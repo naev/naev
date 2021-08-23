@@ -62,24 +62,6 @@
   </enemies>
  </faction>
  <faction>
-  <name>Proteron Dissident</name>
-  <ai>proteron_dissident</ai>
-  <display>Civilian</display>
-  <static />
-  <invisible />
-  <known />
-  <player>0</player>
-  <colour>black</colour>
-  <spawn>proteron_dissident</spawn>
-  <standing>static</standing>
-  <allies>
-  </allies>
-  <enemies>
-   <enemy>Pirate</enemy>
-   <enemy>Proteron</enemy>
-  </enemies>
- </faction>
- <faction>
   <name>Pirate</name>
   <ai>pirate</ai>
   <known />
@@ -102,7 +84,6 @@
    <enemy>Independent</enemy>
    <enemy>Miner</enemy>
    <enemy>Proteron</enemy>
-   <enemy>Proteron Dissident</enemy>
    <enemy>Sirius</enemy>
    <enemy>Soromid</enemy>
    <enemy>Thurion</enemy>
@@ -123,8 +104,6 @@
   <standing>empire</standing>
   <equip>empire</equip>
   <allies>
-   <ally>Dvaered</ally>
-   <ally>Goddard</ally>
   </allies>
   <enemies>
    <enemy>Pirate</enemy>
@@ -146,7 +125,6 @@
   </allies>
   <enemies>
    <enemy>Pirate</enemy>
-   <enemy>Proteron Dissident</enemy>
   </enemies>
   <lane_length_per_presence>143</lane_length_per_presence>
  </faction>
@@ -256,7 +234,6 @@
   <standing>dvaered</standing>
   <equip>dvaered</equip>
   <allies>
-   <ally>Empire</ally>
   </allies>
   <enemies>
    <enemy>Pirate</enemy>
@@ -313,7 +290,6 @@
   <standing>goddard</standing>
   <equip>empire</equip>
   <allies>
-   <ally>Empire</ally>
   </allies>
   <enemies>
    <enemy>Pirate</enemy>

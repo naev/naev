@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Lancelot">
  <base_type>Lancelot</base_type>
- <GFX>lancelot</GFX>
+ <GFX size="56">lancelot</GFX>
  <GUI>brushed</GUI>
  <sound>engine</sound>
  <class>Fighter</class>
@@ -25,10 +25,10 @@
   <cargo>15</cargo>
  </characteristics>
  <slots>
-  <weapon size="medium" x="12" y="0" h="0" />
-  <weapon size="small" x="12" y="0" h="0" />
-  <weapon size="small" x="-3" y="0" h="2" />
-  <weapon size="small" x="-3" y="0" h="2" />
+  <weapon size="medium" x="-3" y="0" h="-2" />
+  <weapon size="small" x="-3" y="3" h="5" />
+  <weapon size="small" x="-3" y="-3" h="5" />
+  <weapon size="small" x="-5" y="0" h="5" />
   <utility size="small" prop="systems" exclusive="1" required="1">Unicorp PT-68 Core System</utility>
   <utility size="small" prop="accessory" exclusive="1" />
   <utility size="small" />

@@ -11,7 +11,7 @@
   <gfx_store>berserk_chip.webp</gfx_store>
   <limit>berserk_chip</limit>
  </general>
- <specific type="modification" group="8">
+ <specific type="modification" group="7">
   <lua>outfits/utility/berserk_chip.lua</lua>
   <energy_regen_mod>-80</energy_regen_mod>
   <shield_regen_mod>-500</shield_regen_mod>

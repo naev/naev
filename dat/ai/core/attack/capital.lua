@@ -8,7 +8,7 @@ end
 -- Main control function for capital ship behavior.
 --]]
 function atk_capital( target )
-   target = _atk_com_think( target )
+   target = __atk_com_think( target )
    if target == nil then return end
 
    -- Targeting stuff
@@ -16,7 +16,7 @@ function atk_capital( target )
    ai.settarget(target)
 
    -- See if the enemy is still seeable
-   if not _atk_check_seeable( target ) then return end
+   if not __atk_check_seeable( target ) then return end
 
    -- Get stats about enemy
    local dist  = ai.dist( target ) -- get distance
@@ -24,10 +24,10 @@ function atk_capital( target )
 
    -- We first bias towards range
    if dist > range * mem.atk_approach and mem.ranged_ammo > mem.atk_minammo then
-      _atk_g_ranged( target, dist )
+      __atk_g_ranged( target, dist )
    -- Close enough to melee
    else
-     _atk_g_capital(target, dist)
+     __atk_g_capital(target, dist)
    end
 end
 
@@ -38,7 +38,7 @@ end
 --This is designed for capital ships with turrets and guided munitions
 --As there is no aiming involved this is a turret/capital ship only attack method
 --]]
-function _atk_g_capital( target, dist )
+function __atk_g_capital( target, dist )
    local range = ai.getweaprange(3)
    local dir = 0
    local shoot = false
@@ -55,7 +55,7 @@ function _atk_g_capital( target, dist )
    if dist > range then
       dir = ai.idir(target)
       if dir < 10 and dir > -10 then
-         _atk_keep_distance()
+         __atk_keep_distance()
          ai.accel()
       else
          dir = ai.iface(target)
@@ -104,7 +104,7 @@ function _atk_g_capital( target, dist )
       end
 
       -- Also try to shoot missiles
-      _atk_dogfight_seekers( dist, aimdir )
+      __atk_dogfight_seekers( dist, aimdir )
    end
 end
 

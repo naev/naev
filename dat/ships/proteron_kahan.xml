@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Proteron Kahan">
  <base_type>Kahan</base_type>
- <GFX sx="10" sy="10">kahan</GFX>
+ <GFX size="100" sx="10" sy="10">kahan</GFX>
  <rarity>3</rarity>
  <GUI>brushed</GUI>
  <sound>engine</sound>

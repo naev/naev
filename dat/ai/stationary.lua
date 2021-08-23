@@ -97,6 +97,7 @@ function attack ()
    if dir < 10 then
       ai.weapset( 4 ) -- Missiles, it's a fire group
    end
+   ai.weapset( 9 ) -- Turreted Missiles
 end
 
 

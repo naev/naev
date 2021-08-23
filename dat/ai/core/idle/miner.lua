@@ -9,9 +9,8 @@ function idle ()
          ai.settimer(0, rnd.uniform(1.0, 3.0))
          ai.pushtask("enterdelay")
       else
-         mem.land = planet:pos()
          ai.pushtask("hyperspace")
-         ai.pushtask("land")
+         ai.pushtask("land", planet)
       end
 
    else -- Mine the asteroid

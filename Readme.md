@@ -23,6 +23,7 @@ Naev requires the following:
 * freetype2
 * GLPK
 * libpng
+* libwebp
 * OpenAL
 * OpenBLAS
 * libvorbis >= 1.2.2
@@ -39,9 +40,9 @@ Install compile-time dependencies on Ubuntu 16.04 (and hopefully later) with:
 
 ```
 apt-get install build-essential libsdl2-dev libsdl2-image-dev \
-libgl1-mesa-dev libxml2-dev libfreetype6-dev libpng-dev libopenal-dev \
-libvorbis-dev binutils-dev libiberty-dev autopoint intltool libfontconfig-dev \
-python3-pip
+libgl1-mesa-dev libxml2-dev libfreetype6-dev libpng-dev libwebp-dev \
+libopenal-dev libvorbis-dev binutils-dev libiberty-dev autopoint intltool \
+libfontconfig-dev python3-pip
 pip3 install meson ninja
 ```
 
@@ -78,7 +79,7 @@ git submodule init
 git submodule update
 ```
 
-Not that `git submodule update` has to be run every time you `git pull` to stay
+Note that `git submodule update` has to be run every time you `git pull` to stay
 up to date. This can also be done automatically by setting the following
 configuration:
 

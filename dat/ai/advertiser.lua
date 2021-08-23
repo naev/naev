@@ -3,9 +3,9 @@ require 'ai.core.idle.advertiser'
 require 'ai.core.misc.distress'
 require "numstring"
 
+mem.lanes_useneutral = true
 
 function create ()
-
    -- Credits.
    ai.setcredits( rnd.rnd(ai.pilot():ship():price()/500, ai.pilot():ship():price()/200) )
 
@@ -19,11 +19,8 @@ function create ()
 
    -- Refuel
    mem.refuel = rnd.rnd( 1000, 3000 )
-   local pp = player.pilot()
-   if pp:exists() then
-      mem.refuel_msg = string.format(_([["I'll supply your ship with fuel for %s."]]),
-            creditstring(mem.refuel))
-   end
+   mem.refuel_msg = string.format(_([["I'll supply your ship with fuel for %s."]]),
+         creditstring(mem.refuel))
 
    -- Selects an advertiser message
    local msg = {

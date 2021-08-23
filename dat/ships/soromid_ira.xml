@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Soromid Ira">
  <base_type>Ira</base_type>
- <GFX sx="12" sy="12">ira</GFX>
+ <GFX size="112" sx="12" sy="12">ira</GFX>
  <GUI>brushed</GUI>
  <rarity>2</rarity>
  <sound>engine</sound>

@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Vigilance">
  <base_type>Vigilance</base_type>
- <GFX sx="10" sy="10">vigilance</GFX>
+ <GFX size="95" sx="10" sy="10">vigilance</GFX>
  <GUI>brushed</GUI>
  <sound>engine</sound>
  <class>Destroyer</class>

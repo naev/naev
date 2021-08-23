@@ -380,10 +380,9 @@ function meeting()
 
       majorTam:taskClear()
       majorTam:memory().careful = true
-      majorTam:runaway(quickie, true) -- The nojump prevents him to land as well
+      majorTam:runaway(quickie, jump.get( system.cur(), nextsys )) -- Runaway towards next system
 
       hook.timer( 2.0, "attackMe" ) -- A small delay to give the player a chance in case an enemy is too close
-      hook.timer( 15.0, "tamHyperspace" ) -- At some point, he is supposed to jump
 
       misn.osdDestroy()
       misn.osdCreate( osd_title, {osd_msg3:format(fleesys:name())} )
@@ -421,11 +420,6 @@ function moreBadGuys()
    buff:setFaction("Warlords")
    warlord:setFaction("Warlords")
    warlord:control(false)
-end
-
-function tamHyperspace()
-   majorTam:taskClear()
-   majorTam:hyperspace( nextsys )
 end
 
 -- Spawn colonel Hamelsen and her mates
@@ -505,16 +499,11 @@ function hamelsen_attacked( )
    local armour, shield = hamelsen:health()
    if shield < 10 then
       hamelsen:control()
-      hamelsen:runaway(player.pilot(), true) -- Nojump because I don't want her to try to jump at the beginning
-      hook.timer(15.0, "hamelsenHyperspace")
+      hamelsen:memory().careful = true
+      hamelsen:runaway(player.pilot(), jump.get( system.cur(), "Radix")) -- I don't want her to try to jump at closest one
       hook.rm(attack)
       ambushDied() -- One less
    end
-end
-
-function hamelsenHyperspace()
-   hamelsen:taskClear()
-   hamelsen:hyperspace( system.get("Radix") )
 end
 
 function ambushDied()

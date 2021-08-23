@@ -324,10 +324,11 @@ void gl_blitTextureInterpolate(  const glTexture* ta,
    glUseProgram(shaders.texture_interpolate.program);
 
    /* Bind the textures. */
-   glActiveTexture( GL_TEXTURE0 );
-   glBindTexture( GL_TEXTURE_2D, ta->texture);
    glActiveTexture( GL_TEXTURE1 );
    glBindTexture( GL_TEXTURE_2D, tb->texture);
+   glActiveTexture( GL_TEXTURE0 );
+   glBindTexture( GL_TEXTURE_2D, ta->texture);
+   /* Always end with TEXTURE0 active. */
 
    /* Must have colour for now. */
    if (c == NULL)
@@ -358,7 +359,6 @@ void gl_blitTextureInterpolate(  const glTexture* ta,
 
    /* Clear state. */
    glDisableVertexAttribArray( shaders.texture_interpolate.vertex );
-   glActiveTexture( GL_TEXTURE0 );
 
    /* anything failed? */
    gl_checkErr();
@@ -387,6 +387,30 @@ void gl_gameToScreenCoords( double *nx, double *ny, double bx, double by )
    /* calculate position - we'll use relative coords to player */
    *nx = (bx - cx) * z + gx + SCREEN_W/2.;
    *ny = (by - cy) * z + gy + SCREEN_H/2.;
+}
+
+
+/**
+ * @brief Return a transformation which converts in-game coordinates to screen coordinates.
+ *
+ *    @param lhs Matrix to multiply by the conversion matrix.
+ */
+gl_Matrix4 gl_gameToScreenMatrix( gl_Matrix4 lhs )
+{
+   double cx,cy, gx,gy, z;
+
+   /* Get parameters. */
+   cam_getPos( &cx, &cy );
+   z = cam_getZoom();
+   gui_getOffset( &gx, &gy );
+
+   return gl_Matrix4_Translate(
+         gl_Matrix4_Scale(
+            gl_Matrix4_Translate(
+               lhs,
+               gx + SCREEN_W/2., gy + SCREEN_H/2., 0.),
+            z, z, 1.),
+         -cx, -cy, 0.);
 }
 
 
@@ -713,7 +737,7 @@ void gl_renderShaderH( const SimpleShader *shd, const gl_Matrix4 *H, const glCol
 
    glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
 
-   glDisableVertexAttribArray(shaders.safelanes.vertex);
+   glDisableVertexAttribArray(shd->vertex);
    glUseProgram(0);
    gl_checkErr();
 }

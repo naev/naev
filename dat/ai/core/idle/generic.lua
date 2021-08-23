@@ -2,11 +2,14 @@ local lanes = require 'ai.core.misc.lanes'
 
 -- Default task to run when idle
 function idle ()
+   local p = ai.pilot()
+   local task = ai.taskname()
+   local si = _stateinfo( task )
    -- Aggressives will try to find enemies first, before falling back on
    -- loitering, to avoid weird stuff starting to scan before attacking
    if mem.aggressive then
       local enemy  = ai.getenemy()
-      if enemy ~= nil and (not mem.enemyclose or ai.dist(enemy) < mem.enemyclose) then
+      if should_attack( enemy,  si ) then
          ai.pushtask( "attack", enemy )
          return
       end
@@ -22,7 +25,6 @@ function idle ()
                mem.goal = "planet"
                mem.goal_planet = planet
                mem.goal_pos = planet:pos()
-               mem.land = mem.goal_pos
             end
          end
          if not mem.goal then
@@ -39,13 +41,13 @@ function idle ()
             return
          end
 
-         mem.route = lanes.getRoute( mem.goal_pos )
+         mem.route = lanes.getRouteP( p, mem.goal_pos )
       end
 
       -- Arrived at goal
       if #mem.route == 0 then
          if mem.goal == "planet" then
-            ai.pushtask("land")
+            ai.pushtask("land", mem.goal_planet)
          elseif mem.goal == "hyperspace" then
             ai.pushtask("hyperspace", mem.goal_hyperspace)
          end
@@ -64,6 +66,7 @@ function idle ()
          if target then
             -- Don't scan if they're going to be attacked anyway
             if ai.isenemy(target) then
+               -- TODO probably use should_attack here
                ai.pushtask( "attack", target )
             else
                __push_scan( target )
@@ -95,8 +98,8 @@ function idle ()
       else
          -- Go to an interesting
          if not mem.route then
-            local target = lanes.getPointInterest()
-            mem.route = lanes.getRoute( target )
+            local target = lanes.getPointInterestP( p )
+            mem.route = lanes.getRouteP( p, target )
          end
          local pos = mem.route[1]
          table.remove( mem.route, 1 )

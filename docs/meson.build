@@ -45,7 +45,7 @@ if genLDoc.disabled() == false
 
         # WARNING: half-assed way to ensure the same directory contains the Lua sources we want to document.
         # Using @PLAINNAME@ forces a flat structure, which is no loss yet. (I think the @module directive is what counts,
-	# in which case we want to leave the nested structure and collision-proof ourselves.)
+        # in which case we want to leave the nested structure and collision-proof ourselves.)
         direct = generator(
             find_program('cp', required: true),
             arguments: ['@INPUT@', '@OUTPUT@'],

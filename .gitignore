@@ -27,6 +27,7 @@ po/credits.pot
 meson-bin/
 
 bin/
+utils/model-view/png-exports
 utils/starmap/*.svg
 utils/starmap/*.png
 utils/starmap/*.jpg

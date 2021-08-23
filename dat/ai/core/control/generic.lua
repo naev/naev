@@ -1,4 +1,5 @@
-local formation = require("scripts/formation")
+local formation = require "scripts.formation"
+local lanes = require "ai.core.misc.lanes"
 
 --[[
 -- Variables to adjust AI
@@ -33,6 +34,7 @@ mem.formation     = "circle" -- Formation to use when commanding fleet
 mem.form_pos      = nil -- Position in formation (for follower)
 mem.leadermaxdist = nil -- Distance from leader to run back to leader
 mem.gather_range  = 800 -- Radius in which the pilot looks for gatherables
+mem.lanes_useneutral = false -- Whether or not to use neutral lanes
 
 --[[Control parameters: mem.radius and mem.angle are the polar coordinates
 of the point the pilot has to follow when using follow_accurate.
@@ -45,6 +47,8 @@ mem.radius         = 100 --  Requested distance between follower and target
 mem.angle          = 180 --  Requested angle between follower and target's velocity
 mem.Kp             = 10 --  First control coefficient
 mem.Kd             = 20 -- Second control coefficient
+
+mem.target_bias    = vec2.new(0,0) -- Initialize land bias, just in case
 
 -- Required control rate that represents the number of seconds between each
 -- control() call
@@ -59,12 +63,12 @@ control_rate   = 2
 stateinfo = {
    attack = {
       fighting = true,
-      attack = true,
+      attack   = true,
    },
    attack_forced = {
-      forced = true,
+      forced   = true,
       fighting = true,
-      attack = true,
+      attack   = true,
       noattack = true,
    },
    runaway = {
@@ -75,11 +79,11 @@ stateinfo = {
       noattack = true,
    },
    hold = {
-      forced = true,
+      forced   = true,
       noattack = true,
    },
    flyback = {
-      forced = true,
+      forced   = true,
       noattack = true,
    },
 }
@@ -90,80 +94,112 @@ function _stateinfo( task )
    return stateinfo[ task ] or {}
 end
 
-function lead_fleet ()
-   if #ai.pilot():followers() ~= 0 then
+function lead_fleet( p )
+   if #p:followers() ~= 0 then
       if mem.formation == nil then
-         formation.clear(ai.pilot())
+         formation.clear(p)
          return
       end
 
       local form = formation[mem.formation]
       if form == nil then
-         warn(string.format(_("Formation '%s' not found"), mem.formation))
+         warn(string.format(_("Pilot '%s': formation '%s' not found!"), p:name(), mem.formation))
       else
-         form(ai.pilot())
+         form(p)
       end
    end
 end
 
 -- Run instead of "control" when under manual control; use should be limited
 function control_manual ()
-   lead_fleet()
+   lead_fleet( ai.pilot() )
 end
 
-function handle_messages ()
+function handle_messages( si )
+   local taskchange = false
    local p = ai.pilot()
    local l = p:leader()
    for _, v in ipairs(ai.messages()) do
       local sender, msgtype, data = table.unpack(v)
-      -- Below we only handle if they came from allies
-      -- (So far, only allies would send in the first place, but this check future-proofs things.
-      -- One day it might be interesting to have non-allied snitches whose tips get checked out...)
-      if sender:exists() and p:faction():areAllies( sender:faction() ) then
-         if msgtype == "scanned" then
-            if mem.doscans and data ~= nil and data:exists() then
-               mem.scanned = mem.scanned or {} -- Create table if doesn't exist
-               table.insert( mem.scanned, data )
-               -- Stop scanning if they got information about the scan
-               if ai.taskname() == "scan" and ai.taskdata() == data then
-                  ai.poptask()
+
+      -- Skip message from nonexistent sender
+      if sender:exists() then
+
+         -- Below we only handle if they came from allies
+         -- (So far, only allies would send in the first place, but this check future-proofs things.
+         -- One day it might be interesting to have non-allied snitches whose tips get checked out...)
+         if p:faction():areAllies( sender:faction() ) then
+            if msgtype == "scanned" then
+               if mem.doscans and data ~= nil and data:exists() then
+                  mem.scanned = mem.scanned or {} -- Create table if doesn't exist
+                  table.insert( mem.scanned, data )
+                  -- Stop scanning if they got information about the scan
+                  if ai.taskname() == "scan" and ai.taskdata() == data then
+                     ai.poptask()
+                     taskchange = true
+                  end
                end
             end
          end
-      end
-      -- Below we only handle if they came from the glorious leader
-      if sender == l then
-         if msgtype == "form-pos" then
-            mem.form_pos = data
-         elseif msgtype == "hyperspace" then
-            ai.pushtask("hyperspace", data)
-         elseif msgtype == "land" then
-            mem.land = ai.planetfrompos(data):pos()
-            ai.pushtask("land")
-         -- Escort commands
-         -- Attack target
-         elseif msgtype == "e_attack" then
-            if data ~= nil and data:exists() then
-               if data:leader() ~= l then
-                  clean_task( ai.taskname() )
-                  ai.pushtask("attack_forced", data)
+
+         -- Messages coming from followers
+         if sender:leader() == p then
+            if msgtype == "f_attacked" then
+               if not si.fighting and should_attack( data, si ) then
+                  ai.pushtask("attack", data)
+                  -- Also signal to other followers
+                  for k,v in ipairs(p:followers()) do
+                     p:msg( v, "l_attacked", data )
+                  end
+                  taskchange = true
                end
             end
-         -- Hold position
-         elseif msgtype == "e_hold" then
-            ai.pushtask("hold" )
-         -- Return to carrier
-         elseif msgtype == "e_return" then
-            ai.pushtask( "flyback", p:flags("carried") )
-         -- Clear orders
-         elseif msgtype == "e_clear" then
-            p:taskClear()
+
+         -- Below we only handle if they came from the glorious leader
+         elseif sender == l then
+            if msgtype == "form-pos" then
+               mem.form_pos = data
+            elseif msgtype == "hyperspace" then
+               ai.pushtask("hyperspace", data)
+               taskchange = true
+            elseif msgtype == "land" then
+               ai.pushtask("land", data)
+               taskchange = true
+            elseif msgtype == "l_attacked" then
+               if not si.fighting and should_attack( data, si ) then
+                  ai.pushtask("attack", data)
+                  taskchange = true
+               end
+
+            -- Escort commands
+            -- Attack target
+            elseif msgtype == "e_attack" then
+               if data ~= nil and data:exists() then
+                  if data:leader() ~= l then
+                     clean_task( ai.taskname() )
+                     ai.pushtask("attack_forced", data)
+                     taskchange = true
+                  end
+               end
+            -- Hold position
+            elseif msgtype == "e_hold" then
+               ai.pushtask("hold")
+               taskchange = true
+            -- Return to carrier
+            elseif msgtype == "e_return" then
+               ai.pushtask( "flyback", p:flags("carried") )
+               taskchange = true
+            -- Clear orders
+            elseif msgtype == "e_clear" then
+               p:taskClear()
+            end
          end
       end
    end
+   return taskchange
 end
 
-function should_attack( enemy )
+function should_attack( enemy, si )
    if not enemy or not enemy:exists() then
       return false
    end
@@ -173,10 +209,35 @@ function should_attack( enemy )
    end
 
    -- Don't reattack the current enemy
-   local task = ai.taskname()
-   local si = _stateinfo( task )
    if si.attack and enemy == ai.taskdata() then
       return false
+   end
+
+   -- Try to follow the leader behaviour
+   local p = ai.pilot()
+   local l = p:leader()
+   if l and l:exists() then
+      local ltask, ldata = l:task()
+      local lsi = _stateinfo( ltask )
+      if lsi.fighting then
+         if ldata and ldata:exists() then
+            -- Check to see if the pilot group the leader is fighting is the
+            -- same as the current enenmy
+            if __sameFleet( ldata, enemy ) then
+               return true
+            end
+         end
+         -- TODO maybe add a check to see if nearby fighting leader?
+      end
+   end
+
+   -- Check to see if we want to go back to the lanes
+   local lr = mem.enemyclose
+   if mem.natural and lr then
+      local d, pos = lanes.getDistance2P( p, enemy:pos() )
+      if d > lr*lr then
+         return false
+      end
    end
 
    -- Check if we have minimum range to engage
@@ -194,7 +255,7 @@ end
 function control_attack( si )
    local target = ai.taskdata()
    -- Needs to have a target
-   if not target:exists() then
+   if not target or not target:exists() then
       ai.poptask()
       return
    end
@@ -231,12 +292,12 @@ function control ()
    local p = ai.pilot()
    local enemy = ai.getenemy()
 
-   lead_fleet()
-   handle_messages()
-
    -- Task information stuff
    local task = ai.taskname()
    local si = _stateinfo( task )
+
+   lead_fleet( p )
+   local taskchange = handle_messages( si )
 
    -- Select new leader
    local l = p:leader()
@@ -259,6 +320,9 @@ function control ()
          ai.stealth(false)
       end
    end
+
+   -- Task changed so we stop thinking and focus on new task
+   if taskchange then return end
 
    -- If command is forced we basically override everything
    if si.forced then
@@ -298,7 +362,7 @@ function control ()
                return
             -- Cool down if the current weapon set is suffering from >= 20% accuracy loss.
             -- This equates to a temperature of 560K presently.
-            elseif (p:weapsetHeat() > .2) then
+            elseif (p:weapsetHeat() > 0.2) then
                mem.cooldown = true
                p:setCooldown(true)
                return
@@ -310,7 +374,7 @@ function control ()
    -- Pilots return if too far away from leader
    local lmd = mem.leadermaxdist
    if lmd then
-      local l = p:leader()
+      --local l = p:leader() -- Leader should be set already
       if l then
          local dist = ai.dist( l )
          if lmd < dist then
@@ -322,23 +386,35 @@ function control ()
       end
    end
 
+   -- Check to see if we want to go back to the lanes
+   if mem.natural and si.fighting then
+      local lr = mem.enemyclose
+      if lr then
+         local d, pos = lanes.getDistance2P( p, p:pos() )
+         if d < math.huge and d > lr*lr then
+            ai.pushtask( "moveto_nobrake", pos )
+            return
+         end
+      end
+   end
+
    -- Get new task
    if task == nil then
       -- See what decision to take
-      if should_attack(enemy) then
+      if should_attack( enemy, si ) then
          ai.hostile(enemy) -- Should be done before taunting
          taunt(enemy, true)
          ai.pushtask("attack", enemy)
-      elseif p:leader() and p:leader():exists() then
+      elseif l then -- Leader should be set already
          ai.pushtask("follow_fleet")
       else
          idle()
       end
-
+      return -- Should have gotten a new task
    end
 
-
    -- Run custom function if applicable
+   task = ai.taskname() -- Reget the task in case something got pushed ontop
    if task then
       local cc = control_funcs[ task ]
       if cc then
@@ -356,7 +432,7 @@ function control ()
       end
 
       -- See if really want to attack
-      if should_attack( enemy ) then
+      if should_attack( enemy, si ) then
          ai.hostile(enemy) -- Should be done before taunting
          taunt(enemy, true)
          clean_task( task )
@@ -376,7 +452,8 @@ function control_funcs.loiter ()
    return false
 end
 function control_funcs.runaway ()
-   if mem.norun or ai.pilot():leader() ~= nil then
+   local p = ai.pilot()
+   if mem.norun or p:leader() ~= nil then
       ai.poptask()
       return true
    end
@@ -391,7 +468,7 @@ function control_funcs.runaway ()
    local dist = ai.dist( target )
 
    -- Should return to combat?
-   local parmour, pshield = ai.pilot():health()
+   local parmour, pshield = p:health()
    if mem.aggressive and ((mem.shield_return > 0 and pshield >= mem.shield_return) or
          (mem.armour_return > 0 and parmour >= mem.armour_return)) then
       ai.poptask() -- "attack" should be above "runaway"
@@ -465,6 +542,17 @@ function attacked( attacker )
    -- Ignore hits from dead pilots.
    if not attacker:exists() then
       return
+   end
+
+   -- Notify followers that we've been attacked
+   if not si.fighting then
+      for k,v in ipairs(p:followers()) do
+         p:msg( v, "l_attacked", attacker )
+      end
+      local l = p:leader()
+      if l and l:exists() then
+         p:msg( l, "f_attacked", attacker )
+      end
    end
 
    if not si.fighting then
@@ -575,7 +663,7 @@ function distress ( pilot, attacker )
    if si.attack then
       if si.noattack then return end
       -- Ignore if not interested in attacking
-      if not should_attack( badguy ) then return end
+      if not should_attack( badguy, si ) then return end
 
       local target = ai.taskdata()
 
@@ -589,7 +677,7 @@ function distress ( pilot, attacker )
    elseif task ~= "runaway" and task ~= "refuel" then
       if not si.noattack and mem.aggressive then
          -- Ignore if not interested in attacking
-         if not should_attack( badguy ) then return end
+         if not should_attack( badguy, si ) then return end
          if p:inrange( badguy ) then -- TODO: something to help in the other case
             clean_task( task )
             ai.pushtask( "attack", badguy )
@@ -678,8 +766,9 @@ end
 -- Puts the pilot into cooldown mode if its weapons are overly hot and its shields are relatively high.
 -- This can happen during combat, so mem.heatthreshold should be quite high.
 function should_cooldown()
-   local mean = ai.pilot():weapsetHeat()
-   local _, pshield = ai.pilot():health()
+   local p = ai.pilot()
+   local mean = p:weapsetHeat()
+   local _, pshield = p:health()
 
    -- Don't want to cool down again so soon.
    -- By default, 15 ticks will be 30 seconds.
@@ -690,7 +779,7 @@ function should_cooldown()
    -- Not sure this is better...
    elseif mean > mem.heatthreshold and pshield > 50 then
       mem.cooldown = true
-      ai.pilot():setCooldown(true)
+      p:setCooldown(true)
    end
    if pshield == nil then
       player.msg("pshield = nil")

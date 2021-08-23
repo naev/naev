@@ -43,10 +43,6 @@ OSDdesc[2] = _("Drop off the goods at %s in the %s system")
 
 payment = 500000
 
--- Cargo Details
-cargo = "Goods"
-cargoAmount = 45
-
 title = {}  --stage titles
 text = {}   --mission text
 
@@ -140,7 +136,8 @@ function land ()
       else
 
          tk.msg( title[3], text[3] )
-         cargoID = misn.cargoAdd(cargo, cargoAmount)  -- adds cargo
+         local c = misn.cargoNew( N_("Goods"), N_("A package of unknown goods for delivery to a countess.") )
+         cargoID = misn.cargoAdd( c, 45 )  -- adds cargo
          pickedup = true
 
          misn.markerMove( marker, delivSys )  -- destination

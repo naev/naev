@@ -22,40 +22,43 @@ local taunt_list = {
 
 -- Create function
 function create ()
-
    -- Credits.
    ai.setcredits( rnd.rnd(ai.pilot():ship():price()/300, ai.pilot():ship():price()/100) )
-
-   -- Handle refueling
-   mem.refuel = rnd.rnd( 1000, 3000 )
-   local p = player.pilot()
-   if p:exists() then
-      local standing = ai.getstanding( p ) or -1
-      if standing > 50 or
-            (standing > 0 and rnd.rnd() > 0.8) or
-            (rnd.rnd() > 0.3) then
-         mem.refuel_no = _([["Mare magno turbantibus. That means that I don't care about your problems."]])
-      else
-         mem.refuel_msg = string.format(_([["For you I could make an exception for %s."]]), creditstring(mem.refuel))
-      end
-
-      -- Handle bribing
-      mem.bribe = math.sqrt( ai.pilot():stats().mass ) * (750 * rnd.rnd() + 2500)
-      if standing > 0 or
-            (standing > -20 and rnd.rnd() > 0.8) or
-            (standing > -50 and rnd.rnd() > 0.5) or
-            (rnd.rnd() > 0.3) then
-         mem.bribe_prompt = string.format(_([["For %s I'll let your grievances slide."]]), creditstring(mem.bribe) )
-         mem.bribe_paid = _([["Now get out of my sight and don't cause any more trouble."]])
-      else
-         mem.bribe_no = bribe_no[ rnd.rnd(1,#bribe_no) ]
-      end
-   end
 
    -- Handle misc stuff
    mem.loiter = 3 -- This is the amount of waypoints the pilot will pass through before leaving the system
 
    create_post()
+end
+
+-- When hailed
+function hail ()
+   if mem.setuphail then return end
+
+   -- Handle refueling
+   mem.refuel = rnd.rnd( 1000, 3000 )
+   local standing = ai.getstanding( player.pilot() ) or -1
+   if standing > 50 or
+         (standing > 0 and rnd.rnd() > 0.8) or
+         (rnd.rnd() > 0.3) then
+      mem.refuel_no = _([["Mare magno turbantibus. That means that I don't care about your problems."]])
+   else
+      mem.refuel_msg = string.format(_([["For you I could make an exception for %s."]]), creditstring(mem.refuel))
+   end
+
+   -- Handle bribing
+   mem.bribe = math.sqrt( ai.pilot():stats().mass ) * (750 * rnd.rnd() + 2500)
+   if (mem.natural or mem.allowbribe) and (standing > 0 or
+         (standing > -20 and rnd.rnd() > 0.8) or
+         (standing > -50 and rnd.rnd() > 0.5) or
+         (rnd.rnd() > 0.3)) then
+      mem.bribe_prompt = string.format(_([["For %s I'll let your grievances slide."]]), creditstring(mem.bribe) )
+      mem.bribe_paid = _([["Now get out of my sight and don't cause any more trouble."]])
+   else
+      mem.bribe_no = bribe_no[ rnd.rnd(1,#bribe_no) ]
+   end
+
+   mem.setuphail = true
 end
 
 -- taunts

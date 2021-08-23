@@ -49,9 +49,6 @@ osd_desc = {}
 osd_desc[1] = _("Drop off the goods at %s in the %s system (You have %s remaining)")
 osd_desc[2] = _("Drop off the goods at %s in the %s system (You are late)")
 
--- Cargo Details
-cargo = "Goods"
-
 title = {}  --stage titles
 text = {}   --mission text
 title[1] = _("Spaceport Bar")

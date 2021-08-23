@@ -204,6 +204,14 @@ SHADERS = [
       }
    ),
    Shader(
+      name = "material",
+      vs_path = "material.vert",
+      fs_path = "material.frag",
+      attributes = ["vertex", "vertex_normal", "vertex_tex"],
+      uniforms = ["projection", "model", "map_Kd", "map_Ks", "map_Ke", "map_Bump", "Ns", "Ka", "Kd", "Ks", "Ke", "Ni", "d", "bm"],
+      subroutines = {},
+   ),
+   Shader(
       name = "colorblind",
       vs_path = "postprocess.vert",
       fs_path = "colorblind.frag",
@@ -242,6 +250,10 @@ SHADERS = [
    SimpleShader(
       name = "factiondisk",
       fs_path = "factiondisk.frag",
+   ),
+   SimpleShader(
+      name = "planetmarker",
+      fs_path = "planetmarker.frag",
    ),
    SimpleShader(
       name = "progressbar",

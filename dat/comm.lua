@@ -111,7 +111,9 @@ local function bribe_msg( plt, group )
          str = _([["We'll need at least %s to not leave you as a hunk of floating debris."]])
       end
       str = string.format( str, cstr )
-      return string.format(_("%s\n\nThis action will bribe %d %s pilots.\nYou have %s. Pay #r%s#0?"), str, #bribeable, plt:faction():name(), chave, cstr )
+      return string.format(n_("%s\n\nThis action will bribe %d %s pilot.\nYou have %s. Pay #r%s#0?",
+                              "%s\n\nThis action will bribe %d %s pilots.\nYou have %s. Pay #r%s#0?", #bribeable),
+            str, #bribeable, plt:faction():name(), chave, cstr )
    else
       local cost = bribe_cost( plt )
       local str = mem.bribe_prompt
@@ -196,7 +198,7 @@ function comm( plt )
 
          if logo then
             vn.setColor( {1, 1, 1}, 1 )
-            logo:draw( x+namebox_text_w+10+bw + (logo_size-logo_w)*0.5, y+bh + (logo_size-logo_h)*0.5, 0, logo_scale )
+            logo:draw( x+namebox_text_w+10+bw + (logo_size-logo_w*logo_scale)*0.5, y+bh + (logo_size-logo_h*logo_scale)*0.5, 0, logo_scale )
          end
       end
       vn.setForeground( render_namebox )
@@ -276,7 +278,7 @@ function comm( plt )
       end
       local cstr = creditstring( player.credits() )
       local cdif = creditstring( cost - player.credits() )
-      return string.format(_("You only have %s credits. You need #r%s#0 more to be able to afford the bribe!"), cstr, cdif )
+      return string.format(_("You only have %s. You need #r%s#0 more to be able to afford the bribe!"), cstr, cdif )
    end )
    vn.jump("menu")
 
@@ -325,7 +327,7 @@ function comm( plt )
    vn.na( function ()
       local cstr = creditstring( player.credits() )
       local cdif = creditstring( bribe_nearby_cost - player.credits() )
-      return string.format(_("You only have %s credits. You need #r%s#0 more to be able to afford the bribe!"), cstr, cdif )
+      return string.format(_("You only have %s. You need #r%s#0 more to be able to afford the bribe!"), cstr, cdif )
    end )
    vn.jump("menu")
 
@@ -375,6 +377,10 @@ function comm( plt )
    p(_([["Sorry, I'm busy now."]]))
    vn.jump("menu")
 
+   vn.label("refueling_already")
+   p(_([["What part of 'on my way' don't you understand?"]]))
+   vn.jump("menu")
+
    vn.label("refuel_refueling")
    vn.na(_("Pilot is already refueling you."))
    vn.jump("menu")
@@ -400,6 +406,9 @@ function comm( plt )
       local val = mem.refuel
       if val==nil or plt:flags("manualcontrol") then
          vn.jump("refuel_busy")
+      end
+      if plt:flags("refueling") then
+         vn.jump("refueling_already")
       end
    end )
    p( function ()

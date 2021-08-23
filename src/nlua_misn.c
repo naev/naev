@@ -660,12 +660,14 @@ static int misn_finish( lua_State *L )
  *
  *    @luatparam string cargo Name of the cargo to add. This must not match a cargo name defined in commodity.xml.
  *    @luatparam string decription Description of the cargo to add.
+ *    @luatparam[opt=nil] table params Table of named parameters. Currently supported is "gfx_space".
  *    @luatreturn Commodity The newly created commodity or an existing temporary commodity with the same name.
  * @luafunc cargoNew
  */
 static int misn_cargoNew( lua_State *L )
 {
-   const char *cname, *cdesc;
+   const char *cname, *cdesc, *buf;
+   char str[STRMAX_SHORT];
    Commodity *cargo;
 
    /* Parameters. */
@@ -678,6 +680,16 @@ static int misn_cargoNew( lua_State *L )
 
    if (cargo==NULL)
       cargo = commodity_newTemp( cname, cdesc );
+
+   if (!lua_isnoneornil(L,3)) {
+      lua_getfield(L,3,"gfx_space");
+      buf = luaL_optstring(L,-1,NULL);
+      if (buf) {
+         gl_freeTexture(cargo->gfx_space);
+         snprintf( str, sizeof(str), COMMODITY_GFX_PATH"space/%s", buf );
+         cargo->gfx_space = gl_newImage( str, 0 );
+      }
+   }
 
    lua_pushcommodity(L, cargo);
    return 1;

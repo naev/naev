@@ -209,11 +209,11 @@ SafeLane* safelanes_get( int faction, int standing, const StarSystem* system )
             fe = areEnemies(faction,lf);
             fa = areAllies(faction,lf);
             skip = 1;
-            if ((standing & SAFELANES_FRIENDLY) && !fa)
+            if ((standing & SAFELANES_FRIENDLY) && fa)
                skip = 0;
-            if ((standing & SAFELANES_NEUTRAL) && (fe || fa))
+            if ((standing & SAFELANES_NEUTRAL) && !fe)
                skip = 0;
-            if ((standing & SAFELANES_HOSTILE) && !fe)
+            if ((standing & SAFELANES_HOSTILE) && fe)
                skip = 0;
             if (skip)
                continue;
@@ -451,9 +451,9 @@ static void safelanes_initStacks_faction (void)
    presence_budget = array_create_size( double*, array_size(faction_stack) );
    systems_stack = system_getAll();
    for (fi=0; fi<array_size(faction_stack); fi++) {
-      presence_budget[fi] = array_create_size( double, array_size(systems_stack) );
+      array_push_back( &presence_budget, array_create_size( double, array_size(systems_stack) ) );
       for (s=0; s<array_size(systems_stack); s++)
-         presence_budget[fi][s] = system_getPresence( &systems_stack[s], faction_stack[fi].id );
+         array_push_back( &presence_budget[fi], system_getPresence( &systems_stack[s], faction_stack[fi].id ) );
    }
 }
 
@@ -790,7 +790,7 @@ static int safelanes_activateByGradient( cholmod_dense* Lambda_tilde )
          presence_budget[fi][si] -= cost_best;
          if (presence_budget[fi][si] >= cost_cheapest_other)
             turns_next_time++;
-	 else {
+         else {
             presence_budget[fi][si] = 0; /* Nothing more to do here; tell ourselves. */
             if (lal[fi] == NULL)
                lal_bases[fi] -= sys_to_first_vertex[1+si] - sys_to_first_vertex[si];

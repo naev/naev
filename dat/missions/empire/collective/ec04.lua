@@ -266,7 +266,8 @@ function land ()
       tk.msg( title[2], text[5] )
 
       -- Add goods
-      misn_cargo = misn.cargoAdd( "Datapad", 0 )
+      local c = misn.cargoNew( N_("Datapad"), N_("A dead soldier's datapad.") )
+      misn_cargo = misn.cargoAdd( c, 0 )
       misn_stage = 2
 
    elseif misn_stage == 3 and planet.cur() == misn_base then

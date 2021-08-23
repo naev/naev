@@ -16,7 +16,7 @@
  <stats>
   <armour_regen_malus>10</armour_regen_malus>
  </stats>
- <specific type="afterburner" group="9">
+ <specific type="afterburner" group="8">
   <rumble>0.9</rumble>
   <sound>afterburner</sound>
   <sound_off>afb_disengage</sound_off>

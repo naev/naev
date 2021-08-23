@@ -160,6 +160,7 @@ function create ( max )
 end
 
 
+local fpir = faction.get("Pirate")
 -- @brief Spawning hook
 function spawn ( presence, max )
    -- Over limit
@@ -168,7 +169,7 @@ function spawn ( presence, max )
    end
 
    -- Actually spawn the pilots
-   local pilots = scom.spawn( spawn_data, "Pirate" )
+   local pilots = scom.spawn( spawn_data, fpir )
 
    -- Calculate spawn data
    spawn_data = scom.choose( spawn_table )

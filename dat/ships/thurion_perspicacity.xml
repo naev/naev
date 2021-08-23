@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Thurion Perspicacity">
  <base_type>Perspicacity</base_type>
- <GFX>perspicacity</GFX>
+ <GFX size="50">perspicacity</GFX>
  <rarity>3</rarity>
  <GUI>brushed</GUI>
  <sound>engine</sound>

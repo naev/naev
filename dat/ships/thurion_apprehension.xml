@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Thurion Apprehension">
  <base_type>Apprehension</base_type>
- <GFX sx="12" sy="12">apprehension</GFX>
+ <GFX size="90" sx="12" sy="12">apprehension</GFX>
  <rarity>3</rarity>
  <GUI>brushed</GUI>
  <sound>engine</sound>

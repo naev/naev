@@ -78,6 +78,11 @@ static char *player_message_noland = NULL; /**< No landing message (when PLAYER_
  */
 static char **player_licenses = NULL; /**< Licenses player has. */
 
+/*
+ * Default radar resolution.
+ */
+#define RADAR_RES_DEFAULT  50. /**< Default resolution. */
+
 
 /*
  * player sounds.
@@ -200,6 +205,7 @@ static void player_newSetup()
    double x, y;
 
    /* Set up GUI. */
+   player.radar_res = RADAR_RES_DEFAULT;
    gui_setDefaults();
 
    /* Setup sound */
@@ -2031,7 +2037,6 @@ void player_targetHostile (void)
 {
    unsigned int tp;
    double d, td;
-   int inRange;
    Pilot *const* pilot_stack;
 
    tp = PLAYER_ID;
@@ -2043,16 +2048,19 @@ void player_targetHostile (void)
          continue;
 
       /* Must be a valid target. */
-      if (!pilot_validTarget( player.p, pilot_stack[i] ))
+      if (!pilot_canTarget( pilot_stack[i] ))
          continue;
 
       /* Must be hostile. */
-      if (pilot_isHostile(pilot_stack[i])) {
-         inRange = pilot_inRangePilot(player.p, pilot_stack[i], &td);
-         if (tp == PLAYER_ID || ((inRange == 1) && (td < d))) {
-            d  = td;
-            tp = pilot_stack[i]->id;
-         }
+      if (!pilot_isHostile(pilot_stack[i]))
+         continue;
+
+      if (pilot_inRangePilot(player.p, pilot_stack[i], &td) != 1 )
+         continue;
+
+      if (tp == PLAYER_ID || ((td < d))) {
+         d  = td;
+         tp = pilot_stack[i]->id;
       }
    }
 
@@ -3085,6 +3093,8 @@ int player_save( xmlTextWriterPtr writer )
       xmlw_elem(writer,"gui","%s",player.gui);
    xmlw_elem(writer,"guiOverride","%d",player.guiOverride);
    xmlw_elem(writer,"mapOverlay","%d",ovr_isOpen());
+   gui_radarGetRes( &player.radar_res );
+   xmlw_elem(writer,"radar_res","%f",player.radar_res);
 
    /* Time. */
    xmlw_startElem(writer,"time");
@@ -3427,6 +3437,7 @@ static Planet* player_parse( xmlNodePtr parent )
    map_overlay_enabled = 0;
 
    player.dt_mod = 1.; /* For old saves. */
+   player.radar_res = RADAR_RES_DEFAULT;
 
    /* Must get planet first. */
    node = parent->xmlChildrenNode;
@@ -3445,6 +3456,7 @@ static Planet* player_parse( xmlNodePtr parent )
       xmlr_int(node, "guiOverride", player.guiOverride);
       xmlr_int(node, "mapOverlay", map_overlay_enabled);
       ovr_setOpen(map_overlay_enabled);
+      xmlr_float(node, "radar_res", player.radar_res);
 
       /* Time. */
       if (xml_isNode(node,"time")) {

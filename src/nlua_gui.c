@@ -292,10 +292,10 @@ static int guiL_targetPlanetGFX( lua_State *L )
 
 
 /**
- * @brief Sets the Lua planet target GFX.
+ * @brief Sets the Lua pilot target GFX.
  *
- *    @luatparam Tex tex Texture to set for the planet targeting.
- * @luafunc targetPlanetGFX
+ *    @luatparam Tex tex Texture to set for the pilot targeting.
+ * @luafunc targetPilotGFX
  */
 static int guiL_targetPilotGFX( lua_State *L )
 {

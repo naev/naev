@@ -78,7 +78,6 @@ static double blink_planet    = 0.; /**< Timer on planet blinking on radar. */
 static double animation_dt    = 0.; /**< Used for animations. */
 
 /* for VBO. */
-static gl_vbo *gui_planet_vbo = NULL;
 static gl_vbo *gui_radar_select_vbo = NULL;
 static gl_vbo *gui_planet_blink_vbo = NULL;
 
@@ -166,10 +165,10 @@ typedef struct Radar_ {
    double res; /**< Resolution */
 } Radar;
 /* radar resolutions */
-#define RADAR_RES_MAX      100. /**< Maximum radar resolution. */
+#define RADAR_RES_MAX      300. /**< Maximum radar resolution. */
+#define RADAR_RES_REF      100. /**< Reference radar resolution. */
 #define RADAR_RES_MIN      10. /**< Minimum radar resolution. */
 #define RADAR_RES_INTERVAL 10. /**< Steps used to increase/decrease resolution. */
-#define RADAR_RES_DEFAULT  50. /**< Default resolution. */
 static Radar gui_radar;
 
 /* needed to render properly */
@@ -245,7 +244,7 @@ static int gui_runFunc( const char* func, int nargs, int nret );
  */
 void gui_setDefaults (void)
 {
-   gui_radar.res = RADAR_RES_DEFAULT;
+   gui_setRadarResolution( player.radar_res );
    memset( mesg_stack, 0, sizeof(Mesg)*mesg_max );
 }
 
@@ -1018,9 +1017,9 @@ int gui_getMapOverlayBoundLeft(void)
 int gui_radarInit( int circle, int w, int h )
 {
    gui_radar.shape   = circle ? RADAR_CIRCLE : RADAR_RECT;
-   gui_radar.res     = RADAR_RES_DEFAULT;
    gui_radar.w       = w;
    gui_radar.h       = h;
+   gui_setRadarResolution( player.radar_res );
    return 0;
 }
 
@@ -1273,7 +1272,7 @@ void gui_renderPilot( const Pilot* p, RadarShape shape, double w, double h, doub
       y = ((p->solid->pos.y - player.p->solid->pos.y) / res);
    }
    /* Get size. */
-   scale = ((double)ship_size( p->ship ) + 1.)/2. * (1. + RADAR_RES_MAX / res );
+   scale = ((double)ship_size( p->ship ) + 1.)/2. * (1. + RADAR_RES_REF / res );
 
    /* Check if pilot in range. */
    if ( ((shape==RADAR_RECT) &&
@@ -1460,7 +1459,7 @@ static void gui_blink( int w, int h, int rc, int cx, int cy, GLfloat vr, RadarSh
 
    if (blinkVar < blinkInterval/2.) {
       projection = gl_Matrix4_Translate(gl_view_matrix, cx, cy, 0);
-      projection = gl_Matrix4_Scale(projection, vr, vr, 1);
+      projection = gl_Matrix4_Scale(projection, 2*vr, 2*vr, 1);
       gl_beginSolidProgram(projection, col);
       gl_vboActivateAttribOffset( gui_planet_blink_vbo, shaders.solid.vertex, 0, 2, GL_FLOAT, 0 );
       glDrawArrays( GL_LINES, 0, 8 );
@@ -1526,8 +1525,8 @@ void gui_renderPlanet( int ind, RadarShape shape, double w, double h, double res
 
    /* Default values. */
    planet = cur_system->planets[ind];
-   r     = planet->radius*2. / res;
-   vr    = overlay ? planet->mo.radius : MAX( r, 15.);
+   r     = planet->radius / res;
+   vr    = overlay ? planet->mo.radius : MAX( r, 7.5 );
 
    if (overlay) {
       cx    = planet->pos.x / res;
@@ -1544,7 +1543,7 @@ void gui_renderPlanet( int ind, RadarShape shape, double w, double h, double res
       x = ABS(cx)-r;
       y = ABS(cy)-r;
       /* Out of range. */
-      if (x*x + y*y > pow2(w-r)) {
+      if (x*x + y*y > pow2(w-2*r)) {
          if ((player.p->nav_planet == ind) && !overlay)
             gui_renderRadarOutOfRange( RADAR_CIRCLE, w, w, cx, cy, &cRadar_tPlanet );
          return;
@@ -1578,24 +1577,8 @@ void gui_renderPlanet( int ind, RadarShape shape, double w, double h, double res
    if (ind == player.p->nav_planet)
       gui_blink( w, h, rc, cx, cy, vr, shape, col, RADAR_BLINK_PLANET, blink_planet);
 
-   /*
-   gl_beginSolidProgram(gl_Matrix4_Scale(gl_Matrix4_Translate(gl_view_matrix, cx, cy, 0), vr, vr, 1), &col);
-   gl_vboActivateAttribOffset( gui_planet_vbo, shaders.solid.vertex, 0, 2, GL_FLOAT, 0 );
-   glDrawArrays( GL_LINE_STRIP, 0, 5 );
-   gl_endSolidProgram();
-   */
-   gl_drawCircle( cx - 1, cy, vr/2.5, &cBlack, 0 );
-   gl_renderCross( cx - 1, cy, vr/2.5, &cBlack );
-   gl_drawCircle( cx + 1, cy, vr/2.5, &cBlack, 0 );
-   gl_renderCross( cx + 1, cy, vr/2.5, &cBlack );
-   gl_drawCircle( cx, cy - 1, vr/2.5, &cBlack, 0 );
-   gl_renderCross( cx, cy - 1, vr/2.5, &cBlack );
-   gl_drawCircle( cx, cy + 1, vr/2.5, &cBlack, 0 );
-   gl_renderCross( cx, cy + 1, vr/2.5, &cBlack );
-
-   gl_drawCircle( cx, cy, vr/2.5, col, 0 );
-   gl_renderCross( cx, cy, vr/2.5, col );
-   //glLineWidth(1.);
+   glUseProgram(shaders.planetmarker.program);
+   gl_renderShader( cx, cy, vr, vr, 0., &shaders.planetmarker, col, 1 );
 
    if (overlay) {
       snprintf( buf, sizeof(buf), "%s%s", planet_getSymbol(planet), _(planet->name) );
@@ -1624,8 +1607,8 @@ void gui_renderJumpPoint( int ind, RadarShape shape, double w, double h, double 
 
    /* Default values. */
    jp    = &cur_system->jumps[ind];
-   r     = jumppoint_gfx->sw / res;
-   vr    = overlay ? jp->mo.radius : MAX( r, 10. );
+   r     = jumppoint_gfx->sw/2. / res;
+   vr    = overlay ? jp->mo.radius : MAX( r, 5. );
    if (overlay) {
       cx    = jp->pos.x / res;
       cy    = jp->pos.y / res;
@@ -1656,7 +1639,7 @@ void gui_renderJumpPoint( int ind, RadarShape shape, double w, double h, double 
       x = ABS(cx)-r;
       y = ABS(cy)-r;
       /* Out of range. */
-      if (x*x + y*y > pow2(w-r)) {
+      if (x*x + y*y > pow2(w-2*r)) {
          if ((player.p->nav_hyperspace == ind) && !overlay)
             gui_renderRadarOutOfRange( RADAR_CIRCLE, w, w, cx, cy, &cRadar_tPlanet );
          return;
@@ -1682,12 +1665,12 @@ void gui_renderJumpPoint( int ind, RadarShape shape, double w, double h, double 
       col = &cGreen;
 
    glLineWidth( 3. );
-   gl_renderTriangleEmpty( cx - 1, cy, -jp->angle, vr, 2., &cBlack );
-   gl_renderTriangleEmpty( cx + 1, cy, -jp->angle, vr, 2., &cBlack );
-   gl_renderTriangleEmpty( cx, cy - 1, -jp->angle, vr, 2., &cBlack );
-   gl_renderTriangleEmpty( cx, cy + 1, -jp->angle, vr, 2., &cBlack );
+   gl_renderTriangleEmpty( cx - 1, cy, -jp->angle, 2*vr, 2., &cBlack );
+   gl_renderTriangleEmpty( cx + 1, cy, -jp->angle, 2*vr, 2., &cBlack );
+   gl_renderTriangleEmpty( cx, cy - 1, -jp->angle, 2*vr, 2., &cBlack );
+   gl_renderTriangleEmpty( cx, cy + 1, -jp->angle, 2*vr, 2., &cBlack );
 
-   gl_renderTriangleEmpty( cx, cy, -jp->angle, vr, 2., col );
+   gl_renderTriangleEmpty( cx, cy, -jp->angle, 2*vr, 2., col );
    glLineWidth( 1. );
 
    /* Render name. */
@@ -1770,7 +1753,7 @@ int gui_init (void)
    /*
     * radar
     */
-   gui_radar.res = RADAR_RES_DEFAULT;
+   gui_setRadarResolution( player.radar_res );
 
    /*
     * messages
@@ -1789,20 +1772,6 @@ int gui_init (void)
    /*
     * VBO.
     */
-
-   if (gui_planet_vbo == NULL) {
-      vertex[0] = 0;
-      vertex[1] = 1;
-      vertex[2] = 1;
-      vertex[3] = 0;
-      vertex[4] = 0;
-      vertex[5] = -1;
-      vertex[6] = -1;
-      vertex[7] = 0;
-      vertex[8] = 0;
-      vertex[9] = 1;
-      gui_planet_vbo = gl_vboCreateStatic( sizeof(GLfloat) * 10, vertex );
-   }
 
    if (gui_radar_select_vbo == NULL) {
       vertex[0] = -1.5;
@@ -2031,7 +2000,11 @@ char* gui_pick (void)
 {
    char* gui;
 
-   if (player.gui && (player.guiOverride == 1 || strcmp(player.p->ship->gui,"default")==0))
+   /* Don't do set a gui if player is dead. This can be triggered through
+    * naev_resize and can cause an issue if player is dead. */
+   if ((player.p == NULL) || pilot_isFlag(player.p,PILOT_DEAD))
+      gui = NULL;
+   else if (player.gui && (player.guiOverride == 1 || strcmp(player.p->ship->gui,"default")==0))
       gui = player.gui;
    else
       gui = player.p->ship->gui;
@@ -2052,6 +2025,8 @@ int gui_load( const char* name )
 
    /* Set defaults. */
    gui_cleanup();
+   if (name==NULL)
+      return 0;
    gui_name = strdup(name);
 
    /* Open file. */
@@ -2149,8 +2124,6 @@ void gui_free (void)
    free(mesg_stack);
    mesg_stack = NULL;
 
-   gl_vboDestroy( gui_planet_vbo );
-   gui_planet_vbo = NULL;
    gl_vboDestroy( gui_radar_select_vbo );
    gui_radar_select_vbo = NULL;
    gl_vboDestroy( gui_planet_blink_vbo );
@@ -2170,6 +2143,17 @@ void gui_free (void)
 
 
 /**
+ * @brief Sets the radar resolution.
+ *
+ *    @param res Resolution to set to.
+ */
+void gui_setRadarResolution( double res )
+{
+   gui_radar.res = CLAMP( RADAR_RES_MIN, RADAR_RES_MAX, res );
+}
+
+
+/**
  * @brief Modifies the radar resolution.
  *
  *    @param mod Number of intervals to jump (up or down).
@@ -2177,8 +2161,7 @@ void gui_free (void)
 void gui_setRadarRel( int mod )
 {
    gui_radar.res += mod * RADAR_RES_INTERVAL;
-   gui_radar.res = CLAMP( RADAR_RES_MIN, RADAR_RES_MAX, gui_radar.res );
-
+   gui_setRadarResolution( gui_radar.res );
    player_message( _("#oRadar set to %dx."), (int)gui_radar.res );
 }
 

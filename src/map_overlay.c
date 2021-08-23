@@ -167,7 +167,7 @@ void ovr_refresh (void)
       snprintf( buf, sizeof(buf), "%s%s", jump_getSymbol(jp), sys_isKnown(jp->target) ? _(jp->target->name) : _("Unknown") );
       pos[items] = &jp->pos;
       mo[items]  = &jp->mo;
-      mo[items]->radius = jumppoint_gfx->sw;
+      mo[items]->radius = jumppoint_gfx->sw / 2.;
       mo[items]->text_width = gl_printWidthRaw(&gl_smallFont, buf);
       items++;
    }
@@ -182,7 +182,8 @@ void ovr_refresh (void)
       snprintf( buf, sizeof(buf), "%s%s", planet_getSymbol(pnt), _(pnt->name) );
       pos[items] = &pnt->pos;
       mo[items]  = &pnt->mo;
-      mo[items]->radius = pnt->radius;
+      mo[items]->radius = pnt->radius / 2. + 2.0;  /* halved since it's awkwardly large if drawn to scale relative to the player. */
+      /* +2.0 represents a margin used by the SDF shader. */
       mo[items]->text_width = gl_printWidthRaw( &gl_smallFont, buf );
       items++;
    }
@@ -190,7 +191,7 @@ void ovr_refresh (void)
    /* We need to calculate the radius of the rendering from the maximum radius of the system. */
    ovr_res = 2. * 1.2 * MAX( max_x / map_overlay_width(), max_y / map_overlay_height() );
    for (i=0; i<items; i++)
-      mo[i]->radius = MAX( mo[i]->radius / ovr_res, i<jumpitems ? 10. : 15. );
+      mo[i]->radius = MAX( mo[i]->radius / ovr_res, i<jumpitems ? 5. : 7.5 );
 
    /* Nothing in the system so we just set a default value. */
    if (items == 0)
@@ -231,7 +232,6 @@ static void ovr_optimizeLayout( int items, const Vector2d** pos, MapOverlayPos**
    for (cur.i=0; cur.i<items; cur.i++)
       for (cur.j=cur.i+1; cur.j<items; cur.j++) {
          cur.dist = hypot( pos[cur.i]->x - pos[cur.j]->x, pos[cur.i]->y - pos[cur.j]->y ) / ovr_res;
-         cur.dist *= 2; /* Oh, for the love of God, did someone make "radius" a diameter again? */
          if (cur.dist < mo[cur.i]->radius + mo[cur.j]->radius)
             array_push_back( &fits, cur );
       }
@@ -256,7 +256,7 @@ static void ovr_optimizeLayout( int items, const Vector2d** pos, MapOverlayPos**
 
    /* Limit shrinkage. */
    for (i=0; i<items; i++)
-      mo[i]->radius = MAX( mo[i]->radius, 8 );
+      mo[i]->radius = MAX( mo[i]->radius, 4 );
 
    /* Initialization offset list. */
    off_0x = calloc( items, sizeof(float) );
@@ -273,8 +273,8 @@ static void ovr_optimizeLayout( int items, const Vector2d** pos, MapOverlayPos**
       w = mo[i]->text_width + 2*ovr_text_pixbuf;
       h = gl_smallFont.h + 2*ovr_text_pixbuf;
 
-      const float tx[4] = { mo[i]->radius/2+ovr_text_pixbuf+.1, -mo[i]->radius/2-.1-w, -mo[i]->text_width/2. , -mo[i]->text_width/2. };
-      const float ty[4] = { -gl_smallFont.h/2.,  -gl_smallFont.h/2., mo[i]->radius/2+ovr_text_pixbuf+.1, -mo[i]->radius/2-.1-h };
+      const float tx[4] = { mo[i]->radius+ovr_text_pixbuf+.1, -mo[i]->radius-.1-w, -mo[i]->text_width/2. , -mo[i]->text_width/2. };
+      const float ty[4] = { -gl_smallFont.h/2.,  -gl_smallFont.h/2., mo[i]->radius+ovr_text_pixbuf+.1, -mo[i]->radius-.1-h };
 
       /* Check all combinations. */
       bx = 0.;
@@ -286,7 +286,7 @@ static void ovr_optimizeLayout( int items, const Vector2d** pos, MapOverlayPos**
          /* Test intersection with the planet indicators. */
          for (j=0; j<items; j++) {
             fx = fy = 0.;
-            mw = mo[j]->radius;
+            mw = 2.*mo[j]->radius;
             mh = mw;
             mx = pos[j]->x/ovr_res - mw/2.;
             my = pos[j]->y/ovr_res - mh/2.;
@@ -448,7 +448,7 @@ static void ovr_refresh_uzawa_overlap( float *forces_x, float *forces_y,
 
    for (i=0; i<items; i++) {
       /* Collisions with planet circles and jp triangles (odd indices). */
-      mw = mo[i]->radius;
+      mw = 2.*mo[i]->radius;
       mh = mw;
       mx = pos[i]->x/ovr_res - mw/2.;
       my = pos[i]->y/ovr_res - mh/2.;
@@ -577,7 +577,7 @@ void ovr_render( double dt )
                   known = 0;
                break;
             default:
-	       ERR( _("Invalid vertex type.") );
+               ERR( _("Invalid vertex type.") );
          }
       }
 

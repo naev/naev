@@ -25,27 +25,6 @@ function create ()
    -- Not too many credits.
    ai.setcredits( rnd.rnd(ps:price()/200, ps:price()/50) )
 
-   -- Get refuel chance
-   local pp = player.pilot()
-   if pp:exists() then
-      local standing = ai.getstanding( pp ) or -1
-      mem.refuel = rnd.rnd( 1000, 2000 )
-      if standing < 0 then
-         mem.refuel_no = _([["I do not have fuel to spare."]])
-      elseif standing > 30 then
-         if rnd.rnd() < 0.5 then
-            mem.refuel_no = _([["I do not have fuel to spare."]])
-         end
-      else
-         mem.refuel = mem.refuel * 0.6
-      end
-      -- Most likely no chance to refuel
-      mem.refuel_msg = string.format( _([["I would be able to refuel your ship for %s."]]), creditstring(mem.refuel) )
-
-      -- Can't be bribed
-      mem.bribe_no = bribe_no_list[ rnd.rnd(1,#bribe_no_list) ]
-   end
-
    mem.loiter = 2 -- This is the amount of waypoints the pilot will pass through before leaving the system
 
    -- Set how far they attack
@@ -53,6 +32,30 @@ function create ()
 
    -- Finish up creation
    create_post()
+end
+
+function hail ()
+   if mem.setuphail then return end
+
+   -- Get refuel chance
+   local standing = ai.getstanding( player.pilot() ) or -1
+   mem.refuel = rnd.rnd( 1000, 2000 )
+   if standing < 0 then
+      mem.refuel_no = _([["I do not have fuel to spare."]])
+   elseif standing > 30 then
+      if rnd.rnd() < 0.5 then
+         mem.refuel_no = _([["I do not have fuel to spare."]])
+      end
+   else
+      mem.refuel = mem.refuel * 0.6
+   end
+   -- Most likely no chance to refuel
+   mem.refuel_msg = string.format( _([["I would be able to refuel your ship for %s."]]), creditstring(mem.refuel) )
+
+   -- Can't be bribed
+   mem.bribe_no = bribe_no_list[ rnd.rnd(1,#bribe_no_list) ]
+
+   mem.setuphail = true
 end
 
 -- taunts

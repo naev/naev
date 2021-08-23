@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Shark">
  <base_type>Shark</base_type>
- <GFX>shark</GFX>
+ <GFX size="54">shark</GFX>
  <GUI>brushed</GUI>
  <sound>engine</sound>
  <class>Interceptor</class>

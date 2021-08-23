@@ -11,7 +11,7 @@
   <gfx_store>placeholder.webp</gfx_store>
   <limit>cloaking</limit>
  </general>
- <specific type="modification" group="8">
+ <specific type="modification" group="7">
   <lua>outfits/utility/cloaking_device.lua</lua>
  </specific>
 </outfit>

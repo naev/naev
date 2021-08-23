@@ -148,7 +148,9 @@ static int pilotL_ship( lua_State *L );
 static int pilotL_idle( lua_State *L );
 static int pilotL_control( lua_State *L );
 static int pilotL_memory( lua_State *L );
+static int pilotL_task( lua_State *L );
 static int pilotL_taskname( lua_State *L );
+static int pilotL_taskdata( lua_State *L );
 static int pilotL_taskclear( lua_State *L );
 static int pilotL_refuel( lua_State *L );
 static int pilotL_moveto( lua_State *L );
@@ -267,7 +269,9 @@ static const luaL_Reg pilotL_methods[] = {
    { "idle", pilotL_idle },
    { "control", pilotL_control },
    { "memory", pilotL_memory },
+   { "task", pilotL_task },
    { "taskname", pilotL_taskname },
+   { "taskdata", pilotL_taskdata },
    { "taskClear", pilotL_taskclear },
    { "refuel", pilotL_refuel },
    { "moveto", pilotL_moveto },
@@ -523,6 +527,7 @@ static int pilotL_add( lua_State *L )
    pilot_clearFlagsRaw( flags );
    vectnull(&vn); /* Need to determine angle. */
    jump = NULL;
+   planet = NULL;
    a    = 0.;
 
    /* Parse first argument - Ship Name */
@@ -639,10 +644,28 @@ static int pilotL_add( lua_State *L )
    /* Create the pilot. */
    p = pilot_create( ship, pilotname, lf, ai, a, &vp, &vv, flags, 0, 0 );
    lua_pushpilot(L,p);
+   pplt = pilot_get( p );
+
+   /* Set the memory stuff. */
+   if (jump != NULL) {
+      LuaJump lj;
+      lj.srcid = jump->from->id;
+      lj.destid = cur_system->id;
+
+      nlua_getenv( pplt->ai->env, AI_MEM );
+      lua_pushjump(L, lj);
+      lua_setfield(L,-2,"create_jump");
+      lua_pop(L,1);
+   }
+   else if (planet != NULL) {
+      nlua_getenv( pplt->ai->env, AI_MEM );
+      lua_pushplanet(L,planet->id);
+      lua_setfield(L,-2,"create_planet");
+      lua_pop(L,1);
+   }
 
    /* TODO don't have space_calcJumpInPos called twice when stealth creating. */
    if ((jump != NULL) && pilot_isFlagRaw( flags, PILOT_STEALTH )) {
-      pplt = pilot_get( p );
       space_calcJumpInPos( cur_system, jump->from, &pplt->solid->pos, &pplt->solid->vel, &pplt->solid->dir, pplt );
    }
    return 1;
@@ -3840,20 +3863,64 @@ static int pilotL_memory( lua_State *L )
 
 
 /**
+ * @brief Gets the name and data of a pilot's current task.
+ *
+ *    @luatparam Pilot p Pilot to get task data of.
+ *    @luatreturn string Name of the task.
+ *    @luareturn Data of the task.
+ * @luafunc task
+ */
+static int pilotL_task( lua_State *L )
+{
+   Pilot *p = luaL_validpilot(L,1);
+   Task *t  = ai_curTask(p);
+   if (t) {
+      lua_pushstring(L, t->name);
+      if (t->dat != LUA_NOREF) {
+         lua_rawgeti(L, LUA_REGISTRYINDEX, t->dat);
+         return 2;
+      }
+      return 1;
+   }
+   return 0;
+}
+
+
+/**
  * @brief Gets the name of the task the pilot is currently doing.
  *
- *    @luatparam Pilot p Pilot to clear tasks of.
+ *    @luatparam Pilot p Pilot to get task name of.
+ *    @luatreturn string Name of the task.
  * @luafunc taskname
  */
 static int pilotL_taskname( lua_State *L )
 {
    Pilot *p = luaL_validpilot(L,1);
    Task *t  = ai_curTask(p);
-   if (t)
+   if (t) {
       lua_pushstring(L, t->name);
-   else
-      lua_pushnil(L);
-   return 1;
+      return 1;
+   }
+   return 0;
+}
+
+
+/**
+ * @brief Gets the data of the task the pilot is currently doing.
+ *
+ *    @luatparam Pilot p Pilot to get task data of.
+ *    @luareturn Data of the task.
+ * @luafunc taskdata
+ */
+static int pilotL_taskdata( lua_State *L )
+{
+   Pilot *p = luaL_validpilot(L,1);
+   Task *t  = ai_curTask(p);
+   if (t && (t->dat != LUA_NOREF)) {
+      lua_rawgeti(L, LUA_REGISTRYINDEX, t->dat);
+      return 1;
+   }
+   return 0;
 }
 
 
@@ -3958,13 +4025,13 @@ static int pilotL_moveto( lua_State *L )
 
    /* Set the task. */
    if (brake) {
-      tsk = "__moveto_precise";
+      tsk = "moveto_precise";
    }
    else {
       if (compensate)
-         tsk = "__moveto_nobrake";
+         tsk = "moveto_nobrake";
       else
-         tsk = "__moveto_nobrake_raw";
+         tsk = "moveto_nobrake_raw";
    }
    t        = pilotL_newtask( L, p, tsk );
    lua_pushvector( L, *vec );
@@ -4007,9 +4074,9 @@ static int pilotL_face( lua_State *L )
 
    /* Set the task. */
    if (towards)
-      t     = pilotL_newtask( L, p, "__face_towards" );
+      t     = pilotL_newtask( L, p, "face_towards" );
    else
-      t     = pilotL_newtask( L, p, "__face" );
+      t     = pilotL_newtask( L, p, "face" );
    if (pt != NULL) {
       lua_pushpilot(L, pt->id);
    }
@@ -4125,12 +4192,16 @@ static int pilotL_attack( lua_State *L )
  * @brief Makes the pilot runaway from another pilot.
  *
  * By default the pilot tries to jump when running away.
+ * Third argument is destination: if false or nil, destination is automatically chosen.
+ * If true, the pilot does not jump nor land and stays in system.
+ * If Jump is given, the pilot tries to use this jump to go hyperspace.
+ * If Planet is given, the pilot tries to land on it.
  *
  * @usage p:runaway( p_enemy ) -- Run away from p_enemy
  * @usage p:runaway( p_enemy, true ) -- Run away from p_enemy but do not jump
  *    @luatparam Pilot p Pilot to tell to runaway from another pilot.
  *    @luatparam Pilot tp Target pilot to runaway from.
- *    @luatparam[opt=false] boolean nojump Whether or not the pilot should try to jump when running away.
+ *    @luatparam[opt=false] boolean|Jump|Planet destination.
  * @luasee control
  * @luafunc runaway
  */
@@ -4139,18 +4210,58 @@ static int pilotL_runaway( lua_State *L )
    Pilot *p, *pt;
    Task *t;
    int nojump;
+   LuaJump *lj;
+   LuaPlanet *lp;
 
    NLUA_CHECKRW(L);
 
    /* Get parameters. */
    p      = luaL_validpilot(L,1);
    pt     = luaL_validpilot(L,2);
-   nojump = lua_toboolean(L,3);
 
-   /* Set the task. */
-   t        = pilotL_newtask( L, p, (nojump) ? "__runaway_nojump" : "__runaway" );
-   lua_pushpilot(L, pt->id);
-   t->dat = luaL_ref(L, LUA_REGISTRYINDEX);
+   /* Set the task depending on the last parameter. */
+   if (lua_gettop(L) > 2) {
+      if (lua_isboolean(L,3)) {
+         nojump = lua_toboolean(L,3);
+         t = pilotL_newtask( L, p, (nojump) ? "runaway_nojump" : "runaway" );
+         lua_pushpilot(L, pt->id);
+         t->dat = luaL_ref(L, LUA_REGISTRYINDEX);
+      }
+
+      else if (lua_isjump(L,3)) {
+         lj = lua_tojump(L,3);
+         t = pilotL_newtask( L, p, "runaway_jump" );
+         lua_newtable(L);
+         lua_pushnumber( L, 1 );
+         lua_pushpilot(L, pt->id);
+         lua_settable( L, -3 );
+         lua_pushnumber( L, 2 );
+         lua_pushjump(L, *lj);
+         lua_settable( L, -3 );
+         t->dat = luaL_ref(L, LUA_REGISTRYINDEX);
+      }
+
+      else if (lua_isplanet(L,3)) {
+         lp = lua_toplanet(L,3);
+         t = pilotL_newtask( L, p, "runaway_land" );
+         lua_newtable(L);
+         lua_pushnumber( L, 1 );
+         lua_pushpilot(L, pt->id);
+         lua_settable( L, -3 );
+         lua_pushnumber( L, 2 );
+         lua_pushplanet(L, *lp);
+         lua_settable( L, -3 );
+         t->dat = luaL_ref(L, LUA_REGISTRYINDEX);
+      }
+
+      else
+         NLUA_INVALID_PARAMETER(L);
+   }
+   else {
+      t = pilotL_newtask( L, p, "runaway" );
+      lua_pushpilot(L, pt->id);
+      t->dat = luaL_ref(L, LUA_REGISTRYINDEX);
+   }
 
    return 0;
 }
@@ -4211,9 +4322,9 @@ static int pilotL_hyperspace( lua_State *L )
 
    /* Set the task. */
    if (shoot)
-      t = pilotL_newtask( L, p, "__hyperspace_shoot" );
+      t = pilotL_newtask( L, p, "hyperspace_shoot" );
    else
-      t = pilotL_newtask( L, p, "__hyperspace" );
+      t = pilotL_newtask( L, p, "hyperspace" );
    if (ss == NULL)
       return 0;
    /* Find the jump. */
@@ -4282,8 +4393,6 @@ static int pilotL_land( lua_State *L )
    Task *t;
    Planet *pnt;
    int i;
-   double a, r;
-   Vector2d v;
    int shoot;
 
    NLUA_CHECKRW(L);
@@ -4298,9 +4407,9 @@ static int pilotL_land( lua_State *L )
 
    /* Set the task. */
    if (shoot)
-      t = pilotL_newtask( L, p, "__land_shoot" );
+      t = pilotL_newtask( L, p, "land_shoot" );
    else
-      t = pilotL_newtask( L, p, "__land" );
+      t = pilotL_newtask( L, p, "land" );
 
    if (pnt != NULL) {
       /* Find the planet. */
@@ -4318,15 +4427,7 @@ static int pilotL_land( lua_State *L )
       if (p->id == PLAYER_ID)
          gui_setNav();
 
-      /* Copy vector. */
-      v = pnt->pos;
-
-      /* Introduce some error. */
-      a = RNGF() * 2. * M_PI;
-      r = RNGF() * pnt->radius;
-      vect_cadd( &v, r*cos(a), r*sin(a) );
-
-      lua_pushvector(L, v);
+      lua_pushplanet(L, pnt->id);
       t->dat = luaL_ref(L, LUA_REGISTRYINDEX);
    }
 

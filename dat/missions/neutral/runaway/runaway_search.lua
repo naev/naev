@@ -32,7 +32,8 @@ misn_desc_pre_accept = _([[Approaching him, he hands you a paper. It offers a 10
     "That's my girl. She disappeared quite a few decaperiods ago. We managed to track her down to here, but where she went afterwards remains a mystery. We know she was kidnapped, but if you know anything..." The man begins to cry. "Have you seen any trace of her?"]])
 misn_desc = _("Search for Cynthia.")
 reward_desc = _("%s on delivery.")
-cargoname = _("Person")
+cargoname = N_("Cynthia")
+cargodesc = N_("A young teenager.")
 
 post_accept = {}
 post_accept[1] = _([[Looking at the picture, you see that the locket matches the one that Cynthia wore, so you hand it to her father. "I believe that this was hers." Stunned, the man hands you a list of planets that they wanted to look for her on.]])
@@ -135,7 +136,8 @@ function land ()
          tk.msg(title, misn_release)
       else
          tk.msg(title, misn_capture)
-         cargoID = misn.cargoAdd( cargoname, 0 )
+         local c = misn.cargoNew( cargoname, cargodesc )
+         cargoID = misn.cargoAdd( c, 0 )
       end
 
       --Update the OSD

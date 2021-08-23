@@ -117,6 +117,7 @@ hunter_hits = {}
 
 function create ()
    paying_faction = planet.cur():faction()
+   target_faction = faction.get( "Pirate" )
 
    local systems = getsysatdistance( system.cur(), 1, 3,
       function(s)
@@ -388,7 +389,7 @@ function spawn_pirate( param )
    if not job_done and system.cur() == missys then
       if jumps_permitted >= 0 then
          misn.osdActive( 2 )
-         target_ship = pilot.add( ship, "Pirate", param )
+         target_ship = pilot.add( ship, target_faction or "Pirate", param )
          local mem = target_ship:memory()
          mem.loiter = math.huge -- Should make them loiter forever
          set_faction( target_ship )
@@ -426,7 +427,7 @@ function set_faction( p )
    if not _target_faction then
       _target_faction = faction.dynAdd( "Pirate", "Wanted Pirate", _("Wanted Pirate"), {clear_enemies=true, clear_allies=true} )
    end
-   p:setFaction( "Wanted Pirate" )
+   p:setFaction( _target_faction )
 end
 
 

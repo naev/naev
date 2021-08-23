@@ -140,11 +140,15 @@ function angrypeople ()
    if not zl_yelling then
       dv_msgid = cycle_messages( dv_msgs, dv_msgid )
       local msg = dv_msgs[ dv_msgid ]
-      dv:broadcast( msg )
+      if dv and dv:exists() then
+         dv:broadcast( msg )
+      end
    else
       zl_msgid = cycle_messages( zl_msgs, zl_msgid )
       local msg = zl_msgs[ zl_msgid ]
-      zl:broadcast( msg )
+      if zl and zl:exists() then
+         zl:broadcast( msg )
+      end
    end
    zl_yelling = not zl_yelling
    timetonextanger = timetonextanger + 2.0 -- slowly talk less and less

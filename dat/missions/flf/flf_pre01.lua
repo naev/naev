@@ -113,7 +113,8 @@ function create()
     misn.setReward(misn_reward)
     misn.markerAdd(system.get(destsysname), "low")
 
-    gregar = misn.cargoAdd("Gregar", 0)
+    local c = misn.cargoNew( N_("Gregar"), N_("A rescued FLF pilot.") )
+    gregar = misn.cargoAdd( c, 0 )
 
     hook.enter("enter")
     hook.land("land")

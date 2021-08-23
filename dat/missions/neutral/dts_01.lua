@@ -239,7 +239,7 @@ function victorious()
       local empire_vect = starting_vect:add( math.cos(a) * d, math.sin(a) * d )
       local empire_med_attack = {"Empire Lancelot", "Empire Lancelot", "Empire Lancelot", "Empire Lancelot",
                                  "Empire Admonisher", "Empire Admonisher",
-				 "Empire Pacifier", "Empire Hawking"}
+                                 "Empire Pacifier", "Empire Hawking"}
       fleet.add( 1, empire_med_attack, "Empire", empire_vect, nil, {ai="def"} )
 
 end

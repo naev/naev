@@ -43,7 +43,7 @@ local bribe_prompt_list = join_tables( {
 }, bribe_prompt_common )
 local bribe_prompt_nearby_list = join_tables( {
    _([["It'll cost you %s for us to ignore your pile of rubbish."]]),
-   _([["We'm in a good mood so we'll let you go for %s."]]),
+   _([["We're in a good mood so we'll let you go for %s."]]),
    _([["Send us %s or you're dead."]]),
    _([["Shut up and give us your money! %s now."]]),
    _([["You give us %s and we'll act like we never saw you."]]),
@@ -129,28 +129,6 @@ function create ()
    -- Not too much money
    ai.setcredits( rnd.rnd(ps:price()/80, ps:price()/30) )
 
-   -- Deal with bribeability
-   mem.bribe = math.sqrt( p:stats().mass ) * (300 * rnd.rnd() + 850)
-   if rnd.rnd() < 0.05 then
-      mem.bribe_no = _([["You won't be able to slide out of this one!"]])
-   else
-      mem.bribe_prompt = string.format(bribe_prompt_list[ rnd.rnd(1,#bribe_prompt_list) ], creditstring(mem.bribe))
-      mem.bribe_prompt_nearby = bribe_prompt_nearby_list[ rnd.rnd(1,#bribe_prompt_nearby_list) ]
-      mem.bribe_paid = bribe_paid_list[ rnd.rnd(1,#bribe_paid_list) ]
-   end
-
-   -- Deal with refueling
-   local pp = player.pilot()
-   if pp:exists() then
-      local standing = ai.getstanding( pp ) or -1
-      mem.refuel = rnd.rnd( 2000, 4000 )
-      if standing > 60 then
-         mem.refuel = mem.refuel * 0.5
-      end
-      mem.refuel_msg = string.format(_("\"For you, only %s for a jump of fuel.\""),
-            creditstring(mem.refuel))
-   end
-
    mem.loiter = 3 -- This is the amount of waypoints the pilot will pass through before leaving the system
 
    -- Set how far they attack
@@ -159,6 +137,34 @@ function create ()
 
    -- Finish up creation
    create_post()
+end
+
+
+function hail ()
+   if mem.setuphail then return end
+
+   local p = ai.pilot()
+
+   -- Deal with refueling
+   local standing = ai.getstanding( player.pilot() ) or -1
+   mem.refuel = rnd.rnd( 2000, 4000 )
+   if standing > 60 then
+      mem.refuel = mem.refuel * 0.5
+   end
+   mem.refuel_msg = string.format(_([["For you, only %s for a jump of fuel."]]),
+         creditstring(mem.refuel))
+
+   -- Deal with bribeability
+   mem.bribe = math.sqrt( p:stats().mass ) * (300 * rnd.rnd() + 850)
+   if (mem.natural or mem.allowbribe) and rnd.rnd() < 0.95 then
+      mem.bribe_prompt = string.format(bribe_prompt_list[ rnd.rnd(1,#bribe_prompt_list) ], creditstring(mem.bribe))
+      mem.bribe_prompt_nearby = bribe_prompt_nearby_list[ rnd.rnd(1,#bribe_prompt_nearby_list) ]
+      mem.bribe_paid = bribe_paid_list[ rnd.rnd(1,#bribe_paid_list) ]
+   else
+      mem.bribe_no = _([["You won't be able to slide out of this one!"]])
+   end
+
+   mem.setuphail = true
 end
 
 

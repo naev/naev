@@ -11,7 +11,7 @@
   <gfx_store>emergency_stasis_inducer.webp</gfx_store>
   <limit>emergency_stasis_inducer</limit>
  </general>
- <specific type="modification" group="8">
+ <specific type="modification">
   <energy_regen_mod>-50</energy_regen_mod>
   <time_mod>-67</time_mod>
   <time_speedup>100</time_speedup>

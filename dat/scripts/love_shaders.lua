@@ -334,7 +334,7 @@ vec4 effect( vec4 color, Image tex, vec2 uv, vec2 screen_coords )
 
    /* Highlights */
    float highlight = 1.0 - highlightrange + (highlightrange * sin((uv.y + (u_time * -highlightspeed)) * highlightcount));
-	texcolor.xyz += highlight;
+   texcolor.xyz += highlight;
 
    // Other effects.
    float x = (uv.x + 4.0) * (uv.y + 4.0) * u_time * 10.0;

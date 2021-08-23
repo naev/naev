@@ -76,7 +76,7 @@ function accept ()
    misn.accept()
 
    -- Mission details
-   reward = rnd.rnd(10,20) * 100000 -- Hey, this mission is probably hell, after all.
+   reward = rnd.rnd(10,20) * 100e3 -- Hey, this mission is probably hell, after all.
    misn.setTitle(misn_title)
    misn.setReward( creditstring(reward) )
    misn.setDesc( string.format(misn_desc, dest:name(), sys:name()))
@@ -136,11 +136,11 @@ function enter ()
       enter_vect = player.pos()
 
       -- Calculate where the enemies will be
-      r = rnd.rnd(0,4)
+      local r = rnd.rnd(0,4)
       -- Next to player (always if landed)
       if enter_vect:dist() < 1000 or r < 2 then
-         a = rnd.rnd() * 2 * math.pi
-         d = rnd.rnd( 400, 1000 )
+         local a = rnd.rnd() * 2 * math.pi
+         local d = rnd.rnd( 400, 1000 )
          enter_vect:add( math.cos(a) * d, math.sin(a) * d )
          invoke_enemies()
       -- Enter after player
@@ -158,30 +158,29 @@ end
 -- Mostly taken from es01.
 function invoke_enemies()
    -- Choose mercenaries
-   merc = {}
+   local merc = {}
    -- Note: New random numbers are *WANTED*.
    if rnd.rnd() < 0.1 then table.insert( merc, "Pirate Kestrel" ) end
-   if rnd.rnd() < 0.2 then table.insert( merc, "Pirate Rhino" ) end
+   if rnd.rnd() < 0.2 then table.insert( merc, "Pirate Starbridge" ) end
    if rnd.rnd() < 0.3 then table.insert( merc, "Pirate Rhino" ) end
-   if rnd.rnd() < 0.4 then table.insert( merc, "Pirate Phalanx" ) end
+   if rnd.rnd() < 0.4 then table.insert( merc, "Pirate Admonisher" ) end
    if rnd.rnd() < 0.5 then table.insert( merc, "Pirate Phalanx" ) end
-   if rnd.rnd() < 0.6 then table.insert( merc, "Pirate Phalanx" ) end
+   if rnd.rnd() < 0.6 then table.insert( merc, "Pirate Ancestor" ) end
    if rnd.rnd() < 0.7 then table.insert( merc, "Pirate Vendetta" ) end
-   if rnd.rnd() < 0.8 then table.insert( merc, "Pirate Vendetta" ) end
-   if rnd.rnd() < 0.9 then table.insert( merc, "Pirate Vendetta" ) end
+   if rnd.rnd() < 0.8 then table.insert( merc, "Pirate Shark" ) end
+   if rnd.rnd() < 0.9 then table.insert( merc, "Hyena" ) end
 
    -- Add mercenaries
    for k,v in ipairs(merc) do
       -- Move position a bit
-      a = rnd.rnd() * 2 * math.pi
-      d = rnd.rnd( 50, 75 )
+      local a = rnd.rnd() * 2 * math.pi
+      local d = rnd.rnd( 50, 75 )
       enter_vect:add( math.cos(a) * d, math.sin(a) * d )
       -- Add pilots
-      p = pilot.add( v, "Pirate", enter_vect, nil, {ai="mercenary"} )
+      local p = pilot.add( v, "Pirate", enter_vect, nil, {ai="mercenary"} )
       -- Set hostile
       for k,v in ipairs(p) do
          v:setHostile()
       end
    end
 end
-

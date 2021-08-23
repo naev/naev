@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Kestrel">
  <base_type>Kestrel</base_type>
- <GFX sx="10" sy="10">kestrel</GFX>
+ <GFX size="125" sx="10" sy="10">kestrel</GFX>
  <GUI>brushed</GUI>
  <sound>engine</sound>
  <class>Cruiser</class>

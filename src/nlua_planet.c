@@ -52,6 +52,7 @@ static int planetL_class( lua_State *L );
 static int planetL_classLong( lua_State *L );
 static int planetL_position( lua_State *L );
 static int planetL_services( lua_State *L );
+static int planetL_flags( lua_State *L );
 static int planetL_canland( lua_State *L );
 static int planetL_landOverride( lua_State *L );
 static int planetL_getLandOverride( lua_State *L );
@@ -82,6 +83,7 @@ static const luaL_Reg planet_methods[] = {
    { "classLong", planetL_classLong },
    { "pos", planetL_position },
    { "services", planetL_services },
+   { "flags", planetL_flags },
    { "canLand", planetL_canland },
    { "landOverride", planetL_landOverride },
    { "getLandOverride", planetL_getLandOverride },
@@ -628,7 +630,7 @@ static int planetL_services( lua_State *L )
    size_t len;
    Planet *p;
    const char *name;
-   char lower[256];
+   char lower[STRMAX_SHORT];
    p = luaL_validplanet(L,1);
 
    /* Return result in table */
@@ -641,10 +643,38 @@ static int planetL_services( lua_State *L )
          len = strlen(name) + 1;
          snprintf( lower, MIN(len,sizeof(lower)), "%c%s", tolower(name[0]), &name[1] );
 
-         lua_pushstring(L, name);
+         /* GUI depends on this returning the service name. */
+         lua_pushstring(L, _(name));
          lua_setfield(L, -2, lower );
       }
    }
+   return 1;
+}
+
+
+/**
+ * @brief Checks for planet flags.
+ *
+ * Possible services are:<br />
+ *  - "nomissionspawn"<br />
+ *
+ * @usage if p:flags()["nomissionspawn"] then -- Planet doesn't spawn missions
+ *    @luatparam Planet p Planet to get the services of.
+ *    @luatreturn table Table containing all the services.
+ * @luafunc services
+ */
+static int planetL_flags( lua_State *L )
+{
+   Planet *p = luaL_validplanet(L,1);
+
+   lua_newtable(L);
+
+   if (planet_isFlag( p, PLANET_NOMISNSPAWN )) {
+      lua_pushstring(L, "nomissionspawn");
+      lua_pushboolean(L, 1);
+      lua_settable(L,-3);
+   }
+
    return 1;
 }
 

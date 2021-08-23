@@ -919,6 +919,41 @@ void ai_discovered( Pilot* discovered )
 
 
 /**
+ * @brief Triggers the hail() function in the pilot's AI.
+ *
+ *    @param recipient Pilot that is being hailed.
+ */
+void ai_hail( Pilot* recipient )
+{
+   HookParam hparam[2];
+
+   hparam[0].type       = HOOK_PARAM_PILOT;
+   hparam[0].u.lp       = recipient->id;
+   hparam[1].type       = HOOK_PARAM_SENTINEL;
+   hooks_runParam( "hail", hparam );
+   pilot_runHook( recipient, PILOT_HOOK_HAIL );
+
+   /* Must have an AI profile and not be player. */
+   if (recipient->ai == NULL)
+      return;
+
+   ai_setPilot( recipient ); /* Sets cur_pilot. */
+
+   /* Only run if hail function exists. */
+   nlua_getenv(cur_pilot->ai->env, "hail");
+   if (lua_isnil(naevL,-1)) {
+      lua_pop(naevL,1);
+      return;
+   }
+
+   if (nlua_pcall(cur_pilot->ai->env, 0, 0)) {
+      WARN( _("Pilot '%s' ai '%s' -> 'hail': %s"), cur_pilot->name, cur_pilot->ai->name, lua_tostring(naevL, -1));
+      lua_pop(naevL, 1);
+   }
+}
+
+
+/**
  * @brief Has a pilot attempt to refuel the other.
  *
  *    @param refueler Pilot doing the refueling.
@@ -1430,7 +1465,7 @@ static int aiL_getdistance( lua_State *L )
  *
  *    @luatparam Vec2|Pilot pointer
  *    @luatreturn number The squared distance from the pointer.
- *    @luafunc dist
+ *    @luafunc dist2
  */
 static int aiL_getdistance2( lua_State *L )
 {
@@ -2373,14 +2408,33 @@ static int aiL_getlandplanet( lua_State *L )
 /**
  * @brief Lands on a planet.
  *
+ *    @luaparam [opt] Planet pnt planet to land on
  *    @luatreturn boolean Whether landing was successful.
  *    @luafunc land
  */
 static int aiL_land( lua_State *L )
 {
-   int ret;
+   int ret, i;
    Planet *planet;
    HookParam hparam;
+   Planet *pnt;
+
+   if (!lua_isnoneornil(L,1)) {
+      pnt = luaL_validplanet( L, 1 );
+
+      /* Find the planet. */
+      for (i=0; i < array_size(cur_system->planets); i++) {
+         if (cur_system->planets[i] == pnt) {
+            break;
+         }
+      }
+      if (i >= array_size(cur_system->planets)) {
+         NLUA_ERROR( L, _("Planet '%s' not found in system '%s'"), pnt->name, cur_system->name );
+         return 0;
+      }
+
+      cur_pilot->nav_planet = i;
+   }
 
    ret = 0;
 
@@ -2428,12 +2482,20 @@ static int aiL_land( lua_State *L )
 /**
  * @brief Tries to enter hyperspace.
  *
+ *    @luaparam [opt] System sys Optional System to jump to
  *    @luatreturn number|nil Distance if too far away.
  *    @luafunc hyperspace
  */
 static int aiL_hyperspace( lua_State *L )
 {
    int dist;
+   JumpPoint *jp;
+
+   /* Find the target jump. */
+   if (!lua_isnoneornil(L,1)) {
+      jp = luaL_validjump( L, 1 );
+      cur_pilot->nav_hyperspace = jp - cur_system->jumps;
+   }
 
    dist = space_hyperspace(cur_pilot);
    if (dist == 0.) {

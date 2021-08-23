@@ -1295,7 +1295,7 @@ void pilot_weaponAuto( Pilot *p )
    pilot_weapSetType( p, 6, WEAPSET_TYPE_ACTIVE );
    pilot_weapSetType( p, 7, WEAPSET_TYPE_ACTIVE );
    pilot_weapSetType( p, 8, WEAPSET_TYPE_ACTIVE );
-   pilot_weapSetType( p, 9, WEAPSET_TYPE_ACTIVE );
+   pilot_weapSetType( p, 9, WEAPSET_TYPE_WEAPON );
 
    /* All should be inrange. */
    if (!pilot_isPlayer(p))
@@ -1316,6 +1316,9 @@ void pilot_weaponAuto( Pilot *p )
          slot->weapset = -1;
          continue;
       }
+
+      /* Set level based on secondary flag. */
+      level  = outfit_isSecondary(o);
 
       /* Manually defined group preempts others. */
       if (o->group) {
@@ -1340,9 +1343,6 @@ void pilot_weaponAuto( Pilot *p )
          continue;
       }
 
-      /* Set level based on secondary flag. */
-      level = outfit_isSecondary(o);
-
       /* Add to its base group. */
       pilot_weapSetAdd( p, id, slot, level );
 
@@ -1355,8 +1355,11 @@ void pilot_weaponAuto( Pilot *p )
          pilot_weapSetAdd( p, 0, slot, level ); /* Also get added to 'All'. */
          pilot_weapSetAdd( p, 3, slot, 1 );     /* Also get added to 'Fwd/Tur'. */
       }
-      else if (id == 4) /* Seekers */
+      else if (id == 4) { /* Seekers */
          pilot_weapSetAdd( p, 0, slot, level ); /* Also get added to 'All'. */
+         if (outfit_isTurret(o))
+            pilot_weapSetAdd( p, 9, slot, level ); /* Also get added to 'Turreted Seekers'. */
+      }
    }
 
    /* Update active weapon set. */

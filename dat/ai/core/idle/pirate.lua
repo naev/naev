@@ -42,7 +42,7 @@ local function __vulnerable( p, plt, threshold, r )
    local pos = plt:pos()
    r = r or math.pow( mem.lanedistance, 2 )
    -- Make sure not in safe lanes
-   if lanes.getDistance2( pos ) > r then
+   if lanes.getDistance2P( p, pos ) > r then
 
       -- Check to see vulnerability
       local H = 1+__estimate_strength( p:getHostiles( mem.vulnrange, pos, true ) )
@@ -110,7 +110,7 @@ local function __loiter( p, taskname )
          targetdir = targetdir + rnd.sigma() * 15
       end
    end
-   local target = lanes.getNonPoint( nil, nil, nil, targetdir )
+   local target = lanes.getNonPointP( p, nil, nil, nil, targetdir )
    if target then
       local m, a = (target - p:pos()):polar()
       mem.lastdirection = a -- bias towards moving in a straight line
@@ -130,7 +130,6 @@ function idle_leave ()
             mem.goal = "planet"
             mem.goal_planet = planet
             mem.goal_pos = planet:pos()
-            mem.land = mem.goal_pos
          end
       end
       if not mem.goal then
@@ -144,7 +143,7 @@ function idle_leave ()
    end
    if mem.goal then
       if mem.goal == "planet" then
-         ai.pushtask("land")
+         ai.pushtask("land", mem.goal_planet)
          return true
       elseif mem.goal == "hyperspace" then
          ai.pushtask("hyperspace", mem.goal_hyperspace)
@@ -262,10 +261,12 @@ function backoff( target )
 end
 
 control_funcs.ambush_moveto = function ()
+   local p = ai.pilot()
    -- Try to engage hostiles
-   if __tryengage( ai.pilot() ) then return end
+   if __tryengage( p ) then return end
 end
 control_funcs.ambush_stalk = function ()
+   local p = ai.pilot()
    local target = ai.taskdata()
    if not target or not target:exists() then
       ai.poptask()
@@ -279,7 +280,7 @@ control_funcs.ambush_stalk = function ()
    end
    -- Ignore enemies that are in safe zone again
    local r = math.pow( mem.lanedistance, 2 )
-   if lanes.getDistance2( target:pos() ) < r then
+   if lanes.getDistance2P( p, target:pos() ) < r then
       ai.poptask()
       return
    end

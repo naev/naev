@@ -12,12 +12,12 @@ float cro(in vec2 a, in vec2 b ) { return a.x*b.y - a.y*b.x; }
 
 float smin( float a, float b, float k )
 {
-	float h = max( k-abs(a-b), 0.0 )/k;
-	return min( a, b ) - h*h*k*(1.0/4.0);
+   float h = max( k-abs(a-b), 0.0 )/k;
+   return min( a, b ) - h*h*k*(1.0/4.0);
 }
 float sdSmoothUnion( float d1, float d2, float k )
  {
-	return smin( d1, d2, k );
+   return smin( d1, d2, k );
 }
 
 float sdSegment( in vec2 p, in vec2 a, in vec2 b )
@@ -38,7 +38,7 @@ float sdPie( vec2 p, vec2 c, float r )
 
 float sdUnevenCapsuleY( in vec2 p, in float ra, in float rb, in float h )
 {
-	p.x = abs(p.x);
+   p.x = abs(p.x);
 
    float b = (ra-rb)/h;
    vec2  c = vec2(sqrt(1.0-b*b),b);
@@ -82,7 +82,7 @@ float sdArc( in vec2 p, in vec2 sca, in vec2 scb, in float ra, in float rb )
    p *= mat2(sca.x,sca.y,-sca.y,sca.x);
    p.x = abs(p.x);
    float k = (scb.y*p.x>scb.x*p.y) ? dot(p.xy,scb) : length(p);
-   return sqrt( dot(p,p) + ra*ra - 2.0*ra*k ) - rb;
+   return sqrt( max(0.0, dot(p,p) + ra*ra - 2.0*ra*k) ) - rb;
 }
 
 float sdCircle( in vec2 p, in float r )
@@ -132,14 +132,39 @@ vec4 sdf_pilot( vec4 color, vec2 uv )
    return color;
 }
 
+vec4 sdf_pilot2( vec4 color, vec2 uv )
+{
+   float m = 1.0 / dimensions.x;
+
+   const float arclen1 = M_PI/4.0;
+   const float arclen2 = M_PI/7.0;
+
+   float w = 2.0 * m;
+   float inner = 1.0-w-m;
+   float d = sdArc( uv, CS(0.0), CS(arclen1), inner, w );
+
+   vec2 yuv = vec2( uv.x, abs(uv.y) );
+
+   d = min( d, sdCircle( yuv-CS(M_PI*3.0/2.0+arclen1)*inner, 7.0 * m) );
+   d = max( -sdCircle(   yuv-CS(M_PI*3.0/2.0+arclen1)*inner, 3.5 * m), d );
+
+   d = min( d, sdArc( uv, CS(M_PI), CS(arclen2), inner, w ) );
+
+   d = min( d, sdCircle( yuv-CS(M_PI/2.0-arclen2)*inner, 7.0 * m) );
+   d = max( -sdCircle(   yuv-CS(M_PI/2.0-arclen2)*inner, 3.5 * m), d );
+
+   color.a *= smoothstep( -m, 0.0, -d );
+   return color;
+}
+
 vec4 sdf_planet( vec4 color, vec2 uv )
 {
    float m = 1.0 / dimensions.x;
 
-	/* Outter stuff. */
-	float w = 1.0 * m;
-	float inner = 1.0-w-m;
-	float d = sdArc( uv, CS(-M_PI/4.0), CS(M_PI/22.0*32.0), inner, w );
+   /* Outer stuff. */
+   float w = 1.0 * m;
+   float inner = 1.0-w-m;
+   float d = sdArc( uv, CS(-M_PI/4.0), CS(M_PI/22.0*32.0), inner, w );
 
    /* Rotation matrix. */
    float dts = 0.1 * max( 0.5, 100.0 * m );
@@ -149,10 +174,12 @@ vec4 sdf_planet( vec4 color, vec2 uv )
    mat2 R = mat2( c, s, -s, c );
 
    vec2 auv = abs(uv);
+   if (auv.y < auv.x)
+      auv.xy = vec2( auv.y, auv.x );
    if (dimensions.x > 100.0) {
       const float arcseg = M_PI/64.0;
       const vec2 shortarc = CS(arcseg);
-      for (int i=2; i<32; i+=4)
+      for (int i=2; i<16; i+=4)
          d = min( d, sdArc( auv, CS(M_PI/2.0+float(i)*arcseg),  shortarc, inner, w ) );
 
       /* Moving inner stuff. */
@@ -166,7 +193,7 @@ vec4 sdf_planet( vec4 color, vec2 uv )
    else {
       const float arcseg = M_PI/32.0;
       const vec2 shortarc = CS(arcseg);
-      for (int i=2; i<16; i+=4)
+      for (int i=2; i<8; i+=4)
          d = min( d, sdArc( auv, CS(M_PI/2.0+float(i)*arcseg),  shortarc, inner, w ) );
 
       /* Moving inner stuff. */
@@ -192,10 +219,10 @@ vec4 sdf_planet2( vec4 color, vec2 uv )
 {
    float m = 1.0 / dimensions.x;
 
-	/* Outter stuff. */
-	float w = 2.0 / dimensions.x;
-	float inner = 1.0-w-m;
-	float d = sdArc( uv, CS(-M_PI/4.0), CS(M_PI/22.0*32.0), inner, w );
+   /* Outter stuff. */
+   float w = 2.0 * m;
+   float inner = 1.0-w-m;
+   float d = sdArc( uv, CS(-M_PI/4.0), CS(M_PI/22.0*32.0), inner, w );
 
    /* Inner steps */
    float dts = 0.05 * max( 0.5, 100.0 * m );
@@ -204,19 +231,26 @@ vec4 sdf_planet2( vec4 color, vec2 uv )
    c = cos(dt*dts);
    mat2 R = mat2( c, s, -s, c );
    vec2 auv = abs(uv*R);
-   const int nmax = 16;
+   if (auv.y < auv.x)
+      auv.xy = vec2( auv.y, auv.x );
+   const int nmax = 9; // only works well with odd numbers
    for (int i=0; i<nmax; i++)
-      d = min( d, sdSegment( auv, CS((float(i)+0.5)*M_PI/float(nmax)*0.5)*0.91, CS((float(i)+0.5)*M_PI/float(nmax)*0.5)*0.93 )-m );
-   d = min( d, sdSegment( auv, CS(M_PI*(0.125+0.25/float(nmax)))*0.89, CS(M_PI*(0.125+0.25/float(nmax)))*0.93 )-1.5*m );
-   d = min( d, sdSegment( auv, CS(M_PI*(0.375+0.25/float(nmax)))*0.89, CS(M_PI*(0.375+0.25/float(nmax)))*0.93 )-1.5*m );
+      d = min( d, sdSegment( auv,
+            CS((float(i)+0.5)*0.5*M_PI/float(nmax)*0.5)*0.91,
+            CS((float(i)+0.5)*0.5*M_PI/float(nmax)*0.5)*0.93 )-m );
+   d = min( d, sdSegment( auv,
+         CS((float(nmax/2)+0.5)*0.5*M_PI/float(nmax)*0.5)*0.89,
+         CS((float(nmax/2)+0.5)*0.5*M_PI/float(nmax)*0.5)*0.93 )-1.5*m );
 
    /* Circles on main. */
+   if (uv.y < uv.x)
+      uv.xy = vec2(uv.y, uv.x);
    d = sdf_emptyCircle( uv - CS(M_PI/4.0)*inner, d, m );
    d = sdf_emptyCircle( uv - CS(M_PI/4.0+M_PI/22.0*32.0)*inner, d, m );
-   d = sdf_emptyCircle( uv - CS(M_PI/4.0-M_PI/22.0*32.0)*inner, d, m );
+   //d = sdf_emptyCircle( uv - CS(M_PI/4.0-M_PI/22.0*32.0)*inner, d, m );
 
    /* Circles off main. */
-   d = sdf_emptyCircle( uv - CS(M_PI/4.0 + M_PI*0.9)*inner, d, m );
+   //d = sdf_emptyCircle( uv - CS(M_PI/4.0 + M_PI*0.9)*inner, d, m );
    d = sdf_emptyCircle( uv - CS(M_PI/4.0 + M_PI*1.0)*inner, d, m );
    d = sdf_emptyCircle( uv - CS(M_PI/4.0 + M_PI*1.1)*inner, d, m );
 
@@ -226,10 +260,10 @@ vec4 sdf_planet2( vec4 color, vec2 uv )
 
 vec4 bg( vec2 uv )
 {
-	vec3 c;
+   vec3 c;
    uv *= 10.0;
-	if (mod( floor(uv.x)+floor(uv.y), 2.0 ) == 0.0)
-		c = vec3( 0.2 );
+   if (mod( floor(uv.x)+floor(uv.y), 2.0 ) == 0.0)
+      c = vec3( 0.2 );
    else
       c = vec3( 0.0 );
    c = gammaToLinear( c );
@@ -244,8 +278,9 @@ vec4 effect( vec4 color, Image tex, vec2 uv, vec2 px )
 
    //col_out = sdf_alarm( color, tex, uv, px );
    //col_out = sdf_pilot( color, uv_rel );
+   col_out = sdf_pilot2( color, uv_rel );
    //col_out = sdf_planet( color, uv_rel );
-   col_out = sdf_planet2( color, uv_rel );
+   //col_out = sdf_planet2( color, uv_rel );
 
    return mix( bg(uv), col_out, col_out.a );
 }
@@ -256,10 +291,10 @@ uniform float u_time = 0.0;
 
 vec4 bg( vec2 uv )
 {
-	vec3 c;
+   vec3 c;
    uv *= 10.0;
-	if (mod( floor(uv.x)+floor(uv.y), 2.0 ) == 0.0)
-		c = vec3( 0.8 );
+   if (mod( floor(uv.x)+floor(uv.y), 2.0 ) == 0.0)
+      c = vec3( 0.8 );
    else
       c = vec3( 0.2 );
    return vec4( c, 1.0 );
@@ -270,33 +305,33 @@ const float PULSE_WIDTH    = 0.1;
 
 vec4 effect( vec4 color, Image tex, vec2 uv, vec2 px )
 {
-	//Sawtooth function to pulse from centre.
-	float u_time = fract(u_time * PULSE_SPEED);
-	vec2 off = uv - vec2(0.5);
-	float dist = length( off );
+   //Sawtooth function to pulse from centre.
+   float u_time = fract(u_time * PULSE_SPEED);
+   vec2 off = uv - vec2(0.5);
+   float dist = length( off );
 
-	vec4 col;
+   vec4 col;
 
-	//Only distort the pixels within the parameter distance from the centre
+   //Only distort the pixels within the parameter distance from the centre
    float diff = dist - u_time;
-	if ((diff <= PULSE_WIDTH) && (diff >= -PULSE_WIDTH)) {
-		//The pixel offset distance based on the input parameters
-		//float sdiff = (1.0 - pow(abs(diff * 10.0), 0.38));
-		float sdiff = (1.0 - abs(diff * 10.0));
+   if ((diff <= PULSE_WIDTH) && (diff >= -PULSE_WIDTH)) {
+      //The pixel offset distance based on the input parameters
+      //float sdiff = (1.0 - pow(abs(diff * 10.0), 0.38));
+      float sdiff = (1.0 - abs(diff * 10.0));
       float tdist = u_time * dist;
 
-		/* Perform the distortion and reduce the effect over time */
-		uv += ((normalize(off) * diff * sdiff) / (tdist * 60.0));
-		//Color = texture( tex, uv );
-		col = bg( uv );
+      /* Perform the distortion and reduce the effect over time */
+      uv += ((normalize(off) * diff * sdiff) / (tdist * 60.0));
+      //Color = texture( tex, uv );
+      col = bg( uv );
 
-		/* Blow out the color and reduce the effect over time */
-		col += color * sdiff / (tdist * 60.0);
-	}
-	else
-		col = bg( uv );
+      /* Blow out the color and reduce the effect over time */
+      col += color * sdiff / (tdist * 60.0);
+   }
+   else
+      col = bg( uv );
 
-	return col;
+   return col;
 }
 ]]
 

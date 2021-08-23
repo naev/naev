@@ -83,7 +83,7 @@ function approach_kex ()
             pos = "right" }
 
       vn.na(_("You tell Kex about you encounter with the transports and how you weren't able to find the supposed cargo."))
-      kex(_([["Damn it. That must have been a decoy. The delivery logs are always a mess and there always seem to be mainly repeated by modified entries. I picked the most likely, but there was also another at the same time and it could have been that one. "]]))
+      kex(_([["Damn it. That must have been a decoy. These delivery logs are always a mess, and they always seem to be full of nearly identical entries. I picked the most likely, but there was also another at the same time, and it could have been that one."]]))
 
       vn.appear( maikki, "slideleft", 1, "linear" )
       vn.sfxEerie()
@@ -181,7 +181,7 @@ He looks at you expectantly.]]))
 "Yeah, I don't think there is talking sense into that one… Maybe if we…"
 He stops to think a bit.]]))
    kex(_([["This may sound crazy, but I think it might work. You're a good pilot from what I hear right?"
-You looks at you with determination.
+He looks at you with determination.
 "Given that the issue is the CEO, if we can somehow get rid of the CEO, there should be no issue, right?"]]))
    kex(_([["Since I know for a certainly that he is involved in, let's call it, unsavory business, all we have to do is get him bust and in the confusion it should be more than easy for me to go free."]]))
    kex(_([[He looks down at the floor.
@@ -221,7 +221,7 @@ You looks at you with determination.
    vn.done()
 
    vn.label("job")
-   kex(_([["We have to find the dirt on the CEO and get him removed. It is the only change I have for freedom."]]))
+   kex(_([["We have to find the dirt on the CEO and get him removed. It is the only chance I have for freedom."]]))
    kex(string.format(_([[They should be receiving a delivery. You should go intercept it at the %s system before it gets here. I have sent you all the precise information. It should be a breeze with with your piloting skills.]]), _(targetsys)))
    kex(_([["If you can disable the ship and find the evidence itself it would be ideal, however, given that it is always delivered in secured vaults, you should be able to recover the vault from the debris if you roll that way."]]))
    vn.jump("menu_msg")

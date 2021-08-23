@@ -7,7 +7,7 @@
 --Attempts to maintain a constant distance from nearby things
 --This modulates the distance between the current pilot and its nearest neighbor
 --]]
-function _atk_keep_distance()
+function __atk_keep_distance()
    --anticipate this will be added to eliminate potentially silly behavior if it becomes a problem
    --local flight_offset = ai.drift_facing()
 
@@ -34,7 +34,7 @@ end
 -- But the clean way would require to have stored the target position into memory
 -- This test should be put in any subtask of the attack task.
 --]]
-function _atk_check_seeable( target )
+function __atk_check_seeable( target )
    if __check_seeable( target ) then
       return true
    end
@@ -46,7 +46,7 @@ end
 --[[
 -- Decides if zigzag is a good option
 --]]
-function _atk_decide_zz()
+function __atk_decide_zz()
    -- The situation is the following: we're out of range, facing the target,
    -- going towards the target, and someone is shooting on us.
 
@@ -78,7 +78,7 @@ function _atk_zigzag()
    end
 
    -- See if the enemy is still seeable
-   if not _atk_check_seeable( target ) then return end
+   if not __atk_check_seeable( target ) then return end
 
    -- Is there something to dodge?
    if (not ai.hasprojectile()) then
@@ -102,9 +102,13 @@ end
 --[[
 -- Tries to shoot seekers at close range
 --]]
-function _atk_dogfight_seekers( dist, dir )
-   if dist < ai.getweaprange( 4 ) and dist > 100 and dir < 20 then
-      ai.weapset( 4 )
+function __atk_dogfight_seekers( dist, dir )
+   if dist > 100 then
+      if dist < ai.getweaprange( 4 ) and dir < 20  then
+         ai.weapset( 4 )
+      elseif dist < ai.getweaprange( 9 ) then
+         ai.weapset( 9 )
+      end
    end
 end
 
@@ -112,7 +116,7 @@ end
 --[[
 -- Common control stuff
 --]]
-function _atk_com_think( target )
+function __atk_com_think( target )
    -- make sure pilot exists
    if not target:exists() then
       ai.poptask()

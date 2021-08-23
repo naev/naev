@@ -769,7 +769,7 @@ void naev_resize (void)
    if (cur_system != NULL)
       background_initStars( cur_system->stars );
    else
-      background_initStars( 1000 ); /* from loadscreen_load */
+      background_initStars( 1000. ); /* from loadscreen_load */
 
    /* Must be before gui_reload */
    fps_setPos( 15., (double)(SCREEN_H-15-gl_defFont.h) );

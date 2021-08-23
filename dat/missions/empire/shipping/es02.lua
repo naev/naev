@@ -237,7 +237,8 @@ end
 
 function board ()
    -- VIP boards
-   vip = misn.cargoAdd( "VIP", 0 )
+   local c = misn.cargoNew( N_("VIP"), N_("A Very Important Person.") )
+   vip = misn.cargoAdd( c, 0 )
    tk.msg( title[2], text[4] )
 
    -- Update mission details

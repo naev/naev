@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Phalanx">
  <base_type>Phalanx</base_type>
- <GFX sx="10" sy="10">phalanx</GFX>
+ <GFX size="95" sx="10" sy="10">phalanx</GFX>
  <GUI>brushed</GUI>
  <sound>engine</sound>
  <class>Corvette</class>

@@ -183,7 +183,7 @@ static int fontL_new( lua_State *L )
    }
 
    if (fname == NULL) {
-      fname = FONT_DEFAULT_PATH;
+      fname = _(FONT_DEFAULT_PATH);
       prefix = FONT_PATH_PREFIX;
    }
    else

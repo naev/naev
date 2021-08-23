@@ -48,6 +48,40 @@ local function safelanesToGraph( lanes )
    return vertices, edges
 end
 
+local function connected( vertices, edges, source )
+   local L = {}
+   for k,v in ipairs(vertices) do
+      L[k] = 0
+   end
+   L[source] = 1
+
+   local N = { source }
+   while #N > 0 do
+      for k,v in ipairs(N) do
+         L[v] = 1
+      end
+      local NN = {}
+      for k,v in ipairs(N) do
+         for i,e in ipairs(edges) do
+            if e[1] == v and L[e[2]] == 0 then
+               table.insert( NN, e[2] )
+            elseif e[2] == v and L[e[1]] == 0 then
+               table.insert( NN, e[1] )
+            end
+         end
+      end
+      N = NN
+   end
+
+   local Q = {}
+   for k,v in ipairs(L) do
+      if v then
+         table.insert( Q, vertices[k] )
+      end
+   end
+   return Q
+end
+
 --[[
 -- You run of the mill djikstra algorithm
 --]]
@@ -201,47 +235,98 @@ local function closestPointLine( a, b, p )
 end
 
 
-local function getCache ()
+-- Caches lanes locally in pilot's memory
+local function getCacheP( p )
+   local mem = p:memory()
+   if not mem.__lanes then
+      local L = {}
+      local standing = (mem.lanes_useneutral and "non-hostile") or "friendly"
+      L.lanes = safelanes.get( p:faction(), standing )
+      L.v, L.e = safelanesToGraph( L.lanes )
+      mem.__lanes = L
+   end
+   return mem.__lanes
+end
+
+
+-- Same as safelanes.get but does caching
+function lanes.get( f, standing )
    -- We try to cache the lane graph per system
-   -- TODO handle hostile lanes and such
    local nc = naev.cache()
    if not nc.lanes then nc.lanes = {} end
    local ncl = nc.lanes
    local sc = system.cur()
    if ncl.system ~= sc then
-      ncl.lanes = safelanes.get()
-      ncl.v, ncl.e = safelanesToGraph( ncl.lanes )
-      ncl.system = sc
+      ncl.L = {}
    end
-   return ncl
+   local key = f:nameRaw()..standing
+   if not ncl.L[key] then
+      local L = {}
+      L.lanes  = safelanes.get( f, standing )
+      L.v, L.e = safelanesToGraph( L.lanes )
+      ncl.L[key] = L
+   end
+   return ncl.L[key]
 end
 
 
 --[[
 -- Gets distance and nearest point to safe lanes from a position
 --]]
-function lanes.getDistance( pos )
-   local d, p = lanes.getDistance2( pos )
-   return math.sqrt(d), p
+function lanes.getDistance( L, pos )
+   local d, lpos = lanes.getDistance2( L, pos )
+   return math.sqrt(d), lpos
+end
+function lanes.getDistanceP( p, pos )
+   return lanes.getDistance( getCacheP(p), pos )
 end
 
 
 --[[
 -- Gets squared distance and nearest point to safe lanes from a position
 --]]
-function lanes.getDistance2( pos )
-   local ncl = getCache()
+function lanes.getDistance2( L, pos )
    local d = math.huge
-   local p = pos
-   for k,v in ipairs(ncl.lanes) do
+   local lp = pos
+   for k,v in ipairs(L.lanes) do
       local pp = closestPointLine( v[1], v[2], pos )
       local dp = pos:dist2( pp )
       if dp < d then
          d = dp
-         p = pp
+         lp = pp
       end
    end
-   return d, p
+   return d, lp
+end
+function lanes.getDistance2P( p, pos )
+   return lanes.getDistance2( getCacheP(p), pos )
+end
+
+
+function lanes.getPoint( L )
+   local lv, le = L.v, L.e
+   local elen = {}
+   local td = 0
+   for k,e in ipairs(le) do
+      local d = lv[e[1]]:dist( lv[e[2]] )
+      td = td + d
+      table.insert( elen, d )
+   end
+   local r = rnd.rnd()
+   local raccum = 0
+   for k,v in ipairs(elen) do
+      local rv = v / td
+      raccum = raccum + rv
+      if r < raccum then
+         local e = le[k]
+         local a = (r - raccum - rv) / rv
+         return lv[e[1]] * a + lv[e[2]] * (1-a)
+      end
+   end
+   return nil
+end
+function lanes.getPointP( p )
+   return lanes.getPoint( getCacheP(p) )
 end
 
 
@@ -249,14 +334,7 @@ end
 -- Tries to get a point outside of the lanes, around a point at a radius rad.
 -- We'll project the pos into radius if it is out of bounds.
 --]]
-function lanes.getNonPoint( pos, rad, margin, biasdir )
-   local p, ews
-   if not pos or not rad or not margin then
-      p = ai.pilot()
-      ews = p:stats().ew_stealth
-   end
-   pos = pos or p:pos()
-   rad = rad or math.min( 2000, ews )
+function lanes.getNonPoint( L, pos, rad, margin, biasdir )
    margin = margin or ews
    local margin2 = margin*margin
    local srad2 = math.pow( system.cur():radius(), 2 )
@@ -280,7 +358,7 @@ function lanes.getNonPoint( pos, rad, margin, biasdir )
          a = a + i * inc * sign
          sign = sign * -1
          if pp:dist2() < srad2 then
-            local d = lanes.getDistance2( pp )
+            local d = lanes.getDistance2( L, pp )
             if d > margin2 then
                return pp
             end
@@ -289,42 +367,64 @@ function lanes.getNonPoint( pos, rad, margin, biasdir )
    end
    return nil
 end
+function lanes.getNonPointP( p, pos, rad, margin, biasdir )
+   local ews
+   if not pos or not rad or not margin then
+      ews = p:stats().ew_stealth
+   end
+   pos = pos or p:pos()
+   rad = rad or math.min( 2000, ews )
+   margin = margin or ews
+   local margin2 = margin*margin
+   local srad2 = math.pow( system.cur():radius(), 2 )
+
+   local L = getCacheP( p )
+   return lanes.getNonPoint( L, pos, rad, margin, biasdir )
+end
 
 
 --[[
 -- Gets a random point of interest
 --]]
-function lanes.getPointInterest( pos )
-   pos = pos or ai.pilot():pos()
-   local ncl = getCache()
-   local lv, le = ncl.v, ncl.e
+function lanes.getPointInterest( L, pos )
+   local lv, le = L.v, L.e
 
    -- Case nothing of interest we just return a random position like in the old days
    -- TODO do something smarter here
    if #lv == 0 then
-      local r = rnd.rnd() * system.cur():radius()
-      local a = rnd.rnd() * 360
       return vec2.newP( rnd.rnd() * system.cur():radius(), rnd.rnd() * 360 )
    end
 
-   return lv[ rnd.rnd(1,#lv) ]
-   -- TODO try to find elements in the connected component and not random
-   --[[
+   -- Get the connected components
    local sv = nearestVertex( lv, pos )
-   local S = djikstra( lv, le, sv )
+   local S = connected( lv, le, sv )
+   local Sfar = {}
    for k,v in ipairs(S) do
+      if pos:dist2(v) > 1000*1000 then -- TODO better threshold
+         table.insert( Sfar, v )
+      end
    end
-   --]]
+
+   -- No far points, this shouldn't happen, but return random point in this case
+   if #Sfar == 0 then
+      return vec2.newP( rnd.rnd() * system.cur():radius(), rnd.rnd() * 360 )
+   end
+
+   -- Random far away point
+   return Sfar[ rnd.rnd(1, #Sfar) ]
+end
+function lanes.getPointInterestP( p, pos )
+   pos = pos or p:pos()
+   local L = getCacheP(p)
+   return lanes.getPointInterest( L, pos )
 end
 
 
 --[[
 -- Computes the route for the pilot to get to target.
 --]]
-function lanes.getRoute( target, pos )
-   pos = pos or ai.pilot():pos()
-   local ncl = getCache()
-   local lv, le = ncl.v, ncl.e
+function lanes.getRoute( L, target, pos )
+   local lv, le = L.v, L.e
 
    -- Case no lanes in the system
    if #lv == 0 then
@@ -355,6 +455,10 @@ function lanes.getRoute( target, pos )
 
    return S
 end
-
+function lanes.getRouteP( p, target, pos )
+   pos = pos or p:pos()
+   local L = getCacheP(p)
+   return lanes.getRoute( L, target, pos )
+end
 
 return lanes

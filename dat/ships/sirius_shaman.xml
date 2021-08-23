@@ -2,7 +2,7 @@
 <ship name="Sirius Shaman">
  <base_type>Shaman</base_type>
  <rarity>2</rarity>
- <GFX>shaman</GFX>
+ <GFX size="68">shaman</GFX>
  <GUI>brushed</GUI>
  <sound>engine</sound>
  <class>Bomber</class>
