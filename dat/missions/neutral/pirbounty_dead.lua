@@ -427,7 +427,7 @@ function set_faction( p )
    if not _target_faction then
       _target_faction = faction.dynAdd( "Pirate", "Wanted Pirate", _("Wanted Pirate"), {clear_enemies=true, clear_allies=true} )
    end
-   p:setFaction( "Wanted Pirate" )
+   p:setFaction( _target_faction )
 end
 
 
