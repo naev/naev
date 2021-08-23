@@ -132,6 +132,11 @@ end
 
 
 function set_faction( p )
+   if not _target_faction then
+      _target_faction = faction.dynAdd( "Independent", "Proteron Dissident", _("Proteron Dissident") )
+      _target_faction:dynEnemy( "Proteron" )
+   end
+   p:setFaction( "Proteron Dissident" )
 end
 
 
