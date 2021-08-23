@@ -182,7 +182,8 @@ void ovr_refresh (void)
       snprintf( buf, sizeof(buf), "%s%s", planet_getSymbol(pnt), _(pnt->name) );
       pos[items] = &pnt->pos;
       mo[items]  = &pnt->mo;
-      mo[items]->radius = pnt->radius / 2.;  /* halved since it's awkwardly large if drawn to scale relative to the player. */
+      mo[items]->radius = pnt->radius / 2. + 2.0;  /* halved since it's awkwardly large if drawn to scale relative to the player. */
+      /* +2.0 represents a margin used by the SDF shader. */
       mo[items]->text_width = gl_printWidthRaw( &gl_smallFont, buf );
       items++;
    }
