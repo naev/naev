@@ -244,7 +244,7 @@ static int gui_runFunc( const char* func, int nargs, int nret );
  */
 void gui_setDefaults (void)
 {
-   gui_radar.res = player.radar_res;
+   gui_setRadarResolution( player.radar_res );
    memset( mesg_stack, 0, sizeof(Mesg)*mesg_max );
 }
 
@@ -1017,9 +1017,9 @@ int gui_getMapOverlayBoundLeft(void)
 int gui_radarInit( int circle, int w, int h )
 {
    gui_radar.shape   = circle ? RADAR_CIRCLE : RADAR_RECT;
-   gui_radar.res     = player.radar_res;
    gui_radar.w       = w;
    gui_radar.h       = h;
+   gui_setRadarResolution( player.radar_res );
    return 0;
 }
 
@@ -1753,7 +1753,7 @@ int gui_init (void)
    /*
     * radar
     */
-   gui_radar.res = player.radar_res;
+   gui_setRadarResolution( player.radar_res );
 
    /*
     * messages
@@ -2143,6 +2143,17 @@ void gui_free (void)
 
 
 /**
+ * @brief Sets the radar resolution.
+ *
+ *    @param res Resolution to set to.
+ */
+void gui_setRadarResolution( double res )
+{
+   gui_radar.res = CLAMP( RADAR_RES_MIN, RADAR_RES_MAX, res );
+}
+
+
+/**
  * @brief Modifies the radar resolution.
  *
  *    @param mod Number of intervals to jump (up or down).
@@ -2150,8 +2161,7 @@ void gui_free (void)
 void gui_setRadarRel( int mod )
 {
    gui_radar.res += mod * RADAR_RES_INTERVAL;
-   gui_radar.res = CLAMP( RADAR_RES_MIN, RADAR_RES_MAX, gui_radar.res );
-
+   gui_setRadarResolution( gui_radar.res );
    player_message( _("#oRadar set to %dx."), (int)gui_radar.res );
 }
 

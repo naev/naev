@@ -115,6 +115,7 @@ void gui_mouseMoveEnable( int enabel );
 void gui_setViewport( double x, double y, double w, double h );
 void gui_clearViewport (void);
 void gui_setDefaults (void);
+void gui_setRadarResolution( double res );
 void gui_setRadarRel( int mod );
 void gui_getOffset( double *x, double *y );
 glTexture* gui_hailIcon (void);
