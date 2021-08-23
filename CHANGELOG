@@ -21,7 +21,7 @@
       * Redid the shake visuals and added a small damage visual
       * Most special effects implemented as shaders
       * Game now tracks meta-data like ships destroyed and time played
-      * Stress now discreases based on ship mass
+      * Stress now decreases based on ship mass
       * Merged the Independent and Civilian factions
       * Added gambling resort "Minerva Station"
       * Added mysterious new system "Taiomi"
@@ -30,7 +30,8 @@
          * Follow happenings on "Minerva Station"
          * Invade the frontier with the Dvaered
          * Ship enthusiast quiz
-      * New translation(s) in progress: Czech, French, and Korean
+         * Deliver fancy contraband all over the universe
+      * New translation(s) in progress: Czech, French, Korean, and Portuguese
    * Engine
       * Added an optimizer to improve automatic outfitting choices
       * A ton of new ship stat attributes have been added
@@ -48,7 +49,7 @@
       * Added card games
       * Added dynamic factions
       * Added dynamic commodities
-      * Interally using linear colourspace
+      * Internally using linear colourspace
 
 * 0.8.2
    * Gameplay
