@@ -37,6 +37,7 @@ float sdBox( vec2 p, vec2 b )
    return length(max(d,0.0)) + min(max(d.x,d.y),0.0);
 }
 
+/* Equilateral triangle centered at p facing "up" */
 float sdEquilateralTriangle( vec2 p )
 {
 	const float k = sqrt(3.0);
@@ -47,6 +48,8 @@ float sdEquilateralTriangle( vec2 p )
 	return -length(p)*sign(p.y);
 }
 
+/* Isosceles triangle centered at p facing "up".
+ * q indicates (width, height) */
 float sdTriangleIsosceles( vec2 p, vec2 q )
 {
 	p.x = abs(p.x);
@@ -58,6 +61,7 @@ float sdTriangleIsosceles( vec2 p, vec2 q )
 	return -sqrt(d.x)*sign(d.y);
 }
 
+/* Pentagon centered at p with radius r. */
 float sdPentagon( vec2 p, float r )
 {
    // cos, sin, and tan of M_PI/5.0
@@ -69,6 +73,7 @@ float sdPentagon( vec2 p, float r )
    return length(p)*sign(p.y);
 }
 
+/* Hexagon centered at p with radius r. */
 float sdHexagon( vec2 p, float r )
 {
    // cos, sin, and tan of M_PI/6.0
@@ -79,7 +84,8 @@ float sdHexagon( vec2 p, float r )
    return length(p)*sign(p.y);
 }
 
-float sdOctogon( in vec2 p, in float r )
+/* Octogan centered at p with radius r. */
+float sdOctogon( vec2 p, float r )
 {
    // cos, sin, and tan of M_PI/88888888.0
    const vec3 k = vec3(-0.9238795325, 0.3826834323, 0.4142135623 );
@@ -90,8 +96,11 @@ float sdOctogon( in vec2 p, in float r )
    return length(p)*sign(p.y);
 }
 
-/* sca is the sin/cos of the orientation
-   scb is the sin/cos of the aperture */
+/* Arc that is part of a circle centered at p.
+ * sca is the sin/cos of the orientation
+ * scb is the sin/cos of the aperture
+ * ra is inner radius
+ * rb is outter radius */
 float sdArc( vec2 p, vec2 sca, vec2 scb, float ra, float rb )
 {
    p *= mat2(sca.x,sca.y,-sca.y,sca.x);
@@ -100,7 +109,7 @@ float sdArc( vec2 p, vec2 sca, vec2 scb, float ra, float rb )
    return sqrt( max(0.0, dot(p,p) + ra*ra - 2.0*ra*k) ) - rb;
 }
 
-/* Rhombus at position p with border b */
+/* Rhombus at position p with size b. */
 float sdRhombus( vec2 p, vec2 b )
 {
    vec2 q = abs(p);
@@ -125,7 +134,8 @@ float sdUnevenCapsuleY( vec2 p, float ra, float rb, float h )
                         return m                     - ra;
 }
 
-/* Uneven capsule between points pa and pb. */
+/* Uneven capsule between points pa and pb with radius ra at point pa and rb at
+ * point pb. */
 float sdUnevenCapsule( vec2 p, vec2 pa, vec2 pb, float ra, float rb )
 {
     p  -= pa;
