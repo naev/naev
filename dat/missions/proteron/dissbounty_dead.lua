@@ -94,6 +94,7 @@ osd_msg["__save"] = true
 
 function create ()
    paying_faction = planet.cur():faction()
+   target_faction = faction.get( "Proteron Dissident" )
 
    local systems = getsysatdistance( system.cur(), 1, 3,
       function(s)
@@ -116,7 +117,7 @@ function create ()
 
    level = 1
    name = _("Target Dissident")
-   ship = "Proteron Dissident Schroedinger"
+   ship = "Schroedinger"
    credits = 50000
    reputation = 0
    board_failed = false
@@ -136,10 +137,7 @@ end
 
 -- Set up the ship, credits, and reputation.
 function bounty_setup ()
-   local choices = {
-      "Proteron Dissident Schroedinger", "Proteron Dissident Hyena",
-      "Proteron Dissident Llama", "Proteron Dissident Gawain",
-   }
+   local choices = { "Schroedinger", "Hyena", "Llama", "Gawain" }
    ship = choices[ rnd.rnd( 1, #choices ) ]
    credits = 150000 + rnd.sigma() * 15000
    reputation = rnd.rnd( 1, 2 )
