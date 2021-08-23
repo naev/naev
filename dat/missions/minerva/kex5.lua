@@ -25,7 +25,6 @@
    to Kex. Player is constantly harassed by thugs while mission is active.
 --]]
 local minerva  = require "campaigns.minerva"
-local portrait = require 'portrait'
 local vn       = require 'vn'
 local equipopt = require 'equipopt'
 local love_shaders = require 'love_shaders'
@@ -63,7 +62,41 @@ function create ()
 end
 
 function accept ()
-   approach_kex()
+   vn.clear()
+   vn.scene()
+   -- TODO sadder music
+   vn.music( minerva.loops.kex )
+   local kex = vn.newCharacter( minerva.vn_kex() )
+   vn.transition()
+
+   vn.na(_("You approach Kex who is sort of slumping at his usual spot. He doesn't seem to be in very good condition."))
+   kex(_([[It takes a bit before Kex notices your presence. His feathers are rather disheveled.
+"Oh, hey kid."]]))
+   kex(_([[It takes a while before he continues.
+"Compared to the vastness of all the universe, we are completely insignificant. Our sorrows and glories go unheard and seemingly devoid of all meaning."]]))
+   kex(_([["Coming to terms with one's own significance does give a clarity of mind and make clear one's deepest desires. What has to be done then becomes clear."]]))
+   vn.sfxEerie()
+   kex(_([[Without blinking Kex states "I need you to kill Strangelove."]]))
+   vn.menu{
+      { _("Accept"), "accept" },
+      { _("Decline"), "decline" },
+   }
+   vn.label("decline")
+   kex(_([[He looks even more dejected.
+"I see. I'll be around."]]))
+   vn.done()
+
+   vn.label("accept")
+   kex(_([["I should have realized it sooner. It was obvious from the start that Strangelove would be involved in this travesty of a station."]]))
+   kex(_([["There's not too many trails, but I do think I know where to find him. Wait, you know where he is? How you know is not important now, all I need you to do is go over there and end his rotten life once and for all."]]))
+   kex(_([["The universe will be a much better place with scum like him gone, and I'll finally get my vengeance."]]))
+   vn.disappear(kex)
+   vn.na(string.format(_([[Without saying anything else, Kex walks off stumbling into the darkness of the station. You feel like it is best to leave him alone right now and decide to go see Strangelove. He should be in the %s system.]]),targetsys))
+
+   vn.func( function ()
+      misn_state = 0
+   end )
+   vn.run()
 
    -- If not accepted, misn_state will still be nil
    if misn_state==nil then
@@ -74,87 +107,18 @@ function accept ()
    minerva.log.kex(_("You have agreed to help Kex deal with Dr. Strangelove.") )
 
    misn.osdCreate( misn_title,
-      { string.format(_("Go to Dr. Strangelove at %s in the %s system"), _(targetplanet), _(targetsys) ),
+      { string.format(_("Go find Dr. Strangelove at %s in the %s system"), _(targetplanet), _(targetsys) ),
       _("Return to Kex at Minerva Station") } )
    misn_marker = misn.markerAdd( system.get(targetsys) )
 
-   hook.land("generate_npc")
    hook.enter("enter")
-
-   generate_npc()
 end
 
 function generate_npc ()
-   if planet.cur() == planet.get("Minerva Station") then
-      npc_kex = misn.npcAdd( "approach_kex", minerva.kex.name, minerva.kex.portrait, minerva.kex.description )
-
    -- Can't use planet.get() here for when the diff is removed
-   elseif misn_state==1 and planet.cur():nameRaw() == targetplanet then
+   if misn_state==1 and planet.cur():nameRaw() == targetplanet then
       landed_lab()
-
    end
-end
-
-function approach_kex ()
-   vn.clear()
-   vn.scene()
-   vn.music( minerva.loops.kex )
-   local kex = vn.newCharacter( minerva.vn_kex() )
-   vn.transition()
-
-   -- Mission is over
-   if misn_state==2 then
-      vn.na(_("You head towards Kex's usual spot."))
-      vn.disappear(kex)
-      vn.sfxMoney()
-      vn.func( function () player.pay( money_reward ) end )
-      vn.na(string.format(_("You received #g%s#0."), creditstring( money_reward )))
-      vn.sfxVictory()
-      vn.na(_("You take your leave and wander back to the main station."))
-      vn.run()
-
-      minerva.log.kex(_(""))
-      misn.finish( true )
-      return
-
-   elseif misn_state==nil then
-      kex(_([[""]]))
-      vn.menu{
-         { _("Accept"), "accept" },
-         { _("Decline"), "decline" },
-      }
-      vn.label("decline")
-      kex(_([[He looks dejected.
-"I see. If you change your mind, I'll be around."]]))
-      vn.done()
-
-      vn.label("accept")
-      vn.func( function ()
-         misn_state = 0
-      end )
-   else
-      vn.na(_("You find Kex taking a break at his favourite spot at Minerva station."))
-   end
-
-   vn.label("menu_msg")
-   kex(_([["What's up kid?"]]))
-   vn.menu( function ()
-      local opts = {
-         { _("Ask about the job"), "job" },
-         -- TODO more backstory
-         { _("Leave"), "leave" },
-      }
-      return opts
-   end )
-
-   vn.label("job")
-   -- TODO job description
-   kex(_([[""]]))
-   vn.jump("menu_msg")
-
-   vn.label("leave")
-   vn.na(_("You take your leave."))
-   vn.run()
 end
 
 local function choose_one( t ) return t[ rnd.rnd(1,#t) ] end
@@ -206,12 +170,27 @@ function enter ()
       if misn_state == 0 then
          -- TODO better handling, maybe more fighting with drones and a close-up cinematic?
          thug_chance = thug_chance / 0.8
-         spawn_thugs( planet.get(targetplanet):pos(), false )
+         local pos = planet.get(targetplanet):pos()
+         spawn_thugs( pos, false )
          hook.timer( 5, "thug_heartbeat" )
          player.allowLand( false, _("#rYou are unable to land while the bounty hunters are still active.#0") )
 
          for k,p in ipairs(thug_pilots) do
             pilot.hook( p, "death", "thug_dead" )
+         end
+
+         -- Add some disabled drones for effect
+         for i=1,5 do
+            local d
+            if rnd.rnd() < 0.2 then
+               d = "Za'lek Heavy Drone"
+            else
+               d = "Za'lek Light Drone"
+            end
+            local p = pilot.add( d, "Za'lek", pos + vec2.newP( 100+700*rnd.rnd(), 360*rnd.rnd() ) )
+            p:setInvincible(true)
+            p:setInvisible(true)
+            p:disable(true)
          end
 
       elseif misn_state == 2 then
@@ -260,7 +239,11 @@ function thug_heartbeat ()
          _("Target locked. Engaging."),
       }
       -- Broadcast after hostile
-      thug_leader:broadcast( msglist[ rnd.rnd(1,#msglist) ], true )
+      if misn_state==0 then
+         thug_leader:broadcast( _("Looks like we have company!"), true )
+      else
+         thug_leader:broadcast( msglist[ rnd.rnd(1,#msglist) ], true )
+      end
 
       -- Decrease chance
       thug_chance = thug_chance * 0.8
