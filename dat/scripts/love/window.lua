@@ -64,6 +64,14 @@ function window.getDPIScale()
    local w,h,scale = naev.gfx.dim()
    return 1/scale
 end
+function window.toPixels( value )
+   local w,h,scale = naev.gfx.dim()
+   return value / scale
+end
+function window.fromPixels( value )
+   local w,h,scale = naev.gfx.dim()
+   return value * scale
+end
 function window.getMode()
    return love.w, love.h, { fullscreen=love.fullscreen, vsync=1, resizeable=false, borderless = false, centered=true, display=1, msaa=0 }
 end
