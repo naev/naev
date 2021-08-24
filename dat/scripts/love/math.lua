@@ -138,4 +138,15 @@ function love_math.colorFromBytes(r, g, b, a)
    return r, g, b, a
 end
 
+function love_math.gammaToLinear( r, g, b )
+   local col = naev.colour.new( r, g, b )
+   local lr, lg, lb = linearToGamma():get()
+   return lr, lg, lb
+end
+function love_math.linearGamma( lr, lg, lb )
+   local col = naev.colour.new( lr, lg, lb )
+   local r, g, b = gammaToLinear():get()
+   return r, g, b
+end
+
 return love_math
