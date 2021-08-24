@@ -648,6 +648,7 @@ function graphics.Canvas:getHeight(...)return self.t:getHeight(...) end
    Misc
 --]]
 function graphics.isGammaCorrect() return true end
+function graphics.isActive() return true end
 
 
 -- Set some sane defaults.
