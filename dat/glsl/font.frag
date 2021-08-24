@@ -1,3 +1,6 @@
+#include "lib/math.glsl"
+
+uniform float m;
 uniform vec4 color;
 uniform vec4 outline_color;
 uniform sampler2D sampler;
@@ -5,18 +8,12 @@ uniform sampler2D sampler;
 in vec2 tex_coord_out;
 out vec4 color_out;
 
-// Colour cutoffs, corresponding to "dist" below.
-const float glyph_center     = 0.538;
-const float outline_center   = 0.1535;
-const float glyph_stepsize   = 0.2325;
-const float outline_stepsize = 0.1175;
-
 void main(void) {
-   // dist is a value between 0 and 1 with 0.5 on the edge and 1 inside it.
-   float dist  = texture(sampler, tex_coord_out).r;
-   // smoothstep maps values below 0.5 to 0 and above 0.5 to 1, with a smooth transition at 0.5.
-   float alpha = smoothstep(glyph_center-glyph_stepsize, glyph_center+glyph_stepsize, dist);
-   float beta  = smoothstep(outline_center-outline_stepsize, outline_center+outline_stepsize, dist);
+   // d is the signed distance to the glyph; m is the distance value corresponding to 1 "pixel".
+   float d  = 0.5 - texture(sampler, tex_coord_out).r;
+   // Map the signed distance to mixing parameters for outline..foreground, transparent..opaque.
+   float alpha = smoothstep(-0.5    *m, +.5*m, -d);
+   float beta  = smoothstep(-M_SQRT2*m, -1.*m, -d);
    vec4 fg_c   = mix( outline_color, color, alpha );
    color_out   = vec4( fg_c.rgb, beta*fg_c.a );
 }
