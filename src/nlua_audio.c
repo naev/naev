@@ -863,10 +863,10 @@ static void efx_setnum( lua_State *L, int pos, ALuint effect, const char *name, 
       nalEffectf( effect, param, luaL_checknumber(L,-1) );
    lua_pop(L,1);
 }
-static void efx_setint( lua_State *L, int pos, ALuint effect, const char *name, ALuint param ) {
+static void efx_setbool( lua_State *L, int pos, ALuint effect, const char *name, ALuint param ) {
    lua_getfield(L,pos,name);
    if (!lua_isnil(L,-1))
-      nalEffecti( effect, param, luaL_checkinteger(L,-1) );
+      nalEffecti( effect, param, lua_toboolean(L,-1) ? AL_TRUE : AL_FALSE );
    lua_pop(L,1);
 }
 static int audioL_setEffectGlobal( lua_State *L )
@@ -910,7 +910,7 @@ static int audioL_setEffectGlobal( lua_State *L )
       efx_setnum( L, p, effect, "latedelay", AL_REVERB_LATE_REVERB_DELAY );
       efx_setnum( L, p, effect, "roomrolloff", AL_REVERB_ROOM_ROLLOFF_FACTOR );
       efx_setnum( L, p, effect, "airabsorption", AL_REVERB_AIR_ABSORPTION_GAINHF );
-      efx_setint( L, p, effect, "highlimit", AL_REVERB_DECAY_HFLIMIT );
+      efx_setbool( L, p, effect, "highlimit", AL_REVERB_DECAY_HFLIMIT );
    }
    else if (strcmp(type,"distortion")==0) {
       nalEffecti(effect, AL_EFFECT_TYPE, AL_EFFECT_DISTORTION);
