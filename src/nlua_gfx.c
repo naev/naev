@@ -887,7 +887,7 @@ static int gfxL_setBlendMode( lua_State *L )
    dstA   = GL_ZERO;
 
    if (!strcmp( alphamode, "alphamultiply" ))
-      srcRGB = GL_SRC_ALPHA;
+      srcRGB = srcA = GL_SRC_ALPHA;
    else if (!strcmp( alphamode, "premultiplied" )) {
       if (!strcmp( mode, "lighten" ) || !strcmp( mode, "darken" ) || !strcmp( mode, "multiply" ))
          NLUA_INVALID_PARAMETER(L);
