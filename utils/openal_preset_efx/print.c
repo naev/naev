@@ -10,13 +10,15 @@ void print_p( const char *name, float value, float def )
    if (fabs(value-def) < 1e-5)
       return;
 
-   printf( "   %s=%g,\n", name, value );
+   printf( "      %s=%g,\n", name, value );
 }
 
 void print_params( const char *name, const EFXEAXREVERBPROPERTIES *p )
 {
 
-   printf( "efx_preset.%s = {\n", name );
+   printf( "function efx_preset.%s ()\n"
+           "   return {\n"
+           "      type=\"reverb\",\n", name );
    print_p( "gain", p->flGain, 0.32 );
    print_p( "highgain", p->flGainHF, 0.89 );
    print_p( "density", p->flDensity, 1.0 );
@@ -30,8 +32,9 @@ void print_params( const char *name, const EFXEAXREVERBPROPERTIES *p )
    print_p( "roomrolloff", p->flRoomRolloffFactor, 0.0 );
    print_p( "airabsorption", p->flAirAbsorptionGainHF, 0.994 );
    if (p->iDecayHFLimit != AL_TRUE)
-      printf( "   %s=%d,\n", "highlimit", p->iDecayHFLimit );
-   printf( "}\n" );
+      printf( "      %s=%d,\n", "highlimit", p->iDecayHFLimit );
+   printf( "   }\n"
+           "end\n" );
    
    /* highlimit */
 }
