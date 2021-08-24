@@ -132,7 +132,6 @@ function graphics.Image:draw( ... )
    local arg = {...}
    local w = self.w
    local h = self.h
-   local s = self.s
    local x,y,r,sx,sy,TH
    if type(arg[1])=='number' then
       -- x, y, r, sx, sy
@@ -173,6 +172,7 @@ function graphics.Image:draw( ... )
    shader:sendRaw( "love_ScreenSize", s1, s2, s3, s4 )
 
    -- Get transformation and run
+   local s = self.s
    local H = _H( x, y, r, w*sx*s, h*sy*s )
    naev.gfx.renderTexH( self.tex, shader, H, graphics._fgcol, TH );
 end
@@ -617,8 +617,9 @@ function graphics.newCanvas( width, height, settings )
    width  = width or nw
    height = height or nh
    c.canvas = naev.canvas.new( width/ns, height/ns )
-   c.w = width * ns
-   c.h = height * ns
+   c.w = width
+   c.h = height
+   c.s = ns
    -- Set texture
    local t = graphics.Image.new()
    t.tex = c.canvas:getTex()
@@ -645,10 +646,10 @@ function graphics.Canvas:setFilter(...)return self.t:setFilter(...) end
 function graphics.Canvas:getFilter(...)return self.t:getFilter(...) end
 function graphics.Canvas:setWrap(...)  return self.t:setWrap(...) end
 function graphics.Canvas:getWrap(...)  return self.t:getWrap(...) end
-function graphics.Canvas:getDimensions(...) return self.t:getDimensions(...) end
-function graphics.Canvas:getWidth(...) return self.t:getWidth(...) end
-function graphics.Canvas:getHeight(...)return self.t:getHeight(...) end
-function graphics.Canvas.getDPIScale(...)return self:getDPIScale(...) end
+function graphics.Canvas:getDimensions(...) return self.w, self.h end
+function graphics.Canvas:getWidth(...) return self.w end
+function graphics.Canvas:getHeight(...)return self.h end
+function graphics.Canvas:getDPIScale(...)return 1/self.s end
 
 
 --[[
