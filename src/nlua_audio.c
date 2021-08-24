@@ -18,6 +18,7 @@
 
 #include "nlua_audio.h"
 
+#include "AL/efx.h"
 #include "AL/efx-presets.h"
 
 #include "conf.h"
@@ -881,8 +882,6 @@ static int audioL_setEffectGlobal( lua_State *L )
    LuaAudioEfx_t *lae;
    const int p = 2;
 
-   nalGenEffects(1, &effect);
-
    /* Get the type. */
    lua_getfield(L,p,"type");
    type = luaL_checkstring(L,-1);
@@ -895,6 +894,9 @@ static int audioL_setEffectGlobal( lua_State *L )
    else
       volume = luaL_checknumber(L,-1);
    lua_pop(L,1);
+
+   soundLock();
+   nalGenEffects(1, &effect);
 
    /* Handle types. */
    if (strcmp(type,"reverb")==0) {
@@ -916,13 +918,29 @@ static int audioL_setEffectGlobal( lua_State *L )
       efx_setnum( L, p, effect, "airabsorption", AL_REVERB_AIR_ABSORPTION_GAINHF, reverb.flAirAbsorptionGainHF );
       efx_setint( L, p, effect, "highlimit", AL_REVERB_DECAY_HFLIMIT, reverb.iDecayHFLimit );
    }
-   else
+   else if (strcmp(type,"distortion")==0) {
+      nalEffecti(effect, AL_EFFECT_TYPE, AL_EFFECT_DISTORTION);
+
+      efx_setnum( L, p, effect, "gain", AL_DISTORTION_GAIN, 0.2 ); /* 0.01 to 1.0 */
+      efx_setnum( L, p, effect, "edge", AL_DISTORTION_EDGE, 0.05 ); /* 0.0 to 1.0 */
+      efx_setnum( L, p, effect, "lowcut", AL_DISTORTION_LOWPASS_CUTOFF, 8000. ); /* 80.0 to 24000.0 */
+      efx_setnum( L, p, effect, "center", AL_DISTORTION_EQCENTER, 3600. ); /* 80.0 to 24000.0 */
+      efx_setnum( L, p, effect, "bandwidth", AL_DISTORTION_EQBANDWIDTH, 3600. ); /* 80.0 to 24000.0 */
+   }
+   else {
+      soundUnlock();
       NLUA_ERROR(L, _("Usupported audio effect type '%s'!"), type);
+   }
+
+   al_checkErr();
 
    nalGenAuxiliaryEffectSlots( 1, &slot );
    if (volume > 0.)
       nalAuxiliaryEffectSlotf( slot, AL_EFFECTSLOT_GAIN, volume );
    nalAuxiliaryEffectSloti( slot, AL_EFFECTSLOT_EFFECT, effect );
+
+   al_checkErr();
+   soundUnlock();
 
    /* Find or add to array as necessary. */
    if (lua_efx == NULL)
@@ -963,6 +981,7 @@ static int audioL_setEffect( lua_State *L )
    int enable = (lua_isnoneornil(L,3)) ? 1 : lua_toboolean(L,3);
    LuaAudioEfx_t *lae;
 
+   soundLock();
    if (enable) {
       lae = NULL;
       for (int i=0; i<array_size(lua_efx); i++) {
@@ -980,6 +999,9 @@ static int audioL_setEffect( lua_State *L )
    }
    else
       alSource3i( la->source, AL_AUXILIARY_SEND_FILTER, AL_EFFECTSLOT_NULL, 0, AL_FILTER_NULL );
+
+   al_checkErr();
+   soundUnlock();
 
    lua_pushboolean(L,1);
    return 1;
