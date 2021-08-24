@@ -107,9 +107,15 @@ function generate_npc ()
 end
 
 function approach_kex ()
+   love.audio.setEffect( "reverb", { type="reverb" } )
+   local pitch = 0.9
+   if misn_state==2 then
+      pitch = 0.8
+   end
+
    vn.clear()
    vn.scene()
-   vn.music( minerva.loops.kex )
+   vn.music( minerva.loops.kex, { pitch=pitch, effect="reverb" } )
    local kex = vn.newCharacter( minerva.vn_kex() )
    vn.transition()
 

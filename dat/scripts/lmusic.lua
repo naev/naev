@@ -25,6 +25,7 @@ function lmusic.play( filename, params )
       looping = true,
       pitch = 1,
       volume = 1,
+      effect = nil,
    }
    for k,v in ipairs(params) do
       p[k] = v
@@ -34,6 +35,9 @@ function lmusic.play( filename, params )
    source:setLooping( p.looping )
    source:setPitch( p.pitch )
    source:setVolume( 0 )
+   if p.effect then
+      source:setEffect( effect )
+   end
    source:play()
 
    local m = {

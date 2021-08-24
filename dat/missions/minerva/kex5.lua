@@ -39,7 +39,7 @@ require 'numstring'
 misn_state = nil
 
 targetplanet = "Strangelove Lab"
-targetsys = planet.get(targetplanet):system():nameRaw()
+targetsys = "Westhaven" --planet.get(targetplanet):system():nameRaw()
 
 misn_reward = _("A step closer to Kex's freedom")
 misn_title = _("Freeing Kex")
@@ -62,10 +62,11 @@ function create ()
 end
 
 function accept ()
+   love.audio.setEffect( "reverb", { type="reverb" } )
+
    vn.clear()
    vn.scene()
-   -- TODO sadder music
-   vn.music( minerva.loops.kex )
+   vn.music( minerva.loops.kex, {pitch=0.7, effect="reverb"} )
    local kex = vn.newCharacter( minerva.vn_kex() )
    vn.transition()
 

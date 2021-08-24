@@ -15,6 +15,9 @@ function love_audio.getVolume( volume )
    return naev.audio.getVolume()
 end
 function love_audio.setPosition( x, y, z ) end -- Don't allow setting position
+function love_audio.setEffect( ... )
+   return naev.audio.setEffect( ... )
+end
 
 
 return love_audio

@@ -879,16 +879,17 @@ static int audioL_setEffectGlobal( lua_State *L )
    const char *type;
    double volume;
    LuaAudioEfx_t *lae;
+   const int p = 2;
 
    nalGenEffects(1, &effect);
 
    /* Get the type. */
-   lua_getfield(L,2,"type");
+   lua_getfield(L,p,"type");
    type = luaL_checkstring(L,-1);
    lua_pop(L,1);
 
    /* Get the volume. */
-   lua_getfield(L,2,"volume");
+   lua_getfield(L,p,"volume");
    if (lua_isnil(L,-1))
       volume = -1.;
    else
@@ -898,7 +899,6 @@ static int audioL_setEffectGlobal( lua_State *L )
    /* Handle types. */
    if (strcmp(type,"reverb")==0) {
       const EFXEAXREVERBPROPERTIES reverb = EFX_REVERB_PRESET_GENERIC;
-      int p = 2;
 
       nalEffecti(effect, AL_EFFECT_TYPE, AL_EFFECT_REVERB);
 
