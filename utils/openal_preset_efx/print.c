@@ -15,7 +15,6 @@ void print_p( const char *name, float value, float def )
 
 void print_params( const char *name, const EFXEAXREVERBPROPERTIES *p )
 {
-
    printf( "function efx_preset.%s ()\n"
            "   return {\n"
            "      type=\"reverb\",\n", name );
@@ -35,8 +34,6 @@ void print_params( const char *name, const EFXEAXREVERBPROPERTIES *p )
       printf( "      %s=%d,\n", "highlimit", p->iDecayHFLimit );
    printf( "   }\n"
            "end\n" );
-   
-   /* highlimit */
 }
 
 
