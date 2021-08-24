@@ -27,7 +27,7 @@ function lmusic.play( filename, params )
       volume = 1,
       effect = nil,
    }
-   for k,v in ipairs(params) do
+   for k,v in pairs(params) do
       p[k] = v
    end
 
@@ -36,7 +36,7 @@ function lmusic.play( filename, params )
    source:setPitch( p.pitch )
    source:setVolume( 0 )
    if p.effect then
-      source:setEffect( effect )
+      source:setEffect( p.effect )
    end
    source:play()
 

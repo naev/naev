@@ -25,8 +25,10 @@
 --]]
 local minerva  = require "campaigns.minerva"
 local portrait = require 'portrait'
+local love_audio = require 'love.audio'
 local vn       = require 'vn'
 local equipopt = require 'equipopt'
+local reverb_preset = require 'reverb_preset'
 require 'numstring'
 
 -- Mission states:
@@ -107,7 +109,7 @@ function generate_npc ()
 end
 
 function approach_kex ()
-   love.audio.setEffect( "reverb", { type="reverb" } )
+   love_audio.setEffect( "reverb_drugged", reverb_preset.drugged() )
    local pitch = 0.9
    if misn_state==2 then
       pitch = 0.8
@@ -115,7 +117,7 @@ function approach_kex ()
 
    vn.clear()
    vn.scene()
-   vn.music( minerva.loops.kex, { pitch=pitch, effect="reverb" } )
+   vn.music( minerva.loops.kex, { pitch=pitch, effect="reverb_drugged" } )
    local kex = vn.newCharacter( minerva.vn_kex() )
    vn.transition()
 

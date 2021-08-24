@@ -1,5 +1,5 @@
 
-efx_preset.lua: main
+reverb_preset.lua: main
 	echo "local efx_preset = {}" > $@
 	./main >> $@
 	echo "return efx_preset" >> $@

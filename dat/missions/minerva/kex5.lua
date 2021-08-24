@@ -25,9 +25,11 @@
    to Kex. Player is constantly harassed by thugs while mission is active.
 --]]
 local minerva  = require "campaigns.minerva"
+local love_audio = require 'love.audio'
 local vn       = require 'vn'
 local equipopt = require 'equipopt'
 local love_shaders = require 'love_shaders'
+local reverb_preset = require 'reverb_preset'
 require 'numstring'
 
 -- Mission states:
@@ -62,11 +64,11 @@ function create ()
 end
 
 function accept ()
-   love.audio.setEffect( "reverb", { type="reverb" } )
+   love_audio.setEffect( "reverb_drugged", reverb_preset.drugged() )
 
    vn.clear()
    vn.scene()
-   vn.music( minerva.loops.kex, {pitch=0.7, effect="reverb"} )
+   vn.music( minerva.loops.kex, {pitch=0.65, effect="reverb_drugged"} )
    local kex = vn.newCharacter( minerva.vn_kex() )
    vn.transition()
 
@@ -76,7 +78,6 @@ function accept ()
    kex(_([[It takes a while before he continues.
 "Compared to the vastness of all the universe, we are completely insignificant. Our sorrows and glories go unheard and seemingly devoid of all meaning."]]))
    kex(_([["Coming to terms with one's own significance does give a clarity of mind and make clear one's deepest desires. What has to be done then becomes clear."]]))
-   vn.sfxEerie()
    kex(_([[Without blinking Kex states "I need you to kill Strangelove."]]))
    vn.menu{
       { _("Accept"), "accept" },
