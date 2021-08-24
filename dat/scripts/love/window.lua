@@ -53,6 +53,7 @@ function window.setMode( width, height, flags )
    end
    return true
 end
+function window.isOpen() return true end
 function window.getDisplayCount() return 1 end
 function window.getDisplayName( displayindex ) return "Naev" end
 function window.getDesktopDimensions() return naev.gfx.dim() end
@@ -61,7 +62,7 @@ function window.getWidth() return love.w end
 function window.getHeight() return love.h end
 function window.getDPIScale()
    local w,h,scale = naev.gfx.dim()
-   return scale
+   return 1/scale
 end
 function window.getMode()
    return love.w, love.h, { fullscreen=love.fullscreen, vsync=1, resizeable=false, borderless = false, centered=true, display=1, msaa=0 }
