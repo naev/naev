@@ -18,13 +18,26 @@
 
 #include "nlua_audio.h"
 
+#include "AL/efx-presets.h"
+
 #include "conf.h"
+#include "array.h"
 #include "nlua_vec2.h"
 #include "nluadef.h"
 #include "nlua_file.h"
 #include "nstring.h"
 #include "sound.h"
 #include "sound_openal.h"
+
+
+typedef struct LuaAudioEfx_s {
+   char *name;
+   ALuint effect;
+   ALuint slot;
+} LuaAudioEfx_t;
+
+
+static LuaAudioEfx_t *lua_efx = NULL;
 
 
 /* Audio methods. */
@@ -51,6 +64,8 @@ static int audioL_setLooping( lua_State *L );
 static int audioL_isLooping( lua_State *L );
 static int audioL_setPitch( lua_State *L );
 static int audioL_getPitch( lua_State *L );
+static int audioL_setEffect( lua_State *L );
+/* Deprecated stuff. */
 static int audioL_soundPlay( lua_State *L ); /* Obsolete API, to get rid of. */
 static const luaL_Reg audioL_methods[] = {
    { "__gc", audioL_gc },
@@ -76,6 +91,8 @@ static const luaL_Reg audioL_methods[] = {
    { "isLooping", audioL_isLooping },
    { "setPitch", audioL_setPitch },
    { "getPitch", audioL_getPitch },
+   { "setEffect", audioL_setEffect },
+   /* Deprecated. */
    { "soundPlay", audioL_soundPlay }, /* Old API */
    {0,0}
 }; /**< AudioLua methods. */
@@ -834,6 +851,117 @@ static int audioL_soundPlay( lua_State *L )
       sound_playPos( sound_get(name), pos->x, pos->y, vel->x, vel->y );
    else
       sound_play( sound_get(name) );
+
+   return 0;
+}
+
+
+static void efx_setnum( lua_State *L, int pos, ALuint effect, const char *name, ALuint param, ALfloat def ) {
+   lua_getfield(L,pos,name);
+   if (lua_isnil(L,-1))
+      nalEffectf( effect, param, def );
+   else
+      nalEffectf( effect, param, luaL_checknumber(L,-1) );
+   lua_pop(L,1);
+}
+static void efx_setint( lua_State *L, int pos, ALuint effect, const char *name, ALuint param, ALint def ) {
+   lua_getfield(L,pos,name);
+   if (lua_isnil(L,-1))
+      nalEffecti( effect, param, def );
+   else
+      nalEffecti( effect, param, luaL_checkinteger(L,-1) );
+   lua_pop(L,1);
+}
+static int audioL_setEffectGlobal( lua_State *L )
+{
+   const char *name = luaL_checkstring(L,1);
+   ALuint effect, slot;
+   const char *type;
+   double volume;
+   LuaAudioEfx_t *lae;
+
+   nalGenEffects(1, &effect);
+
+   /* Get the type. */
+   lua_getfield(L,2,"type");
+   type = luaL_checkstring(L,-1);
+   lua_pop(L,1);
+
+   /* Get the volume. */
+   lua_getfield(L,2,"volume");
+   volume = luaL_checknumber(L,-1);
+   lua_pop(L,1);
+
+   /* Handle types. */
+   if (strcmp(type,"reverb")==0) {
+      const EFXEAXREVERBPROPERTIES reverb = EFX_REVERB_PRESET_GENERIC;
+      int p = 2;
+
+      nalEffecti(effect, AL_EFFECT_TYPE, AL_EFFECT_REVERB);
+
+      efx_setnum( L, p, effect, "gain", AL_REVERB_GAIN, reverb.flGain );
+      efx_setnum( L, p, effect, "highgain", AL_REVERB_GAINHF, reverb.flGainHF );
+      efx_setnum( L, p, effect, "density", AL_REVERB_DENSITY, reverb.flDensity );
+      efx_setnum( L, p, effect, "diffusion", AL_REVERB_DIFFUSION, reverb.flDiffusion );
+      efx_setnum( L, p, effect, "decaytime", AL_REVERB_DECAY_TIME, reverb.flDecayTime );
+      efx_setnum( L, p, effect, "decayhighratio", AL_REVERB_DECAY_HFRATIO, reverb.flDecayHFRatio );
+      efx_setnum( L, p, effect, "earlygain", AL_REVERB_REFLECTIONS_GAIN, reverb.flReflectionsGain );
+      efx_setnum( L, p, effect, "earlydelay", AL_REVERB_REFLECTIONS_DELAY, reverb.flReflectionsDelay );
+      efx_setnum( L, p, effect, "lategain", AL_REVERB_LATE_REVERB_GAIN, reverb.flLateReverbGain );
+      efx_setnum( L, p, effect, "latedelay", AL_REVERB_LATE_REVERB_DELAY, reverb.flLateReverbDelay );
+      efx_setnum( L, p, effect, "roomrolloff", AL_REVERB_ROOM_ROLLOFF_FACTOR, reverb.flRoomRolloffFactor );
+      efx_setnum( L, p, effect, "airabsorption", AL_REVERB_AIR_ABSORPTION_GAINHF, reverb.flAirAbsorptionGainHF );
+      efx_setint( L, p, effect, "highlimit", AL_REVERB_DECAY_HFLIMIT, reverb.iDecayHFLimit );
+   }
+
+   nalGenAuxiliaryEffectSlots( 1, &slot );
+   nalAuxiliaryEffectSlotf( slot, AL_EFFECTSLOT_GAIN, volume );
+   nalAuxiliaryEffectSloti( slot, AL_EFFECTSLOT_EFFECT, effect );
+
+   /* Add to array. */
+   if (lua_efx == NULL)
+      lua_efx = array_create( LuaAudioEfx_t );
+   lae = &array_grow( &lua_efx );
+   lae->name   = strdup( name );
+   lae->effect = effect;
+   lae->slot   = slot;
+
+   return 0;
+}
+
+
+/**
+ * @brief Sets effect stuff.
+ */
+static int audioL_setEffect( lua_State *L )
+{
+   if (al_info.efx == AL_FALSE) {
+      lua_pushboolean(L,1);
+      return 1;
+   }
+
+   /* Creating new effect. */
+   if (!lua_isaudio(L,1))
+      return audioL_setEffectGlobal(L);
+
+   LuaAudio_t *la = luaL_checkaudio(L,1);
+   const char *name = luaL_checkstring(L,2);
+   int enable = (lua_isnoneornil(L,3)) ? 1 : lua_toboolean(L,3);
+   LuaAudioEfx_t *lae;
+
+   if (enable) {
+      lae = NULL;
+      for (int i=0; i<array_size(lua_efx); i++) {
+         if (strcmp(name,lua_efx[i].name)==0) {
+            lae = &lua_efx[i];
+            break;
+         }
+      }
+      /* TODO allow more effect slots. */
+      alSource3i( la->source, AL_AUXILIARY_SEND_FILTER, lae->slot, 0, AL_FILTER_NULL );
+   }
+   else
+      alSource3i( la->source, AL_AUXILIARY_SEND_FILTER, AL_EFFECTSLOT_NULL, 0, AL_FILTER_NULL );
 
    return 0;
 }
