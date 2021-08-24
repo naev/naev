@@ -124,10 +124,10 @@ function graphics.Image:setWrap( horiz, vert, depth )
    self.wrapd = depth
 end
 function graphics.Image:getWrap() return self.wraph, self.wrapv, self.wrapd end
-function graphics.Image:getDimensions() return self.w, self.h end
-function graphics.Image:getWidth() return self.w end
-function graphics.Image:getHeight() return self.h end
-function graphics.Image:getDPIScale() return self.s end
+function graphics.Image:getDimensions() return self.w*self.s, self.h*self.s end
+function graphics.Image:getWidth() return self.w*self.s end
+function graphics.Image:getHeight() return self.h*self.s end
+function graphics.Image:getDPIScale() return 1/self.s end
 function graphics.Image:draw( ... )
    local arg = {...}
    local w = self.w
