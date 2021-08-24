@@ -619,7 +619,7 @@ function graphics.newCanvas( width, height, settings )
    width  = width or nw
    height = height or nh
    local dpiscale = settings.dpiscale or graphics.getDPIScale()
-   c.canvas = naev.canvas.new( width*dpiscale, height*dpiscale)
+   c.canvas = naev.canvas.new( width*dpiscale, height*dpiscale )
    c.w = width
    c.h = height
    c.s = 1/dpiscale
