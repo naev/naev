@@ -77,6 +77,7 @@ typedef struct glFontTex_s {
 typedef struct glFontGlyph_s {
    uint32_t codepoint; /**< Real character. */
    GLfloat adv_x; /**< X advancement on the screen. */
+   GLfloat m; /**< Number of distance units corresponding to 1 "pixel". */
    int ft_index; /**< HACK: Index into the array of fallback fonts. */
    int tex_index; /**< Might be on different texture. */
    GLushort vbo_id; /**< VBO index to use. */
@@ -96,6 +97,7 @@ typedef struct font_char_s {
    int off_x; /**< X offset when rendering. */
    int off_y; /**< Y offset when rendering. */
    GLfloat adv_x; /**< X advancement on the screen. */
+   GLfloat m; /**< Number of distance units corresponding to 1 "pixel". */
    int tx; /**< Texture x position. */
    int ty; /**< Texture y position. */
    int tw; /**< Texture width. */
@@ -1119,6 +1121,7 @@ static int font_makeChar( glFontStash *stsh, font_char_t *c, uint32_t ch )
    FT_GlyphSlot slot;
    FT_UInt glyph_index;
    int i, u,v, w,h, rw,rh, len, b;
+   double vmax;
    glFontStashFreetype *ft;
    GLubyte *buffer;
 
@@ -1162,6 +1165,7 @@ static int font_makeChar( glFontStash *stsh, font_char_t *c, uint32_t ch )
          rh = h;
          c->data = malloc( sizeof(GLubyte) * w*h );
          memset( c->data, 0, sizeof(GLubyte) * w*h );
+	 vmax = 1.0; /* arbitrary */
       }
       else {
          /* Create a larger image using an extra border and center glyph. */
@@ -1173,12 +1177,12 @@ static int font_makeChar( glFontStash *stsh, font_char_t *c, uint32_t ch )
             for (u=0; u<w; u++)
                buffer[ (b+v)*rw+(b+u) ] = bitmap.buffer[ v*w+u ];
          /* Compute signed fdistance field with buffered glyph. */
-         c->dataf = make_distance_mapbf( buffer, rw, rh,
-               (double)(MAX_EFFECT_RADIUS*FONT_DISTANCE_FIELD_SIZE) / stsh->h);
+         c->dataf = make_distance_mapbf( buffer, rw, rh, &vmax );
          free( buffer );
       }
       c->w     = rw;
       c->h     = rh;
+      c->m     = FONT_DISTANCE_FIELD_SIZE / (2. * vmax * stsh->h);
       c->off_x = slot->bitmap_left-b;
       c->off_y = slot->bitmap_top +b;
       c->adv_x = (GLfloat)slot->metrics.horiAdvance / 64.;
@@ -1322,6 +1326,7 @@ static glFontGlyph* gl_fontGetGlyph( glFontStash *stsh, uint32_t ch )
    glyph = &array_grow( &stsh->glyphs );
    glyph->codepoint = ch;
    glyph->adv_x = ft_char.adv_x;
+   glyph->m = ft_char.m;
    glyph->ft_index = ft_char.ft_index;
    glyph->next  = -1;
    idx = glyph - stsh->glyphs;
@@ -1429,6 +1434,7 @@ static int gl_fontRenderGlyph( glFontStash* stsh, uint32_t ch, const glColour *c
    /* Activate texture. */
    glBindTexture(GL_TEXTURE_2D, stsh->tex[glyph->tex_index].id);
 
+   glUniform1f(shaders.font.m, glyph->m);
    gl_Matrix4_Uniform(shaders.font.projection, font_projection_mat);
 
    /* Draw the element. */
