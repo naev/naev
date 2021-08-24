@@ -928,7 +928,7 @@ static int audioL_setEffectGlobal( lua_State *L )
       efx_setnum( L, p, effect, "bandwidth", AL_DISTORTION_EQBANDWIDTH ); /* 80.0 to 24000.0 (3600.0) */
    }
    else if (strcmp(type,"chorus")==0) {
-      nalEffectf(effect, AL_EFFECT_TYPE, AL_EFFECT_CHORUS);
+      nalEffecti(effect, AL_EFFECT_TYPE, AL_EFFECT_CHORUS);
 
       efx_setint( L, p, effect, "waveform", AL_CHORUS_WAVEFORM ); /* 0=sin, 1=triangle (1) */
       efx_setint( L, p, effect, "phase", AL_CHORUS_PHASE ); /* -180 to 180 (90) */
@@ -936,6 +936,11 @@ static int audioL_setEffectGlobal( lua_State *L )
       efx_setnum( L, p, effect, "depth",  AL_CHORUS_DEPTH ); /* 0.0 to 1.0 (0.1) */
       efx_setnum( L, p, effect, "feedback",  AL_CHORUS_FEEDBACK ); /* -1.0 to 1.0 (0.25) */
       efx_setnum( L, p, effect, "delay", AL_CHORUS_DELAY ); /* 0.0 to 0.016 (0.016) */
+   }
+   else if (strcmp(type,"compressor")==0) {
+      nalEffecti(effect, AL_EFFECT_TYPE, AL_EFFECT_COMPRESSOR);
+
+      efx_setbool( L, p, effect, "enable", AL_COMPRESSOR_ONOFF ); /* AL_FALSE or AL_TRUE (AL_TRUE) */
    }
    else {
       soundUnlock();
