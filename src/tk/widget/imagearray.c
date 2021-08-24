@@ -570,7 +570,8 @@ static void iar_scroll( Widget* iar, int direction )
    if (iar->dat.iar.fptr)
       iar->dat.iar.fptr( iar->wdw, iar->name );
 
-   iar_mmove( iar, iar->dat.iar.mx, iar->dat.iar.my, 0, 0 );
+   if (direction != 0)
+      iar_mmove( iar, iar->dat.iar.mx, iar->dat.iar.my, 0, 0 );
 }
 
 
