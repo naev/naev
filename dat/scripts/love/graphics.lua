@@ -613,19 +613,21 @@ end
 graphics.Canvas = class.inheritsFrom( object.Drawable )
 graphics.Canvas._type = "Canvas"
 function graphics.newCanvas( width, height, settings )
+   settings = settings or {}
    local c = graphics.Canvas.new()
    local nw, nh, ns = naev.gfx.dim()
    width  = width or nw
    height = height or nh
-   c.canvas = naev.canvas.new( width/ns, height/ns )
+   local dpiscale = settings.dpiscale or graphics.getDPIScale()
+   c.canvas = naev.canvas.new( width*dpiscale, height*dpiscale)
    c.w = width
    c.h = height
-   c.s = ns
+   c.s = 1/dpiscale
    -- Set texture
    local t = graphics.Image.new()
    t.tex = c.canvas:getTex()
    t.w, t.h = t.tex:dim()
-   t.s = ns
+   t.s = c.s
    t:setFilter( graphics._minfilter, graphics._magfilter )
    t:setWrap( graphics._wraph, graphics._wrapv, graphics._wrapd )
    c.t = t
@@ -658,6 +660,10 @@ function graphics.Canvas:getDPIScale(...)return 1/self.s end
 --]]
 function graphics.isGammaCorrect() return true end
 function graphics.isActive() return true end
+function graphics.getDPIScale()
+   local w,h,scale = naev.gfx.dim()
+   return 1/scale
+end
 
 
 -- Set some sane defaults.
