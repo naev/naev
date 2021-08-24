@@ -889,7 +889,10 @@ static int audioL_setEffectGlobal( lua_State *L )
 
    /* Get the volume. */
    lua_getfield(L,2,"volume");
-   volume = luaL_checknumber(L,-1);
+   if (lua_isnil(L,-1))
+      volume = -1.;
+   else
+      volume = luaL_checknumber(L,-1);
    lua_pop(L,1);
 
    /* Handle types. */
@@ -913,15 +916,26 @@ static int audioL_setEffectGlobal( lua_State *L )
       efx_setnum( L, p, effect, "airabsorption", AL_REVERB_AIR_ABSORPTION_GAINHF, reverb.flAirAbsorptionGainHF );
       efx_setint( L, p, effect, "highlimit", AL_REVERB_DECAY_HFLIMIT, reverb.iDecayHFLimit );
    }
+   else
+      NLUA_ERROR(L, _("Usupported audio effect type '%s'!"), type);
 
    nalGenAuxiliaryEffectSlots( 1, &slot );
-   nalAuxiliaryEffectSlotf( slot, AL_EFFECTSLOT_GAIN, volume );
+   if (volume > 0.)
+      nalAuxiliaryEffectSlotf( slot, AL_EFFECTSLOT_GAIN, volume );
    nalAuxiliaryEffectSloti( slot, AL_EFFECTSLOT_EFFECT, effect );
 
-   /* Add to array. */
+   /* Find or add to array as necessary. */
    if (lua_efx == NULL)
       lua_efx = array_create( LuaAudioEfx_t );
-   lae = &array_grow( &lua_efx );
+   lae = NULL;
+   for (int i=0; i<array_size(lua_efx); i++) {
+      if (strcmp(name,lua_efx[i].name)==0) {
+         lae = &lua_efx[i];
+         break;
+      }
+   }
+   if (lae == NULL)
+      lae = &array_grow( &lua_efx );
    lae->name   = strdup( name );
    lae->effect = effect;
    lae->slot   = slot;
@@ -957,12 +971,17 @@ static int audioL_setEffect( lua_State *L )
             break;
          }
       }
+      if (lae == NULL) {
+         WARN(_("Unknown audio effect '%s'!"), name);
+         return 0;
+      }
       /* TODO allow more effect slots. */
       alSource3i( la->source, AL_AUXILIARY_SEND_FILTER, lae->slot, 0, AL_FILTER_NULL );
    }
    else
       alSource3i( la->source, AL_AUXILIARY_SEND_FILTER, AL_EFFECTSLOT_NULL, 0, AL_FILTER_NULL );
 
-   return 0;
+   lua_pushboolean(L,1);
+   return 1;
 }
 
