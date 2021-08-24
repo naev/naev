@@ -190,6 +190,9 @@ She starts eating the parfait, which seems to be larger than her head.]]))
       vn.jump( "menu" )
 
       vn.label( "nodrink" )
+      vn.func( function ()
+         var.push("maikki_gave_drink",nil)
+      end )
       maikki(_([["The truth is I am looking for my father. He disappeared when I was a little girl and I don't even remember a single memory of him."]]))
 
    else

@@ -147,7 +147,6 @@ They grin at you.]]), mainsys))
    vn.menu( function ()
       local opts = {
          {_("Ask about the job"), "job"},
-         -- TODO add some other more info text
          {_("Are you pirates?"), "pirate"},
          {_("Leave"), "leave"},
       }

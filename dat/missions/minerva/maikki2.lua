@@ -216,6 +216,9 @@ She winks at you.]]))
 
       vn.label("dosome")
       maikki(_([["i thought that after your experience in the nebula you would understand how dangerous this can get."]]))
+      vn.func( function ()
+         var.push("maikki_response",nil)
+      end )
       vn.jump("introcont")
 
       vn.label("donone")

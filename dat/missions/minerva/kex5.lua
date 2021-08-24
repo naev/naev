@@ -300,6 +300,7 @@ function landed_lab ()
    vn.clear()
    vn.scene()
    vn.transition()
+   vn.na(_("You once again land on Strangelove's Laboratory, which "))
    vn.run()
 
    -- Take off
@@ -332,5 +333,6 @@ function strangelove_board ()
    -- TODO small scene
    vn.run()
 
-   misn_state = 2
+   misn_state = 3
+   player.unboard()
 end

@@ -213,4 +213,13 @@ function minerva.maikki_mood_get()
    return mood
 end
 
+--[[
+List of mission variables:
+
+- maikki_gave_drink (true, nil)
+- maikki_response ("yes", "no", nil)
+- maikki_scavengers_alive (true, nil)
+
+--]]
+
 return minerva
