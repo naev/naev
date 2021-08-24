@@ -957,7 +957,15 @@ static int audioL_setEffectGlobal( lua_State *L )
 
 
 /**
- * @brief Sets effect stuff.
+ * @brief Sets effect stuff, behaves different if the first paramater is a source or not.
+ *
+ * @usage audio.setEffect( "reverb", { type="reverb" } )
+ * @usage source:setEffect( "reverb" )
+ *
+ *    @luatparam string name Name of the effect.
+ *    @luatparam table|boolean params Parameter table of the effect if not applied to the source, or whether or not to enable it on the source otherwise.
+ *    @luatreturn boolean true on success.
+ * @luafunc setEffect
  */
 static int audioL_setEffect( lua_State *L )
 {
