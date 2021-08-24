@@ -857,19 +857,15 @@ static int audioL_soundPlay( lua_State *L )
 }
 
 
-static void efx_setnum( lua_State *L, int pos, ALuint effect, const char *name, ALuint param, ALfloat def ) {
+static void efx_setnum( lua_State *L, int pos, ALuint effect, const char *name, ALuint param ) {
    lua_getfield(L,pos,name);
-   if (lua_isnil(L,-1))
-      nalEffectf( effect, param, def );
-   else
+   if (!lua_isnil(L,-1))
       nalEffectf( effect, param, luaL_checknumber(L,-1) );
    lua_pop(L,1);
 }
-static void efx_setint( lua_State *L, int pos, ALuint effect, const char *name, ALuint param, ALint def ) {
+static void efx_setint( lua_State *L, int pos, ALuint effect, const char *name, ALuint param ) {
    lua_getfield(L,pos,name);
-   if (lua_isnil(L,-1))
-      nalEffecti( effect, param, def );
-   else
+   if (!lua_isnil(L,-1))
       nalEffecti( effect, param, luaL_checkinteger(L,-1) );
    lua_pop(L,1);
 }
@@ -900,32 +896,30 @@ static int audioL_setEffectGlobal( lua_State *L )
 
    /* Handle types. */
    if (strcmp(type,"reverb")==0) {
-      const EFXEAXREVERBPROPERTIES reverb = EFX_REVERB_PRESET_GENERIC;
-
       nalEffecti(effect, AL_EFFECT_TYPE, AL_EFFECT_REVERB);
 
-      efx_setnum( L, p, effect, "gain", AL_REVERB_GAIN, reverb.flGain );
-      efx_setnum( L, p, effect, "highgain", AL_REVERB_GAINHF, reverb.flGainHF );
-      efx_setnum( L, p, effect, "density", AL_REVERB_DENSITY, reverb.flDensity );
-      efx_setnum( L, p, effect, "diffusion", AL_REVERB_DIFFUSION, reverb.flDiffusion );
-      efx_setnum( L, p, effect, "decaytime", AL_REVERB_DECAY_TIME, reverb.flDecayTime );
-      efx_setnum( L, p, effect, "decayhighratio", AL_REVERB_DECAY_HFRATIO, reverb.flDecayHFRatio );
-      efx_setnum( L, p, effect, "earlygain", AL_REVERB_REFLECTIONS_GAIN, reverb.flReflectionsGain );
-      efx_setnum( L, p, effect, "earlydelay", AL_REVERB_REFLECTIONS_DELAY, reverb.flReflectionsDelay );
-      efx_setnum( L, p, effect, "lategain", AL_REVERB_LATE_REVERB_GAIN, reverb.flLateReverbGain );
-      efx_setnum( L, p, effect, "latedelay", AL_REVERB_LATE_REVERB_DELAY, reverb.flLateReverbDelay );
-      efx_setnum( L, p, effect, "roomrolloff", AL_REVERB_ROOM_ROLLOFF_FACTOR, reverb.flRoomRolloffFactor );
-      efx_setnum( L, p, effect, "airabsorption", AL_REVERB_AIR_ABSORPTION_GAINHF, reverb.flAirAbsorptionGainHF );
-      efx_setint( L, p, effect, "highlimit", AL_REVERB_DECAY_HFLIMIT, reverb.iDecayHFLimit );
+      efx_setnum( L, p, effect, "gain", AL_REVERB_GAIN );
+      efx_setnum( L, p, effect, "highgain", AL_REVERB_GAINHF );
+      efx_setnum( L, p, effect, "density", AL_REVERB_DENSITY );
+      efx_setnum( L, p, effect, "diffusion", AL_REVERB_DIFFUSION );
+      efx_setnum( L, p, effect, "decaytime", AL_REVERB_DECAY_TIME );
+      efx_setnum( L, p, effect, "decayhighratio", AL_REVERB_DECAY_HFRATIO );
+      efx_setnum( L, p, effect, "earlygain", AL_REVERB_REFLECTIONS_GAIN );
+      efx_setnum( L, p, effect, "earlydelay", AL_REVERB_REFLECTIONS_DELAY );
+      efx_setnum( L, p, effect, "lategain", AL_REVERB_LATE_REVERB_GAIN );
+      efx_setnum( L, p, effect, "latedelay", AL_REVERB_LATE_REVERB_DELAY );
+      efx_setnum( L, p, effect, "roomrolloff", AL_REVERB_ROOM_ROLLOFF_FACTOR );
+      efx_setnum( L, p, effect, "airabsorption", AL_REVERB_AIR_ABSORPTION_GAINHF );
+      efx_setint( L, p, effect, "highlimit", AL_REVERB_DECAY_HFLIMIT );
    }
    else if (strcmp(type,"distortion")==0) {
       nalEffecti(effect, AL_EFFECT_TYPE, AL_EFFECT_DISTORTION);
 
-      efx_setnum( L, p, effect, "gain", AL_DISTORTION_GAIN, 0.2 ); /* 0.01 to 1.0 */
-      efx_setnum( L, p, effect, "edge", AL_DISTORTION_EDGE, 0.05 ); /* 0.0 to 1.0 */
-      efx_setnum( L, p, effect, "lowcut", AL_DISTORTION_LOWPASS_CUTOFF, 8000. ); /* 80.0 to 24000.0 */
-      efx_setnum( L, p, effect, "center", AL_DISTORTION_EQCENTER, 3600. ); /* 80.0 to 24000.0 */
-      efx_setnum( L, p, effect, "bandwidth", AL_DISTORTION_EQBANDWIDTH, 3600. ); /* 80.0 to 24000.0 */
+      efx_setnum( L, p, effect, "gain", AL_DISTORTION_GAIN ); /* 0.01 to 1.0 (0.2) */
+      efx_setnum( L, p, effect, "edge", AL_DISTORTION_EDGE ); /* 0.0 to 1.0 (0.05) */
+      efx_setnum( L, p, effect, "lowcut", AL_DISTORTION_LOWPASS_CUTOFF ); /* 80.0 to 24000.0 (8000.0) */
+      efx_setnum( L, p, effect, "center", AL_DISTORTION_EQCENTER ); /* 80.0 to 24000.0 (3600.0) */
+      efx_setnum( L, p, effect, "bandwidth", AL_DISTORTION_EQBANDWIDTH ); /* 80.0 to 24000.0 (3600.0) */
    }
    else {
       soundUnlock();
