@@ -277,6 +277,7 @@ function graphics.getDefaultFilter()
    return graphics._minfilter, graphics._magfilter, graphics._anisotropy
 end
 function graphics.setBlendMode( mode, alphamode )
+   alphamode = alphamode or "alphamultiply"
    naev.gfx.setBlendMode( mode, alphamode )
    graphics._mode = mode
    graphics._alphamode = alphamode
@@ -679,8 +680,9 @@ graphics.origin()
 graphics._shader_default = graphics.newShader( _pixelcode, _vertexcode )
 graphics.setShader( graphics._shader_default )
 graphics.setCanvas( nil )
-graphics._mode = "alpha"
-graphics._alphamode = "alphamultiply"
+--graphics._mode = "alpha"
+--graphics._alphamode = "alphamultiply"
+graphics.setBlendMode( "alpha" )
 graphics.setScissor()
 
 return graphics
