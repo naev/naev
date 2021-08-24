@@ -29,6 +29,8 @@ void print_params( const char *name, const EFXEAXREVERBPROPERTIES *p )
    print_p( "latedelay", p->flLateReverbDelay, 0.011 );
    print_p( "roomrolloff", p->flRoomRolloffFactor, 0.0 );
    print_p( "airabsorption", p->flAirAbsorptionGainHF, 0.994 );
+   if (p->iDecayHFLimit != AL_TRUE)
+      printf( "   %s=%d,\n", "highlimit", p->iDecayHFLimit );
    printf( "}\n" );
    
    /* highlimit */
