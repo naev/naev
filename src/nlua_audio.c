@@ -863,6 +863,12 @@ static void efx_setnum( lua_State *L, int pos, ALuint effect, const char *name, 
       nalEffectf( effect, param, luaL_checknumber(L,-1) );
    lua_pop(L,1);
 }
+static void efx_setint( lua_State *L, int pos, ALuint effect, const char *name, ALuint param ) {
+   lua_getfield(L,pos,name);
+   if (!lua_isnil(L,-1))
+      nalEffectf( effect, param, luaL_checkinteger(L,-1) );
+   lua_pop(L,1);
+}
 static void efx_setbool( lua_State *L, int pos, ALuint effect, const char *name, ALuint param ) {
    lua_getfield(L,pos,name);
    if (!lua_isnil(L,-1))
@@ -920,6 +926,16 @@ static int audioL_setEffectGlobal( lua_State *L )
       efx_setnum( L, p, effect, "lowcut", AL_DISTORTION_LOWPASS_CUTOFF ); /* 80.0 to 24000.0 (8000.0) */
       efx_setnum( L, p, effect, "center", AL_DISTORTION_EQCENTER ); /* 80.0 to 24000.0 (3600.0) */
       efx_setnum( L, p, effect, "bandwidth", AL_DISTORTION_EQBANDWIDTH ); /* 80.0 to 24000.0 (3600.0) */
+   }
+   else if (strcmp(type,"chorus")==0) {
+      nalEffectf(effect, AL_EFFECT_TYPE, AL_EFFECT_CHORUS);
+
+      efx_setint( L, p, effect, "waveform", AL_CHORUS_WAVEFORM ); /* 0=sin, 1=triangle (1) */
+      efx_setint( L, p, effect, "phase", AL_CHORUS_PHASE ); /* -180 to 180 (90) */
+      efx_setnum( L, p, effect, "rate",  AL_CHORUS_RATE ); /* 0.0 to 10.0 (1.1) */
+      efx_setnum( L, p, effect, "depth",  AL_CHORUS_DEPTH ); /* 0.0 to 1.0 (0.1) */
+      efx_setnum( L, p, effect, "feedback",  AL_CHORUS_FEEDBACK ); /* -1.0 to 1.0 (0.25) */
+      efx_setnum( L, p, effect, "delay", AL_CHORUS_DELAY ); /* 0.0 to 0.016 (0.016) */
    }
    else {
       soundUnlock();
