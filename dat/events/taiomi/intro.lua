@@ -23,7 +23,6 @@ local love_shaders = require "love_shaders"
 local graphics = require 'love.graphics'
 local taiomi = require 'campaigns.taiomi'
 
-logidstr = taiomi.log.main.idstr
 
 --[[
 -- Event states:
