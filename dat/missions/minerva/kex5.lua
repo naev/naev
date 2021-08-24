@@ -207,7 +207,7 @@ function enter ()
          mem.comm_no = _("No response.")
          hook.pilot( p, "board", "strangelove_board" )
          strangelove_ship = p
-         hook.timer( 5, "strangelove_hail" )
+         hook.timer( 10, "strangelove_hail" )
 
          -- Remove station
          diff.remove( eccdiff )
@@ -297,10 +297,63 @@ function thugs_cleared ()
 end
 
 function landed_lab ()
+   local check_living = false
+   local check_rr = false
+   local check_back = false
+
    vn.clear()
    vn.scene()
    vn.transition()
-   vn.na(_("You once again land on Strangelove's Laboratory, which "))
+   vn.na(_("Your ship sensors indicate that Strangelove's Laboratory is no longer pressurized and without an atmosphere, so you don your space suit before entering."))
+   vn.na(_("The first thing you notice is that the laboratory has been ravaged, likely by the Bounty Hunters you encountered outside. The place was already a mess the last time you came, but now you have to jump over obstacles as you progress through the laboratory."))
+
+   vn.label("menu")
+   vn.func( function ()
+      if check_living and check_rr and check_back then
+         vn.jump("check_done")
+      end
+   end )
+   vn.menu( function ()
+      local opts = {}
+      if not check_living then
+         table.insert( opts, {_("Check the Living Quarters"), "living" } )
+      end
+      if not check_rr then
+         table.insert( opts, {_("Check the Recreation Room"), "recreation" } )
+      end
+      if not check_back then
+         table.insert( opts, {_("Check the Back Room"), "back" } )
+      end
+   end )
+
+   vn.label("living")
+   vn.na(_("You make your way through a nearly impassible very tight passageway towards the living quarters. Although it is a mess, you don't really see any signs of anyone living here, it rather seems all abandoned."))
+   vn.na(_("Eventually you reach a really small room with a bed capsule. The ground and bed are splattered in blood, but it seems very old and dessicated. Some empty medicinal syringes and pouches are scattered on the floor."))
+   vn.na(_("You turn over everything, but find nothing of interest."))
+   vn.func( function () check_living = true end )
+   vn.jump("menu")
+
+   vn.label("recreation")
+   vn.na(_("You head towards and eventually reach the recreation room, which has been completely trashed. Even pieces of the wall have been ripped out, revealing shoddy cable connections and lots of weird mold."))
+   vn.na(_("Looking around, you find that the hologram projector you used last time is, unsurprisingly,  completely wrecked. It doesn't seem like you'll be able to use it to get in touch with Dr. Strangelove anymore."))
+   vn.na(_("Try as you might, you are unable to find anything of interest."))
+   vn.func( function () check_rr = true end )
+   vn.jump("menu")
+
+   vn.label("back")
+   vn.na(_([[You find a tunnel leading towards the back room. It seems to have been once blocked off, but now has been torn wide open. You ignore the "KEEP OUT" sign that is bent up underfoot and make your way through.]]))
+   vn.na(_("The tunnel twists and turns as it heads towards the center of the asteroid. There is no lighting the entire way, so you rely on the lamps of your suit."))
+   vn.na(_("Eventually you reach a room at the core of the asteroid. It is fairly large compared to the rest of the laboratory, but is jammed with junk and rubbish, lots of which has been recently moved around."))
+   vn.na(_("You start to sift through the things to try to find something of interest, but after a long time of looking around and not making significant progress given the large amounts of stuff, you decide to take a break and set on a fallen bookcase."))
+   vn.na(_("As you survey the room, you notice a small movement next to your feet. The motion is small that you can only notice it by being still nearby. Slowly and carefully you lift up some debris to uncover a small and heavily damaged droid."))
+   vn.na(_("You pick up the droid and dust it off. The primary lens and hover engine seem completely damaged, but it does seem like it still has power and likely data in it. You try to interface to it, but it seems to be locked with strong encryption. You pocket it as it seems like it might be something of interest to Kex."))
+   vn.na(_("You get back to searching around the stuff and end up finding nothing else of interest."))
+   vn.func( function () check_back = true end )
+   vn.jump("menu")
+
+   vn.menu("check_done")
+   vn.na(_("You spend your time to go carefully through the entire station, but it ends up being mainly in vain: Dr. Strangelove is no where to be found. At least you found a droid that might be useful."))
+   vn.na(_("You let out a sigh as you head outside. Maybe Dr. Strangelove escaped somewhere else?"))
    vn.run()
 
    -- Take off
