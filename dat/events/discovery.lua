@@ -396,7 +396,7 @@ vec4 effect( vec4 color, Image tex, vec2 uv, vec2 px )
       n += snoise( px * u_sharp * 0.003 * m + 1000.0 * u_r ) * (1.0 / m);
    }
 
-   texcolor *= 0.4*n+0.8;
+   texcolor.a *= 0.4*n+0.8;
    texcolor.a *= vignette( uv );
    texcolor.rgb *= 0.0;
 
@@ -451,16 +451,6 @@ function textfg ()
    lg.draw( textcanvas, x, y )
    if progress then
       lg.setShader()
-   end
-
-   -- Horrible hack, but since the canvas is being scaled by Naev's scale stuff,
-   -- we actually draw pretty text ontop using the signed distance transform shader
-   -- when it is fully drawn
-   if not progress then
-      lg.print( title.text, title.font, x+title.x, y+title.y )
-      if subtitle then
-         lg.print( subtitle.text, subtitle.font, x+subtitle.x, y+subtitle.y )
-      end
    end
 end
 function textupdate( dt, real_dt )
