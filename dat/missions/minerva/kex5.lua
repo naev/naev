@@ -139,6 +139,9 @@ function enter ()
          table.insert( thugs, choose_one{ "Ancestor", "Lancelot" } )
          table.insert( thugs, choose_one{ "Ancestor", "Lancelot" } )
       end
+      if misn_state==0 then
+         table.insert( thugs, 1, "Vigilance" )
+      end
       local fbh = faction.dynAdd( "Mercenary", "kex_bountyhunter", _("Bounty Hunter"), {ai="mercenary"} )
       thug_pilots = {}
       for k,v in ipairs(thugs) do
@@ -326,6 +329,7 @@ function landed_lab ()
       if not check_back then
          table.insert( opts, {_("Check the Back Room"), "back" } )
       end
+      return opts
    end )
 
    vn.label("living")
