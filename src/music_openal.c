@@ -680,7 +680,7 @@ void music_al_free (void)
       music_command = MUSIC_CMD_STOP;
       music_forced  = 1;
 
-      SDL_CondWait( music_state_cond, music_state_lock );
+      SDL_CondWaitTimeout( music_state_cond, music_state_lock, 3000 );
       if (music_state == MUSIC_STATE_IDLE)
          music_forced = 0;
    }
