@@ -904,19 +904,19 @@ static int audioL_setEffectGlobal( lua_State *L )
    if (strcmp(type,"reverb")==0) {
       nalEffecti(effect, AL_EFFECT_TYPE, AL_EFFECT_REVERB);
 
-      efx_setnum( L, p, effect, "gain", AL_REVERB_GAIN );
-      efx_setnum( L, p, effect, "highgain", AL_REVERB_GAINHF );
-      efx_setnum( L, p, effect, "density", AL_REVERB_DENSITY );
-      efx_setnum( L, p, effect, "diffusion", AL_REVERB_DIFFUSION );
-      efx_setnum( L, p, effect, "decaytime", AL_REVERB_DECAY_TIME );
-      efx_setnum( L, p, effect, "decayhighratio", AL_REVERB_DECAY_HFRATIO );
-      efx_setnum( L, p, effect, "earlygain", AL_REVERB_REFLECTIONS_GAIN );
-      efx_setnum( L, p, effect, "earlydelay", AL_REVERB_REFLECTIONS_DELAY );
-      efx_setnum( L, p, effect, "lategain", AL_REVERB_LATE_REVERB_GAIN );
-      efx_setnum( L, p, effect, "latedelay", AL_REVERB_LATE_REVERB_DELAY );
-      efx_setnum( L, p, effect, "roomrolloff", AL_REVERB_ROOM_ROLLOFF_FACTOR );
-      efx_setnum( L, p, effect, "airabsorption", AL_REVERB_AIR_ABSORPTION_GAINHF );
-      efx_setbool( L, p, effect, "highlimit", AL_REVERB_DECAY_HFLIMIT );
+      efx_setnum( L, p, effect, "density", AL_REVERB_DENSITY ); /* 0.0 to 1.0 (1.0) */
+      efx_setnum( L, p, effect, "diffusion", AL_REVERB_DIFFUSION ); /* 0.0 to 1.0 (1.0) */
+      efx_setnum( L, p, effect, "gain", AL_REVERB_GAIN ); /* 0.0 to 1.0 (0.32) */
+      efx_setnum( L, p, effect, "highgain", AL_REVERB_GAINHF ); /* 0.0 to 1.0 (0.89) */
+      efx_setnum( L, p, effect, "decaytime", AL_REVERB_DECAY_TIME ); /* 0.1 to 20.0 (1.49) */
+      efx_setnum( L, p, effect, "decayhighratio", AL_REVERB_DECAY_HFRATIO ); /* 0.1 to 2.0 (0.83) */
+      efx_setnum( L, p, effect, "earlygain", AL_REVERB_REFLECTIONS_GAIN ); /* 0.0 to 3.16 (0.05) */
+      efx_setnum( L, p, effect, "earlydelay", AL_REVERB_REFLECTIONS_DELAY ); /* 0.0 to 0.3 (0.007) */
+      efx_setnum( L, p, effect, "lategain", AL_REVERB_LATE_REVERB_GAIN ); /* 0.0 to 10.0 (1.26) */
+      efx_setnum( L, p, effect, "latedelay", AL_REVERB_LATE_REVERB_DELAY ); /* 0.0 to 0.1 (0.011) */
+      efx_setnum( L, p, effect, "roomrolloff", AL_REVERB_ROOM_ROLLOFF_FACTOR ); /* 0.0 to 10.0 (0.0) */
+      efx_setnum( L, p, effect, "airabsorption", AL_REVERB_AIR_ABSORPTION_GAINHF ); /* 0.892 to 1.0 (0.994) */
+      efx_setbool( L, p, effect, "highlimit", AL_REVERB_DECAY_HFLIMIT ); /* AL_FALSE or AL_TRUE (AL_TRUE) */
    }
    else if (strcmp(type,"distortion")==0) {
       nalEffecti(effect, AL_EFFECT_TYPE, AL_EFFECT_DISTORTION);
