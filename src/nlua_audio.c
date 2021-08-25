@@ -942,6 +942,15 @@ static int audioL_setEffectGlobal( lua_State *L )
 
       efx_setbool( L, p, effect, "enable", AL_COMPRESSOR_ONOFF ); /* AL_FALSE or AL_TRUE (AL_TRUE) */
    }
+   else if (strcmp(type,"echo")==0) {
+      nalEffecti(effect, AL_EFFECT_TYPE, AL_EFFECT_ECHO);
+
+      efx_setnum( L, p, effect, "delay", AL_ECHO_DELAY ); /* 0.0 to 0.207 (0.1) */
+      efx_setnum( L, p, effect, "tapdelay", AL_ECHO_LRDELAY ); /* 0.0 to 0.404 (0.1) */
+      efx_setnum( L, p, effect, "damping", AL_ECHO_DAMPING ); /* 0.0 to 0.99 (0.5) */
+      efx_setnum( L, p, effect, "feedback", AL_ECHO_FEEDBACK ); /* 0.0 to 1.0 (0.5) */
+      efx_setnum( L, p, effect, "spread", AL_ECHO_SPREAD ); /* -1.0 to 1.0 (-1.0) */
+   }
    else {
       soundUnlock();
       NLUA_ERROR(L, _("Usupported audio effect type '%s'!"), type);
