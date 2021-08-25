@@ -30,6 +30,8 @@ local function _H( x, y, r, sx, sy )
       local cw = graphics._canvas.t.w
       local ch = graphics._canvas.t.h
       H = naev.transform.ortho( 0, cw, 0, ch, 1, -1 )
+      local cs = 1/graphics._canvas.t.s
+      H = H:scale( cs, cs )
    else
       -- Rendering to screen
       H = graphics._O
@@ -97,6 +99,7 @@ function graphics.newImage( filename )
       t.tex = ttex
       t.w, t.h = ttex:dim()
       -- Set defaults
+      t.s = 1
       t:setFilter( graphics._minfilter, graphics._magfilter )
       t:setWrap( graphics._wraph, graphics._wrapv, graphics._wrapd )
       return t
@@ -121,9 +124,10 @@ function graphics.Image:setWrap( horiz, vert, depth )
    self.wrapd = depth
 end
 function graphics.Image:getWrap() return self.wraph, self.wrapv, self.wrapd end
-function graphics.Image:getDimensions() return self.w, self.h end
-function graphics.Image:getWidth() return self.w end
-function graphics.Image:getHeight() return self.h end
+function graphics.Image:getDimensions() return self.w*self.s, self.h*self.s end
+function graphics.Image:getWidth() return self.w*self.s end
+function graphics.Image:getHeight() return self.h*self.s end
+function graphics.Image:getDPIScale() return 1/self.s end
 function graphics.Image:draw( ... )
    local arg = {...}
    local w = self.w
@@ -168,7 +172,8 @@ function graphics.Image:draw( ... )
    shader:sendRaw( "love_ScreenSize", s1, s2, s3, s4 )
 
    -- Get transformation and run
-   local H = _H( x, y, r, w*sx, h*sy )
+   local s = self.s
+   local H = _H( x, y, r, w*sx*s, h*sy*s )
    naev.gfx.renderTexH( self.tex, shader, H, graphics._fgcol, TH );
 end
 
@@ -272,6 +277,7 @@ function graphics.getDefaultFilter()
    return graphics._minfilter, graphics._magfilter, graphics._anisotropy
 end
 function graphics.setBlendMode( mode, alphamode )
+   alphamode = alphamode or "alphamultiply"
    naev.gfx.setBlendMode( mode, alphamode )
    graphics._mode = mode
    graphics._alphamode = alphamode
@@ -607,17 +613,21 @@ end
 graphics.Canvas = class.inheritsFrom( object.Drawable )
 graphics.Canvas._type = "Canvas"
 function graphics.newCanvas( width, height, settings )
+   settings = settings or {}
    local c = graphics.Canvas.new()
    local nw, nh, ns = naev.gfx.dim()
    width  = width or nw
    height = height or nh
-   c.canvas = naev.canvas.new( width, height )
+   local dpiscale = settings.dpiscale or graphics.getDPIScale()
+   c.canvas = naev.canvas.new( width*dpiscale, height*dpiscale )
    c.w = width
    c.h = height
+   c.s = 1/dpiscale
    -- Set texture
    local t = graphics.Image.new()
    t.tex = c.canvas:getTex()
    t.w, t.h = t.tex:dim()
+   t.s = c.s
    t:setFilter( graphics._minfilter, graphics._magfilter )
    t:setWrap( graphics._wraph, graphics._wrapv, graphics._wrapd )
    c.t = t
@@ -639,15 +649,21 @@ function graphics.Canvas:setFilter(...)return self.t:setFilter(...) end
 function graphics.Canvas:getFilter(...)return self.t:getFilter(...) end
 function graphics.Canvas:setWrap(...)  return self.t:setWrap(...) end
 function graphics.Canvas:getWrap(...)  return self.t:getWrap(...) end
-function graphics.Canvas:getDimensions(...) return self.t:getDimensions(...) end
-function graphics.Canvas:getWidth(...) return self.t:getWidth(...) end
-function graphics.Canvas:getHeight(...)return self.t:getHeight(...) end
+function graphics.Canvas:getDimensions(...) return self.w, self.h end
+function graphics.Canvas:getWidth(...) return self.w end
+function graphics.Canvas:getHeight(...)return self.h end
+function graphics.Canvas:getDPIScale(...)return 1/self.s end
 
 
 --[[
    Misc
 --]]
 function graphics.isGammaCorrect() return true end
+function graphics.isActive() return true end
+function graphics.getDPIScale()
+   local w,h,scale = naev.gfx.dim()
+   return 1/scale
+end
 
 
 -- Set some sane defaults.
@@ -670,8 +686,9 @@ graphics.origin()
 graphics._shader_default = graphics.newShader( _pixelcode, _vertexcode )
 graphics.setShader( graphics._shader_default )
 graphics.setCanvas( nil )
-graphics._mode = "alpha"
-graphics._alphamode = "alphamultiply"
+--graphics._mode = "alpha"
+--graphics._alphamode = "alphamultiply"
+graphics.setBlendMode( "alpha" )
 graphics.setScissor()
 
 return graphics

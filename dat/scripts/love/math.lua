@@ -6,7 +6,7 @@ local prng = require 'prng'
 local object = require 'love.object'
 
 local function clamp01(x) return math.min(math.max(x, 0), 1) end
-love_math = {}
+local love_math = {}
 
 --[[
 -- Transform class
@@ -136,6 +136,17 @@ function love_math.colorFromBytes(r, g, b, a)
    b = clamp01(floor(b + 0.5) / 255)
    a = a ~= nil and clamp01(floor(a + 0.5) / 255) or nil
    return r, g, b, a
+end
+
+function love_math.gammaToLinear( r, g, b )
+   local col = naev.colour.new( r, g, b )
+   local lr, lg, lb = col:linearToGamma():rgb()
+   return lr, lg, lb
+end
+function love_math.linearToGamma( lr, lg, lb )
+   local col = naev.colour.new( lr, lg, lb )
+   local r, g, b = col:gammaToLinear():rgb()
+   return r, g, b
 end
 
 return love_math

@@ -54,11 +54,11 @@ policies, either expressed or implied, of the freetype-gl project.
  *             Negative/zero values are background pixels.
  * @param width Number of columns.
  * @param height Number of rows.
- * @param explicit_max If a positive number is passed in, saturate at that outer distance.
- * @return Allocated distance field, values ranging from 0 (outermost) to 1 (innermost).
+ * @param[out] vmax The underlying distance value corresponding to +1.0.
+ * @return Allocated distance field, values ranging from 0 (farthest inside) to 1 (greatest distance).
  */
 double *
-make_distance_mapd( double *data, unsigned int width, unsigned int height, double explicit_max )
+make_distance_mapd( double *data, unsigned int width, unsigned int height, double *vmax )
 {
     short * xdist = (short *)  malloc( width * height * sizeof(short) );
     short * ydist = (short *)  malloc( width * height * sizeof(short) );
@@ -66,7 +66,6 @@ make_distance_mapd( double *data, unsigned int width, unsigned int height, doubl
     double * gy      = (double *) calloc( width * height, sizeof(double) );
     double * outside = (double *) calloc( width * height, sizeof(double) );
     double * inside  = (double *) calloc( width * height, sizeof(double) );
-    double vmin = DBL_MAX, vmax = -DBL_MAX;
     unsigned int i;
 
     // Compute outside = edtaa3(bitmap); % Transform background (0's)
@@ -88,26 +87,20 @@ make_distance_mapd( double *data, unsigned int width, unsigned int height, doubl
             inside[i] = 0.0;
 
     // distmap = outside - inside; % Bipolar distance field
+    *vmax = 0.;
     for( i=0; i<width*height; ++i)
     {
         outside[i] -= inside[i];
-        if( outside[i] < vmin )
-            vmin = outside[i];
+        if( *vmax < fabs( outside[i] ) )
+            *vmax = fabs( outside[i] );
     }
-
-    vmax = explicit_max > 0 ? explicit_max : fabs(vmin);
 
     for( i=0; i<width*height; ++i)
     {
         double v = outside[i];
-        if ( v < vmin)
-            data[i] = 0;
-        else if( v < 0)
-            data[i] = .5-.5*outside[i]/vmin;
-        else if( v <= vmax)
-            data[i] = .5+.5*outside[i]/vmax;
-        else
-            data[i] = +1;
+        if     ( v < -*vmax) outside[i] = -*vmax;
+        else if( v > +*vmax) outside[i] = +*vmax;
+        data[i] = (outside[i]+*vmax)/(2. * *vmax);
     }
 
     free( xdist );
@@ -125,12 +118,15 @@ make_distance_mapd( double *data, unsigned int width, unsigned int height, doubl
  * @param img Pixel values, row-major order.
  * @param width Number of columns.
  * @param height Number of rows.
- * @param explicit_max If a positive number is passed in, saturate at that outer distance.
+ * @param[out] vmax The underlying distance value corresponding to +1.0.
  * @return Allocated distance field, values ranging from 0 (innermost) to 1 (outermost).
+ *         The reason for the inversion (relative to make_distance_mapd and the "signed distance"
+ *         concept) is so that these can be pasted together in a texture atlas with a buffer of
+ *         0.0 values representing "completely outside".
  */
 float*
 make_distance_mapbf( unsigned char *img,
-                    unsigned int width, unsigned int height, double explicit_max )
+                    unsigned int width, unsigned int height, double *vmax )
 {
     double * data    = (double *) calloc( width * height, sizeof(double) );
     float *out       = (float *) malloc( width * height * sizeof(float) );
@@ -154,7 +150,7 @@ make_distance_mapbf( unsigned char *img,
     for( i=0; i<width*height; ++i)
         data[i] = (img[i]-img_min)/img_max;
 
-    data = make_distance_mapd(data, width, height, explicit_max);
+    data = make_distance_mapd(data, width, height, vmax);
 
     // lower to float
     for( i=0; i<width*height; ++i)

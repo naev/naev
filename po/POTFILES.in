@@ -1104,7 +1104,6 @@ dat/assets/virtual_miner_small.xml
 dat/assets/virtual_pirate_medium.xml
 dat/assets/virtual_pirate_small.xml
 dat/assets/virtual_pirate_unpresence.xml
-dat/assets/virtual_proteron_dissident_local.xml
 dat/assets/virtual_proteron_small.xml
 dat/assets/virtual_proteron_unpresence.xml
 dat/assets/virtual_sindbad.xml
@@ -2262,10 +2261,8 @@ dat/factions/spawn/goddard.lua
 dat/factions/spawn/independent.lua
 dat/factions/spawn/lib/common.lua
 dat/factions/spawn/miner.lua
-dat/factions/spawn/nasin.lua
 dat/factions/spawn/pirate.lua
 dat/factions/spawn/proteron.lua
-dat/factions/spawn/proteron_dissident.lua
 dat/factions/spawn/sirius.lua
 dat/factions/spawn/soromid.lua
 dat/factions/spawn/thurion.lua

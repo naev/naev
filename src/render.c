@@ -109,8 +109,8 @@ static void render_fbo( double dt, GLuint fbo, GLuint tex, PPShader *shader )
       glDisableVertexAttribArray( shader->VertexTexCoord );
    glUseProgram( 0 );
 
-   /* Restore the normal mode. */
-   glBlendFuncSeparate( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
+   /* Restore the default mode. */
+   glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
 }
 
 

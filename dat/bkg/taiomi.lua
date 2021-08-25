@@ -148,7 +148,7 @@ function background ()
       sbeta = sbeta or 3
       local w = 2048
       local h = 2048
-      local cvs = lg.newCanvas( w, h )
+      local cvs = lg.newCanvas( w, h, {dpiscale=1} )
       lg.setCanvas( cvs )
       lg.clear( 0, 0, 0, 0 )
       lg.setColor( g, g, g, 1 )

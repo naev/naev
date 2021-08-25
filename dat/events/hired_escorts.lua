@@ -152,7 +152,7 @@ function createPilotNPCs ()
          newpilot.approachtext = npctext[rnd.rnd(1, #npctext)]
          local id = evt.npcAdd(
             "approachPilot", _("Pilot for Hire"), newpilot.portrait,
-            string.format(description, newpilot.ship, creditstring(newpilot.deposit), newpilot.royalty), 9 )
+            string.format(description, newpilot.ship, creditstring(newpilot.deposit), newpilot.royalty * 100), 9 )
 
          npcs[id] = newpilot
       end
