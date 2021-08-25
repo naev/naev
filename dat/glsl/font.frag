@@ -12,8 +12,8 @@ void main(void) {
    // d is the signed distance to the glyph; m is the distance value corresponding to 1 "pixel".
    float d  = 0.5 - texture(sampler, tex_coord_out).r;
    // Map the signed distance to mixing parameters for outline..foreground, transparent..opaque.
-   float alpha = smoothstep(-0.5    *m, +.5*m, -d);
-   float beta  = smoothstep(-M_SQRT2*m, -1.*m, -d);
+   float alpha = smoothstep(-0.5    *m, +0.5*m, -d);
+   float beta  = smoothstep(-M_SQRT2*m, -1.0*m, -d);
    vec4 fg_c   = mix( outline_color, color, alpha );
    color_out   = vec4( fg_c.rgb, beta*fg_c.a );
 }
