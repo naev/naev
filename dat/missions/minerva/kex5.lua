@@ -388,7 +388,7 @@ function strangelove_hail ()
 A coughing fit wracks his body.
 "There is not much time, come to my ship."]]))
    vn.na(_("The communication channel closes and you receive coordinates to a ship."))
-   vn.done( "electric" )
+   vn.done("electric")
    vn.run()
 
    strangelove_ship:setHilight(true)
@@ -396,12 +396,71 @@ A coughing fit wracks his body.
 end
 
 function strangelove_board ()
+   local kexcount = 0
+
    vn.clear()
    vn.scene()
-   vn.music( minerva.loops.strangelove )
-   local dr = vn.newCharacter( strangelove.name,
+   local dr = vn.Character.new( strangelove.name,
          { color=strangelove.colour, image=minerva.strangelove.image, } )
    -- TODO small scene
+   vn.na(_("You carefully board the ship, not sure what you are about to encounter. Trusting your systems sensors indicating a proper atmosphere in the ship, you board without your space suit. However, when you first enter the ship, a strong pungent odour makes you partially regret your decision."))
+   vn.na(_("As you move to the command room, you notice small movements from the corner of your eyes. Upon closer inspection you make out all sorts of small moving objects, reminding you of cleaning droids on most ships, however, these move in a fairly clunky fashion, as if they had some of their moving apparatus damaged."))
+   vn.na(_("You pay as little attention to the small critters, which seem harmless and proceed through the ship. After a short walk you enter the command room."))
+   love_audio.setEffect( "reverb_psychotic", reverb_preset.psychotic() )
+   vn.music( minerva.loops.strangelove, {effect="reverb_psychotic"} )
+   vn.appear(dr)
+   vn.na(_("You enter the room and meet Dr. Strangelove for the first time face-to-face. Your first impression is that more than a space ship, it looks like a hospital. Dr. Strangelove is laid out in a medical bed connected to a lot of weird machines, with a medical droid attending him. If it weren't for the fact that everything is fairly rundown and dirty, you would think you were in a planetary hospital instead of a space ship at the edge of the universe."))
+   dr(_("You take a close look at Dr. Strangelove, and he seems like a husk of what might of been formally a man. His cheekbones protrude from his pale face, and his laboratory coat seems to be a few sizes too big on his frail body. His vitals monitor also confirms your suspicion that he is more dead than alive."))
+   dr(_([["I see you were able to make it."
+He coughs violently.
+"Sorry, I haven't been feeling too well lately."
+He doesn't seem to be focusing much on you and is just talking in your general direction.]]))
+   dr(_([["It is all going well. I think we are close to a breakthrough, the next time I should be able to succeed. After all this time, finally I'll be able to see the truth!"
+His vital monitor's warning light flashes on.]]))
+   dr(_([["You were right. It was and is all connected. I should have listened to you sooner, but I was foolish and naïve."
+He lets out a sigh.]]))
+   dr(_([["I thought I almost had it with the last specimen. It was all going so smoothly… The zero-point bionimorphic interface connection went flawlessly, and the entropy flux stable was nearly stable, but the connection was never established."]]))
+   dr(_([["It could be the distance, but my calculations indicated that it shouldn't matter. It should be everywhere. Everything is everywhere! Folding onto of itself and twisted around in higher dimensions. Measly Euclidean distances shouldn't matter at all."]]))
+   dr(_([["…but it didn't work. Almost as if making a mockery of science itself and spitting in my face. Almost as if the universe itself is unwilling to give up its secrets."
+He coughs violently.
+"But it failed. Like always. It failed."]]))
+   dr(_([["Williams, why did you have to die? You know so much, you surpassed me in everything I could possibly imagine. You would have been able to make it work!"]]))
+   vn.menu{
+      {_("Ask about Kex"), "1kex"},
+      {_("Say you are sorry"), "1cont"},
+      {_("Mention he is delirious"), "1cont"},
+      {_("…"), "1cont"},
+   }
+
+   vn.label("1kex")
+   vn.func( function () kexcount = kexcount+1 end )
+   vn.label("1cont")
+   dr(_([[He goes on.
+"You were always the brightest in the class. I admired how fast you were able to solve partial differential equations so elegantly."]]))
+   dr(_([["Remember that one time we nearly caused a subatomic implosion when the hyperphased quantum autocycle hit the self-refractive frequency? Your quick thinking save us from turning the entire system into a sterile void."]]))
+   dr(_([["If only you had been with me this entire time. We could have done so much together."
+His voice tears up slightly.]]))
+   dr(_([["Why did you have to do it?"]]))
+
+   vn.menu( function ()
+      local opts = {
+         { _("Do what?"), "2cont" },
+         { _("…"), "2cont" },
+      }
+      if kexcount == 0 then
+         table.insert( opts, 1, {_("Ask about Kex"), "2kex"} )
+      else
+         table.insert( opts, 1, {_("Ask about Kex again"), "2kex"} )
+      end
+      return opts
+   end )
+
+   vn.label("2kex")
+   vn.func( function () kexcount = kexcount+1 end )
+   vn.label("2cont")
+   dr(_([["Why did you have to kill yourself?"
+His sightless eyes look vacantly while tears flow down his face.]]))
+
    vn.run()
 
    -- Remove station
