@@ -1,5 +1,13 @@
 project('sdl2-image', 'c', version: '2.0.5')
 
+cc = meson.get_compiler('c')
+foreach arg: ['-Wno-sign-compare', '-Wno-unused-function', '-Wno-unused-parameter']
+   if cc.has_argument(arg)
+      add_project_arguments(arg, language : 'c')
+   endif
+endforeach
+
+
 feature_args = ['-DLOAD_PNG', '-DLOAD_WEBP']
 
 sdl2_dep = dependency('sdl2')

@@ -34,17 +34,10 @@ If you're cross-compiling for Windows, you must install this soft dependency:
 * [physfs](https://icculus.org/physfs/), example package name mingw-w64-physfs
 
 
-### Ubuntu
+### Linux and non-macOS \*nix
 
-Install compile-time dependencies on Ubuntu 16.04 (and hopefully later) with:
-
-```
-apt-get install build-essential libsdl2-dev libsdl2-image-dev \
-libgl1-mesa-dev libxml2-dev libfreetype6-dev libpng-dev libwebp-dev \
-libopenal-dev libvorbis-dev binutils-dev libiberty-dev autopoint intltool \
-libfontconfig-dev python3-pip
-pip3 install meson ninja
-```
+See [here](https://github.com/naev/naev/wiki/Compiling-on-*nix) for package lists for several
+distributions.
 
 ### macOS
 
@@ -61,11 +54,6 @@ If build may fail if `suite-sparse` is installed via Homebrew, citing an undefin
 (These arguments may be passed to the initial `meson setup` or applied later using `meson configure`. In the later case, make sure to run `meson configure --clearcache` to work around bugs in Meson. For 0.8/Autotools, set the `PKG_CONFIG_PATH` environment variable before running `./configure`.)
 
 Naev 0.9 needs a BLAS library. To use Apple's, add `-Dblas=Accelerate` to your Meson options. You can also install `openblas` via Homebrew, but you'll have to follow its instructions carefully before Meson will be able to detect it. (Official builds are prepared using OSXCross, which bypasses a lot of problems with Homebrew and Apple's toolchain, but is also more difficult to set up.)
-
-### Other \*nix
-
-See [here](https://github.com/naev/naev/wiki/Compiling-on-*nix) for package lists for several
-distributions.
 
 ## COMPILING
 

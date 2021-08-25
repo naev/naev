@@ -7,3 +7,8 @@ function create ()
    mem.loiter = 3 -- This is the amount of waypoints the pilot will pass through before leaving the system
 end
 
+function idle ()
+   local pp = player.pilot()
+   ai.pushtask( "follow", pp )
+end
+

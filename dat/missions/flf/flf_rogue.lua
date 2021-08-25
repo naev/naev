@@ -216,8 +216,8 @@ end
 function rogue_spawnFLF( n, param )
    if rnd.rnd() < 0.25 then n = n - 1 end
    local lancelots = rnd.rnd( n )
-   fleetFLF = fleet.add( lancelots, "Lancelot", "FLF", param, nil, {ai="flf_norun"} )
-   local vendetta_fleet = fleet.add( n - lancelots, "Vendetta", "FLF", param, nil, {ai="flf_norun"} )
+   fleetFLF = fleet.add( lancelots, "Lancelot", "FLF", param, nil, {ai="escort_player"} )
+   local vendetta_fleet = fleet.add( n - lancelots, "Vendetta", "FLF", param, nil, {ai="escort_player"} )
    for i, j in ipairs( vendetta_fleet ) do
       fleetFLF[ #fleetFLF + 1 ] = j
    end
