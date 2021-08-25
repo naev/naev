@@ -79,20 +79,19 @@ if buildExec.disabled() == false
       libxml2 = cc.find_library('xml2', required: true)  # e.g., MacOSX SDK
    endif
 
-   pkgconfig_physfs = dependency('physfs', required: false)
-   if not pkgconfig_physfs.found()
-      physfs = cc.find_library('physfs', required: false, has_headers: ['physfs.h'])
-      if not physfs.found()
-         physfs = dependency('physfs', required: true, fallback: ['physfs', 'physfs_dep'])
+   use_system_physfs = ('glpk' not in get_option('force_fallback_for') and 'forcefallback' != get_option('wrap_mode'))
+   if use_system_physfs
+      system_physfs = dependency('physfs', required: false)
+      if not system_physfs.found()
+         system_physfs = cc.find_library('physfs', required: false, has_headers: ['physfs.h'])
       endif
-   else
-      physfs=pkgconfig_physfs
+      use_system_physfs = system_physfs.found()
    endif
+   naev_deps += use_system_physfs ? system_physfs : subproject('physfs').get_variable('physfs_dep')
 
    naev_deps += [
       dependency('freetype2', required: true),
       libxml2,
-      physfs,
       sdl,
       sdl_image,
       declare_dependency(
