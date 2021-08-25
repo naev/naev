@@ -41,3 +41,8 @@ meson-bin/
 /subprojects/*
 !/subprojects/packagefiles
 !/subprojects/*.wrap
+
+utils/openal_preset_efx/main
+utils/openal_preset_efx/main.c
+utils/openal_preset_efx/preset-list
+utils/openal_preset_efx/reverb_preset.lua
