@@ -367,6 +367,9 @@ function landed_lab ()
    -- Take off
    misn_state = 2
    player.takeoff()
+
+   -- Disable landing, will get disabled on entering new system
+   player.allowLand( false, _("You have better things to do right now.") )
 end
 
 function strangelove_hail ()
