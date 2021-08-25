@@ -420,7 +420,7 @@ static void object_renderMesh( const Object *object, int part, GLfloat alpha )
    /* Set material */
    assert("Part has no material" && (mesh->material != -1));
    Material *material = object->materials + mesh->material;
-   material->Kd[3] = alpha;
+   //material->Kd[3] = alpha;
 
    glUniform1f(shaders.material.Ns, material->Ns);
    glUniform3f(shaders.material.Ka, material->Ka[0], material->Ka[1], material->Ka[2] );
