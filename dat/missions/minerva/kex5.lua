@@ -93,7 +93,7 @@ function accept ()
    kex(_([["There's not too many trails, but I do think I know where to find him. Wait, you know where he is? How you know is not important now, all I need you to do is go over there and end his rotten life once and for all."]]))
    kex(_([["The universe will be a much better place with scum like him gone, and I'll finally get my vengeance."]]))
    vn.disappear(kex)
-   vn.na(string.format(_([[Without saying anything else, Kex walks off stumbling into the darkness of the station. You feel like it is best to leave him alone right now and decide to go see Strangelove. He should be in the %s system.]]),targetsys))
+   vn.na(string.format(_([[Without saying anything else, Kex walks off stumbling into the darkness of the station. You feel like it is best to leave him alone right now and decide to go see Strangelove. He should be in the %s system.]]),_(targetsys)))
 
    vn.func( function ()
       misn_state = 0
@@ -109,7 +109,7 @@ function accept ()
    minerva.log.kex(_("You have agreed to help Kex deal with Dr. Strangelove.") )
 
    misn.osdCreate( misn_title,
-      { string.format(_("Go find Dr. Strangelove at %s in the %s system"), _(targetplanet), _(targetsys) ),
+      { string.format(_("Go find Dr. Strangelove in the %s system"), _(targetsys) ),
       _("Return to Kex at Minerva Station") } )
    misn_marker = misn.markerAdd( system.get(targetsys) )
 
