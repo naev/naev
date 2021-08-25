@@ -951,6 +951,13 @@ static int audioL_setEffectGlobal( lua_State *L )
       efx_setnum( L, p, effect, "feedback", AL_ECHO_FEEDBACK ); /* 0.0 to 1.0 (0.5) */
       efx_setnum( L, p, effect, "spread", AL_ECHO_SPREAD ); /* -1.0 to 1.0 (-1.0) */
    }
+   else if (strcmp(type,"ringmodulator")==0) {
+      nalEffecti(effect, AL_EFFECT_TYPE, AL_EFFECT_RING_MODULATOR);
+
+      efx_setnum( L, p, effect, "frequency", AL_RING_MODULATOR_FREQUENCY ); /* 0.0 to 8000.0 (440.0) */
+      efx_setnum( L, p, effect, "highcut", AL_RING_MODULATOR_HIGHPASS_CUTOFF ); /* 0.0 to 24000.0 (800.0) */
+      efx_setint( L, p, effect, "waveform", AL_RING_MODULATOR_WAVEFORM ); /*0 (sin), 1 (saw), 2 (square) (0 (sin)) */
+   }
    else {
       soundUnlock();
       NLUA_ERROR(L, _("Usupported audio effect type '%s'!"), type);
