@@ -42,7 +42,7 @@ local function __vulnerable( p, plt, threshold, r )
    local pos = plt:pos()
    r = r or math.pow( mem.lanedistance, 2 )
    -- Make sure not in safe lanes
-   if lanes.getDistance2P( p, pos ) > r then
+   if mem.natural and lanes.getDistance2P( p, pos ) > r then
 
       -- Check to see vulnerability
       local H = 1+__estimate_strength( p:getHostiles( mem.vulnrange, pos, true ) )
