@@ -126,6 +126,11 @@ end
 local function choose_one( t ) return t[ rnd.rnd(1,#t) ] end
 
 function enter ()
+   if misn_stage==2 and system.cur() ~= targetsys then
+      player.msg(_("MISSION FAILED! You never met up with Dr. Strangelove."))
+      misn.finish(false)
+   end
+
    local function spawn_thugs( pos, dofollow )
       thug_leader = nil -- Clear
       local thugs = {
@@ -213,9 +218,6 @@ function enter ()
          hook.pilot( p, "board", "strangelove_board" )
          strangelove_ship = p
          hook.timer( 10, "strangelove_hail" )
-
-         -- Remove station
-         diff.remove( eccdiff )
       end
 
    elseif misn_state~=1 and rnd.rnd() < thug_chance then
@@ -376,6 +378,13 @@ function strangelove_hail ()
            shader=love_shaders.hologram() } )
    vn.transition( "electric" )
    -- TODO small scene
+   vn.na(_("As you loiter around a system, you suddenly receive an unexpected incoming transmission."))
+   dr(_([[A hologram of Dr. Strangelove appears before you. He is laying down and his body seems to be sapped of all energy. He seems to muster up energy to roughly look in your direction, although his eyes seem unnaturally clouded.
+"Is that you?"]]))
+   dr(_([["I've been expecting you."
+A coughing fit wracks his body.
+"There is not much time, come to my ship."]]))
+   vn.na(_("The communication channel closes and you receive coordinates to a ship."))
    vn.done( "electric" )
    vn.run()
 
@@ -392,6 +401,11 @@ function strangelove_board ()
    -- TODO small scene
    vn.run()
 
+   -- Remove station
+   diff.remove( eccdiff )
+
+   -- Advance mission
    misn_state = 3
+   misn.osdActive(2)
    player.unboard()
 end
