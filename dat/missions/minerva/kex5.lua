@@ -130,12 +130,31 @@ end
 
 function approach_kex ()
    love_audio.setEffect( "reverb_drugged", reverb_preset.drugged() )
+   local strangelove_death = var.peek("strangelove_death")
 
    vn.clear()
    vn.scene()
-   vn.music( minerva.loops.kex, {pitch=0.65, effect="reverb_drugged"} )
+   vn.music( minerva.loops.kex, {pitch=0.7, effect="reverb_drugged"} )
    local kex = vn.newCharacter( minerva.vn_kex() )
    vn.transition()
+   vn.na(_("You approach Kex who is sort of slumping at his usual spot. He doesn't seem much better than last time you met him."))
+   kex(_([["Hey kid."
+He seems a bit nervious and speaks softer than usual.
+"Did you do what I asked?"]]))
+
+   if strangelove_death=="shot" then
+      vn.na(_([[You explain to him how the mission went and go into graphical details of how you finished Dr. Strangelove off by shooting at him point-blank as Kex asked.]]))
+      kex(_(""))
+   elseif strangelove_death=="unplug" then
+      vn.na(_([[You explain to him how the mission went and go into details of how you finished Dr. Strangelove off by unplugging him as Kex asked.]]))
+   elseif strangelove_death=="comforted" then
+      vn.na(_([[You explain to him how the mission went and explain how you comforted the dying Dr. Strangelove as he passed away from his mysterious illness in front of your eyes.]]))
+   else
+      vn.na(_([[You explain to him how the mission went and explain how Dr. Strangelove died of his mysterious illness in front of your eyes.]]))
+   end
+
+   vn.na(_(""))
+   kex(_([[""]]))
 
    vn.sfxMoney()
    vn.func( function () player.pay( money_reward ) end )
