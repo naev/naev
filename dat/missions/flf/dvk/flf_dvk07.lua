@@ -71,7 +71,7 @@ function create ()
    ships = 4
    flfships = 2
 
-   credits = 100000
+   credits = 100e3
 
    late_arrival = true
    late_arrival_delay = rnd.uniform( 10.0, 120.0 )

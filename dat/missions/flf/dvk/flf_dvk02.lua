@@ -151,7 +151,7 @@ function accept ()
       boss_hook = nil
 
       ore_needed = 40
-      credits = 300000
+      credits = 300e3
       reputation = 1
       pir_reputation = 10
       pir_starting_reputation = faction.get("Pirate"):playerStanding()

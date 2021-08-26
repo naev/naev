@@ -71,7 +71,7 @@ function create ()
    if not misn.claim( missys ) then misn.finish( false ) end
 
    dv_attention_target = 40
-   credits = 400000
+   credits = 400e3
    reputation = 3
 
    misn.setNPC( npc_name, "flf/unique/benito.webp", npc_desc )

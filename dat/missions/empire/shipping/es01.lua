@@ -88,7 +88,7 @@ function accept ()
 
    -- Mission details
    misn_stage = 0
-   reward = 500000
+   reward = 500e3
    misn.setTitle(misn_title)
    misn.setReward( creditstring(reward) )
    misn.setDesc( string.format(misn_desc[1], pickup:name(), pickupsys:name()))

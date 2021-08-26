@@ -651,7 +651,7 @@ function board()
        seiryuu:setActiveBoard(false)
        seiryuu:setHilight(false)
        tk.msg(title[4], string.format(text[4], player.name(), player.name()))
-       player.pay(700000)
+       player.pay(700e3)
        shadow_addLog( log_text_success )
        misn.finish(true)
     end

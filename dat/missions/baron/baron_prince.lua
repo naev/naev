@@ -157,7 +157,7 @@ function accept()
    flintleyfirst = true
    artifactsfound = 0
 
-   reward = 200000 -- The price of each artifact will always be 15% of this, so at most the player will be paid 85% and at least 55%.
+   reward = 200e3 -- The price of each artifact will always be 15% of this, so at most the player will be paid 85% and at least 55%.
 
    if tk.yesno(title[1], text[1]:format(baronsys:name())) then
       misn.accept()
@@ -299,7 +299,7 @@ function seller()
       if tk.choice(title[8], text[9], buy:format(creditstring(reward * 0.15)), nobuy) == 1 then
          if player.credits() >= reward * 0.15 then
             misn.npcRm(sellnpc)
-            player.pay(-15000)
+            player.pay( reward * 0.15 )
             local c = misn.cargoNew( N_("Artifact? A"), N_("An ancient artifact?") )
             artifactA = misn.cargoAdd(c, 0)
             misn.markerRm(markerA)
@@ -311,7 +311,7 @@ function seller()
       if tk.choice(title[8], text[10], buy:format(creditstring(reward * 0.15)), nobuy) == 1 then
          if player.credits() >= reward * 0.15 then
             misn.npcRm(sellnpc)
-            player.pay(-15000)
+            player.pay( reward * 0.15 )
             local c = misn.cargoNew( N_("Artifact? B"), N_("An ancient artifact?") )
             artifactB = misn.cargoAdd(c, 0)
             misn.markerRm(markerB)
@@ -323,7 +323,7 @@ function seller()
       if tk.choice(title[8], text[11], buy:format(creditstring(reward * 0.15)), nobuy) == 1 then
          if player.credits() >= reward * 0.15 then
             misn.npcRm(sellnpc)
-            player.pay(-15000)
+            player.pay( reward * 0.15 )
             local c = misn.cargoNew( N_("Artifact? C"), N_("An ancient artifact?") )
             artifactC = misn.cargoAdd(c, 0)
             misn.markerRm(markerC)
