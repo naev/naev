@@ -972,6 +972,12 @@ static int audioL_setEffectGlobal( lua_State *L )
 		efx_setnum( L, p, effect, "highgain", AL_EQUALIZER_HIGH_GAIN ); /* 0.126 to 7.943 (1.0) */
 		efx_setnum( L, p, effect, "highcut", AL_EQUALIZER_HIGH_CUTOFF ); /* 4000.0 to 16000.0 (6000.0) */
    }
+   else if (strcmp(type,"pitchshifter")==0) {
+      nalEffecti(effect, AL_EFFECT_TYPE, AL_EFFECT_PITCH_SHIFTER);
+
+      efx_setint( L, p, effect, "tunecoarse", AL_PITCH_SHIFTER_COARSE_TUNE ); /* -12 to 12 (12) */
+      efx_setint( L, p, effect, "tunefine'", AL_PITCH_SHIFTER_FINE_TUNE ); /* -50 to 50  (0) */
+   }
    else {
       soundUnlock();
       NLUA_ERROR(L, _("Usupported audio effect type '%s'!"), type);
