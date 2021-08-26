@@ -121,7 +121,32 @@ function landed ()
    -- Can't use planet.get() here for when the diff is removed
    if misn_state==1 and planet.cur():nameRaw() == targetplanet then
       landed_lab()
+
+   elseif misn_stage==3 and planet.get("Minerva Station")==planet.cur() then
+      npc_kex = misn.npcAdd( "approach_kex", minerva.kex.name, minerva.kex.portrait, minerva.kex.description )
+
    end
+end
+
+function approach_kex ()
+   love_audio.setEffect( "reverb_drugged", reverb_preset.drugged() )
+
+   vn.clear()
+   vn.scene()
+   vn.music( minerva.loops.kex, {pitch=0.65, effect="reverb_drugged"} )
+   local kex = vn.newCharacter( minerva.vn_kex() )
+   vn.transition()
+
+   vn.sfxMoney()
+   vn.func( function () player.pay( money_reward ) end )
+   vn.na(string.format(_("You received #g%s#0."), creditstring( money_reward )))
+   vn.sfxVictory()
+
+   vn.run()
+
+   minerva.log.kex(_(""))
+
+   misn.finish( true )
 end
 
 local function choose_one( t ) return t[ rnd.rnd(1,#t) ] end
@@ -314,7 +339,7 @@ function landed_lab ()
    vn.clear()
    vn.scene()
    vn.transition()
-   vn.na(_("Your ship sensors indicate that Strangelove's Laboratory is no longer pressurized and without an atmosphere, so you don your space suit before entering."))
+   vn.na(_("Your ship sensors indicate that Strangelove's laboratory is no longer pressurized and without an atmosphere, so you don your space suit before entering."))
    vn.na(_("The first thing you notice is that the laboratory has been ravaged, likely by the Bounty Hunters you encountered outside. The place was already a mess the last time you came, but now you have to jump over obstacles as you progress through the laboratory."))
 
    vn.label("menu")
@@ -359,7 +384,10 @@ function landed_lab ()
    vn.na(_("As you survey the room, you notice a small movement next to your feet. The motion is small that you can only notice it by being still nearby. Slowly and carefully you lift up some debris to uncover a small and heavily damaged droid."))
    vn.na(_("You pick up the droid and dust it off. The primary lens and hover engine seem completely damaged, but it does seem like it still has power and likely data in it. You try to interface to it, but it seems to be locked with strong encryption. You pocket it as it seems like it might be something of interest to Kex."))
    vn.na(_("You get back to searching around the stuff and end up finding nothing else of interest."))
-   vn.func( function () check_back = true end )
+   vn.func( function ()
+      check_back = true
+      minerva.log.kex(_("You collected a small robot in Dr. Strangelove's laboratory."))
+   end )
    vn.jump("menu")
 
    vn.menu("check_done")
@@ -614,6 +642,16 @@ He seems to be looking at something in the distance.]]))
    misn_state = 3
    misn.osdActive(2)
    player.unboard()
+   local strangelove_death = var.peek("strangelove_death")
+   if strangelove_death=="shot" then
+      minerva.log.kex(_("You shot a dying Dr. Strangelove in cold blood, fulfilling Kex's wish."))
+   elseif strangelove_death=="unplug" then
+      minerva.log.kex(_("You unplugged the life support system of Dr. Strangelove who quickly passed away."))
+   elseif strangelove_death=="comforted" then
+      minerva.log.kex(_("You comforted a dying Dr. Strangelove before he passed away."))
+   else
+      minerva.log.kex(_("You watched Dr. Strangelove die before your eyes."))
+   end
 
    -- And that's all folks
    strangelove_ship:setHealth(-1,-1)
@@ -625,7 +663,7 @@ function strangelove_dead ()
    vn.scene()
    vn.transition()
    vn.na(_([[The explosions clear and the system is once again silent except for your heavy breathing from running back to the ship.]]))
-   vn.na(_([[As you survey the system again, you notice that you are no longer able to detect Dr. Strangelove's Laboratory. Even pointing your sensors to the position where it should be, you are not able to find anything other than inert asteroids. It is possible that the self-destruct sequence didn't affect only the ship…]]))
+   vn.na(_([[As you survey the system again, you notice that you are no longer able to detect Dr. Strangelove's laboratory. Even pointing your sensors to the position where it should be, you are not able to find anything other than inert asteroids. It is possible that the self-destruct sequence didn't affect only the ship…]]))
    vn.na(_([[As your mind wanders after all you just experienced, you realize that you should get back to Kex to report what happened. Is this what Kex wanted? You feel like not even he will know the answer to that question.]]))
    vn.run()
 end
