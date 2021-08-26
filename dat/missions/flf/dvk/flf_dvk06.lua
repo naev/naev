@@ -106,7 +106,7 @@ function accept ()
       marker = misn.markerAdd( missys, "plot" )
       misn.setReward( misn_reward )
 
-      credits = 750000
+      credits = 750e3
       reputation = 5
 
       started = false

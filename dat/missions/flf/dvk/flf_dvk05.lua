@@ -63,7 +63,7 @@ function create ()
    flfships = 0
    reputation = 1
 
-   credits = 1000000
+   credits = 1e6
 
    late_arrival = false
    late_arrival_delay = rnd.uniform( 10.0, 120.0 )
