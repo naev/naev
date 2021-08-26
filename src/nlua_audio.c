@@ -956,7 +956,21 @@ static int audioL_setEffectGlobal( lua_State *L )
 
       efx_setnum( L, p, effect, "frequency", AL_RING_MODULATOR_FREQUENCY ); /* 0.0 to 8000.0 (440.0) */
       efx_setnum( L, p, effect, "highcut", AL_RING_MODULATOR_HIGHPASS_CUTOFF ); /* 0.0 to 24000.0 (800.0) */
-      efx_setint( L, p, effect, "waveform", AL_RING_MODULATOR_WAVEFORM ); /*0 (sin), 1 (saw), 2 (square) (0 (sin)) */
+      efx_setint( L, p, effect, "waveform", AL_RING_MODULATOR_WAVEFORM ); /* 0 (sin), 1 (saw), 2 (square) (0 (sin)) */
+   }
+   else if (strcmp(type,"equalizer")==0) {
+      nalEffecti(effect, AL_EFFECT_TYPE, AL_EFFECT_EQUALIZER);
+
+		efx_setnum( L, p, effect, "lowgain", AL_EQUALIZER_LOW_GAIN ); /* 0.126 to 7.943 (1.0) */
+		efx_setnum( L, p, effect, "lowcut", AL_EQUALIZER_LOW_CUTOFF ); /* 50.0 to 800.0 (200.0) */
+		efx_setnum( L, p, effect, "lowmidgain", AL_EQUALIZER_MID1_GAIN ); /* 0.126 to 7.943 (1.0) */
+		efx_setnum( L, p, effect, "lowmidfrequency", AL_EQUALIZER_MID1_CENTER ); /* 200.0 to 3000.0 (500.0) */
+		efx_setnum( L, p, effect, "lowmidbandwidth", AL_EQUALIZER_MID1_WIDTH ); /* 0.01 to 1.0 (1.0) */
+		efx_setnum( L, p, effect, "highmidgain", AL_EQUALIZER_MID2_GAIN ); /* 0.126 to 7.943 (1.0) */
+		efx_setnum( L, p, effect, "highmidfrequency", AL_EQUALIZER_MID2_CENTER ); /* 1000.0 to 8000.0 (3000.0) */
+		efx_setnum( L, p, effect, "highmidbandwidth", AL_EQUALIZER_MID2_WIDTH ); /* 0.01 to 1.0 (1.0) */
+		efx_setnum( L, p, effect, "highgain", AL_EQUALIZER_HIGH_GAIN ); /* 0.126 to 7.943 (1.0) */
+		efx_setnum( L, p, effect, "highcut", AL_EQUALIZER_HIGH_CUTOFF ); /* 4000.0 to 16000.0 (6000.0) */
    }
    else {
       soundUnlock();
