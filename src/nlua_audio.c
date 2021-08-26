@@ -978,6 +978,16 @@ static int audioL_setEffectGlobal( lua_State *L )
       efx_setint( L, p, effect, "tunecoarse", AL_PITCH_SHIFTER_COARSE_TUNE ); /* -12 to 12 (12) */
       efx_setint( L, p, effect, "tunefine'", AL_PITCH_SHIFTER_FINE_TUNE ); /* -50 to 50  (0) */
    }
+   else if (strcmp(type,"vocalmorpher")==0) {
+      nalEffecti(effect, AL_EFFECT_TYPE, AL_EFFECT_VOCAL_MORPHER);
+
+      efx_setint( L, p, effect, "phonemea", AL_VOCAL_MORPHER_PHONEMEA ); /* 0 to 29 (0 ("A")) */
+      efx_setint( L, p, effect, "phonemeb", AL_VOCAL_MORPHER_PHONEMEB ); /* 0 to 29 (10 ("ER")) */
+      efx_setint( L, p, effect, "tunecoarsea", AL_VOCAL_MORPHER_PHONEMEA_COARSE_TUNING ); /* -24 to 24 (0) */
+      efx_setint( L, p, effect, "tunecoarseb", AL_VOCAL_MORPHER_PHONEMEB_COARSE_TUNING ); /* -24 to 24 (0) */
+      efx_setint( L, p, effect, "waveform", AL_VOCAL_MORPHER_WAVEFORM ); /* 0 (sin), 1 (saw), 2 (square) (0 (sin)) */
+      efx_setnum( L, p, effect, "rate", AL_VOCAL_MORPHER_RATE ); /* 0.0 to 10.0 (1.41) */
+   }
    else {
       soundUnlock();
       NLUA_ERROR(L, _("Usupported audio effect type '%s'!"), type);
