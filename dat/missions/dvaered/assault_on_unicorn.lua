@@ -112,9 +112,7 @@ end
 
 function land()
    if planet.cur() == planet_start and pirates_killed > 0 then
-      if var.peek("assault_on_unicorn_check") then
-         var.pop( "assault_on_unicorn_check" )
-      end
+      var.pop( "assault_on_unicorn_check" )
 
       tk.msg(title[2], text[2]:format( creditstring( bounty_earned )))
       player.pay(bounty_earned)
