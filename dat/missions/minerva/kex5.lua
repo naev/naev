@@ -114,9 +114,10 @@ function accept ()
    misn_marker = misn.markerAdd( system.get(targetsys) )
 
    hook.enter("enter")
+   hook.land("landed")
 end
 
-function generate_npc ()
+function landed ()
    -- Can't use planet.get() here for when the diff is removed
    if misn_state==1 and planet.cur():nameRaw() == targetplanet then
       landed_lab()
