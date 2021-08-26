@@ -398,6 +398,7 @@ A coughing fit wracks his body.
 end
 
 function strangelove_board ()
+   var.pop("strangelove_death") -- Reset variable if player aborted mission after this for some reason
    local kexcount = 0
 
    vn.clear()
@@ -446,7 +447,7 @@ His voice tears up slightly.]]))
 
    vn.menu( function ()
       local opts = {
-         { _("Do what?"), "2cont" },
+         { _([["Do what?"]]), "2cont" },
          { _("…"), "2cont" },
       }
       if kexcount == 0 then
@@ -471,9 +472,9 @@ The vitals monitor is still flashing.]]))
 
    vn.menu( function ()
       local opts = {
-         { _("Everything."), "3conteverything" },
-         { _("It is already connected."), "3contalready" },
-         { _("It never connected."), "3contnever" },
+         { _([["Everything."]]), "3conteverything" },
+         { _([["It is already connected."]]), "3contalready" },
+         { _([["It never connected."]]), "3contnever" },
          { _("…"), "3cont" },
       }
       if kexcount == 0 then
@@ -515,8 +516,8 @@ His talking is slowing down and starting to get muddled. You have trouble making
 
    vn.menu( function ()
       local opts = {
-         { _("You are dying."), "4cont" },
-         { _("It is over."), "4cont" },
+         { _([["You are dying."]]), "4cont" },
+         { _([["It is over."]]), "4cont" },
          { _("…"), "4cont" },
       }
       if kexcount == 0 then
@@ -532,9 +533,11 @@ His talking is slowing down and starting to get muddled. You have trouble making
    vn.label("4kex")
    vn.func( function () kexcount = kexcount+1 end )
    vn.label("4cont")
-   vn.na(_([[His lips are moving and you can hear some sort of rasping sound coming out, however, you can no longer make out what he is saying. You glance at the monitors and you see his vitals are tanking. It looks like he has run out of time.]]))
+   vn.na(_([[His lips begin moving and you can hear some sort of rasping sound coming out, however, you can no longer make out what he is saying. You glance at the monitors and you see his vitals are tanking. It looks like he has run out of time.]]))
+   vn.label("nonviolent_death")
    vn.na(_([[He slowly lifts up an arm as if trying to reach out and grasp something. It it extremely thin and pale, almost transparent. His lips move as if trying to say something, but you can't make out a single sound. You see the strength slowly ebb out of him as he collapses one last time and his pulse flatlines.]]))
    vn.disappear( dr, "slideup", nil, "ease-out" ) -- played backwards so should be down
+   vn.label("dr_death")
    vn.na(_([[Silence once again envelopes the room. You look around the room and decide to try to access the command console to see if there is any information left. It is a bit unsettling with a corpse nearby, but you try to focus on getting the grime off the console and interfacing with it. ]]))
    vn.na(_([[You notice that everything seems to be heavily encrypted, much more so than the standard on even military Za'lek vessels, and try to break into the system. After a few unsuccessful attempts you manage to find what looks like a kink in the cryptographic armour and try to access it.]]))
    vn.na(_([[Suddenly a bright message starts flashing on all the monitors:
@@ -547,7 +550,61 @@ SELF-DESTRUCT SEQUENCE ENGAGED
    -- Player insists and goes to kex arc
    vn.label("kex_talk")
    dr(_([[He suddenly sees to regain a bit of lucidity.
-""]]))
+"Kex? Kex… where have I heard that name before… Wait… You mean Experiment #085? The one taken from the nebula wreck?"]]))
+   dr(_([["Someone also came asking about that awhile back, but my memory is all fuzzy. I don't recall much of the encounter. Must have not been interesting anyway. Most non-research talk is boring."]]))
+   dr(_([["Anyway, the subject of that experiment is long gone. It was a failure."]]))
+   vn.menu{
+      { _([["Failure?"]]), "kex_failure" },
+      { _([[Ask why he did it.]]), "kex_why" },
+      { _([["Kex sends you his regards" (draw weapon)"]]), "kex_weapon" },
+   }
+
+   vn.label("kex_why")
+   dr(_([["Why would I not go on with that perfect experiment? The subjects found in the wreck were already long dead by the modern definition of the world. You don't need any ethic committee approval for experimenting on cadavers, not that I am subject to that oversight anymore."]]))
+   dr(_([["Having spent so long in that wreck, whey were the perfect candidates for testing. Had I not performed it, it would have been a crime against science! It was my moral obligation to do it!"]]))
+   vn.jump("kex_failure")
+
+   vn.label("kex_failure")
+   dr(_([["Yes, it was a failure. It never became a vessel to the void. It was just a husk of what it should have been. So much potential, all wasted."]]))
+   dr(_([["Even though the vitals and neural responses seemed nominal, it didn't really seem to display any standard concious responses. It even failed the LEVEL II test, a sign of a weak mind. An utter failure."
+He coughs violently again, spasms overtaking his body. The medical robot sees to inject him with something and he calms down again.]]))
+   vn.menu{
+      { _([["Kex sends you his regards" (draw weapon)"]]), "kex_weapon" },
+      { _([[Unplug his life support.]]), "kex_unplug" },
+      { _([[Comfort him.]]), "kex_letbe" },
+      { _([[…]]), "cont4" },
+   }
+
+   vn.label("kex_unplug")
+   vn.na(_([[You unplug his life support and see the little colour left in his face fade away. His lips begin moving and you can hear some sort of rasping sound coming out, however, you can no longer make out what he is saying.]]))
+   vn.func( function () var.push("strangelove_death","unplug") end )
+   vn.jump("nonviolent_death")
+
+   vn.label("kex_letbe")
+   vn.na(_([[Seeing him in his last stages brings our the compassion you have in you. Whether Dr. Strangelove is a monster or not is not something that you are meant to judge. You get close to him and hold his hand. It feels very cold to the touch.]]))
+   dr(_([["I can feel it… getting close…"
+He seems to be looking at something in the distance.]]))
+   dr(_([[Suddenly he seems to open his eyes wide, but his expression is less of terror and more of curiosity and awe.
+"It's more beautiful… than I… thought."]]))
+   vn.na(_([[You look into his nearly opaque eyes and for a second, you think you can see the nebula in all its fury and glory reflected in them. You look around the room but nothing has changed.]]))
+   vn.func( function () var.push("strangelove_death","comforted") end )
+   vn.jump("nonviolent_death")
+
+   vn.label("kex_weapon")
+   vn.na(_([[You draw your weapon and press it against Dr. Strangelove's forehead. He doesn't seem to flinch when the cold barrel makes contact with his skin. In fact, he seems very oblivious to everything around him.]]))
+   vn.na(_([[You look at yourself and think what you are about to do. Even if this is what Kex thinks he wants, is there any point in forcibly ending the life of someone who doesn't look like they will survive the next period? Dr. Strangelove seems unresponsive to your actions.]]))
+   vn.menu{
+      { _([[Pull the trigger.]]), "kex_shot" },
+      { _([[Unplug his life support.]]), "kex_unplug" },
+      { _([[Comfort him.]]), "kex_letbe" },
+      { _([[…]]), "cont4" },
+   }
+
+   vn.label("kex_shot")
+   vn.func( function () var.push("strangelove_death","shot") end )
+   vn.disappear( dr, "slideup", nil, "ease-out" ) -- played backwards so should be down
+   vn.na(_([[You pull the trigger and Dr. Strangelove's body becomes completely limp and lifeless. The vitals monitor sounds an alarm before becoming silent and certifying the death. You did the task and you can only hope this will bring Kex peace of mind, although you somehow doubt it.]]))
+   vn.jump("dr_death")
 
    vn.run()
 
