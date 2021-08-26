@@ -998,6 +998,13 @@ static int audioL_setEffectGlobal( lua_State *L )
       efx_setnum( L, p, effect, "feedback", AL_FLANGER_FEEDBACK ); /* -1.0 to 1.0 (-0.5) */
       efx_setnum( L, p, effect, "delay", AL_FLANGER_DELAY ); /* 0.0 to 0.004 (0.002) */
    }
+   else if (strcmp(type,"frequencyshifter")==0) {
+      nalEffecti(effect, AL_EFFECT_TYPE, AL_EFFECT_FREQUENCY_SHIFTER);
+
+      efx_setnum( L, p, effect, "frequency", AL_FREQUENCY_SHIFTER_FREQUENCY ); /* 0.0 to 24000.0 (0.0) */
+      efx_setint( L, p, effect, "leftdirection", AL_FREQUENCY_SHIFTER_LEFT_DIRECTION ); /* 0 (down), 1 (up), 2 (off) (0 (down)) */
+      efx_setint( L, p, effect, "rightdirection", AL_FREQUENCY_SHIFTER_RIGHT_DIRECTION ); /* 0 (down), 1 (up), 2 (off) (0 (down)) */
+   }
    else {
       soundUnlock();
       NLUA_ERROR(L, _("Usupported audio effect type '%s'!"), type);
