@@ -536,6 +536,7 @@ His talking is slowing down and starting to get muddled. You have trouble making
    vn.na(_([[He slowly lifts up an arm as if trying to reach out and grasp something. It it extremely thin and pale, almost transparent. His lips move as if trying to say something, but you can't make out a single sound. You see the strength slowly ebb out of him as he collapses one last time and his pulse flatlines.]]))
    vn.disappear( dr, "slideup", nil, "ease-out" ) -- played backwards so should be down
    vn.label("dr_death")
+   vn.musicStop() -- Stop music
    vn.na(_([[Silence once again envelopes the room. You look around the room and decide to try to access the command console to see if there is any information left. It is a bit unsettling with a corpse nearby, but you try to focus on getting the grime off the console and interfacing with it. ]]))
    vn.na(_([[You notice that everything seems to be heavily encrypted, much more so than the standard on even military Za'lek vessels, and try to break into the system. After a few unsuccessful attempts you manage to find what looks like a kink in the cryptographic armour and try to access it.]]))
    vn.na(_([[Suddenly a bright message starts flashing on all the monitors:
