@@ -75,6 +75,9 @@ function accept ()
       return
    end
 
+   -- Clear variable just in case
+   var.pop("harper_ticket")
+
    misn.accept()
    osd = misn.osdCreate( _("Minerva Moles"),
          {_("Plant a listening device in a VIP room.") } )
@@ -314,6 +317,7 @@ function harper_board ()
    if not harper_gotticket then
       harper_gotticket = true
       harper_nospawn = true
+      var.push("harper_ticket","stole")
 
       vn.clear()
       vn.scene()
@@ -405,6 +409,7 @@ He coughs nervously.]]))
          _harper_done()
          player.pay( -harper_bribe_sml )
          harper:credits( harper_bribe_sml )
+         var.push("harper_ticket","credits")
       end )
       vn.na(_("You wire him the money and he gives you the digital code that represents the ticket. Looks like you are set."))
       vn.done("electric")
@@ -428,7 +433,10 @@ He is sweating profusely.]]))
       vn.label("threaten3")
       h(_([["Ah, damn this! I've still got things worth living for. Here, just take the damn thing."]]))
       vn.na(_("He gives you the digital code that represents the ticket. Looks like you are set."))
-      vn.func( function () _harper_done() end )
+      vn.func( function ()
+         _harper_done()
+         var.push("harper_ticket","free")
+      end )
       vn.done("electric")
 
       vn.label("broke")
@@ -436,7 +444,10 @@ He is sweating profusely.]]))
 He looks around nervously.
 "Ah, damn this. I've still got things worth living for. Here, just take the damn thing."]]))
       vn.na(_("He gives you the digital code that represents the ticket. Looks like you are set."))
-      vn.func( function () _harper_done() end )
+      vn.func( function ()
+         _harper_done()
+         var.push("harper_ticket","free")
+      end )
       vn.done("electric")
       vn.run()
 
@@ -530,6 +541,7 @@ He scoffs at you and closes the transmission.]]))
       _harper_done()
       player.pay( -harper_bribe_big )
       harper:credits( harper_bribe_big ) -- Player can theoretically board to loot it back
+      var.push("harper_ticket","credits")
    end )
    vn.na(_("You wire him the money and he gives you the digital code that represents the ticket. Looks like you are set."))
    vn.jump("leave")
@@ -540,6 +552,7 @@ He scoffs at you and closes the transmission.]]))
    vn.func( function ()
       _harper_done()
       minerva.tokens_pay( -harper_bribe_tkn )
+      var.push("harper_ticket","tokens")
    end )
    vn.na(_("You wire him the tokens and he gives you the digital code that represents the ticket. Looks like you are set."))
 

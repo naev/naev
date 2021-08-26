@@ -104,6 +104,9 @@ function accept ()
       return
    end
 
+   -- Clear just in case
+   var.pop("maikki_scavengers_alive")
+
    hook.land("generate_npc")
    hook.load("generate_npc")
    hook.enter("enter")

@@ -219,6 +219,8 @@ List of mission variables:
 - maikki_gave_drink (true, nil)
 - maikki_response ("yes", "no", nil)
 - maikki_scavengers_alive (true, nil)
+- harper_ticket ("credits", "tokens", "free", "stole" )
+- strangelove_death ("unplug", "comforted", "shot", nil)
 
 --]]
 
