@@ -5,7 +5,7 @@ reverb_preset.lua: main
 	echo "return efx_preset" >> $@
 
 main: main.c print.c
-	gcc -lm `pkg-config openal --cflags` -W -Wall -o $@ $<
+	$(CC) -lm `pkg-config openal --cflags` -W -Wall -o $@ $<
 
 main.c: preset-list make_prog.py
 	python make_prog.py
