@@ -379,9 +379,7 @@ function strangelove_hail ()
    vn.clear()
    vn.scene()
    vn.music( minerva.loops.strangelove )
-   local dr = vn.newCharacter( strangelove.name,
-         { color=strangelove.colour, image=minerva.strangelove.image,
-           shader=love_shaders.hologram() } )
+   local dr = vn.newCharacter( minerva.vn_strangelove{ shaders=love_shaders.hologram() } )
    vn.transition( "electric" )
    -- TODO small scene
    vn.na(_("As you loiter around a system, you suddenly receive an unexpected incoming transmission."))
@@ -404,8 +402,7 @@ function strangelove_board ()
 
    vn.clear()
    vn.scene()
-   local dr = vn.Character.new( strangelove.name,
-         { color=strangelove.colour, image=minerva.strangelove.image, } )
+   local dr = vn.Character.new( minerva.vn_strangelove() )
    -- TODO small scene
    vn.na(_("You carefully board the ship, not sure what you are about to encounter. Trusting your systems sensors indicating a proper atmosphere in the ship, you board without your space suit. However, when you first enter the ship, a strong pungent odour makes you partially regret your decision."))
    vn.na(_("As you move to the command room, you notice small movements from the corner of your eyes. Upon closer inspection you make out all sorts of small moving objects, reminding you of cleaning droids on most ships, however, these move in a fairly clunky fashion, as if they had some of their moving apparatus damaged."))

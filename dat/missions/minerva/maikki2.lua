@@ -746,9 +746,7 @@ function approach_eccentric ()
    vn.clear()
    vn.scene()
    vn.music( minerva.loops.strangelove )
-   local dr = vn.newCharacter( strangelove.name,
-         { color=strangelove.colour, image=minerva.strangelove.image,
-           shader=love_shaders.hologram() } )
+   local dr = vn.newCharacter( minerva.vn_strangelove{ shader=love_shaders.hologram() } )
    vn.transition( "electric" )
 
    if not ecc_visitedonce then

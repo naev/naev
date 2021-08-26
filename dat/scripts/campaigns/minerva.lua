@@ -164,6 +164,13 @@ function minerva.vn_ceo( params )
             color=minerva.ceo.colour,
          }, params) )
 end
+function minerva.vn_strangelove( params )
+   return vn.Character.new( minerva.strangelove.name,
+         mt.merge_tables( {
+            image=minerva.strangelove.image,
+            color=minerva.strangelove.colour,
+         }, params) )
+end
 function minerva.vn_mole( params )
    return vn.Character.new( minerva.mole.name,
          mt.merge_tables( {
