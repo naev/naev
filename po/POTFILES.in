@@ -2352,6 +2352,7 @@ dat/missions/minerva/kex1.lua
 dat/missions/minerva/kex2.lua
 dat/missions/minerva/kex3.lua
 dat/missions/minerva/kex4.lua
+dat/missions/minerva/kex5.lua
 dat/missions/minerva/maikki1.lua
 dat/missions/minerva/maikki2.lua
 dat/missions/minerva/pirate1.lua
@@ -2539,6 +2540,7 @@ dat/scripts/portrait.lua
 dat/scripts/pp_shaders.lua
 dat/scripts/prng.lua
 dat/scripts/proximity.lua
+dat/scripts/reverb_preset.lua
 dat/scripts/selectiveclear.lua
 dat/scripts/swapship.lua
 dat/scripts/vn.lua
