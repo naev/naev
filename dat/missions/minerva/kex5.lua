@@ -202,6 +202,8 @@ function enter ()
             p:setInvisible(true)
             p:disable(true)
          end
+      elseif misn_state == 1 then
+         -- Do nothing (just in case the player kills bounty hunters and goes off somewhere)
 
       elseif misn_state == 2 then
          -- Should be taking off from the Lab
@@ -436,8 +438,8 @@ He coughs violently.
    vn.func( function () kexcount = kexcount+1 end )
    vn.label("1cont")
    dr(_([[He goes on.
-"You were always the brightest in the class. I admired how fast you were able to solve partial differential equations so elegantly."]]))
-   dr(_([["Remember that one time we nearly caused a subatomic implosion when the hyperphased quantum autocycle hit the self-refractive frequency? Your quick thinking save us from turning the entire system into a sterile void."]]))
+"You were always the brightest in the class. I always admired how fast you were able to solve partial differential equations so elegantly."]]))
+   dr(_([["Remember that one time we nearly caused a subatomic implosion when the hyperphased quantum auto-cycle hit the self-refractive frequency? Your quick thinking save us from turning the entire system into a sterile void."]]))
    dr(_([["If only you had been with me this entire time. We could have done so much together."
 His voice tears up slightly.]]))
    dr(_([["Why did you have to do it?"]]))
@@ -460,6 +462,92 @@ His voice tears up slightly.]]))
    vn.label("2cont")
    dr(_([["Why did you have to kill yourself?"
 His sightless eyes look vacantly while tears flow down his face.]]))
+   dr(_([[You don't know what to answer and silence envelopes the room. Finally, he breaks the calmness.
+"I should have been the one to try to defuse the reactor core, not you. I should have been the one vaporized in the resulting explosion, not you. I should have been the one not left alone, not you…"]]))
+   dr(_([[The vitals monitor starts flashing red, and the medical droid begins to tweak and make adjustments to intravenous drips and other medical devices.
+He coughs a bit and you can see blood flecks splatter onto his clothes.]]))
+   dr(_([["If only our places had been changed, you would have been able to solve it and find me again. I was so close and yet it still feels like there is some sort of impenetrable wall between me and the solution. What did I miss, where did I go wrong?"
+The vitals monitor is still flashing.]]))
+
+   vn.menu( function ()
+      local opts = {
+         { _("Everything."), "3conteverything" },
+         { _("It is already connected."), "3contalready" },
+         { _("It never connected."), "3contnever" },
+         { _("…"), "3cont" },
+      }
+      if kexcount == 0 then
+         table.insert( opts, 1, {_("Ask about Kex"), "3kex"} )
+      elseif kexcount == 1 then
+         table.insert( opts, 1, {_("Ask about Kex again"), "3kex"} )
+      else
+         table.insert( opts, 1, {_("Insist about Kex"), "kex_talk"} )
+      end
+      return opts
+   end )
+
+   vn.label("3conteverything")
+   dr(_([["Everything? You mean I missed the fundamental nature of it? I see. What we are seeing is just the lower dimensional projection of an intrinsically higher dimension space. Then everything has to be rewritten."
+He tries feebly to get up before coughs wrack his body and stain it further with specks of blood. He falls back to the bed impotently.]]))
+   vn.jump("3cont")
+
+   vn.label("3contalready")
+   dr(_([["Already connected? You mean that there was no need to force a connection, we just weren't able to see it? Then there might be still time to redo the last experiment. Maybe if I recalibrate the oscillator I could…"
+He tries feebly to get up before coughs wrack his body and stain it further with specks of blood. He falls back to the bed impotently.]]))
+   vn.jump("3cont")
+
+   vn.label("3contnever")
+   dr(_([["Even in the last experiment? The energy wasn't sufficient? Maybe if I reroute all the ships power system and redo the experiment I might be able to connect. I must redo the experiment…"
+He tries feebly to get up before coughs wrack his body and stain it further with specks of blood. He falls back to the bed impotently.]]))
+   vn.jump("3cont")
+
+   vn.label("3kex")
+   vn.func( function () kexcount = kexcount+1 end )
+   vn.label("3contsilence")
+   dr(_([["I am so close, I can't stop here in front of you. Recalibrating the polymorphic tissue might stabilize the connection…"
+He tries feebly to get up before coughs wrack his body and stain it further with specks of blood. He falls back to the bed impotently.]]))
+   vn.label("3cont")
+
+   dr(_([[He seems out of breath.
+"Today is not a good day. I just need a bit more rest and I can get started again."]]))
+   dr(_([["It was just like you said, the Nebula is just a manifestation, not an entity in itself, but establishing the connection is less straight-forward than what you left in your notes. I've tried correcting the harmonic equation, but it doesn't…"
+His talking is slowing down and starting to get muddled. You have trouble making out what he's saying.]]))
+
+   vn.menu( function ()
+      local opts = {
+         { _("You are dying."), "4cont" },
+         { _("It is over."), "4cont" },
+         { _("…"), "4cont" },
+      }
+      if kexcount == 0 then
+         table.insert( opts, 1, {_("Ask about Kex"), "4kex"} )
+      elseif kexcount == 1 then
+         table.insert( opts, 1, {_("Ask about Kex again"), "4kex"} )
+      else
+         table.insert( opts, 1, {_("Insist about Kex"), "kex_talk"} )
+      end
+      return opts
+   end )
+
+   vn.label("4kex")
+   vn.func( function () kexcount = kexcount+1 end )
+   vn.label("4cont")
+   vn.na(_([[His lips are moving and you can hear some sort of rasping sound coming out, however, you can no longer make out what he is saying. You glance at the monitors and you see his vitals are tanking. It looks like he has run out of time.]]))
+   vn.na(_([[He slowly lifts up an arm as if trying to reach out and grasp something. It it extremely thin and pale, almost transparent. His lips move as if trying to say something, but you can't make out a single sound. You see the strength slowly ebb out of him as he collapses one last time and his pulse flatlines.]]))
+   vn.disappear( dr, "slideup", nil, "ease-out" ) -- played backwards so should be down
+   vn.na(_([[Silence once again envelopes the room. You look around the room and decide to try to access the command console to see if there is any information left. It is a bit unsettling with a corpse nearby, but you try to focus on getting the grime off the console and interfacing with it. ]]))
+   vn.na(_([[You notice that everything seems to be heavily encrypted, much more so than the standard on even military Za'lek vessels, and try to break into the system. After a few unsuccessful attempts you manage to find what looks like a kink in the cryptographic armour and try to access it.]]))
+   vn.na(_([[Suddenly a bright message starts flashing on all the monitors:
+#rHONEYPOT #329 ACTIVATED
+SELF-DESTRUCT SEQUENCE ENGAGED
+30 SECONDS REMAINING#0]]))
+   vn.na(_([[Cursing to yourself, you realize you don't have enough time to override the console and you make a dash for your ship. As the airlock closes behind you you can hear explosions starting to rip Dr. Strangelove's ship apart.]]))
+   vn.done()
+
+   -- Player insists and goes to kex arc
+   vn.label("kex_talk")
+   dr(_([[He suddenly sees to regain a bit of lucidity.
+""]]))
 
    vn.run()
 
@@ -470,4 +558,18 @@ His sightless eyes look vacantly while tears flow down his face.]]))
    misn_state = 3
    misn.osdActive(2)
    player.unboard()
+
+   -- And that's all folks
+   strangelove_ship:setHealth(-1,-1)
+   hook.timer( 10, "strangelove_dead" )
+end
+
+function strangelove_dead ()
+   vn.clear()
+   vn.scene()
+   vn.transition()
+   vn.na(_([[The explosions clear and the system is once again silent except for your heavy breathing from running back to the ship.]]))
+   vn.na(_([[As you survey the system again, you notice that you are no longer able to detect Dr. Strangelove's Laboratory. Even pointing your sensors to the position where it should be, you are not able to find anything other than inert asteroids. It is possible that the self-destruct sequence didn't affect only the ship…]]))
+   vn.na(_([[As your mind wanders after all you just experienced, you realize that you should get back to Kex to report what happened. Is this what Kex wanted? You feel like not even he will know the answer to that question.]]))
+   vn.run()
 end
