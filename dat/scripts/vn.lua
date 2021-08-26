@@ -1089,8 +1089,11 @@ end
 Makes a character disappear in the VN.
 
 The way it works is that the transition is played backwards, so if you want the character to slide left, use "slideright"!
+
+@usage vn.disappear( c, "fade", 3 )
+
    @see vn.transition
-   @see vn.disappear
+   @see vn.appear
    @tparam Character c Character to make disappear.
    @tparam[opt="fade"] string name Name of the transition effect to use (see vn.transition)
    @tparam number seconds Seconds to do the transition.
