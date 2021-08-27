@@ -1293,10 +1293,6 @@ void gui_renderPilot( const Pilot* p, RadarShape shape, double w, double h, doub
       h *= 2.;
    }
 
-   /* Draw selection if targeted. */
-   if (p->id == player.p->target)
-      gui_blink( x, y, MAX(scale*2.,10.0), &cRadar_hilight, RADAR_BLINK_PILOT, blink_pilot);
-
    if (p->id == player.p->target)
       col = &cRadar_hilight;
    else if (pilot_isFlag(p, PILOT_HILIGHT))
@@ -1304,9 +1300,13 @@ void gui_renderPilot( const Pilot* p, RadarShape shape, double w, double h, doub
    else
       col = gui_getPilotColour(p);
 
-   scale = scale+3.0; /* Compensate for outline. */
+   scale = MAX(scale+2.0, 5.0); /* Compensate for outline. */
    glUseProgram(shaders.pilotmarker.program);
    gl_renderShader( x, y, scale, scale, p->solid->dir, &shaders.pilotmarker, col, 1 );
+
+   /* Draw selection if targeted. */
+   if (p->id == player.p->target)
+      gui_blink( x, y, MAX(scale*2.,10.0), &cRadar_hilight, RADAR_BLINK_PILOT, blink_pilot);
 
    /* Draw name. */
    if (overlay && pilot_isFlag(p, PILOT_HILIGHT))
