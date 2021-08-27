@@ -334,22 +334,17 @@ vec4 sdf_jumpmarker( vec4 color, vec2 uv )
 
 vec4 sdf_pilotmarker( vec4 color, vec2 uv )
 {
-   float s = sin(dt);
-   float c = cos(dt);
-   mat2 R = mat2( c, s, -s, c );
-   uv = R * uv;
-
    uv = vec2( uv.y, uv.x );
    float m = 1.0 / dimensions.x;
-   float d = sdTriangleEquilateral( uv + vec2(0.0,0.2) );
-   d = abs(d+m);
+   float d = sdTriangleEquilateral( uv*1.15  ) / 1.15;
+   d = abs(d+2.0*m);
    color.a *= smoothstep( -m, 0.0, -d );
    return color;
 }
 
 vec4 sdf_playermarker( vec4 color, vec2 uv )
 {
-   uv = vec2( uv.y, uv.x );
+   uv = vec2( uv.y, -uv.x );
    float m = 1.0 / dimensions.x;
    float d = 2.0*sdTriangleIsosceles( uv*0.5+vec2(0.0,0.5), vec2(0.2,0.8) );
    d = abs(d+2.0*m);

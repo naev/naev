@@ -9,7 +9,7 @@ out vec4 color_out;
 void main(void) {
    vec2 uv = vec2( pos.y, pos.x );
    float m = 1.0 / dimensions.x;
-   float d = sdTriangleEquilateral( uv + vec2(0.0,0.2) );
+   float d = sdTriangleEquilateral( uv*1.15  ) / 1.15;
    d = abs(d+2.0*m);
    float alpha = smoothstep(-m, 0.0, -d);
    float beta  = smoothstep(-2.0*m, -m, -d);

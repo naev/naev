@@ -1392,11 +1392,11 @@ void gui_renderPlayer( double res, int overlay )
    if (overlay) {
       x = player.p->solid->pos.x / res + map_overlay_center_x();
       y = player.p->solid->pos.y / res + map_overlay_center_y();
-      r = MIN(SCREEN_W,SCREEN_H)*0.018;
+      r = MIN(SCREEN_W,SCREEN_H)*0.024;
    } else {
       x = 0.;
       y = 0.;
-      r = MIN(SCREEN_W,SCREEN_H)*0.012;
+      r = MIN(SCREEN_W,SCREEN_H)*0.016;
    }
 
    /* Render the cross. */
