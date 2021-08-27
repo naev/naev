@@ -779,10 +779,10 @@ void gl_drawCircleH( const gl_Matrix4 *H, const glColour *c, int filled )
    // TODO handle shearing and different x/y scaling
    GLfloat r = H->m[0][0] / gl_view_matrix.m[0][0];
 
-   glUseProgram( shaders.sdfcircle.program );
-   glUniform2f( shaders.sdfcircle.dimensions, r, r );
-   glUniform1f( shaders.sdfcircle.r, filled );
-   gl_renderShaderH( &shaders.sdfcircle, H, c, 1 );
+   glUseProgram( shaders.circle.program );
+   glUniform2f( shaders.circle.dimensions, r, r );
+   glUniform1f( shaders.circle.r, filled );
+   gl_renderShaderH( &shaders.circle, H, c, 1 );
 }
 
 

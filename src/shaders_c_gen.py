@@ -48,22 +48,6 @@ class SimpleShader(Shader):
 
 SHADERS = [
    Shader(
-      name = "circle",
-      vs_path = "circle.vert",
-      fs_path = "circle.frag",
-      attributes = ["vertex"],
-      uniforms = ["projection", "color", "radius"],
-      subroutines = {},
-   ),
-   Shader(
-      name = "circle_filled",
-      vs_path = "circle.vert",
-      fs_path = "circle_filled.frag",
-      attributes = ["vertex"],
-      uniforms = ["projection", "color", "radius"],
-      subroutines = {},
-   ),
-   Shader(
       name = "circle_partial",
       vs_path = "circle.vert",
       fs_path = "circle_partial.frag",
@@ -292,8 +276,8 @@ SHADERS = [
       fs_path = "safelanes.frag",
    ),
    SimpleShader(
-      name = "sdfcircle",
-      fs_path = "sdfcircle.frag",
+      name = "circle",
+      fs_path = "circle.frag",
    ),
    SimpleShader(
       name = "progressbar",
