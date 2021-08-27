@@ -167,7 +167,7 @@ void ovr_refresh (void)
       snprintf( buf, sizeof(buf), "%s%s", jump_getSymbol(jp), sys_isKnown(jp->target) ? _(jp->target->name) : _("Unknown") );
       pos[items] = &jp->pos;
       mo[items]  = &jp->mo;
-      mo[items]->radius = jumppoint_gfx->sw / 2. + 2.0;
+      mo[items]->radius = jumppoint_gfx->sw / 2.;
       mo[items]->text_width = gl_printWidthRaw(&gl_smallFont, buf);
       items++;
    }
@@ -182,7 +182,7 @@ void ovr_refresh (void)
       snprintf( buf, sizeof(buf), "%s%s", planet_getSymbol(pnt), _(pnt->name) );
       pos[items] = &pnt->pos;
       mo[items]  = &pnt->mo;
-      mo[items]->radius = pnt->radius / 2. + 2.0;  /* halved since it's awkwardly large if drawn to scale relative to the player. */
+      mo[items]->radius = pnt->radius / 2.;  /* halved since it's awkwardly large if drawn to scale relative to the player. */
       /* +2.0 represents a margin used by the SDF shader. */
       mo[items]->text_width = gl_printWidthRaw( &gl_smallFont, buf );
       items++;
@@ -191,7 +191,7 @@ void ovr_refresh (void)
    /* We need to calculate the radius of the rendering from the maximum radius of the system. */
    ovr_res = 2. * 1.2 * MAX( max_x / map_overlay_width(), max_y / map_overlay_height() );
    for (i=0; i<items; i++)
-      mo[i]->radius = MAX( mo[i]->radius / ovr_res, i<jumpitems ? 5. : 7.5 );
+      mo[i]->radius = MAX( 2.+mo[i]->radius / ovr_res, i<jumpitems ? 5. : 7.5 );
 
    /* Nothing in the system so we just set a default value. */
    if (items == 0)
