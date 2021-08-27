@@ -13,7 +13,7 @@ void main(void) {
    float db = sdBox( uv+vec2(0.0,0.3), vec2(0.2,0.8) );
    float dt = 2.0*sdTriangleIsosceles( 0.5*uv+vec2(0.0,0.2), vec2(0.5, 0.75) );
    float d = sdSmoothUnion( db, dt, 0.5 );
-   d = max( d, -sdBox( abs(uv)-vec2(0.0,1.0), vec2(1.0,2.0*m) ) );
+   d = max( d, abs(uv.y)-1.0+2.0*m );
    d = abs(d);
 
    float alpha = smoothstep(-m, 0.0, -d);
