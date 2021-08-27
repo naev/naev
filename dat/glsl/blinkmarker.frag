@@ -17,12 +17,13 @@ void main(void) {
    const float s = sin(M_PI/4.0);
    const float c = cos(M_PI/4.0);
    const mat2 R = mat2( c, s, -s, c );
-   uv = uv - (vec2(1.0-w*M_SQRT1_2)-m);
+   uv = uv - (vec2(1.0-w*M_SQRT1_2)-2.0*m);
    uv = R * uv;
 
    float d = sdRhombus( uv, vec2(h,w) );
 
-   color_out = color;
-   color_out.a *= smoothstep( -m, 0.0, -d );
+   float alpha = smoothstep(-m, 0.0, -d);
+   float beta  = smoothstep(-2.0*m, -m, -d);
+   color_out   = color * vec4( vec3(alpha), beta );
 }
 
