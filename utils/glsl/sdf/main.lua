@@ -9,6 +9,7 @@ const float M_PI        = 3.14159265358979323846;  /* pi */
 const float M_SQRT1_2   = 0.70710678118654752440;  /* 1/sqrt(2) */
 
 float cro(in vec2 a, in vec2 b ) { return a.x*b.y - a.y*b.x; }
+float ndot( vec2 a, vec2 b ) { return a.x*b.x - a.y*b.y; }
 
 float smin( float a, float b, float k )
 {
@@ -18,6 +19,14 @@ float smin( float a, float b, float k )
 float sdSmoothUnion( float d1, float d2, float k )
  {
    return smin( d1, d2, k );
+}
+
+float sdRhombus( vec2 p, vec2 b )
+{
+   vec2 q = abs(p);
+   float h = clamp((-2.0*ndot(q,b)+ndot(b,b))/dot(b,b),-1.0,1.0);
+   float d = length( q - 0.5*b*vec2(1.0-h,1.0+h) );
+   return d * sign( q.x*b.y + q.y*b.x - b.x*b.y );
 }
 
 float sdSegment( in vec2 p, in vec2 a, in vec2 b )
@@ -258,6 +267,26 @@ vec4 sdf_planet2( vec4 color, vec2 uv )
    return color;
 }
 
+vec4 sdf_blinkMarker( vec4 color, vec2 uv )
+{
+   float m = 1.0 / dimensions.x;
+
+   const float w = 0.20;
+   const float h = 0.05;
+
+   uv = abs(uv);
+   const float s = sin(M_PI/4.0);
+   const float c = cos(M_PI/4.0);
+   const mat2 R = mat2( c, s, -s, c );
+   uv = uv - (vec2(1.0-w*M_SQRT1_2)-m);
+   uv = R * uv;
+
+   float d = sdRhombus( uv, vec2(h,w) );
+   
+   color.a *= smoothstep( -m, 0.0, -d );
+   return color;
+}
+
 vec4 bg( vec2 uv )
 {
    vec3 c;
@@ -278,9 +307,10 @@ vec4 effect( vec4 color, Image tex, vec2 uv, vec2 px )
 
    //col_out = sdf_alarm( color, tex, uv, px );
    //col_out = sdf_pilot( color, uv_rel );
-   col_out = sdf_pilot2( color, uv_rel );
+   //col_out = sdf_pilot2( color, uv_rel );
    //col_out = sdf_planet( color, uv_rel );
    //col_out = sdf_planet2( color, uv_rel );
+   col_out = sdf_blinkMarker( color, uv_rel );
 
    return mix( bg(uv), col_out, col_out.a );
 }

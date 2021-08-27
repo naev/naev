@@ -275,6 +275,10 @@ SHADERS = [
       name = "targetplanet",
       fs_path = "targetplanet.frag",
    ),
+   SimpleShader(
+      name = "blinkmarker",
+      fs_path = "blinkmarker.frag",
+   ),
 ]
 
 def write_header(f):
