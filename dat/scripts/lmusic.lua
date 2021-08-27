@@ -22,8 +22,7 @@ end
 local function _apply( m, f )
    if m==nil then
       for k,v in pairs(lmusic._sources) do
-         v.source:setPitch( pitch )
-         f( v )
+         f(v)
       end
    else
       if type(m)=="string" then
