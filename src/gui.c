@@ -1556,6 +1556,7 @@ void gui_renderPlanet( int ind, RadarShape shape, double w, double h, double res
       gui_blink( cx, cy, vr*2., col, RADAR_BLINK_PLANET, blink_planet);
 
    glUseProgram(shaders.planetmarker.program);
+   glUniform1f(shaders.planetmarker.r, planet_hasService(planet,PLANET_SERVICE_LAND));
    gl_renderShader( cx, cy, vr, vr, 0., &shaders.planetmarker, col, 1 );
 
    if (overlay) {
