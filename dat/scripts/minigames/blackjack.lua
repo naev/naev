@@ -54,6 +54,12 @@ end
 local function _chatter( chat_type )
    local text
    bj.chatter_color = minerva.chicken.colour
+
+   if player.misnDone("Kex's Freedom 5") then
+      bj.chatter = _("Cyborg Chicken looks emotionless.")
+      return
+   end
+
    if chat_type==nil then
       text = nil
    elseif chat_type=="won" then

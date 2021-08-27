@@ -404,7 +404,7 @@ function approach_blackjack()
    } )
    vn.label( "explanation" )
    vn.na( "Cyborg Chicken's eyes blink one second and go blank as a pre-recorded explanation is played from its back. Wait… are those embedded speakers?" )
-   cc("\"Welcome to MINERVA STATIONS blackjack table. The objective of this card game is to get as close to a value of 21 without going over. All cards are worth their rank except for Jack, Queen, and King which are all worth 10, and ace is either worth 1 or 11. You win if you have a higher value than CYBORG CHICKEN without going over 21.\"")
+   cc([["Welcome to MINERVA STATIONS blackjack table. The objective of this card game is to get as close to a value of 21 without going over. All cards are worth their rank except for Jack, Queen, and King which are all worth 10, and ace is either worth 1 or 11. You win if you have a higher value than CYBORG CHICKEN without going over 21."]])
    vn.na( "Cyborg Chicken eyes flutter as it seems like conciousness returns to its body." )
    vn.jump("menu")
    vn.label( "blackjack" )
@@ -579,7 +579,11 @@ function approach_maikki ()
          { _("Leave"), "leave" },
       }
       if player.evtDone("Chicken Rendezvous") then
-         table.insert( opts, 1, { _("Talk about Kex"), "kex" } )
+         if player.misnDone("Kex's Freedom 5") then
+            table.insert( opts, 1, { _("Talk about Kex"), "nokex" } )
+         else
+            table.insert( opts, 1, { _("Talk about Kex"), "kex" } )
+         end
       end
       --table.insert( opts, 1, { _("Ask about her father"), "memory" } )
       return opts
@@ -599,6 +603,10 @@ function approach_maikki ()
    kex(_([[As he stares directly at you, he makes a gesture that you should watch your back.]]))
    vn.na(_("You decide against telling Maikki anything. It does not seem like it is the time, unless you wish to get murdered by a rampant cyborg duck."))
    vn.disappear(kex, "slideright") -- played backwards so slides left
+   vn.jump("menu_msg")
+
+   vn.label("nokex")
+   vn.na(_("You are about to talk, but decide not to. Now is not the time to deal with this."))
    vn.jump("menu_msg")
 
    vn.label("leave")
