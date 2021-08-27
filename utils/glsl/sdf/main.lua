@@ -346,7 +346,7 @@ vec4 sdf_playermarker( vec4 color, vec2 uv )
 {
    uv = vec2( uv.y, -uv.x );
    float m = 1.0 / dimensions.x;
-   float d = 2.0*sdTriangleIsosceles( uv*0.5+vec2(0.0,0.5), vec2(0.2,0.8) );
+   float d = 2.0*sdTriangleIsosceles( uv*0.5+vec2(0.0,0.5), vec2(0.2,0.7) );
    d = abs(d+2.0*m);
    color.a *= smoothstep( -m, 0.0, -d );
    return color;
@@ -377,8 +377,8 @@ vec4 effect( vec4 color, Image tex, vec2 uv, vec2 px )
    //col_out = sdf_planet2( color, uv_rel );
    //col_out = sdf_blinkmarker( color, uv_rel );
    //col_out = sdf_jumpmarker( color, uv_rel );
-   col_out = sdf_pilotmarker( color, uv_rel );
-   //col_out = sdf_playermarker( color, uv_rel );
+   //col_out = sdf_pilotmarker( color, uv_rel );
+   col_out = sdf_playermarker( color, uv_rel );
 
    return mix( bg(uv), col_out, col_out.a );
 }
