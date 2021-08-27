@@ -256,6 +256,10 @@ SHADERS = [
       fs_path = "planetmarker.frag",
    ),
    SimpleShader(
+      name = "jumpmarker",
+      fs_path = "jumpmarker.frag",
+   ),
+   SimpleShader(
       name = "progressbar",
       fs_path = "progressbar.frag",
    ),

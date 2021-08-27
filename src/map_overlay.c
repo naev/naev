@@ -167,7 +167,7 @@ void ovr_refresh (void)
       snprintf( buf, sizeof(buf), "%s%s", jump_getSymbol(jp), sys_isKnown(jp->target) ? _(jp->target->name) : _("Unknown") );
       pos[items] = &jp->pos;
       mo[items]  = &jp->mo;
-      mo[items]->radius = jumppoint_gfx->sw / 2.;
+      mo[items]->radius = jumppoint_gfx->sw / 2. + 2.0;
       mo[items]->text_width = gl_printWidthRaw(&gl_smallFont, buf);
       items++;
    }
