@@ -260,6 +260,10 @@ SHADERS = [
       fs_path = "jumpmarker.frag",
    ),
    SimpleShader(
+      name = "pilotmarker",
+      fs_path = "pilotmarker.frag",
+   ),
+   SimpleShader(
       name = "progressbar",
       fs_path = "progressbar.frag",
    ),

@@ -1304,10 +1304,8 @@ void gui_renderPilot( const Pilot* p, RadarShape shape, double w, double h, doub
    else
       col = gui_getPilotColour(p);
 
-   glLineWidth( 2. );
-   gl_renderTriangleEmpty( x, y, p->solid->dir, scale, 1., &cBlack );
-   glLineWidth( 1. );
-   gl_renderTriangleEmpty( x, y, p->solid->dir, scale, 1., col );
+   glUseProgram(shaders.pilotmarker.program);
+   gl_renderShader( x, y, scale, scale, p->solid->dir, &shaders.pilotmarker, col, 1 );
 
    /* Draw name. */
    if (overlay && pilot_isFlag(p, PILOT_HILIGHT))

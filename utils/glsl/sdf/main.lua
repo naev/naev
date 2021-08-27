@@ -22,7 +22,7 @@ float sdSmoothUnion( float d1, float d2, float k )
 }
 
 /* Equilateral triangle centered at p facing "up" */
-float sdEquilateralTriangle( vec2 p )
+float sdTriangleEquilateral( vec2 p )
 {
 	const float k = sqrt(3.0);
 	p.x = abs(p.x) - 1.0;
@@ -297,7 +297,7 @@ vec4 sdf_planet2( vec4 color, vec2 uv )
    return color;
 }
 
-vec4 sdf_blinkMarker( vec4 color, vec2 uv )
+vec4 sdf_blinkmarker( vec4 color, vec2 uv )
 {
    float m = 1.0 / dimensions.x;
 
@@ -317,7 +317,7 @@ vec4 sdf_blinkMarker( vec4 color, vec2 uv )
    return color;
 }
 
-vec4 sdf_jump( vec4 color, vec2 uv )
+vec4 sdf_jumpmarker( vec4 color, vec2 uv )
 {
    float m = 1.0 / dimensions.x;
 
@@ -328,6 +328,16 @@ vec4 sdf_jump( vec4 color, vec2 uv )
    float d = sdSmoothUnion( db, dt, 0.45 );
 
    d = abs(d);
+   color.a *= smoothstep( -m, 0.0, -d );
+   return color;
+}
+
+vec4 sdf_pilotmarker( vec4 color, vec2 uv )
+{
+   uv = vec2( uv.y, uv.x );
+   float m = 1.0 / dimensions.x;
+   float d = sdTriangleEquilateral( uv + vec2(0.0,0.2) );
+   d = abs(d+m);
    color.a *= smoothstep( -m, 0.0, -d );
    return color;
 }
@@ -355,8 +365,9 @@ vec4 effect( vec4 color, Image tex, vec2 uv, vec2 px )
    //col_out = sdf_pilot2( color, uv_rel );
    //col_out = sdf_planet( color, uv_rel );
    //col_out = sdf_planet2( color, uv_rel );
-   //col_out = sdf_blinkMarker( color, uv_rel );
-   col_out = sdf_jump( color, uv_rel );
+   //col_out = sdf_blinkmarker( color, uv_rel );
+   //col_out = sdf_jumpmarker( color, uv_rel );
+   col_out = sdf_pilotmarker( color, uv_rel );
 
    return mix( bg(uv), col_out, col_out.a );
 }
