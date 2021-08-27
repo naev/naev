@@ -1,0 +1,4 @@
+$latex = 'lualatex';
+$bibtex = 'bibtex';
+$max_repeat = 3;
+$pdf_mode = 3;
