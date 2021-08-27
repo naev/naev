@@ -1322,6 +1322,7 @@ end
 Plays a sound.
 
    @tparam Audio sfx Sound to play.
+   @tparam[opt] table params Parameter values such as "effect" and "pitch". See audio package docs.
 --]]
 function vn.sfx( sfx, params )
    params = params or {}
