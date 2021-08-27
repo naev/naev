@@ -168,6 +168,17 @@ float sdUnevenCapsule( vec2 p, vec2 pa, vec2 pb, float ra, float rb )
                        return m                       - ra;
 }
 
+/*  p is center
+ *  r is length
+ *  d is circleness (0.0 is circle, 1.0 is empty) */
+float sdVesica( vec2 p, float r, float d )
+{
+   p = abs(p);
+   float b = sqrt(r*r-d*d);
+   return ((p.y-b)*d>p.x*b) ? length(p-vec2(0.0,b))
+      : length(p-vec2(-d,0.0))-r;
+}
+
 float sdSmoothUnion( float a, float b, float k )
 {
    float h = max( k-abs(a-b), 0.0 )/k;
