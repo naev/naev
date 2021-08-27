@@ -486,7 +486,7 @@ function strangelove_board ()
 
    vn.clear()
    vn.scene()
-   local dr = vn.Character.new( minerva.vn_strangelove() )
+   local dr = minerva.vn_strangelove()
    -- TODO small scene
    vn.na(_("You carefully board the ship, not sure what you are about to encounter. Trusting your systems sensors indicating a proper atmosphere in the ship, you board without your space suit. However, when you first enter the ship, a strong pungent odour makes you partially regret your decision."))
    vn.na(_("As you move to the command room, you notice small movements from the corner of your eyes. Upon closer inspection you make out all sorts of small moving objects, reminding you of cleaning droids on most ships, however, these move in a fairly clunky fashion, as if they had some of their moving apparatus damaged."))
@@ -624,7 +624,7 @@ His talking is slowing down and starting to get muddled. You have trouble making
    vn.na(_([[Silence once again envelopes the room. You look around the room and decide to try to access the command console to see if there is any information left. It is a bit unsettling with a corpse nearby, but you try to focus on getting the grime off the console and interfacing with it. ]]))
    vn.na(_([[You notice that everything seems to be heavily encrypted, much more so than the standard on even military Za'lek vessels, and try to break into the system. After a few unsuccessful attempts you manage to find what looks like a kink in the cryptographic armour and try to access it.]]))
    vn.na(_([[Suddenly a bright message starts flashing on all the monitors:
-#rHONEYPOT #329 ACTIVATED
+#rHONEYPOT ##329 ACTIVATED
 SELF-DESTRUCT SEQUENCE ENGAGED
 30 SECONDS REMAINING#0]]))
    vn.na(_([[Cursing to yourself, you realize you don't have enough time to override the console and you make a dash for your ship. As the airlock closes behind you you can hear explosions starting to rip Dr. Strangelove's ship apart.]]))
