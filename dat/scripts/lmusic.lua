@@ -10,6 +10,33 @@ local lmusic = {
 
 local love_audio = require "love.audio"
 
+local function _getmusic( m )
+   for k,v in pairs(lmusic._sources) do
+      if v.filename==m then
+         return v
+      end
+   end
+   warn(string.format(_("lmusic: Trying to find music '%s', but it is not playing!"), m))
+end
+
+local function _apply( m, f )
+   if m==nil then
+      for k,v in pairs(lmusic._sources) do
+         v.source:setPitch( pitch )
+         f( v )
+      end
+   else
+      if type(m)=="string" then
+         local v = _getmusic(m)
+         if v then
+            f(v)
+         end
+      else
+         f(m)
+      end
+   end
+end
+
 --[[---
 Plays a music with fade-in and fade-out.
 
@@ -51,6 +78,12 @@ function lmusic.play( filename, params )
    return m
 end
 
+function lmusic.setPitch( m, pitch )
+   _apply( m, function (v)
+      v.source:setPitch( pitch )
+   end )
+end
+
 function lmusic.update( dt )
    local remove = {}
    for k,m in pairs(lmusic._sources) do
@@ -84,39 +117,18 @@ function lmusic.update( dt )
    end
 end
 
-local function _stop( m )
-   if m.state ~= "fadeout" then
-      m.state = "fadeout"
-      m.progess = 0
-   end
-end
-
 --[[---
 Stops a playing music (or all of them)
 
    @tparam tab|nil m Music to stop, or nil to stop all playing music.
 --]]
 function lmusic.stop( m )
-   if m==nil then
-      for k,v in pairs(lmusic._sources) do
-         _stop( v )
+   _apply( m, function (v)
+      if v.state ~= "fadeout" then
+         v.state = "fadeout"
+         v.progess = 0
       end
-   else
-      if type(m)=="string" then
-         local stopped = false
-         for k,v in pairs(lmusic._sources) do
-            if v.filename==m then
-               _stop(v)
-               stopped = true
-            end
-         end
-         if not stopped then
-            print(string.format(_("lmusic: Trying to stop music '%s', but it is not playing!"), m))
-         end
-      else
-         _stop( m )
-      end
-   end
+   end )
 end
 
 --[[---
