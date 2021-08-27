@@ -38,7 +38,7 @@ float sdBox( vec2 p, vec2 b )
 }
 
 /* Equilateral triangle centered at p facing "up" */
-float sdEquilateralTriangle( vec2 p )
+float sdTriangleEquilateral( vec2 p )
 {
 	const float k = sqrt(3.0);
 	p.x = abs(p.x) - 1.0;
