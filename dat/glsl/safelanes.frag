@@ -1,3 +1,5 @@
+#include "lib/sdf.glsl"
+
 const float MARGIN   = 30.0; /**< How much margin to leave when fading in/out. */
 
 uniform vec4 color;
@@ -9,21 +11,16 @@ in vec2 pos;
 out vec4 color_out;
 
 void main(void) {
-   vec2 pos_tex, pos_px;
-   pos_tex.x = pos.x;
-   pos_tex.y = 2.0 * pos.y - 1.0;
-   pos_px = pos * dimensions;
+   vec2 uv = pos * dimensions;
+   float d = sdBox( uv, dimensions-vec2(2.0) );
 
-   vec4 col = color;
-
-   /* Make it wavy. */
-   //pos_tex.y += 0.3 * snoise( 0.006*vec2( r, pos_px.x ) );
-   //col.a *= step( abs(pos_tex.y), 0.5 );
-
-   /* Fade in/out edges. */
-   col.a *= smoothstep( 0.0, MARGIN, pos_px.x );
-   col *= 1.0 - smoothstep( dimensions.x-MARGIN, dimensions.x, pos_px.x );
-
-   color_out = col;
+   /*
+   float alpha = smoothstep(-1.0,  0.0, -d);
+   float beta  = smoothstep(-2.0, -1.0, -d);
+   color_out   = color * vec4( vec3(alpha), beta );
+   */
+   color_out   = color;
+   color_out.a *= smoothstep(-2.0, 0.0, -d);
+   color_out.a *= smoothstep(dimensions.x, dimensions.x-MARGIN, length(uv));
 }
 

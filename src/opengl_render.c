@@ -709,9 +709,9 @@ void gl_renderShader( double x, double y, double w, double h, double r, const Si
 {
    gl_Matrix4 projection = gl_view_matrix;
    projection = gl_Matrix4_Translate(projection, x, y, 0);
-   projection = gl_Matrix4_Scale(projection, w, h, 1);
    if (r != 0.)
       projection = gl_Matrix4_Rotate2d(projection, r);
+   projection = gl_Matrix4_Scale(projection, w, h, 1);
    glUniform2f( shd->dimensions, w, h );
    gl_renderShaderH( shd, &projection, c, center );
 }
