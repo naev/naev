@@ -1,3 +1,4 @@
 require 'ai.baddie'
 
-mem.armour_run = 0
+mem.shield_run = -1
+mem.armour_run = -1

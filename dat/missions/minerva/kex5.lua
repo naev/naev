@@ -89,8 +89,9 @@ function accept ()
    vn.done()
 
    vn.label("accept")
-   kex(_([["I should have realized it sooner. It was obvious from the start that Strangelove would be involved in this travesty of a station."]]))
-   kex(_([["There's not too many trails, but I do think I know where to find him. Wait, you know where he is? How you know is not important now, all I need you to do is go over there and end his rotten life once and for all."]]))
+   kex(_([["I should have realized it sooner. It was obvious from the start that Strangelove would be involved in this travesty of a station. I found his name when reviewing some of the documents you got me, then it was all clear."]]))
+   kex(_([["There's not too many trails to where he is right now, but I do think I know where to find him."]]))
+   kex(_([["Wait, you know where he is? How you know is not important now, all I need you to do is go over there and end his rotten life once and for all."]]))
    kex(_([["The universe will be a much better place with scum like him gone, and I'll finally get my vengeance."]]))
    vn.disappear(kex)
    vn.na(string.format(_([[Without saying anything else, Kex walks off stumbling into the darkness of the station. You feel like it is best to leave him alone right now and decide to go see Strangelove. He should be in the %s system.]]),_(targetsys)))
@@ -228,7 +229,7 @@ function enter ()
       if misn_state==0 then
          table.insert( thugs, 1, "Vigilance" )
       end
-      local fbh = faction.dynAdd( "Mercenary", "kex_bountyhunter", _("Bounty Hunter"), {ai="mercenary"} )
+      local fbh = faction.dynAdd( "Mercenary", "kex_bountyhunter", _("Bounty Hunter"), {ai="baddie_norun"} )
       thug_pilots = {}
       for k,v in ipairs(thugs) do
          local ppos = pos + vec2.new( rnd.rnd()*200, rnd.rnd()*360 )
@@ -266,9 +267,7 @@ function enter ()
          hook.timer( 5, "thug_heartbeat" )
          player.allowLand( false, _("#rYou are unable to land while the bounty hunters are still active.#0") )
 
-         for k,p in ipairs(thug_pilots) do
-            pilot.hook( p, "death", "thug_dead" )
-         end
+         hook.timer( 3, "thug_check" )
 
          -- Add some disabled drones for effect
          for i=1,5 do
@@ -363,7 +362,7 @@ function thug_heartbeat ()
    hook.timer( 1, "thug_heartbeat" )
 end
 
-function thug_dead ()
+function thug_check ()
    local stillalive = {}
    for k,v in ipairs(thug_pilots) do
       if v:exists() then
@@ -373,6 +372,8 @@ function thug_dead ()
    thug_pilots = stillalive
    if #thug_pilots == 0 then
       hook.timer( 4, "thugs_cleared" )
+   else
+      hook.timer( 3, "thug_check" )
    end
 end
 
@@ -445,7 +446,7 @@ function landed_lab ()
    end )
    vn.jump("menu")
 
-   vn.menu("check_done")
+   vn.label("check_done")
    vn.na(_("You spend your time to go carefully through the entire station, but it ends up being mainly in vain: Dr. Strangelove is no where to be found. At least you found a droid that might be useful."))
    vn.na(_("You let out a sigh as you head outside. Maybe Dr. Strangelove escaped somewhere else?"))
    vn.run()
@@ -462,7 +463,7 @@ function strangelove_hail ()
    vn.clear()
    vn.scene()
    vn.music( minerva.loops.strangelove )
-   local dr = vn.newCharacter( minerva.vn_strangelove{ shaders=love_shaders.hologram() } )
+   local dr = vn.newCharacter( minerva.vn_strangelove{ shader=love_shaders.hologram() } )
    vn.transition( "electric" )
    -- TODO small scene
    vn.na(_("As you loiter around a system, you suddenly receive an unexpected incoming transmission."))
