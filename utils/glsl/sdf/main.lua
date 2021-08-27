@@ -323,11 +323,12 @@ vec4 sdf_jumpmarker( vec4 color, vec2 uv )
 
    uv = vec2( uv.y, uv.x );
 
-   float db = sdBox( uv+vec2(0.0,0.10), vec2(0.10,0.6) );
-   float dt = 2.0*sdTriangleIsosceles( 0.5*uv+vec2(0.0,0.40), vec2(0.45, 0.85) );
-   float d = sdSmoothUnion( db, dt, 0.45 );
-
+   float db = sdBox( uv+vec2(0.0,0.3), vec2(0.2,0.6) );
+   float dt = 2.0*sdTriangleIsosceles( 0.5*uv+vec2(0.0,0.3), vec2(0.45, 0.75) );
+   float d = sdSmoothUnion( db, dt, 0.5 );
+   d = max( d, -sdBox( uv+vec2(0.0,1.0), vec2(0.6,0.1) ) );
    d = abs(d);
+
    color.a *= smoothstep( -m, 0.0, -d );
    return color;
 }
@@ -376,9 +377,9 @@ vec4 effect( vec4 color, Image tex, vec2 uv, vec2 px )
    //col_out = sdf_planet( color, uv_rel );
    //col_out = sdf_planet2( color, uv_rel );
    //col_out = sdf_blinkmarker( color, uv_rel );
-   //col_out = sdf_jumpmarker( color, uv_rel );
+   col_out = sdf_jumpmarker( color, uv_rel );
    //col_out = sdf_pilotmarker( color, uv_rel );
-   col_out = sdf_playermarker( color, uv_rel );
+   //col_out = sdf_playermarker( color, uv_rel );
 
    return mix( bg(uv), col_out, col_out.a );
 }
