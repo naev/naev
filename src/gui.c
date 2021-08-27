@@ -1392,15 +1392,16 @@ void gui_renderPlayer( double res, int overlay )
    if (overlay) {
       x = player.p->solid->pos.x / res + map_overlay_center_x();
       y = player.p->solid->pos.y / res + map_overlay_center_y();
-      r = MIN(SCREEN_W,SCREEN_H)*0.012;
+      r = MIN(SCREEN_W,SCREEN_H)*0.018;
    } else {
       x = 0.;
       y = 0.;
-      r = MIN(SCREEN_W,SCREEN_H)*0.008;
+      r = MIN(SCREEN_W,SCREEN_H)*0.012;
    }
 
    /* Render the cross. */
-   // gl_renderCross( x, y, r, &cRadar_player );
+   //gl_renderCross( x, y, r, &cRadar_player );
+   /*
    glLineWidth( 2. );
    gl_renderTriangleEmpty( x - 1, y, player.p->solid->dir, r, 2., &cBlack );
    gl_renderTriangleEmpty( x + 1, y, player.p->solid->dir, r, 2., &cBlack );
@@ -1409,6 +1410,10 @@ void gui_renderPlayer( double res, int overlay )
 
    gl_renderTriangleEmpty( x, y, player.p->solid->dir, r, 2., &cRadar_player );
    glLineWidth( 1. );
+   */
+
+   glUseProgram(shaders.playermarker.program);
+   gl_renderShader( x, y, r, r, player.p->solid->dir, &shaders.playermarker, &cRadar_player, 1 );
 }
 
 
