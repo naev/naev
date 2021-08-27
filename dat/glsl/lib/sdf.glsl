@@ -109,6 +109,17 @@ float sdArc( vec2 p, vec2 sca, vec2 scb, float ra, float rb )
    return sqrt( max(0.0, dot(p,p) + ra*ra - 2.0*ra*k) ) - rb;
 }
 
+/* Pie that is part of a circle centered at p.
+ * c is the sin/cos of aperture
+ * r is the radius */
+float sdPie( vec2 p, vec2 c, float r )
+{
+    p.x = abs(p.x);
+    float l = length(p) - r;
+    float m = length(p-c*clamp(dot(p,c),0.0,r));
+    return max(l,m*sign(c.y*p.x-c.x*p.y));
+}
+
 /* Rhombus at position p with size b. */
 float sdRhombus( vec2 p, vec2 b )
 {

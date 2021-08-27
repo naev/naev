@@ -1005,7 +1005,6 @@ static void player_renderStealthOverlay( double dt )
 {
    (void) dt;
    double x, y, r, st, z;
-   double angle, arc;
    glColour col;
 
    z = cam_getZoom();
@@ -1013,8 +1012,6 @@ static void player_renderStealthOverlay( double dt )
 
    /* Determine the arcs. */
    st    = player.p->ew_stealth_timer;
-   arc   = 2.*M_PI * st;
-   angle = -M_PI/2. - arc;
 
    /* We do red to yellow. */
    col_blend( &col, &cYellow, &cRed, st );
@@ -1024,7 +1021,9 @@ static void player_renderStealthOverlay( double dt )
    r = 1.2/2. * (double)player.p->ship->gfx_space->sw;
 
    /* Draw the main circle. */
-   gl_drawCirclePartial( x, y, r * z, &col, angle, arc );
+   glUseProgram( shaders.stealthmarker.program );
+   glUniform1f( shaders.stealthmarker.r, st );
+   gl_renderShader( x, y, r*z, r*z, 0., &shaders.stealthmarker, &col, 1 );
 }
 
 

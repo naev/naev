@@ -353,9 +353,15 @@ vec4 sdf_playermarker( vec4 color, vec2 uv )
    return color;
 }
 
-vec4 sdf_circle( vec4 color, vec2 uv )
+vec4 sdf_stealth( vec4 color, vec2 uv )
 {
-   float d = sdCircle( uv*dimensions, dimensions.x-1.0 );
+   float r = fract(dt*0.1);
+   float a = r * M_PI;
+   float c = cos(a);
+   float s = sin(a);
+   uv.y = -uv.y;
+   uv = mat2(c,-s,s,c) * uv;
+   float d = sdPie( uv*dimensions, vec2(s,c), dimensions.x-1.0 );
    float alpha = smoothstep(-1.0, 0.0, -d);
    color.a *= smoothstep( -1.0, 0.0, -d );
    return color;
@@ -388,7 +394,7 @@ vec4 effect( vec4 color, Image tex, vec2 uv, vec2 px )
    //col_out = sdf_jumpmarker( color, uv_rel );
    //col_out = sdf_pilotmarker( color, uv_rel );
    //col_out = sdf_playermarker( color, uv_rel );
-   col_out = sdf_circle( color, uv_rel );
+   col_out = sdf_stealth( color, uv_rel );
 
    return mix( bg(uv), col_out, col_out.a );
 }
