@@ -20,7 +20,7 @@ void main(void) {
    color_out   = color * vec4( vec3(alpha), beta );
    */
    color_out   = color;
-   color_out.a *= smoothstep(-2.0, 0.0, -d);
+   color_out.a *= smoothstep(-2.0, 0.0, -d); /* no outline, more blur */
    color_out.a *= smoothstep(dimensions.x, dimensions.x-MARGIN, length(uv));
 }
 
