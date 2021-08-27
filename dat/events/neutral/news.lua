@@ -13,6 +13,10 @@
 require "numstring"
 require "jumpdist"
 
+-- List to treat special factions diffferently
+override_list = {
+   ["Strangelove"] = "Generic",
+}
 
 header_table = {}
 
@@ -501,6 +505,11 @@ function create()
    local f = p:faction()
    if f == nil then evt.finish(false) end
    local my_faction = f:nameRaw()
+
+   local t = override_list[my_faction]
+   if t then
+      my_faction = t
+   end
 
    add_header( my_faction )
    add_article( my_faction )
