@@ -1304,6 +1304,7 @@ void gui_renderPilot( const Pilot* p, RadarShape shape, double w, double h, doub
    else
       col = gui_getPilotColour(p);
 
+   scale = scale+3.0; /* Compensate for outline. */
    glUseProgram(shaders.pilotmarker.program);
    gl_renderShader( x, y, scale, scale, p->solid->dir, &shaders.pilotmarker, col, 1 );
 
