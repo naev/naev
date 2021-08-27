@@ -1364,7 +1364,7 @@ void gui_renderAsteroid( const Asteroid* a, double w, double h, double res, int 
    }
 
    /* Draw square. */
-   px     = MAX(x-sx,-w);
+   px     = MAX(x-sx, -w);
    py     = MAX(y-sy, -h);
 
    targeted = ((i==player.p->nav_asteroid) && (j==player.p->nav_anchor));
@@ -1378,7 +1378,7 @@ void gui_renderAsteroid( const Asteroid* a, double w, double h, double res, int 
    gl_renderRect( px, py, MIN( 2*sx, w-px ), MIN( 2*sy, h-py ), col );
 
    if (targeted)
-      gui_blink( x, y, (w+h), col, RADAR_BLINK_PILOT, blink_pilot );
+      gui_blink( px, py, MAX(7., 2.0*(sx+sy)), col, RADAR_BLINK_PILOT, blink_pilot );
 }
 
 
