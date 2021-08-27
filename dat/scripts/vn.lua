@@ -1323,11 +1323,20 @@ Plays a sound.
 
    @tparam Audio sfx Sound to play.
 --]]
-function vn.sfx( sfx )
+function vn.sfx( sfx, params )
+   params = params or {}
    vn._checkstarted()
    local s = vn.State.new()
    s._init = function (state)
-      sfx:play()
+      local _sfx = sfx:clone()
+      s._sfx = _sfx
+      _sfx:play()
+      if params.pitch then
+         _sfx:setPitch( params.pitch )
+      end
+      if params.effect then
+         _sfx:setEffect( params.effect )
+      end
       _finish(state)
    end
    table.insert( vn._states, s )
@@ -1335,27 +1344,27 @@ end
 --[[--
 Plays a money sound.
 --]]
-function vn.sfxMoney()
+function vn.sfxMoney( params )
    -- TODO
-   -- return vn.sfx( vn._sfx.money )
+   -- return vn.sfx( vn._sfx.money, params )
 end
 --[[--
 Plays a victory sound.
 --]]
-function vn.sfxVictory()
-   return vn.sfx( vn._sfx.victory )
+function vn.sfxVictory( params )
+   return vn.sfx( vn._sfx.victory, params )
 end
 --[[--
 Plays a bingo sound.
 --]]
-function vn.sfxBingo()
-   return vn.sfx( vn._sfx.bingo )
+function vn.sfxBingo( params )
+   return vn.sfx( vn._sfx.bingo, params )
 end
 --[[--
 Plays an eerie sound.
 --]]
 function vn.sfxEerie()
-    return vn.sfx( vn._sfx.eerie )
+    return vn.sfx( vn._sfx.eerie, params )
 end
 
 --[[--
