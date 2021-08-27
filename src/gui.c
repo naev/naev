@@ -1399,19 +1399,6 @@ void gui_renderPlayer( double res, int overlay )
       r = MIN(SCREEN_W,SCREEN_H)*0.016;
    }
 
-   /* Render the cross. */
-   //gl_renderCross( x, y, r, &cRadar_player );
-   /*
-   glLineWidth( 2. );
-   gl_renderTriangleEmpty( x - 1, y, player.p->solid->dir, r, 2., &cBlack );
-   gl_renderTriangleEmpty( x + 1, y, player.p->solid->dir, r, 2., &cBlack );
-   gl_renderTriangleEmpty( x, y - 1, player.p->solid->dir, r, 2., &cBlack );
-   gl_renderTriangleEmpty( x, y + 1, player.p->solid->dir, r, 2., &cBlack );
-
-   gl_renderTriangleEmpty( x, y, player.p->solid->dir, r, 2., &cRadar_player );
-   glLineWidth( 1. );
-   */
-
    glUseProgram(shaders.playermarker.program);
    gl_renderShader( x, y, r, r, player.p->solid->dir, &shaders.playermarker, &cRadar_player, 1 );
 }
