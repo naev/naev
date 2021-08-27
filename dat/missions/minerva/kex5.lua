@@ -30,6 +30,7 @@ local vn       = require 'vn'
 local equipopt = require 'equipopt'
 local love_shaders = require 'love_shaders'
 local reverb_preset = require 'reverb_preset'
+local lmusic   = require 'lmusic'
 require 'numstring'
 
 -- Mission states:
@@ -52,7 +53,6 @@ eccdiff = "strangelove"
 money_reward = 700e3
 
 function create ()
-   if not var.peek("testing") then misn.finish(false) end
    if not misn.claim( system.get(targetsys) ) then
       misn.finish( false )
    end
@@ -116,6 +116,7 @@ function accept ()
 
    hook.enter("enter")
    hook.land("landed")
+   hook.load("landed")
 end
 
 function landed ()
@@ -123,7 +124,7 @@ function landed ()
    if misn_state==1 and planet.cur():nameRaw() == targetplanet then
       landed_lab()
 
-   elseif misn_stage==3 and planet.get("Minerva Station")==planet.cur() then
+   elseif misn_state==3 and planet.get("Minerva Station")==planet.cur() then
       npc_kex = misn.npcAdd( "approach_kex", minerva.kex.name, minerva.kex.portrait, minerva.kex.description )
 
    end
@@ -174,7 +175,7 @@ He looks down sadly at the floor for a while before looking at you again.]]))
    kex(_([["We should be dancing!"]]))
    local function saddance ()
       vn.animation( 2.0, function (progress, dt, offset)
-         kex.offset = offset + math.sin( 2 * math.pi * progress )
+         kex.offset = offset + 100*math.sin( 2 * math.pi * progress )
       end, nil, nil, function () return kex.offset end )
    end
    saddance()
@@ -208,7 +209,7 @@ end
 local function choose_one( t ) return t[ rnd.rnd(1,#t) ] end
 
 function enter ()
-   if misn_stage==2 and system.cur() ~= targetsys then
+   if misn_state==2 and system.cur() ~= targetsys then
       player.msg(_("MISSION FAILED! You never met up with Dr. Strangelove."))
       misn.finish(false)
    end
@@ -697,6 +698,7 @@ He seems to be looking at something in the distance.]]))
    -- Advance mission
    misn_state = 3
    misn.osdActive(2)
+   misn.markerMove( misn_marker, system.get("Limbo") )
    player.unboard()
    local strangelove_death = var.peek("strangelove_death")
    if strangelove_death=="shot" then
