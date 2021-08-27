@@ -609,7 +609,8 @@ static void map_system_array_update( unsigned int wid, char* str ) {
       price2str( buf_price, outfit->price, player.p->credits, 2 );
       if (outfit->license == NULL)
          strncpy( buf_license, _("None"), sizeof(buf_license)-1 );
-      else if (player_hasLicense( outfit->license ))
+      else if (player_hasLicense( outfit->license ) ||
+            (cur_planetObj_sel != NULL && planet_hasService( cur_planetObj_sel, PLANET_SERVICE_BLACKMARKET )))
          strncpy( buf_license, _(outfit->license), sizeof(buf_license)-1 );
       else
          snprintf( buf_license, sizeof( buf_license ), "#r%s#0", _(outfit->license) );
@@ -641,7 +642,8 @@ static void map_system_array_update( unsigned int wid, char* str ) {
       price2str( buf_price, ship_buyPrice( ship ), player.p->credits, 2 );
       if (ship->license == NULL)
          strncpy( buf_license, _("None"), sizeof(buf_license)-1 );
-      else if (player_hasLicense( ship->license ))
+      else if (player_hasLicense( ship->license )
+            || (cur_planetObj_sel != NULL && planet_hasService( cur_planetObj_sel, PLANET_SERVICE_BLACKMARKET )))
          strncpy( buf_license, _(ship->license), sizeof(buf_license)-1 );
       else
          snprintf( buf_license, sizeof(buf_license), "#r%s#0", _(ship->license) );

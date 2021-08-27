@@ -167,7 +167,7 @@ void ovr_refresh (void)
       snprintf( buf, sizeof(buf), "%s%s", jump_getSymbol(jp), sys_isKnown(jp->target) ? _(jp->target->name) : _("Unknown") );
       pos[items] = &jp->pos;
       mo[items]  = &jp->mo;
-      mo[items]->radius = jumppoint_gfx->sw / 2.;
+      mo[items]->radius = jumppoint_gfx->sw / 2. + 2.0;
       mo[items]->text_width = gl_printWidthRaw(&gl_smallFont, buf);
       items++;
    }
@@ -526,7 +526,6 @@ void ovr_render( double dt )
    double x,y, r,detect;
    double rx,ry, x2,y2, rw,rh;
    glColour col;
-   gl_Matrix4 projection;
 
    /* Must be open. */
    if (!ovr_open)
@@ -590,20 +589,12 @@ void ovr_render( double dt )
       rx = x2-x;
       ry = y2-y;
       r  = atan2( ry, rx );
-      rw = 13.;
-      rh = MOD(rx,ry);
-
-      /* Set up projcetion. */
-      projection = gl_view_matrix;
-      projection = gl_Matrix4_Translate( projection, x, y, 0 );
-      projection = gl_Matrix4_Rotate2d( projection, atan2(ry,rx) );
-      projection = gl_Matrix4_Translate( projection, 0, -rw/2., 0 );
-      projection = gl_Matrix4_Scale( projection, rh, rw, 1 );
+      rw = MOD(rx,ry)/2.;
+      rh = 13.;
 
       /* Render. */
       glUseProgram(shaders.safelanes.program);
-      glUniform2f(shaders.safelanes.dimensions, rh, rw);
-      gl_renderShaderH( &shaders.safelanes, &projection, &col, 0 );
+      gl_renderShader( x+rx/2., y+ry/2., rw, rh, r, &shaders.safelanes, &col, 1 );
    }
    array_free( safelanes );
 

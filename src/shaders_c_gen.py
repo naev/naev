@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 class Shader:
-    def __init__(self, name, vs_path, fs_path, attributes, uniforms, subroutines ):
+    def __init__(self, name, vs_path, fs_path, attributes, uniforms, subroutines):
         self.name       = name
         self.vs_path    = vs_path
         self.fs_path    = fs_path
@@ -9,68 +9,44 @@ class Shader:
         self.uniforms   = uniforms
         self.subroutines= subroutines
 
-    def write_header(self, f):
-        f.write("   struct {\n")
-        f.write("      GLuint program;\n")
+    def header_chunks(self):
+        yield "   struct {\n"
+        yield "      GLuint program;\n"
         for attribute in self.attributes:
-            f.write(f"      GLuint {attribute};\n")
+            yield f"      GLuint {attribute};\n"
         for uniform in self.uniforms:
-            f.write(f"      GLuint {uniform};\n")
+            yield f"      GLuint {uniform};\n"
         for subroutine, routines in self.subroutines.items():
-            f.write("      struct {\n")
-            f.write("         GLuint uniform;\n")
+            yield "      struct {\n"
+            yield "         GLuint uniform;\n"
             for r in routines:
-                f.write(f"         GLuint {r};\n")
-            f.write(f"      }} {subroutine};\n")
-        f.write(f"   }} {self.name};\n")
+                yield f"         GLuint {r};\n"
+            yield f"      }} {subroutine};\n"
+        yield f"   }} {self.name};\n"
 
-    def write_source(self, f):
-        f.write(f"   shaders.{self.name}.program = gl_program_vert_frag(\"{self.vs_path}\", \"{self.fs_path}\");\n")
+    def source_chunks(self):
+        yield f"   shaders.{self.name}.program = gl_program_vert_frag(\"{self.vs_path}\", \"{self.fs_path}\");\n"
         for attribute in self.attributes:
-            f.write(f"   shaders.{self.name}.{attribute} = glGetAttribLocation(shaders.{self.name}.program, \"{attribute}\");\n")
+            yield f"   shaders.{self.name}.{attribute} = glGetAttribLocation(shaders.{self.name}.program, \"{attribute}\");\n"
         for uniform in self.uniforms:
-            f.write(f"   shaders.{self.name}.{uniform} = glGetUniformLocation(shaders.{self.name}.program, \"{uniform}\");\n")
+            yield f"   shaders.{self.name}.{uniform} = glGetUniformLocation(shaders.{self.name}.program, \"{uniform}\");\n"
         if len(self.subroutines) > 0:
-            f.write("   if (gl_has( OPENGL_SUBROUTINES )) {\n")
+            yield "   if (gl_has( OPENGL_SUBROUTINES )) {\n"
             for subroutine, routines in self.subroutines.items():
-                f.write(f"      shaders.{self.name}.{subroutine}.uniform = glGetSubroutineUniformLocation( shaders.{self.name}.program, GL_FRAGMENT_SHADER, \"{subroutine}\" );\n")
+                yield f"      shaders.{self.name}.{subroutine}.uniform = glGetSubroutineUniformLocation( shaders.{self.name}.program, GL_FRAGMENT_SHADER, \"{subroutine}\" );\n"
                 for r in routines:
-                    f.write(f"      shaders.{self.name}.{subroutine}.{r} = glGetSubroutineIndex( shaders.{self.name}.program, GL_FRAGMENT_SHADER, \"{r}\" );\n")
-            f.write("   }\n");
+                    yield f"      shaders.{self.name}.{subroutine}.{r} = glGetSubroutineIndex( shaders.{self.name}.program, GL_FRAGMENT_SHADER, \"{r}\" );\n"
+            yield "   }\n"
 
 
 class SimpleShader(Shader):
     def __init__(self, name, fs_path):
         super().__init__( name=name, vs_path="project_pos.vert", fs_path=fs_path, attributes=["vertex"], uniforms=["projection","color","dimensions","dt","r"], subroutines={} )
-    def write_header(self, f):
-        f.write(f"   SimpleShader {self.name};\n")
+    def header_chunks(self):
+        yield f"   SimpleShader {self.name};\n"
 
 
 SHADERS = [
-   Shader(
-      name = "circle",
-      vs_path = "circle.vert",
-      fs_path = "circle.frag",
-      attributes = ["vertex"],
-      uniforms = ["projection", "color", "radius"],
-      subroutines = {},
-   ),
-   Shader(
-      name = "circle_filled",
-      vs_path = "circle.vert",
-      fs_path = "circle_filled.frag",
-      attributes = ["vertex"],
-      uniforms = ["projection", "color", "radius"],
-      subroutines = {},
-   ),
-   Shader(
-      name = "circle_partial",
-      vs_path = "circle.vert",
-      fs_path = "circle_partial.frag",
-      attributes = ["vertex"],
-      uniforms = ["projection", "color", "radius", "angle1", "angle2"],
-      subroutines = {},
-   ),
    Shader(
       name = "solid",
       vs_path = "project.vert",
@@ -180,14 +156,6 @@ SHADERS = [
       }
    ),
    Shader(
-      name = "tk",
-      vs_path = "tk.vert",
-      fs_path = "tk.frag",
-      attributes = ["vertex"],
-      uniforms = ["projection", "c", "dc", "lc", "oc", "wh", "corner_radius"],
-      subroutines = {},
-   ),
-   Shader(
       name = "jump",
       vs_path = "project_pos.vert",
       fs_path = "jump.frag",
@@ -256,16 +224,28 @@ SHADERS = [
       fs_path = "planetmarker.frag",
    ),
    SimpleShader(
-      name = "progressbar",
-      fs_path = "progressbar.frag",
+      name = "jumpmarker",
+      fs_path = "jumpmarker.frag",
    ),
    SimpleShader(
-      name = "safelanes",
-      fs_path = "safelanes.frag",
+      name = "pilotmarker",
+      fs_path = "pilotmarker.frag",
+   ),
+   SimpleShader(
+      name = "playermarker",
+      fs_path = "playermarker.frag",
+   ),
+   SimpleShader(
+      name = "blinkmarker",
+      fs_path = "blinkmarker.frag",
    ),
    SimpleShader(
       name = "sysmarker",
       fs_path = "sysmarker.frag",
+   ),
+   SimpleShader(
+      name = "asteroidmarker",
+      fs_path = "asteroidmarker.frag",
    ),
    SimpleShader(
       name = "targetship",
@@ -275,15 +255,31 @@ SHADERS = [
       name = "targetplanet",
       fs_path = "targetplanet.frag",
    ),
+   SimpleShader(
+      name = "safelanes",
+      fs_path = "safelanes.frag",
+   ),
+   SimpleShader(
+      name = "circle",
+      fs_path = "circle.frag",
+   ),
+   SimpleShader(
+      name = "stealthmarker",
+      fs_path = "stealthmarker.frag",
+   ),
+   SimpleShader(
+      name = "progressbar",
+      fs_path = "progressbar.frag",
+   ),
 ]
 
-def write_header(f):
-    f.write(f"/* FILE GENERATED BY {__file__} */")
+def header_chunks():
+    yield f"/* FILE GENERATED BY {__file__} */"
 
-def generate_h_file(f):
-    write_header(f)
+def generate_h_file():
+    yield from header_chunks()
 
-    f.write("""
+    yield """
 #ifndef SHADER_GEN_C_H
 #define SHADER_GEN_C_H
 #include "glad.h"
@@ -299,24 +295,24 @@ typedef struct SimpleShader_ {
 } SimpleShader;
 
 typedef struct Shaders_ {
-""")
+"""
 
     for shader in SHADERS:
-        shader.write_header( f )
+        yield from shader.header_chunks()
 
-    f.write("""} Shaders;
+    yield """} Shaders;
 
 extern Shaders shaders;
 
 void shaders_load (void);
 void shaders_unload (void);
 
-#endif /* SHADERS_GEN_C_H */""")
+#endif /* SHADERS_GEN_C_H */"""
 
-def generate_c_file(f):
-    write_header(f)
+def generate_c_file():
+    yield from header_chunks()
 
-    f.write("""
+    yield """
 #include <string.h>
 #include "shaders.gen.h"
 #include "opengl_shader.h"
@@ -324,23 +320,23 @@ def generate_c_file(f):
 Shaders shaders;
 
 void shaders_load (void) {
-""")
+"""
     for i, shader in enumerate(SHADERS):
-        shader.write_source( f )
+        yield from shader.source_chunks()
         if i != len(SHADERS) - 1:
-            f.write("\n")
-    f.write("""}
+            yield "\n"
+    yield """}
 
 void shaders_unload (void) {
-""")
+"""
     for shader in SHADERS:
-        f.write(f"   glDeleteProgram(shaders.{shader.name}.program);\n")
+        yield f"   glDeleteProgram(shaders.{shader.name}.program);\n"
 
-    f.write("""   memset(&shaders, 0, sizeof(shaders));
-}""")
+    yield """   memset(&shaders, 0, sizeof(shaders));
+}"""
 
 with open("shaders.gen.h", "w") as shaders_gen_h:
-    generate_h_file(shaders_gen_h)
+    shaders_gen_h.writelines(generate_h_file())
 
 with open("shaders.gen.c", "w") as shaders_gen_c:
-    generate_c_file(shaders_gen_c)
+    shaders_gen_c.writelines(generate_c_file())

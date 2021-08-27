@@ -2,23 +2,18 @@
 
 uniform vec4 color;
 uniform vec2 dimensions;
-uniform float r;
 
 in vec2 pos;
 out vec4 color_out;
 
 void main(void) {
-   float d = sdCircle( pos*dimensions, dimensions.x-1.0 );
-   if (r==0.0)
-      d = abs(d);
-   /*
+   vec2 uv = vec2( pos.y, -pos.x );
+   float m = 1.0 / dimensions.x;
+   float d = 2.0*sdTriangleIsosceles( uv*0.5+vec2(0.0,0.5), vec2(0.2,0.7) );
+   d = abs(d+2.0*m);
    float alpha = smoothstep(-m, 0.0, -d);
    float beta  = smoothstep(-2.0*m, -m, -d);
    color_out   = color * vec4( vec3(alpha), beta );
-   */
-   float alpha = smoothstep(-1.0, 0.0, -d);
-   color_out   = color;
-   color_out.a *= alpha;
 }
 
 

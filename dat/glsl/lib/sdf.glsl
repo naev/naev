@@ -38,7 +38,7 @@ float sdBox( vec2 p, vec2 b )
 }
 
 /* Equilateral triangle centered at p facing "up" */
-float sdEquilateralTriangle( vec2 p )
+float sdTriangleEquilateral( vec2 p )
 {
 	const float k = sqrt(3.0);
 	p.x = abs(p.x) - 1.0;
@@ -109,6 +109,17 @@ float sdArc( vec2 p, vec2 sca, vec2 scb, float ra, float rb )
    return sqrt( max(0.0, dot(p,p) + ra*ra - 2.0*ra*k) ) - rb;
 }
 
+/* Pie that is part of a circle centered at p.
+ * c is the sin/cos of aperture
+ * r is the radius */
+float sdPie( vec2 p, vec2 c, float r )
+{
+    p.x = abs(p.x);
+    float l = length(p) - r;
+    float m = length(p-c*clamp(dot(p,c),0.0,r));
+    return max(l,m*sign(c.y*p.x-c.x*p.y));
+}
+
 /* Rhombus at position p with size b. */
 float sdRhombus( vec2 p, vec2 b )
 {
@@ -155,6 +166,12 @@ float sdUnevenCapsule( vec2 p, vec2 pa, vec2 pb, float ra, float rb )
          if( k < 0.0 ) return sqrt(h*(n            )) - ra;
     else if( k > c.x ) return sqrt(h*(n+1.0-2.0*q.y)) - rb;
                        return m                       - ra;
+}
+
+float sdSmoothUnion( float a, float b, float k )
+{
+   float h = max( k-abs(a-b), 0.0 )/k;
+   return min( a, b ) - h*h*k*(1.0/4.0);
 }
 
 #endif /* _SDF_GLSL */

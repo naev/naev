@@ -279,7 +279,8 @@ void shipyard_update( unsigned int wid, char* str )
 
    if (ship->license == NULL)
       strncpy( buf_license, _("None"), sizeof(buf_license)-1 );
-   else if (player_hasLicense( ship->license ))
+   else if (player_hasLicense( ship->license ) ||
+         (land_planet != NULL && planet_hasService( land_planet, PLANET_SERVICE_BLACKMARKET )))
       strncpy( buf_license, _(ship->license), sizeof(buf_license)-1 );
    else
       snprintf( buf_license, sizeof(buf_license), "#r%s#0", _(ship->license) );
@@ -514,7 +515,8 @@ int shipyard_canTrade( const char *shipname )
    price = ship_buyPrice( ship );
 
    /* Must have the necessary license, enough credits, and be able to swap ships. */
-   if (!player_hasLicense(ship->license)) {
+   if ((!player_hasLicense(ship->license)) &&
+         ((land_planet == NULL) || (!planet_hasService( land_planet, PLANET_SERVICE_BLACKMARKET )))) {
       land_errDialogueBuild( _("You lack the %s."), _(ship->license) );
       failure = 1;
    }

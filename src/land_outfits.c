@@ -417,7 +417,8 @@ void outfits_update( unsigned int wid, char* str )
 
    if (outfit->license == NULL)
       strncpy( buf_license, _("None"), sizeof(buf_license)-1 );
-   else if (player_hasLicense( outfit->license ))
+   else if (player_hasLicense( outfit->license ) ||
+         (land_planet != NULL && planet_hasService( land_planet, PLANET_SERVICE_BLACKMARKET )))
       strncpy( buf_license, _(outfit->license), sizeof(buf_license)-1 );
    else
       snprintf( buf_license, sizeof(buf_license), "#r%s#0", _(outfit->license) );

@@ -709,9 +709,9 @@ void gl_renderShader( double x, double y, double w, double h, double r, const Si
 {
    gl_Matrix4 projection = gl_view_matrix;
    projection = gl_Matrix4_Translate(projection, x, y, 0);
-   projection = gl_Matrix4_Scale(projection, w, h, 1);
    if (r != 0.)
       projection = gl_Matrix4_Rotate2d(projection, r);
+   projection = gl_Matrix4_Scale(projection, w, h, 1);
    glUniform2f( shd->dimensions, w, h );
    gl_renderShaderH( shd, &projection, c, center );
 }
@@ -779,109 +779,10 @@ void gl_drawCircleH( const gl_Matrix4 *H, const glColour *c, int filled )
    // TODO handle shearing and different x/y scaling
    GLfloat r = H->m[0][0] / gl_view_matrix.m[0][0];
 
-   if (filled) {
-      glUseProgram( shaders.circle_filled.program );
-
-      glEnableVertexAttribArray( shaders.circle_filled.vertex );
-      gl_vboActivateAttribOffset( gl_circleVBO, shaders.circle_filled.vertex,
-            0, 2, GL_FLOAT, 0 );
-
-      /* Set shader uniforms. */
-      gl_uniformColor( shaders.circle_filled.color, c );
-      gl_Matrix4_Uniform( shaders.circle_filled.projection, *H );
-      glUniform1f( shaders.circle_filled.radius, r );
-
-      /* Draw. */
-      glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
-
-      /* Clear state. */
-      glDisableVertexAttribArray( shaders.circle_filled.vertex );
-   }
-   else {
-      glUseProgram( shaders.circle.program );
-
-      glEnableVertexAttribArray( shaders.circle.vertex );
-      gl_vboActivateAttribOffset( gl_circleVBO, shaders.circle.vertex,
-            0, 2, GL_FLOAT, 0 );
-
-      /* Set shader uniforms. */
-      gl_uniformColor( shaders.circle.color, c );
-      gl_Matrix4_Uniform( shaders.circle.projection, *H );
-      glUniform1f( shaders.circle.radius, r );
-
-      /* Draw. */
-      glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
-
-      /* Clear state. */
-      glDisableVertexAttribArray( shaders.circle.vertex );
-   }
-   glUseProgram(0);
-
-   /* Check errors. */
-   gl_checkErr();
-}
-
-
-/**
- * @brief Draws a partial circle.
- *
- *    @param cx X position of the center in screen coordinates.
- *    @param cy Y position of the center in screen coordinates.
- *    @param r Radius of the circle.
- *    @param c Colour to use.
- *    @param angle Starting angle in radians.
- *    @param arc Length of the arc (0 to 2 pi)
- */
-void gl_drawCirclePartial( const double cx, const double cy,
-      const double r, const glColour *c, double angle, double arc )
-{
-   gl_Matrix4 projection;
-
-   /* Set the vertex. */
-   projection = gl_view_matrix;
-   projection = gl_Matrix4_Translate(projection, cx, cy, 0);
-   projection = gl_Matrix4_Scale(projection, r, r, 1);
-
-   /* Draw! */
-   gl_drawCirclePartialH( &projection, c, angle, arc );
-}
-
-
-/**
- * @brief Draws a partial circle.
- *
- *    @param H Transformation matrix to draw the circle.
- *    @param c Colour to use.
- *    @param angle Starting angle in radians.
- *    @param arc Length of the arc (0 to 2 pi)
- */
-void gl_drawCirclePartialH( const gl_Matrix4 *H, const glColour *c, double angle, double arc )
-{
-   // TODO handle shearing and different x/y scaling
-   GLfloat r = H->m[0][0] / gl_view_matrix.m[0][0];
-
-   /* Draw. */
-   glUseProgram( shaders.circle_partial.program );
-
-   glEnableVertexAttribArray( shaders.circle_partial.vertex );
-   gl_vboActivateAttribOffset( gl_circleVBO, shaders.circle_partial.vertex,
-         0, 2, GL_FLOAT, 0 );
-
-   /* Set shader uniforms. */
-   gl_uniformColor( shaders.circle_partial.color, c );
-   gl_Matrix4_Uniform( shaders.circle_partial.projection, *H );
-   glUniform1f( shaders.circle_partial.radius, r );
-   glUniform1f( shaders.circle_partial.angle1, angle );
-   glUniform1f( shaders.circle_partial.angle2, arc );
-
-   /* Draw. */
-   glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
-
-   /* Clear state. */
-   glDisableVertexAttribArray( shaders.circle_partial.vertex );
-
-   glUseProgram(0);
-   gl_checkErr();
+   glUseProgram( shaders.circle.program );
+   glUniform2f( shaders.circle.dimensions, r, r );
+   glUniform1f( shaders.circle.r, filled );
+   gl_renderShaderH( &shaders.circle, H, c, 1 );
 }
 
 

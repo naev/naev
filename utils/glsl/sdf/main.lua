@@ -9,6 +9,7 @@ const float M_PI        = 3.14159265358979323846;  /* pi */
 const float M_SQRT1_2   = 0.70710678118654752440;  /* 1/sqrt(2) */
 
 float cro(in vec2 a, in vec2 b ) { return a.x*b.y - a.y*b.x; }
+float ndot( vec2 a, vec2 b ) { return a.x*b.x - a.y*b.y; }
 
 float smin( float a, float b, float k )
 {
@@ -18,6 +19,44 @@ float smin( float a, float b, float k )
 float sdSmoothUnion( float d1, float d2, float k )
  {
    return smin( d1, d2, k );
+}
+
+/* Equilateral triangle centered at p facing "up" */
+float sdTriangleEquilateral( vec2 p )
+{
+	const float k = sqrt(3.0);
+	p.x = abs(p.x) - 1.0;
+	p.y = p.y + 1.0/k;
+	if( p.x+k*p.y>0.0 ) p = vec2(p.x-k*p.y,-k*p.x-p.y)/2.0;
+	p.x -= clamp( p.x, -2.0, 0.0 );
+	return -length(p)*sign(p.y);
+}
+
+/* Isosceles triangle centered at p facing "up".
+ * q indicates (width, height) */
+float sdTriangleIsosceles( vec2 p, vec2 q )
+{
+	p.x = abs(p.x);
+	vec2 a = p - q*clamp( dot(p,q)/dot(q,q), 0.0, 1.0 );
+	vec2 b = p - q*vec2( clamp( p.x/q.x, 0.0, 1.0 ), 1.0 );
+	float s = -sign( q.y );
+	vec2 d = min( vec2( dot(a,a), s*(p.x*q.y-p.y*q.x) ),
+			vec2( dot(b,b), s*(p.y-q.y)  ));
+	return -sqrt(d.x)*sign(d.y);
+}
+
+float sdBox( vec2 p, vec2 b )
+{
+   vec2 d = abs(p)-b;
+   return length(max(d,0.0)) + min(max(d.x,d.y),0.0);
+}
+
+float sdRhombus( vec2 p, vec2 b )
+{
+   vec2 q = abs(p);
+   float h = clamp((-2.0*ndot(q,b)+ndot(b,b))/dot(b,b),-1.0,1.0);
+   float d = length( q - 0.5*b*vec2(1.0-h,1.0+h) );
+   return d * sign( q.x*b.y + q.y*b.x - b.x*b.y );
 }
 
 float sdSegment( in vec2 p, in vec2 a, in vec2 b )
@@ -258,6 +297,76 @@ vec4 sdf_planet2( vec4 color, vec2 uv )
    return color;
 }
 
+vec4 sdf_blinkmarker( vec4 color, vec2 uv )
+{
+   float m = 1.0 / dimensions.x;
+
+   const float w = 0.20;
+   const float h = 0.05;
+
+   uv = abs(uv);
+   const float s = sin(M_PI/4.0);
+   const float c = cos(M_PI/4.0);
+   const mat2 R = mat2( c, s, -s, c );
+   uv = uv - (vec2(1.0-w*M_SQRT1_2)-m);
+   uv = R * uv;
+
+   float d = sdRhombus( uv, vec2(h,w) );
+
+   color.a *= smoothstep( -m, 0.0, -d );
+   return color;
+}
+
+vec4 sdf_jumpmarker( vec4 color, vec2 uv )
+{
+   float m = 1.0 / dimensions.x;
+
+   uv = vec2( uv.y, uv.x );
+
+   float db = sdBox( uv+vec2(0.0,0.3), vec2(0.2,0.8) );
+   float dt = 2.0*sdTriangleIsosceles( 0.5*uv+vec2(0.0,0.2), vec2(0.5, 0.75) );
+   float d = sdSmoothUnion( db, dt, 0.5 );
+   d = max( d, abs(uv.y)-1.0+2.0*m );
+   d = abs(d);
+
+   color.a *= smoothstep( -m, 0.0, -d );
+   return color;
+}
+
+vec4 sdf_pilotmarker( vec4 color, vec2 uv )
+{
+   uv = vec2( uv.y, uv.x );
+   float m = 1.0 / dimensions.x;
+   float d = sdTriangleEquilateral( uv*1.15  ) / 1.15;
+   d = abs(d+2.0*m);
+   color.a *= smoothstep( -m, 0.0, -d );
+   return color;
+}
+
+vec4 sdf_playermarker( vec4 color, vec2 uv )
+{
+   uv = vec2( uv.y, -uv.x );
+   float m = 1.0 / dimensions.x;
+   float d = 2.0*sdTriangleIsosceles( uv*0.5+vec2(0.0,0.5), vec2(0.2,0.7) );
+   d = abs(d+2.0*m);
+   color.a *= smoothstep( -m, 0.0, -d );
+   return color;
+}
+
+vec4 sdf_stealth( vec4 color, vec2 uv )
+{
+   float r = fract(dt*0.1);
+   float a = r * M_PI;
+   float c = cos(a);
+   float s = sin(a);
+   uv.y = -uv.y;
+   uv = mat2(c,-s,s,c) * uv;
+   float d = sdPie( uv*dimensions, vec2(s,c), dimensions.x-1.0 );
+   float alpha = smoothstep(-1.0, 0.0, -d);
+   color.a *= smoothstep( -1.0, 0.0, -d );
+   return color;
+}
+
 vec4 bg( vec2 uv )
 {
    vec3 c;
@@ -278,9 +387,14 @@ vec4 effect( vec4 color, Image tex, vec2 uv, vec2 px )
 
    //col_out = sdf_alarm( color, tex, uv, px );
    //col_out = sdf_pilot( color, uv_rel );
-   col_out = sdf_pilot2( color, uv_rel );
+   //col_out = sdf_pilot2( color, uv_rel );
    //col_out = sdf_planet( color, uv_rel );
    //col_out = sdf_planet2( color, uv_rel );
+   //col_out = sdf_blinkmarker( color, uv_rel );
+   //col_out = sdf_jumpmarker( color, uv_rel );
+   //col_out = sdf_pilotmarker( color, uv_rel );
+   //col_out = sdf_playermarker( color, uv_rel );
+   col_out = sdf_stealth( color, uv_rel );
 
    return mix( bg(uv), col_out, col_out.a );
 }
@@ -399,6 +513,7 @@ function love.draw ()
    draw_shader( 150 )
    draw_shader(  75 )
    draw_shader(  38 )
+   draw_shader(  20 )
 
    lg.setShader()
 end
