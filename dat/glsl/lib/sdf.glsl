@@ -157,4 +157,10 @@ float sdUnevenCapsule( vec2 p, vec2 pa, vec2 pb, float ra, float rb )
                        return m                       - ra;
 }
 
+float sdSmoothUnion( float a, float b, float k )
+{
+   float h = max( k-abs(a-b), 0.0 )/k;
+   return min( a, b ) - h*h*k*(1.0/4.0);
+}
+
 #endif /* _SDF_GLSL */
