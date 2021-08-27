@@ -131,10 +131,12 @@ end
 function approach_kex ()
    love_audio.setEffect( "reverb_drugged", reverb_preset.drugged() )
    local strangelove_death = var.peek("strangelove_death")
+   local pitchlow = 0.7
+   local pitchhigh = 1.1
 
    vn.clear()
    vn.scene()
-   vn.music( minerva.loops.kex, {pitch=0.7, effect="reverb_drugged"} )
+   vn.music( minerva.loops.kex, {pitch=pitchlow, effect="reverb_drugged"} )
    local kex = vn.newCharacter( minerva.vn_kex() )
    vn.transition()
    vn.na(_("You approach Kex who is sort of slumping at his usual spot. He doesn't seem much better than last time you met him."))
@@ -142,28 +144,62 @@ function approach_kex ()
 He seems a bit nervious and speaks softer than usual.
 "Did you do what I asked?"]]))
 
-   if strangelove_death=="shot" then
-      vn.na(_([[You explain to him how the mission went and go into graphical details of how you finished Dr. Strangelove off by shooting at him point-blank as Kex asked.]]))
-      kex(_(""))
-   elseif strangelove_death=="unplug" then
-      vn.na(_([[You explain to him how the mission went and go into details of how you finished Dr. Strangelove off by unplugging him as Kex asked.]]))
-   elseif strangelove_death=="comforted" then
-      vn.na(_([[You explain to him how the mission went and explain how you comforted the dying Dr. Strangelove as he passed away from his mysterious illness in front of your eyes.]]))
+   if strangelove_death=="comforted" then
+      vn.na(_([[You explain to him how the mission went, handing him the drone you found in the laboratory, and explain how you comforted the dying Dr. Strangelove as he passed away from his mysterious illness in front of your eyes.]]))
+      kex(_([[He looks at you after your explanations, furrows his brows a bit.
+"I can't believe you comforted him. Do you know all the shit he's done! The shit he's put me through!"]]))
+      kex(_([["Damn it, not only am I not feeling any relief, but I can't even get angry at you."
+He looks down sadly at the floor for a while before looking at you again.]]))
+
    else
-      vn.na(_([[You explain to him how the mission went and explain how Dr. Strangelove died of his mysterious illness in front of your eyes.]]))
+      if strangelove_death=="shot" then
+         vn.na(_([[You explain to him how the mission went and go into graphical details of how you finished Dr. Strangelove off by shooting at him point-blank as Kex asked.]]))
+         vn.na(_([[You also hand him over the droid you recovered, looks at briefly before pocketing somewhere inside his mat of feathers.]]))
+      elseif strangelove_death=="unplug" then
+         vn.na(_([[You explain to him how the mission went and go into details of how you finished Dr. Strangelove off by unplugging him as Kex asked.]]))
+         vn.na(_([[You also hand him over the droid you recovered, looks at briefly before pocketing somewhere inside his mat of feathers.]]))
+      else
+         vn.na(_([[You explain to him how the mission went, handing him the drone you found in the laboratory, and explain how Dr. Strangelove died of his mysterious illness in front of your eyes.]]))
+      end
+      kex(_([[He looks at you after your explanations, furrows his brows a bit.
+"I was expecting some sort of relief. You know, having Strangelove dead is all I ever wanted sign I escaped from the laboratory. All I ever dreamed of, and when I finally get it… nothing?"]]))
+
    end
 
-   vn.na(_(""))
-   kex(_([[""]]))
+   kex(_([["He's dead. He's completely toasted! Why aren't we celebrating?! Why aren't we happy!?"]]))
+   vn.animation( 1.5, function (progress, dt)
+      lmusic.setPitch( nil, pitchlow + (pitchhigh-pitchlow)*progress )
+   end )
+   kex(_([["We should be dancing!"]]))
+   local function saddance ()
+      vn.animation( 2.0, function (progress, dt, offset)
+         kex.offset = offset + math.sin( 2 * math.pi * progress )
+      end, nil, nil, function () return kex.offset end )
+   end
+   saddance()
+   kex(_([["We should be partying!"]]))
+   saddance()
+   kex(_([["We should…"]]))
+   vn.animation( 0.5, function (progress, dt)
+      lmusic.setPitch( nil, pitchhigh + (pitchlow-pitchhigh)*progress )
+   end )
+   kex(_([["Shit, who am I kidding."
+He looks as glum as ever.
+"You can't kill your way out of depression…"]]))
+   kex(_([["Hey kid, I'm really grateful for all you've done, but I don't think I can go on. I just need some time alone to gather my thoughts."]]))
+   kex(_([["I've scrounged up some cash, I don't think I'll be needing it. Here take it."]]))
 
-   vn.sfxMoney()
+   local sfxparams = { pitch=pitchlow, effect="reverb_drugged" }
+   vn.sfxMoney( sfxparams )
    vn.func( function () player.pay( money_reward ) end )
    vn.na(string.format(_("You received #g%s#0."), creditstring( money_reward )))
-   vn.sfxVictory()
+   vn.sfxVictory( sfxparams )
+
+   vn.na(_([[Without saying another word, Kex slowly disappears into the shadows. It doesn't seem like he'll recover soon. Maybe there is another way to help him without getting him directly involved?]]))
 
    vn.run()
 
-   minerva.log.kex(_(""))
+   minerva.log.kex(_("You reported back to Kex, who gave up on working for his freedom due to his crippling depression. Maybe there is another way to help him indirectly?"))
 
    misn.finish( true )
 end
