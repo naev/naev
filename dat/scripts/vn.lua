@@ -1218,6 +1218,19 @@ function vn.musicStop( filename )
    end )
 end
 
+
+--[[--
+Sets the pitch for playing music.
+
+   @tparam string|nil filename Name of the music to change pitch of or all if nil.
+   @tparam number p Pitch to set.
+--]]
+function vn.musicPitch( filename, p )
+   vn.func( function ()
+      lmusic.setPitch( filename, p )
+   end )
+end
+
 --[[--
 Finishes the VN.
    @see vn.transition
