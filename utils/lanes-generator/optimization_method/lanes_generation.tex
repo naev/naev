@@ -16,6 +16,7 @@
 \usepackage{multirow}                % tableaux de plusieurs colonnes
 \usepackage{multicol}                % plusieurs colonnes dans texte
 \usepackage{wrapfig}
+\usepackage{booktabs}
 \def\changemargin#1#2{\list{}{\rightmargin#2\leftmargin#1}\item[]}
 \let\endchangemargin=\endlist   %Permet de chager la taille des marge localement
 
@@ -82,14 +83,17 @@ Let us suppose one wants to solve such a problem on the mesh presented in figure
 
 \begin{table}[ht]
 	\centering
-	\begin{tabular}{|c|c|c|c|c|} \hline
-		Domain & $u$ & $f$ & k & Remark \\ \hline
-		Economy & Quantity of goods & Flux of goods & ? & \\ \hline
-		Traffic modelling & Population & Traffic & ? & It's our case \\ \hline
-		Thermic & Temperature & Heat flux & Thermal conductivity & \\ \hline
-		Diffusion & Quantity of particles & Flux of particles & Conductivity & \\ \hline
-		Electricity & Electric potential & Intensity & Inverse of resistance & \\ \hline
-		Mechanics & Displacement & Stress & Stiffness & $u$ is a vector \\ \hline
+	\begin{tabular}{ccccc}
+      \toprule
+		Domain & $u$ & $f$ & k & Remark \\
+      \midrule
+		Economy & Quantity of goods & Flux of goods & ? & \\
+		Traffic modelling & Population & Traffic & ? & It's our case \\
+		Thermic & Temperature & Heat flux & Thermal conductivity & \\
+		Diffusion & Quantity of particles & Flux of particles & Conductivity & \\
+		Electricity & Electric potential & Intensity & Inverse of resistance & \\
+		Mechanics & Displacement & Stress & Stiffness & $u$ is a vector \\
+      \bottomrule
 	\end{tabular}
 	\caption{Potential and Flux in different domains}
 	\label{tab:potNflux}
