@@ -779,46 +779,10 @@ void gl_drawCircleH( const gl_Matrix4 *H, const glColour *c, int filled )
    // TODO handle shearing and different x/y scaling
    GLfloat r = H->m[0][0] / gl_view_matrix.m[0][0];
 
-   if (filled) {
-      glUseProgram( shaders.circle_filled.program );
-
-      glEnableVertexAttribArray( shaders.circle_filled.vertex );
-      gl_vboActivateAttribOffset( gl_circleVBO, shaders.circle_filled.vertex,
-            0, 2, GL_FLOAT, 0 );
-
-      /* Set shader uniforms. */
-      gl_uniformColor( shaders.circle_filled.color, c );
-      gl_Matrix4_Uniform( shaders.circle_filled.projection, *H );
-      glUniform1f( shaders.circle_filled.radius, r );
-
-      /* Draw. */
-      glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
-
-      /* Clear state. */
-      glDisableVertexAttribArray( shaders.circle_filled.vertex );
-   }
-   else {
-      glUseProgram( shaders.circle.program );
-
-      glEnableVertexAttribArray( shaders.circle.vertex );
-      gl_vboActivateAttribOffset( gl_circleVBO, shaders.circle.vertex,
-            0, 2, GL_FLOAT, 0 );
-
-      /* Set shader uniforms. */
-      gl_uniformColor( shaders.circle.color, c );
-      gl_Matrix4_Uniform( shaders.circle.projection, *H );
-      glUniform1f( shaders.circle.radius, r );
-
-      /* Draw. */
-      glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
-
-      /* Clear state. */
-      glDisableVertexAttribArray( shaders.circle.vertex );
-   }
-   glUseProgram(0);
-
-   /* Check errors. */
-   gl_checkErr();
+   glUseProgram( shaders.sdfcircle.program );
+   glUniform2f( shaders.sdfcircle.dimensions, r, r );
+   glUniform1f( shaders.sdfcircle.r, filled );
+   gl_renderShaderH( &shaders.sdfcircle, H, c, 1 );
 }
 
 

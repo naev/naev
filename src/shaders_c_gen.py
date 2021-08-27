@@ -292,6 +292,10 @@ SHADERS = [
       fs_path = "safelanes.frag",
    ),
    SimpleShader(
+      name = "sdfcircle",
+      fs_path = "sdfcircle.frag",
+   ),
+   SimpleShader(
       name = "progressbar",
       fs_path = "progressbar.frag",
    ),

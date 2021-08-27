@@ -353,6 +353,14 @@ vec4 sdf_playermarker( vec4 color, vec2 uv )
    return color;
 }
 
+vec4 sdf_circle( vec4 color, vec2 uv )
+{
+   float d = sdCircle( uv*dimensions, dimensions.x-1.0 );
+   float alpha = smoothstep(-1.0, 0.0, -d);
+   color.a *= smoothstep( -1.0, 0.0, -d );
+   return color;
+}
+
 vec4 bg( vec2 uv )
 {
    vec3 c;
@@ -377,9 +385,10 @@ vec4 effect( vec4 color, Image tex, vec2 uv, vec2 px )
    //col_out = sdf_planet( color, uv_rel );
    //col_out = sdf_planet2( color, uv_rel );
    //col_out = sdf_blinkmarker( color, uv_rel );
-   col_out = sdf_jumpmarker( color, uv_rel );
+   //col_out = sdf_jumpmarker( color, uv_rel );
    //col_out = sdf_pilotmarker( color, uv_rel );
    //col_out = sdf_playermarker( color, uv_rel );
+   col_out = sdf_circle( color, uv_rel );
 
    return mix( bg(uv), col_out, col_out.a );
 }
