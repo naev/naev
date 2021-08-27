@@ -268,16 +268,16 @@ SHADERS = [
       fs_path = "playermarker.frag",
    ),
    SimpleShader(
-      name = "progressbar",
-      fs_path = "progressbar.frag",
-   ),
-   SimpleShader(
-      name = "safelanes",
-      fs_path = "safelanes.frag",
+      name = "blinkmarker",
+      fs_path = "blinkmarker.frag",
    ),
    SimpleShader(
       name = "sysmarker",
       fs_path = "sysmarker.frag",
+   ),
+   SimpleShader(
+      name = "asteroidmarker",
+      fs_path = "asteroidmarker.frag",
    ),
    SimpleShader(
       name = "targetship",
@@ -288,8 +288,12 @@ SHADERS = [
       fs_path = "targetplanet.frag",
    ),
    SimpleShader(
-      name = "blinkmarker",
-      fs_path = "blinkmarker.frag",
+      name = "safelanes",
+      fs_path = "safelanes.frag",
+   ),
+   SimpleShader(
+      name = "progressbar",
+      fs_path = "progressbar.frag",
    ),
 ]
 
