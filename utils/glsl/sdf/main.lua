@@ -323,10 +323,10 @@ vec4 sdf_jumpmarker( vec4 color, vec2 uv )
 
    uv = vec2( uv.y, uv.x );
 
-   float db = sdBox( uv+vec2(0.0,0.3), vec2(0.2,0.6) );
-   float dt = 2.0*sdTriangleIsosceles( 0.5*uv+vec2(0.0,0.3), vec2(0.45, 0.75) );
+   float db = sdBox( uv+vec2(0.0,0.3), vec2(0.2,0.8) );
+   float dt = 2.0*sdTriangleIsosceles( 0.5*uv+vec2(0.0,0.2), vec2(0.5, 0.75) );
    float d = sdSmoothUnion( db, dt, 0.5 );
-   d = max( d, -sdBox( uv+vec2(0.0,1.0), vec2(0.6,0.1) ) );
+   d = max( d, -sdBox( abs(uv)-vec2(0.0,1.0+m), vec2(1.0,2.0*m) ) );
    d = abs(d);
 
    color.a *= smoothstep( -m, 0.0, -d );
@@ -498,6 +498,7 @@ function love.draw ()
    draw_shader( 150 )
    draw_shader(  75 )
    draw_shader(  38 )
+   draw_shader(  20 )
 
    lg.setShader()
 end
