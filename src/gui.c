@@ -1644,19 +1644,8 @@ void gui_renderJumpPoint( int ind, RadarShape shape, double w, double h, double 
    else
       col = &cGreen;
 
-   /*
-   glLineWidth( 3. );
-   gl_renderTriangleEmpty( cx - 1, cy, -jp->angle, 2.*vr, 2., &cBlack );
-   gl_renderTriangleEmpty( cx + 1, cy, -jp->angle, 2.*vr, 2., &cBlack );
-   gl_renderTriangleEmpty( cx, cy - 1, -jp->angle, 2.*vr, 2., &cBlack );
-   gl_renderTriangleEmpty( cx, cy + 1, -jp->angle, 2.*vr, 2., &cBlack );
-
-   gl_renderTriangleEmpty( cx, cy, -jp->angle, 2.*vr, 2., col );
-   glLineWidth( 1. );
-   */
-
    glUseProgram(shaders.jumpmarker.program);
-   gl_renderShader( cx, cy, vr*1.5, vr*1.5, -jp->angle+M_PI/2., &shaders.jumpmarker, col, 1 );
+   gl_renderShader( cx, cy, vr*1.5, vr*1.5, -jp->angle, &shaders.jumpmarker, col, 1 );
 
    /* Blink ontop. */
    if (ind == player.p->nav_hyperspace)
