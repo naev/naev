@@ -138,7 +138,6 @@ end
 function spawn ()
    pilot.clear()
    pilot.toggleSpawn( false )
-   player.pilot():setVisible( true )
 
    -- Spawn pirate
    local r = system.cur():radius()

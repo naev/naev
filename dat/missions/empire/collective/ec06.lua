@@ -188,7 +188,6 @@ function jumpin ()
             fleetE[1]:broadcast(start_comm)
             misn.osdActive(2)
             misn_stage = 1
-            player.pilot():setVisible()
         elseif system.cur() == misn_target_sys1 or system.cur() == misn_target_sys2 then
             pilot.clear()
             pilot.toggleSpawn(false)

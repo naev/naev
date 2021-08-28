@@ -163,7 +163,6 @@ function enter()
    if system.cur() == battlesys and stage == 0 and playerclass == "Destroyer" then
       pilot.clear()
       pilot.toggleSpawn( false )
-      pilot.setVisible(player.pilot())
 
       hook.timer(2.0,"lets_go")
    end
