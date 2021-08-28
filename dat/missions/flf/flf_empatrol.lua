@@ -109,7 +109,6 @@ end
 function patrol_spawnEmpire( n, boss )
    pilot.clear()
    pilot.toggleSpawn( false )
-   player.pilot():setVisible( true )
    if rnd.rnd() < 0.05 then n = n + 1 end
    local r = system.cur():radius()
    fleetDV = {}

@@ -125,11 +125,11 @@ function create ()
       reputation = 20
    end
 
-   credits = ships * 30000 - flfships * 1000
-   if has_vigilence then credits = credits + 120000 end
-   if has_goddard then credits = credits + 270000 end
+   credits = ships * 30e3 - flfships * 1e3
+   if has_vigilence then credits = credits + 120e3 end
+   if has_goddard then credits = credits + 270e3 end
    credits = credits * system.cur():jumpDist( missys, true ) / 3
-   credits = credits + rnd.sigma() * 8000
+   credits = credits + rnd.sigma() * 80e3
 
    local desc = setDescription()
 
@@ -235,7 +235,6 @@ end
 function patrol_spawnDV( n, boss )
    pilot.clear()
    pilot.toggleSpawn( false )
-   player.pilot():setVisible( true )
    if rnd.rnd() < 0.05 then n = n + 1 end
    local r = system.cur():radius()
    fleetDV = {}

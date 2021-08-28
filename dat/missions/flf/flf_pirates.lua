@@ -233,7 +233,6 @@ end
 function patrol_spawnPirates( n, boss )
    pilot.clear()
    pilot.toggleSpawn( false )
-   player.pilot():setVisible( true )
    if rnd.rnd() < 0.05 then n = n + 1 end
    local r = system.cur():radius()
    fleetPirate = {}
@@ -251,7 +250,7 @@ function patrol_spawnPirates( n, boss )
       if shipname == "Hyena" then
          pilotname = _("Pirate Hyena")
       end
-      local p = pilot.add( shipname, "Pirate", vec2.new( x, y ), pilotname, {ai="baddie_norun"} )
+      local p = pilot.add( shipname, "Pirate", vec2.new( x, y ), pilotname, {ai="pirate_norun"} )
       hook.pilot( p, "death", "pilot_death_pirate" )
       p:setFaction( "Rogue Pirate" )
       p:setHostile()
