@@ -421,14 +421,14 @@ function landed_lab ()
 
    vn.label("living")
    vn.na(_("You make your way through a nearly impassible very tight passageway towards the living quarters. Although it is a mess, you don't really see any signs of anyone living here, it rather seems all abandoned."))
-   vn.na(_("Eventually you reach a really small room with a bed capsule. The ground and bed are splattered in blood, but it seems very old and dessicated. Some empty medicinal syringes and pouches are scattered on the floor."))
+   vn.na(_("Eventually you reach a really small room with a bed capsule. The ground and bed are splattered in blood, but it seems very old and desiccated. Some empty medicinal syringes and pouches are scattered on the floor."))
    vn.na(_("You turn over everything, but find nothing of interest."))
    vn.func( function () check_living = true end )
    vn.jump("menu")
 
    vn.label("recreation")
    vn.na(_("You head towards and eventually reach the recreation room, which has been completely trashed. Even pieces of the wall have been ripped out, revealing shoddy cable connections and lots of weird mold."))
-   vn.na(_("Looking around, you find that the hologram projector you used last time is, unsurprisingly,  completely wrecked. It doesn't seem like you'll be able to use it to get in touch with Dr. Strangelove anymore."))
+   vn.na(_("Looking around, you find that the hologram projector you used last time is, unsurprisingly, completely wrecked. It doesn't seem like you'll be able to use it to get in touch with Dr. Strangelove anymore."))
    vn.na(_("Try as you might, you are unable to find anything of interest."))
    vn.func( function () check_rr = true end )
    vn.jump("menu")
@@ -448,7 +448,7 @@ function landed_lab ()
    vn.jump("menu")
 
    vn.label("check_done")
-   vn.na(_("You spend your time to go carefully through the entire station, but it ends up being mainly in vain: Dr. Strangelove is no where to be found. At least you found a droid that might be useful."))
+   vn.na(_("You spend your time carefully going through the entire station, but it ends up being mainly in vain: Dr. Strangelove is nowhere to be found. At least you found a droid that might be useful."))
    vn.na(_("You let out a sigh as you head outside. Maybe Dr. Strangelove escaped somewhere else?"))
    vn.run()
 
@@ -491,12 +491,12 @@ function strangelove_board ()
    -- TODO small scene
    vn.na(_("You carefully board the ship, not sure what you are about to encounter. Trusting your systems sensors indicating a proper atmosphere in the ship, you board without your space suit. However, when you first enter the ship, a strong pungent odour makes you partially regret your decision."))
    vn.na(_("As you move to the command room, you notice small movements from the corner of your eyes. Upon closer inspection you make out all sorts of small moving objects, reminding you of cleaning droids on most ships, however, these move in a fairly clunky fashion, as if they had some of their moving apparatus damaged."))
-   vn.na(_("You pay as little attention to the small critters, which seem harmless and proceed through the ship. After a short walk you enter the command room."))
+   vn.na(_("You pay minimal attention to the small critters, which seem harmless, and proceed through the ship. After a short walk you enter the command room."))
    love_audio.setEffect( "reverb_psychotic", reverb_preset.psychotic() )
    vn.music( minerva.loops.strangelove, {effect="reverb_psychotic"} )
    vn.appear(dr)
    vn.na(_("You enter the room and meet Dr. Strangelove for the first time face-to-face. Your first impression is that more than a space ship, it looks like a hospital. Dr. Strangelove is laid out in a medical bed connected to a lot of weird machines, with a medical droid attending him. If it weren't for the fact that everything is fairly rundown and dirty, you would think you were in a planetary hospital instead of a space ship at the edge of the universe."))
-   dr(_("You take a close look at Dr. Strangelove, and he seems like a husk of what might of been formally a man. His cheekbones protrude from his pale face, and his laboratory coat seems to be a few sizes too big on his frail body. His vitals monitor also confirms your suspicion that he is more dead than alive."))
+   dr(_("You take a close look at Dr. Strangelove, and he seems like a husk of what might have formerly been a man. His cheekbones protrude from his pale face, and his laboratory coat seems to be a few sizes too big on his frail body. His vitals monitor also confirms your suspicion that he is more dead than alive."))
    dr(_([["I see you were able to make it."
 He coughs violently.
 "Sorry, I haven't been feeling too well lately."
@@ -665,7 +665,7 @@ He coughs violently again, spasms overtaking his body. The medical robot sees to
    vn.jump("nonviolent_death")
 
    vn.label("kex_letbe")
-   vn.na(_([[Seeing him in his last stages brings our the compassion you have in you. Whether Dr. Strangelove is a monster or not is not something that you are meant to judge. You get close to him and hold his hand. It feels very cold to the touch.]]))
+   vn.na(_([[Seeing him in his last stages brings out the compassion you have in you. Whether Dr. Strangelove is a monster or not is not something that you are meant to judge. You get close to him and hold his hand. It feels very cold to the touch.]]))
    dr(_([["I can feel it… getting close…"
 He seems to be looking at something in the distance.]]))
    dr(_([[Suddenly he seems to open his eyes wide, but his expression is less of terror and more of curiosity and awe.
