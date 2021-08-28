@@ -1,4 +1,5 @@
 require 'ai.core.core'
+require "ai.core.idle.wait"
 
 --[[
    Generic Mission baddie AI
@@ -13,10 +14,3 @@ mem.atk_kill       = true
 mem.atk_board      = false
 mem.bribe_no       = _("You can't bribe me!")
 mem.refuel_no      = _("I won't give you fuel!")
-
-function create ()
-   mem.loiter = 3 -- This is the amount of waypoints the pilot will pass through before leaving the system
-
-   -- Choose attack format
-   create_post()
-end
