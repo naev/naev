@@ -12,7 +12,7 @@ function idle ()
       ai.pushtask("brake")
       return
    end
-   
+
    -- Just wait
    ai.settimer( 0, rnd.uniform(3.0, 5.0) )
    ai.pushtask("idle_wait")

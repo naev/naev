@@ -7,9 +7,9 @@ local lanes = require "ai.core.misc.lanes"
 -- These variables can be used to adjust the generic AI to suit other roles.
 --]]
 mem.enemyclose     = nil -- Distance at which an enemy is considered close
-mem.armour_run     = 0 -- At which damage to run at
+mem.armour_run     = -1 -- At which damage to run at
 mem.armour_return  = 0 -- At which armour to return to combat
-mem.shield_run     = 0 -- At which shield to run
+mem.shield_run     = -1 -- At which shield to run
 mem.shield_return  = 0 -- At which shield to return to combat
 mem.aggressive     = false -- Should pilot actively attack enemies?
 mem.defensive      = true -- Should pilot defend itself
@@ -267,9 +267,9 @@ function control_attack( si )
    choose_weapset()
 
    -- Runaway if needed
-   if (mem.shield_run > 0 and pshield < mem.shield_run
+   if (pshield < mem.shield_run
             and pshield < target_pshield ) or
-         (mem.armour_run > 0 and parmour < mem.armour_run
+         (parmour < mem.armour_run
             and parmour < target_parmour ) then
       ai.pushtask("runaway", target)
 

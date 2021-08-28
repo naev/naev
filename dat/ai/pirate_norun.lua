@@ -1,11 +1,5 @@
 require 'ai.pirate'
+require 'ai.core.idle.wait'
 
-mem.armour_run = 0
-
-function donothing ()
-    ai.brake()
-end
-
-function idle ()
-    ai.pushtask("donothing")
-end
+mem.armour_run = -1
+mem.shield_run = -1
