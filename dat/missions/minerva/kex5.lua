@@ -623,7 +623,7 @@ His talking is slowing down and starting to get muddled. You have trouble making
    vn.label("dr_death")
    vn.musicStop() -- Stop music
    vn.na(_([[Silence once again envelopes the room. You look around the room and decide to try to access the command console to see if there is any information left. It is a bit unsettling with a corpse nearby, but you try to focus on getting the grime off the console and interfacing with it. ]]))
-   vn.na(_([[You notice that everything seems to be heavily encrypted, much more so than the standard on even military Za'lek vessels, and try to break into the system. After a few unsuccessful attempts you manage to find what looks like a kink in the cryptographic armour and try to access it.]]))
+   vn.na(_([[You notice that everything seems to be heavily encrypted, much more so than the standard on even military Za'lek vessels, and try to break into the system. After a few unsuccessful attempts you manage to find what looks like a flaw in the cryptographic armour and try to access it.]]))
    vn.na(_([[Suddenly a bright message starts flashing on all the monitors:
 #rHONEYPOT ##329 ACTIVATED
 SELF-DESTRUCT SEQUENCE ENGAGED
