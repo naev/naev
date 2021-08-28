@@ -798,7 +798,7 @@ void gl_drawLine( const double x1, const double y1,
 
    glUseProgram(shaders.sdfsolid.program);
    glUniform1f(shaders.sdfsolid.r, 1.); /* No outline. */
-   gl_renderShader( (x1+x2)/2., (y1+y2)/2., s/2., 1.0, a, &shaders.sdfsolid, c, 1 );
+   gl_renderShader( (x1+x2)/2., (y1+y2)/2., s/2.+0.5, 1.0, a, &shaders.sdfsolid, c, 1 );
 }
 
 
