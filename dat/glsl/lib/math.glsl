@@ -31,17 +31,19 @@ vec2 mod289(vec2 x) {
 vec4 mod7(vec4 x) {
    return x - floor(x * (1.0 / 7.0)) * 7.0;
 }
+vec3 mod7(vec3 x) {
+   return x - floor(x * (1.0 / 7.0)) * 7.0;
+}
 
 // Permutation polynomial: (34x^2 + x) mod 289
 vec4 permute(vec4 x) {
-   return mod289((34.0 * x + 1.0) * x);
+   return mod289((34.0 * x + 10.0) * x);
 }
 vec3 permute(vec3 x) {
-   return mod289((34.0 * x + 1.0) * x);
+   return mod289((34.0 * x + 10.0) * x);
 }
 
-vec4 taylorInvSqrt(vec4 r)
-{
+vec4 taylorInvSqrt(vec4 r) {
    return 1.79284291400159 - 0.85373472095314 * r;
 }
 
