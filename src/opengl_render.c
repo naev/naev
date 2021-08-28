@@ -48,7 +48,6 @@ static gl_vbo *gl_renderVBO = 0; /**< VBO for rendering stuff. */
 gl_vbo *gl_squareVBO = 0;
 static gl_vbo *gl_squareEmptyVBO = 0;
 gl_vbo *gl_circleVBO = 0;
-static gl_vbo *gl_crossVBO = 0;
 static gl_vbo *gl_lineVBO = 0;
 static gl_vbo *gl_triangleVBO = 0;
 static int gl_renderVBOtexOffset = 0; /**< VBO texture offset. */
@@ -165,15 +164,9 @@ void gl_renderRectH( const gl_Matrix4 *H, const glColour *c, int filled )
  */
 void gl_renderCross( double x, double y, double r, const glColour *c )
 {
-   gl_Matrix4 projection;
-
-   projection = gl_Matrix4_Translate(gl_view_matrix, x, y, 0);
-   projection = gl_Matrix4_Scale(projection, r, r, 1);
-
-   gl_beginSolidProgram(projection, c);
-   gl_vboActivateAttribOffset( gl_crossVBO, shaders.solid.vertex, 0, 2, GL_FLOAT, 0 );
-   glDrawArrays( GL_LINES, 0, 4 );
-   gl_endSolidProgram();
+   glUseProgram(shaders.crosshairs.program);
+   glUniform1f(shaders.crosshairs.r, 1.);
+   gl_renderShader( x, y, r, r, 0., &shaders.crosshairs, c, 1 );
 }
 
 
@@ -895,16 +888,6 @@ int gl_initRender (void)
    gl_squareEmptyVBO = gl_vboCreateStatic( sizeof(GLfloat) * 8, vertex );
 
    vertex[0] = 0.;
-   vertex[1] = -1.;
-   vertex[2] = 0.;
-   vertex[3] = 1.;
-   vertex[4] = -1.;
-   vertex[5] = 0.;
-   vertex[6] = 1.;
-   vertex[7] = 0.;
-   gl_crossVBO = gl_vboCreateStatic( sizeof(GLfloat) * 8, vertex );
-
-   vertex[0] = 0.;
    vertex[1] = 0.;
    vertex[2] = 1.;
    vertex[3] = 0.;
@@ -936,7 +919,6 @@ void gl_exitRender (void)
    gl_vboDestroy( gl_squareVBO );
    gl_vboDestroy( gl_circleVBO );
    gl_vboDestroy( gl_squareEmptyVBO );
-   gl_vboDestroy( gl_crossVBO );
    gl_vboDestroy( gl_lineVBO );
    gl_vboDestroy( gl_triangleVBO );
    gl_renderVBO = NULL;
