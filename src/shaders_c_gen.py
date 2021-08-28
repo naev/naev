@@ -260,6 +260,10 @@ SHADERS = [
       fs_path = "safelanes.frag",
    ),
    SimpleShader(
+      name = "sdfsolid",
+      fs_path = "sdfsolid.frag",
+   ),
+   SimpleShader(
       name = "circle",
       fs_path = "circle.frag",
    ),

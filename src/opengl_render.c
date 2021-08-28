@@ -165,7 +165,7 @@ void gl_renderRectH( const gl_Matrix4 *H, const glColour *c, int filled )
 void gl_renderCross( double x, double y, double r, const glColour *c )
 {
    glUseProgram(shaders.crosshairs.program);
-   glUniform1f(shaders.crosshairs.r, 1.);
+   glUniform1f(shaders.crosshairs.r, 1.); /* No outline. */
    gl_renderShader( x, y, r, r, 0., &shaders.crosshairs, c, 1 );
 }
 
@@ -791,22 +791,14 @@ void gl_drawCircleH( const gl_Matrix4 *H, const glColour *c, int filled )
 void gl_drawLine( const double x1, const double y1,
       const double x2, const double y2, const glColour *c )
 {
-   gl_Matrix4 projection;
    double a, s;
 
    a = atan2( y2-y1, x2-x1 );
    s = hypotf( x2-x1, y2-y1 );
 
-   projection = gl_view_matrix;
-
-   projection = gl_Matrix4_Translate(projection, x1, y1, 0);
-   projection = gl_Matrix4_Rotate2d(projection, a);
-   projection = gl_Matrix4_Scale(projection, s, s, 1);
-
-   gl_beginSolidProgram(projection, c);
-   gl_vboActivateAttribOffset( gl_lineVBO, shaders.solid.vertex, 0, 2, GL_FLOAT, 0 );
-   glDrawArrays( GL_LINES, 0, 2 );
-   gl_endSolidProgram();
+   glUseProgram(shaders.sdfsolid.program);
+   glUniform1f(shaders.sdfsolid.r, 1.); /* No outline. */
+   gl_renderShader( (x1+x2)/2., (y1+y2)/2., s/2., 1.0, a, &shaders.sdfsolid, c, 1 );
 }
 
 
