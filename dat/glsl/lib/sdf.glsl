@@ -22,6 +22,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
  */
 float cro( vec2 a, vec2 b ) { return a.x*b.y - a.y*b.x; }
 float ndot( vec2 a, vec2 b ) { return a.x*b.x - a.y*b.y; }
+float dot2( vec2 v ) { return dot(v,v); }
 
 
 /* Circle. */
@@ -127,6 +128,17 @@ float sdRhombus( vec2 p, vec2 b )
    float h = clamp((-2.0*ndot(q,b)+ndot(b,b))/dot(b,b),-1.0,1.0);
    float d = length( q - 0.5*b*vec2(1.0-h,1.0+h) );
    return d * sign( q.x*b.y + q.y*b.x - b.x*b.y );
+}
+
+/* h is height */
+float sdRoundedCross( vec2 p, float h )
+{
+   float k = 0.5*(h+1.0/h); // k should be const at modeling time
+   p = abs(p);
+   return ( p.x<1.0 && p.y<p.x*(k-h)+h ) ?
+      k-sqrt(dot2(p-vec2(1.0,k)))  :
+      sqrt(min(dot2(p-vec2(0.0,h)),
+               dot2(p-vec2(1.0,0.0))));
 }
 
 /* Uneven capsule oriented on Y axis. */
