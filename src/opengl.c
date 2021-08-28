@@ -370,6 +370,7 @@ static int gl_defState (void)
    glDisable( GL_DEPTH_TEST ); /* set for doing 2d */
 /* glEnable(  GL_TEXTURE_2D ); never enable globally, breaks non-texture blits */
    glEnable(  GL_BLEND ); /* alpha blending ftw */
+   glEnable(  GL_LINE_SMOOTH ); /* We use SDF shaders for most shapes, but star trails & map routes are thin & anti-aliased. */
 
    /* Set the blending/shading model to use. */
    glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA ); /* good blend model */
@@ -396,6 +397,7 @@ static int gl_setupScaling (void)
 
    /* Combine scale factor from OS with the one in Naev's config */
    gl_screen.scale = fmax(gl_screen.dwscale, gl_screen.dhscale) / conf.scalefactor;
+   glLineWidth(1 / gl_screen.scale);
 
    /* New window is real window scaled. */
    gl_screen.nw = (double)gl_screen.rw * gl_screen.scale;

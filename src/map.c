@@ -1092,9 +1092,6 @@ void map_renderJumps( double x, double y, int editor)
    GLfloat vertex[8*(2+4)];
    StarSystem *sys, *jsys;
 
-   /* Generate smooth lines. */
-   glLineWidth( CLAMP(1., 4., 2. * map_zoom)*gl_screen.scale );
-
    for (i=0; i<array_size(systems_stack); i++) {
       sys = system_getIndex( i );
 
@@ -1158,9 +1155,6 @@ void map_renderJumps( double x, double y, int editor)
       }
       gl_endSmoothProgram();
    }
-
-   /* Reset render parameters. */
-   glLineWidth( 1. );
 }
 
 

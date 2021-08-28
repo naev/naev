@@ -164,8 +164,6 @@ void background_renderStars( const double dt )
 
    glUseProgram(shaders.stars.program);
 
-   glLineWidth(1 / gl_screen.scale);
-
    /* Do some scaling for now. */
    z = cam_getZoom();
    z = 1. * (1. - conf.zoom_stars) + z * conf.zoom_stars;
@@ -221,8 +219,6 @@ void background_renderStars( const double dt )
    /* Disable vertex array. */
    glDisableVertexAttribArray( shaders.stars.vertex );
    glDisableVertexAttribArray( shaders.stars.brightness );
-
-   glLineWidth(1 / gl_screen.scale);
 
    glUseProgram(0);
 
