@@ -1071,12 +1071,9 @@ static void player_renderAimHelper( double dt )
 
    gl_drawLine( x1, y1, x2, y2, &c );
 
-   gl_renderCross( x2 - 1, y2 - 1, 6., &cBlack );
-   gl_renderCross( x2 - 1, y2 + 1, 6., &cBlack );
-   gl_renderCross( x2 + 1, y2 - 1, 6., &cBlack );
-   gl_renderCross( x2 + 1, y2 + 1, 6., &cBlack );
-   gl_renderCross( x2, y2, 7., &cBlack );
-   gl_renderCross( x2, y2, 6., &cWhite );
+   glUseProgram(shaders.crosshairs.program);
+   glUniform1f(shaders.crosshairs.r, 1.);
+   gl_renderShader( x2, y2, 7, 7, 0., &shaders.crosshairs, &cWhite, 1 );
 
    gl_gameToScreenCoords( &x2, &y2, player.p->solid->pos.x + r*cos( b ),
                            player.p->solid->pos.y + r*sin( b ) );

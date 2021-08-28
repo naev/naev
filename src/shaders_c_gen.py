@@ -264,6 +264,10 @@ SHADERS = [
       fs_path = "circle.frag",
    ),
    SimpleShader(
+      name = "crosshairs",
+      fs_path = "crosshairs.frag",
+   ),
+   SimpleShader(
       name = "stealthmarker",
       fs_path = "stealthmarker.frag",
    ),
