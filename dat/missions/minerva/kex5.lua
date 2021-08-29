@@ -305,7 +305,7 @@ function enter ()
 
    elseif misn_state~=1 and rnd.rnd() < thug_chance then
       -- Make sure system isn't claimed, but we don't claim it
-      if evt.claim( system.cur(), true ) then
+      if misn.claim( system.cur(), true ) then
          -- Spawn near the center, they home in on player
          spawn_thugs( vec2.newP(0.7*system.cur():radius()*rnd.rnd(),360*rnd.rnd()), false )
          -- Timer
