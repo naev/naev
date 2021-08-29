@@ -46,3 +46,9 @@ utils/openal_preset_efx/main
 utils/openal_preset_efx/main.c
 utils/openal_preset_efx/preset-list
 utils/openal_preset_efx/reverb_preset.lua
+
+utils/lanes-generator/optimization_method/lanes_generation.aux
+utils/lanes-generator/optimization_method/lanes_generation.fdb_latexmk
+utils/lanes-generator/optimization_method/lanes_generation.fls
+utils/lanes-generator/optimization_method/lanes_generation.log
+utils/lanes-generator/optimization_method/lanes_generation.pdf
