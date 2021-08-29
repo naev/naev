@@ -113,7 +113,7 @@ function approach_kex ()
    vn.scene()
    vn.music( minerva.loops.kex )
    local kex = vn.newCharacter( minerva.vn_kex() )
-   vn.transition()
+   vn.transition("hexagon")
 
    -- Mission is over
    if misn_state==2 then

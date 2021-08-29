@@ -70,7 +70,7 @@ function accept ()
    vn.scene()
    vn.music( minerva.loops.kex, {pitch=0.65, effect="reverb_drugged"} )
    local kex = vn.newCharacter( minerva.vn_kex() )
-   vn.transition()
+   vn.transition( "hexagon" )
 
    vn.na(_("You approach Kex who is sort of slumping at his usual spot. He doesn't seem to be in very good condition."))
    kex(_([[It takes a bit before Kex notices your presence. His feathers are rather disheveled.
@@ -140,7 +140,7 @@ function approach_kex ()
    vn.scene()
    vn.music( minerva.loops.kex, {pitch=pitchlow, effect="reverb_drugged"} )
    local kex = vn.newCharacter( minerva.vn_kex() )
-   vn.transition()
+   vn.transition( "hexagon" )
    vn.na(_("You approach Kex who is sort of slumping at his usual spot. He doesn't seem much better than last time you met him."))
    kex(_([["Hey kid."
 He seems a bit nervious and speaks softer than usual.
@@ -300,7 +300,7 @@ function enter ()
          mem.comm_no = _("No response.")
          hook.pilot( p, "board", "strangelove_board" )
          strangelove_ship = p
-         hook.timer( 10, "strangelove_hail" )
+         hook.timer( 5, "strangelove_hail" )
       end
 
    elseif misn_state~=1 and rnd.rnd() < thug_chance then
@@ -383,7 +383,8 @@ end
 function thugs_cleared ()
    vn.clear()
    vn.scene()
-   vn.transition()
+   vn.transition(nil, 3)
+   vn.na(_([[]]))
    vn.run()
 
    misn_state = 1
@@ -467,7 +468,7 @@ function strangelove_hail ()
    vn.scene()
    vn.music( minerva.loops.strangelove )
    local dr = vn.newCharacter( minerva.vn_strangelove{ shader=love_shaders.hologram() } )
-   vn.transition( "electric" )
+   vn.transition( "electric", 3 )
    -- TODO small scene
    vn.na(_("As you loiter around a system, you suddenly receive an unexpected incoming transmission."))
    dr(_([[A hologram of Dr. Strangelove appears before you. He is laying down and his body seems to be sapped of all energy. He seems to muster up energy to roughly look in your direction, although his eyes seem unnaturally clouded.
