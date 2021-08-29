@@ -238,7 +238,7 @@ void render_all( double game_dt, double real_dt )
       render_fbo_list( dt, pp_shaders_list[PP_LAYER_GUI], &cur, !pp_final );
 
    /* Top stuff. */
-   ovr_render(dt);
+   ovr_render( real_dt ); /* Using real_dt is sort of a hack for now. */
    display_fps( real_dt ); /* Exception using real_dt. */
    toolkit_render();
 

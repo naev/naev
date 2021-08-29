@@ -1059,18 +1059,18 @@ void gui_radarRender( double x, double y )
     */
    for (i=0; i<array_size(cur_system->planets); i++)
       if ((cur_system->planets[ i ]->real == ASSET_REAL) && (i != player.p->nav_planet))
-         gui_renderPlanet( i, radar->shape, radar->w, radar->h, radar->res, 0 );
+         gui_renderPlanet( i, radar->shape, radar->w, radar->h, radar->res, 1., 0 );
    if (player.p->nav_planet > -1)
-      gui_renderPlanet( player.p->nav_planet, radar->shape, radar->w, radar->h, radar->res, 0 );
+      gui_renderPlanet( player.p->nav_planet, radar->shape, radar->w, radar->h, radar->res, 1., 0 );
 
    /*
     * Jump points.
     */
    for (i=0; i<array_size(cur_system->jumps); i++)
       if (i != player.p->nav_hyperspace && jp_isUsable(&cur_system->jumps[i]))
-         gui_renderJumpPoint( i, radar->shape, radar->w, radar->h, radar->res, 0 );
+         gui_renderJumpPoint( i, radar->shape, radar->w, radar->h, radar->res, 1., 0 );
    if (player.p->nav_hyperspace > -1)
-      gui_renderJumpPoint( player.p->nav_hyperspace, radar->shape, radar->w, radar->h, radar->res, 0 );
+      gui_renderJumpPoint( player.p->nav_hyperspace, radar->shape, radar->w, radar->h, radar->res, 1., 0 );
 
    /*
     * weapons
@@ -1496,10 +1496,10 @@ static void gui_renderRadarOutOfRange( RadarShape sh, int w, int h, int cx, int 
  *
  * Matrix mode is already displaced to center of the minimap.
  */
-void gui_renderPlanet( int ind, RadarShape shape, double w, double h, double res, int overlay )
+void gui_renderPlanet( int ind, RadarShape shape, double w, double h, double res, double alpha, int overlay )
 {
    GLfloat cx, cy, x, y, r, vr;
-   const glColour *col;
+   glColour col;
    Planet *planet;
    char buf[STRMAX_SHORT];
 
@@ -1553,19 +1553,20 @@ void gui_renderPlanet( int ind, RadarShape shape, double w, double h, double res
 
 
    /* Get the colour. */
-   col = gui_getPlanetColour(ind);
+   col = *gui_getPlanetColour(ind);
+   col.a *= alpha;
 
    /* Do the blink. */
    if (ind == player.p->nav_planet)
-      gui_blink( cx, cy, vr*2., col, RADAR_BLINK_PLANET, blink_planet);
+      gui_blink( cx, cy, vr*2., &col, RADAR_BLINK_PLANET, blink_planet);
 
    glUseProgram(shaders.planetmarker.program);
    glUniform1f(shaders.planetmarker.r, planet_hasService(planet,PLANET_SERVICE_LAND));
-   gl_renderShader( cx, cy, vr, vr, 0., &shaders.planetmarker, col, 1 );
+   gl_renderShader( cx, cy, vr, vr, 0., &shaders.planetmarker, &col, 1 );
 
    if (overlay) {
       snprintf( buf, sizeof(buf), "%s%s", planet_getSymbol(planet), _(planet->name) );
-      gl_printMarkerRaw( &gl_smallFont, cx+planet->mo.text_offx, cy+planet->mo.text_offy, col, buf );
+      gl_printMarkerRaw( &gl_smallFont, cx+planet->mo.text_offx, cy+planet->mo.text_offy, &col, buf );
    }
 }
 
@@ -1578,12 +1579,13 @@ void gui_renderPlanet( int ind, RadarShape shape, double w, double h, double res
  *    @param w Width.
  *    @param h Height.
  *    @param res Radar resolution.
+ *    @param alpha Alpha to use.
  *    @param overlay Whether to render onto the overlay.
  */
-void gui_renderJumpPoint( int ind, RadarShape shape, double w, double h, double res, int overlay )
+void gui_renderJumpPoint( int ind, RadarShape shape, double w, double h, double res, double alpha, int overlay )
 {
    GLfloat cx, cy, x, y, r, vr;
-   const glColour *col;
+   glColour col;
    JumpPoint *jp;
    char buf[STRMAX_SHORT];
 
@@ -1634,25 +1636,26 @@ void gui_renderJumpPoint( int ind, RadarShape shape, double w, double h, double 
    }
 
    if (ind == player.p->nav_hyperspace)
-      col = &cWhite;
+      col = cWhite;
    else if (jp_isFlag(jp, JP_HIDDEN))
-      col = &cRed;
+      col = cRed;
    else
-      col = &cGreen;
+      col = cGreen;
+   col.a *= alpha;
 
    glUseProgram(shaders.jumpmarker.program);
-   gl_renderShader( cx, cy, vr*1.5, vr*1.5, -jp->angle, &shaders.jumpmarker, col, 1 );
+   gl_renderShader( cx, cy, vr*1.5, vr*1.5, -jp->angle, &shaders.jumpmarker, &col, 1 );
 
    /* Blink ontop. */
    if (ind == player.p->nav_hyperspace)
-      gui_blink( cx, cy, vr*3., col, RADAR_BLINK_PLANET, blink_planet );
+      gui_blink( cx, cy, vr*3., &col, RADAR_BLINK_PLANET, blink_planet );
 
    /* Render name. */
    if (overlay) {
       snprintf(
             buf, sizeof(buf), "%s%s", jump_getSymbol(jp),
             sys_isKnown(jp->target) ? _(jp->target->name) : _("Unknown") );
-      gl_printMarkerRaw( &gl_smallFont, cx+jp->mo.text_offx, cy+jp->mo.text_offy, col, buf );
+      gl_printMarkerRaw( &gl_smallFont, cx+jp->mo.text_offx, cy+jp->mo.text_offy, &col, buf );
    }
 }
 

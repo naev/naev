@@ -135,6 +135,7 @@ typedef struct Planet_ {
    /* Misc. */
    unsigned int flags; /**< flags for planet properties */
    MapOverlayPos mo;   /**< Overlay layout data. */
+   double map_alpha;   /**< Alpha to display on the map. */
 } Planet;
 
 
@@ -205,7 +206,8 @@ struct JumpPoint_ {
    double sina; /**< Sinus of the angle. */
    int sx; /**< X sprite to use. */
    int sy; /**< Y sprite to use. */
-   MapOverlayPos mo;   /**< Overlay layout data. */
+   MapOverlayPos mo; /**< Overlay layout data. */
+   double map_alpha; /**< Alpha to display on the map. */
 };
 extern glTexture *jumppoint_gfx; /**< Jump point graphics. */
 

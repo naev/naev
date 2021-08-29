@@ -25,13 +25,16 @@
 #include "space.h"
 
 
+#define OVERLAY_FADEIN        (1.0/3.0)
+
+
 /**
  * Structure for map overlay size.
  */
 typedef struct MapOverlayRadiusConstraint_ {
-   int i; /**< this radius... */
-   int j; /**< plus this radius... */
-   double dist; /**< ... is at most this big. */
+   int i;      /**< this radius... */
+   int j;      /**< plus this radius... */
+   double dist;/**< ... is at most this big. */
 } MapOverlayRadiusConstraint;
 
 
@@ -39,23 +42,24 @@ typedef struct MapOverlayRadiusConstraint_ {
  * @brief An overlay map marker.
  */
 typedef struct ovr_marker_s {
-   unsigned int id; /**< ID of the marker. */
-   char *text; /**< Marker display text. */
-   int type; /**< Marker type. */
+   unsigned int id;  /**< ID of the marker. */
+   char *text;       /**< Marker display text. */
+   int type;         /**< Marker type. */
    union {
       struct {
-         double x; /**< X center of point marker. */
-         double y; /**< Y center of point marker. */
+         double x;   /**< X center of point marker. */
+         double y;   /**< Y center of point marker. */
       } pt; /**< Point marker. */
    } u; /**< Type data. */
 } ovr_marker_t;
 static unsigned int mrk_idgen = 0; /**< ID generator for markers. */
 static ovr_marker_t *ovr_markers = NULL; /**< Overlay markers. */
 
+static SafeLane* ovr_render_safelanes = NULL; /**< Render safe lanes. */
 
 static Uint32 ovr_opened = 0; /**< Time last opened. */
-static int ovr_open = 0; /**< Is the overlay open? */
-static double ovr_res = 10.; /**< Resolution. */
+static int ovr_open = 0;      /**< Is the overlay open? */
+static double ovr_res = 10.;  /**< Resolution. */
 static const double ovr_text_pixbuf = 5.; /**< Extra margin around overlay text. */
 /* Rem: high pix_buffer ovr_text_pixbuff allows to do less iterations. */
 
@@ -72,6 +76,7 @@ static void ovr_refresh_uzawa_overlap( float *forces_x, float *forces_y,
       MapOverlayPos** mo, int items, int self,
       float *offx, float *offy, float *offdx, float *offdy );
 /* Render. */
+static int ovr_safelaneKnown( SafeLane *sf, Vector2d *posns[2] );
 void map_overlayToScreenPos( double *ox, double *oy, double x, double y );
 /* Markers. */
 static void ovr_mrkRenderAll( double res );
@@ -467,6 +472,40 @@ static void ovr_refresh_uzawa_overlap( float *forces_x, float *forces_y,
 }
 
 
+void ovr_initAlpha (void)
+{
+   int i;
+   JumpPoint *jp;
+   Planet *pnt;
+   SafeLane *safelanes;
+   for (i=0; i<array_size(cur_system->jumps); i++) {
+      jp = &cur_system->jumps[i];
+      if (!jp_isUsable(jp) || !jp_isKnown(jp))
+         jp->map_alpha = 0.;
+      else
+         jp->map_alpha = 1.;
+   }
+   for (i=0; i<array_size(cur_system->planets); i++) {
+      pnt = cur_system->planets[i];
+      if ((pnt->real != ASSET_REAL) || !planet_isKnown(pnt))
+         pnt->map_alpha = 0.;
+      else
+         pnt->map_alpha = 1.;
+   }
+
+   safelanes = safelanes_get( -1, 0, cur_system );
+   for (i=0; i<array_size(safelanes); i++) {
+      Vector2d *posns[2];
+      if (!ovr_safelaneKnown( &safelanes[i], posns ))
+         safelanes[i].map_alpha = 0.;
+      else
+         safelanes[i].map_alpha = 1.;
+   }
+   array_free( ovr_render_safelanes );
+   ovr_render_safelanes = safelanes;
+}
+
+
 /**
  * @brief Properly opens or closes the overlay map.
  *
@@ -477,10 +516,13 @@ void ovr_setOpen( int open )
    if (open && !ovr_open) {
       ovr_open = 1;
       input_mouseShow();
+      ovr_initAlpha();
    }
    else if (ovr_open) {
       ovr_open = 0;
       input_mouseHide();
+      array_free( ovr_render_safelanes );
+      ovr_render_safelanes = NULL;
    }
 }
 
@@ -510,6 +552,36 @@ void ovr_key( int type )
 }
 
 
+static int ovr_safelaneKnown( SafeLane *sf, Vector2d *posns[2] )
+{
+   /* This is a bit asinine, but should be easily replaceable by decent code when we have a System Objects API.
+      * Specifically, a generic pos and isKnown test would clean this up nicely. */
+   Planet *pnt;
+   JumpPoint *jp;
+   int known = 1;
+   int j;
+   for (j=0; j<2; j++) {
+      switch(sf->point_type[j]) {
+         case SAFELANE_LOC_PLANET:
+            pnt = planet_getIndex( sf->point_id[j] );
+            posns[j] = &pnt->pos;
+            if (!planet_isKnown( pnt ))
+               known = 0;
+            break;
+         case SAFELANE_LOC_DEST_SYS:
+            jp = jump_getTarget( system_getIndex( sf->point_id[j] ), cur_system );
+            posns[j] = &jp->pos;
+            if (!jp_isKnown( jp ))
+               known = 0;
+            break;
+         default:
+            ERR( _("Invalid vertex type.") );
+      }
+   }
+   return known;
+}
+
+
 /**
  * @brief Renders the overlay map.
  *
@@ -517,11 +589,12 @@ void ovr_key( int type )
  */
 void ovr_render( double dt )
 {
-   (void) dt;
    int i, j;
    Pilot *const*pstk;
    AsteroidAnchor *ast;
    SafeLane *safelanes;
+   Planet *pnt;
+   JumpPoint *jp;
    double w, h, res;
    double x,y, r,detect;
    double rx,ry, x2,y2, rw,rh;
@@ -547,41 +620,24 @@ void ovr_render( double dt )
    /* Render the safe lanes */
    safelanes = safelanes_get( -1, 0, cur_system );
    for (i=0; i<array_size(safelanes); i++) {
+      Vector2d *posns[2];
+      if (!ovr_safelaneKnown( &safelanes[i], posns ))
+         continue;
+
+      /* Copy over alpha. */
+      if (ovr_render_safelanes != NULL)
+         safelanes[i].map_alpha = ovr_render_safelanes[i].map_alpha;
+
+      if (safelanes[i].map_alpha < 1.0)
+         safelanes[i].map_alpha = MIN( safelanes[i].map_alpha+OVERLAY_FADEIN*dt, 1.0 );
+
       if (faction_isPlayerFriend( safelanes[i].faction ))
          col = cFriend;
       else if (faction_isPlayerEnemy( safelanes[i].faction ))
          col = cHostile;
       else
          col = cNeutral;
-      col.a = 0.1;
-
-      /* This is a bit asinine, but should be easily replaceable by decent code when we have a System Objects API.
-       * Specifically, a generic pos and isKnown test would clean this up nicely. */
-      Vector2d *posns[2];
-      Planet *pnt;
-      JumpPoint *jp;
-      int known = 1;
-      for (j=0; j<2; j++) {
-         switch(safelanes[i].point_type[j]) {
-            case SAFELANE_LOC_PLANET:
-               pnt = planet_getIndex( safelanes[i].point_id[j] );
-               posns[j] = &pnt->pos;
-               if (!planet_isKnown( pnt ))
-                  known = 0;
-               break;
-            case SAFELANE_LOC_DEST_SYS:
-               jp = jump_getTarget( system_getIndex( safelanes[i].point_id[j] ), cur_system );
-               posns[j] = &jp->pos;
-               if (!jp_isKnown( jp ))
-                  known = 0;
-               break;
-            default:
-               ERR( _("Invalid vertex type.") );
-         }
-      }
-
-      if (!known)
-         continue;
+      col.a = 0.1 * safelanes[i].map_alpha;
 
       /* Get positions and stuff. */
       map_overlayToScreenPos( &x,  &y,  posns[0]->x, posns[0]->y );
@@ -590,27 +646,36 @@ void ovr_render( double dt )
       ry = y2-y;
       r  = atan2( ry, rx );
       rw = MOD(rx,ry)/2.;
-      rh = 13.;
+      rh = 11.;
 
       /* Render. */
       glUseProgram(shaders.safelanes.program);
       gl_renderShader( x+rx/2., y+ry/2., rw, rh, r, &shaders.safelanes, &col, 1 );
    }
-   array_free( safelanes );
+   array_free( ovr_render_safelanes );
+   ovr_render_safelanes = safelanes;
 
    /* Render planets. */
-   for (i=0; i<array_size(cur_system->planets); i++)
-      if ((cur_system->planets[ i ]->real == ASSET_REAL) && (i != player.p->nav_planet))
-         gui_renderPlanet( i, RADAR_RECT, w, h, res, 1 );
+   for (i=0; i<array_size(cur_system->planets); i++) {
+      pnt = cur_system->planets[i];
+      if (pnt->map_alpha < 1.0)
+         pnt->map_alpha = MIN( pnt->map_alpha+OVERLAY_FADEIN*dt, 1.0 );
+      if ((pnt->real == ASSET_REAL) && (i != player.p->nav_planet))
+         gui_renderPlanet( i, RADAR_RECT, w, h, res, pnt->map_alpha, 1 );
+   }
    if (player.p->nav_planet > -1)
-      gui_renderPlanet( player.p->nav_planet, RADAR_RECT, w, h, res, 1 );
+      gui_renderPlanet( player.p->nav_planet, RADAR_RECT, w, h, res, cur_system->planets[player.p->nav_planet]->map_alpha, 1 );
 
    /* Render jump points. */
-   for (i=0; i<array_size(cur_system->jumps); i++)
-      if ((i != player.p->nav_hyperspace) && !jp_isFlag(&cur_system->jumps[i], JP_EXITONLY))
-         gui_renderJumpPoint( i, RADAR_RECT, w, h, res, 1 );
+   for (i=0; i<array_size(cur_system->jumps); i++) {
+      jp = &cur_system->jumps[i];
+      if (jp->map_alpha < 1.0)
+         jp->map_alpha = MIN( jp->map_alpha+OVERLAY_FADEIN*dt, 1.0 );
+      if ((i != player.p->nav_hyperspace) && !jp_isFlag(jp, JP_EXITONLY))
+         gui_renderJumpPoint( i, RADAR_RECT, w, h, res, jp->map_alpha, 1 );
+   }
    if (player.p->nav_hyperspace > -1)
-      gui_renderJumpPoint( player.p->nav_hyperspace, RADAR_RECT, w, h, res, 1 );
+      gui_renderJumpPoint( player.p->nav_hyperspace, RADAR_RECT, w, h, res, cur_system->jumps[player.p->nav_hyperspace].map_alpha, 1 );
 
    /* render the asteroids */
    for (i=0; i<array_size(cur_system->asteroids); i++) {

@@ -1339,6 +1339,7 @@ void space_update( const double dt )
             hparam[2].type  = HOOK_PARAM_SENTINEL;
             hooks_runParam( "discover", hparam );
             found_something = 1;
+            cur_system->planets[i]->map_alpha = 0.;
          }
       }
 
@@ -1355,6 +1356,7 @@ void space_update( const double dt )
             hparam[2].type  = HOOK_PARAM_SENTINEL;
             hooks_runParam( "discover", hparam );
             found_something = 1;
+            cur_system->jumps[i].map_alpha = 0.;
          }
       }
 

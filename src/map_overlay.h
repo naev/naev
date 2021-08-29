@@ -18,6 +18,7 @@ void ovr_setOpen( int open );
 void ovr_key( int type );
 void ovr_render( double dt );
 void ovr_refresh (void);
+void ovr_initAlpha (void);
 
 /* Markers. */
 void ovr_mrkFree (void);
