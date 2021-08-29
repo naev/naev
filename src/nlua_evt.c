@@ -331,12 +331,15 @@ static int evtL_claim( lua_State *L )
 {
    Claim_t *claim;
    Event_t *cur_event;
+   int onlytest;
 
    /* Get current event. */
    cur_event = event_getFromLua(L);
 
+   onlytest = lua_toboolean(L,2);
+
    /* Check to see if already claimed. */
-   if (cur_event->claims != NULL) {
+   if (!onlytest && (cur_event->claims != NULL)) {
       NLUA_ERROR(L, _("Event trying to claim but already has."));
       return 0;
    }
@@ -364,7 +367,7 @@ static int evtL_claim( lua_State *L )
       NLUA_INVALID_PARAMETER(L);
 
    /* Only test, but don't apply case. */
-   if (lua_toboolean(L,2)) {
+   if (onlytest) {
       lua_pushboolean( L, !claim_test( claim ) );
       claim_destroy( claim );
       return 1;

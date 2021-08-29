@@ -1023,12 +1023,15 @@ static int misn_claim( lua_State *L )
 {
    Claim_t *claim;
    Mission *cur_mission;
+   int onlytest;
 
    /* Get mission. */
    cur_mission = misn_getFromLua(L);
 
+   onlytest = lua_toboolean(L,2);
+
    /* Check to see if already claimed. */
-   if (!claim_isNull(cur_mission->claims)) {
+   if (!onlytest && !claim_isNull(cur_mission->claims)) {
       NLUA_ERROR(L, _("Mission trying to claim but already has."));
       return 0;
    }
@@ -1055,7 +1058,7 @@ static int misn_claim( lua_State *L )
       NLUA_INVALID_PARAMETER(L);
 
    /* Only test, but don't apply case. */
-   if (lua_toboolean(L,2)) {
+   if (onlytest) {
       lua_pushboolean( L, !claim_test( claim ) );
       claim_destroy( claim );
       return 1;
