@@ -384,7 +384,7 @@ function thugs_cleared ()
    vn.clear()
    vn.scene()
    vn.transition(nil, 3)
-   vn.na(_([[]]))
+   vn.na(_([[All that remains of the bounty hunters is floating debris. It seems like you should be able to safely land and search for Dr. Strangelove at his laboratory now.]]))
    vn.run()
 
    misn_state = 1
