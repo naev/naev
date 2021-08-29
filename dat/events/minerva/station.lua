@@ -178,10 +178,10 @@ function bargreeter()
    local g = vn.newCharacter( _("Greeter"),
          { image=portrait.getFullPath( greeter_portrait ) } )
    vn.transition()
-   vn.na( _("As soon as you enter the spaceport bar, a neatly dressed individual runs up to you and hands you a complementary drink. It is hard to make out what he is saying over all the background noise created by other patrons and gambling machines, but you try to make it out as best as you can.") )
-   g:say( _("\"Welcome to the Minerva Station resort! It appears to be your first time here. As you enjoy your complementary drink, let me briefly explain to you how this wonderful place works. It is all very exciting!\"") )
-   g:say( _("\"The currency we use on this station are Minerva Tokens. Unlike credits, they are physical and so very pretty! You can not buy Minerva Tokens directly, however, by participating and betting credits in the various fine games available, you can obtain Minerva Tokens. When you have enough Minerva Tokens, you are able to buy fabulous prizes and enjoy more exclusive areas of our resort. To start out your fun Minerva Adventure®, please enjoy these 10 complementary Minerva Tokens!\"") )
-   g:say( _("\"If you want more information or want to check your balance. Please use the terminals located throughout the station. I highly recommend you check out our universe-famous Cyborg Chicken at the blackjack table, and always remember, 'life is short, spend it at Minerva Station'®!\"") )
+   vn.na( _([[As soon as you enter the spaceport bar, a neatly dressed individual runs up to you and hands you a complementary drink. It is hard to make out what he is saying over all the background noise created by other patrons and gambling machines, but you try to make it out as best as you can.]]) )
+   g:say( _([["Welcome to the Minerva Station resort! It appears to be your first time here. As you enjoy your complementary drink, let me briefly explain to you how this wonderful place works. It is all very exciting!"]]) )
+   g:say( _("[[The currency we use on this station are Minerva Tokens. Unlike credits, they are physical and so very pretty! You can not buy Minerva Tokens directly, however, by participating and betting credits in the various fine games available, you can obtain Minerva Tokens. When you have enough Minerva Tokens, you are able to buy fabulous prizes and enjoy more exclusive areas of our resort. To start out your fun Minerva Adventure®, please enjoy these 10 complementary Minerva Tokens!"]]) )
+   g:say( _([["If you want more information or want to check your balance. Please use the terminals located throughout the station. I highly recommend you check out our universe-famous Cyborg Chicken at the blackjack table, and always remember, 'life is short, spend it at Minerva Station'®!"]]) )
    vn.run()
 
    minerva.tokens_pay( 10 )
@@ -203,8 +203,8 @@ function approach_terminal()
    vn.transition()
    vn.label( "start" )
    t:say( function() return string.format(
-         n_("\"VALUED CUSTOMER, YOU HAVE #p%s MINERVA TOKEN#0.%s\n\nWHAT DO YOU WISH TO DO TODAY?\"",
-            "\"VALUED CUSTOMER, YOU HAVE #p%s MINERVA TOKENS#0.%s\n\nWHAT DO YOU WISH TO DO TODAY?\"", minerva.tokens_get()),
+         n_([["VALUED CUSTOMER, YOU HAVE #p%s MINERVA TOKEN#0.%s\n\nWHAT DO YOU WISH TO DO TODAY?"]],
+            "[[VALUED CUSTOMER, YOU HAVE #p%s MINERVA TOKENS#0.%s\n\nWHAT DO YOU WISH TO DO TODAY?"]], minerva.tokens_get()),
                numstring(minerva.tokens_get()), msgs[rnd.rnd(1,#msgs)]) end )
    vn.menu( {
       {_("Information"), "info"},
@@ -212,10 +212,10 @@ function approach_terminal()
       {_("Leave"), "leave"},
    } )
    vn.label( "info" )
-   t:say( _("\"I AM PROGRAMMED TO EXPLAIN ABOUT THE WONDERFUL MINERVA STATION GAMBLING FACILITIES. WHAT WOULD YOU LIKE TO KNOW ABOUT?\"") )
+   t:say( _([["I AM PROGRAMMED TO EXPLAIN ABOUT THE WONDERFUL MINERVA STATION GAMBLING FACILITIES. WHAT WOULD YOU LIKE TO KNOW ABOUT?"]]) )
    vn.jump( "info_menu" )
    vn.label( "more_info" )
-   t:say( _("\"WHAT ELSE WOULD YOU LIKE TO KNOW?\"") )
+   t:say( _([["WHAT ELSE WOULD YOU LIKE TO KNOW?"]]) )
    vn.label( "info_menu" )
    vn.menu( {
       {_("Station"), "info_station"},
@@ -225,34 +225,34 @@ function approach_terminal()
       {_("Back"), "start"},
    } )
    vn.label( "info_station" )
-   t:say( _("\"MINERVA STATION IS THE BEST PLACE TO SIT BACK AND ENJOY RELAXING GAMBLING ACTIVITIES. ALTHOUGH THE AREA IS HEAVILY DISPUTED BY THE ZA'LEK AND DVAERED, REST ASSURED THAT THERE IS LESS THAN A 2% OF CHANCE OF TOTAL DESTRUCTION OF THE STATION.\"") )
+   t:say( _([["MINERVA STATION IS THE BEST PLACE TO SIT BACK AND ENJOY RELAXING GAMBLING ACTIVITIES. ALTHOUGH THE AREA IS HEAVILY DISPUTED BY THE ZA'LEK AND DVAERED, REST ASSURED THAT THERE IS LESS THAN A 2% OF CHANCE OF TOTAL DESTRUCTION OF THE STATION."]]) )
    vn.jump( "more_info" )
    vn.label( "info_gambling" )
-   t:say( _("\"WHILE GAMBLING IS NOT ALLOWED IN MOST OF THE EMPIRE, MINERVA STATION BOASTS OF AN EXCLUSIVE STATUS THANKS TO THE IMPERIAL DECREE 289.78 ARTICLE 478 SECTION 19 ALLOWING GAMBLING TO BE ENJOYED WITHOUT RESTRICTIONS. IT IS POSSIBLE TO PLAY GAMES USING CREDITS TO OBTAIN MINERVA TOKENS THAT CAN BE TRADED IN FOR GOODS AND SERVICES ANY TERMINAL THROUGHOUT THE STATION.\"" ) )
+   t:say( _([["WHILE GAMBLING IS NOT ALLOWED IN MOST OF THE EMPIRE, MINERVA STATION BOASTS OF AN EXCLUSIVE STATUS THANKS TO THE IMPERIAL DECREE 289.78 ARTICLE 478 SECTION 19 ALLOWING GAMBLING TO BE ENJOYED WITHOUT RESTRICTIONS. IT IS POSSIBLE TO PLAY GAMES USING CREDITS TO OBTAIN MINERVA TOKENS THAT CAN BE TRADED IN FOR GOODS AND SERVICES ANY TERMINAL THROUGHOUT THE STATION."]] ) )
    vn.jump( "more_info" )
    vn.label( "info_trade" )
-   t:say( _("\"IT IS POSSIBLE TO TRADE MINERVA TOKENS FOR GOODS AND SERVICES AT TERMINALS THROUGHOUT THE STATION. THANKS TO THE IMPERIAL DECREE 289.78 ARTICLE 478 SECTION 72, ALL TRADE-INS ARE NOT SUBJECT TO STANDARD IMPERIAL LICENSE RESTRICTIONS. FURTHERMORE, THEY ALL HAVE 'I Got This Sucker at Minerva Station' ENGRAVED ON THEM.\"") )
+   t:say( _([["IT IS POSSIBLE TO TRADE MINERVA TOKENS FOR GOODS AND SERVICES AT TERMINALS THROUGHOUT THE STATION. THANKS TO THE IMPERIAL DECREE 289.78 ARTICLE 478 SECTION 72, ALL TRADE-INS ARE NOT SUBJECT TO STANDARD IMPERIAL LICENSE RESTRICTIONS. FURTHERMORE, THEY ALL HAVE 'I Got This Sucker at Minerva Station' ENGRAVED ON THEM."]]) )
    vn.jump( "more_info" )
    vn.label( "info_chicken" )
-   t:say( _("\"CYBORG CHICKEN IS OUR MOST POPULAR BLACKJACK DEALER. NO WHERE ELSE IN THE UNIVERSE WILL YOU BE ABLE TO PLAY CARD GAMES WITH AN AI-ENHANCED CHICKEN CYBORG. IT IS A ONCE AND A LIFE-TIME CHANCE THAT YOU SHOULD NOT MISS.\"") )
+   t:say( _([["CYBORG CHICKEN IS OUR MOST POPULAR BLACKJACK DEALER. NO WHERE ELSE IN THE UNIVERSE WILL YOU BE ABLE TO PLAY CARD GAMES WITH AN AI-ENHANCED CHICKEN CYBORG. IT IS A ONCE AND A LIFE-TIME CHANCE THAT YOU SHOULD NOT MISS."]]) )
    vn.jump( "more_info" )
 
    vn.label( "trade_notenough" )
    t:say( function() return string.format(
-         n_("\"SORRY, YOU DO NOT HAVE ENOUGH MINERVA TOKENS TO TRADE-IN FOR YOUR REQUESTED ITEM. WOULD YOU LIKE TO TRADE-IN FOR SOMETHING ELSE? YOU HAVE #p%s MINERVA TOKEN#0.\"",
-            "\"SORRY, YOU DO NOT HAVE ENOUGH MINERVA TOKENS TO TRADE-IN FOR YOUR REQUESTED ITEM. WOULD YOU LIKE TO TRADE-IN FOR SOMETHING ELSE? YOU HAVE #p%s MINERVA TOKENS#0.\"", minerva.tokens_get()),
+         n_([["SORRY, YOU DO NOT HAVE ENOUGH MINERVA TOKENS TO TRADE-IN FOR YOUR REQUESTED ITEM. WOULD YOU LIKE TO TRADE-IN FOR SOMETHING ELSE? YOU HAVE #p%s MINERVA TOKEN#0."]],
+            [["SORRY, YOU DO NOT HAVE ENOUGH MINERVA TOKENS TO TRADE-IN FOR YOUR REQUESTED ITEM. WOULD YOU LIKE TO TRADE-IN FOR SOMETHING ELSE? YOU HAVE #p%s MINERVA TOKENS#0."]], minerva.tokens_get()),
          numstring(minerva.tokens_get()) ) end )
    vn.jump( "trade_menu" )
    vn.label( "trade_soldout" )
    t:say( function() return string.format(
-         n_("\"I AM SORRY TO INFORM YOU THAT THE ITEM THAT YOU DESIRE IS CURRENTLY SOLD OUT. WOULD YOU LIKE TO TRADE-IN FOR SOMETHING ELSE? YOU HAVE #p%s MINERVA TOKEN#0.\"",
-            "\"I AM SORRY TO INFORM YOU THAT THE ITEM THAT YOU DESIRE IS CURRENTLY SOLD OUT. WOULD YOU LIKE TO TRADE-IN FOR SOMETHING ELSE? YOU HAVE #p%s MINERVA TOKENS#0.\"", minerva.tokens_get()),
+         n_([["I AM SORRY TO INFORM YOU THAT THE ITEM THAT YOU DESIRE IS CURRENTLY SOLD OUT. WOULD YOU LIKE TO TRADE-IN FOR SOMETHING ELSE? YOU HAVE #p%s MINERVA TOKEN#0."]],
+            [["I AM SORRY TO INFORM YOU THAT THE ITEM THAT YOU DESIRE IS CURRENTLY SOLD OUT. WOULD YOU LIKE TO TRADE-IN FOR SOMETHING ELSE? YOU HAVE #p%s MINERVA TOKENS#0."]], minerva.tokens_get()),
          numstring(minerva.tokens_get()) ) end )
    vn.jump( "trade_menu" )
    vn.label( "trade" )
    t:say( function() return string.format(
-         n_("\"YOU CAN TRADE IN YOUR PRECIOUS #p%s MINERVA TOKEN#0 FOR THE FOLLOWING GOODS.\"",
-            "\"YOU CAN TRADE IN YOUR PRECIOUS #p%s MINERVA TOKENS#0 FOR THE FOLLOWING GOODS.\"", minerva.tokens_get()),
+         n_([["YOU CAN TRADE IN YOUR PRECIOUS #p%s MINERVA TOKEN#0 FOR THE FOLLOWING GOODS."]],
+            [["YOU CAN TRADE IN YOUR PRECIOUS #p%s MINERVA TOKENS#0 FOR THE FOLLOWING GOODS."]], minerva.tokens_get()),
             numstring(minerva.tokens_get()) ) end )
    local trades = {
       {"Ripper Cannon", {100, "outfit"}},
@@ -330,7 +330,7 @@ function approach_terminal()
    -- Buying stuff
    vn.label( "trade_confirm" )
    t:say( function () return string.format(
-         _("\"ARE YOU SURE YOU WANT TO TRADE IN FOR THE '#w%s#0'? THE DESCRIPTION IS AS FOLLOWS:\"\n#w%s#0"),
+         _([["ARE YOU SURE YOU WANT TO TRADE IN FOR THE '#w%s#0'? THE DESCRIPTION IS AS FOLLOWS:"\n#w%s#0]]),
          _(tradein_item[1]), _(tradein_item.description) ) end )
    vn.menu( {
       { _("Trade"), "trade_consumate" },
