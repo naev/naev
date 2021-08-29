@@ -204,7 +204,7 @@ function approach_terminal()
    vn.label( "start" )
    t:say( function() return string.format(
          n_([["VALUED CUSTOMER, YOU HAVE #p%s MINERVA TOKEN#0.%s\n\nWHAT DO YOU WISH TO DO TODAY?"]],
-            "[[VALUED CUSTOMER, YOU HAVE #p%s MINERVA TOKENS#0.%s\n\nWHAT DO YOU WISH TO DO TODAY?"]], minerva.tokens_get()),
+            [["VALUED CUSTOMER, YOU HAVE #p%s MINERVA TOKENS#0.%s\n\nWHAT DO YOU WISH TO DO TODAY?"]], minerva.tokens_get()),
                numstring(minerva.tokens_get()), msgs[rnd.rnd(1,#msgs)]) end )
    vn.menu( {
       {_("Information"), "info"},
