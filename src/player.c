@@ -204,15 +204,15 @@ static void player_newSetup()
 {
    double x, y;
 
-   /* Set up GUI. */
-   player.radar_res = RADAR_RES_DEFAULT;
-   gui_setDefaults();
-
    /* Setup sound */
    player_initSound();
 
    /* Clean up player stuff if we'll be recreating. */
    player_cleanup();
+
+   /* Set up GUI. */
+   player.radar_res = RADAR_RES_DEFAULT;
+   gui_setDefaults();
 
    /* Sane time defaults. */
    player.last_played = time(NULL);
