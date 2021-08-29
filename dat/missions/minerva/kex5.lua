@@ -209,7 +209,7 @@ end
 local function choose_one( t ) return t[ rnd.rnd(1,#t) ] end
 
 function enter ()
-   if misn_state==2 and system.cur() ~= targetsys then
+   if misn_state==2 and system.cur() ~= system.get(targetsys) then
       player.msg(_("MISSION FAILED! You never met up with Dr. Strangelove."))
       misn.finish(false)
    end
