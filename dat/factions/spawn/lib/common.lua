@@ -127,8 +127,8 @@ end
 
 
 -- @brief adds a pilot to the table
-function scom.addPilot( pilots, s, presence, params )
-   presence = presence or s:points()
+function scom.addPilot( pilots, s, params )
+   local presence = s:points()
    pilots[ #pilots+1 ] = { ship=s, presence=presence, params=params }
    pilots.__presence = (pilots.__presence or 0) + presence
 end

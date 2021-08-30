@@ -1,27 +1,38 @@
 local scom = require "factions.spawn.lib.common"
 
+local sdronescout = ship.get("Za'lek Scout Drone")
+local sdronelight = ship.get("Za'lek Light Drone")
+local sdronebomber= ship.get("Za'lek Bomber Drone")
+local sdroneheavy = ship.get("Za'lek Heavy Drone")
+local ssting      = ship.get("Za'lek Sting")
+local sdemon      = ship.get("Za'lek Demon")
+local smephisto   = ship.get("Za'lek Mephisto")
+local sdiablo     = ship.get("Za'lek Diablo")
+
 -- @brief Spawns a small patrol fleet.
-function spawn_patrol ()
-   local pilots = { __doscans = true }
+function spawn_patrol( pilots )
+   pilots = pilots or { __doscans = true }
    local r = rnd.rnd()
 
-   if r < 0.5 then
-      scom.addPilot( pilots, "Za'lek Heavy Drone", 10 )
-      scom.addPilot( pilots, "Za'lek Light Drone", 5 )
-      scom.addPilot( pilots, "Za'lek Light Drone", 5 )
+   if r < 0.2 then
+      scom.addPilot( pilots, sdronelight )
+      scom.addPilot( pilots, sdronelight )
+   elseif r < 0.3 then
+      scom.addPilot( pilots, sdronebomber )
+      scom.addPilot( pilots, sdronebomber )
+   elseif r < 0.5 then
+      scom.addPilot( pilots, sdroneheavy )
+      scom.addPilot( pilots, sdronelight )
+   elseif r < 0.7 then
+      scom.addPilot( pilots, sdronebomber )
+      scom.addPilot( pilots, sdronelight )
+      scom.addPilot( pilots, sdronelight )
    elseif r < 0.8 then
-      scom.addPilot( pilots, "Za'lek Heavy Drone", 10 )
-      scom.addPilot( pilots, "Za'lek Bomber Drone", 10 )
-      scom.addPilot( pilots, "Za'lek Light Drone", 5 )
-      scom.addPilot( pilots, "Za'lek Light Drone", 5 )
-      scom.addPilot( pilots, "Za'lek Light Drone", 5 )
-   elseif r < 0.9 then
-      scom.addPilot( pilots, "Za'lek Sting", 45 )
-      scom.addPilot( pilots, "Za'lek Heavy Drone", 10 )
-      scom.addPilot( pilots, "Za'lek Light Drone", 5 )
-      scom.addPilot( pilots, "Za'lek Light Drone", 5 )
+      scom.addPilot( pilots, sdroneheavy )
+      scom.addPilot( pilots, sdronelight )
+      scom.addPilot( pilots, sdronelight )
    else
-      scom.addPilot( pilots, "Za'lek Demon", 75 )
+      scom.addPilot( pilots, ssting )
    end
 
    return pilots
@@ -37,27 +48,16 @@ function spawn_squad ()
    local r = rnd.rnd()
 
    if r < 0.5 then
-      scom.addPilot( pilots, "Za'lek Sting", 45 )
-      scom.addPilot( pilots, "Za'lek Heavy Drone", 10 )
-      scom.addPilot( pilots, "Za'lek Heavy Drone", 10 )
-      scom.addPilot( pilots, "Za'lek Bomber Drone", 10 )
-      scom.addPilot( pilots, "Za'lek Light Drone", 5 )
-      scom.addPilot( pilots, "Za'lek Light Drone", 5 )
-      scom.addPilot( pilots, "Za'lek Light Drone", 5 )
+      scom.addPilot( pilots, ssting )
+      spawn_patrol( pilots )
    elseif r < 0.8 then
-      scom.addPilot( pilots, "Za'lek Sting", 45 )
-      scom.addPilot( pilots, "Za'lek Heavy Drone", 10 )
-      scom.addPilot( pilots, "Za'lek Heavy Drone", 10 )
-      scom.addPilot( pilots, "Za'lek Bomber Drone", 10 )
-      scom.addPilot( pilots, "Za'lek Light Drone", 5 )
-      scom.addPilot( pilots, "Za'lek Light Drone", 5 )
-      scom.addPilot( pilots, "Za'lek Light Drone", 5 )
+      scom.addPilot( pilots, ssting )
+      scom.addPilot( pilots, sdroneheavy )
+      scom.addPilot( pilots, sdroneheavy )
+      spawn_patrol( pilots )
    else
-      scom.addPilot( pilots, "Za'lek Demon", 75 )
-      scom.addPilot( pilots, "Za'lek Light Drone", 5 )
-      scom.addPilot( pilots, "Za'lek Light Drone", 5 )
-      scom.addPilot( pilots, "Za'lek Light Drone", 5 )
-      scom.addPilot( pilots, "Za'lek Light Drone", 5 )
+      scom.addPilot( pilots, sdemon )
+      spawn_patrol( pilots )
    end
 
    return pilots
@@ -71,30 +71,30 @@ function spawn_capship ()
 
    -- Generate the capship
    if r < 0.5 then
-      scom.addPilot( pilots, "Za'lek Mephisto", 140 )
+      scom.addPilot( pilots, smephisto )
    else
-      scom.addPilot( pilots, "Za'lek Diablo", 150 )
+      scom.addPilot( pilots, sdiablo )
    end
 
    -- Generate the escorts
    r = rnd.rnd()
    if r < 0.5 then
-      scom.addPilot( pilots, "Za'lek Heavy Drone", 10 )
-      scom.addPilot( pilots, "Za'lek Heavy Drone", 10 )
-      scom.addPilot( pilots, "Za'lek Bomber Drone", 10 )
-      scom.addPilot( pilots, "Za'lek Light Drone", 5 )
-      scom.addPilot( pilots, "Za'lek Light Drone", 5 )
-      scom.addPilot( pilots, "Za'lek Light Drone", 5 )
+      scom.addPilot( pilots, sdroneheavy )
+      scom.addPilot( pilots, sdroneheavy )
+      scom.addPilot( pilots, sdronebomber )
+      scom.addPilot( pilots, sdronelight )
+      scom.addPilot( pilots, sdronelight )
+      scom.addPilot( pilots, sdronelight )
    elseif r < 0.8 then
-      scom.addPilot( pilots, "Za'lek Sting", 45 )
-      scom.addPilot( pilots, "Za'lek Bomber Drone", 10 )
-      scom.addPilot( pilots, "Za'lek Bomber Drone", 10 )
+      scom.addPilot( pilots, ssting )
+      scom.addPilot( pilots, sdronebomber )
+      scom.addPilot( pilots, sdronebomber )
    else
-      scom.addPilot( pilots, "Za'lek Demon", 75 )
-      scom.addPilot( pilots, "Za'lek Heavy Drone", 10 )
-      scom.addPilot( pilots, "Za'lek Bomber Drone", 10 )
-      scom.addPilot( pilots, "Za'lek Light Drone", 5 )
-      scom.addPilot( pilots, "Za'lek Light Drone", 5 )
+      scom.addPilot( pilots, sdemon )
+      scom.addPilot( pilots, sdroneheavy )
+      scom.addPilot( pilots, sdronebomber )
+      scom.addPilot( pilots, sdronelight )
+      scom.addPilot( pilots, sdronelight )
    end
 
    return pilots

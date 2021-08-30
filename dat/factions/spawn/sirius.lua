@@ -1,18 +1,24 @@
 local scom = require "factions.spawn.lib.common"
 
+local sfidelity   = ship.get("Sirius Fidelity")
+local sshaman     = ship.get("Sirius Shaman")
+local spreacher   = ship.get("Sirius Preacher")
+local sdogma      = ship.get("Sirius Dogma")
+local sdivinity   = ship.get("Sirius Divinity")
+
 -- @brief Spawns a small patrol fleet.
 function spawn_patrol ()
    local pilots = { __doscans = true }
    local r = rnd.rnd()
 
    if r < 0.5 then
-      scom.addPilot( pilots, "Sirius Fidelity", 20 )
+      scom.addPilot( pilots, sfidelity )
    elseif r < 0.8 then
-      scom.addPilot( pilots, "Sirius Fidelity", 20 )
-      scom.addPilot( pilots, "Sirius Fidelity", 20 )
+      scom.addPilot( pilots, sfidelity )
+      scom.addPilot( pilots, sfidelity )
    else
-      scom.addPilot( pilots, "Sirius Fidelity", 20 )
-      scom.addPilot( pilots, "Sirius Shaman", 25 )
+      scom.addPilot( pilots, sshaman )
+      scom.addPilot( pilots, sfidelity )
    end
 
    return pilots
@@ -28,17 +34,17 @@ function spawn_squad ()
    local r = rnd.rnd()
 
    if r < 0.5 then
-      scom.addPilot( pilots, "Sirius Preacher", 45 )
-      scom.addPilot( pilots, "Sirius Shaman", 25 )
-      scom.addPilot( pilots, "Sirius Fidelity", 20 )
+      scom.addPilot( pilots, spreacher )
+      scom.addPilot( pilots, sshaman )
+      scom.addPilot( pilots, sfidelity )
    elseif r < 0.8 then
-      scom.addPilot( pilots, "Sirius Preacher", 45 )
-      scom.addPilot( pilots, "Sirius Preacher", 45 )
+      scom.addPilot( pilots, spreacher )
+      scom.addPilot( pilots, spreacher )
    else
-      scom.addPilot( pilots, "Sirius Preacher", 45 )
-      scom.addPilot( pilots, "Sirius Shaman", 25 )
-      scom.addPilot( pilots, "Sirius Fidelity", 20 )
-      scom.addPilot( pilots, "Sirius Fidelity", 20 )
+      scom.addPilot( pilots, spreacher )
+      scom.addPilot( pilots, sshaman )
+      scom.addPilot( pilots, sfidelity )
+      scom.addPilot( pilots, sfidelity )
    end
 
    return pilots
@@ -51,20 +57,21 @@ function spawn_capship ()
    local r = rnd.rnd()
    -- Generate the capship
    if r < 0.5 then
-      scom.addPilot( pilots, "Sirius Dogma", 140 )
+      scom.addPilot( pilots, sdogma )
    else
-      scom.addPilot( pilots, "Sirius Divinity", 120 )
+      scom.addPilot( pilots, sdivinity )
    end
 
    -- Generate the escorts
    r = rnd.rnd()
    if r < 0.5 then
-      scom.addPilot( pilots, "Sirius Shaman", 25 )
-      scom.addPilot( pilots, "Sirius Fidelity", 20 )
-      scom.addPilot( pilots, "Sirius Fidelity", 20 )
+      scom.addPilot( pilots, sshaman )
+      scom.addPilot( pilots, sfidelity )
+      scom.addPilot( pilots, sfidelity )
    else
-      scom.addPilot( pilots, "Sirius Preacher", 45 )
-      scom.addPilot( pilots, "Sirius Fidelity", 20 )
+      scom.addPilot( pilots, spreacher )
+      scom.addPilot( pilots, sshaman )
+      scom.addPilot( pilots, sfidelity )
    end
 
    return pilots

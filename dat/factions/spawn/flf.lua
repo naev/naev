@@ -1,5 +1,8 @@
 local scom = require "factions.spawn.lib.common"
 
+local slancelot   = ship.get("Lancelot")
+local svendetta   = ship.get("Vendetta")
+local spacifier   = ship.get("Pacifier")
 
 -- @brief Spawns a small fleet.
 function spawn_patrol ()
@@ -7,15 +10,15 @@ function spawn_patrol ()
    local r = rnd.rnd()
 
    if r < 0.5 then
-      scom.addPilot( pilots, "Lancelot", 25 )
-      scom.addPilot( pilots, "Lancelot", 25 )
+      scom.addPilot( pilots, slancelot )
+      scom.addPilot( pilots, slancelot )
    elseif r < 0.8 then
-      scom.addPilot( pilots, "Lancelot", 25 )
-      scom.addPilot( pilots, "Vendetta", 25 )
+      scom.addPilot( pilots, slancelot )
+      scom.addPilot( pilots, svendetta )
    else
-      scom.addPilot( pilots, "Lancelot", 25 )
-      scom.addPilot( pilots, "Lancelot", 25 )
-      scom.addPilot( pilots, "Vendetta", 25 )
+      scom.addPilot( pilots, slancelot )
+      scom.addPilot( pilots, slancelot )
+      scom.addPilot( pilots, svendetta )
    end
 
    return pilots
@@ -28,16 +31,16 @@ function spawn_squad ()
    local r = rnd.rnd()
 
    if r < 0.5 then
-      scom.addPilot( pilots, "Lancelot", 25 )
-      scom.addPilot( pilots, "Lancelot", 25 )
-      scom.addPilot( pilots, "Vendetta", 25 )
+      scom.addPilot( pilots, slancelot )
+      scom.addPilot( pilots, slancelot )
+      scom.addPilot( pilots, svendetta )
    elseif r < 0.8 then
-      scom.addPilot( pilots, "Lancelot", 25 )
-      scom.addPilot( pilots, "Vendetta", 25 )
-      scom.addPilot( pilots, "Vendetta", 25 )
+      scom.addPilot( pilots, slancelot )
+      scom.addPilot( pilots, svendetta )
+      scom.addPilot( pilots, svendetta )
    else
-      scom.addPilot( pilots, "Lancelot", 25 )
-      scom.addPilot( pilots, "Pacifier", 70 )
+      scom.addPilot( pilots, spacifier )
+      scom.addPilot( pilots, slancelot )
    end
 
    return pilots

@@ -1,5 +1,12 @@
 local scom = require "factions.spawn.lib.common"
 
+local sllama      = ship.get("Llama")
+local sgawain     = ship.get("Gawain")
+local skoala      = ship.get("Koala")
+local squicksilver= ship.get("Quicksilver")
+local smule       = ship.get("Mule")
+local srhino      = ship.get("Rhino")
+--local sshark      = ship.get("Shark")
 
 -- @brief Spawns a small trade fleet.
 function spawn_patrol ()
@@ -7,13 +14,13 @@ function spawn_patrol ()
    local r = rnd.rnd()
 
    if r < 0.5 then
-      scom.addPilot( pilots, "Llama", 20 )
+      scom.addPilot( pilots, sllama )
    elseif r < 0.8 then
-      scom.addPilot( pilots, "Llama", 20 )
-      scom.addPilot( pilots, "Llama", 20 )
+      scom.addPilot( pilots, sllama )
+      scom.addPilot( pilots, sllama )
    else
-      scom.addPilot( pilots, "Llama", 20 )
-      scom.addPilot( pilots, "Koala", 40 )
+      scom.addPilot( pilots, skoala )
+      scom.addPilot( pilots, sllama )
    end
 
    return pilots
@@ -26,20 +33,30 @@ function spawn_squad ()
    local r = rnd.rnd()
 
    if r < 0.5 then
-      scom.addPilot( pilots, "Koala", 40 )
-      scom.addPilot( pilots, "Gawain", 20 )
-      scom.addPilot( pilots, "Gawain", 20 )
-   elseif r < 0.8 then
-      scom.addPilot( pilots, "Mule", 45 )
-      scom.addPilot( pilots, "Llama", 20 )
-      scom.addPilot( pilots, "Quicksilver", 20 )
-      scom.addPilot( pilots, "Rhino", 35 )
+      scom.addPilot( pilots, skoala )
+      if rnd.rnd() < 0.6 then
+         scom.addPilot( pilots, sllama )
+         scom.addPilot( pilots, sllama )
+      else
+         scom.addPilot( pilots, sgawain )
+         scom.addPilot( pilots, sgawain )
+      end
    else
-      scom.addPilot( pilots, "Llama", 20 )
-      scom.addPilot( pilots, "Mule", 45 )
-      scom.addPilot( pilots, "Gawain", 20 )
-      scom.addPilot( pilots, "Rhino", 35 )
-      scom.addPilot( pilots, "Quicksilver", 20 )
+      if rnd.rnd() < 0.7 then
+         scom.addPilot( pilots, smule )
+      else
+         scom.addPilot( pilots, srhino )
+      end
+      if rnd.rnd() < 0.4 then
+         scom.addPilot( pilots, sllama )
+         scom.addPilot( pilots, sllama )
+      elseif rnd.rnd() < 0.7 then
+         scom.addPilot( pilots, skoala )
+         scom.addPilot( pilots, skoala )
+      else
+         scom.addPilot( pilots, squicksilver )
+         scom.addPilot( pilots, squicksilver )
+      end
    end
 
    return pilots
