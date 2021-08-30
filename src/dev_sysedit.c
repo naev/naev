@@ -1302,25 +1302,23 @@ static void sysedit_editPnt( void )
    window_addInput( wid, x += l + 5, y, 150, 20, "inpLand", 20, 1, NULL );
    y -= gl_defFont.h + 15;
 
-   (void)x;
-
    /* Second row. */
    x = 20;
    s = _("Base Presence");
    l = gl_printWidthRaw( NULL, s );
    window_addText( wid, x, y, l, 20, 1, "txtPresenceBase",
          NULL, NULL, s );
-   window_addInput( wid, x += l + 5, y, 60, 20, "inpPresenceBase", 5, 1, NULL );
+   window_addInput( wid, x += l + 5, y, 50, 20, "inpPresenceBase", 5, 1, NULL );
    window_setInputFilter( wid, "inpPresenceBase", INPUT_FILTER_NUMBER );
-   x += 60 + 10;
+   x += 50 + 10;
 
    s = _("Bonus Presence");
    l = gl_printWidthRaw( NULL, s );
    window_addText( wid, x, y, l, 20, 1, "txtPresenceBonus",
          NULL, NULL, s );
-   window_addInput( wid, x += l + 5, y, 30, 20, "inpPresenceBonus", 1, 1, NULL );
+   window_addInput( wid, x += l + 5, y, 50, 20, "inpPresenceBonus", 1, 1, NULL );
    window_setInputFilter( wid, "inpPresenceBonus", INPUT_FILTER_NUMBER );
-   x += 30 + 10;
+   x += 50 + 10;
 
    s = _("Range");
    l = gl_printWidthRaw( NULL, s );
@@ -1328,8 +1326,10 @@ static void sysedit_editPnt( void )
          NULL, NULL, s );
    window_addInput( wid, x += l + 5, y, 30, 20, "inpPresenceRange", 1, 1, NULL );
    window_setInputFilter( wid, "inpPresenceRange", INPUT_FILTER_NUMBER );
-   x += 30 + 10;
+   //x += 30 + 10;
 
+   x = 300;
+   y -= gl_defFont.h + 15;
    s = _("hide");
    l = gl_printWidthRaw( NULL, s );
    window_addText( wid, x, y, l, 20, 1, "txtHide",
@@ -1337,8 +1337,6 @@ static void sysedit_editPnt( void )
    window_addInput( wid, x += l + 5, y, 50, 20, "inpHide", 4, 1, NULL );
    window_setInputFilter( wid, "inpHide", INPUT_FILTER_NUMBER );
    x += 50 + 10;
-
-   (void)x;
 
    /* Bottom buttons. */
    window_addButton( wid, -20 - bw*3 - 15*3, 35 + BUTTON_HEIGHT, bw, BUTTON_HEIGHT,
