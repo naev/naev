@@ -646,7 +646,7 @@ void ovr_render( double dt )
       ry = y2-y;
       r  = atan2( ry, rx );
       rw = MOD(rx,ry)/2.;
-      rh = 11.;
+      rh = 9.;
 
       /* Render. */
       glUseProgram(shaders.safelanes.program);
