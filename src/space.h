@@ -412,6 +412,7 @@ void planets_render (void);
 void system_presenceCleanupAll( void );
 void system_presenceAddAsset( StarSystem *sys, const Planet *pnt );
 double system_getPresence( const StarSystem *sys, int faction );
+double system_getPresenceFull( const StarSystem *sys, int faction, double *base, double *bonus );
 void system_addAllPlanetsPresence( StarSystem *sys );
 void space_reconstructPresences( void );
 void system_rmCurrentPresence( StarSystem *sys, int faction, double amount );

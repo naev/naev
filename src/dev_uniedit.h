@@ -18,5 +18,6 @@ char *uniedit_nameFilter( char *name );
 void uniedit_autosave( unsigned int wid_unused, char *unused );
 void uniedit_updateAutosave (void);
 
+void uniedit_renderMap( double bx, double by, double w, double h, double x, double y, double r );
 
 #endif /* DEV_UNIEDIT_H */

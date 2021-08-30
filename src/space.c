@@ -3998,19 +3998,58 @@ double system_getPresence( const StarSystem *sys, int faction )
    int i;
 
    /* Check for NULL and display a warning. */
+#if DEBUGGING
    if (sys == NULL) {
       WARN("sys == NULL");
       return 0;
    }
+#endif /* DEBUGGING */
 
    /* Go through the array, looking for the faction. */
-   for (i = 0; i < array_size(sys->presence); i++) {
+   for (i=0; i < array_size(sys->presence); i++) {
       if (sys->presence[i].faction == faction)
          return MAX(sys->presence[i].value, 0);
    }
 
    /* If it's not in there, it's zero. */
-   return 0;
+   return 0.;
+}
+
+
+/**
+ * @brief Get the presence of a faction in a system.
+ *
+ *    @param sys Pointer to the system to process.
+ *    @param faction The faction to get the presence for.
+ *    @param[out] base Base value of the presence.
+ *    @param[out] bonus Bonus value of the presence.
+ *    @return The amount of presence the faction has in the system.
+ */
+double system_getPresenceFull( const StarSystem *sys, int faction, double *base, double *bonus )
+{
+   int i;
+
+   /* Check for NULL and display a warning. */
+#if DEBUGGING
+   if (sys == NULL) {
+      WARN("sys == NULL");
+      return 0;
+   }
+#endif /* DEBUGGING */
+
+   /* Go through the array, looking for the faction. */
+   for (i=0; i < array_size(sys->presence); i++) {
+      if (sys->presence[i].faction == faction) {
+         *base = sys->presence[i].base;
+         *bonus = sys->presence[i].bonus;
+         return MAX(sys->presence[i].value, 0);
+      }
+   }
+
+   /* If it's not in there, it's zero. */
+   *base = 0.;
+   *bonus = 0.;
+   return 0.;
 }
 
 
@@ -4024,10 +4063,12 @@ void system_addAllPlanetsPresence( StarSystem *sys )
    int i;
 
    /* Check for NULL and display a warning. */
+#if DEBUGGING
    if (sys == NULL) {
       WARN("sys == NULL");
       return;
    }
+#endif /* DEBUGGING */
 
    for (i=0; i<array_size(sys->planets); i++)
       system_presenceAddAsset(sys, sys->planets[i] );

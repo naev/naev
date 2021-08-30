@@ -1672,11 +1672,10 @@ void map_updateFactionPresence( const unsigned int wid, const char *name, const 
 {
    int    i;
    size_t l;
-   char   buf[STRMAX_SHORT];
+   char   buf[STRMAX_SHORT] = {'\0'};
    int    hasPresence;
    double unknownPresence;
 
-   buf[ 0 ]        = '\0';
    l               = 0;
    hasPresence     = 0;
    unknownPresence = 0;

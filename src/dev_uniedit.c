@@ -57,15 +57,24 @@
 /*
  * The editor modes.
  */
-#define UNIEDIT_DEFAULT    0  /**< Default editor mode. */
-#define UNIEDIT_JUMP       1  /**< Jump point toggle mode. */
-#define UNIEDIT_NEWSYS     2  /**< New system editor mode. */
+typedef enum UniEditMode_ {
+   UNIEDIT_DEFAULT,  /**< Default editor mode. */
+   UNIEDIT_JUMP,     /**< Jump point toggle mode. */
+   UNIEDIT_NEWSYS,   /**< New system editor mode. */
+} UniEditMode;
+
+typedef enum UniEditViewMode_ {
+   UNIEDIT_VIEW_DEFAULT,
+   UNIEDIT_VIEW_PRESENCE,
+} UniEditViewMode;
 
 
 extern StarSystem *systems_stack;
 
 
-static int uniedit_mode       = UNIEDIT_DEFAULT; /**< Editor mode. */
+static UniEditMode uniedit_mode = UNIEDIT_DEFAULT; /**< Editor mode. */
+static UniEditViewMode uniedit_viewmode = UNIEDIT_VIEW_DEFAULT; /**< Editor view mode. */
+static int uniedit_view_faction = -1; /**< Faction currently being viewed. */
 static unsigned int uniedit_wid = 0; /**< Sysedit wid. */
 static unsigned int uniedit_widEdit = 0; /**< Sysedit editor wid. */
 static unsigned int uniedit_widFind = 0; /**< Sysedit find wid. */
@@ -112,7 +121,7 @@ static void uniedit_btnEditRmAsset( unsigned int wid, char *unused );
 static void uniedit_btnEditAddAsset( unsigned int wid, char *unused );
 static void uniedit_btnEditAddAssetAdd( unsigned int wid, char *unused );
 /* System renaming. */
-static int uniedit_checkName( char *name );
+static int uniedit_checkName( const char *name );
 static void uniedit_renameSys (void);
 /* New system. */
 static void uniedit_newSys( double x, double y );
@@ -160,6 +169,10 @@ void uniedit_open( unsigned int wid_unused, char *unused )
 
    /* Reset some variables. */
    uniedit_mode   = UNIEDIT_DEFAULT;
+   //uniedit_viewmode = UNIEDIT_VIEW_DEFAULT;
+   //uniedit_view_faction = -1;
+   uniedit_viewmode = UNIEDIT_VIEW_PRESENCE;
+   uniedit_view_faction = faction_get("Empire");
    uniedit_drag   = 0;
    uniedit_dragSys = 0;
    uniedit_tsys   = NULL;
@@ -395,6 +408,32 @@ static void uniedit_btnEdit( unsigned int wid_unused, char *unused )
 }
 
 
+/* @brief Renders important map stuff.
+ */
+void uniedit_renderMap( double bx, double by, double w, double h, double x, double y, double r )
+{
+   /* background */
+   gl_renderRect( bx, by, w, h, &cBlack );
+
+   map_renderDecorators( x, y, 1, 1. );
+
+   /* Render faction disks. */
+   map_renderFactionDisks( x, y, r, 1, 1. );
+
+   /* Render environment stuff. */
+   map_renderSystemEnvironment( x, y, 1, 1. );
+
+   /* Render jump paths. */
+   map_renderJumps( x, y, 1 );
+
+   /* Render systems. */
+   map_renderSystems( bx, by, x, y, w, h, r, 1 );
+
+   /* Render system names. */
+   map_renderNames( bx, by, x, y, w, h, 1, 1. );
+}
+
+
 /**
  * @brief System editor custom widget rendering.
  */
@@ -409,7 +448,7 @@ static void uniedit_render( double bx, double by, double w, double h, void *data
    map_renderParams( bx, by, uniedit_xpos, uniedit_ypos, w, h, uniedit_zoom, &x, &y, &r );
 
    /* Render map stuff. */
-   sysedit_renderMap( bx, by, w, h, x, y, r );
+   uniedit_renderMap( bx, by, w, h, x, y, r );
 
    /* Render the selected system selections. */
    for (i=0; i<uniedit_nsys; i++) {
@@ -420,12 +459,27 @@ static void uniedit_render( double bx, double by, double w, double h, void *data
 }
 
 
+static char getValCol( double val )
+{
+   if (val > 0.)
+      return 'g';
+   else if (val < 0.)
+      return 'r';
+   return '0';
+}
+
+
 /**
  * @brief Renders the overlay.
  */
 static void uniedit_renderOverlay( double bx, double by, double bw, double bh, void* data )
 {
-   double x, y;
+   double x,y, mx,my, sx,sy;
+   int i, j, k, l, f;
+   double value, base, bonus;
+   char buf[STRMAX] = {'\0'};
+   StarSystem *sys, *cur;
+   Planet *pnt;
    (void) bw;
    (void) bh;
    (void) data;
@@ -437,6 +491,51 @@ static void uniedit_renderOverlay( double bx, double by, double bw, double bh, v
       toolkit_drawAltText( x, y, _("Click to add a new system"));
    else if (uniedit_mode == UNIEDIT_JUMP)
       toolkit_drawAltText( x, y, _("Click to toggle jump route"));
+   else if (uniedit_viewmode == UNIEDIT_VIEW_PRESENCE) {
+
+      f = uniedit_view_faction;
+      if (f < 0)
+         return;
+
+      mx = uniedit_mx - bw/2 - uniedit_xpos;
+      my = uniedit_my - bh/2 - uniedit_ypos;
+
+      for (i=0; i<array_size(systems_stack); i++) {
+         sys = system_getIndex(i);
+         sx = sys->pos.x * uniedit_zoom;
+         sy = sys->pos.y * uniedit_zoom;
+         if ((pow2(sx-mx)+pow2(sy-my)) > pow2(15.))
+            continue;
+
+         value = system_getPresenceFull( sys, f, &base, &bonus );
+         l = scnprintf( buf, sizeof(buf), "%s - %s [#%c%.0f#0 = #%c%.0f#0 + #%c%.0f#0]",
+               _(sys->name), faction_name(f), getValCol(value), value, getValCol(base), base, getValCol(bonus), bonus );
+
+         for (j=0; j<array_size(sys->planets); j++) {
+            pnt = sys->planets[j];
+            if (pnt->faction!=f)
+               continue;
+            l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s: #%c%.0f#0 (#%c%+.0f#0)",
+                  _(pnt->name), getValCol(pnt->presenceBase), pnt->presenceBase,
+                  getValCol(pnt->presenceBonus), pnt->presenceBonus );
+         }
+
+         for (k=0; k<array_size(sys->jumps); k++) {
+            cur = sys->jumps[k].target;
+            for (j=0; j<array_size(cur->planets); j++) {
+               pnt = cur->planets[j];
+               if (pnt->faction!=f)
+                  continue;
+               l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s (%s): #%c%.0f#0 (#%c%+.0f#0)",
+                     _(pnt->name), _(cur->name), getValCol(pnt->presenceBase), pnt->presenceBase*0.5,
+                     getValCol(pnt->presenceBonus), pnt->presenceBonus*0.5 );
+            }
+         }
+
+         toolkit_drawAltText( x, y, buf);
+         return;
+      }
+   }
 }
 
 /**
@@ -477,77 +576,75 @@ static int uniedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
             return 0;
 
          /* selecting star system */
-         else {
-            mx -= w/2 - uniedit_xpos;
-            my -= h/2 - uniedit_ypos;
+         mx -= w/2 - uniedit_xpos;
+         my -= h/2 - uniedit_ypos;
 
-            if (uniedit_mode == UNIEDIT_NEWSYS) {
-               uniedit_newSys( mx, my );
-               uniedit_mode = UNIEDIT_DEFAULT;
-               return 1;
-            }
+         if (uniedit_mode == UNIEDIT_NEWSYS) {
+            uniedit_newSys( mx, my );
+            uniedit_mode = UNIEDIT_DEFAULT;
+            return 1;
+         }
 
-            for (i=0; i<array_size(systems_stack); i++) {
-               sys = system_getIndex( i );
+         for (i=0; i<array_size(systems_stack); i++) {
+            sys = system_getIndex( i );
 
-               /* get position */
-               x = sys->pos.x * uniedit_zoom;
-               y = sys->pos.y * uniedit_zoom;
+            /* get position */
+            x = sys->pos.x * uniedit_zoom;
+            y = sys->pos.y * uniedit_zoom;
 
-               if ((pow2(mx-x)+pow2(my-y)) < t) {
+            if ((pow2(mx-x)+pow2(my-y)) < t) {
 
-                  /* Try to find in selected systems - begin drag move. */
-                  for (i=0; i<uniedit_nsys; i++) {
-                     /* Must match. */
-                     if (uniedit_sys[i] != sys)
-                        continue;
+               /* Try to find in selected systems - begin drag move. */
+               for (i=0; i<uniedit_nsys; i++) {
+                  /* Must match. */
+                  if (uniedit_sys[i] != sys)
+                     continue;
 
-                     /* Detect double click to open system. */
-                     if ((SDL_GetTicks() - uniedit_dragTime < UNIEDIT_DRAG_THRESHOLD*2)
-                           && (uniedit_moved < UNIEDIT_MOVE_THRESHOLD)) {
-                        if (uniedit_nsys == 1) {
-                           sysedit_open( uniedit_sys[0] );
-                           return 1;
-                        }
+                  /* Detect double click to open system. */
+                  if ((SDL_GetTicks() - uniedit_dragTime < UNIEDIT_DRAG_THRESHOLD*2)
+                        && (uniedit_moved < UNIEDIT_MOVE_THRESHOLD)) {
+                     if (uniedit_nsys == 1) {
+                        sysedit_open( uniedit_sys[0] );
+                        return 1;
                      }
-
-                     /* Handle normal click. */
-                     if (uniedit_mode == UNIEDIT_DEFAULT) {
-                        uniedit_dragSys   = 1;
-                        uniedit_tsys      = sys;
-
-                        /* Check modifier. */
-                        if (mod & (KMOD_LCTRL | KMOD_RCTRL))
-                           uniedit_tadd      = 0;
-                        else
-                           uniedit_tadd      = -1;
-                        uniedit_dragTime  = SDL_GetTicks();
-                        uniedit_moved     = 0;
-                     }
-                     return 1;
                   }
 
+                  /* Handle normal click. */
                   if (uniedit_mode == UNIEDIT_DEFAULT) {
-                     /* Add the system if not selected. */
-                     if (mod & (KMOD_LCTRL | KMOD_RCTRL))
-                        uniedit_selectAdd( sys );
-                     else {
-                        uniedit_deselect();
-                        uniedit_selectAdd( sys );
-                     }
-                     uniedit_tsys      = NULL;
-
-                     /* Start dragging anyway. */
                      uniedit_dragSys   = 1;
+                     uniedit_tsys      = sys;
+
+                     /* Check modifier. */
+                     if (mod & (KMOD_LCTRL | KMOD_RCTRL))
+                        uniedit_tadd      = 0;
+                     else
+                        uniedit_tadd      = -1;
                      uniedit_dragTime  = SDL_GetTicks();
                      uniedit_moved     = 0;
                   }
-                  else if (uniedit_mode == UNIEDIT_JUMP) {
-                     uniedit_toggleJump( sys );
-                     uniedit_mode = UNIEDIT_DEFAULT;
-                  }
                   return 1;
                }
+
+               if (uniedit_mode == UNIEDIT_DEFAULT) {
+                  /* Add the system if not selected. */
+                  if (mod & (KMOD_LCTRL | KMOD_RCTRL))
+                     uniedit_selectAdd( sys );
+                  else {
+                     uniedit_deselect();
+                     uniedit_selectAdd( sys );
+                  }
+                  uniedit_tsys      = NULL;
+
+                  /* Start dragging anyway. */
+                  uniedit_dragSys   = 1;
+                  uniedit_dragTime  = SDL_GetTicks();
+                  uniedit_moved     = 0;
+               }
+               else if (uniedit_mode == UNIEDIT_JUMP) {
+                  uniedit_toggleJump( sys );
+                  uniedit_mode = UNIEDIT_DEFAULT;
+               }
+               return 1;
             }
 
             /* Start dragging. */
@@ -625,7 +722,7 @@ static int uniedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
  *
  *    @return 1 if system name is already in use.
  */
-static int uniedit_checkName( char *name )
+static int uniedit_checkName( const char *name )
 {
    int i;
 
