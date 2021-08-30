@@ -115,6 +115,10 @@ local function equip_zalek( p, opt_params )
       cores = ecores.get( p, { all="elite" } )
    end
 
+   -- Set some meta-data
+   local mem = p:memory()
+   mem.equip = { type="zalek", level="elite" }
+
    -- Try to equip
    return optimize.optimize( p, cores, zalek_outfits, params )
 end

@@ -89,6 +89,10 @@ local function equip_thurion( p, opt_params )
    -- See cores
    cores = ecores.get( p, { all="elite" } )
 
+   -- Set some meta-data
+   local mem = p:memory()
+   mem.equip = { type="thurion", level="elite" }
+
    -- Try to equip
    return optimize.optimize( p, cores, thurion_outfits, params )
 end

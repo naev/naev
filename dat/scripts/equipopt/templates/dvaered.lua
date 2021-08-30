@@ -78,9 +78,9 @@ local function equip_dvaered( p, opt_params )
    local sname = p:ship():nameRaw()
    --if dvaered_skip[sname] then return end
 
-   -- Choose parameters and make Za'lekish
+   -- Choose parameters and make Dvaeredish
    local params = eparams.choose( p )
-   -- Prefer to use the Za'lek utilities
+   -- Prefer to use the Dvaered utilities
    params.prefer["Cyclic Combat AI"] = 100
    params.prefer["Milspec Impacto-Plastic Coating"] = 100
    params.type_range["Bolt Weapon"] = { min = 1 }
@@ -103,6 +103,10 @@ local function equip_dvaered( p, opt_params )
    else
       cores = ecores.get( p, { hulls="elite" } )
    end
+
+   -- Set some pilot meta-data
+   local mem = p:memory()
+   mem.equip = { type="dvaered", level="elite" }
 
    -- Try to equip
    return optimize.optimize( p, cores, dvaered_outfits, params )

@@ -132,6 +132,10 @@ local function equip_empire( p, opt_params )
       cores = ecores.get( p, { all="elite" } )
    end
 
+   -- Set some pilot meta-data
+   local mem = p:memory()
+   mem.equip = { type="empire", level="elite" }
+
    -- Try to equip
    return optimize.optimize( p, cores, emp_out, params )
 end

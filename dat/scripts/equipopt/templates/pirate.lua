@@ -115,6 +115,9 @@ local function equip_pirate( p, opt_params )
       cores = ecores.get( p, { all=pirate_class } )
    end
 
+   local mem = p:memory()
+   mem.equip = { type="pirate", level="standard" }
+
    -- Try to equip
    return optimize.optimize( p, cores, pirate_outfits, params )
 end

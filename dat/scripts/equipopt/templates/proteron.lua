@@ -64,6 +64,10 @@ local function equip_proteron( p, opt_params )
    -- See cores
    cores = ecores.get( p, { all="elite" } )
 
+   -- Set some meta-data
+   local mem = p:memory()
+   mem.equip = { type="proteron", level="elite" }
+
    -- Try to equip
    return optimize.optimize( p, cores, proteron_outfits, params )
 end

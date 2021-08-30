@@ -88,6 +88,10 @@ local function equip_soromid( p, opt_params  )
       cores = ecores.get( p, { all="elite" } )
    end
 
+   -- Set some meta-data
+   local mem = p:memory()
+   mem.equip = { type="soromid", level="elite" }
+
    -- Try to equip
    return optimize.optimize( p, cores, soromid_outfits, params )
    -- TODO randomly change some bio plasma weapons to weaker ones

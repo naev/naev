@@ -22,6 +22,10 @@ local function equip_generic( p, opt_params, cores, outfits )
    local ocores = ecores.get( p, { all=cores } )
    local ooutfits = eoutfits[ outfits ].set
 
+   -- Set some pilot meta-data
+   local mem = p:memory()
+   mem.equip = { type="generic", level=cores } -- TODO should we use cores or outfits as a reference? :/
+
    -- Try to equip
    return optimize.optimize( p, ocores, ooutfits, params )
 end
