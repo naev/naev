@@ -95,7 +95,8 @@ typedef struct Ship_ {
    char* name;       /**< Ship name */
    char* base_type;  /**< Ship's base type, basically used for figuring out what ships are related. */
    ShipClass class;  /**< Ship class */
-   char *class_display; /**< Custom ship class. */
+   char *class_display;/**< Custom ship class, overrides class when displaying. */
+   int points;       /**< Number of points the ship costs (used for presence et al.) */
    int rarity;       /**< Rarity. */
 
    /* store stuff */
@@ -110,31 +111,31 @@ typedef struct Ship_ {
    double speed;     /**< Ship's max speed in "pixel/sec" */
 
    /* characteristics */
-   int crew;                /**< Crew members. */
-   double mass;             /**< Mass ship has. */
-   double cpu;              /**< Amount of CPU the ship has. */
-   int fuel;                /**< How much fuel by default. */
-   int fuel_consumption; /**< Fuel consumption by engine. */
-   double cap_cargo;        /**< Cargo capacity (in volume). */
-   double dt_default;      /**< Default/minimum time delta. */
+   int crew;            /**< Crew members. */
+   double mass;         /**< Mass ship has. */
+   double cpu;          /**< Amount of CPU the ship has. */
+   int fuel;            /**< How much fuel by default. */
+   int fuel_consumption;/**< Fuel consumption by engine. */
+   double cap_cargo;    /**< Cargo capacity (in volume). */
+   double dt_default;   /**< Default/minimum time delta. */
 
    /* health */
-   double armour;    /**< Maximum base armour in MJ. */
+   double armour;       /**< Maximum base armour in MJ. */
    double armour_regen; /**< Maximum armour regeneration in MJ/s. */
-   double shield;    /**< Maximum base shield in MJ. */
+   double shield;       /**< Maximum base shield in MJ. */
    double shield_regen; /**< Maximum shield regeneration in MJ/s. */
-   double energy;    /**< Maximum base energy in MJ. */
+   double energy;       /**< Maximum base energy in MJ. */
    double energy_regen; /**< Maximum energy regeneration in MJ/s. */
-   double dmg_absorb; /**< Damage absorption in per one [0:1] with 1 being 100% absorption. */
+   double dmg_absorb;   /**< Damage absorption in per one [0:1] with 1 being 100% absorption. */
 
    /* graphics */
-   Object *gfx_3d; /**< 3d model of the ship */
-   double gfx_3d_scale;/**< scale for 3d model of the ship */
-   glTexture *gfx_space; /**< Space sprite sheet. */
-   glTexture *gfx_engine; /**< Space engine glow sprite sheet. */
-   glTexture *gfx_target; /**< Targeting window graphic. */
-   glTexture *gfx_store; /**< Store graphic. */
-   char* gfx_comm;   /**< Name of graphic for communication. */
+   Object *gfx_3d;         /**< 3d model of the ship */
+   double gfx_3d_scale;    /**< scale for 3d model of the ship */
+   glTexture *gfx_space;   /**< Space sprite sheet. */
+   glTexture *gfx_engine;  /**< Space engine glow sprite sheet. */
+   glTexture *gfx_target;  /**< Targeting window graphic. */
+   glTexture *gfx_store;   /**< Store graphic. */
+   char* gfx_comm;         /**< Name of graphic for communication. */
    glTexture** gfx_overlays; /**< Array (array.h): Store overlay graphics. */
    ShipTrailEmitter* trail_emitters; /**< Trail emitters. */
 
@@ -148,17 +149,17 @@ typedef struct Ship_ {
    int sound;        /**< Sound motor uses. */
 
    /* outfits */
-   ShipOutfitSlot *outfit_structure; /**< Array (array.h): Outfit structure slots. */
-   ShipOutfitSlot *outfit_utility; /**< Array (array.h): Outfit utility slots. */
-   ShipOutfitSlot *outfit_weapon; /**< Array (array.h): Outfit weapons slots. */
+   ShipOutfitSlot *outfit_structure;/**< Array (array.h): Outfit structure slots. */
+   ShipOutfitSlot *outfit_utility;  /**< Array (array.h): Outfit utility slots. */
+   ShipOutfitSlot *outfit_weapon;   /**< Array (array.h): Outfit weapons slots. */
 
    /* mounts */
    double mangle;    /**< Mount angle to simplify mount calculations. */
 
    /* Statistics. */
-   char *desc_stats; /**< Ship statistics information. */
-   ShipStatList *stats; /**< Ship statistics properties. */
-   ShipStats stats_array; /**< Laid out stats for referencing purposes. */
+   char *desc_stats;       /**< Ship statistics information. */
+   ShipStatList *stats;    /**< Ship statistics properties. */
+   ShipStats stats_array;  /**< Laid out stats for referencing purposes. */
 } Ship;
 
 

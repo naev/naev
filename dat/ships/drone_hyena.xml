@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Drone (Hyena)">
- <rating>20</rating>
+ <points>20</points>
  <base_type>Drone</base_type>
  <GFX size="70">drone_hyena</GFX>
  <GUI>brushed</GUI>

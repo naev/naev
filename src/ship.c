@@ -709,7 +709,7 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
    if (temp->name == NULL)
       WARN( _("Ship in %s has invalid or no name"), SHIP_DATA_PATH );
 
-   /* Datat that must be loaded first. */
+   /* Data that must be loaded first. */
    node = parent->xmlChildrenNode;
    do { /* load all the data */
       xml_onlyNodes(node);
@@ -839,6 +839,7 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
       xmlr_strd(node,"license",temp->license);
       xmlr_strd(node,"fabricator",temp->fabricator);
       xmlr_strd(node,"description",temp->description);
+      xmlr_int(node,"points",temp->points);
       xmlr_int(node,"rarity",temp->rarity);
 
       if (xml_isNode(node,"trail_generator")) {
@@ -975,6 +976,7 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
    MELEMENT((temp->gfx_space==NULL) || (temp->gfx_comm==NULL),"GFX");
    MELEMENT(temp->gui==NULL,"GUI");
    MELEMENT(temp->class==SHIP_CLASS_NULL,"class");
+   MELEMENT(temp->points==0,"points");
    MELEMENT(temp->price==0,"price");
    MELEMENT(temp->dt_default==0.,"time_mod");
    MELEMENT(temp->fabricator==NULL,"fabricator");

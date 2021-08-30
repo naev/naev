@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Za'lek Light Drone">
- <rating>8</rating>
+ <points>8</points>
  <base_type>Za'lek Light Drone</base_type>
  <GFX size="40">zalek_drone_light</GFX>
  <GUI>brushed</GUI>

@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Llama">
- <rating>10</rating>
+ <points>10</points>
  <base_type>Llama</base_type>
  <GFX size="47">llama</GFX>
  <GUI>brushed</GUI>

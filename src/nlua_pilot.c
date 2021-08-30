@@ -507,8 +507,8 @@ static int pilotL_choosePoint( lua_State *L )
  */
 static int pilotL_add( lua_State *L )
 {
-   Ship *ship;
-   const char *shipname, *pilotname, *ai;
+   const Ship *ship;
+   const char *pilotname, *ai;
    int i;
    unsigned int p;
    double a, r;
@@ -531,19 +531,11 @@ static int pilotL_add( lua_State *L )
    a    = 0.;
 
    /* Parse first argument - Ship Name */
-   shipname = luaL_checkstring(L,1);
-
-   /* pull the fleet */
-   ship = NULL;
-   ship = ship_get( shipname );
-   if (ship == NULL) {
-      NLUA_ERROR(L,_("Ship '%s' not found!"), shipname);
-      return 0;
-   }
-   /* Get pilotname argument if provided. */
-   pilotname = luaL_optstring( L, 4, shipname );
+   ship = luaL_validship(L,1);
    /* Get faction from string or number. */
    lf = luaL_validfaction(L,2);
+   /* Get pilotname argument if provided. */
+   pilotname = luaL_optstring( L, 4, ship->name );
 
    /* Handle position/origin argument. */
    if (lua_isvector(L,3)) {

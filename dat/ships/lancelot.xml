@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Lancelot">
- <rating>30</rating>
+ <points>30</points>
  <base_type>Lancelot</base_type>
  <GFX size="56">lancelot</GFX>
  <GUI>brushed</GUI>

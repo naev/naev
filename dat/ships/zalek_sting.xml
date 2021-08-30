@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Za'lek Sting">
- <rating>55</rating>
+ <points>55</points>
  <base_type>Sting</base_type>
  <GFX sx="10" sy="10">sting</GFX>
  <rarity>2</rarity>
