@@ -9,7 +9,8 @@ local sshark      = ship.get("Shark")
 local sancestor   = ship.get("Ancestor")
 local slancelot   = ship.get("Lancelot")
 local svendetta   = ship.get("Vendetta")
-local sadmonsher  = ship.get("Admonisher")
+local sphalanx    = ship.get("Phalanx")
+local sadmonisher = ship.get("Admonisher")
 local sstarbridge = ship.get("Starbridge")
 local svigilance  = ship.get("Vigilance")
 local spacifier   = ship.get("Pacifier")
@@ -72,7 +73,7 @@ function spawn_bounty_hunter_sml ()
 end
 function spawn_bounty_hunter_med ()
    return spawn_bounty_hunter{
-      sadmonsher,
+      sadmonisher,
       sphalanx,
       sstarbridge,
       svigilance,
