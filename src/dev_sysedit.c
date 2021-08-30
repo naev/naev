@@ -677,6 +677,48 @@ static void sysedit_render( double bx, double by, double w, double h, void *data
       sysedit_renderAsteroidExclusion( x, y, aexcl, selected );
    }
 
+   /* Render safe lanes. */
+   SafeLane* safelanes = safelanes_get( -1, 0, sys );
+   for (i=0; i<array_size(safelanes); i++) {
+      SafeLane *sf = &safelanes[i];
+      Vector2d *posns[2];
+
+      for (j=0; j<2; j++) {
+         switch(sf->point_type[j]) {
+            case SAFELANE_LOC_PLANET:
+               Planet* pnt = planet_getIndex( sf->point_id[j] );
+               posns[j] = &pnt->pos;
+               break;
+            case SAFELANE_LOC_DEST_SYS:
+               JumpPoint* jp = jump_getTarget( system_getIndex( sf->point_id[j] ), sys );
+               posns[j] = &jp->pos;
+               break;
+            default:
+               ERR( _("Invalid vertex type.") );
+         }
+      }
+
+      glColour col;
+      col = *faction_colour( sf->faction );
+      col.a = 0.1;
+
+      /* Get positions and stuff. */
+      double x1, y1, x2, y2, ry, rx, r, rw, rh;
+      x1 = x + posns[0]->x * z;
+      y1 = y + posns[0]->y * z;
+      x2 = x + posns[1]->x * z;
+      y2 = y + posns[1]->y * z;
+      rx = x2-x1;
+      ry = y2-y1;
+      r  = atan2( ry, rx );
+      rw = MOD(rx,ry)/2.;
+      rh = 9.;
+
+      /* Render. */
+      glUseProgram(shaders.safelanes.program);
+      gl_renderShader( (x1+x2)/2., (y1+y2)/2., rw, rh, r, &shaders.safelanes, &col, 1 );
+   }
+
    /* Render cursor position. */
    gl_print( &gl_smallFont, bx + 5., by + 5.,
          &cWhite, "%.2f, %.2f",
