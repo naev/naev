@@ -152,9 +152,6 @@ static void sysedit_deselect (void);
 static void sysedit_selectAdd( Select_t *sel );
 static void sysedit_selectRm( Select_t *sel );
 
-/* VBO. */
-static gl_vbo *sysedit_vbo = NULL; /**< Map VBO. */
-
 /**
  * @brief Opens the system editor interface.
  */
@@ -163,9 +160,6 @@ void sysedit_open( StarSystem *sys )
    unsigned int wid;
    char buf[PATH_MAX];
    int i;
-
-   /* Create the VBO. */
-   sysedit_vbo = gl_vboCreateStream( sizeof(GLfloat) * 3*(2+4), NULL );
 
    /* Reconstructs the jumps - just in case. */
    systems_reconstructJumps();
@@ -273,10 +267,6 @@ static void sysedit_close( unsigned int wid, char *wgt )
 {
    /* Unload graphics. */
    space_gfxLoad( sysedit_sys );
-
-   /* Unload VBO */
-   gl_vboDestroy(sysedit_vbo);
-   sysedit_vbo = NULL;
 
    /* Remove selection. */
    sysedit_deselect();
@@ -600,6 +590,7 @@ static void sysedit_render( double bx, double by, double w, double h, void *data
    AsteroidExclusion *aexcl;
    double x,y, z;
    const glColour *c;
+   glColour col;
    int selected;
    Select_t sel;
 
@@ -698,7 +689,6 @@ static void sysedit_render( double bx, double by, double w, double h, void *data
          }
       }
 
-      glColour col;
       col = *faction_colour( sf->faction );
       col.a = 0.1;
 
@@ -765,7 +755,7 @@ static void sysedit_renderAsteroidExclusion( double bx, double by, AsteroidExclu
    tx = bx + aexcl->pos.x*z;
    ty = by + aexcl->pos.y*z;
    r = aexcl->radius * sysedit_zoom;
-   rr = r * sin(M_PI / 4);
+   rr = r * sin(M_PI / 4.);
 
    gl_drawCircle( tx, ty, r, &cRed, 0 );
    gl_renderCross( tx, ty, r, &cRed );
@@ -1780,7 +1770,7 @@ static void sysedit_btnTechEdit( unsigned int wid, char *unused )
 
 
 /**
- * @brief Generates the planet services list.
+ * @brief Generates the planet tech list.
  */
 static void sysedit_genTechList( unsigned int wid )
 {
