@@ -408,6 +408,38 @@ static void uniedit_btnEdit( unsigned int wid_unused, char *unused )
 }
 
 
+static void uniedit_renderFactionDisks( double x, double y, double r )
+{
+   int i;
+   const glColour *col;
+   glColour c;
+   StarSystem *sys;
+   double tx, ty, sr, presence;
+
+   col = faction_colour( uniedit_view_faction );
+   c.r = col->r;
+   c.g = col->g;
+   c.b = col->b;
+   c.a = 0.6;
+
+   for (i=0; i<array_size(systems_stack); i++) {
+      sys = system_getIndex( i );
+
+      tx = x + sys->pos.x*uniedit_zoom;
+      ty = y + sys->pos.y*uniedit_zoom;
+
+      presence = system_getPresence( sys, uniedit_view_faction );
+
+      /* draws the disk representing the faction */
+      sr = 5.*sqrt(presence) * uniedit_zoom * 0.5;
+
+      glUseProgram(shaders.factiondisk.program);
+      glUniform1f(shaders.factiondisk.r, r / sr );
+      gl_renderShader( tx, ty, sr, sr, 0., &shaders.factiondisk, &c, 1 );
+   }
+}
+
+
 /* @brief Renders important map stuff.
  */
 void uniedit_renderMap( double bx, double by, double w, double h, double x, double y, double r )
@@ -418,10 +450,14 @@ void uniedit_renderMap( double bx, double by, double w, double h, double x, doub
    map_renderDecorators( x, y, 1, 1. );
 
    /* Render faction disks. */
-   map_renderFactionDisks( x, y, r, 1, 1. );
+   if (uniedit_viewmode == UNIEDIT_VIEW_DEFAULT)
+      map_renderFactionDisks( x, y, r, 1, 1. );
+   else if ((uniedit_viewmode == UNIEDIT_VIEW_PRESENCE) && (uniedit_view_faction>=0))
+      uniedit_renderFactionDisks( x, y, r );
 
    /* Render environment stuff. */
-   map_renderSystemEnvironment( x, y, 1, 1. );
+   if (uniedit_viewmode == UNIEDIT_VIEW_DEFAULT)
+      map_renderSystemEnvironment( x, y, 1, 1. );
 
    /* Render jump paths. */
    map_renderJumps( x, y, 1 );
@@ -553,7 +589,7 @@ static int uniedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
    StarSystem *sys;
    SDL_Keymod mod;
 
-   t = 15.*15.; /* threshold */
+   t = pow2(15.); /* threshold */
 
    /* Handle modifiers. */
    mod = SDL_GetModState();
