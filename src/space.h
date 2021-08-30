@@ -91,45 +91,46 @@ typedef struct MapOverlayPos_ {
  * @brief Represents a planet.
  */
 typedef struct Planet_ {
-   int id; /**< Planet ID. */
-   char* name; /**< planet name */
-   Vector2d pos; /**< position in star system */
+   int id;        /**< Planet ID. */
+   char* name;    /**< planet name */
+   Vector2d pos;  /**< position in star system */
    double radius; /**< Radius of the planet. WARNING: lazy-loaded with gfx_space. */
 
    /* Planet details. */
-   char *class; /**< Planet type. Uses Star Trek classification system (https://stexpanded.fandom.com/wiki/Planet_classifications) */
-   int faction; /**< planet faction */
+   char *class;         /**< Planet type. Uses Star Trek classification system (https://stexpanded.fandom.com/wiki/Planet_classifications) */
+   int faction;         /**< planet faction */
    uint64_t population; /**< Population of the planet. */
 
    /* Asset details. */
-   double presenceAmount; /**< The amount of presence this asset exerts. */
-   double hide;           /**< The ewarfare hide value for an asset. */
-   int presenceRange; /**< The range of presence exertion of this asset. */
-   int real; /**< If the asset is tangible or not. */
+   double presenceBase; /**< The base amount of presence this asset exerts, dependent on other assets. */
+   double presenceBonus;/**< The bonus amount of presence this asset exerts, independent of other assets.. */
+   int presenceRange;   /**< The range of presence exertion of this asset. */
+   double hide;         /**< The ewarfare hide value for an asset. */
+   int real;            /**< If the asset is tangible or not. */
 
    /* Landing details. */
-   int can_land;      /**< Whether or not the player can land. */
-   int land_override; /**< Forcibly allows the player to either be able to land or not (+1 is land, -1 is not, 0 otherwise). */
-   char *land_func; /**< Landing function to execute. */
-   char *land_msg; /**< Message on landing. */
-   char *bribe_msg; /**< Bribe message. */
+   int can_land;        /**< Whether or not the player can land. */
+   int land_override;   /**< Forcibly allows the player to either be able to land or not (+1 is land, -1 is not, 0 otherwise). */
+   char *land_func;     /**< Landing function to execute. */
+   char *land_msg;      /**< Message on landing. */
+   char *bribe_msg;     /**< Bribe message. */
    char *bribe_ack_msg; /**< Bribe ACK message. */
-   credits_t bribe_price;   /**< Cost of bribing. */
-   int bribed; /**< If planet has been bribed. */
+   credits_t bribe_price;/**< Cost of bribing. */
+   int bribed;          /**< If planet has been bribed. */
 
    /* Landed details. */
-   char* description; /**< planet description */
-   char* bar_description; /**< spaceport bar description */
-   unsigned int services; /**< what services they offer */
-   Commodity **commodities; /**< array: what commodities they sell */
+   char* description;      /**< planet description */
+   char* bar_description;  /**< spaceport bar description */
+   unsigned int services;  /**< what services they offer */
+   Commodity **commodities;/**< array: what commodities they sell */
    CommodityPrice *commodityPrice; /**< array: the base cost of a commodity on this planet */
-   tech_group_t *tech; /**< Planet tech. */
+   tech_group_t *tech;     /**< Planet tech. */
 
    /* Graphics. */
-   glTexture* gfx_space; /**< graphic in space */
-   char *gfx_spaceName; /**< Name to load texture quickly with. */
-   char *gfx_spacePath; /**< Name of the gfx_space for saving purposes. */
-   char *gfx_exterior; /**< Don't actually load the texture */
+   glTexture* gfx_space;   /**< graphic in space */
+   char *gfx_spaceName;    /**< Name to load texture quickly with. */
+   char *gfx_spacePath;    /**< Name of the gfx_space for saving purposes. */
+   char *gfx_exterior;     /**< Don't actually load the texture */
    char *gfx_exteriorPath; /**< Name of the gfx_exterior for saving purposes. */
 
    /* Misc. */
@@ -165,11 +166,13 @@ typedef struct StarSystem_ StarSystem;
  * @brief Represents presence in a system
  */
 typedef struct SystemPresence_ {
-   int faction; /**< Faction of this presence. */
-   double value; /**< Amount of presence. */
-   double curUsed; /**< Presence currently used. */
-   double timer; /**< Current faction timer. */
-   int disabled; /**< Whether or not spawning is disabled for this presence. */
+   int faction;      /**< Faction of this presence. */
+   double base;      /**< Base presence value. */
+   double bonus;     /**< Bonus presence value. */
+   double value;     /**< Amount of presence (base+bonus). */
+   double curUsed;   /**< Presence currently used. */
+   double timer;     /**< Current faction timer. */
+   int disabled;     /**< Whether or not spawning is disabled for this presence. */
 } SystemPresence;
 
 
@@ -407,7 +410,7 @@ void planets_render (void);
  * Presence stuff.
  */
 void system_presenceCleanupAll( void );
-void system_addPresence( StarSystem *sys, int faction, double amount, int range );
+void system_presenceAddAsset( StarSystem *sys, const Planet *pnt );
 double system_getPresence( const StarSystem *sys, int faction );
 void system_addAllPlanetsPresence( StarSystem *sys );
 void space_reconstructPresences( void );

@@ -2034,7 +2034,8 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent, Commodity **st
       else if (xml_isNode(node, "presence")) {
          cur = node->children;
          do {
-            xmlr_float(cur, "value", planet->presenceAmount);
+            xmlr_float(cur, "base", planet->presenceBase);
+            xmlr_float(cur, "bonus", planet->presenceBonus);
             xmlr_int(cur, "range", planet->presenceRange);
             if (xml_isNode(cur,"faction")) {
                flags |= FLAG_FACTIONSET;
@@ -2226,7 +2227,7 @@ int system_addPlanet( StarSystem *sys, const char *planetname )
 
    /* Add the presence. */
    if (!systems_loading) {
-      system_addPresence( sys, planet->faction, planet->presenceAmount, planet->presenceRange );
+      system_presenceAddAsset( sys, planet );
       system_setFaction(sys);
    }
 
@@ -2272,7 +2273,7 @@ int system_rmPlanet( StarSystem *sys, const char *planetname )
    array_erase( &sys->planetsid, &sys->planetsid[i], &sys->planetsid[i+1] );
 
    /* Remove the presence. */
-   system_addPresence( sys, planet->faction, -(planet->presenceAmount), planet->presenceRange );
+   space_reconstructPresences(); /* TODO defer this if removing multiple planets at once. */
 
    /* Remove from the name stack thingy. */
    found = 0;
@@ -3880,15 +3881,18 @@ static int getPresenceIndex( StarSystem *sys, int faction )
  * @brief Adds (or removes) some presence to a system.
  *
  *    @param sys Pointer to the system to add to or remove from.
- *    @param faction The index of the faction to alter presence for.
- *    @param amount The amount of presence to add (negative to subtract).
- *    @param range The range of spill of the presence.
+ *    @param pnt Asset to add presence of.
  */
-void system_addPresence( StarSystem *sys, int faction, double amount, int range )
+void system_presenceAddAsset( StarSystem *sys, const Planet *pnt )
 {
    int i, x, curSpill;
    Queue q, qn;
    StarSystem *cur;
+   double spillfactor;
+   int faction = pnt->faction;
+   double base = pnt->presenceBase;
+   double bonus = pnt->presenceBonus;
+   double range = pnt->presenceRange;
 
    /* Check for NULL and display a warning. */
    if (sys == NULL) {
@@ -3896,17 +3900,19 @@ void system_addPresence( StarSystem *sys, int faction, double amount, int range 
       return;
    }
 
-   /* Check that we have a valid faction. (-1 == bobbens == invalid)*/
+   /* Check that we have a valid faction. */
    if (faction_isFaction(faction) == 0)
       return;
 
    /* Check that we're actually adding any. */
-   if (amount == 0)
+   if ((base == 0.) && (bonus == 0.))
       return;
 
    /* Add the presence to the current system. */
    i = getPresenceIndex(sys, faction);
-   sys->presence[i].value += amount;
+   sys->presence[i].base   = MAX( sys->presence[i].base, base );
+   sys->presence[i].bonus += bonus;
+   sys->presence[i].value  = sys->presence[i].base + sys->presence[i].bonus;
 
    /* If there's no range, we're done here. */
    if (range < 1)
@@ -3954,7 +3960,10 @@ void system_addPresence( StarSystem *sys, int faction, double amount, int range 
 
       /* Spill some presence. */
       x = getPresenceIndex(cur, faction);
-      cur->presence[x].value += amount / (2 + curSpill);
+      spillfactor = 1. / (2. + (double)curSpill);
+      cur->presence[x].base   = MAX( cur->presence[x].base, base * spillfactor );
+      cur->presence[x].bonus += bonus * spillfactor;
+      cur->presence[x].value  = cur->presence[x].base + cur->presence[x].bonus;
 
       /* Check to see if we've finished this range and grab the next queue. */
       if (q_isEmpty(q)) {
@@ -4021,7 +4030,7 @@ void system_addAllPlanetsPresence( StarSystem *sys )
    }
 
    for (i=0; i<array_size(sys->planets); i++)
-      system_addPresence(sys, sys->planets[i]->faction, sys->planets[i]->presenceAmount, sys->planets[i]->presenceRange);
+      system_presenceAddAsset(sys, sys->planets[i] );
 }
 
 

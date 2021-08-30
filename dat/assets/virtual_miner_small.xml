@@ -3,7 +3,8 @@
  <virtual/>
  <presence>
   <faction>Miner</faction>
-  <value>80.000000</value>
+  <base>40.000000</base>
+  <bonus>40.000000</bonus>
   <range>2</range>
  </presence>
 </asset>

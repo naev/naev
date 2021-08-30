@@ -317,9 +317,6 @@ static void sysedit_editPntClose( unsigned int wid, char *unused )
 
    p = sysedit_sys->planets[ sysedit_select[0].u.planet ];
 
-   /* Remove the old presence. */
-   system_addPresence(sysedit_sys, p->faction, -p->presenceAmount, p->presenceRange);
-
    p->population = (uint64_t)strtoull( window_getInput( sysedit_widEdit, "inpPop" ), 0, 10);
 
    inp = window_getInput( sysedit_widEdit, "inpClass" );
@@ -338,12 +335,13 @@ static void sysedit_editPntClose( unsigned int wid, char *unused )
    else
       p->land_func = strdup( inp );
 
-   p->presenceAmount = atof(window_getInput( sysedit_widEdit, "inpPresence" ));
+   p->presenceBase   = atof(window_getInput( sysedit_widEdit, "inpPresenceBase" ));
+   p->presenceBonus  = atof(window_getInput( sysedit_widEdit, "inpPresenceBonus" ));
    p->presenceRange  = atoi(window_getInput( sysedit_widEdit, "inpPresenceRange" ));
    p->hide           = atof(window_getInput( sysedit_widEdit, "inpHide" ));
 
-   /* Add the new presence. */
-   system_addPresence(sysedit_sys, p->faction, p->presenceAmount, p->presenceRange);
+   /* Have to recompute presences if stuff changed. */
+   space_reconstructPresences();
 
    if (conf.devautosave)
       dpl_savePlanet( p );
@@ -1308,13 +1306,21 @@ static void sysedit_editPnt( void )
 
    /* Second row. */
    x = 20;
-   s = _("Presence");
+   s = _("Base Presence");
    l = gl_printWidthRaw( NULL, s );
-   window_addText( wid, x, y, l, 20, 1, "txtPresence",
+   window_addText( wid, x, y, l, 20, 1, "txtPresenceBase",
          NULL, NULL, s );
-   window_addInput( wid, x += l + 5, y, 60, 20, "inpPresence", 5, 1, NULL );
-   window_setInputFilter( wid, "inpPresence", INPUT_FILTER_NUMBER );
+   window_addInput( wid, x += l + 5, y, 60, 20, "inpPresenceBase", 5, 1, NULL );
+   window_setInputFilter( wid, "inpPresenceBase", INPUT_FILTER_NUMBER );
    x += 60 + 10;
+
+   s = _("Bonus Presence");
+   l = gl_printWidthRaw( NULL, s );
+   window_addText( wid, x, y, l, 20, 1, "txtPresenceBonus",
+         NULL, NULL, s );
+   window_addInput( wid, x += l + 5, y, 30, 20, "inpPresenceBonus", 1, 1, NULL );
+   window_setInputFilter( wid, "inpPresenceBonus", INPUT_FILTER_NUMBER );
+   x += 30 + 10;
 
    s = _("Range");
    l = gl_printWidthRaw( NULL, s );
@@ -1356,8 +1362,10 @@ static void sysedit_editPnt( void )
    snprintf( buf, sizeof(buf), "%s", p->class );
    window_setInput( wid, "inpClass", buf );
    window_setInput( wid, "inpLand", p->land_func );
-   snprintf( buf, sizeof(buf), "%g", p->presenceAmount );
-   window_setInput( wid, "inpPresence", buf );
+   snprintf( buf, sizeof(buf), "%g", p->presenceBase );
+   window_setInput( wid, "inpPresenceBase", buf );
+   snprintf( buf, sizeof(buf), "%g", p->presenceBonus );
+   window_setInput( wid, "inpPresenceBonus", buf );
    snprintf( buf, sizeof(buf), "%d", p->presenceRange );
    window_setInput( wid, "inpPresenceRange", buf );
    snprintf( buf, sizeof(buf), "%g", p->hide );

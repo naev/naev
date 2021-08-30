@@ -3,7 +3,8 @@
  <virtual/>
  <presence>
   <faction>Trader</faction>
-  <value>50.000000</value>
+  <base>25.000000</base>
+  <bonus>25.000000</bonus>
   <range>1</range>
  </presence>
 </asset>

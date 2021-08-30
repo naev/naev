@@ -10,7 +10,8 @@
  </GFX>
  <presence>
   <faction>Thurion</faction>
-  <value>600.000000</value>
+  <base>300.000000</base>
+  <bonus>300.000000</bonus>
   <range>2</range>
  </presence>
  <general>

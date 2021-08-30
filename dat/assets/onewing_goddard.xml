@@ -10,7 +10,8 @@
  </GFX>
  <presence>
   <faction>Derelict</faction>
-  <value>0.000000</value>
+  <base>0.000000</base>
+  <bonus>0.000000</bonus>
   <range>0</range>
  </presence>
  <general>

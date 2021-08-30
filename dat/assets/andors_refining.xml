@@ -10,7 +10,8 @@
  </GFX>
  <presence>
   <faction>Za'lek</faction>
-  <value>25.000000</value>
+  <base>12.500000</base>
+  <bonus>12.500000</bonus>
   <range>0</range>
  </presence>
  <general>

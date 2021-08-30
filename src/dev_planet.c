@@ -79,7 +79,8 @@ int dpl_savePlanet( const Planet *p )
    if (p->faction >= 0) {
       xmlw_startElem( writer, "presence" );
       xmlw_elem( writer, "faction", "%s", faction_name( p->faction ) );
-      xmlw_elem( writer, "value", "%f", p->presenceAmount );
+      xmlw_elem( writer, "base", "%f", p->presenceBase );
+      xmlw_elem( writer, "bonus", "%f", p->presenceBonus );
       xmlw_elem( writer, "range", "%d", p->presenceRange );
       xmlw_endElem( writer );
    }

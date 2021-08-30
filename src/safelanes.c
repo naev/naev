@@ -356,7 +356,7 @@ static void safelanes_initStacks_vertex (void)
    for (system=0; system<array_size(systems_stack); system++) {
       for (i=0; i<array_size(systems_stack[system].planets); i++) {
          p = systems_stack[system].planets[i];
-         if (p->real && p->presenceAmount) {
+         if (p->real && (p->presenceBase!=0. || p->presenceBonus!=0.)) {
             Vertex v = {.system = system, .type = VERTEX_PLANET, .index = i};
             array_push_back( &tmp_planet_indices, array_size(vertex_stack) );
             array_push_back( &vertex_stack, v );
@@ -658,7 +658,7 @@ static void safelanes_initPPl (void)
    for (i=0; i<np; i++) {
       sys = vertex_stack[tmp_planet_indices[i]].system;
       pnt = system_getIndex( sys )->planets[vertex_stack[tmp_planet_indices[i]].index];
-      pres = pnt->presenceAmount;
+      pres = pnt->presenceBase + pnt->presenceBonus; /* TODO distinguish between base and bonus? */
       fi = FACTION_ID_TO_INDEX( pnt->faction );
       if (fi < 0)
          continue;

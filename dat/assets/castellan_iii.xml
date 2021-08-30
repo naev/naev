@@ -10,7 +10,8 @@
  </GFX>
  <presence>
   <faction>Dvaered</faction>
-  <value>125.000000</value>
+  <base>62.500000</base>
+  <bonus>62.500000</bonus>
   <range>2</range>
  </presence>
  <general>
