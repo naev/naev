@@ -17,125 +17,125 @@ end
 --]]
 -- STANDARD SYSTEMS
 local ssys = {}
-ssys["Scout"] = function( heavy )
+ssys["Scout"] = function ()
    return "Unicorp PT-16 Core System"
 end
-ssys["Interceptor"] = function( heavy )
+ssys["Interceptor"] = function ()
    return "Unicorp PT-16 Core System"
 end
-ssys["Fighter"] = function( heavy )
+ssys["Fighter"] = function ()
    return "Unicorp PT-68 Core System"
 end
-ssys["Bomber"] = function( heavy )
+ssys["Bomber"] = function ()
    return "Unicorp PT-68 Core System"
 end
-ssys["Corvette"] = function( heavy )
+ssys["Corvette"] = function ()
    return "Unicorp PT-200 Core System"
 end
-ssys["Destroyer"] = function( heavy )
+ssys["Destroyer"] = function ()
    return "Unicorp PT-310 Core System"
 end
-ssys["Cruiser"] = function( heavy )
+ssys["Cruiser"] = function ()
    return "Unicorp PT-500 Core System"
 end
-ssys["Battleship"] = function( heavy )
+ssys["Battleship"] = function ()
    return "Unicorp PT-2200 Core System"
 end
-ssys["Carrier"] = function( heavy )
+ssys["Carrier"] = function ()
    return "Unicorp PT-2200 Core System"
 end
 -- Civilian
-ssys["Yacht"] = function( heavy )
+ssys["Yacht"] = function ()
    return "Unicorp PT-16 Core System"
 end
-ssys["Courier"] = function( heavy )
+ssys["Courier"] = function ()
    return "Unicorp PT-68 Core System"
 end
-ssys["Freighter"] = function( heavy )
+ssys["Freighter"] = function ()
    return "Unicorp PT-310 Core System"
 end
 ssys["Armoured Transport"] = ssys["Freighter"]
-ssys["Bulk Freighter"] = function( heavy )
+ssys["Bulk Freighter"] = function ()
    return "Unicorp PT-500 Core System"
 end
 
 -- STANDARD HULLS
 local shul = {}
-shul["Scout"] = function( heavy )
+shul["Scout"] = function ()
    return "Unicorp D-2 Light Plating"
 end
-shul["Interceptor"] = function( heavy )
+shul["Interceptor"] = function ()
    return "Unicorp D-2 Light Plating"
 end
-shul["Fighter"] = function( heavy )
+shul["Fighter"] = function ()
    return "Unicorp D-4 Light Plating"
 end
-shul["Bomber"] = function( heavy )
+shul["Bomber"] = function ()
    return "Unicorp D-4 Light Plating"
 end
-shul["Corvette"] = function( heavy )
+shul["Corvette"] = function ()
    return "Unicorp D-12 Medium Plating"
 end
-shul["Destroyer"] = function( heavy )
+shul["Destroyer"] = function ()
    return "Unicorp D-24 Medium Plating"
 end
-shul["Cruiser"] = function( heavy )
+shul["Cruiser"] = function ()
    return "Unicorp D-48 Heavy Plating"
 end
-shul["Battleship"] = function( heavy )
+shul["Battleship"] = function ()
    return "Unicorp D-68 Heavy Plating"
 end
-shul["Carrier"] = function( heavy )
+shul["Carrier"] = function ()
    return "Unicorp D-68 Heavy Plating"
 end
 -- Civilian
-shul["Yacht"] = function( heavy )
+shul["Yacht"] = function ()
    return choose_one{ "Unicorp D-2 Light Plating", "S&K Small Cargo Hull" }
 end
-shul["Courier"] = function( heavy )
+shul["Courier"] = function ()
    return choose_one{ "Unicorp D-4 Light Plating", "S&K Small Cargo Hull" }
 end
-shul["Freighter"] = function( heavy )
+shul["Freighter"] = function ()
    return choose_one{ "Unicorp D-24 Medium Plating", "S&K Medium Cargo Hull" }
 end
 shul["Armoured Transport"] = shul["Freighter"]
 
 -- STANDARD ENGINES
 local seng = {}
-seng["Scout"] = function( heavy )
+seng["Scout"] = function ()
    return "Nexus Dart 150 Engine"
 end
-seng["Interceptor"] = function( heavy )
+seng["Interceptor"] = function ()
    return "Nexus Dart 150 Engine"
 end
-seng["Fighter"] = function( heavy )
+seng["Fighter"] = function ()
    return "Unicorp Hawk 350 Engine"
 end
-seng["Bomber"] = function( heavy )
+seng["Bomber"] = function ()
    return "Unicorp Hawk 350 Engine"
 end
-seng["Corvette"] = function( heavy )
+seng["Corvette"] = function ()
    return "Nexus Arrow 700 Engine"
 end
-seng["Destroyer"] = function( heavy )
+seng["Destroyer"] = function ()
    return "Unicorp Falcon 1300 Engine"
 end
-seng["Cruiser"] = function( heavy )
+seng["Cruiser"] = function ()
    return "Nexus Bolt 3500 Engine"
 end
-seng["Battleship"] = function( heavy )
+seng["Battleship"] = function ()
    return "Unicorp Eagle 7000 Engine"
 end
-seng["Carrier"] = function( heavy )
+seng["Carrier"] = function ()
    return "Unicorp Eagle 7000 Engine"
 end
-seng["Yacht"] = function( heavy )
+seng["Yacht"] = function ()
    return "Nexus Dart 150 Engine"
 end
-seng["Courier"] = function( heavy )
+seng["Courier"] = function ()
    return "Unicorp Hawk 350 Engine"
 end
-seng["Freighter"] = function( heavy )
+seng["Freighter"] = function ()
    return choose_one{ "Unicorp Falcon 1300 Engine", "Melendez Buffalo XL Engine" }
 end
 seng["Armoured Transport"] = seng["Freighter"]
@@ -153,107 +153,107 @@ cores.standard = {
 --]]
 -- ELITE SYSTEMS
 local esys = {}
-esys["Scout"] = function( heavy )
+esys["Scout"] = function ()
    return "Milspec Orion 2301 Core System"
 end
-esys["Interceptor"] = function( heavy )
+esys["Interceptor"] = function ()
    return choose_one{ "Milspec Orion 2301 Core System", "Milspec Thalos 2202 Core System" }
 end
-esys["Fighter"] = function( heavy )
+esys["Fighter"] = function ()
    return choose_one{ "Milspec Orion 3701 Core System", "Milspec Thalos 3602 Core System" }
 end
-esys["Bomber"] = function( heavy )
+esys["Bomber"] = function ()
    return "Milspec Orion 3701 Core System"
 end
-esys["Corvette"] = function( heavy )
+esys["Corvette"] = function ()
    return choose_one{ "Milspec Orion 4801 Core System", "Milspec Thalos 4702 Core System" }
 end
-esys["Destroyer"] = function( heavy )
+esys["Destroyer"] = function ()
    return choose_one{ "Milspec Orion 5501 Core System", "Milspec Thalos 5402 Core System" }
 end
-esys["Cruiser"] = function( heavy )
+esys["Cruiser"] = function ()
    return choose_one{ "Milspec Orion 9901 Core System", "Milspec Thalos 9802 Core System" }
 end
-esys["Battleship"] = function( heavy )
+esys["Battleship"] = function ()
    return choose_one{ "Milspec Orion 8601 Core System", "Milspec Thalos 8502 Core System" }
 end
-esys["Carrier"] = function( heavy )
+esys["Carrier"] = function ()
    return choose_one{ "Milspec Orion 9901 Core System", "Milspec Thalos 9802 Core System" }
 end
 -- Civilian
 esys["Yacht"] = ssys["Yacht"]
 esys["Courier"] = ssys["Courier"]
 esys["Freighter"] = ssys["Freighter"]
-esys["Armoured Transport"] = function( heavy )
+esys["Armoured Transport"] = function ()
    return "Milspec Orion 5501 Core System"
 end
 esys["Bulk Freighter"] = ssys["Bulk Freighter"]
 
 -- ELITE HULLS
 local ehul = {}
-ehul["Scout"] = function( heavy )
+ehul["Scout"] = function ()
    return choose_one{ "Nexus Light Stealth Plating", "S&K Ultralight Combat Plating" }
 end
-ehul["Interceptor"] = function( heavy )
+ehul["Interceptor"] = function ()
    return choose_one{ "Nexus Light Stealth Plating", "S&K Ultralight Combat Plating" }
 end
-ehul["Fighter"] = function( heavy )
+ehul["Fighter"] = function ()
    return choose_one{ "Nexus Light Stealth Plating", "S&K Light Combat Plating" }
 end
-ehul["Bomber"] = function( heavy )
+ehul["Bomber"] = function ()
    return choose_one{ "Nexus Light Stealth Plating", "S&K Light Combat Plating" }
 end
-ehul["Corvette"] = function( heavy )
+ehul["Corvette"] = function ()
    return choose_one{ "Nexus Medium Stealth Plating", "S&K Medium Combat Plating" }
 end
-ehul["Destroyer"] = function( heavy )
+ehul["Destroyer"] = function ()
    return "S&K Medium-Heavy Combat Plating"
 end
-ehul["Cruiser"] = function( heavy )
+ehul["Cruiser"] = function ()
    return choose_one{ "Unicorp D-48 Heavy Plating", "Unicorp D-68 Heavy Plating" }
 end
-ehul["Battleship"] = function( heavy )
+ehul["Battleship"] = function ()
    return "S&K Superheavy Combat Plating"
 end
-ehul["Carrier"] = function( heavy )
+ehul["Carrier"] = function ()
    return "S&K Superheavy Combat Plating"
 end
 -- Civilian
 ehul["Yacht"] = shul["Yacht"]
 ehul["Courier"] = shul["Courier"]
 ehul["Freighter"] = shul["Freighter"]
-ehul["Armoured Transport"] = function( heavy )
+ehul["Armoured Transport"] = function ()
    return choose_one{ "Unicorp D-24 Medium Plating", "Nexus Medium Stealth Plating" }
 end
 ehul["Bulk Freighter"] = shul["Bulk Freighter"]
 
 -- ELITE ENGINES
 local eeng = {}
-eeng["Scout"] = function( heavy )
+eeng["Scout"] = function ()
    return "Tricon Zephyr Engine"
 end
-eeng["Interceptor"] = function( heavy )
+eeng["Interceptor"] = function ()
    return "Tricon Zephyr Engine"
 end
-eeng["Fighter"] = function( heavy )
+eeng["Fighter"] = function ()
    return "Tricon Zephyr II Engine"
 end
-eeng["Bomber"] = function( heavy )
+eeng["Bomber"] = function ()
    return "Tricon Zephyr II Engine"
 end
-eeng["Corvette"] = function( heavy )
+eeng["Corvette"] = function ()
    return "Tricon Cyclone Engine"
 end
-eeng["Destroyer"] = function( heavy )
+eeng["Destroyer"] = function ()
    return choose_one{ "Tricon Cyclone II Engine", "Melendez Buffalo XL Engine" }
 end
-eeng["Cruiser"] = function( heavy )
+eeng["Cruiser"] = function ()
    return "Tricon Typhoon Engine"
 end
-eeng["Battleship"] = function( heavy )
+eeng["Battleship"] = function ()
    return choose_one{ "Tricon Typhoon II Engine", "Melendez Mammoth XL Engine" }
 end
-eeng["Carrier"] = function( heavy )
+eeng["Carrier"] = function ()
    return "Melendez Mammoth XL Engine"
 end
 eeng["Yacht"] = seng["Yacht"]
@@ -274,31 +274,31 @@ cores.elite = {
    SHIP-BASED EXCEPTIONS
 --]]
 -- Normal exceptions
-cores.standard.engines["Kestrel"] = function( heavy )
+cores.standard.engines["Kestrel"] = function ()
    return choose_one{ "Unicorp Eagle 7000 Engine", "Krain Remige Engine" }
 end
 cores.standard.engines["Pirate Kestrel"] = cores.standard.engines["Kestrel"]
-cores.standard.engines["Starbridge"] = function( heavy )
+cores.standard.engines["Starbridge"] = function ()
    return choose_one{ "Unicorp Falcon 1300 Engine", "Krain Patagium Engine" }
 end
 cores.standard.engines["Pirate Starbridge"] = cores.standard.engines["Starbridge"]
 
 -- Elite exceptions
-cores.elite.engines["Kestrel"] = function( heavy )
+cores.elite.engines["Kestrel"] = function ()
    return choose_one{ "Tricon Typhoon Engine", "Krain Remige Engine" }
 end
 cores.elite.engines["Pirate Kestrel"] = cores.elite.engines["Kestrel"]
-cores.elite.engines["Starbridge"] = function( heavy )
+cores.elite.engines["Starbridge"] = function ()
    return choose_one{ "Tricon Cyclone II Engine", "Krain Patagium Engine" }
 end
 cores.elite.engines["Pirate Starbridge"] = cores.elite.engines["Starbridge"]
-cores.elite.systems["Gawain"] = function( heavy )
+cores.elite.systems["Gawain"] = function ()
    return choose_one{ "Unicorp PT-16 Core System", "Milspec Orion 2301 Core System" }
 end
-cores.elite.hulls["Gawain"] = function( heavy )
+cores.elite.hulls["Gawain"] = function ()
    return choose_one{ "Unicorp D-2 Light Plating", "Nexus Light Stealth Plating" }
 end
-cores.elite.engines["Gawain"] = function( heavy )
+cores.elite.engines["Gawain"] = function ()
    return choose_one{ "Nexus Dart 150 Engine", "Tricon Zephyr Engine" }
 end
 
@@ -307,7 +307,7 @@ require "equipopt.cores_soromid"( cores )
 
 --[[
 cores.get( "Fighter", { all="elite" } )
-cores.get( "Fighter", { all={"standard","elite"}, heavy=true } )
+cores.get( "Fighter", { all={"standard","elite"} )
 cores.get( "Fighter", { systems="elite", hulls="standard", engines="elite" } )
 --]]
 function cores.get( p, params )
@@ -317,14 +317,6 @@ function cores.get( p, params )
    local s = p:ship()
    local shipclass = s:class()
    local shipname = s:nameRaw()
-
-   -- Check out if we have to do heavy
-   local heavy
-   if params.heavy == nil then
-      heavy = rnd.rnd() > 0.5
-   else
-      heavy = params.heavy
-   end
 
    -- Find out what type to use for each slot
    local systems, hulls, engines
@@ -344,17 +336,17 @@ function cores.get( p, params )
    if systems then
       local ct = cores[ systems ].systems
       local co = ct[ shipname ] or ct[ shipclass ]
-      table.insert( c, co( heavy ) )
+      table.insert( c, co() )
    end
    if hulls then
       local ct = cores[ hulls ].hulls
       local co = ct[ shipname ] or ct[ shipclass ]
-      table.insert( c, co( heavy ) )
+      table.insert( c, co() )
    end
    if engines then
       local ct = cores[ engines ].engines
       local co = ct[ shipname ] or ct[ shipclass ]
-      table.insert( c, co( heavy ) )
+      table.insert( c, co() )
    end
 
    return c
