@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2021-08-28 12:00-0400\n"
-"PO-Revision-Date: 2021-07-13 20:33+0000\n"
-"Last-Translator: rhebok-git <geneenkei@gmail.com>\n"
+"PO-Revision-Date: 2021-08-31 04:33+0000\n"
+"Last-Translator: Étienne Girard <etienne.g.girard@gmail.com>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/naev/naev/fr/>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.7.2-dev\n"
+"X-Generator: Weblate 4.8.1-dev\n"
 
 #: dat/intro:2
 msgid ""
@@ -1394,6 +1394,12 @@ msgid ""
 "This was one of the important reasons the Emperor granted House Dvaered its "
 "independence."
 msgstr ""
+"Ambre joua un rôle clef dans la révolte ouvrière qui mena à la fondation de "
+"la Maison Dvaered. À l'époque, la planète abritait un pourcentage important "
+"de la main d'oeuvre impériale dans le secteur spatial. S'il avait été privé "
+"de travailleurs pour opérer les mines et les chantiers de construction, "
+"l'Empire aurait perdu des montants astronomiques à chaque cycle ; l'Empereur "
+"préféra alors accorder à la Maison Dvaered son indépendance."
 
 #: dat/assets/ambre.xml:30
 msgid ""
@@ -1408,7 +1414,7 @@ msgstr ""
 
 #: dat/assets/amhurst.xml:2
 msgid "Amhurst"
-msgstr ""
+msgstr "Amhurst"
 
 #: dat/assets/amhurst.xml:30
 msgid ""
@@ -1417,6 +1423,11 @@ msgid ""
 "has not been hit as hard as many, it has seen its population dip in recent "
 "cycles. Most of the population are miners and other working-class folk."
 msgstr ""
+"Simple monde minier et marchand, cette planète a été relativement épargnée "
+"par la fuite des cerveaux touchant la frontière australe des Za'lek. Si elle "
+"a été moins touchée que d'autres mondes, elle a toutefois vu sa population "
+"diminuer au cours des derniers cycles. La plupart des habitants sont des "
+"mineurs ou des ouvriers."
 
 #: dat/assets/amhurst.xml:31
 msgid ""
@@ -1427,7 +1438,7 @@ msgstr ""
 
 #: dat/assets/amianta.xml:2
 msgid "Amianta"
-msgstr ""
+msgstr "Amianta"
 
 #: dat/assets/amianta.xml:27
 msgid ""
@@ -1435,10 +1446,13 @@ msgid ""
 "Proteron colonized it anyway due to the rich source of both food and water "
 "found underneath the ice."
 msgstr ""
+"Les Protérons ont colonisés Amianta malgré ses températures glaciales, car "
+"elle renferme des sources d'eau et de nourriture riches sous son épaisse "
+"couche de glâce."
 
 #: dat/assets/ammu.xml:2
 msgid "Ammu"
-msgstr ""
+msgstr "Ammu"
 
 #: dat/assets/ammu.xml:29
 msgid ""
@@ -1447,6 +1461,10 @@ msgid ""
 "subterranean spaceport but the way it doesn't seem to faze the locals "
 "reassures you."
 msgstr ""
+"Une fois habitué aux grondements constant des écoulements de lâve, Ammu est "
+"une planète paisible. Les éruptions se font sentir jusque dans le port "
+"spatial installé sous terre, mais le fait que cela ne semble pas inquiéter "
+"les autochtones vous rassure."
 
 #: dat/assets/ammu.xml:30
 msgid ""
@@ -1458,7 +1476,7 @@ msgstr ""
 
 #: dat/assets/amphion.xml:2
 msgid "Amphion"
-msgstr ""
+msgstr "Amphion"
 
 #: dat/assets/amphion.xml:27
 msgid ""
@@ -1468,6 +1486,12 @@ msgid ""
 "calm and the many underwater cities are famous all over the Empire for their "
 "grandeur and opulence."
 msgstr ""
+"Amphion est une destination prisée pour les officiers de l'Empire à la "
+"retraite. Elle est située suffisamment près du centre de l'Empire pour "
+"rappeler aux militaires leur années de service, mais suffisamment loin pour "
+"avoir la paix. Les océans qui dominent la surface de la planète sont calmes, "
+"et les nombreuses cités sous-marines sont connues dans tout l'Empire pour "
+"leur faste et leur opulence."
 
 #: dat/assets/amphion.xml:28
 msgid ""
@@ -70970,7 +70994,7 @@ msgstr ""
 
 #: dat/scripts/pilot/pirate.lua:307
 msgid "Emperor"
-msgstr ""
+msgstr "Empereur"
 
 #: dat/scripts/pilot/pirate.lua:308
 msgid "Energy-Volt"
