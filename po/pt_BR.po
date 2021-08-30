@@ -8,20 +8,26 @@ msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2021-08-28 12:00-0400\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2021-08-31 04:33+0000\n"
+"Last-Translator: Anthony Gregory Souza dos Santos "
+"<antonigregorysouza123@gmail.com>\n"
+"Language-Team: Portuguese (Brazil) <https://hosted.weblate.org/projects/naev/"
+"naev/pt_BR/>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 4.8.1-dev\n"
 
 #: dat/intro:2
 msgid ""
 "The night sky always draws our eyes. People look up with a question, or in "
 "wonder, and sometimes with a dream: to venture forth among the stars."
 msgstr ""
+"O céu noturno sempre atrai nossos olhos. As pessoas erguem os olhos com uma "
+"pergunta, ou maravilhadas, e às vezes com um sonho: aventurar-se entre as "
+"estrelas."
 
 #: dat/intro:4
 msgid ""
@@ -29,6 +35,9 @@ msgid ""
 "of distant suns, far away but so clear. To reach out and grasp one would "
 "only cost a lifetime. Cheap at the price."
 msgstr ""
+"Da Terra, os primeiros viajantes espaciais avistaram joias minúsculas "
+"brilhando com a luz de sóis distantes, porém tão nítidos. Alcançar e agarrar "
+"um custaria apenas uma vida. Barato com o preço."
 
 #: dat/intro:7
 msgid ""
@@ -36,6 +45,9 @@ msgid ""
 "hurled themselves out into the void. On arrival, they decanted and woke to "
 "find new stars staring coldly down from stranger skies."
 msgstr ""
+"Assim, homens e mulheres trancaram seus corpos adormecidos em enormes caixas "
+"de metal. Eles se lançaram no vazio. Na chegada, eles decantaram e acordaram "
+"para encontrar novas estrelas olhando friamente para baixo em céus estranhos."
 
 #: dat/intro:10
 msgid ""
@@ -44,6 +56,10 @@ msgid ""
 "civilisation spread, as it always has, with exponential enthusiasm -- "
 "ripples in the dark sea of space."
 msgstr ""
+"A primeira onda de exploradores rastejou de estrela em estrela na velocidade "
+"da luz, até que a invenção do hiperespaço impulsionou um segundo "
+"crescimento. Então a civilização se espalhou, como sempre, com entusiasmo "
+"exponencial - ondulações no mar escuro do espaço."
 
 #: dat/intro:12
 msgid ""
@@ -52,12 +68,19 @@ msgid ""
 "food, and distrust sowed the seeds of discord. Once begun, the fever of war "
 "spread from world to world and became a holocaust."
 msgstr ""
+"No entanto, a era heróica das descobertas durou apenas enquanto a "
+"curiosidade humana superou a ganância. Muito cedo, o conflito eclodiu nas "
+"colônias. Terra, combustível, comida e desconfiança semearam as sementes da "
+"discórdia. Uma vez iniciada, a febre da guerra espalhou-se de mundo a mundo "
+"e tornou-se um holocausto."
 
 #: dat/intro:15
 msgid ""
 "After a hundred years of interstellar conflict, on the ashes that remained, "
 "at last a new order built its foundations."
 msgstr ""
+"Depois de cem anos de conflito interestelar, sobre as cinzas que restaram, "
+"finalmente uma nova ordem construiu seus alicerces."
 
 #: dat/intro:17
 msgid ""
@@ -66,6 +89,10 @@ msgid ""
 "military, relations between planets resumed; abandoned trade routes saw "
 "traffic for the first time in living memory."
 msgstr ""
+"Um homem chamado Daedris afirmou domínio sobre os mundos exaustos. Ele "
+"fundou um Império Galáctico e se nomeou seu governante. Sob o punho de ferro "
+"de seus militares, as relações entre os planetas foram retomadas; rotas "
+"comerciais abandonadas viram tráfego pela primeira vez na memória viva."
 
 #: dat/intro:19
 msgid ""
@@ -73,6 +100,9 @@ msgid ""
 "irradiated rock was cleansed and dead planets brought back to life. Peace "
 "reigned in an imperial golden age."
 msgstr ""
+"Os estudiosos chamam isso de zênite: a tecnologia deu um salto à frente, a "
+"cultura floresceu, a rocha irradiada foi limpa e os planetas mortos foram "
+"trazidos de volta à vida. A paz reinou em uma época de ouro imperial."
 
 #: dat/intro:21
 msgid ""
@@ -81,18 +111,23 @@ msgid ""
 "the imperium went awry. In some regions, administration fell into the hands "
 "of other powers. The Great Houses now policed the space lanes."
 msgstr ""
+"Depois de Daedris, sob seus sucessores, a luz do império diminuiu. Conflitos "
+"civis e divisões religiosas enfraqueceram os laços sociais. Os grandes "
+"projetos do imperium deram errado. Em algumas regiões, a administração caiu "
+"nas mãos de outros poderes. As Grandes Casas agora policiavam as vias "
+"espaciais."
 
 #: dat/intro:23
 msgid "Rise and fall, the rhythm of history. "
-msgstr ""
+msgstr "Ascensão e queda, o ritmo da história "
 
 #: dat/intro:25
 msgid "But the march of history stumbled over the unknown, over the Incident."
-msgstr ""
+msgstr "Mas a marcha da história tropeçou no desconhecido, no Incidente."
 
 #: dat/intro:27
 msgid "It tore the heart out of the Empire."
-msgstr ""
+msgstr "Isso arrancou o coração do Império."
 
 #: dat/intro:29
 msgid ""
@@ -101,10 +136,14 @@ msgid ""
 "the mysterious nebula left behind. Now the great, galaxy-spanning "
 "civilisation survives as a shadow of its former glory."
 msgstr ""
+"Da Terra, uma explosão cataclísmica rasgou o espaço, aniquilando estrelas, "
+"vaporizando mundos. Morreram bilhões. Dezenas de sistemas desapareceram na "
+"misteriosa nebulosa deixada para trás. Agora, a grande civilização que "
+"abrange toda a galáxia sobrevive como uma sombra de sua antiga glória."
 
 #: dat/intro:32
 msgid "What else remains? Questions."
-msgstr ""
+msgstr "O que mais resta? Perguntas."
 
 #: dat/intro:34
 msgid ""
@@ -112,38 +151,41 @@ msgid ""
 "decaying empire. After the Incident, corruption and piracy run rampant, but "
 "where there is chaos, there is also opportunity."
 msgstr ""
+"Dez Ciclos Padrão se passaram em um universo governado pelos fragmentos de "
+"um império decadente. Depois do incidente, a corrupção e a pirataria "
+"aumentaram, mas onde há caos, também há oportunidade."
 
 #: dat/intro:36
 msgid "Welcome to the universe of Naev..."
-msgstr ""
+msgstr "Bem-vindo ao universo de Naev..."
 
 #: dat/AUTHORS:1
 msgid "Current Core Development Team"
-msgstr ""
+msgstr "Atual Time de Desenvolvimento Central"
 
 #: dat/AUTHORS:2 dat/AUTHORS:26 dat/AUTHORS:38 dat/AUTHORS:63 dat/AUTHORS:174
 msgid "---------------------------------------"
-msgstr ""
+msgstr "---------------------------------------"
 
 #: dat/AUTHORS:4
 msgid "Edgar Simo-Serra \"bobbens\" <bobbens@gmail.com>"
-msgstr ""
+msgstr "Edgar Simo-Serra \"bobbens\" <bobbens@gmail.com>"
 
 #: dat/AUTHORS:5
 msgid "   * Lead Developer"
-msgstr ""
+msgstr "   * Desenvolvedor-chefe"
 
 #: dat/AUTHORS:7
 msgid "Bas Fournier \"BTAxis\" <btaxis@gmail.com>"
-msgstr ""
+msgstr "Bas Fournier \"BTAxis\" <btaxis@gmail.com>"
 
 #: dat/AUTHORS:8
 msgid "   * Story Writer and Misc. Development"
-msgstr ""
+msgstr "   * Roteiro e Desenvolvimento Variado"
 
 #: dat/AUTHORS:10
 msgid "Ian Douglas Scott \"ids1024\" <ian@iandouglasscott.com>"
-msgstr ""
+msgstr "Ian Douglas Scott \"ids1024\" <ian@iandouglasscott.com>"
 
 #: dat/AUTHORS:11
 msgid "   * Misc. Development and Lua unifier"
@@ -151,15 +193,15 @@ msgstr ""
 
 #: dat/AUTHORS:13
 msgid "Justin Blanchard \"UncombedCoconut\" <UncombedCoconut@gmail.com>"
-msgstr ""
+msgstr "Justin Blanchard \"UncombedCoconut\" <UncombedCoconut@gmail.com>"
 
 #: dat/AUTHORS:14
 msgid "   * Code Carnage and Bug Beating"
-msgstr ""
+msgstr "   * Editor de Códigos e Debuger"
 
 #: dat/AUTHORS:16
 msgid "nenau"
-msgstr ""
+msgstr "\"nenau\""
 
 #: dat/AUTHORS:17
 msgid "   * Misc. Development and Dvaered aficionado"
@@ -167,7 +209,7 @@ msgstr ""
 
 #: dat/AUTHORS:19
 msgid "Jack Greiner <jack@emoss.org>"
-msgstr ""
+msgstr "Jack Greiner <jack@emoss.org>"
 
 #: dat/AUTHORS:20
 msgid "   * CI dude and Bringer of automated releases"
@@ -175,123 +217,123 @@ msgstr ""
 
 #: dat/AUTHORS:22
 msgid "Viktor Hahn <viktor.hahn@web.de>"
-msgstr ""
+msgstr "Viktor Hahn <viktor.hahn@web.de>"
 
 #: dat/AUTHORS:23
 msgid "   * 3D modelling"
-msgstr ""
+msgstr "   * Modelagem 3D"
 
 #: dat/AUTHORS:25
 msgid "Past Development Team"
-msgstr ""
+msgstr "Equipe de Desenvolvimento Anterior"
 
 #: dat/AUTHORS:28
 msgid "Nikola Whallon <6.saturn.6@gmail.com>"
-msgstr ""
+msgstr "Nikola Whallon <6.saturn.6@gmail.com>"
 
 #: dat/AUTHORS:29
 msgid "   * Bringer of Sound"
-msgstr ""
+msgstr "   * Portador de som"
 
 #: dat/AUTHORS:31
 msgid "Deiz"
-msgstr ""
+msgstr "Deiz"
 
 #: dat/AUTHORS:32 dat/AUTHORS:35
 msgid "   * Misc. Development"
-msgstr ""
+msgstr "   * Desenvolvimento Variado"
 
 #: dat/AUTHORS:34
 msgid "Layla and Emmy \"The Diligent Circle\" <diligentcircle@riseup.net>"
-msgstr ""
+msgstr "Layla and Emmy \"The Diligent Circle\" <diligentcircle@riseup.net>"
 
 #: dat/AUTHORS:37
 msgid "Major Contributors"
-msgstr ""
+msgstr "Principais Contribuintes"
 
 #: dat/AUTHORS:40
 msgid "Josiah Schwartfeger"
-msgstr ""
+msgstr "Josiah Schwartfeger"
 
 #: dat/AUTHORS:41
 msgid "   * Graphic Designer and Modeller"
-msgstr ""
+msgstr "   * Designer Gráfico e Modelagem"
 
 #: dat/AUTHORS:43
 msgid "Elderman"
-msgstr ""
+msgstr "Elderman"
 
 #: dat/AUTHORS:44
 msgid "   * Mission Development"
-msgstr ""
+msgstr "   * Desenvolvimento de Missões"
 
 #: dat/AUTHORS:45
 msgid "   The first non-bobbens mission developer!"
-msgstr ""
+msgstr "   O primeiro desenvolvedor de missões não bobbens!"
 
 #: dat/AUTHORS:47
 msgid "Ingo Ruhnke <grumbel@gmx.de>"
-msgstr ""
+msgstr "Ingo Ruhnke <grumbel@gmx.de>"
 
 #: dat/AUTHORS:48
 msgid "   * NPC Portrait Artist"
-msgstr ""
+msgstr "   Retrato dos NPCs"
 
 #: dat/AUTHORS:50
 msgid "Enigmatic"
-msgstr ""
+msgstr "Enigmático"
 
 #: dat/AUTHORS:51
 msgid "   * Ships for the Sirius, many other models and faction logos"
-msgstr ""
+msgstr "   * Navios para o Sirius, muitos outros modelos e logotipos de facção"
 
 #: dat/AUTHORS:53
 msgid "Felix Schneider \"Scaatis\" <fsfuenf@gmail.com>"
-msgstr ""
+msgstr "Felix Schneider \"Scaatis\" <fsfuenf@gmail.com>"
 
 #: dat/AUTHORS:54
 msgid "   * Naev logo, Lua GUI development"
-msgstr ""
+msgstr "   * Naev logo, Lua GUI desenvolvedor"
 
 #: dat/AUTHORS:56
 msgid "M. R. Bokhari \"Viruk\" <withextremeprejudice@gmail.com>"
-msgstr ""
+msgstr "M. R. Bokhari \"Viruk\" <withextremeprejudice@gmail.com>"
 
 #: dat/AUTHORS:57
 msgid "   * Ships for the Soromid and the Za'lek"
-msgstr ""
+msgstr "   * Navios para o Soromid e o Za'lek"
 
 #: dat/AUTHORS:59
 msgid "Askyel"
-msgstr ""
+msgstr "Askyel"
 
 #: dat/AUTHORS:60
 msgid "   * Composer of nearly an hour of Naev-exclusive music."
-msgstr ""
+msgstr "   * Compositor de quase uma hora de música exclusiva de Naev."
 
 #: dat/AUTHORS:62
 msgid "Contributions"
-msgstr ""
+msgstr "Contribuições"
 
 #: dat/AUTHORS:65
 msgid "Vega Strike <http://vegastrike.sf.net>"
-msgstr ""
+msgstr "Vega Strike <http://vegastrike.sf.net>"
 
 #: dat/AUTHORS:66
 msgid "   * Ship Models"
-msgstr ""
+msgstr "   * Modelos das naves"
 
 #: dat/AUTHORS:67
 msgid "   * Music"
-msgstr ""
+msgstr "   * Música"
 
 #: dat/AUTHORS:68
 msgid "   * Sounds"
-msgstr ""
+msgstr "   * Sons"
 
 #: dat/AUTHORS:69
 msgid "   * Planet images"
-msgstr ""
+msgstr "   * Imagens dos planetas"
 
 #: dat/AUTHORS:70
 msgid ""
@@ -299,14 +341,17 @@ msgid ""
 "didn't actively participate, by allowing me to use their data they did me a "
 "great favour and let me concentrate on the coding."
 msgstr ""
+"   Não teria sido possível sem a equipa Vega Strike. Embora não terem "
+"participado ativamente, ao permitirem-me usar os seus dados, fizeram-me um "
+"grande favor e permitiram-me concentrar na programação."
 
 #: dat/AUTHORS:72
 msgid "Joel Hans <wolorf@gmail.com>"
-msgstr ""
+msgstr "Joel Hans <wolorf@gmail.com>"
 
 #: dat/AUTHORS:73
 msgid "   * Planet Graphics"
-msgstr ""
+msgstr "   * Gráfico dos Planetas"
 
 #: dat/AUTHORS:74
 msgid "   * Render Script"
@@ -626,131 +671,131 @@ msgstr ""
 
 #: artwork/gfx/loading/ancestor_pirate.webp.txt:1
 msgid "PIRATE ANCESTOR"
-msgstr ""
+msgstr "PIRATA ANTIGO"
 
 #: artwork/gfx/loading/ancestor.webp.txt:1
 msgid "ANCESTOR"
-msgstr ""
+msgstr "ANTIGO"
 
 #: artwork/gfx/loading/archimedes.webp.txt:1
 msgid "ARCHIMEDES"
-msgstr ""
+msgstr "ARCHIMEDES"
 
 #: artwork/gfx/loading/derivative.webp.txt:1
 msgid "DERIVATIVE"
-msgstr ""
+msgstr "DERIVADO"
 
 #: artwork/gfx/loading/diablo.webp.txt:1
 msgid "ZA'LEK DIABLO"
-msgstr ""
+msgstr "ZA'LEK DIABLO"
 
 #: artwork/gfx/loading/drone.webp.txt:1
 msgid "DRONE"
-msgstr ""
+msgstr "DRONE"
 
 #: artwork/gfx/loading/fidelity.webp.txt:1
 msgid "SIRIUS FIDELITY"
-msgstr ""
+msgstr "SIRIUS FIDELITY"
 
 #: artwork/gfx/loading/gawain.webp.txt:1
 msgid "GAWAIN"
-msgstr ""
+msgstr "GAWAIN"
 
 #: artwork/gfx/loading/goddard.webp.txt:1
 msgid "GODDARD"
-msgstr ""
+msgstr "GODDARD"
 
 #: artwork/gfx/loading/hawking.webp.txt:1
 msgid "HAWKING"
-msgstr ""
+msgstr "HAWKING"
 
 #: artwork/gfx/loading/kahan.webp.txt:1
 msgid "KAHAN"
-msgstr ""
+msgstr "KAHAN"
 
 #: artwork/gfx/loading/kestrel_pirate.webp.txt:1
 msgid "PIRATE KESTREL"
-msgstr ""
+msgstr "PIRATA KESTREL"
 
 #: artwork/gfx/loading/koala.webp.txt:1
 msgid "KOALA"
-msgstr ""
+msgstr "KOALA"
 
 #: artwork/gfx/loading/lancelot.webp.txt:1
 msgid "LANCELOT"
-msgstr ""
+msgstr "LANCELOT"
 
 #: artwork/gfx/loading/llama.webp.txt:1
 msgid "LLAMA"
-msgstr ""
+msgstr "LLAMA"
 
 #: artwork/gfx/loading/mule.webp.txt:1
 msgid "MULE"
-msgstr ""
+msgstr "MULA"
 
 #: artwork/gfx/loading/pacifier.webp.txt:1
 msgid "PACIFIER"
-msgstr ""
+msgstr "PACIFICADOR"
 
 #: artwork/gfx/loading/peacemaker.webp.txt:1
 msgid "EMPIRE PEACEMAKER"
-msgstr ""
+msgstr "PACIFICADOR IMPERIAL"
 
 #: artwork/gfx/loading/preacher.webp.txt:1
 msgid "SIRIUS PREACHER"
-msgstr ""
+msgstr "SIRIUS PREACHER"
 
 #: artwork/gfx/loading/quicksilver.webp.txt:1
 msgid "QUICKSILVER"
-msgstr ""
+msgstr "QUICKSILVER"
 
 #: artwork/gfx/loading/rhino_pirate.webp.txt:1
 msgid "PIRATE RHINO"
-msgstr ""
+msgstr "PIRATA RHINO"
 
 #: artwork/gfx/loading/rhino.webp.txt:1
 msgid "RHINO"
-msgstr ""
+msgstr "RHINO"
 
 #: artwork/gfx/loading/schroedinger.webp.txt:1
 msgid "SCHROEDINGER"
-msgstr ""
+msgstr "SCHROEDINGER"
 
 #: artwork/gfx/loading/shaman.webp.txt:1
 msgid "SIRIUS SHAMAN"
-msgstr ""
+msgstr "SIRIUS SHAMAN"
 
 #: artwork/gfx/loading/shark_empire.webp.txt:1
 msgid "EMPIRE SHARK"
-msgstr ""
+msgstr "TUBARÃO DO IMPÉRIO"
 
 #: artwork/gfx/loading/shark_pirate.webp.txt:1
 msgid "PIRATE SHARK"
-msgstr ""
+msgstr "PIRATA TUBARÃO"
 
 #: artwork/gfx/loading/shark.webp.txt:1
 msgid "SHARK"
-msgstr ""
+msgstr "TUBARÃO"
 
 #: artwork/gfx/loading/sting.webp.txt:1
 msgid "ZA'LEK STING"
-msgstr ""
+msgstr "ZA'LEK STING"
 
 #: artwork/gfx/loading/vendetta_pirate.webp.txt:1
 msgid "PIRATE VENDETTA"
-msgstr ""
+msgstr "PIRATA VENDETTA"
 
 #: artwork/gfx/loading/vendetta.webp.txt:1
 msgid "VENDETTA"
-msgstr ""
+msgstr "VENDETTA"
 
 #: artwork/gfx/loading/vigilance.webp.txt:1
 msgid "VIGILANCE"
-msgstr ""
+msgstr "VIGILÂNCIA"
 
 #: dat/assets/abacus.xml:2
 msgid "Abacus"
-msgstr ""
+msgstr "Abakus"
 
 #: dat/assets/abacus.xml:26
 msgid ""
@@ -760,10 +805,15 @@ msgid ""
 "researchers on site at any one time. Tourism is out of the question, so is a "
 "bar."
 msgstr ""
+"Abacus é um planeta muito grande, para os padrões dos planetas rochosos. Os "
+"Soromid estabeleceram um posto avançado de pesquisa aqui para descobrir mais "
+"sobre a estrutura do planeta. O posto avançado é muito pequeno, com apenas "
+"algumas dezenas de pesquisadores no local ao mesmo tempo. O turismo está "
+"fora de questão, assim como um bar."
 
 #: dat/assets/adham.xml:2
 msgid "Adham"
-msgstr ""
+msgstr "Adham"
 
 #: dat/assets/adham.xml:25
 msgid ""
@@ -773,14 +823,20 @@ msgid ""
 "considered neutral territory, most of the planet's surface is subject to the "
 "destructive sport that is so popular among Totoran's visitors."
 msgstr ""
+"Adham é um planeta frio e sem vida. A única razão pela qual uma pista de "
+"pouso está aqui é que o planeta hospeda as três arenas temáticas do Ártico "
+"para os jogos de gladiadores de Totoran. Enquanto a zona de pouso e um "
+"pequeno buffer ao redor dela são considerados território neutro, a maior "
+"parte da superfície do planeta está sujeita ao esporte destrutivo que é "
+"muito popular entre os visitantes de Totoran."
 
 #: dat/assets/adius.xml:2
 msgid "Adius"
-msgstr ""
+msgstr "Adius"
 
 #: dat/assets/adrian.xml:2
 msgid "Adrian"
-msgstr ""
+msgstr "Adrian"
 
 #: dat/assets/adrian.xml:27
 msgid ""
@@ -790,6 +846,11 @@ msgid ""
 "it was a matter of a few cycles before the Sirii came to power. Today Adrian "
 "persists, despite having served its only purpose."
 msgstr ""
+"Um mundo frio e desagradável, Sirius estabeleceu sua colônia em Adrian nos "
+"dias em que estavam se expandindo para Eiderdown. Na época, o sistema era "
+"controlado pelo Império, mas com uma cabeça de ponte firme no sistema, era "
+"uma questão de alguns ciclos antes que o Sirii chegasse ao poder. Hoje "
+"Adrian persiste, apesar de ter servido ao seu único propósito."
 
 #: dat/assets/adrian.xml:28
 msgid ""
@@ -797,10 +858,13 @@ msgid ""
 "kept at an acceptable, though uncomfortable, low. Most patrons of this "
 "spaceport bar are in full winter gear."
 msgstr ""
+"O aquecimento em mundos de classe P costuma ser caro, então a temperatura é "
+"mantida em um nível aceitável, embora desconfortável. A maioria dos clientes "
+"deste bar do espaçoporto usa roupas de inverno completas."
 
 #: dat/assets/aera.xml:2
 msgid "Aera"
-msgstr ""
+msgstr "Aera"
 
 #: dat/assets/aera.xml:26
 msgid ""
@@ -809,14 +873,18 @@ msgid ""
 "subduction, which coaxes them out of the planet's dangerous core and into "
 "the upper atmosphere where they can be safely collected."
 msgstr ""
+"Este gigante gasoso é tão rico em minerais valiosos que o Proteron decidiu "
+"estabelecer uma colônia de mineração. Os minerais são extraídos com "
+"subducção de calor OOA, que os persegue para fora do perigoso núcleo do "
+"planeta e para a alta atmosfera, onde podem ser coletados com segurança."
 
 #: dat/assets/aesir_iv.xml:2
 msgid "Aesir IV"
-msgstr ""
+msgstr "Aesir IV"
 
 #: dat/assets/agino.xml:2
 msgid "Agino"
-msgstr ""
+msgstr "Agino"
 
 #: dat/assets/agino.xml:29
 msgid ""
@@ -825,6 +893,10 @@ msgid ""
 "core but, this being a remote part of Soromid space, it is still a local "
 "highlight."
 msgstr ""
+"Agino é um planeta agitado, em sua maioria cheio de cidadãos Soromid de "
+"classe média. O planeta não se destaca em nenhuma área quando comparado aos "
+"mundos no núcleo Soromid, mas, sendo uma parte remota do espaço Soromid, "
+"ainda é um destaque local."
 
 #: dat/assets/agino.xml:30
 msgid ""
@@ -835,10 +907,17 @@ msgid ""
 "who you are and cheerfully pour you a drink. Some spacers secretly suspect "
 "he has an audiovisual database installed in his head."
 msgstr ""
+"A pessoa que comanda este bar do espaçoporto é um homem corpulento de "
+"Soromid chamado Alverik Sogheem. Alverik geralmente cuida do bar sozinho e "
+"conhece todos os seus clientes pelo nome e pelo rosto. Não importa há quanto "
+"tempo você esteve fora ou onde esteve na galáxia, no seu retorno a Agino, "
+"Alverik se lembrará de quem você é e alegremente servirá uma bebida para "
+"você. Alguns espaçadores suspeitam secretamente que ele tem um banco de "
+"dados audiovisual instalado em sua cabeça."
 
 #: dat/assets/ahmed.xml:2
 msgid "Ahmed"
-msgstr ""
+msgstr "Ahmed"
 
 #: dat/assets/ahmed.xml:28
 msgid ""
@@ -847,6 +926,10 @@ msgid ""
 "people not mining are doing administration or come here as traders and "
 "businessmen looking for turn a credit or two."
 msgstr ""
+"A lua de Ahmed é uma pequena colônia de pessoas sérias, mas considerando que "
+"eles são principalmente mineiros, isso não é uma grande surpresa. Os poucos "
+"que não são mineradores estão fazendo administração ou vêm aqui como "
+"comerciantes e empresários em busca de um crédito ou dois."
 
 #: dat/assets/ahmed.xml:29
 msgid ""
@@ -855,10 +938,15 @@ msgid ""
 "gas extraction. The Soromid might understand comfort and how to have a good "
 "time but this is clearly not the place where they are doing it."
 msgstr ""
+"Um bar muito utilitário com uma atitude bastante relaxada em relação ao "
+"conforto, pelo menos para os padrões do Império. As pessoas vêm aqui para "
+"fazer negócios e conversar sobre extração de minério e gás mineral. Os "
+"Soromid podem entender o conforto e como se divertir, mas claramente não é o "
+"lugar onde eles o estão fazendo."
 
 #: dat/assets/aillis.xml:2
 msgid "Aillis"
-msgstr ""
+msgstr "Aillis"
 
 #: dat/assets/aillis.xml:28
 msgid ""
@@ -868,6 +956,11 @@ msgid ""
 "valuable, and so Aillis offers a fair living for those who don't shun heavy, "
 "dangerous labor."
 msgstr ""
+"Aillis é a base de operações dos mineiros que exploram Koralis VI. O próprio "
+"Koralis VI é altamente radioativo, então nenhuma habitação humana é, ou "
+"jamais será, possível. No entanto, alguns dos elementos pesados do planeta "
+"são muito valiosos e, portanto, Aillis oferece uma vida justa para aqueles "
+"que não evitam trabalhos pesados e perigosos."
 
 #: dat/assets/aillis.xml:29
 msgid ""
@@ -875,10 +968,14 @@ msgid ""
 "very welcome. Running costs are kept low which means maintenance and service "
 "suffer. Nevertheless, it's quite possible to have a good time here."
 msgstr ""
+"Embora este bar não seja exatamente inóspito, ele também não faz você se "
+"sentir muito bem-vindo. Os custos operacionais são mantidos baixos, o que "
+"significa que a manutenção e o serviço são prejudicados. No entanto, é "
+"perfeitamente possível passar bons momentos aqui."
 
 #: dat/assets/akios_station.xml:2
 msgid "Akios Station"
-msgstr ""
+msgstr "Estação Akios"
 
 #: dat/assets/akios_station.xml:27
 msgid ""
@@ -888,14 +985,19 @@ msgid ""
 "(comparatively) little debate over the necessity over this station's "
 "existence."
 msgstr ""
+"A Estação Akios é uma estação de fronteira de Za'lek destinada a manter os "
+"piratas do sistema Kretogg fora do espaço Za'lek. Por causa da ameaça real "
+"que os criminosos repugnantes representam para a segurança da casa grande, "
+"há (comparativamente) pouco debate sobre a necessidade da existência desta "
+"estação."
 
 #: dat/assets/akra_iii.xml:2
 msgid "Akra III"
-msgstr ""
+msgstr "Akra III"
 
 #: dat/assets/akra_station.xml:2
 msgid "Akra Station"
-msgstr ""
+msgstr "Estação Akra"
 
 #: dat/assets/akra_station.xml:28
 msgid ""
@@ -904,24 +1006,30 @@ msgid ""
 "system congregate here, leading to more inter-planetary personal "
 "relationships than normal."
 msgstr ""
+"Construída para servir aos navios da região, a Estação Akra também serve "
+"como um centro de comunicação e comércio essencial para os residentes de "
+"Akra. Pessoas de todo o sistema se reúnem aqui, levando a mais "
+"relacionamentos pessoais interplanetários do que o normal."
 
 #: dat/assets/akra_station.xml:29
 msgid ""
 "The bar is bustling and seemingly constantly packed, yet never seems to "
 "cause anyone any problem due to how efficient everything is."
 msgstr ""
+"O bar é movimentado e aparentemente está constantemente lotado, mas nunca "
+"parece causar nenhum problema a ninguém devido à eficiência de tudo."
 
 #: dat/assets/akra_v.xml:2
 msgid "Akra V"
-msgstr ""
+msgstr "Akra V"
 
 #: dat/assets/akrikos.xml:2
 msgid "Akrikos"
-msgstr ""
+msgstr "Akrikos"
 
 #: dat/assets/aldarus.xml:2
 msgid "Aldarus"
-msgstr ""
+msgstr "Aldarus"
 
 #: dat/assets/aldarus.xml:29
 msgid ""
@@ -931,6 +1039,11 @@ msgid ""
 "materials for all sorts of industries though, and the lack of pollution "
 "controls on the planet make it very attractive for corporations."
 msgstr ""
+"Aldarus tem vastos oceanos cheios de uma lama orgânica que tem pouco a ver "
+"com água. A atmosfera é tóxica e matará um ser humano desprotegido em "
+"hectossegundos. O lodo nos mares é uma boa fonte de matéria-prima para todos "
+"os tipos de indústrias, e a falta de controles de poluição no planeta o "
+"torna muito atraente para as corporações."
 
 #: dat/assets/aldarus.xml:30
 msgid ""
@@ -939,10 +1052,15 @@ msgid ""
 "for private conversations, in case the bar's main area is a little too "
 "public for comfort. The music here can also be a bit grating on the ears."
 msgstr ""
+"O bar do espaçoporto em Aldarus oferece uma variedade de atividades "
+"recreativas, como jogos de azar e jogos competitivos. Também há cabines "
+"muradas para conversas privadas, caso a área principal do bar seja um pouco "
+"pública demais para seu conforto. A música aqui também pode ser um pouco "
+"irritante para os ouvidos."
 
 #: dat/assets/aldernael.xml:2
 msgid "Aldernael"
-msgstr ""
+msgstr "Aldernael"
 
 #: dat/assets/aldernael.xml:28
 msgid ""
@@ -953,6 +1071,13 @@ msgid ""
 "going through a mainstream colonization phase. New immigrants arrive every "
 "day and Soromid habitation centres are constantly under construction."
 msgstr ""
+"Para um visitante comum, Aldernael pode parecer rude e desagradável. Quando "
+"você considera que o mundo costumava ser um planeta sem vida com uma "
+"superfície tóxica e quase nenhuma atmosfera, ele realmente se tornou muito "
+"mais hospitaleiro desde que o Soromid começou a terraformá-lo. Atualmente, o "
+"planeta está passando por uma fase de colonização predominante. Novos "
+"imigrantes chegam todos os dias e os centros habitacionais Soromid estão "
+"constantemente em construção."
 
 #: dat/assets/aldernael.xml:29
 msgid ""
@@ -962,10 +1087,15 @@ msgid ""
 "more customers but also the occasional move from one building to another to "
 "make room for renovations."
 msgstr ""
+"Devido ao grande desenvolvimento em Aldernael, a barra do espaçoporto está "
+"sujeita a relocação ocasional. O espaçoporto está no centro disso, é claro, "
+"e assim a barra sofre e se beneficia disso em turnos. Este crescimento leva "
+"a mais clientes, mas também à mudança ocasional de um edifício para outro "
+"para abrir espaço para reformas."
 
 #: dat/assets/aldous.xml:2
 msgid "Aldous"
-msgstr ""
+msgstr "Aldous"
 
 #: dat/assets/aldous.xml:27
 msgid ""
@@ -976,6 +1106,12 @@ msgid ""
 "their home. The ocean may be toxic, but it also happens to be the perfect "
 "environment for producing high quality positronic circuitry."
 msgstr ""
+"O planeta Aldous é um mar gigante de um fluido tóxico para os humanos. Mesmo "
+"a menor exposição ao material tóxico no oceano de Aldous é letal. No que diz "
+"respeito à habitabilidade, planetas como este vêm em último lugar na lista. "
+"No entanto, um punhado de almas corajosas escolheu fazer deste planeta seu "
+"lar. O oceano pode ser tóxico, mas também é o ambiente perfeito para a "
+"produção de circuitos positrônicos de alta qualidade."
 
 #: dat/assets/aldous.xml:28
 msgid ""
@@ -986,14 +1122,20 @@ msgid ""
 "occurs. Some spacers even insist on wearing breathing masks, even in the "
 "spaceport bar, just to be on the safe side."
 msgstr ""
+"A instalação do espaçoporto faz parte de uma estrutura maior que abriga "
+"todos os habitantes humanos deste planeta. O complexo, mais ou menos, flutua "
+"na superfície e é hermeticamente fechado contra o ambiente externo. Além "
+"disso, o complexo é altamente compartimentado, caso ocorra algum vazamento. "
+"Alguns espaçadores até insistem em usar máscaras de respiração, mesmo na "
+"barra do espaçoporto, só para garantir."
 
 #: dat/assets/aldous_moon.xml:2
 msgid "Aldous' moon"
-msgstr ""
+msgstr "Lua Aldous"
 
 #: dat/assets/aleph.xml:2
 msgid "Aleph"
-msgstr ""
+msgstr "Aleph"
 
 #: dat/assets/aleph.xml:27
 msgid ""
@@ -1002,6 +1144,10 @@ msgid ""
 "primarily residential and sports no superheavy industry, the wastefulness of "
 "the Dvaered inhabitants more than makes up for that."
 msgstr ""
+"Em uma impressionante façanha de de-terraformação, os Dvaered transformaram "
+"Aleph de uma classe limítrofe M em um deserto árido. Embora o mundo seja "
+"basicamente residencial e não tenha nenhuma indústria superpesada, o "
+"desperdício dos habitantes Dvaered mais do que compensa isso."
 
 #: dat/assets/aleph.xml:28
 msgid ""
@@ -1010,14 +1156,18 @@ msgid ""
 "the staleness completely. The drinks do little to relieve the stuffiness "
 "either."
 msgstr ""
+"O ar na barra do porto-espacial está abafado. O ar está abafado em todo o "
+"planeta. Nenhuma quantidade de ar-condicionado e filtragem vai livrar-se do "
+"envelhecimento completamente. As bebidas também não ajudam a aliviar o "
+"entupimento."
 
 #: dat/assets/alexian.xml:2
 msgid "Alexian"
-msgstr ""
+msgstr "Alexian"
 
 #: dat/assets/allan.xml:2
 msgid "Allan"
-msgstr ""
+msgstr "Allan"
 
 #: dat/assets/allan.xml:27
 msgid ""
@@ -1026,6 +1176,10 @@ msgid ""
 "left behind. It is now barely maintained by a small contingent of Dvaered "
 "soldiers and engineers for the use of traders."
 msgstr ""
+"Allan já foi uma estação de patrulha enviada para patrulhar o sul do espaço. "
+"Com o incidente e a regressão do poder imperial, Allan foi deixado para "
+"trás. Agora é mal mantido por um pequeno contingente de soldados e "
+"engenheiros Dvaered para uso dos comerciantes."
 
 #: dat/assets/allan.xml:28
 msgid ""
@@ -1033,10 +1187,13 @@ msgid ""
 "with clean facilities, decent food and strong drink. For its patrons it "
 "provides a small respite from the harsh galaxy."
 msgstr ""
+"Allan não tem recursos para muito, mas o bar parece decente, com instalações "
+"limpas, comida decente e bebidas fortes. Para seus clientes, ele fornece uma "
+"pequena pausa da dura galáxia."
 
 #: dat/assets/alleyway.xml:2
 msgid "Alleyway"
-msgstr ""
+msgstr "Alleyway"
 
 #: dat/assets/alleyway.xml:27
 msgid ""
@@ -1045,6 +1202,11 @@ msgid ""
 "hunters. Authorities have long ago given up any hope of controlling the "
 "chaos, so everyone knows to be armed and remain vigilant at all times."
 msgstr ""
+"Originalmente planejada para ser um centro de comércio e ponto de "
+"reabastecimento para comerciantes, esta estação se tornou efetivamente um "
+"centro para piratas e caçadores de recompensas. As autoridades há muito "
+"desistiram de qualquer esperança de controlar o caos, então todos sabem que "
+"devem estar armados e permanecer vigilantes o tempo todo."
 
 #: dat/assets/alleyway.xml:28
 msgid ""
@@ -1052,22 +1214,26 @@ msgid ""
 "merchants and gamblers. Fights often break out and it's hard to tell who to "
 "trust, so most people keep to themselves and avoid eye contact with others."
 msgstr ""
+"O bar é uma mistura de principalmente piratas e caçadores de recompensas, "
+"com um punhado de comerciantes e jogadores. Frequentemente, acontecem brigas "
+"e é difícil dizer em quem confiar, então a maioria das pessoas se mantém "
+"calada e evita contato visual com os outros."
 
 #: dat/assets/allous_gg3.xml:2
 msgid "Allous GG-3"
-msgstr ""
+msgstr "Allous GG-3"
 
 #: dat/assets/allous_i.xml:2
 msgid "Allous I"
-msgstr ""
+msgstr "Allous I"
 
 #: dat/assets/allous_ii.xml:2
 msgid "Allous II"
-msgstr ""
+msgstr "Allous II"
 
 #: dat/assets/allous_station.xml:2
 msgid "Allous Station"
-msgstr ""
+msgstr "Estação Allous"
 
 #: dat/assets/allous_station.xml:26
 msgid ""
@@ -1079,6 +1245,14 @@ msgid ""
 "need for them to pay for it as numerous warlords, with dreams of "
 "intellectualism, are happy to offer their patronage."
 msgstr ""
+"Apesar do nome, Estação Allous não é um posto avançado militar, é mais um "
+"centro de observação científica e observatório do espaço profundo. "
+"Originalmente, o objetivo era ficar de olho na nebulosa de alta "
+"interferência do PSO. Até mesmo os Dvaered têm uma comunidade científica e "
+"pagaram por esta estação do próprio bolso. É claro que, uma vez construída, "
+"não havia mais necessidade de eles pagarem por ela, pois numerosos senhores "
+"da guerra, com sonhos de intelectualismo, ficam felizes em oferecer seu "
+"patrocínio."
 
 #: dat/assets/allous_station.xml:27
 msgid ""
@@ -1086,46 +1260,49 @@ msgid ""
 "and soldiers are interacting with surprising friendliness and conviviality. "
 "Of course, the local warlords would, and do, tolerate nothing less."
 msgstr ""
+"Este bar parece algo que se esperaria do espaço Za'lek. Cientistas e "
+"soldados estão interagindo com surpreendente simpatia e sociabilidade. É "
+"claro que os senhores da guerra locais não tolerariam, e toleram, nada menos."
 
 #: dat/assets/alteris_i.xml:2
 msgid "Alteris I"
-msgstr ""
+msgstr "Alteris I"
 
 #: dat/assets/alteris_iv.xml:2
 msgid "Alteris IV"
-msgstr ""
+msgstr "Alteris IV"
 
 #: dat/assets/alteris_v.xml:2
 msgid "Alteris V"
-msgstr ""
+msgstr "Alteris V"
 
 #: dat/assets/aluben.xml:2
 msgid "Aluben"
-msgstr ""
+msgstr "Aluben"
 
 #: dat/assets/amaroq_i.xml:2
 msgid "Amaroq I"
-msgstr ""
+msgstr "Amaroq I"
 
 #: dat/assets/amaroq_iii.xml:2
 msgid "Amaroq III"
-msgstr ""
+msgstr "Amaroq III"
 
 #: dat/assets/amatiri_i.xml:2
 msgid "Amatiri I"
-msgstr ""
+msgstr "Amatiri I"
 
 #: dat/assets/amatiri_ia.xml:2
 msgid "Amatiri Ia"
-msgstr ""
+msgstr "Amatiri Ia"
 
 #: dat/assets/amatiri_ii.xml:2
 msgid "Amatiri II"
-msgstr ""
+msgstr "Amatiri II"
 
 #: dat/assets/ambre.xml:2
 msgid "Ambre"
-msgstr ""
+msgstr "Ambre"
 
 #: dat/assets/ambre.xml:29
 msgid ""
@@ -1137,6 +1314,14 @@ msgid ""
 "This was one of the important reasons the Emperor granted House Dvaered its "
 "independence."
 msgstr ""
+"Ambre foi um dos planetas que desempenhou um papel fundamental nas revoltas "
+"dos trabalhadores que eventualmente levaram ao estabelecimento da Casa "
+"Dvaered. Naquela época, o planeta abrigava uma porcentagem considerável da "
+"força de trabalho imperial neste setor do espaço. Sem trabalhadores para "
+"trabalhar nas minas e pátios de construção, o Império poderia perder "
+"quantias astronômicas de dinheiro a cada ciclo. Esta foi uma das razões "
+"importantes pelas quais o imperador concedeu à Casa Dvaered sua "
+"independência."
 
 #: dat/assets/ambre.xml:30
 msgid ""
@@ -1148,10 +1333,17 @@ msgid ""
 "into one of the only remaining spaces available, which was right over the "
 "freight lines."
 msgstr ""
+"O bar do espaçoporto de Ambre nunca é silencioso. Em intervalos regulares, "
+"todos os outros ruídos no bar são abafados pelo som de cápsulas de carga "
+"girando ao longo da ferrovia logo abaixo. O bar foi construído relativamente "
+"tarde no desenvolvimento do planeta; o governo imperial não viu necessidade "
+"de um quando Ambre era pouco mais do que um campo de trabalho forçado. Após "
+"a independência, o bar foi espremido em um dos únicos espaços restantes "
+"disponíveis, que ficava bem sobre as linhas de carga."
 
 #: dat/assets/amhurst.xml:2
 msgid "Amhurst"
-msgstr ""
+msgstr "Amhurst"
 
 #: dat/assets/amhurst.xml:30
 msgid ""
@@ -17762,7 +17954,7 @@ msgstr ""
 
 #: dat/outfits/weapons/plasma_cannon.xml:2
 msgid "Plasma Cannon"
-msgstr ""
+msgstr "Canhão de Plasma"
 
 #: dat/outfits/weapons/plasma_cannon.xml:9
 msgid ""
@@ -17774,7 +17966,7 @@ msgstr ""
 
 #: dat/outfits/weapons/plasma_cluster_cannon.xml:2
 msgid "Plasma Cluster Cannon"
-msgstr ""
+msgstr "Canhão Cluster de Plasma"
 
 #: dat/outfits/weapons/plasma_cluster_cannon.xml:9
 msgid ""
@@ -18393,7 +18585,7 @@ msgstr ""
 #: dat/ships/pirate_rhino.xml:16 dat/ships/pirate_shark.xml:16
 #: dat/ships/pirate_starbridge.xml:15 dat/ships/pirate_vendetta.xml:15
 msgid "Skull and Bones"
-msgstr ""
+msgstr "Crânios e Ossos"
 
 #: dat/ships/pirate_admonisher.xml:18
 msgid ""
@@ -44533,7 +44725,7 @@ msgstr ""
 #. Main stuff starts
 #: dat/missions/minerva/kex2.lua:212
 msgid "Baroness Eve"
-msgstr ""
+msgstr "Baronesa Eve"
 
 #: dat/missions/minerva/kex3.lua:52
 #, lua-format
@@ -44578,7 +44770,7 @@ msgstr ""
 #: dat/missions/minerva/kex3.lua:117 dat/missions/minerva/kex3.lua:314
 #: dat/missions/minerva/kex3.lua:399 dat/missions/minerva/kex3.lua:490
 msgid "Major Malik"
-msgstr ""
+msgstr "Major Malik"
 
 #: dat/missions/minerva/kex3.lua:117
 msgid ""
