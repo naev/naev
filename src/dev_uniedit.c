@@ -508,16 +508,17 @@ static void uniedit_renderOverlay( double bx, double by, double bw, double bh, v
             continue;
 
          value = system_getPresenceFull( sys, f, &base, &bonus );
-         l = scnprintf( buf, sizeof(buf), "%s - %s [#%c%.0f#0 = #%c%.0f#0 + #%c%.0f#0]",
-               _(sys->name), faction_name(f), getValCol(value), value, getValCol(base), base, getValCol(bonus), bonus );
+         l = scnprintf( buf, sizeof(buf), "#%c%.0f#0 = #%c%.0f#0 + #%c%.0f#0 [%s - %s]",
+               getValCol(value), value, getValCol(base), base, getValCol(bonus), bonus,
+               _(sys->name), faction_name(f) );
 
          for (j=0; j<array_size(sys->planets); j++) {
             pnt = sys->planets[j];
             if (pnt->faction!=f)
                continue;
-            l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s: #%c%.0f#0 (#%c%+.0f#0)",
-                  _(pnt->name), getValCol(pnt->presenceBase), pnt->presenceBase,
-                  getValCol(pnt->presenceBonus), pnt->presenceBonus );
+            l += scnprintf( &buf[l], sizeof(buf)-l, "\n#%c%.0f#0 (#%c%+.0f#0) [%s]",
+                  getValCol(pnt->presenceBase), pnt->presenceBase,
+                  getValCol(pnt->presenceBonus), pnt->presenceBonus, _(pnt->name) );
          }
 
          for (k=0; k<array_size(sys->jumps); k++) {
@@ -526,9 +527,10 @@ static void uniedit_renderOverlay( double bx, double by, double bw, double bh, v
                pnt = cur->planets[j];
                if (pnt->faction!=f)
                   continue;
-               l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s (%s): #%c%.0f#0 (#%c%+.0f#0)",
-                     _(pnt->name), _(cur->name), getValCol(pnt->presenceBase), pnt->presenceBase*0.5,
-                     getValCol(pnt->presenceBonus), pnt->presenceBonus*0.5 );
+               l += scnprintf( &buf[l], sizeof(buf)-l, "\n#%c%.0f#0 (#%c%+.0f#0) [%s (%s)]",
+                     getValCol(pnt->presenceBase), pnt->presenceBase*0.5,
+                     getValCol(pnt->presenceBonus), pnt->presenceBonus*0.5,
+                     _(pnt->name), _(cur->name) );
             }
          }
 
