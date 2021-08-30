@@ -7,7 +7,8 @@ mem.lanes_useneutral = true
 
 function create ()
    -- Credits.
-   ai.setcredits( rnd.rnd(ai.pilot():ship():price()/500, ai.pilot():ship():price()/200) )
+   local price = ai.pilot():ship():price()
+   ai.setcredits( rnd.rnd(price/180, price/40) )
 
    -- No bribe
    local bribe_msg = {

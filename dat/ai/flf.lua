@@ -28,7 +28,7 @@ function create ()
    local ps = ai.pilot():ship()
 
    -- Give monies.
-   ai.setcredits( rnd.rnd(ps:price()/600, ps:price()/100) )
+   ai.setcredits( rnd.rnd(ps:price()/400, ps:price()/100) )
 
    mem.loiter = 3 -- This is the amount of waypoints the pilot will pass through before leaving the system
 

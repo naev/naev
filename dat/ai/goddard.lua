@@ -22,7 +22,8 @@ local taunt_list = {
 -- Create function
 function create ()
    -- Credits
-   ai.setcredits( rnd.rnd(ai.pilot():ship():price()/300, ai.pilot():ship():price()/70) )
+   local price = ai.pilot():ship():price()
+   ai.setcredits( rnd.rnd(price/300, price/70) )
 
    mem.loiter = 3 -- This is the amount of waypoints the pilot will pass through before leaving the system
 

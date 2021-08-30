@@ -33,7 +33,7 @@ function create ()
    local price = ai.pilot():ship():price()
 
    -- Credits.
-   ai.setcredits( rnd.rnd( price/500, price/200 ) )
+   ai.setcredits( rnd.rnd( price/300, price/70 ) )
 
    mem.loiter = 3 -- This is the amount of waypoints the pilot will pass through before leaving the system
    create_post()

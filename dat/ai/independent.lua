@@ -14,7 +14,8 @@ local bribe_msg_list = {
 
 function create ()
    -- Credits.
-   ai.setcredits( rnd.rnd(ai.pilot():ship():price()/500, ai.pilot():ship():price()/200) )
+   local price = ai.pilot():ship():price()
+   ai.setcredits( rnd.rnd(price/150, price/50) ) -- Target for crime
 
    mem.loiter = 3 -- This is the amount of waypoints the pilot will pass through before leaving the system
    create_post()

@@ -10,7 +10,8 @@ mem.lanes_useneutral = true
 
 function create ()
    -- Probably the ones with the most money
-   ai.setcredits( rnd.rnd(ai.pilot():ship():price()/100, ai.pilot():ship():price()/25) )
+   local price = ai.pilot():ship():price()
+   ai.setcredits( rnd.rnd(price/100, price/25) )
 
    -- Finish up creation
    create_post()

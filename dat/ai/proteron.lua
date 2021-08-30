@@ -17,7 +17,8 @@ local bribe_no_list = {
 
 function create ()
    -- Not too many credits.
-   ai.setcredits( rnd.rnd(ai.pilot():ship():price()/300, ai.pilot():ship():price()/70) )
+   local price = ai.pilot():ship():price()
+   ai.setcredits( rnd.rnd(price/300, price/70) )
 
    -- Lines to annoy the player.
    local r = rnd.rnd(0,20)
@@ -74,22 +75,22 @@ function taunt ( target, offense )
    local taunts
    if offense then
       taunts = {
-            _("Animals like you don't deserve to live!"),
-            _("Begone from this universe, inferior scum!"),
-            _("We will cleanse you and all other scum from this universe!"),
-            _("Enemies of the state will not be tolerated!"),
-            _("Long live the Proteron!"),
-            _("War is peace!"),
-            _("Freedom is slavery!"),
+         _("Animals like you don't deserve to live!"),
+         _("Begone from this universe, inferior scum!"),
+         _("We will cleanse you and all other scum from this universe!"),
+         _("Enemies of the state will not be tolerated!"),
+         _("Long live the Proteron!"),
+         _("War is peace!"),
+         _("Freedom is slavery!"),
       }
    else
       taunts = {
-            _("How dare you attack the Proteron?!"),
-            _("I will have your head!"),
-            _("You'll regret that!"),
-            _("Your fate has been sealed, dissident!"),
-            _("You will pay for your treason!"),
-            _("Die along with the old Empire!"),
+         _("How dare you attack the Proteron?!"),
+         _("I will have your head!"),
+         _("You'll regret that!"),
+         _("Your fate has been sealed, dissident!"),
+         _("You will pay for your treason!"),
+         _("Die along with the old Empire!"),
       }
    end
 
