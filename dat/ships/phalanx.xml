@@ -1,5 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Phalanx">
+ <rating>40</rating>
  <base_type>Phalanx</base_type>
  <GFX size="95" sx="10" sy="10">phalanx</GFX>
  <GUI>brushed</GUI>

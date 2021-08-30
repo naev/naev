@@ -1,5 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Soromid Vox">
+ <rating>200</rating>
  <base_type>Vox</base_type>
  <GFX sx="12" sy="12">vox</GFX>
  <rarity>2</rarity>

@@ -1,5 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Soromid Brigand">
+ <rating>15</rating>
  <base_type>Brigand</base_type>
  <GFX>brigand</GFX>
  <rarity>2</rarity>

@@ -1,5 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Pirate Admonisher">
+ <rating>45</rating>
  <base_type>Admonisher</base_type>
  <GFX size="68">admonisher_pirate</GFX>
  <rarity>2</rarity>

@@ -1,5 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Soromid Ira">
+ <rating>140</rating>
  <base_type>Ira</base_type>
  <GFX size="112" sx="12" sy="12">ira</GFX>
  <GUI>brushed</GUI>

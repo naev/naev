@@ -1,5 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Starbridge">
+ <rating>60</rating>
  <base_type>Starbridge</base_type>
  <GFX sx="10" sy="10">starbridge</GFX>
  <GUI>brushed</GUI>

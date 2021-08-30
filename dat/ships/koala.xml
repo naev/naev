@@ -1,5 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Koala">
+ <rating>20</rating>
  <base_type>Koala</base_type>
  <GFX size="46">koala</GFX>
  <GUI>brushed</GUI>
