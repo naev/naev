@@ -1,4 +1,5 @@
 local lanes = require 'ai.core.misc.lanes'
+local shiprater = require 'shiprater'
 
 local scom = {}
 
@@ -128,6 +129,7 @@ end
 
 -- @brief adds a pilot to the table
 function scom.addPilot( pilots, name, presence, params )
+   presence = presence or shiprater.rate( name )
    pilots[ #pilots+1 ] = { pilot=name, presence=presence, params=params }
    pilots.__presence = (pilots.__presence or 0) + presence
 end
