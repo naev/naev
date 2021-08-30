@@ -138,7 +138,7 @@ function create()
    cargo = cargoes[rnd.rnd(1, #cargoes)]
    local c = misn.cargoNew( cargo[1], cargo[2] )
    -- TODO make this more nuanced
-   c:illegalto( {"Empire", "Dvaered", "Soromid", "Sirius", "Za'lek"} )
+   c:illegalto( {"Empire", "Dvaered", "Soromid", "Sirius", "Za'lek", "Frontier"} )
    cargo = cargo[1] -- set it to name only
 
    -- mission generics
