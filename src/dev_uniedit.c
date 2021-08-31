@@ -641,8 +641,7 @@ static int uniedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
 
                   /* Detect double click to open system. */
                   if (array_size(uniedit_sys) == 1) {
-                     DEBUG("%u - %u < %u", SDL_GetTicks(), lastClick, UNIEDIT_DOUBLECLICK_THRESHOLD*2);
-                     if ((SDL_GetTicks()-lastClick < UNIEDIT_DOUBLECLICK_THRESHOLD*2)
+                     if ((SDL_GetTicks()-lastClick < UNIEDIT_DOUBLECLICK_THRESHOLD)
                            && (uniedit_moved < UNIEDIT_MOVE_THRESHOLD)) {
                         sysedit_open( uniedit_sys[0] );
                         uniedit_drag = 0;
