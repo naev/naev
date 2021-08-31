@@ -682,22 +682,33 @@ void ovr_render( double dt )
       ast = &cur_system->asteroids[i];
       for (j=0; j<ast->nb; j++)
          gui_renderAsteroid( &ast->asteroids[j], w, h, res, 1 );
-
-      if (pilot_isFlag( player.p, PILOT_STEALTH )) {
-         detect = vect_dist2( &player.p->solid->pos, &ast->pos );
-         if (detect - ast->radius < pow2(pilot_sensorRange() * player.p->stats.ew_detect)) {
-            col = cBlue;
-            col.a = 0.2;
-            map_overlayToScreenPos( &x, &y, ast->pos.x, ast->pos.y );
-            gl_drawCircle( x, y, ast->radius / res, &col, 1 );
-         }
-      }
    }
 
    /* Render pilots. */
    pstk  = pilot_getAll();
-   /* First do the overlays if in stealth. */
+   j = 0;
+   for (i=0; i<array_size(pstk); i++) {
+      if (pstk[i]->id == PLAYER_ID) /* Skip player. */
+         continue;
+      if (pstk[i]->id == player.p->target)
+         j = i;
+      else
+         gui_renderPilot( pstk[i], RADAR_RECT, w, h, res, 1 );
+   }
+   /* Stealth rendering. */
    if (pilot_isFlag( player.p, PILOT_STEALTH )) {
+      for (i=0; i<array_size(cur_system->asteroids); i++) {
+         ast = &cur_system->asteroids[i];
+         if (pilot_isFlag( player.p, PILOT_STEALTH )) {
+            detect = vect_dist2( &player.p->solid->pos, &ast->pos );
+            if (detect - ast->radius < pow2(pilot_sensorRange() * player.p->stats.ew_detect)) {
+               col = cBlue;
+               col.a = 0.2;
+               map_overlayToScreenPos( &x, &y, ast->pos.x, ast->pos.y );
+               gl_drawCircle( x, y, ast->radius / res, &col, 1 );
+            }
+         }
+      }
       detect = player.p->ew_stealth;
       col = cRed;
       col.a = 0.2;
@@ -713,15 +724,6 @@ void ovr_render( double dt )
          r = detect * pstk[i]->stats.ew_detect / res;
          gl_drawCircle( x, y, r, &col, 1 );
       }
-   }
-   j     = 0;
-   for (i=0; i<array_size(pstk); i++) {
-      if (pstk[i]->id == PLAYER_ID) /* Skip player. */
-         continue;
-      if (pstk[i]->id == player.p->target)
-         j = i;
-      else
-         gui_renderPilot( pstk[i], RADAR_RECT, w, h, res, 1 );
    }
    /* Render the targeted pilot */
    if (j!=0)
