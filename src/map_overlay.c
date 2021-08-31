@@ -709,7 +709,7 @@ void ovr_render( double dt )
       for (i=0; i<array_size(cur_system->asteroids); i++) {
          ast = &cur_system->asteroids[i];
          detect = vect_dist2( &player.p->solid->pos, &ast->pos );
-         if (detect - ast->radius < pow2(pilot_sensorRange() * player.p->stats.ew_detect)) {
+         if (detect < pow2(pilot_sensorRange() * player.p->stats.ew_detect + ast->radius)) {
             map_overlayToScreenPos( &x, &y, ast->pos.x, ast->pos.y );
             gl_drawCircle( x, y, ast->radius / res, &col, 1 );
          }
@@ -750,9 +750,7 @@ void ovr_render( double dt )
             0, 2, GL_FLOAT, 0 );
 
       /* Set shader uniforms. */
-      col = cWhite;
-      col.a = 0.2;
-      gl_uniformColor(shaders.stealthoverlay.color, &col);
+      gl_uniformColor(shaders.stealthoverlay.color, &cWhite);
       gl_Matrix4_Uniform(shaders.stealthoverlay.projection, gl_Matrix4_Ortho(0, 1, 0, 1, 1, -1));
       gl_Matrix4_Uniform(shaders.stealthoverlay.tex_mat, gl_Matrix4_Identity());
 
