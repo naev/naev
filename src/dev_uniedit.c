@@ -586,9 +586,10 @@ static int uniedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
 {
    (void) wid;
    (void) data;
-   int i, j;
+   int i;
    unsigned int lastClick;
-   StarSystem *sys;
+   StarSystem *sys, *clickedsys;
+   int inselection;
    SDL_Keymod mod;
 
    /* Handle modifiers. */
@@ -618,79 +619,89 @@ static int uniedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
          /* selecting star system */
          mx -= w/2. - uniedit_xpos;
          my -= h/2. - uniedit_ypos;
+         mx /= uniedit_zoom;
+         my /= uniedit_zoom;
 
+         /* Create new system if applicable. */
          if (uniedit_mode == UNIEDIT_NEWSYS) {
             uniedit_newSys( mx, my );
             uniedit_mode = UNIEDIT_DEFAULT;
             return 1;
          }
 
-         mx /= uniedit_zoom;
-         my /= uniedit_zoom;
-
+         /* Find clicked system. */
+         clickedsys = NULL;
          for (i=0; i<array_size(systems_stack); i++) {
             sys = system_getIndex(i);
+            if ((pow2(mx-sys->pos.x)+pow2(my-sys->pos.y)) > pow2(UNIEDIT_CLICK_THRESHOLD))
+               continue;
+            clickedsys = sys;
+         }
 
-            if ((pow2(mx-sys->pos.x)+pow2(my-sys->pos.y)) < pow2(UNIEDIT_CLICK_THRESHOLD)) {
+         /* Set jump if applicable. */
+         if (uniedit_mode == UNIEDIT_JUMP) {
+            uniedit_toggleJump( sys );
+            uniedit_mode = UNIEDIT_DEFAULT;
+            return 1;
+         }
 
-               /* Try to find in selected systems - begin drag move. */
-               for (j=0; j<array_size(uniedit_sys); j++) {
-                  /* Must match. */
-                  if (uniedit_sys[j] != sys)
-                     continue;
-
-                  /* Detect double click to open system. */
-                  if (array_size(uniedit_sys) == 1) {
-                     if ((SDL_GetTicks()-lastClick < UNIEDIT_DOUBLECLICK_THRESHOLD)
-                           && (uniedit_moved < UNIEDIT_MOVE_THRESHOLD)) {
-                        sysedit_open( uniedit_sys[0] );
-                        uniedit_drag = 0;
-                        uniedit_dragSys = 0;
-                        return 1;
-                     }
-                  }
-
-                  /* Handle normal click. */
-                  if (uniedit_mode == UNIEDIT_DEFAULT) {
-                     uniedit_dragSys   = 1;
-                     uniedit_tsys      = sys;
-
-                     /* Check modifier. */
-                     if (mod & (KMOD_LCTRL | KMOD_RCTRL))
-                        uniedit_tadd      = 0;
-                     else
-                        uniedit_tadd      = -1;
-                     uniedit_moved     = 0;
-                  }
-                  return 1;
-               }
-
-               if (uniedit_mode == UNIEDIT_DEFAULT) {
-                  /* Add the system if not selected. */
-                  if (!(mod & (KMOD_LCTRL | KMOD_RCTRL)))
-                     uniedit_deselect();
-                  uniedit_selectAdd( sys );
-                  uniedit_tsys      = NULL;
-
-                  /* Start dragging anyway. */
-                  uniedit_dragSys   = 1;
-                  uniedit_moved     = 0;
-               }
-               else if (uniedit_mode == UNIEDIT_JUMP) {
-                  uniedit_toggleJump( sys );
-                  uniedit_mode = UNIEDIT_DEFAULT;
-               }
-               return 1;
-            }
-
-            /* Start dragging. */
-            if ((uniedit_mode == UNIEDIT_DEFAULT) && !(mod & (KMOD_LCTRL | KMOD_RCTRL))) {
-               uniedit_drag      = 1;
-               uniedit_moved     = 0;
-               uniedit_tsys      = NULL;
+         /* See if it is selected. */
+         inselection = 0;
+         if (clickedsys != NULL) {
+            for (i=0; i<array_size(uniedit_sys); i++) {
+               if (uniedit_sys[i] != sys)
+                  continue;
+               inselection = 1;
+               break;
             }
          }
-         return 1;
+
+         /* Handle double click. */
+         if (clickedsys && inselection && array_size(uniedit_sys)==1) {
+            if ((SDL_GetTicks()-lastClick < UNIEDIT_DOUBLECLICK_THRESHOLD)
+                  && (uniedit_moved < UNIEDIT_MOVE_THRESHOLD)) {
+               sysedit_open( uniedit_sys[0] );
+               uniedit_drag = 0;
+               uniedit_dragSys = 0;
+               return 1;
+            }
+         }
+
+         /* Clicked on selected system. */
+         if ((clickedsys != NULL) && inselection) {
+            uniedit_dragSys   = 1;
+            uniedit_tsys      = clickedsys;
+            /* Check modifier. */
+            if (mod & (KMOD_LCTRL | KMOD_RCTRL))
+               uniedit_tadd      = 0;
+            else
+               uniedit_tadd      = -1;
+            uniedit_moved     = 0;
+            return 1;
+         }
+
+         /* Clicked on non-selected system. */
+         if (clickedsys != NULL) {
+            /* Add the system if not selected. */
+            if (!(mod & (KMOD_LCTRL | KMOD_RCTRL)))
+               uniedit_deselect();
+            uniedit_selectAdd( clickedsys );
+            uniedit_tsys      = NULL;
+
+            /* Start dragging anyway. */
+            uniedit_dragSys   = 1;
+            uniedit_moved     = 0;
+            return 1;
+         }
+
+         /* Start dragging. */
+         if (!(mod & (KMOD_LCTRL | KMOD_RCTRL))) {
+            uniedit_drag      = 1;
+            uniedit_moved     = 0;
+            uniedit_tsys      = NULL;
+            return 1;
+         }
+
          break;
 
       case SDL_MOUSEBUTTONUP:
@@ -868,10 +879,6 @@ static void uniedit_newSys( double x, double y )
       uniedit_newSys( x, y );
       return;
    }
-
-   /* Transform coordinates back to normal if zoomed */
-   x /= uniedit_zoom;
-   y /= uniedit_zoom;
 
    /* Create the system. */
    sys         = system_new();
