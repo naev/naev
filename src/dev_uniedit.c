@@ -617,11 +617,13 @@ static void uniedit_renderOverlay( double bx, double by, double bw, double bh, v
          if ((pow2(sx-mx)+pow2(sy-my)) > pow2(UNIEDIT_CLICK_THRESHOLD))
             continue;
 
+         /* Total presence. */
          value = system_getPresenceFull( sys, f, &base, &bonus );
          l = scnprintf( buf, sizeof(buf), "#%c%.0f#0 = #%c%.0f#0 + #%c%.0f#0 [%s - %s]",
                getValCol(value), value, getValCol(base), base, getValCol(bonus), bonus,
                _(sys->name), faction_name(f) );
 
+         /* Local presence sources. */
          for (j=0; j<array_size(sys->planets); j++) {
             pnt = sys->planets[j];
             if (pnt->faction!=f)
@@ -631,13 +633,14 @@ static void uniedit_renderOverlay( double bx, double by, double bw, double bh, v
                   getValCol(pnt->presenceBonus), pnt->presenceBonus, _(pnt->name) );
          }
 
+         /* Find neighbours if possible. */
          for (k=0; k<array_size(sys->jumps); k++) {
             cur = sys->jumps[k].target;
             for (j=0; j<array_size(cur->planets); j++) {
                pnt = cur->planets[j];
                if (pnt->faction!=f)
                   continue;
-               if (pnt->presenceRange <= 1)
+               if (pnt->presenceRange < 1)
                   continue;
                l += scnprintf( &buf[l], sizeof(buf)-l, "\n#%c%.0f#0 (#%c%+.0f#0) [%s (%s)]",
                      getValCol(pnt->presenceBase), pnt->presenceBase*0.5,
