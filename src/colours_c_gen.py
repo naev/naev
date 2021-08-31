@@ -74,9 +74,9 @@ COLOURS = [
     # Outfit slot colours
     # Taken from https://cran.r-project.org/web/packages/khroma/vignettes/tol.html#muted
     Colour( "OutfitHeavy",  0.8, 0.4, 0.46 ),
-    Colour( "OutfitMedium", 0.2, 0.73, 0.93 ),
+    Colour( "OutfitMedium", 0.16, 0.63, 0.81 ),
     #Colour( "OutfitMedium", 0.55, 0.8, 0.93 ),
-    Colour( "OutfitLight",  0.86, 0.8, 0.46 ),
+    Colour( "OutfitLight",  0.75, 0.7, 0.40 ),
     # Objects
     Colour( "Inert",        221./255., 221./255., 221./255. ),
     Colour( "Neutral",      221./255., 204./255., 119./255. ),
