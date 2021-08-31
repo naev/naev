@@ -26,6 +26,9 @@
 #include "shaders.gen.h"
 
 
+#define OPENGL_NUM_FBOS    3 /**< Number of FBOs to allocate and deal with. */
+
+
 /*
  * Contains info about the opengl screen
  */
@@ -67,8 +70,8 @@ typedef struct glInfo_ {
    SDL_Window *window; /**< Window for SDL2. */
    SDL_GLContext context; /**< Context for OpenGL. */
    GLuint current_fbo; /**< Current framebuffer. */
-   GLuint fbo[2]; /**< Framebuffers. */
-   GLuint fbo_tex[2]; /**< Texture for framebuffers. */
+   GLuint fbo[OPENGL_NUM_FBOS]; /**< Framebuffers. */
+   GLuint fbo_tex[OPENGL_NUM_FBOS]; /**< Texture for framebuffers. */
 } glInfo;
 extern glInfo gl_screen; /* local structure set with gl_init and co */
 

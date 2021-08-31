@@ -592,6 +592,7 @@ void ovr_render( double dt )
    int i, j;
    Pilot *const*pstk;
    AsteroidAnchor *ast;
+   AsteroidExclusion *aexcl;
    SafeLane *safelanes;
    Planet *pnt;
    JumpPoint *jp;
@@ -697,21 +698,34 @@ void ovr_render( double dt )
    }
    /* Stealth rendering. */
    if (pilot_isFlag( player.p, PILOT_STEALTH )) {
+      glBindFramebuffer( GL_FRAMEBUFFER, gl_screen.fbo[2] );
+      glClearColor( 0., 0., 0., 0. );
+      glClear( GL_COLOR_BUFFER_BIT );
+
+      col.r = 0.;
+      col.g = 0.;
+      col.b = 1.;
+      col.a = 0.5;
       for (i=0; i<array_size(cur_system->asteroids); i++) {
          ast = &cur_system->asteroids[i];
-         if (pilot_isFlag( player.p, PILOT_STEALTH )) {
-            detect = vect_dist2( &player.p->solid->pos, &ast->pos );
-            if (detect - ast->radius < pow2(pilot_sensorRange() * player.p->stats.ew_detect)) {
-               col = cBlue;
-               col.a = 0.2;
-               map_overlayToScreenPos( &x, &y, ast->pos.x, ast->pos.y );
-               gl_drawCircle( x, y, ast->radius / res, &col, 1 );
-            }
+         detect = vect_dist2( &player.p->solid->pos, &ast->pos );
+         if (detect - ast->radius < pow2(pilot_sensorRange() * player.p->stats.ew_detect)) {
+            map_overlayToScreenPos( &x, &y, ast->pos.x, ast->pos.y );
+            gl_drawCircle( x, y, ast->radius / res, &col, 1 );
          }
       }
+
+      col.g = 1.;
+      col.b = 0.;
+      for (i=0; i<array_size(cur_system->astexclude); i++) {
+         aexcl = &cur_system->astexclude[i];
+         map_overlayToScreenPos( &x, &y, aexcl->pos.x, aexcl->pos.y );
+         gl_drawCircle( x, y, aexcl->radius / res, &col, 1 );
+      }
+
       detect = player.p->ew_stealth;
-      col = cRed;
-      col.a = 0.2;
+      col.r = 1.;
+      col.g = 0.;
       for (i=0; i<array_size(pstk); i++) {
          if (areAllies( player.p->faction, pstk[i]->faction ) || pilot_isFriendly(pstk[i]))
             continue;
@@ -724,6 +738,29 @@ void ovr_render( double dt )
          r = detect * pstk[i]->stats.ew_detect / res;
          gl_drawCircle( x, y, r, &col, 1 );
       }
+
+      glBindFramebuffer(GL_FRAMEBUFFER, gl_screen.current_fbo);
+      glClearColor( 0., 0., 0., 1. );
+
+      glUseProgram(shaders.stealthoverlay.program);
+      glBindTexture( GL_TEXTURE_2D, gl_screen.fbo_tex[2] );
+
+      glEnableVertexAttribArray( shaders.stealthoverlay.vertex );
+      gl_vboActivateAttribOffset( gl_squareVBO, shaders.stealthoverlay.vertex,
+            0, 2, GL_FLOAT, 0 );
+
+      /* Set shader uniforms. */
+      col = cWhite;
+      col.a = 0.2;
+      gl_uniformColor(shaders.stealthoverlay.color, &col);
+      gl_Matrix4_Uniform(shaders.stealthoverlay.projection, gl_Matrix4_Ortho(0, 1, 0, 1, 1, -1));
+      gl_Matrix4_Uniform(shaders.stealthoverlay.tex_mat, gl_Matrix4_Identity());
+
+      /* Draw. */
+      glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
+
+      /* Clear state. */
+      glDisableVertexAttribArray( shaders.texture.vertex );
    }
    /* Render the targeted pilot */
    if (j!=0)

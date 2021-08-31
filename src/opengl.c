@@ -266,7 +266,7 @@ static int gl_getFullscreenMode (void)
  */
 static int gl_createWindow( unsigned int flags )
 {
-   int ret, fallback;
+   int i, ret, fallback;
 
    /* Create the window. */
    gl_screen.window = SDL_CreateWindow( APPNAME,
@@ -301,10 +301,10 @@ static int gl_createWindow( unsigned int flags )
 
    /* Finish getting attributes. */
    gl_screen.current_fbo = 0; /* No FBO set. */
-   gl_screen.fbo[0] = GL_INVALID_VALUE;
-   gl_screen.fbo_tex[0] = GL_INVALID_VALUE;
-   gl_screen.fbo[1] = GL_INVALID_VALUE;
-   gl_screen.fbo_tex[1] = GL_INVALID_VALUE;
+   for (i=0; i<OPENGL_NUM_FBOS; i++) {
+      gl_screen.fbo[i]     = GL_INVALID_VALUE;
+      gl_screen.fbo_tex[i] = GL_INVALID_VALUE;
+   }
    SDL_GL_GetAttribute( SDL_GL_DEPTH_SIZE, &gl_screen.depth );
    gl_activated = 1; /* Opengl is now activated. */
 
@@ -514,7 +514,7 @@ void gl_resize (void)
    gl_defViewport();
 
    /* Set up framebuffer. */
-   for (i=0; i<2; i++) {
+   for (i=0; i<OPENGL_NUM_FBOS; i++) {
       if (gl_screen.fbo[i] != GL_INVALID_VALUE) {
          glDeleteFramebuffers( 1, &gl_screen.fbo[i] );
          glDeleteTextures( 1, &gl_screen.fbo_tex[i] );
@@ -668,7 +668,7 @@ void gl_colorblind( int enable )
 void gl_exit (void)
 {
    int i;
-   for (i=0; i<2; i++) {
+   for (i=0; i<OPENGL_NUM_FBOS; i++) {
       if (gl_screen.fbo[i] != GL_INVALID_VALUE) {
          glDeleteFramebuffers( 1, &gl_screen.fbo[i] );
          glDeleteTextures( 1, &gl_screen.fbo_tex[i] );

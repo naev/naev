@@ -98,6 +98,14 @@ SHADERS = [
       subroutines = {},
    ),
    Shader(
+      name = "stealthoverlay",
+      vs_path = "texture.vert",
+      fs_path = "stealthoverlay.frag",
+      attributes = ["vertex"],
+      uniforms = ["projection", "color", "tex_mat"],
+      subroutines = {},
+   ),
+   Shader(
       name = "nebula",
       vs_path = "nebula.vert",
       fs_path = "nebula_overlay.frag",
