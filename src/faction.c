@@ -161,13 +161,28 @@ int faction_get( const char* name )
 /**
  * @brief Returns all faction IDs in an array (array.h).
  */
-int* faction_getAll()
+int* faction_getAll (void)
 {
    int i;
    int *f;
 
-   f  = array_create_size( int, array_size(faction_stack) );
+   f = array_create_size( int, array_size(faction_stack) );
+   for (i=0; i<array_size(faction_stack); i++)
+      array_push_back( &f, i );
 
+   return f;
+}
+
+
+/**
+ * @brief Returns all non-invisible faction IDs in an array (array.h).
+ */
+int* faction_getAllVisible (void)
+{
+   int i;
+   int *f;
+
+   f = array_create_size( int, array_size(faction_stack) );
    for (i=0; i<array_size(faction_stack); i++)
       if (!faction_isFlag( &faction_stack[i], FACTION_INVISIBLE ))
          array_push_back( &f, i );

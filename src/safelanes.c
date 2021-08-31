@@ -437,7 +437,7 @@ static void safelanes_initStacks_faction (void)
    const StarSystem *systems_stack;
 
    faction_stack = array_create( Faction );
-   faction_all = faction_getAll();
+   faction_all = faction_getAllVisible();
    for (fi=0; fi<array_size(faction_all); fi++) {
       f = faction_all[fi];
       Faction rec = {.id = f, .lane_length_per_presence = faction_lane_length_per_presence(f)};

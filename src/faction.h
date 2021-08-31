@@ -20,7 +20,8 @@
 int faction_isFaction( int f );
 int faction_exists( const char* name );
 int faction_get( const char* name );
-int* faction_getAll();
+int* faction_getAll (void);
+int* faction_getAllVisible (void);
 int* faction_getKnown();
 int faction_isInvisible( int id );
 int faction_setInvisible( int id, int state );
