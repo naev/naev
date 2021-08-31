@@ -702,7 +702,6 @@ static int uniedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
             uniedit_tsys      = NULL;
             return 1;
          }
-
          break;
 
       case SDL_MOUSEBUTTONUP:
