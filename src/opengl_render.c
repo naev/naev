@@ -774,7 +774,7 @@ void gl_drawCircleH( const gl_Matrix4 *H, const glColour *c, int filled )
 
    glUseProgram( shaders.circle.program );
    glUniform2f( shaders.circle.dimensions, r, r );
-   glUniform1f( shaders.circle.parami, filled );
+   glUniform1i( shaders.circle.parami, filled );
    gl_renderShaderH( &shaders.circle, H, c, 1 );
 }
 
