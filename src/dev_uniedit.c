@@ -485,7 +485,7 @@ static void uniedit_renderFactionDisks( double x, double y, double r )
    c.r = col->r;
    c.g = col->g;
    c.b = col->b;
-   c.a = 0.6;
+   c.a = 0.5;
 
    for (i=0; i<array_size(systems_stack); i++) {
       sys = system_getIndex( i );
@@ -496,7 +496,7 @@ static void uniedit_renderFactionDisks( double x, double y, double r )
       presence = system_getPresence( sys, uniedit_view_faction );
 
       /* draws the disk representing the faction */
-      sr = 5.*sqrt(presence) * uniedit_zoom * 0.5;
+      sr = 0.5*M_PI*sqrt(presence) * uniedit_zoom;
 
       //glUseProgram(shaders.factiondisk.program);
       //glUniform1f(shaders.factiondisk.paramf, r / sr );
