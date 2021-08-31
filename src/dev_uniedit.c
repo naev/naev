@@ -640,6 +640,8 @@ static int uniedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
                      if ((SDL_GetTicks()-uniedit_dragTime < UNIEDIT_DRAG_THRESHOLD*2)
                            && (uniedit_moved < UNIEDIT_MOVE_THRESHOLD)) {
                         sysedit_open( uniedit_sys[0] );
+                        uniedit_drag = 0;
+                        uniedit_dragSys = 0;
                         return 1;
                      }
                   }
@@ -701,7 +703,7 @@ static int uniedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
             uniedit_drag      = 0;
          }
          if (uniedit_dragSys) {
-            if ((SDL_GetTicks() - uniedit_dragTime < UNIEDIT_DRAG_THRESHOLD) &&
+            if ((SDL_GetTicks()-uniedit_dragTime < UNIEDIT_DRAG_THRESHOLD) &&
                   (uniedit_moved < UNIEDIT_MOVE_THRESHOLD) && (uniedit_tsys != NULL)) {
                if (uniedit_tadd == 0)
                   uniedit_selectRm( uniedit_tsys );
