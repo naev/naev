@@ -535,6 +535,8 @@ static void uniedit_renderOverlay( double bx, double by, double bw, double bh, v
 
       mx = uniedit_mx - bw/2. + uniedit_xpos;
       my = uniedit_my - bh/2. + uniedit_ypos;
+      mx /= uniedit_zoom;
+      my /= uniedit_zoom;
 
       for (i=0; i<array_size(systems_stack); i++) {
          sys = system_getIndex(i);
@@ -625,12 +627,15 @@ static int uniedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
             return 1;
          }
 
+         mx /= uniedit_zoom;
+         my /= uniedit_zoom;
+
          for (i=0; i<array_size(systems_stack); i++) {
             sys = system_getIndex( i );
 
             /* get position */
-            x = sys->pos.x * uniedit_zoom;
-            y = sys->pos.y * uniedit_zoom;
+            x = sys->pos.x;
+            y = sys->pos.y;
 
             if ((pow2(mx-x)+pow2(my-y)) < t) {
 
