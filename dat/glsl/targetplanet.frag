@@ -4,7 +4,7 @@
 uniform vec4 color;
 uniform vec2 dimensions;
 uniform float dt;
-uniform float r;
+uniform float paramf;
 
 in vec2 pos;
 out vec4 color_out;
@@ -20,7 +20,7 @@ void main(void) {
    float d = sdArc( uv, CS(-M_PI/4.0), CS(M_PI/22.0*32.0), inner, w );
 
    /* Rotation matrix. */
-   float dts = 0.1 * max( 0.5, 100.0 / r );
+   float dts = 0.1 * max( 0.5, 100.0 / paramf );
    float c, s;
    s = sin(dt*dts);
    c = cos(dt*dts);
@@ -29,7 +29,7 @@ void main(void) {
    vec2 auv = abs(uv);
    if (auv.y < auv.x)
       auv.xy = vec2( auv.y, auv.x );
-   if (r > 100.0) {
+   if (paramf > 100.0) {
       const float arcseg = M_PI/64.0;
       const vec2 shortarc = CS(arcseg);
       for (int i=2; i<16; i+=4)

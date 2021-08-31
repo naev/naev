@@ -1012,7 +1012,7 @@ void map_renderFactionDisks( double x, double y, double r, int editor, double al
          c.a = 0.6 * alpha;
 
          glUseProgram(shaders.factiondisk.program);
-         glUniform1f(shaders.factiondisk.r, r / sr );
+         glUniform1f(shaders.factiondisk.paramf, r / sr );
          gl_renderShader( tx, ty, sr, sr, 0., &shaders.factiondisk, &c, 1 );
       }
    }
@@ -1106,7 +1106,8 @@ void map_renderJumps( double x, double y, int editor)
       gl_vboActivateAttribOffset( map_vbo, shaders.smooth.vertex, 0, 2, GL_FLOAT, 0 );
       gl_vboActivateAttribOffset( map_vbo, shaders.smooth.vertex_color,
             sizeof(GLfloat) * 2*3, 4, GL_FLOAT, 0 );
-      for (j = 0; j < array_size(sys->jumps); j++) {
+      
+      for (j=0; j < array_size(sys->jumps); j++) {
          jsys = sys->jumps[j].target;
          if (sys_isFlag(jsys,SYSTEM_HIDDEN))
             continue;

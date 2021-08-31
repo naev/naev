@@ -432,7 +432,7 @@ static void uniedit_renderFactionDisks( double x, double y, double r )
       sr = 5.*sqrt(presence) * uniedit_zoom * 0.5;
 
       glUseProgram(shaders.factiondisk.program);
-      glUniform1f(shaders.factiondisk.r, r / sr );
+      glUniform1f(shaders.factiondisk.paramf, r / sr );
       gl_renderShader( tx, ty, sr, sr, 0., &shaders.factiondisk, &c, 1 );
    }
 }

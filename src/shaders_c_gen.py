@@ -41,7 +41,7 @@ class Shader:
 
 class SimpleShader(Shader):
     def __init__(self, name, fs_path):
-        super().__init__( name=name, vs_path="project_pos.vert", fs_path=fs_path, attributes=["vertex"], uniforms=["projection","color","dimensions","dt","r"], subroutines={} )
+        super().__init__( name=name, vs_path="project_pos.vert", fs_path=fs_path, attributes=["vertex"], uniforms=["projection","color","dimensions","dt","paramf","parami","paramv"], subroutines={} )
     def header_chunks(self):
         yield f"   SimpleShader {self.name};\n"
 
@@ -299,7 +299,9 @@ typedef struct SimpleShader_ {
     GLuint color;
     GLuint dimensions;
     GLuint dt;
-    GLuint r;
+    GLuint parami;
+    GLuint paramf;
+    GLuint paramv;
 } SimpleShader;
 
 typedef struct Shaders_ {

@@ -165,7 +165,7 @@ void gl_renderRectH( const gl_Matrix4 *H, const glColour *c, int filled )
 void gl_renderCross( double x, double y, double r, const glColour *c )
 {
    glUseProgram(shaders.crosshairs.program);
-   glUniform1f(shaders.crosshairs.r, 1.); /* No outline. */
+   glUniform1f(shaders.crosshairs.paramf, 1.); /* No outline. */
    gl_renderShader( x, y, r, r, 0., &shaders.crosshairs, c, 1 );
 }
 
@@ -774,7 +774,7 @@ void gl_drawCircleH( const gl_Matrix4 *H, const glColour *c, int filled )
 
    glUseProgram( shaders.circle.program );
    glUniform2f( shaders.circle.dimensions, r, r );
-   glUniform1f( shaders.circle.r, filled );
+   glUniform1f( shaders.circle.parami, filled );
    gl_renderShaderH( &shaders.circle, H, c, 1 );
 }
 
@@ -797,7 +797,7 @@ void gl_drawLine( const double x1, const double y1,
    s = hypotf( x2-x1, y2-y1 );
 
    glUseProgram(shaders.sdfsolid.program);
-   glUniform1f(shaders.sdfsolid.r, 1.); /* No outline. */
+   glUniform1f(shaders.sdfsolid.paramf, 1.); /* No outline. */
    gl_renderShader( (x1+x2)/2., (y1+y2)/2., s/2.+0.5, 1.0, a, &shaders.sdfsolid, c, 1 );
 }
 

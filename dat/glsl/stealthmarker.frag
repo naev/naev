@@ -3,13 +3,13 @@
 
 uniform vec4 color;
 uniform vec2 dimensions;
-uniform float r;
+uniform float paramf;
 
 in vec2 pos;
 out vec4 color_out;
 
 void main(void) {
-   float a = r * M_PI;
+   float a = paramf * M_PI;
    float c = cos(a);
    float s = sin(a);
    vec2 uv = vec2(pos.x, -pos.y);

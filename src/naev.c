@@ -580,7 +580,7 @@ void loadscreen_render( double done, const char *msg )
 
    /* Draw progress bar. */
    glUseProgram(shaders.progressbar.program);
-   glUniform1f( shaders.progressbar.r, loading_r );
+   glUniform1f( shaders.progressbar.paramf, loading_r );
    glUniform1f( shaders.progressbar.dt, done );
    gl_renderShader( x, y, w, h, 0., &shaders.progressbar, NULL, 0 );
 

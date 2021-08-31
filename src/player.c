@@ -1022,7 +1022,7 @@ static void player_renderStealthOverlay( double dt )
 
    /* Draw the main circle. */
    glUseProgram( shaders.stealthmarker.program );
-   glUniform1f( shaders.stealthmarker.r, st );
+   glUniform1f( shaders.stealthmarker.paramf, st );
    gl_renderShader( x, y, r*z, r*z, 0., &shaders.stealthmarker, &col, 1 );
 }
 
@@ -1075,7 +1075,7 @@ static void player_renderAimHelper( double dt )
    c2 = cWhite;
    c2.a = 0.7;
    glUseProgram(shaders.crosshairs.program);
-   glUniform1f(shaders.crosshairs.r, 1.);
+   glUniform1f(shaders.crosshairs.paramf, 1.);
    gl_renderShader( x2, y2, 7, 7, 0., &shaders.crosshairs, &c2, 1 );
 
    gl_gameToScreenCoords( &x2, &y2, player.p->solid->pos.x + r*cos( b ),

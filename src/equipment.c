@@ -494,7 +494,7 @@ static void equipment_renderColumn( double x, double y, double w, double h,
          /* Render a thick frame with a yes/no color, and geometric cue. */
          int ok = (pilot_canEquip( p, &lst[i], o ) == NULL);
          glUseProgram( shaders.status.program );
-         glUniform1f( shaders.status.r, ok );
+         glUniform1f( shaders.status.paramf, ok );
          gl_renderShader( x, y, w, h, 0., &shaders.status, NULL, 0 );
       }
 
@@ -942,7 +942,7 @@ static void equipment_renderShip( double bx, double by,
 
       /* Render it. */
       glUseProgram(shaders.crosshairs.program);
-      glUniform1f(shaders.crosshairs.r, 2.);
+      glUniform1f(shaders.crosshairs.paramf, 2.);
       gl_renderShader( px+v.x, py+v.y, 7, 7, 0., &shaders.crosshairs, &cRadar_player, 1 );
    }
 }
