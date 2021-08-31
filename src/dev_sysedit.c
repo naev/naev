@@ -705,8 +705,8 @@ static void sysedit_render( double bx, double by, double w, double h, void *data
       rh = 9.;
 
       /* Render. */
-      glUseProgram(shaders.safelanes.program);
-      gl_renderShader( (x1+x2)/2., (y1+y2)/2., rw, rh, r, &shaders.safelanes, &col, 1 );
+      glUseProgram(shaders.safelane.program);
+      gl_renderShader( (x1+x2)/2., (y1+y2)/2., rw, rh, r, &shaders.safelane, &col, 1 );
    }
 
    /* Render cursor position. */

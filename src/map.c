@@ -878,22 +878,19 @@ else (x) = MAX( y, (x) - dt )
    if (map_mode == MAPMODE_TRADE)
       map_renderCommod(  bx, by, x, y, w, h, r, 0 );
 
-   /* Initialize with values from cRed */
-   col.r = cRed.r;
-   col.g = cRed.g;
-   col.b = cRed.b;
-
-   /* Selected system. */
-   if (map_selected != -1) {
-      sys = system_getIndex( map_selected );
-      gl_drawCircle( x + sys->pos.x * map_zoom, y + sys->pos.y * map_zoom,
-            1.5*r, &col, 0 );
-   }
-
    /* Values from cRadar_tPlanet */
    col.r = cRadar_tPlanet.r;
    col.g = cRadar_tPlanet.g;
    col.b = cRadar_tPlanet.b;
+
+   /* Selected system. */
+   if (map_selected != -1) {
+      sys = system_getIndex( map_selected );
+      glUseProgram( shaders.selectplanet.program );
+      glUniform1f( shaders.selectplanet.dt, map_nebu_dt ); /* good enough. */
+      gl_renderShader( x + sys->pos.x * map_zoom, y + sys->pos.y * map_zoom,
+            1.7*r, 1.7*r, 0., &shaders.selectplanet, &cRadar_tPlanet, 1 );
+   }
 
    /* Current planet. */
    gl_drawCircle( x + cur_system->pos.x * map_zoom,
@@ -1147,7 +1144,7 @@ void map_renderJumps( double x, double y, double radius, int editor )
          glUseProgram( shaders.jumplane.program );
          gl_uniformColor( shaders.jumplane.paramv, cole );
          glUniform1f( shaders.jumplane.paramf, radius );
-         gl_renderShader( (x1+x2)/2., (y1+y2)/2., rw, rh, r, &shaders.safelanes, col, 1 );
+         gl_renderShader( (x1+x2)/2., (y1+y2)/2., rw, rh, r, &shaders.jumplane, col, 1 );
       }
    }
 }

@@ -21,8 +21,8 @@ void main(void) {
       float dcirc = abs( sdCircle( pos, rad ) );
       d           = min( dcirc, dplus );
    }
-   float alpha = smoothstep(-m, 0.0, -d);
-   float beta  = smoothstep(-2.0*m, -m, -d);
+   float alpha = smoothstep(    -m, 0.0, -d);
+   float beta  = smoothstep(-2.0*m,  -m, -d);
    color_out   = color * vec4( vec3(alpha), beta );
 }
 

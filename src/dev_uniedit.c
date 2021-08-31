@@ -90,7 +90,7 @@ static StarSystem *uniedit_tsys = NULL; /**< Temporarily clicked system. */
 static int uniedit_tadd       = 0;  /**< Temporarily clicked system should be added. */
 static double uniedit_mx      = 0.; /**< X mouse position. */
 static double uniedit_my      = 0.; /**< Y mouse position. */
-
+static double uniedit_dt      = 0.; /**< Deltatick. */
 
 static map_find_t *found_cur  = NULL;  /**< Pointer to found stuff. */
 static int found_ncur         = 0;     /**< Number of found stuff. */
@@ -178,6 +178,7 @@ void uniedit_open( unsigned int wid_unused, char *unused )
    uniedit_zoom   = 1.;
    uniedit_xpos   = 0.;
    uniedit_ypos   = 0.;
+   uniedit_dt     = 0.;
 
    /* Create the window. */
    wid = window_create( "wdwUniverseEditor", _("Universe Editor"), -1, -1, -1, -1 );
@@ -478,6 +479,8 @@ static void uniedit_render( double bx, double by, double w, double h, void *data
    StarSystem *sys;
    int i;
 
+   uniedit_dt += naev_getrealdt();
+
    /* Parameters. */
    map_renderParams( bx, by, uniedit_xpos, uniedit_ypos, w, h, uniedit_zoom, &x, &y, &r );
 
@@ -487,8 +490,10 @@ static void uniedit_render( double bx, double by, double w, double h, void *data
    /* Render the selected system selections. */
    for (i=0; i<array_size(uniedit_sys); i++) {
       sys = uniedit_sys[i];
-      gl_drawCircle( x + sys->pos.x * uniedit_zoom, y + sys->pos.y * uniedit_zoom,
-            1.5*r, &cWhite, 0 );
+      glUseProgram( shaders.selectplanet.program );
+      glUniform1f( shaders.selectplanet.dt, uniedit_dt );
+      gl_renderShader( x + sys->pos.x * uniedit_zoom, y + sys->pos.y * uniedit_zoom,
+            1.5*r, 1.5*r, 0., &shaders.selectplanet, &cWhite, 1 );
    }
 }
 

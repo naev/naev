@@ -11,8 +11,8 @@ void main(void) {
    float m = 1.0 / dimensions.x;
    float d = sdTriangleEquilateral( uv*1.15  ) / 1.15;
    d = abs(d+2.0*m);
-   float alpha = smoothstep(-m, 0.0, -d);
-   float beta  = smoothstep(-2.0*m, -m, -d);
+   float alpha = smoothstep(    -m, 0.0, -d);
+   float beta  = smoothstep(-2.0*m,  -m, -d);
    color_out   = color * vec4( vec3(alpha), beta );
 }
 

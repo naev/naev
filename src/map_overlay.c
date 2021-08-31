@@ -649,8 +649,8 @@ void ovr_render( double dt )
       rh = 9.;
 
       /* Render. */
-      glUseProgram(shaders.safelanes.program);
-      gl_renderShader( x+rx/2., y+ry/2., rw, rh, r, &shaders.safelanes, &col, 1 );
+      glUseProgram(shaders.safelane.program);
+      gl_renderShader( x+rx/2., y+ry/2., rw, rh, r, &shaders.safelane, &col, 1 );
    }
    array_free( ovr_render_safelanes );
    ovr_render_safelanes = safelanes;

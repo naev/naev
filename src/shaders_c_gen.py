@@ -260,8 +260,12 @@ SHADERS = [
       fs_path = "jumplane.frag",
    ),
    SimpleShader(
-      name = "safelanes",
-      fs_path = "safelanes.frag",
+      name = "safelane",
+      fs_path = "safelane.frag",
+   ),
+   SimpleShader(
+      name = "selectplanet",
+      fs_path = "selectplanet.frag",
    ),
    SimpleShader(
       name = "sdfsolid",

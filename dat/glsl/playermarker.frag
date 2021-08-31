@@ -11,8 +11,8 @@ void main(void) {
    float m = 1.0 / dimensions.x;
    float d = 2.0*sdTriangleIsosceles( uv*0.5+vec2(0.0,0.5), vec2(0.2,0.7) );
    d = abs(d+2.0*m);
-   float alpha = smoothstep(-m, 0.0, -d);
-   float beta  = smoothstep(-2.0*m, -m, -d);
+   float alpha = smoothstep(    -m, 0.0, -d);
+   float beta  = smoothstep(-2.0*m,  -m, -d);
    color_out   = color * vec4( vec3(alpha), beta );
 }
 
