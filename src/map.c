@@ -95,7 +95,7 @@ extern Planet* land_planet;
 static void map_update( unsigned int wid );
 /* Render. */
 static void map_render( double bx, double by, double w, double h, void *data );
-static void map_renderPath( double x, double y, double a, double alpha );
+static void map_renderPath( double x, double y, double radius, double alpha );
 static void map_renderMarkers( double x, double y, double r, double a );
 static void map_renderCommod( double bx, double by, double x, double y,
                               double w, double h, double r, int editor );
@@ -776,9 +776,6 @@ static void map_drawMarker( double x, double y, double r, double a,
    r *= 2.0;
 
    glUseProgram(shaders.sysmarker.program);
-   //glUniform2f( shaders.sysmarker.dimensions, r, r );
-   //glUniform1f( shaders.sysmarker.r, loading_r );
-   //glUniform1f( shaders.sysmarker.dt, done );
    gl_renderShader( x, y, r, r, alpha, &shaders.sysmarker, &col, 1 );
 }
 
@@ -861,7 +858,7 @@ else (x) = MAX( y, (x) - dt )
 
    /* Render the player's jump route. */
    if (map_alpha_path > 0.)
-      map_renderPath( x, y, col.a, map_alpha_path );
+      map_renderPath( x, y, r, map_alpha_path );
 
    /* Render systems. */
    map_renderSystems( bx, by, x, y, w, h, r, 0 );
@@ -1110,7 +1107,7 @@ void map_renderJumps( double x, double y, double radius, int editor )
 
          /* Choose colours. */
          cole = &cLightBlue;
-         for (k = 0; k < array_size(jsys->jumps); k++) {
+         for (k=0; k < array_size(jsys->jumps); k++) {
             if (jsys->jumps[k].target == sys) {
                if (jp_isFlag(&jsys->jumps[k], JP_EXITONLY))
                   cole = &cWhite;
@@ -1215,39 +1212,56 @@ void map_renderSystems( double bx, double by, double x, double y,
 /**
  * @brief Render the map path.
  */
-static void map_renderPath( double x, double y, double a, double alpha )
+static void map_renderPath( double x, double y, double radius, double alpha )
 {
-   int j, k, sign;
-   const glColour *col;
-   double w0, w1, x0, y0, x1, y1, h0, h1;
-   GLfloat vertex[(3*2)*(2+4)];
-   StarSystem *sys1, *sys0;
+   int j;
+   glColour col;
+   double x1,y1, x2,y2, rx,ry, rw,rh, r;
+   StarSystem *sys1, *sys2;
    int jmax, jcur;
 
    if (array_size(map_path) != 0) {
-      sys0 = cur_system;
+      sys1 = cur_system;
       jmax = pilot_getJumps(player.p); /* Maximum jumps. */
       jcur = jmax; /* Jump range remaining. */
 
       for (j=0; j<array_size(map_path); j++) {
-         sys1 = map_path[j];
-         if (sys_isFlag(sys0,SYSTEM_HIDDEN) || sys_isFlag(sys1,SYSTEM_HIDDEN))
+         sys2 = map_path[j];
+         if (sys_isFlag(sys1,SYSTEM_HIDDEN) || sys_isFlag(sys2,SYSTEM_HIDDEN))
             continue;
          if (jcur == jmax && jmax > 0)
-            col = &cGreen;
+            col = cGreen;
          else if (jcur < 1)
-            col = &cRed;
+            col = cRed;
          else
-            col = &cYellow;
-         x0 = x + sys0->pos.x * map_zoom;
-         y0 = y + sys0->pos.y * map_zoom;
+            col = cYellow;
+         col.a = alpha;
+
          x1 = x + sys1->pos.x * map_zoom;
          y1 = y + sys1->pos.y * map_zoom;
+         x2 = x + sys2->pos.x * map_zoom;
+         y2 = y + sys2->pos.y * map_zoom;
+         rx = x2-x1;
+         ry = y2-y1;
+         r  = atan2( ry, rx );
+         rw = MOD(rx,ry)/2.;
+         rh = (jcur>=1) ? 5. : 3.;
+
+         /*
          w0 = w1 = MIN( map_zoom, 1.5 ) / hypot( x0-x1, y0-y1 );
          w0 *= jcur >= 1 ? 4 : 2;
          jcur--;
          w1 *= jcur >= 1 ? 4 : 2;
+         */
 
+         glUseProgram( shaders.jumplanegoto.program );
+         glUniform1f( shaders.jumplanegoto.dt, (jcur < 1) ? 0. : map_nebu_dt );
+         glUniform1f( shaders.jumplanegoto.paramf, radius );
+         gl_renderShader( (x1+x2)/2., (y1+y2)/2., rw, rh, r, &shaders.jumplanegoto, &col, 1 );
+
+         jcur--;
+
+#if 0
          /* Draw the lines. */
          for (k=0; k<3*2; k++) {
             h0 = 1 - .5*(k/2);  /* Fraction of the way toward (x0, y0) */
@@ -1268,8 +1282,9 @@ static void map_renderPath( double x, double y, double a, double alpha )
                sizeof(GLfloat) * 2*6, 4, GL_FLOAT, 0 );
          glDrawArrays( GL_TRIANGLE_STRIP, 0, 6 );
          gl_endSmoothProgram();
+#endif
 
-         sys0 = sys1;
+         sys1 = sys2;
       }
    }
 }

@@ -15,6 +15,5 @@ void main(void) {
    color_out      = mix( color, paramv, smoothstep(0.0,1.0,pos.x*0.5+0.5) );
    color_out.a   *= 0.8 - 0.6*abs(pos.x);
    color_out.a   *= smoothstep(dimensions.x, dimensions.x-paramf, length(uv));
-   color_out.rgb *= vec3(alpha);
+   color_out.a   *= alpha;
 }
-

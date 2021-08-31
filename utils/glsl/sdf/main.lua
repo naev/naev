@@ -367,6 +367,22 @@ vec4 sdf_stealth( vec4 color, vec2 uv )
    return color;
 }
 
+vec4 sdf_jumplane( vec4 color, vec2 uv )
+{
+   uv   *= dimensions;
+   float d = sdBox( uv, dimensions-vec2(1.0) );
+
+   uv.y  = abs(uv.y);
+   uv.x -= u_time*dimensions.y*0.5;
+   uv.x  = mod(-uv.x,dimensions.y)-0.25*dimensions.y;
+   float ds = -0.2*abs(uv.x-0.5*uv.y) + 2.0/3.0;
+   d = max( d, ds );
+
+   float alpha = smoothstep(-1.0, 0.0, -d);
+   color.a *= smoothstep( -1.0, 0.0, -d );
+   return color;
+}
+
 vec4 bg( vec2 uv )
 {
    vec3 c;
@@ -394,7 +410,8 @@ vec4 effect( vec4 color, Image tex, vec2 uv, vec2 px )
    //col_out = sdf_jumpmarker( color, uv_rel );
    //col_out = sdf_pilotmarker( color, uv_rel );
    //col_out = sdf_playermarker( color, uv_rel );
-   col_out = sdf_stealth( color, uv_rel );
+   //col_out = sdf_stealth( color, uv_rel );
+   col_out = sdf_jumplane( color, uv_rel );
 
    return mix( bg(uv), col_out, col_out.a );
 }
@@ -514,6 +531,7 @@ function love.draw ()
    draw_shader(  75 )
    draw_shader(  38 )
    draw_shader(  20 )
+   draw_shader(  10 )
 
    lg.setShader()
 end
