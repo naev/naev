@@ -585,8 +585,7 @@ static int uniedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
 {
    (void) wid;
    (void) data;
-   int i;
-   double x,y;
+   int i, j;
    StarSystem *sys;
    SDL_Keymod mod;
 
@@ -626,24 +625,20 @@ static int uniedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
          my /= uniedit_zoom;
 
          for (i=0; i<array_size(systems_stack); i++) {
-            sys = system_getIndex( i );
+            sys = system_getIndex(i);
 
-            /* get position */
-            x = sys->pos.x;
-            y = sys->pos.y;
-
-            if ((pow2(mx-x)+pow2(my-y)) < pow2(UNIEDIT_CLICK_THRESHOLD)) {
+            if ((pow2(mx-sys->pos.x)+pow2(my-sys->pos.y)) < pow2(UNIEDIT_CLICK_THRESHOLD)) {
 
                /* Try to find in selected systems - begin drag move. */
-               for (i=0; i<array_size(uniedit_sys); i++) {
+               for (j=0; j<array_size(uniedit_sys); j++) {
                   /* Must match. */
-                  if (uniedit_sys[i] != sys)
+                  if (uniedit_sys[j] != sys)
                      continue;
 
                   /* Detect double click to open system. */
-                  if ((SDL_GetTicks() - uniedit_dragTime < UNIEDIT_DRAG_THRESHOLD*2)
-                        && (uniedit_moved < UNIEDIT_MOVE_THRESHOLD)) {
-                     if (array_size(uniedit_sys) == 1) {
+                  if (array_size(uniedit_sys) == 1) {
+                     if ((SDL_GetTicks()-uniedit_dragTime < UNIEDIT_DRAG_THRESHOLD*2)
+                           && (uniedit_moved < UNIEDIT_MOVE_THRESHOLD)) {
                         sysedit_open( uniedit_sys[0] );
                         return 1;
                      }
@@ -691,13 +686,13 @@ static int uniedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
                uniedit_moved     = 0;
                uniedit_tsys      = NULL;
             }
-            return 1;
          }
+         return 1;
          break;
 
       case SDL_MOUSEBUTTONUP:
          if (uniedit_drag) {
-            if ((SDL_GetTicks() - uniedit_dragTime < UNIEDIT_DRAG_THRESHOLD) && (uniedit_moved < UNIEDIT_MOVE_THRESHOLD)) {
+            if ((SDL_GetTicks()-uniedit_dragTime < UNIEDIT_DRAG_THRESHOLD) && (uniedit_moved < UNIEDIT_MOVE_THRESHOLD)) {
                if (uniedit_tsys == NULL)
                   uniedit_deselect();
                else
