@@ -2557,7 +2557,7 @@ static int aiL_nearhyptarget( lua_State *L )
 {
    JumpPoint *jp, *jiter;
    double mindist, dist;
-   int i;
+   int i, useshidden;
    LuaJump lj;
 
    /* Find nearest jump .*/
@@ -2565,8 +2565,10 @@ static int aiL_nearhyptarget( lua_State *L )
    jp      = NULL;
    for (i=0; i < array_size(cur_system->jumps); i++) {
       jiter = &cur_system->jumps[i];
+      useshidden = faction_usesHiddenJumps( cur_pilot->faction );
+
       /* We want only standard jump points to be used. */
-      if (jp_isFlag(jiter, JP_HIDDEN) || jp_isFlag(jiter, JP_EXITONLY))
+      if ((!useshidden && jp_isFlag(jiter, JP_HIDDEN)) || jp_isFlag(jiter, JP_EXITONLY))
          continue;
       /* Get nearest distance. */
       dist  = vect_dist2( &cur_pilot->solid->pos, &jiter->pos );
@@ -2597,7 +2599,7 @@ static int aiL_nearhyptarget( lua_State *L )
 static int aiL_rndhyptarget( lua_State *L )
 {
    JumpPoint **jumps, *jiter;
-   int i, r;
+   int i, r, useshidden;
    int *id;
    LuaJump lj;
 
@@ -2605,13 +2607,15 @@ static int aiL_rndhyptarget( lua_State *L )
    if (array_size(cur_system->jumps) == 0)
       return 0;
 
+   useshidden = faction_usesHiddenJumps( cur_pilot->faction );
+
    /* Find usable jump points. */
    jumps = array_create_size( JumpPoint*, array_size(cur_system->jumps) );
    id    = array_create_size( int, array_size(cur_system->jumps) );
    for (i=0; i < array_size(cur_system->jumps); i++) {
       jiter = &cur_system->jumps[i];
       /* We want only standard jump points to be used. */
-      if (jp_isFlag(jiter, JP_HIDDEN) || jp_isFlag(jiter, JP_EXITONLY))
+      if ((!useshidden && jp_isFlag(jiter, JP_HIDDEN)) || jp_isFlag(jiter, JP_EXITONLY))
          continue;
       array_push_back( &id, i );
       array_push_back( &jumps, jiter );
