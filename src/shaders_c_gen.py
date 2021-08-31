@@ -256,6 +256,10 @@ SHADERS = [
       fs_path = "targetplanet.frag",
    ),
    SimpleShader(
+      name = "jumplane",
+      fs_path = "jumplane.frag",
+   ),
+   SimpleShader(
       name = "safelanes",
       fs_path = "safelanes.frag",
    ),

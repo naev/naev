@@ -320,6 +320,6 @@ void gl_uniformColor(GLint location, const glColour *c) {
    glUniform4f(location, c->r, c->g, c->b, c->a);
 }
 
-void gl_uniformAColor(GLint location, const glColour *c, float a) {
+void gl_uniformAColor(GLint location, const glColour *c, GLfloat a) {
    glUniform4f(location, c->r, c->g, c->b, a);
 }

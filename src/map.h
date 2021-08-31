@@ -56,7 +56,7 @@ void map_renderParams( double bx, double by, double xpos, double ypos,
 void map_renderFactionDisks( double x, double y, double r, int editor, double alpha );
 void map_renderSystemEnvironment( double x, double y, int editor, double alpha );
 void map_renderDecorators( double x, double y, int editor, double alpha );
-void map_renderJumps( double x, double y, int editor );
+void map_renderJumps( double x, double y, double radius, int editor );
 void map_renderSystems( double bx, double by, double x, double y,
       double w, double h, double r, int editor );
 void map_renderNames( double bx, double by, double x, double y,

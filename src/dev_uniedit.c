@@ -458,7 +458,7 @@ void uniedit_renderMap( double bx, double by, double w, double h, double x, doub
       map_renderSystemEnvironment( x, y, 1, 1. );
 
    /* Render jump paths. */
-   map_renderJumps( x, y, 1 );
+   map_renderJumps( x, y, r, 1 );
 
    /* Render systems. */
    map_renderSystems( bx, by, x, y, w, h, r, 1 );
