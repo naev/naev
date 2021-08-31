@@ -10,8 +10,8 @@
  </GFX>
  <presence>
   <faction>Pirate</faction>
-  <base>200.000000</base>
-  <bonus>200.000000</bonus>
+  <base>350.000000</base>
+  <bonus>50.000000</bonus>
   <range>5</range>
  </presence>
  <general>

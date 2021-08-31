@@ -10,8 +10,8 @@
  </GFX>
  <presence>
   <faction>Independent</faction>
-  <base>12.500000</base>
-  <bonus>12.500000</bonus>
+  <base>16.666667</base>
+  <bonus>8.333333</bonus>
   <range>1</range>
  </presence>
  <general>

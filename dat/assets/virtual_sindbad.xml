@@ -3,8 +3,8 @@
  <virtual/>
  <presence>
   <faction>FLF</faction>
-  <base>50.000000</base>
-  <bonus>50.000000</bonus>
+  <base>66.666667</base>
+  <bonus>33.333333</bonus>
   <range>2</range>
  </presence>
 </asset>

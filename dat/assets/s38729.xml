@@ -10,8 +10,8 @@
  </GFX>
  <presence>
   <faction>Collective</faction>
-  <base>15.000000</base>
-  <bonus>15.000000</bonus>
+  <base>20.000000</base>
+  <bonus>10.000000</bonus>
   <range>2</range>
  </presence>
  <general>

@@ -45,6 +45,7 @@ const glColour* faction_colour( int f );
 int* faction_getEnemies( int f );
 int* faction_getAllies( int f );
 int* faction_getGroup( int which );
+int faction_usesHiddenJumps( int f );
 
 /* set stuff */
 int faction_setKnown( int id, int state );

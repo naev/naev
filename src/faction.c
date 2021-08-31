@@ -41,6 +41,7 @@
 #define FACTION_INVISIBLE     (1<<1) /**< Faction isn't exposed to the player. */
 #define FACTION_KNOWN         (1<<2) /**< Faction is known to the player. */
 #define FACTION_DYNAMIC       (1<<3) /**< Faction was created dynamically. */
+#define FACTION_USESHIDDENJUMPS (1<<4) /**< Faction will try to use hidden jumps when possible. */
 
 #define faction_setFlag(fa,f) ((fa)->flags |= (f))
 #define faction_rmFlag(fa,f)  ((fa)->flags &= ~(f))
@@ -1410,6 +1411,11 @@ static int faction_parse( Faction* temp, xmlNodePtr parent )
          continue;
       }
 
+      if (xml_isNode(node,"useshiddenjumps")) {
+         faction_setFlag(temp, FACTION_USESHIDDENJUMPS);
+         continue;
+      }
+
       /* Avoid warnings. */
       if (xml_isNode(node,"allies") || xml_isNode(node,"enemies"))
          continue;
@@ -1787,6 +1793,17 @@ int *faction_getGroup( int which )
       default:
          return NULL;
    }
+}
+
+
+/**
+ * @brief Checks to see if a faction uses hidden jumps.
+ */
+int faction_usesHiddenJumps( int f )
+{
+   if (faction_isFaction(f))
+      return faction_isFlag( &faction_stack[f], FACTION_USESHIDDENJUMPS );
+   return 0;
 }
 
 

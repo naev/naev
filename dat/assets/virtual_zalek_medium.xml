@@ -3,8 +3,8 @@
  <virtual/>
  <presence>
   <faction>Za'lek</faction>
-  <base>75.000000</base>
-  <bonus>75.000000</bonus>
+  <base>100.000000</base>
+  <bonus>50.000000</bonus>
   <range>2</range>
  </presence>
 </asset>

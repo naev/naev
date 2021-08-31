@@ -3893,6 +3893,7 @@ void system_presenceAddAsset( StarSystem *sys, const Planet *pnt )
    double base = pnt->presenceBase;
    double bonus = pnt->presenceBonus;
    double range = pnt->presenceRange;
+   int usehidden = faction_usesHiddenJumps( faction );
 
    /* Check for NULL and display a warning. */
    if (sys == NULL) {
@@ -3926,7 +3927,7 @@ void system_presenceAddAsset( StarSystem *sys, const Planet *pnt )
 
    /* Create the initial queue consisting of sys adjacencies. */
    for (i=0; i < array_size(sys->jumps); i++) {
-      if (sys->jumps[i].target->spilled == 0 && !jp_isFlag( &sys->jumps[i], JP_HIDDEN ) && !jp_isFlag( &sys->jumps[i], JP_EXITONLY )) {
+      if (sys->jumps[i].target->spilled == 0 && (usehidden || !jp_isFlag( &sys->jumps[i], JP_HIDDEN )) && !jp_isFlag( &sys->jumps[i], JP_EXITONLY )) {
          q_enqueue( q, sys->jumps[i].target );
          sys->jumps[i].target->spilled = 1;
       }
@@ -3952,7 +3953,7 @@ void system_presenceAddAsset( StarSystem *sys, const Planet *pnt )
 
       /* Enqueue all its adjacencies to the next range queue. */
       for (i=0; i<array_size(cur->jumps); i++) {
-         if (cur->jumps[i].target->spilled == 0 && !jp_isFlag( &cur->jumps[i], JP_HIDDEN ) && !jp_isFlag( &cur->jumps[i], JP_EXITONLY )) {
+         if (cur->jumps[i].target->spilled == 0 && (usehidden || !jp_isFlag( &cur->jumps[i], JP_HIDDEN )) && !jp_isFlag( &cur->jumps[i], JP_EXITONLY )) {
             q_enqueue( qn, cur->jumps[i].target );
             cur->jumps[i].target->spilled = 1;
          }

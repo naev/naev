@@ -72,6 +72,7 @@
   <spawn>pirate</spawn>
   <standing>pirate</standing>
   <equip>pirate</equip>
+  <useshiddenjumps/>
   <allies>
   </allies>
   <enemies>
