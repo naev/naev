@@ -649,7 +649,7 @@ static int uniedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
          inselection = 0;
          if (clickedsys != NULL) {
             for (i=0; i<array_size(uniedit_sys); i++) {
-               if (uniedit_sys[i] != sys)
+               if (uniedit_sys[i] != clickedsys)
                   continue;
                inselection = 1;
                break;
@@ -657,7 +657,7 @@ static int uniedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
          }
 
          /* Handle double click. */
-         if (clickedsys && inselection && array_size(uniedit_sys)==1) {
+         if (clickedsys!=NULL && inselection && array_size(uniedit_sys)==1) {
             if ((SDL_GetTicks()-lastClick < UNIEDIT_DOUBLECLICK_THRESHOLD)
                   && (uniedit_moved < UNIEDIT_MOVE_THRESHOLD)) {
                sysedit_open( uniedit_sys[0] );
@@ -729,7 +729,6 @@ static int uniedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
                for (i=0; i<array_size(uniedit_sys); i++)
                   dsys_saveSystem(uniedit_sys[i]);
          }
-         uniedit_lastClick = 0;
          break;
 
       case SDL_MOUSEMOTION:
