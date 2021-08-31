@@ -1241,8 +1241,9 @@ static void map_renderPath( double x, double y, double radius, double alpha )
          rh = 5.;
 
          glUseProgram( shaders.jumplanegoto.program );
-         glUniform1f( shaders.jumplanegoto.dt, (jcur < 1) ? 0. : map_nebu_dt );
+         glUniform1f( shaders.jumplanegoto.dt, map_nebu_dt );
          glUniform1f( shaders.jumplanegoto.paramf, radius );
+         glUniform1i( shaders.jumplanegoto.parami, (jcur >= 1) );
          gl_renderShader( (x1+x2)/2., (y1+y2)/2., rw, rh, r, &shaders.jumplanegoto, &col, 1 );
 
          jcur--;
