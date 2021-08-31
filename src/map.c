@@ -75,8 +75,6 @@ static char** map_modes = NULL; /**< Array (array.h) of the map modes' names, e.
 static int listMapModeVisible = 0; /**< Whether the map mode list widget is visible. */
 static double commod_av_gal_price = 0; /**< Average price across the galaxy. */
 static double map_nebu_dt     = 0.; /***< Nebula animation stuff. */
-/* VBO. */
-static gl_vbo *map_vbo = NULL; /**< Map VBO. */
 
 /*
  * extern
@@ -123,8 +121,6 @@ static void map_window_close( unsigned int wid, char *str );
  */
 int map_init (void)
 {
-   /* Create the VBO. */
-   map_vbo = gl_vboCreateStream( sizeof(GLfloat) * 6*(2+4), NULL );
    return 0;
 }
 
@@ -135,9 +131,6 @@ int map_init (void)
 void map_exit (void)
 {
    int i;
-
-   gl_vboDestroy(map_vbo);
-   map_vbo = NULL;
 
    if (decorator_stack != NULL) {
       for (i=0; i<array_size(decorator_stack); i++)
@@ -1106,22 +1099,22 @@ void map_renderJumps( double x, double y, double radius, int editor )
             continue;
 
          /* Choose colours. */
-         cole = &cLightBlue;
+         cole = &cAquaBlue;
          for (k=0; k < array_size(jsys->jumps); k++) {
             if (jsys->jumps[k].target == sys) {
                if (jp_isFlag(&jsys->jumps[k], JP_EXITONLY))
-                  cole = &cWhite;
+                  cole = &cGrey50;
                else if (jp_isFlag(&jsys->jumps[k], JP_HIDDEN))
                   cole = &cRed;
                break;
             }
          }
          if (jp_isFlag(&sys->jumps[j], JP_EXITONLY))
-            col = &cWhite;
+            col = &cGrey50;
          else if (jp_isFlag(&sys->jumps[j], JP_HIDDEN))
             col = &cRed;
          else
-            col = &cLightBlue;
+            col = &cAquaBlue;
 
          x2 = x + jsys->pos.x * map_zoom;
          y2 = y + jsys->pos.y * map_zoom;
@@ -1244,15 +1237,8 @@ static void map_renderPath( double x, double y, double radius, double alpha )
          rx = x2-x1;
          ry = y2-y1;
          r  = atan2( ry, rx );
-         rw = MOD(rx,ry)/2.;
-         rh = (jcur>=1) ? 5. : 3.;
-
-         /*
-         w0 = w1 = MIN( map_zoom, 1.5 ) / hypot( x0-x1, y0-y1 );
-         w0 *= jcur >= 1 ? 4 : 2;
-         jcur--;
-         w1 *= jcur >= 1 ? 4 : 2;
-         */
+         rw = (MOD(rx,ry)+radius)/2.;
+         rh = 5.;
 
          glUseProgram( shaders.jumplanegoto.program );
          glUniform1f( shaders.jumplanegoto.dt, (jcur < 1) ? 0. : map_nebu_dt );
@@ -1260,30 +1246,6 @@ static void map_renderPath( double x, double y, double radius, double alpha )
          gl_renderShader( (x1+x2)/2., (y1+y2)/2., rw, rh, r, &shaders.jumplanegoto, &col, 1 );
 
          jcur--;
-
-#if 0
-         /* Draw the lines. */
-         for (k=0; k<3*2; k++) {
-            h0 = 1 - .5*(k/2);  /* Fraction of the way toward (x0, y0) */
-            h1 = .5*(k/2);      /* Fraction of the way toward (x1, y1) */
-            sign = k%2 * 2 - 1; /* Alternating +/- */
-            vertex[2*k+0] = h0*x0 + h1*x1 + sign*(y1-y0)*(h0*w0+h1*w1);
-            vertex[2*k+1] = h0*y0 + h1*y1 - sign*(x1-x0)*(h0*w0+h1*w1);
-            vertex[4*k+12] = col->r;
-            vertex[4*k+13] = col->g;
-            vertex[4*k+14] = col->b;
-            vertex[4*k+15] = (a/4. + .25 + h0*h1) * alpha; /* More solid in the middle for some reason. */
-         }
-         gl_vboSubData( map_vbo, 0, sizeof(GLfloat) * 6*(2+4), vertex );
-
-         gl_beginSmoothProgram(gl_view_matrix);
-         gl_vboActivateAttribOffset( map_vbo, shaders.smooth.vertex, 0, 2, GL_FLOAT, 0 );
-         gl_vboActivateAttribOffset( map_vbo, shaders.smooth.vertex_color,
-               sizeof(GLfloat) * 2*6, 4, GL_FLOAT, 0 );
-         glDrawArrays( GL_TRIANGLE_STRIP, 0, 6 );
-         gl_endSmoothProgram();
-#endif
-
          sys1 = sys2;
       }
    }

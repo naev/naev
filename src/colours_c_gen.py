@@ -56,6 +56,7 @@ COLOURS = [
     Colour( "MidnightBlue", 0.10, 0.10, 0.4 ),
     Colour( "DarkBlue",     0.10, 0.10, 0.60 ),
     Colour( "Blue",         0.20, 0.20, 0.80 ),
+    Colour( "AquaBlue",     0.30, 0.30, 0.90 ),
     Colour( "LightBlue",    0.40, 0.40, 1.00 ),
     Colour( "PrimeBlue",    0.00, 0.00, 1.00 ),
     Colour( "Cyan",         0.00, 1.00, 1.00 ),

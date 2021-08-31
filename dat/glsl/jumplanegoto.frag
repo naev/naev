@@ -13,14 +13,15 @@ void main(void) {
    float m = 1.0 / dimensions.x;
    float d = sdBox( uv, dimensions-vec2(1.0) );
 
-   uv.y  = abs(uv.y);
-   uv.x -= dt*dimensions.y*0.5;
-   uv.x  = mod(-uv.x,dimensions.y)-0.25*dimensions.y;
-   float ds = -0.2*abs(uv.x-0.5*uv.y) + 2.0/3.0;
+   vec2 uvs = uv;
+   uvs.y  = abs(uvs.y);
+   uvs.x -= dt*dimensions.y*0.8;
+   uvs.x  = mod(-uvs.x,dimensions.y)-0.25*dimensions.y;
+   float ds = -0.2*abs(uvs.x-0.5*uvs.y) + 2.0/3.0;
    d = max( d, ds );
 
-   float alpha = smoothstep(-1.0, 0.0, -d);
-   color_out   = color;
-   color_out.a*= alpha;
-   color_out.a*= smoothstep(dimensions.x, dimensions.x-paramf, length(uv));
+   float alpha    = smoothstep(-1.0, 0.0, -d);
+   color_out      = color;
+   color_out.a   *= alpha;
+   color_out.a   *= smoothstep(dimensions.x, dimensions.x-paramf, length(uv));
 }
