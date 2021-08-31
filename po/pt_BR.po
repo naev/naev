@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2021-08-28 12:00-0400\n"
-"PO-Revision-Date: 2021-08-31 04:33+0000\n"
+"PO-Revision-Date: 2021-08-31 13:11+0000\n"
 "Last-Translator: Anthony Gregory Souza dos Santos "
 "<antonigregorysouza123@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) <https://hosted.weblate.org/projects/naev/"
@@ -188,8 +188,9 @@ msgid "Ian Douglas Scott \"ids1024\" <ian@iandouglasscott.com>"
 msgstr "Ian Douglas Scott \"ids1024\" <ian@iandouglasscott.com>"
 
 #: dat/AUTHORS:11
+#, fuzzy
 msgid "   * Misc. Development and Lua unifier"
-msgstr ""
+msgstr "   * Misc. Development and Lua unifier"
 
 #: dat/AUTHORS:13
 msgid "Justin Blanchard \"UncombedCoconut\" <UncombedCoconut@gmail.com>"
@@ -204,16 +205,18 @@ msgid "nenau"
 msgstr "\"nenau\""
 
 #: dat/AUTHORS:17
+#, fuzzy
 msgid "   * Misc. Development and Dvaered aficionado"
-msgstr ""
+msgstr "   * Misc. Development and Dvaered aficionado"
 
 #: dat/AUTHORS:19
 msgid "Jack Greiner <jack@emoss.org>"
 msgstr "Jack Greiner <jack@emoss.org>"
 
 #: dat/AUTHORS:20
+#, fuzzy
 msgid "   * CI dude and Bringer of automated releases"
-msgstr ""
+msgstr "   * CI dude and Bringer of automated releases"
 
 #: dat/AUTHORS:22
 msgid "Viktor Hahn <viktor.hahn@web.de>"
@@ -354,76 +357,87 @@ msgid "   * Planet Graphics"
 msgstr "   * Gráfico dos Planetas"
 
 #: dat/AUTHORS:74
+#, fuzzy
 msgid "   * Render Script"
-msgstr ""
+msgstr "   * Render Script"
 
 #: dat/AUTHORS:75
 msgid "   Helped out when the project was starting. Great morale booster."
-msgstr ""
+msgstr "   Ajudou no início do projeto. Grande impulsionador da moral."
 
 #: dat/AUTHORS:77
 msgid "Amir Taaki <genjix@gmail.com>"
-msgstr ""
+msgstr "Amir Taaki <genjix@gmail.com>"
 
 #: dat/AUTHORS:78
 msgid "Rob Loach <http://robloach.net>"
-msgstr ""
+msgstr "Rob Loach <http://robloach.net>"
 
 #: dat/AUTHORS:79
+#, fuzzy
 msgid "   * SDL_collide"
-msgstr ""
+msgstr "   * SDL_collide"
 
 #: dat/AUTHORS:80
 msgid ""
 "   Although we don't use the SDL_collide library itself, it was "
 "inspirational for Naev's own collision routines."
 msgstr ""
+"   Embora não usemos a biblioteca SDL_collide em si, ela foi inspiradora "
+"para as próprias rotinas de colisão de Naev."
 
 #: dat/AUTHORS:82
 msgid "Pete Shinners <pete@shinners.org>"
-msgstr ""
+msgstr "Pete Shinners <pete@shinners.org>"
 
 #: dat/AUTHORS:83
 msgid "   * SavePNG"
-msgstr ""
+msgstr "   * SavePNG"
 
 #: dat/AUTHORS:84
 msgid "   Great function ripped straight out of pygame. Works marvelously!"
 msgstr ""
+"   Grande função extraída diretamente do pygame. Funciona maravilhosamente!"
 
 #: dat/AUTHORS:86
 msgid "Aurore D. \"Rore\" <aurore.d@gmail.com>"
-msgstr ""
+msgstr "Aurore D. \"Rore\" <aurore.d@gmail.com>"
 
 #: dat/AUTHORS:87
+#, fuzzy
 msgid "   * Planet gimp script"
-msgstr ""
+msgstr "   * Planet gimp script"
 
 #: dat/AUTHORS:88
 msgid ""
 "   Saved a lot of trouble by allowing us to quickly create space planet "
 "graphics."
 msgstr ""
+"   Evitou muitos problemas ao nos permitir criar rapidamente gráficos de "
+"planetas espaciais."
 
 #: dat/AUTHORS:90
 msgid "Andrew Mustun"
-msgstr ""
+msgstr "Andrew Mustun"
 
 #: dat/AUTHORS:91
+#, fuzzy
 msgid "   * Sprite gimp script"
-msgstr ""
+msgstr "   * Sprite gimp script"
 
 #: dat/AUTHORS:92
 msgid "   Although not used directly, it helped create our own sprite script."
 msgstr ""
+"   Embora não seja usado diretamente, ajudou a criar nosso próprio script de "
+"sprite."
 
 #: dat/AUTHORS:94
 msgid "J.C. Wilk"
-msgstr ""
+msgstr "J.C. Wilk"
 
 #: dat/AUTHORS:95
 msgid "   * Turbulence noise"
-msgstr ""
+msgstr "   * Ruído de turbulência"
 
 #: dat/AUTHORS:96
 msgid ""
@@ -431,81 +445,92 @@ msgid ""
 "turbulence noise seemed to do everything perfectly where we screwed up. With "
 "heavy optimization the code was introduced to Naev."
 msgstr ""
+"   Após o terrível fracasso de nossa própria tentativa de fractal de plasma, "
+"o ruído de turbulência do TCOD parecia fazer tudo perfeitamente onde "
+"erramos. Com uma otimização pesada, o código foi apresentado a Naev."
 
 #: dat/AUTHORS:98
 msgid "Jordi Pegueroles Queralt \"pegue\" <j.pegueroles.queralt@gmail.com>"
-msgstr ""
+msgstr "Jordi Pegueroles Queralt \"pegue\" <j.pegueroles.queralt@gmail.com>"
 
 #: dat/AUTHORS:99
 msgid "   * Mace Rocket model"
-msgstr ""
+msgstr "   * Modelo Mace Rocket"
 
 #: dat/AUTHORS:101
 msgid "Brian J. Cameron"
-msgstr ""
+msgstr "Brian J. Cameron"
 
 #: dat/AUTHORS:102
 msgid "   * Much artwork"
-msgstr ""
+msgstr "   Muitas obras de arte"
 
 #: dat/AUTHORS:103
 msgid "   Talented artist, one of the first in creating custom Naev content."
 msgstr ""
+"   Artista talentoso, um dos primeiros na criação de conteúdo personalizado "
+"da Naev."
 
 #: dat/AUTHORS:105
 msgid "Camilo Polymeris <cpolymeris@gmx.net>"
-msgstr ""
+msgstr "Camilo Polymeris <cpolymeris@gmx.net>"
 
 #: dat/AUTHORS:106
 msgid "   * Art and code"
-msgstr ""
+msgstr "   * Arte e código"
 
 #: dat/AUTHORS:107
 msgid ""
 "   Great to see someone else working on Naev code and Lua documentation."
 msgstr ""
+"   É bom ver mais alguém trabalhando no código de Naev e na sua documentação "
+"Lua."
 
 #: dat/AUTHORS:109
 msgid "Dimitry Marakasov"
-msgstr ""
+msgstr "Dimitry Marakasov"
 
 #: dat/AUTHORS:110
+#, fuzzy
 msgid "   * FreeBSD port and CMake"
-msgstr ""
+msgstr "   * FreeBSD port and CMake"
 
 #: dat/AUTHORS:111
 msgid "   Talented coder who did the first official port of Naev."
-msgstr ""
+msgstr "   Codificador talentoso que fez o primeiro porte oficial da Naev."
 
 #: dat/AUTHORS:113
 msgid "Alexandru Mosoi <brtzsnr@gmail.com>"
-msgstr ""
+msgstr "Alexandru Mosoi <brtzsnr@gmail.com>"
 
 #: dat/AUTHORS:114
 msgid "   * Coded cool features"
-msgstr ""
+msgstr "   * Recursos bacanas codificados"
 
 #: dat/AUTHORS:115
 msgid ""
 "   First non-bobbens coder to make serious commits! Like the reason the maps "
 "are all over or the faction in the maps."
 msgstr ""
+"   Primeiro programador não bobbens a fazer commits sérios! Como a razão "
+"pela qual os mapas estão terminados ou a facção nos mapas."
 
 #: dat/AUTHORS:117
 msgid "Peter Johnson <zid@zid.yggdrasil.sk>"
-msgstr ""
+msgstr "Peter Johnson <zid@zid.yggdrasil.sk>"
 
 #: dat/AUTHORS:118
 msgid "   * Sped up nebula generation by a lot"
-msgstr ""
+msgstr "   * Acelerou muito a geração de nebulosas"
 
 #: dat/AUTHORS:120
 msgid "Unavowed <unavowed@vexillium.org>"
-msgstr ""
+msgstr "Unavowed <unavowed@vexillium.org>"
 
 #: dat/AUTHORS:121
 msgid "   * Ported Naev's build system to autotools."
 msgstr ""
+"   * Sistema de compilação do Naev portado para ferramentas automáticas."
 
 #: dat/AUTHORS:122
 msgid "   Probably the cleanest autotools implementation I've ever seen."
