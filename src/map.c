@@ -1103,14 +1103,14 @@ void map_renderJumps( double x, double y, double radius, int editor )
          for (k=0; k < array_size(jsys->jumps); k++) {
             if (jsys->jumps[k].target == sys) {
                if (jp_isFlag(&jsys->jumps[k], JP_EXITONLY))
-                  cole = &cGrey50;
+                  cole = &cGrey80;
                else if (jp_isFlag(&jsys->jumps[k], JP_HIDDEN))
                   cole = &cRed;
                break;
             }
          }
          if (jp_isFlag(&sys->jumps[j], JP_EXITONLY))
-            col = &cGrey50;
+            col = &cGrey80;
          else if (jp_isFlag(&sys->jumps[j], JP_HIDDEN))
             col = &cRed;
          else
