@@ -35,7 +35,7 @@
 #include "unidiff.h"
 
 
-#define BUTTON_WIDTH    80 /**< Map button width. */
+#define BUTTON_WIDTH    90 /**< Map button width. */
 #define BUTTON_HEIGHT   30 /**< Map button height. */
 
 
@@ -118,6 +118,7 @@ static void uniedit_btnEditRename( unsigned int wid, char *unused );
 static void uniedit_btnEditRmAsset( unsigned int wid, char *unused );
 static void uniedit_btnEditAddAsset( unsigned int wid, char *unused );
 static void uniedit_btnEditAddAssetAdd( unsigned int wid, char *unused );
+static void uniedit_btnViewModeSet( unsigned int wid, char *unused );
 /* System renaming. */
 static int uniedit_checkName( const char *name );
 static void uniedit_renameSys (void);
@@ -136,6 +137,7 @@ static int uniedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
 /* Button functions. */
 static void uniedit_close( unsigned int wid, char *wgt );
 static void uniedit_save( unsigned int wid_unused, char *unused );
+static void uniedit_btnView( unsigned int wid_unused, char *unused );
 static void uniedit_btnJump( unsigned int wid_unused, char *unused );
 static void uniedit_btnRename( unsigned int wid_unused, char *unused );
 static void uniedit_btnEdit( unsigned int wid_unused, char *unused );
@@ -167,10 +169,8 @@ void uniedit_open( unsigned int wid_unused, char *unused )
 
    /* Reset some variables. */
    uniedit_mode   = UNIEDIT_DEFAULT;
-   //uniedit_viewmode = UNIEDIT_VIEW_DEFAULT;
-   //uniedit_view_faction = -1;
-   uniedit_viewmode = UNIEDIT_VIEW_PRESENCE;
-   uniedit_view_faction = faction_get("Empire");
+   uniedit_viewmode = UNIEDIT_VIEW_DEFAULT;
+   uniedit_view_faction = -1;
    uniedit_drag   = 0;
    uniedit_dragSys = 0;
    uniedit_tsys   = NULL;
@@ -199,8 +199,12 @@ void uniedit_open( unsigned int wid_unused, char *unused )
          "btnSave", _("Save All"), uniedit_save );
    buttonPos++;
 
-   /* Jump toggle. */
+   /* View button. */
+   window_addButton( wid, -20, 20+(BUTTON_HEIGHT+20)*buttonPos, BUTTON_WIDTH, BUTTON_HEIGHT,
+         "btnView", _("View Mode"), uniedit_btnView );
    buttonPos++;
+
+   /* Jump toggle. */
    window_addButtonKey( wid, -20, 20+(BUTTON_HEIGHT+20)*buttonPos, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnJump", _("Jump"), uniedit_btnJump, SDLK_j );
    buttonPos++;
@@ -329,6 +333,68 @@ void uniedit_autosave( unsigned int wid_unused, char *unused )
 void uniedit_updateAutosave (void)
 {
    window_checkboxSet( uniedit_wid, "chkEditAutoSave", conf.devautosave );
+}
+
+
+/**
+ * @brief Allows selecting the view.
+ */
+static void uniedit_btnView( unsigned int wid_unused, char *unused )
+{
+   (void) wid_unused;
+   (void) unused;
+   unsigned int wid;
+   int i, j;
+   Planet *planets, *p;
+   char **str;
+   int h;
+   int *factions, f, hasfact;
+
+   /* Find usable factions. */
+   factions = faction_getAll();
+   planets  = planet_getAll();
+   for (i=0; i<array_size(factions); i++) {
+      f = factions[i];
+      hasfact = 0;
+      for (j=0; j<array_size(planets); j++) {
+         p = &planets[j];
+         if (p->faction != f)
+            continue;
+         if (p->presenceBase==0. && p->presenceBonus==0.)
+            continue;
+         hasfact = 1;
+         break;
+      }
+      if (!hasfact)
+         factions[i] = -1;
+   }
+
+   /* Create the window. */
+   wid = window_create( "wdwUniEditView", _("Select a View Mode"), -1, -1, UNIEDIT_EDIT_WIDTH, UNIEDIT_EDIT_HEIGHT );
+   window_setCancel( wid, window_close );
+
+   /* Add virtual asset list. */
+   str   = malloc( sizeof(char*) * (array_size(factions)+1) );
+   str[0]= strdup( "Default" );
+   j     = 1;
+   for (i=0; i<array_size(factions); i++) {
+      f = factions[i];
+      if (f>=0)
+         str[j++] = strdup( faction_name( f ) );
+   }
+   h = UNIEDIT_EDIT_HEIGHT-60-(BUTTON_HEIGHT+20);
+   window_addList( wid, 20, -40, UNIEDIT_EDIT_WIDTH-40, h, "lstViewModes", str, j, 0, NULL, NULL );
+
+   /* Close button. */
+   window_addButton( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
+         "btnClose", _("Close"), window_close );
+
+   /* Add button. */
+   window_addButton( wid, -20-(BUTTON_WIDTH+20), 20, BUTTON_WIDTH, BUTTON_HEIGHT,
+         "btnSet", _("Set"), uniedit_btnViewModeSet );
+
+   /* Clean up. */
+   array_free( factions );
 }
 
 
@@ -1674,4 +1740,29 @@ static void uniedit_btnEditRename( unsigned int wid, char *unused )
 }
 
 
+/**
+ * @brief Actually adds the virtual asset.
+ */
+static void uniedit_btnViewModeSet( unsigned int wid, char *unused )
+{
+   char *selected;
 
+   /* Check default. */
+   if (toolkit_getListPos( wid, "lstViewModes" )==0) {
+      uniedit_viewmode = UNIEDIT_VIEW_DEFAULT;
+      uniedit_view_faction = -1;
+      window_close( wid, unused );
+      return;
+   }
+
+   /* Get selection. */
+   selected = toolkit_getList( wid, "lstViewModes" );
+   if (selected == NULL)
+      return;
+
+   uniedit_viewmode = UNIEDIT_VIEW_PRESENCE;
+   uniedit_view_faction = faction_get( selected );
+
+   /* Close the window. */
+   window_close( wid, unused );
+}
