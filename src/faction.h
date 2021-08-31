@@ -46,6 +46,7 @@ int* faction_getEnemies( int f );
 int* faction_getAllies( int f );
 int* faction_getGroup( int which );
 int faction_usesHiddenJumps( int f );
+int faction_generates( int f, double *weight );
 
 /* set stuff */
 int faction_setKnown( int id, int state );

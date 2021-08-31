@@ -18,7 +18,6 @@ end
 function spawn_patrol ()
    local pilots = {}
    pilots.__nofleet = (rnd.rnd() < 0.7)
-   pilots.__stealth = (rnd.rnd() < 0.9)
    local r = rnd.rnd()
 
    if r < 0.3 then
@@ -41,7 +40,6 @@ end
 function spawn_loner ()
    local pilots = {}
    pilots.__nofleet = true
-   pilots.__stealth = (rnd.rnd() < 0.7)
 
    local r = rnd.rnd()
    if r < 0.2 then
@@ -70,7 +68,6 @@ end
 function spawn_squad ()
    local pilots = {}
    pilots.__nofleet = (rnd.rnd() < 0.6)
-   pilots.__stealth = (rnd.rnd() < 0.7)
    local r = rnd.rnd()
 
    if r < 0.3 then
@@ -106,7 +103,6 @@ end
 function spawn_capship ()
    local pilots = {}
    pilots.__nofleet = (rnd.rnd() < 0.5)
-   pilots.__stealth = (rnd.rnd() < 0.5)
    local r = rnd.rnd()
 
    -- Generate the capship
@@ -154,7 +150,7 @@ function create ( max )
 end
 
 
-local fpir = faction.get("Pirate")
+local fmar = faction.get("Marauders")
 -- @brief Spawning hook
 function spawn ( presence, max )
    -- Over limit
@@ -163,7 +159,7 @@ function spawn ( presence, max )
    end
 
    -- Actually spawn the pilots
-   local pilots = scom.spawn( spawn_data, fpir )
+   local pilots = scom.spawn( spawn_data, fmar )
 
    -- Calculate spawn data
    spawn_data = scom.choose( spawn_table )

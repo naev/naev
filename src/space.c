@@ -3894,6 +3894,8 @@ void system_presenceAddAsset( StarSystem *sys, const Planet *pnt )
    double bonus = pnt->presenceBonus;
    double range = pnt->presenceRange;
    int usehidden = faction_usesHiddenJumps( faction );
+   int generates;
+   double gweight;
 
    /* Check for NULL and display a warning. */
    if (sys == NULL) {
@@ -3909,11 +3911,20 @@ void system_presenceAddAsset( StarSystem *sys, const Planet *pnt )
    if ((base == 0.) && (bonus == 0.))
       return;
 
+   /* Get secondary if applicable. */
+   generates = faction_generates( faction, &gweight );
+
    /* Add the presence to the current system. */
    i = getPresenceIndex(sys, faction);
    sys->presence[i].base   = MAX( sys->presence[i].base, base );
    sys->presence[i].bonus += bonus;
    sys->presence[i].value  = sys->presence[i].base + sys->presence[i].bonus;
+   if (generates >= 0) {
+      i = getPresenceIndex(sys, generates);
+      sys->presence[i].base   = MAX( sys->presence[i].base, base*gweight );
+      sys->presence[i].bonus += bonus*gweight;
+      sys->presence[i].value  = sys->presence[i].base + sys->presence[i].bonus;
+   }
 
    /* If there's no range, we're done here. */
    if (range < 1)
@@ -3965,6 +3976,13 @@ void system_presenceAddAsset( StarSystem *sys, const Planet *pnt )
       cur->presence[x].base   = MAX( cur->presence[x].base, base * spillfactor );
       cur->presence[x].bonus += bonus * spillfactor;
       cur->presence[x].value  = cur->presence[x].base + cur->presence[x].bonus;
+   
+      if (generates >= 0) {
+         x = getPresenceIndex(cur, generates);
+         cur->presence[x].base   = MAX( cur->presence[x].base, base*spillfactor*gweight );
+         cur->presence[x].bonus += bonus*spillfactor*gweight;
+         cur->presence[x].value  = cur->presence[x].base + cur->presence[x].bonus;
+      }
 
       /* Check to see if we've finished this range and grab the next queue. */
       if (q_isEmpty(q)) {

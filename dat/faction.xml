@@ -73,6 +73,39 @@
   <standing>pirate</standing>
   <equip>pirate</equip>
   <useshiddenjumps/>
+  <generates weight="0.5">Marauders</generates>
+  <allies>
+  </allies>
+  <enemies>
+   <enemy>Collective</enemy>
+   <enemy>Comingout_associates</enemy>
+   <enemy>Dvaered</enemy>
+   <enemy>Empire</enemy>
+   <enemy>Frontier</enemy>
+   <enemy>Goddard</enemy>
+   <enemy>Independent</enemy>
+   <enemy>Miner</enemy>
+   <enemy>Proteron</enemy>
+   <enemy>Sirius</enemy>
+   <enemy>Soromid</enemy>
+   <enemy>Thurion</enemy>
+   <enemy>DHC</enemy>
+   <enemy>Trader</enemy>
+   <enemy>Traders Guild</enemy>
+   <enemy>Za'lek</enemy>
+  </enemies>
+ </faction>
+ <faction>
+  <name>Marauders</name>
+  <ai>marauders</ai>
+  <known />
+  <logo>pirate</logo>
+  <player>-50</player>
+  <colour>red</colour>
+  <spawn>marauders</spawn>
+  <standing>marauders</standing>
+  <equip>pirate</equip>
+  <useshiddenjumps/>
   <allies>
   </allies>
   <enemies>
