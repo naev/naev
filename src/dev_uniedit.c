@@ -382,6 +382,7 @@ static void uniedit_btnView( unsigned int wid_unused, char *unused )
       if (f>=0)
          str[j++] = strdup( faction_name( f ) );
    }
+   qsort( &str[1], j-1, sizeof(char*), strsort );
    h = UNIEDIT_EDIT_HEIGHT-60-(BUTTON_HEIGHT+20);
    window_addList( wid, 20, -40, UNIEDIT_EDIT_WIDTH-40, h, "lstViewModes", str, j, 0, NULL, NULL );
 
