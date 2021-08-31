@@ -636,6 +636,7 @@ static int uniedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
             if ((pow2(mx-sys->pos.x)+pow2(my-sys->pos.y)) > pow2(UNIEDIT_CLICK_THRESHOLD))
                continue;
             clickedsys = sys;
+            break;
          }
 
          /* Set jump if applicable. */
