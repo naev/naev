@@ -533,14 +533,14 @@ static void uniedit_renderOverlay( double bx, double by, double bw, double bh, v
       if (f < 0)
          return;
 
-      mx = uniedit_mx - bw/2 - uniedit_xpos;
-      my = uniedit_my - bh/2 - uniedit_ypos;
+      mx = uniedit_mx - bw/2. + uniedit_xpos;
+      my = uniedit_my - bh/2. + uniedit_ypos;
 
       for (i=0; i<array_size(systems_stack); i++) {
          sys = system_getIndex(i);
-         sx = sys->pos.x * uniedit_zoom;
-         sy = sys->pos.y * uniedit_zoom;
-         if ((pow2(sx-mx)+pow2(sy-my)) > pow2(15.))
+         sx = sys->pos.x;
+         sy = sys->pos.y;
+         if ((pow2(sx-mx)+pow2(sy-my)) > pow2(20.))
             continue;
 
          value = system_getPresenceFull( sys, f, &base, &bonus );
@@ -562,6 +562,8 @@ static void uniedit_renderOverlay( double bx, double by, double bw, double bh, v
             for (j=0; j<array_size(cur->planets); j++) {
                pnt = cur->planets[j];
                if (pnt->faction!=f)
+                  continue;
+               if (pnt->presenceRange <= 1)
                   continue;
                l += scnprintf( &buf[l], sizeof(buf)-l, "\n#%c%.0f#0 (#%c%+.0f#0) [%s (%s)]",
                      getValCol(pnt->presenceBase), pnt->presenceBase*0.5,
@@ -614,8 +616,8 @@ static int uniedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
             return 0;
 
          /* selecting star system */
-         mx -= w/2 - uniedit_xpos;
-         my -= h/2 - uniedit_ypos;
+         mx -= w/2. - uniedit_xpos;
+         my -= h/2. - uniedit_ypos;
 
          if (uniedit_mode == UNIEDIT_NEWSYS) {
             uniedit_newSys( mx, my );
