@@ -349,6 +349,7 @@ static void uniedit_btnView( unsigned int wid_unused, char *unused )
    char **str;
    int h;
    int *factions, f, hasfact;
+   double w;
 
    /* Find usable factions. */
    factions = faction_getAll();
@@ -358,7 +359,7 @@ static void uniedit_btnView( unsigned int wid_unused, char *unused )
       hasfact = 0;
       for (j=0; j<array_size(planets); j++) {
          p = &planets[j];
-         if (p->faction != f)
+         if ((p->faction != f) && (faction_generates(p->faction, &w)!=f))
             continue;
          if (p->presenceBase==0. && p->presenceBonus==0.)
             continue;
@@ -583,8 +584,8 @@ static char getValCol( double val )
 static void uniedit_renderOverlay( double bx, double by, double bw, double bh, void* data )
 {
    double x,y, mx,my, sx,sy;
-   int i, j, k, l, f;
-   double value, base, bonus;
+   int i, j, k, l, f, gf;
+   double value, base, bonus, w;
    char buf[STRMAX] = {'\0'};
    StarSystem *sys, *cur;
    Planet *pnt;
@@ -626,11 +627,18 @@ static void uniedit_renderOverlay( double bx, double by, double bw, double bh, v
          /* Local presence sources. */
          for (j=0; j<array_size(sys->planets); j++) {
             pnt = sys->planets[j];
-            if (pnt->faction!=f)
+            if ((pnt->faction!=f) && (gf=faction_generates(pnt->faction, &w)!=f))
                continue;
+            if (gf < 0) {
+               base = pnt->presenceBase;
+               bonus = pnt->presenceBonus;
+            }
+            else {
+               base = pnt->presenceBase * w;
+               bonus = pnt->presenceBonus * w;
+            }
             l += scnprintf( &buf[l], sizeof(buf)-l, "\n#%c%.0f#0 (#%c%+.0f#0) [%s]",
-                  getValCol(pnt->presenceBase), pnt->presenceBase,
-                  getValCol(pnt->presenceBonus), pnt->presenceBonus, _(pnt->name) );
+                  getValCol(base), base, getValCol(bonus), bonus, _(pnt->name) );
          }
 
          /* Find neighbours if possible. */
@@ -638,14 +646,20 @@ static void uniedit_renderOverlay( double bx, double by, double bw, double bh, v
             cur = sys->jumps[k].target;
             for (j=0; j<array_size(cur->planets); j++) {
                pnt = cur->planets[j];
-               if (pnt->faction!=f)
+               if ((pnt->faction!=f) && (gf=faction_generates(pnt->faction, &w)!=f))
                   continue;
                if (pnt->presenceRange < 1)
                   continue;
+               if (gf < 0) {
+                  base = pnt->presenceBase;
+                  bonus = pnt->presenceBonus;
+               }
+               else {
+                  base = pnt->presenceBase * w;
+                  bonus = pnt->presenceBonus * w;
+               }
                l += scnprintf( &buf[l], sizeof(buf)-l, "\n#%c%.0f#0 (#%c%+.0f#0) [%s (%s)]",
-                     getValCol(pnt->presenceBase), pnt->presenceBase*0.5,
-                     getValCol(pnt->presenceBonus), pnt->presenceBonus*0.5,
-                     _(pnt->name), _(cur->name) );
+                     getValCol(base), base*0.5, getValCol(bonus), bonus*0.5, _(pnt->name), _(cur->name) );
             }
          }
 
