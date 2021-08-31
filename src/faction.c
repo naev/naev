@@ -1421,16 +1421,16 @@ static int faction_parse( Faction* temp, xmlNodePtr parent )
       }
 
       /* Avoid warnings. */
-      if (xml_isNode(node,"allies") || xml_isNode(node,"enemies"))
+      if (xml_isNode(node,"allies") || xml_isNode(node,"enemies") || xml_isNode(node,"generates"))
          continue;
 
-      DEBUG(_("Unknown node '%s' in faction '%s'"),node->name,temp->name);
+      WARN(_("Unknown node '%s' in faction '%s'"),node->name,temp->name);
    } while (xml_nextNode(node));
 
    if (temp->name == NULL)
       WARN(_("Unable to read data from '%s'"), FACTION_DATA_PATH);
    if (player==0)
-      DEBUG(_("Faction '%s' missing player tag."), temp->name);
+      WARN(_("Faction '%s' missing player tag."), temp->name);
    if ((temp->env==LUA_NOREF) && !faction_isFlag( temp, FACTION_STATIC ))
       WARN(_("Faction '%s' has no Lua and isn't static!"), temp->name);
 
