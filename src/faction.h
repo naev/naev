@@ -16,6 +16,12 @@
 #define FACTION_LOGO_SM 64 /**< Size of "small" logo. */
 
 
+typedef struct FactionGenerator_ {
+   int id;        /**< Id of the generator. */
+   double weight; /**< Weight modifier. */
+} FactionGenerator;
+
+
 /* get stuff */
 int faction_isFaction( int f );
 int faction_exists( const char* name );
@@ -46,7 +52,7 @@ int* faction_getEnemies( int f );
 int* faction_getAllies( int f );
 int* faction_getGroup( int which );
 int faction_usesHiddenJumps( int f );
-int faction_generates( int f, double *weight );
+FactionGenerator* faction_generators( int f );
 
 /* set stuff */
 int faction_setKnown( int id, int state );

@@ -73,7 +73,7 @@
   <standing>pirate</standing>
   <equip>pirate</equip>
   <useshiddenjumps/>
-  <generates weight="0.5">Marauders</generates>
+  <generator weight="0.5">Marauders</generator>
   <allies>
   </allies>
   <enemies>

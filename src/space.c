@@ -3894,8 +3894,7 @@ void system_presenceAddAsset( StarSystem *sys, const Planet *pnt )
    double bonus = pnt->presenceBonus;
    double range = pnt->presenceRange;
    int usehidden = faction_usesHiddenJumps( faction );
-   int generates;
-   double gweight;
+   FactionGenerator *fgens;
 
    /* Check for NULL and display a warning. */
    if (sys == NULL) {
@@ -3912,18 +3911,18 @@ void system_presenceAddAsset( StarSystem *sys, const Planet *pnt )
       return;
 
    /* Get secondary if applicable. */
-   generates = faction_generates( faction, &gweight );
+   fgens = faction_generators( faction );
 
    /* Add the presence to the current system. */
    i = getPresenceIndex(sys, faction);
    sys->presence[i].base   = MAX( sys->presence[i].base, base );
    sys->presence[i].bonus += bonus;
    sys->presence[i].value  = sys->presence[i].base + sys->presence[i].bonus;
-   if (generates >= 0) {
-      i = getPresenceIndex(sys, generates);
-      sys->presence[i].base   = MAX( sys->presence[i].base, base*gweight );
-      sys->presence[i].bonus += bonus*gweight;
-      sys->presence[i].value  = sys->presence[i].base + sys->presence[i].bonus;
+   for (i=0; i<array_size(fgens); i++) {
+      x = getPresenceIndex(sys, fgens[i].id);
+      sys->presence[x].base   = MAX( sys->presence[x].base, base*fgens[i].weight );
+      sys->presence[x].bonus += bonus*fgens[i].weight;
+      sys->presence[x].value  = sys->presence[x].base + sys->presence[x].bonus;
    }
 
    /* If there's no range, we're done here. */
@@ -3977,10 +3976,10 @@ void system_presenceAddAsset( StarSystem *sys, const Planet *pnt )
       cur->presence[x].bonus += bonus * spillfactor;
       cur->presence[x].value  = cur->presence[x].base + cur->presence[x].bonus;
    
-      if (generates >= 0) {
-         x = getPresenceIndex(cur, generates);
-         cur->presence[x].base   = MAX( cur->presence[x].base, base*spillfactor*gweight );
-         cur->presence[x].bonus += bonus*spillfactor*gweight;
+      for (i=0; i<array_size(fgens); i++) {
+         x = getPresenceIndex(cur, fgens[i].id);
+         cur->presence[x].base   = MAX( cur->presence[x].base, base*spillfactor*fgens[i].weight );
+         cur->presence[x].bonus += bonus*spillfactor*fgens[i].weight;
          cur->presence[x].value  = cur->presence[x].base + cur->presence[x].bonus;
       }
 

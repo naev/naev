@@ -336,6 +336,20 @@ void uniedit_updateAutosave (void)
 }
 
 
+static int factionGenerates( int f, int tocheck, double *w )
+{
+   FactionGenerator *fg = faction_generators( f );
+   for (int i=0; i<array_size(fg); i++) {
+      if (fg[i].id==tocheck) {
+         if (w!=NULL)
+            *w = fg[i].weight;
+         return 1;
+      }
+   }
+   return 0;
+}
+
+
 /**
  * @brief Allows selecting the view.
  */
@@ -349,7 +363,6 @@ static void uniedit_btnView( unsigned int wid_unused, char *unused )
    char **str;
    int h;
    int *factions, f, hasfact;
-   double w;
 
    /* Find usable factions. */
    factions = faction_getAll();
@@ -359,7 +372,7 @@ static void uniedit_btnView( unsigned int wid_unused, char *unused )
       hasfact = 0;
       for (j=0; j<array_size(planets); j++) {
          p = &planets[j];
-         if ((p->faction != f) && (faction_generates(p->faction, &w)!=f))
+         if ((p->faction != f) && !factionGenerates(p->faction,f,NULL))
             continue;
          if (p->presenceBase==0. && p->presenceBonus==0.)
             continue;
@@ -627,9 +640,9 @@ static void uniedit_renderOverlay( double bx, double by, double bw, double bh, v
          /* Local presence sources. */
          for (j=0; j<array_size(sys->planets); j++) {
             pnt = sys->planets[j];
-            if ((pnt->faction!=f) && (gf=faction_generates(pnt->faction, &w)!=f))
+            if ((pnt->faction!=f) && !(gf=factionGenerates(pnt->faction, f, &w)))
                continue;
-            if (gf < 0) {
+            if (gf == 0) {
                base = pnt->presenceBase;
                bonus = pnt->presenceBonus;
             }
@@ -646,11 +659,11 @@ static void uniedit_renderOverlay( double bx, double by, double bw, double bh, v
             cur = sys->jumps[k].target;
             for (j=0; j<array_size(cur->planets); j++) {
                pnt = cur->planets[j];
-               if ((pnt->faction!=f) && (gf=faction_generates(pnt->faction, &w)!=f))
+               if ((pnt->faction!=f) && !(gf=factionGenerates(pnt->faction, f, &w)))
                   continue;
                if (pnt->presenceRange < 1)
                   continue;
-               if (gf < 0) {
+               if (gf == 0) {
                   base = pnt->presenceBase;
                   bonus = pnt->presenceBonus;
                }
