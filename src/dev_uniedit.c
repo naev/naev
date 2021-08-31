@@ -42,13 +42,12 @@
 #define UNIEDIT_EDIT_WIDTH       400 /**< System editor width. */
 #define UNIEDIT_EDIT_HEIGHT      450 /**< System editor height. */
 
-
 #define UNIEDIT_FIND_WIDTH       400 /**< System editor width. */
 #define UNIEDIT_FIND_HEIGHT      500 /**< System editor height. */
 
-
 #define UNIEDIT_DRAG_THRESHOLD   300   /**< Drag threshold. */
 #define UNIEDIT_MOVE_THRESHOLD   10    /**< Movement threshold. */
+#define UNIEDIT_CLICK_THRESHOLD  20.   /**< Click threshold. */
 
 #define UNIEDIT_ZOOM_STEP        1.2   /**< Factor to zoom by for each zoom level. */
 #define UNIEDIT_ZOOM_MAX         5     /**< Maximum uniedit zoom level (close). */
@@ -88,8 +87,6 @@ static int uniedit_dragSys    = 0;  /**< Dragging system around. */
 static StarSystem **uniedit_sys = NULL; /**< Selected systems. */
 static StarSystem *uniedit_tsys = NULL; /**< Temporarily clicked system. */
 static int uniedit_tadd       = 0;  /**< Temporarily clicked system should be added. */
-static int uniedit_nsys       = 0;  /**< Number of selected systems. */
-static int uniedit_msys       = 0;  /**< Memory allocated for selected systems. */
 static double uniedit_mx      = 0.; /**< X mouse position. */
 static double uniedit_my      = 0.; /**< Y mouse position. */
 
@@ -377,7 +374,7 @@ static void uniedit_btnOpen( unsigned int wid_unused, char *unused )
    (void) wid_unused;
    (void) unused;
 
-   if (uniedit_nsys != 1)
+   if (array_size(uniedit_sys) != 1)
       return;
 
    sysedit_open( uniedit_sys[0] );
@@ -487,7 +484,7 @@ static void uniedit_render( double bx, double by, double w, double h, void *data
    uniedit_renderMap( bx, by, w, h, x, y, r );
 
    /* Render the selected system selections. */
-   for (i=0; i<uniedit_nsys; i++) {
+   for (i=0; i<array_size(uniedit_sys); i++) {
       sys = uniedit_sys[i];
       gl_drawCircle( x + sys->pos.x * uniedit_zoom, y + sys->pos.y * uniedit_zoom,
             1.5*r, &cWhite, 0 );
@@ -542,7 +539,7 @@ static void uniedit_renderOverlay( double bx, double by, double bw, double bh, v
          sys = system_getIndex(i);
          sx = sys->pos.x;
          sy = sys->pos.y;
-         if ((pow2(sx-mx)+pow2(sy-my)) > pow2(20.))
+         if ((pow2(sx-mx)+pow2(sy-my)) > pow2(UNIEDIT_CLICK_THRESHOLD))
             continue;
 
          value = system_getPresenceFull( sys, f, &base, &bonus );
@@ -589,11 +586,9 @@ static int uniedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
    (void) wid;
    (void) data;
    int i;
-   double x,y, t;
+   double x,y;
    StarSystem *sys;
    SDL_Keymod mod;
-
-   t = pow2(15.); /* threshold */
 
    /* Handle modifiers. */
    mod = SDL_GetModState();
@@ -637,10 +632,10 @@ static int uniedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
             x = sys->pos.x;
             y = sys->pos.y;
 
-            if ((pow2(mx-x)+pow2(my-y)) < t) {
+            if ((pow2(mx-x)+pow2(my-y)) < pow2(UNIEDIT_CLICK_THRESHOLD)) {
 
                /* Try to find in selected systems - begin drag move. */
-               for (i=0; i<uniedit_nsys; i++) {
+               for (i=0; i<array_size(uniedit_sys); i++) {
                   /* Must match. */
                   if (uniedit_sys[i] != sys)
                      continue;
@@ -648,7 +643,7 @@ static int uniedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
                   /* Detect double click to open system. */
                   if ((SDL_GetTicks() - uniedit_dragTime < UNIEDIT_DRAG_THRESHOLD*2)
                         && (uniedit_moved < UNIEDIT_MOVE_THRESHOLD)) {
-                     if (uniedit_nsys == 1) {
+                     if (array_size(uniedit_sys) == 1) {
                         sysedit_open( uniedit_sys[0] );
                         return 1;
                      }
@@ -672,12 +667,9 @@ static int uniedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
 
                if (uniedit_mode == UNIEDIT_DEFAULT) {
                   /* Add the system if not selected. */
-                  if (mod & (KMOD_LCTRL | KMOD_RCTRL))
-                     uniedit_selectAdd( sys );
-                  else {
+                  if (!(mod & (KMOD_LCTRL | KMOD_RCTRL)))
                      uniedit_deselect();
-                     uniedit_selectAdd( sys );
-                  }
+                  uniedit_selectAdd( sys );
                   uniedit_tsys      = NULL;
 
                   /* Start dragging anyway. */
@@ -725,7 +717,7 @@ static int uniedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
             }
             uniedit_dragSys   = 0;
             if (conf.devautosave)
-               for (i=0; i<uniedit_nsys; i++)
+               for (i=0; i<array_size(uniedit_sys); i++)
                   dsys_saveSystem(uniedit_sys[i]);
          }
          break;
@@ -744,9 +736,9 @@ static int uniedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
             /* Update mouse movement. */
             uniedit_moved += ABS(rx) + ABS(ry);
          }
-         else if (uniedit_dragSys && (uniedit_nsys > 0)) {
+         else if (uniedit_dragSys && (array_size(uniedit_sys) > 0)) {
             if ((uniedit_moved > UNIEDIT_MOVE_THRESHOLD) || (SDL_GetTicks() - uniedit_dragTime > UNIEDIT_DRAG_THRESHOLD)) {
-               for (i=0; i<uniedit_nsys; i++) {
+               for (i=0; i<array_size(uniedit_sys); i++) {
                   uniedit_sys[i]->pos.x += rx / uniedit_zoom;
                   uniedit_sys[i]->pos.y -= ry / uniedit_zoom;
                }
@@ -812,7 +804,7 @@ static void uniedit_renameSys (void)
    char *name, *oldName, *newName, *filtered;
    StarSystem *sys;
 
-   for (i=0; i<uniedit_nsys; i++) {
+   for (i=0; i<array_size(uniedit_sys); i++) {
       sys = uniedit_sys[i];
 
       /* Get name. */
@@ -908,7 +900,7 @@ static void uniedit_toggleJump( StarSystem *sys )
    StarSystem *isys, *target;
 
    isys = NULL;
-   for (i=0; i<uniedit_nsys; i++) {
+   for (i=0; i<array_size(uniedit_sys); i++) {
       isys  = uniedit_sys[i];
       rm    = 0;
       for (j=0; j<array_size(isys->jumps); j++) {
@@ -994,11 +986,8 @@ static void uniedit_jumpRm( StarSystem *sys, StarSystem *targ )
  */
 static void uniedit_deselect (void)
 {
-   if (uniedit_nsys > 0)
-      free( uniedit_sys );
+   array_free(uniedit_sys);
    uniedit_sys    = NULL;
-   uniedit_nsys   = 0;
-   uniedit_msys   = 0;
 
    /* Change window stuff. */
    window_disableButton( uniedit_wid, "btnJump" );
@@ -1016,17 +1005,10 @@ static void uniedit_deselect (void)
  */
 static void uniedit_selectAdd( StarSystem *sys )
 {
-   /* Allocate if needed. */
-   if (uniedit_msys < uniedit_nsys+1) {
-      if (uniedit_msys == 0)
-         uniedit_msys = 1;
-      uniedit_msys  *= 2;
-      uniedit_sys    = realloc( uniedit_sys, sizeof(StarSystem*) * uniedit_msys );
-   }
+   if (uniedit_sys == NULL)
+      uniedit_sys = array_create( StarSystem* );
 
-   /* Add system. */
-   uniedit_sys[ uniedit_nsys ] = sys;
-   uniedit_nsys++;
+   array_push_back( &uniedit_sys, sys );
 
    /* Set text again. */
    uniedit_selectText();
@@ -1035,7 +1017,7 @@ static void uniedit_selectAdd( StarSystem *sys )
    window_enableButton( uniedit_wid, "btnJump" );
    window_enableButton( uniedit_wid, "btnRename" );
    window_enableButton( uniedit_wid, "btnEdit" );
-   if (uniedit_nsys == 1)
+   if (array_size(uniedit_sys) == 1)
       window_enableButton( uniedit_wid, "btnOpen" );
    else
       window_disableButton( uniedit_wid, "btnOpen" );
@@ -1048,12 +1030,11 @@ static void uniedit_selectAdd( StarSystem *sys )
 static void uniedit_selectRm( StarSystem *sys )
 {
    int i;
-   for (i=0; i<uniedit_nsys; i++) {
+   for (i=0; i<array_size(uniedit_sys); i++) {
       if (uniedit_sys[i] == sys) {
-         uniedit_nsys--;
-         memmove( &uniedit_sys[i], &uniedit_sys[i+1], sizeof(StarSystem*) * (uniedit_nsys - i) );
+         array_erase( &uniedit_sys, &uniedit_sys[i], &uniedit_sys[i+1] );
          uniedit_selectText();
-         if (uniedit_nsys == 1)
+         if (array_size(uniedit_sys) == 1)
             window_enableButton( uniedit_wid, "btnOpen" );
          else
             window_disableButton( uniedit_wid, "btnOpen" );
@@ -1074,9 +1055,9 @@ void uniedit_selectText (void)
    StarSystem *sys;
 
    l = 0;
-   for (i=0; i<uniedit_nsys; i++) {
+   for (i=0; i<array_size(uniedit_sys); i++) {
       l += scnprintf( &buf[l], sizeof(buf)-l, "%s%s", uniedit_sys[i]->name,
-            (i == uniedit_nsys-1) ? "" : ", " );
+            (i == array_size(uniedit_sys)-1) ? "" : ", " );
    }
    if (l == 0)
       uniedit_deselect();
@@ -1084,7 +1065,7 @@ void uniedit_selectText (void)
       window_modifyText( uniedit_wid, "txtSelected", buf );
 
       /* Presence text. */
-      if (uniedit_nsys == 1) {
+      if (array_size(uniedit_sys) == 1) {
          sys         = uniedit_sys[0];
          map_updateFactionPresence( uniedit_wid, "txtPresence", sys, 1 );
 
@@ -1347,12 +1328,12 @@ static void uniedit_editSys (void)
 {
    unsigned int wid;
    int x, y, l;
-   char buf[128];
+   char buf[STRMAX_SHORT];
    const char *s;
    StarSystem *sys;
 
    /* Must have a system. */
-   if (uniedit_nsys == 0)
+   if (array_size(uniedit_sys)==0)
       return;
    sys   = uniedit_sys[0];
 
@@ -1369,7 +1350,7 @@ static void uniedit_editSys (void)
 
    /* Rename button. */
    y = -45;
-   snprintf( buf, sizeof(buf), _("Name: #n%s"), (uniedit_nsys > 1) ? _("#rvarious") : uniedit_sys[0]->name );
+   snprintf( buf, sizeof(buf), _("Name: #n%s"), (array_size(uniedit_sys) > 1) ? _("#rvarious") : uniedit_sys[0]->name );
    window_addText( wid, x, y, 180, 15, 0, "txtName", &gl_smallFont, NULL, buf );
    window_addButton( wid, 200, y+3, BUTTON_WIDTH, 21, "btnRename", _("Rename"), uniedit_btnEditRename );
 
@@ -1672,13 +1653,13 @@ static void uniedit_btnEditAddAssetAdd( unsigned int wid, char *unused )
 static void uniedit_btnEditRename( unsigned int wid, char *unused )
 {
    (void) unused;
-   char buf[128];
+   char buf[STRMAX_SHORT];
 
    /* Rename systems. */
    uniedit_renameSys();
 
    /* Update text. */
-   snprintf( buf, sizeof(buf), _("Name: %s"), (uniedit_nsys > 1) ? _("#rvarious") : uniedit_sys[0]->name );
+   snprintf( buf, sizeof(buf), _("Name: %s"), (array_size(uniedit_sys) > 1) ? _("#rvarious") : uniedit_sys[0]->name );
    window_modifyText( wid, "txtName", buf );
 }
 
