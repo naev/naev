@@ -3920,8 +3920,8 @@ void system_presenceAddAsset( StarSystem *sys, const Planet *pnt )
    sys->presence[i].value  = sys->presence[i].base + sys->presence[i].bonus;
    for (i=0; i<array_size(fgens); i++) {
       x = getPresenceIndex(sys, fgens[i].id);
-      sys->presence[x].base   = MAX( sys->presence[x].base, base*fgens[i].weight );
-      sys->presence[x].bonus += bonus*fgens[i].weight;
+      sys->presence[x].base   = MAX( sys->presence[x].base, MAX(0., base*fgens[i].weight) );
+      sys->presence[x].bonus += MAX(0., bonus*fgens[i].weight);
       sys->presence[x].value  = sys->presence[x].base + sys->presence[x].bonus;
    }
 
@@ -3978,8 +3978,8 @@ void system_presenceAddAsset( StarSystem *sys, const Planet *pnt )
    
       for (i=0; i<array_size(fgens); i++) {
          x = getPresenceIndex(cur, fgens[i].id);
-         cur->presence[x].base   = MAX( cur->presence[x].base, base*spillfactor*fgens[i].weight );
-         cur->presence[x].bonus += bonus*spillfactor*fgens[i].weight;
+         cur->presence[x].base   = MAX( cur->presence[x].base, MAX(0., base*spillfactor*fgens[i].weight) );
+         cur->presence[x].bonus += MAX(0., bonus*spillfactor*fgens[i].weight );
          cur->presence[x].value  = cur->presence[x].base + cur->presence[x].bonus;
       }
 

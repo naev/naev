@@ -137,6 +137,8 @@
   <spawn>empire</spawn>
   <standing>empire</standing>
   <equip>empire</equip>
+  <generator weight="0.45">Independent</generator>
+  <generator weight="0.35">Trader</generator>
   <allies>
   </allies>
   <enemies>
@@ -172,6 +174,8 @@
   <colour>yellow</colour>
   <spawn>frontier</spawn>
   <standing>frontier</standing>
+  <generator weight="0.6">Independent</generator>
+  <generator weight="0.4">Trader</generator>
   <allies>
   </allies>
   <enemies>
@@ -206,6 +210,8 @@
   <spawn>soromid</spawn>
   <standing>soromid</standing>
   <equip>soromid</equip>
+  <generator weight="0.4">Independent</generator>
+  <generator weight="0.35">Trader</generator>
   <allies/>
   <enemies>
    <enemy>Pirate</enemy>
@@ -267,6 +273,8 @@
   <spawn>dvaered</spawn>
   <standing>dvaered</standing>
   <equip>dvaered</equip>
+  <generator weight="0.45">Independent</generator>
+  <generator weight="0.35">Trader</generator>
   <allies>
   </allies>
   <enemies>
@@ -286,6 +294,8 @@
   <spawn>zalek</spawn>
   <standing>zalek</standing>
   <equip>zalek</equip>
+  <generator weight="0.55">Independent</generator>
+  <generator weight="0.45">Trader</generator>
   <allies>
   </allies>
   <enemies>
@@ -304,6 +314,8 @@
   <spawn>sirius</spawn>
   <standing>sirius</standing>
   <equip>sirius</equip>
+  <generator weight="0.45">Independent</generator>
+  <generator weight="0.5">Trader</generator>
   <allies>
   </allies>
   <enemies>
@@ -323,6 +335,8 @@
   <spawn>goddard</spawn>
   <standing>goddard</standing>
   <equip>empire</equip>
+  <generator weight="0.5">Independent</generator>
+  <generator weight="0.5">Trader</generator>
   <allies>
   </allies>
   <enemies>
