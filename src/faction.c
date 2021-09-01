@@ -1346,13 +1346,6 @@ static int faction_parse( Faction* temp, xmlNodePtr parent )
          continue;
       }
 
-      if (xml_isNode(node, "standing")) {
-         if (temp->env != LUA_NOREF)
-            WARN(_("Faction '%s' has duplicate 'standing' tag."), temp->name);
-         faction_addStandingScript( temp, xml_raw(node) );
-         continue;
-      }
-
       if (xml_isNode(node, "known")) {
          faction_setFlag(temp, FACTION_KNOWN);
          continue;
@@ -1401,7 +1394,8 @@ static int faction_parse( Faction* temp, xmlNodePtr parent )
       }
 
       /* Avoid warnings. */
-      if (xml_isNode(node,"allies") || xml_isNode(node,"enemies") || xml_isNode(node,"generator"))
+      if (xml_isNode(node,"allies") || xml_isNode(node,"enemies") ||
+            xml_isNode(node,"generator") || xml_isNode(node,"standing"))
          continue;
 
       WARN(_("Unknown node '%s' in faction '%s'"),node->name,temp->name);
@@ -1411,8 +1405,6 @@ static int faction_parse( Faction* temp, xmlNodePtr parent )
       WARN(_("Unable to read data from '%s'"), FACTION_DATA_PATH);
    if (player==0)
       WARN(_("Faction '%s' missing player tag."), temp->name);
-   if ((temp->env==LUA_NOREF) && !faction_isFlag( temp, FACTION_STATIC ))
-      WARN(_("Faction '%s' has no Lua and isn't static!"), temp->name);
 
    return 0;
 }
@@ -1485,6 +1477,13 @@ static void faction_parseSocial( xmlNodePtr parent )
          continue;
       }
 
+      if (xml_isNode(node, "standing")) {
+         if (base->env != LUA_NOREF)
+            WARN(_("Faction '%s' has duplicate 'standing' tag."), base->name);
+         faction_addStandingScript( base, xml_raw(node) );
+         continue;
+      }
+
       /* Grab the allies */
       if (xml_isNode(node,"allies")) {
          cur = node->xmlChildrenNode;
@@ -1509,6 +1508,9 @@ static void faction_parseSocial( xmlNodePtr parent )
          continue;
       }
    } while (xml_nextNode(node));
+
+   if ((base->env==LUA_NOREF) && !faction_isFlag( base, FACTION_STATIC ))
+      WARN(_("Faction '%s' has no Lua and isn't static!"), base->name);
 }
 
 

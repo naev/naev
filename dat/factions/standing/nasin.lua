@@ -1,8 +1,4 @@
---[[
-   basically just copied skel and made it work.
---]]
-
-require "factions/standing/skel"
+require "factions.standing.lib.base"
 
 -- Faction caps.
 _fcap_kill       = 20 -- Kill cap

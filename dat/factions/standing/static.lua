@@ -18,7 +18,7 @@
 --]]
 
 
-require "factions/standing/skel"
+require "factions.standing.lib.base"
 
 
 function faction_hit( current, amount, source, secondary )

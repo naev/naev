@@ -10,9 +10,7 @@
    GNU General Public License for more details.
 
 --]]
-
-
-require "factions/standing/skel"
+require "factions.standing.lib.base"
 
 
 _fcap_kill     = 5 -- Kill cap
