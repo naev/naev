@@ -158,7 +158,7 @@ static void sysedit_selectRm( Select_t *sel );
 void sysedit_open( StarSystem *sys )
 {
    unsigned int wid;
-   char buf[PATH_MAX];
+   char buf[128];
    int i;
 
    /* Reconstructs the jumps - just in case. */
@@ -1276,7 +1276,7 @@ static void sysedit_editPnt( void )
 {
    unsigned int wid;
    int x, y, w, l, bw;
-   char buf[1024], title[100];
+   char buf[STRMAX_SHORT], title[128];
    const char *s;
    Planet *p;
 
@@ -1444,7 +1444,7 @@ static void sysedit_editJump( void )
 {
    unsigned int wid;
    int x, y, w, l, bw;
-   char buf[1024];
+   char buf[STRMAX_SHORT];
    const char *s;
    JumpPoint *j;
 
@@ -1538,7 +1538,7 @@ static void sysedit_planetDesc( unsigned int wid, char *unused )
    int x, y, h, w, bw;
    Planet *p;
    const char *desc, *bardesc;
-   char title[100];
+   char title[128];
 
    p = sysedit_sys->planets[ sysedit_select[0].u.planet ];
 
@@ -1906,8 +1906,12 @@ static void sysedit_btnFaction( unsigned int wid_unused, char *unused )
    (void) wid_unused;
    (void) unused;
    unsigned int wid;
-   int i, j, y, h, bw, *factions;
+   int pos, i, j, y, h, bw, *factions;
    char **str;
+   const char *s;
+   Planet *p;
+
+   p = sysedit_sys->planets[ sysedit_select[0].u.planet ];
 
    /* Create the window. */
    wid = window_create( "wdwModifyFaction", _("Modify Faction"), -1, -1, SYSEDIT_EDIT_WIDTH, SYSEDIT_EDIT_HEIGHT );
@@ -1916,16 +1920,24 @@ static void sysedit_btnFaction( unsigned int wid_unused, char *unused )
    /* Generate factions list. */
    factions = faction_getAll();
    str = malloc( sizeof(char*) * (array_size(factions) + 1) );
-   j   = 0;
+   str[0] = strdup(_("None"));
+   j      = 1;
    for (i=0; i<array_size(factions); i++)
-      str[j++] = strdup( faction_name( factions[i] ) );
-   str[j++] = strdup( _("None") );
+      str[j++] = strdup( faction_name( factions[i] ) ); /* Not translating so we can use faction_get */
+   qsort( &str[1], j-1, sizeof(char*), strsort );
+
+   /* Get current faction. */
+   pos    = 0;
+   s      = faction_name(p->faction);
+   for (i=0; i<j; i++)
+      if (strcmp(s,str[i])==0)
+         pos = i;
 
    bw = (SYSEDIT_EDIT_WIDTH - 40 - 15 * 3) / 4.;
    y = 20 + BUTTON_HEIGHT + 15;
    h = SYSEDIT_EDIT_HEIGHT - y - 30;
    window_addList( wid, 20, -40, SYSEDIT_EDIT_WIDTH-40, h,
-         "lstFactions", str, j, 0, NULL, sysedit_btnFactionSet );
+         "lstFactions", str, j, pos, NULL, sysedit_btnFactionSet );
 
    /* Close button. */
    window_addButton( wid, -20, 20, bw, BUTTON_HEIGHT,
@@ -1951,13 +1963,16 @@ static void sysedit_btnFactionSet( unsigned int wid, char *unused )
    selected = toolkit_getList( wid, "lstFactions" );
    if (selected == NULL)
       return;
-
    p = sysedit_sys->planets[ sysedit_select[0].u.planet ];
-   /* Set the faction. */
-   if (strcmp(selected,_("None"))==0)
+
+   /* "None" case. */
+   if (toolkit_getListPos( wid, "lstFactions")==0) {
       p->faction = -1;
-   else
+   }
+   else {
+      /* Set the faction. */
       p->faction = faction_get( selected );
+   }
 
    /* Update the editor window. */
    window_modifyText( sysedit_widEdit, "txtFaction", p->faction > 0 ? faction_name( p->faction ) : _("None") );
@@ -1992,7 +2007,7 @@ static void sysedit_planetGFX( unsigned int wid_unused, char *wgt )
    (void) wid_unused;
    unsigned int wid;
    size_t nfiles, i, j;
-   char *path, buf[PATH_MAX];
+   char *path, buf[STRMAX_SHORT];
    char **files;
    glTexture *t;
    ImageArrayCell *cells;

@@ -389,12 +389,12 @@ static void uniedit_btnView( unsigned int wid_unused, char *unused )
 
    /* Add virtual asset list. */
    str   = malloc( sizeof(char*) * (array_size(factions)+1) );
-   str[0]= strdup( "Default" );
+   str[0]= strdup(_("Default"));
    j     = 1;
    for (i=0; i<array_size(factions); i++) {
       f = factions[i];
       if (f>=0)
-         str[j++] = strdup( faction_name( f ) );
+         str[j++] = strdup( faction_name( f ) ); /* Not translating so we can use faction_get */
    }
    qsort( &str[1], j-1, sizeof(char*), strsort );
    h = UNIEDIT_EDIT_HEIGHT-60-(BUTTON_HEIGHT+20);
