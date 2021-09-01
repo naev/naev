@@ -166,7 +166,7 @@ static void player_parseShipSlot( xmlNodePtr node, Pilot *ship, PilotOutfitSlot 
 static int player_parseShip( xmlNodePtr parent, int is_player );
 static int player_parseEscorts( xmlNodePtr parent );
 static int player_parseMetadata( xmlNodePtr parent );
-static void player_addOutfitToPilot( Pilot* pilot, Outfit* outfit, PilotOutfitSlot *s );
+static void player_addOutfitToPilot( Pilot* pilot, const Outfit* outfit, PilotOutfitSlot *s );
 /* Render. */
 static void player_renderStealthUnderlay( double dt );
 static void player_renderStealthOverlay( double dt );
@@ -333,7 +333,7 @@ void player_new (void)
  */
 static int player_newMake (void)
 {
-   Ship *ship;
+   const Ship *ship;
    const char *shipname;
    double x,y;
 
@@ -2993,7 +2993,7 @@ int player_addEscorts (void)
    double a;
    Vector2d v;
    unsigned int e;
-   Outfit *o;
+   const Outfit *o;
    int q;
    int dockslot = -1;
 
@@ -3421,7 +3421,7 @@ static Planet* player_parse( xmlNodePtr parent )
    Planet *pnt;
    xmlNodePtr node, cur;
    int q;
-   Outfit *o;
+   const Outfit *o;
    int i, map_overlay_enabled;
    StarSystem *sys;
    double a, r;
@@ -3826,7 +3826,7 @@ static int player_parseMetadata( xmlNodePtr parent )
 /**
  * @brief Adds outfit to pilot if it can.
  */
-static void player_addOutfitToPilot( Pilot* pilot, Outfit* outfit, PilotOutfitSlot *s )
+static void player_addOutfitToPilot( Pilot* pilot, const Outfit* outfit, PilotOutfitSlot *s )
 {
    int ret;
 
@@ -3855,7 +3855,7 @@ static void player_addOutfitToPilot( Pilot* pilot, Outfit* outfit, PilotOutfitSl
  */
 static void player_parseShipSlot( xmlNodePtr node, Pilot *ship, PilotOutfitSlot *slot )
 {
-   Outfit *o, *ammo;
+   const Outfit *o, *ammo;
    char *buf;
    int q;
 
@@ -3905,7 +3905,7 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
    char *name, *model;
    int i, n, id;
    int fuel;
-   Ship *ship_parsed;
+   const Ship *ship_parsed;
    Pilot* ship;
    xmlNodePtr node, cur, ccur;
    int quantity;

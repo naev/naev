@@ -397,7 +397,7 @@ void commodity_Jettison( int pilot, const Commodity* com, int quantity )
  *    @param pos Position.
  *    @param vel Velocity.
  */
-int gatherable_init( Commodity* com, Vector2d pos, Vector2d vel, double lifeleng, int qtt )
+int gatherable_init( const Commodity* com, Vector2d pos, Vector2d vel, double lifeleng, int qtt )
 {
    Gatherable *g = &array_grow( &gatherable_stack );
 

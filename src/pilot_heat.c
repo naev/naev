@@ -266,7 +266,7 @@ void pilot_heatUpdateCooldown( Pilot *p )
    double t;
    int i, ammo_threshold;
    PilotOutfitSlot *o;
-   Outfit *ammo;
+   const Outfit *ammo;
 
    t = pow2( 1. - p->ctimer / p->cdelay );
    p->heat_T = p->heat_start - CONST_SPACE_STAR_TEMP - (p->heat_start -

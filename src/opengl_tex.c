@@ -826,7 +826,7 @@ void gl_freeTexture( glTexture* texture )
  *    @param texture Texture to duplicate.
  *    @return Duplicate of texture.
  */
-glTexture* gl_dupTexture( glTexture *texture )
+glTexture* gl_dupTexture( const glTexture *texture )
 {
    glTexList *cur;
 

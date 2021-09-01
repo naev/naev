@@ -436,8 +436,7 @@ static void shipyard_buy( unsigned int wid, char* str )
  */
 int shipyard_canBuy( const char *shipname, Planet *planet )
 {
-   Ship* ship;
-   ship = ship_get( shipname );
+   const Ship* ship = ship_get( shipname );
    int failure = 0;
    credits_t price;
 
@@ -480,8 +479,7 @@ int can_sell( const char *shipname )
 int can_swap( const char *shipname )
 {
    int failure = 0;
-   Ship* ship;
-   ship = ship_get( shipname );
+   const Ship* ship = ship_get( shipname );
    double diff;
 
    if (pilot_cargoUsed(player.p) > ship->cap_cargo) { /* Current ship has too much cargo. */
@@ -508,8 +506,7 @@ int can_swap( const char *shipname )
 int shipyard_canTrade( const char *shipname )
 {
    int failure = 0;
-   Ship* ship;
-   ship = ship_get( shipname );
+   const Ship* ship = ship_get( shipname );
    credits_t price;
 
    price = ship_buyPrice( ship );

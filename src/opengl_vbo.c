@@ -45,7 +45,7 @@ struct gl_vbo_s {
 /**
  * Prototypes.
  */
-static gl_vbo* gl_vboCreate( GLenum target, GLsizei size, void* data, GLenum usage );
+static gl_vbo* gl_vboCreate( GLenum target, GLsizei size, const void* data, GLenum usage );
 
 
 /**
@@ -76,7 +76,7 @@ void gl_exitVBO (void)
  *    @param usage Usage to use.
  *    @return ID of the vbo.
  */
-static gl_vbo* gl_vboCreate( GLenum target, GLsizei size, void* data, GLenum usage )
+static gl_vbo* gl_vboCreate( GLenum target, GLsizei size, const void* data, GLenum usage )
 {
    gl_vbo *vbo;
 
@@ -108,7 +108,7 @@ static gl_vbo* gl_vboCreate( GLenum target, GLsizei size, void* data, GLenum usa
  *    @param size Size of new data.
  *    @param data New data.
  */
-void gl_vboData( gl_vbo *vbo, GLsizei size, void* data )
+void gl_vboData( gl_vbo *vbo, GLsizei size, const void* data )
 {
    GLenum usage;
 
@@ -141,7 +141,7 @@ void gl_vboData( gl_vbo *vbo, GLsizei size, void* data )
  *    @param size Size of the data (in bytes).
  *    @param data Pointer to the data.
  */
-void gl_vboSubData( gl_vbo *vbo, GLint offset, GLsizei size, void* data )
+void gl_vboSubData( gl_vbo *vbo, GLint offset, GLsizei size, const void* data )
 {
    glBindBuffer( GL_ARRAY_BUFFER, vbo->id );
    glBufferSubData( GL_ARRAY_BUFFER, offset, size, data );
@@ -157,7 +157,7 @@ void gl_vboSubData( gl_vbo *vbo, GLint offset, GLsizei size, void* data )
  *    @param size Size of the stream vbo (multiply by sizeof(type)).
  *    @param data Data for the VBO.
  */
-gl_vbo* gl_vboCreateStream( GLsizei size, void* data )
+gl_vbo* gl_vboCreateStream( GLsizei size, const void* data )
 {
    gl_vbo *vbo;
 
@@ -176,7 +176,7 @@ gl_vbo* gl_vboCreateStream( GLsizei size, void* data )
  *    @param size Size of the dynamic vbo (multiply by sizeof(type)).
  *    @param data Data for the VBO.
  */
-gl_vbo* gl_vboCreateDynamic( GLsizei size, void* data )
+gl_vbo* gl_vboCreateDynamic( GLsizei size, const void* data )
 {
    gl_vbo *vbo;
 
@@ -196,7 +196,7 @@ gl_vbo* gl_vboCreateDynamic( GLsizei size, void* data )
  *    @param size Size of the stream vbo (multiply by sizeof(type)).
  *    @param data Data for the VBO.
  */
-gl_vbo* gl_vboCreateStatic( GLsizei size, void* data )
+gl_vbo* gl_vboCreateStatic( GLsizei size, const void* data )
 {
    gl_vbo *vbo;
 

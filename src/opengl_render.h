@@ -32,7 +32,7 @@ void gl_screenToGameCoords( double *nx, double *ny, int bx, int by );
  * Rendering.
  */
 /* blits texture */
-void gl_blitTexture(  const glTexture* texture,
+void gl_blitTexture( const glTexture* texture,
       const double x, const double y,
       const double w, const double h,
       const double tx, const double ty,

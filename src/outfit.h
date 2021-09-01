@@ -196,7 +196,7 @@ typedef struct OutfitBeamData_ {
 typedef struct OutfitLauncherData_ {
    double delay;     /**< Delay between shots. */
    char *ammo_name;  /**< Name of the ammo to use. */
-   struct Outfit_ *ammo; /**< Ammo to use. */
+   const struct Outfit_ *ammo; /**< Ammo to use. */
    int amount;       /**< Amount of ammo it can store. */
    double reload_time; /**< Time it takes to reload 1 ammo. */
 
@@ -285,7 +285,7 @@ typedef struct OutfitAfterburnerData_ {
  */
 typedef struct OutfitFighterBayData_ {
    char *ammo_name;  /**< Name of the ships to use as ammo. */
-   struct Outfit_ *ammo; /**< Ships to use as ammo. */
+   const struct Outfit_ *ammo; /**< Ships to use as ammo. */
    double delay;     /**< Delay between launches. */
    int amount;       /**< Amount of ammo it can store. */
    double reload_time; /**< Time it takes to reload 1 ammo. */
@@ -369,8 +369,8 @@ typedef struct Outfit_ {
 /*
  * get
  */
-Outfit* outfit_get( const char* name );
-Outfit* outfit_getW( const char* name );
+const Outfit* outfit_get( const char* name );
+const Outfit* outfit_getW( const char* name );
 const Outfit* outfit_getAll (void);
 int outfit_compareTech( const void *outfit1, const void *outfit2 );
 /* outfit types */
@@ -421,13 +421,13 @@ const glColour *outfit_slotSizeColour( const OutfitSlot* os );
 char outfit_slotSizeColourFont( const OutfitSlot* os );
 char outfit_slotTypeColourFont( const OutfitSlot* os );
 OutfitSlotSize outfit_toSlotSize( const char *s );
-glTexture* outfit_gfx( const Outfit* o );
-CollPoly* outfit_plg( const Outfit* o );
+const glTexture* outfit_gfx( const Outfit* o );
+const CollPoly* outfit_plg( const Outfit* o );
 int outfit_spfxArmour( const Outfit* o );
 int outfit_spfxShield( const Outfit* o );
 const Damage *outfit_damage( const Outfit* o );
 double outfit_delay( const Outfit* o );
-Outfit* outfit_ammo( const Outfit* o );
+const Outfit* outfit_ammo( const Outfit* o );
 int outfit_amount( const Outfit* o );
 double outfit_energy( const Outfit* o );
 double outfit_heat( const Outfit* o );

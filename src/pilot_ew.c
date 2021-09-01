@@ -289,12 +289,9 @@ int pilot_inRangePilot( const Pilot *p, const Pilot *target, double *dist2 )
       d = vect_dist2( &p->solid->pos, &target->solid->pos );
 
    /* Stealth detection. */
-   if (pilot_isFlag( target, PILOT_STEALTH )) {
+   if (pilot_isFlag( target, PILOT_STEALTH ))
       return 0;
-      /*if (d < pow2( MAX( 0., p->stats.ew_detect * target->ew_stealth )))
-         return 1;
-      */
-   }
+
    /* No stealth so normal detection. */
    else {
       if (d < pow2( MAX( 0., p->stats.ew_detect * p->stats.ew_track * target->ew_evasion )))
@@ -321,7 +318,7 @@ int pilot_inRangePlanet( const Pilot *p, int target )
    double sense;
 
    /* pilot must exist */
-   if ( p == NULL )
+   if (p == NULL)
       return 0;
 
    /* Get the planet. */
@@ -358,7 +355,7 @@ int pilot_inRangeAsteroid( const Pilot *p, int ast, int fie )
    double sense;
 
    /* pilot must exist */
-   if ( p == NULL )
+   if (p == NULL)
       return 0;
 
    /* Get the asteroid. */
@@ -476,7 +473,8 @@ static int pilot_ewStealthGetNearby( const Pilot *p, double *mod, int *close, in
       /* Compute distance. */
       dist = vect_dist2( &p->solid->pos, &t->solid->pos );
       /* TODO maybe not hardcode the close value. */
-      if ((close != NULL) && !pilot_isFlag(t,PILOT_STEALTH) && (dist < pow2( MAX( 0., p->ew_stealth * t->stats.ew_detect * 1.5 ))))
+      if ((close != NULL) && !pilot_isFlag(t,PILOT_STEALTH) &&
+            (dist < pow2( MAX( 0., p->ew_stealth * t->stats.ew_detect * 1.5 ))))
          (*close)++;
       if (dist > pow2( MAX( 0., p->ew_stealth * t->stats.ew_detect )))
          continue;

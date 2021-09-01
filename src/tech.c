@@ -49,9 +49,9 @@ typedef struct tech_item_s {
    tech_item_type_t type;  /**< Type of data. */
    union {
       void *ptr;           /**< Pointer when needing to do indifferent voodoo. */
-      Outfit *outfit;      /**< Outfit pointer. */
-      Ship *ship;          /**< Ship pointer. */
-      Commodity *comm;     /**< Commodity pointer. */
+      const Outfit *outfit;/**< Outfit pointer. */
+      const Ship *ship;    /**< Ship pointer. */
+      const Commodity *comm;/**< Commodity pointer. */
       int grp;             /**< Identifier of another tech group. */
       const tech_group_t *grpptr; /**< Pointer to another tech group. */
    } u;                    /**< Data union. */
@@ -396,7 +396,7 @@ static tech_item_t *tech_itemGrow( tech_group_t *grp )
 static int tech_addItemOutfit( tech_group_t *grp, const char *name )
 {
    tech_item_t *item;
-   Outfit *o;
+   const Outfit *o;
 
    /* Get the outfit. */
    o = outfit_getW( name );
@@ -419,7 +419,7 @@ static int tech_addItemOutfit( tech_group_t *grp, const char *name )
 static int tech_addItemShip( tech_group_t *grp, const char* name )
 {
    tech_item_t *item;
-   Ship *s;
+   const Ship *s;
 
    /* Get the outfit. */
    s = ship_getW( name );

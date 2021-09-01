@@ -65,7 +65,7 @@ static int ship_parse( Ship *temp, xmlNodePtr parent );
  *    @param name Name to match.
  *    @return Ship matching name or NULL if not found.
  */
-Ship* ship_get( const char* name )
+const Ship* ship_get( const char* name )
 {
    Ship *temp;
    int i;
@@ -86,7 +86,7 @@ Ship* ship_get( const char* name )
  *    @param name Name to match.
  *    @return Ship matching name or NULL if not found.
  */
-Ship* ship_getW( const char* name )
+const Ship* ship_getW( const char* name )
 {
    Ship *temp;
    int i;
@@ -289,7 +289,7 @@ credits_t ship_buyPrice( const Ship* s )
 {
    int i;
    credits_t price;
-   Outfit *o;
+   const Outfit *o;
 
    /* Get base price. */
    price = ship_basePrice(s);
@@ -614,7 +614,7 @@ static int ship_parseSlot( Ship *temp, ShipOutfitSlot *slot, OutfitSlotType type
 {
    OutfitSlotSize base_size;
    char *buf;
-   Outfit *o;
+   const Outfit *o;
 
    /* Initialize. */
    memset( slot, 0, sizeof(ShipOutfitSlot) );

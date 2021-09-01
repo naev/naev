@@ -287,7 +287,7 @@ static void map_system_render( double bx, double by, double w, double h, void *d
    double unknownPresence = 0;
    char t;
    int txtHeight;
-   glTexture *logo;
+   const glTexture *logo;
    int offset;
    phase++;
    if ( phase > 150 ) {

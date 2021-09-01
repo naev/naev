@@ -29,11 +29,11 @@ typedef struct WidgetImageData_{
 void window_addImage( const unsigned int wid,
       const int x, const int y, /* position */
       const int w, const int h, /* dimensions */
-      char* name, glTexture* image, int border ); /* label and image itself */
+      char* name, const glTexture* image, int border ); /* label and image itself */
 
 /* Misc functions. */
 void window_modifyImage( const unsigned int wid,
-      char* name, glTexture* image, int w, int h );
+      char* name, const glTexture* image, int w, int h );
 void window_imgColour( const unsigned int wid,
       char* name, const glColour* colour );
 glTexture* window_getImage( const unsigned int wid, char* name );

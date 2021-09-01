@@ -14,6 +14,7 @@
 
 static void img_render( Widget* img, double bx, double by );
 static void img_freeLayers( Widget* img );
+static void img_cleanup( Widget* img );
 
 
 /**
@@ -32,7 +33,7 @@ static void img_freeLayers( Widget* img );
 void window_addImage( const unsigned int wid,
                       const int x, const int y,
                       const int w, const int h,
-                      char* name, glTexture* image, int border )
+                      char* name, const glTexture* image, int border )
 {
    Window *wdw = window_wget(wid);
    Widget *wgt = window_newWidget(wdw, name);
@@ -44,8 +45,8 @@ void window_addImage( const unsigned int wid,
 
    /* specific */
    wgt->render          = img_render;
-   wgt->cleanup         = img_freeLayers;
-   wgt->dat.img.image   = image;
+   wgt->cleanup         = img_cleanup;
+   wgt->dat.img.image   = gl_dupTexture( image );
    wgt->dat.img.border  = border;
    wgt->dat.img.colour  = cWhite; /* normal colour */
    wgt->dat.img.layers  = NULL;
@@ -137,7 +138,7 @@ glTexture* window_getImage( const unsigned int wid, char* name )
  *    @param image New image to set.
  */
 void window_modifyImage( const unsigned int wid,
-      char* name, glTexture* image, int w, int h )
+      char* name, const glTexture* image, int w, int h )
 {
    Widget *wgt;
 
@@ -152,8 +153,9 @@ void window_modifyImage( const unsigned int wid,
       return;
    }
 
-   /* Set the image. */
-   wgt->dat.img.image = image;
+   /* Free and set the image. */
+   gl_freeTexture( wgt->dat.img.image );
+   wgt->dat.img.image   = gl_dupTexture( image );
 
    /* Adjust size. */
    if (w >= 0)
@@ -225,5 +227,12 @@ static void img_freeLayers( Widget* img )
    free( img->dat.img.layers );
    img->dat.img.layers  = NULL;
    img->dat.img.nlayers = 0;
+}
+
+
+static void img_cleanup( Widget* img )
+{
+   gl_freeTexture( img->dat.img.image );
+   img_freeLayers( img );
 }
 

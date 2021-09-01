@@ -99,7 +99,7 @@ static int outfit_loadPLG( Outfit *temp, const char *buf, unsigned int bolt );
  *    @param name Name to match.
  *    @return Outfit matching name or NULL if not found.
  */
-Outfit* outfit_get( const char* name )
+const Outfit* outfit_get( const char* name )
 {
    int i;
 
@@ -118,7 +118,7 @@ Outfit* outfit_get( const char* name )
  *    @param name Name to match.
  *    @return Outfit matching name or NULL if not found.
  */
-Outfit* outfit_getW( const char* name )
+const Outfit* outfit_getW( const char* name )
 {
    int i;
    for (i=0; i<array_size(outfit_stack); i++)
@@ -604,7 +604,7 @@ int outfit_isSecondary( const Outfit* o )
  * @brief Gets the outfit's graphic effect.
  *    @param o Outfit to get information from.
  */
-glTexture* outfit_gfx( const Outfit* o )
+const glTexture* outfit_gfx( const Outfit* o )
 {
    if (outfit_isBolt(o)) return o->u.blt.gfx_space;
    else if (outfit_isAmmo(o)) return o->u.amm.gfx_space;
@@ -614,7 +614,7 @@ glTexture* outfit_gfx( const Outfit* o )
  * @brief Gets the outfit's collision polygon.
  *    @param o Outfit to get information from.
  */
-CollPoly* outfit_plg( const Outfit* o )
+const CollPoly* outfit_plg( const Outfit* o )
 {
    if (outfit_isBolt(o)) return o->u.blt.polygon;
    else if (outfit_isAmmo(o)) return o->u.amm.polygon;
@@ -669,7 +669,7 @@ double outfit_delay( const Outfit* o )
  * @brief Gets the outfit's ammo.
  *    @param o Outfit to get information from.
  */
-Outfit* outfit_ammo( const Outfit* o )
+const Outfit* outfit_ammo( const Outfit* o )
 {
    if (outfit_isLauncher(o)) return o->u.lau.ammo;
    else if (outfit_isFighterBay(o)) return o->u.bay.ammo;
@@ -722,7 +722,7 @@ double outfit_cpu( const Outfit* o )
  */
 double outfit_range( const Outfit* o )
 {
-   Outfit *amm;
+   const Outfit *amm;
    double at, speedinc;
 
    if (outfit_isBolt(o)) return o->u.blt.falloff + (o->u.blt.range - o->u.blt.falloff)/2.;
@@ -755,7 +755,7 @@ double outfit_range( const Outfit* o )
  */
 double outfit_speed( const Outfit* o )
 {
-   Outfit *amm;
+   const Outfit *amm;
    double t;
    if (outfit_isBolt(o))
       return o->u.blt.speed;
@@ -843,7 +843,7 @@ int outfit_soundHit( const Outfit* o )
  */
 double outfit_duration( const Outfit* o )
 {
-   Outfit *amm;
+   const Outfit *amm;
    if (outfit_isMod(o)) { if (o->u.mod.active) return o->u.mod.duration; }
    else if (outfit_isAfterburner(o)) return INFINITY;
    else if (outfit_isBolt(o)) return (o->u.blt.range / o->u.blt.speed);
@@ -2580,7 +2580,7 @@ int outfit_mapParse (void)
       }
 
       xmlr_attr_strd( node, "name", n );
-      o = outfit_get( n );
+      o = (Outfit*) outfit_get( n ); /* Ugh :/ */
       free(n);
       if (!outfit_isMap(o)) { /* If its not a map, we don't care. */
          free(file);
@@ -2618,7 +2618,7 @@ int outfit_mapParse (void)
 static void outfit_launcherDesc( Outfit* o )
 {
    int l;
-   Outfit *a; /* Launcher's ammo. */
+   const Outfit *a; /* Launcher's ammo. */
 
    if (o->desc_short != NULL) {
       WARN(_("Outfit '%s' already has a short description"), o->name);
@@ -2693,7 +2693,7 @@ void outfit_free (void)
       o = &outfit_stack[i];
 
       /* Free graphics */
-      gl_freeTexture(outfit_gfx(o));
+      gl_freeTexture( (glTexture*) outfit_gfx(o)); /*< This is horrible and I should be ashamed. */
 
       /* Free slot. */
       outfit_freeSlot( &outfit_stack[i].slot );

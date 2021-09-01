@@ -246,7 +246,7 @@ static unsigned int comm_open( glTexture *gfx, int faction,
 {
    int namex, standx, logox, y;
    int namew, standw, logow, logoh, width;
-   glTexture *logo;
+   const glTexture *logo;
    const char *stand;
    unsigned int wid;
    const glColour *c;

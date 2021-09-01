@@ -782,7 +782,7 @@ static void spaceport_buyMap( unsigned int wid, char *str )
 {
    (void) wid;
    (void) str;
-   Outfit *o;
+   const Outfit *o;
    unsigned int w;
 
    /* Make sure the map isn't already known, etc. */
@@ -817,7 +817,7 @@ static void spaceport_buyMap( unsigned int wid, char *str )
 void land_updateMainTab (void)
 {
    char buf[STRMAX], cred[ECON_CRED_STRLEN], tons[STRMAX_SHORT];
-   Outfit *o;
+   const Outfit *o;
 
    /* Update credits. */
    tonnes2str( tons, player.p->cargo_free );
@@ -1183,7 +1183,7 @@ void land( Planet* p, int load )
  */
 static void land_createMainTab( unsigned int wid )
 {
-   glTexture *logo;
+   const glTexture *logo;
    int offset;
    int w, h, logow, logoh, th;
    const char *bufSInfo;

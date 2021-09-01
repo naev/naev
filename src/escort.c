@@ -123,7 +123,7 @@ unsigned int escort_create( Pilot *p, char *ship,
       Vector2d *pos, Vector2d *vel, double dir,
       EscortType_t type, int add, int dockslot )
 {
-   Ship *s;
+   const Ship *s;
    Pilot *pe;
    unsigned int e;
    PilotFlags f;

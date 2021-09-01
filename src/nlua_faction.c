@@ -488,7 +488,7 @@ static int factionL_allies( lua_State *L )
 static int factionL_logo( lua_State *L )
 {
    int lf;
-   glTexture *tex;
+   const glTexture *tex;
    lf = luaL_validfaction(L,1);
    tex = faction_logo( lf );
    if (tex == NULL)

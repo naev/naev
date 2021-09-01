@@ -3894,7 +3894,7 @@ void system_presenceAddAsset( StarSystem *sys, const Planet *pnt )
    double bonus = pnt->presenceBonus;
    double range = pnt->presenceRange;
    int usehidden = faction_usesHiddenJumps( faction );
-   FactionGenerator *fgens;
+   const FactionGenerator *fgens;
 
    /* Check for NULL and display a warning. */
    if (sys == NULL) {

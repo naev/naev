@@ -65,7 +65,7 @@ static int outfits_getMod (void);
 static void outfits_renderMod( double bx, double by, double w, double h, void *data );
 static void outfits_rmouse( unsigned int wid, char* widget_name );
 static void outfits_find( unsigned int wid, char* str );
-static credits_t outfit_getPrice( Outfit *outfit );
+static credits_t outfit_getPrice( const Outfit *outfit );
 static void outfits_genList( unsigned int wid );
 static void outfits_changeTab( unsigned int wid, char *wgt, int old, int tab );
 static void outfits_onClose( unsigned int wid, char *str );
@@ -563,7 +563,7 @@ static void outfits_find( unsigned int wid, char* str )
 /**
  * @brief Returns the price of an outfit (subject to quantity modifier)
  */
-static credits_t outfit_getPrice( Outfit *outfit )
+static credits_t outfit_getPrice( const Outfit *outfit )
 {
    unsigned int q;
    credits_t price;
@@ -687,7 +687,7 @@ int outfit_canBuy( const char *name, Planet *planet )
 {
    int failure;
    credits_t price;
-   Outfit *outfit;
+   const Outfit *outfit;
    char buf[ECON_CRED_STRLEN];
 
    failure = 0;
@@ -795,11 +795,8 @@ static void outfits_buy( unsigned int wid, char* str )
  */
 int outfit_canSell( const char *name )
 {
-   int failure;
-   Outfit *outfit;
-
-   failure = 0;
-   outfit = outfit_get(name);
+   int failure = 0;;
+   const Outfit *outfit = outfit_get(name);;
 
    /* Unique item. */
    if (outfit_isProp(outfit, OUTFIT_PROP_UNIQUE)) {

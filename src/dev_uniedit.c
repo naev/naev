@@ -338,7 +338,7 @@ void uniedit_updateAutosave (void)
 
 static int factionGenerates( int f, int tocheck, double *w )
 {
-   FactionGenerator *fg = faction_generators( f );
+   const FactionGenerator *fg = faction_generators( f );
    for (int i=0; i<array_size(fg); i++) {
       if (fg[i].id==tocheck) {
          if (w!=NULL)

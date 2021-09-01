@@ -71,7 +71,7 @@ typedef struct ShipOutfitSlot_ {
    OutfitSlot slot;  /**< Outfit slot type. */
    int exclusive;    /**< Outfits must match property to fit. */
    int required;     /**< Outfit slot must be equipped for the ship to work. */
-   Outfit *data;     /**< Outfit by default if applicable. */
+   const Outfit *data;/**< Outfit by default if applicable. */
    ShipMount mount;  /**< Mountpoint, only used for weapon slots. */
 } ShipOutfitSlot;
 
@@ -172,8 +172,8 @@ void ships_free (void);
 /*
  * get
  */
-Ship* ship_get( const char* name );
-Ship* ship_getW( const char* name );
+const Ship* ship_get( const char* name );
+const Ship* ship_getW( const char* name );
 const char *ship_existsCase( const char* name );
 const Ship* ship_getAll (void);
 const char* ship_class( const Ship* s );

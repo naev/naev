@@ -46,13 +46,13 @@ void faction_addAlly( int f, int o );
 void faction_rmAlly( int f, int o );
 nlua_env faction_getScheduler( int f );
 nlua_env faction_getEquipper( int f );
-glTexture* faction_logo( int f );
+const glTexture* faction_logo( int f );
 const glColour* faction_colour( int f );
 int* faction_getEnemies( int f );
 int* faction_getAllies( int f );
 int* faction_getGroup( int which );
 int faction_usesHiddenJumps( int f );
-FactionGenerator* faction_generators( int f );
+const FactionGenerator* faction_generators( int f );
 
 /* set stuff */
 int faction_setKnown( int id, int state );

@@ -1029,7 +1029,7 @@ static void standings_update( unsigned int wid, char* str )
 {
    (void) str;
    int p, y;
-   glTexture *t;
+   const glTexture *t;
    int w, h, lw, tw, th;
    char buf[128];
    int m;

@@ -11,9 +11,9 @@
 
 
 /* Bit flags to specify what standing to get. */
-#define SAFELANES_FRIENDLY (1<<0)
-#define SAFELANES_NEUTRAL  (1<<1)
-#define SAFELANES_HOSTILE  (1<<3)
+#define SAFELANES_FRIENDLY (1<<0)   /**< Get safelanes friendly to faction. */
+#define SAFELANES_NEUTRAL  (1<<1)   /**< Get safelanes neutral (neither friendly nor hostile) to faction. */
+#define SAFELANES_HOSTILE  (1<<3)   /**< Get safelanes hostile to faction. */
 
 
 /**

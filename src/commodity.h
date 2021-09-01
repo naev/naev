@@ -79,7 +79,7 @@ typedef struct CommodityPrice_ {
  * @brief Represents stuff that can be gathered.
  */
 typedef struct Gatherable_ {
-   Commodity *type; /**< Type of commodity. */
+   const Commodity *type; /**< Type of commodity. */
    Vector2d pos; /**< Position. */
    Vector2d vel; /**< Velocity. */
    double timer; /**< Timer to de-spawn the gatherable. */
@@ -113,7 +113,7 @@ int commodity_tempIllegalto( Commodity *com, int faction );
 /*
  * Gatherable objects
  */
-int gatherable_init( Commodity* com, Vector2d pos, Vector2d vel, double lifeleng, int qtt );
+int gatherable_init( const Commodity* com, Vector2d pos, Vector2d vel, double lifeleng, int qtt );
 void gatherable_render( void );
 int gatherable_getClosest( Vector2d pos, double rad );
 int gatherable_getPos( Vector2d* pos, Vector2d* vel, int id );

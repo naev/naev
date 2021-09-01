@@ -422,7 +422,7 @@ static void map_update( unsigned int wid )
    const char *sym, *adj;
    char buf[PATH_MAX];
    int p;
-   glTexture *logo;
+   const glTexture *logo;
    double w, dmg, itf;
    Commodity *c;
 

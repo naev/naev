@@ -757,7 +757,7 @@ static void weapon_renderBeam( Weapon* w, const double dt ) {
  */
 static void weapon_render( Weapon* w, const double dt )
 {
-   glTexture *gfx;
+   const glTexture *gfx;
    glColour c = { .r=1., .g=1., .b=1. };
 
    /* Don't render destroyed weapons. */
@@ -903,8 +903,8 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
 {
    int i, j, b, psx, psy, k, n;
    unsigned int coll, usePoly=1;
-   glTexture *gfx;
-   CollPoly *plg, *polygon;
+   const glTexture *gfx;
+   const CollPoly *plg, *polygon;
    Vector2d crash[2];
    Pilot *p;
    AsteroidAnchor *ast;
@@ -1477,7 +1477,7 @@ static void weapon_createBolt( Weapon *w, const Outfit* outfit, double T,
    double mass, rdir;
    Pilot *pilot_target;
    double acc;
-   glTexture *gfx;
+   const glTexture *gfx;
 
    /* Only difference is the direction of fire */
    if ((w->parent!=w->target) && (w->target != 0)) /* Must have valid target */
@@ -1548,8 +1548,8 @@ static void weapon_createAmmo( Weapon *w, const Outfit* launcher, double T,
    Vector2d v;
    double mass, rdir;
    Pilot *pilot_target;
-   glTexture *gfx;
-   Outfit* ammo;
+   const glTexture *gfx;
+   const Outfit* ammo;
 
    /* Only difference is the direction of fire */
    if ((w->parent!=w->target) && (w->target != 0)) /* Must have valid target */

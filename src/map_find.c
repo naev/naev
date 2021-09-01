@@ -696,7 +696,7 @@ static void map_showOutfitDetail(unsigned int wid, char* wgtname, int x, int y, 
    (void) x;
    (void) y;
    (void) h;
-   Outfit *outfit;
+   const Outfit *outfit;
    char buf[PATH_MAX], buf2[ECON_CRED_STRLEN], buf3[ECON_CRED_STRLEN];
    double th;
    int iw;
@@ -761,7 +761,8 @@ static int map_findSearchOutfits( unsigned int parent, const char *name )
    StarSystem *sys;
    const char *oname, *sysname;
    char **list;
-   Outfit *o, **olist;
+   const Outfit *o;
+   Outfit **olist;
 
    assert( "Outfit search is not reentrant!" && map_foundOutfitNames == NULL );
 
@@ -883,7 +884,8 @@ static int map_findSearchShips( unsigned int parent, const char *name )
    StarSystem *sys;
    const char *sname, *sysname;
    char **list;
-   Ship *s, **slist;
+   const Ship *s;
+   Ship **slist;
 
    /* Match planet first. */
    s     = NULL;

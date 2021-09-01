@@ -377,7 +377,7 @@ double faction_lane_length_per_presence( int f )
  *    @param f Faction to get the logo of.
  *    @return The faction's logo image.
  */
-glTexture* faction_logo( int f )
+const glTexture* faction_logo( int f )
 {
    if (!faction_isFaction(f)) {
       WARN(_("Faction id '%d' is invalid."),f);
@@ -958,19 +958,16 @@ int faction_isPlayerFriend( int f )
 
    faction = &faction_stack[f];
 
-   if ( faction->env == LUA_NOREF )
+   if (faction->env == LUA_NOREF)
       return 0;
-   else
-   {
-
+   else {
       /* Set up the function:
        * faction_player_friend( standing ) */
       nlua_getenv( faction->env, "faction_player_friend" );
       lua_pushnumber( naevL, faction->player );
 
       /* Call function. */
-      if ( nlua_pcall( faction->env, 1, 1 ) )
-      {
+      if (nlua_pcall( faction->env, 1, 1 )) {
          /* An error occurred. */
          WARN( _("Faction '%s': %s"), faction->name, lua_tostring( naevL, -1 ) );
          lua_pop( naevL, 1 );
@@ -978,8 +975,7 @@ int faction_isPlayerFriend( int f )
       }
 
       /* Parse return. */
-      if ( !lua_isboolean( naevL, -1 ) )
-      {
+      if (!lua_isboolean( naevL, -1 )) {
          WARN( _("Lua script for faction '%s' did not return a boolean from 'faction_player_friend(...)'."), faction->name );
          r = 0;
       }
@@ -1005,19 +1001,16 @@ int faction_isPlayerEnemy( int f )
 
    faction = &faction_stack[f];
 
-   if ( faction->env == LUA_NOREF )
+   if (faction->env == LUA_NOREF)
       return 0;
-   else
-   {
-
+   else {
       /* Set up the function:
        * faction_player_enemy( standing ) */
       nlua_getenv( faction->env, "faction_player_enemy" );
       lua_pushnumber( naevL, faction->player );
 
       /* Call function. */
-      if ( nlua_pcall( faction->env, 1, 1 ) )
-      {
+      if (nlua_pcall( faction->env, 1, 1 )) {
          /* An error occurred. */
          WARN( _("Faction '%s': %s"), faction->name, lua_tostring( naevL, -1 ) );
          lua_pop( naevL, 1 );
@@ -1025,8 +1018,7 @@ int faction_isPlayerEnemy( int f )
       }
 
       /* Parse return. */
-      if ( !lua_isboolean( naevL, -1 ) )
-      {
+      if (!lua_isboolean( naevL, -1 )) {
          WARN( _("Lua script for faction '%s' did not return a boolean from 'faction_player_enemy(...)'."), faction->name );
          r = 0;
       }
@@ -1093,17 +1085,14 @@ const char *faction_getStandingText( int f )
 
    if ( faction->env == LUA_NOREF )
       return _("???");
-   else
-   {
-
+   else {
       /* Set up the function:
        * faction_standing_text( standing ) */
       nlua_getenv( faction->env, "faction_standing_text" );
       lua_pushnumber( naevL, faction->player );
 
       /* Call function. */
-      if ( nlua_pcall( faction->env, 1, 1 ) )
-      {
+      if (nlua_pcall( faction->env, 1, 1 )) {
          /* An error occurred. */
          WARN( _("Faction '%s': %s"), faction->name, lua_tostring( naevL, -1 ) );
          lua_pop( naevL, 1 );
@@ -1111,8 +1100,7 @@ const char *faction_getStandingText( int f )
       }
 
       /* Parse return. */
-      if ( !lua_isstring( naevL, -1 ) )
-      {
+      if (!lua_isstring( naevL, -1 )) {
          WARN( _("Lua script for faction '%s' did not return a string from 'faction_standing_text(...)'."), faction->name );
          r = _("???");
       }
@@ -1144,10 +1132,9 @@ const char *faction_getStandingBroad( int f, int bribed, int override )
 
    faction = &faction_stack[f];
 
-   if ( faction->env == LUA_NOREF )
+   if (faction->env == LUA_NOREF)
       return "???";
-   else
-   {
+   else {
       /* Set up the function:
        * faction_standing_broad( standing, bribed, override ) */
       nlua_getenv( faction->env, "faction_standing_broad" );
@@ -1156,8 +1143,7 @@ const char *faction_getStandingBroad( int f, int bribed, int override )
       lua_pushnumber( naevL, override );
 
       /* Call function. */
-      if ( nlua_pcall( faction->env, 3, 1 ) )
-      {
+      if (nlua_pcall( faction->env, 3, 1 )) {
          /* An error occurred. */
          WARN( _("Faction '%s': %s"), faction->name, lua_tostring( naevL, -1 ) );
          lua_pop( naevL, 1 );
@@ -1165,8 +1151,7 @@ const char *faction_getStandingBroad( int f, int bribed, int override )
       }
 
       /* Parse return. */
-      if ( !lua_isstring( naevL, -1 ) )
-      {
+      if (!lua_isstring( naevL, -1 )) {
          WARN( _("Lua script for faction '%s' did not return a string from 'faction_standing_broad(...)'."), faction->name );
          r = "???";
       }
@@ -1210,12 +1195,10 @@ int areEnemies( int a, int b )
    }
 
    /* player handled separately */
-   if (a==FACTION_PLAYER) {
+   if (a==FACTION_PLAYER)
       return faction_isPlayerEnemy(b);
-   }
-   else if (b==FACTION_PLAYER) {
+   else if (b==FACTION_PLAYER)
       return faction_isPlayerEnemy(a);
-   }
 
    for (i=0;i<array_size(fa->enemies);i++)
       if (fa->enemies[i] == b)
@@ -1260,12 +1243,10 @@ int areAllies( int a, int b )
    }
 
    /* we assume player becomes allies with high rating */
-   if (a==FACTION_PLAYER) {
+   if (a==FACTION_PLAYER)
       return faction_isPlayerFriend(b);
-   }
-   else if (b==FACTION_PLAYER) {
+   else if (b==FACTION_PLAYER)
       return faction_isPlayerFriend(a);
-   }
 
    for (i=0;i<array_size(fa->allies);i++)
       if (fa->allies[i] == b)
@@ -1308,9 +1289,9 @@ static int faction_parse( Faction* temp, xmlNodePtr parent )
 
    /* Clear memory. */
    memset( temp, 0, sizeof(Faction) );
-   temp->equip_env = LUA_NOREF;
-   temp->env = LUA_NOREF;
-   temp->sched_env = LUA_NOREF;
+   temp->equip_env   = LUA_NOREF;
+   temp->env         = LUA_NOREF;
+   temp->sched_env   = LUA_NOREF;
 
    player = 0;
    node   = parent->xmlChildrenNode;
@@ -1823,7 +1804,7 @@ int faction_usesHiddenJumps( int f )
 /**
  * @brief Gets the faction's generators.
  */
-FactionGenerator* faction_generators( int f )
+const FactionGenerator* faction_generators( int f )
 {
    if (faction_isFaction(f))
       return faction_stack[f].generators;
