@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<asset name="Virtual Civilian Standard">
+<asset name="Virtual Independent Unpresence">
  <virtual/>
  <presence>
   <faction>Independent</faction>
-  <base>33.333333</base>
-  <bonus>16.666667</bonus>
+  <base>0.000000</base>
+  <bonus>-1000.000000</bonus>
   <range>0</range>
  </presence>
 </asset>

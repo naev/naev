@@ -150,7 +150,7 @@ function create ( max )
 end
 
 
-local fmar = faction.get("Marauders")
+local fmar = faction.get("Marauder")
 -- @brief Spawning hook
 function spawn ( presence, max )
    -- Over limit

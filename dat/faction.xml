@@ -96,14 +96,14 @@
   </enemies>
  </faction>
  <faction>
-  <name>Marauders</name>
-  <ai>marauders</ai>
+  <name>Marauder</name>
+  <ai>marauder</ai>
   <known />
   <logo>pirate</logo>
   <player>-50</player>
   <colour>red</colour>
-  <spawn>marauders</spawn>
-  <standing>marauders</standing>
+  <spawn>marauder</spawn>
+  <standing>marauder</standing>
   <equip>pirate</equip>
   <useshiddenjumps/>
   <allies>
