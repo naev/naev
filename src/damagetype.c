@@ -135,7 +135,7 @@ static void DTYPE_free( DTYPE *damtype )
  *    @param name Name to match.
  *    @return ID of the damage type or -1 on error.
  */
-int dtype_get( char* name )
+int dtype_get( const char* name )
 {
    int i;
    for (i=0; i<array_size(dtype_types); i++)
@@ -162,7 +162,7 @@ static DTYPE* dtype_validType( int type )
 /**
  * @brief Gets the human readable string from damage type.
  */
-char* dtype_damageTypeToStr( int type )
+const char* dtype_damageTypeToStr( int type )
 {
    DTYPE *dmg = dtype_validType( type );
    if (dmg == NULL)

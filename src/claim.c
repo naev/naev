@@ -101,7 +101,7 @@ int claim_addSys( Claim_t *claim, int ss_id )
  *    @param claim to test.
  *    @return 0 if claim contains something, 1 otherwise.
  */
-int claim_isNull( Claim_t *claim )
+int claim_isNull( const Claim_t *claim )
 {
    if (claim == NULL)
       return 1;
@@ -119,7 +119,7 @@ int claim_isNull( Claim_t *claim )
  *    @param claim System to test.
  *    @return 0 if no collision found, 1 if a collision was found.
  */
-int claim_test( Claim_t *claim )
+int claim_test( const Claim_t *claim )
 {
    int claimed, i, j;
 
@@ -153,7 +153,7 @@ int claim_test( Claim_t *claim )
  *    @param str Stringto see if is claimed by the claim.
  *    @return 0 if no collision is found, 1 otherwise.
  */
-int claim_testStr( Claim_t *claim, const char *str )
+int claim_testStr( const Claim_t *claim, const char *str )
 {
    int i;
 
@@ -178,7 +178,7 @@ int claim_testStr( Claim_t *claim, const char *str )
  *    @param sys System to see if is claimed by the system claim.
  *    @return 0 if no collision is found, 1 otherwise.
  */
-int claim_testSys( Claim_t *claim, int sys )
+int claim_testSys( const Claim_t *claim, int sys )
 {
    int i;
 
@@ -281,7 +281,7 @@ void claim_activate( Claim_t *claim )
  *    @param writer XML Writer to use.
  *    @param claim Claim to save.
  */
-int claim_xmlSave( xmlTextWriterPtr writer, Claim_t *claim )
+int claim_xmlSave( xmlTextWriterPtr writer, const Claim_t *claim )
 {
    int i;
    StarSystem *sys;

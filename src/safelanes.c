@@ -51,7 +51,7 @@ static const double JUMP_CONDUCTIVITY      = .001;      /**< Conductivity value 
 static const double MIN_ANGLE              = M_PI/18;   /**< Path triangles can't be more acute. */
 enum {
    STORAGE_MODE_LOWER_TRIANGULAR_PART = -1,             /**< A CHOLMOD "stype" value: matrix is interpreted as symmetric. */
-   STORAGE_MODE_UNSYMMETRIC = 0,                        /**< A CHOLMOD "stype" value: matrix holds whatever we put in it. */
+   STORAGE_MODE_UNSYMMETRIC           = 0,              /**< A CHOLMOD "stype" value: matrix holds whatever we put in it. */
    STORAGE_MODE_UPPER_TRIANGULAR_PART = +1,             /**< A CHOLMOD "stype" value: matrix is interpreted as symmetric. */
    SORTED                             = 1,              /**< a named bool */
    PACKED                             = 1,              /**< a named bool */

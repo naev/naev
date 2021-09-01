@@ -112,7 +112,7 @@ void debris_add( double mass, double r, double px, double py,
       nvx = vx + d*cos(a);
       nvy = vy + d*sin(a);
 
-      /* Createsprite. */
+      /* Create sprite. */
       spfx_add( debris_spfx[ RNG( 0, debris_nspfx-1 ) ],
             npx, npy, nvx, nvy, RNG(0,1) );
    }

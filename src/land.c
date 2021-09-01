@@ -194,7 +194,7 @@ int can_swapEquipment( const char *shipname )
  *    @param name Name of the ship, outfit or commodity being acted upon.
  *    @param type Type of action.
  */
-int land_errDialogue( const char *name, char *type )
+int land_errDialogue( const char *name, const char *type )
 {
    errorlist_ptr = NULL;
    if (strcmp(type,"tradeShip")==0)

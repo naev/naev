@@ -93,7 +93,7 @@ int pilot_ewScanCheck( const Pilot *p )
 {
    if (p->target == p->id)
       return 0;
-   return p->scantimer < 0.;
+   return (p->scantimer < 0.);
 }
 
 
@@ -117,7 +117,6 @@ static void pilot_ewUpdate( Pilot *p )
 void pilot_ewUpdateStatic( Pilot *p )
 {
    p->ew_mass     = pilot_ewMass( p->solid->mass );
-
    pilot_ewUpdate( p );
 }
 
@@ -180,9 +179,7 @@ static double pilot_ewMass( double mass )
  */
 static double pilot_ewAsteroid( const Pilot *p )
 {
-   int i;
-
-   i = space_isInField(&p->solid->pos);
+   int i = space_isInField(&p->solid->pos);
    if (i>=0)
       return 1. / (1. + 0.4*cur_system->asteroids[i].density);
    else
@@ -233,7 +230,7 @@ void pilot_updateSensorRange (void)
  */
 double pilot_sensorRange( void )
 {
-   return 7500 / ew_interference;
+   return 7500. / ew_interference;
 }
 
 
@@ -247,15 +244,10 @@ double pilot_sensorRange( void )
  */
 int pilot_inRange( const Pilot *p, double x, double y )
 {
-   double d, sense;
-
-   /* Get distance. */
-   d = pow2(x-p->solid->pos.x) + pow2(y-p->solid->pos.y);
-
-   sense = MAX( 0., pilot_sensorRange() * p->stats.ew_detect );
+   double d = pow2(x-p->solid->pos.x) + pow2(y-p->solid->pos.y);
+   double sense = MAX( 0., pilot_sensorRange() * p->stats.ew_detect );
    if (d < pow2(sense))
       return 1;
-
    return 0;
 }
 
@@ -434,6 +426,15 @@ double pilot_ewWeaponTrack( const Pilot *p, const Pilot *t, double trackmin, dou
 }
 
 
+/**
+ * @brief Checks to see if there are pilots nearby to a stealthed pilot that could break stealth.
+ *
+ *    @param p Pilot to check.
+ *    @param mod Distance-dependent trength modifier.
+ *    @param close Number of pilots nearby.
+ *    @param isplayer Whether or not the player is the pilot breaking stealth.
+ *    @return Number of stealth-breaking pilots nearby.
+ */
 static int pilot_ewStealthGetNearby( const Pilot *p, double *mod, int *close, int *isplayer )
 {
    Pilot *t;
@@ -494,6 +495,9 @@ static int pilot_ewStealthGetNearby( const Pilot *p, double *mod, int *close, in
 
 /**
  * @brief Updates the stealth mode and checks to see if it is getting broken.
+ *
+ *    @param p Pilot to update.
+ *    @param dt Current delta-tick.
  */
 void pilot_ewUpdateStealth( Pilot *p, double dt )
 {

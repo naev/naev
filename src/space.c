@@ -518,7 +518,7 @@ char** space_getFactionPlanet( int *factions, int landable )
  *    @param filter Filter function for including planets.
  *    @return The name (internal/English) of a random planet.
  */
-char* space_getRndPlanet( int landable, unsigned int services,
+const char* space_getRndPlanet( int landable, unsigned int services,
       int (*filter)(Planet *p))
 {
    int i,j;
@@ -733,7 +733,7 @@ double system_getClosestAng( const StarSystem *sys, int *pnt, int *jp, int *ast,
  *
  *    @return 1 if target system is reachable, 0 if it isn't.
  */
-int space_sysReachable( StarSystem *sys )
+int space_sysReachable( const StarSystem *sys )
 {
    int i;
    JumpPoint *jp;
@@ -776,7 +776,7 @@ int space_sysReallyReachable( char* sysname )
  *
  *    @return 1 if target system is reachable, 0 if it isn't.
  */
-int space_sysReachableFromSys( StarSystem *target, StarSystem *sys )
+int space_sysReachableFromSys( const StarSystem *target, const StarSystem *sys )
 {
    JumpPoint *jp;
 
@@ -887,7 +887,7 @@ StarSystem* system_getIndex( int id )
  *    @param sys System to get index of.
  *    @return The index of the system.
  */
-int system_index( StarSystem *sys )
+int system_index( const StarSystem *sys )
 {
    return sys->id;
 }
@@ -4155,7 +4155,7 @@ int space_isInField( const Vector2d *p )
  *    @param ID ID of the type.
  *    @return AsteroidType object.
  */
-AsteroidType *space_getType ( int ID )
+const AsteroidType *space_getType ( int ID )
 {
    return &asteroid_types[ ID ];
 }

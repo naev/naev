@@ -31,7 +31,7 @@ int map_isOpen (void);
 /* misc */
 StarSystem* map_getDestination( int *jumps );
 void map_setZoom( double zoom );
-void map_select( StarSystem *sys, char shifted );
+void map_select( const StarSystem *sys, char shifted );
 void map_cleanup (void);
 void map_clear (void);
 void map_jump (void);

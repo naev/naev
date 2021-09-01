@@ -909,7 +909,7 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
    Pilot *p;
    AsteroidAnchor *ast;
    Asteroid *a;
-   AsteroidType *at;
+   const AsteroidType *at;
    Pilot *const* pilot_stack;
 
    gfx = NULL;

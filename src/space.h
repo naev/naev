@@ -437,12 +437,12 @@ const char *system_existsCase( const char* sysname );
 char **system_searchFuzzyCase( const char* sysname, int *n );
 StarSystem* system_get( const char* sysname );
 StarSystem* system_getIndex( int id );
-int system_index( StarSystem *sys );
-int space_sysReachable( StarSystem *sys );
+int system_index( const StarSystem *sys );
+int space_sysReachable( const StarSystem *sys );
 int space_sysReallyReachable( char* sysname );
-int space_sysReachableFromSys( StarSystem *target, StarSystem *sys );
+int space_sysReachableFromSys( const StarSystem *target, const StarSystem *sys );
 char** space_getFactionPlanet( int *factions, int landable );
-char* space_getRndPlanet( int landable, unsigned int services,
+const char* space_getRndPlanet( int landable, unsigned int services,
       int (*filter)(Planet *p));
 double system_getClosest( const StarSystem *sys, int *pnt, int *jp, int *ast, int *fie, double x, double y );
 double system_getClosestAng( const StarSystem *sys, int *pnt, int *jp, int *ast, int *fie, double x, double y, double ang );
@@ -472,7 +472,7 @@ int space_calcJumpInPos( const StarSystem *in, const StarSystem *out, Vector2d *
  */
 void asteroid_hit( Asteroid *a, const Damage *dmg );
 int space_isInField ( const Vector2d *p );
-AsteroidType *space_getType ( int ID );
+const AsteroidType *space_getType ( int ID );
 
 
 /*

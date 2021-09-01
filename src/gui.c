@@ -426,7 +426,7 @@ static void gui_renderPlanetTarget (void)
    JumpPoint *jp;
    AsteroidAnchor *field;
    Asteroid *ast;
-   AsteroidType *at;
+   const AsteroidType *at;
 
    /* no need to draw if pilot is dead */
    if (player_isFlag(PLAYER_DESTROYED) || player_isFlag(PLAYER_CREATING) ||
@@ -712,7 +712,7 @@ static void gui_renderBorder( double dt )
  * @param pilot Pilot to determine the visibility and position of
  * @return Whether or not the pilot is on-screen.
  */
-int gui_onScreenPilot( double *rx, double *ry, Pilot *pilot )
+int gui_onScreenPilot( double *rx, double *ry, const Pilot *pilot )
 {
    double z;
    int cw, ch;
@@ -750,7 +750,7 @@ int gui_onScreenPilot( double *rx, double *ry, Pilot *pilot )
  * @param pnt Planet to determine the visibility and position of
  * @return Whether or not the given asset is on-screen.
  */
-int gui_onScreenAsset( double *rx, double *ry, JumpPoint *jp, Planet *pnt )
+int gui_onScreenAsset( double *rx, double *ry, const JumpPoint *jp, const Planet *pnt )
 {
    double z;
    int cw, ch;

@@ -1295,7 +1295,7 @@ int input_clickPos( SDL_Event *event, double x, double y, double zoom, double mi
    JumpPoint *jp;
    Asteroid *ast;
    AsteroidAnchor *field;
-   AsteroidType *at;
+   const AsteroidType *at;
    int pntid, jpid, astid, fieid;
 
    /* Don't allow selecting a new target with the right mouse button

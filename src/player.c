@@ -1424,7 +1424,7 @@ void player_targetAsteroidSet( int field, int id )
    int old, i;
    AsteroidAnchor *anchor;
    Asteroid *ast;
-   AsteroidType *at;
+   const AsteroidType *at;
    Commodity *com;
 
    if ((player.p == NULL) || pilot_isFlag( player.p, PILOT_LANDING ))
@@ -3416,7 +3416,7 @@ Planet* player_load( xmlNodePtr parent )
  */
 static Planet* player_parse( xmlNodePtr parent )
 {
-   char *planet, *found;
+   const char *planet, *found;
    unsigned int services;
    Planet *pnt;
    xmlNodePtr node, cur;

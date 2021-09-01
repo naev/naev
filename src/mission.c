@@ -220,7 +220,7 @@ int mission_accept( Mission* mission )
  *    @param misn Mission to check if is already running.
  *    @return 1 if already running, 0 if isn't.
  */
-int mission_alreadyRunning( MissionData* misn )
+int mission_alreadyRunning( const MissionData* misn )
 {
    int i;
    for (i=0; i<MISSION_MAX; i++)
@@ -421,7 +421,7 @@ void mission_sysMark (void)
  *
  *    @param misn Mission to mark.
  */
-void mission_sysComputerMark( Mission* misn )
+void mission_sysComputerMark( const Mission* misn )
 {
    StarSystem *sys;
    int i, n;

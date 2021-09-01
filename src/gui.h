@@ -3,7 +3,6 @@
  */
 
 
-
 #ifndef GUI_H
 #  define GUI_H
 
@@ -27,7 +26,7 @@ typedef enum RadarShape_ {
  */
 int gui_init (void);
 void gui_free (void);
-int gui_load (const char* name);
+int gui_load( const char* name );
 void gui_cleanup (void);
 void gui_reload (void);
 
@@ -41,7 +40,7 @@ void gui_setTarget (void);
 void gui_setShip (void);
 void gui_setSystem (void);
 void gui_updateFaction (void);
-void gui_setGeneric ( Pilot* pilot );
+void gui_setGeneric( Pilot* pilot );
 
 /*
  * render
@@ -69,11 +68,11 @@ int map_overlay_center_x (void);
 int map_overlay_center_y (void);
 double map_overlay_scale_x (void);
 double map_overlay_scale_y (void);
-void gui_setMapOverlayBounds(int top, int right, int bottom, int left);
-int gui_getMapOverlayBoundTop(void);
-int gui_getMapOverlayBoundRight(void);
-int gui_getMapOverlayBoundBottom(void);
-int gui_getMapOverlayBoundLeft(void);
+void gui_setMapOverlayBounds( int top, int right, int bottom, int left );
+int gui_getMapOverlayBoundTop (void);
+int gui_getMapOverlayBoundRight (void);
+int gui_getMapOverlayBoundBottom (void);
+int gui_getMapOverlayBoundLeft (void);
 
 /*
  * Radar.
@@ -120,8 +119,8 @@ void gui_setRadarRel( int mod );
 void gui_getOffset( double *x, double *y );
 glTexture* gui_hailIcon (void);
 char* gui_pick (void);
-int gui_onScreenPilot( double *rx, double *ry, Pilot *pilot );
-int gui_onScreenAsset( double *rx, double *ry, JumpPoint *jp, Planet *pnt );
+int gui_onScreenPilot( double *rx, double *ry, const Pilot *pilot );
+int gui_onScreenAsset( double *rx, double *ry, const JumpPoint *jp, const Planet *pnt );
 
 
 #endif /* GUI_H */

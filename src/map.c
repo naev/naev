@@ -2098,7 +2098,7 @@ void map_jump (void)
  *
  *    @param sys System to select.
  */
-void map_select( StarSystem *sys, char shifted )
+void map_select( const StarSystem *sys, char shifted )
 {
    unsigned int wid;
    int i, autonav;
