@@ -883,7 +883,7 @@ else (x) = MAX( y, (x) - dt )
    }
 
    /* Current planet. */
-   gl_drawCircle( x + cur_system->pos.x * map_zoom,
+   gl_renderCircle( x + cur_system->pos.x * map_zoom,
          y + cur_system->pos.y * map_zoom,
          1.5*r, &col, 0 );
 }
@@ -953,7 +953,7 @@ void map_renderDecorators( double x, double y, int editor, double alpha )
          sw = decorator->image->sw*map_zoom;
          sh = decorator->image->sh*map_zoom;
 
-         gl_blitScale(
+         gl_renderScale(
                decorator->image,
                tx - sw/2, ty - sh/2, sw, sh, &ccol );
       }
@@ -1171,7 +1171,7 @@ void map_renderSystems( double bx, double by, double x, double y,
 
       /* Draw an outer ring. */
       if (map_mode == MAPMODE_TRAVEL || map_mode == MAPMODE_TRADE)
-         gl_drawCircle( tx, ty, r, &cInert, 0 );
+         gl_renderCircle( tx, ty, r, &cInert, 0 );
 
       /* Ignore not known systems when not in the editor. */
       if (!editor && !sys_isKnown(sys))
@@ -1188,15 +1188,15 @@ void map_renderSystems( double bx, double by, double x, double y,
 
          if (editor) {
             /* Radius slightly shorter. */
-            gl_drawCircle( tx, ty, 0.5 * r, col, 1 );
+            gl_renderCircle( tx, ty, 0.5 * r, col, 1 );
          }
          else
-            gl_drawCircle( tx, ty, 0.65 * r, col, 1 );
+            gl_renderCircle( tx, ty, 0.65 * r, col, 1 );
       }
       else if (map_mode == MAPMODE_DISCOVER) {
-         gl_drawCircle( tx, ty, r, &cInert, 0 );
+         gl_renderCircle( tx, ty, r, &cInert, 0 );
          if (sys_isFlag( sys, SYSTEM_DISCOVERED ))
-            gl_drawCircle( tx, ty,  0.65 * r, &cGreen, 1 );
+            gl_renderCircle( tx, ty,  0.65 * r, &cGreen, 1 );
       }
    }
 }
@@ -1407,7 +1407,7 @@ static void map_renderSysBlack(double bx, double by, double x,double y, double w
       /* If system is known fill it. */
       if ((sys_isKnown(sys)) && (system_hasPlanet(sys))) {
          ccol = cGrey10;
-         gl_drawCircle( tx, ty , r, &ccol, 1 );
+         gl_renderCircle( tx, ty , r, &ccol, 1 );
       }
    }
 }
@@ -1529,17 +1529,17 @@ void map_renderCommod( double bx, double by, double x, double y,
                   gl_print(&gl_smallFont, x + (sys->pos.x+11) * map_zoom , y + (sys->pos.y-22)*map_zoom, &cLightBlue, "%.1f",best);
                   best = tanh ( 2*best / curMinPrice );
                   col_blend( &ccol, &cFontBlue, &cFontYellow, best );
-                  gl_drawCircle( tx, ty /*+ r*/ , /*(0.1 + best) **/ r, &ccol, 1 );
+                  gl_renderCircle( tx, ty /*+ r*/ , /*(0.1 + best) **/ r, &ccol, 1 );
                } else {/* draw circle below */
                   gl_print(&gl_smallFont, x + (sys->pos.x+11) * map_zoom , y + (sys->pos.y-22)*map_zoom, &cOrange, "%.1f",worst);
                   worst = tanh ( -2*worst/ curMaxPrice );
                   col_blend( &ccol, &cFontOrange, &cFontYellow, worst );
-                  gl_drawCircle( tx, ty /*- r*/ , /*(0.1 - worst) **/ r, &ccol, 1 );
+                  gl_renderCircle( tx, ty /*- r*/ , /*(0.1 - worst) **/ r, &ccol, 1 );
                }
             } else {
                /* Commodity not sold here */
                ccol = cGrey10;
-               gl_drawCircle( tx, ty , r, &ccol, 1 );
+               gl_renderCircle( tx, ty , r, &ccol, 1 );
 
             }
          }
@@ -1596,11 +1596,11 @@ void map_renderCommod( double bx, double by, double x, double y,
                   col_blend( &ccol, &cFontBlue, &cFontYellow, frac );
                }
                gl_print(&gl_smallFont, x + (sys->pos.x+11) * map_zoom , y + (sys->pos.y-22)*map_zoom, &ccol, "%.1f",sumPrice);
-               gl_drawCircle( tx, ty , r, &ccol, 1 );
+               gl_renderCircle( tx, ty , r, &ccol, 1 );
             } else {
                /* Commodity not sold here */
                ccol = cGrey10;
-               gl_drawCircle( tx, ty , r, &ccol, 1 );
+               gl_renderCircle( tx, ty , r, &ccol, 1 );
             }
          }
       }

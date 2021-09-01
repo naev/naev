@@ -993,7 +993,7 @@ static void player_renderStealthUnderlay( double dt )
 
       gl_gameToScreenCoords( &x, &y, t->solid->pos.x, t->solid->pos.y );
       r = detect * t->stats.ew_detect * z;
-      gl_drawCircle( x, y, r, &col, 1 );
+      gl_renderCircle( x, y, r, &col, 1 );
    }
 }
 
@@ -1057,10 +1057,10 @@ static void player_renderAimHelper( double dt )
    c.a = 0.3;
    gl_gameToScreenCoords( &x2, &y2, player.p->solid->pos.x + r*cos( a+theta ),
                            player.p->solid->pos.y + r*sin( a+theta ) );
-   gl_drawLine( x1, y1, x2, y2, &c );
+   gl_renderLine( x1, y1, x2, y2, &c );
    gl_gameToScreenCoords( &x2, &y2, player.p->solid->pos.x + r*cos( a-theta ),
                            player.p->solid->pos.y + r*sin( a-theta ) );
-   gl_drawLine( x1, y1, x2, y2, &c );
+   gl_renderLine( x1, y1, x2, y2, &c );
 
    c.r = d*0.9;
    c.g = d*0.2 + (1.-d)*0.8;
@@ -1070,7 +1070,7 @@ static void player_renderAimHelper( double dt )
    gl_gameToScreenCoords( &x2, &y2, player.p->solid->pos.x + r*cos( a ),
                            player.p->solid->pos.y + r*sin( a ) );
 
-   gl_drawLine( x1, y1, x2, y2, &c );
+   gl_renderLine( x1, y1, x2, y2, &c );
 
    c2 = cWhite;
    c2.a = 0.7;
@@ -1082,14 +1082,14 @@ static void player_renderAimHelper( double dt )
                            player.p->solid->pos.y + r*sin( b ) );
 
    c.a = 0.4;
-   gl_drawLine( x1, y1, x2, y2, &c );
+   gl_renderLine( x1, y1, x2, y2, &c );
 
    /* TODO this should be converted into a single SDF call. */
    glColour c3 = cBlack;
    c3.a = c2.a;
-   gl_drawCircle( x2, y2, 8., &c3, 0 );
-   gl_drawCircle( x2, y2, 10., &c3, 0 );
-   gl_drawCircle( x2, y2, 9., &c2, 0 );
+   gl_renderCircle( x2, y2, 8., &c3, 0 );
+   gl_renderCircle( x2, y2, 10., &c3, 0 );
+   gl_renderCircle( x2, y2, 9., &c2, 0 );
 }
 
 

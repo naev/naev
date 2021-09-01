@@ -517,7 +517,7 @@ static void uniedit_renderFactionDisks( double x, double y, double r )
       //glUniform1f(shaders.factiondisk.paramf, r / sr );
       //gl_renderShader( tx, ty, sr, sr, 0., &shaders.factiondisk, &c, 1 );
       (void) r;
-      gl_drawCircle( tx, ty, sr, &c, 1 );
+      gl_renderCircle( tx, ty, sr, &c, 1 );
    }
 }
 

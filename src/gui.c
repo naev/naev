@@ -655,7 +655,7 @@ static void gui_renderBorder( double dt )
          gui_borderIntersection( &cx, &cy, rx, ry, hw, hh );
 
          col = gui_getPlanetColour(i);
-         gl_drawCircle(cx, cy, 5, col, 0);
+         gl_renderCircle(cx, cy, 5, col, 0);
       }
    }
 
@@ -1487,7 +1487,7 @@ static void gui_renderRadarOutOfRange( RadarShape sh, int w, int h, int cx, int 
    x2 = x - .15 * w * cos(a);
    y2 = y - .15 * w * sin(a);
 
-   gl_drawLine( x, y, x2, y2, col );
+   gl_renderLine( x, y, x2, y2, col );
 }
 
 

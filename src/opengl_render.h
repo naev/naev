@@ -32,49 +32,49 @@ void gl_screenToGameCoords( double *nx, double *ny, int bx, int by );
  * Rendering.
  */
 /* blits texture */
-void gl_blitTexture( const glTexture* texture,
+void gl_renderTexture( const glTexture* texture,
       const double x, const double y,
       const double w, const double h,
       const double tx, const double ty,
       const double tw, const double th, const glColour *c, const double angle );
-void gl_blitTextureInterpolate(  const glTexture* ta,
+void gl_renderTextureInterpolate(  const glTexture* ta,
       const glTexture* tb, const double inter,
       const double x, const double y,
       const double w, const double h,
       const double tx, const double ty,
       const double tw, const double th, const glColour *c );
 /* blits a sprite, relative pos */
-void gl_blitSprite( const glTexture* sprite,
+void gl_renderSprite( const glTexture* sprite,
       const double bx, const double by,
       const int sx, const int sy, const glColour *c );
 /* Blits a sprite interpolating between textures, relative pos. */
-void gl_blitSpriteInterpolate( const glTexture* sa, const glTexture *sb,
+void gl_renderSpriteInterpolate( const glTexture* sa, const glTexture *sb,
       double inter, const double bx, const double by,
       const int sx, const int sy, const glColour *c );
 /* Blits a sprite interpolating between textures and scaling, relative pos. */
-void gl_blitSpriteInterpolateScale( const glTexture* sa, const glTexture *sb,
+void gl_renderSpriteInterpolateScale( const glTexture* sa, const glTexture *sb,
       double inter, const double bx, const double by,
       double scalew, double scaleh,
       const int sx, const int sy, const glColour *c );
 /* blits a sprite, absolute pos */
-void gl_blitStaticSprite( const glTexture* sprite,
+void gl_renderStaticSprite( const glTexture* sprite,
       const double bx, const double by,
       const int sx, const int sy, const glColour* c );
 /* blits a scaled sprite, absolute pos */
-void gl_blitScaleSprite( const glTexture* sprite,
+void gl_renderScaleSprite( const glTexture* sprite,
       const double bx, const double by,
       const int sx, const int sy,
       const double bw, const double bh, const glColour* c );
 /* blits a texture scaled, absolute pos */
-void gl_blitScale( const glTexture* texture,
+void gl_renderScale( const glTexture* texture,
       const double bx, const double by,
       const double bw, const double bh, const glColour* c );
 /* blits a texture scaled to a rectangle, but conserve aspect ratio, absolute pos */
-void gl_blitScaleAspect( const glTexture* texture,
+void gl_renderScaleAspect( const glTexture* texture,
       const double bx, const double by,
       const double bw, const double bh, const glColour* c );
 /* blits the entire image, absolute pos */
-void gl_blitStatic( const glTexture* texture,
+void gl_renderStatic( const glTexture* texture,
       const double bx, const double by, const glColour *c );
 
 
@@ -90,12 +90,12 @@ void gl_renderShader( double x, double y, double w, double h, double r, const Si
 void gl_renderShaderH( const SimpleShader *shd, const gl_Matrix4 *H, const glColour *c, int center );
 
 /* Circles. */
-void gl_drawCircle( const double x, const double y,
+void gl_renderCircle( const double x, const double y,
       const double r, const glColour *c, int filled );
-void gl_drawCircleH( const gl_Matrix4 *H, const glColour *c, int filled );
+void gl_renderCircleH( const gl_Matrix4 *H, const glColour *c, int filled );
 
 /* Lines. */
-void gl_drawLine( const double x1, const double y1,
+void gl_renderLine( const double x1, const double y1,
       const double x2, const double y2, const glColour *c );
 
 /* Rectangles. */

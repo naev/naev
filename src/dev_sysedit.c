@@ -736,7 +736,7 @@ static void sysedit_renderAsteroidsField( double bx, double by, AsteroidAnchor *
    tx = bx + ast->pos.x*z;
    ty = by + ast->pos.y*z;
 
-   gl_drawCircle( tx, ty, ast->radius * sysedit_zoom, &cOrange, 0 );
+   gl_renderCircle( tx, ty, ast->radius * sysedit_zoom, &cOrange, 0 );
 }
 
 /**
@@ -757,7 +757,7 @@ static void sysedit_renderAsteroidExclusion( double bx, double by, AsteroidExclu
    r = aexcl->radius * sysedit_zoom;
    rr = r * sin(M_PI / 4.);
 
-   gl_drawCircle( tx, ty, r, &cRed, 0 );
+   gl_renderCircle( tx, ty, r, &cRed, 0 );
    gl_renderCross( tx, ty, r, &cRed );
    gl_renderRectEmpty( tx - rr, ty - rr, rr * 2, rr * 2, &cRed );
 }
@@ -798,15 +798,15 @@ static void sysedit_renderBG( double bx, double by, double w, double h, double x
    /* Vertical. */
    for ( i = 0; i < nx; i += 1 ) {
       d = startx + ( i * spacing );
-      gl_drawLine( d, by, d, by + h, &cBlue );
+      gl_renderLine( d, by, d, by + h, &cBlue );
    }
    /* Horizontal. */
    for ( i = 0; i < ny; i += 1 ) {
       d = starty + ( i * spacing );
-      gl_drawLine( bx, d, bx + w, d, &cBlue );
+      gl_renderLine( bx, d, bx + w, d, &cBlue );
    }
 
-   gl_drawCircle( x, y, sysedit_sys->radius * z, &cLightBlue, 0 );
+   gl_renderCircle( x, y, sysedit_sys->radius * z, &cLightBlue, 0 );
 }
 
 
@@ -833,11 +833,11 @@ static void sysedit_renderSprite( glTexture *gfx, double bx, double by, double x
       cc.g = cFontBlue.g;
       cc.b = cFontBlue.b;
       cc.a = 0.5;
-      gl_drawCircle( bx + x*z, by + y*z, gfx->sw*z*1.1, &cc, 1 );
+      gl_renderCircle( bx + x*z, by + y*z, gfx->sw*z*1.1, &cc, 1 );
    }
 
    /* Blit the planet. */
-   gl_blitScaleSprite( gfx, tx, ty, sx, sy, gfx->sw*z, gfx->sh*z, c );
+   gl_renderScaleSprite( gfx, tx, ty, sx, sy, gfx->sw*z, gfx->sh*z, c );
 
    /* Display caption. */
    if (caption != NULL) {

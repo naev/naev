@@ -1837,7 +1837,7 @@ void pilot_render( Pilot* p, const double dt )
       object_renderSolidPart(p->ship->gfx_3d, p->solid, "engine", c.a * p->engine_glow, p->ship->gfx_3d_scale * scale);
    } else {
       /* Sprites */
-      gl_blitSpriteInterpolateScale( p->ship->gfx_space, p->ship->gfx_engine,
+      gl_renderSpriteInterpolateScale( p->ship->gfx_space, p->ship->gfx_engine,
             1.-p->engine_glow, p->solid->pos.x, p->solid->pos.y,
             scale, scale,
             p->tsx, p->tsy, &c );
@@ -1913,7 +1913,7 @@ void pilot_renderOverlay( Pilot* p, const double dt )
             p->hail_pos %= sx*sy;
          }
          /* Render. */
-         gl_blitSprite( ico_hail,
+         gl_renderSprite( ico_hail,
                p->solid->pos.x + PILOT_SIZE_APPROX*p->ship->gfx_space->sw/2. + ico_hail->sw/4.,
                p->solid->pos.y + PILOT_SIZE_APPROX*p->ship->gfx_space->sh/2. + ico_hail->sh/4.,
                p->hail_pos % sx, p->hail_pos / sx, NULL );

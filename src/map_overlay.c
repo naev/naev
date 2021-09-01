@@ -711,7 +711,7 @@ void ovr_render( double dt )
          detect = vect_dist2( &player.p->solid->pos, &ast->pos );
          if (detect < pow2(pilot_sensorRange() * player.p->stats.ew_detect + ast->radius)) {
             map_overlayToScreenPos( &x, &y, ast->pos.x, ast->pos.y );
-            gl_drawCircle( x, y, ast->radius / res, &col, 1 );
+            gl_renderCircle( x, y, ast->radius / res, &col, 1 );
          }
       }
 
@@ -720,7 +720,7 @@ void ovr_render( double dt )
       for (i=0; i<array_size(cur_system->astexclude); i++) {
          aexcl = &cur_system->astexclude[i];
          map_overlayToScreenPos( &x, &y, aexcl->pos.x, aexcl->pos.y );
-         gl_drawCircle( x, y, aexcl->radius / res, &col, 1 );
+         gl_renderCircle( x, y, aexcl->radius / res, &col, 1 );
       }
 
       detect = player.p->ew_stealth;
@@ -736,7 +736,7 @@ void ovr_render( double dt )
             continue;
          map_overlayToScreenPos( &x, &y, pstk[i]->solid->pos.x, pstk[i]->solid->pos.y );
          r = detect * pstk[i]->stats.ew_detect / res;
-         gl_drawCircle( x, y, r, &col, 1 );
+         gl_renderCircle( x, y, r, &col, 1 );
       }
 
       glBindFramebuffer(GL_FRAMEBUFFER, gl_screen.current_fbo);

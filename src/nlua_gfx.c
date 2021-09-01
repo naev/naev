@@ -196,7 +196,7 @@ static int gfxL_renderTex( lua_State *L )
 #endif /* DEBUGGING */
 
    /* Render. */
-   gl_blitStaticSprite( tex, x, y, sx, sy, col );
+   gl_renderStaticSprite( tex, x, y, sx, sy, col );
 
    return 0;
 }
@@ -255,7 +255,7 @@ static int gfxL_renderTexScale( lua_State *L )
 #endif /* DEBUGGING */
 
    /* Render. */
-   gl_blitScaleSprite( tex, x, y, sx, sy, bw, bh, col );
+   gl_renderScaleSprite( tex, x, y, sx, sy, bw, bh, col );
 
    return 0;
 }
@@ -330,7 +330,7 @@ static int gfxL_renderTexRaw( lua_State *L )
    if (th < 0)
       ty -= th;
 
-   gl_blitTexture( t, px, py, pw, ph, tx, ty, tw, th, col, angle );
+   gl_renderTexture( t, px, py, pw, ph, tx, ty, tw, th, col, angle );
    return 0;
 }
 
@@ -499,7 +499,7 @@ static int gfxL_renderCircle( lua_State *L )
    empty = lua_toboolean( L, 5 );
 
    /* Render. */
-   gl_drawCircle( x, y, r, col, !empty );
+   gl_renderCircle( x, y, r, col, !empty );
 
    return 0;
 }
@@ -523,7 +523,7 @@ static int gfxL_renderCircleH( lua_State *L )
    int empty = lua_toboolean(L,3);
 
    /* Render. */
-   gl_drawCircleH( H, col, !empty );
+   gl_renderCircleH( H, col, !empty );
 
    return 0;
 }

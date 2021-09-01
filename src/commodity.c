@@ -463,7 +463,7 @@ void gatherable_render( void )
 
    for (i=0; i < array_size(gatherable_stack); i++) {
       gat = &gatherable_stack[i];
-      gl_blitSprite( gat->type->gfx_space, gat->pos.x, gat->pos.y, 0, 0, NULL );
+      gl_renderSprite( gat->type->gfx_space, gat->pos.x, gat->pos.y, 0, 0, NULL );
    }
 }
 

@@ -486,7 +486,7 @@ static void equipment_renderColumn( double x, double y, double w, double h,
 
       if (lst[i].outfit != NULL) {
          /* Draw bugger. */
-         gl_blitScale( lst[i].outfit->gfx_store,
+         gl_renderScale( lst[i].outfit->gfx_store,
                x, y, w, h, NULL );
       }
       else if ((o != NULL) &&
@@ -906,7 +906,7 @@ static void equipment_renderShip( double bx, double by,
 
    px = bx + (bw-pw)/2;
    py = by + (bh-ph)/2;
-   gl_blitScaleSprite( p->ship->gfx_space, px, py, sx, sy, pw, ph, NULL );
+   gl_renderScaleSprite( p->ship->gfx_space, px, py, sx, sy, pw, ph, NULL );
 
 #ifdef DEBUGGING
    if (debug_isFlag(DEBUG_MARK_EMITTER)) {

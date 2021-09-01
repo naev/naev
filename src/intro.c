@@ -479,12 +479,12 @@ int intro_display( const char *text, const char *mus )
 
       if (NULL != side_image.tex)
          /* Draw the image next to the text. */
-         gl_blitScale( side_image.tex, side_image.x, side_image.y,
+         gl_renderScale( side_image.tex, side_image.x, side_image.y,
                        side_image.w, side_image.h, &side_image.c );
 
       if (NULL != transition.tex && transition.c.a > 0.0)
          /* Draw the image in transition. */
-         gl_blitScale( transition.tex, transition.x, transition.y,
+         gl_renderScale( transition.tex, transition.x, transition.y,
                        transition.w, transition.h, &transition.c );
 
       /* Display stuff. */

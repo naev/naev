@@ -82,12 +82,12 @@ static void img_render( Widget* img, double bx, double by )
     * image
     */
    if (img->dat.img.image != NULL) {
-      gl_blitScaleAspect( img->dat.img.image, x, y,
+      gl_renderScaleAspect( img->dat.img.image, x, y,
             w, h, &img->dat.img.colour );
    }
    /* Additional layers. */
    for (i=0; i<img->dat.img.nlayers; i++) {
-      gl_blitScaleAspect( img->dat.img.layers[i], x, y,
+      gl_renderScaleAspect( img->dat.img.layers[i], x, y,
             w, h, &img->dat.img.colour );
    }
 

@@ -318,7 +318,7 @@ static void map_system_render( double bx, double by, double w, double h, void *d
                ih = ih * p->gfx_space->h / p->gfx_space->w;
             else if ( p->gfx_space->w < p->gfx_space->h )
                iw = iw * p->gfx_space->w / p->gfx_space->h;
-            gl_blitScale( p->gfx_space, bx+2, by+(nshow-j-1)*pitch + (pitch-ih)/2 + offset, iw, ih, &cWhite );
+            gl_renderScale( p->gfx_space, bx+2, by+(nshow-j-1)*pitch + (pitch-ih)/2 + offset, iw, ih, &cWhite );
          }
          gl_printRaw( &gl_smallFont, bx + 5 + pitch, by + (nshow-j-0.5)*pitch + offset,
                (cur_planet_sel == j ? &cFontGreen : &cFontWhite), -1., _(p->name) );
@@ -335,7 +335,7 @@ static void map_system_render( double bx, double by, double w, double h, void *d
       ccol.r=ccol.g=ccol.b=ccol.a=1;
       if ( phase > 120 && array_size( bgImages ) > 2 )
          ccol.a = cos ( (phase-121)/30. *M_PI/2.);
-      gl_blitScale( bgImages[starCnt], bx+2 , by+(nshow-1)*pitch + (pitch-ih)/2 + offset, iw , ih, &ccol );
+      gl_renderScale( bgImages[starCnt], bx+2 , by+(nshow-1)*pitch + (pitch-ih)/2 + offset, iw , ih, &ccol );
       if ( phase > 120 && array_size( bgImages ) > 2) {
          /* fade in the next star */
          ih=pitch;
@@ -352,7 +352,7 @@ static void map_system_render( double bx, double by, double w, double h, void *d
          else if ( bgImages[i]->w < bgImages[i]->h )
             iw = iw * bgImages[i]->w / bgImages[i]->h;
          ccol.a = 1 - ccol.a;
-         gl_blitScale( bgImages[i], bx+2, by+(nshow-1)*pitch + (pitch-ih)/2 + offset, iw, ih, &ccol );
+         gl_renderScale( bgImages[i], bx+2, by+(nshow-1)*pitch + (pitch-ih)/2 + offset, iw, ih, &ccol );
       }
    } else {
       /* no nebula or star images - probably due to nebula */
@@ -372,11 +372,11 @@ static void map_system_render( double bx, double by, double w, double h, void *d
       if ( (ih * imgw) / imgh > iw ) {
          /* image is wider per height than the space allows - use all width */
          int newih = (int)((iw * imgh) / imgw);
-         gl_blitScale( bgImages[0], bx + 10 + pitch + nameWidth, by + (ih-newih)/2, iw, newih, &cWhite );
+         gl_renderScale( bgImages[0], bx + 10 + pitch + nameWidth, by + (ih-newih)/2, iw, newih, &cWhite );
       } else {
          /* image is higher, so use all height. */
          int newiw = (int)((ih * imgw) / imgh);
-         gl_blitScale( bgImages[0], bx + 10 + pitch + nameWidth + (iw-newiw)/2, by, newiw, ih, &cWhite );
+         gl_renderScale( bgImages[0], bx + 10 + pitch + nameWidth + (iw-newiw)/2, by, newiw, ih, &cWhite );
       }
    }
    /* draw marker around currently selected planet */
@@ -458,7 +458,7 @@ static void map_system_render( double bx, double by, double w, double h, void *d
          /* display the logo */
          logo = faction_logo( f );
          if ( logo != NULL ) {
-            gl_blitScale( logo, bx + pitch + nameWidth + 200,
+            gl_renderScale( logo, bx + pitch + nameWidth + 200,
                   by + h - 21, 20, 20, &cWhite );
          }
       }
@@ -505,7 +505,7 @@ static void map_system_render( double bx, double by, double w, double h, void *d
         char factionBuf[64];
         logo = faction_logo( p->faction );
         if ( logo != NULL ) {
-           gl_blitScale( logo, bx + pitch + nameWidth + 200, by + h - 21, 20, 20, &cWhite );
+           gl_renderScale( logo, bx + pitch + nameWidth + 200, by + h - 21, 20, 20, &cWhite );
          }
         snprintf( factionBuf, 64, "%s", faction_shortname( p->faction ) );
         gl_printTextRaw( &gl_smallFont, (w - nameWidth-pitch - 60) / 2, 20,

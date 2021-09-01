@@ -789,22 +789,22 @@ static void weapon_render( Weapon* w, const double dt )
 
             /* Render. */
             if (outfit_isBolt(w->outfit) && w->outfit->u.blt.gfx_end)
-               gl_blitSpriteInterpolate( gfx, w->outfit->u.blt.gfx_end,
+               gl_renderSpriteInterpolate( gfx, w->outfit->u.blt.gfx_end,
                      w->timer / w->life,
                      w->solid->pos.x, w->solid->pos.y,
                      w->sprite % (int)gfx->sx, w->sprite / (int)gfx->sx, &c );
             else
-               gl_blitSprite( gfx, w->solid->pos.x, w->solid->pos.y,
+               gl_renderSprite( gfx, w->solid->pos.x, w->solid->pos.y,
                      w->sprite % (int)gfx->sx, w->sprite / (int)gfx->sx, &c );
          }
          /* Outfit faces direction. */
          else {
             if (outfit_isBolt(w->outfit) && w->outfit->u.blt.gfx_end)
-               gl_blitSpriteInterpolate( gfx, w->outfit->u.blt.gfx_end,
+               gl_renderSpriteInterpolate( gfx, w->outfit->u.blt.gfx_end,
                      w->timer / w->life,
                      w->solid->pos.x, w->solid->pos.y, w->sx, w->sy, &c );
             else
-               gl_blitSprite( gfx, w->solid->pos.x, w->solid->pos.y, w->sx, w->sy, &c );
+               gl_renderSprite( gfx, w->solid->pos.x, w->solid->pos.y, w->sx, w->sy, &c );
          }
          break;
 

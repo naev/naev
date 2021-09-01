@@ -1124,7 +1124,7 @@ void spfx_render( const int layer )
          }
 
          /* Renders */
-         gl_blitSprite( effect->gfx,
+         gl_renderSprite( effect->gfx,
                VX(spfx_stack[i].pos), VY(spfx_stack[i].pos),
                spfx_stack[i].lastframe % sx,
                spfx_stack[i].lastframe / sx,

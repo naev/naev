@@ -211,7 +211,7 @@ void gl_renderTriangleEmpty( double x, double y, double a, double s, double leng
  *    @param c Colour to use (modifies texture colour).
  *    @param angle Rotation to apply (radians ccw around the center).
  */
-void gl_blitTexture(  const glTexture* texture,
+void gl_renderTexture(  const glTexture* texture,
       const double x, const double y,
       const double w, const double h,
       const double tx, const double ty,
@@ -289,7 +289,7 @@ void gl_blitTexture(  const glTexture* texture,
  *    @param th Texture height.
  *    @param c Colour to use (modifies texture colour).
  */
-void gl_blitTextureInterpolate(  const glTexture* ta,
+void gl_renderTextureInterpolate(  const glTexture* ta,
       const glTexture* tb, const double inter,
       const double x, const double y,
       const double w, const double h,
@@ -298,17 +298,17 @@ void gl_blitTextureInterpolate(  const glTexture* ta,
 {
    /* No interpolation. */
    if (tb == NULL) {
-      gl_blitTexture( ta, x, y, w, h, tx, ty, tw, th, c, 0. );
+      gl_renderTexture( ta, x, y, w, h, tx, ty, tw, th, c, 0. );
       return;
    }
 
    /* Corner cases. */
    if (inter == 1.) {
-      gl_blitTexture( ta, x, y, w, h, tx, ty, tw, th, c, 0. );
+      gl_renderTexture( ta, x, y, w, h, tx, ty, tw, th, c, 0. );
       return;
    }
    else if (inter == 0.) {
-      gl_blitTexture( tb, x, y, w, h, tx, ty, tw, th, c, 0. );
+      gl_renderTexture( tb, x, y, w, h, tx, ty, tw, th, c, 0. );
       return;
    }
 
@@ -443,7 +443,7 @@ void gl_screenToGameCoords( double *nx, double *ny, int bx, int by )
  *    @param sy Y position of the sprite to use.
  *    @param c Colour to use (modifies texture colour).
  */
-void gl_blitSprite( const glTexture* sprite, const double bx, const double by,
+void gl_renderSprite( const glTexture* sprite, const double bx, const double by,
       const int sx, const int sy, const glColour* c )
 {
    double x,y, w,h, tx,ty, z;
@@ -465,7 +465,7 @@ void gl_blitSprite( const glTexture* sprite, const double bx, const double by,
    tx = sprite->sw*(double)(sx)/sprite->w;
    ty = sprite->sh*(sprite->sy-(double)sy-1)/sprite->h;
 
-   gl_blitTexture( sprite, x, y, w, h,
+   gl_renderTexture( sprite, x, y, w, h,
          tx, ty, sprite->srw, sprite->srh, c, 0. );
 }
 
@@ -487,11 +487,11 @@ void gl_blitSprite( const glTexture* sprite, const double bx, const double by,
  *    @param sy Y position of the sprite to use.
  *    @param c Colour to use (modifies texture colour).
  */
-void gl_blitSpriteInterpolate( const glTexture* sa, const glTexture *sb,
+void gl_renderSpriteInterpolate( const glTexture* sa, const glTexture *sb,
       double inter, const double bx, const double by,
       const int sx, const int sy, const glColour *c )
 {
-   gl_blitSpriteInterpolateScale( sa, sb, inter, bx, by, 1., 1., sx, sy, c );
+   gl_renderSpriteInterpolateScale( sa, sb, inter, bx, by, 1., 1., sx, sy, c );
 }
 
 
@@ -514,7 +514,7 @@ void gl_blitSpriteInterpolate( const glTexture* sa, const glTexture *sb,
  *    @param sy Y position of the sprite to use.
  *    @param c Colour to use (modifies texture colour).
  */
-void gl_blitSpriteInterpolateScale( const glTexture* sa, const glTexture *sb,
+void gl_renderSpriteInterpolateScale( const glTexture* sa, const glTexture *sb,
       double inter, const double bx, const double by,
       double scalew, double scaleh,
       const int sx, const int sy, const glColour *c )
@@ -538,7 +538,7 @@ void gl_blitSpriteInterpolateScale( const glTexture* sa, const glTexture *sb,
    tx = sa->sw*(double)(sx)/sa->w;
    ty = sa->sh*(sa->sy-(double)sy-1)/sa->h;
 
-   gl_blitTextureInterpolate( sa, sb, inter, x, y, w, h,
+   gl_renderTextureInterpolate( sa, sb, inter, x, y, w, h,
          tx, ty, sa->srw, sa->srh, c );
 }
 
@@ -553,7 +553,7 @@ void gl_blitSpriteInterpolateScale( const glTexture* sa, const glTexture *sb,
  *    @param sy Y position of the sprite to use.
  *    @param c Colour to use (modifies texture colour).
  */
-void gl_blitStaticSprite( const glTexture* sprite, const double bx, const double by,
+void gl_renderStaticSprite( const glTexture* sprite, const double bx, const double by,
       const int sx, const int sy, const glColour* c )
 {
    double x,y, tx,ty;
@@ -566,7 +566,7 @@ void gl_blitStaticSprite( const glTexture* sprite, const double bx, const double
    ty = sprite->sh*(sprite->sy-(double)sy-1)/sprite->h;
 
    /* actual blitting */
-   gl_blitTexture( sprite, x, y, sprite->sw, sprite->sh,
+   gl_renderTexture( sprite, x, y, sprite->sw, sprite->sh,
          tx, ty, sprite->srw, sprite->srh, c, 0. );
 }
 
@@ -583,7 +583,7 @@ void gl_blitStaticSprite( const glTexture* sprite, const double bx, const double
  *    @param bh Height of sprite to render at.
  *    @param c Colour to use (modifies texture colour).
  */
-void gl_blitScaleSprite( const glTexture* sprite,
+void gl_renderScaleSprite( const glTexture* sprite,
       const double bx, const double by,
       const int sx, const int sy,
       const double bw, const double bh, const glColour* c )
@@ -598,7 +598,7 @@ void gl_blitScaleSprite( const glTexture* sprite,
    ty = sprite->sh*(sprite->sy-(double)sy-1)/sprite->h;
 
    /* actual blitting */
-   gl_blitTexture( sprite, x, y, bw, bh,
+   gl_renderTexture( sprite, x, y, bw, bh,
          tx, ty, sprite->srw, sprite->srh, c, 0. );
 }
 
@@ -613,7 +613,7 @@ void gl_blitScaleSprite( const glTexture* sprite,
  *    @param bh Height to scale to.
  *    @param c Colour to use (modifies texture colour).
  */
-void gl_blitScale( const glTexture* texture,
+void gl_renderScale( const glTexture* texture,
       const double bx, const double by,
       const double bw, const double bh, const glColour* c )
 {
@@ -628,7 +628,7 @@ void gl_blitScale( const glTexture* texture,
    tx = ty = 0.;
 
    /* Actual blitting. */
-   gl_blitTexture( texture, x, y, bw, bh,
+   gl_renderTexture( texture, x, y, bw, bh,
          tx, ty, texture->srw, texture->srh, c, 0. );
 }
 
@@ -644,7 +644,7 @@ void gl_blitScale( const glTexture* texture,
  *    @param bh Height to scale to.
  *    @param c Colour to use (modifies texture colour).
  */
-void gl_blitScaleAspect( const glTexture* texture,
+void gl_renderScaleAspect( const glTexture* texture,
    double bx, double by, double bw, double bh,
    const glColour *c )
 {
@@ -659,7 +659,7 @@ void gl_blitScaleAspect( const glTexture* texture,
    bx += (bw-nw)/2.;
    by += (bh-nh)/2.;
 
-   gl_blitScale( texture, bx, by, nw, nh, c );
+   gl_renderScale( texture, bx, by, nw, nh, c );
 }
 
 
@@ -671,7 +671,7 @@ void gl_blitScaleAspect( const glTexture* texture,
  *    @param by Y position of the texture in screen coordinates.
  *    @param c Colour to use (modifies texture colour).
  */
-void gl_blitStatic( const glTexture* texture,
+void gl_renderStatic( const glTexture* texture,
       const double bx, const double by, const glColour* c )
 {
    double x,y;
@@ -681,7 +681,7 @@ void gl_blitStatic( const glTexture* texture,
    y = by;
 
    /* actual blitting */
-   gl_blitTexture( texture, x, y, texture->sw, texture->sh,
+   gl_renderTexture( texture, x, y, texture->sw, texture->sh,
          0., 0., texture->srw, texture->srh, c, 0. );
 }
 
@@ -745,7 +745,7 @@ void gl_renderShaderH( const SimpleShader *shd, const gl_Matrix4 *H, const glCol
  *    @param c Colour to use.
  *    @param filled Whether or not it should be filled.
  */
-void gl_drawCircle( const double cx, const double cy,
+void gl_renderCircle( const double cx, const double cy,
       const double r, const glColour *c, int filled )
 {
    gl_Matrix4 projection;
@@ -756,7 +756,7 @@ void gl_drawCircle( const double cx, const double cy,
    projection = gl_Matrix4_Scale(projection, r, r, 1);
 
    /* Draw! */
-   gl_drawCircleH( &projection, c, filled );
+   gl_renderCircleH( &projection, c, filled );
 }
 
 
@@ -767,7 +767,7 @@ void gl_drawCircle( const double cx, const double cy,
  *    @param c Colour to use.
  *    @param filled Whether or not it should be filled.
  */
-void gl_drawCircleH( const gl_Matrix4 *H, const glColour *c, int filled )
+void gl_renderCircleH( const gl_Matrix4 *H, const glColour *c, int filled )
 {
    // TODO handle shearing and different x/y scaling
    GLfloat r = H->m[0][0] / gl_view_matrix.m[0][0];
@@ -788,7 +788,7 @@ void gl_drawCircleH( const gl_Matrix4 *H, const glColour *c, int filled )
  *    @param y2 Y position of the second point in screen coordinates.
  *    @param c Colour to use.
  */
-void gl_drawLine( const double x1, const double y1,
+void gl_renderLine( const double x1, const double y1,
       const double x2, const double y2, const glColour *c )
 {
    double a, s;

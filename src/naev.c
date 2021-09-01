@@ -572,7 +572,7 @@ void loadscreen_render( double done, const char *msg )
 
    /* Draw loading screen image. */
    if (loading != NULL)
-      gl_blitScale( loading, bx, by, SHIP_IMAGE_WIDTH, SHIP_IMAGE_HEIGHT, NULL );
+      gl_renderScale( loading, bx, by, SHIP_IMAGE_WIDTH, SHIP_IMAGE_HEIGHT, NULL );
    if (loading_txt != NULL) {
       int tw = gl_printWidthRaw( &loading_font, loading_txt );
       gl_printRaw( &loading_font, bx+SHIP_IMAGE_WIDTH-tw, by+20, &cFontWhite, 1, loading_txt );

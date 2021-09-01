@@ -3404,12 +3404,12 @@ static void space_renderJumpPoint( const JumpPoint *jp, int i )
    else
       c = NULL;
 
-   gl_blitSprite( jumppoint_gfx, jp->pos.x, jp->pos.y, jp->sx, jp->sy, c );
+   gl_renderSprite( jumppoint_gfx, jp->pos.x, jp->pos.y, jp->sx, jp->sy, c );
 
    /* Draw buoys next to "highway" jump points. */
    if (jp->hide == 0.) {
-      gl_blitSprite( jumpbuoy_gfx, jp->pos.x + 200 * jp->sina, jp->pos.y + 200 * jp->cosa, 0, 0, NULL ); /* Left */
-      gl_blitSprite( jumpbuoy_gfx, jp->pos.x + -200 * jp->sina, jp->pos.y + -200 * jp->cosa, 0, 0, NULL ); /* Right */
+      gl_renderSprite( jumpbuoy_gfx, jp->pos.x + 200 * jp->sina, jp->pos.y + 200 * jp->cosa, 0, 0, NULL ); /* Left */
+      gl_renderSprite( jumpbuoy_gfx, jp->pos.x + -200 * jp->sina, jp->pos.y + -200 * jp->cosa, 0, 0, NULL ); /* Right */
    }
 }
 
@@ -3419,7 +3419,7 @@ static void space_renderJumpPoint( const JumpPoint *jp, int i )
  */
 static void space_renderPlanet( const Planet *p )
 {
-   gl_blitSprite( p->gfx_space, p->pos.x, p->pos.y, 0, 0, NULL );
+   gl_renderSprite( p->gfx_space, p->pos.x, p->pos.y, 0, 0, NULL );
 }
 
 
@@ -3448,7 +3448,7 @@ static void space_renderAsteroid( const Asteroid *a )
 
    at = &asteroid_types[a->type];
 
-   gl_blitSpriteInterpolateScale( at->gfxs[a->gfxID], at->gfxs[a->gfxID], 1,
+   gl_renderSpriteInterpolateScale( at->gfxs[a->gfxID], at->gfxs[a->gfxID], 1,
                                   a->pos.x, a->pos.y, scale, scale, 0, 0, NULL );
 
    /* Add the commodities if scanned. */
@@ -3456,7 +3456,7 @@ static void space_renderAsteroid( const Asteroid *a )
    gl_gameToScreenCoords( &nx, &ny, a->pos.x, a->pos.y );
    for (i=0; i<array_size(at->material); i++) {
       com = at->material[i];
-      gl_blitSprite( com->gfx_space, a->pos.x, a->pos.y-10.*i, 0, 0, NULL );
+      gl_renderSprite( com->gfx_space, a->pos.x, a->pos.y-10.*i, 0, 0, NULL );
       snprintf(c, sizeof(c), "x%i", at->quantity[i]);
       gl_printRaw( &gl_smallFont, nx+10, ny-5-10.*i, &cFontWhite, -1., c );
    }
@@ -3478,7 +3478,7 @@ static void space_renderDebris( const Debris *d, double x, double y )
    testVect->y = d->pos.y + y;
 
    if ( space_isInField( testVect ) == 0 )
-      gl_blitSpriteInterpolateScale( asteroid_gfx[d->gfxID], asteroid_gfx[d->gfxID], 1,
+      gl_renderSpriteInterpolateScale( asteroid_gfx[d->gfxID], asteroid_gfx[d->gfxID], 1,
                                      testVect->x, testVect->y, scale, scale, 0, 0, &cInert );
    free(testVect);
 }
