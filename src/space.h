@@ -96,7 +96,7 @@ typedef struct AssetPresence_ {
 
 
 /**
- * @struct Virtual Asset
+ * @struct VirtualAsset
  *
  * @brief Basically modifies system parameters without creating any real objects.
  */
@@ -325,7 +325,7 @@ struct StarSystem_ {
    Planet **planets; /**< Array (array.h): planets */
    int *planetsid; /**< Array (array.h): IDs of the planets. */
    int faction; /**< overall faction */
-   VirtualAsset *assets; /**< Array (array.h): virtual assets. */
+   VirtualAsset **assets_virtual; /**< Array (array.h): virtual assets. */
 
    /* Jumps. */
    JumpPoint *jumps; /**< Array (array.h): Jump points in the system */
@@ -399,6 +399,12 @@ void planet_updateLand( Planet *p );
 
 
 /*
+ * Virtual asset stuff.
+ */
+VirtualAsset* virtualasset_get( const char *name );
+
+
+/*
  * jump stuff
  */
 JumpPoint* jump_get( const char* jumpname, const StarSystem* sys );
@@ -414,6 +420,8 @@ void systems_reconstructPlanets (void);
 StarSystem *system_new (void);
 int system_addPlanet( StarSystem *sys, const char *planetname );
 int system_rmPlanet( StarSystem *sys, const char *planetname );
+int system_addVirtualAsset( StarSystem *sys, const char *assetname );
+int system_rmVirtualAsset( StarSystem *sys, const char *assetname );
 int system_addJump( StarSystem *sys, xmlNodePtr node );
 int system_addJumpDiff( StarSystem *sys, xmlNodePtr node );
 int system_rmJump( StarSystem *sys, const char *jumpname );

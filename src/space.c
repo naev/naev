@@ -81,14 +81,11 @@ static char** systemname_stack = NULL; /**< System name stack corresponding to p
 
 
 /*
- * Star system stack.
+ * Arrays.
  */
 StarSystem *systems_stack = NULL; /**< Star system stack. */
-
-/*
- * Planet stack.
- */
 static Planet *planet_stack = NULL; /**< Planet stack. */
+static VirtualAsset *vasset_stack = NULL; /**< Virtual asset stack. */
 
 /*
  * Asteroid types stack.
@@ -1064,6 +1061,20 @@ char **planet_searchFuzzyCase( const char* planetname, int *n )
    *n = len;
    return names;
 }
+
+
+/**
+ * @brief Gets a virtual asset by matching name.
+ */
+VirtualAsset* virtualasset_get( const char *name )
+{
+   int i;
+   for (i=0; i<array_size(vasset_stack); i++)
+      if (strcmp(vasset_stack[i].name,name)==0)
+         return &vasset_stack[i];
+   return NULL;
+}
+
 
 /**
  * @brief Gets a jump point based on its target and system.
@@ -2249,7 +2260,7 @@ int system_addPlanet( StarSystem *sys, const char *planetname )
 int system_rmPlanet( StarSystem *sys, const char *planetname )
 {
    int i, found;
-   Planet *planet ;
+   Planet *planet;
 
    if (sys == NULL) {
       WARN(_("Unable to remove planet '%s' from NULL system."), planetname);
@@ -2294,6 +2305,81 @@ int system_rmPlanet( StarSystem *sys, const char *planetname )
 
    return 0;
 }
+
+
+/**
+ * @brief Adds a virtual asset to a system.
+ *
+ *    @param sys System to add virtual asset to.
+ *    @param assetname Name of the virtual asset being added.
+ */
+int system_addVirtualAsset( StarSystem *sys, const char *assetname )
+{
+   VirtualAsset *va;
+   int i;
+
+   if (sys == NULL)
+      return -1;
+
+   va = virtualasset_get( assetname );
+   if (va == NULL)
+      return -1;
+   array_push_back( &sys->assets_virtual, va );
+
+   /* Economy is affected by presence. */
+   economy_addQueuedUpdate();
+
+   /* Add the presence. */
+   if (!systems_loading) {
+      for (i=0; i<array_size(va->presences); i++)
+         system_presenceAddAsset( sys, &va->presences[i] );
+      system_setFaction(sys);
+   }
+
+   return 0;
+}
+
+
+/**
+ * @brief Removes a virtual asset from a system.
+ *
+ *    @param sys System to remove virtual asset from.
+ *    @param assetname Name of the virtual asset being removed.
+ */
+int system_rmVirtualAsset( StarSystem *sys, const char *assetname )
+{
+   int i;
+   VirtualAsset *va;
+
+   if (sys == NULL) {
+      WARN(_("Unable to remove virtual asset '%s' from NULL system."), assetname);
+      return -1;
+   }
+
+   /* Try to find planet. */
+   va = virtualasset_get( assetname );
+   for (i=0; i<array_size(sys->assets_virtual); i++)
+      if (sys->assets_virtual[i] == va)
+         break;
+
+   /* Planet not found. */
+   if (i>=array_size(sys->assets_virtual)) {
+      WARN(_("Virtual asset '%s' not found in system '%s' for removal."), assetname, sys->name);
+      return -1;
+   }
+
+   /* Remove virtual asset. */
+   array_erase( &sys->assets_virtual, &sys->assets_virtual[i], &sys->assets_virtual[i+1] );
+
+   /* Remove the presence. */
+   space_reconstructPresences(); /* TODO defer this if removing multiple assets at once. */
+   system_setFaction(sys);
+
+   economy_addQueuedUpdate();
+
+   return 0;
+}
+
 
 /**
  * @brief Adds a jump point to a star system from a diff.
@@ -2385,6 +2471,7 @@ static void system_init( StarSystem *sys )
 {
    memset( sys, 0, sizeof(StarSystem) );
    sys->planets   = array_create( Planet* );
+   sys->assets_virtual = array_create( VirtualAsset* );
    sys->planetsid = array_create( int );
    sys->jumps     = array_create( JumpPoint );
    sys->asteroids = array_create( AsteroidAnchor );
@@ -3491,6 +3578,7 @@ void space_exit (void)
 {
    int i, j;
    Planet *pnt;
+   VirtualAsset *va;
    AsteroidAnchor *ast;
    StarSystem *sys;
    AsteroidType *at;
@@ -3546,19 +3634,27 @@ void space_exit (void)
    }
    array_free(planet_stack);
 
+   for (i=0; i<array_size(vasset_stack); i++) {
+      va = &vasset_stack[i];
+      free( va->name );
+      array_free( va->presences );
+   }
+   array_free( vasset_stack );
+
    /* Free the systems. */
    for (i=0; i < array_size(systems_stack); i++) {
-      free(systems_stack[i].name);
-      free(systems_stack[i].background);
-      free(systems_stack[i].features);
-      array_free(systems_stack[i].jumps);
-      array_free(systems_stack[i].presence);
-      array_free(systems_stack[i].planets);
-      array_free(systems_stack[i].planetsid);
-
-      /* Free the asteroids. */
       sys = &systems_stack[i];
 
+      free(sys->name);
+      free(sys->background);
+      free(sys->features);
+      array_free(sys->jumps);
+      array_free(sys->presence);
+      array_free(sys->planets);
+      array_free(sys->planetsid);
+      array_free(sys->assets_virtual);
+
+      /* Free the asteroids. */
       for (j=0; j < array_size(sys->asteroids); j++) {
          ast = &sys->asteroids[j];
          free(ast->asteroids);
@@ -3881,7 +3977,7 @@ static int getPresenceIndex( StarSystem *sys, int faction )
  * @brief Adds (or removes) some presence to a system.
  *
  *    @param sys Pointer to the system to add to or remove from.
- *    @param pnt Asset to add presence of.
+ *    @param ap Asset presence to add.
  */
 void system_presenceAddAsset( StarSystem *sys, const AssetPresence *ap )
 {
@@ -4078,7 +4174,7 @@ double system_getPresenceFull( const StarSystem *sys, int faction, double *base,
  */
 void system_addAllPlanetsPresence( StarSystem *sys )
 {
-   int i;
+   int i, j;
 
    /* Check for NULL and display a warning. */
 #if DEBUGGING
@@ -4088,8 +4184,14 @@ void system_addAllPlanetsPresence( StarSystem *sys )
    }
 #endif /* DEBUGGING */
 
+   /* Real planets. */
    for (i=0; i<array_size(sys->planets); i++)
       system_presenceAddAsset(sys, &sys->planets[i]->presence );
+
+   /* Virtual assets. */
+   for (i=0; i<array_size(sys->assets_virtual); i++)
+      for (j=0; j<array_size(sys->assets_virtual[i]->presences); j++)
+         system_presenceAddAsset(sys, &sys->assets_virtual[i]->presences[j] );
 }
 
 
