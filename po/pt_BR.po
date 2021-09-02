@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2021-08-28 12:00-0400\n"
-"PO-Revision-Date: 2021-08-31 13:11+0000\n"
+"PO-Revision-Date: 2021-09-02 06:35+0000\n"
 "Last-Translator: Anthony Gregory Souza dos Santos "
 "<antonigregorysouza123@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) <https://hosted.weblate.org/projects/naev/"
@@ -1384,10 +1384,13 @@ msgid ""
 "rough aesthetic, the clientele, almost everything. There is little sign of "
 "the usual Za'lek trappings here."
 msgstr ""
+"Se alguém não soubesse melhor, eles presumiriam que esta era uma barra "
+"Dvaered. A estética tosca, a clientela, quase tudo. Há poucos sinais das "
+"armadilhas Za'lek usuais aqui."
 
 #: dat/assets/amianta.xml:2
 msgid "Amianta"
-msgstr ""
+msgstr "Amianta"
 
 #: dat/assets/amianta.xml:27
 msgid ""
@@ -1395,10 +1398,13 @@ msgid ""
 "Proteron colonized it anyway due to the rich source of both food and water "
 "found underneath the ice."
 msgstr ""
+"As temperaturas frias de Amianta afastariam algumas pessoas, mas o Proteron "
+"a colonizou de qualquer maneira devido à rica fonte de comida e água "
+"encontrada sob o gelo."
 
 #: dat/assets/ammu.xml:2
 msgid "Ammu"
-msgstr ""
+msgstr "Ammu"
 
 #: dat/assets/ammu.xml:29
 msgid ""
@@ -1407,6 +1413,10 @@ msgid ""
 "subterranean spaceport but the way it doesn't seem to faze the locals "
 "reassures you."
 msgstr ""
+"Ammu é um planeta geralmente calmo, uma vez que a pessoa está acostumada com "
+"o barulho constante dos fluxos de lava. Erupções de lava são freqüentemente "
+"sentidas no espaçoporto subterrâneo, mas a maneira como isso não parece "
+"perturbar os habitantes locais tranquiliza você."
 
 #: dat/assets/ammu.xml:30
 msgid ""
@@ -1415,10 +1425,14 @@ msgid ""
 "known for its temperature, that's not to say you can't get a mean Pan-"
 "Galactic Gargle Blaster."
 msgstr ""
+"O Ammu Spaceport Bar, conhecido como '' O dissipador de calor '' devido às "
+"suas temperaturas frias, é um contraste com o resto da estação. Embora seja "
+"conhecido principalmente por sua temperatura, isso não quer dizer que você "
+"não possa obter um Blaster Gargle Pan-Galáctico médio."
 
 #: dat/assets/amphion.xml:2
 msgid "Amphion"
-msgstr ""
+msgstr "Amphion"
 
 #: dat/assets/amphion.xml:27
 msgid ""
@@ -1428,6 +1442,11 @@ msgid ""
 "calm and the many underwater cities are famous all over the Empire for their "
 "grandeur and opulence."
 msgstr ""
+"Amphion é um local de aposentadoria popular para oficiais do Império. É "
+"perto o suficiente do núcleo do Império para provocar lembranças agradáveis "
+"de serviço, mas longe o suficiente para a paz. Os oceanos que dominam a "
+"superfície do planeta são calmos e as muitas cidades subaquáticas são "
+"famosas em todo o Império por sua grandeza e opulência."
 
 #: dat/assets/amphion.xml:28
 msgid ""
@@ -1436,34 +1455,37 @@ msgid ""
 "cheery. You wind up making easy friends in the amiable and relaxing "
 "atmosphere."
 msgstr ""
+"A idade média dos clientes aqui parece ser o final da meia-idade. O bar em "
+"si é feito em uma taberna de estilo antigo, baixo e escuro, aconchegante e "
+"alegre. Você acaba fazendo amigos fáceis na atmosfera amigável e relaxante."
 
 #: dat/assets/anarbalis_ii.xml:2
 msgid "Anarbalis II"
-msgstr ""
+msgstr "Anarbalis II"
 
 #: dat/assets/anarbalis_iii.xml:2
 msgid "Anarbalis III"
-msgstr ""
+msgstr "Anarbalis III"
 
 #: dat/assets/andee_ii.xml:2
 msgid "Andee II"
-msgstr ""
+msgstr "Andee II"
 
 #: dat/assets/andee_iia.xml:2
 msgid "Andee IIa"
-msgstr ""
+msgstr "Andee IIa"
 
 #: dat/assets/andee_iii.xml:2
 msgid "Andee III"
-msgstr ""
+msgstr "Andee III"
 
 #: dat/assets/andee_iiia.xml:2
 msgid "Andee IIIa"
-msgstr ""
+msgstr "Andee IIIa"
 
 #: dat/assets/andors.xml:2
 msgid "Andors"
-msgstr ""
+msgstr "Andors"
 
 #: dat/assets/andors.xml:30
 msgid ""
@@ -1472,6 +1494,10 @@ msgid ""
 "resources. Unlike more developed Za'lek settlements, there is little in the "
 "way of scholarly presence here."
 msgstr ""
+"Este mundo árido tem uma grande quantidade de minerais enterrados sob "
+"quilômetros de gelo, e os Za'lek empregaram recursos consideráveis para "
+"explorá-los. Ao contrário dos assentamentos Za'lek mais desenvolvidos, há "
+"pouca presença acadêmica aqui."
 
 #: dat/assets/andors.xml:31
 msgid ""
@@ -1480,10 +1506,14 @@ msgid ""
 "beverages and hearty food, and the patrons are almost exclusively off-duty "
 "Za'lek workers."
 msgstr ""
+"Este bar serve como uma pausa bem-vinda dos ventos cortantes e das "
+"temperaturas frias que invadem o planeta. O cardápio consiste basicamente de "
+"bebidas quentes e comida saudável, e os clientes são quase que "
+"exclusivamente trabalhadores Za'lek fora de serviço."
 
 #: dat/assets/andors_refining.xml:2
 msgid "Andors Refining"
-msgstr ""
+msgstr "Refinaria Andors"
 
 #: dat/assets/andors_refining.xml:26
 msgid ""
@@ -1491,10 +1521,13 @@ msgid ""
 "into a more useful form and shipped out to other worlds to be turned into "
 "whatever is needed."
 msgstr ""
+"Esta planta de refino simples é onde o minério coletado em Andors é "
+"transformado em uma forma mais útil e enviado para outros mundos para ser "
+"transformado no que for necessário."
 
 #: dat/assets/anecu.xml:2
 msgid "Anecu"
-msgstr ""
+msgstr "Anecu"
 
 #: dat/assets/anecu.xml:30
 msgid ""
@@ -1505,6 +1538,12 @@ msgid ""
 "which use the high pressure of the water as a benchmark against which ships "
 "can be measured."
 msgstr ""
+"Anecu é um planeta totalmente aquático. Sua superfície é completamente "
+"coberta por água, mas nas áreas rasas grandes cidades subaquáticas são "
+"construídas. O clima acima da água pode ser muito severo; ondas foram "
+"registradas em até dois quilômetros de altura. O planeta possui extensas "
+"instalações de design de navios que usam a alta pressão da água como uma "
+"referência contra a qual os navios podem ser medidos."
 
 #: dat/assets/anecu.xml:31
 msgid ""
@@ -1514,38 +1553,43 @@ msgid ""
 "gelatinous creatures sliding around, barely illuminated by the bar's "
 "lighting."
 msgstr ""
+"O bar do espaçoporto está aproximadamente três quilômetros abaixo da "
+"superfície do planeta. As paredes são construídas com um polímero endurecido "
+"e transparente que permite ver a escuridão da água. De vez em quando, você "
+"pode ver criaturas gelatinosas deslizando, mal iluminadas pela iluminação do "
+"bar."
 
 #: dat/assets/anger_i.xml:2
 msgid "Anger I"
-msgstr ""
+msgstr "Anger I"
 
 #: dat/assets/anger_ii.xml:2
 msgid "Anger II"
-msgstr ""
+msgstr "Anger II"
 
 #: dat/assets/anifta.xml:2
 msgid "Anifta"
-msgstr ""
+msgstr "Anifta"
 
 #: dat/assets/anker.xml:2
 msgid "Anker"
-msgstr ""
+msgstr "Anker"
 
 #: dat/assets/anku_i.xml:2
 msgid "An'ku I"
-msgstr ""
+msgstr "An'ku I"
 
 #: dat/assets/anku_ii.xml:2
 msgid "An'ku II"
-msgstr ""
+msgstr "An'ku II"
 
 #: dat/assets/anku_iii.xml:2
 msgid "An'ku III"
-msgstr ""
+msgstr "An'ku III"
 
 #: dat/assets/antica.xml:2
 msgid "Antica"
-msgstr ""
+msgstr "Antica"
 
 #: dat/assets/antica.xml:30
 msgid ""
@@ -1554,6 +1598,10 @@ msgid ""
 "transports stop at Antica to sell their wares before venturing deeper into "
 "Empire space."
 msgstr ""
+"Embora a instalação militar em órbita seja apenas para negócios, a Antica "
+"mistura negócios e prazer facilmente. Dada a sua localização, um grande "
+"número de transportes param em Antica para vender seus produtos antes de se "
+"aventurarem mais fundo no espaço do Império."
 
 #: dat/assets/antica.xml:31
 msgid ""
@@ -1562,10 +1610,14 @@ msgid ""
 "finest food and drink, this Arcturian bar is often a traveller's "
 "introduction to Empire cuisine."
 msgstr ""
+"O bar Antican é um local bastante luxuoso, em contraste com o exterior "
+"austero da estação militar em órbita. Servindo algumas das melhores comidas "
+"e bebidas do Império, este bar Arcturiano costuma ser a introdução do "
+"viajante à culinária do Império."
 
 #: dat/assets/anubis.xml:2
 msgid "Anubis"
-msgstr ""
+msgstr "Anubis"
 
 #: dat/assets/anubis.xml:30
 msgid ""
