@@ -1151,6 +1151,9 @@ static void system_scheduler( double dt, int init )
    /* Go through all the factions and reduce the timer. */
    for (i=0; i < array_size(cur_system->presence); i++) {
       p = &cur_system->presence[i];
+      if (p->value <= 0.)
+         continue;
+
       env = faction_getScheduler( p->faction );
 
       /* Must have a valid scheduler. */
@@ -1568,6 +1571,7 @@ void space_init( const char* sysname )
    player.enemies = 0;
    player.disabled_enemies = 0;
 
+   /* Reset new trails. */
    pilots_newSystem();
 
    /* Reset any schedules and used presence. */
@@ -4233,27 +4237,6 @@ double system_getPresenceFull( const StarSystem *sys, int faction, double *base,
 
 
 /**
- * @brief Sanitizes presence by removing regative values and the likes.
- */
-void systems_sanitizePresence (void)
-{
-   int i, j;
-   StarSystem *sys;
-   return;
-
-   /* Do post-process cleaning up. */
-   for (i=0; i<array_size(systems_stack); i++) {
-      sys = &systems_stack[i];
-      for (j=0; j<array_size(sys->presence); j++) {
-         if (sys->presence[j].value <= 0.) {
-            array_erase( &sys->presence, &sys->presence[j], &sys->presence[j+1] );
-         }
-      }
-   }
-}
-
-
-/**
  * @brief Go through all the assets and call system_addPresence().
  *
  *    @param sys Pointer to the system to process.
@@ -4278,9 +4261,6 @@ void system_addAllPlanetsPresence( StarSystem *sys )
    for (i=0; i<array_size(sys->assets_virtual); i++)
       for (j=0; j<array_size(sys->assets_virtual[i]->presences); j++)
          system_presenceAddAsset(sys, &sys->assets_virtual[i]->presences[j] );
-
-   /* Clean up stuff here. */
-   systems_sanitizePresence();
 }
 
 

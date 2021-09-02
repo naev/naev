@@ -393,13 +393,11 @@ const char *planet_getSymbol( const Planet *p );
 const glColour* planet_getColour( const Planet *p );
 void planet_updateLand( Planet *p );
 
-
 /*
  * Virtual asset stuff.
  */
 VirtualAsset* virtualasset_getAll (void);
 VirtualAsset* virtualasset_get( const char *name );
-
 
 /*
  * jump stuff
@@ -433,7 +431,6 @@ void planets_render (void);
 /*
  * Presence stuff.
  */
-void systems_sanitizePresence (void);
 void system_presenceCleanupAll (void);
 void system_presenceAddAsset( StarSystem *sys, const AssetPresence *ap );
 double system_getPresence( const StarSystem *sys, int faction );
