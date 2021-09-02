@@ -172,114 +172,106 @@ end
 
 -- There's a battle to defend the system
 function defend_system()
+   local fraider = faction.dynAdd( "Pirate", "Raider", _("Raider") )
 
-  -- Makes the system empty except for the two fleets. No help coming.
-      pilot.clear ()
-      pilot.toggleSpawn( false )
+   -- Makes the system empty except for the two fleets. No help coming.
+   pilot.clear ()
+   pilot.toggleSpawn( false )
 
-  -- Set up distances
-      angle = rnd.rnd() * 2 * math.pi
-      if defender == true then
-         raider_position  = vec2.new( 400*math.cos(angle), 400*math.sin(angle) )
-         defense_position = vec2.new( 0, 0 )
-      else
-         raider_position  = vec2.new( 800*math.cos(angle), 800*math.sin(angle) )
-         defense_position = vec2.new( 400*math.cos(angle), 400*math.sin(angle) )
-      end
+   -- Set up distances
+   angle = rnd.rnd() * 2 * math.pi
+   if defender == true then
+      raider_position  = vec2.new( 400*math.cos(angle), 400*math.sin(angle) )
+      defense_position = vec2.new( 0, 0 )
+   else
+      raider_position  = vec2.new( 800*math.cos(angle), 800*math.sin(angle) )
+      defense_position = vec2.new( 400*math.cos(angle), 400*math.sin(angle) )
+   end
 
-  -- Create a fleet of raiding pirates
-      raider_fleet = fleet.add( 18, "Hyena", "Raider", raider_position, _("Raider Hyena"), {ai="def"} )
-      for k,v in ipairs( raider_fleet) do
-         v:setHostile()
-      end
+   -- Create a fleet of raiding pirates
+   raider_fleet = fleet.add( 18, "Hyena", fraider, raider_position, _("Raider Hyena"), {ai="def"} )
+   for k,v in ipairs( raider_fleet) do
+   v:setHostile()
+   end
 
-  -- And a fleet of defending independents
-      local dfleet = { "Mule", "Lancelot", "Ancestor", "Gawain" }
-      defense_fleet = fleet.add( 2, dfleet, "Trader", defense_position, _("Defender"), {ai="def"} )
-      for k,v in ipairs( defense_fleet) do
-         v:setFriendly()
-      end
+   -- And a fleet of defending independents
+   local dfleet = { "Mule", "Lancelot", "Ancestor", "Gawain" }
+   defense_fleet = fleet.add( 2, dfleet, "Trader", defense_position, _("Defender"), {ai="def"} )
+   for k,v in ipairs( defense_fleet) do
+      v:setFriendly()
+   end
 
-  --[[ How the Battle ends:
-    hook fleet departure to disabling or killing ships]]
-      casualties = 0
-      for k, v in ipairs( raider_fleet) do
-         hook.pilot (v, "death", "add_cas_and_check")
-         hook.pilot (v, "disable", "add_cas_and_check")
-      end
+   --[[ How the Battle ends:
+   hook fleet departure to disabling or killing ships]]
+   casualties = 0
+   for k, v in ipairs( raider_fleet) do
+      hook.pilot (v, "death", "add_cas_and_check")
+      hook.pilot (v, "disable", "add_cas_and_check")
+   end
 
-      if defender == false then
-         misn.finish( true)
-      end
+   if defender == false then
+      misn.finish( true)
+   end
 
-      if pilot.get( "Raider") == {} then
-         player.msg( comm[7])
-      end
-
+   if pilot.get(fraider) == {} then
+      player.msg( comm[7])
+   end
 end
 
 -- Record each raider death and make the raiders flee after too many casualties
 function add_cas_and_check()
 
-      casualties = casualties + 1
-      if casualties > 8 then
+   casualties = casualties + 1
+   if casualties > 8 then
 
-         raiders_left = pilot.get( { faction.get("Raider") } )
-         for k, v in ipairs( raiders_left ) do
-            v:changeAI("flee")
-         end
-         if victory ~= true then   -- A few seconds after the raiders start to flee declare victory
-            victory = true
-            player.msg( comm[6])
-            hook.timer(8.0, "victorious")
-         end
-      end
-
+   raiders_left = pilot.get( { faction.get(fraider) } )
+   for k, v in ipairs( raiders_left ) do
+   v:changeAI("flee")
+   end
+   if victory ~= true then   -- A few seconds after the raiders start to flee declare victory
+   victory = true
+player.msg( comm[6])
+   hook.timer(8.0, "victorious")
+   end
+   end
 end
 
--- Call ships back to base
+   -- Call ships back to base
 function victorious()
-
-      player.msg( comm[7])
-
+   player.msg( comm[7])
 end
 
 -- The player lands to a warm welcome (if the job is done).
 function celebrate_victory()
-
-      if victory == true then
-         tk.msg( title[2], string.format( text[2], planet_name ) )
-         player.pay( reward)
-         faction.modPlayerSingle( "Empire", 3)
-         tk.msg( title[3], string.format( text[3], system_name ) )
-         misn.finish( true)
-      else
-         tk.msg( bounce_title, bounce_text)   -- If any pirates still alive, send player back out.
-         player.takeoff()
-      end
-
+   if victory == true then
+      tk.msg( title[2], string.format( text[2], planet_name ) )
+      player.pay( reward)
+      faction.modPlayerSingle( "Empire", 3)
+      tk.msg( title[3], string.format( text[3], system_name ) )
+      misn.finish( true)
+   else
+      tk.msg( bounce_title, bounce_text)   -- If any pirates still alive, send player back out.
+      player.takeoff()
+   end
 end
 
 -- A fellow warrior says hello in passing if player jumps out of the system without landing
 function ship_enters()
-      enter_vect = player.pos()
-      pilot.add( "Mule", "Trader", enter_vect:add( 10, 10), _("Trader Mule"), {ai="def"} )
-      hook.timer(1.0, "congratulations")
+   enter_vect = player.pos()
+   pilot.add( "Mule", "Trader", enter_vect:add( 10, 10), _("Trader Mule"), {ai="def"} )
+   hook.timer(1.0, "congratulations")
 end
 function congratulations()
-      tk.msg( title[4], string.format( text[4], _( system_name) ))
-      misn.finish( true)
-
+   tk.msg( title[4], string.format( text[4], _( system_name) ))
+   misn.finish( true)
 end
 
 function abort()
-
-      if victory ~= true then
-         faction.modPlayerSingle( "Empire", -10)
-         faction.modPlayerSingle( "Trader", -10)
-         player.msg( string.format( comm[9], player.name()) )
-      else
-         player.msg( string.format( comm[10], player.name()) )
-      end
-
+   if victory ~= true then
+      faction.modPlayerSingle( "Empire", -10)
+      faction.modPlayerSingle( "Trader", -10)
+      player.msg( string.format( comm[9], player.name()) )
+   else
+      player.msg( string.format( comm[10], player.name()) )
+   end
 end

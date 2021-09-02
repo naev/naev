@@ -24,6 +24,11 @@
   </allies>
   <enemies>
    <enemy>Pirate</enemy>
+   <enemy>Marauder</enemy>
+   <enemy>Wild Ones</enemy>
+   <enemy>Dreamer Clan</enemy>
+   <enemy>Raven Clan</enemy>
+   <enemy>Black Lotus</enemy>
   </enemies>
  </faction>
  <faction>
@@ -40,7 +45,11 @@
   </allies>
   <enemies>
    <enemy>Pirate</enemy>
-   <enemy>Raider</enemy>
+   <enemy>Marauder</enemy>
+   <enemy>Wild Ones</enemy>
+   <enemy>Dreamer Clan</enemy>
+   <enemy>Raven Clan</enemy>
+   <enemy>Black Lotus</enemy>
   </enemies>
  </faction>
  <faction>
@@ -58,7 +67,11 @@
   </allies>
   <enemies>
    <enemy>Pirate</enemy>
-   <enemy>Raider</enemy>
+   <enemy>Marauder</enemy>
+   <enemy>Wild Ones</enemy>
+   <enemy>Dreamer Clan</enemy>
+   <enemy>Raven Clan</enemy>
+   <enemy>Black Lotus</enemy>
   </enemies>
  </faction>
  <faction>
@@ -280,8 +293,13 @@
   <allies>
   </allies>
   <enemies>
-   <enemy>Pirate</enemy>
    <enemy>Collective</enemy>
+   <enemy>Pirate</enemy>
+   <enemy>Marauder</enemy>
+   <enemy>Wild Ones</enemy>
+   <enemy>Dreamer Clan</enemy>
+   <enemy>Raven Clan</enemy>
+   <enemy>Black Lotus</enemy>
   </enemies>
   <lane_length_per_presence>143</lane_length_per_presence>
  </faction>
@@ -299,6 +317,11 @@
   </allies>
   <enemies>
    <enemy>Pirate</enemy>
+   <enemy>Marauder</enemy>
+   <enemy>Wild Ones</enemy>
+   <enemy>Dreamer Clan</enemy>
+   <enemy>Raven Clan</enemy>
+   <enemy>Black Lotus</enemy>
   </enemies>
   <lane_length_per_presence>143</lane_length_per_presence>
  </faction>
@@ -318,6 +341,11 @@
   </allies>
   <enemies>
    <enemy>Pirate</enemy>
+   <enemy>Marauder</enemy>
+   <enemy>Wild Ones</enemy>
+   <enemy>Dreamer Clan</enemy>
+   <enemy>Raven Clan</enemy>
+   <enemy>Black Lotus</enemy>
   </enemies>
   <lane_length_per_presence>143</lane_length_per_presence>
  </faction>
@@ -335,7 +363,11 @@
   </allies>
   <enemies>
    <enemy>Pirate</enemy>
-   <enemy>Raider</enemy>
+   <enemy>Marauder</enemy>
+   <enemy>Wild Ones</enemy>
+   <enemy>Dreamer Clan</enemy>
+   <enemy>Raven Clan</enemy>
+   <enemy>Black Lotus</enemy>
   </enemies>
  </faction>
  <faction>
@@ -353,6 +385,11 @@
   <allies/>
   <enemies>
    <enemy>Pirate</enemy>
+   <enemy>Marauder</enemy>
+   <enemy>Wild Ones</enemy>
+   <enemy>Dreamer Clan</enemy>
+   <enemy>Raven Clan</enemy>
+   <enemy>Black Lotus</enemy>
   </enemies>
   <lane_length_per_presence>143</lane_length_per_presence>
  </faction>
@@ -367,6 +404,11 @@
   <equip>thurion</equip>
   <enemies>
    <enemy>Pirate</enemy>
+   <enemy>Marauder</enemy>
+   <enemy>Wild Ones</enemy>
+   <enemy>Dreamer Clan</enemy>
+   <enemy>Raven Clan</enemy>
+   <enemy>Black Lotus</enemy>
   </enemies>
  </faction>
  <faction>
@@ -380,6 +422,11 @@
   <enemies>
    <enemy>Empire</enemy>
    <enemy>Pirate</enemy>
+   <enemy>Marauder</enemy>
+   <enemy>Wild Ones</enemy>
+   <enemy>Dreamer Clan</enemy>
+   <enemy>Raven Clan</enemy>
+   <enemy>Black Lotus</enemy>
   </enemies>
   <lane_length_per_presence>143</lane_length_per_presence>
  </faction>
@@ -415,8 +462,13 @@
   <allies>
   </allies>
   <enemies>
-   <enemy>Pirate</enemy>
    <enemy>FLF</enemy>
+   <enemy>Pirate</enemy>
+   <enemy>Marauder</enemy>
+   <enemy>Wild Ones</enemy>
+   <enemy>Dreamer Clan</enemy>
+   <enemy>Raven Clan</enemy>
+   <enemy>Black Lotus</enemy>
   </enemies>
   <lane_length_per_presence>143</lane_length_per_presence>
  </faction>
@@ -437,6 +489,11 @@
   </allies>
   <enemies>
    <enemy>Pirate</enemy>
+   <enemy>Marauder</enemy>
+   <enemy>Wild Ones</enemy>
+   <enemy>Dreamer Clan</enemy>
+   <enemy>Raven Clan</enemy>
+   <enemy>Black Lotus</enemy>
   </enemies>
   <lane_length_per_presence>143</lane_length_per_presence>
  </faction>
@@ -456,8 +513,13 @@
   <allies>
   </allies>
   <enemies>
-   <enemy>Pirate</enemy>
    <enemy>Nasin</enemy>
+   <enemy>Pirate</enemy>
+   <enemy>Marauder</enemy>
+   <enemy>Wild Ones</enemy>
+   <enemy>Dreamer Clan</enemy>
+   <enemy>Raven Clan</enemy>
+   <enemy>Black Lotus</enemy>
   </enemies>
   <lane_length_per_presence>143</lane_length_per_presence>
  </faction>
@@ -478,6 +540,11 @@
   </allies>
   <enemies>
    <enemy>Pirate</enemy>
+   <enemy>Marauder</enemy>
+   <enemy>Wild Ones</enemy>
+   <enemy>Dreamer Clan</enemy>
+   <enemy>Raven Clan</enemy>
+   <enemy>Black Lotus</enemy>
   </enemies>
   <lane_length_per_presence>143</lane_length_per_presence>
  </faction>
@@ -491,23 +558,6 @@
   <standing>static</standing>
   <allies />
   <enemies />
- </faction>
- <faction>
-  <name>Raider</name>
-  <ai>pirate</ai>
-  <static />
-  <invisible />
-  <known />
-  <logo>pirate</logo>
-  <longname>Galactic Pirates</longname>
-  <player>-100</player>
-  <colour>red</colour>
-  <standing>static</standing>
-  <enemies>
-   <enemy>Miner</enemy>
-   <enemy>Trader</enemy>
-   <enemy>Traders Guild</enemy>
-  </enemies>
  </faction>
  <faction>
   <name>Derelict</name>
@@ -692,7 +742,7 @@
   </enemies>
  </faction>
  <faction>
-  <name>Strangelove</name>
+  <name>Strangelove</name> <!-- Can't be made dynamic because has an asset.-->
   <ai>zalek</ai>
   <display>Independent</display>
   <static />
@@ -701,9 +751,14 @@
   <player>0</player>
   <standing>static</standing>
   <equip>pirate</equip>
-  <enemies>
+  <enemies><!-- They are enemies just so they don't land on the planet.-->
    <enemy>Za'lek</enemy>
    <enemy>Pirate</enemy>
+   <enemy>Marauder</enemy>
+   <enemy>Wild Ones</enemy>
+   <enemy>Dreamer Clan</enemy>
+   <enemy>Raven Clan</enemy>
+   <enemy>Black Lotus</enemy>
    <enemy>Miner</enemy>
    <enemy>Trader</enemy>
    <enemy>Traders Guild</enemy>

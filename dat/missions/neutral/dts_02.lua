@@ -176,6 +176,7 @@ end
 
 -- There's a battle to defend the system
 function defend_system()
+   local fraider = faction.dynAdd( "Pirate", "Raider", _("Raider") )
 
   -- Makes the system empty except for the two fleets. No help coming.
       pilot.clear ()
@@ -192,7 +193,7 @@ function defend_system()
       end
 
   -- Create a fleet of raiding pirates
-      raider_fleet = fleet.add( 18, "Hyena", "Raider", raider_position, _("Raider Hyena"), {ai="def"} )
+      raider_fleet = fleet.add( 18, "Hyena", fraider, raider_position, _("Raider Hyena"), {ai="def"} )
       for k,v in ipairs( raider_fleet) do
          v:setHostile()
       end
@@ -243,7 +244,7 @@ function add_cas_and_check()
       casualties = casualties + 1
       if casualties > casualty_max then
 
-         raiders_left = pilot.get( { faction.get("Raider") } )
+         raiders_left = pilot.get( { faction.get(fraider) } )
          for k, v in ipairs( raiders_left ) do
             v:changeAI("flee")
          end
@@ -263,9 +264,8 @@ end
 function second_wave_attacks()
 
       casualties = 0
-      second_wave = fleet.add( 4, "Hyena", "Pirate", player.pos(), _("Pirate Hyena"), {ai="def"} )
+      second_wave = fleet.add( 4, "Hyena", fraider, player.pos(), _("Pirate Hyena"), {ai="def"} )
       for k, v in ipairs( second_wave) do
-         v:setFaction( "Raider")
          v:setHostile()
       end
       casualty_max = math.modf( #second_wave / 2)
