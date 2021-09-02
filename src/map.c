@@ -36,6 +36,13 @@
 #include "utf8.h"
 
 
+typedef struct FactionPresence_ {
+   const char *name;
+   double value;
+   int known;
+} FactionPresence;
+
+
 typedef enum MapMode_ {
    MAPMODE_TRAVEL,
    MAPMODE_DISCOVER,
@@ -1630,6 +1637,17 @@ static void map_renderCommodIgnorance( double x, double y, StarSystem *sys, Comm
 }
 
 
+static int factionPresenceCompare( const void *a, const void *b )
+{
+   FactionPresence *fpa, *fpb;
+   fpa = (FactionPresence*) a;
+   fpb = (FactionPresence*) b;
+   if (fpa->value < fpb->value)
+      return 1;
+   else if (fpb->value < fpa->value)
+      return -1;
+   return strcmp( fpa->name, fpb->name );
+}
 /**
  * @brief Updates a text widget with a system's presence info.
  *
@@ -1641,41 +1659,65 @@ static void map_renderCommodIgnorance( double x, double y, StarSystem *sys, Comm
  */
 void map_updateFactionPresence( const unsigned int wid, const char *name, const StarSystem *sys, int omniscient )
 {
-   int    i;
+   int    i, j, matched;
    size_t l;
    char   buf[STRMAX_SHORT] = {'\0'};
-   int    hasPresence;
-   double unknownPresence;
+   FactionPresence *presence, *p;
+   char col;
 
-   l               = 0;
-   hasPresence     = 0;
-   unknownPresence = 0;
-
-   for (i = 0; i < array_size(sys->presence); i++) {
-      if (sys->presence[i].value <= 0)
+   /* Build the faction presence array. */
+   presence = array_create( FactionPresence );
+   for (i=0; i<array_size(sys->presence); i++) {
+      FactionPresence fp;
+      if (sys->presence[i].value <= 0.)
          continue;
 
-      hasPresence = 1;
+      /* Determine properties. */
       if (!omniscient && !faction_isKnown( sys->presence[i].faction )) {
-         unknownPresence += sys->presence[i].value;
-         break;
+         fp.name  = N_("Unknown");
+         fp.known = 0;
       }
-      /* Use map grey instead of default neutral colour */
-      l += scnprintf( &buf[l], sizeof(buf) - l, "%s#0%s: #%c%.0f", ( l == 0 ) ? "" : "\n",
-                      omniscient ? faction_name( sys->presence[ i ].faction )
-                                 : faction_shortname( sys->presence[ i ].faction ),
-                      faction_getColourChar( sys->presence[ i ].faction ), sys->presence[ i ].value );
-      if (l > sizeof( buf ))
-         break;
-   }
-   if (unknownPresence != 0 && l <= sizeof(buf))
-      l += scnprintf( &buf[l], sizeof(buf) - l, "%s#0%s: #%c%.0f", ( l == 0 ) ? "" : "\n", _( "Unknown" ), 'N',
-                      unknownPresence );
+      else {
+         fp.name  = faction_mapname( sys->presence[i].faction );
+         fp.known = 1;
+      }
+      fp.value = sys->presence[i].value;
 
-   if (hasPresence == 0)
+      /* Try to add to existing. */
+      matched = 0;
+      for (j=0; j<array_size(presence); j++) {
+         if (!omniscient && strcmp(fp.name,presence[j].name)==0) {
+            presence[j].value += fp.value;
+            matched = 1;
+            break;
+         }
+      }
+      /* Insert new. */
+      if (!matched)
+         array_push_back( &presence, fp );
+   }
+   qsort( presence, array_size(presence), sizeof(FactionPresence), factionPresenceCompare );
+
+   l = 0;
+   for (i=0; i<array_size(presence); i++) {
+      p = &presence[i];
+      if (faction_exists( p->name ))
+         col = faction_getColourChar( faction_get(p->name) );
+      else
+         col = 'N';
+
+      /* Use map grey instead of default neutral colour */
+      l += scnprintf( &buf[l], sizeof(buf) - l, "%s#0%s: #%c%.0f", (l==0) ? "" : "\n",
+            _(p->name), col, p->value );
+   }
+
+   if (array_size(presence)==0)
       snprintf( buf, sizeof(buf), _("None") );
 
    window_modifyText( wid, name, buf );
+
+   /* Cleanup. */
+   array_free(presence);
 }
 
 /**

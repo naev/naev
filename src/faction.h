@@ -36,6 +36,7 @@ int faction_isDynamic( int id );
 const char* faction_name( int f );
 const char* faction_shortname( int f );
 const char* faction_longname( int f );
+const char* faction_mapname( int f );
 const char* faction_default_ai( int f );
 double faction_lane_length_per_presence( int f );
 void faction_clearEnemy( int f );

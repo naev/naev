@@ -33,6 +33,7 @@
  </faction>
  <faction>
   <name>Trader</name>
+  <mapname>Independent</mapname>
   <ai>trader</ai>
   <static />
   <invisible />
@@ -54,6 +55,7 @@
  </faction>
  <faction>
   <name>Miner</name>
+  <mapname>Independent</mapname>
   <ai>miner</ai>
   <logo>miner</logo>
   <static />
@@ -249,6 +251,7 @@
  </faction>
  <faction>
   <name>Marauder</name>
+  <mapname>Pirate</mapname>
   <ai>marauder</ai>
   <known />
   <logo>pirate</logo>
