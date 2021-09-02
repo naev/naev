@@ -2227,7 +2227,7 @@ int system_addPlanet( StarSystem *sys, const char *planetname )
 
    /* Add the presence. */
    if (!systems_loading) {
-      system_presenceAddAsset( sys, planet );
+      system_presenceAddAsset( sys, &planet->presence );
       system_setFaction(sys);
    }
 
@@ -3883,16 +3883,16 @@ static int getPresenceIndex( StarSystem *sys, int faction )
  *    @param sys Pointer to the system to add to or remove from.
  *    @param pnt Asset to add presence of.
  */
-void system_presenceAddAsset( StarSystem *sys, const Planet *pnt )
+void system_presenceAddAsset( StarSystem *sys, const AssetPresence *ap )
 {
    int i, x, curSpill;
    Queue q, qn;
    StarSystem *cur;
    double spillfactor;
-   int faction = pnt->presence.faction;
-   double base = pnt->presence.base;
-   double bonus = pnt->presence.bonus;
-   double range = pnt->presence.range;
+   int faction = ap->faction;
+   double base = ap->base;
+   double bonus = ap->bonus;
+   double range = ap->range;
    int usehidden = faction_usesHiddenJumps( faction );
    const FactionGenerator *fgens;
 
@@ -4089,7 +4089,7 @@ void system_addAllPlanetsPresence( StarSystem *sys )
 #endif /* DEBUGGING */
 
    for (i=0; i<array_size(sys->planets); i++)
-      system_presenceAddAsset(sys, sys->planets[i] );
+      system_presenceAddAsset(sys, &sys->planets[i]->presence );
 }
 
 
