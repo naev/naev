@@ -1339,7 +1339,7 @@ static void sysedit_editPnt( void )
    l = gl_printWidthRaw( NULL, s );
    window_addText( wid, x, y, l, 20, 1, "txtPresenceBonus",
          NULL, NULL, s );
-   window_addInput( wid, x += l + 5, y, 50, 20, "inpPresenceBonus", 1, 1, NULL );
+   window_addInput( wid, x += l + 5, y, 50, 20, "inpPresenceBonus", 5, 1, NULL );
    window_setInputFilter( wid, "inpPresenceBonus", INPUT_FILTER_NUMBER );
    x += 50 + 10;
 
