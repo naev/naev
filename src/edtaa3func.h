@@ -58,15 +58,6 @@
 #ifndef __EDTAA3FUNC_H__
 #define __EDTAA3FUNC_H__
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-
-#ifdef __cplusplus
-namespace ftgl {
-#endif
-
 /*
  * Compute the local gradient at edge pixels using convolution filters.
  * The gradient is computed only at edge pixels. At other places in the
@@ -85,18 +76,11 @@ void computegradient(double *img, int w, int h, double *gx, double *gy);
  */
 double edgedf(double gx, double gy, double a);
 
-
 double distaa3(double *img, double *gximg, double *gyimg, int w, int c, int xc, int yc, int xi, int yi);
 
 // Shorthand macro: add ubiquitous parameters dist, gx, gy, img and w and call distaa3()
 #define DISTAA(c,xc,yc,xi,yi) (distaa3(img, gx, gy, w, c, xc, yc, xi, yi))
 
 void edtaa3(double *img, double *gx, double *gy, int w, int h, short *distx, short *disty, double *dist);
-
-
-#ifdef __cplusplus
-}
-}
-#endif
 
 #endif // __EDTAA3FUNC_H__

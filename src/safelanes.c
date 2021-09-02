@@ -47,7 +47,7 @@
  * Global parameters.
  */
 static const double ALPHA                  = 9;         /**< Lane efficiency parameter. */
-static const double JUMP_CONDUCTIVITY      = .001;      /**< Conductivity value for inter-system jump-point connections. */
+static const double JUMP_CONDUCTIVITY      = 0.001;     /**< Conductivity value for inter-system jump-point connections. */
 static const double MIN_ANGLE              = M_PI/18;   /**< Path triangles can't be more acute. */
 enum {
    STORAGE_MODE_LOWER_TRIANGULAR_PART = -1,             /**< A CHOLMOD "stype" value: matrix is interpreted as symmetric. */
@@ -365,7 +365,7 @@ static void safelanes_initStacks_vertex (void)
 
       for (i=0; i<array_size(systems_stack[system].jumps); i++) {
          jp = &systems_stack[system].jumps[i];
-         if (!jp_isFlag( jp, JP_HIDDEN|JP_EXITONLY )) {
+         if (!jp_isFlag( jp, JP_HIDDEN | JP_EXITONLY )) {
             Vertex v = {.system = system, .type = VERTEX_JUMP, .index = i};
             array_push_back( &vertex_stack, v );
             if (jp->targetid < system && jp->returnJump != NULL)
@@ -560,7 +560,7 @@ static void safelanes_initStiff (void)
 #if DEBUGGING
    assert( stiff->nnz == stiff->nzmax );
    assert( cholmod_check_triplet( stiff, &C) );
-#endif
+#endif /* DEBUGGING */
 }
 
 
@@ -610,7 +610,7 @@ static void safelanes_initQtQ (void)
    }
 #if DEBUGGING
    assert( cholmod_check_sparse( Q, &C ) );
-#endif
+#endif /* DEBUGGING */
    QtQ = cholmod_aat( Q, NULL, 0, MODE_NUMERICAL, &C );
    cholmod_free_sparse( &Q, &C );
 }
@@ -804,7 +804,7 @@ static int safelanes_activateByGradient( cholmod_dense* Lambda_tilde )
    for (fi=0; fi<array_size(faction_stack); fi++)
       if ( lal[fi] != NULL)
          assert( "Correctly tracked row offsets between the 'lal' and 'utilde' matrices" && lal[fi]->nrow == lal_bases[fi] );
-#endif
+#endif /* DEBUGGING */
 
    for (fi=0; fi<array_size(faction_stack); fi++)
       cholmod_free_dense( &lal[fi], &C );
