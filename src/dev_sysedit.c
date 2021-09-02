@@ -583,8 +583,8 @@ static void sysedit_render( double bx, double by, double w, double h, void *data
    (void) data;
    int i, j;
    StarSystem *sys;
-   Planet *p;
-   JumpPoint *jp;
+   Planet *p, *pnt;
+   JumpPoint *jp, *njp;
    AsteroidAnchor *ast;
    AsteroidExclusion *aexcl;
    double x,y, z;
@@ -672,12 +672,12 @@ static void sysedit_render( double bx, double by, double w, double h, void *data
       for (j=0; j<2; j++) {
          switch(sf->point_type[j]) {
             case SAFELANE_LOC_PLANET:
-               Planet* pnt = planet_getIndex( sf->point_id[j] );
+               pnt = planet_getIndex( sf->point_id[j] );
                posns[j] = &pnt->pos;
                break;
             case SAFELANE_LOC_DEST_SYS:
-               JumpPoint* jp = jump_getTarget( system_getIndex( sf->point_id[j] ), sys );
-               posns[j] = &jp->pos;
+               njp = jump_getTarget( system_getIndex( sf->point_id[j] ), sys );
+               posns[j] = &njp->pos;
                break;
             default:
                ERR( _("Invalid vertex type.") );
