@@ -240,13 +240,13 @@ void uniedit_open( unsigned int wid_unused, char *unused )
 
    /* Nebula. */
    window_addText( wid, -20, -40, 100, 20, 0, "txtSNebula",
-         &gl_smallFont, NULL, _("Nebula:") );
+         &gl_smallFont, &cFontGrey, _("Nebula:") );
    window_addText( wid, -10, -40-gl_smallFont.h-5, 110, 60, 0, "txtNebula",
          &gl_smallFont, NULL, _("N/A") );
 
    /* Presence. */
    window_addText( wid, -20, -100, 100, 20, 0, "txtSPresence",
-         &gl_smallFont, NULL, _("Presence:") );
+         &gl_smallFont, &cFontGrey, _("Presence:") );
    window_addText( wid, -10, -100-gl_smallFont.h-5, 110, 140, 0, "txtPresence",
          &gl_smallFont, NULL, _("N/A") );
 

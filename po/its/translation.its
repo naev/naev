@@ -5,7 +5,6 @@
   <its:escapeRule selector="//*" escape="no"/>
   <its:escapeRule selector="//*/@*" escape="no"/>
 
-
   <!-- Start -->
   <its:translateRule selector="/Start/name" translate="yes"/>
   <its:translateRule selector="/Start/player/ship/@name" translate="yes"/>
@@ -14,6 +13,7 @@
   <its:translateRule selector="/Factions/faction/display" translate="yes"/>
   <its:translateRule selector="/Factions/faction/name" translate="yes"/>
   <its:translateRule selector="/Factions/faction/longname" translate="yes"/>
+  <its:translateRule selector="/Factions/faction/mapname" translate="yes"/>
 
   <!-- Slots -->
   <its:translateRule selector="/Slots/slot/display" translate="yes"/>
@@ -42,7 +42,4 @@
   <!-- Star Systems -->
   <its:translateRule selector="/ssys/@name" translate="yes"/>
   <its:translateRule selector="/ssys/general/features" translate="yes"/>
-
-  <!-- Fleets -->
-  <its:translateRule selector="/Fleets/fleet/pilots/pilot/@name" translate="yes"/>
 </its:rules>
