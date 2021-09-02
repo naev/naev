@@ -640,6 +640,7 @@ static void uniedit_renderOverlay( double bx, double by, double bw, double bh, v
          /* Local presence sources. */
          for (j=0; j<array_size(sys->planets); j++) {
             pnt = sys->planets[j];
+            gf = 0; /* Shut up gcc. */
             if ((pnt->presence.faction!=f) && !(gf=factionGenerates(pnt->presence.faction, f, &w)))
                continue;
             if (gf == 0) {
@@ -659,6 +660,7 @@ static void uniedit_renderOverlay( double bx, double by, double bw, double bh, v
             cur = sys->jumps[k].target;
             for (j=0; j<array_size(cur->planets); j++) {
                pnt = cur->planets[j];
+               gf = 0; /* Shut up gcc. */
                if ((pnt->presence.faction!=f) && !(gf=factionGenerates(pnt->presence.faction, f, &w)))
                   continue;
                if (pnt->presence.range < 1)
@@ -745,7 +747,7 @@ static int uniedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
 
          /* Set jump if applicable. */
          if (uniedit_mode == UNIEDIT_JUMP) {
-            uniedit_toggleJump( sys );
+            uniedit_toggleJump( clickedsys );
             uniedit_mode = UNIEDIT_DEFAULT;
             return 1;
          }
@@ -1672,7 +1674,7 @@ static void uniedit_btnEditAddAsset( unsigned int parent, char *unused )
    (void) parent;
    (void) unused;
    unsigned int wid;
-   int i, j;
+   int i;
    const VirtualAsset *va;
    char **str;
    int h;
@@ -1689,12 +1691,12 @@ static void uniedit_btnEditAddAsset( unsigned int parent, char *unused )
    window_setCancel( wid, window_close );
 
    /* Add virtual asset list. */
-   str   = malloc( sizeof(char*) * array_size(va) );
+   str  = malloc( sizeof(char*) * array_size(va) );
    for (i=0; i<array_size(va); i++)
-      str[j++] = strdup( va[i].name );
+      str[i] = strdup( va[i].name );
    h = UNIEDIT_EDIT_HEIGHT-60-(BUTTON_HEIGHT+20);
    window_addList( wid, 20, -40, UNIEDIT_EDIT_WIDTH-40, h,
-         "lstAssets", str, j, 0, NULL, NULL );
+         "lstAssets", str, array_size(va), 0, NULL, NULL );
 
    /* Close button. */
    window_addButton( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
