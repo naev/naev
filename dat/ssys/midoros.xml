@@ -12,8 +12,8 @@
  </pos>
  <assets>
   <asset>Lirith</asset>
-  <asset>Virtual Empire Unpresence</asset>
-  <asset>Virtual Thurion Local</asset>
+  <vasset>Virtual Empire Unpresence</vasset>
+  <vasset>Virtual Thurion Local</vasset>
  </assets>
  <jumps>
   <jump target="Metsys">

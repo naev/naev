@@ -13,8 +13,8 @@
  <assets>
   <asset>Ingot I</asset>
   <asset>Ulios</asset>
-  <asset>Virtual Dvaered Unpresence</asset>
-  <asset>Virtual Pirate Unpresence</asset>
+  <vasset>Virtual Dvaered Unpresence</vasset>
+  <vasset>Virtual Pirate Unpresence</vasset>
  </assets>
  <jumps>
   <jump target="Gilligan's Light">

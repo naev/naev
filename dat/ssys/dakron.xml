@@ -15,8 +15,8 @@
   <asset>Dakron V</asset>
   <asset>Shariff Station</asset>
   <asset>Thar</asset>
-  <asset>Virtual FLF Small</asset>
-  <asset>Virtual Frontier Unpresence</asset>
+  <vasset>Virtual FLF Small</vasset>
+  <vasset>Virtual Frontier Unpresence</vasset>
  </assets>
  <jumps>
   <jump target="Doranthex">

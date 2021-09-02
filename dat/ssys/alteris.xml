@@ -17,8 +17,8 @@
   <asset>Darkshed</asset>
   <asset>Ozogo X</asset>
   <asset>Takeru</asset>
-  <asset>Virtual Empire Small</asset>
-  <asset>Virtual Miner Small</asset>
+  <vasset>Virtual Empire Small</vasset>
+  <vasset>Virtual Miner Small</vasset>
  </assets>
  <jumps>
   <jump target="Coriolis">

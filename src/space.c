@@ -55,8 +55,8 @@
 #include "toolkit.h"
 #include "weapon.h"
 
-#define XML_PLANET_TAG        "asset" /**< Individual planet xml tag. */
-#define XML_SYSTEM_TAG        "ssys" /**< Individual systems xml tag. */
+#define XML_ASSET_TAG   "asset" /**< Individual planet xml tag. */
+#define XML_SYSTEM_TAG  "ssys" /**< Individual systems xml tag. */
 
 #define PLANET_GFX_EXTERIOR_PATH_W 400 /**< Planet exterior graphic width. */
 #define PLANET_GFX_EXTERIOR_PATH_H 400 /**< Planet exterior graphic height. */
@@ -118,6 +118,7 @@ int space_spawn = 1; /**< Spawn enabled by default. */
 /* planet load */
 static int planet_parse( Planet *planet, const xmlNodePtr parent, Commodity **stdList );
 static int space_parseAssets( xmlNodePtr parent, StarSystem* sys );
+static int asset_parsePresence( xmlNodePtr node, AssetPresence *ap );
 /* system load */
 static void system_init( StarSystem *sys );
 static void asteroid_init( Asteroid *ast, AsteroidAnchor *field );
@@ -1723,7 +1724,7 @@ Planet *planet_new (void)
  *
  *    @return 0 on success.
  */
-static int planets_load ( void )
+static int planets_load (void)
 {
    size_t bufsize;
    char *buf, **planet_files, *file;
@@ -1773,7 +1774,7 @@ static int planets_load ( void )
          continue;
       }
 
-      if (xml_isNode(node,XML_PLANET_TAG)) {
+      if (xml_isNode(node,XML_ASSET_TAG)) {
          p = planet_new();
          planet_parse( p, node, stdList );
       }
@@ -1786,6 +1787,75 @@ static int planets_load ( void )
    /* Clean up. */
    PHYSFS_freeList( planet_files );
    array_free(stdList);
+
+   return 0;
+}
+
+
+/**
+ * @brief Loads all the virtual assets.
+ *
+ *    @return 0 on success.
+ */
+static int virtualassets_load (void)
+{
+   char **asset_files, *file;
+   xmlNodePtr node, cur;
+   xmlDocPtr doc;
+   VirtualAsset va;
+   AssetPresence ap;
+   size_t i;
+
+   /* Initialize stack if needed. */
+   if (vasset_stack == NULL)
+      vasset_stack = array_create_size(VirtualAsset, 64);
+
+   /* Load XML stuff. */
+   asset_files = PHYSFS_enumerateFiles( VIRTUALASSET_DATA_PATH );
+   for (i=0; asset_files[i]!=NULL; i++) {
+      if (!ndata_matchExt( asset_files[i], "xml" ))
+         continue;
+
+      asprintf( &file, "%s%s", VIRTUALASSET_DATA_PATH, asset_files[i]);
+      doc = xml_parsePhysFS( file );
+      if (doc == NULL) {
+         free(file);
+         continue;
+      }
+
+      node = doc->xmlChildrenNode; /* first asset node */
+      if (node == NULL) {
+         WARN(_("Malformed %s file: does not contain elements"),file);
+         free(file);
+         xmlFreeDoc(doc);
+         continue;
+      }
+
+      if (xml_isNode(node,XML_ASSET_TAG)) {
+         memset( &va, 0, sizeof(va) );
+         xmlr_attr_strd( node, "name", va.name );
+         va.presences = array_create( AssetPresence );
+
+         cur = node->children;
+         do {
+            xml_onlyNodes(cur);
+            if (xml_isNode(cur,"presence")) {
+               asset_parsePresence( cur, &ap );
+               array_push_back( &va.presences, ap );
+               continue;
+            }
+         } while (xml_nextNode(cur));
+
+         array_push_back( &vasset_stack, va );
+      }
+
+      /* Clean up. */
+      free(file);
+      xmlFreeDoc(doc);
+   }
+
+   /* Clean up. */
+   PHYSFS_freeList( asset_files );
 
    return 0;
 }
@@ -1976,6 +2046,31 @@ void space_gfxUnload( StarSystem *sys )
 
 
 /**
+ * @brief Parsess an asset presence from xml.
+ *
+ *    @param node Node to process.
+ *    @param[out] ap Asset presence to save to.
+ */
+static int asset_parsePresence( xmlNodePtr node, AssetPresence *ap )
+{
+   xmlNodePtr cur = node->children;
+   memset( ap, 0, sizeof(AssetPresence) );
+   ap->faction = -1;
+   do {
+      xml_onlyNodes(cur);
+      xmlr_float(cur, "base", ap->base);
+      xmlr_float(cur, "bonus", ap->bonus);
+      xmlr_int(cur, "range", ap->range);
+      if (xml_isNode(cur,"faction")) {
+         ap->faction = faction_get( xml_get(cur) );
+         continue;
+      }
+   } while (xml_nextNode(cur));
+   return 0;
+}
+
+
+/**
  * @brief Parses a planet from an xml node.
  *
  *    @param planet Planet to fill up.
@@ -2007,11 +2102,7 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent, Commodity **st
       /* Only handle nodes. */
       xml_onlyNodes(node);
 
-      if (xml_isNode(node,"virtual")) {
-         planet->real   = ASSET_VIRTUAL;
-         continue;
-      }
-      else if (xml_isNode(node,"GFX")) {
+      if (xml_isNode(node,"GFX")) {
          cur = node->children;
          do {
             if (xml_isNode(cur,"space")) { /* load space gfx */
@@ -2043,22 +2134,15 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent, Commodity **st
          continue;
       }
       else if (xml_isNode(node, "presence")) {
-         cur = node->children;
-         do {
-            xmlr_float(cur, "base", planet->presence.base);
-            xmlr_float(cur, "bonus", planet->presence.bonus);
-            xmlr_int(cur, "range", planet->presence.range);
-            if (xml_isNode(cur,"faction")) {
-               flags |= FLAG_FACTIONSET;
-               planet->presence.faction = faction_get( xml_get(cur) );
-               continue;
-            }
-         } while (xml_nextNode(cur));
+         asset_parsePresence( node, &planet->presence );
+         if (planet->presence.faction>=0)
+            flags += FLAG_FACTIONSET;
          continue;
       }
       else if (xml_isNode(node,"general")) {
          cur = node->children;
          do {
+            xml_onlyNodes(cur);
             /* Direct reads. */
             xmlr_strd(cur, "class", planet->class);
             xmlr_strd(cur, "bar", planet->bar_description);
@@ -2645,6 +2729,8 @@ static StarSystem* system_parse( StarSystem *sys, const xmlNodePtr parent )
          do {
             if (xml_isNode(cur,"asset"))
                system_addPlanet( sys, xml_get(cur) );
+            else if (xml_isNode(cur,"vasset"))
+               system_addVirtualAsset( sys, xml_get(cur) );
          } while (xml_nextNode(cur));
          continue;
       }
@@ -3131,6 +3217,11 @@ int space_load (void)
 
    /* Load planets. */
    ret = planets_load();
+   if (ret < 0)
+      return ret;
+
+   /* Load virtual assets. */
+   ret = virtualassets_load();
    if (ret < 0)
       return ret;
 

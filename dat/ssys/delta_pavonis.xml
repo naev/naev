@@ -18,8 +18,8 @@
   <asset>Nappi</asset>
   <asset>Ridrack</asset>
   <asset>Seanich</asset>
-  <asset>Virtual Dvaered Unpresence</asset>
-  <asset>Virtual Pirate Medium</asset>
+  <vasset>Virtual Dvaered Unpresence</vasset>
+  <vasset>Virtual Pirate Medium</vasset>
  </assets>
  <jumps>
   <jump target="Alteris">
