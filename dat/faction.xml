@@ -431,7 +431,6 @@
    <enemy>Raven Clan</enemy>
    <enemy>Black Lotus</enemy>
   </enemies>
-  <lane_length_per_presence>143</lane_length_per_presence>
  </faction>
  <faction>
   <name>FLF</name>
