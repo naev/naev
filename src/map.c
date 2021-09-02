@@ -50,6 +50,8 @@ typedef enum MapMode_ {
 #define MAP_LOOP_PROT   1000 /**< Number of iterations max in pathfinding before
                                  aborting. */
 
+#define MAP_TEXT_INDENT   45 /**< Indentation of the text below the titles. */
+
 #define MAP_MARKER_CYCLE  750 /**< Time of a mission marker's animation cycle in milliseconds. */
 
 /* map decorator stack */
@@ -166,6 +168,7 @@ void map_open (void)
    StarSystem *cur;
    int i, j;
    int w, h, x, y, rw;
+   const int indent = MAP_TEXT_INDENT;
 
    /* Not displaying commodities */
    map_reset();
@@ -229,14 +232,11 @@ void map_open (void)
    /* get the selected system. */
    cur = system_getIndex( map_selected );
 
-   /* Set up window size. */
-   w = MAX(600, SCREEN_W - 100);
-   h = MAX(540, SCREEN_H - 100);
-
    /* create the window. */
-   wid = window_create( MAP_WDWNAME, _("Star Map"), -1, -1, w, h );
+   wid = window_create( MAP_WDWNAME, _("Star Map"), -1, -1, -1, -1 );
    window_setCancel( wid, map_window_close );
    window_handleKeys( wid, map_keyHandler );
+   window_dimWindow( wid, &w, &h );
 
    /*
     * SIDE TEXT
@@ -276,36 +276,36 @@ void map_open (void)
 
    /* Faction */
    window_addText( wid, x, y, 90, 20, 0, "txtSFaction",
-         &gl_smallFont, NULL, _("Faction:") );
-   window_addText( wid, x + 50, y-gl_smallFont.h-5, rw, 300, 0, "txtFaction",
+         &gl_smallFont, &cFontGrey, _("Faction:") );
+   window_addText( wid, x + indent, y-gl_smallFont.h-5, rw, 300, 0, "txtFaction",
          &gl_smallFont, NULL, NULL );
    y -= 2 * gl_smallFont.h + 5 + 15;
 
    /* Standing */
    window_addText( wid, x, y, 90, 20, 0, "txtSStanding",
-         &gl_smallFont, NULL, _("Standing:") );
-   window_addText( wid, x + 50, y-gl_smallFont.h-5, rw, 300, 0, "txtStanding",
+         &gl_smallFont, &cFontGrey, _("Standing:") );
+   window_addText( wid, x + indent, y-gl_smallFont.h-5, rw, 300, 0, "txtStanding",
          &gl_smallFont, NULL, NULL );
    y -= 2 * gl_smallFont.h + 5 + 15;
 
    /* Presence. */
    window_addText( wid, x, y, 90, 20, 0, "txtSPresence",
-         &gl_smallFont, NULL, _("Presence:") );
-   window_addText( wid, x + 50, y-gl_smallFont.h-5, rw, 300, 0, "txtPresence",
+         &gl_smallFont, &cFontGrey, _("Presence:") );
+   window_addText( wid, x + indent, y-gl_smallFont.h-5, rw, 300, 0, "txtPresence",
          &gl_smallFont, NULL, NULL );
    y -= 2 * gl_smallFont.h + 5 + 15;
 
    /* Planets */
    window_addText( wid, x, y, 90, 20, 0, "txtSPlanets",
-         &gl_smallFont, NULL, _("Planets:") );
-   window_addText( wid, x + 50, y-gl_smallFont.h-5, rw, 300, 0, "txtPlanets",
+         &gl_smallFont, &cFontGrey, _("Planets:") );
+   window_addText( wid, x + indent, y-gl_smallFont.h-5, rw, 300, 0, "txtPlanets",
          &gl_smallFont, NULL, NULL );
    y -= 2 * gl_smallFont.h + 5 + 15;
 
    /* Services */
    window_addText( wid, x, y, 90, 20, 0, "txtSServices",
-         &gl_smallFont, NULL, _("Services:") );
-   window_addText( wid, x + 50, y-gl_smallFont.h-5, rw, 300, 0, "txtServices",
+         &gl_smallFont, &cFontGrey, _("Services:") );
+   window_addText( wid, x + indent, y-gl_smallFont.h-5, rw, 300, 0, "txtServices",
          &gl_smallFont, NULL, NULL );
 
    /* Close button */
@@ -425,6 +425,7 @@ static void map_update( unsigned int wid )
    const glTexture *logo;
    double w, dmg, itf;
    Commodity *c;
+   const int indent = MAP_TEXT_INDENT;
 
    /* Needs map to update. */
    if (!map_isOpen())
@@ -479,31 +480,31 @@ static void map_update( unsigned int wid )
       /* Faction */
       window_modifyImage( wid, "imgFaction", NULL, 0, 0 );
       window_moveWidget( wid, "txtSFaction", x, y);
-      window_moveWidget( wid, "txtFaction", x + 50, y - gl_smallFont.h - 5 );
+      window_moveWidget( wid, "txtFaction", x + indent, y - gl_smallFont.h - 5 );
       window_modifyText( wid, "txtFaction", _("Unknown") );
       y -= 2 * gl_smallFont.h + 5 + 15;
 
       /* Standing */
       window_moveWidget( wid, "txtSStanding", x, y );
-      window_moveWidget( wid, "txtStanding", x + 50, y - gl_smallFont.h - 5 );
+      window_moveWidget( wid, "txtStanding", x + indent, y - gl_smallFont.h - 5 );
       window_modifyText( wid, "txtStanding", _("Unknown") );
       y -= 2 * gl_smallFont.h + 5 + 15;
 
       /* Presence. */
       window_moveWidget( wid, "txtSPresence", x, y );
-      window_moveWidget( wid, "txtPresence",  x + 50, y - gl_smallFont.h - 5 );
+      window_moveWidget( wid, "txtPresence",  x + indent, y - gl_smallFont.h - 5 );
       window_modifyText( wid, "txtPresence", _("Unknown") );
       y -= 2 * gl_smallFont.h + 5 + 15;
 
       /* Planets */
       window_moveWidget( wid, "txtSPlanets", x, y );
-      window_moveWidget( wid, "txtPlanets", x + 50, y - gl_smallFont.h - 5 );
+      window_moveWidget( wid, "txtPlanets", x + indent, y - gl_smallFont.h - 5 );
       window_modifyText( wid, "txtPlanets", _("Unknown") );
       y -= 2 * gl_smallFont.h + 5 + 15;
 
       /* Services */
       window_moveWidget( wid, "txtSServices", x, y );
-      window_moveWidget( wid, "txtServices", x + 50, y -gl_smallFont.h - 5 );
+      window_moveWidget( wid, "txtServices", x + indent, y -gl_smallFont.h - 5 );
       window_modifyText( wid, "txtServices", _("Unknown") );
 
       /*
@@ -564,16 +565,16 @@ static void map_update( unsigned int wid )
 
    /* Faction */
    window_moveWidget( wid, "txtSFaction", x, y);
-   window_moveWidget( wid, "txtFaction", x + 50, y-gl_smallFont.h - 5 );
+   window_moveWidget( wid, "txtFaction", x + indent, y-gl_smallFont.h - 5 );
    y -= gl_smallFont.h + h + 5 + 15;
 
    /* Standing */
    window_moveWidget( wid, "txtSStanding", x, y );
-   window_moveWidget( wid, "txtStanding", x + 50, y-gl_smallFont.h - 5 );
+   window_moveWidget( wid, "txtStanding", x + indent, y-gl_smallFont.h - 5 );
    y -= 2 * gl_smallFont.h + 5 + 15;
 
    window_moveWidget( wid, "txtSPresence", x, y );
-   window_moveWidget( wid, "txtPresence", x + 50, y-gl_smallFont.h-5 );
+   window_moveWidget( wid, "txtPresence", x + indent, y-gl_smallFont.h-5 );
    map_updateFactionPresence( wid, "txtPresence", sys, 0 );
    /* Scroll down. */
    h = window_getTextHeight( wid, "txtPresence" );
@@ -609,14 +610,14 @@ static void map_update( unsigned int wid )
    /* Update text. */
    window_modifyText( wid, "txtPlanets", buf );
    window_moveWidget( wid, "txtSPlanets", x, y );
-   window_moveWidget( wid, "txtPlanets", x + 50, y-gl_smallFont.h-5 );
+   window_moveWidget( wid, "txtPlanets", x + indent, y-gl_smallFont.h-5 );
    /* Scroll down. */
    h  = gl_printHeightRaw( &gl_smallFont, w, buf );
    y -= 40 + (h - gl_smallFont.h);
 
    /* Get the services */
    window_moveWidget( wid, "txtSServices", x, y );
-   window_moveWidget( wid, "txtServices", x + 50, y-gl_smallFont.h-5 );
+   window_moveWidget( wid, "txtServices", x + indent, y-gl_smallFont.h-5 );
    services = 0;
    services_h = 0;
    services_u = 0;
