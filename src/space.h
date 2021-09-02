@@ -433,7 +433,8 @@ void planets_render (void);
 /*
  * Presence stuff.
  */
-void system_presenceCleanupAll( void );
+void systems_sanitizePresence (void);
+void system_presenceCleanupAll (void);
 void system_presenceAddAsset( StarSystem *sys, const AssetPresence *ap );
 double system_getPresence( const StarSystem *sys, int faction );
 double system_getPresenceFull( const StarSystem *sys, int faction, double *base, double *bonus );

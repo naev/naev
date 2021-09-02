@@ -2313,12 +2313,6 @@ int system_addPlanet( StarSystem *sys, const char *planetname )
    /* This is required to clear the player statistics for this planet */
    economy_clearSinglePlanet(planet);
 
-   /* Add the presence. */
-   if (!systems_loading) {
-      system_presenceAddAsset( sys, &planet->presence );
-      system_setFaction(sys);
-   }
-
    /* Reload graphics if necessary. */
    if (cur_system != NULL)
       space_gfxLoad( cur_system );
@@ -2393,7 +2387,6 @@ int system_rmPlanet( StarSystem *sys, const char *planetname )
 int system_addVirtualAsset( StarSystem *sys, const char *assetname )
 {
    VirtualAsset *va;
-   int i;
 
    if (sys == NULL)
       return -1;
@@ -2405,13 +2398,6 @@ int system_addVirtualAsset( StarSystem *sys, const char *assetname )
 
    /* Economy is affected by presence. */
    economy_addQueuedUpdate();
-
-   /* Add the presence. */
-   if (!systems_loading) {
-      for (i=0; i<array_size(va->presences); i++)
-         system_presenceAddAsset( sys, &va->presences[i] );
-      system_setFaction(sys);
-   }
 
    return 0;
 }
@@ -4247,6 +4233,27 @@ double system_getPresenceFull( const StarSystem *sys, int faction, double *base,
 
 
 /**
+ * @brief Sanitizes presence by removing regative values and the likes.
+ */
+void systems_sanitizePresence (void)
+{
+   int i, j;
+   StarSystem *sys;
+   return;
+
+   /* Do post-process cleaning up. */
+   for (i=0; i<array_size(systems_stack); i++) {
+      sys = &systems_stack[i];
+      for (j=0; j<array_size(sys->presence); j++) {
+         if (sys->presence[j].value <= 0.) {
+            array_erase( &sys->presence, &sys->presence[j], &sys->presence[j+1] );
+         }
+      }
+   }
+}
+
+
+/**
  * @brief Go through all the assets and call system_addPresence().
  *
  *    @param sys Pointer to the system to process.
@@ -4271,6 +4278,9 @@ void system_addAllPlanetsPresence( StarSystem *sys )
    for (i=0; i<array_size(sys->assets_virtual); i++)
       for (j=0; j<array_size(sys->assets_virtual[i]->presences); j++)
          system_presenceAddAsset(sys, &sys->assets_virtual[i]->presences[j] );
+
+   /* Clean up stuff here. */
+   systems_sanitizePresence();
 }
 
 

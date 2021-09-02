@@ -28,10 +28,9 @@ end
       @return The matching spawn table.
 --]]
 function scom.createSpawnTable( weights )
+   -- Create spawn table
    local spawn_table = {}
    local max = 0
-
-   -- Create spawn table
    for k,v in pairs(weights) do
       max = max + v
       spawn_table[ #spawn_table+1 ] = { chance = max, func = k }
@@ -44,7 +43,7 @@ function scom.createSpawnTable( weights )
 
    -- Normalize
    for k,v in ipairs(spawn_table) do
-      v["chance"] = v["chance"] / max
+      v.chance = v.chance / max
    end
 
    -- Job done
@@ -56,8 +55,8 @@ end
 function scom.choose( stable )
    local r = rnd.rnd()
    for k,v in ipairs( stable ) do
-      if r < v["chance"] then
-         return v["func"]()
+      if r < v.chance then
+         return v.func()
       end
    end
    error(_("No spawn function found"))
@@ -109,7 +108,7 @@ function scom.spawn( pilots, faction )
       local p = pilot.add( v.ship, pfact, origin, params.name, params )
       local mem = p:memory()
       mem.natural = true -- mark that it was spawned naturally and not as part of a mission
-      local presence = v["presence"]
+      local presence = v.presence
       if not pilots.__nofleet then
          if leader == nil then
             leader = p
