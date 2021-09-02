@@ -1841,6 +1841,8 @@ static int virtualassets_load (void)
                array_push_back( &va.presences, ap );
                continue;
             }
+
+            WARN(_("Unknown node '%s' in virtual asset '%s'"),cur->name,va.name);
          } while (xml_nextNode(cur));
 
          array_push_back( &vasset_stack, va );
@@ -2216,7 +2218,7 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent, Commodity **st
          continue;
       }
 
-      DEBUG(_("Unknown node '%s' in planet '%s'"),node->name,planet->name);
+      WARN(_("Unknown node '%s' in planet '%s'"),node->name,planet->name);
    } while (xml_nextNode(node));
 
    /* Allow forcing to be uninhabited. */
@@ -4148,7 +4150,7 @@ void system_presenceAddAsset( StarSystem *sys, const AssetPresence *ap )
       cur->presence[x].base   = MAX( cur->presence[x].base, base * spillfactor );
       cur->presence[x].bonus += bonus * spillfactor;
       cur->presence[x].value  = cur->presence[x].base + cur->presence[x].bonus;
-   
+
       for (i=0; i<array_size(fgens); i++) {
          x = getPresenceIndex(cur, fgens[i].id);
          cur->presence[x].base   = MAX( cur->presence[x].base, MAX(0., base*spillfactor*fgens[i].weight) );

@@ -1667,20 +1667,21 @@ void map_updateFactionPresence( const unsigned int wid, const char *name, const 
          continue;
 
       /* Determine properties. */
+      fp.known = 1;
       if (!omniscient && !faction_isKnown( sys->presence[i].faction )) {
          fp.name  = N_("Unknown");
          fp.known = 0;
       }
-      else {
+      else if (omniscient)
+         fp.name  = faction_name( sys->presence[i].faction );
+      else
          fp.name  = faction_mapname( sys->presence[i].faction );
-         fp.known = 1;
-      }
       fp.value = sys->presence[i].value;
 
       /* Try to add to existing. */
       matched = 0;
       for (j=0; j<array_size(presence); j++) {
-         if (!omniscient && strcmp(fp.name,presence[j].name)==0) {
+         if (strcmp(fp.name,presence[j].name)==0) {
             presence[j].value += fp.value;
             matched = 1;
             break;
