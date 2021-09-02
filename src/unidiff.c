@@ -81,6 +81,8 @@ typedef enum UniHunkType_ {
    HUNK_TYPE_ASSET_REMOVE,
    HUNK_TYPE_ASSET_BLACKMARKET,
    HUNK_TYPE_ASSET_LEGALMARKET,
+   HUNK_TYPE_VASSET_ADD,
+   HUNK_TYPE_VASSET_REMOVE,
    HUNK_TYPE_JUMP_ADD,
    HUNK_TYPE_JUMP_REMOVE,
    HUNK_TYPE_SSYS_BACKGROUND,
@@ -358,6 +360,34 @@ static int diff_patchSystem( UniDiff_t *diff, xmlNodePtr node )
             hunk.type = HUNK_TYPE_ASSET_LEGALMARKET;
          else
             WARN(_("Unidiff '%s': Unknown hunk type '%s' for asset '%s'."), diff->name, buf, hunk.u.name);
+
+         /* Apply diff. */
+         if (diff_patchHunk( &hunk ) < 0)
+            diff_hunkFailed( diff, &hunk );
+         else
+            diff_hunkSuccess( diff, &hunk );
+         continue;
+      }
+      else if (xml_isNode(cur,"vasset")) {
+         buf = xml_get( cur );
+         if ( buf == NULL ) {
+            WARN( _( "Unidiff '%s': Null hunk type." ), diff->name );
+            continue;
+         }
+
+         hunk.target.type = base.target.type;
+         hunk.target.u.name = strdup(base.target.u.name);
+
+         /* Get the asset to modify. */
+         xmlr_attr_strd(cur,"name",hunk.u.name);
+
+         /* Get the type. */
+         if (strcmp(buf,"add")==0)
+            hunk.type = HUNK_TYPE_VASSET_ADD;
+         else if (strcmp(buf,"remove")==0)
+            hunk.type = HUNK_TYPE_VASSET_REMOVE;
+         else
+            WARN(_("Unidiff '%s': Unknown hunk type '%s' for virtual asset '%s'."), diff->name, buf, hunk.u.name);
 
          /* Apply diff. */
          if (diff_patchHunk( &hunk ) < 0)
@@ -719,6 +749,12 @@ static int diff_patch( xmlNodePtr parent )
             case HUNK_TYPE_ASSET_LEGALMARKET:
                WARN(_("   [%s] asset legalmarket: '%s'"), target, fail->u.name);
                break;
+            case HUNK_TYPE_VASSET_ADD:
+               WARN(_("   [%s] virtual asset add: '%s'"), target, fail->u.name);
+               break;
+            case HUNK_TYPE_VASSET_REMOVE:
+               WARN(_("   [%s] virtual asset remove: '%s'"), target, fail->u.name);
+               break;
             case HUNK_TYPE_JUMP_ADD:
                WARN(_("   [%s] jump add: '%s'"), target, fail->u.name);
                break;
@@ -810,6 +846,15 @@ static int diff_patchHunk( UniHunk_t *hunk )
       case HUNK_TYPE_ASSET_LEGALMARKET:
          planet_rmService( planet_get(hunk->u.name), PLANET_SERVICE_BLACKMARKET );
          return 0;
+
+      /* Adding an asset. */
+      case HUNK_TYPE_VASSET_ADD:
+         diff_universe_changed = 1;
+         return system_addVirtualAsset( system_get(hunk->target.u.name), hunk->u.name );
+      /* Removing an asset. */
+      case HUNK_TYPE_VASSET_REMOVE:
+         diff_universe_changed = 1;
+         return system_rmVirtualAsset( system_get(hunk->target.u.name), hunk->u.name );
 
       /* Adding a Jump. */
       case HUNK_TYPE_JUMP_ADD:
@@ -1064,6 +1109,13 @@ static int diff_removeDiff( UniDiff_t *diff )
             hunk.type = HUNK_TYPE_ASSET_BLACKMARKET;
             break;
 
+         case HUNK_TYPE_VASSET_ADD:
+            hunk.type = HUNK_TYPE_VASSET_REMOVE;
+            break;
+         case HUNK_TYPE_VASSET_REMOVE:
+            hunk.type = HUNK_TYPE_VASSET_ADD;
+            break;
+
          case HUNK_TYPE_JUMP_ADD:
             hunk.type = HUNK_TYPE_JUMP_REMOVE;
             break;
@@ -1156,6 +1208,8 @@ static void diff_cleanupHunk( UniHunk_t *hunk )
       case HUNK_TYPE_ASSET_REMOVE:
       case HUNK_TYPE_ASSET_BLACKMARKET:
       case HUNK_TYPE_ASSET_LEGALMARKET:
+      case HUNK_TYPE_VASSET_ADD:
+      case HUNK_TYPE_VASSET_REMOVE:
       case HUNK_TYPE_JUMP_ADD:
       case HUNK_TYPE_JUMP_REMOVE:
       case HUNK_TYPE_SSYS_BACKGROUND:

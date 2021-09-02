@@ -417,9 +417,6 @@ static int planetL_getAll( lua_State *L )
    p = planet_getAll();
    ind = 1;
    for (i=0; i<array_size(p); i++) {
-      /* Ignore virtual assets. */
-      if (p[i].real == ASSET_VIRTUAL)
-         continue;
       lua_pushnumber( L, ind++ );
       lua_pushplanet( L, planet_index( &p[i] ) );
       lua_settable(   L, -3 );

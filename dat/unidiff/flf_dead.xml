@@ -4,23 +4,23 @@
   <asset name="Sindbad">remove</asset>
  </system>
  <system name="Raelid">
-  <asset name="Virtual FLF Small">remove</asset>
+  <vasset name="Virtual FLF Small">remove</vasset>
  </system>
  <system name="Tuoladis">
-  <asset name="Virtual FLF Small">remove</asset>
+  <vasset name="Virtual FLF Small">remove</vasset>
  </system>
  <system name="Dakron">
-  <asset name="Virtual FLF Small">remove</asset>
+  <vasset name="Virtual FLF Small">remove</vasset>
  </system>
  <system name="Tarsus">
-  <asset name="Virtual FLF Small">remove</asset>
+  <vasset name="Virtual FLF Small">remove</vasset>
  </system>
  <system name="Torg">
-  <asset name="Virtual FLF Small">remove</asset>
+  <vasset name="Virtual FLF Small">remove</vasset>
  </system>
  <system name="Sigur">
-  <asset name="Virtual Empire Unpresence">remove</asset>
-  <asset name="Virtual Soromid Unpresence">remove</asset>
+  <vasset name="Virtual Empire Unpresence">remove</vasset>
+  <vasset name="Virtual Soromid Unpresence">remove</vasset>
  </system>
 </unidiff>
 

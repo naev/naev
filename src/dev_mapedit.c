@@ -1089,10 +1089,8 @@ static int mapedit_saveMap( StarSystem **uniedit_sys, mapOutfitsList_t* ns )
       }
 
       /* Iterate assets and add them */
-      for (j = 0; j < array_size(s->planets); j++) {
-         if (s->planets[j]->real)
-            xmlw_elem( writer, "asset", "%s", s->planets[j]->name );
-      }
+      for (j = 0; j < array_size(s->planets); j++)
+         xmlw_elem( writer, "asset", "%s", s->planets[j]->name );
 
       xmlw_endElem( writer ); /* "sys" */
    }

@@ -315,11 +315,6 @@ int pilot_inRangePlanet( const Pilot *p, int target )
 
    /* Get the planet. */
    pnt = cur_system->planets[target];
-
-   /* target must not be virtual */
-   if (!pnt->real)
-      return 0;
-
    sense = EW_PLANETDETECT_DIST;
 
    /* Get distance. */

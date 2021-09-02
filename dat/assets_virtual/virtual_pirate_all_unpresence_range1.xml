@@ -1,28 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<asset name="Virtual Pirate All Unpresence">
+<asset name="Virtual Pirate All Unpresence (Range 1)">
  <virtual/>
  <presence>
   <faction>Pirate</faction>
   <bonus>-100000.000000</bonus>
+  <range>1</range>
  </presence>
  <presence>
   <faction>Marauder</faction>
   <bonus>-100000.000000</bonus>
+  <range>1</range>
  </presence>
  <presence>
   <faction>Wild Ones</faction>
   <bonus>-100000.000000</bonus>
+  <range>1</range>
  </presence>
  <presence>
   <faction>Raven Clan</faction>
   <bonus>-100000.000000</bonus>
+  <range>1</range>
  </presence>
  <presence>
   <faction>Black Lotus</faction>
   <bonus>-100000.000000</bonus>
+  <range>1</range>
  </presence>
  <presence>
   <faction>Dreamer Clan</faction>
   <bonus>-100000.000000</bonus>
+  <range>1</range>
  </presence>
 </asset>

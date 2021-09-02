@@ -24,9 +24,6 @@ typedef struct JumpPoint_ JumpPoint;
 
 #define MAX_HYPERSPACE_VEL    25 /**< Speed to brake to before jumping. */
 
-#define ASSET_VIRTUAL         0 /**< The asset is virtual. */
-#define ASSET_REAL            1 /**< The asset is real. */
-
 #define ASTEROID_REF_AREA     500000 /**< The "density" value in an asteroid field means 1 rock per this area. */
 
 
@@ -124,7 +121,6 @@ typedef struct Planet_ {
    /* Asset details. */
    AssetPresence presence; /**< Presence details (faction, etc.) */
    double hide;         /**< The ewarfare hide value for an asset. */
-   int real;            /**< Whether it is real or not. */
 
    /* Landing details. */
    int can_land;        /**< Whether or not the player can land. */
@@ -401,6 +397,7 @@ void planet_updateLand( Planet *p );
 /*
  * Virtual asset stuff.
  */
+VirtualAsset* virtualasset_getAll (void);
 VirtualAsset* virtualasset_get( const char *name );
 
 

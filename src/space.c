@@ -473,10 +473,6 @@ char** space_getFactionPlanet( int *factions, int landable )
       for (j=0; j<array_size(systems_stack[i].planets); j++) {
          planet = systems_stack[i].planets[j];
 
-         /* Important to ignore virtual assets. */
-         if (planet->real != ASSET_REAL)
-            continue;
-
          /* Check if it's in factions. */
          f = 0;
          for (k=0; k<array_size(factions); k++) {
@@ -530,9 +526,6 @@ const char* space_getRndPlanet( int landable, unsigned int services,
    for (i=0; i<array_size(systems_stack); i++) {
       for (j=0; j<array_size(systems_stack[i].planets); j++) {
          pnt = systems_stack[i].planets[j];
-
-         if (pnt->real != ASSET_REAL)
-            continue;
 
          if (services && planet_hasService(pnt, services) != services)
             continue;
@@ -598,8 +591,6 @@ double system_getClosest( const StarSystem *sys, int *pnt, int *jp, int *ast, in
    /* Planets. */
    for (i=0; i<array_size(sys->planets); i++) {
       p  = sys->planets[i];
-      if (p->real != ASSET_REAL)
-         continue;
       if (!planet_isKnown(p))
          continue;
       td = pow2(x-p->pos.x) + pow2(y-p->pos.y);
@@ -681,8 +672,6 @@ double system_getClosestAng( const StarSystem *sys, int *pnt, int *jp, int *ast,
    /* Planets. */
    for (i=0; i<array_size(sys->planets); i++) {
       p  = sys->planets[i];
-      if (p->real != ASSET_REAL)
-         continue;
       ta = atan2( y - p->pos.y, x - p->pos.x);
       if ( ABS(angle_diff(ang, ta)) < ABS(angle_diff(ang, a))) {
          *pnt  = i;
@@ -996,8 +985,7 @@ Planet* planet_getAll (void)
  */
 void planet_setKnown( Planet *p )
 {
-   if (p->real == ASSET_REAL)
-      planet_setFlag(p, PLANET_KNOWN);
+   planet_setFlag(p, PLANET_KNOWN);
 }
 
 
@@ -1061,6 +1049,15 @@ char **planet_searchFuzzyCase( const char* planetname, int *n )
 
    *n = len;
    return names;
+}
+
+
+/**
+ * @brief Gets all the virtual assets.
+ */
+VirtualAsset* virtualasset_getAll (void)
+{
+   return vasset_stack;
 }
 
 
@@ -2005,9 +2002,6 @@ void planet_updateLand( Planet *p )
  */
 void planet_gfxLoad( Planet *planet )
 {
-   if (planet->real != ASSET_REAL)
-      return;
-
    if (planet->gfx_space == NULL) {
       planet->gfx_space = gl_newImage( planet->gfx_spaceName, OPENGL_TEX_MIPMAPS );
       planet->radius = (planet->gfx_space->w + planet->gfx_space->h)/4.;
@@ -2089,7 +2083,6 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent, Commodity **st
 
    /* Clear up memory for safe defaults. */
    flags          = 0;
-   planet->real   = ASSET_REAL;
    planet->hide   = 0.01;
    comms          = array_create( Commodity* );
 
@@ -2235,30 +2228,28 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent, Commodity **st
  */
 #define MELEMENT(o,s)   if (o) WARN(_("Planet '%s' missing '%s' element"), planet->name, s)
    /* Issue warnings on missing items only it the asset is real. */
-   if (planet->real == ASSET_REAL) {
-      MELEMENT(planet->gfx_spaceName==NULL,"GFX space");
-      MELEMENT( planet_hasService(planet,PLANET_SERVICE_LAND) &&
-            planet->gfx_exterior==NULL,"GFX exterior");
-      MELEMENT( planet_hasService(planet,PLANET_SERVICE_INHABITED) &&
-            (planet->population==0), "population");
-      MELEMENT((flags&FLAG_XSET)==0,"x");
-      MELEMENT((flags&FLAG_YSET)==0,"y");
-      MELEMENT(planet->class==NULL,"class");
-      MELEMENT( planet_hasService(planet,PLANET_SERVICE_LAND) &&
-            planet->description==NULL,"description");
-      MELEMENT( planet_hasService(planet,PLANET_SERVICE_BAR) &&
-            planet->bar_description==NULL,"bar");
-      MELEMENT( planet_hasService(planet,PLANET_SERVICE_INHABITED) &&
-            (flags&FLAG_FACTIONSET)==0,"faction");
-      MELEMENT((flags&FLAG_SERVICESSET)==0,"services");
-      MELEMENT( (planet_hasService(planet,PLANET_SERVICE_OUTFITS) ||
-               planet_hasService(planet,PLANET_SERVICE_SHIPYARD)) &&
-            (planet->tech==NULL), "tech" );
-      /*MELEMENT( planet_hasService(planet,PLANET_SERVICE_COMMODITY) &&
-            (array_size(planet->commodities)==0),"commodity" );*/
-      /*MELEMENT( (flags&FLAG_FACTIONSET) && (planet->presenceAmount == 0.),
-            "presence" );*/
-   }
+   MELEMENT(planet->gfx_spaceName==NULL,"GFX space");
+   MELEMENT( planet_hasService(planet,PLANET_SERVICE_LAND) &&
+         planet->gfx_exterior==NULL,"GFX exterior");
+   MELEMENT( planet_hasService(planet,PLANET_SERVICE_INHABITED) &&
+         (planet->population==0), "population");
+   MELEMENT((flags&FLAG_XSET)==0,"x");
+   MELEMENT((flags&FLAG_YSET)==0,"y");
+   MELEMENT(planet->class==NULL,"class");
+   MELEMENT( planet_hasService(planet,PLANET_SERVICE_LAND) &&
+         planet->description==NULL,"description");
+   MELEMENT( planet_hasService(planet,PLANET_SERVICE_BAR) &&
+         planet->bar_description==NULL,"bar");
+   MELEMENT( planet_hasService(planet,PLANET_SERVICE_INHABITED) &&
+         (flags&FLAG_FACTIONSET)==0,"faction");
+   MELEMENT((flags&FLAG_SERVICESSET)==0,"services");
+   MELEMENT( (planet_hasService(planet,PLANET_SERVICE_OUTFITS) ||
+            planet_hasService(planet,PLANET_SERVICE_SHIPYARD)) &&
+         (planet->tech==NULL), "tech" );
+   /*MELEMENT( planet_hasService(planet,PLANET_SERVICE_COMMODITY) &&
+         (array_size(planet->commodities)==0),"commodity" );*/
+   /*MELEMENT( (flags&FLAG_FACTIONSET) && (planet->presenceAmount == 0.),
+         "presence" );*/
 #undef MELEMENT
 
    /* Build commodities list */
@@ -2433,20 +2424,18 @@ int system_addVirtualAsset( StarSystem *sys, const char *assetname )
 int system_rmVirtualAsset( StarSystem *sys, const char *assetname )
 {
    int i;
-   VirtualAsset *va;
 
    if (sys == NULL) {
       WARN(_("Unable to remove virtual asset '%s' from NULL system."), assetname);
       return -1;
    }
 
-   /* Try to find planet. */
-   va = virtualasset_get( assetname );
+   /* Try to find virtual asset. */
    for (i=0; i<array_size(sys->assets_virtual); i++)
-      if (sys->assets_virtual[i] == va)
+      if (strcmp(sys->assets_virtual[i]->name, assetname)==0)
          break;
 
-   /* Planet not found. */
+   /* Virtual asset not found. */
    if (i>=array_size(sys->assets_virtual)) {
       WARN(_("Virtual asset '%s' not found in system '%s' for removal."), assetname, sys->name);
       return -1;
@@ -2808,8 +2797,6 @@ void system_setFaction( StarSystem *sys )
    for (i=0; i<array_size(sys->presence); i++) {
       for (j=0; j<array_size(sys->planets); j++) { /** @todo Handle multiple different factions. */
          pnt = sys->planets[j];
-         if (pnt->real != ASSET_REAL)
-            continue;
 
          if (pnt->presence.faction != sys->presence[i].faction)
             continue;
@@ -3534,8 +3521,7 @@ void planets_render (void)
 
    /* Render the planets. */
    for (i=0; i < array_size(cur_system->planets); i++)
-      if (cur_system->planets[i]->real == ASSET_REAL)
-         space_renderPlanet( cur_system->planets[i] );
+      space_renderPlanet( cur_system->planets[i] );
 
    /* Get the player in order to compute the offset for debris. */
    pplayer = pilot_get( PLAYER_ID );
@@ -4447,8 +4433,7 @@ int system_hasPlanet( const StarSystem *sys )
 
    /* Go through all the assets and look for a real one. */
    for (i = 0; i < array_size(sys->planets); i++)
-      if (sys->planets[i]->real == ASSET_REAL)
-         return 1;
+      return 1;
 
    return 0;
 }

@@ -1297,8 +1297,6 @@ static void uniedit_findSearch( unsigned int wid, char *str )
       pnt = planet_get( planets[i] );
       if (pnt == NULL)
          continue;
-      if (pnt->real != ASSET_REAL)
-         continue;
 
       sysname = planet_getSystem( planets[i] );
       if (sysname == NULL)
@@ -1556,7 +1554,7 @@ static void uniedit_editGenList( unsigned int wid )
 {
    int i, j, n;
    StarSystem *sys;
-   Planet *p;
+   VirtualAsset *va;
    char **str;
    int y, h, has_assets;
 
@@ -1568,15 +1566,8 @@ static void uniedit_editGenList( unsigned int wid )
 
    /* Check to see if it actually has virtual assets. */
    sys   = uniedit_sys[0];
-   n     = array_size( sys->planets );
-   has_assets = 0;
-   for (i=0; i<n; i++) {
-      p     = sys->planets[i];
-      if (p->real == ASSET_VIRTUAL) {
-         has_assets = 1;
-         break;
-      }
-   }
+   n     = array_size( sys->assets_virtual );
+   has_assets = !!n;
 
    /* Generate list. */
    j     = 0;
@@ -1584,9 +1575,8 @@ static void uniedit_editGenList( unsigned int wid )
    if (has_assets) {
       /* Virtual asset button. */
       for (i=0; i<n; i++) {
-         p     = sys->planets[i];
-         if (p->real == ASSET_VIRTUAL)
-            str[j++] = strdup( p->name );
+         va    = sys->assets_virtual[i];
+         str[j++] = strdup( va->name );
       }
    }
    else
@@ -1683,17 +1673,13 @@ static void uniedit_btnEditAddAsset( unsigned int parent, char *unused )
    (void) unused;
    unsigned int wid;
    int i, j;
-   Planet *p;
+   VirtualAsset *va;
    char **str;
    int h;
 
    /* Get all assets. */
-   p  = planet_getAll();
-   j  = 0;
-   for (i=0; i<array_size(p); i++)
-      if (p[i].real == ASSET_VIRTUAL)
-         j = 1;
-   if (j==0) {
+   va  = virtualasset_getAll();
+   if (array_size(va)==0) {
       dialogue_alert( _("No virtual assets to add! Please add virtual assets to the 'assets' directory first.") );
       return;
    }
@@ -1703,11 +1689,9 @@ static void uniedit_btnEditAddAsset( unsigned int parent, char *unused )
    window_setCancel( wid, window_close );
 
    /* Add virtual asset list. */
-   str   = malloc( sizeof(char*) * array_size(p) );
-   j     = 0;
-   for (i=0; i<array_size(p); i++)
-      if (p[i].real == ASSET_VIRTUAL)
-         str[j++] = strdup( p[i].name );
+   str   = malloc( sizeof(char*) * array_size(va) );
+   for (i=0; i<array_size(va); i++)
+      str[j++] = strdup( va[i].name );
    h = UNIEDIT_EDIT_HEIGHT-60-(BUTTON_HEIGHT+20);
    window_addList( wid, 20, -40, UNIEDIT_EDIT_WIDTH-40, h,
          "lstAssets", str, j, 0, NULL, NULL );

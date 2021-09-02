@@ -369,7 +369,6 @@ static void sysedit_btnNew( unsigned int wid_unused, char *unused )
 
    /* Create the new planet. */
    p        = planet_new();
-   p->real  = ASSET_REAL;
    p->name  = name;
 
    /* Base planet data off another. */
@@ -608,10 +607,6 @@ static void sysedit_render( double bx, double by, double w, double h, void *data
    /* Render planets. */
    for (i=0; i<array_size(sys->planets); i++) {
       p              = sys->planets[i];
-
-      /* Must be real. */
-      if (p->real != ASSET_REAL)
-         continue;
 
       /* Check if selected. */
       sel.type       = SELECT_PLANET;
@@ -913,10 +908,6 @@ static int sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
             /* Check planets. */
             for (i=0; i<array_size(sys->planets); i++) {
                p = sys->planets[i];
-
-               /* Must be real. */
-               if (p->real != ASSET_REAL)
-                  continue;
 
                /* Position. */
                x = p->pos.x * sysedit_zoom;

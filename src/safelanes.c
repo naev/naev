@@ -356,7 +356,7 @@ static void safelanes_initStacks_vertex (void)
    for (system=0; system<array_size(systems_stack); system++) {
       for (i=0; i<array_size(systems_stack[system].planets); i++) {
          p = systems_stack[system].planets[i];
-         if (p->real && (p->presence.base!=0. || p->presence.bonus!=0.)) {
+         if (p->presence.base!=0. || p->presence.bonus!=0.) {
             Vertex v = {.system = system, .type = VERTEX_PLANET, .index = i};
             array_push_back( &tmp_planet_indices, array_size(vertex_stack) );
             array_push_back( &vertex_stack, v );

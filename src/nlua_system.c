@@ -872,12 +872,10 @@ static int systemL_planets( lua_State *L )
    lua_newtable(L);
    key = 0;
    for (i=0; i<array_size(s->planets); i++) {
-      if (s->planets[i]->real == ASSET_REAL) {
-         key++;
-         lua_pushnumber(L,key); /* key */
-         lua_pushplanet(L,planet_index( s->planets[i] )); /* value */
-         lua_rawset(L,-3);
-      }
+      key++;
+      lua_pushnumber(L,key); /* key */
+      lua_pushplanet(L,planet_index( s->planets[i] )); /* value */
+      lua_rawset(L,-3);
    }
 
    return 1;

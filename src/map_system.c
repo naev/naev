@@ -307,22 +307,20 @@ static void map_system_render( double bx, double by, double w, double h, void *d
    offset = h - pitch*nshow;
    for ( i=0; i<array_size(sys->planets); i++ ) {
       p=sys->planets[i];
-      if ( planet_isKnown(p) && (p->real == ASSET_REAL) ) {
-         j++;
-         if ( p->gfx_space == NULL) {
-            WARN( _("No gfx for %s...\n"),p->name );
-         } else {
-            ih=pitch;
-            iw = ih;
-            if ( p->gfx_space->w > p->gfx_space->h )
-               ih = ih * p->gfx_space->h / p->gfx_space->w;
-            else if ( p->gfx_space->w < p->gfx_space->h )
-               iw = iw * p->gfx_space->w / p->gfx_space->h;
-            gl_renderScale( p->gfx_space, bx+2, by+(nshow-j-1)*pitch + (pitch-ih)/2 + offset, iw, ih, &cWhite );
-         }
-         gl_printRaw( &gl_smallFont, bx + 5 + pitch, by + (nshow-j-0.5)*pitch + offset,
-               (cur_planet_sel == j ? &cFontGreen : &cFontWhite), -1., _(p->name) );
+      j++;
+      if ( p->gfx_space == NULL) {
+         WARN( _("No gfx for %s...\n"),p->name );
+      } else {
+         ih=pitch;
+         iw = ih;
+         if ( p->gfx_space->w > p->gfx_space->h )
+            ih = ih * p->gfx_space->h / p->gfx_space->w;
+         else if ( p->gfx_space->w < p->gfx_space->h )
+            iw = iw * p->gfx_space->w / p->gfx_space->h;
+         gl_renderScale( p->gfx_space, bx+2, by+(nshow-j-1)*pitch + (pitch-ih)/2 + offset, iw, ih, &cWhite );
       }
+      gl_printRaw( &gl_smallFont, bx + 5 + pitch, by + (nshow-j-0.5)*pitch + offset,
+            (cur_planet_sel == j ? &cFontGreen : &cFontWhite), -1., _(p->name) );
    }
    /* draw the star */
    ih=pitch;
@@ -441,7 +439,7 @@ static void map_system_render( double bx, double by, double w, double h, void *d
       /* Faction */
       f = -1;
       for ( i=0; i<array_size(sys->planets); i++ ) {
-         if (sys->planets[i]->real == ASSET_REAL && planet_isKnown( sys->planets[i] ) ) {
+         if (planet_isKnown( sys->planets[i] )) {
             if ((f==-1) && (sys->planets[i]->presence.faction>0) ) {
                f = sys->planets[i]->presence.faction;
             } else if (f != sys->planets[i]->presence.faction &&  (sys->planets[i]->presence.faction>0) ) {
@@ -755,7 +753,7 @@ void map_system_updateSelected( unsigned int wid )
    nshow=1;/* start at 1 for the sun*/
    for ( i=0; i<array_size(sys->planets); i++) {
       p = sys->planets[i];
-      if ( planet_isKnown( p ) && (p->real == ASSET_REAL) ) {
+      if (planet_isKnown( p )) {
          textw = gl_printWidthRaw( &gl_smallFont, _(p->name) );
          if ( textw > nameWidth )
             nameWidth = textw;

@@ -212,8 +212,6 @@ void map_open (void)
          /* Check planets. */
          for (j=0; j<array_size(sys->planets); j++) {
             Planet *p = sys->planets[j];
-            if (p->real != ASSET_REAL)
-               continue;
             if (!planet_isKnown(p)) {
                known = 0;
                break;
@@ -526,8 +524,6 @@ static void map_update( unsigned int wid )
 
    f         = -1;
    for (i=0; i<array_size(sys->planets); i++) {
-      if (sys->planets[i]->real != ASSET_REAL)
-         continue;
       if (!planet_isKnown(sys->planets[i]))
          continue;
       if ( (sys->planets[i]->presence.faction > 0)
@@ -592,8 +588,6 @@ static void map_update( unsigned int wid )
    p = 0;
    buf[0] = '\0';
    for (i=0; i<array_size(sys->planets); i++) {
-      if (sys->planets[i]->real != ASSET_REAL)
-         continue;
       if (!planet_isKnown(sys->planets[i]))
          continue;
 
@@ -2526,7 +2520,7 @@ int map_isUseless( const Outfit* map )
 
    for (i=0; i<array_size(map->u.map->assets);i++) {
       p = map->u.map->assets[i];
-      if (p->real != ASSET_REAL || !planet_hasSystem( p->name ) )
+      if (!planet_hasSystem( p->name ) )
          continue;
       if (!planet_isKnown(p))
          return 0;
@@ -2567,7 +2561,7 @@ int localmap_map( const Outfit *lmap )
    detect = lmap->u.lmap.asset_detect;
    for (i=0; i<array_size(cur_system->planets); i++) {
       p = cur_system->planets[i];
-      if (p->real != ASSET_REAL || !planet_hasSystem( p->name ) )
+      if (!planet_hasSystem( p->name ) )
          continue;
       if (mod*p->hide <= detect)
          planet_setKnown( p );
@@ -2603,8 +2597,6 @@ int localmap_isUseless( const Outfit *lmap )
    detect = lmap->u.lmap.asset_detect;
    for (i=0; i<array_size(cur_system->planets); i++) {
       p = cur_system->planets[i];
-      if (p->real != ASSET_REAL)
-         continue;
       if ((mod*p->hide <= detect) && !planet_isKnown( p ))
          return 0;
    }

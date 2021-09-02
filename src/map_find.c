@@ -92,10 +92,6 @@ static int map_knownInit (void)
       for (j=0; j<array_size(sys[i].planets); j++) {
          pnt = sys[i].planets[j];
 
-         /* Must be real. */
-         if (pnt->real != ASSET_REAL)
-            continue;
-
          /* Must be known. */
          if (!planet_isKnown( pnt ))
             continue;
@@ -550,8 +546,6 @@ static int map_findSearchPlanets( unsigned int parent, const char *name )
       /* Planet must be real. */
       pnt = planet_get( names[i] );
       if (pnt == NULL)
-         continue;
-      if (pnt->real != ASSET_REAL)
          continue;
       if (!planet_isKnown(pnt))
          continue;

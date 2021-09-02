@@ -181,7 +181,7 @@ void ovr_refresh (void)
       pnt = cur_system->planets[i];
       max_x = MAX( max_x, ABS(pnt->pos.x) );
       max_y = MAX( max_y, ABS(pnt->pos.y) );
-      if ((pnt->real != ASSET_REAL) || !planet_isKnown(pnt))
+      if (!planet_isKnown(pnt))
          continue;
       /* Initialize the map overlay stuff. */
       snprintf( buf, sizeof(buf), "%s%s", planet_getSymbol(pnt), _(pnt->name) );
@@ -487,7 +487,7 @@ void ovr_initAlpha (void)
    }
    for (i=0; i<array_size(cur_system->planets); i++) {
       pnt = cur_system->planets[i];
-      if ((pnt->real != ASSET_REAL) || !planet_isKnown(pnt))
+      if (!planet_isKnown(pnt))
          pnt->map_alpha = 0.;
       else
          pnt->map_alpha = 1.;
@@ -661,7 +661,7 @@ void ovr_render( double dt )
       pnt = cur_system->planets[i];
       if (pnt->map_alpha < 1.0)
          pnt->map_alpha = MIN( pnt->map_alpha+OVERLAY_FADEIN*dt, 1.0 );
-      if ((pnt->real == ASSET_REAL) && (i != player.p->nav_planet))
+      if (i != player.p->nav_planet)
          gui_renderPlanet( i, RADAR_RECT, w, h, res, pnt->map_alpha, 1 );
    }
    if (player.p->nav_planet > -1)
