@@ -17,7 +17,7 @@ void main(void) {
    if (parami != 0) {
       vec2 uvs = uv;
       uvs.y  = abs(uvs.y);
-      uvs.x -= dt*dimensions.y;
+      uvs.x -= dt*dimensions.y*0.8;
       uvs.x  = mod(-uvs.x,dimensions.y*1.5)-0.25*dimensions.y;
       float ds = -0.2*abs(uvs.x-0.5*uvs.y) + 2.0/3.0;
       d = max( d, ds );
