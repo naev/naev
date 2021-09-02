@@ -17,7 +17,7 @@
   <asset>New Haven</asset>
   <asset>Old Man Jack</asset>
   <asset>Red Eye</asset>
-  <vasset>Virtual Soromid Unpresence</vasset>
+  <asset_virtual>Soromid Unpresence</asset_virtual>
  </assets>
  <jumps>
   <jump target="Daled">

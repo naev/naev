@@ -17,7 +17,7 @@
   <asset>Euler IIIa</asset>
   <asset>Euler IV</asset>
   <asset>Euler Ia</asset>
-  <vasset>Virtual Pirate Small</vasset>
+  <asset_virtual>Pirate Small</asset_virtual>
  </assets>
  <jumps>
   <jump target="Narousse">

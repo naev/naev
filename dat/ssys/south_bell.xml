@@ -11,8 +11,8 @@
   <y>409.000000</y>
  </pos>
  <assets>
-  <vasset>Virtual Proteron Unpresence</vasset>
-  <vasset>Virtual Thurion Local</vasset>
+  <asset_virtual>Proteron Unpresence</asset_virtual>
+  <asset_virtual>Thurion Local</asset_virtual>
  </assets>
  <jumps>
   <jump target="Aet">

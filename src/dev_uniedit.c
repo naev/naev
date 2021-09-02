@@ -1554,7 +1554,7 @@ static void uniedit_editGenList( unsigned int wid )
 {
    int i, j, n;
    StarSystem *sys;
-   VirtualAsset *va;
+   const VirtualAsset *va;
    char **str;
    int y, h, has_assets;
 
@@ -1651,9 +1651,9 @@ static void uniedit_btnEditRmAsset( unsigned int wid, char *unused )
       return;
 
    /* Remove the asset. */
-   ret = system_rmPlanet( uniedit_sys[0], selected );
+   ret = system_rmVirtualAsset( uniedit_sys[0], selected );
    if (ret != 0) {
-      dialogue_alert( _("Failed to remove planet '%s'!"), selected );
+      dialogue_alert( _("Failed to remove virtual asset '%s'!"), selected );
       return;
    }
 
@@ -1673,7 +1673,7 @@ static void uniedit_btnEditAddAsset( unsigned int parent, char *unused )
    (void) unused;
    unsigned int wid;
    int i, j;
-   VirtualAsset *va;
+   const VirtualAsset *va;
    char **str;
    int h;
 

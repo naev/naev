@@ -17,7 +17,7 @@
   <asset>Gath Station</asset>
   <asset>Lora-Mor</asset>
   <asset>Samell</asset>
-  <vasset>Virtual Dvaered Unpresence</vasset>
+  <asset_virtual>Dvaered Unpresence</asset_virtual>
  </assets>
  <jumps>
   <jump target="Eye of Night">

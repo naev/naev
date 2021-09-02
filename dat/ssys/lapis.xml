@@ -13,8 +13,8 @@
  <assets>
   <asset>Lapis I</asset>
   <asset>Lapis II</asset>
-  <vasset>Virtual Dvaered Unpresence</vasset>
-  <vasset>Virtual Miner Small</vasset>
+  <asset_virtual>Dvaered Unpresence</asset_virtual>
+  <asset_virtual>Miner Small</asset_virtual>
  </assets>
  <jumps>
   <jump target="Anarbalis">

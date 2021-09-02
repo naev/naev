@@ -13,7 +13,7 @@
   <y>246.979987</y>
  </pos>
  <assets>
-  <vasset>Virtual Pirate Small</vasset>
+  <asset_virtual>Pirate Small</asset_virtual>
  </assets>
  <jumps>
   <jump target="Capricorn">

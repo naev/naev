@@ -11,9 +11,9 @@
   <y>90.000000</y>
  </pos>
  <assets>
-  <vasset>Virtual Empire Unpresence</vasset>
-  <vasset>Virtual Sindbad</vasset>
-  <vasset>Virtual Soromid Unpresence</vasset>
+  <asset_virtual>Empire Unpresence</asset_virtual>
+  <asset_virtual>Sindbad</asset_virtual>
+  <asset_virtual>Soromid Unpresence</asset_virtual>
  </assets>
  <jumps>
   <jump target="Arcanis">

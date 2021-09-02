@@ -2718,7 +2718,7 @@ static StarSystem* system_parse( StarSystem *sys, const xmlNodePtr parent )
          do {
             if (xml_isNode(cur,"asset"))
                system_addPlanet( sys, xml_get(cur) );
-            else if (xml_isNode(cur,"vasset"))
+            else if (xml_isNode(cur,"asset_virtual"))
                system_addVirtualAsset( sys, xml_get(cur) );
          } while (xml_nextNode(cur));
          continue;

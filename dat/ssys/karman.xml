@@ -14,7 +14,7 @@
   <asset>Atalanta</asset>
   <asset>Karman I</asset>
   <asset>Karman II</asset>
-  <vasset>Virtual Sirius Unpresence</vasset>
+  <asset_virtual>Sirius Unpresence</asset_virtual>
  </assets>
  <jumps>
   <jump target="Chraan">

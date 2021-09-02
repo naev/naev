@@ -14,7 +14,7 @@
   <asset>Corinth 1</asset>
   <asset>Corinth 2</asset>
   <asset>Corinth Foods</asset>
-  <vasset>Virtual Empire Unpresence</vasset>
+  <asset_virtual>Empire Unpresence</asset_virtual>
  </assets>
  <jumps>
   <jump target="Kohler">

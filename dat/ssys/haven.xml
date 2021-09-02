@@ -12,7 +12,7 @@
  </pos>
  <assets>
   <asset>Haven</asset>
-  <vasset>Virtual Miner Small</vasset>
+  <asset_virtual>Miner Small</asset_virtual>
  </assets>
  <jumps>
   <jump target="Andres">

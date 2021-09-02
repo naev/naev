@@ -15,7 +15,7 @@
   <asset>New Dortmund</asset>
   <asset>Norpin II</asset>
   <asset>Norpin IV</asset>
-  <vasset>Virtual FLF Small</vasset>
+  <asset_virtual>FLF Small</asset_virtual>
  </assets>
  <jumps>
   <jump target="Slaccid">

@@ -13,7 +13,7 @@
  <assets>
   <asset>Bon Sebb</asset>
   <asset>Sixbat Station</asset>
-  <vasset>Virtual Miner Local</vasset>
+  <asset_virtual>Miner Local</asset_virtual>
  </assets>
  <jumps>
   <jump target="Amaroq">

@@ -14,7 +14,7 @@
   <asset>Akrikos</asset>
   <asset>Astana IIV</asset>
   <asset>Drognain</asset>
-  <vasset>Virtual Pirate Unpresence</vasset>
+  <asset_virtual>Pirate Unpresence</asset_virtual>
  </assets>
  <jumps>
   <jump target="Auger">

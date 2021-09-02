@@ -16,7 +16,7 @@
   <asset>Secundus Alpha</asset>
   <asset>Secundus Beta</asset>
   <asset>Secundus Station</asset>
-  <vasset>Virtual Frontier Unpresence</vasset>
+  <asset_virtual>Frontier Unpresence</asset_virtual>
  </assets>
  <jumps>
   <jump target="Dakron">

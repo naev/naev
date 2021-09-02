@@ -15,7 +15,7 @@
   <asset>Fidelis IV</asset>
   <asset>Mannannan</asset>
   <asset>Petaat</asset>
-  <vasset>Virtual Dvaered Small</vasset>
+  <asset_virtual>Dvaered Small</asset_virtual>
  </assets>
  <jumps>
   <jump target="Eye of Night">

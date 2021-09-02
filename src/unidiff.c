@@ -368,7 +368,7 @@ static int diff_patchSystem( UniDiff_t *diff, xmlNodePtr node )
             diff_hunkSuccess( diff, &hunk );
          continue;
       }
-      else if (xml_isNode(cur,"vasset")) {
+      else if (xml_isNode(cur,"asset_virtual")) {
          buf = xml_get( cur );
          if ( buf == NULL ) {
             WARN( _( "Unidiff '%s': Null hunk type." ), diff->name );

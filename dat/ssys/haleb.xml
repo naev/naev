@@ -14,7 +14,7 @@
   <asset>Haleb IV</asset>
   <asset>Jorlan</asset>
   <asset>Raglan Outpost</asset>
-  <vasset>Virtual FLF Small</vasset>
+  <asset_virtual>FLF Small</asset_virtual>
  </assets>
  <jumps>
   <jump target="Slaccid">

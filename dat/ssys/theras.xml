@@ -14,8 +14,8 @@
   <asset>Cetrat</asset>
   <asset>Theras II</asset>
   <asset>Theras III</asset>
-  <vasset>Virtual Dvaered Small</vasset>
-  <vasset>Virtual FLF Small</vasset>
+  <asset_virtual>Dvaered Small</asset_virtual>
+  <asset_virtual>FLF Small</asset_virtual>
  </assets>
  <jumps>
   <jump target="Dakron">

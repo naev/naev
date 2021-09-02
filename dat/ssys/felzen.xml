@@ -11,8 +11,8 @@
   <y>-954.416665</y>
  </pos>
  <assets>
-  <vasset>Virtual Miner Small</vasset>
-  <vasset>Virtual Pirate Small</vasset>
+  <asset_virtual>Miner Small</asset_virtual>
+  <asset_virtual>Pirate Small</asset_virtual>
  </assets>
  <jumps>
   <jump target="Peter">

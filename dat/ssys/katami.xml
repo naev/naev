@@ -12,7 +12,7 @@
  </pos>
  <assets>
   <asset>Katami I</asset>
-  <vasset>Virtual Thurion Local</vasset>
+  <asset_virtual>Thurion Local</asset_virtual>
  </assets>
  <jumps>
   <jump target="Booster">

@@ -52,6 +52,24 @@ static int dsys_compPlanet( const void *planet1, const void *planet2 )
 
 
 /**
+ * @brief Compare function for asset qsort.
+ *
+ *    @param asset1 Virtual asset 1 to sort.
+ *    @param asset2 Virtual asset 2 to sort.
+ *    @return Order to sort.
+ */
+static int dsys_compVirtualAsset( const void *asset1, const void *asset2 )
+{
+   const VirtualAsset *va1, *va2;
+
+   va1 = *(const VirtualAsset**) asset1;
+   va2 = *(const VirtualAsset**) asset2;
+
+   return strcmp( va1->name, va2->name );
+}
+
+
+/**
  * @brief Function for qsorting jumppoints.
  *
  *    @param jmp1 Jump Point 1 to sort.
@@ -82,6 +100,7 @@ int dsys_saveSystem( StarSystem *sys )
    xmlDocPtr doc;
    xmlTextWriterPtr writer;
    const Planet **sorted_planets;
+   const VirtualAsset **sorted_assets;
    const JumpPoint **sorted_jumps, *jp;
    const AsteroidAnchor *ast;
    const AsteroidExclusion *aexcl;
@@ -139,6 +158,16 @@ int dsys_saveSystem( StarSystem *sys )
       xmlw_elem( writer, "asset", "%s", sorted_planets[i]->name );
    xmlw_endElem( writer ); /* "assets" */
    free(sorted_planets);
+
+   /* Virtual assets. */
+   sorted_assets = malloc( sizeof(VirtualAsset*) * array_size(sys->assets_virtual) );
+   memcpy( sorted_assets, sys->assets_virtual, sizeof(VirtualAsset*) * array_size(sys->assets_virtual) );
+   qsort( sorted_assets, array_size(sys->assets_virtual), sizeof(VirtualAsset*), dsys_compVirtualAsset );
+   xmlw_startElem( writer, "assets" );
+   for (i=0; i<array_size(sys->assets_virtual); i++)
+      xmlw_elem( writer, "asset_virtual", "%s", sorted_assets[i]->name );
+   xmlw_endElem( writer ); /* "assets" */
+   free(sorted_assets);
 
    /* Jumps. */
    sorted_jumps = malloc( sizeof(JumpPoint*) * array_size(sys->jumps) );

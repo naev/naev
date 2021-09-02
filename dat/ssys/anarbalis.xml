@@ -16,7 +16,7 @@
   <asset>Freshwater Station</asset>
   <asset>Racheka</asset>
   <asset>Racheka Secundus</asset>
-  <vasset>Virtual Pirate Medium</vasset>
+  <asset_virtual>Pirate Medium</asset_virtual>
  </assets>
  <jumps>
   <jump target="Humdrum">

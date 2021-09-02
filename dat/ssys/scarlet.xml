@@ -16,7 +16,7 @@
   <asset>Obelisk Station</asset>
   <asset>Scarlet II</asset>
   <asset>Scarlett III</asset>
-  <vasset>Virtual Dvaered Unpresence</vasset>
+  <asset_virtual>Dvaered Unpresence</asset_virtual>
  </assets>
  <jumps>
   <jump target="Druss">

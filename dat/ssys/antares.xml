@@ -11,7 +11,7 @@
   <y>277.780736</y>
  </pos>
  <assets>
-  <vasset>Virtual Thurion Local</vasset>
+  <asset_virtual>Thurion Local</asset_virtual>
  </assets>
  <jumps>
   <jump target="Rauthia">

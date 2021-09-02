@@ -15,7 +15,7 @@
   <asset>Perhelion Alpha</asset>
   <asset>Perhelion Beta</asset>
   <asset>Perhelion Gamma</asset>
-  <vasset>Virtual Pirate Unpresence</vasset>
+  <asset_virtual>Pirate Unpresence</asset_virtual>
  </assets>
  <jumps>
   <jump target="Daravon">

@@ -16,7 +16,7 @@
   <asset>Torg Crops</asset>
   <asset>Torg I</asset>
   <asset>Torg IV</asset>
-  <vasset>Virtual FLF Small</vasset>
+  <asset_virtual>FLF Small</asset_virtual>
  </assets>
  <jumps>
   <jump target="Doranthex">

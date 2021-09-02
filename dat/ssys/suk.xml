@@ -15,7 +15,7 @@
   <asset>Cristen</asset>
   <asset>Suk II</asset>
   <asset>Suk IV</asset>
-  <vasset>Virtual Dvaered Small</vasset>
+  <asset_virtual>Dvaered Small</asset_virtual>
  </assets>
  <jumps>
   <jump target="Allous">

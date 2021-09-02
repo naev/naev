@@ -17,7 +17,7 @@
   <asset>Fyruse Station</asset>
   <asset>Madria</asset>
   <asset>Suoer</asset>
-  <vasset>Virtual Frontier Unpresence</vasset>
+  <asset_virtual>Frontier Unpresence</asset_virtual>
  </assets>
  <jumps>
   <jump target="Gutter">

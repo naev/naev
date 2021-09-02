@@ -15,7 +15,7 @@
   <asset>Arch Arai</asset>
   <asset>Ruttwi I</asset>
   <asset>Ruttwi II</asset>
-  <vasset>Virtual Dvaered Unpresence</vasset>
+  <asset_virtual>Dvaered Unpresence</asset_virtual>
  </assets>
  <jumps>
   <jump target="Druss">

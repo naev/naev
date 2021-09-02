@@ -18,7 +18,7 @@
   <asset>Massia IV</asset>
   <asset>Massia IVa</asset>
   <asset>Sinclair</asset>
-  <vasset>Virtual Pirate Small</vasset>
+  <asset_virtual>Pirate Small</asset_virtual>
  </assets>
  <jumps>
   <jump target="Klantar">

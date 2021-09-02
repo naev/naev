@@ -11,8 +11,8 @@
   <y>424.000000</y>
  </pos>
  <assets>
-  <vasset>Virtual Proteron Unpresence</vasset>
-  <vasset>Virtual Proteron Unpresence</vasset>
+  <asset_virtual>Proteron Unpresence</asset_virtual>
+  <asset_virtual>Proteron Unpresence</asset_virtual>
  </assets>
  <jumps>
   <jump target="Haered">

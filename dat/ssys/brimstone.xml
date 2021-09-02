@@ -18,8 +18,8 @@
   <asset>Brimstone Ia</asset>
   <asset>Brimstone Ib</asset>
   <asset>Nonuri</asset>
-  <vasset>Virtual FLF Small</vasset>
-  <vasset>Virtual FLF Small</vasset>
+  <asset_virtual>FLF Small</asset_virtual>
+  <asset_virtual>FLF Small</asset_virtual>
  </assets>
  <jumps>
   <jump target="Andee">
