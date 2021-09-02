@@ -35,7 +35,10 @@ _ftext_bribed   = _("Paid Off")
 local faction_pirate = faction.get("Pirate")
 local faction_marauder = faction.get("Marauder")
 local pirate_clans = {
-   faction.get("Qorel Clan"),
+   faction.get("Wild Ones"),
+   faction.get("Raven Clan"),
+   faction.get("Black Lotus"),
+   faction.get("Dreamer Clan"),
 }
 
 function faction_hit( current, amount, source, secondary )

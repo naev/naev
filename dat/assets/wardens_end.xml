@@ -9,7 +9,7 @@
   <exterior>traderoom.webp</exterior>
  </GFX>
  <presence>
-  <faction>Pirate</faction>
+  <faction>Black Lotus</faction>
   <base>250.000000</base>
   <bonus>50.000000</bonus>
   <range>5</range>

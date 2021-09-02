@@ -1284,8 +1284,7 @@ static int faction_parse( Faction* temp, xmlNodePtr parent )
 {
    xmlNodePtr node;
    int player;
-   char buf[PATH_MAX], *dat, *ctmp;
-   size_t ndat;
+   char buf[PATH_MAX], *ctmp;
 
    /* Clear memory. */
    memset( temp, 0, sizeof(Faction) );
@@ -1327,46 +1326,8 @@ static int faction_parse( Faction* temp, xmlNodePtr parent )
          continue;
       }
 
-      if (xml_isNode(node, "spawn")) {
-         if (temp->sched_env != LUA_NOREF)
-            WARN(_("Faction '%s' has duplicate 'spawn' tag."), temp->name);
-         snprintf( buf, sizeof(buf), FACTIONS_PATH"spawn/%s.lua", xml_raw(node) );
-         temp->sched_env = nlua_newEnv(1);
-         nlua_loadStandard( temp->sched_env );
-         dat = ndata_read( buf, &ndat );
-         if (nlua_dobufenv(temp->sched_env, dat, ndat, buf) != 0) {
-            WARN(_("Failed to run spawn script: %s\n"
-                  "%s\n"
-                  "Most likely Lua file has improper syntax, please check"),
-                  buf, lua_tostring(naevL,-1));
-            nlua_freeEnv( temp->sched_env );
-            temp->sched_env = LUA_NOREF;
-         }
-         free(dat);
-         continue;
-      }
-
       if (xml_isNode(node, "known")) {
          faction_setFlag(temp, FACTION_KNOWN);
-         continue;
-      }
-
-      if (xml_isNode(node, "equip")) {
-         if (temp->equip_env != LUA_NOREF)
-            WARN(_("Faction '%s' has duplicate 'equip' tag."), temp->name);
-         snprintf( buf, sizeof(buf), FACTIONS_PATH"equip/%s.lua", xml_raw(node) );
-         temp->equip_env = nlua_newEnv(1);
-         nlua_loadStandard( temp->equip_env );
-         dat = ndata_read( buf, &ndat );
-         if (nlua_dobufenv(temp->equip_env, dat, ndat, buf) != 0) {
-            WARN(_("Failed to run equip script: %s\n"
-                  "%s\n"
-                  "Most likely Lua file has improper syntax, please check"),
-                  buf, lua_tostring(naevL, -1));
-            nlua_freeEnv( temp->equip_env );
-            temp->equip_env = LUA_NOREF;
-         }
-         free(dat);
          continue;
       }
 
@@ -1393,12 +1354,15 @@ static int faction_parse( Faction* temp, xmlNodePtr parent )
          continue;
       }
 
+#if DEBUGGING
       /* Avoid warnings. */
       if (xml_isNode(node,"allies") || xml_isNode(node,"enemies") ||
-            xml_isNode(node,"generator") || xml_isNode(node,"standing"))
+            xml_isNode(node,"generator") || xml_isNode(node,"standing") ||
+            xml_isNode(node,"spawn") || xml_isNode(node,"equip"))
          continue;
-
       WARN(_("Unknown node '%s' in faction '%s'"),node->name,temp->name);
+#endif /* DEBUGGING */
+
    } while (xml_nextNode(node));
 
    if (temp->name == NULL)
@@ -1416,7 +1380,8 @@ static int faction_parse( Faction* temp, xmlNodePtr parent )
  *    @param temp Faction to associate the script to.
  *    @param scriptname Name of the lua script to use (e.g., "static").
  */
-static void faction_addStandingScript( Faction* temp, const char* scriptname ) {
+static void faction_addStandingScript( Faction* temp, const char* scriptname )
+{
    char buf[PATH_MAX], *dat;
    size_t ndat;
 
@@ -1443,6 +1408,8 @@ static void faction_addStandingScript( Faction* temp, const char* scriptname ) {
  */
 static void faction_parseSocial( xmlNodePtr parent )
 {
+   char buf[PATH_MAX], *dat;
+   size_t ndat;
    xmlNodePtr node, cur;
    Faction *base;
    int *tmp;
@@ -1477,10 +1444,51 @@ static void faction_parseSocial( xmlNodePtr parent )
          continue;
       }
 
+      /* Standing scripts. */
       if (xml_isNode(node, "standing")) {
          if (base->env != LUA_NOREF)
             WARN(_("Faction '%s' has duplicate 'standing' tag."), base->name);
          faction_addStandingScript( base, xml_raw(node) );
+         continue;
+      }
+
+      /* Spawning scripts. */
+      if (xml_isNode(node, "spawn")) {
+         if (base->sched_env != LUA_NOREF)
+            WARN(_("Faction '%s' has duplicate 'spawn' tag."), base->name);
+         snprintf( buf, sizeof(buf), FACTIONS_PATH"spawn/%s.lua", xml_raw(node) );
+         base->sched_env = nlua_newEnv(1);
+         nlua_loadStandard( base->sched_env );
+         dat = ndata_read( buf, &ndat );
+         if (nlua_dobufenv(base->sched_env, dat, ndat, buf) != 0) {
+            WARN(_("Failed to run spawn script: %s\n"
+                  "%s\n"
+                  "Most likely Lua file has improper syntax, please check"),
+                  buf, lua_tostring(naevL,-1));
+            nlua_freeEnv( base->sched_env );
+            base->sched_env = LUA_NOREF;
+         }
+         free(dat);
+         continue;
+      }
+
+      /* Equipment scripts. */
+      if (xml_isNode(node, "equip")) {
+         if (base->equip_env != LUA_NOREF)
+            WARN(_("Faction '%s' has duplicate 'equip' tag."), base->name);
+         snprintf( buf, sizeof(buf), FACTIONS_PATH"equip/%s.lua", xml_raw(node) );
+         base->equip_env = nlua_newEnv(1);
+         nlua_loadStandard( base->equip_env );
+         dat = ndata_read( buf, &ndat );
+         if (nlua_dobufenv(base->equip_env, dat, ndat, buf) != 0) {
+            WARN(_("Failed to run equip script: %s\n"
+                  "%s\n"
+                  "Most likely Lua file has improper syntax, please check"),
+                  buf, lua_tostring(naevL, -1));
+            nlua_freeEnv( base->equip_env );
+            base->equip_env = LUA_NOREF;
+         }
+         free(dat);
          continue;
       }
 

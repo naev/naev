@@ -62,15 +62,15 @@
   </enemies>
  </faction>
  <faction>
-  <name>Qorel Clan</name>
+  <name>Raven Clan</name>
   <ai>pirate</ai>
   <known />
   <logo>pirate</logo>
-  <longname>Qorel Pirate Clan</longname>
+  <longname>Raven Pirate Clan</longname>
   <player>-20</player>
   <colour>red</colour>
-  <spawn>pirate_qorel_clan</spawn>
-  <standing>pirate_qorel_clan</standing>
+  <spawn>pirate_raven_clan</spawn>
+  <standing>pirate_raven_clan</standing>
   <equip>pirate</equip>
   <useshiddenjumps/>
   <generator weight="0.8">Pirate</generator>
@@ -80,7 +80,111 @@
   </allies>
   <enemies>
    <enemy>Collective</enemy>
-   <enemy>Comingout_associates</enemy>
+   <enemy>Dvaered</enemy>
+   <enemy>Empire</enemy>
+   <enemy>Frontier</enemy>
+   <enemy>Goddard</enemy>
+   <enemy>Independent</enemy>
+   <enemy>Miner</enemy>
+   <enemy>Proteron</enemy>
+   <enemy>Sirius</enemy>
+   <enemy>Soromid</enemy>
+   <enemy>Thurion</enemy>
+   <enemy>DHC</enemy>
+   <enemy>Trader</enemy>
+   <enemy>Traders Guild</enemy>
+   <enemy>Za'lek</enemy>
+  </enemies>
+ </faction>
+ <faction>
+  <name>Wild Ones</name>
+  <ai>pirate</ai>
+  <known />
+  <logo>pirate</logo>
+  <longname>Wild Ones Pirate Clan</longname>
+  <player>-40</player>
+  <colour>red</colour>
+  <spawn>pirate_wild_ones</spawn>
+  <standing>pirate_wild_ones</standing>
+  <equip>pirate</equip>
+  <useshiddenjumps/>
+  <generator weight="0.5">Pirate</generator>
+  <generator weight="0.8">Marauder</generator>
+  <allies>
+   <ally>Pirate</ally>
+  </allies>
+  <enemies>
+   <enemy>Collective</enemy>
+   <enemy>Dvaered</enemy>
+   <enemy>Empire</enemy>
+   <enemy>Frontier</enemy>
+   <enemy>Goddard</enemy>
+   <enemy>Independent</enemy>
+   <enemy>Miner</enemy>
+   <enemy>Proteron</enemy>
+   <enemy>Sirius</enemy>
+   <enemy>Soromid</enemy>
+   <enemy>Thurion</enemy>
+   <enemy>DHC</enemy>
+   <enemy>Trader</enemy>
+   <enemy>Traders Guild</enemy>
+   <enemy>Za'lek</enemy>
+  </enemies>
+ </faction>
+ <faction>
+  <name>Black Lotus</name>
+  <ai>pirate</ai>
+  <known />
+  <logo>pirate</logo>
+  <longname>Black Lotus Pirate Clan</longname>
+  <player>-20</player>
+  <colour>red</colour>
+  <spawn>pirate_black_lotus</spawn>
+  <standing>pirate_black_lotus</standing>
+  <equip>pirate</equip>
+  <useshiddenjumps/>
+  <generator weight="0.8">Pirate</generator>
+  <generator weight="0.5">Marauder</generator>
+  <allies>
+   <ally>Pirate</ally>
+  </allies>
+  <enemies>
+   <enemy>Collective</enemy>
+   <enemy>Dvaered</enemy>
+   <enemy>Empire</enemy>
+   <enemy>Frontier</enemy>
+   <enemy>Goddard</enemy>
+   <enemy>Independent</enemy>
+   <enemy>Miner</enemy>
+   <enemy>Proteron</enemy>
+   <enemy>Sirius</enemy>
+   <enemy>Soromid</enemy>
+   <enemy>Thurion</enemy>
+   <enemy>DHC</enemy>
+   <enemy>Trader</enemy>
+   <enemy>Traders Guild</enemy>
+   <enemy>Za'lek</enemy>
+  </enemies>
+ </faction>
+ <faction>
+  <name>Dreamer Clan</name>
+  <ai>pirate</ai>
+  <known />
+  <logo>pirate</logo>
+  <longname>Dreamer Pirate Clan</longname>
+  <player>-10</player>
+  <colour>red</colour>
+  <spawn>pirate_dreamer_clan</spawn>
+  <standing>pirate_dreamer_clan</standing>
+  <equip>pirate</equip>
+  <useshiddenjumps/>
+  <generator weight="0.7">Pirate</generator>
+  <generator weight="0.7">Marauder</generator>
+  <allies>
+   <ally>Pirate</ally>
+  </allies>
+  <enemies>
+   <enemy>Collective</enemy>
    <enemy>Dvaered</enemy>
    <enemy>Empire</enemy>
    <enemy>Frontier</enemy>
@@ -114,7 +218,6 @@
   </allies>
   <enemies>
    <enemy>Collective</enemy>
-   <enemy>Comingout_associates</enemy>
    <enemy>Dvaered</enemy>
    <enemy>Empire</enemy>
    <enemy>Frontier</enemy>
@@ -146,7 +249,6 @@
   </allies>
   <enemies>
    <enemy>Collective</enemy>
-   <enemy>Comingout_associates</enemy>
    <enemy>Dvaered</enemy>
    <enemy>Empire</enemy>
    <enemy>Frontier</enemy>
@@ -553,34 +655,6 @@
   <player>0</player>
   <enemies>
    <enemy>Sirius</enemy>
-  </enemies>
- </faction>
- <faction>
-  <name>Comingout_associates</name>
-  <ai>mercenary</ai>
-  <display>Mercenary</display>
-  <static />
-  <invisible />
-  <known />
-  <player>70</player>
-  <standing>static</standing>
-  <enemies>
-   <enemy>Pirate</enemy>
-   <enemy>Comingout_thugs</enemy>
-  </enemies>
- </faction>
- <faction>
-  <name>Comingout_thugs</name>
-  <ai>baddie</ai>
-  <display>Thugs</display>
-  <static />
-  <invisible />
-  <known />
-  <player>-20</player>
-  <standing>static</standing>
-  <equip>pirate</equip>
-  <enemies>
-   <enemy>Comingout_associates</enemy>
   </enemies>
  </faction>
  <faction>

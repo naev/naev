@@ -114,7 +114,8 @@ end
 
 
 function spawnChelseaShip( param )
-   chelsea = pilot.add( "Rhino", "Comingout_associates", param, _("Chelsea") )
+   fass = faction.dynAdd( "Independent", "Comingout_associates", _("Mercenary") )
+
    chelsea:outfitRm( "all" )
    chelsea:outfitRm( "cores" )
    chelsea:outfitAdd( "Unicorp PT-310 Core System" )
@@ -151,9 +152,12 @@ end
 
 
 function spawnThug( param )
+   fthug = faction.dynAdd( "Mercenary", "Comingout_thugs", _("Thugs") )
+   fthug:dynEnemy(fass)
+
    local shiptypes = { "Hyena", "Hyena", "Shark", "Lancelot", "Admonisher" }
    local shiptype = shiptypes[ rnd.rnd( 1, #shiptypes ) ]
-   thug = pilot.add( shiptype, "Comingout_thugs", param, _("Thug %s"):format( _(shiptype) ) )
+   thug = pilot.add( shiptype, fthug, param, _("Thug %s"):format( _(shiptype), {ai="baddie"} ) )
 
    thug:setHostile()
 

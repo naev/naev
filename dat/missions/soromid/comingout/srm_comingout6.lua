@@ -93,7 +93,7 @@ function create ()
    if not misn.claim( missys ) then misn.finish( false ) end
 
    pirname = pirate_name()
-   credits = 300000
+   credits = 300e3
    started = false
 
    misn.setNPC( npc_name, "soromid/unique/chelsea.webp", npc_desc )
@@ -150,8 +150,9 @@ function spawn ()
    p:setVisible( true )
    p:setHilight( true )
 
+   fass = faction.dynAdd( "Independent", "Comingout_associates", _("Mercenary") )
    -- Spawn Chelsea
-   chelsea = pilot.add( "Lancelot", "Comingout_associates", lastsys, _("Chelsea"), {naked=true} )
+   chelsea = pilot.add( "Lancelot", fass, lastsys, _("Chelsea"), {naked=true} )
    equipopt.generic( chelsea, nil, "elite" )
 
    chelsea:setHealth( 100, 100 )
