@@ -326,7 +326,7 @@ int planet_averagePlanetPrice( const Planet *p, const Commodity *c, credits_t *m
  */
 int planet_setFaction( Planet *p, int faction )
 {
-   p->faction = faction;
+   p->presence.faction = faction;
    return 0;
 }
 
@@ -482,7 +482,7 @@ char** space_getFactionPlanet( int *factions, int landable )
          /* Check if it's in factions. */
          f = 0;
          for (k=0; k<array_size(factions); k++) {
-            if (planet->faction == factions[k]) {
+            if (planet->presence.faction == factions[k]) {
                f = 1;
                break;
             }
@@ -1697,7 +1697,7 @@ Planet *planet_new (void)
    realloced   = (old_stack!=planet_stack);
    memset( p, 0, sizeof(Planet) );
    p->id       = array_size(planet_stack)-1;
-   p->faction  = -1;
+   p->presence.faction = -1;
 
    /* Reconstruct the jumps. */
    if (!systems_loading && realloced)
@@ -1789,12 +1789,12 @@ char planet_getColourChar( const Planet *p )
       return 'I';
 
    if (p->can_land || p->bribed) {
-      if (areAllies(FACTION_PLAYER,p->faction))
+      if (areAllies(FACTION_PLAYER,p->presence.faction))
          return 'F';
       return 'N';
    }
 
-   if (areEnemies(FACTION_PLAYER,p->faction))
+   if (areEnemies(FACTION_PLAYER,p->presence.faction))
       return 'H';
    return 'R';
 }
@@ -1812,12 +1812,12 @@ const char *planet_getSymbol( const Planet *p )
    }
 
    if (p->can_land || p->bribed) {
-      if (areAllies(FACTION_PLAYER,p->faction))
+      if (areAllies(FACTION_PLAYER,p->presence.faction))
          return "+ ";
       return "~ ";
    }
 
-   if (areEnemies(FACTION_PLAYER,p->faction))
+   if (areEnemies(FACTION_PLAYER,p->presence.faction))
       return "!! ";
    return "* ";
 }
@@ -1832,12 +1832,12 @@ const glColour* planet_getColour( const Planet *p )
       return &cInert;
 
    if (p->can_land || p->bribed) {
-      if (areAllies(FACTION_PLAYER,p->faction))
+      if (areAllies(FACTION_PLAYER,p->presence.faction))
          return &cFriend;
       return &cNeutral;
    }
 
-   if (areEnemies(FACTION_PLAYER,p->faction))
+   if (areEnemies(FACTION_PLAYER,p->presence.faction))
       return &cHostile;
    return &cRestricted;
 }
@@ -2034,12 +2034,12 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent, Commodity **st
       else if (xml_isNode(node, "presence")) {
          cur = node->children;
          do {
-            xmlr_float(cur, "base", planet->presenceBase);
-            xmlr_float(cur, "bonus", planet->presenceBonus);
-            xmlr_int(cur, "range", planet->presenceRange);
+            xmlr_float(cur, "base", planet->presence.base);
+            xmlr_float(cur, "bonus", planet->presence.bonus);
+            xmlr_int(cur, "range", planet->presence.range);
             if (xml_isNode(cur,"faction")) {
                flags |= FLAG_FACTIONSET;
-               planet->faction = faction_get( xml_get(cur) );
+               planet->presence.faction = faction_get( xml_get(cur) );
                continue;
             }
          } while (xml_nextNode(cur));
@@ -2638,10 +2638,10 @@ void system_setFaction( StarSystem *sys )
          if (pnt->real != ASSET_REAL)
             continue;
 
-         if (pnt->faction != sys->presence[i].faction)
+         if (pnt->presence.faction != sys->presence[i].faction)
             continue;
 
-         sys->faction = pnt->faction;
+         sys->faction = pnt->presence.faction;
          return;
       }
    }
@@ -3889,10 +3889,10 @@ void system_presenceAddAsset( StarSystem *sys, const Planet *pnt )
    Queue q, qn;
    StarSystem *cur;
    double spillfactor;
-   int faction = pnt->faction;
-   double base = pnt->presenceBase;
-   double bonus = pnt->presenceBonus;
-   double range = pnt->presenceRange;
+   int faction = pnt->presence.faction;
+   double base = pnt->presence.base;
+   double bonus = pnt->presence.bonus;
+   double range = pnt->presence.range;
    int usehidden = faction_usesHiddenJumps( faction );
    const FactionGenerator *fgens;
 

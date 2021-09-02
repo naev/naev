@@ -372,9 +372,9 @@ static void uniedit_btnView( unsigned int wid_unused, char *unused )
       hasfact = 0;
       for (j=0; j<array_size(planets); j++) {
          p = &planets[j];
-         if ((p->faction != f) && !factionGenerates(p->faction,f,NULL))
+         if ((p->presence.faction != f) && !factionGenerates(p->presence.faction,f,NULL))
             continue;
-         if (p->presenceBase==0. && p->presenceBonus==0.)
+         if (p->presence.base==0. && p->presence.bonus==0.)
             continue;
          hasfact = 1;
          break;
@@ -640,15 +640,15 @@ static void uniedit_renderOverlay( double bx, double by, double bw, double bh, v
          /* Local presence sources. */
          for (j=0; j<array_size(sys->planets); j++) {
             pnt = sys->planets[j];
-            if ((pnt->faction!=f) && !(gf=factionGenerates(pnt->faction, f, &w)))
+            if ((pnt->presence.faction!=f) && !(gf=factionGenerates(pnt->presence.faction, f, &w)))
                continue;
             if (gf == 0) {
-               base = pnt->presenceBase;
-               bonus = pnt->presenceBonus;
+               base = pnt->presence.base;
+               bonus = pnt->presence.bonus;
             }
             else {
-               base = pnt->presenceBase * w;
-               bonus = pnt->presenceBonus * w;
+               base = pnt->presence.base * w;
+               bonus = pnt->presence.bonus * w;
             }
             l += scnprintf( &buf[l], sizeof(buf)-l, "\n#%c%.0f#0 (#%c%+.0f#0) [%s]",
                   getValCol(base), base, getValCol(bonus), bonus, _(pnt->name) );
@@ -659,17 +659,17 @@ static void uniedit_renderOverlay( double bx, double by, double bw, double bh, v
             cur = sys->jumps[k].target;
             for (j=0; j<array_size(cur->planets); j++) {
                pnt = cur->planets[j];
-               if ((pnt->faction!=f) && !(gf=factionGenerates(pnt->faction, f, &w)))
+               if ((pnt->presence.faction!=f) && !(gf=factionGenerates(pnt->presence.faction, f, &w)))
                   continue;
-               if (pnt->presenceRange < 1)
+               if (pnt->presence.range < 1)
                   continue;
                if (gf == 0) {
-                  base = pnt->presenceBase;
-                  bonus = pnt->presenceBonus;
+                  base = pnt->presence.base;
+                  bonus = pnt->presence.bonus;
                }
                else {
-                  base = pnt->presenceBase * w;
-                  bonus = pnt->presenceBonus * w;
+                  base = pnt->presence.base * w;
+                  bonus = pnt->presence.bonus * w;
                }
                l += scnprintf( &buf[l], sizeof(buf)-l, "\n#%c%.0f#0 (#%c%+.0f#0) [%s (%s)]",
                      getValCol(base), base*0.5, getValCol(bonus), bonus*0.5, _(pnt->name), _(cur->name) );

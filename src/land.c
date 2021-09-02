@@ -542,7 +542,7 @@ static void bar_approach( unsigned int wid, char *str )
  */
 static int news_load (void)
 {
-   generate_news(land_planet->faction);
+   generate_news(land_planet->presence.faction);
    return 0;
 }
 
@@ -832,7 +832,7 @@ void land_updateMainTab (void)
          "%s"),
          _(land_planet->name), _(cur_system->name),
          planet_getClassName(land_planet->class), _(land_planet->class),
-         land_planet->faction >= 0 ? _(faction_name(land_planet->faction)) : _("None"),
+         land_planet->presence.faction >= 0 ? _(faction_name(land_planet->presence.faction)) : _("None"),
          space_populationStr( land_planet->population ),
          tons, cred );
    window_modifyText( land_windows[0], "txtDInfo", buf );
@@ -1035,7 +1035,7 @@ void land_genWindows( int load, int changetab )
          npc_generateMissions(); /* Generate bar npc. */
       if (planet_hasService(land_planet, PLANET_SERVICE_MISSIONS))
          mission_computer = missions_genList( &mission_ncomputer,
-               land_planet->faction, land_planet->name, cur_system->name,
+               land_planet->presence.faction, land_planet->name, cur_system->name,
                MIS_AVAIL_COMPUTER );
    }
 
@@ -1076,7 +1076,7 @@ void land_genWindows( int load, int changetab )
 
       /* Check land missions. */
       if (!has_visited(VISITED_LAND)) {
-         missions_run(MIS_AVAIL_LAND, land_planet->faction,
+         missions_run(MIS_AVAIL_LAND, land_planet->presence.faction,
                land_planet->name, cur_system->name);
          visited(VISITED_LAND);
       }
@@ -1195,8 +1195,8 @@ static void land_createMainTab( unsigned int wid )
     * Faction logo.
     */
    offset = 20;
-   if (land_planet->faction != -1) {
-      logo = faction_logo(land_planet->faction);
+   if (land_planet->presence.faction != -1) {
+      logo = faction_logo(land_planet->presence.faction);
       if (logo != NULL) {
          logow = logo->w * (double)FACTION_LOGO_SM / MAX( logo->w, logo->h );
          logoh = logo->h * (double)FACTION_LOGO_SM / MAX( logo->w, logo->h );

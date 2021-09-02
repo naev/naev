@@ -596,14 +596,14 @@ void economy_destroy (void)
  *    @param commodityPrice Where to write the commodity price to.
  *    @return 0 on success.
  */
-static int economy_calcPrice( Planet *planet, Commodity *commodity, CommodityPrice *commodityPrice ) {
-
+static int economy_calcPrice( Planet *planet, Commodity *commodity, CommodityPrice *commodityPrice )
+{
    CommodityModifier *cm;
    double base, scale, factor;
    const char *factionname;
 
    /* Check the faction is not NULL.*/
-   if ( planet->faction == -1 ) {
+   if (planet->presence.faction == -1) {
       WARN(_("Planet '%s' appears to have commodity '%s' defined, but no faction."), planet->name, commodity->name);
       return 1;
    }
@@ -656,7 +656,7 @@ static int economy_calcPrice( Planet *planet, Commodity *commodity, CommodityPri
    scale = 1.;
    cm = commodity->planet_modifier;
 
-   factionname = faction_name(planet->faction);
+   factionname = faction_name(planet->presence.faction);
    while ( cm != NULL ) {
       if ( strcmp( factionname, cm->name ) == 0 ) {
          scale = cm->value;
@@ -668,8 +668,8 @@ static int economy_calcPrice( Planet *planet, Commodity *commodity, CommodityPri
 
    /* Range seems to go from 0-5, with median being 2.  Increased range
     * will increase safety and so lower prices and improve stability */
-   commodityPrice->price *= (1 - planet->presenceRange/30.);
-   commodityPrice->planetPeriod *= 1 / (1 - planet->presenceRange/30.);
+   commodityPrice->price *= (1 - planet->presence.range/30.);
+   commodityPrice->planetPeriod *= 1 / (1 - planet->presence.range/30.);
 
    /* Make sure the price is always positive and non-zero */
    commodityPrice->price = MAX( commodityPrice->price, 1 );

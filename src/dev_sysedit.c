@@ -325,9 +325,9 @@ static void sysedit_editPntClose( unsigned int wid, char *unused )
    else
       p->land_func = strdup( inp );
 
-   p->presenceBase   = atof(window_getInput( sysedit_widEdit, "inpPresenceBase" ));
-   p->presenceBonus  = atof(window_getInput( sysedit_widEdit, "inpPresenceBonus" ));
-   p->presenceRange  = atoi(window_getInput( sysedit_widEdit, "inpPresenceRange" ));
+   p->presence.base  = atof(window_getInput( sysedit_widEdit, "inpPresenceBase" ));
+   p->presence.bonus = atof(window_getInput( sysedit_widEdit, "inpPresenceBonus" ));
+   p->presence.range = atoi(window_getInput( sysedit_widEdit, "inpPresenceRange" ));
    p->hide           = atof(window_getInput( sysedit_widEdit, "inpHide" ));
 
    /* Have to recompute presences if stuff changed. */
@@ -1306,7 +1306,7 @@ static void sysedit_editPnt( void )
    y -= gl_defFont.h + 5;
 
    window_addText( wid, 20, y, 180, 15, 0, "txtFactionLabel", &gl_smallFont, NULL, _("Faction: ") );
-   snprintf( buf, sizeof(buf), "%s", p->faction > 0 ? faction_name( p->faction ) : _("None") );
+   snprintf( buf, sizeof(buf), "%s", p->presence.faction > 0 ? faction_name( p->presence.faction ) : _("None") );
    window_addText( wid, 20 + w, y, 180, 15, 0, "txtFaction", &gl_smallFont, NULL, buf );
    y -= gl_defFont.h + 5;
 
@@ -1392,11 +1392,11 @@ static void sysedit_editPnt( void )
    snprintf( buf, sizeof(buf), "%s", p->class );
    window_setInput( wid, "inpClass", buf );
    window_setInput( wid, "inpLand", p->land_func );
-   snprintf( buf, sizeof(buf), "%g", p->presenceBase );
+   snprintf( buf, sizeof(buf), "%g", p->presence.base );
    window_setInput( wid, "inpPresenceBase", buf );
-   snprintf( buf, sizeof(buf), "%g", p->presenceBonus );
+   snprintf( buf, sizeof(buf), "%g", p->presence.bonus );
    window_setInput( wid, "inpPresenceBonus", buf );
-   snprintf( buf, sizeof(buf), "%d", p->presenceRange );
+   snprintf( buf, sizeof(buf), "%d", p->presence.range );
    window_setInput( wid, "inpPresenceRange", buf );
    snprintf( buf, sizeof(buf), "%g", p->hide );
    window_setInput( wid, "inpHide", buf );
@@ -1928,7 +1928,7 @@ static void sysedit_btnFaction( unsigned int wid_unused, char *unused )
 
    /* Get current faction. */
    pos    = 0;
-   s      = faction_name(p->faction);
+   s      = faction_name(p->presence.faction);
    for (i=0; i<j; i++)
       if (strcmp(s,str[i])==0)
          pos = i;
@@ -1967,15 +1967,15 @@ static void sysedit_btnFactionSet( unsigned int wid, char *unused )
 
    /* "None" case. */
    if (toolkit_getListPos( wid, "lstFactions")==0) {
-      p->faction = -1;
+      p->presence.faction = -1;
    }
    else {
       /* Set the faction. */
-      p->faction = faction_get( selected );
+      p->presence.faction = faction_get( selected );
    }
 
    /* Update the editor window. */
-   window_modifyText( sysedit_widEdit, "txtFaction", p->faction > 0 ? faction_name( p->faction ) : _("None") );
+   window_modifyText( sysedit_widEdit, "txtFaction", p->presence.faction > 0 ? faction_name( p->presence.faction ) : _("None") );
 
    window_close( wid, unused );
 }

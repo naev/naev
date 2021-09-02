@@ -442,9 +442,9 @@ static void map_system_render( double bx, double by, double w, double h, void *d
       f = -1;
       for ( i=0; i<array_size(sys->planets); i++ ) {
          if (sys->planets[i]->real == ASSET_REAL && planet_isKnown( sys->planets[i] ) ) {
-            if ((f==-1) && (sys->planets[i]->faction>0) ) {
-               f = sys->planets[i]->faction;
-            } else if (f != sys->planets[i]->faction &&  (sys->planets[i]->faction>0) ) {
+            if ((f==-1) && (sys->planets[i]->presence.faction>0) ) {
+               f = sys->planets[i]->presence.faction;
+            } else if (f != sys->planets[i]->presence.faction &&  (sys->planets[i]->presence.faction>0) ) {
                cnt+=scnprintf( &buf[cnt], sizeof(buf)-cnt, _("Faction: Multiple\n") );
                break;
             }
@@ -501,13 +501,13 @@ static void map_system_render( double bx, double by, double w, double h, void *d
    } else {
      /* display planet info */
      p = cur_planetObj_sel;
-     if (p->faction > 0 ) {/* show the faction */
+     if (p->presence.faction > 0 ) {/* show the faction */
         char factionBuf[64];
-        logo = faction_logo( p->faction );
+        logo = faction_logo( p->presence.faction );
         if ( logo != NULL ) {
            gl_renderScale( logo, bx + pitch + nameWidth + 200, by + h - 21, 20, 20, &cWhite );
          }
-        snprintf( factionBuf, 64, "%s", faction_shortname( p->faction ) );
+        snprintf( factionBuf, 64, "%s", faction_shortname( p->presence.faction ) );
         gl_printTextRaw( &gl_smallFont, (w - nameWidth-pitch - 60) / 2, 20,
             bx+pitch+nameWidth + 230, by + h - 31, 0, &cFontWhite, -1., factionBuf );
 
@@ -518,7 +518,7 @@ static void map_system_render( double bx, double by, double w, double h, void *d
         cnt+=scnprintf( &buf[cnt], sizeof(buf)-cnt, _("No space port here\n") );
      else if (p->can_land || p->bribed ) {
         cnt+=scnprintf( &buf[cnt], sizeof(buf)-cnt, _("You can land here\n") );
-     } else if ( areEnemies( FACTION_PLAYER, p->faction ) ) {
+     } else if ( areEnemies( FACTION_PLAYER, p->presence.faction ) ) {
         cnt+=scnprintf( &buf[cnt], sizeof(buf)-cnt, _("Not advisable to land here\n") );
      } else {
         cnt+=scnprintf( &buf[cnt], sizeof(buf)-cnt, _("You cannot land here\n") );

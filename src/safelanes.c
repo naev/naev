@@ -356,7 +356,7 @@ static void safelanes_initStacks_vertex (void)
    for (system=0; system<array_size(systems_stack); system++) {
       for (i=0; i<array_size(systems_stack[system].planets); i++) {
          p = systems_stack[system].planets[i];
-         if (p->real && (p->presenceBase!=0. || p->presenceBonus!=0.)) {
+         if (p->real && (p->presence.base!=0. || p->presence.bonus!=0.)) {
             Vertex v = {.system = system, .type = VERTEX_PLANET, .index = i};
             array_push_back( &tmp_planet_indices, array_size(vertex_stack) );
             array_push_back( &vertex_stack, v );
@@ -658,8 +658,8 @@ static void safelanes_initPPl (void)
    for (i=0; i<np; i++) {
       sys = vertex_stack[tmp_planet_indices[i]].system;
       pnt = system_getIndex( sys )->planets[vertex_stack[tmp_planet_indices[i]].index];
-      pres = pnt->presenceBase + pnt->presenceBonus; /* TODO distinguish between base and bonus? */
-      fi = FACTION_ID_TO_INDEX( pnt->faction );
+      pres = pnt->presence.base + pnt->presence.bonus; /* TODO distinguish between base and bonus? */
+      fi = FACTION_ID_TO_INDEX( pnt->presence.faction );
       if (fi < 0)
          continue;
       Di = PPl[fi]->x;
@@ -848,7 +848,7 @@ static int vertex_faction( int vi )
    const StarSystem *sys = system_getIndex(vertex_stack[vi].system);
    switch (vertex_stack[vi].type) {
       case VERTEX_PLANET:
-         return sys->planets[vertex_stack[vi].index]->faction;
+         return sys->planets[vertex_stack[vi].index]->presence.faction;
       case VERTEX_JUMP:
          return -1;
       default:

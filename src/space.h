@@ -86,6 +86,27 @@ typedef struct MapOverlayPos_ {
 
 
 /**
+ * @brief Represents the presence of an asset. */
+typedef struct AssetPresence_ {
+   int faction;   /**< Faction generating presence. */
+   double base;   /**< Base presence. */
+   double bonus;  /**< Bonus presence. */
+   int range;     /**< Range effect of the presence (in jumps). */
+} AssetPresence;
+
+
+/**
+ * @struct Virtual Asset
+ *
+ * @brief Basically modifies system parameters without creating any real objects.
+ */
+typedef struct VirtualAsset_ {
+   char *name;                /**< Virtual asset name. */
+   AssetPresence *presences;  /**< Virtual asset presences (Array from array.h). */
+} VirtualAsset;
+
+
+/**
  * @struct Planet
  *
  * @brief Represents a planet.
@@ -98,15 +119,12 @@ typedef struct Planet_ {
 
    /* Planet details. */
    char *class;         /**< Planet type. Uses Star Trek classification system (https://stexpanded.fandom.com/wiki/Planet_classifications) */
-   int faction;         /**< planet faction */
    uint64_t population; /**< Population of the planet. */
 
    /* Asset details. */
-   double presenceBase; /**< The base amount of presence this asset exerts, dependent on other assets. */
-   double presenceBonus;/**< The bonus amount of presence this asset exerts, independent of other assets.. */
-   int presenceRange;   /**< The range of presence exertion of this asset. */
+   AssetPresence presence; /**< Presence details (faction, etc.) */
    double hide;         /**< The ewarfare hide value for an asset. */
-   int real;            /**< If the asset is tangible or not. */
+   int real;            /**< Whether it is real or not. */
 
    /* Landing details. */
    int can_land;        /**< Whether or not the player can land. */
@@ -303,10 +321,11 @@ struct StarSystem_ {
    char *background; /**< Background script. */
    char *features; /**< Extra text on the map indicating special features of the system. */
 
-   /* Planets. */
+   /* Assets. */
    Planet **planets; /**< Array (array.h): planets */
    int *planetsid; /**< Array (array.h): IDs of the planets. */
    int faction; /**< overall faction */
+   VirtualAsset *assets; /**< Array (array.h): virtual assets. */
 
    /* Jumps. */
    JumpPoint *jumps; /**< Array (array.h): Jump points in the system */

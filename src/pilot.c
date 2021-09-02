@@ -1263,7 +1263,7 @@ void pilot_distress( Pilot *p, Pilot *attacker, const char *msg, int ignore_int 
       for (i=0; i<array_size(cur_system->planets); i++) {
          if (planet_hasService(cur_system->planets[i], PLANET_SERVICE_INHABITED) &&
                (!ignore_int && pilot_inRangePlanet(p, i)) &&
-               !areEnemies(p->faction, cur_system->planets[i]->faction)) {
+               !areEnemies(p->faction, cur_system->planets[i]->presence.faction)) {
             r = 1;
             break;
          }
@@ -3085,7 +3085,7 @@ void pilot_choosePoint( Vector2d *vp, Planet **planet, JumpPoint **jump, int lf,
    ind = array_create_size( int, array_size(cur_system->planets) );
    for (i=0; i<array_size(cur_system->planets); i++)
       if (planet_hasService(cur_system->planets[i],PLANET_SERVICE_INHABITED) &&
-            !areEnemies(lf,cur_system->planets[i]->faction))
+            !areEnemies(lf,cur_system->planets[i]->presence.faction))
          array_push_back( &ind, i );
 
    /* Build jumpable jump table. */

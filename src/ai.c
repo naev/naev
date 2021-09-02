@@ -2267,7 +2267,7 @@ static int aiL_getnearestplanet( lua_State *L )
       if (!planet_hasService(cur_system->planets[i],PLANET_SERVICE_INHABITED))
          continue;
       d = vect_dist( &cur_system->planets[i]->pos, &cur_pilot->solid->pos );
-      if ((!areEnemies(cur_pilot->faction,cur_system->planets[i]->faction)) &&
+      if ((!areEnemies(cur_pilot->faction,cur_system->planets[i]->presence.faction)) &&
             (d < dist)) { /* closer friendly planet */
          j = i;
          dist = d;
@@ -2306,7 +2306,7 @@ static int aiL_getplanetfrompos( lua_State *L )
       if (!planet_hasService(cur_system->planets[i],PLANET_SERVICE_INHABITED))
          continue;
       d = vect_dist( &cur_system->planets[i]->pos, pos );
-      if ((!areEnemies(cur_pilot->faction,cur_system->planets[i]->faction)) &&
+      if ((!areEnemies(cur_pilot->faction,cur_system->planets[i]->presence.faction)) &&
             (d < dist)) { /* closer friendly planet */
          j = i;
          dist = d;
@@ -2378,9 +2378,9 @@ static int aiL_getlandplanet( lua_State *L )
          continue;
 
       /* Check conditions. */
-      if (only_friend && !areAllies( cur_pilot->faction, cur_system->planets[i]->faction ))
+      if (only_friend && !areAllies( cur_pilot->faction, cur_system->planets[i]->presence.faction ))
          continue;
-      else if (!only_friend && areEnemies(cur_pilot->faction,cur_system->planets[i]->faction))
+      else if (!only_friend && areEnemies(cur_pilot->faction,cur_system->planets[i]->presence.faction))
          continue;
 
       /* Add it. */

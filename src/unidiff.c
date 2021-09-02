@@ -854,7 +854,7 @@ static int diff_patchHunk( UniHunk_t *hunk )
          p = planet_get( hunk->target.u.name );
          if (p==NULL)
             return -1;
-         hunk->o.name = faction_name( p->faction );
+         hunk->o.name = faction_name( p->presence.faction );
          diff_universe_changed = 1;
          return planet_setFaction( p, faction_get(hunk->u.name) );
       case HUNK_TYPE_ASSET_FACTION_REMOVE:

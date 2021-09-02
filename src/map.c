@@ -530,15 +530,15 @@ static void map_update( unsigned int wid )
          continue;
       if (!planet_isKnown(sys->planets[i]))
          continue;
-      if ( (sys->planets[i]->faction > 0)
-            && (!faction_isKnown(sys->planets[i]->faction)) )
+      if ( (sys->planets[i]->presence.faction > 0)
+            && (!faction_isKnown(sys->planets[i]->presence.faction)) )
          continue;
 
-      if ((f == -1) && (sys->planets[i]->faction > 0)) {
-         f = sys->planets[i]->faction;
+      if ((f == -1) && (sys->planets[i]->presence.faction > 0)) {
+         f = sys->planets[i]->presence.faction;
       }
-      else if (f != sys->planets[i]->faction /** @todo more verbosity */
-               && (sys->planets[i]->faction > 0)) {
+      else if (f != sys->planets[i]->presence.faction /** @todo more verbosity */
+               && (sys->planets[i]->presence.faction > 0)) {
          snprintf( buf, sizeof(buf), _("Multiple") );
          break;
       }
@@ -632,7 +632,7 @@ static void map_update( unsigned int wid )
       if (planet_isKnown(sys->planets[i])) {
          if (sys->planets[i]->can_land)
             services |= sys->planets[i]->services;
-         else if (areEnemies(sys->planets[i]->faction,FACTION_PLAYER))
+         else if (areEnemies(sys->planets[i]->presence.faction,FACTION_PLAYER))
             services_h |= sys->planets[i]->services;
          else
             services_u |= sys->planets[i]->services;
