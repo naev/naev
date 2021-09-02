@@ -233,12 +233,15 @@ end
 function patrol_spawnPirates( n, boss )
    pilot.clear()
    pilot.toggleSpawn( false )
+
    if rnd.rnd() < 0.05 then n = n + 1 end
-   local r = system.cur():radius()
+
+   local frogue = faction.dynAdd( "Pirate", "Rogue Pirate", _("Rogue Pirate"), {clear_allies=true, clear_enemies=true})
+   frogue:dynEnemy("FLF")
+
    fleetPirate = {}
    for i = 1, n do
-      local x = rnd.rnd( -r, r )
-      local y = rnd.rnd( -r, r )
+      local pos = vec2.newP( 0.8*system.cur():radius()*rnd.rnd(), 360*rnd.rnd )
       local pilotname = nil
       local shipname
       if i == 1 and boss ~= nil then
@@ -250,9 +253,8 @@ function patrol_spawnPirates( n, boss )
       if shipname == "Hyena" then
          pilotname = _("Pirate Hyena")
       end
-      local p = pilot.add( shipname, "Pirate", vec2.new( x, y ), pilotname, {ai="pirate_norun"} )
+      local p = pilot.add( shipname, frogue, pos, pilotname, {ai="pirate_norun"} )
       hook.pilot( p, "death", "pilot_death_pirate" )
-      p:setFaction( "Rogue Pirate" )
       p:setHostile()
       p:setVisible( true )
       p:setHilight( true )

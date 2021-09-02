@@ -191,15 +191,17 @@ end
 function rogue_spawnRogue( n )
    pilot.clear()
    pilot.toggleSpawn( false )
+
    if rnd.rnd() < 0.05 then n = n + 1 end
-   local r = system.cur():radius()
+   local shipnames = { "Vendetta", "Lancelot" }
+   local pilotnames = { _("Rogue FLF Vendetta"), _("Rogue FLF Lancelot") }
+   local frogue = faction.dynAdd( "FLF", "Rogue FLF", _("Rogue FLF"), {clear_allies=true, clear_enemies=true})
+   frogue:dynEnemy("FLF")
+
    fleetRogue = {}
    for i = 1, n do
-      local x = rnd.rnd( -r, r )
-      local y = rnd.rnd( -r, r )
-      local shipnames = { "Vendetta", "Lancelot" }
-      local pilotnames = { _("Rogue FLF Vendetta"), _("Rogue FLF Lancelot") }
-      local pstk = fleet.add( 1, shipnames, "Rogue FLF", vec2.new( x, y ), pilotnames, {ai="flf_rogue_norun"} )
+      local pos = vec2.newP( 0.8*system.cur():radius()*rnd.rnd(), 360*rnd.rnd )
+      local pstk = fleet.add( 1, shipnames, frogue, pos, pilotnames, {ai="flf_rogue_norun"} )
       local p = pstk[1]
       hook.pilot( p, "death", "pilot_death_rogue" )
       p:setHostile()

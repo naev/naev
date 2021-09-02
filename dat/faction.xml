@@ -291,10 +291,9 @@
   <colour>yellow</colour>
   <spawn>flf</spawn>
   <standing>flf</standing>
+  <equip>pirate</equip>
   <enemies>
    <enemy>Dvaered</enemy>
-   <enemy>Rogue FLF</enemy>
-   <enemy>Rogue Pirate</enemy>
    <enemy>DHC</enemy>
   </enemies>
  </faction>
@@ -379,36 +378,6 @@
    <enemy>Pirate</enemy>
   </enemies>
   <lane_length_per_presence>143</lane_length_per_presence>
- </faction>
- <faction>
-  <name>Rogue FLF</name>
-  <ai>flf</ai>
-  <static />
-  <invisible />
-  <known />
-  <player>-100</player>
-  <colour>red</colour>
-  <standing>static</standing>
-  <equip>pirate</equip>
-  <enemies>
-   <enemy>FLF</enemy>
-  </enemies>
- </faction>
- <faction>
-  <name>Rogue Pirate</name>
-  <ai>baddie_norun</ai>
-  <display>Pirate</display>
-  <static />
-  <invisible />
-  <known />
-  <logo>pirate</logo>
-  <player>-100</player>
-  <colour>red</colour>
-  <standing>static</standing>
-  <equip>pirate</equip>
-  <enemies>
-   <enemy>FLF</enemy>
-  </enemies>
  </faction>
  <faction>
   <name>Mercenary</name>
