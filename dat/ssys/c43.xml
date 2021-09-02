@@ -15,6 +15,8 @@
   <asset>S23491</asset>
   <asset>S58309</asset>
   <asset>S91456</asset>
+  <asset_virtual>Independent All Unpresence (Range 1)</asset_virtual>
+  <asset_virtual>Pirate All Unpresence (Range 1)</asset_virtual>
  </assets>
  <jumps>
   <jump target="C-14">

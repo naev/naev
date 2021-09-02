@@ -19,9 +19,9 @@
   <asset>PRP-3</asset>
   <asset>PRP-4</asset>
   <asset>Tu'halar</asset>
-  <asset_virtual>Za'lek Medium</asset_virtual>
   <asset>Za'lek II</asset>
   <asset>Za'lek IV</asset>
+  <asset_virtual>Za'lek Medium</asset_virtual>
  </assets>
  <jumps>
   <jump target="Damien">

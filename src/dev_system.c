@@ -149,24 +149,24 @@ int dsys_saveSystem( StarSystem *sys )
    xmlw_elem( writer, "y", "%f", sys->pos.y );
    xmlw_endElem( writer ); /* "pos" */
 
-   /* Planets. */
+   /* Sort planets. */
    sorted_planets = malloc( sizeof(Planet*) * array_size(sys->planets) );
    memcpy( sorted_planets, sys->planets, sizeof(Planet*) * array_size(sys->planets) );
    qsort( sorted_planets, array_size(sys->planets), sizeof(Planet*), dsys_compPlanet );
-   xmlw_startElem( writer, "assets" );
-   for (i=0; i<array_size(sys->planets); i++)
-      xmlw_elem( writer, "asset", "%s", sorted_planets[i]->name );
-   xmlw_endElem( writer ); /* "assets" */
-   free(sorted_planets);
 
-   /* Virtual assets. */
+   /* Sort virtual assets. */
    sorted_assets = malloc( sizeof(VirtualAsset*) * array_size(sys->assets_virtual) );
    memcpy( sorted_assets, sys->assets_virtual, sizeof(VirtualAsset*) * array_size(sys->assets_virtual) );
    qsort( sorted_assets, array_size(sys->assets_virtual), sizeof(VirtualAsset*), dsys_compVirtualAsset );
+
+   /* Write assets and clean up. */
    xmlw_startElem( writer, "assets" );
+   for (i=0; i<array_size(sys->planets); i++)
+      xmlw_elem( writer, "asset", "%s", sorted_planets[i]->name );
    for (i=0; i<array_size(sys->assets_virtual); i++)
       xmlw_elem( writer, "asset_virtual", "%s", sorted_assets[i]->name );
    xmlw_endElem( writer ); /* "assets" */
+   free(sorted_planets);
    free(sorted_assets);
 
    /* Jumps. */

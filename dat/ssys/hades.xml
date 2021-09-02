@@ -10,9 +10,7 @@
   <x>-179.609568</x>
   <y>40.532407</y>
  </pos>
- <assets>
-  <asset_virtual>Pirate All Unpresence</asset_virtual>
- </assets>
+ <assets/>
  <jumps>
   <jump target="C-43">
    <autopos/>

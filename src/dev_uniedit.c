@@ -1720,7 +1720,7 @@ static void uniedit_btnEditAddAssetAdd( unsigned int wid, char *unused )
       return;
 
    /* Add virtual presence. */
-   ret = system_addPlanet( uniedit_sys[0], selected );
+   ret = system_addVirtualAsset( uniedit_sys[0], selected );
    if (ret != 0) {
       dialogue_alert( _("Failed to add virtual asset '%s'!"), selected );
       return;

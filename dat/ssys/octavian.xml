@@ -13,11 +13,11 @@
  <assets>
   <asset>August</asset>
   <asset>Olario</asset>
-  <asset_virtual>Empire Unpresence</asset_virtual>
-  <asset_virtual>Empire Unpresence</asset_virtual>
   <asset>Warnecke</asset>
   <asset>Warnecke I</asset>
   <asset>Warnecke II</asset>
+  <asset_virtual>Empire Unpresence</asset_virtual>
+  <asset_virtual>Empire Unpresence</asset_virtual>
  </assets>
  <jumps>
   <jump target="Copernicus">
