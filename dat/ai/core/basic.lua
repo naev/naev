@@ -159,8 +159,6 @@ function moveto_precise( target )
 end
 
 
-
-
 --[[
 -- Goes to a target position roughly
 --]]
