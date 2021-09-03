@@ -28,6 +28,10 @@ blacklist = {
 -- of the main universe (Thurion, Proteron).
 nongeneric_factions = {
    "Pirate",
+   "Wild Ones",
+   "Raven Clan",
+   "Dreamer Clan",
+   "Black Lotus",
    "FLF",
    "Thurion",
    "Proteron"

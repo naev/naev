@@ -15,6 +15,12 @@ require "jumpdist"
 
 -- List to treat special factions diffferently
 override_list = {
+   -- Treat pirate clans the same (at least for now)
+   ["Wild Ones"] = "Pirate",
+   ["Raven Clan"] = "Pirate",
+   ["Dreamer Clan"] = "Pirate",
+   ["Black Lotus"] = "Pirate",
+   -- Other misc factions
    ["Strangelove"] = "Generic",
 }
 
