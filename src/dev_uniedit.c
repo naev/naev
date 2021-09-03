@@ -51,8 +51,8 @@
 #define UNIEDIT_DOUBLECLICK_THRESHOLD   300   /**< Drag threshold (ms). */
 
 #define UNIEDIT_ZOOM_STEP        1.2   /**< Factor to zoom by for each zoom level. */
-#define UNIEDIT_ZOOM_MAX         5     /**< Maximum uniedit zoom level (close). */
-#define UNIEDIT_ZOOM_MIN         -5    /**< Minimum uniedit zoom level (far). */
+#define UNIEDIT_ZOOM_MAX         5.    /**< Maximum uniedit zoom level (close). */
+#define UNIEDIT_ZOOM_MIN         -5.   /**< Minimum uniedit zoom level (far). */
 
 /*
  * The editor modes.
@@ -65,6 +65,7 @@ typedef enum UniEditMode_ {
 
 typedef enum UniEditViewMode_ {
    UNIEDIT_VIEW_DEFAULT,
+   UNIEDIT_VIEW_VIRTUALASSETS,
    UNIEDIT_VIEW_PRESENCE,
 } UniEditViewMode;
 
@@ -134,6 +135,8 @@ static void uniedit_render( double bx, double by, double w, double h, void *data
 static void uniedit_renderOverlay( double bx, double by, double bw, double bh, void* data );
 static int uniedit_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
       double w, double h, double rx, double ry, void *data );
+static void uniedit_renderFactionDisks( double x, double y, double r );
+static void uniedit_renderVirtualAssets( double x, double y, double r );
 /* Button functions. */
 static void uniedit_close( unsigned int wid, char *wgt );
 static void uniedit_save( unsigned int wid_unused, char *unused );
@@ -390,13 +393,14 @@ static void uniedit_btnView( unsigned int wid_unused, char *unused )
    /* Add virtual asset list. */
    str   = malloc( sizeof(char*) * (array_size(factions)+1) );
    str[0]= strdup(_("Default"));
-   j     = 1;
+   str[1]= strdup(_("Virtual Assets"));
+   j     = 2;
    for (i=0; i<array_size(factions); i++) {
       f = factions[i];
       if (f>=0)
          str[j++] = strdup( faction_name( f ) ); /* Not translating so we can use faction_get */
    }
-   qsort( &str[1], j-1, sizeof(char*), strsort );
+   qsort( &str[2], j-2, sizeof(char*), strsort );
    h = UNIEDIT_EDIT_HEIGHT-60-(BUTTON_HEIGHT+20);
    window_addList( wid, 20, -40, UNIEDIT_EDIT_WIDTH-40, h, "lstViewModes", str, j, 0, NULL, NULL );
 
@@ -522,6 +526,31 @@ static void uniedit_renderFactionDisks( double x, double y, double r )
 }
 
 
+static void uniedit_renderVirtualAssets( double x, double y, double r )
+{
+   int i;
+   glColour c;
+   StarSystem *sys;
+   double tx, ty, sr;
+
+   c   = cWhite;
+   c.a = 0.3;
+
+   for (i=0; i<array_size(systems_stack); i++) {
+      sys = system_getIndex( i );
+
+      tx = x + sys->pos.x*uniedit_zoom;
+      ty = y + sys->pos.y*uniedit_zoom;
+
+      /* draws the disk representing the faction */
+      sr = 5.*M_PI*sqrt((double)array_size(sys->assets_virtual)) * uniedit_zoom;
+
+      (void) r;
+      gl_renderCircle( tx, ty, sr, &c, 1 );
+   }
+}
+
+
 /* @brief Renders important map stuff.
  */
 void uniedit_renderMap( double bx, double by, double w, double h, double x, double y, double r )
@@ -532,14 +561,21 @@ void uniedit_renderMap( double bx, double by, double w, double h, double x, doub
    map_renderDecorators( x, y, 1, 1. );
 
    /* Render faction disks. */
-   if (uniedit_viewmode == UNIEDIT_VIEW_DEFAULT)
-      map_renderFactionDisks( x, y, r, 1, 1. );
-   else if ((uniedit_viewmode == UNIEDIT_VIEW_PRESENCE) && (uniedit_view_faction>=0))
-      uniedit_renderFactionDisks( x, y, r );
+   switch (uniedit_viewmode) {
+      case UNIEDIT_VIEW_DEFAULT:
+         map_renderFactionDisks( x, y, r, 1, 1. );
+         map_renderSystemEnvironment( x, y, 1, 1. );
+         break;
 
-   /* Render environment stuff. */
-   if (uniedit_viewmode == UNIEDIT_VIEW_DEFAULT)
-      map_renderSystemEnvironment( x, y, 1, 1. );
+      case UNIEDIT_VIEW_VIRTUALASSETS:
+         uniedit_renderVirtualAssets( x, y, r );
+         break;
+
+      case UNIEDIT_VIEW_PRESENCE:
+         if (uniedit_view_faction>=0)
+            uniedit_renderFactionDisks( x, y, r );
+         break;
+   }
 
    /* Render jump paths. */
    map_renderJumps( x, y, r, 1 );
@@ -600,48 +636,103 @@ static void uniedit_renderOverlay( double bx, double by, double bw, double bh, v
    int i, j, k, l, f, gf;
    double value, base, bonus, w;
    char buf[STRMAX] = {'\0'};
-   StarSystem *sys, *cur;
+   StarSystem *sys, *cur, *mousesys;
    Planet *pnt;
-   (void) bw;
-   (void) bh;
+   VirtualAsset *va;
    (void) data;
 
    x = bx + uniedit_mx;
    y = by + uniedit_my;
 
-   if (uniedit_mode == UNIEDIT_NEWSYS)
+   if (uniedit_mode == UNIEDIT_NEWSYS) {
       toolkit_drawAltText( x, y, _("Click to add a new system"));
-   else if (uniedit_mode == UNIEDIT_JUMP)
+      return;
+   }
+   else if (uniedit_mode == UNIEDIT_JUMP) {
       toolkit_drawAltText( x, y, _("Click to toggle jump route"));
-   else if (uniedit_viewmode == UNIEDIT_VIEW_PRESENCE) {
+      return;
+   }
+   else if (uniedit_viewmode == UNIEDIT_VIEW_DEFAULT)
+      return;
 
+   /* Correct coordinates. */
+   mx = uniedit_mx - bw/2. + uniedit_xpos;
+   my = uniedit_my - bh/2. + uniedit_ypos;
+   mx /= uniedit_zoom;
+   my /= uniedit_zoom;
+
+   /* Find mouse over system. */
+   mousesys = NULL;
+   for (i=0; i<array_size(systems_stack); i++) {
+      sys = system_getIndex(i);
+      sx = sys->pos.x;
+      sy = sys->pos.y;
+      if ((pow2(sx-mx)+pow2(sy-my)) > pow2(UNIEDIT_CLICK_THRESHOLD))
+         continue;
+      mousesys = sys;
+      break;
+   }
+   if (mousesys == NULL)
+      return;
+   sys   = mousesys;
+   sx    = sys->pos.x;
+   sy    = sys->pos.y;
+
+   /* Handle virtual asset viewer. */
+   if (uniedit_viewmode == UNIEDIT_VIEW_VIRTUALASSETS) {
+      if (array_size(sys->assets_virtual)==0)
+         return;
+
+      /* Count assets. */
+      l = 0;
+      for (j=0; j<array_size(sys->assets_virtual); j++) {
+         va = sys->assets_virtual[j];
+         l += scnprintf( &buf[l], sizeof(buf)-l, "%s%s", (l>0)?"\n":"", va->name );
+      }
+
+      toolkit_drawAltText( x, y, buf);
+      return;
+   }
+
+   /* Handle presence mode. */
+   else if (uniedit_viewmode == UNIEDIT_VIEW_PRESENCE) {
       f = uniedit_view_faction;
       if (f < 0)
          return;
 
-      mx = uniedit_mx - bw/2. + uniedit_xpos;
-      my = uniedit_my - bh/2. + uniedit_ypos;
-      mx /= uniedit_zoom;
-      my /= uniedit_zoom;
+      /* Total presence. */
+      value = system_getPresenceFull( sys, f, &base, &bonus );
+      l = scnprintf( buf, sizeof(buf), "#%c%.0f#0 = #%c%.0f#0 + #%c%.0f#0 [%s - %s]",
+            getValCol(value), value, getValCol(base), base, getValCol(bonus), bonus,
+            _(sys->name), faction_name(f) );
 
-      for (i=0; i<array_size(systems_stack); i++) {
-         sys = system_getIndex(i);
-         sx = sys->pos.x;
-         sy = sys->pos.y;
-         if ((pow2(sx-mx)+pow2(sy-my)) > pow2(UNIEDIT_CLICK_THRESHOLD))
+      /* Local presence sources. */
+      for (j=0; j<array_size(sys->planets); j++) {
+         pnt = sys->planets[j];
+         gf = 0; /* Shut up gcc. */
+         if ((pnt->presence.faction!=f) && !(gf=factionGenerates(pnt->presence.faction, f, &w)))
             continue;
+         if (gf == 0) {
+            base = pnt->presence.base;
+            bonus = pnt->presence.bonus;
+         }
+         else {
+            base = pnt->presence.base * w;
+            bonus = pnt->presence.bonus * w;
+         }
+         l += scnprintf( &buf[l], sizeof(buf)-l, "\n#%c%.0f#0 (#%c%+.0f#0) [%s]",
+               getValCol(base), base, getValCol(bonus), bonus, _(pnt->name) );
+      }
 
-         /* Total presence. */
-         value = system_getPresenceFull( sys, f, &base, &bonus );
-         l = scnprintf( buf, sizeof(buf), "#%c%.0f#0 = #%c%.0f#0 + #%c%.0f#0 [%s - %s]",
-               getValCol(value), value, getValCol(base), base, getValCol(bonus), bonus,
-               _(sys->name), faction_name(f) );
-
-         /* Local presence sources. */
-         for (j=0; j<array_size(sys->planets); j++) {
-            pnt = sys->planets[j];
+      /* Find neighbours if possible. */
+      for (k=0; k<array_size(sys->jumps); k++) {
+         cur = sys->jumps[k].target;
+         for (j=0; j<array_size(cur->planets); j++) {
+            pnt = cur->planets[j];
             gf = 0; /* Shut up gcc. */
             if ((pnt->presence.faction!=f) && !(gf=factionGenerates(pnt->presence.faction, f, &w)))
+               continue;
+            if (pnt->presence.range < 1)
                continue;
             if (gf == 0) {
                base = pnt->presence.base;
@@ -651,36 +742,13 @@ static void uniedit_renderOverlay( double bx, double by, double bw, double bh, v
                base = pnt->presence.base * w;
                bonus = pnt->presence.bonus * w;
             }
-            l += scnprintf( &buf[l], sizeof(buf)-l, "\n#%c%.0f#0 (#%c%+.0f#0) [%s]",
-                  getValCol(base), base, getValCol(bonus), bonus, _(pnt->name) );
+            l += scnprintf( &buf[l], sizeof(buf)-l, "\n#%c%.0f#0 (#%c%+.0f#0) [%s (%s)]",
+                  getValCol(base), base*0.5, getValCol(bonus), bonus*0.5, _(pnt->name), _(cur->name) );
          }
-
-         /* Find neighbours if possible. */
-         for (k=0; k<array_size(sys->jumps); k++) {
-            cur = sys->jumps[k].target;
-            for (j=0; j<array_size(cur->planets); j++) {
-               pnt = cur->planets[j];
-               gf = 0; /* Shut up gcc. */
-               if ((pnt->presence.faction!=f) && !(gf=factionGenerates(pnt->presence.faction, f, &w)))
-                  continue;
-               if (pnt->presence.range < 1)
-                  continue;
-               if (gf == 0) {
-                  base = pnt->presence.base;
-                  bonus = pnt->presence.bonus;
-               }
-               else {
-                  base = pnt->presence.base * w;
-                  bonus = pnt->presence.bonus * w;
-               }
-               l += scnprintf( &buf[l], sizeof(buf)-l, "\n#%c%.0f#0 (#%c%+.0f#0) [%s (%s)]",
-                     getValCol(base), base*0.5, getValCol(bonus), bonus*0.5, _(pnt->name), _(cur->name) );
-            }
-         }
-
-         toolkit_drawAltText( x, y, buf);
-         return;
       }
+
+      toolkit_drawAltText( x, y, buf);
+      return;
    }
 }
 
@@ -1765,10 +1833,18 @@ static void uniedit_btnEditRename( unsigned int wid, char *unused )
 static void uniedit_btnViewModeSet( unsigned int wid, char *unused )
 {
    char *selected;
+   int pos;
 
    /* Check default. */
-   if (toolkit_getListPos( wid, "lstViewModes" )==0) {
+   pos = toolkit_getListPos( wid, "lstViewModes" );
+   if (pos==0) {
       uniedit_viewmode = UNIEDIT_VIEW_DEFAULT;
+      uniedit_view_faction = -1;
+      window_close( wid, unused );
+      return;
+   }
+   else if (pos==1) {
+      uniedit_viewmode = UNIEDIT_VIEW_VIRTUALASSETS;
       uniedit_view_faction = -1;
       window_close( wid, unused );
       return;
