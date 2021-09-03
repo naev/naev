@@ -313,9 +313,10 @@ control_funcs.attack = function ()
    return false
 end
 control_funcs.inspect_moveto = function ()
+   local p = ai.pilot()
    local target = ai.taskdata()
    local r = math.pow( mem.lanedistance, 2 )
-   if mem.natural and lanes.getDistance2P( p, target ) > r then
+   if mem.natural and target and lanes.getDistance2P( p, target ) > r then
       ai.poptask()
       return false
    end
