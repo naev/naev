@@ -38,8 +38,9 @@
 
 require "numstring"
 require "jumpdist"
-require "pilot/pirate"
-require "missions/soromid/common"
+require "pilot.pirate"
+require "missions.soromid.common"
+local pir = require "missions.pirate.common"
 local equipopt = require 'equipopt'
 
 
@@ -80,8 +81,7 @@ log_text = _([[You helped Chelsea hunt down a wanted pirate, earning a bounty fo
 function create ()
    local systems = getsysatdistance( system.cur(), 1, 3,
       function(s)
-         local p = s:presences()["Pirate"]
-         return p ~= nil and p > 0
+         return pir.systemPresence( s ) > 0
       end )
 
    if #systems == 0 then

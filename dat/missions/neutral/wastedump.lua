@@ -39,6 +39,7 @@
 --]]
 
 require "numstring"
+local pir = require "missions.pirate.common"
 
 text = {}
 text[1] = _("The waste containers are loaded onto your ship and you are paid %s. You begin to wonder if accepting this job was really a good idea.")
@@ -194,7 +195,7 @@ function abort ()
          choices = { "Collective Drone", "Collective Heavy Drone" }
       elseif f == faction.get( "FLF" ) then
          choices = { "Pacifier", "Vendetta", "Lancelot" }
-      elseif f == faction.get( "Pirate" ) then
+      elseif pir.factionIsPirate(f) then
          choices = { "Pirate Kestrel", "Pirate Phalanx", "Pirate Admonisher" }
       else
          f = faction.get( "Mercenary" )

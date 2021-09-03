@@ -24,7 +24,8 @@ require "nextjump"
 local fleet = require "fleet"
 require "chatter"
 require "selectiveclear"
-require "missions/shadow/common"
+require "missions.shadow.common"
+local pir = require "missions.pirate.common"
 
 
 title = {}
@@ -311,8 +312,10 @@ function jumpin()
         misn.markerRm(marker) -- No marker. Player has to follow the NPCs.
     end
     if stage >= 2 then
-        pilot.toggleSpawn("Pirate")
-        pilot.clearSelect("Pirate")
+        for k,f in ipairs(pir.factions) do
+            pilot.toggleSpawn(f)
+            pilot.clearSelect(f) -- Not sure if we need a claim for this.
+        end
 
         -- Spawn the escorts.
         escorts = fleet.add( 3, "Lancelot", "Four Winds", origin, _("Four Winds Escort"), {ai="baddie_norun"} )

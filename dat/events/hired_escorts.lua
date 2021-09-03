@@ -34,8 +34,9 @@
 --]]
 
 local portrait = require "portrait"
-require "pilot/generic"
-require "pilot/pirate"
+local pir = require "missions.pirate.common"
+require "pilot.generic"
+require "pilot.pirate"
 
 logidstr = "log_hiredescort"
 logname = _("Hired Escorts")
@@ -100,7 +101,7 @@ function createPilotNPCs ()
    local portrait_arg = nil
 
    local pf = planet.cur():faction()
-   if pf == faction.get("Pirate") then
+   if pir.factionIsPirate( pf ) then
       ship_choices = {
          { ship = "Hyena",             royalty = 0.1 },
          { ship = "Pirate Shark",      royalty = 0.15 },

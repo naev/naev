@@ -31,7 +31,7 @@
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 --]]
-
+local pir = require 'missions.pirate.common'
 require "numstring"
 
 
@@ -126,7 +126,7 @@ function standing( f, delta )
       else
          abort()
       end
-   elseif fn == "Pirate" and delta >= 0 then
+   elseif pir.factionIsPirate( fn ) and delta >= 0 then
       local sf = system.cur():faction()
       if sf ~= nil and orig_standing[sf:nameRaw()] ~= nil then
          -- We delay choice of when you are discovered to prevent players

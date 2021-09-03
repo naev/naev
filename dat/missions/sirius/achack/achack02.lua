@@ -26,9 +26,9 @@ require "scripts/nextjump"
 local fleet = require "fleet"
 require "selectiveclear"
 require "proximity"
-require "missions/sirius/common"
+require "missions.sirius.common"
 require "numstring"
-
+local pir = require "missions.pirate.common"
 
 title1 = _("An unexpected reunion")
 text1 = _([[When you approach her, the officer greets you with a smile. "What a surprise that we should run into each other again," she says. "I'm afraid to say I don't remember your name. What was it again? Ah yes, %s. I don't think I introduced myself last time, my name is Joanne. Well met. As you can see I'm still doing quite well, no poison in my wine or snakes in my bed or anything." Then her expression turns more serious. "Actually, about that. I think our friend Harja still has it in for me. You had the common sense to use your head, but I'm afraid not everyone is like that. I'm convinced Harja will try to hire more assassins to do what you didn't, so I'm in considerable danger."
@@ -239,8 +239,10 @@ function enter()
      joanne:setSpeedLimit(playershipspeed)
    end
 
-   pilot.toggleSpawn("Pirate")
-   pilot.clearSelect("Pirate") -- Not sure if we need a claim for this.
+   for k,f in ipairs(pir.factions) do
+      pilot.toggleSpawn(f)
+      pilot.clearSelect(f) -- Not sure if we need a claim for this.
+   end
 
    joannejumped = false
    origin = system.cur()

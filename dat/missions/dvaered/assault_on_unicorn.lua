@@ -19,8 +19,8 @@
    DESCRIPTION: Kill some pirates!
 
 --]]
-
-require "scripts/numstring"
+local pir = require 'missions.pirate.common'
+require "scripts.numstring"
 
 misn_title = _("DV: Assault on Unicorn")
 misn_reward = _("Variable")
@@ -82,7 +82,7 @@ function jumpin()
 end
 
 function death(pilot,killer)
-   if pilot:faction() == faction.get("Pirate")
+   if pir.factionIsPirate( pilot:faction() )
          and (killer == player.pilot()
             or killer:leader() == player.pilot()) then
       reward_table = {

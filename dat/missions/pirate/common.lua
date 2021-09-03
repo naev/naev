@@ -32,21 +32,31 @@ function pir.addMiscLog( text )
    shiplog.append("pir_misc", text)
 end
 
+ pir.factions = {
+   faction.get("Pirate"),
+   faction.get("Marauder"),
+   faction.get("Raven Clan"),
+   faction.get("Wild Ones"),
+   faction.get("Dreamer Clan"),
+   faction.get("Black Lotus"),
+}
+
 function pir.factionIsPirate( f )
-   local pir_factions = {
-      faction.get("Pirate"),
-      faction.get("Marauder"),
-      faction.get("Raven Clan"),
-      faction.get("Wild Ones"),
-      faction.get("Dreamer Clan"),
-      faction.get("Black Lotus"),
-   }
-   for k,v in ipairs(pir_factions) do
+   for k,v in ipairs(pir.factions) do
       if f==v then
          return true
       end
    end
    return false
+end
+
+function pir.systemPresence( sys )
+   local total = 0
+   local p = sys:presences()
+   for k,v in ipairs(pir.factions) do
+      total = total + (p[v] or 0)
+   end
+   return total
 end
 
 return pir

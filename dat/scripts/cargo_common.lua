@@ -1,3 +1,4 @@
+local pir = require 'missions.pirate.common'
 require "jumpdist"
 require "nextjump"
 require "numstring"
@@ -96,11 +97,11 @@ function cargo_calculateRoute ()
 
    --Determine amount of piracy along the route
    local jumps = system.jumpPath( system.cur(), destsys )
-   local risk = system.cur():presences()["Pirate"]
+   local risk = pir.systemPresence( system.cur() )
    if risk == nil then risk = 0 end
    if jumps then
       for k, v in ipairs(jumps) do
-         local travelrisk = v:system():presences()["Pirate"]
+         local travelrisk = pir.systemPresence( v:system() )
          if travelrisk == nil then
             travelrisk = 0
          end
@@ -142,11 +143,16 @@ function cargoValidDest( targetplanet )
    local hidden = {
       faction.get("FLF"),
       faction.get("Pirate"),
+      faction.get("Raven Clan"),
+      faction.get("Dreamer Clan"),
+      faction.get("Wild Ones"),
+      faction.get("Black Lotus"),
       faction.get("Proteron"),
       faction.get("Thurion"),
    }
+   local tfact = targetplanet:faction()
    for i, f in ipairs(hidden) do
-      if targetplanet:faction() == f and planet.cur():faction() ~= f then
+      if tfact == f and planet.cur():faction() ~= f then
          return false
       end
    end
