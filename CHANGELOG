@@ -1,16 +1,4 @@
 * 0.9.0 (unreleased)
-   * Gameplay changes
-      * Pirates split into multiple clans and marauders
-      * Added discovery messages as you explore the universe
-      * Added automatic landing as an overlay double-click action (and on repeat of the "Land" key).
-      * Overhauled NPC AI
-      * Overhaul and rebalance of most outfits
-      * Wanted pirates no longer aggro defense forces (pirate bounties)
-      * Comm window reworked and you can bribe multiple pilots at once
-      * Bribed pilots don't become hostile again unless attacked
-      * Stress now decreases based on ship mass
-      * Merged the Independent and Civilian factions
-      * Game now tracks meta-data like ships destroyed and time played
    * New mechanics
       * Added new utility outfits with complex effects
       * Changed ship classification, removing rare classes while adding Interceptor and Battleship classes
@@ -29,9 +17,20 @@
       * Redid the shake visuals and added a small damage visual
       * Most special effects implemented as shaders
       * Most small visuals redone to be more visible and clean
-   * Map improvements
-      * Similar presences are now merged
-      * Trade lane routes are now clearer
+      * Similar presences are now merged in map
+   * Gameplay changes
+      * Pirates split into multiple clans and marauders
+      * Added discovery messages as you explore the universe
+      * Added automatic landing as an overlay double-click action (and on repeat of the "Land" key).
+      * Overhauled NPC AI
+      * Overhaul and rebalance of most outfits
+      * Wanted pirates no longer aggro defense forces (pirate bounties)
+      * Comm window reworked and you can bribe multiple pilots at once
+      * Bribed pilots don't become hostile again unless attacked
+      * Stress now decreases based on ship mass
+      * Merged the Independent and Civilian factions
+      * Game now tracks meta-data like ships destroyed and time played
+      * Trade lane routes made explicit
    * New locations
       * Added gambling resort "Minerva Station"
       * Added mysterious new system "Taiomi"
