@@ -1,39 +1,48 @@
 * 0.9.0 (unreleased)
-   * Gameplay
-      * Illegal cargo and ship-to-ship detection
-      * Pilots can now go into stealth mode
-      * Systems have "safe lanes" patrolled by the governing faction
-      * Electronic warfare parameters are simplified and visible
+   * Gameplay changes
+      * Pirates split into multiple clans and marauders
+      * Added discovery messages as you explore the universe
+      * Added automatic landing as an overlay double-click action (and on repeat of the "Land" key).
+      * Overhauled NPC AI
       * Overhaul and rebalance of most outfits
       * Wanted pirates no longer aggro defense forces (pirate bounties)
       * Comm window reworked and you can bribe multiple pilots at once
       * Bribed pilots don't become hostile again unless attacked
-      * Changed ship classification, removing rare classes while adding Interceptor and Battleship classes
-      * You can now favourite your ships to help with sorting.
+      * Stress now decreases based on ship mass
+      * Merged the Independent and Civilian factions
+      * Game now tracks meta-data like ships destroyed and time played
+   * New mechanics
       * Added new utility outfits with complex effects
+      * Changed ship classification, removing rare classes while adding Interceptor and Battleship classes
+      * Illegal cargo and ship-to-ship detection
+      * Pilots can now go into stealth mode
+      * Systems have "safe lanes" patrolled by the governing faction
+      * Electronic warfare parameters are simplified and visible
       * Added escorts for hire
-      * Added discovery messages as you explore the universe
-      * Added automatic landing as an overlay double-click action (and on repeat of the "Land" key).
+      * Some simple minigames have been added
+      * You can now favourite your ships to help with sorting
+   * Visual improvements
       * New fancy system rendering effects
       * Ships and rockets now have engine trails
       * Beam visuals have been made more flexible and pretty
       * Jumping visuals improved
       * Redid the shake visuals and added a small damage visual
-      * Overhauled NPC AI
       * Most special effects implemented as shaders
-      * Game now tracks meta-data like ships destroyed and time played
-      * Stress now decreases based on ship mass
-      * Merged the Independent and Civilian factions
+      * Most small visuals redone to be more visible and clean
+   * Map improvements
+      * Similar presences are now merged
+      * Trade lane routes are now clearer
+   * New locations
       * Added gambling resort "Minerva Station"
       * Added mysterious new system "Taiomi"
-      * New missions
-         * Challenge adversaries in the Crimson Gauntlet
-         * Follow happenings on "Minerva Station"
-         * Invade the frontier with the Dvaered
-         * Ship enthusiast quiz
-         * Deliver fancy contraband all over the universe
-      * New translation(s) in progress: Czech, French, Korean, and Portuguese
-   * Engine
+   * New missions
+      * Challenge adversaries in the Crimson Gauntlet
+      * Follow happenings on "Minerva Station"
+      * Invade the frontier with the Dvaered
+      * Ship enthusiast quiz
+      * Deliver fancy contraband all over the universe
+   * New translation(s) in progress: Czech, French, Korean, and Portuguese
+   * Engine Changes
       * Added an optimizer to improve automatic outfitting choices
       * A ton of new ship stat attributes have been added
       * Support for Lua-based hooks in Outfits for complex behaviours
@@ -53,6 +62,11 @@
       * Lua support for advanced sound effectss
       * Most markers and indicators use signed distance functions now
       * Internally using linear colourspace
+      * Lots of optimization
+      * Faction presence computed with base and bonus values
+      * Virtual assets have been redone and are more flexible than before
+      * Point value system for ships to help with presence and other things
+      * Initial support for 3D models
 
 * 0.8.2
    * Gameplay
