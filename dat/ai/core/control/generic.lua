@@ -481,7 +481,7 @@ function control_funcs.runaway ()
    else
       -- If far enough away, stop the task
       local enemy = ai.getenemy() -- nearest enemy
-      if enemy and ai.dist(enemy) > mem.safe_distance then
+      if not enemy or (enemy and ai.dist(enemy) > mem.safe_distance) then
          ai.poptask()
          return true
       end
