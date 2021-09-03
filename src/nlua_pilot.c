@@ -150,6 +150,7 @@ static int pilotL_control( lua_State *L );
 static int pilotL_memory( lua_State *L );
 static int pilotL_task( lua_State *L );
 static int pilotL_taskname( lua_State *L );
+static int pilotL_taskstack( lua_State *L );
 static int pilotL_taskdata( lua_State *L );
 static int pilotL_taskclear( lua_State *L );
 static int pilotL_refuel( lua_State *L );
@@ -271,6 +272,7 @@ static const luaL_Reg pilotL_methods[] = {
    { "memory", pilotL_memory },
    { "task", pilotL_task },
    { "taskname", pilotL_taskname },
+   { "taskstack", pilotL_taskstack },
    { "taskdata", pilotL_taskdata },
    { "taskClear", pilotL_taskclear },
    { "refuel", pilotL_refuel },
@@ -3894,6 +3896,31 @@ static int pilotL_taskname( lua_State *L )
       return 1;
    }
    return 0;
+}
+
+
+/**
+ * @brief Gets the name of all the pilot's current tasks (not subtasks).
+ *
+ *    @luatparam Pilot p Pilot to get task stack of.
+ * @luafunc taskstack
+ */
+static int pilotL_taskstack( lua_State *L )
+{
+   Pilot *p = luaL_validpilot(L,1);
+   Task *t;
+   int n;
+
+   lua_newtable(L);
+   n = 1;
+   for (t=p->task; t!=NULL; t=t->next) {
+      if (t->done)
+         continue;
+      lua_pushstring(L,t->name);
+      lua_rawseti(L,-2,n++);
+   }
+
+   return 1;
 }
 
 
