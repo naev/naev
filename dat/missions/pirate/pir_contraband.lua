@@ -52,7 +52,7 @@ function create()
    -- Note: this mission does not make any system claims.
    local pntf = planet.cur():faction()
    -- Lower chance of appearing to 1/3 on non-pirate planets
-   if pir.factionIsPirate( pntf ) and rnd.rnd() < 2/3 then
+   if not pir.factionIsPirate( pntf ) and rnd.rnd() < 2/3 then
       misn.finish(false)
    end
    -- Doesn't appear on Thurion and Proteron worlds for now
@@ -66,7 +66,7 @@ function create()
 
    -- target destination
    destplanet, destsys, numjumps, traveldist, cargo, avgrisk, tier = cargo_calculateRoute()
-   if destplanet == nil or destplanet:faction() == faction.get("Pirate") then
+   if destplanet == nil or pir.factionIsPirate( destplanet:faction() ) then
       misn.finish(false)
    end
 
