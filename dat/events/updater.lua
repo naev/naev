@@ -11,6 +11,7 @@
 --]]
 
 
+-- Runs on saves older than 0.9.0
 function updater090 ()
    -- Changed how the FLF base diff stuff works
    if diff.isApplied("flf_dead") and diff.isApplied("FLF_base") then
@@ -47,7 +48,7 @@ function create ()
    local game_version, save_version = naev.version()
 
    -- Run on saves older than 0.9.0
-   if naev.versionTest( save_version, "0.9.0" ) < 0 then
+   if not save_version or naev.versionTest( save_version, "0.9.0" ) < 0 then
       updater090()
    end
 
