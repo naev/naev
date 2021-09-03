@@ -10,7 +10,8 @@
    Small updater to handle moving saves to newer versions.
 --]]
 
-function create ()
+
+function updater090 ()
    -- Changed how the FLF base diff stuff works
    if diff.isApplied("flf_dead") and diff.isApplied("FLF_base") then
       diff.remove("FLF_base")
@@ -39,6 +40,15 @@ function create ()
    end
    if not var.peek("disc_proteron") then
       faction.get("Proteron"):setKnown(false)
+   end
+end
+
+function create ()
+   local game_version, save_version = naev.version()
+
+   -- Run on saves older than 0.9.0
+   if naev.versionTest( save_version, "0.9.0" ) < 0 then
+      updater090()
    end
 
    -- Done

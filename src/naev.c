@@ -1085,8 +1085,7 @@ int naev_versionCompare( const char *version )
    int res;
    semver_t sv;
 
-   if (semver_parse( version, &sv ))
-   {
+   if (semver_parse( version, &sv )) {
       WARN( _("Failed to parse version string '%s'!"), version );
       return -1;
    }

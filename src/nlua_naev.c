@@ -24,6 +24,7 @@
 #include "nluadef.h"
 #include "nstring.h"
 #include "player.h"
+#include "semver.h"
 
 
 static int cache_table = LUA_NOREF; /* No reference. */
@@ -31,6 +32,7 @@ static int cache_table = LUA_NOREF; /* No reference. */
 
 /* Naev methods. */
 static int naev_Lversion( lua_State *L );
+static int naev_versionTest( lua_State *L);
 static int naev_lastplayed( lua_State *L );
 static int naev_ticks( lua_State *L );
 static int naev_keyGet( lua_State *L );
@@ -44,6 +46,7 @@ static int naevL_conf( lua_State *L );
 static int naevL_cache( lua_State *L );
 static const luaL_Reg naev_methods[] = {
    { "version", naev_Lversion },
+   { "versionTest", naev_versionTest },
    { "lastplayed", naev_lastplayed },
    { "ticks", naev_ticks },
    { "keyGet", naev_keyGet },
@@ -89,8 +92,8 @@ int nlua_loadNaev( nlua_env env )
  *
  * @usage game_version, save_version = naev.version()
  *
- *    @luatreturn game_version The version of the game.
- *    @luatreturn save_version Version of current loaded save or nil if not loaded.
+ *    @luatreturn string The version of the game.
+ *    @luatreturn string Version of current loaded save or nil if not loaded.
  * @luafunc version
  */
 static int naev_Lversion( lua_State *L )
@@ -101,6 +104,39 @@ static int naev_Lversion( lua_State *L )
    else
       lua_pushstring( L, player.loaded_version );
    return 2;
+}
+
+
+/**
+ * @brief Tests two semver version strings.
+ *
+ *    @luatparam string v1 Version 1 to test.
+ *    @luatparam string v2 Version 2 to test.
+ *    @luatreturn number Positive if v1 is newer or negative if v2 is newer.
+ * @luafunc versionTest
+ */
+static int naev_versionTest( lua_State *L)
+{
+   const char *s1, *s2;
+   semver_t sv1, sv2;
+   int res;
+   /* Parse inputs. */
+   s1 = luaL_checkstring(L,1);
+   s2 = luaL_checkstring(L,2);
+   if (semver_parse( s1, &sv1 ))
+      WARN( _("Failed to parse version string '%s'!"), s1 );
+   if (semver_parse( s2, &sv2 ))
+      WARN( _("Failed to parse version string '%s'!"), s2 );
+
+   /* Check version. */
+   res = semver_compare( sv1, sv2 );
+
+   /* Cleanup. */
+   semver_free( &sv1 );
+   semver_free( &sv2 );
+
+   lua_pushinteger(L,res);
+   return 1;
 }
 
 
