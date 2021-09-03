@@ -1,17 +1,23 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Stealing ships">
-  <avail>
-   <priority>4</priority>
-   <chance>10</chance>
-   <location>Bar</location>
-   <cond>faction.playerStanding("Pirate") &gt;= 0 or planet.cur():faction() == faction.get("Pirate")</cond>
-  </avail>
-  <notes>
-   <tier>2</tier>
-  </notes>
- </mission>
- --]]
+ <avail>
+  <priority>4</priority>
+  <chance>10</chance>
+  <location>Bar</location>
+  <cond>
+  faction.playerStanding("Pirate") &gt;= -20 or
+  planet.cur():faction() == faction.get("Black Lotus") or
+  planet.cur():faction() == faction.get("Wild Ones") or
+  planet.cur():faction() == faction.get("Dreamer Clan") or
+  planet.cur():faction() == faction.get("Raven Clan")
+  </cond>
+ </avail>
+ <notes>
+  <tier>2</tier>
+ </notes>
+</mission>
+--]]
 --[[
 
 -- The player pays a fellow pirate to know where to steal a random ship.
@@ -67,7 +73,7 @@ unableto = {
    message = _("Before you make it into the ship and take control of it, you realize you are not ready to deal with the logistics of moving your cargo over. You decide to leave the ship stealing business for later.")
 }
 
-base_price = 100000
+base_price = 100e3
 
 ships = {
    Dvaered = {

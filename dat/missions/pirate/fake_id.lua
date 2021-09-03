@@ -1,13 +1,17 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Fake ID">
-  <avail>
-   <priority>10</priority>
-   <chance>100</chance>
-   <location>Computer</location>
-   <faction>Pirate</faction>
-  </avail>
- </mission>
+ <avail>
+  <priority>10</priority>
+  <chance>100</chance>
+  <location>Computer</location>
+  <faction>Wild Ones</faction>
+  <faction>Black Lotus</faction>
+  <faction>Raven Clan</faction>
+  <faction>Dreamer Clan</faction>
+  <faction>Pirate</faction>
+ </avail>
+</mission>
 --]]
 --[[
 
@@ -50,10 +54,14 @@ factions = {
    "Trader", "Miner"
 }
 misnvars = {
-   Empire = "_fcap_empire", Goddard = "_fcap_goddard",
-   Dvaered = "_fcap_dvaered", ["Za'lek"] = "_fcap_zalek",
-   Sirius = "_fcap_sirius", Soromid = "_fcap_soromid",
-   Frontier = "_fcap_frontier", Trader = "_fcap_trader",
+   Empire = "_fcap_empire",
+   Goddard = "_fcap_goddard",
+   Dvaered = "_fcap_dvaered",
+   ["Za'lek"] = "_fcap_zalek",
+   Sirius = "_fcap_sirius",
+   Soromid = "_fcap_soromid",
+   Frontier = "_fcap_frontier",
+   Trader = "_fcap_trader",
    Miner = "_fcap_miner"
 }
 orig_standing = {}

@@ -1,20 +1,24 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Pirate Empire Patrol Bounty">
-  <avail>
-   <priority>3</priority>
-   <cond>player.numOutfit("Mercenary License") &gt; 0 or planet.cur():blackmarket()</cond>
-   <chance>1260</chance>
-   <location>Computer</location>
-   <faction>Pirate</faction>
-   <faction>Independent</faction>
-   <faction>FLF</faction>
-  </avail>
-  <notes>
-   <tier>3</tier>
-  </notes>
- </mission>
- --]]
+ <avail>
+  <priority>3</priority>
+  <cond>player.numOutfit("Mercenary License") &gt; 0 or planet.cur():blackmarket()</cond>
+  <chance>1260</chance>
+  <location>Computer</location>
+  <faction>Wild Ones</faction>
+  <faction>Black Lotus</faction>
+  <faction>Raven Clan</faction>
+  <faction>Dreamer Clan</faction>
+  <faction>Pirate</faction>
+  <faction>Independent</faction>
+  <faction>FLF</faction>
+ </avail>
+ <notes>
+  <tier>3</tier>
+ </notes>
+</mission>
+--]]
 --[[
 
    Pirate Empire bounty
@@ -44,10 +48,10 @@
 
 --]]
 
+local pir = require "missions.pirate.common"
 require "numstring"
 require "jumpdist"
-require "missions/pirate/common"
-require "pilot/generic"
+require "pilot.generic"
 
 
 -- Mission details
@@ -580,16 +584,16 @@ function succeed ()
       local bounty_dangerous_done = var.peek( "pir_bounty_dangerous_done" )
       var.push( "pir_bounty_dangerous_done", true )
       if bounty_dangerous_done ~= true then
-         pir_modReputation( 2 )
-         pir_modDecayFloor( 2 )
+         pir.modReputation( 2 )
+         pir.modDecayFloor( 2 )
       end
 
       if level >= 6 then
          local bounty_highly_dangerous_done = var.peek( "pir_bounty_highly_dangerous_done" )
          var.push( "pir_bounty_highly_dangerous_done", true )
          if bounty_highly_dangerous_done ~= true then
-            pir_modReputation( 3 )
-            pir_modDecayFloor( 3 )
+            pir.modReputation( 3 )
+            pir.modDecayFloor( 3 )
          end
       end
    end

@@ -1,20 +1,20 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Hitman">
-  <flags>
-   <unique />
-  </flags>
-  <avail>
-   <priority>2</priority>
-   <chance>10</chance>
-   <location>Bar</location>
-   <cond>system.cur() == system.get("Alteris")</cond>
-  </avail>
-  <notes>
-   <tier>3</tier>
-  </notes>
- </mission>
- --]]
+ <flags>
+  <unique />
+ </flags>
+ <avail>
+  <priority>2</priority>
+  <chance>10</chance>
+  <location>Bar</location>
+  <cond>system.cur() == system.get("Alteris")</cond>
+ </avail>
+ <notes>
+  <tier>3</tier>
+ </notes>
+</mission>
+--]]
 --[[
 
    Pirate Hitman
@@ -24,8 +24,7 @@
    Author: nloewen
 
 --]]
-
-require "missions/pirate/common"
+local pir = require "missions.pirate.common"
 
 
 -- Bar information
@@ -148,11 +147,11 @@ end
 function landed()
    if planet.cur() == misn_base then
       tk.msg(title[3], text[3])
-      player.pay(150000)
-      pir_modDecayFloor(2)
-      pir_modReputation(2)
+      player.pay(150e3)
+      pir.modDecayFloor(2)
+      pir.modReputation(2)
       faction.modPlayerSingle("Pirate", 5)
-      pir_addMiscLog(log_text)
+      pir.addMiscLog(log_text)
       misn.finish(true)
    end
 end

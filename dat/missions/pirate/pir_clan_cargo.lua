@@ -1,18 +1,22 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Pirate Clan Shipping">
-  <avail>
-   <priority>2</priority>
-   <cond>faction.playerStanding("Pirate") &gt;= 20 and var.peek("ps_misn") ~= nil and var.peek("ps_misn") &gt;= 2</cond>
-   <chance>10</chance>
-   <location>Bar</location>
-   <faction>Pirate</faction>
-  </avail>
-  <notes>
-   <tier>2</tier>
-  </notes>
- </mission>
- --]]
+ <avail>
+  <priority>2</priority>
+  <cond>faction.playerStanding("Pirate") &gt;= 20 and var.peek("ps_misn") ~= nil and var.peek("ps_misn") &gt;= 2</cond>
+  <chance>10</chance>
+  <location>Bar</location>
+  <faction>Wild Ones</faction>
+  <faction>Black Lotus</faction>
+  <faction>Raven Clan</faction>
+  <faction>Dreamer Clan</faction>
+  <faction>Pirate</faction>
+ </avail>
+ <notes>
+  <tier>2</tier>
+ </notes>
+</mission>
+--]]
 --[[
 
    A dangerous cargo mission for Pirate players, where you are attacked. On

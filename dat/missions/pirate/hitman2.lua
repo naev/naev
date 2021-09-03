@@ -1,18 +1,18 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Hitman 2">
-  <flags>
-   <unique />
-  </flags>
-  <avail>
-   <priority>2</priority>
-   <chance>10</chance>
-   <location>Bar</location>
-   <cond>system.cur() == system.get("Alteris")</cond>
-   <done>Hitman</done>
-  </avail>
- </mission>
- --]]
+ <flags>
+  <unique />
+ </flags>
+ <avail>
+  <priority>2</priority>
+  <chance>10</chance>
+  <location>Bar</location>
+  <cond>system.cur() == system.get("Alteris")</cond>
+  <done>Hitman</done>
+ </avail>
+</mission>
+--]]
 --[[
 
    Pirate Hitman 2
@@ -22,8 +22,7 @@
    Author: nloewen
 
 --]]
-
-require "missions/pirate/common"
+local pir = require "missions.pirate.common"
 
 
 -- Bar information
@@ -109,11 +108,12 @@ function trader_death (hook_pilot, hook_attacker, hook_arg)
    if misn_done then
       return
    end
+   local pp = player.pilot()
 
    if ( hook_pilot:faction() == faction.get("Trader")
             or hook_pilot:faction() == faction.get("Traders Guild") )
-         and ( hook_attacker == player.pilot()
-            or hook_attacker:leader() == player.pilot() ) then
+         and ( hook_attacker == pp
+            or hook_attacker:leader() == pp ) then
       attack_finished()
    end
 end
@@ -136,10 +136,10 @@ function landed()
    if planet.cur() == misn_base then
       tk.msg(title[3], text[3])
       player.pay(500e3)
-      pir_modDecayFloor(3)
-      pir_modReputation(3)
+      pir.modDecayFloor(3)
+      pir.modReputation(3)
       faction.modPlayerSingle("Pirate", 5)
-      pir_addMiscLog(log_text)
+      pir.addMiscLog(log_text)
       misn.finish(true)
    end
 end

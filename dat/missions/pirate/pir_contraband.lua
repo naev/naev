@@ -1,25 +1,25 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Pirate Smuggling">
-  <avail>
-   <priority>4</priority>
-   <cond>faction.playerStanding("Pirate") &gt;= -100</cond>
-   <chance>960</chance>
-   <location>Computer</location>
-   <done>Pirate Smuggle Cake</done>
-  </avail>
-  <notes>
-   <tier>1</tier>
-  </notes>
- </mission>
- --]]
+ <avail>
+  <priority>4</priority>
+  <cond>faction.playerStanding("Pirate") &gt;= -100</cond>
+  <chance>960</chance>
+  <location>Computer</location>
+  <done>Pirate Smuggle Cake</done>
+ </avail>
+ <notes>
+  <tier>1</tier>
+ </notes>
+</mission>
+--]]
 --[[
 
    Handles the randomly generated Pirate contraband missions. They can appear
    anywhere and give better rewards with higher risk.
 
 ]]--
-
+local pir = require "missions.pirate.common"
 require "cargo_common"
 require "numstring"
 
@@ -52,7 +52,7 @@ function create()
    -- Note: this mission does not make any system claims.
    local pntf = planet.cur():faction()
    -- Lower chance of appearing to 1/3 on non-pirate planets
-   if pntf ~= faction.get("Pirate") and rnd.rnd() < 2/3 then
+   if pir.factionIsPirate( pntf ) and rnd.rnd() < 2/3 then
       misn.finish(false)
    end
    -- Doesn't appear on Thurion and Proteron worlds for now
