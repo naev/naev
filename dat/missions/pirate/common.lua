@@ -6,7 +6,6 @@
 --]]
 local pir = {}
 
-
 --[[
    @brief Increases the reputation limit of the player.
 --]]
@@ -14,7 +13,6 @@ function pir.modReputation( increment )
    local cur = var.peek("_fcap_pirate") or 30
    var.push( "_fcap_pirate", math.min(cur+increment, 100) )
 end
-
 
 --[[
    @brief Increases the decay floor (how low reputation can decay to).
@@ -26,13 +24,16 @@ function pir.modDecayFloor( n )
    var.push("_ffloor_decay_pirate", floor)
 end
 
-
+--[[
+   @brief Adds miscellaneous pirate log entry.
+--]]
 function pir.addMiscLog( text )
    shiplog.create("pir_misc", _("Miscellaneous"), _("Pirate"))
    shiplog.append("pir_misc", text)
 end
 
- pir.factions = {
+-- List of all the pirate factions
+pir.factions = {
    faction.get("Pirate"),
    faction.get("Marauder"),
    faction.get("Raven Clan"),
@@ -41,15 +42,21 @@ end
    faction.get("Black Lotus"),
 }
 
+--[[
+   @brief Gets whether or not a faction is a pirate faction
+--]]
 function pir.factionIsPirate( f )
    for k,v in ipairs(pir.factions) do
-      if f==v then
+      if faction.get(f)==v then
          return true
       end
    end
    return false
 end
 
+--[[
+   @brief Computes the total amount of pirate-related factions in a system.
+--]]
 function pir.systemPresence( sys )
    local total = 0
    local p = sys:presences()

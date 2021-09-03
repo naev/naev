@@ -112,15 +112,7 @@ int nlua_loadFaction( nlua_env env )
  */
 static int factionL_get( lua_State *L )
 {
-   LuaFaction f;
-   const char *name;
-
-   name = luaL_checkstring(L,1);
-   f = faction_get(name);
-   if (f < 0) {
-      NLUA_ERROR(L,_("Faction '%s' not found in stack."), name );
-      return 0;
-   }
+   LuaFaction f = luaL_validfaction(L,1);
    lua_pushfaction(L,f);
    return 1;
 }

@@ -234,20 +234,7 @@ static int shipL_eq( lua_State *L )
  */
 static int shipL_get( lua_State *L )
 {
-   const char *name;
-   const Ship *ship;
-
-   /* Handle parameters. */
-   name = luaL_checkstring(L,1);
-
-   /* Get ship. */
-   ship = ship_get( name );
-   if (ship == NULL) {
-      NLUA_ERROR(L,_("Ship '%s' not found!"), name);
-      return 0;
-   }
-
-   /* Push. */
+   const Ship *ship = luaL_validship(L,1);
    lua_pushship(L, ship);
    return 1;
 }
