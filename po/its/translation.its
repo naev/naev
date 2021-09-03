@@ -14,6 +14,7 @@
   <its:translateRule selector="/Factions/faction/name" translate="yes"/>
   <its:translateRule selector="/Factions/faction/longname" translate="yes"/>
   <its:translateRule selector="/Factions/faction/mapname" translate="yes"/>
+  <its:translateRule selector="/Factions/faction/description" translate="yes"/>
 
   <!-- Slots -->
   <its:translateRule selector="/Slots/slot/display" translate="yes"/>
