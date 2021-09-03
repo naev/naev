@@ -10,9 +10,9 @@
  </GFX>
  <presence>
   <faction>Raven Clan</faction>
-  <base>250.000000</base>
+  <base>300.000000</base>
   <bonus>50.000000</bonus>
-  <range>4</range>
+  <range>5</range>
  </presence>
  <general>
   <class>G</class>

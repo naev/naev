@@ -12,7 +12,6 @@
  </pos>
  <assets>
   <asset_virtual>Miner Small</asset_virtual>
-  <asset_virtual>Pirate Small</asset_virtual>
  </assets>
  <jumps>
   <jump target="Straight Row">
