@@ -247,6 +247,36 @@ custom_events = {
       title = _("Southern Solar Winds"),
       --subtitle = _("None"),
    },
+   WildOnes = {
+      test = function ()
+         return (system.cur():presences()["Wild Ones"] > 0)
+      end,
+      type = "enter",
+      name = "disc_wildones",
+      title = _("#HWild Ones Territory#0"),
+      subtitle = _("#HUncontrolled and Raging Pirate Fury#0"),
+      func = function() faction.get("Wild Ones"):setKnown( true ) end
+   },
+   BlackLotus = {
+      test = function ()
+         return (system.cur():presences()["Black Lotus"] > 0)
+      end,
+      type = "enter",
+      name = "disc_blacklotus",
+      title = _("#HBlack Lotus Territory#0"),
+      subtitle = _("#HPiracy has never been Snazzier#0"),
+      func = function() faction.get("Black Lotus"):setKnown( true ) end
+   },
+   DreamerClan = {
+      test = function ()
+         return (system.cur():presences()["Dreamer Clan"] > 0)
+      end,
+      type = "enter",
+      name = "disc_dreamerclan",
+      title = _("#HDreamer Clan Territory#0"),
+      subtitle = _("#HPiracy to Rebel against Reality#0"),
+      func = function() faction.get("Dreamer Clan"):setKnown( true ) end
+   },
 }
 
 function sfxDiscovery()
