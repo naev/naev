@@ -600,8 +600,10 @@ function _run_landgo( data )
    if dist < bdist then -- Need to start braking
       ai.pushsubtask( "_landland", planet )
       ai.pushsubtask( "_subbrake" )
-   else
+      ai.weapset( 8, false ) -- Turn off afterburner just in case
+      return -- Don't try to afterburn
 
+   else
       local dozigzag = false
       if enemy:exists() then
          if __zigzag_run_decide( plt, enemy ) and dist > 3*bdist then
@@ -636,7 +638,6 @@ function _run_landgo( data )
          ai.weapset( 8, false )
       end
    end
-
 end
 
 
