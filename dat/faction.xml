@@ -79,7 +79,6 @@
  <faction>
   <name>Raven Clan</name>
   <ai>pirate</ai>
-  <known />
   <logo>pirate</logo>
   <longname>Raven Pirate Clan</longname>
   <player>-20</player>
@@ -88,6 +87,7 @@
   <standing>pirate_raven_clan</standing>
   <equip>pirate</equip>
   <useshiddenjumps/>
+  <description>The Raven Pirate Clan is a band of pirates that lead over the widespread Qorel sector between the Empire and Dvaered systems.</description>
   <generator weight="0.8">Pirate</generator>
   <generator weight="0.5">Marauder</generator>
   <allies>
@@ -114,7 +114,6 @@
  <faction>
   <name>Wild Ones</name>
   <ai>pirate</ai>
-  <known />
   <logo>pirate</logo>
   <longname>Wild Ones Pirate Clan</longname>
   <player>-40</player>
@@ -123,6 +122,7 @@
   <standing>pirate_wild_ones</standing>
   <equip>pirate</equip>
   <useshiddenjumps/>
+  <description>The Wild Ones Pirate Clan is a violent and loosely organized band of pirates that control the Haven sector between Empire and Soromid territories.</description>
   <generator weight="0.5">Pirate</generator>
   <generator weight="0.8">Marauder</generator>
   <allies>
@@ -149,7 +149,6 @@
  <faction>
   <name>Black Lotus</name>
   <ai>pirate</ai>
-  <known />
   <logo>pirate</logo>
   <longname>Black Lotus Pirate Clan</longname>
   <player>-20</player>
@@ -158,6 +157,7 @@
   <standing>pirate_black_lotus</standing>
   <equip>pirate</equip>
   <useshiddenjumps/>
+  <description>The Black Lotus Pirate Clan is a fiercely organized pirate clan located between the Za'lek and Sirius space.</description>
   <generator weight="0.8">Pirate</generator>
   <generator weight="0.5">Marauder</generator>
   <allies>
@@ -184,7 +184,6 @@
  <faction>
   <name>Dreamer Clan</name>
   <ai>pirate</ai>
-  <known />
   <logo>pirate</logo>
   <longname>Dreamer Pirate Clan</longname>
   <player>-10</player>
@@ -193,6 +192,7 @@
   <standing>pirate_dreamer_clan</standing>
   <equip>pirate</equip>
   <useshiddenjumps/>
+  <description>The Dreamer Pirate Clan consists largely of disgruntled pirates from the Frontier, fed up with both the FLF terrorism and Empire tyranny.</description>
   <generator weight="0.7">Pirate</generator>
   <generator weight="0.7">Marauder</generator>
   <allies>
@@ -221,13 +221,14 @@
   <ai>pirate</ai>
   <known />
   <logo>pirate</logo>
-  <longname>Galactic Pirates</longname>
+  <longname>Galactic Space Pirates</longname>
   <player>-20</player>
   <colour>red</colour>
   <spawn>pirate</spawn>
   <standing>pirate</standing>
   <equip>pirate</equip>
   <useshiddenjumps/>
+  <description>The Galactic Space Pirates consists of independent pirate vessels not affiliated with any particular clan. Due to their disorganized nature, they tend to respect the clans they operate near.</description>
   <generator weight="0.5">Marauder</generator>
   <allies>
   </allies>
@@ -252,6 +253,7 @@
  <faction>
   <name>Marauder</name>
   <mapname>Pirate</mapname>
+  <longname>Pirate Marauders</longname>
   <ai>marauder</ai>
   <known />
   <logo>pirate</logo>
@@ -261,6 +263,7 @@
   <standing>marauder</standing>
   <equip>pirate</equip>
   <useshiddenjumps/>
+  <description>Pirate Marauders are the lowest and most vile of pirates. They are extremely aggressive and will attack most vessels unprovoked.</description>
   <allies>
   </allies>
   <enemies>
@@ -291,6 +294,7 @@
   <spawn>empire</spawn>
   <standing>empire</standing>
   <equip>empire</equip>
+  <description>The Empire is the bureaucratic heart of the universe that provides stability and cohesion, when possible.</description>
   <generator weight="0.45">Independent</generator>
   <generator weight="0.35">Trader</generator>
   <allies>
@@ -310,12 +314,13 @@
   <name>Proteron</name>
   <ai>proteron</ai>
   <logo>proteron</logo>
-  <longname>Proteron</longname>
+  <longname>Fallen House Proteron</longname>
   <player>-50</player>
   <colour>purple</colour>
   <spawn>proteron</spawn>
   <standing>proteron</standing>
   <equip>proteron</equip>
+  <description>Fallen House Proteron was an Imperial Great House that decided to move and attack the Emperor himself. This caused the incident and left the universe irreversibly ravaged.</description>
   <allies>
   </allies>
   <enemies>
@@ -338,6 +343,7 @@
   <colour>yellow</colour>
   <spawn>frontier</spawn>
   <standing>frontier</standing>
+  <description>The Frontier Alliance is formed by the survivors of the initial attempts of Human expansion into space.</description>
   <generator weight="0.6">Independent</generator>
   <generator weight="0.4">Trader</generator>
   <allies>
@@ -355,13 +361,13 @@
  <faction>
   <name>Traders Guild</name>
   <ai>trader</ai>
-  <known />
   <logo>trader</logo>
   <longname>Space Traders Guild</longname>
   <player>3</player>
   <spawn>traders_guild</spawn>
   <standing>trader</standing>
   <equip>trader</equip>
+  <description>TODO we have to make these guys more interesting.</description>
   <allies>
   </allies>
   <enemies>
@@ -383,6 +389,7 @@
   <spawn>soromid</spawn>
   <standing>soromid</standing>
   <equip>soromid</equip>
+  <description>The Soromid consists of individuals who were forced to genetically modify themselves in order to survive a pandemic. They now openly embrace their human transcendence as a sign of strength.</description>
   <generator weight="0.4">Independent</generator>
   <generator weight="0.35">Trader</generator>
   <allies/>
@@ -405,6 +412,7 @@
   <spawn>thurion</spawn>
   <standing>thurion</standing>
   <equip>thurion</equip>
+  <description>The Thurion are a mysterious faction located deep in the Nebula. They seem to be out of touch with the external world.</description>
   <enemies>
    <enemy>Pirate</enemy>
    <enemy>Marauder</enemy>
@@ -422,6 +430,7 @@
   <colour>silver</colour>
   <spawn>collective</spawn>
   <standing>collective</standing>
+  <description>The Collective are a hivemind of AI ships gone rogue. They seem to attack and destroy all humans on sight.</description>
   <enemies>
    <enemy>Empire</enemy>
    <enemy>Pirate</enemy>
@@ -435,7 +444,6 @@
  <faction>
   <name>FLF</name>
   <ai>flf</ai>
-  <known />
   <logo>flf</logo>
   <longname>Frontier Liberation Front</longname>
   <player>0</player>
@@ -443,6 +451,7 @@
   <spawn>flf</spawn>
   <standing>flf</standing>
   <equip>pirate</equip>
+  <description>The Frontier Liberation Front is a group of terrorists advocating for the independence of the Frontier from Imperial tyranny.</description>
   <enemies>
    <enemy>Dvaered</enemy>
    <enemy>DHC</enemy>
@@ -459,6 +468,7 @@
   <spawn>dvaered</spawn>
   <standing>dvaered</standing>
   <equip>dvaered</equip>
+  <description>House Dvaered is one of the oldest Great Houses in the Empire. They are proud and formed by a coalition of many powerful warlords.</description>
   <generator weight="0.45">Independent</generator>
   <generator weight="0.35">Trader</generator>
   <allies>
@@ -485,6 +495,7 @@
   <spawn>zalek</spawn>
   <standing>zalek</standing>
   <equip>zalek</equip>
+  <description>House Za'lek is the scientific heart of the Empire. Until recently they were a secretive Great House, but they have recently become much more open.</description>
   <generator weight="0.55">Independent</generator>
   <generator weight="0.45">Trader</generator>
   <allies>
@@ -510,6 +521,7 @@
   <spawn>sirius</spawn>
   <standing>sirius</standing>
   <equip>sirius</equip>
+  <description>House Sirius is defined by its state religion more than anything else, with Sirichana as the focus of worship.</description>
   <generator weight="0.45">Independent</generator>
   <generator weight="0.5">Trader</generator>
   <allies>
@@ -536,6 +548,7 @@
   <spawn>goddard</spawn>
   <standing>goddard</standing>
   <equip>empire</equip>
+  <description>House Goddard is a minor house wedged between the Empire and Dvaered. They are one of the main fabricators of ships for the Dvaered.</description>
   <generator weight="0.5">Independent</generator>
   <generator weight="0.5">Trader</generator>
   <allies>

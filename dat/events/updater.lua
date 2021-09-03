@@ -32,6 +32,15 @@ function create ()
    faction.get("Pirate"):setPlayerStanding(   maxval - 20 )
    faction.get("Marauder"):setPlayerStanding( maxval - 40 )
 
+   -- Some previously known factions become unknown
+   faction.get("Traders Guild"):setKnown(false)
+   if not var.peek("disc_collective") then
+      faction.get("Collective"):setKnown(false)
+   end
+   if not var.peek("disc_proteron") then
+      faction.get("Proteron"):setKnown(false)
+   end
+
    -- Done
    evt.finish()
 end

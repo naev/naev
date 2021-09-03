@@ -59,6 +59,7 @@ typedef struct Faction_ {
    char *displayname;   /**< Display name. */
    char *mapname;       /**< Name to use on the map. */
    char *ai;            /**< Name of the faction's default pilot AI. */
+   char *description;   /**< Description of the faction. */
 
    /* Graphics. */
    glTexture *logo; /**< Tiny logo. */
@@ -344,10 +345,10 @@ const char* faction_longname( int f )
 
 
 /**
- * @brief Gets the faction's map name (non-translated).
+ * @brief Gets the faction's map name (translated).
  *
  *    @param f Faction to get the name of.
- *    @return The faction's map name (in English).
+ *    @return The faction's map name (in User's language).
  */
 const char* faction_mapname( int f )
 {
@@ -358,6 +359,24 @@ const char* faction_mapname( int f )
    if (faction_stack[f].mapname != NULL)
       return _(faction_stack[f].mapname);
    return _(faction_stack[f].name);
+}
+
+
+/**
+ * @brief Gets the faction's description (translated).
+ *
+ *    @param f Faction to get the name of.
+ *    @return The faction's description (in User's language).
+ */
+const char* faction_description( int f )
+{
+   if (!faction_isFaction(f)) {
+      WARN(_("Faction id '%d' is invalid."),f);
+      return NULL;
+   }
+   if (faction_stack[f].description != NULL)
+      return _(faction_stack[f].description);
+   return NULL;
 }
 
 
@@ -1328,6 +1347,7 @@ static int faction_parse( Faction* temp, xmlNodePtr parent )
       xmlr_strd(node,"longname",temp->longname);
       xmlr_strd(node,"display",temp->displayname);
       xmlr_strd(node,"mapname",temp->mapname);
+      xmlr_strd(node,"description",temp->description);
       xmlr_strd(node,"ai",temp->ai);
       xmlr_float(node,"lane_length_per_presence",temp->lane_length_per_presence);
       if (xml_isNode(node, "colour")) {
@@ -1388,7 +1408,9 @@ static int faction_parse( Faction* temp, xmlNodePtr parent )
    if (temp->name == NULL)
       WARN(_("Unable to read data from '%s'"), FACTION_DATA_PATH);
    if (player==0)
-      WARN(_("Faction '%s' missing player tag."), temp->name);
+      WARN(_("Faction '%s' missing 'player' tag."), temp->name);
+   if (faction_isKnown_(temp) && !faction_isFlag(temp, FACTION_INVISIBLE) && temp->description==NULL)
+      WARN(_("Faction '%s' is known but missing 'description' tag."), temp->name);
 
    return 0;
 }
@@ -1667,6 +1689,8 @@ static void faction_freeOne( Faction *f )
    free(f->name);
    free(f->longname);
    free(f->displayname);
+   free(f->mapname);
+   free(f->description);
    free(f->ai);
    array_free(f->generators);
    gl_freeTexture(f->logo);

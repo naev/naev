@@ -976,6 +976,20 @@ static void standings_close( unsigned int wid, char *str )
 }
 
 
+static int factionsSort( const void *p1, const void *p2 )
+{
+   int f1, f2;
+   double v1, v2;
+   f1 = *(int*)p1;
+   f2 = *(int*)p2;
+   v1 = round(faction_getPlayer(f1));
+   v2 = round(faction_getPlayer(f2));
+   if (v1 < v2)
+      return 1;
+   else if (v1 > v2)
+      return -1;
+   return strcmp(faction_longname(f1), faction_longname(f2));
+}
 /**
  * @brief Displays the player's standings.
  */
@@ -1003,17 +1017,21 @@ static void info_openStandings( unsigned int wid )
    window_addText( wid, lw+40, 0, (w-(lw+60)), 20, 1, "txtName",
          &gl_defFont, NULL, NULL );
    window_addText( wid, lw+40, 0, (w-(lw+60)), 20, 1, "txtStanding",
-         &gl_smallFont, NULL, NULL );
+         &gl_defFont, NULL, NULL );
+   window_addText( wid, lw+40, 0, (w-(lw+60)), 300, 0, "txtDescription",
+         &gl_defFont, NULL, NULL );
 
    /* Gets the faction standings. */
    info_factions  = faction_getKnown();
    str            = malloc( sizeof(char*) * array_size(info_factions) );
+   qsort( info_factions, array_size(info_factions), sizeof(int), factionsSort );
 
    /* Create list. */
    for (i=0; i<array_size(info_factions); i++) {
       m = round( faction_getPlayer( info_factions[i] ) );
-      asprintf( &str[i], "%s   [ %+d%% ]",
-            _(faction_name( info_factions[i] )), m );
+      asprintf( &str[i], "%s   [ #%c%+d%%#0 ]",
+            faction_longname( info_factions[i] ),
+            faction_getColourChar( info_factions[i] ), m );
    }
 
    /* Display list. */
@@ -1031,7 +1049,7 @@ static void standings_update( unsigned int wid, char* str )
    int p, y;
    const glTexture *t;
    int w, h, lw, tw, th;
-   char buf[128];
+   char buf[STRMAX_SHORT];
    int m;
 
    /* Get dimensions. */
@@ -1057,14 +1075,18 @@ static void standings_update( unsigned int wid, char* str )
 
    /* Modify text. */
    y -= 20;
+   m = round( faction_getPlayer( info_factions[p] ) );
+   snprintf( buf, sizeof(buf), "#%c%+d%%#0   [ %s ]",
+      faction_getColourChar( info_factions[p] ), m,
+      faction_getStandingText( info_factions[p] ) );
    window_modifyText( wid, "txtName", faction_longname( info_factions[p] ) );
    window_moveWidget( wid, "txtName", lw+40, y );
-   y -= 40;
-   m = round( faction_getPlayer( info_factions[p] ) );
-   snprintf( buf, sizeof(buf), "%+d%%   [ %s ]", m,
-      faction_getStandingText( info_factions[p] ) );
+   y -= 20;
    window_modifyText( wid, "txtStanding", buf );
    window_moveWidget( wid, "txtStanding", lw+40, y );
+   y -= 30;
+   window_modifyText( wid, "txtDescription", faction_description( info_factions[p] ) );
+   window_moveWidget( wid, "txtDescription", lw+40, y );
 }
 
 
