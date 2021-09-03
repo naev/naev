@@ -249,7 +249,8 @@ custom_events = {
    },
    WildOnes = {
       test = function ()
-         return (system.cur():presences()["Wild Ones"] > 0)
+         local p = system.cur():presences()["Wild Ones"]
+         return (p and p>0)
       end,
       type = "enter",
       name = "disc_wildones",
@@ -259,7 +260,8 @@ custom_events = {
    },
    BlackLotus = {
       test = function ()
-         return (system.cur():presences()["Black Lotus"] > 0)
+         local p = system.cur():presences()["Black Lotus"]
+         return (p and p>0)
       end,
       type = "enter",
       name = "disc_blacklotus",
@@ -269,7 +271,8 @@ custom_events = {
    },
    DreamerClan = {
       test = function ()
-         return (system.cur():presences()["Dreamer Clan"] > 0)
+         local p = system.cur():presences()["Dreamer Clan"]
+         return (p and p>0)
       end,
       type = "enter",
       name = "disc_dreamerclan",
