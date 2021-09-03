@@ -20,7 +20,7 @@
   <asset>Dvaered High Command</asset>
   <asset>Eist Shipyard</asset>
   <asset>Laarss</asset>
-  <asset_virtual>Tradelane (Dvaered)</asset_virtual>
+  <asset_virtual>Trade Lane (Dvaered)</asset_virtual>
  </assets>
  <jumps>
   <jump target="Beeklo">

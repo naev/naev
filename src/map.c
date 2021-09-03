@@ -657,7 +657,7 @@ static void map_update( unsigned int wid )
       if (sys->features != NULL)
          p += scnprintf(&buf[p], sizeof(buf)-p, "%s", _(sys->features) );
 
-      /* Mention tradelanes if applicable. */
+      /* Mention trade lanes if applicable. */
       found = 0;
       for (i=0; i<array_size(sys->jumps); i++) {
          if (sys->jumps[i].hide<=0.) {
@@ -668,7 +668,7 @@ static void map_update( unsigned int wid )
       if (found) {
          if (buf[0] != '\0')
             p += scnprintf(&buf[p], sizeof(buf)-p, _(", "));
-         p += scnprintf(&buf[p], sizeof(buf)-p, "%s", _("#gTradelane#0") );
+         p += scnprintf(&buf[p], sizeof(buf)-p, "%s", _("#gTrade Lane#0") );
       }
 
       /* Nebula. */

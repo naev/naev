@@ -16,6 +16,7 @@
   <asset>Warnecke</asset>
   <asset>Warnecke I</asset>
   <asset>Warnecke II</asset>
+  <asset_virtual>Trade Lane (Za'lek)</asset_virtual>
  </assets>
  <jumps>
   <jump target="Copernicus">

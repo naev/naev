@@ -13,7 +13,7 @@
  <assets>
   <asset>Jorla</asset>
   <asset>Lugun</asset>
-  <asset_virtual>Tradelane (Za'lek)</asset_virtual>
+  <asset_virtual>Trade Lane (Za'lek)</asset_virtual>
  </assets>
  <jumps>
   <jump target="Hargen">

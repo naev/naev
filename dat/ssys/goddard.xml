@@ -17,7 +17,7 @@
   <asset>Imk</asset>
   <asset>Manuel Station</asset>
   <asset>Zhiru</asset>
-  <asset_virtual>Tradelane</asset_virtual>
+  <asset_virtual>Trade Lane</asset_virtual>
  </assets>
  <jumps>
   <jump target="Arcturus">

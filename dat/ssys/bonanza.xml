@@ -13,6 +13,7 @@
  <assets>
   <asset>Bonanza I</asset>
   <asset>Bonanza II</asset>
+  <asset_virtual>Trade Lane (Soromid)</asset_virtual>
  </assets>
  <jumps>
   <jump target="Hasselt">

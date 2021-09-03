@@ -17,6 +17,7 @@
   <asset>Phosarrus</asset>
   <asset>Yak Station</asset>
   <asset>Zhang Lu</asset>
+  <asset_virtual>Trade Lane (Soromid)</asset_virtual>
  </assets>
  <jumps>
   <jump target="Bonanza">
