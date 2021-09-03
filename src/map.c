@@ -418,7 +418,7 @@ static void map_update_commod_av_price()
  */
 static void map_update( unsigned int wid )
 {
-   int i;
+   int i, found;
    StarSystem *sys;
    int f, h, x, y, logow, logoh;
    unsigned int services, services_h, services_u;
@@ -656,6 +656,20 @@ static void map_update( unsigned int wid )
       /* Special feature text. */
       if (sys->features != NULL)
          p += scnprintf(&buf[p], sizeof(buf)-p, "%s", _(sys->features) );
+
+      /* Mention tradelanes if applicable. */
+      found = 0;
+      for (i=0; i<array_size(sys->jumps); i++) {
+         if (sys->jumps[i].hide<=0.) {
+            found = 1;
+            break;
+         }
+      }
+      if (found) {
+         if (buf[0] != '\0')
+            p += scnprintf(&buf[p], sizeof(buf)-p, _(", "));
+         p += scnprintf(&buf[p], sizeof(buf)-p, "%s", _("#gTradelane#0") );
+      }
 
       /* Nebula. */
       if (sys->nebu_density > 0.) {

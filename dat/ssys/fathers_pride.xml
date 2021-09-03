@@ -17,6 +17,7 @@
   <asset>Flach</asset>
   <asset>Hartwell Station</asset>
   <asset>Rudderfern</asset>
+  <asset_virtual>Tradelane (Soromid)</asset_virtual>
  </assets>
  <jumps>
   <jump target="Gewirn">

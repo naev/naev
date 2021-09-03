@@ -18,6 +18,7 @@
   <asset>Culex</asset>
   <asset>Myonei</asset>
   <asset>Soromid Databank</asset>
+  <asset_virtual>Tradelane (Soromid)</asset_virtual>
  </assets>
  <jumps>
   <jump target="Feye">

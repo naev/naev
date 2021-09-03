@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <unidiff name="flf_dead">
  <system name="Sigur">
-  <asset name="Sindbad">remove</asset>
+  <asset_virtual name="Virtual Sindbad">remove</asset_virtual>
+  <asset_virtual name="Empire Unpresence">remove</asset_virtual>
+  <asset_virtual name="Soromid Unpresence">remove</asset_virtual>
  </system>
  <system name="Raelid">
   <asset_virtual name="FLF Small">remove</asset_virtual>
@@ -17,10 +19,6 @@
  </system>
  <system name="Torg">
   <asset_virtual name="FLF Small">remove</asset_virtual>
- </system>
- <system name="Sigur">
-  <asset_virtual name="Empire Unpresence">remove</asset_virtual>
-  <asset_virtual name="Soromid Unpresence">remove</asset_virtual>
  </system>
 </unidiff>
 

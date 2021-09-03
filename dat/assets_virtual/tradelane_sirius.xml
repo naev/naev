@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Tradelane (Sirius)">
+ <presence>
+  <faction>Trader</faction>
+  <base>50.000000</base>
+ </presence>
+ <presence>
+  <faction>Trader</faction>
+  <base>25.000000</base>
+  <bonus>25.000000</bonus>
+  <range>1</range>
+ </presence>
+ <presence>
+  <faction>Independent</faction>
+  <base>30.000000</base>
+  <bonus>20.000000</bonus>
+  <range>1</range>
+ </presence>
+ <presence>
+  <faction>Sirius</faction>
+  <base>70.000000</base>
+  <range>0</range>
+ </presence>
+ <presence>
+  <faction>Sirius</faction>
+  <bonus>50.000000</bonus>
+  <range>1</range>
+ </presence>
+</asset>

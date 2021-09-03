@@ -16,6 +16,7 @@
   <asset>Tarsus Station</asset>
   <asset>Valt</asset>
   <asset_virtual>FLF Small</asset_virtual>
+  <asset_virtual>Tradelane (Dvaered)</asset_virtual>
  </assets>
  <jumps>
   <jump target="Doranthex">

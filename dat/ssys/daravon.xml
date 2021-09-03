@@ -15,6 +15,7 @@
   <asset>Daravon III</asset>
   <asset>Eclipse Station</asset>
   <asset>Vilati Vilata</asset>
+  <asset_virtual>Tradelane (Dvaered)</asset_virtual>
  </assets>
  <jumps>
   <jump target="Daan">

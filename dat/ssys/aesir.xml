@@ -18,6 +18,7 @@
   <asset>Sirius Ordnance</asset>
   <asset>Sirius Shipyards</asset>
   <asset>Urail</asset>
+  <asset_virtual>Tradelane (Sirius)</asset_virtual>
  </assets>
  <jumps>
   <jump target="Vanir">

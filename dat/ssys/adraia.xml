@@ -10,7 +10,9 @@
   <x>1238.983941</x>
   <y>-594.218853</y>
  </pos>
- <assets/>
+ <assets>
+  <asset_virtual>Tradelane (Sirius)</asset_virtual>
+ </assets>
  <jumps>
   <jump target="Gilligan's Tomb">
    <autopos/>

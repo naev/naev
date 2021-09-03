@@ -13,6 +13,7 @@
  <assets>
   <asset>Provectus Nova I</asset>
   <asset>Provectus Nova Ia</asset>
+  <asset_virtual>Tradelane (Za'lek)</asset_virtual>
  </assets>
  <jumps>
   <jump target="Daan">

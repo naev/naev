@@ -12,6 +12,7 @@
  </pos>
  <assets>
   <asset>Gilligan's Tomb</asset>
+  <asset_virtual>Tradelane (Sirius)</asset_virtual>
  </assets>
  <jumps>
   <jump target="Adraia">

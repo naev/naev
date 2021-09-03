@@ -2,7 +2,7 @@
 <unidiff name="FLF_base">
  <system name="Sigur">
   <asset name="Sindbad">add</asset>
-  <asset_virtual name="Sindbad">remove</asset_virtual>
+  <asset_virtual name="Virtual Sindbad">remove</asset_virtual>
  </system>
 </unidiff>
 

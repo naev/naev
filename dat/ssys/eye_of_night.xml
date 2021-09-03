@@ -16,6 +16,7 @@
   <asset>Eye of Night III</asset>
   <asset>Inios Station</asset>
   <asset>Traal</asset>
+  <asset_virtual>Tradelane (Sirius)</asset_virtual>
  </assets>
  <jumps>
   <jump target="Druid">

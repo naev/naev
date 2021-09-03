@@ -192,6 +192,7 @@ function takeoff ()
       j:setVisible()
    end
 
+   diff.remove("FLF_base") -- Get rid of Sindbad
    diff.apply( "flf_dead" )
    player.pilot():setNoJump( true )
 end

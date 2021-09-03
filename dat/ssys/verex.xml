@@ -14,6 +14,7 @@
   <asset>Verex I</asset>
   <asset>Verex II</asset>
   <asset>Verex III</asset>
+  <asset_virtual>Tradelane (Dvaered)</asset_virtual>
  </assets>
  <jumps>
   <jump target="Blunderbuss">

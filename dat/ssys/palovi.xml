@@ -16,6 +16,7 @@
   <asset>Palovi IV</asset>
   <asset>Palovi V</asset>
   <asset>Solpere</asset>
+  <asset_virtual>Tradelane (Sirius)</asset_virtual>
  </assets>
  <jumps>
   <jump target="Duros">

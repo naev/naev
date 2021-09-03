@@ -16,6 +16,7 @@
   <asset>Oberon III</asset>
   <asset>Oberon IV</asset>
   <asset>Soromid Customs Central</asset>
+  <asset_virtual>Tradelane (Soromid)</asset_virtual>
  </assets>
  <jumps>
   <jump target="Defa">

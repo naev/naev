@@ -15,6 +15,7 @@
   <asset>Pilatis II</asset>
   <asset>Pilatis III</asset>
   <asset>Wildwood Station</asset>
+  <asset_virtual>Tradelane (Empire)</asset_virtual>
  </assets>
  <jumps>
   <jump target="Defa">
