@@ -3627,7 +3627,7 @@ static void space_renderDebris( const Debris *d, double x, double y )
    double scale;
    Vector2d *testVect;
 
-   scale = .5;
+   scale = 0.5;
 
    testVect = malloc(sizeof(Vector2d));
    testVect->x = d->pos.x + x;
