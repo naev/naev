@@ -290,9 +290,8 @@ static int systemL_getAll( lua_State *L )
 
    ind = 1;
    for (i=0; i<array_size(sys); i++) {
-      lua_pushnumber( L, ind++ );
       lua_pushsystem( L, system_index( &sys[i] ) );
-      lua_settable(   L, -3 );
+      lua_rawseti( L, -2, ind++ );
    }
    return 1;
 }

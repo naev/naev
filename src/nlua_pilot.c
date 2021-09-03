@@ -4251,12 +4251,10 @@ static int pilotL_runaway( lua_State *L )
          lj = lua_tojump(L,3);
          t = pilotL_newtask( L, p, "runaway_jump" );
          lua_newtable(L);
-         lua_pushnumber( L, 1 );
          lua_pushpilot(L, pt->id);
-         lua_settable( L, -3 );
-         lua_pushnumber( L, 2 );
+         lua_rawseti( L, -2, 1 );
          lua_pushjump(L, *lj);
-         lua_settable( L, -3 );
+         lua_rawseti( L, -2, 2 );
          t->dat = luaL_ref(L, LUA_REGISTRYINDEX);
       }
 
@@ -4264,12 +4262,10 @@ static int pilotL_runaway( lua_State *L )
          lp = lua_toplanet(L,3);
          t = pilotL_newtask( L, p, "runaway_land" );
          lua_newtable(L);
-         lua_pushnumber( L, 1 );
          lua_pushpilot(L, pt->id);
-         lua_settable( L, -3 );
-         lua_pushnumber( L, 2 );
+         lua_rawseti( L, -2, 1 );
          lua_pushplanet(L, *lp);
-         lua_settable( L, -3 );
+         lua_rawseti( L, -2, 2 );
          t->dat = luaL_ref(L, LUA_REGISTRYINDEX);
       }
 
