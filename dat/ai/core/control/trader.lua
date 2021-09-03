@@ -6,8 +6,8 @@ control_rate    = 2
 
 -- Required "control" function
 function control ()
-   task  = ai.taskname()
-   enemy = ai.getenemy()
+   local task  = ai.taskname()
+   local enemy = ai.getenemy()
 
    -- Runaway if enemy is near
    if task ~= "runaway" and enemy ~= nil and
@@ -19,16 +19,15 @@ function control ()
 
    -- Try to jump when far enough away
    elseif task == "runaway" then
-      target = ai.taskdata()
+      local target = ai.taskdata()
 
       -- Check if should still run.
-      if not target:exists() then
+      if not target or not target:exists() then
          ai.poptask()
          return
       end
 
-      dist = ai.dist( target )
-
+      local dist = ai.dist( target )
       if mem.attacked then
          -- Increment distress
          if mem.distressed == nil then
@@ -54,21 +53,8 @@ function control ()
       if dist > 400 then
          ai.hyperspace()
       end
-
-   -- Find something to do
-   elseif task == nil then
-      planet = ai.landplanet()
-      -- planet must exist
-      if planet == nil then
-         ai.settimer(0, rnd.uniform(1.0, 3.0))
-         ai.pushtask("enterdelay")
-      else
-         ai.pushtask("hyperspace")
-         ai.pushtask("land", planet)
-      end
    end
 end
-
 
 function sos ()
 end

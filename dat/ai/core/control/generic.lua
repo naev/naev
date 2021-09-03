@@ -15,7 +15,8 @@ mem.aggressive     = false -- Should pilot actively attack enemies?
 mem.defensive      = true -- Should pilot defend itself
 mem.cooldown       = false -- Whether the pilot is currently cooling down.
 mem.heatthreshold  = 0.5 -- Weapon heat to enter cooldown at [0-2 or nil]
-mem.safe_distance  = 300 -- Safe distance from enemies to jump
+mem.safe_distance  = 8000 -- Safe distance from enemies to stop running away
+mem.safe_jump_distance = 300 -- Safe distance from enemies to jump
 mem.land_planet    = true -- Should land on planets?
 mem.land_friendly  = false -- Only land on friendly planets?
 mem.distress       = true -- AI distresses
@@ -472,10 +473,18 @@ function control_funcs.runaway ()
    if mem.aggressive and ((mem.shield_return > 0 and pshield >= mem.shield_return) or
          (mem.armour_return > 0 and parmour >= mem.armour_return)) then
       ai.poptask() -- "attack" should be above "runaway"
+      return true
 
    -- Try to jump
-   elseif dist > mem.safe_distance then
+   elseif dist > mem.safe_jump_distance then
       ai.hyperspace()
+   else
+      -- If far enough away, stop the task
+      local enemy = ai.getenemy() -- nearest enemy
+      if enemy and ai.dist(enemy) > mem.safe_distance then
+         ai.poptask()
+         return true
+      end
    end
 
    -- Handle distress
