@@ -7,10 +7,10 @@ control_rate = 2
 
 -- Required "control" function
 function control ()
-   task = ai.taskname()
+   local task = ai.taskname()
 
    if task == nil or task == "idle" then
-      enemy = ai.getenemy()
+      local enemy = ai.getenemy()
 
       -- There is an enemy
       if enemy ~= nil then
@@ -44,7 +44,7 @@ function control ()
 
    -- Check if we are near enough
    elseif task == "approach" then
-      planet = mem.approach
+      local planet = mem.approach
 
       if ai.dist( planet ) < mem.planet_dist + ai.minbrakedist() then
          ai.poptask()
@@ -97,9 +97,9 @@ end
 
 -- Approaches the target
 function approach ()
-   target = mem.approach
-   dir = ai.face(target)
-   dist = ai.dist(target)
+   local target = mem.approach
+   local dir = ai.face(target)
+   local dist = ai.dist(target)
 
    -- See if should accel or brake
    if dist > mem.planet_dist then
