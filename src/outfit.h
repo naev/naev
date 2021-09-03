@@ -251,6 +251,7 @@ typedef struct OutfitModificationData_ {
     * Lua and active stuff. */
 
    /* Lua function references. Set to LUA_NOREF if not used. */
+   char *lua_file;   /**< Lua File. */
    nlua_env lua_env; /**< Lua environment. Shared for each outfit to allow globals. */
    int lua_init;     /**< Run when pilot enters a system. */
    int lua_cleanup;  /**< Run when the pilot is erased. */
@@ -295,8 +296,8 @@ typedef struct OutfitFighterBayData_ {
  * @brief Represents a fighter for a fighter bay.
  */
 typedef struct OutfitFighterData_ {
-   char *ship;       /**< Ship to use for fighter. */
-   int sound;        /**< Sound to make when launching. */
+   char *ship; /**< Ship to use for fighter. */
+   int sound;  /**< Sound to make when launching. */
 } OutfitFighterData;
 
 /* Forward declaration */
@@ -307,15 +308,15 @@ typedef struct OutfitMapData_s OutfitMapData_t;
  * @brief Represents a local map.
  */
 typedef struct OutfitLocalMapData_ {
-   double jump_detect;     /**< Ability to detect jumps. */
-   double asset_detect;    /**< Ability to detect assets. */
+   double jump_detect;  /**< Ability to detect jumps. */
+   double asset_detect; /**< Ability to detect assets. */
 } OutfitLocalMapData;
 
 /**
  * @brief Represents a GUI.
  */
 typedef struct OutfitGUIData_ {
-   char *gui;        /**< Name of the GUI file. */
+   char *gui;  /**< Name of the GUI file. */
 } OutfitGUIData;
 
 /**

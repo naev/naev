@@ -59,6 +59,15 @@ static int ship_loadPLG( Ship *temp, const char *buf, int size_hint );
 static int ship_parse( Ship *temp, xmlNodePtr parent );
 
 
+static int ship_cmp( const void *p1, const void *p2 )
+{
+   const Ship *s1, *s2;
+   s1 = (const Ship*) p1;
+   s2 = (const Ship*) p2;
+   return strcmp( s1->name, s2->name );
+}
+
+
 /**
  * @brief Gets a ship based on its name.
  *
@@ -67,14 +76,10 @@ static int ship_parse( Ship *temp, xmlNodePtr parent );
  */
 const Ship* ship_get( const char* name )
 {
-   Ship *temp;
-   int i;
-
-   temp = ship_stack;
-   for (i=0; i < array_size(ship_stack); i++)
-      if (strcmp(temp[i].name, name)==0)
-         return &temp[i];
-
+   const Ship s = {.name = (char*)name };
+   Ship* found = bsearch( &s, ship_stack, array_size(ship_stack), sizeof(Ship), ship_cmp );
+   if (found != NULL)
+      return found;
    WARN(_("Ship %s does not exist"), name);
    return NULL;
 }
@@ -1056,6 +1061,7 @@ int ships_load (void)
       /* Clean up. */
       xmlFreeDoc(doc);
    }
+   qsort( ship_stack, array_size(ship_stack), sizeof(Ship), ship_cmp );
 
    /* Shrink stack. */
    array_shrink(&ship_stack);

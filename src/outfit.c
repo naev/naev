@@ -93,6 +93,15 @@ static void outfit_parseSLicense( Outfit *temp, const xmlNodePtr parent );
 static int outfit_loadPLG( Outfit *temp, const char *buf, unsigned int bolt );
 
 
+static int outfit_cmp( const void *p1, const void *p2 )
+{
+   const Outfit *o1, *o2;
+   o1 = (const Outfit*) p1;
+   o2 = (const Outfit*) p2;
+   return strcmp( o1->name, o2->name );
+}
+
+
 /**
  * @brief Gets an outfit by name.
  *
@@ -101,12 +110,10 @@ static int outfit_loadPLG( Outfit *temp, const char *buf, unsigned int bolt );
  */
 const Outfit* outfit_get( const char* name )
 {
-   int i;
-
-   for (i=0; i<array_size(outfit_stack); i++)
-      if (strcmp(name,outfit_stack[i].name)==0)
-         return &outfit_stack[i];
-
+   const Outfit s = {.name = (char*)name };
+   Outfit* found = bsearch( &s, outfit_stack, array_size(outfit_stack), sizeof(Outfit), outfit_cmp );
+   if (found != NULL)
+      return found;
    WARN(_("Outfit '%s' not found in stack."), name);
    return NULL;
 }
@@ -1758,44 +1765,8 @@ static void outfit_parseSMod( Outfit* temp, const xmlNodePtr parent )
 
          continue;
       }
-      /* Lua stuff. */
-      if (xml_isNode(node,"lua")) {
-         nlua_env env;
-         size_t sz;
-         char *dat = ndata_read( xml_get(node), &sz );
-         if (dat==NULL) {
-            WARN(_("Outfit '%s' failed to read Lua '%s'!"), temp->name, xml_get(node) );
-            continue;
-         }
-
-         env = nlua_newEnv(1);
-         temp->u.mod.lua_env = env;
-         /* TODO limit libraries here. */
-         nlua_loadStandard( env );
-         nlua_loadGFX( env );
-         nlua_loadPilotOutfit( env );
-
-         /* Run code. */
-         if (nlua_dobufenv( env, dat, sz, xml_get(node) ) != 0) {
-            WARN(_("Outfit '%s' Lua error:\n%s"), temp->name, lua_tostring(naevL,-1));
-            lua_pop(naevL,1);
-            nlua_freeEnv( temp->u.mod.lua_env );
-            free( dat );
-            temp->u.mod.lua_env = LUA_NOREF;
-            continue;
-         }
-         free( dat );
-
-         /* Check functions as necessary. */
-         temp->u.mod.lua_init = nlua_refenvtype( env, "init", LUA_TFUNCTION );
-         temp->u.mod.lua_cleanup = nlua_refenvtype( env, "cleanup", LUA_TFUNCTION );
-         temp->u.mod.lua_update = nlua_refenvtype( env, "update", LUA_TFUNCTION );
-         temp->u.mod.lua_ontoggle = nlua_refenvtype( env, "ontoggle", LUA_TFUNCTION );
-         temp->u.mod.lua_onhit = nlua_refenvtype( env, "onhit", LUA_TFUNCTION );
-         temp->u.mod.lua_outofenergy = nlua_refenvtype( env, "outofenergy", LUA_TFUNCTION );
-         temp->u.mod.lua_cooldown = nlua_refenvtype( env, "cooldown", LUA_TFUNCTION );
-         continue;
-      }
+      /* Lua stuff gets loaded later. */
+      xmlr_strd(node,"lua",temp->u.mod.lua_file);
 
       /* Stats. */
       ll = ss_listFromXML( node );
@@ -2473,9 +2444,6 @@ static int outfit_loadDir( char *dir )
    }
    array_free( outfit_files );
 
-   /* Reduce size. */
-   array_shrink( &outfit_stack );
-
    return 0;
 }
 
@@ -2494,8 +2462,9 @@ int outfit_load (void)
    outfit_loadDir( OUTFIT_DATA_PATH );
    array_shrink(&outfit_stack);
    noutfits = array_size(outfit_stack);
+   qsort( outfit_stack, noutfits, sizeof(Outfit), outfit_cmp );
 
-   /* Second pass, sets up ammunition relationships. */
+   /* Second pass. */
    for (i=0; i<noutfits; i++) {
       o = &outfit_stack[i];
       if (outfit_isLauncher(&outfit_stack[i])) {
@@ -2516,6 +2485,45 @@ int outfit_load (void)
       }
       else if (outfit_isFighterBay(&outfit_stack[i]))
          o->u.bay.ammo = outfit_get( o->u.bay.ammo_name );
+
+      else if (outfit_isMod(&outfit_stack[i])) {
+         if (o->u.mod.lua_file==NULL)
+            continue;
+         nlua_env env;
+         size_t sz;
+         char *dat = ndata_read( o->u.mod.lua_file, &sz );
+         if (dat==NULL) {
+            WARN(_("Outfit '%s' failed to read Lua '%s'!"), o->name, o->u.mod.lua_file );
+            continue;
+         }
+
+         env = nlua_newEnv(1);
+         o->u.mod.lua_env = env;
+         /* TODO limit libraries here. */
+         nlua_loadStandard( env );
+         nlua_loadGFX( env );
+         nlua_loadPilotOutfit( env );
+
+         /* Run code. */
+         if (nlua_dobufenv( env, dat, sz, o->u.mod.lua_file ) != 0) {
+            WARN(_("Outfit '%s' Lua error:\n%s"), o->name, lua_tostring(naevL,-1));
+            lua_pop(naevL,1);
+            nlua_freeEnv( o->u.mod.lua_env );
+            free( dat );
+            o->u.mod.lua_env = LUA_NOREF;
+            continue;
+         }
+         free( dat );
+
+         /* Check functions as necessary. */
+         o->u.mod.lua_init = nlua_refenvtype( env, "init", LUA_TFUNCTION );
+         o->u.mod.lua_cleanup = nlua_refenvtype( env, "cleanup", LUA_TFUNCTION );
+         o->u.mod.lua_update = nlua_refenvtype( env, "update", LUA_TFUNCTION );
+         o->u.mod.lua_ontoggle = nlua_refenvtype( env, "ontoggle", LUA_TFUNCTION );
+         o->u.mod.lua_onhit = nlua_refenvtype( env, "onhit", LUA_TFUNCTION );
+         o->u.mod.lua_outofenergy = nlua_refenvtype( env, "outofenergy", LUA_TFUNCTION );
+         o->u.mod.lua_cooldown = nlua_refenvtype( env, "cooldown", LUA_TFUNCTION );
+      }
    }
 
 #ifdef DEBUGGING
@@ -2710,7 +2718,7 @@ void outfit_free (void)
          array_free(o->u.amm.polygon);
       }
       /* Type specific. */
-      if (outfit_isBolt(o)) {
+      else if (outfit_isBolt(o)) {
          gl_freeTexture(o->u.blt.gfx_end);
          /* Free collision polygons. */
          for (j=0; j<array_size(o->u.blt.polygon); j++) {
@@ -2719,24 +2727,25 @@ void outfit_free (void)
          }
          array_free(o->u.blt.polygon);
       }
-      if (outfit_isLauncher(o))
+      else if (outfit_isLauncher(o))
          free(o->u.lau.ammo_name);
-      if (outfit_isFighterBay(o))
+      else if (outfit_isFighterBay(o))
          free(o->u.bay.ammo_name);
-      if (outfit_isFighter(o))
+      else if (outfit_isFighter(o))
          free(o->u.fig.ship);
-      if (outfit_isGUI(o))
+      else if (outfit_isGUI(o))
          free(o->u.gui.gui);
-      if (outfit_isMap(o)) {
+      else if (outfit_isMap(o)) {
          array_free( o->u.map->systems );
          array_free( o->u.map->assets );
          array_free( o->u.map->jumps );
          free( o->u.map );
       }
-      if (outfit_isMod(o)) {
+      else if (outfit_isMod(o)) {
          if (o->u.mod.lua_env != LUA_NOREF)
             nlua_freeEnv( o->u.mod.lua_env );
          o->u.mod.lua_env = LUA_NOREF;
+         free(o->u.mod.lua_file);
       }
 
       /* strings */

@@ -112,6 +112,15 @@ int pfaction_save( xmlTextWriterPtr writer );
 int pfaction_load( xmlNodePtr parent );
 
 
+static int faction_cmp( const void *p1, const void *p2 )
+{
+   const Faction *f1, *f2;
+   f1 = (const Faction*) p1;
+   f2 = (const Faction*) p2;
+   return strcmp(f1->name,f2->name);
+}
+
+
 /**
  * @brief Gets a faction ID by name.
  *
@@ -132,6 +141,13 @@ static int faction_getRaw( const char* name )
 
       if (i != array_size(faction_stack))
          return i;
+
+      /* Dynamic factions are why we can't have nice things.
+      const Faction f = { .name = (char*)name };
+      Faction *found = bsearch( &f, faction_stack, array_size(faction_stack), sizeof(Faction), faction_cmp );
+      if (found != NULL)
+         return found - faction_stack;
+      */
    }
    return -1;
 }
@@ -1629,6 +1645,9 @@ int factions_load (void)
          f->oflags = f->flags;
       }
    } while (xml_nextNode(node));
+
+   /* Sort by name. */
+   qsort( faction_stack, array_size(faction_stack), sizeof(Faction), faction_cmp );
 
    /* Second pass - sets allies and enemies */
    node = factions;

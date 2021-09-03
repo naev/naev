@@ -832,8 +832,13 @@ char **system_searchFuzzyCase( const char* sysname, int *n )
 }
 
 
-
-
+static int system_cmp( const void *p1, const void *p2 )
+{
+   const StarSystem *s1, *s2;
+   s1 = (const StarSystem*) p1;
+   s2 = (const StarSystem*) p2;
+   return strcmp(s1->name,s2->name);
+}
 /**
  * @brief Get the system from its name.
  *
@@ -842,14 +847,13 @@ char **system_searchFuzzyCase( const char* sysname, int *n )
  */
 StarSystem* system_get( const char* sysname )
 {
-   int i;
-
-   if ( sysname == NULL )
+   if (sysname == NULL)
       return NULL;
 
-   for (i=0; i<array_size(systems_stack); i++)
-      if (strcmp(sysname, systems_stack[i].name)==0)
-         return &systems_stack[i];
+   const StarSystem s = {.name = (char*)sysname};
+   StarSystem *found = bsearch( &s, systems_stack, array_size(systems_stack), sizeof(StarSystem), system_cmp );
+   if (found != NULL)
+      return found;
 
    WARN(_("System '%s' not found in stack"), sysname);
    return NULL;
@@ -3365,6 +3369,7 @@ static int systems_load (void)
    xmlDocPtr doc;
    StarSystem *sys;
    size_t i;
+   int j;
 
    /* Allocate if needed. */
    if (systems_stack == NULL)
@@ -3400,6 +3405,9 @@ static int systems_load (void)
       xmlFreeDoc(doc);
       free( file );
    }
+   qsort( systems_stack, array_size(systems_stack), sizeof(StarSystem), system_cmp );
+   for (j=0; j<array_size(systems_stack); j++)
+      systems_stack[j].id = j;
 
    /*
     * Second pass - loads all the jump routes.
