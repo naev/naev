@@ -642,6 +642,17 @@ end
 
 
 --[[
+-- Tries to return to the lane, shooting at nearby enemies if necessary
+--]]
+function return_lane( data )
+   local enemy = data[1]
+   local target = data[2]
+   __shoot_turret(enemy)
+   moveto_nobrake( target )
+end
+
+
+--[[
 -- Starts heading away to try to hyperspace.
 --]]
 function hyperspace( target )

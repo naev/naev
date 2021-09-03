@@ -72,7 +72,16 @@ stateinfo = {
       attack   = true,
       noattack = true,
    },
+   return_lane = {
+      running  = true,
+      noattack = true,
+   },
+   backoff = {
+      running  = true,
+      noattack = true,
+   },
    runaway = {
+      running  = true,
       fighting = true,
       noattack = true,
    },
@@ -393,7 +402,7 @@ function control ()
       if lr then
          local d, pos = lanes.getDistance2P( p, p:pos() )
          if d < math.huge and d > lr*lr then
-            ai.pushtask( "moveto_nobrake", pos )
+            ai.pushtask( "return_lane", {target, pos} )
             return
          end
       end
