@@ -48,7 +48,8 @@ function faction_hit( current, amount, source, secondary )
    local maxval = standing
    for k,v in ipairs(pirate_clans) do
       if v ~= _fthis then
-         maxval = math.max( maxval, v:playerStanding() )
+         local vs = v:playerStanding() -- Only get first parameter
+         maxval = math.max( maxval, vs )
       end
    end
 
