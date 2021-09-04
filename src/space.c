@@ -1752,6 +1752,7 @@ static int planets_load (void)
    Planet *p;
    size_t i;
    Commodity **stdList;
+   int j;
 
    /* Load landing stuff. */
    landing_env = nlua_newEnv(0);
@@ -1803,6 +1804,8 @@ static int planets_load (void)
       xmlFreeDoc(doc);
    }
    qsort( planet_stack, array_size(planet_stack), sizeof(Planet), planet_cmp );
+   for (j=0; j<array_size(planet_stack); j++)
+      planet_stack[j].id = j;
 
    /* Clean up. */
    PHYSFS_freeList( planet_files );
