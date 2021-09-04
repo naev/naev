@@ -260,10 +260,15 @@ function backoff( target )
    end
 end
 
-control_funcs.ambush_moveto = function ()
-   local p = ai.pilot()
+control_funcs.loiter = function ()
    -- Try to engage hostiles
-   if __tryengage( p ) then return end
+   __tryengage( ai.pilot() )
+   return true
+end
+control_funcs.ambush_moveto = function ()
+   -- Try to engage hostiles
+   __tryengage( ai.pilot() )
+   return true
 end
 control_funcs.ambush_stalk = function ()
    local p = ai.pilot()
@@ -326,6 +331,8 @@ end
 -- Custom should attack
 local should_attack_generic = should_attack
 function should_attack( enemy, si )
+   if not enemy then return false end
+
    local p = ai.pilot()
    -- If stealthed we don't want to attack normally
    local stealth = p:flags("stealth")
@@ -333,12 +340,10 @@ function should_attack( enemy, si )
 
    -- Do normal check
    local res = should_attack_generic( enemy, si )
-   print(string.format("should_attack_generic: %s", res))
    if not res then return false end
 
    -- Make sure vulnerable
    if not __vulnerable( p, enemy, mem.vulnattack ) then
-      print("   not vulnerable")
       return false
    end
    return true

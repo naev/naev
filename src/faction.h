@@ -12,7 +12,10 @@
 #include "opengl.h"
 
 
-#define FACTION_PLAYER  0  /**< Hardcoded player faction identifier. */
+extern int faction_player;
+
+
+#define FACTION_PLAYER  faction_player  /**< Hardcoded player faction identifier. */
 #define FACTION_LOGO_SM 64 /**< Size of "small" logo. */
 
 

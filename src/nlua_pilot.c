@@ -907,6 +907,10 @@ static int pilotL_getFriendOrFoe( lua_State *L, int friend )
             vect_dist2(&plt->solid->pos, v) > dd)
          continue;
 
+      /* Check if disabled. */
+      if (dis && pilot_isDisabled(plt))
+         continue;
+
       /* Check appropriate faction. */
       if (friend) {
          if (p==NULL) {
@@ -934,9 +938,6 @@ static int pilotL_getFriendOrFoe( lua_State *L, int friend )
             }
          }
       }
-      /* Check if disabled. */
-      if (dis && pilot_isDisabled(plt))
-         continue;
 
       /* Need extra check for friends. */
       if ((p!=NULL) && inrange && friend) {
@@ -944,9 +945,8 @@ static int pilotL_getFriendOrFoe( lua_State *L, int friend )
             continue;
       }
 
-      lua_pushnumber(L, k++); /* key */
       lua_pushpilot(L, plt->id); /* value */
-      lua_rawset(L,-3); /* table[key] = value */
+      lua_rawseti(L,-2, k++); /* table[key] = value */
    }
    return 1;
 }

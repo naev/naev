@@ -48,6 +48,8 @@
 #define faction_isFlag(fa,f)  ((fa)->flags & (f))
 #define faction_isKnown_(fa)   ((fa)->flags & (FACTION_KNOWN))
 
+int faction_player;
+
 /**
  * @struct Faction
  *
@@ -1648,6 +1650,7 @@ int factions_load (void)
 
    /* Sort by name. */
    qsort( faction_stack, array_size(faction_stack), sizeof(Faction), faction_cmp );
+   faction_player = faction_get("Player");
 
    /* Second pass - sets allies and enemies */
    node = factions;
