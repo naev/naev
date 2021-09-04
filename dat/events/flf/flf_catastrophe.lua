@@ -96,9 +96,10 @@ function create ()
 
    emp_srcsys = system.get( "Arcanis" )
    emp_shptypes = {
-      "Empire Lancelot", "Empire Lancelot", "Empire Lancelot", "Empire Lancelot", "Empire Lancelot", "Empire Lancelot", "Empire Lancelot",
+      "Empire Peacemaker", "Empire Lancelot", "Empire Lancelot", "Empire Lancelot", "Empire Lancelot",
+      "Empire Lancelot", "Empire Lancelot", "Empire Lancelot",
       "Empire Admonisher", "Empire Admonisher", "Empire Admonisher", "Empire Pacifier", "Empire Hawking",
-      "Empire Peacemaker", "Empire Shark", "Empire Shark", "Empire Shark" }
+      "Empire Shark", "Empire Shark", "Empire Shark" }
    emp_minsize = 6
    found_thurion = false
    player_attacks = 0
@@ -159,10 +160,16 @@ function takeoff ()
    hook.pilot( flf_base, "death", "pilot_death_sindbad" )
 
    -- Spawn FLF ships
+   local norm = (jump.get( system.cur(), emp_srcsys ):pos()-ss:pos()):normalize()
    local shptypes = {"Pacifier", "Lancelot", "Vendetta", "Lancelot", "Vendetta", "Lancelot", "Vendetta"}
-   flf_ships = fleet.add( 5, shptypes, "FLF", ss:pos(), nil, {ai="guard"} )
-   for i, j in ipairs( flf_ships ) do
-      j:setVisible()
+   flf_ships = {}
+   for i=1,5 do
+      for k,s in ipairs(shptypes) do
+         local pos = ss:pos() + vec2.newP(2000*rnd.rnd(), 360*rnd.rnd()) + norm*1000
+         local p = pilot.add( s, "FLF", pos, nil, {ai="guard"} )
+         p:setVisible()
+         table.insert( flf_ships, p )
+      end
    end
 
    -- Spawn Empire ships
@@ -220,6 +227,8 @@ function pilot_death_emp( pilot, attacker, arg )
             end
          end
          emp_ships[ #emp_ships + 1 ] = j
+         local mem = j:memory()
+         mem.enemyclose = nil
       end
    end
 end
@@ -242,6 +251,13 @@ function pilot_death_sindbad( pilot, attacker, arg )
       diff.remove( "flf_pirate_ally" )
    end
 
+   for i, j in ipairs( flf_ships ) do
+      if j:exists() then
+         j:control( false )
+         j:changeAI( "flf_norun" )
+         j:setVisible( false )
+      end
+   end
    for i, j in ipairs( emp_ships ) do
       if j:exists() then
          j:control( false )
