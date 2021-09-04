@@ -141,6 +141,9 @@ def generate_c_file(f):
 """)
     for col in COLOURS:
         col.write_source( f )
+
+    # TODO optimize this part. Should be possible to speed it up immensely,
+    # although it probably won't impact Naev performance at all
     f.write("""
 const glColour* col_fromName( const char* name )
 {
