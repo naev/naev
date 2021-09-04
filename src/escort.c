@@ -148,6 +148,12 @@ unsigned int escort_create( Pilot *p, char *ship,
    pe = pilot_get(e);
    pe->parent = parent;
 
+   /* Set some flags for consistent behaviour. */
+   if (pilot_isFlag(p, PILOT_HOSTILE))
+      pilot_setFlag( pe, PILOT_HOSTILE );
+   if (pilot_isFlag(p, PILOT_FRIENDLY))
+      pilot_setFlag( pe, PILOT_FRIENDLY );
+
    /* Compute fighter bay bonuses. */
    if (pilot_isFlagRaw( f, PILOT_CARRIED )) {
       /* Damage. */

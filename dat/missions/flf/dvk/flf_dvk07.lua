@@ -36,8 +36,8 @@
 
 --]]
 
-require "missions/flf/flf_rogue"
-require "missions/flf/flf_common"
+require "missions.flf.flf_rogue"
+require "missions.flf.flf_common"
 
 title = {}
 text = {}

@@ -41,6 +41,7 @@ static int vectorL_setP( lua_State *L );
 static int vectorL_distance( lua_State *L );
 static int vectorL_distance2( lua_State *L );
 static int vectorL_mod( lua_State *L );
+static int vectorL_normalize( lua_State *L );
 static const luaL_Reg vector_methods[] = {
    { "new", vectorL_new },
    { "newP", vectorL_newP },
@@ -60,6 +61,7 @@ static const luaL_Reg vector_methods[] = {
    { "dist", vectorL_distance },
    { "dist2", vectorL_distance2 },
    { "mod", vectorL_mod },
+   { "normalize", vectorL_normalize },
    {0,0}
 }; /**< Vector metatable methods. */
 
@@ -648,10 +650,23 @@ static int vectorL_distance2( lua_State *L )
  */
 static int vectorL_mod( lua_State *L )
 {
-   Vector2d *v;
-
-   v = luaL_checkvector(L,1);
+   Vector2d *v = luaL_checkvector(L,1);
    lua_pushnumber(L, VMOD(*v));
    return 1;
 }
 
+/**
+ * @brief Normalizes a vector.
+ *    @luatparam Vec2 v Vector to normalize.
+ *    @luatreturn Vec2 Normalized vector.
+ * @luafunc normalize
+ */
+static int vectorL_normalize( lua_State *L )
+{
+   Vector2d *v = luaL_checkvector(L,1);
+   double m = VMOD(*v);
+   v->x /= m;
+   v->y /= m;
+   lua_pushvector(L, *v);
+   return 1;
+}

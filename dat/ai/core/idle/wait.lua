@@ -1,7 +1,7 @@
 function idle ()
    if mem.aggressive then
-      local enemy  = ai.getenemy()
-      if enemy ~= nil and should_attack(enemy) then
+      local enemy = ai.getenemy()
+      if enemy ~= nil and should_attack( enemy ) then
          ai.pushtask( "attack", enemy )
          return
       end
@@ -16,4 +16,12 @@ function idle ()
    -- Just wait
    ai.settimer( 0, rnd.uniform(3.0, 5.0) )
    ai.pushtask("idle_wait")
+end
+
+-- Overwrite the attack function with the generic in case we are overloading idle/pirate
+function control_funcs.attack ()
+   local task = ai.taskname()
+   local si = _stateinfo( task )
+   control_attack( si )
+   return false
 end
