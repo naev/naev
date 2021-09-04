@@ -24,9 +24,8 @@ require "cargo_common"
 require "numstring"
 
 
-misn_desc = _([[Smuggling contraband goods to %s in the %s system.
-
-WARNING: Contraband is illegal in most systems and you will face consequences if caught by patrols.]])
+misn_desc = _("Smuggling contraband goods to %s in the %s system.%s")
+desc_illegal_warning = _("WARNING: Contraband is illegal in most systems and you will face consequences if caught by patrols.")
 
 msg_timeup = _("MISSION FAILED: You have failed to deliver the goods on time!")
 
@@ -62,7 +61,8 @@ function create()
       misn.finish(false)
    end
 
-   reward_faction = pir.systemClan( system.cur() )
+   reward_faction = pir.systemClanP( system.cur() )
+   local faction_text = pir.reputationMessage( reward_faction )
 
    origin_p, origin_s = planet.cur()
    local routesys = origin_s
@@ -168,7 +168,12 @@ function create()
       _("PIRACY: Smuggle %s of %s"), tonnestring(amount),
       _(cargo) ) )
    misn.markerAdd(destsys, "computer")
-   cargo_setDesc( misn_desc:format( destplanet:name(), destsys:name() ), cargo, amount, destplanet, timelimit );
+   if pir.factionIsPirate( planet.cur():faction() ) then
+      cargo_setDesc( misn_desc:format( destplanet:name(), destsys:name(), faction_text ), cargo, amount, destplanet, timelimit )
+   else
+      cargo_setDesc( misn_desc:format( destplanet:name(), destsys:name(), faction_text ) .. "\n\n" .. desc_illegal_warning, cargo, amount, destplanet, timelimit )
+   end
+
    misn.setReward( creditstring(reward) )
 end
 

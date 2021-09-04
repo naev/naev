@@ -266,6 +266,8 @@ end
 function create ()
    theship = { __save = true }
 
+   reward_faction = pir.systemClanP( system.cur() )
+
    theship.planet  = random_planet()
 
    if not theship.planet or theship.planet:faction() == nil then
@@ -360,7 +362,7 @@ function land()
       )
 
       -- Hey, stealing a ship isn’t anything! (if you survive, that is)
-      faction.modPlayerSingle("Pirate", rnd.rnd(3,5))
+      faction.modPlayerSingle( reward_faction, rnd.rnd(3,5) )
 
       -- Let’s keep a counter. Just in case we want to know how many you
       -- stole in the future.

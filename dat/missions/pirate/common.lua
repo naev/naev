@@ -110,4 +110,8 @@ function pir.systemClanP( sys )
    return faction.get("Pirate")
 end
 
+function pir.reputationMessage( f )
+   return string.format(_("This mission will increase your reputation with %s."), f:longname())
+end
+
 return pir

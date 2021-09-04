@@ -82,7 +82,7 @@ function create ()
    end
    if nhated <= 0 then misn.finish( false ) end
 
-   credits = 50000 * nhated
+   credits = 50e3 * nhated
 
    misn.setTitle( misn_title )
    misn.setDesc( misn_desc:format( creditstring( credits ) ) )
