@@ -24,7 +24,9 @@ require "cargo_common"
 require "numstring"
 
 
-misn_desc = _("Smuggling contraband goods to %s in the %s system. Note that the cargo is illegal in most systems and you will face consequences if caught by patrols.")
+misn_desc = _("Smuggling contraband goods to %s in the %s system.
+
+WARNING: Contraband is illegal in most systems and you will face consequences if caught by patrols.")
 
 msg_timeup = _("MISSION FAILED: You have failed to deliver the goods on time!")
 
@@ -59,6 +61,8 @@ function create()
    if pntf == faction.get("Thurion") or pntf == faction.get("Proteron") then
       misn.finish(false)
    end
+
+   reward_faction = pir.systemClan( system.cur() )
 
    origin_p, origin_s = planet.cur()
    local routesys = origin_s
@@ -212,7 +216,7 @@ function land()
       var.push("ps_misn", n+1)
 
       -- increase faction
-      faction.modPlayerSingle("Pirate", rnd.rnd(2, 4))
+      faction.modPlayerSingle(reward_faction, rnd.rnd(2, 4))
       misn.finish(true)
    end
 end
