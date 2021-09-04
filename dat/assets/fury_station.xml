@@ -9,9 +9,9 @@
   <exterior>station02.webp</exterior>
  </GFX>
  <presence>
-  <faction>Pirate</faction>
-  <base>66.666667</base>
-  <bonus>33.333333</bonus>
+  <faction>Dreamer Clan</faction>
+  <base>100</base>
+  <bonus>50</bonus>
   <range>5</range>
  </presence>
  <general>

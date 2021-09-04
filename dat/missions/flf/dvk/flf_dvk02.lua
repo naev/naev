@@ -35,10 +35,12 @@
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 --]]
-
 require "numstring"
 local fleet = require "fleet"
-require "missions/flf/flf_common"
+require "missions.flf.flf_common"
+
+-- TODO this mission needs to be adapted to the new pirate clan stuff
+-- for now I just swapped "Pirate" for "Dreamer Clan"
 
 -- Localization
 title = {}
@@ -154,7 +156,7 @@ function accept ()
       credits = 300e3
       reputation = 1
       pir_reputation = 10
-      pir_starting_reputation = faction.get("Pirate"):playerStanding()
+      pir_starting_reputation = faction.get("Dreamer Clan"):playerStanding()
 
       hook.enter( "enter" )
    else
@@ -178,9 +180,9 @@ function pilot_hail_boss ()
    if stage <= 1 then
       if boss_impressed then
          stage = 2
-         local standing = faction.get("Pirate"):playerStanding()
+         local standing = faction.get("Dreamer Clan"):playerStanding()
          if standing < 25 then
-            faction.get("Pirate"):setPlayerStanding( 25 )
+            faction.get("Dreamer Clan"):setPlayerStanding( 25 )
          end
 
          if boss ~= nil then
@@ -267,14 +269,14 @@ function enter ()
          local r = system.cur():radius()
          local vec = vec2.new( rnd.rnd( -r, r ), rnd.rnd( -r, r ) )
 
-         boss = pilot.add( "Pirate Kestrel", "Pirate", vec, nil, {ai="pirate_norun"} )
+         boss = pilot.add( "Pirate Kestrel", "Dreamer Clan", vec, nil, {ai="pirate_norun"} )
          hook.pilot( boss, "death", "pilot_death_boss" )
          hook.pilot( boss, "hail", "pilot_hail_boss" )
          boss:setHostile()
          boss:setHilight()
 
          pirates_left = 4
-         pirates = fleet.add( pirates_left, "Hyena", "Pirate", vec, _("Pirate Hyena"), {ai="pirate_norun"} )
+         pirates = fleet.add( pirates_left, "Hyena", "Dreamer Clan", vec, _("Pirate Hyena"), {ai="pirate_norun"} )
          for i, j in ipairs( pirates ) do
             hook.pilot( j, "death", "pilot_death_pirate" )
             hook.pilot( j, "hail", "pilot_hail_pirate" )
@@ -293,7 +295,7 @@ function enter ()
          local r = system.cur():radius()
          local vec = vec2.new( rnd.rnd( -r, r ), rnd.rnd( -r, r ) )
 
-         boss = pilot.add( "Pirate Kestrel", "Pirate", vec, nil, {ai="pirate_norun"} )
+         boss = pilot.add( "Pirate Kestrel", "Dreamer Clan", vec, nil, {ai="pirate_norun"} )
          hook.pilot( boss, "death", "pilot_death_boss" )
          boss_hook = hook.pilot( boss, "hail", "pilot_hail_boss" )
          boss:setFriendly()
@@ -312,7 +314,7 @@ function land ()
       player.pay( credits )
       flf_setReputation( 50 )
       faction.get("FLF"):modPlayer( reputation )
-      faction.get("Pirate"):modPlayerSingle( pir_reputation )
+      faction.get("Dreamer Clan"):modPlayerSingle( pir_reputation )
       flf_addLog( log_text )
       misn.finish( true )
    end
@@ -320,7 +322,7 @@ end
 
 
 function abort ()
-   faction.get("Pirate"):setPlayerStanding( pir_starting_reputation )
+   faction.get("Dreamer Clan"):setPlayerStanding( pir_starting_reputation )
    local hj1 = nil
    local hj2 = nil
    hj1, hj2 = jump.get( "Tormulex", "Anger" )
