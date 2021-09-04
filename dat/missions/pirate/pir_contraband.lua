@@ -24,9 +24,9 @@ require "cargo_common"
 require "numstring"
 
 
-misn_desc = _("Smuggling contraband goods to %s in the %s system.
+misn_desc = _([[Smuggling contraband goods to %s in the %s system.
 
-WARNING: Contraband is illegal in most systems and you will face consequences if caught by patrols.")
+WARNING: Contraband is illegal in most systems and you will face consequences if caught by patrols.]])
 
 msg_timeup = _("MISSION FAILED: You have failed to deliver the goods on time!")
 
