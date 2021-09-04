@@ -10,8 +10,8 @@
  </GFX>
  <presence>
   <faction>Dreamer Clan</faction>
-  <base>100</base>
-  <bonus>50</bonus>
+  <base>100.000000</base>
+  <bonus>50.000000</bonus>
   <range>5</range>
  </presence>
  <general>
