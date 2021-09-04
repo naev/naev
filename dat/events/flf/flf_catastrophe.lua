@@ -159,11 +159,13 @@ function takeoff ()
    hook.pilot( flf_base, "death", "pilot_death_sindbad" )
 
    -- Spawn FLF ships
-   shptypes = {"Pacifier", "Lancelot", "Vendetta", "Lancelot", "Vendetta", "Lancelot", "Vendetta"}
+   local shptypes = {"Pacifier", "Lancelot", "Vendetta", "Lancelot", "Vendetta", "Lancelot", "Vendetta"}
    flf_ships = fleet.add( 5, shptypes, "FLF", ss:pos(), nil, {ai="flf_norun"} )
    for i, j in ipairs( flf_ships ) do
       j:setVisible()
-      j:memory( "aggressive", true )
+      local mem = j:memory()
+      mem.aggressive = true
+      mem.enemyclose = 8000
    end
 
    -- Spawn Empire ships
@@ -176,10 +178,12 @@ function takeoff ()
          j:control()
          j:attack( flf_base )
       end
+      local mem = j:memory()
+      mem.enemyclose = nil
    end
 
    -- Spawn Dvaered ships
-   shptypes = {
+   local shptypes = {
       "Dvaered Goddard", "Dvaered Vigilance", "Dvaered Vigilance",
       "Dvaered Phalanx", "Dvaered Ancestor", "Dvaered Ancestor",
       "Dvaered Ancestor", "Dvaered Vendetta", "Dvaered Vendetta",
@@ -188,6 +192,8 @@ function takeoff ()
    for i, j in ipairs( dv_ships ) do
       j:setHostile()
       j:setVisible()
+      local mem = j:memory()
+      mem.enemyclose = nil
    end
 
    diff.apply( "flf_dead" )
