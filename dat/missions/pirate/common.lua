@@ -40,6 +40,12 @@ pir.factions = {
    faction.get("Dreamer Clan"),
    faction.get("Black Lotus"),
 }
+pir.factions_clans = {
+   faction.get("Raven Clan"),
+   faction.get("Wild Ones"),
+   faction.get("Dreamer Clan"),
+   faction.get("Black Lotus"),
+}
 
 --[[
    @brief Gets whether or not a faction is a pirate faction
@@ -73,7 +79,7 @@ function pir.systemClan( sys )
    local f
    local m = 0
    local p = sys:presences()
-   for k,v in ipairs(pir.factions) do
+   for k,v in ipairs(pir.factions_clans) do
       local pp = p[v:nameRaw()]
       if pp and pp > m then
          f = v
@@ -81,6 +87,27 @@ function pir.systemClan( sys )
       end
    end
    return f or faction.get("Pirate")
+end
+
+--[[
+   @brief Probabilistically determines the dominant clan (treats the presence values as likelihoods).
+--]]
+function pir.systemClanP( sys )
+   local total = 0
+   local p = sys:presences()
+   for k,v in ipairs(pir.factions_clans) do
+      total = total + (p[v:nameRaw()] or 0)
+   end
+   local r = rnd.rnd()
+   local accum = 0
+   for k,v in ipairs(pir.factions_clans) do
+      local pp = p[v:nameRaw()]
+      accum = accum + pp
+      if r < accum / total then
+         return v
+      end
+   end
+   return faction.get("Pirate")
 end
 
 return pir
