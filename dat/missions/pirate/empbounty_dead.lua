@@ -151,7 +151,7 @@ function create ()
    bounty_setup()
 
    -- Set mission details
-   if paying_faction ~= faction.get("Pirate") then
+   if pir.factionIsClan( paying_faction ) then
       misn.setTitle( misn_title[level]:format( missys:name(), string.format(_(" (%s)"), paying_faction:name() ) ) )
    else
       misn.setTitle( misn_title[level]:format( missys:name(), "" ) )

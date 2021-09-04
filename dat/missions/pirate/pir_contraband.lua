@@ -164,7 +164,7 @@ function create()
    distreward = 0.40
    reward    = 1.5^tier * (numjumps * jumpreward + traveldist * distreward) * finished_mod * (1. + 0.05*rnd.twosigma())
 
-   if reward_faction ~= faction.get("Pirate") then
+   if pir.factionIsClan( reward_faction ) then
       misn.setTitle( string.format(
          _("#rPIRACY:#0 Smuggle %s of %s (%s)"), tonnestring(amount),
          _(cargo), reward_faction:name() ) )

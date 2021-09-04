@@ -62,6 +62,19 @@ function pir.factionIsPirate( f )
 end
 
 --[[
+   @brief Gets whether or not a faction is a pirate clan
+--]]
+function pir.factionIsClan( f )
+   f = faction.get(f)
+   for k,v in ipairs(pir.factions_clans) do
+      if f==v then
+         return true
+      end
+   end
+   return false
+end
+
+--[[
    @brief Computes the total amount of pirate-related factions in a system.
 --]]
 function pir.systemPresence( sys )
@@ -77,6 +90,16 @@ end
    @brief Gets the dominant clan of a system.
 --]]
 function pir.systemClan( sys )
+   sys = sys or system.cur()
+   -- Return faction of landed asset if applicable
+   local pnt = planet.cur()
+   if pnt then
+      local pfact = pnt:faction()
+      if pfact and pir.factionIsPirate( pfact ) then
+         return pfact
+      end
+   end
+
    local f
    local m = 0
    local p = sys:presences()
@@ -94,6 +117,16 @@ end
    @brief Probabilistically determines the dominant clan (treats the presence values as likelihoods).
 --]]
 function pir.systemClanP( sys )
+   sys = sys or system.cur()
+   -- Return faction of landed asset if applicable
+   local pnt = planet.cur()
+   if pnt then
+      local pfact = pnt:faction()
+      if pfact and pir.factionIsPirate( pfact ) then
+         return pfact
+      end
+   end
+
    local total = 0
    local p = sys:presences()
    for k,v in ipairs(pir.factions_clans) do
