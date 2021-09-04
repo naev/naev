@@ -619,7 +619,7 @@ end
 
 -- Finishes create stuff like choose attack and prepare plans
 function create_post ()
-   local p = ai.pilot()
+   local p        = ai.pilot()
    mem.tookoff    = p:flags("takingoff")
    mem.jumpedin   = p:flags("jumpingin")
    mem.scanned    = {} -- must create for each pilot
