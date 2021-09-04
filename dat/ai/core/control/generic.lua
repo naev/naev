@@ -200,6 +200,8 @@ function handle_messages( si )
 end
 
 function should_attack( enemy, si )
+   si = si or _stateinfo( ai.taskname() )
+
    if not enemy or not enemy:exists() then
       return false
    end

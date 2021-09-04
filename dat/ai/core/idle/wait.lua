@@ -1,7 +1,7 @@
 function idle ()
    if mem.aggressive then
-      local enemy  = ai.getenemy()
-      if enemy ~= nil and should_attack(enemy) then
+      local enemy = ai.getenemy()
+      if enemy ~= nil and should_attack( enemy ) then
          ai.pushtask( "attack", enemy )
          return
       end

@@ -31,7 +31,7 @@
 
 local fleet = require "fleet"
 require "misnhelper"
-require "missions/flf/flf_common"
+require "missions.flf.flf_common"
 
 
 title = {}
@@ -144,9 +144,7 @@ function takeoff ()
    pilot.toggleSpawn( false )
    pilot.clear()
 
-   local ss, s
-
-   ss, s = planet.get( "Sindbad" )
+   local ss, s = planet.get( "Sindbad" )
 
    flf_base = pilot.add( "Sindbad", "FLF", ss:pos(), nil, {ai="flf_norun"} )
    flf_base:outfitRm( "all" )
