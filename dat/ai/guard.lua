@@ -19,11 +19,14 @@ mem.guardreturndist = 6000 -- distance at which to return
 mem.enemyclose    = mem.guarddodist
 
 function create ()
+   local p = ai.pilot()
+   local ps = p:ship()
+
    -- Choose attack format
    attack_choose()
 
    -- Default range stuff
-   mem.guardpos      = ai.pilot():pos() -- Just guard current position
+   mem.guardpos      = p:pos() -- Just guard current position
    mem.guarddodist   = 3000 * ps:size()
    mem.guardreturndist = mem.guarddodist + 5000
    mem.enemyclose    = mem.guarddodist
