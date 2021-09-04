@@ -102,7 +102,7 @@ function pir.systemClanP( sys )
    local r = rnd.rnd()
    local accum = 0
    for k,v in ipairs(pir.factions_clans) do
-      local pp = p[v:nameRaw()]
+      local pp = p[v:nameRaw()] or 0
       accum = accum + pp
       if r < accum / total then
          return v
