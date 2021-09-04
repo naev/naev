@@ -260,11 +260,6 @@ function backoff( target )
    end
 end
 
-control_funcs.loiter = function ()
-   -- Try to engage hostiles
-   __tryengage( ai.pilot() )
-   return true
-end
 control_funcs.ambush_moveto = function ()
    -- Try to engage hostiles
    __tryengage( ai.pilot() )
