@@ -164,9 +164,15 @@ function create()
    distreward = 0.40
    reward    = 1.5^tier * (numjumps * jumpreward + traveldist * distreward) * finished_mod * (1. + 0.05*rnd.twosigma())
 
-   misn.setTitle( string.format(
-      _("PIRACY: Smuggle %s of %s"), tonnestring(amount),
-      _(cargo) ) )
+   if reward_faction ~= faction.get("Pirate") then
+      misn.setTitle( string.format(
+         _("PIRACY: Smuggle %s of %s (%s)"), tonnestring(amount),
+         _(cargo), reward_faction:name() ) )
+   else
+      misn.setTitle( string.format(
+         _("PIRACY: Smuggle %s of %s"), tonnestring(amount),
+         _(cargo) ) )
+   end
    misn.markerAdd(destsys, "computer")
    if pir.factionIsPirate( planet.cur():faction() ) then
       cargo_setDesc( misn_desc:format( destplanet:name(), destsys:name(), faction_text ), cargo, amount, destplanet, timelimit )

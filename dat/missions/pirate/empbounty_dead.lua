@@ -56,12 +56,12 @@ require "pilot.generic"
 
 -- Mission details
 misn_title = {}
-misn_title[1] = _("PIRACY: Quick Assassination Job in %s")
-misn_title[2] = _("PIRACY: Small Assassination Job in %s")
-misn_title[3] = _("PIRACY: Moderate Assassination Job in %s")
-misn_title[4] = _("PIRACY: Big Assassination Job in %s")
-misn_title[5] = _("PIRACY: Dangerous Assassination Job in %s")
-misn_title[6] = _("PIRACY: Highly Dangerous Assassination Job in %s")
+misn_title[1] = _("PIRACY: Quick Assassination Job in %s%s")
+misn_title[2] = _("PIRACY: Small Assassination Job in %s%s")
+misn_title[3] = _("PIRACY: Moderate Assassination Job in %s%s")
+misn_title[4] = _("PIRACY: Big Assassination Job in %s%s")
+misn_title[5] = _("PIRACY: Dangerous Assassination Job in %s%s")
+misn_title[6] = _("PIRACY: Highly Dangerous Assassination Job in %s%s")
 misn_desc   = _("A meddlesome %s pilot known as %s was recently seen in the %s system. Local crime lords want this pilot dead.%s")
 desc_illegal_warning = _("WARNING: This mission is illegal and will get you in trouble with the authorities!")
 
@@ -147,7 +147,11 @@ function create ()
    bounty_setup()
 
    -- Set mission details
-   misn.setTitle( misn_title[level]:format( missys:name() ) )
+   if paying_faction ~= faction.get("Pirate") then
+      misn.setTitle( misn_title[level]:format( missys:name(), string.format(_(" (%s)"), paying_faction:name() ) ) )
+   else
+      misn.setTitle( misn_title[level]:format( missys:name(), "" ) )
+   end
 
    if pir.factionIsPirate( planet.cur():faction() ) then
       misn.setDesc( misn_desc:format( target_faction, name, missys:name(), faction_text ) )
