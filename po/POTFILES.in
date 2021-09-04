@@ -2250,7 +2250,7 @@ dat/events/taiomi/find.lua
 dat/events/taiomi/intro.lua
 dat/events/taiomi/system.lua
 dat/events/travelling_merchant.lua
-dat/events/tutorial/tutorial_common.lua
+dat/events/tutorial/common.lua
 dat/events/tutorial/tutorial_enter.lua
 dat/events/tutorial/tutorial_land.lua
 dat/events/updater.lua

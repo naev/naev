@@ -28,9 +28,8 @@
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 --]]
-
-require "events/tutorial/tutorial_common"
-require "missions/neutral/common"
+local tut = require "events.tutorial.common"
+require "missions.neutral.common"
 
 
 -- FIXME: Have to use a table for some of it due to # bug.
@@ -153,8 +152,8 @@ function accept ()
       stage = 1
 
       tk.msg( tutorial_title, movement_text:format(
-            tutGetKey("left"), tutGetKey("right"), tutGetKey("accel"),
-            tutGetKey("reverse"), start_planet:name() ) )
+            tut.getKey("left"), tut.getKey("right"), tut.getKey("accel"),
+            tut.getKey("reverse"), start_planet:name() ) )
    else
       tk.msg( nothanks_title, nothanks_text )
       misn.finish( true )
@@ -172,10 +171,10 @@ function timer ()
          stage = 2
          misn.osdActive( 2 )
 
-         tk.msg(tutorial_title, text.objectives:format(tutGetKey("mousefly")))
+         tk.msg(tutorial_title, text.objectives:format(tut.getKey("mousefly")))
          tk.msg( tutorial_title, text.landing:format(
-               start_planet:name(), tutGetKey("autobrake"),
-               tutGetKey("target_planet"), tutGetKey("land") ) )
+               start_planet:name(), tut.getKey("autobrake"),
+               tut.getKey("target_planet"), tut.getKey("land") ) )
       end
    elseif stage == 4 then
       if system.cur() == missys
@@ -183,9 +182,9 @@ function timer ()
          stage = 5
          misn.osdActive( 4 )
          tk.msg( tutorial_title, combat_text:format(
-               dest_planet:name(), tutGetKey("target_hostile"),
-               tutGetKey("primary"), tutGetKey("secondary"),
-               tutGetKey("autobrake") ) )
+               dest_planet:name(), tut.getKey("target_hostile"),
+               tut.getKey("primary"), tut.getKey("secondary"),
+               tut.getKey("autobrake") ) )
          spawn_drone()
       end
    end
@@ -215,7 +214,7 @@ end
 
 function land_mission ()
    if mission_hook ~= nil then hook.rm(mission_hook) end
-   tk.msg(tutorial_title, mission_text:format(tutGetKey("info")))
+   tk.msg(tutorial_title, mission_text:format(tut.getKey("info")))
 end
 
 
@@ -239,7 +238,7 @@ end
 
 function land_commodity ()
    if commodity_hook ~= nil then hook.rm(commodity_hook) end
-   tk.msg(tutorial_title, commodity_text:format(tutGetKey("starmap")))
+   tk.msg(tutorial_title, commodity_text:format(tut.getKey("starmap")))
 end
 
 
@@ -264,11 +263,11 @@ function enter_timer ()
    if stage == 3 then
       stage = 4
       misn.osdActive( 3 )
-      tk.msg( tutorial_title, text.autonav:format( player.name(), tutGetKey("overlay"), tutGetKey("menu"), dest_planet:name() ) )
+      tk.msg( tutorial_title, text.autonav:format( player.name(), tut.getKey("overlay"), tut.getKey("menu"), dest_planet:name() ) )
    elseif stage == 5 and system.cur() == missys then
       spawn_drone()
    elseif stage == 6 and system.cur() == destsys then
-      tk.msg( tutorial_title, text.conclusion:format( player.name(), tutGetKey("target_next"), tutGetKey("hail") ) )
+      tk.msg( tutorial_title, text.conclusion:format( player.name(), tut.getKey("target_next"), tut.getKey("hail") ) )
 
       addMiscLog( log_text )
 
@@ -286,8 +285,8 @@ function pilot_death_timer ()
    stage = 6
    misn.osdActive( 5 )
    misn.markerAdd( destsys, "high" )
-   tk.msg( tutorial_title, infoscreen_text:format( tutGetKey("autobrake"), tutGetKey("info") ) )
-   tk.msg( tutorial_title, jumping_text:format( tutGetKey("starmap"), destsys:name() ) )
+   tk.msg( tutorial_title, infoscreen_text:format( tut.getKey("autobrake"), tut.getKey("info") ) )
+   tk.msg( tutorial_title, jumping_text:format( tut.getKey("starmap"), destsys:name() ) )
 end
 
 

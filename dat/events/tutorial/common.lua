@@ -1,5 +1,7 @@
+local tut = {}
+
 -- Capsule function for tk.msg that disables all key input WHILE the msg is open.
-function tkMsg(title, msg, keys)
+function tut.tkMsg(title, msg, keys)
     naev.keyDisableAll()
     enableBasicKeys()
     tk.msg(title, msg)
@@ -12,7 +14,7 @@ end
 
 
 -- Capsule function for enabling the keys passed to it in a table, plus some defaults.
-function enableKeys(keys)
+function tut.enableKeys(keys)
     naev.keyDisableAll()
     for _, key in ipairs(keys) do
         naev.keyEnable(key, true)
@@ -21,7 +23,7 @@ function enableKeys(keys)
 end
 
 -- Capsule function for enabling basic, important keys.
-function enableBasicKeys()
+function tut.enableBasicKeys()
     local alwaysEnable = { "speed", "menu", "screenshot", "console" }
     for _, key in ipairs(alwaysEnable) do
         naev.keyEnable(key, true)
@@ -29,6 +31,8 @@ function enableBasicKeys()
 end
 
 -- Capsule function for naev.keyGet() that adds a color code to the return string.
-function tutGetKey(command)
+function tut.getKey(command)
     return "#b" .. naev.keyGet(command) .. "#0"
 end
+
+return tut

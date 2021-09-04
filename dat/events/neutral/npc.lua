@@ -10,7 +10,7 @@
 -- Event for creating random characters in the spaceport bar.
 -- The random NPCs will tell the player things about the Naev universe in general, about their faction, or about the game itself.
 --]]
-require "events.tutorial.tutorial_common"
+local tut = require "events.tutorial.common"
 local portrait = require "portrait"
 local vn = require 'vn'
 
@@ -217,7 +217,7 @@ msg_lore["Trader"] = {
 -- So, make sure the tips are always faction neutral.
 msg_tip = {
    _([["I heard you can set your weapons to only fire when your target is in range, or just let them fire when you pull the trigger. Sounds handy!"]]),
-   string.format( _([["Did you know that if a planet doesn't like you, you can often bribe the spaceport operators and land anyway? Just hail the planet with %s, and click the bribe button! Careful though, it doesn't always work."]]), tutGetKey("hail") ),
+   string.format( _([["Did you know that if a planet doesn't like you, you can often bribe the spaceport operators and land anyway? Just hail the planet with %s, and click the bribe button! Careful though, it doesn't always work."]]), tut.getKey("hail") ),
    _([["Many factions offer rehabilitation programs to criminals through the mission computer, giving them a chance to get back into their good graces. It can get really expensive for serious offenders though!"]]),
    _([["These new-fangled missile systems! You can't even fire them unless you get a target lock first! But the same thing goes for your opponents. You can actually make it harder for them to lock on to your ship by equipping scramblers or jammers. Scout class ships are also harder to target."]]),
    _([["You know how you can't change your ship or your equipment on some planets? Well, it seems you need an outfitter to change equipment, and a shipyard to change ships! Bet you didn't know that."]]),
@@ -228,7 +228,7 @@ msg_tip = {
    _([["There are passive outfits and active outfits. The passive ones modify your ship continuously, but the active ones only work if you turn them on. You usually can't keep an active outfit on all the time, so you need to be careful only to use it when you need it."]]),
    _([["If you're new to the galaxy, I recommend you buy a map or two. It can make exploration a bit easier."]]),
    _([["Scramblers and jammers make it harder for missiles to track you. They can be very handy if your enemies use missiles."]]),
-   string.format( _([["If you're having trouble with overheating weapons or outfits, you can press %s twice to put your ship into Active Cooldown; that'll dissipate all heat from your ship and also refill your rocket ammunition. Careful though, your energy and shields won't recharge while you do it!"]]), tutGetKey("autobrake") ),
+   string.format( _([["If you're having trouble with overheating weapons or outfits, you can press %s twice to put your ship into Active Cooldown; that'll dissipate all heat from your ship and also refill your rocket ammunition. Careful though, your energy and shields won't recharge while you do it!"]]), tut.getKey("autobrake") ),
    _([["If you're having trouble shooting other ships face on, try outfitting with turrets or use an afterburner to avoid them entirely!"]]),
    _([["You know how time speeds up when Autonav is on, but then goes back to normal when enemies are around? Turns out you can't disable the return to normal speed entirely, but you can control what amount of danger triggers it. Really handy if you want to ignore enemies that aren't actually hitting you."]]),
    _([["Flying bigger ships is awesome, but it's a bit tougher than flying smaller ships. There's so much more you have to do for the same actions, time just seems to fly by faster. I guess the upside of that is that you don't notice how slow your ship is as much."]]),
