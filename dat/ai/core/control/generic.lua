@@ -463,6 +463,16 @@ function control_funcs.loiter ()
    end
    return false
 end
+control_funcs.inspect_moveto = function ()
+   local p = ai.pilot()
+   local target = ai.taskdata()
+   local lr = mem.enemyclose
+   if mem.natural and target and lr and lanes.getDistance2P( p, target ) > lr*lr then
+      ai.poptask()
+      return false
+   end
+   return true
+end
 function control_funcs.runaway ()
    local p = ai.pilot()
    if mem.norun or p:leader() ~= nil then
