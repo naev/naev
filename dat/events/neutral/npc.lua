@@ -28,6 +28,11 @@ blacklist = {
 -- of the main universe (Thurion, Proteron).
 nongeneric_factions = {
    "Pirate",
+   "Marauder",
+   "Wild Ones",
+   "Raven Clan",
+   "Dreamer Clan",
+   "Black Lotus",
    "FLF",
    "Thurion",
    "Proteron"
@@ -40,6 +45,7 @@ override_list = {
    ["Raven Clan"] = "Pirate",
    ["Dreamer Clan"] = "Pirate",
    ["Black Lotus"] = "Pirate",
+   ["Marauder"] = "Pirate",
 }
 
 -- Civilian descriptions for the spaceport bar.
