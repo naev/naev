@@ -185,7 +185,7 @@ function pir_clanworld( pnt )
       bribe_price = (20 - standing) * 500 + 1000 -- 36K max, at -50 rep. Pirates are supposed to be cheaper than regular factions.
       local str   = creditstring( bribe_price )
       bribe_msg   = string.format(
-               _("\"Well, I think you're scum, but I'm willing to look the other way for %s. Deal?\""),
+               _([["Well, I think you're scum, but I'm willing to look the other way for %s. Deal?"]]),
             str )
       bribe_ack_msg = _("Heh heh, thanks. Now get off the comm, I'm busy!")
    end

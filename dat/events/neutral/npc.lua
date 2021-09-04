@@ -11,6 +11,7 @@
 -- The random NPCs will tell the player things about the Naev universe in general, about their faction, or about the game itself.
 --]]
 local tut = require "events.tutorial.common"
+local pir = require "missions.pirate.common"
 local portrait = require "portrait"
 local vn = require 'vn'
 
@@ -27,13 +28,18 @@ blacklist = {
 -- of the main universe (Thurion, Proteron).
 nongeneric_factions = {
    "Pirate",
-   "Wild Ones",
-   "Raven Clan",
-   "Dreamer Clan",
-   "Black Lotus",
    "FLF",
    "Thurion",
    "Proteron"
+}
+
+-- List to treat special factions diffferently
+override_list = {
+   -- Treat pirate clans the same (at least for now)
+   ["Wild Ones"] = "Pirate",
+   ["Raven Clan"] = "Pirate",
+   ["Dreamer Clan"] = "Pirate",
+   ["Black Lotus"] = "Pirate",
 }
 
 -- Civilian descriptions for the spaceport bar.
@@ -303,8 +309,8 @@ function create()
    local cur = planet.cur()
 
    -- Do not spawn any NPCs on restricted assets.
-   if cur:restricted() then
-      evt.finish()
+   if cur:restricted() and not pir.factionIsPirate(cur:faction()) then
+      evt.finish(false)
    end
 
    -- Skip blacklisted planets
@@ -317,7 +323,7 @@ function create()
       end
    end
    if blacklisted then
-      evt.finish()
+      evt.finish(false)
    end
 
    -- Chance of a jump point message showing up. As this gradually goes
@@ -348,10 +354,14 @@ function spawnNPC()
 
    local nongeneric = false
 
-   local f = planet.cur():faction()
+   -- Choose faction, overriding if necessary
+   local f  = planet.cur():faction()
+   local of = override_list[f:nameRaw()]
+   if of then f = faction.get(of) end
+
    local planfaction = f ~= nil and f:nameRaw() or nil
    local fac = "general"
-   local select = rnd.rnd()
+   local sel = rnd.rnd()
    if planfaction ~= nil then
       for i, j in ipairs(nongeneric_factions) do
          if j == planfaction then
@@ -360,7 +370,7 @@ function spawnNPC()
          end
       end
 
-      if nongeneric or select >= (0.5) then
+      if nongeneric or sel >= 0.5 then
          fac = planfaction
       end
    end
