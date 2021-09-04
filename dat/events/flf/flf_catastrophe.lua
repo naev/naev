@@ -160,11 +160,9 @@ function takeoff ()
 
    -- Spawn FLF ships
    local shptypes = {"Pacifier", "Lancelot", "Vendetta", "Lancelot", "Vendetta", "Lancelot", "Vendetta"}
-   flf_ships = fleet.add( 5, shptypes, "FLF", ss:pos(), nil, {ai="flf_norun"} )
+   flf_ships = fleet.add( 5, shptypes, "FLF", ss:pos(), nil, {ai="guard"} )
    for i, j in ipairs( flf_ships ) do
       j:setVisible()
-      local mem = j:memory()
-      mem.enemyclose = 8000
    end
 
    -- Spawn Empire ships
