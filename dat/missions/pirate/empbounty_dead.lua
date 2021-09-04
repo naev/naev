@@ -56,14 +56,14 @@ require "pilot.generic"
 
 -- Mission details
 misn_title = {}
-misn_title[1] = _("PIRACY: Quick Assassination Job in %s%s")
-misn_title[2] = _("PIRACY: Small Assassination Job in %s%s")
-misn_title[3] = _("PIRACY: Moderate Assassination Job in %s%s")
-misn_title[4] = _("PIRACY: Big Assassination Job in %s%s")
-misn_title[5] = _("PIRACY: Dangerous Assassination Job in %s%s")
-misn_title[6] = _("PIRACY: Highly Dangerous Assassination Job in %s%s")
+misn_title[1] = _("#rPIRACY:#0: Quick Assassination Job in %s%s")
+misn_title[2] = _("#rPIRACY:#0: Small Assassination Job in %s%s")
+misn_title[3] = _("#rPIRACY:#0: Moderate Assassination Job in %s%s")
+misn_title[4] = _("#rPIRACY:#0: Big Assassination Job in %s%s")
+misn_title[5] = _("#rPIRACY:#0: Dangerous Assassination Job in %s%s")
+misn_title[6] = _("#rPIRACY:#0: Highly Dangerous Assassination Job in %s%s")
 misn_desc   = _("A meddlesome %s pilot known as %s was recently seen in the %s system. Local crime lords want this pilot dead.%s")
-desc_illegal_warning = _("WARNING: This mission is illegal and will get you in trouble with the authorities!")
+desc_illegal_warning = _("#rWARNING:#0 This mission is illegal and will get you in trouble with the authorities!")
 
 -- Messages
 msg    = {}
@@ -84,6 +84,12 @@ hunter_hits = {}
 
 
 function create ()
+   -- Lower probability on non-pirate places
+   if not pir.factionIsPirate( planet.cur():faction() ) and rnd.rnd() < 0.5 then
+      misn.finish(false)
+   end
+
+   -- Determine paying faction probabilistic
    paying_faction = pir.systemClanP( system.cur() )
    local faction_text = pir.reputationMessage( paying_faction )
 

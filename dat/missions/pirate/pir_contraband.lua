@@ -25,7 +25,7 @@ require "numstring"
 
 
 misn_desc = _("Smuggling contraband goods to %s in the %s system.%s")
-desc_illegal_warning = _("WARNING: Contraband is illegal in most systems and you will face consequences if caught by patrols.")
+desc_illegal_warning = _("#rWARNING:#0 Contraband is illegal in most systems and you will face consequences if caught by patrols.")
 
 msg_timeup = _("MISSION FAILED: You have failed to deliver the goods on time!")
 
@@ -166,11 +166,11 @@ function create()
 
    if reward_faction ~= faction.get("Pirate") then
       misn.setTitle( string.format(
-         _("PIRACY: Smuggle %s of %s (%s)"), tonnestring(amount),
+         _("#rPIRACY:#0 Smuggle %s of %s (%s)"), tonnestring(amount),
          _(cargo), reward_faction:name() ) )
    else
       misn.setTitle( string.format(
-         _("PIRACY: Smuggle %s of %s"), tonnestring(amount),
+         _("#rPIRACY:#0 Smuggle %s of %s"), tonnestring(amount),
          _(cargo) ) )
    end
    misn.markerAdd(destsys, "computer")
