@@ -121,7 +121,7 @@ function create ()
 
    local systems = getsysatdistance( system.cur(), 1, 3,
       function(s)
-         return pir.systemPresense( s ) > 0
+         return pir.systemPresence( s ) > 0
       end )
 
    if #systems == 0 then
