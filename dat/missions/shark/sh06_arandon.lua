@@ -26,9 +26,9 @@
    1) Way back to Darkshed
 
 --]]
-
+local pir = require "missions.pirate.common"
 require "numstring"
-require "missions/shark/common"
+require "missions.shark.common"
 
 
 title = {}
@@ -126,6 +126,7 @@ function land()
    if stage == 1 and planet.cur() == paypla then
       if misn.cargoRm(smith) then
          tk.msg(title[3], text[3])
+         pir.reputationNormalMission(rnd.rnd(2,3))
          player.pay(reward)
          misn.osdDestroy(osd)
          hook.rm(enterhook)

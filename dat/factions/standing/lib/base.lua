@@ -22,7 +22,6 @@ _fmod_misn_friend     = 0.3 -- Missions done for the faction's allies
 _fstanding_friendly = 70
 _fstanding_neutral = 0
 
-
 _ftext_standing = {}
 _ftext_standing[100] = _("Legend")
 _ftext_standing[90]  = _("Hero")

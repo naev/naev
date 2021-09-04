@@ -180,6 +180,7 @@ function land()
       reward = reward / 2
    end
    player.pay(reward)
+   pir.reputationNormalMission(rnd.rnd(2,3))
    misn.finish(true)
    end
 end

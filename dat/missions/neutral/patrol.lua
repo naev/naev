@@ -45,7 +45,7 @@
    faction.
 
 --]]
-
+local pir = require "missions.pirate.common"
 require "numstring"
 require "jumpdist"
 
@@ -218,6 +218,7 @@ function land ()
       local txt = pay_text[ rnd.rnd( 1, #pay_text ) ]
       tk.msg( pay_title, txt )
       player.pay( credits )
+      pir.reputationNormalMission( reputation )
       paying_faction:modPlayerSingle( reputation )
       misn.finish( true )
    elseif not job_done and system.cur() == missys then

@@ -40,6 +40,7 @@ pir.factions = {
    faction.get("Dreamer Clan"),
    faction.get("Black Lotus"),
 }
+-- List of all the pirate clan factions
 pir.factions_clans = {
    faction.get("Raven Clan"),
    faction.get("Wild Ones"),
@@ -115,6 +116,19 @@ end
 --]]
 function pir.reputationMessage( f )
    return string.format(_("This mission will increase your reputation with %s."), f:longname())
+end
+
+--[[
+   @brief Decrease pirate standings for doing normal missions.
+--]]
+function pir.reputationNormalMission( amount )
+   for k,v in ipairs(pir.faction_clans) do
+      local s = v:playerStanding()
+      -- TODO Probably should handle this minimum stuff better
+      if s > -50 then
+         v:modPlayerSingle( -amount )
+      end
+   end
 end
 
 return pir

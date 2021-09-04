@@ -24,7 +24,7 @@
  </mission>
  --]]
 --Escort a convoy of traders to a destination--
-
+local pir = require "missions.pirate.common"
 local fleet = require "fleet"
 require "nextjump"
 require "cargo_common"
@@ -214,6 +214,7 @@ function land()
          tk.msg( landcasualtytitle, landcasualtytext[2] )
          player.pay( reward * alive / orig_alive )
       end
+      pir.reputationNormalMission(rnd.rnd(2,3))
       misn.finish( true )
    end
 end

@@ -16,10 +16,9 @@
    Handles the randomly generated Empire cargo missions.
 
 ]]--
-
+local pir = require "missions.pirate.common"
 require "cargo_common"
 require "numstring"
-
 
 misn_desc  = _("Official Empire cargo transport to %s in the %s system.")
 
@@ -145,7 +144,9 @@ function land()
       end
 
       -- increase faction
-      faction.modPlayerSingle("Empire", rnd.rnd(2, 4))
+      local reputation = rnd.rnd(2, 4)
+      faction.modPlayerSingle("Empire", reputation)
+      pir.reputationNormalMission(reputation)
       misn.finish(true)
    end
 end

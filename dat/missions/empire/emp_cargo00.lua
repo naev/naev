@@ -23,10 +23,10 @@
       minor edits by Infiltrator
 
 ]]--
-
+local pir = require "missions.pirate.common"
 require "numstring"
 require "jumpdist"
-require "missions/empire/common"
+require "missions.empire.common"
 
 bar_desc = _("You see an Empire Lieutenant who seems to be looking at you.")
 misn_title = _("Empire Recruitment")
@@ -99,7 +99,6 @@ end
 
 
 function land()
-
    local landed = planet.cur()
    if landed == dest then
       if misn.cargoRm(parcels) then
@@ -109,6 +108,7 @@ function land()
          var.push("es_cargo", true)
          faction.modPlayerSingle("Empire",3);
          emp_addShippingLog( log_text )
+         pir.reputationNormalMission(3)
          misn.finish(true)
       end
    end

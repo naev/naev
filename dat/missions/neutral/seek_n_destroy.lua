@@ -30,12 +30,12 @@
    4) Target was killed
 
 --]]
-
+local pir = require "missions.pirate.common"
 require "numstring"
 require "jumpdist"
 local portrait = require "portrait"
-require "pilot/generic"
-require "pilot/pirate"
+require "pilot.generic"
+require "pilot.pirate"
 
 clue_title   = _("I know the pilot you're looking for")
 clue_text    = {}
@@ -566,6 +566,7 @@ function land ()
       tk.msg( pay_title, pay_text[rnd.rnd(1,#pay_text)] )
       player.pay( credits )
       paying_faction:modPlayerSingle( rnd.rnd(1,2) )
+      pir.reputationNormalMission(rnd.rnd(2,3))
       misn.finish( true )
    end
 end

@@ -225,6 +225,7 @@ function land ()
       tk.msg( pay_title, pay_text:format( name ) )
       player.pay( credits )
       paying_faction:modPlayerSingle( reputation )
+      pir.reputationNormalMission( reputation )
       misn.finish( true )
    end
 end

@@ -22,9 +22,8 @@
       their hardware. The player can fail in multiple ways.
       AUTHOR: thilo <thilo@thiloernst.de>
    --]]
-
+local pir = require "missions.pirate.common"
 require "numstring"
-
 
 -- Bar information, describes how the NPC appears in the bar
 bar_desc = _("You see a bunch of guys and gals, excitedly whispering over some papers, which seem to contain column after column of raw numbers. Two of them don't participate in the babbling, but look at you expectantly.")
@@ -367,7 +366,7 @@ function nerds_land3()
    if cp == srcPlanet then
       if nerdswon then
          tk.msg(title[12], string.format(text[12], player.name()))
-         player.pay(30000)
+         player.pay(30e3)
       else
          if not tk.yesno(title[13], text[13]) then
             tk.msg(title[14], text[14])
@@ -383,6 +382,7 @@ function nerds_land3()
       hook.rm(dhook)
       hook.rm(lhook)
       misn.markerRm(marker)
+      pir.reputationNormalMission(rnd.rnd(2,3))
       misn.finish(true)
    end
 end

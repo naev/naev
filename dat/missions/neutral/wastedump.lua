@@ -37,7 +37,6 @@
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 --]]
-
 require "numstring"
 local pir = require "missions.pirate.common"
 
@@ -135,6 +134,7 @@ function land ()
       if planet.get( j ) == planet.cur() then
          local txt = finish_text[ rnd.rnd( 1, #finish_text ) ]
          tk.msg( "", txt )
+         pir.reputationNormalMission(rnd.rnd(2,3))
          misn.finish( true )
       end
    end

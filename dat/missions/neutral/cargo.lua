@@ -26,7 +26,7 @@
    -- These are regular cargo delivery missions. Pay is low, but so is difficulty.
    -- Most of these missions require BULK ships. Not for small ships!
 --]]
-
+local pir = require "missions.pirate.common"
 require "cargo_common"
 require "numstring"
 
@@ -118,6 +118,7 @@ function land()
       -- Semi-random message.
       tk.msg( cargo_land_title, cargo_land[rnd.rnd(1, #cargo_land)]:format(_(cargo)) )
       player.pay(reward)
+      pir.reputationNormalMission(rnd.rnd(2,3))
       misn.finish(true)
    end
 end

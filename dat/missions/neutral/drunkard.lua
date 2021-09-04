@@ -22,9 +22,8 @@
   A drunkard at the bar has gambled his ship into hock, and needs you to do a mission for him.
 
 ]]--
-
 require "numstring"
-require "missions/neutral/common"
+require "missions.neutral.common"
 
 
 -- Bar Description

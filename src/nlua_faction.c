@@ -352,7 +352,6 @@ static int factionL_modplayersingle( lua_State *L )
    int f    = luaL_validfaction(L,1);
    double n = luaL_checknumber(L,2);
    faction_modPlayerSingle( f, n, "script" );
-
    return 0;
 }
 

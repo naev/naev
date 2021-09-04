@@ -43,7 +43,7 @@
    Based on patrol mission, this mission ferries sightseers to various points.
 
 --]]
-
+local pir = require "missions.pirate.common"
 require "numstring"
 require "jumpdist"
 
@@ -225,6 +225,7 @@ function land ()
       end
       tk.msg( ttl, txt )
 
+      pir.reputationNormalMission(rnd.rnd(2,3))
       if nolux then
          player.pay( credits_nolux )
       else

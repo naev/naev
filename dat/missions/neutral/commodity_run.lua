@@ -38,7 +38,7 @@
 
    Commodity delivery missions.
 --]]
-
+local pir = require "missions.pirate.common"
 require "numstring"
 
 --Mission Details
@@ -151,6 +151,7 @@ function land ()
       tk.msg(cargo_land_title, txt)
       pilot.cargoRm(player.pilot(), chosen_comm, amount)
       player.pay(reward)
+      pir.reputationNormalMission(rnd.rnd(2,3))
       update_active_runs(-1)
       misn.finish(true)
    end

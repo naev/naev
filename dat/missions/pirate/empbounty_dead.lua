@@ -78,10 +78,8 @@ osd_msg[1] = _("Fly to the %s system")
 osd_msg[2] = _("Kill %s")
 osd_msg["__save"] = true
 
-
 hunters = {}
 hunter_hits = {}
-
 
 function create ()
    -- Lower probability on non-pirate places
@@ -347,33 +345,33 @@ end
 -- Set up the ship, credits, and reputation based on the level.
 function bounty_setup ()
    ship = "Schroedinger"
-   credits = 50000
+   credits = 50e3
    reputation = 0
 
    if target_faction == "Empire" then
       if level == 1 then
          ship = "Empire Shark"
-         credits = 200000 + rnd.sigma() * 15000
+         credits = 200e3 + rnd.sigma() * 15e3
          reputation = 1
       elseif level == 2 then
          ship = "Empire Lancelot"
-         credits = 450000 + rnd.sigma() * 50000
+         credits = 450e3 + rnd.sigma() * 50e3
          reputation = 2
       elseif level == 3 then
          ship = "Empire Admonisher"
-         credits = 800000 + rnd.sigma() * 80000
+         credits = 800e3 + rnd.sigma() * 80e3
          reputation = 3
       elseif level == 4 then
          ship = "Empire Pacifier"
-         credits = 1200000 + rnd.sigma() * 120000
+         credits = 1200e3 + rnd.sigma() * 120e3
          reputation = 6
       elseif level == 5 then
          ship = "Empire Hawking"
-         credits = 1800000 + rnd.sigma() * 200000
+         credits = 1800e3 + rnd.sigma() * 200e3
          reputation = 10
       elseif level == 6 then
          ship = "Empire Peacemaker"
-         credits = 3000000 + rnd.sigma() * 500000
+         credits = 3e6 + rnd.sigma() * 500e3
          reputation = 20
       end
    elseif target_faction == "Dvaered" then
@@ -383,25 +381,25 @@ function bounty_setup ()
          else
             ship = "Dvaered Vendetta"
          end
-         credits = 450000 + rnd.sigma() * 50000
+         credits = 450e3 + rnd.sigma() * 50e3
          reputation = 2
       elseif level == 3 then
          ship = "Dvaered Phalanx"
-         credits = 800000 + rnd.sigma() * 80000
+         credits = 800e3 + rnd.sigma() * 80e3
          reputation = 3
       elseif level == 4 then
          ship = "Dvaered Vigilance"
-         credits = 1200000 + rnd.sigma() * 120000
+         credits = 1200e3 + rnd.sigma() * 120e3
          reputation = 6
       elseif level >= 5 then
          ship = "Dvaered Goddard"
-         credits = 1800000 + rnd.sigma() * 200000
+         credits = 1800e3 + rnd.sigma() * 200e3
          reputation = 10
       end
    elseif target_faction == "Soromid" then
       if level == 1 then
          ship = "Soromid Brigand"
-         credits = 200000 + rnd.sigma() * 15000
+         credits = 200e3 + rnd.sigma() * 15e3
          reputation = 1
       elseif level == 2 then
          if rnd.rnd() < 0.5 then
@@ -409,19 +407,19 @@ function bounty_setup ()
          else
             ship = "Soromid Marauder"
          end
-         credits = 450000 + rnd.sigma() * 50000
+         credits = 450e3 + rnd.sigma() * 50e3
          reputation = 2
       elseif level == 3 then
          ship = "Soromid Odium"
-         credits = 800000 + rnd.sigma() * 80000
+         credits = 800e3 + rnd.sigma() * 80e3
          reputation = 3
       elseif level == 4 then
          ship = "Soromid Nyx"
-         credits = 1200000 + rnd.sigma() * 120000
+         credits = 1200e3 + rnd.sigma() * 120e3
          reputation = 6
       elseif level == 5 then
          ship = "Soromid Ira"
-         credits = 1800000 + rnd.sigma() * 200000
+         credits = 1800e3 + rnd.sigma() * 200e3
          reputation = 10
       elseif level == 6 then
          if rnd.rnd() < 0.5 then
@@ -429,13 +427,13 @@ function bounty_setup ()
          else
             ship = "Soromid Vox"
          end
-         credits = 3000000 + rnd.sigma() * 500000
+         credits = 3e6 + rnd.sigma() * 500e3
          reputation = 20
       end
    elseif target_faction == "Frontier" then
       if level == 1 then
          ship = "Hyena"
-         credits = 100000 + rnd.sigma() * 7500
+         credits = 100e3 + rnd.sigma() * 7500
          reputation = 0
       elseif level == 2 then
          if rnd.rnd() < 0.5 then
@@ -443,43 +441,43 @@ function bounty_setup ()
          else
             ship = "Ancestor"
          end
-         credits = 450000 + rnd.sigma() * 50000
+         credits = 450e3 + rnd.sigma() * 50e3
          reputation = 2
       elseif level >= 3 then
          ship = "Phalanx"
-         credits = 800000 + rnd.sigma() * 80000
+         credits = 800e3 + rnd.sigma() * 80e3
          reputation = 3
       end
    elseif target_faction == "Sirius" then
       if level == 1 then
          ship = "Sirius Fidelity"
-         credits = 200000 + rnd.sigma() * 15000
+         credits = 200e3 + rnd.sigma() * 15e3
          reputation = 1
       elseif level == 2 then
          ship = "Sirius Shaman"
-         credits = 450000 + rnd.sigma() * 50000
+         credits = 450e3 + rnd.sigma() * 50e3
          reputation = 2
       elseif level == 3 or level == 4 then
          ship = "Sirius Preacher"
-         credits = 800000 + rnd.sigma() * 80000
+         credits = 800e3 + rnd.sigma() * 80e3
          reputation = 3
       elseif level == 5 then
          ship = "Sirius Dogma"
-         credits = 1800000 + rnd.sigma() * 200000
+         credits = 1800e3 + rnd.sigma() * 200e3
          reputation = 10
       elseif level == 6 then
          ship = "Sirius Divinity"
-         credits = 3000000 + rnd.sigma() * 500000
+         credits = 3e6 + rnd.sigma() * 500e3
          reputation = 20
       end
    elseif target_faction == "Za'lek" then
       if level <= 3 then
          ship = "Za'lek Sting"
-         credits = 800000 + rnd.sigma() * 80000
+         credits = 80e3 + rnd.sigma() * 80e3
          reputation = 3
       elseif level == 4 then
          ship = "Za'lek Demon"
-         credits = 1200000 + rnd.sigma() * 120000
+         credits = 1200e3 + rnd.sigma() * 120e3
          reputation = 6
       elseif level == 5 then
          if rnd.rnd() < 0.5 then
@@ -487,11 +485,11 @@ function bounty_setup ()
          else
             ship = "Za'lek Mephisto"
          end
-         credits = 1800000 + rnd.sigma() * 200000
+         credits = 1800e3 + rnd.sigma() * 200e3
          reputation = 10
       elseif level == 6 then
          ship = "Za'lek Hephaestus"
-         credits = 3000000 + rnd.sigma() * 500000
+         credits = 3e6 + rnd.sigma() * 500e3
          reputation = 20
       end
    elseif target_faction == "Trader" then
@@ -501,7 +499,7 @@ function bounty_setup ()
          else
             ship = "Koala"
          end
-         credits = 75000 + rnd.sigma() * 5000
+         credits = 75e3 + rnd.sigma() * 5e3
          reputation = 0
       elseif level == 2 then
          if rnd.rnd() < 0.5 then
@@ -509,15 +507,16 @@ function bounty_setup ()
          else
             ship = "Quicksilver"
          end
-         credits = 350000 + rnd.sigma() * 50000
+         credits = 350e3 + rnd.sigma() * 50e3
          reputation = 2
       elseif level >= 3 then
          if rnd.rnd() < 0.5 then
             ship = "Rhino"
+            credits = 800e3 + rnd.sigma() * 80e3
          else
             ship = "Mule"
+            credits = 700e3 + rnd.sigma() * 80e3
          end
-         credits = 700000 + rnd.sigma() * 80000
          reputation = 3
       end
    elseif target_faction == "Traders Guild" then
@@ -527,7 +526,7 @@ function bounty_setup ()
          else
             ship = "Koala"
          end
-         credits = 100000 + rnd.sigma() * 5000
+         credits = 100e3 + rnd.sigma() * 5e3
          reputation = 0
       elseif level == 2 then
          if rnd.rnd() < 0.5 then
@@ -535,15 +534,16 @@ function bounty_setup ()
          else
             ship = "Quicksilver"
          end
-         credits = 400000 + rnd.sigma() * 50000
+         credits = 400e3 + rnd.sigma() * 50e3
          reputation = 2
       elseif level >= 3 then
          if rnd.rnd() < 0.5 then
             ship = "Rhino"
+            credits = 900e3 + rnd.sigma() * 80e3
          else
             ship = "Mule"
+            credits = 800e3 + rnd.sigma() * 80e3
          end
-         credits = 800000 + rnd.sigma() * 80000
          reputation = 3
       end
    elseif target_faction == "Independent" then
@@ -554,7 +554,7 @@ function bounty_setup ()
       choices[4] = "Llama"
 
       ship = choices[ rnd.rnd( 1, #choices ) ]
-      credits = 50000 + rnd.sigma() * 5000
+      credits = 50e3 + rnd.sigma() * 5e3
       reputation = 0
    end
 end

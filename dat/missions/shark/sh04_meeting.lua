@@ -27,12 +27,11 @@
    TODO: I'm not really happy with the drone's behaviour: it's quite too obvious
 
 --]]
-
---needed scripts
+local pir = require "missions.pirate.common"
 require "proximity"
 require "numstring"
 local fleet = require "fleet"
-require "missions/shark/common"
+require "missions.shark.common"
 
 
 title = {}
@@ -140,6 +139,7 @@ function land()
       if misn.cargoRm(smith) then
          tk.msg(title[3], text[3])
          player.pay(reward)
+         pir.reputationNormalMission(rnd.rnd(2,3))
          misn.osdDestroy(osd)
          hook.rm(enterhook)
          hook.rm(landhook)

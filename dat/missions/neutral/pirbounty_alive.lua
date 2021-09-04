@@ -42,9 +42,8 @@
    Can work with any faction.
 
 --]]
-
 require "numstring"
-require "missions/neutral/pirbounty_dead"
+require "missions.neutral.pirbounty_dead"
 
 -- Localization
 kill_instead_title   = _("Better Dead than Free")

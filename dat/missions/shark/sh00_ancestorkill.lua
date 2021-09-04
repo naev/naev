@@ -37,11 +37,10 @@
    4) Pirate was killed
 
 --]]
-
---Needed scripts
-require "pilot/pirate"
+local pir = require "missions.pirate.common"
+require "pilot.pirate"
 require "numstring"
-require "missions/shark/common"
+require "missions.shark.common"
 
 
 title = {}
@@ -157,6 +156,7 @@ function land()
       hook.rm(landhook)
       hook.rm(jumpouthook)
       shark_addLog( log_text )
+      pir.reputationNormalMission(rnd.rnd(2,3))
       misn.finish(true)
    end
 end

@@ -26,9 +26,9 @@
    Help some independent scientists put a satellite in the nebula.
 
 ]]--
-
+local pir = require "missions.pirate.common"
 require "numstring"
-require "missions/neutral/common"
+require "missions.neutral.common"
 
 
 -- localization stuff, translators would work here
@@ -127,6 +127,7 @@ function land ()
    if misn_stage == 1 and landed == homeworld then
       tk.msg( title[3], text[4] )
       player.outfitAdd( "Satellite Mock-up" )
+      pir.reputationNormalMission(rnd.rnd(2,3))
       player.pay( credits )
       addMiscLog( log_text )
       misn.finish(true)

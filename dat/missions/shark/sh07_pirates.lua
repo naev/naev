@@ -26,12 +26,11 @@
    1) Way to Alteris
 
 --]]
-
---Needed scripts
-require "pilot/pirate"
+local pir = require "missions.pirate.common"
+require "pilot.pirate"
 require "numstring"
 require "jumpdist"
-require "missions/shark/common"
+require "missions.shark.common"
 
 
 title = {}
@@ -163,6 +162,7 @@ function land()
    --Job is done
    if stage == 1 and planet.cur() == planet.get("Darkshed") then
       tk.msg(title[5], text[5])
+      pir.reputationNormalMission(rnd.rnd(2,3))
       player.pay(reward)
       player.outfitAdd("Sandwich Holder")
       misn.osdDestroy(osd)

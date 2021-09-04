@@ -34,9 +34,9 @@
    1) Way back to Darkshed
 
 --]]
-
+local pir = require "missions.pirate.common"
 require "numstring"
-require "missions/shark/common"
+require "missions.shark.common"
 
 
 title = {}
@@ -120,6 +120,7 @@ function land()
    --Job is done
    if stage == 1 and planet.cur() == paypla then
       tk.msg(title[3], text[3]:format(nextsys:name()))
+      pir.reputationNormalMission(rnd.rnd(2,3))
       player.pay(reward)
       shark_addLog( log_text )
       misn.finish(true)
