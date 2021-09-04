@@ -211,7 +211,7 @@ function should_attack( enemy, si )
    end
 
    -- Don't reattack the current enemy
-   if si.attack and enemy == ai.taskdata() then
+   if si.attack and enemy==ai.taskdata() then
       return false
    end
 
@@ -235,17 +235,18 @@ function should_attack( enemy, si )
 
    -- Check to see if we want to go back to the lanes
    local lr = mem.enemyclose
+   local lr2 = lr*lr
    if mem.natural and lr then
       local d, pos = lanes.getDistance2P( p, enemy:pos() )
-      if d > lr*lr then
+      if d > lr2 then
          return false
       end
    end
 
    -- Check if we have minimum range to engage
-   if mem.enemyclose then
-      local dist = ai.dist2( enemy )
-      if mem.enemyclose*mem.enemyclose > dist then
+   if lr then
+      local d = ai.dist2( enemy )
+      if lr2 > d then
          return true
       end
    else
