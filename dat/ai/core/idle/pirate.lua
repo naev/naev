@@ -323,13 +323,34 @@ control_funcs.inspect_moveto = function ()
    return true
 end
 
+-- Custom should attack
+local should_attack_generic = should_attack
+function should_attack( enemy, si )
+   local p = ai.pilot()
+   -- If stealthed we don't want to attack normally
+   local stealth = p:flags("stealth")
+   if stealth then return false end
+
+   -- Do normal check
+   local res = should_attack_generic( enemy, si )
+   print(string.format("should_attack_generic: %s", res))
+   if not res then return false end
+
+   -- Make sure vulnerable
+   if not __vulnerable( p, enemy, mem.vulnattack ) then
+      print("   not vulnerable")
+      return false
+   end
+   return true
+end
+
 -- Settings
 mem.doscans       = false
 mem.loiter        = math.huge -- They loiter until they can steal!
 mem.stealth       = true
 mem.aggressive    = true -- Pirates are aggressive
 mem.lanedistance  = 2000
-mem.enemyclose    = 0 -- Don't aggro normally
+mem.enemyclose    = nil
 mem.ambushclose   = nil
 mem.vulnrange     = 4000
 mem.vulnrambo     = 1.0

@@ -15,7 +15,7 @@ _fmod_kill_friend     = 0 -- Kills of the faction's allies
 _fmod_misn_enemy      = 0.3 -- Missions done for the faction's enemies
 _fmod_misn_friend     = 0.3 -- Missions done for the faction's allies
 
-_fstanding_friendly = 20
+_fstanding_friendly = 40
 _fstanding_neutral = 0
 
 _ftext_standing = {}
@@ -60,4 +60,3 @@ function faction_hit( current, amount, source, secondary )
    -- Set current faction standing
    return standing
 end
-

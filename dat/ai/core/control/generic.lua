@@ -210,8 +210,6 @@ function handle_messages( si )
 end
 
 function should_attack( enemy, si )
-   si = si or _stateinfo( ai.taskname() )
-
    if not enemy or not enemy:exists() then
       return false
    end
@@ -219,6 +217,8 @@ function should_attack( enemy, si )
    if not mem.aggressive then
       return false
    end
+
+   si = si or _stateinfo( ai.taskname() )
 
    -- Don't reattack the current enemy
    if si.attack and enemy==ai.taskdata() then
@@ -247,7 +247,7 @@ function should_attack( enemy, si )
    local lr = mem.enemyclose
    if mem.natural and lr then
       local d, pos = lanes.getDistance2P( p, enemy:pos() )
-      if d > lr*lr then
+      if math.huge > d and d > lr*lr then
          return false
       end
    end

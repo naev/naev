@@ -34,6 +34,7 @@ function create ()
 
    -- Set how far they attack
    mem.ambushclose = 4000 + 1000 * ps:size()
+   mem.enemyclose = mem.ambushclose
    mem.stealth = p:flags("stealth")
 
    -- Finish up creation
