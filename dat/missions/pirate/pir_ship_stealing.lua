@@ -32,12 +32,12 @@
    Then, when the player wants to leave the planet, and that will eventually
    happen (at least, I hope…) he’ll be pursued by a few fighters.
 --]]
-
+local pir = require "missions.pirate.common"
 local swapship = require "swapship"
 require "jumpdist"
 require "numstring"
 local portrait = require "portrait"
-require "factions/equip/generic"
+require "factions.equip.generic"
 
 
 title = _("Stealing a %s")
