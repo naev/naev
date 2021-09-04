@@ -86,6 +86,10 @@ static char** systemname_stack = NULL; /**< System name stack corresponding to p
 StarSystem *systems_stack = NULL; /**< Star system stack. */
 static Planet *planet_stack = NULL; /**< Planet stack. */
 static VirtualAsset *vasset_stack = NULL; /**< Virtual asset stack. */
+#ifdef DEBUGGING
+static int systemstack_changed = 0; /**< Whether or not the systems_stack was changed after loading. */
+static int planetstack_changed = 0; /**< Whether or not the planet_stack was changed after loading. */
+#endif /* DEBUGGING */
 
 /*
  * Asteroid types stack.
@@ -105,6 +109,7 @@ static int space_simulating = 0; /**< Are we simulating space? */
 glTexture **asteroid_gfx = NULL;
 static size_t nasterogfx = 0; /**< Nb of asteroid gfx. */
 static Planet *space_landQueuePlanet = NULL;
+
 
 /*
  * fleet spawn rate
@@ -850,11 +855,21 @@ StarSystem* system_get( const char* sysname )
    if (sysname == NULL)
       return NULL;
 
+#ifdef DEBUGGING
+   if (systemstack_changed) {
+      for (int i; i<array_size(systems_stack); i++)
+         if (strcmp(systems_stack[i].name, sysname)==0)
+            return &systems_stack[i];
+      goto system_notfound;
+   }
+#endif /* DEBUGGING */
+
    const StarSystem s = {.name = (char*)sysname};
    StarSystem *found = bsearch( &s, systems_stack, array_size(systems_stack), sizeof(StarSystem), system_cmp );
    if (found != NULL)
       return found;
 
+system_notfound:
    WARN(_("System '%s' not found in stack"), sysname);
    return NULL;
 }
@@ -941,11 +956,21 @@ Planet* planet_get( const char* planetname )
       return NULL;
    }
 
+#ifdef DEBUGGING
+   if (planetstack_changed) {
+      for (int i; i<array_size(planet_stack); i++)
+         if (strcmp(planet_stack[i].name, planetname)==0)
+            return &planet_stack[i];
+      goto planet_notfound;
+   }
+#endif /* DEBUGGING */
+
    const Planet p = {.name = (char*)planetname};
    Planet *found = bsearch( &p, planet_stack, array_size(planet_stack), sizeof(Planet), planet_cmp );
    if (found != NULL)
       return found;
 
+planet_notfound:
    WARN(_("Planet '%s' not found in the universe"), planetname);
    return NULL;
 }
@@ -1721,6 +1746,14 @@ Planet *planet_new (void)
 {
    Planet *p, *old_stack;
    int realloced;
+
+#if DEBUGGING
+   if (!systems_loading)
+      planetstack_changed = 1;
+#else /* DEBUGGING */
+   if (!systems_loading)
+      WARN(_("Creating new planet in non-debugging mode. Things are probably going to break horribly."))
+#endif /* DEBUGGING */
 
    /* Grow and initialize memory. */
    old_stack   = planet_stack;
@@ -2575,6 +2608,14 @@ StarSystem *system_new (void)
 {
    StarSystem *sys;
    int id;
+
+#if DEBUGGING
+   if (!systems_loading)
+      systemstack_changed = 1;
+#else /* DEBUGGING */
+   if (!systems_loading)
+      WARN(_("Creating new system in non-debugging mode. Things are probably going to break horribly."))
+#endif /* DEBUGGING */
 
    /* Protect current system in case of realloc. */
    id = -1;
