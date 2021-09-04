@@ -46,8 +46,9 @@ pir.factions = {
    @brief Gets whether or not a faction is a pirate faction
 --]]
 function pir.factionIsPirate( f )
+   f = faction.get(f)
    for k,v in ipairs(pir.factions) do
-      if faction.get(f)==v then
+      if f==v then
          return true
       end
    end

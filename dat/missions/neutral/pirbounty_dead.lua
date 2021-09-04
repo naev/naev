@@ -43,10 +43,10 @@
    Can work with any faction.
 
 --]]
-
+local pir = require "missions.pirate.common"
 require "numstring"
 require "jumpdist"
-require "pilot/pirate"
+require "pilot.pirate"
 
 subdue_title   = _("Captured Alive")
 subdue_text    = {}
@@ -121,8 +121,7 @@ function create ()
 
    local systems = getsysatdistance( system.cur(), 1, 3,
       function(s)
-         local p = s:presences()["Pirate"]
-         return p ~= nil and p > 0
+         return pir.systemPresense( s ) > 0
       end )
 
    if #systems == 0 then
