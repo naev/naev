@@ -921,6 +921,13 @@ char* planet_getSystem( const char* planetname )
 }
 
 
+static int planet_cmp( const void *p1, const void *p2 )
+{
+   const Planet *pnt1, *pnt2;
+   pnt1 = (const Planet*) p1;
+   pnt2 = (const Planet*) p2;
+   return strcmp(pnt1->name,pnt2->name);
+}
 /**
  * @brief Gets a planet based on its name.
  *
@@ -929,16 +936,15 @@ char* planet_getSystem( const char* planetname )
  */
 Planet* planet_get( const char* planetname )
 {
-   int i;
-
    if (planetname==NULL) {
       WARN(_("Trying to find NULL planet..."));
       return NULL;
    }
 
-   for (i=0; i<array_size(planet_stack); i++)
-      if (strcmp(planet_stack[i].name,planetname)==0)
-         return &planet_stack[i];
+   const Planet p = {.name = (char*)planetname};
+   Planet *found = bsearch( &p, planet_stack, array_size(planet_stack), sizeof(Planet), planet_cmp );
+   if (found != NULL)
+      return found;
 
    WARN(_("Planet '%s' not found in the universe"), planetname);
    return NULL;
@@ -1065,15 +1071,23 @@ VirtualAsset* virtualasset_getAll (void)
 }
 
 
+static int virtualasset_cmp( const void *p1, const void *p2 )
+{
+   const VirtualAsset *v1, *v2;
+   v1 = (const VirtualAsset*) p1;
+   v2 = (const VirtualAsset*) p2;
+   return strcmp(v1->name,v2->name);
+}
 /**
  * @brief Gets a virtual asset by matching name.
  */
 VirtualAsset* virtualasset_get( const char *name )
 {
-   int i;
-   for (i=0; i<array_size(vasset_stack); i++)
-      if (strcmp(vasset_stack[i].name,name)==0)
-         return &vasset_stack[i];
+   const VirtualAsset va = {.name = (char*)name};
+   VirtualAsset *found = bsearch( &va, vasset_stack, array_size(vasset_stack), sizeof(VirtualAsset), virtualasset_cmp );
+   if (found != NULL)
+      return found;
+   WARN(_("Virtual Asset '%s' not found in the universe"), name);
    return NULL;
 }
 
@@ -1788,6 +1802,7 @@ static int planets_load (void)
       free(file);
       xmlFreeDoc(doc);
    }
+   qsort( planet_stack, array_size(planet_stack), sizeof(Planet), planet_cmp );
 
    /* Clean up. */
    PHYSFS_freeList( planet_files );
@@ -1860,6 +1875,7 @@ static int virtualassets_load (void)
       free(file);
       xmlFreeDoc(doc);
    }
+   qsort( vasset_stack, array_size(vasset_stack), sizeof(VirtualAsset), virtualasset_cmp );
 
    /* Clean up. */
    PHYSFS_freeList( asset_files );
