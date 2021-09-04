@@ -447,7 +447,7 @@ function control ()
       if should_attack( enemy, si ) then
          ai.hostile(enemy) -- Should be done before taunting
          taunt(enemy, true)
-         clean_task( task )
+         clean_task()
          ai.pushtask("attack", enemy)
       end
    end
@@ -819,7 +819,8 @@ end
 
 -- Decide if the task is likely to become obsolete once attack is finished
 function clean_task( task )
-   if task == "brake" or task == "inspect_moveto" then
+   task = task or ai.taskname()
+   if task=="brake" or task=="inspect_moveto" then
       ai.poptask()
    end
 end
