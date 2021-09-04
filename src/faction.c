@@ -48,7 +48,7 @@
 #define faction_isFlag(fa,f)  ((fa)->flags & (f))
 #define faction_isKnown_(fa)   ((fa)->flags & (FACTION_KNOWN))
 
-int faction_player;
+int faction_player; /**< Player faction identifier. */
 
 /**
  * @struct Faction
