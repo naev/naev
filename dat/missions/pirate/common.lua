@@ -18,8 +18,7 @@ end
    @brief Increases the decay floor (how low reputation can decay to).
 --]]
 function pir.modDecayFloor( n )
-   local floor = var.peek("_ffloor_decay_pirate")
-   if floor == nil then floor = -20 end
+   local floor = var.peek("_ffloor_decay_pirate") or -20
    floor = math.min(floor + n, -1)
    var.push("_ffloor_decay_pirate", floor)
 end

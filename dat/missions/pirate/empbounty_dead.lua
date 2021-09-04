@@ -583,7 +583,7 @@ function succeed ()
    if level >= 5 then
       local bounty_dangerous_done = var.peek( "pir_bounty_dangerous_done" )
       var.push( "pir_bounty_dangerous_done", true )
-      if bounty_dangerous_done ~= true then
+      if not bounty_dangerous_done then
          pir.modReputation( 2 )
          pir.modDecayFloor( 2 )
       end
@@ -591,7 +591,7 @@ function succeed ()
       if level >= 6 then
          local bounty_highly_dangerous_done = var.peek( "pir_bounty_highly_dangerous_done" )
          var.push( "pir_bounty_highly_dangerous_done", true )
-         if bounty_highly_dangerous_done ~= true then
+         if not bounty_highly_dangerous_done then
             pir.modReputation( 3 )
             pir.modDecayFloor( 3 )
          end
