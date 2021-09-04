@@ -59,6 +59,8 @@ osd_msg[1] = _("Buy as much %s as possible")
 osd_msg[2] = _("Take the %s to %s in the %s system")
 osd_msg["__save"] = true
 
+paying_faction = faction.get("Independent")
+
 
 -- A script may require "missions/neutral/commodity_run" and override this
 -- with a table of (raw) commodity names to choose from.
@@ -151,7 +153,9 @@ function land ()
       tk.msg(cargo_land_title, txt)
       pilot.cargoRm(player.pilot(), chosen_comm, amount)
       player.pay(reward)
-      pir.reputationNormalMission(rnd.rnd(2,3))
+      if not pir.factionIsPirate( paying_faction ) then
+         pir.reputationNormalMission(rnd.rnd(2,3))
+      end
       update_active_runs(-1)
       misn.finish(true)
    end

@@ -35,7 +35,7 @@
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 --]]
-
+local pir = require "missions.pirate.common"
 require "missions.neutral.commodity_run"
 
 misn_title = _("Exploit the Demand for %s")
@@ -48,3 +48,5 @@ cargo_land[3] = _("The containers of %s are eventually all sold to the pirates, 
 cargo_land[4] = _("Pirates immediately line up to buy your %s. Before you know it, you have none left, and you find that you're %s richer.")
 
 osd_title = _("Pirate Sales")
+
+paying_faction = pir.systemClanP( system.cur() )
