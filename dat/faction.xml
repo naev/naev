@@ -698,20 +698,6 @@
   </enemies>
  </faction>
  <faction>
-  <name>Kidnappers</name>
-  <ai>trader</ai>
-  <display>Pirate</display>
-  <static />
-  <invisible />
-  <known />
-  <logo>pirate</logo>
-  <colour>red</colour>
-  <allies />
-  <player>0</player>
-  <standing>static</standing>
-  <enemies />
- </faction>
- <faction>
   <name>Nasin</name>
   <ai>baddie</ai>
   <invisible />

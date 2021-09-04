@@ -188,11 +188,11 @@ function secondpirates()
 end
 
 function enter()
+   local fkidnappers = faction.dynAdd( "Pirate", "Kidnappers", _("Kidnappers"), { clear_allies=true, clear_enemies=true, ai="trader" } )
 
   if eavesdropped1 and eavesdropped2 and system.cur() == system.get(sysname2) and (not rescued) then
-    kidnappers = pilot.add( "Koala", "Trader", planet.get("Zhiru"):pos() + vec2.new(-800,-800), _("Trader Koala") )
+    kidnappers = pilot.add( "Koala", fkidnappers, planet.get("Zhiru"):pos() + vec2.new(-800,-800), _("Trader Koala") )
     kidnappers:rename(_("Progeny"))
-    kidnappers:setFaction("Kidnappers")
     kidnappers:setHilight(true)
     kidnappers:setVisible(true)
     kidnappers:memory().aggressive = true
