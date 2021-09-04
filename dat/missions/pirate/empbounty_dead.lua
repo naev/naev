@@ -84,7 +84,7 @@ hunter_hits = {}
 
 
 function create ()
-   paying_faction = faction.get("Pirate")
+   paying_faction = pir.systemClan( system.cur() )
 
    target_factions = {
       "Independent",
@@ -148,7 +148,7 @@ function create ()
    -- Set mission details
    misn.setTitle( misn_title[level]:format( missys:name() ) )
 
-   if planet.cur():faction() == faction.get("Pirate") then
+   if pir.factionIsPirate( planet.cur():faction() ) then
       misn.setDesc( misn_desc:format( target_faction, name, missys:name() ) )
    else
       -- We're not on a pirate stronghold, so include a warning that the

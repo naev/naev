@@ -21,7 +21,7 @@
    (illegal) to a random system.
 
 ]]--
-
+local pir = require "missions.pirate.common"
 local portrait = require 'portrait'
 local vn = require 'vn'
 require "cargo_common"
@@ -56,7 +56,7 @@ function create()
 
    -- target destination
    destplanet, destsys, numjumps, traveldist, cargo, avgrisk, tier = cargo_calculateRoute()
-   if destplanet == nil or destplanet:faction() == faction.get("Pirate") then
+   if destplanet == nil or pir.factionIsPirate( destplanet:faction() ) then
       misn.finish(false)
    end
 

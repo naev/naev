@@ -32,11 +32,11 @@ require "numstring"
 
 
 misn_title = {}
-misn_title[1] = _("Escort a tiny convoy to %s in %s.")
-misn_title[2] = _("Escort a small convoy to %s in %s.")
-misn_title[3] = _("Escort a medium convoy to %s in %s.")
-misn_title[4] = _("Escort a large convoy to %s in %s.")
-misn_title[5] = _("Escort a huge convoy to %s in %s.")
+misn_title[1] = _("Escort a tiny convoy to %s in %s")
+misn_title[2] = _("Escort a small convoy to %s in %s")
+misn_title[3] = _("Escort a medium convoy to %s in %s")
+misn_title[4] = _("Escort a large convoy to %s in %s")
+misn_title[5] = _("Escort a huge convoy to %s in %s")
 
 misn_desc = _("A convoy of traders needs protection while they go to %s in %s. You must stick with the convoy at all times, waiting to jump or land until the entire convoy has done so.")
 

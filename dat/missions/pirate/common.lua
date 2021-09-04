@@ -61,9 +61,26 @@ function pir.systemPresence( sys )
    local total = 0
    local p = sys:presences()
    for k,v in ipairs(pir.factions) do
-      total = total + (p[v] or 0)
+      total = total + (p[v:nameRaw()] or 0)
    end
    return total
+end
+
+--[[
+   @brief Gets the dominant clan of a system.
+--]]
+function pir.systemClan( sys )
+   local f
+   local m = 0
+   local p = sys:presences()
+   for k,v in ipairs(pir.factions) do
+      local pp = p[v:nameRaw()]
+      if pp and pp > m then
+         f = v
+         m = pp
+      end
+   end
+   return f or faction.get("Pirate")
 end
 
 return pir
