@@ -110,6 +110,9 @@ function pir.systemClanP( sys )
    return faction.get("Pirate")
 end
 
+--[[
+   @brief Gets a simple reputation message telling the player how the mission will increase their standing.
+--]]
 function pir.reputationMessage( f )
    return string.format(_("This mission will increase your reputation with %s."), f:longname())
 end
