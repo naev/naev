@@ -164,7 +164,6 @@ function takeoff ()
    for i, j in ipairs( flf_ships ) do
       j:setVisible()
       local mem = j:memory()
-      mem.aggressive = true
       mem.enemyclose = 8000
    end
 
