@@ -159,6 +159,10 @@ function takeoff ()
    hook.pilot( flf_base, "attacked", "pilot_attacked_sindbad" )
    hook.pilot( flf_base, "death", "pilot_death_sindbad" )
 
+   -- FLF are not a natural enemy of the Empire, we have to enforce that
+   local factflf = faction.dynAdd( "FLF", "flf_laststand", _("FLF") )
+   factflf:dynEnemy( "Empire" )
+
    -- Spawn FLF ships
    local norm = (jump.get( system.cur(), emp_srcsys ):pos()-ss:pos()):normalize()
    local shptypes = {"Pacifier", "Lancelot", "Vendetta", "Lancelot", "Vendetta", "Lancelot", "Vendetta"}
@@ -166,7 +170,7 @@ function takeoff ()
    for i=1,5 do
       for k,s in ipairs(shptypes) do
          local pos = ss:pos() + vec2.newP(2000*rnd.rnd(), 360*rnd.rnd()) + norm*1000
-         local p = pilot.add( s, "FLF", pos, nil, {ai="guard"} )
+         local p = pilot.add( s, factflf, pos, nil, {ai="guard"} )
          p:setVisible()
          table.insert( flf_ships, p )
       end
