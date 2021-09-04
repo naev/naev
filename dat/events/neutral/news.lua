@@ -6,10 +6,9 @@
 </event>
 --]]
 --[[
--- Event for creating news
---
+   Event for creating news
 --]]
-
+local pir = require "missions.pirate.common"
 require "numstring"
 require "jumpdist"
 
@@ -590,7 +589,7 @@ function add_econ_article ()
       local planets = {}
       for i, s in ipairs( getsysatdistance( system.cur(), 2, 4 ) ) do
          for j, p in ipairs( s:planets() ) do
-            if p:faction() ~= faction.get("Pirate")
+            if not pir.factionIsPirate( p:faction() )
                   and p:faction() ~= faction.get("FLF")
                   and #(p:commoditiesSold()) > 0 then
                planets[ #planets + 1 ] = p
