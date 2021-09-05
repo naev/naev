@@ -813,9 +813,8 @@ static int pilotL_getPilots( lua_State *L )
             if ((pilot_stack[i]->faction == factions[j]) &&
                   (d || !pilot_isDisabled(pilot_stack[i])) &&
                   !pilot_isFlag(pilot_stack[i], PILOT_DELETE)) {
-               lua_pushnumber(L, k++); /* key */
                lua_pushpilot(L, pilot_stack[i]->id); /* value */
-               lua_rawset(L,-3); /* table[key] = value */
+               lua_rawseti(L,-2, k++); /* table[key] = value */
             }
          }
       }
@@ -830,9 +829,8 @@ static int pilotL_getPilots( lua_State *L )
       for (i=0; i<array_size(pilot_stack); i++) {
          if ((d || !pilot_isDisabled(pilot_stack[i])) &&
                !pilot_isFlag(pilot_stack[i], PILOT_DELETE)) {
-            lua_pushnumber(L, k++); /* key */
             lua_pushpilot(L, pilot_stack[i]->id); /* value */
-            lua_rawset(L,-3); /* table[key] = value */
+            lua_rawseti(L,-2,k++); /* table[key] = value */
          }
       }
    }
@@ -1024,9 +1022,8 @@ static int pilotL_getVisible( lua_State *L )
       if (!pilot_validTarget( p, pilot_stack[i] ))
          continue;
 
-      lua_pushnumber(L, k++); /* key */
       lua_pushpilot(L, pilot_stack[i]->id); /* value */
-      lua_rawset(L,-3); /* table[key] = value */
+      lua_rawseti(L,-2,k++); /* table[key] = value */
    }
 
    return 1;
@@ -1849,9 +1846,8 @@ static int pilotL_outfits( lua_State *L )
          continue;
 
       /* Set the outfit. */
-      lua_pushnumber( L, j++ );
       lua_pushoutfit( L, p->outfits[i]->outfit );
-      lua_rawset( L, -3 );
+      lua_rawseti( L, -2, j++ );
    }
 
    return 1;
@@ -4633,9 +4629,8 @@ static int pilotL_followers( lua_State *L )
       pe = pilot_get( p->escorts[i].id );
       if ((pe==NULL) || pilot_isFlag( pe, PILOT_DEAD ) || pilot_isFlag( pe, PILOT_HIDE ))
          continue;
-      lua_pushnumber(L, idx++);
       lua_pushpilot(L, p->escorts[i].id);
-      lua_rawset(L, -3);
+      lua_rawseti(L, -2, idx++);
    }
 
    return 1;
