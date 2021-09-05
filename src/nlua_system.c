@@ -283,15 +283,14 @@ static int systemL_get( lua_State *L )
 static int systemL_getAll( lua_State *L )
 {
    StarSystem *sys;
-   int i, ind;
+   int i;
 
    lua_newtable(L);
    sys = system_getAll();
 
-   ind = 1;
    for (i=0; i<array_size(sys); i++) {
       lua_pushsystem( L, system_index( &sys[i] ) );
-      lua_rawseti( L, -2, ind++ );
+      lua_rawseti( L, -2, i+1 );
    }
    return 1;
 }
@@ -522,17 +521,15 @@ static int systemL_jumpPath( lua_State *L )
    lj.srcid  = sid;
    lj.destid = s[0]->id;
 
-   lua_pushnumber(L, ++pushed); /* key. */
    lua_pushjump(L, lj);         /* value. */
-   lua_rawset(L, -3);
+   lua_rawseti(L, -2, ++pushed);
 
    for (i=0; i<array_size(s)-1; i++) {
       lj.srcid  = s[i]->id;
       lj.destid = s[i+1]->id;
 
-      lua_pushnumber(L, ++pushed); /* key. */
       lua_pushjump(L, lj);         /* value. */
-      lua_rawset(L, -3);
+      lua_rawseti(L, -2, ++pushed);
    }
    array_free(s);
 
@@ -568,11 +565,8 @@ static int systemL_adjacent( lua_State *L )
       if (!h && jp_isFlag(&s->jumps[i], JP_HIDDEN))
          continue;
       sysp = system_index( s->jumps[i].target );
-      lua_pushnumber(L, id);   /* key. */
       lua_pushsystem(L, sysp); /* value. */
-      lua_rawset(L,-3);
-
-      id++;
+      lua_rawseti(L,-2,id++);
    }
 
    return 1;
@@ -608,9 +602,8 @@ static int systemL_jumps( lua_State *L )
 
       lj.srcid  = s->id;
       lj.destid = s->jumps[i].targetid;
-      lua_pushnumber(L,++pushed); /* key. */
       lua_pushjump(L,lj); /* value. */
-      lua_rawset(L,-3);
+      lua_rawseti(L,-2, ++pushed);
    }
 
    return 1;
@@ -635,7 +628,6 @@ static int systemL_asteroidFields( lua_State *L )
    pushed = 0;
    lua_newtable(L);
    for (i=0; i<array_size(s->asteroids); i++) {
-      lua_pushnumber(L,++pushed);   /* key. */
       lua_newtable(L);              /* key, t */
 
       lua_pushstring(L,"pos");      /* key, t, k */
@@ -650,7 +642,7 @@ static int systemL_asteroidFields( lua_State *L )
       lua_pushnumber(L,s->asteroids[i].radius); /* key, t, k, v */
       lua_rawset(L,-3);
 
-      lua_rawset(L,-3);
+      lua_rawseti(L,-2,++pushed);
    }
 
    return 1;
@@ -862,19 +854,13 @@ static int systemL_presences( lua_State *L )
  */
 static int systemL_planets( lua_State *L )
 {
-   int i, key;
-   StarSystem *s;
-
-   s = luaL_validsystem(L,1);
-
+   int i;
+   StarSystem *s = luaL_validsystem(L,1);
    /* Push all planets. */
    lua_newtable(L);
-   key = 0;
    for (i=0; i<array_size(s->planets); i++) {
-      key++;
-      lua_pushnumber(L,key); /* key */
       lua_pushplanet(L,planet_index( s->planets[i] )); /* value */
-      lua_rawset(L,-3);
+      lua_rawseti(L,-2,i+1);
    }
 
    return 1;

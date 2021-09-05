@@ -920,7 +920,6 @@ static int playerL_ships( lua_State *L )
 
    lua_newtable(L);  /* t */
    for (i=0; i<array_size(ships); i++) {
-      lua_pushnumber(L, i+1); /* t, k */
       lua_newtable(L);        /* t, k, t */
 
       lua_pushstring(L, ships[i].p->name); /* t, k, t, s */
@@ -929,7 +928,7 @@ static int playerL_ships( lua_State *L )
       lua_pushship(L, ships[i].p->ship); /* t, k, t, s */
       lua_setfield(L, -2, "ship"); /* t, k, t */
 
-      lua_rawset(L, -3); /* t */
+      lua_rawseti(L, -2, i+1); /* t */
    }
 
    return 1;
@@ -986,9 +985,8 @@ static int playerL_shipOutfits( lua_State *L )
          continue;
 
       /* Set the outfit. */
-      lua_pushnumber( L, j++ );
       lua_pushoutfit( L, p->outfits[i]->outfit );
-      lua_rawset( L, -3 );
+      lua_rawseti( L, -2, j++ );
    }
 
    return 1;
@@ -1014,9 +1012,8 @@ static int playerL_outfits( lua_State *L )
 
    lua_newtable(L);
    for (i=0; i<array_size(outfits); i++) {
-      lua_pushnumber(L, i+1);
       lua_pushoutfit(L, (Outfit*)outfits[i].o );
-      lua_rawset(L, -3);
+      lua_rawseti(L, -3, i+1);
    }
 
    return 1;

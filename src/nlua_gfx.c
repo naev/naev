@@ -649,15 +649,12 @@ static int gfxL_printfWrap( lua_State *L )
          maxw = outw;
 
       /* Create entry of form { string, width } in the table. */
-      lua_pushnumber(L, linenum++);    /* t, n */
-      lua_newtable(L);                 /* t, n, t */
-      lua_pushinteger(L, 1);           /* t, n, t, 1 */
-      lua_pushlstring(L, &tmp[p], l);  /* t, n, t, 1, s */
-      lua_rawset(L, -3);               /* t, n, t */
-      lua_pushinteger(L, 2);           /* t, n, t, 2 */
-      lua_pushinteger(L, outw);        /* t, n, t, 2, n */
-      lua_rawset(L, -3);               /* t, n, t */
-      lua_rawset(L, -3);               /* t */
+      lua_newtable(L);                 /* t, t */
+      lua_pushlstring(L, &tmp[p], l);  /* t, t, s */
+      lua_rawseti(L,-2,1);             /* t, t */
+      lua_pushinteger(L, outw);        /* t, t, n */
+      lua_rawseti(L,-2,2);             /* t, t */
+      lua_rawseti(L,-2,linenum++);     /* t */
 
       p += l;
       if (lp==p)

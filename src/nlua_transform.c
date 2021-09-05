@@ -198,14 +198,12 @@ static int transformL_get( lua_State *L )
    int i,j;
    lua_newtable(L);              /* t */
    for (i=0; i<4; i++) {
-      lua_pushinteger(L,i+1);    /* t, n */
-      lua_newtable(L);           /* t, n, t */
+      lua_newtable(L);           /* t, t */
       for (j=0; j<4; j++) {
-         lua_pushinteger(L,j+1); /* t, n, t, n */
-         lua_pushnumber(L,M->m[i][j]); /* t, n, t, n, n */
-         lua_rawset(L,-3);       /* t, n, t */
+         lua_pushnumber(L,M->m[i][j]); /* t, t, n */
+         lua_rawseti(L,-2,j+1);       /* t, t */
       }
-      lua_rawset(L,-3);          /* t */
+      lua_rawseti(L,-2,i+1);          /* t */
    }
    return 1;
 }

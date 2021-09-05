@@ -432,9 +432,8 @@ static int factionL_enemies( lua_State *L )
    lua_newtable(L);
    factions = faction_getEnemies( f );
    for (i=0; i<array_size(factions); i++) {
-      lua_pushnumber(L, i+1); /* key */
       lua_pushfaction(L, factions[i]); /* value */
-      lua_rawset(L, -3);
+      lua_rawseti(L,-2,i+1);
    }
 
    return 1;
@@ -460,9 +459,8 @@ static int factionL_allies( lua_State *L )
    lua_newtable(L);
    factions = faction_getAllies( f );
    for (i=0; i<array_size(factions); i++) {
-      lua_pushnumber(L, i+1); /* key */
       lua_pushfaction(L, factions[i]); /* value */
-      lua_rawset(L, -3);
+      lua_rawseti(L,-2,i+1);
    }
 
    return 1;

@@ -411,14 +411,13 @@ static int planetL_getLandable( lua_State *L )
 static int planetL_getAll( lua_State *L )
 {
    Planet *p;
-   int i, ind;
+   int i;
 
    lua_newtable(L);
    p = planet_getAll();
-   ind = 1;
    for (i=0; i<array_size(p); i++) {
       lua_pushplanet( L, planet_index( &p[i] ) );
-      lua_rawseti( L, -2, ind++ );
+      lua_rawseti( L, -2, i+1 );
    }
    return 1;
 }
@@ -824,9 +823,8 @@ static int planetL_shipsSold( lua_State *L )
    /* Push results in a table. */
    lua_newtable(L);
    for (i=0; i<array_size(s); i++) {
-      lua_pushnumber(L,i+1); /* index, starts with 1 */
       lua_pushship(L,s[i]); /* value = LuaShip */
-      lua_rawset(L,-3); /* store the value in the table */
+      lua_rawseti(L,-2,i+1); /* store the value in the table */
    }
 
    array_free(s);
@@ -854,9 +852,8 @@ static int planetL_outfitsSold( lua_State *L )
    /* Push results in a table. */
    lua_newtable(L);
    for (i=0; i<array_size(o); i++) {
-      lua_pushnumber(L,i+1); /* index, starts with 1 */
       lua_pushoutfit(L,o[i]); /* value = LuaOutfit */
-      lua_rawset(L,-3); /* store the value in the table */
+      lua_rawseti(L,-2,i+1); /* store the value in the table */
    }
 
    array_free(o);
@@ -882,9 +879,8 @@ static int planetL_commoditiesSold( lua_State *L )
    /* Push results in a table. */
    lua_newtable(L);
    for (i=0; i<array_size(p->commodities); i++) {
-      lua_pushnumber(L,i+1); /* index, starts with 1 */
       lua_pushcommodity(L,p->commodities[i]); /* value = LuaCommodity */
-      lua_rawset(L,-3); /* store the value in the table */
+      lua_rawseti(L,-2,i+1); /* store the value in the table */
    }
 
    return 1;

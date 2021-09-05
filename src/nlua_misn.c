@@ -569,10 +569,9 @@ static int misn_factions( lua_State *L )
    /* we'll push all the factions in table form */
    lua_newtable(L);
    for (i=0; i<array_size(dat->avail.factions); i++) {
-      lua_pushnumber(L,i+1); /* index, starts with 1 */
       f = dat->avail.factions[i];
       lua_pushfaction(L, f); /* value */
-      lua_rawset(L,-3); /* store the value in the table */
+      lua_rawseti(L,-2,i+1); /* store the value in the table */
    }
    return 1;
 }

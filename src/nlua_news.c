@@ -379,10 +379,9 @@ int newsL_get( lua_State *L )
                      || strcmp( article_ptr->desc, characteristic ) == 0
                      || strcmp( article_ptr->faction, characteristic ) == 0
                      || ( article_ptr->tag != NULL && strcmp( article_ptr->tag, characteristic ) == 0 ) ) ) ) {
-         lua_pushnumber(L, k++); /* key */
          Larticle = article_ptr->id;
          lua_pusharticle(L, Larticle); /* value */
-         lua_rawset(L, -3);            /* table[key] = value */
+         lua_rawseti(L, -2, k++);
       }
 
    } while ((article_ptr = article_ptr->next) != NULL);

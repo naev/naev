@@ -237,11 +237,10 @@ static int commodityL_getStandard( lua_State *L )
    standard = standard_commodities();
 
    /* Push. */
-   lua_newtable( L );                       /* Stack: t */
+   lua_newtable( L );
    for (i=0; i<array_size(standard); i++) {
-      lua_pushnumber( L, i+1 );            /* Stack: t, i (1-based index) */
-      lua_pushcommodity( L, standard[i] ); /* Stack: t, i, c */
-      lua_rawset( L, -3 );                 /* Stack: t */
+      lua_pushcommodity( L, standard[i] );
+      lua_rawseti( L, -2, i+1 );
    }
 
    array_free( standard );
