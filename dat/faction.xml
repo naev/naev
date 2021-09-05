@@ -20,6 +20,7 @@
   <colour>blue</colour>
   <spawn>independent</spawn>
   <standing>static</standing>
+  <generator weight="0.7">Trader</generator>
   <allies>
   </allies>
   <enemies>
@@ -309,7 +310,7 @@
    <enemy>Raven Clan</enemy>
    <enemy>Black Lotus</enemy>
   </enemies>
-  <lane_length_per_presence>143</lane_length_per_presence>
+  <lane_length_per_presence>170</lane_length_per_presence>
  </faction>
  <faction>
   <name>Proteron</name>
@@ -357,7 +358,7 @@
    <enemy>Raven Clan</enemy>
    <enemy>Black Lotus</enemy>
   </enemies>
-  <lane_length_per_presence>143</lane_length_per_presence>
+  <lane_length_per_presence>200</lane_length_per_presence>
  </faction>
  <faction>
   <name>Traders Guild</name>
