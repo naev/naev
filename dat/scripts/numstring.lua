@@ -90,3 +90,36 @@ function timestring( times )
    return gettext.ngettext("%s time", "%s times", times):format(
          numstring(times) )
 end
+
+
+local function _replace(template, index, text)
+   local str, unused = string.gsub(template, index, text)
+   return str
+end
+--[[
+-- @brief Creates a translatable list of words.
+--
+-- Taken from https://stackoverflow.com/questions/43081112/localization-of-lists/58033018#58033018
+--
+--    @tparam table words List of words to translate such as {"one","two","three"}.
+--    @treturn string String of the list of words such as "one, two, and three"
+--]]
+function list_format( words )
+   local length = #words
+   if length == 1 then return words[1] end
+   if length == 2 then
+      return _replace(_replace( _("{0} and {1}"), '{0}', words[1]),
+         '{1}', words[2])
+   end
+
+   local result = _replace( _("{0}, and {1}"), '{1}', words[length])
+   while length > 3 do
+      length = length - 1
+      local mid = _replace( _("{0}, {1}"), '{1}', words[length])
+      result = _replace(result, '{0}', mid)
+   end
+   result = _replace(result, '{0}', words[2])
+   result = _replace( _("{0}, {1}"), '{1}', result)
+   result = _replace(result, '{0}', words[1])
+   return result
+end
