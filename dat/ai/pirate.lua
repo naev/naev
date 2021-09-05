@@ -135,19 +135,37 @@ function create ()
    mem.ambushclose = 4000 + 1000 * ps:size()
    mem.stealth = p:flags("stealth") -- Follow however they were spawned
 
+   -- Determine base prices and set up initial hail
+   hail()
+
    -- Finish up creation
    create_post()
 end
 
 
 function hail ()
-   if mem.setuphail then return end
-
    local p = ai.pilot()
 
+   -- Remove randomness from future calls
+   if not mem.hailsetup then
+      mem.refuel_base = rnd.rnd( 2000, 4000 )
+      mem.bribe_base = math.sqrt( p:stats().mass ) * (300 * rnd.rnd() + 850)
+      mem.bribe_rng = rnd.rnd()
+      mem.hailsetup = true
+   end
+
+   -- Clean up
+   mem.refuel        = 0
+   mem.refuel_msg    = nil
+   mem.bribe         = 0
+   mem.bribe_prompt  = nil
+   mem.bribe_prompt_nearby = nil
+   mem.bribe_paid    = nil
+   mem.bribe_no      = nil
+
    -- Deal with refueling
-   local standing = ai.getstanding( player.pilot() ) or -1
-   mem.refuel = rnd.rnd( 2000, 4000 )
+   local standing = p:faction():playerStanding()
+   mem.refuel = mem.refuel_base
    if standing > 60 then
       mem.refuel = mem.refuel * 0.5
    end
@@ -155,16 +173,14 @@ function hail ()
          creditstring(mem.refuel))
 
    -- Deal with bribeability
-   mem.bribe = math.sqrt( p:stats().mass ) * (300 * rnd.rnd() + 850)
-   if (mem.natural or mem.allowbribe) and rnd.rnd() < 0.95 then
+   mem.bribe         = mem.bribe_base
+   if (mem.natural or mem.allowbribe) and mem.bribe_rng < 0.95 then
       mem.bribe_prompt = string.format(bribe_prompt_list[ rnd.rnd(1,#bribe_prompt_list) ], creditstring(mem.bribe))
       mem.bribe_prompt_nearby = bribe_prompt_nearby_list[ rnd.rnd(1,#bribe_prompt_nearby_list) ]
       mem.bribe_paid = bribe_paid_list[ rnd.rnd(1,#bribe_paid_list) ]
    else
       mem.bribe_no = _([["You won't be able to slide out of this one!"]])
    end
-
-   mem.setuphail = true
 end
 
 

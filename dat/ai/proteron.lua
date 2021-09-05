@@ -27,20 +27,40 @@ function create ()
 
    mem.loiter = 3 -- This is the amount of waypoints the pilot will pass through before leaving the system
 
+   hail()
+
    -- Finish up creation
    create_post()
 end
 
 function hail ()
-   if mem.setuphail then return end
+   local p = ai.pilot()
 
-   -- Get refuel chance
-   local standing = ai.getstanding( player.pilot() ) or -1
-   mem.refuel = rnd.rnd( 2000, 4000 )
+   -- Remove randomness from future calls
+   if not mem.hailsetup then
+      mem.refuel_base = rnd.rnd( 2000, 4000 )
+      mem.refuel_rng = rnd.rnd()
+      mem.bribe_base = math.sqrt( p:stats().mass ) * (500 * rnd.rnd() + 1750)
+      mem.bribe_rng = rnd.rnd()
+      mem.hailsetup = true
+   end
+
+   -- Clean up
+   mem.refuel        = 0
+   mem.refuel_msg    = nil
+   mem.bribe         = 0
+   mem.bribe_prompt  = nil
+   mem.bribe_prompt_nearby = nil
+   mem.bribe_paid    = nil
+   mem.bribe_no      = nil
+
+   -- Deal with refueling
+   local standing = p:faction():playerStanding()
+   mem.refuel = mem.refuel_base
    if standing < 0 then
       mem.refuel_no = _([["My fuel isn't for sale."]])
    elseif standing < 50 then
-      if rnd.rnd() > 0.8 then
+      if mem.refuel_rng > 0.8 then
          mem.refuel_no = _([["Sorry, my fuel isn't for sale."]])
       end
    else
@@ -50,16 +70,14 @@ function hail ()
    mem.refuel_msg = string.format( _([["I can transfer some fuel for %s."]]), creditstring(mem.refuel) )
 
    -- See if can be bribed
-   mem.bribe = math.sqrt( ai.pilot():stats().mass ) * (500. * rnd.rnd() + 1750.)
-   if (mem.natural or mem.allowbribe) and rnd.rnd() > 0.6 then
+   mem.bribe = mem.bribe_base
+   if (mem.natural or mem.allowbribe) and mem.bribe_rng > 0.6 then
       mem.bribe_prompt = string.format(_([["The Proteron can always use some income. %s and you were never here."]]), creditstring(mem.bribe) )
       mem.bribe_paid = _([["Get lost before I have to dispose of you."]])
    else
      mem.bribe_no = bribe_no_list[ rnd.rnd(1,#bribe_no_list) ]
 
    end
-
-   mem.setuphail = true
 end
 
 -- taunts

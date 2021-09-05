@@ -13,6 +13,9 @@ local function can_bribe( plt )
    if mem.bribe==0 then
       return false
    end
+   if mem.bribed_once then
+      return false
+   end
    if plt:flags("bribed") then
       return false
    end
@@ -55,11 +58,11 @@ end
 
 -- Get nearby pilots for bribing (includes current pilot)
 -- Respects fleets
-local function nearby_bribeable( plt )
+local function nearby_bribeable( plt, difffactok )
    local pp = player.pilot()
    local bribeable = {}
    for k,v in ipairs(pp:getVisible()) do
-      if v:faction() == plt:faction() and can_bribe(v) then
+      if (difffactok or v:faction() == plt:faction()) and can_bribe(v) then
          local flt = bribe_fleet( v )
          if flt then
             for i,p in ipairs(flt) do
@@ -304,13 +307,13 @@ function comm( plt )
             v:setBribed(true)
             v:setHostile(false)
             local vmem = v:memory()
-            vmem.bribe = 0 -- Disable rebribes
+            vmem.bribed_once = true -- Disable rebribes
          end
       else
          plt:credits( cost )
          plt:setBribed(true)
          plt:setHostile(false)
-         mem.bribe = 0 -- Disable rebribes
+         mem.bribed_once = true -- Disable rebribes
       end
       setup_namebox()
    end )
@@ -352,7 +355,7 @@ function comm( plt )
          v:setBribed(true)
          v:setHostile(false)
          local vmem = v:memory()
-         vmem.bribe = 0 -- Disable rebribes
+         vmem.bribed_once = true -- Disable rebribes
       end
       setup_namebox()
    end )

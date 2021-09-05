@@ -17,6 +17,7 @@
 #include "comm.h"
 
 #include "ai.h"
+#include "array.h"
 #include "commodity.h"
 #include "dialogue.h"
 #include "escort.h"
@@ -82,10 +83,12 @@ void comm_queueClose (void)
  */
 int comm_openPilot( unsigned int pilot )
 {
+   int i;
    const char *msg;
    char c;
    unsigned int wid;
    Pilot *p;
+   Pilot *const* pltstk;
 
    /* Get the pilot. */
    p  = pilot_get( pilot );
@@ -143,8 +146,10 @@ int comm_openPilot( unsigned int pilot )
    /* Don't close automatically. */
    comm_commClose = 0;
 
-   /* Run generic hail hooks. */
-   ai_hail( p );
+   /* Run generic hail hooks on all pilots. */
+   pltstk = pilot_getAll();
+   for (i=0; i<array_size(pltstk); i++)
+      ai_hail( pltstk[i] );
 
    /* Close window if necessary. */
    if (comm_commClose) {

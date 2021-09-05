@@ -27,29 +27,46 @@ function create ()
 
    mem.loiter = 3 -- This is the amount of waypoints the pilot will pass through before leaving the system
 
+   hail()
+
    -- Finish up creation
    create_post()
 end
 
 -- When hailed
 function hail ()
-   if mem.setuphail then return end
+   local p = ai.pilot()
+
+   -- Remove randomness from future calls
+   if not mem.hailsetup then
+      mem.refuel_base = rnd.rnd( 3000, 5000 )
+      mem.bribe_base = math.sqrt( p:stats().mass ) * (750 * rnd.rnd() + 2500)
+      mem.bribe_rng = rnd.rnd()
+      mem.hailsetup = true
+   end
+
+   -- Clean up
+   mem.refuel        = 0
+   mem.refuel_msg    = nil
+   mem.bribe         = 0
+   mem.bribe_prompt  = nil
+   mem.bribe_prompt_nearby = nil
+   mem.bribe_paid    = nil
+   mem.bribe_no      = nil
 
    -- Refuel
-   mem.refuel = rnd.rnd( 3000, 5000 )
+   mem.refuel = mem.refuel_base
    mem.refuel_msg = string.format(_([["I'll supply your ship with fuel for %s."]]),
          creditstring(mem.refuel))
 
    -- Set up bribes
-   mem.bribe = math.sqrt( ai.pilot():stats().mass ) * (750 * rnd.rnd() + 2500)
-   if (mem.natural or mem.allowbribe) and rnd.rnd() > 0.7 then
+   mem.bribe = mem.bribe_base
+   if (mem.natural or mem.allowbribe) and mem.bribe_rng > 0.7 then
       mem.bribe_prompt = string.format(_([["Your life is worth %s to me."]]), creditstring(mem.bribe) )
       mem.bribe_paid = _([["Beat it."]])
    else
       mem.bribe_no = bribe_no_list[ rnd.rnd(1,#bribe_no_list) ]
    end
-
-   mem.setuphail = true
 end
 
 -- taunts
