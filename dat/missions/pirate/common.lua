@@ -52,6 +52,7 @@ pir.factions_clans = {
    @brief Gets whether or not a faction is a pirate faction
 --]]
 function pir.factionIsPirate( f )
+   if not f then return false end
    f = faction.get(f)
    for k,v in ipairs(pir.factions) do
       if f==v then
@@ -65,6 +66,7 @@ end
    @brief Gets whether or not a faction is a pirate clan
 --]]
 function pir.factionIsClan( f )
+   if not f then return false end
    f = faction.get(f)
    for k,v in ipairs(pir.factions_clans) do
       if f==v then
