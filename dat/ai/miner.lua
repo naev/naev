@@ -11,6 +11,8 @@ function create ()
 
    hail()
 
+   hail()
+
    create_post()
 end
 
