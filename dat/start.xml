@@ -5,9 +5,9 @@
   <ship name="El Ego de Deiz">Llama</ship>
   <credits>30000</credits>
   <system>
-   <name>Hakoi</name>
-   <x>-8000</x>
-   <y>-17000</y>
+   <name>Delta Polaris</name>
+   <x>-12000</x>
+   <y>-3000</y>
   </system>
   <event>start_event</event>
  </player>

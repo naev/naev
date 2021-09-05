@@ -105,18 +105,18 @@ osd_desc[1] = _("Fly to %s in the %s system with the movement keys")
 osd_desc[2] = _("Land on %s in the %s system by double-clicking on it")
 osd_desc[3] = _("Go to %s in the %s system by right-clicking it on the overview map")
 osd_desc[4] = _("Destroy the practice drone near %s in the %s system")
-osd_desc[5] = _("Jump to the %s system by using your starmap")
+osd_desc[5] = _("Jump to a nearby system by using your starmap")
 osd_desc["__save"] = true
 
 log_text = _([[Captain T. Practice, the Melendez employee who sold you your first ship, gave you a tutorial on how to pilot it, claiming afterwards that you are "a natural-born pilot".]])
 
 
 function create ()
-   missys = system.get( "Hakoi" )
-   destsys = system.get( "Qex" )
-   start_planet = planet.get( "Em 1" )
+   missys = system.get( "Delta Polaris" )
+   destsys = system.get( "Jade" )
+   start_planet = planet.get( "Bolero" )
    start_planet_r = 200
-   dest_planet = planet.get( "Em 5" )
+   dest_planet = planet.get( "Benteen" )
    dest_planet_r = 200
 
    if not misn.claim( missys ) then
@@ -146,8 +146,12 @@ function accept ()
       osd_desc[2] = osd_desc[2]:format( start_planet:name(), missys:name() )
       osd_desc[3] = osd_desc[3]:format( dest_planet:name(), missys:name() )
       osd_desc[4] = osd_desc[4]:format( dest_planet:name(), missys:name() )
-      osd_desc[5] = osd_desc[5]:format( destsys:name() )
+      osd_desc[5] = osd_desc[5]--:format( destsys:name() )
       misn.osdCreate( osd_title, osd_desc )
+
+      -- Set stuff known as necessary
+      dest_planet:setKnown(true)
+      jump.get( system.cur(), destsys ):setKnown(true)
 
       stage = 1
 
