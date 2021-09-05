@@ -238,7 +238,7 @@ function comm( plt )
       if hostile and not plt:flags("bribed") then
          if mem.bribe_no then
             table.insert( opts, 1, {"Bribe", "bribe_no"} )
-         elseif mem.bribe and mem.bribe == 0 then
+         elseif (mem.bribe and mem.bribe == 0) or mem.bribed_once then
             table.insert( opts, 1, {"Bribe", "bribe_0"} )
          else
             bribe_group = bribe_fleet( plt )
