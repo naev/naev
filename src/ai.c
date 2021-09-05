@@ -162,7 +162,6 @@ static int aiL_getdistance2( lua_State *L ); /* number getdist(Vector2d) */
 static int aiL_getflybydistance( lua_State *L ); /* number getflybydist(Vector2d) */
 static int aiL_minbrakedist( lua_State *L ); /* number minbrakedist( [number] ) */
 static int aiL_isbribed( lua_State *L ); /* bool isbribed( number ) */
-static int aiL_getstanding( lua_State *L ); /* number getstanding( number ) */
 static int aiL_getGatherable( lua_State *L ); /* integer getgatherable( radius ) */
 static int aiL_instantJump( lua_State *L ); /* bool instantJump() */
 
@@ -274,7 +273,6 @@ static const luaL_Reg aiL_methods[] = {
    { "flyby_dist", aiL_getflybydistance },
    { "minbrakedist", aiL_minbrakedist },
    { "isbribed", aiL_isbribed },
-   { "getstanding", aiL_getstanding },
    { "getgatherable", aiL_getGatherable },
    { "instantJump", aiL_instantJump },
    /* movement */
@@ -1604,36 +1602,6 @@ static int aiL_isbribed( lua_State *L )
 static int aiL_instantJump( lua_State *L )
 {
    lua_pushboolean(L, cur_pilot->stats.misc_instant_jump);
-   return 1;
-}
-
-
-/**
- * @brief Gets the standing of the target pilot with the current pilot.
- *
- *    @luatparam Pilot target Pilot to get faction standing of.
- *    @luatreturn number|nil The faction standing of the target [-100,100] or nil if invalid.
- * @luafunc getstanding
- */
-static int aiL_getstanding( lua_State *L )
-{
-   Pilot *p;
-
-   /* Get parameters. */
-   p = luaL_validpilot(L,1);
-
-   /* Get faction standing. */
-   if (pilot_isWithPlayer(p))
-      lua_pushnumber(L, faction_getPlayer(cur_pilot->faction));
-   else {
-      if (areAllies( cur_pilot->faction, p->faction ))
-         lua_pushnumber(L, 100);
-      else if (areEnemies( cur_pilot->faction, p->faction ))
-         lua_pushnumber(L,-100);
-      else
-         lua_pushnumber(L, 0);
-   }
-
    return 1;
 }
 
