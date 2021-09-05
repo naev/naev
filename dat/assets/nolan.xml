@@ -25,4 +25,7 @@
   <commodities/>
   <description>Yet another prison world. While Nolan is not the harshest world in Dvaered space, it's shrouded in near-perpetual darkness. Convicts are kept here to be shipped off to Veren for their typically brief work stints.</description>
  </general>
+ <tags>
+  <tag>restricted</tag>
+ </tags>
 </asset>

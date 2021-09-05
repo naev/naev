@@ -200,7 +200,7 @@ function create ()
    if not evt.claim( system.cur(), true ) then evt.finish() end
 
    -- Do not spawn on restricted assets
-   if pnt:restricted() then evt.finish() end
+   if pnt:tags().restricted then evt.finish() end
 
    -- Ignore on uninhabited and planets without bars
    local services = pnt:services()

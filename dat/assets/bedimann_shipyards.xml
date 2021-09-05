@@ -37,4 +37,7 @@
   <item>Hulls Medium</item>
   <item>Hulls High</item>
  </tech>
+ <tags>
+  <tag>restricted</tag>
+ </tags>
 </asset>

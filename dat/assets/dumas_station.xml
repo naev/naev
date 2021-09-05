@@ -32,4 +32,7 @@
   <item>Light Civilian Combat Ships</item>
   <item>Basic Civilian Ships</item>
  </tech>
+ <tags>
+  <tag>restricted</tag>
+ </tags>
 </asset>

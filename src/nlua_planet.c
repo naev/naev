@@ -66,6 +66,7 @@ static int planetL_isRestricted( lua_State *L );
 static int planetL_isKnown( lua_State *L );
 static int planetL_setKnown( lua_State *L );
 static int planetL_recordCommodityPriceAtTime( lua_State *L );
+static int planetL_tags( lua_State *L );
 static const luaL_Reg planet_methods[] = {
    { "cur", planetL_cur },
    { "get", planetL_get },
@@ -97,6 +98,7 @@ static const luaL_Reg planet_methods[] = {
    { "known", planetL_isKnown },
    { "setKnown", planetL_setKnown },
    { "recordCommodityPriceAtTime", planetL_recordCommodityPriceAtTime },
+   { "tags", planetL_tags },
    {0,0}
 }; /**< Planet metatable methods. */
 
@@ -986,4 +988,25 @@ static int planetL_recordCommodityPriceAtTime( lua_State *L )
    t = luaL_validtime(L, 2);
    planet_averageSeenPricesAtTime( p, t );
    return 0;
+}
+
+/**
+ * @brief Gets the planet tags.
+ *
+ * @usage if planet.cur():tags["fancy"] then -- Has "fancy" tag
+ *
+ *    @luatparam Planet p Planet to get tags of.
+ *    @luatreturn table Table of tags where the name is the key and true is the value.
+ * @luafunc tags
+ */
+static int planetL_tags( lua_State *L )
+{
+   Planet *p = luaL_validplanet(L,1);
+   lua_newtable(L);
+   for (int i=0; i<array_size(p->tags); i++) {
+      lua_pushstring(L,p->tags[i]);
+      lua_pushboolean(L,1);
+      lua_rawset(L,-3);
+   }
+   return 1;
 }

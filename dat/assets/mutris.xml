@@ -44,4 +44,7 @@
   <item>Basic Civilian Ships</item>
   <item>Sirius Elite Outfits</item>
  </tech>
+ <tags>
+  <tag>restricted</tag>
+ </tags>
 </asset>

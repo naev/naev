@@ -39,4 +39,7 @@
   <item>Low Tech Upgrades</item>
   <item>Missiles 1</item>
  </tech>
+ <tags>
+  <tag>restricted</tag>
+ </tags>
 </asset>

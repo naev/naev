@@ -42,4 +42,7 @@
   <item>Basic Outfits 2</item>
   <item>Low Tech Upgrades</item>
  </tech>
+ <tags>
+  <tag>restricted</tag>
+ </tags>
 </asset>

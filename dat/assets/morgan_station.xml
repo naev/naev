@@ -46,4 +46,7 @@
   <item>Basic Trade Ships</item>
   <item>Kinetic 1</item>
  </tech>
+ <tags>
+  <tag>restricted</tag>
+ </tags>
 </asset>

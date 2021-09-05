@@ -128,7 +128,14 @@ int dpl_savePlanet( const Planet *p )
    if (planet_hasService( p, PLANET_SERVICE_LAND ))
       tech_groupWrite( writer, p->tech );
 
-   xmlw_endElem( writer ); /** "planet" */
+   if (array_size(p->tags)>0) {
+      xmlw_startElem( writer, "tags" );
+      for (i=0; i<array_size(p->tags); i++)
+         xmlw_elem( writer, "tag", "%s", p->tags[i] );
+      xmlw_endElem( writer ); /* "tags" */
+   }
+
+   xmlw_endElem( writer ); /* "planet" */
    xmlw_done( writer );
 
    /* No need for writer anymore. */

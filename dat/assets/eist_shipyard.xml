@@ -30,4 +30,7 @@
  <tech>
   <item>Heavy Civilian Combat Ships</item>
  </tech>
+ <tags>
+  <tag>restricted</tag>
+ </tags>
 </asset>

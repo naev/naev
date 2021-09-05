@@ -15,13 +15,6 @@ local pir = require "missions.pirate.common"
 local portrait = require "portrait"
 local vn = require 'vn'
 
--- List of inhabited planets where there will be NO generic NPCs
-blacklist = {
-   "Minerva Station",
-   "Strangelove Lab",
-   "Totoran",
-}
-
 -- Factions which will NOT get generic texts if possible.  Factions
 -- listed here not spawn generic civilian NPCs or get aftercare texts.
 -- Meant for factions which are either criminal (FLF, Pirate) or unaware
@@ -314,23 +307,9 @@ function create()
    -- Logic to decide what to spawn, if anything.
    local cur = planet.cur()
 
-   --[[
-   -- Do not spawn any NPCs on restricted assets.
-   if cur:restricted() and not pir.factionIsPirate(cur:faction()) then
-      evt.finish(false)
-   end
-   --]]
-
-   -- Skip blacklisted planets
-   local blacklisted = false
-   local name = cur:name()
-   for k,v in ipairs(blacklist) do
-      if name == v then
-         blacklisted = true
-         break
-      end
-   end
-   if blacklisted then
+   -- Do not spawn any NPCs on restricted assets or that don't want NPC
+   local t = cur:tags()
+   if t.restricted or t.nonpc then
       evt.finish(false)
    end
 

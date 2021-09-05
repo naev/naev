@@ -50,4 +50,7 @@
   <item>Empire Military Ships</item>
   <item>Empire Elite Outfits</item>
  </tech>
+ <tags>
+  <tag>restricted</tag>
+ </tags>
 </asset>

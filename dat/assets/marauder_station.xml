@@ -50,4 +50,7 @@
   <item>Bulk Trade Ships</item>
   <item>Light Civilian Combat Ships</item>
  </tech>
+ <tags>
+  <tag>restricted</tag>
+ </tags>
 </asset>

@@ -43,4 +43,7 @@
   <item>Heavy Civilian Combat Ships</item>
   <item>Dvaered Elite Outfits</item>
  </tech>
+ <tags>
+  <tag>nonpc</tag>
+ </tags>
 </asset>

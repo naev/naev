@@ -2,14 +2,13 @@
  * See Licensing and Copyright notice in naev.h
  */
 
-
-
 #ifndef SPACE_H
 #  define SPACE_H
 
+/* Forward declarations. */
+typedef struct StarSystem_ StarSystem;
 typedef struct Planet_ Planet;
 typedef struct JumpPoint_ JumpPoint;
-
 
 #include "commodity.h"
 #include "explosion.h"
@@ -19,13 +18,9 @@ typedef struct JumpPoint_ JumpPoint;
 #include "pilot.h"
 #include "tech.h"
 
-
 #define SYSTEM_SIMULATE_TIME  30. /**< Time to simulate system before player is added. */
-
 #define MAX_HYPERSPACE_VEL    25 /**< Speed to brake to before jumping. */
-
 #define ASTEROID_REF_AREA     500000 /**< The "density" value in an asteroid field means 1 rock per this area. */
-
 
 /* Asteroid status enum */
 enum {
@@ -36,7 +31,6 @@ enum {
    ASTEROID_INIT,       /**< Asteroid has not been created yet. */
    ASTEROID_INVISIBLE,  /**< Asteroid is not used. */
 };
-
 
 /*
  * planet services
@@ -55,7 +49,6 @@ enum {
 #define planet_addService(p,s)      ((p)->services |= (s)) /**< Adds a planet service. */
 #define planet_rmService(p,s)       ((p)->services &= ~(s)) /**< Removes a planet service. */
 
-
 /*
  * Planet flags.
  */
@@ -67,7 +60,6 @@ enum {
 #define planet_setFlag(p,f)   ((p)->flags |= (f)) /**< Sets a planet flag. */
 #define planet_rmFlag(p,f)    ((p)->flags &= ~(f)) /**< Removes a planet flag. */
 #define planet_isKnown(p) planet_isFlag(p,PLANET_KNOWN) /**< Checks if planet is known. */
-
 
 /**
  * @struct MapOverlayPos
@@ -81,7 +73,6 @@ typedef struct MapOverlayPos_ {
    float text_width; /**< width of the caption text. */
 } MapOverlayPos;
 
-
 /**
  * @brief Represents the presence of an asset. */
 typedef struct AssetPresence_ {
@@ -90,7 +81,6 @@ typedef struct AssetPresence_ {
    double bonus;  /**< Bonus presence. */
    int range;     /**< Range effect of the presence (in jumps). */
 } AssetPresence;
-
 
 /**
  * @struct VirtualAsset
@@ -101,7 +91,6 @@ typedef struct VirtualAsset_ {
    char *name;                /**< Virtual asset name. */
    AssetPresence *presences;  /**< Virtual asset presences (Array from array.h). */
 } VirtualAsset;
-
 
 /**
  * @struct Planet
@@ -148,14 +137,14 @@ typedef struct Planet_ {
    char *gfx_exteriorPath; /**< Name of the gfx_exterior for saving purposes. */
 
    /* Misc. */
+   char **tags;        /**< Planet tagsg. */
    unsigned int flags; /**< flags for planet properties */
    MapOverlayPos mo;   /**< Overlay layout data. */
    double map_alpha;   /**< Alpha to display on the map. */
 } Planet;
 
-
 /*
- * star system flags
+ * Star system flags
  */
 #define SYSTEM_KNOWN       (1<<0) /**< System is known. */
 #define SYSTEM_MARKED      (1<<1) /**< System is marked by a regular mission. */
@@ -168,13 +157,6 @@ typedef struct Planet_ {
 #define sys_rmFlag(s,f)    ((s)->flags &= ~(f)) /**< Removes a system flag. */
 #define sys_isKnown(s)     (sys_isFlag((s),SYSTEM_KNOWN)) /**< Checks if system is known. */
 #define sys_isMarked(s)    sys_isFlag((s),SYSTEM_MARKED) /**< Checks if system is marked. */
-
-
-/*
- * Forward declaration.
- */
-typedef struct StarSystem_ StarSystem;
-
 
 /**
  * @brief Represents presence in a system
@@ -189,7 +171,6 @@ typedef struct SystemPresence_ {
    int disabled;     /**< Whether or not spawning is disabled for this presence. */
 } SystemPresence;
 
-
 /*
  * Jump point flags.
  */
@@ -202,8 +183,6 @@ typedef struct SystemPresence_ {
 #define jp_rmFlag(j,f)    ((j)->flags &= ~(f)) /**< Removes a jump flag. */
 #define jp_isKnown(j)     jp_isFlag(j,JP_KNOWN) /**< Checks if jump is known. */
 #define jp_isUsable(j)    (jp_isKnown(j) && !jp_isFlag(j,JP_EXITONLY))
-
-
 
 /**
  * @brief Represents a jump lane.
@@ -239,9 +218,10 @@ typedef struct AsteroidType_ {
    double armour; /**< Starting "armour" of the asteroid. */
 } AsteroidType;
 
-
 /**
  * @brief Represents a small player-rendered debris.
+ *
+ * @TODO this should be moved to spfx and probably generated on the fly.
  */
 typedef struct Debris_ {
    Vector2d pos; /**< Position. */
@@ -249,7 +229,6 @@ typedef struct Debris_ {
    int gfxID; /**< ID of the asteroid gfx. */
    double height; /**< height vs player */
 } Debris;
-
 
 /**
  * @brief Represents a single asteroid.
@@ -268,8 +247,6 @@ typedef struct Asteroid_ {
 } Asteroid;
 extern glTexture **asteroid_gfx; /**< Asteroid graphics list. */
 
-
-
 /**
  * @brief Represents an asteroid field anchor.
  */
@@ -287,7 +264,6 @@ typedef struct AsteroidAnchor_ {
    int ntype; /**< Number of types. */
 } AsteroidAnchor;
 
-
 /**
  * @brief Represents an asteroid exclusion zone.
  */
@@ -295,7 +271,6 @@ typedef struct AsteroidExclusion_ {
    Vector2d pos; /**< Position in the system (from center). */
    double radius; /**< Radius of the exclusion zone. */
 } AsteroidExclusion;
-
 
 /**
  * @brief Represents a star system.
@@ -348,13 +323,13 @@ struct StarSystem_ {
    CommodityPrice *averagePrice;
 
    /* Misc. */
-   unsigned int flags; /**< flags for system properties */
+   char **tags;         /**< Star system tags. */
+   unsigned int flags;  /**< flags for system properties */
 };
 
-
+/* Some useful externs. */
 extern StarSystem *cur_system; /**< current star system */
 extern int space_spawn; /**< 1 if spawning is enabled. */
-
 
 /*
  * loading/exiting

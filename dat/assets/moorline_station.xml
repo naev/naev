@@ -47,4 +47,7 @@
   <item>Heavy Civilian Combat Ships</item>
   <item>Soromid Elite Outfits</item>
  </tech>
+ <tags>
+  <tag>restricted</tag>
+ </tags>
 </asset>

@@ -2277,6 +2277,19 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent, Commodity **st
          planet->tech = tech_groupCreateXML( node );
          continue;
       }
+      else if (xml_isNode(node, "tags")) {
+         planet->tags = array_create( char* );
+         cur = node->children;
+         do {
+            xml_onlyNodes(cur);
+            if (xml_isNode(cur, "tag")) {
+               tmp = xml_get(cur);
+               if (tmp != NULL)
+                  array_push_back( &planet->tags, strdup(tmp) );
+            }
+         } while (xml_nextNode(cur));
+         continue;
+      }
 
       WARN(_("Unknown node '%s' in planet '%s'"),node->name,planet->name);
    } while (xml_nextNode(node));
@@ -2719,6 +2732,7 @@ void systems_reconstructPlanets (void)
 static StarSystem* system_parse( StarSystem *sys, const xmlNodePtr parent )
 {
    xmlNodePtr cur, node;
+   char *tmp;
    uint32_t flags;
 
    /* Clear memory for safe defaults. */
@@ -2785,6 +2799,21 @@ static StarSystem* system_parse( StarSystem *sys, const xmlNodePtr parent )
          continue;
       if (xml_isNode(node,"asteroids"))
          continue;
+
+      if (xml_isNode(cur, "tags")) {
+         sys->tags = array_create( char* );
+         cur = cur->children;
+         do {
+            xml_onlyNodes(cur);
+            if (xml_isNode(cur, "tag")) {
+               tmp = xml_get(cur);
+               if (tmp != NULL)
+                  array_push_back( &sys->tags, strdup(tmp) );
+            }
+         } while (xml_nextNode(cur));
+         continue;
+      }
+
 
       DEBUG(_("Unknown node '%s' in star system '%s'"),node->name,sys->name);
    } while (xml_nextNode(node));
@@ -3743,6 +3772,9 @@ void space_exit (void)
       free(pnt->class);
       free(pnt->description);
       free(pnt->bar_description);
+      for (j=0; j<array_size(pnt->tags); j++)
+         free( pnt->tags[j] );
+      array_free(pnt->tags);
 
       /* graphics */
       if (pnt->gfx_spaceName != NULL) {
@@ -3790,6 +3822,10 @@ void space_exit (void)
       array_free(sys->planets);
       array_free(sys->planetsid);
       array_free(sys->assets_virtual);
+
+      for (j=0; j<array_size(sys->tags); j++)
+         free( sys->tags[j] );
+      array_free(sys->tags);
 
       /* Free the asteroids. */
       for (j=0; j < array_size(sys->asteroids); j++) {

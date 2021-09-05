@@ -62,6 +62,7 @@ static int systemL_setHidden( lua_State *L );
 static int systemL_mrkClear( lua_State *L );
 static int systemL_mrkAdd( lua_State *L );
 static int systemL_mrkRm( lua_State *L );
+static int systemL_tags( lua_State *L );
 static const luaL_Reg system_methods[] = {
    { "cur", systemL_cur },
    { "get", systemL_get },
@@ -93,6 +94,7 @@ static const luaL_Reg system_methods[] = {
    { "mrkClear", systemL_mrkClear },
    { "mrkAdd", systemL_mrkAdd },
    { "mrkRm", systemL_mrkRm },
+   { "tags", systemL_tags },
    {0,0}
 }; /**< System metatable methods. */
 
@@ -1128,5 +1130,26 @@ static int systemL_mrkRm( lua_State *L )
    id = luaL_checklong( L, 1 );
    ovr_mrkRm( id );
    return 0;
+}
+
+/**
+ * @brief Gets the system tags.
+ *
+ * @usage if system.cur():tags["fancy"] then -- Has "fancy" tag
+ *
+ *    @luatparam System s System to get tags of.
+ *    @luatreturn table Table of tags where the name is the key and true is the value.
+ * @luafunc tags
+ */
+static int systemL_tags( lua_State *L )
+{
+   StarSystem *s = luaL_validsystem(L,1);
+   lua_newtable(L);
+   for (int i=0; i<array_size(s->tags); i++) {
+      lua_pushstring(L,s->tags[i]);
+      lua_pushboolean(L,1);
+      lua_rawset(L,-3);
+   }
+   return 1;
 }
 
