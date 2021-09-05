@@ -33,19 +33,37 @@ function create ()
    -- Set how far they attack
    mem.enemyclose = 3000 * ps:size()
 
+   -- Set up initial hail stuff
+   hail()
+
    create_post()
 end
 
 -- When hailed
 function hail ()
-   if mem.setuphail then return end
+   local p = ai.pilot()
+
+   -- Remove randomness from future calls
+   if not mem.hailsetup then
+      mem.refuel_base = rnd.rnd( 1000, 3000 )
+      mem.hailsetup = true
+   end
+
+   -- Clean up
+   mem.refuel        = 0
+   mem.refuel_msg    = nil
+   mem.bribe         = 0
+   mem.bribe_prompt  = nil
+   mem.bribe_prompt_nearby = nil
+   mem.bribe_paid    = nil
+   mem.bribe_no      = nil
 
    -- Handle refueling
-   local standing = ai.getstanding( player.pilot() ) or -1
+   local standing = p:faction():playerStanding()
    if standing < 50 then
       mem.refuel_no = _([["You are not worthy of my attention."]])
    else
-      mem.refuel = rnd.rnd( 1000, 3000 )
+      mem.refuel = mem.refuel_base
       mem.refuel_msg = string.format(_([["For you I could make an exception for %s."]]), creditstring(mem.refuel))
    end
 
@@ -55,8 +73,6 @@ function hail ()
    else
       mem.bribe_no = bribe_no_list[ rnd.rnd(1,#bribe_no_list) ]
    end
-
-   mem.setuphail = true
 end
 
 -- taunts
