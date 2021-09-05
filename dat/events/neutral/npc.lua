@@ -314,10 +314,12 @@ function create()
    -- Logic to decide what to spawn, if anything.
    local cur = planet.cur()
 
+   --[[
    -- Do not spawn any NPCs on restricted assets.
    if cur:restricted() and not pir.factionIsPirate(cur:faction()) then
       evt.finish(false)
    end
+   --]]
 
    -- Skip blacklisted planets
    local blacklisted = false
