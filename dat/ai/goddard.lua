@@ -27,9 +27,6 @@ function create ()
 
    mem.loiter = 3 -- This is the amount of waypoints the pilot will pass through before leaving the system
 
-   -- Set up hail
-   hail()
-
    -- Finish up creation
    create_post()
 end

@@ -33,9 +33,6 @@ function create ()
    -- Set how far they attack
    mem.enemyclose = 3000 * ps:size()
 
-   -- Set up initial hail stuff
-   hail()
-
    create_post()
 end
 

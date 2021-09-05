@@ -136,9 +136,6 @@ function create ()
    mem.enemyclose = mem.ambushclose
    mem.stealth = p:flags("stealth") -- Follow however they were spawned
 
-   -- Determine base prices and set up initial hail
-   hail()
-
    -- Finish up creation
    create_post()
 end

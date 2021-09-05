@@ -37,9 +37,6 @@ function create ()
    mem.enemyclose = mem.ambushclose
    mem.stealth = p:flags("stealth")
 
-   -- Set up hail
-   hail()
-
    -- Finish up creation
    create_post()
 end

@@ -9,10 +9,6 @@ function create ()
    local price = ai.pilot():ship():price()
    ai.setcredits( rnd.rnd(price/300, price/70) )
 
-   hail()
-
-   hail()
-
    create_post()
 end
 

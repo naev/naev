@@ -18,10 +18,6 @@ function create ()
    -- Try to do normal life as muchas possible
    mem.safe_distance = 2000 + 500 * ps:size()
 
-   hail()
-
-   hail()
-
    -- Finish up creation
    create_post()
 end
