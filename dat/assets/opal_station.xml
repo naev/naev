@@ -10,13 +10,13 @@
  </GFX>
  <presence>
   <faction>Frontier</faction>
-  <base>66.666667</base>
-  <bonus>33.333333</bonus>
+  <base>100.000000</base>
+  <bonus>50.000000</bonus>
   <range>2</range>
  </presence>
  <general>
   <class>0</class>
-  <population>1500</population>
+  <population>15000</population>
   <hide>2.000000</hide>
   <services>
    <land/>
