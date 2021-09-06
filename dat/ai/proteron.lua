@@ -2,9 +2,10 @@ require 'ai.core.core'
 require "numstring"
 
 -- Settings
-mem.armour_run = 40
+mem.armour_run    = 40
 mem.armour_return = 70
-mem.aggressive = true
+mem.aggressive    = true
+mem.whiteknight   = true
 
 local bribe_no_list = {
    _([["You won't buy your way out of this one."]]),
@@ -17,13 +18,14 @@ local bribe_no_list = {
 
 function create ()
    -- Not too many credits.
-   local price = ai.pilot():ship():price()
+   local p = ai.pilot()
+   local price = p:ship():price()
    ai.setcredits( rnd.rnd(price/300, price/70) )
 
    -- Lines to annoy the player.
    local r = rnd.rnd(0,20)
    if r == 0 then
-      ai.pilot():broadcast(_("The Proteron are watching you."))
+      p:broadcast(_("The Proteron are watching you."))
    end
 
    mem.loiter = 3 -- This is the amount of waypoints the pilot will pass through before leaving the system

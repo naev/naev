@@ -680,7 +680,7 @@ function distress ( pilot, attacker )
    elseif a_enemy then
       badguy = attacker
    -- We'll be nice and go after the aggressor if the victim is peaceful.
-   elseif not pilot:memory().aggressive then
+   elseif mem.whiteknight and not pilot:memory().aggressive then
       badguy = attacker
    end
 

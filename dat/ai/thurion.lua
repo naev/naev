@@ -1,10 +1,11 @@
 require 'ai.core.core'
 require "numstring"
 
-mem.shield_run = 20
-mem.armour_run = 20
-mem.defensive  = true
-mem.enemyclose = 500
+mem.shield_run    = 20
+mem.armour_run    = 20
+mem.defensive     = true
+mem.enemyclose    = 500
+mem.whiteknight   = true
 mem.distressmsgfunc = sos
 
 local sos_msg_list = {

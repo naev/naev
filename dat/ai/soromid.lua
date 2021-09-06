@@ -5,6 +5,7 @@ require "numstring"
 mem.armour_run    = 40
 mem.armour_return = 70
 mem.aggressive    = true
+mem.whiteknight   = true
 
 local bribe_no_list = {
    _([["I shall especially enjoy your death."]]),

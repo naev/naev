@@ -6,8 +6,9 @@ require "numstring"
 -- hasn’t been too hostile in the past.
 
 -- Settings
-mem.armour_run = 75 -- Za'lek armour is pretty crap. They know this, and will dip when their shields go down.
-mem.aggressive = true
+mem.armour_run    = 75 -- Za'lek armour is pretty crap. They know this, and will dip when their shields go down.
+mem.aggressive    = true
+mem.whiteknight   = true
 
 local drones = {
    ["Za'lek Heavy Drone"] = true,
