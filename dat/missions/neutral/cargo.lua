@@ -70,10 +70,10 @@ function create()
    if avgrisk == 0 then
       piracyrisk = piracyrisk[1]
       riskreward = 0
-   elseif avgrisk <= 25 then
+   elseif avgrisk <= 75 then
       piracyrisk = piracyrisk[2]
       riskreward = 10
-   elseif avgrisk > 25 and avgrisk <= 100 then
+   elseif avgrisk > 150 and avgrisk <= 300 then
       piracyrisk = piracyrisk[3]
       riskreward = 25
    else
