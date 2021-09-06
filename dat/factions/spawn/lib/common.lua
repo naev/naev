@@ -119,6 +119,9 @@ function scom.spawn( pilots, faction )
       if pilots.__doscans then
          mem.doscans = true
       end
+      if params.postprocess then
+         params.postprocess( p )
+      end
       spawned[ #spawned+1 ] = { pilot=p, presence=presence }
    end
    return spawned

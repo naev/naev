@@ -18,6 +18,13 @@ local skestrel    = ship.get("Kestrel")
 local shawking    = ship.get("Hawking")
 local sgoddard    = ship.get("Goddard")
 
+-- Make pilot more visible
+local function _advert( p )
+   -- They want to be seen
+   p:intrinsicSet( "ew_hide", -75 )
+   p:intrinsicSet( "ew_evade", -75 )
+end
+
 function spawn_advert ()
    local pilots = {}
    local civships = {
@@ -27,7 +34,7 @@ function spawn_advert ()
       shyena,
    }
    local shp = civships[ rnd.rnd(1, #civships) ]
-   scom.addPilot( pilots, shp, {ai="advertiser"} )
+   scom.addPilot( pilots, shp, {ai="advertiser", postprocess=_advert} )
    return pilots
 end
 
