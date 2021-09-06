@@ -42,8 +42,8 @@ outfits.standard.weapons = {
    "Ion Cannon",
 }
 outfits.standard.utility = {
-   "Unicorp Scrambler", "Unicorp Light Afterburner",
-   "Sensor Array", "Unicorp Medium Afterburner", "Droid Repair Crew",
+   --"Unicorp Scrambler", "Unicorp Light Afterburner",
+   --"Sensor Array", "Unicorp Medium Afterburner", "Droid Repair Crew",
 }
 outfits.standard.structural = {
    -- Heavy Structural
@@ -54,7 +54,7 @@ outfits.standard.structural = {
    "Battery II", "Shield Capacitor II", "Reactor Class II",
    "Medium Shield Booster",
    -- Small Structural
-   "Improved Stabilizer", "Engine Reroute",
+   --"Improved Stabilizer", "Engine Reroute",
    "Battery I", "Shield Capacitor I", "Reactor Class I",
    "Small Shield Booster",
 }
@@ -67,8 +67,16 @@ outfits.standard.set = outfits.merge{
 -- TODO proper elite outfits
 outfits.elite = {}
 outfits.elite.weapons = outfits.standard.weapons
-outfits.elite.utility = outfits.standard.utility
-outfits.elite.structural = outfits.standard.structural
+outfits.elite.utility = outfits.merge{ {
+   "Unicorp Scrambler", "Unicorp Light Afterburner",
+   "Sensor Array", "Unicorp Medium Afterburner",
+   "Droid Repair Crew",
+   }, outfits.standard.utility,
+}
+outfits.elite.structural = outfits.merge{ {
+   "Improved Stabilizer", "Engine Reroute",
+   }, outfits.standard.structural
+}
 outfits.elite.set = outfits.merge{
    outfits.elite.weapons,
    outfits.elite.utility,
