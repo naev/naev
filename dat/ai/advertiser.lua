@@ -4,6 +4,7 @@ require 'ai.core.misc.distress'
 require "numstring"
 
 mem.lanes_useneutral = true
+mem.simplecombat = true
 
 function create ()
    -- Credits.

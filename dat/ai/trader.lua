@@ -7,6 +7,7 @@ require "numstring"
 -- Always run away
 mem.aggressive = false
 mem.lanes_useneutral = true
+mem.simplecombat = true -- Don't do fancy dodging
 
 function create ()
    local p = ai.pilot()

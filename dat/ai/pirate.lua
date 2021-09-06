@@ -3,9 +3,7 @@ require 'ai.core.idle.pirate'
 require "numstring"
 
 --[[
-
-   Pirate AI
-
+   The Glorious Pirate AI
 --]]
 
 -- Settings

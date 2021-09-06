@@ -47,9 +47,10 @@ end
 -- Decides if zigzag is a good option
 --]]
 function __atk_decide_zz()
+   -- Some AI will not do fancy maneuvers
+   if mem.simplecombat then return false end
    -- The situation is the following: we're out of range, facing the target,
    -- going towards the target, and someone is shooting on us.
-
    local target = ai.taskdata()
    local pilot  = ai.pilot()
    local range  = ai.getweaprange(3)

@@ -106,10 +106,14 @@ function __zigzag ( dir, angle )
    ai.accel()
 end
 function __zigzag_run_decide( self, target )
-   local relspe = self:stats().speed_max/target:stats().speed_max
-   return ( self:stats().mass <= 400 
-            and relspe <= 1.01 
-            and ai.hasprojectile() 
+   -- Some AI will not do fancy maneuvers
+   if mem.simplecombat then return false end
+   -- Try to figure it out
+   local ss = self:stats()
+   local relspe = ss.speed_max/target:stats().speed_max
+   return ( ss.mass <= 400
+            and relspe <= 1.01
+            and ai.hasprojectile()
             and (not ai.hasafterburner() or self:energy() < 10)
           )
 end
