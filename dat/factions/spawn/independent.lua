@@ -109,12 +109,12 @@ function create ( max )
    -- Create weights for spawn table
    weights[ spawn_solitary_civilians ] = max
    weights[ spawn_bounty_hunter_sml  ] = math.min( 0.3*max, 50 )
-   weights[ spawn_bounty_hunter_med  ] = math.min( 0.2*max, math.max(1, -100 + host ) )
-   weights[ spawn_bounty_hunter_lrg  ] = math.min( 0.1*max, math.max(1, -200 + host ) )
+   weights[ spawn_bounty_hunter_med  ] = math.min( 0.2*max, math.max(1, -150 + host ) )
+   weights[ spawn_bounty_hunter_lrg  ] = math.min( 0.1*max, math.max(1, -300 + host ) )
    -- The more hostiles, the less advertisers
    -- The modifier should be 0.15 at 10% hostiles, 0.001 at 100% hostiles, and
    -- 1 at 0% hostiles
-   weights[ spawn_advert  ] = 30 * math.exp(-hostnorm*5)
+   weights[ spawn_advert  ] = 0.1 * max * math.exp(-hostnorm*5)
 
    -- Create spawn table base on weights
    spawn_table = scom.createSpawnTable( weights )
