@@ -94,21 +94,40 @@ function cargo_calculateRoute ()
    local numjumps   = origin_s:jumpDist(destsys, cargo_use_hidden)
    local traveldist = cargo_calculateDistance(routesys, routepos, destsys, destplanet)
 
+   -- Guarding factions
+   local _guards = {
+      faction.get("Empire"),
+      faction.get("Dvaered"),
+      faction.get("Soromid"),
+      faction.get("Sirius"),
+      faction.get("Za'lek"),
+      faction.get("Frontier"),
+   }
+   local function guard_presence( sys )
+      local p = sys:presences()
+      local total = 0
+      for k,f in ipairs(_guards) do
+         total = total + (p[f:nameRaw()] or 0)
+      end
+      return total
+   end
+   local function calc_risk( sys )
+      local risk = pir.systemPresence( sys )
+      local grisk = guard_presence( sys )
+      return math.max(0, risk - grisk/3)
+   end
 
    --Determine amount of piracy along the route
-   local jumps = system.jumpPath( system.cur(), destsys )
-   local risk = pir.systemPresence( system.cur() )
+   local cursys = system.cur()
+   local jumps = system.jumpPath( cursys, destsys )
+   local risk = calc_risk( cursys )
    if risk == nil then risk = 0 end
    if jumps then
       for k, v in ipairs(jumps) do
-         local travelrisk = pir.systemPresence( v:system() )
-         if travelrisk == nil then
-            travelrisk = 0
-         end
-         local risk = risk+travelrisk
+         risk = risk + calc_risk( v:system() )
       end
    end
-   local avgrisk = risk/(numjumps + 1)
+   risk = risk/(numjumps + 1)
 
    -- We now know where. But we don't know what yet. Randomly choose a commodity type.
    local cargo
@@ -125,7 +144,7 @@ function cargo_calculateRoute ()
 
 
    -- Return lots of stuff
-   return destplanet, destsys, numjumps, traveldist, cargo, avgrisk, tier
+   return destplanet, destsys, numjumps, traveldist, cargo, risk, tier
 end
 
 
