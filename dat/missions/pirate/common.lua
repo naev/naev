@@ -157,7 +157,7 @@ end
    @brief Decrease pirate standings for doing normal missions.
 --]]
 function pir.reputationNormalMission( amount )
-   for k,v in ipairs(pir.faction_clans) do
+   for k,v in ipairs(pir.factions_clans) do
       local s = v:playerStanding()
       -- TODO Probably should handle this minimum stuff better
       local vamount = -amount
