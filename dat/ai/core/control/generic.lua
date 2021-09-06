@@ -13,6 +13,7 @@ mem.shield_run     = -1 -- At which shield to run
 mem.shield_return  = 0 -- At which shield to return to combat
 mem.aggressive     = false -- Should pilot actively attack enemies?
 mem.defensive      = true -- Should pilot defend itself
+mem.whiteknight    = false -- Should the AI help out independent ships duking it out?
 mem.cooldown       = false -- Whether the pilot is currently cooling down.
 mem.heatthreshold  = 0.5 -- Weapon heat to enter cooldown at [0-2 or nil]
 mem.safe_distance  = 8000 -- Safe distance from enemies to stop running away
