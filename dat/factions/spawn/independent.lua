@@ -95,12 +95,16 @@ function create ( max )
 
    -- Hostiles (namely pirates atm)
    local host = 0
+   local total = 0
    local csys = system.cur()
    local find = faction.get("Independent")
-   for k,fact in pairs(find:enemies()) do
-      host = host + csys:presence(fact)
+   for f,v in pairs(csys:presences()) do
+      if find:areEnemies(f) then
+         host = host + v
+      end
+      total = total + v
    end
-   local hostnorm = host / csys:presence(find)
+   local hostnorm = host / total
 
    -- Create weights for spawn table
    weights[ spawn_solitary_civilians ] = max
