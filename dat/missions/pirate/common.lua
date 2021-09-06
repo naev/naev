@@ -159,9 +159,10 @@ end
 function pir.reputationNormalMission( amount )
    for k,v in ipairs(pir.factions_clans) do
       local s = v:playerStanding()
+      local d = v:playerStandingDefault()
       -- TODO Probably should handle this minimum stuff better
       local vamount = -amount
-      if s > -50 then
+      if s > d then
          if s > 30 then
             vamount = vamount * 3
          elseif s > 0 then

@@ -49,7 +49,7 @@ end
 function cargo_calculateDistance(routesys, routepos, destsys, destplanet)
    local traveldist = 0
 
-   jumps = routesys:jumpPath( destsys, cargo_use_hidden )
+   local jumps = routesys:jumpPath( destsys, cargo_use_hidden )
    if jumps then
       for k, v in ipairs(jumps) do
          -- We're not in the destination system yet.
@@ -69,7 +69,7 @@ function cargo_calculateDistance(routesys, routepos, destsys, destplanet)
 end
 
 function cargo_calculateRoute ()
-   origin_p, origin_s = planet.cur()
+   local origin_p, origin_s = planet.cur()
    local routesys = origin_s
    local routepos = origin_p:pos()
 
@@ -84,7 +84,7 @@ function cargo_calculateRoute ()
    end
 
    local index     = rnd.rnd(1, #planets)
-   local destplanet = planets[index][1]
+   local destplanet= planets[index][1]
    local destsys   = planets[index][2]
 
    -- We have a destination, now we need to calculate how far away it is by simulating the journey there.
@@ -114,7 +114,7 @@ function cargo_calculateRoute ()
    local function calc_risk( sys )
       local risk = pir.systemPresence( sys )
       local grisk = guard_presence( sys )
-      return math.max(0, risk - grisk/3)
+      return math.max( risk/10, risk - grisk/3 )
    end
 
    --Determine amount of piracy along the route
@@ -195,9 +195,14 @@ end
 function difference(a, b)
    local ai = {}
    local r = {}
-   for k,v in pairs(a) do r[k] = v; ai[v]=true end
+   for k,v in pairs(a) do
+      r[k] = v
+      ai[v]=true
+   end
    for k,v in pairs(b) do
-      if ai[v]~=nil then   r[k] = nil   end
+      if ai[v]~=nil then
+         r[k] = nil
+      end
    end
    return r
 end

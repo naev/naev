@@ -1161,7 +1161,7 @@ const char *faction_getStandingText( int f )
          r = _("???");
       }
       else
-         r = lua_tostring( naevL, -1 );
+         r = lua_tostring( naevL, -1 ); /* Should be translated already. */
       lua_pop( naevL, 1 );
 
       return r;

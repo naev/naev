@@ -88,7 +88,7 @@ function create()
    amount = rnd.rnd(5 + 25 * tier, 20 + 60 * tier)
    jumpreward = commodity.price(cargo)
    distreward = math.log(100*commodity.price(cargo))/100
-   reward = 1.5^tier * (avgrisk*riskreward + numjumps * jumpreward + traveldist * distreward) * finished_mod * (1. + 0.05*rnd.twosigma())
+   reward = 1.5^tier * (avgrisk*riskreward + numjumps * jumpreward + traveldist * distreward) * finished_mod * (1 + 0.05*rnd.twosigma())
 
    misn.setTitle( _("Shipment to %s in %s (%s)"):format(
          destplanet:name(), destsys:name(), tonnestring(amount) ) )
@@ -98,12 +98,13 @@ function create()
 end
 
 -- Mission is accepted
-function accept()
-   if player.pilot():cargoFree() < amount then
+function accept ()
+   local freecargo = player.pilot():cargoFree()
+   if freecargo < amount then
       tk.msg( _("No room in ship"), string.format(
          _("You don't have enough cargo space to accept this mission. It requires %s of free space (%s more than you have)."),
          tonnestring(amount),
-         tonnestring( amount - player.pilot():cargoFree() ) ) )
+         tonnestring( amount - freecargo ) ) )
       misn.finish()
    end
    misn.accept()

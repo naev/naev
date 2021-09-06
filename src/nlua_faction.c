@@ -39,6 +39,7 @@ static int factionL_modplayersingle( lua_State *L );
 static int factionL_modplayerraw( lua_State *L );
 static int factionL_setplayerstanding( lua_State *L );
 static int factionL_playerstanding( lua_State *L );
+static int factionL_playerstandingdefault( lua_State *L );
 static int factionL_enemies( lua_State *L );
 static int factionL_allies( lua_State *L );
 static int factionL_logo( lua_State *L );
@@ -62,6 +63,7 @@ static const luaL_Reg faction_methods[] = {
    { "modPlayerRaw", factionL_modplayerraw },
    { "setPlayerStanding", factionL_setplayerstanding },
    { "playerStanding", factionL_playerstanding },
+   { "playerStandingDefault", factionL_playerstandingdefault },
    { "enemies", factionL_enemies },
    { "allies", factionL_allies },
    { "logo", factionL_logo },
@@ -401,6 +403,7 @@ static int factionL_setplayerstanding( lua_State *L )
  *
  *    @luatparam Faction f Faction to get player's standing with.
  *    @luatreturn number The value of the standing and the human readable string.
+ *    @luatreturn string The text corresponding to the standing (translated).
  * @luafunc playerStanding
  */
 static int factionL_playerstanding( lua_State *L )
@@ -410,6 +413,21 @@ static int factionL_playerstanding( lua_State *L )
    lua_pushnumber( L, n );
    lua_pushstring( L, faction_getStandingText( f ) );
    return 2;
+}
+
+/**
+ * @brief Gets the player's default standing with the faction.
+ *
+ *    @luatparam Faction f Faction to get player's default standing with.
+ *    @luatreturn number The value of the standing and the human readable string.
+ * @luafunc playerStandingDefault
+ */
+static int factionL_playerstandingdefault( lua_State *L )
+{
+   int f    = luaL_validfaction( L, 1 );
+   double n = faction_getPlayerDef( f );
+   lua_pushnumber( L, n );
+   return 1;
 }
 
 /**
