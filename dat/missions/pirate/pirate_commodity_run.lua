@@ -3,8 +3,8 @@
 <mission name="Pirate Commodity Run">
  <avail>
   <priority>5</priority>
-  <cond>var.peek("commodity_runs_active") == nil or var.peek("commodity_runs_active") &lt; 3</cond>
-  <chance>0</chance>
+  <cond>false or var.peek("commodity_runs_active") == nil or var.peek("commodity_runs_active") &lt; 3</cond>
+  <chance>90</chance>
   <location>Computer</location>
   <faction>Wild Ones</faction>
   <faction>Black Lotus</faction>
