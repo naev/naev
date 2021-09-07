@@ -35,6 +35,7 @@
 #include "escort.h"
 #include "log.h"
 #include "nxml.h"
+#include "nlua_pilotoutfit.h"
 #include "pilot.h"
 #include "player.h"
 #include "spfx.h"
@@ -234,12 +235,16 @@ void pilot_weapSetPress( Pilot* p, int id, int type )
          }
          /* Turn them on. */
          else {
+            pilotoutfit_modified = 0;
             for (i=0; i<l; i++) {
                if (ws->slots[i].slot->state != PILOT_OUTFIT_OFF)
                   continue;
 
                n += pilot_outfitOn( p, ws->slots[i].slot );
             }
+            /* Recalculate if anything changed. */
+            if (pilotoutfit_modified)
+               pilot_calcStats( p );
          }
          /* Must recalculate stats. */
          if (n > 0) {
