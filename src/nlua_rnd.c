@@ -24,19 +24,19 @@
 
 
 /* Random methods. */
-static int rnd_int( lua_State *L );
-static int rnd_sigma( lua_State *L );
-static int rnd_twosigma( lua_State *L );
-static int rnd_threesigma( lua_State *L );
-static int rnd_uniform( lua_State *L );
-static int rnd_permutation( lua_State *L );
+static int rndL_int( lua_State *L );
+static int rndL_sigma( lua_State *L );
+static int rndL_twosigma( lua_State *L );
+static int rndL_threesigma( lua_State *L );
+static int rndL_uniform( lua_State *L );
+static int rndL_permutation( lua_State *L );
 static const luaL_Reg rnd_methods[] = {
-   { "rnd", rnd_int },
-   { "sigma", rnd_sigma },
-   { "twosigma", rnd_twosigma },
-   { "threesigma", rnd_threesigma },
-   { "uniform", rnd_uniform },
-   { "permutation", rnd_permutation },
+   { "rnd", rndL_int },
+   { "sigma", rndL_sigma },
+   { "twosigma", rndL_twosigma },
+   { "threesigma", rndL_threesigma },
+   { "uniform", rndL_uniform },
+   { "permutation", rndL_permutation },
    {0,0}
 }; /**< Random Lua methods. */
 
@@ -88,7 +88,7 @@ int nlua_loadRnd( nlua_env env )
  *    @luatreturn number A randomly generated number, read description for details.
  * @luafunc rnd
  */
-static int rnd_int( lua_State *L )
+static int rndL_int( lua_State *L )
 {
    int o;
    int l,h;
@@ -121,7 +121,7 @@ static int rnd_int( lua_State *L )
  *    @luatreturn number A number from [-1:1] biased slightly towards 0.
  * @luafunc sigma
  */
-static int rnd_sigma( lua_State *L )
+static int rndL_sigma( lua_State *L )
 {
    lua_pushnumber(L, RNG_1SIGMA());
    return 1;
@@ -139,7 +139,7 @@ static int rnd_sigma( lua_State *L )
  *    @luatreturn number A number from [-2:2] biased heavily towards 0.
  * @luafunc twosigma
  */
-static int rnd_twosigma( lua_State *L )
+static int rndL_twosigma( lua_State *L )
 {
    lua_pushnumber(L, RNG_2SIGMA());
    return 1;
@@ -158,7 +158,7 @@ static int rnd_twosigma( lua_State *L )
  *    @luatreturn number A number from [-3:3] biased totally towards 0.
  * @luafunc threesigma
  */
-static int rnd_threesigma( lua_State *L )
+static int rndL_threesigma( lua_State *L )
 {
    lua_pushnumber(L, RNG_3SIGMA());
    return 1;
@@ -177,7 +177,7 @@ static int rnd_threesigma( lua_State *L )
  *    @luatreturn number A randomly generated number, read description for details.
  * @luafunc uniform
  */
-static int rnd_uniform( lua_State *L )
+static int rndL_uniform( lua_State *L )
 {
    int o;
    double l,h;
@@ -215,7 +215,7 @@ static int rnd_uniform( lua_State *L )
  *    @luatreturn table A randomly permutated table.
  * @luafunc permutation
  */
-static int rnd_permutation( lua_State *L )
+static int rndL_permutation( lua_State *L )
 {
    int *values;
    int i, j, temp, max;
