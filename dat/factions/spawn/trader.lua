@@ -43,11 +43,11 @@ function spawn_patrol ()
       add_llama( pilots )
       add_llama( pilots )
    elseif r < 0.9 then
-      add_quicksilver( pilots)
+      add_quicksilver( pilots )
    elseif r < 0.97 then
-      add_mule( pilots)
+      add_mule( pilots )
    else
-      add_rhino( pilots)
+      add_rhino( pilots )
    end
 
    return pilots
