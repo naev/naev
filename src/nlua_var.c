@@ -68,13 +68,13 @@ int var_load( xmlNodePtr parent );
 
 
 /* var */
-static int var_peek( lua_State *L );
-static int var_pop( lua_State *L );
-static int var_push( lua_State *L );
+static int varL_peek( lua_State *L );
+static int varL_pop( lua_State *L );
+static int varL_push( lua_State *L );
 static const luaL_Reg var_methods[] = {
-   { "peek", var_peek },
-   { "pop", var_pop },
-   { "push", var_push },
+   { "peek", varL_peek },
+   { "pop", varL_pop },
+   { "push", varL_push },
    {0,0}
 }; /**< Mission variable Lua methods. */
 
@@ -262,7 +262,7 @@ int var_checkflag( char* str )
  *             it is.
  * @luafunc peek
  */
-static int var_peek( lua_State *L )
+static int varL_peek( lua_State *L )
 {
    int i;
    const char *str;
@@ -299,7 +299,7 @@ static int var_peek( lua_State *L )
  *    @luatparam string name Name of the mission variable to pop.
  * @luafunc pop
  */
-static int var_pop( lua_State *L )
+static int varL_pop( lua_State *L )
 {
    int i;
    const char* str;
@@ -329,7 +329,7 @@ static int var_pop( lua_State *L )
  *                  nil, bool, string or number.
  * @luafunc push
  */
-static int var_push( lua_State *L )
+static int varL_push( lua_State *L )
 {
    const char *str;
    misn_var var;

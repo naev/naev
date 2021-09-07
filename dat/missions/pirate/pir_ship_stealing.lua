@@ -5,13 +5,12 @@
   <priority>4</priority>
   <chance>10</chance>
   <location>Bar</location>
-  <cond>
-  faction.playerStanding("Pirate") &gt;= -20 or
-  planet.cur():faction() == faction.get("Black Lotus") or
-  planet.cur():faction() == faction.get("Wild Ones") or
-  planet.cur():faction() == faction.get("Dreamer Clan") or
-  planet.cur():faction() == faction.get("Raven Clan")
-  </cond>
+  <cond>faction.playerStanding("Pirate") &gt;= -20</cond>
+  <faction>Wild Ones</faction>
+  <faction>Black Lotus</faction>
+  <faction>Raven Clan</faction>
+  <faction>Dreamer Clan</faction>
+  <faction>Pirate</faction>
  </avail>
  <notes>
   <tier>2</tier>
