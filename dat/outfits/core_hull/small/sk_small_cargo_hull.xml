@@ -15,5 +15,6 @@
   <absorb>2</absorb>
   <armour>55</armour>
   <cargo_inertia>-25</cargo_inertia>
+  <cargo_mod>25</cargo_mod>
  </specific>
 </outfit>

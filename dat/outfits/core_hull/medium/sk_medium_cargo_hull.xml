@@ -15,5 +15,6 @@
   <absorb>12</absorb>
   <armour>180</armour>
   <cargo_inertia>-25</cargo_inertia>
+  <cargo_mod>25</cargo_mod>
  </specific>
 </outfit>
