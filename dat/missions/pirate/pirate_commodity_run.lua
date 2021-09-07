@@ -4,7 +4,7 @@
  <avail>
   <priority>5</priority>
   <cond>var.peek("commodity_runs_active") == nil or var.peek("commodity_runs_active") &lt; 3</cond>
-  <chance>90</chance>
+  <chance>0</chance>
   <location>Computer</location>
   <faction>Wild Ones</faction>
   <faction>Black Lotus</faction>
