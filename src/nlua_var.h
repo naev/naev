@@ -10,7 +10,7 @@
 
 
 /* checks if a flag exists on the variable stack */
-int var_checkflag( char* str );
+int var_checkflag( const char* str );
 void var_cleanup (void);
 
 /* individual library stuff */

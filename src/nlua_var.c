@@ -30,10 +30,13 @@
 
 
 /* similar to Lua vars, but with less variety */
-#define MISN_VAR_NIL    0 /**< Nil type. */
-#define MISN_VAR_NUM    1 /**< Number type. */
-#define MISN_VAR_BOOL   2 /**< Boolean type. */
-#define MISN_VAR_STR    3 /**< String type. */
+enum {
+   MISN_VAR_NIL, /**< Nil type. */
+   MISN_VAR_NUM, /**< Number type. */
+   MISN_VAR_BOOL, /**< Boolean type. */
+   MISN_VAR_STR, /**< String type. */
+};
+
 /**
  * @struct misn_var
  *
@@ -60,7 +63,9 @@ static misn_var* var_stack = NULL; /**< Stack of mission variables. */
  * prototypes
  */
 /* static */
-static int var_add( misn_var *var );
+static int var_cmp( const void *p1, const void *p2 );
+static misn_var *var_get( const char *str );
+static int var_add( misn_var *new_var, int sort );
 static void var_free( misn_var* var );
 /* externed */
 int var_save( xmlTextWriterPtr writer );
@@ -88,6 +93,25 @@ int nlua_loadVar( nlua_env env )
 {
    nlua_register(env, "var", var_methods, 0);
    return 0;
+}
+
+
+static int var_cmp( const void *p1, const void *p2 )
+{
+   const misn_var *mv1, *mv2;
+   mv1 = (const misn_var*) p1;
+   mv2 = (const misn_var*) p2;
+   return strcmp(mv1->name,mv2->name);
+}
+
+
+/**
+ * @brief Gets a mission var by name.
+ */
+static misn_var *var_get( const char *str )
+{
+   misn_var mv = {.name=(char*)str};
+   return bsearch( &mv, var_stack, array_size(var_stack), sizeof(misn_var), var_cmp );
 }
 
 
@@ -125,10 +149,8 @@ int var_save( xmlTextWriterPtr writer )
             xmlw_str(writer,"%s",var_stack[i].d.str);
             break;
       }
-
       xmlw_endElem(writer); /* "var" */
    }
-
    xmlw_endElem(writer); /* "vars" */
 
    return 0;
@@ -179,11 +201,12 @@ int var_load( xmlNodePtr parent )
                   continue;
                }
                free(str);
-               var_add( &var );
+               var_add( &var, 0 );
             }
          } while (xml_nextNode(cur));
       }
    } while (xml_nextNode(node));
+   qsort( var_stack, array_size(var_stack), sizeof(misn_var), var_cmp );
 
    return 0;
 }
@@ -193,28 +216,31 @@ int var_load( xmlNodePtr parent )
  * @brief Adds a var to the stack, strings will be SHARED, don't free.
  *
  *    @param new_var Variable to add.
+ *    @param sort Whether or not to sort.
  *    @return 0 on success.
  */
-static int var_add( misn_var *new_var )
+static int var_add( misn_var *new_var, int sort )
 {
-   int i;
    misn_var *mv;
 
    if (var_stack==NULL)
       var_stack = array_create( misn_var );
 
    /* check if already exists */
-   for (i=0; i<array_size(var_stack); i++) {
-      if (strcmp(new_var->name,var_stack[i].name)==0) { /* overwrite */
-         var_free( &var_stack[i] );
-         var_stack[i] = *new_var;
-         return 0;
-      }
+   mv = var_get( new_var->name );
+   if (mv != NULL) {
+      var_free( mv );
+      *mv = *new_var;
+      return 0;
    }
 
    /* need new one. */
    mv = &array_grow( &var_stack );
    *mv = *new_var;
+
+   /* Sort if necessary. */
+   if (sort)
+      qsort( var_stack, array_size(var_stack), sizeof(misn_var), var_cmp );
 
    return 0;
 }
@@ -245,15 +271,11 @@ static int var_add( misn_var *new_var )
  *    @param str Name of the mission var.
  *    @return 1 if it exists, 0 if it doesn't.
  */
-int var_checkflag( char* str )
+int var_checkflag( const char* str )
 {
-   int i;
-
-   for (i=0; i<array_size(var_stack); i++)
-      if (strcmp(var_stack[i].name,str)==0)
-         return 1;
-   return 0;
+   return var_get( str ) != NULL;
 }
+
 /**
  * @brief Gets the mission variable value of a certain name.
  *
@@ -264,32 +286,26 @@ int var_checkflag( char* str )
  */
 static int varL_peek( lua_State *L )
 {
-   int i;
-   const char *str;
+   const char *str = luaL_checkstring(L,1);
+   misn_var *mv = var_get( str );
+   if (mv == NULL)
+      return 0;
 
-   /* Get the parameter. */
-   str = luaL_checkstring(L,1);
-
-   for (i=0; i<array_size(var_stack); i++)
-      if (strcmp(str,var_stack[i].name)==0) {
-         switch (var_stack[i].type) {
-            case MISN_VAR_NIL:
-               lua_pushnil(L);
-               break;
-            case MISN_VAR_NUM:
-               lua_pushnumber(L,var_stack[i].d.num);
-               break;
-            case MISN_VAR_BOOL:
-               lua_pushboolean(L,var_stack[i].d.b);
-               break;
-            case MISN_VAR_STR:
-               lua_pushstring(L,var_stack[i].d.str);
-               break;
-         }
-         return 1;
-      }
-
-   return 0;
+   switch (mv->type) {
+      case MISN_VAR_NIL:
+         lua_pushnil(L);
+         break;
+      case MISN_VAR_NUM:
+         lua_pushnumber(L,mv->d.num);
+         break;
+      case MISN_VAR_BOOL:
+         lua_pushboolean(L,mv->d.b);
+         break;
+      case MISN_VAR_STR:
+         lua_pushstring(L,mv->d.str);
+         break;
+   }
+   return 1;
 }
 /**
  * @brief Pops a mission variable off the stack, destroying it.
@@ -301,21 +317,13 @@ static int varL_peek( lua_State *L )
  */
 static int varL_pop( lua_State *L )
 {
-   int i;
-   const char* str;
-
    NLUA_CHECKRW(L);
-
-   str = luaL_checkstring(L,1);
-
-   for (i=0; i<array_size(var_stack); i++)
-      if (strcmp(str,var_stack[i].name)==0) {
-         var_free( &var_stack[i] );
-         array_erase( &var_stack, &var_stack[i], &var_stack[i+1] );
-         return 0;
-      }
-
-   /*NLUA_DEBUG("Var '%s' not found in stack", str);*/
+   const char* str = luaL_checkstring(L,1);
+   misn_var *mv = var_get( str );
+   if (mv == NULL)
+      return 0;
+   var_free( mv );
+   array_erase( &var_stack, mv, mv+1 );
    return 0;
 }
 /**
@@ -331,12 +339,9 @@ static int varL_pop( lua_State *L )
  */
 static int varL_push( lua_State *L )
 {
-   const char *str;
-   misn_var var;
-
    NLUA_CHECKRW(L);
-
-   str = luaL_checkstring(L,1);
+   const char *str = luaL_checkstring(L,1);
+   misn_var var;
 
    /* store appropriate data */
    if (lua_isnil(L,2))
@@ -359,7 +364,7 @@ static int varL_push( lua_State *L )
    }
    /* Set name. */
    var.name = strdup(str);
-   var_add( &var );
+   var_add( &var, 1 );
 
    return 0;
 }
@@ -380,7 +385,6 @@ static void var_free( misn_var* var )
       case MISN_VAR_BOOL:
          break;
    }
-
    free(var->name);
    var->name = NULL;
 }
