@@ -400,7 +400,7 @@ function control ()
    end
 
    -- Check to see if we want to go back to the lanes
-   if mem.natural and si.fighting then
+   if mem.natural and si.fighting and not si.running then
       local lr = mem.enemyclose
       if lr then
          local d, pos = lanes.getDistance2P( p, p:pos() )
@@ -587,7 +587,6 @@ function attacked( attacker )
    end
 
    if not si.fighting then
-
       if mem.defensive then
          -- Some taunting
          ai.hostile(attacker) -- Should be done before taunting
@@ -714,7 +713,9 @@ function distress ( pilot, attacker )
             ai.pushtask( "attack", badguy )
          end
       else
-         ai.pushtask( "runaway", badguy )
+         if p:inrange(badguy) and ai.dist(badguy) < mem.safe_distance then
+            ai.pushtask( "runaway", badguy )
+         end
       end
    end
 end

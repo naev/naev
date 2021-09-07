@@ -16,8 +16,8 @@ function create ()
    local price = ps:price()
    ai.setcredits( rnd.rnd(price/100, price/25) )
 
-   -- Try to do normal life as muchas possible
-   mem.safe_distance = 2000 + 500 * ps:size()
+   -- Try to do normal life as much as possible
+   mem.safe_distance = 2000 + 1000 * ps:size()
 
    -- Finish up creation
    create_post()
