@@ -22,9 +22,9 @@
  </health>
  <characteristics>
   <crew>11</crew>
-  <mass>500</mass>
+  <mass>600</mass>
   <fuel_consumption>200</fuel_consumption>
-  <cargo>100</cargo>
+  <cargo>150</cargo>
  </characteristics>
  <slots>
   <weapon size="large" x="25" y="-3" h="4" />

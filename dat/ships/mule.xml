@@ -21,9 +21,9 @@
  </health>
  <characteristics>
   <crew>13</crew>
-  <mass>600</mass>
+  <mass>800</mass>
   <fuel_consumption>200</fuel_consumption>
-  <cargo>180</cargo>
+  <cargo>230</cargo>
  </characteristics>
  <slots>
   <weapon size="medium" prop="fighter_bay" x="-15" y="0" h="4" />
