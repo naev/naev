@@ -33,5 +33,5 @@ function equip( p )
    local cores = ecores.get( p, { all="standard" } )
 
    -- Try to equip
-   equipopt.optimize.optimize( p, cores, miner_outfits, params )
+   return equipopt.optimize.optimize( p, cores, miner_outfits, params )
 end

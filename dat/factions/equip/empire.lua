@@ -5,6 +5,6 @@ local equipopt = require 'equipopt'
 --    @param p Pilot to equip
 --]]
 function equip( p )
-   equipopt.empire( p )
+   return equipopt.empire( p )
 end
 

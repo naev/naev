@@ -5,5 +5,5 @@ local equipopt = require 'equipopt'
 --    @param p Pilot to equip
 --]]
 function equip( p )
-   equipopt.dvaered( p )
+   return equipopt.dvaered( p )
 end

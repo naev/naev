@@ -6,11 +6,11 @@ local ecargo = require 'equipopt.cargo'
 
 -- Probability of cargo by class.
 local cargo_chance = {
-   ["Yacht"]         = 0.8,
-   ["Courier"]       = 0.8,
-   ["Freighter"]     = 0.8,
-   ["Armoured Transport"] = 0.8,
-   ["Bulk Freighter"]= 0.9,
+   ["Yacht"]         = 0.95,
+   ["Courier"]       = 0.95,
+   ["Freighter"]     = 0.95,
+   ["Armoured Transport"] = 0.95,
+   ["Bulk Freighter"]= 0.95,
    ["Scout"]         = 0.1,
    ["Interceptor"]   = 0.2,
    ["Fighter"]       = 0.2,
@@ -37,11 +37,13 @@ function equip( p )
    local cores = ecores.get( p, { all="standard" } )
 
    -- Try to equip
-   equipopt.optimize.optimize( p, cores, eoutfits.standard.set, params )
+   local ret = equipopt.optimize.optimize( p, cores, eoutfits.standard.set, params )
 
    -- Add cargo
    local cc = cargo_chance[ p:ship():class() ]
    if cc and rnd.rnd() < cc then
       ecargo.add( p )
    end
+
+   return ret
 end
