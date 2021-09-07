@@ -68,9 +68,9 @@ local function _setdefaults()
    vn._default._draw_bg = nil
    vn._default._updatefunc = nil
    -- These are implicitly dependent on lw, lh, so should be recalculated with the above.
-   vn._canvas = graphics.newCanvas()
+   vn._canvas     = graphics.newCanvas()
    vn._prevcanvas = graphics.newCanvas()
-   vn._curcanvas = graphics.newCanvas()
+   vn._curcanvas  = graphics.newCanvas()
    -- Empty canvas used for some transitions
    vn._emptycanvas = graphics.newCanvas()
    local oldcanvas = graphics.getCanvas()
@@ -171,12 +171,16 @@ end
 --[[
 -- Main drawing function.
 --]]
-local function _draw()
+local function _draw( tocanvas )
    local prevcanvas
    if vn._postshader then
       prevcanvas = graphics.getCanvas()
       graphics.setCanvas( vn._canvas )
       graphics.clear( 0, 0, 0, 0 )
+   end
+
+   if tocanvas then
+      graphics.setBlendMode( "alpha", "premultiplied" )
    end
 
    -- Draw background
@@ -194,6 +198,10 @@ local function _draw()
       if c.talking then
          _draw_character( c )
       end
+   end
+
+   if tocanvas then
+      graphics.setBlendMode( "alpha" )
    end
 
    -- Textbox
@@ -263,14 +271,14 @@ function vn.draw()
    if s and s.drawoverride then
       s:drawoverride()
    else
-      _draw()
+      _draw( false )
    end
 end
 local function _draw_to_canvas( canvas )
    local oldcanvas = graphics.getCanvas()
    graphics.setCanvas( canvas )
    graphics.clear( 0, 0, 0, 0 )
-   _draw()
+   _draw( true )
    graphics.setCanvas( oldcanvas )
 end
 
@@ -1031,15 +1039,15 @@ local function _appear_setup( c, shader )
             local oldcanvas = graphics.getCanvas()
             graphics.setCanvas( vn._curcanvas )
             graphics.clear( 0, 0, 0, 0 )
+            graphics.setBlendMode( "alpha", "premultiplied" )
             self.image:draw( ... )
+            graphics.setBlendMode( "alpha" )
             graphics.setCanvas( oldcanvas )
 
             local oldshader = graphics.getShader()
             graphics.setShader( shader )
             vn.setColor( {1, 1, 1, 1} )
-            graphics.setBlendMode( "alpha", "premultiplied" )
             vn._curcanvas:draw( 0, 0 )
-            graphics.setBlendMode( "alpha" )
             graphics.setShader( oldshader )
          end
          v.image = d
@@ -1241,6 +1249,10 @@ function vn.done( ... )
    vn.scene()
    vn.func( function ()
       vn._globalalpha = 0
+      vn._draw_fg = nil
+      vn._draw_bg = nil
+      vn._postshader = nil
+      vn._update = nil
       if vn._handle_music then
          lmusic.stop()
          if not music.isPlaying() then

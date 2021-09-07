@@ -26,7 +26,6 @@ local function add_shark( pilots )
    scom.addPilot( pilots, sshark, {name=_("Trader Shark"), ai="mercenary"})
 end
 
-
 -- @brief Spawns a small trade fleet.
 function spawn_patrol ()
    local pilots = {}
