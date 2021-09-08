@@ -2520,6 +2520,7 @@ dat/scripts/equipopt/templates/soromid.lua
 dat/scripts/equipopt/templates/thurion.lua
 dat/scripts/equipopt/templates/zalek.lua
 dat/scripts/fleet.lua
+dat/scripts/format.lua
 dat/scripts/formation.lua
 dat/scripts/jumpdist.lua
 dat/scripts/lmusic.lua
@@ -2555,10 +2556,8 @@ dat/scripts/minigames/chuckaluck.lua
 dat/scripts/minigames/diceio.lua
 dat/scripts/misnhelper.lua
 dat/scripts/nextjump.lua
-dat/scripts/numstring.lua
 dat/scripts/outfits/shaders.lua
-dat/scripts/pilot/generic.lua
-dat/scripts/pilot/pirate.lua
+dat/scripts/pilotname.lua
 dat/scripts/playerform.lua
 dat/scripts/portrait.lua
 dat/scripts/pp_shaders.lua
