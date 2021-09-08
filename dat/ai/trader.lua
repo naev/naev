@@ -40,7 +40,7 @@ function hail ()
    mem.bribe_prompt_nearby = nil
    mem.bribe_paid    = nil
    mem.bribe_no      = nil
-   
+
    -- Deal with refueling
    local standing = p:faction():playerStanding()
    mem.refuel = mem.refuel_base
