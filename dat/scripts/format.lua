@@ -2,7 +2,7 @@ local format = {}
 
 -- Converts an integer into a human readable string, delimiting every third digit with a comma.
 -- Note: rounds input to the nearest integer. Primary use is for payment descriptions.
-function format.numstring(number)
+function format.number(number)
    number = math.floor(number + 0.5)
    local numberstring = ""
    while number >= 1000 do
@@ -24,7 +24,7 @@ end
 --    @param credits Number of credits.
 --    @return A string taking the form of "X ¤".
 --]]
-function format.creditstring( credits )
+function format.credits( credits )
    return gettext.ngettext("%s ¤", "%s ¤", credits):format(
          numstring(credits) )
 end
@@ -41,7 +41,7 @@ end
 --    @param tonnes Number of tonnes.
 --    @return A string taking the form of "X tonne" or "X tonnes".
 --]]
-function format.tonnestring( tonnes )
+function format.tonne( tonnes )
    return gettext.ngettext("%s tonne", "%s tonnes", tonnes):format(
          numstring(tonnes) )
 end
@@ -53,7 +53,7 @@ end
 --    @param tonnes Number of tonnes.
 --    @return A short string like "22 t" describing the given mass.
 --]]
-function format.tonnestring_short( tonnes )
+function format.tonne_short( tonnes )
    -- Translator note: this form represents an abbreviation of "_ tonnes".
    return gettext.ngettext( "%d t", "%d t", tonnes ):format( tonnes )
 end
@@ -70,7 +70,7 @@ end
 --    @param jumps Number of jumps.
 --    @return A string taking the form of "X jump" or "X jumps".
 --]]
-function format.jumpstring( jumps )
+function format.jump( jumps )
    return gettext.ngettext("%s jump", "%s jumps", jumps):format(
          numstring(jumps) )
 end
@@ -88,7 +88,7 @@ end
 --    @param times Number of times.
 --    @return A string taking the form of "X time" or "X times".
 --]]
-function format.timestring( times )
+function format.time( times )
    return gettext.ngettext("%s time", "%s times", times):format(
          numstring(times) )
 end
@@ -106,7 +106,7 @@ end
 --    @tparam table words List of words to translate such as {"one","two","three"}.
 --    @treturn string String of the list of words such as "one, two, and three"
 --]]
-function format.list_format( words )
+function format.list( words )
    local length = #words
    if length == 1 then return words[1] end
    if length == 2 then
