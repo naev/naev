@@ -22,7 +22,7 @@ MISSION: Chase Test
 DESCRIPTION: Pirates chase you to Ogat.
 ]]--
 
-require "numstring"
+local fmt = require "format"
 local fleet = require "fleet"
 
 NPC_name = _("A detective") --NPC params
@@ -167,7 +167,7 @@ function pilotKilled () --function for second trigger
 end
 
 function capHailed () --when hailing the capship back
-   tk.msg( title[2], string.format( text[2], creditstring( reward ) ) ) --congratulates
+   tk.msg( title[2], string.format( text[2], fmt.credits( reward ) ) ) --congratulates
    player.pay( reward )
    player.commClose()
    misn.finish(true)

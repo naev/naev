@@ -14,7 +14,7 @@
 --]]
 local vn = require 'vn'
 local lg = require 'love.graphics'
-require "numstring"
+local fmt = require "format"
 
 shiplover_name    = _("Ship Enthusiast")
 shiplover_portrait= "shiplover.webp"
@@ -314,11 +314,11 @@ function create ()
 
    else
       reward.func = function ()
-         shiplog.append( "shiplover", string.format(_("You obtained a %s from the Ship Enthusiast for getting a quiz right."), creditstring(cash_reward))  )
+         shiplog.append( "shiplover", string.format(_("You obtained a %s from the Ship Enthusiast for getting a quiz right."), fmt.credits(cash_reward))  )
          player.pay( cash_reward, true ) -- Don't trigger hooks
       end
       reward.msg_shiplover = string.format(_([["That's right! Damn, I thought you wouldn't know this one. This is the %d time you got my quiz right! Here, take this as a reward for your performance."]]), nwon+1)
-      reward.msg_obtain = string.format(_("You have received #g%s#0."), creditstring(cash_reward))
+      reward.msg_obtain = string.format(_("You have received #g%s#0."), fmt.credits(cash_reward))
    end
 
    -- Set up NPC and hooks

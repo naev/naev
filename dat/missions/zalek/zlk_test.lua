@@ -24,7 +24,7 @@
 ]]
 
 require "scripts/cargo_common"
-require "scripts/numstring"
+local fmt = require "format"
 
 misn_title = _("ZT test of %s")
 misn_desc = _("A Za'lek research team needs you to travel to %s in %s using an engine in order to test it.")
@@ -123,7 +123,7 @@ function create()
    misn.setTitle( misn_title:format( typeOfEng ))
    misn.markerAdd(destsys, "computer")
    cargo_setDesc( misn_desc:format( destplanet:name(), destsys:name() ), nil, nil, destplanet )
-   misn.setReward(creditstring(reward))
+   misn.setReward(fmt.credits(reward))
 end
 
 function accept()

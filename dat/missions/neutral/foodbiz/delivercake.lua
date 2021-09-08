@@ -21,7 +21,7 @@ Plot: on Zhiru you meet the same girl who received the love letters,her name is 
  on Zeo where he will sell her baked goodies etc. asks if you can take recipes and plans to him on Zeo. Fills you cargo hold with cake which you don’t like. You can sell cake or bring to Michal who will pay a lot of $ for the cake, player doesn’t know that he will get payed for cake he brings.
 --]]
 
-require "numstring"
+local fmt = require "format"
 require "missions/neutral/common"
 
 
@@ -78,14 +78,14 @@ function accept()
    if amount > 0 then
       misn.cargoAdd( cakes, amount )
       reward = reward + ( 1000 * amount )
-      tk.msg( title, objectives:format( creditstring( reward ) ) )
+      tk.msg( title, objectives:format( fmt.credits( reward ) ) )
    else
-      tk.msg( title, objectives_nocake:format( creditstring( reward ) ) )
+      tk.msg( title, objectives_nocake:format( fmt.credits( reward ) ) )
    end
 
    -- set up mission computer
    misn.setTitle( title )
-   misn.setReward( creditstring( reward ) )
+   misn.setReward( fmt.credits( reward ) )
    misn.setDesc( misn_desc:format( targetworld:name(), targetworld_sys:name() ) )
 
    osd_desc[1] = osd_desc[1]:format( targetworld:name(), targetworld_sys:name() )

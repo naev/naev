@@ -27,7 +27,7 @@
 
 ]]--
 
-require "numstring"
+local fmt = require "format"
 require "missions/zalek/common"
 
 
@@ -76,7 +76,7 @@ function accept()
         misn.finish()
     end
 
-    if not tk.yesno(bar_title, string.format(bar_ask_text, creditstring(50000))) then
+    if not tk.yesno(bar_title, string.format(bar_ask_text, fmt.credits(50000))) then
         if not tk.yesno(bar_title, bar_ask_again_text ) then
             misn.finish()
         else
@@ -97,7 +97,7 @@ function accept()
     -- Set up mission information
     misn.setTitle( _("Novice Nebula Research") )
     misn.setReward( string.format(
-        _("%s and the gratitude of a student"), creditstring(50000) ) )
+        _("%s and the gratitude of a student"), fmt.credits(50000) ) )
     misn.setDesc( _("You have been asked by a Za'lek student to fly into the Nebula for some kind of research.") )
     misn_marker = misn.markerAdd(system.get(t_sys[1]), "low")
 
@@ -121,7 +121,7 @@ function land()
     landed = planet.cur()
     if misn_stage == 3 and landed == homeworld then
         tk.msg( "", finish_text:format(
-            homeworld:name(), creditstring(credits) ) )
+            homeworld:name(), fmt.credits(credits) ) )
         misn.cargoRm(cargo)
         player.pay(credits)
         misn.markerRm(misn_marker)

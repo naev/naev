@@ -25,7 +25,7 @@
 --]]
 
 require "scripts/cargo_common"
-require "scripts/numstring"
+local fmt = require "format"
 require "missions/zalek/common"
 
 
@@ -74,14 +74,14 @@ function create()
 end
 
 function accept()
-    if not tk.yesno(bar_title, bar_text:format(player:name(), homeworld:name(), homeworld_sys:name(), creditstring(credits))) then
+    if not tk.yesno(bar_title, bar_text:format(player:name(), homeworld:name(), homeworld_sys:name(), fmt.credits(credits))) then
         misn.finish()
     end
     tk.msg(bar_title, accept_text:format(homeworld:name()))
 
     -- Set up mission information
     misn.setTitle(mtitle)
-    misn.setReward(misn_reward:format(creditstring(credits)))
+    misn.setReward(misn_reward:format(fmt.credits(credits)))
     misn.setDesc(mdesc:format(homeworld:name(), homeworld_sys:name()))
     misn_marker = misn.markerAdd(homeworld_sys, "low")
 
@@ -96,10 +96,10 @@ function land()
     landed = planet.cur()
     if landed == homeworld then
         if timelimit < time.get() then
-            tk.msg(landing_title, late_arrival_text:format(creditstring(credits / 2), request_text))
+            tk.msg(landing_title, late_arrival_text:format(fmt.credits(credits / 2), request_text))
             player.pay(credits / 2)
         else
-            tk.msg(landing_title, arrival_text:format(creditstring(credits), request_text))
+            tk.msg(landing_title, arrival_text:format(fmt.credits(credits), request_text))
             player.pay(credits)
         end
         misn.markerRm(misn_marker)

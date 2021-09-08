@@ -21,7 +21,7 @@
 ]]--
 
 require "cargo_common"
-require "numstring"
+local fmt = require "format"
 
 
 misn_desc  = _("Official Empire long distance cargo transport to %s in the %s system.")
@@ -101,11 +101,11 @@ function create()
    reward     = 1.5^tier * (avgrisk*riskreward + numjumps * jumpreward + traveldist * distreward) * finished_mod * (1. + 0.05*rnd.twosigma())
 
    misn.setTitle( string.format(
-      _("ES: Long distance cargo transport (%s of %s)"), tonnestring(amount),
+      _("ES: Long distance cargo transport (%s of %s)"), fmt.tonnes(amount),
       _(cargo) ) )
    misn.markerAdd(destsys, "computer")
    cargo_setDesc( misn_desc:format( destplanet:name(), destsys:name() ), cargo, amount, destplanet, timelimit, piracyrisk );
-   misn.setReward( creditstring(reward) )
+   misn.setReward( fmt.credits(reward) )
 end
 
 -- Mission is accepted
@@ -122,8 +122,8 @@ function accept()
    if player.pilot():cargoFree() < amount then
       tk.msg( _("No room in ship"), string.format(
          _("You don't have enough cargo space to accept this mission. It requires %s of free space (%s more than you have)."),
-         tonnestring(amount),
-         tonnestring( amount - player.pilot():cargoFree() ) ) )
+         fmt.tonnes(amount),
+         fmt.tonnes( amount - player.pilot():cargoFree() ) ) )
       misn.finish()
    end
 
@@ -132,7 +132,7 @@ function accept()
    carg_id = misn.cargoAdd( cargo, amount )
    tk.msg( _("Mission Accepted"), string.format(
       _("The Empire workers load the %s of %s onto your ship."),
-      tonnestring(amount), _(cargo) ) )
+      fmt.tonnes(amount), _(cargo) ) )
    local osd_msg = {}
    osd_msg[1] = osd_msg1:format(
       destplanet:name(), destsys:name(), timelimit:str(),

@@ -35,7 +35,7 @@
 
 --]]
 local pir = require "missions.pirate.common"
-require "numstring"
+local fmt = require "format"
 require "missions.shark.common"
 
 
@@ -108,7 +108,7 @@ function accept()
    stage = 0
    reward = 750e3
 
-   if tk.yesno(title[1], text[1]:format(battlesys:name(), numstring(reward/2))) then
+   if tk.yesno(title[1], text[1]:format(battlesys:name(), fmt.number(reward/2))) then
       misn.accept()
       tk.msg(title[2], text[2]:format(battlesys:name(), paypla:name(), paysys:name()))
 
@@ -116,7 +116,7 @@ function accept()
       osd_msg[2] = osd_msg[2]:format(paypla:name(), paysys:name())
 
       misn.setTitle(misn_title)
-      misn.setReward(creditstring(reward/2))
+      misn.setReward(fmt.credits(reward/2))
       misn.setDesc(misn_desc)
       osd = misn.osdCreate(osd_title, osd_msg)
       misn.osdActive(1)

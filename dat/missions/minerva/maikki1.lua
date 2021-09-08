@@ -42,7 +42,7 @@ local minerva = require "campaigns.minerva"
 local portrait = require 'portrait'
 local vn = require 'vn'
 local love_shaders = require 'love_shaders'
-require 'numstring'
+local fmt = require "format"
 
 maikki_name = _("Distraught Young Woman")
 maikki_description = _("You see a small young woman sitting by herself. She has a worried expression on her face.")
@@ -814,7 +814,7 @@ He points at the wreck nearby.]]))
 He seems to be clutching his head. A headache perhaps?]]))
    vn.menu( {
       { _([["Look I just want to talk"]]), "trytalk" },
-      { string.format(_([[Try to bribe them (#r%s#0)]]), creditstring(bribeamount)), "trybribe" },
+      { string.format(_([[Try to bribe them (#r%s#0)]]), fmt.credits(bribeamount)), "trybribe" },
    })
 
    -- TODO possibly add a pacifist option here too
@@ -838,7 +838,7 @@ He seems to be clutching his head. A headache perhaps?]]))
       end
    end )
    vn.sfxMoney()
-   vn.na(string.format(_("You wire them %s."), creditstring(bribeamount)))
+   vn.na(string.format(_("You wire them %s."), fmt.credits(bribeamount)))
    scavB(_([["I guess this isn't worth our trouble. We already got enough stuff for the Za'leks already."]]))
    scavA(_([["C'mon, let's get out of here. This place gives me the creeps. Feel like a ghost is going to pop out any minute."]]))
    scavB(_([["Next round in Doeston is on me."]]))

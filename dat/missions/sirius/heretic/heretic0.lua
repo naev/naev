@@ -22,7 +22,7 @@
     Credits to KAHR-Alpha for the work "lackadaisically",
     and to BTAxis for the word "discombobulate"]]
 
-require "numstring"
+local fmt = require "format"
 require "missions/sirius/common"
 
 
@@ -63,7 +63,7 @@ function create()
       misn.finish(false)
    end
    --set the mission stuff
-   misn.setReward(creditstring(reward))
+   misn.setReward(fmt.credits(reward))
    misn.setTitle(misn_title)
    misn.setNPC(npc_name, "sirius/unique/strangeman.webp", bar_desc)
    osd[1] = osd[1]:format(targetasset:name(),targetsystem:name())
@@ -74,7 +74,7 @@ function accept()
    --the obligatory opening messages
    local aname = targetasset:name()
 
-   if not tk.yesno( misn_title, bmsg[1]:format( aname, creditstring(reward) ) ) then
+   if not tk.yesno( misn_title, bmsg[1]:format( aname, fmt.credits(reward) ) ) then
       tk.msg(misn_title,rejected)
       misn.finish(false)
    end

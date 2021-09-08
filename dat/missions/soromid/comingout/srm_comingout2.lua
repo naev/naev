@@ -36,7 +36,7 @@
 
 --]]
 
-require "numstring"
+local fmt = require "format"
 require "missions/soromid/common"
 
 
@@ -88,13 +88,13 @@ function accept ()
    started = true
 
    if tk.yesno( title[1], txt ) then
-      tk.msg( title[1], text[2]:format( player.name(), creditstring( credits ) ) )
+      tk.msg( title[1], text[2]:format( player.name(), fmt.credits( credits ) ) )
 
       misn.accept()
 
       misn.setTitle( misn_title )
       misn.setDesc( misn_desc:format( misplanet:name() ) )
-      misn.setReward( creditstring( credits ) )
+      misn.setReward( fmt.credits( credits ) )
       marker = misn.markerAdd( missys, "low" )
 
       osd_desc[1] = osd_desc[1]:format( missys:name(), misplanet:name() )

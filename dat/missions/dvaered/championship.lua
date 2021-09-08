@@ -28,7 +28,7 @@
 --]]
 
 --Needed scripts
-require "numstring"
+local fmt = require "format"
 require "proximity"
 local portrait = require "portrait"
 
@@ -196,7 +196,7 @@ function accept()
       osd_msg[3] = osd_msg[3]:format(planame)
 
       misn.setTitle(misn_title)
-      misn.setReward(misn_reward:format(numstring(reward)))
+      misn.setReward(misn_reward:format(fmt.number(reward)))
       misn.setDesc(misn_desc)
       misn.osdCreate(misn_title, osd_msg)
 
@@ -246,7 +246,7 @@ function beginbattle()
 
       usedNames[#usedNames+1] = opponame
 
-      tk.msg(title[2], text[2]:format(opponame,numstring(5-level)))
+      tk.msg(title[2], text[2]:format(opponame,fmt.number(5-level)))
 
       enterhook = hook.enter("enter")
 
@@ -445,11 +445,11 @@ function land()
       elseif stage == 3 and planet.cur() == mispla then  --player will be payed
 
       if level == 5 then  --you are the champion
-         tk.msg(title[4], text[4]:format(creditstring(reward * 2^level)))
+         tk.msg(title[4], text[4]:format(fmt.credits(reward * 2^level)))
       elseif level == 4 then
-         tk.msg(title[5], text[5]:format(creditstring(reward * 2^level)))
+         tk.msg(title[5], text[5]:format(fmt.credits(reward * 2^level)))
       else
-         tk.msg(title[6], text[6]:format(creditstring(reward * 2^level)))
+         tk.msg(title[6], text[6]:format(fmt.credits(reward * 2^level)))
       end
 
       player.pay(reward * 2^level)

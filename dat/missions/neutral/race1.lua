@@ -19,7 +19,7 @@
 --
 --]]
 
-require "numstring"
+local fmt = require "format"
 
 
 text = {}
@@ -94,11 +94,11 @@ end
 
 
 function accept ()
-   if tk.yesno(title[1], text[1]:format(creditstring(credits))) then
+   if tk.yesno(title[1], text[1]:format(fmt.credits(credits))) then
       misn.accept()
       OSD[4] = string.format(OSD[4], curplanet:name())
       misn.setDesc(misndesc)
-      misn.setReward(creditstring(credits))
+      misn.setReward(fmt.credits(credits))
       misn.osdCreate(OSDtitle, OSD)
       tk.msg(title[2], string.format(text[2], curplanet:name(), curplanet:name()))
       hook.takeoff("takeoff")

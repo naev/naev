@@ -32,7 +32,7 @@
    escort creation and behavior in space.
 
 --]]
-
+local fmt = require "format"
 local portrait = require "portrait"
 local pir = require "missions.pirate.common"
 require "pilot.generic"
@@ -153,7 +153,7 @@ function createPilotNPCs ()
          newpilot.approachtext = npctext[rnd.rnd(1, #npctext)]
          local id = evt.npcAdd(
             "approachPilot", _("Pilot for Hire"), newpilot.portrait,
-            string.format(description, newpilot.ship, creditstring(newpilot.deposit), newpilot.royalty * 100), 9 )
+            string.format(description, newpilot.ship, fmt.credits(newpilot.deposit), newpilot.royalty * 100), 9 )
 
          npcs[id] = newpilot
       end
@@ -359,7 +359,7 @@ function pilot_askFire( edata, npc_id )
    local credits, scredits = player.credits(2)
    local approachtext = (
          pilot_action_text .. "\n\n" .. credentials:format(
-            edata.name, edata.ship, creditstring(edata.deposit),
+            edata.name, edata.ship, fmt.credits(edata.deposit),
             edata.royalty * 100, scredits, getTotalRoyalties() * 100 ) )
 
    local n, s = tk.choice( "", approachtext, _("Fire pilot"), _("Do nothing") )
@@ -435,7 +435,7 @@ function approachPilot( npc_id )
 
    local credits, scredits = player.credits(2)
    local cstr = credentials:format(
-         pdata.name, pdata.ship, creditstring(pdata.deposit),
+         pdata.name, pdata.ship, fmt.credits(pdata.deposit),
          pdata.royalty * 100, scredits, getTotalRoyalties() * 100 )
 
    if not tk.yesno("", pdata.approachtext .. "\n\n" .. cstr) then
@@ -469,6 +469,6 @@ function approachPilot( npc_id )
 
    local edata = escorts[i]
    shiplog.create( logidstr, logname, logtype )
-   shiplog.append( logidstr, string.format(_("You hired a %s ship named '%s' for %s and %.1f%% of mission earnings."), edata.ship, edata.name, creditstring(edata.deposit), edata.royalty * 100 ) )
+   shiplog.append( logidstr, string.format(_("You hired a %s ship named '%s' for %s and %.1f%% of mission earnings."), edata.ship, edata.name, fmt.credits(edata.deposit), edata.royalty * 100 ) )
 end
 

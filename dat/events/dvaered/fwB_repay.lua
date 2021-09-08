@@ -16,7 +16,7 @@
 --]]
 
 require "missions/dvaered/frontier_war/fw_common"
-require "numstring"
+local fmt = require "format"
 
 npc_name = { _("Major Tam"), _("Captain Leblanc"), _("Lieutenant Strafer") }
 
@@ -41,7 +41,7 @@ function create()
 end
 
 function pay()
-   if tk.yesno(pay_title, pay_text:format(numstring(pirate_price))) then
+   if tk.yesno(pay_title, pay_text:format(fmt.number(pirate_price))) then
       if player.credits() >= pirate_price then
          player.pay(-pirate_price)
          shiplog.create( "frontier_war", _("Frontier War"), _("Dvaered") )

@@ -3,7 +3,7 @@
 --]]
 local vn = require 'vn'
 local lg = require 'love.graphics'
-require 'numstring'
+local fmt = require "format"
 
 local function can_bribe( plt )
    local mem = plt:memory()
@@ -114,7 +114,7 @@ local function bribe_msgFactions( group )
    for k,v in pairs(factions) do
       table.insert( names, k )
    end
-   return list_format(names)
+   return fmt.list(names)
 end
 
 local function bribe_msg( plt, group )
@@ -122,8 +122,8 @@ local function bribe_msg( plt, group )
    if group then
       local cost = bribe_cost( group )
       local str = mem.bribe_prompt_nearby
-      local cstr = creditstring(cost)
-      local chave = creditstring(player.credits())
+      local cstr = fmt.credits(cost)
+      local chave = fmt.credits(player.credits())
       if not str then
          str = _([["We'll need at least %s to not leave you as a hunk of floating debris."]])
       end
@@ -134,8 +134,8 @@ local function bribe_msg( plt, group )
    else
       local cost = bribe_cost( plt )
       local str = mem.bribe_prompt
-      local cstr = creditstring(cost)
-      local chave = creditstring(player.credits())
+      local cstr = fmt.credits(cost)
+      local chave = fmt.credits(player.credits())
       if not str then
          str = string.format(_([["I'm gonna need at least %s to not leave you as a hunk of floating debris."]]), cstr)
       end
@@ -298,8 +298,8 @@ function comm( plt )
       else
          cost = bribe_cost( plt )
       end
-      local cstr = creditstring( player.credits() )
-      local cdif = creditstring( cost - player.credits() )
+      local cstr = fmt.credits( player.credits() )
+      local cdif = fmt.credits( cost - player.credits() )
       return string.format(_("You only have %s. You need #r%s#0 more to be able to afford the bribe!"), cstr, cdif )
    end )
    vn.jump("menu")
@@ -351,8 +351,8 @@ function comm( plt )
 
    vn.label("bribe_nearby_nomoney")
    vn.na( function ()
-      local cstr = creditstring( player.credits() )
-      local cdif = creditstring( bribe_nearby_cost - player.credits() )
+      local cstr = fmt.credits( player.credits() )
+      local cdif = fmt.credits( bribe_nearby_cost - player.credits() )
       return string.format(_("You only have %s. You need #r%s#0 more to be able to afford the bribe!"), cstr, cdif )
    end )
    vn.jump("menu")
@@ -397,8 +397,8 @@ function comm( plt )
 
    vn.label("bribe_all_nomoney")
    vn.na( function ()
-      local cstr = creditstring( player.credits() )
-      local cdif = creditstring( bribe_all_cost - player.credits() )
+      local cstr = fmt.credits( player.credits() )
+      local cdif = fmt.credits( bribe_all_cost - player.credits() )
       return string.format(_("You only have %s. You need #r%s#0 more to be able to afford the bribe!"), cstr, cdif )
    end )
    vn.jump("menu")
@@ -486,8 +486,8 @@ function comm( plt )
    p( function ()
       local str = mem.refuel_msg
       local cost = mem.refuel
-      local cstr = creditstring(cost)
-      local chave = creditstring(player.credits())
+      local cstr = fmt.credits(cost)
+      local chave = fmt.credits(player.credits())
       if not str then
          str = string.format(_([["I should be able to refuel you for %s."]]), cstr)
       end
@@ -500,8 +500,8 @@ function comm( plt )
 
    vn.label("refuel_nomoney")
    vn.na( function ()
-      local cstr = creditstring( player.credits() )
-      local cdif = creditstring( mem.refuel - player.credits() )
+      local cstr = fmt.credits( player.credits() )
+      local cdif = fmt.credits( mem.refuel - player.credits() )
       return string.format(_("You only have %s credits. You need #r%s#0 more to be able to afford the refueling!"), cstr, cdif )
    end )
    vn.jump("menu")

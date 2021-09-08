@@ -44,7 +44,7 @@
 
 --]]
 local pir = require "missions.pirate.common"
-require "numstring"
+local fmt = require "format"
 require "jumpdist"
 
 nolux_title = _("Not Very Luxurious")
@@ -150,16 +150,16 @@ function create ()
    -- Set mission details
    misn.setTitle( misn_title:format( missys:name() ) )
    misn.setDesc( misn_desc:format( missys:name() ) )
-   misn.setReward( creditstring( credits ) )
+   misn.setReward( fmt.credits( credits ) )
    marker = misn.markerAdd( missys, "computer" )
 end
 
 
 function accept ()
    if player.pilot():ship():classDisplay() ~= "Luxury Yacht" then
-      if tk.yesno( nolux_title, nolux_text:format( creditstring(credits_nolux) ) ) then
+      if tk.yesno( nolux_title, nolux_text:format( fmt.credits(credits_nolux) ) ) then
          nolux_known = true
-         misn.setReward( creditstring( credits_nolux ) )
+         misn.setReward( fmt.credits( credits_nolux ) )
       else
          misn.finish()
       end

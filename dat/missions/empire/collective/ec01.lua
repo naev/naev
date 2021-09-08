@@ -30,7 +30,7 @@
 
 ]]--
 
-require "numstring"
+local fmt = require "format"
 require "missions/empire/common"
 
 bar_desc = _("You notice Lt. Commander Dimitri motioning for you to come over to him.")
@@ -84,7 +84,7 @@ function accept ()
    -- Mission details
    misn_desc[2] = misn_desc[2]:format(misn_base:name(), misn_base_sys:name())
    misn.setTitle(misn_title)
-   misn.setReward( creditstring( credits ) )
+   misn.setReward( fmt.credits( credits ) )
    misn.setDesc(misn_desc[1])
    misn_marker1 = misn.markerAdd(targsys1, "low")
    misn_marker2 = misn.markerAdd(targsys2, "low")

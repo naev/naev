@@ -23,7 +23,7 @@ local fleet = require "fleet"
 require "proximity"
 require "enum"
 require "missions/sirius/common"
-require "numstring"
+local fmt = require "format"
 
 
 title1 = _("You have mail")
@@ -101,7 +101,7 @@ osd_msg["__save"] = true
 
 misn_desc = _("Joanne has contacted you. She wants to meet you on %s (%s).")
 misn_desc2 = _("Joanne wants you to find Harja and convince him to meet her in person.")
-misn_reward = creditstring(1.5e6)
+misn_reward = fmt.credits(1.5e6)
 
 log_text = _([[You were hired by Joanne to deliver an invitation to Harja to talk with her. He agreed on the condition that you first deal with associates of his that were coming after him. When Joanne and Harja met, they came to an agreement that neither of them were responsible for the hack of the High Academy main computer which was the source of their feud. Joanne said that she will probably call for you again when she's figured out how to proceed.]])
 

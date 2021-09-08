@@ -2,7 +2,7 @@ require 'ai.core.core'
 require 'ai.core.idle.trader'
 --require 'ai.core.control.trader'
 require 'ai.core.misc.distress'
-require "numstring"
+local fmt = require "format"
 
 -- Always run away
 mem.aggressive = false
@@ -50,7 +50,7 @@ function hail ()
       mem.refuel = mem.refuel * 0.5
    end
    mem.refuel_msg = string.format(_([["I'll supply your ship with fuel for %s."]]),
-         creditstring(mem.refuel))
+         fmt.credits(mem.refuel))
 
    -- Bribes
    mem.bribe_no = _([["The Space Traders do not negotiate with criminals."]])

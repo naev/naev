@@ -37,7 +37,7 @@ require "nextjump"
 require "proximity"
 require "selectiveclear"
 require "missions/dvaered/frontier_war/fw_common"
-require "numstring"
+local fmt = require "format"
 
 portrait_name = _("Major Tam")
 portrait_desc = _("Major Tam may be in need of a pilot.")
@@ -201,7 +201,7 @@ function accept()
       misn.finish(false)
    end
    tk.msg(accept_title, accept_text1)
-   tk.msg(accept_title, accept_text2:format(hampla:name(), hamsys:name(), tonnestring(bombMass)))
+   tk.msg(accept_title, accept_text2:format(hampla:name(), hamsys:name(), fmt.tonnes(bombMass)))
 
    misn.accept()
    misn.setDesc(misn_desc)
@@ -209,7 +209,7 @@ function accept()
 
    stage = 0
    hook.land("land")
-   misn.osdCreate( osd_title, {osd_msg1:format(hampla:name(), hamsys:name(), tonnestring(bombMass)), osd_msg2:format(sabotpla:name(), sabotsys:name()), osd_msg3:format(duelpla:name(), duelsys:name())} )
+   misn.osdCreate( osd_title, {osd_msg1:format(hampla:name(), hamsys:name(), fmt.tonnes(bombMass)), osd_msg2:format(sabotpla:name(), sabotsys:name()), osd_msg3:format(duelpla:name(), duelsys:name())} )
    mark = misn.markerAdd(hamsys, "low")
 end
 
@@ -234,7 +234,7 @@ end
 
 function hamfresser()
    if (player.pilot():cargoFree() >= bombMass) then
-      tk.msg( ham_title, ham_text1:format(tonnestring(bombMass), tonnestring(bombMass)) )
+      tk.msg( ham_title, ham_text1:format(fmt.tonnes(bombMass), fmt.tonnes(bombMass)) )
       tk.msg( ham_title, ham_text2 )
       tk.msg( ham_title, ham_text3:format(sabotpla:name(), sabotsys:name()) )
       stage = 1
@@ -247,7 +247,7 @@ function hamfresser()
       mark = misn.markerAdd(sabotsys, "low")
       player.takeoff()
    else
-      tk.msg(not_title, not_text:format(tonnestring(bombMass)))
+      tk.msg(not_title, not_text:format(fmt.tonnes(bombMass)))
    end
 end
 
@@ -626,7 +626,7 @@ end
 
 -- Epilogue
 function endMisn()
-   tk.msg( epilogue_title, epilogue_text:format(creditstring(credits_01)) )
+   tk.msg( epilogue_title, epilogue_text:format(fmt.credits(credits_01)) )
    player.pay(credits_01)
    shiplog.create( "dvaered_military", _("Dvaered Military Coordination"), _("Dvaered") )
    shiplog.append( "dvaered_military", log_text )

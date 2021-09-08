@@ -28,7 +28,7 @@
 --]]
 local pir = require 'missions.pirate.common'
 require "cargo_common"
-require "numstring"
+local fmt = require "format"
 
 
 misn_title = {}
@@ -122,10 +122,10 @@ function create()
    reward     = 1.5^tier * (avgrisk*riskreward + numjumps * jumpreward + traveldist * distreward) * finished_mod * (1. + 0.05*rnd.twosigma())
 
    misn.setTitle( misn_title[tier]:format(
-      destplanet:name(), destsys:name(), tonnestring(amount) ) )
+      destplanet:name(), destsys:name(), fmt.tonnes(amount) ) )
    misn.markerAdd(destsys, "computer")
    cargo_setDesc( misn_desc[tier]:format( destplanet:name(), destsys:name() ), cargo, amount, destplanet, timelimit, piracyrisk );
-   misn.setReward( creditstring(reward) )
+   misn.setReward( fmt.credits(reward) )
 end
 
 -- Mission is accepted
@@ -133,8 +133,8 @@ function accept()
    if player.pilot():cargoFree() < amount then
       tk.msg( _("No room in ship"), string.format(
          _("You don't have enough cargo space to accept this mission. It requires %s of free space (%s more than you have)."),
-         tonnestring(amount),
-         tonnestring( amount - player.pilot():cargoFree() ) ) )
+         fmt.tonnes(amount),
+         fmt.tonnes( amount - player.pilot():cargoFree() ) ) )
       misn.finish()
    end
    player.pilot():cargoAdd( cargo, amount )
@@ -151,7 +151,7 @@ function accept()
          or system.cur():jumpDist(destsys, false, true) < numjumps then
       if not tk.yesno( _("Unknown route"), string.format(
             _("The fastest route to %s is not currently known to you. Landing to buy maps, spending time searching for unknown jumps, or taking a route longer than %s may cause you to miss the deadline. Accept the mission anyway?"),
-            destplanet:name(), jumpstring(numjumps) ) ) then
+            destplanet:name(), fmt.jumps(numjumps) ) ) then
          misn.finish()
       end
    end
@@ -176,7 +176,7 @@ function land()
    else
       -- Semi-random message for being late.
       tk.msg( cargo_land_title, cargo_land_slow[rnd.rnd(1, #cargo_land_slow)]:format(
-         _(cargo), creditstring(reward / 2), creditstring(reward) ) )
+         _(cargo), fmt.credits(reward / 2), fmt.credits(reward) ) )
       reward = reward / 2
    end
    player.pay(reward)

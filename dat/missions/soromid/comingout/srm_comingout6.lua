@@ -36,7 +36,7 @@
 
 --]]
 
-require "numstring"
+local fmt = require "format"
 require "jumpdist"
 require "pilot.pirate"
 require "missions.soromid.common"
@@ -105,7 +105,7 @@ function accept ()
    if started then
       txt = text[4]:format( player.name() )
    else
-      txt = text[1]:format( pirname, missys:name(), creditstring( credits ) )
+      txt = text[1]:format( pirname, missys:name(), fmt.credits( credits ) )
    end
    started = true
 
@@ -115,7 +115,7 @@ function accept ()
 
       misn.setTitle( misn_title )
       misn.setDesc( misn_desc:format( missys:name() ) )
-      misn.setReward( creditstring( credits ) )
+      misn.setReward( fmt.credits( credits ) )
       marker = misn.markerAdd( missys, "high" )
 
       hook.enter( "enter" )

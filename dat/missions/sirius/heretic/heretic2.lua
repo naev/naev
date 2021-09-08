@@ -24,7 +24,7 @@
    The player's job is to take out any and all Sirius in the system.]]
 
 local fleet = require "fleet"
-require "numstring"
+local fmt = require "format"
 require "missions/sirius/common"
 
 
@@ -71,7 +71,7 @@ function create()
    deathcount = 0
    --set the mission stuff
    misn.setTitle(misn_title)
-   misn.setReward(creditstring(reward))
+   misn.setReward(fmt.credits(reward))
    misn.setNPC(npc_name, "sirius/unique/draga.webp", bar_desc)
 
    -- Format OSD

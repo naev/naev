@@ -31,7 +31,7 @@
 
 --]]
 local pir = require "missions.pirate.common"
-require "numstring"
+local fmt = require "format"
 require "jumpdist"
 local portrait = require "portrait"
 require "pilot.generic"
@@ -230,7 +230,7 @@ function create ()
    -- Set mission details
    misn.setTitle( misn_title:format( mysys[1]:name() ) )
    misn.setDesc( misn_desc:format( target_faction:name(), name, paying_faction:name(), mysys[1]:name() ) )
-   misn.setReward( creditstring( credits ) )
+   misn.setReward( fmt.credits( credits ) )
    marker = misn.markerAdd( mysys[1], "computer" )
 
    -- Store the table
@@ -253,7 +253,7 @@ function accept ()
    stage = 0
    increment = false
    last_sys = system.cur()
-   tk.msg( breef_title, breef_text:format( name, target_faction:name(), name, creditstring(credits), paying_faction:name(), mysys[1]:name() ) )
+   tk.msg( breef_title, breef_text:format( name, target_faction:name(), name, fmt.credits(credits), paying_faction:name(), mysys[1]:name() ) )
    jumphook = hook.enter( "enter" )
    hailhook = hook.hail( "hail" )
    landhook = hook.land( "land" )
@@ -463,7 +463,7 @@ function space_clue ()
    else -- Pilot wants payment
 
       price = (5 + 5*rnd.rnd()) * 1000
-      choice = tk.choice(money_title, money_text[rnd.rnd(1,#money_text)]:format(name,creditstring(price)), IdoPay, IdonnoPay, IkickYourAss)
+      choice = tk.choice(money_title, money_text[rnd.rnd(1,#money_text)]:format(name,fmt.credits(price)), IdoPay, IdonnoPay, IkickYourAss)
 
       if choice == 1 then
          if player.credits() >= price then
@@ -581,7 +581,7 @@ function clue_bar()
       if know == 0 then -- NPC does not know the target
          tk.msg( dono_title, dono_text[rnd.rnd(1,#dono_text)]:format( name ) )
       elseif know == 1 then -- NPC wants money
-         choice = tk.choice(money_title, money_text[rnd.rnd(1,#money_text)]:format(name,creditstring(price)), IdoPay, IdonnoPay)
+         choice = tk.choice(money_title, money_text[rnd.rnd(1,#money_text)]:format(name,fmt.credits(price)), IdoPay, IdonnoPay)
 
          if choice == 1 then
             if player.credits() >= price then

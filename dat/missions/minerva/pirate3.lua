@@ -26,7 +26,7 @@ local minerva = require "campaigns.minerva"
 local portrait = require 'portrait'
 local vn = require 'vn'
 local love_shaders = require "love_shaders"
-require 'numstring'
+local fmt = require "format"
 
 misn_title = _("Finding the Dvaered Spy")
 misn_reward = _("Cold hard credits")
@@ -156,7 +156,7 @@ They take out a metallic object from their pocket and show it to you. You don't 
    if misn_state == 5 then
       vn.na(_("You explain to them that you were able to successfully plant the device in the Minerva Spa."))
       pir(_([["Great job! I knew you had it in you. Catching the mole now should be just a matter of time. After we collect some data and process them, we can see how to catch the asshole. Meet me again at the bar in a bit, I have a feeling we will catch them soon."]]))
-      vn.na(string.format(_("You have received #g%s#0."), creditstring(reward_amount)))
+      vn.na(string.format(_("You have received #g%s#0."), fmt.credits(reward_amount)))
       vn.func( function ()
          player.pay( reward_amount )
          minerva.log.pirate(_("You planted a listening device in the Minerva Spa to catch a mole and were rewarded for your actions.") )
@@ -390,9 +390,9 @@ function harper_hail ()
       vn.na(_("You see Harper's hologram appear into view paler than usual."))
       h(string.format(_([["I have had a change of mind."
 He gulps.
-"How about I give you the ticket for a mere %s?]]), creditstring(harper_bribe_sml)))
+"How about I give you the ticket for a mere %s?]]), fmt.credits(harper_bribe_sml)))
       vn.menu( {
-         { string.format(_("Pay him %s%s"),creditstring(harper_bribe_sml),enoughcreds(harper_bribe_sml)), "pay" },
+         { string.format(_("Pay him %s%s"),fmt.credits(harper_bribe_sml),enoughcreds(harper_bribe_sml)), "pay" },
          { _("Threaten him"), "threaten" },
       } )
 
@@ -418,7 +418,7 @@ He coughs nervously.]]))
       h(_([[He laughs nervously.
 "You have to be killing right? You wouldn't kill me in cold blood would you? I have a family waiting for me back home.]]))
       vn.menu( {
-         { string.format(_("Pay him %s%s"),creditstring(harper_bribe_sml),enoughcreds(harper_bribe_sml)), "pay" },
+         { string.format(_("Pay him %s%s"),fmt.credits(harper_bribe_sml),enoughcreds(harper_bribe_sml)), "pay" },
          { _("Aim your weapons at him"), "threaten2" },
       } )
 
@@ -426,7 +426,7 @@ He coughs nervously.]]))
       h(_([["I have a daughter! She is turning 5 soon. You wouldn't be so cold-hearted to leave her an orphan would you?"
 He is sweating profusely.]]))
       vn.menu( {
-         { string.format(_("Pay him %s%s"),creditstring(harper_bribe_sml),enoughcreds(harper_bribe_sml)), "pay" },
+         { string.format(_("Pay him %s%s"),fmt.credits(harper_bribe_sml),enoughcreds(harper_bribe_sml)), "pay" },
          { _("Prime your weapon systems"), "threaten3" },
       } )
 
@@ -513,9 +513,9 @@ He scoffs at you and closes the transmission.]]))
    h(_([["I don't know. This is very valuable you know? What would you trade for it?"]]))
    vn.menu( function ()
       local opts = {
-         { string.format(_([[Offer %s%s]]), creditstring(harper_bribe_big),
+         { string.format(_([[Offer %s%s]]), fmt.credits(harper_bribe_big),
             enoughcreds(harper_bribe_big)), "money_big" },
-         { string.format(_([[Offer %s%s]]), creditstring(harper_bribe_sml),
+         { string.format(_([[Offer %s%s]]), fmt.credits(harper_bribe_sml),
             enoughcreds(harper_bribe_sml)), "money_sml" },
          {_("End transmission"), "leave" },
       }
@@ -562,9 +562,9 @@ He scoffs at you and closes the transmission.]]))
          vn.jump("broke")
       end
    end )
-   h(string.format(_([["%s only? I spent more than that gambling just to get this ticket."]]), creditstring(harper_bribe_sml)))
+   h(string.format(_([["%s only? I spent more than that gambling just to get this ticket."]]), fmt.credits(harper_bribe_sml)))
    vn.menu( {
-      { string.format(_([[Offer %s%s]]), creditstring(harper_bribe_big),
+      { string.format(_([[Offer %s%s]]), fmt.credits(harper_bribe_big),
          enoughcreds(harper_bribe_big)), "money_big" },
       {_("End transmission"), "leave" },
    } )

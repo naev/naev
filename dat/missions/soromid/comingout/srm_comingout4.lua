@@ -35,7 +35,7 @@
 
 --]]
 
-require "numstring"
+local fmt = require "format"
 require "missions/soromid/common"
 
 

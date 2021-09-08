@@ -37,7 +37,7 @@ require "nextjump"
 require "proximity"
 require "selectiveclear"
 require "missions/dvaered/frontier_war/fw_common"
-require "numstring"
+local fmt = require "format"
 
 portrait_name = _("Dvaered officer")
 portrait_desc = _("This Dvaered senior officer could be looking for a pilot for hire. Why else would he stay at this bar?")
@@ -328,7 +328,7 @@ function land() -- The player is only allowed to land on special occasions
    elseif stage == 8 then
       shiplog.create( "dvaered_military", _("Dvaered Military Coordination"), _("Dvaered") )
       shiplog.append( "dvaered_military", log_text )
-      tk.msg(end_title, end_text:format(creditstring(credits_00)))
+      tk.msg(end_title, end_text:format(fmt.credits(credits_00)))
 
       -- Major Tam gives Gauss Guns instead of credits, because Major Tam is a freak.
       GGprice = outfit.get("Gauss Gun"):price()

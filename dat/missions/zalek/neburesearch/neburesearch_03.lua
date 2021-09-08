@@ -24,7 +24,7 @@
 --]]
 
 require "scripts/cargo_common"
-require "scripts/numstring"
+local fmt = require "format"
 require "missions/zalek/common"
 
 
@@ -197,18 +197,18 @@ function enter_spaceport()
         return
     elseif not has_lab_coat and c == 3 then
         if player.credits() < lab_coat_price then
-            tk.msg(lab_coat_title, lab_coat_text:format(creditstring(lab_coat_price), _("Apparently this is too expensive for you. Looks like you have to give your talk without a lab coat.")))
+            tk.msg(lab_coat_title, lab_coat_text:format(fmt.credits(lab_coat_price), _("Apparently this is too expensive for you. Looks like you have to give your talk without a lab coat.")))
         else
-            if tk.choice(lab_coat_title, lab_coat_text:format(creditstring(lab_coat_price), _("Will you buy the lab coat?")), _("Yes"), _("No")) == 1 then
+            if tk.choice(lab_coat_title, lab_coat_text:format(fmt.credits(lab_coat_price), _("Will you buy the lab coat?")), _("Yes"), _("No")) == 1 then
                 player.pay(-lab_coat_price)
                 has_lab_coat = true
             end
         end
     elseif (has_lab_coat and c == 3) or (not has_lab_coat and c == 4) then
         if player.credits() < glasses_price then
-            tk.msg("", electronics_text:format(creditstring(glasses_price), _("Apparently this is too expensive for you.")))
+            tk.msg("", electronics_text:format(fmt.credits(glasses_price), _("Apparently this is too expensive for you.")))
         else
-            if tk.choice("", electronics_text:format(creditstring(glasses_price), _("Will you buy the glasses?")), _("Yes"), _("No")) == 1 then
+            if tk.choice("", electronics_text:format(fmt.credits(glasses_price), _("Will you buy the glasses?")), _("Yes"), _("No")) == 1 then
                 player.pay(-lab_coat_price)
                 has_glasses = true
             end

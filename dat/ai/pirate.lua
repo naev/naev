@@ -1,6 +1,6 @@
 require 'ai.core.core'
 require 'ai.core.idle.pirate'
-require "numstring"
+local fmt = require "format"
 
 --[[
    The Glorious Pirate AI
@@ -166,12 +166,12 @@ function hail ()
       mem.refuel = mem.refuel * 0.5
    end
    mem.refuel_msg = string.format(_([["For you, only %s for a jump of fuel."]]),
-         creditstring(mem.refuel))
+         fmt.credits(mem.refuel))
 
    -- Deal with bribeability
    mem.bribe         = mem.bribe_base
    if (mem.natural or mem.allowbribe) and mem.bribe_rng < 0.95 then
-      mem.bribe_prompt = string.format(bribe_prompt_list[ rnd.rnd(1,#bribe_prompt_list) ], creditstring(mem.bribe))
+      mem.bribe_prompt = string.format(bribe_prompt_list[ rnd.rnd(1,#bribe_prompt_list) ], fmt.credits(mem.bribe))
       mem.bribe_prompt_nearby = bribe_prompt_nearby_list[ rnd.rnd(1,#bribe_prompt_nearby_list) ]
       mem.bribe_paid = bribe_paid_list[ rnd.rnd(1,#bribe_paid_list) ]
    else

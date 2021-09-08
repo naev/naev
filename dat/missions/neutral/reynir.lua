@@ -38,7 +38,7 @@
 
 --]]
 
-require "numstring"
+local fmt = require "format"
 require "missions/neutral/common"
 
 
@@ -138,9 +138,9 @@ function landed()
          reward_text = text[5]
          log_text = log_text_good
       end
-      tk.msg( title[4], string.format(reward_text, tonnestring(reward)) )
+      tk.msg( title[4], string.format(reward_text, fmt.tonnes(reward)) )
       player.pilot():cargoAdd( cargoname, reward )
-      addMiscLog( log_text:format( tonnestring(reward) ) )
+      addMiscLog( log_text:format( fmt.tonnes(reward) ) )
       misn.finish(true)
    -- If we're in misn_base_sys but not on misn_base then...
    elseif system.cur() == misn_base_sys then

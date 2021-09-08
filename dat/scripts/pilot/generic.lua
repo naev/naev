@@ -1,4 +1,4 @@
-require "numstring"
+local fmt = require "format"
 
 --[[
 -- @brief Encodes a number as a roman numeral.

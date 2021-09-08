@@ -39,7 +39,7 @@
 --]]
 local pir = require "missions.pirate.common"
 require "pilot.pirate"
-require "numstring"
+local fmt = require "format"
 require "missions.shark.common"
 
 
@@ -123,7 +123,7 @@ function accept()
       osd_msg[3] = osd_msg[3]:format(mispla:name())
 
       misn.setTitle(misn_title)
-      misn.setReward(creditstring(reward))
+      misn.setReward(fmt.credits(reward))
       misn.setDesc(misn_desc)
       osd = misn.osdCreate(osd_title, osd_msg)
       misn.osdActive(1)

@@ -20,7 +20,7 @@
 
 --]]
 local pir = require 'missions.pirate.common'
-require "scripts.numstring"
+local fmt = require "format"
 
 misn_title = _("DV: Assault on Unicorn")
 misn_reward = _("Variable")
@@ -41,7 +41,7 @@ function create ()
    rep = faction.playerStanding("Dvaered")
    -- Round the payment to the nearest thousand.
    max_payment = rep * 50e3
-   misn_desc = misn_desc:format( creditstring(max_payment) )
+   misn_desc = misn_desc:format( fmt.credits(max_payment) )
    misn.setTitle(misn_title)
    misn.setReward(misn_reward)
    misn.setDesc(misn_desc)
@@ -65,7 +65,7 @@ function accept ()
       misn_stage = 0
       misn_target_sys = system.get("Unicorn")
 
-      osd_msg[2] = osd_msg2:format(pirates_killed, creditstring(bounty_earned), planet_start_name)
+      osd_msg[2] = osd_msg2:format(pirates_killed, fmt.credits(bounty_earned), planet_start_name)
       misn.osdCreate(misn_title,osd_msg)
       misn.osdActive(1)
 
@@ -103,7 +103,7 @@ function death(pilot,killer)
       if bounty_earned == max_payment then
          osd_msg[2] = osd_msg3:format(planet_start_name)
       else
-         osd_msg[2] = osd_msg2:format(pirates_killed, creditstring( bounty_earned ), planet_start_name)
+         osd_msg[2] = osd_msg2:format(pirates_killed, fmt.credits( bounty_earned ), planet_start_name)
       end
       misn.osdCreate(misn_title, osd_msg)
       misn.osdActive(2)
@@ -114,7 +114,7 @@ function land()
    if planet.cur() == planet_start and pirates_killed > 0 then
       var.pop( "assault_on_unicorn_check" )
 
-      tk.msg(title[2], text[2]:format( creditstring( bounty_earned )))
+      tk.msg(title[2], text[2]:format( fmt.credits( bounty_earned )))
       player.pay(bounty_earned)
       faction.modPlayerSingle( "Dvaered", math.pow( bounty_earned, 0.5 ) / 100 )
       misn.finish(true)

@@ -38,7 +38,7 @@
 --]]
 
 require "cargo_common"
-require "numstring"
+local fmt = require "format"
 
 misn_title = _("SR: %s pilgrimage transport for %s-class citizen")
 
@@ -242,7 +242,7 @@ function create()
     misn.markerAdd(destsys, "computer")
     misn.setTitle( string.format(misn_title, ferrytime[print_speed], prank[rank]) )
     cargo_setDesc( misn_desc:format( ferrytime[print_speed], destplanet:name(), prank[rank]), nil, nil, destplanet, timelimit );
-    misn.setReward(creditstring(reward))
+    misn.setReward(fmt.credits(reward))
 
     -- Set up passenger details so player cannot keep trying to get a better outcome
     destpicky = rnd.rnd(1,4)
@@ -305,11 +305,11 @@ function accept()
         elseif outcome == 2 then
             -- Rank 1 will accept an alternate destination, but cut your fare
             reward = reward / 2
-            ok = tk.yesno(no_clearace_t, no_clearance_p1 .. no_clearance_p2[outcome]:format(creditstring(reward), altplanets[altdest]:name()) )
+            ok = tk.yesno(no_clearace_t, no_clearance_p1 .. no_clearance_p2[outcome]:format(fmt.credits(reward), altplanets[altdest]:name()) )
         elseif outcome == 1 then
             -- OK with alternate destination, with smaller fare cut
             reward = reward * 0.6666
-            ok = tk.yesno(no_clearace_t, no_clearance_p1 .. no_clearance_p2[outcome]:format(altplanets[altdest]:name(), creditstring(reward)) )
+            ok = tk.yesno(no_clearace_t, no_clearance_p1 .. no_clearance_p2[outcome]:format(altplanets[altdest]:name(), fmt.credits(reward)) )
         else
             -- Rank 0 will take whatever they can get
             ok = tk.yesno(no_clearace_t, no_clearance_p1 .. no_clearance_p2[outcome]:format(altplanets[altdest]:name()) )
@@ -337,7 +337,7 @@ function accept()
         elseif picky > 0 then
             -- Could be persuaded, for a discount
             reward = reward*0.6666
-            if not tk.yesno(no_ship_t, no_ship_p2[1]:format(no_ship_p1, creditstring(reward))) then
+            if not tk.yesno(no_ship_t, no_ship_p2[1]:format(no_ship_p1, fmt.credits(reward))) then
                 misn.finish() -- Player won't offer a discount
             end
             if picky > 1 then
@@ -378,7 +378,7 @@ function land()
         if wants_sirian and not has_sirian_ship then
             change = 1  -- Bad: they wanted a Sirian ship and you switched on them
             reward = reward / (rank+1.5)
-            tk.msg( change_ship_t, change_ship[change]:format( creditstring(reward) ) )
+            tk.msg( change_ship_t, change_ship[change]:format( fmt.credits(reward) ) )
             player.pay(reward)
             misn.finish(true)
         elseif not wants_sirian and has_sirian_ship then
@@ -396,7 +396,7 @@ function land()
         else
             -- You were late
             reward = reward / (rank + 1)
-            tk.msg(ferry_land_late, ferry_land_p3[rank]:format( ferry_land_p1[rank], creditstring(reward)))
+            tk.msg(ferry_land_late, ferry_land_p3[rank]:format( ferry_land_p1[rank], fmt.credits(reward)))
         end
 
         if change == 2 then

@@ -24,7 +24,7 @@
 local minerva = require "campaigns.minerva"
 local portrait = require 'portrait'
 local vn = require 'vn'
-require 'numstring'
+local fmt = require "format"
 
 misn_title = _("Dvaered Thugs")
 misn_reward = _("Cold hard credits")
@@ -118,7 +118,7 @@ function land ()
       pir(_([["I hear it went rather well. This should cause more tension between the Za'lek and the Dvaered so we can get them off this station. However, this is only the beginning."]]))
       pir(_([["If you are interested, I may have another job for you which I believe you are more than capable of handling. Meet me up at the bar if you want more information. I have also transferred a sum of credits to your account as a reward for your services."
 She winks at you and walks way.]]))
-      vn.na(string.format(_("You have received #g%s#0."), creditstring(reward_amount)))
+      vn.na(string.format(_("You have received #g%s#0."), fmt.credits(reward_amount)))
       vn.func( function ()
          player.pay( reward_amount )
       end )

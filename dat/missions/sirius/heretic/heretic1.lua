@@ -22,7 +22,7 @@
    the player is asked to deliver a message to a "shady character"
    on the wringer in the Suna system.]]
 
-require "numstring"
+local fmt = require "format"
 require "missions/sirius/common"
 
 
@@ -63,7 +63,7 @@ function create()
    targetasset, targetsystem = planet.get("The Wringer")
    --set the mission stuff
    misn.setTitle(misn_title)
-   misn.setReward(creditstring(reward))
+   misn.setReward(fmt.credits(reward))
    misn.setNPC(npc_name, "sirius/unique/shaman.webp", bar_desc)
    misn.setDesc(bar_desc)
 
@@ -75,7 +75,7 @@ function accept()
    tk.msg(misn_title,bmsg[1])
    tk.msg(misn_title,bmsg[2])
 
-   local msg = bmsg[3]:format( targetasset:name(), targetsystem:name(), creditstring(reward) )
+   local msg = bmsg[3]:format( targetasset:name(), targetsystem:name(), fmt.credits(reward) )
    if not tk.yesno(misn_title, msg) then
       misn.finish()
    end
@@ -93,7 +93,7 @@ end
 
 function landing()
    if planet.cur() == targetasset then
-      tk.msg(misn_title, emsg[1]:format( creditstring(reward) ))
+      tk.msg(misn_title, emsg[1]:format( fmt.credits(reward) ))
       player.pay(reward)
       misn.cargoRm(message)
       misn_tracker = misn_tracker + 1

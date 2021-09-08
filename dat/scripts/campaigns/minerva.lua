@@ -5,7 +5,7 @@ local vn = require 'vn'
 local colour = require 'colour'
 local portrait = require 'portrait'
 local mt = require 'merge_tables'
-require 'numstring'
+local fmt = require "format"
 
 local minerva = {
    -- Main Characters
@@ -200,7 +200,7 @@ function minerva.tokens_str( amount )
    return gettext.ngettext(
       "#p%s Minerva Token#0",
       "#p%s Minerva Tokens#0", amount ):format(
-         numstring(amount) )
+         fmt.number(amount) )
 end
 
 -- Maikki stuff

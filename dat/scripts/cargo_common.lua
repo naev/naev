@@ -1,7 +1,7 @@
 local pir = require 'missions.pirate.common'
 require "jumpdist"
 require "nextjump"
-require "numstring"
+local fmt = require "format"
 
 -- Don't use hidden jumps by default; set this to true to use hidden jumps.
 cargo_use_hidden = false
@@ -219,7 +219,7 @@ end
 function cargo_setDesc( misn_desc, cargo, amount, target, deadline, notes )
    local t = { misn_desc, "" };
    if amount ~= nil then
-      table.insert( t, _("Cargo: %s (%s)"):format( _(cargo), tonnestring(amount) ) );
+      table.insert( t, _("Cargo: %s (%s)"):format( _(cargo), fmt.tonnes(amount) ) );
    elseif cargo ~= nil then
       table.insert( t, _("Cargo: %s"):format( _(cargo) ) );
    end
@@ -229,7 +229,7 @@ function cargo_setDesc( misn_desc, cargo, amount, target, deadline, notes )
    table.insert( t,
       gettext.ngettext( "Jumps: %d", "Jumps: %d", numjumps ):format( numjumps )
       .. "\n"
-      .. gettext.ngettext("Travel distance: %s", "Travel distance: %s", dist):format( numstring(dist) ) )
+      .. gettext.ngettext("Travel distance: %s", "Travel distance: %s", dist):format( fmt.number(dist) ) )
 
    if notes ~= nil then
       table.insert( t, notes );

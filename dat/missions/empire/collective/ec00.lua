@@ -31,7 +31,7 @@
 ]]--
 
 require "proximity"
-require "numstring"
+local fmt = require "format"
 require "missions/empire/common"
 
 bar_desc = _("You see an Empire Lt. Commander who seems to be motioning you over to the counter.")
@@ -94,7 +94,7 @@ function accept ()
 
    -- Mission details
    misn.setTitle(misn_title)
-   misn.setReward( creditstring( credits ) )
+   misn.setReward( fmt.credits( credits ) )
    misn.setDesc( string.format(misn_desc[1], misn_nearby:name()))
 
    -- Flavour text and mini-briefing

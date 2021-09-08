@@ -20,7 +20,7 @@ This is the "The Runaway" mission as described on the wiki.
 There will be more missions to detail how you are perceived as the kidnapper of "Cynthia"
 --]]
 
-require "numstring"
+local fmt = require "format"
 require "missions/neutral/common"
 
 
@@ -62,7 +62,7 @@ end
 
 function accept ()
    --This mission does not make any system claims
-   if not tk.yesno( title, string.format( misn_desc_pre_accept, creditstring(reward), targetworld:name() ) ) then
+   if not tk.yesno( title, string.format( misn_desc_pre_accept, fmt.credits(reward), targetworld:name() ) ) then
       misn.finish()
    end
 
@@ -83,7 +83,7 @@ function accept ()
 
    misn.setTitle( title )
 
-   misn.setReward( string.format( reward_desc, creditstring(reward) ) )
+   misn.setReward( string.format( reward_desc, fmt.credits(reward) ) )
 
    misn.setDesc( string.format( misn_desc, targetworld:name(), targetworld_sys:name() ) )
    misn.markerAdd( targetworld_sys, "high")
@@ -99,7 +99,7 @@ function land ()
       misn.cargoRm( cargoID )
       player.pay( reward )
 
-      tk.msg( title, string.format( misn_accomplished, numstring(reward) ) )
+      tk.msg( title, string.format( misn_accomplished, fmt.number(reward) ) )
 
       addMiscLog( log_text )
 

@@ -26,7 +26,7 @@
 
 --]]
 
-require "numstring"
+local fmt = require "format"
 require "missions/zalek/common"
 
 bar_desc = _("She probably has a new poorly paid job for you. Maybe she won't notice you if you leave now.")
@@ -94,7 +94,7 @@ function accept()
 
     -- Set up mission information
     misn.setTitle(mtitle)
-    misn.setReward(misn_reward:format(creditstring(credits)))
+    misn.setReward(misn_reward:format(fmt.credits(credits)))
     misn.setDesc(mdesc:format(dest_planet:name(), dest_sys:name()))
     misn_marker = misn.markerAdd(dest_sys, "low")
 
@@ -147,7 +147,7 @@ function land()
             misn.markerMove(misn_marker, dest_sys)
             misn.osdActive(2)
         elseif stage == 7 then
-            tk.msg(home_title, return_text:format(creditstring(credits)))
+            tk.msg(home_title, return_text:format(fmt.credits(credits)))
             player.pay(credits)
             misn.markerRm(misn_marker)
             zlk_addNebuResearchLog(log_text)

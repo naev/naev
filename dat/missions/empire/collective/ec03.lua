@@ -32,7 +32,7 @@
 
 ]]--
 
-require "numstring"
+local fmt = require "format"
 require "missions/empire/common"
 
 bar_desc = _("You see Lt. Commander Dimitri at the bar as usual.")
@@ -103,7 +103,7 @@ function accept ()
 
       -- Mission details
       misn.setTitle(misn_title)
-      misn.setReward( creditstring( credits ) )
+      misn.setReward( fmt.credits( credits ) )
       misn.setDesc( string.format(misn_desc[1], misn_target_sys:name() ))
 
       tk.msg( title[1], string.format(text[2], commando_planet, commando_planet ) )

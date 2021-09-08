@@ -29,7 +29,7 @@
 --]]
 local pir = require "missions.pirate.common"
 require "proximity"
-require "numstring"
+local fmt = require "format"
 local fleet = require "fleet"
 require "missions.shark.common"
 
@@ -106,7 +106,7 @@ function accept()
       osd_msg[2] = osd_msg[2]:format(paypla:name(), paysys:name())
 
       misn.setTitle(misn_title)
-      misn.setReward(creditstring(reward))
+      misn.setReward(fmt.credits(reward))
       misn.setDesc(misn_desc)
       osd = misn.osdCreate(osd_title, osd_msg)
       misn.osdActive(1)

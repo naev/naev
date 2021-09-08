@@ -26,7 +26,7 @@ local minerva = require "campaigns.minerva"
 local portrait = require 'portrait'
 local love_shaders = require 'love_shaders'
 local vn = require 'vn'
-require 'numstring'
+local fmt = require "format"
 
 -- Mission states:
 --  nil: mission not accepted yet
@@ -109,7 +109,7 @@ It is signed "Baroness Eve".]]))
       kex(_([["Oh, I almost forgot. There's quite a few credits in the crate too, I think it's only fair to give you most of them as a reward for your help."]]))
       vn.sfxMoney()
       vn.func( function () player.pay( money_reward ) end )
-      vn.na(string.format(_("You received #g%s#0."), creditstring( money_reward )))
+      vn.na(string.format(_("You received #g%s#0."), fmt.credits( money_reward )))
       kex(_([["Meet me up here again in a bit, I'm going to go get some information."
 Kex runs off and disappears into the station.]]))
       vn.sfxVictory()
@@ -329,7 +329,7 @@ function mainguy_board ()
    vn.scene()
    vn.transition()
    vn.na(_("You storm the transport and head towards the cargo bay, however, once you get there you find it is empty. Given that it is likely not to be large, you proceed to explore the rest of the ship to see if there is anything of interest."))
-   vn.na(string.format(_("You are not able to find what you were looking for, but you were able to find %s that likely won't be necessary to the crew anymore."), creditstring(reward)))
+   vn.na(string.format(_("You are not able to find what you were looking for, but you were able to find %s that likely won't be necessary to the crew anymore."), fmt.credits(reward)))
    vn.na(_("It might be best to report back to Kex to see if his information was incorrect."))
    vn.run()
 

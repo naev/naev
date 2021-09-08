@@ -48,7 +48,7 @@
 ]]--
 
 local fleet = require "fleet"
-require "numstring"
+local fmt = require "format"
 require "missions/empire/common"
 
 bar_desc = _("Dimitri should be around here, but you can't see him. You should probably look for him.")
@@ -137,7 +137,7 @@ function accept ()
 
    -- Mission details
    misn.setTitle(misn_title)
-   misn.setReward( creditstring( credits ) )
+   misn.setReward( fmt.credits( credits ) )
    misn.setDesc( string.format(misn_desc[1], misn_target_sys:name() ))
    osd_msg[1] = osd_msg[1]:format(misn_target_sys:name())
    osd_msg[3] = osd_msg[3]:format(misn_base:name())

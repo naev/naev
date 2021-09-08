@@ -1,7 +1,7 @@
 require 'ai.core.core'
 require 'ai.core.idle.civilian'
 require 'ai.core.misc.distress'
-require "numstring"
+local fmt = require "format"
 
 mem.careful   = false
 mem.lanes_useneutral = true
@@ -41,7 +41,7 @@ function hail ()
 
    mem.refuel = mem.refuel_base
    mem.refuel_msg = string.format(_([["I'll supply your ship with fuel for %s."]]),
-         creditstring(mem.refuel))
+         fmt.credits(mem.refuel))
 
    -- No bribe
    mem.bribe_no = bribe_msg_list[ rnd.rnd(1,#bribe_msg_list) ]

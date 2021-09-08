@@ -20,7 +20,7 @@
    --
 --]]
 
-require "numstring"
+local fmt = require "format"
 
 
 text = {}
@@ -113,7 +113,7 @@ function accept ()
       OSD[4] = string.format(OSD[4], curplanet:name())
       misn.setDesc(misndesc)
       misn.osdCreate(OSDtitle, OSD)
-      local s = text[5]:format(creditstring(credits_easy), creditstring(credits_hard))
+      local s = text[5]:format(fmt.credits(credits_easy), fmt.credits(credits_hard))
       choice, choicetext = tk.choice(title[5], s, choice1, choice2)
       if choice == 1 then
          credits = credits_easy
@@ -122,7 +122,7 @@ function accept ()
          credits = credits_hard
          tk.msg(title[6], text[6])
       end
-      misn.setReward(creditstring(credits))
+      misn.setReward(fmt.credits(credits))
       hook.takeoff("takeoff")
       else
       tk.msg(refusetitle, refusetext)
@@ -310,10 +310,10 @@ function land()
    if target[4] == 4 then
       if racers[1]:exists() and racers[2]:exists() and racers[3]:exists() then
          if choice==2 and player.numOutfit("Racing Trophy") <= 0 then
-            tk.msg(wintitle, firstwintext:format(creditstring(credits)))
+            tk.msg(wintitle, firstwintext:format(fmt.credits(credits)))
             player.outfitAdd("Racing Trophy")
          else
-            tk.msg(wintitle, wintext:format(creditstring(credits)))
+            tk.msg(wintitle, wintext:format(fmt.credits(credits)))
          end
          player.pay(credits)
          misn.finish(true)

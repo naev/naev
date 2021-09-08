@@ -28,7 +28,7 @@
 
 local fleet = require "fleet"
 require "nextjump"
-require "numstring"
+local fmt = require "format"
 require "missions/zalek/common"
 
 
@@ -123,7 +123,7 @@ function accept()
     -- Set up mission information
     destsys = t_sys[1]
     misn.setTitle(mtitle)
-    misn.setReward(string.format(misn_reward, creditstring(credits)))
+    misn.setReward(string.format(misn_reward, fmt.credits(credits)))
     misn.setDesc(string.format(mdesc, _(station), t_sys[5]:name()))
     nextsys = getNextSystem(system.cur(), destsys) -- This variable holds the system the player is supposed to jump to NEXT.
 
@@ -208,7 +208,7 @@ function land()
         tk.msg(refueltitle, string.format(refueltext, _(homeworld)))
         station_visited = true
     elseif planet.cur() == planet.get(homeworld) then
-        tk.msg(title[5], string.format(text[7], creditstring(credits)))
+        tk.msg(title[5], string.format(text[7], fmt.credits(credits)))
         player.pay(credits)
         zlk_addNebuResearchLog(log_text)
         misn.finish(true)

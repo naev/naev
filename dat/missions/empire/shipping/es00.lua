@@ -28,7 +28,7 @@
 ]]--
 
 local fleet = require "fleet"
-require "numstring"
+local fmt = require "format"
 require "missions/empire/common"
 
 bar_desc = _("You see an Empire Commander. He seems to have noticed you.")
@@ -86,7 +86,7 @@ function accept ()
    misn_stage = 0
    reward = 500e3
    misn.setTitle(misn_title)
-   misn.setReward( creditstring(reward) )
+   misn.setReward( fmt.credits(reward) )
    misn.setDesc( string.format(misn_desc[1], dest:name(), destsys:name()))
 
    -- Flavour text and mini-briefing

@@ -21,7 +21,7 @@
    I'm joking about the last line a little. If you want to name him, feel free.
 --]]
 
-require "numstring"
+local fmt = require "format"
 require "missions/neutral/common"
 
 
@@ -86,7 +86,7 @@ function accept ()
    end
 
    misn.setTitle( title )
-   misn.setReward( string.format( reward_desc, creditstring(reward) ) )
+   misn.setReward( string.format( reward_desc, fmt.credits(reward) ) )
 
    misn.setDesc( string.format( misn_desc, targetworld:name(), targetworld_sys:name() ) )
    runawayMarker = misn.markerAdd(system.get("Dohriabi"), "low")

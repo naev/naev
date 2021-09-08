@@ -34,7 +34,7 @@
 local pir = require "missions.pirate.common"
 local swapship = require "swapship"
 require "jumpdist"
-require "numstring"
+local fmt = require "format"
 local portrait = require "portrait"
 require "factions.equip.generic"
 
@@ -294,7 +294,7 @@ end
 
 function accept()
    if tk.yesno( informer.title, informer.message:format(
-         _(theship.faction), _(theship.class), creditstring(theship.price) ) ) then
+         _(theship.faction), _(theship.class), fmt.credits(theship.price) ) ) then
       if player.credits() >= theship.price then
          tk.msg( approval.title, approval.message:format(
             theship.planet:name(), theship.system:name() ) )

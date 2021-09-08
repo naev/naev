@@ -28,7 +28,7 @@ local pir = require "missions.pirate.common"
 local fleet = require "fleet"
 require "nextjump"
 require "cargo_common"
-require "numstring"
+local fmt = require "format"
 
 
 misn_title = {}
@@ -121,7 +121,7 @@ function create()
       destplanet:name(), destsys:name() ) )
    cargo_setDesc( misn_desc:format( destplanet:name(), destsys:name() ), cargo, nil, destplanet, nil, piracyrisk );
    misn.markerAdd(destsys, "computer")
-   misn.setReward( creditstring(reward) )
+   misn.setReward( fmt.credits(reward) )
 end
 
 function accept()
@@ -147,7 +147,7 @@ function accept()
 
    if player.jumps() < numjumps then
       if not tk.yesno( slow[1], slow[2]:format(
-            jumpstring(numjumps), jumpstring( player.jumps() ) ) ) then
+            fmt.jumps(numjumps), fmt.jumps( player.jumps() ) ) ) then
          misn.finish()
       end
    end

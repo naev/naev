@@ -9,7 +9,7 @@
    Event for creating news
 --]]
 local pir = require "missions.pirate.common"
-require "numstring"
+local fmt = require "format"
 require "jumpdist"
 
 -- List to treat special factions diffferently
@@ -494,7 +494,7 @@ function get_econ_article( commod_name, plnt_name, credits )
    local i = rnd.rnd( 1, #econ_articles )
    local title = econ_articles[i]["title"]
    local desc = econ_articles[i]["desc"]:format(
-      commod_name, plnt_name, numstring(credits) )
+      commod_name, plnt_name, fmt.number(credits) )
 
    return title, desc
 end
@@ -625,7 +625,7 @@ function add_econ_article ()
             body = body .. econ_header:format( plnt:name(), sys:name() )
             for k, comm in ipairs( commodities ) do
                body = body .. econ_desc_part:format( comm:name(),
-                     numstring( comm:priceAtTime( plnt, cur_t ) ) )
+                     fmt.number( comm:priceAtTime( plnt, cur_t ) ) )
             end
             plnt:recordCommodityPriceAtTime( cur_t )
          end

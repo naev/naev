@@ -37,7 +37,7 @@
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 --]]
-require "numstring"
+local fmt = require "format"
 local pir = require "missions.pirate.common"
 
 text = {}
@@ -98,7 +98,7 @@ function create ()
    -- Set mission details
    misn.setTitle( misn_title )
    misn.setDesc( misn_desc )
-   misn.setReward( misn_reward:format( creditstring( credits_factor ) ) )
+   misn.setReward( misn_reward:format( fmt.credits( credits_factor ) ) )
 end
 
 
@@ -109,7 +109,7 @@ function accept ()
    credits = credits_factor * q + credits_mod
 
    local txt = text[ rnd.rnd( 1, #text ) ]
-   tk.msg( "", txt:format( creditstring( credits ) ) )
+   tk.msg( "", txt:format( fmt.credits( credits ) ) )
 
    local c = misn.cargoNew( N_("Waste Containers"), N_("A bunch of waste containers leaking all sorts of indescribable liquids.") )
    cid = misn.cargoAdd( c, q )
@@ -145,7 +145,7 @@ function abort ()
    if landed then
       misn.cargoRm( cid )
       local fine = 2 * credits
-      tk.msg( "", abort_landed_text:format( creditstring( fine ) ) )
+      tk.msg( "", abort_landed_text:format( fmt.credits( fine ) ) )
       player.pay( -fine )
       misn.finish( false )
    else

@@ -32,7 +32,7 @@
 --]]
 
 local fleet = require "fleet"
-require "numstring"
+local fmt = require "format"
 require "missions/flf/flf_pirates"
 
 title = {}
@@ -73,7 +73,7 @@ end
 
 
 function accept ()
-   if tk.yesno( title[1], text[1]:format( player.name(), creditstring( credits ) ) ) then
+   if tk.yesno( title[1], text[1]:format( player.name(), fmt.credits( credits ) ) ) then
       tk.msg( title[1], text[2]:format( missys:name() ) )
 
       misn.accept()
@@ -85,7 +85,7 @@ function accept ()
 
       misn.setTitle( misn_title[level]:format( missys:name() ) )
       marker = misn.markerAdd( missys, "high" )
-      misn.setReward( creditstring( credits ) )
+      misn.setReward( fmt.credits( credits ) )
 
       pirate_ships_left = 0
       job_done = false

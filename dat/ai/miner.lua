@@ -1,7 +1,7 @@
 require 'ai.core.core'
 require 'ai.core.idle.miner'
 require 'ai.core.misc.distress'
-require "numstring"
+local fmt = require "format"
 
 mem.lanes_useneutral = true
 
@@ -33,7 +33,7 @@ function hail ()
    -- Refuel
    mem.refuel = mem.refuel_base
    mem.refuel_msg = string.format(_([["I'll supply your ship with fuel for %s."]]),
-         creditstring(mem.refuel))
+         fmt.credits(mem.refuel))
 
    -- Communication stuff
    mem.bribe_no = _([["I don't want any problems."]])

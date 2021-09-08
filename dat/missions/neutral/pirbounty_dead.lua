@@ -44,7 +44,7 @@
 
 --]]
 local pir = require "missions.pirate.common"
-require "numstring"
+local fmt = require "format"
 require "jumpdist"
 require "pilot.pirate"
 
@@ -160,7 +160,7 @@ function create ()
    -- Set mission details
    misn.setTitle( misn_title[level]:format( missys:name() ) )
    misn.setDesc( misn_desc:format( name, missys:name(), paying_faction:name() ) )
-   misn.setReward( creditstring( credits ) )
+   misn.setReward( fmt.credits( credits ) )
    marker = misn.markerAdd( missys, "computer" )
 end
 

@@ -32,7 +32,7 @@
 --]]
 
 local fleet = require "fleet"
-require "numstring"
+local fmt = require "format"
 require "missions/flf/flf_common"
 
 -- localization stuff
@@ -76,7 +76,7 @@ function create ()
    -- Set mission details
    misn.setTitle( misn_title:format( missys:name() ) )
    misn.setDesc( misn_desc:format( missys:name() ) )
-   misn.setReward( creditstring( credits ) )
+   misn.setReward( fmt.credits( credits ) )
    marker = misn.markerAdd( missys, "computer" )
 end
 

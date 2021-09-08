@@ -7,8 +7,7 @@
 -- This file is used by the various faction missions, which must set the faction variable.
 --
 --]]
-
-require "scripts/numstring"
+local fmt = require "format"
 
 
 misn_title = _("%s Rehabilitation")
@@ -51,13 +50,13 @@ function create()
     setFine(rep)
 
     misn.setTitle(misn_title:format(fac:name()))
-    misn.setDesc(misn_desc:format(fac:name(), creditstring(fine)))
+    misn.setDesc(misn_desc:format(fac:name(), fmt.credits(fine)))
     misn.setReward(misn_reward)
 end
 
 function accept()
     if player.credits() < fine then
-        tk.msg("", lowmoney:format(creditstring(fine)))
+        tk.msg("", lowmoney:format(fmt.credits(fine)))
         misn.finish()
     end
 

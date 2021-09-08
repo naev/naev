@@ -25,7 +25,7 @@
 
 ]]--
 
-require "numstring"
+local fmt = require "format"
 require "jumpdist"
 require "missions/empire/common"
 
@@ -74,7 +74,7 @@ function accept ()
    -- Description is visible in OSD and the onboard computer, it shouldn't be too long either.
    reward = 500e3
    misn.setTitle(misn_title)
-   misn.setReward(creditstring(reward))
+   misn.setReward(fmt.credits(reward))
    misn.setDesc( string.format( misn_desc, targetworld:name(), targetworld_sys:name() ) )
    misn.osdCreate(title[2], {misn_desc})
    -- Set up the goal

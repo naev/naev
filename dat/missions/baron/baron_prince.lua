@@ -24,7 +24,7 @@
 --]]
 
 local fleet = require "fleet"
-require "numstring"
+local fmt = require "format"
 local portrait = require "portrait"
 require "missions/baron/common"
 
@@ -296,7 +296,7 @@ end
 
 function seller()
    if planet.cur() == artifactplanetA then
-      if tk.choice(title[8], text[9], buy:format(creditstring(reward * 0.15)), nobuy) == 1 then
+      if tk.choice(title[8], text[9], buy:format(fmt.credits(reward * 0.15)), nobuy) == 1 then
          if player.credits() >= reward * 0.15 then
             misn.npcRm(sellnpc)
             player.pay( reward * 0.15 )
@@ -304,11 +304,11 @@ function seller()
             artifactA = misn.cargoAdd(c, 0)
             misn.markerRm(markerA)
          else
-            tk.msg(nomoneytitle, nomoneytext:format(creditstring(reward * 0.15)))
+            tk.msg(nomoneytitle, nomoneytext:format(fmt.credits(reward * 0.15)))
          end
       end
    elseif planet.cur() == artifactplanetB then
-      if tk.choice(title[8], text[10], buy:format(creditstring(reward * 0.15)), nobuy) == 1 then
+      if tk.choice(title[8], text[10], buy:format(fmt.credits(reward * 0.15)), nobuy) == 1 then
          if player.credits() >= reward * 0.15 then
             misn.npcRm(sellnpc)
             player.pay( reward * 0.15 )
@@ -316,11 +316,11 @@ function seller()
             artifactB = misn.cargoAdd(c, 0)
             misn.markerRm(markerB)
          else
-            tk.msg(nomoneytitle, nomoneytext:format(creditstring(reward * 0.15)))
+            tk.msg(nomoneytitle, nomoneytext:format(fmt.credits(reward * 0.15)))
          end
       end
    elseif planet.cur() == artifactplanetC then
-      if tk.choice(title[8], text[11], buy:format(creditstring(reward * 0.15)), nobuy) == 1 then
+      if tk.choice(title[8], text[11], buy:format(fmt.credits(reward * 0.15)), nobuy) == 1 then
          if player.credits() >= reward * 0.15 then
             misn.npcRm(sellnpc)
             player.pay( reward * 0.15 )
@@ -328,7 +328,7 @@ function seller()
             artifactC = misn.cargoAdd(c, 0)
             misn.markerRm(markerC)
          else
-            tk.msg(nomoneytitle, nomoneytext:format(creditstring(reward * 0.15)))
+            tk.msg(nomoneytitle, nomoneytext:format(fmt.credits(reward * 0.15)))
          end
       end
    end

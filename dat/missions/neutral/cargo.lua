@@ -28,7 +28,7 @@
 --]]
 local pir = require "missions.pirate.common"
 require "cargo_common"
-require "numstring"
+local fmt = require "format"
 
 
 misn_desc = {}
@@ -91,10 +91,10 @@ function create()
    reward = 1.5^tier * (avgrisk*riskreward + numjumps * jumpreward + traveldist * distreward) * finished_mod * (1 + 0.05*rnd.twosigma())
 
    misn.setTitle( _("Shipment to %s in %s (%s)"):format(
-         destplanet:name(), destsys:name(), tonnestring(amount) ) )
+         destplanet:name(), destsys:name(), fmt.tonnes(amount) ) )
    misn.markerAdd(destsys, "computer")
    cargo_setDesc( misn_desc[tier]:format( destplanet:name(), destsys:name() ), cargo, amount, destplanet, nil, piracyrisk );
-   misn.setReward( creditstring(reward) )
+   misn.setReward( fmt.credits(reward) )
 end
 
 -- Mission is accepted
@@ -103,8 +103,8 @@ function accept ()
    if freecargo < amount then
       tk.msg( _("No room in ship"), string.format(
          _("You don't have enough cargo space to accept this mission. It requires %s of free space (%s more than you have)."),
-         tonnestring(amount),
-         tonnestring( amount - freecargo ) ) )
+         fmt.tonnes(amount),
+         fmt.tonnes( amount - freecargo ) ) )
       misn.finish()
    end
    misn.accept()

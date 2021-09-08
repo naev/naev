@@ -19,39 +19,39 @@ end
 --
 -- Should be used everywhere a number of credits is displayed.
 --
--- @usage tk.msg("", _("You have been paid %s."):format(creditstring(credits)))
+-- @usage tk.msg("", _("You have been paid %s."):format(fmt.credits(credits)))
 --
 --    @param credits Number of credits.
 --    @return A string taking the form of "X ¤".
 --]]
 function format.credits( credits )
-   return n_("%s ¤", "%s ¤", credits):format( numstring(credits) )
+   return n_("%s ¤", "%s ¤", credits):format( format.number(credits) )
 end
 
 
 --[[
 -- @brief Properly converts a number of tonnes to a string, utilizing ngettext.
 --
--- This adds "tonnes" to the output of numstring in a translatable way.
+-- This adds "tonnes" to the output of fmt.number in a translatable way.
 -- Should be used everywhere a number of tonnes is displayed.
 --
--- @usage tk.msg("", _("You are carrying %s."):format(tonnestring(tonnes)))
+-- @usage tk.msg("", _("You are carrying %s."):format(fmt.tonnes(tonnes)))
 --
 --    @param tonnes Number of tonnes.
 --    @return A string taking the form of "X tonne" or "X tonnes".
 --]]
-function format.tonne( tonnes )
-   return n_("%s tonne", "%s tonnes", tonnes):format( numstring(tonnes) )
+function format.tonnes( tonnes )
+   return n_("%s tonne", "%s tonnes", tonnes):format( format.number(tonnes) )
 end
 
 
 --[[
--- @brief Like tonnestring, but for abbreviations.
+-- @brief Like fmt.tonnes, but for abbreviations.
 --
 --    @param tonnes Number of tonnes.
 --    @return A short string like "22 t" describing the given mass.
 --]]
-function format.tonne_short( tonnes )
+function format.tonnes_short( tonnes )
    -- Translator note: this form represents an abbreviation of "_ tonnes".
    return n_( "%d t", "%d t", tonnes ):format( tonnes )
 end
@@ -60,16 +60,16 @@ end
 --[[
 -- @brief Properly converts a number of jumps to a string, utilizing ngettext.
 --
--- This adds "jumps" to the output of numstring in a translatable way.
+-- This adds "jumps" to the output of fmt.number in a translatable way.
 -- Should be used everywhere a number of jumps is displayed.
 --
--- @usage tk.msg("", _("The system is %s away."):format(jumpstring(jumps)))
+-- @usage tk.msg("", _("The system is %s away."):format(fmt.jumps(jumps)))
 --
 --    @param jumps Number of jumps.
 --    @return A string taking the form of "X jump" or "X jumps".
 --]]
-function format.jump( jumps )
-   return n_("%s jump", "%s jumps", jumps):format (numstring(jumps) )
+function format.jumps( jumps )
+   return n_("%s jump", "%s jumps", jumps):format(format.number(jumps))
 end
 
 
@@ -77,16 +77,16 @@ end
 -- @brief Properly converts a number of times (occurrences) to a string,
 -- utilizing ngettext.
 --
--- This adds "times" to the output of numstring in a translatable way.
+-- This adds "times" to the output of fmt.number in a translatable way.
 -- Should be used everywhere a number of occurrences is displayed.
 --
--- @usage tk.msg("", _("Brush your teeth % per day."):format(timestring(times)))
+-- @usage tk.msg("", _("Brush your teeth % per day."):format(fmt.times(times)))
 --
 --    @param times Number of times.
 --    @return A string taking the form of "X time" or "X times".
 --]]
-function format.time( times )
-   return n_("%s time", "%s times", times):format( numstring(times) )
+function format.times( times )
+   return n_("%s time", "%s times", times):format(format.number(times))
 end
 
 

@@ -3,7 +3,7 @@ Utility to swap the player's ship.
 
 @module swapship
 --]]
-require 'numstring'
+local fmt = require "format"
 
 local swapship = {}
 
@@ -84,7 +84,7 @@ function swapship.swap( template )
       -- Format into a nice string all the removals
       local remove_str = ""
       for n,q in pairs(removals) do
-         remove_str = remove_str .. string.format("\n %s %s", tonnestring_short(q), _(n))
+         remove_str = remove_str .. string.format("\n %s %s", fmt.tonnes_short(q), _(n))
       end
 
       -- Ask if the player is fine with removing the cargo

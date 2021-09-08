@@ -15,7 +15,7 @@
 
 local fleet = require "fleet"
 require "proximity"
-require "numstring"
+local fmt = require "format"
 local formation = require "formation"
 
 
@@ -103,7 +103,7 @@ end
 
 function hailagain()
    hook.rm(hailhook)
-   tk.msg(title[2], text[2]:format(creditstring(reward)))
+   tk.msg(title[2], text[2]:format(fmt.credits(reward)))
    player.pay(reward)
 end
 

@@ -22,7 +22,7 @@ Author: iwaschosen
 Plot: Talk to man on Zeo, bargain, load some cargo, deliver it to Zhiru in Goddard, get $
 --]]
 
-require "numstring"
+local fmt = require "format"
 require "missions/neutral/common"
 
 
@@ -74,9 +74,9 @@ function accept ()
          misn.finish()
       end
       started = true
-      if not tk.yesno( title, acceptornot:format( creditstring( reward ) ) ) then
+      if not tk.yesno( title, acceptornot:format( fmt.credits( reward ) ) ) then
          reward = reward * 2 --look at you go, double the reward
-         if not tk.yesno(title, bargain:format( creditstring( reward ) ) ) then
+         if not tk.yesno(title, bargain:format( fmt.credits( reward ) ) ) then
             misn.finish()
          end
       end
@@ -97,7 +97,7 @@ function accept ()
    misn.cargoAdd( c, 1 )
 
    misn.setTitle( misn_title )
-   misn.setReward( creditstring( reward ) )
+   misn.setReward( fmt.credits( reward ) )
    misn.setDesc( misn_desc:format( targetworld:name(), targetworld_sys:name() ) )
 
    osd_desc[1] = osd_desc[1]:format( targetworld:name(), targetworld_sys:name() )
@@ -112,7 +112,7 @@ end
 function land()
    if planet.cur() == targetworld then
       player.pay( reward )
-      tk.msg( "", misn_accomplished:format( creditstring( reward ) ) )
+      tk.msg( "", misn_accomplished:format( fmt.credits( reward ) ) )
       player.outfitAdd("Love Letter")
       addMiscLog( log_text )
       misn.finish( true )

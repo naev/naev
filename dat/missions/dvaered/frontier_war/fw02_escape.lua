@@ -43,7 +43,7 @@ require "selectiveclear"
 require "proximity"
 local portrait = require "portrait"
 require "missions/dvaered/frontier_war/fw_common"
-require "numstring"
+local fmt = require "format"
 
 -- TODO: add news comments about all this
 -- TODO: check that no blockade has been forgotten
@@ -308,7 +308,7 @@ function land()
 
    -- Land at an Imperial planet and meet the agents
    elseif stage == 5 and planet.cur():faction() == faction.get("Empire") then
-      tk.msg(pirate_title, pirate_text1:format(numstring(pirate_price), creditstring(pirate_price)))
+      tk.msg(pirate_title, pirate_text1:format(fmt.number(pirate_price), fmt.credits(pirate_price)))
       pirag = misn.npcAdd("pirateDealer", pir_name, portrait.get("Pirate"), pir_desc)
       impag = misn.npcAdd("imperialAgent", imp_name, portrait.get(), imp_desc)
       stage = 6
@@ -320,18 +320,18 @@ function land()
       var.push("dv_pirate_debt", false)
       shiplog.create( "frontier_war", _("Frontier War"), _("Dvaered") )
       if stage == 7 then -- Empire solution
-         tk.msg(back_empire_title, back_empire_text:format(creditstring(credits_02)))
+         tk.msg(back_empire_title, back_empire_text:format(fmt.credits(credits_02)))
          var.push("dv_empire_deal", true)
          shiplog.append( "frontier_war", log_text_emp )
       elseif stage == 8 then -- Pirate debt
-         tk.msg(back_debt_title, back_debt_text:format(creditstring(pirate_price), creditstring(credits_02)))
+         tk.msg(back_debt_title, back_debt_text:format(fmt.credits(pirate_price), fmt.credits(credits_02)))
          var.push("dv_pirate_debt", true)
          shiplog.append( "frontier_war", log_text_debt )
       elseif stage == 9 then -- Pirate cash
-         tk.msg(back_pay_title, back_pay_text:format(creditstring(credits_02)))
+         tk.msg(back_pay_title, back_pay_text:format(fmt.credits(credits_02)))
          shiplog.append( "frontier_war", log_text_pay )
       else -- Normally, the player should not achieve that (maybe with a trick I did not foresee, but it should be Xtremely hard)
-         tk.msg(back_nodeal_title, back_nodeal_text:format(creditstring(credits_02)))
+         tk.msg(back_nodeal_title, back_nodeal_text:format(fmt.credits(credits_02)))
          shiplog.append( "frontier_war", log_text_raw )
       end
       player.pay(credits_02)
@@ -363,7 +363,7 @@ end
 
 -- Optional discussions with the team
 function discussHam()
-   tk.msg(ham_title, ham_text:format(player.name(), tonnestring(commMass)))
+   tk.msg(ham_title, ham_text:format(player.name(), fmt.tonnes(commMass)))
 end
 function discussNik()
    tk.msg(nikol_title, nikol_text)
@@ -789,7 +789,7 @@ end
 
 -- Discuss with the Pirate or Imperial agent
 function pirateDealer()
-   local c = tk.choice(pirate_title, pirate_text2:format(creditstring(pirate_price)), pir_yes_answer, pir_debt_answer, pir_no_answer)
+   local c = tk.choice(pirate_title, pirate_text2:format(fmt.credits(pirate_price)), pir_yes_answer, pir_debt_answer, pir_no_answer)
    if c == 1 then
       if player.credits() >= pirate_price then
          player.pay(-pirate_price)

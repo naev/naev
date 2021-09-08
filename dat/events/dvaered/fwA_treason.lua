@@ -25,7 +25,7 @@
 -- TODO: see chance for this event
 
 require "missions/dvaered/frontier_war/fw_common"
-require "numstring"
+local fmt = require "format"
 
 yesno_title = _("You are needed for a special job")
 yesno_text = _([[The pilot of the fighter says, over an encrypted channel: "I have finally found you, %s. Better late than never. My employers want to congratulate you about how effective you have been with Lord Battleaddict. I am afraid there won't be many people to mourn him." You answer that you don't know what this is about, and that as far as you know, Lord Battleaddict has been killed in an honest duel by the General Klank. The interlocutor laughs "You're playing your part, eh? I can understand you, after all, they pay you well... Wait, no, they don't pay well. Not at all! How much was it for risking your life twice with this EMP bomb trick? %s? Haw haw haw! You can make better money with a cargo mission!
@@ -106,7 +106,7 @@ end
 -- Player answers to hail
 function hail()
    player.commClose()
-   local c = tk.choice(yesno_title, yesno_text:format(player.name(), creditstring(credits_01), creditstring(credits)), yes_answer, no_answer)
+   local c = tk.choice(yesno_title, yesno_text:format(player.name(), fmt.credits(credits_01), fmt.credits(credits)), yes_answer, no_answer)
    if c == 1 then
       tk.msg(accept_title, accept_text:format(targetsys:name()))
       stage = 1

@@ -27,7 +27,7 @@ local pp_shaders = require 'pp_shaders'
 local vn       = require 'vn'
 local equipopt = require 'equipopt'
 local luaspfx  = require 'luaspfx'
-require 'numstring'
+local fmt = require "format"
 
 -- Mission states:
 --  nil: mission not accepted yet
@@ -158,7 +158,7 @@ He seems satisfied at his pun.]]))
       kex(_([["Ah yes, before I get absorbed by the data processing, here, let me reward you for your troubles."]]))
       vn.sfxMoney()
       vn.func( function () player.pay( money_reward ) end )
-      vn.na(string.format(_("You received #g%s#0."), creditstring( money_reward )))
+      vn.na(string.format(_("You received #g%s#0."), fmt.credits( money_reward )))
       vn.sfxVictory()
       vn.na(_("As you take your leave you hear Kex beginning to hum an ancient-sounding tune."))
       vn.run()

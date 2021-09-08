@@ -36,7 +36,7 @@
 
 --]]
 
-require "numstring"
+local fmt = require "format"
 local fleet = require "fleet"
 require "missions.flf.flf_common"
 

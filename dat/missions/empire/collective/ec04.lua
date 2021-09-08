@@ -34,7 +34,7 @@
 local fleet = require "fleet"
 require "nextjump"
 require "proximity"
-require "numstring"
+local fmt = require "format"
 require "missions/empire/common"
 
 misn_title = _("Collective Extraction")
@@ -90,7 +90,7 @@ function create ()
 
       -- Mission details
       misn.setTitle(misn_title)
-      misn.setReward( creditstring( credits ) )
+      misn.setReward( fmt.credits( credits ) )
       misn.setDesc( string.format(misn_desc[1], misn_target:name(), misn_target_sys:name() ))
       tk.msg( title[1], string.format(text[2], misn_target_sys:name(), misn_target:name()) )
       osd_msg[1] = osd_msg[1]:format(misn_target_sys:name())

@@ -24,7 +24,7 @@
 
 ]]--
 local pir = require "missions.pirate.common"
-require "numstring"
+local fmt = require "format"
 require "jumpdist"
 require "missions.empire.common"
 
@@ -84,7 +84,7 @@ function accept ()
    -- Mission details
    reward = 30000
    misn.setTitle(misn_title)
-   misn.setReward( creditstring(reward) )
+   misn.setReward( fmt.credits(reward) )
    misn.setDesc( string.format(misn_desc, dest:name(), sys:name()))
 
    -- Flavour text and mini-briefing

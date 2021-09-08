@@ -14,7 +14,7 @@ local vn = require 'vn'
 local gauntlet = require 'campaigns.gauntlet'
 local gauntlet_gui = require 'missions.dvaered.gauntlet.gui'
 require 'missions.dvaered.gauntlet.tables'
-require 'numstring'
+local fmt = require "format"
 local equipopt = require 'equipopt'
 
 logidstr = "log_gauntlet"
@@ -55,7 +55,7 @@ function land ()
    end )
    vn.na(string.format(_([[You received #g%s#0!
 You received %s!]]),
-         creditstring( rewardcredits ),
+         fmt.credits( rewardcredits ),
          gauntlet.emblems_str( rewardemblems ) ))
    vn.run()
 

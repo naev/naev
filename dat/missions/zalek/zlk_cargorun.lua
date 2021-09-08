@@ -20,7 +20,7 @@
 Za'lek Cargo Run. adapted from Drunkard Mission
 ]]--
 
-require "numstring"
+local fmt = require "format"
 require "missions/zalek/common"
 
 
@@ -174,7 +174,7 @@ function hail()
    tk.msg( title[6], text[6] )
 
 --   eventually I'll implement a bonus
---   tk.msg( title[7], text[7]:format( creditstring(bonus) ) )
+--   tk.msg( title[7], text[7]:format( fmt.credits(bonus) ) )
 
    hook.update("closehail")
    player.commClose()
@@ -183,7 +183,7 @@ end
 function closehail()
    bonus = 0
    player.pay( payment )
-   tk.msg( title[8], text[8]:format( creditstring(payment) ) )
+   tk.msg( title[8], text[8]:format( fmt.credits(payment) ) )
    logan:setVisplayer(false)
    logan:setHilight(false)
    logan:setInvincible(false)

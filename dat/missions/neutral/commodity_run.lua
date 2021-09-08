@@ -39,7 +39,7 @@
    Commodity delivery missions.
 --]]
 local pir = require "missions.pirate.common"
-require "numstring"
+local fmt = require "format"
 
 --Mission Details
 misn_title = _("%s Delivery")
@@ -115,7 +115,7 @@ function create ()
    misn.setTitle( misn_title:format( comm:name() ) )
    misn.markerAdd( system.cur(), "computer" )
    misn.setDesc( misn_desc:format( misplanet:name(), comm:name() ) )
-   misn.setReward( _("%s per tonne"):format( creditstring( price ) ) )
+   misn.setReward( _("%s per tonne"):format( fmt.credits( price ) ) )
 end
 
 
@@ -149,7 +149,7 @@ function land ()
 
    if planet.cur() == misplanet and amount > 0 then
       local txt = cargo_land[rnd.rnd(1, #cargo_land)]:format(
-            _(chosen_comm), creditstring(reward) )
+            _(chosen_comm), fmt.credits(reward) )
       tk.msg(cargo_land_title, txt)
       pilot.cargoRm(player.pilot(), chosen_comm, amount)
       player.pay(reward)

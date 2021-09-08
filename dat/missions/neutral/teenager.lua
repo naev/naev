@@ -27,7 +27,7 @@
 
 -- Localization, choosing a language if Naev is translated for non-english-speaking locales.
 
-require "numstring"
+local fmt = require "format"
 
 
 text = {}
@@ -122,7 +122,7 @@ end
 
 function targetDeath()
     fine = math.max(-20000, -player.credits()) -- Fine 20K, or take the player for all he has
-    tk.msg(title[3], text[3]:format(creditstring(-fine)))
+    tk.msg(title[3], text[3]:format(fmt.credits(-fine)))
     player.pay(fine) -- I love this statement.
     misn.finish(true)
 end

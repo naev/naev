@@ -24,7 +24,7 @@
    space. thanks to nloewen and viashimo for help!]]
 
 local fleet = require "fleet"
-require "numstring"
+local fmt = require "format"
 require "missions/sirius/common"
 
 
@@ -69,7 +69,7 @@ function create()
    if not misn.claim(homesys) then
       misn.finish(false)
    end
-   misn.setReward( creditstring( reward ) )
+   misn.setReward( fmt.credits( reward ) )
    misn.setTitle( misn_title )
    misn.setNPC(npc_name, "sirius/unique/draga.webp", bar_desc)
 

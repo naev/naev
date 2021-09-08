@@ -27,7 +27,7 @@
 
 ]]--
 local pir = require "missions.pirate.common"
-require "numstring"
+local fmt = require "format"
 require "missions.neutral.common"
 
 
@@ -102,7 +102,7 @@ function accept ()
 
    -- Set up mission information
    misn.setTitle( mtitle[1] )
-   misn.setReward( creditstring(credits) )
+   misn.setReward( fmt.credits(credits) )
    misn.setDesc( string.format( mdesc[1], satellite_sys:name() ) )
    misn_marker = misn.markerAdd( satellite_sys, "low" )
 
@@ -112,7 +112,7 @@ function accept ()
    -- More flavour text
    tk.msg( title[2], string.format(text[2], satellite_sys:name()) )
    tk.msg( title[2], string.format(text[3], satellite_sys:name(),
-         homeworld:name(), homeworld_sys:name(), creditstring(credits) ) )
+         homeworld:name(), homeworld_sys:name(), fmt.credits(credits) ) )
 
    misn.osdCreate(mtitle[1], {mdesc[1]:format(satellite_sys:name())})
    -- Set up hooks

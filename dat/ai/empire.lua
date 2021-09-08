@@ -1,5 +1,5 @@
 require 'ai.core.core'
-require 'numstring'
+local fmt = require "format"
 
 -- Settings
 mem.armour_run    = 40
@@ -88,7 +88,7 @@ function hail ()
       mem.refuel = mem.refuel * 0.6
    end
    -- Most likely no chance to refuel
-   mem.refuel_msg = string.format( _([["I suppose I could spare some fuel for %s, but you'll have to do the paperwork."]]), creditstring(mem.refuel) )
+   mem.refuel_msg = string.format( _([["I suppose I could spare some fuel for %s, but you'll have to do the paperwork."]]), fmt.credits(mem.refuel) )
 
    -- See if can be bribed
    mem.bribe = mem.bribe_base
@@ -96,7 +96,7 @@ function hail ()
          (standing > -20 and mem.bribe_rng > 0.7) or
          (standing > -50 and mem.bribe_rng > 0.5) or
          (mem.bribe_rng > 0.3)) then
-      mem.bribe_prompt = string.format(_([["For some %s I could forget about seeing you."]]), creditstring(mem.bribe) )
+      mem.bribe_prompt = string.format(_([["For some %s I could forget about seeing you."]]), fmt.credits(mem.bribe) )
       mem.bribe_paid = _([["Now scram before I change my mind."]])
    else
       mem.bribe_no = bribe_no_list[ rnd.rnd(1,#bribe_no_list) ]

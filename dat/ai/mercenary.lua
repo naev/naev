@@ -1,5 +1,5 @@
 require 'ai.core.core'
-require "numstring"
+local fmt = require "format"
 
 -- Settings
 mem.armour_run    = 40
@@ -56,12 +56,12 @@ function hail ()
    -- Refuel
    mem.refuel = mem.refuel_base
    mem.refuel_msg = string.format(_([["I'll supply your ship with fuel for %s."]]),
-         creditstring(mem.refuel))
+         fmt.credits(mem.refuel))
 
    -- Set up bribes
    mem.bribe = mem.bribe_base
    if (mem.natural or mem.allowbribe) and mem.bribe_rng > 0.7 then
-      mem.bribe_prompt = string.format(_([["Your life is worth %s to me."]]), creditstring(mem.bribe) )
+      mem.bribe_prompt = string.format(_([["Your life is worth %s to me."]]), fmt.credits(mem.bribe) )
       mem.bribe_paid = _([["Beat it."]])
    else
       mem.bribe_no = bribe_no_list[ rnd.rnd(1,#bribe_no_list) ]

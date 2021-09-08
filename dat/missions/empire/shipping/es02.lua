@@ -37,7 +37,7 @@
 ]]--
 
 local fleet = require "fleet"
-require "numstring"
+local fmt = require "format"
 require "missions/empire/common"
 
 -- Mission details
@@ -102,12 +102,12 @@ function accept ()
    misn_stage = 0
    reward = 750e3
    misn.setTitle(misn_title)
-   misn.setReward( creditstring(reward) )
+   misn.setReward( fmt.credits(reward) )
    misn.setDesc( string.format( misn_desc[1], destsys:name() ) )
 
    -- Flavour text and mini-briefing
    tk.msg( title[1], string.format( text[2], destsys:name(), destsys:name() ) )
-   tk.msg( title[1], string.format( text[3], creditstring(reward) ) )
+   tk.msg( title[1], string.format( text[3], fmt.credits(reward) ) )
    misn.osdCreate(misn_title, {misn_desc[1]:format(destsys:name())})
    -- Set hooks
    hook.land("land")

@@ -42,7 +42,7 @@ Add some consequences if the player aborts the mission
 ]]--
 
 local fleet = require "fleet"
-require "scripts/numstring"
+local fmt = require "format"
 
 
 -- This section stores the strings (text) for the mission.
@@ -125,7 +125,7 @@ function create ()
       var.push( "dts_firstSystem", "planet_name")
       tk.msg( title[11], text[11])
       reward = 40000
-      misn.setReward( string.format( misn_reward, creditstring(reward)) )
+      misn.setReward( string.format( misn_reward, fmt.credits(reward)) )
       misn.setDesc( misn_desc)
       misn.setTitle( misn_title)
       misn.markerAdd( this_system, "low" )

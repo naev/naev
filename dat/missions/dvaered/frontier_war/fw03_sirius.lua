@@ -38,7 +38,7 @@ require "missions/dvaered/frontier_war/fw_common"
 require "selectiveclear"
 require "nextjump"
 require "proximity"
-require "numstring"
+local fmt = require "format"
 
 npc_name = _("Major Tam")
 npc_desc = _("The major seems to be waiting for you.")
@@ -299,7 +299,7 @@ function land()
    -- Land for reward
    elseif stage == 2 then
       compute_reward()
-      tk.msg( pay_title, pay_text:format(creditstring(effective_credits)) )
+      tk.msg( pay_title, pay_text:format(fmt.credits(effective_credits)) )
       payNfinish()
 
    -- More illegitimate landings
@@ -316,11 +316,11 @@ function land()
          compute_reward()
          if shi:nameRaw() == "Kestrel" then -- it's Hamelsen and she escapes
             tk.msg( execution_title, execution_text1:format(shi:name(), player.name()) )
-            tk.msg( execution_title, execution_failed_text2:format(creditstring(effective_credits)) )
+            tk.msg( execution_title, execution_failed_text2:format(fmt.credits(effective_credits)) )
          else -- No pity for non-Hamelsen henchmen
             tk.msg( execution_title, execution_text1:format(shi:name(), player.name()) )
             tk.msg( execution_title, execution_text2, "portraits/neutral/female1.webp" )
-            tk.msg( execution_title, execution_text3:format(creditstring(effective_credits)) )
+            tk.msg( execution_title, execution_text3:format(fmt.credits(effective_credits)) )
          end
          payNfinish()
       else

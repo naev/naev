@@ -27,8 +27,7 @@
    end
 
 --]]
-
-require "scripts/numstring"
+local fmt = require "format"
 
 -- Default function. Any asset that has no landing script explicitly defined will use this.
 function land( pnt )
@@ -183,7 +182,7 @@ function pir_clanworld( pnt )
    local bribe_price, bribe_msg, bribe_ack_msg
    if not can_land and standing >= -50 then
       bribe_price = (20 - standing) * 500 + 1000 -- 36K max, at -50 rep. Pirates are supposed to be cheaper than regular factions.
-      local str   = creditstring( bribe_price )
+      local str   = fmt.credits( bribe_price )
       bribe_msg   = string.format(
                _([["Well, I think you're scum, but I'm willing to look the other way for %s. Deal?"]]),
             str )
@@ -230,7 +229,7 @@ function land_civilian( pnt, land_floor, bribe_floor )
    -- Calculate bribe price. Note: Assumes bribe floor < land_floor.
    local bribe_price = getcost(fct, land_floor, bribe_floor, 1000) -- TODO: different rates for different factions.
    if not can_land and type(bribe_price) == "number" then
-       local str      = creditstring( bribe_price )
+       local str      = fmt.credits( bribe_price )
        bribe_msg      = string.format(
                _("\"I'll let you land for the modest price of %s.\"\n\nPay %s?"),
             str, str )

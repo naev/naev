@@ -353,8 +353,9 @@ static int nlua_loadBasic( lua_State* L )
          "getfenv",
          "load",
          "loadfile",
-         "loadstring",
-         /*"setfenv",*//* Unsafe but needed for f-strings. */
+         /* Unsafe but needed for f-strings. */
+         /*"loadstring",*/
+         /*"setfenv",*/
          NULL
    };
 

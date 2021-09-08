@@ -20,7 +20,7 @@
 --]]
 
 require "missions/sirius/common"
-require "numstring"
+local fmt = require "format"
 
 
 title1 = _("A Sirian with a grudge")
@@ -53,7 +53,7 @@ osd_msg[2] = _("Find your target on %s and kill her")
 osd_msg["__save"] = true
 
 misn_desc = _([[A Sirian man named Harja has hired you to dispatch a "dangerous criminal" who supposedly committed some kind of crime against him.]])
-misn_reward = creditstring(400e3)
+misn_reward = fmt.credits(400e3)
 
 log_text = _([[A Sirian man named Harja hired you to kill a Sirius military officer, claiming that she was a "dangerous criminal". Rather than carrying out the mission, you told her about the plot, and she rewarded you by paying half what Harja would have paid for her death.]])
 

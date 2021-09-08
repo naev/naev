@@ -80,7 +80,7 @@ end
 
 function accept ()
    if tk.yesno( title[1], text[1]:format(
-         player.name(), missys:name(), creditstring( credits ) ) ) then
+         player.name(), missys:name(), fmt.credits( credits ) ) ) then
       tk.msg( title[1], text[2] )
 
       misn.accept()
@@ -90,7 +90,7 @@ function accept ()
       misn.setTitle( misn_title )
       misn.setDesc( misn_desc:format( missys:name() ) )
       marker = misn.markerAdd( missys, "plot" )
-      misn.setReward( creditstring( credits ) )
+      misn.setReward( fmt.credits( credits ) )
 
       dv_attention = 0
       job_done = false

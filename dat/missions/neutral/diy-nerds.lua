@@ -23,14 +23,14 @@
       AUTHOR: thilo <thilo@thiloernst.de>
    --]]
 local pir = require "missions.pirate.common"
-require "numstring"
+local fmt = require "format"
 
 -- Bar information, describes how the NPC appears in the bar
 bar_desc = _("You see a bunch of guys and gals, excitedly whispering over some papers, which seem to contain column after column of raw numbers. Two of them don't participate in the babbling, but look at you expectantly.")
 
 -- Mission details.
 misn_title = _("DIY Nerds")
-misn_reward = creditstring(20e3)
+misn_reward = fmt.credits(20e3)
 misn_desc = _("Cart some nerds to their contest, and back.")
 
 title = {}

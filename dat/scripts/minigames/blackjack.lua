@@ -3,7 +3,7 @@ local lg = require 'love.graphics'
 local la = require 'love.audio'
 local cardio = require 'minigames.cardio'
 local love_math = require 'love.math'
-require 'numstring'
+local fmt = require "format"
 
 local bj = { -- too lazy to write blackjack over and over
    sound = {
@@ -322,18 +322,18 @@ function bj.draw( bx, by, bw, bh)
    end
    y = bj.bets_y + h+3*b
    local tokens = minerva.tokens_get()
-   local s = string.format(n_("You have %s credits and #p%s Minerva Token#0.", "You have %s credits and #p%s Minerva Tokens#0.", tokens), creditstring(player.credits()), numstring(tokens))
+   local s = string.format(n_("You have %s credits and #p%s Minerva Token#0.", "You have %s credits and #p%s Minerva Tokens#0.", tokens), fmt.credits(player.credits()), fmt.number(tokens))
    w = bj.font:getWidth( s )
    lg.print( s, bj.font, bx+(bw-w)/2, y )
 end
 
 local function trybet( betamount )
    if player.credits() < betamount then
-      bj.msg = string.format(_("#rNot enough credits! You only have %s!#0"), creditstring(player.credits()))
+      bj.msg = string.format(_("#rNot enough credits! You only have %s!#0"), fmt.credits(player.credits()))
    else
       player.pay(-betamount)
       bj.betamount = betamount
-      bj.msg = string.format(_("You bet %s."),creditstring(betamount))
+      bj.msg = string.format(_("You bet %s."),fmt.credits(betamount))
       bj.deal()
       bj.sound.chips[love_math.random(1,#bj.sound.chips)]:play()
    end

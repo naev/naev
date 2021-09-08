@@ -25,7 +25,7 @@ local pir = require "missions.pirate.common"
 local portrait = require 'portrait'
 local vn = require 'vn'
 require "cargo_common"
-require "numstring"
+local fmt = require "format"
 
 
 -- TODO replace images with something meant for the VN
@@ -94,7 +94,7 @@ They shiver with disgust to emphasize and you can see some of their sweat fly of
    vn.na("You stare at them coldly.")
    g(string.format(_([["Fine fine, take it all. It should be %s. Just remember no scanning means no problems."
 They extend their sweaty hand towards you.
-"So, are you in?"]]), creditstring(reward)))
+"So, are you in?"]]), fmt.credits(reward)))
    vn.menu{
       {_("Accept"), "accept"},
       {_("Decline"), "decline"},
@@ -145,7 +145,7 @@ They go to the restroom and come back holding a nondescript brown box that seems
    misn.osdCreate( _("Deliver Cake"), { string.format(_("Fly to %s in the %s system without getting scanned"), destplanet, destsys) } )
 
    misn.setTitle(_("Deliver Cake"))
-   misn.setReward( creditstring(reward) )
+   misn.setReward( fmt.credits(reward) )
    misn.setDesc( string.format(_("Deliver a cake to %s in the %s system. Apparently it has a special frosting and will be damaged if you are scanned. Use stealth to avoid getting scanned."), destplanet, destsys ) )
    misn.markerAdd(destsys)
 

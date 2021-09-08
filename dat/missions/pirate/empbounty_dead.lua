@@ -49,7 +49,7 @@
 --]]
 
 local pir = require "missions.pirate.common"
-require "numstring"
+local fmt = require "format"
 require "jumpdist"
 require "pilot.generic"
 
@@ -165,7 +165,7 @@ function create ()
       misn.setDesc( misn_desc:format( target_faction, name, missys:name(), faction_text ) .. "\n\n" .. desc_illegal_warning )
    end
 
-   misn.setReward( creditstring( credits ) )
+   misn.setReward( fmt.credits( credits ) )
    marker = misn.markerAdd( missys, "computer" )
 end
 

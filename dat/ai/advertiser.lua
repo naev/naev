@@ -1,7 +1,7 @@
 require 'ai.core.core'
 require 'ai.core.idle.advertiser'
 require 'ai.core.misc.distress'
-require "numstring"
+local fmt = require "format"
 
 mem.lanes_useneutral = true
 mem.simplecombat = true
@@ -22,7 +22,7 @@ function create ()
    -- Refuel
    mem.refuel = rnd.rnd( 1000, 3000 )
    mem.refuel_msg = string.format(_([["I'll supply your ship with fuel for %s."]]),
-         creditstring(mem.refuel))
+         fmt.credits(mem.refuel))
 
    -- Selects an advertiser message
    local msg = {

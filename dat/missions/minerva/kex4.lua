@@ -29,7 +29,7 @@ local love_audio = require 'love.audio'
 local vn       = require 'vn'
 local equipopt = require 'equipopt'
 local reverb_preset = require 'reverb_preset'
-require 'numstring'
+local fmt = require "format"
 
 -- Mission states:
 --  nil: mission not accepted yet
@@ -134,7 +134,7 @@ He gives a sort of half-hearted grin and disappears into the shadows.]]))
       vn.disappear(kex)
       vn.sfxMoney()
       vn.func( function () player.pay( money_reward ) end )
-      vn.na(string.format(_("You received #g%s#0."), creditstring( money_reward )))
+      vn.na(string.format(_("You received #g%s#0."), fmt.credits( money_reward )))
       vn.sfxVictory()
       vn.na(_("You take your leave and wander back to the main station."))
       vn.run()

@@ -38,7 +38,7 @@ local minerva = require "campaigns.minerva"
 local portrait = require 'portrait'
 local vn = require 'vn'
 local love_shaders = require 'love_shaders'
-require 'numstring'
+local fmt = require "format"
 
 hint1_name = _("Prof. Sato") -- Computer Science / Mathematics
 hint1_description = _("You see a person in a fancy lab coat. It seems like they are enjoying their time off.")

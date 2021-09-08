@@ -27,7 +27,7 @@ Thank you to Bobbens, Deiz, BTAxis, and others that have helped me with learning
 ]]--
 
 require "jumpdist"
-require "numstring"
+local fmt = require "format"
 require "missions/neutral/common"
 
 
@@ -189,7 +189,7 @@ function land ()
          end
       end
    elseif hasDrink and planet.cur() == startplanet then
-      tk.msg( finishedtitle, finishedtxt:format( creditstring(payment) ) )
+      tk.msg( finishedtitle, finishedtxt:format( fmt.credits(payment) ) )
       player.outfitAdd( "Swamp Bombing" )
       player.pay( payment )
 

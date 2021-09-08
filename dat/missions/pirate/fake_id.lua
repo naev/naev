@@ -32,7 +32,7 @@
 
 --]]
 local pir = require 'missions.pirate.common'
-require "numstring"
+local fmt = require "format"
 
 
 misn_title = _("Fake ID")
@@ -85,14 +85,14 @@ function create ()
    credits = 50e3 * nhated
 
    misn.setTitle( misn_title )
-   misn.setDesc( misn_desc:format( creditstring( credits ) ) )
+   misn.setDesc( misn_desc:format( fmt.credits( credits ) ) )
    misn.setReward( misn_reward )
 end
 
 
 function accept ()
    if player.credits() < credits then
-      tk.msg( "", lowmoney:format( creditstring( credits ) ) )
+      tk.msg( "", lowmoney:format( fmt.credits( credits ) ) )
       misn.finish()
    end
 

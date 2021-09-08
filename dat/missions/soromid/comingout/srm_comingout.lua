@@ -34,7 +34,7 @@
 
 --]]
 
-require "numstring"
+local fmt = require "format"
 require "missions/soromid/common"
 
 
@@ -186,7 +186,7 @@ function land ()
 
       tk.msg( "", landtext[1] )
       tk.msg( "", landtext[2] )
-      tk.msg( "", landtext[3]:format( creditstring( credits ) ) )
+      tk.msg( "", landtext[3]:format( fmt.credits( credits ) ) )
       player.pay(credits)
 
       local t = time.get():tonumber()

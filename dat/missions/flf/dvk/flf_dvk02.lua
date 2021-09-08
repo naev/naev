@@ -35,7 +35,7 @@
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 --]]
-require "numstring"
+local fmt = require "format"
 local fleet = require "fleet"
 require "missions.flf.flf_common"
 
@@ -202,13 +202,13 @@ function pilot_hail_boss ()
 
          tk.msg( title[8], text[8] )
          tk.msg( title[8], text[9]:format(
-            missys2:name(), tonnestring( ore_needed ), missys2:name() ) )
+            missys2:name(), fmt.tonnes( ore_needed ), missys2:name() ) )
 
          player.outfitAdd( "Map: FLF-Pirate Route" )
          if marker ~= nil then misn.markerRm( marker ) end
          marker = misn.markerAdd( missys2, "plot" )
 
-         osd_desc[4] = osd_apnd[4]:format( tonnestring( ore_needed ), missys2:name() )
+         osd_desc[4] = osd_apnd[4]:format( fmt.tonnes( ore_needed ), missys2:name() )
          osd_desc[5] = osd_final
          misn.osdCreate( osd_title, osd_desc )
          misn.osdActive( 4 )

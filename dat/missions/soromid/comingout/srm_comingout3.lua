@@ -37,7 +37,7 @@
 
 --]]
 
-require "numstring"
+local fmt = require "format"
 require "cargo_common"
 require "nextjump"
 require "missions/soromid/common"
@@ -100,7 +100,7 @@ function accept ()
    if started then
       txt = text[4]
    else
-      txt = text[1]:format( creditstring( credits ) )
+      txt = text[1]:format( fmt.credits( credits ) )
    end
    started = true
 
@@ -111,7 +111,7 @@ function accept ()
 
       misn.setTitle( misn_title )
       misn.setDesc( misn_desc:format( misplanet:name() ) )
-      misn.setReward( creditstring( credits ) )
+      misn.setReward( fmt.credits( credits ) )
       marker = misn.markerAdd( missys, "low" )
 
       osd_desc[1] = osd_desc[1]:format( misplanet:name(), missys:name() )
@@ -223,7 +223,7 @@ end
 
 function land ()
    if planet.cur() == misplanet then
-      tk.msg( title[6], text[6]:format( creditstring( credits ) ) )
+      tk.msg( title[6], text[6]:format( fmt.credits( credits ) ) )
       player.pay( credits )
       srm_addComingOutLog( log_text )
       misn.finish( true )

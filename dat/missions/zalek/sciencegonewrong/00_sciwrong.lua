@@ -26,7 +26,7 @@
    Author: fart but based on Mission Ideas in wiki: wiki.naev.org/wiki/Mission_Ideas
 --]]
 
-require "numstring"
+local fmt = require "format"
 require "proximity"
 local fleet = require "fleet"
 require "missions/zalek/common"
@@ -151,7 +151,7 @@ end
 -- 2nd trade: Get player the stuff and make them pay, let them be hunted by the police squad
 function second_trd()
   misn.npcRm(bar2pir1)
-  if not tk.yesno( title[1], text[8]:format(creditstring(pho_mny)) ) then
+  if not tk.yesno( title[1], text[8]:format(fmt.credits(pho_mny)) ) then
      tk.msg(title[1], text[10])
      return
   end
@@ -264,7 +264,7 @@ end
 function fine_vanish ()
    fine = 100000
    tk.msg(title[3],text[13])
-   tk.msg(title[3],text[14]:format(creditstring(fine)))
+   tk.msg(title[3],text[14]:format(fmt.credits(fine)))
    if player.credits() > fine then
       player.pay(-fine)
    else

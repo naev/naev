@@ -28,7 +28,7 @@
 
 ]]--
 
-require "numstring"
+local fmt = require "format"
 require "jumpdist"
 local portrait = require "portrait"
 
@@ -82,7 +82,7 @@ function accept ()
    -- Mission details
    reward = rnd.rnd(10,20) * 100e3 -- Hey, this mission is probably hell, after all.
    misn.setTitle(misn_title)
-   misn.setReward( creditstring(reward) )
+   misn.setReward( fmt.credits(reward) )
    misn.setDesc( string.format(misn_desc, dest:name(), sys:name()))
 
    -- Flavour text and mini-briefing

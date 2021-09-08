@@ -25,7 +25,7 @@ local minerva = require "campaigns.minerva"
 local portrait = require 'portrait'
 local vn = require 'vn'
 local love_shaders = require "love_shaders"
-require 'numstring'
+local fmt = require "format"
 
 misn_title = _("Minerva Mole")
 misn_reward = _("Cold hard credits")
@@ -430,7 +430,7 @@ function followup ()
 "I have some business to attend to."
 They give you a tired grin.
 "Anyway, I'll wire you a reward and meet me back at Minerva Station."]]))
-   vn.na(string.format(_("You have received #g%s#0."), creditstring(reward_amount)))
+   vn.na(string.format(_("You have received #g%s#0."), fmt.credits(reward_amount)))
    vn.func( function () -- Rewards
       player.pay( reward_amount )
       minerva.log.pirate(_("You helped defend an interrogation ship from Dvaered vessels.") )

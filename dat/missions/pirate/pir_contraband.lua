@@ -21,7 +21,7 @@
 ]]--
 local pir = require "missions.pirate.common"
 require "cargo_common"
-require "numstring"
+local fmt = require "format"
 
 
 misn_desc = _("Smuggling contraband goods to %s in the %s system.%s")
@@ -166,11 +166,11 @@ function create()
 
    if pir.factionIsClan( reward_faction ) then
       misn.setTitle( string.format(
-         _("#rPIRACY:#0 Smuggle %s of %s (%s)"), tonnestring(amount),
+         _("#rPIRACY:#0 Smuggle %s of %s (%s)"), fmt.tonnes(amount),
          _(cargo), reward_faction:name() ) )
    else
       misn.setTitle( string.format(
-         _("#rPIRACY:#0 Smuggle %s of %s"), tonnestring(amount),
+         _("#rPIRACY:#0 Smuggle %s of %s"), fmt.tonnes(amount),
          _(cargo) ) )
    end
    misn.markerAdd(destsys, "computer")
@@ -180,7 +180,7 @@ function create()
       cargo_setDesc( misn_desc:format( destplanet:name(), destsys:name(), faction_text ) .. "\n\n" .. desc_illegal_warning, cargo, amount, destplanet, timelimit )
    end
 
-   misn.setReward( creditstring(reward) )
+   misn.setReward( fmt.credits(reward) )
 end
 
 -- Mission is accepted
@@ -197,8 +197,8 @@ function accept()
    if player.pilot():cargoFree() < amount then
       tk.msg( _("No room in ship"), string.format(
          _("You don't have enough cargo space to accept this mission. It requires %s of free space (%s more than you have)."),
-         tonnestring(amount),
-         tonnestring( amount - player.pilot():cargoFree() ) ) )
+         fmt.tonnes(amount),
+         fmt.tonnes( amount - player.pilot():cargoFree() ) ) )
       misn.finish()
    end
 
@@ -206,7 +206,7 @@ function accept()
 
    carg_id = misn.cargoAdd( cargo, amount )
    tk.msg( _("Mission Accepted"), string.format(
-      _("%s of %s are loaded onto your ship."), tonnestring(amount),
+      _("%s of %s are loaded onto your ship."), fmt.tonnes(amount),
       _(cargo) ) )
    local osd_msg = {}
    osd_msg[1] = osd_msg1:format(

@@ -3,7 +3,7 @@ local lg = require 'love.graphics'
 local la = require 'love.audio'
 local diceio = require 'minigames.diceio'
 local love_math = require 'love.math'
-require 'numstring'
+local fmt = require "format"
 
 local cl = { -- too lazy to write chuck-a-luck
    sound = {
@@ -178,18 +178,18 @@ function cl.draw( bx, by, bw, bh)
    end
    y = y + h+3*b
    local tokens = minerva.tokens_get()
-   local s = string.format(n_("You have %s credits and #p%s Minerva Token#0.", "You have %s credits and #p%s Minerva Tokens#0.", tokens), creditstring(player.credits()), numstring(tokens))
+   local s = string.format(n_("You have %s credits and #p%s Minerva Token#0.", "You have %s credits and #p%s Minerva Tokens#0.", tokens), fmt.credits(player.credits()), fmt.number(tokens))
    w = cl.font:getWidth( s )
    lg.print( s, cl.font, bx+(bw-w)/2, y )
 end
 
 local function trybet( betamount )
    if player.credits() < betamount then
-      cl.msg = string.format(_("#rNot enough credits! You only have %s!#0"), creditstring(player.credits()))
+      cl.msg = string.format(_("#rNot enough credits! You only have %s!#0"), fmt.credits(player.credits()))
    else
       player.pay(-betamount)
       cl.betamount = betamount
-      cl.msg = string.format(_("You bet %s."),creditstring(betamount))
+      cl.msg = string.format(_("You bet %s."),fmt.credits(betamount))
       cl.sound.chips[love_math.random(1,#cl.sound.chips)]:play()
       cl.betting = false
    end

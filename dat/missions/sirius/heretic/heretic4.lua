@@ -28,7 +28,7 @@
    involve smuggling elements.]]
 
 local fleet = require "fleet"
-require "numstring"
+local fmt = require "format"
 require "missions/sirius/common"
 
 
@@ -85,7 +85,7 @@ function accept()
    free_cargo = player.pilot():cargoFree()
    people_carried =  (16 * free_cargo) + 7 --average weight per person is 62kg. one ton / 62 is 16. added the +7 for ships with 0 cargo.
    misn.setTitle(misn_title)
-   misn.setReward(creditstring(reward))
+   misn.setReward(fmt.credits(reward))
    misn.setDesc(misn_desc:format( targetasset:name(), targetsys:name()))
    misn.osdCreate(misn_title,osd)
    local c = misn.cargoNew( N_("Refugees"), N_("Nasin refugees.") )
@@ -169,7 +169,7 @@ function misn_over() --aren't you glad thats over?
 end
 
 function abort()
-   tk.msg(misn_title,abort_msg:format(numstring(people_carried)))
+   tk.msg(misn_title,abort_msg:format(fmt.number(people_carried)))
    misn.cargoJet(refugees)
    faction.modPlayerSingle("Nasin",-200)
    player.allowSave(true)
