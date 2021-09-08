@@ -1,43 +1,29 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Diversion from Haleb">
-  <flags>
-   <unique />
-  </flags>
-  <avail>
-   <priority>2</priority>
-   <chance>40</chance>
-   <done>Assault on Raelid</done>
-   <location>Bar</location>
-   <faction>FLF</faction>
-   <cond>faction.playerStanding("FLF") &gt;= 70</cond>
-  </avail>
-  <notes>
-   <campaign>Save the Frontier</campaign>
-  </notes>
- </mission>
- --]]
+ <flags>
+  <unique />
+ </flags>
+ <avail>
+  <priority>2</priority>
+  <chance>40</chance>
+  <done>Assault on Raelid</done>
+  <location>Bar</location>
+  <faction>FLF</faction>
+  <cond>faction.playerStanding("FLF") &gt;= 70</cond>
+ </avail>
+ <notes>
+  <campaign>Save the Frontier</campaign>
+ </notes>
+</mission>
+--]]
 --[[
 
    Diversion from Haleb
 
-   This program is free software: you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   This program is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
-
-   You should have received a copy of the GNU General Public License
-   along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
 --]]
-
-require "missions/flf/flf_diversion"
-require "missions/flf/flf_common"
+local flf = require "missions.flf.flf_common"
+require "missions.flf.flf_diversion"
 
 -- localization stuff
 title = {}
@@ -108,9 +94,9 @@ function land ()
    if planet.cur():faction() == faction.get("FLF") then
       tk.msg( "", pay_text[ rnd.rnd( 1, #pay_text ) ] )
       player.pay( credits )
-      flf_setReputation( 75 )
+      flf.setReputation( 75 )
       faction.get("FLF"):modPlayer( reputation )
-      flf_addLog( log_text )
+      flf.addLog( log_text )
       misn.finish( true )
    end
 end

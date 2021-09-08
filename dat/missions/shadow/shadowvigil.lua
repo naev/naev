@@ -24,7 +24,7 @@ require "nextjump"
 local fleet = require "fleet"
 require "chatter"
 require "selectiveclear"
-require "missions.shadow.common"
+local shadow = require "missions.shadow.common"
 local pir = require "missions.pirate.common"
 
 
@@ -201,7 +201,7 @@ function accept_m()
     landfail = false
 
     tk.msg(accepttitle, string.format(accepttext, player.name(), player.name()))
-    shadow_addLog( log_text_intro )
+    shadow.addLog( log_text_intro )
 
     misn.setDesc(misn_desc)
     misn.setReward(misn_reward)
@@ -220,7 +220,7 @@ end
 function jumpout()
     if stage == 4 and not dpjump then
         tk.msg(diplomatnoruntitle, diplomatnoruntext)
-        shadow_addLog( log_text_fail )
+        shadow.addLog( log_text_fail )
         abort()
     end
     origin = system.cur()
@@ -290,7 +290,7 @@ function jumpin()
 
     if stage >= 3 and system.cur() ~= nextsys then -- case player is escorting AND jumped to somewhere other than the next escort destination
         tk.msg(wrongsystitle, wrongsystext)
-        shadow_addLog( log_text_fail )
+        shadow.addLog( log_text_fail )
         abort()
     end
 
@@ -500,7 +500,7 @@ function escortDeath()
     elseif alive[2] then alive[2] = false
     else -- all escorts dead
         tk.msg(escortdeathtitle, escortdeathtext)
-        shadow_addLog( log_text_fail )
+        shadow.addLog( log_text_fail )
         abort()
     end
 end
@@ -513,7 +513,7 @@ function diplomatDeath()
             j:control(false)
         end
     end
-    shadow_addLog( log_text_fail )
+    shadow.addLog( log_text_fail )
     abort()
 end
 
@@ -655,7 +655,7 @@ function board()
        seiryuu:setHilight(false)
        tk.msg(title[4], string.format(text[4], player.name(), player.name()))
        player.pay(700e3)
-       shadow_addLog( log_text_success )
+       shadow.addLog( log_text_success )
        misn.finish(true)
     end
 end

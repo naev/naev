@@ -40,7 +40,7 @@
 local pir = require "missions.pirate.common"
 local pilotname = require "pilotname"
 local fmt = require "format"
-require "missions.shark.common"
+local shark = require "missions.shark.common"
 
 
 title = {}
@@ -155,7 +155,7 @@ function land()
       hook.rm(enterhook)
       hook.rm(landhook)
       hook.rm(jumpouthook)
-      shark_addLog( log_text )
+      shark.addLog( log_text )
       pir.reputationNormalMission(rnd.rnd(2,3))
       misn.finish(true)
    end

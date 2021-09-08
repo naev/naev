@@ -26,9 +26,8 @@
 -- localization stuff, translators would work here
 
 local fleet = require "fleet"
-require "missions/flf/flf_common"
-require "missions/dvaered/common"
-
+local flf = require "missions.flf.flf_common"
+require "missions.dvaered.common"
 
 title = {}
 text = {}
@@ -171,7 +170,7 @@ function land()
         tk.msg(title[4], text[5])
         var.push("flfbase_intro", 2)
         var.pop("flfbase_flfshipkilled")
-        flf_addLog( log_text_flf )
+        flf.addLog( log_text_flf )
         misn.finish(true)
     -- Case Dvaered planet
     elseif planet.cur():faction() == faction.get("Dvaered") and not basefound then

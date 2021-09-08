@@ -20,8 +20,8 @@
 --]]
 
 local fleet = require "fleet"
+local shadow = require "missions.shadow.common"
 require "proximity"
-require "missions/shadow/common"
 
 
 title = {}
@@ -176,7 +176,7 @@ function seiryuuBoard()
     if stage == 1 then -- Briefing
         tk.msg(title[2], text[2]:format(player.name()))
         tk.msg(title[2], text[3]:format(player.name()))
-        shadow_addLog( log_text_intro:format( player.name() ) )
+        shadow.addLog( log_text_intro:format( player.name() ) )
         tk.msg(title[2], text[4])
         tk.msg(title[2], text[5]:format(player.name(), jorekplanet1:name(), joreksys1:name(), jorekplanet1:name()))
         accept2()
@@ -188,7 +188,7 @@ function seiryuuBoard()
         seiryuu:control()
         seiryuu:hyperspace()
         var.pop("darkshadow_active")
-        shadow_addLog( log_text_succeed )
+        shadow.addLog( log_text_succeed )
         misn.finish(true)
     end
 end
@@ -286,7 +286,7 @@ function enter()
         poller = hook.timer(0.5, "patrolPoll")
     elseif system.cur() == ambushsys and stage == 4 then
         tk.msg(joefailtitle, joefailtext:format(player.name()))
-        shadow_addLog( log_text_fail )
+        shadow.addLog( log_text_fail )
         abort()
     elseif system.cur() == ambushsys and stage == 5 then
         pilot.clear()

@@ -1,44 +1,30 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Assault on Haleb">
-  <flags>
-   <unique />
-  </flags>
-  <avail>
-   <priority>2</priority>
-   <chance>30</chance>
-   <done>Alliance of Inconvenience</done>
-   <location>Bar</location>
-   <faction>FLF</faction>
-   <cond>faction.playerStanding("FLF") &gt;= 80</cond>
-  </avail>
-  <notes>
-   <campaign>Save the Frontier</campaign>
-  </notes>
- </mission>
- --]]
+ <flags>
+  <unique />
+ </flags>
+ <avail>
+  <priority>2</priority>
+  <chance>30</chance>
+  <done>Alliance of Inconvenience</done>
+  <location>Bar</location>
+  <faction>FLF</faction>
+  <cond>faction.playerStanding("FLF") &gt;= 80</cond>
+ </avail>
+ <notes>
+  <campaign>Save the Frontier</campaign>
+ </notes>
+</mission>
+--]]
 --[[
 
    Assault on Haleb
 
-   This program is free software: you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   This program is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
-
-   You should have received a copy of the GNU General Public License
-   along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
 --]]
-
 local fmt = require "format"
 local fleet = require "fleet"
-require "missions.flf.flf_common"
+local flf = require "missions.flf.flf_common"
 
 -- Localization stuff
 title = {}
@@ -357,9 +343,9 @@ end
 
 function finish ()
    player.pay( credits )
-   flf_setReputation( 90 )
+   flf.setReputation( 90 )
    faction.get("FLF"):modPlayer( reputation )
-   flf_addLog( log_text )
+   flf.addLog( log_text )
    misn.finish( true )
 end
 

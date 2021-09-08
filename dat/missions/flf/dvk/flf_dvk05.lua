@@ -1,39 +1,30 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Alliance of Inconvenience">
-  <flags>
-   <unique />
-  </flags>
-  <avail>
-   <priority>2</priority>
-   <chance>30</chance>
-   <done>Diversion from Haleb</done>
-   <location>Bar</location>
-   <faction>FLF</faction>
-  </avail>
-  <notes>
-   <campaign>Save the Frontier</campaign>
-  </notes>
- </mission>
- --]]
+ <flags>
+  <unique />
+ </flags>
+ <avail>
+  <priority>2</priority>
+  <chance>30</chance>
+  <done>Diversion from Haleb</done>
+  <location>Bar</location>
+  <faction>FLF</faction>
+ </avail>
+ <notes>
+  <campaign>Save the Frontier</campaign>
+ </notes>
+</mission>
+--]]
 --[[
 
    Alliance of Inconvenience
 
-   This program is free software: you can redistribute it and/or modify
-   it under the terms of the GNU General Public License version 3 as
-   published by the Free Software Foundation.
-
-   This program is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
-
 --]]
-
 local fleet = require "fleet"
 local fmt = require "format"
-require "missions/flf/flf_pirates"
+local flf = require "missions.flf.flf_common"
+require "missions.flf.flf_pirates"
 
 title = {}
 text = {}
@@ -104,7 +95,7 @@ function land_flf ()
    if planet.cur():faction() == faction.get("FLF") then
       tk.msg( "", pay_text[ rnd.rnd( 1, #pay_text ) ] )
       player.pay( credits )
-      flf_setReputation( 80 )
+      flf.setReputation( 80 )
       faction.get("FLF"):modPlayerSingle( reputation )
       misn.finish( true )
    end

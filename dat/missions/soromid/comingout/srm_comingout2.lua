@@ -1,44 +1,29 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Coming of Age">
-  <flags>
-   <unique />
-  </flags>
-  <avail>
-   <priority>2</priority>
-   <done>Coming Out</done>
-   <chance>100</chance>
-   <location>Bar</location>
-   <planet>Durea</planet>
-   <cond>var.peek("comingout_time") == nil or time.get() &gt;= time.fromnumber(var.peek("comingout_time")) + time.create(0, 20, 0)</cond>
-  </avail>
-  <notes>
-   <campaign>Coming Out</campaign>
-  </notes>
- </mission>
- --]]
+ <flags>
+  <unique />
+ </flags>
+ <avail>
+  <priority>2</priority>
+  <done>Coming Out</done>
+  <chance>100</chance>
+  <location>Bar</location>
+  <planet>Durea</planet>
+  <cond>var.peek("comingout_time") == nil or time.get() &gt;= time.fromnumber(var.peek("comingout_time")) + time.create(0, 20, 0)</cond>
+ </avail>
+ <notes>
+  <campaign>Coming Out</campaign>
+ </notes>
+</mission>
+--]]
 --[[
 
    Coming of Age
 
-   This program is free software: you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   This program is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
-
-   You should have received a copy of the GNU General Public License
-   along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
 --]]
-
 local fmt = require "format"
-require "missions/soromid/common"
-
+require "missions.soromid.common"
 
 title = {}
 text = {}

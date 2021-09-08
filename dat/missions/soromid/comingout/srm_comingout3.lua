@@ -1,47 +1,33 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="A Friend's Aid">
-  <flags>
-   <unique />
-  </flags>
-  <avail>
-   <priority>2</priority>
-   <done>Coming of Age</done>
-   <chance>30</chance>
-   <location>Bar</location>
-   <faction>Soromid</faction>
-   <cond>var.peek("comingout_time") == nil or time.get() &gt;= time.fromnumber(var.peek("comingout_time")) + time.create(0, 20, 0)</cond>
-  </avail>
-  <notes>
-   <campaign>Coming Out</campaign>
-   <tier>3</tier>
-  </notes>
- </mission>
- --]]
+ <flags>
+  <unique />
+ </flags>
+ <avail>
+  <priority>2</priority>
+  <done>Coming of Age</done>
+  <chance>30</chance>
+  <location>Bar</location>
+  <faction>Soromid</faction>
+  <cond>var.peek("comingout_time") == nil or time.get() &gt;= time.fromnumber(var.peek("comingout_time")) + time.create(0, 20, 0)</cond>
+ </avail>
+ <notes>
+  <campaign>Coming Out</campaign>
+  <tier>3</tier>
+ </notes>
+</mission>
+--]]
 --[[
 
    A Friend's Aid
-
-   This program is free software: you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   This program is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
-
-   You should have received a copy of the GNU General Public License
-   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 --]]
 
 local fmt = require "format"
 require "cargo_common"
 require "nextjump"
-require "missions/soromid/common"
-
+require "missions.soromid.common"
 
 title = {}
 text = {}

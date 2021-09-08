@@ -20,8 +20,8 @@
 --]]
 
 local portrait = require "portrait"
-require "missions/baron/common"
-require "missions/neutral/common"
+local baron = require "missions.baron.common"
+require "missions.neutral.common"
 
 
 sysname1 = "Darkstone"
@@ -211,7 +211,7 @@ function board()
    pinnacle:changeAI("flee")
    pinnacle:setHilight(false)
    pinnacle:setActiveBoard(false)
-   baron_addLog( log_text_succeed )
+   baron.addLog( log_text_succeed )
    misn.finish(true)
 end
 

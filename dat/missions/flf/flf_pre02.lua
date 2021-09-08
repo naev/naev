@@ -21,17 +21,6 @@
 --]]
 --[[
 
-   This program is free software: you can redistribute it and/or modify
-   it under the terms of the GNU General Public License version 3 as
-   published by the Free Software Foundation.
-
-   This program is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
-
---
-
    This is the second "prelude" mission leading to the FLF campaign.
    stack variable flfbase_intro:
         1 - The player has turned in the FLF agent or rescued the Dvaered crew. Conditional for dv_antiflf02
@@ -41,9 +30,9 @@
 --]]
 
 local fleet = require "fleet"
-require "missions/flf/flf_patrol"
-require "missions/flf/flf_common"
-require "missions/dvaered/common"
+local flf = require "missions.flf.flf_common"
+require "missions.flf.flf_patrol"
+require "missions.dvaered.common"
 
 title = {}
 text = {}
@@ -386,10 +375,10 @@ function land_flf ()
       tk.msg( title[4], text[7] )
       player.pay( 100000 )
       player.outfitAdd('Pentagram of Valor')
-      flf_setReputation( 10 )
+      flf.setReputation( 10 )
       faction.get("FLF"):modPlayer( 1 )
       var.pop( "flfbase_intro" )
-      flf_addLog( log_text_flf )
+      flf.addLog( log_text_flf )
       misn.finish( true )
    end
 end

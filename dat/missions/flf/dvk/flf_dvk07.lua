@@ -21,23 +21,9 @@
 
    The FLF Split
 
-   This program is free software: you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   This program is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
-
-   You should have received a copy of the GNU General Public License
-   along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
 --]]
-
+local flf = require "missions.flf.flf_common"
 require "missions.flf.flf_rogue"
-require "missions.flf.flf_common"
 
 title = {}
 text = {}
@@ -113,8 +99,8 @@ function land_flf ()
    if planet.cur():faction() == faction.get("FLF") then
       tk.msg( "", pay_text[1] )
       player.pay( credits )
-      flf_setReputation( 98 )
-      flf_addLog( log_text )
+      flf.setReputation( 98 )
+      flf.addLog( log_text )
       misn.finish( true )
    end
 end

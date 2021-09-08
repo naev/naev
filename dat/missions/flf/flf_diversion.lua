@@ -16,24 +16,10 @@
 
    FLF diversion mission.
 
-   This program is free software: you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   This program is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
-
-   You should have received a copy of the GNU General Public License
-   along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
 --]]
-
 local fleet = require "fleet"
 local fmt = require "format"
-require "missions/flf/flf_common"
+local flf = require "missions.flf.flf_common"
 
 -- localization stuff
 misn_title  = _("FLF: Diversion in %s")
@@ -58,7 +44,7 @@ osd_desc["__save"] = true
 
 
 function create ()
-   missys = flf_getTargetSystem()
+   missys = flf.getTargetSystem()
    if not misn.claim( missys ) then misn.finish( false ) end
 
    local num_dvaereds = missys:presences()["Dvaered"]

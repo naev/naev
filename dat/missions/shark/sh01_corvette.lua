@@ -36,7 +36,7 @@
 --]]
 local pir = require "missions.pirate.common"
 local fmt = require "format"
-require "missions.shark.common"
+local shark = require "missions.shark.common"
 
 
 title = {}
@@ -152,7 +152,7 @@ function land()
       hook.rm(enterhook)
       hook.rm(landhook)
       hook.rm(jumpouthook)
-      shark_addLog( log_text )
+      shark.addLog( log_text )
       misn.finish(true)
    end
 end

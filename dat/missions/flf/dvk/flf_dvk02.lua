@@ -21,23 +21,10 @@
 
    Pirate Alliance
 
-   This program is free software: you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   This program is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
-
-   You should have received a copy of the GNU General Public License
-   along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
 --]]
 local fmt = require "format"
 local fleet = require "fleet"
-require "missions.flf.flf_common"
+local flf = require "missions.flf.flf_common"
 
 -- TODO this mission needs to be adapted to the new pirate clan stuff
 -- for now I just swapped "Pirate" for "Dreamer Clan"
@@ -312,10 +299,10 @@ function land ()
       diff.apply( "Fury_Station" )
       diff.apply( "flf_pirate_ally" )
       player.pay( credits )
-      flf_setReputation( 50 )
+      flf.setReputation( 50 )
       faction.get("FLF"):modPlayer( reputation )
       faction.get("Dreamer Clan"):modPlayerSingle( pir_reputation )
-      flf_addLog( log_text )
+      flf.addLog( log_text )
       misn.finish( true )
    end
 end

@@ -25,7 +25,7 @@
 
 local portrait = require "portrait"
 local fleet = require "fleet"
-require "missions/shadow/common"
+local shadow = require "missions.shadow.common"
 
 
 planetname = "Durea" -- The planet where SHITMAN lives
@@ -323,7 +323,7 @@ function board()
     if var.peek("shadowrun") then
        var.pop("shadowrun") -- in case it was used
     end
-    shadow_addLog( log_text )
+    shadow.addLog( log_text )
     misn.finish(true)
 end
 

@@ -36,7 +36,7 @@
 --]]
 local pir = require "missions.pirate.common"
 local fmt = require "format"
-require "missions.shark.common"
+local shark = require "missions.shark.common"
 
 
 title = {}
@@ -122,7 +122,7 @@ function land()
       tk.msg(title[3], text[3]:format(nextsys:name()))
       pir.reputationNormalMission(rnd.rnd(2,3))
       player.pay(reward)
-      shark_addLog( log_text )
+      shark.addLog( log_text )
       misn.finish(true)
    end
 end
