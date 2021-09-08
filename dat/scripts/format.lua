@@ -25,8 +25,7 @@ end
 --    @return A string taking the form of "X ¤".
 --]]
 function format.credits( credits )
-   return gettext.ngettext("%s ¤", "%s ¤", credits):format(
-         numstring(credits) )
+   return n_("%s ¤", "%s ¤", credits):format( numstring(credits) )
 end
 
 
@@ -42,8 +41,7 @@ end
 --    @return A string taking the form of "X tonne" or "X tonnes".
 --]]
 function format.tonne( tonnes )
-   return gettext.ngettext("%s tonne", "%s tonnes", tonnes):format(
-         numstring(tonnes) )
+   return n_("%s tonne", "%s tonnes", tonnes):format( numstring(tonnes) )
 end
 
 
@@ -55,7 +53,7 @@ end
 --]]
 function format.tonne_short( tonnes )
    -- Translator note: this form represents an abbreviation of "_ tonnes".
-   return gettext.ngettext( "%d t", "%d t", tonnes ):format( tonnes )
+   return n_( "%d t", "%d t", tonnes ):format( tonnes )
 end
 
 
@@ -71,8 +69,7 @@ end
 --    @return A string taking the form of "X jump" or "X jumps".
 --]]
 function format.jump( jumps )
-   return gettext.ngettext("%s jump", "%s jumps", jumps):format(
-         numstring(jumps) )
+   return n_("%s jump", "%s jumps", jumps):format (numstring(jumps) )
 end
 
 
@@ -89,8 +86,7 @@ end
 --    @return A string taking the form of "X time" or "X times".
 --]]
 function format.time( times )
-   return gettext.ngettext("%s time", "%s times", times):format(
-         numstring(times) )
+   return n_("%s time", "%s times", times):format( numstring(times) )
 end
 
 
