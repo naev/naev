@@ -857,7 +857,7 @@ StarSystem* system_get( const char* sysname )
 
 #ifdef DEBUGGING
    if (systemstack_changed) {
-      for (int i; i<array_size(systems_stack); i++)
+      for (int i=0; i<array_size(systems_stack); i++)
          if (strcmp(systems_stack[i].name, sysname)==0)
             return &systems_stack[i];
       goto system_notfound;
@@ -958,7 +958,7 @@ Planet* planet_get( const char* planetname )
 
 #ifdef DEBUGGING
    if (planetstack_changed) {
-      for (int i; i<array_size(planet_stack); i++)
+      for (int i=0; i<array_size(planet_stack); i++)
          if (strcmp(planet_stack[i].name, planetname)==0)
             return &planet_stack[i];
       goto planet_notfound;
@@ -2794,15 +2794,9 @@ static StarSystem* system_parse( StarSystem *sys, const xmlNodePtr parent )
          continue;
       }
 
-      /* Avoid warning. */
-      if (xml_isNode(node,"jumps"))
-         continue;
-      if (xml_isNode(node,"asteroids"))
-         continue;
-
-      if (xml_isNode(cur, "tags")) {
+      if (xml_isNode(node, "tags")) {
          sys->tags = array_create( char* );
-         cur = cur->children;
+         cur = node->children;
          do {
             xml_onlyNodes(cur);
             if (xml_isNode(cur, "tag")) {
@@ -2814,6 +2808,9 @@ static StarSystem* system_parse( StarSystem *sys, const xmlNodePtr parent )
          continue;
       }
 
+      /* Avoid warnings. */
+      if (xml_isNode(node,"jumps") || xml_isNode(node,"asteroids"))
+         continue;
 
       DEBUG(_("Unknown node '%s' in star system '%s'"),node->name,sys->name);
    } while (xml_nextNode(node));
