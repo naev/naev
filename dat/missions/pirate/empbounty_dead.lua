@@ -51,7 +51,7 @@
 local pir = require "missions.pirate.common"
 local fmt = require "format"
 require "jumpdist"
-require "pilot.generic"
+local pilotname = require "pilotname"
 
 
 -- Mission details
@@ -146,7 +146,7 @@ function create ()
       jumps_permitted = jumps_permitted - 1
    end
 
-   name = pilot_name()
+   name = pilotname.generic()
    level_setup()
    bounty_setup()
 

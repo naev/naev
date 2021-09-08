@@ -35,8 +35,7 @@
 local fmt = require "format"
 local portrait = require "portrait"
 local pir = require "missions.pirate.common"
-require "pilot.generic"
-require "pilot.pirate"
+local pilotname = require "pilotname"
 
 logidstr = "log_hiredescort"
 logname = _("Hired Escorts")
@@ -97,7 +96,7 @@ function createPilotNPCs ()
    }
    local num_pilots = rnd.rnd(0, 5)
    local fac = faction.get("Mercenary")
-   local name_func = pilot_name
+   local name_func = pilotname.generic
    local portrait_arg = nil
 
    local pf = planet.cur():faction()
@@ -111,7 +110,7 @@ function createPilotNPCs ()
          { ship = "Pirate Phalanx",    royalty = 0.35 },
       }
       fac = faction.get("Pirate")
-      name_func = pirate_name
+      name_func = pilotname.pirate
       portrait_arg = "Pirate"
    elseif pf == faction.get("Thurion") then
       ship_choices = {

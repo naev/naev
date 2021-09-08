@@ -38,7 +38,7 @@
 
 --]]
 local pir = require "missions.pirate.common"
-require "pilot.pirate"
+local pilotname = require "pilotname"
 local fmt = require "format"
 require "missions.shark.common"
 
@@ -115,7 +115,7 @@ function accept()
 
    if tk.yesno(title[1], text[1]) then
       misn.accept()
-      piratename = pirate_name()    --for now, we only need his name
+      piratename = pilotname.pirate() --for now, we only need his name
       tk.msg(title[2], text[2]:format(missys:name(),mispla:name()))
 
       osd_msg[1] = osd_msg[1]:format(missys:name(), mispla:name())

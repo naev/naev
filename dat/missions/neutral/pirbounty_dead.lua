@@ -45,8 +45,8 @@
 --]]
 local pir = require "missions.pirate.common"
 local fmt = require "format"
+local pilotname = require "pilotname"
 require "jumpdist"
-require "pilot.pirate"
 
 subdue_title   = _("Captured Alive")
 subdue_text    = {}
@@ -150,9 +150,9 @@ function create ()
       level = rnd.rnd( 4, #misn_title )
    end
 
-   name = pirate_name()
+   name = pilotname.pirate()
    ship = "Hyena"
-   credits = 50000
+   credits = 50e3
    reputation = 0
    board_failed = false
    bounty_setup()

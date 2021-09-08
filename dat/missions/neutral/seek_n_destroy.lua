@@ -34,8 +34,7 @@ local pir = require "missions.pirate.common"
 local fmt = require "format"
 require "jumpdist"
 local portrait = require "portrait"
-require "pilot.generic"
-require "pilot.pirate"
+local pilotname = require "pilotname"
 
 clue_title   = _("I know the pilot you're looking for")
 clue_text    = {}
@@ -211,12 +210,12 @@ function create ()
    aname = nil
    bname = nil
    if target_faction == faction.get("FLF") then
-      name = pilot_name()
+      name = pilotname.generic()
       ships = {"Lancelot", "Vendetta", "Pacifier"}
       aship = "Pacifier"
       bship = "Lancelot"
    else -- default Pirate
-      name = pirate_name()
+      name = pilotname.pirate()
       ships = {"Pirate Shark", "Pirate Vendetta", "Pirate Admonisher"}
       aship = "Pirate Phalanx"
       bship = "Hyena"

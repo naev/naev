@@ -27,7 +27,7 @@
 
 --]]
 local pir = require "missions.pirate.common"
-require "pilot.pirate"
+local pilotname = require "pilotname"
 local fmt = require "format"
 require "jumpdist"
 require "missions.shark.common"
@@ -127,10 +127,10 @@ function accept()
    goddead = false
 
    --set the names of the pirates (and make sure they aren't duplicates)
-   gawname = pirate_name()
-   kername1 = string.format( _("%s III"), pirate_name() )
-   kername2 = string.format( _("%s Jr." ), pirate_name() )
-   godname = string.format( _("%s II"), pirate_name() )
+   gawname = pilotname.pirate()
+   kername1 = string.format( _("%s III"), pilotname.pirate() )
+   kername2 = string.format( _("%s Jr." ), pilotname.pirate() )
+   godname = string.format( _("%s II"), pilotname.pirate() )
 
    if tk.yesno(title[1], text[1]) then
       misn.accept()

@@ -37,8 +37,8 @@
 --]]
 
 local fmt = require "format"
+local pilotname = require "pilotname"
 require "jumpdist"
-require "pilot.pirate"
 require "missions.soromid.common"
 local pir = require "missions.pirate.common"
 local equipopt = require 'equipopt'
@@ -92,7 +92,7 @@ function create ()
    missys = systems[ rnd.rnd( 1, #systems ) ]
    if not misn.claim( missys ) then misn.finish( false ) end
 
-   pirname = pirate_name()
+   pirname = pilotname.pirate()
    credits = 300e3
    started = false
 
