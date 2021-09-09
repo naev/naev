@@ -139,7 +139,11 @@ function format.f(str, tab)
       code = code or block:match("{(.*)}")
       local fn, err = loads("return "..code, string.format(_("format expression `%s`"),code), tab)
       if fn then
-         return fmt and string.format(fmt, fn()) or tostring(fn())
+         fn = fn()
+         if fn==nil then
+            warn(string.format(_("fmt.f: string '%s' has '%s'==nil!"),str,code))
+         end
+         return fmt and string.format(fmt, fn) or tostring(fn)
       else
          error(err, 0)
       end
