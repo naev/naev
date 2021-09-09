@@ -55,7 +55,6 @@ function get_route( sys )
 end
 
 function create ()
-   if not var.peek('testing') then misn.finish(false) end
    local target_factions = {
       "Independent",
       "Trader",
