@@ -127,17 +127,24 @@ function create ()
    convoy_enter, convoy_exit = get_route( targetsys )
    -- TODO make tiers based on how many times the player does them or something
    local r = rnd.rnd()
-   if r < 0.5 then
+   local adjective
+   if r < 0.4 then
       tier = 1
-   elseif r < 0.8 then
+      adjective = "tiny"
+   elseif r < 0.7 then
       tier = 2
-   else
+      adjective = "small"
+   elseif r < 0.9 then
       tier = 3
+      adjective = "medium"
+   else
+      tier = 4
+      adjective = "large"
    end
 
    -- Set up rewards
    reward_faction = pir.systemClanP( system.cur() )
-   reward_base = 100e3 + rnd.rnd() * 50e3
+   reward_base = (50e3 + rnd.rnd() * 25e3)*tier
    reward_cargo = 10e3 + rnd.rnd() * 3e3
 
    local faction_text = pir.reputationMessage( reward_faction )
@@ -146,9 +153,9 @@ function create ()
       faction_title = fmt.f(_(" ({clanname})"), {clanname=reward_faction:name()})
    end
 
-   misn.setTitle(fmt.f(_("#rPIRACY#0: Raid a {name} convoy in the {sys} system{fct}"), {name=enemyfaction:name(), sys=targetsys:name(), fct=faction_title} ))
-   misn.setDesc(fmt.f(_("A convoy carrying {cargo} will be passing through the {sys} system on the way from {entersys} to {exitsys}. A local Pirate Lord wants you to assault the convoy and bring back as much {cargo} as possible. You will be paid based on how much you are able to bring back.{reputation}"),
-         {cargo=cargo[1], sys=targetsys:name(), convoy_enter:dest():name(), convoy_exit:dest():name(), reputation=faction_text}))
+   misn.setTitle(fmt.f(_("#rPIRACY#0: Raid a {adjective} {name} convoy in the {sys} system{fct}"), {adjective=adjective, name=enemyfaction:name(), sys=targetsys:name(), fct=faction_title} ))
+   misn.setDesc(fmt.f(_("A convoy carrying {cargo} will be passing through the {sys} system on the way from {entersys} to {exitsys}. A local Pirate Lord wants you to assault the convoy and bring back as many tonnes of {cargo} as possible. You will be paid based on how much you are able to bring back.{reputation}"),
+         {cargo=cargo[1], sys=targetsys:name(), entersys=convoy_enter:dest():name(), exitsys=convoy_exit:dest():name(), reputation=faction_text}))
    misn.setReward(fmt.f(_("{rbase} and {rcargo} per ton of {cargo} recovered"), {rbase=fmt.credits(reward_base),rcargo=fmt.credits(reward_cargo),cargo=cargo[1]}))
    misn.markerAdd( targetsys )
 end
@@ -186,9 +193,16 @@ function land ()
    if convoy_spawned and q > 0 then
       local reward = reward_base + q * reward_cargo
       lmisn.sfxVictory()
-      vntk.msg( nil, fmt.f(_("The workers unload your {cargoname} and take it away to somewhere you can't see. As you wonder about your payment, you suddenly receive a message that #g{reward}#0 was transferred to your account."), {cargoname=cargo[1], reward=fmt.credits(reward)}) )
-      player.pay( reward )
+      vntk.msg( _("Mission Success"), fmt.f(_("The workers unload your {cargoname} and take it away to somewhere you can't see. As you wonder about your payment, you suddenly receive a message that #g{reward}#0 was transferred to your account."), {cargoname=cargo[1], reward=fmt.credits(reward)}) )
       pp:cargoRm( misn_cargo, q )
+      player.pay( reward )
+
+      -- Faction hit
+      faction.modPlayerSingle(reward_faction, tier*rnd.rnd(1, 2))
+
+      -- Mark as done
+      local done = var.peek( "pir_convoy_raid" ) or 0
+      var.push( "pir_convoy_raid", done+1 )
       misn.finish(true)
    end
 end
@@ -204,12 +218,56 @@ end
 
 function spawn_convoy ()
    -- Tier 1
-   local tships = {"Koala", "Llama", "Llama"}
-   local eships
-   if rnd.rnd() < 0.5 then
+   local tships, eships
+   if tier==4 then
+      tships = {"Mule", "Mule", "Mule"}
+      if rnd.rnd() < 0.5 then
+         table.insert( tships, "Mule" )
+      end
+      if rnd.rnd() < 0.5 then
+         eships = {"Kestrel"}
+      else
+         eships = {"Pacifier", "Pacifier"}
+      end
+      for i=1,rnd.rnd(4.5) do
+         table.insert( eships, (rnd.rnd() < 0.7 and "Lancelot") or "Admonisher" )
+      end
+
+   elseif tier==3 then
+      tships = {"Mule"}
+      local r = rnd.rnd()
+      if r < 0.3 then
+         eships = {"Pacifier"}
+      elseif  r < 0.6 then
+         eships = {"Vigilance"}
+      else
+         eships = {"Admonisher", "Admonisher"}
+      end
+      for i=1,rnd.rnd(3.4) do
+         table.insert( eships, (rnd.rnd() < 0.7 and "Shark") or "Lancelot" )
+      end
+
+   elseif tier==2 then
+      if rnd.rnd() < 0.5 then
+         tships = {"Koala", "Koala"}
+      else
+         tships = {"Koala", "Llama", "Llama"}
+      end
+      if rnd.rnd() < 0.5 then
+         eships = { "Lancelot" }
+      else
+         eships = { "Vendetta" }
+      end
+      for i=1,3 do
+         table.insert( eships, "Shark" )
+      end
+
+   else -- tier==1
+      tships = {"Llama", "Llama"}
       eships = {"Shark", "Shark"}
-   else
-      eships = {"Shark", "Hyena", "Hyena"}
+      if rnd.rnd() < 0.5 then
+         table.insert( eships, "Shark" )
+      end
    end
    sconvoy = flt.add( 1, tships, enemyfaction, convoy_enter, _("Convoy") )
    for k,p in ipairs(sconvoy) do
