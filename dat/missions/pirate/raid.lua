@@ -290,19 +290,35 @@ function spawn_convoy ()
    for k,p in ipairs(sconvoy) do
       p:cargoRm("all")
       p:cargoAdd( misn_cargo, math.floor((0.8+0.2*rnd.rnd())*p:cargoFree()) )
-      p:intrinsicSet( "speed_mod", -33 )
-      p:intrinsicSet( "thrust_mod", -33 )
-      p:intrinsicSet( "turn_mod", -33 )
       hook.pilot( p, "board", "convoy_board" )
+      hook.pilot( p, "attacked", "convoy_attacked" )
    end
-   sescorts = flt.add( 1, eships, fconvoy, convoy_enter )
+   sescorts = flt.add( 1, eships, fconvoy, convoy_enter, nil, {ai="mercenary"} )
    for k,p in ipairs(sescorts) do
       p:setLeader( sconvoy[1] )
+      hook.pilot( p, "attacked", "convoy_attacked" )
    end
+   -- Only slow down leader, or it can be faster than other guys
+   sconvoy[1]:intrinsicSet( "speed_mod", -33 )
+   sconvoy[1]:intrinsicSet( "thrust_mod", -33 )
+   sconvoy[1]:intrinsicSet( "turn_mod", -33 )
    sconvoy[1]:setHilight(true)
    sconvoy[1]:control()
    sconvoy[1]:hyperspace( convoy_exit, true )
    hook.pilot( sconvoy[1], "death", "convoy_done" )
+end
+
+function convoy_attacked ()
+   for k,p in ipairs(sconvoy) do
+      if p:exists() then
+         p:setHostile(true)
+      end
+   end
+   for k,p in ipairs(sescorts) do
+      if p:exists() then
+         p:setHostile(true)
+      end
+   end
 end
 
 function convoy_board ()
