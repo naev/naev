@@ -1,6 +1,7 @@
 --[[
    Small wrapper around vn to do toolkit type stuff.
 --]]
+local vn = require "vn"
 local vntk = {}
 
 function vntk.msg( title, text )
@@ -14,7 +15,7 @@ function vntk.msg( title, text )
    end
    vn.transition()
    c( text )
-   vn.done()
+   vn.run()
 end
 
 return vntk
