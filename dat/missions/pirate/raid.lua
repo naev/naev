@@ -115,7 +115,7 @@ function create ()
       {N_("Premium Service Droids"), N_("Expensive service droids that can do all sorts of menial tasks.")},
       -- A bit sillier
       {N_("Aged Wines"), N_("Wines aged in carefully controlled climates to bring out the most subtle and exquisite flavours.")},
-      {N_("Fine-tuned Neural Networks"), N("Neural networks trained with billions of data points to do all sorts of pointless tasks.")},
+      {N_("Fine-tuned Neural Networks"), N_("Neural networks trained with billions of data points to do all sorts of pointless tasks.")},
       {N_("Blue and White Porcelain"), N_("Very exquisite and highly detailed traditional blue and white pottery.")},
       {N_("Exquisite Shaders"), N_("Code for exquisite shaders that are able to render computer graphics scenes beyond all human imagination.")},
       {N_("Audiophile Paraphernalia"), N_("High end audio systems meant for true audio connoisseurs.")},
@@ -282,7 +282,11 @@ function spawn_convoy ()
          table.insert( eships, "Shark" )
       end
    end
-   sconvoy = flt.add( 1, tships, enemyfaction, convoy_enter, _("Convoy") )
+
+   -- Use a dynamic faction so pirates don't destroy them
+   local fconvoy = faction.dynAdd( enemyfaction, "convoy_faction", enemyfaction:name(), {clear_enemies=true, clear_allies=true} )
+
+   sconvoy = flt.add( 1, tships, fconvoy, convoy_enter, _("Convoy") )
    for k,p in ipairs(sconvoy) do
       p:cargoRm("all")
       p:cargoAdd( misn_cargo, math.floor((0.8+0.2*rnd.rnd())*p:cargoFree()) )
@@ -291,7 +295,7 @@ function spawn_convoy ()
       p:intrinsicSet( "turn_mod", -33 )
       hook.pilot( p, "board", "convoy_board" )
    end
-   sescorts = flt.add( 1, eships, enemyfaction, convoy_enter )
+   sescorts = flt.add( 1, eships, fconvoy, convoy_enter )
    for k,p in ipairs(sescorts) do
       p:setLeader( sconvoy[1] )
    end
