@@ -126,14 +126,17 @@ function create ()
    convoy_enter, convoy_exit = get_route( targetsys )
    -- TODO make tiers based on how many times the player does them or something
    local r = rnd.rnd()
+   local done = var.peek("pir_convoy_raid") or 0
+   local mod = math.exp( -done*0.05 ) -- 0.95 for 1, 0.90 for 2 0.86 for 3, etc.
+   mod = math.max( 0.5, mod ) -- Limit it so that 50% are large
    local adjective
-   if r < 0.4 then
+   if r < 0.5*mod then
       tier = 1
       adjective = "tiny"
-   elseif r < 0.7 then
+   elseif r < 1.0*mod then
       tier = 2
       adjective = "small"
-   elseif r < 0.9 then
+   elseif r < 1.2*mod then
       tier = 3
       adjective = "medium"
    else
@@ -143,8 +146,8 @@ function create ()
 
    -- Set up rewards
    reward_faction = pir.systemClanP( system.cur() )
-   reward_base = (50e3 + rnd.rnd() * 25e3)*tier
-   reward_cargo = 10e3 + rnd.rnd() * 3e3
+   reward_base = 25e3 + rnd.rnd() * 15e3 + 25e3*math.sqrt(tier)
+   reward_cargo = 2e3 + rnd.rnd() * 2e3 + 3e3*math.sqrt(tier)
 
    local faction_text = pir.reputationMessage( reward_faction )
    local faction_title = ""
