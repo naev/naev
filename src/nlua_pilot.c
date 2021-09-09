@@ -528,9 +528,10 @@ static int pilotL_add( lua_State *L )
    /* Default values. */
    pilot_clearFlagsRaw( flags );
    vectnull(&vn); /* Need to determine angle. */
-   jump = NULL;
-   planet = NULL;
-   a    = 0.;
+   ss    = NULL;
+   jump  = NULL;
+   planet= NULL;
+   a     = 0.;
 
    /* Parse first argument - Ship Name */
    ship = luaL_validship(L,1);
@@ -545,26 +546,10 @@ static int pilotL_add( lua_State *L )
       a = RNGF() * 2.*M_PI;
       vectnull( &vv );
    }
-   else if (lua_issystem(L,3)) {
+   else if (lua_issystem(L,3))
       ss = system_getIndex( lua_tosystem(L,3) );
-      for (i=0; i<array_size(cur_system->jumps); i++) {
-         if ((cur_system->jumps[i].target == ss)
-               && !jp_isFlag( cur_system->jumps[i].returnJump, JP_EXITONLY )) {
-            jump = cur_system->jumps[i].returnJump;
-            break;
-         }
-      }
-      if (jump == NULL) {
-         if (array_size(cur_system->jumps) > 0) {
-            WARN(_("Ship '%s' jumping in from non-adjacent system '%s' to '%s'."),
-                  pilotname, ss->name, cur_system->name );
-            jump = cur_system->jumps[RNG_BASE(0, array_size(cur_system->jumps)-1)].returnJump;
-         }
-         else
-            WARN(_("Ship '%s' attempting to jump in from '%s', but '%s' has no jump points."),
-                  pilotname, ss->name, cur_system->name );
-      }
-   }
+   else if (lua_isjump(L,3))
+      ss = system_getIndex( lua_tojump(L,3)->destid );
    else if (lua_isplanet(L,3)) {
       planet  = luaL_validplanet(L,3);
       pilot_setFlagRaw( flags, PILOT_TAKEOFF );
@@ -577,7 +562,7 @@ static int pilotL_add( lua_State *L )
       vectnull( &vv );
    }
    /* Random. */
-   else {
+   else if (lua_isnoneornil(L,3)) {
       /* Check if we should ignore the strict rules. */
       ignore_rules = 0;
       if (lua_isboolean(L,3) && lua_toboolean(L,3))
@@ -599,6 +584,29 @@ static int pilotL_add( lua_State *L )
       else {
          a = RNGF() * 2.*M_PI;
          vectnull( &vv );
+      }
+   }
+   else
+      NLUA_INVALID_PARAMETER(L);
+
+   /* Handle system. */
+   if (ss != NULL) {
+      for (i=0; i<array_size(cur_system->jumps); i++) {
+         if ((cur_system->jumps[i].target == ss)
+               && !jp_isFlag( cur_system->jumps[i].returnJump, JP_EXITONLY )) {
+            jump = cur_system->jumps[i].returnJump;
+            break;
+         }
+      }
+      if (jump == NULL) {
+         if (array_size(cur_system->jumps) > 0) {
+            WARN(_("Ship '%s' jumping in from non-adjacent system '%s' to '%s'."),
+                  pilotname, ss->name, cur_system->name );
+            jump = cur_system->jumps[RNG_BASE(0, array_size(cur_system->jumps)-1)].returnJump;
+         }
+         else
+            WARN(_("Ship '%s' attempting to jump in from '%s', but '%s' has no jump points."),
+                  pilotname, ss->name, cur_system->name );
       }
    }
 
