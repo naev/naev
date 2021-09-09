@@ -2426,6 +2426,7 @@ dat/missions/pirate/pir_contraband.lua
 dat/missions/pirate/pir_contraband_cake.lua
 dat/missions/pirate/pir_ship_stealing.lua
 dat/missions/pirate/pirate_commodity_run.lua
+dat/missions/pirate/raid.lua
 dat/missions/proteron/dissbounty_dead.lua
 dat/missions/rehab_common.lua
 dat/missions/shadow/common.lua
@@ -2523,6 +2524,7 @@ dat/scripts/fleet.lua
 dat/scripts/format.lua
 dat/scripts/formation.lua
 dat/scripts/jumpdist.lua
+dat/scripts/lmisn.lua
 dat/scripts/lmusic.lua
 dat/scripts/love.lua
 dat/scripts/love/audio.lua
@@ -2570,6 +2572,7 @@ dat/scripts/vn.lua
 dat/scripts/vn/conf.lua
 dat/scripts/vn/main.lua
 dat/scripts/vn/transitions.lua
+dat/scripts/vntk.lua
 src/ai.c
 src/ai.h
 src/array.c
