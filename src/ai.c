@@ -865,16 +865,16 @@ void ai_attacked( Pilot* attacked, const unsigned int attacker, double dmg )
 
    /* Behaves differently if manually overridden. */
    pilot_runHookParam( attacked, PILOT_HOOK_ATTACKED, hparam, 2 );
-   if (pilot_isFlag( attacked, PILOT_MANUAL_CONTROL ))
-      return;
 
-   /* Must have an AI profile and not be player. */
+   /* Must have an AI profile. */
    if (attacked->ai == NULL)
       return;
 
    ai_setPilot( attacked ); /* Sets cur_pilot. */
-
-   nlua_getenv(cur_pilot->ai->env, "attacked");
+   if (pilot_isFlag( attacked, PILOT_MANUAL_CONTROL ))
+      nlua_getenv(cur_pilot->ai->env, "attacked_manual");
+   else
+      nlua_getenv(cur_pilot->ai->env, "attacked");
 
    lua_pushpilot(naevL, attacker);
    if (nlua_pcall(cur_pilot->ai->env, 1, 0)) {

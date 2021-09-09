@@ -558,11 +558,46 @@ end
 function control_funcs.flyback () return true end
 function control_funcs.hold () return true end
 
--- Required "attacked" function
-function attacked( attacker )
+function attacked_manual( attacker )
+   -- Ignore hits from dead pilots.
+   if not attacker:exists() then
+      return
+   end
+
    local task = ai.taskname()
    local si = _stateinfo( task )
-   if si.forced then return end
+
+   -- Notify that pilot has been attacked before
+   mem.attacked = true
+   local p = ai.pilot()
+
+   -- Pilot shouldn't be allowed to rebribe, so we just have to cancel
+   -- bribe status
+   if ai.isbribed(attacker) then
+      p:setBribed( false )
+   end
+
+   -- Notify followers that we've been attacked
+   if not si.fighting then
+      for k,v in ipairs(p:followers()) do
+         p:msg( v, "l_attacked", attacker )
+      end
+      local l = p:leader()
+      if l and l:exists() then
+         p:msg( l, "f_attacked", attacker )
+      end
+   end
+end
+
+-- Required "attacked" function
+function attacked( attacker )
+   -- Ignore hits from dead pilots.
+   if not attacker:exists() then
+      return
+   end
+
+   local task = ai.taskname()
+   local si = _stateinfo( task )
 
    -- Notify that pilot has been attacked before
    mem.attacked = true
@@ -585,11 +620,6 @@ function attacked( attacker )
       end
    end
 
-   -- Ignore hits from dead pilots.
-   if not attacker:exists() then
-      return
-   end
-
    -- Notify followers that we've been attacked
    if not si.fighting then
       for k,v in ipairs(p:followers()) do
@@ -600,6 +630,9 @@ function attacked( attacker )
          p:msg( l, "f_attacked", attacker )
       end
    end
+  
+   -- If forced we'll stop after telling friends
+   if si.forced then return end
 
    if not si.fighting then
       if mem.defensive then
