@@ -40,7 +40,9 @@ function updater090 ()
       faction.get("Collective"):setKnown(false)
    end
    if not var.peek("disc_proteron") then
-      faction.get("Proteron"):setKnown(false)
+      pro = faction.get("Proteron")
+      pro:setKnown(false)
+      pro:setPlayerStanding(-50) -- Hostile by default
    end
 end
 
