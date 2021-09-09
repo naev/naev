@@ -214,7 +214,7 @@ function enter_delay ()
    mrkexit = system.mrkAdd( _("Convoy Exit Point"), convoy_exit:pos() )
 
    player.autonavReset( 5 )
-   player.msg(fmt.f(_("The convoy will be coming in from {sysname} shortly!"), {sysname=convoy_enter:name()}))
+   player.msg(fmt.f(_("The convoy will be coming in from {sysname} shortly!"), {sysname=convoy_enter:dest():name()}))
    hook.timer( 5+10*rnd.rnd(), "spawn_convoy" )
 end
 
