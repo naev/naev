@@ -258,6 +258,17 @@ custom_events = {
       subtitle = _("#HUncontrolled and Raging Pirate Fury#0"),
       func = function() faction.get("Wild Ones"):setKnown( true ) end
    },
+   RavenClan = {
+      test = function ()
+         local p = system.cur():presences()["Raven Clan"]
+         return (p and p>0)
+      end,
+      type = "enter",
+      name = "disc_ravenclan",
+      title = _("#HRaven Clan Territory#0"),
+      subtitle = _("#HDark Hand of the Black Market#0"),
+      func = function() faction.get("Raven Clan"):setKnown( true ) end
+   },
    BlackLotus = {
       test = function ()
          local p = system.cur():presences()["Black Lotus"]
