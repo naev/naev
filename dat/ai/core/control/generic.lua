@@ -123,10 +123,15 @@ end
 
 -- Run instead of "control" when under manual control; use should be limited
 function control_manual ()
-   lead_fleet( ai.pilot() )
+   local p = ai.pilot()
+   local task = ai.taskname()
+   local si = _stateinfo( task )
+
+   lead_fleet( p )
+   handle_messages( si, false )
 end
 
-function handle_messages( si )
+function handle_messages( si, dopush )
    local taskchange = false
    local p = ai.pilot()
    local l = p:leader()
@@ -157,12 +162,14 @@ function handle_messages( si )
          if sender:leader() == p then
             if msgtype == "f_attacked" then
                if not si.fighting and should_attack( data, si ) then
-                  ai.pushtask("attack", data)
                   -- Also signal to other followers
                   for k,v in ipairs(p:followers()) do
                      p:msg( v, "l_attacked", data )
                   end
-                  taskchange = true
+                  if dopush then
+                     ai.pushtask("attack", data)
+                     taskchange = true
+                  end
                end
             end
 
@@ -171,38 +178,46 @@ function handle_messages( si )
             if msgtype == "form-pos" then
                mem.form_pos = data
             elseif msgtype == "hyperspace" then
-               ai.pushtask("hyperspace", data)
-               taskchange = true
-            elseif msgtype == "land" then
-               ai.pushtask("land", data)
-               taskchange = true
-            elseif msgtype == "l_attacked" then
-               if not si.fighting and should_attack( data, si ) then
-                  ai.pushtask("attack", data)
+               if dopush then
+                  ai.pushtask("hyperspace", data)
                   taskchange = true
                end
-
-            -- Escort commands
-            -- Attack target
-            elseif msgtype == "e_attack" then
-               if data ~= nil and data:exists() then
-                  if data:leader() ~= l then
-                     clean_task( ai.taskname() )
-                     ai.pushtask("attack_forced", data)
+            elseif msgtype == "land" then
+               if dopush then
+                  ai.pushtask("land", data)
+                  taskchange = true
+               end
+            elseif msgtype == "l_attacked" then
+               if not si.fighting and should_attack( data, si ) then
+                  if dopush then
+                     ai.pushtask("attack", data)
                      taskchange = true
                   end
                end
-            -- Hold position
-            elseif msgtype == "e_hold" then
-               ai.pushtask("hold")
-               taskchange = true
-            -- Return to carrier
-            elseif msgtype == "e_return" then
-               ai.pushtask( "flyback", p:flags("carried") )
-               taskchange = true
-            -- Clear orders
-            elseif msgtype == "e_clear" then
-               p:taskClear()
+
+            -- Escort commands
+            elseif dopush then
+               -- Attack target
+               if msgtype == "e_attack" then
+                  if data ~= nil and data:exists() then
+                     if data:leader() ~= l then
+                        clean_task( ai.taskname() )
+                        ai.pushtask("attack_forced", data)
+                        taskchange = true
+                     end
+                  end
+               -- Hold position
+               elseif msgtype == "e_hold" then
+                  ai.pushtask("hold")
+                  taskchange = true
+               -- Return to carrier
+               elseif msgtype == "e_return" then
+                  ai.pushtask( "flyback", p:flags("carried") )
+                  taskchange = true
+               -- Clear orders
+               elseif msgtype == "e_clear" then
+                  p:taskClear()
+               end
             end
          end
       end
@@ -310,7 +325,7 @@ function control ()
    local si = _stateinfo( task )
 
    lead_fleet( p )
-   local taskchange = handle_messages( si )
+   local taskchange = handle_messages( si, true )
 
    -- Select new leader
    local l = p:leader()
