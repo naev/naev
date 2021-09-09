@@ -140,7 +140,6 @@ function create ()
    local done = var.peek("pir_convoy_raid") or 0
    local mod = math.exp( -done*0.05 ) -- 0.95 for 1, 0.90 for 2 0.86 for 3, etc.
    mod = math.max( 0.5, mod ) -- Limit it so that 50% are large
-   local adjective
    if r < 0.5*mod then
       tier = 1
       adjective = "tiny"
@@ -204,10 +203,10 @@ function land ()
    local pp = player.pilot()
    local q = pp:cargoHas( misn_cargo )
    if convoy_spawned and q > 0 then
+      q = pp:cargoRm( misn_cargo, q ) -- Remove it
       local reward = reward_base + q * reward_cargo
       lmisn.sfxVictory()
       vntk.msg( _("Mission Success"), fmt.f(_("The workers unload your {cargoname} and take it away to somewhere you can't see. As you wonder about your payment, you suddenly receive a message that #g{reward}#0 was transferred to your account."), {cargoname=cargo[1], reward=fmt.credits(reward)}) )
-      pp:cargoRm( misn_cargo, q )
       player.pay( reward )
 
       -- Faction hit
@@ -216,6 +215,8 @@ function land ()
       -- Mark as done
       local done = var.peek( "pir_convoy_raid" ) or 0
       var.push( "pir_convoy_raid", done+1 )
+
+      pir.addMiscLog(fmt.f(_("You raided a {adjective} {name} convoy in the {sysname} system and stole {tonnes} of {cargoname}."), {adjective=adjective, name=enemyfaction:name(), sysname=targetsys:name(), tonnes=fmt.tonnes(q), cargoname=cargo[1]}))
       misn.finish(true)
    end
 end
