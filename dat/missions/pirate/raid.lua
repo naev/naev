@@ -186,9 +186,13 @@ function accept ()
 end
 
 function enter ()
-   if convoy_spawned and player.pilot():cargoHas( misn_cargo ) <= 0 then
+   local q = player.pilot():cargoHas( misn_cargo )
+   if convoy_spawned and q <= 0 then
       player.msg(fmt.f(_("#rMISSION FAILED: You did not recover any {cargoname} from the convoy!"), {cargoname=cargo[1]}))
       misn.finish(false)
+   end
+   if convoy_spawned and q > 0 then
+      misn.osdActive(3)
    end
    if system.cur() ~= targetsys or convoy_spawned then
       return
