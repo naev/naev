@@ -131,7 +131,7 @@ end
 
 function enter ()
    local pp = player.pilot()
-   pilot.hook( pp, "scanned", "player_scanned" )
+   hook.pilot( pp, "scanned", "player_scanned" )
 end
 
 
