@@ -23,7 +23,7 @@ local fmt = require "format"
 
 
 misn_title = _("Fake ID")
-misn_desc = _([[This fake ID will allow you to conduct business with all major locations where you are currently wanted. It will be as if you were a new person. However, committing any crime will risk discovery of your identity by authorities, no gains in reputation under your fake ID will ever improve your real name's reputation under any circumstance, and gaining too much reputation with factions where you are wanted can lead to the discovery of your true identity as well. Note that fake ID does not work on pirates, for whom your reputation will be affected as normal (whether good or bad).
+misn_desc = _([[This fake ID will allow you to conduct business with all major locations where you are currently wanted. It will be as if you were a new person. However, committing any crime will risk discovery of your identity by authorities, no gains in reputation under your fake ID will ever improve your real name's reputation under any circumstance, and gaining too much reputation with factions where you are wanted can lead to the discovery of your true identity as well. Note that fake ID does not work on pirates, for whom your reputation will be affected as normal (whether good or bad). Furthermore, being scanned by other ships will lead to your fake ID being detected and your cover being blown.
 
 Cost: %s]])
 misn_reward = _("None")
@@ -38,18 +38,18 @@ noticed_offplanet = _("It seems your actions have led to the discovery of your i
 
 factions = {
    "Empire", "Goddard", "Dvaered", "Za'lek", "Sirius", "Soromid", "Frontier",
-   "Trader", "Miner"
+   --"Trader", "Miner"
 }
 misnvars = {
-   Empire = "_fcap_empire",
-   Goddard = "_fcap_goddard",
-   Dvaered = "_fcap_dvaered",
-   ["Za'lek"] = "_fcap_zalek",
-   Sirius = "_fcap_sirius",
-   Soromid = "_fcap_soromid",
-   Frontier = "_fcap_frontier",
-   Trader = "_fcap_trader",
-   Miner = "_fcap_miner"
+   Empire      = "_fcap_empire",
+   Goddard     = "_fcap_goddard",
+   Dvaered     = "_fcap_dvaered",
+   ["Za'lek"]  = "_fcap_zalek",
+   Sirius      = "_fcap_sirius",
+   Soromid     = "_fcap_soromid",
+   Frontier    = "_fcap_frontier",
+   --Trader      = "_fcap_trader",
+   --Miner       = "_fcap_miner"
 }
 orig_standing = {}
 orig_standing["__save"] = true
@@ -100,6 +100,7 @@ function accept ()
    standhook = hook.standing( "standing" )
    hook.takeoff( "takeoff" )
    hook.land( "land" )
+   hook.enter( "enter" )
 end
 
 
@@ -125,6 +126,19 @@ function standing( f, delta )
          end
       end
    end
+end
+
+
+function enter ()
+   local pp = player.pilot()
+   pilot.hook( pp, "scanned", "player_scanned" )
+end
+
+
+function player_scanned( pp, scanner )
+   player.msg(_("#rYou fake ID has been detected and your cover has been blown!"))
+   scanner:setHostile(true)
+   misn.finish( false )
 end
 
 

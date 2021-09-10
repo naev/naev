@@ -100,7 +100,7 @@ int hooks_run( const char* stack );
 int hook_runIDparam( unsigned int id, const HookParam *param );
 int hook_runID( unsigned int id ); /* runs hook of specific id */
 
-/* destroys hooks */
+/* Destroys hooks */
 void hook_cleanup (void);
 
 /* Timer hooks. */

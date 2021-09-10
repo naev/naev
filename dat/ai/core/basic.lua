@@ -1167,8 +1167,8 @@ function __wanttoscan( p, target )
    end
    --]]
 
-   -- Don't care about allies
-   if ai.isally(target) then
+   -- Don't care about allies nor enemies (should attack instead)
+   if ai.isally(target) or ai.isenemy(target) then
       return false
    end
 

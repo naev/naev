@@ -1643,10 +1643,7 @@ static int aiL_isstopped( lua_State *L )
  */
 static int aiL_isenemy( lua_State *L )
 {
-   Pilot *p;
-
-   /* Get the pilot. */
-   p = luaL_validpilot(L,1);
+   Pilot *p = luaL_validpilot(L,1);
 
    /* Player needs special handling in case of hostility. */
    if (pilot_isWithPlayer(p)) {
@@ -1668,10 +1665,7 @@ static int aiL_isenemy( lua_State *L )
  */
 static int aiL_isally( lua_State *L )
 {
-   Pilot *p;
-
-   /* Get the pilot. */
-   p = luaL_validpilot(L,1);
+   Pilot *p = luaL_validpilot(L,1);
 
    /* Player needs special handling in case of friendliness. */
    if (pilot_isWithPlayer(p)) {
