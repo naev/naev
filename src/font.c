@@ -23,6 +23,9 @@
 #include "naev.h"
 /** @endcond */
 
+#include "linebreak.h"
+#include "linebreakdef.h"
+
 #include "font.h"
 
 #include "array.h"
@@ -529,6 +532,20 @@ int gl_printWidthForTextLine( const glFont *ft_font, const char *text, int width
 }
 
 
+static uint32_t font_nextChar( const char *s, size_t *i )
+{
+   uint32_t ch = u8_nextchar(s,i);
+   if (ch=='\t')
+      return u8_nextchar(s,i);
+   else if (ch==FONT_COLOUR_CODE) {
+      if (s[*i+1] != '\0')
+         *i += 2;
+      else
+         *i += 1;
+      return u8_nextchar(s,i);
+   }
+   return ch;
+}
 /**
  * @brief Gets the number of characters in text that fit into width,
  *        assuming your intent is to word-wrap at said width.
@@ -542,10 +559,12 @@ int gl_printWidthForTextLine( const glFont *ft_font, const char *text, int width
 int gl_printWidthForText( const glFont *ft_font, const char *text,
       const int width, int *outw )
 {
-   int lastspace, lastwidth, adv_x;
-   size_t i;
-   uint32_t ch;
+   int lastbreak, lastwidth, adv_x;
+   size_t i, l;
+   uint32_t ch, nextch;
    GLfloat n;
+   struct LineBreakContext lbc;
+   int brk;
 
    if (ft_font == NULL)
       ft_font = &gl_defFont;
@@ -553,43 +572,38 @@ int gl_printWidthForText( const glFont *ft_font, const char *text,
 
    /* limit size per line */
    gl_fontKernStart();
-   lastspace = 0; /* last ' ' or '\n' in the text */
-   n = 0.; /* current width */
+
+   /* Initialize line break stuff. */
    i = 0; /* current position */
-   while ((text[i] != '\n') && (text[i] != '\0')) {
-      /* Characters we should ignore. */
-      if (text[i] == '\t') {
-         i++;
-         continue;
+   ch = font_nextChar( text, &i );
+   lb_init_break_context( &lbc, ch, gettext_getLanguage() );
+   lastbreak = 0; /* last ' ' or '\n' in the text */
+   n = 0.; /* current width */
+   brk = LINEBREAK_ALLOWBREAK;
+   while (ch != '\0') {
+      l = i;
+      nextch = font_nextChar( text, &i );
+      brk = lb_process_next_char( &lbc, nextch );
+      if (brk == LINEBREAK_MUSTBREAK) {
+         i = l;
+         break;
       }
-
-      /* Ignore escape sequence. */
-      if (text[i] == FONT_COLOUR_CODE) {
-         if (text[i+1] != '\0')
-            i += 2;
-         else
-            i += 1;
-         continue;
-      }
-
-      /* Save last space. */
-      if (text[i] == ' ') {
-         lastspace = i;
+      else if (brk == LINEBREAK_ALLOWBREAK) {
+         lastbreak = l;
          lastwidth = (int)round(n);
       }
 
-      ch = u8_nextchar( text, &i );
-      /* Unicode. */
+      /* Get glyph info. */
       glFontGlyph *glyph = gl_fontGetGlyph( stsh, ch );
       adv_x = glyph==NULL ? 0 : gl_fontKernGlyph( stsh, ch, glyph ) + glyph->adv_x;
       n += adv_x;
 
       /* Check if out of bounds. */
       if (n > (GLfloat)width) {
-         if (lastspace > 0) {
+         if (lastbreak > 0) {
             if (outw != NULL)
                *outw = lastwidth;
-            return lastspace;
+            return lastbreak;
          }
          /* Case we weren't able to write any whole words. */
          if (outw != NULL)
@@ -597,6 +611,9 @@ int gl_printWidthForText( const glFont *ft_font, const char *text,
          u8_dec( text, &i );
          return i;
       }
+
+      /* Next char and stuff. */
+      ch = nextch;
    }
 
    /* Ran out of text so just return. */

@@ -33,7 +33,6 @@ typedef struct translation {
    struct translation *next;    /**< Next entry in the list of loaded translations. */
 } translation_t;
 
-
 static char gettext_systemLanguage[64] = "";            /**< Language, or :-delimited list of them, from the system at startup. */
 static translation_t *gettext_translations = NULL;      /**< Linked list of loaded translation chains. */
 static translation_t *gettext_activeTranslation = NULL; /**< Active language's code. */
@@ -71,6 +70,16 @@ void gettext_init()
          return; /* The first env var with language settings wins. */
    }
 }
+
+
+/**
+ * @brief Gets the active translation language.
+ */
+const char* gettext_getLanguage (void)
+{
+   return gettext_activeTranslation->language;
+}
+
 
 /**
  * @brief Set the translation language.

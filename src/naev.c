@@ -14,6 +14,7 @@
  */
 
 /** @cond */
+#include "linebreak.h"
 #include "physfsrwops.h"
 #include "SDL.h"
 #include "SDL_error.h"
@@ -181,6 +182,7 @@ int main( int argc, char** argv )
 
    /* Set up locales. */
    gettext_init();
+   init_linebreak();
 
    /* Parse version. */
    if (semver_parse( VERSION, &version_binary ))

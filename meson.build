@@ -70,9 +70,8 @@ if buildExec.disabled() == false
    naev_deps += cc.find_library('m', required : false)
 
    sdl = dependency('sdl2', required: true)
-
-   # SDL2_image
    sdl_image = dependency('SDL2_image', required: true, fallback: ['sdl2_image', 'sdl2_image_dep'])
+   libunibreak = dependency('libunibreak', required: true, fallback: ['libunibreak', 'libunibreak_dep'])
 
    libxml2 = dependency('libxml-2.0', required: false)
    if not libxml2.found()
@@ -91,6 +90,7 @@ if buildExec.disabled() == false
 
    naev_deps += [
       dependency('freetype2', required: true),
+      libunibreak,
       libxml2,
       sdl,
       sdl_image,
