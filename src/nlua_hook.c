@@ -882,6 +882,8 @@ static int hook_trigger( lua_State *L )
  *    <li> "idle" : triggered when the pilot becomes idle in manual control.</li>
  *    <li> "lockon" : triggered when the pilot locked on a missile on it's target.</li>
  *    <li> "stealth" : triggered when the pilot either enters or leaves stealth.</li>
+ *    <li> "scanned" : triggered when the pilot is scanned by another pilot.</li>
+ *    <li> "scan" : triggered when the pilot scans another pilot.</li>
  * </ul>
  * <br />
  * If you pass nil as pilot, it will set it as a global hook that will jump for all pilots.<br />
@@ -957,6 +959,8 @@ static int hook_pilot( lua_State *L )
    else if (strcmp(hook_type,"land")==0)     type = PILOT_HOOK_LAND;
    else if (strcmp(hook_type,"attacked")==0) type = PILOT_HOOK_ATTACKED;
    else if (strcmp(hook_type,"discovered")==0) type = PILOT_HOOK_DISCOVERED;
+   else if (strcmp(hook_type,"scan")==0)  type = PILOT_HOOK_SCAN;
+   else if (strcmp(hook_type,"scanned")==0)  type = PILOT_HOOK_SCANNED;
    else if (strcmp(hook_type,"idle")==0)     type = PILOT_HOOK_IDLE;
    else if (strcmp(hook_type,"lockon")==0)   type = PILOT_HOOK_LOCKON;
    else if (strcmp(hook_type,"stealth")==0)  type = PILOT_HOOK_STEALTH;

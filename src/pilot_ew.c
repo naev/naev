@@ -129,8 +129,8 @@ void pilot_ewUpdateStatic( Pilot *p )
  */
 void pilot_ewUpdateDynamic( Pilot *p, double dt )
 {
-   double d;
-   const Pilot *t;
+   Pilot *t;
+   HookParam hparam;
 
    /* Electronic warfare values. */
    p->ew_asteroid = pilot_ewAsteroid( p );
@@ -149,13 +149,24 @@ void pilot_ewUpdateDynamic( Pilot *p, double dt )
    t = pilot_get( p->target );
    if (t == NULL)
       return;
-   d = vect_dist2( &p->solid->pos, &t->solid->pos );
 
    /* Must be in evasion range. */
-   if (d < pow2( MAX( 0., p->stats.ew_detect * p->stats.ew_track * t->ew_evasion ) ))
+   if ((p->scantimer > 0.) &&
+         (vect_dist2( &p->solid->pos, &t->solid->pos ) < pow2( MAX( 0., p->stats.ew_detect * p->stats.ew_track * t->ew_evasion ) ))) {
       p->scantimer -= dt;
 
-   /* TODO handle case the player finished scaning by setting a flag or something. */
+      if (p->scantimer < 0.) {
+         hparam.type = HOOK_PARAM_PILOT;
+         /* Run scan hook. */
+         hparam.u.lp = t->id;
+         pilot_runHookParam( p, PILOT_HOOK_SCAN, &hparam, 1 );
+         /* Run scanned hook. */
+         hparam.u.lp = p->id;
+         pilot_runHookParam( t, PILOT_HOOK_SCANNED, &hparam, 1 );
+
+         /* TODO handle case the player finished scaning by setting a flag or something. */
+      }
+   }
 }
 
 
