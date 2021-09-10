@@ -1,15 +1,33 @@
 local scom = require "factions.spawn.lib.common"
 
+local sschroedinger= ship.get("Schroedinger")
+local sllama      = ship.get("Llama")
+local sgawain     = ship.get("Gawain")
+local skoala      = ship.get("Koala")
+local shyena      = ship.get("Hyena")
+local sshark      = ship.get("Shark")
+local sancestor   = ship.get("Ancestor")
+local slancelot   = ship.get("Lancelot")
+local svendetta   = ship.get("Vendetta")
+local sphalanx    = ship.get("Phalanx")
+local sadmonisher = ship.get("Admonisher")
+local sstarbridge = ship.get("Starbridge")
+local svigilance  = ship.get("Vigilance")
+local spacifier   = ship.get("Pacifier")
+local skestrel    = ship.get("Kestrel")
+local shawking    = ship.get("Hawking")
+local sgoddard    = ship.get("Goddard")
+
 function spawn_advert ()
    local pilots = {}
    local civships = {
-         {"Schroedinger", 8},
-         {"Llama", 8},
-         {"Gawain", 8},
-         {"Hyena", 13}
+      sschroedinger,
+      sllama,
+      sgawain,
+      shyena,
    }
    local shp = civships[ rnd.rnd(1, #civships) ]
-   scom.addPilot( pilots, shp[1], shp[2], {ai="advertiser"} )
+   scom.addPilot( pilots, shp, {ai="advertiser"} )
    return pilots
 end
 
@@ -20,15 +38,15 @@ function spawn_solitary_civilians ()
    local r = rnd.rnd()
 
    if r < 0.3 then
-      scom.addPilot( pilots, "Llama", 5 )
+      scom.addPilot( pilots, sllama )
    elseif r < 0.55 then
-      scom.addPilot( pilots, "Hyena", 7 )
+      scom.addPilot( pilots, shyena )
    elseif r < 0.75 then
-      scom.addPilot( pilots, "Gawain", 7 )
+      scom.addPilot( pilots, sgawain )
    elseif r < 0.9 then
-      scom.addPilot( pilots, "Schroedinger", 12 )
+      scom.addPilot( pilots, sschroedinger )
    else
-      scom.addPilot( pilots, "Koala", 20 )
+      scom.addPilot( pilots, skoala )
    end
 
    return pilots
@@ -36,37 +54,37 @@ end
 
 function spawn_bounty_hunter( shiplist )
    local pilots = {}
-   local r = rnd.rnd()
+   local r      = rnd.rnd()
    local params = {name=_("Bounty Hunter"), ai="mercenary"}
-   local shp = shiplist[ rnd.rnd(1,#shiplist) ]
-   scom.addPilot( pilots, shp[1], shp[2], params )
+   local shp    = shiplist[ rnd.rnd(1,#shiplist) ]
+   scom.addPilot( pilots, shp, params )
    return pilots
 end
 
 
 function spawn_bounty_hunter_sml ()
    return spawn_bounty_hunter{
-      {"Hyena",    10},
-      {"Shark",    20},
-      {"Lancelot", 25},
-      {"Vendetta", 25},
-      {"Ancestor", 20},
+      shyena,
+      sshark,
+      slancelot,
+      svendetta,
+      sancestor,
    }
 end
 function spawn_bounty_hunter_med ()
    return spawn_bounty_hunter{
-      {"Admonisher", 45},
-      {"Phalanx",    45},
-      {"Starbridge", 60},
-      {"Vigilance",  70},
-      {"Pacifier",   70},
+      sadmonisher,
+      sphalanx,
+      sstarbridge,
+      svigilance,
+      spacifier,
    }
 end
 function spawn_bounty_hunter_lrg ()
    return spawn_bounty_hunter{
-      {"Kestrel", 90},
-      {"Hawking", 105},
-      {"Goddard", 120},
+      skestrel,
+      shawking,
+      sgoddard,
    }
 end
 

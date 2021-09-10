@@ -1,62 +1,64 @@
 local scom = require "factions.spawn.lib.common"
 
+local slancelot   = ship.get("Lancelot")
+local sgoddard    = ship.get("Goddard")
 
 -- @brief Spawns a capship with escorts.
 function spawn_capship ()
-    local pilots = {}
+   local pilots = {}
 
-    -- Generate the capship
-    scom.addPilot( pilots, "Goddard", 145 )
+   -- Generate the capship
+   scom.addPilot( pilots, sgoddard )
 
-    -- Generate the escorts
-    local r = rnd.rnd()
-    if r < 0.5 then
-       scom.addPilot( pilots, "Lancelot", 25 )
-       scom.addPilot( pilots, "Lancelot", 25 )
-    elseif r < 0.8 then
-       scom.addPilot( pilots, "Lancelot", 25 )
-       scom.addPilot( pilots, "Lancelot", 25 )
-       scom.addPilot( pilots, "Lancelot", 25 )
-    else
-       scom.addPilot( pilots, "Lancelot", 25 )
-       scom.addPilot( pilots, "Lancelot", 25 )
-       scom.addPilot( pilots, "Lancelot", 25 )
-       scom.addPilot( pilots, "Lancelot", 25 )
-    end
+   -- Generate the escorts
+   local r = rnd.rnd()
+   if r < 0.5 then
+      scom.addPilot( pilots, slancelot )
+      scom.addPilot( pilots, slancelot )
+   elseif r < 0.8 then
+      scom.addPilot( pilots, slancelot )
+      scom.addPilot( pilots, slancelot )
+      scom.addPilot( pilots, slancelot )
+   else
+      scom.addPilot( pilots, slancelot )
+      scom.addPilot( pilots, slancelot )
+      scom.addPilot( pilots, slancelot )
+      scom.addPilot( pilots, slancelot )
+   end
 
-    return pilots
+   return pilots
 end
 
 
 -- @brief Creation hook.
 function create ( max )
-    local weights = {}
+   local weights = {}
 
-    -- Create weights for spawn table
-    weights[ spawn_capship ] = 100
+   -- Create weights for spawn table
+   weights[ spawn_capship ] = 100
 
-    -- Create spawn table base on weights
-    spawn_table = scom.createSpawnTable( weights )
+   -- Create spawn table base on weights
+   spawn_table = scom.createSpawnTable( weights )
 
-    -- Calculate spawn data
-    spawn_data = scom.choose( spawn_table )
+   -- Calculate spawn data
+   spawn_data = scom.choose( spawn_table )
 
-    return scom.calcNextSpawn( 0, scom.presence(spawn_data), max )
+   return scom.calcNextSpawn( 0, scom.presence(spawn_data), max )
 end
 
 
 -- @brief Spawning hook
 function spawn ( presence, max )
-    -- Over limit
-    if presence > max then
-       return 5
-    end
+   -- Over limit
+   if presence > max then
+      return 5
+   end
 
-    -- Actually spawn the pilots
-    local pilots = scom.spawn( spawn_data, "Goddard" )
+   -- Actually spawn the pilots
+   local pilots = scom.spawn( spawn_data, "Goddard" )
 
-    -- Calculate spawn data
-    spawn_data = scom.choose( spawn_table )
+   -- Calculate spawn data
+   spawn_data = scom.choose( spawn_table )
 
-    return scom.calcNextSpawn( presence, scom.presence(spawn_data), max ), pilots
+   return scom.calcNextSpawn( presence, scom.presence(spawn_data), max ), pilots
 end

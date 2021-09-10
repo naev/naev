@@ -31,7 +31,7 @@
 
 local fleet = require "fleet"
 require "misnhelper"
-require "missions/flf/flf_common"
+require "missions.flf.flf_common"
 
 
 title = {}
@@ -96,9 +96,10 @@ function create ()
 
    emp_srcsys = system.get( "Arcanis" )
    emp_shptypes = {
-      "Empire Lancelot", "Empire Lancelot", "Empire Lancelot", "Empire Lancelot", "Empire Lancelot", "Empire Lancelot", "Empire Lancelot",
+      "Empire Peacemaker", "Empire Lancelot", "Empire Lancelot", "Empire Lancelot", "Empire Lancelot",
+      "Empire Lancelot", "Empire Lancelot", "Empire Lancelot",
       "Empire Admonisher", "Empire Admonisher", "Empire Admonisher", "Empire Pacifier", "Empire Hawking",
-      "Empire Peacemaker", "Empire Shark", "Empire Shark", "Empire Shark" }
+      "Empire Shark", "Empire Shark", "Empire Shark" }
    emp_minsize = 6
    found_thurion = false
    player_attacks = 0
@@ -144,9 +145,7 @@ function takeoff ()
    pilot.toggleSpawn( false )
    pilot.clear()
 
-   local ss, s
-
-   ss, s = planet.get( "Sindbad" )
+   local ss, s = planet.get( "Sindbad" )
 
    flf_base = pilot.add( "Sindbad", "FLF", ss:pos(), nil, {ai="flf_norun"} )
    flf_base:outfitRm( "all" )
@@ -160,12 +159,21 @@ function takeoff ()
    hook.pilot( flf_base, "attacked", "pilot_attacked_sindbad" )
    hook.pilot( flf_base, "death", "pilot_death_sindbad" )
 
+   -- FLF are not a natural enemy of the Empire, we have to enforce that
+   local factflf = faction.dynAdd( "FLF", "flf_laststand", _("FLF") )
+   factflf:dynEnemy( "Empire" )
+
    -- Spawn FLF ships
-   shptypes = {"Pacifier", "Lancelot", "Vendetta", "Lancelot", "Vendetta", "Lancelot", "Vendetta"}
-   flf_ships = fleet.add( 5, shptypes, "FLF", ss:pos(), nil, {ai="flf_norun"} )
-   for i, j in ipairs( flf_ships ) do
-      j:setVisible()
-      j:memory( "aggressive", true )
+   local norm = (jump.get( system.cur(), emp_srcsys ):pos()-ss:pos()):normalize()
+   local shptypes = {"Pacifier", "Lancelot", "Vendetta", "Lancelot", "Vendetta", "Lancelot", "Vendetta"}
+   flf_ships = {}
+   for i=1,5 do
+      for k,s in ipairs(shptypes) do
+         local pos = ss:pos() + vec2.newP(2000*rnd.rnd(), 360*rnd.rnd()) + norm*1000
+         local p = pilot.add( s, factflf, pos, nil, {ai="guard"} )
+         p:setVisible()
+         table.insert( flf_ships, p )
+      end
    end
 
    -- Spawn Empire ships
@@ -178,10 +186,12 @@ function takeoff ()
          j:control()
          j:attack( flf_base )
       end
+      local mem = j:memory()
+      mem.enemyclose = nil
    end
 
    -- Spawn Dvaered ships
-   shptypes = {
+   local shptypes = {
       "Dvaered Goddard", "Dvaered Vigilance", "Dvaered Vigilance",
       "Dvaered Phalanx", "Dvaered Ancestor", "Dvaered Ancestor",
       "Dvaered Ancestor", "Dvaered Vendetta", "Dvaered Vendetta",
@@ -190,6 +200,8 @@ function takeoff ()
    for i, j in ipairs( dv_ships ) do
       j:setHostile()
       j:setVisible()
+      local mem = j:memory()
+      mem.enemyclose = nil
    end
 
    diff.apply( "flf_dead" )
@@ -219,6 +231,8 @@ function pilot_death_emp( pilot, attacker, arg )
             end
          end
          emp_ships[ #emp_ships + 1 ] = j
+         local mem = j:memory()
+         mem.enemyclose = nil
       end
    end
 end
@@ -241,6 +255,13 @@ function pilot_death_sindbad( pilot, attacker, arg )
       diff.remove( "flf_pirate_ally" )
    end
 
+   for i, j in ipairs( flf_ships ) do
+      if j:exists() then
+         j:control( false )
+         j:changeAI( "flf_norun" )
+         j:setVisible( false )
+      end
+   end
    for i, j in ipairs( emp_ships ) do
       if j:exists() then
          j:control( false )

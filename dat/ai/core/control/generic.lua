@@ -200,6 +200,8 @@ function handle_messages( si )
 end
 
 function should_attack( enemy, si )
+   si = si or _stateinfo( ai.taskname() )
+
    if not enemy or not enemy:exists() then
       return false
    end
@@ -209,7 +211,7 @@ function should_attack( enemy, si )
    end
 
    -- Don't reattack the current enemy
-   if si.attack and enemy == ai.taskdata() then
+   if si.attack and enemy==ai.taskdata() then
       return false
    end
 
@@ -241,9 +243,9 @@ function should_attack( enemy, si )
    end
 
    -- Check if we have minimum range to engage
-   if mem.enemyclose then
-      local dist = ai.dist2( enemy )
-      if mem.enemyclose*mem.enemyclose > dist then
+   if lr then
+      local d = ai.dist2( enemy )
+      if lr*lr > d then
          return true
       end
    else

@@ -64,16 +64,35 @@ function create()
    -- Set how far they attack
    mem.enemyclose = 3000 + 1000 * ps:size()
 
+   hail()
+
    -- Finish up creation
    create_post()
 end
 
 function hail ()
-   if mem.setuphail then return end
+   local p = ai.pilot()
 
-   -- Get refuel chance
-   local standing = ai.getstanding( player.pilot() ) or -1
-   mem.refuel = rnd.rnd( 1000, 2000 )
+   -- Remove randomness from future calls
+   if not mem.hailsetup then
+      mem.refuel_base = rnd.rnd( 2000, 4000 )
+      mem.bribe_base = math.sqrt( p:stats().mass ) * (500 * rnd.rnd() + 1750)
+      mem.bribe_rng = rnd.rnd()
+      mem.hailsetup = true
+   end
+
+   -- Clean up
+   mem.refuel        = 0
+   mem.refuel_msg    = nil
+   mem.bribe         = 0
+   mem.bribe_prompt  = nil
+   mem.bribe_prompt_nearby = nil
+   mem.bribe_paid    = nil
+   mem.bribe_no      = nil
+
+   -- Deal with refueling
+   local standing = p:faction():playerStanding()
+   mem.refuel = mem.refuel_base
    if standing < -10 then
       mem.refuel_no = _([["I do not have fuel to spare."]])
    else
@@ -83,18 +102,16 @@ function hail ()
    mem.refuel_msg = string.format( _([["I will agree to refuel your ship for %s."]]), creditstring(mem.refuel) )
 
    -- See if can be bribed
-   mem.bribe = math.sqrt( ai.pilot():stats().mass ) * (500 * rnd.rnd() + 1750)
+   mem.bribe = mem.bribe_base
    if (mem.natural or mem.allowbribe) and (standing > 0 or
-         (standing > -20 and rnd.rnd() > 0.8) or
-         (standing > -50 and rnd.rnd() > 0.6) or
+         (standing > -20 and mem.bribe_rng > 0.8) or
+         (standing > -50 and mem.bribe_rng > 0.6) or
          (rnd.rnd() > 0.4)) then
       mem.bribe_prompt = string.format(_([["We will agree to end the battle for %s."]]), creditstring(mem.bribe) )
       mem.bribe_paid = _([["Temporarily stopping fire."]])
    else
       mem.bribe_no = bribe_no_list[ rnd.rnd(1,#bribe_no_list) ]
    end
-
-   mem.setuphail = true
 end
 
 function taunt ( target, offense )

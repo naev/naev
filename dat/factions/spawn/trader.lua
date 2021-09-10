@@ -1,23 +1,29 @@
 local scom = require "factions.spawn.lib.common"
 
+local sllama      = ship.get("Llama")
+local skoala      = ship.get("Koala")
+local squicksilver= ship.get("Quicksilver")
+local smule       = ship.get("Mule")
+local srhino      = ship.get("Rhino")
+local sshark      = ship.get("Shark")
 
 local function add_llama( pilots )
-   scom.addPilot( pilots, "Llama", 20, {name=_("Trader Llama")})
+   scom.addPilot( pilots, sllama, {name=_("Trader Llama")})
 end
 local function add_koala( pilots )
-   scom.addPilot( pilots, "Koala", 30, {name=_("Trader Koala")})
+   scom.addPilot( pilots, skoala, {name=_("Trader Koala")})
 end
 local function add_quicksilver( pilots )
-   scom.addPilot( pilots, "Quicksilver", 40, {name=_("Trader Quicksilver")})
+   scom.addPilot( pilots, squicksilver, {name=_("Trader Quicksilver")})
 end
 local function add_mule( pilots )
-   scom.addPilot( pilots, "Mule", 60, {name=_("Trader Mule")})
+   scom.addPilot( pilots, smule, {name=_("Trader Mule")})
 end
 local function add_rhino( pilots )
-   scom.addPilot( pilots, "Rhino", 70, {name=_("Trader Rhino")})
+   scom.addPilot( pilots, srhino, {name=_("Trader Rhino")})
 end
 local function add_shark( pilots )
-   scom.addPilot( pilots, "Shark", 15, {name=_("Trader Shark"), ai="mercenary"})
+   scom.addPilot( pilots, sshark, {name=_("Trader Shark"), ai="mercenary"})
 end
 
 

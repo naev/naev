@@ -1,21 +1,27 @@
 local scom = require "factions.spawn.lib.common"
 
+local svendetta   = ship.get("Dvaered Vendetta")
+local sancestor   = ship.get("Dvaered Ancestor")
+local sphalanx    = ship.get("Dvaered Phalanx")
+local svigilance  = ship.get("Dvaered Vigilance")
+local sgoddard    = ship.get("Dvaered Goddard")
+
 -- @brief Spawns a small patrol fleet.
 function spawn_patrol ()
    local pilots = { __doscans = true }
    local r = rnd.rnd()
 
    if r < 0.5 then
-      scom.addPilot( pilots, "Dvaered Vendetta", 25 )
-      scom.addPilot( pilots, "Dvaered Ancestor", 20 )
+      scom.addPilot( pilots, svendetta )
+      scom.addPilot( pilots, sancestor )
    elseif r < 0.8 then
-      scom.addPilot( pilots, "Dvaered Vendetta", 25 )
-      scom.addPilot( pilots, "Dvaered Vendetta", 25 )
-      scom.addPilot( pilots, "Dvaered Ancestor", 20 )
+      scom.addPilot( pilots, svendetta )
+      scom.addPilot( pilots, svendetta )
+      scom.addPilot( pilots, sancestor )
    else
-      scom.addPilot( pilots, "Dvaered Phalanx", 45 )
-      scom.addPilot( pilots, "Dvaered Vendetta", 25 )
-      scom.addPilot( pilots, "Dvaered Ancestor", 20 )
+      scom.addPilot( pilots, sphalanx )
+      scom.addPilot( pilots, svendetta )
+      scom.addPilot( pilots, sancestor )
    end
 
    return pilots
@@ -31,18 +37,18 @@ function spawn_squad ()
    local r = rnd.rnd()
 
    if r < 0.5 then
-      scom.addPilot( pilots, "Dvaered Vigilance", 70 )
-      scom.addPilot( pilots, "Dvaered Vendetta", 25 )
-      scom.addPilot( pilots, "Dvaered Ancestor", 20 )
+      scom.addPilot( pilots, svigilance )
+      scom.addPilot( pilots, svendetta )
+      scom.addPilot( pilots, sancestor )
    elseif r < 0.8 then
-      scom.addPilot( pilots, "Dvaered Vigilance", 70 )
-      scom.addPilot( pilots, "Dvaered Vendetta", 25 )
-      scom.addPilot( pilots, "Dvaered Vendetta", 25 )
-      scom.addPilot( pilots, "Dvaered Ancestor", 20 )
+      scom.addPilot( pilots, svigilance )
+      scom.addPilot( pilots, svendetta )
+      scom.addPilot( pilots, svendetta )
+      scom.addPilot( pilots, sancestor )
    else
-      scom.addPilot( pilots, "Dvaered Vigilance", 70 )
-      scom.addPilot( pilots, "Dvaered Vendetta", 25 )
-      scom.addPilot( pilots, "Dvaered Phalanx", 45 )
+      scom.addPilot( pilots, svigilance )
+      scom.addPilot( pilots, sphalanx )
+      scom.addPilot( pilots, svendetta )
    end
 
    return pilots
@@ -54,22 +60,22 @@ function spawn_capship ()
    local pilots = {}
 
    -- Generate the capship
-   scom.addPilot( pilots, "Dvaered Goddard", 120 )
+   scom.addPilot( pilots, sgoddard )
 
    -- Generate the escorts
    r = rnd.rnd()
    if r < 0.5 then
-      scom.addPilot( pilots, "Dvaered Vendetta", 25 )
-      scom.addPilot( pilots, "Dvaered Vendetta", 25 )
-      scom.addPilot( pilots, "Dvaered Ancestor", 20 )
+      scom.addPilot( pilots, svendetta )
+      scom.addPilot( pilots, svendetta )
+      scom.addPilot( pilots, sancestor )
    elseif r < 0.8 then
-      scom.addPilot( pilots, "Dvaered Phalanx", 45 )
-      scom.addPilot( pilots, "Dvaered Vendetta", 25 )
-      scom.addPilot( pilots, "Dvaered Ancestor", 20 )
+      scom.addPilot( pilots, sphalanx )
+      scom.addPilot( pilots, svendetta )
+      scom.addPilot( pilots, sancestor )
    else
-      scom.addPilot( pilots, "Dvaered Vigilance", 70 )
-      scom.addPilot( pilots, "Dvaered Vendetta", 25 )
-      scom.addPilot( pilots, "Dvaered Vendetta", 25 )
+      scom.addPilot( pilots, svigilance )
+      scom.addPilot( pilots, svendetta )
+      scom.addPilot( pilots, svendetta )
    end
 
    return pilots

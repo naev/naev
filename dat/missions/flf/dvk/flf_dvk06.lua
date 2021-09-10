@@ -38,7 +38,7 @@
 
 require "numstring"
 local fleet = require "fleet"
-require "missions/flf/flf_common"
+require "missions.flf.flf_common"
 
 -- Localization stuff
 title = {}

@@ -6,6 +6,14 @@ mem.carrier = true -- Is a carried fighter
 function create ()
    attack_choose()
 
+   -- Inherit some properties from the parent (leader)
+   local p = ai.pilot()
+   local l = p:leader()
+   if l then
+      local lmem = l:memory()
+      mem.atk_kill = lmem.atk_kill
+   end
+
    -- Disable thinking
    --mem.atk_think = nil
 end

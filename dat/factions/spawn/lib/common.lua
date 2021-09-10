@@ -106,7 +106,7 @@ function scom.spawn( pilots, faction )
          params.ai = pilots.__ai
       end
       local pfact = params.faction or faction
-      local p = pilot.add( v["pilot"], pfact, origin, params.name, params )
+      local p = pilot.add( v.ship, pfact, origin, params.name, params )
       local mem = p:memory()
       mem.natural = true -- mark that it was spawned naturally and not as part of a mission
       local presence = v["presence"]
@@ -127,8 +127,9 @@ end
 
 
 -- @brief adds a pilot to the table
-function scom.addPilot( pilots, name, presence, params )
-   pilots[ #pilots+1 ] = { pilot=name, presence=presence, params=params }
+function scom.addPilot( pilots, s, params )
+   local presence = s:points()
+   pilots[ #pilots+1 ] = { ship=s, presence=presence, params=params }
    pilots.__presence = (pilots.__presence or 0) + presence
 end
 

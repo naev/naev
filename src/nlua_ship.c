@@ -40,6 +40,7 @@ static int shipL_nameRaw( lua_State *L );
 static int shipL_baseType( lua_State *L );
 static int shipL_class( lua_State *L );
 static int shipL_classDisplay( lua_State *L );
+static int shipL_getPoints( lua_State *L );
 static int shipL_slots( lua_State *L );
 static int shipL_getSlots( lua_State *L );
 static int shipL_fitsSlot( lua_State *L );
@@ -63,6 +64,7 @@ static const luaL_Reg shipL_methods[] = {
    { "baseType", shipL_baseType },
    { "class", shipL_class },
    { "classDisplay", shipL_classDisplay },
+   { "points", shipL_getPoints },
    { "slots", shipL_slots },
    { "getSlots", shipL_getSlots },
    { "fitsSlot", shipL_fitsSlot },
@@ -361,6 +363,23 @@ static int shipL_classDisplay( lua_State *L )
 {
    const Ship *s = luaL_validship(L,1);
    lua_pushstring(L, ship_classDisplay(s));
+   return 1;
+}
+
+
+/**
+ * @brief Gets the point value of a ship. Used for comparing relative ship strengths (minus outfits).
+ *
+ * @usage points = s:points()
+ *
+ *    @luatparam Ship s Ship to get points of.
+ *    @luatreturn number Point value of the ship.
+ * @luafunc points
+ */
+static int shipL_getPoints( lua_State *L )
+{
+   const Ship *s = luaL_validship(L,1);
+   lua_pushinteger(L, s->points);
    return 1;
 }
 

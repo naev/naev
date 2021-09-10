@@ -1271,7 +1271,7 @@ void gui_renderPilot( const Pilot* p, RadarShape shape, double w, double h, doub
       y = ((p->solid->pos.y - player.p->solid->pos.y) / res);
    }
    /* Get size. */
-   scale = ((double)ship_size( p->ship ) + 1.)/2. * (1. + RADAR_RES_REF / res );
+   scale = (sqrt((double)ship_size( p->ship )) + 1.)/2. * (1. + RADAR_RES_REF / res );
 
    /* Check if pilot in range. */
    if ( ((shape==RADAR_RECT) &&

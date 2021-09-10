@@ -1,103 +1,105 @@
 local scom = require "factions.spawn.lib.common"
 
+local sdrone = ship.get("Drone")
+local sheavy = ship.get("Heavy Drone")
 
 -- @brief Spawns a small swarm.
 function spawn_patrol ()
-    local pilots = {}
+   local pilots = {}
 
-    scom.addPilot( pilots, "Drone", 20 )
+   scom.addPilot( pilots, sdrone )
 
-    return pilots
+   return pilots
 end
 
 
 -- @brief Spawns a medium sized squadron.
 function spawn_squad ()
-    local pilots = {}
-    local r = rnd.rnd()
+   local pilots = {}
+   local r = rnd.rnd()
 
-    if r < 0.5 then
-        scom.addPilot( pilots, "Drone", 20 )
-        scom.addPilot( pilots, "Drone", 20 )
-    elseif r < 0.8 then
-        scom.addPilot( pilots, "Heavy Drone", 30 )
-        scom.addPilot( pilots, "Drone", 20 )
-        scom.addPilot( pilots, "Drone", 20 )
-    else
-        scom.addPilot( pilots, "Heavy Drone", 30 )
-        scom.addPilot( pilots, "Heavy Drone", 30 )
-        scom.addPilot( pilots, "Drone", 20 )
-        scom.addPilot( pilots, "Drone", 20 )
-    end
+   if r < 0.5 then
+      scom.addPilot( pilots, sdrone )
+      scom.addPilot( pilots, sdrone )
+   elseif r < 0.8 then
+      scom.addPilot( pilots, sheavy )
+      scom.addPilot( pilots, sdrone )
+      scom.addPilot( pilots, sdrone )
+   else
+      scom.addPilot( pilots, sheavy )
+      scom.addPilot( pilots, sheavy )
+      scom.addPilot( pilots, sdrone )
+      scom.addPilot( pilots, sdrone )
+   end
 
-    return pilots
+   return pilots
 end
 
 
 -- @brief Spawns a large swarm.
 function spawn_capship ()
-    local pilots = {}
-    local r = rnd.rnd()
+   local pilots = {}
+   local r = rnd.rnd()
 
-    if r < 0.5 then
-        scom.addPilot( pilots, "Heavy Drone", 30 )
-        scom.addPilot( pilots, "Drone", 20 )
-        scom.addPilot( pilots, "Drone", 20 )
-        scom.addPilot( pilots, "Drone", 20 )
-    elseif r < 0.8 then
-        scom.addPilot( pilots, "Heavy Drone", 30 )
-        scom.addPilot( pilots, "Heavy Drone", 30 )
-        scom.addPilot( pilots, "Drone", 20 )
-        scom.addPilot( pilots, "Drone", 20 )
-        scom.addPilot( pilots, "Drone", 20 )
-    else
-        scom.addPilot( pilots, "Heavy Drone", 30 )
-        scom.addPilot( pilots, "Heavy Drone", 30 )
-        scom.addPilot( pilots, "Heavy Drone", 30 )
-        scom.addPilot( pilots, "Drone", 20 )
-        scom.addPilot( pilots, "Drone", 20 )
-        scom.addPilot( pilots, "Drone", 20 )
-    end
+   if r < 0.5 then
+      scom.addPilot( pilots, sheavy )
+      scom.addPilot( pilots, sdrone )
+      scom.addPilot( pilots, sdrone )
+      scom.addPilot( pilots, sdrone )
+   elseif r < 0.8 then
+      scom.addPilot( pilots, sheavy )
+      scom.addPilot( pilots, sheavy )
+      scom.addPilot( pilots, sdrone )
+      scom.addPilot( pilots, sdrone )
+      scom.addPilot( pilots, sdrone )
+   else
+      scom.addPilot( pilots, sheavy )
+      scom.addPilot( pilots, sheavy )
+      scom.addPilot( pilots, sheavy )
+      scom.addPilot( pilots, sdrone )
+      scom.addPilot( pilots, sdrone )
+      scom.addPilot( pilots, sdrone )
+   end
 
-    return pilots
+   return pilots
 end
 
 
 -- @brief Creation hook.
 function create ( max )
-    local weights = {}
+   local weights = {}
 
-    -- Create weights for spawn table
-    weights[ spawn_patrol  ] = 100
-    weights[ spawn_squad   ] = math.max(1, -100 + 1.00 * max)
-    weights[ spawn_capship ] = math.max(1, -100 + 0.50 * max)
+   -- Create weights for spawn table
+   weights[ spawn_patrol  ] = 100
+   weights[ spawn_squad   ] = math.max(1, -100 + 1.00 * max)
+   weights[ spawn_capship ] = math.max(1, -100 + 0.50 * max)
 
-    -- Create spawn table base on weights
-    spawn_table = scom.createSpawnTable( weights )
+   -- Create spawn table base on weights
+   spawn_table = scom.createSpawnTable( weights )
 
-    -- Calculate spawn data
-    spawn_data = scom.choose( spawn_table )
+   -- Calculate spawn data
+   spawn_data = scom.choose( spawn_table )
 
-    return scom.calcNextSpawn( 0, scom.presence(spawn_data), max )
+   return scom.calcNextSpawn( 0, scom.presence(spawn_data), max )
 end
 
 
 -- @brief Spawning hook
 function spawn ( presence, max )
-    local pilots
+   local pilots
 
-    -- Over limit
-    if presence > max then
-        return 5
-    end
+   -- Over limit
+   if presence > max then
+      return 5
+   end
 
-    -- Actually spawn the pilots
-    pilots = scom.spawn( spawn_data, "Collective" )
+   -- Actually spawn the pilots
+   pilots = scom.spawn( spawn_data, "Collective" )
 
-    -- Calculate spawn data
-    spawn_data = scom.choose( spawn_table )
+   -- Calculate spawn data
+   spawn_data = scom.choose( spawn_table )
 
-    return scom.calcNextSpawn( presence, scom.presence(spawn_data), max ), pilots
+   return scom.calcNextSpawn( presence, scom.presence(spawn_data), max ), pilots
 end
 
 

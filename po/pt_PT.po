@@ -8,8 +8,9 @@ msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2021-08-28 12:00-0400\n"
-"PO-Revision-Date: 2021-08-22 18:35+0000\n"
-"Last-Translator: Festerdam <festerdam@posteo.net>\n"
+"PO-Revision-Date: 2021-08-30 16:38+0000\n"
+"Last-Translator: Anthony Gregory Souza dos Santos "
+"<antonigregorysouza123@gmail.com>\n"
 "Language-Team: Portuguese (Portugal) <https://hosted.weblate.org/projects/"
 "naev/naev/pt_PT/>\n"
 "Language: pt_PT\n"
@@ -24,6 +25,9 @@ msgid ""
 "The night sky always draws our eyes. People look up with a question, or in "
 "wonder, and sometimes with a dream: to venture forth among the stars."
 msgstr ""
+"O céu noturno sempre atrai nossos olhos. As pessoas erguem os olhos com uma "
+"pergunta, ou maravilhadas, e às vezes com um sonho: aventurar-se entre as "
+"estrelas."
 
 #: dat/intro:4
 msgid ""
@@ -31,6 +35,9 @@ msgid ""
 "of distant suns, far away but so clear. To reach out and grasp one would "
 "only cost a lifetime. Cheap at the price."
 msgstr ""
+"Da Terra, os primeiros viajantes espaciais avistaram joias minúsculas "
+"brilhando com a luz de sóis distantes, porém tão nítidos. Alcançar e agarrar "
+"um custaria apenas uma vida. Barato com o preço."
 
 #: dat/intro:7
 msgid ""
@@ -38,6 +45,9 @@ msgid ""
 "hurled themselves out into the void. On arrival, they decanted and woke to "
 "find new stars staring coldly down from stranger skies."
 msgstr ""
+"Assim, homens e mulheres trancaram seus corpos adormecidos em enormes caixas "
+"de metal. Eles se lançaram no vazio. Na chegada, eles decantaram e acordaram "
+"para encontrar novas estrelas olhando friamente para baixo em céus estranhos."
 
 #: dat/intro:10
 msgid ""
@@ -46,6 +56,10 @@ msgid ""
 "civilisation spread, as it always has, with exponential enthusiasm -- "
 "ripples in the dark sea of space."
 msgstr ""
+"A primeira onda de exploradores rastejou de estrela na velocidade da luz, "
+"até que a invenção do hiperespaço impulsionou um segundo crescimento. Então "
+"a civilização se espalhou, como sempre, com entusiasmo exponencial - "
+"ondulações no mar escuro do espaço."
 
 #: dat/intro:12
 msgid ""
@@ -54,12 +68,19 @@ msgid ""
 "food, and distrust sowed the seeds of discord. Once begun, the fever of war "
 "spread from world to world and became a holocaust."
 msgstr ""
+"No entanto, a era heroica das descobertas durou apenas enquanto a "
+"curiosidade humana superou a ganância. Muito cedo, o conflito eclodiu nas "
+"colônias. Terra, combustível, comida e desconfiança semearam as sementes da "
+"discórdia. Uma vez iniciada, a febre da guerra espalhou-se de mundo a mundo "
+"e tornou-se um holocausto."
 
 #: dat/intro:15
 msgid ""
 "After a hundred years of interstellar conflict, on the ashes that remained, "
 "at last a new order built its foundations."
 msgstr ""
+"Depois de cem anos de conflito interestelar, sobre as cinzas que restaram, "
+"finalmente uma nova ordem construiu seus alicerces."
 
 #: dat/intro:17
 msgid ""
@@ -68,6 +89,10 @@ msgid ""
 "military, relations between planets resumed; abandoned trade routes saw "
 "traffic for the first time in living memory."
 msgstr ""
+"Um homem chamado Daedris afirmou domínio sobre os mundos exaustos. Ele "
+"fundou um Império Galáctico e se nomeou seu governante. Sob o punho de ferro "
+"de seus militares, as relações entre os planetas foram retomadas; rotas "
+"comerciais abandonadas viram tráfego pela primeira vez na memória viva."
 
 #: dat/intro:19
 msgid ""
@@ -75,6 +100,9 @@ msgid ""
 "irradiated rock was cleansed and dead planets brought back to life. Peace "
 "reigned in an imperial golden age."
 msgstr ""
+"Os estudiosos chamam isso de zênite: a tecnologia deu um salto à frente, a "
+"cultura floresceu, a rocha irradiada foi limpa e os planetas mortos foram "
+"trazidos de volta à vida. A paz reinou em uma época de ouro imperial."
 
 #: dat/intro:21
 msgid ""
@@ -83,18 +111,23 @@ msgid ""
 "the imperium went awry. In some regions, administration fell into the hands "
 "of other powers. The Great Houses now policed the space lanes."
 msgstr ""
+"Depois de Daedris, sob seus sucessores, a luz do império diminuiu. Conflitos "
+"civis e divisões religiosas enfraqueceram os laços sociais. Os grandes "
+"projetos do imperium deram errado. Em algumas regiões, a administração caiu "
+"nas mãos de outros poderes. As Grandes Casas agora policiavam as vias "
+"espaciais."
 
 #: dat/intro:23
 msgid "Rise and fall, the rhythm of history. "
-msgstr ""
+msgstr "Ascensão e queda, o ritmo da história. "
 
 #: dat/intro:25
 msgid "But the march of history stumbled over the unknown, over the Incident."
-msgstr ""
+msgstr "Mas a marcha da história tropeçou no desconhecido, no Incidente."
 
 #: dat/intro:27
 msgid "It tore the heart out of the Empire."
-msgstr ""
+msgstr "Isso arrancou o coração do Império."
 
 #: dat/intro:29
 msgid ""
@@ -103,6 +136,10 @@ msgid ""
 "the mysterious nebula left behind. Now the great, galaxy-spanning "
 "civilisation survives as a shadow of its former glory."
 msgstr ""
+"Da Terra, uma explosão cataclísmica rasgou o espaço, aniquilando estrelas, "
+"vaporizando mundos. Morreram bilhões. Dezenas de sistemas desapareceram na "
+"misteriosa nebulosa deixada para trás. Agora, a grande civilização que "
+"abrange toda a galáxia sobrevive como uma sombra de sua antiga glória."
 
 #: dat/intro:32
 msgid "What else remains? Questions."
@@ -114,6 +151,9 @@ msgid ""
 "decaying empire. After the Incident, corruption and piracy run rampant, but "
 "where there is chaos, there is also opportunity."
 msgstr ""
+"Dez Ciclos Padrão se passaram em um universo governado pelos fragmentos de "
+"um império decadente. Depois do incidente, a corrupção e a pirataria "
+"aumentaram, mas onde há caos, também há oportunidade."
 
 #: dat/intro:36
 msgid "Welcome to the universe of Naev..."
@@ -121,11 +161,11 @@ msgstr "Bem-vindo ao universo de Naev..."
 
 #: dat/AUTHORS:1
 msgid "Current Core Development Team"
-msgstr ""
+msgstr "Atual equipe de desenvolvimento central"
 
 #: dat/AUTHORS:2 dat/AUTHORS:26 dat/AUTHORS:38 dat/AUTHORS:63 dat/AUTHORS:174
 msgid "---------------------------------------"
-msgstr ""
+msgstr "---------------------------------------"
 
 #: dat/AUTHORS:4
 msgid "Edgar Simo-Serra \"bobbens\" <bobbens@gmail.com>"
@@ -133,19 +173,19 @@ msgstr "Edgar Simo-Serra «bobbens» <bobbens@gmail.com>"
 
 #: dat/AUTHORS:5
 msgid "   * Lead Developer"
-msgstr ""
+msgstr "   * Desenvolvedor-chefe"
 
 #: dat/AUTHORS:7
 msgid "Bas Fournier \"BTAxis\" <btaxis@gmail.com>"
-msgstr ""
+msgstr "Bas Fournier \"BTAxis\" <btaxis@gmail.com>"
 
 #: dat/AUTHORS:8
 msgid "   * Story Writer and Misc. Development"
-msgstr ""
+msgstr "   * Roteiro e desenvolvimento variado"
 
 #: dat/AUTHORS:10
 msgid "Ian Douglas Scott \"ids1024\" <ian@iandouglasscott.com>"
-msgstr ""
+msgstr "Ian Douglas Scott \"ids1024\" <ian@iandouglasscott.com>"
 
 #: dat/AUTHORS:11
 msgid "   * Misc. Development and Lua unifier"

@@ -19,6 +19,7 @@
       * Beam visuals have been made more flexible and pretty
       * Jumping visuals improved
       * Redid the shake visuals and added a small damage visual
+      * Overhauled NPC AI
       * Most special effects implemented as shaders
       * Game now tracks meta-data like ships destroyed and time played
       * Stress now decreases based on ship mass
@@ -49,6 +50,8 @@
       * Added card games
       * Added dynamic factions
       * Added dynamic commodities
+      * Lua support for advanced sound effectss
+      * Most markers and indicators use signed distance functions now
       * Internally using linear colourspace
 
 * 0.8.2

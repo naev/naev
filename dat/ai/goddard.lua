@@ -26,25 +26,43 @@ function create ()
 
    mem.loiter = 3 -- This is the amount of waypoints the pilot will pass through before leaving the system
 
+   -- Set up hail
+   hail()
+
    -- Finish up creation
    create_post()
 end
 
 -- When hailed
 function hail ()
-   if mem.setuphail then return end
+   local p = ai.pilot()
 
-   -- Refueling
-   mem.refuel = rnd.rnd( 2000, 4000 )
-   local standing = ai.getstanding( player.pilot() ) or -1
+   -- Remove randomness from future calls
+   if not mem.hailsetup then
+      mem.refuel_base = rnd.rnd( 2000, 4000 )
+      mem.bribe_base = math.sqrt( p:stats().mass ) * (300 * rnd.rnd() + 850)
+      mem.bribe_rng = rnd.rnd()
+      mem.hailsetup = true
+   end
+
+   -- Clean up
+   mem.refuel        = 0
+   mem.refuel_msg    = nil
+   mem.bribe         = 0
+   mem.bribe_prompt  = nil
+   mem.bribe_prompt_nearby = nil
+   mem.bribe_paid    = nil
+   mem.bribe_no      = nil
+
+   -- Deal with refueling
+   local standing = p:faction():playerStanding()
+   mem.refuel = mem.refuel_base
    if standing > 60 then mem.refuel = mem.refuel * 0.7 end
    mem.refuel_msg = string.format( _([["I could do you the favour of refueling for the price of %s."]]),
          creditstring(mem.refuel) )
 
    -- Bribing
    mem.bribe_no = bribe_no_list[ rnd.rnd(1,#bribe_no_list) ]
-
-   mem.setuphail = true
 end
 
 -- taunts

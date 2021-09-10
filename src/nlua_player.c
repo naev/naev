@@ -784,7 +784,7 @@ static int playerL_land( lua_State *L )
 
       space_init( sysname );
 
-      map_clear();
+      ovr_initAlpha();
 
       player.p->solid->pos = pnt->pos;
    }
@@ -1419,6 +1419,9 @@ static int playerL_teleport( lua_State *L )
 
    /* Map gets deformed when jumping this way. */
    map_clear();
+
+   /* Initialize alpha as needed. */
+   ovr_initAlpha();
 
    /* Run hooks - order is important. */
    hooks_run( "jumpin" );

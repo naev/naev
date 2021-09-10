@@ -1,17 +1,25 @@
 local scom = require "factions.spawn.lib.common"
 
+local sbrigand    = ship.get("Soromid Brigand")
+local sreaver     = ship.get("Soromid Reaver")
+local smarauder   = ship.get("Soromid Marauder")
+local snyx        = ship.get("Soromid Nyx")
+local sodium      = ship.get("Soromid Odium")
+local sarx        = ship.get("Soromid Arx")
+local sira        = ship.get("Soromid Ira")
+
 -- @brief Spawns a small patrol fleet.
 function spawn_patrol ()
    local pilots = { __doscans = true }
    local r = rnd.rnd()
 
    if r < 0.5 then
-      scom.addPilot( pilots, "Soromid Reaver", 25 )
+      scom.addPilot( pilots, sreaver )
    elseif r < 0.8 then
-      scom.addPilot( pilots, "Soromid Marauder", 25 )
-      scom.addPilot( pilots, "Soromid Brigand", 20 )
+      scom.addPilot( pilots, smarauder )
+      scom.addPilot( pilots, sbrigand )
    else
-      scom.addPilot( pilots, "Soromid Nyx", 75 )
+      scom.addPilot( pilots, snyx )
    end
 
    return pilots
@@ -27,16 +35,16 @@ function spawn_squad ()
    local r = rnd.rnd()
 
    if r < 0.5 then
-      scom.addPilot( pilots, "Soromid Odium", 45 )
-      scom.addPilot( pilots, "Soromid Marauder", 25 )
-      scom.addPilot( pilots, "Soromid Brigand", 20 )
+      scom.addPilot( pilots, sodium )
+      scom.addPilot( pilots, smarauder )
+      scom.addPilot( pilots, sbrigand )
    elseif r < 0.8 then
-      scom.addPilot( pilots, "Soromid Odium", 45 )
-      scom.addPilot( pilots, "Soromid Reaver", 25 )
+      scom.addPilot( pilots, sodium )
+      scom.addPilot( pilots, sreaver )
    else
-      scom.addPilot( pilots, "Soromid Nyx", 75 )
-      scom.addPilot( pilots, "Soromid Reaver", 25 )
-      scom.addPilot( pilots, "Soromid Brigand", 20 )
+      scom.addPilot( pilots, snyx )
+      scom.addPilot( pilots, sreaver )
+      scom.addPilot( pilots, sbrigand )
    end
 
    return pilots
@@ -50,23 +58,23 @@ function spawn_capship ()
 
    -- Generate the capship
    if r < 0.7 then
-      scom.addPilot( pilots, "Soromid Ira", 140 )
+      scom.addPilot( pilots, sira )
    else
-      scom.addPilot( pilots, "Soromid Arx", 165 )
+      scom.addPilot( pilots, sarx )
    end
 
    -- Generate the escorts
    r = rnd.rnd()
    if r < 0.5 then
-      scom.addPilot( pilots, "Soromid Reaver", 25 )
-      scom.addPilot( pilots, "Soromid Marauder", 25 )
-      scom.addPilot( pilots, "Soromid Brigand", 20 )
+      scom.addPilot( pilots, sreaver )
+      scom.addPilot( pilots, smarauder )
+      scom.addPilot( pilots, sbrigand )
    elseif r < 0.8 then
-      scom.addPilot( pilots, "Soromid Odium", 45 )
-      scom.addPilot( pilots, "Soromid Reaver", 25 )
+      scom.addPilot( pilots, sodium )
+      scom.addPilot( pilots, sreaver )
    else
-      scom.addPilot( pilots, "Soromid Nyx", 75 )
-      scom.addPilot( pilots, "Soromid Reaver", 25 )
+      scom.addPilot( pilots, snyx )
+      scom.addPilot( pilots, sreaver )
    end
 
    return pilots

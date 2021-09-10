@@ -1,18 +1,24 @@
 local scom = require "factions.spawn.lib.common"
 
+local shyena      = ship.get("Hyena")
+local sancestor   = ship.get("Ancestor")
+local slancelot   = ship.get("Lancelot")
+local svendetta   = ship.get("Vendetta")
+local sphalanx    = ship.get("Phalanx")
+
 -- @brief Spawns a small patrol fleet.
 function spawn_patrol ()
    local pilots = { __doscans = true }
    local r = rnd.rnd()
 
    if r < 0.5 then
-      scom.addPilot( pilots, "Lancelot", 30 )
+      scom.addPilot( pilots, slancelot )
    elseif r < 0.8 then
-      scom.addPilot( pilots, "Hyena", 20 )
-      scom.addPilot( pilots, "Lancelot", 30 )
+      scom.addPilot( pilots, slancelot )
+      scom.addPilot( pilots, shyena )
    else
-      scom.addPilot( pilots, "Hyena", 20 )
-      scom.addPilot( pilots, "Ancestor", 25 )
+      scom.addPilot( pilots, sancestor )
+      scom.addPilot( pilots, shyena )
    end
 
    return pilots
@@ -29,12 +35,12 @@ function spawn_squad ()
    local r = rnd.rnd()
 
    if r < 0.5 then
-      scom.addPilot( pilots, "Lancelot", 30 )
-      scom.addPilot( pilots, "Phalanx", 55 )
+      scom.addPilot( pilots, sphalanx )
+      scom.addPilot( pilots, slancelot )
    else
-      scom.addPilot( pilots, "Lancelot", 30 )
-      scom.addPilot( pilots, "Lancelot", 30 )
-      scom.addPilot( pilots, "Ancestor", 25 )
+      scom.addPilot( pilots, slancelot )
+      scom.addPilot( pilots, slancelot )
+      scom.addPilot( pilots, sancestor )
    end
 
    return pilots

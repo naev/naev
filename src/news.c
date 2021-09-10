@@ -348,7 +348,9 @@ void news_widget( unsigned int wid, int x, int y, int w, int h )
          array_push_back( &news_restores, restore );
       }
 
-      p += i + 1;    /* Move pointer. */
+      p += i;    /* Move pointer. */
+      if ((buf[p] == '\n') || (buf[p] == ' '))
+         p++; /* Skip "empty char". */
    }
    /* </load text> */
 

@@ -212,7 +212,9 @@ void osd_wordwrap( OSD_t* osd )
          array_push_back( &osd->items[i], chunk );
 
          /* Go to next line. */
-         n += s + 1;
+         n += s;
+         if ((osd->msg[i][n] == '\n') || (osd->msg[i][n] == ' '))
+            n++; /* Skip "empty char". */
       }
    }
 }
