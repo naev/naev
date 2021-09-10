@@ -138,6 +138,7 @@ end
 function player_scanned( pp, scanner )
    player.msg(_("#rYou fake ID has been detected and your cover has been blown!"))
    scanner:setHostile(true)
+   restore_standing()
    misn.finish( false )
 end
 
@@ -155,6 +156,22 @@ end
 function abort ()
    if standhook ~= nil then hook.rm(standhook) end
 
+   restore_standing()
+
+   local msg = noticed_offplanet
+   if landed then
+      local f = planet.cur():faction()
+      if f ~= nil and orig_standing[f:nameRaw()] ~= nil then
+         msg = noticed_onplanet
+      end
+   end
+
+   tk.msg( "", msg )
+   misn.finish( false )
+end
+
+
+function restore_standing ()
    for i, j in ipairs( factions ) do
       if orig_standing[j] ~= nil then
          if misnvars[j] ~= nil then
@@ -167,15 +184,4 @@ function abort ()
          faction.get(j):setPlayerStanding( orig_standing[j] )
       end
    end
-
-   local msg = noticed_offplanet
-   if landed then
-      local f = planet.cur():faction()
-      if f ~= nil and orig_standing[f:nameRaw()] ~= nil then
-         msg = noticed_onplanet
-      end
-   end
-
-   tk.msg( "", msg )
-   misn.finish( false )
 end
