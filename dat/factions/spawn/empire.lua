@@ -1,5 +1,4 @@
 local scom = require "factions.spawn.lib.common"
-local formation = require "scripts.formation"
 
 local slancelot   = ship.get("Empire Lancelot")
 local sshark      = ship.get("Empire Shark")
