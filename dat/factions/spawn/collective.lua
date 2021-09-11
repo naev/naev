@@ -65,6 +65,7 @@ function spawn_capship ()
 end
 
 
+local fcollective = faction.get("Collective")
 -- @brief Creation hook.
 function create ( max )
    local weights = {}
@@ -74,32 +75,6 @@ function create ( max )
    weights[ spawn_squad   ] = math.max(1, -100 + 1.00 * max)
    weights[ spawn_capship ] = math.max(1, -100 + 0.50 * max)
 
-   -- Create spawn table base on weights
-   spawn_table = scom.createSpawnTable( weights )
-
-   -- Calculate spawn data
-   spawn_data = scom.choose( spawn_table )
-
-   return scom.calcNextSpawn( 0, scom.presence(spawn_data), max )
+   return scom.init( fcollective, weights, max )
 end
-
-
--- @brief Spawning hook
-function spawn ( presence, max )
-   local pilots
-
-   -- Over limit
-   if presence > max then
-      return 5
-   end
-
-   -- Actually spawn the pilots
-   pilots = scom.spawn( spawn_data, "Collective" )
-
-   -- Calculate spawn data
-   spawn_data = scom.choose( spawn_table )
-
-   return scom.calcNextSpawn( presence, scom.presence(spawn_data), max ), pilots
-end
-
 

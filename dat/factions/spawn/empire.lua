@@ -91,7 +91,7 @@ function create( max )
    weights[ spawn_capship ] = math.max(1, -500 + 1.70 * max)
 
    -- Initialize spawn stuff
-   return scom.init( fempire, weights )
+   return scom.init( fempire, weights, max )
 end
 
 

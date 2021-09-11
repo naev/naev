@@ -1,19 +1,16 @@
 local scom = require "factions.spawn.lib.common"
 require "factions.spawn.pirate"
 
-local fpir = faction.get("Raven Clan")
--- @brief Spawning hook
-function spawn ( presence, max )
-   -- Over limit
-   if presence > max then
-      return 5
-   end
+local fravenclan = faction.get("Raven Clan")
+-- @brief Creation hook.
+function create ( max )
+   local weights = {}
 
-   -- Actually spawn the pilots
-   local pilots = scom.spawn( spawn_data, fpir )
+   -- Create weights for spawn table
+   weights[ spawn_patrol  ] = 100
+   weights[ spawn_loner   ] = 100
+   weights[ spawn_squad   ] = math.max(1, -80 + 0.80 * max)
+   weights[ spawn_capship ] = math.max(1, -500 + 1.70 * max)
 
-   -- Calculate spawn data
-   spawn_data = scom.choose( spawn_table )
-
-   return scom.calcNextSpawn( presence, scom.presence(spawn_data), max ), pilots
+   return scom.init( fravenclan, weights, max )
 end

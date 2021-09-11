@@ -68,7 +68,6 @@ function spawn_bounty_hunter( shiplist )
    return pilots
 end
 
-
 function spawn_bounty_hunter_sml ()
    return spawn_bounty_hunter{
       shyena,
@@ -95,7 +94,7 @@ function spawn_bounty_hunter_lrg ()
    }
 end
 
-
+local findependent = faction.get("Independent")
 -- @brief Creation hook.
 function create ( max )
    local weights = {}
@@ -104,9 +103,8 @@ function create ( max )
    local host = 0
    local total = 0
    local csys = system.cur()
-   local find = faction.get("Independent")
    for f,v in pairs(csys:presences()) do
-      if find:areEnemies(f) then
+      if findependent:areEnemies(f) then
          host = host + v
       end
       total = total + v
@@ -123,28 +121,5 @@ function create ( max )
    -- 1 at 0% hostiles
    weights[ spawn_advert  ] = 0.1 * max * math.exp(-hostnorm*5)
 
-   -- Create spawn table base on weights
-   spawn_table = scom.createSpawnTable( weights )
-
-   -- Calculate spawn data
-   spawn_data = scom.choose( spawn_table )
-
-   return scom.calcNextSpawn( 0, scom.presence(spawn_data), max )
-end
-
-
--- @brief Spawning hook
-function spawn ( presence, max )
-   -- Over limit
-   if presence > max then
-      return 5
-   end
-
-   -- Actually spawn the pilots
-   local pilots = scom.spawn( spawn_data, "Independent" )
-
-   -- Calculate spawn data
-   spawn_data = scom.choose( spawn_table )
-
-   return scom.calcNextSpawn( presence, scom.presence(spawn_data), max ), pilots
+   return scom.init( findependent, weights, max )
 end

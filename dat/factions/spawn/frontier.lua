@@ -24,7 +24,6 @@ function spawn_patrol ()
    return pilots
 end
 
-
 -- @brief Spawns a medium sized squadron.
 function spawn_squad ()
    local pilots = {}
@@ -46,37 +45,14 @@ function spawn_squad ()
    return pilots
 end
 
-
+faction.get("Frontier")
 -- @brief Creation hook.
 function create ( max )
-    local weights = {}
+   local weights = {}
 
-    -- Create weights for spawn table
-    weights[ spawn_patrol  ] = 100
-    weights[ spawn_squad   ] = 0.33*max
+   -- Create weights for spawn table
+   weights[ spawn_patrol  ] = 100
+   weights[ spawn_squad   ] = 0.33*max
 
-    -- Create spawn table base on weights
-    spawn_table = scom.createSpawnTable( weights )
-
-    -- Calculate spawn data
-    spawn_data = scom.choose( spawn_table )
-
-    return scom.calcNextSpawn( 0, scom.presence(spawn_data), max )
-end
-
-
--- @brief Spawning hook
-function spawn ( presence, max )
-    -- Over limit
-    if presence > max then
-       return 5
-    end
-
-    -- Actually spawn the pilots
-    local pilots = scom.spawn( spawn_data, "Frontier" )
-
-    -- Calculate spawn data
-    spawn_data = scom.choose( spawn_table )
-
-    return scom.calcNextSpawn( presence, scom.presence(spawn_data), max ), pilots
+   return scom.init( fflf, weights, max )
 end

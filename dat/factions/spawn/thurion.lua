@@ -26,7 +26,6 @@ function spawn_patrol ()
    return pilots
 end
 
-
 -- @brief Spawns a medium sized squadron.
 function spawn_squad ()
    local pilots = {}
@@ -51,7 +50,6 @@ function spawn_squad ()
 
    return pilots
 end
-
 
 -- @brief Spawns a capship with escorts.
 function spawn_capship ()
@@ -78,7 +76,7 @@ function spawn_capship ()
    return pilots
 end
 
-
+local fthurion = faction.get("Thurion")
 -- @brief Creation hook.
 function create ( max )
    local weights = {}
@@ -88,13 +86,8 @@ function create ( max )
    weights[ spawn_squad   ] = math.max(1, -80 + 0.80 * max)
    weights[ spawn_capship ] = math.max(1, -500 + 1.70 * max)
 
-   -- Create spawn table base on weights
-   spawn_table = scom.createSpawnTable( weights )
-
-   -- Calculate spawn data
-   spawn_data = scom.choose( spawn_table )
-
-   return scom.calcNextSpawn( 0, scom.presence(spawn_data), max )
+   -- Don't overwrite spawn func, we use custom
+   return scom.init( fthurion, weights, max, {nospawnfunc=true} )
 end
 
 
@@ -106,7 +99,7 @@ function spawn ( presence, max )
    end
 
    -- Actually spawn the pilots
-   local pilots = scom.spawn( spawn_data, "Thurion" )
+   local pilots = scom.doSpawn()
 
    -- Make sure they don't die because of nebula
    local nebu_dens, nebu_vol = system.cur():nebula()
@@ -131,13 +124,13 @@ function spawn ( presence, max )
    end
 
    -- Calculate spawn data
-   spawn_data = scom.choose( spawn_table )
+   scom._spawn_data = scom.choose( scom._weight_table )
 
    -- Case no ship was actually spawned, just create an arbitrary delay
    if #pilots == 0 then
       return 10
    end
 
-   return scom.calcNextSpawn( presence, scom.presence(spawn_data), max ), pilots
+   return scom.calcNextSpawn( presence, scom.presence(scom._spawn_data), max ), pilots
 end
 

@@ -81,7 +81,7 @@ function spawn_capship ()
    return pilots
 end
 
-
+local fdvaered = faction.get("Dvaered")
 -- @brief Creation hook.
 function create ( max )
    local weights = {}
@@ -91,28 +91,5 @@ function create ( max )
    weights[ spawn_squad   ] = math.max(1, -80 + 0.80 * max)
    weights[ spawn_capship ] = math.max(1, -500 + 1.70 * max)
 
-   -- Create spawn table base on weights
-   spawn_table = scom.createSpawnTable( weights )
-
-   -- Calculate spawn data
-   spawn_data = scom.choose( spawn_table )
-
-   return scom.calcNextSpawn( 0, scom.presence(spawn_data), max )
-end
-
-
--- @brief Spawning hook
-function spawn ( presence, max )
-   -- Over limit
-   if presence > max then
-       return 5
-   end
-
-   -- Actually spawn the pilots
-   local pilots = scom.spawn( spawn_data, "Dvaered" )
-
-   -- Calculate spawn data
-   spawn_data = scom.choose( spawn_table )
-
-   return scom.calcNextSpawn( presence, scom.presence(spawn_data), max ), pilots
+   return scom.init( fdvaered, weights, max )
 end

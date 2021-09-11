@@ -53,7 +53,6 @@ function spawn_patrol ()
    return pilots
 end
 
-
 -- @brief Spawns a larger trade fleet
 function spawn_squad ()
    local pilots = {}
@@ -101,7 +100,7 @@ function spawn_squad ()
    return pilots
 end
 
-
+local ftrader = faction.get("Trader")
 -- @brief Creation hook.
 function create ( max )
    local weights = {}
@@ -110,29 +109,5 @@ function create ( max )
    weights[ spawn_patrol  ] = 400
    weights[ spawn_squad   ] = math.max(1, -80 + 0.80 * max)
 
-   -- Create spawn table base on weights
-   spawn_table = scom.createSpawnTable( weights )
-
-   -- Calculate spawn data
-   spawn_data = scom.choose( spawn_table )
-
-   return scom.calcNextSpawn( 0, scom.presence(spawn_data), max )
-end
-
-
-local ftrader = faction.get("Trader")
--- @brief Spawning hook
-function spawn ( presence, max )
-   -- Over limit
-   if presence > max then
-      return 5
-   end
-
-   -- Actually spawn the pilots
-   local pilots = scom.spawn( spawn_data, ftrader )
-
-   -- Calculate spawn data
-   spawn_data = scom.choose( spawn_table )
-
-   return scom.calcNextSpawn( presence, scom.presence(spawn_data), max ), pilots
+   return scom.init( ftrader, weights, max )
 end

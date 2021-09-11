@@ -36,7 +36,6 @@ function spawn_patrol ()
    return pilots
 end
 
-
 function spawn_loner ()
    local pilots = {}
    pilots.__nofleet = true
@@ -62,7 +61,6 @@ function spawn_loner ()
 
    return pilots
 end
-
 
 -- @brief Spawns a medium sized squadron.
 function spawn_squad ()
@@ -98,7 +96,6 @@ function spawn_squad ()
    return pilots
 end
 
-
 -- @brief Spawns a capship with escorts.
 function spawn_capship ()
    local pilots = {}
@@ -129,7 +126,7 @@ function spawn_capship ()
    return pilots
 end
 
-
+local fmarauder = faction.get("Marauder")
 -- @brief Creation hook.
 function create ( max )
    local weights = {}
@@ -140,29 +137,5 @@ function create ( max )
    weights[ spawn_squad   ] = math.max(1, -80 + 0.80 * max)
    weights[ spawn_capship ] = math.max(1, -500 + 1.70 * max)
 
-   -- Create spawn table base on weights
-   spawn_table = scom.createSpawnTable( weights )
-
-   -- Calculate spawn data
-   spawn_data = scom.choose( spawn_table )
-
-   return scom.calcNextSpawn( 0, scom.presence(spawn_data), max )
-end
-
-
-local fmar = faction.get("Marauder")
--- @brief Spawning hook
-function spawn ( presence, max )
-   -- Over limit
-   if presence > max then
-      return 5
-   end
-
-   -- Actually spawn the pilots
-   local pilots = scom.spawn( spawn_data, fmar )
-
-   -- Calculate spawn data
-   spawn_data = scom.choose( spawn_table )
-
-   return scom.calcNextSpawn( presence, scom.presence(spawn_data), max ), pilots
+   return scom.init( fmarauder, weights, max )
 end
