@@ -27,7 +27,6 @@ function spawn_patrol ()
    return pilots
 end
 
-
 -- @brief Spawns a medium sized squadron.
 function spawn_squad ()
    local pilots = {}
@@ -53,7 +52,6 @@ function spawn_squad ()
 
    return pilots
 end
-
 
 -- @brief Spawns a capship with escorts.
 function spawn_capship ()
@@ -91,5 +89,5 @@ function create ( max )
    weights[ spawn_squad   ] = math.max(1, -80 + 0.80 * max)
    weights[ spawn_capship ] = math.max(1, -500 + 1.70 * max)
 
-   return scom.init( fdvaered, weights, max )
+   return scom.init( fdvaered, weights, max, {patrol=true} )
 end

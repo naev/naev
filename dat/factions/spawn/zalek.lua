@@ -108,5 +108,5 @@ function create( max )
    weights[ spawn_squad   ] = math.max(1, -80 + 0.80 * max)
    weights[ spawn_capship ] = math.max(1, -500 + 1.70 * max)
 
-   return scom.init( fzalek, weights, max )
+   return scom.init( fzalek, weights, max, {patrol=true} )
 end

@@ -15,6 +15,7 @@ function scom.init( fct, weights, max, params )
    scom._weight_table= scom.createSpawnTable( weights )
    scom._max         = max
    scom._spawn_data  = nil
+   scom._params      = params
    if not params.nospawnfunc then
       spawn = scom.spawn_handler -- Global!
    end
@@ -129,6 +130,10 @@ function scom.spawn( pilots )
                break
             end
          end
+      -- Spawn near patrol points in the system
+      elseif scom._params.patrol then
+         local L = lanes.get(fct, "friendly")
+         origin = lanes.getPoint( L )
       end
    end
    if not origin then

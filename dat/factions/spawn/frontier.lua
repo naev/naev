@@ -54,5 +54,5 @@ function create ( max )
    weights[ spawn_patrol  ] = 100
    weights[ spawn_squad   ] = 0.33*max
 
-   return scom.init( fflf, weights, max )
+   return scom.init( fflf, weights, max, {patrol=true} )
 end
