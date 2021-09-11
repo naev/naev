@@ -8,9 +8,8 @@
  * @brief Handles Linear linoptization in Lua.
  */
 
-#include <glpk.h>
-
 /** @cond */
+#include <glpk.h>
 #include <lauxlib.h>
 
 #include "naev.h"
