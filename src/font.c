@@ -19,12 +19,11 @@
 #include FT_FREETYPE_H
 #include FT_GLYPH_H
 #include FT_MODULE_H
+#include "linebreak.h"
+#include "linebreakdef.h"
 
 #include "naev.h"
 /** @endcond */
-
-#include "linebreak.h"
-#include "linebreakdef.h"
 
 #include "font.h"
 
@@ -532,20 +531,23 @@ int gl_printWidthForTextLine( const glFont *ft_font, const char *text, int width
 }
 
 
+/** @brief Reads the next utf-8 sequence out of a string, updating an index. Skips font markup directives.
+ * @TODO For now, this enforces font.c's inability to handle tabs.
+ */
 static uint32_t font_nextChar( const char *s, size_t *i )
 {
-   uint32_t ch = u8_nextchar(s,i);
-   if (ch=='\t')
-      return u8_nextchar(s,i);
-   else if (ch==FONT_COLOUR_CODE) {
-      if (s[*i+1] != '\0')
-         *i += 2;
-      else
-         *i += 1;
-      return u8_nextchar(s,i);
+   uint32_t ch = s[*i]; /* To be corrected: the character starting at byte *i. Whether it's zero or not is already correct. */
+   while (ch != 0) {
+      ch = u8_nextchar(s, i);
+      if (ch==FONT_COLOUR_CODE)
+         ch = u8_nextchar(s, i); /* Skip the operand and try again. */
+      else if (ch != '\t')
+         return ch; /* Skip tabs and try again; else return the char. */
    }
-   return ch;
+   return 0;
 }
+
+
 /**
  * @brief Gets the number of characters in text that fit into width,
  *        assuming your intent is to word-wrap at said width.
@@ -559,8 +561,8 @@ static uint32_t font_nextChar( const char *s, size_t *i )
 int gl_printWidthForText( const glFont *ft_font, const char *text,
       const int width, int *outw )
 {
-   int lastbreak, lastwidth, adv_x;
-   size_t i, l;
+   int lastwidth, adv_x;
+   size_t i, nexti, lastbreak;
    uint32_t ch, nextch;
    GLfloat n;
    struct LineBreakContext lbc;
@@ -575,21 +577,22 @@ int gl_printWidthForText( const glFont *ft_font, const char *text,
 
    /* Initialize line break stuff. */
    i = 0; /* current position */
+   lastbreak = 0; /* last ALLOWBREAK/MUSTBREAK index in the text */
+   n = 0.; /* current width */
    ch = font_nextChar( text, &i );
    lb_init_break_context( &lbc, ch, gettext_getLanguage() );
-   lastbreak = 0; /* last ' ' or '\n' in the text */
-   n = 0.; /* current width */
-   brk = LINEBREAK_ALLOWBREAK;
    while (ch != '\0') {
-      l = i;
-      nextch = font_nextChar( text, &i );
+      nexti = i;
+      nextch = font_nextChar( text, &nexti );
       brk = lb_process_next_char( &lbc, nextch );
+
       if (brk == LINEBREAK_MUSTBREAK) {
-         i = l;
+         u8_dec( text, &i );
          break;
       }
       else if (brk == LINEBREAK_ALLOWBREAK) {
-         lastbreak = l;
+         lastbreak = i;
+         u8_dec( text, &lastbreak );
          lastwidth = (int)round(n);
       }
 
@@ -608,11 +611,9 @@ int gl_printWidthForText( const glFont *ft_font, const char *text,
          /* Case we weren't able to write any whole words. */
          if (outw != NULL)
             *outw = (int)round(n - adv_x);
-         u8_dec( text, &i );
          return i;
       }
-
-      /* Next char and stuff. */
+      i = nexti;
       ch = nextch;
    }
 
