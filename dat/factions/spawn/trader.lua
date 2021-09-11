@@ -120,6 +120,7 @@ function create ( max )
 end
 
 
+local ftrader = faction.get("Trader")
 -- @brief Spawning hook
 function spawn ( presence, max )
    -- Over limit
@@ -128,7 +129,7 @@ function spawn ( presence, max )
    end
 
    -- Actually spawn the pilots
-   local pilots = scom.spawn( spawn_data, "Trader" )
+   local pilots = scom.spawn( spawn_data, ftrader )
 
    -- Calculate spawn data
    spawn_data = scom.choose( spawn_table )

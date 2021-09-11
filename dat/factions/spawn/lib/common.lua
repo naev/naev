@@ -22,6 +22,24 @@ function scom.calcNextSpawn( cur, new, max )
 end
 
 
+function scom.init( fct, weights, max, params )
+   scom._faction = faction.get(fct)
+   scom._weight_table = scom.createSpawnTable( weights )
+   scom._max = max
+   scom._spawn_data = nil
+end
+
+
+function scom.prepareSpawn ()
+   scom._spawn_data = scom.choose( scom._weight_table )
+   return scom.calcNextSpawn( 0, scom.presence( scom._spawn_data ), scom._max )
+end
+
+function scom.doSpawn ()
+   return scom.spawn( scom._spawn_data, scom._faction )
+end
+
+
 --[[
    @brief Creates the spawn table based on a weighted spawn function table.
       @param weights Weighted spawn function table to use to generate the spawn table.
@@ -64,32 +82,36 @@ end
 
 
 -- @brief Actually spawns the pilots
-function scom.spawn( pilots, faction )
+function scom.spawn( pilots, fct )
    local spawned = {}
+   local issim = naev.isSimulation()
 
    -- Case no pilots
    if pilots == nil then
       return nil
    end
 
+   -- When simulating we try to find good points
    local leader
    local origin
-   if pilots.__stealth and naev.isSimulation() then
-      -- Try to random sample a good point
-      local r = system.cur():radius() * 0.8
-      local p = vec2.newP( rnd.rnd() * r, rnd.rnd() * 360 )
-      local m = 3000 -- margin
-      local L = lanes.get(faction, "non-friendly")
-      for i = 1,20 do
-         local np = lanes.getNonPoint( L, p, r, m )
-         if np and #pilot.getHostiles( faction, m, np ) == 0 then
-            origin = np
-            break
+   if issim then
+      -- Stealth should avoid pirates
+      if pilots.__stealth then
+         local r = system.cur():radius() * 0.8
+         local p = vec2.newP( rnd.rnd() * r, rnd.rnd() * 360 )
+         local m = 3000 -- margin
+         local L = lanes.get(fct, "non-friendly")
+         for i = 1,20 do
+            local np = lanes.getNonPoint( L, p, r, m )
+            if np and #pilot.getHostiles( fct, m, np ) == 0 then
+               origin = np
+               break
+            end
          end
       end
    end
    if not origin then
-      origin = pilot.choosePoint( faction, false, pilots.__stealth ) -- Find a suitable spawn point
+      origin = pilot.choosePoint( fct, false, pilots.__stealth ) -- Find a suitable spawn point
    end
    for k,v in ipairs(pilots) do
       local params = v.params or {}
@@ -104,7 +126,7 @@ function scom.spawn( pilots, faction )
       if params.ai==nil and pilots.__ai then
          params.ai = pilots.__ai
       end
-      local pfact = params.faction or faction
+      local pfact = params.faction or fct
       local p = pilot.add( v.ship, pfact, origin, params.name, params )
       local mem = p:memory()
       mem.natural = true -- mark that it was spawned naturally and not as part of a mission
