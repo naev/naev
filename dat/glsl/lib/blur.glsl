@@ -1,6 +1,8 @@
 #ifndef _BLUR_GLSL
 #define _BLUR_GLSL
 
+#include "lib/math.glsl"
+
 // Blur from https://github.com/Jam3/glsl-fast-gaussian-blur
 /*
 The MIT License (MIT) Copyright (c) 2015 Jam3
@@ -35,8 +37,39 @@ vec4 blur9( sampler2D image, vec2 uv, vec2 resolution, vec2 direction ) {
    return color;
 }
 vec4 blur9( sampler2D image, vec2 uv, vec2 resolution, float strength ) {
-   return 0.5 * blur9( image, uv, resolution, strength * vec2(1,0) )
-        + 0.5 * blur9( image, uv, resolution, strength * vec2(0,1) );
+   vec4 color = vec4(0.0);
+   const vec2 off1 = vec2(1.3846153846,0.0);
+   const vec2 off2 = vec2(3.2307692308,0.0);
+   color += texture(image, uv) * 0.2270270270;
+   /* Horizontal. */
+   vec2 off1xy = off1.xy / resolution;
+   vec2 off2xy = off2.xy / resolution;
+   color += texture(image, uv + off1xy) * 0.3162162162 * 0.25;
+   color += texture(image, uv - off1xy) * 0.3162162162 * 0.25;
+   color += texture(image, uv + off2xy) * 0.0702702703 * 0.25;
+   color += texture(image, uv - off2xy) * 0.0702702703 * 0.25;
+   /* Vertical. */
+   vec2 off1yx = off1.yx / resolution;
+   vec2 off2yx = off2.yx / resolution;
+   color += texture(image, uv + off1yx) * 0.3162162162 * 0.25;
+   color += texture(image, uv - off1yx) * 0.3162162162 * 0.25;
+   color += texture(image, uv + off2yx) * 0.0702702703 * 0.25;
+   color += texture(image, uv - off2yx) * 0.0702702703 * 0.25;
+   /* BL-TR Diagonal. */
+   vec2 off1d1 = off1.xx * M_SQRT2 / resolution;
+   vec2 off2d1 = off2.xx * M_SQRT2 / resolution;
+   color += texture(image, uv + off1d1) * 0.3162162162 * 0.25;
+   color += texture(image, uv - off1d1) * 0.3162162162 * 0.25;
+   color += texture(image, uv + off2d1) * 0.0702702703 * 0.25;
+   color += texture(image, uv - off2d1) * 0.0702702703 * 0.25;
+   /* TL-BR Diagonal. */
+   vec2 off1d2 = vec2(off1d1.x, -off1d1.y);
+   vec2 off2d2 = vec2(off2d1.x, -off2d1.y);
+   color += texture(image, uv + off1d2) * 0.3162162162 * 0.25;
+   color += texture(image, uv - off1d2) * 0.3162162162 * 0.25;
+   color += texture(image, uv + off2d2) * 0.0702702703 * 0.25;
+   color += texture(image, uv - off2d2) * 0.0702702703 * 0.25;
+   return color;
 }
 vec4 blur13(sampler2D image, vec2 uv, vec2 resolution, vec2 direction) {
    vec4 color = vec4(0.0);
@@ -63,11 +96,10 @@ vec4 blur13( sampler2D image, vec2 uv, vec2 resolution, float strength ) {
  */
 vec4 blurlinear( sampler2D image, vec2 uv, vec2 resolution, vec2 direction, float strength ) {
    vec4 color = texture( image, uv );
-
-   float step = 1.0 / dot( resolution, direction );
+   float dstep = 1.0 / dot( resolution, direction );
    float sum = 1.0;
    for (float i = 1.0; i<=strength; i++ ) {
-      vec2 off = direction*i*step;
+      vec2 off = direction*i*dstep;
       color += texture( image, uv+off );
       color += texture( image, uv-off );
       sum += 2.0;
@@ -77,14 +109,13 @@ vec4 blurlinear( sampler2D image, vec2 uv, vec2 resolution, vec2 direction, floa
 }
 vec4 blurgaussian( sampler2D image, vec2 uv, vec2 resolution, vec2 direction, float sigma ) {
    const float threshold = 0.01; // Threshold to ignore pixels at
-
    vec4 color = texture( image, uv );
-   float step = 1.0 / dot( resolution, direction );
+   float dstep = 1.0 / dot( resolution, direction );
    float g = 1.0; // exp( 0.0 )
    float sum = g;
    float den = 1.0 / (2.0 * pow(sigma, 2.0));
    for (float i = 1.0; (g=exp( -pow(i,2.0)*den )) > threshold; i++ ) {
-      vec2 off = direction*i*step;
+      vec2 off = direction*i*dstep;
       color += texture( image, uv+off ) * g;
       color += texture( image, uv-off ) * g;
       sum += 2.0 * g;

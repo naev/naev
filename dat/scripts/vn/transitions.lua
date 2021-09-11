@@ -32,7 +32,7 @@ vec4 effect( vec4 unused, Image tex, vec2 texture_coords, vec2 screen_coords )
 transitions._t.blur = [[
 #include "lib/blur.glsl"
 
-const float intensity = 10.0;
+const float intensity = 20.0;
 
 vec4 effect( vec4 unused, Image tex, vec2 uv, vec2 screen_coords )
 {
