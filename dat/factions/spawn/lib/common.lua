@@ -2,8 +2,32 @@ local lanes = require 'ai.core.misc.lanes'
 
 local scom = {}
 
+--[[
+   @brief Initializes the common spawn scheduler framework.
+      @tparam Faction fct Faction to initialize for.
+      @tparam table weights Weights to use.
+      @tparam number max Maximum presence allowed for the current system.
+      @tparam table params Custom parameters.
+--]]
+function scom.init( fct, weights, max, params )
+   params = params or {}
+   scom._faction = faction.get(fct)
+   scom._weight_table = scom.createSpawnTable( weights )
+   scom._max = max
+   scom._spawn_data = nil
+   if not params.nospawnfunc then
+      spawn = scom.spawn_handler -- Global!
+   end
+
+   scom.choose()
+   return scom.calcNextSpawn( 0 )
+end
+
 -- @brief Calculates when next spawn should occur
-function scom.calcNextSpawn( cur, new, max )
+function scom.calcNextSpawn( cur )
+   new = scom.presence( scom._spawn_data )
+   max = scom._max
+
    if cur == 0 then return rnd.rnd(0, 10) end -- Kickstart spawning.
 
    local stddelay = 10 -- seconds
@@ -21,37 +45,18 @@ function scom.calcNextSpawn( cur, new, max )
    return math.min(stddelay * fleetratio * delayweight * penaltyweight, maxdelay)
 end
 
-
-function scom.init( fct, weights, max, params )
-   params = params or {}
-   scom._faction = faction.get(fct)
-   scom._weight_table = scom.createSpawnTable( weights )
-   scom._max = max
-   scom._spawn_data = nil
-   if not params.nospawnfunc then
-      spawn = scom.fullSpawn -- Global!
-   end
-
-   scom._spawn_data = scom.choose( scom._weight_table )
-   return scom.calcNextSpawn( 0, scom.presence( scom._spawn_data ), scom._max )
-end
-
-function scom.doSpawn ()
-   return scom.spawn( scom._spawn_data, scom._faction )
-end
-
-function scom.fullSpawn( presence, max )
+function scom.spawn_handler( presence, max )
    -- Over limit
    if presence > max then
       return 5
    end
 
    -- Actually spawn pilot
-   local pilots = scom.doSpawn ()
+   local pilots = scom.spawn()
 
    -- Choose next spawn and time to spawn
-   scom._spawn_data = scom.choose( scom._weight_table )
-   return scom.calcNextSpawn( presence, scom.presence( scom._spawn_data ), scom._max ), pilots
+   scom.choose()
+   return scom.calcNextSpawn( presence ), pilots
 end
 
 
@@ -85,11 +90,12 @@ end
 
 
 -- @brief Chooses what to spawn
-function scom.choose( stable )
+function scom.choose ()
    local r = rnd.rnd()
-   for k,v in ipairs( stable ) do
+   for k,v in ipairs( scom._weight_table ) do
       if r < v.chance then
-         return v.func()
+         scom._spawn_data = v.func()
+         return true
       end
    end
    error(_("No spawn function found"))
@@ -97,7 +103,9 @@ end
 
 
 -- @brief Actually spawns the pilots
-function scom.spawn( pilots, fct )
+function scom.spawn( pilots )
+   pilots = pilots or scom._spawn_data
+   local fct = scom._faction
    local spawned = {}
    local issim = naev.isSimulation()
 
@@ -175,13 +183,8 @@ end
 
 -- @brief Gets the presence value of a group of pilots
 function scom.presence( pilots )
-   return pilots.__presence or 0
+   return (pilots and pilots.__presence) or 0
 end
 
-
--- @brief Default decrease function
-function scom.decrease( cur, max, timer )
-   return timer
-end
 
 return scom

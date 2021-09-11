@@ -99,7 +99,7 @@ function spawn ( presence, max )
    end
 
    -- Actually spawn the pilots
-   local pilots = scom.doSpawn()
+   local pilots = scom.spawn()
 
    -- Make sure they don't die because of nebula
    local nebu_dens, nebu_vol = system.cur():nebula()
@@ -124,13 +124,13 @@ function spawn ( presence, max )
    end
 
    -- Calculate spawn data
-   scom._spawn_data = scom.choose( scom._weight_table )
+   scom.choose()
 
    -- Case no ship was actually spawned, just create an arbitrary delay
    if #pilots == 0 then
       return 10
    end
 
-   return scom.calcNextSpawn( presence, scom.presence(scom._spawn_data), max ), pilots
+   return scom.calcNextSpawn( presence ), pilots
 end
 
