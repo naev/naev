@@ -18,10 +18,8 @@
 --[[
    Za'lek Cargo Run. adapted from Drunkard Mission
 ]]--
-
 local fmt = require "format"
-require "missions/zalek/common"
-
+local zlk = require "missions.zalek.common"
 
 -- Bar Description
 bar_desc = _("This Za'lek scientist seems to be looking for someone.")
@@ -188,7 +186,7 @@ function closehail()
    logan:setInvincible(false)
    logan:hyperspace()
    faction.modPlayerSingle("Za'lek", 5)
-   zlk_addMiscLog( log_text )
+   zlk.addMiscLog( log_text )
    misn.finish(true)
 end
 
