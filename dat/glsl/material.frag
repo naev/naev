@@ -1,9 +1,6 @@
 /*
  * Blinn-Phong illumination for materials
  */
-
-uniform mat4 projection;
-
 /* Textures. */
 uniform sampler2D map_Kd;  /* Diffuse map. */
 uniform sampler2D map_Ks;  /* Specular map. */
