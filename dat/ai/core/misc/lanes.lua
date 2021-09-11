@@ -306,20 +306,22 @@ end
 function lanes.getPoint( L )
    local lv, le = L.v, L.e
    local elen = {}
+   -- Compute total lane distance
    local td = 0
    for k,e in ipairs(le) do
       local d = lv[e[1]]:dist( lv[e[2]] )
       td = td + d
       table.insert( elen, d )
    end
+   -- Choose a random pair based on the total distance
    local r = rnd.rnd()
    local raccum = 0
-   for k,v in ipairs(elen) do
-      local rv = v / td
-      raccum = raccum + rv
+   for k,d in ipairs(elen) do
+      local rd = d / td
+      raccum = raccum + rd
       if r < raccum then
          local e = le[k]
-         local a = (r - raccum - rv) / rv
+         local a = (raccum-r) / rd
          return lv[e[1]] * a + lv[e[2]] * (1-a)
       end
    end
