@@ -27,6 +27,8 @@ function scom.init( fct, weights, max, params )
    scom._weight_table = scom.createSpawnTable( weights )
    scom._max = max
    scom._spawn_data = nil
+   spawn = scom.fullSpawn -- Global!
+   return scom.prepareSpawn()
 end
 
 
@@ -37,6 +39,20 @@ end
 
 function scom.doSpawn ()
    return scom.spawn( scom._spawn_data, scom._faction )
+end
+
+function scom.fullSpawn( presence, max )
+   -- Over limit
+   if presence > max then
+      return 5
+   end
+
+   -- Actually spawn pilot
+   scom.spawn( scom._spawn_data, scom._faction )
+
+   -- Choose next spawn and time to spawn
+   scom._spawn_data = scom.choose( scom._weight_table )
+   return scom.calcNextSpawn( 0, scom.presence( scom._spawn_data ), scom._max )
 end
 
 

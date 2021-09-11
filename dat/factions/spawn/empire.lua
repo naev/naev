@@ -91,21 +91,7 @@ function create( max )
    weights[ spawn_capship ] = math.max(1, -500 + 1.70 * max)
 
    -- Initialize spawn stuff
-   scom.init( fempire, weights )
-
-   return scom.prepareSpawn()
-end
-
-
--- @brief Spawning hook
-function spawn( presence, max )
-   -- Over limit
-   if presence > max then
-      return 5
-   end
-
-   scom.doSpawn()
-   return scom.prepareSpawn()
+   return scom.init( fempire, weights )
 end
 
 
