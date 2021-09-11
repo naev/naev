@@ -11,16 +11,28 @@ local scom = {}
 --]]
 function scom.init( fct, weights, max, params )
    params = params or {}
-   scom._faction = faction.get(fct)
-   scom._weight_table = scom.createSpawnTable( weights )
-   scom._max = max
-   scom._spawn_data = nil
+   scom._faction     = faction.get(fct)
+   scom._weight_table= scom.createSpawnTable( weights )
+   scom._max         = max
+   scom._spawn_data  = nil
    if not params.nospawnfunc then
       spawn = scom.spawn_handler -- Global!
    end
 
    scom.choose()
    return scom.calcNextSpawn( 0 )
+end
+function scom.spawn_handler( presence, max )
+   scom._max = max -- Just in case it changed
+   -- Over limit so do a short delay
+   if presence > max then
+      return 5
+   end
+   -- Spawn chosen pilots
+   local pilots = scom.spawn()
+   -- Choose next spawn and time to spawn
+   scom.choose()
+   return scom.calcNextSpawn( presence ), pilots
 end
 
 -- @brief Calculates when next spawn should occur
@@ -43,20 +55,6 @@ function scom.calcNextSpawn( cur )
    local fleetratio = (new/max)/stdfleetsize -- This turns into the base delay multiplier for the next fleet.
 
    return math.min(stddelay * fleetratio * delayweight * penaltyweight, maxdelay)
-end
-
-function scom.spawn_handler( presence, max )
-   -- Over limit
-   if presence > max then
-      return 5
-   end
-
-   -- Actually spawn pilot
-   local pilots = scom.spawn()
-
-   -- Choose next spawn and time to spawn
-   scom.choose()
-   return scom.calcNextSpawn( presence ), pilots
 end
 
 
