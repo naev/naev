@@ -33,7 +33,7 @@ t_pla = {}
 t_pla[1] = planet.get("Gastan")
 t_sys[1] = system.get("Seiben")
 t_sys[2] = system.get("Shikima")
-reward = 1000000
+reward = 1e6
 shpnm = _("Tokera")
 -- Mission details
 title = {}
@@ -52,7 +52,7 @@ text[2] = _([["Excellent. From what I have been told it looks like this." He ges
 -- msgs by Soromid forces
 title[3] = _([[In the ship]])
 text[4] = _([[You make your way through the living ship after taking care of its crew. You note the feeling that the ship is personally angry at you which, given the rumors that Soromid ships are alive, gives you the creeps. In any case, you begin to search through the ship and the handheld in your pocket starts beeping.
-    You manage to locate a box on a table in the crew's chambers. Apparently nobody expected anyone to be foolish enough to try to do what you are doing. You grab the box and head back to your ship.]])
+    You manage to locate a box on a table in the crew's chambers. Apparently nobody expected anyone to be foolish enough to try to do what you are doing. You grab the box and head back to your ship. You should make sure to avoid any Soromid patrols on the way back. You don't think they will be too happy with you if they manage to scan your ship.]])
 
 text[5] = _([["How'd it go?" asks Dr. Geller. You show him the box. "Ah, marvelous! Do you know what this is? This is a quantum sharpener. It's like a quantum eraser, but it does not erase but sharpen. This is exactly what I needed. I think with this I should be able to finish my prototype." He tosses you a credit chip before walking off, smiling.]])
 -- if the player kills the ship before getting the tech
@@ -64,7 +64,7 @@ osd_msg[1] = _("Go to the %s system and find the %s")
 osd_msg[2] = _("Board the %s and retrieve the secret technology")
 osd_msg[3] = _("Return to %s in the %s system")
 
--- refuestext
+-- refusetext
 refusetitle = _("No Science Today")
 refusetext = _("But I really thought you were into science...")
 
@@ -154,6 +154,7 @@ function targetBoard()
    target:setHilight(false)
    target:setVisplayer(false)
    local c = misn.cargoNew(N_("Secret Technology"), N_("A mysterious box of stolen Soromid technology."))
+   c:illegalTo( "Soromid" )
    cargoID = misn.cargoAdd(c, 0)
    misn.osdActive(3)
    misn.markerRm(misn_mark)
