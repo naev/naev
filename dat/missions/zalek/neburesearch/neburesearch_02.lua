@@ -26,7 +26,7 @@
 
 require "scripts/cargo_common"
 local fmt = require "format"
-require "missions/zalek/common"
+local zlk = require "missions.zalek.common"
 
 
 bar_desc = _("It appears she wants to talk with you.")
@@ -103,7 +103,7 @@ function land()
             player.pay(credits)
         end
         misn.markerRm(misn_marker)
-        zlk_addNebuResearchLog(log_text)
+        zlk.addNebuResearchLog(log_text)
         misn.finish(true)
     end
 end

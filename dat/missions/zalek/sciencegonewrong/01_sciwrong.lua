@@ -24,8 +24,7 @@
 --
 -- Author: fart but based on Mission Ideas in wiki: wiki.naev.org/wiki/Mission_Ideas
 --]]
-
-require "missions/zalek/common"
+local zlk = require "missions.zalek.common"
 
 
 -- mission variables
@@ -170,7 +169,7 @@ function land()
       hook.rm(hland)
       misn.markerRm(misn_mark)
       player.pay(reward)
-      zlk_addSciWrongLog( log_text )
+      zlk.addSciWrongLog( log_text )
       misn.finish(true)
    end
 end

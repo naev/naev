@@ -16,8 +16,7 @@
  </mission>
  --]]
 --[[
-
-Za'lek Cargo Run. adapted from Drunkard Mission
+   Za'lek Cargo Run. adapted from Drunkard Mission
 ]]--
 
 local fmt = require "format"

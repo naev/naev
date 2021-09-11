@@ -25,7 +25,7 @@
 
 require "scripts/cargo_common"
 local fmt = require "format"
-require "missions/zalek/common"
+local zlk = require "missions.zalek.common"
 
 
 bar_desc = _("The student is already awaiting you.")
@@ -241,13 +241,13 @@ function start_talk()
 
     if c == 3 then
         tk.msg(cancel_title, run_text)
-        zlk_addNebuResearchLog(log_text:format(dest_planet:name()))
+        zlk.addNebuResearchLog(log_text:format(dest_planet:name()))
         misn.finish(true)
         return
     end
 
     tk.msg(talk_title, avoid_question_text)
-    zlk_addNebuResearchLog(log_text:format(dest_planet:name()))
+    zlk.addNebuResearchLog(log_text:format(dest_planet:name()))
     faction.modPlayerSingle("Za'lek", 1)
     misn.finish(true)
 end

@@ -29,7 +29,7 @@
 local fmt = require "format"
 require "proximity"
 local fleet = require "fleet"
-require "missions/zalek/common"
+local zlk = require "missions.zalek.common"
 
 
 -- set mission variables
@@ -197,7 +197,7 @@ function fnl_ld ()
       tk.msg(title[1],text[15])
       tk.msg(title[1],text[16])
       player.pay(reward)
-      zlk_addSciWrongLog( log_text )
+      zlk.addSciWrongLog( log_text )
       misn.finish(true)
    end
 end

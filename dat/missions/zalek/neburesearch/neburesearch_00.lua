@@ -26,9 +26,8 @@
    Difficulty: Easy
 
 ]]--
-
 local fmt = require "format"
-require "missions/zalek/common"
+local zlk = require "missions.zalek.common"
 
 
 -- Mission Text
@@ -125,7 +124,7 @@ function land()
         misn.cargoRm(cargo)
         player.pay(credits)
         misn.markerRm(misn_marker)
-        zlk_addNebuResearchLog(
+        zlk.addNebuResearchLog(
             _("You helped a Za'lek student to collect sensor data in the Nebula.") )
         misn.finish(true)
     end
@@ -178,7 +177,7 @@ end
 function stopProblems()
     ps:control(false)
     ps:setEnergy(100)
-    if zlk_hasZalekShip() then
+    if zlk.hasZalekShip() then
       tk.msg("", string.format(problems_end_text_has_zalek, t_sys[2]))
     else
       tk.msg("", string.format(problems_end_text, t_sys[2]))

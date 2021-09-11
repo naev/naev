@@ -29,7 +29,7 @@
 local fleet = require "fleet"
 require "nextjump"
 local fmt = require "format"
-require "missions/zalek/common"
+local zlk = require "missions.zalek.common"
 
 
 bar_desc = _("You see a scientist who is apparently looking for someone.")
@@ -210,7 +210,7 @@ function land()
     elseif planet.cur() == planet.get(homeworld) then
         tk.msg(title[5], string.format(text[7], fmt.credits(credits)))
         player.pay(credits)
-        zlk_addNebuResearchLog(log_text)
+        zlk.addNebuResearchLog(log_text)
         misn.finish(true)
     end
     origin = planet.cur()

@@ -27,7 +27,7 @@
 --]]
 
 local fmt = require "format"
-require "missions/zalek/common"
+local zlk = require "missions.zalek.common"
 
 bar_desc = _("She probably has a new poorly paid job for you. Maybe she won't notice you if you leave now.")
 mtitle = _("Shielding Prototype Funding")
@@ -150,7 +150,7 @@ function land()
             tk.msg(home_title, return_text:format(fmt.credits(credits)))
             player.pay(credits)
             misn.markerRm(misn_marker)
-            zlk_addNebuResearchLog(log_text)
+            zlk.addNebuResearchLog(log_text)
             misn.finish(true)
         end
     end

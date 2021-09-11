@@ -23,9 +23,8 @@
 
    Author: fart but based on Mission Ideas in wiki: wiki.naev.org/wiki/Mission_Ideas
 --]]
-
 local fleet = require "fleet"
-require "missions/zalek/common"
+local zlk = require "missions.zalek.common"
 
 
 -- set text variables
@@ -300,7 +299,7 @@ function land_home()
       tk.msg(title[4]:format(t_pla[2]:name()),text[15])
       player.pay(reward)
       player.outfitAdd("Toy Drone")
-      zlk_addSciWrongLog( log_text )
+      zlk.addSciWrongLog( log_text )
       misn.finish(true)
    end
 end
