@@ -5,11 +5,6 @@
 --]]
 local zlk = {}
 
-function zlk.addSciWrongLog( text )
-   shiplog.create( "zlk_sciwrong", _("Science Gone Wrong"), _("Za'lek") )
-   shiplog.append( "zlk_sciwrong", text )
-end
-
 function zlk.addNebuResearchLog( text )
    shiplog.create( "zlk_neburesearch", _("Nebula Research"), _("Za'lek") )
    shiplog.append( "zlk_neburesearch", text )

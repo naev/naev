@@ -25,6 +25,7 @@
 --]]
 local fleet = require "fleet"
 local zlk = require "missions.zalek.common"
+local sciwrong = require "missions.zalek.sciencegonewrong.common"
 
 
 -- set text variables
@@ -32,17 +33,16 @@ title = {}
 text = {}
 osd_msg = {}
 -- system with the drone and the return to start
-t_sys = {}
-t_pla = {}
+t_sys = { __save=true }
+t_pla = { __save=true }
 -- Mission details
-reward = 2000000
+reward = 2e6
 -- amount of jumps the drone did to escape. Each jump reduces it's speed
 fled = false
 jumps = 0
 t_sys[1] = system.get("Xavier")
 t_pla[1] = t_sys[1]:planets()[1]
-t_sys[2] = system.get("Seiben")
-t_pla[2] = planet.get("Gastan")
+--t_pla[2], t_sys[2] = planet.get("Gastan")
 misn_title = _("The one with the Runaway")
 misn_reward = _("A peek at the new prototype and some compensation for your efforts")
 misn_desc = _("You've been hired by Dr. Geller to retrieve his prototype that ran away.")
@@ -85,6 +85,12 @@ log_text = _([[You helped Dr. Geller retrieve his lost prototype drone.]])
 
 
 function create ()
+   -- Have to be at center of operations.
+   t_pla[2], t_sys[2] = sciwrong.getCenterOperations()
+   if planet.cur() ~= t_pla[2] then
+      misn.finish(false)
+   end
+
    -- Spaceport bar stuff
    misn.setNPC( _("Dr. Geller"),  "zalek/unique/geller.webp", bar_desc )
 end
@@ -299,7 +305,7 @@ function land_home()
       tk.msg(title[4]:format(t_pla[2]:name()),text[15])
       player.pay(reward)
       player.outfitAdd("Toy Drone")
-      zlk.addSciWrongLog( log_text )
+      sciwrong.addLog( log_text )
       misn.finish(true)
    end
 end

@@ -6,9 +6,8 @@
   </flags>
   <avail>
    <priority>4</priority>
-   <chance>25</chance>
-   <location>Bar</location>
-   <planet>Niflheim</planet>
+   <chance>10</chance>
+   <faction>Za'lek</faction>
   </avail>
   <notes>
    <tier>1</tier>
@@ -35,7 +34,7 @@ OSDdesc = {}
 OSDdesc[1] = _("Go pick up some equipment at %s in the %s system")
 OSDdesc[2] = _("Drop off the equipment at %s in the %s system")
 
-payment = 2500000
+payment = 800e3
 
 title = {}  --stage titles
 text = {}   --mission text

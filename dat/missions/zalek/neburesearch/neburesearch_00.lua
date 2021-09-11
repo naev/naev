@@ -60,7 +60,7 @@ function create()
     -- mission variables
     misn_stage = 0
     homeworld, homeworld_sys = planet.get("Jorla")
-    credits = 300000
+    credits = 300e3
 
     -- Spaceport bar stuff
     misn.setNPC(_("A young scientist"),  "zalek/unique/student.webp", _("You see a young scientist talking with some pilots, apparently without success.") )

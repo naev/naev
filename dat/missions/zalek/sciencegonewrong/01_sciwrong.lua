@@ -9,7 +9,7 @@
   <done>The one with the Shopping</done>
   <chance>100</chance>
   <location>Bar</location>
-  <planet>Gastan</planet>
+  <faction>Za'lek</faction>
  </avail>
 </mission>
 --]]
@@ -25,13 +25,13 @@
 -- Author: fart but based on Mission Ideas in wiki: wiki.naev.org/wiki/Mission_Ideas
 --]]
 local zlk = require "missions.zalek.common"
+local sciwrong = require "missions.zalek.sciencegonewrong.common"
 
 
 -- mission variables
-t_sys = {}
-t_pla = {}
-t_pla[1] = planet.get("Gastan")
-t_sys[1] = system.get("Seiben")
+t_sys = { __save=true }
+t_pla = { __save=true }
+--t_pla[1], t_sys[1] = planet.get("Gastan")
 t_sys[2] = system.get("Shikima")
 reward = 1e6
 shpnm = _("Tokera")
@@ -72,6 +72,12 @@ log_text = _([[You stole something called a "quantum sharpener" from a Soromid s
 
 
 function create ()
+   -- Have to be at center of operations.
+   t_pla[1], t_sys[1] = sciwrong.getCenterOperations()
+   if planet.cur() ~= t_pla[1] then
+      misn.finish(false)
+   end
+
    -- Spaceport bar stuff
    misn.setNPC( _("Dr. Geller"),  "zalek/unique/geller.webp", bar_desc )
 end
@@ -170,7 +176,7 @@ function land()
       hook.rm(hland)
       misn.markerRm(misn_mark)
       player.pay(reward)
-      zlk.addSciWrongLog( log_text )
+      sciwrong.addLog( log_text )
       misn.finish(true)
    end
 end

@@ -6,9 +6,9 @@
   </flags>
   <avail>
    <priority>4</priority>
-   <chance>100</chance>
+   <chance>10</chance>
    <location>Bar</location>
-   <planet>Gastan</planet>
+   <faction>Za'lek</faction>
   </avail>
   <notes>
    <tier>2</tier>
@@ -30,20 +30,18 @@ local fmt = require "format"
 require "proximity"
 local fleet = require "fleet"
 local zlk = require "missions.zalek.common"
+local sciwrong = require "missions.zalek.sciencegonewrong.common"
 
 
 -- set mission variables
-t_sys = {}
-t_pla = {}
-t_sys[1] = system.get("Daravon")
-t_pla[1] = planet.get("Vilati Vilata")
-t_sys[2] = system.get("Waterhole")
-t_pla[2] = planet.get("Waterhole's Moon")
+t_sys = { __save=true }
+t_pla = { __save=true }
+t_pla[1], t_sys[1] = planet.get("Vilati Vilata")
+t_pla[2], t_sys[2] = planet.get("Waterhole's Moon")
 -- t_x[3] is empty bc it depends on where the mission will start finally. (To be set in mission.xml and then adjusted in the following campaign missions)
-t_sys[3] = system.get("Seiben")
-t_pla[3] = planet.get("Gastan")
-pho_mny = 50000
-reward = 1000000
+--t_pla[3], t_sys[3] = planet.get("Gastan")
+pho_mny = 50e3
+reward = 1e6
 title = {}
 text = {}
 osd_msg = {}
@@ -90,10 +88,14 @@ osd_msg[4] = _("Return to the %s system and deliver to Dr. Geller on %s")
 refusetitle = _("No Science Today")
 refusetext = _("I guess you don't care for science...")
 
-log_text = _([[You helped Dr. Geller obtain a "ghost ship piece" for his research. When you asked about these so-called ghost ships, he seemed amused. "Some people believe in ridiculous nonsense related to this. There is no scientific explanation for the origin of these so-called ghost ships yet, but I think it has to do with some technology involved in the Incident. Hard to say exactly what, but hey, that's why we do research!"]])
+log_text = _([[You helped Dr. Geller at {pntname} in the {sysname} system toobtain a "ghost ship piece" for his research. When you asked about these so-called ghost ships, he seemed amused. "Some people believe in ridiculous nonsense related to this. There is no scientific explanation for the origin of these so-called ghost ships yet, but I think it has to do with some technology involved in the Incident. Hard to say exactly what, but hey, that's why we do research!"]])
 
 
 function create ()
+   -- Variable set up and clean up
+   var.push( sciwrong.center_operations, planet.cur():nameRaw() )
+   t_pla[3], t_sys[3] = sciwrong.getCenterOperations()
+
    -- Spaceport bar stuff
    misn.setNPC( _("A scientist"), "zalek/unique/geller.webp", bar_desc )
 end
@@ -197,7 +199,7 @@ function fnl_ld ()
       tk.msg(title[1],text[15])
       tk.msg(title[1],text[16])
       player.pay(reward)
-      zlk.addSciWrongLog( log_text )
+      sciwrong.addLog( fmt.f( log_text, {pntname=t_pla[3]:name(), sysname=t_sys[3]:name() } ) )
       misn.finish(true)
    end
 end
