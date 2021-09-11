@@ -625,7 +625,22 @@ static char getValCol( double val )
       return 'r';
    return '0';
 }
-
+static int getPresenceVal( int f, AssetPresence *ap, double *base, double *bonus )
+{
+   int gf = 0;
+   double w;
+   if ((ap->faction!=f) && !(gf=factionGenerates(ap->faction, f, &w)))
+      return 0;
+   if (gf == 0) {
+      *base = ap->base;
+      *bonus = ap->bonus;
+   }
+   else {
+      *base = ap->base * w;
+      *bonus = ap->bonus * w;
+   }
+   return 1;
+}
 
 /**
  * @brief Renders the overlay.
@@ -633,8 +648,8 @@ static char getValCol( double val )
 static void uniedit_renderOverlay( double bx, double by, double bw, double bh, void* data )
 {
    double x,y, mx,my, sx,sy;
-   int i, j, k, l, f, gf;
-   double value, base, bonus, w;
+   int i, j, k, p, l, f;
+   double value, base, bonus;
    char buf[STRMAX] = {'\0'};
    StarSystem *sys, *cur, *mousesys;
    Planet *pnt;
@@ -709,19 +724,19 @@ static void uniedit_renderOverlay( double bx, double by, double bw, double bh, v
       /* Local presence sources. */
       for (j=0; j<array_size(sys->planets); j++) {
          pnt = sys->planets[j];
-         gf = 0; /* Shut up gcc. */
-         if ((pnt->presence.faction!=f) && !(gf=factionGenerates(pnt->presence.faction, f, &w)))
+         if (!getPresenceVal( f, &pnt->presence, &base, &bonus ))
             continue;
-         if (gf == 0) {
-            base = pnt->presence.base;
-            bonus = pnt->presence.bonus;
-         }
-         else {
-            base = pnt->presence.base * w;
-            bonus = pnt->presence.bonus * w;
-         }
          l += scnprintf( &buf[l], sizeof(buf)-l, "\n#%c%.0f#0 (#%c%+.0f#0) [%s]",
                getValCol(base), base, getValCol(bonus), bonus, _(pnt->name) );
+      }
+      for (j=0; j<array_size(sys->assets_virtual); j++) {
+         va = sys->assets_virtual[j];
+         for (p=0; p<array_size(va->presences); p++) {
+            if (!getPresenceVal( f, &va->presences[p], &base, &bonus ))
+               continue;
+            l += scnprintf( &buf[l], sizeof(buf)-l, "\n#%c%.0f#0 (#%c%+.0f#0) [%s]",
+                  getValCol(base), base, getValCol(bonus), bonus, _(va->name) );
+         }
       }
 
       /* Find neighbours if possible. */
@@ -729,21 +744,19 @@ static void uniedit_renderOverlay( double bx, double by, double bw, double bh, v
          cur = sys->jumps[k].target;
          for (j=0; j<array_size(cur->planets); j++) {
             pnt = cur->planets[j];
-            gf = 0; /* Shut up gcc. */
-            if ((pnt->presence.faction!=f) && !(gf=factionGenerates(pnt->presence.faction, f, &w)))
+            if (!getPresenceVal( f, &pnt->presence, &base, &bonus ))
                continue;
-            if (pnt->presence.range < 1)
-               continue;
-            if (gf == 0) {
-               base = pnt->presence.base;
-               bonus = pnt->presence.bonus;
-            }
-            else {
-               base = pnt->presence.base * w;
-               bonus = pnt->presence.bonus * w;
-            }
             l += scnprintf( &buf[l], sizeof(buf)-l, "\n#%c%.0f#0 (#%c%+.0f#0) [%s (%s)]",
                   getValCol(base), base*0.5, getValCol(bonus), bonus*0.5, _(pnt->name), _(cur->name) );
+         }
+         for (j=0; j<array_size(cur->assets_virtual); j++) {
+            va = cur->assets_virtual[j];
+            for (p=0; p<array_size(va->presences); p++) {
+               if (!getPresenceVal( f, &va->presences[p], &base, &bonus ))
+                  continue;
+               l += scnprintf( &buf[l], sizeof(buf)-l, "\n#%c%.0f#0 (#%c%+.0f#0) [%s (%s)]",
+                     getValCol(base), base*0.5, getValCol(bonus), bonus*0.5, _(va->name), _(cur->name) );
+            }
          }
       }
 
