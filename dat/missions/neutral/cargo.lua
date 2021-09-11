@@ -40,10 +40,10 @@ misn_desc[3] = _("Large cargo delivery to %s in the %s system.")
 misn_desc[4] = _("Bulk freight delivery to %s in the %s system.")
 
 piracyrisk = {}
-piracyrisk[1] = _("Piracy Risk: None")
-piracyrisk[2] = _("Piracy Risk: Low")
-piracyrisk[3] = _("Piracy Risk: Medium")
-piracyrisk[4] = _("Piracy Risk: High")
+piracyrisk[1] = _("#nPiracy Risk:#0 None")
+piracyrisk[2] = _("#nPiracy Risk:#0 Low")
+piracyrisk[3] = _("#nPiracy Risk:#0 Medium")
+piracyrisk[4] = _("#nPiracy Risk:#0 High")
 --=Landing=--
 
 cargo_land_title = _("Delivery success!")
@@ -70,10 +70,10 @@ function create()
    if avgrisk == 0 then
       piracyrisk = piracyrisk[1]
       riskreward = 0
-   elseif avgrisk <= 75 then
+   elseif avgrisk <= 200 then
       piracyrisk = piracyrisk[2]
       riskreward = 10
-   elseif avgrisk > 150 and avgrisk <= 300 then
+   elseif avgrisk <= 400 then
       piracyrisk = piracyrisk[3]
       riskreward = 25
    else

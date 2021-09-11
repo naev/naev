@@ -219,24 +219,24 @@ end
 function cargo_setDesc( misn_desc, cargo, amount, target, deadline, notes )
    local t = { misn_desc, "" };
    if amount ~= nil then
-      table.insert( t, _("Cargo: %s (%s)"):format( _(cargo), fmt.tonnes(amount) ) );
+      table.insert( t, _("#nCargo:#0 %s (%s)"):format( _(cargo), fmt.tonnes(amount) ) );
    elseif cargo ~= nil then
-      table.insert( t, _("Cargo: %s"):format( _(cargo) ) );
+      table.insert( t, _("#nCargo:#0 %s"):format( _(cargo) ) );
    end
 
    local numjumps   = system.cur():jumpDist( target:system(), cargo_use_hidden )
    local dist = cargo_calculateDistance( system.cur(), planet.cur():pos(), target:system(), target )
    table.insert( t,
-      gettext.ngettext( "Jumps: %d", "Jumps: %d", numjumps ):format( numjumps )
+      gettext.ngettext( "#nJumps:#0 %d", "#nJumps:#0 %d", numjumps ):format( numjumps )
       .. "\n"
-      .. gettext.ngettext("Travel distance: %s", "Travel distance: %s", dist):format( fmt.number(dist) ) )
+      .. gettext.ngettext("#nTravel distance:#0 %s", "#nTravel distance:#0 %s", dist):format( fmt.number(dist) ) )
 
    if notes ~= nil then
       table.insert( t, notes );
    end
 
    if deadline ~= nil then
-      table.insert( t, _("Time limit: %s"):format( tostring(deadline - time.get()) ) );
+      table.insert( t, _("#nTime limit:#0 %s"):format( tostring(deadline - time.get()) ) );
    end
 
    misn.setDesc( table.concat(t, "\n" ) );

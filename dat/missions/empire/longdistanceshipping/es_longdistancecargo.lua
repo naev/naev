@@ -27,10 +27,10 @@ local fmt = require "format"
 misn_desc  = _("Official Empire long distance cargo transport to %s in the %s system.")
 
 piracyrisk = {}
-piracyrisk[1] = _("Piracy Risk: None")
-piracyrisk[2] = _("Piracy Risk: Low")
-piracyrisk[3] = _("Piracy Risk: Medium")
-piracyrisk[4] = _("Piracy Risk: High")
+piracyrisk[1] = _("#nPiracy Risk:#0 None")
+piracyrisk[2] = _("#nPiracy Risk:#0 Low")
+piracyrisk[3] = _("#nPiracy Risk:#0 Medium")
+piracyrisk[4] = _("#nPiracy Risk:#0 High")
 
 msg_timeup = _("MISSION FAILED: You have failed to deliver the goods to the Empire on time!")
 
@@ -82,10 +82,10 @@ function create()
    if avgrisk == 0 then
       piracyrisk = piracyrisk[1]
       riskreward = 0
-   elseif avgrisk <= 25 then
+   elseif avgrisk <= 200 then
       piracyrisk = piracyrisk[2]
       riskreward = 10
-   elseif avgrisk > 25 and avgrisk <= 100 then
+   elseif avgrisk <= 400 then
       piracyrisk = piracyrisk[3]
       riskreward = 25
    else

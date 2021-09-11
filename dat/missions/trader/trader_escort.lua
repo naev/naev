@@ -41,10 +41,10 @@ misn_title[5] = _("Escort a huge convoy to %s in %s")
 misn_desc = _("A convoy of traders needs protection while they go to %s in %s. You must stick with the convoy at all times, waiting to jump or land until the entire convoy has done so.")
 
 piracyrisk = {}
-piracyrisk[1] = _("Piracy Risk: None")
-piracyrisk[2] = _("Piracy Risk: Low")
-piracyrisk[3] = _("Piracy Risk: Medium")
-piracyrisk[4] = _("Piracy Risk: High")
+piracyrisk[1] = _("#nPiracy Risk:#0 None")
+piracyrisk[2] = _("#nPiracy Risk:#0 Low")
+piracyrisk[3] = _("#nPiracy Risk:#0 Medium")
+piracyrisk[4] = _("#nPiracy Risk:#0 High")
 
 osd_title = _("Convey Escort")
 osd_msg = _("Escort a convoy of traders to %s in the %s system")
@@ -87,9 +87,9 @@ function create()
 
    if avgrisk == 0 then
       piracyrisk = piracyrisk[1]
-   elseif avgrisk <= 25 then
+   elseif avgrisk <= 150 then
       piracyrisk = piracyrisk[2]
-   elseif avgrisk <= 100 then
+   elseif avgrisk <= 300 then
       piracyrisk = piracyrisk[3]
    else
       piracyrisk = piracyrisk[4]
