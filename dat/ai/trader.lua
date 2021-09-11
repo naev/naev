@@ -18,6 +18,7 @@ function create ()
 
    -- Try to do normal life as much as possible
    mem.safe_distance = 2000 + 1000 * ps:size()
+   mem.formation = "buffer"
 
    -- Finish up creation
    create_post()

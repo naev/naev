@@ -17,4 +17,7 @@ function create ()
 
    -- Not always dodging
    mem.simplecombat = (rnd.rnd() < 0.5)
+
+   -- No formation
+   mem.formation = nil
 end

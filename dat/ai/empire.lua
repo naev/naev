@@ -49,6 +49,7 @@ function create ()
 
    -- Set how far they attack
    mem.enemyclose = 3000 * ps:size()
+   mem.formation = "fishbone"
 
    -- Finish up creation
    create_post()

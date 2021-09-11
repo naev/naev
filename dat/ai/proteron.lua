@@ -29,6 +29,7 @@ function create ()
    end
 
    mem.loiter = 3 -- This is the amount of waypoints the pilot will pass through before leaving the system
+   mem.formation = "fishbone"
 
    -- Finish up creation
    create_post()

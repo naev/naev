@@ -42,6 +42,7 @@ function create ()
 
    -- Set how far they attack
    mem.enemyclose = 2000 + 2000 * ps:size()
+   mem.formation = "vee"
 
    -- Finish up creation
    create_post()

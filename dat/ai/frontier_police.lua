@@ -29,6 +29,7 @@ function create ()
 
    -- Handle misc stuff
    mem.loiter = 3 -- This is the amount of waypoints the pilot will pass through before leaving the system
+   mem.formation = "wedge"
 
    create_post()
 end

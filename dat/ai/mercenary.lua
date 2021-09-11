@@ -21,12 +21,21 @@ local taunt_list_defensive = {
    _("I'll crush you like a grape!"),
    _("This isn't what I signed up for!"),
 }
+local merc_formations = {
+   "vee",
+   "wedge",
+   "echelon_left",
+   "echelon_right",
+   "wall",
+   "buffer",
+}
 
 function create ()
    local price = ai.pilot():ship():price()
    ai.setcredits( rnd.rnd(price/80, price/30) )
 
    mem.loiter = 3 -- This is the amount of waypoints the pilot will pass through before leaving the system
+   mem.formation = merc_formations[ rnd.rnd(1,#merc_formations) ]
 
    -- Finish up creation
    create_post()

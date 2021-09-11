@@ -22,6 +22,10 @@ local function join_tables( a, b )
    return a
 end
 
+local function choose_one( t )
+   return t[ rnd.rnd(1,#t) ]
+end
+
 local bribe_prompt_common = {
    _([["Pay up %s or it's the end of the line."]]),
    _([["Your money or your life. %s and make the choice quickly."]]),
@@ -114,6 +118,13 @@ local taunt_list_defensive = {
    _("Okay, that's enough of that!"),
    _("I'm gonna torrent you to bits!"),
 }
+local pir_formations = {
+   "echelon_left",
+   "echelon_right",
+   "vee",
+   "wedge",
+   "cross",
+}
 
 function create ()
    local p = ai.pilot()
@@ -130,9 +141,10 @@ function create ()
    mem.loiter = 3 -- This is the amount of waypoints the pilot will pass through before leaving the system
 
    -- Set how far they attack
-   mem.ambushclose = 4000 + 1000 * ps:size()
+   mem.ambushclose= 4000 + 1000 * ps:size()
    mem.enemyclose = mem.ambushclose
-   mem.stealth = p:flags("stealth") -- Follow however they were spawned
+   mem.stealth    = p:flags("stealth") -- Follow however they were spawned
+   mem.formation  = pir_formations[ rnd.rnd(1,#pir_formations) ]
 
    -- Finish up creation
    create_post()
