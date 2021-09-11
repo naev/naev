@@ -14,7 +14,6 @@
 </mission>
 --]]
 --[[
-
    Handles the randomly generated Za'lek test missions.
    (Based on the ES lua code)
 
@@ -23,7 +22,7 @@
              1 : the player has forgotten the engine
 ]]
 
-require "scripts/cargo_common"
+require "scripts.cargo_common"
 local fmt = require "format"
 
 misn_title = _("ZT test of %s")
@@ -178,11 +177,11 @@ function enter()  --Generates a random breakdown
    local time = 10.0*(1 + 0.3*rnd.twosigma())
    if luck < 0.06 then  --player is teleported to a random place around the current system
       hook.timer(time, "teleport")
-      elseif luck < 0.12 then  --player's ship slows down a lot
+   elseif luck < 0.12 then  --player's ship slows down a lot
       hook.timer(time, "slow")
-      elseif luck < 0.18 then   --ship gets out of control for some time
+   elseif luck < 0.18 then   --ship gets out of control for some time
       hook.timer(time, "outOfControl")
-      elseif luck < 0.24 then   --ship doesn't answer to command for some time
+   elseif luck < 0.24 then   --ship doesn't answer to command for some time
       hook.timer(time, "noAnswer")
    end
 
