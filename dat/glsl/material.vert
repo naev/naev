@@ -8,7 +8,7 @@ out vec2 tex_coord;
 out vec3 normal;
 
 /* Not including math.glsl here because a python script reads this also and
-can't handle #include. */
+can't handle include preprocessor. */
 const float M_PI        = 3.14159265358979323846;  /* pi */
 
 const float view_angle = M_PI / 4.0;
