@@ -3,7 +3,9 @@
 
 #include "lib/math.glsl"
 
-// Blur from https://github.com/Jam3/glsl-fast-gaussian-blur
+/*
+   Blur originally taken from https://github.com/Jam3/glsl-fast-gaussian-blur
+   Heavily modified to suit Naev.
 /*
 The MIT License (MIT) Copyright (c) 2015 Jam3
 
@@ -14,22 +16,37 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 vec4 blur5(sampler2D image, vec2 uv, vec2 resolution, vec2 direction) {
-   vec4 color = vec4(0.0);
+   vec4 color = texture(image, uv) * 0.29411764705882354;
    vec2 off1 = vec2(1.3333333333333333) * direction;
-   color += texture(image, uv) * 0.29411764705882354;
    color += texture(image, uv + (off1 / resolution)) * 0.35294117647058826;
    color += texture(image, uv - (off1 / resolution)) * 0.35294117647058826;
    return color;
 }
 vec4 blur5( sampler2D image, vec2 uv, vec2 resolution, float strength ) {
-   return 0.5 * blur5( image, uv, resolution, strength * vec2(1,0) )
-        + 0.5 * blur5( image, uv, resolution, strength * vec2(0,1) );
+   vec4 color = texture(image, uv) * 0.2941176470588234;
+   vec2 off1 = vec2(1.3333333333333333,0.0) * strength;
+   /* Horizontal. */
+   vec2 off1xy = off1.xy / resolution;
+   color += texture(image, uv + off1xy) * 0.35294117647058826 * 0.25;
+   color += texture(image, uv - off1xy) * 0.35294117647058826 * 0.25;
+   /* Vertical. */
+   vec2 off1yx = off1.yx / resolution;
+   color += texture(image, uv + off1yx) * 0.35294117647058826 * 0.25;
+   color += texture(image, uv - off1yx) * 0.35294117647058826 * 0.25;
+   /* BL-TR Diagonal. */
+   vec2 off1d1 = off1.xx * M_SQRT2 / resolution;
+   color += texture(image, uv + off1d1) * 0.35294117647058826 * 0.25;
+   color += texture(image, uv - off1d1) * 0.35294117647058826 * 0.25;
+   /* TL-BR Diagonal. */
+   vec2 off1d2 = vec2(off1d1.x, -off1d1.y);
+   color += texture(image, uv + off1d2) * 0.35294117647058826 * 0.25;
+   color += texture(image, uv - off1d2) * 0.35294117647058826 * 0.25;
+   return color;
 }
 vec4 blur9( sampler2D image, vec2 uv, vec2 resolution, vec2 direction ) {
-   vec4 color = vec4(0.0);
+   vec4 color = texture(image, uv) * 0.2270270270;
    vec2 off1 = vec2(1.3846153846) * direction;
    vec2 off2 = vec2(3.2307692308) * direction;
-   color += texture(image, uv) * 0.2270270270;
    color += texture(image, uv + (off1 / resolution)) * 0.3162162162;
    color += texture(image, uv - (off1 / resolution)) * 0.3162162162;
    color += texture(image, uv + (off2 / resolution)) * 0.0702702703;
@@ -37,10 +54,9 @@ vec4 blur9( sampler2D image, vec2 uv, vec2 resolution, vec2 direction ) {
    return color;
 }
 vec4 blur9( sampler2D image, vec2 uv, vec2 resolution, float strength ) {
-   vec4 color = vec4(0.0);
-   const vec2 off1 = vec2(1.3846153846,0.0);
-   const vec2 off2 = vec2(3.2307692308,0.0);
-   color += texture(image, uv) * 0.2270270270;
+   vec4 color = texture(image, uv) * 0.2270270270;
+   vec2 off1 = vec2(1.3846153846,0.0) * strength;
+   vec2 off2 = vec2(3.2307692308,0.0) * strength;
    /* Horizontal. */
    vec2 off1xy = off1.xy / resolution;
    vec2 off2xy = off2.xy / resolution;
@@ -72,11 +88,10 @@ vec4 blur9( sampler2D image, vec2 uv, vec2 resolution, float strength ) {
    return color;
 }
 vec4 blur13(sampler2D image, vec2 uv, vec2 resolution, vec2 direction) {
-   vec4 color = vec4(0.0);
+   vec4 color = texture(image, uv) * 0.1964825501511404;
    vec2 off1 = vec2(1.411764705882353) * direction;
    vec2 off2 = vec2(3.2941176470588234) * direction;
    vec2 off3 = vec2(5.176470588235294) * direction;
-   color += texture(image, uv) * 0.1964825501511404;
    color += texture(image, uv + (off1 / resolution)) * 0.2969069646728344;
    color += texture(image, uv - (off1 / resolution)) * 0.2969069646728344;
    color += texture(image, uv + (off2 / resolution)) * 0.09447039785044732;
@@ -86,8 +101,51 @@ vec4 blur13(sampler2D image, vec2 uv, vec2 resolution, vec2 direction) {
    return color;
 }
 vec4 blur13( sampler2D image, vec2 uv, vec2 resolution, float strength ) {
-   return 0.5 * blur13( image, uv, resolution, strength * vec2(1,0) )
-        + 0.5 * blur13( image, uv, resolution, strength * vec2(0,1) );
+   vec4 color = texture(image, uv) * 0.1964825501511404;
+   vec2 off1 = vec2(1.411764705882353) * strength;
+   vec2 off2 = vec2(3.2941176470588234) * strength;
+   vec2 off3 = vec2(5.176470588235294) * strength;
+   /* Horizontal. */
+   vec2 off1xy = off1.xy / resolution;
+   vec2 off2xy = off2.xy / resolution;
+   vec2 off3xy = off3.xy / resolution;
+   color += texture(image, uv + off1xy) * 0.2969069646728344 * 0.25;
+   color += texture(image, uv - off1xy) * 0.2969069646728344 * 0.25;
+   color += texture(image, uv + off2xy) * 0.09447039785044732 * 0.25;
+   color += texture(image, uv - off2xy) * 0.09447039785044732 * 0.25;
+   color += texture(image, uv + off3xy) * 0.010381362401148057 * 0.25;
+   color += texture(image, uv - off3xy) * 0.010381362401148057 * 0.25;
+   /* Vertical. */
+   vec2 off1yx = off1.yx / resolution;
+   vec2 off2yx = off2.yx / resolution;
+   vec2 off3yx = off3.yx / resolution;
+   color += texture(image, uv + off1yx) * 0.2969069646728344 * 0.25;
+   color += texture(image, uv - off1yx) * 0.2969069646728344 * 0.25;
+   color += texture(image, uv + off2yx) * 0.09447039785044732 * 0.25;
+   color += texture(image, uv - off2yx) * 0.09447039785044732 * 0.25;
+   color += texture(image, uv + off3yx) * 0.010381362401148057 * 0.25;
+   color += texture(image, uv - off3yx) * 0.010381362401148057 * 0.25;
+   /* BL-TR Diagonal. */
+   vec2 off1d1 = off1.xx * M_SQRT2 / resolution;
+   vec2 off2d1 = off2.xx * M_SQRT2 / resolution;
+   vec2 off3d1 = off3.xx * M_SQRT2 / resolution;
+   color += texture(image, uv + off1d1) * 0.2969069646728344 * 0.25;
+   color += texture(image, uv - off1d1) * 0.2969069646728344 * 0.25;
+   color += texture(image, uv + off2d1) * 0.09447039785044732 * 0.25;
+   color += texture(image, uv - off2d1) * 0.09447039785044732 * 0.25;
+   color += texture(image, uv + off3d1) * 0.010381362401148057 * 0.25;
+   color += texture(image, uv - off3d1) * 0.010381362401148057 * 0.25;
+   /* TL-BR Diagonal. */
+   vec2 off1d2 = vec2(off1d1.x, -off1d1.y);
+   vec2 off2d2 = vec2(off2d1.x, -off2d1.y);
+   vec2 off3d2 = vec2(off3d1.x, -off3d1.y);
+   color += texture(image, uv + off1d2) * 0.2969069646728344 * 0.25;
+   color += texture(image, uv - off1d2) * 0.2969069646728344 * 0.25;
+   color += texture(image, uv + off2d2) * 0.09447039785044732 * 0.25;
+   color += texture(image, uv - off2d2) * 0.09447039785044732 * 0.25;
+   color += texture(image, uv + off3d2) * 0.010381362401148057 * 0.25;
+   color += texture(image, uv - off3d2) * 0.010381362401148057 * 0.25;
+   return color;
 }
 
 /*
