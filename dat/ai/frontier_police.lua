@@ -4,6 +4,7 @@ local fmt = require "format"
 -- Settings
 mem.aggressive    = true
 mem.whiteknight   = true
+mem.formation     = "wedge"
 
 local bribe_no_list = {
    _([["I shall especially enjoy your death."]]),
@@ -29,7 +30,6 @@ function create ()
 
    -- Handle misc stuff
    mem.loiter = 3 -- This is the amount of waypoints the pilot will pass through before leaving the system
-   mem.formation = "wedge"
 
    create_post()
 end

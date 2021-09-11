@@ -6,6 +6,7 @@ mem.armour_run    = 40
 mem.armour_return = 70
 mem.aggressive    = true
 mem.whiteknight   = true
+mem.formation     = "fishbone"
 
 local bribe_no_list = {
    _([["You won't buy your way out of this one."]]),
@@ -29,7 +30,6 @@ function create ()
    end
 
    mem.loiter = 3 -- This is the amount of waypoints the pilot will pass through before leaving the system
-   mem.formation = "fishbone"
 
    -- Finish up creation
    create_post()

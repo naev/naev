@@ -9,6 +9,7 @@ local fmt = require "format"
 mem.armour_run    = 75 -- Za'lek armour is pretty crap. They know this, and will dip when their shields go down.
 mem.aggressive    = true
 mem.whiteknight   = true
+mem.formation     = "circle"
 
 local drones = {
    ["Za'lek Heavy Drone"] = true,
@@ -64,7 +65,6 @@ function create()
 
    -- Set how far they attack
    mem.enemyclose = 3000 + 1000 * ps:size()
-   mem.formation = "circle"
 
    -- Finish up creation
    create_post()

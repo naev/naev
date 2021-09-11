@@ -6,6 +6,7 @@ mem.armour_run    = 20
 mem.defensive     = true
 mem.enemyclose    = 500
 mem.whiteknight   = true
+mem.formation     = "cross"
 mem.distressmsgfunc = sos
 
 local sos_msg_list = {
@@ -37,8 +38,6 @@ function create ()
    ai.setcredits( rnd.rnd( price/300, price/70 ) )
 
    mem.loiter = 3 -- This is the amount of waypoints the pilot will pass through before leaving the system
-
-   mem.formation = "cross"
 
    create_post()
 end

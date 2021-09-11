@@ -5,9 +5,10 @@ require 'ai.core.misc.distress'
 local fmt = require "format"
 
 -- Always run away
-mem.aggressive = false
+mem.aggressive    = false
+mem.formation     = "buffer"
 mem.lanes_useneutral = true
-mem.simplecombat = true -- Don't do fancy dodging
+mem.simplecombat  = true -- Don't do fancy dodging
 
 function create ()
    local p = ai.pilot()
@@ -18,7 +19,6 @@ function create ()
 
    -- Try to do normal life as much as possible
    mem.safe_distance = 2000 + 1000 * ps:size()
-   mem.formation = "buffer"
 
    -- Finish up creation
    create_post()

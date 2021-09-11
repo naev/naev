@@ -6,6 +6,7 @@ mem.armour_run    = 0
 mem.armour_return = 0
 mem.aggressive    = true
 mem.whiteknight   = true
+mem.formation     = "wedge"
 
 local bribe_no_list = {
    _([["Your money is of no interest to me."]])
@@ -30,7 +31,6 @@ function create ()
 
    -- Set how far they attack
    mem.enemyclose = 2000 + 2000 * ps:size()
-   mem.formation = "wedge"
 
    -- Finish up creation
    create_post()

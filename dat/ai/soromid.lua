@@ -6,6 +6,7 @@ mem.armour_run    = 40
 mem.armour_return = 70
 mem.aggressive    = true
 mem.whiteknight   = true
+mem.formation     = "vee"
 
 local bribe_no_list = {
    _([["I shall especially enjoy your death."]]),
@@ -42,7 +43,6 @@ function create ()
 
    -- Set how far they attack
    mem.enemyclose = 2000 + 2000 * ps:size()
-   mem.formation = "vee"
 
    -- Finish up creation
    create_post()

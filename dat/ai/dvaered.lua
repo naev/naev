@@ -4,6 +4,7 @@ local fmt = require "format"
 -- Settings
 mem.aggressive = true
 mem.whiteknight = true
+mem.formation = "wall"
 
 local bribe_no_list = {
    _([["You insult my honour."]]),
@@ -33,7 +34,6 @@ function create ()
 
    -- Set how far they attack
    mem.enemyclose = 3000 * ps:size()
-   mem.formation = "wall"
 
    create_post()
 end
