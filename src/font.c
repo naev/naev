@@ -1092,7 +1092,9 @@ int gl_printHeightRaw( const glFont *ft_font,
    p = 0;
    do {
       i = gl_printWidthForText( ft_font, &text[p], width, NULL );
-      p += i + 1;
+      p += i;
+      if ((text[p] == '\n') || (text[p] == ' ') || (text[p] == '\0'))
+         p++; /* Skip "empty char". */
       y += 1.5*(double)ft_font->h; /* move position down */
    } while (text[p-1] != '\0');
 
