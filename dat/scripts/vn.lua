@@ -179,10 +179,6 @@ local function _draw( tocanvas )
       graphics.clear( 0, 0, 0, 0 )
    end
 
-   if tocanvas then
-      graphics.setBlendMode( "alpha", "premultiplied" )
-   end
-
    -- Draw background
    if vn._draw_bg then
       vn._draw_bg()
@@ -198,10 +194,6 @@ local function _draw( tocanvas )
       if c.talking then
          _draw_character( c )
       end
-   end
-
-   if tocanvas then
-      graphics.setBlendMode( "alpha" )
    end
 
    -- Textbox
@@ -259,7 +251,9 @@ local function _draw( tocanvas )
       graphics.setCanvas( prevcanvas )
       graphics.setShader( vn._postshader )
       vn.setColor( {1, 1, 1, 1} )
+      graphics.setBlendMode( "alpha", "premultiplied" )
       vn._canvas:draw( 0, 0 )
+      graphics.setBlendMode( "alpha" )
       graphics.setShader()
    end
 end
@@ -1039,15 +1033,15 @@ local function _appear_setup( c, shader )
             local oldcanvas = graphics.getCanvas()
             graphics.setCanvas( vn._curcanvas )
             graphics.clear( 0, 0, 0, 0 )
-            graphics.setBlendMode( "alpha", "premultiplied" )
             self.image:draw( ... )
-            graphics.setBlendMode( "alpha" )
             graphics.setCanvas( oldcanvas )
 
             local oldshader = graphics.getShader()
             graphics.setShader( shader )
             vn.setColor( {1, 1, 1, 1} )
+            graphics.setBlendMode( "alpha", "premultiplied" )
             vn._curcanvas:draw( 0, 0 )
+            graphics.setBlendMode( "alpha" )
             graphics.setShader( oldshader )
          end
          v.image = d

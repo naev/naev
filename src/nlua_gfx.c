@@ -864,7 +864,7 @@ static int gfxL_printText( lua_State *L )
  * @usage gfx.setBlendMode( "alpha", "premultiplied" )
  *
  *    @luatparam string mode One of: "alpha", "replace", "screen", "add", "subtract", "multiply", "lighten", or "darken".
- *    @luatparam[opt="alphamultiply"] string alphamode Override to "premulitplied" when drawing canvases; see https://love2d.org/wiki/BlendAlphaMode.
+ *    @luatparam[opt="alphamultiply"] string alphamode Override to "premultiplied" when drawing canvases; see https://love2d.org/wiki/BlendAlphaMode.
  * @luafunc setBlendMode
  */
 static int gfxL_setBlendMode( lua_State *L )
