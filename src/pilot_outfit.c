@@ -314,7 +314,7 @@ int pilot_addOutfitRaw( Pilot* pilot, const Outfit* outfit, PilotOutfitSlot *s )
       pilot->ncannons++;
    else if (outfit_isAfterburner(outfit))
       pilot->nafterburners++;
-   else if (outfit_isLauncher(outfit)) {
+   if (outfit_isLauncher(outfit)) {
       s->u.ammo.outfit   = NULL;
       s->u.ammo.quantity = 0;
       s->u.ammo.deployed = 0; /* Just in case. */
