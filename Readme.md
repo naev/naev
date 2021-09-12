@@ -3,8 +3,10 @@
 
 ![Naev Logo](https://naev.org/imgs/naev.png)
 
-**Naev (/nɑ.ɛv/)** is an open source 2D space trading and combat game, taking inspiration from the [Escape
-Velocity series](https://en.wikipedia.org/wiki/Escape_Velocity_(video_game)), among others.
+**Naev (/nɑ.ɛv/)** is an open source 2D space trading and combat game, taking
+inspiration from the [Escape Velocity
+series](https://en.wikipedia.org/wiki/Escape_Velocity_(video_game)), among
+others.
 
 You pilot a space ship from a top-down perspective, and are more or less free
 to do what you want. As the genre name implies, you’re able to trade and engage
@@ -37,8 +39,8 @@ If you're cross-compiling for Windows, you must install this soft dependency:
 
 ### LINUX AND NON-MACOS \*NIX
 
-See [here](https://github.com/naev/naev/wiki/Compiling-on-*nix) for package lists for several
-distributions.
+See [here](https://github.com/naev/naev/wiki/Compiling-on-*nix) for package
+lists for several distributions.
 
 ### WINDOWS
 
@@ -72,9 +74,9 @@ git submodule init
 git submodule update
 ```
 
-Note that `git submodule update` has to be run every time you `git pull` to stay
-up to date. This can also be done automatically by setting the following
-configuration:
+Note that `git submodule update` has to be run every time you `git pull` to
+stay up to date. This can also be done automatically (highly recommended) by
+setting the following configuration:
 
 ```bash
 git config submodule.recurse true
@@ -106,7 +108,11 @@ directory to see a list of all available options.
 
 ### RUNNING NAEV
 
-You can run Naev directly from the git repository using the `naev.sh` script which will be generated in the build directory. This script will automatically set up all the data paths for running Naev. Make sure the art assets are checked out and up to date as mentioned in the Updating Art Assets section below.
+You can run Naev directly from the git repository using the `naev.sh` script
+which will be generated in the build directory. This script will automatically
+set up all the data paths for running Naev. Make sure the art assets are
+checked out and up to date as mentioned in the Updating Art Assets section
+below.
 
 ### INSTALLATION
 
@@ -118,9 +124,10 @@ from 16x16 to 256x256 can be found in `extras/logos/`.
 
 ## UPDATING ART ASSETS
 
-Art assets are partially stored in the naev-artwork-production repository and
-sometimes are updated. For that reason, it is recommended to periodically
-update the submodules with the following command.
+Art assets are partially stored in the
+[naev-artwork-production](https://github.com/naev/naev-artwork-production)
+repository and sometimes are updated. For that reason, it is recommended to
+periodically update the submodules with the following command.
 
 ```bash
 git submodule update
@@ -142,8 +149,8 @@ Naev supports unicode and gettext since version 0.8.0.
 
 ### ONLINE TRANSLATION
 
-Naev is incorporated into Weblate. You can easily translate directly with a web
-interface to your chosen language at
+Naev is incorporated into [Weblate](https://weblate.org/). You can easily
+translate directly with a web interface to your chosen language at
 https://hosted.weblate.org/projects/naev/naev/ . New languages have to be added
 manually, please open an issue if you want to translate Naev to a new language.
 
@@ -188,5 +195,5 @@ Naev is open source software compatible with the [Debian Free Software
 Guidelines](https://www.debian.org/social_contract#guidelines) licensed under
 the [GNU General Public License version 3 or
 later](https://www.gnu.org/licenses/gpl-3.0.en.html), with some exceptions.
-Please refer to the [LICENSE](LICENSE) file.
-
+Please refer to the [LICENSE](LICENSE) file for more in-depth licensing
+details.
