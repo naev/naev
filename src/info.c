@@ -532,7 +532,7 @@ static void ship_update( unsigned int wid )
  */
 static void info_openWeapons( unsigned int wid )
 {
-   int w, h, y, wlen;
+   int w, h, x, y, wlen;
 
    /* Get the dimensions. */
    window_dimWindow( wid, &w, &h );
@@ -550,25 +550,28 @@ static void info_openWeapons( unsigned int wid )
 
    /* Checkboxes. */
    wlen = w - 220 - 20;
-   y -=100;
-   window_addText( wid, 220, y, wlen, 20, 0, "txtLocal", NULL, NULL,
-         _("Current Set Settings"));
+   x = 220;
+   y -= 100;
+   window_addText( wid, x, y, wlen, 20, 0, "txtLocal", NULL, NULL,
+         _("Current Weapon Set Settings"));
    y -= 20;
-   window_addCheckbox( wid, 240, y, wlen, BUTTON_HEIGHT,
-         "chkFire", _("Enable instant mode (only for weapons)"), weapons_fire,
+   window_addCheckbox( wid, x+10, y, wlen, BUTTON_HEIGHT,
+         "chkFire", _("Enable instant Mode"), weapons_fire,
          (pilot_weapSetTypeCheck( player.p, info_eq_weaps.weapons )==WEAPSET_TYPE_WEAPON) );
    y -= 30;
-   window_addCheckbox( wid, 240, y, wlen, BUTTON_HEIGHT,
+   window_addText( wid, x+10, y, wlen, 20, 0, "txtSInstant", NULL, NULL, _("(Weapons fire when this weapon set key is pressed)"));
+   y -= 20;
+   window_addCheckbox( wid, x+10, y, wlen, BUTTON_HEIGHT,
          "chkInrange", _("Only shoot weapons that are in range"), weapons_inrange,
          pilot_weapSetInrangeCheck( player.p, info_eq_weaps.weapons ) );
    y -= 40;
-   window_addText( wid, 220, y, wlen, 20, 0, "txtGlobal", NULL, NULL,
+   window_addText( wid, x, y, wlen, 20, 0, "txtGlobal", NULL, NULL,
          _("Global Settings"));
    y -= 20;
-   window_addCheckbox( wid, 240, y, wlen, BUTTON_HEIGHT,
+   window_addCheckbox( wid, x+10, y, wlen, BUTTON_HEIGHT,
          "chkAutoweap", _("Automatically handle weapons"), weapons_autoweap, player.p->autoweap );
    y -= 30;
-   window_addCheckbox( wid, 240, y, wlen, BUTTON_HEIGHT,
+   window_addCheckbox( wid, x+10, y, wlen, BUTTON_HEIGHT,
          "chkHelper", _("Dogfight aiming helper"), aim_lines, player.p->aimLines );
 
    /* List. Has to be generated after checkboxes. */
@@ -761,11 +764,11 @@ static void weapons_renderLegend( double bx, double by, double bw, double bh, vo
    toolkit_drawRect( bx, y, 10, 10, &cFontBlue, NULL );
    gl_print( &gl_smallFont, bx+20, y, &cFontWhite, _("Outfit that can be activated") );
 
-   y -= 15.;
+   y -= 20.;
    toolkit_drawRect( bx, y, 10, 10, &cFontYellow, NULL );
    gl_print( &gl_smallFont, bx+20, y, &cFontWhite, _("Secondary Weapon (Right click toggles)") );
 
-   y -= 15.;
+   y -= 20.;
    toolkit_drawRect( bx, y, 10, 10, &cFontRed, NULL );
    gl_print( &gl_smallFont, bx+20, y, &cFontWhite, _("Primary Weapon (Left click toggles)") );
 }
