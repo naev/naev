@@ -2,27 +2,28 @@
 <asset name="Trade Lane (Empire)">
  <presence>
   <faction>Trader</faction>
-  <base>50.000000</base>
+  <base>100.000000</base>
  </presence>
  <presence>
   <faction>Trader</faction>
-  <base>25.000000</base>
-  <bonus>25.000000</bonus>
+  <base>50.000000</base>
+  <bonus>50.000000</bonus>
   <range>1</range>
  </presence>
  <presence>
   <faction>Independent</faction>
-  <base>30.000000</base>
-  <bonus>20.000000</bonus>
+  <base>50.000000</base>
+  <bonus>40.000000</bonus>
   <range>1</range>
  </presence>
  <presence>
   <faction>Empire</faction>
-  <base>70.000000</base>
+  <base>150.000000</base>
   <range>0</range>
  </presence>
  <presence>
   <faction>Empire</faction>
+  <base>50.000000</base>
   <bonus>50.000000</bonus>
   <range>1</range>
  </presence>
