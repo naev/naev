@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Empire Shark">
- <points>20</points>
+ <points>15</points>
  <base_type>Shark</base_type>
  <GFX size="54">shark_empire</GFX>
  <rarity>2</rarity>
@@ -9,8 +9,8 @@
  <class>Interceptor</class>
  <price>380000</price>
  <time_mod>0.9</time_mod>
- <trail_generator x="-14" y="12" h="0" >nebula</trail_generator>
- <trail_generator x="-14" y="-12" h="0" >nebula</trail_generator>
+ <trail_generator x="-14" y="12" h="0">nebula</trail_generator>
+ <trail_generator x="-14" y="-12" h="0">nebula</trail_generator>
  <trail_generator x="-15" y="7" h="7" />
  <trail_generator x="-15" y="-7" h="7" />
  <trail_generator x="-15" y="0" h="-5" always_under="1" />

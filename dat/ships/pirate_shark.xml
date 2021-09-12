@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Pirate Shark">
- <points>20</points>
+ <points>15</points>
  <base_type>Shark</base_type>
  <GFX size="54">shark_pirate</GFX>
  <rarity>2</rarity>
@@ -9,11 +9,11 @@
  <class>Interceptor</class>
  <price>280000</price>
  <time_mod>0.9</time_mod>
- <trail_generator x="-14" y="12" h="0" >nebula</trail_generator>
- <trail_generator x="-14" y="-12" h="0" >nebula</trail_generator>
- <trail_generator x="-15" y="7" h="7" >pirate</trail_generator>
- <trail_generator x="-15" y="-7" h="7" >pirate</trail_generator>
- <trail_generator x="-15" y="0" h="-5" always_under="1" >pirate</trail_generator>
+ <trail_generator x="-14" y="12" h="0">nebula</trail_generator>
+ <trail_generator x="-14" y="-12" h="0">nebula</trail_generator>
+ <trail_generator x="-15" y="7" h="7">pirate</trail_generator>
+ <trail_generator x="-15" y="-7" h="7">pirate</trail_generator>
+ <trail_generator x="-15" y="0" h="-5" always_under="1">pirate</trail_generator>
  <fabricator>Skull and Bones</fabricator>
  <description>The nimble Nexus Shipyards Shark has proved an excellent canvas for the Skull and Bones technicians. Fitted with an additional weapon mount, its handling suffers minimally while it's able to bring substantially more firepower to bear.</description>
  <health>

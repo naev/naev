@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Thurion Apprehension">
- <points>75</points>
+ <points>45</points>
  <base_type>Apprehension</base_type>
  <GFX size="90" sx="12" sy="12">apprehension</GFX>
  <rarity>3</rarity>
@@ -12,8 +12,8 @@
  <trail_generator x="-30" y="9" h="-5" />
  <trail_generator x="-30" y="-9" h="-5" />
  <trail_generator x="-30" y="0" h="10" />
- <trail_generator x="-20" y="-20" h="10" >nebula</trail_generator>
- <trail_generator x="-20" y="20" h="10" >nebula</trail_generator>
+ <trail_generator x="-20" y="-20" h="10">nebula</trail_generator>
+ <trail_generator x="-20" y="20" h="10">nebula</trail_generator>
  <fabricator>Thurion shipyards</fabricator>
  <license>Medium Combat Vessel License</license>
  <description>...</description>

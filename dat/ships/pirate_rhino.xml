@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Pirate Rhino">
- <points>70</points>
+ <points>40</points>
  <base_type>Rhino</base_type>
  <GFX size="100" sx="10" sy="10">rhino_pirate</GFX>
  <rarity>2</rarity>
@@ -9,10 +9,10 @@
  <class>Armoured Transport</class>
  <price>1500000</price>
  <time_mod>1.25</time_mod>
- <trail_generator x="-35" y="4" h="10" >pirate</trail_generator>
- <trail_generator x="-35" y="4" h="0" always_under="1" >pirate</trail_generator>
+ <trail_generator x="-35" y="4" h="10">pirate</trail_generator>
+ <trail_generator x="-35" y="4" h="0" always_under="1">pirate</trail_generator>
  <trail_generator x="-35" y="-4" h="10">pirate</trail_generator>
- <trail_generator x="-35" y="-4" h="0" always_under="1" >pirate</trail_generator>
+ <trail_generator x="-35" y="-4" h="0" always_under="1">pirate</trail_generator>
  <trail_generator x="-35" y="0" h="5">nebula</trail_generator>
  <fabricator>Skull and Bones</fabricator>
  <description>The traditional Skull and Bones refit has left the Rhino substantially more manoeuvrable, though somewhat less armoured. Exploiting its large cargo bay and durability, the Rhino has become an excellent scavenger ship.</description>

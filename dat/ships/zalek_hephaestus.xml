@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Za'lek Hephaestus">
- <points>200</points>
+ <points>150</points>
  <base_type>Hephaestus</base_type>
  <GFX size="170" sx="12" sy="12">hephaestus</GFX>
  <rarity>2</rarity>
@@ -10,7 +10,7 @@
  <price>10000000</price>
  <time_mod>1.5</time_mod>
  <trail_generator x="-50" y="30" h="0">zalek</trail_generator>
- <trail_generator x="-60" y="-25" h="-20" always_under="1" >zalek</trail_generator>
+ <trail_generator x="-60" y="-25" h="-20" always_under="1">zalek</trail_generator>
  <trail_generator x="45" y="25" h="20">zalek</trail_generator>
  <trail_generator x="45" y="-30" h="0">zalek</trail_generator>
  <fabricator>Za'lek Fabricators</fabricator>

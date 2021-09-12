@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Proteron Archimedes">
- <points>140</points>
+ <points>100</points>
  <base_type>Archimedes</base_type>
  <GFX size="130" sx="12" sy="12">archimedes</GFX>
  <rarity>3</rarity>
@@ -15,8 +15,8 @@
  <trail_generator x="-50" y="-4" h="0">thin</trail_generator>
  <trail_generator x="-50" y="-8" h="0">thin</trail_generator>
  <trail_generator x="-50" y="-12" h="0">thin</trail_generator>
- <trail_generator x="-45" y="-22" h="0" >nebula</trail_generator>
- <trail_generator x="-45" y="22" h="0" >nebula</trail_generator>
+ <trail_generator x="-45" y="-22" h="0">nebula</trail_generator>
+ <trail_generator x="-45" y="22" h="0">nebula</trail_generator>
  <fabricator>Proteron</fabricator>
  <license>Heavy Combat Vessel License</license>
  <description>The Archimedes is the backbone of the Proteron fleet. Offering heavy firepower and high durability, it can always be found in the heat of battle.</description>

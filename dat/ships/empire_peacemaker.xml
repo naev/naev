@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Empire Peacemaker">
- <points>150</points>
+ <points>100</points>
  <base_type>Peacemaker</base_type>
  <GFX size="110" sx="12" sy="12">peacemaker</GFX>
  <rarity>2</rarity>
@@ -9,8 +9,8 @@
  <class>Carrier</class>
  <price>8000000</price>
  <time_mod>1.5</time_mod>
- <trail_generator x="-53" y="0" h="15" >nebula</trail_generator>
- <trail_generator x="-53" y="0" h="-10" >nebula</trail_generator>
+ <trail_generator x="-53" y="0" h="15">nebula</trail_generator>
+ <trail_generator x="-53" y="0" h="-10">nebula</trail_generator>
  <trail_generator x="5" y="5" h="-35" always_under="1" />
  <trail_generator x="5" y="5" h="-45" always_under="1" />
  <trail_generator x="5" y="-5" h="-35" always_under="1" />

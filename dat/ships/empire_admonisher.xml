@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Empire Admonisher">
- <points>45</points>
+ <points>30</points>
  <base_type>Admonisher</base_type>
  <GFX size="68">admonisher_empire</GFX>
  <rarity>2</rarity>
@@ -9,8 +9,8 @@
  <class>Corvette</class>
  <price>700000</price>
  <time_mod>1</time_mod>
- <trail_generator x="-11" y="33" h="-2" >nebula</trail_generator>
- <trail_generator x="-11" y="-33" h="-2" >nebula</trail_generator>
+ <trail_generator x="-11" y="33" h="-2">nebula</trail_generator>
+ <trail_generator x="-11" y="-33" h="-2">nebula</trail_generator>
  <trail_generator x="-20" y="5" h="5" />
  <trail_generator x="-20" y="-5" h="5" />
  <trail_generator x="-20" y="5" h="-5" always_under="1" />

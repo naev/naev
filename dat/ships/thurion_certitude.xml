@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Thurion Certitude">
- <points>140</points>
+ <points>100</points>
  <base_type>Certitude</base_type>
  <GFX size="120" sx="12" sy="12">certitude</GFX>
  <rarity>3</rarity>
@@ -13,8 +13,8 @@
  <trail_generator x="-42" y="11" h="-8" />
  <trail_generator x="-42" y="-17" h="7" />
  <trail_generator x="-42" y="-17" h="-8" />
- <trail_generator x="-39" y="-25" h="0" >nebula</trail_generator>
- <trail_generator x="-39" y="25" h="0" >nebula</trail_generator>
+ <trail_generator x="-39" y="-25" h="0">nebula</trail_generator>
+ <trail_generator x="-39" y="25" h="0">nebula</trail_generator>
  <fabricator>Thurion shipyards</fabricator>
  <license>Heavy Combat Vessel License</license>
  <description>...</description>

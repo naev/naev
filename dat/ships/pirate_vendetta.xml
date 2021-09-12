@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Pirate Vendetta">
- <points>30</points>
+ <points>25</points>
  <base_type>Vendetta</base_type>
  <GFX size="49">vendetta_pirate</GFX>
  <rarity>2</rarity>
@@ -11,8 +11,8 @@
  <time_mod>0.9</time_mod>
  <trail_generator x="3" y="18" h="0">nebula</trail_generator>
  <trail_generator x="3" y="-18" h="0">nebula</trail_generator>
- <trail_generator x="-5" y="4" h="0" always_under="1" >pirate</trail_generator>
- <trail_generator x="-5" y="-4" h="0" always_under="1" >pirate</trail_generator>
+ <trail_generator x="-5" y="4" h="0" always_under="1">pirate</trail_generator>
+ <trail_generator x="-5" y="-4" h="0" always_under="1">pirate</trail_generator>
  <fabricator>Skull and Bones</fabricator>
  <description>The Pirate Vendetta is even more intimidating than its regular counterpart. It's been heavily tweaked to be more adjusted to the pirate style of flying. Some of the armour has been removed to make more room for loot, while the reactor has been jacked up by a dubious technician. The ship ends up being substantially better than the original, but every so often the reactor goes nova destroying the ship. You hope it won't happen to you if you get in one.</description>
  <health>

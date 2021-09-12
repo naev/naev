@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Starbridge">
- <points>60</points>
+ <points>40</points>
  <base_type>Starbridge</base_type>
  <GFX sx="10" sy="10">starbridge</GFX>
  <GUI>brushed</GUI>
@@ -8,8 +8,8 @@
  <class>Destroyer</class>
  <price>1500000</price>
  <time_mod>1.25</time_mod>
- <trail_generator x="-24" y="-20" h="-4" >nebula</trail_generator>
- <trail_generator x="-24" y="20" h="-4" >nebula</trail_generator>
+ <trail_generator x="-24" y="-20" h="-4">nebula</trail_generator>
+ <trail_generator x="-24" y="20" h="-4">nebula</trail_generator>
  <trail_generator x="-28" y="6" h="5" />
  <trail_generator x="-28" y="-6" h="5" />
  <fabricator>Krain Industries</fabricator>
