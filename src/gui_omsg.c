@@ -34,8 +34,7 @@ static omsg_font_t *omsg_font_array = NULL; /**< Array of fonts. */
  */
 typedef struct omsg_s {
    unsigned int id;  /**< Unique ID. */
-   char **msg;       /**< Message to display. */
-   int nlines;       /**< Message lines. */
+   char **msg;       /**< Array: Message to display. */
    double duration;  /**< Time left. */
    int font;         /**< Font to use. */
    glColour col;     /**< Colour to use. */
@@ -78,13 +77,10 @@ static void omsg_free( omsg_t *omsg )
 {
    int i;
 
-   if (omsg->msg != NULL) {
-      for (i=0; i<omsg->nlines; i++)
-         free( omsg->msg[i] );
-      free( omsg->msg );
-      omsg->msg = NULL;
-      omsg->nlines = 0;
-   }
+   for (i=0; i<array_size(omsg->msg); i++)
+      free( omsg->msg[i] );
+   array_free( omsg->msg );
+   omsg->msg = NULL;
 }
 
 
@@ -93,7 +89,7 @@ static void omsg_free( omsg_t *omsg )
  */
 static void omsg_setMsg( omsg_t *omsg, const char *msg )
 {
-   int l, n, s, m;
+   int l, n, s;
    glFont *font;
 
    /* Clean up after old stuff. */
@@ -101,33 +97,13 @@ static void omsg_setMsg( omsg_t *omsg, const char *msg )
 
    /* Create data. */
    l  = strlen( msg );
-   if (l==0)
-      return;
    font = omsg_getFont( omsg->font );
-   /* First pass size. */
+
+   omsg->msg = array_create( char* );
    n  = 0;
-   m  = 0;
    while (n < l) {
       s  = gl_printWidthForText( font, &msg[n], omsg_center_w, NULL );
-      n += s;
-      if ((msg[n] == '\n') || (msg[n] == ' '))
-         n++; /* Skip "empty char". */
-      m++;
-   }
-
-   /* Avoid zero-length malloc. */
-   if (m == 0)
-      return;
-
-   /* Second pass allocate. */
-   omsg->msg = malloc( m * sizeof(char*) );
-   omsg->nlines = m;
-   n  = 0;
-   m  = 0;
-   while (n < l) {
-      s  = gl_printWidthForText( font, &msg[n], omsg_center_w, NULL );
-      omsg->msg[m] = strndup( &msg[n], s );
-      m++;
+      array_push_back( &omsg->msg, strndup( &msg[n], s ) );
       n += s;
       if ((msg[n] == '\n') || (msg[n] == ' '))
          n++; /* Skip "empty char". */
@@ -233,7 +209,7 @@ void omsg_render( double dt )
       if (omsg->duration < 1.)
          col.a = omsg->duration;
       gl_printRestoreClear();
-      for (j=0; j<omsg->nlines; j++) {
+      for (j=0; j<array_size(omsg->msg); j++) {
          y -= font->h * 1.5;
          gl_printRestoreLast();
          gl_printMidRaw( font, omsg_center_w, x, y, &col, -1., omsg->msg[j] );

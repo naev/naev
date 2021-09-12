@@ -20,6 +20,7 @@
 
 #include "intro.h"
 
+#include "array.h"
 #include "conf.h"
 #include "font.h"
 #include "log.h"
@@ -47,8 +48,7 @@ typedef struct intro_img_t_ {
 /*
  * Introduction text lines.
  */
-static char **intro_lines = NULL;  /**< Introduction text lines. */
-static int intro_nlines = 0;       /**< Number of introduction text lines. */
+static char **intro_lines = NULL;  /**< Array (array.h): Introduction text lines. */
 static glFont intro_font;          /**< Introduction font. */
 
 static int has_side_gfx = 0;       /* Determines how wide to make the text. */
@@ -76,9 +76,7 @@ static int intro_load( const char *text )
    const char *cur_line;
    char *rest_of_file;
    char img_src[STRMAX_SHORT];     /* path to image to be displayed alongside text. */
-   int length;
-   int i, n;
-   int mem;
+   int i;
 
    has_side_gfx = 0;
 
@@ -91,12 +89,10 @@ static int intro_load( const char *text )
    /* Accumulate text into intro_lines. At each step, keep track of:
     * * cur_line: text to go from the current input line, after word-wrapping.
     * * rest_of_file: pointer to just after the current input line (or NULL if we're on the last one).
-    * * n: output line #
     * * i: current line length (strlen(cur_line), or less if we must word-wrap).
     * We can start in a state with no word-wrap spill-over and "rest_of_file" pointing to the full input.
     */
-   n = 0;
-   mem = 0;
+   intro_lines = array_create( char* );
    cur_line = "";
    rest_of_file = intro_buf;
    while (1) {
@@ -119,51 +115,35 @@ static int intro_load( const char *text )
             cur_line = _(cur_line);
          i = strlen(cur_line);
       }
-      /* Copy the line. */
-      if (n+1 > mem) {
-         mem += 128;
-         intro_lines = realloc( intro_lines, sizeof(char*) * mem );
-      }
 
       if ( cur_line[0] == '[' /* Don't do sscanf for every line! */
            && sscanf( &cur_line[0], "[fadein %s", img_src ) == 1 ) {
          /* an image to appear next to text. */
-
-         length = strlen( img_src );
-         intro_lines[n] = malloc( length + 2 );
-         intro_lines[n][0] = 'i';
-         strncpy( &intro_lines[n][1], img_src, length + 1 );
-         intro_lines[n][length] = '\0';
+         asprintf( &array_grow( &intro_lines ), "i%s", img_src );
+         /* Terminate the line where the closing bracket of [fadein ...] was. */
+         array_back( intro_lines )[ strlen( img_src ) ] = '\0';
 
          /* Mark that there are graphics. */
          has_side_gfx = 1;
-
       } else if ( cur_line[0] == '[' /* Don't do strncmp for every line! */
            && strncmp( &cur_line[0], "[fadeout]", 9 ) == 0 ) {
          /* fade out the image next to the text. */
-
-         intro_lines[n] = malloc( 2 );
-         intro_lines[n][0] = 'o';
-         intro_lines[n][1] = '\0';   /* not strictly necessary, but safe. */
-
+         array_push_back( &intro_lines, strdup( "o" ) );
       } else { /* plain old text. */
          /* Get the length. */
          i = gl_printWidthForText( &intro_font, cur_line, SCREEN_W - 2*SIDE_MARGIN - IMAGE_WIDTH, NULL );
-
-         intro_lines[n] = malloc( i + 2 );
-         intro_lines[n][0] = 't';
-         strncpy( &intro_lines[n][1], cur_line, i );
-         intro_lines[n][i+1] = '\0';
+         array_push_back( &intro_lines, malloc( i + 2 ) );
+         array_back( intro_lines )[0] = 't';
+         strncpy( &array_back( intro_lines )[1], cur_line, i );
+         array_back( intro_lines )[i+1] = '\0';
       }
 
       cur_line += i; /* Move pointer. */
-      n++; /* New line. */
    }
 
    /* Clean up. */
    free(intro_buf);
 
-   intro_nlines = n;
    return 0;
 }
 
@@ -176,14 +156,13 @@ static void intro_cleanup (void)
    int i;
 
    /* Free memory. */
-   for (i=0; i<intro_nlines; i++)
+   for (i=0; i<array_size(intro_lines); i++)
       free(intro_lines[i]);
-   free(intro_lines);
+   array_free(intro_lines);
    gl_freeFont(&intro_font);
 
    /* Set defaults. */
    intro_lines = NULL;
-   intro_nlines = 0;
 }
 
 /**
@@ -405,7 +384,7 @@ int intro_display( const char *text, const char *mus )
       while (! (offset < line_height)) {
          /* One line has scrolled off, and another one on. */
 
-         if (line_index < intro_nlines) {
+         if (line_index < array_size(intro_lines)) {
             switch (intro_lines[line_index][0]) {
             case 't': /* plain ol' text. */
                sb_arr[ sb_index ] = &intro_lines[ line_index ][ 1 ];
