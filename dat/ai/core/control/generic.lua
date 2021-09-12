@@ -397,6 +397,13 @@ function control ()
             end
          end
       end
+
+      -- Recall fighters if applicable
+      if ai.hasfighterbays() then
+         for k,v in ipairs(p:followers()) do
+            p:msg( v, "e_return" )
+         end
+      end
    end
 
    -- Pilots return if too far away from leader

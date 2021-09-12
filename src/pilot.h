@@ -313,6 +313,7 @@ typedef struct Pilot_ {
    int ncannons;      /**< Number of cannons equipped. */
    int nturrets;      /**< Number of turrets equipped. */
    int nbeams;        /**< Number of beams equipped. */
+   int nfighterbays;  /**< Number of fighter bays available. */
    int nafterburners; /**< Number of afterburners equipped. */
 
    /* For easier usage. */

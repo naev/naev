@@ -306,22 +306,23 @@ int pilot_addOutfitRaw( Pilot* pilot, const Outfit* outfit, PilotOutfitSlot *s )
       s->u.ammo.outfit   = NULL;
       s->u.ammo.quantity = 0;
       s->u.ammo.deployed = 0;
+      pilot->nfighterbays++;
    }
-   if (outfit_isTurret(outfit)) /* used to speed up AI */
+   else if (outfit_isTurret(outfit)) /* used to speed up AI */
       pilot->nturrets++;
    else if (outfit_isBolt(outfit))
       pilot->ncannons++;
    else if (outfit_isAfterburner(outfit))
       pilot->nafterburners++;
+   else if (outfit_isLauncher(outfit)) {
+      s->u.ammo.outfit   = NULL;
+      s->u.ammo.quantity = 0;
+      s->u.ammo.deployed = 0; /* Just in case. */
+   }
 
    if (outfit_isBeam(outfit)) { /* Used to speed up some calculations. */
       s->u.beamid = 0;
       pilot->nbeams++;
-   }
-   if (outfit_isLauncher(outfit)) {
-      s->u.ammo.outfit   = NULL;
-      s->u.ammo.quantity = 0;
-      s->u.ammo.deployed = 0; /* Just in case. */
    }
 
    /* Check if active. */
@@ -426,6 +427,8 @@ int pilot_rmOutfitRaw( Pilot* pilot, PilotOutfitSlot *s )
          pilot->nturrets--;
       else if (outfit_isBolt(s->outfit))
          pilot->ncannons--;
+      else if (outfit_isFighterBay(s->outfit))
+         pilot->nfighterbays--;
       if (outfit_isBeam(s->outfit))
          pilot->nbeams--;
    }
