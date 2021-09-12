@@ -181,9 +181,11 @@ int can_swapEquipment( const char *shipname )
             diff );
       failure = 1;
    }
-   if (pilot_hasDeployed(player.p)) { /* Escorts are in space. */
-      land_errDialogueBuild( _("You can't strand your fighters in space.") );
-      failure = 1;
+   if (pilot_hasDeployed( player.p )) {
+      if (!dialogue_YesNo(_("Recall Fighters"), _("This action will recall your deployed fighters. Is that OK?"))) {
+         land_errDialogueBuild( _("You have deployed fighters.") );
+         failure = 1;
+      }
    }
    return !failure;
 }

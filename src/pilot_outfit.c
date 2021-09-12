@@ -239,7 +239,7 @@ int pilot_dock( Pilot *p, Pilot *target )
    if (pilot_addAmmo(target, target->outfits[i], o, 1) != 1)
       return -1;
 
-   /* Remove from pilot's escort list. */\
+   /* Remove from pilot's escort list. */
    for (i=0; i<array_size(target->escorts); i++) {
       if ((target->escorts[i].type == ESCORT_TYPE_BAY) &&
             (target->escorts[i].id == p->id))

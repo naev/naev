@@ -23,6 +23,7 @@
 #include "conf.h"
 #include "debug.h"
 #include "dialogue.h"
+#include "escort.h"
 #include "gui.h"
 #include "hook.h"
 #include "info.h"
@@ -1926,8 +1927,8 @@ static void equipment_unequipShip( unsigned int wid, char* str )
 {
    (void) str;
    int ret;
-   int i;
-   Pilot *ship;
+   int i, j;
+   Pilot *ship, *pe;
    const Outfit *o, *ammo;
 
    ship = eq_wgt.selected;
@@ -1938,27 +1939,28 @@ static void equipment_unequipShip( unsigned int wid, char* str )
     * unequip if it's carrying more cargo than the ship normally fits, i.e.
     * by equipping cargo pods.
     */
-   for (i=0; i<array_size(ship->outfits); i++) {
-      /* Must have outfit. */
-      if (ship->outfits[i]->outfit == NULL)
-         continue;
-      /* Must be fighter bay. */
-      if (!outfit_isFighterBay( ship->outfits[i]->outfit))
-         continue;
-      /* Must not have deployed fighters. */
-      if (ship->outfits[i]->u.ammo.deployed > 0) {
-         dialogue_alert( _("You can not unequip your ship while you have deployed fighters!") );
-         return;
-      }
-   }
    if (pilot_cargoUsed( ship ) > ship->ship->cap_cargo) {
-      dialogue_alert( _("You can not unequip your ship when you have more cargo than it can hold without modifications!") );
+      dialogue_alert( _("You can't unequip your ship when you have more cargo than it can hold without modifications!") );
       return;
    }
-
    if (dialogue_YesNo(_("Unequip Ship"), /* confirm */
          _("Are you sure you want to remove all equipment from your ship?"))==0)
       return;
+   if (pilot_hasDeployed( ship )) {
+      if (!dialogue_YesNo(_("Recall Fighters"), _("This action will recall your deployed fighters. Is that OK?")))
+         return;
+      /* Recall fighters. */
+      for (j=array_size(ship->escorts)-1; j>=0; j--) {
+         pe = pilot_get( ship->escorts[j].id );
+         if (pe==NULL)
+            continue;
+         /* Hack so it can dock. */
+         memcpy( &pe->solid->pos, &ship->solid->pos, sizeof(Vector2d) );
+         memcpy( &pe->solid->vel, &ship->solid->vel, sizeof(Vector2d) );
+         if (pilot_dock( pe, ship ))
+            WARN(_("Player escort '%s' docking error!"), pe->name);
+      }
+   }
 
    /* Remove all outfits. */
    for (i=0; i<array_size(ship->outfits); i++) {

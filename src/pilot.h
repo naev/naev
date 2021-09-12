@@ -220,7 +220,6 @@ typedef struct Escort_s {
  * @brief The representation of an in-game pilot.
  */
 typedef struct Pilot_ {
-
    unsigned int id;  /**< pilot's id, used for many functions */
    char* name;       /**< pilot's name (if unique) */
 
