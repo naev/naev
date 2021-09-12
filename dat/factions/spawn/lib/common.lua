@@ -2,6 +2,18 @@ local lanes = require 'ai.core.misc.lanes'
 
 local scom = {}
 
+local function _normalize_presence( max )
+   local r = system.cur():radius()
+   --[[
+   -- Strictly speaking this should be quadratic, but I find it's a bit too strong of an effect
+   -- No need for math.pi as it cancels out
+   local norm = math.pow( 15e3, 2 )
+   local area = math.pow( r, 2 )
+   return max * area / norm
+   --]]
+   return max * math.min( 1.0, r / 15e3 )
+end
+
 --[[
    @brief Initializes the common spawn scheduler framework.
       @tparam Faction fct Faction to initialize for.
@@ -13,7 +25,7 @@ function scom.init( fct, weights, max, params )
    params = params or {}
    scom._faction     = faction.get(fct)
    scom._weight_table= scom.createSpawnTable( weights )
-   scom._max         = max
+   scom._max         = _normalize_presence( max )
    scom._spawn_data  = nil
    scom._params      = params
    if not params.nospawnfunc then
@@ -24,7 +36,7 @@ function scom.init( fct, weights, max, params )
    return scom.calcNextSpawn( 0 )
 end
 function scom.spawn_handler( presence, max )
-   scom._max = max -- Just in case it changed
+   scom._max = _normalize_presence( max ) -- just in case it changed
    -- Over limit so do a short delay
    if presence > max then
       return 5
