@@ -15,21 +15,6 @@
 
    Mission Template (mission name goes here)
 
-   This program is free software: you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   This program is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
-
-   You should have received a copy of the GNU General Public License
-   along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
---
-
    This is a Naev mission template.
    In this document aims to provide a structure on which to build many
    Naev missions and teach how to make basic missions in Naev.
@@ -97,7 +82,7 @@ description.
 function create ()
    -- Set our mission parameters.
    misplanet, missys = planet.get("Ulios")
-   credits = 250000
+   credits = 250e3
    talked = false
 
    -- Here we use the `creditstring()` function to convert our credits
