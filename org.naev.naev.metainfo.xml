@@ -15,7 +15,7 @@
   <recommends>
     <control>pointing</control>
     <control>keyboard</control>
-    <control>gamepad</control>
+    <!--<control>gamepad</control>-->
   </recommends>
 
   <description>
