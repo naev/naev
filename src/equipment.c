@@ -1927,8 +1927,8 @@ static void equipment_unequipShip( unsigned int wid, char* str )
 {
    (void) str;
    int ret;
-   int i, j;
-   Pilot *ship, *pe;
+   int i;
+   Pilot *ship;
    const Outfit *o, *ammo;
 
    ship = eq_wgt.selected;
@@ -1950,16 +1950,7 @@ static void equipment_unequipShip( unsigned int wid, char* str )
       if (!dialogue_YesNo(_("Recall Fighters"), _("This action will recall your deployed fighters. Is that OK?")))
          return;
       /* Recall fighters. */
-      for (j=array_size(ship->escorts)-1; j>=0; j--) {
-         pe = pilot_get( ship->escorts[j].id );
-         if (pe==NULL)
-            continue;
-         /* Hack so it can dock. */
-         memcpy( &pe->solid->pos, &ship->solid->pos, sizeof(Vector2d) );
-         memcpy( &pe->solid->vel, &ship->solid->vel, sizeof(Vector2d) );
-         if (pilot_dock( pe, ship ))
-            WARN(_("Player escort '%s' docking error!"), pe->name);
-      }
+      escort_clearDeployed( ship );
    }
 
    /* Remove all outfits. */

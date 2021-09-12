@@ -22,6 +22,7 @@ void escort_rmListIndex( Pilot *p, int i );
 unsigned int escort_create( Pilot *p, char *ship,
       Vector2d *pos, Vector2d *vel, double dir,
       EscortType_t type, int add, int dockslot );
+int escort_clearDeployed( Pilot *p );
 
 /* Keybind commands. */
 int escorts_attack( Pilot *parent );

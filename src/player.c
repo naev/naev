@@ -540,8 +540,8 @@ static Pilot* player_newShipMake( const char* name )
  */
 void player_swapShip( const char *shipname, int move_cargo )
 {
-   int i, j, fav;
-   Pilot *ship, *pe;
+   int i, fav;
+   Pilot *ship;
    Vector2d v;
    double dir;
 
@@ -550,16 +550,7 @@ void player_swapShip( const char *shipname, int move_cargo )
          continue;
 
       /* Get rid of deployed escorts. */
-      for (j=array_size(player.p->escorts)-1; j>=0; j--) {
-         pe = pilot_get( player.p->escorts[j].id );
-         if (pe==NULL)
-            continue;
-         /* Hack so it can dock. */
-         memcpy( &pe->solid->pos, &player.p->solid->pos, sizeof(Vector2d) );
-         memcpy( &pe->solid->vel, &player.p->solid->vel, sizeof(Vector2d) );
-         if (pilot_dock( pe, player.p ))
-            WARN(_("Player escort '%s' docking error!"), pe->name);
-      }
+      escort_clearDeployed( player.p );
 
       /* swap player and ship */
       ship = player_stack[i].p;

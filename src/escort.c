@@ -180,6 +180,29 @@ unsigned int escort_create( Pilot *p, char *ship,
 
 
 /**
+ * @brief Clears deployed escorts of a pilot.
+ */
+int escort_clearDeployed( Pilot *p )
+{
+   int j, q = 0;
+   Pilot *pe;
+   for (j=array_size(p->escorts)-1; j>=0; j--) {
+      pe = pilot_get( p->escorts[j].id );
+      if (pe==NULL)
+         continue;
+      /* Hack so it can dock. */
+      memcpy( &pe->solid->pos, &p->solid->pos, sizeof(Vector2d) );
+      memcpy( &pe->solid->vel, &p->solid->vel, sizeof(Vector2d) );
+      if (pilot_dock( pe, p ))
+         WARN(_("Pilot '%s' has escort '%s' docking error!"), p->name, pe->name);
+      else
+         q++;
+   }
+   return q;
+}
+
+
+/**
  * @brief Runs an escort command on all of a pilot's escorts.
  *
  *    @param parent Pilot who is giving orders.
