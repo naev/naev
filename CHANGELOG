@@ -21,16 +21,18 @@
    * Gameplay changes
       * Pirates split into multiple clans and marauders
       * Added discovery messages as you explore the universe
-      * Added automatic landing as an overlay double-click action (and on repeat of the "Land" key).
       * Overhauled NPC AI
       * Overhaul and rebalance of most outfits
       * Wanted pirates no longer aggro defense forces (pirate bounties)
-      * Comm window reworked and you can bribe multiple pilots at once
       * Bribed pilots don't become hostile again unless attacked
       * Stress now decreases based on ship mass
       * Merged the Independent and Civilian factions
       * Game now tracks meta-data like ships destroyed and time played
       * Trade lane routes made explicit
+   * Quality of Life
+      * Added automatic landing as an overlay double-click action (and on repeat of the "Land" key)
+      * Comm window reworked and you can bribe multiple pilots at once
+      * Possible to change or unequip ships with deployed fighters
    * New locations
       * Added gambling resort "Minerva Station"
       * Added mysterious new system "Taiomi"
