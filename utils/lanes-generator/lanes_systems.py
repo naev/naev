@@ -40,7 +40,7 @@ def readAssets( path ):
             ran = 0
         else:
             faction = presence.find('faction').text
-            population = float(presence.find('value').text)
+            population = float(presence.find('base').text) + float(presence.find('bonus').text)
             ran = int(presence.find('range').text)
 
         assets[name] = Asset( x, y, faction, population, ran )
