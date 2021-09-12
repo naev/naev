@@ -1,5 +1,5 @@
 [![Nightly Release Status](https://github.com/naev/naev/workflows/Nightly%20Release/badge.svg)](https://github.com/naev/naev/actions?query=workflow%3A%22Nightly+Release%22) [![CI Status](https://github.com/naev/naev/workflows/CI/badge.svg)](https://github.com/naev/naev/actions?query=workflow%3ACI) [![Packaging status](https://repology.org/badge/tiny-repos/naev.svg)](https://repology.org/project/naev/versions) [![Translation Status](https://hosted.weblate.org/widgets/naev/-/naev/svg-badge.svg)](https://hosted.weblate.org/projects/naev/)
-# Naev Readme
+# NAEV README
 
 ![Naev Logo](https://naev.org/imgs/naev.png)
 
@@ -13,7 +13,7 @@ missions, equipment, and ships; Even the galaxy itself grows larger with each
 release. For the literarily-inclined, there are large amounts of lore
 accompanying everything from planets to equipment.
 
-## Dependencies
+## DEPENDENCIES
 
 Naev's dependencies are intended to be relatively common. In addition to an
 OpenGL-capable graphics card and driver with support for at least OpenGL 3.1,
@@ -35,16 +35,16 @@ If you're cross-compiling for Windows, you must install this soft dependency:
 * [physfs](https://icculus.org/physfs/), example package name mingw-w64-physfs
 
 
-### Linux and non-macOS \*nix
+### LINUX AND NON-MACOS \*NIX
 
 See [here](https://github.com/naev/naev/wiki/Compiling-on-*nix) for package lists for several
 distributions.
 
-### Windows
+### WINDOWS
 
 See https://github.com/naev/naev/wiki/Compiling-on-Windows for dependencies and how to compile on windows.
 
-### macOS
+### MACOS
 
 Warning: this procedure is inadequate if you want to build a Naev.app that you can share with users of older macOS versions than your own.
 
@@ -60,9 +60,9 @@ If build may fail if `suite-sparse` is installed via Homebrew, citing an undefin
 
 Naev 0.9 needs a BLAS library. To use Apple's, add `-Dblas=Accelerate` to your Meson options. You can also install `openblas` via Homebrew, but you'll have to follow its instructions carefully before Meson will be able to detect it. (Official builds are prepared using OSXCross, which bypasses a lot of problems with Homebrew and Apple's toolchain, but is also more difficult to set up.)
 
-## Compiling Naev
+## COMPILING NAEV
 
-### Cloning and Submodules
+### CLONING AND SUBMODULES
 
 Naev requires the artwork submodule to run from git. You can check out the
 submodules from the cloned repository with:
@@ -80,7 +80,7 @@ configuration:
 git config submodule.recurse true
 ```
 
-### Compilation
+### COMPILATION
 
 Run:
 
@@ -104,11 +104,11 @@ directory to see a list of all available options.
 
 **For faster debug builds** (but harder to trace with gdb/lldb), try `--buildtype=debugoptimized -Db_lto=true -Db_lto_mode=thin` in place of the corresponding values above.
 
-### Running Naev
+### RUNNING NAEV
 
 You can run Naev directly from the git repository using the `naev.sh` script which will be generated in the build directory. This script will automatically set up all the data paths for running Naev. Make sure the art assets are checked out and up to date as mentioned in the Updating Art Assets section below.
 
-### Installation
+### INSTALLATION
 
 Naev currently supports `meson install` which will install everything that
 is needed.
@@ -116,7 +116,7 @@ is needed.
 If you wish to create a .desktop for your desktop environment, logos
 from 16x16 to 256x256 can be found in `extras/logos/`.
 
-## Updating Art Assets
+## UPDATING ART ASSETS
 
 Art assets are partially stored in the naev-artwork-production repository and
 sometimes are updated. For that reason, it is recommended to periodically
@@ -136,17 +136,18 @@ git config submodule.recurse true
 Afterwards, every time you perform a `git pull`, it will also update the
 artwork submodule.
 
-## Translation
+## TRANSLATION
 
 Naev supports unicode and gettext since version 0.8.0.
 
-### Online Translation
+### ONLINE TRANSLATION
 
 Naev is incorporated into Weblate. You can easily translate directly with a web
 interface to your chosen language at
-https://hosted.weblate.org/projects/naev/naev/ .
+https://hosted.weblate.org/projects/naev/naev/ . New languages have to be added
+manually, please open an issue if you want to translate Naev to a new language.
 
-### Manual Translation
+### MANUAL TRANSLATION
 
 If you are a developer, you may need to update translation files as
 text is modified. You can update all translation files with the
@@ -172,7 +173,7 @@ If you like, you can set up commit hooks to handle the `potfiles` step. For inst
 git diff --exit-code po/POTFILES.in || exec git commit --amend -C HEAD po/POTFILES.in
 ```
 
-## Crashes and Problems
+## CRASHES AND PROBLEMS
 
 Please take a look at the [FAQ](https://github.com/naev/naev/wiki/FAQ) before submitting a new
 bug report, as it covers a number of common gameplay questions and
@@ -180,4 +181,12 @@ common issues.
 
 If Naev is crashing during gameplay, please file a bug report after
 reading https://github.com/naev/naev/wiki/Bugs
+
+## LICENSE
+
+Naev is open source software compatible with the [Debian Free Software
+Guidelines](https://www.debian.org/social_contract#guidelines) licensed under
+the [GNU General Public License version 3 or
+later](https://www.gnu.org/licenses/gpl-3.0.en.html), with some exceptions.
+Please refer to the [LICENSE](LICENSE) file.
 
