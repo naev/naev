@@ -66,6 +66,7 @@ typedef enum UniEditMode_ {
 typedef enum UniEditViewMode_ {
    UNIEDIT_VIEW_DEFAULT,
    UNIEDIT_VIEW_VIRTUALASSETS,
+   UNIEDIT_VIEW_RADIUS,
    UNIEDIT_VIEW_PRESENCE,
 } UniEditViewMode;
 
@@ -361,7 +362,7 @@ static void uniedit_btnView( unsigned int wid_unused, char *unused )
    (void) wid_unused;
    (void) unused;
    unsigned int wid;
-   int i, j;
+   int i, j, n;
    Planet *planets, *p;
    char **str;
    int h;
@@ -394,13 +395,15 @@ static void uniedit_btnView( unsigned int wid_unused, char *unused )
    str   = malloc( sizeof(char*) * (array_size(factions)+1) );
    str[0]= strdup(_("Default"));
    str[1]= strdup(_("Virtual Assets"));
-   j     = 2;
+   str[2]= strdup(_("System Radius"));
+   n     = 3; /* Number of special cases. */
+   j     = n;
    for (i=0; i<array_size(factions); i++) {
       f = factions[i];
       if (f>=0)
          str[j++] = strdup( faction_name( f ) ); /* Not translating so we can use faction_get */
    }
-   qsort( &str[2], j-2, sizeof(char*), strsort );
+   qsort( &str[n], j-n, sizeof(char*), strsort );
    h = UNIEDIT_EDIT_HEIGHT-60-(BUTTON_HEIGHT+20);
    window_addList( wid, 20, -40, UNIEDIT_EDIT_WIDTH-40, h, "lstViewModes", str, j, 0, NULL, NULL );
 
@@ -551,6 +554,31 @@ static void uniedit_renderVirtualAssets( double x, double y, double r )
 }
 
 
+static void uniedit_renderRadius( double x, double y, double r )
+{
+   int i;
+   glColour c;
+   StarSystem *sys;
+   double tx, ty, sr;
+
+   c   = cWhite;
+   c.a = 0.3;
+
+   for (i=0; i<array_size(systems_stack); i++) {
+      sys = system_getIndex( i );
+
+      tx = x + sys->pos.x*uniedit_zoom;
+      ty = y + sys->pos.y*uniedit_zoom;
+
+      /* draws the disk representing the faction */
+      sr = 5.*M_PI*sqrt(sys->radius / 10e3) * uniedit_zoom;
+
+      (void) r;
+      gl_renderCircle( tx, ty, sr, &c, 1 );
+   }
+}
+
+
 /* @brief Renders important map stuff.
  */
 void uniedit_renderMap( double bx, double by, double w, double h, double x, double y, double r )
@@ -569,6 +597,10 @@ void uniedit_renderMap( double bx, double by, double w, double h, double x, doub
 
       case UNIEDIT_VIEW_VIRTUALASSETS:
          uniedit_renderVirtualAssets( x, y, r );
+         break;
+
+      case UNIEDIT_VIEW_RADIUS:
+         uniedit_renderRadius( x, y, r );
          break;
 
       case UNIEDIT_VIEW_PRESENCE:
@@ -705,6 +737,13 @@ static void uniedit_renderOverlay( double bx, double by, double bw, double bh, v
          l += scnprintf( &buf[l], sizeof(buf)-l, "%s%s", (l>0)?"\n":"", va->name );
       }
 
+      toolkit_drawAltText( x, y, buf);
+      return;
+   }
+
+   /* Handle radius view.r */
+   else if (uniedit_viewmode == UNIEDIT_VIEW_RADIUS) {
+      scnprintf( &buf[0], sizeof(buf), _("System Radius: %s"), num2strU( sys->radius, 0 ));
       toolkit_drawAltText( x, y, buf);
       return;
    }
@@ -1858,6 +1897,12 @@ static void uniedit_btnViewModeSet( unsigned int wid, char *unused )
    }
    else if (pos==1) {
       uniedit_viewmode = UNIEDIT_VIEW_VIRTUALASSETS;
+      uniedit_view_faction = -1;
+      window_close( wid, unused );
+      return;
+   }
+   else if (pos==2) {
+      uniedit_viewmode = UNIEDIT_VIEW_RADIUS;
       uniedit_view_faction = -1;
       window_close( wid, unused );
       return;
