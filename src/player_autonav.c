@@ -568,7 +568,7 @@ static int player_autonavBrake (void)
  */
 int player_autonavShouldResetSpeed (void)
 {
-   double failpc, shield, armour;
+   double shield, armour;
    int i;
    Pilot *const*pstk;
    int hostiles, will_reset;
