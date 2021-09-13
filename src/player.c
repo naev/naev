@@ -1890,7 +1890,7 @@ int player_jump (void)
 void player_brokeHyperspace (void)
 {
    ntime_t t;
-   StarSystem *sys;
+   StarSystem *sys, *destsys;
    JumpPoint *jp;
    Pilot *const* pilot_stack;
    int i, map_npath;
@@ -1960,12 +1960,12 @@ void player_brokeHyperspace (void)
          player_autonavEnd();
       }
       else {
-         (void)map_getDestination( &map_npath );
+         destsys = map_getDestination( &map_npath );
          player_message( n_(
-                  "#oAutonav continuing until destination (%d jump left).",
-                  "#oAutonav continuing until destination (%d jumps left).",
+                  "#oAutonav continuing until %s (%d jump left).",
+                  "#oAutonav continuing until %s (%d jumps left).",
                   map_npath),
-               map_npath );
+               _(destsys->name), map_npath );
       }
    }
 

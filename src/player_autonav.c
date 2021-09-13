@@ -87,9 +87,10 @@ void player_autonavStart (void)
       return;
    }
 
-   if (!player_autonavSetup())
+   if (player_autonavSetup())
       return;
 
+   player_message(_("#oAutonav: travelling to %s."), _(map_getDestination(NULL)->name));
    player.autonav = AUTONAV_JUMP_APPROACH;
 }
 
@@ -97,19 +98,18 @@ void player_autonavStart (void)
 /**
  * @brief Prepares the player to enter autonav.
  *
- *    @return 1 on success, 0 on failure (disabled, etc.)
+ *    @return 0 on success, -1 on failure (disabled, etc.)
  */
 static int player_autonavSetup (void)
 {
    /* Not under manual control or disabled. */
    if (pilot_isFlag( player.p, PILOT_MANUAL_CONTROL ) ||
          pilot_isDisabled(player.p))
-      return 0;
+      return -1;
 
    /* Autonav is mutually-exclusive with other autopilot methods. */
    player_restoreControl( PINPUT_AUTONAV, NULL );
 
-   player_message(_("#oAutonav: initialized."));
    if (!player_isFlag(PLAYER_AUTONAV)) {
       tc_base   = player_dt_default() * player.speed;
       tc_mod    = tc_base;
@@ -139,7 +139,7 @@ static int player_autonavSetup (void)
    /* Make sure time acceleration starts immediately. */
    player.autonav_timer = 0.;
 
-   return 1;
+   return 0;
 }
 
 
@@ -171,9 +171,10 @@ void player_autonavStartWindow( unsigned int wid, char *str)
  */
 void player_autonavPos( double x, double y )
 {
-   if (!player_autonavSetup())
+   if (player_autonavSetup())
       return;
 
+   player_message(_("#oAutonav: heading to position."));
    player.autonav    = AUTONAV_POS_APPROACH;
    player.autonavmsg = strdup( _("position" ));
    player.autonavcol = '0';
@@ -189,9 +190,10 @@ void player_autonavPnt( char *name )
    Planet *p;
 
    p = planet_get( name );
-   if (!player_autonavSetup())
+   if (player_autonavSetup())
       return;
 
+   player_message(_("#oAutonav: landing on %s."), _(p->name));
    player.autonav    = AUTONAV_PNT_APPROACH;
    player.autonavmsg = strdup( _(p->name) );
    player.autonavcol = planet_getColourChar( p );
@@ -210,13 +212,13 @@ void player_autonavPil( unsigned int p )
    pilot = pilot_get( p );
 
    inrange = pilot_inRangePilot( player.p, pilot, NULL );
-   if (!player_autonavSetup() || !inrange)
+   if (player_autonavSetup() || !inrange)
       return;
 
+   player_message(_("#oAutonav: following %s."), (inrange==1) ? pilot->name : _("Unknown") );
    player.autonav    = AUTONAV_PLT_FOLLOW;
    player.autonavmsg = strdup( pilot->name );
    player.autonavcol = '0';
-   player_message(_("#oAutonav: following %s."), inrange == 1 ? pilot->name : _("Unknown") );
 }
 
 
