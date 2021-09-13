@@ -111,6 +111,8 @@ static int var_cmp( const void *p1, const void *p2 )
 static misn_var *var_get( const char *str )
 {
    misn_var mv = {.name=(char*)str};
+   if (var_stack == NULL)
+      return NULL;
    return bsearch( &mv, var_stack, array_size(var_stack), sizeof(misn_var), var_cmp );
 }
 
