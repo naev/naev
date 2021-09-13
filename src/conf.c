@@ -191,7 +191,8 @@ void conf_setGameplayDefaults (void)
    conf.mouse_thrust          = MOUSE_THRUST_DEFAULT;
    conf.mouse_doubleclick     = MOUSE_DOUBLECLICK_TIME;
    conf.mouse_fly             = MOUSE_FLY_DEFAULT;
-   conf.autonav_reset_speed   = AUTONAV_RESET_SPEED_DEFAULT;
+   conf.autonav_reset_dist    = AUTONAV_RESET_DIST_DEFAULT;
+   conf.autonav_reset_shield  = AUTONAV_RESET_SHIELD_DEFAULT;
    conf.zoom_manual           = MANUAL_ZOOM_DEFAULT;
 }
 
@@ -396,7 +397,8 @@ int conf_loadConfig ( const char* file )
       conf_loadBool( lEnv, "mouse_fly", conf.mouse_fly );
       conf_loadInt( lEnv, "mouse_thrust", conf.mouse_thrust );
       conf_loadFloat( lEnv, "mouse_doubleclick", conf.mouse_doubleclick );
-      conf_loadFloat( lEnv, "autonav_abort", conf.autonav_reset_speed );
+      conf_loadFloat( lEnv, "autonav_reset_dist", conf.autonav_reset_dist );
+      conf_loadFloat( lEnv, "autonav_reset_shield", conf.autonav_reset_shield );
       conf_loadBool( lEnv, "devmode", conf.devmode );
       conf_loadBool( lEnv, "devautosave", conf.devautosave );
       conf_loadBool( lEnv, "conf_nosave", conf.nosave );
@@ -996,8 +998,12 @@ int conf_saveConfig ( const char* file )
    conf_saveFloat("mouse_doubleclick",conf.mouse_doubleclick);
    conf_saveEmptyLine();
 
-   conf_saveComment(_("Condition under which the autonav aborts."));
-   conf_saveFloat("autonav_abort",conf.autonav_reset_speed);
+   conf_saveComment(_("Enemy distance at which autonav speed resets."));
+   conf_saveFloat("autonav_reset_dist",conf.autonav_reset_dist);
+   conf_saveEmptyLine();
+
+   conf_saveComment(_("Shield value at which autonav speed resets."));
+   conf_saveFloat("autonav_reset_shield",conf.autonav_reset_shield);
    conf_saveEmptyLine();
 
    conf_saveComment(_("Enables developer mode (universe editor and the likes)"));

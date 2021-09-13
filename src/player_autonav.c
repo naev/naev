@@ -35,8 +35,8 @@ static double tc_mod    = 1.; /**< Time compression modifier. */
 static double tc_base   = 1.; /**< Base compression modifier. */
 static double tc_down   = 0.; /**< Rate of decrement. */
 static int tc_rampdown  = 0; /**< Ramping down time compression? */
-static double lasts;
-static double lasta;
+static double last_shield; /**< Player's last shield value. */
+static double last_armour; /**< Player's last armour value. */
 
 /*
  * Prototypes.
@@ -128,8 +128,8 @@ static int player_autonavSetup (void)
    player.autonavmsg = NULL;
    tc_rampdown  = 0;
    tc_down      = 0.;
-   lasts        = player.p->shield / player.p->shield_max;
-   lasta        = player.p->armour / player.p->armour_max;
+   last_shield  = player.p->shield / player.p->shield_max;
+   last_armour  = player.p->armour / player.p->armour_max;
 
    /* Set flag and tc_mod just in case. */
    player_setFlag(PLAYER_AUTONAV);
@@ -572,40 +572,46 @@ int player_autonavShouldResetSpeed (void)
    int i;
    Pilot *const*pstk;
    int hostiles, will_reset;
+   double hdist2, d2;
+   double reset_dist, reset_shield;
 
    if (!player_isFlag(PLAYER_AUTONAV))
       return 0;
 
-   hostiles   = 0;
-   will_reset = 0;
+   reset_dist     = conf.autonav_reset_dist;
+   reset_shield   = conf.autonav_reset_shield;
+   hdist2         = INFINITY;
+   hostiles       = 0;
+   will_reset     = 0;
 
-   failpc = conf.autonav_reset_speed;
    shield = player.p->shield / player.p->shield_max;
    armour = player.p->armour / player.p->armour_max;
 
    pstk = pilot_getAll();
    for (i=0; i<array_size(pstk); i++) {
-      if ( ( pstk[i]->id != PLAYER_ID ) && pilot_isHostile( pstk[i] )
-            && pilot_inRangePilot( player.p, pstk[i], NULL ) == 1
-            && !pilot_isDisabled( pstk[i] ) ) {
+      if ((pstk[i]->id != PLAYER_ID ) && pilot_isHostile( pstk[i] )
+            && pilot_inRangePilot( player.p, pstk[i], &d2 )==1
+            && !pilot_isDisabled( pstk[i] )) {
          hostiles = 1;
+         if (d2 < hdist2)
+            hdist2 = d2;
          break;
       }
    }
 
    if (hostiles) {
-      if (failpc > .995) {
+      if ((reset_dist > 0) && (hdist2 < pow2(reset_dist))) {
          will_reset = 1;
          player.autonav_timer = MAX( player.autonav_timer, 0. );
       }
-      else if ((shield < lasts && shield < failpc) || armour < lasta) {
+      else if ((shield < last_shield && shield < reset_shield) || armour < last_armour) {
          will_reset = 1;
          player.autonav_timer = MAX( player.autonav_timer, 2. );
       }
    }
 
-   lasts = shield;
-   lasta = armour;
+   last_shield = shield;
+   last_armour = armour;
 
    if (will_reset || (player.autonav_timer > 0)) {
       player_autonavResetSpeed();

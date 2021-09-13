@@ -19,7 +19,8 @@
 #define MOUSE_FLY_DEFAULT                    1     /**< Whether or not middle clicking enables mouse flying. */
 #define MOUSE_THRUST_DEFAULT                 1     /**< Whether or not to use mouse thrust controls. */
 #define MOUSE_DOUBLECLICK_TIME               0.5   /**< How long to consider double-clicks for. */
-#define AUTONAV_RESET_SPEED_DEFAULT          1.    /**< Shield level (0-1) to reset autonav speed at. 1 means at enemy presence, 0 means at armour damage. */
+#define AUTONAV_RESET_DIST_DEFAULT           5000. /**< Distance of an enemy to reset autonav speed at. */
+#define AUTONAV_RESET_SHIELD_DEFAULT         1.    /**< Shield level (0-1) to reset autonav speed at. 1 means at enemy presence, 0 means at armour damage. */
 #define MANUAL_ZOOM_DEFAULT                  0     /**< Whether or not to enable manual zoom controls. */
 #define ZOOM_FAR_DEFAULT                     0.5   /**< Far zoom distance (smaller is further) */
 #define ZOOM_NEAR_DEFAULT                    1.0   /**< Close zoom distance (bigger is larger) */
@@ -140,7 +141,8 @@ typedef struct PlayerConf_s {
    int mouse_fly; /**< Whether middle clicking enables mouse flying or not. */
    int mouse_thrust; /**< Whether mouse flying controls thrust. */
    double mouse_doubleclick; /**< How long to consider double-clicks for. */
-   double autonav_reset_speed; /**< Condition for resetting autonav speed. */
+   double autonav_reset_dist; /**< Enemy distance condition for resetting autonav. */
+   double autonav_reset_shield; /**< Shield condition for resetting autonav speed. */
    int nosave; /**< Disables conf saving. */
    int devmode; /**< Developer mode. */
    int devautosave; /**< Developer mode autosave. */

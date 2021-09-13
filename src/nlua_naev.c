@@ -385,7 +385,8 @@ static int naevL_conf( lua_State *L )
    PUSH_INT( L, "afterburn_sensitivity", conf.afterburn_sens );
    PUSH_INT( L, "mouse_thrust", conf.mouse_thrust );
    PUSH_DOUBLE( L, "mouse_doubleclick", conf.mouse_doubleclick );
-   PUSH_DOUBLE( L, "autonav_abort", conf.autonav_reset_speed );
+   PUSH_DOUBLE( L, "autonav_reset_dist", conf.autonav_reset_dist );
+   PUSH_DOUBLE( L, "autonav_reset_shield", conf.autonav_reset_shield );
    PUSH_BOOL( L, "devmode", conf.devmode );
    PUSH_BOOL( L, "devautosave", conf.devautosave );
    PUSH_BOOL( L, "conf_nosave", conf.nosave );

@@ -31,7 +31,6 @@
 #include "sound.h"
 #include "toolkit.h"
 
-
 #define BUTTON_WIDTH    200 /**< Button width, standard across menus. */
 #define BUTTON_HEIGHT   30 /**< Button height, standard across menus. */
 
@@ -40,6 +39,8 @@
 #define OPT_WIN_AUDIO      2
 #define OPT_WIN_INPUT      3
 #define OPT_WINDOWS        4
+
+#define AUTONAV_RESET_DIST_MAX  10e3
 
 static unsigned int opt_wid = 0;
 static unsigned int *opt_windows;
@@ -360,7 +361,7 @@ static void opt_gameplay( unsigned int wid )
          NULL, NULL, NULL );
    y -= 20;
    window_addFader( wid, x, y, cw, 20, "fadAutonav", 0., 1.,
-         conf.autonav_reset_speed, opt_setAutonavResetSpeed );
+         0., opt_setAutonavResetSpeed );
    y -= 40;
 
    window_addText( wid, x, y, cw, 20, 0, "txtSettings",
@@ -410,6 +411,7 @@ static int opt_gameplaySave( unsigned int wid, char *str )
    (void) str;
    int f, p, newlang;
    char *vmsg, *tmax, *s;
+   double reset;
 
    /* List. */
    p = toolkit_getListPos( wid, "lstLanguage" );
@@ -439,7 +441,19 @@ static int opt_gameplaySave( unsigned int wid, char *str )
       player_rmFlag( PLAYER_MFLY );
 
    /* Faders. */
-   conf.autonav_reset_speed = window_getFaderValue(wid, "fadAutonav");
+   reset = window_getFaderValue(wid, "fadAutonav");
+   if (reset >= 1.0) {
+      conf.autonav_reset_dist    = INFINITY;
+      conf.autonav_reset_shield  = 1.;
+   }
+   else if (reset > 0.5) {
+      conf.autonav_reset_dist    = (reset-0.5) / 0.5 * AUTONAV_RESET_DIST_MAX;
+      conf.autonav_reset_shield  = 1.;
+   }
+   else {
+      conf.autonav_reset_dist    = -1.;
+      conf.autonav_reset_shield  = reset * 0.5;
+   }
 
    /* Input boxes. */
    vmsg = window_getInput( wid, "inpMSG" );
@@ -468,7 +482,7 @@ static void opt_gameplayDefaults( unsigned int wid, char *str )
    window_checkboxSet( wid, "chkCompress", SAVE_COMPRESSION_DEFAULT );
 
    /* Faders. */
-   window_faderValue( wid, "fadAutonav", AUTONAV_RESET_SPEED_DEFAULT );
+   window_faderValue( wid, "fadAutonav", 0.75 ); /* TODO Not really good to hardcode this here :/. */
 
    /* Input boxes. */
    snprintf( vmsg, sizeof(vmsg), "%d", INPUT_MESSAGES_DEFAULT );
@@ -484,6 +498,7 @@ static void opt_gameplayUpdate( unsigned int wid, char *str )
 {
    (void) str;
    char vmsg[16], tmax[16];
+   double reset;
 
    /* Checkboxes. */
    window_checkboxSet( wid, "chkZoomManual", conf.zoom_manual );
@@ -493,7 +508,12 @@ static void opt_gameplayUpdate( unsigned int wid, char *str )
    window_checkboxSet( wid, "chkCompress", conf.save_compress );
 
    /* Faders. */
-   window_faderValue( wid, "fadAutonav", conf.autonav_reset_speed );
+   reset = 0.;
+   if (conf.autonav_reset_dist > 0.)
+      reset = MIN( 1.0, 0.5 + 0.5 * conf.autonav_reset_dist / AUTONAV_RESET_DIST_MAX );
+   else
+      reset = MAX( 0.0, 0.5 * conf.autonav_reset_shield );
+   window_faderValue( wid, "fadAutonav", reset );
 
    /* Input boxes. */
    snprintf( vmsg, sizeof(vmsg), "%d", conf.mesg_visible );
@@ -512,16 +532,18 @@ static void opt_gameplayUpdate( unsigned int wid, char *str )
 static void opt_setAutonavResetSpeed( unsigned int wid, char *str )
 {
    char buf[PATH_MAX];
-   double autonav_reset_speed;
+   double autonav_reset;
 
    /* Set fader. */
-   autonav_reset_speed = window_getFaderValue(wid, str);
+   autonav_reset = window_getFaderValue(wid, str);
 
    /* Generate message. */
-   if (autonav_reset_speed >= 1.)
+   if (autonav_reset >= 1.)
       snprintf( buf, sizeof(buf), _("Enemy Presence") );
-   else if (autonav_reset_speed > 0.)
-      snprintf( buf, sizeof(buf), _("%.0f%% Shield"), autonav_reset_speed * 100 );
+   else if (autonav_reset > 0.5)
+      snprintf( buf, sizeof(buf), _("Enemy within %s distance"), num2strU( (autonav_reset - 0.5) / 0.5 * AUTONAV_RESET_DIST_MAX, 0) );
+   else if (autonav_reset > 0.)
+      snprintf( buf, sizeof(buf), _("%.0f%% Shield"), autonav_reset / 0.5 * 100. );
    else
       snprintf( buf, sizeof(buf), _("Armour Damage") );
 
