@@ -2432,13 +2432,12 @@ static int outfit_loadDir( char *dir )
 
    outfit_files = ndata_listRecursive( dir );
    for ( i = 0; i < array_size( outfit_files ); i++ ) {
-      if (!ndata_matchExt( outfit_files[i], "xml" ))
-         continue;
-
-      ret = outfit_parse( &array_grow(&outfit_stack), outfit_files[i] );
-      if (ret < 0) {
-         n = array_size(outfit_stack);
-         array_erase( &outfit_stack, &outfit_stack[n-1], &outfit_stack[n] );
+      if (ndata_matchExt( outfit_files[i], "xml" )) {
+         ret = outfit_parse( &array_grow(&outfit_stack), outfit_files[i] );
+         if (ret < 0) {
+            n = array_size(outfit_stack);
+            array_erase( &outfit_stack, &outfit_stack[n-1], &outfit_stack[n] );
+         }
       }
       free( outfit_files[i] );
    }
