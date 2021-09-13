@@ -1,6 +1,10 @@
 #!/usr/bin/env python
 # This file generates safe lanes
 
+# TODO the presence calculation is not the same as the current Naev
+# implementation!! Faction generators and virtual assets are not taken into
+# account.
+
 import copy
 import math
 import numpy as np
