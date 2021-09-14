@@ -172,6 +172,9 @@ function create ( max )
    end
    local hostnorm = host / total
 
+   -- Hermite interpolation
+   hostnorm = math.pow(hostnorm,2) * (3-hostnorm)
+
    -- Create weights for spawn table
    weights[ spawn_loner  ] = 400
    weights[ spawn_fleet_small ] = math.max(1, -150, max ) * (1-hostnorm)
