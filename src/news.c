@@ -323,7 +323,7 @@ int *generate_news( int faction )
  */
 void news_widget( unsigned int wid, int x, int y, int w, int h )
 {
-   int i, p;
+   glPrintLineIterator *iter;
 
    /* Safe defaults. */
    news_pos    = h/3;
@@ -332,14 +332,11 @@ void news_widget( unsigned int wid, int x, int y, int w, int h )
    clear_newslines();
 
    /* Now load up the text. */
-   p = 0;
+   iter = gl_printLineIteratorInit( NULL, buf, w-40 );
 
-   while (p < len) {
-      /* Get the length. */
-      i = gl_printWidthForText( NULL, &buf[p], w-40, NULL );
-
+   while (gl_printLineIteratorNext( iter )) {
       /* Copy the line. */
-      array_push_back( &news_lines, strndup( buf+p, i ) );
+      array_push_back( &news_lines, strndup( &buf[iter->l_begin], iter->l_end - iter->l_begin ) );
       if (array_size( news_restores ) == 0)
          gl_printRestoreInit( &array_grow( &news_restores ) );
       else {
@@ -347,11 +344,9 @@ void news_widget( unsigned int wid, int x, int y, int w, int h )
          gl_printStore( &restore, news_lines[ array_size(news_lines)-2 ] );
          array_push_back( &news_restores, restore );
       }
-
-      p += i;    /* Move pointer. */
-      if ((buf[p] == '\n') || (buf[p] == ' '))
-         p++; /* Skip "empty char". */
    }
+
+   gl_printLineIteratorFree( iter );
    /* </load text> */
 
    /* Create the custom widget. */

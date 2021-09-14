@@ -122,30 +122,26 @@ static char* cli_escapeString( int *len_out, const char *s, int len )
  */
 static void cli_printCoreString( const char *s, int escape )
 {
-   int p, l, slen, len;
-   char *tmp, *buf;
+   int len;
+   char *buf;
+   glPrintLineIterator *iter;
 
-   tmp = strdup(s);
-   slen = strlen(s);
-   p = 0;
-   do {
-      if ((tmp[p] == ' ') || (tmp[p] == '\n'))
-         p++;
-      /* Don't handle tab for now. */
-      if (tmp[p]=='\t')
-         tmp[p] = ' ';
-      l = gl_printWidthForText(cli_font, &tmp[p], CLI_WIDTH-40, NULL );
+   if (s[0] == '\0') {
+      cli_addMessageMax( NULL, 0 );
+      return;
+   }
+
+   iter = gl_printLineIteratorInit( cli_font, s, CLI_WIDTH-40 );
+   while (gl_printLineIteratorNext( iter )) {
       if (escape) {
-         buf = cli_escapeString( &len, &tmp[p], l );
+         buf = cli_escapeString( &len, &s[iter->l_begin], iter->l_end - iter->l_begin );
          cli_addMessageMax( buf, len );
          free(buf);
       }
       else
-         cli_addMessageMax( &tmp[p], l );
-      p += l;
-   } while (p < slen);
-
-   free(tmp);
+         cli_addMessageMax( &s[iter->l_begin], iter->l_end - iter->l_begin );
+   }
+   gl_printLineIteratorFree( iter );
 }
 
 

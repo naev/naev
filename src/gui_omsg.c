@@ -89,25 +89,20 @@ static void omsg_free( omsg_t *omsg )
  */
 static void omsg_setMsg( omsg_t *omsg, const char *msg )
 {
-   int l, n, s;
    glFont *font;
+   glPrintLineIterator *iter;
 
    /* Clean up after old stuff. */
    omsg_free( omsg );
 
    /* Create data. */
-   l  = strlen( msg );
    font = omsg_getFont( omsg->font );
 
    omsg->msg = array_create( char* );
-   n  = 0;
-   while (n < l) {
-      s  = gl_printWidthForText( font, &msg[n], omsg_center_w, NULL );
-      array_push_back( &omsg->msg, strndup( &msg[n], s ) );
-      n += s;
-      if ((msg[n] == '\n') || (msg[n] == ' '))
-         n++; /* Skip "empty char". */
-   }
+   iter = gl_printLineIteratorInit( font, msg, omsg_center_w );
+   while (gl_printLineIteratorNext( iter ))
+      array_push_back( &omsg->msg, strndup( &iter->text[iter->l_begin], iter->l_end - iter->l_begin ) );
+   gl_printLineIteratorFree( iter );
 }
 
 

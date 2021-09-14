@@ -38,6 +38,19 @@ typedef struct glFontRestore_s {
 } glFontRestore;
 
 
+/**
+ * @brief The state of a line iteration. \see gl_printLineIteratorInit, gl_printLineIteratorNext, gl_printLineIteratorFree.
+ */
+typedef struct glPrintLineIterator_s {
+   const char *text;            /**< Text to split. */
+   const glFont *ft_font;       /**< Font to use. */
+   int width;                   /**< Maximum width of a line. */
+   int l_width;                 /**< The current line's actual width. */
+   size_t l_begin, l_end;       /**< The current line's location (&text[l_begin], inclusive, to &text[l_end], exclusive). */
+   size_t l_next;               /**< Starting point for next iteration, i.e., l_end plus any spaces that became a line break. */
+} glPrintLineIterator;
+
+
 /*
  * glFont loading / freeing
  *
@@ -93,6 +106,9 @@ PRINTF_FORMAT( 8, 9 ) int gl_printText( const glFont *ft_font,
       const glColour* c, const char *fmt, ... );
 
 /* Dimension stuff. */
+glPrintLineIterator* gl_printLineIteratorInit( const glFont *ft_font, const char *text, int width );
+int gl_printLineIteratorNext( glPrintLineIterator* iter );
+void gl_printLineIteratorFree( glPrintLineIterator* iter );
 int gl_printWidthForTextLine( const glFont *ft_font, const char *text, int width );
 int gl_printWidthForText( const glFont *ft_font, const char *text, int width, int *outw );
 int gl_printWidthRaw( const glFont *ft_font, const char *text );
