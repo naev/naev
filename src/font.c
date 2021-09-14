@@ -517,6 +517,52 @@ static size_t font_limitSize( glFontStash *stsh, int *width, const char *text, c
 
 
 /**
+ * @brief Return an iterator object for word-wrapping text.
+ *
+ *    @param text Text to split.
+ *    @param ft_font Font to use.
+ *    @param width Maximum width of a line.
+ *    @return New glPrintLineIterator. Use with \ref gl_printLineIteratorNext and free with \ref gl_printLineIteratorFree.
+ */
+glPrintLineIterator* gl_printLineIteratorInit( const glFont *ft_font, const char *text, int width )
+{
+   /* TODO: maybe no need to allocate. */
+   glPrintLineIterator *iter;
+   iter = calloc( 1, sizeof(glPrintLineIterator) );
+   iter->text = text;
+   iter->ft_font = ft_font;
+   iter->width = width;
+   return iter;
+}
+
+
+/**
+ * @brief Updates \p iter with the next line's information.
+ * @param iter An iterator returned by \ref gl_printLineIteratorInit.
+ * @return nonzero if there's a line.
+ */
+int gl_printLineIteratorNext( glPrintLineIterator* iter )
+{
+   if (iter->text[iter->l_next] == '\0')
+      return 0;
+   iter->l_begin = iter->l_next;
+   iter->l_end = iter->l_begin + gl_printWidthForText( iter->ft_font, &iter->text[iter->l_begin], iter->width, &iter->l_width );
+   /* TODO: Properly test for whitespace to skip. */
+   iter->l_next = isspace(iter->text[iter->l_end]) ? iter->l_end + 1: iter->l_end;
+   return 1;
+}
+
+
+/**
+ * @brief Frees iterators returned by \ref gl_printLineIteratorInit.
+ */
+void gl_printLineIteratorFree( glPrintLineIterator* iter )
+{
+   free( iter );
+}
+
+
+/**
  * @brief Gets the number of characters in text that fit into width.
  *
  *    @param ft_font Font to use.

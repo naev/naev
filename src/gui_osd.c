@@ -160,62 +160,36 @@ unsigned int osd_create( const char *title, int nitems, const char **items, int 
  */
 void osd_wordwrap( OSD_t* osd )
 {
-   int i, n, l, s, w, t;
+   int i, l, msg_len, w, has_tab, chunk_len;
    char *chunk;
+   const char *chunk_fmt;
+   glPrintLineIterator *iter;
+
    for (i=0; i<array_size(osd->items); i++) {
       for (l=0; l<array_size(osd->items[i]); l++)
          free(osd->items[i][l]);
       array_resize( &osd->items[i], 0 );
 
-      l = strlen(osd->msg[i]); /* Message length. */
-      n = 0; /* Text position. */
-      t = 0; /* Tabbed? */
-      w = osd_w-osd_hyphenLen;
-      while (n < l) {
-         /* Test if tabbed. */
-         if (n==0) {
-            if (osd->msg[i][n] == '\t') {
-               t = 1;
-               w = osd_w - osd_tabLen;
-            }
-            else {
-               t = 0;
-               w = osd_w - osd_hyphenLen;
-            }
-         }
+      msg_len = strlen(osd->msg[i]);
+      if (msg_len == 0)
+         continue;
 
-         /* Get text size. */
-         s = gl_printWidthForText( &gl_smallFont, &osd->msg[i][n], w, NULL );
+      /* Test if tabbed. */
+      has_tab = !!(osd->msg[i][0] == '\t');
+      w = osd_w - (has_tab ? osd_tabLen : osd_hyphenLen);
+      iter = gl_printLineIteratorInit( &gl_smallFont, &osd->msg[i][has_tab], w );
+      chunk_fmt = has_tab ? "   %s" : "- %s";
 
-         if (n==0 && t==1)
-            w -= osd_hyphenLen;
-
+      while (gl_printLineIteratorNext( iter )) {
          /* Copy text over. */
-         if (n==0) {
-            if (t==1) {
-               chunk = malloc(s+4);
-               snprintf( chunk, s+4, "   %s", &osd->msg[i][n+1] );
-            }
-            else {
-               chunk = malloc(s+3);
-               snprintf( chunk, s+3, "- %s", &osd->msg[i][n] );
-            }
-         }
-         else if (t==1) {
-            chunk = malloc(s+4);
-            snprintf( chunk, s+4, "   %s", &osd->msg[i][n] );
-         }
-         else {
-            chunk = malloc(s+1);
-            snprintf( chunk, s+1, "%s", &osd->msg[i][n] );
-         }
+         chunk_len = iter->l_end - iter->l_begin + strlen( chunk_fmt ) - 1;
+         chunk = malloc( chunk_len );
+         snprintf( chunk, chunk_len, chunk_fmt, &iter->text[iter->l_begin] );
          array_push_back( &osd->items[i], chunk );
-
-         /* Go to next line. */
-         n += s;
-         if ((osd->msg[i][n] == '\n') || (osd->msg[i][n] == ' '))
-            n++; /* Skip "empty char". */
+         chunk_fmt = has_tab ? "   %s" : "%s";
+         iter->width = has_tab ? osd_w - osd_tabLen - osd_hyphenLen : osd_w - osd_hyphenLen;
       }
+      gl_printLineIteratorFree( iter );
    }
 }
 

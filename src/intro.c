@@ -76,7 +76,7 @@ static int intro_load( const char *text )
    const char *cur_line;
    char *rest_of_file;
    char img_src[STRMAX_SHORT];     /* path to image to be displayed alongside text. */
-   int i;
+   glPrintLineIterator *iter;
 
    has_side_gfx = 0;
 
@@ -89,35 +89,22 @@ static int intro_load( const char *text )
    /* Accumulate text into intro_lines. At each step, keep track of:
     * * cur_line: text to go from the current input line, after word-wrapping.
     * * rest_of_file: pointer to just after the current input line (or NULL if we're on the last one).
-    * * i: current line length (strlen(cur_line), or less if we must word-wrap).
     * We can start in a state with no word-wrap spill-over and "rest_of_file" pointing to the full input.
     */
    intro_lines = array_create( char* );
-   cur_line = "";
    rest_of_file = intro_buf;
-   while (1) {
-      i = strlen(cur_line);
-      /* Advance a line in the source file if necesary. */
-      if (i == 0) {
-         if (rest_of_file == NULL)
-            break;
-         cur_line = rest_of_file;
-         rest_of_file = strchr(cur_line, '\n');
-         /* If there's a next line, split the string and point rest_of_file to it. */
-         if (rest_of_file != NULL) {
-            /* Check for CRLF endings -- if present, zero both parts. */
-            if (rest_of_file > cur_line && *(rest_of_file-1) == '\r')
-               *(rest_of_file-1) = '\0';
-            *rest_of_file++ = '\0';
-         }
-         /* Translate if plain text (not empty, not a directive). */
-         if (cur_line[0] != '\0' && cur_line[0] != '[')
-            cur_line = _(cur_line);
-         i = strlen(cur_line);
+   while (rest_of_file) {
+      cur_line = rest_of_file;
+      rest_of_file = strchr(cur_line, '\n');
+      /* If there's a next line, split the string and point rest_of_file to it. */
+      if (rest_of_file != NULL) {
+         /* Check for CRLF endings -- if present, zero both parts. */
+         if (rest_of_file > cur_line && *(rest_of_file-1) == '\r')
+            *(rest_of_file-1) = '\0';
+         *rest_of_file++ = '\0';
       }
 
-      if ( cur_line[0] == '[' /* Don't do sscanf for every line! */
-           && sscanf( &cur_line[0], "[fadein %s", img_src ) == 1 ) {
+      if (cur_line[0] == '[' && sscanf( &cur_line[0], "[fadein %s", img_src ) == 1) {
          /* an image to appear next to text. */
          asprintf( &array_grow( &intro_lines ), "i%s", img_src );
          /* Terminate the line where the closing bracket of [fadein ...] was. */
@@ -125,20 +112,20 @@ static int intro_load( const char *text )
 
          /* Mark that there are graphics. */
          has_side_gfx = 1;
-      } else if ( cur_line[0] == '[' /* Don't do strncmp for every line! */
-           && strncmp( &cur_line[0], "[fadeout]", 9 ) == 0 ) {
-         /* fade out the image next to the text. */
-         array_push_back( &intro_lines, strdup( "o" ) );
-      } else { /* plain old text. */
-         /* Get the length. */
-         i = gl_printWidthForText( &intro_font, cur_line, SCREEN_W - 2*SIDE_MARGIN - IMAGE_WIDTH, NULL );
-         array_push_back( &intro_lines, malloc( i + 2 ) );
-         array_back( intro_lines )[0] = 't';
-         strncpy( &array_back( intro_lines )[1], cur_line, i );
-         array_back( intro_lines )[i+1] = '\0';
       }
-
-      cur_line += i; /* Move pointer. */
+      else if (cur_line[0] == '[' && strncmp( &cur_line[0], "[fadeout]", 9 ) == 0)
+         array_push_back( &intro_lines, strdup( "o" ) ); /* fade out the image next to the text. */
+      else if (cur_line[0] == '\0')
+         array_push_back( &intro_lines, strdup( "t" ) ); /* empty paragraph break. */
+      else { /* plain old text. */
+         iter = gl_printLineIteratorInit( &intro_font, _(cur_line), SCREEN_W - 2*SIDE_MARGIN - IMAGE_WIDTH );
+         while (gl_printLineIteratorNext( iter )) {
+            array_push_back( &intro_lines, malloc( iter->l_end - iter->l_begin + 2 ) );
+            array_back( intro_lines )[0] = 't';
+            strncpy( &array_back( intro_lines )[1], &iter->text[iter->l_begin], iter->l_end - iter->l_begin );
+            array_back( intro_lines )[iter->l_end - iter->l_begin + 1] = '\0';
+         }
+      }
    }
 
    /* Clean up. */

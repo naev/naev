@@ -617,11 +617,10 @@ static int gfxL_printfDim( lua_State *L )
 static int gfxL_printfWrap( lua_State *L )
 {
    const char *s;
-   int width, outw, maxw;
+   int width, maxw;
    glFont *font;
-   int p, l, slen;
+   glPrintLineIterator *iter;
    int linenum;
-   char *tmp;
 
    /* Parse parameters. */
    font  = luaL_checkfont(L,1);
@@ -632,39 +631,25 @@ static int gfxL_printfWrap( lua_State *L )
 
    /* Process output into table. */
    lua_newtable(L);
-   tmp = strdup(s);
-   slen = strlen(s);
-   p = 0;
+   iter = gl_printLineIteratorInit(font, s, width);
    linenum = 1;
    maxw = 0;
-   do {
-      int lp = p;
-      if ((tmp[p] == ' ') || (tmp[p] == '\n'))
-         p++;
-      /* Don't handle tab for now. */
-      if (tmp[p]=='\t')
-         tmp[p] = ' ';
-      l = gl_printWidthForText(font, &tmp[p], width, &outw );
-      if (outw > maxw)
-         maxw = outw;
+   while (gl_printLineIteratorNext(iter)) {
+      maxw = MAX(maxw, iter->l_width);
 
       /* Create entry of form { string, width } in the table. */
       lua_newtable(L);                 /* t, t */
-      lua_pushlstring(L, &tmp[p], l);  /* t, t, s */
+      lua_pushlstring(L, &s[iter->l_begin], iter->l_end - iter->l_begin);  /* t, t, s */
       lua_rawseti(L,-2,1);             /* t, t */
-      lua_pushinteger(L, outw);        /* t, t, n */
+      lua_pushinteger(L,iter->l_width);/* t, t, n */
       lua_rawseti(L,-2,2);             /* t, t */
       lua_rawseti(L,-2,linenum++);     /* t */
-
-      p += l;
-      if (lp==p)
-         break;
-   } while (p < slen);
+   }
+   gl_printLineIteratorFree(iter);
 
    /* Push max width. */
    lua_pushinteger(L, maxw);
 
-   free( tmp );
    return 2;
 }
 
