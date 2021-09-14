@@ -26,6 +26,11 @@ local function add_shark( pilots )
    scom.addPilot( pilots, sshark, {name=_("Trader Shark"), ai="mercenary"})
 end
 
+-- Doubles the credits of the pilot
+function double_credits( p )
+   p:credits( p:credits() )
+end
+
 -- @brief Spawns a small trade fleet.
 function spawn_loner ()
    local pilots = {}
@@ -76,6 +81,11 @@ function spawn_fleet_small_guarded ()
       else
          add_quicksilver( pilots )
       end
+   end
+
+   -- Give more money
+   for k,p in ipairs(pilots) do
+      p.postprocess = double_credits
    end
 
    -- Some Guards
@@ -131,6 +141,11 @@ end
 
 function spawn_fleet_med_guarded ()
    local pilots = spawn_fleet_med ()
+
+   -- Give more money
+   for k,p in ipairs(pilots) do
+      p.postprocess = double_credits
+   end
 
    -- Some Guards
    for i=1,rnd.rnd(3,5) do
