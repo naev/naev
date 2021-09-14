@@ -36,7 +36,7 @@
 #include "utf8.h"
 
 
-#define MAX_EFFECT_RADIUS 2 /**< Maximum pixel distance from glyph to outline/shadow/etc. */
+#define MAX_EFFECT_RADIUS 4 /**< Maximum pixel distance from glyph to outline/shadow/etc. */
 #define FONT_DISTANCE_FIELD_SIZE   55 /**< Size to render the fonts at. */
 #define HASH_LUT_SIZE 512 /**< Size of glyph look up table. */
 #define DEFAULT_TEXTURE_SIZE 1024 /**< Default size of texture caches for glyphs. */
