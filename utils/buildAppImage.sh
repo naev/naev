@@ -5,7 +5,7 @@
 # Written by Jack Greiner (ProjectSynchro on Github: https://github.com/ProjectSynchro/)
 #
 # For more information, see http://appimage.org/
-# Pass in [-d] [-c] (set this for debug builds) [-n] (set this for nightly builds) [-m] (set this if you want to use Meson) -s <SOURCEROOT> (Sets location of source) -b <BUILDROOT> (Sets location of build directory)
+# Pass in [-d] [-c] (set this for debug builds) [-n] (set this for nightly builds) -s <SOURCEROOT> (Sets location of source) -b <BUILDROOT> (Sets location of build directory)
 
 # Output destination is ${BUILDPATH}/dist
 
@@ -27,6 +27,7 @@ while getopts dcnms:b:o: OPTION "$@"; do
         ;;        
     n)
         NIGHTLY="true"
+        BUILDTYPE="debug"
         ;;
     s)
         SOURCEROOT="${OPTARG}"
@@ -51,6 +52,7 @@ fi
 echo "SOURCE ROOT:        $SOURCEROOT"
 echo "BUILD ROOT:         $BUILDPATH"
 echo "NIGHTLY:            $NIGHTLY"
+echo "BUILDTYPE:          $BUILDTYPE"
 echo "MESON WRAPPER PATH: $MESON"
 
 export DESTDIR="$(readlink -mf "$BUILDPATH")/dist/Naev.AppDir"
@@ -61,7 +63,7 @@ sh "$MESON" setup "$BUILDPATH" "$SOURCEROOT" \
 --native-file "$SOURCEROOT/utils/build/linux.ini" \
 --buildtype "$BUILDTYPE" \
 --force-fallback-for=glpk,SuiteSparse \
--Dnightly=$NIGHTLY \
+-Dnightly="$NIGHTLY" \
 -Dprefix="/usr" \
 -Db_lto=true \
 -Dauto_features=enabled \
