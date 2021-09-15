@@ -607,7 +607,7 @@ static uint32_t font_nextChar( const char *s, size_t *i )
 int gl_printWidthForText( const glFont *ft_font, const char *text,
       const int width, int *outw )
 {
-   int lastwidth, adv_x;
+   int adv_x;
    size_t i, nexti, lastbreak;
    uint32_t ch, nextch;
    GLfloat n;
@@ -639,7 +639,8 @@ int gl_printWidthForText( const glFont *ft_font, const char *text,
       else if (brk == LINEBREAK_ALLOWBREAK) {
          lastbreak = i;
          u8_dec( text, &lastbreak );
-         lastwidth = (int)round(n);
+         if (outw != NULL)
+            *outw = (int)round(n);
       }
 
       /* Get glyph info. */
@@ -649,11 +650,8 @@ int gl_printWidthForText( const glFont *ft_font, const char *text,
 
       /* Check if out of bounds. */
       if (n > (GLfloat)width) {
-         if (lastbreak > 0) {
-            if (outw != NULL)
-               *outw = lastwidth;
+         if (lastbreak > 0)
             return lastbreak;
-         }
          /* Case we weren't able to write any whole words. */
          if (outw != NULL)
             *outw = (int)round(n - adv_x);
