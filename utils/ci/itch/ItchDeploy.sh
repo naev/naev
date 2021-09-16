@@ -95,9 +95,18 @@ run_butler () {
 }
 
 # Collect date and assemble the VERSION suffix
+
 BUILD_DATE="$(date +%Y%m%d)"
 VERSION="$(<"$TEMPPATH/naev-version/VERSION")"
-SUFFIX="$VERSION.$BUILD_DATE"
+
+if [ "$NIGHTLY" == "true" ]; then
+    SUFFIX="$VERSION+DEBUG.$BUILD_DATE"
+elif [ "$PRERELEASE" == "true" ]; then 
+    SUFFIX="$VERSION+DEBUG.$BUILD_DATE"
+else
+    SUFFIX="$VERSION"
+fi
+
 
 # Make itch.io dist path if it does not exist
 mkdir -p "$OUTDIR"/lin64
