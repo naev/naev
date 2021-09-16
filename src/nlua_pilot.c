@@ -80,6 +80,7 @@ static int pilotL_weapset( lua_State *L );
 static int pilotL_weapsetHeat( lua_State *L );
 static int pilotL_actives( lua_State *L );
 static int pilotL_outfits( lua_State *L );
+static int pilotL_outfitByID( lua_State *L );
 static int pilotL_rename( lua_State *L );
 static int pilotL_position( lua_State *L );
 static int pilotL_velocity( lua_State *L );
@@ -194,6 +195,7 @@ static const luaL_Reg pilotL_methods[] = {
    { "weapsetHeat", pilotL_weapsetHeat },
    { "actives", pilotL_actives },
    { "outfits", pilotL_outfits },
+   { "outfitByID", pilotL_outfitByID },
    { "rename", pilotL_rename },
    { "pos", pilotL_position },
    { "vel", pilotL_velocity },
@@ -1858,6 +1860,32 @@ static int pilotL_outfits( lua_State *L )
       lua_rawseti( L, -2, j++ );
    }
 
+   return 1;
+}
+
+
+/**
+ * @brief Gets a pilot's outfit by ID.
+ *
+ *    @luatparam Pilot p Pilot to get outf of.
+ *    @luatparam number id ID of the outfit to get.
+ *    @luatreturn Outfit|nil Outfit equipped in the slot or nil otherwise.
+ * @luafunc outfitByID
+ */
+static int pilotL_outfitByID( lua_State *L )
+{
+   int id;
+   Pilot *p;
+   /* Parse parameters */
+   p     = luaL_validpilot(L,1);
+   id    = luaL_checkinteger(L,2)-1;
+   if (id < 0 || id >= array_size(p->outfits))
+      NLUA_ERROR(L, _("Pilot '%s' outfit ID '%d' is out of range!"), p->name, id);
+
+   if (p->outfits[id]->outfit != NULL)
+      lua_pushoutfit( L, p->outfits[i]->outfit );
+   else
+      lua_pushnil( L );
    return 1;
 }
 
