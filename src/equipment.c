@@ -277,7 +277,7 @@ static void equipment_getDim( unsigned int wid, int *w, int *h,
 
    /* Calculate button dimensions. */
    if (bw != NULL)
-      *bw = 128;
+      *bw = 128+8;
    if (bh != NULL)
       *bh = BUTTON_HEIGHT;
 }
@@ -307,19 +307,20 @@ void equipment_open( unsigned int wid )
          &ew, &eh, &cw, &ch, &bw, &bh );
 
    /* Buttons */
-   window_addButtonKey( wid, -20, 20,
+   x = -20+4;
+   window_addButtonKey( wid, x, 20,
          BUTTON_WIDTH, bh, "btnCloseEquipment",
          _("Take Off"), land_buttonTakeoff, SDLK_t );
-   window_addButtonKey( wid, -20, 20 + (15+bh)*1,
+   window_addButtonKey( wid, x, 20 + (15+bh)*1,
          bw, bh, "btnRenameShip",
          _("Rename"), equipment_renameShip, SDLK_r );
-   window_addButtonKey( wid, -20, 20 + (15+bh)*2,
+   window_addButtonKey( wid, x, 20 + (15+bh)*2,
          bw, bh, "btnSellShip",
          _("Sell Ship"), equipment_sellShip, SDLK_s );
-   window_addButtonKey( wid, -20, 20 + (15+bh)*3,
+   window_addButtonKey( wid, x, 20 + (15+bh)*3,
          bw, bh, "btnChangeShip",
          _("Swap Ship"), equipment_transChangeShip, SDLK_p );
-   window_addButtonKey( wid, -20, 20 + (15+bh)*4,
+   window_addButtonKey( wid, x, 20 + (15+bh)*4,
          bw, bh, "btnUnequipShip",
          _("Unequip"), equipment_unequipShip, SDLK_u );
 
