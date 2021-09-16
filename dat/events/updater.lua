@@ -19,6 +19,8 @@ function updater090 ()
    end
 
    -- Set up pirate faction
+   local fpir = faction.get("Pirate")
+   local pirmod = fpir:playerStanding()
    local pirate_clans = {
       faction.get("Wild Ones"),
       faction.get("Raven Clan"),
@@ -28,10 +30,17 @@ function updater090 ()
    local maxval = -100
    for k,v in ipairs(pirate_clans) do
       local vs = v:playerStanding() -- Only get first parameter
+      local vsd = v:playerStandingDefault()
+      -- We'll be kind and set the player's pirate standing for the clans
+      -- to be positive if the player was doing well with pirates before
+      if pirmod > 0 and vs==vsd and not v:isKnown() then
+         v:setPlayerStanding( fpir+20 )
+      end
+      local vs = v:playerStanding()
       maxval = math.max( maxval, vs )
    end
    -- Pirates and marauders are fixed offsets
-   faction.get("Pirate"):setPlayerStanding(   maxval - 20 )
+   fpir:setPlayerStanding( maxval - 20 )
    faction.get("Marauder"):setPlayerStanding( maxval - 40 )
 
    -- Some previously known factions become unknown
@@ -40,7 +49,7 @@ function updater090 ()
       faction.get("Collective"):setKnown(false)
    end
    if not var.peek("disc_proteron") then
-      pro = faction.get("Proteron")
+      local pro = faction.get("Proteron")
       pro:setKnown(false)
       pro:setPlayerStanding(-50) -- Hostile by default
    end
