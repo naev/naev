@@ -313,7 +313,7 @@ jobs:
         run: |
           BUILD_DATE="$(date +%Y%m%d)"
           VERSION="$(<"build/staging/naev-version/VERSION")"
-          SUFFIX="$VERSION.$BUILD_DATE"
+          SUFFIX="$VERSION+DEBUG.$BUILD_DATE"
 
           mv build/staging/naev-linux-x86-64/*.AppImage build/dist/naev-$SUFFIX-linux-x86-64.AppImage
           mv build/staging/naev-macos/*.zip build/dist/naev-$SUFFIX-macos.zip

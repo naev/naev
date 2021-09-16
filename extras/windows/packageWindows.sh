@@ -36,7 +36,7 @@ export MINGW_BUNDLEDLLS_SEARCH_PATH
 # Check version exists and set VERSION variable.
 VERSION="$(<"$STAGING/dat/VERSION")"
 if [[ "$NIGHTLY" == "true" ]]; then
-    export VERSION="$VERSION.$BUILD_DATE"
+    export VERSION="$VERSION+DEBUG.$BUILD_DATE"
 fi
 SUFFIX="$VERSION-win64"
 
