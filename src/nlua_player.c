@@ -1065,13 +1065,9 @@ static int playerL_addOutfit( lua_State *L  )
 
    NLUA_CHECKRW(L);
 
-   /* Defaults. */
-   q = 1;
-
    /* Handle parameters. */
    o = luaL_validoutfit(L, 1);
-   if (lua_gettop(L) > 1)
-      q = luaL_checkint(L, 2);
+   q = luaL_optinteger(L, 2, 1);
 
    /* Add the outfits. */
    player_addOutfit( o, q );
@@ -1103,9 +1099,7 @@ static int playerL_rmOutfit( lua_State *L )
    NLUA_MIN_ARGS(1);
 
    /* Get quantity. */
-   q = 1; /* Default. */
-   if (lua_gettop(L) > 1)
-      q = luaL_checkint(L, 2);
+   q = luaL_optinteger(L, 2, 1);
 
    /* Handle special case it's "all". */
    if (lua_isstring(L, 1)) {
