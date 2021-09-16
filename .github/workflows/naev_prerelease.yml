@@ -24,7 +24,7 @@ jobs:
 
       - name: Package Dist
         run: |
-          meson setup build source -Dnightly=false -Dexecutable=disabled -Ddocs_c=disabled -Ddocs_lua=disabled
+          meson setup build source -Dnightly=true -Dexecutable=disabled -Ddocs_c=disabled -Ddocs_lua=disabled
           meson dist -C build --no-tests --include-subprojects
 
       - name: Collect Artifacts
@@ -123,9 +123,9 @@ jobs:
               --bindir=bin \
               -Dndata_path=bin \
               --cross-file='source/utils/build/windows_cross_mxe.ini' \
-              --buildtype=release \
+              --buildtype=debug \
               --force-fallback-for=glpk,SuiteSparse \
-              -Dnightly=false \
+              -Dnightly=true \
               -Db_lto=true \
               -Dauto_features=enabled \
               -Ddocs_c=disabled \
@@ -170,8 +170,8 @@ jobs:
               --bindir=Contents/MacOS \
               -Dndata_path=Contents/Resources \
               --cross-file='source/utils/build/macos_cross_osxcross.ini' \
-              --buildtype=release \
-              -Dnightly=false \
+              --buildtype=debug \
+              -Dnightly=true \
               -Db_lto=true \
               -Dauto_features=enabled \
               -Ddocs_c=disabled \
@@ -216,10 +216,10 @@ jobs:
         run: |
           meson setup build source \
               --native-file='source/utils/build/linux_steamruntime.ini' \
-              --buildtype=release \
+              --buildtype=debug \
               --force-fallback-for=SuiteSparse,sdl2_image \
               -Dprefix="/usr" \
-              -Dnightly=false \
+              -Dnightly=true \
               -Db_lto=true \
               -Dauto_features=enabled \
               -Ddocs_c=disabled \
@@ -295,7 +295,7 @@ jobs:
         run: |
           BUILD_DATE="$(date +%Y%m%d)"
           VERSION="$(<"build/staging/naev-version/VERSION")"
-          SUFFIX="$VERSION.$BUILD_DATE"
+          SUFFIX="$VERSION+DEBUG.$BUILD_DATE"
 
           mv build/staging/naev-linux-x86-64/*.AppImage build/dist/naev-$SUFFIX-linux-x86-64.AppImage
           mv build/staging/naev-macos/*.zip build/dist/naev-$SUFFIX-macos.zip
