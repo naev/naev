@@ -4388,6 +4388,10 @@ void space_reconstructPresences( void )
       system_setFaction( &systems_stack[i] );
       systems_stack[i].ownerpresence = system_getPresence( &systems_stack[i], systems_stack[i].faction );
    }
+
+   /* Have to redo the scheduler because everything changed. */
+   /* TODO this actually ignores existing presence and will temporarily increase system presence more than normal... */
+   system_scheduler( 0., 1 );
 }
 
 
