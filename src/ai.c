@@ -927,6 +927,10 @@ void ai_hail( Pilot* recipient )
 {
    HookParam hparam[2];
 
+   /* Make sure it's getable. */
+   if (!pilot_canTarget( recipient ))
+      return;
+
    hparam[0].type       = HOOK_PARAM_PILOT;
    hparam[0].u.lp       = recipient->id;
    hparam[1].type       = HOOK_PARAM_SENTINEL;
