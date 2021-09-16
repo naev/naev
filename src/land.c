@@ -1472,6 +1472,10 @@ static void land_stranded (void)
       nlua_loadTk( rescue_env );
 
       buf = ndata_read( file, &bufsize );
+      if (buf == NULL) {
+         WARN( _("File '%s' not found!"), RESCUE_PATH );
+         return;
+      }
       if (nlua_dobufenv(rescue_env, buf, bufsize, file) != 0) {
          WARN( _("Error loading file: %s\n"
              "%s\n"

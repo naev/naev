@@ -35,6 +35,8 @@
 #include "mission.h"
 #include "ndata.h"
 #include "nstring.h"
+#include "nlua.h"
+#include "nlua_tk.h"
 #include "ntime.h"
 #include "player.h"
 #include "pilot_outfit.h"
@@ -68,6 +70,7 @@ static unsigned int equipment_lastick = 0; /**< Last tick. */
 static unsigned int equipment_wid   = 0; /**< Global wid. */
 static iar_data_t *iar_data = NULL; /**< Stored image array positions. */
 static Outfit ***iar_outfits = NULL; /**< Outfits associated with the image array cells. */
+static nlua_env autoequip_env = LUA_NOREF; /* Autoequip env. */
 
 /*
  * prototypes
@@ -103,6 +106,7 @@ static void equipment_renameShip( unsigned int wid, char *str );
 static void equipment_transChangeShip( unsigned int wid, char* str );
 static void equipment_changeShip( unsigned int wid );
 static void equipment_unequipShip( unsigned int wid, char* str );
+static void equipment_autoequipShip( unsigned int wid, char* str );
 static void equipment_filterOutfits( unsigned int wid, char *str );
 static void equipment_rightClickOutfits( unsigned int wid, char* str );
 static void equipment_changeTab( unsigned int wid, char *wgt, int old, int tab );
@@ -323,6 +327,9 @@ void equipment_open( unsigned int wid )
    window_addButtonKey( wid, x, 20 + (15+bh)*4,
          bw, bh, "btnUnequipShip",
          _("Unequip"), equipment_unequipShip, SDLK_u );
+   window_addButtonKey( wid, x, 20 + (15+bh)*5,
+         bw, bh, "btnAutoequipShip",
+         _("Autoequip"), equipment_autoequipShip, SDLK_a );
 
    /* Prepare the outfit array. */
    if (iar_data == NULL)
@@ -1992,6 +1999,73 @@ static void equipment_unequipShip( unsigned int wid, char* str )
    /* Notify GUI of modification. */
    gui_setShip();
 }
+
+
+/**
+ * @brief Does the autoequip magic on the player's ship.
+ */
+static void equipment_autoequipShip( unsigned int wid, char* str )
+{
+   (void) str;
+   Pilot *ship;
+   int doswap, nship;
+   const char *curship;
+   const char *file = "autoequip.lua";
+   char *buf;
+   size_t bufsize;
+
+   ship = eq_wgt.selected;
+
+   /* Swap ship if necessary. */
+   doswap = (ship != player.p);
+   if (doswap) {
+      nship = toolkit_getImageArrayPos( wid, EQUIPMENT_SHIPS );
+      curship = player.p->name;
+      player_swapShip( ship->name, 0 );
+   }
+
+   /* Create the environment */
+   if (autoequip_env == LUA_NOREF) {
+      /* Read File. */
+      buf = ndata_read( file, &bufsize );
+      if (buf == NULL) {
+         WARN( _("File '%s' not found!"), file );
+         return;
+      }
+      /* New env. */
+      autoequip_env = nlua_newEnv(1);
+      nlua_loadStandard( autoequip_env );
+      nlua_loadTk( autoequip_env );
+      if (nlua_dobufenv(autoequip_env, buf, bufsize, file) != 0) {
+         WARN(_("Failed to run 'autoequip.lua': %s"), lua_tostring(naevL,-1));
+         lua_pop(naevL,1);
+         goto autoequip_cleanup;
+      }
+   }
+
+   /* Run func. */
+   nlua_getenv( autoequip_env, "autoequip" );
+   if (!lua_isfunction(naevL,-1)) {
+      WARN(_("'autoequip.lua' doesn't have valid required 'autoequip' function!"));
+      lua_pop(naevL,1);
+      goto autoequip_cleanup;
+   }
+   lua_pushpilot(naevL,player.p->id);
+   if (nlua_pcall( autoequip_env, 1, 0 )) {
+      WARN(_("'autoequip.lua' failed to run required 'autoequip' function: %s"), lua_tostring(naevL,-1));
+      lua_pop(naevL,1);
+      goto autoequip_cleanup;
+   }
+
+   /* Clean up. */
+autoequip_cleanup:
+   if (doswap) {
+      player_swapShip( curship, 0 );
+      toolkit_setImageArrayPos( wid, EQUIPMENT_SHIPS, nship );
+   }
+}
+
+
 /**
  * @brief Player tries to sell a ship.
  *    @param wid Window player is selling ships in.
