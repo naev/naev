@@ -72,12 +72,8 @@ int nlua_loadDiff( nlua_env env )
  */
 static int diff_applyL( lua_State *L )
 {
-   const char *name;
-
    NLUA_CHECKRW(L);
-
-   name = luaL_checkstring(L,1);
-
+   const char *name = luaL_checkstring(L,1);
    diff_apply( name );
    return 0;
 }
@@ -89,12 +85,8 @@ static int diff_applyL( lua_State *L )
  */
 static int diff_removeL( lua_State *L )
 {
-   const char *name;
-
    NLUA_CHECKRW(L);
-
-   name = luaL_checkstring(L,1);
-
+   const char *name = luaL_checkstring(L,1);
    diff_remove( name );
    return 0;
 }
@@ -107,10 +99,7 @@ static int diff_removeL( lua_State *L )
  */
 static int diff_isappliedL( lua_State *L )
 {
-   const char *name;
-
-   name = luaL_checkstring(L,1);
-
+   const char *name = luaL_checkstring(L,1);
    lua_pushboolean(L,diff_isApplied(name));
    return 1;
 }
