@@ -1883,7 +1883,7 @@ static int pilotL_outfitByID( lua_State *L )
       NLUA_ERROR(L, _("Pilot '%s' outfit ID '%d' is out of range!"), p->name, id);
 
    if (p->outfits[id]->outfit != NULL)
-      lua_pushoutfit( L, p->outfits[i]->outfit );
+      lua_pushoutfit( L, p->outfits[id]->outfit );
    else
       lua_pushnil( L );
    return 1;
