@@ -45,7 +45,7 @@ function spawn_squad ()
    return pilots
 end
 
-faction.get("Frontier")
+local ffrontier = faction.get("Frontier")
 -- @brief Creation hook.
 function create ( max )
    local weights = {}
@@ -54,5 +54,5 @@ function create ( max )
    weights[ spawn_patrol  ] = 100
    weights[ spawn_squad   ] = 0.33*max
 
-   return scom.init( fflf, weights, max, {patrol=true} )
+   return scom.init( ffrontier, weights, max, {patrol=true} )
 end
