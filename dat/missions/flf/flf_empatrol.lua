@@ -19,6 +19,7 @@
    FLF Empire patrol elimination mission
 
 --]]
+require "missions.flf.flf_patrol"
 local flf = require "missions.flf.flf_common"
 
 misn_title = {}
