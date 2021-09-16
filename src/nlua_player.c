@@ -1013,7 +1013,7 @@ static int playerL_outfits( lua_State *L )
    lua_newtable(L);
    for (i=0; i<array_size(outfits); i++) {
       lua_pushoutfit(L, (Outfit*)outfits[i].o );
-      lua_rawseti(L, -3, i+1);
+      lua_rawseti(L, -2, i+1);
    }
 
    return 1;
