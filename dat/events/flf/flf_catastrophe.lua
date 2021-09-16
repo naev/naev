@@ -18,7 +18,7 @@
 
 local fleet = require "fleet"
 require "misnhelper"
-require "missions.flf.flf_common"
+local flf = require "missions.flf.flf_common"
 
 
 title = {}
@@ -270,7 +270,7 @@ function pilot_death_sindbad( pilot, attacker, arg )
       -- reputation to "enemy", add a log entry, and finish the event
       -- without giving the usual rewards.
       faction.get("FLF"):setPlayerStanding( -100 )
-      flf_addLog( log_text_betrayal )
+      flf.addLog( log_text_betrayal )
       evt.finish( true )
    end
 
@@ -285,9 +285,9 @@ function pilot_death_sindbad( pilot, attacker, arg )
 
    tk.msg( title[6], text[6] )
    tk.msg( title[6], text[7]:format( player.name() ) )
-   flf_setReputation( 100 )
+   flf.setReputation( 100 )
    faction.get("FLF"):setPlayerStanding( 100 )
-   flf_addLog( log_text_flf )
+   flf.addLog( log_text_flf )
    player.outfitAdd( "Map: Inner Nebula Secret Jump" )
    hook.jumpin( "jumpin" )
    hook.land( "land" )
@@ -336,7 +336,7 @@ function land ()
       tk.msg( title[11], text[13] )
       tk.msg( title[11], text[14]:format( player.name() ) )
       faction.get("Thurion"):setKnown( true )
-      flf_addLog( log_text_thurion )
+      flf.addLog( log_text_thurion )
    elseif diff.isApplied( "Thurion_found" ) then
       diff.remove( "Thurion_found" )
    end
