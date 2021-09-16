@@ -88,7 +88,7 @@ else
     exit -1
 fi
 
-if [[ "$BUILDTYPE" =~ "debug"]]; then
+if [[ "$BUILDTYPE" =~ "debug" ]]; then
     export VERSION="$VERSION+DEBUG.$BUILD_DATE"
 fi
 
