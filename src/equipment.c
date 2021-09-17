@@ -2062,6 +2062,7 @@ autoequip_cleanup:
    if (doswap) {
       player_swapShip( curship, 0 );
       toolkit_setImageArray( equipment_wid, EQUIPMENT_SHIPS, ship->name );
+      equipment_updateShips( equipment_wid, NULL );
    }
 }
 
