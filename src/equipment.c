@@ -2016,7 +2016,7 @@ static void equipment_autoequipShip( unsigned int wid, char* str )
    Pilot *ship;
    int doswap;
    const char *curship;
-   const char *file = "autoequip.lua";
+   const char *file = AUTOEQUIP_PATH;
    char *buf;
    size_t bufsize;
 
