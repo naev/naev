@@ -281,7 +281,7 @@ static void equipment_getDim( unsigned int wid, int *w, int *h,
 
    /* Calculate button dimensions. */
    if (bw != NULL)
-      *bw = 128+8;
+      *bw = (*w - 20 - (sw!=NULL?*sw:0) - 40 - 20 - 60) / 5;
    if (bh != NULL)
       *bh = BUTTON_HEIGHT;
 }
@@ -312,22 +312,24 @@ void equipment_open( unsigned int wid )
 
    /* Buttons */
    x = -20+4;
-   window_addButtonKey( wid, x, 20,
-         BUTTON_WIDTH, bh, "btnCloseEquipment",
+   y = 20;
+   window_addButtonKey( wid, x, y,
+         bw, bh, "btnCloseEquipment",
          _("Take Off"), land_buttonTakeoff, SDLK_t );
-   window_addButtonKey( wid, x, 20 + (15+bh)*1,
-         bw, bh, "btnRenameShip",
-         _("Rename"), equipment_renameShip, SDLK_r );
-   window_addButtonKey( wid, x, 20 + (15+bh)*2,
+   x -= (15+bw);
+   window_addButtonKey( wid, x, y,
          bw, bh, "btnSellShip",
          _("Sell Ship"), equipment_sellShip, SDLK_s );
-   window_addButtonKey( wid, x, 20 + (15+bh)*3,
+   x -= (15+bw);
+   window_addButtonKey( wid, x, y,
          bw, bh, "btnChangeShip",
          _("Swap Ship"), equipment_transChangeShip, SDLK_p );
-   window_addButtonKey( wid, x, 20 + (15+bh)*4,
+   x -= (15+bw);
+   window_addButtonKey( wid, x, y,
          bw, bh, "btnUnequipShip",
          _("Unequip"), equipment_unequipShip, SDLK_u );
-   window_addButtonKey( wid, x, 20 + (15+bh)*5,
+   x -= (15+bw);
+   window_addButtonKey( wid, x, y,
          bw, bh, "btnAutoequipShip",
          _("Autoequip"), equipment_autoequipShip, SDLK_a );
 
@@ -393,6 +395,9 @@ void equipment_open( unsigned int wid )
 
    /* Favourite checkbox, run before genLists. */
    window_addCheckbox( wid, -20-(128-cw)/2, -20-150-ch, cw, 30, "chkFav", _("Favourite"), equipment_toggleFav, 0 );
+   window_addButtonKey( wid, -16, -20-150-ch-bh,
+         128+8, bh, "btnRenameShip",
+         _("Rename"), equipment_renameShip, SDLK_r );
 
    /* Generate lists. */
    equipment_genLists( wid );
