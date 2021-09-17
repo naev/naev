@@ -2203,6 +2203,7 @@ dat/ai/stationary.lua
 dat/ai/thurion.lua
 dat/ai/trader.lua
 dat/ai/zalek.lua
+dat/autoequip.lua
 dat/bkg/bgshaders.lua
 dat/bkg/crimson_gauntlet.lua
 dat/bkg/default.lua
