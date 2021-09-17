@@ -1476,10 +1476,10 @@ void window_render( Window *w )
       wgt = toolkit_getFocus( w );
       if ((wgt == NULL) || wgt_isFlag(wgt, WGT_FLAG_KILL))
          return;
-      x  += wgt->x;
-      y  += wgt->y;
-      wid = wgt->w;
-      hei = wgt->h;
+      x  += wgt->x-2;
+      y  += wgt->y-2;
+      wid = wgt->w+4;
+      hei = wgt->h+4;
       toolkit_drawOutlineThick( x, y, wid, hei, 0, 2, (wgt->type == WIDGET_BUTTON ? &cGrey70 : &cGrey30), NULL );
    }
 }
