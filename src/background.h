@@ -18,7 +18,7 @@ void background_renderOverlay( double dt );
 
 /* Add images. */
 unsigned int background_addImage( glTexture *image, double x, double y,
-      double move, double scale, const glColour *col, int foreground );
+      double move, double scale, double angle, const glColour *col, int foreground );
 
 /* Stars. */
 void background_initStars( int n );
