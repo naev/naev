@@ -745,7 +745,7 @@ char* toolkit_getImageArray( const unsigned int wid, const char* name )
 }
 
 
-/**
+/*
  * @brief Sets an image array based on value.
  *
  *   \warning If the captions have been translated or otherwise preprocessed,
@@ -770,6 +770,7 @@ int toolkit_setImageArray( const unsigned int wid, const char* name, char* elem 
    for (i=0; i<wgt->dat.iar.nelements; i++) {
       if (strcmp(elem,wgt->dat.iar.images[i].caption)==0) {
          wgt->dat.iar.selected = i;
+         iar_centerSelected( wgt );
          return 0;
       }
    }

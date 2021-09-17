@@ -2007,8 +2007,9 @@ static void equipment_unequipShip( unsigned int wid, char* str )
 static void equipment_autoequipShip( unsigned int wid, char* str )
 {
    (void) str;
+   (void) wid;
    Pilot *ship;
-   int doswap, nship;
+   int doswap;
    const char *curship;
    const char *file = "autoequip.lua";
    char *buf;
@@ -2019,7 +2020,6 @@ static void equipment_autoequipShip( unsigned int wid, char* str )
    /* Swap ship if necessary. */
    doswap = (ship != player.p);
    if (doswap) {
-      nship = toolkit_getImageArrayPos( wid, EQUIPMENT_SHIPS );
       curship = player.p->name;
       player_swapShip( ship->name, 0 );
    }
@@ -2037,7 +2037,7 @@ static void equipment_autoequipShip( unsigned int wid, char* str )
       nlua_loadStandard( autoequip_env );
       nlua_loadTk( autoequip_env );
       if (nlua_dobufenv(autoequip_env, buf, bufsize, file) != 0) {
-         WARN(_("Failed to run 'autoequip.lua': %s"), lua_tostring(naevL,-1));
+         WARN(_("Failed to run '%s': %s"), file, lua_tostring(naevL,-1));
          lua_pop(naevL,1);
          goto autoequip_cleanup;
       }
@@ -2046,13 +2046,13 @@ static void equipment_autoequipShip( unsigned int wid, char* str )
    /* Run func. */
    nlua_getenv( autoequip_env, "autoequip" );
    if (!lua_isfunction(naevL,-1)) {
-      WARN(_("'autoequip.lua' doesn't have valid required 'autoequip' function!"));
+      WARN(_("'%s' doesn't have valid required 'autoequip' function!"), file);
       lua_pop(naevL,1);
       goto autoequip_cleanup;
    }
    lua_pushpilot(naevL,player.p->id);
    if (nlua_pcall( autoequip_env, 1, 0 )) {
-      WARN(_("'autoequip.lua' failed to run required 'autoequip' function: %s"), lua_tostring(naevL,-1));
+      WARN(_("'%s' failed to run required 'autoequip' function: %s"), file, lua_tostring(naevL,-1));
       lua_pop(naevL,1);
       goto autoequip_cleanup;
    }
@@ -2061,7 +2061,7 @@ static void equipment_autoequipShip( unsigned int wid, char* str )
 autoequip_cleanup:
    if (doswap) {
       player_swapShip( curship, 0 );
-      toolkit_setImageArrayPos( wid, EQUIPMENT_SHIPS, nship );
+      toolkit_setImageArray( equipment_wid, EQUIPMENT_SHIPS, ship->name );
    }
 }
 
