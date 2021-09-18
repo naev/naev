@@ -175,18 +175,17 @@ static double gui_xoff = 0.; /**< X Offset that GUI introduces. */
 static double gui_yoff = 0.; /**< Y offset that GUI introduces. */
 
 /* messages */
-#define MESG_SIZE_MAX        256 /**< Maxmimu message length. */
-static int mesg_max        = 128; /**< Maximum messages onscreen */
-static int mesg_pointer    = 0; /**< Current pointer message is at (for when scrolling. */
+static const int mesg_max        = 128; /**< Maximum messages onscreen */
+static int mesg_pointer    = 0; /**< Current pointer message is at (for when scrolling). */
 static int mesg_viewpoint  = -1; /**< Position of viewing. */
-static double mesg_timeout = 15.; /**< Timeout length. */
+static const double mesg_timeout = 15.; /**< Timeout length. */
 /**
  * @struct Mesg
  *
  * @brief On screen player message.
  */
 typedef struct Mesg_ {
-   char str[MESG_SIZE_MAX]; /**< The message. */
+   char *str; /**< The message (allocated). */
    double t; /**< Time to live for the message. */
    glFontRestore restore; /**< Hack for font restoration. */
 } Mesg;
@@ -244,7 +243,7 @@ static int gui_runFunc( const char* func, int nargs, int nret );
 void gui_setDefaults (void)
 {
    gui_setRadarResolution( player.radar_res );
-   memset( mesg_stack, 0, sizeof(Mesg)*mesg_max );
+   gui_clearMessages();
 }
 
 
@@ -349,10 +348,6 @@ void player_messageRaw( const char *str )
    if (!gui_getMessage)
       return;
 
-   /* Must be non-null. */
-   if (str == NULL)
-      return;
-
    /* Get length. */
    l = strlen(str);
    i = gl_printWidthForText( NULL, str, gui_mesg_w - ((str[0] == '\t') ? 45. : 15.), NULL );
@@ -363,18 +358,15 @@ void player_messageRaw( const char *str )
       if (mesg_viewpoint != -1)
          mesg_viewpoint++;
 
-      /* Buffer overrun safety. */
-      if (i > MESG_SIZE_MAX-1)
-         i = MESG_SIZE_MAX-1;
-
       /* Add the new one */
+      free( mesg_stack[mesg_pointer].str );
       if (p == 0) {
-         snprintf( mesg_stack[mesg_pointer].str, i+1, "%s", &str[p] );
+         mesg_stack[mesg_pointer].str = strndup( &str[p], i );
          gl_printRestoreInit( &mesg_stack[mesg_pointer].restore );
       }
       else {
-         mesg_stack[mesg_pointer].str[0] = '\t'; /* Hack to indent. */
-         snprintf( &mesg_stack[mesg_pointer].str[1], i+1, "%s", &str[p] );
+         mesg_stack[mesg_pointer].str = malloc(i+2);
+         snprintf( mesg_stack[mesg_pointer].str, i+2, "\t%s", &str[p] );
          gl_printStoreMax( &mesg_stack[mesg_pointer].restore, str, p );
       }
       mesg_stack[mesg_pointer].t = mesg_timeout;
@@ -395,23 +387,18 @@ void player_messageRaw( const char *str )
 void player_message( const char *fmt, ... )
 {
    va_list ap;
-   char buf[1024];
+   char *buf;
 
    /* Must be receiving messages. */
    if (!gui_getMessage)
       return;
 
-   /* Must be non-null. */
-   if (fmt == NULL)
-      return;
-
    /* Add the new one */
-   va_start(ap, fmt);
-   vsnprintf( buf, sizeof(buf), fmt, ap );
-   va_end(ap);
-
-   /* Add the message. */
+   va_start( ap, fmt );
+   vasprintf( &buf, fmt, ap );
+   va_end( ap );
    player_messageRaw( buf );
+   free( buf );
 }
 
 
@@ -1120,6 +1107,8 @@ void gui_radarGetRes( double* res )
  */
 void gui_clearMessages (void)
 {
+   for (int i = 0; i < mesg_max; i++)
+      free( mesg_stack[i].str );
    memset( mesg_stack, 0, sizeof(Mesg)*mesg_max );
 }
 
@@ -1185,14 +1174,14 @@ static void gui_renderMessages( double dt )
             mesg_stack[m].t -= dt / dt_mod;
 
          /* Only handle non-NULL messages. */
-         if (mesg_stack[m].str[0] != '\0') {
+         if (mesg_stack[m].str != NULL) {
             if (mesg_stack[m].str[0] == '\t') {
                gl_printRestore( &mesg_stack[m].restore );
                dy = gl_printHeightRaw( NULL, gui_mesg_w, &mesg_stack[m].str[1]) + 6;
                gl_renderRect( x-4., y-1., gui_mesg_w-13., dy, &msgc );
                gl_printMaxRaw( &gl_smallFont, gui_mesg_w - 45., x + 30, y + 3, &cFontWhite, -1., &mesg_stack[m].str[1] );
             } else {
-               dy = gl_printHeightRaw( NULL, gui_mesg_w, &mesg_stack[m].str[1]) + 6;
+               dy = gl_printHeightRaw( NULL, gui_mesg_w, mesg_stack[m].str) + 6;
                gl_renderRect( x-4., y-1., gui_mesg_w-13., dy, &msgc );
                gl_printMaxRaw( &gl_smallFont, gui_mesg_w - 15., x, y + 3, &cFontWhite, -1., mesg_stack[m].str );
             }
@@ -2074,6 +2063,8 @@ void gui_free (void)
 {
    gui_cleanup();
 
+   for (int i = 0; i < mesg_max; i++)
+      free( mesg_stack[i].str );
    free(mesg_stack);
    mesg_stack = NULL;
 

@@ -180,8 +180,8 @@ void player_render( double dt );
  * Message stuff, in gui.c
  */
 void player_messageToggle( int enable );
-PRINTF_FORMAT( 1, 2 )void player_message( const char *fmt, ... );
-void player_messageRaw ( const char *str );
+NONNULL( 1 ) PRINTF_FORMAT( 1, 2 ) void player_message( const char *fmt, ... );
+NONNULL( 1 ) void player_messageRaw ( const char *str );
 
 /*
  * misc
