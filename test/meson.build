@@ -3,7 +3,7 @@ subdir('glcheck')
 test('main_menu',
     find_program('watch-for-msg.py'),
     args: [
-        naev_bin,
+        naev_sh,
         meson.source_root() / 'dat',
         'Reached main menu'],
     workdir: meson.source_root(),

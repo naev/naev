@@ -303,7 +303,7 @@ if buildExec.disabled() == false
       export_dynamic: bfd.found(),
       install: true)
 
-   configure_file(
+   naev_sh = configure_file(
       input: 'utils/build/naev.sh',
       output: 'naev.sh',
       configuration: {
