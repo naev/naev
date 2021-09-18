@@ -57,39 +57,41 @@ log_text = _([[You rescued the crew of a Dvaered ship that was disabled by an FL
 
 
 function create()
-    -- Note: this mission makes no system claims.
-    misn.accept()
+   faction.get("FLF"):setKnown(true)
 
-    tk.msg(title[1], text[1])
+   -- Note: this mission makes no system claims.
+   misn.accept()
 
-    misn.osdCreate(misn_title, osd_desc)
-    misn.setDesc(misn_desc)
-    misn.setTitle(misn_title)
-    misn.setReward(misn_reward)
+   tk.msg(title[1], text[1])
 
-    local c = misn.cargoNew( N_("Dvaered Ship Crew"), N_("Dvaered crew from a ship that was disabled by the FLF.") )
-    DVcrew = misn.cargoAdd(c, 0)
+   misn.osdCreate(misn_title, osd_desc)
+   misn.setDesc(misn_desc)
+   misn.setTitle(misn_title)
+   misn.setReward(misn_reward)
 
-    hook.land("land")
+   local c = misn.cargoNew( N_("Dvaered Ship Crew"), N_("Dvaered crew from a ship that was disabled by the FLF.") )
+   DVcrew = misn.cargoAdd(c, 0)
+
+   hook.land("land")
 end
 
 function land()
-    if planet.cur():faction() == faction.get("Dvaered") then
-        if var.peek("flfbase_flfshipkilled") then
-            tk.msg(title[2], text[2] .. text[3] .. text[5])
-            player.pay(100e3)
-        else
-            tk.msg(title[2], text[2] .. text[4] .. text[5])
-        end
-    end
-    misn.cargoJet(DVcrew)
-    var.push("flfbase_intro", 1)
-    var.pop("flfbase_flfshipkilled")
-    dv_addAntiFLFLog( log_text )
-    misn.finish(true)
+   if planet.cur():faction() == faction.get("Dvaered") then
+      if var.peek("flfbase_flfshipkilled") then
+         tk.msg(title[2], text[2] .. text[3] .. text[5])
+         player.pay(100e3)
+      else
+         tk.msg(title[2], text[2] .. text[4] .. text[5])
+      end
+   end
+   misn.cargoJet(DVcrew)
+   var.push("flfbase_intro", 1)
+   var.pop("flfbase_flfshipkilled")
+   dv_addAntiFLFLog( log_text )
+   misn.finish(true)
 end
 
 function abort()
-    var.pop("flfbase_flfshipkilled")
-    misn.finish(false)
+   var.pop("flfbase_flfshipkilled")
+   misn.finish(false)
 end

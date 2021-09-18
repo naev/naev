@@ -53,6 +53,11 @@ function updater090 ()
       pro:setKnown(false)
       pro:setPlayerStanding(-50) -- Hostile by default
    end
+   local fflf = faction.get("FLF")
+   fflf:setKnown(false)
+   if var.peek("disc_frontier") or player.misnDone("Deal with the FLF agent") or player.misnDone("Take the Dvaered crew home")  then
+      fflf:setKnown(true)
+   end
 end
 
 function create ()
