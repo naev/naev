@@ -946,9 +946,10 @@ int gl_printTextRaw( const glFont *ft_font,
       const char *text
     )
 {
-   int p, s, l;
+   glPrintLineIterator *iter;
+   int s;
    double x,y;
-   size_t i, ret;
+   size_t i;
    uint32_t ch;
 
    if (ft_font == NULL)
@@ -965,36 +966,23 @@ int gl_printTextRaw( const glFont *ft_font,
    /* Clears restoration. */
    gl_printRestoreClear();
 
-   ch = text[0]; /* In case of a 0-width first line (ret==p) below, we just care if text is empty or not. */
-   i = 0;
    s = 0;
-   p = 0; /* where we last drew up to */
-   while (y - by > -1e-5) {
-      int lp = p;
-      l = gl_printWidthForText( ft_font, &text[p], width, NULL );
-      ret = p + l;
-
+   iter = gl_printLineIteratorInit( ft_font, text, width );
+   while ((y - by > -1e-5) && gl_printLineIteratorNext( iter )) {
       /* Must restore stuff. */
       gl_printRestoreLast();
 
       /* Render it. */
       gl_fontRenderStart( stsh, x, y, c, outlineR );
-      for (i=p; i<ret; ) {
-         ch = u8_nextchar( text, &i);
+      for (i = iter->l_begin; i < iter->l_end; ) {
+         ch = u8_nextchar( text, &i );
          s = gl_fontRenderGlyph( stsh, ch, c, s );
       }
       gl_fontRenderEnd();
 
-      if (ch == '\0')
-         break;
-      p = i;
-      if ((text[p] == '\n') || (text[p] == ' '))
-         p++; /* Skip "empty char". */
       y -= line_height; /* move position down */
-      /* Case we haven't moved. */
-      if (p==lp)
-         break;
    }
+   gl_printLineIteratorFree( iter );
 
    return 0;
 }
@@ -1122,25 +1110,24 @@ int gl_printWidth( const glFont *ft_font, const char *fmt, ... )
 int gl_printHeightRaw( const glFont *ft_font,
       const int width, const char *text )
 {
-   int i, p;
+   glPrintLineIterator *iter;
+   size_t charn;
    double y;
-
-   if (ft_font == NULL)
-      ft_font = &gl_defFont;
 
    /* Check 0 length strings. */
    if (text[0] == '\0')
       return 0;
 
+   if (ft_font == NULL)
+      ft_font = &gl_defFont;
+
    y = 0.;
-   p = 0;
-   do {
-      i = gl_printWidthForText( ft_font, &text[p], width, NULL );
-      p += i;
-      if ((text[p] == '\n') || (text[p] == ' ') || (text[p] == '\0'))
-         p++; /* Skip "empty char". */
+   iter = gl_printLineIteratorInit( ft_font, text, width );
+   while (gl_printLineIteratorNext( iter ))
       y += 1.5*(double)ft_font->h; /* move position down */
-   } while (text[p-1] != '\0');
+   if (u8_strchr( &text[iter->l_end], '\n', &charn ))
+      y += 1.5*(double)ft_font->h; /* Count final empty line */
+   gl_printLineIteratorFree( iter );
 
    return (int) (y - 0.5*(double)ft_font->h) + 1;
 }
