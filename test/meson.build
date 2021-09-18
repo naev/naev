@@ -27,6 +27,7 @@ if (luacheck_exe.found())
     test('lua_lint',
     luacheck_exe,
     args: [join_paths(meson.source_root(), 'dat'),
+                '--std=lua51c+love',
                 '--no-color'
     ],
     workdir: meson.source_root()
