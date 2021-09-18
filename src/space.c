@@ -1752,7 +1752,7 @@ Planet *planet_new (void)
       planetstack_changed = 1;
 #else /* DEBUGGING */
    if (!systems_loading)
-      WARN(_("Creating new planet in non-debugging mode. Things are probably going to break horribly."))
+      WARN(_("Creating new planet in non-debugging mode. Things are probably going to break horribly."));
 #endif /* DEBUGGING */
 
    /* Grow and initialize memory. */
@@ -2627,7 +2627,7 @@ StarSystem *system_new (void)
       systemstack_changed = 1;
 #else /* DEBUGGING */
    if (!systems_loading)
-      WARN(_("Creating new system in non-debugging mode. Things are probably going to break horribly."))
+      WARN(_("Creating new system in non-debugging mode. Things are probably going to break horribly."));
 #endif /* DEBUGGING */
 
    /* Protect current system in case of realloc. */
