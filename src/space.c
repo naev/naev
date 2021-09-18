@@ -860,7 +860,8 @@ StarSystem* system_get( const char* sysname )
       for (int i=0; i<array_size(systems_stack); i++)
          if (strcmp(systems_stack[i].name, sysname)==0)
             return &systems_stack[i];
-      goto system_notfound;
+      WARN(_("System '%s' not found in stack"), sysname);
+      return NULL;
    }
 #endif /* DEBUGGING */
 
@@ -869,7 +870,6 @@ StarSystem* system_get( const char* sysname )
    if (found != NULL)
       return found;
 
-system_notfound:
    WARN(_("System '%s' not found in stack"), sysname);
    return NULL;
 }
@@ -961,7 +961,8 @@ Planet* planet_get( const char* planetname )
       for (int i=0; i<array_size(planet_stack); i++)
          if (strcmp(planet_stack[i].name, planetname)==0)
             return &planet_stack[i];
-      goto planet_notfound;
+      WARN(_("Planet '%s' not found in the universe"), planetname);
+      return NULL;
    }
 #endif /* DEBUGGING */
 
@@ -970,7 +971,6 @@ Planet* planet_get( const char* planetname )
    if (found != NULL)
       return found;
 
-planet_notfound:
    WARN(_("Planet '%s' not found in the universe"), planetname);
    return NULL;
 }
