@@ -1,6 +1,6 @@
 subdir('glcheck')
 
-test('Reaches main menu',
+test('main_menu',
     find_program('watch-for-msg.py'),
     args: [
         naev_bin,
@@ -11,7 +11,7 @@ test('Reaches main menu',
 
 if (ascli_exe.found())
     metainfo_test_file = 'org.naev.naev.metainfo.xml'
-    test('validate metainfo file',
+    test('validate_metainfo',
     ascli_exe,
     args: ['validate',
                 '--no-net',
@@ -20,5 +20,16 @@ if (ascli_exe.found())
                 metainfo_test_file
     ],
     workdir: meson.source_root()
+    )
+endif
+
+if (luacheck_exe.found())
+    luacheck_config_file = join_paths(meson.source_root(), 'test', 'luacheckrc')
+    test('lua_lint',
+    luacheck_exe,
+    args: [join_paths(meson.source_root(), 'dat'),
+                '--config=' + luacheck_config_file,
+                '--no-color'
+    ]
     )
 endif
