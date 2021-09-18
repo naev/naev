@@ -4,20 +4,23 @@ test('main_menu',
     find_program('watch-for-msg.py'),
     args: [
         naev_sh,
-        meson.source_root() / 'dat',
-        'Reached main menu'],
+        'Reached main menu'
+    ],
+    env: ['WITHGDB=NO'],
     workdir: meson.source_root(),
-    protocol: 'exitcode')
+    protocol: 'exitcode'
+    )
 
 if (ascli_exe.found())
     metainfo_test_file = 'org.naev.naev.metainfo.xml'
     test('validate_metainfo',
     ascli_exe,
-    args: ['validate',
-                '--no-net',
-                '--pedantic',
-                '--verbose',
-                metainfo_test_file
+    args: [
+        'validate',
+        '--no-net',
+        '--pedantic',
+        '--verbose',
+        metainfo_test_file
     ],
     workdir: meson.source_root()
     )
@@ -27,9 +30,10 @@ if (luacheck_exe.found())
     luacheck_config_file = join_paths(meson.source_root(), 'test', 'luacheckrc')
     test('lua_lint',
     luacheck_exe,
-    args: [join_paths(meson.source_root(), 'dat'),
-                '--config=' + luacheck_config_file,
-                '--no-color'
+    args: [
+        join_paths(meson.source_root(), 'dat'),
+        '--config=' + luacheck_config_file,
+        '--no-color'
     ]
     )
 endif
