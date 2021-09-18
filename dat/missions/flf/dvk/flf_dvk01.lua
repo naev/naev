@@ -1,23 +1,23 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Diversion from Raelid">
-  <flags>
-   <unique />
-  </flags>
-  <avail>
-   <priority>2</priority>
-   <chance>60</chance>
-   <done>Disrupt a Dvaered Patrol</done>
-   <location>Bar</location>
-   <faction>FLF</faction>
-   <cond>faction.playerStanding("FLF") &gt;= 10</cond>
-  </avail>
-  <notes>
-   <campaign>Save the Frontier</campaign>
-   <tier>4</tier>
-  </notes>
- </mission>
- --]]
+ <flags>
+  <unique />
+ </flags>
+ <avail>
+  <priority>2</priority>
+  <chance>60</chance>
+  <done>Disrupt a Dvaered Patrol</done>
+  <location>Bar</location>
+  <faction>FLF</faction>
+  <cond>faction.playerStanding("FLF") &gt;= 10</cond>
+ </avail>
+ <notes>
+  <campaign>Save the Frontier</campaign>
+  <tier>4</tier>
+ </notes>
+</mission>
+--]]
 --[[
 
    Diversion from Raelid.

@@ -95,6 +95,7 @@ function create()
     if not misn.claim(missys) then
         abort() -- TODO: This claim should be in the event that starts this mission!
     end
+    faction.get("FLF"):setKnown(true)
 
     misn.accept() -- The player chose to accept this mission by boarding the FLF ship
 

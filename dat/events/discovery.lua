@@ -175,6 +175,7 @@ faction_events = {
       name = "disc_frontier",
       title = _("The Frontier"),
       subtitle = _("Leading to a New Future"),
+      func = function() faction.get("FLF"):setKnown( true ) end
    },
    Collective = {
       type = "enter",
