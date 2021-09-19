@@ -530,26 +530,34 @@ glPrintLineIterator* gl_printLineIteratorInit( const glFont *ft_font, const char
    glPrintLineIterator *iter;
    iter = calloc( 1, sizeof(glPrintLineIterator) );
    iter->text = text;
-   iter->ft_font = ft_font;
+   iter->ft_font = (ft_font==NULL ? &gl_defFont : ft_font);
    iter->width = width;
    return iter;
 }
 
 
 /**
- * @brief Updates \p iter with the next line's information.
- * @param iter An iterator returned by \ref gl_printLineIteratorInit.
- * @return nonzero if there's a line.
+ * @brief Gets the number of characters in text that fit into width,
+ *        assuming your intent is to word-wrap at said width.
+ *
+ *    @param ft_font Font to use.
+ *    @param text Text to check.
+ *    @param width Width to match.
+ *    @param[out] outw True width of the text.
+ *    @return Number of characters that fit.
  */
-int gl_printLineIteratorNext( glPrintLineIterator* iter )
+int gl_printWidthForText( const glFont *ft_font, const char *text, int width, int *outw )
 {
-   if (iter->text[iter->l_next] == '\0')
-      return 0;
-   iter->l_begin = iter->l_next;
-   iter->l_end = iter->l_begin + gl_printWidthForText( iter->ft_font, &iter->text[iter->l_begin], iter->width, &iter->l_width );
-   /* TODO: Properly test for whitespace to skip. */
-   iter->l_next = isspace(iter->text[iter->l_end]) ? iter->l_end + 1: iter->l_end;
-   return 1;
+   glPrintLineIterator *iter;
+   size_t i;
+
+   iter = gl_printLineIteratorInit( ft_font, text, width );
+   (void) gl_printLineIteratorNext( iter );
+   i = iter->l_end;
+   if (outw != NULL)
+      *outw = iter->l_width;
+   gl_printLineIteratorFree( iter );
+   return i;
 }
 
 
@@ -595,17 +603,11 @@ static uint32_t font_nextChar( const char *s, size_t *i )
 
 
 /**
- * @brief Gets the number of characters in text that fit into width,
- *        assuming your intent is to word-wrap at said width.
- *
- *    @param ft_font Font to use.
- *    @param text Text to check.
- *    @param width Width to match.
- *    @param[out] outw True width of the text.
- *    @return Number of characters that fit.
+ * @brief Updates \p iter with the next line's information.
+ * @param iter An iterator returned by \ref gl_printLineIteratorInit.
+ * @return nonzero if there's a line.
  */
-int gl_printWidthForText( const glFont *ft_font, const char *text,
-      const int width, int *outw )
+int gl_printLineIteratorNext( glPrintLineIterator* iter )
 {
    int adv_x;
    size_t i, nexti, lastbreak;
@@ -614,33 +616,34 @@ int gl_printWidthForText( const glFont *ft_font, const char *text,
    struct LineBreakContext lbc;
    int brk;
 
-   if (ft_font == NULL)
-      ft_font = &gl_defFont;
-   glFontStash *stsh = gl_fontGetStash( ft_font );
+   if (iter->text[iter->l_next] == '\0')
+      return 0;
+   glFontStash *stsh = gl_fontGetStash( iter->ft_font );
 
    /* limit size per line */
    gl_fontKernStart();
 
    /* Initialize line break stuff. */
-   i = 0; /* current position */
-   lastbreak = 0; /* last ALLOWBREAK/MUSTBREAK index in the text */
+   i = iter->l_begin = iter->l_next; /* current position */
+   lastbreak = iter->l_begin; /* last ALLOWBREAK/MUSTBREAK index in the text */
    n = 0.; /* current width */
-   ch = font_nextChar( text, &i );
+   ch = font_nextChar( iter->text, &i );
    lb_init_break_context( &lbc, ch, gettext_getLanguage() );
    while (ch != '\0') {
       nexti = i;
-      nextch = font_nextChar( text, &nexti );
+      nextch = font_nextChar( iter->text, &nexti );
       brk = lb_process_next_char( &lbc, nextch );
 
       if (brk == LINEBREAK_MUSTBREAK) {
-         u8_dec( text, &i );
-         break;
+         iter->l_width = (int)round(n);
+         iter->l_end = iter->l_next = i;
+         u8_dec( iter->text, &iter->l_end );
+         return 1;
       }
       else if (brk == LINEBREAK_ALLOWBREAK) {
          lastbreak = i;
-         u8_dec( text, &lastbreak );
-         if (outw != NULL)
-            *outw = (int)round(n);
+         u8_dec( iter->text, &lastbreak );
+         iter->l_width = (int)round(n);
       }
 
       /* Get glyph info. */
@@ -649,22 +652,25 @@ int gl_printWidthForText( const glFont *ft_font, const char *text,
       n += adv_x;
 
       /* Check if out of bounds. */
-      if (n > (GLfloat)width) {
-         if (lastbreak > 0)
-            return lastbreak;
+      if (n > (GLfloat)iter->width) {
+         if (lastbreak > iter->l_begin) {
+            iter->l_end = iter->l_next = lastbreak;
+            u8_inc( iter->text, &iter->l_next );
+            return 1;
+         }
          /* Case we weren't able to write any whole words. */
-         if (outw != NULL)
-            *outw = (int)round(n - adv_x);
-         return i;
+         iter->l_width = (int)round(n - adv_x);
+         iter->l_end = iter->l_next = i;
+         return 1;
       }
       i = nexti;
       ch = nextch;
    }
 
    /* Ran out of text so just return. */
-   if (outw != NULL)
-      *outw = (int)round(n);
-   return i;
+   iter->l_width = (int)round(n);
+   iter->l_end = iter->l_next = i;
+   return 1;
 }
 
 
