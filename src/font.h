@@ -53,6 +53,7 @@ typedef struct glPrintLineIterator_s {
    size_t l_begin, l_end;       /**< The current line's location (&text[l_begin], inclusive, to &text[l_end], exclusive). */
    size_t l_next;               /**< Starting point for next iteration, i.e., l_end plus any spaces that became a line break. */
    uint8_t dead;                /**< Did we emit a line where the text ends? */
+   uint8_t no_soft_breaks;      /**< Disable word wrapping, e.g. for one-line input widgets. */
 } glPrintLineIterator;
 
 
@@ -114,7 +115,6 @@ PRINTF_FORMAT( 8, 9 ) int gl_printText( const glFont *ft_font,
 glPrintLineIterator* gl_printLineIteratorInit( const glFont *ft_font, const char *text, int width );
 int gl_printLineIteratorNext( glPrintLineIterator* iter );
 void gl_printLineIteratorFree( glPrintLineIterator* iter );
-int gl_printWidthForTextLine( const glFont *ft_font, const char *text, int width );
 int gl_printWidthForText( const glFont *ft_font, const char *text, int width, int *outw );
 int gl_printWidthRaw( const glFont *ft_font, const char *text );
 PRINTF_FORMAT( 2, 3 )int gl_printWidth( const glFont *ft_font, const char *fmt, ... );

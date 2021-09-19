@@ -546,9 +546,9 @@ int gl_printLineIteratorNext( glPrintLineIterator* iter )
 {
    glFontStash *stsh = gl_fontGetStash( iter->ft_font );
    int adv_x, brk;
-   size_t i, nexti;
+   size_t i, nexti; /* byte index of current/next char */
    uint32_t ch, nextch;
-   GLfloat n;
+   GLfloat n; /* current width */
    struct LineBreakContext lbc;
 
    if (iter->dead)
@@ -558,9 +558,9 @@ int gl_printLineIteratorNext( glPrintLineIterator* iter )
    gl_fontKernStart();
 
    /* Initialize line break stuff. */
-   i = iter->l_begin = iter->l_next; /* current position */
-   iter->l_end = iter->l_begin; /* last ALLOWBREAK/MUSTBREAK index in the text */
-   n = 0.; /* current width */
+   i = iter->l_begin = iter->l_next;
+   iter->l_end = iter->l_begin;
+   n = 0.;
    ch = font_nextChar( iter->text, &i );
    lb_init_break_context( &lbc, ch, gettext_getLanguage() );
    while (ch != '\0') {
@@ -568,7 +568,7 @@ int gl_printLineIteratorNext( glPrintLineIterator* iter )
       nextch = font_nextChar( iter->text, &nexti );
       brk = lb_process_next_char( &lbc, nextch );
 
-      if (brk == LINEBREAK_ALLOWBREAK || brk == LINEBREAK_MUSTBREAK) {
+      if ((brk == LINEBREAK_ALLOWBREAK && !iter->no_soft_breaks) || brk == LINEBREAK_MUSTBREAK) {
          iter->l_width = (int)round(n);
          iter->l_end = iter->l_next = i;
          u8_dec( iter->text, &iter->l_end );
@@ -608,21 +608,6 @@ int gl_printLineIteratorNext( glPrintLineIterator* iter )
 void gl_printLineIteratorFree( glPrintLineIterator* iter )
 {
    free( iter );
-}
-
-
-/**
- * @brief Gets the number of characters in text that fit into width.
- *
- *    @param ft_font Font to use.
- *    @param text Text to check.
- *    @param width Width to match.
- *    @return Number of characters that fit.
- */
-int gl_printWidthForTextLine( const glFont *ft_font, const char *text, int width )
-{
-   glFontStash *stsh = gl_fontGetStash( ft_font );
-   return font_limitSize( stsh, NULL, text, width );
 }
 
 
