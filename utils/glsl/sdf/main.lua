@@ -383,6 +383,27 @@ vec4 sdf_jumplane( vec4 color, vec2 uv )
    return color;
 }
 
+vec4 sdf_gear( vec4 color, vec2 uv )
+{
+   float m = 1.0 / dimensions.x;
+   float d = sdCircle( uv, 0.75 );
+
+   vec2 auv = abs(uv);
+   if (auv.y < auv.x)
+      auv.xy = vec2( auv.y, auv.x );
+   float c, s;
+   s = sin( -M_PI/8.0 );
+   c = cos( -M_PI/8.0 );
+   mat2 R = mat2( c, s, -s, c );
+   d = sdSmoothUnion( d, sdBox( auv*R, vec2(0.1,1.0-m) )-0.025, 0.2 );
+
+   d = max( d, -sdCircle( uv, 0.6 ) );
+   d = min( d, sdCircle( uv, 0.25 ) );
+
+   color.a = smoothstep( -m, 0.0, -d );
+   return color;
+}
+
 vec4 bg( vec2 uv )
 {
    vec3 c;
@@ -411,7 +432,8 @@ vec4 effect( vec4 color, Image tex, vec2 uv, vec2 px )
    //col_out = sdf_pilotmarker( color, uv_rel );
    //col_out = sdf_playermarker( color, uv_rel );
    //col_out = sdf_stealth( color, uv_rel );
-   col_out = sdf_jumplane( color, uv_rel );
+   //col_out = sdf_jumplane( color, uv_rel );
+   col_out = sdf_gear( color, uv_rel );
 
    return mix( bg(uv), col_out, col_out.a );
 }

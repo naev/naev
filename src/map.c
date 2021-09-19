@@ -1978,7 +1978,7 @@ static void map_buttonCommodity( unsigned int wid, char* str )
       }
       map_update(wid);
    } else {/* no keyboard modifier */
-      if ( listMapModeVisible) {/* Hide the list widget */
+      if (listMapModeVisible) {/* Hide the list widget */
          listMapModeVisible = 0;
          window_destroyWidget( wid, "lstMapMode" );
       } else {/* show the list widget */

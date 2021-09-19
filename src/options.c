@@ -80,7 +80,7 @@ static void opt_gameplayDefaults( unsigned int wid, char *str );
 static void opt_gameplayUpdate( unsigned int wid, char *str );
 /* Video. */
 static void opt_video( unsigned int wid );
-static void opt_videoRes( unsigned int wid, char *str );
+static void opt_videoRes( unsigned int wid, const char *str );
 static int opt_videoSave( unsigned int wid, char *str );
 static void opt_videoDefaults( unsigned int wid, char *str );
 static void opt_getVideoMode( int *w, int *h, int *fullscreen );
@@ -107,8 +107,8 @@ static void menuKeybinds_update( unsigned int wid, char *name );
 static void opt_keyDefaults( unsigned int wid, char *str );
 /* Setting keybindings. */
 static int opt_setKeyEvent( unsigned int wid, SDL_Event *event );
-static void opt_setKey( unsigned int wid, char *str );
-static void opt_unsetKey( unsigned int wid, char *str );
+static void opt_setKey( unsigned int wid, const char *str );
+static void opt_unsetKey( unsigned int wid, const char *str );
 
 
 /**
@@ -1131,7 +1131,7 @@ static int opt_setKeyEvent( unsigned int wid, SDL_Event *event )
 /**
  * @brief Rebinds a key.
  */
-static void opt_setKey( unsigned int wid, char *str )
+static void opt_setKey( unsigned int wid, const char *str )
 {
    (void) wid;
    (void) str;
@@ -1171,7 +1171,7 @@ static void opt_setKey( unsigned int wid, char *str )
 /**
  * @brief Unsets the key.
  */
-static void opt_unsetKey( unsigned int wid, char *str )
+static void opt_unsetKey( unsigned int wid, const char *str )
 {
    (void) str;
    unsigned int parent;
@@ -1378,7 +1378,7 @@ static void opt_needRestart (void)
 /**
  * @brief Callback when resolution changes.
  */
-static void opt_videoRes( unsigned int wid, char *str )
+static void opt_videoRes( unsigned int wid, const char *str )
 {
    char *buf;
    buf = toolkit_getList( wid, str );

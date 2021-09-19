@@ -109,6 +109,7 @@ static void equipment_unequipShip( unsigned int wid, char* str );
 static void equipment_autoequipShip( unsigned int wid, char* str );
 static void equipment_filterOutfits( unsigned int wid, char *str );
 static void equipment_rightClickOutfits( unsigned int wid, char* str );
+static void equipment_outfitPopdown( unsigned int wid, char* str );
 static void equipment_changeTab( unsigned int wid, char *wgt, int old, int tab );
 static int equipment_playerAddOutfit( const Outfit *o, int quantity );
 static int equipment_playerRmOutfit( const Outfit *o, int quantity );
@@ -1534,6 +1535,22 @@ static void equipment_genShipList( unsigned int wid )
    }
 }
 
+static int equipment_filter( const Outfit *o ) {
+   return 1;
+}
+static int equipment_filterWeapon( const Outfit *o ) {
+   return equipment_filter(o) && outfit_filterWeapon(o);
+}
+static int equipment_filterUtility( const Outfit *o ) {
+   return equipment_filter(o) && outfit_filterUtility(o);
+}
+static int equipment_filterStructure( const Outfit *o ) {
+   return equipment_filter(o) && outfit_filterStructure(o);
+}
+static int equipment_filterCore( const Outfit *o ) {
+   return equipment_filter(o) && outfit_filterCore(o);
+}
+
 
 /**
  * @brief Generates the outfit list.
@@ -1546,10 +1563,10 @@ static void equipment_genOutfitList( unsigned int wid )
    char *filtertext;
    int (*tabfilters[])( const Outfit *o ) = {
       NULL,
-      outfit_filterWeapon,
-      outfit_filterUtility,
-      outfit_filterStructure,
-      outfit_filterCore
+      equipment_filterWeapon,
+      equipment_filterUtility,
+      equipment_filterStructure,
+      equipment_filterCore,
    };
    const char *tabnames[] = {
       _("All"), _(OUTFIT_LABEL_WEAPON), _(OUTFIT_LABEL_UTILITY), _(OUTFIT_LABEL_STRUCTURE), _(OUTFIT_LABEL_CORE)
@@ -1583,12 +1600,21 @@ static void equipment_genOutfitList( unsigned int wid )
       ix = ow - iw + 15;
       iy = y + oh - 25 - 1;
 
-      /* Only create the filter widget if it will be a reasonable size. */
-      if (iw >= 30) {
-         window_addInput( wid, ix, iy, iw, ih, EQUIPMENT_FILTER, 32, 1, NULL );
-         inp_setEmptyText( wid, EQUIPMENT_FILTER, _("Filter…") );
-         window_setInputCallback( wid, EQUIPMENT_FILTER, equipment_filterOutfits );
-      }
+#ifdef DEBUGGING
+      if (iw <= 60)
+         WARN(_("Very little space on equipment outfit tabs!"));
+#endif /* DEBUGGING */
+
+      /* Add popdown menu stuff. */
+      window_addButton( wid, ix+iw-30, iy, 30, 30, "btnOutfitFilter", NULL, equipment_outfitPopdown );
+      window_buttonCustomRender( wid, "btnOutfitFilter", window_buttonCustomRenderGear );
+      iw -= 35;
+
+
+      /* Set text filter. */
+      window_addInput( wid, ix, iy, iw, ih, EQUIPMENT_FILTER, 32, 1, NULL );
+      inp_setEmptyText( wid, EQUIPMENT_FILTER, _("Filter…") );
+      window_setInputCallback( wid, EQUIPMENT_FILTER, equipment_filterOutfits );
    }
 
    window_tabWinOnChange( wid, EQUIPMENT_OUTFIT_TAB, equipment_changeTab );
@@ -1613,7 +1639,6 @@ static void equipment_genOutfitList( unsigned int wid )
    /* Get the outfits. */
    noutfits = player_getOutfitsFiltered( (const Outfit**)iar_outfits[active], tabfilters[active], filtertext );
    coutfits = outfits_imageArrayCells( (const Outfit**)iar_outfits[active], &noutfits );
-
 
    /* Create the actual image array. */
    iw = ow - 6;
@@ -1828,6 +1853,34 @@ static void equipment_filterOutfits( unsigned int wid, char *str )
 {
    (void) str;
    equipment_regenLists(wid, 1, 0);
+}
+
+static void equipment_outfitPopdownSelect( unsigned int wid, char *str )
+{
+}
+
+static void equipment_outfitPopdown( unsigned int wid, char* str )
+{
+   const char *name = "lstOutfitPopdown";
+   const char *modes[] = {
+      N_("Show all outfits"),
+      N_("Show only equipable outfits"),
+      N_("Show only small outfits"),
+      N_("Show only medium outfits"),
+      N_("Show only large outfits"),
+   };
+   char **modelist;
+
+   if (widget_exists( wid, name )) {
+      window_destroyWidget( wid, name );
+      return;
+   }
+
+   modelist = malloc(sizeof(modes));
+   for (size_t i=0; i<sizeof(modes); i++)
+      modelist[i] = strdup( _(modes[i]) );
+
+   window_addList( wid, -10, 60, 200, 200, name, modelist, sizeof(modes), 0, equipment_outfitPopdownSelect, NULL );
 }
 
 /**
