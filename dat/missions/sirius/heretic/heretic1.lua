@@ -23,7 +23,7 @@
    on the wringer in the Suna system.]]
 
 local fmt = require "format"
-require "missions/sirius/common"
+require "common.sirius"
 
 
 --all the messages before the mission starts

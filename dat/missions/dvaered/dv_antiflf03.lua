@@ -29,7 +29,7 @@
 local fleet = require "fleet"
 require "proximity"
 local portrait = require "portrait"
-require "missions/dvaered/common"
+require "common.dvaered"
 
 
 title = {}

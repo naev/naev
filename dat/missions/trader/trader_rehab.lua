@@ -15,6 +15,6 @@
 --
 --]]
 
-require "missions/rehab_common"
+require "missions.rehab_common"
 
 fac = faction.get("Traders Guild")

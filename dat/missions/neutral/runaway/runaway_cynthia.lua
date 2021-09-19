@@ -21,7 +21,7 @@ There will be more missions to detail how you are perceived as the kidnapper of 
 --]]
 
 local fmt = require "format"
-require "missions/neutral/common"
+require "common.neutral"
 
 
 npc_name = _("Young Teenager")

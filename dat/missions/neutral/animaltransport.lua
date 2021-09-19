@@ -26,7 +26,7 @@
 --]]
 
 require "jumpdist"
-require "missions/neutral/common"
+require "common.neutral"
 
 
 text = {}

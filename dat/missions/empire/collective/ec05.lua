@@ -49,7 +49,7 @@
 
 local fleet = require "fleet"
 local fmt = require "format"
-require "missions/empire/common"
+require "common.empire"
 
 bar_desc = _("Dimitri should be around here, but you can't see him. You should probably look for him.")
 misn_title = _("Operation Black Trinity")

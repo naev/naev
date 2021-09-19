@@ -38,7 +38,7 @@
 
 local fleet = require "fleet"
 local fmt = require "format"
-require "missions/empire/common"
+require "common.empire"
 
 -- Mission details
 bar_desc = _("Commander Soldner is waiting for you.")

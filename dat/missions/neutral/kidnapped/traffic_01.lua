@@ -34,7 +34,7 @@
 --]]
 
 local portrait = require "portrait"
-require "missions/neutral/common"
+require "common.neutral"
 
 
 -- Bar information

@@ -22,7 +22,7 @@
 local fleet = require "fleet"
 require "proximity"
 require "enum"
-require "missions/sirius/common"
+require "common.sirius"
 local fmt = require "format"
 
 

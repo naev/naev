@@ -23,7 +23,7 @@
 --]]
 
 local portrait = require "portrait"
-require "missions/neutral/common"
+require "common.neutral"
 
 
 sysname1 = "Arcturus"

@@ -23,7 +23,7 @@ Plot: Talk to man on Zeo, bargain, load some cargo, deliver it to Zhiru in Godda
 --]]
 
 local fmt = require "format"
-require "missions/neutral/common"
+require "common.neutral"
 
 
 misn_title = _([[Deliver Love]])

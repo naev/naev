@@ -25,7 +25,7 @@
 --]]
 
 require "cargo_common"
-require "missions/neutral/common"
+require "common.neutral"
 
 
 -- Localization, choosing a language if Naev is translated for non-english-speaking locales.

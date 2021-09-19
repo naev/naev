@@ -32,7 +32,7 @@
 
 require "proximity"
 local fmt = require "format"
-require "missions/empire/common"
+require "common.empire"
 
 bar_desc = _("You see an Empire Lt. Commander who seems to be motioning you over to the counter.")
 misn_title = _("Collective Scout")

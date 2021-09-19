@@ -33,7 +33,7 @@
 ]]--
 
 local fmt = require "format"
-require "missions/empire/common"
+require "common.empire"
 
 bar_desc = _("You see Lt. Commander Dimitri at the bar as usual.")
 misn_title = _("Collective Distraction")

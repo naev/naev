@@ -18,7 +18,7 @@
 --]]
 
 require "proximity"
-require "missions/shadow/common"
+local shadow = require "common.shadow"
 
 
 -- localization stuff, translators would work here
@@ -75,7 +75,7 @@ function hail(p)
     vendetta:hyperspace()
 
     if tk.yesno( "", yesnotxt ) then
-        shadow_addLog( log_text )
+        shadow.addLog( log_text )
         naev.missionStart("Shadow Vigil")
         evt.finish()
     end

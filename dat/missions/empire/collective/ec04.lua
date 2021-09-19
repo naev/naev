@@ -35,7 +35,7 @@ local fleet = require "fleet"
 require "nextjump"
 require "proximity"
 local fmt = require "format"
-require "missions/empire/common"
+require "common.empire"
 
 misn_title = _("Collective Extraction")
 misn_desc = {}

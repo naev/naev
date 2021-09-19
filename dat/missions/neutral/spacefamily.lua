@@ -20,7 +20,7 @@
 --]]
 
 require "jumpdist"
-require "missions/neutral/common"
+require "common.neutral"
 
 
 shipname = _("August") --The ship will have a unique name

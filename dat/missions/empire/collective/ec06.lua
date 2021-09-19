@@ -31,7 +31,7 @@
 
 require "proximity"
 local fleet = require "fleet"
-require "missions/empire/common"
+require "common.empire"
 
 bar_desc = _("You see Commodore Keer at a table with a couple of other pilots. She motions for you to sit down with them.")
 misn_title = _("Operation Cold Metal")

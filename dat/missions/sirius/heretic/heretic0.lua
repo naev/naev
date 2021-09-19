@@ -23,7 +23,7 @@
     and to BTAxis for the word "discombobulate"]]
 
 local fmt = require "format"
-require "missions/sirius/common"
+require "common.sirius"
 
 
 --the intro messages

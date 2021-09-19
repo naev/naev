@@ -22,7 +22,7 @@ Plot: on Zhiru you meet the same girl who received the love letters,her name is 
 --]]
 
 local fmt = require "format"
-require "missions/neutral/common"
+require "common.neutral"
 
 
 -- Dialogue

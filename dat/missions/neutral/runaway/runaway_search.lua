@@ -22,7 +22,7 @@
 --]]
 
 local fmt = require "format"
-require "missions/neutral/common"
+require "common.neutral"
 
 
 npc_name = _("Old Man")

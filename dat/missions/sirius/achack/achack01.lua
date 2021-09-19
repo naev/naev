@@ -19,7 +19,7 @@
 -- This is the first mission in the Academy Hack minor campaign.
 --]]
 
-require "missions/sirius/common"
+require "common.sirius"
 local fmt = require "format"
 
 

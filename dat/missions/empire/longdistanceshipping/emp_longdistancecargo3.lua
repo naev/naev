@@ -27,7 +27,7 @@
 
 local fmt = require "format"
 require "jumpdist"
-require "missions/empire/common"
+require "common.empire"
 
 bar_desc = _("Lieutenant Czesc from the Empire Armada Shipping Division is sitting at the bar.")
 misn_title = _("Za'lek Long Distance Recruitment")

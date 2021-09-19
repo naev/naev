@@ -24,7 +24,7 @@
 
 --]]
 
-require "scripts/cargo_common"
+require "scripts.cargo_common"
 local fmt = require "format"
 local zlk = require "common.zalek"
 

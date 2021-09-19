@@ -31,7 +31,7 @@
 ]]--
 
 local fleet = require "fleet"
-require "missions/empire/common"
+require "common.empire"
 local fmt = require "format"
 
 bar_desc = _("You notice Lt. Commander Dimitri at one of the booths.")

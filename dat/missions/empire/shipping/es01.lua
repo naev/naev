@@ -27,7 +27,7 @@
 ]]--
 
 local fmt = require "format"
-require "missions/empire/common"
+require "common.empire"
 
 -- Mission details
 bar_desc = _("You see Commander Soldner who is expecting you.")

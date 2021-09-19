@@ -29,7 +29,7 @@
 
 local fleet = require "fleet"
 local fmt = require "format"
-require "missions/sirius/common"
+require "common.sirius"
 
 
 --beginning messages
