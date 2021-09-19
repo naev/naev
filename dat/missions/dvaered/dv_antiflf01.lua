@@ -23,9 +23,7 @@
 --      2 - The player has rescued the FLF agent. Conditional for flf_pre02
 --      3 - The player has found the FLF base for the Dvaered, or has betrayed the FLF after rescuing the agent. Conditional for dv_antiflf03
 --]]
-
-require "common.dvaered"
-
+local dv = require "common.dvaered"
 
 title = {}
 text = {}
@@ -87,7 +85,7 @@ function land()
    misn.cargoJet(DVcrew)
    var.push("flfbase_intro", 1)
    var.pop("flfbase_flfshipkilled")
-   dv_addAntiFLFLog( log_text )
+   dv.addAntiFLFLog( log_text )
    misn.finish(true)
 end
 

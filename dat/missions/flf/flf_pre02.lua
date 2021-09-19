@@ -28,11 +28,10 @@
         3 - The player has found the FLF base for the Dvaered, or has betrayed the FLF after rescuing the agent. Conditional for dv_antiflf03
 
 --]]
-
 local fleet = require "fleet"
 local flf = require "missions.flf.flf_common"
 require "missions.flf.flf_patrol"
-require "common.dvaered"
+local dv = require "common.dvaered"
 
 title = {}
 text = {}
@@ -393,7 +392,7 @@ function land_dv ()
       player.pay( 70000 )
       var.push( "flfbase_intro", 3 )
       if diff.isApplied( "FLF_base" ) then diff.remove( "FLF_base" ) end
-      dv_addAntiFLFLog( log_text_dv )
+      dv.addAntiFLFLog( log_text_dv )
       misn.finish( true )
    end
 end

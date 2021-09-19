@@ -27,12 +27,9 @@
 --      3 - The player has found the FLF base for the Dvaered, or has betrayed the FLF after rescuing the agent. Conditional for dv_antiflf03
 --]]
 
--- localization stuff, translators would work here
-
 local fleet = require "fleet"
 local portrait = require "portrait"
-require "common.dvaered"
-
+local dv = require "common.dvaered"
 
 title = {}
 text = {}
@@ -167,7 +164,7 @@ function land()
         var.push("flfbase_intro", 3)
         faction.get("Dvaered"):modPlayerSingle(5)
         player.pay(700e3)
-        dv_addAntiFLFLog( log_text )
+        dv.addAntiFLFLog( log_text )
         misn.finish(true)
     end
 end

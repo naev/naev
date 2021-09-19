@@ -29,7 +29,7 @@
 local fleet = require "fleet"
 require "proximity"
 local portrait = require "portrait"
-require "common.dvaered"
+local dv = require "common.dvaered"
 
 
 title = {}
@@ -210,14 +210,14 @@ function land()
     if victorious and planet.cur() == DVplanet then
         tk.msg(title[3], string.format(text[5], player.name()))
         tk.msg(title[3], text[6])
-        dv_modReputation( 5 )
+        dv.modReputation( 5 )
         faction.get("Dvaered"):modPlayerSingle(10)
         player.pay(1e6)
         player.outfitAdd("Star of Valor")
         var.pop("flfbase_intro")
         var.pop("flfbase_sysname")
         diff.apply("flf_dead")
-        dv_addAntiFLFLog( log_text )
+        dv.addAntiFLFLog( log_text )
         local t = time.get():tonumber()
         var.push( "invasion_time", t ) -- Timer for the frontier's invasion
         misn.finish(true)
