@@ -178,6 +178,7 @@ static int font_restoreLast      = 0; /**< Restore last colour. */
 static int gl_fontstashAddFallback( glFontStash* stsh, const char *fname, unsigned int h );
 static size_t font_limitSize( glFontStash *stsh, int *width, const char *text, const int max );
 static const glColour* gl_fontGetColour( uint32_t ch );
+static uint32_t font_nextChar( const char *s, size_t *i );
 /* Get unicode glyphs from cache. */
 static glFontGlyph* gl_fontGetGlyph( glFontStash *stsh, uint32_t ch );
 /* Render.
@@ -537,72 +538,6 @@ glPrintLineIterator* gl_printLineIteratorInit( const glFont *ft_font, const char
 
 
 /**
- * @brief Gets the number of characters in text that fit into width,
- *        assuming your intent is to word-wrap at said width.
- *
- *    @param ft_font Font to use.
- *    @param text Text to check.
- *    @param width Width to match.
- *    @param[out] outw True width of the text.
- *    @return Number of characters that fit.
- */
-int gl_printWidthForText( const glFont *ft_font, const char *text, int width, int *outw )
-{
-   glPrintLineIterator *iter;
-   size_t i;
-
-   iter = gl_printLineIteratorInit( ft_font, text, width );
-   (void) gl_printLineIteratorNext( iter );
-   i = iter->l_end;
-   if (outw != NULL)
-      *outw = iter->l_width;
-   gl_printLineIteratorFree( iter );
-   return i;
-}
-
-
-/**
- * @brief Frees iterators returned by \ref gl_printLineIteratorInit.
- */
-void gl_printLineIteratorFree( glPrintLineIterator* iter )
-{
-   free( iter );
-}
-
-
-/**
- * @brief Gets the number of characters in text that fit into width.
- *
- *    @param ft_font Font to use.
- *    @param text Text to check.
- *    @param width Width to match.
- *    @return Number of characters that fit.
- */
-int gl_printWidthForTextLine( const glFont *ft_font, const char *text, int width )
-{
-   glFontStash *stsh = gl_fontGetStash( ft_font );
-   return font_limitSize( stsh, NULL, text, width );
-}
-
-
-/** @brief Reads the next utf-8 sequence out of a string, updating an index. Skips font markup directives.
- * @TODO For now, this enforces font.c's inability to handle tabs.
- */
-static uint32_t font_nextChar( const char *s, size_t *i )
-{
-   uint32_t ch = s[*i]; /* To be corrected: the character starting at byte *i. Whether it's zero or not is already correct. */
-   while (ch != 0) {
-      ch = u8_nextchar(s, i);
-      if (ch==FONT_COLOUR_CODE)
-         ch = u8_nextchar(s, i); /* Skip the operand and try again. */
-      else if (ch != '\t')
-         return ch; /* Skip tabs and try again; else return the char. */
-   }
-   return 0;
-}
-
-
-/**
  * @brief Updates \p iter with the next line's information.
  * @param iter An iterator returned by \ref gl_printLineIteratorInit.
  * @return nonzero if there's a line.
@@ -671,6 +606,72 @@ int gl_printLineIteratorNext( glPrintLineIterator* iter )
    iter->l_width = (int)round(n);
    iter->l_end = iter->l_next = i;
    return 1;
+}
+
+
+/**
+ * @brief Frees iterators returned by \ref gl_printLineIteratorInit.
+ */
+void gl_printLineIteratorFree( glPrintLineIterator* iter )
+{
+   free( iter );
+}
+
+
+/**
+ * @brief Gets the number of characters in text that fit into width.
+ *
+ *    @param ft_font Font to use.
+ *    @param text Text to check.
+ *    @param width Width to match.
+ *    @return Number of characters that fit.
+ */
+int gl_printWidthForTextLine( const glFont *ft_font, const char *text, int width )
+{
+   glFontStash *stsh = gl_fontGetStash( ft_font );
+   return font_limitSize( stsh, NULL, text, width );
+}
+
+
+/** @brief Reads the next utf-8 sequence out of a string, updating an index. Skips font markup directives.
+ * @TODO For now, this enforces font.c's inability to handle tabs.
+ */
+static uint32_t font_nextChar( const char *s, size_t *i )
+{
+   uint32_t ch = s[*i]; /* To be corrected: the character starting at byte *i. Whether it's zero or not is already correct. */
+   while (ch != 0) {
+      ch = u8_nextchar(s, i);
+      if (ch==FONT_COLOUR_CODE)
+         ch = u8_nextchar(s, i); /* Skip the operand and try again. */
+      else if (ch != '\t')
+         return ch; /* Skip tabs and try again; else return the char. */
+   }
+   return 0;
+}
+
+
+/**
+ * @brief Gets the number of characters in text that fit into width,
+ *        assuming your intent is to word-wrap at said width.
+ *
+ *    @param ft_font Font to use.
+ *    @param text Text to check.
+ *    @param width Width to match.
+ *    @param[out] outw True width of the text.
+ *    @return Number of characters that fit.
+ */
+int gl_printWidthForText( const glFont *ft_font, const char *text, int width, int *outw )
+{
+   glPrintLineIterator *iter;
+   size_t i;
+
+   iter = gl_printLineIteratorInit( ft_font, text, width );
+   (void) gl_printLineIteratorNext( iter );
+   i = iter->l_end;
+   if (outw != NULL)
+      *outw = iter->l_width;
+   gl_printLineIteratorFree( iter );
+   return i;
 }
 
 
