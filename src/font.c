@@ -619,28 +619,6 @@ static uint32_t font_nextChar( const char *s, size_t *i )
 
 
 /**
- * @brief Gets the number of characters in text that fit into width,
- *        assuming your intent is to word-wrap at said width.
- *
- *    @param ft_font Font to use.
- *    @param text Text to check.
- *    @param width Width to match.
- *    @param[out] outw True width of the text.
- *    @return Number of characters that fit.
- */
-int gl_printWidthForText( const glFont *ft_font, const char *text, int width, int *outw )
-{
-   glPrintLineIterator iter;
-
-   gl_printLineIteratorInit( &iter, ft_font, text, width );
-   (void) gl_printLineIteratorNext( &iter );
-   if (outw != NULL)
-      *outw = iter.l_width;
-   return iter.l_end;
-}
-
-
-/**
  * @brief Prints text on screen.
  *
  * Defaults ft_font to gl_defFont if NULL.

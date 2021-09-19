@@ -342,17 +342,14 @@ void player_messageToggle( int enable )
  */
 void player_messageRaw( const char *str )
 {
-   int i, p, l;
+   glPrintLineIterator iter;
 
    /* Must be receiving messages. */
    if (!gui_getMessage)
       return;
 
-   /* Get length. */
-   l = strlen(str);
-   i = gl_printWidthForText( NULL, str, gui_mesg_w - ((str[0] == '\t') ? 45. : 15.), NULL );
-   p = 0;
-   while (p < l) {
+   gl_printLineIteratorInit( &iter, NULL, str, gui_mesg_w - ((str[0] == '\t') ? 45 : 15) );
+   while (gl_printLineIteratorNext( &iter )) {
       /* Move pointer. */
       mesg_pointer   = (mesg_pointer + 1) % mesg_max;
       if (mesg_viewpoint != -1)
@@ -360,22 +357,18 @@ void player_messageRaw( const char *str )
 
       /* Add the new one */
       free( mesg_stack[mesg_pointer].str );
-      if (p == 0) {
-         mesg_stack[mesg_pointer].str = strndup( &str[p], i );
+      if (iter.l_begin == 0) {
+         mesg_stack[mesg_pointer].str = strndup( &str[iter.l_begin], iter.l_end - iter.l_begin );
          gl_printRestoreInit( &mesg_stack[mesg_pointer].restore );
       }
       else {
-         mesg_stack[mesg_pointer].str = malloc(i+2);
-         snprintf( mesg_stack[mesg_pointer].str, i+2, "\t%s", &str[p] );
-         gl_printStoreMax( &mesg_stack[mesg_pointer].restore, str, p );
+         mesg_stack[mesg_pointer].str = malloc( iter.l_end - iter.l_begin + 2 );
+         snprintf( mesg_stack[mesg_pointer].str, iter.l_end - iter.l_begin + 2, "\t%s", &str[iter.l_begin] );
+         gl_printStoreMax( &mesg_stack[mesg_pointer].restore, str, iter.l_begin );
       }
       mesg_stack[mesg_pointer].t = mesg_timeout;
 
-      /* Get length. */
-      p += i;
-      if ((str[p] == '\n') || (str[p] == ' '))
-         p++; /* Skip "empty char". */
-      i  = gl_printWidthForText( NULL, &str[p], gui_mesg_w - 45., NULL ); /* They're tabbed so it's shorter. */
+      iter.width = gui_mesg_w - 45; /* Remaining lines are tabbed so it's shorter. */
    }
 }
 

@@ -114,12 +114,10 @@ PRINTF_FORMAT( 8, 9 ) int gl_printText( const glFont *ft_font,
 /* Dimension stuff. */
 void gl_printLineIteratorInit( glPrintLineIterator* iter, const glFont *ft_font, const char *text, int width );
 int gl_printLineIteratorNext( glPrintLineIterator* iter );
-int gl_printWidthForText( const glFont *ft_font, const char *text, int width, int *outw );
 int gl_printWidthRaw( const glFont *ft_font, const char *text );
 PRINTF_FORMAT( 2, 3 )int gl_printWidth( const glFont *ft_font, const char *fmt, ... );
-int gl_printHeightRaw( const glFont *ft_font, const int width, const char *text );
-PRINTF_FORMAT( 3, 4 )int gl_printHeight( const glFont *ft_font,
-      const int width, const char *fmt, ... );
+int gl_printHeightRaw( const glFont *ft_font, int width, const char *text );
+PRINTF_FORMAT( 3, 4 )int gl_printHeight( const glFont *ft_font, int width, const char *fmt, ... );
 
 /* Restore hacks. */
 void gl_printRestoreClear (void);
