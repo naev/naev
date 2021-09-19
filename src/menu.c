@@ -76,31 +76,31 @@ static glTexture *main_naevLogo = NULL; /**< Naev Logo texture. */
  * prototypes
  */
 /* Generic. */
-static void menu_exit( unsigned int wid, char* str );
+static void menu_exit( unsigned int wid, const char *str );
 /* main menu */
 static int menu_main_bkg_system (void);
-static void main_menu_promptClose( unsigned int wid, char *unused );
-static void menu_main_load( unsigned int wid, char* str );
-static void menu_main_new( unsigned int wid, char* str );
-static void menu_main_credits( unsigned int wid, char* str );
-static void menu_main_cleanBG( unsigned int wid, char* str );
+static void main_menu_promptClose( unsigned int wid, const char *unused );
+static void menu_main_load( unsigned int wid, const char *str );
+static void menu_main_new( unsigned int wid, const char *str );
+static void menu_main_credits( unsigned int wid, const char *str );
+static void menu_main_cleanBG( unsigned int wid, const char *str );
 /* small menu */
-static void menu_small_close( unsigned int wid, char* str );
-static void menu_small_info( unsigned int wid, char *str );
-static void menu_small_exit( unsigned int wid, char* str );
+static void menu_small_close( unsigned int wid, const char *str );
+static void menu_small_info( unsigned int wid, const char *str );
+static void menu_small_exit( unsigned int wid, const char *str );
 static void exit_game (void);
 /* death menu */
-static void menu_death_continue( unsigned int wid, char* str );
-static void menu_death_restart( unsigned int wid, char* str );
-static void menu_death_main( unsigned int wid, char* str );
-static void menu_death_close( unsigned int wid, char* str );
+static void menu_death_continue( unsigned int wid, const char *str );
+static void menu_death_restart( unsigned int wid, const char *str );
+static void menu_death_main( unsigned int wid, const char *str );
+static void menu_death_close( unsigned int wid, const char *str );
 /* editors menu */
 /* - Universe Editor */
 /* - Back to Main Menu */
-static void menu_editors_open( unsigned int wid_unused, char *unused );
-static void menu_editors_close( unsigned int wid, char* str );
+static void menu_editors_open( unsigned int wid_unused, const char *unused );
+static void menu_editors_close( unsigned int wid, const char *str );
 /* options button. */
-static void menu_options_button( unsigned int wid, char *str );
+static void menu_options_button( unsigned int wid, const char *str );
 
 
 /*
@@ -315,7 +315,7 @@ void menu_main_resize (void)
 /**
  * @brief Main menu closing prompt.
  */
-static void main_menu_promptClose( unsigned int wid, char *unused )
+static void main_menu_promptClose( unsigned int wid, const char *unused )
 {
    (void) wid;
    (void) unused;
@@ -340,7 +340,7 @@ void menu_main_close (void)
  * @brief Function to active the load game menu.
  *    @param str Unused.
  */
-static void menu_main_load( unsigned int wid, char* str )
+static void menu_main_load( unsigned int wid, const char *str )
 {
    (void) str;
    (void) wid;
@@ -350,7 +350,7 @@ static void menu_main_load( unsigned int wid, char* str )
  * @brief Function to active the new game menu.
  *    @param str Unused.
  */
-static void menu_main_new( unsigned int wid, char* str )
+static void menu_main_new( unsigned int wid, const char *str )
 {
    (void) str;
    (void) wid;
@@ -367,7 +367,7 @@ static void menu_main_new( unsigned int wid, char* str )
  * @brief Function to exit the main menu and game.
  *    @param str Unused.
  */
-static void menu_main_credits( unsigned int wid, char* str )
+static void menu_main_credits( unsigned int wid, const char *str )
 {
    (void) str;
    (void) wid;
@@ -379,7 +379,7 @@ static void menu_main_credits( unsigned int wid, char* str )
  * @brief Function to exit the main menu and game.
  *    @param str Unused.
  */
-static void menu_exit( unsigned int wid, char* str )
+static void menu_exit( unsigned int wid, const char *str )
 {
    (void) str;
    (void) wid;
@@ -391,7 +391,7 @@ static void menu_exit( unsigned int wid, char* str )
  *    @param wid Window to clean.
  *    @param str Unused.
  */
-static void menu_main_cleanBG( unsigned int wid, char* str )
+static void menu_main_cleanBG( unsigned int wid, const char *str )
 {
    (void) wid;
    (void) str;
@@ -447,7 +447,7 @@ void menu_small (void)
  * @brief Closes the small in-game menu.
  *    @param str Unused.
  */
-static void menu_small_close( unsigned int wid, char* str )
+static void menu_small_close( unsigned int wid, const char *str )
 {
    (void)str;
    window_destroy( wid );
@@ -460,7 +460,7 @@ static void menu_small_close( unsigned int wid, char* str )
  *    @param wid Unused.
  *    @param str Unused.
  */
-static void menu_small_info( unsigned int wid, char *str )
+static void menu_small_info( unsigned int wid, const char *str )
 {
    (void) str;
    (void) wid;
@@ -472,7 +472,7 @@ static void menu_small_info( unsigned int wid, char *str )
  * @brief Closes the small in-game menu and goes back to the main menu.
  *    @param str Unused.
  */
-static void menu_small_exit( unsigned int wid, char* str )
+static void menu_small_exit( unsigned int wid, const char *str )
 {
    (void) str;
    unsigned int info_wid, board_wid;
@@ -526,7 +526,7 @@ static void exit_game (void)
 /**
  * @brief Reload the current saved game, when player want to continue after death
  */
-static void menu_death_continue( unsigned int wid, char* str )
+static void menu_death_continue( unsigned int wid, const char *str )
 {
    (void) str;
 
@@ -539,7 +539,7 @@ static void menu_death_continue( unsigned int wid, char* str )
 /**
  * @brief Restart the game, when player want to continue after death but without a saved game
  */
-static void menu_death_restart( unsigned int wid, char* str )
+static void menu_death_restart( unsigned int wid, const char *str )
 {
    (void) str;
 
@@ -583,7 +583,7 @@ void menu_death (void)
  * @brief Closes the player death menu.
  *    @param str Unused.
  */
-static void menu_death_main( unsigned int wid, char* str )
+static void menu_death_main( unsigned int wid, const char *str )
 {
    (void) str;
 
@@ -596,7 +596,7 @@ static void menu_death_main( unsigned int wid, char* str )
 /**
  * @brief Hack to get around the fact the death menu unpauses the game.
  */
-static void menu_death_close( unsigned int wid, char* str )
+static void menu_death_close( unsigned int wid, const char *str )
 {
    (void) wid;
    (void) str;
@@ -607,7 +607,7 @@ static void menu_death_close( unsigned int wid, char* str )
 /**
  * @brief Opens the menu options from a button.
  */
-static void menu_options_button( unsigned int wid, char *str )
+static void menu_options_button( unsigned int wid, const char *str )
 {
    (void) wid;
    (void) str;
@@ -640,7 +640,7 @@ int menu_askQuit (void)
 /**
  * @brief Provisional Menu for when there will be multiple editors
  */
-static void menu_editors_open( unsigned int wid, char *unused )
+static void menu_editors_open( unsigned int wid, const char *unused )
 {
    (void) unused;
    int h, y;
@@ -684,7 +684,7 @@ static void menu_editors_open( unsigned int wid, char *unused )
  * @brief Closes the editors menu.
  *    @param str Unused.
  */
-static void menu_editors_close( unsigned int wid, char* str )
+static void menu_editors_close( unsigned int wid, const char *str )
 {
    (void)str;
 

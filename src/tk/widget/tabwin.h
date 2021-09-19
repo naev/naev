@@ -25,24 +25,24 @@ typedef struct WidgetTabbedWindowData_ {
 
    /* Internal usage. */
    int *namelen;
-   void(*onChange)(unsigned int,char*,int,int);
+   void(*onChange)(unsigned int,const char*,int,int);
 } WidgetTabbedWindowData;
 
 
 /* Required functions. */
-unsigned int* window_addTabbedWindow( const unsigned int wid,
+unsigned int* window_addTabbedWindow( unsigned int wid,
       const int x, const int y, /* position */
       const int w, const int h, /* size */
       const char* name, int ntabs, const char **tabnames, int tabpos );
 
 
-int window_tabWinSetActive( const unsigned int wid, const char *tab, int active );
-int window_tabWinGetActive( const unsigned int wid, const char *tab );
-int window_tabWinOnChange( const unsigned int wid, const char *tab,
-      void(*onChange)(unsigned int,char*,int,int) );
-int window_tabSetFont( const unsigned int wid, const char *tab, const glFont *font );
-unsigned int* window_tabWinGet( const unsigned int wid, const char *tab );
-int window_tabWinGetBarWidth( const unsigned int wid, const char *tab );
+int window_tabWinSetActive( unsigned int wid, const char *tab, int active );
+int window_tabWinGetActive( unsigned int wid, const char *tab );
+int window_tabWinOnChange( unsigned int wid, const char *tab,
+      void(*onChange)(unsigned int,const char*,int,int) );
+int window_tabSetFont( unsigned int wid, const char *tab, const glFont *font );
+unsigned int* window_tabWinGet( unsigned int wid, const char *tab );
+int window_tabWinGetBarWidth( unsigned int wid, const char *tab );
 
 
 #endif /* WGT_TABWIN_H */

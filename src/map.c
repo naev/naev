@@ -115,12 +115,12 @@ static int map_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
 /* Misc. */
 static void map_reset (void);
 static int map_keyHandler( unsigned int wid, SDL_Keycode key, SDL_Keymod mod );
-static void map_buttonZoom( unsigned int wid, char* str );
-static void map_buttonCommodity( unsigned int wid, char* str );
+static void map_buttonZoom( unsigned int wid, const char* str );
+static void map_buttonCommodity( unsigned int wid, const char* str );
 static void map_selectCur (void);
 static void map_genModeList(void);
 static void map_update_commod_av_price();
-static void map_window_close( unsigned int wid, char *str );
+static void map_window_close( unsigned int wid, const char *str );
 
 
 /**
@@ -1827,7 +1827,7 @@ static int map_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
  *    @param wid Unused.
  *    @param str Name of the button creating the event.
  */
-static void map_buttonZoom( unsigned int wid, char* str )
+static void map_buttonZoom( unsigned int wid, const char* str )
 {
    (void) wid;
 
@@ -1908,7 +1908,7 @@ static void map_genModeList(void)
  *    @param wid Window of the map window.
  *    @param str Unused.
  */
-static void map_modeUpdate( unsigned int wid, char* str )
+static void map_modeUpdate( unsigned int wid, const char* str )
 {
   (void)str;
   int listpos;
@@ -1943,7 +1943,7 @@ static void map_modeUpdate( unsigned int wid, char* str )
  *    @param wid Window widget.
  *    @param str Name of the button creating the event.
  */
-static void map_buttonCommodity( unsigned int wid, char* str )
+static void map_buttonCommodity( unsigned int wid, const char* str )
 {
    (void)str;
    SDL_Keymod mods;
@@ -2004,7 +2004,7 @@ static void map_buttonCommodity( unsigned int wid, char* str )
 /**
  * @brief Cleans up the map stuff.
  */
-static void map_window_close( unsigned int wid, char *str )
+static void map_window_close( unsigned int wid, const char *str )
 {
    int i;
    free ( commod_known );

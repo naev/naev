@@ -710,7 +710,7 @@ static void** tech_addGroupItem( void **items, tech_item_type_t type, const tech
  *    @param item The item name to search for.
  *    @return Whether or not the item was found.
  */
-int tech_hasItem( const tech_group_t *tech, char *item )
+int tech_hasItem( const tech_group_t *tech, const char *item )
 {
    int i, s;
    char *buf;

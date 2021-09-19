@@ -354,7 +354,7 @@ int planet_exists( const char* planetname );
 const char *planet_existsCase( const char* planetname );
 char **planet_searchFuzzyCase( const char* planetname, int *n );
 const char* planet_getServiceName( int service );
-int planet_getService( char *name );
+int planet_getService( const char *name );
 const char* planet_getClassName( const char *class );
 credits_t planet_commodityPrice( const Planet *p, const Commodity *c );
 credits_t planet_commodityPriceAtTime( const Planet *p, const Commodity *c, ntime_t t );

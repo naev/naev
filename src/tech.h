@@ -49,7 +49,7 @@ int tech_rmItem( const char *name, const char *value );
 /*
  * Get.
  */
-int tech_hasItem( const tech_group_t *tech, char *item );
+int tech_hasItem( const tech_group_t *tech, const char *item );
 int tech_getItemCount( const tech_group_t *tech );
 char** tech_getItemNames( const tech_group_t *tech, int *n );
 char** tech_getAllItemNames( int *n );

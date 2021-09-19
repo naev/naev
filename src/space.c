@@ -176,7 +176,7 @@ const char* planet_getServiceName( int service )
    return NULL;
 }
 
-int planet_getService( char *name )
+int planet_getService( const char *name )
 {
    if (strcmp(name,"Land")==0)
       return PLANET_SERVICE_LAND;

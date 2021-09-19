@@ -36,8 +36,8 @@ static void iar_centerSelected( Widget *iar );
 /* Misc. */
 static double iar_maxPos( Widget *iar );
 static void iar_setAltTextPos( Widget *iar, double bx, double by );
-static Widget *iar_getWidget( const unsigned int wid, const char *name );
-static char* toolkit_getNameById( Widget *wgt, int elem );
+static Widget *iar_getWidget( unsigned int wid, const char *name );
+static const char* toolkit_getNameById( Widget *wgt, int elem );
 /* Clean up. */
 static void iar_cleanup( Widget* iar );
 
@@ -63,14 +63,14 @@ static void iar_cleanup( Widget* iar );
  *    @param rmcall Callback when right-clicked.
  *    @param dblcall Callback when selection is double-clicked.
  */
-void window_addImageArray( const unsigned int wid,
+void window_addImageArray( unsigned int wid,
                            const int x, const int y, /* position */
                            const int w, const int h, /* size */
-                           char* name, const int iw, const int ih,
+                           const char* name, const int iw, const int ih,
                            ImageArrayCell *img, int nelem,
-                           void (*call) (unsigned int wdw, char* wgtname),
-                           void (*rmcall) (unsigned int wdw, char* wgtname),
-                           void (*dblcall) (unsigned int wdw, char* wgtname) )
+                           void (*call) (unsigned int wdw, const char* wgtname),
+                           void (*rmcall) (unsigned int wdw, const char* wgtname),
+                           void (*dblcall) (unsigned int wdw, const char* wgtname) )
 {
    Window *wdw = window_wget(wid);
    Widget *wgt = window_newWidget(wdw, name);
@@ -680,7 +680,7 @@ static void iar_setAltTextPos( Widget *iar, double bx, double by )
 /**
  * @brief Gets an image array.
  */
-static Widget *iar_getWidget( const unsigned int wid, const char *name )
+static Widget *iar_getWidget( unsigned int wid, const char *name )
 {
    Widget *wgt = window_getwgt(wid,name);
 
@@ -708,7 +708,7 @@ static Widget *iar_getWidget( const unsigned int wid, const char *name )
  *    @param elem The element in the image array.
  *    @return The name of the selected object.
  */
-static char* toolkit_getNameById( Widget *wgt, int elem )
+static const char* toolkit_getNameById( Widget *wgt, int elem )
 {
    if (wgt == NULL)
       return NULL;
@@ -735,7 +735,7 @@ static char* toolkit_getNameById( Widget *wgt, int elem )
  *    @param name Name of the image array.
  *    @return The name of the selected object.
  */
-char* toolkit_getImageArray( const unsigned int wid, const char* name )
+const char* toolkit_getImageArray( unsigned int wid, const char* name )
 {
    Widget *wgt = iar_getWidget( wid, name );
    if (wgt == NULL || wgt->dat.iar.selected < 0 )
@@ -753,7 +753,7 @@ char* toolkit_getImageArray( const unsigned int wid, const char* name )
  *            same way. There may be a more robust solution involving indices.
  *            \see toolkit_setImageArrayPos
  */
-int toolkit_setImageArray( const unsigned int wid, const char* name, char* elem )
+int toolkit_setImageArray( unsigned int wid, const char* name, const char* elem )
 {
    int i;
    Widget *wgt = iar_getWidget( wid, name );
@@ -787,7 +787,7 @@ int toolkit_setImageArray( const unsigned int wid, const char* name, char* elem 
  *    @param name Name of the image array.
  *    @return The position of selected object.
  */
-int toolkit_getImageArrayPos( const unsigned int wid, const char* name )
+int toolkit_getImageArrayPos( unsigned int wid, const char* name )
 {
    Widget *wgt = iar_getWidget( wid, name );
    if (wgt == NULL)
@@ -800,7 +800,7 @@ int toolkit_getImageArrayPos( const unsigned int wid, const char* name )
 /**
  * @brief Gets the Image Array offset.
  */
-double toolkit_getImageArrayOffset( const unsigned int wid, const char* name )
+double toolkit_getImageArrayOffset( unsigned int wid, const char* name )
 {
    Widget *wgt = iar_getWidget( wid, name );
    if (wgt == NULL)
@@ -813,7 +813,7 @@ double toolkit_getImageArrayOffset( const unsigned int wid, const char* name )
 /**
  * @brief Sets the Image Array offset.
  */
-int toolkit_setImageArrayOffset( const unsigned int wid, const char* name, double off )
+int toolkit_setImageArrayOffset( unsigned int wid, const char* name, double off )
 {
    double hmax;
 
@@ -847,7 +847,7 @@ int toolkit_setImageArrayOffset( const unsigned int wid, const char* name, doubl
  *    @param pos Position to set to.
  *    @return 0 on success.
  */
-int toolkit_setImageArrayPos( const unsigned int wid, const char* name, int pos )
+int toolkit_setImageArrayPos( unsigned int wid, const char* name, int pos )
 {
    Widget *wgt = iar_getWidget( wid, name );
    if (wgt == NULL)
@@ -874,7 +874,7 @@ int toolkit_setImageArrayPos( const unsigned int wid, const char* name, int pos 
  *    @param iar_data Pointer to an iar_data_t struct.
  *    @return 0 on success.
  */
-int toolkit_saveImageArrayData( const unsigned int wid, const char *name,
+int toolkit_saveImageArrayData( unsigned int wid, const char *name,
       iar_data_t *iar_data )
 {
    Widget *wgt = iar_getWidget( wid, name );
@@ -894,7 +894,7 @@ int toolkit_saveImageArrayData( const unsigned int wid, const char *name,
  *    @param name Name of the image array widget.
  */
 
-int toolkit_unsetSelection( const unsigned int wid, const char *name )
+int toolkit_unsetSelection( unsigned int wid, const char *name )
 {
   Widget *wgt = iar_getWidget( wid, name );
 
@@ -912,7 +912,7 @@ int toolkit_unsetSelection( const unsigned int wid, const char *name )
  *    @param name Name of the image array.
  *    @param fptr Accept function to set.
  */
-void toolkit_setImageArrayAccept( const unsigned int wid, const char *name, void (*fptr)(unsigned int,char*) )
+void toolkit_setImageArrayAccept( unsigned int wid, const char *name, void (*fptr)(unsigned int,const char*) )
 {
    Widget *wgt = iar_getWidget( wid, name );
    if (wgt == NULL)
@@ -928,7 +928,7 @@ void toolkit_setImageArrayAccept( const unsigned int wid, const char *name, void
  *    @param name Name of the image array.
  *    @return The number of totally visible elements.
  */
-int toolkit_getImageArrayVisibleElements( const unsigned int wid, const char *name )
+int toolkit_getImageArrayVisibleElements( unsigned int wid, const char *name )
 {
    Widget *iar = iar_getWidget( wid, name );
    if (iar == NULL)

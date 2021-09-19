@@ -22,7 +22,7 @@ typedef struct WidgetRectData_{
 
 
 /* Required functions. */
-void window_addRect( const unsigned int wid,
+void window_addRect( unsigned int wid,
       const int x, const int y, /* position */
       const int w, const int h, /* size */
       char* name, const glColour* colour, int border ); /* properties */

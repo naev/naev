@@ -23,7 +23,7 @@ typedef struct WidgetListData_ {
 
 
 /* Required functions. */
-void window_addList( const unsigned int wid,
+void window_addList( unsigned int wid,
       const int x, const int y, /* position */
       const int w, const int h, /* size */
       const char* name, char **items, int nitems, int defitem,
@@ -31,12 +31,12 @@ void window_addList( const unsigned int wid,
       void (*onActivate) (unsigned int, const char*) );
 
 /* Misc functions. */
-char* toolkit_getList( const unsigned int wid, const char* name );
-int toolkit_getListPos( const unsigned int wid, const char* name );
-char* toolkit_setList( const unsigned int wid, const char* name, char* value );
-char* toolkit_setListPos( const unsigned int wid, const char* name, int pos );
-int toolkit_getListOffset( const unsigned int wid, const char* name );
-int toolkit_setListOffset( const unsigned int wid, const char* name, int off );
+const char* toolkit_getList( unsigned int wid, const char* name );
+int toolkit_getListPos( unsigned int wid, const char* name );
+const char* toolkit_setList( unsigned int wid, const char* name, const char* value );
+const char* toolkit_setListPos( unsigned int wid, const char* name, int pos );
+int toolkit_getListOffset( unsigned int wid, const char* name );
+int toolkit_setListOffset( unsigned int wid, const char* name, int off );
 
 
 #endif /* WGT_LIST_H */

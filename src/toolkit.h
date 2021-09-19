@@ -34,19 +34,19 @@ unsigned int window_createFlags( const char* name, const char *displayname,
  * modification
  */
 /* window */
-void window_setAccept( const unsigned int wid, void (*fptr)(unsigned int,char*) );
-void window_setCancel( const unsigned int wid, void (*cancel)(unsigned int,char*) );
+void window_setAccept( unsigned int wid, void (*fptr)(unsigned int,const char*) );
+void window_setCancel( unsigned int wid, void (*cancel)(unsigned int,const char*) );
 void window_setBorder( unsigned int wid, int enable );
-void window_setFocus( const unsigned int wid, const char* wgtname );
-void window_handleKeys( const unsigned int wid,
+void window_setFocus( unsigned int wid, const char* wgtname );
+void window_handleKeys( unsigned int wid,
       int (*keyhandler)(unsigned int,SDL_Keycode,SDL_Keymod) );
-void window_handleEvents( const unsigned int wid,
+void window_handleEvents( unsigned int wid,
       int (*eventhandler)(unsigned int,SDL_Event*) );
-void window_move( const unsigned int wid, int x, int y );
-void window_resize( const unsigned int wid, int w, int h );
+void window_move( unsigned int wid, int x, int y );
+void window_resize( unsigned int wid, int w, int h );
 void window_raise( unsigned int wid );
 void window_lower( unsigned int wid );
-int window_setDisplayname( const unsigned int wid, const char *displayname );
+int window_setDisplayname( unsigned int wid, const char *displayname );
 
 
 /*
@@ -54,28 +54,28 @@ int window_setDisplayname( const unsigned int wid, const char *displayname );
  */
 /* generic */
 int window_exists( const char* wdwname );
-int window_existsID( const unsigned int wid );
-int widget_exists( const unsigned int wid, const char* wgtname );
+int window_existsID( unsigned int wid );
+int widget_exists( unsigned int wid, const char* wgtname );
 unsigned int window_get( const char* wdwname );
-void window_dimWindow( const unsigned int wid, int *w, int *h );
-void window_posWindow( const unsigned int wid, int *x, int *y );
-void window_dimWidget( const unsigned int wid, const char *name, int *w, int *h );
-char* window_getFocus( const unsigned int wid );
-void window_posWidget( const unsigned int wid, const char* name, int *x, int *y );
-void window_moveWidget( const unsigned int wid, const char* name, int x, int y );
-void window_resizeWidget( const unsigned int wid, const char* name, int w, int h );
-int window_isTop( const unsigned int wid );
+void window_dimWindow( unsigned int wid, int *w, int *h );
+void window_posWindow( unsigned int wid, int *x, int *y );
+void window_dimWidget( unsigned int wid, const char *name, int *w, int *h );
+char* window_getFocus( unsigned int wid );
+void window_posWidget( unsigned int wid, const char* name, int *x, int *y );
+void window_moveWidget( unsigned int wid, const char* name, int x, int y );
+void window_resizeWidget( unsigned int wid, const char* name, int w, int h );
+int window_isTop( unsigned int wid );
 
 /*
  * destruction
  */
 void toolkit_closeAll( void );
-void window_close( unsigned int wid, char *str );
-void window_destroy( const unsigned int wid );
+void window_close( unsigned int wid, const char* str );
+void window_destroy( unsigned int wid );
 void window_destroyWidget( unsigned int wid, const char* wgtname );
 void window_setParent( unsigned int wid, unsigned int parent );
 unsigned int window_getParent( unsigned int wid );
-void window_onClose( unsigned int wid, void (*fptr)(unsigned int,char*) );
+void window_onClose( unsigned int wid, void (*fptr)(unsigned int,const char*) );
 
 
 /*

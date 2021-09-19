@@ -21,7 +21,7 @@ static int btn_mclick( Widget* btn, int button, int x, int y );
 static int btn_key( Widget* btn, SDL_Keycode key, SDL_Keymod mod );
 static void btn_render( Widget* btn, double bx, double by );
 static void btn_cleanup( Widget* btn );
-static Widget* btn_get( const unsigned int wid, const char* name );
+static Widget* btn_get( unsigned int wid, const char* name );
 static void btn_updateHotkey( Widget *btn );
 
 
@@ -42,11 +42,11 @@ static void btn_updateHotkey( Widget *btn );
  *                is the name of the button.
  *    @param key Hotkey for using the button without it being focused.
  */
-void window_addButtonKey( const unsigned int wid,
+void window_addButtonKey( unsigned int wid,
                        const int x, const int y,
                        const int w, const int h,
                        const char* name, const char* display,
-                       void (*call) (unsigned int wgt, char* wdwname),
+                       void (*call) (unsigned int wgt, const char* wdwname),
                        SDL_Keycode key )
 {
    Window *wdw = window_wget(wid);
@@ -102,11 +102,11 @@ void window_addButtonKey( const unsigned int wid,
  *    @param call Function to call when button is pressed. Parameter passed
  *                is the name of the button.
  */
-void window_addButton( const unsigned int wid,
+void window_addButton( unsigned int wid,
                        const int x, const int y,
                        const int w, const int h,
                        const char* name, const char* display,
-                       void (*call) (unsigned int wgt, char* wdwname) )
+                       void (*call) (unsigned int wgt, const char* wdwname) )
 {
    window_addButtonKey( wid, x, y, w, h, name, display, call, 0 );
 }
@@ -115,7 +115,7 @@ void window_addButton( const unsigned int wid,
 /**
  * @brief Gets a button widget.
  */
-static Widget* btn_get( const unsigned int wid, const char* name )
+static Widget* btn_get( unsigned int wid, const char* name )
 {
    Widget *wgt = window_getwgt(wid,name);
    if (wgt == NULL)
@@ -137,7 +137,7 @@ static Widget* btn_get( const unsigned int wid, const char* name )
  *    @param wid ID of the window to get widget from.
  *    @param name Name of the button to disable.
  */
-void window_disableButton( const unsigned int wid, const char* name )
+void window_disableButton( unsigned int wid, const char* name )
 {
    Widget *wgt;
    Window *wdw;
@@ -162,7 +162,7 @@ void window_disableButton( const unsigned int wid, const char* name )
  *    @param wid ID of the window to get widget from.
  *    @param name Name of the button to disable.
  */
-void window_disableButtonSoft( const unsigned int wid, const char *name )
+void window_disableButtonSoft( unsigned int wid, const char *name )
 {
    Widget *wgt = btn_get( wid, name );
    if (wgt == NULL)
@@ -179,7 +179,7 @@ void window_disableButtonSoft( const unsigned int wid, const char *name )
  *    @param wid ID of the window to get widget from.
  *    @param name Name of the button to enable.
  */
-void window_enableButton( const unsigned int wid, const char *name )
+void window_enableButton( unsigned int wid, const char *name )
 {
    Widget *wgt;
 
@@ -201,7 +201,7 @@ void window_enableButton( const unsigned int wid, const char *name )
  *    @param name Name of the button to change caption.
  *    @param display New caption to display.
  */
-void window_buttonCaption( const unsigned int wid, const char *name, const char *display )
+void window_buttonCaption( unsigned int wid, const char *name, const char *display )
 {
    Widget *wgt = btn_get( wid, name );
    if (wgt == NULL)

@@ -27,7 +27,7 @@ typedef struct WidgetCustData_ {
 
 
 /* Required functions. */
-void window_addCust( const unsigned int wid,
+void window_addCust( unsigned int wid,
       const int x, const int y, /* position */
       const int w, const int h, /* size */
       char* name, const int border,
@@ -36,10 +36,10 @@ void window_addCust( const unsigned int wid,
       void *data );
 
 
-void window_custSetClipping( const unsigned int wid, const char *name, int clip );
-void window_custSetOverlay( const unsigned int wid, const char *name,
+void window_custSetClipping( unsigned int wid, const char *name, int clip );
+void window_custSetOverlay( unsigned int wid, const char *name,
       void (*renderOverlay) (double bx, double by, double bw, double bh, void* data) );
-void *window_custGetData( const unsigned int wid, const char *name );
+void *window_custGetData( unsigned int wid, const char *name );
 
 
 #endif /* WGT_CUST_H */

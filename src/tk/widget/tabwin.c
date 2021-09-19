@@ -58,7 +58,7 @@ static Widget *tab_getWgt( unsigned int wid, const char *tab );
  *    @param tabpos Position to set up the tabs at.
  *    @return List of created windows.
  */
-unsigned int* window_addTabbedWindow( const unsigned int wid,
+unsigned int* window_addTabbedWindow( unsigned int wid,
       const int x, const int y, /* position */
       const int w, const int h, /* size */
       const char* name, int ntabs, const char **tabnames, int tabpos )
@@ -486,7 +486,7 @@ static Widget *tab_getWgt( unsigned int wid, const char *tab )
  *    @param tab Name of the tabbed window.
  *    @param active tab to set active.
  */
-int window_tabWinSetActive( const unsigned int wid, const char *tab, int active )
+int window_tabWinSetActive( unsigned int wid, const char *tab, int active )
 {
    int old;
 
@@ -514,7 +514,7 @@ int window_tabWinSetActive( const unsigned int wid, const char *tab, int active 
  *    @param tab Name of the tabbed window.
  *    @return The ID of the active tab.
  */
-int window_tabWinGetActive( const unsigned int wid, const char *tab )
+int window_tabWinGetActive( unsigned int wid, const char *tab )
 {
    Widget *wgt = tab_getWgt( wid, tab );
    if (wgt == NULL)
@@ -532,8 +532,8 @@ int window_tabWinGetActive( const unsigned int wid, const char *tab )
  *    @param tab Name of the tabbed window.
  *    @param onChange Callback to use (NULL disables).
  */
-int window_tabWinOnChange( const unsigned int wid, const char *tab,
-      void(*onChange)(unsigned int,char*,int,int) )
+int window_tabWinOnChange( unsigned int wid, const char *tab,
+      void(*onChange)(unsigned int,const char*,int,int) )
 {
    Widget *wgt = tab_getWgt( wid, tab );
    if (wgt == NULL)
@@ -554,7 +554,7 @@ int window_tabWinOnChange( const unsigned int wid, const char *tab,
  *    @param font Font to set to.
  *    @return 0 on success.
  */
-int window_tabSetFont( const unsigned int wid, const char *tab, const glFont *font )
+int window_tabSetFont( unsigned int wid, const char *tab, const glFont *font )
 {
    int i;
    Widget *wgt = tab_getWgt( wid, tab );
@@ -577,7 +577,7 @@ int window_tabSetFont( const unsigned int wid, const char *tab, const glFont *fo
  *    @param tab Name of the tabbed window.
  *    @return The children windows.
  */
-unsigned int* window_tabWinGet( const unsigned int wid, const char *tab )
+unsigned int* window_tabWinGet( unsigned int wid, const char *tab )
 {
    Widget *wgt = tab_getWgt( wid, tab );
    if (wgt == NULL)
@@ -592,7 +592,7 @@ unsigned int* window_tabWinGet( const unsigned int wid, const char *tab )
  *    @param tab Name of the tabbed window.
  *    @return Bar width in pixels
  */
-int window_tabWinGetBarWidth( const unsigned int wid, const char* tab )
+int window_tabWinGetBarWidth( unsigned int wid, const char* tab )
 {
    Widget *wgt = tab_getWgt( wid, tab );
    return tab_getBarWidth( wgt );

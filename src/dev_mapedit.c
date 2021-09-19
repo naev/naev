@@ -106,22 +106,22 @@ static void mapedit_deselect (void);
 static void mapedit_selectAdd( StarSystem *sys );
 static void mapedit_selectRm( StarSystem *sys );
 /* Custom system editor widget. */
-static void mapedit_buttonZoom( unsigned int wid, char* str );
+static void mapedit_buttonZoom( unsigned int wid, const char* str );
 static void mapedit_render( double bx, double by, double w, double h, void *data );
 static int mapedit_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
       double w, double h, double xr, double yr, void *data );
 /* Button functions. */
-static void mapedit_close( unsigned int wid, char *wgt );
-static void mapedit_btnOpen( unsigned int wid_unused, char *unused );
-static void mapedit_btnSaveMapAs( unsigned int wid_unused, char *unused );
-static void mapedit_clear( unsigned int wid_unused, char *unused );
+static void mapedit_close( unsigned int wid, const char *wgt );
+static void mapedit_btnOpen( unsigned int wid_unused, const char *unused );
+static void mapedit_btnSaveMapAs( unsigned int wid_unused, const char *unused );
+static void mapedit_clear( unsigned int wid_unused, const char *unused );
 /* Keybindings handling. */
 static int mapedit_keys( unsigned int wid, SDL_Keycode key, SDL_Keymod mod );
 /* Loading of Map files. */
 static void mapedit_loadMapMenu_open (void);
-static void mapedit_loadMapMenu_close( unsigned int wdw, char *str );
-static void mapedit_loadMapMenu_update( unsigned int wdw, char *str );
-static void mapedit_loadMapMenu_load( unsigned int wdw, char *str );
+static void mapedit_loadMapMenu_close( unsigned int wdw, const char *str );
+static void mapedit_loadMapMenu_update( unsigned int wdw, const char *str );
+static void mapedit_loadMapMenu_load( unsigned int wdw, const char *str );
 /* Saving of Map files. */
 static int mapedit_saveMap( StarSystem** uniedit_sys, mapOutfitsList_t* ns );
 /* Management of last loaded/saved Map file. */
@@ -134,7 +134,7 @@ static void mapsList_free (void);
 /**
  * @brief Opens the system editor interface.
  */
-void mapedit_open( unsigned int wid_unused, char *unused )
+void mapedit_open( unsigned int wid_unused, const char *unused )
 {
    (void) wid_unused;
    (void) unused;
@@ -299,7 +299,7 @@ static int mapedit_keys( unsigned int wid, SDL_Keycode key, SDL_Keymod mod )
 /**
  * @brief Closes the system editor widget.
  */
-static void mapedit_close( unsigned int wid, char *wgt )
+static void mapedit_close( unsigned int wid, const char *wgt )
 {
    /* Frees some memory. */
    mapedit_deselect();
@@ -318,10 +318,10 @@ static void mapedit_close( unsigned int wid, char *wgt )
 /**
  * @brief Closes the system editor widget.
  */
-static void mapedit_clear( unsigned int wid, char *wgt )
+static void mapedit_clear( unsigned int wid, const char *unused )
 {
    (void) wid;
-   (void) wgt;
+   (void) unused;
 
    /* Clear the map. */
    mapedit_deselect();
@@ -330,7 +330,7 @@ static void mapedit_clear( unsigned int wid, char *wgt )
 /**
  * @brief Opens up a map file.
  */
-static void mapedit_btnOpen( unsigned int wid_unused, char *unused )
+static void mapedit_btnOpen( unsigned int wid_unused, const char *unused )
 {
    (void) wid_unused;
    (void) unused;
@@ -596,7 +596,7 @@ void mapedit_selectText (void)
  *    @param wid Unused.
  *    @param str Name of the button creating the event.
  */
-static void mapedit_buttonZoom( unsigned int wid, char* str )
+static void mapedit_buttonZoom( unsigned int wid, const char* str )
 {
    (void) wid;
 
@@ -683,13 +683,13 @@ void mapedit_loadMapMenu_open (void)
  *    @param wdw Window triggering function.
  *    @param str Unused.
  */
-static void mapedit_loadMapMenu_update( unsigned int wdw, char *str )
+static void mapedit_loadMapMenu_update( unsigned int wdw, const char *str )
 {
    (void) str;
    int pos;
    mapOutfitsList_t *ns;
-   char *save;
-   char buf[1024];
+   const char *save;
+   char buf[STRMAX_SHORT];
 
    /* Make sure list is ok. */
    save = toolkit_getList( wdw, "lstMapOutfits" );
@@ -722,7 +722,7 @@ static void mapedit_loadMapMenu_update( unsigned int wdw, char *str )
  *    @param wdw Window triggering function.
  *    @param str Unused.
  */
-static void mapedit_loadMapMenu_close( unsigned int wdw, char *str )
+static void mapedit_loadMapMenu_close( unsigned int wdw, const char *str )
 {
    (void)str;
 
@@ -733,12 +733,13 @@ static void mapedit_loadMapMenu_close( unsigned int wdw, char *str )
 /**
  * @brief Load the selected Map.
  */
-static void mapedit_loadMapMenu_load( unsigned int wdw, char *str )
+static void mapedit_loadMapMenu_load( unsigned int wdw, const char *str )
 {
    (void)str;
    int pos, len, compareLimit, i, found;
    mapOutfitsList_t *ns;
-   char *save, *file, *name, *systemName;
+   const char *save;
+   char *file, *name, *systemName;
    xmlNodePtr node;
    xmlDocPtr doc;
    StarSystem *sys;
@@ -842,19 +843,23 @@ static void mapedit_loadMapMenu_load( unsigned int wdw, char *str )
 /**
  * @brief Save the current Map to selected file.
  */
-static void mapedit_btnSaveMapAs( unsigned int wdw, char *unused )
+static void mapedit_btnSaveMapAs( unsigned int wdw, const char *unused )
 {
    (void)unused;
    mapOutfitsList_t ns;
 
-   ns.fileName = window_getInput( wdw, "inpFileName" );
-   ns.mapName = window_getInput( wdw, "inpMapName" );
-   ns.description = window_getInput( wdw, "inpDescription" );
+   ns.fileName = strdup( window_getInput( wdw, "inpFileName" ) );
+   ns.mapName = strdup( window_getInput( wdw, "inpMapName" ) );
+   ns.description = strdup( window_getInput( wdw, "inpDescription" ) );
    ns.numSystems = mapedit_nsys;
    ns.price = atoll(window_getInput( wdw, "inpPrice" ));
    ns.rarity = atoi(window_getInput( wdw, "inpRarity" ));
 
    mapedit_saveMap( mapedit_sys, &ns );
+
+   free( ns.fileName );
+   free( ns.mapName );
+   free( ns.description );
 }
 
 /**

@@ -2712,7 +2712,7 @@ const PlayerOutfit_t* player_getOutfits (void)
  *    @return Number of outfits.
  */
 int player_getOutfitsFiltered( const Outfit **outfits,
-      int(*filter)( const Outfit *o ), char *name )
+      int(*filter)( const Outfit *o ), const char *name )
 {
    int i;
 

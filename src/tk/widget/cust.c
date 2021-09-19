@@ -15,7 +15,7 @@
 
 static void cst_render( Widget* cst, double bx, double by );
 static void cst_renderOverlay( Widget* cst, double bx, double by );
-static Widget *cst_getWidget( const unsigned int wid, const char *name );
+static Widget *cst_getWidget( unsigned int wid, const char *name );
 
 
 /**
@@ -39,7 +39,7 @@ static Widget *cst_getWidget( const unsigned int wid, const char *name );
  *    @param mouse Mouse function, passes the window id, event and position as
  *                 parameters.
  */
-void window_addCust( const unsigned int wid,
+void window_addCust( unsigned int wid,
                      const int x, const int y, /* position */
                      const int w, const int h, /* size */
                      char* name, const int border,
@@ -126,7 +126,7 @@ static void cst_renderOverlay( Widget* cst, double bx, double by )
 /**
  * @brief Gets a custom widget.
  */
-static Widget *cst_getWidget( const unsigned int wid, const char *name )
+static Widget *cst_getWidget( unsigned int wid, const char *name )
 {
    Widget *wgt;
 
@@ -152,7 +152,7 @@ static Widget *cst_getWidget( const unsigned int wid, const char *name )
  *    @param name Name of the widget.
  *    @param clip If 0 disables clipping, otherwise enables clipping.
  */
-void window_custSetClipping( const unsigned int wid, const char *name, int clip )
+void window_custSetClipping( unsigned int wid, const char *name, int clip )
 {
    Widget *wgt = cst_getWidget( wid, name );
    if (wgt == NULL)
@@ -170,7 +170,7 @@ void window_custSetClipping( const unsigned int wid, const char *name, int clip 
  *    @param name Name of the widget.
  *    @param renderOverlay Function to render widget overlay, NULL disables.
  */
-void window_custSetOverlay( const unsigned int wid, const char *name,
+void window_custSetOverlay( unsigned int wid, const char *name,
       void (*renderOverlay) (double bx, double by, double bw, double bh, void *data) )
 {
    Widget *wgt = cst_getWidget( wid, name );
@@ -188,7 +188,7 @@ void window_custSetOverlay( const unsigned int wid, const char *name,
  *    @param name Name of the widget.
  *    @return A pointer to the widget user data.
  */
-void* window_custGetData( const unsigned int wid, const char *name )
+void* window_custGetData( unsigned int wid, const char *name )
 {
    Widget *wgt = cst_getWidget( wid, name );
    if (wgt == NULL)

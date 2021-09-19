@@ -49,10 +49,10 @@ static void inp_focusLose( Widget* inp );
  *    @param oneline Whether widget should only be one line long.
  *    @param font Font to use.
  */
-void window_addInput( const unsigned int wid,
+void window_addInput( unsigned int wid,
                       const int x, const int y, /* position */
                       const int w, const int h, /* size */
-                      char* name, const int max, const int oneline,
+                      const char* name, const int max, const int oneline,
                       glFont *font )
 {
    Window *wdw = window_wget(wid);
@@ -584,12 +584,9 @@ static void inp_cleanup( Widget* inp )
  *    @param wid ID of the window to get widget from.
  *    @param name Name of the widget.
  */
-char* window_getInput( const unsigned int wid, char* name )
+const char* window_getInput( unsigned int wid, const char* name )
 {
-   Widget *wgt;
-
-   /* Get the widget. */
-   wgt = window_getwgt(wid,name);
+   Widget *wgt = window_getwgt(wid,name);
    if (wgt == NULL)
       return NULL;
 
@@ -611,12 +608,9 @@ char* window_getInput( const unsigned int wid, char* name )
  *    @param msg Message to set for the input box or NULL to clear.
  * @return The message actually set (can be truncated).
  */
-char* window_setInput( const unsigned int wid, char* name, const char *msg )
+const char* window_setInput( unsigned int wid, const char* name, const char *msg )
 {
-   Widget *wgt;
-
-   /* Get the widget. */
-   wgt = window_getwgt(wid,name);
+   Widget *wgt = window_getwgt(wid,name);
    if (wgt == NULL)
       return NULL;
 
@@ -653,12 +647,9 @@ char* window_setInput( const unsigned int wid, char* name, const char *msg )
  *    @param name Name of the widget to modify.
  *    @param msg Empty text to display or NULL to clear.
  */
-void inp_setEmptyText( const unsigned int wid, char* name, const char *str )
+void inp_setEmptyText( unsigned int wid, const char* name, const char *str )
 {
-   Widget *wgt;
-
-   /* Get the widget. */
-   wgt = window_getwgt(wid,name);
+   Widget *wgt = window_getwgt(wid,name);
    if (wgt == NULL)
       return;
 
@@ -685,12 +676,9 @@ void inp_setEmptyText( const unsigned int wid, char* name, const char *str )
  *    @param name Input widget to set filter on.
  *    @param filter '\0' terminated list of characters to filter.
  */
-void window_setInputFilter( const unsigned int wid, char* name, const char *filter )
+void window_setInputFilter( unsigned int wid, const char* name, const char *filter )
 {
-   Widget *wgt;
-
-   /* Get the widget. */
-   wgt = window_getwgt(wid,name);
+   Widget *wgt = window_getwgt(wid,name);
    if (wgt == NULL)
       return;
 
@@ -711,12 +699,9 @@ void window_setInputFilter( const unsigned int wid, char* name, const char *filt
  *    @param name Input widget to set callback for.
  *    @param fptr Function to trigger when the input's text is modified.
  */
-void window_setInputCallback( const unsigned int wid, char* name, void (*fptr)(unsigned int, char*) )
+void window_setInputCallback( unsigned int wid, const char* name, void (*fptr)(unsigned int, const char*) )
 {
-   Widget *wgt;
-
-   /* Get the widget. */
-   wgt = window_getwgt(wid, name);
+   Widget *wgt = window_getwgt(wid, name);
    if (wgt == NULL)
       return;
 

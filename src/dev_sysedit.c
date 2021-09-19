@@ -103,7 +103,7 @@ static int jp_exit   = 0; /**< Jump point exit only checkbox value. */
  * System editor Prototypes.
  */
 /* Custom system editor widget. */
-static void sysedit_buttonZoom( unsigned int wid, char* str );
+static void sysedit_buttonZoom( unsigned int wid, const char* str );
 static void sysedit_render( double bx, double by, double w, double h, void *data );
 static void sysedit_renderAsteroidsField( double bx, double by, AsteroidAnchor *ast, int selected );
 static void sysedit_renderAsteroidExclusion( double bx, double by, AsteroidExclusion *aexcl, int selected );
@@ -114,33 +114,33 @@ static void sysedit_renderOverlay( double bx, double by, double bw, double bh, v
 static int sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
       double w, double h, double xr, double yr, void *data );
 /* Button functions. */
-static void sysedit_close( unsigned int wid, char *wgt );
-static void sysedit_btnNew( unsigned int wid_unused, char *unused );
-static void sysedit_btnRename( unsigned int wid_unused, char *unused );
-static void sysedit_btnRemove( unsigned int wid_unused, char *unused );
-static void sysedit_btnReset( unsigned int wid_unused, char *unused );
-static void sysedit_btnScale( unsigned int wid_unused, char *unused );
-static void sysedit_btnGrid( unsigned int wid_unused, char *unused );
-static void sysedit_btnEdit( unsigned int wid_unused, char *unused );
+static void sysedit_close( unsigned int wid, const char *wgt );
+static void sysedit_btnNew( unsigned int wid_unused, const char *unused );
+static void sysedit_btnRename( unsigned int wid_unused, const char *unused );
+static void sysedit_btnRemove( unsigned int wid_unused, const char *unused );
+static void sysedit_btnReset( unsigned int wid_unused, const char *unused );
+static void sysedit_btnScale( unsigned int wid_unused, const char *unused );
+static void sysedit_btnGrid( unsigned int wid_unused, const char *unused );
+static void sysedit_btnEdit( unsigned int wid_unused, const char *unused );
 /* Planet editing. */
 static void sysedit_editPnt( void );
-static void sysedit_editPntClose( unsigned int wid, char *unused );
-static void sysedit_planetDesc( unsigned int wid, char *unused );
-static void sysedit_planetDescReturn( unsigned int wid, char *unused );
-static void sysedit_planetDescClose( unsigned int wid, char *unused );
+static void sysedit_editPntClose( unsigned int wid, const char *unused );
+static void sysedit_planetDesc( unsigned int wid, const char *unused );
+static void sysedit_planetDescReturn( unsigned int wid, const char *unused );
+static void sysedit_planetDescClose( unsigned int wid, const char *unused );
 static void sysedit_genServicesList( unsigned int wid );
-static void sysedit_btnTechEdit( unsigned int wid, char *unused );
+static void sysedit_btnTechEdit( unsigned int wid, const char *unused );
 static void sysedit_genTechList( unsigned int wid );
-static void sysedit_btnAddTech( unsigned int wid, char *unused );
-static void sysedit_btnRmTech( unsigned int wid, char *unused );
-static void sysedit_btnAddService( unsigned int wid, char *unused );
-static void sysedit_btnRmService( unsigned int wid, char *unused );
-static void sysedit_planetGFX( unsigned int wid_unused, char *unused );
-static void sysedit_btnGFXClose( unsigned int wid, char *wgt );
-static void sysedit_btnGFXApply( unsigned int wid, char *wgt );
-static void sysedit_btnFaction( unsigned int wid_unused, char *unused );
-static void sysedit_btnFactionSet( unsigned int wid, char *unused );
-static void sysedit_editJumpClose( unsigned int wid, char *unused );
+static void sysedit_btnAddTech( unsigned int wid, const char *unused );
+static void sysedit_btnRmTech( unsigned int wid, const char *unused );
+static void sysedit_btnAddService( unsigned int wid, const char *unused );
+static void sysedit_btnRmService( unsigned int wid, const char *unused );
+static void sysedit_planetGFX( unsigned int wid_unused, const char *wgt );
+static void sysedit_btnGFXClose( unsigned int wid, const char *wgt );
+static void sysedit_btnGFXApply( unsigned int wid, const char *wgt );
+static void sysedit_btnFaction( unsigned int wid_unused, const char *unused );
+static void sysedit_btnFactionSet( unsigned int wid, const char *unused );
+static void sysedit_editJumpClose( unsigned int wid, const char *unused );
 /* Jump editing */
 static void sysedit_editJump( void );
 /* Keybindings handling. */
@@ -263,7 +263,7 @@ static int sysedit_keys( unsigned int wid, SDL_Keycode key, SDL_Keymod mod )
 /**
  * @brief Closes the system editor widget.
  */
-static void sysedit_close( unsigned int wid, char *wgt )
+static void sysedit_close( unsigned int wid, const char *wgt )
 {
    /* Unload graphics. */
    space_gfxLoad( sysedit_sys );
@@ -299,11 +299,11 @@ static void sysedit_close( unsigned int wid, char *wgt )
 /**
  * @brief Closes the planet editor, saving the changes made.
  */
-static void sysedit_editPntClose( unsigned int wid, char *unused )
+static void sysedit_editPntClose( unsigned int wid, const char *unused )
 {
    (void) unused;
    Planet *p;
-   char *inp;
+   const char *inp;
 
    p = sysedit_sys->planets[ sysedit_select[0].u.planet ];
 
@@ -346,7 +346,7 @@ static void sysedit_editPntClose( unsigned int wid, char *unused )
 /**
  * @brief Enters the editor in new planet mode.
  */
-static void sysedit_btnNew( unsigned int wid_unused, char *unused )
+static void sysedit_btnNew( unsigned int wid_unused, const char *unused )
 {
    (void) wid_unused;
    (void) unused;
@@ -397,7 +397,7 @@ static void sysedit_btnNew( unsigned int wid_unused, char *unused )
 }
 
 
-static void sysedit_btnRename( unsigned int wid_unused, char *unused )
+static void sysedit_btnRename( unsigned int wid_unused, const char *unused )
 {
    (void) wid_unused;
    (void) unused;
@@ -450,7 +450,7 @@ static void sysedit_btnRename( unsigned int wid_unused, char *unused )
 /**
  * @brief Removes planets.
  */
-static void sysedit_btnRemove( unsigned int wid_unused, char *unused )
+static void sysedit_btnRemove( unsigned int wid_unused, const char *unused )
 {
    (void) wid_unused;
    (void) unused;
@@ -482,7 +482,7 @@ static void sysedit_btnRemove( unsigned int wid_unused, char *unused )
 /**
  * @brief Resets jump points.
  */
-static void sysedit_btnReset( unsigned int wid_unused, char *unused )
+static void sysedit_btnReset( unsigned int wid_unused, const char *unused )
 {
    (void) wid_unused;
    (void) unused;
@@ -502,7 +502,7 @@ static void sysedit_btnReset( unsigned int wid_unused, char *unused )
 /**
  * @brief Interface for scaling a system from the system view.
  */
-static void sysedit_btnScale( unsigned int wid_unused, char *unused )
+static void sysedit_btnScale( unsigned int wid_unused, const char *unused )
 {
    (void) wid_unused;
    (void) unused;
@@ -566,7 +566,7 @@ void sysedit_sysScale( StarSystem *sys, double factor )
 /**
  * @brief Toggles the grid.
  */
-static void sysedit_btnGrid( unsigned int wid_unused, char *unused )
+static void sysedit_btnGrid( unsigned int wid_unused, const char *unused )
 {
    (void) wid_unused;
    (void) unused;
@@ -1123,7 +1123,7 @@ static int sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
  *    @param wid Unused.
  *    @param str Name of the button creating the event.
  */
-static void sysedit_buttonZoom( unsigned int wid, char* str )
+static void sysedit_buttonZoom( unsigned int wid, const char* str )
 {
    (void) wid;
 
@@ -1399,7 +1399,7 @@ static void sysedit_editPnt( void )
 /**
  * @brief Updates the jump point checkboxes.
  */
-static void jp_type_check_hidden_update( unsigned int wid, char* str )
+static void jp_type_check_hidden_update( unsigned int wid, const char* str )
 {
    (void) str;
    if (jp_hidden == 0) {
@@ -1415,7 +1415,7 @@ static void jp_type_check_hidden_update( unsigned int wid, char* str )
 /**
  * @brief Updates the jump point checkboxes.
  */
-static void jp_type_check_exit_update( unsigned int wid, char* str )
+static void jp_type_check_exit_update( unsigned int wid, const char* str )
 {
    (void) str;
    if (jp_exit == 0) {
@@ -1497,7 +1497,7 @@ static void sysedit_editJump( void )
 /**
  * @brief Closes the jump editor, saving the changes made.
  */
-static void sysedit_editJumpClose( unsigned int wid, char *unused )
+static void sysedit_editJumpClose( unsigned int wid, const char *unused )
 {
    (void) unused;
    JumpPoint *j;
@@ -1523,7 +1523,7 @@ static void sysedit_editJumpClose( unsigned int wid, char *unused )
 /**
  * @brief Displays the planet landing description and bar description in a separate window.
  */
-static void sysedit_planetDesc( unsigned int wid, char *unused )
+static void sysedit_planetDesc( unsigned int wid, const char *unused )
 {
    (void) unused;
    int x, y, h, w, bw;
@@ -1579,10 +1579,10 @@ static void sysedit_planetDesc( unsigned int wid, char *unused )
 /**
  * @brief Closes the planet description window and returns to the properties window.
  */
-static void sysedit_planetDescReturn( unsigned int wid, char *unused )
+static void sysedit_planetDescReturn( unsigned int wid, const char *unused )
 {
    Planet *p;
-   char *mydesc, *mybardesc;
+   const char *mydesc, *mybardesc;
 
    p = sysedit_sys->planets[ sysedit_select[0].u.planet ];
 
@@ -1605,7 +1605,7 @@ static void sysedit_planetDescReturn( unsigned int wid, char *unused )
 /**
  * @brief Closes both the planet description window and the properties window.
  */
-static void sysedit_planetDescClose( unsigned int wid, char *unused )
+static void sysedit_planetDescClose( unsigned int wid, const char *unused )
 {
    sysedit_planetDescReturn( wid, unused );
    sysedit_editPntClose( sysedit_widEdit, unused );
@@ -1684,10 +1684,10 @@ static void sysedit_genServicesList( unsigned int wid )
 /**
  * @brief Adds a service to a planet.
  */
-static void sysedit_btnAddService( unsigned int wid, char *unused )
+static void sysedit_btnAddService( unsigned int wid, const char *unused )
 {
    (void) unused;
-   char *selected;
+   const char *selected;
    Planet *p;
 
    selected = toolkit_getList( wid, "lstServicesLacked" );
@@ -1706,10 +1706,10 @@ static void sysedit_btnAddService( unsigned int wid, char *unused )
 /**
  * @brief Removes a service from a planet.
  */
-static void sysedit_btnRmService( unsigned int wid, char *unused )
+static void sysedit_btnRmService( unsigned int wid, const char *unused )
 {
    (void) unused;
-   char *selected;
+   const char *selected;
    Planet *p;
 
    selected = toolkit_getList( wid, "lstServicesHave" );
@@ -1731,7 +1731,7 @@ static void sysedit_btnRmService( unsigned int wid, char *unused )
 /**
  * @brief Edits a planet's tech.
  */
-static void sysedit_btnTechEdit( unsigned int wid, char *unused )
+static void sysedit_btnTechEdit( unsigned int wid, const char *unused )
 {
    (void) unused;
    int y, w, bw;
@@ -1842,10 +1842,10 @@ static void sysedit_genTechList( unsigned int wid )
 /**
  * @brief Adds a tech to a planet.
  */
-static void sysedit_btnAddTech( unsigned int wid, char *unused )
+static void sysedit_btnAddTech( unsigned int wid, const char *unused )
 {
    (void) unused;
-   char *selected;
+   const char *selected;
    Planet *p;
 
    selected = toolkit_getList( wid, "lstTechsLacked" );
@@ -1865,10 +1865,10 @@ static void sysedit_btnAddTech( unsigned int wid, char *unused )
 /**
  * @brief Removes a tech from a planet.
  */
-static void sysedit_btnRmTech( unsigned int wid, char *unused )
+static void sysedit_btnRmTech( unsigned int wid, const char *unused )
 {
    (void) unused;
-   char *selected;
+   const char *selected;
    Planet *p;
    int n;
 
@@ -1892,7 +1892,7 @@ static void sysedit_btnRmTech( unsigned int wid, char *unused )
 /**
  * @brief Edits a planet's faction.
  */
-static void sysedit_btnFaction( unsigned int wid_unused, char *unused )
+static void sysedit_btnFaction( unsigned int wid_unused, const char *unused )
 {
    (void) wid_unused;
    (void) unused;
@@ -1945,10 +1945,10 @@ static void sysedit_btnFaction( unsigned int wid_unused, char *unused )
 /**
  * @brief Actually modifies the faction.
  */
-static void sysedit_btnFactionSet( unsigned int wid, char *unused )
+static void sysedit_btnFactionSet( unsigned int wid, const char *unused )
 {
    (void) unused;
-   char *selected;
+   const char *selected;
    Planet *p;
 
    selected = toolkit_getList( wid, "lstFactions" );
@@ -1975,7 +1975,7 @@ static void sysedit_btnFactionSet( unsigned int wid, char *unused )
 /**
  * @brief Opens the system property editor.
  */
-static void sysedit_btnEdit( unsigned int wid_unused, char *unused )
+static void sysedit_btnEdit( unsigned int wid_unused, const char *unused )
 {
    (void) wid_unused;
    (void) unused;
@@ -1993,7 +1993,7 @@ static void sysedit_btnEdit( unsigned int wid_unused, char *unused )
 /**
  * @brief Opens the planet landing or space graphic editor.
  */
-static void sysedit_planetGFX( unsigned int wid_unused, char *wgt )
+static void sysedit_planetGFX( unsigned int wid_unused, const char *wgt )
 {
    (void) wid_unused;
    unsigned int wid;
@@ -2063,7 +2063,7 @@ static void sysedit_planetGFX( unsigned int wid_unused, char *wgt )
 /**
  * @brief Closes the planet graphic editor.
  */
-static void sysedit_btnGFXClose( unsigned int wid, char *wgt )
+static void sysedit_btnGFXClose( unsigned int wid, const char *wgt )
 {
    window_close( wid, wgt );
 }
@@ -2072,10 +2072,11 @@ static void sysedit_btnGFXClose( unsigned int wid, char *wgt )
 /**
  * @brief Apply new graphics.
  */
-static void sysedit_btnGFXApply( unsigned int wid, char *wgt )
+static void sysedit_btnGFXApply( unsigned int wid, const char *wgt )
 {
    Planet *p;
-   char *str, *path, buf[PATH_MAX];
+   const char *str;
+   char *path, buf[PATH_MAX];
    int land;
 
    land = (strcmp(wgt,"btnApplyLand") == 0);

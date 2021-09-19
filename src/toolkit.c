@@ -206,7 +206,7 @@ void window_move( unsigned int wid, int x, int y )
  *    @param w Width to change to (or fullscreen if -1).
  *    @param h Height to change to (or fullscreen if -1).
  */
-void window_resize( const unsigned int wid, int w, int h )
+void window_resize( unsigned int wid, int w, int h )
 {
    Window *wdw;
 
@@ -312,7 +312,7 @@ Widget* window_newWidget( Window* w, const char *name )
  *    @param wid ID of the window to get.
  *    @return Window matching wid.
  */
-Window* window_wget( const unsigned int wid )
+Window* window_wget( unsigned int wid )
 {
    Window *w;
    if (windows == NULL) {
@@ -334,7 +334,7 @@ Window* window_wget( const unsigned int wid )
  *    @param name Name of the widget to get.
  *    @return Widget matching name in the window.
  */
-Widget* window_getwgt( const unsigned int wid, const char* name )
+Widget* window_getwgt( unsigned int wid, const char* name )
 {
    Window *wdw;
    Widget *wgt;
@@ -363,7 +363,7 @@ Widget* window_getwgt( const unsigned int wid, const char* name )
  *    @param[out] w Width of the window or -1 on error.
  *    @param[out] h Height of the window or -1 on error.
  */
-void window_dimWindow( const unsigned int wid, int *w, int *h )
+void window_dimWindow( unsigned int wid, int *w, int *h )
 {
    Window *wdw;
 
@@ -388,7 +388,7 @@ void window_dimWindow( const unsigned int wid, int *w, int *h )
  *    @param[out] x X position of the window or -1 on error.
  *    @param[out] y Y position of the window or -1 on error.
  */
-void window_posWindow( const unsigned int wid, int *x, int *y )
+void window_posWindow( unsigned int wid, int *x, int *y )
 {
    Window *wdw;
 
@@ -414,7 +414,7 @@ void window_posWindow( const unsigned int wid, int *x, int *y )
  *    @param[out] w Width of the widget or -1 on error.
  *    @param[out] h Height of the widget or -1 on error.
  */
-void window_dimWidget( const unsigned int wid, const char *name, int *w, int *h )
+void window_dimWidget( unsigned int wid, const char *name, int *w, int *h )
 {
    Widget *wgt;
 
@@ -439,7 +439,7 @@ void window_dimWidget( const unsigned int wid, const char *name, int *w, int *h 
  *    @param[out] x X position of the widget.
  *    @param[out] y Y position of the widget.
  */
-void window_posWidget( const unsigned int wid,
+void window_posWidget( unsigned int wid,
       const char* name, int *x, int *y )
 {
    Widget *wgt;
@@ -456,7 +456,6 @@ void window_posWidget( const unsigned int wid,
       (*y) = wgt->y;
 }
 
-
 /**
  * @brief Moves a widget.
  *
@@ -465,7 +464,7 @@ void window_posWidget( const unsigned int wid,
  *    @param x New X position to set widget to.
  *    @param y New Y position to set widget to.
  */
-void window_moveWidget( const unsigned int wid,
+void window_moveWidget( unsigned int wid,
       const char* name, int x, int y )
 {
    Window *wdw;
@@ -494,7 +493,7 @@ void window_moveWidget( const unsigned int wid,
  *    @param w New width.
  *    @param h New height.
  */
-void window_resizeWidget( const unsigned int wid,
+void window_resizeWidget( unsigned int wid,
       const char* name, int w, int h )
 {
    Window *wdw;
@@ -521,7 +520,7 @@ void window_resizeWidget( const unsigned int wid,
  *
  *    @param wid indow ID to see if is top.
  */
-int window_isTop( const unsigned int wid )
+int window_isTop( unsigned int wid )
 {
    Window *n, *w = window_wget(wid);
    if (w==NULL)
@@ -560,7 +559,7 @@ int window_exists( const char* wdwname )
  *    @param wid ID of the window to check.
  *    @return 1 if it exists, 0 if it doesn't.
  */
-int window_existsID( const unsigned int wid )
+int window_existsID( unsigned int wid )
 {
    Window *w;
    if (windows == NULL)
@@ -579,7 +578,7 @@ int window_existsID( const unsigned int wid )
  *    @param displayname Display name to set to.
  *    @return 0 on success.
  */
-int window_setDisplayname( const unsigned int wid, const char *displayname )
+int window_setDisplayname( unsigned int wid, const char *displayname )
 {
    Window *wdw = window_wget(wid);
    if (wdw == NULL)
@@ -772,7 +771,7 @@ unsigned int window_getParent( unsigned int wid )
  *    @param fptr Function to trigger when window is closed, parameter is window id
  *           and name.
  */
-void window_onClose( unsigned int wid, void (*fptr)(unsigned int,char*) )
+void window_onClose( unsigned int wid, void (*fptr)(unsigned int,const char*) )
 {
    Window *wdw;
 
@@ -796,7 +795,7 @@ void window_onClose( unsigned int wid, void (*fptr)(unsigned int,char*) )
  *    @param accept Function to trigger when window is "accepted".  Parameter
  *                  passed is window name.
  */
-void window_setAccept( const unsigned int wid, void (*accept)(unsigned int,char*) )
+void window_setAccept( unsigned int wid, void (*accept)(unsigned int,const char*) )
 {
    Window *wdw;
 
@@ -820,7 +819,7 @@ void window_setAccept( const unsigned int wid, void (*accept)(unsigned int,char*
  *    @param cancel Function to trigger when window is "cancelled".  Parameter
  *                  passed is window name.
  */
-void window_setCancel( const unsigned int wid, void (*cancel)(unsigned int,char*) )
+void window_setCancel( unsigned int wid, void (*cancel)(unsigned int,const char*) )
 {
    Window *wdw;
 
@@ -904,7 +903,7 @@ void window_setBorder( unsigned int wid, int enable )
  * This function is only called if neither the active widget nor the window
  *  itself grabs the input.
  */
-void window_handleKeys( const unsigned int wid,
+void window_handleKeys( unsigned int wid,
       int (*keyhandler)(unsigned int,SDL_Keycode,SDL_Keymod) )
 {
    Window *wdw;
@@ -924,7 +923,7 @@ void window_handleKeys( const unsigned int wid,
  *
  * This function is called every time the window receives input.
  */
-void window_handleEvents( const unsigned int wid,
+void window_handleEvents( unsigned int wid,
       int (*eventhandler)(unsigned int,SDL_Event*) )
 {
    Window *wdw;
@@ -972,7 +971,7 @@ void toolkit_closeAll( void )
  *    @param wid Window to close.
  *    @param str Unused.
  */
-void window_close( unsigned int wid, char *str )
+void window_close( unsigned int wid, const char *str )
 {
    (void) str;
 
@@ -986,7 +985,7 @@ void window_close( unsigned int wid, char *str )
  *    @param wid ID of window to destroy.
  *    @return 1 if windows still need killing.
  */
-void window_destroy( const unsigned int wid )
+void window_destroy( unsigned int wid )
 {
    Window *wdw, *w;
    if (windows == NULL)
@@ -1066,7 +1065,7 @@ static void window_kill( Window *wdw )
  *    @param wgtname Name of the widget to check;
  *    @return 1 if the widget exists.
  */
-int widget_exists( const unsigned int wid, const char* wgtname )
+int widget_exists( unsigned int wid, const char* wgtname )
 {
    Window *w = window_wget(wid);
    Widget *wgt;
@@ -2383,7 +2382,7 @@ static Widget* toolkit_getFocus( Window *wdw )
  *    @param wgtname Name of the widget to set focus to,
  *                   or NULL to clear the focus.
  */
-void window_setFocus( const unsigned int wid, const char* wgtname )
+void window_setFocus( unsigned int wid, const char* wgtname )
 {
    Window *wdw;
    Widget *wgt;
@@ -2405,12 +2404,12 @@ void window_setFocus( const unsigned int wid, const char* wgtname )
 
 
 /**
- * @brief Gets the focused widget in a window.
+ * @brief Gets the focused widget in a window (does strdup!!).
  *
  *    @param wid ID of the window to get widget from.
  *    @return The focused widget's name (strdup()ed string or NULL).
  */
-char* window_getFocus( const unsigned int wid )
+char* window_getFocus( unsigned int wid )
 {
    Window *wdw;
    Widget *wgt;

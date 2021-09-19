@@ -158,7 +158,7 @@ void player_autonavEnd (void)
 /**
  * @brief Starts autonav and closes the window.
  */
-void player_autonavStartWindow( unsigned int wid, char *str)
+void player_autonavStartWindow( unsigned int wid, const char *str)
 {
    (void) str;
    player_autonavStart();
@@ -185,7 +185,7 @@ void player_autonavPos( double x, double y )
 /**
  * @brief Starts autonav with a planet destination.
  */
-void player_autonavPnt( char *name )
+void player_autonavPnt( const char *name )
 {
    Planet *p;
 

@@ -30,7 +30,7 @@ static void rct_render( Widget* rct, double bx, double by );
  *    @param colour Colour of the rectangle.
  *    @param border Whether or not it should have a border.
  */
-void window_addRect( const unsigned int wid,
+void window_addRect( unsigned int wid,
                      const int x, const int y, /* position */
                      const int w, const int h, /* size */
                      char* name, const glColour* colour, int border )

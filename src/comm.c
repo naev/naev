@@ -50,8 +50,8 @@ static nlua_env comm_env       = LUA_NOREF; /**< Comm Lua env. */
 /* Static. */
 static unsigned int comm_open( glTexture *gfx, int faction,
       int override, int bribed, const char *name );
-static void comm_close( unsigned int wid, char *unused );
-static void comm_bribePlanet( unsigned int wid, char *unused );
+static void comm_close( unsigned int wid, const char *unused );
+static void comm_bribePlanet( unsigned int wid, const char *unused );
 static const char* comm_getString( const Pilot *p, const char *str );
 
 
@@ -353,7 +353,7 @@ static unsigned int comm_open( glTexture *gfx, int faction,
  *    @param wid ID of window calling the function.
  *    @param unused Unused.
  */
-static void comm_close( unsigned int wid, char *unused )
+static void comm_close( unsigned int wid, const char *unused )
 {
    gl_freeTexture(comm_graphic);
    comm_graphic = NULL;
@@ -369,7 +369,7 @@ static void comm_close( unsigned int wid, char *unused )
  *    @param wid ID of window calling the function.
  *    @param unused Unused.
  */
-static void comm_bribePlanet( unsigned int wid, char *unused )
+static void comm_bribePlanet( unsigned int wid, const char *unused )
 {
    (void) unused;
    int answer;

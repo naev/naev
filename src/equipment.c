@@ -84,7 +84,7 @@ static void equipment_genShipList( unsigned int wid );
 static void equipment_genOutfitList( unsigned int wid );
 /* Widget. */
 static void equipment_genLists( unsigned int wid );
-static void equipment_toggleFav( unsigned int wid, char *wgt );
+static void equipment_toggleFav( unsigned int wid, const char *wgt );
 static void equipment_renderColumn( double x, double y, double w, double h,
       PilotOutfitSlot *lst, const char *txt,
       int selected, Outfit *o, Pilot *p, CstSlotWidget *wgt );
@@ -101,16 +101,16 @@ static int equipment_mouseSlots( unsigned int wid, SDL_Event* event,
 /* Misc. */
 static char eq_qCol( double cur, double base, int inv );
 static int equipment_swapSlot( unsigned int wid, Pilot *p, PilotOutfitSlot *slot );
-static void equipment_sellShip( unsigned int wid, char* str );
-static void equipment_renameShip( unsigned int wid, char *str );
-static void equipment_transChangeShip( unsigned int wid, char* str );
+static void equipment_sellShip( unsigned int wid, const char* str );
+static void equipment_renameShip( unsigned int wid, const char *str );
+static void equipment_transChangeShip( unsigned int wid, const char* str );
 static void equipment_changeShip( unsigned int wid );
-static void equipment_unequipShip( unsigned int wid, char* str );
-static void equipment_autoequipShip( unsigned int wid, char* str );
-static void equipment_filterOutfits( unsigned int wid, char *str );
-static void equipment_rightClickOutfits( unsigned int wid, char* str );
-static void equipment_outfitPopdown( unsigned int wid, char* str );
-static void equipment_changeTab( unsigned int wid, char *wgt, int old, int tab );
+static void equipment_unequipShip( unsigned int wid, const char* str );
+static void equipment_autoequipShip( unsigned int wid, const char* str );
+static void equipment_filterOutfits( unsigned int wid, const char *str );
+static void equipment_rightClickOutfits( unsigned int wid, const char* str );
+static void equipment_outfitPopdown( unsigned int wid, const char* str );
+static void equipment_changeTab( unsigned int wid, const char *wgt, int old, int tab );
 static int equipment_playerAddOutfit( const Outfit *o, int quantity );
 static int equipment_playerRmOutfit( const Outfit *o, int quantity );
 
@@ -120,7 +120,7 @@ static int equipment_playerRmOutfit( const Outfit *o, int quantity );
  *    @param wid Window to update.
  *    @param str Widget name. Must be EQUIPMENT_OUTFITS.
  */
-void equipment_rightClickOutfits( unsigned int wid, char* str )
+void equipment_rightClickOutfits( unsigned int wid, const char* str )
 {
    (void)str;
    Outfit* o;
@@ -1235,7 +1235,8 @@ void equipment_regenLists( unsigned int wid, int outfits, int ships )
    int i, ret;
    int nship;
    double offship;
-   char *s, selship[PATH_MAX];
+   char selship[PATH_MAX];
+   const char *s;
    char *focused;
 
    /* Default.s */
@@ -1408,7 +1409,7 @@ int equipment_shipStats( char *buf, int max_len,  const Pilot *s, int dpseps )
 /**
  * @brief Handles toggling of the favourite checkbox.
  */
-static void equipment_toggleFav( unsigned int wid, char *wgt )
+static void equipment_toggleFav( unsigned int wid, const char *wgt )
 {
    const char *shipname;
    PlayerShip_t *ps;
@@ -1536,6 +1537,7 @@ static void equipment_genShipList( unsigned int wid )
 }
 
 static int equipment_filter( const Outfit *o ) {
+   (void) o;
    return 1;
 }
 static int equipment_filterWeapon( const Outfit *o ) {
@@ -1560,7 +1562,7 @@ static void equipment_genOutfitList( unsigned int wid )
 {
    int x, y, w, h, ow, oh;
    int ix, iy, iw, ih, barw; /* Input filter. */
-   char *filtertext;
+   const char *filtertext;
    int (*tabfilters[])( const Outfit *o ) = {
       NULL,
       equipment_filterWeapon,
@@ -1694,12 +1696,12 @@ eq_qCol( cur, base, inv ), eq_qSym( cur, base, inv ), cur
  *    @param wid Window to update.
  *    @param str Unused.
  */
-void equipment_updateShips( unsigned int wid, char* str )
+void equipment_updateShips( unsigned int wid, const char* str )
 {
    (void)str;
    char *buf, buf2[ECON_CRED_STRLEN];
    char errorReport[STRMAX_SHORT];
-   char *shipname;
+   const char *shipname;
    char sdet[NUM2STRLEN], seva[NUM2STRLEN], sste[NUM2STRLEN];
    char smass[NUM2STRLEN], sfuel[NUM2STRLEN];
    Pilot *ship;
@@ -1827,7 +1829,7 @@ void equipment_updateShips( unsigned int wid, char* str )
  *    @param wid Window to update.
  *    @param str Unused.
  */
-void equipment_updateOutfits( unsigned int wid, char* str )
+void equipment_updateOutfits( unsigned int wid, const char* str )
 {
    (void) wid;
    (void) str;
@@ -1849,18 +1851,21 @@ void equipment_updateOutfits( unsigned int wid, char* str )
  *    @param wid Window containing the widget.
  *    @param str Unused.
  */
-static void equipment_filterOutfits( unsigned int wid, char *str )
+static void equipment_filterOutfits( unsigned int wid, const char *str )
 {
    (void) str;
    equipment_regenLists(wid, 1, 0);
 }
 
-static void equipment_outfitPopdownSelect( unsigned int wid, char *str )
+static void equipment_outfitPopdownSelect( unsigned int wid, const char *str )
 {
+   (void) wid;
+   (void) str;
 }
 
-static void equipment_outfitPopdown( unsigned int wid, char* str )
+static void equipment_outfitPopdown( unsigned int wid, const char* str )
 {
+   (void) str;
    const char *name = "lstOutfitPopdown";
    const char *modes[] = {
       N_("Show all outfits"),
@@ -1891,7 +1896,7 @@ static void equipment_outfitPopdown( unsigned int wid, char* str )
  *    @param old Tab changed from.
  *    @param tab Tab changed to.
  */
-static void equipment_changeTab( unsigned int wid, char *wgt, int old, int tab )
+static void equipment_changeTab( unsigned int wid, const char *wgt, int old, int tab )
 {
    (void) wid;
    (void) wgt;
@@ -1925,7 +1930,7 @@ static void equipment_changeTab( unsigned int wid, char *wgt, int old, int tab )
  *    @param wid Window player is attempting to change ships in.
  *    @param str Unused.
  */
-static void equipment_transChangeShip( unsigned int wid, char* str )
+static void equipment_transChangeShip( unsigned int wid, const char* str )
 {
    (void) str;
 
@@ -1940,7 +1945,7 @@ static void equipment_transChangeShip( unsigned int wid, char* str )
  */
 static void equipment_changeShip( unsigned int wid )
 {
-   char *shipname, *filtertext;
+   const char *shipname, *filtertext;
    int i;
 
    shipname = toolkit_getImageArray( wid, EQUIPMENT_SHIPS );
@@ -1989,7 +1994,7 @@ static void equipment_changeShip( unsigned int wid )
  *    @param wid Window id.
  *    @param str of widget.
  */
-static void equipment_unequipShip( unsigned int wid, char* str )
+static void equipment_unequipShip( unsigned int wid, const char* str )
 {
    (void) str;
    int ret;
@@ -2062,7 +2067,7 @@ static void equipment_unequipShip( unsigned int wid, char* str )
 /**
  * @brief Does the autoequip magic on the player's ship.
  */
-static void equipment_autoequipShip( unsigned int wid, char* str )
+static void equipment_autoequipShip( unsigned int wid, const char* str )
 {
    (void) str;
    (void) wid;
@@ -2130,10 +2135,11 @@ autoequip_cleanup:
  *    @param wid Window player is selling ships in.
  *    @param str Unused.
  */
-static void equipment_sellShip( unsigned int wid, char* str )
+static void equipment_sellShip( unsigned int wid, const char* str )
 {
    (void)str;
-   char *shipname, buf[ECON_CRED_STRLEN], *name;
+   const char *shipname;
+   char buf[ECON_CRED_STRLEN], *name;
    credits_t price;
    Pilot *p;
    const Ship *s;
@@ -2189,11 +2195,12 @@ static void equipment_sellShip( unsigned int wid, char* str )
  *    @param wid Parent window id.
  *    @param str Unused.
  */
-static void equipment_renameShip( unsigned int wid, char *str )
+static void equipment_renameShip( unsigned int wid, const char *str )
 {
    (void)str;
    Pilot *ship;
-   char *shipname, *newname;
+   const char *shipname;
+   char *newname;
 
    shipname = toolkit_getImageArray( wid, EQUIPMENT_SHIPS );
    ship = player_getShip(shipname);

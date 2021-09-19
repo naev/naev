@@ -83,34 +83,34 @@ static int logWidgetsReady=0;
  * prototypes
  */
 /* information menu */
-static void info_close( unsigned int wid, char* str );
+static void info_close( unsigned int wid, const char *str );
 static void info_openMain( unsigned int wid );
-static void info_setGui( unsigned int wid, char* str );
-static void setgui_load( unsigned int wdw, char *str );
-static void info_toggleGuiOverride( unsigned int wid, char *name );
+static void info_setGui( unsigned int wid, const char *str );
+static void setgui_load( unsigned int wdw, const char *str );
+static void info_toggleGuiOverride( unsigned int wid, const char *name );
 static void info_openShip( unsigned int wid );
 static void info_openWeapons( unsigned int wid );
 static void info_openCargo( unsigned int wid );
 static void info_openMissions( unsigned int wid );
 static void info_getDim( unsigned int wid, int *w, int *h, int *lw );
-static void standings_close( unsigned int wid, char *str );
+static void standings_close( unsigned int wid, const char *str );
 static void ship_update( unsigned int wid );
 static void weapons_genList( unsigned int wid );
-static void weapons_update( unsigned int wid, char *str );
-static void weapons_autoweap( unsigned int wid, char *str );
-static void weapons_fire( unsigned int wid, char *str );
-static void weapons_inrange( unsigned int wid, char *str );
-static void aim_lines( unsigned int wid, char *str );
+static void weapons_update( unsigned int wid, const char *str );
+static void weapons_autoweap( unsigned int wid, const char *str );
+static void weapons_fire( unsigned int wid, const char *str );
+static void weapons_inrange( unsigned int wid, const char *str );
+static void aim_lines( unsigned int wid, const char *str );
 static void weapons_renderLegend( double bx, double by, double bw, double bh, void* data );
 static void info_openStandings( unsigned int wid );
-static void info_shiplogView( unsigned int wid, char *str );
-static void standings_update( unsigned int wid, char* str );
+static void info_shiplogView( unsigned int wid, const char *str );
+static void standings_update( unsigned int wid, const char *str );
 static void cargo_genList( unsigned int wid );
-static void cargo_update( unsigned int wid, char* str );
-static void cargo_jettison( unsigned int wid, char* str );
-static void mission_menu_abort( unsigned int wid, char* str );
+static void cargo_update( unsigned int wid, const char *str );
+static void cargo_jettison( unsigned int wid, const char *str );
+static void mission_menu_abort( unsigned int wid, const char *str );
 static void mission_menu_genList( unsigned int wid, int first );
-static void mission_menu_update( unsigned int wid, char* str );
+static void mission_menu_update( unsigned int wid, const char *str );
 static void info_openShipLog( unsigned int wid );
 static const char* info_getLogTypeFilter( int lstPos );
 
@@ -168,7 +168,7 @@ void menu_info( int window )
  * @brief Closes the information menu.
  *    @param str Unused.
  */
-static void info_close( unsigned int wid, char* str )
+static void info_close( unsigned int wid, const char *str )
 {
    (void) wid;
    if (info_wid > 0) {
@@ -298,7 +298,7 @@ static void info_openMain( unsigned int wid )
  *    @param wdw Window triggering function.
  *    @param str Unused.
  */
-static void setgui_close( unsigned int wdw, char *str )
+static void setgui_close( unsigned int wdw, const char *str )
 {
    (void)str;
    window_destroy( wdw );
@@ -311,7 +311,7 @@ static void setgui_close( unsigned int wdw, char *str )
  *    @param wid Window id.
  *    @param name of widget.
  */
-static void info_setGui( unsigned int wid, char* str )
+static void info_setGui( unsigned int wid, const char *str )
 {
    (void)str;
    int i;
@@ -368,10 +368,10 @@ static void info_setGui( unsigned int wid, char* str )
  *    @param wdw Window triggering function.
  *    @param str Unused.
  */
-static void setgui_load( unsigned int wdw, char *str )
+static void setgui_load( unsigned int wdw, const char *str )
 {
    (void)str;
-   char *gui;
+   const char *gui;
    int wid;
 
    wid = window_get( "wdwSetGUI" );
@@ -408,7 +408,7 @@ static void setgui_load( unsigned int wdw, char *str )
  *    @param wid Window id.
  *    @param name of widget.
  */
-static void info_toggleGuiOverride( unsigned int wid, char *name )
+static void info_toggleGuiOverride( unsigned int wid, const char *name )
 {
    player.guiOverride = window_checkboxState( wid, name );
    /* Go back to the default one. */
@@ -628,7 +628,7 @@ static void weapons_genList( unsigned int wid )
 /**
  * @brief Updates the weapon sets.
  */
-static void weapons_update( unsigned int wid, char *str )
+static void weapons_update( unsigned int wid, const char *str )
 {
    (void) str;
    int pos;
@@ -655,7 +655,7 @@ static void weapons_update( unsigned int wid, char *str )
 /**
  * @brief Toggles autoweap for the ship.
  */
-static void weapons_autoweap( unsigned int wid, char *str )
+static void weapons_autoweap( unsigned int wid, const char *str )
 {
    int state, sure;
 
@@ -683,7 +683,7 @@ static void weapons_autoweap( unsigned int wid, char *str )
 /**
  * @brief Sets the fire mode.
  */
-static void weapons_fire( unsigned int wid, char *str )
+static void weapons_fire( unsigned int wid, const char *str )
 {
    int i, state, t, c;
 
@@ -724,7 +724,7 @@ static void weapons_fire( unsigned int wid, char *str )
 /**
  * @brief Sets the inrange property.
  */
-static void weapons_inrange( unsigned int wid, char *str )
+static void weapons_inrange( unsigned int wid, const char *str )
 {
    int state;
 
@@ -737,7 +737,7 @@ static void weapons_inrange( unsigned int wid, char *str )
 /**
  * @brief Sets the aim lines property.
  */
-static void aim_lines( unsigned int wid, char *str )
+static void aim_lines( unsigned int wid, const char *str )
 {
    int state;
 
@@ -846,7 +846,7 @@ static void cargo_genList( unsigned int wid )
  * @brief Updates the player's cargo in the cargo menu.
  *    @param str Unused.
  */
-static void cargo_update( unsigned int wid, char* str )
+static void cargo_update( unsigned int wid, const char *str )
 {
    (void) str;
    char desc[STRMAX];
@@ -888,7 +888,7 @@ static void cargo_update( unsigned int wid, char* str )
  * @brief Makes the player jettison the currently selected cargo.
  *    @param str Unused.
  */
-static void cargo_jettison( unsigned int wid, char* str )
+static void cargo_jettison( unsigned int wid, const char *str )
 {
    (void)str;
    int i, j, f, pos, ret;
@@ -970,7 +970,7 @@ static void info_getDim( unsigned int wid, int *w, int *h, int *lw )
 /**
  * @brief Closes the faction stuff.
  */
-static void standings_close( unsigned int wid, char *str )
+static void standings_close( unsigned int wid, const char *str )
 {
    (void) wid;
    (void) str;
@@ -1046,7 +1046,7 @@ static void info_openStandings( unsigned int wid )
 /**
  * @brief Updates the standings menu.
  */
-static void standings_update( unsigned int wid, char* str )
+static void standings_update( unsigned int wid, const char *str )
 {
    (void) str;
    int p, y;
@@ -1165,10 +1165,10 @@ static void mission_menu_genList( unsigned int wid, int first )
  * @brief Updates the mission menu mission information based on what's selected.
  *    @param str Unused.
  */
-static void mission_menu_update( unsigned int wid, char* str )
+static void mission_menu_update( unsigned int wid, const char *str )
 {
    (void)str;
-   char *active_misn;
+   const char *active_misn;
    Mission* misn;
 
    active_misn = toolkit_getList( wid, "lstMission" );
@@ -1194,7 +1194,7 @@ static void mission_menu_update( unsigned int wid, char* str )
  * @brief Aborts a mission in the mission menu.
  *    @param str Unused.
  */
-static void mission_menu_abort( unsigned int wid, char* str )
+static void mission_menu_abort( unsigned int wid, const char *str )
 {
    (void)str;
    int pos;
@@ -1238,7 +1238,7 @@ static void mission_menu_abort( unsigned int wid, char* str )
  * @brief Updates the mission menu mission information based on what's selected.
  *    @param str Unused.
  */
-static void shiplog_menu_update( unsigned int wid, char* str )
+static void shiplog_menu_update( unsigned int wid, const char *str )
 {
    int regenerateEntries=0;
    int w, h;
@@ -1349,7 +1349,7 @@ static void shiplog_menu_genList( unsigned int wid, int first )
    logWidgetsReady=1;
 }
 
-static void info_shiplogMenuDelete( unsigned int wid, char* str )
+static void info_shiplogMenuDelete( unsigned int wid, const char *str )
 {
    char buf[256];
    int ret, logid;
@@ -1376,7 +1376,7 @@ static void info_shiplogMenuDelete( unsigned int wid, char* str )
    }
 }
 
-static void info_shiplogView( unsigned int wid, char *str )
+static void info_shiplogView( unsigned int wid, const char *str )
 {
    char **logentries;
    int nentries;
@@ -1404,7 +1404,7 @@ static void info_shiplogView( unsigned int wid, char *str )
  * @param wid Window widget
  * @param str Button widget name
  */
-static void info_shiplogAdd( unsigned int wid, char *str )
+static void info_shiplogAdd( unsigned int wid, const char *str )
 {
    char *tmp;
    int logType, log;
