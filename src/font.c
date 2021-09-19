@@ -19,6 +19,7 @@
 #include FT_FREETYPE_H
 #include FT_GLYPH_H
 #include FT_MODULE_H
+#include <wctype.h>
 #include "linebreak.h"
 #include "linebreakdef.h"
 
@@ -568,7 +569,8 @@ int gl_printLineIteratorNext( glPrintLineIterator* iter )
       if ((brk == LINEBREAK_ALLOWBREAK && !iter->no_soft_breaks) || brk == LINEBREAK_MUSTBREAK) {
          iter->l_width = (int)round(n);
          iter->l_end = iter->l_next = i;
-         u8_dec( iter->text, &iter->l_end );
+	 if (iswspace( ch ))
+            u8_dec( iter->text, &iter->l_end );
          if (brk == LINEBREAK_MUSTBREAK)
             return 1;
       }
