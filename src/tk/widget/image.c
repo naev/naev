@@ -30,7 +30,7 @@ static void img_cleanup( Widget* img );
  *    @param image Image to use.
  *    @param border Whether to use a border.
  */
-void window_addImage( const unsigned int wid,
+void window_addImage( unsigned int wid,
                       const int x, const int y,
                       const int w, const int h,
                       char* name, const glTexture* image, int border )
@@ -108,7 +108,7 @@ static void img_render( Widget* img, double bx, double by )
  *    @param wid ID of the window to get widget from.
  *    @param name Name of the widget.
  */
-glTexture* window_getImage( const unsigned int wid, char* name )
+glTexture* window_getImage( unsigned int wid, char* name )
 {
    Widget *wgt;
 
@@ -137,7 +137,7 @@ glTexture* window_getImage( const unsigned int wid, char* name )
  *    @param w New height to set, 0 uses image, -1 doesn't change and >0 sets directly.
  *    @param image New image to set.
  */
-void window_modifyImage( const unsigned int wid,
+void window_modifyImage( unsigned int wid,
       char* name, const glTexture* image, int w, int h )
 {
    Widget *wgt;
@@ -172,7 +172,7 @@ void window_modifyImage( const unsigned int wid,
  *    @param name Name of the widget to modify image colour of.
  *    @param colour New colour to use.
  */
-void window_imgColour( const unsigned int wid,
+void window_imgColour( unsigned int wid,
       char* name, const glColour* colour )
 {
    Widget *wgt;
@@ -196,7 +196,7 @@ void window_imgColour( const unsigned int wid,
 /**
  * @brief Sets the image widget layers
  */
-void window_modifyImageLayers( const unsigned int wid,
+void window_modifyImageLayers( unsigned int wid,
       char* name, glTexture** layers, int n )
 {
    Widget *wgt;

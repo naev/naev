@@ -17,7 +17,7 @@
 #include "tk/toolkit_priv.h"
 
 
-static Widget *chk_getWgt( const unsigned int wid, const char *name );
+static Widget *chk_getWgt( unsigned int wid, const char *name );
 static int chk_key( Widget* chk, SDL_Keycode key, SDL_Keymod mod );
 static int chk_mclick( Widget* chk, int button, int x, int y );
 static void chk_render( Widget* chk, double bx, double by );
@@ -41,11 +41,11 @@ static void chk_toggleState( Widget *chk );
  *    @param call Function to call when checkbox is toggled Parameter passed
  *                is the name of the checkbox.
  */
-void window_addCheckbox( const unsigned int wid,
+void window_addCheckbox( unsigned int wid,
       const int x, const int y, /* position */
       const int w, const int h, /* size */
-      char* name, const char* display, /* label name, display name */
-      void (*call) (unsigned int,char*), /* toggle function */
+      const char* name, const char* display, /* label name, display name */
+      void (*call) (unsigned int,const char*), /* toggle function */
       int default_state ) /* default state. */
 {
    Window *wdw = window_wget(wid);
@@ -75,7 +75,7 @@ void window_addCheckbox( const unsigned int wid,
 /**
  * @brief Gets a widget.
  */
-static Widget *chk_getWgt( const unsigned int wid, const char *name )
+static Widget *chk_getWgt( unsigned int wid, const char *name )
 {
    Widget *wgt;
 
@@ -101,7 +101,7 @@ static Widget *chk_getWgt( const unsigned int wid, const char *name )
  *    @param name Name of the button to change caption.
  *    @param display New caption to display.
  */
-void window_checkboxCaption( const unsigned int wid, const char *name, char *display )
+void window_checkboxCaption( unsigned int wid, const char *name, char *display )
 {
    Widget *wgt;
    wgt = chk_getWgt(wid, name);
@@ -118,7 +118,7 @@ void window_checkboxCaption( const unsigned int wid, const char *name, char *dis
  *
  *    @return 1 = pressed, 0 = not pressed, -1 = error.
  */
-int window_checkboxState( const unsigned int wid, const char *name )
+int window_checkboxState( unsigned int wid, const char *name )
 {
    Widget *wgt;
    wgt = chk_getWgt(wid, name);
@@ -135,7 +135,7 @@ int window_checkboxState( const unsigned int wid, const char *name )
  *    @param state State to set checkbox to.
  *    @return The checkbox state or -1 on error.
  */
-int window_checkboxSet( const unsigned int wid, const char *name, int state )
+int window_checkboxSet( unsigned int wid, const char *name, int state )
 {
    Widget *wgt;
    wgt = chk_getWgt(wid, name);

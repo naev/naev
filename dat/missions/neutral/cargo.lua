@@ -26,7 +26,7 @@
    -- These are regular cargo delivery missions. Pay is low, but so is difficulty.
    -- Most of these missions require BULK ships. Not for small ships!
 --]]
-local pir = require "missions.pirate.common"
+local pir = require "common.pirate"
 require "cargo_common"
 local fmt = require "format"
 

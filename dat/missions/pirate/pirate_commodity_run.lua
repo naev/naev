@@ -22,7 +22,7 @@
    Pirate Commodity Delivery Mission
 
 --]]
-local pir = require "missions.pirate.common"
+local pir = require "common.pirate"
 require "missions.neutral.commodity_run"
 
 misn_title = _("Exploit the Demand for %s")

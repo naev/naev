@@ -28,7 +28,7 @@
    Based on patrol mission, this mission ferries sightseers to various points.
 
 --]]
-local pir = require "missions.pirate.common"
+local pir = require "common.pirate"
 local fmt = require "format"
 require "jumpdist"
 

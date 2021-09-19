@@ -21,7 +21,7 @@
 
    Go to planet A, get ambushed twice, and then duel in the Crimson Gauntlet.
 --]]
-local minerva  = require "campaigns.minerva"
+local minerva  = require "common.minerva"
 local portrait = require 'portrait'
 local pp_shaders = require 'pp_shaders'
 local vn       = require 'vn'

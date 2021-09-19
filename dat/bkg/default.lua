@@ -1,4 +1,4 @@
-prng_lib = require "prng"
+local prng_lib = require "prng"
 prng = prng_lib.new()
 
 nebulae = {
@@ -44,7 +44,6 @@ stars = {
 
 
 function background ()
-
    -- We can do systems without nebula
    cur_sys = system.cur()
    local nebud, nebuv = cur_sys:nebula()
@@ -75,8 +74,9 @@ function background_nebula ()
    local y     = r*math.sin(a)
    local move  = 0.01 + prng:random()*0.01
    local scale = 1 + (prng:random()*0.5 + 0.5)*((2000+2000)/(w+h))
+   local angle = prng:random()*360
    if scale > 1.9 then scale = 1.9 end
-   bkg.image( img, x, y, move, scale )
+   bkg.image( img, x, y, move, scale, angle )
 end
 
 

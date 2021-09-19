@@ -42,10 +42,10 @@ static int board_boarded   = 0;
 /*
  * prototypes
  */
-static void board_stealCreds( unsigned int wdw, char* str );
-static void board_stealCargo( unsigned int wdw, char* str );
-static void board_stealFuel( unsigned int wdw, char* str );
-static void board_stealAmmo( unsigned int wdw, char* str );
+static void board_stealCreds( unsigned int wdw, const char *str );
+static void board_stealCargo( unsigned int wdw, const char *str );
+static void board_stealFuel( unsigned int wdw, const char *str );
+static void board_stealAmmo( unsigned int wdw, const char *str );
 static int board_trySteal( Pilot *p );
 static int board_fail( unsigned int wdw );
 static void board_update( unsigned int wdw );
@@ -202,7 +202,7 @@ void board_unboard (void)
  *    @param wdw Window triggering the function.
  *    @param str Unused.
  */
-void board_exit( unsigned int wdw, char* str )
+void board_exit( unsigned int wdw, const char *str )
 {
    (void) str;
    window_destroy( wdw );
@@ -218,7 +218,7 @@ void board_exit( unsigned int wdw, char* str )
  *    @param wdw Window triggering the function.
  *    @param str Unused.
  */
-static void board_stealCreds( unsigned int wdw, char* str )
+static void board_stealCreds( unsigned int wdw, const char *str )
 {
    (void)str;
    Pilot* p;
@@ -245,7 +245,7 @@ static void board_stealCreds( unsigned int wdw, char* str )
  *    @param wdw Window triggering the function.
  *    @param str Unused.
  */
-static void board_stealCargo( unsigned int wdw, char* str )
+static void board_stealCargo( unsigned int wdw, const char *str )
 {
    (void) str;
    int q;
@@ -284,7 +284,7 @@ static void board_stealCargo( unsigned int wdw, char* str )
  *    @param wdw Window triggering the function.
  *    @param str Unused.
  */
-static void board_stealFuel( unsigned int wdw, char* str )
+static void board_stealFuel( unsigned int wdw, const char *str )
 {
    (void)str;
    Pilot* p;
@@ -327,7 +327,7 @@ static void board_stealFuel( unsigned int wdw, char* str )
  *    @param wdw Window triggering the function.
  *    @param str Unused.
  */
-static void board_stealAmmo( unsigned int wdw, char* str )
+static void board_stealAmmo( unsigned int wdw, const char *str )
 {
      Pilot* p;
      int nreloaded, i, nammo, x;

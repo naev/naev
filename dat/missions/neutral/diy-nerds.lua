@@ -22,7 +22,7 @@
       their hardware. The player can fail in multiple ways.
       AUTHOR: thilo <thilo@thiloernst.de>
    --]]
-local pir = require "missions.pirate.common"
+local pir = require "common.pirate"
 local fmt = require "format"
 
 -- Bar information, describes how the NPC appears in the bar

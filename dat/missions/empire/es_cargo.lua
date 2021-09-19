@@ -16,7 +16,7 @@
    Handles the randomly generated Empire cargo missions.
 
 ]]--
-local pir = require "missions.pirate.common"
+local pir = require "common.pirate"
 require "cargo_common"
 local fmt = require "format"
 

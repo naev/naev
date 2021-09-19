@@ -23,8 +23,8 @@ typedef struct map_find_s {
 } map_find_t;
 
 
-void map_inputFind( unsigned int parent, char* str );
-void map_inputFindType( unsigned int parent, char *type );
+void map_inputFind( unsigned int parent, const char* str );
+void map_inputFindType( unsigned int parent, const char *type );
 
 
 #endif /* MAP_FIND_H */

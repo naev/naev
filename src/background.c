@@ -44,6 +44,7 @@ typedef struct background_image_s {
    double y; /**< Y center of the image. */
    double move; /**< How many pixels it moves for each pixel the player moves. */
    double scale; /**< How the image should be scaled. */
+   double angle; /**< Rotation (in radians). */
    glColour col; /**< Colour to use. */
 } background_image_t;
 static background_image_t *bkg_image_arr_bk = NULL; /**< Background image array to display (behind stars). */
@@ -303,7 +304,7 @@ static void bkg_sort( background_image_t *arr )
  * @brief Adds a new background image.
  */
 unsigned int background_addImage( glTexture *image, double x, double y,
-      double move, double scale, const glColour *col, int foreground )
+      double move, double scale, double angle, const glColour *col, int foreground )
 {
    background_image_t *bkg, **arr;
 
@@ -324,6 +325,7 @@ unsigned int background_addImage( glTexture *image, double x, double y,
    bkg->y      = y;
    bkg->move   = move;
    bkg->scale  = scale;
+   bkg->angle  = angle;
    bkg->col    = (col!=NULL) ? *col : cWhite;
 
    /* Sort if necessary. */
@@ -357,13 +359,13 @@ static void background_renderImages( background_image_t *bkg_arr )
       gl_gameToScreenCoords( &xs, &ys, x, y );
       z = cam_getZoom();
       z *= bkg->scale;
-      /* TODO add rotation too! */
+
       col.r = bkg->col.r * conf.bg_brightness;
       col.g = bkg->col.g * conf.bg_brightness;
       col.b = bkg->col.b * conf.bg_brightness;
       col.a = bkg->col.a;
-      gl_renderScale( bkg->image, xs, ys,
-            z*bkg->image->sw, z*bkg->image->sh, &col );
+
+      gl_renderTexture( bkg->image, xs, ys, z*bkg->image->sw, z*bkg->image->sh, 0., 0., bkg->image->srw, bkg->image->srh, &col, bkg->angle );
    }
 }
 

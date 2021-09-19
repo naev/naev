@@ -1,4 +1,4 @@
-local minerva = require "campaigns.minerva"
+local minerva = require "common.minerva"
 local lg = require 'love.graphics'
 local la = require 'love.audio'
 local cardio = require 'minigames.cardio'

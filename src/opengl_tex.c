@@ -181,7 +181,10 @@ static GLuint gl_texParameters( unsigned int flags )
     * also seems to create a bit of artifacts around the edges */
    if ((gl_screen.scale != 1.) || (flags & OPENGL_TEX_MIPMAPS)) {
       glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+      if (flags & OPENGL_TEX_MIPMAPS)
+         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST_MIPMAP_LINEAR);
+      else
+         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
    }
    else {
       glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);

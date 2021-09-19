@@ -1,3 +1,4 @@
+local pir = require 'common.pirate'
 require "factions.standing.lib.base"
 
 _fcap_kill     = 30 -- Kill cap
@@ -32,30 +33,20 @@ _ftext_neutral  = _("Neutral")
 _ftext_hostile  = _("Hostile")
 _ftext_bribed   = _("Paid Off")
 
-local faction_pirate = faction.get("Pirate")
-local faction_marauder = faction.get("Marauder")
-local pirate_clans = {
-   faction.get("Wild Ones"),
-   faction.get("Raven Clan"),
-   faction.get("Black Lotus"),
-   faction.get("Dreamer Clan"),
-}
-
 function faction_hit( current, amount, source, secondary )
    local standing = math.max( -50, default_hit( current, amount, source, secondary ) )
 
    -- Get the maximum player standing with any pirate clan
    local maxval = standing
-   for k,v in ipairs(pirate_clans) do
+   for k,v in ipairs(pir.factions_clans) do
       if v ~= _fthis then
          local vs = v:playerStanding() -- Only get first parameter
          maxval = math.max( maxval, vs )
       end
    end
 
-   -- Pirates and marauders are fixed offsets
-   faction_pirate:setPlayerStanding(   maxval - 20 )
-   faction_marauder:setPlayerStanding( maxval - 40 )
+   -- Update pirate and marauder standings
+   pir.updateStandings( maxval )
 
    -- Set current faction standing
    return standing

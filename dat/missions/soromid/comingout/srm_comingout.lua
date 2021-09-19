@@ -21,7 +21,7 @@
 
 --]]
 local fmt = require "format"
-require "missions.soromid.common"
+require "common.soromid"
 
 title = {}
 text = {}

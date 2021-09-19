@@ -67,6 +67,7 @@ typedef enum UniEditViewMode_ {
    UNIEDIT_VIEW_DEFAULT,
    UNIEDIT_VIEW_VIRTUALASSETS,
    UNIEDIT_VIEW_RADIUS,
+   UNIEDIT_VIEW_PRESENCE_SUM,
    UNIEDIT_VIEW_PRESENCE,
 } UniEditViewMode;
 
@@ -107,20 +108,20 @@ static void uniedit_selectAdd( StarSystem *sys );
 static void uniedit_selectRm( StarSystem *sys );
 /* System and asset search. */
 static void uniedit_findSys (void);
-static void uniedit_findSysClose( unsigned int wid, char *name );
-static void uniedit_findSearch( unsigned int wid, char *str );
+static void uniedit_findSysClose( unsigned int wid, const char *name );
+static void uniedit_findSearch( unsigned int wid, const char *str );
 static void uniedit_findShowResults( unsigned int wid, map_find_t *found, int n );
-static void uniedit_centerSystem( unsigned int wid, char *unused );
+static void uniedit_centerSystem( unsigned int wid, const char *unused );
 static int uniedit_sortCompare( const void *p1, const void *p2 );
 /* System editing. */
 static void uniedit_editSys (void);
-static void uniedit_editSysClose( unsigned int wid, char *name );
+static void uniedit_editSysClose( unsigned int wid, const char *name );
 static void uniedit_editGenList( unsigned int wid );
-static void uniedit_btnEditRename( unsigned int wid, char *unused );
-static void uniedit_btnEditRmAsset( unsigned int wid, char *unused );
-static void uniedit_btnEditAddAsset( unsigned int wid, char *unused );
-static void uniedit_btnEditAddAssetAdd( unsigned int wid, char *unused );
-static void uniedit_btnViewModeSet( unsigned int wid, char *unused );
+static void uniedit_btnEditRename( unsigned int wid, const char *unused );
+static void uniedit_btnEditRmAsset( unsigned int wid, const char *unused );
+static void uniedit_btnEditAddAsset( unsigned int wid, const char *unused );
+static void uniedit_btnEditAddAssetAdd( unsigned int wid, const char *unused );
+static void uniedit_btnViewModeSet( unsigned int wid, const char *unused );
 /* System renaming. */
 static int uniedit_checkName( const char *name );
 static void uniedit_renameSys (void);
@@ -131,7 +132,7 @@ static void uniedit_toggleJump( StarSystem *sys );
 static void uniedit_jumpAdd( StarSystem *sys, StarSystem *targ );
 static void uniedit_jumpRm( StarSystem *sys, StarSystem *targ );
 /* Custom system editor widget. */
-static void uniedit_buttonZoom( unsigned int wid, char* str );
+static void uniedit_buttonZoom( unsigned int wid, const char* str );
 static void uniedit_render( double bx, double by, double w, double h, void *data );
 static void uniedit_renderOverlay( double bx, double by, double bw, double bh, void* data );
 static int uniedit_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
@@ -139,15 +140,15 @@ static int uniedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
 static void uniedit_renderFactionDisks( double x, double y, double r );
 static void uniedit_renderVirtualAssets( double x, double y, double r );
 /* Button functions. */
-static void uniedit_close( unsigned int wid, char *wgt );
-static void uniedit_save( unsigned int wid_unused, char *unused );
-static void uniedit_btnView( unsigned int wid_unused, char *unused );
-static void uniedit_btnJump( unsigned int wid_unused, char *unused );
-static void uniedit_btnRename( unsigned int wid_unused, char *unused );
-static void uniedit_btnEdit( unsigned int wid_unused, char *unused );
-static void uniedit_btnNew( unsigned int wid_unused, char *unused );
-static void uniedit_btnOpen( unsigned int wid_unused, char *unused );
-static void uniedit_btnFind( unsigned int wid_unused, char *unused );
+static void uniedit_close( unsigned int wid, const char *wgt );
+static void uniedit_save( unsigned int wid_unused, const char *unused );
+static void uniedit_btnView( unsigned int wid_unused, const char *unused );
+static void uniedit_btnJump( unsigned int wid_unused, const char *unused );
+static void uniedit_btnRename( unsigned int wid_unused, const char *unused );
+static void uniedit_btnEdit( unsigned int wid_unused, const char *unused );
+static void uniedit_btnNew( unsigned int wid_unused, const char *unused );
+static void uniedit_btnOpen( unsigned int wid_unused, const char *unused );
+static void uniedit_btnFind( unsigned int wid_unused, const char *unused );
 /* Keybindings handling. */
 static int uniedit_keys( unsigned int wid, SDL_Keycode key, SDL_Keymod mod );
 
@@ -155,7 +156,7 @@ static int uniedit_keys( unsigned int wid, SDL_Keycode key, SDL_Keymod mod );
 /**
  * @brief Opens the system editor interface.
  */
-void uniedit_open( unsigned int wid_unused, char *unused )
+void uniedit_open( unsigned int wid_unused, const char *unused )
 {
    (void) wid_unused;
    (void) unused;
@@ -291,7 +292,7 @@ static int uniedit_keys( unsigned int wid, SDL_Keycode key, SDL_Keymod mod )
 /**
  * @brief Closes the system editor widget.
  */
-static void uniedit_close( unsigned int wid, char *wgt )
+static void uniedit_close( unsigned int wid, const char *wgt )
 {
    /* Frees some memory. */
    uniedit_deselect();
@@ -309,7 +310,7 @@ static void uniedit_close( unsigned int wid, char *wgt )
 /*
  * @brief Saves the systems.
  */
-static void uniedit_save( unsigned int wid_unused, char *unused )
+static void uniedit_save( unsigned int wid_unused, const char *unused )
 {
    (void) wid_unused;
    (void) unused;
@@ -322,7 +323,7 @@ static void uniedit_save( unsigned int wid_unused, char *unused )
 /*
  * @brief Toggles autosave.
  */
-void uniedit_autosave( unsigned int wid_unused, char *unused )
+void uniedit_autosave( unsigned int wid_unused, const char *unused )
 {
    (void) wid_unused;
    (void) unused;
@@ -357,7 +358,7 @@ static int factionGenerates( int f, int tocheck, double *w )
 /**
  * @brief Allows selecting the view.
  */
-static void uniedit_btnView( unsigned int wid_unused, char *unused )
+static void uniedit_btnView( unsigned int wid_unused, const char *unused )
 {
    (void) wid_unused;
    (void) unused;
@@ -396,7 +397,8 @@ static void uniedit_btnView( unsigned int wid_unused, char *unused )
    str[0]= strdup(_("Default"));
    str[1]= strdup(_("Virtual Assets"));
    str[2]= strdup(_("System Radius"));
-   n     = 3; /* Number of special cases. */
+   str[3]= strdup(_("Sum of Presences"));
+   n     = 4; /* Number of special cases. */
    j     = n;
    for (i=0; i<array_size(factions); i++) {
       f = factions[i];
@@ -423,7 +425,7 @@ static void uniedit_btnView( unsigned int wid_unused, char *unused )
 /**
  * @brief Enters the editor in new jump mode.
  */
-static void uniedit_btnJump( unsigned int wid_unused, char *unused )
+static void uniedit_btnJump( unsigned int wid_unused, const char *unused )
 {
    (void) wid_unused;
    (void) unused;
@@ -435,7 +437,7 @@ static void uniedit_btnJump( unsigned int wid_unused, char *unused )
 /**
  * @brief Renames selected systems.
  */
-static void uniedit_btnRename( unsigned int wid_unused, char *unused )
+static void uniedit_btnRename( unsigned int wid_unused, const char *unused )
 {
    (void) wid_unused;
    (void) unused;
@@ -447,7 +449,7 @@ static void uniedit_btnRename( unsigned int wid_unused, char *unused )
 /**
  * @brief Enters the editor in new system mode.
  */
-static void uniedit_btnNew( unsigned int wid_unused, char *unused )
+static void uniedit_btnNew( unsigned int wid_unused, const char *unused )
 {
    (void) wid_unused;
    (void) unused;
@@ -459,7 +461,7 @@ static void uniedit_btnNew( unsigned int wid_unused, char *unused )
 /**
  * @brief Opens up a system.
  */
-static void uniedit_btnOpen( unsigned int wid_unused, char *unused )
+static void uniedit_btnOpen( unsigned int wid_unused, const char *unused )
 {
    (void) wid_unused;
    (void) unused;
@@ -474,7 +476,7 @@ static void uniedit_btnOpen( unsigned int wid_unused, char *unused )
 /**
  * @brief Opens the system property editor.
  */
-static void uniedit_btnFind( unsigned int wid_unused, char *unused )
+static void uniedit_btnFind( unsigned int wid_unused, const char *unused )
 {
    (void) wid_unused;
    (void) unused;
@@ -486,7 +488,7 @@ static void uniedit_btnFind( unsigned int wid_unused, char *unused )
 /**
  * @brief Opens the system property editor.
  */
-static void uniedit_btnEdit( unsigned int wid_unused, char *unused )
+static void uniedit_btnEdit( unsigned int wid_unused, const char *unused )
 {
    (void) wid_unused;
    (void) unused;
@@ -579,6 +581,35 @@ static void uniedit_renderRadius( double x, double y, double r )
 }
 
 
+static void uniedit_renderPresenceSum( double x, double y, double r )
+{
+   int i, j;
+   glColour c;
+   StarSystem *sys;
+   double tx, ty, sr, total;
+
+   c   = cWhite;
+   c.a = 0.3;
+
+   for (i=0; i<array_size(systems_stack); i++) {
+      sys = system_getIndex( i );
+
+      total = 0.;
+      for (j=0; j<array_size(sys->presence); j++)
+         total += MAX( 0., sys->presence[j].value );
+
+      tx = x + sys->pos.x*uniedit_zoom;
+      ty = y + sys->pos.y*uniedit_zoom;
+
+      /* draws the disk representing the faction */
+      sr = 0.2*M_PI*sqrt(total) * uniedit_zoom;
+
+      (void) r;
+      gl_renderCircle( tx, ty, sr, &c, 1 );
+   }
+}
+
+
 /* @brief Renders important map stuff.
  */
 void uniedit_renderMap( double bx, double by, double w, double h, double x, double y, double r )
@@ -601,6 +632,10 @@ void uniedit_renderMap( double bx, double by, double w, double h, double x, doub
 
       case UNIEDIT_VIEW_RADIUS:
          uniedit_renderRadius( x, y, r );
+         break;
+
+      case UNIEDIT_VIEW_PRESENCE_SUM:
+         uniedit_renderPresenceSum( x, y, r );
          break;
 
       case UNIEDIT_VIEW_PRESENCE:
@@ -684,6 +719,7 @@ static void uniedit_renderOverlay( double bx, double by, double bw, double bh, v
    double value, base, bonus;
    char buf[STRMAX] = {'\0'};
    StarSystem *sys, *cur, *mousesys;
+   SystemPresence *sp;
    Planet *pnt;
    VirtualAsset *va;
    (void) data;
@@ -741,9 +777,30 @@ static void uniedit_renderOverlay( double bx, double by, double bw, double bh, v
       return;
    }
 
-   /* Handle radius view.r */
+   /* Handle radius view. */
    else if (uniedit_viewmode == UNIEDIT_VIEW_RADIUS) {
       scnprintf( &buf[0], sizeof(buf), _("System Radius: %s"), num2strU( sys->radius, 0 ));
+      toolkit_drawAltText( x, y, buf);
+      return;
+   }
+
+   /* Handle presence sum. */
+   else if (uniedit_viewmode == UNIEDIT_VIEW_PRESENCE_SUM) {
+      if (array_size(sys->presence)==0)
+         return;
+
+      value = 0.;
+      for (j=0; j<array_size(sys->presence); j++)
+         value += MAX( sys->presence[j].value, 0. );
+
+      /* Count assets. */
+      l = scnprintf( buf, sizeof(buf), _("Total: %.0f"), value );
+      for (j=0; j<array_size(sys->presence); j++) {
+         sp = &sys->presence[j];
+         if (sp->value<=0.)
+            continue;
+         l += scnprintf( &buf[l], sizeof(buf)-l, "\n%s: %.0f = %.0f + %.0f", faction_name(sp->faction), sp->value, sp->base, sp->bonus);
+      }
       toolkit_drawAltText( x, y, buf);
       return;
    }
@@ -1009,7 +1066,7 @@ static int uniedit_checkName( const char *name )
 }
 
 
-char *uniedit_nameFilter( char *name )
+char *uniedit_nameFilter( const char *name )
 {
    int i, pos;
    char *out;
@@ -1320,7 +1377,7 @@ void uniedit_selectText (void)
  *    @param wid Unused.
  *    @param str Name of the button creating the event.
  */
-static void uniedit_buttonZoom( unsigned int wid, char* str )
+static void uniedit_buttonZoom( unsigned int wid, const char* str )
 {
    (void) wid;
 
@@ -1387,11 +1444,11 @@ static void uniedit_findSys (void)
 /**
  * @brief Searches for planets and systems.
  */
-static void uniedit_findSearch( unsigned int wid, char *str )
+static void uniedit_findSearch( unsigned int wid, const char *str )
 {
    (void) str;
    int i, n, nplanets, nsystems;
-   char *name;
+   const char *name;
    char **planets, **systems;
    const char *sysname;
    map_find_t *found;
@@ -1498,7 +1555,7 @@ static void uniedit_findShowResults( unsigned int wid, map_find_t *found, int n 
 /**
  * @brief Closes the search dialogue.
  */
-static void uniedit_findSysClose( unsigned int wid, char *name )
+static void uniedit_findSysClose( unsigned int wid, const char *name )
 {
    /* Clean up if necessary. */
    free( found_cur );
@@ -1512,7 +1569,7 @@ static void uniedit_findSysClose( unsigned int wid, char *name )
 /**
  * @brief Centers the selected system.
  */
-static void uniedit_centerSystem( unsigned int wid, char *unused )
+static void uniedit_centerSystem( unsigned int wid, const char *unused )
 {
    (void) unused;
    StarSystem *sys;
@@ -1723,7 +1780,7 @@ static void uniedit_editGenList( unsigned int wid )
 /**
  * @brief Closes the system property editor, saving the changes made.
  */
-static void uniedit_editSysClose( unsigned int wid, char *name )
+static void uniedit_editSysClose( unsigned int wid, const char *name )
 {
    StarSystem *sys;
    double scale;
@@ -1759,10 +1816,10 @@ static void uniedit_editSysClose( unsigned int wid, char *name )
 /**
  * @brief Removes a selected asset.
  */
-static void uniedit_btnEditRmAsset( unsigned int wid, char *unused )
+static void uniedit_btnEditRmAsset( unsigned int wid, const char *unused )
 {
    (void) unused;
-   char *selected;
+   const char *selected;
    int ret;
 
    /* Get selection. */
@@ -1789,7 +1846,7 @@ static void uniedit_btnEditRmAsset( unsigned int wid, char *unused )
 /**
  * @brief Adds a new virtual asset.
  */
-static void uniedit_btnEditAddAsset( unsigned int parent, char *unused )
+static void uniedit_btnEditAddAsset( unsigned int parent, const char *unused )
 {
    (void) parent;
    (void) unused;
@@ -1831,9 +1888,9 @@ static void uniedit_btnEditAddAsset( unsigned int parent, char *unused )
 /**
  * @brief Actually adds the virtual asset.
  */
-static void uniedit_btnEditAddAssetAdd( unsigned int wid, char *unused )
+static void uniedit_btnEditAddAssetAdd( unsigned int wid, const char *unused )
 {
-   char *selected;
+   const char *selected;
    int ret;
 
    /* Get selection. */
@@ -1865,7 +1922,7 @@ static void uniedit_btnEditAddAssetAdd( unsigned int wid, char *unused )
 /**
  * @brief Renames the systems in the system editor.
  */
-static void uniedit_btnEditRename( unsigned int wid, char *unused )
+static void uniedit_btnEditRename( unsigned int wid, const char *unused )
 {
    (void) unused;
    char buf[STRMAX_SHORT];
@@ -1882,9 +1939,9 @@ static void uniedit_btnEditRename( unsigned int wid, char *unused )
 /**
  * @brief Actually adds the virtual asset.
  */
-static void uniedit_btnViewModeSet( unsigned int wid, char *unused )
+static void uniedit_btnViewModeSet( unsigned int wid, const char *unused )
 {
-   char *selected;
+   const char *selected;
    int pos;
 
    /* Check default. */
@@ -1903,6 +1960,12 @@ static void uniedit_btnViewModeSet( unsigned int wid, char *unused )
    }
    else if (pos==2) {
       uniedit_viewmode = UNIEDIT_VIEW_RADIUS;
+      uniedit_view_faction = -1;
+      window_close( wid, unused );
+      return;
+   }
+   else if (pos==3) {
+      uniedit_viewmode = UNIEDIT_VIEW_PRESENCE_SUM;
       uniedit_view_faction = -1;
       window_close( wid, unused );
       return;

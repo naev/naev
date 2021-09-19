@@ -152,22 +152,18 @@ function background ()
       lg.setCanvas( cvs )
       lg.clear( 0, 0, 0, 0 )
       lg.setColor( g, g, g, 1 )
-      local a = math.rad( 20 + 10 * rnd.rnd() )
-      local c = math.cos(a)
-      local s = math.sin(a)
+      local angle = math.rad( 20 + 10 * rnd.rnd() )
       for i = 1,n do
          local p = parts_create()
          p.s = 1 / (salpha + sbeta*rnd.rnd())
-         local xr = 0.8 * naev.rnd.threesigma()
-         local yr = 0.7 * naev.rnd.threesigma()
-         local x = xr*c-yr*s
-         local y = xr*c+yr*s
+         local x = 0.8 * naev.rnd.threesigma()
+         local y = 0.7 * naev.rnd.threesigma()
          p.x = w*(x+3) / 6
          p.y = h*(y+3) / 6
          lg.draw( p.i.i, p.q, p.x, p.y, 0, p.s )
       end
       lg.setCanvas()
-      naev.bkg.image( cvs.t.tex, 0, 0, move, scale )
+      naev.bkg.image( cvs.t.tex, 0, 0, move, scale, angle )
 
       -- Store in cache
       cache.taiomi[ id ] = cvs

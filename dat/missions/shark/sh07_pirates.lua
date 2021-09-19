@@ -26,10 +26,10 @@
    1) Way to Alteris
 
 --]]
-local pir = require "missions.pirate.common"
+local pir = require "common.pirate"
 local pilotname = require "pilotname"
 local fmt = require "format"
-local shark = require "missions.shark.common"
+local shark = require "common.shark"
 require "jumpdist"
 
 

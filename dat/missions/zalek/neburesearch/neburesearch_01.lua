@@ -29,7 +29,7 @@
 local fleet = require "fleet"
 require "nextjump"
 local fmt = require "format"
-local zlk = require "missions.zalek.common"
+local zlk = require "common.zalek"
 
 
 bar_desc = _("You see a scientist who is apparently looking for someone.")

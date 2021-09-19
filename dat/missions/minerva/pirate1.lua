@@ -21,7 +21,7 @@
 --[[
 -- Beat up Dvaered thugs making them think the za'leks did it
 --]]
-local minerva = require "campaigns.minerva"
+local minerva = require "common.minerva"
 local portrait = require 'portrait'
 local vn = require 'vn'
 local fmt = require "format"

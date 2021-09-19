@@ -4,7 +4,19 @@
 -- This framework allows to keep consistency and abstracts around commonly used
 --  Pirate mission functions.
 --]]
+local fmt = require 'format'
 local pir = {}
+
+local function _intable( t, q )
+   for k,v in ipairs(t) do
+      if v==q then
+         return true
+      end
+   end
+   return false
+end
+local fpir = faction.get("Pirate")
+local fmar = faction.get("Marauder")
 
 --[[
    @brief Increases the reputation limit of the player.
@@ -53,13 +65,7 @@ pir.factions_clans = {
 --]]
 function pir.factionIsPirate( f )
    if not f then return false end
-   f = faction.get(f)
-   for k,v in ipairs(pir.factions) do
-      if f==v then
-         return true
-      end
-   end
-   return false
+   return _intable( pir.factions, faction.get(f) )
 end
 
 --[[
@@ -67,13 +73,7 @@ end
 --]]
 function pir.factionIsClan( f )
    if not f then return false end
-   f = faction.get(f)
-   for k,v in ipairs(pir.factions_clans) do
-      if f==v then
-         return true
-      end
-   end
-   return false
+   return _intable( pir.factions_clans, faction.get(f) )
 end
 
 --[[
@@ -112,7 +112,7 @@ function pir.systemClan( sys )
          m = pp
       end
    end
-   return f or faction.get("Pirate")
+   return f or fpir
 end
 
 --[[
@@ -143,14 +143,14 @@ function pir.systemClanP( sys )
          return v
       end
    end
-   return faction.get("Pirate")
+   return fpir
 end
 
 --[[
    @brief Gets a simple reputation message telling the player how the mission will increase their standing.
 --]]
 function pir.reputationMessage( f )
-   return string.format(_("This mission will increase your reputation with %s."), f:longname())
+   return fmt.f(_("This mission will increase your reputation with {factname}."), {factname=f:longname()})
 end
 
 --[[
@@ -170,6 +170,51 @@ function pir.reputationNormalMission( amount )
          end
          v:modPlayerSingle( vamount )
       end
+   end
+end
+
+pir.ships = {
+   ship.get("Hyena"), -- TODO pirate hyena
+   ship.get("Pirate Admonisher"),
+   ship.get("Pirate Ancestor"),
+   ship.get("Pirate Kestrel"),
+   ship.get("Pirate Phalanx"),
+   ship.get("Pirate Rhino"),
+   ship.get("Pirate Shark"),
+   ship.get("Pirate Starbridge"),
+   ship.get("Pirate Vendetta"),
+}
+
+--[[
+   @brief Gets whether or not the pilot is in a pirate ship
+--]]
+function pir.isPirateShip( p )
+   return _intable( pir.ships, p:ship() )
+end
+
+--[[
+   @brief Gets the maximum standing the player has with any clan
+--]]
+function pir.maxClanStanding ()
+   local maxval = -100
+   for k,v in ipairs(pir.factions_clans) do
+      local vs = v:playerStanding()
+      maxval = math.max( maxval, vs )
+   end
+   return maxval
+end
+
+--[[
+   @brief Updates the standing of the marauders and pirates based on maxval (computed as necessary)
+--]]
+function pir.updateStandings( maxval )
+   maxval = maxval or pir.maxClanStanding()
+   if pir.isPirateShip( player.pilot() ) then
+      fpir:setPlayerStanding( maxval )
+      fmar:setPlayerStanding( maxval - 20 )
+   else
+      fpir:setPlayerStanding( maxval - 20 )
+      fmar:setPlayerStanding( maxval - 40 )
    end
 end
 

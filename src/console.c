@@ -543,11 +543,12 @@ void cli_exit (void)
  *    @param wid Window receiving the input.
  *    @param unused Unused.
  */
-static void cli_input( unsigned int wid, char *unused )
+static void cli_input( unsigned int wid, const char *unused )
 {
    (void) unused;
    int status, len;
-   char *str, *escaped;
+   const char *str;
+   char *escaped;
    char buf[CLI_MAX_INPUT+7];
 
    /* Get the input. */

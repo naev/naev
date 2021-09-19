@@ -43,12 +43,12 @@ static void fad_scrolldone( Widget *wgt );
  *    @param def Default value.
  *    @param call Callback when fader is modified.
  */
-void window_addFader( const unsigned int wid,
+void window_addFader( unsigned int wid,
                       const int x, const int y, /* position */
                       const int w, const int h, /* size */
-                      char* name, const double min, const double max,
+                      const char* name, const double min, const double max,
                       const double def,
-                      void (*call) (unsigned int,char*) )
+                      void (*call) (unsigned int,const char*) )
 {
    Window *wdw = window_wget(wid);
    Widget *wgt = window_newWidget(wdw, name);
@@ -226,7 +226,7 @@ static int fad_key( Widget* fad, SDL_Keycode key, SDL_Keymod mod )
  *    @param wid ID of the window to get widget from.
  *    @param name Name of the widget.
  */
-double window_getFaderValue( const unsigned int wid, char* name )
+double window_getFaderValue( unsigned int wid, const char* name )
 {
    Widget *wgt;
 
@@ -275,8 +275,8 @@ static void fad_setValue( Widget *fad, double value )
  *    @param name Name of the widget.
  *    @param value Value to set fader to (between 0 and 1).
  */
-void window_faderValue( const unsigned int wid,
-      char* name, double value )
+void window_faderValue( unsigned int wid,
+      const char* name, double value )
 {
    Widget *wgt;
 
@@ -311,8 +311,8 @@ void window_faderValue( const unsigned int wid,
  *    @param name Name of the widget.
  *    @param value Value to set fader to (between Min and Max)
  */
-void window_faderSetBoundedValue( const unsigned int wid,
-      char* name, double value )
+void window_faderSetBoundedValue( unsigned int wid,
+      const char* name, double value )
 {
    const double INTRINSIC_MIN = 0.;
    const double INTRINSIC_MAX = 1.;
@@ -348,8 +348,8 @@ void window_faderSetBoundedValue( const unsigned int wid,
  *    @param min Minimum fader value.
  *    @param max Maximum fader value.
  */
-void window_faderBounds( const unsigned int wid,
-      char* name, double min, double max )
+void window_faderBounds( unsigned int wid,
+      const char* name, double min, double max )
 {
    Widget *wgt;
 
@@ -389,8 +389,8 @@ static void fad_scrolldone( Widget *wgt )
  *    @param name Name of the fader.
  *    @param func Function to call when scrolling is done.
  */
-void window_faderScrollDone( const unsigned int wid,
-      char *name, void (*func)(unsigned int,char*) )
+void window_faderScrollDone( unsigned int wid,
+      const char *name, void (*func)(unsigned int,const char*) )
 {
    Widget *wgt;
 

@@ -167,7 +167,8 @@ int nlua_dobufenv(nlua_env env,
  *    @param env Lua environment.
  *    @param filename Filename of Lua script.
  */
-int nlua_dofileenv(nlua_env env, const char *filename) {
+int nlua_dofileenv(nlua_env env, const char *filename)
+{
    if (luaL_loadfile(naevL, filename) != 0)
       return -1;
    nlua_pushenv(env);

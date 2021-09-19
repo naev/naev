@@ -59,16 +59,16 @@ static int outfits_mod = 1;
  */
 static void outfits_getSize( unsigned int wid, int *w, int *h,
       int *iw, int *ih, int *bw, int *bh );
-static void outfits_buy( unsigned int wid, char* str );
-static void outfits_sell( unsigned int wid, char* str );
+static void outfits_buy( unsigned int wid, const char *str );
+static void outfits_sell( unsigned int wid, const char *str );
 static int outfits_getMod (void);
 static void outfits_renderMod( double bx, double by, double w, double h, void *data );
-static void outfits_rmouse( unsigned int wid, char* widget_name );
-static void outfits_find( unsigned int wid, char* str );
+static void outfits_rmouse( unsigned int wid, const char* widget_name );
+static void outfits_find( unsigned int wid, const char *str );
 static credits_t outfit_getPrice( const Outfit *outfit );
 static void outfits_genList( unsigned int wid );
-static void outfits_changeTab( unsigned int wid, char *wgt, int old, int tab );
-static void outfits_onClose( unsigned int wid, char *str );
+static void outfits_changeTab( unsigned int wid, const char *wgt, int old, int tab );
+static void outfits_onClose( unsigned int wid, const char *str );
 
 
 /**
@@ -102,7 +102,7 @@ static void outfits_getSize( unsigned int wid, int *w, int *h,
 /**
  * @brief For when the widget closes.
  */
-static void outfits_onClose( unsigned int wid, char *str )
+static void outfits_onClose( unsigned int wid, const char *str )
 {
    (void) str;
    LandOutfitData *data = window_getData( wid );
@@ -223,7 +223,7 @@ void outfits_open( unsigned int wid, const Outfit **outfits )
  *   @param wid Window to generate the list on.
  *   @param str Unused.
  */
-void outfits_regenList( unsigned int wid, char *str )
+void outfits_regenList( unsigned int wid, const char *str )
 {
    (void) str;
    int tab;
@@ -281,7 +281,7 @@ static void outfits_genList( unsigned int wid )
    ImageArrayCell *coutfits;
    int noutfits;
    int w, h, iw, ih;
-   char *filtertext;
+   const char *filtertext;
    LandOutfitData *data;
    int iconsize;
 
@@ -351,7 +351,7 @@ static void outfits_genList( unsigned int wid )
  *    @param wid Window to update the outfits in.
  *    @param str Unused.
  */
-void outfits_update( unsigned int wid, char* str )
+void outfits_update( unsigned int wid, const char *str )
 {
    (void)str;
    int i, active;
@@ -487,7 +487,7 @@ void outfits_updateEquipmentOutfits( void )
  *    @param old Tab changed from.
  *    @param tab Tab changed to.
  */
-static void outfits_changeTab( unsigned int wid, char *wgt, int old, int tab )
+static void outfits_changeTab( unsigned int wid, const char *wgt, int old, int tab )
 {
    (void) wid;
    (void) wgt;
@@ -527,7 +527,7 @@ static void outfits_changeTab( unsigned int wid, char *wgt, int old, int tab )
  *    @return Number of outfits.
  */
 int outfits_filter( const Outfit **outfits, int n,
-      int(*filter)( const Outfit *o ), char *name )
+      int(*filter)( const Outfit *o ), const char *name )
 {
    int i, j;
 
@@ -553,7 +553,7 @@ int outfits_filter( const Outfit **outfits, int n,
  *    @param wid Window buying outfit from.
  *    @param str Unused.
  */
-static void outfits_find( unsigned int wid, char* str )
+static void outfits_find( unsigned int wid, const char *str )
 {
    (void) str;
    map_inputFindType(wid, "outfit");
@@ -739,7 +739,7 @@ int outfit_canBuy( const char *name, Planet *planet )
  *    @param wid Window player is buying ship from.
  *    @param widget_name Name of the window. (unused)
  */
-static void outfits_rmouse( unsigned int wid, char* widget_name )
+static void outfits_rmouse( unsigned int wid, const char* widget_name )
 {
     outfits_buy( wid, widget_name );
 }
@@ -749,7 +749,7 @@ static void outfits_rmouse( unsigned int wid, char* widget_name )
  *    @param wid Window buying outfit from.
  *    @param str Unused.
  */
-static void outfits_buy( unsigned int wid, char* str )
+static void outfits_buy( unsigned int wid, const char *str )
 {
    (void) str;
    int i, active;
@@ -835,7 +835,7 @@ int outfit_canSell( const char *name )
  *    @param wid Window selling outfits from.
  *    @param str Unused.
  */
-static void outfits_sell( unsigned int wid, char* str )
+static void outfits_sell( unsigned int wid, const char *str )
 {
    (void)str;
    int i, active;

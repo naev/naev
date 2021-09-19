@@ -31,7 +31,7 @@
    Then, when the player wants to leave the planet, and that will eventually
    happen (at least, I hope…) he’ll be pursued by a few fighters.
 --]]
-local pir = require "missions.pirate.common"
+local pir = require "common.pirate"
 local swapship = require "swapship"
 require "jumpdist"
 local fmt = require "format"

@@ -13,7 +13,7 @@
 
 local vn = require 'vn'
 local portrait = require 'portrait'
-local gauntlet = require 'campaigns.gauntlet'
+local gauntlet = require 'common.gauntlet'
 
 spectator_names = {
    _("Spectator"),

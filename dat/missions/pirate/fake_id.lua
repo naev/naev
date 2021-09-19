@@ -18,7 +18,7 @@
    Fake ID
 
 --]]
-local pir = require 'missions.pirate.common'
+local pir = require 'common.pirate'
 local fmt = require "format"
 
 

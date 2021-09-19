@@ -26,7 +26,7 @@
 local fleet = require "fleet"
 local fmt = require "format"
 local portrait = require "portrait"
-local baron = require "missions.baron.common"
+local baron = require "common.baron"
 
 
 title = {}

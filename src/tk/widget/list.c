@@ -28,7 +28,7 @@ static int lst_mwheel( Widget* lst, SDL_MouseWheelEvent event );
 static int lst_mmove( Widget* lst, int x, int y, int rx, int ry );
 static void lst_cleanup( Widget* lst );
 
-static Widget *lst_getWgt( const unsigned int wid, const char* name );
+static Widget *lst_getWgt( unsigned int wid, const char* name );
 static int lst_focus( Widget* lst, double bx, double by );
 static void lst_scroll( Widget* lst, int direction );
 
@@ -53,12 +53,12 @@ static void lst_scroll( Widget* lst, int direction );
  *    @param onActivate Function to call when selected item is double-clicked. Parameter passed
  *                is the name of the list.
  */
-void window_addList( const unsigned int wid,
+void window_addList( unsigned int wid,
                      const int x, const int y,
                      const int w, const int h,
-                     char* name, char **items, int nitems, int defitem,
-                     void (*onSelect) (unsigned int wdw, char* wgtname),
-                     void (*onActivate) (unsigned int wdw, char* wgtname) )
+                     const char* name, char **items, int nitems, int defitem,
+                     void (*onSelect) (unsigned int wdw, const char* wgtname),
+                     void (*onActivate) (unsigned int wdw, const char* wgtname) )
 {
    Window *wdw = window_wget(wid);
    Widget *wgt = window_newWidget(wdw, name);
@@ -397,7 +397,7 @@ static void lst_scroll( Widget* lst, int direction )
 /**
  * @brief Gets the list widget.
  */
-static Widget *lst_getWgt( const unsigned int wid, const char* name )
+static Widget *lst_getWgt( unsigned int wid, const char* name )
 {
    Widget *wgt = window_getwgt(wid,name);
 
@@ -430,7 +430,7 @@ static Widget *lst_getWgt( const unsigned int wid, const char* name )
  *            \see toolkit_getListPos
  *
  */
-char* toolkit_getList( const unsigned int wid, const char* name )
+const char* toolkit_getList( unsigned int wid, const char* name )
 {
    Widget *wgt = lst_getWgt( wid, name );
    if (wgt == NULL)
@@ -456,7 +456,7 @@ char* toolkit_getList( const unsigned int wid, const char* name )
  *            same way. There may be a more robust solution involving indices.
  *            \see toolkit_setListPos
  */
-char* toolkit_setList( const unsigned int wid, const char* name, char* value )
+const char* toolkit_setList( unsigned int wid, const char* name, const char* value )
 {
    int i;
    Widget *wgt = lst_getWgt( wid, name );
@@ -478,7 +478,7 @@ char* toolkit_setList( const unsigned int wid, const char* name, char* value )
 /**
  * @brief Sets the list value by position.
  */
-char* toolkit_setListPos( const unsigned int wid, const char* name, int pos )
+const char* toolkit_setListPos( unsigned int wid, const char* name, int pos )
 {
    Widget *wgt = lst_getWgt( wid, name );
    if (wgt == NULL)
@@ -498,7 +498,7 @@ char* toolkit_setListPos( const unsigned int wid, const char* name, int pos )
  *    @param name Name of the list.
  *    @return The position in the list or -1 on error.
  */
-int toolkit_getListPos( const unsigned int wid, const char* name )
+int toolkit_getListPos( unsigned int wid, const char* name )
 {
    Widget *wgt = lst_getWgt( wid, name );
    if (wgt == NULL)
@@ -511,7 +511,7 @@ int toolkit_getListPos( const unsigned int wid, const char* name )
 /**
  * @brief Gets the offset of a list.
  */
-int toolkit_getListOffset( const unsigned int wid, const char* name )
+int toolkit_getListOffset( unsigned int wid, const char* name )
 {
    Widget *wgt = lst_getWgt( wid, name );
    if (wgt == NULL)
@@ -524,7 +524,7 @@ int toolkit_getListOffset( const unsigned int wid, const char* name )
 /**
  * @brief Sets the offset of a list.
  */
-int toolkit_setListOffset( const unsigned int wid, const char* name, int off )
+int toolkit_setListOffset( unsigned int wid, const char* name, int off )
 {
    Widget *wgt = lst_getWgt( wid, name );
    if (wgt == NULL)

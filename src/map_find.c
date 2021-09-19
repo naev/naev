@@ -49,13 +49,13 @@ static Planet **map_known_planets   = NULL;  /**< Array (array.h) of known plane
 static int map_knownInit (void);
 static void map_knownClean (void);
 /* Toolkit-related. */
-static void map_find_check_update( unsigned int wid, char *str );
-static void map_findClose( unsigned int wid, char* str );
+static void map_find_check_update( unsigned int wid, const char *str );
+static void map_findClose( unsigned int wid, const char* str );
 static int map_findSearchSystems( unsigned int parent, const char *name );
 static int map_findSearchPlanets( unsigned int parent, const char *name );
 static int map_findSearchOutfits( unsigned int parent, const char *name );
 static int map_findSearchShips( unsigned int parent, const char *name );
-static void map_findSearch( unsigned int wid, char* str );
+static void map_findSearch( unsigned int wid, const char* str );
 /* Misc. */
 static void map_findAccumulateResult( map_find_t *found, int n,  StarSystem *sys, Planet *pnt );
 static int map_sortCompare( const void *p1, const void *p2 );
@@ -127,7 +127,7 @@ static void map_knownClean (void)
 /**
  * @brief Updates the checkboxes.
  */
-static void map_find_check_update( unsigned int wid, char* str )
+static void map_find_check_update( unsigned int wid, const char* str )
 {
    (void) str;
    map_find_systems ^= window_checkboxState( wid, "chkSystem" );
@@ -147,7 +147,7 @@ static void map_find_check_update( unsigned int wid, char* str )
  *    @param Parent window's ID.
  *    @param Default type to search for.
  */
-void map_inputFindType( unsigned int parent, char *type )
+void map_inputFindType( unsigned int parent, const char *type )
 {
    map_find_systems = 0;
    map_find_planets = 0;
@@ -170,7 +170,7 @@ void map_inputFindType( unsigned int parent, char *type )
 /**
  * @brief Closes the find window.
  */
-static void map_findClose( unsigned int wid, char* str )
+static void map_findClose( unsigned int wid, const char* str )
 {
    window_close( wid, str );
 
@@ -186,7 +186,7 @@ static void map_findClose( unsigned int wid, char* str )
 /**
  * @brief Goes to a found system to display it.
  */
-static void map_findDisplayMark( unsigned int wid, char* str )
+static void map_findDisplayMark( unsigned int wid, const char* str )
 {
    int pos;
    StarSystem *sys;
@@ -685,7 +685,7 @@ static void map_addOutfitDetailFields(unsigned int wid, int x, int y, int w, int
  *    @param w The width of the area where we can draw
  *    @param h The height of the area where we can draw
  */
-static void map_showOutfitDetail(unsigned int wid, char* wgtname, int x, int y, int w, int h)
+static void map_showOutfitDetail(unsigned int wid, const char* wgtname, int x, int y, int w, int h)
 {
    (void) x;
    (void) y;
@@ -951,7 +951,7 @@ static int map_findSearchShips( unsigned int parent, const char *name )
 /**
  * @brief Does a search.
  */
-static void map_findSearch( unsigned int wid, char* str )
+static void map_findSearch( unsigned int wid, const char* str )
 {
    int ret;
    const char *name, *searchname;
@@ -1005,7 +1005,7 @@ static void map_findSearch( unsigned int wid, char* str )
 /**
  * @brief Opens a search input box to find a system or planet.
  */
-void map_inputFind( unsigned int parent, char* str )
+void map_inputFind( unsigned int parent, const char* str )
 {
    (void) str;
    unsigned int wid;

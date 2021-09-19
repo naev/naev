@@ -5,10 +5,10 @@
  <chance>100</chance>
 </event>
 --]]
-
 --[[
    Small updater to handle moving saves to newer versions.
 --]]
+local pir = require 'common.pirate'
 
 
 -- Runs on saves older than 0.9.0
@@ -21,14 +21,7 @@ function updater090 ()
    -- Set up pirate faction
    local fpir = faction.get("Pirate")
    local pirmod = fpir:playerStanding()
-   local pirate_clans = {
-      faction.get("Wild Ones"),
-      faction.get("Raven Clan"),
-      faction.get("Black Lotus"),
-      faction.get("Dreamer Clan"),
-   }
-   local maxval = -100
-   for k,v in ipairs(pirate_clans) do
+   for k,v in ipairs(pir.factions_clans) do
       local vs = v:playerStanding() -- Only get first parameter
       local vsd = v:playerStandingDefault()
       -- We'll be kind and set the player's pirate standing for the clans
@@ -37,11 +30,8 @@ function updater090 ()
          v:setPlayerStanding( fpir+20 )
       end
       local vs = v:playerStanding()
-      maxval = math.max( maxval, vs )
    end
-   -- Pirates and marauders are fixed offsets
-   fpir:setPlayerStanding( maxval - 20 )
-   faction.get("Marauder"):setPlayerStanding( maxval - 40 )
+   pir.updateStandings() -- Update pirate/marauder
 
    -- Some previously known factions become unknown
    faction.get("Traders Guild"):setKnown(false)

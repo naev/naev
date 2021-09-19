@@ -21,7 +21,7 @@
 --]]
 local vn = require 'vn'
 local love_shaders = require 'love_shaders'
-local minerva = require 'campaigns.minerva'
+local minerva = require 'common.minerva'
 
 zalek_holo = "zalek_thug1.png"
 zalek_image = "zalek_thug1.png"

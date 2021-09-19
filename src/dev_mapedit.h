@@ -10,7 +10,7 @@
 #include "mapData.h"
 #include "outfit.h"
 
-void mapedit_open( unsigned int wid_unused, char *unused );
+void mapedit_open( unsigned int wid_unused, const char *unused );
 void mapedit_selectText (void);
 
 

@@ -3,7 +3,7 @@
  <general>
   <background>taiomi</background>
   <features>#pShip Graveyard#0</features>
-  <radius>3000.000000</radius>
+  <radius>6000.000000</radius>
   <stars>400</stars>
   <interference>0.000000</interference>
   <nebula volatility="0.000000">0.000000</nebula>
@@ -14,6 +14,7 @@
  </pos>
  <assets>
   <asset>One-Wing Goddard</asset>
+  <asset_virtual>Pirate All Unpresence</asset_virtual>
  </assets>
  <jumps>
   <jump target="Bastion">

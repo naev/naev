@@ -494,10 +494,8 @@ static int factionL_allies( lua_State *L )
  */
 static int factionL_logo( lua_State *L )
 {
-   int lf;
-   const glTexture *tex;
-   lf = luaL_validfaction(L,1);
-   tex = faction_logo( lf );
+   int lf               = luaL_validfaction(L,1);
+   const glTexture *tex = faction_logo( lf );
    if (tex == NULL)
       return 0;
    lua_pushtex( L, gl_dupTexture( tex ) );
@@ -514,10 +512,8 @@ static int factionL_logo( lua_State *L )
  */
 static int factionL_colour( lua_State *L )
 {
-   int lf;
-   const glColour *col;
-   lf = luaL_validfaction(L,1);
-   col = faction_getColour(lf);
+   int lf               = luaL_validfaction(L,1);
+   const glColour *col  = faction_getColour(lf);
    if (col == NULL)
       return 0;
    lua_pushcolour( L, *col );

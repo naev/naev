@@ -21,7 +21,7 @@ static int btn_mclick( Widget* btn, int button, int x, int y );
 static int btn_key( Widget* btn, SDL_Keycode key, SDL_Keymod mod );
 static void btn_render( Widget* btn, double bx, double by );
 static void btn_cleanup( Widget* btn );
-static Widget* btn_get( const unsigned int wid, const char* name );
+static Widget* btn_get( unsigned int wid, const char* name );
 static void btn_updateHotkey( Widget *btn );
 
 
@@ -42,11 +42,11 @@ static void btn_updateHotkey( Widget *btn );
  *                is the name of the button.
  *    @param key Hotkey for using the button without it being focused.
  */
-void window_addButtonKey( const unsigned int wid,
+void window_addButtonKey( unsigned int wid,
                        const int x, const int y,
                        const int w, const int h,
                        const char* name, const char* display,
-                       void (*call) (unsigned int wgt, char* wdwname),
+                       void (*call) (unsigned int wgt, const char* wdwname),
                        SDL_Keycode key )
 {
    Window *wdw = window_wget(wid);
@@ -63,7 +63,7 @@ void window_addButtonKey( const unsigned int wid,
    wgt->cleanup            = btn_cleanup;
    wgt->mclickevent        = btn_mclick;
    wgt_setFlag(wgt, WGT_FLAG_CANFOCUS);
-   wgt->dat.btn.display    = strdup(display);
+   wgt->dat.btn.display    = (display!=NULL) ? strdup(display) : NULL;
    wgt->dat.btn.disabled   = 0; /* initially enabled */
    wgt->dat.btn.fptr       = call;
    if (key != 0) {
@@ -102,11 +102,11 @@ void window_addButtonKey( const unsigned int wid,
  *    @param call Function to call when button is pressed. Parameter passed
  *                is the name of the button.
  */
-void window_addButton( const unsigned int wid,
+void window_addButton( unsigned int wid,
                        const int x, const int y,
                        const int w, const int h,
                        const char* name, const char* display,
-                       void (*call) (unsigned int wgt, char* wdwname) )
+                       void (*call) (unsigned int wgt, const char* wdwname) )
 {
    window_addButtonKey( wid, x, y, w, h, name, display, call, 0 );
 }
@@ -115,12 +115,9 @@ void window_addButton( const unsigned int wid,
 /**
  * @brief Gets a button widget.
  */
-static Widget* btn_get( const unsigned int wid, const char* name )
+static Widget* btn_get( unsigned int wid, const char* name )
 {
-   Widget *wgt;
-
-   /* Get widget. */
-   wgt = window_getwgt(wid,name);
+   Widget *wgt = window_getwgt(wid,name);
    if (wgt == NULL)
       return NULL;
 
@@ -140,7 +137,7 @@ static Widget* btn_get( const unsigned int wid, const char* name )
  *    @param wid ID of the window to get widget from.
  *    @param name Name of the button to disable.
  */
-void window_disableButton( const unsigned int wid, const char* name )
+void window_disableButton( unsigned int wid, const char* name )
 {
    Widget *wgt;
    Window *wdw;
@@ -165,14 +162,11 @@ void window_disableButton( const unsigned int wid, const char* name )
  *    @param wid ID of the window to get widget from.
  *    @param name Name of the button to disable.
  */
-void window_disableButtonSoft( const unsigned int wid, const char *name )
+void window_disableButtonSoft( unsigned int wid, const char *name )
 {
-   Widget *wgt;
-
-   /* Get the widget. */
-      wgt = btn_get( wid, name );
-      if (wgt == NULL)
-         return;
+   Widget *wgt = btn_get( wid, name );
+   if (wgt == NULL)
+      return;
 
    wgt->dat.btn.softdisable = 1;
    window_disableButton( wid, name );
@@ -185,7 +179,7 @@ void window_disableButtonSoft( const unsigned int wid, const char *name )
  *    @param wid ID of the window to get widget from.
  *    @param name Name of the button to enable.
  */
-void window_enableButton( const unsigned int wid, const char *name )
+void window_enableButton( unsigned int wid, const char *name )
 {
    Widget *wgt;
 
@@ -207,18 +201,14 @@ void window_enableButton( const unsigned int wid, const char *name )
  *    @param name Name of the button to change caption.
  *    @param display New caption to display.
  */
-void window_buttonCaption( const unsigned int wid, const char *name, const char *display )
+void window_buttonCaption( unsigned int wid, const char *name, const char *display )
 {
-
-   Widget *wgt;
-
-   /* Get the widget. */
-   wgt = btn_get( wid, name );
+   Widget *wgt = btn_get( wid, name );
    if (wgt == NULL)
       return;
 
    free(wgt->dat.btn.display);
-   wgt->dat.btn.display = strdup(display);
+   wgt->dat.btn.display = (display != NULL) ? strdup(display) : NULL;
 
    if (wgt->dat.btn.key != 0)
       btn_updateHotkey(wgt);
@@ -234,6 +224,9 @@ static void btn_updateHotkey( Widget *btn )
    const char *keyname;
    size_t i;
    int match;
+
+   if (btn->dat.btn.display==NULL)
+      return;
 
    keyname = SDL_GetKeyName(btn->dat.btn.key);
    if (strlen(keyname) != 1) /* Only interested in single chars. */
@@ -337,10 +330,14 @@ static void btn_render( Widget* btn, double bx, double by )
    /* outer outline */
    toolkit_drawOutlineThick( x, y, btn->w, btn->h, 1, 2, outline, NULL );
 
-   gl_printMidRaw( &gl_smallFont, (int)btn->w,
-         bx + btn->x,
-         by + btn->y + (btn->h - gl_smallFont.h)/2.,
-         fc, -1., btn->dat.btn.display );
+   /* Render inner stuff. */
+   if (btn->dat.btn.cst_render)
+      btn->dat.btn.cst_render( bx+btn->x, by+btn->y, btn->w, btn->h, fc );
+   else
+      gl_printMidRaw( &gl_smallFont, (int)btn->w,
+            bx + btn->x,
+            by + btn->y + (btn->h - gl_smallFont.h)/2.,
+            fc, -1., btn->dat.btn.display );
 }
 
 
@@ -367,4 +364,23 @@ static int btn_mclick( Widget* btn, int button, int x, int y )
    return 1;
 }
 
+/**
+ * @brief Overrides the button rendering function with something else (like an SDF)
+ */
+void window_buttonCustomRender( unsigned int wid, const char *name, void (*func)( double, double, double, double, const glColour* ) )
+{
+   Widget *wgt = btn_get( wid, name );
+   if (wgt == NULL)
+      return;
 
+   wgt->dat.btn.cst_render = func;
+}
+
+void window_buttonCustomRenderGear( double x, double y, double w, double h, const glColour *c )
+{
+   const double b = 3.;
+   w = w/2.-b;
+   h = h/2.-b;
+   glUseProgram( shaders.gear.program );
+   gl_renderShader( x+b+w, y+b+h, w, h, 0., &shaders.gear, c, 1 );
+}

@@ -19,7 +19,7 @@
    DESCRIPTION: Kill some pirates!
 
 --]]
-local pir = require 'missions.pirate.common'
+local pir = require 'common.pirate'
 local fmt = require "format"
 
 misn_title = _("DV: Assault on Unicorn")

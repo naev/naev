@@ -24,8 +24,8 @@ require "nextjump"
 local fleet = require "fleet"
 require "chatter"
 require "selectiveclear"
-local shadow = require "missions.shadow.common"
-local pir = require "missions.pirate.common"
+local shadow = require "common.shadow"
+local pir = require "common.pirate"
 
 
 title = {}

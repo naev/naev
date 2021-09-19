@@ -64,7 +64,7 @@ glTexture **bgImages; /**< array (array.h) of nebula and star textures */
 /*
  * prototypes
  */
-void map_system_close( unsigned int wid, char *str );
+void map_system_close( unsigned int wid, const char *str );
 
 int map_system_isOpen( void );
 
@@ -85,9 +85,9 @@ static void map_system_genShipsList( unsigned int wid, float goodsSpace, float o
 static void map_system_genTradeList( unsigned int wid, float goodsSpace, float outfitSpace, float shipSpace );
 
 
-static void map_system_array_update( unsigned int wid, char* str );
+static void map_system_array_update( unsigned int wid, const char* str );
 
-void map_system_buyCommodPrice( unsigned int wid, char *str );
+void map_system_buyCommodPrice( unsigned int wid, const char *str );
 
 /**
  * @brief Initializes the system map subsystem.
@@ -123,7 +123,7 @@ void map_system_exit( void )
 /**
  * @brief Close the map window.
  */
-void map_system_close( unsigned int wid, char *str ) {
+void map_system_close( unsigned int wid, const char *str ) {
    if ( cur_sys_sel != cur_system ) {
      space_gfxUnload( cur_sys_sel );
    }
@@ -279,7 +279,7 @@ static void map_system_render( double bx, double by, double w, double h, void *d
    Planet *p;
    static int phase=0;
    glColour ccol;
-   char buf[1000];
+   char buf[STRMAX_SHORT];
    int cnt;
    double ast_nb, ast_area;
    double f;
@@ -588,7 +588,7 @@ static int map_system_mouse( unsigned int wid, SDL_Event* event, double mx, doub
 }
 
 
-static void map_system_array_update( unsigned int wid, char* str ) {
+static void map_system_array_update( unsigned int wid, const char* str ) {
    int i;
    Outfit *outfit;
    Ship *ship;
@@ -998,7 +998,7 @@ static void map_system_genTradeList( unsigned int wid, float goodsSpace, float o
 /**
  * @brief Handles the button to buy commodity prices
  */
-void map_system_buyCommodPrice( unsigned int wid, char *str )
+void map_system_buyCommodPrice( unsigned int wid, const char *str )
 {
    (void)wid;
    (void)str;

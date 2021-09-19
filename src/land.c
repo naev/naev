@@ -118,23 +118,23 @@ static void land_stranded (void);
  * prototypes
  */
 static void land_createMainTab( unsigned int wid );
-static void land_cleanupWindow( unsigned int wid, char *name );
-static void land_changeTab( unsigned int wid, char *wgt, int old, int tab );
+static void land_cleanupWindow( unsigned int wid, const char *name );
+static void land_changeTab( unsigned int wid, const char *wgt, int old, int tab );
 /* spaceport bar */
 static void bar_getDim( int wid,
       int *w, int *h, int *iw, int *ih, int *bw, int *bh );
 static void bar_open( unsigned int wid );
 static int bar_genList( unsigned int wid );
-static void bar_update( unsigned int wid, char* str );
-static void bar_close( unsigned int wid, char* str );
-static void bar_approach( unsigned int wid, char* str );
+static void bar_update( unsigned int wid, const char *str );
+static void bar_close( unsigned int wid, const char *str );
+static void bar_approach( unsigned int wid, const char *str );
 static int news_load (void);
 /* mission computer */
 static void misn_open( unsigned int wid );
-static void misn_close( unsigned int wid, char *name );
-static void misn_accept( unsigned int wid, char* str );
+static void misn_close( unsigned int wid, const char *name );
+static void misn_accept( unsigned int wid, const char *str );
 static void misn_genList( unsigned int wid, int first );
-static void misn_update( unsigned int wid, char* str );
+static void misn_update( unsigned int wid, const char *str );
 
 
 /**
@@ -414,7 +414,7 @@ void bar_regen (void)
  *    @param wid Window to update the outfits in.
  *    @param str Unused.
  */
-static void bar_update( unsigned int wid, char* str )
+static void bar_update( unsigned int wid, const char *str )
 {
    (void) str;
    int pos;
@@ -487,7 +487,7 @@ static void bar_update( unsigned int wid, char* str )
  *    @param wid Window to close.
  *    @param name Unused.
  */
-static void bar_close( unsigned int wid, char *name )
+static void bar_close( unsigned int wid, const char *name )
 {
    (void) wid;
    (void) name;
@@ -504,7 +504,7 @@ static void bar_close( unsigned int wid, char *name )
 /**
  * @brief Approaches guy in mission computer.
  */
-static void bar_approach( unsigned int wid, char *str )
+static void bar_approach( unsigned int wid, const char *str )
 {
    (void) str;
    int pos, n;
@@ -607,7 +607,7 @@ static void misn_open( unsigned int wid )
  *    @param wid Window to close.
  *    @param name Unused.
  */
-static void misn_close( unsigned int wid, char *name )
+static void misn_close( unsigned int wid, const char *name )
 {
    (void) wid;
    (void) name;
@@ -620,10 +620,10 @@ static void misn_close( unsigned int wid, char *name )
  *    @param wid Window of the mission computer.
  *    @param str Unused.
  */
-static void misn_accept( unsigned int wid, char* str )
+static void misn_accept( unsigned int wid, const char *str )
 {
    (void) str;
-   char* misn_name;
+   const char* misn_name;
    Mission* misn;
    int pos;
    int i, ret;
@@ -716,12 +716,12 @@ static void misn_genList( unsigned int wid, int first )
  *    @param wid Window of the mission computer.
  *    @param str Unused.
  */
-static void misn_update( unsigned int wid, char* str )
+static void misn_update( unsigned int wid, const char *str )
 {
    (void) str;
-   char *active_misn;
+   const char *active_misn;
    Mission* misn;
-   char txt[512], *buf;
+   char txt[STRMAX_SHORT], *buf;
 
    /* Clear computer markers. */
    space_clearComputerMarkers();
@@ -780,7 +780,7 @@ void land_refuel (void)
 /**
  * @brief Buys a local system map.
  */
-static void spaceport_buyMap( unsigned int wid, char *str )
+static void spaceport_buyMap( unsigned int wid, const char *str )
 {
    (void) wid;
    (void) str;
@@ -874,7 +874,7 @@ void land_updateMainTab (void)
  *    @param wid Window causing takeoff.
  *    @param unused Unused.
  */
-void land_buttonTakeoff( unsigned int wid, char *unused )
+void land_buttonTakeoff( unsigned int wid, const char *unused )
 {
    (void) wid;
    (void) unused;
@@ -889,7 +889,7 @@ void land_buttonTakeoff( unsigned int wid, char *unused )
  *    @param wid Window closing.
  *    @param name Unused.
  */
-static void land_cleanupWindow( unsigned int wid, char *name )
+static void land_cleanupWindow( unsigned int wid, const char *name )
 {
    (void) wid;
    (void) name;
@@ -1256,7 +1256,7 @@ static void land_createMainTab( unsigned int wid )
  *    @param old Previously-active tab. (Unused)
  *    @param tab Tab changed to.
  */
-static void land_changeTab( unsigned int wid, char *wgt, int old, int tab )
+static void land_changeTab( unsigned int wid, const char *wgt, int old, int tab )
 {
    int i;
    (void) wid;
@@ -1472,6 +1472,10 @@ static void land_stranded (void)
       nlua_loadTk( rescue_env );
 
       buf = ndata_read( file, &bufsize );
+      if (buf == NULL) {
+         WARN( _("File '%s' not found!"), RESCUE_PATH );
+         return;
+      }
       if (nlua_dobufenv(rescue_env, buf, bufsize, file) != 0) {
          WARN( _("Error loading file: %s\n"
              "%s\n"

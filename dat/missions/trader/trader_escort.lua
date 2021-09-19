@@ -24,7 +24,7 @@
  </mission>
  --]]
 --Escort a convoy of traders to a destination--
-local pir = require "missions.pirate.common"
+local pir = require "common.pirate"
 local fleet = require "fleet"
 require "nextjump"
 require "cargo_common"

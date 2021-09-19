@@ -68,16 +68,16 @@ static int dialogue_custom_event( unsigned int wid, SDL_Event *event );
 /* extern */
 extern void main_loop( int update ); /* from naev.c */
 /* generic */
-static void dialogue_close( unsigned int wid, char* str );
-static void dialogue_cancel( unsigned int wid, char* str );
+static void dialogue_close( unsigned int wid, const char *str );
+static void dialogue_cancel( unsigned int wid, const char *str );
 /* dialogues */
 static glFont* dialogue_getSize( const char* title,
       const char* msg, int* width, int* height );
-static void dialogue_YesNoClose( unsigned int wid, char* str );
-static void dialogue_inputClose( unsigned int wid, char* str );
-static void dialogue_choiceClose( unsigned int wid, char* str );
-static void dialogue_listClose( unsigned int wid, char* str );
-static void dialogue_listCancel( unsigned int wid, char* str );
+static void dialogue_YesNoClose( unsigned int wid, const char *str );
+static void dialogue_inputClose( unsigned int wid, const char *str );
+static void dialogue_choiceClose( unsigned int wid, const char *str );
+static void dialogue_listClose( unsigned int wid, const char *str );
+static void dialogue_listCancel( unsigned int wid, const char *str );
 /* secondary loop hack */
 static int toolkit_loop( int *loop_done, dialogue_update_t *du );
 
@@ -90,11 +90,11 @@ typedef struct InputDialogue_ {
    int y; /**< y position where we can start drawing. */
    int w; /**< width of area we can draw in */
    int h; /**< height of area we can draw in */
-   void (*item_select_cb) (unsigned int wid, char* wgtname,
+   void (*item_select_cb) (unsigned int wid, const char* wgtname,
                            int x, int y, int w, int h
         ); /**< callback when an item is selected */
 } InputDialogue;
-static void select_call_wrapper(unsigned int wid, char* wgtname);
+static void select_call_wrapper(unsigned int wid, const char* wgtname);
 
 /**
  * @brief Checks to see if a dialogue is open.
@@ -108,7 +108,7 @@ int dialogue_isOpen (void)
 /**
  * @brief Generic window close.
  */
-static void dialogue_close( unsigned int wid, char* str )
+static void dialogue_close( unsigned int wid, const char *str )
 {
    (void) str;
    int *loop_done;
@@ -121,7 +121,7 @@ static void dialogue_close( unsigned int wid, char* str )
 /**
  * @brief Generic window cancel.
  */
-static void dialogue_cancel( unsigned int wid, char* str )
+static void dialogue_cancel( unsigned int wid, const char *str )
 {
    (void) str;
    int *loop_done;
@@ -413,7 +413,7 @@ int dialogue_YesNoRaw( const char* caption, const char *msg )
  *    @param wid Window being closed.
  *    @param str Unused.
  */
-static void dialogue_YesNoClose( unsigned int wid, char* str )
+static void dialogue_YesNoClose( unsigned int wid, const char *str )
 {
    int *loop_done, result;
 
@@ -540,7 +540,7 @@ char* dialogue_inputRaw( const char* title, int min, int max, const char *msg )
  *    @param wid Unused.
  *    @param str Unused.
  */
-static void dialogue_inputClose( unsigned int wid, char* str )
+static void dialogue_inputClose( unsigned int wid, const char *str )
 {
    (void) str;
    int *loop_done;
@@ -552,12 +552,12 @@ static void dialogue_inputClose( unsigned int wid, char* str )
 
 
 static int dialogue_listSelected = -1;
-static void dialogue_listCancel( unsigned int wid, char* str )
+static void dialogue_listCancel( unsigned int wid, const char *str )
 {
    dialogue_listSelected = -1;
    dialogue_cancel( wid, str );
 }
-static void dialogue_listClose( unsigned int wid, char* str )
+static void dialogue_listClose( unsigned int wid, const char *str )
 {
    dialogue_listSelected = toolkit_getListPos( wid, "lstDialogue" );
    dialogue_close( wid, str );
@@ -570,7 +570,7 @@ static void dialogue_listClose( unsigned int wid, char* str )
  *    @param wid Window id
  *    @param wgtname name of the widget that raised the event.
  */
-static void select_call_wrapper(unsigned int wid, char* wgtname)
+static void select_call_wrapper(unsigned int wid, const char* wgtname)
 {
    if (input_dialogue.item_select_cb)
       input_dialogue.item_select_cb(wid, wgtname,input_dialogue.x,
@@ -632,7 +632,7 @@ int dialogue_listRaw( const char* title, char **items, int nitems, const char *m
  */
 int dialogue_listPanel( const char* title, char **items, int nitems, int extrawidth,
       int minheight, void (*add_widgets) (unsigned int wid, int x, int y, int w, int h),
-      void (*select_call) (unsigned int wid, char* wgtname, int x, int y, int w, int h),
+      void (*select_call) (unsigned int wid, const char* wgtname, int x, int y, int w, int h),
       const char *fmt, ... )
 {
    char msg[STRMAX_SHORT];
@@ -670,7 +670,7 @@ int dialogue_listPanel( const char* title, char **items, int nitems, int extrawi
  */
 int dialogue_listPanelRaw( const char* title, char **items, int nitems, int extrawidth,
       int minheight, void (*add_widgets) (unsigned int wid, int x, int y, int w, int h),
-      void (*select_call) (unsigned int wid, char* wgtname, int x, int y, int w, int h),
+      void (*select_call) (unsigned int wid, const char* wgtname, int x, int y, int w, int h),
       const char *msg )
 {
    int i;
@@ -821,7 +821,7 @@ char *dialogue_runChoice (void)
  *    @param wid Window being closed.
  *    @param str Stored to choice_result.
  */
-static void dialogue_choiceClose( unsigned int wid, char* str )
+static void dialogue_choiceClose( unsigned int wid, const char *str )
 {
    int *loop_done;
 

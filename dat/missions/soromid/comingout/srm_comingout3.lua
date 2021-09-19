@@ -27,7 +27,7 @@
 local fmt = require "format"
 require "cargo_common"
 require "nextjump"
-require "missions.soromid.common"
+require "common.soromid"
 
 title = {}
 text = {}

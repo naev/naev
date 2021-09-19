@@ -22,7 +22,7 @@
    Author: nloewen
 
 --]]
-local pir = require "missions.pirate.common"
+local pir = require "common.pirate"
 
 
 -- Bar information

@@ -143,7 +143,7 @@ void commodity_exchange_open( unsigned int wid )
  *    @param wid Window to update.
  *    @param str Unused.
  */
-void commodity_update( unsigned int wid, char* str )
+void commodity_update( unsigned int wid, const char *str )
 {
    (void)str;
    char buf[PATH_MAX];
@@ -269,7 +269,7 @@ int commodity_canSell( const Commodity* com )
  *    @param wid Window buying from.
  *    @param str Unused.
  */
-void commodity_buy( unsigned int wid, char* str )
+void commodity_buy( unsigned int wid, const char *str )
 {
    (void)str;
    int i;
@@ -310,7 +310,7 @@ void commodity_buy( unsigned int wid, char* str )
  *    @param wid Window selling commodity from.
  *    @param str Unused.
  */
-void commodity_sell( unsigned int wid, char* str )
+void commodity_sell( unsigned int wid, const char *str )
 {
    (void)str;
    int i;

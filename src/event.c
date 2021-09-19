@@ -146,9 +146,7 @@ int event_start( const char *name, unsigned int *id )
  */
 const char *event_getData( unsigned int eventid )
 {
-   Event_t *ev;
-
-   ev = event_get( eventid );
+   Event_t *ev = event_get( eventid );
    if (ev == NULL)
       return NULL;
 
@@ -164,9 +162,7 @@ const char *event_getData( unsigned int eventid )
  */
 int event_isUnique( unsigned int eventid )
 {
-   Event_t *ev;
-
-   ev = event_get( eventid );
+   Event_t *ev = event_get( eventid );
    if (ev == NULL)
       return -1;
 
@@ -299,8 +295,7 @@ void event_remove( unsigned int eventid )
  */
 int event_save( unsigned int eventid )
 {
-   Event_t *ev;
-   ev = event_get(eventid);
+   Event_t *ev = event_get(eventid);
    if (ev == NULL)
       return 0;
    return ev->save;
@@ -682,8 +677,7 @@ void event_activateClaims (void)
  */
 int event_testClaims( unsigned int eventid, int sys )
 {
-   Event_t *ev;
-   ev = event_get( eventid );
+   Event_t *ev = event_get( eventid );
    if (ev==NULL) {
       WARN(_("Trying to test claims of unknown event with id '%d'!"), eventid);
       return 0;

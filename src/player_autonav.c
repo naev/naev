@@ -158,7 +158,7 @@ void player_autonavEnd (void)
 /**
  * @brief Starts autonav and closes the window.
  */
-void player_autonavStartWindow( unsigned int wid, char *str)
+void player_autonavStartWindow( unsigned int wid, const char *str)
 {
    (void) str;
    player_autonavStart();
@@ -174,7 +174,7 @@ void player_autonavPos( double x, double y )
    if (player_autonavSetup())
       return;
 
-   player_message(_("#oAutonav: heading to position."));
+   player_message(_("#oAutonav: heading to target position."));
    player.autonav    = AUTONAV_POS_APPROACH;
    player.autonavmsg = strdup( _("position" ));
    player.autonavcol = '0';
@@ -185,14 +185,13 @@ void player_autonavPos( double x, double y )
 /**
  * @brief Starts autonav with a planet destination.
  */
-void player_autonavPnt( char *name )
+void player_autonavPnt( const char *name )
 {
    Planet *p;
 
-   p = planet_get( name );
    if (player_autonavSetup())
       return;
-
+   p = planet_get( name );
    player_message(_("#oAutonav: landing on %s."), _(p->name));
    player.autonav    = AUTONAV_PNT_APPROACH;
    player.autonavmsg = strdup( _(p->name) );

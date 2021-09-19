@@ -11,7 +11,7 @@
 --]]
 
 local vn = require 'vn'
-local gauntlet = require 'campaigns.gauntlet'
+local gauntlet = require 'common.gauntlet'
 local gauntlet_gui = require 'missions.dvaered.gauntlet.gui'
 require 'missions.dvaered.gauntlet.tables'
 local fmt = require "format"

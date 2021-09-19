@@ -166,10 +166,10 @@ typedef struct Window_ {
    int idgen; /**< ID generator for widgets. */
 
    unsigned int parent; /**< Parent window, will close if this one closes. */
-   void (*close_fptr)(unsigned int wid, char* name); /**< How to close the window. */
+   void (*close_fptr)(unsigned int wid,const char* name); /**< How to close the window. */
 
-   void (*accept_fptr)(unsigned int wid, char* name); /**< Triggered by hitting 'enter' with no widget that catches the keypress. */
-   void (*cancel_fptr)(unsigned int wid, char* name); /**< Triggered by hitting 'escape' with no widget that catches the keypress. */
+   void (*accept_fptr)(unsigned int wid,const char* name); /**< Triggered by hitting 'enter' with no widget that catches the keypress. */
+   void (*cancel_fptr)(unsigned int wid,const char* name); /**< Triggered by hitting 'escape' with no widget that catches the keypress. */
    int (*keyevent)(unsigned int wid,SDL_Keycode,SDL_Keymod); /**< User defined custom key event handler. */
    int (*eventevent)(unsigned int wid,SDL_Event *evt); /**< User defined event handler. */
 

@@ -276,6 +276,10 @@ SHADERS = [
       fs_path = "safelane.frag",
    ),
    SimpleShader(
+      name = "gear",
+      fs_path = "gear.frag",
+   ),
+   SimpleShader(
       name = "selectplanet",
       fs_path = "selectplanet.frag",
    ),

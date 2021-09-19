@@ -19,7 +19,7 @@
 --]]
 local fmt = require "format"
 local portrait = require "portrait"
-local pir = require "missions.pirate.common"
+local pir = require "common.pirate"
 local pilotname = require "pilotname"
 
 logidstr = "log_hiredescort"

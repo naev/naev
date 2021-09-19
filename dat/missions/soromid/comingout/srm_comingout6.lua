@@ -26,8 +26,8 @@
 local fmt = require "format"
 local pilotname = require "pilotname"
 require "jumpdist"
-require "missions.soromid.common"
-local pir = require "missions.pirate.common"
+require "common.soromid"
+local pir = require "common.pirate"
 local equipopt = require 'equipopt'
 
 title = {}

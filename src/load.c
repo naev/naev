@@ -83,10 +83,10 @@ extern int economy_sysLoad( xmlNodePtr parent ); /**< Loads the economy stuff. *
 /* unidiff.c */
 extern int diff_load( xmlNodePtr parent ); /**< Loads the universe diffs. */
 /* static */
-static void load_menu_update( unsigned int wid, char *str );
-static void load_menu_close( unsigned int wdw, char *str );
-static void load_menu_load( unsigned int wdw, char *str );
-static void load_menu_delete( unsigned int wdw, char *str );
+static void load_menu_update( unsigned int wid, const char *str );
+static void load_menu_close( unsigned int wdw, const char *str );
+static void load_menu_load( unsigned int wdw, const char *str );
+static void load_menu_delete( unsigned int wdw, const char *str );
 static int load_load( nsave_t *save, const char *path );
 static int load_gameInternal( const char* file, const char* version );
 static int load_enumerateCallback( void* data, const char* origdir, const char* fname );
@@ -392,7 +392,7 @@ void load_loadGameMenu (void)
  *    @param wdw Window triggering function.
  *    @param str Unused.
  */
-static void load_menu_close( unsigned int wdw, char *str )
+static void load_menu_close( unsigned int wdw, const char *str )
 {
    (void)str;
    window_destroy( wdw );
@@ -402,12 +402,12 @@ static void load_menu_close( unsigned int wdw, char *str )
  *    @param wid Widget triggering function.
  *    @param str Unused.
  */
-static void load_menu_update( unsigned int wid, char *str )
+static void load_menu_update( unsigned int wid, const char *str )
 {
    (void) str;
    int pos;
    nsave_t *ns;
-   char *save;
+   const char *save;
    char buf[STRMAX_SHORT], credits[ECON_CRED_STRLEN], date[64];
 
    /* Make sure list is ok. */
@@ -446,10 +446,10 @@ static void load_menu_update( unsigned int wid, char *str )
  *    @param wdw Window triggering function.
  *    @param str Unused.
  */
-static void load_menu_load( unsigned int wdw, char *str )
+static void load_menu_load( unsigned int wdw, const char *str )
 {
    (void)str;
-   char *save;
+   const char *save;
    int wid, pos;
    int diff;
 
@@ -491,10 +491,10 @@ static void load_menu_load( unsigned int wdw, char *str )
  *    @param wdw Window to delete.
  *    @param str Unused.
  */
-static void load_menu_delete( unsigned int wdw, char *str )
+static void load_menu_delete( unsigned int wdw, const char *str )
 {
    (void)str;
-   char *save;
+   const char *save;
    int wid, pos;
 
    wid = window_get( "wdwLoadGameMenu" );

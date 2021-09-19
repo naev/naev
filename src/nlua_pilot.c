@@ -80,6 +80,7 @@ static int pilotL_weapset( lua_State *L );
 static int pilotL_weapsetHeat( lua_State *L );
 static int pilotL_actives( lua_State *L );
 static int pilotL_outfits( lua_State *L );
+static int pilotL_outfitByID( lua_State *L );
 static int pilotL_rename( lua_State *L );
 static int pilotL_position( lua_State *L );
 static int pilotL_velocity( lua_State *L );
@@ -194,6 +195,7 @@ static const luaL_Reg pilotL_methods[] = {
    { "weapsetHeat", pilotL_weapsetHeat },
    { "actives", pilotL_actives },
    { "outfits", pilotL_outfits },
+   { "outfitByID", pilotL_outfitByID },
    { "rename", pilotL_rename },
    { "pos", pilotL_position },
    { "vel", pilotL_velocity },
@@ -330,10 +332,10 @@ static int pilotL_setFlagWrapper( lua_State *L, int flag )
    p = luaL_validpilot(L,1);
 
    /* Get state. */
-   if (lua_gettop(L) > 1)
-      state = lua_toboolean(L, 2);
-   else
+   if (lua_isnone(L,2))
       state = 1;
+   else
+      state = lua_toboolean(L, 2);
 
    /* Set or remove the flag. */
    if (state)
@@ -1160,10 +1162,10 @@ static int pilotL_setTarget( lua_State *L )
    Pilot *p;
    unsigned int t;
    p = luaL_validpilot(L,1);
-   if (lua_gettop(L)>1)
-      t = luaL_validpilot(L,2)->id;
-   else
+   if (lua_isnoneornil(L,2))
       t = p->id;
+   else
+      t = luaL_validpilot(L,2)->id;
    p->target = t;
    return 0;
 }
@@ -1863,9 +1865,35 @@ static int pilotL_outfits( lua_State *L )
 
 
 /**
+ * @brief Gets a pilot's outfit by ID.
+ *
+ *    @luatparam Pilot p Pilot to get outf of.
+ *    @luatparam number id ID of the outfit to get.
+ *    @luatreturn Outfit|nil Outfit equipped in the slot or nil otherwise.
+ * @luafunc outfitByID
+ */
+static int pilotL_outfitByID( lua_State *L )
+{
+   int id;
+   Pilot *p;
+   /* Parse parameters */
+   p     = luaL_validpilot(L,1);
+   id    = luaL_checkinteger(L,2)-1;
+   if (id < 0 || id >= array_size(p->outfits))
+      NLUA_ERROR(L, _("Pilot '%s' outfit ID '%d' is out of range!"), p->name, id);
+
+   if (p->outfits[id]->outfit != NULL)
+      lua_pushoutfit( L, p->outfits[id]->outfit );
+   else
+      lua_pushnil( L );
+   return 1;
+}
+
+
+/**
  * @brief Changes the pilot's name.
  *
- * @usage p:rename( "Black Beard" )
+ * @usage p:rename( _("Black Beard") )
  *
  *    @luatparam Pilot p Pilot to change name of.
  *    @luatparam string name Name to change to.
@@ -2239,10 +2267,10 @@ static int pilotL_setHostile( lua_State *L )
    p = luaL_validpilot(L,1);
 
    /* Get state. */
-   if (lua_gettop(L) > 1)
-      state = lua_toboolean(L, 2);
-   else
+   if (lua_isnone(L,2))
       state = 1;
+   else
+      state = lua_toboolean(L, 2);
 
    /* Set as hostile. */
    if (state)
@@ -2275,10 +2303,10 @@ static int pilotL_setFriendly( lua_State *L )
    p = luaL_validpilot(L,1);
 
    /* Get state. */
-   if (lua_gettop(L) > 1)
-      state = lua_toboolean(L, 2);
-   else
+   if (lua_isnone(L,2))
       state = 1;
+   else
+      state = lua_toboolean(L, 2);
 
    /* Remove hostile and mark as friendly. */
    if (state)
@@ -2545,11 +2573,11 @@ static int pilotL_setCooldown( lua_State *L )
    /* Get the pilot. */
    p = luaL_validpilot(L,1);
 
-  /* Get state. */
-  if (lua_gettop(L) > 1)
-     state = lua_toboolean(L, 2);
-  else
-     state = 1;
+   /* Get state. */
+   if (lua_isnone(L,2))
+      state = 1;
+   else
+      state = lua_toboolean(L, 2);
 
    /* Set status. */
    if (state)
@@ -2998,10 +3026,7 @@ static int pilotL_setHealth( lua_State *L )
    p  = luaL_validpilot(L,1);
    a  = luaL_checknumber(L, 2);
    s  = luaL_checknumber(L, 3);
-   if (lua_gettop(L) > 3)
-      st = luaL_checknumber(L, 4);
-   else
-      st = 0;
+   st = luaL_optnumber(L,4,0.);
 
    a  /= 100.;
    s  /= 100.;
@@ -3100,7 +3125,7 @@ static int pilotL_setNoboard( lua_State *L )
 
    /* Handle parameters. */
    p  = luaL_validpilot(L,1);
-   if (lua_gettop(L)==1)
+   if (lua_isnone(L,2))
       disable = 1;
    else
       disable = lua_toboolean(L, 2);
@@ -3136,7 +3161,7 @@ static int pilotL_setNoDisable( lua_State *L )
 
    /* Handle parameters. */
    p  = luaL_validpilot(L,1);
-   if (lua_gettop(L)==1)
+   if (lua_isnone(L,2))
       disable = 1;
    else
       disable = lua_toboolean(L, 2);
@@ -3789,18 +3814,17 @@ static int pilotL_idle( lua_State *L )
 static int pilotL_control( lua_State *L )
 {
    Pilot *p;
-   int n, enable, cleartasks;
+   int enable, cleartasks;
 
    NLUA_CHECKRW(L);
 
    /* Handle parameters. */
    p  = luaL_validpilot(L,1);
-   n  = lua_gettop(L);
-   if (n<2)
+   if (lua_isnone(L,2))
       enable = 1;
    else
       enable = lua_toboolean(L, 2);
-   if (n<3)
+   if (lua_isnone(L,3))
       cleartasks = enable ^ pilot_isFlag(p, PILOT_MANUAL_CONTROL);
    else
       cleartasks = lua_toboolean(L, 3);
@@ -4036,15 +4060,14 @@ static int pilotL_moveto( lua_State *L )
    /* Get parameters. */
    p  = luaL_validpilot(L,1);
    vec = luaL_checkvector(L,2);
-   if (lua_gettop(L) > 2)
-      brake = lua_toboolean(L,3);
-   else
+   if (lua_isnone(L,3))
       brake = 1;
-   if (lua_gettop(L) > 3)
-      compensate = lua_toboolean(L,4);
    else
+      brake = lua_toboolean(L,3);
+   if (lua_isnone(L,4))
       compensate = 1;
-
+   else
+      compensate = lua_toboolean(L,4);
 
    /* Set the task. */
    if (brake) {
@@ -4192,14 +4215,14 @@ static int pilotL_attack( lua_State *L )
 
    /* Get parameters. */
    p  = luaL_validpilot(L,1);
-   if (lua_gettop(L) == 1) {
+   if (lua_isnoneornil(L,2)) {
+      pt  = luaL_validpilot(L,2);
+      pid = pt->id;
+   }
+   else {
       pid = pilot_getNearestEnemy( p );
       if (pid == 0) /* No enemy found. */
          return 0;
-   }
-   else {
-      pt  = luaL_validpilot(L,2);
-      pid = pt->id;
    }
 
    /* Set the task. */
@@ -4243,14 +4266,19 @@ static int pilotL_runaway( lua_State *L )
    pt     = luaL_validpilot(L,2);
 
    /* Set the task depending on the last parameter. */
-   if (lua_gettop(L) > 2) {
+   if (lua_isnoneornil(L,3)) {
+      t = pilotL_newtask( L, p, "runaway" );
+      lua_pushpilot(L, pt->id);
+      t->dat = luaL_ref(L, LUA_REGISTRYINDEX);
+   }
+   else {
+
       if (lua_isboolean(L,3)) {
          nojump = lua_toboolean(L,3);
          t = pilotL_newtask( L, p, (nojump) ? "runaway_nojump" : "runaway" );
          lua_pushpilot(L, pt->id);
          t->dat = luaL_ref(L, LUA_REGISTRYINDEX);
       }
-
       else if (lua_isjump(L,3)) {
          lj = lua_tojump(L,3);
          t = pilotL_newtask( L, p, "runaway_jump" );
@@ -4261,7 +4289,6 @@ static int pilotL_runaway( lua_State *L )
          lua_rawseti( L, -2, 2 );
          t->dat = luaL_ref(L, LUA_REGISTRYINDEX);
       }
-
       else if (lua_isplanet(L,3)) {
          lp = lua_toplanet(L,3);
          t = pilotL_newtask( L, p, "runaway_land" );
@@ -4272,14 +4299,8 @@ static int pilotL_runaway( lua_State *L )
          lua_rawseti( L, -2, 2 );
          t->dat = luaL_ref(L, LUA_REGISTRYINDEX);
       }
-
       else
          NLUA_INVALID_PARAMETER(L);
-   }
-   else {
-      t = pilotL_newtask( L, p, "runaway" );
-      lua_pushpilot(L, pt->id);
-      t->dat = luaL_ref(L, LUA_REGISTRYINDEX);
    }
 
    return 0;
@@ -4421,10 +4442,10 @@ static int pilotL_land( lua_State *L )
 
    /* Get parameters. */
    p = luaL_validpilot(L,1);
-   if (!lua_isnoneornil(L,2))
-      pnt = luaL_validplanet( L, 2 );
-   else
+   if (lua_isnoneornil(L,2))
       pnt = NULL;
+   else
+      pnt = luaL_validplanet( L, 2 );
    shoot = lua_toboolean(L,3);
 
    /* Set the task. */
@@ -4477,10 +4498,10 @@ static int pilotL_hailPlayer( lua_State *L )
 
    /* Get parameters. */
    p = luaL_validpilot(L,1);
-   if (lua_gettop(L) > 1)
-      enable = lua_toboolean(L,2);
-   else
+   if (lua_isnone(L,2))
       enable = 1;
+   else
+      enable = lua_toboolean(L,2);
 
 
    /* Set the flag. */

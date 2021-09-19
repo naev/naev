@@ -1013,7 +1013,7 @@ static int playerL_outfits( lua_State *L )
    lua_newtable(L);
    for (i=0; i<array_size(outfits); i++) {
       lua_pushoutfit(L, (Outfit*)outfits[i].o );
-      lua_rawseti(L, -3, i+1);
+      lua_rawseti(L, -2, i+1);
    }
 
    return 1;
@@ -1065,13 +1065,9 @@ static int playerL_addOutfit( lua_State *L  )
 
    NLUA_CHECKRW(L);
 
-   /* Defaults. */
-   q = 1;
-
    /* Handle parameters. */
    o = luaL_validoutfit(L, 1);
-   if (lua_gettop(L) > 1)
-      q = luaL_checkint(L, 2);
+   q = luaL_optinteger(L, 2, 1);
 
    /* Add the outfits. */
    player_addOutfit( o, q );
@@ -1103,9 +1099,7 @@ static int playerL_rmOutfit( lua_State *L )
    NLUA_MIN_ARGS(1);
 
    /* Get quantity. */
-   q = 1; /* Default. */
-   if (lua_gettop(L) > 1)
-      q = luaL_checkint(L, 2);
+   q = luaL_optinteger(L, 2, 1);
 
    /* Handle special case it's "all". */
    if (lua_isstring(L, 1)) {

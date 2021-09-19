@@ -49,12 +49,12 @@ static glTexture *shipyard_comm = NULL; /**< Current comm image. */
 /*
  * Helper functions.
  */
-static void shipyard_buy( unsigned int wid, char* str );
-static void shipyard_trade( unsigned int wid, char* str );
-static void shipyard_rmouse( unsigned int wid, char* widget_name );
+static void shipyard_buy( unsigned int wid, const char* str );
+static void shipyard_trade( unsigned int wid, const char* str );
+static void shipyard_rmouse( unsigned int wid, const char* widget_name );
 static void shipyard_renderSlots( double bx, double by, double bw, double bh, void *data );
 static void shipyard_renderSlotsRow( double bx, double by, double bw, const char *str, ShipOutfitSlot *s );
-static void shipyard_find( unsigned int wid, char* str );
+static void shipyard_find( unsigned int wid, const char* str );
 
 
 /**
@@ -204,7 +204,7 @@ void shipyard_open( unsigned int wid )
  *    @param wid Window to update the ships in.
  *    @param str Unused.
  */
-void shipyard_update( unsigned int wid, char* str )
+void shipyard_update( unsigned int wid, const char* str )
 {
    (void)str;
    int i;
@@ -363,7 +363,7 @@ void shipyard_cleanup (void)
  *    @param wid Window buying outfit from.
  *    @param str Unused.
  */
-static void shipyard_find( unsigned int wid, char* str )
+static void shipyard_find( unsigned int wid, const char* str )
 {
    (void) str;
    map_inputFindType(wid, "ship");
@@ -375,7 +375,7 @@ static void shipyard_find( unsigned int wid, char* str )
  *    @param wid Window player is buying ship from.
  *    @param widget_name Name of the window. (unused)
  */
-static void shipyard_rmouse( unsigned int wid, char* widget_name )
+static void shipyard_rmouse( unsigned int wid, const char* widget_name )
 {
     return shipyard_buy(wid, widget_name);
 }
@@ -386,7 +386,7 @@ static void shipyard_rmouse( unsigned int wid, char* widget_name )
  *    @param wid Window player is buying ship from.
  *    @param str Unused.
  */
-static void shipyard_buy( unsigned int wid, char* str )
+static void shipyard_buy( unsigned int wid, const char* str )
 {
    (void)str;
    int i;
@@ -535,7 +535,7 @@ int shipyard_canTrade( const char *shipname )
  *    @param wid Window player is buying ship from.
  *    @param str Unused.
  */
-static void shipyard_trade( unsigned int wid, char* str )
+static void shipyard_trade( unsigned int wid, const char* str )
 {
    (void)str;
    int i;

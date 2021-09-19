@@ -33,7 +33,7 @@
 
 --]]
 
-local pir = require "missions.pirate.common"
+local pir = require "common.pirate"
 local fmt = require "format"
 require "jumpdist"
 local pilotname = require "pilotname"

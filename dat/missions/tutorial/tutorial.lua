@@ -15,8 +15,8 @@
    Tutorial Mission
 
 --]]
-local tut = require "events.tutorial.common"
-require "missions.neutral.common"
+local tut = require "common.tutorial"
+require "common.neutral"
 
 
 -- FIXME: Have to use a table for some of it due to # bug.

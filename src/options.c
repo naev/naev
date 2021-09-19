@@ -67,48 +67,48 @@ static int opt_lastKeyPress = 0; /**< Last keypress. */
  * prototypes
  */
 /* Misc. */
-static void opt_close( unsigned int wid, char *name );
+static void opt_close( unsigned int wid, const char *name );
 static void opt_needRestart (void);
 /* Gameplay. */
 static char** lang_list( int *n );
 static void opt_gameplay( unsigned int wid );
-static void opt_setAutonavResetSpeed( unsigned int wid, char *str );
-static void opt_setMapOverlayOpacity( unsigned int wid, char *str );
-static void opt_OK( unsigned int wid, char *str );
-static int opt_gameplaySave( unsigned int wid, char *str );
-static void opt_gameplayDefaults( unsigned int wid, char *str );
-static void opt_gameplayUpdate( unsigned int wid, char *str );
+static void opt_setAutonavResetSpeed( unsigned int wid, const char *str );
+static void opt_setMapOverlayOpacity( unsigned int wid, const char *str );
+static void opt_OK( unsigned int wid, const char *str );
+static int opt_gameplaySave( unsigned int wid, const char *str );
+static void opt_gameplayDefaults( unsigned int wid, const char *str );
+static void opt_gameplayUpdate( unsigned int wid, const char *str );
 /* Video. */
 static void opt_video( unsigned int wid );
-static void opt_videoRes( unsigned int wid, char *str );
-static int opt_videoSave( unsigned int wid, char *str );
-static void opt_videoDefaults( unsigned int wid, char *str );
+static void opt_videoRes( unsigned int wid, const char *str );
+static int opt_videoSave( unsigned int wid, const char *str );
+static void opt_videoDefaults( unsigned int wid, const char *str );
 static void opt_getVideoMode( int *w, int *h, int *fullscreen );
-static void opt_setScalefactor( unsigned int wid, char *str );
-static void opt_setZoomFar( unsigned int wid, char *str );
-static void opt_setZoomNear( unsigned int wid, char *str );
-static void opt_setBGBrightness( unsigned int wid, char *str );
-static void opt_setNebuBrightness( unsigned int wid, char *str );
-static void opt_checkColorblind( unsigned int wid, char *str );
+static void opt_setScalefactor( unsigned int wid, const char *str );
+static void opt_setZoomFar( unsigned int wid, const char *str );
+static void opt_setZoomNear( unsigned int wid, const char *str );
+static void opt_setBGBrightness( unsigned int wid, const char *str );
+static void opt_setNebuBrightness( unsigned int wid, const char *str );
+static void opt_checkColorblind( unsigned int wid, const char *str );
 /* Audio. */
 static void opt_audio( unsigned int wid );
-static int opt_audioSave( unsigned int wid, char *str );
-static void opt_audioDefaults( unsigned int wid, char *str );
+static int opt_audioSave( unsigned int wid, const char *str );
+static void opt_audioDefaults( unsigned int wid, const char *str );
 static void opt_audioUpdate( unsigned int wid );
 static void opt_audioLevelStr( char *buf, int max, int type, double pos );
-static void opt_setAudioLevel( unsigned int wid, char *str );
-static void opt_beep( unsigned int wid, char *str );
+static void opt_setAudioLevel( unsigned int wid, const char *str );
+static void opt_beep( unsigned int wid, const char *str );
 /* Keybind menu. */
 static void opt_keybinds( unsigned int wid );
 static void menuKeybinds_getDim( unsigned int wid, int *w, int *h,
       int *lw, int *lh, int *bw, int *bh );
 static void menuKeybinds_genList( unsigned int wid );
-static void menuKeybinds_update( unsigned int wid, char *name );
-static void opt_keyDefaults( unsigned int wid, char *str );
+static void menuKeybinds_update( unsigned int wid, const char *name );
+static void opt_keyDefaults( unsigned int wid, const char *str );
 /* Setting keybindings. */
 static int opt_setKeyEvent( unsigned int wid, SDL_Event *event );
-static void opt_setKey( unsigned int wid, char *str );
-static void opt_unsetKey( unsigned int wid, char *str );
+static void opt_setKey( unsigned int wid, const char *str );
+static void opt_unsetKey( unsigned int wid, const char *str );
 
 
 /**
@@ -154,7 +154,7 @@ void opt_menu (void)
 /**
  * @brief Saves all options and closes the options screen.
  */
-static void opt_OK( unsigned int wid, char *str )
+static void opt_OK( unsigned int wid, const char *str )
 {
    int ret, prompted_restart;
 
@@ -178,7 +178,7 @@ static void opt_OK( unsigned int wid, char *str )
 /**
  * @brief Closes the options screen without saving.
  */
-static void opt_close( unsigned int wid, char *name )
+static void opt_close( unsigned int wid, const char *name )
 {
    (void) wid;
    (void) name;
@@ -406,11 +406,12 @@ static void opt_gameplay( unsigned int wid )
 /**
  * @brief Saves the gameplay options.
  */
-static int opt_gameplaySave( unsigned int wid, char *str )
+static int opt_gameplaySave( unsigned int wid, const char *str )
 {
    (void) str;
    int f, p, newlang;
-   char *vmsg, *tmax, *s;
+   const char *vmsg, *tmax;
+   const char *s;
    double reset;
 
    /* List. */
@@ -469,7 +470,7 @@ static int opt_gameplaySave( unsigned int wid, char *str )
 /**
  * @brief Sets the default gameplay options.
  */
-static void opt_gameplayDefaults( unsigned int wid, char *str )
+static void opt_gameplayDefaults( unsigned int wid, const char *str )
 {
    (void) str;
    char vmsg[16], tmax[16];
@@ -494,7 +495,7 @@ static void opt_gameplayDefaults( unsigned int wid, char *str )
 /**
  * @brief Updates the gameplay options.
  */
-static void opt_gameplayUpdate( unsigned int wid, char *str )
+static void opt_gameplayUpdate( unsigned int wid, const char *str )
 {
    (void) str;
    char vmsg[16], tmax[16];
@@ -529,7 +530,7 @@ static void opt_gameplayUpdate( unsigned int wid, char *str )
  *    @param wid Window calling the callback.
  *    @param str Name of the widget calling the callback.
  */
-static void opt_setAutonavResetSpeed( unsigned int wid, char *str )
+static void opt_setAutonavResetSpeed( unsigned int wid, const char *str )
 {
    char buf[PATH_MAX];
    double autonav_reset;
@@ -707,7 +708,7 @@ static void menuKeybinds_genList( unsigned int wid )
  *    @param wid Window to update.
  *    @param name Unused.
  */
-static void menuKeybinds_update( unsigned int wid, char *name )
+static void menuKeybinds_update( unsigned int wid, const char *name )
 {
    (void) name;
    int selected;
@@ -781,7 +782,7 @@ static void menuKeybinds_update( unsigned int wid, char *name )
 /**
  * @brief Restores the key defaults.
  */
-static void opt_keyDefaults( unsigned int wid, char *str )
+static void opt_keyDefaults( unsigned int wid, const char *str )
 {
    (void) str;
    const char *title, *caption, *ret;
@@ -834,7 +835,7 @@ static void opt_keyDefaults( unsigned int wid, char *str )
  *    @param wid Window calling the callback.
  *    @param str Name of the widget calling the callback.
  */
-static void opt_setAudioLevel( unsigned int wid, char *str )
+static void opt_setAudioLevel( unsigned int wid, const char *str )
 {
    char buf[32], *widget;
    double vol;
@@ -945,7 +946,7 @@ static void opt_audio( unsigned int wid )
 }
 
 
-static void opt_beep( unsigned int wid, char *str )
+static void opt_beep( unsigned int wid, const char *str )
 {
    (void) wid;
    (void) str;
@@ -956,7 +957,7 @@ static void opt_beep( unsigned int wid, char *str )
 /**
  * @brief Saves the audio stuff.
  */
-static int opt_audioSave( unsigned int wid, char *str )
+static int opt_audioSave( unsigned int wid, const char *str )
 {
    (void) str;
    int f;
@@ -984,7 +985,7 @@ static int opt_audioSave( unsigned int wid, char *str )
 /**
  * @brief Sets the audio defaults.
  */
-static void opt_audioDefaults( unsigned int wid, char *str )
+static void opt_audioDefaults( unsigned int wid, const char *str )
 {
    (void) str;
 
@@ -1131,7 +1132,7 @@ static int opt_setKeyEvent( unsigned int wid, SDL_Event *event )
 /**
  * @brief Rebinds a key.
  */
-static void opt_setKey( unsigned int wid, char *str )
+static void opt_setKey( unsigned int wid, const char *str )
 {
    (void) wid;
    (void) str;
@@ -1171,7 +1172,7 @@ static void opt_setKey( unsigned int wid, char *str )
 /**
  * @brief Unsets the key.
  */
-static void opt_unsetKey( unsigned int wid, char *str )
+static void opt_unsetKey( unsigned int wid, const char *str )
 {
    (void) str;
    unsigned int parent;
@@ -1378,10 +1379,9 @@ static void opt_needRestart (void)
 /**
  * @brief Callback when resolution changes.
  */
-static void opt_videoRes( unsigned int wid, char *str )
+static void opt_videoRes( unsigned int wid, const char *str )
 {
-   char *buf;
-   buf = toolkit_getList( wid, str );
+   const char *buf = toolkit_getList( wid, str );
    window_setInput( wid, "inpRes", buf );
 }
 
@@ -1389,10 +1389,10 @@ static void opt_videoRes( unsigned int wid, char *str )
 /**
  * @brief Saves the video settings.
  */
-static int opt_videoSave( unsigned int wid, char *str )
+static int opt_videoSave( unsigned int wid, const char *str )
 {
    (void) str;
-   char *inp;
+   const char *inp;
    int ret, w, h, f, fullscreen;
 
    /* Handle resolution. */
@@ -1441,7 +1441,7 @@ static int opt_videoSave( unsigned int wid, char *str )
 /**
  * @brief Handles the colorblind checkbox being checked.
  */
-static void opt_checkColorblind( unsigned int wid, char *str )
+static void opt_checkColorblind( unsigned int wid, const char *str )
 {
    int f = window_checkboxState( wid, str );
    conf.colorblind = f;
@@ -1534,7 +1534,7 @@ static void opt_getVideoMode( int *w, int *h, int *fullscreen )
 /**
  * @brief Sets video defaults.
  */
-static void opt_videoDefaults( unsigned int wid, char *str )
+static void opt_videoDefaults( unsigned int wid, const char *str )
 {
    (void) str;
    char buf[16];
@@ -1568,7 +1568,7 @@ static void opt_videoDefaults( unsigned int wid, char *str )
  *    @param wid Window calling the callback.
  *    @param str Name of the widget calling the callback.
  */
-static void opt_setScalefactor( unsigned int wid, char *str )
+static void opt_setScalefactor( unsigned int wid, const char *str )
 {
    char buf[STRMAX_SHORT];
    double scale = window_getFaderValue(wid, str);
@@ -1587,7 +1587,7 @@ static void opt_setScalefactor( unsigned int wid, char *str )
  *    @param wid Window calling the callback.
  *    @param str Name of the widget calling the callback.
  */
-static void opt_setZoomFar( unsigned int wid, char *str )
+static void opt_setZoomFar( unsigned int wid, const char *str )
 {
    char buf[STRMAX_SHORT];
    double scale = window_getFaderValue(wid, str);
@@ -1610,7 +1610,7 @@ static void opt_setZoomFar( unsigned int wid, char *str )
  *    @param wid Window calling the callback.
  *    @param str Name of the widget calling the callback.
  */
-static void opt_setZoomNear( unsigned int wid, char *str )
+static void opt_setZoomNear( unsigned int wid, const char *str )
 {
    char buf[STRMAX_SHORT];
    double scale = window_getFaderValue(wid, str);
@@ -1633,7 +1633,7 @@ static void opt_setZoomNear( unsigned int wid, char *str )
  *    @param wid Window calling the callback.
  *    @param str Name of the widget calling the callback.
  */
-static void opt_setBGBrightness( unsigned int wid, char *str )
+static void opt_setBGBrightness( unsigned int wid, const char *str )
 {
    char buf[STRMAX_SHORT];
    double fad = window_getFaderValue(wid, str);
@@ -1648,7 +1648,7 @@ static void opt_setBGBrightness( unsigned int wid, char *str )
  *    @param wid Window calling the callback.
  *    @param str Name of the widget calling the callback.
  */
-static void opt_setNebuBrightness( unsigned int wid, char *str )
+static void opt_setNebuBrightness( unsigned int wid, const char *str )
 {
    char buf[STRMAX_SHORT];
    double fad = window_getFaderValue(wid, str);
@@ -1663,7 +1663,7 @@ static void opt_setNebuBrightness( unsigned int wid, char *str )
  *    @param wid Window calling the callback.
  *    @param str Name of the widget calling the callback.
  */
-static void opt_setMapOverlayOpacity( unsigned int wid, char *str )
+static void opt_setMapOverlayOpacity( unsigned int wid, const char *str )
 {
    char buf[STRMAX_SHORT];
    double fad = window_getFaderValue(wid, str);

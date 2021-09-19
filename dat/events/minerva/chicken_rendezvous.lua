@@ -18,7 +18,7 @@
 -- Triggered from other missions.
 --]]
 local vn = require 'vn'
-local minerva = require 'campaigns.minerva'
+local minerva = require 'common.minerva'
 local love_shaders = require "love_shaders"
 
 function create()

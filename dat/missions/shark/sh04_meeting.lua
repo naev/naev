@@ -27,11 +27,11 @@
    TODO: I'm not really happy with the drone's behaviour: it's quite too obvious
 
 --]]
-local pir = require "missions.pirate.common"
+local pir = require "common.pirate"
 require "proximity"
 local fmt = require "format"
 local fleet = require "fleet"
-local shark = require "missions.shark.common"
+local shark = require "common.shark"
 
 
 title = {}

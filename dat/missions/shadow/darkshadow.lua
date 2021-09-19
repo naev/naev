@@ -20,7 +20,7 @@
 --]]
 
 local fleet = require "fleet"
-local shadow = require "missions.shadow.common"
+local shadow = require "common.shadow"
 require "proximity"
 
 

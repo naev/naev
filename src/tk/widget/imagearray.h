@@ -42,10 +42,10 @@ typedef struct WidgetImageArrayData_ {
    int ih; /**< Image height to use. */
    int mx; /**< Last mouse x position. */
    int my; /**< Last mouse y position. */
-   void (*fptr) (unsigned int,char*); /**< Modify callback - triggered on selection. */
-   void (*rmptr) (unsigned int,char*); /**< Right click callback. */
-   void (*dblptr) (unsigned int,char*); /**< Double click callback (for one selection). */
-   void (*accept) (unsigned int, char*); /**< Accept function pointer (when hitting enter). */
+   void (*fptr) (unsigned int,const char*); /**< Modify callback - triggered on selection. */
+   void (*rmptr) (unsigned int,const char*); /**< Right click callback. */
+   void (*dblptr) (unsigned int,const char*); /**< Double click callback (for one selection). */
+   void (*accept) (unsigned int, const char*); /**< Accept function pointer (when hitting enter). */
 } WidgetImageArrayData;
 
 
@@ -59,27 +59,27 @@ typedef struct iar_data_s {
 
 
 /* Required functions. */
-void window_addImageArray( const unsigned int wid,
+void window_addImageArray( unsigned int wid,
       const int x, const int y, /* position */
       const int w, const int h, /* size */
-      char* name, const int iw, const int ih, /* name and image sizes */
+      const char* name, const int iw, const int ih, /* name and image sizes */
       ImageArrayCell *img, int nelem, /* elements */
-      void (*call) (unsigned int,char*), /* update callback */
-      void (*rmcall) (unsigned int,char*), /* right click callback */
-      void (*dblcall) (unsigned int,char*) ); /* double click callback */
+      void (*call) (unsigned int,const char*), /* update callback */
+      void (*rmcall) (unsigned int,const char*), /* right click callback */
+      void (*dblcall) (unsigned int,const char*) ); /* double click callback */
 
 /* Misc functions. */
-char* toolkit_getImageArray( const unsigned int wid, const char* name );
-int toolkit_setImageArray( const unsigned int wid, const char* name, char* elem );
-int toolkit_getImageArrayPos( const unsigned int wid, const char* name );
-int toolkit_setImageArrayPos( const unsigned int wid, const char* name, int pos );
-double toolkit_getImageArrayOffset( const unsigned int wid, const char* name );
-int toolkit_setImageArrayOffset( const unsigned int wid, const char* name, double off );
-int toolkit_saveImageArrayData( const unsigned int wid, const char *name,
+const char* toolkit_getImageArray( unsigned int wid, const char* name );
+int toolkit_setImageArray( unsigned int wid, const char* name, const char* elem );
+int toolkit_getImageArrayPos( unsigned int wid, const char* name );
+int toolkit_setImageArrayPos( unsigned int wid, const char* name, int pos );
+double toolkit_getImageArrayOffset( unsigned int wid, const char* name );
+int toolkit_setImageArrayOffset( unsigned int wid, const char* name, double off );
+int toolkit_saveImageArrayData( unsigned int wid, const char *name,
       iar_data_t *iar_data );
-int toolkit_unsetSelection( const unsigned int wid, const char *name );
-void toolkit_setImageArrayAccept( const unsigned int wid, const char *name, void (*fptr)(unsigned int,char*) );
-int toolkit_getImageArrayVisibleElements( const unsigned int wid, const char *name );
+int toolkit_unsetSelection( unsigned int wid, const char *name );
+void toolkit_setImageArrayAccept( unsigned int wid, const char *name, void (*fptr)(unsigned int,const char*) );
+int toolkit_getImageArrayVisibleElements( unsigned int wid, const char *name );
 int toolkit_simImageArrayVisibleElements( int w, int h, int iw, int ih );
 
 #endif /* WGT_IMAGEARRAY_H */
