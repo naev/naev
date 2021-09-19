@@ -39,7 +39,7 @@
 --]]
 
 local fmt = require "format"
-require "common.neutral"
+local neu = require "common.neutral"
 
 
 -- This section stores the strings (text) for the mission.
@@ -140,7 +140,7 @@ function landed()
       end
       tk.msg( title[4], string.format(reward_text, fmt.tonnes(reward)) )
       player.pilot():cargoAdd( cargoname, reward )
-      addMiscLog( log_text:format( fmt.tonnes(reward) ) )
+      neu.addMiscLog( log_text:format( fmt.tonnes(reward) ) )
       misn.finish(true)
    -- If we're in misn_base_sys but not on misn_base then...
    elseif system.cur() == misn_base_sys then

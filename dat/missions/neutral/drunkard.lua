@@ -23,7 +23,7 @@
 
 ]]--
 local fmt = require "format"
-require "common.neutral"
+local neu = require "common.neutral"
 
 
 -- Bar Description
@@ -190,7 +190,7 @@ function closehail()
    willie:setHilight(false)
    willie:setInvincible(false)
    willie:hyperspace()
-   addMiscLog( log_text )
+   neu.addMiscLog( log_text )
    misn.finish(true)
 end
 

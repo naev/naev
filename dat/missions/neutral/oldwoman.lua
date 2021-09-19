@@ -25,7 +25,7 @@
 --]]
 
 require "cargo_common"
-require "common.neutral"
+local neu = require "common.neutral"
 
 
 -- Localization, choosing a language if Naev is translated for non-english-speaking locales.
@@ -126,7 +126,7 @@ function land()
     if planet.cur() == destplanet then
         tk.msg(title2, text3)
         player.pay(500e3)
-        addMiscLog( log_text )
+        neu.addMiscLog( log_text )
         misn.finish(true)
     end
 end

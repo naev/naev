@@ -22,7 +22,7 @@ Plot: on Zhiru you meet the same girl who received the love letters,her name is 
 --]]
 
 local fmt = require "format"
-require "common.neutral"
+local neu = require "common.neutral"
 
 
 -- Dialogue
@@ -100,10 +100,10 @@ function land()
    if planet.cur() == targetworld then
       if amount > 0 then
          tk.msg( "", finish )
-         addMiscLog( log_text )
+         neu.addMiscLog( log_text )
       else
          tk.msg( "", finish_nocake )
-         addMiscLog( log_text_nocake )
+         neu.addMiscLog( log_text_nocake )
       end
 
       player.pay( reward )

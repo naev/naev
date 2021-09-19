@@ -21,7 +21,7 @@ There will be more missions to detail how you are perceived as the kidnapper of 
 --]]
 
 local fmt = require "format"
-require "common.neutral"
+local neu = require "common.neutral"
 
 
 npc_name = _("Young Teenager")
@@ -101,7 +101,7 @@ function land ()
 
       tk.msg( title, string.format( misn_accomplished, fmt.number(reward) ) )
 
-      addMiscLog( log_text )
+      neu.addMiscLog( log_text )
 
       misn.finish(true)
    end

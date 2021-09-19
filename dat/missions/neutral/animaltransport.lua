@@ -26,7 +26,7 @@
 --]]
 
 require "jumpdist"
-require "common.neutral"
+local neu = require "common.neutral"
 
 
 text = {}
@@ -99,7 +99,7 @@ function land()
         tk.msg(title[1], text[3])
         player.pay(200e3)
         var.push("shipinfested", true)
-        addMiscLog( log_text )
+        neu.addMiscLog( log_text )
         misn.finish(true)
     end
 end

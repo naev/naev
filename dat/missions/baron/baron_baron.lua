@@ -21,7 +21,7 @@
 
 local portrait = require "portrait"
 local baron = require "common.baron"
-require "common.neutral"
+local neu = require "common.neutral"
 
 
 sysname1 = "Darkstone"
@@ -125,7 +125,7 @@ function create ()
    else
       tk.msg(angrytitle, angrytext)
       var.push("baron_hated", true)
-      addMiscLog( log_text_refuse )
+      neu.addMiscLog( log_text_refuse )
       abort()
    end
 end

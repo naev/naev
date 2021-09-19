@@ -28,7 +28,7 @@
 ]]--
 local pir = require "common.pirate"
 local fmt = require "format"
-require "common.neutral"
+local neu = require "common.neutral"
 
 
 -- localization stuff, translators would work here
@@ -129,7 +129,7 @@ function land ()
       player.outfitAdd( "Satellite Mock-up" )
       pir.reputationNormalMission(rnd.rnd(2,3))
       player.pay( credits )
-      addMiscLog( log_text )
+      neu.addMiscLog( log_text )
       misn.finish(true)
    end
 end

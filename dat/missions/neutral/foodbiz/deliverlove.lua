@@ -23,7 +23,7 @@ Plot: Talk to man on Zeo, bargain, load some cargo, deliver it to Zhiru in Godda
 --]]
 
 local fmt = require "format"
-require "common.neutral"
+local neu = require "common.neutral"
 
 
 misn_title = _([[Deliver Love]])
@@ -114,7 +114,7 @@ function land()
       player.pay( reward )
       tk.msg( "", misn_accomplished:format( fmt.credits( reward ) ) )
       player.outfitAdd("Love Letter")
-      addMiscLog( log_text )
+      neu.addMiscLog( log_text )
       misn.finish( true )
    end
 end

@@ -23,7 +23,7 @@
 --]]
 
 local portrait = require "portrait"
-require "common.neutral"
+local neu = require "common.neutral"
 
 
 sysname1 = "Arcturus"
@@ -265,7 +265,7 @@ function land3()
   if planet.cur() == planet.get(home) and rescued then
     tk.msg(title[6], text[6]:format(player.name()))
     tk.msg(title[7], text[7]:format(player.name()))
-    addMiscLog( log_text )
+    neu.addMiscLog( log_text )
     misn.finish(true)
   end
 end

@@ -19,7 +19,7 @@
 -- This event occurs after the player has done the "Animal transport" mission.
 --]]
 
-require "common.neutral"
+local neu = require "common.neutral"
 
 
 text = {}
@@ -74,6 +74,6 @@ function endProblems()
     tk.msg(title[2], text[2])
     ps:control(false)
     var.pop("shipinfested")
-    addMiscLog( log_text )
+    neu.addMiscLog( log_text )
     evt.finish(true)
 end

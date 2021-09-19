@@ -28,7 +28,7 @@ Thank you to Bobbens, Deiz, BTAxis, and others that have helped me with learning
 
 require "jumpdist"
 local fmt = require "format"
-require "common.neutral"
+local neu = require "common.neutral"
 
 
 bar_desc = _("You see an aristocrat sitting at a table in the middle of the bar, drinking a swirling concoction in a martini glass with a disappointed look on his face every time he takes a sip.")
@@ -195,7 +195,7 @@ function land ()
 
       hook.rm(landhook)
       hook.rm(takeoffhook)
-      addMiscLog( log_text )
+      neu.addMiscLog( log_text )
       misn.finish( true )
    end
 end

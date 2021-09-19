@@ -16,7 +16,7 @@
 
 --]]
 local tut = require "common.tutorial"
-require "common.neutral"
+local neu = require "common.neutral"
 
 
 -- FIXME: Have to use a table for some of it due to # bug.
@@ -260,7 +260,7 @@ function enter_timer ()
    elseif stage == 6 and system.cur() == destsys then
       tk.msg( tutorial_title, text.conclusion:format( player.name(), tut.getKey("target_next"), tut.getKey("hail") ) )
 
-      addMiscLog( log_text )
+      neu.addMiscLog( log_text )
 
       misn.finish( true )
    end

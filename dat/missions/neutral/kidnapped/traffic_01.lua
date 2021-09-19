@@ -34,7 +34,7 @@
 --]]
 
 local portrait = require "portrait"
-require "common.neutral"
+local neu = require "common.neutral"
 
 
 -- Bar information
@@ -213,7 +213,7 @@ function got_boarded(shipp)
    end
 
    player.pay(reward)
-   addMiscLog( log_text )
+   neu.addMiscLog( log_text )
    misn.finish(true)
 end
 -- idle

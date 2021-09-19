@@ -22,7 +22,7 @@
 --]]
 
 local fmt = require "format"
-require "common.neutral"
+local neu = require "common.neutral"
 
 
 npc_name = _("Old Man")
@@ -156,11 +156,11 @@ function land ()
          tk.msg(title, misn_father)
          player.pay(reward)
          misn.cargoRm(cargoID)
-         addMiscLog( log_text_capture )
+         neu.addMiscLog( log_text_capture )
       else
          tk.msg(title, misn_release_father)
          player.pay(releasereward)
-         addMiscLog( log_text_release )
+         neu.addMiscLog( log_text_release )
       end
 
       misn.finish(true)

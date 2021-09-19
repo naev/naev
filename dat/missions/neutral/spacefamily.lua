@@ -20,7 +20,7 @@
 --]]
 
 require "jumpdist"
-require "common.neutral"
+local neu = require "common.neutral"
 
 
 shipname = _("August") --The ship will have a unique name
@@ -139,7 +139,7 @@ function land()
          tk.msg(title[4], string.format(text[3], destsys:name())) -- Final message
          player.pay(500000)
          misn.cargoJet(carg_id)
-         addMiscLog( log_text )
+         neu.addMiscLog( log_text )
          misn.finish(true)
       else
          nextstop = nextstop + 1
