@@ -1807,7 +1807,8 @@ static int toolkit_mouseEventWidget( Window *w, Widget *wgt,
             ret |= (*wgt->mdoubleclickevent)( wgt, button, x, y );
          else if (wgt->mclickevent != NULL)
             ret |= (*wgt->mclickevent)( wgt, button, x, y );
-         input_clicked( (void*)wgt );
+         if (ret)
+            input_clicked( (void*)wgt );
          break;
 
       case SDL_MOUSEBUTTONUP:

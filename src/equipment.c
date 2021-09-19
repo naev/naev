@@ -1863,6 +1863,12 @@ static void equipment_outfitPopdownSelect( unsigned int wid, const char *str )
    (void) str;
 }
 
+static void equipment_outfitPopdownActivate( unsigned int wid, const char *str )
+{
+   equipment_outfitPopdownSelect( wid, str );
+   window_destroyWidget( wid, str );
+}
+
 static void equipment_outfitPopdown( unsigned int wid, const char* str )
 {
    (void) str;
@@ -1886,7 +1892,7 @@ static void equipment_outfitPopdown( unsigned int wid, const char* str )
    for (size_t i=0; i<n; i++)
       modelist[i] = strdup( _(modes[i]) );
 
-   window_addList( wid, -10, 60, 200, 200, name, modelist, n, 0, equipment_outfitPopdownSelect, NULL );
+   window_addList( wid, -10, 60, 200, 200, name, modelist, n, 0, equipment_outfitPopdownSelect, equipment_outfitPopdownActivate );
 }
 
 /**

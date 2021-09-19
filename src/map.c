@@ -1934,7 +1934,15 @@ static void map_modeUpdate( unsigned int wid, const char* str )
       }
    }
    map_update(wid);
+}
 
+/**
+ * @brief Double click the map mode widget.
+ */
+static void map_modeActivate( unsigned int wid, const char* str )
+{
+   map_modeUpdate( wid, str );
+   window_destroyWidget( wid, str );
 }
 
 /**
@@ -1995,7 +2003,7 @@ static void map_buttonCommodity( unsigned int wid, const char* str )
             defpos = cur_commod*2 + MAPMODE_TRADE - cur_commod_mode;
 
          window_addList( wid, -10, 60, 200, 200, "lstMapMode",
-                         this_map_modes, array_size(map_modes), defpos, map_modeUpdate, NULL );
+                         this_map_modes, array_size(map_modes), defpos, map_modeUpdate, map_modeActivate );
       }
    }
 }
