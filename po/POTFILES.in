@@ -2210,7 +2210,6 @@ dat/bkg/default.lua
 dat/bkg/solarwind.lua
 dat/bkg/taiomi.lua
 dat/comm.lua
-dat/events/bioship_upgrade.lua
 dat/events/cinematic/DvdFLFbattle.lua
 dat/events/dev/system_tour.lua
 dat/events/discovery.lua
@@ -2242,15 +2241,17 @@ dat/events/neutral/shadow_comm.lua
 dat/events/neutral/shadow_comm2.lua
 dat/events/neutral/shiplover.lua
 dat/events/neutral/shipwreck.lua
+dat/events/neutral/travelling_merchant.lua
+dat/events/pirate/shipcheck.lua
 dat/events/proteron/blockade.lua
 dat/events/shiplog.lua
 dat/events/sirius/achack04.lua
 dat/events/sirius/preach.lua
+dat/events/soromid/bioship_upgrade.lua
 dat/events/start.lua
 dat/events/taiomi/find.lua
 dat/events/taiomi/intro.lua
 dat/events/taiomi/system.lua
-dat/events/travelling_merchant.lua
 dat/events/tutorial/tutorial_enter.lua
 dat/events/tutorial/tutorial_land.lua
 dat/events/updater.lua
