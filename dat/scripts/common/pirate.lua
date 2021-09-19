@@ -6,6 +6,15 @@
 --]]
 local pir = {}
 
+local function _intable( t, q )
+   for k,v in ipairs(t) do
+      if v==q then
+         return true
+      end
+   end
+   return false
+end
+
 --[[
    @brief Increases the reputation limit of the player.
 --]]
@@ -53,13 +62,7 @@ pir.factions_clans = {
 --]]
 function pir.factionIsPirate( f )
    if not f then return false end
-   f = faction.get(f)
-   for k,v in ipairs(pir.factions) do
-      if f==v then
-         return true
-      end
-   end
-   return false
+   return _intable( pir.factions, faction.get(f) )
 end
 
 --[[
@@ -67,13 +70,7 @@ end
 --]]
 function pir.factionIsClan( f )
    if not f then return false end
-   f = faction.get(f)
-   for k,v in ipairs(pir.factions_clans) do
-      if f==v then
-         return true
-      end
-   end
-   return false
+   return _intable( pir.factions_clans, faction.get(f) )
 end
 
 --[[
@@ -171,6 +168,25 @@ function pir.reputationNormalMission( amount )
          v:modPlayerSingle( vamount )
       end
    end
+end
+
+pir.ships = {
+   ship.get("Hyena"), -- TODO pirate hyena
+   ship.get("Pirate Admonisher"),
+   ship.get("Pirate Ancestor"),
+   ship.get("Pirate Kestrel"),
+   ship.get("Pirate Phalanx"),
+   ship.get("Pirate Rhino"),
+   ship.get("Pirate Shark"),
+   ship.get("Pirate Starbridge"),
+   ship.get("Pirate Vendetta"),
+}
+
+--[[
+   @brief Gets whether or not the pilot is in a pirate ship
+--]]
+function pir.isPirateShip( p )
+   return _intable( pir.ships, p:ship() )
 end
 
 return pir
