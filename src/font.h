@@ -43,7 +43,7 @@ typedef struct glFontRestore_s {
  * An empty string produces a zero-width line. Each regular, fitting character expands its line horizontally.
  * A newline or wrapping leads to vertical expansion.
  * The layout calculation is iterative; one may for instance change the width limit between lines.
- * \see gl_printLineIteratorInit, gl_printLineIteratorNext, gl_printLineIteratorFree.
+ * \see gl_printLineIteratorInit, gl_printLineIteratorNext.
  */
 typedef struct glPrintLineIterator_s {
    const char *text;            /**< Text to split. */
@@ -112,9 +112,8 @@ PRINTF_FORMAT( 8, 9 ) int gl_printText( const glFont *ft_font,
       const glColour* c, const char *fmt, ... );
 
 /* Dimension stuff. */
-glPrintLineIterator* gl_printLineIteratorInit( const glFont *ft_font, const char *text, int width );
+void gl_printLineIteratorInit( glPrintLineIterator* iter, const glFont *ft_font, const char *text, int width );
 int gl_printLineIteratorNext( glPrintLineIterator* iter );
-void gl_printLineIteratorFree( glPrintLineIterator* iter );
 int gl_printWidthForText( const glFont *ft_font, const char *text, int width, int *outw );
 int gl_printWidthRaw( const glFont *ft_font, const char *text );
 PRINTF_FORMAT( 2, 3 )int gl_printWidth( const glFont *ft_font, const char *fmt, ... );

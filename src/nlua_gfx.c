@@ -619,7 +619,7 @@ static int gfxL_printfWrap( lua_State *L )
    const char *s;
    int width, maxw;
    glFont *font;
-   glPrintLineIterator *iter;
+   glPrintLineIterator iter;
    int linenum;
 
    /* Parse parameters. */
@@ -631,21 +631,20 @@ static int gfxL_printfWrap( lua_State *L )
 
    /* Process output into table. */
    lua_newtable(L);
-   iter = gl_printLineIteratorInit(font, s, width);
+   gl_printLineIteratorInit(&iter, font, s, width);
    linenum = 1;
    maxw = 0;
-   while (gl_printLineIteratorNext(iter)) {
-      maxw = MAX(maxw, iter->l_width);
+   while (gl_printLineIteratorNext(&iter)) {
+      maxw = MAX(maxw, iter.l_width);
 
       /* Create entry of form { string, width } in the table. */
       lua_newtable(L);                 /* t, t */
-      lua_pushlstring(L, &s[iter->l_begin], iter->l_end - iter->l_begin);  /* t, t, s */
+      lua_pushlstring(L, &s[iter.l_begin], iter.l_end - iter.l_begin);  /* t, t, s */
       lua_rawseti(L,-2,1);             /* t, t */
-      lua_pushinteger(L,iter->l_width);/* t, t, n */
+      lua_pushinteger(L,iter.l_width);/* t, t, n */
       lua_rawseti(L,-2,2);             /* t, t */
       lua_rawseti(L,-2,linenum++);     /* t */
    }
-   gl_printLineIteratorFree(iter);
 
    /* Push max width. */
    lua_pushinteger(L, maxw);

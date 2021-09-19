@@ -323,7 +323,7 @@ int *generate_news( int faction )
  */
 void news_widget( unsigned int wid, int x, int y, int w, int h )
 {
-   glPrintLineIterator *iter;
+   glPrintLineIterator iter;
 
    /* Safe defaults. */
    news_pos    = h/3;
@@ -332,11 +332,11 @@ void news_widget( unsigned int wid, int x, int y, int w, int h )
    clear_newslines();
 
    /* Now load up the text. */
-   iter = gl_printLineIteratorInit( NULL, buf, w-40 );
+   gl_printLineIteratorInit( &iter, NULL, buf, w-40 );
 
-   while (gl_printLineIteratorNext( iter )) {
+   while (gl_printLineIteratorNext( &iter )) {
       /* Copy the line. */
-      array_push_back( &news_lines, strndup( &buf[iter->l_begin], iter->l_end - iter->l_begin ) );
+      array_push_back( &news_lines, strndup( &buf[iter.l_begin], iter.l_end - iter.l_begin ) );
       if (array_size( news_restores ) == 0)
          gl_printRestoreInit( &array_grow( &news_restores ) );
       else {
@@ -345,9 +345,6 @@ void news_widget( unsigned int wid, int x, int y, int w, int h )
          array_push_back( &news_restores, restore );
       }
    }
-
-   gl_printLineIteratorFree( iter );
-   /* </load text> */
 
    /* Create the custom widget. */
    window_addCust( wid, x, y, w, h, "cstNews", 1, news_render, news_mouse, NULL );

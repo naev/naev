@@ -90,7 +90,7 @@ static void omsg_free( omsg_t *omsg )
 static void omsg_setMsg( omsg_t *omsg, const char *msg )
 {
    glFont *font;
-   glPrintLineIterator *iter;
+   glPrintLineIterator iter;
 
    /* Clean up after old stuff. */
    omsg_free( omsg );
@@ -99,10 +99,9 @@ static void omsg_setMsg( omsg_t *omsg, const char *msg )
    font = omsg_getFont( omsg->font );
 
    omsg->msg = array_create( char* );
-   iter = gl_printLineIteratorInit( font, msg, omsg_center_w );
-   while (gl_printLineIteratorNext( iter ))
-      array_push_back( &omsg->msg, strndup( &iter->text[iter->l_begin], iter->l_end - iter->l_begin ) );
-   gl_printLineIteratorFree( iter );
+   gl_printLineIteratorInit( &iter, font, msg, omsg_center_w );
+   while (gl_printLineIteratorNext( &iter ))
+      array_push_back( &omsg->msg, strndup( &iter.text[iter.l_begin], iter.l_end - iter.l_begin ) );
 }
 
 

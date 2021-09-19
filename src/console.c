@@ -124,24 +124,23 @@ static void cli_printCoreString( const char *s, int escape )
 {
    int len;
    char *buf;
-   glPrintLineIterator *iter;
+   glPrintLineIterator iter;
 
    if (s[0] == '\0') {
       cli_addMessageMax( NULL, 0 );
       return;
    }
 
-   iter = gl_printLineIteratorInit( cli_font, s, CLI_WIDTH-40 );
-   while (gl_printLineIteratorNext( iter )) {
+   gl_printLineIteratorInit( &iter, cli_font, s, CLI_WIDTH-40 );
+   while (gl_printLineIteratorNext( &iter )) {
       if (escape) {
-         buf = cli_escapeString( &len, &s[iter->l_begin], iter->l_end - iter->l_begin );
+         buf = cli_escapeString( &len, &s[iter.l_begin], iter.l_end - iter.l_begin );
          cli_addMessageMax( buf, len );
          free(buf);
       }
       else
-         cli_addMessageMax( &s[iter->l_begin], iter->l_end - iter->l_begin );
+         cli_addMessageMax( &s[iter.l_begin], iter.l_end - iter.l_begin );
    }
-   gl_printLineIteratorFree( iter );
 }
 
 

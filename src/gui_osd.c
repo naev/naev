@@ -163,7 +163,7 @@ void osd_wordwrap( OSD_t* osd )
    int i, l, msg_len, w, has_tab, chunk_len;
    char *chunk;
    const char *chunk_fmt;
-   glPrintLineIterator *iter;
+   glPrintLineIterator iter;
 
    for (i=0; i<array_size(osd->items); i++) {
       for (l=0; l<array_size(osd->items[i]); l++)
@@ -177,19 +177,18 @@ void osd_wordwrap( OSD_t* osd )
       /* Test if tabbed. */
       has_tab = !!(osd->msg[i][0] == '\t');
       w = osd_w - (has_tab ? osd_tabLen : osd_hyphenLen);
-      iter = gl_printLineIteratorInit( &gl_smallFont, &osd->msg[i][has_tab], w );
+      gl_printLineIteratorInit( &iter, &gl_smallFont, &osd->msg[i][has_tab], w );
       chunk_fmt = has_tab ? "   %s" : "- %s";
 
-      while (gl_printLineIteratorNext( iter )) {
+      while (gl_printLineIteratorNext( &iter )) {
          /* Copy text over. */
-         chunk_len = iter->l_end - iter->l_begin + strlen( chunk_fmt ) - 1;
+         chunk_len = iter.l_end - iter.l_begin + strlen( chunk_fmt ) - 1;
          chunk = malloc( chunk_len );
-         snprintf( chunk, chunk_len, chunk_fmt, &iter->text[iter->l_begin] );
+         snprintf( chunk, chunk_len, chunk_fmt, &iter.text[iter.l_begin] );
          array_push_back( &osd->items[i], chunk );
          chunk_fmt = has_tab ? "   %s" : "%s";
-         iter->width = has_tab ? osd_w - osd_tabLen - osd_hyphenLen : osd_w - osd_hyphenLen;
+         iter.width = has_tab ? osd_w - osd_tabLen - osd_hyphenLen : osd_w - osd_hyphenLen;
       }
-      gl_printLineIteratorFree( iter );
    }
 }
 

@@ -76,7 +76,7 @@ static int intro_load( const char *text )
    const char *cur_line;
    char *rest_of_file;
    char img_src[STRMAX_SHORT];     /* path to image to be displayed alongside text. */
-   glPrintLineIterator *iter;
+   glPrintLineIterator iter;
 
    has_side_gfx = 0;
 
@@ -118,14 +118,13 @@ static int intro_load( const char *text )
       else if (cur_line[0] == '\0')
          array_push_back( &intro_lines, strdup( "t" ) ); /* empty paragraph break. */
       else { /* plain old text. */
-         iter = gl_printLineIteratorInit( &intro_font, _(cur_line), SCREEN_W - 2*SIDE_MARGIN - IMAGE_WIDTH );
-         while (gl_printLineIteratorNext( iter )) {
-            array_push_back( &intro_lines, malloc( iter->l_end - iter->l_begin + 2 ) );
+         gl_printLineIteratorInit( &iter, &intro_font, _(cur_line), SCREEN_W - 2*SIDE_MARGIN - IMAGE_WIDTH );
+         while (gl_printLineIteratorNext( &iter )) {
+            array_push_back( &intro_lines, malloc( iter.l_end - iter.l_begin + 2 ) );
             array_back( intro_lines )[0] = 't';
-            strncpy( &array_back( intro_lines )[1], &iter->text[iter->l_begin], iter->l_end - iter->l_begin );
-            array_back( intro_lines )[iter->l_end - iter->l_begin + 1] = '\0';
+            strncpy( &array_back( intro_lines )[1], &iter.text[iter.l_begin], iter.l_end - iter.l_begin );
+            array_back( intro_lines )[iter.l_end - iter.l_begin + 1] = '\0';
          }
-	 gl_printLineIteratorFree( iter );
       }
    }
 

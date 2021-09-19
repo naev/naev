@@ -518,22 +518,19 @@ static size_t font_limitSize( glFontStash *stsh, int *width, const char *text, c
 
 
 /**
- * @brief Return an iterator object for word-wrapping text.
+ * @brief Initialize an iterator object for breaking text into lines.
  *
+ *    @param iter New glPrintLineIterator.
  *    @param text Text to split.
  *    @param ft_font Font to use.
  *    @param width Maximum width of a line.
- *    @return New glPrintLineIterator. Use with \ref gl_printLineIteratorNext and free with \ref gl_printLineIteratorFree.
  */
-glPrintLineIterator* gl_printLineIteratorInit( const glFont *ft_font, const char *text, int width )
+void gl_printLineIteratorInit( glPrintLineIterator *iter, const glFont *ft_font, const char *text, int width )
 {
-   /* TODO: maybe no need to allocate. */
-   glPrintLineIterator *iter;
-   iter = calloc( 1, sizeof(glPrintLineIterator) );
+   memset( iter, 0, sizeof(glPrintLineIterator) );
    iter->text = text;
    iter->ft_font = (ft_font==NULL ? &gl_defFont : ft_font);
    iter->width = width;
-   return iter;
 }
 
 
@@ -602,15 +599,6 @@ int gl_printLineIteratorNext( glPrintLineIterator* iter )
 }
 
 
-/**
- * @brief Frees iterators returned by \ref gl_printLineIteratorInit.
- */
-void gl_printLineIteratorFree( glPrintLineIterator* iter )
-{
-   free( iter );
-}
-
-
 /** @brief Reads the next utf-8 sequence out of a string, updating an index. Skips font markup directives.
  * @TODO For now, this enforces font.c's inability to handle tabs.
  */
@@ -640,16 +628,13 @@ static uint32_t font_nextChar( const char *s, size_t *i )
  */
 int gl_printWidthForText( const glFont *ft_font, const char *text, int width, int *outw )
 {
-   glPrintLineIterator *iter;
-   size_t i;
+   glPrintLineIterator iter;
 
-   iter = gl_printLineIteratorInit( ft_font, text, width );
-   (void) gl_printLineIteratorNext( iter );
-   i = iter->l_end;
+   gl_printLineIteratorInit( &iter, ft_font, text, width );
+   (void) gl_printLineIteratorNext( &iter );
    if (outw != NULL)
-      *outw = iter->l_width;
-   gl_printLineIteratorFree( iter );
-   return i;
+      *outw = iter.l_width;
+   return iter.l_end;
 }
 
 
@@ -931,7 +916,7 @@ int gl_printTextRaw( const glFont *ft_font,
       const char *text
     )
 {
-   glPrintLineIterator *iter;
+   glPrintLineIterator iter;
    int s;
    double x,y;
    size_t i;
@@ -952,14 +937,14 @@ int gl_printTextRaw( const glFont *ft_font,
    gl_printRestoreClear();
 
    s = 0;
-   iter = gl_printLineIteratorInit( ft_font, text, width );
-   while ((y - by > -1e-5) && gl_printLineIteratorNext( iter )) {
+   gl_printLineIteratorInit( &iter, ft_font, text, width );
+   while ((y - by > -1e-5) && gl_printLineIteratorNext( &iter )) {
       /* Must restore stuff. */
       gl_printRestoreLast();
 
       /* Render it. */
       gl_fontRenderStart( stsh, x, y, c, outlineR );
-      for (i = iter->l_begin; i < iter->l_end; ) {
+      for (i = iter.l_begin; i < iter.l_end; ) {
          ch = u8_nextchar( text, &i );
          s = gl_fontRenderGlyph( stsh, ch, c, s );
       }
@@ -967,7 +952,6 @@ int gl_printTextRaw( const glFont *ft_font,
 
       y -= line_height; /* move position down */
    }
-   gl_printLineIteratorFree( iter );
 
    return 0;
 }
@@ -1095,7 +1079,7 @@ int gl_printWidth( const glFont *ft_font, const char *fmt, ... )
 int gl_printHeightRaw( const glFont *ft_font,
       const int width, const char *text )
 {
-   glPrintLineIterator *iter;
+   glPrintLineIterator iter;
    double y;
 
    /* Check 0 length strings. */
@@ -1106,10 +1090,9 @@ int gl_printHeightRaw( const glFont *ft_font,
       ft_font = &gl_defFont;
 
    y = 0.;
-   iter = gl_printLineIteratorInit( ft_font, text, width );
-   while (gl_printLineIteratorNext( iter ))
+   gl_printLineIteratorInit( &iter, ft_font, text, width );
+   while (gl_printLineIteratorNext( &iter ))
       y += 1.5*(double)ft_font->h; /* move position down */
-   gl_printLineIteratorFree( iter );
 
    return (int) (y - 0.5*(double)ft_font->h) + 1;
 }
