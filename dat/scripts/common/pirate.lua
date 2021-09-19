@@ -4,6 +4,7 @@
 -- This framework allows to keep consistency and abstracts around commonly used
 --  Pirate mission functions.
 --]]
+local fmt = require 'format'
 local pir = {}
 
 local function _intable( t, q )
@@ -149,7 +150,7 @@ end
    @brief Gets a simple reputation message telling the player how the mission will increase their standing.
 --]]
 function pir.reputationMessage( f )
-   return string.format(_("This mission will increase your reputation with %s."), f:longname())
+   return fmt.f(_("This mission will increase your reputation with {factname}."), {factname=f:longname()})
 end
 
 --[[
