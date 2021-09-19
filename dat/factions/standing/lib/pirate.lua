@@ -33,9 +33,6 @@ _ftext_neutral  = _("Neutral")
 _ftext_hostile  = _("Hostile")
 _ftext_bribed   = _("Paid Off")
 
-local faction_pirate = faction.get("Pirate")
-local faction_marauder = faction.get("Marauder")
-
 function faction_hit( current, amount, source, secondary )
    local standing = math.max( -50, default_hit( current, amount, source, secondary ) )
 
@@ -48,14 +45,8 @@ function faction_hit( current, amount, source, secondary )
       end
    end
 
-   -- Pirates and marauders are fixed offsets
-   if pir.isPirateShip( player.pilot() ) then
-      faction_pirate:setPlayerStanding(   maxval - 10 )
-      faction_marauder:setPlayerStanding( maxval - 20 )
-   else
-      faction_pirate:setPlayerStanding(   maxval - 20 )
-      faction_marauder:setPlayerStanding( maxval - 40 )
-   end
+   -- Update pirate and marauder standings
+   pir.updateStandings( maxval )
 
    -- Set current faction standing
    return standing

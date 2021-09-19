@@ -14,6 +14,8 @@ local function _intable( t, q )
    end
    return false
 end
+local fpir = faction.get("Pirate")
+local fmar = faction.get("Marauder")
 
 --[[
    @brief Increases the reputation limit of the player.
@@ -109,7 +111,7 @@ function pir.systemClan( sys )
          m = pp
       end
    end
-   return f or faction.get("Pirate")
+   return f or fpir
 end
 
 --[[
@@ -140,7 +142,7 @@ function pir.systemClanP( sys )
          return v
       end
    end
-   return faction.get("Pirate")
+   return fpir
 end
 
 --[[
@@ -187,6 +189,32 @@ pir.ships = {
 --]]
 function pir.isPirateShip( p )
    return _intable( pir.ships, p:ship() )
+end
+
+--[[
+   @brief Gets the maximum standing the player has with any clan
+--]]
+function pir.maxClanStanding ()
+   local maxval = -100
+   for k,v in ipairs(pir.factions_clans) do
+      local vs = v:playerStanding()
+      maxval = math.max( maxval, vs )
+   end
+   return maxval
+end
+
+--[[
+   @brief Updates the standing of the marauders and pirates based on maxval (computed as necessary)
+--]]
+function pir.updateStandings( maxval )
+   maxval = maxval or pir.maxClanStanding()
+   if pir.isPirateShip( player.pilot() ) then
+      fpir:setPlayerStanding( maxval )
+      fmar:setPlayerStanding( maxval - 20 )
+   else
+      fpir:setPlayerStanding( maxval - 20 )
+      fmar:setPlayerStanding( maxval - 40 )
+   end
 end
 
 return pir
