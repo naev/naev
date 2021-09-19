@@ -71,6 +71,7 @@ static unsigned int equipment_wid   = 0; /**< Global wid. */
 static iar_data_t *iar_data = NULL; /**< Stored image array positions. */
 static Outfit ***iar_outfits = NULL; /**< Outfits associated with the image array cells. */
 static nlua_env autoequip_env = LUA_NOREF; /* Autoequip env. */
+static int equipment_outfitMode = 0; /**< Outfit mode for filtering. */
 
 /*
  * prototypes
@@ -1537,7 +1538,25 @@ static void equipment_genShipList( unsigned int wid )
 }
 
 static int equipment_filter( const Outfit *o ) {
-   (void) o;
+   Pilot *p = eq_wgt.selected;
+   switch (equipment_outfitMode) {
+      case 0:
+         return 1;
+
+      case 1:
+         for (int i=0; i < array_size(p->outfits); i++) {
+            if (outfit_fitsSlot( o, &p->outfits[i]->sslot->slot ))
+               return 1;
+         }
+         return 0;
+
+      case 2:
+         return (o->slot.size==OUTFIT_SLOT_SIZE_LIGHT);
+      case 3:
+         return (o->slot.size==OUTFIT_SLOT_SIZE_MEDIUM);
+      case 4:
+         return (o->slot.size==OUTFIT_SLOT_SIZE_HEAVY);
+   }
    return 1;
 }
 static int equipment_filterWeapon( const Outfit *o ) {
@@ -1564,7 +1583,7 @@ static void equipment_genOutfitList( unsigned int wid )
    int ix, iy, iw, ih, barw; /* Input filter. */
    const char *filtertext;
    int (*tabfilters[])( const Outfit *o ) = {
-      NULL,
+      equipment_filter,
       equipment_filterWeapon,
       equipment_filterUtility,
       equipment_filterStructure,
@@ -1859,8 +1878,12 @@ static void equipment_filterOutfits( unsigned int wid, const char *str )
 
 static void equipment_outfitPopdownSelect( unsigned int wid, const char *str )
 {
-   (void) wid;
-   (void) str;
+   int m = toolkit_getListPos( wid, str );
+   if (m == equipment_outfitMode)
+      return;
+
+   equipment_outfitMode = m;
+   equipment_regenLists( wid, 1, 0 );
 }
 
 static void equipment_outfitPopdownActivate( unsigned int wid, const char *str )
@@ -1876,9 +1899,9 @@ static void equipment_outfitPopdown( unsigned int wid, const char* str )
    const char *modes[] = {
       N_("Show all outfits"),
       N_("Show only equipable outfits"),
-      N_("Show only small outfits"),
+      N_("Show only light outfits"),
       N_("Show only medium outfits"),
-      N_("Show only large outfits"),
+      N_("Show only heavy outfits"),
    };
    char **modelist;
    const size_t n = sizeof(modes) / sizeof(const char*);
