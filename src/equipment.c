@@ -1875,6 +1875,7 @@ static void equipment_outfitPopdown( unsigned int wid, const char* str )
       N_("Show only large outfits"),
    };
    char **modelist;
+   const size_t n = sizeof(modes) / sizeof(const char*);
 
    if (widget_exists( wid, name )) {
       window_destroyWidget( wid, name );
@@ -1882,10 +1883,10 @@ static void equipment_outfitPopdown( unsigned int wid, const char* str )
    }
 
    modelist = malloc(sizeof(modes));
-   for (size_t i=0; i<sizeof(modes); i++)
+   for (size_t i=0; i<n; i++)
       modelist[i] = strdup( _(modes[i]) );
 
-   window_addList( wid, -10, 60, 200, 200, name, modelist, sizeof(modes), 0, equipment_outfitPopdownSelect, NULL );
+   window_addList( wid, -10, 60, 200, 200, name, modelist, n, 0, equipment_outfitPopdownSelect, NULL );
 }
 
 /**
