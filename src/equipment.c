@@ -1894,7 +1894,6 @@ static void equipment_outfitPopdownActivate( unsigned int wid, const char *str )
 
 static void equipment_outfitPopdown( unsigned int wid, const char* str )
 {
-   (void) str;
    const char *name = "lstOutfitPopdown";
    const char *modes[] = {
       N_("Show all outfits"),
@@ -1905,6 +1904,7 @@ static void equipment_outfitPopdown( unsigned int wid, const char* str )
    };
    char **modelist;
    const size_t n = sizeof(modes) / sizeof(const char*);
+   int x, y, w, h;
 
    if (widget_exists( wid, name )) {
       window_destroyWidget( wid, name );
@@ -1915,7 +1915,10 @@ static void equipment_outfitPopdown( unsigned int wid, const char* str )
    for (size_t i=0; i<n; i++)
       modelist[i] = strdup( _(modes[i]) );
 
-   window_addList( wid, -10, 60, 200, 200, name, modelist, n, 0, equipment_outfitPopdownSelect, equipment_outfitPopdownActivate );
+   window_dimWidget( wid, str, &w, &h );
+   window_posWidget( wid, str, &x, &y );
+   window_addList( wid, x+w, y-120+h, 200, 120, name, modelist, n, equipment_outfitMode, equipment_outfitPopdownSelect, equipment_outfitPopdownActivate );
+   window_setFocus( wid, name );
 }
 
 /**
