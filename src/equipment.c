@@ -1723,7 +1723,7 @@ void equipment_updateShips( unsigned int wid, const char* str )
    const char *shipname;
    char sdet[NUM2STRLEN], seva[NUM2STRLEN], sste[NUM2STRLEN];
    char smass[NUM2STRLEN], sfuel[NUM2STRLEN];
-   Pilot *ship;
+   Pilot *ship, *prevship;
    PlayerShip_t *ps;
    char *nt;
    int onboard;
@@ -1748,6 +1748,7 @@ void equipment_updateShips( unsigned int wid, const char* str )
       onboard = 0;
       favourite = ps->favourite;
    }
+   prevship = eq_wgt.selected;
    eq_wgt.selected = ship;
 
    /* update text */
@@ -1841,6 +1842,10 @@ void equipment_updateShips( unsigned int wid, const char* str )
       window_enableButton( wid, "btnChangeShip" );
       window_enableButton( wid, "btnSellShip" );
    }
+
+   /* If pilot-dependent outfit filter modes are active, we have to regenerate outfits always. */
+   if ((equipment_outfitMode==1) && (eq_wgt.selected != prevship))
+      equipment_regenLists( wid, 1, 0 );
 }
 #undef EQ_COMP
 /**
