@@ -23,7 +23,7 @@
 --]]
 local fmt = require "format"
 require "missions.soromid.comingout.srm_comingout3"
-require "common.soromid"
+local srm = require "common.soromid"
 
 
 title = {}
@@ -169,7 +169,7 @@ function land ()
       local t = time.get():tonumber()
       var.push( "comingout_time", t )
 
-      srm_addComingOutLog( log_text )
+      srm.addComingOutLog( log_text )
 
       misn.finish( true )
    else

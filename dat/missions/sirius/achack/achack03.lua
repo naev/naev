@@ -22,7 +22,7 @@
 
 local fleet = require "fleet"
 require "proximity"
-require "common.sirius"
+local srs = require "common.sirius"
 local fmt = require "format"
 
 
@@ -240,7 +240,7 @@ function land()
       tk.msg(title5, text7:format(player.name()))
       player.pay(1e6)
       var.pop("achack03repeat")
-      srs_addAcHackLog( log_text )
+      srs.addAcHackLog( log_text )
       misn.finish(true)
    end
 end

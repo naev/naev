@@ -23,7 +23,7 @@
    on the wringer in the Suna system.]]
 
 local fmt = require "format"
-require "common.sirius"
+local srs = require "common.sirius"
 
 
 --all the messages before the mission starts
@@ -99,7 +99,7 @@ function landing()
       misn_tracker = misn_tracker + 1
       faction.modPlayer("Nasin",5) --once again, the Nasin like the fact that we are helping the Nasin.
       var.push("heretic_misn_tracker",misn_tracker)
-      srs_addHereticLog( log_text )
+      srs.addHereticLog( log_text )
       misn.finish(true)
    end
 end

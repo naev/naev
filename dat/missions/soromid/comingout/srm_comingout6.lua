@@ -26,7 +26,7 @@
 local fmt = require "format"
 local pilotname = require "pilotname"
 require "jumpdist"
-require "common.soromid"
+local srm = require "common.soromid"
 local pir = require "common.pirate"
 local equipopt = require 'equipopt'
 
@@ -189,7 +189,7 @@ function win_timer ()
    local t = time.get():tonumber()
    var.push( "comingout_time", t )
 
-   srm_addComingOutLog( log_text )
+   srm.addComingOutLog( log_text )
 
    misn.finish( true )
 end

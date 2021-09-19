@@ -23,7 +23,7 @@
     and to BTAxis for the word "discombobulate"]]
 
 local fmt = require "format"
-require "common.sirius"
+local srs = require "common.sirius"
 
 
 --the intro messages
@@ -102,7 +102,7 @@ function land ()
       misn.cargoRm(small_arms) --this mission was an act against Sirius, and we want Sirius to not like us a little bit.
       faction.modPlayer("Nasin",3) --Nasin reputation is used in mission rewards, and I am trying to avoid having the pay skyrocket.
       var.push("heretic_misn_tracker",1) --using "misn_tracker", as later on in-game, i plan on having multiple arcs to the ending.
-      srs_addHereticLog( log_text )
+      srs.addHereticLog( log_text )
       misn.finish( true )
    end
 end

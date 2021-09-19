@@ -25,7 +25,7 @@
 
 local fleet = require "fleet"
 local fmt = require "format"
-require "common.sirius"
+local srs = require "common.sirius"
 
 
 --beginning messages
@@ -191,7 +191,7 @@ function return_to_base()
       misn_tracker = misn_tracker + 1
       faction.modPlayer("Nasin",10)
       var.push("heretic_misn_tracker",misn_tracker)
-      srs_addHereticLog( log_text )
+      srs.addHereticLog( log_text )
       misn.finish(true)
    end
 end

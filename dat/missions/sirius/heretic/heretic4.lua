@@ -29,7 +29,7 @@
 
 local fleet = require "fleet"
 local fmt = require "format"
-require "common.sirius"
+local srs = require "common.sirius"
 
 
 --beginning messages
@@ -163,7 +163,7 @@ function misn_over() --aren't you glad thats over?
       var.push("heretic_misn_tracker",misn_tracker)
       misn.osdDestroy()
       player.allowSave(true)
-      srs_addHereticLog( log_text )
+      srs.addHereticLog( log_text )
       misn.finish(true)
    end
 end

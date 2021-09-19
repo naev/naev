@@ -26,7 +26,7 @@ require "scripts/nextjump"
 local fleet = require "fleet"
 require "selectiveclear"
 require "proximity"
-require "common.sirius"
+local srs = require "common.sirius"
 local fmt = require "format"
 local pir = require "common.pirate"
 
@@ -192,7 +192,7 @@ function land()
       tk.msg(title5, text7:format(player.name()))
       player.pay(750e3)
       var.pop("achack02repeat")
-      srs_addAcHackLog( log_text )
+      srs.addAcHackLog( log_text )
       misn.finish(true)
    end
 end

@@ -27,7 +27,7 @@
 local fmt = require "format"
 require "cargo_common"
 require "nextjump"
-require "common.soromid"
+local srm = require "common.soromid"
 
 title = {}
 text = {}
@@ -211,7 +211,7 @@ function land ()
    if planet.cur() == misplanet then
       tk.msg( title[6], text[6]:format( fmt.credits( credits ) ) )
       player.pay( credits )
-      srm_addComingOutLog( log_text )
+      srm.addComingOutLog( log_text )
       misn.finish( true )
    else
       tk.msg( title[5], text[5] )

@@ -19,7 +19,7 @@
 -- This is the first mission in the Academy Hack minor campaign.
 --]]
 
-require "common.sirius"
+local srs = require "common.sirius"
 local fmt = require "format"
 
 
@@ -102,7 +102,7 @@ end
 function talkJoanne()
     tk.msg(title2, text3)
     player.pay(200e3)
-    srs_addAcHackLog( log_text )
+    srs.addAcHackLog( log_text )
     misn.finish(true)
 end
 

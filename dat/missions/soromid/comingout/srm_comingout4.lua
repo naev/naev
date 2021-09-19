@@ -22,7 +22,7 @@
 
 --]]
 local fmt = require "format"
-require "common.soromid"
+local srm = require "common.soromid"
 
 
 title = {}
@@ -147,7 +147,7 @@ function land ()
       player.takeoff()
    elseif stage >= 2 and planet.cur() == misplanet2 then
       tk.msg( "", text[10] )
-      srm_addComingOutLog( log_text )
+      srm.addComingOutLog( log_text )
       misn.finish( true )
    end
 end
