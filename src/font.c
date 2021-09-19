@@ -544,23 +544,22 @@ glPrintLineIterator* gl_printLineIteratorInit( const glFont *ft_font, const char
  */
 int gl_printLineIteratorNext( glPrintLineIterator* iter )
 {
-   int adv_x;
-   size_t i, nexti, lastbreak;
+   glFontStash *stsh = gl_fontGetStash( iter->ft_font );
+   int adv_x, brk;
+   size_t i, nexti;
    uint32_t ch, nextch;
    GLfloat n;
    struct LineBreakContext lbc;
-   int brk;
 
    if (iter->text[iter->l_next] == '\0')
       return 0;
-   glFontStash *stsh = gl_fontGetStash( iter->ft_font );
 
    /* limit size per line */
    gl_fontKernStart();
 
    /* Initialize line break stuff. */
    i = iter->l_begin = iter->l_next; /* current position */
-   lastbreak = iter->l_begin; /* last ALLOWBREAK/MUSTBREAK index in the text */
+   iter->l_end = iter->l_begin; /* last ALLOWBREAK/MUSTBREAK index in the text */
    n = 0.; /* current width */
    ch = font_nextChar( iter->text, &i );
    lb_init_break_context( &lbc, ch, gettext_getLanguage() );
@@ -569,16 +568,12 @@ int gl_printLineIteratorNext( glPrintLineIterator* iter )
       nextch = font_nextChar( iter->text, &nexti );
       brk = lb_process_next_char( &lbc, nextch );
 
-      if (brk == LINEBREAK_MUSTBREAK) {
+      if (brk == LINEBREAK_ALLOWBREAK || brk == LINEBREAK_MUSTBREAK) {
          iter->l_width = (int)round(n);
          iter->l_end = iter->l_next = i;
          u8_dec( iter->text, &iter->l_end );
-         return 1;
-      }
-      else if (brk == LINEBREAK_ALLOWBREAK) {
-         lastbreak = i;
-         u8_dec( iter->text, &lastbreak );
-         iter->l_width = (int)round(n);
+         if (brk == LINEBREAK_MUSTBREAK)
+            return 1;
       }
 
       /* Get glyph info. */
@@ -588,11 +583,8 @@ int gl_printLineIteratorNext( glPrintLineIterator* iter )
 
       /* Check if out of bounds. */
       if (n > (GLfloat)iter->width) {
-         if (lastbreak > iter->l_begin) {
-            iter->l_end = iter->l_next = lastbreak;
-            u8_inc( iter->text, &iter->l_next );
+         if (iter->l_end > iter->l_begin)
             return 1;
-         }
          /* Case we weren't able to write any whole words. */
          iter->l_width = (int)round(n - adv_x);
          iter->l_end = iter->l_next = i;
