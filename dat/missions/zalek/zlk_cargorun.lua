@@ -18,7 +18,7 @@
    Za'lek Cargo Run. adapted from Drunkard Mission
 ]]--
 local fmt = require "format"
-local zlk = require "missions.zalek.common"
+local zlk = require "common.zalek"
 
 -- Bar Description
 bar_desc = _("This Za'lek scientist seems to be looking for someone.")

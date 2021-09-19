@@ -23,7 +23,7 @@
    2. Have to disable convoy ships and recover stuff.
    3. Payment is based on how much stuff is recovered.
 --]]
-local pir = require "missions.pirate.common"
+local pir = require "common.pirate"
 local fmt = require "format"
 local flt = require "fleet"
 local lmisn = require "lmisn"

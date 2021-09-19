@@ -22,7 +22,7 @@
 
    Simple mission where the player has to raid a small transport to start to get clues.
 --]]
-local minerva = require "campaigns.minerva"
+local minerva = require "common.minerva"
 local portrait = require 'portrait'
 local love_shaders = require 'love_shaders'
 local vn = require 'vn'

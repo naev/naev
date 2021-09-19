@@ -23,7 +23,7 @@
 
 ]]--
 local fmt = require "format"
-require "missions.neutral.common"
+require "common.neutral"
 
 
 -- Bar Description

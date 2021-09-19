@@ -23,10 +23,10 @@
       minor edits by Infiltrator
 
 ]]--
-local pir = require "missions.pirate.common"
+local pir = require "common.pirate"
 local fmt = require "format"
 require "jumpdist"
-require "missions.empire.common"
+require "common.empire"
 
 bar_desc = _("You see an Empire Lieutenant who seems to be looking at you.")
 misn_title = _("Empire Recruitment")

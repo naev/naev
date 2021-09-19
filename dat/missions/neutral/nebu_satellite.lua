@@ -26,9 +26,9 @@
    Help some independent scientists put a satellite in the nebula.
 
 ]]--
-local pir = require "missions.pirate.common"
+local pir = require "common.pirate"
 local fmt = require "format"
-require "missions.neutral.common"
+require "common.neutral"
 
 
 -- localization stuff, translators would work here

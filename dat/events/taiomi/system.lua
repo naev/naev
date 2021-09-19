@@ -16,7 +16,7 @@
 
 --]]
 local vn = require 'vn'
-local taiomi = require 'campaigns.taiomi'
+local taiomi = require 'common.taiomi'
 
 function create ()
    --[[

@@ -38,7 +38,7 @@
 --  598ish - Kex is found
 --  603ish - game start (~15 years after incident, maikki is 18ish)
 --]]
-local minerva = require "campaigns.minerva"
+local minerva = require "common.minerva"
 local portrait = require 'portrait'
 local vn = require 'vn'
 local love_shaders = require 'love_shaders'

@@ -26,7 +26,7 @@
    -- These are rush cargo delivery missions. They can be failed! But, pay is higher to compensate.
    -- These missions require fast ships, but higher tiers may also require increased cargo space.
 --]]
-local pir = require 'missions.pirate.common'
+local pir = require 'common.pirate'
 require "cargo_common"
 local fmt = require "format"
 

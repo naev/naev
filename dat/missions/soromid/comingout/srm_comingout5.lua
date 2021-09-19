@@ -23,7 +23,7 @@
 --]]
 local fmt = require "format"
 require "missions.soromid.comingout.srm_comingout3"
-require "missions.soromid.common"
+require "common.soromid"
 
 
 title = {}

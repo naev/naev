@@ -27,7 +27,7 @@
    There are drones patrolling the hacking center, it requires disabling two drone controllers to get there.
    There are also drones wandering around that are independent / depend on the hacking center.
 --]]
-local minerva = require "campaigns.minerva"
+local minerva = require "common.minerva"
 local portrait = require 'portrait'
 local vn = require 'vn'
 local equipopt = require 'equipopt'

@@ -23,7 +23,7 @@
    Pirate version of the patrol mission.
 
 --]]
-local pir = require "missions.pirate.common"
+local pir = require "common.pirate"
 require "missions.neutral.patrol"
 
 pay_title = _("Mission Completed")

@@ -29,8 +29,8 @@
 local fmt = require "format"
 require "proximity"
 local fleet = require "fleet"
-local zlk = require "missions.zalek.common"
-local sciwrong = require "missions.zalek.sciencegonewrong.common"
+local zlk = require "common.zalek"
+local sciwrong = require "common.sciencegonewrong"
 
 
 -- set mission variables

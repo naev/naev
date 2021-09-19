@@ -27,7 +27,7 @@
    Can work with any faction.
 
 --]]
-local pir = require "missions.pirate.common"
+local pir = require "common.pirate"
 local fmt = require "format"
 local pilotname = require "pilotname"
 require "jumpdist"

@@ -25,7 +25,7 @@
 
 local portrait = require "portrait"
 local fleet = require "fleet"
-local shadow = require "missions.shadow.common"
+local shadow = require "common.shadow"
 
 
 planetname = "Durea" -- The planet where SHITMAN lives

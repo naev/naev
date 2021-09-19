@@ -22,7 +22,7 @@
    Fairly straight forward mission where the player has to go to the objective
    to steal some stuff before running away from tons of enemy ships.
 --]]
-local minerva = require "campaigns.minerva"
+local minerva = require "common.minerva"
 local portrait = require 'portrait'
 local love_shaders = require 'love_shaders'
 local vn = require 'vn'

@@ -25,7 +25,7 @@
 
 require "scripts/cargo_common"
 local fmt = require "format"
-local zlk = require "missions.zalek.common"
+local zlk = require "common.zalek"
 
 
 bar_desc = _("The student is already awaiting you.")

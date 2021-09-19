@@ -30,7 +30,7 @@
    faction.
 
 --]]
-local pir = require "missions.pirate.common"
+local pir = require "common.pirate"
 local fmt = require "format"
 require "jumpdist"
 

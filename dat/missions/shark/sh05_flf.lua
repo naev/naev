@@ -34,9 +34,9 @@
    1) Way back to Darkshed
 
 --]]
-local pir = require "missions.pirate.common"
+local pir = require "common.pirate"
 local fmt = require "format"
-local shark = require "missions.shark.common"
+local shark = require "common.shark"
 
 
 title = {}

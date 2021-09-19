@@ -24,8 +24,8 @@
 --
 -- Author: fart but based on Mission Ideas in wiki: wiki.naev.org/wiki/Mission_Ideas
 --]]
-local zlk = require "missions.zalek.common"
-local sciwrong = require "missions.zalek.sciencegonewrong.common"
+local zlk = require "common.zalek"
+local sciwrong = require "common.sciencegonewrong"
 
 
 -- mission variables

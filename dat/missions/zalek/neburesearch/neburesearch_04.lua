@@ -27,7 +27,7 @@
 --]]
 
 local fmt = require "format"
-local zlk = require "missions.zalek.common"
+local zlk = require "common.zalek"
 
 bar_desc = _("She probably has a new poorly paid job for you. Maybe she won't notice you if you leave now.")
 mtitle = _("Shielding Prototype Funding")

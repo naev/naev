@@ -19,7 +19,7 @@
    anywhere and give better rewards with higher risk.
 
 ]]--
-local pir = require "missions.pirate.common"
+local pir = require "common.pirate"
 require "cargo_common"
 local fmt = require "format"
 

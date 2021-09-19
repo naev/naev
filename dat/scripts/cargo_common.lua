@@ -1,4 +1,4 @@
-local pir = require 'missions.pirate.common'
+local pir = require 'common.pirate'
 require "jumpdist"
 require "nextjump"
 local fmt = require "format"

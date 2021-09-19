@@ -24,7 +24,7 @@
    gets a message from Dr. Strangelove for a long last sermon before going back
    to Kex. Player is constantly harassed by thugs while mission is active.
 --]]
-local minerva  = require "campaigns.minerva"
+local minerva  = require "common.minerva"
 local love_audio = require 'love.audio'
 local vn       = require 'vn'
 local equipopt = require 'equipopt'

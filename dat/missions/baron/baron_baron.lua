@@ -20,8 +20,8 @@
 --]]
 
 local portrait = require "portrait"
-local baron = require "missions.baron.common"
-require "missions.neutral.common"
+local baron = require "common.baron"
+require "common.neutral"
 
 
 sysname1 = "Darkstone"

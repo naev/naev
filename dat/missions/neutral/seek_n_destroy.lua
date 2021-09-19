@@ -30,7 +30,7 @@
    4) Target was killed
 
 --]]
-local pir = require "missions.pirate.common"
+local pir = require "common.pirate"
 local fmt = require "format"
 require "jumpdist"
 local portrait = require "portrait"

@@ -21,7 +21,7 @@
 local portrait = require "portrait"
 local vn = require 'vn'
 local window = require 'love.window'
-local minerva = require 'campaigns.minerva'
+local minerva = require 'common.minerva'
 
 thug1_name = _("Thug")
 thug1_image = "scavenger1.png"

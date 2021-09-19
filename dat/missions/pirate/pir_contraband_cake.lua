@@ -21,7 +21,7 @@
    (illegal) to a random system.
 
 ]]--
-local pir = require "missions.pirate.common"
+local pir = require "common.pirate"
 local portrait = require 'portrait'
 local vn = require 'vn'
 require "cargo_common"

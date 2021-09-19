@@ -27,7 +27,7 @@
 
 local fleet = require "fleet"
 local flf = require "missions.flf.flf_common"
-require "missions.dvaered.common"
+require "common.dvaered"
 
 title = {}
 text = {}

@@ -23,7 +23,7 @@
    by bounty hunters while active. Fairly straight forward with a pretty hard
    fight at the end.
 --]]
-local minerva  = require "campaigns.minerva"
+local minerva  = require "common.minerva"
 local portrait = require 'portrait'
 local love_audio = require 'love.audio'
 local vn       = require 'vn'

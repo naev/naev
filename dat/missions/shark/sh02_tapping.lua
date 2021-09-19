@@ -36,9 +36,9 @@
    TODO: I didn't test the case when the player tries to do the mission with a freighter, and the case when the player's class is unknown
 
 --]]
-local pir = require "missions.pirate.common"
+local pir = require "common.pirate"
 local fmt = require "format"
-local shark = require "missions.shark.common"
+local shark = require "common.shark"
 
 
 title = {}
