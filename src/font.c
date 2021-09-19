@@ -551,7 +551,7 @@ int gl_printLineIteratorNext( glPrintLineIterator* iter )
    GLfloat n;
    struct LineBreakContext lbc;
 
-   if (iter->text[iter->l_next] == '\0')
+   if (iter->dead)
       return 0;
 
    /* limit size per line */
@@ -594,9 +594,10 @@ int gl_printLineIteratorNext( glPrintLineIterator* iter )
       ch = nextch;
    }
 
-   /* Ran out of text so just return. */
+   /* Ran out of text. */
    iter->l_width = (int)round(n);
    iter->l_end = iter->l_next = i;
+   iter->dead = 1;
    return 1;
 }
 
@@ -1110,7 +1111,6 @@ int gl_printHeightRaw( const glFont *ft_font,
       const int width, const char *text )
 {
    glPrintLineIterator *iter;
-   size_t charn;
    double y;
 
    /* Check 0 length strings. */
@@ -1124,8 +1124,6 @@ int gl_printHeightRaw( const glFont *ft_font,
    iter = gl_printLineIteratorInit( ft_font, text, width );
    while (gl_printLineIteratorNext( iter ))
       y += 1.5*(double)ft_font->h; /* move position down */
-   if (u8_strchr( &text[iter->l_end], '\n', &charn ))
-      y += 1.5*(double)ft_font->h; /* Count final empty line */
    gl_printLineIteratorFree( iter );
 
    return (int) (y - 0.5*(double)ft_font->h) + 1;

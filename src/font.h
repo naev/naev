@@ -39,7 +39,11 @@ typedef struct glFontRestore_s {
 
 
 /**
- * @brief The state of a line iteration. \see gl_printLineIteratorInit, gl_printLineIteratorNext, gl_printLineIteratorFree.
+ * @brief The state of a line iteration. This matches the process of rendering text into an on-screen box:
+ * An empty string produces a zero-width line. Each regular, fitting character expands its line horizontally.
+ * A newline or wrapping leads to vertical expansion.
+ * The layout calculation is iterative; one may for instance change the width limit between lines.
+ * \see gl_printLineIteratorInit, gl_printLineIteratorNext, gl_printLineIteratorFree.
  */
 typedef struct glPrintLineIterator_s {
    const char *text;            /**< Text to split. */
@@ -48,6 +52,7 @@ typedef struct glPrintLineIterator_s {
    int l_width;                 /**< The current line's actual width. */
    size_t l_begin, l_end;       /**< The current line's location (&text[l_begin], inclusive, to &text[l_end], exclusive). */
    size_t l_next;               /**< Starting point for next iteration, i.e., l_end plus any spaces that became a line break. */
+   uint8_t dead;                /**< Did we emit a line where the text ends? */
 } glPrintLineIterator;
 
 
