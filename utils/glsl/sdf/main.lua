@@ -391,10 +391,9 @@ vec4 sdf_gear( vec4 color, vec2 uv )
    vec2 auv = abs(uv);
    if (auv.y < auv.x)
       auv.xy = vec2( auv.y, auv.x );
-   float c, s;
-   s = sin( -M_PI/8.0 );
-   c = cos( -M_PI/8.0 );
-   mat2 R = mat2( c, s, -s, c );
+   const float s = sin( -M_PI/8.0 );
+   const float c = cos( -M_PI/8.0 );
+   const mat2 R = mat2( c, s, -s, c );
    d = sdSmoothUnion( d, sdBox( auv*R, vec2(0.1,1.0-m) )-0.025, 0.2 );
 
    d = max( d, -sdCircle( uv, 0.6 ) );
