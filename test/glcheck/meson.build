@@ -1,5 +1,6 @@
 build_gl_version = 'Unknown'
 test_renderer = 'System'
+note = 'OpenGL >= 3.1 support is available with your current driver/device.'
 
 gl_result = cc.run(files('getglversion.c'), dependencies: sdl)
 if not gl_result.compiled()
@@ -17,17 +18,22 @@ if build_gl_version.version_compare('<3.1')
     if build_machine.system() in ['cygwin', 'windows']
         run_command('ln', '-f', '-s', '/mingw64/bin/opengl32.dll', meson.build_root())
         test_renderer = 'Mesa'
-    else
+        note = 'Found Mesa available as a software renderer.'
+    elif build_machine.system() != 'darwin'
         xvfb = find_program('xvfb-run', required: false)
         if xvfb.found()
             add_test_setup(
                 'xvfb',
                 exe_wrapper: xvfb,
-                is_default: true
             )
             test_renderer = 'XVFB'
+            note = 'Found XVFB available as a software renderer, you\'ll need to run \'meson test --setup=xvfb *testname*\' to use it.'
         endif
+    else
+        note = 'Could not find a software renderer.'
     endif
+    warning(note)
 endif
 
 summary('Renderer', test_renderer, section: 'Tests')
+summary('Note', note, section: 'Tests')

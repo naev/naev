@@ -125,6 +125,7 @@ static int intro_load( const char *text )
             strncpy( &array_back( intro_lines )[1], &iter->text[iter->l_begin], iter->l_end - iter->l_begin );
             array_back( intro_lines )[iter->l_end - iter->l_begin + 1] = '\0';
          }
+	 gl_printLineIteratorFree( iter );
       }
    }
 

@@ -1795,14 +1795,12 @@ double player_dt_default (void)
  */
 void player_hailStart (void)
 {
-   char msg[STRMAX_SHORT];
    char buf[128];
 
    player_hailCounter = 5;
 
    input_getKeybindDisplay( "autohail", buf, sizeof(buf) );
-   snprintf( msg, sizeof(msg), _("#rReceiving hail! Press %s to respond."), buf );
-   player_messageRaw( msg );
+   player_message( _("#rReceiving hail! Press %s to respond."), buf );
 
    /* Reset speed. */
    player_autonavResetSpeed();

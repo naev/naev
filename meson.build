@@ -71,7 +71,7 @@ if buildExec.disabled() == false
 
    sdl = dependency('sdl2', required: true)
    sdl_image = dependency('SDL2_image', required: true, fallback: ['sdl2_image', 'sdl2_image_dep'])
-   libunibreak = dependency('libunibreak', required: true, fallback: ['libunibreak', 'libunibreak_dep'])
+   libunibreak = dependency('libunibreak', required: true, version: '>=4.0', fallback: ['libunibreak', 'libunibreak_dep'])
 
    libxml2 = dependency('libxml-2.0', required: false)
    if not libxml2.found()
