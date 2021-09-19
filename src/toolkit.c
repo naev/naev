@@ -1686,6 +1686,43 @@ Uint32 toolkit_inputTranslateCoords( Window *w, SDL_Event *event,
 }
 
 
+static int toolkit_mouseEventSingle( Window *w, SDL_Event* event,
+   Widget *wgt, int x, int y, int rx, int ry )
+{
+   int ret = 0;
+   /* Custom widgets take it from here */
+   if (wgt->type==WIDGET_CUST) {
+      if (wgt->dat.cst.mouse)
+         ret = wgt->dat.cst.mouse( w->id, event, x-wgt->x, y-wgt->y, wgt->w, wgt->h, rx, ry,
+               wgt->dat.cst.userdata );
+   }
+   else
+      ret = toolkit_mouseEventWidget( w, wgt, event, x, y, rx, ry );
+   return ret;
+}
+static int toolkit_mouseEventReverse( Window *w, SDL_Event* event,
+   Widget *wgt, int x, int y, int rx, int ry )
+{
+   int ret, skip=0;
+
+   /* Focused case, handle first. */
+   if (w->focus == wgt->id) {
+      ret = toolkit_mouseEventSingle( w, event, wgt, x, y, rx, ry );
+      if (ret)
+         return ret;
+      skip = 1;
+   }
+
+   if (wgt->next!=NULL) {
+      ret = toolkit_mouseEventReverse( w, event, wgt->next, x, y, rx, ry );
+      if (ret)
+         return ret;
+   }
+   if (skip)
+      return ret;
+
+   return toolkit_mouseEventSingle( w, event, wgt, x, y, rx, ry );
+}
 /**
  * @brief Handles the mouse events.
  *
@@ -1694,30 +1731,15 @@ Uint32 toolkit_inputTranslateCoords( Window *w, SDL_Event *event,
  */
 static int toolkit_mouseEvent( Window *w, SDL_Event* event )
 {
-   Widget *wgt;
-   int x, y, rx, ry, ret;
+   int x, y, rx, ry;
 
    /* Translate mouse coords. */
    toolkit_inputTranslateCoords( w, event, &x, &y, &rx, &ry );
 
    /* Check each widget. */
-   ret = 0;
-   for (wgt=w->widgets; wgt!=NULL; wgt=wgt->next) {
-
-      /* custom widgets take it from here */
-      if (wgt->type==WIDGET_CUST) {
-         if (wgt->dat.cst.mouse)
-            ret |= wgt->dat.cst.mouse( w->id, event, x-wgt->x, y-wgt->y, wgt->w, wgt->h, rx, ry,
-                  wgt->dat.cst.userdata );
-      }
-      else
-         ret |= toolkit_mouseEventWidget( w, wgt, event, x, y, rx, ry );
-
-      if (ret != 0)
-         return ret;
-   }
-
-   return ret;
+   if (w->widgets != NULL)
+      return toolkit_mouseEventReverse( w, event, w->widgets, x, y, rx, ry );
+   return 0;
 }
 
 
