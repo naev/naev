@@ -25,9 +25,8 @@
       minor edits by Infiltrator
 
 ]]--
-
 local fmt = require "format"
-require "common.empire"
+local emp = require "common.empire"
 
 -- Mission details
 bar_desc = _("You see Commander Soldner who is expecting you.")
@@ -159,7 +158,7 @@ function land ()
       -- The goods
       diff.apply("heavy_weapons_license")
 
-      emp_addShippingLog( log_text )
+      emp.addShippingLog( log_text )
 
       misn.finish(true)
    end

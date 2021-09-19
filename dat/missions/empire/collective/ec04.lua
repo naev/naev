@@ -30,12 +30,11 @@
     forces on a surveillance mission.
 
 ]]--
-
 local fleet = require "fleet"
 require "nextjump"
 require "proximity"
 local fmt = require "format"
-require "common.empire"
+local emp = require "common.empire"
 
 misn_title = _("Collective Extraction")
 misn_desc = {}
@@ -280,7 +279,7 @@ function land ()
       player.pay(credits)
       faction.modPlayerSingle("Empire",5)
 
-      emp_addCollectiveLog( log_text )
+      emp.addCollectiveLog( log_text )
 
       misn.finish(true)
    end

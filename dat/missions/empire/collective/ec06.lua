@@ -28,10 +28,9 @@
    Seventh and final mission in the Collective Campaign
 
 ]]--
-
 require "proximity"
 local fleet = require "fleet"
-require "common.empire"
+local emp = require "common.empire"
 
 bar_desc = _("You see Commodore Keer at a table with a couple of other pilots. She motions for you to sit down with them.")
 misn_title = _("Operation Cold Metal")
@@ -209,7 +208,7 @@ end
 
 function fail_timer ()
    tk.msg( coward_title, coward_text )
-   emp_addCollectiveLog( log_text_fail )
+   emp.addCollectiveLog( log_text_fail )
    misn.finish( true )
 end
 
@@ -273,14 +272,14 @@ function land ()
 
       -- Rewards
       -- This was the last mission in the minor campaign, so bump the reputation cap.
-      emp_modReputation( 10 )
+      emp.modReputation( 10 )
       faction.modPlayerSingle("Empire",5)
       player.pay( 5000000 ) -- 5m
 
       tk.msg( title[3], text[4] )
       player.outfitAdd("Left Boot")
 
-      emp_addCollectiveLog( log_text_succeed )
+      emp.addCollectiveLog( log_text_succeed )
 
       misn.finish(true) -- Run last
    end

@@ -31,9 +31,8 @@
     while a commando lands to monitor wireless.
 
 ]]--
-
 local fmt = require "format"
-require "common.empire"
+local emp = require "common.empire"
 
 bar_desc = _("You see Lt. Commander Dimitri at the bar as usual.")
 misn_title = _("Collective Distraction")
@@ -154,7 +153,7 @@ function land()
       player.pay(credits)
       faction.modPlayerSingle("Empire",5)
 
-      emp_addCollectiveLog( log_text )
+      emp.addCollectiveLog( log_text )
 
       misn.finish(true)
    end

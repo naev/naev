@@ -35,10 +35,9 @@
       2) Rescued VIP, returning to base.
       3) VIP died or jump out of system without VIP  --> mission failure.
 ]]--
-
 local fleet = require "fleet"
 local fmt = require "format"
-require "common.empire"
+local emp = require "common.empire"
 
 -- Mission details
 bar_desc = _("Commander Soldner is waiting for you.")
@@ -131,7 +130,7 @@ function land ()
 
          -- Rewards
          player.pay(reward)
-         emp_modReputation( 5 ) -- Bump cap a bit
+         emp.modReputation( 5 ) -- Bump cap a bit
          faction.modPlayerSingle("Empire",5)
          faction.modPlayerSingle("Dvaered",5)
          diff.apply("heavy_combat_vessel_license")
@@ -139,7 +138,7 @@ function land ()
          -- Flavour text
          tk.msg( title[3], text[5] )
 
-         emp_addShippingLog( log_text_success )
+         emp.addShippingLog( log_text_success )
 
          misn.finish(true)
       end
@@ -204,7 +203,7 @@ function enter ()
    elseif misn_stage == 1 then
       -- Notify of mission failure
       player.msg( msg[2] )
-      emp_addShippingLog( log_text_fail )
+      emp.addShippingLog( log_text_fail )
       var.pop( "music_combat_force" )
       misn.finish(false)
    end
@@ -256,7 +255,7 @@ function death ()
    if misn_stage == 1 then
       -- Notify of death
       player.msg( msg[1] )
-      emp_addShippingLog( log_text_fail )
+      emp.addShippingLog( log_text_fail )
       var.pop( "music_combat_force" )
       misn.finish(false)
    end
@@ -266,7 +265,7 @@ end
 function abort ()
    -- If aborted you'll also leave the VIP to fate. (A.)
    player.msg( msg[2] )
-   emp_addShippingLog( log_text_fail )
+   emp.addShippingLog( log_text_fail )
    if system.cur() == destsys then
       var.pop( "music_combat_force" )
    end

@@ -24,10 +24,9 @@
    Author: micahmumper
 
 ]]--
-
 local fmt = require "format"
 require "jumpdist"
-require "common.empire"
+local emp = require "common.empire"
 
 bar_desc = _("Lieutenant Czesc from the Empire Armada Shipping Division is sitting at the bar.")
 misn_title = _("Za'lek Long Distance Recruitment")
@@ -91,7 +90,7 @@ function land()
          -- More flavour text
          tk.msg( title[3], text[3] )
          faction.modPlayerSingle( "Empire",3 )
-         emp_addShippingLog( log_text )
+         emp.addShippingLog( log_text )
          misn.finish(true)
    end
 end

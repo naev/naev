@@ -29,10 +29,9 @@
    You must inspect a stray drone.
 
 ]]--
-
 require "proximity"
 local fmt = require "format"
-require "common.empire"
+local emp = require "common.empire"
 
 bar_desc = _("You see an Empire Lt. Commander who seems to be motioning you over to the counter.")
 misn_title = _("Collective Scout")
@@ -99,7 +98,7 @@ function accept ()
 
    -- Flavour text and mini-briefing
    tk.msg( title[2], string.format( text[2], misn_base_sys:name() ) )
-   emp_addCollectiveLog( text[2]:format( misn_base_sys:name() ) )
+   emp.addCollectiveLog( text[2]:format( misn_base_sys:name() ) )
    tk.msg( title[2], string.format( text[3], misn_nearby:name(),
          misn_target:name(), misn_base:name(), misn_base_sys:name() ))
 
@@ -162,7 +161,7 @@ function land()
       tk.msg( title[3], string.format(text[4], misn_target:name()) )
       faction.modPlayerSingle("Empire",5)
       player.pay(credits)
-      emp_addCollectiveLog( log_text_success )
+      emp.addCollectiveLog( log_text_success )
       misn.finish(true)
    end
 end
@@ -182,7 +181,7 @@ end
 function kill()
    player.msg( msg_killdrone )
    var.push( "collective_fail", true )
-   emp_addCollectiveLog( log_text_fail )
+   emp.addCollectiveLog( log_text_fail )
    misn.finish(true)
 end
 

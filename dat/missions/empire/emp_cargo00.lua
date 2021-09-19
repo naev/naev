@@ -26,7 +26,7 @@
 local pir = require "common.pirate"
 local fmt = require "format"
 require "jumpdist"
-require "common.empire"
+local emp = require "common.empire"
 
 bar_desc = _("You see an Empire Lieutenant who seems to be looking at you.")
 misn_title = _("Empire Recruitment")
@@ -107,7 +107,7 @@ function land()
          tk.msg(title[3], string.format( text[3], dest:name() ))
          var.push("es_cargo", true)
          faction.modPlayerSingle("Empire",3);
-         emp_addShippingLog( log_text )
+         emp.addShippingLog( log_text )
          pir.reputationNormalMission(3)
          misn.finish(true)
       end

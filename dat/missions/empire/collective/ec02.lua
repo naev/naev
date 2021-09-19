@@ -29,9 +29,8 @@
    You must land on an ex-empire planet in collective territory and return.
 
 ]]--
-
 local fleet = require "fleet"
-require "common.empire"
+local emp = require "common.empire"
 local fmt = require "format"
 
 bar_desc = _("You notice Lt. Commander Dimitri at one of the booths.")
@@ -116,7 +115,7 @@ function land()
       faction.modPlayerSingle("Empire",5)
       player.pay( 700000 )
 
-      emp_addCollectiveLog( log_text )
+      emp.addCollectiveLog( log_text )
 
       misn.finish(true)
    end

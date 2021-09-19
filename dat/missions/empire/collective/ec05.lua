@@ -46,10 +46,9 @@
 -- I'm no writer. Hopefully someone can clean it up a bit someday.
 
 ]]--
-
 local fleet = require "fleet"
 local fmt = require "format"
-require "common.empire"
+local emp = require "common.empire"
 
 bar_desc = _("Dimitri should be around here, but you can't see him. You should probably look for him.")
 misn_title = _("Operation Black Trinity")
@@ -145,7 +144,7 @@ function accept ()
 
    tk.msg( title[2], string.format(text[3], misn_base:name() ) )
    tk.msg( title[3], string.format(text[4], _("Eiroik")))
-   emp_addCollectiveLog( log_text_intro )
+   emp.addCollectiveLog( log_text_intro )
    tk.msg( title[4], string.format(text[5], misn_target_sys:name(), misn_target_sys:name() ) )
 
    -- Escorts
@@ -372,12 +371,12 @@ function land ()
          tk.msg( title[5], text[7] )
          var.push("trinity", true)
          credits = credits / 2
-         emp_addCollectiveLog( log_text_fail )
+         emp.addCollectiveLog( log_text_fail )
       else
          -- Successfully killed
          tk.msg( title[4], string.format(text[6], player.name()) )
          var.push("trinity", false)
-         emp_addCollectiveLog( log_text_succeed )
+         emp.addCollectiveLog( log_text_succeed )
       end
 
       -- Rewards

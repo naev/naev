@@ -29,9 +29,8 @@
    You must inspect a system for wireless communications.
 
 ]]--
-
 local fmt = require "format"
-require "common.empire"
+local emp = require "common.empire"
 
 bar_desc = _("You notice Lt. Commander Dimitri motioning for you to come over to him.")
 misn_title = _("Collective Espionage")
@@ -143,7 +142,7 @@ function land()
       tk.msg( title[3], text[3] )
       player.pay(credits)
       faction.modPlayerSingle("Empire",5)
-      emp_addCollectiveLog( log_text )
+      emp.addCollectiveLog( log_text )
       misn.finish(true)
    end
 end

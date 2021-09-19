@@ -1,22 +1,22 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Sirius Long Distance Recruitment">
-  <flags>
-   <unique />
-  </flags>
-  <avail>
-   <priority>4</priority>
-   <cond>faction.playerStanding("Empire") &gt;= 0</cond>
-   <chance>75</chance>
-   <done>Frontier Long Distance Recruitment</done>
-   <location>Bar</location>
-   <faction>Empire</faction>
-  </avail>
-  <notes>
-   <campaign>Empire Shipping</campaign>
-  </notes>
- </mission>
- --]]
+ <flags>
+  <unique />
+ </flags>
+ <avail>
+  <priority>4</priority>
+  <cond>faction.playerStanding("Empire") &gt;= 0</cond>
+  <chance>75</chance>
+  <done>Frontier Long Distance Recruitment</done>
+  <location>Bar</location>
+  <faction>Empire</faction>
+ </avail>
+ <notes>
+  <campaign>Empire Shipping</campaign>
+ </notes>
+</mission>
+--]]
 --[[
 
    Fifth diplomatic mission to Sirius space that opens up the Empire long-distance cargo missions.
@@ -24,10 +24,9 @@
    Author: micahmumper
 
 ]]--
-
 local fmt = require "format"
 require "jumpdist"
-require "common.empire"
+local emp = require "common.empire"
 
 bar_desc = _("Lieutenant Czesc from the Empire Armada Shipping Division is sitting at the bar.")
 misn_title = _("Sirius Long Distance Recruitment")
@@ -91,7 +90,7 @@ function land()
          -- More flavour text
          tk.msg( title[3], text[3] )
          faction.modPlayerSingle( "Empire",3 )
-         emp_addShippingLog( log_text )
+         emp.addShippingLog( log_text )
          misn.finish(true)
    end
 end
