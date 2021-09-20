@@ -1966,7 +1966,7 @@ static void weapon_free( Weapon* w )
       pilot_target->projectiles--;
       if (outfit_isSeeker(w->outfit))
          pilot_target->lockons--;
-      }
+   }
 
    /* Stop playing sound if beam weapon. */
    if (outfit_isBeam(w->outfit)) {
