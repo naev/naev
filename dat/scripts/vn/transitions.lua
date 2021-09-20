@@ -266,12 +266,7 @@ vec4 effect( vec4 unused, Image tex, vec2 uv, vec2 px )
    float higher = p + smoothness;
    float q = smoothstep(lower, higher, n);
 
-   vec4 c1 = Texel( texprev, uv );
-   vec4 c2 = Texel( MainTex, uv );
-
-   c1 = burncolor( c1, q );
-
-   vec4 color = (q <= 0.0) ? c2 : c1;
+   vec4 color = (q <= 0.0) ? Texel( MainTex, uv ) : burncolor( Texel( texprev, uv ), q );
 
    return color;
 }
