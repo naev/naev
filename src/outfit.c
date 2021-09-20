@@ -2673,7 +2673,7 @@ static void outfit_launcherDesc( Outfit* o )
    SDESC_ADD(  l, o, _("\n%.0f Maximum Speed"), a->u.amm.speed_max );
    SDESC_ADD(  l, o, _("\n%.1f Seconds to Reload"), o->u.lau.reload_time );
    SDESC_COND( l, o, _("\n%.1f EPS [%.0f Energy]"), o->u.lau.delay * a->u.amm.energy, a->u.amm.energy );
-   SDESC_COND( l, o, _("\n%.1f%% Jam Resistance"), (1. - 0.5 / a->u.amm.resist) * 100.);
+   SDESC_COND( l, o, _("\n%.0f%% Jam Resistance"), a->u.amm.resist );
 }
 
 
