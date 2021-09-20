@@ -1766,12 +1766,10 @@ static int map_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
       /* Must be in bounds. */
       if ((mx < 0.) || (mx > w) || (my < 0.) || (my > h))
          return 0;
-      /*if ( listMapModeVisible == 0 ) {*/
       if (event->wheel.y > 0)
          map_buttonZoom( 0, "btnZoomIn" );
-      else
+      else if (event->wheel.y < 0)
          map_buttonZoom( 0, "btnZoomOut" );
-      /*}*/
       return 1;
 
    case SDL_MOUSEBUTTONDOWN:

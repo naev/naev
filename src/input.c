@@ -1628,7 +1628,7 @@ void input_handle( SDL_Event* event )
       case SDL_MOUSEWHEEL:
          if (event->wheel.y > 0)
             input_clickZoom( 1.1 );
-         else
+         else if (event->wheel.y < 0)
             input_clickZoom( 0.9 );
          break;
 

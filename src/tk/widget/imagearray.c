@@ -466,7 +466,7 @@ static int iar_mwheel( Widget* iar, SDL_MouseWheelEvent event )
 {
    if (event.y > 0)
       iar_scroll( iar, +1 );
-   else
+   else if (event.y < 0)
       iar_scroll( iar, -1 );
 
    return 1;

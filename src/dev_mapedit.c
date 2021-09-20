@@ -398,7 +398,7 @@ static int mapedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
          return 0;
       if (event->wheel.y > 0)
          mapedit_buttonZoom( 0, "btnZoomIn" );
-      else
+      else if (event->wheel.y < 0)
          mapedit_buttonZoom( 0, "btnZoomOut" );
       return 1;
 

@@ -392,7 +392,7 @@ static int news_mouse( unsigned int wid, SDL_Event *event, double mx, double my,
 
          if (event->wheel.y > 0)
             news_pos -= h/3.;
-         else
+         else if (event->wheel.y < 0)
             news_pos += h/3.;
          return 1;
 

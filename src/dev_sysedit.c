@@ -889,7 +889,7 @@ static int sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
 
          if (event->wheel.y > 0)
             sysedit_buttonZoom( 0, "btnZoomIn" );
-         else
+         else if (event->wheel.y < 0)
             sysedit_buttonZoom( 0, "btnZoomOut" );
 
          return 1;

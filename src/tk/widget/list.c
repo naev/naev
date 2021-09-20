@@ -258,7 +258,7 @@ static int lst_mwheel( Widget* lst, SDL_MouseWheelEvent event )
 {
    if (event.y > 0)
       lst_scroll( lst, +1 );
-   else
+   else if (event.y < 0)
       lst_scroll( lst, -1 );
 
    return 1;
