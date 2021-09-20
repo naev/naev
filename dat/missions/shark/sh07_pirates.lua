@@ -146,8 +146,8 @@ function accept()
       kermarker2 = misn.markerAdd(kersys2, "high")
       godmarker = misn.markerAdd(godsys, "high")
 
-      enterhook = hook.enter("enter")
-      landhook = hook.land("land")
+      hook.enter("enter")
+      hook.land("land")
 
    else
       tk.msg(refusetitle, refusetext)
@@ -155,22 +155,19 @@ function accept()
    end
 end
 
-function land()
+function land ()
    --Job is done
    if stage == 1 and planet.cur() == planet.get("Darkshed") then
       tk.msg(title[5], text[5])
       pir.reputationNormalMission(rnd.rnd(2,3))
       player.pay(reward)
       player.outfitAdd("Sandwich Holder")
-      misn.osdDestroy(osd)
-      hook.rm(enterhook)
-      hook.rm(landhook)
       shark.addLog( log_text )
       misn.finish(true)
    end
 end
 
-function enter()
+function enter ()
    --Arrived in system
    if system.cur() == gawsys and gawdead == false then  --The Gawain
 
@@ -252,7 +249,6 @@ function enter()
       hook.pilot( baddie, "death", "goddard_dead")
 
    end
-
 end
 
 function idle(pilot,pos)  --the Gawain is flying around a random point
