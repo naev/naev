@@ -23,10 +23,8 @@ source = files(
    'dev_sysedit.c',
    'dev_system.c',
    'dev_uniedit.c',
-   'distance_field.c',
    'dialogue.c',
    'economy.c',
-   'edtaa3func.c',
    'env.c',
    'equipment.c',
    'escort.c',
@@ -176,6 +174,7 @@ nlua_source = files(
    'nlua_vec2.c'
 )
 
+sdf_source = files('distance_field.c', 'edtaa3func.c')
 mac_source = files('glue_macos.m')
 
 naev_source = [

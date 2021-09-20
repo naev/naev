@@ -23,7 +23,7 @@ if genCDoc.disabled() == false
 
         cdoc = custom_target(
             'cdoc',
-            input      : [source, nlua_source, mac_source, headers],
+            input      : [source, nlua_source, mac_source, sdf_source, headers],
             output     : doxy_output,
             command    : [doxygen, doxyfile],
             install    : true,

@@ -25,7 +25,7 @@ else
    summary('tag', version)
 endif
 
-# Initializeation
+# Initialization
 config_data = configuration_data()
 naev_deps = []
 
@@ -260,6 +260,9 @@ if buildExec.disabled() == false
       'src/tk',
       'src/tk/widget'
    )]
+
+   libsdf = static_library('sdf', sdf_source, include_directories: include_dirs, override_options: ['optimization=3'])
+   naev_deps += declare_dependency(link_with: libsdf)
 
    if host_machine.system() == 'darwin'
       add_languages('objc', native: false)
