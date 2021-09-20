@@ -243,9 +243,9 @@ const float smoothness = 0.1;
 
 vec4 burncolor( vec4 color, float value )
 {
-   const vec3 cred      = vec3( 1.00, 0.13, 0.00 );
-   const vec3 corange   = vec3( 0.95, 0.47, 0.02 );
-   const vec3 cblack    = vec3( 0.00, 0.00, 0.00 );
+   const vec3 cred      = vec3( 1.000, 0.015, 0.000 ); /* Gamma: vec3( 1.00, 0.13, 0.00 ); */
+   const vec3 corange   = vec3( 0.890, 0.187, 0.002 ); /** Gamma: vec3( 0.95, 0.47, 0.02 ); */
+   const vec3 cblack    = vec3( 0.0 );
    const vec3 cwhite    = vec3( 1.0 );
 
    vec4 outcol = color;
@@ -300,7 +300,8 @@ transitions._t.electric = [[
 uniform float u_time;
 
 const float height = 10.0;
-const vec3 bluetint = vec3( 0.4, 0.6, 1.0 );
+//const vec3 bluetint = vec3( 0.132, 0.319, 1.0 );/* Gamma: vec3(0.4, 0.6, 0.8); */
+const vec3 bluetint = vec3( 0.2, 0.5, 1.0 );/* Gamma: vec3(0.4, 0.6, 0.8); */
 
 /* Similar to smoothbeam, but more k == sharper. */
 float sharpbeam( float x, float k )

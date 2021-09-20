@@ -290,7 +290,8 @@ vec4 effect( vec4 color, Image tex, vec2 uv, vec2 screen_coords )
    const float WOBBLESPEED       = 0.1 + 0.1 * strength;
 
    /* Truly constant values. */
-   const vec3 bluetint           = vec3( 0.075, 0.215, 0.604 );/* Gamma: vec3(0.3, 0.5, 0.8); */
+   //const vec3 bluetint           = vec3( 0.075, 0.215, 0.604 );/* Gamma: vec3(0.3, 0.5, 0.8); */
+   const vec3 bluetint           = vec3( 0.1, 0.3, 0.7 );/* Gamma: vec3(0.3, 0.5, 0.8); */
    const float BRIGHTNESS        = 0.5;
    const float CONTRAST          = 2.0;
    const float SCANLINEMEAN      = 0.9;
