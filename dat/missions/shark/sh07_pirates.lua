@@ -170,13 +170,14 @@ end
 function enter ()
    --Arrived in system
    if system.cur() == gawsys and gawdead == false then  --The Gawain
+      local fenemy = shark.pirateFaction()
 
       -- Choose a random point in the system for him to stay around
       sysrad = rnd.rnd() * system.cur():radius()
       angle = rnd.rnd() * 360
       pos = vec2.newP(sysrad, angle)
 
-      baddie = pilot.add( "Gawain", "Thugs", nil, gawname, {ai="dummy"} )
+      baddie = pilot.add( "Gawain", fenemy, nil, gawname, {ai="dummy"} )
       baddie:setHostile()
       baddie:setHilight()
       baddie:control()
@@ -206,11 +207,12 @@ function enter ()
    elseif system.cur() == kersys1 and kerdead1 == false then  --The Kestrel
       pilot.clear()
       pilot.toggleSpawn(false)
+      local fenemy = shark.pirateFaction()
 
-      baddie = pilot.add( "Pirate Kestrel", "Pirate", vec2.new(0,0), nil, {ai="pirate_norun"} )
+      baddie = pilot.add( "Pirate Kestrel", fenemy, vec2.new(0,0), nil, {ai="pirate_norun"} )
       local enemies = {
-         pilot.add( "Pirate Ancestor", "Pirate", vec2.new(100,0) ),
-         pilot.add( "Hyena", "Pirate", vec2.new(0,100), _("Pirate Hyena") ),
+         pilot.add( "Pirate Ancestor", fenemy, vec2.new(100,0) ),
+         pilot.add( "Hyena", fenemy, vec2.new(0,100), _("Pirate Hyena") ),
       }
       for k,p in ipairs(enemies) do
          p:setLeader( baddie )
@@ -225,12 +227,13 @@ function enter ()
    elseif system.cur() == kersys2 and kerdead2 == false then  --The Kestrel
       pilot.clear()
       pilot.toggleSpawn(false)
+      local fenemy = shark.pirateFaction()
 
-      baddie = pilot.add( "Pirate Kestrel", "Pirate", vec2.new(0,0), nil, {ai="pirate_norun"} )
+      baddie = pilot.add( "Pirate Kestrel", fenemy, vec2.new(0,0), nil, {ai="pirate_norun"} )
       local enemies = {
-         pilot.add( "Pirate Ancestor", "Pirate", vec2.new(100,0) ),
-         pilot.add( "Pirate Shark", "Pirate", vec2.new(0,100) ),
-         pilot.add( "Hyena", "Pirate", vec2.new(100,100), _("Pirate Hyena") ),
+         pilot.add( "Pirate Ancestor", fenemy, vec2.new(100,0) ),
+         pilot.add( "Pirate Shark", fenemy, vec2.new(0,100) ),
+         pilot.add( "Hyena", fenemy, vec2.new(100,100), _("Pirate Hyena") ),
       }
       for k,p in ipairs(enemies) do
          p:setLeader( baddie )
@@ -246,14 +249,13 @@ function enter ()
    elseif system.cur() == godsys and goddead == false then  --The Goddard
       pilot.clear()
       pilot.toggleSpawn(false)
+      local fenemy = shark.pirateFaction()
 
-      baddie = pilot.add( "Goddard", "Goddard", vec2.new(0,0), godname, {ai="pirate_norun"} ) --Faction's ships come with upgraded weaponry
-      baddie:setFaction("Pirate")
-      baddie:changeAI( "pirate" )
+      baddie = pilot.add( "Goddard", fenemy, vec2.new(0,0), godname, {ai="pirate_norun"} ) --Faction's ships come with upgraded weaponry
 
       local enemies = {
-         pilot.add( "Pirate Ancestor", "Pirate", vec2.new(100,0) ),
-         pilot.add( "Hyena", "Pirate", vec2.new(0,100), _("Pirate Hyena") ),
+         pilot.add( "Pirate Ancestor", fenemy, vec2.new(100,0) ),
+         pilot.add( "Hyena", fenemy, vec2.new(0,100), _("Pirate Hyena") ),
       }
       for k,p in ipairs(enemies) do
          p:setLeader( baddie )

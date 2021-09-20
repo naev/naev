@@ -187,7 +187,7 @@ function enter()
       pilot.toggleSpawn(false)
 
       -- spawns the bad guy
-      badboy = pilot.add( "Pirate Ancestor", "Pirate", system.get("Raelid") )
+      badboy = pilot.add( "Pirate Ancestor", shark.pirateFaction(), system.get("Raelid") )
       badboy:rename(piratename)
       badboy:setHostile()
       badboy:setVisplayer()
