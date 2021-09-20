@@ -243,8 +243,8 @@ const float smoothness = 0.1;
 
 vec4 burncolor( vec4 color, float value )
 {
-   const vec3 cred      = vec3( 1.000, 0.015, 0.000 ); /* Gamma: vec3( 1.00, 0.13, 0.00 ); */
-   const vec3 corange   = vec3( 0.890, 0.187, 0.002 ); /** Gamma: vec3( 0.95, 0.47, 0.02 ); */
+   const vec3 cred      = vec3( 1.00, 0.03, 0.00 );
+   const vec3 corange   = vec3( 0.95, 0.3,  0.02 );
    const vec3 cblack    = vec3( 0.0 );
    const vec3 cwhite    = vec3( 1.0 );
 
