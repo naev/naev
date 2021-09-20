@@ -94,14 +94,11 @@ function create ()
          godsys = system.get("Alteris")
       end
    end
-   local index = rnd.rnd(1, #systems/4) --This avoids picking the same
-   gawsys = systems[index]
-   local index = rnd.rnd(index, #systems/3) --system twice, which would
-   kersys1 = systems[index]
-   local index = rnd.rnd(index, #systems/2) --make the missions rather
-   kersys2 = systems[index]
-   local index = rnd.rnd(index, #systems) --harder!
-   godsys = systems[index]
+   systems = rnd.permutation( systems ) -- Avoid picking same system
+   gawsys = systems[1]
+   kersys1 = systems[2] or systems[ rnd.rnd(1,#systems) ]
+   kersys2 = systems[3] or systems[ rnd.rnd(1,#systems) ]
+   godsys = systems[4] or systems[ rnd.rnd(1,#systems) ]
 
    pplname = "Darkshed"
    psyname = "Alteris"
@@ -152,7 +149,7 @@ function accept()
       enterhook = hook.enter("enter")
       landhook = hook.land("land")
 
-      else
+   else
       tk.msg(refusetitle, refusetext)
       misn.finish(false)
    end
