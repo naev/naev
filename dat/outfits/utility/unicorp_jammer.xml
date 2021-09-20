@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Unicorp Jammer">
  <general>
-  <typename>Electronic Warfare</typename>
+  <typename>Electronic Warfare Jammer</typename>
   <slot>utility</slot>
   <size>small</size>
   <mass>2</mass>
@@ -12,7 +12,8 @@
  </general>
  <specific type="modification" group="6">
   <active />
-  <ew_hide>70</ew_hide>
+  <ew_evade>20</ew_evade>
+  <jam_chance>60</jam_chance>
   <energy_loss>25</energy_loss>
  </specific>
 </outfit>
