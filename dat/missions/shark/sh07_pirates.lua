@@ -208,8 +208,13 @@ function enter ()
       pilot.toggleSpawn(false)
 
       baddie = pilot.add( "Pirate Kestrel", "Pirate", vec2.new(0,0), nil, {ai="pirate_norun"} )
-      ancestor = pilot.add( "Pirate Ancestor", "Pirate", vec2.new(100,0) )
-      hyena = pilot.add( "Hyena", "Pirate", vec2.new(0,100), _("Pirate Hyena") )
+      local enemies = {
+         pilot.add( "Pirate Ancestor", "Pirate", vec2.new(100,0) ),
+         pilot.add( "Hyena", "Pirate", vec2.new(0,100), _("Pirate Hyena") ),
+      }
+      for k,p in ipairs(enemies) do
+         p:setLeader( baddie )
+      end
 
       baddie:rename(kername1)
       baddie:setHilight()
@@ -222,9 +227,15 @@ function enter ()
       pilot.toggleSpawn(false)
 
       baddie = pilot.add( "Pirate Kestrel", "Pirate", vec2.new(0,0), nil, {ai="pirate_norun"} )
-      ancestor = pilot.add( "Pirate Ancestor", "Pirate", vec2.new(100,0) )
-      shark = pilot.add( "Pirate Shark", "Pirate", vec2.new(0,100) )
-      hyena = pilot.add( "Hyena", "Pirate", vec2.new(100,100), _("Pirate Hyena") )
+      local enemies = {
+         pilot.add( "Pirate Ancestor", "Pirate", vec2.new(100,0) ),
+         pilot.add( "Pirate Shark", "Pirate", vec2.new(0,100) ),
+         pilot.add( "Hyena", "Pirate", vec2.new(100,100), _("Pirate Hyena") ),
+      }
+      for k,p in ipairs(enemies) do
+         p:setLeader( baddie )
+      end
+
 
       baddie:rename(kername2)
       baddie:setHilight()
@@ -240,8 +251,13 @@ function enter ()
       baddie:setFaction("Pirate")
       baddie:changeAI( "pirate" )
 
-      ancestor = pilot.add( "Pirate Ancestor", "Pirate", vec2.new(100,0) )
-      hyena = pilot.add( "Hyena", "Pirate", vec2.new(0,100), _("Pirate Hyena") )
+      local enemies = {
+         pilot.add( "Pirate Ancestor", "Pirate", vec2.new(100,0) ),
+         pilot.add( "Hyena", "Pirate", vec2.new(0,100), _("Pirate Hyena") ),
+      }
+      for k,p in ipairs(enemies) do
+         p:setLeader( baddie )
+      end
 
       baddie:setHilight()
       baddie:setHostile()
