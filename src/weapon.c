@@ -942,6 +942,7 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
    Asteroid *a;
    const AsteroidType *at;
    Pilot *const* pilot_stack;
+   int isjammed;
 
    gfx = NULL;
    polygon = NULL;
@@ -1017,9 +1018,8 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
       }
       /* smart weapons only collide with their target */
       else if (weapon_isSmart(w)) {
-
-         if ( (pilot_stack[i]->id == w->target) &&
-               (w->status == WEAPON_STATUS_OK) &&
+         isjammed = ((w->status == WEAPON_STATUS_JAMMED) || (w->status == WEAPON_STATUS_JAMMED_SLOWED));
+         if ((((pilot_stack[i]->id == w->target) && !isjammed) || isjammed) &&
                weapon_checkCanHit(w,p) ) {
             if (usePoly) {
                k = p->ship->gfx_space->sx * psy + psx;
@@ -1629,6 +1629,7 @@ static void weapon_createAmmo( Weapon *w, const Outfit* launcher, double T,
    /* Handle seekers. */
    if (w->outfit->u.amm.ai != AMMO_AI_UNGUIDED) {
       w->think = think_seeker; /* AI is the same atm. */
+      w->r     = RNGF(); /* Used for jamming. */
 
       /* If they are seeking a pilot, increment lockon counter. */
       if (pilot_target == NULL)
