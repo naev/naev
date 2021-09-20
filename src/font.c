@@ -549,7 +549,7 @@ typedef struct _linepos_t_ {
 int gl_printLineIteratorNext( glPrintLineIterator* iter )
 {
    glFontStash *stsh = gl_fontGetStash( iter->ft_font );
-   int brk;
+   int brk, can_break, can_fit;
    struct LineBreakContext lbc;
 
    if (iter->dead)
@@ -571,25 +571,29 @@ int gl_printLineIteratorNext( glPrintLineIterator* iter )
       nextpos.ch = font_nextChar( iter->text, &nextpos.i );
       nextpos.w += glyph==NULL ? 0 : gl_fontKernGlyph( stsh, pos.ch, glyph ) + glyph->adv_x;
       brk = lb_process_next_char( &lbc, nextpos.ch );
+      can_break = (brk == LINEBREAK_ALLOWBREAK && !iter->no_soft_breaks) || brk == LINEBREAK_MUSTBREAK;
+      can_fit = (iter->width >= (int)round(nextpos.w));
 
-      if ((brk == LINEBREAK_ALLOWBREAK && !iter->no_soft_breaks) || brk == LINEBREAK_MUSTBREAK) {
+      if (can_break && iswspace( pos.ch )) {
          iter->l_width = (int)round(pos.w);
          iter->l_end = iter->l_next = pos.i;
-	 if (iswspace( pos.ch ))
-            u8_dec( iter->text, &iter->l_end );
-         if (brk == LINEBREAK_MUSTBREAK)
-            return 1;
+         u8_dec( iter->text, &iter->l_end );
+      }
+      else if (can_break && can_fit) {
+         iter->l_width = (int)round(nextpos.w);
+         iter->l_end = iter->l_next = pos.i;
+         u8_inc( iter->text, &iter->l_next );
       }
 
-      /* Check if out of bounds. */
-      if (nextpos.w > (GLfloat)iter->width) {
-         if (iter->l_end > iter->l_begin)
-            return 1;
+      if (!can_fit && iter->l_end == iter->l_begin) {
          /* Case we weren't able to write any whole words. */
          iter->l_width = (int)round(pos.w);
          iter->l_end = iter->l_next = pos.i;
-         return 1;
       }
+
+      if (!can_fit || brk == LINEBREAK_MUSTBREAK)
+         return 1;
+
       pos = nextpos;
    }
 
