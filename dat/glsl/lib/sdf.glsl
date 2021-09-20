@@ -130,6 +130,21 @@ float sdRhombus( vec2 p, vec2 b )
    return d * sign( q.x*b.y + q.y*b.x - b.x*b.y );
 }
 
+/* Egg shape (semicircle glued half a vesica) at position p with size b. The cusp is at vec2(-b.x, 0). */
+float sdEgg( vec2 p, vec2 b )
+{
+    /* Transform to Inigo's code */
+    const float k           = 1.73205080756887729353;  /* sqrt(3) */
+    float ra = b.y;
+    float rb = ((k+1.0)*ra - 2.0*b.x)/(k-1.0);
+    p = vec2(abs(p.y), b.x - ra - p.x);
+    /* The rest of the calculation matches the web page cited above. */
+    float r = ra - rb;
+    return ((p.y<0.0)       ? length(vec2(p.x,  p.y    )) - r :
+            (k*(p.x+r)<p.y) ? length(vec2(p.x,  p.y-k*r)) :
+                              length(vec2(p.x+r,p.y    )) - 2.0*r) - rb;
+}
+
 /* h is height */
 float sdRoundedCross( vec2 p, float h )
 {
