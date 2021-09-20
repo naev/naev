@@ -582,7 +582,6 @@ int gl_printLineIteratorNext( glPrintLineIterator* iter )
       else if (can_break && can_fit) {
          iter->l_width = (int)round(nextpos.w);
          iter->l_end = iter->l_next = pos.i;
-         u8_inc( iter->text, &iter->l_next );
       }
 
       if (!can_fit && iter->l_end == iter->l_begin) {
