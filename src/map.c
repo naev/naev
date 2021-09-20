@@ -870,7 +870,8 @@ else (x) = MAX( y, (x) - dt )
    map_renderJumps( x, y, r, 0 );
 
    /* Cause alpha to move smoothly between 0-1. */
-   col.a = 0.5 + 0.5 * ( ABS(MAP_MARKER_CYCLE - (int)SDL_GetTicks() % (2*MAP_MARKER_CYCLE))
+   /* TODO should be based around real_dt instead of SDL_GetTicks(). */
+   col.a = 0.6 + 0.4 * ( ABS(MAP_MARKER_CYCLE - (int)SDL_GetTicks() % (2*MAP_MARKER_CYCLE))
          / (double)MAP_MARKER_CYCLE );
 
    /* Render the player's jump route. */
