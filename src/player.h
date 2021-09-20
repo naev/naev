@@ -76,10 +76,6 @@ typedef struct Player_s {
    Pilot *p;         /**< Player's pilot. */
    char *name;       /**< Player's name. */
    double dt_mod;    /**< Static modifier of dt applied to the game as a whole. */
-   char *gui;        /**< Player's GUI. */
-   int guiOverride;  /**< GUI is overridden (not default). */
-   int favourite;    /**< Whether or not this ship is favourited. */
-   double radar_res;    /**< Player's radar resolution. */
 
    /* Player data. */
    PlayerFlags flags;/**< Player's flags. */
@@ -97,6 +93,13 @@ typedef struct Player_s {
 
    /* Loaded game version. */
    char *loaded_version;/**< Version of the loaded save game. */
+
+   /* Stuff we save. */
+   char *gui;        /**< Player's GUI. */
+   int guiOverride;  /**< GUI is overridden (not default). */
+   int favourite;    /**< Whether or not this ship is favourited. */
+   double radar_res; /**< Player's radar resolution. */
+   int eq_outfitMode; /**< Equipment outfit mode. */
 
    /* Meta-data. */
    time_t last_played; /**< Date the save was last played. */

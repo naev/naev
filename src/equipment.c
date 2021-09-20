@@ -302,6 +302,9 @@ void equipment_open( unsigned int wid )
    int x, y;
    const char *buf;
 
+   /* Load the outfit mode. */
+   equipment_outfitMode = player.eq_outfitMode;
+
    /* Mark as generated. */
    land_tabGenerate(LAND_WINDOW_EQUIPMENT);
 
@@ -1544,6 +1547,8 @@ static int equipment_filter( const Outfit *o ) {
          return 1;
 
       case 1:
+         if (p==NULL)
+            return 1;
          for (int i=0; i < array_size(p->outfits); i++) {
             if (outfit_fitsSlot( o, &p->outfits[i]->sslot->slot ))
                return 1;
@@ -1889,6 +1894,7 @@ static void equipment_outfitPopdownSelect( unsigned int wid, const char *str )
 
    equipment_outfitMode = m;
    equipment_regenLists( wid, 1, 0 );
+   player.eq_outfitMode = m;
 }
 
 static void equipment_outfitPopdownActivate( unsigned int wid, const char *str )
