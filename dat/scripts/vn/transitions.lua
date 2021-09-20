@@ -49,13 +49,13 @@ transitions._t.ripple = [[
 // License: MIT
 
 const float amplitude = 100.0;
-const float speed = 50.;
+const float speed = 50.0;
 
 vec4 effect( vec4 unused, Image tex, vec2 uv, vec2 screen_coords )
 {
-   vec2 dir = uv - vec2(.5);
+   vec2 dir = uv - vec2(0.5);
    float dist = length(dir);
-   vec2 offset = dir * (sin(progress * dist * amplitude - progress * speed) + .5) / 30.;
+   vec2 offset = dir * (sin(progress * dist * amplitude - progress * speed) + 0.5) / 30.0;
    vec4 c1 = Texel( texprev, uv + offset );
    vec4 c2 = Texel( MainTex, uv );
    return mix( c1, c2, smoothstep(0.2, 1.0, progress) );
@@ -96,16 +96,16 @@ const float colorSeparation = 0.3;
 float compute(vec2 p, float progress, vec2 center) {
    vec2 o = p*sin(progress * amplitude)-center;
    // horizontal vector
-   vec2 h = vec2(1., 0.);
+   vec2 h = vec2(1.0, 0.0);
    // butterfly polar function (don't ask me why this one :))
    float theta = acos(dot(o, h)) * waves;
-   return (exp(cos(theta)) - 2.*cos(4.*theta) + pow(sin((2.*theta - M_PI) / 24.), 5.)) / 10.;
+   return (exp(cos(theta)) - 2.0*cos(4.0*theta) + pow(sin((2.0*theta - M_PI) / 24.0), 5.0)) / 10.0;
 }
 
 vec4 effect( vec4 unused, Image tex, vec2 uv, vec2 screen_coords )
 {
    vec2 p = uv / vec2(1.0);
-   float inv = 1. - progress;
+   float inv = 1.0 - progress;
    vec2 dir = p - vec2(0.5);
    float dist = length(dir);
    float disp = compute(p, progress, vec2(0.5)) ;
@@ -151,9 +151,9 @@ const int steps = 50;
 
 vec4 effect( vec4 unused, Image tex, vec2 uv, vec2 screen_coords ) {
    float d = min(progress, 1.0 - progress);
-   float dist = steps>0 ? ceil(d * float(steps)) / float(steps) : d;
+   float dist = (steps>0) ? ceil(d * float(steps)) / float(steps) : d;
    vec2 squareSize = 2.0 * dist / vec2(squaresMin);
-   vec2 p = dist>0.0 ? (floor(uv / squareSize) + 0.5) * squareSize : uv;
+   vec2 p = (dist>0.0) ? (floor(uv / squareSize) + 0.5) * squareSize : uv;
 
    vec4 c1 = Texel( texprev, p );
    vec4 c2 = Texel( MainTex, p )
@@ -167,7 +167,7 @@ transitions._t.hexagon = [[
 // Hexagonal math from: http://www.redblobgames.com/grids/hexagons/
 
 const int steps = 50;
-uniform float horizontalHexagons = 20;
+uniform float horizontalHexagons = 20.0;
 float ratio = love_ScreenSize.x / love_ScreenSize.y;
 
 struct Hexagon {
@@ -226,9 +226,9 @@ vec2 pointFromHexagon(Hexagon hex, float size) {
 vec4 effect( vec4 unused, Image tex, vec2 uv, vec2 screen_coords ) {
 
    float dist = 2.0 * min(progress, 1.0 - progress);
-   dist = steps > 0 ? ceil(dist * float(steps)) / float(steps) : dist;
+   dist = (steps > 0) ? ceil(dist * float(steps)) / float(steps) : dist;
    float size = (sqrt(3.0) / 3.0) * dist / horizontalHexagons;
-   vec2 point = dist > 0.0 ? pointFromHexagon(hexagonFromPoint(uv, size), size) : uv;
+   vec2 point = (dist > 0.0) ? pointFromHexagon(hexagonFromPoint(uv, size), size) : uv;
 
    vec4 c1 = Texel( texprev, point );
    vec4 c2 = Texel( MainTex, point );

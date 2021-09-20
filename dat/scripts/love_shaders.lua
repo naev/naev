@@ -307,7 +307,7 @@ vec4 effect( vec4 color, Image tex, vec2 uv, vec2 screen_coords )
 
    /* Blur a bit. */
    vec4 texcolor  = color * texture( tex, look );
-   float blurdir  = snoise( vec2( BLURSPEED*u_time, 0 ) );
+   float blurdir  = snoise( vec2( BLURSPEED*u_time, 0.0 ) );
    vec2 blurvec   = BLURAMPLITUDE * vec2( cos(blurdir), sin(blurdir) );
    vec4 blurbg    = blur9( tex, look, love_ScreenSize.xy, blurvec );
    texcolor.rgb   = blendSoftLight( texcolor.rgb, blurbg.rgb );
@@ -360,7 +360,7 @@ function love_shaders.corruption( params )
 
 uniform float u_time;
 
-const int    fps     = 15;
+const int fps        = 15;
 const float strength = %f;
 
 vec4 effect( vec4 color, Image tex, vec2 uv, vec2 px ) {
@@ -452,7 +452,7 @@ uniform vec3 u_camera = vec3( 0.0, 0.0, 1.0 );
 const float strength = %f;
 const float speed    = %f;
 const float u_r      = %f;
-const float NUM_OCTAVES = 3;
+const int  NUM_OCTAVES = 3;
 
 /* 1D noise */
 float noise1( float p )
@@ -578,15 +578,15 @@ const float noiseTimeScale = 0.03;
 
 float fbm3(vec3 v) {
    float result = snoise(v);
-   result += snoise(v * 2.) / 2.;
-   result += snoise(v * 4.) / 4.;
-   result /= (1. + 1./2. + 1./4.);
+   result += snoise(v * 2.0) / 2.0;
+   result += snoise(v * 4.0) / 4.0;
+   result /= (1.0 + 1.0/2.0 + 1.0/4.0);
    return result;
 }
 
 float getNoise(vec3 v) {
-   v.xy += vec2( fbm3(v), fbm3(vec3(v.xy, v.z + 1000.)));
-   return fbm3(v) / 2. + 0.5;
+   v.xy += vec2( fbm3(v), fbm3(vec3(v.xy, v.z + 1000.0)));
+   return fbm3(v) / 2.0 + 0.5;
 }
 
 vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
