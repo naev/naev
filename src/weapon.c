@@ -39,9 +39,12 @@
 #define weapon_isSmart(w)     (w->think != NULL) /**< Checks if the weapon w is smart. */
 
 /* Weapon status */
-#define WEAPON_STATUS_OK         0 /**< Weapon is fine */
-#define WEAPON_STATUS_JAMMED     1 /**< Got jammed */
-#define WEAPON_STATUS_UNJAMMED   2 /**< Survived jamming */
+typedef enum WeaponStatus_ {
+   WEAPON_STATUS_OK,       /**< Weapon is fine */
+   WEAPON_STATUS_UNJAMMED, /**< Survived jamming */
+   WEAPON_STATUS_JAMMED,   /**< Got jammed */
+   WEAPON_STATUS_JAMMED_SLOWED, /**< Jammed and is now slower. */
+} WeaponStatus;
 
 /* Weapon flags. */
 #define WEAPON_FLAG_DESTROYED    1
@@ -76,7 +79,7 @@ typedef struct Weapon_ {
    GLfloat r; /**< Unique random value . */
    int sprite; /**< Used for spinning outfits. */
    PilotOutfitSlot *mount; /**< Used for beam weapons. */
-   double falloff; /**< Point at which damage falls off. */
+   double falloff; /**< Point at which damage falls off. Used to determine solwodwn for smart seekers.  */
    double strength; /**< Calculated with falloff. */
    int sx; /**< Current X sprite to use. */
    int sy; /**< Current Y sprite to use. */
@@ -86,7 +89,7 @@ typedef struct Weapon_ {
    void (*update)(struct Weapon_*, const double, WeaponLayer); /**< Updates the weapon */
    void (*think)(struct Weapon_*, const double); /**< for the smart missiles */
 
-   char status; /**< Weapon status - to check for jamming */
+   WeaponStatus status; /**< Weapon status - to check for jamming */
 } Weapon;
 
 
@@ -320,8 +323,7 @@ static void think_seeker( Weapon* w, const double dt )
    double diff;
    Pilot *p;
    Vector2d v;
-   double t, turn_max;
-   //double ewtrack;
+   double t, turn_max, d, r, jc, speed_mod;
 
    if (w->target == w->parent)
       return; /* no self shooting */
@@ -339,9 +341,35 @@ static void think_seeker( Weapon* w, const double dt )
    switch (w->status) {
 
       case WEAPON_STATUS_OK: /* Check to see if can get jammed */
-      /* Purpose fallthrough */
-      case WEAPON_STATUS_UNJAMMED: /* Work as expected */
+         jc = p->stats.jam_chance - w->outfit->u.amm.resist;
+         if (jc > 0.) {
+            /* Roll based on distance. */
+            d = vect_dist( &p->solid->pos, &w->solid->pos );
+            if (d / p->ew_evasion < w->r) {
+               if (jc < RNGF()) {
+                  r = RNGF();
+                  if (r < 0.4) {
+                     w->status = WEAPON_STATUS_JAMMED_SLOWED;
+                     w->falloff = RNGF()*0.5;
+                  }
+                  else if (r < 0.7) {
+                     w->status = WEAPON_STATUS_JAMMED;
+                     weapon_setTurn( w, w->outfit->u.amm.turn * ((RNGF()>0.5)?-1.0:1.0) );
+                  }
+                  else {
+                     w->status = WEAPON_STATUS_JAMMED;
+                     weapon_setTurn( w, 0. );
+                     weapon_setThrust( w, w->outfit->u.amm.thrust * w->outfit->mass );
+                  }
+                  break;
+               }
+               w->status = WEAPON_STATUS_UNJAMMED;
+            }
+         }
+         FALLTHROUGH;
 
+      case WEAPON_STATUS_JAMMED_SLOWED: /* Slowed down. */
+      case WEAPON_STATUS_UNJAMMED: /* Work as expected */
          /* Smart seekers take into account ship velocity. */
          if (w->outfit->u.amm.ai == AMMO_AI_SMART) {
 
@@ -378,8 +406,11 @@ static void think_seeker( Weapon* w, const double dt )
          break;
    }
 
+   /* Slow off based on falloff. */
+   speed_mod = (w->status==WEAPON_STATUS_JAMMED_SLOWED) ? w->falloff : 1.;
+
    /* Limit speed here */
-   w->real_vel = MIN( w->outfit->u.amm.speed_max, w->real_vel + w->outfit->u.amm.thrust*dt );
+   w->real_vel = MIN( speed_mod * w->outfit->u.amm.speed_max, w->real_vel + w->outfit->u.amm.thrust*dt );
    vect_pset( &w->solid->vel, /* ewtrack * */ w->real_vel, w->solid->dir );
 
    /* Modulate max speed. */

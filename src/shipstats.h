@@ -125,6 +125,7 @@ typedef enum ShipStatsType_ {
    SS_TYPE_P_ABSORB,          /**< Damage absorption. */
    /* Nebula. */
    SS_TYPE_P_NEBULA_ABSORB,   /**< Nebula resistance. */
+   SS_TYPE_P_JAMMING_CHANCE,  /**< Jamming chance for outfits. */
 
    /*
     * I: Integer type data. Should be continuous.
@@ -270,6 +271,9 @@ typedef struct ShipStats_ {
    double tur_firerate;    /**< Rate of fire of turrets. */
    double tur_energy;      /**< Consumption rate of turrets. */
    double tur_dam_as_dis;  /**< Damage as disable for turrets. */
+
+   /* Jamming. */
+   double jam_chance;      /**< Jamming chance. */
 
    /* Engine limits. */
    double engine_limit_rel; /**< Engine limit modifier. */
