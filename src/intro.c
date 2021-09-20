@@ -35,9 +35,7 @@
 #define IMAGE_WIDTH       300. /**< Width to reserve for images on the side. */
 
 
-/**
- * @brief Intro Image: to be displayed to the side of the scrolling.
- */
+/** @brief Intro Image: to be displayed to the side of the scrolling. */
 typedef struct intro_img_t_ {
    glTexture *tex;     /* Image. */
    double x, y, w, h;  /* Position. */
@@ -45,13 +43,28 @@ typedef struct intro_img_t_ {
    double fade_rate;   /* Positive for fade-in, negative for fade-out. */
 } intro_img_t;
 
-/*
- * Introduction text lines.
- */
-static char **intro_lines = NULL;  /**< Array (array.h): Introduction text lines. */
-static glFont intro_font;          /**< Introduction font. */
+/** @brief The possible display operations. */
+typedef enum intro_opcode_t_ {
+   INTRO_TEXT,          /**< Plain old text. */
+   INTRO_FADEIN,        /**< Operand is an image to appear next to text. */
+   INTRO_FADEOUT,       /**< Fade out the image next to the text. */
+} intro_opcode_t;
 
-static int has_side_gfx = 0;       /* Determines how wide to make the text. */
+/** @brief A display command (operation code and operand if applicable). */
+typedef struct intro_cmd_t_ {
+   intro_opcode_t opcode;
+   const char *operand;
+} intro_cmd_t;
+
+
+/*
+ * State.
+ */
+static intro_cmd_t *intro_cmds = NULL;   /**< Array (array.h): Introduction text lines. */
+static char *intro_buf = NULL;           /**< Allocated buffer read from the raw intro-file and modified as we split lines. */
+static glFont intro_font;                /**< Introduction font. */
+static int has_side_gfx = 0;             /* Determines how wide to make the text. */
+
 
 /*
  * Prototypes.
@@ -61,8 +74,7 @@ static void intro_cleanup (void);
 static void intro_event_handler( int *stop, double *offset, double *vel );
 static void initialize_image( intro_img_t *img );
 static void load_image( intro_img_t *img, const char *img_file );
-static void intro_fade_image_in( intro_img_t *side, intro_img_t *transition,
-                                 const char *img_file );
+static void intro_fade_image_in( intro_img_t *side, intro_img_t *transition, const char *img_file );
 static int  intro_draw_text( char **const sb_list, int sb_size, int sb_index, double offset, double line_height );
 
 
@@ -72,11 +84,7 @@ static int  intro_draw_text( char **const sb_list, int sb_size, int sb_index, do
 static int intro_load( const char *text )
 {
    size_t intro_size;
-   char *intro_buf;
-   const char *cur_line;
-   char *rest_of_file;
-   char img_src[STRMAX_SHORT];     /* path to image to be displayed alongside text. */
-   glPrintLineIterator iter;
+   char *cur_line, *rest_of_file;
 
    has_side_gfx = 0;
 
@@ -86,12 +94,7 @@ static int intro_load( const char *text )
    /* Create intro font. */
    gl_fontInit( &intro_font, _(FONT_MONOSPACE_PATH), conf.font_size_intro, FONT_PATH_PREFIX, 0 );
 
-   /* Accumulate text into intro_lines. At each step, keep track of:
-    * * cur_line: text to go from the current input line, after word-wrapping.
-    * * rest_of_file: pointer to just after the current input line (or NULL if we're on the last one).
-    * We can start in a state with no word-wrap spill-over and "rest_of_file" pointing to the full input.
-    */
-   intro_lines = array_create( char* );
+   intro_cmds = array_create( intro_cmd_t );
    rest_of_file = intro_buf;
    while (rest_of_file) {
       cur_line = rest_of_file;
@@ -104,32 +107,22 @@ static int intro_load( const char *text )
          *rest_of_file++ = '\0';
       }
 
-      if (cur_line[0] == '[' && sscanf( &cur_line[0], "[fadein %s", img_src ) == 1) {
-         /* an image to appear next to text. */
-         asprintf( &array_grow( &intro_lines ), "i%s", img_src );
-         /* Terminate the line where the closing bracket of [fadein ...] was. */
-         array_back( intro_lines )[ strlen( img_src ) ] = '\0';
-
+      if (strncmp( cur_line, "[fadein ", 8 ) == 0) {
+         array_grow( &intro_cmds ).opcode = INTRO_FADEIN;
+         array_back( intro_cmds ).operand = &cur_line[8];
+         /* Zap the closing square-bracket. */
+         cur_line[strlen( cur_line ) - 1] = '\0';
          /* Mark that there are graphics. */
          has_side_gfx = 1;
       }
-      else if (cur_line[0] == '[' && strncmp( &cur_line[0], "[fadeout]", 9 ) == 0)
-         array_push_back( &intro_lines, strdup( "o" ) ); /* fade out the image next to the text. */
-      else if (cur_line[0] == '\0')
-         array_push_back( &intro_lines, strdup( "t" ) ); /* empty paragraph break. */
-      else { /* plain old text. */
-         gl_printLineIteratorInit( &iter, &intro_font, _(cur_line), SCREEN_W - 2*SIDE_MARGIN - IMAGE_WIDTH );
-         while (gl_printLineIteratorNext( &iter )) {
-            array_push_back( &intro_lines, malloc( iter.l_end - iter.l_begin + 2 ) );
-            array_back( intro_lines )[0] = 't';
-            strncpy( &array_back( intro_lines )[1], &iter.text[iter.l_begin], iter.l_end - iter.l_begin );
-            array_back( intro_lines )[iter.l_end - iter.l_begin + 1] = '\0';
-         }
+      else if (strncmp( cur_line, "[fadeout]", 9 ) == 0)
+         array_grow( &intro_cmds ).opcode = INTRO_FADEOUT;
+      else {
+         array_grow( &intro_cmds ).opcode = INTRO_TEXT;
+         /* Translate the line if it's not the empty string. */
+         array_back( intro_cmds ).operand = (cur_line[0] == '\0' ? cur_line : _(cur_line));
       }
    }
-
-   /* Clean up. */
-   free(intro_buf);
 
    return 0;
 }
@@ -140,16 +133,12 @@ static int intro_load( const char *text )
  */
 static void intro_cleanup (void)
 {
-   int i;
-
    /* Free memory. */
-   for (i=0; i<array_size(intro_lines); i++)
-      free(intro_lines[i]);
-   array_free(intro_lines);
+   array_free(intro_cmds);
+   intro_cmds = NULL;
+   free(intro_buf);
+   intro_buf = NULL;
    gl_freeFont(&intro_font);
-
-   /* Set defaults. */
-   intro_lines = NULL;
 }
 
 /**
@@ -328,11 +317,12 @@ int intro_display( const char *text, const char *mus )
    int          sb_index;         /* Position in the line array. */
    double       vel  = 16.;       /* velocity: speed of text. */
    int          stop = 0;         /* stop the intro. */
-   unsigned int tcur, tlast;      /* timers. */
+   unsigned int tcur, tlast, tlag;/* timers. */
    double       delta;            /* time diff from last render to this one. */
-   int          line_index = 0;   /* index into the big list of intro lines. */
+   int          cmd_index = 0;   /* index into the big list of intro lines. */
    intro_img_t  side_image;       /* image to go along with the text. */
    intro_img_t  transition;       /* image for transitioning. */
+   glPrintLineIterator iter;      /* the renderable lines coming from the current text directive. */
 
    /* Load the introduction. */
    if (intro_load(text) < 0)
@@ -350,6 +340,9 @@ int intro_display( const char *text, const char *mus )
    line_height = (double)intro_font.h * 1.3;
    lines_per_screen = (int)(SCREEN_H / line_height + 1.5); /* round up + 1 */
 
+   /* Initialize the lines. */
+   gl_printLineIteratorInit( &iter, &intro_font, "", SCREEN_W - 2*SIDE_MARGIN - IMAGE_WIDTH );
+   (void) gl_printLineIteratorNext( &iter );
    sb_arr   = calloc( lines_per_screen, sizeof( char * ) );
    sb_index = 0;
 
@@ -370,19 +363,21 @@ int intro_display( const char *text, const char *mus )
       offset += vel * delta;
       while (! (offset < line_height)) {
          /* One line has scrolled off, and another one on. */
-
-         if (line_index < array_size(intro_lines)) {
-            switch (intro_lines[line_index][0]) {
-            case 't': /* plain ol' text. */
-               sb_arr[ sb_index ] = &intro_lines[ line_index ][ 1 ];
-               offset -= line_height;
-               sb_index = ( sb_index + 1 ) % lines_per_screen;
+         if (gl_printLineIteratorNext( &iter )) {
+            free( sb_arr[sb_index] );
+            sb_arr[sb_index] = strndup( &iter.text[iter.l_begin], iter.l_end - iter.l_begin );
+            offset -= line_height;
+            sb_index = ( sb_index + 1 ) % lines_per_screen;
+         }
+         else if (cmd_index < array_size(intro_cmds)) {
+            switch (intro_cmds[cmd_index].opcode) {
+            case INTRO_TEXT:
+               gl_printLineIteratorInit( &iter, &intro_font, intro_cmds[cmd_index].operand, iter.width );
                break;
-            case 'i': /* fade in image. */
-               intro_fade_image_in( &side_image, &transition,
-                                    &intro_lines[line_index][1] );
+            case INTRO_FADEIN:
+               intro_fade_image_in( &side_image, &transition, intro_cmds[cmd_index].operand );
                break;
-            case 'o': /* fade out image. */
+            case INTRO_FADEOUT:
                if (NULL == side_image.tex) {
                   WARN(_("Tried to fade out without an image.") );
                   break;
@@ -390,12 +385,11 @@ int intro_display( const char *text, const char *mus )
                side_image.fade_rate = -0.1;
                side_image.c.a = 0.99;
                break;
-            default:  /* unknown. */
-               break;
             }
-            ++line_index;
+            ++cmd_index;
          } else {
-            sb_arr[ sb_index ] = NULL;
+            free( sb_arr[sb_index] );
+            sb_arr[sb_index] = NULL;
             offset -= line_height;
             sb_index = ( sb_index + 1 ) % lines_per_screen;
          }
@@ -456,8 +450,9 @@ int intro_display( const char *text, const char *mus )
       /* Display stuff. */
       SDL_GL_SwapWindow( gl_screen.window );
 
-
-      SDL_Delay(10); /* No need to burn CPU. */
+      tlag = SDL_GetTicks() - tcur;
+      if (tlag < 25) /* No need to burn CPU. Note: swapping may involve a wait for vblank; 25 is 1.5 frames @60fps. */
+         SDL_Delay( 25 - tlag );
 
       /* Handle user events. */
       intro_event_handler( &stop, &offset, &vel );
