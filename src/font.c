@@ -535,6 +535,12 @@ void gl_printLineIteratorInit( glPrintLineIterator *iter, const glFont *ft_font,
 }
 
 
+typedef struct _linepos_t_ {
+   size_t i;    /**< Byte index of the current char */
+   uint32_t ch; /**< Current code point */
+   GLfloat w;   /**< Current width (line start to left side of current character) */
+} _linepos_t;
+
 /**
  * @brief Updates \p iter with the next line's information.
  * @param iter An iterator returned by \ref gl_printLineIteratorInit.
@@ -543,10 +549,7 @@ void gl_printLineIteratorInit( glPrintLineIterator *iter, const glFont *ft_font,
 int gl_printLineIteratorNext( glPrintLineIterator* iter )
 {
    glFontStash *stsh = gl_fontGetStash( iter->ft_font );
-   int adv_x, brk;
-   size_t i, nexti; /* byte index of current/next char */
-   uint32_t ch, nextch;
-   GLfloat n; /* current width */
+   int brk;
    struct LineBreakContext lbc;
 
    if (iter->dead)
@@ -556,46 +559,43 @@ int gl_printLineIteratorNext( glPrintLineIterator* iter )
    gl_fontKernStart();
 
    /* Initialize line break stuff. */
-   i = iter->l_begin = iter->l_next;
+   iter->l_begin = iter->l_next;
    iter->l_end = iter->l_begin;
-   n = 0.;
-   ch = font_nextChar( iter->text, &i );
-   lb_init_break_context( &lbc, ch, gettext_getLanguage() );
-   while (ch != '\0') {
-      nexti = i;
-      nextch = font_nextChar( iter->text, &nexti );
-      brk = lb_process_next_char( &lbc, nextch );
+   _linepos_t pos = { .i = iter->l_begin, .w = 0. };
+   pos.ch = font_nextChar( iter->text, &pos.i );
+   lb_init_break_context( &lbc, pos.ch, gettext_getLanguage() );
+
+   while (pos.ch != '\0') {
+      glFontGlyph *glyph = gl_fontGetGlyph( stsh, pos.ch );
+      _linepos_t nextpos = pos;
+      nextpos.ch = font_nextChar( iter->text, &nextpos.i );
+      nextpos.w += glyph==NULL ? 0 : gl_fontKernGlyph( stsh, pos.ch, glyph ) + glyph->adv_x;
+      brk = lb_process_next_char( &lbc, nextpos.ch );
 
       if ((brk == LINEBREAK_ALLOWBREAK && !iter->no_soft_breaks) || brk == LINEBREAK_MUSTBREAK) {
-         iter->l_width = (int)round(n);
-         iter->l_end = iter->l_next = i;
-	 if (iswspace( ch ))
+         iter->l_width = (int)round(pos.w);
+         iter->l_end = iter->l_next = pos.i;
+	 if (iswspace( pos.ch ))
             u8_dec( iter->text, &iter->l_end );
          if (brk == LINEBREAK_MUSTBREAK)
             return 1;
       }
 
-      /* Get glyph info. */
-      glFontGlyph *glyph = gl_fontGetGlyph( stsh, ch );
-      adv_x = glyph==NULL ? 0 : gl_fontKernGlyph( stsh, ch, glyph ) + glyph->adv_x;
-      n += adv_x;
-
       /* Check if out of bounds. */
-      if (n > (GLfloat)iter->width) {
+      if (nextpos.w > (GLfloat)iter->width) {
          if (iter->l_end > iter->l_begin)
             return 1;
          /* Case we weren't able to write any whole words. */
-         iter->l_width = (int)round(n - adv_x);
-         iter->l_end = iter->l_next = i;
+         iter->l_width = (int)round(pos.w);
+         iter->l_end = iter->l_next = pos.i;
          return 1;
       }
-      i = nexti;
-      ch = nextch;
+      pos = nextpos;
    }
 
    /* Ran out of text. */
-   iter->l_width = (int)round(n);
-   iter->l_end = iter->l_next = i;
+   iter->l_width = (int)round(pos.w);
+   iter->l_end = iter->l_next = pos.i;
    iter->dead = 1;
    return 1;
 }
