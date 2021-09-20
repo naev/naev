@@ -10,7 +10,7 @@ local love_math = require 'love.math'
 local love_shaders = require 'love_shaders'
 
 local transitions = {
-   _t = {}
+   _t = {},
 }
 
 local _vertexcode = [[
