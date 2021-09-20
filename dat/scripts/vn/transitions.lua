@@ -311,9 +311,6 @@ float sharpbeam( float x, float k )
 
 vec4 effect( vec4 unused, Image tex, vec2 uv, vec2 px )
 {
-   vec4 c1 = Texel( texprev, uv );
-   vec4 c2 = Texel( MainTex, uv );
-
    float h = height / love_ScreenSize.y;
    float p = mix( -2.0*h, 1.0+2.0*h, progress );
 
@@ -332,13 +329,23 @@ vec4 effect( vec4 unused, Image tex, vec2 uv, vec2 px )
    y = yoff + height*snoise( 2.0*ncoord );
    v += max( 0.0, sharpbeam( 0.5*distance(y,px.y), m ) );
 
-   // Create color
-   vec4 arcs = vec4( bluetint, v * max( c1.a, c2.a ) );
+   // Create colour
+   vec4 arcs = vec4( bluetint, v );
 
-   vec4 color = mix( c1, c2, step( ybase, px.y ) );
-   color = mix( color, arcs, v );
+   // Reference alpha value
+   vec2 uvr = vec2( uv.x, p );
+   vec4 c1 = Texel( MainTex, uvr );
+   vec4 c2 = Texel( texprev, uvr );
 
-   return color;
+   // Sample texture
+   vec4 colour;
+   if (ybase < px.y)
+      colour = Texel( MainTex, uv );
+   else
+      colour = Texel( texprev, uv );
+   colour = mix( colour, arcs, v * max( c1.a, c2.a ));
+
+   return colour;
 }
 ]]
 
