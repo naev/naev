@@ -32,7 +32,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2021-08-28 12:00-0400\n"
-"PO-Revision-Date: 2021-09-19 15:39+0000\n"
+"PO-Revision-Date: 2021-09-21 14:39+0000\n"
 "Last-Translator: OOTA, Masato <ooyooxei+gh@gmail.com>\n"
 "Language-Team: Japanese <https://hosted.weblate.org/projects/naev/naev/ja/>\n"
 "Language: ja\n"
@@ -132,9 +132,8 @@ msgid ""
 "the imperium went awry. In some regions, administration fell into the hands "
 "of other powers. The Great Houses now policed the space lanes."
 msgstr ""
-"デードリスのあと、後継者たちのもとで、帝国の光輝は衰えていく。内乱と宗教間の"
-"不和は社会のきずなを弱めた。帝国の大計画はつまずいた。いくつかの地方で、政府"
-"がほかの勢力の手に落ちた。今では大貴族たちが宇宙の航路を管理していた。"
+"デードリスのあと、後継者たちのもとで、帝国の光輝は衰えていく。内乱と宗教間の不和は社会のきずなを弱めた。帝国の大計画はつまずいた。いくつかの地方で、政府が"
+"ほかの勢力の手に落ちた。今では大荘園が宇宙の航路を管理していた。"
 
 #: dat/intro:23
 msgid "Rise and fall, the rhythm of history. "
@@ -773,7 +772,7 @@ msgstr "パシファイアー"
 
 #: artwork/gfx/loading/peacemaker.webp.txt:1
 msgid "EMPIRE PEACEMAKER"
-msgstr "帝国ピースメーカー"
+msgstr "帝国ピースメイカー"
 
 #: artwork/gfx/loading/preacher.webp.txt:1
 msgid "SIRIUS PREACHER"
@@ -891,7 +890,7 @@ msgstr ""
 
 #: dat/assets/aesir_iv.xml:2
 msgid "Aesir IV"
-msgstr "アシール IV"
+msgstr "アシール IV "
 
 #: dat/assets/agino.xml:2
 msgid "Agino"
@@ -970,7 +969,7 @@ msgstr ""
 
 #: dat/assets/akra_iii.xml:2
 msgid "Akra III"
-msgstr "エイクラ III"
+msgstr "エイクラ III "
 
 #: dat/assets/akra_station.xml:2
 msgid "Akra Station"
@@ -992,7 +991,7 @@ msgstr ""
 
 #: dat/assets/akra_v.xml:2
 msgid "Akra V"
-msgstr "エイクラ V"
+msgstr "エイクラ V "
 
 #: dat/assets/akrikos.xml:2
 msgid "Akrikos"
@@ -1134,15 +1133,15 @@ msgstr ""
 
 #: dat/assets/allous_gg3.xml:2
 msgid "Allous GG-3"
-msgstr "アロウス GG-3"
+msgstr "アロウス GG-3 "
 
 #: dat/assets/allous_i.xml:2
 msgid "Allous I"
-msgstr "アロウス I"
+msgstr "アロウス I "
 
 #: dat/assets/allous_ii.xml:2
 msgid "Allous II"
-msgstr "アロウス II"
+msgstr "アロウス II "
 
 #: dat/assets/allous_station.xml:2
 msgid "Allous Station"
@@ -1172,11 +1171,11 @@ msgstr "オルタリス I"
 
 #: dat/assets/alteris_iv.xml:2
 msgid "Alteris IV"
-msgstr "オルタリス IV"
+msgstr "オルタリス IV "
 
 #: dat/assets/alteris_v.xml:2
 msgid "Alteris V"
-msgstr "オルタリス V"
+msgstr "オルタリス V "
 
 #: dat/assets/aluben.xml:2
 msgid "Aluben"
@@ -1184,23 +1183,23 @@ msgstr "アルベン"
 
 #: dat/assets/amaroq_i.xml:2
 msgid "Amaroq I"
-msgstr "アマロク I"
+msgstr "アマロク I "
 
 #: dat/assets/amaroq_iii.xml:2
 msgid "Amaroq III"
-msgstr "アマロク III"
+msgstr "アマロク III "
 
 #: dat/assets/amatiri_i.xml:2
 msgid "Amatiri I"
-msgstr "アマティリ I"
+msgstr "アマティリ I "
 
 #: dat/assets/amatiri_ia.xml:2
 msgid "Amatiri Ia"
-msgstr "アマティリ Ia"
+msgstr "アマティリ Ia "
 
 #: dat/assets/amatiri_ii.xml:2
 msgid "Amatiri II"
-msgstr "アマティリ II"
+msgstr "アマティリ II "
 
 #: dat/assets/ambre.xml:2
 msgid "Ambre"
@@ -1301,27 +1300,27 @@ msgstr ""
 
 #: dat/assets/anarbalis_ii.xml:2
 msgid "Anarbalis II"
-msgstr "アナーバリス II"
+msgstr "アナーバリス II "
 
 #: dat/assets/anarbalis_iii.xml:2
 msgid "Anarbalis III"
-msgstr "アナーバリス III"
+msgstr "アナーバリス III "
 
 #: dat/assets/andee_ii.xml:2
 msgid "Andee II"
-msgstr "アンディー II"
+msgstr "アンディー II "
 
 #: dat/assets/andee_iia.xml:2
 msgid "Andee IIa"
-msgstr "アンディー IIa"
+msgstr "アンディー IIa "
 
 #: dat/assets/andee_iii.xml:2
 msgid "Andee III"
-msgstr "アンディー III"
+msgstr "アンディー III "
 
 #: dat/assets/andee_iiia.xml:2
 msgid "Andee IIIa"
-msgstr "アンディー IIIa"
+msgstr "アンディー IIIa "
 
 #: dat/assets/andors.xml:2
 msgid "Andors"
@@ -1379,11 +1378,11 @@ msgstr ""
 
 #: dat/assets/anger_i.xml:2
 msgid "Anger I"
-msgstr "アンガー I"
+msgstr "アンガー I "
 
 #: dat/assets/anger_ii.xml:2
 msgid "Anger II"
-msgstr "アンガー II"
+msgstr "アンガー II "
 
 #: dat/assets/anifta.xml:2
 msgid "Anifta"
@@ -1395,15 +1394,15 @@ msgstr "アンカー"
 
 #: dat/assets/anku_i.xml:2
 msgid "An'ku I"
-msgstr "アンク I"
+msgstr "アンク I "
 
 #: dat/assets/anku_ii.xml:2
 msgid "An'ku II"
-msgstr "アンク II"
+msgstr "アンク II "
 
 #: dat/assets/anku_iii.xml:2
 msgid "An'ku III"
-msgstr "アンク III"
+msgstr "アンク III "
 
 #: dat/assets/antica.xml:2
 msgid "Antica"
@@ -1475,19 +1474,19 @@ msgstr ""
 
 #: dat/assets/apez_ii.xml:2
 msgid "Apez II"
-msgstr "エイペズ II"
+msgstr "エイペズ II "
 
 #: dat/assets/apez_v.xml:2
 msgid "Apez V"
-msgstr "エイペズ V"
+msgstr "エイペズ V "
 
 #: dat/assets/apik_i.xml:2
 msgid "Apik I"
-msgstr "エイピク I"
+msgstr "エイピク I "
 
 #: dat/assets/apik_ii.xml:2
 msgid "Apik II"
-msgstr "エイピク II"
+msgstr "エイピク II "
 
 #: dat/assets/apik_shipyard.xml:2
 msgid "Apik Shipyard"
@@ -1616,31 +1615,31 @@ msgstr ""
 
 #: dat/assets/arcturus_i.xml:2
 msgid "Arcturus I"
-msgstr "アークトゥルス I"
+msgstr "アークトゥルス I "
 
 #: dat/assets/arcturus_ii.xml:2
 msgid "Arcturus II"
-msgstr "アークトゥルス II"
+msgstr "アークトゥルス II "
 
 #: dat/assets/ariadus_ii.xml:2
 msgid "Ariadus II"
-msgstr "エイリアダス II"
+msgstr "エイリアダス II "
 
 #: dat/assets/ariadus_iv.xml:2
 msgid "Ariadus IV"
-msgstr "エイリアダス IV"
+msgstr "エイリアダス IV "
 
 #: dat/assets/ariadus_vi.xml:2
 msgid "Ariadus VI"
-msgstr "エイリアダス VI"
+msgstr "エイリアダス VI "
 
 #: dat/assets/ariadus_via.xml:2
 msgid "Ariadus VIa"
-msgstr "エイリアダス VIa"
+msgstr "エイリアダス VIa "
 
 #: dat/assets/ariadus_vib.xml:2
 msgid "Ariadus VIb"
-msgstr "エイリアダス VIb"
+msgstr "エイリアダス VIb "
 
 #: dat/assets/ariak.xml:2
 msgid "Ariak"
@@ -1648,11 +1647,11 @@ msgstr "エイリアク"
 
 #: dat/assets/armorhead_i1.xml:2
 msgid "Armorhead I-1"
-msgstr "アーマーヘッド I-1"
+msgstr "アーマーヘッド I-1 "
 
 #: dat/assets/armorhead_i1_b.xml:2
 msgid "Armorhead I-1 b"
-msgstr "アーマーヘッド I-1 b"
+msgstr "アーマーヘッド I-1 b "
 
 #: dat/assets/arrakis.xml:2
 msgid "Arrakis"
@@ -1720,7 +1719,7 @@ msgstr ""
 
 #: dat/assets/astana_iiv.xml:2
 msgid "Astana IIV"
-msgstr "アスタナ IIV"
+msgstr "アスタナ IIV "
 
 #: dat/assets/atalanta.xml:2
 msgid "Atalanta"
@@ -1745,7 +1744,7 @@ msgstr ""
 
 #: dat/assets/atlantis_i.xml:2
 msgid "Atlantis I"
-msgstr "アトランティス I"
+msgstr "アトランティス I "
 
 #: dat/assets/atryssa.xml:2
 msgid "Atryssa"
@@ -1769,7 +1768,7 @@ msgstr ""
 
 #: dat/assets/atryssa_iv.xml:2
 msgid "Atryssa IV"
-msgstr "アトリッサ IV"
+msgstr "アトリッサ IV "
 
 #. Another check since the previous block could change the result
 #. Remove existing marks
@@ -1831,11 +1830,11 @@ msgstr ""
 
 #: dat/assets/awowa_iv.xml:2
 msgid "Awowa IV"
-msgstr "エイウォワ IV"
+msgstr "エイウォワ IV "
 
 #: dat/assets/awowa_v.xml:2
 msgid "Awowa V"
-msgstr "エイウォワ V"
+msgstr "エイウォワ V "
 
 #: dat/assets/baba_yaga.xml:2
 msgid "Baba Yaga"
@@ -1843,27 +1842,27 @@ msgstr "バーバ・ヤーガ"
 
 #: dat/assets/babylon_i.xml:2
 msgid "Babylon I"
-msgstr "バビロン I"
+msgstr "バビロン I "
 
 #: dat/assets/babylon_ii.xml:2
 msgid "Babylon II"
-msgstr "バビロン II"
+msgstr "バビロン II "
 
 #: dat/assets/babylon_iia.xml:2
 msgid "Babylon IIa"
-msgstr "バビロン IIa"
+msgstr "バビロン IIa "
 
 #: dat/assets/baf_i.xml:2
 msgid "Baf I"
-msgstr "バフ I"
+msgstr "バフ I "
 
 #: dat/assets/baf_iv.xml:2
 msgid "Baf IV"
-msgstr "バフ IV"
+msgstr "バフ IV "
 
 #: dat/assets/basel_i.xml:2
 msgid "Basel I"
-msgstr "バーゼル I"
+msgstr "バーゼル I "
 
 #: dat/assets/bastion_station.xml:2
 msgid "Bastion Station"
@@ -1891,7 +1890,7 @@ msgstr ""
 
 #: dat/assets/beeklo_ii.xml:2
 msgid "Beeklo II"
-msgstr "ビークロ II"
+msgstr "ビークロ II "
 
 #: dat/assets/beene.xml:2
 msgid "Beene"
@@ -2008,7 +2007,7 @@ msgstr "ベス"
 
 #: dat/assets/bgg1356.xml:2
 msgid "BGG-1356"
-msgstr "BGG-1356"
+msgstr " BGG-1356 "
 
 #: dat/assets/big_fred.xml:2
 msgid "Big Fred"
@@ -2016,19 +2015,19 @@ msgstr "ビッグ・フレッド"
 
 #: dat/assets/blackwell_i.xml:2
 msgid "Blackwell I"
-msgstr "ブラックウェル I"
+msgstr "ブラックウェル I "
 
 #: dat/assets/blackwell_iix.xml:2
 msgid "Blackwell IIX"
-msgstr "ブラックウェル IIX"
+msgstr "ブラックウェル IIX "
 
 #: dat/assets/blackwell_vii.xml:2
 msgid "Blackwell VII"
-msgstr "ブラックウェル VII"
+msgstr "ブラックウェル VII "
 
 #: dat/assets/blunderbuss_ii.xml:2
 msgid "Blunderbuss II"
-msgstr "ブランダバス II"
+msgstr "ブランダバス II "
 
 #: dat/assets/bolero.xml:2
 msgid "Bolero"
@@ -2071,11 +2070,11 @@ msgstr ""
 
 #: dat/assets/bonanza_i.xml:2
 msgid "Bonanza I"
-msgstr "ボナンザ I"
+msgstr "ボナンザ I "
 
 #: dat/assets/bonanza_ii.xml:2
 msgid "Bonanza II"
-msgstr "ボナンザ II"
+msgstr "ボナンザ II "
 
 #: dat/assets/boowoy.xml:2
 msgid "Boowoy"
@@ -2101,7 +2100,7 @@ msgstr ""
 
 #: dat/assets/botarn_i.xml:2
 msgid "Botarn I"
-msgstr "ボターン I"
+msgstr "ボターン I "
 
 #: dat/assets/brandt_station.xml:2
 msgid "Brandt Station"
@@ -2124,27 +2123,27 @@ msgstr ""
 
 #: dat/assets/brendon_i.xml:2
 msgid "Brendon I"
-msgstr "ブレンドン I"
+msgstr "ブレンドン I "
 
 #: dat/assets/brimstone_i.xml:2
 msgid "Brimstone I"
-msgstr "ブリムストーン I"
+msgstr "ブリムストーン I "
 
 #: dat/assets/brimstone_ia.xml:2
 msgid "Brimstone Ia"
-msgstr "ブリムストーン Ia"
+msgstr "ブリムストーン Ia "
 
 #: dat/assets/brimstone_ib.xml:2
 msgid "Brimstone Ib"
-msgstr "ブリムストーン Ib"
+msgstr "ブリムストーン Ib "
 
 #: dat/assets/brimstone_ii.xml:2
 msgid "Brimstone II"
-msgstr "ブリムストーン II"
+msgstr "ブリムストーン II "
 
 #: dat/assets/brimstone_iii.xml:2
 msgid "Brimstone III"
-msgstr "ブリムストーン III"
+msgstr "ブリムストーン III "
 
 #: dat/assets/brock.xml:2
 msgid "Brock"
@@ -2285,15 +2284,15 @@ msgstr ""
 
 #: dat/assets/capricorn_ii.xml:2
 msgid "Capricorn II"
-msgstr "カプリコーン II"
+msgstr "カプリコーン II "
 
 #: dat/assets/capricorn_iii.xml:2
 msgid "Capricorn III"
-msgstr "カプリコーン III"
+msgstr "カプリコーン III "
 
 #: dat/assets/capricorn_iiia.xml:2
 msgid "Capricorn IIIa"
-msgstr "カプリコーン IIIa"
+msgstr "カプリコーン IIIa "
 
 #: dat/assets/castellan_epsilon.xml:2
 msgid "Castellan Epsilon"
@@ -2301,11 +2300,11 @@ msgstr "カステラン・エプシロン"
 
 #: dat/assets/castellan_i.xml:2
 msgid "Castellan I"
-msgstr "カステラン I"
+msgstr "カステラン I "
 
 #: dat/assets/castellan_iii.xml:2
 msgid "Castellan III"
-msgstr "カステラン III"
+msgstr "カステラン III "
 
 #: dat/assets/castellan_iii.xml:27
 msgid ""
@@ -2327,7 +2326,7 @@ msgstr ""
 
 #: dat/assets/castellan_vi.xml:2
 msgid "Castellan VI"
-msgstr "カステラン VI"
+msgstr "カステラン VI "
 
 #: dat/assets/cerberus.xml:2 dat/ssys/cerberus.xml:2
 msgid "Cerberus"
@@ -2352,19 +2351,19 @@ msgstr ""
 
 #: dat/assets/cerberus_i.xml:2
 msgid "Cerberus I"
-msgstr "ケルベロス I"
+msgstr "ケルベロス I "
 
 #: dat/assets/cerberus_ii.xml:2
 msgid "Cerberus II"
-msgstr "ケルベロス II"
+msgstr "ケルベロス II "
 
 #: dat/assets/cerberus_iia.xml:2
 msgid "Cerberus IIa"
-msgstr "ケルベロス IIa"
+msgstr "ケルベロス IIa "
 
 #: dat/assets/cerberus_iv.xml:2
 msgid "Cerberus IV"
-msgstr "ケルベロス IV"
+msgstr "ケルベロス IV "
 
 #: dat/assets/cetrat.xml:2
 msgid "Cetrat"
@@ -2419,15 +2418,15 @@ msgstr ""
 
 #: dat/assets/churchill_i.xml:2
 msgid "Churchill I"
-msgstr "チャーチル I"
+msgstr "チャーチル I "
 
 #: dat/assets/churchill_ii.xml:2
 msgid "Churchill II"
-msgstr "チャーチル II"
+msgstr "チャーチル II "
 
 #: dat/assets/churchill_iia.xml:2
 msgid "Churchill IIa"
-msgstr "チャーチル IIa"
+msgstr "チャーチル IIa "
 
 #: dat/assets/claudius_mehan.xml:2
 msgid "Claudius Mehan"
@@ -2503,11 +2502,11 @@ msgstr ""
 
 #: dat/assets/corinth_1.xml:2
 msgid "Corinth 1"
-msgstr "コリント 1"
+msgstr "コリント 1 "
 
 #: dat/assets/corinth_2.xml:2
 msgid "Corinth 2"
-msgstr "コリント 2"
+msgstr "コリント 2 "
 
 #: dat/assets/corinth_foods.xml:2
 msgid "Corinth Foods"
@@ -2547,19 +2546,19 @@ msgstr ""
 
 #: dat/assets/corvus_i.xml:2
 msgid "Corvus I"
-msgstr "コルウス I"
+msgstr "コルウス I "
 
 #: dat/assets/corvus_vi.xml:2
 msgid "Corvus VI"
-msgstr "コルウス VI"
+msgstr "コルウス VI "
 
 #: dat/assets/corvus_via.xml:2
 msgid "Corvus VI-a"
-msgstr "コルウス VI-a"
+msgstr "コルウス VI-a "
 
 #: dat/assets/corvus_vib.xml:2
 msgid "Corvus VI-b"
-msgstr "コルウス VI-b"
+msgstr "コルウス VI-b "
 
 #: dat/assets/corvus_vib.xml:26
 msgid ""
@@ -2713,7 +2712,7 @@ msgstr ""
 
 #: dat/assets/cygnus_iv.xml:2
 msgid "Cygnus IV"
-msgstr "シグナス IV"
+msgstr "シグナス IV "
 
 #: dat/assets/cyrene.xml:2
 msgid "Cyrene"
@@ -2766,15 +2765,15 @@ msgstr ""
 
 #: dat/assets/dakron_iii.xml:2
 msgid "Dakron III"
-msgstr "ダクロン III"
+msgstr "ダクロン III "
 
 #: dat/assets/dakron_v.xml:2
 msgid "Dakron V"
-msgstr "ダクロン V"
+msgstr "ダクロン V "
 
 #: dat/assets/damien_vii.xml:2
 msgid "Damien VII"
-msgstr "ダミアン VII"
+msgstr "ダミアン VII "
 
 #: dat/assets/damphyr.xml:2
 msgid "Damphyr"
@@ -2782,11 +2781,11 @@ msgstr "ダンフィアー"
 
 #: dat/assets/daravon_i.xml:2
 msgid "Daravon I"
-msgstr "ダラボン I"
+msgstr "ダラボン I "
 
 #: dat/assets/daravon_iii.xml:2
 msgid "Daravon III"
-msgstr "ダラボン III"
+msgstr "ダラボン III "
 
 #: dat/assets/darkshed.xml:2
 msgid "Darkshed"
@@ -2811,11 +2810,11 @@ msgstr ""
 
 #: dat/assets/darkstone_iv.xml:2
 msgid "Darkstone IV"
-msgstr "ダークストーン IV"
+msgstr "ダークストーン IV "
 
 #: dat/assets/darkstone_v.xml:2
 msgid "Darkstone V"
-msgstr "ダークストーン V"
+msgstr "ダークストーン V "
 
 #: dat/assets/dawn.xml:2
 msgid "Dawn"
@@ -2845,27 +2844,27 @@ msgstr ""
 
 #: dat/assets/delta_pavonis_i.xml:2
 msgid "Delta Pavonis I"
-msgstr "デルタ・パボニス I"
+msgstr "デルタ・パボニス I "
 
 #: dat/assets/delta_pavonis_ii.xml:2
 msgid "Delta Pavonis II"
-msgstr "デルタ・パボニス II"
+msgstr "デルタ・パボニス II "
 
 #: dat/assets/delta_pavonis_iia.xml:2
 msgid "Delta Pavonis IIa"
-msgstr "デルタ・パボニス IIa"
+msgstr "デルタ・パボニス IIa "
 
 #: dat/assets/delta_polaris_i.xml:2
 msgid "Delta Polaris I"
-msgstr "デルタ・ポラリス I"
+msgstr "デルタ・ポラリス I "
 
 #: dat/assets/delta_polaris_ii.xml:2
 msgid "Delta Polaris II"
-msgstr "デルタ・ポラリス II"
+msgstr "デルタ・ポラリス II "
 
 #: dat/assets/delta_polaris_vi.xml:2
 msgid "Delta Polaris VI"
-msgstr "デルタ・ポラリス VI"
+msgstr "デルタ・ポラリス VI "
 
 #: dat/assets/diabolos.xml:2
 msgid "Diabolos"
@@ -2883,11 +2882,11 @@ msgstr ""
 
 #: dat/assets/diadem_i.xml:2
 msgid "Diadem I"
-msgstr "ダイアデム I"
+msgstr "ダイアデム I "
 
 #: dat/assets/diadem_ii.xml:2
 msgid "Diadem II"
-msgstr "ダイアデム II"
+msgstr "ダイアデム II "
 
 #: dat/assets/doeston_prime.xml:2
 msgid "Doeston Prime"
@@ -3092,7 +3091,7 @@ msgstr ""
 
 #: dat/assets/draygar_iii.xml:2
 msgid "Draygar III"
-msgstr "ドレイガー III"
+msgstr "ドレイガー III "
 
 #: dat/assets/drognain.xml:2
 msgid "Drognain"
@@ -3109,15 +3108,15 @@ msgstr ""
 
 #: dat/assets/druss_ii.xml:2
 msgid "Druss II"
-msgstr "ドラス II"
+msgstr "ドラス II "
 
 #: dat/assets/druss_iia.xml:2
 msgid "Druss IIa"
-msgstr "ドラス IIa"
+msgstr "ドラス IIa "
 
 #: dat/assets/druss_iii.xml:2
 msgid "Druss III"
-msgstr "ドラス III"
+msgstr "ドラス III "
 
 #: dat/assets/dumas_station.xml:2
 msgid "Dumas Station"
@@ -3246,11 +3245,11 @@ msgstr ""
 
 #: dat/assets/duros_i.xml:2
 msgid "Duros I"
-msgstr "デュロス I"
+msgstr "デュロス I "
 
 #: dat/assets/duros_ia.xml:2
 msgid "Duros Ia"
-msgstr "デュロス Ia"
+msgstr "デュロス Ia "
 
 #: dat/assets/durumdra.xml:2
 msgid "Durumdra"
@@ -3284,19 +3283,19 @@ msgstr "ダスト"
 
 #: dat/assets/dvaer_ii.xml:2
 msgid "Dvaer II"
-msgstr "ドベーア II"
+msgstr "ドベーア II "
 
 #: dat/assets/dvaer_iii.xml:2
 msgid "Dvaer III"
-msgstr "ドベーア III"
+msgstr "ドベーア III "
 
 #: dat/assets/dvaer_iiia.xml:2
 msgid "Dvaer IIIa"
-msgstr "ドベーア IIIa"
+msgstr "ドベーア IIIa "
 
 #: dat/assets/dvaer_iv.xml:2
 msgid "Dvaer IV"
-msgstr "ドベーア IV"
+msgstr "ドベーア IV "
 
 #: dat/assets/dvaer_prime.xml:2
 msgid "Dvaer Prime"
@@ -3342,7 +3341,7 @@ msgstr ""
 
 #: dat/assets/dvnn_central.xml:2
 msgid "DVNN Central"
-msgstr "DVNN セントラル"
+msgstr " DVNN セントラル"
 
 #: dat/assets/dvnn_central.xml:26
 msgid ""
@@ -3463,11 +3462,11 @@ msgstr ""
 
 #: dat/assets/eiderdown_i.xml:2
 msgid "Eiderdown I"
-msgstr "アイダーダウン I"
+msgstr "アイダーダウン I "
 
 #: dat/assets/eiderdown_iii.xml:2
 msgid "Eiderdown III"
-msgstr "アイダーダウン III"
+msgstr "アイダーダウン III "
 
 #: dat/assets/eiger.xml:2 dat/ssys/eiger.xml:2
 msgid "Eiger"
@@ -3522,19 +3521,19 @@ msgstr ""
 
 #: dat/assets/ekta_i.xml:2
 msgid "Ekta I"
-msgstr "エクタ I"
+msgstr "エクタ I "
 
 #: dat/assets/ekta_ii.xml:2
 msgid "Ekta II"
-msgstr "エクタ II"
+msgstr "エクタ II "
 
 #: dat/assets/ekta_iia.xml:2
 msgid "Ekta IIa"
-msgstr "エクタ IIa"
+msgstr "エクタ IIa "
 
 #: dat/assets/ekta_iib.xml:2
 msgid "Ekta IIb"
-msgstr "エクタ IIb"
+msgstr "エクタ IIb "
 
 #: dat/assets/ekta_station.xml:2
 msgid "Ekta Station"
@@ -3558,7 +3557,7 @@ msgstr ""
 
 #: dat/assets/elixir_i.xml:2
 msgid "Elixir I"
-msgstr "エリクサー I"
+msgstr "エリクサー I "
 
 #: dat/assets/elpa.xml:2
 msgid "Elpa"
@@ -3579,19 +3578,19 @@ msgstr ""
 
 #: dat/assets/elza_i.xml:2
 msgid "Elza I"
-msgstr "エルザ I"
+msgstr "エルザ I "
 
 #: dat/assets/elza_ia.xml:2
 msgid "Elza Ia"
-msgstr "エルザ Ia"
+msgstr "エルザ Ia "
 
 #: dat/assets/elza_iii.xml:2
 msgid "Elza III"
-msgstr "エルザ III"
+msgstr "エルザ III "
 
 #: dat/assets/em_1.xml:2
 msgid "Em 1"
-msgstr "エム 1"
+msgstr "エム 1 "
 
 #: dat/assets/em_1.xml:30
 msgid ""
@@ -3609,15 +3608,15 @@ msgstr ""
 
 #: dat/assets/em_2.xml:2
 msgid "Em 2"
-msgstr "エム 2"
+msgstr "エム 2 "
 
 #: dat/assets/em_4.xml:2
 msgid "Em 4"
-msgstr "エム 4"
+msgstr "エム 4 "
 
 #: dat/assets/em_5.xml:2
 msgid "Em 5"
-msgstr "エム 5"
+msgstr "エム 5 "
 
 #: dat/assets/em_5.xml:30
 msgid ""
@@ -3702,15 +3701,15 @@ msgstr ""
 
 #: dat/assets/eneguoz_ii.xml:2
 msgid "Eneguoz II"
-msgstr "エネグオズ II"
+msgstr "エネグオズ II "
 
 #: dat/assets/eridani_ii.xml:2
 msgid "Eridani II"
-msgstr "エリダヌス II"
+msgstr "エリダヌス II "
 
 #: dat/assets/eridani_iii.xml:2
 msgid "Eridani III"
-msgstr "エリダヌス III"
+msgstr "エリダヌス III "
 
 #: dat/assets/eryla.xml:2
 msgid "Eryla"
@@ -3718,39 +3717,39 @@ msgstr "エリラ"
 
 #: dat/assets/esker_i.xml:2
 msgid "Esker I"
-msgstr "エスカー I"
+msgstr "エスカー I "
 
 #: dat/assets/esker_ii.xml:2
 msgid "Esker II"
-msgstr "エスカー II"
+msgstr "エスカー II "
 
 #: dat/assets/esker_iv.xml:2
 msgid "Esker IV"
-msgstr "エスカー IV"
+msgstr "エスカー IV "
 
 #: dat/assets/euler_i.xml:2
 msgid "Euler I"
-msgstr "オイラー I"
+msgstr "オイラー I "
 
 #: dat/assets/euler_ia.xml:2
 msgid "Euler Ia"
-msgstr "オイラー Ia"
+msgstr "オイラー Ia "
 
 #: dat/assets/euler_ii.xml:2
 msgid "Euler II"
-msgstr "オイラー II"
+msgstr "オイラー II "
 
 #: dat/assets/euler_iii.xml:2
 msgid "Euler III"
-msgstr "オイラー III"
+msgstr "オイラー III "
 
 #: dat/assets/euler_iiia.xml:2
 msgid "Euler IIIa"
-msgstr "オイラー IIIa"
+msgstr "オイラー IIIa "
 
 #: dat/assets/euler_iv.xml:2
 msgid "Euler IV"
-msgstr "オイラー IV"
+msgstr "オイラー IV "
 
 #: dat/assets/europea.xml:2
 msgid "Europea"
@@ -3801,15 +3800,15 @@ msgstr ""
 
 #: dat/assets/eye_of_night_i.xml:2
 msgid "Eye of Night I"
-msgstr "アイ・オブ・ナイト I"
+msgstr "アイ・オブ・ナイト I "
 
 #: dat/assets/eye_of_night_ii.xml:2
 msgid "Eye of Night II"
-msgstr "アイ・オブ・ナイト II"
+msgstr "アイ・オブ・ナイト II "
 
 #: dat/assets/eye_of_night_iii.xml:2
 msgid "Eye of Night III"
-msgstr "アイ・オブ・ナイト III"
+msgstr "アイ・オブ・ナイト III "
 
 #: dat/assets/facett_outpost.xml:2
 msgid "Facett Outpost"
@@ -3866,27 +3865,27 @@ msgstr ""
 
 #: dat/assets/fathers_pride_i.xml:2
 msgid "Father's Pride I"
-msgstr "ファザーズ・プライド I"
+msgstr "ファザーズ・プライド I "
 
 #: dat/assets/fathers_pride_ii.xml:2
 msgid "Father's Pride II"
-msgstr "ファザーズ・プライド II"
+msgstr "ファザーズ・プライド II "
 
 #: dat/assets/fathers_pride_iii.xml:2
 msgid "Father's Pride III"
-msgstr "ファザーズ・プライド III"
+msgstr "ファザーズ・プライド III "
 
 #: dat/assets/faust_iii.xml:2
 msgid "Faust III"
-msgstr "ファウスト III"
+msgstr "ファウスト III "
 
 #: dat/assets/faust_vi.xml:2
 msgid "Faust VI"
-msgstr "ファウスト VI"
+msgstr "ファウスト VI "
 
 #: dat/assets/fd24.xml:2
 msgid "FD-24"
-msgstr "FD-24"
+msgstr " FD-24 "
 
 #: dat/assets/fd24.xml:25
 msgid ""
@@ -3939,19 +3938,19 @@ msgstr ""
 
 #: dat/assets/feye_i.xml:2
 msgid "Feye I"
-msgstr "ファイ I"
+msgstr "ファイ I "
 
 #: dat/assets/feye_iv.xml:2
 msgid "Feye IV"
-msgstr "ファイ IV"
+msgstr "ファイ IV "
 
 #: dat/assets/fidelis_iii.xml:2
 msgid "Fidelis III"
-msgstr "フィデーリス III"
+msgstr "フィデーリス III "
 
 #: dat/assets/fidelis_iv.xml:2
 msgid "Fidelis IV"
-msgstr "フィデーリス IV"
+msgstr "フィデーリス IV "
 
 #: dat/assets/finn.xml:2
 msgid "Finn"
@@ -4034,15 +4033,15 @@ msgstr ""
 
 #: dat/assets/fortitude_i.xml:2
 msgid "Fortitude I"
-msgstr "フォーティテュード I"
+msgstr "フォーティテュード I "
 
 #: dat/assets/fortitude_ii.xml:2
 msgid "Fortitude II"
-msgstr "フォーティテュード II"
+msgstr "フォーティテュード II "
 
 #: dat/assets/fortitude_iii.xml:2
 msgid "Fortitude III"
-msgstr "フォーティテュード III"
+msgstr "フォーティテュード III "
 
 #: dat/assets/foundation_station.xml:2
 msgid "Foundation Station"
@@ -4076,31 +4075,31 @@ msgstr ""
 
 #: dat/assets/fried_i.xml:2
 msgid "Fried I"
-msgstr "フライド I"
+msgstr "フライド I "
 
 #: dat/assets/fried_ia.xml:2
 msgid "Fried Ia"
-msgstr "フライド Ia"
+msgstr "フライド Ia "
 
 #: dat/assets/fried_ii.xml:2
 msgid "Fried II"
-msgstr "フライド II"
+msgstr "フライド II "
 
 #: dat/assets/fried_iii.xml:2
 msgid "Fried III"
-msgstr "フライド III"
+msgstr "フライド III "
 
 #: dat/assets/fried_iiia.xml:2
 msgid "Fried IIIa"
-msgstr "フライド IIIa"
+msgstr "フライド IIIa "
 
 #: dat/assets/fulcrum_i.xml:2
 msgid "Fulcrum I"
-msgstr "フルクラム I"
+msgstr "フルクラム I "
 
 #: dat/assets/fury_i.xml:2
 msgid "Fury I"
-msgstr "フューリー I"
+msgstr "フューリー I "
 
 #: dat/assets/fury_station.xml:2
 msgid "Fury Station"
@@ -4165,31 +4164,31 @@ msgstr "ガンマ"
 
 #: dat/assets/gammacron_iv.xml:2
 msgid "Gammacron IV"
-msgstr "ガンマクロン IV"
+msgstr "ガンマクロン IV "
 
 #: dat/assets/gammacron_v.xml:2
 msgid "Gammacron V"
-msgstr "ガンマクロン V"
+msgstr "ガンマクロン V "
 
 #: dat/assets/gammacron_va.xml:2
 msgid "Gammacron Va"
-msgstr "ガンマクロン Va"
+msgstr "ガンマクロン Va "
 
 #: dat/assets/gammacron_vb.xml:2
 msgid "Gammacron Vb"
-msgstr "ガンマクロン Vb"
+msgstr "ガンマクロン Vb "
 
 #: dat/assets/ganth_i.xml:2
 msgid "Ganth I"
-msgstr "ガンス I"
+msgstr "ガンス I "
 
 #: dat/assets/garten_iv.xml:2
 msgid "Garten IV"
-msgstr "ガーテン IV"
+msgstr "ガーテン IV "
 
 #: dat/assets/garten_x.xml:2
 msgid "Garten X"
-msgstr "ガーテン X"
+msgstr "ガーテン X "
 
 #: dat/assets/gastan.xml:2
 msgid "Gastan"
@@ -4345,11 +4344,11 @@ msgstr ""
 
 #: dat/assets/gewirn_iv.xml:2
 msgid "Gewirn IV"
-msgstr "ゲウィーン IV"
+msgstr "ゲウィーン IV "
 
 #: dat/assets/gilligans_light_iii.xml:2
 msgid "Gilligan's Light III"
-msgstr "ガリガンズ・ライト III"
+msgstr "ガリガンズ・ライト III "
 
 #: dat/assets/gilligans_memory.xml:2 dat/ssys/gilligans_memory.xml:2
 msgid "Gilligan's Memory"
@@ -4383,11 +4382,11 @@ msgstr "ガリガンズ・ツーム"
 
 #: dat/assets/ginger_ii.xml:2
 msgid "Ginger II"
-msgstr "ジンジャー II"
+msgstr "ジンジャー II "
 
 #: dat/assets/ginger_iii.xml:2
 msgid "Ginger III"
-msgstr "ジンジャー III"
+msgstr "ジンジャー III "
 
 #: dat/assets/ginni.xml:2
 msgid "Ginni"
@@ -4414,11 +4413,11 @@ msgstr ""
 
 #: dat/assets/goddard_iii.xml:2
 msgid "Goddard III"
-msgstr "ゴダード III"
+msgstr "ゴダード III "
 
 #: dat/assets/goddard_iv.xml:2
 msgid "Goddard IV"
-msgstr "ゴダード IV"
+msgstr "ゴダード IV "
 
 #: dat/assets/godtra.xml:2
 msgid "Godtra"
@@ -4586,15 +4585,15 @@ msgstr ""
 
 #: dat/assets/griffin__ii.xml:2
 msgid "Griffin II"
-msgstr "グリフィン II"
+msgstr "グリフィン II "
 
 #: dat/assets/griffin_i.xml:2
 msgid "Griffin I"
-msgstr "グリフィン I"
+msgstr "グリフィン I "
 
 #: dat/assets/griffin_iii.xml:2
 msgid "Griffin III"
-msgstr "グリフィン III"
+msgstr "グリフィン III "
 
 #: dat/assets/griffin_iii.xml:30
 msgid ""
@@ -4613,7 +4612,7 @@ msgstr ""
 
 #: dat/assets/griffin_vi.xml:2
 msgid "Griffin VI"
-msgstr "グリフィン VI"
+msgstr "グリフィン VI "
 
 #: dat/assets/grindstone_shipyards.xml:2
 msgid "Grindstone Shipyards"
@@ -4638,51 +4637,51 @@ msgstr ""
 
 #: dat/assets/gruz_i.xml:2
 msgid "Gruz I"
-msgstr "グラズ I"
+msgstr "グラズ I "
 
 #: dat/assets/gruz_ii.xml:2
 msgid "Gruz II"
-msgstr "グラズ II"
+msgstr "グラズ II "
 
 #: dat/assets/gruz_iii.xml:2
 msgid "Gruz III"
-msgstr "グラズ III"
+msgstr "グラズ III "
 
 #: dat/assets/gutter_i.xml:2
 msgid "Gutter I"
-msgstr "ガター I"
+msgstr "ガター I "
 
 #: dat/assets/gutter_iii.xml:2
 msgid "Gutter III"
-msgstr "ガター III"
+msgstr "ガター III "
 
 #: dat/assets/gyrios_ii.xml:2
 msgid "Gyrios II"
-msgstr "ギリオス II"
+msgstr "ギリオス II "
 
 #: dat/assets/gyrios_iv.xml:2
 msgid "Gyrios IV"
-msgstr "ギリオス IV"
+msgstr "ギリオス IV "
 
 #: dat/assets/gyrios_v.xml:2
 msgid "Gyrios V"
-msgstr "ギリオス V"
+msgstr "ギリオス V "
 
 #: dat/assets/hadosh_ia.xml:2
 msgid "Hadosh Ia"
-msgstr "ハドシュ Ia"
+msgstr "ハドシュ Ia "
 
 #: dat/assets/hadosh_ii.xml:2
 msgid "Hadosh II"
-msgstr "ハドシュ II"
+msgstr "ハドシュ II "
 
 #: dat/assets/hadosh_iii.xml:2
 msgid "Hadosh III"
-msgstr "ハドシュ III"
+msgstr "ハドシュ III "
 
 #: dat/assets/hadosh_iv.xml:2
 msgid "Hadosh IV"
-msgstr "ハドシュ IV"
+msgstr "ハドシュ IV "
 
 #: dat/assets/haldr.xml:2
 msgid "Haldr"
@@ -4710,7 +4709,7 @@ msgstr ""
 
 #: dat/assets/haleb_iv.xml:2
 msgid "Haleb IV"
-msgstr "ハーレブ IV"
+msgstr "ハーレブ IV "
 
 #: dat/assets/halir.xml:2
 msgid "Halir"
@@ -4839,19 +4838,19 @@ msgstr ""
 
 #: dat/assets/hasselt_ii.xml:2
 msgid "Hasselt II"
-msgstr "ハッセルト II"
+msgstr "ハッセルト II "
 
 #: dat/assets/hasselt_iv.xml:2
 msgid "Hasselt IV"
-msgstr "ハッセルト IV"
+msgstr "ハッセルト IV "
 
 #: dat/assets/hatter_i.xml:2
 msgid "Hatter I"
-msgstr "ハッター I"
+msgstr "ハッター I "
 
 #: dat/assets/hatter_ii.xml:2
 msgid "Hatter II"
-msgstr "ハッター II"
+msgstr "ハッター II "
 
 #: dat/assets/haurn.xml:2
 msgid "Haurn"
@@ -4903,11 +4902,11 @@ msgstr ""
 
 #: dat/assets/hekaras_iii.xml:2
 msgid "Hekaras III"
-msgstr "ヘカラス III"
+msgstr "ヘカラス III "
 
 #: dat/assets/hekaras_iv.xml:2
 msgid "Hekaras IV"
-msgstr "ヘカラス IV"
+msgstr "ヘカラス IV "
 
 #: dat/assets/heronus.xml:2
 msgid "Heronus"
@@ -4959,7 +4958,7 @@ msgstr ""
 
 #: dat/assets/house_zalek_central_station.xml:2 dat/events/discovery.lua:52
 msgid "House Za'lek Central Station"
-msgstr "ザレク家中央ステーション"
+msgstr "ザレク荘中央ステーション"
 
 #: dat/assets/house_zalek_central_station.xml:30
 msgid ""
@@ -4984,7 +4983,7 @@ msgstr "フリームファクシ"
 
 #: dat/assets/hs224.xml:2
 msgid "HS-224"
-msgstr "HS-224"
+msgstr " HS-224 "
 
 #: dat/assets/hs224.xml:28 dat/assets/hs232.xml:28 dat/assets/hs24.xml:28
 #: dat/assets/hs37.xml:28 dat/assets/hs54.xml:28
@@ -5004,27 +5003,27 @@ msgstr ""
 
 #: dat/assets/hs232.xml:2
 msgid "HS-232"
-msgstr "HS-232"
+msgstr " HS-232 "
 
 #: dat/assets/hs24.xml:2
 msgid "HS-24"
-msgstr "HS-24"
+msgstr " HS-24 "
 
 #: dat/assets/hs37.xml:2
 msgid "HS-37"
-msgstr "HS-37"
+msgstr " HS-37 "
 
 #: dat/assets/hs54.xml:2
 msgid "HS-54"
-msgstr "HS-54"
+msgstr " HS-54 "
 
 #: dat/assets/hs__5.xml:2
 msgid "HS - 5"
-msgstr "HS - 5"
+msgstr " HS - 5 "
 
 #: dat/assets/hs__5_1.xml:2
 msgid "HS - 5 1"
-msgstr "HS - 5 1"
+msgstr " HS - 5 1 "
 
 #: dat/assets/hs__5_1.xml:30
 msgid ""
@@ -5065,15 +5064,15 @@ msgstr ""
 
 #: dat/assets/humdrum_i.xml:2
 msgid "Humdrum I"
-msgstr "ハンドラム I"
+msgstr "ハンドラム I "
 
 #: dat/assets/humdrum_ii.xml:2
 msgid "Humdrum II"
-msgstr "ハンドラム II"
+msgstr "ハンドラム II "
 
 #: dat/assets/humdrum_iii.xml:2
 msgid "Humdrum III"
-msgstr "ハンドラム III"
+msgstr "ハンドラム III "
 
 #: dat/assets/hurada.xml:2
 msgid "Hurada"
@@ -5115,15 +5114,15 @@ msgstr ""
 
 #: dat/assets/hystera_i.xml:2
 msgid "Hystera I"
-msgstr "ヒステラ I"
+msgstr "ヒステラ I "
 
 #: dat/assets/hystera_ia.xml:2
 msgid "Hystera Ia"
-msgstr "ヒステラ Ia"
+msgstr "ヒステラ Ia "
 
 #: dat/assets/hystera_ii.xml:2
 msgid "Hystera II"
-msgstr "ヒステラ II"
+msgstr "ヒステラ II "
 
 #: dat/assets/hystera_outpost.xml:2
 msgid "Hystera Outpost"
@@ -5149,7 +5148,7 @@ msgstr ""
 
 #: dat/assets/hzmm01.xml:2
 msgid "HZMM-01"
-msgstr "HZMM-01"
+msgstr " HZMM-01 "
 
 #: dat/assets/hzmm01.xml:27
 msgid ""
@@ -5160,7 +5159,7 @@ msgstr ""
 
 #: dat/assets/hznss1.xml:2
 msgid "HZNSS-1"
-msgstr "HZNSS-1"
+msgstr " HZNSS-1 "
 
 #: dat/assets/hznss1.xml:28
 msgid ""
@@ -5180,7 +5179,7 @@ msgstr ""
 
 #: dat/assets/hznss2.xml:2
 msgid "HZNSS-2"
-msgstr "HZNSS-2"
+msgstr " HZNSS-2 "
 
 #: dat/assets/hznss2.xml:27
 msgid ""
@@ -5190,7 +5189,7 @@ msgstr ""
 
 #: dat/assets/hznss3.xml:2
 msgid "HZNSS-3"
-msgstr "HZNSS-3"
+msgstr " HZNSS-3 "
 
 #: dat/assets/hznss3.xml:27
 msgid ""
@@ -5272,19 +5271,19 @@ msgstr "インカ"
 
 #: dat/assets/infinity_iii.xml:2
 msgid "Infinity III"
-msgstr "インフィニティー III"
+msgstr "インフィニティー III "
 
 #: dat/assets/infinity_iv.xml:2
 msgid "Infinity IV"
-msgstr "インフィニティー IV"
+msgstr "インフィニティー IV "
 
 #: dat/assets/infinity_vii.xml:2
 msgid "Infinity VII"
-msgstr "インフィニティー VII"
+msgstr "インフィニティー VII "
 
 #: dat/assets/ingot_i.xml:2
 msgid "Ingot I"
-msgstr "インゴット I"
+msgstr "インゴット I "
 
 #: dat/assets/inios_station.xml:2
 msgid "Inios Station"
@@ -5310,7 +5309,7 @@ msgstr ""
 
 #: dat/assets/inss1.xml:2
 msgid "INSS-1"
-msgstr "INSS-1"
+msgstr " INSS-1 "
 
 #: dat/assets/inss1.xml:27
 msgid ""
@@ -5329,7 +5328,7 @@ msgstr ""
 
 #: dat/assets/inss2.xml:2
 msgid "INSS-2"
-msgstr "INSS-2"
+msgstr " INSS-2 "
 
 #: dat/assets/inss2.xml:27
 msgid ""
@@ -5349,7 +5348,7 @@ msgstr ""
 
 #: dat/assets/inss3.xml:2
 msgid "INSS-3"
-msgstr "INSS-3"
+msgstr " INSS-3 "
 
 #: dat/assets/inss3.xml:27
 msgid ""
@@ -5396,11 +5395,11 @@ msgstr ""
 
 #: dat/assets/jackson_ii.xml:2
 msgid "Jackson II"
-msgstr "ジャクソン II"
+msgstr "ジャクソン II "
 
 #: dat/assets/jackson_v.xml:2
 msgid "Jackson V"
-msgstr "ジャクソン V"
+msgstr "ジャクソン V "
 
 #: dat/assets/jacqueline.xml:2
 msgid "Jacqueline"
@@ -5446,19 +5445,19 @@ msgstr ""
 
 #: dat/assets/jade_i.xml:2
 msgid "Jade I"
-msgstr "ジェイド I"
+msgstr "ジェイド I "
 
 #: dat/assets/jade_ii.xml:2
 msgid "Jade II"
-msgstr "ジェイド II"
+msgstr "ジェイド II "
 
 #: dat/assets/jade_iii.xml:2
 msgid "Jade III"
-msgstr "ジェイド III"
+msgstr "ジェイド III "
 
 #: dat/assets/jade_vi.xml:2
 msgid "Jade VI"
-msgstr "ジェイド VI"
+msgstr "ジェイド VI "
 
 #: dat/assets/jaegnhild.xml:2
 msgid "Jaegnhild"
@@ -5668,11 +5667,11 @@ msgstr ""
 
 #: dat/assets/jervis_v.xml:2
 msgid "Jervis V"
-msgstr "ジャービス V"
+msgstr "ジャービス V "
 
 #: dat/assets/jervis_vii.xml:2
 msgid "Jervis VII"
-msgstr "ジャービス VII"
+msgstr "ジャービス VII "
 
 #: dat/assets/jezza.xml:2
 msgid "Jezza"
@@ -5821,27 +5820,27 @@ msgstr "カネル"
 
 #: dat/assets/kansas_i.xml:2
 msgid "Kansas I"
-msgstr "カンザス I"
+msgstr "カンザス I "
 
 #: dat/assets/kansas_iii.xml:2
 msgid "Kansas III"
-msgstr "カンザス III"
+msgstr "カンザス III "
 
 #: dat/assets/kansas_iv.xml:2
 msgid "Kansas IV"
-msgstr "カンザス IV"
+msgstr "カンザス IV "
 
 #: dat/assets/kansas_vi.xml:2
 msgid "Kansas VI"
-msgstr "カンザス VI"
+msgstr "カンザス VI "
 
 #: dat/assets/karman_i.xml:2
 msgid "Karman I"
-msgstr "カルマン I"
+msgstr "カルマン I "
 
 #: dat/assets/karman_ii.xml:2
 msgid "Karman II"
-msgstr "カルマン II"
+msgstr "カルマン II "
 
 #: dat/assets/karvua.xml:2
 msgid "Karvua"
@@ -5883,7 +5882,7 @@ msgstr ""
 
 #: dat/assets/katami_i.xml:2
 msgid "Katami I"
-msgstr "カタミ I"
+msgstr "カタミ I "
 
 #: dat/assets/katar.xml:2
 msgid "Katar"
@@ -5962,23 +5961,23 @@ msgstr "キラーログ"
 
 #: dat/assets/klantar_i.xml:2
 msgid "Klantar I"
-msgstr "クランター I"
+msgstr "クランター I "
 
 #: dat/assets/klantar_iii.xml:2
 msgid "Klantar III"
-msgstr "クランター III"
+msgstr "クランター III "
 
 #: dat/assets/kobopos_i.xml:2
 msgid "Kobopos I"
-msgstr "コボポス I"
+msgstr "コボポス I "
 
 #: dat/assets/kobopos_ii.xml:2
 msgid "Kobopos II"
-msgstr "コボポス II"
+msgstr "コボポス II "
 
 #: dat/assets/kobopos_iv.xml:2
 msgid "Kobopos IV"
-msgstr "コボポス IV"
+msgstr "コボポス IV "
 
 #: dat/assets/koga.xml:2
 msgid "Koga"
@@ -6000,27 +5999,27 @@ msgstr ""
 
 #: dat/assets/koralis_iv.xml:2
 msgid "Koralis IV"
-msgstr "コラリス IV"
+msgstr "コラリス IV "
 
 #: dat/assets/koralis_vi.xml:2
 msgid "Koralis VI"
-msgstr "コラリス VI"
+msgstr "コラリス VI "
 
 #: dat/assets/korifa_i.xml:2
 msgid "Korifa I"
-msgstr "コリファ I"
+msgstr "コリファ I "
 
 #: dat/assets/korifa_ia.xml:2
 msgid "Korifa Ia"
-msgstr "コリファ Ia"
+msgstr "コリファ Ia "
 
 #: dat/assets/korifa_ii.xml:2
 msgid "Korifa II"
-msgstr "コリファ II"
+msgstr "コリファ II "
 
 #: dat/assets/korifa_iii.xml:2
 msgid "Korifa III"
-msgstr "コリファ III"
+msgstr "コリファ III "
 
 #: dat/assets/kotori.xml:2
 msgid "Kotori"
@@ -6028,23 +6027,23 @@ msgstr "コトリ"
 
 #: dat/assets/kraft_i.xml:2
 msgid "Kraft I"
-msgstr "クラフト I"
+msgstr "クラフト I "
 
 #: dat/assets/kraft_ii.xml:2
 msgid "Kraft II"
-msgstr "クラフト II"
+msgstr "クラフト II "
 
 #: dat/assets/kraft_iv.xml:2
 msgid "Kraft IV"
-msgstr "クラフト IV"
+msgstr "クラフト IV "
 
 #: dat/assets/kraft_v.xml:2
 msgid "Kraft V"
-msgstr "クラフト V"
+msgstr "クラフト V "
 
 #: dat/assets/kraft_vi.xml:2
 msgid "Kraft VI"
-msgstr "クラフト VI"
+msgstr "クラフト VI "
 
 #: dat/assets/kramer.xml:2
 msgid "Kramer"
@@ -6067,27 +6066,27 @@ msgstr ""
 
 #: dat/assets/kretogg_i.xml:2
 msgid "Kretogg I"
-msgstr "クレトッグ I"
+msgstr "クレトッグ I "
 
 #: dat/assets/kretogg_ii.xml:2
 msgid "Kretogg II"
-msgstr "クレトッグ II"
+msgstr "クレトッグ II "
 
 #: dat/assets/kretogg_iii.xml:2
 msgid "Kretogg III"
-msgstr "クレトッグ III"
+msgstr "クレトッグ III "
 
 #: dat/assets/ksher_i.xml:2
 msgid "Ksher I"
-msgstr "クシャー I"
+msgstr "クシャー I "
 
 #: dat/assets/ksher_ii.xml:2
 msgid "Ksher II"
-msgstr "クシャー II"
+msgstr "クシャー II "
 
 #: dat/assets/ksher_iii.xml:2
 msgid "Ksher III"
-msgstr "クシャー III"
+msgstr "クシャー III "
 
 #: dat/assets/kunzler.xml:2
 msgid "Kunzler"
@@ -6095,7 +6094,7 @@ msgstr "クンツラー"
 
 #: dat/assets/kyo_iii.xml:2
 msgid "Kyo III"
-msgstr "キョー III"
+msgstr "キョー III "
 
 #: dat/assets/laarss.xml:2
 msgid "Laarss"
@@ -6143,11 +6142,11 @@ msgstr ""
 
 #: dat/assets/lapis_i.xml:2
 msgid "Lapis I"
-msgstr "ラピス I"
+msgstr "ラピス I "
 
 #: dat/assets/lapis_ii.xml:2
 msgid "Lapis II"
-msgstr "ラピス II"
+msgstr "ラピス II "
 
 #: dat/assets/lapra.xml:2
 msgid "Lapra"
@@ -6195,15 +6194,15 @@ msgstr ""
 
 #: dat/assets/lazuli_i.xml:2
 msgid "Lazuli I"
-msgstr "ラズリ I"
+msgstr "ラズリ I "
 
 #: dat/assets/lazuli_ia.xml:2
 msgid "Lazuli Ia"
-msgstr "ラズリ Ia"
+msgstr "ラズリ Ia "
 
 #: dat/assets/lazuli_iii.xml:2
 msgid "Lazuli III"
-msgstr "ラズリ III"
+msgstr "ラズリ III "
 
 #: dat/assets/leo.xml:2
 msgid "Leo"
@@ -6237,11 +6236,11 @@ msgstr "レビアタン"
 
 #: dat/assets/limbo_i.xml:2
 msgid "Limbo I"
-msgstr "リンボ I"
+msgstr "リンボ I "
 
 #: dat/assets/limbo_ii.xml:2
 msgid "Limbo II"
-msgstr "リンボ II"
+msgstr "リンボ II "
 
 #: dat/assets/lirith.xml:2
 msgid "Lirith"
@@ -6273,15 +6272,15 @@ msgstr ""
 
 #: dat/assets/longbow_i.xml:2
 msgid "Longbow I"
-msgstr "ロングボウ I"
+msgstr "ロングボウ I "
 
 #: dat/assets/longbow_iii.xml:2
 msgid "Longbow III"
-msgstr "ロングボウ III"
+msgstr "ロングボウ III "
 
 #: dat/assets/longbow_iv.xml:2
 msgid "Longbow IV"
-msgstr "ロングボウ IV"
+msgstr "ロングボウ IV "
 
 #: dat/assets/loramor.xml:2
 msgid "Lora-Mor"
@@ -6444,15 +6443,15 @@ msgstr "マレボルジェ"
 
 #: dat/assets/malebolge_iii.xml:2
 msgid "Malebolge III"
-msgstr "マレボルジェ III"
+msgstr "マレボルジェ III "
 
 #: dat/assets/malebolge_iv.xml:2
 msgid "Malebolge IV"
-msgstr "マレボルジェ IV"
+msgstr "マレボルジェ IV "
 
 #: dat/assets/malebolge_v.xml:2
 msgid "Malebolge V"
-msgstr "マレボルジェ V"
+msgstr "マレボルジェ V "
 
 #: dat/assets/manis.xml:2
 msgid "Manis"
@@ -6537,15 +6536,15 @@ msgstr ""
 
 #: dat/assets/margarita_i.xml:2
 msgid "Margarita I"
-msgstr "マリガリータ I"
+msgstr "マリガリータ I "
 
 #: dat/assets/margarita_ii.xml:2
 msgid "Margarita II"
-msgstr "マリガリータ II"
+msgstr "マリガリータ II "
 
 #: dat/assets/margarita_iv.xml:2
 msgid "Margarita IV"
-msgstr "マリガリータ IV"
+msgstr "マリガリータ IV "
 
 #: dat/assets/margot.xml:2
 msgid "Margot"
@@ -6593,27 +6592,27 @@ msgstr ""
 
 #: dat/assets/mason_i.xml:2
 msgid "Mason I"
-msgstr "メイソン I"
+msgstr "メイソン I "
 
 #: dat/assets/mason_ii.xml:2
 msgid "Mason II"
-msgstr "メイソン II"
+msgstr "メイソン II "
 
 #: dat/assets/mason_iv.xml:2
 msgid "Mason IV"
-msgstr "メイソン IV"
+msgstr "メイソン IV "
 
 #: dat/assets/massia_i.xml:2
 msgid "Massia I"
-msgstr "マシア I"
+msgstr "マシア I "
 
 #: dat/assets/massia_iv.xml:2
 msgid "Massia IV"
-msgstr "マシア IV"
+msgstr "マシア IV "
 
 #: dat/assets/massia_iva.xml:2
 msgid "Massia IVa"
-msgstr "マシア IVa"
+msgstr "マシア IVa "
 
 #: dat/assets/mastodon_station.xml:2
 msgid "Mastodon Station"
@@ -6635,15 +6634,15 @@ msgstr ""
 
 #: dat/assets/maus_i.xml:2
 msgid "Maus I"
-msgstr "モーズ I"
+msgstr "モーズ I "
 
 #: dat/assets/maus_ii.xml:2
 msgid "Maus II"
-msgstr "モーズ II"
+msgstr "モーズ II "
 
 #: dat/assets/maus_iii.xml:2
 msgid "Maus III"
-msgstr "モーズ III"
+msgstr "モーズ III "
 
 #: dat/assets/maus_station.xml:2
 msgid "Maus Station"
@@ -6768,19 +6767,19 @@ msgstr ""
 
 #: dat/assets/merisi_i.xml:2
 msgid "Merisi I"
-msgstr "メリジ I"
+msgstr "メリジ I "
 
 #: dat/assets/merisi_ii.xml:2
 msgid "Merisi II"
-msgstr "メリジ II"
+msgstr "メリジ II "
 
 #: dat/assets/merisi_iii.xml:2
 msgid "Merisi III"
-msgstr "メリジ III"
+msgstr "メリジ III "
 
 #: dat/assets/merisi_iv.xml:2
 msgid "Merisi IV"
-msgstr "メリジ IV"
+msgstr "メリジ IV "
 
 #: dat/assets/meya.xml:2
 msgid "Meya"
@@ -6788,15 +6787,15 @@ msgstr "メイヤ"
 
 #: dat/assets/mgg003.xml:2
 msgid "MGG-003"
-msgstr "MGG-003"
+msgstr " MGG-003 "
 
 #: dat/assets/mgg007.xml:2
 msgid "MGG-007"
-msgstr "MGG-007"
+msgstr " MGG-007 "
 
 #: dat/assets/mgg1294.xml:2
 msgid "MGG-1294"
-msgstr "MGG-1294"
+msgstr " MGG-1294 "
 
 #: dat/assets/mida_proxima.xml:2
 msgid "Mida Proxima"
@@ -6832,39 +6831,39 @@ msgstr ""
 
 #: dat/assets/mirror_i.xml:2
 msgid "Mirror I"
-msgstr "ミラー I"
+msgstr "ミラー I "
 
 #: dat/assets/mirror_iv.xml:2
 msgid "Mirror IV"
-msgstr "ミラー IV"
+msgstr "ミラー IV "
 
 #: dat/assets/mirror_vi.xml:2
 msgid "Mirror VI"
-msgstr "ミラー VI"
+msgstr "ミラー VI "
 
 #: dat/assets/mirror_via.xml:2
 msgid "Mirror VIa"
-msgstr "ミラー VIa"
+msgstr "ミラー VIa "
 
 #: dat/assets/mirror_vib.xml:2
 msgid "Mirror VIb"
-msgstr "ミラー VIb"
+msgstr "ミラー VIb "
 
 #: dat/assets/mizar_iii.xml:2
 msgid "Mizar III"
-msgstr "ミザール III"
+msgstr "ミザール III "
 
 #: dat/assets/mizar_iv.xml:2
 msgid "Mizar IV"
-msgstr "ミザール IV"
+msgstr "ミザール IV "
 
 #: dat/assets/mizar_vi.xml:2
 msgid "Mizar VI"
-msgstr "ミザール VI"
+msgstr "ミザール VI "
 
 #: dat/assets/mk.xml:2
 msgid "M.K."
-msgstr "M.K."
+msgstr " M.K. "
 
 #: dat/assets/mk.xml:29
 msgid ""
@@ -6927,15 +6926,15 @@ msgstr ""
 
 #: dat/assets/monogram_iii.xml:2
 msgid "Monogram III"
-msgstr "モノグラム III"
+msgstr "モノグラム III "
 
 #: dat/assets/monogram_iv.xml:2
 msgid "Monogram IV"
-msgstr "モノグラム IV"
+msgstr "モノグラム IV "
 
 #: dat/assets/monogram_v.xml:2
 msgid "Monogram V"
-msgstr "モノグラム V"
+msgstr "モノグラム V "
 
 #: dat/assets/monsoon_station.xml:2
 msgid "Monsoon Station"
@@ -6957,23 +6956,23 @@ msgstr ""
 
 #: dat/assets/moor_i.xml:2
 msgid "Moor I"
-msgstr "ムーア I"
+msgstr "ムーア I "
 
 #: dat/assets/moor_ii.xml:2
 msgid "Moor II"
-msgstr "ムーア II"
+msgstr "ムーア II "
 
 #: dat/assets/moor_iii.xml:2
 msgid "Moor III"
-msgstr "ムーア III"
+msgstr "ムーア III "
 
 #: dat/assets/moordra_i.xml:2
 msgid "Moordra I"
-msgstr "ムーアドラ I"
+msgstr "ムーアドラ I "
 
 #: dat/assets/moordra_ii.xml:2
 msgid "Moordra II"
-msgstr "ムーアドラ II"
+msgstr "ムーアドラ II "
 
 #: dat/assets/moorline_station.xml:2
 msgid "Moorline Station"
@@ -7177,43 +7176,43 @@ msgstr ""
 
 #: dat/assets/narousse_i.xml:2
 msgid "Narousse I"
-msgstr "ナルース I"
+msgstr "ナルース I "
 
 #: dat/assets/narousse_ii.xml:2
 msgid "Narousse II"
-msgstr "ナルース II"
+msgstr "ナルース II "
 
 #: dat/assets/narousse_iii.xml:2
 msgid "Narousse III"
-msgstr "ナルース III"
+msgstr "ナルース III "
 
 #: dat/assets/narousse_iiia.xml:2
 msgid "Narousse IIIa"
-msgstr "ナルース IIIa"
+msgstr "ナルース IIIa "
 
 #: dat/assets/narousse_iv.xml:2
 msgid "Narousse IV"
-msgstr "ナルース IV"
+msgstr "ナルース IV "
 
 #: dat/assets/nartur_i.xml:2
 msgid "Nartur I"
-msgstr "ナーチャー I"
+msgstr "ナーチャー I "
 
 #: dat/assets/nartur_ii.xml:2
 msgid "Nartur II"
-msgstr "ナーチャー II"
+msgstr "ナーチャー II "
 
 #: dat/assets/nartur_iii.xml:2
 msgid "Nartur III"
-msgstr "ナーチャー III"
+msgstr "ナーチャー III "
 
 #: dat/assets/nartur_iv.xml:2
 msgid "Nartur IV"
-msgstr "ナーチャー IV"
+msgstr "ナーチャー IV "
 
 #: dat/assets/nartur_iva.xml:2
 msgid "Nartur IVa"
-msgstr "ナーチャー IVa"
+msgstr "ナーチャー IVa "
 
 #: dat/assets/nasano.xml:2
 msgid "Nasano"
@@ -7221,15 +7220,15 @@ msgstr "ナサノ"
 
 #: dat/assets/nava_i.xml:2
 msgid "Nava I"
-msgstr "ナーバ I"
+msgstr "ナーバ I "
 
 #: dat/assets/neexi_i.xml:2
 msgid "Neexi I"
-msgstr "ニークシ I"
+msgstr "ニークシ I "
 
 #: dat/assets/neexi_ii.xml:2
 msgid "Neexi II"
-msgstr "ニークシ II"
+msgstr "ニークシ II "
 
 #: dat/assets/neo_pomerania.xml:2
 msgid "Neo Pomerania"
@@ -7254,11 +7253,11 @@ msgstr ""
 
 #: dat/assets/neon_i.xml:2
 msgid "Neon I"
-msgstr "ネオン I"
+msgstr "ネオン I "
 
 #: dat/assets/neon_iii.xml:2
 msgid "Neon III"
-msgstr "ネオン III"
+msgstr "ネオン III "
 
 #: dat/assets/nera.xml:2
 msgid "Nera"
@@ -7392,11 +7391,11 @@ msgstr "ニュートマス"
 
 #: dat/assets/newmarch_a1.xml:2
 msgid "Newmarch A-1"
-msgstr "ニューマーチ A-1"
+msgstr "ニューマーチ A-1 "
 
 #: dat/assets/newmarch_d3.xml:2
 msgid "Newmarch D-3"
-msgstr "ニューマーチ D-3"
+msgstr "ニューマーチ D-3 "
 
 #: dat/assets/niflheim.xml:2
 msgid "Niflheim"
@@ -7423,11 +7422,11 @@ msgstr ""
 
 #: dat/assets/niger_i.xml:2
 msgid "Niger I"
-msgstr "ニジェール I"
+msgstr "ニジェール I "
 
 #: dat/assets/niger_ii.xml:2
 msgid "Niger II"
-msgstr "ニジェール II"
+msgstr "ニジェール II "
 
 #: dat/assets/nixa.xml:2
 msgid "Nixa"
@@ -7451,23 +7450,23 @@ msgstr ""
 
 #: dat/assets/nixon_i.xml:2
 msgid "Nixon I"
-msgstr "ニクソン I"
+msgstr "ニクソン I "
 
 #: dat/assets/nixon_ii.xml:2
 msgid "Nixon II"
-msgstr "ニクソン II"
+msgstr "ニクソン II "
 
 #: dat/assets/nixon_iii.xml:2
 msgid "Nixon III"
-msgstr "ニクソン III"
+msgstr "ニクソン III "
 
 #: dat/assets/nixon_iv.xml:2
 msgid "Nixon IV"
-msgstr "ニクソン IV"
+msgstr "ニクソン IV "
 
 #: dat/assets/nixon_v.xml:2
 msgid "Nixon V"
-msgstr "ニクソン V"
+msgstr "ニクソン V "
 
 #: dat/assets/nocalin.xml:2
 msgid "Nocalin"
@@ -7549,7 +7548,7 @@ msgstr ""
 
 #: dat/assets/norpin_ii.xml:2
 msgid "Norpin II"
-msgstr "ノルピン II"
+msgstr "ノルピン II "
 
 #: dat/assets/norpin_ii.xml:30
 msgid ""
@@ -7568,15 +7567,15 @@ msgstr ""
 
 #: dat/assets/norpin_iv.xml:2
 msgid "Norpin IV"
-msgstr "ノルピン IV"
+msgstr "ノルピン IV "
 
 #: dat/assets/nougat_i.xml:2
 msgid "Nougat I"
-msgstr "ヌガー I"
+msgstr "ヌガー I "
 
 #: dat/assets/nougat_ii.xml:2
 msgid "Nougat II"
-msgstr "ヌガー II"
+msgstr "ヌガー II "
 
 #: dat/assets/nova_shakar.xml:2
 msgid "Nova Shakar"
@@ -7600,7 +7599,7 @@ msgstr ""
 
 #: dat/assets/ns1.xml:2
 msgid "NS-1"
-msgstr "NS-1"
+msgstr " NS-1 "
 
 #: dat/assets/ns1.xml:26 dat/assets/ns144.xml:26 dat/assets/ns27.xml:26
 #: dat/assets/ns42.xml:26 dat/assets/ns63.xml:26
@@ -7611,19 +7610,19 @@ msgstr ""
 
 #: dat/assets/ns144.xml:2
 msgid "NS-144"
-msgstr "NS-144"
+msgstr " NS-144 "
 
 #: dat/assets/ns27.xml:2
 msgid "NS-27"
-msgstr "NS-27"
+msgstr " NS-27 "
 
 #: dat/assets/ns42.xml:2
 msgid "NS-42"
-msgstr "NS-42"
+msgstr " NS-42 "
 
 #: dat/assets/ns63.xml:2
 msgid "NS-63"
-msgstr "NS-63"
+msgstr " NS-63 "
 
 #: dat/assets/obelisk_station.xml:2
 msgid "Obelisk Station"
@@ -7660,15 +7659,15 @@ msgstr ""
 
 #: dat/assets/oberon_i.xml:2
 msgid "Oberon I"
-msgstr "オベロン I"
+msgstr "オベロン I "
 
 #: dat/assets/oberon_iii.xml:2
 msgid "Oberon III"
-msgstr "オベロン III"
+msgstr "オベロン III "
 
 #: dat/assets/oberon_iv.xml:2
 msgid "Oberon IV"
-msgstr "オベロン IV"
+msgstr "オベロン IV "
 
 #: dat/assets/ocata.xml:2
 msgid "Ocata"
@@ -7680,7 +7679,7 @@ msgstr "オドンガ"
 
 #: dat/assets/odonga_m1.xml:2
 msgid "Odonga m1"
-msgstr "オドンガ m1"
+msgstr "オドンガ m1 "
 
 #: dat/assets/odonga_m1.xml:29
 msgid ""
@@ -7906,7 +7905,7 @@ msgstr "オパ"
 
 #: dat/assets/opal_i.xml:2
 msgid "Opal I"
-msgstr "オパール I"
+msgstr "オパール I "
 
 #: dat/assets/opal_station.xml:2
 msgid "Opal Station"
@@ -8009,83 +8008,83 @@ msgstr ""
 
 #: dat/assets/overture_i.xml:2
 msgid "Overture I"
-msgstr "オーバーチュア I"
+msgstr "オーバーチュア I "
 
 #: dat/assets/overture_ii.xml:2
 msgid "Overture II"
-msgstr "オーバーチュア II"
+msgstr "オーバーチュア II "
 
 #: dat/assets/overture_iii.xml:2
 msgid "Overture III"
-msgstr "オーバーチュア III"
+msgstr "オーバーチュア III "
 
 #: dat/assets/ozogo_x.xml:2
 msgid "Ozogo X"
-msgstr "オゾゴ X"
+msgstr "オゾゴ X "
 
 #: dat/assets/p0125.xml:2
 msgid "P0125"
-msgstr "P0125"
+msgstr " P0125 "
 
 #: dat/assets/p2020.xml:2
 msgid "P2020"
-msgstr "P2020"
+msgstr " P2020 "
 
 #: dat/assets/p2021.xml:2
 msgid "P2021"
-msgstr "P2021"
+msgstr " P2021 "
 
 #: dat/assets/p2022.xml:2
 msgid "P2022"
-msgstr "P2022"
+msgstr " P2022 "
 
 #: dat/assets/p9122.xml:2
 msgid "P9122"
-msgstr "P9122"
+msgstr " P9122 "
 
 #: dat/assets/p9234.xml:2
 msgid "P9234"
-msgstr "P9234"
+msgstr " P9234 "
 
 #: dat/assets/palin_i.xml:2
 msgid "Palin I"
-msgstr "ペイリン I"
+msgstr "ペイリン I "
 
 #: dat/assets/palin_ii.xml:2
 msgid "Palin II"
-msgstr "ペイリン II"
+msgstr "ペイリン II "
 
 #: dat/assets/palin_iii.xml:2
 msgid "Palin III"
-msgstr "ペイリン III"
+msgstr "ペイリン III "
 
 #: dat/assets/palovi_ii.xml:2
 msgid "Palovi II"
-msgstr "パロビ II"
+msgstr "パロビ II "
 
 #: dat/assets/palovi_iv.xml:2
 msgid "Palovi IV"
-msgstr "パロビ IV"
+msgstr "パロビ IV "
 
 #: dat/assets/palovi_v.xml:2
 msgid "Palovi V"
-msgstr "パロビ V"
+msgstr "パロビ V "
 
 #: dat/assets/paradox_ii.xml:2
 msgid "Paradox II"
-msgstr "パラドックス II"
+msgstr "パラドックス II "
 
 #: dat/assets/paradox_iii.xml:2
 msgid "Paradox III"
-msgstr "パラドックス III"
+msgstr "パラドックス III "
 
 #: dat/assets/paradox_iiia.xml:2
 msgid "Paradox III-a"
-msgstr "パラドックス III-a"
+msgstr "パラドックス III-a "
 
 #: dat/assets/paradox_v.xml:2
 msgid "Paradox V"
-msgstr "パラドックス V"
+msgstr "パラドックス V "
 
 #: dat/assets/passir.xml:2
 msgid "Passir"
@@ -8109,15 +8108,15 @@ msgstr ""
 
 #: dat/assets/pastor_ii.xml:2
 msgid "Pastor II"
-msgstr "パースター II"
+msgstr "パースター II "
 
 #: dat/assets/pastor_iix.xml:2
 msgid "Pastor IIX"
-msgstr "パースター IIX"
+msgstr "パースター IIX "
 
 #: dat/assets/pastor_vi.xml:2
 msgid "Pastor VI"
-msgstr "パースター VI"
+msgstr "パースター VI "
 
 #: dat/assets/pauldur.xml:2
 msgid "Pauldur"
@@ -8182,19 +8181,19 @@ msgstr ""
 
 #: dat/assets/peogas_ii.xml:2
 msgid "Peogas II"
-msgstr "ペオガス II"
+msgstr "ペオガス II "
 
 #: dat/assets/peogas_iii.xml:2
 msgid "Peogas III"
-msgstr "ペオガス III"
+msgstr "ペオガス III "
 
 #: dat/assets/peogas_iv.xml:2
 msgid "Peogas IV"
-msgstr "ペオガス IV"
+msgstr "ペオガス IV "
 
 #: dat/assets/peogas_v.xml:2
 msgid "Peogas V"
-msgstr "ペオガス V"
+msgstr "ペオガス V "
 
 #: dat/assets/percola.xml:2
 msgid "Percola"
@@ -8308,23 +8307,23 @@ msgstr ""
 
 #: dat/assets/pike_i.xml:2
 msgid "Pike I"
-msgstr "パイク I"
+msgstr "パイク I "
 
 #: dat/assets/pilatis_i.xml:2
 msgid "Pilatis I"
-msgstr "ピラティス I"
+msgstr "ピラティス I "
 
 #: dat/assets/pilatis_ii.xml:2
 msgid "Pilatis II"
-msgstr "ピラティス II"
+msgstr "ピラティス II "
 
 #: dat/assets/pilatis_iii.xml:2
 msgid "Pilatis III"
-msgstr "ピラティス III"
+msgstr "ピラティス III "
 
 #: dat/assets/point_zero_0.xml:2
 msgid "Point Zero 0"
-msgstr "ポイント・ゼロ 0"
+msgstr "ポイント・ゼロ 0 "
 
 #: dat/assets/point_zero_station.xml:2
 msgid "Point Zero Station"
@@ -8387,11 +8386,11 @@ msgstr ""
 
 #: dat/assets/poller_d2.xml:2
 msgid "Poller D-2"
-msgstr "ポラー D-2"
+msgstr "ポラー D-2 "
 
 #: dat/assets/poller_i1.xml:2
 msgid "Poller I-1"
-msgstr "ポラー I-1"
+msgstr "ポラー I-1 "
 
 #: dat/assets/porro_farming_station.xml:2
 msgid "Porro Farming Station"
@@ -8415,15 +8414,15 @@ msgstr ""
 
 #: dat/assets/porro_ii.xml:2
 msgid "Porro II"
-msgstr "ポーロ II"
+msgstr "ポーロ II "
 
 #: dat/assets/porro_iii.xml:2
 msgid "Porro III"
-msgstr "ポーロ III"
+msgstr "ポーロ III "
 
 #: dat/assets/possum_ii.xml:2
 msgid "Possum II"
-msgstr "ポッサム II"
+msgstr "ポッサム II "
 
 #: dat/assets/praxis.xml:2
 msgid "Praxis"
@@ -8506,15 +8505,15 @@ msgstr ""
 
 #: dat/assets/provectus_nova_i.xml:2
 msgid "Provectus Nova I"
-msgstr "プロベクタス・ノバ I"
+msgstr "プロベクタス・ノバ I "
 
 #: dat/assets/provectus_nova_ia.xml:2
 msgid "Provectus Nova Ia"
-msgstr "プロベクタス・ノバ Ia"
+msgstr "プロベクタス・ノバ Ia "
 
 #: dat/assets/prp1.xml:2
 msgid "PRP-1"
-msgstr "PRP-1"
+msgstr " PRP-1 "
 
 #: dat/assets/prp1.xml:28 dat/assets/prp2.xml:28 dat/assets/prp3.xml:27
 #: dat/assets/prp4.xml:28
@@ -8534,47 +8533,47 @@ msgstr ""
 
 #: dat/assets/prp2.xml:2
 msgid "PRP-2"
-msgstr "PRP-2"
+msgstr " PRP-2 "
 
 #: dat/assets/prp3.xml:2
 msgid "PRP-3"
-msgstr "PRP-3"
+msgstr " PRP-3 "
 
 #: dat/assets/prp4.xml:2
 msgid "PRP-4"
-msgstr "PRP-4"
+msgstr " PRP-4 "
 
 #: dat/assets/pso_1234.xml:2
 msgid "PSO 1234"
-msgstr "PSO 1234"
+msgstr " PSO 1234 "
 
 #: dat/assets/pso_1251.xml:2
 msgid "PSO 1251"
-msgstr "PSO 1251"
+msgstr " PSO 1251 "
 
 #: dat/assets/pso_1324.xml:2
 msgid "PSO 1324"
-msgstr "PSO 1324"
+msgstr " PSO 1324 "
 
 #: dat/assets/pso_2212.xml:2
 msgid "PSO 2212"
-msgstr "PSO 2212"
+msgstr " PSO 2212 "
 
 #: dat/assets/pso_2345.xml:2
 msgid "PSO 2345"
-msgstr "PSO 2345"
+msgstr " PSO 2345 "
 
 #: dat/assets/pso_2356.xml:2
 msgid "PSO 2356"
-msgstr "PSO 2356"
+msgstr " PSO 2356 "
 
 #: dat/assets/pso_2434.xml:2
 msgid "PSO 2434"
-msgstr "PSO 2434"
+msgstr " PSO 2434 "
 
 #: dat/assets/pso_monitor.xml:2
 msgid "PSO Monitor"
-msgstr "PSO 監視所"
+msgstr " PSO 監視所"
 
 #: dat/assets/pso_monitor.xml:25
 msgid ""
@@ -8586,35 +8585,35 @@ msgstr ""
 
 #: dat/assets/pt237_iii.xml:2
 msgid "PT237 III"
-msgstr "PT237 III"
+msgstr " PT237 III "
 
 #: dat/assets/pt237_iv.xml:2
 msgid "PT237 IV"
-msgstr "PT237 IV"
+msgstr " PT237 IV "
 
 #: dat/assets/pt413_vi.xml:2
 msgid "PT413 VI"
-msgstr "PT413 VI"
+msgstr " PT413 VI "
 
 #: dat/assets/pt413_viii.xml:2
 msgid "PT413 VIII"
-msgstr "PT413 VIII"
+msgstr " PT413 VIII "
 
 #: dat/assets/pt612_i.xml:2
 msgid "PT612 I"
-msgstr "PT612 I"
+msgstr " PT612 I "
 
 #: dat/assets/pt612_ii.xml:2
 msgid "PT612 II"
-msgstr "PT612 II"
+msgstr " PT612 II "
 
 #: dat/assets/pt612_iii.xml:2
 msgid "PT612 III"
-msgstr "PT612 III"
+msgstr " PT612 III "
 
 #: dat/assets/pt612_iv.xml:2
 msgid "PT612 IV"
-msgstr "PT612 IV"
+msgstr " PT612 IV "
 
 #: dat/assets/ptolemy.xml:2
 msgid "Ptolemy"
@@ -8622,23 +8621,23 @@ msgstr "プトレマイオス"
 
 #: dat/assets/pudas_i.xml:2
 msgid "Pudas I"
-msgstr "プダス I"
+msgstr "プダス I "
 
 #: dat/assets/pudas_ii.xml:2
 msgid "Pudas II"
-msgstr "プダス II"
+msgstr "プダス II "
 
 #: dat/assets/pultatis_i.xml:2
 msgid "Pultatis I"
-msgstr "プルタティス I"
+msgstr "プルタティス I "
 
 #: dat/assets/pultatis_ii.xml:2
 msgid "Pultatis II"
-msgstr "プルタティス II"
+msgstr "プルタティス II "
 
 #: dat/assets/pultatis_iii.xml:2
 msgid "Pultatis III"
-msgstr "プルタティス III"
+msgstr "プルタティス III "
 
 #: dat/assets/pund.xml:2
 msgid "Pund"
@@ -8646,15 +8645,15 @@ msgstr "プンド"
 
 #: dat/assets/qex_ii.xml:2
 msgid "Qex II"
-msgstr "ケクス II"
+msgstr "ケクス II "
 
 #: dat/assets/qex_iv.xml:2
 msgid "Qex IV"
-msgstr "ケクス IV"
+msgstr "ケクス IV "
 
 #: dat/assets/qex_v.xml:2
 msgid "Qex V"
-msgstr "ケクス V"
+msgstr "ケクス V "
 
 #: dat/assets/qoman.xml:2
 msgid "Qoman"
@@ -8716,15 +8715,15 @@ msgstr ""
 
 #: dat/assets/quai_i.xml:2
 msgid "Quai I"
-msgstr "クアイ I"
+msgstr "クアイ I "
 
 #: dat/assets/quai_ii.xml:2
 msgid "Quai II"
-msgstr "クアイ II"
+msgstr "クアイ II "
 
 #: dat/assets/quai_iia.xml:2
 msgid "Quai IIa"
-msgstr "クアイ IIa"
+msgstr "クアイ IIa "
 
 #: dat/assets/qulam_primus.xml:2
 msgid "Qulam Primus"
@@ -8760,19 +8759,19 @@ msgstr "ラチェカ・セクンダス"
 
 #: dat/assets/radix_i.xml:2
 msgid "Radix I"
-msgstr "レイディクス I"
+msgstr "レイディクス I "
 
 #: dat/assets/radix_ii.xml:2
 msgid "Radix II"
-msgstr "レイディクス II"
+msgstr "レイディクス II "
 
 #: dat/assets/radix_iii.xml:2
 msgid "Radix III"
-msgstr "レイディクス III"
+msgstr "レイディクス III "
 
 #: dat/assets/raelid_ii.xml:2
 msgid "Raelid II"
-msgstr "レーリド II"
+msgstr "レーリド II "
 
 #: dat/assets/raelid_outpost.xml:2 dat/ships/raelid_outpost.xml:2
 msgid "Raelid Outpost"
@@ -8902,11 +8901,11 @@ msgstr "なし"
 
 #: dat/assets/rei_ii.xml:2
 msgid "Rei II"
-msgstr "レイ II"
+msgstr "レイ II "
 
 #: dat/assets/rei_iii.xml:2
 msgid "Rei III"
-msgstr "レイ III"
+msgstr "レイ III "
 
 #: dat/assets/reidd.xml:2
 msgid "Reidd"
@@ -8950,15 +8949,15 @@ msgstr ""
 
 #: dat/assets/rhu_ii.xml:2
 msgid "Rhu II"
-msgstr "ルー II"
+msgstr "ルー II "
 
 #: dat/assets/rhu_iii.xml:2
 msgid "Rhu III"
-msgstr "ルー III"
+msgstr "ルー III "
 
 #: dat/assets/rhu_iv.xml:2
 msgid "Rhu IV"
-msgstr "ルー IV"
+msgstr "ルー IV "
 
 #: dat/assets/ridrack.xml:2
 msgid "Ridrack"
@@ -9096,11 +9095,11 @@ msgstr ""
 
 #: dat/assets/rotide_i.xml:2
 msgid "Rotide I"
-msgstr "ロタイド I"
+msgstr "ロタイド I "
 
 #: dat/assets/rotide_ii.xml:2
 msgid "Rotide II"
-msgstr "ロタイド II"
+msgstr "ロタイド II "
 
 #: dat/assets/ruadan_bastion.xml:2
 msgid "Ruadan Bastion"
@@ -9118,15 +9117,15 @@ msgstr "ルアダン・ガンマ"
 
 #: dat/assets/ruadan_ii.xml:2
 msgid "Ruadan II"
-msgstr "ルアダン II"
+msgstr "ルアダン II "
 
 #: dat/assets/ruadan_j1.xml:2
 msgid "Ruadan J-1"
-msgstr "ルアダン J-1"
+msgstr "ルアダン J-1 "
 
 #: dat/assets/ruadan_j2.xml:2
 msgid "Ruadan J-2"
-msgstr "ルアダン J-2"
+msgstr "ルアダン J-2 "
 
 #: dat/assets/ruadan_prime.xml:2 dat/events/discovery.lua:60
 msgid "Ruadan Prime"
@@ -9227,71 +9226,71 @@ msgstr ""
 
 #: dat/assets/ruttwi_i.xml:2
 msgid "Ruttwi I"
-msgstr "ラットウィ I"
+msgstr "ラットウィ I "
 
 #: dat/assets/ruttwi_ii.xml:2
 msgid "Ruttwi II"
-msgstr "ラットウィ II"
+msgstr "ラットウィ II "
 
 #: dat/assets/s00000.xml:2
 msgid "S00000"
-msgstr "S00000"
+msgstr " S00000 "
 
 #: dat/assets/s00018.xml:2
 msgid "S00018"
-msgstr "S00018"
+msgstr " S00018 "
 
 #: dat/assets/s00522.xml:2
 msgid "S00522"
-msgstr "S00522"
+msgstr " S00522 "
 
 #: dat/assets/s00653.xml:2
 msgid "S00653"
-msgstr "S00653"
+msgstr " S00653 "
 
 #: dat/assets/s13024.xml:2
 msgid "S13024"
-msgstr "S13024"
+msgstr " S13024 "
 
 #: dat/assets/s23001.xml:2
 msgid "S23001"
-msgstr "S23001"
+msgstr " S23001 "
 
 #: dat/assets/s23491.xml:2
 msgid "S23491"
-msgstr "S23491"
+msgstr " S23491 "
 
 #: dat/assets/s38729.xml:2
 msgid "S38729"
-msgstr "S38729"
+msgstr " S38729 "
 
 #: dat/assets/s49281.xml:2
 msgid "S49281"
-msgstr "S49281"
+msgstr " S49281 "
 
 #: dat/assets/s49335.xml:2
 msgid "S49335"
-msgstr "S49335"
+msgstr " S49335 "
 
 #: dat/assets/s49588.xml:2
 msgid "S49588"
-msgstr "S49588"
+msgstr " S49588 "
 
 #: dat/assets/s58309.xml:2
 msgid "S58309"
-msgstr "S58309"
+msgstr " S58309 "
 
 #: dat/assets/s72288.xml:2
 msgid "S72288"
-msgstr "S72288"
+msgstr " S72288 "
 
 #: dat/assets/s72839.xml:2
 msgid "S72839"
-msgstr "S72839"
+msgstr " S72839 "
 
 #: dat/assets/s91456.xml:2
 msgid "S91456"
-msgstr "S91456"
+msgstr " S91456 "
 
 #: dat/assets/sabe.xml:2
 msgid "Sabe"
@@ -9417,19 +9416,19 @@ msgstr ""
 
 #: dat/assets/sarcophagus_i.xml:2
 msgid "Sarcophagus I"
-msgstr "サーコファガス I"
+msgstr "サーコファガス I "
 
 #: dat/assets/sarcophagus_ii.xml:2
 msgid "Sarcophagus II"
-msgstr "サーコファガス II"
+msgstr "サーコファガス II "
 
 #: dat/assets/sarcophagus_iib.xml:2
 msgid "Sarcophagus IIb"
-msgstr "サーコファガス IIb"
+msgstr "サーコファガス IIb "
 
 #: dat/assets/sarcophagus_v.xml:2
 msgid "Sarcophagus V"
-msgstr "サーコファガス V"
+msgstr "サーコファガス V "
 
 #: dat/assets/sarrii_station.xml:2
 msgid "Sarrii Station"
@@ -9456,11 +9455,11 @@ msgstr ""
 
 #: dat/assets/scarlet_ii.xml:2
 msgid "Scarlet II"
-msgstr "スカーレット II"
+msgstr "スカーレット II "
 
 #: dat/assets/scarlett_iii.xml:2
 msgid "Scarlett III"
-msgstr "スカーレット III"
+msgstr "スカーレット III "
 
 #: dat/assets/scinfaxi.xml:2
 msgid "Scinfaxi"
@@ -9551,11 +9550,11 @@ msgstr ""
 
 #: dat/assets/seiben_iv.xml:2
 msgid "Seiben IV"
-msgstr "セイベン IV"
+msgstr "セイベン IV "
 
 #: dat/assets/seiben_xi.xml:2
 msgid "Seiben XI"
-msgstr "セイベン XI"
+msgstr "セイベン XI "
 
 #: dat/assets/selphod.xml:2
 msgid "Selphod"
@@ -9599,11 +9598,11 @@ msgstr ""
 
 #: dat/assets/sergio_vix_i.xml:2
 msgid "Sergio Vix I"
-msgstr "セルジオ・ビクス I"
+msgstr "セルジオ・ビクス I "
 
 #: dat/assets/sergio_vix_iii.xml:2
 msgid "Sergio Vix III"
-msgstr "セルジオ・ビクス III"
+msgstr "セルジオ・ビクス III "
 
 #: dat/assets/serria.xml:2
 msgid "Serria"
@@ -9653,11 +9652,11 @@ msgstr ""
 
 #: dat/assets/shakar_i.xml:2
 msgid "Shakar I"
-msgstr "シャカー I"
+msgstr "シャカー I "
 
 #: dat/assets/shakar_iii.xml:2
 msgid "Shakar III"
-msgstr "シャカー III"
+msgstr "シャカー III "
 
 #: dat/assets/sharak.xml:2
 msgid "Sharak"
@@ -9731,23 +9730,23 @@ msgstr ""
 
 #: dat/assets/shickhaw_i.xml:2
 msgid "Shickhaw I"
-msgstr "シックホー I"
+msgstr "シックホー I "
 
 #: dat/assets/shickhaw_ii.xml:2
 msgid "Shickhaw II"
-msgstr "シックホー II"
+msgstr "シックホー II "
 
 #: dat/assets/shickhaw_iv.xml:2
 msgid "Shickhaw IV"
-msgstr "シックホー IV"
+msgstr "シックホー IV "
 
 #: dat/assets/shikima_ii.xml:2
 msgid "Shikima II"
-msgstr "シキマ II"
+msgstr "シキマ II "
 
 #: dat/assets/shikima_iii.xml:2
 msgid "Shikima III"
-msgstr "シキマ III"
+msgstr "シキマ III "
 
 #: dat/assets/shion.xml:2
 msgid "Shion"
@@ -9929,15 +9928,15 @@ msgstr ""
 
 #: dat/assets/sirou_i.xml:2
 msgid "Sirou I"
-msgstr "シロウ I"
+msgstr "シロウ I "
 
 #: dat/assets/sirou_ii.xml:2
 msgid "Sirou II"
-msgstr "シロウ II"
+msgstr "シロウ II "
 
 #: dat/assets/sirou_vi.xml:2
 msgid "Sirou VI"
-msgstr "シロウ VI"
+msgstr "シロウ VI "
 
 #: dat/assets/sixbat_station.xml:2
 msgid "Sixbat Station"
@@ -10001,7 +10000,7 @@ msgstr ""
 
 #: dat/assets/sleuth_ii.xml:2
 msgid "Sleuth II"
-msgstr "スルース II"
+msgstr "スルース II "
 
 #: dat/assets/slofeldt.xml:2
 msgid "Slofeldt"
@@ -10089,11 +10088,11 @@ msgstr ""
 
 #: dat/assets/sollav_ii.xml:2
 msgid "Sollav II"
-msgstr "ソラブ II"
+msgstr "ソラブ II "
 
 #: dat/assets/sollav_vi.xml:2
 msgid "Sollav VI"
-msgstr "ソラブ VI"
+msgstr "ソラブ VI "
 
 #: dat/assets/sollebor.xml:2
 msgid "Sollebor"
@@ -10313,15 +10312,15 @@ msgstr ""
 
 #: dat/assets/starlight_end_i.xml:2
 msgid "Starlight End I"
-msgstr "スターライト・エンド I"
+msgstr "スターライト・エンド I "
 
 #: dat/assets/starlight_end_ii.xml:2
 msgid "Starlight End II"
-msgstr "スターライト・エンド II"
+msgstr "スターライト・エンド II "
 
 #: dat/assets/starlight_end_iii.xml:2
 msgid "Starlight End III"
-msgstr "スターライト・エンド III"
+msgstr "スターライト・エンド III "
 
 #: dat/assets/stein.xml:2
 msgid "Stein"
@@ -10377,7 +10376,7 @@ msgstr ""
 
 #: dat/assets/stelman_i3.xml:2
 msgid "Stelman I-3"
-msgstr "ステルマン I-3"
+msgstr "ステルマン I-3 "
 
 #: dat/assets/sternguard.xml:2
 msgid "Sternguard"
@@ -10400,7 +10399,7 @@ msgstr ""
 
 #: dat/assets/stint_iii.xml:2
 msgid "Stint III"
-msgstr "スティント III"
+msgstr "スティント III "
 
 #: dat/assets/stoma.xml:2
 msgid "Stoma"
@@ -10449,7 +10448,7 @@ msgstr ""
 
 #: dat/assets/straight_row_ii.xml:2
 msgid "Straight Row II"
-msgstr "ストレート・ロー II"
+msgstr "ストレート・ロー II "
 
 #: dat/assets/strangelove_lab.xml:2
 msgid "Strangelove Lab"
@@ -10521,27 +10520,27 @@ msgstr ""
 
 #: dat/assets/suk_ii.xml:2
 msgid "Suk II"
-msgstr "スーク II"
+msgstr "スーク II "
 
 #: dat/assets/suk_iv.xml:2
 msgid "Suk IV"
-msgstr "スーク IV"
+msgstr "スーク IV "
 
 #: dat/assets/sultan_iii.xml:2
 msgid "Sultan III"
-msgstr "スルタン III"
+msgstr "スルタン III "
 
 #: dat/assets/sultan_vi.xml:2
 msgid "Sultan VI"
-msgstr "スルタン VI"
+msgstr "スルタン VI "
 
 #: dat/assets/suna_i.xml:2
 msgid "Suna I"
-msgstr "スナ I"
+msgstr "スナ I "
 
 #: dat/assets/suna_ii.xml:2
 msgid "Suna II"
-msgstr "スナ II"
+msgstr "スナ II "
 
 #: dat/assets/suoer.xml:2
 msgid "Suoer"
@@ -10557,7 +10556,7 @@ msgstr ""
 
 #: dat/assets/sy1025.xml:2
 msgid "SY-1025"
-msgstr "SY-1025"
+msgstr " SY-1025 "
 
 #: dat/assets/sy1025.xml:27 dat/assets/sy1206.xml:27 dat/assets/sy159.xml:27
 #: dat/assets/sy19.xml:27 dat/assets/sy237.xml:27 dat/assets/sy256.xml:27
@@ -10571,71 +10570,71 @@ msgstr ""
 
 #: dat/assets/sy1206.xml:2
 msgid "SY-1206"
-msgstr "SY-1206"
+msgstr " SY-1206 "
 
 #: dat/assets/sy159.xml:2
 msgid "SY-159"
-msgstr "SY-159"
+msgstr " SY-159 "
 
 #: dat/assets/sy19.xml:2
 msgid "SY-19"
-msgstr "SY-19"
+msgstr " SY-19 "
 
 #: dat/assets/sy237.xml:2
 msgid "SY-237"
-msgstr "SY-237"
+msgstr " SY-237 "
 
 #: dat/assets/sy256.xml:2
 msgid "SY-256"
-msgstr "SY-256"
+msgstr " SY-256 "
 
 #: dat/assets/sy314.xml:2
 msgid "SY-314"
-msgstr "SY-314"
+msgstr " SY-314 "
 
 #: dat/assets/sy413.xml:2
 msgid "SY-413"
-msgstr "SY-413"
+msgstr " SY-413 "
 
 #: dat/assets/sy612.xml:2
 msgid "SY-612"
-msgstr "SY-612"
+msgstr " SY-612 "
 
 #: dat/assets/sy894.xml:2
 msgid "SY-894"
-msgstr "SY-894"
+msgstr " SY-894 "
 
 #: dat/assets/sy920.xml:2
 msgid "SY-920"
-msgstr "SY-920"
+msgstr " SY-920 "
 
 #: dat/assets/sylph_ii.xml:2
 msgid "Sylph II"
-msgstr "シルフ II"
+msgstr "シルフ II "
 
 #: dat/assets/sylph_iv.xml:2
 msgid "Sylph IV"
-msgstr "シルフ IV"
+msgstr "シルフ IV "
 
 #: dat/assets/sylph_iva.xml:2
 msgid "Sylph IVa"
-msgstr "シルフ IVa"
+msgstr "シルフ IVa "
 
 #: dat/assets/symm_ii.xml:2
 msgid "Symm II"
-msgstr "シム II"
+msgstr "シム II "
 
 #: dat/assets/symm_iii.xml:2
 msgid "Symm III"
-msgstr "シム III"
+msgstr "シム III "
 
 #: dat/assets/symm_iiia.xml:2
 msgid "Symm IIIa"
-msgstr "シム IIIa"
+msgstr "シム IIIa "
 
 #: dat/assets/symm_iiib.xml:2
 msgid "Symm IIIb"
-msgstr "シム IIIb"
+msgstr "シム IIIb "
 
 #: dat/assets/takeru.xml:2
 msgid "Takeru"
@@ -10659,15 +10658,15 @@ msgstr ""
 
 #: dat/assets/tandar_i.xml:2
 msgid "Tandar I"
-msgstr "タンダー I"
+msgstr "タンダー I "
 
 #: dat/assets/tandar_ia.xml:2
 msgid "Tandar Ia"
-msgstr "タンダー Ia"
+msgstr "タンダー Ia "
 
 #: dat/assets/tandar_iix.xml:2
 msgid "Tandar IIX"
-msgstr "タンダー IIX"
+msgstr "タンダー IIX "
 
 #: dat/assets/tankard_station.xml:2
 msgid "Tankard Station"
@@ -10719,7 +10718,7 @@ msgstr "ターラム"
 
 #: dat/assets/tarsus_ii.xml:2
 msgid "Tarsus II"
-msgstr "ターサス II"
+msgstr "ターサス II "
 
 #: dat/assets/tarsus_station.xml:2
 msgid "Tarsus Station"
@@ -10785,11 +10784,11 @@ msgstr ""
 
 #: dat/assets/telika_ii.xml:2
 msgid "Telika II"
-msgstr "テリカ II"
+msgstr "テリカ II "
 
 #: dat/assets/telika_iii.xml:2
 msgid "Telika III"
-msgstr "テリカ III"
+msgstr "テリカ III "
 
 #: dat/assets/telika_station.xml:2
 msgid "Telika Station"
@@ -10811,7 +10810,7 @@ msgstr ""
 
 #: dat/assets/tenalp.xml:2
 msgid "Tenal-P"
-msgstr "テナル -P"
+msgstr "テナル -P "
 
 #: dat/assets/tenalp.xml:26
 msgid ""
@@ -10969,11 +10968,11 @@ msgstr ""
 
 #: dat/assets/theras_ii.xml:2
 msgid "Theras II"
-msgstr "セーラス II"
+msgstr "セーラス II "
 
 #: dat/assets/theras_iii.xml:2
 msgid "Theras III"
-msgstr "セーラス III"
+msgstr "セーラス III "
 
 #: dat/assets/thosson.xml:2
 msgid "Thosson"
@@ -11063,15 +11062,15 @@ msgstr ""
 
 #: dat/assets/tomas_i1.xml:2
 msgid "Tomas I-1"
-msgstr "トマス I-1"
+msgstr "トマス I-1 "
 
 #: dat/assets/tomas_j1.xml:2
 msgid "Tomas J-1"
-msgstr "トマス J-1"
+msgstr "トマス J-1 "
 
 #: dat/assets/tomas_x1.xml:2
 msgid "Tomas X-1"
-msgstr "トマス X-1"
+msgstr "トマス X-1 "
 
 #: dat/assets/topkapi_station.xml:2
 msgid "Topkapi Station"
@@ -11123,11 +11122,11 @@ msgstr ""
 
 #: dat/assets/torg_i.xml:2
 msgid "Torg I"
-msgstr "トーグ I"
+msgstr "トーグ I "
 
 #: dat/assets/torg_iv.xml:2
 msgid "Torg IV"
-msgstr "トーグ IV"
+msgstr "トーグ IV "
 
 #: dat/assets/tori.xml:2 dat/scripts/pilot/pirate.lua:478
 msgid "Tori"
@@ -11251,7 +11250,7 @@ msgstr ""
 
 #: dat/assets/triap_i.xml:2
 msgid "Triap I"
-msgstr "トライアプ I"
+msgstr "トライアプ I "
 
 #: dat/assets/trichu.xml:2
 msgid "Trichu"
@@ -11431,19 +11430,19 @@ msgstr "テューア"
 
 #: dat/assets/uhp1001.xml:2
 msgid "UHP-1001"
-msgstr "UHP-1001"
+msgstr " UHP-1001 "
 
 #: dat/assets/uhp1002.xml:2
 msgid "UHP-1002"
-msgstr "UHP-1002"
+msgstr " UHP-1002 "
 
 #: dat/assets/uhriabi17.xml:2
 msgid "Uhriabi-17"
-msgstr "ウーリアビ -17"
+msgstr "ウーリアビ -17 "
 
 #: dat/assets/uhriabi9.xml:2
 msgid "Uhriabi-9"
-msgstr "ウーリアビ -9"
+msgstr "ウーリアビ -9 "
 
 #: dat/assets/ulios.xml:2
 msgid "Ulios"
@@ -11497,11 +11496,11 @@ msgstr ""
 
 #: dat/assets/ulysses_iii.xml:2
 msgid "Ulysses III"
-msgstr "ユリシーズ III"
+msgstr "ユリシーズ III "
 
 #: dat/assets/ulysses_iv.xml:2
 msgid "Ulysses IV"
-msgstr "ユリシーズ IV"
+msgstr "ユリシーズ IV "
 
 #: dat/assets/umbrella_station.xml:2
 msgid "Umbrella Station"
@@ -11551,31 +11550,31 @@ msgstr ""
 
 #: dat/assets/umw1231d.xml:2
 msgid "UMW-1231d"
-msgstr "UMW-1231d"
+msgstr " UMW-1231d "
 
 #: dat/assets/umw1345a.xml:2
 msgid "UMW-1345a"
-msgstr "UMW-1345a"
+msgstr " UMW-1345a "
 
 #: dat/assets/undergate_ii.xml:2
 msgid "Undergate II"
-msgstr "アンダーゲイト II"
+msgstr "アンダーゲイト II "
 
 #: dat/assets/undergate_iii.xml:2
 msgid "Undergate III"
-msgstr "アンダーゲイト III"
+msgstr "アンダーゲイト III "
 
 #: dat/assets/undergate_v.xml:2
 msgid "Undergate V"
-msgstr "アンダーゲイト V"
+msgstr "アンダーゲイト V "
 
 #: dat/assets/unicorn_i.xml:2
 msgid "Unicorn I"
-msgstr "ユニコーン I"
+msgstr "ユニコーン I "
 
 #: dat/assets/unicorn_ii.xml:2
 msgid "Unicorn II"
-msgstr "ユニコーン II"
+msgstr "ユニコーン II "
 
 #: dat/assets/unseelie.xml:2
 msgid "Unseelie"
@@ -11626,23 +11625,23 @@ msgstr ""
 
 #: dat/assets/urbanus_ii.xml:2
 msgid "Urbanus II"
-msgstr "ウルバヌス II"
+msgstr "ウルバヌス II "
 
 #: dat/assets/urbanus_iii.xml:2
 msgid "Urbanus III"
-msgstr "ウルバヌス III"
+msgstr "ウルバヌス III "
 
 #: dat/assets/uridhrion_i.xml:2
 msgid "Uridhrion I"
-msgstr "ウリドゥリオン I"
+msgstr "ウリドゥリオン I "
 
 #: dat/assets/uridhrion_ii.xml:2
 msgid "Uridhrion II"
-msgstr "ウリドゥリオン II"
+msgstr "ウリドゥリオン II "
 
 #: dat/assets/uridhrion_iii.xml:2
 msgid "Uridhrion III"
-msgstr "ウリドゥリオン III"
+msgstr "ウリドゥリオン III "
 
 #: dat/assets/ururis.xml:2
 msgid "Ururis"
@@ -11688,15 +11687,15 @@ msgstr "ウーリス"
 
 #: dat/assets/ux_i.xml:2
 msgid "UX I"
-msgstr "ウクス I"
+msgstr "ウクス I "
 
 #: dat/assets/ux_iix.xml:2
 msgid "UX IIX"
-msgstr "ウクス IIX"
+msgstr "ウクス IIX "
 
 #: dat/assets/ux_vii.xml:2
 msgid "UX VII"
-msgstr "ウクス VII"
+msgstr "ウクス VII "
 
 #: dat/assets/vaal.xml:2
 msgid "Vaal"
@@ -11713,15 +11712,15 @@ msgstr ""
 
 #: dat/assets/valerie_ii.xml:2
 msgid "Valerie II"
-msgstr "バレリー II"
+msgstr "バレリー II "
 
 #: dat/assets/valerie_iix.xml:2
 msgid "Valerie IIX"
-msgstr "バレリー IIX"
+msgstr "バレリー IIX "
 
 #: dat/assets/valerie_iv.xml:2
 msgid "Valerie IV"
-msgstr "バレリー IV"
+msgstr "バレリー IV "
 
 #: dat/assets/valt.xml:2
 msgid "Valt"
@@ -11745,19 +11744,19 @@ msgstr ""
 
 #: dat/assets/valur_gem_i.xml:2
 msgid "Valur Gem I"
-msgstr "バルル・ジェム I"
+msgstr "バルル・ジェム I "
 
 #: dat/assets/vanir_i.xml:2
 msgid "Vanir I"
-msgstr "バニル I"
+msgstr "バニル I "
 
 #: dat/assets/vanir_ia.xml:2
 msgid "Vanir Ia"
-msgstr "バニル Ia"
+msgstr "バニル Ia "
 
 #: dat/assets/vanir_ii.xml:2
 msgid "Vanir II"
-msgstr "バニル II"
+msgstr "バニル II "
 
 #: dat/assets/vao_vos.xml:2
 msgid "Vao Vos"
@@ -11862,7 +11861,7 @@ msgstr "バローナ"
 
 #: dat/assets/vauban_i1.xml:2
 msgid "Vauban I-1"
-msgstr "ボーバン I-1"
+msgstr "ボーバン I-1 "
 
 #: dat/assets/vault.xml:2
 msgid "Vault"
@@ -11884,11 +11883,11 @@ msgstr ""
 
 #: dat/assets/vean_i.xml:2
 msgid "Vean I"
-msgstr "ビーン I"
+msgstr "ビーン I "
 
 #: dat/assets/vean_ii.xml:2
 msgid "Vean II"
-msgstr "ビーン II"
+msgstr "ビーン II "
 
 #: dat/assets/vennis.xml:2
 msgid "Vennis"
@@ -11937,15 +11936,15 @@ msgstr ""
 
 #: dat/assets/verex_i.xml:2
 msgid "Verex I"
-msgstr "ベレックス I"
+msgstr "ベレックス I "
 
 #: dat/assets/verex_ii.xml:2
 msgid "Verex II"
-msgstr "ベレックス II"
+msgstr "ベレックス II "
 
 #: dat/assets/verex_iii.xml:2
 msgid "Verex III"
-msgstr "ベレックス III"
+msgstr "ベレックス III "
 
 #: dat/assets/vert.xml:2
 msgid "Vert"
@@ -12215,11 +12214,11 @@ msgstr ""
 
 #: dat/assets/vlexon_i.xml:2
 msgid "Vlexon I"
-msgstr "ブレクソン I"
+msgstr "ブレクソン I "
 
 #: dat/assets/vlexon_ii.xml:2
 msgid "Vlexon II"
-msgstr "ブレクソン II"
+msgstr "ブレクソン II "
 
 #: dat/assets/vorca.xml:2
 msgid "Vorca"
@@ -12331,11 +12330,11 @@ msgstr ""
 
 #: dat/assets/wahri_iii.xml:2
 msgid "Wahri III"
-msgstr "ワウリ III"
+msgstr "ワウリ III "
 
 #: dat/assets/wahri_iv.xml:2
 msgid "Wahri IV"
-msgstr "ワウリ IV"
+msgstr "ワウリ IV "
 
 #: dat/assets/wakan.xml:2
 msgid "Wa'kan"
@@ -12432,11 +12431,11 @@ msgstr ""
 
 #: dat/assets/warnecke_i.xml:2
 msgid "Warnecke I"
-msgstr "バーネッケ I"
+msgstr "バーネッケ I "
 
 #: dat/assets/warnecke_ii.xml:2
 msgid "Warnecke II"
-msgstr "バーネッケ II"
+msgstr "バーネッケ II "
 
 #: dat/assets/waterhole.xml:2 dat/ssys/waterhole.xml:2
 msgid "Waterhole"
@@ -12480,11 +12479,11 @@ msgstr ""
 
 #: dat/assets/wayline_m1.xml:2
 msgid "Wayline m1"
-msgstr "ウェイライン m1"
+msgstr "ウェイライン m1 "
 
 #: dat/assets/wayline_m2.xml:2
 msgid "Wayline m2"
-msgstr "ウェイライン m2"
+msgstr "ウェイライン m2 "
 
 #: dat/assets/wellen.xml:2
 msgid "Wellen"
@@ -12611,15 +12610,15 @@ msgstr ""
 
 #: dat/assets/wolf_i.xml:2
 msgid "Wolf I"
-msgstr "ウルフ I"
+msgstr "ウルフ I "
 
 #: dat/assets/wolf_ii.xml:2
 msgid "Wolf II"
-msgstr "ウルフ II"
+msgstr "ウルフ II "
 
 #: dat/assets/wolf_vii.xml:2
 msgid "Wolf VII"
-msgstr "ウルフ VII"
+msgstr "ウルフ VII "
 
 #: dat/assets/wonclock.xml:2
 msgid "Wonclock"
@@ -12669,11 +12668,11 @@ msgstr ""
 
 #: dat/assets/wsthvn_d1.xml:2
 msgid "WSTHVN D-1"
-msgstr "WSTHVN D-1"
+msgstr " WSTHVN D-1 "
 
 #: dat/assets/wsthvn_p1.xml:2
 msgid "WSTHVN P-1"
-msgstr "WSTHVN P-1"
+msgstr " WSTHVN P-1 "
 
 #: dat/assets/xavier.xml:2 dat/ssys/xavier.xml:2
 msgid "Xavier"
@@ -12806,11 +12805,11 @@ msgstr ""
 
 #: dat/assets/zalek_ii.xml:2
 msgid "Za'lek II"
-msgstr "ザレク II"
+msgstr "ザレク II "
 
 #: dat/assets/zalek_iv.xml:2
 msgid "Za'lek IV"
-msgstr "ザレク IV"
+msgstr "ザレク IV "
 
 #: dat/assets/zaren.xml:2
 msgid "Zaren"
@@ -12868,7 +12867,7 @@ msgstr ""
 
 #: dat/assets/zemur_iii.xml:2
 msgid "Zemur III"
-msgstr "ゼマー III"
+msgstr "ゼマー III "
 
 #: dat/assets/zeo.xml:2
 msgid "Zeo"
@@ -12988,11 +12987,11 @@ msgstr ""
 
 #: dat/assets/zintar_iv.xml:2
 msgid "Zintar IV"
-msgstr "ジンタール IV"
+msgstr "ジンタール IV "
 
 #: dat/assets/zintar_v.xml:2
 msgid "Zintar V"
-msgstr "ジンタール V"
+msgstr "ジンタール V "
 
 #: dat/assets/ziz.xml:2
 msgid "Ziz"
@@ -13248,7 +13247,7 @@ msgstr "ドベーレッド"
 #: dat/ships/phalanx.xml:14 dat/ships/vendetta.xml:14
 #: dat/ships/vigilance.xml:13
 msgid "House Dvaered"
-msgstr "ドベーレッド家"
+msgstr "ドベーレッド荘"
 
 #. Must be goal system
 #. Must be in mission mode (we allow the player to run away and come back)
@@ -13265,7 +13264,7 @@ msgstr "ザレク"
 
 #: dat/faction.xml:250
 msgid "House Za'lek"
-msgstr "ザレク家"
+msgstr "ザレク荘"
 
 #: dat/faction.xml:263 dat/faction.xml:454 dat/missions/sirius/common.lua:22
 #: dat/missions/sirius/common.lua:28
@@ -13274,7 +13273,7 @@ msgstr "シリウス"
 
 #: dat/faction.xml:268
 msgid "House Sirius"
-msgstr "シリウス家"
+msgstr "シリウス荘"
 
 #: dat/faction.xml:282 dat/ships/goddard.xml:2 dat/ssys/goddard.xml:2
 msgid "Goddard"
@@ -13283,7 +13282,7 @@ msgstr "ゴダード"
 #: dat/faction.xml:287 dat/ships/dvaered_goddard.xml:17
 #: dat/ships/goddard.xml:16
 msgid "House Goddard"
-msgstr "ゴダード家"
+msgstr "ゴダード荘"
 
 #: dat/faction.xml:300 dat/missions/flf/flf_rogue.lua:49
 msgid "Rogue FLF"
@@ -13453,11 +13452,11 @@ msgstr "DHC"
 #: dat/faction.xml:552 dat/events/dvaered/warlords_battle.lua:140
 #: dat/events/dvaered/warlords_battle.lua:181
 msgid "Warlords"
-msgstr "将軍"
+msgstr "軍閥領袖"
 
 #: dat/faction.xml:556
 msgid "Dvaered Warlords"
-msgstr "ドベーレッドの将軍"
+msgstr "ドベーレッドの軍閥領袖"
 
 #: dat/faction.xml:568
 msgid "Strangelove"
@@ -13950,7 +13949,7 @@ msgstr ""
 #: dat/outfits/biocore_brain/ultralight_brain_stage_2.xml:5
 #: dat/outfits/biocore_brain/ultralight_brain_stage_x.xml:5
 msgid "Bioship Brain"
-msgstr ""
+msgstr "生きた船の脳"
 
 #: dat/outfits/biocore_brain/heavy_brain_stage_1.xml:10
 #: dat/outfits/biocore_brain/heavy_brain_stage_2.xml:10
@@ -14199,7 +14198,7 @@ msgstr ""
 #: dat/outfits/biocore_drive/ultralight_strong_gene_drive_stage_2.xml:5
 #: dat/outfits/biocore_drive/ultralight_strong_gene_drive_stage_x.xml:4
 msgid "Bioship Gene Drive"
-msgstr ""
+msgstr "生きた船の遺伝子駆動装置"
 
 #: dat/outfits/biocore_drive/heavy_fast_gene_drive_stage_1.xml:9
 #: dat/outfits/biocore_drive/heavy_fast_gene_drive_stage_2.xml:9
@@ -14580,7 +14579,7 @@ msgstr ""
 #: dat/outfits/biocore_shell/ultralight_shell_stage_2.xml:5
 #: dat/outfits/biocore_shell/ultralight_shell_stage_x.xml:4
 msgid "Bioship Shell"
-msgstr ""
+msgstr "生きた船の殻"
 
 #: dat/outfits/biocore_shell/heavy_shell_stage_1.xml:9
 #: dat/outfits/biocore_shell/heavy_shell_stage_2.xml:9
@@ -18293,7 +18292,7 @@ msgstr ""
 
 #: dat/ships/empire_peacemaker.xml:2
 msgid "Empire Peacemaker"
-msgstr "帝国ピースメーカー"
+msgstr "帝国ピースメイカー"
 
 #: dat/ships/empire_peacemaker.xml:19
 msgid ""
@@ -19118,7 +19117,7 @@ msgstr ""
 
 #: dat/slots.xml:27
 msgid "Bioship Brains"
-msgstr ""
+msgstr "生きた船の脳"
 
 #: dat/slots.xml:28
 msgid ""
@@ -19130,7 +19129,7 @@ msgstr ""
 
 #: dat/slots.xml:33
 msgid "Bioship Shells"
-msgstr ""
+msgstr "生きた船の殻"
 
 #: dat/slots.xml:34
 msgid ""
@@ -19142,7 +19141,7 @@ msgstr ""
 
 #: dat/slots.xml:39
 msgid "Bioship Gene Drives"
-msgstr ""
+msgstr "生きた船の遺伝子駆動装置"
 
 #: dat/slots.xml:40
 msgid ""
@@ -19152,7 +19151,7 @@ msgstr ""
 
 #: dat/slots.xml:45
 msgid "Bioship Weapons"
-msgstr ""
+msgstr "生きた船の武器"
 
 #: dat/slots.xml:46
 msgid ""
@@ -19361,23 +19360,23 @@ msgstr "ブリムストーン"
 
 #: dat/ssys/c00.xml:2
 msgid "C-00"
-msgstr "C-00"
+msgstr " C-00 "
 
 #: dat/ssys/c14.xml:2
 msgid "C-14"
-msgstr "C-14"
+msgstr " C-14 "
 
 #: dat/ssys/c28.xml:2
 msgid "C-28"
-msgstr "C-28"
+msgstr " C-28 "
 
 #: dat/ssys/c43.xml:2
 msgid "C-43"
-msgstr "C-43"
+msgstr " C-43 "
 
 #: dat/ssys/c59.xml:2
 msgid "C-59"
-msgstr "C-59"
+msgstr " C-59 "
 
 #: dat/ssys/capricorn.xml:2
 msgid "Capricorn"
@@ -22000,7 +21999,7 @@ msgstr "｢贈賄は厳しく罰せられる｣"
 
 #: dat/ai/dvaered.lua:12
 msgid "\"House Dvaered does not lower itself to common scum.\""
-msgstr "｢ドベーレッド家が並のくずに屈することはぜったいにない｣"
+msgstr "｢ドベーレッド荘が並のくずに屈することはぜったいにない｣"
 
 #: dat/ai/dvaered.lua:15 dat/ai/goddard.lua:15
 msgid "Prepare to face annihilation!"
@@ -22184,7 +22183,7 @@ msgstr "帝国燃料補給船が攻撃をうけている！"
 #. Doesn't make sense to bribe
 #: dat/ai/empire_refuel.lua:22
 msgid "I'm out of here."
-msgstr "わたしは場ちがいだな"
+msgstr "わたしは場違いだな"
 
 #. Override refuel chance
 #: dat/ai/empire_refuel.lua:26
@@ -22297,7 +22296,7 @@ msgstr "｢さあ、視界から消えろ。もう問題をおこすなよ｣"
 
 #: dat/ai/goddard.lua:12
 msgid "\"House Goddard does not lower itself to common scum.\""
-msgstr "｢ゴダード家が並のくずに屈することはぜったいにない｣"
+msgstr "｢ゴダード荘が並のくずに屈することはぜったいにない｣"
 
 #: dat/ai/goddard.lua:18
 msgid "These moments will be your last!"
@@ -23473,7 +23472,7 @@ msgstr "ザレクの新しい中心"
 
 #: dat/events/discovery.lua:69
 msgid "Convening of the Warlords"
-msgstr "将軍たちの会合"
+msgstr "軍閥領袖たちの会合"
 
 #: dat/events/discovery.lua:75
 msgid "Remembering Sorom"
@@ -23530,7 +23529,7 @@ msgstr "ドベーレッドの領域"
 
 #: dat/events/discovery.lua:146
 msgid "The Warlords are Eager for Blood"
-msgstr "将軍たちは血に飢えている"
+msgstr "軍閥領袖たちは血に飢えている"
 
 #: dat/events/discovery.lua:151
 msgid "The Soromid Territories"
@@ -27319,7 +27318,7 @@ msgstr "辺境同盟からのニュース。"
 
 #: dat/events/neutral/news.lua:32
 msgid "Word from the Proteron state."
-msgstr "プロテロン州からの声。"
+msgstr "プロテロン国からの声。"
 
 #: dat/events/neutral/news.lua:33
 msgid "Scientific, Socioeconomic, and Sundry Events"
@@ -27784,9 +27783,8 @@ msgid ""
 "the formation of House Sirius. This weakness is yet another sign that House "
 "Dvaered must increase patrols on the border and into Sirius space."
 msgstr ""
-"この周期のミュートリスへの巡礼者の数は、シリウス家成立以後の最小記録を更新し"
-"ている。この弱体化は、ドベーレッド家がシリウス宙域との境界や内部まで巡視を増"
-"やさなければならないという、もうひとつの兆候である。"
+"この周期のミュートリスへの巡礼者の数は、シリウス荘成立以後の最小記録を更新している。この弱体化は、ドベーレッド荘がシリウス宙域との境界や内部まで巡視を増や"
+"さなければならないという、もうひとつの兆候である。"
 
 #.
 #. Science and technology
@@ -27801,8 +27799,7 @@ msgid ""
 "possible improvements. This new strategy will increase the gap with the "
 "competing ship fabricators."
 msgstr ""
-"新任の科学者の多くが、ゴダード家と契約を結んで、進歩につながる可能性を調査し"
-"ている。この新しい計画は、競合する宇宙船製造業者との隔たりを増すことだろう。"
+"新任の科学者の多くが、ゴダード荘と契約を結んで、進歩につながる可能性を調査している。この新しい計画は、競合する宇宙船製造業者との隔たりを増すことだろう。"
 
 #.
 #. Business
@@ -27816,9 +27813,7 @@ msgid ""
 "House Goddard has once again increased its earnings. \"Our investment in "
 "technology and quality has paid off,\" said Kari Baker of House Goddard's "
 "marketing bureau."
-msgstr ""
-"ゴダード家がまた収益を増やした。｢技術と品質への投資が結実した｣ と、ゴダード家"
-"営業企画局のカリ・ベイカーは述べた。"
+msgstr "ゴダード荘がまた収益を増やした。｢技術と品質への投資が結実した｣ と、ゴダード荘営業企画局のカリ・ベイカーは述べた。"
 
 #: dat/events/neutral/news.lua:234
 msgid "Goddard Awarded Best Ship"
@@ -27831,9 +27826,8 @@ msgid ""
 "reliability like the Goddard,\" said Lord Warthon upon receiving the award "
 "on behalf of House Goddard."
 msgstr ""
-"ゴダードの巡洋戦艦が、ドベーレッド艦隊の今周期の優秀船に選ばれることで、総合"
-"的に最高の船であるとまた認められた。｢ゴダードのように信頼できる船はとても少な"
-"い｣ と、ゴダード家の代理として賞を受けとったウォーソン卿は述べた。"
+"ゴダードの巡洋戦艦が、ドベーレッド艦隊の今周期の優秀船に選ばれることで、総合的に最高の船であるとまた認められた。｢ゴダードのように信頼できる船はとても少な"
+"い｣ と、ゴダード荘の代理として賞を受けとったウォーソン卿は述べた。"
 
 #: dat/events/neutral/news.lua:238
 msgid "Aerosys Earnings Drop"
@@ -27939,9 +27933,8 @@ msgid ""
 "are \"figments of the touched's imagination\". Official complaints have been "
 "made to the Emperor."
 msgstr ""
-"最近、ミュートリスへ向かう巡礼者たちは、ドベーレッドの工作員から強奪や暴力の"
-"話を聞かされている。ドベーレッドの将軍クラトクは、これを ｢感触者の想像力の産"
-"物｣ と主張している。公式な申し立てが皇帝におこなわれた。"
+"最近、ミュートリスへ向かう巡礼者たちは、ドベーレッドの工作員から強奪や暴力の話を聞かされている。ドベーレッドの軍閥領袖クラトクは、これを "
+"｢被触者の想像力の産物｣ と主張している。公式な申し立てが皇帝におこなわれた。"
 
 #.
 #. Human interest.
@@ -27956,9 +27949,8 @@ msgid ""
 "Shaira echelon after their long pilgrimage on Mutris. House Sirius is still "
 "a refugee for the orphans lost in this Universe."
 msgstr ""
-"ミュートリスへの長い巡礼のあとで、シャイラの階層に最近奉仕しはじめた新しいた"
-"くさんの感触者をありがたく思っています。シリウス家は、宇宙で迷った孤児たちの"
-"ための避難所でありつづけています。"
+"ミュートリスへの長い巡礼のあとで、シャイラの階層に最近奉仕しはじめた新しいたくさんの被触者をありがたく思っています。シリウス荘は、宇宙で迷った孤児たちのた"
+"めの避難所でありつづけています。"
 
 #.
 #. Science and technology
@@ -28212,9 +28204,7 @@ msgstr "帝国は囚人労働に依存"
 msgid ""
 "A recent report by the Soromid House Ways and Means Committee suggests "
 "infrastructure may be too dependent the on the incarcerated population."
-msgstr ""
-"ソロミド家の歳入委員会の最近の報告書は、社会基盤が投獄された人びとにあまりに"
-"依存している可能性があると示唆している。"
+msgstr "ソロミド荘の歳入委員会の最近の報告書は、社会基盤が投獄された人びとにあまりに依存している可能性があると示唆している。"
 
 #: dat/events/neutral/news.lua:401
 msgid "Imperial Oversight Scandal"
@@ -28486,65 +28476,65 @@ msgstr "News: Faction '%s' does not have entry in faction table!"
 #. about the appearance of the NPC!
 #: dat/events/neutral/npc.lua:35
 msgid "This person seems to be here to relax."
-msgstr ""
+msgstr "この人はここでくつろいでいるようだ。"
 
 #: dat/events/neutral/npc.lua:36
 msgid "There is a civilian sitting on one of the tables."
-msgstr ""
+msgstr "民間人がテーブルに座っている。"
 
 #: dat/events/neutral/npc.lua:37
 msgid "There is a civilian sitting there, looking somewhere else."
-msgstr ""
+msgstr "むこうに民間人が座っている。ほかのどこかを見ている。"
 
 #: dat/events/neutral/npc.lua:38
 msgid ""
 "A worker sits at one of the tables, wearing a name tag saying \"Go away\"."
-msgstr ""
+msgstr "労働者がテーブルに座っている。つけている名札には ｢失せろ｣ と書いてある。"
 
 #: dat/events/neutral/npc.lua:39
 msgid ""
 "A civilian sits at the bar, seemingly serious about the cocktails on offer."
-msgstr ""
+msgstr "民間人がバーに座っている。見たところまじめにカクテルを注文している。"
 
 #: dat/events/neutral/npc.lua:40
 msgid "A civilian wearing a shirt saying: \"Ask me about Jaegnhild\""
-msgstr ""
+msgstr "民間人で、着ているシャツにはこう書いてある。｢イエーグンヒルドについて聞いてよ｣"
 
 #: dat/events/neutral/npc.lua:41
 msgid "There is a civilian sitting in the corner."
-msgstr ""
+msgstr "民間人が隅に座っている。"
 
 #: dat/events/neutral/npc.lua:42
 msgid "A civilian feverishly concentrating on a fluorescing drink."
-msgstr ""
+msgstr "民間人が蛍光を発する飲み物に興奮しながら集中している。"
 
 #: dat/events/neutral/npc.lua:43
 msgid "A civilian drinking alone."
-msgstr ""
+msgstr "民間人がひとりで飲んでいる。"
 
 #: dat/events/neutral/npc.lua:44
 msgid "This person seems friendly enough."
-msgstr ""
+msgstr "この人はじゅうぶん親切なようだ。"
 
 #: dat/events/neutral/npc.lua:45
 msgid "A civilian sitting at the bar."
-msgstr ""
+msgstr "民間人がバーに座っている。"
 
 #: dat/events/neutral/npc.lua:46
 msgid "This person is idly browsing a news terminal."
-msgstr ""
+msgstr "この人はぼんやりとニュース端末を拾い読みしている。"
 
 #: dat/events/neutral/npc.lua:47
 msgid "A worker sips a cold drink after a hard shift."
-msgstr ""
+msgstr "きつい仕事をしたあとの労働者が、冷たい飲み物をちびちび飲んでいる。"
 
 #: dat/events/neutral/npc.lua:48
 msgid "A worker slouched against the bar, nursing a drink."
-msgstr ""
+msgstr "労働者がバーにむかって前屈みになり、飲み物をだいじに飲んでいる。"
 
 #: dat/events/neutral/npc.lua:49
 msgid "This worker seems bored with everything but their drink."
-msgstr ""
+msgstr "この労働者は、自分の飲み物以外のすべてにうんざりしているようだ。"
 
 #. Lore messages. These come in general and factional varieties.
 #. General lore messages will be said by non-faction NPCs, OR by faction NPCs if they have no factional text to say.
@@ -28555,37 +28545,37 @@ msgstr ""
 msgid ""
 "\"I heard the nebula is haunted! My uncle Bobby told me he saw one of the "
 "ghost ships himself over in Arandon!\""
-msgstr ""
+msgstr "｢星雲には幽霊が出ると聞いたよ！　おじのボビーが、アランドンのむこうで幽霊船を自分の目で見たって教えてくれたんだ！｣"
 
 #: dat/events/neutral/npc.lua:59
 msgid ""
 "\"I don't believe in those nebula ghost stories. The people who talk about "
 "it are just trying to scare you.\""
-msgstr ""
+msgstr "｢あの星雲の幽霊話は信じてない。話してる人たちは怖がらせようとしてるだけだよ｣"
 
 #: dat/events/neutral/npc.lua:60
 msgid ""
 "\"I heard the Soromid lost their homeworld Sorom in the Incident. Its corpse "
 "can still be found in Basel.\""
-msgstr ""
+msgstr "｢ソロミドは母世界のソロムを事象で失ったと聞いたよ。その亡骸はまだバーゼルで見つけられるんだ｣"
 
 #: dat/events/neutral/npc.lua:61
 msgid ""
 "\"The Soromid fly organic ships! I heard their ships can even heal "
 "themselves in flight. That's so weird.\""
-msgstr ""
+msgstr "｢ソロミドは有機体の船で飛んでるんだ！　飛行中に自分で傷を治すこともできると聞いたよ。とても気味が悪いね｣"
 
 #: dat/events/neutral/npc.lua:62
 msgid ""
 "\"Have you seen that ship the Emperor lives on? It's huge! But if you ask "
 "me, it looks a bit like a... No, never mind.\""
-msgstr ""
+msgstr "｢皇帝が住んでる船を見たことある？　とてつもなく大きいんだよ！　でも自分に言わせれば、見た目がちょっとあれみたいで……。いや、なんでもない｣"
 
 #: dat/events/neutral/npc.lua:63
 msgid ""
 "\"I wonder why the Sirii are all so devout? I heard they have these special "
 "priesty people walking around. I wonder what's so special about them.\""
-msgstr ""
+msgstr "｢なんでシリウス人たちはみんなあんな信心深いんだろう？　歩きまわるとくべつな聖職者たちもいると聞いたよ。なにがそんなにとくべつなんだろうね｣"
 
 #: dat/events/neutral/npc.lua:64
 msgid ""
@@ -28593,23 +28583,26 @@ msgid ""
 "amidst a cache of his inventions! What I wouldn't give to rummage through "
 "there...\""
 msgstr ""
+"｢エドアルド・マニュエル・ゴダードは宇宙のどこかをさまよってるんだって言われてるよ。発明品の隠し場所に葬られてさ！　"
+"どうにかそのなかを徹底的にあされないものかな……｣"
 
 #: dat/events/neutral/npc.lua:65
 msgid ""
 "\"Ah man, I lost all my money on Totoran. I love the fights they stage "
 "there, but the guys I bet on always lose. What am I doing wrong?\""
 msgstr ""
+"｢ああ、ちょっと。トトーランで全財産を失ったんだ。あそこでやってる戦いが大好きでね。でも賭けたやつがいつも負けるんだよ。なにがまずいんだろう？｣"
 
 #: dat/events/neutral/npc.lua:66
 msgid ""
 "\"Don't try to fly into the inner nebula. I've known people who tried, and "
 "none of them came back.\""
-msgstr ""
+msgstr "｢星雲の中に向かって飛ぼうとするんじゃないよ。試した人たちを知ってるけど、だれも戻ってきてない｣"
 
 #: dat/events/neutral/npc.lua:67
 msgid ""
 "\"Have you heard of Captain T. Practice? He's amazing, I'm his biggest fan!\""
-msgstr ""
+msgstr "｢キャプテン T. プラクティスのことを聞いたことある？　あの人はたいした人だよ。大ファンなんだ！｣"
 
 #: dat/events/neutral/npc.lua:68
 msgid ""
@@ -28617,12 +28610,13 @@ msgid ""
 "fighter! That area of space has really gone down the drain since the "
 "Incident.\""
 msgstr ""
+"｢もしわたしがあなたなら、オルタリスから北へは行かないね。戦いがうまいんじゃなければだけど！　あの宙域は事象からこっち、ほんとうにだめになってるよ｣"
 
 #: dat/events/neutral/npc.lua:69
 msgid ""
 "\"Sometimes I look at the stars and wonder... are we the only sentient "
 "species in the universe?\""
-msgstr ""
+msgstr "｢ときどき星々を見て、疑問に思うことがある……。われわれは意識ある宇宙で唯一の種なんだろうか？｣"
 
 #: dat/events/neutral/npc.lua:70
 msgid ""
@@ -28633,30 +28627,34 @@ msgid ""
 "stares at you incredulously. \"What?? No, I mean why are we in here, in this "
 "bar?\""
 msgstr ""
+"｢ちょっと、なんでここにいるのか疑問に思ったことある？｣。あなたは宇宙におけるおおいなる謎のひとつだと答えた。どうしてここにいるのか？　"
+"われわれはいくつかの宇宙的偶然の産物なのか、われわれについてなにか大きな宇宙の計画があるのか？　"
+"あなたにはわからなかったが、ときどき夜に眠れないことがあった。あなたがそういうと、その民間人は疑い深げにあなたを見つめた。｢えっ ??　"
+"ちがうって。なんでこのバーにいるのかって意味だよ｣"
 
 #: dat/events/neutral/npc.lua:71
 msgid ""
 "\"Life is so boring here. I would love to go gamble with all the famous "
 "people at Minerva Station.\""
-msgstr ""
+msgstr "｢ここでの人生はとても退屈だね。ミネルバ・ステーションへ行って、有名人だらけのなかで賭け事をしてみたいよ｣"
 
 #: dat/events/neutral/npc.lua:74
 msgid ""
 "\"We're not part of any of the galactic superpowers. We can take care of "
 "ourselves!\""
-msgstr ""
+msgstr "｢われわれは銀河の超大国のどれにも属してない。自分の面倒は自分でみられる！｣"
 
 #: dat/events/neutral/npc.lua:75
 msgid ""
 "\"Sometimes I worry that our lack of a standing military leaves us "
 "vulnerable to attack. I hope nobody will get any ideas about conquering us!\""
-msgstr ""
+msgstr "｢ときどき、われわれには常備軍がないから攻撃には弱いままだって心配になる。だれも武力で制圧しようとか考えなきゃいいんだけどね！｣"
 
 #: dat/events/neutral/npc.lua:78
 msgid ""
 "\"Things are getting worse by the cycle. What happened to the Empire? We "
 "used to be the lords and masters over the whole galaxy!\""
-msgstr ""
+msgstr "｢ものごとが周期ごとに悪くなっていく。帝国はどうしんだろう？　かつては全銀河じゅうに領主や家長がいたのに！｣"
 
 #: dat/events/neutral/npc.lua:79
 msgid ""
@@ -28664,24 +28662,26 @@ msgid ""
 "the Empire? Well, now you do! There was also a Project Proteron, but that "
 "didn't go so well.\""
 msgstr ""
+"｢ザレク荘は、もともとは帝国が始めた大計画だったって知ってる？　まあ、もう知ったよね！　プロテロン計画もあったけど、あれはあまりうまくいかなかった｣"
 
 #: dat/events/neutral/npc.lua:80
 msgid ""
 "\"The Emperor lives on a giant supercruiser in Gamma Polaris. It's said to "
 "be the biggest ship in the galaxy! I totally want one.\""
-msgstr ""
+msgstr "｢皇帝はガンマ・ポラリスにある巨大な超巡洋艦に住んでいるんだよ。銀河でもっとも大きな船だといわれてるね！　すっかり欲しくなった｣"
 
 #: dat/events/neutral/npc.lua:81
 msgid ""
 "\"I'm still waiting for my pilot license application to get through. Oh "
 "well, it's only been half a cycle, I just have to be patient.\""
-msgstr ""
+msgstr "｢パイロット免許の申請がとおるのをまだ待っているんだ。ああ、ほら、たった半周期だけどね。ただ忍耐強くなきゃならない｣"
 
 #: dat/events/neutral/npc.lua:82
 msgid ""
 "\"Between you and me, the laws the Council passes can get really ridiculous! "
 "Most planets find creative ways of ignoring them...\""
 msgstr ""
+"｢ここだけの話だけど、評議会が通す法律にはほんとうにばかばかしくなることがある！　ほとんどの惑星はそれを無視する独創的な方法を見つけるけどね……｣"
 
 #: dat/events/neutral/npc.lua:83
 msgid ""
@@ -28689,30 +28689,32 @@ msgid ""
 "ever seen a Peacemaker up close? I doubt any ship fielded by any other power "
 "could stand up to one.\""
 msgstr ""
+"｢否定ばかりするやつを気にすることはないよ。帝国はいまだ強い。ピースメイカーを近くから見たことはある？　"
+"ほかの勢力が出してきてるどの船でもあれと撃ちあえるとは思えないね｣"
 
 #: dat/events/neutral/npc.lua:86
 msgid ""
 "\"Our Warlord is currently fighting for control over another planet. We all "
 "support him unconditionally, of course! Of course...\""
-msgstr ""
+msgstr "｢われわれの軍閥領袖は現在別の惑星を支配しようとして戦っている。みんなもろ手をあげて支援しているよ、もちろん！　もちろんだとも……｣"
 
 #: dat/events/neutral/npc.lua:87
 msgid ""
 "\"My great-great-great-grandfather fought in the Dvaered Revolts! We still "
 "have the holovids he made. I'm proud to be a Dvaered!\""
-msgstr ""
+msgstr "｢ひいひいひいおじいさんはドベーレッドの反乱を戦ったんだよ！　まだその戦いのホロビデオもあるんだ。自分がドベーレッドなのは誇りに思うね！｣"
 
 #: dat/events/neutral/npc.lua:88
 msgid ""
 "\"I've got lots of civilian commendations! It's important to have "
 "commendations if you're a Dvaered.\""
-msgstr ""
+msgstr "｢民間表彰をたくさんもってるんだ！　ドベーレッドなら表彰を持ってるのは重要だよ｣"
 
 #: dat/events/neutral/npc.lua:89
 msgid ""
 "\"You better not mess with House Dvaered. Our military is the largest and "
 "strongest in the galaxy. Nobody can stand up to us!\""
-msgstr ""
+msgstr "｢ドベーレッド荘と面倒をおこさないほうがいい。われわれの軍隊は銀河で最大最強なんだ。だれもわれわれには立ち向かえない！｣"
 
 #: dat/events/neutral/npc.lua:90
 msgid ""
@@ -28721,6 +28723,9 @@ msgid ""
 "they going to do, subjugate us? We all know how well that went last time! Ha!"
 "\""
 msgstr ""
+"｢ドベーレッド荘？　荘？　帝国は弱くて役立たずだ。われわれはもう帝国を必要としていない！　"
+"わたしなら、われわれはいまでは独立した党派であると宣言するっていうね。帝国がどうするって？　われわれを服従させる？　"
+"前回どれだけうまくやったのか、われわれはみんな知ってるよ！　ハハッ！｣"
 
 #: dat/events/neutral/npc.lua:91
 msgid ""
@@ -28728,6 +28733,8 @@ msgid ""
 "about those rotten FLF bastards, it makes my blood boil! They should all be "
 "pounded into space dust!\""
 msgstr ""
+"｢軍隊に入ろうかと考えてる。あの腐った FLF のくずたちのニュースを見聞きするたびに、血が沸きたつんだよ！　"
+"あいつらはみんなすりつぶして宇宙のちりにすべきだ！｣"
 
 #: dat/events/neutral/npc.lua:92
 msgid ""
@@ -28735,35 +28742,42 @@ msgid ""
 "will have smoked them out of their den soon enough, and then the Frontier "
 "will be ours.\""
 msgstr ""
+"｢FLF のテロリスト？　"
+"それほど心配してはいないね。わかるだろうけど、最高司令部があいつらを隠れ家からじきにいぶしだすよ。そうなれば辺境はわれわれのものになるね｣"
 
 #: dat/events/neutral/npc.lua:93
 msgid ""
 "\"Did you know that House Dvaered was named after a hero of the revolt? At "
 "least that's what my grandparents told me.\""
-msgstr ""
+msgstr "｢ドベーレッド荘は反乱の英雄から名前を取ったんだって知ってる？　すくなくとも祖父からはそう教えられた｣"
 
 #: dat/events/neutral/npc.lua:96
 msgid ""
 "\"Greetings, traveler. May Sirichana's wisdom guide you as it guides me.\""
-msgstr ""
+msgstr "｢旅人にごあいさつ申しあげる。シリチャナの英知がわたし同様あなたも導きますように｣"
 
 #: dat/events/neutral/npc.lua:97
 msgid ""
 "\"I once met one of the Touched in person. Well, it wasn't really a meeting, "
 "our eyes simply met... But that instant alone was awe-inspiring.\""
 msgstr ""
+"｢いままでに被触者のひとりと直接会ったことがある。まあ、ほんとうに出会ったんじゃなくて、たんに目があったんだけど……。でもあの瞬間だけで、畏怖の念が吹きこ"
+"まれたね｣"
 
 #: dat/events/neutral/npc.lua:98
 msgid ""
 "\"They say Sirichana lives and dies like any other man, but each new "
 "Sirichana is the same as the last. How is that possible?\""
 msgstr ""
+"｢シリチャナはほかのみんなと同じように生きて死ぬといわれてるけど、新しいシリチャナはだれもがとことんまで同じなんだよね。どうしたらそんなことが可能になるん"
+"だろう？｣"
 
 #: dat/events/neutral/npc.lua:99
 msgid ""
 "\"My cousin was called to Mutris a cycle ago... He must be in Crater City by "
 "now. And one day, he will become one of the Touched!\""
 msgstr ""
+"｢いとこが 1 周期まえにミュートリスへ呼ばれたんだ……。いまではクレーターの都市にいるにちがいないね。それにいつかは被触者になるんだろうな！｣"
 
 #: dat/events/neutral/npc.lua:100
 msgid ""
@@ -28771,6 +28785,8 @@ msgid ""
 "determined by birth. But even though we are different, we are all followers "
 "of Sirichana. Spiritually, we are equal.\""
 msgstr ""
+"｢シリウス社会は不公平だっていう人もいるね。わたしたちの階層が生まれで決まるから。でも違いがあるとしたって、みんなシリチャナの信奉者なんだよ。精神的には、"
+"わたしたちはみんな平等｣"
 
 #: dat/events/neutral/npc.lua:101
 msgid ""
@@ -28778,22 +28794,24 @@ msgid ""
 "only true on paper. The Emperor has nothing to say in these systems. We "
 "follow Sirichana, and no-one else.\""
 msgstr ""
+"｢シリウス荘は公式には帝国の一部だけど、みんな知っているようにそれはただの書類の上のことでしかない。皇帝はここの星系のことにはなにもいわないよ。わたしたち"
+"はシリチャナについていく。ほかのだれにでもない｣"
 
 #: dat/events/neutral/npc.lua:102
 msgid ""
 "\"You can easily tell the different echelons apart. Every Sirian citizen and "
 "soldier wears clothing appropriate to his or her echelon.\""
-msgstr ""
+msgstr "｢階層ごとの違いは簡単にわかるよ。すべてのシリウス市民と兵士は階層にふさわしい衣服を着ているから｣"
 
 #: dat/events/neutral/npc.lua:103
 msgid "\"I hope to meet one of the Touched one day!\""
-msgstr ""
+msgstr "｢いつか被触者に会ってみたい！｣"
 
 #: dat/events/neutral/npc.lua:106
 msgid ""
 "Hello. Can I interest you in one of our galaxy famous cosmetic gene "
 "treatments? You look like you could use them..."
-msgstr ""
+msgstr "｢こんにちは。銀河で有名なわれわれの美容遺伝子処置を紹介してもいいですか？　あなたなら効果がありそうなんですよ……｣"
 
 #: dat/events/neutral/npc.lua:107
 msgid ""
@@ -28801,6 +28819,7 @@ msgid ""
 "boom! It got burnt to a crisp! Even now, cycles later, I still can't believe "
 "it.\""
 msgstr ""
+"｢信じられる？　ソロムへ行って自分の祖先を見つけようとしてたんですよ。そしたらバーン！　かりかりに焼けてしまった！　何周期もたった今でも信じられない｣"
 
 #: dat/events/neutral/npc.lua:108
 msgid ""
@@ -28808,6 +28827,8 @@ msgid ""
 "own bioships though, we have to make do with synthetic constructs just like "
 "everyone else.\""
 msgstr ""
+"｢はい、それは事実です。われわれの軍用船は生きています。もっとも、われわれの一般の人たちは生きた船を所有することはありませんので、ほかの人びととまったく同"
+"じように、人工的に作られたものでまにあわせなければなりません｣"
 
 #: dat/events/neutral/npc.lua:109
 msgid ""
@@ -28816,18 +28837,20 @@ msgid ""
 "often is that billions of us died from the therapy itself. We paid a high "
 "price for survival.\""
 msgstr ""
+"｢われわれソロミドが大隔離のあいだのソロムの致死的な状況で生きのびるために自己改変をしたのはだれでも知っている。あまりひんぱんに聞くことがないのは、われわ"
+"れのなかの何十億もがその治療法によって死んだことだよ。われわれは生きのびるために高い代償を支払ったんだ｣"
 
 #: dat/events/neutral/npc.lua:110
 msgid ""
 "\"Our cosmetic gene treatments are even safer now for non-Soromids, with a "
 "rate of survival of 99.4%!\""
-msgstr ""
+msgstr "｢われわれの美容遺伝子処置は今ではソロミドでなくてもずっと安全だよ。生きのびる確率は 99.4% なんだ！｣"
 
 #: dat/events/neutral/npc.lua:111
 msgid ""
 "\"We have been rebuilding and enhancing our bodies for so long, I say we've "
 "become a new species, one above human.\""
-msgstr ""
+msgstr "｢われわれはずいぶん長く体の改造と増強をやってきた。わたしなら新しい種になったっていうね。人類をこえた種だよ｣"
 
 #: dat/events/neutral/npc.lua:114
 msgid ""
@@ -28835,17 +28858,19 @@ msgid ""
 "impossible tasks! Like, where am I supposed to get a triple redundant "
 "helitron converter? Honestly.\""
 msgstr ""
+"｢簡単じゃないよ。あの科学者たちのいいなりになるのは。あいつらはいちばん不可能な仕事を与えるんだよ！　たとえば、3 "
+"重冗長ヘリトロン変換器を取ってくるところを想像してみなよ？　まったく｣"
 
 #: dat/events/neutral/npc.lua:115
 msgid ""
 "\"The Soromids? Hah! We Za'lek are the only true scientists in this galaxy.\""
-msgstr ""
+msgstr "｢ソロミド？　ハハッ！　われわれザレクがこの銀河では唯一正真正銘の科学者だよ｣"
 
 #: dat/events/neutral/npc.lua:116
 msgid ""
 "\"I don't understand why we bother sending our research results to the "
 "Empire. These asshats can't understand the simplest formulas!\""
-msgstr ""
+msgstr "｢わざわざ研究結果を帝国に送っている理由が理解できない。あのばかたちはいちばん簡単な公式も理解できないんだよ！｣"
 
 #: dat/events/neutral/npc.lua:117
 msgid ""
@@ -55941,7 +55966,7 @@ msgstr "たいして豪華ではない"
 msgid ""
 "Since your ship is not a Luxury Yacht class ship, you will only be paid %s. "
 "Accept the mission anyway?"
-msgstr "あなたの船はぜいたくなヨット型の船ではないので、支払いは %s だけになる。それでもこの任務をうけるか？"
+msgstr "あなたの船はぜいたくなヨット型の船ではないので、支払いは %s だけになります。それでもこの任務をうけますか？"
 
 #: dat/missions/neutral/sightseeing.lua:55
 msgid ""
@@ -64583,12 +64608,10 @@ msgid ""
 "it a try by flying over to %s! You see it on your screen, right? It's the "
 "planet right next to you.\""
 msgstr ""
-"｢よし、それではメレンデズの最新式の船の操縦方法を確認してみよう！｣。あなたは"
-"あきれて仰ぎみようとする衝動をこらえた。｢動かすのはとんでもなく簡単だ。船を "
-"%s や %s で回転させ、%s で推力を発生させて船を前に動かすんだ！　%s を使えば、"
-"動いているのとは逆方向に船を向けることもできるし、逆推力器を購入してメレンデ"
-"ズの星間船に設置すれば逆方向に推力を発生させることもできる。%sの上を飛んで試"
-"してみよう！　スクリーンを見ればわかる、だろ？　真横にある惑星だよ｣"
+"｢よし、それではメレンデズの最新式の船の操縦方法を確認してみよう！｣。あなたはあきれて仰ぎみようとする衝動をこらえた。｢動かすのはとんでもなく簡単だ。"
+"船を %s や %s で回転させ、%s で推力を発生させて船を前に動かすんだ！　%s を使えば、動いているのとは逆方向に船を向けることもできるし、逆推力器"
+"を購入してメレンデズの星間船に取りつければ逆方向に推力を発生させることもできる。%sの上を飛んで試してみよう！　スクリーンを見ればわかる、だろ？　"
+"真横にある惑星だよ｣"
 
 #: dat/missions/tutorial/tutorial.lua:52
 #, lua-format
@@ -64795,17 +64818,12 @@ msgid ""
 "combat and flying around space without any weapons can be very risky anyway."
 "\""
 msgstr ""
-"｢これは装備画面だ。これは艤装所か造船所がある惑星でだけ利用できる。ここでは、"
-"艤装所で買ったどんな艤装品でも設置可能だ。現在の惑星に造船所がある場合だけ、"
-"所有するほかの船にも同じことが可能となる。さらに、現在操縦している船ともうひ"
-"とつ選んだ船を､『船を交換』ボタンをクリックすることで交換できる。今使っている"
-"もの以外の船を､『船を売る』ボタンで売ることも可能だ。もう必要ないと決めた場合"
-"はだが。まだ艤装品が設置されている船を売ると、船といっしょにその艤装品も売ら"
-"れることになる。だから取っておく必要がある艤装品があるなら、それを心に留めて"
-"おくこと。\n"
-"    ｢もしいま船に変更を加えるのなら、二つの武器がかならず設置されたままでいる"
-"ようにお願いする。あとで戦闘訓練のためにそれが必要になるし、いずれにせよ武器"
-"なしで宇宙を飛びまわるのはとても危険なことになりうるんだ｣"
+"｢これは装備画面だ。これは艤装所か造船所がある惑星でだけ利用できる。ここでは、艤装所で買ったどんな艤装品でも装備可能だ。現在の惑星に造船所がある場合だけ、"
+"所有するほかの船にも同じことが可能となる。さらに、現在操縦している船ともうひとつ選んだ船を､『船を交換』ボタンをクリックすることで交換できる。今使っている"
+"もの以外の船を､『船を売る』ボタンで売ることも可能だ。もう必要ないと決めた場合はだが。まだ艤装品が装備されている船を売ると、船といっしょにその艤装品も売ら"
+"れることになる。だから取っておく必要がある艤装品があるなら、それを心に留めておくこと。\n"
+"    ｢もしいま船に変更を加えるのなら、二つの武器がかならず装備されたままでいるようにお願いする。あとで戦闘訓練のためにそれが必要になるし、いずれにせよ"
+"武器なしで宇宙を飛びまわるのはとても危険なことになりうるんだ｣"
 
 #: dat/missions/tutorial/tutorial.lua:74
 #, lua-format
@@ -75878,7 +75896,7 @@ msgstr "#%c%s #%c%s #0スロット\n"
 
 #: src/land_outfits.c:601
 msgid "#oUnique#0\n"
-msgstr "#o設置しない#0\n"
+msgstr "#o装備しない#0\n"
 
 #: src/land_outfits.c:603
 #, c-format
@@ -79309,7 +79327,7 @@ msgstr ""
 "%s\n"
 "#r作動させるか選べる艤装品#0\n"
 "CPU: %.0f\n"
-"ひとつだけ設置できます\n"
+"ひとつだけ装備できます\n"
 "最大有効質量 : %.0f\n"
 "推力 : %.0f%%\n"
 "最大速度 : %.0f%%\n"
@@ -79719,12 +79737,12 @@ msgstr "空き船倉容量が不足"
 
 #: src/pilot_outfit.c:566
 msgid "Not All Core Slots are equipped"
-msgstr "中核スロットのすべてが設置ずみでない"
+msgstr "中核スロットのすべてが装備ずみでない"
 
 #. Core Slots
 #: src/pilot_outfit.c:588
 msgid "!! Not All Core Slots are equipped\n"
-msgstr "!! 中核スロットのすべてが設置ずみでない\n"
+msgstr "!! 中核スロットのすべてが装備ずみでない\n"
 
 #. CPU.
 #: src/pilot_outfit.c:590
