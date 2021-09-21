@@ -10,6 +10,7 @@
   <chance>100</chance>
   <location>Bar</location>
   <faction>Za'lek</faction>
+  <cond>planet.cur() == require("common.sciencegonewrong").getCenterOperations()</cond>
  </avail>
 </mission>
 --]]

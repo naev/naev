@@ -9,7 +9,8 @@
   <done>The one with the Visit</done>
   <chance>100</chance>
   <location>Bar</location>
-  <planet>Gastan</planet>
+  <faction>Za'lek</faction>
+  <cond>planet.cur() == require("common.sciencegonewrong").getCenterOperations()</cond>
  </avail>
 </mission>
 --]]

@@ -10,8 +10,8 @@ end
 function sciwrong.getCenterOperations()
    local pnt = var.peek( sciwrong.center_operations )
    if not pnt then
-      warn("Science Gone Wrong: center of operations not set!")
-      return planet.cur(), system.cur() -- Shouldn't happen
+      -- Probably old save, just set to Gastan like before
+      return planet.get("Gastan")
    end
    return planet.get( pnt )
 end
