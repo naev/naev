@@ -3,6 +3,7 @@ local pixelcode_sdf = [[
 uniform float u_time = 0.0;
 uniform float dt = 0.0;
 uniform float u_size = 100.0;
+uniform int parami = 0;
 uniform vec2 dimensions;
 
 const float M_PI        = 3.14159265358979323846;  /* pi */
@@ -57,6 +58,21 @@ float sdRhombus( vec2 p, vec2 b )
    float h = clamp((-2.0*ndot(q,b)+ndot(b,b))/dot(b,b),-1.0,1.0);
    float d = length( q - 0.5*b*vec2(1.0-h,1.0+h) );
    return d * sign( q.x*b.y + q.y*b.x - b.x*b.y );
+}
+
+/* Egg shape (semicircle glued half a vesica) at position p with size b. The cusp is at vec2(-b.x, 0). */
+float sdEgg( vec2 p, vec2 b )
+{
+    /* Transform to Inigo's code */
+    const float k           = 1.73205080756887729353;  /* sqrt(3) */
+    float ra = b.y;
+    float rb = ra + 2.0*b.x - 2.0*b.x*b.x/ra;
+    p = vec2(abs(p.y), b.x - ra - p.x);
+    /* The rest of the calculation matches the web page cited above. */
+    float r = ra - rb;
+    return ((p.y<0.0)       ? length(vec2(p.x,  p.y    )) - r :
+            (k*(p.x+r)<p.y) ? length(vec2(p.x,  p.y-k*r)) :
+                              length(vec2(p.x+r,p.y    )) - 2.0*r) - rb;
 }
 
 float sdSegment( in vec2 p, in vec2 a, in vec2 b )
@@ -403,6 +419,44 @@ vec4 sdf_gear( vec4 color, vec2 uv )
    return color;
 }
 
+vec4 sdf_sysrhombus( vec4 color, vec2 uv)
+{
+   vec2 pos = vec2( uv.y, uv.x );
+   const vec2 b1 = vec2( 0.9, 0.6 );
+   const vec2 b2 = vec2( 0.9, 0.4 );
+   float m = 1.0 / dimensions.x;
+
+   float d;
+   if (parami==1) {
+      const vec2 b = b2;
+      d = sdRhombus( pos, b );
+      d = max( -sdRhombus( pos*2.0, b ), d );
+      d = min(  d, sdRhombus( pos*4.0, b ) );
+   }
+   else {
+      const vec2 b = b1;
+      d = sdRhombus( pos, b );
+      d = max( -sdRhombus( pos*2.0, b ), d );
+      d = min(  d, sdRhombus( pos*4.0, b ) );
+   }
+   color.a *= smoothstep( -m, 0.0, -d );
+   return color;
+}
+
+vec4 sdf_sysmarker( vec4 color, vec2 uv )
+{
+   vec2 pos = vec2( uv.y, uv.x );
+   const vec2 b1 = vec2( 0.9, 0.45 );
+   const vec2 b2 = vec2( 0.9, 0.30 );
+   float m = 1.0 / dimensions.x;
+
+   vec2 b = (parami==1) ? b2 : b1;
+   float d = sdEgg( pos, b );
+   color.a *= smoothstep( -m, 0.0, -d - 0.75*b.y ) + smoothstep( -m, 0.0, -d ) * smoothstep( 0.0, m, d + 0.5*b.y );
+
+   return color;
+}
+
 vec4 bg( vec2 uv )
 {
    vec3 c;
@@ -432,7 +486,9 @@ vec4 effect( vec4 color, Image tex, vec2 uv, vec2 px )
    //col_out = sdf_playermarker( color, uv_rel );
    //col_out = sdf_stealth( color, uv_rel );
    //col_out = sdf_jumplane( color, uv_rel );
-   col_out = sdf_gear( color, uv_rel );
+   //col_out = sdf_gear( color, uv_rel );
+   //col_out = sdf_sysrhombus( color, uv_rel );
+   col_out = sdf_sysmarker( color, uv_rel );
 
    return mix( bg(uv), col_out, col_out.a );
 }
@@ -529,9 +585,13 @@ function love.draw ()
    lg.rectangle( "fill", 0, 0, w, h )
 
    local x, y = 0, 0
+   local parami = 0
    local function draw_shader( w )
       local h = w
       shader:send("u_size",w/2)
+      if shader:hasUniform("parami") then
+         shader:send("parami", parami )
+      end
       if shader:hasUniform("dimensions") then
          shader:send("dimensions", {w/2, w/2} )
       end
@@ -544,6 +604,7 @@ function love.draw ()
       lg.draw( img, x, y, 0, w, h )
 
       x = x + w
+      parami = 1 - parami
    end
 
    draw_shader( 600 )
@@ -560,6 +621,7 @@ end
 function love.update( dt )
    global_dt = (global_dt or 0) + dt
    if shader:hasUniform("u_time") then
+      shader:send( "u_time", global_dt )
       shader:send( "u_time", global_dt )
    end
    if shader:hasUniform("dt") then
