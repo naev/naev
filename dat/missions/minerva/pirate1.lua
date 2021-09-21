@@ -101,6 +101,8 @@ They beam a smile at you.]]),_(runawaysys)))
           _("Go back to Minerva Station") } )
    misn.osdActive(1)
 
+   misn.markerAdd( system.cur() )
+
    hook.enter("enter")
    hook.load("land")
    hook.land("land")

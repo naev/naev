@@ -69,6 +69,8 @@ function accept ()
       _("Find out who the mole is"),
    } )
 
+   misn.markerAdd( system.cur() )
+
    minerva.log.pirate(_("You accepted another job from the shady individual deal with a mole at Minerva Station.") )
 
    hook.load("generate_npc")
