@@ -12,7 +12,7 @@ void main(void) {
    const vec2 c = vec2(-0.35,0.0);
    float m = 1.0 / dimensions.x;
 
-   float d = sdEgg( pos, b-m );
+   float d = sdEgg( pos, b-2.0*m );
    vec2 cpos = pos+c;
    if (parami==1)
       d = max( -sdSegment( cpos, vec2(0.0), vec2(1.0,0.0) )+0.15, d );
