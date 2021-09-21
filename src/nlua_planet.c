@@ -312,6 +312,19 @@ static int planetL_getBackend( lua_State *L, int landable )
       planets = space_getFactionPlanet( factions, landable );
       array_free(factions);
    }
+
+   /* Just get a planet. */
+   else if (lua_isplanet(L,1)) {
+      pnt = luaL_validplanet( L, 1 );
+      if (landable) {
+         /* Check if can land. */
+         planet_updateLand( pnt );
+         if (!pnt->can_land)
+            return 0;
+      }
+      rndplanet = pnt->name;
+   }
+
    else
       NLUA_INVALID_PARAMETER(L); /* Bad Parameter */
 
