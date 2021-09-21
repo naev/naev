@@ -23,13 +23,12 @@
 </mission>
 --]]
 --[[
-   -- These are regular cargo delivery missions. Pay is low, but so is difficulty.
-   -- Most of these missions require BULK ships. Not for small ships!
+   These are regular cargo delivery missions. Pay is low, but so is difficulty.
+   Most of these missions require BULK ships. Not for small ships!
 --]]
 local pir = require "common.pirate"
 require "cargo_common"
 local fmt = require "format"
-
 
 misn_desc = {}
 -- Note: indexed from 0 to match mission tiers.
