@@ -40,13 +40,13 @@ function getsysatdistance( sys, min, max, filter, data, hidden )
       max = min
    end
 
-   open  = { sys }
-   close = { [sys:nameRaw()]=sys }
-   dist  = { [sys:nameRaw()]=0 }
+   local open  = { sys }
+   local close = { [sys:nameRaw()]=sys }
+   local dist  = { [sys:nameRaw()]=0 }
 
    -- Run max times
    for i=1,max do
-      nopen = {}
+      local nopen = {}
       -- Get all the adjacent system of the current set
       for _,s in ipairs(open) do
          adjsys = s:adjacentSystems( hidden ) -- Get them all
@@ -63,7 +63,7 @@ function getsysatdistance( sys, min, max, filter, data, hidden )
    end
 
    -- Now we filter the solutions
-   finalset = {}
+   local finalset = {}
    for i,s in pairs(close) do
       if dist[i] >= min and dist[i] <= max and
             (filter == nil or filter(s,data)) then
