@@ -107,7 +107,7 @@ end
 
 function goodevent()
    -- Roll for good event, handle accordingly
-   event = rnd.rnd(1, #gtext)
+   local event = rnd.rnd(1, #gtext)
 
    -- Only give a map if unknown.
    if event == 2 then
