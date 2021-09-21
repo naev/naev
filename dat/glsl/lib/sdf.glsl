@@ -136,7 +136,7 @@ float sdEgg( vec2 p, vec2 b )
     /* Transform to Inigo's code */
     const float k           = 1.73205080756887729353;  /* sqrt(3) */
     float ra = b.y;
-    float rb = ((k+1.0)*ra - 2.0*b.x)/(k-1.0);
+    float rb = ra + 2.0*b.x - 2.0*b.x*b.x/ra;
     p = vec2(abs(p.y), b.x - ra - p.x);
     /* The rest of the calculation matches the web page cited above. */
     float r = ra - rb;

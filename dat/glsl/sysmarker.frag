@@ -13,19 +13,8 @@ void main(void) {
    float m = 1.0 / dimensions.x;
 
    color_out = color;
-   float d;
-   if (parami==1) {
-      const vec2 b = b2;
-      d = sdEgg( pos, b );
-      d = max( -sdEgg( pos*2.0, b ), d );
-      d = min(  d, sdEgg( pos*4.0, b ) );
-   }
-   else {
-      const vec2 b = b1;
-      d = sdEgg( pos, b );
-      d = max( -sdEgg( pos*2.0, b ), d );
-      d = min(  d, sdEgg( pos*4.0, b ) );
-   }
-   color_out.a *= smoothstep( -m, 0.0, -d );
+   vec2 b = (parami==1) ? b2 : b1;
+   float d = sdEgg( pos, b );
+   color_out.a *= smoothstep( -m, 0.0, -d - 0.75*b.y ) + smoothstep( -m, 0.0, -d ) * smoothstep( 0.0, m, d + 0.5*b.y );
 }
 
