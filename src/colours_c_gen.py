@@ -84,11 +84,12 @@ COLOURS = [
     Colour( "Hostile",      170./255.,  68./255., 153./255. ),
     Colour( "Restricted",   153./255., 153./255.,  51./255. ),
     # Mission Markers
-    Colour( "MarkerNew",        154./255., 112./255., 158./255. ),
-    Colour( "MarkerComputer",   208./255., 231./255., 202./255. ),
-    Colour( "MarkerLow",        234./255., 240./255., 181./255. ),
-    Colour( "MarkerHigh",       252./255., 247./255., 213./255. ),
-    Colour( "MarkerPlot",       255./255., 255./255., 255./255. ),
+    # https://packages.tesselle.org/khroma/articles/tol.html#vibrant
+    Colour( "MarkerNew",        0x33/255., 0xBB/255., 0xEE/255. ),
+    Colour( "MarkerComputer",   0x33/255., 0xBB/255., 0xEE/255. ),
+    Colour( "MarkerLow",        0x00/255., 0x99/255., 0x88/255. ),
+    Colour( "MarkerHigh",       0xEE/255., 0x77/255., 0x33/255. ),
+    Colour( "MarkerPlot",       0xEE/255., 0x33/255., 0x77/255. ),
     # Radar
     Colour( "Radar_player",     0.9, 0.1, 0.9 ),
     Colour( "Radar_tPilot",     1.0, 1.0, 1.0 ),

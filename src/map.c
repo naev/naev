@@ -83,7 +83,7 @@ static Commodity **commod_known = NULL; /**< index of known commodities */
 static char** map_modes = NULL; /**< Array (array.h) of the map modes' names, e.g. "Gold: Cost". */
 static int listMapModeVisible = 0; /**< Whether the map mode list widget is visible. */
 static double commod_av_gal_price = 0; /**< Average price across the galaxy. */
-static double map_nebu_dt     = 0.; /***< Nebula animation stuff. */
+static double map_dt     = 0.; /***< Nebula animation stuff. */
 
 /*
  * extern
@@ -776,23 +776,23 @@ static void map_drawMarker( double x, double y, double r, double a,
 
    alpha += M_PI*2. * (double)cur/(double)num;
 
-   /* Draw the marking triangle. */
-   col = *colours[type];
-   col.a *= a;
-
    x = x + 3.0*r * cos(alpha);
    y = y + 3.0*r * sin(alpha);
    r *= 2.0;
 
    glUseProgram(shaders.sysmarker.program);
    if (type==0) {
+      col_blend( &col, colours[type], &cWhite, MIN(1.0, 0.75 + 0.25*sin(2.0*M_PI*map_dt)) );
       x += 0.25*r * cos(alpha);
       y += 0.25*r * sin(alpha);
       r *= 1.25;
       glUniform1i( shaders.sysmarker.parami, 1 );
    }
-   else
+   else {
+      col_blend( &col, colours[type], &cWhite, MIN(1.0, 1.0 + 0.25*sin(2.0*M_PI*map_dt)) );
       glUniform1i( shaders.sysmarker.parami, 0 );
+   }
+   col.a *= a;
    gl_renderShader( x, y, r, r, alpha, &shaders.sysmarker, &col, 1 );
 }
 
@@ -811,6 +811,9 @@ static void map_render( double bx, double by, double w, double h, void *data )
    double dt = naev_getrealdt();
    glColour col;
    StarSystem *sys;
+
+   /* Update timer. */
+   map_dt += naev_getrealdt();
 
 #define AMAX(x) (x) = MIN( 1., (x) + dt )
 #define AMIN(x) (x) = MAX( 0., (x) - dt )
@@ -869,11 +872,6 @@ else (x) = MAX( y, (x) - dt )
    /* Render jump routes. */
    map_renderJumps( x, y, r, 0 );
 
-   /* Cause alpha to move smoothly between 0-1. */
-   /* TODO should be based around real_dt instead of SDL_GetTicks(). */
-   col.a = 0.6 + 0.4 * ( ABS(MAP_MARKER_CYCLE - (int)SDL_GetTicks() % (2*MAP_MARKER_CYCLE))
-         / (double)MAP_MARKER_CYCLE );
-
    /* Render the player's jump route. */
    if (map_alpha_path > 0.)
       map_renderPath( x, y, r, map_alpha_path );
@@ -887,7 +885,7 @@ else (x) = MAX( y, (x) - dt )
 
    /* Render system markers. */
    if (map_alpha_markers > 0.)
-     map_renderMarkers( x, y, r, col.a * map_alpha_markers );
+     map_renderMarkers( x, y, r, map_alpha_markers );
 
    /* Render commodity info. */
    if (map_mode == MAPMODE_TRADE)
@@ -902,7 +900,7 @@ else (x) = MAX( y, (x) - dt )
    if (map_selected != -1) {
       sys = system_getIndex( map_selected );
       glUseProgram( shaders.selectplanet.program );
-      glUniform1f( shaders.selectplanet.dt, map_nebu_dt ); /* good enough. */
+      glUniform1f( shaders.selectplanet.dt, map_dt ); /* good enough. */
       gl_renderShader( x + sys->pos.x * map_zoom, y + sys->pos.y * map_zoom,
             1.7*r, 1.7*r, 0., &shaders.selectplanet, &cRadar_tPlanet, 1 );
    }
@@ -1043,9 +1041,6 @@ void map_renderSystemEnvironment( double x, double y, int editor, double alpha )
    /* Fade in the disks to allow toggling between commodity and nothing */
    gl_Matrix4 projection;
 
-   /* Update timer. */
-   map_nebu_dt += naev_getrealdt();
-
    for (i=0; i<array_size(systems_stack); i++) {
       sys = system_getIndex( i );
 
@@ -1077,7 +1072,7 @@ void map_renderSystemEnvironment( double x, double y, int editor, double alpha )
          glUniform1f(shaders.nebula_map.alpha, alpha);
          gl_Matrix4_Uniform(shaders.nebula_map.projection, projection);
          glUniform1f(shaders.nebula_map.eddy_scale, map_zoom );
-         glUniform1f(shaders.nebula_map.time, map_nebu_dt / 10.0);
+         glUniform1f(shaders.nebula_map.time, map_dt / 10.0);
          glUniform2f(shaders.nebula_map.globalpos, sys->pos.x, sys->pos.y );
 
          /* Draw. */
@@ -1266,7 +1261,7 @@ static void map_renderPath( double x, double y, double radius, double alpha )
          rh = 5.;
 
          glUseProgram( shaders.jumplanegoto.program );
-         glUniform1f( shaders.jumplanegoto.dt, map_nebu_dt );
+         glUniform1f( shaders.jumplanegoto.dt, map_dt );
          glUniform1f( shaders.jumplanegoto.paramf, radius );
          glUniform1i( shaders.jumplanegoto.parami, (jcur >= 1) );
          gl_renderShader( (x1+x2)/2., (y1+y2)/2., rw, rh, r, &shaders.jumplanegoto, &col, 1 );
