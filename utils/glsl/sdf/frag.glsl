@@ -17,7 +17,7 @@ float smin( float a, float b, float k )
    return min( a, b ) - h*h*k*(1.0/4.0);
 }
 float sdSmoothUnion( float d1, float d2, float k )
- {
+{
    return smin( d1, d2, k );
 }
 
@@ -445,13 +445,24 @@ vec4 sdf_sysrhombus( vec4 color, vec2 uv)
 vec4 sdf_sysmarker( vec4 color, vec2 uv )
 {
    vec2 pos = vec2( uv.y, uv.x );
-   const vec2 b1 = vec2( 0.9, 0.45 );
+   const vec2 b1 = vec2( 1.0, 0.65 );
    const vec2 b2 = vec2( 0.9, 0.30 );
    float m = 1.0 / dimensions.x;
+   const vec2 c = vec2(0.0,-0.35);
 
    vec2 b = (parami==1) ? b2 : b1;
-   float d = sdEgg( pos, b );
-   color.a *= smoothstep( -m, 0.0, -d - 0.75*b.y ) + smoothstep( -m, 0.0, -d ) * smoothstep( 0.0, m, d + 0.5*b.y );
+   float d = sdEgg( pos, b-m );
+   //d = max( -sdSegment( uv, vec2(0.0,0.0), vec2(0.0,1.0) )+0.1, d );
+   //d = max( -sdSegment( uv, vec2(0.0,-1.0), vec2(0.0,1.0) )+0.1, d );
+   //d = max( -sdSegment( uv, vec2(0.0,-0.4), vec2(0.0,0.0) )+0.1, d );
+   //vec2 auv = vec2( abs(uv.x), uv.y );
+   //d = max( -sdSegment( auv+vec2(0.0,-0.35), vec2(1.0,1.0), vec2(0.0,0.0) )+0.1, d );
+   //vec2 auv = abs( uv+c );
+   //d = max( -sdSegment( auv, vec2(1.0,1.0), vec2(0.0,0.0) )+0.1, d );
+   d = max( -sdSegment( uv+c, vec2(0.0,0.0), vec2(sin(1.5*u_time),1.0) )+0.1, d );
+   d = max( -sdCircle( uv+c, 0.45 ), d );
+   d = min( sdCircle( uv+c, 0.25 ), d );
+   color.a *= smoothstep( -m, 0.0, -d );
 
    return color;
 }

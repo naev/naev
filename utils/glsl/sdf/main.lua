@@ -110,7 +110,7 @@ function love.draw ()
       lg.draw( img, x, y, 0, w, h )
 
       x = x + w
-      parami = 1 - parami
+      --parami =  --1 - parami
    end
 
    draw_shader( 600 )
@@ -127,7 +127,6 @@ end
 function love.update( dt )
    global_dt = (global_dt or 0) + dt
    if shader:hasUniform("u_time") then
-      shader:send( "u_time", global_dt )
       shader:send( "u_time", global_dt )
    end
    if shader:hasUniform("dt") then

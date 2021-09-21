@@ -786,9 +786,9 @@ static void map_drawMarker( double x, double y, double r, double a,
 
    glUseProgram(shaders.sysmarker.program);
    if (type==0) {
-      x += 0.5*r * cos(alpha);
-      y += 0.5*r * sin(alpha);
-      r *= 1.5;
+      x += 0.25*r * cos(alpha);
+      y += 0.25*r * sin(alpha);
+      r *= 1.25;
       glUniform1i( shaders.sysmarker.parami, 1 );
    }
    else

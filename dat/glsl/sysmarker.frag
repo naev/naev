@@ -8,13 +8,19 @@ in vec2 pos;
 out vec4 color_out;
 
 void main(void) {
-   const vec2 b1 = vec2( 0.9, 0.45 );
-   const vec2 b2 = vec2( 0.9, 0.30 );
+   const vec2 b = vec2( 1.0, 0.65 );
+   const vec2 c = vec2(-0.35,0.0);
    float m = 1.0 / dimensions.x;
 
-   color_out = color;
-   vec2 b = (parami==1) ? b2 : b1;
-   float d = sdEgg( pos, b );
-   color_out.a *= smoothstep( -m, 0.0, -d - 0.75*b.y ) + smoothstep( -m, 0.0, -d ) * smoothstep( 0.0, m, d + 0.5*b.y );
+   float d = sdEgg( pos, b-m );
+   vec2 cpos = pos+c;
+   if (parami==1)
+      d = max( -sdSegment( cpos, vec2(0.0), vec2(1.0,0.0) )+0.15, d );
+   d = max( -sdCircle( cpos, 0.5 ), d );
+   d = min( sdCircle( cpos, 0.2 ), d );
+
+   float alpha = smoothstep(     -m, 0.0, -d );
+   float beta  = smoothstep( -2.0*m,  -m, -d );
+   color_out   = color * vec4( vec3(alpha), beta );
 }
 
