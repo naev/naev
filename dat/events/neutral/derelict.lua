@@ -229,6 +229,7 @@ function badevent()
          end
          local pirates = {}
          local pos = player.pos()
+         local leader
          for k,v in ipairs(enemies) do
             local p = pilot.add( v, "Marauder", pos + vec2.newP( 1300 + rnd.rnd()*500, 360*rnd.rnd() ) )
             if v == "Hyena" then
@@ -236,6 +237,11 @@ function badevent()
             end
             p:setHostile( true ) -- Should naturally attack the player
             table.insert( pirates, p )
+            if not leader then
+               leader = p
+            else
+               p:setLeader( leader )
+            end
          end
          destroyevent()
       end,
