@@ -51,7 +51,7 @@ function create ()
       { _("Help them out"), "help" },
       { _("Refuse to help"), "refuse" },
    }
-   
+
    vn.label("refuse")
    vn.na(_("You refuse to help them and leave them to the mercy of the stars."))
    vn.done()
@@ -74,7 +74,7 @@ function create ()
    misn.setTitle(_("Derelict Rescue"))
    misn.setDesc(fmt.f(_("You have agreed to take some crew you rescued from a derelict ship to {planetname} in the {sysname} system."), {planetname=destpnt:name(), sysname=destsys:name()}))
    misn.setReward(fmt.credits(reward_amount))
-   
+
    local c = misn.cargoNew( N_("Rescued Crew"), N_("Some crew you rescued from a derelict ship.") )
    civs = misn.cargoAdd( c, 0 )
 

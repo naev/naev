@@ -637,7 +637,7 @@ function attacked( attacker )
          p:msg( l, "f_attacked", attacker )
       end
    end
-  
+
    -- If forced we'll stop after telling friends
    if si.forced then return end
 

@@ -1,7 +1,7 @@
 local sciwrong = {}
 
 sciwrong.center_operations = "sciwrong_center_operations"
-   
+
 function sciwrong.addLog( text )
    shiplog.create( "zlk_sciwrong", _("Science Gone Wrong"), _("Za'lek") )
    shiplog.append( "zlk_sciwrong", text )
