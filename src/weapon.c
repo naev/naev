@@ -40,6 +40,7 @@
 
 /* Weapon status */
 typedef enum WeaponStatus_ {
+   WEAPON_STATUS_LOCKING,  /**< Weapon is locking on. */
    WEAPON_STATUS_OK,       /**< Weapon is fine */
    WEAPON_STATUS_UNJAMMED, /**< Survived jamming */
    WEAPON_STATUS_JAMMED,   /**< Got jammed */
@@ -72,7 +73,7 @@ typedef struct Weapon_ {
    double dam_mod; /**< Damage modifier. */
    double dam_as_dis_mod; /**< Damage as disable modifier. */
    int voice; /**< Weapon's voice. */
-   double exp_timer; /**< Explosion timer for beams. */
+   double timer2; /**< Explosion timer for beams, and lockon for ammo. */
    double life; /**< Total life. */
    double timer; /**< mainly used to see when the weapon was fired */
    double anim; /**< Used for beam weapon graphics and others. */
@@ -339,6 +340,13 @@ static void think_seeker( Weapon* w, const double dt )
 
    /* Handle by status. */
    switch (w->status) {
+      case WEAPON_STATUS_LOCKING: /* Check to see if we can get a lock on. */
+         w->timer2 -= dt;
+         if (w->timer2 > 0.) {
+            weapon_setThrust( w, w->outfit->u.amm.thrust * w->outfit->mass );
+            break;
+         }
+         FALLTHROUGH;
 
       case WEAPON_STATUS_OK: /* Check to see if can get jammed */
          jc = p->stats.jam_chance - w->outfit->u.amm.resist;
@@ -663,12 +671,12 @@ static void weapons_updateLayer( const double dt, const WeaponLayer layer )
                break;
             }
             /* We use the explosion timer to tell when we have to create explosions. */
-            w->exp_timer -= dt;
-            if (w->exp_timer < 0.) {
-               if (w->exp_timer < -1.)
-                  w->exp_timer = 0.100;
+            w->timer2 -= dt;
+            if (w->timer2 < 0.) {
+               if (w->timer2 < -1.)
+                  w->timer2 = 0.100;
                else
-                  w->exp_timer = -1.;
+                  w->timer2 = -1.;
             }
             break;
          default:
@@ -1348,7 +1356,7 @@ static void weapon_hitBeam( Weapon* w, Pilot* p, WeaponLayer layer,
    damage = pilot_hit( p, w->solid, w->parent, &dmg, 1 );
 
    /* Add sprite, layer depends on whether player shot or not. */
-   if (w->exp_timer == -1.) {
+   if (w->timer2 == -1.) {
       /* Get the layer. */
       spfx_layer = (p==player.p) ? SPFX_LAYER_FRONT : SPFX_LAYER_MIDDLE;
 
@@ -1363,7 +1371,7 @@ static void weapon_hitBeam( Weapon* w, Pilot* p, WeaponLayer layer,
             VX(p->solid->vel), VY(p->solid->vel), spfx_layer );
       spfx_add( spfx, pos[1].x, pos[1].y,
             VX(p->solid->vel), VY(p->solid->vel), spfx_layer );
-      w->exp_timer = -2;
+      w->timer2 = -2.;
 
       /* Inform AI that it's been hit, to not saturate ai Lua with messages. */
       weapon_hitAI( p, parent, damage );
@@ -1398,7 +1406,7 @@ static void weapon_hitAstBeam( Weapon* w, Asteroid* a, WeaponLayer layer,
    asteroid_hit( a, &dmg );
 
    /* Add sprite. */
-   if (w->exp_timer == -1.) {
+   if (w->timer2 == -1.) {
       spfx = outfit_spfxArmour(w->outfit);
 
       /* Add graphic. */
@@ -1406,7 +1414,7 @@ static void weapon_hitAstBeam( Weapon* w, Asteroid* a, WeaponLayer layer,
             VX(a->vel), VY(a->vel), SPFX_LAYER_MIDDLE );
       spfx_add( spfx, pos[1].x, pos[1].y,
             VX(a->vel), VY(a->vel), SPFX_LAYER_MIDDLE );
-      w->exp_timer = -2;
+      w->timer2 = -2.;
    }
 }
 
@@ -1618,6 +1626,7 @@ static void weapon_createAmmo( Weapon *w, const Outfit* launcher, double T,
    mass        = w->outfit->mass;
    w->timer    = ammo->u.amm.duration * parent->stats.launch_range;
    w->solid    = solid_create( mass, rdir, pos, &v, SOLID_UPDATE_EULER );
+   w->timer2   = launcher->u.lau.iflockon;
    if (w->outfit->u.amm.thrust > 0.) {
       weapon_setThrust( w, w->outfit->u.amm.thrust * mass );
       /* Limit speed, we only relativize in the case it has thrust + initila speed. */
@@ -1861,7 +1870,7 @@ unsigned int beam_start( const Outfit* outfit,
    w = weapon_create( outfit, 0., dir, pos, vel, parent, target, 0. );
    w->ID = ++beam_idgen;
    w->mount = mount;
-   w->exp_timer = 0.;
+   w->timer2 = 0.;
 
    /* set the proper layer */
    switch (layer) {
