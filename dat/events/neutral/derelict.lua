@@ -17,9 +17,15 @@
 local vntk = require 'vntk'
 local fmt = require 'format'
 
---=== MISSION EVENTS ===--
--- Add the name of your mission to this list. It will automatically have a chance of triggering from the derelict. The event handles unboarding.
-missionlist = {}
+mission_list = {
+   --[[
+   {
+      name = "Mission Name",
+      cond = function () return true end, -- Some condition to be met
+      weight = 1, -- how it should be weighted, defaults to 1
+   },
+   --]]
+}
 
 function create ()
    local nebu_dens, nebu_vol = system.cur():nebula()
@@ -181,23 +187,30 @@ end
 
 function missionevent()
    -- Fetch all missions that haven't been flagged as done yet.
-   local mymissions = {}
-
-   for i, mission in ipairs(missionlist) do
-      if not player.misnDone(mission) then
-         mymissions[#mymissions + 1] = mission
+   local available_missions = {}
+   local weights = 0
+   for k,m in ipairs(mission_list) do
+      if not player.misnDone(m.name) and m.cond() then
+         weights = weights + m.weight or 1
+         m.chance = weights
+         table.insert( available_missions, m )
       end
    end
 
    -- If no missions are available, default to a neutral event.
-   if #mymissions == 0 then
+   if #available_missions == 0 then
       neutralevent()
-   else
-      -- Roll a random mission and start it.
-      local select = rnd.rnd(1, #mymissions)
-      naev.missionStart(mymissions[select])
+      return
+   end
 
-      destroyevent()
+   -- Roll a random mission and start it.
+   local r = rnd.rnd()
+   for k,m in ipairs(available_missions) do
+      if m.chance / weights < r then
+         naev.missionStart( m.name )
+         destroyevent()
+         return
+      end
    end
 end
 
