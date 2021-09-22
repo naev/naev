@@ -15,7 +15,8 @@
   <ammo>Caesar IV Torpedo</ammo>
   <delay>7</delay>
   <reload_time>90</reload_time>
-  <lockon>9</lockon>
+  <lockon>2</lockon>
+  <iflockon>7</iflockon>
   <arc>60</arc>
   <trackmin>5000</trackmin>
   <trackmax>25000</trackmax>

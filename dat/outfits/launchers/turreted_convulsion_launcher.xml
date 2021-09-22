@@ -18,7 +18,8 @@ This launcher is mounted on a turret and has more ammo capacity than the standar
   <delay>2.5</delay>
   <reload_time>90</reload_time>
   <amount>35</amount>
-  <lockon>5</lockon>
+  <lockon>1.5</lockon>
+  <iflockon>2.5</iflockon>
   <trackmin>0</trackmin>
   <trackmax>5000</trackmax>
  </specific>

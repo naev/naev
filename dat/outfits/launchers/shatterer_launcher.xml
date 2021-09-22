@@ -16,7 +16,8 @@
   <delay>1.5</delay>
   <reload_time>35</reload_time>
   <amount>30</amount>
-  <lockon>3</lockon>
+  <lockon>0.5</lockon>
+  <iflockon>1.5</iflockon>
   <trackmin>0</trackmin>
   <trackmax>10000</trackmax>
  </specific>

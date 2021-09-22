@@ -17,7 +17,8 @@ This is TeraCom's model Headhunter launcher. Though somewhat pricey and demandin
   <delay>3.5</delay>
   <reload_time>60</reload_time>
   <amount>25</amount>
-  <lockon>6</lockon>
+  <lockon>3</lockon>
+  <iflockon>4</iflockon>
   <arc>60</arc>
   <trackmin>0</trackmin>
   <trackmax>6000</trackmax>
