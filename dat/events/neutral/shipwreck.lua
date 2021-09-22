@@ -31,7 +31,7 @@ function create ()
    if not evt.claim( system.cur(), true ) then evt.finish() end
 
     -- The shipwreck will be a random trader vessel.
-    r = rnd.rnd()
+    local r = rnd.rnd()
     if r > 0.95 then
         ship = "Gawain"
     elseif r > 0.8 then
@@ -43,15 +43,13 @@ function create ()
     end
 
     -- Create the derelict.
-    angle = rnd.rnd() * 2 * math.pi
-    dist  = rnd.rnd(2000, 3000) -- place it a ways out
-    pos   = vec2.new( dist * math.cos(angle), dist * math.sin(angle) )
-    p     = pilot.add( ship, "Derelict", pos, nil, {ai="dummy"} )
-    p:disable()
-    p:rename(shipwreck:format(shipname))
+    local pos   = vec2.newP( rnd.rnd(2000,3000), rnd.rnd()*360 )
+    derelict    = pilot.add( ship, "Derelict", pos, nil, {ai="dummy"} )
+    derelict:disable()
+    derelict:rename(shipwreck:format(shipname))
     -- Added extra visibility for big systems (A.)
-    p:setVisplayer( true )
-    p:setHilight( true )
+    derelict:setVisplayer( true )
+    derelict:setHilight( true )
 
     hook.timer(3.0, "broadcast")
 
@@ -64,10 +62,10 @@ end
 
 function broadcast ()
     -- Ship broadcasts an SOS every 10 seconds, until boarded or destroyed.
-    if not p:exists() then
+    if not derelict:exists() then
         return
     end
-    p:broadcast( string.format(broadcastmsg, shipname), true )
+    derelict:broadcast( string.format(broadcastmsg, shipname), true )
     timer_delay = timer_delay or 10
     timer_delay = timer_delay + 5
     bctimer = hook.timer(timer_delay, "broadcast")

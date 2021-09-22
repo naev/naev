@@ -2,7 +2,7 @@
 <?xml version='1.0' encoding='utf8'?>
 <event name="Derelict">
  <trigger>enter</trigger>
- <chance>10</chance>
+ <chance>30</chance>
  <cond>system.cur():faction() ~= nil</cond>
  <notes>
   <tier>1</tier>
@@ -25,6 +25,9 @@ mission_list = {
       weight = 1, -- how it should be weighted, defaults to 1
    },
    --]]
+   {
+      name = "Derelict Rescue",
+   },
 }
 
 function create ()
@@ -32,6 +35,9 @@ function create ()
    if nebu_vol > 0 then
       evt.finish()
    end
+
+   -- Ignore claimed systems (don't want to ruin the atmosphere)
+   if not evt.claim( system.cur(), true ) then evt.finish() end
 
    -- Get the derelict's ship.
    local r = rnd.rnd()
@@ -50,11 +56,12 @@ function create ()
    end
 
    -- Create the derelict.
-   local dist  = rnd.rnd(400, system.cur():radius() * 0.6)
+   local dist  = rnd.rnd() * system.cur():radius() * 0.6
    local pos   = vec2.newP( dist, rnd.rnd()*360 )
    local p     = pilot.add(ship, "Derelict", pos, nil, {ai="dummy"})
    p:disable()
    p:rename("Derelict")
+   p:intrinsicSet( "ew_hide", -75 ) -- Much more visible
    hook.pilot(p, "board", "board")
    hook.pilot(p, "death", "destroyevent")
    hook.jumpout("destroyevent")
@@ -67,9 +74,9 @@ function board()
    local prob = rnd.rnd()
    if prob <= 0.25 then
       neutralevent()
-   elseif prob <= 0.5 then
+   elseif prob <= 0.6 then
       goodevent()
-   elseif prob <= 0.75 then
+   elseif prob <= 0.7 then
       badevent()
    else
       missionevent()
@@ -109,7 +116,7 @@ function goodevent()
          player.pay(rnd.rnd(5e3,30e3))
       end,
       function ()
-         local factions = {"Empire", "Dvaered", "Sirius", "Soromid", "Zalek", "Frontier"}
+         local factions = {"Empire", "Dvaered", "Sirius", "Soromid", "Za'lek", "Frontier"}
          rndfact = factions[rnd.rnd(1, #factions)]
          vntk.msg(gtitle, fmt.f(_([[This ship looks like any old piece of scrap at a glance, but it is actually an antique, one of the very first of its kind ever produced! Museums all over the galaxy would love to have a ship like this. You plant a beacon on the derelict to mark it for salvaging, and contact the {factname} authorities. Your reputation with them has slightly improved.]]), {factname=rndfact}))
          faction.modPlayerSingle(rndfact, 3)
@@ -269,7 +276,7 @@ function missionevent()
    local weights = 0
    for k,m in ipairs(mission_list) do
       if not player.misnDone(m.name) and (not m.cond or m.cond()) then
-         weights = weights + m.weight or 1
+         weights = weights + (m.weight or 1)
          m.chance = weights
          table.insert( available_missions, m )
       end

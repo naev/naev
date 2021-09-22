@@ -26,18 +26,72 @@ function lmisn.sfxMoney ()
 end
 
 
+function lmisn.getLandablePlanet( sys, fct, fctmatch )
+   sys = sys or system.cur()
+   local pnt_candidates = {}
+   for k,p in ipairs(sys:planets()) do
+      local s = p:services()
+      if s.land and s.inhabited then
+         if not fct then
+            table.insert( pnt_candidates, p )
+         else
+            local f = p:faction()
+            if (fctmatch and f==fct) or (not fctmatch and f and not f:areEnemies(fct)) then
+               table.insert( pnt_candidates, p )
+            end
+         end
+      end
+   end
+   if #pnt_candidates==0 then
+      return nil
+   end
+   return pnt_candidates[ rnd.rnd(1,#pnt_candidates) ]
+end
+
+
 -- Choose the next system to jump to on the route from system nowsys to system finalsys.
 function lmisn.getNextSystem( nowsys, finalsys, hidden )
    if nowsys == finalsys or finalsys == nil then
        return nowsys
    end
 
-   path = nowsys:jumpPath( finalsys, hidden )
+   local path = nowsys:jumpPath( finalsys, hidden )
    if not path then
       return nowsys
    end
 
    return path[1]:dest()
+end
+
+lmisn.sysFilters = {}
+function lmisn.sysFilters.default ()
+   return function( sys )
+      return true
+   end
+end
+function lmisn.sysFilters.faction( fct, threshold )
+   fct = faction.get(fct)
+   threshold = threshold or 0
+   local fctname = fct:nameRaw()
+   return function( sys )
+      local f = sys:presences()[fctname] or 0
+      return (f > threshold)
+   end
+end
+function lmisn.sysFilters.factionLandable( fct, samefact )
+   fct = faction.get(fct)
+   return function( sys )
+      for k,p in ipairs(sys:planets()) do
+         local s = p:services()
+         if s.land and s.inhabited then
+            local f = p:faction()
+            if (samefact and f==fct) or (not samefact and f and not f:areEnemies(fct)) then
+               return true
+            end
+         end
+      end
+      return false
+   end
 end
 
 --[[
