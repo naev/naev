@@ -2,7 +2,7 @@
 <?xml version='1.0' encoding='utf8'?>
 <event name="Derelict">
  <trigger>enter</trigger>
- <chance>30</chance>
+ <chance>45</chance>
  <cond>system.cur():faction() ~= nil</cond>
  <notes>
   <tier>1</tier>
@@ -31,13 +31,19 @@ mission_list = {
 }
 
 function create ()
-   local nebu_dens, nebu_vol = system.cur():nebula()
+   local cursys = system.cur()
+   local nebu_dens, nebu_vol = cursys:nebula()
    if nebu_vol > 0 then
       evt.finish()
    end
 
+   -- Don't spawn in Thurion space
+   if cursys:faction()==faction.get("Thurion") then
+      evt.finish()
+   end
+
    -- Ignore claimed systems (don't want to ruin the atmosphere)
-   if not evt.claim( system.cur(), true ) then evt.finish() end
+   if not evt.claim( cursys, true ) then evt.finish() end
 
    -- Get the derelict's ship.
    local r = rnd.rnd()
@@ -56,14 +62,14 @@ function create ()
    end
 
    -- Create the derelict.
-   local dist  = rnd.rnd() * system.cur():radius() * 0.6
+   local dist  = rnd.rnd() * cursys:radius() * 0.8
    local pos   = vec2.newP( dist, rnd.rnd()*360 )
    derelict    = pilot.add(ship, "Derelict", pos, nil, {ai="dummy"})
    derelict:disable()
    derelict:rename("Derelict")
    derelict:intrinsicSet( "ew_hide", -75 ) -- Much more visible
-   hook.pilot(p, "board", "board")
-   hook.pilot(p, "death", "destroyevent")
+   hook.pilot(derelict, "board", "board")
+   hook.pilot(derelict, "death", "destroyevent")
    hook.jumpout("destroyevent")
    hook.land("destroyevent")
 end
@@ -113,7 +119,7 @@ function goodevent()
    local goodevent_list = {
       function ()
          vntk.msg(gtitle, _([[The derelict appears deserted, its passengers long gone. However, they seem to have left behind a small amount of credit chips in their hurry to leave! You decide to help yourself to them, and leave the derelict.]]) )
-         player.pay(rnd.rnd(5e3,30e3))
+         player.pay( rnd.rnd(5e3,30e3) )
       end,
       function ()
          local factions = {"Empire", "Dvaered", "Sirius", "Soromid", "Za'lek", "Frontier"}
