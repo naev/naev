@@ -15,10 +15,9 @@
    The FLF Catastrophe
 
 --]]
-
 local fleet = require "fleet"
-require "misnhelper"
 local flf = require "missions.flf.flf_common"
+local lmisn = require "lmisn"
 
 
 title = {}
@@ -101,7 +100,7 @@ function enter_bar ()
       "FLF Commodity Run", "Eliminate a Dvaered Patrol",
       "Divert the Dvaered Forces", "Eliminate an Empire Patrol",
       "FLF Pirate Disturbance", "Rogue FLF" }
-   if not anyMissionActive( flf_missions ) then
+   if not lmisn.anyMissionActive( flf_missions ) then
       if bar_hook ~= nil then hook.rm( bar_hook ) end
       if abort_hook ~= nil then hook.rm( abort_hook ) end
       music.stop()
