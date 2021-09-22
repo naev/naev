@@ -1,26 +1,26 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Patrol">
-  <avail>
-   <priority>4</priority>
-   <cond>player.numOutfit("Mercenary License") &gt; 0</cond>
-   <chance>560</chance>
-   <location>Computer</location>
-   <faction>Dvaered</faction>
-   <faction>Empire</faction>
-   <faction>Frontier</faction>
-   <faction>Goddard</faction>
-   <faction>Independent</faction>
-   <faction>Proteron</faction>
-   <faction>Sirius</faction>
-   <faction>Soromid</faction>
-   <faction>Thurion</faction>
-   <faction>Za'lek</faction>
-  </avail>
-  <notes>
-   <tier>3</tier>
-  </notes>
- </mission>
+ <avail>
+  <priority>4</priority>
+  <cond>player.numOutfit("Mercenary License") &gt; 0</cond>
+  <chance>560</chance>
+  <location>Computer</location>
+  <faction>Dvaered</faction>
+  <faction>Empire</faction>
+  <faction>Frontier</faction>
+  <faction>Goddard</faction>
+  <faction>Independent</faction>
+  <faction>Proteron</faction>
+  <faction>Sirius</faction>
+  <faction>Soromid</faction>
+  <faction>Thurion</faction>
+  <faction>Za'lek</faction>
+ </avail>
+ <notes>
+  <tier>3</tier>
+ </notes>
+</mission>
 --]]
 --[[
 
@@ -32,6 +32,7 @@
 --]]
 local pir = require "common.pirate"
 local fmt = require "format"
+local vntk = require "vntk"
 require "jumpdist"
 
 pay_title = _("Mission Completed")
@@ -201,7 +202,7 @@ function land ()
    jumps_permitted = jumps_permitted - 1
    if job_done and planet.cur():faction() == paying_faction then
       local txt = pay_text[ rnd.rnd( 1, #pay_text ) ]
-      tk.msg( pay_title, txt )
+      vntk.msg( pay_title, txt )
       player.pay( credits )
       if not pir.factionIsPirate( paying_faction ) then
          pir.reputationNormalMission( reputation )
@@ -210,7 +211,7 @@ function land ()
       misn.finish( true )
    elseif not job_done and system.cur() == missys then
       local txt = abandon_text[ rnd.rnd( 1, #abandon_text ) ]
-      tk.msg( abandon_title, txt )
+      vntk.msg( abandon_title, txt )
       misn.finish( false )
    end
 end

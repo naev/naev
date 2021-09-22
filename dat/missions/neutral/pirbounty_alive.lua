@@ -28,6 +28,7 @@
 
 --]]
 local fmt = require "format"
+local vntk = require "vntk"
 require "missions.neutral.pirbounty_dead"
 
 -- Localization
@@ -119,7 +120,7 @@ function board_fail ()
       credits = credits / 5
       local t = kill_instead_text[ rnd.rnd( 1, #kill_instead_text ) ]:format(
          name, fmt.credits( credits ) )
-      tk.msg( kill_instead_title, t )
+      vntk.msg( kill_instead_title, t )
       osd_msg[2] = osd_msg_kill:format( name )
       misn.osdCreate( osd_title, osd_msg )
       misn.osdActive( 2 )

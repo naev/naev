@@ -1,25 +1,25 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Dead Or Alive Bounty">
-  <avail>
-   <priority>4</priority>
-   <cond>player.numOutfit("Mercenary License") &gt; 0</cond>
-   <chance>360</chance>
-   <location>Computer</location>
-   <faction>Dvaered</faction>
-   <faction>Empire</faction>
-   <faction>Frontier</faction>
-   <faction>Goddard</faction>
-   <faction>Independent</faction>
-   <faction>Sirius</faction>
-   <faction>Soromid</faction>
-   <faction>Za'lek</faction>
-  </avail>
-  <notes>
-   <tier>3</tier>
-  </notes>
- </mission>
- --]]
+ <avail>
+  <priority>4</priority>
+  <cond>player.numOutfit("Mercenary License") &gt; 0</cond>
+  <chance>360</chance>
+  <location>Computer</location>
+  <faction>Dvaered</faction>
+  <faction>Empire</faction>
+  <faction>Frontier</faction>
+  <faction>Goddard</faction>
+  <faction>Independent</faction>
+  <faction>Sirius</faction>
+  <faction>Soromid</faction>
+  <faction>Za'lek</faction>
+ </avail>
+ <notes>
+  <tier>3</tier>
+ </notes>
+</mission>
+--]]
 --[[
 
    Dead or Alive Pirate Bounty
@@ -30,6 +30,7 @@
 local pir = require "common.pirate"
 local fmt = require "format"
 local pilotname = require "pilotname"
+local vntk = require "vntk"
 require "jumpdist"
 
 subdue_title   = _("Captured Alive")
@@ -206,7 +207,7 @@ function land ()
       else
          pay_text = pay_capture_text[ rnd.rnd( 1, #pay_capture_text ) ]
       end
-      tk.msg( pay_title, pay_text:format( name ) )
+      vntk.msg( pay_title, pay_text:format( name ) )
       player.pay( credits )
       paying_faction:modPlayerSingle( reputation )
       pir.reputationNormalMission( reputation )
@@ -228,7 +229,7 @@ function pilot_board ()
    player.unboard()
    if can_capture then
       local t = subdue_text[ rnd.rnd( 1, #subdue_text ) ]:format( name )
-      tk.msg( subdue_title, t )
+      vntk.msg( subdue_title, t )
       succeed()
       target_killed = false
       target_ship:changeAI( "dummy" )
@@ -237,7 +238,7 @@ function pilot_board ()
       if death_hook ~= nil then hook.rm( death_hook ) end
    else
       local t = subdue_fail_text[ rnd.rnd( 1, #subdue_fail_text ) ]:format( name )
-      tk.msg( subdue_fail_title, t )
+      vntk.msg( subdue_fail_title, t )
       board_fail()
    end
 end
@@ -322,7 +323,7 @@ function hunter_hail( arg )
    player.commClose()
 
    local text = share_text[ rnd.rnd( 1, #share_text ) ]
-   tk.msg( share_title, text:format( name ) )
+   vntk.msg( share_title, text:format( name ) )
 
    player.pay( credits )
    misn.finish( true )
