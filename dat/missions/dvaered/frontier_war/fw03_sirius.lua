@@ -1,23 +1,23 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
- <mission name="Dvaered Diplomacy">
-  <flags>
-   <unique />
-  </flags>
-  <avail>
-   <priority>2</priority>
-   <chance>30</chance>
-   <done>Dvaered Escape</done>
-   <location>Bar</location>
-   <faction>Dvaered</faction>
-   <cond>var.peek("dv_pirate_debt") == false</cond>
-  </avail>
-  <notes>
-   <campaign>Frontier Invasion</campaign>
-   <done_evt name="Repay General Klank"/>
-  </notes>
- </mission>
- --]]
+<mission name="Dvaered Diplomacy">
+ <flags>
+  <unique />
+ </flags>
+ <avail>
+  <priority>2</priority>
+  <chance>30</chance>
+  <done>Dvaered Escape</done>
+  <location>Bar</location>
+  <faction>Dvaered</faction>
+  <cond>var.peek("dv_pirate_debt") == false</cond>
+ </avail>
+ <notes>
+  <campaign>Frontier Invasion</campaign>
+  <done_evt name="Repay General Klank"/>
+ </notes>
+</mission>
+--]]
 --[[
 -- Dvaered Diplomacy
 -- It does not go together well, does it?
@@ -33,10 +33,9 @@
    5) Pursuit: cleaning the first system before landing
    6) Pursuit: you may land after the target
 --]]
-
+local lmisn = require "lmisn"
 require "missions/dvaered/frontier_war/fw_common"
 require "selectiveclear"
-require "nextjump"
 require "proximity"
 local fmt = require "format"
 
@@ -227,7 +226,7 @@ function enter()
          if system.cur() == destsys then
             ambStart = destpla
          else
-            ambStart = getNextSystem(system.cur(), destsys)
+            ambStart = lmisn.getNextSystem(system.cur(), destsys)
             ambJp = jump.get(system.cur(), ambStart) -- We assume there are no one-way jumps
          end
 
@@ -241,7 +240,7 @@ function enter()
 
             -- Find the waiting point: on the line tamPoint -> ambJp, at 3000 of tamPoint
             -- Normally, tamPoint and absStart are never the same
-            tamPoint = getNextSystem(system.cur(), startsys)
+            tamPoint = lmisn.getNextSystem(system.cur(), startsys)
             tamJp = jump.get(system.cur(), tamPoint)
             PA = ambJp:pos() - tamJp:pos()
             PW = PA/PA:mod() * 3000

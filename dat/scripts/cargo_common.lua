@@ -1,6 +1,6 @@
+local lmisn = require "lmisn"
 local pir = require 'common.pirate'
 require "jumpdist"
-require "nextjump"
 local fmt = require "format"
 
 -- Don't use hidden jumps by default; set this to true to use hidden jumps.

@@ -1,21 +1,21 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
- <mission name="Dvaered Sabotage">
-  <flags>
-   <unique />
-  </flags>
-  <avail>
-   <priority>2</priority>
-   <chance>20</chance>
-   <done>Dvaered Escort</done>
-   <location>Bar</location>
-   <faction>Dvaered</faction>
-  </avail>
-  <notes>
-   <campaign>Frontier Invasion</campaign>
-  </notes>
- </mission>
- --]]
+<mission name="Dvaered Sabotage">
+ <flags>
+  <unique />
+ </flags>
+ <avail>
+  <priority>2</priority>
+  <chance>20</chance>
+  <done>Dvaered Escort</done>
+  <location>Bar</location>
+  <faction>Dvaered</faction>
+ </avail>
+ <notes>
+  <campaign>Frontier Invasion</campaign>
+ </notes>
+</mission>
+--]]
 --[[
 -- Dvaered Sabotage
 -- This is the second mission of the Frontier War Dvaered campaign.
@@ -33,7 +33,7 @@
    7) Final landing
 --]]
 
-require "nextjump"
+local lmisn = require "lmisn"
 require "proximity"
 require "selectiveclear"
 require "missions/dvaered/frontier_war/fw_common"
@@ -430,7 +430,7 @@ function spawn_phalanx()
    p:rename("Gorgon")
    p:control()
 
-   nextsys = getNextSystem(system.cur(), sabotsys)
+   nextsys = lmisn.getNextSystem(system.cur(), sabotsys)
    p:hyperspace( nextsys ) -- Go towards Battleaddict's place
 
    p:outfitRm("all")

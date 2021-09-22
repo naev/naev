@@ -1,24 +1,24 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
- <mission name="Dvaered Escape">
-  <flags>
-   <unique />
-  </flags>
-  <avail>
-   <priority>2</priority>
-   <chance>10</chance>
-   <done>Dvaered Sabotage</done>
-   <location>Bar</location>
-   <cond>var.peek("loyal2klank") == true</cond>
-   <faction>Dvaered</faction>
-  </avail>
-  <notes>
-   <campaign>Frontier Invasion</campaign>
-   <done_evt name="Betray General Klank">If you don't betray</done_evt>
-   <provides name="General Klank wants his 10M back">If you get into debt</provides>
-  </notes>
- </mission>
- --]]
+<mission name="Dvaered Escape">
+ <flags>
+  <unique />
+ </flags>
+ <avail>
+  <priority>2</priority>
+  <chance>10</chance>
+  <done>Dvaered Sabotage</done>
+  <location>Bar</location>
+  <cond>var.peek("loyal2klank") == true</cond>
+  <faction>Dvaered</faction>
+ </avail>
+ <notes>
+  <campaign>Frontier Invasion</campaign>
+  <done_evt name="Betray General Klank">If you don't betray</done_evt>
+  <provides name="General Klank wants his 10M back">If you get into debt</provides>
+ </notes>
+</mission>
+--]]
 --[[
 -- Dvaered Escape
 -- This is the third mission of the Frontier War Dvaered campaign.
@@ -37,8 +37,7 @@
    8) Accepted Pirate solution: can cross any blockade
    9) Accepted Pirate solution: can cross any blockade, but has paid cash
 --]]
-
-require "nextjump"
+local lmisn = require "lmisn"
 require "selectiveclear"
 require "proximity"
 local portrait = require "portrait"
@@ -415,8 +414,8 @@ function enter()
 
       pilot.toggleSpawn(false)
       pilot.clear()
-      prevsys = getNextSystem(system.cur(), prisys)
-      nextsys = getNextSystem(system.cur(), zlksys)
+      prevsys = lmisn.getNextSystem(system.cur(), prisys)
+      nextsys = lmisn.getNextSystem(system.cur(), zlksys)
 
       hook.timer(5.0, "convoyEnter")
 

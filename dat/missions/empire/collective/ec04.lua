@@ -1,22 +1,22 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Collective Extraction">
-  <flags>
-   <unique />
-  </flags>
-  <avail>
-   <priority>2</priority>
-   <cond>faction.playerStanding("Empire") &gt; 5 and var.peek("emp_commando") ~= nil and time.get() &gt; time.fromnumber( var.peek("emp_commando") )</cond>
-   <done>Collective Distraction</done>
-   <chance>100</chance>
-   <location>Land</location>
-   <planet>Omega Station</planet>
-  </avail>
-  <notes>
-   <campaign>Collective</campaign>
-  </notes>
- </mission>
- --]]
+ <flags>
+  <unique />
+ </flags>
+ <avail>
+  <priority>2</priority>
+  <cond>faction.playerStanding("Empire") &gt; 5 and var.peek("emp_commando") ~= nil and time.get() &gt; time.fromnumber( var.peek("emp_commando") )</cond>
+  <done>Collective Distraction</done>
+  <chance>100</chance>
+  <location>Land</location>
+  <planet>Omega Station</planet>
+ </avail>
+ <notes>
+  <campaign>Collective</campaign>
+ </notes>
+</mission>
+--]]
 --[[
 
    Collective Extraction
@@ -31,7 +31,7 @@
 
 ]]--
 local fleet = require "fleet"
-require "nextjump"
+local lmisn = require "lmisn"
 require "proximity"
 local fmt = require "format"
 local emp = require "common.empire"
@@ -220,7 +220,7 @@ function empireRetreat(fleet)
         if j:exists() then
             j:control()
             j:setVisplayer()
-            j:hyperspace(getNextSystem(system.cur(), misn_base_sys))
+            j:hyperspace(lmisn.getNextSystem(system.cur(), misn_base_sys))
         end
     end
 end

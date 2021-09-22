@@ -1,23 +1,23 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
- <mission name="Dvaered Escort">
-  <flags>
-   <unique />
-  </flags>
-  <avail>
-   <priority>2</priority>
-   <chance>100</chance>
-   <location>Bar</location>
-   <faction>Dvaered</faction>
-   <done>Destroy the FLF base!</done>
-   <cond>system.get("Tarsus"):jumpDist() &lt; 4 and not (planet.cur():services().shipyard == nil)</cond>
-  </avail>
-  <notes>
-   <campaign>Frontier Invasion</campaign>
-   <requires name="The FLF is dead"/>
-  </notes>
- </mission>
- --]]
+<mission name="Dvaered Escort">
+ <flags>
+  <unique />
+ </flags>
+ <avail>
+  <priority>2</priority>
+  <chance>100</chance>
+  <location>Bar</location>
+  <faction>Dvaered</faction>
+  <done>Destroy the FLF base!</done>
+  <cond>system.get("Tarsus"):jumpDist() &lt; 4 and not (planet.cur():services().shipyard == nil)</cond>
+ </avail>
+ <notes>
+  <campaign>Frontier Invasion</campaign>
+  <requires name="The FLF is dead"/>
+ </notes>
+</mission>
+--]]
 --[[
 -- Dvaered Escort
 -- This is the first mission of the Frontier War Dvaered campaign.
@@ -32,11 +32,10 @@
    5) Way to third system, battle with Hamelsen & such
    8) Land at last system
 --]]
-
-require "nextjump"
 require "proximity"
 require "selectiveclear"
 require "missions/dvaered/frontier_war/fw_common"
+local lmisn = require "lmisn"
 local fmt = require "format"
 
 portrait_name = _("Dvaered officer")
@@ -182,7 +181,7 @@ function enter()
          encounterWarlord( _("Lady Bitterfly"), destpla1 )
          hook.timer( 2.0, "meeting_msg1" )
       else
-         nextsys = getNextSystem(system.cur(), destsys1)
+         nextsys = lmisn.getNextSystem(system.cur(), destsys1)
          majorTam:control()
          majorTam:hyperspace(nextsys)
          jumpingTam = hook.pilot(majorTam, "jump", "tamJump")
@@ -194,7 +193,7 @@ function enter()
          jumpingTam = hook.pilot(majorTam, "jump", "tamJump")
          hook.timer( 2.0, "meeting_msg2" )
       else
-         nextsys = getNextSystem(system.cur(), destsys2)
+         nextsys = lmisn.getNextSystem(system.cur(), destsys2)
          majorTam:control()
          majorTam:hyperspace(nextsys)
          jumpingTam = hook.pilot(majorTam, "jump", "tamJump")
@@ -215,7 +214,7 @@ function enter()
          encounterWarlord( _("Lord Jim"), destpla3 )
          hook.timer( 2.0, "meeting_msg3" )
       else
-         nextsys = getNextSystem(system.cur(), destsys3)
+         nextsys = lmisn.getNextSystem(system.cur(), destsys3)
          majorTam:control()
          majorTam:hyperspace(nextsys)
          jumpingTam = hook.pilot(majorTam, "jump", "tamJump")

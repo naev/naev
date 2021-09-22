@@ -25,9 +25,8 @@
    Difficulty: Medium
 
 ]]--
-
+local lmisn = require "lmisn"
 local fleet = require "fleet"
-require "nextjump"
 local fmt = require "format"
 local zlk = require "common.zalek"
 
@@ -125,7 +124,7 @@ function accept()
     misn.setTitle(mtitle)
     misn.setReward(string.format(misn_reward, fmt.credits(credits)))
     misn.setDesc(string.format(mdesc, _(station), t_sys[5]:name()))
-    nextsys = getNextSystem(system.cur(), destsys) -- This variable holds the system the player is supposed to jump to NEXT.
+    nextsys = lmisn.getNextSystem(system.cur(), destsys) -- This variable holds the system the player is supposed to jump to NEXT.
 
     misn.accept()
     misn_marker = misn.markerAdd(nextsys, "low")
@@ -168,7 +167,7 @@ function jumpin()
      if system.cur() ~= nextsys then
         fail(_("MISSION FAILED! You jumped into the wrong system. You failed science miserably!"))
     else
-        nextsys = getNextSystem(system.cur(), destsys)
+        nextsys = lmisn.getNextSystem(system.cur(), destsys)
         updateGoalDisplay()
         spawnTransporter()
         if not ambush and system.cur():faction() == faction.get("Dvaered") and system.cur():jumpDist(t_sys[5]) < 5 then

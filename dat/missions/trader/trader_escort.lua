@@ -1,32 +1,32 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Trader Escort">
-  <avail>
-   <priority>5</priority>
-   <cond>player.numOutfit("Mercenary License") &gt; 0</cond>
-   <chance>560</chance>
-   <location>Computer</location>
-   <faction>Dvaered</faction>
-   <faction>Empire</faction>
-   <faction>Frontier</faction>
-   <faction>Goddard</faction>
-   <faction>Independent</faction>
-   <faction>Proteron</faction>
-   <faction>Sirius</faction>
-   <faction>Soromid</faction>
-   <faction>Thurion</faction>
-   <faction>Traders Guild</faction>
-   <faction>Za'lek</faction>
-  </avail>
-  <notes>
-   <tier>3</tier>
-  </notes>
- </mission>
- --]]
+ <avail>
+  <priority>5</priority>
+  <cond>player.numOutfit("Mercenary License") &gt; 0</cond>
+  <chance>560</chance>
+  <location>Computer</location>
+  <faction>Dvaered</faction>
+  <faction>Empire</faction>
+  <faction>Frontier</faction>
+  <faction>Goddard</faction>
+  <faction>Independent</faction>
+  <faction>Proteron</faction>
+  <faction>Sirius</faction>
+  <faction>Soromid</faction>
+  <faction>Thurion</faction>
+  <faction>Traders Guild</faction>
+  <faction>Za'lek</faction>
+ </avail>
+ <notes>
+  <tier>3</tier>
+ </notes>
+</mission>
+--]]
 --Escort a convoy of traders to a destination--
 local pir = require "common.pirate"
 local fleet = require "fleet"
-require "nextjump"
+local lmisn = require "lmisn"
 require "cargo_common"
 local fmt = require "format"
 
@@ -152,7 +152,7 @@ function accept()
       end
    end
 
-   nextsys = getNextSystem(system.cur(), destsys) -- This variable holds the system the player is supposed to jump to NEXT.
+   nextsys = lmisn.getNextSystem(system.cur(), destsys) -- This variable holds the system the player is supposed to jump to NEXT.
    origin = planet.cur() -- The place where the AI ships spawn from.
 
    orig_alive = nil
@@ -190,7 +190,7 @@ function jumpout()
       alive = math.min( alive, exited )
    end
    origin = system.cur()
-   nextsys = getNextSystem(system.cur(), destsys)
+   nextsys = lmisn.getNextSystem(system.cur(), destsys)
 end
 
 function land()
@@ -228,7 +228,7 @@ end
 
 -- Handle the jumps of convoy.
 function traderJump( p, j )
-   if j:dest() == getNextSystem( system.cur(), destsys ) then
+   if j:dest() == lmisn.getNextSystem( system.cur(), destsys ) then
       exited = exited + 1
       if p:exists() then
          player.msg( string.format(
@@ -286,7 +286,7 @@ function spawnConvoy ()
    --Make it interesting
    local ambush_src = destplanet
    if system.cur() ~= destsys then
-      ambush_src = getNextSystem( system.cur(), destsys )
+      ambush_src = lmisn.getNextSystem( system.cur(), destsys )
    end
 
    local ambushes = {
@@ -402,7 +402,7 @@ function continueToDest( p )
       if system.cur() == destsys then
          p:land( destplanet, true )
       else
-         p:hyperspace( getNextSystem( system.cur(), destsys ), true )
+         p:hyperspace( lmisn.getNextSystem( system.cur(), destsys ), true )
       end
    end
 end

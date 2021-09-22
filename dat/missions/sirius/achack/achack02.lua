@@ -1,28 +1,27 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Harja's Vengeance">
-  <flags>
-   <unique />
-  </flags>
-  <avail>
-   <priority>3</priority>
-   <cond>planet.get("Violin Station"):system():jumpDist() &lt; 4</cond>
-   <done>Sirian Bounty</done>
-   <chance>10</chance>
-   <location>Bar</location>
-   <faction>Sirius</faction>
-  </avail>
-  <notes>
-   <campaign>Academy Hack</campaign>
-   <tier>3</tier>
-  </notes>
- </mission>
- --]]
+ <flags>
+  <unique />
+ </flags>
+ <avail>
+  <priority>3</priority>
+  <cond>planet.get("Violin Station"):system():jumpDist() &lt; 4</cond>
+  <done>Sirian Bounty</done>
+  <chance>10</chance>
+  <location>Bar</location>
+  <faction>Sirius</faction>
+ </avail>
+ <notes>
+  <campaign>Academy Hack</campaign>
+  <tier>3</tier>
+ </notes>
+</mission>
+--]]
 --[[
 -- This is the second mission in the Academy Hack minor campaign.
 --]]
-
-require "scripts/nextjump"
+local lmisn = require "lmisn"
 local fleet = require "fleet"
 require "selectiveclear"
 require "proximity"
@@ -252,7 +251,7 @@ function enter()
       joanne:land(destplanet)
       hook.pilot(joanne, "land", "joanneLand")
    else
-      nextsys = getNextSystem(system.cur(), destsys) -- This variable holds the system the player is supposed to jump to NEXT.
+      nextsys = lmisn.getNextSystem(system.cur(), destsys) -- This variable holds the system the player is supposed to jump to NEXT.
       joanne:hyperspace(nextsys)
       hook.pilot(joanne, "jump", "joanneJump")
    end

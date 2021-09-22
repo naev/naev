@@ -23,10 +23,9 @@
    A Friend's Aid
 
 --]]
-
+local lmisn = require "lmisn"
 local fmt = require "format"
 require "cargo_common"
-require "nextjump"
 local srm = require "common.soromid"
 
 title = {}
@@ -178,7 +177,7 @@ function jumpNext ()
       if system.cur() == missys then
          chelsea:land( misplanet, true )
       else
-         chelsea:hyperspace( getNextSystem( system.cur(), missys ), true )
+         chelsea:hyperspace( lmisn.getNextSystem( system.cur(), missys ), true )
       end
    end
 end
@@ -197,7 +196,7 @@ end
 
 
 function jumpin ()
-   if chelsea_jumped and system.cur() == getNextSystem( lastsys, missys ) then
+   if chelsea_jumped and system.cur() == lmisn.getNextSystem( lastsys, missys ) then
       spawnChelseaShip( lastsys )
       jumpNext()
       hook.timer( 5.0, "thug_timer" )
@@ -234,7 +233,7 @@ end
 
 
 function chelsea_jump( p, jump_point )
-   if jump_point:dest() == getNextSystem( system.cur(), missys ) then
+   if jump_point:dest() == lmisn.getNextSystem( system.cur(), missys ) then
       player.msg( cheljump_msg:format( jump_point:dest():name() ) )
       chelsea_jumped = true
    else

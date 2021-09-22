@@ -36,9 +36,9 @@ function create ()
    -- Get the derelict's ship.
    local r = rnd.rnd()
    if r < 0.2 then
-      ship = "Llama",
-   if r < 0.3 then
-      ship = "Hyena",
+      ship = "Llama"
+   elseif r < 0.3 then
+      ship = "Hyena"
    elseif r < 0.5 then
       ship = "Koala"
    elseif r < 0.7 then
@@ -92,7 +92,7 @@ function neutralevent()
       _([[The artificial gravity on this ship has bizarrely failed, managing to somehow reverse itself. As soon as you step aboard you fall upwards and onto the ceiling, getting some nasty bruises in the process. Annoyed, you search the ship, but without result. You return to your ship - but forget about the polarized gravity at the airlock, so you again smack against the deck plates.]]),
       _([[The cargo hold of this ship contains several heavy, metal chests. You pry them open, but they are empty. Whatever was in them must have been pilfered by other looters already. You decide not to waste any time on this ship, and return to your own.]]),
       _([[You have attached your docking clamp to the derelict's airlock, but the door refuses to open. A few diagnostics reveal that the other side isn't pressurized. The derelict must have suffered hull breaches over the years. It doesn't seem like there's much you can do here.]]),
-      _([[As you walk through the corridors of the derelict, you can't help but notice the large scratch marks on the walls, the floor and even the ceiling. It's as if something went on a rampage throughout this ship - something big, with a lot of very sharp claws and teeth... You feel it might be best to leave as soon as possible, so you abandon the search of the derelict and disengage your docking clamp.]]),
+      _([[As you walk through the corridors of the derelict, you can't help but notice the large scratch marks on the walls, the floor and even the ceiling. It's as if something went on a rampage throughout this ship - something big, with a lot of very sharp claws and teeth… You feel it might be best to leave as soon as possible, so you abandon the search of the derelict and disengage your docking clamp.]]),
    }
 
    -- Pick a random message from the list, display it, unboard.
