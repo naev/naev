@@ -61,11 +61,11 @@ function board()
    player.unboard()
    -- Roll for events
    local prob = rnd.rnd()
-   if prob <= 0.50 then
+   if prob <= 0.25 then
       neutralevent()
-   elseif prob <= 0.70 then
+   elseif prob <= 0.5 then
       goodevent()
-   elseif prob <= 0.85 then
+   elseif prob <= 0.75 then
       badevent()
    else
       missionevent()
