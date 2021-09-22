@@ -291,7 +291,7 @@ function missionevent()
    -- Roll a random mission and start it.
    local r = rnd.rnd()
    for k,m in ipairs(available_missions) do
-      if m.chance / weights < r then
+      if r < m.chance / weights then
          naev.missionStart( m.name )
          destroyevent()
          return
