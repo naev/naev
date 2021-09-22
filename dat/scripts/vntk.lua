@@ -1,10 +1,15 @@
 --[[
    Small wrapper around vn to do toolkit type stuff.
 --]]
-local vn = require "vn"
+local vn
 local vntk = {}
 
 function vntk.msg( title, text )
+   -- Lazy load VN library
+   if not vn then
+      vn = require "vn"
+   end
+
    vn.reset()
    vn.scene()
    local c
