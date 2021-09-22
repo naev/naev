@@ -1,18 +1,18 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <event name="Derelict">
-  <trigger>enter</trigger>
-  <chance>10</chance>
-  <cond>system.cur():faction() ~= nil</cond>
-  <notes>
-   <tier>1</tier>
-  </notes>
- </event>
- --]]
+ <trigger>enter</trigger>
+ <chance>10</chance>
+ <cond>system.cur():faction() ~= nil</cond>
+ <notes>
+  <tier>1</tier>
+ </notes>
+</event>
+--]]
 --[[
--- Derelict Event
---
--- Creates a derelict ship that spawns random events.
+   Derelict Event
+
+   Creates a derelict ship that spawns random events.
 --]]
 local vntk = require 'vntk'
 local fmt = require 'format'
@@ -34,21 +34,25 @@ function create ()
    end
 
    -- Get the derelict's ship.
-   r = rnd.rnd()
-   if r > 0.8 then
-      ship = "Gawain"
-   elseif r > 0.6 then
-      ship = "Mule"
-   elseif r > 0.4 then
+   local r = rnd.rnd()
+   if r < 0.2 then
+      ship = "Llama",
+   if r < 0.3 then
+      ship = "Hyena",
+   elseif r < 0.5 then
       ship = "Koala"
+   elseif r < 0.7 then
+      ship = "Quicksilver"
+   elseif r < 0.9 then
+      ship = "Mule"
    else
-      ship = "Llama"
+      ship = "Gawain"
    end
 
    -- Create the derelict.
    local dist  = rnd.rnd(400, system.cur():radius() * 0.6)
    local pos   = vec2.newP( dist, rnd.rnd()*360 )
-   p     = pilot.add(ship, "Derelict", pos, nil, {ai="dummy"})
+   local p     = pilot.add(ship, "Derelict", pos, nil, {ai="dummy"})
    p:disable()
    p:rename("Derelict")
    hook.pilot(p, "board", "board")
