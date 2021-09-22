@@ -10,7 +10,7 @@
 --]]
 local pir = require "common.pirate"
 local fmt = require "format"
-require "jumpdist"
+local lmisn = require "lmisn"
 
 -- List to treat special factions diffferently
 override_list = {
@@ -587,7 +587,7 @@ function add_econ_article ()
    if (t == nil or time.get() - t > time.create( 0, 2, 0 ))
          and rnd.rnd() < 0.75 then
       local planets = {}
-      for i, s in ipairs( getsysatdistance( system.cur(), 2, 4 ) ) do
+      for i, s in ipairs( lmisn.getSysAtDistance( system.cur(), 2, 4 ) ) do
          for j, p in ipairs( s:planets() ) do
             if not pir.factionIsPirate( p:faction() )
                   and p:faction() ~= faction.get("FLF")
@@ -618,7 +618,7 @@ function add_econ_article ()
 
    local cur_t = time.get()
    local body = ""
-   for i, sys in ipairs( getsysatdistance( system.cur(), 0, 1 ) ) do
+   for i, sys in ipairs( lmisn.getSysAtDistance( system.cur(), 0, 1 ) ) do
       for j, plnt in ipairs( sys:planets() ) do
          local commodities = plnt:commoditiesSold()
          if #commodities > 0 then

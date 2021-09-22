@@ -66,7 +66,7 @@ function create ()
     cursys = system.cur()
 
     local planets = {}
-    getsysatdistance( cursys, 1, 6,
+    lmisn.getSysAtDistance( cursys, 1, 6,
         function(s)
             for i, v in ipairs(s:planets()) do
                 if v:faction() == faction.get("Sirius") and v:class() == "M" and v:canLand() then

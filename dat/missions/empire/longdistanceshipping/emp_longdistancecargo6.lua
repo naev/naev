@@ -16,7 +16,7 @@
   <campaign>Empire Shipping</campaign>
  </notes>
 </mission>
- --]]
+--]]
 --[[
 
    Sixth (and final) mission that explains the Empire long-distance cargo missions.
@@ -25,8 +25,8 @@
 
 ]]--
 local fmt = require "format"
-require "jumpdist"
 local emp = require "common.empire"
+local lmisn = require "lmisn"
 
 bar_desc = _("Lieutenant Czesc from the Empire Armada Shipping Division is sitting at the bar.")
 misn_title = _("Empire Long Distance Recruitment")

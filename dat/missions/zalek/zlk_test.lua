@@ -222,7 +222,7 @@ function teleport()
 end
 
 function teleportation()
-   local newsyslist = getsysatdistance(system.cur(), 1, 3)
+   local newsyslist = lmisn.getSysAtDistance(system.cur(), 1, 3)
    local newsys = newsyslist[rnd.rnd(1, #newsyslist)]
    player.teleport(newsys)
    tk.msg(teleport_title, teleport_text:format(newsys:name()))

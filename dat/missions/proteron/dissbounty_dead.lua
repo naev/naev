@@ -83,7 +83,7 @@ function create ()
    paying_faction = planet.cur():faction()
    target_faction = faction.get( "Proteron Dissident" )
 
-   local systems = getsysatdistance( system.cur(), 1, 3,
+   local systems = lmisn.getSysAtDistance( system.cur(), 1, 3,
       function(s)
          local p = s:presences()["Proteron Dissident"]
          return p ~= nil and p > 0

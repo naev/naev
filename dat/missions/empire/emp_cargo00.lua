@@ -1,20 +1,20 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Empire Recruitment">
-  <flags>
-   <unique />
-  </flags>
-  <avail>
-   <priority>4</priority>
-   <chance>40</chance>
-   <location>Bar</location>
-   <faction>Empire</faction>
-  </avail>
-  <notes>
-   <tier>1</tier>
-  </notes>
- </mission>
- --]]
+ <flags>
+  <unique />
+ </flags>
+ <avail>
+  <priority>4</priority>
+  <chance>40</chance>
+  <location>Bar</location>
+  <faction>Empire</faction>
+ </avail>
+ <notes>
+  <tier>1</tier>
+ </notes>
+</mission>
+--]]
 --[[
 
    Simple cargo mission that opens up the Empire cargo missions.
@@ -25,8 +25,8 @@
 ]]--
 local pir = require "common.pirate"
 local fmt = require "format"
-require "jumpdist"
 local emp = require "common.empire"
+local lmisn = require "lmisn"
 
 bar_desc = _("You see an Empire Lieutenant who seems to be looking at you.")
 misn_title = _("Empire Recruitment")
@@ -52,7 +52,7 @@ function create ()
 
    -- target destination
    local planets = {}
-   getsysatdistance( system.cur(), 1, 6,
+   lmisn.getSysAtDistance( system.cur(), 1, 6,
        function(s)
            for i, v in ipairs(s:planets()) do
                if v:faction() == faction.get("Empire") and v:canLand() then

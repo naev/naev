@@ -32,9 +32,9 @@
 --]]
 local pir = require "common.pirate"
 local fmt = require "format"
-require "jumpdist"
 local portrait = require "portrait"
 local pilotname = require "pilotname"
+local lmisn = require "lmisn"
 
 clue_title   = _("I know the pilot you're looking for")
 clue_text    = {}
@@ -174,7 +174,7 @@ function create ()
       misn.finish( false )
    end
 
-   local systems = getsysatdistance( system.cur(), 1, 5,
+   local systems = lmisn.getSysAtDistance( system.cur(), 1, 5,
       function(s)
          local p = s:presences()[target_faction:nameRaw()]
          return p ~= nil and p > 0

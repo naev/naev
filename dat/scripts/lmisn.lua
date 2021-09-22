@@ -48,7 +48,7 @@ end
 --
 -- @code
 -- local planets = {}
--- getsysatdistance( system.cur(), 1, 6,
+-- lmisn.getSysAtDistance( system.cur(), 1, 6,
 --     function(s)
 --         for i, v in ipairs(s:planets()) do
 --             if v:faction() == faction.get("Sirius") and v:class() == "M" then

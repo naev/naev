@@ -22,13 +22,12 @@
    Moving Up
 
 --]]
-
 local fmt = require "format"
 local pilotname = require "pilotname"
-require "jumpdist"
 local srm = require "common.soromid"
 local pir = require "common.pirate"
 local equipopt = require 'equipopt'
+local lmisn = require "lmisn"
 
 title = {}
 text = {}
@@ -65,7 +64,7 @@ log_text = _([[You helped Chelsea hunt down a wanted pirate, earning a bounty fo
 
 
 function create ()
-   local systems = getsysatdistance( system.cur(), 1, 3,
+   local systems = lmisn.getSysAtDistance( system.cur(), 1, 3,
       function(s)
          return pir.systemPresence( s ) > 0
       end )

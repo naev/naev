@@ -1,22 +1,22 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Za'lek Long Distance Recruitment">
-  <flags>
-   <unique />
-  </flags>
-  <avail>
-   <priority>4</priority>
-   <cond>faction.playerStanding("Empire") &gt;= 0</cond>
-   <chance>75</chance>
-   <done>Dvaered Long Distance Recruitment</done>
-   <location>Bar</location>
-   <faction>Empire</faction>
-  </avail>
-  <notes>
-   <campaign>Empire Shipping</campaign>
-  </notes>
- </mission>
- --]]
+ <flags>
+  <unique />
+ </flags>
+ <avail>
+  <priority>4</priority>
+  <cond>faction.playerStanding("Empire") &gt;= 0</cond>
+  <chance>75</chance>
+  <done>Dvaered Long Distance Recruitment</done>
+  <location>Bar</location>
+  <faction>Empire</faction>
+ </avail>
+ <notes>
+  <campaign>Empire Shipping</campaign>
+ </notes>
+</mission>
+--]]
 --[[
 
    Third diplomatic mission to Za'lek space that opens up the Empire long-distance cargo missions.
@@ -25,8 +25,8 @@
 
 ]]--
 local fmt = require "format"
-require "jumpdist"
 local emp = require "common.empire"
+local lmisn = require "lmisn"
 
 bar_desc = _("Lieutenant Czesc from the Empire Armada Shipping Division is sitting at the bar.")
 misn_title = _("Za'lek Long Distance Recruitment")

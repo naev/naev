@@ -33,9 +33,9 @@
 --]]
 local pir = require "common.pirate"
 local swapship = require "swapship"
-require "jumpdist"
 local fmt = require "format"
 local portrait = require "portrait"
+local lmisn = require "lmisn"
 require "factions.equip.generic"
 
 
@@ -192,7 +192,7 @@ function random_planet()
    local maximum_distance = 6
    local minimum_distance = 0
 
-   getsysatdistance(
+   lmisn.getSysAtDistance(
       system.cur(),
       minimum_distance, maximum_distance,
 

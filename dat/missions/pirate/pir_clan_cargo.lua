@@ -27,10 +27,9 @@
       major edits by Lukc
 
 ]]--
-
 local fmt = require "format"
-require "jumpdist"
 local portrait = require "portrait"
+local lmisn = require "lmisn"
 
 bar_desc = _("You see a pirate lord raving about something. A significant crowd has gathered around.")
 misn_title = _("Clans trade")

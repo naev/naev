@@ -1,6 +1,5 @@
 local lmisn = require "lmisn"
 local pir = require 'common.pirate'
-require "jumpdist"
 local fmt = require "format"
 
 -- Don't use hidden jumps by default; set this to true to use hidden jumps.
@@ -26,7 +25,7 @@ end
 -- Build a set of target planets
 function cargo_selectPlanets(missdist, routepos)
    local planets = {}
-   getsysatdistance(system.cur(), missdist, missdist,
+   lmisn.getSysAtDistance(system.cur(), missdist, missdist,
       function(s)
          for i, v in ipairs(s:planets()) do
             if v:services()["inhabited"] and v ~= planet.cur()

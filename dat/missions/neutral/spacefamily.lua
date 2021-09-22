@@ -15,11 +15,10 @@
 </mission>
 --]]
 --[[
--- This is the mission part of the shipwrecked Space Family mission, started from a random event.
--- See dat/events/neutral/shipwreck
+   This is the mission part of the shipwrecked Space Family mission, started from a random event.
+   See dat/events/neutral/shipwreck
 --]]
-
-require "jumpdist"
+local lmisn = require "lmisn"
 local neu = require "common.neutral"
 
 
@@ -97,7 +96,7 @@ function create ()
 
    -- First stop; subsequent stops will be handled in the land function
    nextstop = 1
-   targsys = getsysatdistance(nil, 3) -- Populate the array
+   targsys = lmisn.getSysAtDistance(nil, 3) -- Populate the array
    targsys = getlandablesystems( targsys )
    if #targsys == 0 then targsys = {system.get("Apez")} end -- In case no systems were found.
    destsys = targsys[rnd.rnd(1, #targsys)]
@@ -143,7 +142,7 @@ function land()
          misn.finish(true)
       else
          nextstop = nextstop + 1
-         targsys = getsysatdistance(nil, nextstop+1) -- Populate the array
+         targsys = lmisn.getSysAtDistance(nil, nextstop+1) -- Populate the array
          targsys = getlandablesystems( targsys )
          if #targsys == 0 then targsys = {system.get("Apez")} end -- In case no systems were found.
          destsys = targsys[rnd.rnd(1, #targsys)]

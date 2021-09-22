@@ -28,7 +28,6 @@ local fmt = require "format"
 local flt = require "fleet"
 local lmisn = require "lmisn"
 local vntk = require "vntk"
-require "jumpdist"
 
 function get_route( sys )
    local adj = sys:jumps()
@@ -88,7 +87,7 @@ function create ()
 
       return true
    end
-   local syslist = getsysatdistance( nil, 2, 7, sysfilter, true )
+   local syslist = lmisn.getSysAtDistance( nil, 2, 7, sysfilter, true )
    if #syslist <= 0 then
       misn.finish(false)
    end

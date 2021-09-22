@@ -31,7 +31,7 @@
 local pir = require "common.pirate"
 local fmt = require "format"
 local vntk = require "vntk"
-require "jumpdist"
+local lmisn = require "lmisn"
 
 nolux_title = _("Not Very Luxurious")
 nolux_text  = _("Since your ship is not a Luxury Yacht class ship, you will only be paid %s. Accept the mission anyway?")
@@ -88,7 +88,7 @@ function create ()
    paying_faction = planet.cur():faction()
    startingplanet = planet.cur()
    startingsystem = system.cur()
-   local systems = getsysatdistance( system.cur(), 1, 2 )
+   local systems = lmisn.getSysAtDistance( system.cur(), 1, 2 )
    systems[ #systems + 1 ] = startingsystem
 
    if #systems <= 0 then

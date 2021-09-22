@@ -32,11 +32,10 @@
    you manage to board them. >:)
 
 --]]
-
 local pir = require "common.pirate"
 local fmt = require "format"
-require "jumpdist"
 local pilotname = require "pilotname"
+local lmisn = require "lmisn"
 
 
 -- Mission details
@@ -89,7 +88,7 @@ function create ()
       "Za'lek",
    }
 
-   local systems = getsysatdistance( system.cur(), 1, 6,
+   local systems = lmisn.getSysAtDistance( system.cur(), 1, 6,
       function(s)
          for i, j in ipairs(target_factions) do
             local p = s:presences()[j]

@@ -1,22 +1,22 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="The Last Detail">
-  <flags>
-   <unique />
-  </flags>
-  <avail>
-   <priority>3</priority>
-   <done>A Journey To Arandon</done>
-   <chance>50</chance>
-   <location>Bar</location>
-   <planet>Darkshed</planet>
-   <cond>not diff.isApplied( "flf_dead" )</cond>
-  </avail>
-  <notes>
-   <campaign>Nexus show their teeth</campaign>
-  </notes>
- </mission>
- --]]
+ <flags>
+  <unique />
+ </flags>
+ <avail>
+  <priority>3</priority>
+  <done>A Journey To Arandon</done>
+  <chance>50</chance>
+  <location>Bar</location>
+  <planet>Darkshed</planet>
+  <cond>not diff.isApplied( "flf_dead" )</cond>
+ </avail>
+ <notes>
+  <campaign>Nexus show their teeth</campaign>
+ </notes>
+</mission>
+--]]
 --[[
 
    This is the climax mission of the Shark's teeth campaign. The player has to kill 4 pirates.
@@ -30,8 +30,7 @@ local pir = require "common.pirate"
 local pilotname = require "pilotname"
 local fmt = require "format"
 local shark = require "common.shark"
-require "jumpdist"
-
+local lmisn = require "lmisn"
 
 title = {}
 text = {}
@@ -83,9 +82,9 @@ function create ()
    --Will now pick systems between min and max jumps in distance
    local min = 3
    local max = 7
-   local systems = getsysatdistance(system.cur(), min, max)
+   local systems = lmisn.getSysAtDistance(system.cur(), min, max)
    if #systems == 0 then
-      local systems = getsysatdistance(system.cur(), 1, 15)
+      local systems = lmisn.getSysAtDistance(system.cur(), 1, 15)
       if #systems == 0 then
          osd_title = _("Houston, we have a problem!")
          gawsys = system.get("Alteris")

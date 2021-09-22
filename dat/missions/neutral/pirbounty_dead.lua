@@ -31,7 +31,7 @@ local pir = require "common.pirate"
 local fmt = require "format"
 local pilotname = require "pilotname"
 local vntk = require "vntk"
-require "jumpdist"
+local lmisn = require "lmisn"
 
 subdue_title   = _("Captured Alive")
 subdue_text    = {}
@@ -104,7 +104,7 @@ function create ()
    paying_faction = planet.cur():faction()
    target_faction = faction.get( "Pirate" )
 
-   local systems = getsysatdistance( system.cur(), 1, 3,
+   local systems = lmisn.getSysAtDistance( system.cur(), 1, 3,
       function(s)
          return pir.systemPresence( s ) > 0
       end )

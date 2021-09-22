@@ -25,10 +25,9 @@
 Thank you to Bobbens, Deiz, BTAxis, and others that have helped me with learning to use Lua and debugging my scripts in the IRC channel. Thanks as well to all those that have contributed to Naev and made it as great as it is today, and continue to make it better every day.
 
 ]]--
-
-require "jumpdist"
 local fmt = require "format"
 local neu = require "common.neutral"
+local lmisn = require "lmisn"
 
 
 bar_desc = _("You see an aristocrat sitting at a table in the middle of the bar, drinking a swirling concoction in a martini glass with a disappointed look on his face every time he takes a sip.")
@@ -203,7 +202,7 @@ end
 function getclueplanet ( mini, maxi )
    local planets = {}
 
-   getsysatdistance( system.cur(), mini, maxi,
+   lmisn.getSysAtDistance( system.cur(), mini, maxi,
       function(s)
          for i, v in ipairs(s:planets()) do
             if not isPrevPlanet(v) and v:services()["bar"] and v:canLand() then

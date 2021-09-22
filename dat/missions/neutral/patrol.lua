@@ -33,7 +33,7 @@
 local pir = require "common.pirate"
 local fmt = require "format"
 local vntk = require "vntk"
-require "jumpdist"
+local lmisn = require "lmisn"
 
 pay_title = _("Mission Completed")
 pay_text    = {}
@@ -90,7 +90,7 @@ end
 function create ()
    paying_faction = planet.cur():faction()
 
-   local systems = getsysatdistance( system.cur(), 1, 2,
+   local systems = lmisn.getSysAtDistance( system.cur(), 1, 2,
       function(s)
          local this_faction = s:presences()[paying_faction:nameRaw()]
          return this_faction ~= nil and this_faction > 0 and get_enemies(s) > 0

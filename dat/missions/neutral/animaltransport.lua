@@ -1,33 +1,31 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Animal transport">
-  <flags>
-   <unique />
-  </flags>
-  <avail>
-   <priority>4</priority>
-   <chance>10</chance>
-   <location>Bar</location>
-   <faction>Sirius</faction>
-   <cond>planet.cur():class() ~= "0" and planet.cur():class() ~= "1" and planet.cur():class() ~= "2" and planet.cur():class() ~= "3"</cond>
-  </avail>
-  <notes>
-   <tier>1</tier>
-  </notes>
- </mission>
- --]]
---[[
---
--- MISSION: Animal transport
--- DESCRIPTION: A man asks you to transport a crate of specially bred creatures for
--- his in-law's exotic pet store on another planet. It's a standard fare A-to-B mission,
--- but doing this mission infests the player's current ship with the creatures.
---
+ <flags>
+  <unique />
+ </flags>
+ <avail>
+  <priority>4</priority>
+  <chance>10</chance>
+  <location>Bar</location>
+  <faction>Sirius</faction>
+  <cond>planet.cur():class() ~= "0" and planet.cur():class() ~= "1" and planet.cur():class() ~= "2" and planet.cur():class() ~= "3"</cond>
+ </avail>
+ <notes>
+  <tier>1</tier>
+ </notes>
+</mission>
 --]]
+--[[
 
-require "jumpdist"
+   MISSION: Animal transport
+   DESCRIPTION: A man asks you to transport a crate of specially bred creatures for
+   his in-law's exotic pet store on another planet. It's a standard fare A-to-B mission,
+   but doing this mission infests the player's current ship with the creatures.
+
+--]]
 local neu = require "common.neutral"
-
+local lmisn = require "lmisn"
 
 text = {}
 title = {}
@@ -55,7 +53,7 @@ log_text = _([[You successfully transported a crate of rodents for a Fyrra civil
 function create ()
     -- Get an M-class Sirius planet at least 2 and at most 4 jumps away. If not found, don't spawn the mission.
     local planets = {}
-    getsysatdistance( system.cur(), 2, 4,
+    lmisn.getSysAtDistance( system.cur(), 2, 4,
         function(s)
             for i, v in ipairs(s:planets()) do
                 if v:faction() == faction.get("Sirius") and v:class() == "M" and v:canLand() then

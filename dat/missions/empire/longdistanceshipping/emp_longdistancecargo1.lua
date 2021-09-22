@@ -1,22 +1,22 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Soromid Long Distance Recruitment">
-  <flags>
-   <unique />
-  </flags>
-  <avail>
-   <priority>4</priority>
-   <cond>faction.playerStanding("Empire") &gt;= 0 and var.peek("es_cargo") == true and var.peek("es_misn") ~= nil and var.peek("es_misn") &gt;= 2</cond>
-   <chance>30</chance>
-   <location>Bar</location>
-   <faction>Empire</faction>
-  </avail>
-  <notes>
-   <done_misn name="Empire Shipping">2 times or more</done_misn>
-   <campaign>Empire Shipping</campaign>
-  </notes>
- </mission>
- --]]
+ <flags>
+  <unique />
+ </flags>
+ <avail>
+  <priority>4</priority>
+  <cond>faction.playerStanding("Empire") &gt;= 0 and var.peek("es_cargo") == true and var.peek("es_misn") ~= nil and var.peek("es_misn") &gt;= 2</cond>
+  <chance>30</chance>
+  <location>Bar</location>
+  <faction>Empire</faction>
+ </avail>
+ <notes>
+  <done_misn name="Empire Shipping">2 times or more</done_misn>
+  <campaign>Empire Shipping</campaign>
+ </notes>
+</mission>
+--]]
 --[[
 
    First diplomatic mission to Soromid space that opens up the Empire long-distance cargo missions.
@@ -25,8 +25,8 @@
 
 ]]--
 local fmt = require "format"
-require "jumpdist"
 local emp = require "common.empire"
+local lmisn = require "lmisn"
 
 bar_desc = _("Lieutenant Czesc from the Empire Armada Shipping Division is sitting at the bar.")
 misn_title = _("Soromid Long Distance Recruitment")

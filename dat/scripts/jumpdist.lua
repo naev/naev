@@ -6,7 +6,7 @@
 --
 -- @code
 -- local planets = {}
--- getsysatdistance( system.cur(), 1, 6,
+-- lmisn.getSysAtDistance( system.cur(), 1, 6,
 --     function(s)
 --         for i, v in ipairs(s:planets()) do
 --             if v:faction() == faction.get("Sirius") and v:class() == "M" then
@@ -31,7 +31,7 @@
 --    @param hidden Whether or not to consider hidden jumps (off by default)
 --    @return The table of systems n jumps away from sys
 --]]
-function getsysatdistance( sys, min, max, filter, data, hidden )
+function lmisn.getSysAtDistance( sys, min, max, filter, data, hidden )
    -- Get default parameters
    if sys == nil then
       sys = system.cur()
