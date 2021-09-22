@@ -1130,7 +1130,7 @@ void land( Planet* p, int load )
    /* Do not land twice. */
    if (landed)
       return;
- 
+
    /* Incrcement times player landed. */
    if (!load)
       player.landed_times++;
