@@ -58,10 +58,10 @@ function create ()
    -- Create the derelict.
    local dist  = rnd.rnd() * system.cur():radius() * 0.6
    local pos   = vec2.newP( dist, rnd.rnd()*360 )
-   local p     = pilot.add(ship, "Derelict", pos, nil, {ai="dummy"})
-   p:disable()
-   p:rename("Derelict")
-   p:intrinsicSet( "ew_hide", -75 ) -- Much more visible
+   derelict    = pilot.add(ship, "Derelict", pos, nil, {ai="dummy"})
+   derelict:disable()
+   derelict:rename("Derelict")
+   derelict:intrinsicSet( "ew_hide", -75 ) -- Much more visible
    hook.pilot(p, "board", "board")
    hook.pilot(p, "death", "destroyevent")
    hook.jumpout("destroyevent")
@@ -72,12 +72,12 @@ function board()
    player.unboard()
    -- Roll for events
    local prob = rnd.rnd()
-   if prob <= 0.25 then
+   if prob <= 0.125 then
+      badevent()
+   elseif prob <= 0.25 then
       neutralevent()
    elseif prob <= 0.6 then
       goodevent()
-   elseif prob <= 0.7 then
-      badevent()
    else
       missionevent()
    end
@@ -156,11 +156,11 @@ function badevent()
    local btitle = _("Oh no!")
    local badevent_list = {
       function ()
-         p:hookClear() -- So the pilot doesn't end the event by dying.
+         derelict:hookClear() -- So the pilot doesn't end the event by dying.
          vntk.msg(btitle, _([[The moment you affix your boarding clamp to the derelict ship, it triggers a booby trap! The derelict explodes, severely damaging your ship. You escaped death this time, but it was a close call!]]))
-         p:setHealth(0,0)
+         derelict:setHealth(0,0)
          player.pilot():control(true)
-         hook.pilot(p, "exploded", "derelict_exploded")
+         hook.pilot(derelict, "exploded", "derelict_exploded")
       end,
       function ()
          vntk.msg(btitle, _([[You board the derelict ship and search its interior, but you find nothing. When you return to your ship, however, it turns out there were Space Leeches onboard the derelict - and they've now attached themselves to your ship! You scorch them off with a plasma torch, but it's too late. The little buggers have already drunk all of your fuel. You're not jumping anywhere until you find some more!]]))
@@ -264,8 +264,9 @@ function badevent()
 end
 
 function derelict_exploded()
-   player.pilot():control(false)
-   player.pilot():setHealth(42, 0)
+   local pp = player.pilot()
+   pp:control(false)
+   pp:setHealth(42, 0)
    camera.shake()
    destroyevent()
 end
