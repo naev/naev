@@ -8,7 +8,7 @@ function vntk.msg( title, text )
    vn.reset()
    vn.scene()
    local c
-   if title then
+   if title and title ~= "" then
       c = vn.newCharacter( title )
    else
       c = vn.na

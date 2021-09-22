@@ -40,6 +40,7 @@
 --]]
 local pir = require "common.pirate"
 local fmt = require "format"
+local vntk = require "vntk"
 
 --Mission Details
 misn_title = _("%s Delivery")
@@ -150,7 +151,7 @@ function land ()
    if planet.cur() == misplanet and amount > 0 then
       local txt = cargo_land[rnd.rnd(1, #cargo_land)]:format(
             _(chosen_comm), fmt.credits(reward) )
-      tk.msg(cargo_land_title, txt)
+      vntk.msg(cargo_land_title, txt)
       pilot.cargoRm(player.pilot(), chosen_comm, amount)
       player.pay(reward)
       if not pir.factionIsPirate( paying_faction ) then

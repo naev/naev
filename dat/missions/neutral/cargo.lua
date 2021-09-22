@@ -27,8 +27,9 @@
    Most of these missions require BULK ships. Not for small ships!
 --]]
 local pir = require "common.pirate"
-require "cargo_common"
 local fmt = require "format"
+local vntk = require "vntk"
+require "cargo_common"
 
 misn_desc = {}
 -- Note: indexed from 0 to match mission tiers.
@@ -100,14 +101,14 @@ end
 function accept ()
    local freecargo = player.pilot():cargoFree()
    if freecargo < amount then
-      tk.msg( _("No room in ship"), string.format(
+      vntk.msg( _("No room in ship"), string.format(
          _("You don't have enough cargo space to accept this mission. It requires %s of free space (%s more than you have)."),
          fmt.tonnes(amount),
          fmt.tonnes( amount - freecargo ) ) )
       misn.finish()
    end
    misn.accept()
-   misn.cargoAdd(cargo, amount) -- TODO: change to jettisonable cargo once custom commodities are in. For piracy purposes.
+   misn.cargoAdd(cargo, amount)
    misn.osdCreate(osd_title, {osd_msg:format(destplanet:name(), destsys:name())})
    hook.land("land")
 end
@@ -116,7 +117,7 @@ end
 function land()
    if planet.cur() == destplanet then
       -- Semi-random message.
-      tk.msg( cargo_land_title, cargo_land[rnd.rnd(1, #cargo_land)]:format(_(cargo)) )
+      vntk.msg( cargo_land_title, cargo_land[rnd.rnd(1, #cargo_land)]:format(_(cargo)) )
       player.pay(reward)
       pir.reputationNormalMission(rnd.rnd(2,3))
       misn.finish(true)

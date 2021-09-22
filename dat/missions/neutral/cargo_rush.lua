@@ -23,13 +23,13 @@
 </mission>
 --]]
 --[[
-   -- These are rush cargo delivery missions. They can be failed! But, pay is higher to compensate.
-   -- These missions require fast ships, but higher tiers may also require increased cargo space.
+   These are rush cargo delivery missions. They can be failed! But, pay is higher to compensate.
+   These missions require fast ships, but higher tiers may also require increased cargo space.
 --]]
 local pir = require 'common.pirate'
-require "cargo_common"
 local fmt = require "format"
-
+local vntk = require "vntk"
+require "cargo_common"
 
 misn_title = {}
 -- Note: indexed from 0, to match mission tiers.
@@ -131,7 +131,7 @@ end
 -- Mission is accepted
 function accept()
    if player.pilot():cargoFree() < amount then
-      tk.msg( _("No room in ship"), string.format(
+      vntk.msg( _("No room in ship"), string.format(
          _("You don't have enough cargo space to accept this mission. It requires %s of free space (%s more than you have)."),
          fmt.tonnes(amount),
          fmt.tonnes( amount - player.pilot():cargoFree() ) ) )
@@ -157,7 +157,7 @@ function accept()
    end
    misn.accept()
    intime = true
-   misn.cargoAdd(cargo, amount) -- TODO: change to jettisonable cargo once custom commodities are in. For piracy purposes.
+   misn.cargoAdd(cargo, amount)
    local osd_msg = {}
    osd_msg[1] = osd_msg1:format(
       destplanet:name(), destsys:name(), timelimit:str(),
@@ -172,10 +172,10 @@ function land()
    if planet.cur() == destplanet then
       if intime then
       -- Semi-random message.
-      tk.msg( cargo_land_title, cargo_land[rnd.rnd(1, #cargo_land)]:format(_(cargo)) )
+      vntk.msg( cargo_land_title, cargo_land[rnd.rnd(1, #cargo_land)]:format(_(cargo)) )
    else
       -- Semi-random message for being late.
-      tk.msg( cargo_land_title, cargo_land_slow[rnd.rnd(1, #cargo_land_slow)]:format(
+      vntk.msg( cargo_land_title, cargo_land_slow[rnd.rnd(1, #cargo_land_slow)]:format(
          _(cargo), fmt.credits(reward / 2), fmt.credits(reward) ) )
       reward = reward / 2
    end

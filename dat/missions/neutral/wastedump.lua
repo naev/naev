@@ -26,6 +26,7 @@
 --]]
 local fmt = require "format"
 local pir = require "common.pirate"
+local vntk = require "vntk"
 
 text = {}
 text[1] = _("The waste containers are loaded onto your ship and you are paid %s. You begin to wonder if accepting this job was really a good idea.")
@@ -96,7 +97,7 @@ function accept ()
    credits = credits_factor * q + credits_mod
 
    local txt = text[ rnd.rnd( 1, #text ) ]
-   tk.msg( "", txt:format( fmt.credits( credits ) ) )
+   vntk.msg( "", txt:format( fmt.credits( credits ) ) )
 
    local c = misn.cargoNew( N_("Waste Containers"), N_("A bunch of waste containers leaking all sorts of indescribable liquids.") )
    cid = misn.cargoAdd( c, q )
@@ -120,7 +121,7 @@ function land ()
    for i, j in ipairs( dest_planets ) do
       if planet.get( j ) == planet.cur() then
          local txt = finish_text[ rnd.rnd( 1, #finish_text ) ]
-         tk.msg( "", txt )
+         vntk.msg( "", txt )
          pir.reputationNormalMission(rnd.rnd(2,3))
          misn.finish( true )
       end
@@ -132,12 +133,12 @@ function abort ()
    if landed then
       misn.cargoRm( cid )
       local fine = 2 * credits
-      tk.msg( "", abort_landed_text:format( fmt.credits( fine ) ) )
+      vntk.msg( "", abort_landed_text:format( fmt.credits( fine ) ) )
       player.pay( -fine )
       misn.finish( false )
    else
       local txt = abort_text[ rnd.rnd( 1, #abort_text ) ]
-      tk.msg( "", txt )
+      vntk.msg( "", txt )
 
       misn.cargoJet( cid )
 

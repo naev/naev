@@ -30,6 +30,7 @@
 --]]
 local pir = require "common.pirate"
 local fmt = require "format"
+local vntk = require "vntk"
 require "jumpdist"
 
 nolux_title = _("Not Very Luxurious")
@@ -208,7 +209,7 @@ function land ()
             txt = pay_s_lux_text[ rnd.rnd( 1, #pay_s_lux_text ) ]
          end
       end
-      tk.msg( ttl, txt )
+      vntk.msg( ttl, txt )
 
       pir.reputationNormalMission(rnd.rnd(2,3))
       if nolux then
