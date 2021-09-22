@@ -1703,7 +1703,7 @@ static int toolkit_mouseEventSingle( Window *w, SDL_Event* event,
 static int toolkit_mouseEventReverse( Window *w, SDL_Event* event,
    Widget *wgt, int x, int y, int rx, int ry )
 {
-   int ret, skip=0;
+   int ret=0, skip=0;
 
    /* Focused case, handle first. */
    if (w->focus == wgt->id) {
