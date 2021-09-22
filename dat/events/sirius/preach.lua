@@ -112,7 +112,7 @@ _("Someone killed the preacher!")
 
 --initialize the event
 function create()
-   curr=system.cur() --save the current system
+   curr = system.cur() --save the current system
 
    v = var.peek( "si_convert" ) -- Get the value
    if v == nil then -- Doesn't exist, so create

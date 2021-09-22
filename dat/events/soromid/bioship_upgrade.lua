@@ -127,7 +127,7 @@ end
 
 function pay( amount, reason )
    local pp = player.pilot()
-   local exp_gain = math.floor(amount / 10000)
+   local exp_gain = math.floor(amount / 10e3)
    if amount > 0 and has_bioship() then
       local exp = var.peek( "_bioship_exp" ) or 0
       exp = exp + exp_gain
