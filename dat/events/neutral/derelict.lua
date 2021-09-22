@@ -21,7 +21,7 @@ mission_list = {
    --[[
    {
       name = "Mission Name",
-      cond = function () return true end, -- Some condition to be met
+      cond = function () return true end, -- Some condition to be met, defaults to true if not set
       weight = 1, -- how it should be weighted, defaults to 1
    },
    --]]
@@ -157,7 +157,7 @@ function badevent()
          destroyevent()
       end,
       function ()
-         vntk.msg(btitle, _([[You affix your boarding clamp and walk aboard the derelict ship. You've only spent a couple of hectoseconds searching the interior when there is a proximity alarm from your ship! Pirates are closing on your position! Clearly this derelict was a trap! You run back onto your ship and prepare to unboard, but you've lost precious time. The pirates are already in firing range...]]))
+         vntk.msg(btitle, _([[You affix your boarding clamp and walk aboard the derelict ship. You've only spent a couple of hectoseconds searching the interior when there is a proximity alarm from your ship! Pirates are closing on your position! Clearly this derelict was a trap! You run back onto your ship and prepare to unboard, but you've lost precious time. The pirates are already in firing range…]]))
 
          local s = player.pilot():ship():size()
          local enemies_tiny = {
@@ -231,7 +231,8 @@ function badevent()
          local pos = player.pos()
          local leader
          for k,v in ipairs(enemies) do
-            local p = pilot.add( v, "Marauder", pos + vec2.newP( 1300 + rnd.rnd()*500, 360*rnd.rnd() ) )
+            local dist = 800 + 200 * ship.get(v):size()
+            local p = pilot.add( v, "Marauder", pos + vec2.newP( dist + rnd.rnd()*0.5*dist, 360*rnd.rnd() ) )
             if v == "Hyena" then
                p:rename("Pirate Hyena")
             end
@@ -263,7 +264,7 @@ function missionevent()
    local available_missions = {}
    local weights = 0
    for k,m in ipairs(mission_list) do
-      if not player.misnDone(m.name) and m.cond() then
+      if not player.misnDone(m.name) and (not m.cond or m.cond()) then
          weights = weights + m.weight or 1
          m.chance = weights
          table.insert( available_missions, m )
