@@ -83,7 +83,8 @@ static Commodity **commod_known = NULL; /**< index of known commodities */
 static char** map_modes = NULL; /**< Array (array.h) of the map modes' names, e.g. "Gold: Cost". */
 static int listMapModeVisible = 0; /**< Whether the map mode list widget is visible. */
 static double commod_av_gal_price = 0; /**< Average price across the galaxy. */
-static double map_dt     = 0.; /***< Nebula animation stuff. */
+static double map_dt     = 0.; /**< Nebula animation stuff. */
+static int map_minimal_mode = 0; /**< Map is in minimal mode. */
 
 /*
  * extern
@@ -116,6 +117,8 @@ static int map_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
 static void map_reset (void);
 static int map_keyHandler( unsigned int wid, SDL_Keycode key, SDL_Keymod mod );
 static void map_buttonZoom( unsigned int wid, const char* str );
+static void map_setMinimal( unsigned int wid, int value );
+static void map_buttonMinimal( unsigned int wid, const char* str );
 static void map_buttonCommodity( unsigned int wid, const char* str );
 static void map_selectCur (void);
 static void map_genModeList(void);
@@ -324,6 +327,10 @@ void map_open (void)
    /* Autonav button */
    window_addButtonKey( wid, -20 - 3*(BUTTON_WIDTH+20), 20, BUTTON_WIDTH, BUTTON_HEIGHT,
             "btnAutonav", _("Autonav"), player_autonavStartWindow, SDLK_a );
+   /* MInimal button */
+   window_addButtonKey( wid, -20 - 4*(BUTTON_WIDTH+20), 20, BUTTON_WIDTH, BUTTON_HEIGHT,
+            "btnMinimal", NULL, map_buttonMinimal, SDLK_i );
+   map_setMinimal( wid, player.map_minimal );
 
    /*
     * Bottom stuff
@@ -811,6 +818,7 @@ static void map_render( double bx, double by, double w, double h, void *data )
    double dt = naev_getrealdt();
    glColour col;
    StarSystem *sys;
+   double mapmin = 1.-map_minimal_mode;
 
    /* Update timer. */
    map_dt += naev_getrealdt();
@@ -822,18 +830,18 @@ if ((x) < y) (x) = MIN( y, (x) + dt ); \
 else (x) = MAX( y, (x) - dt )
    switch (map_mode) {
       case MAPMODE_TRAVEL:
-         AMAX( map_alpha_decorators );
-         AMAX( map_alpha_faction );
-         AMAX( map_alpha_env );
+         ATAR( map_alpha_decorators, mapmin );
+         ATAR( map_alpha_faction, mapmin );
+         ATAR( map_alpha_env, mapmin );
          AMAX( map_alpha_path );
          AMAX( map_alpha_names );
          AMAX( map_alpha_markers );
          break;
 
       case MAPMODE_DISCOVER:
-         ATAR( map_alpha_decorators, 0.5 );
-         ATAR( map_alpha_faction, 0.5 );
-         AMIN( map_alpha_env );
+         ATAR( map_alpha_decorators, 0.5 * mapmin );
+         ATAR( map_alpha_faction, 0.5 * mapmin );
+         ATAR( map_alpha_env, mapmin );
          AMIN( map_alpha_path );
          AMAX( map_alpha_names );
          AMIN( map_alpha_markers );
@@ -1945,6 +1953,23 @@ static void map_modeActivate( unsigned int wid, const char* str )
 {
    map_modeUpdate( wid, str );
    window_destroyWidget( wid, str );
+}
+
+
+static void map_setMinimal( unsigned int wid, int value )
+{
+   map_minimal_mode = value;
+   player.map_minimal = value;
+   window_buttonCaption( wid, "btnMinimal", (value) ? _("Normal View") : _("Minimal View") );
+}
+
+/**
+ * @brief Toggle map minimal mode.
+ */
+static void map_buttonMinimal( unsigned int wid, const char* str )
+{
+   (void) str;
+   map_setMinimal( wid, !map_minimal_mode );
 }
 
 /**
