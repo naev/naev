@@ -445,25 +445,50 @@ vec4 sdf_sysrhombus( vec4 color, vec2 uv)
 vec4 sdf_sysmarker( vec4 color, vec2 uv )
 {
    vec2 pos = vec2( uv.y, uv.x );
-   const vec2 b1 = vec2( 1.0, 0.65 );
-   const vec2 b2 = vec2( 0.9, 0.30 );
+   const vec2 b = vec2( 1.0, 0.65 );
+   const vec2 c = vec2(-0.35,0.0);
    float m = 1.0 / dimensions.x;
-   const vec2 c = vec2(0.0,-0.35);
 
-   vec2 b = (parami==1) ? b2 : b1;
-   float d = sdEgg( pos, b-m );
-   //d = max( -sdSegment( uv, vec2(0.0,0.0), vec2(0.0,1.0) )+0.1, d );
-   //d = max( -sdSegment( uv, vec2(0.0,-1.0), vec2(0.0,1.0) )+0.1, d );
-   //d = max( -sdSegment( uv, vec2(0.0,-0.4), vec2(0.0,0.0) )+0.1, d );
-   //vec2 auv = vec2( abs(uv.x), uv.y );
-   //d = max( -sdSegment( auv+vec2(0.0,-0.35), vec2(1.0,1.0), vec2(0.0,0.0) )+0.1, d );
-   //vec2 auv = abs( uv+c );
-   //d = max( -sdSegment( auv, vec2(1.0,1.0), vec2(0.0,0.0) )+0.1, d );
-   d = max( -sdSegment( uv+c, vec2(0.0,0.0), vec2(sin(1.5*u_time),1.0) )+0.1, d );
-   d = max( -sdCircle( uv+c, 0.45 ), d );
-   d = min( sdCircle( uv+c, 0.25 ), d );
+   float d = sdEgg( pos, b-2.0*m );
+   vec2 cpos = pos+c;
+   if (parami==1)
+      d = max( -sdSegment( cpos, vec2(0.0), vec2(1.0,0.0) )+0.15, d );
+   d = max( -sdCircle( cpos, 0.5 ), d );
+   d = min( sdCircle( cpos, 0.2 ), d );
    color.a *= smoothstep( -m, 0.0, -d );
 
+   return color;
+}
+
+vec4 sdf_missilelockon( vec4 color, vec2 uv )
+{
+   float m = 1.0 / dimensions.x;
+
+   /* Outter stuff. */
+   float d = 1e1000;
+
+   /* Inner steps */
+   float dts = 0.05 * max( 0.5, 100.0 * m );
+   vec2 auv = abs(uv);
+   if (auv.y < auv.x)
+      auv.xy = vec2( auv.y, auv.x );
+   const int nmax = 1; // only works well with odd numbers
+   for (int i=0; i<nmax; i++)
+      d = min( d, sdSegment( auv,
+            CS((float(i)+0.5)*0.5*M_PI/float(nmax)*0.5)*0.8,
+            CS((float(i)+0.5)*0.5*M_PI/float(nmax)*0.5)*1.0 )-m );
+   
+   float r = fract(dt*0.1);
+   float a = r * M_PI;
+   float c = cos(a);
+   float s = sin(a);
+   uv.y = -uv.y;
+   uv = mat2(c,-s,s,c) * uv;
+   float dp = sdPie( uv*dimensions, vec2(s,c), 1.5*dimensions.x );
+
+   d = max(d,-dp);
+
+   color.a *= smoothstep( -m, 0.0, -d );
    return color;
 }
 
@@ -498,7 +523,8 @@ vec4 effect( vec4 color, Image tex, vec2 uv, vec2 px )
    //col_out = sdf_jumplane( color, uv_rel );
    //col_out = sdf_gear( color, uv_rel );
    //col_out = sdf_sysrhombus( color, uv_rel );
-   col_out = sdf_sysmarker( color, uv_rel );
+   //col_out = sdf_sysmarker( color, uv_rel );
+   col_out = sdf_missilelockon( color, uv_rel );
 
    return mix( bg(uv), col_out, col_out.a );
 }
