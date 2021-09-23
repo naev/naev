@@ -168,9 +168,19 @@ function goodevent()
    local pp = player.pilot()
    local fuel, consumption = pp:fuel()
    if fuel < 2*consumption then
-         table.insert( goodevent_list, function ()
+      table.insert( goodevent_list, function ()
          vntk.msg(gtitle, _([[The derelict appears deserted, with most everything of value long gone. As explore the ship you suddenly pick up a back-up fuel tank hidden in the walls. The fuel is in good state and you siphon it off to fill your ships fuel tanks.]]) )
          pp:refuel()
+      end )
+   end
+
+   -- If the player is low on health and not regenerating, offer armour repairs
+   local armour, shield = pp:health()
+   local stats = p:stats()
+   if armour < 50 and stats.armour_regen <= 0 then
+      table.insert( goodevent_list, function ()
+         vntk.msg(gtitle, _([[The derelict is deserted and striped of everything of value, however, you notice that the ship hull is in very good shape. In fact, it is rather suspicious that a ship in such good ship became a derelict. Without thinking much deeper about it you strip hull components and are able to repair your ship's armour.]]) )
+         pp:setHealth( 100, shield )
       end )
    end
 
