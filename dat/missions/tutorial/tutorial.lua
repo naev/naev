@@ -18,12 +18,8 @@
 local tut = require "common.tutorial"
 local neu = require "common.neutral"
 
-
 -- FIXME: Have to use a table for some of it due to # bug.
 text = {}
-
-a_commodity = commodity.get( "Water" )
-an_outfit = outfit.get( "Heavy Laser Turret" )
 
 intro_title = _("Passing The Sky")
 intro_text  = _([["Congratulations on your first space ship, %s!" Captain T. Practice, who sold the %s to you, says through the radio. "You have made an excellent decision to purchase from Melendez Corporation! Our ships are prized for their reliability and affordability. I promise, you won't be disappointed!" You are skeptical of the sales pitch, of course; you really only bought this ship because it was the only one you could afford. Still, you tactfully thank the salesperson.
@@ -84,7 +80,7 @@ text.conclusion = _("\"You have done very well, %s! As you can see, the trip con
 
 misn_title = _("Tutorial")
 misn_desc = _("Captain T. Practice has offered to teach you how to fly your ship.")
-misn_reward = _("None")
+misn_reward = _("Skills to play the game!")
 
 osd_title = _("Tutorial")
 osd_desc = {}
@@ -188,9 +184,9 @@ function land ()
       stage = 3
       tk.msg(tutorial_title, land_text)
       bar_hook = hook.land("land_bar", "bar")
-      mission_hook = hook.land("land_mission", "mission")
-      outfits_hook = hook.land("land_outfits", "outfits")
-      shipyard_hook = hook.land("land_shipyard", "shipyard")
+      mission_hook   = hook.land("land_mission", "mission")
+      outfits_hook   = hook.land("land_outfits", "outfits")
+      shipyard_hook  = hook.land("land_shipyard", "shipyard")
       equipment_hook = hook.land("land_equipment", "equipment")
       commodity_hook = hook.land("land_commodity", "commodity")
    end
