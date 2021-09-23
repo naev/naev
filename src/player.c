@@ -3102,6 +3102,7 @@ int player_save( xmlTextWriterPtr writer )
    gui_radarGetRes( &player.radar_res );
    xmlw_elem(writer,"radar_res","%f",player.radar_res);
    xmlw_elem(writer,"eq_outfitMode","%d",player.eq_outfitMode);
+   xmlw_elem(writer,"map_minimal","%d",player.map_minimal);
 
    /* Time. */
    xmlw_startElem(writer,"time");
@@ -3465,6 +3466,7 @@ static Planet* player_parse( xmlNodePtr parent )
       ovr_setOpen(map_overlay_enabled);
       xmlr_float(node, "radar_res", player.radar_res);
       xmlr_int(node, "eq_outfitMode", player.eq_outfitMode);
+      xmlr_int(node, "map_minimal", player.map_minimal);
 
       /* Time. */
       if (xml_isNode(node,"time")) {
