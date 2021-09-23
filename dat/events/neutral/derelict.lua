@@ -76,6 +76,17 @@ end
 
 function board()
    player.unboard()
+
+   -- If player is low on fuel make it more likely they get fuel
+   local pp = player.pilot()
+   local fuel, consumption = pp:fuel()
+   if fuel < consumption and rnd.rnd() < 0.8 then
+      vntk.msg(gtitle, _([[The derelict appears deserted, with most everything of value long gone. As explore the ship you suddenly pick up a back-up fuel tank hidden in the walls. The fuel is in good state and you siphon it off to fill your ships fuel tanks. Talk about good timing.]]) )
+      pp:refuel()
+      destroyevent()
+      return
+   end
+
    -- Roll for events
    local prob = rnd.rnd()
    if prob <= 0.125 then
@@ -129,6 +140,7 @@ function goodevent()
       end,
    }
 
+   -- See if we should add maps
    local maps = {
       ["Map: Dvaered-Soromid trade route"] = _("Dvaered-Soromid trade route"),
       ["Map: Sirian border systems"] = _("Sirian border systems"),
@@ -149,6 +161,16 @@ function goodevent()
          local choice = unknown[rnd.rnd(1,#unknown)]
          vntk.msg(gtitle, fmt.f(_([[The derelict is empty, and seems to have been thoroughly picked over by other space buccaneers. However, the ship's computer contains a map of the {mapname}! You download it into your own computer.]]), {mapname=maps[choice]}))
          player.outfitAdd(choice, 1)
+      end )
+   end
+
+   -- If the player has little fuel left allow for refueling
+   local pp = player.pilot()
+   local fuel, consumption = pp:fuel()
+   if fuel < 2*consumption then
+         table.insert( goodevent_list, function ()
+         vntk.msg(gtitle, _([[The derelict appears deserted, with most everything of value long gone. As explore the ship you suddenly pick up a back-up fuel tank hidden in the walls. The fuel is in good state and you siphon it off to fill your ships fuel tanks.]]) )
+         pp:refuel()
       end )
    end
 
