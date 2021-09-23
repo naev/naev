@@ -923,7 +923,7 @@ static int uniedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
          }
 
          /* Set jump if applicable. */
-         if (uniedit_mode == UNIEDIT_JUMP) {
+         if (clickedsys!=NULL && uniedit_mode == UNIEDIT_JUMP) {
             uniedit_toggleJump( clickedsys );
             uniedit_mode = UNIEDIT_DEFAULT;
             return 1;
