@@ -1791,6 +1791,8 @@ static void outfit_parseSMod( Outfit* temp, const xmlNodePtr parent )
          "%s",
          _(outfit_getType(temp)),
          (temp->u.mod.active || temp->u.mod.lua_ontoggle != LUA_NOREF) ? _("\n#rActivated Outfit#0") : "" );
+   if (temp->u.mod.active && temp->u.mod.cooldown > 0.)
+      i += scnprintf( &temp->desc_short[i], OUTFIT_SHORTDESC_MAX-i, _(" #r(%.1f s Cooldown)#0"), temp->u.mod.cooldown );
 
 #define DESC_ADD(x, s) \
 if ((x) != 0) \
