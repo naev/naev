@@ -25,6 +25,7 @@
       * Overhaul and rebalance of most outfits
       * Wanted pirates no longer aggro defense forces (pirate bounties)
       * Bribed pilots don't become hostile again unless attacked
+      * Scramblers and jammers have fixed chance to mess up missiles depending on their resistance
       * Stress now decreases based on ship mass
       * Merged the Independent and Civilian factions
       * Game now tracks meta-data like ships destroyed and time played
@@ -36,6 +37,8 @@
       * More fine-grained autonav reset control by setting enemy distance
       * Added autoequip functionality
       * Able to filter equipable outfits
+      * Minimal view mode for the map
+      * More visible map markers
    * New locations
       * Added gambling resort "Minerva Station"
       * Added mysterious new system "Taiomi"
