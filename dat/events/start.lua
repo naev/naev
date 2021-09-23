@@ -32,6 +32,8 @@ function name()
       _("Vagabond"),
       _("Vindicator"),
       _("Windjammer"),
+      _("Tuna Can"),
+      _("Reddish Dwarf"), -- Red Dwarf
    }
    return names[rnd.rnd(1,#names)]
 end
@@ -39,11 +41,11 @@ end
 
 function create()
    player.pilot():rename( name() ) -- Assign a random name to the player's ship.
-   player.pilot():outfitAdd( "Laser Cannon MK1", 2 )
+   player.pilot():outfitAdd( "Laser Cannon MK1", 1 )
    jump.setKnown( "Hakoi", "Eneguoz" )
 
    -- Give all GUIs
-   -- XXX: Would be better to remove these outfits and the association,
+   -- TODO: Would be better to remove these outfits and the association,
    -- but they're so tightly integrated atm (with no other way to define
    -- GUIs as usable) that I'm implementing it this way for now.
    player.outfitAdd( "GUI - Brushed" )
