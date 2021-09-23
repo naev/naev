@@ -181,6 +181,7 @@ void map_open (void)
    const int indent = MAP_TEXT_INDENT;
 
    /* Not displaying commodities */
+   map_minimal_mode = player.map_minimal;
    map_reset();
    listMapModeVisible = 0;
 
@@ -330,7 +331,7 @@ void map_open (void)
    /* MInimal button */
    window_addButtonKey( wid, -20 - 4*(BUTTON_WIDTH+20), 20, BUTTON_WIDTH, BUTTON_HEIGHT,
             "btnMinimal", NULL, map_buttonMinimal, SDLK_i );
-   map_setMinimal( wid, player.map_minimal );
+   map_setMinimal( wid, map_minimal_mode );
 
    /*
     * Bottom stuff
@@ -2097,11 +2098,12 @@ void map_clear (void)
 
 static void map_reset (void)
 {
+   double mapmin = 1.-map_minimal_mode;
    cur_commod = -1;
    map_mode = MAPMODE_TRAVEL;
-   map_alpha_decorators   = 1.;
-   map_alpha_faction      = 1.;
-   map_alpha_env          = 1.;
+   map_alpha_decorators   = mapmin;
+   map_alpha_faction      = mapmin;
+   map_alpha_env          = mapmin;
    map_alpha_path         = 1.;
    map_alpha_names        = 1.;
    map_alpha_markers      = 1.;
