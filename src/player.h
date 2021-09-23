@@ -99,7 +99,8 @@ typedef struct Player_s {
    int guiOverride;  /**< GUI is overridden (not default). */
    int favourite;    /**< Whether or not this ship is favourited. */
    double radar_res; /**< Player's radar resolution. */
-   int eq_outfitMode; /**< Equipment outfit mode. */
+   int eq_outfitMode;/**< Equipment outfit mode. */
+   int map_minimal;  /**< Map is set in minimal mode. */
 
    /* Meta-data. */
    time_t last_played; /**< Date the save was last played. */
