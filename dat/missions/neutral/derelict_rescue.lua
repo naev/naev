@@ -23,7 +23,7 @@ local neu = require "common.neutral"
 local lmisn = require "lmisn"
 
 function create ()
-   destpnt, destsys = lmisn.getPlanetAtDistance( system.cur(), 0, 5, "Indpendent" )
+   destpnt, destsys = lmisn.getRandomPlanetAtDistance( system.cur(), 0, 5, "Indpendent" )
 
    -- See if we got something
    if not destpnt then

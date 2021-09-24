@@ -26,7 +26,7 @@ function lmisn.sfxMoney ()
 end
 
 
-function lmisn.getLandablePlanet( sys, fct, fctmatch )
+function lmisn.getLandablePlanets( sys, fct, fctmatch )
    sys = sys or system.cur()
    local pnt_candidates = {}
    for k,p in ipairs(sys:planets()) do
@@ -42,10 +42,7 @@ function lmisn.getLandablePlanet( sys, fct, fctmatch )
          end
       end
    end
-   if #pnt_candidates==0 then
-      return nil
-   end
-   return pnt_candidates[ rnd.rnd(1,#pnt_candidates) ]
+   return pnt_candidates
 end
 
 
@@ -174,9 +171,22 @@ function lmisn.getPlanetAtDistance( sys, min, max, fct, samefct, hidden )
    if #candidates == 0 then
       return nil, nil
    end
-   local destsys = candidates[ rnd.rnd(1,#candidates) ]
-   local destpnt = lmisn.getLandablePlanet( destsys, fct, samefct )
-   return destpnt, destsys
+   local pnts = {}
+   for k,s in ipairs(candidates) do
+      local lp = lmisn.getLandablePlanets( sys, fct, samefct )
+      for i,p in ipairs(lp) do
+         table.insert( pnts, p )
+      end
+   end
+   return pnts
+end
+
+function lmisn.getRandomPlanetAtDistance( sys, min, max, fct, samefct, hidden )
+   local candidates = lmisn.getPlanetAtDistance( sys, min, max, fct, samefct, hidden )
+   if #candidates == 0 then
+      return nil, nil
+   end
+   return planet.get( candidates[ rnd.rnd(1,#candidates) ] )
 end
 
 --[[
