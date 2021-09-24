@@ -49,31 +49,31 @@ static int cust_mouse( int type, int button, double x, double y, custom_function
 
 
 /* Toolkit methods. */
-static int tk_msg( lua_State *L );
-static int tk_yesno( lua_State *L );
-static int tk_input( lua_State *L );
-static int tk_choice( lua_State *L );
-static int tk_list( lua_State *L );
-static int tk_merchantOutfit( lua_State *L );
-static int tk_custom( lua_State *L );
-static int tk_customRename( lua_State *L );
-static int tk_customFullscreen( lua_State *L );
-static int tk_customResize( lua_State *L );
-static int tk_customSize( lua_State *L );
-static int tk_customDone( lua_State *L );
-static const luaL_Reg tk_methods[] = {
-   { "msg", tk_msg },
-   { "yesno", tk_yesno },
-   { "input", tk_input },
-   { "choice", tk_choice },
-   { "list", tk_list },
-   { "merchantOutfit", tk_merchantOutfit },
-   { "custom", tk_custom },
-   { "customRename", tk_customRename },
-   { "customFullscreen", tk_customFullscreen },
-   { "customResize", tk_customResize },
-   { "customSize", tk_customSize },
-   { "customDone", tk_customDone },
+static int tkL_msg( lua_State *L );
+static int tkL_yesno( lua_State *L );
+static int tkL_input( lua_State *L );
+static int tkL_choice( lua_State *L );
+static int tkL_list( lua_State *L );
+static int tkL_merchantOutfit( lua_State *L );
+static int tkL_custom( lua_State *L );
+static int tkL_customRename( lua_State *L );
+static int tkL_customFullscreen( lua_State *L );
+static int tkL_customResize( lua_State *L );
+static int tkL_customSize( lua_State *L );
+static int tkL_customDone( lua_State *L );
+static const luaL_Reg tkL_methods[] = {
+   { "msg", tkL_msg },
+   { "yesno", tkL_yesno },
+   { "input", tkL_input },
+   { "choice", tkL_choice },
+   { "list", tkL_list },
+   { "merchantOutfit", tkL_merchantOutfit },
+   { "custom", tkL_custom },
+   { "customRename", tkL_customRename },
+   { "customFullscreen", tkL_customFullscreen },
+   { "customResize", tkL_customResize },
+   { "customSize", tkL_customSize },
+   { "customDone", tkL_customDone },
    {0,0}
 }; /**< Toolkit Lua methods. */
 
@@ -87,7 +87,7 @@ static const luaL_Reg tk_methods[] = {
  */
 int nlua_loadTk( nlua_env env )
 {
-   nlua_register(env, "tk", tk_methods, 0);
+   nlua_register(env, "tk", tkL_methods, 0);
    nlua_loadCol(env);
    nlua_loadGFX(env);
    return 0;
@@ -125,7 +125,7 @@ int nlua_loadTk( nlua_env env )
  *    @luatparam[opt=-1] number height height of the image to display. Negative values use image height.
  * @luafunc msg
  */
-static int tk_msg( lua_State *L )
+static int tkL_msg( lua_State *L )
 {
    const char *title, *str, *img;
    int width, height;
@@ -158,7 +158,7 @@ static int tk_msg( lua_State *L )
  *    @luatreturn boolean true if yes was clicked, false if no was clicked.
  * @luafunc yesno
  */
-static int tk_yesno( lua_State *L )
+static int tkL_yesno( lua_State *L )
 {
    int ret;
    const char *title, *str;
@@ -183,7 +183,7 @@ static int tk_yesno( lua_State *L )
  *    @luatreturn string|nil nil if input was canceled or a string with the text written.
  * @luafunc input
  */
-static int tk_input( lua_State *L )
+static int tkL_input( lua_State *L )
 {
    const char *title, *str;
    char *ret;
@@ -218,7 +218,7 @@ static int tk_input( lua_State *L )
  *    @luatreturn string The name of the choice chosen.
  * @luafunc choice
  */
-static int tk_choice( lua_State *L )
+static int tkL_choice( lua_State *L )
 {
    int ret, opts, i;
    const char *title, *str;
@@ -272,7 +272,7 @@ static int tk_choice( lua_State *L )
  *    @luatreturn string The name of the choice chosen.
  * @luafunc list
  */
-static int tk_list( lua_State *L )
+static int tkL_list( lua_State *L )
 {
    int ret, opts, i;
    const char *title, *str;
@@ -317,7 +317,7 @@ static int tk_list( lua_State *L )
  *    @luatparam Table outfits Table of outfits to sell/buy. It is possible to use either outfits or outfit names (strings).
  * @luafunc merchantOutfit
  */
-static int tk_merchantOutfit( lua_State *L )
+static int tkL_merchantOutfit( lua_State *L )
 {
    const Outfit **outfits;
    unsigned int wid;
@@ -365,7 +365,7 @@ static int tk_merchantOutfit( lua_State *L )
  *    @luatparam Function mouse Function to call when mouse events are received.
  * @luafunc custom
  */
-static int tk_custom( lua_State *L )
+static int tkL_custom( lua_State *L )
 {
    int w, h;
    const char *caption;
@@ -415,7 +415,7 @@ static int tk_custom( lua_State *L )
  *    @luatparam string displayname Name to give the custom widget window.
  * @luafunc customRename
  */
-static int tk_customRename( lua_State *L )
+static int tkL_customRename( lua_State *L )
 {
    const char *s = luaL_checkstring(L,1);
    unsigned int wid = window_get( "dlgMsg" );
@@ -432,7 +432,7 @@ static int tk_customRename( lua_State *L )
  *    @luatparam boolean enable Enable fullscreen or not.
  * @luafunc customFullscreen
  */
-static int tk_customFullscreen( lua_State *L )
+static int tkL_customFullscreen( lua_State *L )
 {
    int enable = lua_toboolean(L,1);
    unsigned int wid = window_get( "dlgMsg" );
@@ -450,7 +450,7 @@ static int tk_customFullscreen( lua_State *L )
  *    @luatparam number height Height of the widget to resize to.
  * @luafunc customResize
  */
-static int tk_customResize( lua_State *L )
+static int tkL_customResize( lua_State *L )
 {
    int w, h;
    unsigned int wid = window_get( "dlgMsg" );
@@ -470,7 +470,7 @@ static int tk_customResize( lua_State *L )
  *    @luatreturn number Height of the window.
  * @luafunc customSize
  */
-static int tk_customSize( lua_State *L )
+static int tkL_customSize( lua_State *L )
 {
    int w, h;
    unsigned int wid = window_get( "dlgMsg" );
@@ -487,7 +487,7 @@ static int tk_customSize( lua_State *L )
  * @brief Ends the execution of a custom widget.
  * @luafunc customDone
  */
-static int tk_customDone( lua_State *L )
+static int tkL_customDone( lua_State *L )
 {
    unsigned int wid = window_get( "dlgMsg" );
    if (wid == 0)
