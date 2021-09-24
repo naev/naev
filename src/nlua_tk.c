@@ -129,19 +129,23 @@ static int tkL_query( lua_State *L )
 {
    const char *wdwname, *wgtname;
    unsigned int wid;
-   int x, y, w, h;
+   int bx, by, x, y, w, h;
    wdwname = luaL_checkstring( L, 1 );
    wgtname = luaL_optstring( L, 2, NULL );
    wid = window_get( wdwname );
    if (wid == 0)
       return 0;
+   window_posWindow( wid, &bx, &by );
    if (wgtname == NULL) {
-      window_posWindow( wid, &x, &y );
+      x = bx;
+      y = by;
       window_dimWindow( wid, &w, &h );
    }
    else {
       window_posWidget( wid, wgtname, &x, &y );
       window_dimWidget( wid, wgtname, &w, &h );
+      x += bx;
+      y += by;
    }
    lua_pushinteger( L, x );
    lua_pushinteger( L, y );

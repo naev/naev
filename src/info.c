@@ -1357,7 +1357,7 @@ static void shiplog_menu_genList( unsigned int wid, int first )
 
 static void info_shiplogMenuDelete( unsigned int wid, const char *str )
 {
-   char buf[256];
+   char buf[STRMAX_SHORT];
    int ret, logid;
    (void) str;
 
@@ -1366,7 +1366,7 @@ static void info_shiplogMenuDelete( unsigned int wid, const char *str )
       return;
    }
 
-   snprintf( buf, 256,
+   snprintf( buf, sizeof(buf),
          _("This will delete ALL \"%s\" log entries. This operation cannot be undone. Are you sure?"),
          logs[selectedLog]);
    ret = dialogue_YesNoRaw( "", buf );
