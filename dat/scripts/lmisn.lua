@@ -166,7 +166,12 @@ function lmisn.getSysAtDistance( sys, min, max, filter, data, hidden )
    return finalset
 end
 
-function lmisn.getPlanetAtDistance( sys, min, max, fct, samefct, hidden )
+--[[
+   Works the same as lmisn.getSysAtDistance, but for planets.
+
+   Filter is applied on a planet level.
+--]]
+function lmisn.getPlanetAtDistance( sys, min, max, fct, samefct, filter, data, hidden )
    local candidates = lmisn.getSysAtDistance( sys, min, max, lmisn.sysFilters.factionLandable( fct ), nil, hidden )
    if #candidates == 0 then
       return nil, nil
@@ -175,14 +180,16 @@ function lmisn.getPlanetAtDistance( sys, min, max, fct, samefct, hidden )
    for k,s in ipairs(candidates) do
       local lp = lmisn.getLandablePlanets( sys, fct, samefct )
       for i,p in ipairs(lp) do
-         table.insert( pnts, p )
+         if not filter or filter( p, data ) then
+            table.insert( pnts, p )
+         end
       end
    end
    return pnts
 end
 
-function lmisn.getRandomPlanetAtDistance( sys, min, max, fct, samefct, hidden )
-   local candidates = lmisn.getPlanetAtDistance( sys, min, max, fct, samefct, hidden )
+function lmisn.getRandomPlanetAtDistance( sys, min, max, fct, samefct, filter, data, hidden )
+   local candidates = lmisn.getPlanetAtDistance( sys, min, max, fct, samefct, filter, data, hidden )
    if #candidates == 0 then
       return nil, nil
    end
