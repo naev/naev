@@ -248,12 +248,12 @@ function info ()
 
    info_msg( _([["Ah, the info menu in all it's glory. In the main window, you can see overall statistics of your gameplay and license information. Try to navigate to the #oMissions#0 tab. Feel free to click the other tabs for more information."]]) )
 
-   hk_info_ship = hook.info( "info_ship", "ship" )
-   hk_info_weapons = hook.info( "info_weapons", "weapons" )
-   hk_info_cargo = hook.info( "info_cargo", "cargo" )
-   hk_info_mission = hook.info( "info_mission", "mission" )
-   hk_info_standing = hook.info( "info_standing", "standing" )
-   hk_info_shiplog = hook.info( "shiplog", "shiplog" )
+   hk_info_ship      = hook.info( "info_ship", "ship" )
+   hk_info_weapons   = hook.info( "info_weapons", "weapons" )
+   hk_info_cargo     = hook.info( "info_cargo", "cargo" )
+   hk_info_mission   = hook.info( "info_mission", "mission" )
+   hk_info_standing  = hook.info( "info_standing", "standing" )
+   hk_info_shiplog   = hook.info( "shiplog", "shiplog" )
 end
 
 function info_checkdone ()
