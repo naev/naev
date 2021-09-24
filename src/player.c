@@ -943,7 +943,10 @@ void player_render( double dt )
       player_renderAimHelper( dt );
 
    /* Render the player's pilot. */
-   pilot_render(player.p, dt);
+   pilot_render( player.p, dt );
+
+   /* Render the player's overlay. */
+   pilot_renderOverlay( player.p, dt );
 }
 
 
