@@ -1199,7 +1199,7 @@ static int font_makeChar( glFontStash *stsh, font_char_t *c, uint32_t ch )
  */
 static void gl_fontRenderStart( const glFontStash* stsh, double x, double y, const glColour *c, double outlineR )
 {
-   gl_Matrix4 H = gl_Matrix4_Translate(gl_view_matrix, round(x), round(y), 0);
+   gl_Matrix4 H = gl_Matrix4_Translate(gl_view_matrix, x, y, 0);
    gl_fontRenderStartH( stsh, &H, c, outlineR );
 }
 static void gl_fontRenderStartH( const glFontStash* stsh, const gl_Matrix4 *H, const glColour *c, double outlineR )
