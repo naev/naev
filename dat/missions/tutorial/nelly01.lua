@@ -163,6 +163,7 @@ function land ()
       -- Get rid of cargo
       misn.cargoRm( cargo_id )
       misn_state = 2
+      misn.osdActive(2)
 
    elseif misn_state==3 and pcur == retsys then
       -- Finished mission
@@ -193,10 +194,19 @@ function enter ()
 
       vn.label("info_yes")
       nel(_([["The information window, which you can open with {infokey}, is critical to managing your ship and finding out where to go."]]))
+      -- TODO hooks for info menu plus walkthrough
       vn.run()
 
    elseif misn_state==2 and system.cur() == retsys then
-      -- TODO Show and talk about disabled ship
+      hook.timer( 5e3, "talk_derelict" )
 
    end
+end
+
+function talk_derelict ()
+   -- TODO Show and talk about disabled ship
+   vn.clear()
+   vn.scene()
+   local nel = tutnel.vn_nelly()
+   vn.run()
 end
