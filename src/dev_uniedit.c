@@ -1456,8 +1456,6 @@ static void uniedit_findSearch( unsigned int wid, const char *str )
    Planet *pnt;
 
    name = window_getInput( wid, "inpFind" );
-   if (name == NULL)
-      return;
 
    /* Search for names. */
    planets = planet_searchFuzzyCase( name, &nplanets );
