@@ -349,7 +349,7 @@ static int hookL_land( lua_State *L )
    const char *where;
    unsigned int h;
 
-   if (lua_gettop(L) < 2)
+   if (lua_isnone(L,2))
       h = hookL_generic( L, "land", 0., 1, 0 );
    else {
       where = luaL_checkstring(L, 2);
