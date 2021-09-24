@@ -923,7 +923,7 @@ static int uniedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
          }
 
          /* Set jump if applicable. */
-         if (uniedit_mode == UNIEDIT_JUMP) {
+         if (clickedsys!=NULL && uniedit_mode == UNIEDIT_JUMP) {
             uniedit_toggleJump( clickedsys );
             uniedit_mode = UNIEDIT_DEFAULT;
             return 1;
@@ -1456,8 +1456,6 @@ static void uniedit_findSearch( unsigned int wid, const char *str )
    Planet *pnt;
 
    name = window_getInput( wid, "inpFind" );
-   if (name == NULL)
-      return;
 
    /* Search for names. */
    planets = planet_searchFuzzyCase( name, &nplanets );

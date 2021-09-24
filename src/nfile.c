@@ -394,6 +394,8 @@ int nfile_copyIfExists( const char* file1, const char* file2 )
       WARN( _("Failure to copy '%s' to '%s': %s"), file1, file2, strerror(errno) );
       if (f_in!=NULL)
          fclose(f_in);
+      if (f_out!=NULL)
+         fclose(f_out);
       return -1;
    }
 

@@ -245,16 +245,20 @@ void dtype_free (void)
  *    @param[out] shield Shield damage modulator.
  *    @param[out] armour Armour damage modulator.
  *    @param[out] knockback Knockback modulator.
+ *    @return 0 on success.
  */
-void dtype_raw( int type, double *shield, double *armour, double *knockback )
+int dtype_raw( int type, double *shield, double *armour, double *knockback )
 {
    DTYPE *dtype = dtype_validType( type );
+   if (dtype == NULL)
+      return -1;
    if (shield != NULL)
       *shield = dtype->sdam;
    if (armour != NULL)
       *armour = dtype->adam;
    if (knockback != NULL)
       *knockback = dtype->knock;
+   return 0;
 }
 
 

@@ -958,7 +958,7 @@ static void map_findSearch( unsigned int wid, const char* str )
 
    /* Get the name. */
    name = window_getInput( wid, "inpSearch" );
-   if ( (name == NULL) || ( strcmp("", name) == 0 ) )
+   if ( name[0] == '\0' )
       return;
 
    /* Prevent reentrancy, e.g. the toolkit spontaneously deciding a future mouseup event was the
