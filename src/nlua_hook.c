@@ -37,6 +37,7 @@
 static int hookL_rm( lua_State *L );
 static int hookL_load( lua_State *L );
 static int hookL_land( lua_State *L );
+static int hookL_info( lua_State *L );
 static int hookL_takeoff( lua_State *L );
 static int hookL_jumpout( lua_State *L );
 static int hookL_jumpin( lua_State *L );
@@ -69,6 +70,7 @@ static const luaL_Reg hookL_methods[] = {
    { "rm", hookL_rm },
    { "load", hookL_load },
    { "land", hookL_land },
+   { "info", hookL_info },
    { "takeoff", hookL_takeoff },
    { "jumpout", hookL_jumpout },
    { "jumpin", hookL_jumpin },
@@ -353,6 +355,46 @@ static int hookL_land( lua_State *L )
       h = hookL_generic( L, "land", 0., 1, 0 );
    else {
       where = luaL_checkstring(L, 2);
+      /* TODO validity checking? */
+      h = hookL_generic( L, where, 0., 1, 0 );
+   }
+
+   lua_pushnumber( L, h );
+   return 1;
+}
+/**
+ * @brief Hooks the function to the info menu.
+ *
+ * Can also be used to hook the various subparts of the info menu. Possible targets
+ *  for where are:<br />
+ *   - "main"<br />
+ *   - "ship"<br />
+ *   - "cargo"<br />
+ *   - "mission"<br />
+ *   - "standing"<br />
+ *   - "shiplog"<br />
+ *
+ * @usage hook.info( "my_function" ) -- Info calls my_function
+ * @usage hook.info( "my_function", "equipment" ) -- Calls my_function at equipment screen
+ *
+ *    @luatparam string funcname Name of function to run when hook is triggered.
+ *    @luatparam[opt] string where Where to hook the function. Defaults to any.
+ *    @luaparam arg Argument to pass to hook.
+ *    @luatreturn number Hook identifier.
+ * @luafunc info
+ */
+static int hookL_info( lua_State *L )
+{
+   const char *where;
+   char buf[128];
+   unsigned int h;
+
+   if (lua_isnone(L,2))
+      h = hookL_generic( L, "info", 0., 1, 0 );
+   else {
+      where = luaL_checkstring(L, 2);
+      snprintf( buf, sizeof(buf), "info_%s", where );
+      /* TODO validity checking? */
       h = hookL_generic( L, where, 0., 1, 0 );
    }
 

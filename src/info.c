@@ -19,6 +19,7 @@
 #include "dialogue.h"
 #include "equipment.h"
 #include "gui.h"
+#include "hook.h"
 #include "land.h"
 #include "log.h"
 #include "map.h"
@@ -113,6 +114,7 @@ static void mission_menu_genList( unsigned int wid, int first );
 static void mission_menu_update( unsigned int wid, const char *str );
 static void info_openShipLog( unsigned int wid );
 static const char* info_getLogTypeFilter( int lstPos );
+static void info_changeTab( unsigned int wid, const char *str, int old, int new );
 
 
 /**
@@ -161,7 +163,11 @@ void menu_info( int window )
 
    menu_Open(MENU_INFO);
 
+   /* Opening hooks. */
+   hooks_run("info");
+
    /* Set active window. */
+   window_tabWinOnChange( info_wid, "tabInfo", info_changeTab );
    window_tabWinSetActive( info_wid, "tabInfo", CLAMP( 0, 6, window ) );
 }
 /**
@@ -1480,4 +1486,25 @@ static void info_openShipLog( unsigned int wid )
 #undef LOGSPACING
    /* list */
    shiplog_menu_genList(wid ,1);
+}
+
+
+/**
+ * @brief Handles tab window changes.
+ */
+static void info_changeTab( unsigned int wid, const char *str, int old, int new )
+{
+   (void) wid;
+   (void) str;
+   (void) old;
+   const char *hookname;
+   switch (new) {
+      case INFO_WIN_MAIN:  hookname = "info_main";    break;
+      case INFO_WIN_SHIP:  hookname = "info_ship";    break;
+      case INFO_WIN_CARGO: hookname = "info_cargo";   break;
+      case INFO_WIN_MISN:  hookname = "info_mission"; break;
+      case INFO_WIN_STAND: hookname = "info_standing";break;
+      case INFO_WIN_SHIPLOG:hookname= "info_shiplog"; break;
+   }
+   hooks_run( hookname );
 }
