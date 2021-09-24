@@ -94,7 +94,7 @@ function accept ()
 
    nel(fmt.f(_([[The lone individual lightens up when you near.
 "Say, you look like a pilot with a working ship. I'm in a bit of a mess. You see, I was supposed to deliver some {cargoname} to {pntname} in the {sysname} system, but my ship broke down and I don't think I'll be able to deliver it any time soon. Would you be willing to help me take the cargo there and come back? I'll pay you your fair share."]]),
-      {cargoname=cargo_type, pntname=destpnt:name(), sysname=:destsys:name()}))
+      {cargoname=cargo_type, pntname=destpnt:name(), sysname=destsys:name()}))
 
    vn.menu{
       {_("Help them out"), "accept"},
