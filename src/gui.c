@@ -1075,7 +1075,7 @@ void gui_radarRender( double x, double y )
          gui_renderAsteroid( &ast->asteroids[j], radar->w, radar->h, radar->res, 0 );
    }
 
-   /* Render the player cross. */
+   /* Render the player. */
    gui_renderPlayer( radar->res, 0 );
 
    gl_view_matrix = view_matrix_prev;
@@ -1374,12 +1374,9 @@ void gui_renderPlayer( double res, int overlay )
    if (overlay) {
       x = player.p->solid->pos.x / res + map_overlay_center_x();
       y = player.p->solid->pos.y / res + map_overlay_center_y();
-      r = MIN(SCREEN_W,SCREEN_H)*0.024;
-   } else {
-      x = 0.;
-      y = 0.;
-      r = MIN(SCREEN_W,SCREEN_H)*0.016;
-   }
+   } else
+      x = y = 0.;
+   r = MIN(SCREEN_W,SCREEN_H)*0.32 / res;
 
    glUseProgram(shaders.playermarker.program);
    gl_renderShader( x, y, r, r, player.p->solid->dir, &shaders.playermarker, &cRadar_player, 1 );
