@@ -369,6 +369,7 @@ static int hookL_land( lua_State *L )
  *  for where are:<br />
  *   - "main"<br />
  *   - "ship"<br />
+ *   - "weapons"<br />
  *   - "cargo"<br />
  *   - "mission"<br />
  *   - "standing"<br />

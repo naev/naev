@@ -1717,6 +1717,8 @@ void player_targetHyperspaceSet( int id )
    if ((old != id) && (id >= 0))
       player_soundPlayGUI(snd_nav,1);
    gui_setNav();
+
+   hooks_run( "target_hyperspace" );
 }
 
 

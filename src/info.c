@@ -1501,6 +1501,7 @@ static void info_changeTab( unsigned int wid, const char *str, int old, int new 
    switch (new) {
       case INFO_WIN_MAIN:  hookname = "info_main";    break;
       case INFO_WIN_SHIP:  hookname = "info_ship";    break;
+      case INFO_WIN_WEAP:  hookname = "weapons";      break;
       case INFO_WIN_CARGO: hookname = "info_cargo";   break;
       case INFO_WIN_MISN:  hookname = "info_mission"; break;
       case INFO_WIN_STAND: hookname = "info_standing";break;

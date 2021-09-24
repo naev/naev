@@ -152,6 +152,11 @@ They cock their head a bit at you.
 end
 
 function land ()
+   if hk_info_timer then
+      hook.rm( hk_info_timer )
+      hk_info_timer = nil
+   end
+
    local pcur = planet.cur()
    if misn_state==1 and pcur == destsys then
       -- Delivered Cargo
@@ -176,6 +181,11 @@ function land ()
 end
 
 function enter ()
+   if hk_info_timer then
+      hook.rm( hk_info_timer )
+      hk_info_timer = nil
+   end
+
    if misn_state==0 then
       vn.clear()
       vn.scene()
@@ -193,9 +203,15 @@ function enter ()
       vn.done()
 
       vn.label("info_yes")
-      nel(_([["The information window, which you can open with {infokey}, is critical to managing your ship and finding out where to go."]]))
-      -- TODO hooks for info menu plus walkthrough
+      nel(fmt.f(_([["The information window, which you can open with {infokey}, is critical to managing your ship and finding out where to go. Try opening the info menu with {infokey} and I will show you around it."]]),{infokey=tut.getKey("info")}))
+      vn.func( function ()
+         hk_info = hook.info( "info" )
+         hk_info_timer = hook.timer( 15, "info_reminder" )
+      end )
       vn.run()
+
+      -- Advance so it deosn't do the same convo
+      misn_state = 1
 
    elseif misn_state==2 and system.cur() == retsys then
       hook.timer( 5e3, "talk_derelict" )
@@ -209,4 +225,112 @@ function talk_derelict ()
    vn.scene()
    local nel = tutnel.vn_nelly()
    vn.run()
+end
+
+function info_reminder ()
+   player.pilot():comm(fmt.f(_("Try opening the info menu with {infokey}."),{infokey=tut.getKey("info")}))
+   hk_info_timer = hook.timer( 15, "info_reminder" )
+end
+
+function info_msg( msg )
+   vntk.msg( tutnel.nelly.name, msg )
+end
+
+function info ()
+   if hk_info_timer then
+      hook.rm( hk_info_timer )
+      hk_info_timer = nil
+   end
+   if hk_info then
+      hook.rm( hk_info )
+      hk_info = nil
+   end
+
+   info_msg( _([["Ah, the info menu in all it's glory. In the main window, you can see overall statistics of your gameplay and license information. Try to navigate to the #oMissions#0 tab. Feel free to click the other tabs for more information."]]) )
+
+   hk_info_ship = hook.info( "info_ship", "ship" )
+   hk_info_weapons = hook.info( "info_weapons", "weapons" )
+   hk_info_cargo = hook.info( "info_cargo", "cargo" )
+   hk_info_mission = hook.info( "info_mission", "mission" )
+   hk_info_standing = hook.info( "info_standing", "standing" )
+   hk_info_shiplog = hook.info( "shiplog", "shiplog" )
+end
+
+function info_checkdone ()
+   if hk_info_ship or
+      hk_info_weapons or
+      hk_info_cargo or
+      hk_info_mission or
+      hk_info_standing or
+      hk_info_ship then
+      return
+   end
+   -- TODO not sure we need more message annoyances here
+end
+
+function info_ship ()
+   info_msg( _([["The #oShip Info#0 tab contains information relevant to your ship including all active bonuses and equipped outfits."]]) )
+   hook.rm( hk_info_ship )
+   hk_info_ship = nil
+   info_checkdone()
+end
+
+function info_weapons ()
+   info_msg( fmt.f(_([["At the #oWeapon Info#0, you can modify the current ship's weapon sets. There are three types of weapon sets:
+- #oWeapons - Switched#0: when activated define the weapons you should with the primary weapon key {keyprimary} and secondary weapon key {keysecondary}.
+- #oWeapons - Instant#0: immediately fires the weapon set weapons when the set hotkey is pressed. Enable this for a set by checking the #oEnable instant mode#0 checkbox.
+- #oAbilities - Toggled#0: toggles the state of the non-weapon outfits in the set.
+"]]), {keyprimary=tut.getKey("primary"), keysecondary=tut.getKey("secondary")} ) )
+   hook.rm( hk_info_weapons )
+   hk_info_weapons = nil
+   info_checkdone()
+end
+
+function info_cargo ()
+   info_msg( _([["Here, at the #oCargo Info#0, you can see the cargo you are carrying. This includes important information like legal status. Furthermore, you can #ojettison#0 cargo you want to get rid of. Jettisoning mission cargo will forfeit the mission."]]) )
+   hook.rm( hk_info_cargo )
+   hk_info_cargo = nil
+   info_checkdone()
+end
+
+function info_mission ()
+   info_msg( fmt.f(_([["The #oMission Info#0 shows you information of all currently accepted missions. Selecting each mission will center the map on mission markers if available. Clicking on systems here also allows you to set routes directly. Make sure this mission is selected and try setting a route to {destsys} is marked on your map."]]), {destsys=destsys:name()} ) )
+   hook.rm( hk_info_mission )
+   hk_info_mission = nil
+
+   hk_target_hyperspace = hook.custom( "target_hyperspace", "target_hyperspace" )
+   hk.timer( 0, clear_target_hyperspace ) -- Clear it right away if the player closes the window
+   info_checkdone()
+end
+
+function target_hyperspace ()
+   local tsys, jumps = player.autonavDest()
+   if tsys ~= destsys then
+      return
+   end
+
+   info_msg( _([["Good! Now we are all set to head to our target system. You can click on other tabs in the Info window to get more explanations. When you are done, close the info window and let us head to our goal!"]]) )
+
+   hook.rm( hk_target_hyperspace )
+   hk_target_hyperspace = nil
+end
+
+function clear_target_hyperspace ()
+   hook.rm( hk_target_hyperspace )
+   hk_target_hyperspace = nil
+   info_checkdone()
+end
+
+function info_standing ()
+   info_msg( _([["The #oStanding Info#0 informs you at your current standing with the different known factions in the universe. Not everyone is as friendly as me out there!"]]) )
+   hook.rm( hk_info_standing )
+   hk_info_standing = nil
+   info_checkdone()
+end
+
+function info_shiplog ()
+   info_msg( _([["The #oShiplog#0 is a good way to review missions and tasks you have completed. I sometimes forget exactly what I did and who I should check up on and it comes really in handy. You can also keep a diary and add custom entries to keep track of what you have done or are doing."]]) )
+   hook.rm( hk_info_shiplog )
+   hk_info_shiplog = nil
+   info_checkdone()
 end
