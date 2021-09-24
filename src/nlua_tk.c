@@ -49,6 +49,7 @@ static int cust_mouse( int type, int button, double x, double y, custom_function
 
 
 /* Toolkit methods. */
+static int tkL_query( lua_State *L );
 static int tkL_msg( lua_State *L );
 static int tkL_yesno( lua_State *L );
 static int tkL_input( lua_State *L );
@@ -62,6 +63,7 @@ static int tkL_customResize( lua_State *L );
 static int tkL_customSize( lua_State *L );
 static int tkL_customDone( lua_State *L );
 static const luaL_Reg tkL_methods[] = {
+   { "query", tkL_query },
    { "msg", tkL_msg },
    { "yesno", tkL_yesno },
    { "input", tkL_input },
@@ -112,6 +114,43 @@ int nlua_loadTk( nlua_env env )
  *
  *  @luamod tk
  */
+/**
+ * @brief Gets the position and dimensions of either a window or a widget.
+ *
+ *    @luatparam string wdwname Name of the window.
+ *    @luatparam[opt] string wgtname Name of the widget to get dimensions of. If not specified, the dimensions of the window are returned.
+ *    @luatreturn number X position of the window/widget.
+ *    @luatreturn number Y position of the window/widget.
+ *    @luatreturn number Width of the window/widget.
+ *    @luatreturn number Height of the window/widget.
+ * @luafunc query
+ */
+static int tkL_query( lua_State *L )
+{
+   const char *wdwname, *wgtname;
+   unsigned int wid;
+   int x, y, w, h;
+   wdwname = luaL_checkstring( L, 1 );
+   wgtname = luaL_optstring( L, 2, NULL );
+   wid = window_get( wdwname );
+   if (wid == 0)
+      return 0;
+   if (wgtname == NULL) {
+      window_posWindow( wid, &x, &y );
+      window_dimWindow( wid, &w, &h );
+   }
+   else {
+      window_posWidget( wid, wgtname, &x, &y );
+      window_dimWidget( wid, wgtname, &w, &h );
+   }
+   lua_pushinteger( L, x );
+   lua_pushinteger( L, y );
+   lua_pushinteger( L, w );
+   lua_pushinteger( L, h );
+   return 4;
+}
+
+
 /**
  * @brief Creates a window with an ok button, and optionally an image.
  *
