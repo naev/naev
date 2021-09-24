@@ -23,16 +23,7 @@ local neu = require "common.neutral"
 local lmisn = require "lmisn"
 
 function create ()
-   local function filter( sys )
-      return true
-   end
-   local candidates = lmisn.getSysAtDistance( system.cur(), 0, 5, lmisn.sysFilters.factionLandable("Independent") )
-
-   -- Get destination
-   if #candidates > 0 then
-      destsys = candidates[rnd.rnd(1,#candidates)]
-      destpnt = lmisn.getLandablePlanet( destsys, "Independent" )
-   end
+   destpnt, destsys = lmisn.getPlanetAtDistance( system.cur(), 0, 5, "Indpendent" )
 
    -- See if we got something
    if not destpnt then

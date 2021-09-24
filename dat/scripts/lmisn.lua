@@ -169,6 +169,16 @@ function lmisn.getSysAtDistance( sys, min, max, filter, data, hidden )
    return finalset
 end
 
+function lmisn.getPlanetAtDistance( sys, min, max, fct, samefct, hidden )
+   local candidates = lmisn.getSysAtDistance( sys, min, max, lmisn.sysFilters.factionLandable( fct ), nil, hidden )
+   if #candidates == 0 then
+      return nil, nil
+   end
+   local destsys = candidates[ rnd.rnd(1,#candidates) ]
+   local destpnt = lmisn.getLandablePlanet( destsys, fct, samefct )
+   return destpnt, destsys
+end
+
 --[[
 -- @brief Wrapper for player.misnActive that works on a table of missions.
 --
@@ -179,7 +189,7 @@ end
 --
 -- @luafunc anyMissionActive( names )
 --]]
-function anyMissionActive( names )
+function lmisn.anyMissionActive( names )
    for i, j in ipairs( names ) do
       if player.misnActive( j ) then
          return true
