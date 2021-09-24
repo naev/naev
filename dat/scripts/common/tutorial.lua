@@ -16,7 +16,7 @@ end
 -- Capsule function for enabling the keys passed to it in a table, plus some defaults.
 function tut.enableKeys(keys)
     naev.keyDisableAll()
-    for _, key in ipairs(keys) do
+    for i, key in ipairs(keys) do
         naev.keyEnable(key, true)
     end
     enableBasicKeys()
@@ -25,7 +25,7 @@ end
 -- Capsule function for enabling basic, important keys.
 function tut.enableBasicKeys()
     local alwaysEnable = { "speed", "menu", "screenshot", "console" }
-    for _, key in ipairs(alwaysEnable) do
+    for i, key in ipairs(alwaysEnable) do
         naev.keyEnable(key, true)
     end
 end
