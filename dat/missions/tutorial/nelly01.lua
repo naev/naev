@@ -70,8 +70,9 @@ function create ()
    if not misn.claim( retsys ) then
       misn.finish()
    end
-   -- Need commodity exchange
-   if retpnt:services().commodity == nil then
+   -- Need commodity exchange and mission computer
+   local rs = retpnt:services()
+   if rs.commodity == nil or rs.missions == nil then
       misn.finish()
    end
 
@@ -228,7 +229,9 @@ function land ()
       vn.func( function () -- Rewards
          player.pay( reward_amount )
       end )
-      nel(_([["Now time to get back to my ship. I hope it's repaired already. See you around!"]]))
+      nel(_([["Now time to get back to my ship. I hope it's repaired already. If you want to do more cargo missions to make some easy credits, I recommend you to look at the mission computer, which should be available on most planets like here. Sometimes you will also meet interesting characters at the spaceport bar who will offer you interesting missions."
+They beam you a grin.
+"Anyway, see you around!"]]))
       if gotore then
          nel(_([["Oh, and don't forget to sell the ore you got from the derelict at the commodity exchange!"]]))
       end
@@ -308,7 +311,7 @@ function talk_derelict ()
    local nel = vn.newCharacter( tutnel.vn_nelly() )
    vn.na(_([[After you enter the system, Nelly points something out on the radar.]]))
    -- TODO autoboard!
-   nel(fmt.f(_([["Oooh, look at that. A Koala derelict is nearby. There might be something interesting on it! We should go board it. Try to bring the ship to a stop on top of them and either #odouble-click#0 or select them and board them with {boardkey}."]]),{boardkey=tut.getKey("board")}))
+   nel(fmt.f(_([["Oooh, look at that. A Koala derelict is nearby. There might be something interesting on it! We should go board it. Try to bring the ship to a stop on top of them and either #odouble-click#0 or select them and board them with {boardkey}. You can toggle the overlay to see exactly where the ship is with {overlay}."]]),{boardkey=tut.getKey("board"), overlaykey=tut.get("overlay")}))
    vn.run()
 end
 
