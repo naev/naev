@@ -32,7 +32,7 @@ function cargo_selectPlanets(missdist, routepos)
                   and not (s == system.cur()
                      and ( vec2.dist( v:pos(), routepos ) < 2500 ) )
                   and v:canLand() and cargoValidDest( v ) then
-               planets[#planets + 1] = {v, s}
+               table.insert( planets, {v, s} )
             end
          end
          return true
@@ -141,7 +141,6 @@ function cargo_calculateRoute ()
       cargo = cargoes[rnd.rnd(1,#cargoes)]:nameRaw()
    end
 
-
    -- Return lots of stuff
    return destplanet, destsys, numjumps, traveldist, cargo, risk, tier
 end
@@ -156,20 +155,21 @@ function cargoGetTransit( timelimit, numjumps, traveldist )
    return arrivalt
 end
 
+local _hidden_fact = {
+   faction.get("FLF"),
+   faction.get("Pirate"),
+   faction.get("Marauder"),
+   faction.get("Raven Clan"),
+   faction.get("Dreamer Clan"),
+   faction.get("Wild Ones"),
+   faction.get("Black Lotus"),
+   faction.get("Proteron"),
+   faction.get("Thurion"),
+}
 function cargoValidDest( targetplanet )
    -- factions which cannot be delivered to by factions other than themselves
-   local hidden = {
-      faction.get("FLF"),
-      faction.get("Pirate"),
-      faction.get("Raven Clan"),
-      faction.get("Dreamer Clan"),
-      faction.get("Wild Ones"),
-      faction.get("Black Lotus"),
-      faction.get("Proteron"),
-      faction.get("Thurion"),
-   }
    local tfact = targetplanet:faction()
-   for i, f in ipairs(hidden) do
+   for i, f in ipairs(_hidden_fact) do
       if tfact == f and planet.cur():faction() ~= f then
          return false
       end
