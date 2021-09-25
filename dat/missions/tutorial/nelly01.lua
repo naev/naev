@@ -175,14 +175,33 @@ function land ()
    end
 
    local pcur = planet.cur()
-   if misn_state==1 and pcur == destsys then
+   if misn_state==1 and pcur == destpnt then
+      local wanthelp = true
+
       -- Delivered Cargo
       vn.clear()
       vn.scene()
       local nel = tutnel.vn_nelly()
-      nel(_([[You land on ]]))
-      -- TODO try get the player to buy the outfit
+      vn.na(fmt.f(_([[You land on {pntname} and the dockworkers offload your cargo. This delivery stuff is quite easy.]]),{pntname=destpnt:name()}))
+      nel(fmt.f(_([["Say, I heard this place sells #o{outfit}#0. If you want to be able to take down ships non-lethally, #oion damage#0 is your best bet. Here, I'll forward you {credits}. Do you need help buying and equipping the outfit?"]]),{}))
+      vn.menu{
+         {_("Get useful advice"), "help_yes"},
+         {_("Buy the outfit alone"), "help_no"},
+      }
+
+      vn.label("help_no")
+      nel(fmt.f(_([["OK! Taking the initiative I see. Go buy the {outfit} at the #oOutfits Tab#0 and make sure to equip it at the #oEquipment Tab#0 before taking off. Once you get that done, let's head back to {pntname} at {sysname}."]]),{outfit=outfit_tobuy:name(), pntname=retpnt:name(), sysname=retsys:name()}))
+      vn.func( function ()
+         wanthelp = false
+      end )
+      vn.done()
+
+      vn.label("help_yes")
+      nel(_([["OK! I'll guide you through it. For now, please go to the #oOutfits Tab#0 of the landing window."]]))
+
       vn.run()
+
+      player.pay( outfit_tobuy:price() )
 
       -- Get rid of cargo
       misn.cargoRm( cargo_id )
@@ -190,9 +209,11 @@ function land ()
       misn.osdActive(2)
 
       -- Hook the outfits
-      hk_land_outfits = hook.land( "outfits", "outfits" )
+      if wanthelp then
+         hk_land_outfits = hook.land( "outfits", "outfits" )
+      end
 
-   elseif misn_state==3 and pcur == retsys then
+   elseif misn_state==3 and pcur == retpnt then
       -- Finished mission
       vn.clear()
       vn.scene()
@@ -426,7 +447,7 @@ function equip ()
       return
    end
 
-   info_msg( fmt.f(_([["Great! Now you have the #o{outfit}#0 equipped. If your ship is set to automatically weapons, it should be assigned to a primary weapon. If not, you will have to assign the #o{outfit}#0 to a weapon set so you can use that. You can check by opening the #oInfo Window#0 with {infokey}. Check to make sure that is set up and let us go back to {pntname} in {sysname}."]]), {outfit=outfit_tobuy:name(), infokey=tut.getKey("info"), pntname=destpnt:name(), sysname=destsys:name()} ))
+   info_msg( fmt.f(_([["Great! Now you have the #o{outfit}#0 equipped. If your ship is set to automatically weapons, it should be assigned to a primary weapon. If not, you will have to assign the #o{outfit}#0 to a weapon set so you can use that. You can check by opening the #oInfo Window#0 with {infokey}. Check to make sure that is set up and let us go back to {pntname} in {sysname}."]]), {outfit=outfit_tobuy:name(), infokey=tut.getKey("info"), pntname=retpnt:name(), sysname=retsys:name()} ))
 
    hook.rm( hk_equip )
    hk_equip = nil
