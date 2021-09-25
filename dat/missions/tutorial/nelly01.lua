@@ -70,6 +70,10 @@ function create ()
    if not misn.claim( retsys ) then
       misn.finish()
    end
+   -- Need commodity exchange
+   if retpnt:services().commodity == nil then
+      misn.finish()
+   end
 
    -- Find destination system that sells ion cannons
    local pntfilter = function( p )
@@ -107,7 +111,7 @@ function accept ()
    local doaccept
    vn.clear()
    vn.scene()
-   local nel = tutnel.vn_nelly()
+   local nel = vn.newCharacter( tutnel.vn_nelly() )
 
    nel(fmt.f(_([[The lone individual lightens up when you near.
 "Say, you look like a pilot with a working ship. I'm in a bit of a mess. You see, I was supposed to deliver some {cargoname} to {pntname} in the {sysname} system, but my ship broke down and I don't think I'll be able to deliver it any time soon. Would you be willing to help me take the cargo there and come back? I'll pay you your fair share."]]),
@@ -181,7 +185,7 @@ function land ()
       -- Delivered Cargo
       vn.clear()
       vn.scene()
-      local nel = tutnel.vn_nelly()
+      local nel = vn.newCharacter( tutnel.vn_nelly() )
       vn.na(fmt.f(_([[You land on {pntname} and the dockworkers offload your cargo. This delivery stuff is quite easy.]]),{pntname=destpnt:name()}))
       nel(fmt.f(_([["Say, I heard this place sells #o{outfit}#0. If you want to be able to take down ships non-lethally, #oion damage#0 is your best bet. Here, I'll forward you {credits}. Do you need help buying and equipping the outfit?"]]),{}))
       vn.menu{
@@ -217,9 +221,20 @@ function land ()
       -- Finished mission
       vn.clear()
       vn.scene()
-      local nel = tutnel.vn_nelly()
+      local nel = vn.newCharacter( tutnel.vn_nelly() )
+      nel(_([["We made it! A job well done. Here let me pay you what I promised you.]]))
+      vn.sfxVictory()
+      vn.na(fmt.f(_("You have received #g{credits}#0."), {credits=fmt.credits(reward_amount)}))
+      vn.func( function () -- Rewards
+         player.pay( reward_amount )
+      end )
+      nel(_([["Now time to get back to my ship. I hope it's repaired already. See you around!"]]))
+      if gotore then
+         nel(_([["Oh, and don't forget to sell the ore you got from the derelict at the commodity exchange!"]]))
+      end
       vn.run()
 
+      misn.finish()
    end
 end
 
@@ -248,7 +263,7 @@ function enter ()
    if misn_state==0 then
       vn.clear()
       vn.scene()
-      local nel = tutnel.vn_nelly()
+      local nel = vn.newCharacter( tutnel.vn_nelly() )
       vn.na(fmt.f(_("After the dock workers load the cargo on your ship, you take off with Nelly aboard. On to {sysname}!"), {sysname:name()}))
       nel(_([[Just after taking off Nelly pipes up.
 "Say, are you familiar with the information window? It shows all the important things about your ship and current missions."]]))
@@ -275,15 +290,43 @@ function enter ()
    elseif misn_state==2 and system.cur() == retsys then
       hook.timer( 5e3, "talk_derelict" )
 
+      local pos = player.pos() * 0.6 -- Should be to the center of the system
+      derelict = pilot.add( "Koala", "Derelict", pos )
+      derelict:disable()
+      derelict:rename(_("Derelict"))
+      derelict:intrinsicSet( "ew_hide", -75 ) -- Much more visible
+      derelict:setHilight(true)
+      hook.pilot( derelict, "board", "board" )
+
+      misn_state = 3
    end
 end
 
 function talk_derelict ()
-   -- TODO Show and talk about disabled ship
+   vn.clear()
+   vn.scene()
+   local nel = vn.newCharacter( tutnel.vn_nelly() )
+   vn.na(_([[After you enter the system, Nelly points something out on the radar.]]))
+   -- TODO autoboard!
+   nel(fmt.f(_([["Oooh, look at that. A Koala derelict is nearby. There might be something interesting on it! We should go board it. Try to bring the ship to a stop on top of them and either #odouble-click#0 or select them and board them with {boardkey}."]]),{boardkey=tut.getKey("board")}))
+   vn.run()
+end
+
+function board ()
+   -- TODO maybe explain better boarding window when done
    vn.clear()
    vn.scene()
    local nel = tutnel.vn_nelly()
+   vn.na(_([[You enter the derelict ship which is eerily silent. A large hole in the engine room indicates that likely the core engine blew out, forcing the ship crew to abandon ship. Although you don't find anything of significant value, there is still lots of ore cargo available on the ship. You quickly load as much as you can onto your ship before you depart.]]))
+   vn.appear( nel )
+   nel(fmt.f(_([["Looks like your scored a lot of ore there. That should bring you a pretty penny at a planet with commodity exchange. Boarding derelicts is not always as easy as this and sometimes bad things can happen. We should head to {pntname} that should be nearby now."]]), {pntname=retpnt:name()}))
    vn.run()
+
+   local pp = player.pilot()
+   pp:cargoAdd( "Ore", pp:cargoFree() )
+   gotore = true
+
+   player.unboard()
 end
 
 function info_reminder ()
