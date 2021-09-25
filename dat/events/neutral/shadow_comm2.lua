@@ -16,7 +16,7 @@
 -- Comm Event for the Shadow missions
 --]]
 
-require ("proximity")
+require "proximity"
 
 function create ()
     hailie = hook.timer(20.0, "hailme")

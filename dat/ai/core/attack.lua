@@ -9,18 +9,18 @@
 --]]
 
 -- Utilities
-require("ai/core/attack/util")
-require("ai/core/attack/target")
+require 'ai.core.attack.util'
+require 'ai.core.attack.target'
 
 -- Attack profiles
-require("ai/core/attack/generic")
-require("ai/core/attack/fighter")
-require("ai/core/attack/bomber")
-require("ai/core/attack/corvette")
-require("ai/core/attack/capital")
---require("ai/core/attack/cruiser")
---require("ai/core/attack/carrier")
-require("ai/core/attack/drone")
+require 'ai.core.attack.generic'
+require 'ai.core.attack.fighter'
+require 'ai.core.attack.bomber'
+require 'ai.core.attack.corvette'
+require 'ai.core.attack.capital'
+--require 'ai.core.attack.cruiser'
+--require 'ai.core.attack.carrier'
+require 'ai.core.attack.drone'
 
 -- Set attack variables
 mem.atk_changetarget  = 2 -- Distance at which target changes

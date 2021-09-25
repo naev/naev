@@ -1,5 +1,5 @@
 local formation = require "scripts.formation"
-local lanes = require "ai.core.misc.lanes"
+local lanes = require 'ai.core.misc.lanes'
 
 --[[
 -- Variables to adjust AI

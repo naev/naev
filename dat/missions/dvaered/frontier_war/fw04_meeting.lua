@@ -31,7 +31,7 @@
    4) Land on Laars and get rewarded
 --]]
 
-require "missions/dvaered/frontier_war/fw_common"
+require "missions.dvaered.frontier_war.fw_common"
 require "proximity"
 local portrait = require "portrait"
 local fmt = require "format"
