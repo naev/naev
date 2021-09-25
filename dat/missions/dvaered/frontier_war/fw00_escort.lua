@@ -34,7 +34,7 @@
 --]]
 require "proximity"
 require "selectiveclear"
-require "missions/dvaered/frontier_war/fw_common"
+require "missions.dvaered.frontier_war.fw_common"
 local lmisn = require "lmisn"
 local fmt = require "format"
 

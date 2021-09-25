@@ -35,7 +35,7 @@
    7) Mace Pankration performed
 --]]
 
-require "missions/dvaered/frontier_war/fw_common"
+require "missions.dvaered.frontier_war.fw_common"
 require "proximity"
 local portrait = require "portrait"
 
