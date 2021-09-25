@@ -1371,12 +1371,18 @@ void gui_renderPlayer( double res, int overlay )
 {
    double x, y, r;
 
+   /* Based on gui_renderPilot but with larger fixed size (4x normal ship, but
+    * the shader is actually quite smaller so it ends up being just a bit
+    * larger than a capital ship.. */
+   r = (sqrt(24.) + 1.)/2. * (1. + RADAR_RES_REF / res );
    if (overlay) {
       x = player.p->solid->pos.x / res + map_overlay_center_x();
       y = player.p->solid->pos.y / res + map_overlay_center_y();
-   } else
+      r = MAX( 17., r );
+   } else {
       x = y = 0.;
-   r = MIN(SCREEN_W,SCREEN_H)*0.32 / res;
+      r = MAX( 11., r );
+   }
 
    glUseProgram(shaders.playermarker.program);
    gl_renderShader( x, y, r, r, player.p->solid->dir, &shaders.playermarker, &cRadar_player, 1 );
