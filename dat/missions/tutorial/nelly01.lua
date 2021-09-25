@@ -6,7 +6,17 @@
  </flags>
  <avail>
   <priority>1</priority>
-  <location>None</location>
+  <chance>100</chance>
+  <cond>require("common.pirate").systemPresence() &lt;= 0</cond>
+  <location>Bar</location>
+  <faction>Dvaered</faction>
+  <faction>Empire</faction>
+  <faction>Frontier</faction>
+  <faction>Goddard</faction>
+  <faction>Independent</faction>
+  <faction>Sirius</faction>
+  <faction>Soromid</faction>
+  <faction>Za'lek</faction>
  </avail>
 </mission>
 --]]
@@ -34,6 +44,7 @@
 local tutnel= require "common.tut_nelly.lua"
 local tut   = require "common.tutorial"
 local neu   = require "common.neutral"
+local pir   = require "common.pirate"
 local portrait = require 'portrait'
 local vn    = require 'vn'
 local fmt   = require "format"
@@ -62,9 +73,15 @@ function create ()
 
    -- Find destination system that sells ion cannons
    local pntfilter = function( p )
+      -- No pirates
+      if pir.systemPresence( p:system() ) > 0 then
+         return false
+      end
+      -- Sells Outfits
       if p:services().outfits == nil then
          return false
       end
+      -- Sells a particular outfit
       for k,o in ipairs(p:outfitsSold()) do
          if o == outfit_buy then
             return true

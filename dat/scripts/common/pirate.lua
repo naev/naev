@@ -80,6 +80,7 @@ end
    @brief Computes the total amount of pirate-related factions in a system.
 --]]
 function pir.systemPresence( sys )
+   sys = sys or system.cur()
    local total = 0
    local p = sys:presences()
    for k,v in ipairs(pir.factions) do
