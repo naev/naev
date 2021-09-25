@@ -247,7 +247,12 @@ end
 
 function info_reminder ()
    player.pilot():comm(fmt.f(_("Try opening the info menu with {infokey}."),{infokey=tut.getKey("info")}))
-   hk_info_timer = hook.timer( 15, "info_reminder" )
+   times_said = (times_said or 0) + 1
+   if times_said < 4 then
+      hk_info_timer = hook.timer( 15, "info_reminder" )
+   else
+      hk_info_timer = nil
+   end
 end
 
 function info_msg( msg )
