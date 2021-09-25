@@ -1,12 +1,12 @@
 -- Lazy loader for vn
-local _vn
+local vn
 local lazy = setmetatable( {}, {
    __index = function( self, key )
-      if not _vn then
-         _vn = require "vn.core"
-         self.__index = _vn
+      if not vn then
+         vn = require "vn.core"
+         self.__index = vn
       end
-      return _vn[key]
+      return vn[key]
    end
 } )
 return lazy
