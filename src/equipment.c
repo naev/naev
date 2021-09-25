@@ -180,6 +180,8 @@ void equipment_rightClickOutfits( unsigned int wid, const char* str )
       if (slots[minimal].outfit != NULL)
          equipment_swapSlot( equipment_wid, p, &slots[minimal] );
       equipment_swapSlot( equipment_wid, p, &slots[minimal] );
+
+      hooks_run( "equip" ); /* Equipped. */
       return;
    }
 
@@ -211,6 +213,8 @@ void equipment_rightClickOutfits( unsigned int wid, const char* str )
          /* Once to unequip and once to equip. */
          equipment_swapSlot( equipment_wid, p, &slots[minimal] );
          equipment_swapSlot( equipment_wid, p, &slots[minimal] );
+         hooks_run( "equip" ); /* Equipped. */
+         return;
       }
    }
 
@@ -242,6 +246,7 @@ void equipment_rightClickOutfits( unsigned int wid, const char* str )
       eq_wgt.outfit  = o;
       p              = eq_wgt.selected;
       equipment_swapSlot( equipment_wid, p, &slots[minimal] );
+      hooks_run( "equip" ); /* Equipped. */
    }
 }
 
@@ -1016,8 +1021,10 @@ static int equipment_mouseColumn( unsigned int wid, SDL_Event* event,
          if (event->button.button == SDL_BUTTON_LEFT)
             wgt->slot = selected + ret;
          else if ((event->button.button == SDL_BUTTON_RIGHT) &&
-               wgt->canmodify)
+               wgt->canmodify) {
             equipment_swapSlot( wid, p, &os[ret] );
+            hooks_run( "equip" ); /* Equipped. */
+         }
       }
       /* Viewing weapon slots. */
       else {
@@ -2163,6 +2170,8 @@ static void equipment_autoequipShip( unsigned int wid, const char* str )
       lua_pop(naevL,1);
       goto autoequip_cleanup;
    }
+
+   hooks_run( "equip" ); /* Equipped. */
 
    /* Clean up. */
 autoequip_cleanup:

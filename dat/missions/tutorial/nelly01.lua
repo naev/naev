@@ -62,7 +62,7 @@ misn_state = nil
 cargo_type  = "Food"
 cargo_q     = 5
 reward_amount = 40e3
-outfit_buy = outfit.get("Ion Cannon")
+outfit_tobuy = outfit.get("Ion Cannon")
 
 function create ()
    -- Save current system to return to
@@ -83,7 +83,7 @@ function create ()
       end
       -- Sells a particular outfit
       for k,o in ipairs(p:outfitsSold()) do
-         if o == outfit_buy then
+         if o == outfit_tobuy then
             return true
          end
       end
@@ -180,6 +180,7 @@ function land ()
       vn.clear()
       vn.scene()
       local nel = tutnel.vn_nelly()
+      nel(_([[You land on ]]))
       -- TODO try get the player to buy the outfit
       vn.run()
 
@@ -187,6 +188,9 @@ function land ()
       misn.cargoRm( cargo_id )
       misn_state = 2
       misn.osdActive(2)
+
+      -- Hook the outfits
+      hk_land_outfits = hook.land( "outfits", "outfits" )
 
    elseif misn_state==3 and pcur == retsys then
       -- Finished mission
@@ -202,6 +206,22 @@ function enter ()
    if hk_info_timer then
       hook.rm( hk_info_timer )
       hk_info_timer = nil
+   end
+   if hk_land_outfits then
+      hook.rm( hk_land_outfits )
+      hk_land_outfits = nil
+   end
+   if hk_outfit_buy then
+      hook.rm( hk_outfit_buy )
+      hk_outfit_buy = nil
+   end
+   if hk_land_equipment then
+      hook.rm( hk_land_equipment )
+      hk_land_equipment = nil
+   end
+   if hk_equip then
+      hook.rm( hk_equip )
+      hk_equip = nil
    end
 
    if misn_state==0 then
@@ -356,4 +376,58 @@ function info_shiplog ()
    hook.rm( hk_info_shiplog )
    hk_info_shiplog = nil
    info_checkdone()
+end
+
+function outfits ()
+   info_msg( fmt.f(_([["Here you can see all the outfits available for sale at this planet. Look for the #o{outfit}#0 and either #oright-click on it#0 or click on it and click the buy button to buy it."]]), {outfit=outfit_tobuy:name()} ) )
+
+   hk_outfit_buy = hook.outfit_buy( "outfit_buy" )
+
+   hook.rm( hk_land_outfits )
+   hk_land_outfits = nil
+end
+
+function outfit_buy( name, q )
+   local o = outfit.get( name )
+   local t = o:type()
+   if t=="Map" or t=="Local Map" or t=="License" or t=="GUI" or t=="Unknown" then
+      return
+   end
+   if o ~= outfit_tobuy then
+      info_msg( fmt.f(_([["You bought a #o{bought}#0 instead of #o{tobuy}#0! Don't worry, you can sell most outfits back for the price you bought them at. Please try to buy a #o{tobuy}#0. It should come in handy later."]]), {bought=o:name(), tobuy=outfit_tobuy:name()}))
+      return
+   end
+
+   info_msg( fmt.f(_([["Great! You bought the #o{bought}#0. Outfits don't get equipped right away. To be able to use it, please navigate to the #oEquipment Tab#0 of the landing window."]]), {bought=o:name()}))
+
+   hook.rm( hk_outfit_buy )
+   hk_outfit_buy = nil
+
+   hk_land_equipment = hook.land( "equipment", "equipment" )
+end
+
+function equipment ()
+   info_msg( fmt.f(_([["The #oEquipment Tab#0 allows to handle your ships and their equipment. You can have more than one ship and switch between them freely. Try to equip the #o{outfit}#0 in a weapon slot by first clicking on the outfit and then right clicking on the slot you want to equip it at. If you have free slots you can also right click on an outfit to have it directly be assigned to the smallest free slot it fits into. Try to equip the #o{outfit}#0 now."]]), {outfit=outfit_tobuy:name()}) )
+
+   hk_equip = hook.equip( "equip" )
+end
+
+function equip ()
+   local pp = player.pilot()
+   local hasoutfit = false
+   for k,o in ipairs(pp:outfits()) do
+      if o == outfit_tobuy then
+         hasoutfit = true
+         break
+      end
+   end
+
+   if not hasoutfit then
+      return
+   end
+
+   info_msg( fmt.f(_([["Great! Now you have the #o{outfit}#0 equipped. If your ship is set to automatically weapons, it should be assigned to a primary weapon. If not, you will have to assign the #o{outfit}#0 to a weapon set so you can use that. You can check by opening the #oInfo Window#0 with {infokey}. Check to make sure that is set up and let us go back to {pntname} in {sysname}."]]), {outfit=outfit_tobuy:name(), infokey=tut.getKey("info"), pntname=destpnt:name(), sysname=destsys:name()} ))
+
+   hook.rm( hk_equip )
+   hk_equip = nil
 end
