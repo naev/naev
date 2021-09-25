@@ -24,9 +24,10 @@ local function equipopt_load ()
 end
 
 local lazy = setmetatable( {}, {
-   __index = function( tbl, key )
+   __index = function( self, key )
       if not equipopt then
          equipopt_load ()
+         self.__index = equipopt
       end
       return equipopt[key]
    end
