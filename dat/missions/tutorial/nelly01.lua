@@ -41,7 +41,7 @@
    4. Find and board derelict on the way there
    5. Land on planet and mission over
 --]]
-local tutnel= require "common.tut_nelly.lua"
+local tutnel= require "common.tut_nelly"
 local tut   = require "common.tutorial"
 local neu   = require "common.neutral"
 local pir   = require "common.pirate"
