@@ -46,6 +46,7 @@ local tut   = require "common.tutorial"
 local neu   = require "common.neutral"
 local pir   = require "common.pirate"
 local vn    = require 'vn'
+local vntk  = require 'vntk'
 local fmt   = require "format"
 local lmisn = require "lmisn"
 
@@ -268,7 +269,7 @@ function enter ()
       vn.clear()
       vn.scene()
       local nel = vn.newCharacter( tutnel.vn_nelly() )
-      vn.na(fmt.f(_("After the dock workers load the cargo on your ship, you take off with Nelly aboard. On to {sysname}!"), {destname:name()}))
+      vn.na(fmt.f(_("After the dock workers load the cargo on your ship, you take off with Nelly aboard. On to {sysname}!"), {sysname=destsys:name()}))
       nel(_([[Just after taking off Nelly pipes up.
 "Say, are you familiar with the information window? It shows all the important things about your ship and current missions."]]))
       vn.menu{
