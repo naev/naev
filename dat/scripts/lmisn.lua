@@ -142,7 +142,7 @@ function lmisn.getSysAtDistance( sys, min, max, filter, data, hidden )
       local nopen = {}
       -- Get all the adjacent system of the current set
       for j,s in ipairs(open) do
-         adjsys = s:adjacentSystems( hidden ) -- Get them all
+         local adjsys = s:adjacentSystems( hidden ) -- Get them all
          for k,a in ipairs(adjsys) do
             -- Must not have been explored previously
             if close[ a:nameRaw() ] == nil then
