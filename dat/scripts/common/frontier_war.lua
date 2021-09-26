@@ -3,11 +3,11 @@
 --]]
 
 -- All the rewards:
-credits_00 = 100000
-credits_01 = 50000
-credits_02 = 200000
-credits_03 = 50000
-credits_04 = 150000
+credits_00 = 100e3
+credits_01 =  50e3
+credits_02 = 200e3
+credits_03 =  50e3
+credits_04 = 150e3
 
 pirate_price = 10000000
 
