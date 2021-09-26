@@ -365,7 +365,7 @@ function info ()
    hk_info_cargo     = hook.info( "info_cargo",    "cargo" )
    hk_info_mission   = hook.info( "info_mission",  "mission" )
    hk_info_standing  = hook.info( "info_standing", "standing" )
-   hk_info_shiplog   = hook.info( "shiplog",       "shiplog" )
+   hk_info_shiplog   = hook.info( "info_shiplog",  "shiplog" )
 end
 
 function info_checkdone ()
@@ -391,15 +391,14 @@ function info_weapons ()
    info_msg( fmt.f(_([["At the #oWeapon Info#0, you can modify the current ship's weapon sets. There are three types of weapon sets:
 - #oWeapons - Switched#0: when activated define the weapons you should with the primary weapon key {keyprimary} and secondary weapon key {keysecondary}.
 - #oWeapons - Instant#0: immediately fires the weapon set weapons when the set hotkey is pressed. Enable this for a set by checking the #oEnable instant mode#0 checkbox.
-- #oAbilities - Toggled#0: toggles the state of the non-weapon outfits in the set.
-"]]), {keyprimary=tut.getKey("primary"), keysecondary=tut.getKey("secondary")} ) )
+- #oAbilities - Toggled#0: toggles the state of the non-weapon outfits in the set."]]), {keyprimary=tut.getKey("primary"), keysecondary=tut.getKey("secondary")} ) )
    hook.rm( hk_info_weapons )
    hk_info_weapons = nil
    info_checkdone()
 end
 
 function info_cargo ()
-   info_msg( _([["Here, at the #oCargo Info#0, you can see the cargo you are carrying. This includes important information like legal status. Furthermore, you can #ojettison#0 cargo you want to get rid of. Jettisoning mission cargo will forfeit the mission."]]) )
+   info_msg( _([["Here, at the #oCargo Info#0, you can see the cargo you are carrying. This includes important information like legal status. Furthermore, you can #ojettison#0 cargo you want to get rid of. Be careful though: jettisoning mission cargo will forfeit the mission."]]) )
    hook.rm( hk_info_cargo )
    hk_info_cargo = nil
    info_checkdone()
@@ -411,7 +410,7 @@ function info_mission ()
    hk_info_mission = nil
 
    hk_target_hyperspace = hook.custom( "target_hyperspace", "target_hyperspace" )
-   hk.timer( 0, clear_target_hyperspace ) -- Clear it right away if the player closes the window
+   hook.timer( 0, "clear_target_hyperspace" ) -- Clear it right away if the player closes the window
    info_checkdone()
 end
 

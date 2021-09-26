@@ -398,7 +398,7 @@ static int hookL_info( lua_State *L )
       where = luaL_checkstring(L, 2);
       snprintf( buf, sizeof(buf), "info_%s", where );
       /* TODO validity checking? */
-      h = hookL_generic( L, where, 0., 1, 0 );
+      h = hookL_generic( L, buf, 0., 1, 0 );
    }
 
    lua_pushnumber( L, h );
