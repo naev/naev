@@ -1,11 +1,13 @@
 local vn = require "vn"
 local mt = require 'merge_tables'
+local portrait = require 'portrait' -- temporary for now
 
 local tutnel = {}
 
+local pnelly  = portrait.getFemale()
 tutnel.nelly = {
-   portrait = portrait.getFemale(),
-   image = portrait.getFullPath( portrait ),
+   portrait = pnelly,
+   image = portrait.getFullPath( pnelly ),
    name = _("Nelly"),
    color = nil,
 }
@@ -18,7 +20,7 @@ function tutnel.vn_nelly( params )
          }, params) )
 end
    
-function tutnel.log( text ) =
+function tutnel.log( text )
    shiplog.create( "tut_nelly", _("Nelly"), _("Neutral") )
    shiplog.append( "tut_nelly", text )
 end

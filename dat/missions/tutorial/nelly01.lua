@@ -45,7 +45,6 @@ local tutnel= require "common.tut_nelly"
 local tut   = require "common.tutorial"
 local neu   = require "common.neutral"
 local pir   = require "common.pirate"
-local portrait = require 'portrait'
 local vn    = require 'vn'
 local fmt   = require "format"
 local lmisn = require "lmisn"
@@ -137,7 +136,9 @@ function accept ()
    vn.func( function ()
       if player.pilot():cargoFree() < cargo_q then
          vn.jump("nofreespace")
+         return
       end
+      doaccept = true
    end )
    nel(_([["Great! My name is Nelly. Glad to make your acquaintance. I'll have the dock workers load up your ship and we can be off. This should be a piece of cake."
 They cock their head a bit at you.
@@ -166,7 +167,7 @@ They cock their head a bit at you.
 
    misn.osdCreate( _("Helping Nelly Out"), {
       fmt.f(_("Deliver cargo to {pntname} in {sysname}"), {sysname=destsys:name(), pntname=destpnt:name()} ),
-      fmt.f(_("Return to {pntname} in {sysname}"), {syname=retsys:name(), pntname=retpnt:name()} ),
+      fmt.f(_("Return to {pntname} in {sysname}"), {sysname=retsys:name(), pntname=retpnt:name()} ),
    } )
 
    hook.enter("enter")
@@ -267,7 +268,7 @@ function enter ()
       vn.clear()
       vn.scene()
       local nel = vn.newCharacter( tutnel.vn_nelly() )
-      vn.na(fmt.f(_("After the dock workers load the cargo on your ship, you take off with Nelly aboard. On to {sysname}!"), {sysname:name()}))
+      vn.na(fmt.f(_("After the dock workers load the cargo on your ship, you take off with Nelly aboard. On to {sysname}!"), {destname:name()}))
       nel(_([[Just after taking off Nelly pipes up.
 "Say, are you familiar with the information window? It shows all the important things about your ship and current missions."]]))
       vn.menu{
