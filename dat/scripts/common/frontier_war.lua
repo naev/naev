@@ -9,7 +9,7 @@ credits_02 = 200e3
 credits_03 =  50e3
 credits_04 = 150e3
 
-pirate_price = 10000000
+pirate_price = 10e6
 
 wlrd_planet = "Buritt"
 
@@ -48,7 +48,7 @@ portrait_tronk      = "dvaered/dv_military_m5.webp" -- Private Tronk: subordinat
 
 
 -- When an escort is hailed
-function escort_hailed(pilot)
+function escort_hailed( pilot )
    local c = tk.choice(instr_title, instr_text, in_free, in_follow, in_nevermind)
    if c == 1 then
       pilot:control(false)
