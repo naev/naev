@@ -34,7 +34,7 @@
    6) Pursuit: you may land after the target
 --]]
 local lmisn = require "lmisn"
-require "missions.dvaered.frontier_war.fw_common"
+require "common.frontier_war"
 require "selectiveclear"
 require "proximity"
 local fmt = require "format"

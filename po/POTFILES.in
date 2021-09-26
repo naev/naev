@@ -2330,7 +2330,6 @@ dat/missions/dvaered/frontier_war/fw02_escape.lua
 dat/missions/dvaered/frontier_war/fw03_sirius.lua
 dat/missions/dvaered/frontier_war/fw04_meeting.lua
 dat/missions/dvaered/frontier_war/fw05_triathlon.lua
-dat/missions/dvaered/frontier_war/fw_common.lua
 dat/missions/dvaered/gauntlet/gauntlet.lua
 dat/missions/dvaered/gauntlet/gui.lua
 dat/missions/dvaered/gauntlet/tables.lua
@@ -2458,6 +2457,7 @@ dat/missions/soromid/srm_rehab.lua
 dat/missions/trader/anxiousmerchant.lua
 dat/missions/trader/trader_escort.lua
 dat/missions/trader/trader_rehab.lua
+dat/missions/tutorial/nelly01.lua
 dat/missions/tutorial/tutorial.lua
 dat/missions/zalek/neburesearch/neburesearch_00.lua
 dat/missions/zalek/neburesearch/neburesearch_01.lua
@@ -2494,6 +2494,7 @@ dat/scripts/colour.lua
 dat/scripts/common/baron.lua
 dat/scripts/common/dvaered.lua
 dat/scripts/common/empire.lua
+dat/scripts/common/frontier_war.lua
 dat/scripts/common/gauntlet.lua
 dat/scripts/common/minerva.lua
 dat/scripts/common/neutral.lua
@@ -2504,6 +2505,7 @@ dat/scripts/common/shark.lua
 dat/scripts/common/sirius.lua
 dat/scripts/common/soromid.lua
 dat/scripts/common/taiomi.lua
+dat/scripts/common/tut_nelly.lua
 dat/scripts/common/tutorial.lua
 dat/scripts/common/zalek.lua
 dat/scripts/debug/debug.lua
@@ -2571,6 +2573,7 @@ dat/scripts/selectiveclear.lua
 dat/scripts/swapship.lua
 dat/scripts/vn.lua
 dat/scripts/vn/conf.lua
+dat/scripts/vn/core.lua
 dat/scripts/vn/main.lua
 dat/scripts/vn/transitions.lua
 dat/scripts/vntk.lua

@@ -36,7 +36,7 @@
 local lmisn = require "lmisn"
 require "proximity"
 require "selectiveclear"
-require "missions.dvaered.frontier_war.fw_common"
+require "common.frontier_war"
 local fmt = require "format"
 
 portrait_name = _("Major Tam")

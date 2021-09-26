@@ -15,7 +15,7 @@
 --Event for Frontier Invasion campaign. The player must repay general Klank
 --]]
 
-require "missions.dvaered.frontier_war.fw_common"
+require "common.frontier_war"
 local fmt = require "format"
 
 npc_name = { _("Major Tam"), _("Captain Leblanc"), _("Lieutenant Strafer") }

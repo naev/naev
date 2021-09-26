@@ -24,7 +24,7 @@
 -- TODO: at some point before, it should have been suggested that it's a bad idea to try to betray Klank
 -- TODO: see chance for this event
 
-require "missions.dvaered.frontier_war.fw_common"
+require "common.frontier_war"
 local fmt = require "format"
 
 yesno_title = _("You are needed for a special job")
