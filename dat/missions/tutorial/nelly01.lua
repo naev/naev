@@ -151,6 +151,7 @@ They cock their head a bit at you.
 
    vn.label("novice_yes")
    nel(_([["I knew it! You seem to have a nice fresh aura around you. Reminds me of back in the day when I was starting out. Starting out can be a bit tricky, so I hope you don't mind if I give you some advice on the road."]]))
+   vn.done()
 
    vn.label("novice_no")
    nel(_([["Weird. I could have sworn you had some sort of new pilot aura around you. Must have been my imagination. Let's get going!"]]))
@@ -165,6 +166,8 @@ They cock their head a bit at you.
    misn_state = 0
 
    cargo_id = misn.cargoAdd( cargo_type, cargo_q )
+
+   misn_marker = misn.markerAdd( destsys )
 
    misn.osdCreate( _("Helping Nelly Out"), {
       fmt.f(_("Deliver cargo to {pntname} in {sysname}"), {sysname=destsys:name(), pntname=destpnt:name()} ),
@@ -190,7 +193,7 @@ function land ()
       vn.scene()
       local nel = vn.newCharacter( tutnel.vn_nelly() )
       vn.na(fmt.f(_([[You land on {pntname} and the dockworkers offload your cargo. This delivery stuff is quite easy.]]),{pntname=destpnt:name()}))
-      nel(fmt.f(_([["Say, I heard this place sells #o{outfit}#0. If you want to be able to take down ships non-lethally, #oion damage#0 is your best bet. Here, I'll forward you {credits}. Do you need help buying and equipping the outfit?"]]),{}))
+      nel(fmt.f(_([["Say, I heard this place sells #o{outfit}#0. If you want to be able to take down ships non-lethally, #oion damage#0 is your best bet. Here, I'll forward you {credits}. Do you need help buying and equipping the outfit?"]]),{outfit=outfit_tobuy:name()}))
       vn.menu{
          {_("Get useful advice"), "help_yes"},
          {_("Buy the outfit alone"), "help_no"},
@@ -214,6 +217,8 @@ function land ()
       misn.cargoRm( cargo_id )
       misn_state = 2
       misn.osdActive(2)
+
+      misn.markerMove( misn_marker, retsys )
 
       -- Hook the outfits
       if wanthelp then
