@@ -32,7 +32,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2021-08-28 12:00-0400\n"
-"PO-Revision-Date: 2021-09-21 14:39+0000\n"
+"PO-Revision-Date: 2021-09-26 14:39+0000\n"
 "Last-Translator: OOTA, Masato <ooyooxei+gh@gmail.com>\n"
 "Language-Team: Japanese <https://hosted.weblate.org/projects/naev/naev/ja/>\n"
 "Language: ja\n"
@@ -3029,15 +3029,15 @@ msgstr ""
 
 #: dat/assets/draconis_alpha.xml:2
 msgid "Draconis Alpha"
-msgstr "ドラコニスアルファ"
+msgstr "ドラコニス・アルファ"
 
 #: dat/assets/draconis_beta.xml:2
 msgid "Draconis Beta"
-msgstr "ドラコニスベータ"
+msgstr "ドラコニス・ベータ"
 
 #: dat/assets/draconis_delta.xml:2
 msgid "Draconis Delta"
-msgstr "ドラコニスデルタ"
+msgstr "ドラコニス・デルタ"
 
 #: dat/assets/draconis_epsilon.xml:2
 msgid "Draconis Epsilon"
@@ -3063,11 +3063,11 @@ msgstr ""
 
 #: dat/assets/draconis_gamma.xml:2
 msgid "Draconis Gamma"
-msgstr "ドラコニスガンマ"
+msgstr "ドラコニス・ガンマ"
 
 #: dat/assets/draconis_omega.xml:2
 msgid "Draconis Omega"
-msgstr "ドラコニスオメガ"
+msgstr "ドラコニス・オメガ"
 
 #: dat/assets/draconis_omega.xml:30
 msgid ""
@@ -10452,7 +10452,7 @@ msgstr "ストレート・ロー II "
 
 #: dat/assets/strangelove_lab.xml:2
 msgid "Strangelove Lab"
-msgstr "ストレインジラブ研究所"
+msgstr "ストレンジラブ研究所"
 
 #: dat/assets/strangelove_lab.xml:27
 msgid ""
@@ -13191,7 +13191,7 @@ msgstr "ザーリオン"
 
 #: dat/faction.xml:195
 msgid "Collective"
-msgstr "共同体"
+msgstr "集合体"
 
 #.
 #.
@@ -13460,7 +13460,7 @@ msgstr "ドベーレッドの軍閥領袖"
 
 #: dat/faction.xml:568
 msgid "Strangelove"
-msgstr "ストレインジラブ"
+msgstr "ストレンジラブ"
 
 #: dat/outfits/accessory/air_freshener.xml:2
 msgid "Air Freshener"
@@ -13492,10 +13492,12 @@ msgid ""
 "effect with modern ships powerful filtration system, these days they are for "
 "cosmetic purposes only."
 msgstr ""
+"みたところ空気清浄機は、人類の船には古くから伝統的に装飾として使われてきたようだ。かつては香りをつけることもあったが、現代的な船の強力なろ過機構では効果が"
+"なくなるので、このごろでは美容的な目的だけしかない。"
 
 #: dat/outfits/accessory/dv_handbook.xml:2
 msgid "Handbook for Dvaered Good Manners"
-msgstr ""
+msgstr "ドベーレッドの上品な作法についての手引き"
 
 #: dat/outfits/accessory/dv_handbook.xml:11
 msgid ""
@@ -13507,10 +13509,13 @@ msgid ""
 "\"This book has allowed me to quickly work my way up through the highest "
 "ranks\" -- Colonel Urnus, Executive Office Manager at the High Command"
 msgstr ""
+"紳士が別の紳士の頭をトイレに置く獲物として使うのはどういうときか？　そしてそれをカップとして使ったほうがもっと適切なのはどういうときか？　"
+"犠牲者の家を焼いてもいいとき、それが絶対的な失策となるときは？　いまの時代にきわだった成功をおさめている軍閥領袖であるチェーンソー卿が、この困難な疑問やほ"
+"かの数多くの問題に、この必携の小冊子のなかで答えます。｢この本がとびぬけた階級まで出世させてくれたのです｣ ⸺最高司令部の事務局の幹部であるウラヌス大佐"
 
 #: dat/outfits/accessory/fuzzy_dice.xml:2
 msgid "Fuzzy Dice"
-msgstr ""
+msgstr "ふわふわさいころ"
 
 #: dat/outfits/accessory/fuzzy_dice.xml:11
 msgid ""
@@ -13519,14 +13524,16 @@ msgid ""
 "starship pilot Mireia, who was famous for recovering artefacts from the "
 "nebula before she disappeared mysteriously."
 msgstr ""
+"あなたの船の中に吊るしておける、ひと組のふわふわさいころだ。どうもこれは、あなたに幸運をもたらすと考えられているらしい。このとくべつなひと組は、星間船パイ"
+"ロットであるミレイアのものだと言われていた。ミレイアは謎めいた失踪をとげるまで、星雲から回収した人工物のことで有名だった。"
 
 #: dat/outfits/accessory/fuzzy_dice.xml:12
 msgid "#pImproves luck!#0"
-msgstr ""
+msgstr "#p運の向上！#0"
 
 #: dat/outfits/accessory/left_boot.xml:2
 msgid "Left Boot"
-msgstr ""
+msgstr "左のブーツ"
 
 #: dat/outfits/accessory/left_boot.xml:11
 msgid ""
@@ -13534,10 +13541,12 @@ msgid ""
 "and is full of confetti. You're not sure what to do with it, but it might "
 "liven up the ship."
 msgstr ""
+"高位にある帝国高官のブーツの左側だ。あなたにはあわないようだし、紙ふぶきでいっぱいになっている。あなたはこれをどうしたらいいのかわからなかったが、船の景気"
+"づけにはなるかもしれない。"
 
 #: dat/outfits/accessory/left_boot.xml:13
 msgid "#gSmells funky.#0"
-msgstr ""
+msgstr "#g嫌なにおいがする。#0"
 
 #: dat/outfits/accessory/love_letter.xml:2
 msgid "Love Letter"
@@ -13949,7 +13958,7 @@ msgstr ""
 #: dat/outfits/biocore_brain/ultralight_brain_stage_2.xml:5
 #: dat/outfits/biocore_brain/ultralight_brain_stage_x.xml:5
 msgid "Bioship Brain"
-msgstr "生きた船の脳"
+msgstr "生体船の脳"
 
 #: dat/outfits/biocore_brain/heavy_brain_stage_1.xml:10
 #: dat/outfits/biocore_brain/heavy_brain_stage_2.xml:10
@@ -14198,7 +14207,7 @@ msgstr ""
 #: dat/outfits/biocore_drive/ultralight_strong_gene_drive_stage_2.xml:5
 #: dat/outfits/biocore_drive/ultralight_strong_gene_drive_stage_x.xml:4
 msgid "Bioship Gene Drive"
-msgstr "生きた船の遺伝子駆動装置"
+msgstr "生体船の遺伝子駆動装置"
 
 #: dat/outfits/biocore_drive/heavy_fast_gene_drive_stage_1.xml:9
 #: dat/outfits/biocore_drive/heavy_fast_gene_drive_stage_2.xml:9
@@ -14579,7 +14588,7 @@ msgstr ""
 #: dat/outfits/biocore_shell/ultralight_shell_stage_2.xml:5
 #: dat/outfits/biocore_shell/ultralight_shell_stage_x.xml:4
 msgid "Bioship Shell"
-msgstr "生きた船の殻"
+msgstr "生体船の殻"
 
 #: dat/outfits/biocore_shell/heavy_shell_stage_1.xml:9
 #: dat/outfits/biocore_shell/heavy_shell_stage_2.xml:9
@@ -14759,7 +14768,7 @@ msgstr ""
 
 #: dat/outfits/core_engine/dummy_engine.xml:2
 msgid "Dummy Engine"
-msgstr ""
+msgstr "ダミーエンジン"
 
 #: dat/outfits/core_engine/dummy_engine.xml:4
 #: dat/outfits/core_engine/large/beat_up_large_engine.xml:4
@@ -14784,17 +14793,17 @@ msgstr ""
 #: dat/outfits/core_engine/small/unicorp_hawk_350_engine.xml:4
 #: dat/outfits/core_engine/small/zalek_test_engine.xml:4
 msgid "Core Systems (Engine)"
-msgstr ""
+msgstr "中核システム (エンジン)"
 
 #: dat/outfits/core_engine/dummy_engine.xml:9
 msgid ""
 "This is a dummy engine for use in missions only, which does nothing. DO NOT "
 "BUY."
-msgstr ""
+msgstr "これは任務で使うためだけの飾りのエンジンだ。なにもしない。買ってはならない。"
 
 #: dat/outfits/core_engine/large/beat_up_large_engine.xml:2
 msgid "Beat Up Large Engine"
-msgstr ""
+msgstr "おんぼろ大型エンジン"
 
 #: dat/outfits/core_engine/large/beat_up_large_engine.xml:9
 #: dat/outfits/core_engine/medium/beat_up_medium_engine.xml:9
@@ -14802,7 +14811,7 @@ msgstr ""
 msgid ""
 "Clogged, corroded and cracked in every way possible while still remaining in "
 "functional condition, this engine really belongs on the scrap heap."
-msgstr ""
+msgstr "どうやっても動きが悪く、腐食してひびが入っているが、それでも機能条件内である。このエンジンはほんとうに廃物の山の上がふさわしい。"
 
 #: dat/outfits/core_engine/large/krain_remige_engine.xml:2
 msgid "Krain Remige Engine"
@@ -14815,6 +14824,8 @@ msgid ""
 "performance exceeding most other cruiser engines in every respect, though "
 "its tuning renders it ill-suited to heavier vessels."
 msgstr ""
+"レミージュは、クレインインダストリーズが同社で最高の巡洋艦であるケストレルのためだけに開発した。ケストレルが必要とする性能に最適化したレミージュは、あらゆ"
+"る面でほかのほとんどの巡洋艦用エンジンをこえた性能を実現している。もっとも、その調整によりさらに重い船には不向きなものになってしまった。"
 
 #: dat/outfits/core_engine/large/melendez_mammoth_xl_engine.xml:2
 msgid "Melendez Mammoth XL Engine"
@@ -14827,6 +14838,8 @@ msgid ""
 "the galaxy, whether in the form of bulk freight or as the primary engine of "
 "a fully-equipped battlecruiser."
 msgstr ""
+"マンモス XL エンジンは、メレンデズが製造しているとくべつきわだって大きなエンジンだ。銀河じゅうに大きな質量を移動させることになったときには、競争相手が"
+"ほとんどまったく存在しない。そのときは、ばら積み貨物船の形をとるか、完全装備の巡洋戦艦の主力エンジンとして使うことになる。"
 
 #: dat/outfits/core_engine/large/nexus_bolt_3500_engine.xml:2
 msgid "Nexus Bolt 3500 Engine"
@@ -14838,6 +14851,8 @@ msgid ""
 "Like most Nexus engines, it doesn't excel in speed, but its low power "
 "consumption makes it an attractive option for some pilots."
 msgstr ""
+"ボルト 3500 は使われるのがいくぶん珍しい、巡洋艦向けに設計されたエンジンだ。たいていのネクサス製エンジンと同様に、速度で勝ることはない。しかし低消費"
+"電力なため、なかには魅力的な選択肢だと思うパイロットもいる。"
 
 #: dat/outfits/core_engine/large/tricon_typhoon_engine.xml:2
 msgid "Tricon Typhoon Engine"
@@ -14850,6 +14865,8 @@ msgid ""
 "of many captains, though its high power consumption limits it to ships with "
 "powerful reactors."
 msgstr ""
+"タイフーンエンジンの開発は、トライコンにとっては誇りある計画といったものだった。他を圧する操縦性と速度をもつ巡洋艦を与えてくれるので、これは多くの船長から"
+"とくに好まれている。それでも消費電力が大きいので、使えるのは強力な反応炉をもつ船に限定された。"
 
 #: dat/outfits/core_engine/large/tricon_typhoon_ii_engine.xml:2
 msgid "Tricon Typhoon II Engine"
@@ -14862,6 +14879,8 @@ msgid ""
 "markedly higher than anything in its class, but most captains are willing to "
 "make the trade for superior manoeuvrability"
 msgstr ""
+"生産中の最大のトライコンエンジンであるタイフーン II は、主力艦のエンジンとしては驚くべき高性能を誇っている。消費電力はこの種別のエンジンのどれよりもあ"
+"きらかに大きいが、ほとんどの船長はすぐれた機動性の代償としてそれを受けいれている。"
 
 #: dat/outfits/core_engine/large/unicorp_eagle_7000_engine.xml:2
 msgid "Unicorp Eagle 7000 Engine"
@@ -14875,10 +14894,13 @@ msgid ""
 "and its efficiency makes it an attractive option for heavy cruisers that "
 "need as much battery power for their weapons as possible."
 msgstr ""
+"イーグル 7000 は、ユニコープでは最大・最高能力のエンジンだ。もっとも、おそらくは最高の型というわけではない。これは比較的低価格であるため、収支がきび"
+"しく、すぐれた性能をあまり必要としていない船長には魅力的だ。そしてその効率は、武器のためにバッテリーの電力を可能なかぎり多く必要とする重巡洋艦にとっても魅"
+"力ある選択肢となっている。"
 
 #: dat/outfits/core_engine/medium/beat_up_medium_engine.xml:2
 msgid "Beat Up Medium Engine"
-msgstr ""
+msgstr "おんぼろ中型エンジン"
 
 #: dat/outfits/core_engine/medium/krain_patagium_engine.xml:2
 msgid "Krain Patagium Engine"
@@ -14891,6 +14913,8 @@ msgid ""
 "terms of maximum speed and manouverability, the engine is not adequate for "
 "most other destroyers due to their higher mass."
 msgstr ""
+"パテイジアムはクレインインダストリーズが設計した駆逐艦むけエンジンで、スターブリッジに使われている。最大速度と機動力の点ではほかの駆逐艦用エンジンの性能を"
+"こえているが、ほとんどの駆逐艦では質量が大きすぎてこのエンジンは適切ではない。"
 
 #: dat/outfits/core_engine/medium/melendez_buffalo_xl_engine.xml:2
 msgid "Melendez Buffalo XL Engine"
@@ -14903,6 +14927,8 @@ msgid ""
 "in its size class, and more than a few combat vessels rely on it to move "
 "them and their arsenals into battle."
 msgstr ""
+"バッファロー XL は、中くらいの大きさの貨物船、とくに運ぶ積み荷が多いときには主要なものとなっている。かなりな出力のため、この種の大きさのなかでは競争相"
+"手がほとんどいない。すこしとはいえない数の軍用船が、船と兵器類を戦いへ持ちこむときに、このエンジンを当てにしている。"
 
 #: dat/outfits/core_engine/medium/nexus_arrow_700_engine.xml:2
 msgid "Nexus Arrow 700 Engine"
@@ -14914,6 +14940,7 @@ msgid ""
 "giving captains decent manouverability without leeching too much off of the "
 "ship's reactors."
 msgstr ""
+"アロー 700 は、まともな価格のまともなコルベット用エンジンで、船の反応炉をあまり食いものにすることなく、きちんとした機動性を船長たちに与えてくれる。"
 
 #: dat/outfits/core_engine/medium/tricon_cyclone_engine.xml:2
 msgid "Tricon Cyclone Engine"
@@ -14925,6 +14952,8 @@ msgid ""
 "engines with superb performance. Many large navies and wealthier mercenaries "
 "employ the Cyclone in their corvettes."
 msgstr ""
+"トライコンのサイクロンエンジンは、他を圧する性能をもつ高級エンジン製造業者としての会社の評判を再確認するものだ。多くの大海軍や裕福な傭兵が、自分たちのコル"
+"ベットにサイクロンを採用している。"
 
 #: dat/outfits/core_engine/medium/tricon_cyclone_ii_engine.xml:2
 msgid "Tricon Cyclone II Engine"
@@ -14937,6 +14966,8 @@ msgid ""
 "than doubling the engine's mass capacity. Its high power consumption is "
 "typically gladly written off given its exemplary performance."
 msgstr ""
+"駆逐艦や、時間に重点を置いた貨物船の船長に好まれるエンジンだ。サイクロン II は、もともとのサイクロンの性能をほとんど維持しつつ、エンジンの質量制限を "
+"2 倍近くにした。消費電力の大きさは、賞賛に値する性能のおかげで一般的にはこころよく帳消しとされる。"
 
 #: dat/outfits/core_engine/medium/unicorp_falcon_1300_engine.xml:2
 msgid "Unicorp Falcon 1300 Engine"
@@ -14949,10 +14980,12 @@ msgid ""
 "Destroyer pilots who prefer a more efficient engine over the fastest engine "
 "available."
 msgstr ""
+"ファルコン 1300 は、低出力で中の上に分類される標準的なエンジンだ。ふつうはもっとよいものを買う余裕のない民間貨物船のパイロットが使っている。それにも"
+"ちろん、入手可能ないちばん速いエンジンより、効率のよいエンジンを好む駆逐艦のパイロットもだ。"
 
 #: dat/outfits/core_engine/small/beat_up_small_engine.xml:2
 msgid "Beat Up Small Engine"
-msgstr "ビームアップ小型エンジン"
+msgstr "おんぼろ小型エンジン"
 
 #: dat/outfits/core_engine/small/melendez_ox_xl_engine.xml:2
 msgid "Melendez Ox XL Engine"
@@ -14964,6 +14997,8 @@ msgid ""
 "excels at enabling merchants to haul moderate amounts of cargo from system "
 "to system with minimal refuelling stops."
 msgstr ""
+"小さな船でも利用できるとくに強力なエンジンのなかでも、オクス XL "
+"は貿易商が適度な量の貨物を星系から星系へと運搬するとき、燃料補給のための寄港を最小限にできることで優れている。"
 
 #: dat/outfits/core_engine/small/nexus_dart_150_engine.xml:2
 msgid "Nexus Dart 150 Engine"
@@ -15015,7 +15050,7 @@ msgstr ""
 
 #: dat/outfits/core_engine/small/zalek_test_engine.xml:2
 msgid "Za'lek Test Engine"
-msgstr ""
+msgstr "ザレク・試験エンジン"
 
 #: dat/outfits/core_engine/small/zalek_test_engine.xml:10
 msgid ""
@@ -15265,7 +15300,7 @@ msgstr ""
 
 #: dat/outfits/core_system/dummy_systems.xml:2
 msgid "Dummy Systems"
-msgstr ""
+msgstr "ダミーシステム"
 
 #: dat/outfits/core_system/dummy_systems.xml:4
 #: dat/outfits/core_system/large/milspec_orion_8601_core_system.xml:4
@@ -15290,7 +15325,7 @@ msgstr ""
 #: dat/outfits/core_system/small/unicorp_pt16_core_system.xml:4
 #: dat/outfits/core_system/small/unicorp_pt68_core_system.xml:4
 msgid "Core Systems (System)"
-msgstr ""
+msgstr "中核システム (システム)"
 
 #: dat/outfits/core_system/dummy_systems.xml:9
 msgid ""
@@ -15350,7 +15385,7 @@ msgstr ""
 
 #: dat/outfits/core_system/large/previous_generation_large_systems.xml:2
 msgid "Previous Generation Large Systems"
-msgstr ""
+msgstr "前世代の大型システム"
 
 #: dat/outfits/core_system/large/previous_generation_large_systems.xml:9
 #: dat/outfits/core_system/medium/previous_generation_medium_systems.xml:9
@@ -15433,7 +15468,7 @@ msgstr ""
 
 #: dat/outfits/core_system/medium/previous_generation_medium_systems.xml:2
 msgid "Previous Generation Medium Systems"
-msgstr ""
+msgstr "前世代の中型システム"
 
 #: dat/outfits/core_system/medium/unicorp_pt200_core_system.xml:2
 msgid "Unicorp PT-200 Core System"
@@ -15508,7 +15543,7 @@ msgstr ""
 
 #: dat/outfits/core_system/small/previous_generation_small_systems.xml:2
 msgid "Previous Generation Small Systems"
-msgstr ""
+msgstr "前世代の小型システム"
 
 #: dat/outfits/core_system/small/unicorp_pt16_core_system.xml:2
 msgid "Unicorp PT-16 Core System"
@@ -15532,7 +15567,7 @@ msgstr ""
 
 #: dat/outfits/fighter_bays/drone_fighter_bay.xml:2
 msgid "Drone Fighter Bay"
-msgstr ""
+msgstr "ドローン戦闘機格納庫"
 
 #: dat/outfits/fighter_bays/drone_fighter_bay.xml:11
 msgid ""
@@ -15545,7 +15580,7 @@ msgstr ""
 
 #: dat/outfits/fighter_bays/empire_lancelot_fighter_bay.xml:2
 msgid "Empire Lancelot Fighter Bay"
-msgstr ""
+msgstr "帝国ランスロット戦闘機格納庫"
 
 #: dat/outfits/fighter_bays/empire_lancelot_fighter_bay.xml:11
 msgid ""
@@ -15556,7 +15591,7 @@ msgstr ""
 
 #: dat/outfits/fighter_bays/fidelity_fighter_bay.xml:2
 msgid "Fidelity Fighter Bay"
-msgstr ""
+msgstr "フィデリティー戦闘機格納庫"
 
 #: dat/outfits/fighter_bays/fidelity_fighter_bay.xml:11
 msgid ""
@@ -15567,7 +15602,7 @@ msgstr ""
 
 #: dat/outfits/fighter_bays/hyena_fighter_bay.xml:2
 msgid "Hyena Fighter Bay"
-msgstr ""
+msgstr "ハイエナ戦闘機格納庫"
 
 #: dat/outfits/fighter_bays/hyena_fighter_bay.xml:10
 msgid ""
@@ -15578,7 +15613,7 @@ msgstr ""
 
 #: dat/outfits/fighter_bays/hyena_fighter_dock.xml:2
 msgid "Hyena Fighter Dock"
-msgstr ""
+msgstr "ハイエナ戦闘機修理施設"
 
 #: dat/outfits/fighter_bays/hyena_fighter_dock.xml:10
 msgid ""
@@ -15589,7 +15624,7 @@ msgstr ""
 
 #: dat/outfits/fighter_bays/lancelot_fighter_bay.xml:2
 msgid "Lancelot Fighter Bay"
-msgstr ""
+msgstr "ランスロット戦闘機格納庫"
 
 #: dat/outfits/fighter_bays/lancelot_fighter_bay.xml:10
 msgid ""
@@ -15600,7 +15635,7 @@ msgstr ""
 
 #: dat/outfits/fighter_bays/proteron_derivative_fighter_bay.xml:2
 msgid "Proteron Derivative Fighter Bay"
-msgstr ""
+msgstr "プロテロン・デリバティブ戦闘機格納庫"
 
 #: dat/outfits/fighter_bays/proteron_derivative_fighter_bay.xml:11
 #: dat/outfits/fighter_bays/soromid_brigand_fighter_bay.xml:11
@@ -15612,11 +15647,11 @@ msgstr ""
 
 #: dat/outfits/fighter_bays/soromid_brigand_fighter_bay.xml:2
 msgid "Soromid Brigand Fighter Bay"
-msgstr ""
+msgstr "ソロミド・ブリガンド戦闘機格納庫"
 
 #: dat/outfits/fighter_bays/thurion_perspicacity_fighter_bay.xml:2
 msgid "Thurion Perspicacity Fighter Bay"
-msgstr ""
+msgstr "ザーリオン・パースピカシティー戦闘機格納庫"
 
 #: dat/outfits/fighter_bays/thurion_perspicacity_fighter_bay.xml:11
 msgid ""
@@ -15627,7 +15662,7 @@ msgstr ""
 
 #: dat/outfits/fighter_bays/zalek_bomber_drone_fighter_bay.xml:2
 msgid "Za'lek Bomber Drone Fighter Bay"
-msgstr ""
+msgstr "ザレク・爆撃ドローン戦闘機格納庫"
 
 #: dat/outfits/fighter_bays/zalek_bomber_drone_fighter_bay.xml:12
 msgid ""
@@ -15638,7 +15673,7 @@ msgstr ""
 
 #: dat/outfits/fighter_bays/zalek_bomber_drone_fighter_dock.xml:2
 msgid "Za'lek Bomber Drone Fighter Dock"
-msgstr ""
+msgstr "ザレク・爆撃ドローン戦闘機修理施設"
 
 #: dat/outfits/fighter_bays/zalek_bomber_drone_fighter_dock.xml:11
 msgid ""
@@ -15651,7 +15686,7 @@ msgstr ""
 
 #: dat/outfits/fighter_bays/zalek_heavy_drone_fighter_bay.xml:2
 msgid "Za'lek Heavy Drone Fighter Bay"
-msgstr ""
+msgstr "ザレク・重ドローン戦闘機格納庫"
 
 #: dat/outfits/fighter_bays/zalek_heavy_drone_fighter_bay.xml:11
 msgid ""
@@ -15662,7 +15697,7 @@ msgstr ""
 
 #: dat/outfits/fighter_bays/zalek_heavy_drone_fighter_dock.xml:2
 msgid "Za'lek Heavy Drone Fighter Dock"
-msgstr ""
+msgstr "ザレク・重ドローン戦闘機修理施設"
 
 #: dat/outfits/fighter_bays/zalek_heavy_drone_fighter_dock.xml:11
 msgid ""
@@ -15674,7 +15709,7 @@ msgstr ""
 
 #: dat/outfits/fighter_bays/zalek_light_drone_fighter_bay.xml:2
 msgid "Za'lek Light Drone Fighter Bay"
-msgstr ""
+msgstr "ザレク・軽ドローン戦闘機格納庫"
 
 #: dat/outfits/fighter_bays/zalek_light_drone_fighter_bay.xml:11
 msgid ""
@@ -15684,7 +15719,7 @@ msgstr ""
 
 #: dat/outfits/fighter_bays/zalek_light_drone_fighter_dock.xml:2
 msgid "Za'lek Light Drone Fighter Dock"
-msgstr ""
+msgstr "ザレク・軽ドローン戦闘機修理施設"
 
 #: dat/outfits/fighter_bays/zalek_light_drone_fighter_dock.xml:11
 msgid ""
@@ -15695,7 +15730,7 @@ msgstr ""
 
 #: dat/outfits/fighters/drone_fighter.xml:2
 msgid "Drone Fighter"
-msgstr ""
+msgstr "ドローン戦闘機"
 
 #: dat/outfits/fighters/drone_fighter.xml:8
 msgid ""
@@ -15706,7 +15741,7 @@ msgstr ""
 
 #: dat/outfits/fighters/empire_lancelot_fighter.xml:2
 msgid "Empire Lancelot Fighter"
-msgstr ""
+msgstr "帝国ランスロット戦闘機"
 
 #: dat/outfits/fighters/empire_lancelot_fighter.xml:8
 msgid ""
@@ -15717,7 +15752,7 @@ msgstr ""
 
 #: dat/outfits/fighters/fidelity_fighter.xml:2
 msgid "Fidelity Fighter"
-msgstr ""
+msgstr "フィデリティー戦闘機"
 
 #: dat/outfits/fighters/fidelity_fighter.xml:8
 msgid ""
@@ -15727,7 +15762,7 @@ msgstr ""
 
 #: dat/outfits/fighters/hyena_fighter.xml:2
 msgid "Hyena Fighter"
-msgstr ""
+msgstr "ハイエナ戦闘機"
 
 #: dat/outfits/fighters/hyena_fighter.xml:8
 msgid "This is a Hyena class fighter adapted for usage in fighter bays."
@@ -15735,7 +15770,7 @@ msgstr ""
 
 #: dat/outfits/fighters/lancelot_fighter.xml:2
 msgid "Lancelot Fighter"
-msgstr ""
+msgstr "ランスロット戦闘機"
 
 #: dat/outfits/fighters/lancelot_fighter.xml:8
 msgid ""
@@ -15746,7 +15781,7 @@ msgstr ""
 
 #: dat/outfits/fighters/proteron_derivative_fighter.xml:2
 msgid "Proteron Derivative Fighter"
-msgstr ""
+msgstr "プロテロン・デリバティブ戦闘機"
 
 #: dat/outfits/fighters/proteron_derivative_fighter.xml:8
 msgid ""
@@ -15756,7 +15791,7 @@ msgstr ""
 
 #: dat/outfits/fighters/soromid_brigand_fighter.xml:2
 msgid "Soromid Brigand Fighter"
-msgstr ""
+msgstr "ソロミド・ブリガンド戦闘機"
 
 #: dat/outfits/fighters/soromid_brigand_fighter.xml:8
 msgid ""
@@ -15766,7 +15801,7 @@ msgstr ""
 
 #: dat/outfits/fighters/thurion_perspicacity_fighter.xml:2
 msgid "Thurion Perspicacity Fighter"
-msgstr ""
+msgstr "ザーリオン・パースピカシティー戦闘機"
 
 #: dat/outfits/fighters/thurion_perspicacity_fighter.xml:8
 msgid ""
@@ -15776,7 +15811,7 @@ msgstr ""
 
 #: dat/outfits/fighters/zalek_bomber_drone_fighter.xml:2
 msgid "Za'lek Bomber Drone Fighter"
-msgstr ""
+msgstr "ザレク・爆撃ドローン戦闘機"
 
 #: dat/outfits/fighters/zalek_bomber_drone_fighter.xml:8
 msgid ""
@@ -15786,7 +15821,7 @@ msgstr ""
 
 #: dat/outfits/fighters/zalek_heavy_drone_fighter.xml:2
 msgid "Za'lek Heavy Drone Fighter"
-msgstr ""
+msgstr "ザレク・重ドローン戦闘機"
 
 #: dat/outfits/fighters/zalek_heavy_drone_fighter.xml:8
 msgid ""
@@ -15797,7 +15832,7 @@ msgstr ""
 
 #: dat/outfits/fighters/zalek_light_drone_fighter.xml:2
 msgid "Za'lek Light Drone Fighter"
-msgstr ""
+msgstr "ザレク・軽ドローン戦闘機"
 
 #: dat/outfits/fighters/zalek_light_drone_fighter.xml:8
 msgid ""
@@ -15807,7 +15842,7 @@ msgstr ""
 
 #: dat/outfits/launchers/convulsion_launcher.xml:2
 msgid "Convulsion Launcher"
-msgstr ""
+msgstr "コンバルション発射機"
 
 #: dat/outfits/launchers/convulsion_launcher.xml:10
 #: dat/outfits/rockets/convulsion_missile.xml:6
@@ -15819,7 +15854,7 @@ msgstr ""
 
 #: dat/outfits/launchers/electron_burst_cannon.xml:2
 msgid "Electron Burst Cannon"
-msgstr ""
+msgstr "電子バーストキャノン"
 
 #: dat/outfits/launchers/electron_burst_cannon.xml:10
 msgid ""
@@ -15832,7 +15867,7 @@ msgstr ""
 
 #: dat/outfits/launchers/emp_grenade_launcher.xml:2
 msgid "EMP Grenade Launcher"
-msgstr ""
+msgstr "電磁バルス放射榴弾発射機"
 
 #: dat/outfits/launchers/emp_grenade_launcher.xml:9
 msgid ""
@@ -15845,7 +15880,7 @@ msgstr ""
 
 #: dat/outfits/launchers/enygma_systems_huntsman_launcher.xml:2
 msgid "Enygma Systems Huntsman Launcher"
-msgstr ""
+msgstr "エニグマシステム・ハンツマン発射機"
 
 #: dat/outfits/launchers/enygma_systems_huntsman_launcher.xml:10
 msgid ""
@@ -15857,7 +15892,7 @@ msgstr ""
 
 #: dat/outfits/launchers/enygma_systems_spearhead_launcher.xml:2
 msgid "Enygma Systems Spearhead Launcher"
-msgstr ""
+msgstr "エニグマシステム・砲塔型スピアヘッド発射機"
 
 #: dat/outfits/launchers/enygma_systems_spearhead_launcher.xml:9
 #: dat/outfits/rockets/spearhead_missile.xml:7
@@ -15872,7 +15907,7 @@ msgstr ""
 
 #: dat/outfits/launchers/enygma_systems_turreted_fury_launcher.xml:2
 msgid "Enygma Systems Turreted Fury Launcher"
-msgstr ""
+msgstr "エニグマシステム・砲塔型フューリー発射機"
 
 #: dat/outfits/launchers/enygma_systems_turreted_fury_launcher.xml:9
 msgid ""
@@ -15883,7 +15918,7 @@ msgstr ""
 
 #: dat/outfits/launchers/enygma_systems_turreted_headhunter_launcher.xml:2
 msgid "Enygma Systems Turreted Headhunter Launcher"
-msgstr ""
+msgstr "エニグマシステム・砲塔型ヘッドハンター発射機"
 
 #: dat/outfits/launchers/enygma_systems_turreted_headhunter_launcher.xml:9
 msgid ""
@@ -15895,7 +15930,7 @@ msgstr ""
 
 #: dat/outfits/launchers/shatterer_launcher.xml:2
 msgid "Shatterer Launcher"
-msgstr ""
+msgstr "シャターラー発射機"
 
 #: dat/outfits/launchers/shatterer_launcher.xml:10
 msgid ""
@@ -16006,7 +16041,7 @@ msgstr ""
 
 #: dat/outfits/launchers/turreted_convulsion_launcher.xml:2
 msgid "Turreted Convulsion Launcher"
-msgstr ""
+msgstr "砲塔型コンバルション発射機"
 
 #: dat/outfits/launchers/turreted_convulsion_launcher.xml:10
 msgid ""
@@ -16107,7 +16142,7 @@ msgstr ""
 
 #: dat/outfits/launchers/zalek_hunter_launcher.xml:2
 msgid "Za'lek Hunter Launcher"
-msgstr ""
+msgstr "ザレク・ハンター発射機"
 
 #: dat/outfits/launchers/zalek_hunter_launcher.xml:10
 msgid ""
@@ -16122,7 +16157,7 @@ msgstr ""
 
 #: dat/outfits/launchers/zalek_reaper_launcher.xml:2
 msgid "Za'lek Reaper Launcher"
-msgstr ""
+msgstr "ザレク・リーパー発射機"
 
 #: dat/outfits/launchers/zalek_reaper_launcher.xml:10
 msgid ""
@@ -16137,7 +16172,7 @@ msgstr ""
 
 #: dat/outfits/maps/localmap.xml:2
 msgid "Local System Map"
-msgstr ""
+msgstr "系内地図"
 
 #: dat/outfits/maps/localmap.xml:6
 msgid "This map contains information about the local system."
@@ -16145,7 +16180,7 @@ msgstr ""
 
 #: dat/outfits/maps/map_collective_space.xml:2
 msgid "Map: Collective Space"
-msgstr ""
+msgstr "地図 : 集合体宙域"
 
 #: dat/outfits/maps/map_collective_space.xml:7
 msgid ""
@@ -16156,7 +16191,7 @@ msgstr ""
 
 #: dat/outfits/maps/map_dvaered_core.xml:2
 msgid "Map: Dvaered Core"
-msgstr ""
+msgstr "地図 : ドベーレッド中心部"
 
 #: dat/outfits/maps/map_dvaered_core.xml:6
 msgid ""
@@ -16166,7 +16201,7 @@ msgstr ""
 
 #: dat/outfits/maps/map_dvaeredsoromid_trade_route.xml:2
 msgid "Map: Dvaered-Soromid trade route"
-msgstr ""
+msgstr "地図 : ドベーレッド—ソロミド貿易路"
 
 #: dat/outfits/maps/map_dvaeredsoromid_trade_route.xml:6
 msgid ""
@@ -16176,7 +16211,7 @@ msgstr ""
 
 #: dat/outfits/maps/map_empire_core.xml:2
 msgid "Map: Empire Core"
-msgstr ""
+msgstr "地図 : 帝国中心部"
 
 #: dat/outfits/maps/map_empire_core.xml:6
 msgid ""
@@ -16186,7 +16221,7 @@ msgstr ""
 
 #: dat/outfits/maps/map_flf.xml:2
 msgid "Map: FLF Hidden Jumps"
-msgstr ""
+msgstr "地図 : FLF 隠れジャンプ"
 
 #: dat/outfits/maps/map_flf.xml:7
 msgid ""
@@ -16196,7 +16231,7 @@ msgstr ""
 
 #: dat/outfits/maps/map_flf_pirate_route.xml:2
 msgid "Map: FLF-Pirate Route"
-msgstr ""
+msgstr "地図 : FLF—海賊航路"
 
 #: dat/outfits/maps/map_flf_pirate_route.xml:7
 msgid ""
@@ -16206,7 +16241,7 @@ msgstr ""
 
 #: dat/outfits/maps/map_inner_nebula_secret_jump.xml:2
 msgid "Map: Inner Nebula Secret Jump"
-msgstr ""
+msgstr "地図 : 星雲内部秘密ジャンプ"
 
 #: dat/outfits/maps/map_inner_nebula_secret_jump.xml:7
 msgid ""
@@ -16216,7 +16251,7 @@ msgstr ""
 
 #: dat/outfits/maps/map_kretogg_hidden_jumps.xml:2
 msgid "Map: Kretogg's hidden jump points"
-msgstr ""
+msgstr "地図 : クレトッグの隠れジャンプポイント"
 
 #: dat/outfits/maps/map_kretogg_hidden_jumps.xml:7
 msgid ""
@@ -16226,7 +16261,7 @@ msgstr ""
 
 #: dat/outfits/maps/map_nebula_edge.xml:2
 msgid "Map: Nebula Edge"
-msgstr ""
+msgstr "地図 : 星系の端"
 
 #: dat/outfits/maps/map_nebula_edge.xml:6
 msgid ""
@@ -16236,7 +16271,7 @@ msgstr ""
 
 #: dat/outfits/maps/map_new_haven_hidden_jumps.xml:2
 msgid "Map: New Haven's hidden jump points"
-msgstr ""
+msgstr "地図 : ニューヘイブンの隠れジャンプポイント"
 
 #: dat/outfits/maps/map_new_haven_hidden_jumps.xml:7
 msgid ""
@@ -16246,7 +16281,7 @@ msgstr ""
 
 #: dat/outfits/maps/map_pirate_strongholds.xml:2
 msgid "Map: Pirate strongholds"
-msgstr ""
+msgstr "地図 : 海賊の拠点"
 
 #: dat/outfits/maps/map_pirate_strongholds.xml:7
 msgid ""
@@ -16256,7 +16291,7 @@ msgstr ""
 
 #: dat/outfits/maps/map_qorel.xml:2
 msgid "Map: Qorel Expanse"
-msgstr ""
+msgstr "地図 : コレルの広がり"
 
 #: dat/outfits/maps/map_qorel.xml:7
 msgid ""
@@ -16268,7 +16303,7 @@ msgstr ""
 
 #: dat/outfits/maps/map_sirian_border_systems.xml:2
 msgid "Map: Sirian border systems"
-msgstr ""
+msgstr "地図 : シリウス境界星系"
 
 #: dat/outfits/maps/map_sirian_border_systems.xml:6
 msgid "This map contains the systems that lead to Sirius controlled space."
@@ -16276,7 +16311,7 @@ msgstr ""
 
 #: dat/outfits/maps/map_sirius_core.xml:2
 msgid "Map: Sirius Core"
-msgstr ""
+msgstr "地図 : シリウス中心部"
 
 #: dat/outfits/maps/map_sirius_core.xml:6
 msgid ""
@@ -16286,7 +16321,7 @@ msgstr ""
 
 #: dat/outfits/maps/map_sol.xml:2
 msgid "Map: Sol"
-msgstr ""
+msgstr "地図 : ソル"
 
 #: dat/outfits/maps/map_sol.xml:6
 msgid ""
@@ -16298,7 +16333,7 @@ msgstr ""
 
 #: dat/outfits/maps/map_the_frontier.xml:2
 msgid "Map: The Frontier"
-msgstr ""
+msgstr "地図 : 辺境"
 
 #: dat/outfits/maps/map_the_frontier.xml:6
 msgid ""
@@ -16308,7 +16343,7 @@ msgstr ""
 
 #: dat/outfits/maps/map_thurion.xml:2
 msgid "Map: Thurion Core"
-msgstr ""
+msgstr "地図 : ザーリオン中心部"
 
 #: dat/outfits/maps/map_thurion.xml:7
 msgid ""
@@ -16318,7 +16353,7 @@ msgstr ""
 
 #: dat/outfits/maps/map_zalek_core.xml:2
 msgid "Map: Za'lek Core"
-msgstr ""
+msgstr "地図 : ザレク中心部"
 
 #: dat/outfits/maps/map_zalek_core.xml:6
 msgid ""
@@ -16328,15 +16363,15 @@ msgstr ""
 
 #: dat/outfits/maps/ultra_map.xml:2
 msgid "Ultra Map"
-msgstr ""
+msgstr "超地図"
 
 #: dat/outfits/maps/ultra_map.xml:6
 msgid "For cheating."
-msgstr ""
+msgstr "いかさま用。"
 
 #: dat/outfits/misc/gui_brushed.xml:2
 msgid "GUI - Brushed"
-msgstr ""
+msgstr "GUI - Brushed"
 
 #: dat/outfits/misc/gui_brushed.xml:6
 msgid "Outfit corresponding with the \"Brushed\" GUI."
@@ -16344,7 +16379,7 @@ msgstr ""
 
 #: dat/outfits/misc/gui_legacy.xml:2
 msgid "GUI - Legacy"
-msgstr ""
+msgstr "GUI - Legacy"
 
 #: dat/outfits/misc/gui_legacy.xml:6
 msgid "Outfit corresponding with the \"Legacy\" GUI."
@@ -16352,7 +16387,7 @@ msgstr ""
 
 #: dat/outfits/misc/gui_slim.xml:2
 msgid "GUI - Slim"
-msgstr ""
+msgstr "GUI - Slim"
 
 #: dat/outfits/misc/gui_slim.xml:6
 msgid "Outfit corresponding with the \"Slim\" GUI."
@@ -16360,7 +16395,7 @@ msgstr ""
 
 #: dat/outfits/misc/gui_slimv2.xml:2
 msgid "GUI - Slimv2"
-msgstr ""
+msgstr "GUI - Slimv2"
 
 #: dat/outfits/misc/gui_slimv2.xml:6
 msgid "Outfit corresponding with the \"Slimv2\" GUI."
@@ -16431,7 +16466,7 @@ msgstr ""
 
 #: dat/outfits/rockets/banshee_rocket.xml:2
 msgid "Banshee Rocket"
-msgstr ""
+msgstr "バンシーロケット"
 
 #: dat/outfits/rockets/banshee_rocket.xml:7
 msgid ""
@@ -16442,15 +16477,15 @@ msgstr ""
 
 #: dat/outfits/rockets/caesar_iv_torpedo.xml:2
 msgid "Caesar IV Torpedo"
-msgstr ""
+msgstr "シーザー IV 魚雷"
 
 #: dat/outfits/rockets/convulsion_missile.xml:2
 msgid "Convulsion Missile"
-msgstr ""
+msgstr "コンバルションミサイル"
 
 #: dat/outfits/rockets/electron_energy_cell.xml:2
 msgid "Electron Energy Cell"
-msgstr ""
+msgstr "電子エネルギー電池"
 
 #: dat/outfits/rockets/electron_energy_cell.xml:7
 msgid ""
@@ -16462,7 +16497,7 @@ msgstr ""
 
 #: dat/outfits/rockets/emp_grenade.xml:2
 msgid "EMP Grenade"
-msgstr ""
+msgstr "電磁バルス放射榴弾"
 
 #: dat/outfits/rockets/emp_grenade.xml:7
 msgid ""
@@ -16474,7 +16509,7 @@ msgstr ""
 
 #: dat/outfits/rockets/fury_missile.xml:2
 msgid "Fury Missile"
-msgstr ""
+msgstr "フューリーミサイル"
 
 #: dat/outfits/rockets/fury_missile.xml:6
 msgid ""
@@ -16486,11 +16521,11 @@ msgstr ""
 
 #: dat/outfits/rockets/headhunter_missile.xml:2
 msgid "Headhunter Missile"
-msgstr ""
+msgstr "ヘッドハンダーミサイル"
 
 #: dat/outfits/rockets/huntsman_torpedo.xml:2
 msgid "Huntsman Torpedo"
-msgstr ""
+msgstr "ハンツマン魚雷"
 
 #: dat/outfits/rockets/huntsman_torpedo.xml:7
 msgid ""
@@ -16500,19 +16535,19 @@ msgstr ""
 
 #: dat/outfits/rockets/imperator_torpedo.xml:2
 msgid "Imperator Torpedo"
-msgstr ""
+msgstr "インペトラル魚雷"
 
 #: dat/outfits/rockets/mace_rocket.xml:2
 msgid "Mace Rocket"
-msgstr ""
+msgstr "メイスロケット"
 
 #: dat/outfits/rockets/medusa_missile.xml:2
 msgid "Medusa Missile"
-msgstr ""
+msgstr "メデューサミサイル"
 
 #: dat/outfits/rockets/shatterer_missile.xml:2
 msgid "Shatterer Missile"
-msgstr ""
+msgstr "シャターラーミサイル"
 
 #: dat/outfits/rockets/shatterer_missile.xml:7
 msgid ""
@@ -16523,11 +16558,11 @@ msgstr ""
 
 #: dat/outfits/rockets/spearhead_missile.xml:2
 msgid "Spearhead Missile"
-msgstr ""
+msgstr "スピアヘッドミサイル"
 
 #: dat/outfits/rockets/vengeance_missile.xml:2
 msgid "Vengeance Missile"
-msgstr ""
+msgstr "ベンジャンスミサイル"
 
 #: dat/outfits/rockets/vengeance_missile.xml:7
 msgid ""
@@ -16540,7 +16575,7 @@ msgstr ""
 
 #: dat/outfits/rockets/zalek_hunter.xml:2
 msgid "Za'lek Hunter-Killer"
-msgstr ""
+msgstr "ザレク・ハンターキラー"
 
 #: dat/outfits/rockets/zalek_hunter.xml:7
 msgid ""
@@ -16550,7 +16585,7 @@ msgstr ""
 
 #: dat/outfits/rockets/zalek_reaper.xml:2
 msgid "Za'lek Reaper Drone"
-msgstr ""
+msgstr "ザレク・リーパードローン"
 
 #: dat/outfits/rockets/zalek_reaper.xml:7
 msgid ""
@@ -16560,7 +16595,7 @@ msgstr ""
 
 #: dat/outfits/structure/active_plating.xml:2
 msgid "Active Plating"
-msgstr ""
+msgstr "アクティブ装甲"
 
 #: dat/outfits/structure/active_plating.xml:4
 #: dat/outfits/structure/adaptive_stealth_plating.xml:4
@@ -16568,7 +16603,7 @@ msgstr ""
 #: dat/outfits/structure/nanobond_plating.xml:4
 #: dat/outfits/structure/plasteel_plating.xml:4
 msgid "Armour Modifier"
-msgstr ""
+msgstr "装甲修正値"
 
 #: dat/outfits/structure/active_plating.xml:11
 msgid ""
@@ -16581,7 +16616,7 @@ msgstr ""
 
 #: dat/outfits/structure/adaptive_stealth_plating.xml:2
 msgid "Adaptive Stealth Plating"
-msgstr ""
+msgstr "適応ステルス装甲"
 
 #: dat/outfits/structure/adaptive_stealth_plating.xml:11
 msgid ""
@@ -16593,13 +16628,13 @@ msgstr ""
 
 #: dat/outfits/structure/battery_i.xml:2
 msgid "Battery I"
-msgstr ""
+msgstr "バッテリー I"
 
 #: dat/outfits/structure/battery_i.xml:4 dat/outfits/structure/battery_ii.xml:4
 #: dat/outfits/structure/battery_iii.xml:4
 #: dat/outfits/structure/battery_iv.xml:4
 msgid "Energy Modifier"
-msgstr ""
+msgstr "エネルギー修正値"
 
 #: dat/outfits/structure/battery_i.xml:9
 msgid ""
@@ -16609,7 +16644,7 @@ msgstr ""
 
 #: dat/outfits/structure/battery_ii.xml:2
 msgid "Battery II"
-msgstr ""
+msgstr "バッテリー II"
 
 #: dat/outfits/structure/battery_ii.xml:9
 msgid ""
@@ -16619,7 +16654,7 @@ msgstr ""
 
 #: dat/outfits/structure/battery_iii.xml:2
 msgid "Battery III"
-msgstr ""
+msgstr "バッテリー III"
 
 #: dat/outfits/structure/battery_iii.xml:9
 msgid ""
@@ -16629,7 +16664,7 @@ msgstr ""
 
 #: dat/outfits/structure/battery_iv.xml:2
 msgid "Battery IV"
-msgstr ""
+msgstr "バッテリー IV"
 
 #: dat/outfits/structure/battery_iv.xml:9
 msgid ""
@@ -16639,7 +16674,7 @@ msgstr ""
 
 #: dat/outfits/structure/biometal_armour.xml:2
 msgid "Biometal Armour"
-msgstr ""
+msgstr "生体金属装甲"
 
 #: dat/outfits/structure/biometal_armour.xml:10
 msgid ""
@@ -16651,12 +16686,12 @@ msgstr ""
 
 #: dat/outfits/structure/engine_reroute.xml:2
 msgid "Engine Reroute"
-msgstr ""
+msgstr "エンジン経路変更"
 
 #: dat/outfits/structure/engine_reroute.xml:4
 #: dat/outfits/structure/improved_stabilizer.xml:4
 msgid "Manoeuvrability Modifier"
-msgstr ""
+msgstr "運動性修正値"
 
 #: dat/outfits/structure/engine_reroute.xml:9
 msgid ""
@@ -16669,7 +16704,7 @@ msgstr ""
 
 #: dat/outfits/structure/improved_stabilizer.xml:2
 msgid "Improved Stabilizer"
-msgstr ""
+msgstr "改良型安定器"
 
 #: dat/outfits/structure/improved_stabilizer.xml:9
 msgid ""
@@ -16681,13 +16716,13 @@ msgstr ""
 
 #: dat/outfits/structure/large_cargo_pod.xml:2
 msgid "Large Cargo Pod"
-msgstr ""
+msgstr "大型貨物庫"
 
 #: dat/outfits/structure/large_cargo_pod.xml:4
 #: dat/outfits/structure/medium_cargo_pod.xml:4
 #: dat/outfits/structure/small_cargo_pod.xml:4
 msgid "Cargo Expansion"
-msgstr ""
+msgstr "拡大船倉"
 
 #: dat/outfits/structure/large_cargo_pod.xml:9
 #: dat/outfits/structure/medium_cargo_pod.xml:9
@@ -16700,13 +16735,13 @@ msgstr ""
 
 #: dat/outfits/structure/large_fuel_pod.xml:2
 msgid "Large Fuel Pod"
-msgstr ""
+msgstr "大型燃料庫"
 
 #: dat/outfits/structure/large_fuel_pod.xml:4
 #: dat/outfits/structure/medium_fuel_pod.xml:4
 #: dat/outfits/structure/small_fuel_pod.xml:4
 msgid "Fuel Modifier"
-msgstr ""
+msgstr "燃料修正値"
 
 #: dat/outfits/structure/large_fuel_pod.xml:9
 #: dat/outfits/structure/medium_fuel_pod.xml:9
@@ -16716,13 +16751,13 @@ msgstr ""
 
 #: dat/outfits/structure/large_shield_booster.xml:2
 msgid "Large Shield Booster"
-msgstr ""
+msgstr "大型シールド増幅器"
 
 #: dat/outfits/structure/large_shield_booster.xml:4
 #: dat/outfits/structure/medium_shield_booster.xml:4
 #: dat/outfits/structure/small_shield_booster.xml:4
 msgid "Shield Booster"
-msgstr ""
+msgstr "シールド増幅器"
 
 #: dat/outfits/structure/large_shield_booster.xml:9
 #: dat/outfits/structure/medium_shield_booster.xml:9
@@ -16735,19 +16770,19 @@ msgstr ""
 
 #: dat/outfits/structure/medium_cargo_pod.xml:2
 msgid "Medium Cargo Pod"
-msgstr ""
+msgstr "中型貨物庫"
 
 #: dat/outfits/structure/medium_fuel_pod.xml:2
 msgid "Medium Fuel Pod"
-msgstr ""
+msgstr "中型燃料庫"
 
 #: dat/outfits/structure/medium_shield_booster.xml:2
 msgid "Medium Shield Booster"
-msgstr ""
+msgstr "中型シールド増幅器"
 
 #: dat/outfits/structure/nanobond_plating.xml:2
 msgid "Nanobond Plating"
-msgstr ""
+msgstr "ナノボンド装甲"
 
 #: dat/outfits/structure/nanobond_plating.xml:10
 msgid ""
@@ -16759,7 +16794,7 @@ msgstr ""
 
 #: dat/outfits/structure/nebular_shielding_prototype.xml:2
 msgid "Nebular Shielding Prototype"
-msgstr ""
+msgstr "星雲シールド試作機"
 
 #: dat/outfits/structure/nebular_shielding_prototype.xml:4
 #: dat/outfits/structure/shield_capacitor_i.xml:4
@@ -16767,7 +16802,7 @@ msgstr ""
 #: dat/outfits/structure/shield_capacitor_iii.xml:4
 #: dat/outfits/structure/shield_capacitor_iv.xml:4
 msgid "Shield Modifier"
-msgstr ""
+msgstr "シールド修正値"
 
 #: dat/outfits/structure/nebular_shielding_prototype.xml:11
 msgid ""
@@ -16783,7 +16818,7 @@ msgstr ""
 
 #: dat/outfits/structure/plasteel_plating.xml:2
 msgid "Plasteel Plating"
-msgstr ""
+msgstr "プラスチール装甲"
 
 #: dat/outfits/structure/plasteel_plating.xml:10
 msgid ""
@@ -16797,13 +16832,13 @@ msgstr ""
 #: dat/outfits/structure/reactor_class_i.xml:2
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:323
 msgid "Reactor Class I"
-msgstr ""
+msgstr "第 I 級反応炉"
 
 #: dat/outfits/structure/reactor_class_i.xml:4
 #: dat/outfits/structure/reactor_class_ii.xml:4
 #: dat/outfits/structure/reactor_class_iii.xml:4
 msgid "Power Modifier"
-msgstr ""
+msgstr "電力修正値"
 
 #: dat/outfits/structure/reactor_class_i.xml:10
 msgid ""
@@ -16814,7 +16849,7 @@ msgstr ""
 
 #: dat/outfits/structure/reactor_class_ii.xml:2
 msgid "Reactor Class II"
-msgstr ""
+msgstr "第 II 級反応炉"
 
 #: dat/outfits/structure/reactor_class_ii.xml:10
 msgid ""
@@ -16825,7 +16860,7 @@ msgstr ""
 
 #: dat/outfits/structure/reactor_class_iii.xml:2
 msgid "Reactor Class III"
-msgstr ""
+msgstr "第 III 級反応炉"
 
 #: dat/outfits/structure/reactor_class_iii.xml:10
 msgid ""
@@ -16840,7 +16875,7 @@ msgstr ""
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:310
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:329
 msgid "Shield Capacitor I"
-msgstr ""
+msgstr "シールドキャパシター I"
 
 #: dat/outfits/structure/shield_capacitor_i.xml:9
 msgid ""
@@ -16850,7 +16885,7 @@ msgstr ""
 
 #: dat/outfits/structure/shield_capacitor_ii.xml:2
 msgid "Shield Capacitor II"
-msgstr ""
+msgstr "シールドキャパシター II"
 
 #: dat/outfits/structure/shield_capacitor_ii.xml:9
 msgid ""
@@ -16860,7 +16895,7 @@ msgstr ""
 
 #: dat/outfits/structure/shield_capacitor_iii.xml:2
 msgid "Shield Capacitor III"
-msgstr ""
+msgstr "シールドキャパシター III"
 
 #: dat/outfits/structure/shield_capacitor_iii.xml:9
 msgid ""
@@ -16869,7 +16904,7 @@ msgstr ""
 
 #: dat/outfits/structure/shield_capacitor_iv.xml:2
 msgid "Shield Capacitor IV"
-msgstr ""
+msgstr "シールドキャパシター IV"
 
 #: dat/outfits/structure/shield_capacitor_iv.xml:9
 msgid ""
@@ -16879,20 +16914,20 @@ msgstr ""
 
 #: dat/outfits/structure/small_cargo_pod.xml:2
 msgid "Small Cargo Pod"
-msgstr ""
+msgstr "小型貨物庫"
 
 #: dat/outfits/structure/small_fuel_pod.xml:2
 msgid "Small Fuel Pod"
-msgstr ""
+msgstr "小型燃料庫"
 
 #: dat/outfits/structure/small_shield_booster.xml:2
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:326
 msgid "Small Shield Booster"
-msgstr ""
+msgstr "小型シールド増幅器"
 
 #: dat/outfits/unique/hades_torch.xml:2
 msgid "Hades Torch"
-msgstr ""
+msgstr "ハデストーチ"
 
 #: dat/outfits/unique/hades_torch.xml:10
 msgid ""
@@ -16903,11 +16938,11 @@ msgstr ""
 
 #: dat/outfits/unique/hades_torch.xml:14
 msgid "#rHot hot hot!#0"
-msgstr ""
+msgstr "#r熱い、熱い、熱い！#0"
 
 #: dat/outfits/unique/valkyrie_beam.xml:2
 msgid "Valkyrie Beam"
-msgstr ""
+msgstr "ワルキューレビーム"
 
 #: dat/outfits/unique/valkyrie_beam.xml:10
 msgid ""
@@ -16934,13 +16969,13 @@ msgstr ""
 
 #: dat/outfits/utility/berserk_chip.xml:2
 msgid "Berserk Chip"
-msgstr ""
+msgstr "バーサークチップ"
 
 #: dat/outfits/utility/berserk_chip.xml:4
 #: dat/outfits/utility/emergency_stasis_inducer.xml:4
 #: dat/outfits/utility/neural_accelerator_interface.xml:4
 msgid "Speed Modifier"
-msgstr ""
+msgstr "速度修正値"
 
 #: dat/outfits/utility/berserk_chip.xml:9
 msgid ""
@@ -16963,7 +16998,7 @@ msgstr ""
 #: dat/outfits/utility/blink_drive.xml:2 dat/outfits/utility/blink_drive.xml:4
 #: dat/outfits/utility/hyperbolic_blink_engine.xml:4
 msgid "Blink Drive"
-msgstr ""
+msgstr "ブリンクドライブ"
 
 #: dat/outfits/utility/blink_drive.xml:10
 msgid ""
@@ -16981,12 +17016,12 @@ msgstr ""
 
 #: dat/outfits/utility/boarding_androids_mk1.xml:2
 msgid "Boarding Androids MK1"
-msgstr ""
+msgstr "移乗用アンドロイド MK1"
 
 #: dat/outfits/utility/boarding_androids_mk1.xml:4
 #: dat/outfits/utility/boarding_androids_mk2.xml:4
 msgid "Boarding Androids"
-msgstr ""
+msgstr "移乗用アンドロイド"
 
 #: dat/outfits/utility/boarding_androids_mk1.xml:9
 msgid ""
@@ -16998,7 +17033,7 @@ msgstr ""
 
 #: dat/outfits/utility/boarding_androids_mk2.xml:2
 msgid "Boarding Androids MK2"
-msgstr ""
+msgstr "移乗用アンドロイド MK2"
 
 #: dat/outfits/utility/boarding_androids_mk2.xml:9
 msgid ""
@@ -17011,7 +17046,7 @@ msgstr ""
 #: dat/outfits/utility/cloaking_device.xml:4
 #: dat/outfits/utility/cloaking_device.xml:9
 msgid "Cloaking Device"
-msgstr ""
+msgstr "遮蔽装置"
 
 #: dat/outfits/utility/cloaking_device.xml:10
 msgid "Uses 1 MJ of energy per 10 mass and drains shield in 0.5 seconds."
@@ -17019,11 +17054,11 @@ msgstr ""
 
 #: dat/outfits/utility/combat_hologram_projector.xml:2
 msgid "Combat Hologram Projector"
-msgstr ""
+msgstr "戦闘用ホログラム映写機"
 
 #: dat/outfits/utility/combat_hologram_projector.xml:4
 msgid "Holograph Projector"
-msgstr ""
+msgstr "ホログラム映写機"
 
 #: dat/outfits/utility/combat_hologram_projector.xml:12
 msgid ""
@@ -17041,7 +17076,7 @@ msgstr ""
 
 #: dat/outfits/utility/combatai/agility_combat_ai.xml:2
 msgid "Agility Combat AI"
-msgstr ""
+msgstr "アジリティー戦闘用 AI"
 
 #: dat/outfits/utility/combatai/agility_combat_ai.xml:4
 #: dat/outfits/utility/combatai/bioneural_combat_ai.xml:4
@@ -17051,7 +17086,7 @@ msgstr ""
 #: dat/outfits/utility/combatai/pinpoint_combat_ai.xml:4
 #: dat/outfits/utility/combatai/scanning_combat_ai.xml:4
 msgid "Combat AI"
-msgstr ""
+msgstr "戦闘用 AI"
 
 #: dat/outfits/utility/combatai/agility_combat_ai.xml:11
 msgid ""
@@ -17063,7 +17098,7 @@ msgstr ""
 
 #: dat/outfits/utility/combatai/bioneural_combat_ai.xml:2
 msgid "Bio-Neural Combat AI"
-msgstr ""
+msgstr "バイオ゠ニューラル戦闘用 AI"
 
 #: dat/outfits/utility/combatai/bioneural_combat_ai.xml:11
 msgid ""
@@ -17076,7 +17111,7 @@ msgstr ""
 
 #: dat/outfits/utility/combatai/cyclic_combat_ai.xml:2
 msgid "Cyclic Combat AI"
-msgstr ""
+msgstr "サイクリック戦闘用 AI"
 
 #: dat/outfits/utility/combatai/cyclic_combat_ai.xml:11
 msgid ""
@@ -17088,7 +17123,7 @@ msgstr ""
 
 #: dat/outfits/utility/combatai/hive_combat_ai.xml:2
 msgid "Hive Combat AI"
-msgstr ""
+msgstr "ハイブ戦闘用 AI"
 
 #: dat/outfits/utility/combatai/hive_combat_ai.xml:11
 msgid ""
@@ -17101,7 +17136,7 @@ msgstr ""
 
 #: dat/outfits/utility/combatai/hunting_combat_ai.xml:2
 msgid "Hunting Combat AI"
-msgstr ""
+msgstr "ハンティング戦闘用 AI"
 
 #: dat/outfits/utility/combatai/hunting_combat_ai.xml:11
 msgid ""
@@ -17113,7 +17148,7 @@ msgstr ""
 
 #: dat/outfits/utility/combatai/pinpoint_combat_ai.xml:2
 msgid "Pinpoint Combat AI"
-msgstr ""
+msgstr "ピンポイント戦闘用 AI"
 
 #: dat/outfits/utility/combatai/pinpoint_combat_ai.xml:11
 msgid ""
@@ -17126,7 +17161,7 @@ msgstr ""
 
 #: dat/outfits/utility/combatai/scanning_combat_ai.xml:2
 msgid "Scanning Combat AI"
-msgstr ""
+msgstr "スキャニング戦闘用 AI"
 
 #: dat/outfits/utility/combatai/scanning_combat_ai.xml:11
 msgid ""
@@ -17137,12 +17172,12 @@ msgstr ""
 
 #: dat/outfits/utility/cryogenic_repair_nanobots.xml:2
 msgid "Cryogenic Repair Nanobots"
-msgstr ""
+msgstr "低温性修理ナノボット"
 
 #: dat/outfits/utility/cryogenic_repair_nanobots.xml:4
 #: dat/outfits/utility/droid_repair_crew.xml:4
 msgid "Armour Repair"
-msgstr ""
+msgstr "装甲修理"
 
 #: dat/outfits/utility/cryogenic_repair_nanobots.xml:10
 msgid ""
@@ -17160,7 +17195,7 @@ msgstr ""
 
 #: dat/outfits/utility/droid_repair_crew.xml:2
 msgid "Droid Repair Crew"
-msgstr ""
+msgstr "ドロイド修理要員"
 
 #: dat/outfits/utility/droid_repair_crew.xml:10
 msgid ""
@@ -17179,11 +17214,11 @@ msgstr ""
 #: dat/outfits/utility/emergency_shield_booster.xml:2
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:306
 msgid "Emergency Shield Booster"
-msgstr ""
+msgstr "緊急シールド増幅器"
 
 #: dat/outfits/utility/emergency_shield_booster.xml:4
 msgid "Shield Modification"
-msgstr ""
+msgstr "シールド修正"
 
 #: dat/outfits/utility/emergency_shield_booster.xml:9
 msgid ""
@@ -17203,7 +17238,7 @@ msgstr ""
 
 #: dat/outfits/utility/emergency_stasis_inducer.xml:2
 msgid "Emergency Stasis Inducer"
-msgstr ""
+msgstr "緊急停滞誘導器"
 
 #: dat/outfits/utility/emergency_stasis_inducer.xml:9
 msgid ""
@@ -17221,7 +17256,7 @@ msgstr ""
 #: dat/outfits/utility/hellburner.xml:2
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:320
 msgid "Hellburner"
-msgstr ""
+msgstr "ヘルバーナー"
 
 #: dat/outfits/utility/hellburner.xml:8
 msgid ""
@@ -17234,7 +17269,7 @@ msgstr ""
 
 #: dat/outfits/utility/hidden_jump_scanner.xml:2
 msgid "Hidden Jump Scanner"
-msgstr ""
+msgstr "隠れジャンプスキャナー"
 
 #: dat/outfits/utility/hidden_jump_scanner.xml:9
 msgid ""
@@ -17247,7 +17282,7 @@ msgstr ""
 
 #: dat/outfits/utility/hullcoating/faraday_tempest_coating.xml:2
 msgid "Faraday Tempest Coating"
-msgstr ""
+msgstr "ファラデーテンペスト被覆"
 
 #: dat/outfits/utility/hullcoating/faraday_tempest_coating.xml:4
 #: dat/outfits/utility/hullcoating/lattice_thermal_coating.xml:4
@@ -17256,7 +17291,7 @@ msgstr ""
 #: dat/outfits/utility/hullcoating/nexus_stealth_coating.xml:4
 #: dat/outfits/utility/hullcoating/photovoltaic_nanobot_coating.xml:4
 msgid "Hull Coating"
-msgstr ""
+msgstr "装甲被覆"
 
 #: dat/outfits/utility/hullcoating/faraday_tempest_coating.xml:9
 msgid ""
@@ -17269,7 +17304,7 @@ msgstr ""
 
 #: dat/outfits/utility/hullcoating/lattice_thermal_coating.xml:2
 msgid "Lattice Thermal Coating"
-msgstr ""
+msgstr "ラティスサーマル被覆"
 
 #: dat/outfits/utility/hullcoating/lattice_thermal_coating.xml:9
 msgid ""
@@ -17282,7 +17317,7 @@ msgstr ""
 
 #: dat/outfits/utility/hullcoating/milspec_impactoplastic_coating.xml:2
 msgid "Milspec Impacto-Plastic Coating"
-msgstr "ミルスペック・インパクト゠プラスティック被膜"
+msgstr "ミルスペック・インパクト゠プラスティック被覆"
 
 #: dat/outfits/utility/hullcoating/milspec_impactoplastic_coating.xml:9
 msgid ""
@@ -17293,7 +17328,7 @@ msgstr ""
 
 #: dat/outfits/utility/hullcoating/nebula_resistant_coating.xml:2
 msgid "Nebula Resistant Coating"
-msgstr ""
+msgstr "耐星雲被覆"
 
 #: dat/outfits/utility/hullcoating/nebula_resistant_coating.xml:10
 msgid ""
@@ -17306,7 +17341,7 @@ msgstr ""
 
 #: dat/outfits/utility/hullcoating/nexus_stealth_coating.xml:2
 msgid "Nexus Stealth Coating"
-msgstr "ネクサス・ステルス被膜"
+msgstr "ネクサス・ステルス被覆"
 
 #: dat/outfits/utility/hullcoating/nexus_stealth_coating.xml:9
 msgid ""
@@ -17318,7 +17353,7 @@ msgstr ""
 
 #: dat/outfits/utility/hullcoating/photovoltaic_nanobot_coating.xml:2
 msgid "Photo-Voltaic Nanobot Coating"
-msgstr ""
+msgstr "光電池ナノボット被覆"
 
 #: dat/outfits/utility/hullcoating/photovoltaic_nanobot_coating.xml:9
 msgid ""
@@ -17330,7 +17365,7 @@ msgstr ""
 
 #: dat/outfits/utility/hyperbolic_blink_engine.xml:2
 msgid "Hyperbolic Blink Engine"
-msgstr ""
+msgstr "ハイパーボリックブリンクエンジン"
 
 #: dat/outfits/utility/hyperbolic_blink_engine.xml:10
 msgid ""
@@ -17352,7 +17387,7 @@ msgstr ""
 
 #: dat/outfits/utility/jump_scanner.xml:2
 msgid "Jump Scanner"
-msgstr ""
+msgstr "ジャンプスキャナー"
 
 #: dat/outfits/utility/jump_scanner.xml:8
 msgid ""
@@ -17368,13 +17403,13 @@ msgstr ""
 
 #: dat/outfits/utility/low_radiation_sensor_modulator.xml:2
 msgid "Low Radiation Sensor Modulator"
-msgstr ""
+msgstr "低放射センサー変調器"
 
 #: dat/outfits/utility/low_radiation_sensor_modulator.xml:4
 #: dat/outfits/utility/targeting_conduit.xml:4
 #: dat/outfits/utility/weakness_harmonizer_ai.xml:4
 msgid "System Improvement"
-msgstr ""
+msgstr "システム改良"
 
 #: dat/outfits/utility/low_radiation_sensor_modulator.xml:10
 msgid ""
@@ -17385,7 +17420,7 @@ msgstr ""
 
 #: dat/outfits/utility/low_radiation_sensor_modulator.xml:11
 msgid "#pOnly active when in stealth.#0"
-msgstr ""
+msgstr "#pステルス中だけ作動する。#0"
 
 #: dat/outfits/utility/milspec_jammer.xml:2
 msgid "Milspec Jammer"
@@ -17397,7 +17432,7 @@ msgstr "ミルスペック・ジャマー"
 #: dat/outfits/utility/unicorp_jammer.xml:4
 #: dat/outfits/utility/unicorp_scrambler.xml:4
 msgid "Electronic Warfare"
-msgstr ""
+msgstr "電子戦"
 
 #: dat/outfits/utility/milspec_jammer.xml:9
 msgid ""
@@ -17423,7 +17458,7 @@ msgstr ""
 
 #: dat/outfits/utility/neural_accelerator_interface.xml:2
 msgid "Neural Accelerator Interface"
-msgstr ""
+msgstr "ニューラルアクセラレーターインターフェース"
 
 #: dat/outfits/utility/neural_accelerator_interface.xml:11
 msgid ""
@@ -17436,11 +17471,11 @@ msgstr ""
 
 #: dat/outfits/utility/neural_accelerator_interface.xml:12
 msgid "Active for 5 seconds with a cooldown of 20 seconds."
-msgstr ""
+msgstr "20 秒の冷却で 5 秒作動する。"
 
 #: dat/outfits/utility/sensor_array.xml:2
 msgid "Sensor Array"
-msgstr ""
+msgstr "センサーアレイ"
 
 #: dat/outfits/utility/sensor_array.xml:9
 msgid ""
@@ -17454,11 +17489,11 @@ msgstr ""
 
 #: dat/outfits/utility/targeting_array.xml:2
 msgid "Targeting Array"
-msgstr ""
+msgstr "捕捉アレイ"
 
 #: dat/outfits/utility/targeting_array.xml:4
 msgid "Weapon Modifier (Turret)"
-msgstr ""
+msgstr "武器修正値 (砲塔)"
 
 #: dat/outfits/utility/targeting_array.xml:9
 msgid ""
@@ -17469,7 +17504,7 @@ msgstr ""
 
 #: dat/outfits/utility/targeting_conduit.xml:2
 msgid "Targeting Conduit"
-msgstr ""
+msgstr "捕捉コンジット"
 
 #: dat/outfits/utility/targeting_conduit.xml:10
 msgid ""
@@ -17481,7 +17516,7 @@ msgstr ""
 
 #: dat/outfits/utility/targeting_conduit.xml:11
 msgid "Only active when shield is above 70%."
-msgstr ""
+msgstr "シールドが 70% をこえているときだけ作動する。"
 
 #: dat/outfits/utility/unicorp_jammer.xml:2
 msgid "Unicorp Jammer"
@@ -17530,7 +17565,7 @@ msgstr ""
 
 #: dat/outfits/utility/weakness_harmonizer_ai.xml:2
 msgid "Weakness Harmonizer AI"
-msgstr ""
+msgstr "ウイークネスハーモナイザー AI"
 
 #: dat/outfits/utility/weakness_harmonizer_ai.xml:11
 msgid ""
@@ -17549,11 +17584,11 @@ msgstr ""
 
 #: dat/outfits/utility/weapons_ionizer.xml:2
 msgid "Weapons Ionizer"
-msgstr ""
+msgstr "ウエポンズイオナイザー"
 
 #: dat/outfits/utility/weapons_ionizer.xml:4
 msgid "Weapon Modification"
-msgstr ""
+msgstr "武器修正"
 
 #: dat/outfits/utility/weapons_ionizer.xml:9
 msgid ""
@@ -17567,11 +17602,11 @@ msgstr ""
 
 #: dat/outfits/utility/weapons_ionizer.xml:12
 msgid "Automatically triggers when target armour is below 50%."
-msgstr ""
+msgstr "目標の装甲が 50% 未満のときに自動的に起動する。"
 
 #: dat/outfits/weapons/base_ripper_mk2.xml:2
 msgid "Base Ripper MK2"
-msgstr ""
+msgstr "ベースリッパー MK2"
 
 #: dat/outfits/weapons/base_ripper_mk2.xml:9
 #: dat/outfits/weapons/cheaters_laser_cannon.xml:8
@@ -17581,15 +17616,15 @@ msgstr ""
 
 #: dat/outfits/weapons/cheaters_laser_cannon.xml:2
 msgid "Cheater's Laser Cannon"
-msgstr ""
+msgstr "いかさまレーザーキャノン"
 
 #: dat/outfits/weapons/cheaters_ragnarok_beam.xml:2
 msgid "Cheater's Ragnarok Beam"
-msgstr ""
+msgstr "いかさまラグナロクビーム"
 
 #: dat/outfits/weapons/gauss_gun.xml:2
 msgid "Gauss Gun"
-msgstr ""
+msgstr "ガウスガン"
 
 #: dat/outfits/weapons/gauss_gun.xml:8
 msgid ""
@@ -17602,7 +17637,7 @@ msgstr ""
 
 #: dat/outfits/weapons/grave_beam.xml:2
 msgid "Grave Beam"
-msgstr ""
+msgstr "グレイブビーム"
 
 #: dat/outfits/weapons/grave_beam.xml:10
 msgid ""
@@ -17613,7 +17648,7 @@ msgstr ""
 
 #: dat/outfits/weapons/grave_lance.xml:2
 msgid "Grave Lance"
-msgstr ""
+msgstr "グレイブランス"
 
 #: dat/outfits/weapons/grave_lance.xml:10
 msgid ""
@@ -17624,7 +17659,7 @@ msgstr ""
 
 #: dat/outfits/weapons/heavy_ion_cannon.xml:2
 msgid "Heavy Ion Cannon"
-msgstr ""
+msgstr "重イオンキャノン"
 
 #: dat/outfits/weapons/heavy_ion_cannon.xml:9
 msgid ""
@@ -17636,7 +17671,7 @@ msgstr ""
 
 #: dat/outfits/weapons/heavy_ion_turret.xml:2
 msgid "Heavy Ion Turret"
-msgstr ""
+msgstr "重イオン砲塔"
 
 #: dat/outfits/weapons/heavy_ion_turret.xml:10
 msgid ""
@@ -17647,7 +17682,7 @@ msgstr ""
 
 #: dat/outfits/weapons/heavy_laser_turret.xml:2
 msgid "Heavy Laser Turret"
-msgstr ""
+msgstr "重レーザー砲塔"
 
 #: dat/outfits/weapons/heavy_laser_turret.xml:10
 msgid ""
@@ -17658,7 +17693,7 @@ msgstr ""
 
 #: dat/outfits/weapons/heavy_razor_turret.xml:2
 msgid "Heavy Razor Turret"
-msgstr ""
+msgstr "重かみそり砲塔"
 
 #: dat/outfits/weapons/heavy_razor_turret.xml:10
 msgid ""
@@ -17669,7 +17704,7 @@ msgstr ""
 
 #: dat/outfits/weapons/heavy_ripper_cannon.xml:2
 msgid "Heavy Ripper Cannon"
-msgstr ""
+msgstr "重リッパーキャノン"
 
 #: dat/outfits/weapons/heavy_ripper_cannon.xml:10
 msgid ""
@@ -17682,7 +17717,7 @@ msgstr ""
 
 #: dat/outfits/weapons/heavy_ripper_turret.xml:2
 msgid "Heavy Ripper Turret"
-msgstr ""
+msgstr "重リッパー砲塔"
 
 #: dat/outfits/weapons/heavy_ripper_turret.xml:10
 msgid ""
@@ -17693,7 +17728,7 @@ msgstr ""
 
 #: dat/outfits/weapons/ion_cannon.xml:2
 msgid "Ion Cannon"
-msgstr ""
+msgstr "イオンキャノン"
 
 #: dat/outfits/weapons/ion_cannon.xml:8
 msgid ""
@@ -17706,7 +17741,7 @@ msgstr ""
 
 #: dat/outfits/weapons/laser_cannon_mk1.xml:2
 msgid "Laser Cannon MK1"
-msgstr ""
+msgstr "レーザーキャノン MK1"
 
 #: dat/outfits/weapons/laser_cannon_mk1.xml:8
 msgid ""
@@ -17717,7 +17752,7 @@ msgstr ""
 
 #: dat/outfits/weapons/laser_cannon_mk2.xml:2
 msgid "Laser Cannon MK2"
-msgstr ""
+msgstr "レーザーキャノン MK2"
 
 #: dat/outfits/weapons/laser_cannon_mk2.xml:9
 msgid ""
@@ -17729,7 +17764,7 @@ msgstr ""
 
 #: dat/outfits/weapons/laser_turret_mk1.xml:2
 msgid "Laser Turret MK1"
-msgstr ""
+msgstr "レーザー砲塔 MK1"
 
 #: dat/outfits/weapons/laser_turret_mk1.xml:9
 msgid ""
@@ -17740,7 +17775,7 @@ msgstr ""
 
 #: dat/outfits/weapons/laser_turret_mk2.xml:2
 msgid "Laser Turret MK2"
-msgstr ""
+msgstr "レーザー砲塔 MK2"
 
 #: dat/outfits/weapons/laser_turret_mk2.xml:9
 msgid ""
@@ -17751,7 +17786,7 @@ msgstr ""
 
 #: dat/outfits/weapons/mass_driver.xml:2
 msgid "Mass Driver"
-msgstr ""
+msgstr "マスドライバー"
 
 #: dat/outfits/weapons/mass_driver.xml:9
 msgid ""
@@ -17762,7 +17797,7 @@ msgstr ""
 
 #: dat/outfits/weapons/neutron_disruptor.xml:2
 msgid "Neutron Disruptor"
-msgstr ""
+msgstr "中性子ディスラプター"
 
 #: dat/outfits/weapons/neutron_disruptor.xml:10
 msgid ""
@@ -17774,7 +17809,7 @@ msgstr ""
 
 #: dat/outfits/weapons/neutron_disruptor_heavy.xml:2
 msgid "Heavy Neutron Disruptor"
-msgstr ""
+msgstr "重中性子ディスラプター"
 
 #: dat/outfits/weapons/neutron_disruptor_heavy.xml:10
 msgid ""
@@ -17784,7 +17819,7 @@ msgstr ""
 
 #: dat/outfits/weapons/orion_beam.xml:2
 msgid "Orion Beam"
-msgstr ""
+msgstr "オリオンビーム"
 
 #: dat/outfits/weapons/orion_beam.xml:9
 msgid ""
@@ -17795,7 +17830,7 @@ msgstr ""
 
 #: dat/outfits/weapons/orion_lance.xml:2
 msgid "Orion Lance"
-msgstr ""
+msgstr "オリオンランス"
 
 #: dat/outfits/weapons/orion_lance.xml:9
 msgid ""
@@ -17806,7 +17841,7 @@ msgstr ""
 
 #: dat/outfits/weapons/particle_beam.xml:2
 msgid "Particle Beam"
-msgstr ""
+msgstr "粒子ビーム"
 
 #: dat/outfits/weapons/particle_beam.xml:9
 msgid ""
@@ -17816,7 +17851,7 @@ msgstr ""
 
 #: dat/outfits/weapons/particle_lance.xml:2
 msgid "Particle Lance"
-msgstr ""
+msgstr "粒子ランス"
 
 #: dat/outfits/weapons/particle_lance.xml:9
 msgid ""
@@ -17826,7 +17861,7 @@ msgstr ""
 
 #: dat/outfits/weapons/plasma_blaster_mk1.xml:2
 msgid "Plasma Blaster MK1"
-msgstr ""
+msgstr "プラズマブラスター MK1"
 
 #: dat/outfits/weapons/plasma_blaster_mk1.xml:8
 msgid ""
@@ -17837,7 +17872,7 @@ msgstr ""
 
 #: dat/outfits/weapons/plasma_blaster_mk2.xml:2
 msgid "Plasma Blaster MK2"
-msgstr ""
+msgstr "プラズマブラスター MK2"
 
 #: dat/outfits/weapons/plasma_blaster_mk2.xml:9
 msgid ""
@@ -17849,7 +17884,7 @@ msgstr ""
 
 #: dat/outfits/weapons/plasma_cannon.xml:2
 msgid "Plasma Cannon"
-msgstr ""
+msgstr "プラズマキャノン"
 
 #: dat/outfits/weapons/plasma_cannon.xml:9
 msgid ""
@@ -17861,7 +17896,7 @@ msgstr ""
 
 #: dat/outfits/weapons/plasma_cluster_cannon.xml:2
 msgid "Plasma Cluster Cannon"
-msgstr ""
+msgstr "プラズマクラスターキャノン"
 
 #: dat/outfits/weapons/plasma_cluster_cannon.xml:9
 msgid ""
@@ -17876,7 +17911,7 @@ msgstr ""
 
 #: dat/outfits/weapons/plasma_turret_mk1.xml:2
 msgid "Plasma Turret MK1"
-msgstr ""
+msgstr "プラズマ砲塔 MK1"
 
 #: dat/outfits/weapons/plasma_turret_mk1.xml:9
 msgid ""
@@ -17889,7 +17924,7 @@ msgstr ""
 
 #: dat/outfits/weapons/plasma_turret_mk2.xml:2
 msgid "Plasma Turret MK2"
-msgstr ""
+msgstr "プラズマ砲塔 MK2"
 
 #: dat/outfits/weapons/plasma_turret_mk2.xml:9
 msgid ""
@@ -17900,7 +17935,7 @@ msgstr ""
 
 #: dat/outfits/weapons/ragnarok_beam.xml:2
 msgid "Ragnarok Beam"
-msgstr ""
+msgstr "ラグナロクビーム"
 
 #: dat/outfits/weapons/ragnarok_beam.xml:10
 msgid ""
@@ -17911,7 +17946,7 @@ msgstr ""
 
 #: dat/outfits/weapons/railgun.xml:2
 msgid "Railgun"
-msgstr ""
+msgstr "レールガン"
 
 #: dat/outfits/weapons/railgun.xml:10
 msgid ""
@@ -17922,7 +17957,7 @@ msgstr ""
 
 #: dat/outfits/weapons/railgun_turret.xml:2
 msgid "Railgun Turret"
-msgstr ""
+msgstr "レールガン砲塔"
 
 #: dat/outfits/weapons/railgun_turret.xml:10
 msgid ""
@@ -17934,7 +17969,7 @@ msgstr ""
 
 #: dat/outfits/weapons/razor_mk1.xml:2
 msgid "Razor MK1"
-msgstr ""
+msgstr "かみそり MK1"
 
 #: dat/outfits/weapons/razor_mk1.xml:8
 msgid ""
@@ -17946,7 +17981,7 @@ msgstr ""
 
 #: dat/outfits/weapons/razor_mk2.xml:2
 msgid "Razor MK2"
-msgstr ""
+msgstr "かみそり MK2"
 
 #: dat/outfits/weapons/razor_mk2.xml:8
 msgid ""
@@ -17959,7 +17994,7 @@ msgstr ""
 
 #: dat/outfits/weapons/razor_turret_mk1.xml:2
 msgid "Razor Turret MK1"
-msgstr ""
+msgstr "かみそり砲塔 MK1"
 
 #: dat/outfits/weapons/razor_turret_mk1.xml:9
 msgid ""
@@ -17970,7 +18005,7 @@ msgstr ""
 
 #: dat/outfits/weapons/razor_turret_mk2.xml:2
 msgid "Razor Turret MK2"
-msgstr ""
+msgstr "かみそり砲塔 MK2"
 
 #: dat/outfits/weapons/razor_turret_mk2.xml:9
 msgid ""
@@ -17981,7 +18016,7 @@ msgstr ""
 
 #: dat/outfits/weapons/repeating_railgun.xml:2
 msgid "Repeating Railgun"
-msgstr ""
+msgstr "連発レールガン"
 
 #: dat/outfits/weapons/repeating_railgun.xml:10
 msgid ""
@@ -17993,7 +18028,7 @@ msgstr ""
 
 #: dat/outfits/weapons/ripper_cannon.xml:2
 msgid "Ripper Cannon"
-msgstr ""
+msgstr "リッパーキャノン"
 
 #: dat/outfits/weapons/ripper_cannon.xml:9
 msgid ""
@@ -18006,7 +18041,7 @@ msgstr ""
 
 #: dat/outfits/weapons/shredder.xml:2
 msgid "Shredder"
-msgstr ""
+msgstr "シュレッダー"
 
 #: dat/outfits/weapons/shredder.xml:9
 msgid ""
@@ -18017,7 +18052,7 @@ msgstr ""
 
 #: dat/outfits/weapons/slicer.xml:2
 msgid "Slicer"
-msgstr ""
+msgstr "スライサー"
 
 #: dat/outfits/weapons/slicer.xml:9
 msgid ""
@@ -18028,7 +18063,7 @@ msgstr ""
 
 #: dat/outfits/weapons/tesla_cannon.xml:2
 msgid "Tesla Cannon"
-msgstr ""
+msgstr "テスラキャノン"
 
 #: dat/outfits/weapons/tesla_cannon.xml:10
 msgid ""
@@ -18041,7 +18076,7 @@ msgstr ""
 
 #: dat/outfits/weapons/turbolaser.xml:2
 msgid "Turbolaser"
-msgstr ""
+msgstr "ターボレーザー"
 
 #: dat/outfits/weapons/turbolaser.xml:10
 msgid ""
@@ -18052,7 +18087,7 @@ msgstr ""
 
 #: dat/outfits/weapons/turreted_gauss_gun.xml:2
 msgid "Turreted Gauss Gun"
-msgstr ""
+msgstr "砲塔型ガウスガン"
 
 #: dat/outfits/weapons/turreted_gauss_gun.xml:9
 msgid ""
@@ -18063,7 +18098,7 @@ msgstr ""
 
 #: dat/outfits/weapons/turreted_vulcan_gun.xml:2
 msgid "Turreted Vulcan Gun"
-msgstr ""
+msgstr "砲塔型バルカンガン"
 
 #: dat/outfits/weapons/turreted_vulcan_gun.xml:10
 msgid ""
@@ -18074,7 +18109,7 @@ msgstr ""
 
 #: dat/outfits/weapons/vulcan_gun.xml:2
 msgid "Vulcan Gun"
-msgstr ""
+msgstr "バルカンガン"
 
 #: dat/outfits/weapons/vulcan_gun.xml:9
 msgid ""
@@ -18376,7 +18411,7 @@ msgstr "ケストレル"
 
 #: dat/ships/kestrel.xml:14 dat/ships/starbridge.xml:14
 msgid "Krain Industries"
-msgstr "クレイン・インダストリーズ"
+msgstr "クレインインダストリーズ"
 
 #: dat/ships/kestrel.xml:16
 msgid ""
@@ -18998,7 +19033,7 @@ msgstr ""
 
 #: dat/ships/zalek_drone_bomber.xml:2
 msgid "Za'lek Bomber Drone"
-msgstr "ザレク・ボマードローン"
+msgstr "ザレク・爆撃ドローン"
 
 #: dat/ships/zalek_drone_bomber.xml:12 dat/ships/zalek_drone_heavy.xml:12
 #: dat/ships/zalek_drone_light.xml:12 dat/ships/zalek_drone_scout.xml:12
@@ -19117,7 +19152,7 @@ msgstr ""
 
 #: dat/slots.xml:27
 msgid "Bioship Brains"
-msgstr "生きた船の脳"
+msgstr "生体船の脳"
 
 #: dat/slots.xml:28
 msgid ""
@@ -19129,7 +19164,7 @@ msgstr ""
 
 #: dat/slots.xml:33
 msgid "Bioship Shells"
-msgstr "生きた船の殻"
+msgstr "生体船の殻"
 
 #: dat/slots.xml:34
 msgid ""
@@ -19141,7 +19176,7 @@ msgstr ""
 
 #: dat/slots.xml:39
 msgid "Bioship Gene Drives"
-msgstr "生きた船の遺伝子駆動装置"
+msgstr "生体船の遺伝子駆動装置"
 
 #: dat/slots.xml:40
 msgid ""
@@ -19151,7 +19186,7 @@ msgstr ""
 
 #: dat/slots.xml:45
 msgid "Bioship Weapons"
-msgstr "生きた船の武器"
+msgstr "生体船の武器"
 
 #: dat/slots.xml:46
 msgid ""
@@ -23290,7 +23325,7 @@ msgstr "｢申しわけない。いまは忙しい｣"
 
 #: dat/comm.lua:381
 msgid "\"What part of 'on my way' don't you understand?\""
-msgstr "｢なあ､『自分の用事に戻る』のどこが理解できなかったんだ？｣"
+msgstr "｢なあ､『向かっている』のどこが理解できなかったんだ？｣"
 
 #: dat/comm.lua:385
 msgid "Pilot is already refueling you."
@@ -23310,7 +23345,7 @@ msgstr "あなたは %s しかもっていない。必要な #r%s#0 は�
 
 #: dat/comm.lua:450
 msgid "\"On my way.\""
-msgstr "｢自分の用事に戻る｣"
+msgstr "｢向かっている｣"
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -23573,7 +23608,7 @@ msgstr "新しい前途に導く"
 
 #: dat/events/discovery.lua:182
 msgid "The Collective"
-msgstr "共同体"
+msgstr "集合体"
 
 #: dat/events/discovery.lua:183
 msgid "Do Robots Dream of Electric Sheep?"
@@ -24351,15 +24386,15 @@ msgstr ""
 #. List of FLF flyers
 #: dat/events/dvaered/poster.lua:30
 msgid "This is an advertisement for the Dvaered Army."
-msgstr ""
+msgstr "これはドベーレッド軍の宣伝だ。"
 
 #: dat/events/dvaered/poster.lua:31
 msgid "Does this poster make you want to buy this book?"
-msgstr ""
+msgstr "この貼り紙は、あなたにこの本を買わせたがっている？"
 
 #: dat/events/dvaered/poster.lua:33
 msgid "The FLF has wrecked this Dvaered poster."
-msgstr ""
+msgstr "FLF がこのドベーレッドの貼り紙をめちゃめちゃにした。"
 
 #. Did the FLF wreck this poster?
 #. Create the NPC.
@@ -24371,11 +24406,11 @@ msgstr ""
 #. Create the vn scene
 #: dat/events/dvaered/poster.lua:49 dat/events/dvaered/poster.lua:83
 msgid "Poster"
-msgstr ""
+msgstr "貼り紙"
 
 #: dat/events/dvaered/poster.lua:49
 msgid "There is a poster on the wall."
-msgstr ""
+msgstr "壁に貼り紙がある。"
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -25195,19 +25230,19 @@ msgstr ""
 #. --
 #: dat/events/hired_escorts.lua:41 dat/events/hired_escorts.lua:42
 msgid "Hired Escorts"
-msgstr ""
+msgstr "雇われた護衛"
 
 #: dat/events/hired_escorts.lua:45
 msgid ""
 "\"Hi there! I'm looking to get some piloting experience. Here are my "
 "credentials. Would you be interested in hiring me?\""
-msgstr ""
+msgstr "｢やあ、こんにちは！　操縦の経験を積みたいと思っているんです。資格証明書はここにあります。わたしを雇うことに興味はありますか？｣"
 
 #: dat/events/hired_escorts.lua:46
 msgid ""
 "\"Hello! I'm looking to join someone's fleet. Here's my credentials. What do "
 "you say, would you like me on board?\""
-msgstr ""
+msgstr "｢こんにちは！　だれかの船団に加わりたいと思っているんです。資格証明書はここにあります。どうでしょうか、わたしを連れていきたいと思いますか？｣"
 
 #: dat/events/hired_escorts.lua:47
 msgid ""
@@ -25216,6 +25251,8 @@ msgid ""
 "Here's my info. Well, what do you think? Would you like to add me to your "
 "fleet?\""
 msgstr ""
+"｢やあ！　パイロットがいたら役に立ちそうですね！　わたしは今手が空いていて、請求は銀河でもいちばんな歩合になります。仕事は完璧だと約束しますよ！　"
+"わたしの情報はこれになります。さあ、どうしますか？　船団にわたしを加えたいですか？｣"
 
 #: dat/events/hired_escorts.lua:49
 #, lua-format
@@ -25228,6 +25265,13 @@ msgid ""
 "Money: %s\n"
 "Current total royalties: %.1f%% of mission earnings"
 msgstr ""
+"船の名前 : %s\n"
+"船 : %s\n"
+"頭金 : %s\n"
+"料金 : 任務売上の %.1f%%\n"
+"\n"
+"あなたの所持金 : %s\n"
+"現在の合計料金 : 任務売上の %.1f%%"
 
 #: dat/events/hired_escorts.lua:58
 #, lua-format
@@ -25238,6 +25282,11 @@ msgid ""
 "Deposit: %s\n"
 "Royalty: %.1f%% of mission earnings"
 msgstr ""
+"このパイロットは仕事をさがしているようだ。\n"
+"\n"
+"船 : %s\n"
+"頭金 : %s\n"
+"料金 : 任務売上の %.1f%%"
 
 #: dat/events/hired_escorts.lua:64
 msgid ""
@@ -25245,17 +25294,20 @@ msgid ""
 "\n"
 "Pilot credentials:"
 msgstr ""
+"このパイロットにしたいことはなんですか？\n"
+"\n"
+"パイロットの資格証明書 :"
 
 #. { ship = "Llama",       royalty = 0.05 },
 #: dat/events/hired_escorts.lua:154
 msgid "Pilot for Hire"
-msgstr ""
+msgstr "雇われパイロット"
 
 #. Clean up dead escorts so it doesn't build up, and create NPCs for
 #. existing escorts.
 #: dat/events/hired_escorts.lua:197 dat/events/hired_escorts.lua:465
 msgid "This is one of the pilots currently under your wing."
-msgstr ""
+msgstr "この人は現在あなたの飛行隊にいるパイロットだ。"
 
 #. Ignore on uninhabited and planets without bars
 #. Create NPCs for pilots you can hire.
@@ -25266,27 +25318,27 @@ msgstr ""
 #: dat/events/hired_escorts.lua:303 dat/events/hired_escorts.lua:336
 #, lua-format
 msgid "'%s' (%s) has left your employment."
-msgstr ""
+msgstr "｢%s｣ (%s) があなたの雇用のもとから外れました。"
 
 #. Pilot is no longer employed by the player
 #. Asks the player whether or not they want to fire the pilot
 #: dat/events/hired_escorts.lua:364
 msgid "Fire pilot"
-msgstr ""
+msgstr "パイロットの解雇"
 
 #: dat/events/hired_escorts.lua:364
 msgid "Do nothing"
-msgstr ""
+msgstr "なにもしない"
 
 #: dat/events/hired_escorts.lua:367
 #, lua-format
 msgid "Are you sure you want to fire %s? This cannot be undone."
-msgstr ""
+msgstr "ほんとうに%sを解雇したいですか？　これはもとに戻せません。"
 
 #: dat/events/hired_escorts.lua:373
 #, lua-format
 msgid "You fired '%s' (%s)."
-msgstr ""
+msgstr "あなたは ｢%s｣ (%s) を解雇しました。"
 
 #. Pilot was hailed by the player
 #. Check if player attacked his own escort
@@ -25297,20 +25349,20 @@ msgstr ""
 #: dat/events/hired_escorts.lua:400
 #, lua-format
 msgid "You turned on your hired escort '%s' (%s)."
-msgstr ""
+msgstr "雇った護衛 ｢%s｣ (%s) が敵になりました。"
 
 #. Escort got killed
 #: dat/events/hired_escorts.lua:412
 #, lua-format
 msgid "'%s' (%s) was killed in combat."
-msgstr ""
+msgstr "｢%s｣ (%s) が戦闘で亡くなりました。"
 
 #. Approaching hired pilot at the bar
 #. Approaching unhired pilot at the bar
 #. Player rejected offer
 #: dat/events/hired_escorts.lua:445
 msgid "You don't have enough credits to pay for this pilot's deposit."
-msgstr ""
+msgstr "このパイロットの頭金を払えるだけのクレジットがありません。"
 
 #: dat/events/hired_escorts.lua:449
 msgid ""
@@ -25318,6 +25370,8 @@ msgid ""
 "from missions, meaning you will lose credits when doing missions. Are you "
 "sure you want to hire this pilot?"
 msgstr ""
+"このパイロット雇うと、あなたの任務での稼ぎをこえた料金を支払うことになります。これは任務を遂行するとクレジットを失うという意味です。ほんとうにこのパイロッ"
+"トを雇いますか？"
 
 #: dat/events/hired_escorts.lua:471
 #, lua-format
@@ -26160,7 +26214,7 @@ msgstr ""
 #. Special
 #: dat/events/minerva/station.lua:50
 msgid "Patron"
-msgstr ""
+msgstr "常連"
 
 #: dat/events/minerva/station.lua:53
 msgid "A gambling patron enjoying their time at the station."
@@ -28609,8 +28663,7 @@ msgid ""
 "\"I wouldn't travel north from Alteris if I were you, unless you're a good "
 "fighter! That area of space has really gone down the drain since the "
 "Incident.\""
-msgstr ""
-"｢もしわたしがあなたなら、オルタリスから北へは行かないね。戦いがうまいんじゃなければだけど！　あの宙域は事象からこっち、ほんとうにだめになってるよ｣"
+msgstr "｢自分だったら、オルタリスから北へは行かないね。戦いがうまいんじゃなければだけど！　あの宙域は事象からこっち、ほんとうにだめになってるよ｣"
 
 #: dat/events/neutral/npc.lua:69
 msgid ""
@@ -28819,7 +28872,7 @@ msgid ""
 "boom! It got burnt to a crisp! Even now, cycles later, I still can't believe "
 "it.\""
 msgstr ""
-"｢信じられる？　ソロムへ行って自分の祖先を見つけようとしてたんですよ。そしたらバーン！　かりかりに焼けてしまった！　何周期もたった今でも信じられない｣"
+"｢信じられる？　ソロムへ行って自分の祖先を見つけようとしてたんだよ。そしたらバーン！　かりかりに焼けてしまった！　何周期もたった今でも信じられない｣"
 
 #: dat/events/neutral/npc.lua:108
 msgid ""
@@ -28827,8 +28880,8 @@ msgid ""
 "own bioships though, we have to make do with synthetic constructs just like "
 "everyone else.\""
 msgstr ""
-"｢はい、それは事実です。われわれの軍用船は生きています。もっとも、われわれの一般の人たちは生きた船を所有することはありませんので、ほかの人びととまったく同"
-"じように、人工的に作られたものでまにあわせなければなりません｣"
+"｢はい、それは事実です。われわれの軍用船は生きています。もっとも、われわれの一般の人たちは生体船を所有することはありませんので、ほかの人びととまったく同じ"
+"ように、人工的に作られたもので間にあわせなければなりません｣"
 
 #: dat/events/neutral/npc.lua:109
 msgid ""
@@ -28870,7 +28923,7 @@ msgstr "｢ソロミド？　ハハッ！　われわれザレクがこの銀河
 msgid ""
 "\"I don't understand why we bother sending our research results to the "
 "Empire. These asshats can't understand the simplest formulas!\""
-msgstr "｢わざわざ研究結果を帝国に送っている理由が理解できない。あのばかたちはいちばん簡単な公式も理解できないんだよ！｣"
+msgstr "｢わざわざ研究結果を帝国に送っている理由が理解できない。あのバカたちはいちばん簡単な公式も理解できないんだよ！｣"
 
 #: dat/events/neutral/npc.lua:117
 msgid ""
@@ -28880,12 +28933,14 @@ msgid ""
 "current iterate, the next one will lead to a greater value of your objective "
 "function. There are still too many people who don't know this!\""
 msgstr ""
+"｢たくさんの最適化アルゴリズムが、目的とする関数が凸であることを要求するのはなぜだか知ってる？　極小値の問題だけでなく、関数が現在の繰り返し周辺で局所的に"
+"凹んでいると、次回は目的関数の値がさらに大きくなることにつながるからだよ。これを知らない人がまだあまりに多すぎるね！｣"
 
 #: dat/events/neutral/npc.lua:118
 msgid ""
 "\"There are so many algorithms for solving the non-linear eigenvalues "
 "problem, I never know which one to choose. Which one do you prefer?\""
-msgstr ""
+msgstr "｢非線形固有値問題を解くアルゴリズムはとてもたくさんあるよね。どれを選べばいいのかわかったことがない。あなたの好みは？｣"
 
 #: dat/events/neutral/npc.lua:119
 msgid ""
@@ -28895,18 +28950,20 @@ msgid ""
 "back at that time! Imagine: they had to wait for hours to solve a problem "
 "with only a dozen billion degrees of freedom!\""
 msgstr ""
+"｢最近とても興味をひかれた会議に参加したんだよ。宇宙時代以前の応用数学の歴史についてだった。あんな原始時代でも数値代数が使われていたんだね。あの当時の人た"
+"ちは同次多項式計算機も持ってなかったんだよ！　想像してほしい。自由度が 100 億しかない問題を解くのに何時間も待たなきゃならないってことを！｣"
 
 #: dat/events/neutral/npc.lua:120
 msgid ""
 "\"Last time I had to solve a deconvolution problem, its condition number was "
 "so high that its inverse reached numerical zero on Octuple Precision!\""
-msgstr ""
+msgstr "｢最後に逆たたみこみ問題を解かなきゃならなかったとき、条件数が大きすぎて逆数が 8 倍精度でも数値的に 0 になっちゃったんだよ！｣"
 
 #: dat/events/neutral/npc.lua:121
 msgid ""
 "\"I am worried about my sister. She's on trial for 'abusive self-citing' and "
 "the public prosecutor has requested a life sentence.\""
-msgstr ""
+msgstr "｢妹のことが心配で｡『自己引用の悪用』の裁判で、検察官が終身刑を求刑したんだよ｣"
 
 #: dat/events/neutral/npc.lua:122
 msgid ""
@@ -28917,6 +28974,9 @@ msgid ""
 "lab posted a positive review of the president of the Za'lek central "
 "scientific recruitment committee.\""
 msgstr ""
+"｢アトリッサ中央生産研究所で精密機械加工の教授のいすが二つ空いたんだ。それでビディマン先進加工研究所はなしだけど、今週期に 3 人の教授が退職したから、そ"
+"れ以来増員が必要になってるのはみんな知ってる。アトリッサの研究所の一員が、ザレク中央科学募集委員会の会長に好意的な報告を公表したのは、それが理由だっていわ"
+"れてるね｣"
 
 #: dat/events/neutral/npc.lua:123
 msgid ""
@@ -28925,6 +28985,8 @@ msgid ""
 "used to be very successful until it was nuked by mistake by a warlord during "
 "an invasion of the planet.\""
 msgstr ""
+"｢われわれの研究所が銀河で上位を占めているにしても、ほかの党派も自分たちの研究所をもっている。たとえば、かつてドベーア・プライム先進メイスロケット研究所は"
+"とても成功していた。ある軍閥領袖が惑星を侵略中にまちがって核攻撃するまではだけどね｣"
 
 #: dat/events/neutral/npc.lua:126
 msgid ""
@@ -28932,6 +28994,8 @@ msgid ""
 "during the upload process? That's why we're very careful to not allow our "
 "brains to be damaged, even a little.\""
 msgstr ""
+"｢脳のごくわずかな小片の傷でさえ、アップロード処置中には死につながりかねないって知ってる？　"
+"脳が傷つく可能性をとても注意して避けている理由はそれなんだ。ほんのすこしであってもね｣"
 
 #: dat/events/neutral/npc.lua:127
 msgid ""
@@ -28939,6 +29003,8 @@ msgid ""
 "safely uploaded. It's okay, though; he had a long and fulfilling life, for a "
 "non-uploaded human, that is.\""
 msgstr ""
+"｢わたしの父は不運にも若いときに頭を打ってしまってね、無事にアップロードできなかったんだよ。まあ、しかたがないね。長生きして満たされた人生を送ったんだし。"
+"アップロードされない人間としてはだけど、もちろん｣"
 
 #: dat/events/neutral/npc.lua:128
 msgid ""
@@ -28947,6 +29013,8 @@ msgid ""
 "for him before he could watch it, so once he got uploaded, he deleted that "
 "memory and watched it with a fresh perspective. Cool, huh?\""
 msgstr ""
+"｢アップロードしてひとつすばらしいのは、覚えておきたくないことを選んで忘れられるってことだね。曾祖父はねたばらしされてから映画を見たことがあったので、アッ"
+"プロードされたらその記憶を消して、新たな視点でその映画を見たんだ。気がきいてるよね？｣"
 
 #: dat/events/neutral/npc.lua:129
 msgid ""
@@ -28954,6 +29022,8 @@ msgid ""
 "we lead boring lives before then. We have quite easy and satisfying "
 "biological lives before uploading.\""
 msgstr ""
+"｢われわれの人生で最高な時はアップロードされたあとなんだよ。でもそれは、そのまえの人生がつまらないものになるという意味じゃない。アップロードのまえには、か"
+"なり気楽で満たされた生物学的人生がある｣"
 
 #: dat/events/neutral/npc.lua:130
 msgid ""
@@ -28961,6 +29031,8 @@ msgid ""
 "forced to. Any uploaded Thurion can choose to end their own life if they "
 "want, though few have chosen to do so.\""
 msgstr ""
+"｢アップロードは永遠に生きられるようにしてくれる。でもそれは無理やりという意味じゃない。アップロードされたザーリオンは、望めばだれでも自分自身の人生の終わ"
+"りを選ぶことができる。そうすることを選ぶのはほとんどいないけどね｣"
 
 #: dat/events/neutral/npc.lua:131
 msgid ""
@@ -28968,6 +29040,8 @@ msgid ""
 "that, well, what kind of person would turn down the chance to live a second "
 "life on the network?\""
 msgstr ""
+"｢アップロードはわれわれの社会ではひとつの選択なんだよ。だれもそれを強制されてはいない。まあ、どんな人がネットワーク上で次の人生を生きる機会を拒否するのか"
+"ってだけのことだよ｣"
 
 #: dat/events/neutral/npc.lua:132
 msgid ""
@@ -28975,6 +29049,8 @@ msgid ""
 "benefited from it. The nebula that resulted gave us a great cover and sealed "
 "off the Empire from us. It also got rid of those dangerous Proterons.\""
 msgstr ""
+"｢われわれが事象に影響をうけなかったのは運がよかったよ。それどころかちょっとためになったね。できた星雲はうまい隠れみのを与えてくれたし、帝国はしめだされて"
+"る。そのうえあの危険なプロテロンも追い払えたしね｣"
 
 #: dat/events/neutral/npc.lua:133
 msgid ""
@@ -28982,18 +29058,20 @@ msgid ""
 "our way of life to the rest of the galaxy, so that everyone can experience "
 "the joy of being uploaded.\""
 msgstr ""
+"｢われわれは銀河の支配を望んでいない。そうはいっても、われわれの生きかたを銀河のよそへ広げていきたいとは思ってる。そうなれば、みんなアップロードの喜びを経"
+"験できるわけだからね｣"
 
 #: dat/events/neutral/npc.lua:134
 msgid ""
 "\"I think you're from the outside, aren't you? That's awesome! I've never "
 "met a foreigner before. What's it like outside the nebula?\""
-msgstr ""
+msgstr "｢思うんだけど、あなたは外から来たんだよね？　それはすごいな！　いままでよその人を見たことがなかったんだよ。星雲の外はどんな感じ？｣"
 
 #: dat/events/neutral/npc.lua:135
 msgid ""
 "\"We actually make occasional trips outside of the nebula, though only "
 "rarely, and we always make sure to not get discovered by the Empire.\""
-msgstr ""
+msgstr "｢じつはわれわれは、ときどき星雲の外へ行っているんだよ。ほんとにまれなことだし、いつも帝国には見つからないように確認してるけどね｣"
 
 #: dat/events/neutral/npc.lua:136
 msgid ""
@@ -29002,53 +29080,55 @@ msgid ""
 "they overcame those odds, the Incident blew up their homeworld. The fact "
 "that they're still thriving now despite that is phenomenal, I must say.\""
 msgstr ""
+"｢ソロミドにはつらい歴史があるね。くわしく聞いたことある？　最初は帝国によって死の惑星に閉じこめられて、絶滅を運命づけられた。それから賭けに勝つと、事象が"
+"母世界を吹き飛ばした。それにもかかわらずいまだ繁栄しているという事実は、驚異といわなきゃならないね｣"
 
 #: dat/events/neutral/npc.lua:139
 msgid ""
 "\"Our system of government is clearly superior to all others. Nothing could "
 "be more obvious.\""
-msgstr ""
+msgstr "｢われわれの政府組織はよそよりあきらかにすぐれている。これ以上ないくらいあきらかだ｣"
 
 #: dat/events/neutral/npc.lua:140
 msgid ""
 "\"The Incident really set back our plan for galactic dominance, but that was "
 "only temporary.\""
-msgstr ""
+msgstr "｢事象でわれわれの銀河支配計画はほんとうに遅れてしまった。でもそれは一時的なことでしかない｣"
 
 #: dat/events/neutral/npc.lua:141
 msgid ""
 "\"We don't have time for fun and games. The whole reason we're so great is "
 "because we're more productive than any other society.\""
-msgstr ""
+msgstr "｢娯楽やゲームに使う時間はない。われわれがこれだけ偉大なのは、われわれがほかのどの社会よりも生産性が高いというのが完全な理由になる｣"
 
 #: dat/events/neutral/npc.lua:142
 msgid ""
 "\"We are superior, so of course we deserve control over the galaxy. It's our "
 "destiny.\""
-msgstr ""
+msgstr "｢われわれはまさっている。だからもちろん、銀河じゅうを支配するに値する。それがわれわれの運命だ｣"
 
 #: dat/events/neutral/npc.lua:143
 msgid "\"The Empire is weak, obsolete. That is why we must replace them.\""
-msgstr ""
+msgstr "｢帝国は弱くて時代遅れだ。われわれが取って代わらなければならなかったのは、それが理由だ｣"
 
 #: dat/events/neutral/npc.lua:144
 msgid ""
 "\"Slaves? Of course we're not slaves. Slaves are beaten and starved. We are "
 "in top shape so we can serve our country better.\""
-msgstr ""
+msgstr "｢奴隷？　もちろんわれわれは奴隷ではない。奴隷というのは打たれて飢えているものだ。われわれは最高な体調だから、国によりよく仕えることができる｣"
 
 #: dat/events/neutral/npc.lua:145
 msgid ""
 "\"I can't believe the Empire continues to allow families. So primitive. "
 "Obviously, all this does is make them less productive.\""
-msgstr ""
+msgstr "｢帝国が家族を許可しつづけているのが信じられない。原始的だからな。あきらかに、これは帝国の生産性を低くするだけだ｣"
 
 #: dat/events/neutral/npc.lua:146
 msgid ""
 "\"The exact cause of the Incident is a tightly-kept secret, but the "
 "government says it was caused by the Empire's inferiority. I would expect "
 "nothing less.\""
-msgstr ""
+msgstr "｢事象の正確な原因は固く守られた秘密だ。しかし政府は帝国の下等性が原因だといっている。期待できる最小限だな｣"
 
 #: dat/events/neutral/npc.lua:147
 msgid ""
@@ -29057,6 +29137,8 @@ msgid ""
 "the perfect society we are, of course we would never cause such a massive "
 "catastrophe.\""
 msgstr ""
+"｢二、三カ月まえに数人の不信心者に出くわした。いいか、われわれプロテロンが事象の原因だと主張してるんだ！　"
+"なんともばかげた中傷だな。完璧な社会なんだ、われわれは。もちろんわれわれはけっしてあのような巨大破局の原因ではない｣"
 
 #: dat/events/neutral/npc.lua:150
 msgid ""
@@ -29064,6 +29146,8 @@ msgid ""
 "Warlords! Can't they just shoot at each other instead of threatening us? If "
 "it wasn't for the Liberation Front...\""
 msgstr ""
+"｢われわれは自主性をたいせつにしているんだ。あのドベーレッドの軍閥領袖たちに統治されることなど望んでいない！　"
+"われわれを脅迫するんじゃなくて、おたがい撃ちあうだけにできないものかな？　自由戦線が原因じゃないならね……｣"
 
 #: dat/events/neutral/npc.lua:151
 msgid ""
@@ -29071,6 +29155,8 @@ msgid ""
 "to be colonized by humans. That makes our worlds the oldest human "
 "settlements in the galaxy, now that Earth is gone.\""
 msgstr ""
+"｢銀河の歴史を勉強したことある？　"
+"最初に人類が植民地化したのは辺境世界なんだよ。われわれの世界が銀河にある最古の人類居留地ってことになる。いまでは地球がなくなったからね｣"
 
 #: dat/events/neutral/npc.lua:152
 msgid ""
@@ -29078,6 +29164,8 @@ msgid ""
 "Sirius zealots on the other. Sometimes I worry that in a few decacycles, the "
 "Frontier will no longer exist.\""
 msgstr ""
+"｢われわれには領域を侵略するドベーレッドが片側にいて、シリウスの熱狂者たちがもう片側にいる。二、三十周期たったら辺境はもう存在していないんじゃないかって、"
+"ときどき心配になるよ｣"
 
 #: dat/events/neutral/npc.lua:153
 msgid ""
@@ -29085,6 +29173,8 @@ msgid ""
 "Growth colony ship on display in one of the big rooms. Even scaled down like "
 "that, it's massive! Imagine how overwhelming the real ones must have been.\""
 msgstr ""
+"｢辺境博物館に行ったことは？　大きな部屋のひとつに、第一期拡大植民船の縮小模型が展示してあってね。小さくしてあるとはいえ、とても大きいんだよ！　"
+"ほんものだったらどれだけ圧倒されるか想像してほしいね｣"
 
 #: dat/events/neutral/npc.lua:154
 msgid ""
@@ -29094,6 +29184,8 @@ msgid ""
 "it. Some are said to have mysteriously disappeared. I wonder what happened "
 "to them?\""
 msgstr ""
+"｢真の辺境世界は 12 個ある。なぜなら 12 の植民船が第一期拡大のときに旅を成功して終えたからだよ。でも初めは 20 隻の植民船があったのを知ってる？"
+"　8 隻はまるで成功しなかった。あるものは不可解にも消え去ったと言われてる。なにがおきたんだろうね？｣"
 
 #: dat/events/neutral/npc.lua:155
 msgid ""
@@ -29101,6 +29193,8 @@ msgid ""
 "leading directly back to Earth. But I don't mind. I'm happy living here, and "
 "I wouldn't want to move anywhere else.\""
 msgstr ""
+"｢われわれはこの辺境で多くを持っていない。直接地球にまでさかのぼれる長い歴史以外にはね。でも気にはしてないよ。ここで生きるのを楽しんでるし、ほかのどこかへ"
+"引っ越したいとも思ってない｣"
 
 #: dat/events/neutral/npc.lua:156
 msgid ""
@@ -29109,31 +29203,32 @@ msgid ""
 "Frontier, the Frontier Front for Liberation, or the Liberal Frontier's Front!"
 "\""
 msgstr ""
+"｢辺境自由戦線を知ってる？　辺境のために戦うゲリラ活動だよ。辺境における自由戦線や自由のための辺境戦線や自由な辺境の戦線と混同しないでほしい！｣"
 
 #: dat/events/neutral/npc.lua:159
 msgid ""
 "\"I can't stand Dvaereds. I just want to wipe them all off the map. Don't "
 "you?\""
-msgstr ""
+msgstr "｢ドベーレッドには我慢できない。とにかくあいつらを地図から完全に消し去ってしまうことだけを望んでるよ。あなたはちがうの？｣"
 
 #: dat/events/neutral/npc.lua:160
 msgid ""
 "\"One of these days, we will completely rid the Frontier of Dvaered "
 "oppressors. Mark my words!\""
-msgstr ""
+msgstr "｢そのうちに、われわれが辺境からドベーレッドの迫害者を完全に取り除く。覚えておくように！｣"
 
 #: dat/events/neutral/npc.lua:161
 msgid ""
 "\"Have you ever wondered about our chances of actually winning over the "
 "Dvaereds? Sometimes I worry a little.\""
-msgstr ""
+msgstr "｢じっさいわれわれがドベーレッドに勝つ見こみはあるのかって思ったことある？　ときどきわたしもちょっと心配になる｣"
 
 #: dat/events/neutral/npc.lua:162
 msgid ""
 "\"I was in charge of a bombing run recently. The mission was a success, but "
 "I lost a lot of comrades. Oh well... this is the sacrifice we must make to "
 "resist the oppressors.\""
-msgstr ""
+msgstr "｢最近爆撃行の担当になった。任務は成功したんだけど、仲間をたくさん失ったよ。ああ、まあ……これは圧政者に抵抗するためにはしかたのない犠牲だね｣"
 
 #: dat/events/neutral/npc.lua:163
 msgid ""
@@ -29142,6 +29237,9 @@ msgid ""
 "Dvaered threat is ended, we'll still have those Sirius freaks to worry "
 "about. I don't think our job will ever end in our lifetimes.\""
 msgstr ""
+"｢われわれがドベーレッドを追い払ったあとはどうなるのかって？　辺境が圧政にたいして安全になるまで、われわれの仕事が真に終わりをむかえることはけっしてない。"
+"ドベーレッドの脅迫が終わったとしても、いままでどおりシリウスの熱狂者たちを心配することになるだろう。われわれの仕事が自分たちの人生のあいだのどこかで終わる"
+"とは考えていない｣"
 
 #: dat/events/neutral/npc.lua:164
 msgid ""
@@ -29149,12 +29247,14 @@ msgid ""
 "didn't, we'd have a really hard time landing on Frontier planets, what with "
 "the kinds of operations we perform against the Dvaereds.\""
 msgstr ""
+"｢そう、それは事実だよ。辺境の公職にあるたくさんの人たちがわれわれの活動に資金を提供してる。してもらえなかったら、辺境の惑星に着陸するのはほんとうにひと苦"
+"労ってことになるだろうね。あらゆる活動でわれわれはドベーレッドに対抗しているんだよ｣"
 
 #: dat/events/neutral/npc.lua:165
 msgid ""
 "\"Yeah, some civilians die because of our efforts, but that's just a "
 "sacrifice we have to make. It's for the greater good.\""
-msgstr ""
+msgstr "｢そのとおり。われわれの活動のおかげで死ぬ民間人もいる。しかしそれはしかたのない犠牲なんだよ。もっと大きな善のためだね｣"
 
 #: dat/events/neutral/npc.lua:166
 msgid ""
@@ -29162,6 +29262,8 @@ msgid ""
 "without purpose. Our operations do have a purpose: to drive out the Dvaered "
 "oppressors from the Frontier.\""
 msgstr ""
+"｢いや、われわれはテロリストじゃない。兵士だよ。真のテロリストは目的もなく殺して破壊するんだ。われわれの作戦にはまちがいなく目的がある。ドベーレッドの圧政"
+"者を辺境から駆逐することだ｣"
 
 #: dat/events/neutral/npc.lua:167
 msgid ""
@@ -29169,6 +29271,8 @@ msgid ""
 "encroaching on Frontier territory? It's the most ridiculous thing I ever "
 "heard.\""
 msgstr ""
+"｢なぞなぞだよ。ドベーレッドが辺境領域を侵略して始まったのに、どうしてわれわれがテロリストになるのでしょうか？　"
+"いままで聞いたなかではいちばんばかばかしいやつだね｣"
 
 #: dat/events/neutral/npc.lua:168
 msgid ""
@@ -29177,20 +29281,22 @@ msgid ""
 "reason could they possibly have them there for if not to set up an invasion?"
 "\""
 msgstr ""
+"｢うーん、ない。ドベーレッドがじっさいに辺境船を攻撃したことはないよ。でもそれは問題じゃない。ドベーレッドは辺境領域に船を入れている。侵略の用意のほかに、"
+"どんな理由があるんだろうね？｣"
 
 #: dat/events/neutral/npc.lua:171
 msgid "\"Hi mate. Money or your life! Heh heh, just messing with you.\""
-msgstr ""
+msgstr "｢よう、相棒。かねか命か！　ハハッ、ちょっとふざけただけだよ｣"
 
 #: dat/events/neutral/npc.lua:172
 msgid "\"Hey, look at these new scars I got!\""
-msgstr ""
+msgstr "｢ちょっと、新しくついたこの傷をみてくれ！｣"
 
 #: dat/events/neutral/npc.lua:173
 msgid ""
 "\"Have you heard of the Pirates' Code? They're more guidelines than rules..."
 "\""
-msgstr ""
+msgstr "｢海賊の慣例について聞いたことあるか？　規則というより基準なんだが……｣"
 
 #: dat/events/neutral/npc.lua:174
 msgid ""
@@ -29198,24 +29304,26 @@ msgid ""
 "got a pretty credit chip outta her wallet last time I saw her, and I'd do it "
 "again.\""
 msgstr ""
+"｢ばあさんからまえにいわれた｡『海賊を信じるな』って。まあ、ばあさんは正しかったよ！　"
+"最後に会ったとき、ばあさんの財布からクレジットチップをたんまりいただいたんだ。またやろうと思ってる｣"
 
 #: dat/events/neutral/npc.lua:175
 msgid ""
 "\"I don't understand why some pirates talk like 16th-century Earth pirates "
 "even though that planet is literally dead.\""
-msgstr ""
+msgstr "｢16 世紀の地球の海賊みたいなしゃべりかたをする海賊がいるってのは理解できないな。あの惑星は文字どおり死んでるってのに｣"
 
 #: dat/events/neutral/npc.lua:176
 msgid ""
 "\"I may be a pirate who blows up ships and steals for a living, but that "
 "inner nebula still kind of freaks me out.\""
-msgstr ""
+msgstr "｢生活のために船を吹き飛ばしたり盗んだりしてる海賊かもしれないけど、あの星雲内部にはまだちょっとおじけづくね｣"
 
 #: dat/events/neutral/npc.lua:177
 msgid ""
 "\"Damn Empire stopped my heist a few decaperiods ago. Just wait'll they see "
 "me again...\""
-msgstr ""
+msgstr "｢くそったれ帝国が二、三十時限まえに強盗するのをとめやがった。また会う時をしっかり待ってろよ……｣"
 
 #: dat/events/neutral/npc.lua:178
 msgid ""
@@ -29223,6 +29331,7 @@ msgid ""
 "let me in because I'm a 'small-time pirate'! Sometimes I think I'll never "
 "make it in this line of work...\""
 msgstr ""
+"｢行ってみたい海賊一味の世界があるんだけど、おれは『けちな海賊』だから入れてくれないんだよ！　ときどきこの商売ではうまくいかないんじゃないかって感じる｣"
 
 #: dat/events/neutral/npc.lua:179
 msgid ""
@@ -29231,6 +29340,8 @@ msgid ""
 "once met a pirate who kept flying his standard Lancelot. Let's just say, he "
 "didn't make it very far.\""
 msgstr ""
+"｢忘れるなよ。真の海賊とは海賊船を飛ばしてるやつだ！　あの哀れな大衆船で飛びまわってるなら、あまり長いあいだ自分の評判を維持することはできないだろうね。ま"
+"えにふつうのランスロットを飛ばしつづけてる海賊に会ったことがあるよ。ちょっといわせてもらうが、そいつはあまりたいした成功をしなかった｣"
 
 #: dat/events/neutral/npc.lua:180
 msgid ""
@@ -29239,6 +29350,9 @@ msgid ""
 "done for. Ha! As if! It barely even made a difference. We just relocated to "
 "New Haven and resumed business as usual.\""
 msgstr ""
+"｢ヘイブンが破壊されるまえからやってるんだよ、なあ！　"
+"おかしな時代だったよ。海賊はみんなうろたえてるし、帝国はおれたちが終わったと思ってかっさいしてるし。ハッ！　まさかな！　"
+"変化をおこすことさえほとんどなかったよ。たんにニューヘイブンへ引っ越して、いつもどおりの仕事を再開しただけだ｣"
 
 #: dat/events/neutral/npc.lua:181
 msgid ""
@@ -29246,6 +29360,8 @@ msgid ""
 "can you do? I could get a fake ID and pretend to be someone else but I'd get "
 "caught eventually and I'd lose my fame as a pirate.\""
 msgstr ""
+"｢なあ、この仕事には偶然ついたんだ、じつは。だがどうしようもなかった。偽の身分証明書を手に入れて、他人のふりができたんだけど、ついにばれて海賊としての評判"
+"を失ったんだよ｣"
 
 #: dat/events/neutral/npc.lua:182
 msgid ""
@@ -29253,6 +29369,7 @@ msgid ""
 "contraband as I can before I get caught. It's great fun, and finding out "
 "that my identity's been discovered gives me a rush!\""
 msgstr ""
+"｢好きなことのひとつは、偽の身分証明書を買って、ばれるまえにできるだけ密輸品を輸送することだな。すごく楽しいし、身元がばれたのがわかると心がおどるんだ！｣"
 
 #: dat/events/neutral/npc.lua:183
 msgid ""
@@ -29262,6 +29379,9 @@ msgid ""
 "things are way more exciting for normies, but I don't regret my choice one "
 "bit!\""
 msgstr ""
+"｢この仕事を始めた当時は、できることといえば小包をほかのやつらに配達してまわることだけだった。そのころは海賊になるのがほんとうに難しかったが、何十時限もそ"
+"んなことしてたらあまりに退屈になったんだ。このごろでは物事は大衆にとってはるかにはらはらするようになってるけど、自分の選択はこれっぽっちも後悔してないね！"
+"｣"
 
 #: dat/events/neutral/npc.lua:184
 msgid ""
@@ -29269,28 +29389,30 @@ msgid ""
 "mean, I respect ya more if you're flying a Goddard than if you're flying a "
 "civilian Lancelot, but the best pirates fly the good old Pirate Kestrel!\""
 msgstr ""
+"｢ほんとうに大きな船を飛ばすというのは感動的だが、まだ海賊船にはない。つまり、民間船のランスロットを飛ばすより、ゴダードを飛ばしてたほうが尊敬するってこと"
+"だよ。でも最高の海賊は古きよき海賊ケストレルを飛ばすんだ！｣"
 
 #: dat/events/neutral/npc.lua:187
 msgid "\"Just another link in the Great Chain, right?\""
-msgstr ""
+msgstr "｢月なみな大いなる連鎖へのつながりってやつだね？｣"
 
 #: dat/events/neutral/npc.lua:188
 msgid ""
 "\"You win some, you lose some, but if you don't try you're never going to "
 "win.\""
-msgstr ""
+msgstr "｢勝つこともあり、負けることもある。でも試さないと、けっして勝つことはない｣"
 
 #: dat/events/neutral/npc.lua:189
 msgid ""
 "\"If you don't watch the markets then you'll be hopping between planets in a "
 "jury-rigged ship in no time.\""
-msgstr ""
+msgstr "｢市場を注視していないと、安物の船で時間に追われて惑星から惑星へと飛びまわることになるよ｣"
 
 #: dat/events/neutral/npc.lua:190
 msgid ""
 "\"Them blimming pirates, stopping honest folk from making an honest living - "
 "it's not like we're exploiting the needy!\""
-msgstr ""
+msgstr "｢とんでもない海賊の連中は、正直者が正直に生きていくのをじゃましてる⸺うちらが貧乏人を食いものにしてるんじゃない！｣"
 
 #. Gameplay tip messages.
 #. ALL NPCs have a chance to say one of these lines instead of a lore message.
@@ -29300,6 +29422,7 @@ msgid ""
 "\"I heard you can set your weapons to only fire when your target is in "
 "range, or just let them fire when you pull the trigger. Sounds handy!\""
 msgstr ""
+"｢目標が射程内にあるときだけ発砲するように武器を設定できるんだって聞いたよ。そうしなかったときは、たんに引き金をしぼると発砲する。便利そうだね！｣"
 
 #: dat/events/neutral/npc.lua:197
 #, lua-format
@@ -29308,6 +29431,8 @@ msgid ""
 "spaceport operators and land anyway? Just hail the planet with %s, and click "
 "the bribe button! Careful though, it doesn't always work.\""
 msgstr ""
+"｢惑星があなたを好ましい人物じゃないと思っていても、宇宙港の通信士にわいろを贈ると、どうにか着陸できることがよくあるって知ってる？　%s "
+"で惑星に呼びかけて、わいろボタンを押すだけでいいんだよ！　それでも注意したほうがいい。いつも効くわけじゃないからね｣"
 
 #: dat/events/neutral/npc.lua:198
 msgid ""
@@ -29315,6 +29440,8 @@ msgid ""
 "mission computer, giving them a chance to get back into their good graces. "
 "It can get really expensive for serious offenders though!\""
 msgstr ""
+"｢多くの党派がミッションコンピューターで犯罪者たちに社会復帰課程を提供して、親切心を取り戻す機会を与えてる。もっとも、重犯罪者にはほんとうに高くつくことが"
+"あるけどね！｣"
 
 #: dat/events/neutral/npc.lua:199
 msgid ""
@@ -29323,6 +29450,8 @@ msgid ""
 "actually make it harder for them to lock on to your ship by equipping "
 "scramblers or jammers. Scout class ships are also harder to target.\""
 msgstr ""
+"｢この最新式のミサイルシステムってやつは！　最初に目標を捕捉しないと発射することもできないよ！　でも同じことが敵にも当てはまる。じっさい、スクランブラーや"
+"ジャマーを装備すれば、敵が自分の船を捕捉するのを難しくすることができる。偵察船に分類される船も、捕捉するのが難しいね｣"
 
 #: dat/events/neutral/npc.lua:200
 msgid ""
@@ -29330,6 +29459,8 @@ msgid ""
 "Well, it seems you need an outfitter to change equipment, and a shipyard to "
 "change ships! Bet you didn't know that.\""
 msgstr ""
+"｢どうして船や装備を変えられない惑星があるのか知ってる？　さて、装備を変えるには艤装所が、船を変えるには造船所が必要なようだよ！　"
+"あなたは知らなかったと断言するね｣"
 
 #: dat/events/neutral/npc.lua:201
 msgid ""
@@ -29338,6 +29469,8 @@ msgid ""
 "can buy 500 at a time! You can actually do that with outfits too, but why "
 "would you want to buy 50 laser cannons?\""
 msgstr ""
+"｢商品取引はしてる？　#bコントロールキー#0を押しておくと一度に 50 買えるよ。そして#bシフトキー#0なら 100 買える。両方同時に押しておくと "
+"500 買えるんだ！　じつは艤装品についても同じことができる。でもレーザーキャノンを 50 個買いたいなんて思う？｣"
 
 #: dat/events/neutral/npc.lua:202
 msgid ""
@@ -29345,18 +29478,20 @@ msgid ""
 "panel and abort the mission. There's no penalty for doing it, so don't "
 "hesitate to try the mission again later.\""
 msgstr ""
+"｢やっている任務がちょっと間にあわなければ、情報パネルを開けば任務を中止できるよ。そうしても罰金はない。だからためらわずに、またあとでその任務をやってみれ"
+"ばいい｣"
 
 #: dat/events/neutral/npc.lua:203
 msgid ""
 "\"Some weapons have a different effect on shields than they do on armor. "
 "Keep that in mind when equipping your ship.\""
-msgstr ""
+msgstr "｢一部の武器は、シールドと装甲では異なる効果がある。船に装備するときには忘れないように｣"
 
 #: dat/events/neutral/npc.lua:204
 msgid ""
 "\"Afterburners can speed you up a lot, but when they get hot they don't work "
 "as well anymore. Don't use them carelessly!\""
-msgstr ""
+msgstr "｢アフターバーナーは大きく加速してくれる。でも熱くなると、もう同じようには働かなくなるんだよ。うかつには使わないように！｣"
 
 #: dat/events/neutral/npc.lua:205
 msgid ""
@@ -29365,18 +29500,20 @@ msgid ""
 "usually can't keep an active outfit on all the time, so you need to be "
 "careful only to use it when you need it.\""
 msgstr ""
+"｢受動的な艤装品と、能動的な艤装品があるんだよ。受動的なやつは船をずっと変えておいてくれるわけだけど、能動的なものはパイロットが動かしたときだけ作用する。"
+"ふつう能動的な艤装品をつねに動かしておくことはできないから、必要なときだけ使うように注意しなければならないね｣"
 
 #: dat/events/neutral/npc.lua:206
 msgid ""
 "\"If you're new to the galaxy, I recommend you buy a map or two. It can make "
 "exploration a bit easier.\""
-msgstr ""
+msgstr "｢もし銀河に出たばかりなら、地図をひとつか二つ買うことをお勧めするよ。探検がちょっと簡単になるからね｣"
 
 #: dat/events/neutral/npc.lua:207
 msgid ""
 "\"Scramblers and jammers make it harder for missiles to track you. They can "
 "be very handy if your enemies use missiles.\""
-msgstr ""
+msgstr "｢スクランブラーやジャマーは、ミサイルが追跡してくるのを難しくするんだよ。もし敵がミサイルを使うなら、とても役に立つこともあるね｣"
 
 #: dat/events/neutral/npc.lua:208
 #, lua-format
@@ -29386,12 +29523,14 @@ msgid ""
 "heat from your ship and also refill your rocket ammunition. Careful though, "
 "your energy and shields won't recharge while you do it!\""
 msgstr ""
+"｢武器や艤装品のオーバーヒートが問題になってるなら、%s を 2 回押せば船の冷却器を作動させられるよ。それで船の熱をすべて散逸させて、ロケット弾薬の再装"
+"填もしてくれる。それでも注意が必要だけどね。エネルギーとシールドはそのあいだ補充されないんだよ！｣"
 
 #: dat/events/neutral/npc.lua:209
 msgid ""
 "\"If you're having trouble shooting other ships face on, try outfitting with "
 "turrets or use an afterburner to avoid them entirely!\""
-msgstr ""
+msgstr "｢ほかの船にむかって撃つのに問題を感じてるなら、砲塔を設置してみるか、アフターバーナーを使ってその船をひたすら避けることだね！｣"
 
 #: dat/events/neutral/npc.lua:210
 msgid ""
@@ -29401,6 +29540,8 @@ msgid ""
 "it. Really handy if you want to ignore enemies that aren't actually hitting "
 "you.\""
 msgstr ""
+"｢自動操縦を有効にすると時間が加速するのは知ってるよね。で、敵がまわりにいるとふつうに戻るでしょ。完全にふつうの速度に戻るのはやめさせられないけど、危険だ"
+"と判定する値を変えられるのはわかったよ。じっさいに撃たれることのない敵を無視したければ、ほんとうに便利だね｣"
 
 #: dat/events/neutral/npc.lua:211
 msgid ""
@@ -29409,6 +29550,8 @@ msgid ""
 "seems to fly by faster. I guess the upside of that is that you don't notice "
 "how slow your ship is as much.\""
 msgstr ""
+"｢もっと大きい船で飛ぶのはすごいけど、小さな船で飛ぶよりちょっと頑丈になるだけなんだよ。同じ対処をするにもしなくちゃいけないことがほんとうにずっと多いし、"
+"とにかく時間がもっと速くすぎていくように思えるね。いいところは、船が遅くなったのをそのまま知覚せずにすむことだと思うよ｣"
 
 #: dat/events/neutral/npc.lua:212
 msgid ""
@@ -29417,6 +29560,8 @@ msgid ""
 "size, you have a lot more time to react with a smaller vessel. Some are even "
 "so simple to pilot that time seems to slow down all around you!\""
 msgstr ""
+"｢大きくて強力な船で飛ぶのに誘惑されるのはわかるけど、小さい船を過小評価しないこと！　設計が単純で乗員数も少ないから、小さい船に反応する時間がもっとたくさ"
+"んあるんだよ。あまりに簡素なんで、操縦してるとまわりじゅうの船がゆっくりになったように感じる船もあるね！｣"
 
 #: dat/events/neutral/npc.lua:213
 msgid ""
@@ -29424,6 +29569,8 @@ msgid ""
 "while an asteroid will just randomly explode for no apparent reason, so you "
 "have to watch out for that. Yeah, I don't know why they do that either.\""
 msgstr ""
+"｢採掘はいくらか余分なクレジットを稼ぐ簡単な方法にもなるけど、ときどき小惑星がはっきりした理由もなく、まったくでたらめに爆発することがある。だからそれには"
+"注意しなくちゃならないよ。ええと、そうはいっても、どうすればいいのかわからないけど｣"
 
 #: dat/events/neutral/npc.lua:214
 msgid ""
@@ -29431,6 +29578,8 @@ msgid ""
 "yacht. I don't get it personally; it's all the same no matter what ship "
 "you're in.\""
 msgstr ""
+"｢裕福な人たちは外世界の観光旅行へ行くとき、豪華なヨットに乗せると余分に払ってくれる。自分で受けとったことはないけどね。どんな船に乗ってたってまったく同じ"
+"じゃん｣"
 
 #: dat/events/neutral/npc.lua:215
 msgid ""
@@ -29441,6 +29590,9 @@ msgid ""
 "your reaction time, so you need to learn to just take the hits and focus "
 "your attention on firing back at your enemies.\""
 msgstr ""
+"｢異なる船は、仕立ても操縦法も変えたほうがいいよ。とくにはっきりした教訓を学んだのは、大きな船を操縦しているときに、戦闘中にうけた損害がかなり大きくなって"
+"もパイロットが心配しなくなってきたときだった。ああいう船は避けられないほど遅いし、いうまでもないけど、複雑すぎて反応する時間が減ってしまう。だから打撃はた"
+"だうけるだけにして、注意を集中するのは敵への反撃だってことを学ぶ必要がある｣"
 
 #: dat/events/neutral/npc.lua:216
 msgid ""
@@ -29450,6 +29602,9 @@ msgid ""
 "depressurize the exhaust valve while also configuring the capacitance array. "
 "In a way the slow speed of the ship becomes a pretty huge relief!\""
 msgstr ""
+"｢大きな船を操縦するときには、小さな船を操縦しているときより時間の流れがずっと速く感じるってことを覚えておくこと。半狂乱になって排気弁を減圧させようとしな"
+"がらキャパシターアレイを設定しようとしているときなんか、大きな船はとにかく遅いんだってことを簡単に忘れてしまいかねないから。ある意味、船がゆっくりなのはと"
+"ても大きな気晴らしになるけどね！｣"
 
 #: dat/events/neutral/npc.lua:217
 msgid ""
@@ -29459,6 +29614,8 @@ msgid ""
 "aiming is harder anyway what with how complex these ships are. Turrets are "
 "much better; they aim automatically and usually do a very good job!\""
 msgstr ""
+"｢規則にはいつでも例外がある。だけど大きな船で前を向いた武器を使うのはお勧めしないよ。大きな船は旋回率が低いから、小さな船の突撃と回避にはついていけない。"
+"それにどちらにしたところで、ああいう船はとても複雑だから狙うのが難しいんだよ。砲塔はずっといい。自動的に狙ってくれるし、ふつうはとてもいい仕事をするね！｣"
 
 #: dat/events/neutral/npc.lua:218
 msgid ""
@@ -29466,13 +29623,15 @@ msgid ""
 "cloaking? Well, now you do! Small ships majorly benefit from a scrambler or "
 "two; it makes it much easier to dodge those turrets on the larger ships.\""
 msgstr ""
+"｢砲塔による自動的な目標追跡は、覆い隠せば鈍くなるって知ってた？　ほら、もう知った！　"
+"小さな船ならひとつか二つスクランブラーがあればかなり役に立つよ。大きな船の砲塔を避けるのがずっと簡単になるね｣"
 
 #: dat/events/neutral/npc.lua:219
 msgid ""
 "\"Don't forget to have your target selected. Even if you have forward-facing "
 "weapons, the weapons will swivel a bit to track your target. But it's "
 "absolutely essential for turreted weapons.\""
-msgstr ""
+msgstr "｢目標の選択を忘れないこと。前を向いた武器であっても、目標を狙ってすこし回転するんだよ。でも砲塔型の武器なら、それがぜったい必須になる｣"
 
 #: dat/events/neutral/npc.lua:220
 msgid ""
@@ -29481,13 +29640,16 @@ msgid ""
 "your target to follow! I like to use this feature for escort missions. It "
 "makes them a lot less tedious.\""
 msgstr ""
+"｢自動操縦で、自動的に船を追いかけられるって知ってた？　ほんとうだよ！　"
+"船を#b左クリック#0して選択してから、目標を#b右クリック#0するだけで追いかけるんだ！　"
+"この機能を護衛任務で使うのが好きでね。退屈なのがずいぶんと減るよ｣"
 
 #: dat/events/neutral/npc.lua:221
 msgid ""
 "\"The new aiming helper feature is awesome! Simply turn it on in your ship's "
 "weapons configuration and you get little guides telling you where you should "
 "aim to hit your target! I use it a lot.\""
-msgstr ""
+msgstr "｢新しい照準補助機能はすごいね！　ただ船の武器設定で有効にすれば、どこを狙えば目標に命中するのか案内してくれる！　たくさん使ってるよ｣"
 
 #: dat/events/neutral/npc.lua:222
 msgid ""
@@ -29496,6 +29658,8 @@ msgid ""
 "sometimes expressed with SI prefixes: 'k¤' for thousands of credits, 'M¤' "
 "for millions of credits, and so on.\""
 msgstr ""
+"｢あの『¤』という記号は、クレジットを示す公式な銀河の記号なんだよ。推定では、古代地球文明の通貨の記号が由来らしいね。ときどきは SI "
+"接頭語をつけて表現される｡『k¤』は千クレジット､『M¤』は百万クレジット、とかだよ｣"
 
 #: dat/events/neutral/npc.lua:223
 msgid ""
@@ -29506,6 +29670,9 @@ msgid ""
 "pilot. I've not had that problem ever since I equipped a turreted missile "
 "launcher.\""
 msgstr ""
+"｢中型船を操縦してるなら、すくなくともひとつは砲塔型ミサイル発射機に投資することを勧めるね。二、三十時限まえに危ういところだったんだけど、レーザー砲塔のち"
+"ょっと射程外にいた爆撃機に吹き飛ばされかけたんだよ。幸運にも、どうにかやっと近くの惑星に着陸できたんで、あの船から逃れられた。砲塔型のミサイル発射機を装備"
+"してからは、問題はおきてないね｣"
 
 #: dat/events/neutral/npc.lua:224
 msgid ""
@@ -29514,6 +29681,8 @@ msgid ""
 "easy to get, but as for the others, I have no idea where they get them from."
 "\""
 msgstr ""
+"｢海賊はほかの海賊たちに負けないように、海賊船を飛ばして評判を維持しなければならないと聞いたよ。ハイエナは海賊船だと思われていて入手も容易だけど、ほかのも"
+"のについては、どこから入手しているのかわからないね｣"
 
 #: dat/events/neutral/npc.lua:225
 #, lua-format
@@ -29523,6 +29692,8 @@ msgid ""
 "means restricted, and '%s' means uninhabited but landable. I wish someone "
 "had told me that!\""
 msgstr ""
+"｢あのコンピューターの記号ってやつは、ときどき混乱することがあるよ！　もっともわかってはいるんだけど､『%s』は友好的を意味して､『%s』は中立で､『%s"
+"』は敵対的､『%s』は立入制限､『%s』が無人だけど着陸可能なんだよね。だれか教えてくれればよかったのに！｣"
 
 #. Jump point messages.
 #. For giving the location of a jump point in the current system to the player for free.
@@ -29536,6 +29707,7 @@ msgid ""
 "know already, let me give you the location of the jump from here to %s. I "
 "hope that helps.\""
 msgstr ""
+"｢やあ、旅人。星系の地図は最新版？　ねんのためだけど、まだ知らないんなら、ここから%sへジャンプする場所を教えられるよ。役に立てばいいんだけど｣"
 
 #: dat/events/neutral/npc.lua:234
 #, lua-format
@@ -29544,6 +29716,8 @@ msgid ""
 "to get to %s. I travel there often, so I know exactly where the jump point "
 "is. Here, let me show you.\""
 msgstr ""
+"｢ここへ来たかなり多くの人たちが、%sへ行く方法がわからないと文句をいってた。そっちにはよく行くから、ジャンプポイントの場所は正確に知ってる。ほら、見せて"
+"あげるよ｣"
 
 #: dat/events/neutral/npc.lua:235
 #, lua-format
@@ -29552,6 +29726,7 @@ msgid ""
 "give you the coordinates of the jump to %s. Check your map next time you "
 "take off!\""
 msgstr ""
+"｢そうすると、この領域のことをまだ知ろうとしているんだね？　ほら、%sへのジャンプの座標を教えてやれるよ。次回離陸したら地図を確認してほしいね｣"
 
 #: dat/events/neutral/npc.lua:236
 #, lua-format
@@ -29559,7 +29734,7 @@ msgid ""
 "\"True fact, there's a direct jump from here to %s. Want to know where it "
 "is? It'll cost you! Ha ha, just kidding. Here you go, I've added it to your "
 "map.\""
-msgstr ""
+msgstr "｢じっさい、%sへ直接行くジャンプがあるよ。どこにあるか知りたい？　かねがかかるよ！　ハハ、ただの冗談だって。ほら、地図に加えておいたから｣"
 
 #: dat/events/neutral/npc.lua:237
 #, lua-format
@@ -29567,6 +29742,8 @@ msgid ""
 "\"There's a system just one jump away by the name of %s. I can tell you "
 "where the jump point is. There, I've updated your map. Don't mention it.\""
 msgstr ""
+"｢たったひとつジャンプで離れた星系に、%sという名前のがある。ジャンプポイントがどこにあるのか教えてやれるよ。ほら、地図を更新しておいたから。どういたしま"
+"して｣"
 
 #. Mission hint messages. Each element should be a table containing the mission name and the corresponding hint.
 #. ALL NPCs have a chance to say one of these lines instead of a lore message.
@@ -29575,7 +29752,7 @@ msgstr ""
 msgid ""
 "\"Apparently there's a woman who regularly turns up on planets in and around "
 "the Klantar system. I wonder what she's looking for?\""
-msgstr ""
+msgstr "｢どうも定期的にクランター星系やその近くの惑星に向かう女の人がいるようだね。なにをさがしているんだろう？｣"
 
 #: dat/events/neutral/npc.lua:244
 msgid ""
@@ -29583,6 +29760,8 @@ msgid ""
 "Who knows, maybe you can even help them out if you make it to Omega Station."
 "\""
 msgstr ""
+"｢帝国はほんとうに集合体にかんしてなにかしようとしているね、聞いたところだと。わからないけど、オメガ・ステーションに行くなら、たぶん助けてやることもできる"
+"んじゃないかな｣"
 
 #: dat/events/neutral/npc.lua:245
 msgid ""
@@ -29590,12 +29769,13 @@ msgid ""
 "stay away from there if I were you, someone might offer you a dirty kind of "
 "job!\""
 msgstr ""
+"｢うさんくさい人たちが、よくオルタリス星系に出入りしているよ。自分だったら、あそこには近寄らないね。だれかが汚い種類の仕事をさせようとするかもよ！｣"
 
 #: dat/events/neutral/npc.lua:246
 msgid ""
 "\"So there's some Za'lek scientist looking for a cargo monkey out on "
 "Niflheim in the Dohriabi system. I hear it's pretty good money.\""
-msgstr ""
+msgstr "｢で、ドウリアビ星系のニブルヘイムで運送小僧を探してたザレクの科学者がいた。とてもよいかねになると聞いたね｣"
 
 #. Event hint messages. Each element should be a table containing the event name and the corresponding hint.
 #. Make sure the hints are always faction neutral.
@@ -29603,7 +29783,7 @@ msgstr ""
 msgid ""
 "\"The FLF and the Dvaered sometimes clash in Surano. If you go there, you "
 "might find something of interest... Or not.\""
-msgstr ""
+msgstr "｢ときどきスラーノで FLF とドベーレッドが衝突してる。そこへ行けば、興味深いものがみつかるかもね……。そうともかぎらないけど｣"
 
 #. Mission after-care messages. Each element should be a table containing the mission name and a line of text.
 #. This text will be said by NPCs once the player has completed the mission in question.
@@ -29614,6 +29794,8 @@ msgid ""
 "nebula for them. I thought everyone with half a brain knew to stay out of "
 "there, but oh well.\""
 msgstr ""
+"｢むこうみずな科学者たちが、だれかに頼んで星雲の内側に衛星を置かせたと聞いたよ。脳みそが半分もあれば、だれだってあれにはかかわらないだけの分別があると思っ"
+"てたけどね。でもまあ、なんとも｣"
 
 #: dat/events/neutral/npc.lua:258
 msgid ""
@@ -29622,12 +29804,14 @@ msgid ""
 "both diplomats died. Now both sides are accusing the other of foul play. "
 "Could get ugly.\""
 msgstr ""
+"｢聞いてるかな？　帝国とドベーレッドのあいだの外交会議でなにか大きな事件があったんだってさ。おきたことを正確に知ってるのはだれもいないんだけど、両方の外交"
+"官が死んだんだよ。今ではどちらの側も、相手の不正行為を非難してる。険悪なことになるかもね｣"
 
 #: dat/events/neutral/npc.lua:259
 msgid ""
 "\"Hey, remember the Collective? They got wiped out! I feel so much better "
 "now that there aren't a bunch of robot ships out there to get me anymore.\""
-msgstr ""
+msgstr "｢ちょっと、集合体を覚えてる？　一掃されたんだよ！　ずっと気分がよくなったね。今ではもう向かってくるロボット船の群れがあそこにいないんだよ｣"
 
 #: dat/events/neutral/npc.lua:260
 msgid ""
@@ -29635,6 +29819,8 @@ msgid ""
 "of the thieves were caught, but the one who carried the holopainting "
 "offworld is still at large. No leads. Damn criminals...\""
 msgstr ""
+"｢泥棒たちがバリアの博物館に侵入して、ホロ絵画を盗んだんだよ！　"
+"ほとんどの泥棒は捕まったけど、ホロ絵画を外世界に運んだひとりはまだ捕まってない。手がかりなし。くそったれ犯罪者が……｣"
 
 #: dat/events/neutral/npc.lua:261
 msgid ""
@@ -29642,6 +29828,8 @@ msgid ""
 "into Sigur and blew the hidden base there to bits! I bet that was a serious "
 "setback for the FLF.\""
 msgstr ""
+"｢ドベーレッドが最近 FLF にたいして大勝利をおさめたんだって。ドベーレッドはシグールへ行って、そこの秘密基地をこなごなに吹き飛ばしたんだ！　FLF "
+"にとっては深刻な敗北だって断言するね｣"
 
 #. Event after-care messages. Each element should be a table containing the event name and a line of text.
 #. This text will be said by NPCs once the player has completed the event in question.
@@ -29650,13 +29838,13 @@ msgstr ""
 msgid ""
 "\"What? You had rodents sabotage your ship? Man, you're lucky to be alive. "
 "If it had hit the wrong power line...\""
-msgstr ""
+msgstr "｢なに？　破壊行為をするげっ歯動物が船にいた？　ちょっと、生きてて幸運だよ。まずい電力線をやられてたら……｣"
 
 #: dat/events/neutral/npc.lua:268
 msgid ""
 "\"What do you mean, the world ended and then the creator of the universe "
 "came and fixed it? What kind of illegal substance are you on?\""
-msgstr ""
+msgstr "｢つまり、世界が終わって、それから宇宙の創造主が来て、なおしていった？　なんか違法薬物でもやったんじゃないの？｣"
 
 #. Logic to decide what to spawn, if anything.
 #. Do not spawn any NPCs on restricted assets.
@@ -30082,12 +30270,14 @@ msgid ""
 "SOS. This is %s. We are shipwrecked. Please #bboard#0 us by positioning your "
 "ship over ours and then #bdouble-clicking#0 on our ship."
 msgstr ""
+"SOS。こちらは『%s』だ。われわれは難破した。そちらの船をわれわれの船の位置へつけてから、われわれの船を#bダブルクリック#0して#b移乗#0してくださ"
+"い。"
 
 #. The ship will have a unique name
 #: dat/events/neutral/shipwreck.lua:27
 #, lua-format
 msgid "Shipwrecked %s"
-msgstr ""
+msgstr "難破した ｢%s｣"
 
 #. Make sure system isn't claimed, but we don't claim it
 #. The shipwreck will be a random trader vessel.
@@ -31409,7 +31599,7 @@ msgstr ""
 #. --
 #: dat/events/tutorial/tutorial_enter.lua:25
 msgid "Volatility Rising"
-msgstr ""
+msgstr "変動度の増大"
 
 #: dat/events/tutorial/tutorial_enter.lua:26
 #, lua-format
@@ -31422,10 +31612,14 @@ msgid ""
 "stronger, it could be fatal to the %s. Going deeper into the nebula could "
 "prove to be a very risky endeavour."
 msgstr ""
+"星系にジャンプすると、制御卓に小さな警告灯がついたのに気がついた。\n"
+"    %s\n"
+"    システムを調べてみると、ここの星雲は不安定で、船のシールドに損害を与えはじめているようだった。変動度がなにか強くなると、%sには致命的なことになり"
+"かねない。星雲のさらに深くへ行くのは、とても危険な試みだと判明することになるのかもしれない。"
 
 #: dat/events/tutorial/tutorial_enter.lua:29
 msgid "WARNING: NEBULA VOLATILITY DETECTED"
-msgstr ""
+msgstr "警告 : 激変性星雲の検出"
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -31474,6 +31668,16 @@ msgid ""
 "    \"That's all! Sorry to be a bother. I wish you good luck in your travels!"
 "\" You thank the salesperson and continue on your way."
 msgstr ""
+"あなたに%sを売った人物が、あなたの記録を見てためらった。｢ああ、いままで大きな船を所有したことはないんですね！　"
+"待たせてすみませんが、船についての重要事項を説明したいんです。ほんのちょっとだってことは約束しますよ。\n"
+"    ｢最初に、買った船には『時間定数』の値があることに気がつくと思います。ほら、大きな船を運行するときには、船の基本的な操作をするにも、もっと時間と努"
+"力を費やさなければならないじゃないですか。そうすると、あなたは時間が速く進むように感じます。時間定数は、一般的な小さな船に比べて、時間がすぎるのがどれくら"
+"い速く感じるかを示す単純な尺度です。たとえば、時間定数の値が 200%% だったら、一般的な小さな船より時間が 2 "
+"倍速くすぎるように思えるという意味です。\n"
+"    ｢この効果と、船の速度が遅くなることから、前に向いた武器を小さな船と同じように使うのは、難しくなることがあります。最大級の種別であれば⸺駆逐艦やそ"
+"れ以上のものですが⸺ふつうは前に向いた武器ではなくて、砲塔型の武器の使用を勧めています。それなら自動的に敵を狙います。それでももちろん、あなた次第ではあり"
+"ますが。\n"
+"    ｢これだけです！　面倒をかけてすみませんでした。旅での幸運をお祈りしています！｣。あなたは販売員に礼を言い、自分の用事に戻った。"
 
 #.
 #. -- @brief Does Dvaered pilot equipping
@@ -32098,7 +32302,7 @@ msgstr "ふつうの泥棒"
 
 #: dat/factions/standing/pirate.lua:32
 msgid "Normie"
-msgstr "一般人"
+msgstr "大衆"
 
 #: dat/factions/standing/pirate.lua:34 dat/factions/standing/skel.lua:38
 msgid "Friendly"
@@ -33257,7 +33461,7 @@ msgstr ""
 #: dat/missions/neutral/kidnapped/traffic_00.lua:94
 #, lua-format
 msgid "Fly to the %s system and land on planet %s"
-msgstr ""
+msgstr "%s星系へ飛んで、惑星%sに着陸せよ。"
 
 #. OSD stuff
 #: dat/missions/baron/baron_baron.lua:104
@@ -38990,7 +39194,7 @@ msgstr ""
 
 #: dat/missions/dvaered/frontier_war/fw_common.lua:25
 msgid "Lord Chainsaw"
-msgstr ""
+msgstr "チェーンソー卿"
 
 #: dat/missions/dvaered/frontier_war/fw_common.lua:26
 msgid "Lord Painbishop"
@@ -51380,14 +51584,14 @@ msgstr ""
 #: dat/missions/neutral/commodity_run.lua:45
 #, lua-format
 msgid "%s Delivery"
-msgstr ""
+msgstr "%sの配達"
 
 #: dat/missions/neutral/commodity_run.lua:46
 #, lua-format
 msgid ""
 "%s has an insufficient supply of %s to satisfy the current demand. Go to any "
 "planet which sells this commodity and bring as much of it back as possible."
-msgstr ""
+msgstr "%sでは%sの供給がたりないので、現在の需要が満たせていない。この商品を売っているほかの惑星に行き、できるだけ多く持ちかえれ。"
 
 #: dat/missions/neutral/commodity_run.lua:51
 #, lua-format
@@ -51396,6 +51600,8 @@ msgid ""
 "different men double-check the register to confirm the amount, you are paid "
 "%s and summarily dismissed."
 msgstr ""
+"あなたの船から%sのコンテナが運びだされ、量を記録された。数人の別々の人たちが量を確認した記録簿を重ねて点検してから、あなたは "
+"%sの支払いをうけて、ただちに解放された。"
 
 #: dat/missions/neutral/commodity_run.lua:52
 #, lua-format
@@ -51404,6 +51610,8 @@ msgid ""
 "readied for distribution. The delivery manager thanks you with a credit chip "
 "worth %s."
 msgstr ""
+"%sのコンテナはすばやく効率的に荷降ろしされ、荷札がつけられ、流通の用意がされた。出荷管理者が "
+"%sの価値のあるクレジットチップをあなたに渡して礼をいった。"
 
 #: dat/missions/neutral/commodity_run.lua:53
 #, lua-format
@@ -51412,22 +51620,23 @@ msgid ""
 "who are in no rush to finish, eventually delivering %s after the number of "
 "tonnes is determined."
 msgstr ""
+"港湾労働者のチームが%sのコンテナをあなたの船から荷降ろしした。チームは急いで終えようとはしていない。トン数が確定すると、やっと %sが渡された。"
 
 #: dat/missions/neutral/commodity_run.lua:54
 #, lua-format
 msgid ""
 "The containers of %s are unloaded by robotic drones that scan and tally the "
 "contents. The human overseer hands you %s when they finish."
-msgstr ""
+msgstr "ロボットドローンが%sのコンテナを荷降ろしし、ざっと調べて量を記録した。それが終わると、人間の監督があなたに %sを手渡した。"
 
 #: dat/missions/neutral/commodity_run.lua:56
 msgid "Commodity Delivery"
-msgstr ""
+msgstr "商品の配達"
 
 #: dat/missions/neutral/commodity_run.lua:58
 #, lua-format
 msgid "Buy as much %s as possible"
-msgstr ""
+msgstr "できるだけ%sを買え。"
 
 #: dat/missions/neutral/commodity_run.lua:59
 #, lua-format
@@ -51445,7 +51654,7 @@ msgstr ""
 #: dat/missions/neutral/wastedump.lua:64
 #, lua-format
 msgid "%s per tonne"
-msgstr ""
+msgstr "トンあたり %s"
 
 #.
 #.
@@ -56149,7 +56358,7 @@ msgstr "観光中の民間人の一団"
 #. The ship will have a unique name
 #: dat/missions/neutral/spacefamily.lua:31
 msgid "Shipwrecked space family"
-msgstr ""
+msgstr "難破した宇宙家族"
 
 #: dat/missions/neutral/spacefamily.lua:32
 msgid ""
@@ -56170,6 +56379,15 @@ msgid ""
 "enough for them to reach, despite their mother's hopeless attempts to keep "
 "them under control."
 msgstr ""
+"エアロックを開けると、あなたは神経質な表情をした男と、引っ込み思案の女、神経過敏な 3 人の子どもたちに出迎えられた。\n"
+"    ｢あなたが来てくれたことに神へ感謝します｣ と、男が言う。｢どれだけ長くもちこたえられたかわかりません。あの人たちはわたしたちが死ぬように放置した"
+"んですよ。燃料なし、食料もなし、だから予備電力だけでわたしたちは耐えていました｣。男はそれから、過去数時限のあいだ自分たちはどれだけ多くに我慢してきたかと"
+"いった、一貫しない話を始めた。しかしあなたは早めに話をやめさせる。男の終わることない無駄口に辛抱する気はなかったからだ。\n"
+"    二、三の要を得た質問をして、あなたは男の名前がハラスであることを知った。そして男とその妻、それから子どもたちが生きてきた、あるいは少なくともかつて"
+"生きてきたのは、貿易船の上であることも。｢いい人生でしたよ｣ "
+"と、ハラスはいった。｢銀河を見て、人びとに会って、惑星を見る。そのすべては在宅で仕事をしながらです。なぜなら、ハハッ、自分に家がついてくるから！｣\n"
+"    あなたはハラスの子どもたちをちらっと見ずにはいられなかった。あなたの船じゅうへ逃げまわることに熱中しはじめていた。低い位置にあって、背が届く範囲の"
+"ボタンをすべて押している。いうことを聞かせておこうとしている母の絶望的な試みなどどこ吹く風だ。"
 
 #: dat/missions/neutral/spacefamily.lua:36
 #, lua-format
@@ -56190,10 +56408,19 @@ msgid ""
 "favour, Harrus and his family proceed onto your ship and install themselves "
 "into your living quarters. They do not seem about to leave."
 msgstr ""
+"ハラスは貿易商としての自分の人生についての次の逸話に乗りだそうとしていたが、あなたはどうにか先手を打つことができた。あなたはすぐに知った。この家族の生きか"
+"たは、小さな海賊団の手で、突然の変化をむかえることになったのだ。｢%s｣ にはいくらかの武器類とシールドシステムがあったにせよ、その攻撃者たちはたった "
+"1 隻の貨物船には多すぎた。\n"
+"    ｢このような終わりをむかえるとは思ったこともなかった｣ と、ハラスはため息をついた。｢いや、宇宙が危険なことは知ってました。でも安全じゃない領域は"
+"避けてたんです。巡視されている航路にしがみついてね。どんな危険もおかさなかった。ほら、わたしには家族がいるんですよ｣\n"
+"    それからハラスは明るくなった。どうも最近の災難のことは瞬きするうちに忘れたようだ。｢もうすべてはよくなりますよ｣ "
+"と、ハラスは元気よくいった。｢わたしたちは救助されました。だからいま必要なことは、新しい人生を築ける適切な世界へ連れていってもらうことだけです｣\n"
+"    それ以上の騒ぎもなく、そして形式的な好意の求めさえもなく、ハラスと家族はあなたの船に乗りこんで、あなたの居住区画に居座った。出ていく気はぜんぜんな"
+"いようだ。"
 
 #: dat/missions/neutral/spacefamily.lua:40
 msgid "Next stop"
-msgstr ""
+msgstr "次の寄港"
 
 #: dat/missions/neutral/spacefamily.lua:41
 #, lua-format
@@ -56209,7 +56436,7 @@ msgstr ""
 
 #: dat/missions/neutral/spacefamily.lua:42
 msgid "Distractions on the bridge"
-msgstr ""
+msgstr "船橋での雑念"
 
 #: dat/missions/neutral/spacefamily.lua:43
 msgid ""
@@ -56225,6 +56452,13 @@ msgid ""
 "get his family to a safe haven, which seems to satisfy him. Finally alone "
 "again, you take a moment to subside before completing that check."
 msgstr ""
+"あなたが決まりきった航法上の確認をしていると、ハラスがあなたの船室にいきなり入ってきた。ハラスは苦しんでいた状態からは回復したらしく、いまではあつかましさ"
+"を発散していた。\n"
+"    ｢船長｣ と、ハラスはあなたに話しかけた。｢できるだけ早く目的地に着かなきゃならないってことを、思いだしてもらう必要がなければいいんだけどね。妻と"
+"子どものことを考えなきゃならんし、率直にいってあなたの、あー、設備はちょっと不足してるとわかったんだ｣\n"
+"    あなたはハラスに船橋から出るように命じるか検討したが、ハラスは退くような男に見えない。だからあなたが成し遂げられた唯一のことは、船の雰囲気を悪くす"
+"ることだけだった。ハラスの家族を安全な避難所へ連れていこうとずっと努力しているとハラスに伝える。それでハラスは満足したようだった。やっとまたひとりになると"
+"、確認を終えるまえに一瞬落ちこんでしまった。"
 
 #: dat/missions/neutral/spacefamily.lua:46
 #, lua-format
@@ -56269,7 +56503,7 @@ msgstr ""
 
 #: dat/missions/neutral/spacefamily.lua:53
 msgid "Rid of them at last"
-msgstr ""
+msgstr "やっと厄介払い"
 
 #: dat/missions/neutral/spacefamily.lua:54
 msgid ""
@@ -56286,22 +56520,29 @@ msgid ""
 "    Inside the box, you find a sum of credits and a note written in neat, "
 "feminine handwriting that says, \"Sorry for the trouble.\""
 msgstr ""
+"宇宙家族を故郷に連れていくというあなたの探求における、最終的な目的地にあなたは着陸した。それはあなたとハラスの二人にとっては、早すぎた瞬間というわけではな"
+"かった。ハラスが足を踏み鳴らして船から降りていく。あいさつさえなく、妻と子どもをうしろに従えていった。あなたは家族が去っていくのを見て、ただただうれしく思"
+"った。\n"
+"    いまではさびしくなった居住区画を調べてみて、臨時の居住者が道中にこなせた損害の大きさに度肝を抜かれた。すくなくとも超空間にいるあいだの暇な時間にす"
+"ることができたし、船が必要とすることに気を配るきっかけになると考えて、あなたは自分をなぐさめる。そのとき、いままでここで見た覚えのない小さな箱に目が向いた"
+"。\n"
+"    箱の中には、クレジットときれいに書かれた手紙があった。弱々しい手書きで、こう書いてある。｢面倒をおかけして申しわけありません｣"
 
 #. Mission details
 #: dat/missions/neutral/spacefamily.lua:59
 msgid "The Space Family"
-msgstr ""
+msgstr "宇宙家族"
 
 #: dat/missions/neutral/spacefamily.lua:60
 msgid "A clear conscience."
-msgstr ""
+msgstr "良心に曇りなし。"
 
 #: dat/missions/neutral/spacefamily.lua:62
 #: dat/missions/neutral/spacefamily.lua:75
 msgid ""
 "A shipwrecked space family has enlisted your aid. Can you take them to "
 "safety?"
-msgstr ""
+msgstr "難破した宇宙家族があなたの援助を得た。安全なところへ連れていけるか？"
 
 #: dat/missions/neutral/spacefamily.lua:63
 #, lua-format
@@ -56311,26 +56552,26 @@ msgstr ""
 #. Aborted mission
 #: dat/missions/neutral/spacefamily.lua:66
 msgid "A parting of ways"
-msgstr ""
+msgstr "分かれ道"
 
 #: dat/missions/neutral/spacefamily.lua:67
 msgid ""
 "You unceremoniously shove your passengers out of the airlock and into the "
 "coldness of space. You're done playing taxi; it's time to get back to "
 "important things!"
-msgstr ""
+msgstr "あなたはぶきらぼうに、乗客たちをエアロックの外の冷たい宇宙へと押しやった。タクシーを演じるのは終わった。重要な用事に戻る潮時だ！"
 
 #: dat/missions/neutral/spacefamily.lua:68
 msgid ""
 "You unceremoniously shove your passengers out of the airlock, leaving them "
 "to their fate on this planet. You're done playing taxi; it's time to get "
 "back to important things!"
-msgstr ""
+msgstr "あなたはぶきらぼうに、乗客たちをエアロックの外へと押しやって、この惑星での運命に任せた。タクシーを演じるのは終わった。重要な用事に戻る潮時だ！"
 
 #. OSD stuff
 #: dat/missions/neutral/spacefamily.lua:73
 msgid "The space family"
-msgstr ""
+msgstr "宇宙家族"
 
 #: dat/missions/neutral/spacefamily.lua:78
 msgid ""
@@ -56338,6 +56579,8 @@ msgid ""
 "ship. After a lot of annoying complaints, the man and his family finally "
 "left your ship, the man's wife leaving a generous payment for the trouble."
 msgstr ""
+"あなたは意地の悪い男とその家族を救助した。その男たちは船に乗って立ち往生していたのだ。たくさんの不平に悩まされたあとで、男と家族はやっと船から出ていった。"
+"男の妻は面倒をかけたことにたいして気前よい支払いを残していった。"
 
 #. Note: this mission does not make any system claims.
 #. You boarded their ship, now you're stuck with them.
@@ -56345,11 +56588,11 @@ msgstr ""
 #. Intro text, player meets family
 #: dat/missions/neutral/spacefamily.lua:95
 msgid "Space Family"
-msgstr ""
+msgstr "宇宙家族"
 
 #: dat/missions/neutral/spacefamily.lua:95
 msgid "A family who you rescued in space."
-msgstr ""
+msgstr "あなたが宇宙で救助した家族。"
 
 #. First stop; subsequent stops will be handled in the land function
 #. Populate the array
@@ -64300,7 +64543,7 @@ msgstr ""
 #. Calculate the route, distance, jumps and cargo to take
 #: dat/missions/trader/anxiousmerchant.lua:89
 msgid "Merchant"
-msgstr ""
+msgstr "貿易商"
 
 #. creates the merchant at the bar
 #. Allow extra time for refuelling stops.
@@ -64696,11 +64939,10 @@ msgid ""
 "patrons, at least early on. There may be pilots among them who may have "
 "useful tips for you!\""
 msgstr ""
-"｢ここは宇宙港だ。ここでは最新のニュースが見られる (いま右に見えているやつ"
-"だ)。しかしもっと重要なのは、ほかのパイロットや一般人たち、それにもっとたくさ"
-"んの人たちと会えることだ！　バーにいるだれかをクリックしてから、話しかけるボ"
-"タンをクリックすれば話ができる。定期的にバーの常連と話すことをお勧めする。役"
-"に立つ情報をもっているパイロットがいるかもしれないからな！｣"
+"｢ここは宇宙港だ。ここでは最新のニュースが見られる "
+"(いま右に見えているやつだ)。しかしもっと重要なのは、ほかのパイロットや一般人たち、それにもっとたくさんの人たちと会えることだ！　バーにいるだれかをクリッ"
+"クしてから、近づくボタンをクリックすれば話ができる。定期的にバーの常連と話すことをお勧めする。役に立つ情報をもっているパイロットがいるかもしれないからな！"
+"｣"
 
 #: dat/missions/tutorial/tutorial.lua:62
 #, lua-format
@@ -64912,22 +65154,15 @@ msgid ""
 "losing their accuracy, it's because they're becoming overheated. You can "
 "remedy that by pressing %s twice to engage active cooling.\""
 msgstr ""
-"｢いい仕事ぶりだ！　わかったとおり、自動操縦を使うと、知覚できる旅の期間が実質"
-"的には短くなる。そのうちメレンデズの船のこの機能を、どんどん高く評価するよう"
-"になっていくと思う。とくに、星系から星系へと品物やなにかを運んでいくときには"
-"な。\n"
-"    ｢さあ、戦闘訓練といくか。帝国の中核となる安全な星系に固執すれば、これは必"
-"要にならないだろう。しかし悲しいことに、思いきってもっと遠くまで乗りだしてい"
-"けば、おそらく海賊のくずどもと出会うことになる。だから身を守る方法は知ってお"
-"かなければならない。さいわいにも、まさにそれが道理ってことになるから、その船"
-"には最新式のレーザーキャノンがあらかじめ搭載されているんだ！\n"
-"    ｢%sから戦闘訓練用のドローンを発進させて飛ばしてやる。心配するなよ。われわ"
-"れのドローンはどんな武器も積んでないから、傷つくことはない。ドローンをクリッ"
-"クするか、%s を押して選択してくれ。そうしたら武器を使う。%s と %s で好きにに"
-"撃てるぞ。ドローンを破壊してしまえ！\n"
-"    ｢ああ、そうだ。ドローンを発進させるまえに、もうひとつこつを教えておく。武"
-"器の精度が悪くなりはじめたとしたら、オーバーヒートしてるからだ。%s を二回押す"
-"と、アクティブ冷却器を起動して改善することができる｣"
+"｢いい仕事ぶりだ！　わかったとおり、自動操縦を使うと、知覚できる旅の期間が実質的には短くなる。そのうちメレンデズの船のこの機能を、どんどん高く評価するよう"
+"になっていくと思う。とくに、星系から星系へと品物やなにかを運んでいくときにはな。\n"
+"    ｢さあ、戦闘訓練といくか。帝国の中核となる安全な星系に固執すれば、これは必要にならないだろう。しかし悲しいことに、思いきってもっと遠くまで乗りだし"
+"ていけば、おそらく海賊のくずどもと出会うことになる。だから身を守る方法は知っておかなければならない。さいわいにも、まさにそれが道理ってことになるから、その"
+"船には最新式のレーザーキャノンがあらかじめ搭載されているんだ！\n"
+"    ｢%sから戦闘訓練用のドローンを発進させて飛ばしてやる。心配するなよ。われわれのドローンはどんな武器も積んでないから、傷つくことはない。ドローンを"
+"クリックするか、%s を押して選択してくれ。そうしたら武器を使う。%s と %s で好きにに撃てるぞ。ドローンを破壊してしまえ！\n"
+"    ｢ああ、そうだ。ドローンを発進させるまえに、もうひとつこつを教えておく。武器の精度が悪くなりはじめたとしたら、オーバーヒートしてるからだ。%s "
+"を二回押すと、冷却器を起動して治すことができる｣"
 
 #: dat/missions/tutorial/tutorial.lua:86
 #, lua-format
@@ -64950,21 +65185,14 @@ msgid ""
 "information about your ship, cargo, current missions, and reputation with "
 "the various factions. You will likely be referencing it a lot.\""
 msgstr ""
-"｢すばらしい手際であのドローンを破壊したな！　気づいたかもしれないが、シールド"
-"は時間とともに再生するが、装甲はしない。これはもちろん、例外がないわけではな"
-"い。一部の船には、とくに大型の船だが、先進の装甲修理技術を目玉にしているもの"
-"がある。しかしそういうものでさえ、一般的に装甲の再生はシールド再生よりずっと"
-"遅い。\n"
-"    ｢熱の計器の値が上昇したのと、船や武器が熱くなるにつれて武器の精度が低下し"
-"たのにも気づいたかもしれないな。これはふつうのことだが、発熱しすぎて武器を使"
-"うのが難しくなることもある。それが理由で、われわれメレンデズはそうしたほうが"
-"安全なときにはアクティブ冷却器を使うことを勧めている。まえにいったとおり、ア"
-"クティブ冷却器は %s を二回押せば起動できる。代わりに、船を惑星やステーション"
-"に着陸させることで、すぐに船を冷やすことが可能だ。\n"
-"    ｢これもいっておく価値があるな。情報画面から武器の発砲方法を設定することが"
-"できる。情報画面は %s を押すか、画面上のボタンで出せる。情報画面は、船や積み"
-"荷、現在の任務、そしていろいろな党派からの評判についての情報も示してくれる。"
-"おそらくかなりたくさん参照することになるだろう｣"
+"｢すばらしい手際であのドローンを破壊したな！　気づいたかもしれないが、シールドは時間とともに再生するが、装甲はしない。これはもちろん、例外がないわけではな"
+"い。一部の船には、とくに大型の船だが、先進の装甲修理技術を目玉にしているものがある。しかしそういうものでさえ、一般的に装甲の再生はシールド再生よりずっと遅"
+"い。\n"
+"    ｢熱の計器の値が上昇したのと、船や武器が熱くなるにつれて武器の精度が低下したのにも気づいたかもしれないな。これはふつうのことだが、発熱しすぎて武器"
+"を使うのが難しくなることもある。それが理由で、われわれメレンデズはそうしたほうが安全なときには冷却器を使うことを勧めている。まえにいったとおり、冷却器は "
+"%s を二回押せば起動できる。代わりに、船を惑星やステーションに着陸させることで、すぐに船を冷やすことが可能だ。\n"
+"    ｢これもいっておく価値があるな。情報画面から武器の発砲方法を設定することができる。情報画面は %s を押すか、画面上のボタンで出せる。情報画面は、"
+"船や積み荷、現在の任務、そしていろいろな党派からの評判についての情報も示してくれる。おそらくかなりたくさん参照することになるだろう｣"
 
 #: dat/missions/tutorial/tutorial.lua:90
 #, lua-format
@@ -70727,7 +70955,7 @@ msgstr ""
 
 #: dat/scripts/pilot/pirate.lua:267
 msgid "Chainsaw"
-msgstr ""
+msgstr "チェーンソー"
 
 #: dat/scripts/pilot/pirate.lua:268
 msgid "Cheese"
@@ -75325,7 +75553,7 @@ msgstr "自動ブレーキ"
 
 #: src/input.c:104
 msgid "Begins automatic braking or active cooldown, if stopped."
-msgstr "自動ブレーキを開始。止まっているならアクティブ冷却器の起動。"
+msgstr "自動ブレーキを開始。止まっているなら冷却器の作動開始。"
 
 #. Communication
 #: src/input.c:106
@@ -75665,7 +75893,7 @@ msgstr "戦闘機を宇宙に立ち往生させることはできません。"
 
 #: src/land.c:292
 msgid "Approach"
-msgstr "話しかける"
+msgstr "近づく"
 
 #: src/land.c:362 src/land.c:368
 msgid "News"
@@ -75939,7 +76167,7 @@ msgstr "すでにこの免許はもっています。"
 #: src/land_trade.c:240
 #, c-format
 msgid "You need %s more."
-msgstr "%sたりません。"
+msgstr "%s たりません。"
 
 #: src/land_outfits.c:728
 #, c-format
@@ -76460,17 +76688,17 @@ msgstr "密度が低い"
 #: src/map.c:681
 #, c-format
 msgid "#rVolatile %sNebula (%.1f MW)#0"
-msgstr "#r激変しやすく%s星雲 (%.1f MW)#0"
+msgstr "#r%s激変する星雲 (%.1f MW)#0"
 
 #: src/map.c:683
 #, c-format
 msgid "#oDangerous %sNebula (%.1f MW)#0"
-msgstr "#o危険で%s星雲 (%.1f MW)#0"
+msgstr "#o%s危険な星雲 (%.1f MW)#0"
 
 #: src/map.c:685
 #, c-format
 msgid "#yUnstable %sNebula (%.1f MW)#0"
-msgstr "#y不安定で%s星雲 (%.1f MW)#0"
+msgstr "#y%s不安定な星雲 (%.1f MW)#0"
 
 #: src/map.c:687
 #, c-format
@@ -76494,11 +76722,11 @@ msgstr "#y干渉 (%.0f%%)#0"
 
 #: src/map.c:715
 msgid "#oDense Asteroid Field#0"
-msgstr "#o密度の高い小惑星帯#0"
+msgstr "#o密度が高い小惑星帯#0"
 
 #: src/map.c:717
 msgid "#yLight Asteroid Field"
-msgstr "#y密度の低い小惑星帯"
+msgstr "#y密度が低い小惑星帯"
 
 #: src/map.c:1656
 #, c-format
@@ -79580,20 +79808,20 @@ msgstr "Solid initialization did not specify correct update function!"
 
 #: src/pilot.c:968
 msgid "#oActive cooldown engaged."
-msgstr "#oアクティブ冷却を作動させました。"
+msgstr "#o冷却器を作動させました。"
 
 #: src/pilot.c:1026
 msgid "#oActive cooldown completed."
-msgstr "#oアクティブ冷却を完了しました。"
+msgstr "#o冷却器の作動を完了しました。"
 
 #: src/pilot.c:1029
 #, c-format
 msgid "#rActive cooldown aborted: %s!"
-msgstr "#rアクティブ冷却を中止します : %s！"
+msgstr "#r冷却器の作動を中止します : %s！"
 
 #: src/pilot.c:1031
 msgid "#rActive cooldown aborted!"
-msgstr "#rアクティブ冷却を中止します！"
+msgstr "#r冷却器の作動を中止します！"
 
 #: src/pilot.c:1197
 #, c-format
@@ -80547,7 +80775,7 @@ msgstr "装甲輸送船"
 
 #: src/ship.c:207
 msgid "Scout"
-msgstr "偵察艦"
+msgstr "偵察船"
 
 #: src/ship.c:209
 msgid "Interceptor"
@@ -80996,7 +81224,7 @@ msgstr "星雲耐性"
 
 #: src/shipstats.c:173
 msgid "Hidden Jump Detection"
-msgstr "隠れたジャンプの探知"
+msgstr "隠れジャンプの探知"
 
 #: src/shipstats.c:174
 msgid "units Fuel"
