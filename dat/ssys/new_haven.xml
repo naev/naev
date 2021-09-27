@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ssys name="New Haven">
  <general>
-  <background>solarwind</background>
-  <features>#bSolar Winds#0</features>
+  <background>stellarwind</background>
+  <features>#bStellar Wind#0</features>
   <radius>28000.000000</radius>
   <stars>100</stars>
   <interference>33.333300</interference>

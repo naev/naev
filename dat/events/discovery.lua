@@ -228,7 +228,7 @@ custom_events = {
       end,
       type = "enter",
       name = "disc_northwinds",
-      title = _("Northern Solar Winds"),
+      title = _("Northern Stellar Winds"),
       --subtitle = _("None"),
    },
    SouthWinds = {
@@ -245,7 +245,7 @@ custom_events = {
       end,
       type = "enter",
       name = "disc_southwinds",
-      title = _("Southern Solar Winds"),
+      title = _("Southern Stellar Winds"),
       --subtitle = _("None"),
    },
    WildOnes = {

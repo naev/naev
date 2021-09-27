@@ -211,8 +211,8 @@ The voice sounds uncanny, almost human but something sets it apart.]]))
 
    -- TODO maybe make this less of a "hey yo, you're welcome here" type thing and have the player make some harder decisions
    vn.label("greet")
-   d(_([["This is an extraordinary place, is it not? The solar winds have created currents that slowly drag many ships from very far away and concentrate them here."]]))
-   d(_([["However, you do not seem to have been caught in the solar wind. The time-frame in which the solar winds operate does not seem to be compatible with human lifespan."]]))
+   d(_([["This is an extraordinary place, is it not? The stellar winds have created currents that slowly drag many ships from very far away and concentrate them here."]]))
+   d(_([["However, you do not seem to have been caught in the stellar wind. The time-frame in which the stellar winds operate does not seem to be compatible with human lifespan."]]))
    d(_([["It is quite remarkable that you made it here. As far as we know, the probability of your conventional sensors finding the jump that brought you here should be to all practical effects zero."]]))
    d(_([["We do not wish to harm you, however, our experience leads us to think that co-existence with humans is futile. After analyzing your behaviour we have decided that you do not seem to be a threat. Please note that we do not want knowledge of our existence to spread."]]))
    d(_([["Please dock once more with the Goddard and I will explain the situation slightly more in detail."]]))

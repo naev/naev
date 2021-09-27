@@ -1,5 +1,5 @@
 --[[
-   Some sort of solar wind type background.
+   Some sort of stellar wind type background.
 --]]
 
 -- We use the default background too!
