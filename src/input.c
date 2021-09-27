@@ -1195,12 +1195,14 @@ static void input_clickevent( SDL_Event* event )
    int autonav;
    double x, y, zoom, px, py;
    double ang, angp, mouseang;
-   HookParam hparam[2];
+   HookParam hparam[3];
 
    /* Generate hook. */
    hparam[0].type    = HOOK_PARAM_NUMBER;
    hparam[0].u.num   = event->button.button;
-   hparam[1].type    = HOOK_PARAM_SENTINEL;
+   hparam[1].type    = HOOK_PARAM_BOOL;
+   hparam[1].u.b     = (event->type == SDL_MOUSEBUTTONDOWN);
+   hparam[2].type    = HOOK_PARAM_SENTINEL;
    hooks_runParam( "mouse", hparam );
 
    /* Player must not be NULL. */

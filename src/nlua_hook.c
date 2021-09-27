@@ -712,7 +712,7 @@ static int hookL_input( lua_State *L )
 /**
  * @brief Hooks the function to the player clicking the mouse.
  *
- * The parameter passed to the function is the button pressed (1==left,2==middle,3==right).
+ * The parameter passed to the function is the button pressed (1==left,2==middle,3==right), and whether it is a down (true) or up (false) event.
  *
  *    @luatparam string funcname Name of function to run when hook is triggered.
  *    @luaparam arg Argument to pass to hook.

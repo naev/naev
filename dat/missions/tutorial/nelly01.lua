@@ -193,7 +193,10 @@ function land ()
       vn.scene()
       local nel = vn.newCharacter( tutnel.vn_nelly() )
       vn.na(fmt.f(_([[You land on {pntname} and the dockworkers offload your cargo. This delivery stuff is quite easy.]]),{pntname=destpnt:name()}))
-      nel(fmt.f(_([["Say, I heard this place sells #o{outfit}#0. If you want to be able to take down ships non-lethally, #oion damage#0 is your best bet. Here, I'll forward you {credits}. Do you need help buying and equipping the outfit?"]]),{outfit=outfit_tobuy:name()}))
+      nel(fmt.f(_([["Say, I heard this place sells #o{outfit}#0. If you want to be able to take down ships non-lethally, #oion damage#0 is your best bet. Here, I'll forward you {credits}. Do you need help buying and equipping the outfit?"]]),{outfit=outfit_tobuy:name(), credits=fmt.credits(outfit_tobuy:price())}))
+      vn.func( function ()
+         player.pay( outfit_tobuy:price() )
+      end )
       vn.menu{
          {_("Get useful advice"), "help_yes"},
          {_("Buy the outfit alone"), "help_no"},
@@ -415,11 +418,12 @@ function info_mission ()
    hk_info_mission = nil
 
    hk_target_hyperspace = hook.custom( "target_hyperspace", "target_hyperspace" )
-   hook.timer( 0, "clear_target_hyperspace" ) -- Clear it right away if the player closes the window
+   hook.timer( 0.001, "clear_target_hyperspace" ) -- Clear it right away if the player closes the window
    info_checkdone()
 end
 
 function target_hyperspace ()
+   -- TODO map mouse gets "stuck" here because the toolkit eats the mouse click up event
    local tsys, jumps = player.autonavDest()
    if tsys ~= destsys then
       return

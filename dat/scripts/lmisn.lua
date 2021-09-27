@@ -178,7 +178,7 @@ function lmisn.getPlanetAtDistance( sys, min, max, fct, samefct, filter, data, h
    end
    local pnts = {}
    for k,s in ipairs(candidates) do
-      local lp = lmisn.getLandablePlanets( sys, fct, samefct )
+      local lp = lmisn.getLandablePlanets( s, fct, samefct )
       for i,p in ipairs(lp) do
          if not filter or filter( p, data ) then
             table.insert( pnts, p )
