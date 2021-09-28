@@ -15,8 +15,8 @@
  </notes>
 </mission>
 --]]
---[
--- This is the second mission in the "shadow" series.
+--[[
+   This is the second mission in the "shadow" series.
 --]]
 local lmisn = require "lmisn"
 require "proximity"
@@ -25,7 +25,6 @@ require "chatter"
 require "selectiveclear"
 local shadow = require "common.shadow"
 local pir = require "common.pirate"
-
 
 title = {}
 text = {}

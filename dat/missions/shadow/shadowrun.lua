@@ -1,32 +1,30 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Shadowrun">
-  <flags>
-   <unique />
-  </flags>
-  <avail>
-   <priority>3</priority>
-   <chance>20</chance>
-   <location>Bar</location>
-   <cond>system.get("Klantar"):jumpDist() &lt; 3</cond>
-  </avail>
-  <notes>
-   <campaign>Shadow</campaign>
-  </notes>
- </mission>
- --]]
---[[
--- This is the main script for the Shadowrun mission. It's started from the spaceport bar and tries to emulate spaceport bar conversation as part of the mission.
--- "shadowrun" stack variable:
--- 1 = player has met Rebina, but hasn't accepted the mission
--- 2 = player has accepted Rebina's mission, but has not talked to SHITMAN
--- 3 = player has talked to SHITMAN
+ <flags>
+  <unique />
+ </flags>
+ <avail>
+  <priority>3</priority>
+  <chance>20</chance>
+  <location>Bar</location>
+  <cond>system.get("Klantar"):jumpDist() &lt; 3</cond>
+ </avail>
+ <notes>
+  <campaign>Shadow</campaign>
+ </notes>
+</mission>
 --]]
-
+--[[
+   This is the main script for the Shadowrun mission. It's started from the spaceport bar and tries to emulate spaceport bar conversation as part of the mission.
+   "shadowrun" stack variable:
+   1 = player has met Rebina, but hasn't accepted the mission
+   2 = player has accepted Rebina's mission, but has not talked to SHITMAN
+   3 = player has talked to SHITMAN
+--]]
 local portrait = require "portrait"
 local fleet = require "fleet"
 local shadow = require "common.shadow"
-
 
 planetname = "Durea" -- The planet where SHITMAN lives
 pnt = planet.get(planetname)
