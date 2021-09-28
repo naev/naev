@@ -241,7 +241,7 @@ function land ()
       end )
       nel(_([["Now time to get back to my ship. I hope it's repaired already. If you want to do more cargo missions to make some easy credits, I recommend you to look at the mission computer, which should be available on most planets like here. Sometimes you will also meet interesting characters at the spaceport bar who will offer you interesting missions."
 They beam you a grin.
-"Anyway, see you around!"]]))
+"Anyway, see you around! Make sure to check the spaceport bar whenever you land for new missions!"]]))
       if gotore then
          nel(_([["Oh, and don't forget to sell the ore you got from the derelict at the commodity exchange!"]]))
       end
