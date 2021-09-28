@@ -1,38 +1,36 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Sharkman Is Back">
-  <flags>
-   <unique />
-  </flags>
-  <avail>
-   <priority>3</priority>
-   <done>A Shark Bites</done>
-   <chance>10</chance>
-   <location>Bar</location>
-   <faction>Dvaered</faction>
-   <faction>Empire</faction>
-   <faction>Frontier</faction>
-   <faction>Goddard</faction>
-   <faction>Independent</faction>
-   <faction>Sirius</faction>
-   <faction>Soromid</faction>
-   <faction>Traders Guild</faction>
-   <faction>Za'lek</faction>
-  </avail>
-  <notes>
-   <campaign>Nexus show their teeth</campaign>
-  </notes>
- </mission>
- --]]
+ <flags>
+  <unique />
+ </flags>
+ <avail>
+  <priority>3</priority>
+  <done>A Shark Bites</done>
+  <chance>10</chance>
+  <location>Bar</location>
+  <faction>Dvaered</faction>
+  <faction>Empire</faction>
+  <faction>Frontier</faction>
+  <faction>Goddard</faction>
+  <faction>Independent</faction>
+  <faction>Sirius</faction>
+  <faction>Soromid</faction>
+  <faction>Traders Guild</faction>
+  <faction>Za'lek</faction>
+ </avail>
+ <notes>
+  <campaign>Nexus show their teeth</campaign>
+ </notes>
+</mission>
+--]]
 --[[
-
    This is the second mission of the Shark's teeth campaign. The player has to take part to a fake battle.
 
    Stages :
    0) Way to Toaxis
    1) Battle
    2) Going to Darkshed
-
 --]]
 local pir = require "common.pirate"
 local fmt = require "format"

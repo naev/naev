@@ -1,32 +1,31 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="A Shark Bites">
-  <flags>
-   <unique />
-  </flags>
-  <avail>
-   <priority>3</priority>
-   <cond>planet.cur() ~= planet.get("Ulios") and player.numOutfit("Mercenary License") &gt; 0</cond>
-   <chance>5</chance>
-   <location>Bar</location>
-   <faction>Dvaered</faction>
-   <faction>Empire</faction>
-   <faction>Frontier</faction>
-   <faction>Goddard</faction>
-   <faction>Independent</faction>
-   <faction>Sirius</faction>
-   <faction>Soromid</faction>
-   <faction>Traders Guild</faction>
-   <faction>Za'lek</faction>
-  </avail>
-  <notes>
-   <campaign>Nexus show their teeth</campaign>
-   <tier>3</tier>
-  </notes>
- </mission>
- --]]
+ <flags>
+  <unique />
+ </flags>
+ <avail>
+  <priority>3</priority>
+  <cond>planet.cur() ~= planet.get("Ulios") and player.numOutfit("Mercenary License") &gt; 0</cond>
+  <chance>5</chance>
+  <location>Bar</location>
+  <faction>Dvaered</faction>
+  <faction>Empire</faction>
+  <faction>Frontier</faction>
+  <faction>Goddard</faction>
+  <faction>Independent</faction>
+  <faction>Sirius</faction>
+  <faction>Soromid</faction>
+  <faction>Traders Guild</faction>
+  <faction>Za'lek</faction>
+ </avail>
+ <notes>
+  <campaign>Nexus show their teeth</campaign>
+  <tier>3</tier>
+ </notes>
+</mission>
+--]]
 --[[
-
    This is the first mission of the Shark's teeth campaign. The player has to kill a pirate ancestor with a shark.
 
    Stages :
@@ -35,7 +34,6 @@
    2) Fight in Toaxis
    3) Pirate ran away
    4) Pirate was killed
-
 --]]
 local pir = require "common.pirate"
 local pilotname = require "pilotname"

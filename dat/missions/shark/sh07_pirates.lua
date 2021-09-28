@@ -18,13 +18,11 @@
 </mission>
 --]]
 --[[
-
    This is the climax mission of the Shark's teeth campaign. The player has to kill 4 pirates.
 
    Stages :
    0) There are pirates to kill
    1) Way to Alteris
-
 --]]
 local pir = require "common.pirate"
 local pilotname = require "pilotname"

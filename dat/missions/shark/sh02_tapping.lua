@@ -1,40 +1,36 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Unfair Competition">
-  <flags>
-   <unique />
-  </flags>
-  <avail>
-   <priority>3</priority>
-   <cond>diff.isApplied("collective_dead")</cond>
-   <done>Sharkman Is Back</done>
-   <chance>5</chance>
-   <location>Bar</location>
-   <faction>Dvaered</faction>
-   <faction>Empire</faction>
-   <faction>Frontier</faction>
-   <faction>Goddard</faction>
-   <faction>Independent</faction>
-   <faction>Soromid</faction>
-   <faction>Traders Guild</faction>
-   <faction>Za'lek</faction>
-  </avail>
-  <notes>
-   <requires name="The Collective is dead and no one will miss them"/>
-   <campaign>Nexus show their teeth</campaign>
-  </notes>
- </mission>
- --]]
+ <flags>
+  <unique />
+ </flags>
+ <avail>
+  <priority>3</priority>
+  <cond>diff.isApplied("collective_dead")</cond>
+  <done>Sharkman Is Back</done>
+  <chance>5</chance>
+  <location>Bar</location>
+  <faction>Dvaered</faction>
+  <faction>Empire</faction>
+  <faction>Frontier</faction>
+  <faction>Goddard</faction>
+  <faction>Independent</faction>
+  <faction>Soromid</faction>
+  <faction>Traders Guild</faction>
+  <faction>Za'lek</faction>
+ </avail>
+ <notes>
+  <requires name="The Collective is dead and no one will miss them"/>
+  <campaign>Nexus show their teeth</campaign>
+ </notes>
+</mission>
+--]]
 --[[
-
    This is the third mission of the Shark's teeth campaign. The player has to take illegal holophone recordings in his ship.
 
    Stages :
    0) Way to Sirius world
    1) Way to Darkshed
-
-   TODO: I didn't test the case when the player tries to do the mission with a freighter, and the case when the player's class is unknown
-
 --]]
 local pir = require "common.pirate"
 local fmt = require "format"
@@ -196,9 +192,9 @@ function ambush()
    -- And depending on the number of avaliable ships of the given class
    if playerSize <= 2 then
       choose( 3*nInterce, 2*nFighter, nBombers, nCorvett, nCruiser )
-      elseif playerSize <= 4 then
+   elseif playerSize <= 4 then
       choose( nInterce, 2*nFighter, nBombers, 4*nCorvett, 5*nCruiser )
-      elseif playerSize <= 6 then
+   elseif playerSize <= 6 then
       choose( nInterce, nFighter, 5*nBombers, nCorvett, 5*nCruiser )
    else -- We're never too sure
       choose( nInterce, nFighter, nBombers, nCorvett, nCruiser )

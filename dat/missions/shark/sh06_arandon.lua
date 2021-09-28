@@ -1,35 +1,32 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="A Journey To Arandon">
-  <flags>
-   <unique />
-  </flags>
-  <avail>
-   <priority>30</priority>
-   <done>The FLF Contact</done>
-   <chance>100</chance>
-   <location>Bar</location>
-   <planet>Darkshed</planet>
-   <cond>not diff.isApplied( "flf_dead" )</cond>
-  </avail>
-  <notes>
-   <campaign>Nexus show their teeth</campaign>
-  </notes>
- </mission>
-  --]]
+ <flags>
+  <unique />
+ </flags>
+ <avail>
+  <priority>30</priority>
+  <done>The FLF Contact</done>
+  <chance>100</chance>
+  <location>Bar</location>
+  <planet>Darkshed</planet>
+  <cond>not diff.isApplied( "flf_dead" )</cond>
+ </avail>
+ <notes>
+  <campaign>Nexus show their teeth</campaign>
+ </notes>
+</mission>
+--]]
 --[[
-
    This is the seventh mission of the Shark's teeth campaign. The player has to meet the FLF in Arandon.
 
    Stages :
    0) Way to Arandon
    1) Way back to Darkshed
-
 --]]
 local pir = require "common.pirate"
 local fmt = require "format"
 local shark = require "common.shark"
-
 
 title = {}
 text = {}

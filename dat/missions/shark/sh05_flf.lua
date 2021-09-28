@@ -26,18 +26,15 @@
 </mission>
 --]]
 --[[
-
    This is the sixth mission of the Shark's teeth campaign. The player has to take contact with the FLF.
 
    Stages :
    0) Way to Eiger/Surano
    1) Way back to Darkshed
-
 --]]
 local pir = require "common.pirate"
 local fmt = require "format"
 local shark = require "common.shark"
-
 
 title = {}
 text = {}

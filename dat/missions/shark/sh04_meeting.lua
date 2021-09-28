@@ -1,23 +1,22 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="The Meeting">
-  <flags>
-   <unique />
-  </flags>
-  <avail>
-   <priority>3</priority>
-   <done>Invitation</done>
-   <chance>100</chance>
-   <location>Bar</location>
-   <planet>Darkshed</planet>
-  </avail>
-  <notes>
-   <campaign>Nexus show their teeth</campaign>
-  </notes>
- </mission>
- --]]
+ <flags>
+  <unique />
+ </flags>
+ <avail>
+  <priority>3</priority>
+  <done>Invitation</done>
+  <chance>100</chance>
+  <location>Bar</location>
+  <planet>Darkshed</planet>
+ </avail>
+ <notes>
+  <campaign>Nexus show their teeth</campaign>
+ </notes>
+</mission>
+--]]
 --[[
-
    This is the fifth mission of the Shark's teeth campaign. The player has to go to a planet in Za'lek space.
 
    Stages :
@@ -25,7 +24,6 @@
    1) Way back to Darkshed
 
    TODO: I'm not really happy with the drone's behaviour: it's quite too obvious
-
 --]]
 local pir = require "common.pirate"
 require "proximity"
@@ -76,7 +74,6 @@ log_text = _([[You transported Arnold Smith to a secret meeting for Nexus Shipya
 
 
 function create ()
-
    --Change here to change the planets and the systems
    mispla, missys = planet.get("Curie")
    pplname = "Darkshed"
@@ -92,9 +89,8 @@ function create ()
 end
 
 function accept()
-
    stage = 0
-   reward = 750000
+   reward = 750e3
    proba = 0.3  --the probability of ambushes will change
    firstambush = true  --In the first ambush, there will be a little surprise text
 

@@ -18,6 +18,9 @@
   <faction>Soromid</faction>
   <faction>Za'lek</faction>
  </avail>
+ <notes>
+  <campaign>Tutorial Nelly</campaign>
+ </notes>
 </mission>
 --]]
 --[[
@@ -246,6 +249,8 @@ They beam you a grin.
          nel(_([["Oh, and don't forget to sell the ore you got from the derelict at the commodity exchange!"]]))
       end
       vn.run()
+
+      tutnel.log(_("You helped Nelly complete a delivery mission."))
 
       misn.finish()
    end
