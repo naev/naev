@@ -98,6 +98,13 @@ function onhit( p, po, armour, shield )
    end
 end
 
+-- Disable on shoot
+function onshoot( p, po )
+   if mem.active then
+      turnoff( p, po )
+   end
+end
+
 function ontoggle( p, po, on )
    if on then
       return turnon( p, po )
