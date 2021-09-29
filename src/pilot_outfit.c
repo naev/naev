@@ -1220,7 +1220,6 @@ void pilot_outfitLInitAll( Pilot *pilot )
       pilot_calcStats( pilot );
 }
 
-
 /**
  * @brief Runs the pilot's Lua outfits init script for an outfit.
  *
@@ -1256,7 +1255,6 @@ int pilot_outfitLInit( Pilot *pilot, PilotOutfitSlot *po )
    }
    return 1;
 }
-
 
 /**
  * @brief Runs the pilot's Lua outfits update script.
@@ -1297,7 +1295,6 @@ void pilot_outfitLUpdate( Pilot *pilot, double dt )
       pilot_calcStats( pilot );
 }
 
-
 /**
  * @brief Handles when the pilot runs out of energy.
  *
@@ -1334,7 +1331,6 @@ void pilot_outfitLOutfofenergy( Pilot *pilot )
    if (pilotoutfit_modified)
       pilot_calcStats( pilot );
 }
-
 
 /**
  * @brief Runs the pilot's Lua outfits onhit script.
@@ -1379,7 +1375,6 @@ void pilot_outfitLOnhit( Pilot *pilot, double armour, double shield, unsigned in
       pilot_calcStats( pilot );
 }
 
-
 /**
  * @brief Handle the manual toggle of an outfit.
  *
@@ -1413,7 +1408,6 @@ int pilot_outfitLOntoggle( Pilot *pilot, PilotOutfitSlot *po, int on )
    lua_pop(naevL, 1);
    return ret;
 }
-
 
 /**
  * @brief Handle cooldown hooks for outfits.
@@ -1460,6 +1454,76 @@ void pilot_outfitLCooldown( Pilot *pilot, int done, int success, double timer )
       pilot_calcStats( pilot );
 }
 
+/**
+ * @brief Runs the pilot's Lua outfits onhit script.
+ *
+ *    @param pilot Pilot to run Lua outfits for.
+ */
+void pilot_outfitLOnshoot( Pilot *pilot )
+{
+   pilotoutfit_modified = 0;
+   for (int i=0; i<array_size(pilot->outfits); i++) {
+      PilotOutfitSlot *po = pilot->outfits[i];
+      if (po->outfit==NULL || !outfit_isMod(po->outfit))
+         continue;
+      if (po->outfit->u.mod.lua_onshoot == LUA_NOREF)
+         continue;
+
+      nlua_env env = po->outfit->u.mod.lua_env;
+
+      /* Set the memory. */
+      lua_rawgeti(naevL, LUA_REGISTRYINDEX, po->lua_mem); /* mem */
+      nlua_setenv(env, "mem"); /* */
+
+      /* Set up the function: onshoot( p, po ) */
+      lua_rawgeti(naevL, LUA_REGISTRYINDEX, po->outfit->u.mod.lua_onshoot); /* f */
+      lua_pushpilot(naevL, pilot->id); /* f, p */
+      lua_pushpilotoutfit(naevL, po);  /* f, p, po */
+      if (nlua_pcall( env, 2, 0 )) {   /* */
+         WARN( _("Pilot '%s''s outfit '%s' -> 'onshoot':\n%s"), pilot->name, po->outfit->name, lua_tostring(naevL,-1));
+         lua_pop(naevL, 1);
+      }
+   }
+   /* Recalculate if anything changed. */
+   if (pilotoutfit_modified)
+      pilot_calcStats( pilot );
+}
+
+/**
+ * @brief Runs the pilot's Lua outfits onhit script.
+ *
+ *    @param pilot Pilot to run Lua outfits for.
+ */
+void pilot_outfitLOnstealth( Pilot *pilot )
+{
+   pilotoutfit_modified = 0;
+   for (int i=0; i<array_size(pilot->outfits); i++) {
+      PilotOutfitSlot *po = pilot->outfits[i];
+      if (po->outfit==NULL || !outfit_isMod(po->outfit))
+         continue;
+      if (po->outfit->u.mod.lua_onstealth == LUA_NOREF)
+         continue;
+
+      nlua_env env = po->outfit->u.mod.lua_env;
+
+      /* Set the memory. */
+      lua_rawgeti(naevL, LUA_REGISTRYINDEX, po->lua_mem); /* mem */
+      nlua_setenv(env, "mem"); /* */
+
+      /* Set up the function: onstealth( p, po, stealthed ) */
+      lua_rawgeti(naevL, LUA_REGISTRYINDEX, po->outfit->u.mod.lua_onstealth); /* f */
+      lua_pushpilot(naevL, pilot->id); /* f, p */
+      lua_pushpilotoutfit(naevL, po);  /* f, p, po */
+      lua_pushboolean(naevL, pilot_isFlag(pilot,PILOT_STEALTH) ); /* f, p, po, steathed */
+      if (nlua_pcall( env, 3, 0 )) {   /* */
+         WARN( _("Pilot '%s''s outfit '%s' -> 'onstealth':\n%s"), pilot->name, po->outfit->name, lua_tostring(naevL,-1));
+         lua_pop(naevL, 1);
+      }
+   }
+   /* Recalculate if anything changed. */
+   if (pilotoutfit_modified)
+      pilot_calcStats( pilot );
+}
 
 /**
  * @brief Handle cleanup hooks for outfits.

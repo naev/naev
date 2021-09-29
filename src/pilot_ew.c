@@ -570,6 +570,7 @@ int pilot_stealth( Pilot *p )
    pilot_outfitOffAll( p );
 
    /* Got into stealth. */
+   pilot_outfitLOnstealth( p );
    pilot_calcStats(p);
    p->ew_stealth_timer = 0.;
 
@@ -589,7 +590,8 @@ void pilot_destealth( Pilot *p )
       return;
    pilot_rmFlag( p, PILOT_STEALTH );
    p->ew_stealth_timer = 0.;
-   pilot_calcStats(p);
+   pilot_outfitLOnstealth( p );
+   pilot_calcStats(p); /* TODO skip this when outfits updated pilot. */
 
    /* Run hook. */
    const HookParam hparam = { .type = HOOK_PARAM_BOOL, .u.b = 0 };
