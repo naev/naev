@@ -1581,6 +1581,68 @@ void pilot_outfitLOnstealth( Pilot *pilot )
       pilot_calcStats( pilot );
 }
 
+void pilot_outfitLOnscan( Pilot *pilot )
+{
+   pilotoutfit_modified = 0;
+   for (int i=0; i<array_size(pilot->outfits); i++) {
+      PilotOutfitSlot *po = pilot->outfits[i];
+      if (po->outfit==NULL || !outfit_isMod(po->outfit))
+         continue;
+      if (po->outfit->u.mod.lua_onscan == LUA_NOREF)
+         continue;
+
+      nlua_env env = po->outfit->u.mod.lua_env;
+
+      /* Set the memory. */
+      lua_rawgeti(naevL, LUA_REGISTRYINDEX, po->lua_mem); /* mem */
+      nlua_setenv(env, "mem"); /* */
+
+      /* Set up the function: onscan( p, po, stealthed ) */
+      lua_rawgeti(naevL, LUA_REGISTRYINDEX, po->outfit->u.mod.lua_onscan); /* f */
+      lua_pushpilot(naevL, pilot->id); /* f, p */
+      lua_pushpilotoutfit(naevL, po);  /* f, p, po */
+      lua_pushpilot(naevL, pilot->target); /* f, p, po, t */
+      if (nlua_pcall( env, 3, 0 )) {   /* */
+         WARN( _("Pilot '%s''s outfit '%s' -> 'onscan':\n%s"), pilot->name, po->outfit->name, lua_tostring(naevL,-1));
+         lua_pop(naevL, 1);
+      }
+   }
+   /* Recalculate if anything changed. */
+   if (pilotoutfit_modified)
+      pilot_calcStats( pilot );
+}
+
+void pilot_outfitLOnscanned( Pilot *pilot, const Pilot *scanner )
+{
+   pilotoutfit_modified = 0;
+   for (int i=0; i<array_size(pilot->outfits); i++) {
+      PilotOutfitSlot *po = pilot->outfits[i];
+      if (po->outfit==NULL || !outfit_isMod(po->outfit))
+         continue;
+      if (po->outfit->u.mod.lua_onscanned == LUA_NOREF)
+         continue;
+
+      nlua_env env = po->outfit->u.mod.lua_env;
+
+      /* Set the memory. */
+      lua_rawgeti(naevL, LUA_REGISTRYINDEX, po->lua_mem); /* mem */
+      nlua_setenv(env, "mem"); /* */
+
+      /* Set up the function: onscanned( p, po, stealthed ) */
+      lua_rawgeti(naevL, LUA_REGISTRYINDEX, po->outfit->u.mod.lua_onscanned); /* f */
+      lua_pushpilot(naevL, pilot->id); /* f, p */
+      lua_pushpilotoutfit(naevL, po);  /* f, p, po */
+      lua_pushpilot(naevL, scanner->id); /* f, p, po, scanner */
+      if (nlua_pcall( env, 3, 0 )) {   /* */
+         WARN( _("Pilot '%s''s outfit '%s' -> 'onscanned':\n%s"), pilot->name, po->outfit->name, lua_tostring(naevL,-1));
+         lua_pop(naevL, 1);
+      }
+   }
+   /* Recalculate if anything changed. */
+   if (pilotoutfit_modified)
+      pilot_calcStats( pilot );
+}
+
 /**
  * @brief Handle cleanup hooks for outfits.
  *

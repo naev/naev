@@ -164,6 +164,10 @@ void pilot_ewUpdateDynamic( Pilot *p, double dt )
          hparam.u.lp = p->id;
          pilot_runHookParam( t, PILOT_HOOK_SCANNED, &hparam, 1 );
 
+         /* Run outfit stuff. */
+         pilot_outfitLOnscan( p );
+         pilot_outfitLOnscanned( t, p );
+
          /* TODO handle case the player finished scaning by setting a flag or something. */
       }
    }

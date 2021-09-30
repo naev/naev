@@ -63,6 +63,8 @@ int pilot_outfitLOntoggle( Pilot *pilot, PilotOutfitSlot *po, int on );
 void pilot_outfitLCooldown( Pilot *pilot, int done, int success, double timer );
 void pilot_outfitLOnshoot( Pilot *pilot );
 void pilot_outfitLOnstealth( Pilot *pilot );
+void pilot_outfitLOnscan( Pilot *pilot );
+void pilot_outfitLOnscanned( Pilot *pilot, const Pilot *scanner );
 void pilot_outfitLCleanup( Pilot *pilot );
 
 
