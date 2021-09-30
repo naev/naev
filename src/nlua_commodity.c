@@ -35,6 +35,7 @@ static int commodityL_price( lua_State *L );
 static int commodityL_priceAt( lua_State *L );
 static int commodityL_priceAtTime( lua_State *L );
 static int commodityL_illegalto( lua_State *L );
+static int commodityL_illegality( lua_State *L );
 static const luaL_Reg commodityL_methods[] = {
    { "__tostring", commodityL_name },
    { "__eq", commodityL_eq },
@@ -46,6 +47,7 @@ static const luaL_Reg commodityL_methods[] = {
    { "priceAt", commodityL_priceAt },
    { "priceAtTime", commodityL_priceAtTime },
    { "illegalto", commodityL_illegalto },
+   { "illegality", commodityL_illegality },
    {0,0}
 }; /**< Commodity metatable methods. */
 
@@ -403,4 +405,23 @@ static int commodityL_illegalto( lua_State *L )
       commodity_tempIllegalto( c, f );
    }
    return 0;
+}
+
+
+/**
+ * @brief Gets the factions to which the commodity is illegal to.
+ *
+ *    @luatparam c Commodity to get illegality status of.
+ *    @luatreturn table Table of all the factions the commodity is illegal to.
+ * @luafunc illegality
+ */
+static int commodityL_illegality( lua_State *L )
+{
+   Commodity *c = luaL_validcommodity(L,1);
+   lua_newtable(L);
+   for (int i=0; i<array_size(c->illegalto); i++) {
+      lua_pushfaction( L, c->illegalto[i] );
+      lua_rawseti( L, -2, i+1 );
+   }
+   return 1;
 }

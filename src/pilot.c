@@ -3050,9 +3050,8 @@ Pilot* pilot_createEmpty( const Ship* ship, const char* name,
  */
 Pilot* pilot_replacePlayer( Pilot* after )
 {
-   int i, j;
-   i = pilot_getStackPos( PLAYER_ID );
-   for (j=0; j<array_size(pilot_stack[i]->trail); j++)
+   int i = pilot_getStackPos( PLAYER_ID );
+   for (int j=0; j<array_size(pilot_stack[i]->trail); j++)
       spfx_trail_remove( pilot_stack[i]->trail[j] );
    array_erase( &pilot_stack[i]->trail, array_begin(pilot_stack[i]->trail), array_end(pilot_stack[i]->trail) );
    pilot_stack[i] = after;
@@ -3667,14 +3666,17 @@ void pilot_msg(Pilot *p, Pilot *receiver, const char *type, unsigned int idx)
  */
 int pilot_hasIllegal( const Pilot *p, int faction )
 {
-   int i;
-   const Commodity *c;
    /* Check commodities. */
-   for (i=0; i<array_size(p->commodities); i++) {
-      c = p->commodities[i].commodity;
-      if (commodity_checkIllegal( c, faction )) {
+   for (int i=0; i<array_size(p->commodities); i++) {
+      const Commodity *c = p->commodities[i].commodity;
+      if (commodity_checkIllegal( c, faction ))
          return 1;
-      }
+   }
+   /* Check outfits. */
+   for (int i=0; i<array_size(p->outfits); i++) {
+      const Outfit *o = p->outfits[i]->outfit;
+      if ((o != NULL) && outfit_checkIllegal( o, faction ))
+         return 1;
    }
    /* Nothing to see here sir. */
    return 0;

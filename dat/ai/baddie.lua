@@ -1,5 +1,5 @@
 require 'ai.core.core'
-require "ai.core.idle.wait"
+require 'ai.core.idle.wait'
 
 --[[
    Generic Mission baddie AI

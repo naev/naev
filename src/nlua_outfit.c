@@ -19,6 +19,7 @@
 #include "array.h"
 #include "log.h"
 #include "damagetype.h"
+#include "nlua_faction.h"
 #include "nlua_pilot.h"
 #include "nlua_ship.h"
 #include "nlua_tex.h"
@@ -46,6 +47,7 @@ static int outfitL_unique( lua_State *L );
 static int outfitL_getShipStat( lua_State *L );
 static int outfitL_weapStats( lua_State *L );
 static int outfitL_specificStats( lua_State *L );
+static int outfitL_illegality( lua_State *L );
 static const luaL_Reg outfitL_methods[] = {
    { "__tostring", outfitL_name },
    { "__eq", outfitL_eq },
@@ -66,6 +68,7 @@ static const luaL_Reg outfitL_methods[] = {
    { "shipstat", outfitL_getShipStat },
    { "weapstats", outfitL_weapStats },
    { "specificstats", outfitL_specificStats },
+   { "illegality", outfitL_illegality },
    {0,0}
 }; /**< Outfit metatable methods. */
 
@@ -237,10 +240,9 @@ static int outfitL_get( lua_State *L )
  */
 static int outfitL_getAll( lua_State *L )
 {
-   int i;
    const Outfit *outfits = outfit_getAll();
    lua_newtable(L); /* t */
-   for (i=0; i<array_size(outfits); i++) {
+   for (int i=0; i<array_size(outfits); i++) {
       lua_pushoutfit( L, (Outfit*) &outfits[i] );
       lua_rawseti( L, -2, i+1 );
    }
@@ -544,7 +546,8 @@ static int outfitL_weapStats( lua_State *L )
       mod_shots = shots / (shots + mod_shots * outfit_delay(o));
       dmg = outfit_damage(o);
       /* Modulate the damage by average of damage types. */
-      dtype_raw( dmg->type, &sdmg, &admg, NULL );
+      if( dtype_raw( dmg->type, &sdmg, &admg, NULL ) != 0)
+         NLUA_ERROR(L, _("Outfit has invalid damage type."));
       mod_damage *= 0.5*(sdmg+admg);
       /* Calculate good damage estimates. */
       dps = mod_shots * mod_damage * dmg->damage;
@@ -729,3 +732,21 @@ static int outfitL_specificStats( lua_State *L )
 #undef SETFIELD
 #undef SETFIELDI
 #undef SETFIELDB
+
+/**
+ * @brief Gets the factions to which the outfit is illegal to.
+ *
+ *    @luatparam o Outfit to get illegality status of.
+ *    @luatreturn table Table of all the factions the outfit is illegal to.
+ * @luafunc illegality
+ */
+static int outfitL_illegality( lua_State *L )
+{
+   const Outfit *o = luaL_validoutfit(L,1);
+   lua_newtable(L);
+   for (int i=0; i<array_size(o->illegalto); i++) {
+      lua_pushfaction( L, o->illegalto[i] );
+      lua_rawseti( L, -2, i+1 );
+   }
+   return 1;
+}

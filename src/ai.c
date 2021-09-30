@@ -1093,7 +1093,7 @@ static void ai_create( Pilot* pilot )
 /**
  * @brief Creates a new AI task.
  */
-Task *ai_newtask( Pilot *p, const char *func, int subtask, int pos )
+Task *ai_newtask( lua_State *L, Pilot *p, const char *func, int subtask, int pos )
 {
    Task *t, *curtask, *pointer;
    nlua_env env = p->ai->env;
@@ -1123,9 +1123,8 @@ Task *ai_newtask( Pilot *p, const char *func, int subtask, int pos )
       /* Must have valid task. */
       curtask = ai_curTask( p );
       if (curtask == NULL) {
-         WARN( _("Trying to add subtask '%s' to non-existent task."), func);
          ai_freetask( t );
-         return NULL;
+         NLUA_ERROR( L, _("Trying to add subtask '%s' to non-existent task."), func);
       }
 
       /* Add the subtask. */
@@ -1185,7 +1184,7 @@ static Task* ai_createTask( lua_State *L, int subtask )
    func  = luaL_checkstring(L,1);
 
    /* Creates a new AI task. */
-   t     = ai_newtask( cur_pilot, func, subtask, 0 );
+   t     = ai_newtask( L, cur_pilot, func, subtask, 0 );
 
    /* Set the data. */
    if (lua_gettop(L) > 1) {

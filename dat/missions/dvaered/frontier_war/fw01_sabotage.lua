@@ -36,7 +36,7 @@
 require "nextjump"
 require "proximity"
 require "selectiveclear"
-require "missions/dvaered/frontier_war/fw_common"
+require "missions.dvaered.frontier_war.fw_common"
 local fmt = require "format"
 
 portrait_name = _("Major Tam")

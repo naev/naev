@@ -17,7 +17,6 @@ function create ()
    local price = ai.pilot():ship():price()
    ai.setcredits( rnd.rnd(price/150, price/50) ) -- Target for crime
 
-   mem.loiter = 3 -- This is the amount of waypoints the pilot will pass through before leaving the system
    create_post()
 end
 

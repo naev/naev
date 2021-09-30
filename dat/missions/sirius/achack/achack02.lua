@@ -22,7 +22,7 @@
 -- This is the second mission in the Academy Hack minor campaign.
 --]]
 
-require "scripts/nextjump"
+require "nextjump"
 local fleet = require "fleet"
 require "selectiveclear"
 require "proximity"

@@ -401,8 +401,6 @@ void cli_tabComplete( unsigned int wid ) {
    char *str, *cur, *new;
 
    old = window_getInput( wid, "inpInput" );
-   if (old == NULL)
-      return;
    str = strdup(old);
 
    nlua_pushenv(cli_env);

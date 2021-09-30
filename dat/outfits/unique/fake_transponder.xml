@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<outfit name="Fake Transponder">
+ <general>
+  <rarity>6</rarity>
+  <unique />
+  <typename>Fake Transponder</typename>
+  <slot>utility</slot>
+  <size>small</size>
+  <mass>0</mass>
+  <price>1000000</price>
+  <description>A fake transponder to make ship appear like a non-descript and harmless independent ship.</description>
+  <desc_extra>Makes the ship appear as independent to other ships. Becomes void when scanned.</desc_extra>
+  <gfx_store>placeholder.webp</gfx_store>
+  <limit>fake_transponder</limit>
+  <illegalto>
+   <faction>Empire</faction>
+   <faction>Dvaered</faction>
+   <faction>Soromid</faction>
+   <faction>Sirius</faction>
+   <faction>Za'lek</faction>
+   <faction>Goddard</faction>
+   <faction>Frontier</faction>
+  </illegalto>
+ </general>
+ <specific type="modification">
+  <lua>outfits/unique/fake_transponder.lua</lua>
+  <ew_scanned_time>-25</ew_scanned_time>
+ </specific>
+</outfit>

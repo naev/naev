@@ -121,14 +121,14 @@ function create ()
       jumps_permitted = jumps_permitted - 1
    end
 
-   local num_pirates = missys:presences()["Pirate"]
-   if num_pirates <= 25 then
+   local num_pirates = pir.systemPresence( missys )
+   if num_pirates <= 50 then
       level = 1
-   elseif num_pirates <= 50 then
-      level = rnd.rnd( 1, 2 )
-   elseif num_pirates <= 75 then
-      level = rnd.rnd( 2, 3 )
    elseif num_pirates <= 100 then
+      level = rnd.rnd( 1, 2 )
+   elseif num_pirates <= 200 then
+      level = rnd.rnd( 2, 3 )
+   elseif num_pirates <= 300 then
       level = rnd.rnd( 3, 4 )
    else
       level = rnd.rnd( 4, #misn_title )

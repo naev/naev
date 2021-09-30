@@ -50,7 +50,7 @@
       * Ship enthusiast quiz
       * Deliver fancy contraband all over the universe
       * Raid trader convoys
-   * New translation(s) in progress: Czech, French, Korean, and Portuguese
+   * New translation(s) in progress: Czech, French, Korean, Portuguese, and Japanese
    * Engine Changes
       * Added an optimizer to improve automatic outfitting choices
       * A ton of new ship stat attributes have been added
@@ -76,6 +76,7 @@
       * Virtual assets have been redone and are more flexible than before
       * Point value system for ships to help with presence and other things
       * Initial support for 3D models
+      * Proper support for line breaks in most languages
 
 * 0.8.2
    * Gameplay

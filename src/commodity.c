@@ -308,6 +308,18 @@ static int commodity_parse( Commodity *temp, xmlNodePtr parent )
          temp->standard = 1;
          continue;
       }
+      if (xml_isNode(node, "illegalto")) {
+         xmlNodePtr cur = node->xmlChildrenNode;
+         temp->illegalto = array_create( int );
+         do {
+            xml_onlyNodes(cur);
+            if (xml_isNode(cur, "faction")) {
+               int f = faction_get( xml_get(cur) );
+               array_push_back( &temp->illegalto, f );
+            }
+         } while (xml_nextNode(node));
+         continue;
+      }
       xmlr_float(node, "population_modifier", temp->population_modifier);
       xmlr_float(node, "period", temp->period);
       if (xml_isNode(node, "planet_modifier")) {
@@ -324,6 +336,7 @@ static int commodity_parse( Commodity *temp, xmlNodePtr parent )
          xmlr_attr_strd(node, "type", newdict->name);
          newdict->value = xml_getFloat(node);
          temp->faction_modifier = newdict;
+         continue;
       }
 
    } while (xml_nextNode(node));
@@ -581,8 +594,7 @@ void gatherable_gather( int pilot )
  */
 int commodity_checkIllegal( const Commodity *com, int faction )
 {
-   int i;
-   for (i=0; i<array_size(com->illegalto); i++) {
+   for (int i=0; i<array_size(com->illegalto); i++) {
       if (com->illegalto[i] == faction)
          return 1;
    }
@@ -598,12 +610,10 @@ int commodity_checkIllegal( const Commodity *com, int faction )
  */
 int commodity_isTemp( const char* name )
 {
-   int i;
-
-   for (i=0; i<array_size(commodity_temp); i++)
+   for (int i=0; i<array_size(commodity_temp); i++)
       if (strcmp(commodity_temp[i]->name, name) == 0)
          return 1;
-   for (i=0; i<array_size(commodity_stack); i++)
+   for (int i=0; i<array_size(commodity_stack); i++)
       if (strcmp(commodity_stack[i].name,name)==0)
          return 0;
 
@@ -639,7 +649,7 @@ Commodity* commodity_newTemp( const char* name, const char* desc )
  */
 int commodity_tempIllegalto( Commodity *com, int faction )
 {
-   int i, *f;
+   int *f;
 
    if (!com->istemp) {
       WARN(_("Trying to modify temporary commodity '%s'!"), com->name);
@@ -650,7 +660,7 @@ int commodity_tempIllegalto( Commodity *com, int faction )
       com->illegalto = array_create( int );
 
    /* Don't add twice. */
-   for (i=0; i<array_size(com->illegalto); i++) {
+   for (int i=0; i<array_size(com->illegalto); i++) {
       if (com->illegalto[i] == faction)
          return 0;
    }

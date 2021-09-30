@@ -116,4 +116,4 @@ end
 mem.waypoints     = nil
 mem.land_friendly = false -- Land on only friendly by default
 mem.doscans       = false
-mem.loiter        = 3
+mem.loiter        = 10

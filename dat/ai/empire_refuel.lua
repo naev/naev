@@ -9,8 +9,6 @@ function create ()
    -- Broke
    ai.setcredits( 0 )
 
-   mem.loiter = 3 -- This is the amount of waypoints the pilot will pass through before leaving the system
-
    -- Finish up creation
    create_post()
 end

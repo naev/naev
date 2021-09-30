@@ -42,7 +42,7 @@ require "nextjump"
 require "selectiveclear"
 require "proximity"
 local portrait = require "portrait"
-require "missions/dvaered/frontier_war/fw_common"
+require "missions.dvaered.frontier_war.fw_common"
 local fmt = require "format"
 
 -- TODO: add news comments about all this

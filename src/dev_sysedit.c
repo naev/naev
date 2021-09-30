@@ -312,7 +312,7 @@ static void sysedit_editPntClose( unsigned int wid, const char *unused )
    inp = window_getInput( sysedit_widEdit, "inpClass" );
    free( p->class );
 
-   if ((inp == NULL) || (strlen(inp) == 0))
+   if ( inp[0] == '\0' )
       p->class = NULL;
    else
       p->class = strdup( inp );

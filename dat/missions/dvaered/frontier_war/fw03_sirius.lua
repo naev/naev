@@ -34,7 +34,7 @@
    6) Pursuit: you may land after the target
 --]]
 
-require "missions/dvaered/frontier_war/fw_common"
+require "missions.dvaered.frontier_war.fw_common"
 require "selectiveclear"
 require "nextjump"
 require "proximity"

@@ -29,9 +29,6 @@ function create ()
    -- Credits.
    ai.setcredits( rnd.rnd(ps:price()/300, ps:price()/100) )
 
-   -- Handle misc stuff
-   mem.loiter = 3 -- This is the amount of waypoints the pilot will pass through before leaving the system
-
    -- Set how far they attack
    mem.enemyclose = 3000 * ps:size()
 

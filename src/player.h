@@ -64,9 +64,7 @@ enum {
    PINPUT_BRAKING   /**< Player engaged auto-braking. */
 };
 
-
 #include "player_autonav.h"
-
 
 /**
  * The player struct.
@@ -118,7 +116,6 @@ typedef struct Player_s {
    time_t time_since_save; /**< Time since last saved. */
 } Player_t;
 
-
 /**
  * @brief Wrapper for outfits.
  */
@@ -126,7 +123,6 @@ typedef struct PlayerOutfit_s {
    const Outfit *o;  /**< Actual associated outfit. */
    int q;            /**< Amount of outfit owned. */
 } PlayerOutfit_t;
-
 
 /**
  * @brief Player ship.
@@ -137,12 +133,10 @@ typedef struct PlayerShip_s {
    int favourite; /**< Whether or not it is favourited. */
 } PlayerShip_t;
 
-
 /*
  * Local player.
  */
 extern Player_t player; /**< Local player. */
-
 
 /*
  * Common player sounds.
@@ -156,7 +150,6 @@ extern int snd_hypEng; /**< Hyperspace engine sound. */
 extern int snd_hypPowDown; /**< Hyperspace power down sound. */
 extern int snd_hypPowUpJump; /**< Hyperspace Power up to jump sound. */
 extern int snd_hypJump; /**< Hyperspace jump sound. */
-
 
 /*
  * creation/cleanup
@@ -172,13 +165,11 @@ void player_cleanup (void);
  */
 void player_runHooks (void);
 
-
 /*
- * render
+ * Rendering.
  */
 void player_renderUnderlay( double dt );
 void player_render( double dt );
-
 
 /*
  * Message stuff, in gui.c
@@ -188,7 +179,7 @@ NONNULL( 1 ) PRINTF_FORMAT( 1, 2 ) void player_message( const char *fmt, ... );
 NONNULL( 1 ) void player_messageRaw ( const char *str );
 
 /*
- * misc
+ * Misc.
  */
 void player_resetSpeed (void);
 void player_restoreControl( int reason, const char *str );
@@ -207,9 +198,8 @@ void player_soundStop (void);
 void player_soundPause (void);
 void player_soundResume (void);
 
-
 /*
- * player ships
+ * Player ships.
  */
 int player_ships( char** sships, glTexture** tships );
 void player_shipsSort (void);
@@ -222,9 +212,8 @@ void       player_swapShip( const char *shipname, int move_cargo );
 credits_t  player_shipPrice( const char *shipname );
 void       player_rmShip( const char *shipname );
 
-
 /*
- * player outfits.
+ * Player outfits.
  */
 int player_outfitOwned( const Outfit *o );
 int player_outfitOwnedTotal( const Outfit* o );
@@ -235,37 +224,32 @@ int player_numOutfits (void);
 int player_addOutfit( const Outfit *o, int quantity );
 int player_rmOutfit( const Outfit *o, int quantity );
 
-
 /*
- * player missions
+ * Player missions.
  */
 void player_missionFinished( int id );
 int player_missionAlreadyDone( int id );
 
-
 /*
- * player events
+ * Player events.
  */
 void player_eventFinished( int id );
 int player_eventAlreadyDone( int id );
 
-
 /*
- * licenses
+ * Licenses.
  */
-NONNULL( 1 ) void player_addLicense( char *license );
-int player_hasLicense( char *license );
-char **player_getLicenses (void);
-
+NONNULL( 1 ) void player_addLicense( const char *license );
+int player_hasLicense( const char *license );
+const char **player_getLicenses (void);
 
 /*
- * escorts
+ * Escorts.
  */
 int player_addEscorts (void);
 
-
 /*
- * pilot related stuff
+ * Pilot related stuff.
  */
 void player_dead (void);
 void player_destroyed (void);
@@ -300,7 +284,7 @@ void player_targetNearest (void);
 void player_targetEscort( int prev );
 
 /*
- * keybind actions
+ * Keybind actions.
  */
 void player_weapSetPress( int id, double value, int repeat );
 int player_land( int loud );
@@ -314,6 +298,5 @@ void player_autohail (void);
 void player_toggleMouseFly (void);
 void player_brake (void);
 void player_stealth (void);
-
 
 #endif /* PLAYER_H */

@@ -53,6 +53,7 @@ typedef enum ShipStatsType_ {
    SS_TYPE_D_EW_TRACK,        /**< Electronic warfare tracking modifier. */
    SS_TYPE_D_EW_JUMPDETECT,   /**< Electronic warfare jump point detection modifier. */
    SS_TYPE_D_EW_STEALTH_TIMER,/**< Electronic warfare stealth timer decrease speed. */
+   SS_TYPE_D_EW_SCANNED_TIME, /**< Electronic warfare time it takes to get scanned. */
 
    /* Launchers. */
    SS_TYPE_D_LAUNCH_RATE,     /**< Launch rate for missiles. */
@@ -234,6 +235,7 @@ typedef struct ShipStats_ {
    double ew_track;
    double ew_jump_detect;  /**< Electronic warfare jump point detection modifier. */
    double ew_stealth_timer; /**< Stealth timer decrease speed. */
+   double ew_scanned_time; /**< Time to scan. */
 
    /* Military type. */
    double heat_dissipation; /**< Global ship dissipation. */

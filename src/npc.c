@@ -478,6 +478,8 @@ void npc_patchMission( Mission *misn )
 static void npc_free( NPC_t *npc )
 {
    /* Common free stuff. */
+   if (npc == NULL)
+      return;
    free(npc->name);
    gl_freeTexture(npc->portrait);
    if (npc->background != NULL)

@@ -1075,7 +1075,7 @@ void gui_radarRender( double x, double y )
          gui_renderAsteroid( &ast->asteroids[j], radar->w, radar->h, radar->res, 0 );
    }
 
-   /* Render the player cross. */
+   /* Render the player. */
    gui_renderPlayer( radar->res, 0 );
 
    gl_view_matrix = view_matrix_prev;
@@ -1371,14 +1371,17 @@ void gui_renderPlayer( double res, int overlay )
 {
    double x, y, r;
 
+   /* Based on gui_renderPilot but with larger fixed size (4x normal ship, but
+    * the shader is actually quite smaller so it ends up being just a bit
+    * larger than a capital ship.. */
+   r = (sqrt(24.) + 1.)/2. * (1. + RADAR_RES_REF / res );
    if (overlay) {
       x = player.p->solid->pos.x / res + map_overlay_center_x();
       y = player.p->solid->pos.y / res + map_overlay_center_y();
-      r = MIN(SCREEN_W,SCREEN_H)*0.024;
+      r = MAX( 17., r );
    } else {
-      x = 0.;
-      y = 0.;
-      r = MIN(SCREEN_W,SCREEN_H)*0.016;
+      x = y = 0.;
+      r = MAX( 11., r );
    }
 
    glUseProgram(shaders.playermarker.program);

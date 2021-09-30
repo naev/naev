@@ -22,7 +22,7 @@
              1 : the player has forgotten the engine
 ]]
 
-require "scripts.cargo_common"
+require "cargo_common"
 local fmt = require "format"
 
 misn_title = _("ZT test of %s")

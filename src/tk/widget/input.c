@@ -582,14 +582,10 @@ static void inp_cleanup( Widget* inp )
 const char* window_getInput( unsigned int wid, const char* name )
 {
    Widget *wgt = window_getwgt(wid,name);
-   if (wgt == NULL)
-      return NULL;
 
    /* Check the type. */
-   if (wgt->type != WIDGET_INPUT) {
-      WARN("Trying to get input from non-input widget '%s'.", name);
-      return NULL;
-   }
+   if (wgt == NULL || wgt->type != WIDGET_INPUT)
+      ERR("Trying to get input from non-input widget '%s'.", name);
 
    /* Get the value. */
    return wgt->dat.inp.input;

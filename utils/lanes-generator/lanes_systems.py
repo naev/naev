@@ -1,17 +1,52 @@
 from collections import namedtuple
+from dataclasses import dataclass
 import math
 import numpy as np
 import os
 import scipy.sparse as sp
 import xml.etree.ElementTree as ET
 
-Asset = namedtuple('Asset', 'x y faction population ran')
 
-def readFactions( path ):
-    '''Returns a dictionary from faction name to distance-per-presence value.'''
+Asset = namedtuple('Asset', 'x y presences')
+Faction = namedtuple('Faction', 'generators invisible lane_length_per_presence useshiddenjumps')
+FactionPresence = namedtuple('FactionPresence', 'facname presence')
+Generator = namedtuple('Generator', 'faction weight')
+
+@dataclass
+class Presence:
+    base: float = 0.
+    bonus: float = 0.
+    range: int = 0.
+
+    @property
+    def value(self):
+        return self.base + self.bonus
+
+    def __bool__(self):
+        return bool(self.base or self.bonus)
+
+    def __add__(self, rhs):
+        return Presence(max(self.base, rhs.base), self.bonus + rhs.bonus)
+
+    def __mul__(self, scalar):
+        return Presence(self.base * scalar, self.bonus * scalar)
+
+    def positive_part(self):
+        return Presence(max(0., self.base), max(0., self.bonus))
+
+
+def readFactions(path):
+    '''Returns a dictionary of Faction values by name. '''
     tree = ET.parse(path)
-    tag = 'lane_length_per_presence'
-    return {elem.find('name').text: float(elem.find(tag).text) for elem in tree.findall(f'.//{tag}/..')}
+    full = {}
+    for elem in tree.findall('faction'):
+        full[elem.findtext('name')] = Faction(
+            [Generator(gen.text, float(gen.attrib['weight'])) for gen in elem.findall('generator')],
+            bool(elem.find('invisible')),
+            float(elem.findtext('lane_length_per_presence', 0)),
+            bool(elem.find('useshiddenjumps')),
+        )
+    return {n: f for n, f in full.items() if f.lane_length_per_presence and not f.invisible}
 
 def parse_pos(pos):
     if pos is None:
@@ -19,44 +54,43 @@ def parse_pos(pos):
     elif 'x' in pos.attrib:
         return ( float(pos.attrib['x']), float(pos.attrib['y']) )
     else:
-        return ( float(pos.find('x').text), float(pos.find('y').text) )
+        return ( float(pos.findtext('x')), float(pos.findtext('y')) )
 
-def readAssets( path ):
-    '''Reads all the assets'''
+def readAssets(path):
+    '''Returns a dictionary of Asset values by name. '''
     assets = {}
     
     for fileName in os.listdir(path):
         tree = ET.parse((path+fileName))
         root = tree.getroot()
-        
         name = root.attrib['name']
-        
         x, y = parse_pos(root.find('pos'))
         
-        presence = root.find('presence')
-        if presence == None: # Inhabited
-            faction = 'nobody'
-            population = 0
-            ran = 0
-        else:
-            faction = presence.find('faction').text
-            population = float(presence.find('base').text) + float(presence.find('bonus').text)
-            ran = int(presence.find('range').text)
-
-        assets[name] = Asset( x, y, faction, population, ran )
+        assets[name] = Asset(x, y, presences=[
+            FactionPresence(
+                presence.findtext('faction'),
+                Presence(
+                    base=float(presence.findtext('base', 0)),
+                    bonus=float(presence.findtext('bonus', 0)),
+                    range=int(presence.findtext('range', 0)),
+                ),
+            )
+            for presence in root.findall('presence')
+        ])
     
     return assets
 
 
 class Systems:
     '''Readable representation of the systems.'''
-    def __init__( self, skip_hidden=True, skip_exitonly=True, skip_uninhabited=False ):
+    def __init__( self ):
         path = '../../dat/ssys/'
         assets  = readAssets( '../../dat/assets/' )
-        dpp = readFactions( '../../dat/faction.xml' )
+        vassets  = readAssets( '../../dat/assets_virtual/' )
+        facinfo = readFactions( '../../dat/faction.xml' )
 
-        self.dist_per_presence = dict(enumerate(dpp.values()))
-        self.facnames = list(dpp.keys())
+        self.facnames = list(facinfo)
+        self.dist_per_presence = {i: facinfo[facname].lane_length_per_presence for i, facname in enumerate(self.facnames)}
         factions = {name: i for (i, name) in enumerate(self.facnames)}
 
         self.sysdict = {} # This dico will give index of systems
@@ -64,6 +98,7 @@ class Systems:
         self.nodess = [] # This is a list of nodes in systems
 
         self.jpnames = [] # List of jump points
+        hjnames = [] # List of hidden jump points
         self.jpdicts = [] # List of dict (invert of self.jpnames)
 
         self.autoposs = []
@@ -79,7 +114,7 @@ class Systems:
         self.g2sys   = [] # Gives the system from global numerotation
 
         self.sysass = [] # Assets names per system
-        fakeass = [] # Virtual asset names (conferring faction presence or anti-presence)
+        sysvass = [] # Virtual asset names (conferring faction presence or anti-presence)
 
         self.presass = [] # List of presences in assets
         self.factass = [] # Factions in assets. (I'm sorry for all these asses)
@@ -98,61 +133,57 @@ class Systems:
             x, y = parse_pos(root.find('pos'))
             self.xlist.append( x )
             self.ylist.append( y )
-
-            general = root.find('general')
-            self.radius.append( float(general.find('radius').text) )
+            self.radius.append( float(root.findtext('general/radius')) )
 
             # Store list of nodes (without jumps)
             nodes = []
-            presence = [0] * len(factions)
-            assts = root.find('assets')
             loc2glob = []
             sysas = []
-            fakeas = []
+            sysvas = []
             nass = 0
 
-            if assts != None:
-                aslist = assts.findall('asset')
-                for pnt in aslist :
-                    asname = pnt.text
-                    info = assets[asname]
-                    if info.population > 0 and info.x is not None: # Populated, not a virtual asset
-                            sysas.append(asname)
-                            nodes.append( (info.x, info.y) )
-                            loc2glob.append(nglob)
-                            self.ass2g.append(nglob)
-                            self.g2ass.append(nasg)
-                            self.g2sys.append(i)
-                            self.presass.append(info.population)
-                            self.factass.append(factions.get(info.faction, -1))
-                            nglob += 1
-                            nass += 1
-                            nasg += 1
-                    else:
-                            fakeas.append(asname)
+            for pnt in root.findall('assets/asset'):
+                asname = pnt.text
+                info = assets[asname]
+                assert len(info.presences) <= 1, f'Real asset {asname} unexpectedly has multiple presence elements.'
+                for facname, facpres in info.presences:
+                    if not facpres:
+                        continue
+                    sysas.append(asname)
+                    nodes.append( (info.x, info.y) )
+                    loc2glob.append(nglob)
+                    self.ass2g.append(nglob)
+                    self.g2ass.append(nasg)
+                    self.g2sys.append(i)
+                    self.presass.append(facpres)
+                    self.factass.append(factions.get(facname, -1))
+                    nglob += 1
+                    nass += 1
+                    nasg += 1
+            for virt in root.findall('assets/asset_virtual'):
+                sysvas.append(virt.text)
 
-            presence = [max(0,j) for j in presence] # Ensure presences are >= 0
+            presence = [Presence() for _ in factions]
             self.presences.append(presence)
             self.sysass.append(sysas)
-            fakeass.append(fakeas)
+            sysvass.append(sysvas)
 
 
             # Store jump points.
             jpname = []
+            hjname = []
             jpdict = {}
             autopos = []
             jp2loc = []
             jumps = root.find('jumps')
             jplist = jumps.findall('jump')
             jjj = 0
-            for jpt in jplist :
-
-                hid = jpt.find('hidden')
-                if skip_hidden and hid != None:  # Jump is hidden : don't consider it
+            for jpt in jplist:
+                if jpt.find('hidden') is not None:
+                    hjname.append(jpt.attrib['target'])
                     continue
 
-                xit = skip_exitonly and jpt.find('exitonly')
-                if xit != None:  # Jump is exit only : don't consider it
+                if jpt.find('exitonly') is not None:
                     continue
 
                 nodes.append( parse_pos( jpt.find('pos') ) )
@@ -177,7 +208,7 @@ class Systems:
             i += 1
 
         nsys = len(self.sysnames)
-        connect = np.zeros((nsys,nsys)) # Connectivity matrix for systems. TODO : use sparse
+        connect = np.zeros((nsys,nsys)) # Connectivity matrix for systems.
 
         for i, (jpname, autopos, loc2globi, jp2loci, namei) in enumerate(zip(self.jpnames, self.autoposs, self.loc2globs, self.jp2locs, self.sysnames)):
             for j in range(len(jpname)):
@@ -191,19 +222,29 @@ class Systems:
                     self.nodess[i][jp2loci[j]] = (x,y) # Now we have the position
 
         # Compute distances.
-        self.distances = sp.csgraph.dijkstra(connect)
+        connect_full = connect.copy()
+        for i, hjname in enumerate(hjnames):
+            for dest in hjname:
+                connect_full[i, self.sysdict[dest]] = 1
+        distances_strict = sp.csgraph.dijkstra(connect)
+        distances_hidden = sp.csgraph.dijkstra(connect_full)
 
         # Use distances to compute ranged presences
         for i in range(nsys):
             for j in range(nsys):
-                sysas = self.sysass[j] + fakeass[j]
-                for k in range(len(sysas)):
-                    info = assets[sysas[k]] # not really optimized, but should be OK
-                    if info.faction in factions:
-                        fact = factions[ info.faction ]
-                        d = self.distances[i,j]
-                        if d <= info.ran:
-                            self.presences[i][fact] += info.population / (1+d)
+                infos = [assets[ai] for ai in self.sysass[j]] + [vassets[ai] for ai in sysvass[j]]
+                for info in infos:
+                    for facname, facpres in info.presences:
+                        if facname not in factions:
+                            continue
+                        for gen in [Generator(facname, 1.)] + facinfo[facname].generators:
+                            if gen.faction not in factions:
+                                continue
+                            fact = factions[ gen.faction ]
+                            d = self.distances_hidden[i,j] if facinfo[gen.faction].useshiddenjumps else distances_strict[i,j]
+                            if d <= facpres.range:
+                                self.presences[i][fact] += facpres * (gen.weight / (1+d))
 
-            for presence in self.presences:
-                presence[:] = [max(0, p) for p in presence]
+        #TODO distinguish between base and bonus? (Cf. same comment in src/safelanes.c)
+        for presence in self.presences + [self.presass]:
+            presence[:] = [max(0, p.value) for p in presence]
