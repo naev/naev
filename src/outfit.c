@@ -1752,10 +1752,11 @@ static void outfit_parseSMod( Outfit* temp, const xmlNodePtr parent )
    temp->u.mod.lua_update     = LUA_NOREF;
    temp->u.mod.lua_ontoggle   = LUA_NOREF;
    temp->u.mod.lua_onhit      = LUA_NOREF;
+   temp->u.mod.lua_outofenergy = LUA_NOREF;
    temp->u.mod.lua_onshoot    = LUA_NOREF;
    temp->u.mod.lua_onstealth  = LUA_NOREF;
    temp->u.mod.lua_onscanned  = LUA_NOREF;
-   temp->u.mod.lua_outofenergy = LUA_NOREF;
+   temp->u.mod.lua_onscan     = LUA_NOREF;
    temp->u.mod.lua_cooldown   = LUA_NOREF;
 
    do { /* load all the data */
@@ -2544,8 +2545,8 @@ int outfit_load (void)
          o->u.mod.lua_outofenergy= nlua_refenvtype( env, "outofenergy",LUA_TFUNCTION );
          o->u.mod.lua_onshoot    = nlua_refenvtype( env, "onshoot",  LUA_TFUNCTION );
          o->u.mod.lua_onstealth  = nlua_refenvtype( env, "onstealth",LUA_TFUNCTION );
-         o->u.mod.lua_onscan     = nlua_refenvtype( env, "onscan",   LUA_TFUNCTION );
          o->u.mod.lua_onscanned  = nlua_refenvtype( env, "onscanned",LUA_TFUNCTION );
+         o->u.mod.lua_onscan     = nlua_refenvtype( env, "onscan",   LUA_TFUNCTION );
          o->u.mod.lua_cooldown   = nlua_refenvtype( env, "cooldown", LUA_TFUNCTION );
       }
 

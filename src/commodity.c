@@ -318,6 +318,7 @@ static int commodity_parse( Commodity *temp, xmlNodePtr parent )
                array_push_back( &temp->illegalto, f );
             }
          } while (xml_nextNode(node));
+         continue;
       }
       xmlr_float(node, "population_modifier", temp->population_modifier);
       xmlr_float(node, "period", temp->period);
@@ -335,6 +336,7 @@ static int commodity_parse( Commodity *temp, xmlNodePtr parent )
          xmlr_attr_strd(node, "type", newdict->name);
          newdict->value = xml_getFloat(node);
          temp->faction_modifier = newdict;
+         continue;
       }
 
    } while (xml_nextNode(node));
