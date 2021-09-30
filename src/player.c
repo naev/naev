@@ -540,14 +540,18 @@ static Pilot* player_newShipMake( const char* name )
  */
 void player_swapShip( const char *shipname, int move_cargo )
 {
-   int i, fav;
+   int fav;
    Pilot *ship;
    Vector2d v;
    double dir;
 
-   for (i=0; i<array_size(player_stack); i++) {
+   for (int i=0; i<array_size(player_stack); i++) {
       if (strcmp(shipname,player_stack[i].p->name)!=0)
          continue;
+
+      /* Run onremove hook for all old outfits. */
+      for (int j=0; j<array_size(player.p->outfits); j++)
+         pilot_outfitLRemove( player.p, player.p->outfits[j] );
 
       /* Get rid of deployed escorts. */
       escort_clearDeployed( player.p );
@@ -576,6 +580,10 @@ void player_swapShip( const char *shipname, int move_cargo )
       /* extra pass to calculate stats */
       pilot_calcStats( ship );
       pilot_calcStats( player.p );
+
+      /* Run onadd hook for all new outfits. */
+      for (int j=0; j<array_size(ship->outfits); j++)
+         pilot_outfitLAdd( ship, ship->outfits[j] );
 
       /* now swap the players */
       player_stack[i].p = player.p;
@@ -2910,13 +2918,12 @@ int player_eventAlreadyDone( int id )
  *    @param license License to check to see if the player has.
  *    @return 1 if has license (or none needed), 0 if doesn't.
  */
-int player_hasLicense( char *license )
+int player_hasLicense( const char *license )
 {
-   int i;
    if (license == NULL)
       return 1;
 
-   for (i=0; i<array_size(player_licenses); i++)
+   for (int i=0; i<array_size(player_licenses); i++)
       if (strcmp(license, player_licenses[i])==0)
          return 1;
 
@@ -2929,7 +2936,7 @@ int player_hasLicense( char *license )
  *
  *    @brief license License to give the player.
  */
-void player_addLicense( char *license )
+void player_addLicense( const char *license )
 {
    if (player_hasLicense(license))
       return;
@@ -2942,9 +2949,9 @@ void player_addLicense( char *license )
 /**
  * @brief Gets the array (array.h) of license names in the player's inventory.
  */
-char **player_getLicenses ()
+const char **player_getLicenses ()
 {
-   return player_licenses;
+   return (const char**) player_licenses;
 }
 
 

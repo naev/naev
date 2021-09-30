@@ -35,6 +35,9 @@ end
 function onhit( p, po, armour, shield, attacker )
 end
 
+-- The onshoot function is run when the pilot 'p' shoots. This includes primary / secondary / instant weapon sets
+function onshoot( p, po )
+end
 
 -- The ontoggle function allows the oufit to be toggled by the player
 -- on is whether it was toggled "on" or "off" and is a boolean value
@@ -43,6 +46,10 @@ function ontoggle( p, po, on )
    return false
 end
 
+-- The onstealth function runs when the pilot stealths or destealths
+-- stealthed the current stealth status of the pilot
+function onstealth( p, po, stealthed )
+end
 
 -- The cooldown function is triggered when both cooldown starts and when
 -- it ends. The done is a boolean value which indicates whether or not it

@@ -639,6 +639,9 @@ void load_all (void)
    loadscreen_render( ++stage/LOADING_STAGES, _("Loading Factions...") );
    factions_load(); /* dep for fleet, space, missions, AI */
 
+   /* Handle outfit loading part that may use ships and factions. */
+   outfit_loadPost();
+
    loadscreen_render( ++stage/LOADING_STAGES, _("Loading Events...") );
    events_load(); /* no dep */
 

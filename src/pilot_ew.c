@@ -53,7 +53,7 @@ static int pilot_ewStealthGetNearby( const Pilot *p, double *mod, int *close, in
 double pilot_ewScanTime( const Pilot *p )
 {
    /* Here larger is "better", so we multiply by ew_hide instead of dividing. */
-   return pow( p->solid->mass, 1./3. ) * 1.25 * p->stats.ew_hide;
+   return pow( p->solid->mass, 1./3. ) * 1.25 * p->stats.ew_hide * p->stats.ew_scanned_time;
 }
 
 
@@ -163,6 +163,10 @@ void pilot_ewUpdateDynamic( Pilot *p, double dt )
          /* Run scanned hook. */
          hparam.u.lp = p->id;
          pilot_runHookParam( t, PILOT_HOOK_SCANNED, &hparam, 1 );
+
+         /* Run outfit stuff. */
+         pilot_outfitLOnscan( p );
+         pilot_outfitLOnscanned( t, p );
 
          /* TODO handle case the player finished scaning by setting a flag or something. */
       }
@@ -570,6 +574,7 @@ int pilot_stealth( Pilot *p )
    pilot_outfitOffAll( p );
 
    /* Got into stealth. */
+   pilot_outfitLOnstealth( p );
    pilot_calcStats(p);
    p->ew_stealth_timer = 0.;
 
@@ -589,7 +594,8 @@ void pilot_destealth( Pilot *p )
       return;
    pilot_rmFlag( p, PILOT_STEALTH );
    p->ew_stealth_timer = 0.;
-   pilot_calcStats(p);
+   pilot_outfitLOnstealth( p );
+   pilot_calcStats(p); /* TODO skip this when outfits updated pilot. */
 
    /* Run hook. */
    const HookParam hparam = { .type = HOOK_PARAM_BOOL, .u.b = 0 };

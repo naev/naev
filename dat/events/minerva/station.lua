@@ -10,11 +10,10 @@
  </notes>
 </event>
 --]]
-
 --[[
--- Event handling the gambling stuff going on at Minerva station
+   Event handling the gambling stuff going on at Minerva station
 --]]
-
+local fmt = require "format"
 local minerva = require 'common.minerva'
 local portrait = require "portrait"
 local vn = require 'vn'

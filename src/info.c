@@ -201,12 +201,12 @@ void info_update (void)
  */
 static void info_openMain( unsigned int wid )
 {
-   char str[STRMAX_SHORT], **buf, creds[ECON_CRED_STRLEN];
+   const char **buf;
+   char str[STRMAX_SHORT], creds[ECON_CRED_STRLEN];
    char sdmgdone[NUM2STRLEN], sdmgtaken[NUM2STRLEN], sdestroyed[NUM2STRLEN];
    char slanded[NUM2STRLEN], sjumped[NUM2STRLEN];
    char **licenses;
    int nlicenses;
-   int i;
    char *nt;
    int w, h;
    unsigned int destroyed;
@@ -216,7 +216,7 @@ static void info_openMain( unsigned int wid )
 
    /* Compute ships destroyed. */
    destroyed = 0;
-   for (i=0; i<SHIP_CLASS_TOTAL; i++)
+   for (int i=0; i<SHIP_CLASS_TOTAL; i++)
       destroyed += player.ships_destroyed[i];
 
    /* pilot generics */
@@ -282,12 +282,12 @@ static void info_openMain( unsigned int wid )
    buf = player_getLicenses();
    nlicenses = array_size( buf );
    /* List. */
-   if(nlicenses == 0){
+   if (nlicenses == 0) {
      licenses = malloc(sizeof(char*));
      licenses[0] = strdup(_("None"));
    } else {
      licenses = malloc(sizeof(char*) * nlicenses);
-     for (i=0; i<nlicenses; i++)
+     for (int i=0; i<nlicenses; i++)
         licenses[i] = strdup( _(buf[i]) );
       qsort( licenses, nlicenses, sizeof(char*), strsort );
    }

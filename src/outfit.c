@@ -1744,14 +1744,20 @@ static void outfit_parseSMod( Outfit* temp, const xmlNodePtr parent )
    node = parent->children;
 
    /* Defaults. */
-   temp->u.mod.lua_env = LUA_NOREF;
-   temp->u.mod.lua_init = LUA_NOREF;
-   temp->u.mod.lua_cleanup = LUA_NOREF;
-   temp->u.mod.lua_update = LUA_NOREF;
-   temp->u.mod.lua_ontoggle = LUA_NOREF;
-   temp->u.mod.lua_onhit = LUA_NOREF;
+   temp->u.mod.lua_env        = LUA_NOREF;
+   temp->u.mod.lua_onadd      = LUA_NOREF;
+   temp->u.mod.lua_onremove   = LUA_NOREF;
+   temp->u.mod.lua_init       = LUA_NOREF;
+   temp->u.mod.lua_cleanup    = LUA_NOREF;
+   temp->u.mod.lua_update     = LUA_NOREF;
+   temp->u.mod.lua_ontoggle   = LUA_NOREF;
+   temp->u.mod.lua_onhit      = LUA_NOREF;
    temp->u.mod.lua_outofenergy = LUA_NOREF;
-   temp->u.mod.lua_cooldown = LUA_NOREF;
+   temp->u.mod.lua_onshoot    = LUA_NOREF;
+   temp->u.mod.lua_onstealth  = LUA_NOREF;
+   temp->u.mod.lua_onscanned  = LUA_NOREF;
+   temp->u.mod.lua_onscan     = LUA_NOREF;
+   temp->u.mod.lua_cooldown   = LUA_NOREF;
 
    do { /* load all the data */
       xml_onlyNodes(node);
@@ -2304,6 +2310,23 @@ static int outfit_parse( Outfit* temp, const char* file )
                temp->slot.size = outfit_toSlotSize( xml_get(cur) );
                continue;
             }
+            else if (xml_isNode(cur, "illegalto")) {
+               xmlNodePtr ccur = cur->xmlChildrenNode;
+               temp->illegaltoS = array_create( char* );
+               do {
+                  xml_onlyNodes(ccur);
+                  if (xml_isNode(ccur, "faction")) {
+                     const char *s = xml_get(ccur);
+                     if (s==NULL)
+                        WARN(_("Empty faction string for outfit '%s' legality!"), temp->name);
+                     else
+                        array_push_back( &temp->illegaltoS, strdup(s) );
+                  }
+               } while (xml_nextNode(ccur));
+               if (array_size(temp->illegaltoS) <= 0 )
+                  WARN(_("Outfit '%s' has no factions defined in <illegalto> block!"), temp->name);
+               continue;
+            }
             WARN(_("Outfit '%s' has unknown general node '%s'"),temp->name, cur->name);
          } while (xml_nextNode(cur));
          continue;
@@ -2456,8 +2479,7 @@ static int outfit_loadDir( char *dir )
  */
 int outfit_load (void)
 {
-   int i, noutfits;
-   Outfit *o;
+   int noutfits;
 
    /* First pass, loads up ammunition. */
    outfit_stack = array_create(Outfit);
@@ -2467,8 +2489,8 @@ int outfit_load (void)
    qsort( outfit_stack, noutfits, sizeof(Outfit), outfit_cmp );
 
    /* Second pass. */
-   for (i=0; i<noutfits; i++) {
-      o = &outfit_stack[i];
+   for (int i=0; i<noutfits; i++) {
+      Outfit *o = &outfit_stack[i];
       if (outfit_isLauncher(&outfit_stack[i])) {
          o->u.lau.ammo = outfit_get( o->u.lau.ammo_name );
          if (outfit_isSeeker(o) && /* Smart seekers. */
@@ -2518,13 +2540,19 @@ int outfit_load (void)
          free( dat );
 
          /* Check functions as necessary. */
-         o->u.mod.lua_init = nlua_refenvtype( env, "init", LUA_TFUNCTION );
-         o->u.mod.lua_cleanup = nlua_refenvtype( env, "cleanup", LUA_TFUNCTION );
-         o->u.mod.lua_update = nlua_refenvtype( env, "update", LUA_TFUNCTION );
-         o->u.mod.lua_ontoggle = nlua_refenvtype( env, "ontoggle", LUA_TFUNCTION );
-         o->u.mod.lua_onhit = nlua_refenvtype( env, "onhit", LUA_TFUNCTION );
-         o->u.mod.lua_outofenergy = nlua_refenvtype( env, "outofenergy", LUA_TFUNCTION );
-         o->u.mod.lua_cooldown = nlua_refenvtype( env, "cooldown", LUA_TFUNCTION );
+         o->u.mod.lua_onadd      = nlua_refenvtype( env, "onadd",    LUA_TFUNCTION );
+         o->u.mod.lua_onremove   = nlua_refenvtype( env, "onremove", LUA_TFUNCTION );
+         o->u.mod.lua_init       = nlua_refenvtype( env, "init",     LUA_TFUNCTION );
+         o->u.mod.lua_cleanup    = nlua_refenvtype( env, "cleanup",  LUA_TFUNCTION );
+         o->u.mod.lua_update     = nlua_refenvtype( env, "update",   LUA_TFUNCTION );
+         o->u.mod.lua_ontoggle   = nlua_refenvtype( env, "ontoggle", LUA_TFUNCTION );
+         o->u.mod.lua_onhit      = nlua_refenvtype( env, "onhit",    LUA_TFUNCTION );
+         o->u.mod.lua_outofenergy= nlua_refenvtype( env, "outofenergy",LUA_TFUNCTION );
+         o->u.mod.lua_onshoot    = nlua_refenvtype( env, "onshoot",  LUA_TFUNCTION );
+         o->u.mod.lua_onstealth  = nlua_refenvtype( env, "onstealth",LUA_TFUNCTION );
+         o->u.mod.lua_onscanned  = nlua_refenvtype( env, "onscanned",LUA_TFUNCTION );
+         o->u.mod.lua_onscan     = nlua_refenvtype( env, "onscan",   LUA_TFUNCTION );
+         o->u.mod.lua_cooldown   = nlua_refenvtype( env, "cooldown", LUA_TFUNCTION );
       }
    }
 
@@ -2532,11 +2560,11 @@ int outfit_load (void)
    char **outfit_names = malloc( noutfits * sizeof(char*) );
    int start;
 
-   for (i=0; i<noutfits; i++)
+   for (int i=0; i<noutfits; i++)
       outfit_names[i] = outfit_stack[i].name;
 
    qsort( outfit_names, noutfits, sizeof(char*), strsort );
-   for (i=0; i<(noutfits - 1); i++) {
+   for (int i=0; i<(noutfits - 1); i++) {
       start = i;
       while (strcmp(outfit_names[i], outfit_names[i+1]) == 0)
          i++;
@@ -2549,10 +2577,53 @@ int outfit_load (void)
             i + 1 - start, outfit_names[ start ] );
    }
    free(outfit_names);
-#endif
+#endif /* DEBUGGING */
 
    DEBUG( n_( "Loaded %d Outfit", "Loaded %d Outfits", noutfits ), noutfits );
 
+   return 0;
+}
+
+/**
+ * @brief Loads all the outfits legality.
+ *
+ *    @return 0 on success.
+ */
+int outfit_loadPost (void)
+{
+   for (int i=0; i<array_size(outfit_stack); i++) {
+      Outfit *o = &outfit_stack[i];
+
+      /* Add illegality as necessary. */
+      if (array_size(o->illegaltoS) > 0) {
+         o->illegalto = array_create_size( int, array_size(o->illegaltoS) );
+         for (int j=0; j<array_size(o->illegaltoS); j++) {
+            int f = faction_get( o->illegaltoS[j] );
+            array_push_back( &o->illegalto, f );
+            free( o->illegaltoS[j] );
+         }
+         array_free( o->illegaltoS );
+         o->illegaltoS = NULL;
+
+         int l = strlen( o->desc_short );
+         SDESC_ADD( l, o, _("\n#rIllegal to:#0") );
+         for (int j=0; j<array_size(o->illegalto); j++)
+            SDESC_ADD( l, o, _("\n#r- %s#0"), _(faction_name(o->illegalto[j])) );
+      }
+
+      /* Handle initializing module stuff. */
+      if (outfit_isMod(o) && (o->u.mod.lua_env != LUA_NOREF)) {
+         nlua_getenv( o->u.mod.lua_env, "onload" );
+         if (lua_isnil(naevL,-1))
+            lua_pop(naevL,1);
+         else {
+            if (nlua_pcall( o->u.mod.lua_env, 0, 0 )) {
+               WARN(_("Outfit '%s' lua load error -> 'load':\n%s"), o->name, lua_tostring(naevL,-1));
+               lua_pop(naevL,1);
+            }
+         }
+      }
+   }
    return 0;
 }
 
@@ -2692,28 +2763,43 @@ glTexture* rarity_texture( int rarity )
 
 
 /**
+ * @brief Checks illegality of an outfit to a faction.
+ */
+int outfit_checkIllegal( const Outfit* o, int fct )
+{
+   for (int i=0; i<array_size(o->illegalto); i++) {
+      if (o->illegalto[i] == fct)
+         return 1;
+   }
+   return 0;
+}
+
+
+/**
  * @brief Frees the outfit stack.
  */
 void outfit_free (void)
 {
-   int i, j;
    Outfit *o;
 
-   for (i=0; i < array_size(outfit_stack); i++) {
+   for (int i=0; i < array_size(outfit_stack); i++) {
       o = &outfit_stack[i];
 
       /* Free graphics */
       gl_freeTexture( (glTexture*) outfit_gfx(o)); /*< This is horrible and I should be ashamed. */
 
       /* Free slot. */
-      outfit_freeSlot( &outfit_stack[i].slot );
+      outfit_freeSlot( &o->slot );
 
       /* Free stats. */
       ss_free( o->stats );
 
+      /* Free illegality. */
+      array_free( o->illegalto );
+
       if (outfit_isAmmo(o)) {
          /* Free collision polygons. */
-         for (j=0; j<array_size(o->u.amm.polygon); j++) {
+         for (int j=0; j<array_size(o->u.amm.polygon); j++) {
             free(o->u.amm.polygon[j].x);
             free(o->u.amm.polygon[j].y);
          }
@@ -2723,7 +2809,7 @@ void outfit_free (void)
       else if (outfit_isBolt(o)) {
          gl_freeTexture(o->u.blt.gfx_end);
          /* Free collision polygons. */
-         for (j=0; j<array_size(o->u.blt.polygon); j++) {
+         for (int j=0; j<array_size(o->u.blt.polygon); j++) {
             free(o->u.blt.polygon[j].x);
             free(o->u.blt.polygon[j].y);
          }
@@ -2758,7 +2844,7 @@ void outfit_free (void)
       free(o->license);
       free(o->name);
       gl_freeTexture(o->gfx_store);
-      for (j=0; j<array_size(o->gfx_overlays); j++)
+      for (int j=0; j<array_size(o->gfx_overlays); j++)
          gl_freeTexture(o->gfx_overlays[j]);
       array_free(o->gfx_overlays);
    }
