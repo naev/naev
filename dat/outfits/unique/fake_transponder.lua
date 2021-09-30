@@ -1,14 +1,6 @@
 local factions
 function onload ()
-   factions = {
-      faction.get("Empire"),
-      faction.get("Dvaered"),
-      faction.get("Soromid"),
-      faction.get("Sirius"),
-      faction.get("Za'lek"),
-      faction.get("Goddard"),
-      faction.get("Frontier"),
-   }
+   factions = outfit.get("Fake Transponder"):illegality()
 end
 
 local function fget( f )

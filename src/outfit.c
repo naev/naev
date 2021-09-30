@@ -2594,19 +2594,6 @@ int outfit_loadPost (void)
    for (int i=0; i<array_size(outfit_stack); i++) {
       Outfit *o = &outfit_stack[i];
 
-      /* Handle initializing module stuff. */
-      if (outfit_isMod(o) && (o->u.mod.lua_env != LUA_NOREF)) {
-         nlua_getenv( o->u.mod.lua_env, "onload" );
-         if (lua_isnil(naevL,-1))
-            lua_pop(naevL,1);
-         else {
-            if (nlua_pcall( o->u.mod.lua_env, 0, 0 )) {
-               WARN(_("Outfit '%s' lua load error -> 'load':\n%s"), o->name, lua_tostring(naevL,-1));
-               lua_pop(naevL,1);
-            }
-         }
-      }
-
       /* Add illegality as necessary. */
       if (array_size(o->illegaltoS) > 0) {
          o->illegalto = array_create_size( int, array_size(o->illegaltoS) );
@@ -2622,6 +2609,19 @@ int outfit_loadPost (void)
          SDESC_ADD( l, o, _("\n#rIllegal to:#0") );
          for (int j=0; j<array_size(o->illegalto); j++)
             SDESC_ADD( l, o, _("\n#r- %s#0"), _(faction_name(o->illegalto[j])) );
+      }
+
+      /* Handle initializing module stuff. */
+      if (outfit_isMod(o) && (o->u.mod.lua_env != LUA_NOREF)) {
+         nlua_getenv( o->u.mod.lua_env, "onload" );
+         if (lua_isnil(naevL,-1))
+            lua_pop(naevL,1);
+         else {
+            if (nlua_pcall( o->u.mod.lua_env, 0, 0 )) {
+               WARN(_("Outfit '%s' lua load error -> 'load':\n%s"), o->name, lua_tostring(naevL,-1));
+               lua_pop(naevL,1);
+            }
+         }
       }
    }
    return 0;
