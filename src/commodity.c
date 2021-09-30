@@ -308,6 +308,17 @@ static int commodity_parse( Commodity *temp, xmlNodePtr parent )
          temp->standard = 1;
          continue;
       }
+      if (xml_isNode(node, "illegalto")) {
+         xmlNodePtr cur = node->xmlChildrenNode;
+         temp->illegalto = array_create( int );
+         do {
+            xml_onlyNodes(cur);
+            if (xml_isNode(cur, "faction")) {
+               int f = faction_get( xml_get(cur) );
+               array_push_back( &temp->illegalto, f );
+            }
+         } while (xml_nextNode(node));
+      }
       xmlr_float(node, "population_modifier", temp->population_modifier);
       xmlr_float(node, "period", temp->period);
       if (xml_isNode(node, "planet_modifier")) {

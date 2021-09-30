@@ -335,6 +335,7 @@ typedef struct Outfit_ {
    double mass;      /**< How much weapon capacity is needed. */
    double cpu;       /**< CPU usage. */
    char *limit;      /**< Name to limit to one per ship (ignored if NULL). */
+   int *illegalto;   /**< Factions this outfit is illegal to. */
 
    /* Store stuff */
    credits_t price;  /**< Base sell price. */
@@ -460,6 +461,7 @@ int outfit_fitsSlot( const Outfit* o, const OutfitSlot* s );
 int outfit_fitsSlotType( const Outfit* o, const OutfitSlot* s );
 void outfit_freeSlot( OutfitSlot* s );
 glTexture* rarity_texture( int rarity );
+int outfit_checkIllegal( const Outfit* o, int fct );
 
 
 #endif /* OUTFIT_H */
