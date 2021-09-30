@@ -31,6 +31,7 @@
       * Game now tracks meta-data like ships destroyed and time played
       * Trade lane routes made explicit
       * More common and useful derelict ships
+      * Missiles have lock-on reduced and in-flight calibration added
    * Quality of Life
       * Added automatic landing as an overlay double-click action (and on repeat of the "Land" key)
       * Comm window reworked and you can bribe multiple pilots at once

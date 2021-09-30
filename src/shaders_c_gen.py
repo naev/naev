@@ -276,6 +276,10 @@ SHADERS = [
       fs_path = "safelane.frag",
    ),
    SimpleShader(
+      name = "iflockon",
+      fs_path = "iflockon.frag",
+   ),
+   SimpleShader(
       name = "gear",
       fs_path = "gear.frag",
    ),

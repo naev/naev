@@ -189,17 +189,13 @@ void outfits_open( unsigned int wid, const Outfit **outfits )
    /* the descriptive text */
    window_addText( wid, 20 + iw + 20, -40,
          w - (20 + iw + 20) - 264 - 40, 160, 0, "txtOutfitName", &gl_defFont, NULL, NULL );
-   window_addText( wid, 20 + iw + 20, -40 - gl_defFont.h - 30,
+   window_addText( wid, 20 + iw + 20, -40 - gl_defFont.h*2. - 30,
          w - (20 + iw + 20) - 264 - 40, 320, 0, "txtDescShort", &gl_defFont, NULL, NULL );
 
    window_addText( wid, 20 + iw + 20, 0,
          90, 160, 0, "txtSDesc", &gl_defFont, &cFontGrey,
          _("Owned:\n"
-         "\n"
-         "Slot:\n"
-         "Size:\n"
          "Mass:\n"
-         "\n"
          "Price:\n"
          "Money:\n"
          "License:\n") );
@@ -374,11 +370,7 @@ void outfits_update( unsigned int wid, const char *str )
       window_disableButton( wid, "btnSellOutfit" );
       snprintf( buf, sizeof(buf),
             _("N/A\n"
-            "\n"
             "N/A\n"
-            "N/A\n"
-            "N/A\n"
-            "\n"
             "N/A\n"
             "N/A\n"
             "N/A\n") );
@@ -429,27 +421,27 @@ void outfits_update( unsigned int wid, const char *str )
       mass += outfit_amount(outfit) * outfit_ammo(outfit)->mass;
    }
 
+   scnprintf( buf, sizeof(buf), _( "%s\n#%c%s #%c%s #0slot" ),
+      _(outfit->name),
+      outfit_slotSizeColourFont( &outfit->slot ), outfit_slotSize( outfit ),
+      outfit_slotTypeColourFont( &outfit->slot ), outfit_slotName( outfit ) );
+   window_modifyText( wid, "txtOutfitName", buf );
+   th = gl_printHeightRaw( &gl_defFont, w - (20 + iw + 20) - 264 - 40, buf );
    snprintf( buf, sizeof(buf),
          _("%d\n"
-         "\n"
-         "%s\n"
-         "%s\n"
          "%.0f tonnes\n"
-         "\n"
          "%s\n"
          "%s\n"
          "%s\n"),
          player_outfitOwned(outfit),
-         _(outfit_slotName(outfit)),
-         _(outfit_slotSize(outfit)),
          mass,
          buf_price,
          buf_credits,
          buf_license );
    window_modifyText( wid, "txtDDesc", buf );
-   window_modifyText( wid, "txtOutfitName", _(outfit->name) );
    window_modifyText( wid, "txtDescShort", outfit->desc_short );
-   th = gl_printHeightRaw( &gl_defFont, w - (20 + iw + 20) - 264 - 40, outfit->desc_short );
+   window_moveWidget( wid, "txtDescShort", 20+iw+20, -40-th-30 );
+   th += gl_printHeightRaw( &gl_defFont, w - (20 + iw + 20) - 264 - 40, outfit->desc_short );
    window_moveWidget( wid, "txtSDesc", 20+iw+20, -40-th-30-32 );
    window_moveWidget( wid, "txtDDesc", 20+iw+20+90, -40-th-30-32 );
    th += gl_printHeightRaw( &gl_defFont, w - (20 + iw + 20) - 200 - 20, buf );

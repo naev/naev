@@ -15,7 +15,8 @@
   <ammo>Huntsman Torpedo</ammo>
   <delay>8</delay>
   <reload_time>90</reload_time>
-  <lockon>11</lockon>
+  <lockon>4</lockon>
+  <iflockon>9</iflockon>
   <arc>60</arc>
   <trackmin>5000</trackmin>
   <trackmax>25000</trackmax>

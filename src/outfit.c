@@ -1550,6 +1550,7 @@ static void outfit_parseSLauncher( Outfit* temp, const xmlNodePtr parent )
       xmlr_float(node,"trackmin",temp->u.lau.trackmin);
       xmlr_float(node,"trackmax",temp->u.lau.trackmax);
       xmlr_float(node,"lockon",temp->u.lau.lockon);
+      xmlr_float(node,"iflockon",temp->u.lau.iflockon);
       xmlr_float(node,"swivel",temp->u.lau.swivel);
       if (!outfit_isTurret(temp))
          xmlr_float(node,"arc",temp->u.lau.arc); /* This is in semi-arc like swivel. */
@@ -2716,6 +2717,7 @@ static void outfit_launcherDesc( Outfit* o )
 
    if (outfit_isSeeker(o)) {
       SDESC_ADD(  l, o, _("\n%.1f Second Lock-on"), o->u.lau.lockon );
+      SDESC_ADD(  l, o, _("\n%.1f Second In-Flight Calibration"), o->u.lau.iflockon );
       SDESC_ADD(  l, o, _("\n%s Optimal Tracking"), num2strU( o->u.lau.trackmax, 0 ) );
       SDESC_ADD(  l, o, _("\n%s Minimal Tracking"), num2strU( o->u.lau.trackmin, 0 ) );
    }

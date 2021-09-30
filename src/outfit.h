@@ -202,6 +202,7 @@ typedef struct OutfitLauncherData_ {
 
    /* Lock-on information. */
    double lockon;    /**< Time it takes to lock on the target */
+   double iflockon;  /**< Time it takes to lock on properly after launch. */
    double trackmin;  /**< Ewarfare minimal tracking. */
    double trackmax;  /**< Ewarfare maximal (optimal) tracking. */
    double arc;       /**< Semi-angle of the arc which it will lock on in. */
