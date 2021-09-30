@@ -2309,16 +2309,17 @@ static int outfit_parse( Outfit* temp, const char* file )
                temp->slot.size = outfit_toSlotSize( xml_get(cur) );
                continue;
             }
-            if (xml_isNode(node, "illegalto")) {
-               xmlNodePtr cur = node->xmlChildrenNode;
+            else if (xml_isNode(cur, "illegalto")) {
+               xmlNodePtr ccur = cur->xmlChildrenNode;
                temp->illegalto = array_create( int );
                do {
-                  xml_onlyNodes(cur);
-                  if (xml_isNode(cur, "faction")) {
-                     int f = faction_get( xml_get(cur) );
+                  xml_onlyNodes(ccur);
+                  if (xml_isNode(ccur, "faction")) {
+                     int f = faction_get( xml_get(ccur) );
                      array_push_back( &temp->illegalto, f );
                   }
-               } while (xml_nextNode(node));
+               } while (xml_nextNode(cur));
+               continue;
             }
             WARN(_("Outfit '%s' has unknown general node '%s'"),temp->name, cur->name);
          } while (xml_nextNode(cur));
