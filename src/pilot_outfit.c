@@ -424,6 +424,9 @@ int pilot_rmOutfitRaw( Pilot* pilot, PilotOutfitSlot *s )
    if (s->state==PILOT_OUTFIT_ON)
       pilot_outfitOff( pilot, s );
 
+   /* Run remove hook if necessary. */
+   pilot_outfitLRemove( pilot, s );
+
    /* Decrement counters if necessary. */
    if (s->outfit != NULL) {
       if (outfit_isTurret(s->outfit))
@@ -443,9 +446,6 @@ int pilot_rmOutfitRaw( Pilot* pilot, PilotOutfitSlot *s )
    /* Remove secondary and such if necessary. */
    if (pilot->afterburner == s)
       pilot->afterburner = NULL;
-
-   /* Run remove hook if necessary. */
-   pilot_outfitLRemove( pilot, s );
 
    /* Clear Lua if necessary. */
    if (s->lua_mem != LUA_NOREF) {
