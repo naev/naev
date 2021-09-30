@@ -1745,6 +1745,8 @@ static void outfit_parseSMod( Outfit* temp, const xmlNodePtr parent )
 
    /* Defaults. */
    temp->u.mod.lua_env        = LUA_NOREF;
+   temp->u.mod.lua_onadd      = LUA_NOREF;
+   temp->u.mod.lua_onremove   = LUA_NOREF;
    temp->u.mod.lua_init       = LUA_NOREF;
    temp->u.mod.lua_cleanup    = LUA_NOREF;
    temp->u.mod.lua_update     = LUA_NOREF;
@@ -2530,15 +2532,17 @@ int outfit_load (void)
          free( dat );
 
          /* Check functions as necessary. */
-         o->u.mod.lua_init = nlua_refenvtype( env, "init", LUA_TFUNCTION );
-         o->u.mod.lua_cleanup = nlua_refenvtype( env, "cleanup", LUA_TFUNCTION );
-         o->u.mod.lua_update = nlua_refenvtype( env, "update", LUA_TFUNCTION );
-         o->u.mod.lua_ontoggle = nlua_refenvtype( env, "ontoggle", LUA_TFUNCTION );
-         o->u.mod.lua_onhit = nlua_refenvtype( env, "onhit", LUA_TFUNCTION );
-         o->u.mod.lua_outofenergy = nlua_refenvtype( env, "outofenergy", LUA_TFUNCTION );
-         o->u.mod.lua_onshoot = nlua_refenvtype( env, "onshoot", LUA_TFUNCTION );
-         o->u.mod.lua_onstealth = nlua_refenvtype( env, "onstealth", LUA_TFUNCTION );
-         o->u.mod.lua_cooldown = nlua_refenvtype( env, "cooldown", LUA_TFUNCTION );
+         o->u.mod.lua_onadd      = nlua_refenvtype( env, "onadd",    LUA_TFUNCTION );
+         o->u.mod.lua_onremove   = nlua_refenvtype( env, "onremove", LUA_TFUNCTION );
+         o->u.mod.lua_init       = nlua_refenvtype( env, "init",     LUA_TFUNCTION );
+         o->u.mod.lua_cleanup    = nlua_refenvtype( env, "cleanup",  LUA_TFUNCTION );
+         o->u.mod.lua_update     = nlua_refenvtype( env, "update",   LUA_TFUNCTION );
+         o->u.mod.lua_ontoggle   = nlua_refenvtype( env, "ontoggle", LUA_TFUNCTION );
+         o->u.mod.lua_onhit      = nlua_refenvtype( env, "onhit",    LUA_TFUNCTION );
+         o->u.mod.lua_outofenergy= nlua_refenvtype( env, "outofenergy",LUA_TFUNCTION );
+         o->u.mod.lua_onshoot    = nlua_refenvtype( env, "onshoot",  LUA_TFUNCTION );
+         o->u.mod.lua_onstealth  = nlua_refenvtype( env, "onstealth",LUA_TFUNCTION );
+         o->u.mod.lua_cooldown   = nlua_refenvtype( env, "cooldown", LUA_TFUNCTION );
       }
 
       /* Add illegality as necessary. */

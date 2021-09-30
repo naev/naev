@@ -253,6 +253,8 @@ typedef struct OutfitModificationData_ {
    /* Lua function references. Set to LUA_NOREF if not used. */
    char *lua_file;   /**< Lua File. */
    nlua_env lua_env; /**< Lua environment. Shared for each outfit to allow globals. */
+   int lua_onadd;    /**< Run when added to a pilot or player swaps to this ship. */
+   int lua_onremove; /**< Run when removed to a pilot or when player swaps away from this ship. */
    int lua_init;     /**< Run when pilot enters a system. */
    int lua_cleanup;  /**< Run when the pilot is erased. */
    int lua_update;   /**< Run periodically. */
@@ -369,9 +371,8 @@ typedef struct Outfit_ {
    } u; /**< Holds the type-based outfit data. */
 } Outfit;
 
-
 /*
- * get
+ * Access stuff.
  */
 const Outfit* outfit_get( const char* name );
 const Outfit* outfit_getW( const char* name );
@@ -415,7 +416,7 @@ int outfit_filterCore( const Outfit *o );
 int outfit_filterOther( const Outfit *o );
 
 /*
- * get data from outfit
+ * Get data from outfits.
  */
 const char *outfit_slotName( const Outfit* o );
 const char *slotName( const OutfitSlotType o );
@@ -447,12 +448,11 @@ int outfit_soundHit( const Outfit* o );
 double outfit_duration( const Outfit* o );
 double outfit_cooldown( const Outfit* o );
 /*
- * loading/freeing outfit stack
+ * Loading and freeing outfit stack.
  */
 int outfit_load (void);
 int outfit_mapParse(void);
 void outfit_free (void);
-
 
 /*
  * Misc.
@@ -462,6 +462,5 @@ int outfit_fitsSlotType( const Outfit* o, const OutfitSlot* s );
 void outfit_freeSlot( OutfitSlot* s );
 glTexture* rarity_texture( int rarity );
 int outfit_checkIllegal( const Outfit* o, int fct );
-
 
 #endif /* OUTFIT_H */
