@@ -3050,9 +3050,8 @@ Pilot* pilot_createEmpty( const Ship* ship, const char* name,
  */
 Pilot* pilot_replacePlayer( Pilot* after )
 {
-   int i, j;
-   i = pilot_getStackPos( PLAYER_ID );
-   for (j=0; j<array_size(pilot_stack[i]->trail); j++)
+   int i = pilot_getStackPos( PLAYER_ID );
+   for (int j=0; j<array_size(pilot_stack[i]->trail); j++)
       spfx_trail_remove( pilot_stack[i]->trail[j] );
    array_erase( &pilot_stack[i]->trail, array_begin(pilot_stack[i]->trail), array_end(pilot_stack[i]->trail) );
    pilot_stack[i] = after;

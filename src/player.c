@@ -550,7 +550,7 @@ void player_swapShip( const char *shipname, int move_cargo )
          continue;
 
       /* Run onremove hook for all old outfits. */
-      for (int j; j<array_size(player.p->outfits); j++)
+      for (int j=0; j<array_size(player.p->outfits); j++)
          pilot_outfitLRemove( player.p, player.p->outfits[j] );
 
       /* Get rid of deployed escorts. */
@@ -581,6 +581,10 @@ void player_swapShip( const char *shipname, int move_cargo )
       pilot_calcStats( ship );
       pilot_calcStats( player.p );
 
+      /* Run onadd hook for all new outfits. */
+      for (int j=0; j<array_size(ship->outfits); j++)
+         pilot_outfitLAdd( ship, ship->outfits[j] );
+
       /* now swap the players */
       player_stack[i].p = player.p;
       player.p          = pilot_replacePlayer( ship );
@@ -600,10 +604,6 @@ void player_swapShip( const char *shipname, int move_cargo )
 
       /* Set some gui stuff. */
       gui_load( gui_pick() );
-
-      /* Run onadd hook for all new outfits. */
-      for (int j; j<array_size(player.p->outfits); j++)
-         pilot_outfitLAdd( player.p, player.p->outfits[j] );
 
       /* Bind camera. */
       cam_setTargetPilot( player.p->id, 0 );
