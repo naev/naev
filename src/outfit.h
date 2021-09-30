@@ -340,6 +340,7 @@ typedef struct Outfit_ {
    double cpu;       /**< CPU usage. */
    char *limit;      /**< Name to limit to one per ship (ignored if NULL). */
    int *illegalto;   /**< Factions this outfit is illegal to. */
+   char **illegaltoS; /**< Temporary buffer to set up illegality. */
 
    /* Store stuff */
    credits_t price;  /**< Base sell price. */
@@ -453,6 +454,7 @@ double outfit_cooldown( const Outfit* o );
  * Loading and freeing outfit stack.
  */
 int outfit_load (void);
+int outfit_loadPost (void);
 int outfit_mapParse(void);
 void outfit_free (void);
 

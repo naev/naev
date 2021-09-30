@@ -2312,14 +2312,19 @@ static int outfit_parse( Outfit* temp, const char* file )
             }
             else if (xml_isNode(cur, "illegalto")) {
                xmlNodePtr ccur = cur->xmlChildrenNode;
-               temp->illegalto = array_create( int );
+               temp->illegaltoS = array_create( char* );
                do {
                   xml_onlyNodes(ccur);
                   if (xml_isNode(ccur, "faction")) {
-                     int f = faction_get( xml_get(ccur) );
-                     array_push_back( &temp->illegalto, f );
+                     const char *s = xml_get(ccur);
+                     if (s==NULL)
+                        WARN(_("Empty faction string for outfit '%s' legality!"), temp->name);
+                     else
+                        array_push_back( &temp->illegaltoS, strdup(s) );
                   }
-               } while (xml_nextNode(cur));
+               } while (xml_nextNode(ccur));
+               if (array_size(temp->illegaltoS) <= 0 )
+                  WARN(_("Outfit '%s' has no factions defined in <illegalto> block!"), temp->name);
                continue;
             }
             WARN(_("Outfit '%s' has unknown general node '%s'"),temp->name, cur->name);
@@ -2549,14 +2554,6 @@ int outfit_load (void)
          o->u.mod.lua_onscan     = nlua_refenvtype( env, "onscan",   LUA_TFUNCTION );
          o->u.mod.lua_cooldown   = nlua_refenvtype( env, "cooldown", LUA_TFUNCTION );
       }
-
-      /* Add illegality as necessary. */
-      if (array_size(o->illegalto) > 0) {
-         int l = strlen( o->desc_short );
-         SDESC_ADD( l, o, _("\n#rIllegal to:#0") );
-         for (int j=0; j<array_size(o->illegalto); j++)
-            SDESC_ADD( l, o, _("\n#r- %s#0"), _(faction_name(o->illegalto[j])) );
-      }
    }
 
 #ifdef DEBUGGING
@@ -2584,6 +2581,49 @@ int outfit_load (void)
 
    DEBUG( n_( "Loaded %d Outfit", "Loaded %d Outfits", noutfits ), noutfits );
 
+   return 0;
+}
+
+/**
+ * @brief Loads all the outfits legality.
+ *
+ *    @return 0 on success.
+ */
+int outfit_loadPost (void)
+{
+   for (int i=0; i<array_size(outfit_stack); i++) {
+      Outfit *o = &outfit_stack[i];
+
+      /* Handle initializing module stuff. */
+      if (outfit_isMod(o) && (o->u.mod.lua_env != LUA_NOREF)) {
+         nlua_getenv( o->u.mod.lua_env, "onload" );
+         if (lua_isnil(naevL,-1))
+            lua_pop(naevL,1);
+         else {
+            if (nlua_pcall( o->u.mod.lua_env, 0, 0 )) {
+               WARN(_("Outfit '%s' lua load error -> 'load':\n%s"), o->name, lua_tostring(naevL,-1));
+               lua_pop(naevL,1);
+            }
+         }
+      }
+
+      /* Add illegality as necessary. */
+      if (array_size(o->illegaltoS) > 0) {
+         o->illegalto = array_create_size( int, array_size(o->illegaltoS) );
+         for (int j=0; j<array_size(o->illegaltoS); j++) {
+            int f = faction_get( o->illegaltoS[j] );
+            array_push_back( &o->illegalto, f );
+            free( o->illegaltoS[j] );
+         }
+         array_free( o->illegaltoS );
+         o->illegaltoS = NULL;
+
+         int l = strlen( o->desc_short );
+         SDESC_ADD( l, o, _("\n#rIllegal to:#0") );
+         for (int j=0; j<array_size(o->illegalto); j++)
+            SDESC_ADD( l, o, _("\n#r- %s#0"), _(faction_name(o->illegalto[j])) );
+      }
+   }
    return 0;
 }
 

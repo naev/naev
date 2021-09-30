@@ -1,5 +1,5 @@
 local factions
-local function load_factions ()
+function onload ()
    factions = {
       faction.get("Empire"),
       faction.get("Dvaered"),
@@ -22,7 +22,6 @@ local function fclear( f )
 end
 
 local function reset( p, po )
-   if not factions then load_factions() end
    for k,f in ipairs(factions) do
       local os = fget( f )
       local s  = f:playerStanding()
