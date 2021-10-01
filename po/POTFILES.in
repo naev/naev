@@ -2208,7 +2208,7 @@ dat/autoequip.lua
 dat/bkg/bgshaders.lua
 dat/bkg/crimson_gauntlet.lua
 dat/bkg/default.lua
-dat/bkg/solarwind.lua
+dat/bkg/stellarwind.lua
 dat/bkg/taiomi.lua
 dat/comm.lua
 dat/events/cinematic/DvdFLFbattle.lua
@@ -2556,6 +2556,7 @@ dat/scripts/love/video.lua
 dat/scripts/love/window.lua
 dat/scripts/love_shaders.lua
 dat/scripts/luaspfx.lua
+dat/scripts/luaspfx/core.lua
 dat/scripts/luaspfx/effects.lua
 dat/scripts/luatk.lua
 dat/scripts/merge_tables.lua
