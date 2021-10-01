@@ -1407,7 +1407,6 @@ static int pilotL_weapset( lua_State *L )
          lua_pushstring(L,slot->outfit->name);
          lua_rawset(L,-3);
 
-
          /* Beams require special handling. */
          if (outfit_isBeam(o)) {
             pilot_getRateMod( &firemod, &enermod, p, slot->outfit );
@@ -1660,7 +1659,7 @@ static int pilotL_weapsetHeat( lua_State *L )
 static int pilotL_actives( lua_State *L )
 {
    Pilot *p;
-   int i, k, sort;
+   int k, sort;
    PilotOutfitSlot *o;
    PilotOutfitSlot **outfits;
    const char *str;
@@ -1680,7 +1679,7 @@ static int pilotL_actives( lua_State *L )
    else
       outfits  = p->outfits;
 
-   for (i=0; i<array_size(outfits); i++) {
+   for (int i=0; i<array_size(outfits); i++) {
       /* Get active outfits. */
       o = outfits[i];
       if (o->outfit == NULL)
