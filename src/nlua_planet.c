@@ -636,21 +636,15 @@ static int planetL_classLong(lua_State *L )
  */
 static int planetL_services( lua_State *L )
 {
-   int i;
-   size_t len;
-   Planet *p;
-   const char *name;
-   char lower[STRMAX_SHORT];
-   p = luaL_validplanet(L,1);
-
+   Planet *p = luaL_validplanet(L,1);
    /* Return result in table */
    lua_newtable(L);
-
    /* allows syntax like foo = planet.get("foo"); if foo["bar"] then ... end */
-   for (i=1; i<PLANET_SERVICES_MAX; i<<=1) {
+   for (int i=1; i<PLANET_SERVICES_MAX; i<<=1) {
       if (planet_hasService(p, i)) {
-         name = planet_getServiceName(i);
-         len = strlen(name) + 1;
+         char lower[STRMAX_SHORT];
+         const char *name = planet_getServiceName(i);
+         size_t len = strlen(name) + 1;
          snprintf( lower, MIN(len,sizeof(lower)), "%c%s", tolower(name[0]), &name[1] );
 
          /* GUI depends on this returning the service name. */
