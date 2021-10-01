@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 <its:rules xmlns:its="http://www.w3.org/2005/11/its" version="1.0">
   <!-- General Rules -->
+  <its:preserveSpaceRule selector="//*" space="preserve"/>
   <its:translateRule selector="/*" translate="no"/>
   <its:escapeRule selector="//*" escape="no"/>
   <its:escapeRule selector="//*/@*" escape="no"/>
