@@ -13,8 +13,9 @@ function vntk.msg( title, text )
    else
       c = vn.na
    end
-   vn.transition()
+   vn.transition( "blur", 0.2 )
    c( text )
+   vn.done( "blur", 0.2 )
    vn.run()
 end
 
