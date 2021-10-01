@@ -913,13 +913,9 @@ static int playerL_commclose( lua_State *L )
  */
 static int playerL_ships( lua_State *L )
 {
-   int i;
-   const PlayerShip_t *ships;
-
-   ships = player_getShipStack();
-
+   const PlayerShip_t *ships = player_getShipStack();
    lua_newtable(L);  /* t */
-   for (i=0; i<array_size(ships); i++) {
+   for (int i=0; i<array_size(ships); i++) {
       lua_newtable(L);        /* t, k, t */
 
       lua_pushstring(L, ships[i].p->name); /* t, k, t, s */
@@ -930,7 +926,6 @@ static int playerL_ships( lua_State *L )
 
       lua_rawseti(L, -2, i+1); /* t */
    }
-
    return 1;
 }
 
@@ -947,7 +942,7 @@ static int playerL_ships( lua_State *L )
 static int playerL_shipOutfits( lua_State *L )
 {
    const char *str;
-   int i, j;
+   int j;
    const PlayerShip_t *ships;
    Pilot *p;
 
@@ -965,7 +960,7 @@ static int playerL_shipOutfits( lua_State *L )
    if (strcmp(str, player.p->name)==0)
       p = player.p;
    else {
-      for (i=0; i<array_size(ships); i++) {
+      for (int i=0; i<array_size(ships); i++) {
          if (strcmp(str, ships[i].p->name)==0) {
             p = ships[i].p;
             break;
@@ -980,7 +975,7 @@ static int playerL_shipOutfits( lua_State *L )
 
    lua_newtable( L );
    j = 1;
-   for (i=0; i<array_size(p->outfits); i++) {
+   for (int i=0; i<array_size(p->outfits); i++) {
       if (p->outfits[i]->outfit == NULL)
          continue;
 
@@ -1005,17 +1000,12 @@ static int playerL_shipOutfits( lua_State *L )
  */
 static int playerL_outfits( lua_State *L )
 {
-   int i;
-   const PlayerOutfit_t *outfits;
-
-   outfits = player_getOutfits();
-
+   const PlayerOutfit_t *outfits = player_getOutfits();
    lua_newtable(L);
-   for (i=0; i<array_size(outfits); i++) {
-      lua_pushoutfit(L, (Outfit*)outfits[i].o );
+   for (int i=0; i<array_size(outfits); i++) {
+      lua_pushoutfit(L, outfits[i].o );
       lua_rawseti(L, -2, i+1);
    }
-
    return 1;
 }
 
