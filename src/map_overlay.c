@@ -697,6 +697,7 @@ void ovr_render( double dt )
       glBindFramebuffer( GL_FRAMEBUFFER, gl_screen.fbo[2] );
       glClearColor( 0., 0., 0., 0. );
       glClear( GL_COLOR_BUFFER_BIT );
+      glBlendEquation( GL_MAX );
       glBlendFunc( GL_ONE, GL_ONE );
 
       for (int i=0; i<array_size(cur_system->asteroids); i++) {
@@ -734,6 +735,7 @@ void ovr_render( double dt )
          glUseProgram( shaders.stealthaura.program );
          gl_renderShader( x, y, r, r, 0., &shaders.stealthaura, &col, 1 );
       }
+      glBlendEquation( GL_FUNC_ADD );
       glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
 
       glBindFramebuffer(GL_FRAMEBUFFER, gl_screen.current_fbo);
