@@ -33,16 +33,17 @@ function name()
       _("Vindicator"),
       _("Windjammer"),
       _("Tuna Can"),
-      _("Reddish Dwarf"), -- Red Dwarf
+      _("Vermilion Dwarf"), -- Red Dwarf
    }
    return names[rnd.rnd(1,#names)]
 end
 
 
 function create()
-   player.pilot():rename( name() ) -- Assign a random name to the player's ship.
-   player.pilot():outfitAdd( "Laser Cannon MK1", 1 )
-   jump.setKnown( "Hakoi", "Eneguoz" )
+   local pp = player.pilot()
+   pp:rename( name() ) -- Assign a random name to the player's ship.
+   pp:outfitAdd( "Laser Cannon MK1", 1 )
+   --jump.setKnown( "Hakoi", "Eneguoz" )
 
    -- Give all GUIs
    -- TODO: Would be better to remove these outfits and the association,
