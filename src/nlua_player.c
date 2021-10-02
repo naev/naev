@@ -86,7 +86,7 @@ static int playerL_allowLand( lua_State *L );
 static int playerL_landWindow( lua_State *L );
 /* Hail stuff. */
 static int playerL_commclose( lua_State *L );
-/* Cargo stuff. */
+/* Misc stuff. */
 static int playerL_ships( lua_State *L );
 static int playerL_shipOutfits( lua_State *L );
 static int playerL_outfits( lua_State *L );
@@ -95,6 +95,7 @@ static int playerL_addOutfit( lua_State *L );
 static int playerL_rmOutfit( lua_State *L );
 static int playerL_addShip( lua_State *L );
 static int playerL_swapShip( lua_State *L );
+static int playerL_missions( lua_State *L );
 static int playerL_misnActive( lua_State *L );
 static int playerL_misnDone( lua_State *L );
 static int playerL_evtActive( lua_State *L );
@@ -139,6 +140,7 @@ static const luaL_Reg playerL_methods[] = {
    { "outfitRm", playerL_rmOutfit },
    { "addShip", playerL_addShip },
    { "swapShip", playerL_swapShip },
+   { "missions", playerL_missions },
    { "misnActive", playerL_misnActive },
    { "misnDone", playerL_misnDone },
    { "evtActive", playerL_evtActive },
@@ -1183,6 +1185,24 @@ static int playerL_swapShip( lua_State *L )
    return 0;
 }
 
+/**
+ * @brief Gets the list of the player's active missions.
+ *
+ *    @luatreturn table Table containing the names of active missions as values.
+ * @luafunc missions
+ */
+static int playerL_missions( lua_State *L )
+{
+   int j = 1;
+   lua_newtable(L);
+   for (int i=0; i<MISSION_MAX; i++) {
+      if (player_missions[i]->id == 0)
+         continue;
+      lua_pushstring( L, player_missions[i]->data->name );
+      lua_rawseti( L, -2, j++ );
+   }
+   return 1;
+}
 
 /**
  * @brief Checks to see if the player has a mission active.

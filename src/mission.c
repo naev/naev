@@ -222,8 +222,7 @@ int mission_accept( Mission* mission )
  */
 int mission_alreadyRunning( const MissionData* misn )
 {
-   int i;
-   for (i=0; i<MISSION_MAX; i++)
+   for (int i=0; i<MISSION_MAX; i++)
       if (player_missions[i]->data == misn)
          return 1;
    return 0;
@@ -392,20 +391,18 @@ int mission_addMarker( Mission *misn, int id, int sys, SysMarker type )
  */
 void mission_sysMark (void)
 {
-   int i, j, n;
-   MissionMarker *m;
-
    /* Clear markers. */
    space_clearMarkers();
+   for (int i=0; i<MISSION_MAX; i++) {
+      int n;
 
-   for (i=0; i<MISSION_MAX; i++) {
       /* Must be a valid player mission. */
       if (player_missions[i]->id == 0)
          continue;
 
       n = array_size( player_missions[i]->markers );
-      for (j=0; j<n; j++) {
-         m = &player_missions[i]->markers[j];
+      for (int j=0; j<n; j++) {
+         MissionMarker *m = &player_missions[i]->markers[j];
 
          /* Add the individual markers. */
          space_addMarker( m->sys, m->type );

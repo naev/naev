@@ -242,7 +242,7 @@ function enter ()
    elseif misn_state == 2 and scur == retsys then
       -- TODO pirate boarding stuff
 
-   else if misn_state == 4 and scur == destsys then
+   elseif misn_state == 4 and scur == destsys then
       -- TODO ex stealth stuff
 
    end
