@@ -1,0 +1,302 @@
+--[[
+<?xml version='1.0' encoding='utf8'?>
+<mission name="Helping Nelly Out 2">
+ <flags>
+  <unique />
+ </flags>
+ <avail>
+  <priority>1</priority>
+  <chance>100</chance>
+  <cond>require("common.pirate").systemPresence() &lt;= 0</cond>
+  <location>Bar</location>
+  <faction>Dvaered</faction>
+  <faction>Empire</faction>
+  <faction>Frontier</faction>
+  <faction>Goddard</faction>
+  <faction>Independent</faction>
+  <faction>Sirius</faction>
+  <faction>Soromid</faction>
+  <faction>Za'lek</faction>
+  <done>Helping Nelly Out 1</done>
+ </avail>
+ <notes>
+  <campaign>Tutorial Nelly</campaign>
+ </notes>
+</mission>
+--]]
+--[[
+   Nelly Tutorial Campaign
+
+   Second mission is designed to teach about:
+   1. Disabling
+   2. Comm and bribing
+   3. Safe lanes
+   4. Stealth
+
+   Mission Details:
+   0. Have to disable out of control ship.
+   1. Land back on planet.
+   2. Have to go pick up repair part at nearby system.
+   3. Attacked by pirate, taught how to bribe.
+   4. Reach planet, get part.
+   5. Fly back, have to avoid ex at jump point.
+--]]
+local tutnel= require "common.tut_nelly"
+local tut   = require "common.tutorial"
+local neu   = require "common.neutral"
+local pir   = require "common.pirate"
+local vn    = require 'vn'
+local vntk  = require 'vntk'
+local fmt   = require "format"
+local lmisn = require "lmisn"
+
+--[[
+   Mission States:
+  -2: Don't own a disabling weapon
+  -1: Own but don't have equipped a disabling weapon
+   0: Accepted and going to disable ship
+   1: Disabled ship and returning to planet
+   2: Going to pick up repair pirate
+   3. Dealt with pirate
+   4: Got part
+   5: Flying back
+--]]
+misn_state = nil
+
+misn_title = _("Helping Nelly Out")
+reward_amount = 60e3
+
+local function has_disable( o )
+   local dmg, dis = o:weapStats
+   return dis > 0
+end
+
+function create ()
+   if not var.peek("testing") then misn.finish() end
+   -- Save current system to return to
+   retpnt, retsys = planet.cur()
+   if not misn.claim( retsys ) then
+      misn.finish()
+   end
+   -- Need commodity exchange and mission computer
+   local rs = retpnt:services()
+   if rs.commodity == nil or rs.missions == nil then
+      misn.finish()
+   end
+
+   -- Find destination system that sells ion cannons
+   local pntfilter = function( p )
+      -- Sells Outfits
+      if p:services().outfits == nil then
+         return false
+      end
+      return false
+   end
+   destpnt, destsys = lmisn.getRandomPlanetAtDistance( system.cur(), 1, 1, "Independent", false, pntfilter )
+   if not destpnt then
+      warn("No destpnt found")
+      misn.finish()
+   end
+
+   misn.setNPC( tutnel.nelly.name, tutnel.nelly.portrait, _("You see a Nelly motioning to you at the table.") )
+
+   misn.setTitle( _("Helping Nelly Out… Again") )
+   misn.setDesc( _("Help Nelly fix their ship.") )
+   misn.setReward( fmt.credits(reward_amount) )
+end
+
+
+function accept ()
+   local doaccept
+   vn.clear()
+   vn.scene()
+   local nel = vn.newCharacter( tutnel.vn_nelly() )
+
+   nel(_([[Nelly brightens up when you get near.
+"Hey, I thought was able to get my ship up and running, but before I was able to get in and do a test run, the thing went haywire and now it's spinning around in circles. You have an Ion Cannon, do you? Could you help me disable my ship and get it back?"]]))
+   vn.menu{
+      {_("Help them with their ship"), "accept"},
+      {_("Decline to help"), "decline"},
+   }
+
+   vn.label("decline")
+   nel(_([[They look dejected.
+"I guess I'll have to see if there is any other way to solve my problem."]]))
+   vn.done()
+
+
+   vn.label("accept")
+   vn.func( function () doaccept = true end )
+   nel(fmt.f(_([["Thanks for the help agian. So while I was preparing to take off on my ship, I heard a weird noise outside, and when I went to check out, the autonav locked me out and my ship took off without anyone in it! Now it's flying around in circles outside of {pntname}!"]]),{pntname=retpnt:name()}))
+
+   local pp = player.pilot()
+   local hasoutfit = false
+   local has_dis = false
+   local has_dis_owned = false
+   local owned = {}
+   for k,o in ipairs(pp:outfits()) do
+      has_dis = has_dis or has_disable(o)
+   end
+   for k,o in ipairs(player.outfits()) do
+      local hd = has_disable(o)
+      has_dis_owned = has_dis_owned or hd
+      if hd then
+         table.insert( owned, o )
+      end
+   end
+   local outfit_tobuy = outfit.get("Ion Cannon")
+   local function pntfilter( p )
+      -- Sells Outfits
+      if p:services().outfits == nil then
+         return false
+      end
+      -- Sells a particular outfit
+      for k,o in ipairs(p:outfitsSold()) do
+         if o == outfit_tobuy then
+            return true
+         end
+      end
+      return false
+   end
+   local pnts = lmisn.getPlanetAtDistance( system.cur(), 0, 3, "Independent", false, pntfilter )
+   table.sort( pnts, function( a, b )
+      return a:system():jumpDist() < b:system():jumpDist()
+   end )
+   local nearplanet = pnts[1]
+
+   if has_dis then
+      nel(_([["It looks like you already have some disabling weapons equipped. Make sure they are set in the info window as either a primary or secondary weapon in your active weapon set or as an instant fire weapon set and let's go get my ship back!"]]))
+   elseif has_dis_owned then
+      nel(fmt.f(_([["It looks like you own some disabling weapons but don't have them equipped. Why don't you try to equip #o{outfitname} before we head out? We want to disable my ship, not destroy it!"]]),{outfitname=owned[rnd.rnd(1,#owned)]:name()}))
+      local s = planet.cur():services()
+      if not s.outfits and not s.shipyard then
+         nel(fmt.f(_([["It looks like this planet doesn't have neither an #ooutfitter#0 nor a #oshipyard#0 so you won't be able to change your current equipment. Try to head off to a nearby planet with either an #ooutfitter#0 or a #oshipyard#0 such as #o{nearplanet}#0. You can check what services are available when you select the planet, or from the map."]]),{nearplanet=nearplanet:name()}))
+      end
+   else
+      nel(fmt.f(_([["It looks like you don't have any disabling weapons. Remember, you have to disable my ship and not destroy it! I think the nearby #o{nearplanet}#0 should have #o{outfitname}#0 for sale. You should buy and equip one before trying to disable my ship!"]]),{nearplanet=nearplanet:name(), outfit_tobuy:name()}))
+   end
+
+   vn.run()
+
+   -- Check to see if truly accepted
+   if not doaccept then return end
+
+   misn.accept()
+
+   misn_state = 0
+   misn_marker = misn.markerAdd( retsys )
+
+   local osdtxt = {}
+   if has_dis_owned then
+      table.insert( osdtxt, _("Equip a weapon with disable damage") )
+      misn_state = -1
+   elseif not has_dis then
+      table.insert( osdtxt, _("Buy and equip a weapon with disable damage") )
+      misn_state = -2
+   end
+   table.insert( osdtxt, fmt.f(_("Disable and board Nelly's ship in {sysname}"), {sysname=destsys:name()}) )
+   misn.osdCreate( misntitle, osdtxt )
+
+   if misn_state < 0 then
+      hk_equip = hook.equip( "equip" )
+   end
+   hook.enter("enter")
+   hook.land("land")
+end
+
+function info_msg( msg )
+   vntk.msg( tutnel.nelly.name, msg )
+end
+
+function hk_equip ()
+   local pp = player.pilot()
+   for k,o in ipairs(pp:outfits()) do
+      if has_disable(o) then
+         info_msg(fmt.f(_([["You have equipped a #o{outfitname}#0 with disable damage. Looks like you'll be able to safely disable my rampant ship!"]]),{outfitname=o:name()}))
+         misn_state = 0
+         misn.osdActive(2)
+         hook.rm( hk_equip )
+         hk_equip = nil
+         return
+      end
+   end
+end
+
+function enter ()
+   local scur = system.cur()
+   if misn.state <= 0  and scur == retsys then
+      rampant_pos = scur:pos() + rnd.rnd( 2000, rnd.rnd()*360 )
+      rampant = pilot.add( "Llama", "Independent", rampant_pos )
+      rampant:rename(_("Llaminator MK2"))
+      rampant:intrinsicSet( "speed", -50 )
+      rampant:intrinsicSet( "thrust", -50 )
+      rampant:intrinsicSet( "turn", -50 )
+      rampant:intrinsicSet( "shield_regen", -100 )
+      rampant:intrinsicSet( "stress_dissipation", -100 )
+      hook.pilot( rampant, "disable", "disable" )
+      hook.pilot( rampant, "board", "board" )
+      hook.pilot( rampant, "death", "death" )
+      rampant:control(true)
+      hook.pilot( rampant, "idle", "idle" )
+   end
+end
+
+function idle ()
+   local radius = 200
+   local samples = 10
+   rampant_pos_idx = rampant_pos_idx or 0
+   rampant_pos_idx = math.fmod( rampant_pos_idx, samples ) + 1
+   local pos = rampant_pos + vec2.newP( radius, rnd.rnd() * samples / rampant_pos_idx * 360 )
+   rampant:moveto( pos, false )
+end
+
+function disable ()
+   player.pilot():comm(fmt.f(_("You disabled it! Now get on top of the ship and board it with {boardkey}!"),{tut.getKey("board")}))
+end
+
+function board ()
+   vn.clear()
+   vn.scene()
+   local nel = vn.newCharacter( tutnel.vn_nelly() )
+   vn.na(_("You board Nelly's ship and quickly go to the control panel to turn off the autonav."))
+   nel(fmt.f(_([["I hate when this happes. Err, I mean, this is the first time something like this has happened to me! Let me bring the ship back to {pntname} and meet me at the spaceport bar for your reward."]]),{pntname=retpnt:name()}))
+   vn.run()
+
+   -- Update objectives
+   misn.osdCreate( misntitle, {
+      fmt.f(_("Return to {pntname}"),{pntname=retpnt:name()})
+   } )
+
+   misn_state = 1
+
+   -- Have the ship go back
+   rampant:setHealth( 100 )
+   rampant:setInvincible(true)
+   rampant:intrinsicReset() -- Faster again
+   rampant:control(true)
+   rampant:land( retpnt )
+
+   player.unboard()
+end
+
+function death ()
+   vntk.msg(_([[#rMISSION FAILED: you weren't supposed to destroy Nelly's ship!#0
+Although the mission has been aborted, you can still repeat it from the beginning by finding Nelly at a spaceport bar to try again.]]))
+   misn.finish(false)
+end
+
+function land ()
+   local cpnt = planet.cur()
+   if cpnt == retpnt and misn_state==1 then
+      misn.npcAdd( "approach_nelly", tutnel.nelly.nam, tut.nelly.portrait, _("Nelly is motioning you to come join her at the table.") )
+   end
+end
+   
+function approach_nelly ()
+   vn.clear()
+   vn.scene()
+   local nel = vn.newCharacter( tutnel.vn_nelly() )
+   vn.na(_(""))
+   nel(fmt.f(_([[""]]),{}))
+   vn.run()
+end
