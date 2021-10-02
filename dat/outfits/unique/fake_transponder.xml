@@ -6,7 +6,7 @@
   <typename>Fake Transponder</typename>
   <slot>utility</slot>
   <size>small</size>
-  <mass>0</mass>
+  <mass>1</mass>
   <price>1000000</price>
   <description>A fake transponder to make ship appear like a non-descript and harmless independent ship.</description>
   <desc_extra>Makes the ship appear as independent to other ships. Becomes void when scanned.</desc_extra>
