@@ -39,7 +39,7 @@
    2. Have to go pick up repair part at nearby system.
    3. Attacked by pirate, taught how to bribe.
    4. Reach planet, get part.
-   5. Fly back, have to avoid ex at jump point.
+   5. Flying back, avoided ex at jump point.
 --]]
 local tutnel= require "common.tut_nelly"
 local tut   = require "common.tutorial"
@@ -127,7 +127,7 @@ function accept ()
 
    vn.label("accept")
    vn.func( function () doaccept = true end )
-   nel(fmt.f(_([["Thanks for the help agian. So while I was preparing to take off on my ship, I heard a weird noise outside, and when I went to check out, the autonav locked me out and my ship took off without anyone in it! Now it's flying around in circles outside of {pntname}!"]]),{pntname=retpnt:name()}))
+   nel(fmt.f(_([["Thanks for the help again. So while I was preparing to take off on my ship, I heard a weird noise outside, and when I went to check out, the autonav locked me out and my ship took off without anyone in it! Now it's flying around in circles outside of {pntname}!"]]),{pntname=retpnt:name()}))
 
    local pp = player.pilot()
    local hasoutfit = false
@@ -238,6 +238,13 @@ function enter ()
       hook.pilot( rampant, "death", "death" )
       rampant:control(true)
       hook.pilot( rampant, "idle", "idle" )
+
+   elseif misn_state == 2 and scur == retsys then
+      -- TODO pirate boarding stuff
+
+   else if misn_state == 4 and scur == destsys then
+      -- TODO ex stealth stuff
+
    end
 end
 
@@ -251,7 +258,7 @@ function idle ()
 end
 
 function disable ()
-   player.pilot():comm(fmt.f(_("You disabled it! Now get on top of the ship and board it with {boardkey}!"),{tut.getKey("board")}))
+   player.pilot():comm(fmt.f(_([[Nelly: "You disabled it! Now get on top of the ship and board it with {boardkey}!"]]),{tut.getKey("board")}))
 end
 
 function board ()
@@ -288,15 +295,60 @@ end
 function land ()
    local cpnt = planet.cur()
    if cpnt == retpnt and misn_state==1 then
-      misn.npcAdd( "approach_nelly", tutnel.nelly.nam, tut.nelly.portrait, _("Nelly is motioning you to come join her at the table.") )
+      npc_nel = misn.npcAdd( "approach_nelly", tutnel.nelly.nam, tut.nelly.portrait, _("Nelly is motioning you to come join her at the table.") )
+
+   elseif cpnt == destpnt and (misn_state==2 or misn_state==3) then
+      vn.clear()
+      vn.scene()
+      local nel = vn.newCharacter( tutnel.vn_nelly() )
+      vn.na(_("You land and quickly Nelly goes over to the outfitter and seems to get into some sort of argument with the person in charge. After a bit you see they exchange something and she comes back with a grin on her face."))
+      nel(fmt.f(_([["Got the parts! Cheaper than I expected to. Hopefully this will bring an end to my ship troubles. Let's go back to #o{pntname}#0 in #o{sysname}#0!"]]), {pntname=destpnt:name(), sysname=destsys:name()}))
+      vn.run()
+
+      local c = misn.cargoNew( N_("Jumpdrive Repair Parts"), N_("Spare parts that can be used to break a ship's broken jumpdrive.") )
+      misn.cargoAdd( c, 0 )
+      misn_marker = misn.markerMove( retsys )
+      misn.osdActive(2)
+      misn_state = 4
+
+   elseif cpnt == retpnt and misn_state >= 4 then
+      -- Finished mission
+      vn.clear()
+      vn.scene()
+      local nel = vn.newCharacter( tutnel.vn_nelly() )
+      nel(_([["We finally made it. Nothing ever comes really easy does it? Ah, before I forget, let me reward you for your troubles."]]))
+      vn.sfxVictory()
+      vn.na(fmt.f(_("You have received #g{credits}#0."), {credits=fmt.credits(reward_amount)}))
+      vn.func( function () -- Rewards
+         player.pay( reward_amount )
+      end )
+      nel(_([["I'm going to get my ship fixed and hopefully next time we meet it'll be in space. Have fun!"
+She runs off to where here ship is stored with the repair parts in hand.]]))
+      vn.run()
+
+      tutnel.log(_("You helped Nelly repair her ship."))
+
+      misn.finish(true)
    end
 end
-   
+
 function approach_nelly ()
    vn.clear()
    vn.scene()
    local nel = vn.newCharacter( tutnel.vn_nelly() )
-   vn.na(_(""))
-   nel(fmt.f(_([[""]]),{}))
+   vn.na(_("As you approach her you can see she is a bit flustered."))
+   nel(fmt.f(_([["I got my ship checked up again, and it looks like it wasn't just an autonav malfunction, but the jumpdrive is toast. I need a spare part, but they don't seem to have any here, and told me I'll have to wait at least a hectaperiod if I want it delivered. However, I was able to find that they seem to have replacements on #o{destpnt}#0 in #o{destsys}#0."]]),{destpnt=destpnt:name(), destsys=destsys:name()}))
+   nel(fmt.f(_([[Before you can answer she grabs your arm and pulls you towards where your ship is docked.
+"Come on, let's head to #o{destpnt}#0 to grab a spare part so I can finally get my ship off the ground."]]),{destpnt=destpnt:name()}))
+   vn.na(_("Looks like you'll have to do another round trip if you want to get paid."))
    vn.run()
+
+   misn.osdCreate( misntitle, {
+      fmt.f(_("Go to {pntname} in {sysname}"),{pntname=destpnt:name(), sysname=destsys:name()}),
+      fmt.f(_("Return to {pntname} in {sysname}"),{pntname=retpnt:name(), sysname=retsys:name()}),
+   } )
+   misn_marker = misn.markerMove( destsys )
+
+   misn.npcRm( npc_nel )
+   misn_state = 2
 end

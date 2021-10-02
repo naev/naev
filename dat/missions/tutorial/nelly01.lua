@@ -206,7 +206,7 @@ function land ()
       }
 
       vn.label("help_no")
-      nel(fmt.f(_([["OK! Taking the initiative I see. Go buy the {outfit} at the #oOutfits Tab#0 and make sure to equip it at the #oEquipment Tab#0 before taking off. Once you get that done, let's head back to {pntname} at {sysname}."]]),{outfit=outfit_tobuy:name(), pntname=retpnt:name(), sysname=retsys:name()}))
+      nel(fmt.f(_([["OK! Taking the initiative I see. Go buy the {outfit} at the #oOutfits Tab#0 and make sure to equip it at the #oEquipment Tab#0 before taking off. Once you get that done, let's head back to {pntname} in {sysname}."]]),{outfit=outfit_tobuy:name(), pntname=retpnt:name(), sysname=retsys:name()}))
       vn.func( function ()
          wanthelp = false
       end )
@@ -348,7 +348,7 @@ function board ()
 end
 
 function info_reminder ()
-   player.pilot():comm(fmt.f(_("Try opening the info menu with {infokey}."),{infokey=tut.getKey("info")}))
+   player.pilot():comm(fmt.f(_([[Nelly: "Try opening the info menu with {infokey}."]]),{infokey=tut.getKey("info")}))
    times_said = (times_said or 0) + 1
    if times_said < 4 then
       hk_info_timer = hook.timer( 15, "info_reminder" )
