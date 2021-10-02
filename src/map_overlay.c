@@ -60,6 +60,7 @@ static SafeLane* ovr_render_safelanes = NULL; /**< Render safe lanes. */
 static Uint32 ovr_opened = 0; /**< Time last opened. */
 static int ovr_open = 0;      /**< Is the overlay open? */
 static double ovr_res = 10.;  /**< Resolution. */
+static double ovr_dt = 0.; /**< For animations and stuff. */
 static const double ovr_text_pixbuf = 5.; /**< Extra margin around overlay text. */
 /* Rem: high pix_buffer ovr_text_pixbuff allows to do less iterations. */
 
@@ -474,19 +475,16 @@ static void ovr_refresh_uzawa_overlap( float *forces_x, float *forces_y,
 
 void ovr_initAlpha (void)
 {
-   int i;
-   JumpPoint *jp;
-   Planet *pnt;
    SafeLane *safelanes;
-   for (i=0; i<array_size(cur_system->jumps); i++) {
-      jp = &cur_system->jumps[i];
+   for (int i=0; i<array_size(cur_system->jumps); i++) {
+      JumpPoint *jp = &cur_system->jumps[i];
       if (!jp_isUsable(jp) || !jp_isKnown(jp))
          jp->map_alpha = 0.;
       else
          jp->map_alpha = 1.;
    }
-   for (i=0; i<array_size(cur_system->planets); i++) {
-      pnt = cur_system->planets[i];
+   for (int i=0; i<array_size(cur_system->planets); i++) {
+      Planet *pnt = cur_system->planets[i];
       if (!planet_isKnown(pnt))
          pnt->map_alpha = 0.;
       else
@@ -494,7 +492,7 @@ void ovr_initAlpha (void)
    }
 
    safelanes = safelanes_get( -1, 0, cur_system );
-   for (i=0; i<array_size(safelanes); i++) {
+   for (int i=0; i<array_size(safelanes); i++) {
       Vector2d *posns[2];
       if (!ovr_safelaneKnown( &safelanes[i], posns ))
          safelanes[i].map_alpha = 0.;
@@ -503,6 +501,8 @@ void ovr_initAlpha (void)
    }
    array_free( ovr_render_safelanes );
    ovr_render_safelanes = safelanes;
+
+   ovr_dt = 0.;
 }
 
 
@@ -606,6 +606,7 @@ void ovr_render( double dt )
    w     = map_overlay_width();
    h     = map_overlay_height();
    res   = ovr_res;
+   ovr_dt += dt;
 
    /* First render the background overlay. */
    glColour c = { .r=0., .g=0., .b=0., .a= conf.map_overlay_opacity };
@@ -765,8 +766,13 @@ void ovr_render( double dt )
 
    /* Check if player has goto target. */
    if (player_isFlag(PLAYER_AUTONAV) && (player.autonav == AUTONAV_POS_APPROACH)) {
+      glColour col = cRadar_hilight;
+      col.a = 0.6;
       map_overlayToScreenPos( &x, &y, player.autonav_pos.x, player.autonav_pos.y );
-      gl_renderCross( x, y, 5., &cRadar_hilight );
+      //gl_renderCross( x, y, 5., &cRadar_hilight );
+      glUseProgram( shaders.selectplanet.program );
+      glUniform1f( shaders.selectplanet.dt, ovr_dt );
+      gl_renderShader( x, y, 9., 9., 0., &shaders.selectplanet, &col, 1 );
       gl_printMarkerRaw( &gl_smallFont, x+10., y-gl_smallFont.h/2., &cRadar_hilight, _("TARGET") );
    }
 

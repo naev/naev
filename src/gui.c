@@ -1273,12 +1273,19 @@ void gui_renderPilot( const Pilot* p, RadarShape shape, double w, double h, doub
 
    if (p->id == player.p->target)
       col = &cRadar_hilight;
-   else if (pilot_isFlag(p, PILOT_HILIGHT))
-      col = &cRadar_tPilot;
    else
       col = gui_getPilotColour(p);
 
    scale = MAX(scale+2.0, 5.0); /* Compensate for outline. */
+
+   if (pilot_isFlag(p, PILOT_HILIGHT)) {
+      glColour col = cRadar_hilight;
+      col.a = 0.3;
+      glUseProgram( shaders.hilight.program );
+      glUniform1f( shaders.hilight.dt, animation_dt );
+      gl_renderShader( x, y, scale*2.0, scale*2.0, 0., &shaders.hilight, &col, 1 );
+   }
+
    glUseProgram(shaders.pilotmarker.program);
    gl_renderShader( x, y, scale, scale, p->solid->dir, &shaders.pilotmarker, col, 1 );
 
