@@ -41,7 +41,7 @@ local function disable( p, po )
       fclear( f )
    end
    po:state("off")
-   player.msg(_("#rYour fake transponder has been discovered and is useless until you change systems or land!#0"))
+   player.msg(_("#rYour fake transponder has been discovered and is useless until you change systems, land, or cooldown!#0"))
    isactive = false
 end
 
@@ -59,4 +59,9 @@ end
 
 function onscanned( p, po, scanner )
    disable( p, po )
+end
+
+function cooldown( p, po, done, opt )
+   if not done then return end
+   reset( p, po )
 end

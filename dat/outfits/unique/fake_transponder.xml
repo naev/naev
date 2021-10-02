@@ -9,7 +9,7 @@
   <mass>1</mass>
   <price>1000000</price>
   <description>A fake transponder to make ship appear like a non-descript and harmless independent ship.</description>
-  <desc_extra>Makes the ship appear as independent to other ships. Becomes void when scanned.</desc_extra>
+  <desc_extra>Makes the ship appear as independent to other ships. Becomes temporarily void when discovered.</desc_extra>
   <gfx_store>placeholder.webp</gfx_store>
   <limit>fake_transponder</limit>
   <illegalto>
@@ -25,5 +25,6 @@
  <specific type="modification">
   <lua>outfits/unique/fake_transponder.lua</lua>
   <ew_scanned_time>-25</ew_scanned_time>
+  <cooldown_time>50</cooldown_time>
  </specific>
 </outfit>
