@@ -38,9 +38,9 @@ function hail ()
 
    -- Remove randomness from future calls
    if not mem.hailsetup then
-      mem.refuel_base = rnd.rnd( 2000, 4000 )
+      mem.refuel_base = mem.refuel_base or rnd.rnd( 2000, 4000 )
       mem.refuel_rng = rnd.rnd()
-      mem.bribe_base = math.sqrt( p:stats().mass ) * (500 * rnd.rnd() + 1750)
+      mem.bribe_base = mem.bribe_base or math.sqrt( p:stats().mass ) * (500 * rnd.rnd() + 1750)
       mem.bribe_rng = rnd.rnd()
       mem.hailsetup = true
    end
@@ -71,11 +71,11 @@ function hail ()
 
    -- See if can be bribed
    mem.bribe = mem.bribe_base
-   if (mem.natural or mem.allowbribe) and mem.bribe_rng > 0.6 then
+   if mem.allowbribe or (mem.natural and mem.bribe_rng > 0.6) then
       mem.bribe_prompt = string.format(_([["The Proteron can always use some income. %s and you were never here."]]), fmt.credits(mem.bribe) )
       mem.bribe_paid = _([["Get lost before I have to dispose of you."]])
    else
-     mem.bribe_no = bribe_no_list[ rnd.rnd(1,#bribe_no_list) ]
+      mem.bribe_no = bribe_no_list[ rnd.rnd(1,#bribe_no_list) ]
 
    end
 end

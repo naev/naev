@@ -51,9 +51,9 @@ function hail ()
 
    -- Remove randomness from future calls
    if not mem.hailsetup then
-      mem.refuel_base = rnd.rnd( 2000, 4000 )
+      mem.refuel_base = mem.refuel_base or rnd.rnd( 2000, 4000 )
       mem.refuel_rng = rnd.rnd()
-      mem.bribe_base = 3*math.sqrt( p:stats().mass ) * (500 * rnd.rnd() + 1750)
+      mem.bribe_base = mem.bribe_base or 3*math.sqrt( p:stats().mass ) * (500 * rnd.rnd() + 1750)
       mem.bribe_rng = rnd.rnd()
       mem.hailsetup = true
    end
@@ -84,11 +84,11 @@ function hail ()
 
    -- Handle bribing
    mem.bribe = mem.bribe_base
-   if (mem.natural or mem.allowbribe) and (standing > 20 or
+   if mem.allowbribe or (mem.natural and (standing > 20 or
          (standing > 0 and mem.bribe_rng > 0.8) or
          (standing > -20 and mem.bribe_rng > 0.6) or
          (standing > -50 and mem.bribe_rng > 0.4) or
-         (rnd.rnd() > 0.2)) then
+         (rnd.rnd() > 0.2))) then
       mem.bribe_prompt = string.format(_([["For %s I'll give you enough time to get out of my sight."]]), fmt.credits(mem.bribe) )
       mem.bribe_paid = _([["Now get out of my sight."]])
    else
