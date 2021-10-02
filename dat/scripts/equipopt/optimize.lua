@@ -1,7 +1,7 @@
---[[
+--[[--
+   Equips pilots based on mixed integer linear programming.
 
-   Equips pilots based on mixed integer linear programming
-
+   @module equipopt.optimize
 --]]
 local optimize = {}
 local eparams = require 'equipopt.params'
@@ -220,8 +220,8 @@ local function print_debug( p, st, ss, outfit_list, params, constraints, energyg
    end
 end
 
---[[
-   @brief Equips a pilot with cores and outfits chosen from a list through optimization.
+--[[--
+   Equips a pilot with cores and outfits chosen from a list through optimization.
 
       @tparam Pilot p Pilot to equip.
       @tparam[opt=nil] table|nil cores Table of core outfits (by name) to equip. They will replace existing outfits, or set to nil to use defaults.
