@@ -589,15 +589,9 @@ static int ovr_safelaneKnown( SafeLane *sf, Vector2d *posns[2] )
  */
 void ovr_render( double dt )
 {
-   int i, j;
-   Pilot *const*pstk;
-   AsteroidAnchor *ast;
-   AsteroidExclusion *aexcl;
    SafeLane *safelanes;
-   Planet *pnt;
-   JumpPoint *jp;
    double w, h, res;
-   double x,y, r,detect;
+   double x,y, r;
    double rx,ry, x2,y2, rw,rh;
    glColour col;
 
@@ -620,7 +614,7 @@ void ovr_render( double dt )
 
    /* Render the safe lanes */
    safelanes = safelanes_get( -1, 0, cur_system );
-   for (i=0; i<array_size(safelanes); i++) {
+   for (int i=0; i<array_size(safelanes); i++) {
       Vector2d *posns[2];
       if (!ovr_safelaneKnown( &safelanes[i], posns ))
          continue;
@@ -657,8 +651,8 @@ void ovr_render( double dt )
    ovr_render_safelanes = safelanes;
 
    /* Render planets. */
-   for (i=0; i<array_size(cur_system->planets); i++) {
-      pnt = cur_system->planets[i];
+   for (int i=0; i<array_size(cur_system->planets); i++) {
+      Planet *pnt = cur_system->planets[i];
       if (pnt->map_alpha < 1.0)
          pnt->map_alpha = MIN( pnt->map_alpha+OVERLAY_FADEIN*dt, 1.0 );
       if (i != player.p->nav_planet)
@@ -668,8 +662,8 @@ void ovr_render( double dt )
       gui_renderPlanet( player.p->nav_planet, RADAR_RECT, w, h, res, cur_system->planets[player.p->nav_planet]->map_alpha, 1 );
 
    /* Render jump points. */
-   for (i=0; i<array_size(cur_system->jumps); i++) {
-      jp = &cur_system->jumps[i];
+   for (int i=0; i<array_size(cur_system->jumps); i++) {
+      JumpPoint *jp = &cur_system->jumps[i];
       if (jp->map_alpha < 1.0)
          jp->map_alpha = MIN( jp->map_alpha+OVERLAY_FADEIN*dt, 1.0 );
       if ((i != player.p->nav_hyperspace) && !jp_isFlag(jp, JP_EXITONLY))
@@ -679,35 +673,37 @@ void ovr_render( double dt )
       gui_renderJumpPoint( player.p->nav_hyperspace, RADAR_RECT, w, h, res, cur_system->jumps[player.p->nav_hyperspace].map_alpha, 1 );
 
    /* render the asteroids */
-   for (i=0; i<array_size(cur_system->asteroids); i++) {
-      ast = &cur_system->asteroids[i];
-      for (j=0; j<ast->nb; j++)
+   for (int i=0; i<array_size(cur_system->asteroids); i++) {
+      AsteroidAnchor *ast = &cur_system->asteroids[i];
+      for (int j=0; j<ast->nb; j++)
          gui_renderAsteroid( &ast->asteroids[j], w, h, res, 1 );
    }
 
    /* Render pilots. */
-   pstk  = pilot_getAll();
-   j = 0;
-   for (i=0; i<array_size(pstk); i++) {
+   Pilot *const* pstk = pilot_getAll();
+   int t = 0;
+   for (int i=0; i<array_size(pstk); i++) {
       if (pstk[i]->id == PLAYER_ID) /* Skip player. */
          continue;
       if (pstk[i]->id == player.p->target)
-         j = i;
+         t = i;
       else
          gui_renderPilot( pstk[i], RADAR_RECT, w, h, res, 1 );
    }
    /* Stealth rendering. */
    if (pilot_isFlag( player.p, PILOT_STEALTH )) {
+      double detect;
       glBindFramebuffer( GL_FRAMEBUFFER, gl_screen.fbo[2] );
       glClearColor( 0., 0., 0., 0. );
       glClear( GL_COLOR_BUFFER_BIT );
+      glBlendFunc( GL_ONE, GL_ONE );
 
       col.r = 0.;
       col.g = 0.;
       col.b = 1.;
-      col.a = 0.5;
-      for (i=0; i<array_size(cur_system->asteroids); i++) {
-         ast = &cur_system->asteroids[i];
+      col.a = 1.;
+      for (int i=0; i<array_size(cur_system->asteroids); i++) {
+         AsteroidAnchor *ast = &cur_system->asteroids[i];
          detect = vect_dist2( &player.p->solid->pos, &ast->pos );
          if (detect < pow2(pilot_sensorRange() * player.p->stats.ew_detect + ast->radius)) {
             map_overlayToScreenPos( &x, &y, ast->pos.x, ast->pos.y );
@@ -717,8 +713,8 @@ void ovr_render( double dt )
 
       col.g = 1.;
       col.b = 0.;
-      for (i=0; i<array_size(cur_system->astexclude); i++) {
-         aexcl = &cur_system->astexclude[i];
+      for (int i=0; i<array_size(cur_system->astexclude); i++) {
+         AsteroidExclusion *aexcl = &cur_system->astexclude[i];
          map_overlayToScreenPos( &x, &y, aexcl->pos.x, aexcl->pos.y );
          gl_renderCircle( x, y, aexcl->radius / res, &col, 1 );
       }
@@ -726,7 +722,8 @@ void ovr_render( double dt )
       detect = player.p->ew_stealth;
       col.r = 1.;
       col.g = 0.;
-      for (i=0; i<array_size(pstk); i++) {
+      for (int i=0; i<array_size(pstk); i++) {
+         double r;
          if (areAllies( player.p->faction, pstk[i]->faction ) || pilot_isFriendly(pstk[i]))
             continue;
          if (pilot_isDisabled(pstk[i]))
@@ -738,6 +735,7 @@ void ovr_render( double dt )
          r = detect * pstk[i]->stats.ew_detect / res;
          gl_renderCircle( x, y, r, &col, 1 );
       }
+      glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
 
       glBindFramebuffer(GL_FRAMEBUFFER, gl_screen.current_fbo);
       glClearColor( 0., 0., 0., 1. );
@@ -761,8 +759,8 @@ void ovr_render( double dt )
       glDisableVertexAttribArray( shaders.texture.vertex );
    }
    /* Render the targeted pilot */
-   if (j!=0)
-      gui_renderPilot( pstk[j], RADAR_RECT, w, h, res, 1 );
+   if (t!=0)
+      gui_renderPilot( pstk[t], RADAR_RECT, w, h, res, 1 );
 
    /* Check if player has goto target. */
    if (player_isFlag(PLAYER_AUTONAV) && (player.autonav == AUTONAV_POS_APPROACH)) {
