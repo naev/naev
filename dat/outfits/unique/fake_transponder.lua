@@ -31,14 +31,17 @@ local function reset( p, po )
       f:setPlayerStanding( f:playerStandingDefault() )
    end
    po:state("on")
+   isactive = true
 end
 
 local function disable( p, po )
+   if not isactive then return end
    for k,f in ipairs(factions) do
       f:setPlayerStanding( fget( f ) )
       fclear( f )
    end
    po:state("off")
+   isactive = false
 end
 
 function onadd( p, po )
