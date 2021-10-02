@@ -593,7 +593,6 @@ void ovr_render( double dt )
    double w, h, res;
    double x,y, r;
    double rx,ry, x2,y2, rw,rh;
-   glColour col;
 
    /* Must be open. */
    if (!ovr_open)
@@ -615,6 +614,7 @@ void ovr_render( double dt )
    /* Render the safe lanes */
    safelanes = safelanes_get( -1, 0, cur_system );
    for (int i=0; i<array_size(safelanes); i++) {
+      glColour col;
       Vector2d *posns[2];
       if (!ovr_safelaneKnown( &safelanes[i], posns ))
          continue;
@@ -693,15 +693,12 @@ void ovr_render( double dt )
    /* Stealth rendering. */
    if (pilot_isFlag( player.p, PILOT_STEALTH )) {
       double detect;
+      glColour col = {0., 0., 1., 1.};
       glBindFramebuffer( GL_FRAMEBUFFER, gl_screen.fbo[2] );
       glClearColor( 0., 0., 0., 0. );
       glClear( GL_COLOR_BUFFER_BIT );
       glBlendFunc( GL_ONE, GL_ONE );
 
-      col.r = 0.;
-      col.g = 0.;
-      col.b = 1.;
-      col.a = 1.;
       for (int i=0; i<array_size(cur_system->asteroids); i++) {
          AsteroidAnchor *ast = &cur_system->asteroids[i];
          detect = vect_dist2( &player.p->solid->pos, &ast->pos );
@@ -733,7 +730,9 @@ void ovr_render( double dt )
             continue;
          map_overlayToScreenPos( &x, &y, pstk[i]->solid->pos.x, pstk[i]->solid->pos.y );
          r = detect * pstk[i]->stats.ew_detect / res;
-         gl_renderCircle( x, y, r, &col, 1 );
+         //gl_renderCircle( x, y, r, &col, 1 );
+         glUseProgram( shaders.stealthaura.program );
+         gl_renderShader( x, y, r, r, 0., &shaders.stealthaura, &col, 1 );
       }
       glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
 

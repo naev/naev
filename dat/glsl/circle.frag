@@ -20,5 +20,3 @@ void main(void) {
    color_out   = color;
    color_out.a *= alpha;
 }
-
-

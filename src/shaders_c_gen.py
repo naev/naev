@@ -228,6 +228,10 @@ SHADERS = [
       fs_path = "factiondisk.frag",
    ),
    SimpleShader(
+      name = "stealthaura",
+      fs_path = "stealthaura.frag",
+   ),
+   SimpleShader(
       name = "planetmarker",
       fs_path = "planetmarker.frag",
    ),
