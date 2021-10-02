@@ -67,7 +67,7 @@ misn_title = _("Helping Nelly Out")
 reward_amount = 60e3
 
 local function has_disable( o )
-   local dmg, dis = o:weapStats
+   local dmg, dis = o:weapStats()
    return dis > 0
 end
 
