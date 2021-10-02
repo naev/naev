@@ -785,13 +785,10 @@ void ovr_render( double dt )
  */
 static void ovr_mrkRenderAll( double res )
 {
-   int i;
-   ovr_marker_t *mrk;
-   double x, y;
    (void) res;
-
-   for (i=0; i<array_size(ovr_markers); i++) {
-      mrk = &ovr_markers[i];
+   for (int i=0; i<array_size(ovr_markers); i++) {
+      double x, y;
+      ovr_marker_t *mrk = &ovr_markers[i];
 
       map_overlayToScreenPos( &x, &y, mrk->u.pt.x, mrk->u.pt.y );
       gl_renderCross( x, y, 5., &cRadar_hilight );
