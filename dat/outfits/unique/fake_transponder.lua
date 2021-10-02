@@ -41,6 +41,7 @@ local function disable( p, po )
       fclear( f )
    end
    po:state("off")
+   player.msg(_("#rYour fake transponder has been discovered and is useless until you change systems or land!#0"))
    isactive = false
 end
 
