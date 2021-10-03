@@ -1846,8 +1846,10 @@ void pilot_render( Pilot* p, const double dt )
 #ifdef DEBUGGING
    double dircos, dirsin, x, y;
    Vector2d v;
-   dircos = cos(p->solid->dir);
-   dirsin = sin(p->solid->dir);
+   if (debug_isFlag(DEBUG_MARK_EMITTER)) {
+      dircos = cos(p->solid->dir);
+      dirsin = sin(p->solid->dir);
+   }
 #endif /* DEBUGGING */
 
    /* Re-draw backwards trails. */
