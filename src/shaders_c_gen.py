@@ -292,6 +292,10 @@ SHADERS = [
       fs_path = "selectplanet.frag",
    ),
    SimpleShader(
+      name = "selectposition",
+      fs_path = "selectposition.frag",
+   ),
+   SimpleShader(
       name = "sdfsolid",
       fs_path = "sdfsolid.frag",
    ),

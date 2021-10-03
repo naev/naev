@@ -144,9 +144,9 @@ float sdCircle( in vec2 p, in float r )
    return length(p)-r;
 }
 
-vec4 sdf_alarm( vec4 color, Image tex, vec2 uv, vec2 px )
+vec4 sdf_alarm( vec4 colour, Image tex, vec2 uv, vec2 px )
 {
-   color.a *= sin(u_time*20.0) * 0.1 + 0.9;
+   colour.a *= sin(u_time*20.0) * 0.1 + 0.9;
 
    /* Base Alpha */
    float a = step( sin((px.x + px.y) * 0.3), 0.0);
@@ -166,12 +166,12 @@ vec4 sdf_alarm( vec4 color, Image tex, vec2 uv, vec2 px )
    a += step( -(dc+15.0/u_size), 0.0 );
    a *= step( dc, 0.0 );
 
-   color.a *= a;
-   return color;
+   colour.a *= a;
+   return colour;
 }
 
 #define CS(A)  vec2(sin(A),cos(A))
-vec4 sdf_pilot( vec4 color, vec2 uv )
+vec4 sdf_pilot( vec4 colour, vec2 uv )
 {
    float m = 1.0 / dimensions.x;
    uv = abs(uv);
@@ -182,11 +182,11 @@ vec4 sdf_pilot( vec4 color, vec2 uv )
    d -= (1.0+sin(3.0*dt)) * 0.007;
    d = max( -sdCircle( uv-vec2(M_SQRT1_2), 0.04 ), d );
 
-   color.a *= smoothstep( -m, 0.0, -d );
-   return color;
+   colour.a *= smoothstep( -m, 0.0, -d );
+   return colour;
 }
 
-vec4 sdf_pilot2( vec4 color, vec2 uv )
+vec4 sdf_pilot2( vec4 colour, vec2 uv )
 {
    float m = 1.0 / dimensions.x;
 
@@ -207,11 +207,11 @@ vec4 sdf_pilot2( vec4 color, vec2 uv )
    d = min( d, sdCircle( yuv-CS(M_PI/2.0-arclen2)*inner, 7.0 * m) );
    d = max( -sdCircle(   yuv-CS(M_PI/2.0-arclen2)*inner, 3.5 * m), d );
 
-   color.a *= smoothstep( -m, 0.0, -d );
-   return color;
+   colour.a *= smoothstep( -m, 0.0, -d );
+   return colour;
 }
 
-vec4 sdf_planet( vec4 color, vec2 uv )
+vec4 sdf_planet( vec4 colour, vec2 uv )
 {
    float m = 1.0 / dimensions.x;
 
@@ -259,8 +259,8 @@ vec4 sdf_planet( vec4 color, vec2 uv )
          d = min( d, sdArc( uv, CS( float(i)*M_PI*2.0/3.0), arclen, inner, w ) );
    }
 
-   color.a *= smoothstep( -m, 0.0, -d );
-   return color;
+   colour.a *= smoothstep( -m, 0.0, -d );
+   return colour;
 }
 
 float sdf_emptyCircle( vec2 uv, float d, float m )
@@ -269,7 +269,7 @@ float sdf_emptyCircle( vec2 uv, float d, float m )
    d = max( -sdCircle(   uv, 3.5 * m), d );
    return d;
 }
-vec4 sdf_planet2( vec4 color, vec2 uv )
+vec4 sdf_planet2( vec4 colour, vec2 uv )
 {
    float m = 1.0 / dimensions.x;
 
@@ -308,11 +308,11 @@ vec4 sdf_planet2( vec4 color, vec2 uv )
    d = sdf_emptyCircle( uv - CS(M_PI/4.0 + M_PI*1.0)*inner, d, m );
    d = sdf_emptyCircle( uv - CS(M_PI/4.0 + M_PI*1.1)*inner, d, m );
 
-   color.a *= smoothstep( -m, 0.0, -d );
-   return color;
+   colour.a *= smoothstep( -m, 0.0, -d );
+   return colour;
 }
 
-vec4 sdf_blinkmarker( vec4 color, vec2 uv )
+vec4 sdf_blinkmarker( vec4 colour, vec2 uv )
 {
    float m = 1.0 / dimensions.x;
 
@@ -328,11 +328,11 @@ vec4 sdf_blinkmarker( vec4 color, vec2 uv )
 
    float d = sdRhombus( uv, vec2(h,w) );
 
-   color.a *= smoothstep( -m, 0.0, -d );
-   return color;
+   colour.a *= smoothstep( -m, 0.0, -d );
+   return colour;
 }
 
-vec4 sdf_jumpmarker( vec4 color, vec2 uv )
+vec4 sdf_jumpmarker( vec4 colour, vec2 uv )
 {
    float m = 1.0 / dimensions.x;
 
@@ -344,31 +344,31 @@ vec4 sdf_jumpmarker( vec4 color, vec2 uv )
    d = max( d, abs(uv.y)-1.0+2.0*m );
    d = abs(d);
 
-   color.a *= smoothstep( -m, 0.0, -d );
-   return color;
+   colour.a *= smoothstep( -m, 0.0, -d );
+   return colour;
 }
 
-vec4 sdf_pilotmarker( vec4 color, vec2 uv )
+vec4 sdf_pilotmarker( vec4 colour, vec2 uv )
 {
    uv = vec2( uv.y, uv.x );
    float m = 1.0 / dimensions.x;
    float d = sdTriangleEquilateral( uv*1.15  ) / 1.15;
    d = abs(d+2.0*m);
-   color.a *= smoothstep( -m, 0.0, -d );
-   return color;
+   colour.a *= smoothstep( -m, 0.0, -d );
+   return colour;
 }
 
-vec4 sdf_playermarker( vec4 color, vec2 uv )
+vec4 sdf_playermarker( vec4 colour, vec2 uv )
 {
    uv = vec2( uv.y, -uv.x );
    float m = 1.0 / dimensions.x;
    float d = 2.0*sdTriangleIsosceles( uv*0.5+vec2(0.0,0.5), vec2(0.2,0.7) );
    d = abs(d+2.0*m);
-   color.a *= smoothstep( -m, 0.0, -d );
-   return color;
+   colour.a *= smoothstep( -m, 0.0, -d );
+   return colour;
 }
 
-vec4 sdf_stealth( vec4 color, vec2 uv )
+vec4 sdf_stealth( vec4 colour, vec2 uv )
 {
    float r = fract(dt*0.1);
    float a = r * M_PI;
@@ -378,11 +378,11 @@ vec4 sdf_stealth( vec4 color, vec2 uv )
    uv = mat2(c,-s,s,c) * uv;
    float d = sdPie( uv*dimensions, vec2(s,c), dimensions.x-1.0 );
    float alpha = smoothstep(-1.0, 0.0, -d);
-   color.a *= smoothstep( -1.0, 0.0, -d );
-   return color;
+   colour.a *= smoothstep( -1.0, 0.0, -d );
+   return colour;
 }
 
-vec4 sdf_jumplane( vec4 color, vec2 uv )
+vec4 sdf_jumplane( vec4 colour, vec2 uv )
 {
    uv   *= dimensions;
    float d = sdBox( uv, dimensions-vec2(1.0) );
@@ -394,11 +394,11 @@ vec4 sdf_jumplane( vec4 color, vec2 uv )
    d = max( d, ds );
 
    float alpha = smoothstep(-1.0, 0.0, -d);
-   color.a *= smoothstep( -1.0, 0.0, -d );
-   return color;
+   colour.a *= smoothstep( -1.0, 0.0, -d );
+   return colour;
 }
 
-vec4 sdf_gear( vec4 color, vec2 uv )
+vec4 sdf_gear( vec4 colour, vec2 uv )
 {
    float m = 1.0 / dimensions.x;
    float d = sdCircle( uv, 0.75 );
@@ -414,11 +414,11 @@ vec4 sdf_gear( vec4 color, vec2 uv )
    d = max( d, -sdCircle( uv, 0.6 ) );
    d = min( d, sdCircle( uv, 0.25 ) );
 
-   color.a = smoothstep( -m, 0.0, -d );
-   return color;
+   colour.a = smoothstep( -m, 0.0, -d );
+   return colour;
 }
 
-vec4 sdf_sysrhombus( vec4 color, vec2 uv)
+vec4 sdf_sysrhombus( vec4 colour, vec2 uv)
 {
    vec2 pos = vec2( uv.y, uv.x );
    const vec2 b1 = vec2( 0.9, 0.6 );
@@ -438,11 +438,11 @@ vec4 sdf_sysrhombus( vec4 color, vec2 uv)
       d = max( -sdRhombus( pos*2.0, b ), d );
       d = min(  d, sdRhombus( pos*4.0, b ) );
    }
-   color.a *= smoothstep( -m, 0.0, -d );
-   return color;
+   colour.a *= smoothstep( -m, 0.0, -d );
+   return colour;
 }
 
-vec4 sdf_sysmarker( vec4 color, vec2 uv )
+vec4 sdf_sysmarker( vec4 colour, vec2 uv )
 {
    vec2 pos = vec2( uv.y, uv.x );
    const vec2 b = vec2( 1.0, 0.65 );
@@ -455,12 +455,12 @@ vec4 sdf_sysmarker( vec4 color, vec2 uv )
       d = max( -sdSegment( cpos, vec2(0.0), vec2(1.0,0.0) )+0.15, d );
    d = max( -sdCircle( cpos, 0.5 ), d );
    d = min( sdCircle( cpos, 0.2 ), d );
-   color.a *= smoothstep( -m, 0.0, -d );
+   colour.a *= smoothstep( -m, 0.0, -d );
 
-   return color;
+   return colour;
 }
 
-vec4 sdf_missilelockon( vec4 color, vec2 uv )
+vec4 sdf_missilelockon( vec4 colour, vec2 uv )
 {
    float m = 1.0 / dimensions.x;
 
@@ -488,8 +488,19 @@ vec4 sdf_missilelockon( vec4 color, vec2 uv )
 
    d = max(d,-dp);
 
-   color.a *= smoothstep( -m, 0.0, -d );
-   return color;
+   colour.a *= smoothstep( -m, 0.0, -d );
+   return colour;
+}
+
+vec4 sdf_selectposition( vec4 colour, vec2 uv )
+{
+   float m = 1.0 / dimensions.x;
+   uv = abs( uv );
+   if (uv.y < uv.x)
+      uv.xy = uv.yx;
+   float d = sdSegment( uv, vec2(0.2+m,1.0-2.0*m), vec2(1.0,1.0)-2.0*m );
+   colour.a *= smoothstep( -m, 0.0, -d );
+   return colour;
 }
 
 vec4 bg( vec2 uv )
@@ -504,27 +515,28 @@ vec4 bg( vec2 uv )
    return vec4( c, 1.0 );
 }
 
-vec4 effect( vec4 color, Image tex, vec2 uv, vec2 px )
+vec4 effect( vec4 colour, Image tex, vec2 uv, vec2 px )
 {
    vec4 col_out;
    vec2 uv_rel = uv*2.0-1.0;
    uv_rel.y = - uv_rel.y;
 
-   //col_out = sdf_alarm( color, tex, uv, px );
-   //col_out = sdf_pilot( color, uv_rel );
-   //col_out = sdf_pilot2( color, uv_rel );
-   //col_out = sdf_planet( color, uv_rel );
-   //col_out = sdf_planet2( color, uv_rel );
-   //col_out = sdf_blinkmarker( color, uv_rel );
-   //col_out = sdf_jumpmarker( color, uv_rel );
-   //col_out = sdf_pilotmarker( color, uv_rel );
-   //col_out = sdf_playermarker( color, uv_rel );
-   //col_out = sdf_stealth( color, uv_rel );
-   //col_out = sdf_jumplane( color, uv_rel );
-   //col_out = sdf_gear( color, uv_rel );
-   //col_out = sdf_sysrhombus( color, uv_rel );
-   //col_out = sdf_sysmarker( color, uv_rel );
-   col_out = sdf_missilelockon( color, uv_rel );
+   //col_out = sdf_alarm( colour, tex, uv, px );
+   //col_out = sdf_pilot( colour, uv_rel );
+   //col_out = sdf_pilot2( colour, uv_rel );
+   //col_out = sdf_planet( colour, uv_rel );
+   //col_out = sdf_planet2( colour, uv_rel );
+   //col_out = sdf_blinkmarker( colour, uv_rel );
+   //col_out = sdf_jumpmarker( colour, uv_rel );
+   //col_out = sdf_pilotmarker( colour, uv_rel );
+   //col_out = sdf_playermarker( colour, uv_rel );
+   //col_out = sdf_stealth( colour, uv_rel );
+   //col_out = sdf_jumplane( colour, uv_rel );
+   //col_out = sdf_gear( colour, uv_rel );
+   //col_out = sdf_sysrhombus( colour, uv_rel );
+   //col_out = sdf_sysmarker( colour, uv_rel );
+   //col_out = sdf_missilelockon( colour, uv_rel );
+   col_out = sdf_selectposition( colour, uv_rel );
 
    return mix( bg(uv), col_out, col_out.a );
 }

@@ -765,9 +765,8 @@ void ovr_render( double dt )
       glColour col = cRadar_hilight;
       col.a = 0.6;
       map_overlayToScreenPos( &x, &y, player.autonav_pos.x, player.autonav_pos.y );
-      glUseProgram( shaders.selectplanet.program );
-      glUniform1f( shaders.selectplanet.dt, ovr_dt );
-      gl_renderShader( x, y, 9., 9., 0., &shaders.selectplanet, &col, 1 );
+      glUseProgram( shaders.selectposition.program );
+      gl_renderShader( x, y, 9., 9., 0., &shaders.selectposition, &col, 1 );
       gl_printMarkerRaw( &gl_smallFont, x+10., y-gl_smallFont.h/2., &cRadar_hilight, _("TARGET") );
    }
 
