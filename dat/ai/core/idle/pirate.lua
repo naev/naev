@@ -39,6 +39,7 @@ end
 
 -- See if a target is vulnerable
 local function __vulnerable( p, plt, threshold, r )
+   if mem.vulnignore then return true end
    local pos = plt:pos()
    r = r or math.pow( mem.lanedistance, 2 )
    -- Make sure not in safe lanes
@@ -356,3 +357,4 @@ mem.vulnrange     = 4000
 mem.vulnrambo     = 1.0
 mem.vulnattack    = 1.5 -- Vulnerability threshold to attack (higher is less vulnerable)
 mem.vulnabort     = 2.0 -- Vulnerability threshold to break off attack (lower is more vulnerable)
+mem.vulnignore    = false

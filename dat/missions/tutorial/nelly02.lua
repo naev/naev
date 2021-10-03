@@ -254,7 +254,7 @@ function enter ()
 
    elseif misn_state == 2 and scur == retsys then
       jump_dest = jump.get( retsys, destsys )
-      fpir = faction.dynAdd( "Pirate", "Pirate", _("Pirate"), {clear_enemies=true, clear_allies=true} )
+      fpir = faction.dynAdd( "Pirate", "nelly_pirate", _("Pirate"), {clear_enemies=true, clear_allies=true} )
       hook.timer( 1, "timer_pirate" )
       if not hk_reset_osd then
          hk_reset_osd = hook.enter( "reset_osd_hook" )
@@ -394,27 +394,27 @@ end
 
 function timer_pirate ()
    local pp = player.pilot()
-
+   local d = jump_dest:pos():dist( pp:pos() )
    if d < 5000 then
       -- Spawn pirates
       enemies = {}
       for i=1,3 do
-         local p = pirate.add( "Hyena", fpir, jump_dest, _("Pirate Hyena") )
+         local p = pilot.add( "Hyena", fpir, jump_dest, _("Pirate Hyena") )
          if i>1 then
             p:setLeader( enemies[1] )
          end
          p:setHostile()
          p:setHilight()
          p:setVisplayer()
-         p:control()
-         p:attack( pp )
          p:intrinsicSet( "fwd_damage", -75 )
          local mem = p:memory()
          mem.allowbribe = true
          mem.bribe_base = 100
+         mem.vulnignore = true -- Ignore vulnerability
          table.insert( enemies, p )
       end
       pp:comm(fmt.f(_([[Nelly: "Wait, are those pirates coming our way?"]])))
+      player.autonavReset(7)
       hook.timer( 5, "timer_pirate_nelly" )
       hook.timer( 3, "timer_pirate_checkbribe" )
       nelly_spam = 2

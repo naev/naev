@@ -945,7 +945,7 @@ static int misn_osdGet( lua_State *L )
       lua_rawseti( L, -2, i+1 );
    }
    lua_pushinteger( L, osd_getActive(cur_mission->osd) );
-   return 1;
+   return 3;
 }
 
 
