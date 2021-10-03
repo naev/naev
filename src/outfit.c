@@ -2718,7 +2718,7 @@ static void outfit_launcherDesc( Outfit* o )
       }
    }
 
-   SDESC_ADD(  l, o, _("\nHolds %d %s:"), o->u.lau.amount, _(o->u.lau.ammo_name) );
+   SDESC_ADD(  l, o, _("\nHolds %d %s"), o->u.lau.amount, _(o->u.lau.ammo_name) );
    SDESC_ADD(  l, o, _("\n%.0f%% Penetration"), a->u.amm.dmg.penetration * 100. );
    SDESC_COND( l, o, _("\n%.2f DPS [%.0f Damage]"),
          1. / o->u.lau.delay * a->u.amm.dmg.damage, a->u.amm.dmg.damage );
