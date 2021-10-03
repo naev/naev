@@ -712,9 +712,9 @@ void ovr_render( double dt )
 
       glBlendEquation( GL_FUNC_REVERSE_SUBTRACT );
       glBlendFuncSeparate( GL_SRC_ALPHA, GL_ONE, GL_ONE, GL_ONE );
-      for (int i=0; i<array_size(cur_system->astaura); i++) {
+      for (int i=0; i<array_size(cur_system->astexclude); i++) {
          double r;
-         AsteroidExclusion *aexcl = &cur_system->astaura[i];
+         AsteroidExclusion *aexcl = &cur_system->astexclude[i];
          map_overlayToScreenPos( &x, &y, aexcl->pos.x, aexcl->pos.y );
          r = aexcl->radius / res;
          glUseProgram( shaders.astaura.program );
