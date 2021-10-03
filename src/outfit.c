@@ -1868,13 +1868,13 @@ static void outfit_parseSAfterburner( Outfit* temp, const xmlNodePtr parent )
    l = 0;
    SDESC_ADD( l, temp, "%s", _(outfit_getType(temp)) );
    SDESC_ADD( l, temp, _("\n#rActivated Outfit#0") );
-   SDESC_ADD( l, temp, _("\n%.0f CPU"), temp->cpu );
+   SDESC_COND( l, temp, _("\n%.0f CPU"), temp->cpu );
    SDESC_ADD( l, temp, _("\nOnly one can be equipped") );
    SDESC_ADD( l, temp, _("\n%.0f Maximum Effective Mass"), temp->u.afb.mass_limit );
    SDESC_ADD( l, temp, _("\n%.0f%% Thrust"), temp->u.afb.thrust + 100. );
    SDESC_ADD( l, temp, _("\n%.0f%% Maximum Speed"), temp->u.afb.speed + 100. );
-   SDESC_ADD( l, temp, _("\n%.1f EPS"), temp->u.afb.energy );
-   SDESC_ADD( l, temp, _("\n%.1f Rumble"), temp->u.afb.rumble );
+   SDESC_COND( l, temp, _("\n%.1f EPS"), temp->u.afb.energy );
+   SDESC_COND( l, temp, _("\n%.1f Rumble"), temp->u.afb.rumble );
 
    /* Post processing. */
    temp->u.afb.thrust /= 100.;
@@ -1938,10 +1938,10 @@ static void outfit_parseSFighterBay( Outfit *temp, const xmlNodePtr parent )
    temp->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
    l = 0;
    SDESC_ADD( l, temp, "%s", _(outfit_getType(temp)) );
-   SDESC_ADD( l, temp, _("\n%.0f CPU"), temp->cpu );
-   SDESC_ADD( l, temp, _("\n%.1f Seconds Per Launch"), temp->u.bay.delay );
+   SDESC_COND( l, temp, _("\n%.0f CPU"), temp->cpu );
+   SDESC_COND( l, temp, _("\n%.1f Seconds Per Launch"), temp->u.bay.delay );
    SDESC_ADD( l, temp, _("\nHolds %d %s"), temp->u.bay.amount, _(temp->u.bay.ammo_name) );
-   SDESC_ADD( l, temp, _("\n%.1f Seconds to Reload"), temp->u.bay.reload_time );
+   SDESC_COND( l, temp, _("\n%.1f Seconds to Reload"), temp->u.bay.reload_time );
 
 #define MELEMENT(o,s) \
 if (o) WARN(_("Outfit '%s' missing/invalid '%s' element"), temp->name, s) /**< Define to help check for data errors. */
