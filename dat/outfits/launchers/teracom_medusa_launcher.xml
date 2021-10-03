@@ -18,7 +18,7 @@ TeraCom has built a highly efficient Medusa launcher, capable of locking on and 
   <reload_time>60</reload_time>
   <amount>8</amount>
   <lockon>3</lockon>
-  <iflockon>4</iflockon>
+  <iflockon>2</iflockon>
   <arc>60</arc>
   <trackmin>0</trackmin>
   <trackmax>10000</trackmax>

@@ -16,7 +16,7 @@
   <delay>8</delay>
   <reload_time>90</reload_time>
   <lockon>4</lockon>
-  <iflockon>9</iflockon>
+  <iflockon>4.5</iflockon>
   <arc>60</arc>
   <trackmin>5000</trackmin>
   <trackmax>25000</trackmax>
