@@ -1832,7 +1832,7 @@ static int outfit_compareActive( const void *slot1, const void *slot2 )
  */
 static int pilotL_outfits( lua_State *L )
 {
-   int i, j;
+   int j;
    Pilot *p;
    const char *type;
    OutfitSlotType ost;
@@ -1857,7 +1857,7 @@ static int pilotL_outfits( lua_State *L )
 
    j  = 1;
    lua_newtable( L );
-   for (i=0; i<array_size(p->outfits); i++) {
+   for (int i=0; i<array_size(p->outfits); i++) {
 
       /* Get outfit. */
       if (p->outfits[i]->outfit == NULL)

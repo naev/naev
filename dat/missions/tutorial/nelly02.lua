@@ -67,8 +67,8 @@ misn_title = _("Helping Nelly Out")
 reward_amount = 60e3
 
 local function has_disable( o )
-   local dmg, dis = o:weapStats()
-   return dis > 0
+   local dmg, dis = o:weapstats()
+   return dis and dis > 0
 end
 
 function create ()
@@ -121,7 +121,7 @@ function accept ()
    local nel = vn.newCharacter( tutnel.vn_nelly() )
 
    nel(_([[Nelly brightens up when you get near.
-"Hey, I thought was able to get my ship up and running, but before I was able to get in and do a test run, the thing went haywire and now it's spinning around in circles. You have an Ion Cannon, do you? Could you help me disable my ship and get it back?"]]))
+"Hey, I thought was able to get my ship up and running, but before I was able to get in and do a test run, the thing went haywire and now it's spinning around in circles! You have an Ion Cannon, do you? Could you help me disable my ship and get it back?"]]))
    vn.menu{
       {_("Help them with their ship"), "accept"},
       {_("Decline to help"), "decline"},
@@ -203,7 +203,7 @@ function accept ()
       misn_state = -2
    end
    table.insert( osdtxt, fmt.f(_("Disable and board Nelly's ship in {sysname}"), {sysname=destsys:name()}) )
-   misn.osdCreate( misntitle, osdtxt )
+   misn.osdCreate( misn_title, osdtxt )
 
    if misn_state < 0 then
       hk_equip = hook.equip( "equip" )
@@ -232,20 +232,23 @@ end
 
 function enter ()
    local scur = system.cur()
-   if misn.state <= 0  and scur == retsys then
-      rampant_pos = scur:pos() + rnd.rnd( 2000, rnd.rnd()*360 )
+   if misn_state <= 0  and scur == retsys then
+      rampant_pos = player.pos() + vec2.newP( 2000, rnd.rnd()*360 )
       rampant = pilot.add( "Llama", "Independent", rampant_pos )
       rampant:rename(_("Llaminator MK2"))
       rampant:intrinsicSet( "speed", -50 )
       rampant:intrinsicSet( "thrust", -50 )
       rampant:intrinsicSet( "turn", -50 )
-      rampant:intrinsicSet( "shield_regen", -100 )
-      rampant:intrinsicSet( "stress_dissipation", -100 )
+      rampant:intrinsicSet( "shield_regen", -50 )
+      rampant:intrinsicSet( "stress_dissipation", -90 )
+      local mem = rampant:memory()
+      mem.comm_no = _("No response.")
       hook.pilot( rampant, "disable", "disable" )
       hook.pilot( rampant, "board", "board" )
       hook.pilot( rampant, "death", "death" )
       rampant:control(true)
       hook.pilot( rampant, "idle", "idle" )
+      idle( rampant )
 
    elseif misn_state == 2 and scur == retsys then
       jump_dest = jump.get( retsys, destsys )
@@ -285,7 +288,7 @@ function idle ()
 end
 
 function disable ()
-   player.pilot():comm(fmt.f(_([[Nelly: "You disabled it! Now get on top of the ship and board it with {boardkey}!"]]),{tut.getKey("board")}))
+   player.pilot():comm(fmt.f(_([[Nelly: "You disabled it! Now get on top of the ship and board it with {boardkey}!"]]),{boardkey=tut.getKey("board")}))
 end
 
 function board ()
@@ -297,7 +300,7 @@ function board ()
    vn.run()
 
    -- Update objectives
-   misn.osdCreate( misntitle, {
+   misn.osdCreate( misn_title, {
       fmt.f(_("Return to {pntname}"),{pntname=retpnt:name()})
    } )
 
@@ -370,7 +373,7 @@ function approach_nelly ()
    vn.na(_("Looks like you'll have to do another round trip if you want to get paid."))
    vn.run()
 
-   misn.osdCreate( misntitle, {
+   misn.osdCreate( misn_title, {
       fmt.f(_("Go to {pntname} in {sysname}"),{pntname=destpnt:name(), sysname=destsys:name()}),
       fmt.f(_("Return to {pntname} in {sysname}"),{pntname=retpnt:name(), sysname=retsys:name()}),
    } )
@@ -466,7 +469,7 @@ function timer_pirate_checkbribe ()
 end
 
 function reset_osd ()
-   misn.osdCreate( misntitle, {
+   misn.osdCreate( misn_title, {
       fmt.f(_("Go to {pntname} in {sysname}"),{pntname=destpnt:name(), sysname=destsys:name()}),
       fmt.f(_("Return to {pntname} in {sysname}"),{pntname=retpnt:name(), sysname=retsys:name()}),
    } )
