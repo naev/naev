@@ -37,7 +37,7 @@
 #include "weapon.h"
 
 
-#define MOUSE_HIDE   ( 3.) /**< Time in seconds to wait before hiding mouse again. */
+#define MOUSE_HIDE   (3.) /**< Time in seconds to wait before hiding mouse again. */
 
 
 /* keybinding structure */

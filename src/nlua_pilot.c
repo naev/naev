@@ -73,6 +73,7 @@ static int pilotL_exists( lua_State *L );
 static int pilotL_target( lua_State *L );
 static int pilotL_setTarget( lua_State *L );
 static int pilotL_inrange( lua_State *L );
+static int pilotL_scandone( lua_State *L );
 static int pilotL_withPlayer( lua_State *L );
 static int pilotL_nav( lua_State *L );
 static int pilotL_activeWeapset( lua_State *L );
@@ -188,6 +189,7 @@ static const luaL_Reg pilotL_methods[] = {
    { "target", pilotL_target },
    { "setTarget", pilotL_setTarget },
    { "inrange", pilotL_inrange },
+   { "scandone", pilotL_scandone },
    { "withPlayer", pilotL_withPlayer },
    { "nav", pilotL_nav },
    { "activeWeapset", pilotL_activeWeapset },
@@ -1208,6 +1210,18 @@ static int pilotL_inrange( lua_State *L )
    return 2;
 }
 
+/**
+ * @brief Checks to see if a pilot is done scanning its target.
+ *
+ *    @luatreturn boolean True if the pilot has finished scanning their target.
+ * @luafunc scandone
+ */
+static int pilotL_scandone( lua_State *L )
+{
+   Pilot *p = luaL_validpilot(L,1);
+   lua_pushboolean(L, pilot_ewScanCheck( p ) );
+   return 1;
+}
 
 /**
  * @brief Checks to see if pilot is with player.
@@ -1222,7 +1236,6 @@ static int pilotL_withPlayer( lua_State *L )
    lua_pushboolean(L, pilot_isWithPlayer(p));
    return 1;
 }
-
 
 /**
  * @brief Gets the nav target of the pilot.

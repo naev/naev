@@ -252,11 +252,18 @@ function enter ()
 
       local s = player.pilot():stats().ew_stealth
       local m, a = jump_dest:pos():polar()
-      local pos = vec2.newp( m - 1.5 * s, a )
-      spotter = pilot.add( "Pacifier", "Mercenary", pos )
+      spotter_pos = vec2.newp( m - 1.5 * s, a )
+      spotter = pilot.add( "Pacifier", "Mercenary", spotter_pos )
+      spotter:rename(_("Noisy Pacifier"))
       spotter:intrinsicSet( "ew_hide", -50 )
-      -- TODO ex stealth stuff
+      spotter:setVisplayer()
+      spotter:setHilight()
+      spotter:setInvincible()
+      spotter:control()
+      spotter:brake()
 
+      hk_timer_spotter = hook.timer( 15, "timer_spotter" )
+      hook.timer( 15, "timer_spotter_start" )
    end
 end
 
@@ -465,3 +472,101 @@ function reset_osd_hook ()
    hook.rm( hk_reset_osd )
    hk_reset_osd = nil
 end
+
+local spotter_msglist = {
+   _([[I know you're out there Nelly. Please come forward voluntarily.]]),
+   _([[Stop hiding Nelly, you know this is futile.]]),
+   _([[Let us face this like adults, Nelly.]]),
+   _([[Nelly, if you come out now I would hold this against you.]]),
+   _([[You're seriously going to make me have to scan the entire universe to find you Nelly?]]),
+   _([[Just come on out and let's get this over with, Nelly.]]),
+}
+function timer_spotter ()
+   if not spotter:exists() then return end
+
+   spotter_msg = spotter_msg or 0
+   spotter_msg = math.fmod( spotter_msg, #spotter_msglist )+1
+
+   spotter:broadcast( spotter_msglist[ spotter_msg ] )
+
+   hk_timer_spotter = hook.timer( 15, "timer_spotter" )
+end
+
+function timer_spotter_start ()
+   vn.clear()
+   vn.scene()
+   local nel = vn.newCharacter( tutnel.vn_nelly() )
+   nel(_([[Nelly seems to get a bit nervous when seeing the pacifier appear on-screen.
+"Wait, that looks like Robin. Shit, I never paid her back did I?"
+She frowns.
+"Looks like we're going to have to avoid her for now. You know how electronic warfare works?"]]))
+   vn.menu{
+      {_("Learn about Electronic Warfare"), "learn"},
+      {_("Already know"), "nolearn" },
+   }
+
+   vn.label("learn")
+   nel(_([["I'll try to be brief. So ship sensors are based on detecting gravitational anomalies, and thus the mass of a ship plays a critical role in being detected. Smaller ships like yachts or interceptors are much harder to detect than carriers or battleship."]]))
+   nel(_([["Each ship has three important electronic warfare statistics:
+- #oDetection#0 determines the distance at which a ship appears on the radar.
+- #oEvasion#0 determines the distance at which a ship is fully detected, that is, ship type and faction are visible. It also plays a role in how missiles and weapons track the ship.
+- #oStealth#0 determines the distance at which the ship is undetected when in stealth mode"]]))
+   nel(fmt.f(_([["You can activate stealth mode with {stealthkey} when far enough away from other ships. When stealthed, your ship will be completely invisible to all ships. However, if a ship gets within the #ostealth#0 distance of your ship, it will slowly uncover you."]]),{stealthkey=tut.getKey("stealth")}))
+   nel(_([["Besides making your ship invisible to other ships, #ostealth#0 slows down your ship heavily to mask your gravitational presence. This also has the effect of letting you jump out from jumpoints further away."]]))
+   nel(_([["When not in stealth, ships can target your ship to perform a scan. This can uncover unwanted information, such as illegal cargo or outfits. The time to scan depends on the mass of the ship. If you don't want to be scanned, I recommend you to rely on stealth as much as possible."]]))
+   nel(fmt.f(_([["To avoid getting spotted by {shipname}, you should first get away from nearby ships and stealth with {stealthkey}. Then avoid other ships using the overlay map you can open with {overlaykey}, where the detection radius will be shown in red circles. You should then be able to fly around {shipname} and get to the jump point. It shouldn't be hard, but be careful not to get close to them!"]]),{stealthkey=tut.getKey("stealth"),overlaykey=tut.getKey("overlay"),spotter:name()}))
+   vn.done()
+
+   vn.label("nolearn")
+   nel(_([["You sure you know how to avoid them? It can be a bit tricky."]]))
+   vn.menu{
+      {_("Learn about Electronic Warfare"), "learn"},
+      {_([["Call me Dr. Electronic Warfare"]]), "neverlearn"},
+   }
+
+   vn.label("neverlearn")
+   nel(fmt.f(_([["Great! Avoid getting scanned by them and let's head off to {pntname} in {sysname]!"]]),{pntname=destpnt:name(),sysname=destsys:name()}))
+
+   vn.run()
+
+   local osdtitle, osdelem, osdactive = misn.osdGet()
+   table.insert( osdelem, 2, fmt.f(_("Avoid Nelly's ex-colleague by using stealth with {stealthkey}"), {stealthkey=tut.getKey("stealth")}) )
+   misn.osdCreate( osdtitle, osdelem )
+   misn.osdActive(2)
+
+   hook.timer( 1, "spotter_spot" )
+end
+
+function spotter_spot ()
+   if not spotter:exists() then return end
+
+   local pp    = player.pilot()
+   local detected, scanned = spotter:inrange( pp )
+   local d     = pp:pos():dist( spotter:pos() )
+   local iss   = pp:flags("stealth")
+   -- Spotter lost track of them
+   if spotter_scanning and (iss or not scanned) then
+      spotter_scanning = false
+      spotter:taskClear()
+      spotter:moveto( spotter_pos )
+      pp:comm(_([[Nelly: "Phew, it seems like they lost track of us."]]))
+
+   elseif spotter_scanning and spotter:scandone() then
+      spotter:control(false)
+      spotter:setHostile(true)
+      spotter:comm(_("You won't get away this time Nelly!"))
+      hook.rm( hk_timer_spotter )
+      hk_timer_spotter = nil
+      return
+
+   elseif scanned and not spotter_scanning then
+      spotter_scanning = true
+      spotter:taskClear()
+      ai.pushtask( "scan", pp )
+      pp:comm(fmt.f(_([[Nelly: "They found us and are scanning us. Quickly try to stealth with {stealthkey}!"]]),{tut.getKey("stealth")}))
+
+   end
+
+   hook.timer( 1, "spotter_spot" )
+end
+
