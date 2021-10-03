@@ -979,24 +979,21 @@ void player_renderUnderlay( double dt )
 static void player_renderStealthUnderlay( double dt )
 {
    (void) dt;
-   double detect, x, y, r, z;
+   double detectz, x, y, r;
    glColour col;
-   Pilot *t;
    Pilot *const* ps;
-   int i;
 
    /* Don't display if overlay is open. */
    if (ovr_isOpen())
       return;
 
    /* Iterate and draw for all pilots. */
-   z = cam_getZoom();
-   detect = player.p->ew_stealth;
+   detectz = player.p->ew_stealth * cam_getZoom();
    col = cRed;
-   col.a = 0.2;
+   col.a = 0.3;
    ps = pilot_getAll();
-   for (i=0; i<array_size(ps); i++) {
-      t = ps[i];
+   for (int i=0; i<array_size(ps); i++) {
+      Pilot *t = ps[i];
       if (areAllies( player.p->faction, t->faction ) || pilot_isFriendly(t))
          continue;
       if (pilot_isDisabled(t))
@@ -1006,8 +1003,9 @@ static void player_renderStealthUnderlay( double dt )
          continue;
 
       gl_gameToScreenCoords( &x, &y, t->solid->pos.x, t->solid->pos.y );
-      r = detect * t->stats.ew_detect * z;
-      gl_renderCircle( x, y, r, &col, 1 );
+      r = detectz * t->stats.ew_detect;
+      glUseProgram( shaders.stealthaura.program );
+      gl_renderShader( x, y, r, r, 0., &shaders.stealthaura, &col, 1 );
    }
 }
 

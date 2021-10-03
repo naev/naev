@@ -687,15 +687,17 @@ void ovr_render( double dt )
       else
          gui_renderPilot( pstk[i], RADAR_RECT, w, h, res, 1 );
    }
+
    /* Stealth rendering. */
    if (pilot_isFlag( player.p, PILOT_STEALTH )) {
       double detect;
       glColour col = {0., 0., 1., 1.};
+
       glBindFramebuffer( GL_FRAMEBUFFER, gl_screen.fbo[2] );
       glClearColor( 0., 0., 0., 0. );
       glClear( GL_COLOR_BUFFER_BIT );
       glBlendEquation( GL_MAX );
-      glBlendFunc( GL_ONE, GL_ONE );
+      glBlendFuncSeparate( GL_DST_ALPHA, GL_SRC_ALPHA, GL_ONE, GL_ONE );
 
       for (int i=0; i<array_size(cur_system->asteroids); i++) {
          AsteroidAnchor *ast = &cur_system->asteroids[i];
@@ -714,7 +716,7 @@ void ovr_render( double dt )
          gl_renderCircle( x, y, aexcl->radius / res, &col, 1 );
       }
 
-      detect = player.p->ew_stealth;
+      detect = player.p->ew_stealth / res;
       col.r = 1.;
       col.g = 0.;
       for (int i=0; i<array_size(pstk); i++) {
@@ -727,13 +729,12 @@ void ovr_render( double dt )
          if (!pilot_validTarget( player.p, pstk[i] ))
             continue;
          map_overlayToScreenPos( &x, &y, pstk[i]->solid->pos.x, pstk[i]->solid->pos.y );
-         r = detect * pstk[i]->stats.ew_detect / res;
-         //gl_renderCircle( x, y, r, &col, 1 );
+         r = detect * pstk[i]->stats.ew_detect; /* Already divided by res */
          glUseProgram( shaders.stealthaura.program );
          gl_renderShader( x, y, r, r, 0., &shaders.stealthaura, &col, 1 );
       }
       glBlendEquation( GL_FUNC_ADD );
-      glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
+      glBlendFunc( GL_ONE, GL_ONE_MINUS_SRC_ALPHA );
 
       glBindFramebuffer(GL_FRAMEBUFFER, gl_screen.current_fbo);
       glClearColor( 0., 0., 0., 1. );
@@ -755,7 +756,9 @@ void ovr_render( double dt )
 
       /* Clear state. */
       glDisableVertexAttribArray( shaders.texture.vertex );
+      glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
    }
+
    /* Render the targeted pilot */
    if (t!=0)
       gui_renderPilot( pstk[t], RADAR_RECT, w, h, res, 1 );

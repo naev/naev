@@ -11,11 +11,11 @@ void main(void) {
    tex.rgb = vec3(
       tex.r,
       0.0,
-      tex.b * (1.0-step(1e-3,tex.g))
+      tex.b - tex.g
    ) * tex.a;
 
    float s = tex.r + tex.b;
-   float a = mix( ALPHA, ALPHA + ALPHA*(1.0-ALPHA), s-1.0 ) * step( 0.5, s );
+   float a = mix( ALPHA, ALPHA + ALPHA*(1.0-ALPHA), s-1.0 );
 
    color_out = color * vec4( 0.8*tex.rgb, a );
 }
