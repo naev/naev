@@ -1,3 +1,5 @@
+-- vim: set syntax=lua:
+
 std = "lua51c+love+Basic"
 
 stds.ai = {globals={"mem"}, read_globals={"ai"}}
