@@ -240,9 +240,13 @@ function enter ()
       hook.pilot( rampant, "idle", "idle" )
 
    elseif misn_state == 2 and scur == retsys then
+      jump_dest = jump.get( retsys, destsys )
+      fpir = faction.dynAdd( "Pirate", "Pirate", _("Pirate"), {clear_enemies=true, clear_allies=true} )
+      hook.timer( 1, "timer_pirate" )
       -- TODO pirate boarding stuff
 
    elseif misn_state == 4 and scur == destsys then
+      jump_dest = jump.get( destsys, retsys )
       -- TODO ex stealth stuff
 
    end
@@ -351,4 +355,42 @@ function approach_nelly ()
 
    misn.npcRm( npc_nel )
    misn_state = 2
+end
+
+function timer_pirate ()
+   local pp = player.pilot()
+   local d = jump_dest:pos():dist( player.pos() )
+   if d < 5000 then
+      -- Spawn pirates
+      enemies = {}
+      for i=1,3 do
+         local p = pirate.add( "Hyena", fpir, jump_dest, _("Pirate Hyena") )
+         if i>1 then
+            p:setLeader( enemies[1] )
+         end
+         p:setHostile()
+         p:setHilight()
+         p:setVisplayer()
+         p:control()
+         p:attack( pp )
+         p:intrinsicSet( "fwd_damage", -75 )
+         local mem = p:memory()
+         mem.allowbribe = true
+         mem.bribe_base = 100
+         table.insert( enemies, p )
+      end
+      pp:comm(fmt.f(_([[Nelly: "Wait, are those pirates coming our way?"]])))
+      hook.timer( 5, "timer_pirate_nelly" )
+      return
+   end
+   hook.timer( 1, "timer_pirate" )
+end
+
+function timer_pirate_nelly ()
+   vn.clear()
+   vn.scene()
+   local nel = vn.newCharacter( tutnel.vn_nelly() )
+   nel(_([["It looks like we've been spotted by a trio of Pirate Hyenas, normally I would say run, but I don't think we'll be able to outrun them. I think that bribing them may be the only way out."]]))
+   nel(fmt.f(_([[""]]),{tut.getKey()}))
+   vn.run()
 end
