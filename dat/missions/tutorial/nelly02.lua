@@ -248,8 +248,9 @@ function enter ()
       hook.pilot( rampant, "board", "board" )
       hook.pilot( rampant, "death", "death" )
       rampant:control(true)
-      hook.pilot( rampant, "idle", "idle" )
+      --hook.pilot( rampant, "idle", "idle" )
       idle( rampant )
+
 
    elseif misn_state == 2 and scur == retsys then
       jump_dest = jump.get( retsys, destsys )
@@ -280,12 +281,16 @@ function enter ()
 end
 
 function idle ()
+   if misn_state > 0 then return end
    local radius = 200
-   local samples = 10
+   local samples = 18
    rampant_pos_idx = rampant_pos_idx or 0
    rampant_pos_idx = math.fmod( rampant_pos_idx, samples ) + 1
-   local pos = rampant_pos + vec2.newP( radius, rnd.rnd() * samples / rampant_pos_idx * 360 )
-   rampant:moveto( pos, false )
+   local pos = rampant_pos + vec2.newP( radius, rampant_pos_idx / samples * 360 )
+   rampant:taskClear()
+   rampant:moveto( pos, false, false )
+
+   hook.timer( 1, "idle" )
 end
 
 function disable ()
@@ -329,7 +334,7 @@ end
 function land ()
    local cpnt = planet.cur()
    if cpnt == retpnt and misn_state==1 then
-      npc_nel = misn.npcAdd( "approach_nelly", tutnel.nelly.nam, tut.nelly.portrait, _("Nelly is motioning you to come join her at the table.") )
+      npc_nel = misn.npcAdd( "approach_nelly", tutnel.nelly.name, tutnel.nelly.portrait, _("Nelly is motioning you to come join her at the table.") )
 
    elseif cpnt == destpnt and (misn_state==2 or misn_state==3) then
       vn.clear()
@@ -341,7 +346,7 @@ function land ()
 
       local c = misn.cargoNew( N_("Jumpdrive Repair Parts"), N_("Spare parts that can be used to break a ship's broken jumpdrive.") )
       misn.cargoAdd( c, 0 )
-      misn_marker = misn.markerMove( retsys )
+      misn_marker = misn.markerMove( misn_marker, retsys )
       misn.osdActive(2)
       misn_state = 4
 
@@ -381,7 +386,7 @@ function approach_nelly ()
       fmt.f(_("Go to {pntname} in {sysname}"),{pntname=destpnt:name(), sysname=destsys:name()}),
       fmt.f(_("Return to {pntname} in {sysname}"),{pntname=retpnt:name(), sysname=retsys:name()}),
    } )
-   misn_marker = misn.markerMove( destsys )
+   misn_marker = misn.markerMove( misn_marker, destsys )
 
    misn.npcRm( npc_nel )
    misn_state = 2
