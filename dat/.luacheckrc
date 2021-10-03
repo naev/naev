@@ -1,4 +1,4 @@
--- vim: set syntax=lua:
+-- vim: set expandtab shiftwidth=3 syntax=lua:
 
 std = "lua51c+love+Basic"
 
