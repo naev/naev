@@ -75,7 +75,7 @@ function create ()
    if not var.peek("testing") then misn.finish() end
    -- Save current system to return to
    retpnt, retsys = planet.cur()
-   if not misn.claim( retsys ) then
+   if not misn.claim( retsys, true ) then
       misn.finish()
    end
    -- Need commodity exchange and mission computer
@@ -86,15 +86,23 @@ function create ()
 
    -- Find destination system that sells ion cannons
    local pntfilter = function( p )
-      -- Sells Outfits
-      if p:services().outfits == nil then
+      -- Must be claimable
+      local s = p:system()
+      if not misn.claim( s, true ) then
          return false
       end
-      return false
+      -- Sells Outfits
+      if not p:services().outfits then
+         return false
+      end
+      return true
    end
    destpnt, destsys = lmisn.getRandomPlanetAtDistance( system.cur(), 1, 1, "Independent", false, pntfilter )
    if not destpnt then
       warn("No destpnt found")
+      misn.finish()
+   end
+   if not misn.claim{ retsys, destsys } then
       misn.finish()
    end
 

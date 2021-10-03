@@ -252,7 +252,7 @@ They beam you a grin.
 
       tutnel.log(_("You helped Nelly complete a delivery mission."))
 
-      misn.finish()
+      misn.finish(true)
    end
 end
 
