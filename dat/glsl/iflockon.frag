@@ -13,19 +13,21 @@ void main(void) {
    float m = 1.0 / dimensions.x;
    vec2 uv = pos;
 
-   /* Outter stuff. */
-   float d = 1e1000;
-
-   /* Inner steps */
    float dts = 0.05 * max( 0.5, 100.0 * m );
    vec2 auv = abs(uv);
    if (auv.y < auv.x)
       auv.xy = vec2( auv.y, auv.x );
+   /*
    const int nmax = 1; // only works well with odd numbers
+   float d = 1e1000;
    for (int i=0; i<nmax; i++)
       d = min( d, sdSegment( auv,
             CS((float(i)+0.5)*0.5*M_PI/float(nmax)*0.5)*0.8,
             CS((float(i)+0.5)*0.5*M_PI/float(nmax)*0.5)*1.0 )-m );
+   */
+   float d = sdSegment( auv,
+         CS(0.5*0.5*M_PI*0.5)*0.8,
+         CS(0.5*0.5*M_PI*0.5)*1.0 )-m;
    
    float a = paramf * M_PI;
    float c = cos(a);
