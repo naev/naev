@@ -200,15 +200,11 @@ void osd_wordwrap( OSD_t* osd )
  */
 static OSD_t *osd_get( unsigned int osd )
 {
-   int i;
-   OSD_t *ll;
-
-   for (i=0; i<array_size(osd_list); i++) {
-      ll = &osd_list[i];
+   for (int i=0; i<array_size(osd_list); i++) {
+      OSD_t *ll = &osd_list[i];
       if (ll->id == osd)
          return ll;
    }
-
    WARN(_("OSD '%d' not found."), osd);
    return NULL;
 }

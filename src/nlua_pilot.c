@@ -3713,12 +3713,11 @@ static const struct pL_flag pL_flags[] = {
  */
 static int pilotL_flags( lua_State *L )
 {
-   int i;
    Pilot *p = luaL_validpilot(L,1);
    const char *name = luaL_optstring( L, 2, NULL );
 
    if (name != NULL) {
-      for (i=0; pL_flags[i].name != NULL; i++)
+      for (int i=0; pL_flags[i].name != NULL; i++)
          if (strcmp(pL_flags[i].name,name)==0) {
             lua_pushboolean( L, pilot_isFlag( p, pL_flags[i].id ) );
             return 1;
@@ -3731,7 +3730,7 @@ static int pilotL_flags( lua_State *L )
 
    /* Create flag table. */
    lua_newtable(L);
-   for (i=0; pL_flags[i].name != NULL; i++) {
+   for (int i=0; pL_flags[i].name != NULL; i++) {
       lua_pushboolean( L, pilot_isFlag( p, pL_flags[i].id ) );
       lua_setfield(L, -2, pL_flags[i].name);
    }
@@ -4347,7 +4346,6 @@ static int pilotL_hyperspace( lua_State *L )
    Pilot *p;
    Task *t;
    StarSystem *ss;
-   int i;
    JumpPoint *jp;
    LuaJump lj;
    int shoot;
@@ -4370,7 +4368,7 @@ static int pilotL_hyperspace( lua_State *L )
    if (ss == NULL)
       return 0;
    /* Find the jump. */
-   for (i=0; i < array_size(cur_system->jumps); i++) {
+   for (int i=0; i < array_size(cur_system->jumps); i++) {
       jp = &cur_system->jumps[i];
       if (jp->target != ss)
          continue;
@@ -4593,7 +4591,6 @@ static int pilotL_setLeader( lua_State *L )
    Pilot *p, *leader, *prev_leader;
    PilotOutfitSlot* dockslot;
    Pilot *const* pilot_stack;
-   int i;
 
    NLUA_CHECKRW(L);
 
@@ -4630,7 +4627,7 @@ static int pilotL_setLeader( lua_State *L )
       escort_rmList(prev_leader, p->id);
 
    /* If the pilot has followers, they should be given the new leader as well */
-   for (i = 0; i<array_size(pilot_stack); i++) {
+   for (int i=0; i<array_size(pilot_stack); i++) {
       if (pilot_stack[i]->parent == p->id) {
          pilot_stack[i]->parent = p->parent;
       }

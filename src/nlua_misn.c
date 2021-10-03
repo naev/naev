@@ -86,6 +86,7 @@ static int misn_cargoJet( lua_State *L );
 static int misn_osdCreate( lua_State *L );
 static int misn_osdDestroy( lua_State *L );
 static int misn_osdActive( lua_State *L );
+static int misn_osdGet( lua_State *L );
 static int misn_osdGetActiveItem( lua_State *L );
 static int misn_npcAdd( lua_State *L );
 static int misn_npcRm( lua_State *L );
@@ -108,6 +109,7 @@ static const luaL_Reg misn_methods[] = {
    { "osdCreate", misn_osdCreate },
    { "osdDestroy", misn_osdDestroy },
    { "osdActive", misn_osdActive },
+   { "osdGet", misn_osdGet },
    { "osdGetActive", misn_osdGetActiveItem },
    { "npcAdd", misn_npcAdd },
    { "npcRm", misn_npcRm },
@@ -915,6 +917,34 @@ static int misn_osdGetActiveItem( lua_State *L )
    }
 
    lua_pushstring(L, items[active]);
+   return 1;
+}
+
+
+/**
+ * @brief Gets the current mission OSD information.
+ *
+ *    @luatparam string Title of the OSD.
+ *    @luatparam table List of items in the OSD.
+ *    @luatparam number ID of the current active OSD element.
+ * @luafunc osdGet
+ */
+static int misn_osdGet( lua_State *L )
+{
+   Mission *cur_mission = misn_getFromLua(L);
+   char **items;
+
+   if (cur_mission->osd == 0)
+      return 0;
+
+   lua_pushstring( L, osd_getTitle(cur_mission->osd) );
+   lua_newtable(L);
+   items = osd_getItems(cur_mission->osd);
+   for (int i=0; i<array_size(items); i++) {
+      lua_pushstring( L, items[i] );
+      lua_rawseti( L, -2, i+1 );
+   }
+   lua_pushinteger( L, osd_getActive(cur_mission->osd) );
    return 1;
 }
 

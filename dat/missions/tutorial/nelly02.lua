@@ -243,10 +243,18 @@ function enter ()
       jump_dest = jump.get( retsys, destsys )
       fpir = faction.dynAdd( "Pirate", "Pirate", _("Pirate"), {clear_enemies=true, clear_allies=true} )
       hook.timer( 1, "timer_pirate" )
-      -- TODO pirate boarding stuff
+      if not hk_reset_osd then
+         hk_reset_osd = hook.enter( "reset_osd_hook" )
+      end
 
    elseif misn_state == 4 and scur == destsys then
       jump_dest = jump.get( destsys, retsys )
+
+      local s = player.pilot():stats().ew_stealth
+      local m, a = jump_dest:pos():polar()
+      local pos = vec2.newp( m - 1.5 * s, a )
+      spotter = pilot.add( "Pacifier", "Mercenary", pos )
+      spotter:intrinsicSet( "ew_hide", -50 )
       -- TODO ex stealth stuff
 
    end
@@ -359,7 +367,7 @@ end
 
 function timer_pirate ()
    local pp = player.pilot()
-   local d = jump_dest:pos():dist( player.pos() )
+
    if d < 5000 then
       -- Spawn pirates
       enemies = {}
@@ -381,6 +389,8 @@ function timer_pirate ()
       end
       pp:comm(fmt.f(_([[Nelly: "Wait, are those pirates coming our way?"]])))
       hook.timer( 5, "timer_pirate_nelly" )
+      hook.timer( 3, "timer_pirate_checkbribe" )
+      nelly_spam = 2
       return
    end
    hook.timer( 1, "timer_pirate" )
@@ -391,6 +401,63 @@ function timer_pirate_nelly ()
    vn.scene()
    local nel = vn.newCharacter( tutnel.vn_nelly() )
    nel(_([["It looks like we've been spotted by a trio of Pirate Hyenas, normally I would say run, but I don't think we'll be able to outrun them. I think that bribing them may be the only way out."]]))
-   nel(fmt.f(_([[""]]),{tut.getKey()}))
+   nel(fmt.f(_([["If you target a pirate and hail them with {hailkey}, you should have an option to bribe them and their friends if they are hostile. Although it can be expensive, it beats getting blown to bits. Try targetting the nearest enemy with {targetkey}, hailing them with {hailkey}, and bribing them!"]]),{targetkey=tut.getKey("target_hostile"),hailkey=tut.getKey("hail")}))
    vn.run()
+
+   local osdtitle, osdelem, osdactive = misn.osdGet()
+   table.insert( osdelem, 1, _("Hail and bribe the pirates") )
+   misn.osdCreate( osdtitle, osdelem )
+end
+
+function timer_pirate_checkbribe ()
+   local allbribed = true
+   local somebribed = false
+   local n = 0
+   for k,p in ipairs(enemies) do
+      if p:exists() then
+         if not p:flags("bribed") then
+            allbribed = false
+         else
+            somebribed = true
+         end
+         n = n+1
+      end
+   end
+
+   local pp = player.pilot()
+   if allbribed then
+      pp:comm(_([[Nelly: "Now we should be able to get out of here safely."]]))
+      return
+   end
+
+   nelly_spam = math.fmod(nelly_spam,3)+1
+   if nelly_spam == 1 then
+      local msg
+      if n <= 0 then
+         msg = _([[Nelly: "I guess that's another way of doing it."]])
+      elseif somebribed then
+         msg = _([[Nelly: "You only bribed some pilots, try to bribe them all!"]])
+      else
+         msg = fmt.f(_([[Nelly: "Quickly! Target the hostile pirates with {targetkey} and bribe them by hailing them with {hailkey}!"]]),{targetkey=tut.getKey("target_hostile"),hailkey=tut.getKey("hail")})
+      end
+      pp:comm( msg )
+   end
+
+   hook.timer( 3, "timer_pirate_checkbribe" )
+end
+
+function reset_osd ()
+   misn.osdCreate( misntitle, {
+      fmt.f(_("Go to {pntname} in {sysname}"),{pntname=destpnt:name(), sysname=destsys:name()}),
+      fmt.f(_("Return to {pntname} in {sysname}"),{pntname=retpnt:name(), sysname=retsys:name()}),
+   } )
+   if misn_state >= 4 then
+      misn.osdActive(2)
+   end
+end
+
+function reset_osd_hook ()
+   reset_osd()
+   hook.rm( hk_reset_osd )
+   hk_reset_osd = nil
 end
