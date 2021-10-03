@@ -734,7 +734,7 @@ void ovr_render( double dt )
          gl_renderShader( x, y, r, r, 0., &shaders.stealthaura, &col, 1 );
       }
       glBlendEquation( GL_FUNC_ADD );
-      glBlendFunc( GL_ONE, GL_ONE_MINUS_SRC_ALPHA );
+      glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
 
       glBindFramebuffer(GL_FRAMEBUFFER, gl_screen.current_fbo);
       glClearColor( 0., 0., 0., 1. );
@@ -756,7 +756,6 @@ void ovr_render( double dt )
 
       /* Clear state. */
       glDisableVertexAttribArray( shaders.texture.vertex );
-      glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
    }
 
    /* Render the targeted pilot */

@@ -4,7 +4,7 @@ uniform sampler2D sampler;
 in vec2 tex_coord;
 out vec4 color_out;
 
-const float ALPHA = 0.2;
+const float ALPHA = 0.3;
 
 void main(void) {
    vec4 tex = texture(sampler, tex_coord);
