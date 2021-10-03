@@ -14,7 +14,7 @@ Converts an integer into a human readable string, delimiting every third digit w
 
    @param number The number to format. Will be rounded to the nearest integer.
 --]]
-function format.number(number)
+function format.number( number )
    number = math.floor(number + 0.5)
    local numberstring = ""
    while number >= 1000 do
@@ -152,7 +152,7 @@ String interpolation, inspired by <a href="https://github.com/hishamhm/f-strings
                       (where the expression after the colon is any directive string.format understands).
    @tparam table tab Argument table.
 --]]
-function format.f(str, tab)
+function format.f( str, tab )
    return (str:gsub("%b{}", function(block)
       local code, fmt = block:match("{(.*):(%%.*)}")
       code = code or block:match("{(.*)}")
