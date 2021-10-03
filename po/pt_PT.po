@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2021-09-30 21:18-0400\n"
+"POT-Creation-Date: 2021-10-03 12:18-0400\n"
 "PO-Revision-Date: 2021-08-30 16:38+0000\n"
 "Last-Translator: Anthony Gregory Souza dos Santos "
 "<antonigregorysouza123@gmail.com>\n"
@@ -8880,8 +8880,8 @@ msgstr ""
 #: src/dev_sysedit.c:1876 src/dev_sysedit.c:1914 src/dev_sysedit.c:1969
 #: src/dev_uniedit.c:1361 src/dev_uniedit.c:1535 src/dev_uniedit.c:1760
 #: src/dev_uniedit.c:1827 src/info.c:281 src/info.c:379 src/info.c:826
-#: src/info.c:1176 src/input.c:553 src/land.c:837 src/land_outfits.c:378
-#: src/land_outfits.c:411 src/land_outfits.c:626 src/land_shipyard.c:169
+#: src/info.c:1176 src/input.c:553 src/land.c:837 src/land_outfits.c:377
+#: src/land_outfits.c:410 src/land_outfits.c:627 src/land_shipyard.c:169
 #: src/land_shipyard.c:281 src/land_trade.c:85 src/land_trade.c:87
 #: src/land_trade.c:121 src/load.c:370 src/load.c:415 src/load.c:459
 #: src/map.c:616 src/map.c:653 src/map.c:1737 src/map_find.c:732
@@ -67674,10 +67674,10 @@ msgstr ""
 #.
 #. ELITE ENGINES
 #. --
+#. --
+#. Equips pilots based on mixed integer linear programming.
 #.
-#.
-#. Equips pilots based on mixed integer linear programming
-#.
+#. @module equipopt.optimize
 #. --
 #. Create caches and stuff
 #. Get all the fighter bays and calculate rough dps
@@ -67741,8 +67741,8 @@ msgstr ""
 msgid "Shield Regen: %.3f [%.3f > %.3f (%.1f)]"
 msgstr ""
 
-#.
-#. @brief Equips a pilot with cores and outfits chosen from a list through optimization.
+#. --
+#. Equips a pilot with cores and outfits chosen from a list through optimization.
 #.
 #. @tparam Pilot p Pilot to equip.
 #. @tparam[opt=nil] table|nil cores Table of core outfits (by name) to equip. They will replace existing outfits, or set to nil to use defaults.
@@ -68112,123 +68112,142 @@ msgid "fleet.add: Error, raw ships must have factions!"
 msgstr ""
 
 #. Repeat the pattern as necessary.
-#. Converts an integer into a human readable string, delimiting every third digit with a comma.
-#. Note: rounds input to the nearest integer. Primary use is for payment descriptions.
+#. --
+#. Provides string formatting and interpolation facilities.
+#. The benefits of using it are easy internationalization and consistency with the rest of Naev.
+#. The number formatters handle plural forms in the user's language, digit separators, and abbreviations.
+#. String interpolation (format.f) allows for named parameters ("Fly to {planet} in the {system} system"),
+#. whereas string.format is positional ("Fly to %s in the %s system") and locks translators into the English word order.
 #.
-#. -- @brief Properly converts a number of credits to a string.
+#. @module format
 #. --
-#. -- Should be used everywhere a number of credits is displayed.
 #. --
-#. -- @usage tk.msg("", _("You have been paid %s."):format(fmt.credits(credits)))
+#. Converts an integer into a human readable string, delimiting every third digit with a comma.
+#.
+#. @param number The number to format. Will be rounded to the nearest integer.
 #. --
-#. --    @param credits Number of credits.
-#. --    @return A string taking the form of "X ¤".
 #. --
-#: dat/scripts/format.lua:28
+#. Converts a number of credits to a string.
+#.
+#. Should be used everywhere a number of credits is displayed.
+#.
+#. @usage tk.msg("", _("You have been paid %s."):format(fmt.credits(credits)))
+#.
+#. @param credits Number of credits.
+#. @return A string taking the form of "X ¤".
+#. --
+#: dat/scripts/format.lua:40
 #, lua-format
 msgid "%s ¤"
 msgid_plural "%s ¤"
 msgstr[0] ""
 msgstr[1] ""
 
+#. --
+#. Converts a number of tonnes to a string, using ngettext.
 #.
-#. -- @brief Properly converts a number of tonnes to a string, utilizing ngettext.
+#. This adds "tonnes" to the output of fmt.number in a translatable way.
+#. Should be used everywhere a number of tonnes is displayed.
+#.
+#. @usage tk.msg("", _("You are carrying %s."):format(fmt.tonnes(tonnes)))
+#.
+#. @param tonnes Number of tonnes.
+#. @return A string taking the form of "X tonne" or "X tonnes".
 #. --
-#. -- This adds "tonnes" to the output of fmt.number in a translatable way.
-#. -- Should be used everywhere a number of tonnes is displayed.
-#. --
-#. -- @usage tk.msg("", _("You are carrying %s."):format(fmt.tonnes(tonnes)))
-#. --
-#. --    @param tonnes Number of tonnes.
-#. --    @return A string taking the form of "X tonne" or "X tonnes".
-#. --
-#: dat/scripts/format.lua:44
+#: dat/scripts/format.lua:56
 #, lua-format
 msgid "%s tonne"
 msgid_plural "%s tonnes"
 msgstr[0] ""
 msgstr[1] ""
 
-#.
-#. -- @brief Like fmt.tonnes, but for abbreviations.
 #. --
-#. --    @param tonnes Number of tonnes.
-#. --    @return A short string like "22 t" describing the given mass.
+#. Like fmt.tonnes, but for abbreviations.
+#.
+#. @param tonnes Number of tonnes.
+#. @return A short string like "22 t" describing the given mass.
 #. --
 #. Translator note: this form represents an abbreviation of "_ tonnes".
-#: dat/scripts/format.lua:56
+#: dat/scripts/format.lua:68
 #, lua-format
 msgid "%d t"
 msgid_plural "%d t"
 msgstr[0] ""
 msgstr[1] ""
 
+#. --
+#. Converts a number of jumps to a string, utilizing ngettext.
 #.
-#. -- @brief Properly converts a number of jumps to a string, utilizing ngettext.
+#. This adds "jumps" to the output of fmt.number in a translatable way.
+#. Should be used everywhere a number of jumps is displayed.
+#.
+#. @usage tk.msg("", _("The system is %s away."):format(fmt.jumps(jumps)))
+#.
+#. @param jumps Number of jumps.
+#. @return A string taking the form of "X jump" or "X jumps".
 #. --
-#. -- This adds "jumps" to the output of fmt.number in a translatable way.
-#. -- Should be used everywhere a number of jumps is displayed.
-#. --
-#. -- @usage tk.msg("", _("The system is %s away."):format(fmt.jumps(jumps)))
-#. --
-#. --    @param jumps Number of jumps.
-#. --    @return A string taking the form of "X jump" or "X jumps".
-#. --
-#: dat/scripts/format.lua:72
+#: dat/scripts/format.lua:84
 #, lua-format
 msgid "%s jump"
 msgid_plural "%s jumps"
 msgstr[0] ""
 msgstr[1] ""
 
+#. --
+#. Converts a number of times (occurrences) to a string, using ngettext.
 #.
-#. -- @brief Properly converts a number of times (occurrences) to a string,
-#. -- utilizing ngettext.
+#. This adds "times" to the output of fmt.number in a translatable way.
+#. Should be used everywhere a number of occurrences is displayed.
+#.
+#. @usage tk.msg("", _("Brush your teeth % per day."):format(fmt.times(times)))
+#.
+#. @param times Number of times.
+#. @return A string taking the form of "X time" or "X times".
 #. --
-#. -- This adds "times" to the output of fmt.number in a translatable way.
-#. -- Should be used everywhere a number of occurrences is displayed.
-#. --
-#. -- @usage tk.msg("", _("Brush your teeth % per day."):format(fmt.times(times)))
-#. --
-#. --    @param times Number of times.
-#. --    @return A string taking the form of "X time" or "X times".
-#. --
-#: dat/scripts/format.lua:89
+#: dat/scripts/format.lua:100
 #, lua-format
 msgid "%s time"
 msgid_plural "%s times"
 msgstr[0] ""
 msgstr[1] ""
 
+#. --
+#. Creates a translatable list of words.
 #.
-#. -- @brief Creates a translatable list of words.
+#. Taken from <a href="https://stackoverflow.com/questions/43081112/localization-of-lists/58033018#58033018">this post</a>.
+#.
+#. @tparam table words List of words to translate such as {"one","two","three"}.
+#. @treturn string String of the list of words such as "one, two, and three"
 #. --
-#. -- Taken from https://stackoverflow.com/questions/43081112/localization-of-lists/58033018#58033018
-#. --
-#. --    @tparam table words List of words to translate such as {"one","two","three"}.
-#. --    @treturn string String of the list of words such as "one, two, and three"
-#. --
-#: dat/scripts/format.lua:109
+#: dat/scripts/format.lua:120
 msgid "{0} and {1}"
 msgstr ""
 
-#: dat/scripts/format.lua:113
+#: dat/scripts/format.lua:124
 msgid "{0}, and {1}"
 msgstr ""
 
-#: dat/scripts/format.lua:116 dat/scripts/format.lua:120
+#: dat/scripts/format.lua:127 dat/scripts/format.lua:131
 msgid "{0}, {1}"
 msgstr ""
 
-#.
-#. Inspired by https://github.com/hishamhm/f-strings without debug stuff
 #. --
-#: dat/scripts/format.lua:140
+#. String interpolation, inspired by <a href="https://github.com/hishamhm/f-strings">f-strings</a> without debug stuff.
+#.
+#. Prefer this over string.format because it allows translations to change the word order.
+#.
+#. @usage fmt.f(_("Deliver the loot to {pntname} in the {sysname} system"),{pntname=returnpnt:name(), sysname=returnsys:name()})
+#.
+#. @tparam string str Format string which may include placeholders of the form "{var}" "{var:6.3f}"
+#. (where the expression after the colon is any directive string.format understands).
+#. @tparam table tab Argument table.
+#. --
+#: dat/scripts/format.lua:159
 #, lua-format
 msgid "format expression `%s`"
 msgstr ""
 
-#: dat/scripts/format.lua:144
+#: dat/scripts/format.lua:163
 #, lua-format
 msgid "fmt.f: string '%s' has '%s'==nil!"
 msgstr ""
@@ -73403,7 +73422,7 @@ msgstr ""
 msgid "Right click to add"
 msgstr ""
 
-#: src/equipment.c:851
+#: src/equipment.c:851 src/land_outfits.c:425 src/land_outfits.c:588
 #, c-format
 msgid "#%c%s #%c%s #0slot"
 msgstr ""
@@ -75209,7 +75228,7 @@ msgstr ""
 msgid "Other"
 msgstr ""
 
-#: src/land_outfits.c:372
+#: src/land_outfits.c:371
 #, c-format
 msgid ""
 "N/A\n"
@@ -75219,14 +75238,7 @@ msgid ""
 "N/A\n"
 msgstr ""
 
-#: src/land_outfits.c:424
-#, c-format
-msgid ""
-"%s\n"
-"#%c%s #%c%s #0slot"
-msgstr ""
-
-#: src/land_outfits.c:431
+#: src/land_outfits.c:432
 #, c-format
 msgid ""
 "%d\n"
@@ -75236,25 +75248,20 @@ msgid ""
 "%s\n"
 msgstr ""
 
-#: src/land_outfits.c:587
-#, c-format
-msgid "#%c%s #%c%s #0slot\n"
-msgstr ""
-
-#: src/land_outfits.c:593
+#: src/land_outfits.c:594
 msgid "#oUnique#0\n"
 msgstr ""
 
-#: src/land_outfits.c:595
+#: src/land_outfits.c:596
 #, c-format
 msgid "#o%s#0\n"
 msgstr ""
 
-#: src/land_outfits.c:598
+#: src/land_outfits.c:599
 msgid "#rOnly 1 of type per ship#0\n"
 msgstr ""
 
-#: src/land_outfits.c:602
+#: src/land_outfits.c:603
 #, c-format
 msgid ""
 "\n"
@@ -75265,50 +75272,50 @@ msgid_plural ""
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/land_outfits.c:691
+#: src/land_outfits.c:692
 msgid "You can only own one of this outfit."
 msgstr ""
 
-#: src/land_outfits.c:698
+#: src/land_outfits.c:699
 msgid "You already know of everything this map contains."
 msgstr ""
 
-#: src/land_outfits.c:703
+#: src/land_outfits.c:704
 msgid "You already own this GUI."
 msgstr ""
 
-#: src/land_outfits.c:708
+#: src/land_outfits.c:709
 msgid "You already have this license."
 msgstr ""
 
-#: src/land_outfits.c:714 src/land_shipyard.c:454 src/land_shipyard.c:524
+#: src/land_outfits.c:715 src/land_shipyard.c:454 src/land_shipyard.c:524
 #: src/land_trade.c:240
 #, c-format
 msgid "You need %s more."
 msgstr ""
 
-#: src/land_outfits.c:720
+#: src/land_outfits.c:721
 #, c-format
 msgid "You need the '%s' license to buy this outfit."
 msgstr ""
 
-#: src/land_outfits.c:795
+#: src/land_outfits.c:796
 msgid "You can't sell a unique outfit."
 msgstr ""
 
-#: src/land_outfits.c:801
+#: src/land_outfits.c:802
 msgid "You can't sell a map."
 msgstr ""
 
-#: src/land_outfits.c:807
+#: src/land_outfits.c:808
 msgid "You can't sell a GUI."
 msgstr ""
 
-#: src/land_outfits.c:813
+#: src/land_outfits.c:814
 msgid "You can't sell a license."
 msgstr ""
 
-#: src/land_outfits.c:819 src/land_trade.c:259
+#: src/land_outfits.c:820 src/land_trade.c:259
 msgid "You can't sell something you don't have!"
 msgstr ""
 
@@ -78239,33 +78246,34 @@ msgid ""
 msgstr ""
 
 #: src/outfit.c:1315 src/outfit.c:1473 src/outfit.c:1565 src/outfit.c:1698
-#: src/outfit.c:1787 src/outfit.c:1868 src/outfit.c:1941 src/outfit.c:1988
-#: src/outfit.c:2060 src/outfit.c:2083 src/outfit.c:2125 src/outfit.c:2164
-#: src/outfit.c:2198 src/outfit.c:2347 src/outfit.c:2428
+#: src/outfit.c:1787 src/outfit.c:1863 src/outfit.c:1930 src/outfit.c:1973
+#: src/outfit.c:2045 src/outfit.c:2068 src/outfit.c:2110 src/outfit.c:2149
+#: src/outfit.c:2183 src/outfit.c:2332 src/outfit.c:2413
 #, c-format
 msgid "Outfit '%s' has unknown node '%s'"
 msgstr ""
 
-#: src/outfit.c:1344 src/outfit.c:2714
+#: src/outfit.c:1344 src/outfit.c:2702
 #, c-format
 msgid "%s [%s]"
 msgstr ""
 
-#: src/outfit.c:1346 src/outfit.c:1493 src/outfit.c:2716
+#: src/outfit.c:1346 src/outfit.c:1493 src/outfit.c:1871 src/outfit.c:1941
+#: src/outfit.c:2704
 #, c-format
 msgid ""
 "\n"
 "%.0f CPU"
 msgstr ""
 
-#: src/outfit.c:1347 src/outfit.c:1494 src/outfit.c:2734
+#: src/outfit.c:1347 src/outfit.c:1494 src/outfit.c:2722
 #, c-format
 msgid ""
 "\n"
 "%.0f%% Penetration"
 msgstr ""
 
-#: src/outfit.c:1348 src/outfit.c:2735
+#: src/outfit.c:1348 src/outfit.c:2723
 #, c-format
 msgid ""
 "\n"
@@ -78279,14 +78287,14 @@ msgid ""
 "%.2f Disable/s [%.0f Disable]"
 msgstr ""
 
-#: src/outfit.c:1352 src/outfit.c:2739
+#: src/outfit.c:1352 src/outfit.c:2727
 #, c-format
 msgid ""
 "\n"
 "%.1f Shots Per Second"
 msgstr ""
 
-#: src/outfit.c:1353 src/outfit.c:2751
+#: src/outfit.c:1353 src/outfit.c:2739
 #, c-format
 msgid ""
 "\n"
@@ -78300,7 +78308,7 @@ msgid ""
 "%s Range"
 msgstr ""
 
-#: src/outfit.c:1356 src/outfit.c:2748
+#: src/outfit.c:1356 src/outfit.c:2736
 #, c-format
 msgid ""
 "\n"
@@ -78314,30 +78322,30 @@ msgid ""
 "%.1f second heat up"
 msgstr ""
 
-#: src/outfit.c:1359 src/outfit.c:1506 src/outfit.c:2729
+#: src/outfit.c:1359 src/outfit.c:1506 src/outfit.c:2717
 #, c-format
 msgid ""
 "\n"
 "%.1f Degree Swivel"
 msgstr ""
 
-#: src/outfit.c:1360 src/outfit.c:2721 src/outfit.c:2727
+#: src/outfit.c:1360 src/outfit.c:2709 src/outfit.c:2715
 #, c-format
 msgid ""
 "\n"
 "%s Optimal Tracking"
 msgstr ""
 
-#: src/outfit.c:1361 src/outfit.c:2722 src/outfit.c:2728
+#: src/outfit.c:1361 src/outfit.c:2710 src/outfit.c:2716
 #, c-format
 msgid ""
 "\n"
 "%s Minimal Tracking"
 msgstr ""
 
-#: src/outfit.c:1364 src/outfit.c:1509 src/outfit.c:1712 src/outfit.c:1905
-#: src/outfit.c:1962 src/outfit.c:1998 src/outfit.c:2099 src/outfit.c:2138
-#: src/outfit.c:2173 src/outfit.c:2208 src/outfit.c:2432
+#: src/outfit.c:1364 src/outfit.c:1509 src/outfit.c:1712 src/outfit.c:1893
+#: src/outfit.c:1947 src/outfit.c:1983 src/outfit.c:2084 src/outfit.c:2123
+#: src/outfit.c:2158 src/outfit.c:2193 src/outfit.c:2417
 #, c-format
 msgid "Outfit '%s' missing/invalid '%s' element"
 msgstr ""
@@ -78356,7 +78364,7 @@ msgid ""
 "%.0f Disable/s"
 msgstr ""
 
-#: src/outfit.c:1499
+#: src/outfit.c:1499 src/outfit.c:1876
 #, c-format
 msgid ""
 "\n"
@@ -78397,263 +78405,285 @@ msgstr ""
 msgid "Outfit '%s' has no speed nor thrust set!"
 msgstr ""
 
-#: src/outfit.c:1800
+#: src/outfit.c:1799 src/outfit.c:1870
 msgid ""
 "\n"
 "#rActivated Outfit#0"
 msgstr ""
 
-#: src/outfit.c:1802
+#: src/outfit.c:1801
 #, c-format
 msgid " #r(%.1f s Cooldown)#0"
 msgstr ""
 
-#: src/outfit.c:1811
+#: src/outfit.c:1804
 #, c-format
 msgid "%+.0f CPU"
+msgstr ""
+
+#: src/outfit.c:1872
+msgid ""
+"\n"
+"Only one can be equipped"
+msgstr ""
+
+#: src/outfit.c:1873
+#, c-format
+msgid ""
+"\n"
+"%.0f Maximum Effective Mass"
 msgstr ""
 
 #: src/outfit.c:1874
 #, c-format
 msgid ""
-"%s\n"
-"#rActivated Outfit#0\n"
-"%.0f CPU\n"
-"Only one can be equipped\n"
-"%.0f Maximum Effective Mass\n"
-"%.0f%% Thrust\n"
-"%.0f%% Maximum Speed\n"
-"%.1f EPS\n"
+"\n"
+"%.0f%% Thrust"
+msgstr ""
+
+#: src/outfit.c:1875
+#, c-format
+msgid ""
+"\n"
+"%.0f%% Maximum Speed"
+msgstr ""
+
+#: src/outfit.c:1877
+#, c-format
+msgid ""
+"\n"
 "%.1f Rumble"
 msgstr ""
 
-#: src/outfit.c:1951
+#: src/outfit.c:1942
 #, c-format
 msgid ""
-"%s\n"
-"%.0f CPU\n"
-"%.1f Seconds Per Launch\n"
-"Holds %d %s\n"
+"\n"
+"%.1f Seconds Per Launch"
+msgstr ""
+
+#: src/outfit.c:1943 src/outfit.c:2721
+#, c-format
+msgid ""
+"\n"
+"Holds %d %s"
+msgstr ""
+
+#: src/outfit.c:1944 src/outfit.c:2738
+#, c-format
+msgid ""
+"\n"
 "%.1f Seconds to Reload"
 msgstr ""
 
-#: src/outfit.c:2049
+#: src/outfit.c:2034
 #, c-format
 msgid "Map '%s' has invalid asset '%s'"
 msgstr ""
 
-#: src/outfit.c:2057
+#: src/outfit.c:2042
 #, c-format
 msgid "Map '%s' has invalid jump point '%s'"
 msgstr ""
 
-#: src/outfit.c:2064
+#: src/outfit.c:2049
 #, c-format
 msgid "Map '%s' has invalid system '%s'"
 msgstr ""
 
-#: src/outfit.c:2170
+#: src/outfit.c:2155
 #, c-format
 msgid "GUI (Graphical User Interface)"
 msgstr ""
 
-#: src/outfit.c:2237 src/outfit.c:2658 src/slots.c:74 src/space.c:3379
+#: src/outfit.c:2222 src/outfit.c:2646 src/slots.c:74 src/space.c:3379
 #: src/spfx.c:1214 src/start.c:74
 #, c-format
 msgid "Malformed '%s' file: does not contain elements"
 msgstr ""
 
-#: src/outfit.c:2247
+#: src/outfit.c:2232
 #, c-format
 msgid "Outfit in %s has invalid or no name"
 msgstr ""
 
-#: src/outfit.c:2293
+#: src/outfit.c:2278
 #, c-format
 msgid "Outfit '%s' has an slot type invalid."
 msgstr ""
 
-#: src/outfit.c:2301
+#: src/outfit.c:2286
 #, c-format
 msgid "Outfit '%s' has unknown slot type '%s'."
 msgstr ""
 
-#: src/outfit.c:2322
+#: src/outfit.c:2307
 #, c-format
 msgid "Empty faction string for outfit '%s' legality!"
 msgstr ""
 
-#: src/outfit.c:2328
+#: src/outfit.c:2313
 #, c-format
 msgid "Outfit '%s' has no factions defined in <illegalto> block!"
 msgstr ""
 
-#: src/outfit.c:2331
+#: src/outfit.c:2316
 #, c-format
 msgid "Outfit '%s' has unknown general node '%s'"
 msgstr ""
 
-#: src/outfit.c:2357
+#: src/outfit.c:2342
 #, c-format
 msgid "Outfit '%s' element 'specific' missing property 'type'"
 msgstr ""
 
-#: src/outfit.c:2373
+#: src/outfit.c:2358
 #, c-format
 msgid "Outfit '%s' has group '%d', should be in the 1-%d range"
 msgstr ""
 
-#: src/outfit.c:2384
+#: src/outfit.c:2369
 #, c-format
 msgid "Outfit '%s' is of type NONE"
 msgstr ""
 
-#: src/outfit.c:2500
+#: src/outfit.c:2485
 #, c-format
 msgid "Outfit '%s' missing/invalid 'trackmin' element"
 msgstr ""
 
-#: src/outfit.c:2502
+#: src/outfit.c:2487
 #, c-format
 msgid "Outfit '%s' missing/invalid 'trackmax' element"
 msgstr ""
 
-#: src/outfit.c:2504
+#: src/outfit.c:2489
 #, c-format
 msgid "Outfit '%s' missing/invalid 'lockon' element"
 msgstr ""
 
-#: src/outfit.c:2506
+#: src/outfit.c:2491
 #, c-format
 msgid "Outfit '%s' missing/invalid 'arc' element"
 msgstr ""
 
-#: src/outfit.c:2521
+#: src/outfit.c:2495
+#, c-format
+msgid "Outfit '%s' has longer 'iflockon' than ammo 'duration'"
+msgstr ""
+
+#: src/outfit.c:2509
 #, c-format
 msgid "Outfit '%s' failed to read Lua '%s'!"
 msgstr ""
 
-#: src/outfit.c:2534
+#: src/outfit.c:2522
 #, c-format
 msgid ""
 "Outfit '%s' Lua error:\n"
 "%s"
 msgstr ""
 
-#: src/outfit.c:2576
+#: src/outfit.c:2564
 #, c-format
 msgid "Name collision! %d outfit is named '%s'"
 msgid_plural "Name collision! %d outfits are named '%s'"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/outfit.c:2583
+#: src/outfit.c:2571
 #, c-format
 msgid "Loaded %d Outfit"
 msgid_plural "Loaded %d Outfits"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/outfit.c:2610
+#: src/outfit.c:2598
 msgid ""
 "\n"
 "#rIllegal to:#0"
 msgstr ""
 
-#: src/outfit.c:2612
+#: src/outfit.c:2600
 #, c-format
 msgid ""
 "\n"
 "#r- %s#0"
 msgstr ""
 
-#: src/outfit.c:2622
+#: src/outfit.c:2610
 #, c-format
 msgid ""
 "Outfit '%s' lua load error -> 'load':\n"
 "%s"
 msgstr ""
 
-#: src/outfit.c:2651
+#: src/outfit.c:2639
 #, c-format
 msgid "%s file is invalid xml!"
 msgstr ""
 
-#: src/outfit.c:2706
+#: src/outfit.c:2694
 #, c-format
 msgid "Outfit '%s' already has a short description"
 msgstr ""
 
-#: src/outfit.c:2719
+#: src/outfit.c:2707
 #, c-format
 msgid ""
 "\n"
 "%.1f Second Lock-on"
 msgstr ""
 
-#: src/outfit.c:2720
+#: src/outfit.c:2708
 #, c-format
 msgid ""
 "\n"
 "%.1f Second In-Flight Calibration"
 msgstr ""
 
-#: src/outfit.c:2725
+#: src/outfit.c:2713
 msgid ""
 "\n"
 "No Seeking"
 msgstr ""
 
-#: src/outfit.c:2733
-#, c-format
-msgid ""
-"\n"
-"Holds %d %s:"
-msgstr ""
-
-#: src/outfit.c:2737
+#: src/outfit.c:2725
 #, c-format
 msgid ""
 "\n"
 "%.1f Disable/s [%.0f Disable]"
 msgstr ""
 
-#: src/outfit.c:2740
+#: src/outfit.c:2728
 #, c-format
 msgid ""
 "\n"
 "%s Range [%.1f duration]"
 msgstr ""
 
-#: src/outfit.c:2743
+#: src/outfit.c:2731
 #, c-format
 msgid ""
 "\n"
 "%.0f Initial Speed (%.0f Thrust)"
 msgstr ""
 
-#: src/outfit.c:2745
+#: src/outfit.c:2733
 #, c-format
 msgid ""
 "\n"
 "%.0f Thrust"
 msgstr ""
 
-#: src/outfit.c:2749
+#: src/outfit.c:2737
 #, c-format
 msgid ""
 "\n"
 "%.0f Maximum Speed"
 msgstr ""
 
-#: src/outfit.c:2750
-#, c-format
-msgid ""
-"\n"
-"%.1f Seconds to Reload"
-msgstr ""
-
-#: src/outfit.c:2752
+#: src/outfit.c:2740
 #, c-format
 msgid ""
 "\n"
