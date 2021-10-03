@@ -308,6 +308,10 @@ SHADERS = [
       fs_path = "crosshairs.frag",
    ),
    SimpleShader(
+      name = "astaura",
+      fs_path = "astaura.frag",
+   ),
+   SimpleShader(
       name = "hilight",
       fs_path = "hilight.frag",
    ),

@@ -696,29 +696,36 @@ void ovr_render( double dt )
       glBindFramebuffer( GL_FRAMEBUFFER, gl_screen.fbo[2] );
       glClearColor( 0., 0., 0., 0. );
       glClear( GL_COLOR_BUFFER_BIT );
-      glBlendEquation( GL_MAX );
-      glBlendFuncSeparate( GL_DST_ALPHA, GL_SRC_ALPHA, GL_ONE, GL_ONE );
-
+      glBlendEquation( GL_FUNC_ADD );
+      glBlendFuncSeparate( GL_SRC_ALPHA, GL_ONE, GL_ONE, GL_ONE );
       for (int i=0; i<array_size(cur_system->asteroids); i++) {
          AsteroidAnchor *ast = &cur_system->asteroids[i];
          detect = vect_dist2( &player.p->solid->pos, &ast->pos );
          if (detect < pow2(pilot_sensorRange() * player.p->stats.ew_detect + ast->radius)) {
+            double r;
             map_overlayToScreenPos( &x, &y, ast->pos.x, ast->pos.y );
-            gl_renderCircle( x, y, ast->radius / res, &col, 1 );
+            r = ast->radius / res;
+            glUseProgram( shaders.astaura.program );
+            gl_renderShader( x, y, r, r, 0., &shaders.astaura, &col, 1 );
          }
       }
 
-      col.g = 1.;
-      col.b = 0.;
-      for (int i=0; i<array_size(cur_system->astexclude); i++) {
-         AsteroidExclusion *aexcl = &cur_system->astexclude[i];
+      glBlendEquation( GL_FUNC_REVERSE_SUBTRACT );
+      glBlendFuncSeparate( GL_SRC_ALPHA, GL_ONE, GL_ONE, GL_ONE );
+      for (int i=0; i<array_size(cur_system->astaura); i++) {
+         double r;
+         AsteroidExclusion *aexcl = &cur_system->astaura[i];
          map_overlayToScreenPos( &x, &y, aexcl->pos.x, aexcl->pos.y );
-         gl_renderCircle( x, y, aexcl->radius / res, &col, 1 );
+         r = aexcl->radius / res;
+         glUseProgram( shaders.astaura.program );
+         gl_renderShader( x, y, r, r, 0., &shaders.astaura, &col, 1 );
       }
 
+      glBlendEquation( GL_MAX );
       detect = player.p->ew_stealth / res;
       col.r = 1.;
       col.g = 0.;
+      col.b = 0.;
       for (int i=0; i<array_size(pstk); i++) {
          double r;
          if (areAllies( player.p->faction, pstk[i]->faction ) || pilot_isFriendly(pstk[i]))

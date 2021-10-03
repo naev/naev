@@ -11,6 +11,6 @@ void main(void) {
    float d     = sdCircle( pos, 1.0-m );
    float alpha = smoothstep(-m, 0.0, -d);
    color_out   = color;
-   color_out.a *= alpha;
+   color_out  *= alpha;
    color_out.a *= length(pos);
 }
