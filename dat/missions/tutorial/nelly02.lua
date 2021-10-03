@@ -275,7 +275,7 @@ function enter ()
       spotter:control()
       spotter:brake()
 
-      hk_timer_spotter = hook.timer( 15, "timer_spotter" )
+      hk_timer_spotter = hook.timer( 9, "timer_spotter" )
       hook.timer( 15, "timer_spotter_start" )
    end
 end
@@ -508,7 +508,7 @@ function timer_spotter ()
    spotter_msg = spotter_msg or 0
    spotter_msg = math.fmod( spotter_msg, #spotter_msglist )+1
 
-   spotter:broadcast( spotter_msglist[ spotter_msg ] )
+   spotter:broadcast( spotter_msglist[ spotter_msg ], true )
 
    hk_timer_spotter = hook.timer( 15, "timer_spotter" )
 end
@@ -546,7 +546,7 @@ She frowns.
    }
 
    vn.label("neverlearn")
-   nel(fmt.f(_([["Great! Avoid getting scanned by them and let's head off to {pntname} in {sysname]!"]]),{pntname=destpnt:name(),sysname=destsys:name()}))
+   nel(fmt.f(_([["Great! Avoid getting scanned by them and let's head off to {pntname} in {sysname}!"]]),{pntname=destpnt:name(),sysname=destsys:name()}))
 
    vn.run()
 
@@ -585,6 +585,7 @@ function spotter_spot ()
       spotter:taskClear()
       spotter:pushtask( "scan", pp )
       pp:comm(fmt.f(_([[Nelly: "They found us and are scanning us. Quickly try to stealth with {stealthkey}!"]]),{stealthkey=tut.getKey("stealth")}))
+      player.autonavReset( 5 )
 
    end
 
