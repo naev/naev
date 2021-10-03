@@ -422,7 +422,7 @@ static int misn_markerMove( lua_State *L )
    int id;
    LuaSystem sys;
    MissionMarker *marker;
-   int i, n;
+   int n;
    Mission *cur_mission;
 
    /* Handle parameters. */
@@ -434,7 +434,7 @@ static int misn_markerMove( lua_State *L )
    /* Check id. */
    marker = NULL;
    n = array_size( cur_mission->markers );
-   for (i=0; i<n; i++) {
+   for (int i=0; i<n; i++) {
       if (id == cur_mission->markers[i].id) {
          marker = &cur_mission->markers[i];
          break;

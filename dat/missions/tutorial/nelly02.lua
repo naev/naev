@@ -265,7 +265,7 @@ function enter ()
 
       local s = player.pilot():stats().ew_stealth
       local m, a = jump_dest:pos():polar()
-      spotter_pos = vec2.newp( m - 1.5 * s, a )
+      spotter_pos = vec2.newP( m - 1.5 * s, a )
       spotter = pilot.add( "Pacifier", "Mercenary", spotter_pos )
       spotter:rename(_("Noisy Pacifier"))
       spotter:intrinsicSet( "ew_hide", -50 )
@@ -341,12 +341,12 @@ function land ()
       vn.scene()
       local nel = vn.newCharacter( tutnel.vn_nelly() )
       vn.na(_("You land and quickly Nelly goes over to the outfitter and seems to get into some sort of argument with the person in charge. After a bit you see they exchange something and she comes back with a grin on her face."))
-      nel(fmt.f(_([["Got the parts! Cheaper than I expected to. Hopefully this will bring an end to my ship troubles. Let's go back to #o{pntname}#0 in #o{sysname}#0!"]]), {pntname=destpnt:name(), sysname=destsys:name()}))
+      nel(fmt.f(_([["Got the parts! Cheaper than I expected to. Hopefully this will bring an end to my ship troubles. Let's go back to #o{pntname}#0 in #o{sysname}#0!"]]), {pntname=retpnt:name(), sysname=retsys:name()}))
       vn.run()
 
       local c = misn.cargoNew( N_("Jumpdrive Repair Parts"), N_("Spare parts that can be used to break a ship's broken jumpdrive.") )
       misn.cargoAdd( c, 0 )
-      misn_marker = misn.markerMove( misn_marker, retsys )
+      misn.markerMove( misn_marker, retsys )
       misn.osdActive(2)
       misn_state = 4
 
@@ -386,7 +386,7 @@ function approach_nelly ()
       fmt.f(_("Go to {pntname} in {sysname}"),{pntname=destpnt:name(), sysname=destsys:name()}),
       fmt.f(_("Return to {pntname} in {sysname}"),{pntname=retpnt:name(), sysname=retsys:name()}),
    } )
-   misn_marker = misn.markerMove( misn_marker, destsys )
+   misn.markerMove( misn_marker, destsys )
 
    misn.npcRm( npc_nel )
    misn_state = 2
@@ -450,6 +450,7 @@ function timer_pirate_checkbribe ()
             allbribed = false
          else
             somebribed = true
+            p:setHilight(false)
          end
          n = n+1
       end
@@ -534,7 +535,7 @@ She frowns.
    nel(fmt.f(_([["You can activate stealth mode with {stealthkey} when far enough away from other ships. When stealthed, your ship will be completely invisible to all ships. However, if a ship gets within the #ostealth#0 distance of your ship, it will slowly uncover you."]]),{stealthkey=tut.getKey("stealth")}))
    nel(_([["Besides making your ship invisible to other ships, #ostealth#0 slows down your ship heavily to mask your gravitational presence. This also has the effect of letting you jump out from jumpoints further away."]]))
    nel(_([["When not in stealth, ships can target your ship to perform a scan. This can uncover unwanted information, such as illegal cargo or outfits. The time to scan depends on the mass of the ship. If you don't want to be scanned, I recommend you to rely on stealth as much as possible."]]))
-   nel(fmt.f(_([["To avoid getting spotted by {shipname}, you should first get away from nearby ships and stealth with {stealthkey}. Then avoid other ships using the overlay map you can open with {overlaykey}, where the detection radius will be shown in red circles. You should then be able to fly around {shipname} and get to the jump point. It shouldn't be hard, but be careful not to get close to them!"]]),{stealthkey=tut.getKey("stealth"),overlaykey=tut.getKey("overlay"),spotter:name()}))
+   nel(fmt.f(_([["To avoid getting spotted by {shipname}, you should first get away from nearby ships and stealth with {stealthkey}. Then avoid other ships using the overlay map you can open with {overlaykey}, where the detection radius will be shown in red circles. You should then be able to fly around {shipname} and get to the jump point. It shouldn't be hard, but be careful not to get close to them!"]]),{stealthkey=tut.getKey("stealth"),overlaykey=tut.getKey("overlay"),shipname=spotter:name()}))
    vn.done()
 
    vn.label("nolearn")
@@ -583,7 +584,7 @@ function spotter_spot ()
       spotter_scanning = true
       spotter:taskClear()
       ai.pushtask( "scan", pp )
-      pp:comm(fmt.f(_([[Nelly: "They found us and are scanning us. Quickly try to stealth with {stealthkey}!"]]),{tut.getKey("stealth")}))
+      pp:comm(fmt.f(_([[Nelly: "They found us and are scanning us. Quickly try to stealth with {stealthkey}!"]]),{stealthkey=tut.getKey("stealth")}))
 
    end
 
