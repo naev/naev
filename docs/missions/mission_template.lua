@@ -34,13 +34,13 @@
 --]]
 
 -- require statements go here. Most missions should include
--- numstring.lua, which provides the useful `numstring()` and
--- `creditstring()` functions. We use these functions to format numbers
--- as text properly in Naev. dat/missions/neutral/common.lua provides
+-- "format", which provides the useful `number()` and
+-- `credits()` functions. We use these functions to format numbers
+-- as text properly in Naev. dat/scripts/common/neutral.lua provides
 -- the addMiscLog function, which is typically used for non-factional
 -- unique missions.
-require "numstring.lua"
-require "missions/neutral/common.lua"
+local fmt = require "format"
+local neu = require "common.neutral"
 
 --[[
 Multi-paragraph dialog strings should go here, each with an identifiable
@@ -64,12 +64,12 @@ One thing to keep in mind: the player can be any gender, so keep all
 references to the player gender-neutral. If you need to use a
 third-person pronoun for the player, singular "they" is the best choice.
 
-You may notice instances of "%s" sprinkled throughout the text. These
+You may notice curly-bracketed {words} sprinkled throughout the text. These
 are portions that will be filled in later by the mission via the
-`string.format()` function.
+`fmt.f()` function.
 --]]
 ask_text = _([[As you approach the guy, he looks up in curiosity. You sit down and ask him how his day is. "Why, fine," he answers. "How are you?" You answer that you are fine as well and compliment him on his suit, which seems to make his eyes light up. "Why, thanks! It's my favorite suit! I had it custom tailored, you know.
-    "Actually, that reminds me! There was a special suit on %s in the %s system, the last one I need to complete my collection, but I don't have a ship. You do have a ship, don't you? So I'll tell you what, give me a ride and I'll pay you %s for it! What do you say?"]])
+    "Actually, that reminds me! There was a special suit on {pntname} in the {sysname} system, the last one I need to complete my collection, but I don't have a ship. You do have a ship, don't you? So I'll tell you what, give me a ride and I'll pay you {reward} for it! What do you say?"]])
 
 
 --[[ 
@@ -81,17 +81,18 @@ description.
 --]]
 function create ()
    -- Set our mission parameters.
+   -- For credit values in the thousands or millions, we use scientific notation (less error-prone than counting zeros).
    misplanet, missys = planet.get("Ulios")
    credits = 250e3
    talked = false
 
-   -- Here we use the `creditstring()` function to convert our credits
+   -- Here we use the `fmt.credits()` function to convert our credits
    -- from a number to a string. This function both applies gettext
    -- correctly for variable amounts (by using the ngettext function),
    -- and formats the number in a way that is appropriate for Naev (by
    -- using the numstring function). You should always use this when
    -- displaying a number of credits.
-   reward_text = creditstring(credits)
+   reward_text = fmt.credits(credits)
    
    -- If we needed to claim a system, we would do that here with
    -- something like the following commented out statement. However,
@@ -118,10 +119,10 @@ function accept ()
    -- this is our first time.
    local text
    if talked then
-      -- We use `string.format()` here to fill in the destination and
-      -- reward text. `s1:format(s2)` is a shorthand for
-      -- `string.format(s1, s2)`.
-      text = _([["Ah, it's you again! Have you changed your mind? Like I said, I just need transport to %s in the %s system, and I'll pay you %s when we get there. How's that sound?"]]):format( misplanet:name(), missys:name(), reward_text )
+      -- We use `fmt.f()` here to fill in the destination and
+      -- reward text. (You may also see Lua's standard library used for similar purposes:
+      -- `s1:format(arg1, ...)` or equivalently string.format(s1, arg1, ...)`.)
+      text = fmt.f(_([["Ah, it's you again! Have you changed your mind? Like I said, I just need transport to {pntname} in the {sysname} system, and I'll pay you {reward} when we get there. How's that sound?"]]), {pntname=misplanet:name(), sysname=missys:name(), reward=reward_text})
    else
       text = ask_text
       talked = true
@@ -130,7 +131,7 @@ function accept ()
    -- This will create the typical "Yes/No" dialogue. It returns true if
    -- yes was selected. 
    if tk.yesno( _("My Suit Collection"),
-         ask_text:format( reward_text ) ) then
+         fmt.f(ask_text, {reward=reward_text}) ) then
       -- Followup text.
       tk.msg( _("My Suit Collection"), _([["Fantastic! I knew you would do it! Like I said, I'll pay you as soon as we get there. No rush! Just bring me there when you're ready.]]) )
 
@@ -142,7 +143,7 @@ function accept ()
       -- mission.
       misn.setTitle( _("Suits Me Fine") )
       misn.setReward( reward_text )
-      misn.setDesc( _("A well-dressed man wants you to take him to %s in the %s system so he get some sort of special suit."):format( misplanet:name(), missys:name() ) )
+      misn.setDesc( fmt.f(_("A well-dressed man wants you to take him to {pntname} in the {sysname} system so he get some sort of special suit."), {pntname=misplanet:name(), sysname=missys:name()}) )
 
       -- Markers indicate a target system on the map, it may not be
       -- needed depending on the type of mission you're writing.
@@ -150,7 +151,7 @@ function accept ()
 
       -- The OSD shows your objectives.
       local osd_desc = {}
-      osd_desc[1] = _("Fly to %s in the %s system"):format( misplanet:name(), missys:name() )
+      osd_desc[1] = fmt.f(_("Fly to {pntname} in the {sysname} system"), {pntname=misplanet:name(), sysname=missys:name()} )
       misn.osdCreate( _("Suits Me Fine"), osd_desc )
 
       -- This is where we would define any other variables we need, but
@@ -176,7 +177,7 @@ function land ()
       -- Mission accomplished! Now we do an outro dialog and reward the
       -- player. Rewards are usually credits, as shown here, but
       -- other rewards can also be given depending on the circumstances.
-      tk.msg( _([[As you arrive on %s, your passenger reacts with glee. "I must sincerely thank you, kind stranger! Now I can finally complete my suit collection, and it's all thanks to you. Here is %s, as we agreed. I hope you have safe travels!"]]):format( misplanet:name(), reward_text )
+      tk.msg( fmt.f(_([[As you arrive on {pntname}, your passenger reacts with glee. "I must sincerely thank you, kind stranger! Now I can finally complete my suit collection, and it's all thanks to you. Here is {reward}, as we agreed. I hope you have safe travels!"]]), {pntname=misplanet:name(), reward=reward_text}) )
 
       -- Reward the player. Rewards are usually credits, as shown here,
       -- but other rewards can also be given depending on the
@@ -184,7 +185,7 @@ function land ()
       player.pay( credits )
 
       -- Add a log entry. This should only be done for unique missions.
-      addMiscLog( _([[You helped transport a well-dressed man to %s so that he could buy some kind of special suit to complete his collection.]]):format( misplanet:name() ) )
+      neu.addMiscLog( fmt.f(_([[You helped transport a well-dressed man to {pntname} so that he could buy some kind of special suit to complete his collection.]]), {pntname=misplanet:name()} ) )
       
       -- Finish the mission. Passing the `true` argument marks the
       -- mission as complete.
