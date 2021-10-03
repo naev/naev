@@ -17,6 +17,6 @@ void main(void) {
    float s = tex.r + tex.b;
    float a = mix( ALPHA, ALPHA + ALPHA*(1.0-ALPHA), s-1.0 ) * step( 0.5, s );
 
-   color_out = color * vec4( 0.6*tex.rgb, a );
+   color_out = color * vec4( 0.8*tex.rgb, a );
 }
 

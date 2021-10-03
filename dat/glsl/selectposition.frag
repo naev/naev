@@ -12,8 +12,8 @@ void main(void) {
    vec2 uv = abs( pos );
    if (uv.y < uv.x)
       uv.xy = uv.yx;
-   float m2 = m*2.0;
-   float d = sdSegment( uv, vec2(0.2+m,1.0-m2), vec2(1.0,1.0)-m2 );
+   float m3 = m*3.0;
+   float d = sdSegment( uv, vec2(0.2+m,1.0-m3), vec2(1.0,1.0)-m3 ) - 0.5*m;
 
    float alpha = smoothstep(     -m, 0.0, -d );
    float beta  = smoothstep( -2.0*m,  -m, -d );
