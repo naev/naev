@@ -239,8 +239,9 @@ function enter ()
       rampant:intrinsicSet( "speed", -50 )
       rampant:intrinsicSet( "thrust", -50 )
       rampant:intrinsicSet( "turn", -50 )
-      rampant:intrinsicSet( "shield_regen", -50 )
+      rampant:intrinsicSet( "shield_regen_mod", -90 )
       rampant:intrinsicSet( "stress_dissipation", -90 )
+      rampant:setHilight()
       local mem = rampant:memory()
       mem.comm_no = _("No response.")
       hook.pilot( rampant, "disable", "disable" )
@@ -307,10 +308,13 @@ function board ()
    misn_state = 1
 
    -- Have the ship go back
-   rampant:setHealth( 100 )
+   local a, s = rampant:health()
+   rampant:setHealth( a, s )
    rampant:setInvincible(true)
    rampant:intrinsicReset() -- Faster again
+   rampant:setFriendly(true)
    rampant:control(true)
+   rampant:taskClear()
    rampant:land( retpnt )
 
    player.unboard()
