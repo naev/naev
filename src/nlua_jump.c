@@ -290,8 +290,7 @@ static int jumpL_eq( lua_State *L )
  */
 static int jumpL_radius( lua_State *L )
 {
-   JumpPoint *jp;
-   jp = luaL_validjump(L,1);
+   JumpPoint *jp = luaL_validjump(L,1);
    lua_pushnumber(L,jp->radius);
    return 1;
 }
@@ -307,8 +306,7 @@ static int jumpL_radius( lua_State *L )
  */
 static int jumpL_position( lua_State *L )
 {
-   JumpPoint *jp;
-   jp = luaL_validjump(L,1);
+   JumpPoint *jp = luaL_validjump(L,1);
    lua_pushvector(L, jp->pos);
    return 1;
 }
@@ -324,9 +322,7 @@ static int jumpL_position( lua_State *L )
  */
 static int jumpL_angle( lua_State *L )
 {
-   JumpPoint *jp;
-
-   jp = luaL_validjump(L,1);
+   JumpPoint *jp = luaL_validjump(L,1);
    lua_pushnumber(L, jp->angle * 180. / M_PI);
    return 1;
 }
@@ -342,8 +338,7 @@ static int jumpL_angle( lua_State *L )
  */
 static int jumpL_hidden( lua_State *L )
 {
-   JumpPoint *jp;
-   jp = luaL_validjump(L,1);
+   JumpPoint *jp = luaL_validjump(L,1);
    lua_pushboolean(L, jp_isFlag(jp, JP_HIDDEN) );
    return 1;
 }
@@ -359,8 +354,7 @@ static int jumpL_hidden( lua_State *L )
  */
 static int jumpL_exitonly( lua_State *L )
 {
-   JumpPoint *jp;
-   jp = luaL_validjump(L,1);
+   JumpPoint *jp = luaL_validjump(L,1);
    lua_pushboolean(L, jp_isFlag(jp, JP_EXITONLY) );
    return 1;
 }
@@ -376,8 +370,7 @@ static int jumpL_exitonly( lua_State *L )
  */
 static int jumpL_system( lua_State *L )
 {
-   JumpPoint *jp;
-   jp = luaL_validjumpSystem( L, 1, NULL );
+   JumpPoint *jp = luaL_validjumpSystem( L, 1, NULL );
    lua_pushsystem( L, jp->from->id );
    return 1;
 }
@@ -393,9 +386,7 @@ static int jumpL_system( lua_State *L )
  */
 static int jumpL_dest( lua_State *L )
 {
-   JumpPoint *jp;
-
-   jp = luaL_validjump(L,1);
+   JumpPoint *jp = luaL_validjump(L,1);
    lua_pushsystem(L,jp->targetid);
    return 1;
 }
@@ -412,9 +403,7 @@ static int jumpL_dest( lua_State *L )
  */
 static int jumpL_isKnown( lua_State *L )
 {
-   JumpPoint *jp;
-
-   jp = luaL_validjump(L,1);
+   JumpPoint *jp = luaL_validjump(L,1);
    lua_pushboolean(L, jp_isKnown(jp));
    return 1;
 }

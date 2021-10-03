@@ -2677,10 +2677,8 @@ void system_reconstructJumps (StarSystem *sys)
          a += 2.*M_PI;
 
       /* Update position if needed.. */
-      if (jp->flags & JP_AUTOPOS) {
-         jp->pos.x   = sys->radius*cos(a);
-         jp->pos.y   = sys->radius*sin(a);
-      }
+      if (jp->flags & JP_AUTOPOS)
+         vect_pset( &jp->pos, sys->radius, a );
 
       /* Update jump specific data. */
       gl_getSpriteFromDir( &jp->sx, &jp->sy, jumppoint_gfx, a );

@@ -512,11 +512,7 @@ static int vectorL_get( lua_State *L )
  */
 static int vectorL_polar( lua_State *L )
 {
-   Vector2d *v1;
-
-   /* Get self. */
-   v1 = luaL_checkvector(L,1);
-
+   Vector2d *v1 = luaL_checkvector(L,1);
    lua_pushnumber(L, VMOD(*v1));
    lua_pushnumber(L, VANGLE(*v1)*180./M_PI);
    return 2;
