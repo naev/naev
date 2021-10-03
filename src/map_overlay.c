@@ -446,10 +446,10 @@ static void ovr_refresh_uzawa_overlap( float *forces_x, float *forces_y,
       MapOverlayPos** mo, int items, int self,
       float *offx, float *offy, float *offdx, float *offdy )
 {
-   float mx, my, mw, mh;
-   const float pb2 = ovr_text_pixbuf*2.;
-
    for (int i=0; i<items; i++) {
+      float mx, my, mw, mh;
+      const float pb2 = ovr_text_pixbuf*2.;
+
       /* Collisions with planet circles and jp triangles (odd indices). */
       mw = 2.*mo[i]->radius;
       mh = mw;
