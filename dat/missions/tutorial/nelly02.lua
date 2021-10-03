@@ -583,7 +583,7 @@ function spotter_spot ()
    elseif scanned and not spotter_scanning then
       spotter_scanning = true
       spotter:taskClear()
-      ai.pushtask( "scan", pp )
+      spotter:pushtask( "scan", pp )
       pp:comm(fmt.f(_([[Nelly: "They found us and are scanning us. Quickly try to stealth with {stealthkey}!"]]),{stealthkey=tut.getKey("stealth")}))
 
    end

@@ -1239,14 +1239,12 @@ static int aiL_pushtask( lua_State *L )
  */
 static int aiL_poptask( lua_State *L )
 {
-   Task* t = ai_curTask( cur_pilot );
-
+   Task *t = ai_curTask( cur_pilot );
    /* Tasks must exist. */
    if (t == NULL) {
       NLUA_ERROR(L, _("Trying to pop task when there are no tasks on the stack."));
       return 0;
    }
-
    t->done = 1;
    return 0;
 }

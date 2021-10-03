@@ -155,6 +155,8 @@ static int pilotL_taskname( lua_State *L );
 static int pilotL_taskstack( lua_State *L );
 static int pilotL_taskdata( lua_State *L );
 static int pilotL_taskclear( lua_State *L );
+static int pilotL_pushtask( lua_State *L );
+static int pilotL_poptask( lua_State *L );
 static int pilotL_refuel( lua_State *L );
 static int pilotL_moveto( lua_State *L );
 static int pilotL_face( lua_State *L );
@@ -279,6 +281,8 @@ static const luaL_Reg pilotL_methods[] = {
    { "taskstack", pilotL_taskstack },
    { "taskdata", pilotL_taskdata },
    { "taskClear", pilotL_taskclear },
+   { "pushtask", pilotL_pushtask },
+   { "poptask", pilotL_poptask },
    { "refuel", pilotL_refuel },
    { "moveto", pilotL_moveto },
    { "face", pilotL_face },
@@ -3981,7 +3985,6 @@ static int pilotL_taskdata( lua_State *L )
    return 0;
 }
 
-
 /**
  * @brief Clears all the tasks of the pilot.
  *
@@ -3998,6 +4001,48 @@ static int pilotL_taskclear( lua_State *L )
    return 0;
 }
 
+/**
+ * @brief Pushes a new task to the pilot's AI.
+ *
+ * Equivalent to ai.pushtask()
+ *
+ *    @luatparam Pilot p Pilot to push task to.
+ *    @luatparam string func Name of the function to be run.
+ *    @luatparam any data Data to be passed to the function.
+ * @luafunc pushtask
+ */
+static int pilotL_pushtask( lua_State *L )
+{
+   Pilot *p          = luaL_validpilot(L,1);
+   const char *task  = luaL_checkstring(L,2);
+   Task *t           = ai_newtask( L, p, task, 0, 1 );
+   if (!lua_isnoneornil(L,3)) {
+      lua_pushvalue( L, 3 );
+      t->dat = luaL_ref( L, LUA_REGISTRYINDEX );
+   }
+   return 0;
+}
+
+/**
+ * @brief Pops the current task from the pilot's AI.
+ *
+ * Equivalent to ai.poptask().
+ *
+ *    @luatparam Pilot p Pilot to pop task from.
+ * @luafunc poptask
+ */
+static int pilotL_poptask( lua_State *L )
+{
+   Pilot *p  = luaL_validpilot(L,1);
+   Task *t = ai_curTask( p );
+   /* Tasks must exist. */
+   if (t == NULL) {
+      NLUA_ERROR(L, _("Trying to pop task when there are no tasks on the stack."));
+      return 0;
+   }
+   t->done = 1;
+   return 0;
+}
 
 /**
  * @brief Tries to refuel a pilot.
@@ -4140,7 +4185,7 @@ static int pilotL_face( lua_State *L )
    else {
       lua_pushvector(L, *vec);
    }
-   t->dat = luaL_ref(naevL, LUA_REGISTRYINDEX);
+   t->dat = luaL_ref(L, LUA_REGISTRYINDEX);
 
    return 0;
 }
