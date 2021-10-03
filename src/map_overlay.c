@@ -146,9 +146,7 @@ int ovr_input( SDL_Event *event )
 void ovr_refresh (void)
 {
    double max_x, max_y;
-   int i, items, jumpitems;
-   Planet *pnt;
-   JumpPoint *jp;
+   int items, jumpitems;
    const Vector2d **pos;
    MapOverlayPos **mo;
    char buf[STRMAX_SHORT];
@@ -163,8 +161,8 @@ void ovr_refresh (void)
    mo  = calloc(array_size(cur_system->jumps) + array_size(cur_system->planets), sizeof(MapOverlayPos*));
    max_x = 0.;
    max_y = 0.;
-   for (i=0; i<array_size(cur_system->jumps); i++) {
-      jp = &cur_system->jumps[i];
+   for (int i=0; i<array_size(cur_system->jumps); i++) {
+      JumpPoint *jp = &cur_system->jumps[i];
       max_x = MAX( max_x, ABS(jp->pos.x) );
       max_y = MAX( max_y, ABS(jp->pos.y) );
       if (!jp_isUsable(jp) || !jp_isKnown(jp))
@@ -178,8 +176,8 @@ void ovr_refresh (void)
       items++;
    }
    jumpitems = items;
-   for (i=0; i<array_size(cur_system->planets); i++) {
-      pnt = cur_system->planets[i];
+   for (int i=0; i<array_size(cur_system->planets); i++) {
+      Planet *pnt = cur_system->planets[i];
       max_x = MAX( max_x, ABS(pnt->pos.x) );
       max_y = MAX( max_y, ABS(pnt->pos.y) );
       if (!planet_isKnown(pnt))
@@ -196,7 +194,7 @@ void ovr_refresh (void)
 
    /* We need to calculate the radius of the rendering from the maximum radius of the system. */
    ovr_res = 2. * 1.2 * MAX( max_x / map_overlay_width(), max_y / map_overlay_height() );
-   for (i=0; i<items; i++)
+   for (int i=0; i<items; i++)
       mo[i]->radius = MAX( 2.+mo[i]->radius / ovr_res, i<jumpitems ? 5. : 7.5 );
 
    /* Nothing in the system so we just set a default value. */
@@ -448,11 +446,10 @@ static void ovr_refresh_uzawa_overlap( float *forces_x, float *forces_y,
       MapOverlayPos** mo, int items, int self,
       float *offx, float *offy, float *offdx, float *offdy )
 {
-   int i;
    float mx, my, mw, mh;
    const float pb2 = ovr_text_pixbuf*2.;
 
-   for (i=0; i<items; i++) {
+   for (int i=0; i<items; i++) {
       /* Collisions with planet circles and jp triangles (odd indices). */
       mw = 2.*mo[i]->radius;
       mh = mw;
@@ -559,8 +556,7 @@ static int ovr_safelaneKnown( SafeLane *sf, Vector2d *posns[2] )
    Planet *pnt;
    JumpPoint *jp;
    int known = 1;
-   int j;
-   for (j=0; j<2; j++) {
+   for (int j=0; j<2; j++) {
       switch(sf->point_type[j]) {
          case SAFELANE_LOC_PLANET:
             pnt = planet_getIndex( sf->point_id[j] );
@@ -769,7 +765,6 @@ void ovr_render( double dt )
       glColour col = cRadar_hilight;
       col.a = 0.6;
       map_overlayToScreenPos( &x, &y, player.autonav_pos.x, player.autonav_pos.y );
-      //gl_renderCross( x, y, 5., &cRadar_hilight );
       glUseProgram( shaders.selectplanet.program );
       glUniform1f( shaders.selectplanet.dt, ovr_dt );
       gl_renderShader( x, y, 9., 9., 0., &shaders.selectplanet, &col, 1 );
@@ -797,7 +792,9 @@ static void ovr_mrkRenderAll( double res )
       ovr_marker_t *mrk = &ovr_markers[i];
 
       map_overlayToScreenPos( &x, &y, mrk->u.pt.x, mrk->u.pt.y );
-      gl_renderCross( x, y, 5., &cRadar_hilight );
+      glUseProgram( shaders.hilight.program );
+      glUniform1f( shaders.hilight.dt, ovr_dt );
+      gl_renderShader( x, y, 9., 9., 0., &shaders.hilight, &cRadar_hilight, 1 );
 
       if (mrk->text != NULL)
          gl_printMarkerRaw( &gl_smallFont, x+10., y-gl_smallFont.h/2., &cRadar_hilight, mrk->text );
@@ -824,8 +821,7 @@ void ovr_mrkFree (void)
  */
 void ovr_mrkClear (void)
 {
-   int i;
-   for (i=0; i<array_size(ovr_markers); i++)
+   for (int i=0; i<array_size(ovr_markers); i++)
       ovr_mrkCleanup( &ovr_markers[i] );
    array_erase( &ovr_markers, array_begin(ovr_markers), array_end(ovr_markers) );
 }
@@ -872,9 +868,7 @@ static ovr_marker_t *ovr_mrkNew (void)
  */
 unsigned int ovr_mrkAddPoint( const char *text, double x, double y )
 {
-   ovr_marker_t *mrk;
-
-   mrk = ovr_mrkNew();
+   ovr_marker_t *mrk = ovr_mrkNew();
    mrk->type = 0;
    if (text != NULL)
       mrk->text = strdup( text );
@@ -892,8 +886,7 @@ unsigned int ovr_mrkAddPoint( const char *text, double x, double y )
  */
 void ovr_mrkRm( unsigned int id )
 {
-   int i;
-   for (i=0; i<array_size(ovr_markers); i++) {
+   for (int i=0; i<array_size(ovr_markers); i++) {
       if (id!=ovr_markers[i].id)
          continue;
       ovr_mrkCleanup( &ovr_markers[i] );
