@@ -37,3 +37,11 @@ if (luacheck_exe.found())
     ]
     )
 endif
+
+# If this test fails, someone put a standard constant like PRIu64 in a translatable string.
+# We can't support that (and you don't want to know how GNU gettext does it), but %.0f is typically good enough.
+test('search_for_unsupported_sysdep_strings',
+   find_program('grep'),
+   args: ['-q', '%<PRI', join_paths(meson.source_root(), 'po', 'naev.pot')],
+   should_fail: true,
+   )
