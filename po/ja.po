@@ -32,7 +32,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2021-09-30 21:18-0400\n"
-"PO-Revision-Date: 2021-09-26 14:39+0000\n"
+"PO-Revision-Date: 2021-10-03 14:39+0000\n"
 "Last-Translator: OOTA, Masato <ooyooxei+gh@gmail.com>\n"
 "Language-Team: Japanese <https://hosted.weblate.org/projects/naev/naev/ja/>\n"
 "Language: ja\n"
@@ -79,10 +79,8 @@ msgid ""
 "civilisation spread, as it always has, with exponential enthusiasm -- "
 "ripples in the dark sea of space."
 msgstr ""
-"探検家たちの最初の波は、亜光速で星から星へとはうように進んでいった。超空間駆"
-"動の発明が、二度めの拡張に拍車をかけるまでは。それから、文明は広がっていっ"
-"た。いつものとおり、急激な熱意とともにだ⸺それが宇宙の暗い海にさざなみを立たせ"
-"る。"
+"探検家たちの最初の波は、亜光速で星から星へとはうように進んでいった。超空間駆動の発明が、二度めの拡大に拍車をかけるまでは。それから、文明は広がっていった。"
+"いつものとおり、急激な熱意とともにだ⸺それが宇宙の暗い海にさざなみを立たせる。"
 
 #: dat/intro:12
 msgid ""
@@ -12913,230 +12911,172 @@ msgid ""
 msgstr ""
 
 #: dat/assets_virtual/dvaered_small.xml:2
-#, fuzzy
-#| msgid "Dvaered Phalanx"
 msgid "Dvaered Small"
-msgstr "ドベーレッド・ファランクス"
+msgstr "ドベーレッド 小"
 
 #: dat/assets_virtual/dvaered_unpresence.xml:2
-#, fuzzy
-#| msgid "Dvaered Ancestor"
 msgid "Dvaered Unpresence"
-msgstr "ドベーレッド・アンセスター"
+msgstr "ドベーレッド 非存在"
 
 #: dat/assets_virtual/dvaered_unpresence_range1.xml:2
 msgid "Dvaered Unpresence (Range 1)"
-msgstr ""
+msgstr "ドベーレッド 非存在 (距離 1)"
 
 #: dat/assets_virtual/empire_small.xml:2
-#, fuzzy
-#| msgid "Empire Shark"
 msgid "Empire Small"
-msgstr "帝国シャーク"
+msgstr "帝国 小"
 
 #: dat/assets_virtual/empire_unpresence.xml:2
-#, fuzzy
-#| msgid "Enemy Presence"
 msgid "Empire Unpresence"
-msgstr "敵の出現"
+msgstr "帝国 非存在"
 
 #: dat/assets_virtual/empire_unpresence_range1.xml:2
 msgid "Empire Unpresence (Range 1)"
-msgstr ""
+msgstr "帝国 非存在 (距離 1)"
 
 #: dat/assets_virtual/flf_small.xml:2
-#, fuzzy
-#| msgid "Small"
 msgid "FLF Small"
-msgstr "小型"
+msgstr "FLF 小"
 
 #: dat/assets_virtual/flf_unpresence.xml:2
-#, fuzzy
-#| msgid "Presence"
 msgid "FLF Unpresence"
-msgstr "存在感"
+msgstr "FLF 非存在"
 
 #: dat/assets_virtual/frontier_small.xml:2
-#, fuzzy
-#| msgid "Frontier"
 msgid "Frontier Small"
-msgstr "辺境"
+msgstr "辺境 小"
 
 #: dat/assets_virtual/frontier_unpresence.xml:2
-#, fuzzy
-#| msgid "Frontier Alliance"
 msgid "Frontier Unpresence"
-msgstr "辺境同盟"
+msgstr "辺境 非存在"
 
 #: dat/assets_virtual/independent_all_unpresence.xml:2
 msgid "Independent All Unpresence"
-msgstr ""
+msgstr "独立勢力 すべて 非存在"
 
 #: dat/assets_virtual/independent_all_unpresence_range1.xml:2
 msgid "Independent All Unpresence (Range 1)"
-msgstr ""
+msgstr "独立勢力 すべて 非存在 (距離 1)"
 
 #: dat/assets_virtual/independent_trader_area.xml:2
-#, fuzzy
-#| msgid "Independent"
 msgid "Independent Trader Area"
-msgstr "独立勢力"
+msgstr "独立勢力 貿易商 区域"
 
 #: dat/assets_virtual/independent_trader_local.xml:2
-#, fuzzy
-#| msgid "Independent"
 msgid "Independent Trader Local"
-msgstr "独立勢力"
+msgstr "独立勢力 貿易商 局所"
 
 #: dat/assets_virtual/independent_unpresence.xml:2
-#, fuzzy
-#| msgid "Independent"
 msgid "Independent Unpresence"
-msgstr "独立勢力"
+msgstr "独立勢力 非存在"
 
 #: dat/assets_virtual/miner_local.xml:2
-#, fuzzy
-#| msgid "Miner Koala"
 msgid "Miner Local"
-msgstr "鉱員コアラ"
+msgstr "採掘者 局所"
 
 #: dat/assets_virtual/miner_small.xml:2
-#, fuzzy
-#| msgid "Miner Llama"
 msgid "Miner Small"
-msgstr "鉱員ラマ"
+msgstr "採掘者 小"
 
 #: dat/assets_virtual/pirate_all_unpresence.xml:2
-#, fuzzy
-#| msgid "Pirate Ancestor"
 msgid "Pirate All Unpresence"
-msgstr "海賊アンセスター"
+msgstr "海賊 すべて 非存在"
 
 #: dat/assets_virtual/pirate_all_unpresence_range1.xml:2
 msgid "Pirate All Unpresence (Range 1)"
-msgstr ""
+msgstr "海賊 すべて 非存在 (距離 1)"
 
 #: dat/assets_virtual/pirate_medium.xml:2
-#, fuzzy
-#| msgid "Piracy Risk: Medium"
 msgid "Pirate Medium"
-msgstr "海賊行為の危険性: 中程度"
+msgstr "海賊 中"
 
 #: dat/assets_virtual/pirate_small.xml:2
-#, fuzzy
-#| msgid "Pirate Shark"
 msgid "Pirate Small"
-msgstr "海賊シャーク"
+msgstr "海賊 小"
 
 #: dat/assets_virtual/pirate_unpresence.xml:2
-#, fuzzy
-#| msgid "Pirate Kestrel"
 msgid "Pirate Unpresence"
-msgstr "海賊ケストレル"
+msgstr "海賊 非存在"
 
 #: dat/assets_virtual/proteron_small.xml:2
-#, fuzzy
-#| msgid "Protera Sigma"
 msgid "Proteron Small"
-msgstr "プロテラ・シグマ"
+msgstr "プロテロン 小"
 
 #: dat/assets_virtual/proteron_unpresence.xml:2
-#, fuzzy
-#| msgid "Proteron Watson"
 msgid "Proteron Unpresence"
-msgstr "プロテロン・ワトソン"
+msgstr "プロテロン 非存在"
 
 #: dat/assets_virtual/proteron_unpresence_range1.xml:2
 msgid "Proteron Unpresence (Range 1)"
-msgstr ""
+msgstr "プロテロン すべて 非存在 (距離 1)"
 
 #: dat/assets_virtual/sirius_small.xml:2
-#, fuzzy
-#| msgid "Sirius Shaman"
 msgid "Sirius Small"
-msgstr "シリウス・シャーマン"
+msgstr "シリウス 小"
 
 #: dat/assets_virtual/sirius_unpresence.xml:2
-#, fuzzy
-#| msgid "Sirius Reverence"
 msgid "Sirius Unpresence"
-msgstr "シリウス・レベレンス"
+msgstr "シリウス 非存在"
 
 #: dat/assets_virtual/soromid_unpresence.xml:2
-#, fuzzy
-#| msgid "Soromid Reaver"
 msgid "Soromid Unpresence"
-msgstr "ソロミド・リーバー"
+msgstr "ソロミド 非存在"
 
 #: dat/assets_virtual/thurion_local.xml:2
-#, fuzzy
-#| msgid "Thurion"
 msgid "Thurion Local"
-msgstr "ザーリオン"
+msgstr "ザーリオン 局所"
 
 #: dat/assets_virtual/tradelane.xml:2
-#, fuzzy
-#| msgid "Grave Lance"
 msgid "Trade Lane"
-msgstr "グレイブランス"
+msgstr "貿易用航路"
 
 #: dat/assets_virtual/tradelane_dvaered.xml:2
 msgid "Trade Lane (Dvaered)"
-msgstr ""
+msgstr "貿易用航路 (ドベーレッド)"
 
 #: dat/assets_virtual/tradelane_empire.xml:2
 msgid "Trade Lane (Empire)"
-msgstr ""
+msgstr "貿易用航路 (帝国)"
 
 #: dat/assets_virtual/tradelane_sirius.xml:2
 msgid "Trade Lane (Sirius)"
-msgstr ""
+msgstr "貿易用航路 (シリウス)"
 
 #: dat/assets_virtual/tradelane_soromid.xml:2
 msgid "Trade Lane (Soromid)"
-msgstr ""
+msgstr "貿易用航路 (ソロミド)"
 
 #: dat/assets_virtual/tradelane_zalek.xml:2
 msgid "Trade Lane (Za'lek)"
-msgstr ""
+msgstr "貿易用航路 (ザレク)"
 
 #: dat/assets_virtual/trader_area.xml:2
-#, fuzzy
-#| msgid "Trader Mule"
 msgid "Trader Area"
-msgstr "貿易商ミュール"
+msgstr "貿易商 区域"
 
 #: dat/assets_virtual/trader_local.xml:2
-#, fuzzy
-#| msgid "Trader Koala"
 msgid "Trader Local"
-msgstr "貿易商コアラ"
+msgstr "貿易商 局所"
 
 #: dat/assets_virtual/trader_unpresence.xml:2
 msgid "Trader Unpresence"
-msgstr ""
+msgstr "貿易商 非存在"
 
 #: dat/assets_virtual/virtual_sindbad.xml:2
 msgid "Virtual Sindbad"
 msgstr "バーチャル シンドバッド"
 
 #: dat/assets_virtual/zalek_medium.xml:2
-#, fuzzy
-#| msgid "Za'lek Demon"
 msgid "Za'lek Medium"
-msgstr "ザレク・ディーモン"
+msgstr "ザレク 中"
 
 #: dat/assets_virtual/zalek_small.xml:2
-#, fuzzy
-#| msgid "Za'lek Diablo"
 msgid "Za'lek Small"
-msgstr "ザレク・ディアブロ"
+msgstr "ザレク 小"
 
 #: dat/assets_virtual/zalek_unpresence.xml:2
-#, fuzzy
-#| msgid "Za'lek Test Engine"
 msgid "Za'lek Unpresence"
-msgstr "ザレク・試験エンジン"
+msgstr "ザレク 非存在"
 
 #: dat/commodity.xml:4
 msgid "Food"
@@ -13263,67 +13203,63 @@ msgstr "貿易商"
 
 #: dat/faction.xml:58
 msgid "Miner"
-msgstr "鉱員"
+msgstr "採掘者"
 
 #: dat/faction.xml:81
 msgid "Raven Clan"
-msgstr ""
+msgstr "レイブン一味"
 
 #: dat/faction.xml:84
-#, fuzzy
-#| msgid "Pirate Phalanx"
 msgid "Raven Pirate Clan"
-msgstr "海賊ファランクス"
+msgstr "レイブン海賊一味"
 
 #: dat/faction.xml:91
 msgid ""
 "The Raven Pirate Clan is a band of pirates that lead over the widespread "
 "Qorel sector between the Empire and Dvaered systems."
-msgstr ""
+msgstr "レイブン海賊一味は、帝国とドベーレッドの星系の間にあるコレル区域の広い範囲で優勢な海賊団だ。"
 
 #: dat/faction.xml:116
 msgid "Wild Ones"
-msgstr ""
+msgstr "荒くれ"
 
 #: dat/faction.xml:119
 msgid "Wild Ones Pirate Clan"
-msgstr ""
+msgstr "荒くれ海賊一味"
 
 #: dat/faction.xml:126
 msgid ""
 "The Wild Ones Pirate Clan is a violent and loosely organized band of pirates "
 "that control the Haven sector between Empire and Soromid territories."
-msgstr ""
+msgstr "荒くれ海賊一味は暴力的でゆるやかに組織化された海賊団で、帝国とソロミドの領域の間にあるヘイブン区域を支配している。"
 
 #: dat/faction.xml:151
 msgid "Black Lotus"
-msgstr ""
+msgstr "ブラックロータス"
 
 #: dat/faction.xml:154
 msgid "Black Lotus Pirate Clan"
-msgstr ""
+msgstr "ブラックロータス海賊一味"
 
 #: dat/faction.xml:161
 msgid ""
 "The Black Lotus Pirate Clan is a fiercely organized pirate clan located "
 "between the Za'lek and Sirius space."
-msgstr ""
+msgstr "ブラックロータス海賊一味は厳重な組織の海賊団で、ザレクとシリウス宙域の間に位置を占めている。"
 
 #: dat/faction.xml:186
 msgid "Dreamer Clan"
-msgstr ""
+msgstr "ドリーマー一味"
 
 #: dat/faction.xml:189
-#, fuzzy
-#| msgid "Pirate Phalanx"
 msgid "Dreamer Pirate Clan"
-msgstr "海賊ファランクス"
+msgstr "ドリーマー海賊一味"
 
 #: dat/faction.xml:196
 msgid ""
 "The Dreamer Pirate Clan consists largely of disgruntled pirates from the "
 "Frontier, fed up with both the FLF terrorism and Empire tyranny."
-msgstr ""
+msgstr "ドリーマー海賊一味は、おもに不満をもった辺境出身の海賊たちからなっていて、FLF のテロリズムと帝国の圧政の両方にうんざりしている。"
 
 #: dat/faction.xml:221 dat/faction.xml:256 dat/faction.xml:619
 #: dat/missions/neutral/kidnapped/traffic_00.lua:145
@@ -13335,10 +13271,8 @@ msgid "Pirate"
 msgstr "海賊"
 
 #: dat/faction.xml:225
-#, fuzzy
-#| msgid "Galactic Pirates"
 msgid "Galactic Space Pirates"
-msgstr "銀河海賊"
+msgstr "銀河宇宙海賊"
 
 #: dat/faction.xml:232
 msgid ""
@@ -13346,24 +13280,22 @@ msgid ""
 "affiliated with any particular clan. Due to their disorganized nature, they "
 "tend to respect the clans they operate near."
 msgstr ""
+"銀河宇宙海賊は、特定の海賊団とはまったく提携していない、独立した海賊船からなっている。まとまりがないという性質のため、近くで運営されている海賊団に注意を払"
+"う傾向にある。"
 
 #: dat/faction.xml:255
-#, fuzzy
-#| msgid "Marauder Station"
 msgid "Marauder"
-msgstr "マローダー・ステーション"
+msgstr "略奪者"
 
 #: dat/faction.xml:257
-#, fuzzy
-#| msgid "Pirate Starbridge"
 msgid "Pirate Marauders"
-msgstr "海賊スターブリッジ"
+msgstr "海賊の略奪者"
 
 #: dat/faction.xml:267
 msgid ""
 "Pirate Marauders are the lowest and most vile of pirates. They are extremely "
 "aggressive and will attack most vessels unprovoked."
-msgstr ""
+msgstr "海賊の略奪者は、もっとも粗野で下劣な海賊だ。きわめて押しが強く、ほとんどの船をいわれもなく攻撃する。"
 
 #: dat/faction.xml:289 dat/scripts/common/empire.lua:18
 #: dat/scripts/common/empire.lua:23
@@ -13374,7 +13306,7 @@ msgstr "帝国"
 msgid ""
 "The Empire is the bureaucratic heart of the universe that provides stability "
 "and cohesion, when possible."
-msgstr ""
+msgstr "帝国は宇宙の官僚的中心で、安定と団結をもたらしている。可能なときはだが。"
 
 #: dat/faction.xml:315 dat/ships/proteron_archimedes.xml:20
 #: dat/ships/proteron_derivative.xml:16 dat/ships/proteron_kahan.xml:16
@@ -13384,7 +13316,7 @@ msgstr "プロテロン"
 
 #: dat/faction.xml:318
 msgid "Fallen House Proteron"
-msgstr ""
+msgstr "落ちぶれたプロテロン荘"
 
 #: dat/faction.xml:324
 msgid ""
@@ -13392,6 +13324,8 @@ msgid ""
 "attack the Emperor himself. This caused the incident and left the universe "
 "irreversibly ravaged."
 msgstr ""
+"落ちぶれたプロテロン荘は帝国の大荘園だったが、立場を変えて皇帝自身を攻撃することに決めたのだった。これは事象をひきおこし、宇宙を不可逆的に荒廃させることと"
+"なった。"
 
 #: dat/faction.xml:338 dat/missions/flf/flf_common.lua:69
 msgid "Frontier"
@@ -13405,7 +13339,7 @@ msgstr "辺境同盟"
 msgid ""
 "The Frontier Alliance is formed by the survivors of the initial attempts of "
 "Human expansion into space."
-msgstr ""
+msgstr "辺境同盟は、人類の宇宙拡大への最初の試みを生きのびた人たちから形成された。"
 
 #: dat/faction.xml:363
 msgid "Traders Guild"
@@ -13417,7 +13351,7 @@ msgstr "宇宙貿易商ギルド"
 
 #: dat/faction.xml:371
 msgid "TODO we have to make these guys more interesting."
-msgstr ""
+msgstr "修正予定 この人たちがもっとおもしろくなるものを作らなきゃ。"
 
 #: dat/faction.xml:384 dat/ships/soromid_arx.xml:20
 #: dat/ships/soromid_brigand.xml:13 dat/ships/soromid_ira.xml:18
@@ -13433,6 +13367,8 @@ msgid ""
 "themselves in order to survive a pandemic. They now openly embrace their "
 "human transcendence as a sign of strength."
 msgstr ""
+"ソロミドは、流行病から生きのびるために自身を遺伝的に改変せざるをえなかった人たちから構成されている。ソロミドは自分たちの人類にたいする超越性を、強さのしる"
+"しとしてあからさまに活用している。"
 
 #: dat/faction.xml:408
 msgid "Thurion"
@@ -13442,7 +13378,7 @@ msgstr "ザーリオン"
 msgid ""
 "The Thurion are a mysterious faction located deep in the Nebula. They seem "
 "to be out of touch with the external world."
-msgstr ""
+msgstr "ザーリオンは星雲の深くにいる謎めいた党派だ。外部の世界とは接触をしていないらしい。"
 
 #: dat/faction.xml:427
 msgid "Collective"
@@ -13452,7 +13388,7 @@ msgstr "集合体"
 msgid ""
 "The Collective are a hivemind of AI ships gone rogue. They seem to attack "
 "and destroy all humans on sight."
-msgstr ""
+msgstr "集合体は、はぐれてしまった人工知能船からなる集合精神だ。視界に入った人間はすべて攻撃して破壊しているらしい。"
 
 #. FLF are not a natural enemy of the Empire, we have to enforce that
 #.
@@ -13480,7 +13416,7 @@ msgstr "辺境自由戦線"
 msgid ""
 "The Frontier Liberation Front is a group of terrorists advocating for the "
 "independence of the Frontier from Imperial tyranny."
-msgstr ""
+msgstr "辺境自由戦線はテロリスト集団で、帝国の圧政からの辺境の独立を主張している。"
 
 #. Ship to go back to
 #. Set up Major Malik
@@ -13508,7 +13444,7 @@ msgstr "ドベーレッド荘"
 msgid ""
 "House Dvaered is one of the oldest Great Houses in the Empire. They are "
 "proud and formed by a coalition of many powerful warlords."
-msgstr ""
+msgstr "ドベーレッド荘は、帝国でもとりわけ古い大荘園だ。高慢で、力のある多数の軍閥領袖の連合から形成されている。"
 
 #. Must be goal system
 #. Must be in mission mode (we allow the player to run away and come back)
@@ -13531,7 +13467,7 @@ msgstr "ザレク荘"
 msgid ""
 "House Za'lek is the scientific heart of the Empire. Until recently they were "
 "a secretive Great House, but they have recently become much more open."
-msgstr ""
+msgstr "ザレク荘は帝国の科学的中心だ。最近までは秘密主義の大荘園だったが、このごろはずっと開放的になった。"
 
 #: dat/faction.xml:515 dat/faction.xml:675 dat/scripts/common/sirius.lua:9
 #: dat/scripts/common/sirius.lua:15
@@ -13546,7 +13482,7 @@ msgstr "シリウス荘"
 msgid ""
 "House Sirius is defined by its state religion more than anything else, with "
 "Sirichana as the focus of worship."
-msgstr ""
+msgstr "シリウス荘は、ほかのなによりも国教によってあきらかに定まる。崇拝の中心としてはシリチャナがいる。"
 
 #: dat/faction.xml:542 dat/ships/goddard.xml:2 dat/ssys/goddard.xml:2
 msgid "Goddard"
@@ -13561,7 +13497,7 @@ msgstr "ゴダード荘"
 msgid ""
 "House Goddard is a minor house wedged between the Empire and Dvaered. They "
 "are one of the main fabricators of ships for the Dvaered."
-msgstr ""
+msgstr "ゴダード荘は、帝国とドベーレッドの間に割りこむ小規模な荘園だ。ドベーレッドむけの主要な船舶製造業者のひとつである。"
 
 #. thissystem and source_system must be adjacent (for those who use player.teleport)
 #. Spawn the ambusher, depending on the player's max velocity
@@ -15290,9 +15226,8 @@ msgid ""
 "excels at enabling merchants to haul moderate amounts of cargo from system "
 "to system with minimal refuelling stops."
 msgstr ""
-"小さな船でも利用できるとくに強力なエンジンのなかでも、オクス XL は貿易商が適"
-"度な量の貨物を星系から星系へと運搬するとき、燃料補給のための寄港を最小限にで"
-"きることで優れている。"
+"小さな船でも利用できるとくに強力なエンジンのなかでも、オクス XL "
+"は貿易商が適度な量の貨物を星系から星系へと運搬するとき、燃料補給のための寄港を最小限にできることですぐれている。"
 
 #: dat/outfits/core_engine/small/nexus_dart_150_engine.xml:2
 msgid "Nexus Dart 150 Engine"
@@ -15305,6 +15240,8 @@ msgid ""
 "reasonable price. A very popular engine among civilian and military users "
 "alike."
 msgstr ""
+"ダート 150 は小型船のための釣りあいの取れたエンジンだ。速度ではすぐれていないが、よい操縦性と電力効率を手ごろな価格で提供している。民間でも軍事用途で"
+"も同様に、とても人気のあるエンジンだ。"
 
 #: dat/outfits/core_engine/small/tricon_zephyr_engine.xml:2
 msgid "Tricon Zephyr Engine"
@@ -15317,6 +15254,8 @@ msgid ""
 "caveat of markedly increased power consumption, but those flying with Tricon "
 "engines can usually afford the requisite reactor upgrades."
 msgstr ""
+"無比の性能を要求する小型船パイロットなら、トライコンのゼファーが選ぶべきエンジンだ。この種のものではいちばんの操縦性には、きわだって増加する電力消費という"
+"注意書きがしっかりついてくる。しかしトライコンエンジンで飛ぶ者たちには、必要となる性能をもつ反応炉への交換をする余裕がふつうはあるものだ。"
 
 #: dat/outfits/core_engine/small/tricon_zephyr_ii_engine.xml:2
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:306
@@ -15330,6 +15269,8 @@ msgid ""
 "Its performance has not gone unnoticed by merchants either, resulting in its "
 "use for lightweight, time-critical shipping."
 msgstr ""
+"重戦闘機むけを意図した、トライコンのもとのゼファーの拡大版であるゼファー II "
+"は、重戦闘機や爆撃機を偵察船のように動かす余裕がある。その性能は交易商たちにも気づかれずにいることはなく、時間制約の厳しい軽量輸送に使われることになった。"
 
 #: dat/outfits/core_engine/small/unicorp_hawk_350_engine.xml:2
 msgid "Unicorp Hawk 350 Engine"
@@ -15341,6 +15282,8 @@ msgid ""
 "modest energy consumption allows it to be equipped on most vessels without "
 "requiring reactor upgrades."
 msgstr ""
+"ホーク 350 "
+"は重戦闘機と軽負荷な貨物船を狙ったものだ。エネルギー消費は控えめなので、反応炉をよいものにかえる必要もなく、ほとんどの船に装備することができる。"
 
 #: dat/outfits/core_engine/small/zalek_test_engine.xml:2
 msgid "Za'lek Test Engine"
@@ -15353,6 +15296,8 @@ msgid ""
 "scientists to test new refrigeration and propulsion systems. These engines "
 "are very often modded by students, which makes them unreliable."
 msgstr ""
+"ザレクの製作者に作られたこのエンジンは、効率を狙ったエンジンではない。その目的は、簡単に変更できるようにして、ザレクの科学者たちが新しい冷却・推進システム"
+"を試験できるようにすることだ。このエンジンは学生たちがほんとうによく変更をするので、信頼できるものにはなっていない。"
 
 #: dat/outfits/core_hull/dummy_plating.xml:2
 msgid "Dummy Plating"
@@ -15386,11 +15331,11 @@ msgstr "中核システム (船殻)"
 msgid ""
 "This is a dummy hull for use in missions only, which does nothing. DO NOT "
 "BUY."
-msgstr ""
+msgstr "これは任務で使うためだけの飾りの船殻だ。なにもしない。買ってはならない。"
 
 #: dat/outfits/core_hull/large/patchwork_heavy_plating.xml:2
 msgid "Patchwork Heavy Plating"
-msgstr "パッチワーク・重装甲"
+msgstr "つぎはぎ重装甲"
 
 #: dat/outfits/core_hull/large/patchwork_heavy_plating.xml:10
 #: dat/outfits/core_hull/medium/patchwork_medium_plating.xml:10
@@ -15398,7 +15343,7 @@ msgstr "パッチワーク・重装甲"
 msgid ""
 "On the plus side, it keeps air from venting into space. But that's about it. "
 "This kind of hull maintenance is simply unacceptable."
-msgstr ""
+msgstr "よい点を見れば、これは空気を宇宙に逃さないようにしている。しかしそれだけだ。この種の船殻を維持していくのは、単純に論外といえる。"
 
 #: dat/outfits/core_hull/large/sk_heavy_combat_plating.xml:2
 msgid "S&K Heavy Combat Plating"
@@ -15410,10 +15355,12 @@ msgid ""
 "prolonged battle. Quite a few captains and their crews owe their lives to "
 "this armour configuration."
 msgstr ""
+"シェイファー & "
+"ケインインダストリーズが開発したこの重装甲は、長期の戦闘に耐えることができる。かなりの数の船長と乗員が、この装甲構造のために命を助けられた。"
 
 #: dat/outfits/core_hull/large/sk_large_cargo_hull.xml:2
 msgid "S&K Large Cargo Hull"
-msgstr "S&K・大型船倉"
+msgstr "S&K・大型船倉船殻"
 
 #: dat/outfits/core_hull/large/sk_large_cargo_hull.xml:10
 msgid ""
@@ -15421,6 +15368,8 @@ msgid ""
 "defensive alloys, which allows it to free up even more space for cargo "
 "without sacrificing too much durability."
 msgstr ""
+"このシェイファー & "
+"ケインインダストリーズ製の大型船倉は、最新の防御用合金を使っている。そのため、耐久性をあまり犠牲にせずに、ずっと大きな空間を船倉用に空けられる。"
 
 #: dat/outfits/core_hull/large/sk_superheavy_combat_plating.xml:2
 msgid "S&K Superheavy Combat Plating"
@@ -15432,6 +15381,8 @@ msgid ""
 "modification from Schafer & Kane Industries is generally found only on "
 "important capital ships."
 msgstr ""
+"市場にある標準的な装甲構造のなかでいちばんよいと考えられているこの装甲は、シェイファー & "
+"ケインインダストリーズ製の船殻修正手段であり、一般的には重要な主力艦でのみ見られるものだ。"
 
 #: dat/outfits/core_hull/large/unicorp_d48_heavy_plating.xml:2
 msgid "Unicorp D-48 Heavy Plating"
@@ -15443,6 +15394,7 @@ msgid ""
 "weapons, with most seasoned captains opting for a heavier, more advanced "
 "plating."
 msgstr ""
+"きちんとした設計ではあるものの、D-48 装甲は現代の強力な武器には完敗だ。相手がとりわけ年季を積んだ船長で、もっと強くて進んだ装甲を選んでいた場合は。"
 
 #: dat/outfits/core_hull/large/unicorp_d68_heavy_plating.xml:2
 msgid "Unicorp D-68 Heavy Plating"
@@ -15454,6 +15406,7 @@ msgid ""
 "weapons, with most seasoned captains opting for a heavier, more advanced "
 "plating."
 msgstr ""
+"きちんとした設計ではあるものの、D-68 装甲は現代の強力な武器には完敗だ。相手がとりわけ年季を積んだ船長で、もっと強くて進んだ装甲を選んでいた場合は。"
 
 #: dat/outfits/core_hull/medium/nexus_medium_stealth_plating.xml:2
 msgid "Nexus Medium Stealth Plating"
@@ -15465,20 +15418,22 @@ msgid ""
 "but Nexus Shipyards have nevertheless developed a hull modification that "
 "helps in this area"
 msgstr ""
+"中くらいの大きさの船は、ふつう仕事中には発見されないままでいることはない。しかしそれでも、ネクサス造船所はその領域の船がそうすることを助ける船殻修正手段を"
+"開発した。"
 
 #: dat/outfits/core_hull/medium/patchwork_medium_plating.xml:2
 msgid "Patchwork Medium Plating"
-msgstr "パッチワーク・中装甲"
+msgstr "つぎはぎ中装甲"
 
 #: dat/outfits/core_hull/medium/sk_medium_cargo_hull.xml:2
 msgid "S&K Medium Cargo Hull"
-msgstr "S&K・中型船倉"
+msgstr "S&K・中型船倉船殻"
 
 #: dat/outfits/core_hull/medium/sk_medium_cargo_hull.xml:10
 msgid ""
 "Schafer & Kane Industries have developed a hull modification that provides "
 "both ample cargo space and protection."
-msgstr ""
+msgstr "シェイファー & ケインインダストリーズは、広い船倉と防衛力の両方を提供する船殻修正手段を開発した。"
 
 #: dat/outfits/core_hull/medium/sk_medium_combat_plating.xml:2
 msgid "S&K Medium Combat Plating"
@@ -15489,7 +15444,7 @@ msgid ""
 "Designed for corvettes and similarly-sized vessels, Schafer & Kane's medium "
 "combat plating provides ample protection utilizing the latest in defensive "
 "materials."
-msgstr ""
+msgstr "コルベットとそれに似た大きさの船のために設計された S&K・中戦闘装甲は、最新の防御用材料を活用して、たっぷりとした防衛力を提供している。"
 
 #: dat/outfits/core_hull/medium/sk_mediumheavy_combat_plating.xml:2
 msgid "S&K Medium-Heavy Combat Plating"
@@ -15500,7 +15455,7 @@ msgid ""
 "Designed for destroyers and similarly-sized vessels, Schafer & Kane's medium-"
 "heavy combat plating provides excellent protection from everything save "
 "capital-class threats."
-msgstr ""
+msgstr "駆逐艦とそれに似た大きさの船のために設計された S&K・中重戦闘装甲は、主力艦級の脅威を除くすべてにたいするすぐれた防衛力を提供している。"
 
 #: dat/outfits/core_hull/medium/unicorp_d12_medium_plating.xml:2
 msgid "Unicorp D-12 Medium Plating"
@@ -15510,7 +15465,7 @@ msgstr "ユニコープ・D-12 中装甲"
 msgid ""
 "D-12 plating provides a serviceable layer of armour to medium ships, and "
 "doesn't weigh too much."
-msgstr ""
+msgstr "D-12 装甲は、中くらいの船の装甲のなかでは実用的な水準の商品として用意されたものだ。そのうえあまり重くない。"
 
 #: dat/outfits/core_hull/medium/unicorp_d24_medium_plating.xml:2
 msgid "Unicorp D-24 Medium Plating"
@@ -15522,6 +15477,8 @@ msgid ""
 "thicker and built atop an enlarged superstructure, increasing mass, armour, "
 "and cargo capacity."
 msgstr ""
+"ユニコープの D-24 装甲は D-12 "
+"装甲と似ているが、装甲板がもっと分厚くなっていて、拡大された上部構造物が上に作りつけられている。それにより、質量、装甲、船倉容量が増している。"
 
 #: dat/outfits/core_hull/small/nexus_light_stealth_plating.xml:2
 msgid "Nexus Light Stealth Plating"
@@ -15532,11 +15489,11 @@ msgid ""
 "Designed for military scouting and patrol vessels, Nexus' Light Stealth "
 "Plating configuration features the latest in sensor-absorbing materials and "
 "geometry."
-msgstr ""
+msgstr "軍事用の偵察・巡視船のために設計されたネクサスの軽ステルス装甲構造は、最新のセンサー吸収材料と幾何的配置が特徴だ。"
 
 #: dat/outfits/core_hull/small/patchwork_light_plating.xml:2
 msgid "Patchwork Light Plating"
-msgstr "パッチワーク・軽装甲"
+msgstr "つぎはぎ軽装甲"
 
 #: dat/outfits/core_hull/small/sk_light_combat_plating.xml:2
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:314
@@ -15549,10 +15506,12 @@ msgid ""
 "Combat Plating configuration is a product made for fighters and bombers, "
 "providing optimum protection."
 msgstr ""
+"シェイファー & "
+"ケインインダストリーズは、おもに大きめな船にむけた開発をしている。しかし軽量戦闘装甲構造は、戦闘機や爆撃機に最適な防衛力を提供するように作られた製品だ。"
 
 #: dat/outfits/core_hull/small/sk_small_cargo_hull.xml:2
 msgid "S&K Small Cargo Hull"
-msgstr "S&K・小型船倉"
+msgstr "S&K・小型船倉船殻"
 
 #: dat/outfits/core_hull/small/sk_small_cargo_hull.xml:10
 msgid ""
@@ -15560,6 +15519,8 @@ msgid ""
 "Schafer & Kane Industries provides an impressive amount of cargo space "
 "without compromising the hull's integrity."
 msgstr ""
+"小さな配達船には高価な投資となるが、このシェイファー & "
+"ケインインダストリーズ製の船殻修正手段は、船殻の整合性を危険にさらすことなく堂々とした大きさの船倉を提供する。"
 
 #: dat/outfits/core_hull/small/sk_ultralight_combat_plating.xml:2
 msgid "S&K Ultralight Combat Plating"
@@ -15571,6 +15532,8 @@ msgid ""
 "Ultralight Combat Plating configuration is a product made for light fighters "
 "and in-system patrol craft, providing optimum protection."
 msgstr ""
+"シェイファー & ケインインダストリーズは、おもに大きめな船にむけた開発をしている。しかし超軽量戦闘装甲構造は、軽戦闘機や星系内小型巡視船に最適な防衛力を"
+"提供するように作られた製品だ。"
 
 #: dat/outfits/core_hull/small/unicorp_d2_light_plating.xml:2
 msgid "Unicorp D-2 Light Plating"
@@ -15580,7 +15543,7 @@ msgstr "ユニコープ・D-2 軽装甲"
 msgid ""
 "Commonly found on civilian vessels, the D-2 plating is popular with ship "
 "manufacturers due to its low cost and adequate, if uninspiring performance."
-msgstr ""
+msgstr "民間船でふつうに見られる D-2 装甲は、造船業者に人気がある。低価格でまずまずなものだからだ。ただし退屈な性能ではある。"
 
 #: dat/outfits/core_hull/small/unicorp_d4_light_plating.xml:2
 msgid "Unicorp D-4 Light Plating"
@@ -15590,7 +15553,7 @@ msgstr "ユニコープ・D-4 軽装甲"
 msgid ""
 "Commonly found on civilian vessels, the D-4 plating is popular with ship "
 "manufacturers due to its low cost and adequate, if uninspiring performance."
-msgstr ""
+msgstr "民間船でふつうに見られる D-4 装甲は、造船業者に人気がある。低価格でまずまずなものだからだ。ただし退屈な性能ではある。"
 
 #: dat/outfits/core_system/dummy_systems.xml:2
 msgid "Dummy Systems"
@@ -15625,7 +15588,7 @@ msgstr "中核システム (システム)"
 msgid ""
 "This is a dummy core system for use in missions only, which does nothing. DO "
 "NOT BUY."
-msgstr ""
+msgstr "これは任務で使うためだけの飾りの中核システムだ。なにもしない。買ってはならない。"
 
 #: dat/outfits/core_system/large/milspec_orion_8601_core_system.xml:2
 msgid "Milspec Orion 8601 Core System"
@@ -15639,6 +15602,8 @@ msgid ""
 "capital ships, providing superior performance in every field. Fly safe, fly "
 "Milspec."
 msgstr ""
+"ミルスペックはあなたの船のために高性能な機材を開発している。旅するあなたに宇宙が投げつけてきそうな危険にたいして、いつでも最適な用意をさせてくれるのだ。"
+"オリオン 8601 中核システムは主力艦むけの最高級製品で、どの方面にもすぐれた性能を発揮する。安全に飛ぼう。ミルスペックで飛ぼう。"
 
 #: dat/outfits/core_system/large/milspec_orion_9901_core_system.xml:2
 msgid "Milspec Orion 9901 Core System"
@@ -15652,6 +15617,8 @@ msgid ""
 "capital ships, providing superior performance in every field. Fly safe, fly "
 "Milspec."
 msgstr ""
+"ミルスペックはあなたの船のために高性能な機材を開発している。旅するあなたに宇宙が投げつけてきそうな危険にたいして、いつでも最適な用意をさせてくれるのだ。"
+"オリオン 9901 中核システムは主力艦むけの最高級製品で、どの方面にもすぐれた性能を発揮する。安全に飛ぼう。ミルスペックで飛ぼう。"
 
 #: dat/outfits/core_system/large/milspec_thalos_8502_core_system.xml:2
 msgid "Milspec Thalos 8502 Core System"
@@ -15664,6 +15631,8 @@ msgid ""
 "subsystem control whilst retaining the high standard in energy and shielding "
 "that Milspec prides itself on. Fly safe, fly Milspec."
 msgstr ""
+"ミルスペックは、船がただの部品の集まりでしかないことを知っている。それは部品をたくさんつければ船がもっとよくなるという意味だ。サロス 8502 は重要な下"
+"位システム制御手段を提供するのと同時に、エネルギーとシールドについてミルスペックが誇りとする高い水準を維持している。安全に飛ぼう。ミルスペックで飛ぼう。"
 
 #: dat/outfits/core_system/large/milspec_thalos_9802_core_system.xml:2
 msgid "Milspec Thalos 9802 Core System"
@@ -15676,6 +15645,8 @@ msgid ""
 "subsystem control whilst retaining the high standard in energy and shielding "
 "that Milspec prides itself on. Fly safe, fly Milspec."
 msgstr ""
+"ミルスペックは、船がただの部品の集まりでしかないことを知っている。それは部品をたくさんつければ船がもっとよくなるという意味だ。サロス 9802 は重要な下"
+"位システム制御手段を提供するのと同時に、エネルギーとシールドについてミルスペックが誇りとする高い水準を維持している。安全に飛ぼう。ミルスペックで飛ぼう。"
 
 #: dat/outfits/core_system/large/previous_generation_large_systems.xml:2
 msgid "Previous Generation Large Systems"
@@ -15687,7 +15658,7 @@ msgstr "前世代の大型システム"
 msgid ""
 "A jury-rigged mess of processors and generators that most captains wouldn't "
 "be seen dead having installed on their ship."
-msgstr ""
+msgstr "応急的にでっちあげた処理装置と発電機のごちゃまぜ。ほとんどの船長は死んでも船に設置しない。"
 
 #: dat/outfits/core_system/large/unicorp_pt2200_core_system.xml:2
 msgid "Unicorp PT-2200 Core System"
@@ -15699,6 +15670,8 @@ msgid ""
 "PT-2200 nevertheless offers acceptable performance for capital ships at a "
 "fraction of its competitors' prices."
 msgstr ""
+"一部の者から PT-400 システムを集めたものでしかないと批判される PT-2200 "
+"は、そうだとしても競合業者の価格の何分の一かで、主力艦むけとして許容できる性能を提供する。"
 
 #: dat/outfits/core_system/large/unicorp_pt500_core_system.xml:2
 msgid "Unicorp PT-500 Core System"
@@ -15710,6 +15683,8 @@ msgid ""
 "PT-500 nevertheless offers acceptable performance for light cruisers at a "
 "fraction of its competitors' prices."
 msgstr ""
+"一部の者から PT-310 システムを集めたものでしかないと批判される PT-500 "
+"は、そうだとしても競合業者の価格の何分の一かで、軽巡洋艦むけとして許容できる性能を提供する。"
 
 #: dat/outfits/core_system/medium/milspec_orion_4801_core_system.xml:2
 msgid "Milspec Orion 4801 Core System"
@@ -15722,6 +15697,8 @@ msgid ""
 "you on your travels. The Orion 4801 core system is affordable yet capable, "
 "recommended for the discerning captain. Fly safe, fly Milspec."
 msgstr ""
+"ミルスペックはあなたの船のために高性能な機材を開発している。旅するあなたに宇宙が投げつけてきそうな危険にたいして、いつでも最適な用意をさせてくれるのだ。"
+"オリオン 4801 中核システムは手ごろな価格であるうえに、必要な能力を備えているので、見識の高い船長にお勧めである。安全に飛ぼう。ミルスペックで飛ぼう。"
 
 #: dat/outfits/core_system/medium/milspec_orion_5501_core_system.xml:2
 msgid "Milspec Orion 5501 Core System"
@@ -15735,6 +15712,8 @@ msgid ""
 "medium ships, providing superior performance in every field. Fly safe, fly "
 "Milspec."
 msgstr ""
+"ミルスペックはあなたの船のために高性能な機材を開発している。旅するあなたに宇宙が投げつけてきそうな危険にたいして、いつでも最適な用意をさせてくれるのだ。"
+"オリオン 5501 中核システムは中型船むけの最高級製品で、どの方面にもすぐれた性能を発揮する。安全に飛ぼう。ミルスペックで飛ぼう。"
 
 #: dat/outfits/core_system/medium/milspec_thalos_4702_core_system.xml:2
 msgid "Milspec Thalos 4702 Core System"
@@ -15747,6 +15726,8 @@ msgid ""
 "subsystem control whilst retaining the high standard in energy and shielding "
 "that Milspec prides itself on. Fly safe, fly Milspec."
 msgstr ""
+"ミルスペックは、船がただの部品の集まりでしかないことを知っている。それは部品をたくさんつければ船がもっとよくなるという意味だ。サロス 4702 は重要な下"
+"位システム制御手段を提供するのと同時に、エネルギーとシールドについてミルスペックが誇りとする高い水準を維持している。安全に飛ぼう。ミルスペックで飛ぼう。"
 
 #: dat/outfits/core_system/medium/milspec_thalos_5402_core_system.xml:2
 msgid "Milspec Thalos 5402 Core System"
@@ -15759,6 +15740,8 @@ msgid ""
 "subsystem control whilst retaining the high standard in energy and shielding "
 "that Milspec prides itself on. Fly safe, fly Milspec."
 msgstr ""
+"ミルスペックは、船がただの部品の集まりでしかないことを知っている。それは部品をたくさんつければ船がもっとよくなるという意味だ。サロス 5402 は重要な下"
+"位システム制御手段を提供するのと同時に、エネルギーとシールドについてミルスペックが誇りとする高い水準を維持している。安全に飛ぼう。ミルスペックで飛ぼう。"
 
 #: dat/outfits/core_system/medium/previous_generation_medium_systems.xml:2
 msgid "Previous Generation Medium Systems"
@@ -15772,7 +15755,7 @@ msgstr "ユニコープ・PT-200 中核システム"
 msgid ""
 "Continuing Unicorp's PT series of core systems in the medium ship category, "
 "the PT-200 gives acceptable performance for an acceptable price."
-msgstr ""
+msgstr "一連のユニコープの PT 中核システムのなかで中型船を対象とする PT-200 は、許容可能な価格で許容可能な性能を与えてくれる。"
 
 #: dat/outfits/core_system/medium/unicorp_pt310_core_system.xml:2
 msgid "Unicorp PT-310 Core System"
@@ -15784,6 +15767,8 @@ msgid ""
 "all respects. Its considerably higher mass restricts its use to larger "
 "medium vessels such as destroyers."
 msgstr ""
+"PT-200 の高負荷用の変種である PT-310 "
+"は、あらゆる点でその前形式をこえている。かなり大きくなった質量のため、使えるのは駆逐艦のような大きめな中型船に限られる。"
 
 #: dat/outfits/core_system/small/milspec_orion_2301_core_system.xml:2
 msgid "Milspec Orion 2301 Core System"
@@ -15796,6 +15781,8 @@ msgid ""
 "you on your travels. The Orion 2301 core system is affordable yet capable, "
 "recommended for the beginning captain. Fly safe, fly Milspec."
 msgstr ""
+"ミルスペックはあなたの船のために高性能な機材を開発している。旅するあなたに宇宙が投げつけてきそうな危険にたいして、いつでも最適な用意をさせてくれるのだ。"
+"オリオン 2301 中核システムは手ごろな価格であるうえに、必要な能力を備えているので、かけだしの船長にお勧めである。安全に飛ぼう。ミルスペックで飛ぼう。"
 
 #: dat/outfits/core_system/small/milspec_orion_3701_core_system.xml:2
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:310
@@ -15810,6 +15797,8 @@ msgid ""
 "small ships, providing superior performance in every field. Fly safe, fly "
 "Milspec."
 msgstr ""
+"ミルスペックはあなたの船のために高性能な機材を開発している。旅するあなたに宇宙が投げつけてきそうな危険にたいして、いつでも最適な用意をさせてくれるのだ。"
+"オリオン 3701 中核システムは小型船むけの最高級製品で、どの方面にもすぐれた性能を発揮する。安全に飛ぼう。ミルスペックで飛ぼう。"
 
 #: dat/outfits/core_system/small/milspec_thalos_2202_core_system.xml:2
 msgid "Milspec Thalos 2202 Core System"
@@ -15822,6 +15811,8 @@ msgid ""
 "subsystem control whilst retaining the high standard in energy and shielding "
 "that Milspec prides itself on. Fly safe, fly Milspec."
 msgstr ""
+"ミルスペックは、船がただの部品の集まりでしかないことを知っている。それは部品をたくさんつければ船がもっとよくなるという意味だ。サロス 2202 は重要な下"
+"位システム制御手段を提供するのと同時に、エネルギーとシールドについてミルスペックが誇りとする高い水準を維持している。安全に飛ぼう。ミルスペックで飛ぼう。"
 
 #: dat/outfits/core_system/small/milspec_thalos_3602_core_system.xml:2
 msgid "Milspec Thalos 3602 Core System"
@@ -15834,6 +15825,8 @@ msgid ""
 "subsystem control whilst retaining the high standard in energy and shielding "
 "that Milspec prides itself on. Fly safe, fly Milspec."
 msgstr ""
+"ミルスペックは、船がただの部品の集まりでしかないことを知っている。それは部品をたくさんつければ船がもっとよくなるという意味だ。サロス 3602 は重要な下"
+"位システム制御手段を提供するのと同時に、エネルギーとシールドについてミルスペックが誇りとする高い水準を維持している。安全に飛ぼう。ミルスペックで飛ぼう。"
 
 #: dat/outfits/core_system/small/previous_generation_small_systems.xml:2
 msgid "Previous Generation Small Systems"
@@ -15847,7 +15840,7 @@ msgstr "ユニコープ・PT-16 中核システム"
 msgid ""
 "The PT-16 is a modest but to-spec core system offering reasonable, all-round "
 "performance for small vessels."
-msgstr ""
+msgstr "PT-16 は、控えめだが仕様にみあった中核システムであり、手ごろな価格で小型船にはまんべんのない性能を提供する。"
 
 #: dat/outfits/core_system/small/unicorp_pt68_core_system.xml:2
 msgid "Unicorp PT-68 Core System"
@@ -15857,11 +15850,11 @@ msgstr "ユニコープ・PT-68 中核システム"
 msgid ""
 "The PT-68 is an economical core system providing decent performance to small-"
 "to-medium vessels."
-msgstr ""
+msgstr "PT-68 は経済的な中核システムであり、小型から中型の船にかなりの性能を与えてくれる。"
 
 #: dat/outfits/fighter_bays/drone_fighter_bay.xml:2
 msgid "Drone Fighter Bay"
-msgstr "ドローン戦闘機格納庫"
+msgstr "ドローン戦闘機ベイ"
 
 #: dat/outfits/fighter_bays/drone_fighter_bay.xml:11
 msgid ""
@@ -15871,21 +15864,24 @@ msgid ""
 "maintenance. All the tools needed to take care of them are provided with the "
 "bay."
 msgstr ""
+"ドローン戦闘機ベイは、先進の集合体技術を使って 3 機のドローン戦闘機群を維持できるようにしたものだ。パイロットのいらないドローン戦闘機は、危険な状況にも"
+"っと安全なやりかたでの対処を可能とする。とはいえ、ドローン戦闘機はいくらか注意深い保守がほんとうに必要だ。整備をするのに必要な道具類は、すべてこのベイが与"
+"えてくれる。"
 
 #: dat/outfits/fighter_bays/empire_lancelot_fighter_bay.xml:2
 msgid "Empire Lancelot Fighter Bay"
-msgstr "帝国ランスロット戦闘機格納庫"
+msgstr "帝国ランスロット戦闘機ベイ"
 
 #: dat/outfits/fighter_bays/empire_lancelot_fighter_bay.xml:11
 msgid ""
 "This fighter bay allows your ship to carry a pair of Empire Lancelot class "
 "fighters. It comes with all the devices required for the maintenance and "
 "flight of the fighters."
-msgstr ""
+msgstr "この戦闘機ベイは、あなたの船が 2 機の帝国ランスロット級戦闘機を運べるようにしてくれる。戦闘機の保守と飛行に必要な装置はすべて備わっている。"
 
 #: dat/outfits/fighter_bays/fidelity_fighter_bay.xml:2
 msgid "Fidelity Fighter Bay"
-msgstr "フィデリティー戦闘機格納庫"
+msgstr "フィデリティー戦闘機ベイ"
 
 #: dat/outfits/fighter_bays/fidelity_fighter_bay.xml:11
 msgid ""
@@ -15893,21 +15889,23 @@ msgid ""
 "are stronger when working together in groups. Quite apropos, given Sirian "
 "society."
 msgstr ""
+"このベイは、3 機のシリウス・フィデリティー戦闘機を発進させる。個々には弱いこの戦闘機は、集団として共同で働くと、もっと強くなる。シリウス社会のものだと思"
+"えば、かなりしっくりと感じられる。"
 
 #: dat/outfits/fighter_bays/hyena_fighter_bay.xml:2
 msgid "Hyena Fighter Bay"
-msgstr "ハイエナ戦闘機格納庫"
+msgstr "ハイエナ戦闘機ベイ"
 
 #: dat/outfits/fighter_bays/hyena_fighter_bay.xml:10
 msgid ""
 "This fighter bay allows your ship to carry twin Hyena interceptors. It comes "
 "with all the amenities necessary for the maintenance and operation of the "
 "interceptors."
-msgstr ""
+msgstr "この戦闘機ベイは、あなたの船が 2 機のハイエナ要撃機を運べるようにしてくれる。要撃機の保守と運用に必要な利便装備はすべて備わっている。"
 
 #: dat/outfits/fighter_bays/hyena_fighter_dock.xml:2
 msgid "Hyena Fighter Dock"
-msgstr "ハイエナ戦闘機修理施設"
+msgstr "ハイエナ戦闘機ドック"
 
 #: dat/outfits/fighter_bays/hyena_fighter_dock.xml:10
 msgid ""
@@ -15915,21 +15913,23 @@ msgid ""
 "Hyena interceptors that can be operated. It comes with all the amenities "
 "necessary for the maintenance and operation of the interceptors."
 msgstr ""
+"このドックは人気のあるハイエナ戦闘機ベイを拡張したもので、運用できるハイエナ要撃機の数は 2 "
+"倍になっている。要撃機の保守と運用に必要な利便装備はすべて備わっている。"
 
 #: dat/outfits/fighter_bays/lancelot_fighter_bay.xml:2
 msgid "Lancelot Fighter Bay"
-msgstr "ランスロット戦闘機格納庫"
+msgstr "ランスロット戦闘機ベイ"
 
 #: dat/outfits/fighter_bays/lancelot_fighter_bay.xml:10
 msgid ""
 "This fighter bay allows your ship to carry a pair of Lancelot class "
 "fighters. It comes with all the devices required for the maintenance and "
 "flight of the fighters."
-msgstr ""
+msgstr "この戦闘機ベイは、あなたの船が 2 機のランスロット級戦闘機を運べるようにしてくれる。戦闘機の保守と飛行に必要な装置はすべて備わっている。"
 
 #: dat/outfits/fighter_bays/proteron_derivative_fighter_bay.xml:2
 msgid "Proteron Derivative Fighter Bay"
-msgstr "プロテロン・デリバティブ戦闘機格納庫"
+msgstr "プロテロン・デリバティブ戦闘機ベイ"
 
 #: dat/outfits/fighter_bays/proteron_derivative_fighter_bay.xml:11
 msgid ""
@@ -15937,10 +15937,11 @@ msgid ""
 "class fighters. It comes with all the devices required for the maintenance "
 "and flight of the fighters."
 msgstr ""
+"この戦闘機ベイは、あなたの船が 3 機のプロテロン・デリバティブ級戦闘機を運べるようにしてくれる。戦闘機の保守と飛行に必要な装置はすべて備わっている。"
 
 #: dat/outfits/fighter_bays/soromid_brigand_fighter_bay.xml:2
 msgid "Soromid Brigand Fighter Bay"
-msgstr "ソロミド・ブリガンド戦闘機格納庫"
+msgstr "ソロミド・ブリガンド戦闘機ベイ"
 
 #: dat/outfits/fighter_bays/soromid_brigand_fighter_bay.xml:11
 msgid ""
@@ -15948,10 +15949,11 @@ msgid ""
 "class fighters. It comes with all the devices required for the maintenance "
 "and flight of the fighters."
 msgstr ""
+"この戦闘機ベイは、あなたの船が 3 機のソロミド・ブリガンド級戦闘機を運べるようにしてくれる。戦闘機の保守と飛行に必要な装置はすべて備わっている。"
 
 #: dat/outfits/fighter_bays/thurion_perspicacity_fighter_bay.xml:2
 msgid "Thurion Perspicacity Fighter Bay"
-msgstr "ザーリオン・パースピカシティー戦闘機格納庫"
+msgstr "ザーリオン・パースピカシティー戦闘機ベイ"
 
 #: dat/outfits/fighter_bays/thurion_perspicacity_fighter_bay.xml:11
 msgid ""
@@ -15959,10 +15961,12 @@ msgid ""
 "fighters. It comes with all the devices required for the maintenance and "
 "flight of the fighters."
 msgstr ""
+"この戦闘機ベイは、あなたの船が 4 "
+"機のザーリオン・パースピカシティー級戦闘機を運べるようにしてくれる。戦闘機の保守と飛行に必要な装置はすべて備わっている。"
 
 #: dat/outfits/fighter_bays/zalek_bomber_drone_fighter_bay.xml:2
 msgid "Za'lek Bomber Drone Fighter Bay"
-msgstr "ザレク・爆撃ドローン戦闘機格納庫"
+msgstr "ザレク・爆撃ドローン戦闘機ベイ"
 
 #: dat/outfits/fighter_bays/zalek_bomber_drone_fighter_bay.xml:12
 msgid ""
@@ -15970,10 +15974,11 @@ msgid ""
 "bombarding enemy capital ships into submission without the mothership ever "
 "coming into danger."
 msgstr ""
+"この接舷施設は 1 飛行隊の爆撃ドローンを発進させることができる。この爆撃機は、母艦を危険にさらすことなく敵の主力艦を爆撃して降伏させる能力がある。"
 
 #: dat/outfits/fighter_bays/zalek_bomber_drone_fighter_dock.xml:2
 msgid "Za'lek Bomber Drone Fighter Dock"
-msgstr "ザレク・爆撃ドローン戦闘機修理施設"
+msgstr "ザレク・爆撃ドローン戦闘機ドック"
 
 #: dat/outfits/fighter_bays/zalek_bomber_drone_fighter_dock.xml:11
 msgid ""
@@ -15983,10 +15988,13 @@ msgid ""
 "careful maintenance. All the tools needed to take care of them are provided "
 "with the bay."
 msgstr ""
+"この比較的かさばるドローンは、遠くから大型船をぱっくり割ってしまうために作られた。このドローンは、その仕事をみごとに達成する。パイロットのいらないドローン"
+"戦闘機は、危険な状況にもっと安全なやりかたでの対処を可能とする。とはいえ、ドローン戦闘機はいくらか注意深い保守がほんとうに必要だ。整備をするのに必要な道具"
+"類は、すべてこのドックが与えてくれる。"
 
 #: dat/outfits/fighter_bays/zalek_heavy_drone_fighter_bay.xml:2
 msgid "Za'lek Heavy Drone Fighter Bay"
-msgstr "ザレク・重ドローン戦闘機格納庫"
+msgstr "ザレク・重ドローン戦闘機ベイ"
 
 #: dat/outfits/fighter_bays/zalek_heavy_drone_fighter_bay.xml:11
 msgid ""
@@ -15994,10 +16002,12 @@ msgid ""
 "to be able to pilot itself. Three heavy drones can be operated from this "
 "bay, giving the mothership a good deal of punch."
 msgstr ""
+"ザレク・重ドローンは恐ろしい船だ。AI 自身で操縦できる、とても進んだ AI 技術を使っている。3 "
+"機の重ドローンがこのベイで運用可能で、母艦にはかなりの打撃力が付与される。"
 
 #: dat/outfits/fighter_bays/zalek_heavy_drone_fighter_dock.xml:2
 msgid "Za'lek Heavy Drone Fighter Dock"
-msgstr "ザレク・重ドローン戦闘機修理施設"
+msgstr "ザレク・重ドローン戦闘機ドック"
 
 #: dat/outfits/fighter_bays/zalek_heavy_drone_fighter_dock.xml:11
 msgid ""
@@ -16006,20 +16016,22 @@ msgid ""
 "disposal. The drones are capable of fighting all but the biggest ships in "
 "packs."
 msgstr ""
+"最大級の船だけが、このドローンドックを不自由なく維持することができる。しかしそうした船は、自由に使える致命的かつ万能の重ドローン飛行隊をもつことになるのだ"
+"。このドローンは、群れをなすことで最大級を除くほぼすべての船と戦う能力がある。"
 
 #: dat/outfits/fighter_bays/zalek_light_drone_fighter_bay.xml:2
 msgid "Za'lek Light Drone Fighter Bay"
-msgstr "ザレク・軽ドローン戦闘機格納庫"
+msgstr "ザレク・軽ドローン戦闘機ベイ"
 
 #: dat/outfits/fighter_bays/zalek_light_drone_fighter_bay.xml:11
 msgid ""
 "A quartet of light drones are maintained and launched from this bay. The "
 "Drones themselves are frail, but very cheap."
-msgstr ""
+msgstr "このベイは 4 機の軽ドローンの整備と発進ができるようにするものだ。ドローン自体はもろいが、とても安くつく。"
 
 #: dat/outfits/fighter_bays/zalek_light_drone_fighter_dock.xml:2
 msgid "Za'lek Light Drone Fighter Dock"
-msgstr "ザレク・軽ドローン戦闘機修理施設"
+msgstr "ザレク・軽ドローン戦闘機ドック"
 
 #: dat/outfits/fighter_bays/zalek_light_drone_fighter_dock.xml:11
 msgid ""
@@ -16027,6 +16039,8 @@ msgid ""
 "Za'lek light drones. The drones are expendable, but in numbers they excel at "
 "clearing eney light craft."
 msgstr ""
+"船に内蔵させるこの大きな施設は、ザレク・軽ドローンの群れの整備と発進をさせるために作られた。このドローンは消耗品だが、数があれば敵の小型船を除去するのに秀"
+"でている。"
 
 #: dat/outfits/fighters/drone_fighter.xml:2
 msgid "Drone Fighter"
@@ -16038,6 +16052,8 @@ msgid ""
 "to pilot itself. The fact it doesn't need a pilot nor life support systems "
 "makes it a much smaller and compact vessel."
 msgstr ""
+"ドローンは恐ろしい船だ。AI 自身で操縦できる、とても進んだ AI "
+"技術を使っている。パイロットも生命維持装置も必要としないことから、これはずっと小さく簡素な船となっている。"
 
 #: dat/outfits/fighters/empire_lancelot_fighter.xml:2
 msgid "Empire Lancelot Fighter"
@@ -16049,6 +16065,8 @@ msgid ""
 "Fighter Bay. It contains all the features of the standalone Empire Lancelot "
 "with improved encrypted communication."
 msgstr ""
+"これはランスロット戦闘機ベイでの使用に適合した、帝国ランスロット級戦闘機だ。ベイは改良型暗号通信により帝国ランスロット単体のすべての機能を包含することにな"
+"る。"
 
 #: dat/outfits/fighters/fidelity_fighter.xml:2
 msgid "Fidelity Fighter"
@@ -16058,7 +16076,7 @@ msgstr "フィデリティー戦闘機"
 msgid ""
 "The Sirius may not be the greatest fighter ever fielded by the Sirii, but "
 "they have strength in numbers and the faith of their pilots."
-msgstr ""
+msgstr "フィデリティーはシリウス人が配備したこれまでで最高の戦闘機というわけではないかもしれないが、数が多くてパイロットの信仰があれば強いものだ。"
 
 #: dat/outfits/fighters/hyena_fighter.xml:2
 msgid "Hyena Fighter"
@@ -16066,7 +16084,7 @@ msgstr "ハイエナ戦闘機"
 
 #: dat/outfits/fighters/hyena_fighter.xml:8
 msgid "This is a Hyena class fighter adapted for usage in fighter bays."
-msgstr ""
+msgstr "これ戦闘機ベイでの使用に適合した、ハイエナ級戦闘機だ。"
 
 #: dat/outfits/fighters/lancelot_fighter.xml:2
 msgid "Lancelot Fighter"
@@ -16078,6 +16096,7 @@ msgid ""
 "Bay. It contains all the features of the standalone Lancelot with improved "
 "encrypted communication."
 msgstr ""
+"これはランスロット戦闘機ベイでの使用に適合した、ランスロット級戦闘機だ。ベイは改良型暗号通信によりランスロット単体のすべての機能を包含することになる。"
 
 #: dat/outfits/fighters/proteron_derivative_fighter.xml:2
 msgid "Proteron Derivative Fighter"
@@ -16087,7 +16106,7 @@ msgstr "プロテロン・デリバティブ戦闘機"
 msgid ""
 "This is a Proteron Derivative class fighter adapted for usage in fighter "
 "bays."
-msgstr ""
+msgstr "これ戦闘機ベイでの使用に適合した、プロテロン・デリバティブ級戦闘機だ。"
 
 #: dat/outfits/fighters/soromid_brigand_fighter.xml:2
 msgid "Soromid Brigand Fighter"
@@ -16097,7 +16116,7 @@ msgstr "ソロミド・ブリガンド戦闘機"
 msgid ""
 "This is a Soromid Brigand class fighter adapted for usage in the Soromid "
 "Brigand Fighter Bay."
-msgstr ""
+msgstr "これソロミド・ブリガンド戦闘機ベイでの使用に適合した、ソロミド・ブリガンド級戦闘機だ。"
 
 #: dat/outfits/fighters/thurion_perspicacity_fighter.xml:2
 msgid "Thurion Perspicacity Fighter"
@@ -16107,7 +16126,7 @@ msgstr "ザーリオン・パースピカシティー戦闘機"
 msgid ""
 "This is an Thurion Perspicacity class fighter adapted for usage in fighter "
 "bays."
-msgstr ""
+msgstr "これ戦闘機ベイでの使用に適合した、ザーリオン・パースピカシティー級戦闘機だ。"
 
 #: dat/outfits/fighters/zalek_bomber_drone_fighter.xml:2
 msgid "Za'lek Bomber Drone Fighter"
@@ -16117,7 +16136,7 @@ msgstr "ザレク・爆撃ドローン戦闘機"
 msgid ""
 "This relatively bulky drone is built to crack open large ships from afar. It "
 "accomplishes this task admirably"
-msgstr ""
+msgstr "この比較的かさばるドローンは、遠くから大型船をぱっくり割ってしまうために作られた。このドローンは、その仕事をみごとに達成する。"
 
 #: dat/outfits/fighters/zalek_heavy_drone_fighter.xml:2
 msgid "Za'lek Heavy Drone Fighter"
@@ -16129,6 +16148,8 @@ msgid ""
 "to be able to pilot itself. The fact it doesn't need a pilot nor life "
 "support systems makes it a much smaller and compact vessel."
 msgstr ""
+"ザレク・重ドローンは恐ろしい船だ。AI 自身で操縦できる、とても進んだ AI "
+"技術を使っている。パイロットも生命維持装置も必要としないことから、これはずっと小さく簡素な船となっている。"
 
 #: dat/outfits/fighters/zalek_light_drone_fighter.xml:2
 msgid "Za'lek Light Drone Fighter"
@@ -16139,6 +16160,7 @@ msgid ""
 "This tiny robotic drone built by the Za'lek is very weak by itself. However, "
 "they are compact and cheap, allowing them to be massed very easily."
 msgstr ""
+"ザレクによって作られたこの小さなロボット化ドローンは、それ自体はとても弱い。けれども、これは簡素で安価であり、とても簡単に群れを作ることができる。"
 
 #: dat/outfits/launchers/convulsion_launcher.xml:2
 msgid "Convulsion Launcher"
@@ -16151,6 +16173,7 @@ msgid ""
 "destructive power. While it does little damage to physical objects it is "
 "quite effective at disrupting shields."
 msgstr ""
+"ザーリオンの迎撃級ミサイルは、破壊力より高機動性に焦点をあわせたものだ。物体にはほとんど損害を与えないが、シールドを崩壊させるのにはかなり効果がある。"
 
 #: dat/outfits/launchers/electron_burst_cannon.xml:2
 msgid "Electron Burst Cannon"
@@ -16164,10 +16187,13 @@ msgid ""
 "developed by the Za'lek to be used by their heavier droness to supplement "
 "the short range and high damage of their beams."
 msgstr ""
+"この強力なエネルギー兵器は、長距離からイオンバーストで目標を砲撃するために作られた。イオンバーストは目標のシールドと電子システムに性能低下の障害を引きおこ"
+"すので、船を実質的には無防備にしてしまうことができる。これはザレクによって開発されたもので、大型のザレクドローンの短射程高威力ビームを補完する目的で使われ"
+"ている。"
 
 #: dat/outfits/launchers/emp_grenade_launcher.xml:2
 msgid "EMP Grenade Launcher"
-msgstr "電磁バルス放射榴弾発射機"
+msgstr "電磁パルス放射榴弾発射機"
 
 #: dat/outfits/launchers/emp_grenade_launcher.xml:9
 msgid ""
@@ -16177,6 +16203,9 @@ msgid ""
 "EM pulses rarely destroy the ship, leaving it floating disabled in space. "
 "These are favoured by traders for keeping pirates at bay."
 msgstr ""
+"この発射機は、独特な内蔵誘導システムを使うことで、どの方向にも電磁パルス放射榴弾を発射できる。この榴弾は、電磁パルスを浴びせかけるもので、すばやく敵の船の"
+"電子機器を無力化してしまう。船を生け捕りにするには便利である。電磁パルスが船を破壊することはまれなことであり、船は無力に宇宙で漂うままとなるからだ。これは"
+"海賊を寄せつけないようにしたい貿易商には好まれている。"
 
 #: dat/outfits/launchers/enygma_systems_huntsman_launcher.xml:2
 msgid "Enygma Systems Huntsman Launcher"
@@ -16189,10 +16218,13 @@ msgid ""
 "insufficient, they redisgned Unicorp's Caesar IV torpedo as a heavy EMP "
 "weapon, capable of rapidly frying the systems of even the largest warships."
 msgstr ""
+"エニグマシステムは、大きめの戦闘艦を狙う無力化兵器に未開拓のすき間市場があることを発見した。メデューサミサイルとイオン兵器は不十分だとわかったので、"
+"エニグマシステムはユニコープのシーザー IV "
+"魚雷を強力な電磁パルス放射兵器として再設計をした。これは相手が最大級の戦闘艦であっても、そのシステムをすばやくフライにすることができる。"
 
 #: dat/outfits/launchers/enygma_systems_spearhead_launcher.xml:2
 msgid "Enygma Systems Spearhead Launcher"
-msgstr "エニグマシステム・砲塔型スピアヘッド発射機"
+msgstr "エニグマシステム・スピアヘッド発射機"
 
 #: dat/outfits/launchers/enygma_systems_spearhead_launcher.xml:9
 #: dat/outfits/rockets/spearhead_missile.xml:7
@@ -16204,6 +16236,9 @@ msgid ""
 "The Spearhead's limited agility make it primarily suited to fighting "
 "corvette class ships or heavier."
 msgstr ""
+"スピアヘッド級のシールド破壊ミサイルは、さらに特定用途への専門化をしたエニグマシステム兵器のひとつだ。このミサイルの単独での作用は、シールドに大量の損害を"
+"与えることである。これにはかなりの効果でシールドを崩壊させる特殊なエネルギー解放弾頭を使っているのだが、それは物体への効果をほとんどもたない。スピアヘッド"
+"は機敏性が限られているので、おもにコルベットやそれ以上の船種の船との戦いに向いている。"
 
 #: dat/outfits/launchers/enygma_systems_turreted_fury_launcher.xml:2
 msgid "Enygma Systems Turreted Fury Launcher"
@@ -16215,6 +16250,8 @@ msgid ""
 "steep price, but Fury missiles can be a powerful means of discouraging "
 "pirate fighters and an effective means of defending against hostile bombers."
 msgstr ""
+"エニグマシステムは砲塔搭載型のフューリー発射機を開発した。法外な値段となったが、フューリーミサイルは海賊の戦闘機をくじけさせる強力な手段となることもあるし"
+"、敵の爆撃機にたいする効果的防衛手段となることもある。"
 
 #: dat/outfits/launchers/enygma_systems_turreted_headhunter_launcher.xml:2
 msgid "Enygma Systems Turreted Headhunter Launcher"
@@ -16227,6 +16264,8 @@ msgid ""
 "bombers. The punch of the Headhunter missile combined with Enygma Systems' "
 "swivel mounted launcher can effectively compensate for any blind spots."
 msgstr ""
+"この砲塔型発射機は、敵の戦闘機や爆撃機と効果的に戦えるほどの機動性がない巡洋艦の艦長にときどき使われる。ヘッドハンターミサイルの打撃力とエニグマシステムの"
+"砲塔搭載型発射機が組みあわさると、すべての死角を効果的に消し去ることができる。"
 
 #: dat/outfits/launchers/shatterer_launcher.xml:2
 msgid "Shatterer Launcher"
@@ -16239,6 +16278,8 @@ msgid ""
 "sheer numbers that the Collective could bring to bear makes this weapon "
 "dangerous."
 msgstr ""
+"フューリーミサイルをもとにしたこの武器は、大きな目標にたいする砲撃手段として、集合体の重ドローンに使われている。個々には弱いのだが、集合体が投入できる純粋"
+"な数の力は、この武器を恐ろしいものにしている。"
 
 #: dat/outfits/launchers/teracom_banshee_launcher.xml:2
 msgid "TeraCom Banshee Launcher"
@@ -16251,6 +16292,8 @@ msgid ""
 "unguided rockets, while slow, can do quite respectable damage even to fairly "
 "large ships."
 msgstr ""
+"テラコムは、自分たちのバンシー発射機に高級な再装填システムと冷却管をもたせたので、発砲間隔がかなり高速化した。この無誘導ロケットは遅いのだが、そこそこ大き"
+"な船にもずいぶんな損害を与えることができる。"
 
 #: dat/outfits/launchers/teracom_fury_launcher.xml:2
 msgid "TeraCom Fury Launcher"
@@ -16264,6 +16307,8 @@ msgid ""
 "power, the Fury missiles launched are nimble enough to easily strike even "
 "some of the fastest ships in the galaxy."
 msgstr ""
+"テラコムのフューリー発射機は、特許を取った目標追跡技術とミサイル供給技術を備えた高性能ミサイル発射機だ。これでパイロットは目標をすばやく簡単に捕捉すること"
+"ができるようになった。破壊力には欠けるものの、放たれたフューリーミサイルは銀河で屈指の速度をもつ船にたいしても、簡単に命中するほど速いのだ。"
 
 #: dat/outfits/launchers/teracom_headhunter_launcher.xml:2
 msgid "TeraCom Headhunter Launcher"
@@ -16280,10 +16325,15 @@ msgid ""
 "demanding on the ship's resources, the patented tracking and missile arming "
 "technology allows pilots to fire their missiles before the competition does."
 msgstr ""
+"ヘッドハンター級迎撃ミサイルは、中小規模の目標に壊滅的な損害を与えるいっぽうで、速度と機敏性が適度に残されている中口径のミサイルだ。もっとも効果があるのは"
+"、遠くの敵に発射したときになる。\n"
+"\n"
+"これはテラコム製のヘッドハンター発射機だ。いくぶん高価で船の資源をたくさん要求するが、特許を取った追跡技術とミサイル供給技術で、パイロットは競争相手が発射"
+"するより早くミサイルを発射できるようになる。"
 
 #: dat/outfits/launchers/teracom_imperator_launcher.xml:2
 msgid "TeraCom Imperator Launcher"
-msgstr "テラコム・インペトラル発射機"
+msgstr "テラコム・インペラトル発射機"
 
 #: dat/outfits/launchers/teracom_imperator_launcher.xml:10
 #: dat/outfits/rockets/imperator_torpedo.xml:7
@@ -16295,6 +16345,9 @@ msgid ""
 "take a while for it to reach its target. Faster cruisers may be able to "
 "outrun it completely."
 msgstr ""
+"テラコムはシーザー IV 用の発射機を開発しないことに決定した。なぜならシーザー IV は会社の性能要求を満たさなかったからである。そのかわり、この会社は"
+"完全に新しい魚雷の仕様を発表した。現在、このインペラトル級重魚雷は壊滅的な破壊力を提供している。もっとも、これが目標に到達するにはしばらくかかってしまうの"
+"だが。速度のある巡洋艦なら、おそらく完全に逃げきることができるだろう。"
 
 #: dat/outfits/launchers/teracom_mace_launcher.xml:2
 msgid "TeraCom Mace Launcher"
@@ -16310,6 +16363,10 @@ msgid ""
 "TeraCom's Mace launcher uses an advanced reload mechanism that allows the "
 "launcher to fire more rockets in less time."
 msgstr ""
+"メイス級無誘導ロケットは、安価でどんどん使っていい武器であり、困難な状況で最高火力を増加させるために使われる。小型の目標に与える損害については、たいていの"
+"戦闘機用エネルギーキャノンと比べてはるかによいが、少々撃つだけでも弾薬が枯渇するという不利な点がある。\n"
+"\n"
+"テラコムのメイス発射機は先進の再装填機構を使用しているので、この発射機は短い時間にもっと多くのロケットを発射できる。"
 
 #: dat/outfits/launchers/teracom_medusa_launcher.xml:2
 msgid "TeraCom Medusa Launcher"
@@ -16327,6 +16384,12 @@ msgid ""
 "and firing faster than the standard specification, and holding a greater "
 "amount in the magazine as well."
 msgstr ""
+"メデューサ級電磁パルス放射巡航ミサイルは、船の内部システムを役に立たなくするために設計された非致死性の武器で、その船を無害にして移乗できるようにする。弾頭"
+"はほんとうに限られた損害しか与えない。だから装甲の薄い目標であっても、この武器で効果的に無力化することができる。とはいえ、メデューサは市場でもっとも機敏な"
+"ミサイルというわけではない。\n"
+"\n"
+"テラコムは高い効率のメデューサ発射機を作った。捕捉と発射はふつうのものより速くできるようになっている。そして弾倉にはもっと多くの弾薬を保持することもできる"
+"。"
 
 #: dat/outfits/launchers/teracom_vengeance_launcher.xml:2
 msgid "TeraCom Vengeance Launcher"
@@ -16343,6 +16406,11 @@ msgid ""
 "TeraCom's patented launcher hardware considerably reduces the time it takes "
 "to achieve a lock. Sometimes, those few seconds can make all the difference."
 msgstr ""
+"ベンジャンス級迎撃ミサイルは、現在生産されているなかではもっとも強力な迎撃ミサイルだ。ミサイルの本体のほぼ半分が弾頭として使われているので、速い目標を捕ら"
+"える能力は低下している。これは装甲化された目標を撃破するのに卓越した設計となっていて、その犠牲とされたのはシールドにたいして劣ることだ。このミサイルは対シ"
+"ールド兵器と組みあわせるがいちばんよい。\n"
+"\n"
+"特許取得ずみのテラコム製発射機は、捕捉にかかる時間がかなり減少している。その二、三秒がすべてを変えてしまうこともときどきはありそうだ。"
 
 #: dat/outfits/launchers/turreted_convulsion_launcher.xml:2
 msgid "Turreted Convulsion Launcher"
@@ -16357,6 +16425,9 @@ msgid ""
 "This launcher is mounted on a turret and has more ammo capacity than the "
 "standard launcher."
 msgstr ""
+"ザーリオンの迎撃級ミサイルは、破壊力より高機動性に焦点をあわせたものだ。物体にはほとんど損害を与えないが、シールドを崩壊させるのにはかなり効果がある。\n"
+"\n"
+"この発射機は砲塔に搭載されていて、ふつうの発射機より弾薬の容量が大きい。"
 
 #: dat/outfits/launchers/unicorp_banshee_launcher.xml:2
 msgid "Unicorp Banshee Launcher"
@@ -16369,6 +16440,8 @@ msgid ""
 "punch that can do respectable damage even to fairly large ships. The "
 "launcher is small and light enough to be usable by even small fighters."
 msgstr ""
+"バンシー級無誘導重ロケットは、ときどき ｢貧乏なパイロットの魚雷｣ と呼ばれる。これのエンジンは比較的劣っているのだが、そこそこ大きな船にもずいぶんな損害"
+"を与えられる打撃力が詰めこまれている。この発射機は、小さな戦闘機でも使えるほど小さくて軽いものだ。"
 
 #: dat/outfits/launchers/unicorp_caesar_iv_launcher.xml:2
 msgid "Unicorp Caesar IV Launcher"
@@ -16381,6 +16454,8 @@ msgid ""
 "available. Though much slower than missiles and useless against mobile "
 "targets, they remain manoeuvrable enough to chase down light cruisers."
 msgstr ""
+"シーザー IV 級魚雷は、入手可能なもっともありふれた魚雷兵器のひとつだ。ミサイルよりずっと遅くて、機動性のある目標には役立たないのだが、軽巡洋艦に追いつ"
+"くだけの機動力は残されている。"
 
 #: dat/outfits/launchers/unicorp_fury_launcher.xml:2
 msgid "Unicorp Fury Launcher"
@@ -16393,6 +16468,8 @@ msgid ""
 "efficiently. Its high agility comes at the cost of destructive power, "
 "however, limiting its effectiveness to light, nimble fighters."
 msgstr ""
+"フューリー級迎撃ミサイルは、強力なエンジンが推進する軽量ミサイルで、目標まで弾頭をすばやく効果的に送りとどけるものだ。とても機敏ではあるのだが、破壊力が犠"
+"牲となっているので、高い効果が見られるのは軽量ですばやい戦闘機に限られている。"
 
 #: dat/outfits/launchers/unicorp_headhunter_launcher.xml:2
 msgid "Unicorp Headhunter Launcher"
@@ -16406,6 +16483,8 @@ msgid ""
 "remaining reasonably fast and agile. Most effective when launched at distant "
 "enemies."
 msgstr ""
+"ヘッドハンター級迎撃ミサイルは、中小規模の目標に壊滅的な損害を与えるいっぽうで、速度と機敏性が適度に残されている中口径のミサイルだ。もっとも効果があるのは"
+"、遠くの敵に発射したときになる。"
 
 #: dat/outfits/launchers/unicorp_mace_launcher.xml:2
 msgid "Unicorp Mace Launcher"
@@ -16419,6 +16498,8 @@ msgid ""
 "light targets than most fighter sized energy cannons, but comes with the "
 "disadvantage of running out of ammunition after only a short time of fire."
 msgstr ""
+"メイス級無誘導ロケットは、安価でどんどん使っていい武器であり、困難な状況で最高火力を増加させるために使われる。小型の目標に与える損害については、たいていの"
+"戦闘機用エネルギーキャノンと比べてはるかによいが、少々撃つだけでも弾薬が枯渇するという不利な点がある。"
 
 #: dat/outfits/launchers/unicorp_medusa_launcher.xml:2
 msgid "Unicorp Medusa Launcher"
@@ -16433,6 +16514,9 @@ msgid ""
 "effectively be disabled with this weapon. However, the Medusa is not the "
 "most agile missile on the market."
 msgstr ""
+"メデューサ級電磁パルス放射巡航ミサイルは、船の内部システムを役に立たなくするために設計された非致死性の武器で、その船を無害にして移乗できるようにする。弾頭"
+"はほんとうに限られた損害しか与えない。だから装甲の薄い目標であっても、この武器で効果的に無力化することができる。とはいえ、メデューサは市場でもっとも機敏な"
+"ミサイルというわけではない。"
 
 #: dat/outfits/launchers/unicorp_vengeance_launcher.xml:2
 msgid "Unicorp Vengeance Launcher"
@@ -16446,6 +16530,9 @@ msgid ""
 "killing armoured targets at the expense of making it poor against shields. "
 "Best paired with anti-shield weapons."
 msgstr ""
+"ベンジャンス級迎撃ミサイルは、現在生産されているなかではもっとも強力な迎撃ミサイルだ。ミサイルの本体のほぼ半分が弾頭として使われているので、速い目標を捕ら"
+"える能力は低下している。これは装甲化された目標を撃破するのに卓越した設計となっていて、その犠牲とされたのはシールドにたいして劣ることだ。このミサイルは対シ"
+"ールド兵器と組みあわせるがいちばんよい。"
 
 #: dat/outfits/launchers/zalek_hunter_launcher.xml:2
 msgid "Za'lek Hunter Launcher"
@@ -16462,6 +16549,11 @@ msgid ""
 "The Za'lek do not share the secrets of their 'missile' drones lightly. Only "
 "trusted allies of the Za'lek are trusted with these weapons."
 msgstr ""
+"ザレクは、伝統的なミサイルや魚雷が自分たちのドローン小型化技術と比べて嘆かわしいほど原始的なことを理解しはじめた。それゆえ、ザレクはそれらを置き換えるべく"
+"神風ドローン製造機に取り組みはじめたのだ。その結果、ハンターキラードローンという死の成果が生みだされた。これは目標に向けて加速していくと、強磁性流体弾頭を"
+"解放して致命的な効果をもたらすことになる。\n"
+"\n"
+"ザレクが自分たちの ｢ミサイル｣ ドローンの秘密を軽々しく分け与えることはない。ザレクに信頼される味方だけが、この武器を任せられる。"
 
 #: dat/outfits/launchers/zalek_reaper_launcher.xml:2
 msgid "Za'lek Reaper Launcher"
@@ -16478,6 +16570,10 @@ msgid ""
 "The Za'lek do not share the secrets of their 'missile' drones lightly. Only "
 "trusted allies of the Za'lek are trusted with these weapons."
 msgstr ""
+"この武器は ｢小型化ドローン｣ という用語を限界近くまで拡大解釈したものだ。これはじっさいのところ、減量した標準的なドローン基盤に、ほぼすべてを巨大な強磁"
+"性流体爆弾に置き換えて載せたものである。これがあまり進んでいない国々にたいするザレクの回答だ。そしてそれはたしかに雄弁な回答である。\n"
+"\n"
+"ザレクが自分たちの ｢ミサイル｣ ドローンの秘密を軽々しく分け与えることはない。ザレクに信頼される味方だけが、この武器を任せられる。"
 
 #: dat/outfits/maps/localmap.xml:2
 msgid "Local System Map"
@@ -16485,7 +16581,7 @@ msgstr "系内地図"
 
 #: dat/outfits/maps/localmap.xml:6
 msgid "This map contains information about the local system."
-msgstr ""
+msgstr "この地図には、地元星系内の情報が入っている。"
 
 #: dat/outfits/maps/map_collective_space.xml:2
 msgid "Map: Collective Space"
@@ -16497,6 +16593,8 @@ msgid ""
 "Collective. Sadly, the Empire has no accurate intel about Collective assets "
 "in the area."
 msgstr ""
+"この地図には、集合体に占領されている星系と接続している既知のジャンプが記されている。嘆かわしいことに、帝国はこの領域の集合体の資産については正確な情報を持"
+"ちあわせていない。"
 
 #: dat/outfits/maps/map_dvaered_core.xml:2
 msgid "Map: Dvaered Core"
@@ -16506,7 +16604,7 @@ msgstr "地図 : ドベーレッド中心部"
 msgid ""
 "This map lists the locations of all Dvaered worlds and stations close to the "
 "Dvaered capital."
-msgstr ""
+msgstr "この地図には、ドベーレッドの首都近くのすべてのドベーレッド世界とステーションの場所が載っている。"
 
 #: dat/outfits/maps/map_dvaeredsoromid_trade_route.xml:2
 msgid "Map: Dvaered-Soromid trade route"
@@ -16516,7 +16614,7 @@ msgstr "地図 : ドベーレッド—ソロミド貿易路"
 msgid ""
 "This map contains the main route between Dvaered and Soromid controlled "
 "space."
-msgstr ""
+msgstr "この地図には、ドベーレッドとソロミドが支配する宙域の間の主要航路が入っている。"
 
 #: dat/outfits/maps/map_empire_core.xml:2
 msgid "Map: Empire Core"
@@ -16526,7 +16624,7 @@ msgstr "地図 : 帝国中心部"
 msgid ""
 "This map lists the locations of all Imperial worlds and stations close to "
 "the Imperial capital."
-msgstr ""
+msgstr "この地図には、帝国の首都近くのすべての帝国世界とステーションの場所が載っている。"
 
 #: dat/outfits/maps/map_flf.xml:2
 msgid "Map: FLF Hidden Jumps"
@@ -16536,7 +16634,7 @@ msgstr "地図 : FLF 隠れジャンプ"
 msgid ""
 "This map contains the location of hidden jump points between the FLF base "
 "and Frontier space."
-msgstr ""
+msgstr "この地図には、FLF 基地と辺境宙域の間の隠れジャンプポイントの位置が入っている。"
 
 #: dat/outfits/maps/map_flf_pirate_route.xml:2
 msgid "Map: FLF-Pirate Route"
@@ -16546,7 +16644,7 @@ msgstr "地図 : FLF—海賊航路"
 msgid ""
 "This map contains the location of the two-way hidden jump point between the "
 "FLF base and the nearest Pirate stronghold."
-msgstr ""
+msgstr "この地図には、FLF 基地と近くにある海賊拠点との間の双方向隠れジャンプポイントの位置が入っている。"
 
 #: dat/outfits/maps/map_inner_nebula_secret_jump.xml:2
 msgid "Map: Inner Nebula Secret Jump"
@@ -16556,7 +16654,7 @@ msgstr "地図 : 星雲内部秘密ジャンプ"
 msgid ""
 "This map contains the location of a hidden jump point leading to the inner "
 "nebula."
-msgstr ""
+msgstr "この地図には、星雲内部につづく隠れジャンプポイントの位置が入っている。"
 
 #: dat/outfits/maps/map_kretogg_hidden_jumps.xml:2
 msgid "Map: Kretogg's hidden jump points"
@@ -16566,17 +16664,17 @@ msgstr "地図 : クレトッグの隠れジャンプポイント"
 msgid ""
 "This map contains the position of hidden jump points leading straight into "
 "Za'lek space."
-msgstr ""
+msgstr "この地図には、ザレク宙域にまっすぐ行ける隠れジャンプポイントの位置が入っている。"
 
 #: dat/outfits/maps/map_nebula_edge.xml:2
 msgid "Map: Nebula Edge"
-msgstr "地図 : 星系の端"
+msgstr "地図 : 星雲の端"
 
 #: dat/outfits/maps/map_nebula_edge.xml:6
 msgid ""
 "This map contains the route leading from Dvaered/Imperial space to the edge "
 "of the Nebula. It also lists the two Imperial stations along the route."
-msgstr ""
+msgstr "この地図には、ドベーレッドと帝国宙域から星雲の端へとつづく航路が入っている。また、航路の途中の 2 つの帝国ステーションも載っている。"
 
 #: dat/outfits/maps/map_new_haven_hidden_jumps.xml:2
 msgid "Map: New Haven's hidden jump points"
@@ -16586,7 +16684,7 @@ msgstr "地図 : ニューヘイブンの隠れジャンプポイント"
 msgid ""
 "This map contains the position of a set of hidden jump points in and around "
 "the New Haven system. Only a minority of pirates have access to this map."
-msgstr ""
+msgstr "この地図には、ニューヘイブンへ行くものと、その周辺の隠れジャンプポイントの位置が入っている。少数の海賊だけがこの地図を入手できる。"
 
 #: dat/outfits/maps/map_pirate_strongholds.xml:2
 msgid "Map: Pirate strongholds"
@@ -16596,7 +16694,7 @@ msgstr "地図 : 海賊の拠点"
 msgid ""
 "This map contains the locations of the pirate clan worlds, and a few "
 "stations that are known to offer opportunities for pirates in the vicinity."
-msgstr ""
+msgstr "この地図には、海賊一味の世界の位置が入っている。それから海賊に近づく機会を提供してくれる数少ないステーションの位置も。"
 
 #: dat/outfits/maps/map_qorel.xml:2
 msgid "Map: Qorel Expanse"
@@ -16609,6 +16707,8 @@ msgid ""
 "Getting the location of these very special jump points is usually very "
 "costly to reduce the number of people having access to it."
 msgstr ""
+"この地図には、ふつうのジャンプポイントからは行くことのできない星系群である、コレルの広がりへ出入りするジャンプポイントの位置が入っている。ここを通れる人間"
+"は減らそうとされているので、このとても特殊なジャンプポイントの位置を知るには、ふつうとても費用がかかるようになっている。"
 
 #: dat/outfits/maps/map_sirian_border_systems.xml:2
 msgid "Map: Sirian border systems"
@@ -16616,7 +16716,7 @@ msgstr "地図 : シリウス境界星系"
 
 #: dat/outfits/maps/map_sirian_border_systems.xml:6
 msgid "This map contains the systems that lead to Sirius controlled space."
-msgstr ""
+msgstr "この地図には、シリウスが支配する宙域へつづく星系が入っている。"
 
 #: dat/outfits/maps/map_sirius_core.xml:2
 msgid "Map: Sirius Core"
@@ -16626,7 +16726,7 @@ msgstr "地図 : シリウス中心部"
 msgid ""
 "This map contains the location of Mutris, home of Sirichana and capital to "
 "the Sirians, as well as the surrounding systems."
-msgstr ""
+msgstr "この地図には、シリチャナの本拠地でありシリウス人たちの主星であるミュートリスの位置が入っている。とうぜん周辺星系の位置もだ。"
 
 #: dat/outfits/maps/map_sol.xml:2
 msgid "Map: Sol"
@@ -16639,6 +16739,8 @@ msgid ""
 "which no known ship in the galaxy can safely pass through. What lies beyond "
 "Sol, if anything, is unknown."
 msgstr ""
+"この地図には、人類の出身地であるソル星系の位置が入っている。事象により死に絶えていて、今ではとても不安定な星系に覆われている。そこを安全に通りぬけられる船"
+"は銀河では知られていない。ソルのむこうになにが横たわっているのかは、もしなにかあるとしても、謎である。"
 
 #: dat/outfits/maps/map_the_frontier.xml:2
 msgid "Map: The Frontier"
@@ -16648,7 +16750,7 @@ msgstr "地図 : 辺境"
 msgid ""
 "This map contains an east-west route through Frontier space, as well as the "
 "location of the Frontier Council."
-msgstr ""
+msgstr "この地図には、辺境宙域をとおる東西の航路が入っている。もちろん辺境評議会の位置もだ。"
 
 #: dat/outfits/maps/map_thurion.xml:2
 msgid "Map: Thurion Core"
@@ -16658,7 +16760,7 @@ msgstr "地図 : ザーリオン中心部"
 msgid ""
 "This map provides the hidden route to the Thurion core systems outside of "
 "the nebula."
-msgstr ""
+msgstr "この地図は、星雲の外側にあるザーリオン中心部の星系への秘匿航路を提供する。"
 
 #: dat/outfits/maps/map_zalek_core.xml:2
 msgid "Map: Za'lek Core"
@@ -16668,7 +16770,7 @@ msgstr "地図 : ザレク中心部"
 msgid ""
 "This map contains the heart of Za'lek space, including its capital Ruadan "
 "and central hub, Za'lek."
-msgstr ""
+msgstr "この地図には、主星系であるルアダンとザレクの中心地を含む、ザレク宙域の中心部が入っている。"
 
 #: dat/outfits/maps/ultra_map.xml:2
 msgid "Ultra Map"
@@ -16684,7 +16786,7 @@ msgstr "GUI - Brushed"
 
 #: dat/outfits/misc/gui_brushed.xml:6
 msgid "Outfit corresponding with the \"Brushed\" GUI."
-msgstr ""
+msgstr "｢Brushed｣ GUI に相当する艤装品。"
 
 #: dat/outfits/misc/gui_legacy.xml:2
 msgid "GUI - Legacy"
@@ -16692,7 +16794,7 @@ msgstr "GUI - Legacy"
 
 #: dat/outfits/misc/gui_legacy.xml:6
 msgid "Outfit corresponding with the \"Legacy\" GUI."
-msgstr ""
+msgstr "｢Legacy｣ GUI に相当する艤装品。"
 
 #: dat/outfits/misc/gui_slim.xml:2
 msgid "GUI - Slim"
@@ -16700,7 +16802,7 @@ msgstr "GUI - Slim"
 
 #: dat/outfits/misc/gui_slim.xml:6
 msgid "Outfit corresponding with the \"Slim\" GUI."
-msgstr ""
+msgstr "｢Slim｣ GUI に相当する艤装品。"
 
 #: dat/outfits/misc/gui_slimv2.xml:2
 msgid "GUI - Slimv2"
@@ -16708,7 +16810,7 @@ msgstr "GUI - Slimv2"
 
 #: dat/outfits/misc/gui_slimv2.xml:6
 msgid "Outfit corresponding with the \"Slimv2\" GUI."
-msgstr ""
+msgstr "｢Slimv2｣ GUI に相当する艤装品。"
 
 #: dat/outfits/misc/heavy_combat_vessel_license.xml:2
 msgid "Heavy Combat Vessel License"
@@ -16716,7 +16818,7 @@ msgstr "大型戦闘艦免許"
 
 #: dat/outfits/misc/heavy_combat_vessel_license.xml:9
 msgid "This license will authorize you to buy cruiser and carrier-class ships."
-msgstr ""
+msgstr "この免許は、巡洋艦と母艦に分類される船の購入を認めるものだ。"
 
 #: dat/outfits/misc/heavy_weapon_license.xml:2
 msgid "Heavy Weapon License"
@@ -16726,7 +16828,7 @@ msgstr "大型武器免許"
 msgid ""
 "This license will authorize you to buy and use heavy weapons like the heavy "
 "ion turret."
-msgstr ""
+msgstr "この免許は、重イオン砲塔のような強力な兵器の購入を認めるものだ。"
 
 #: dat/outfits/misc/large_civilian_vessel_license.xml:2
 msgid "Large Civilian Vessel License"
@@ -16734,7 +16836,7 @@ msgstr "大型民間船免許"
 
 #: dat/outfits/misc/large_civilian_vessel_license.xml:7
 msgid "This license will authorize you to buy freighter-class ships."
-msgstr ""
+msgstr "この免許は、貨物船に分類される船の購入を認めるものだ。"
 
 #: dat/outfits/misc/light_combat_vessel_license.xml:2
 msgid "Light Combat Vessel License"
@@ -16742,7 +16844,7 @@ msgstr "小型戦闘艦免許"
 
 #: dat/outfits/misc/light_combat_vessel_license.xml:7
 msgid "This license will authorize you to buy fighter and bomber class ships."
-msgstr ""
+msgstr "この免許は、戦闘機と爆撃機に分類される船の購入を認めるものだ。"
 
 #: dat/outfits/misc/medium_combat_vessel_license.xml:2
 msgid "Medium Combat Vessel License"
@@ -16751,7 +16853,7 @@ msgstr "中型戦闘艦免許"
 #: dat/outfits/misc/medium_combat_vessel_license.xml:8
 msgid ""
 "This license will authorize you to buy destroyer and corvette-class ships."
-msgstr ""
+msgstr "この免許は、駆逐艦とコルベットに分類される船の購入を認めるものだ。"
 
 #: dat/outfits/misc/medium_weapon_license.xml:2
 msgid "Medium Weapon License"
@@ -16761,7 +16863,7 @@ msgstr "中型武器免許"
 msgid ""
 "This license will authorize you to buy and use medium weapons like the ion "
 "cannon."
-msgstr ""
+msgstr "この免許は、イオンキャノンのような中程度の兵器の購入を認めるものだ。"
 
 #: dat/outfits/misc/mercenary_license.xml:2
 msgid "Mercenary License"
@@ -16771,7 +16873,7 @@ msgstr "傭兵免許"
 msgid ""
 "This license will authorize you to do mercenary missions and collect "
 "bounties."
-msgstr ""
+msgstr "この免許は、傭兵任務や賞金稼ぎをすることを認めるものだ。"
 
 #: dat/outfits/rockets/banshee_rocket.xml:2
 msgid "Banshee Rocket"
@@ -16783,6 +16885,8 @@ msgid ""
 "torpedo\". It has a relatively weak engine, but packs a powerful punch that "
 "can do respectable damage even to fairly large ships."
 msgstr ""
+"バンシー級重ロケットは、ときどき ｢貧乏なパイロットの魚雷｣ "
+"と呼ばれる。これのエンジンは比較的劣っているのだが、そこそこ大きな船にもずいぶんな損害を与えられる打撃力が詰めこまれている。"
 
 #: dat/outfits/rockets/caesar_iv_torpedo.xml:2
 msgid "Caesar IV Torpedo"
@@ -16794,7 +16898,7 @@ msgstr "コンバルションミサイル"
 
 #: dat/outfits/rockets/electron_energy_cell.xml:2
 msgid "Electron Energy Cell"
-msgstr "電子エネルギー電池"
+msgstr "電子エネルギーセル"
 
 #: dat/outfits/rockets/electron_energy_cell.xml:7
 msgid ""
@@ -16803,10 +16907,12 @@ msgid ""
 "them ideal for softening up a target for shorter-ranged beams to finish the "
 "target off."
 msgstr ""
+"このエネルギーセルは ｢弾薬｣ "
+"という形でザレクが長距離砲に使っている。これはかなりの射程距離があって大きな損害を与えるので、目標を弱体化させて短距離ビームでとどめをさすのに理想的だ。"
 
 #: dat/outfits/rockets/emp_grenade.xml:2
 msgid "EMP Grenade"
-msgstr "電磁バルス放射榴弾"
+msgstr "電磁パルス放射榴弾"
 
 #: dat/outfits/rockets/emp_grenade.xml:7
 msgid ""
@@ -16815,6 +16921,8 @@ msgid ""
 "alive, as the EM pulses rarely destroy the ship; leaving it floating "
 "disabled in space."
 msgstr ""
+"これは電磁パルスを浴びせかけて、すばやく敵の船の電子機器を無力化できる榴弾だ。船を生け捕りにするには便利である。電磁パルスが船を破壊することはまれなことで"
+"あり、船は無力に宇宙で漂うままとなるからだ。"
 
 #: dat/outfits/rockets/fury_missile.xml:2
 msgid "Fury Missile"
@@ -16827,6 +16935,8 @@ msgid ""
 "efficiently. Its high agility come at the cost of destructive power, "
 "however, limiting its effectiveness to light, nimble fighters."
 msgstr ""
+"フューリー級迎撃ミサイルは、強力なエンジンが推進する軽量ミサイルで、目標まで弾頭をすばやく効果的に送りとどけるものだ。とても機敏ではあるのだが、破壊力が犠"
+"牲となっているので、高い効果が見られるのは軽量ですばやい戦闘機に限られている。"
 
 #: dat/outfits/rockets/headhunter_missile.xml:2
 msgid "Headhunter Missile"
@@ -16840,11 +16950,11 @@ msgstr "ハンツマン魚雷"
 msgid ""
 "Based on the Caesar torpedo platofrm, Huntsman EMP torpedoes are designed to "
 "disable large warships, where smaller weapons would fail."
-msgstr ""
+msgstr "シーザー魚雷共通基盤をもとにしたハンツマン電磁パルス魚雷は、もっと小さな武器では役に立たない大型戦闘艦を無力化するために設計された。"
 
 #: dat/outfits/rockets/imperator_torpedo.xml:2
 msgid "Imperator Torpedo"
-msgstr "インペトラル魚雷"
+msgstr "インペラトル魚雷"
 
 #: dat/outfits/rockets/mace_rocket.xml:2
 msgid "Mace Rocket"
@@ -16864,6 +16974,8 @@ msgid ""
 "puncture heavy warships and leave them vulnerable. It has very poor "
 "tracking, but has excellent speed and armor piercing."
 msgstr ""
+"この改造型ロケットは、大型戦闘艦に穴をあけてもろくしておく手段として、集合体の重ドローンに使われていた。追尾能力はとても悪いのだが、速度に優れるので装甲を"
+"貫通する。"
 
 #: dat/outfits/rockets/spearhead_missile.xml:2
 msgid "Spearhead Missile"
@@ -16881,6 +16993,9 @@ msgid ""
 "killing armoured targets at the expense of making it poor against shields. "
 "Best paired with anti-shield weapons."
 msgstr ""
+"ベンジャンス級迎撃ミサイルは、現在生産されているなかではもっとも強力な迎撃ミサイルだ。ミサイルの本体のほぼ半分が弾頭として使われているので、速い目標を捕ら"
+"える能力は低下している。これは装甲化された目標を撃破するのに卓越した設計となっていて、その犠牲とされたのはシールドにたいして劣ることだ。このミサイルは対シ"
+"ールド兵器と組みあわせるがいちばんよい。"
 
 #: dat/outfits/rockets/zalek_hunter.xml:2
 msgid "Za'lek Hunter-Killer"
@@ -16890,7 +17005,7 @@ msgstr "ザレク・ハンターキラー"
 msgid ""
 "This little drone is little more than a guidance computer with bare-bones "
 "AI, a propulsion system, and a bomb wrapped in an armored shell."
-msgstr ""
+msgstr "この小さなドローンは、基本部分だけの AI を使った誘導コンピューターと大差ない。あとはそれに装甲板で包んだ爆弾をつけたものだ。"
 
 #: dat/outfits/rockets/zalek_reaper.xml:2
 msgid "Za'lek Reaper Drone"
@@ -16900,7 +17015,7 @@ msgstr "ザレク・リーパードローン"
 msgid ""
 "Reaper drones are the Za'lek version of other nations' torpedoes. They are "
 "reasonably fast, and hit with shattering force."
-msgstr ""
+msgstr "リーパードローンは、ほかの国々の魚雷のザレク版だ。これは適度に速く、粉砕力を発揮する。"
 
 #: dat/outfits/structure/active_plating.xml:2
 msgid "Active Plating"
@@ -16922,6 +17037,8 @@ msgid ""
 "strength is substantially increased at the cost of dramatically increased "
 "energy usage."
 msgstr ""
+"このドベーレッド荘が開発した装甲は、他に類を見ないがいくらか力まかせなやりかたで装甲強度を増加させるものだ。船殻じゅうに分布する電磁シールドコイルにたえま"
+"なくエネルギーを注入することで、エネルギー使用量のひじょうな増加を代償として、装甲強度を増加させている。"
 
 #: dat/outfits/structure/adaptive_stealth_plating.xml:2
 msgid "Adaptive Stealth Plating"
@@ -16934,6 +17051,8 @@ msgid ""
 "radiation around the ship and is able to emit space-resolved the right "
 "amount of radiation to appear invisible for passive sensors."
 msgstr ""
+"この装甲板はどんな防御力も提供しない。かわりにこれは船を検出しづらくする。これは船の周囲の放射を測定する統合センサーをもっているので、受動式センサーから見"
+"えなくなるような空間分解放射量を正確に放つことができる。"
 
 #: dat/outfits/structure/battery_i.xml:2
 msgid "Battery I"
@@ -16949,7 +17068,7 @@ msgstr "エネルギー修正値"
 msgid ""
 "A large battery unit designed to hold 250 MJ of energy. Small enough to "
 "mount on many light vessels."
-msgstr ""
+msgstr "250 MJ のエネルギーを保持するように設計された大型バッテリー装置だ。多くの小型船にも設置できるほど小さい。"
 
 #: dat/outfits/structure/battery_ii.xml:2
 msgid "Battery II"
@@ -16959,7 +17078,7 @@ msgstr "バッテリー II"
 msgid ""
 "A large battery unit designed to hold 500 MJ of energy. Ideally mounted on "
 "medium-to-large vessels."
-msgstr ""
+msgstr "500 MJ のエネルギーを保持するように設計された大型バッテリー装置だ。中型から大型船に設置するのが理想的である。"
 
 #: dat/outfits/structure/battery_iii.xml:2
 msgid "Battery III"
@@ -16969,7 +17088,7 @@ msgstr "バッテリー III"
 msgid ""
 "A very large battery unit designed to hold 1200 MJ of energy. It can only be "
 "mounted on very large ships."
-msgstr ""
+msgstr "1200 MJ のエネルギーを保持するように設計された、とても大きなバッテリー装置だ。とても大きな船にしか設置できない。"
 
 #: dat/outfits/structure/battery_iv.xml:2
 msgid "Battery IV"
@@ -16980,6 +17099,7 @@ msgid ""
 "A massive battery unit designed to hold 2000 MJ of energy. Given the mass of "
 "this battery, it's advisable to only mount it on capital ships."
 msgstr ""
+"2000 MJ のエネルギーを保持するように設計された、巨大なバッテリー装置だ。このバッテリーの質量を考えると、主力艦以外には設置しないのが賢明である。"
 
 #: dat/outfits/structure/biometal_armour.xml:2
 msgid "Biometal Armour"
@@ -16992,6 +17112,8 @@ msgid ""
 "life, and the difficulty of cultivating the bacteria, Biometal has greater "
 "mass than alternatives, and is the most expensive hull plating."
 msgstr ""
+"生体金属は、それ自身で再生する装甲だ。これはこの装甲のいたるところにいる遺伝子設計されたバクテリアのおかげである。バクテリアを生かしておけるように区画分け"
+"がされていたり、バクテリアの培養は難しいといったことから、生体金属は代わりのものより質量が大きく、もっとも高価な船体装甲となっている。"
 
 #: dat/outfits/structure/engine_reroute.xml:2
 msgid "Engine Reroute"
@@ -17010,6 +17132,8 @@ msgid ""
 "that the engines can now also be run in reverse to allow braking with a "
 "small loss in reverse thrust capability."
 msgstr ""
+"この改良は、船のエネルギー源からエンジンへのエネルギー経路をひいて、船の推力を増加させるものだ。船の最高速度や旋回能力が直接増加することはないが、それでも"
+"これには興味深い効果がある。エンジンが逆方向にも働くようになるので、逆推力能力で無駄の少ない減速ができるのだ。"
 
 #: dat/outfits/structure/improved_stabilizer.xml:2
 msgid "Improved Stabilizer"
@@ -17022,6 +17146,8 @@ msgid ""
 "keeping the ship stable. As another side effect, the improved stabilizers "
 "allowing reversing the thrusters with a small loss of thrust."
 msgstr ""
+"船の安定システムを徹底的に改良するこの改造は、船の安定度は保ったままさらに速い速度と旋回力を得られるようにする。別の副作用として、改良された安定器で推進力"
+"をあまり無駄にせずに推力を逆方向に向けられるようになる。"
 
 #: dat/outfits/structure/large_cargo_pod.xml:2
 msgid "Large Cargo Pod"
@@ -17040,7 +17166,7 @@ msgid ""
 "Cargo pods are large containers that increase a ship's cargo capacity. Due "
 "to being externally added to the ship's hull, it has the side effect of "
 "slightly increasing the cargo inertia."
-msgstr ""
+msgstr "貨物庫は船の船倉容量を増やす大きな容器だ。船殻の外側に追加するので、積み荷の慣性がわずかに増加するという副作用がある。"
 
 #: dat/outfits/structure/large_fuel_pod.xml:2
 msgid "Large Fuel Pod"
@@ -17056,7 +17182,7 @@ msgstr "燃料修正値"
 #: dat/outfits/structure/medium_fuel_pod.xml:9
 #: dat/outfits/structure/small_fuel_pod.xml:9
 msgid "The fuel pod allows a ship to store more fuel for hyperspace jumps."
-msgstr ""
+msgstr "燃料庫は船に超空間ジャンプ用の燃料をもっと積めるようにする。"
 
 #: dat/outfits/structure/large_shield_booster.xml:2
 msgid "Large Shield Booster"
@@ -17076,6 +17202,8 @@ msgid ""
 "you to regenerate your shield faster and give you a small shield capacity "
 "boost, at the expense of draining some of the ship's energy."
 msgstr ""
+"船の主要エネルギー系統を利用するシールド生成器だ。これはさらに速くシールドを再生できるようにして、すこしシールド容量も増加させる。その犠牲となるのは、船の"
+"エネルギーがいくらか漏出することだ。"
 
 #: dat/outfits/structure/medium_cargo_pod.xml:2
 msgid "Medium Cargo Pod"
@@ -17100,6 +17228,8 @@ msgid ""
 "The result is a much more robust material, although it is substantially more "
 "expensive."
 msgstr ""
+"ナノボンドはプラスチールに取って代わるものだ。これは同じやりかたを踏襲したものだが、生産工程がおおはばに洗練されていて、粒子密度がさらに大きくなっている。"
+"その結果、材料はずっと強固になったが、価格はおおいに上がってしまった。"
 
 #: dat/outfits/structure/nebular_shielding_prototype.xml:2
 msgid "Nebular Shielding Prototype"
@@ -17117,13 +17247,13 @@ msgstr "シールド修正値"
 msgid ""
 "A modification to the ship's shields that allows them to resist nebular "
 "volatility."
-msgstr ""
+msgstr "船のシールドが星雲の変動に耐えられるようにする改造。"
 
 #: dat/outfits/structure/nebular_shielding_prototype.xml:12
 msgid ""
 "Able to compensate up to 30 MW of nebula volatility. Uses 1 MW of energy per "
 "MW of damage prevented."
-msgstr ""
+msgstr "30 MW までの星雲変動を補償することができる。1 MW の損傷を防ぐために、1 MW のエネルギーを使う。"
 
 #: dat/outfits/structure/plasteel_plating.xml:2
 msgid "Plasteel Plating"
@@ -17137,6 +17267,8 @@ msgid ""
 "only possible with this material. Although it is no longer cutting-edge, its "
 "low price point attracts many buyers."
 msgstr ""
+"プラスチールは、材料における人類屈指の進歩だった。これは安価で、プラスティックと鋼の両方のいいところを取ったように見える強い装甲であり、容易に曲がるが驚く"
+"べき強さは保っているのだ。第二次拡大は、この材料があってこそ可能なものだった。もう最先端とはいえないが、安い価格で多くの買い手をひきつけている。"
 
 #: dat/outfits/structure/reactor_class_i.xml:2
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:323
@@ -17155,6 +17287,8 @@ msgid ""
 "energy boost you need. This does not replace the existing reactor but works "
 "alongside it and hooks up directly to the energy flux."
 msgstr ""
+"補助的な反応炉を船に追加するのは、必要とされる余分なエネルギーを増加させる優れた方法だ。これが既存の反応炉を置き換えることはなく、並列に作動させてエネルギ"
+"ー系統に直結させることになる。"
 
 #: dat/outfits/structure/reactor_class_ii.xml:2
 msgid "Reactor Class II"
@@ -17166,6 +17300,8 @@ msgid ""
 "permitting it to have greater energy density. The result is a mid-sized "
 "reactor that is best used on ships with moderate energy demands."
 msgstr ""
+"第 II 級反応炉は、第 I 級より新しい核融合技術を使用していて、さらに大きなエネルギー密度を得ている。その結果が、中くらいのエネルギー需要がある船で使"
+"うにはいちばんな中規模反応炉である。"
 
 #: dat/outfits/structure/reactor_class_iii.xml:2
 msgid "Reactor Class III"
@@ -17179,6 +17315,9 @@ msgid ""
 "III results in it only fitting comfortably on large vessels, though its "
 "energy output would be excessive for anything less."
 msgstr ""
+"巨大な第 III 級反応炉は、どんなことにもほぼじゅうぶんな電力を供給する。この反応炉に使われている技術はとりわけ先駆的なもので、3 "
+"つ種類の反応炉のなかでは最高のエネルギー密度をもっている。第 III "
+"級は巨大なので、不自由なく収まるのは大型船だけになる。もっとも、このエネルギー出力はそれ以下のどの船でも過大だろう。"
 
 #: dat/outfits/structure/shield_capacitor_i.xml:2
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:310
@@ -17190,7 +17329,7 @@ msgstr "シールドキャパシター I"
 msgid ""
 "An enhancement for the shield power system, giving small ships a better "
 "chance of escaping attackers."
-msgstr ""
+msgstr "シールド電力系統の強化手段であり、小さな船が攻撃者から逃げる見こみを増やしてくれる。"
 
 #: dat/outfits/structure/shield_capacitor_ii.xml:2
 msgid "Shield Capacitor II"
@@ -17200,7 +17339,7 @@ msgstr "シールドキャパシター II"
 msgid ""
 "A more powerful shield enhancer, providing better protection during "
 "skirmishes."
-msgstr ""
+msgstr "さらに強力なシールド強化手段であり、小競りあいのあいだにもっとよい防護力を与えてくれる。"
 
 #: dat/outfits/structure/shield_capacitor_iii.xml:2
 msgid "Shield Capacitor III"
@@ -17209,7 +17348,7 @@ msgstr "シールドキャパシター III"
 #: dat/outfits/structure/shield_capacitor_iii.xml:9
 msgid ""
 "A heavy duty shield enhancer for ships that face combat on a regular basis."
-msgstr ""
+msgstr "酷使に耐えるシールド強化手段であり、繰り返し戦いに直面する船のためにある。"
 
 #: dat/outfits/structure/shield_capacitor_iv.xml:2
 msgid "Shield Capacitor IV"
@@ -17219,7 +17358,7 @@ msgstr "シールドキャパシター IV"
 msgid ""
 "The pinnacle in shield boosting technology, reinforcing the defenses of "
 "ships fighting on the front lines."
-msgstr ""
+msgstr "シールド増強技術の頂点であり、前線で戦う船の防衛力を補強する。"
 
 #: dat/outfits/structure/small_cargo_pod.xml:2
 msgid "Small Cargo Pod"
@@ -17237,19 +17376,19 @@ msgstr "小型シールド増幅器"
 #: dat/outfits/unique/fake_transponder.xml:2
 #: dat/outfits/unique/fake_transponder.xml:6
 msgid "Fake Transponder"
-msgstr ""
+msgstr "偽造応答器"
 
 #: dat/outfits/unique/fake_transponder.xml:11
 msgid ""
 "A fake transponder to make ship appear like a non-descript and harmless "
 "independent ship."
-msgstr ""
+msgstr "特徴のない無害な独立勢力の船のように見せる偽造応答器。"
 
 #: dat/outfits/unique/fake_transponder.xml:12
 msgid ""
 "Makes the ship appear as independent to other ships. Becomes void when "
 "scanned."
-msgstr ""
+msgstr "ほかの船から独立勢力の船のように見せることになる。スキャンされると空になる。"
 
 #: dat/outfits/unique/hades_torch.xml:2
 msgid "Hades Torch"
@@ -17261,6 +17400,8 @@ msgid ""
 "detail that to obtain maximum performance it has a tendency to burn the hull "
 "of the ship it is attached too."
 msgstr ""
+"ハデストーチは小さな詳細を除けば並はずれたアフターバーナーといえるだろう。最大限の性能を得るために、これを取りつけた船の船殻を焼きこがす傾向があることを除"
+"けばだ。"
 
 #: dat/outfits/unique/hades_torch.xml:14
 msgid "#rHot hot hot!#0"
@@ -17278,6 +17419,8 @@ msgid ""
 "a tendency to leave the ship as a sitting duck if it is unable to destroy "
 "the target in a single swipe."
 msgstr ""
+"ワルキューレビームは大きく改造されたラグナロクビームだ。かなりな量のシールドをビーム兵器に振りむけて、与える損害を増加させている。その結果は、信じられない"
+"ほど威力があり、いちどの猛打で目標を破壊できなかったときには船を無防備な標的にしてしまう癖のあるビームである。"
 
 #: dat/outfits/utility/asteroid_scanner.xml:2 src/shipstats.c:181
 msgid "Asteroid Scanner"
@@ -17292,6 +17435,9 @@ msgid ""
 "composition via inverse electrical impedance. Of course, that comes at a "
 "price that not any miner can pay."
 msgstr ""
+"どのスキャナーでも小惑星の質量・位置・速度を示してくれる。しかし採掘者は小惑星の価値を知りたがっている。その目的のために、ミルスペックは分光学で表面の組成"
+"を導きだせるスキャナーアレイを設計した。さらに、もっと感動的なのは、電気的逆インピーダンスから内部組成を推測できることだ。もちろん、これはどんな採掘者でも"
+"買える価格にはならなかった。"
 
 #: dat/outfits/utility/berserk_chip.xml:2
 msgid "Berserk Chip"
@@ -17312,6 +17458,9 @@ msgid ""
 "used for a short time. Newer versions have a safety shutoff which "
 "automatically turn off the chip before hull integrity collapses."
 msgstr ""
+"バーサークチップが危険なのは、とくべつ無謀なパイロットが使ったときだけだ。船にこれを完全に統合することで、基本的な機能のほとんどを乗っとって戦闘能力に振り"
+"むけることができる。これは船殻の整合性と船のシステムにとても大きな犠牲を払わせることになり、そのうえ使えるのは短いあいだだけである。さらに新しいものには安"
+"全遮断装置がついていて、船殻の整合性が維持できなくなるまえに、チップが自動的に停止する。"
 
 #: dat/outfits/utility/berserk_chip.xml:10
 msgid ""
@@ -17320,6 +17469,8 @@ msgid ""
 "second cooldown period during which movement and damage output is decreased "
 "by 20%."
 msgstr ""
+"時間がたつと大量の損害をシールドと装甲にうけ、船殻の整合性が 30% 未満になると自動的に停止する。使ったあとには 8 秒の冷却時間があって、"
+"そのあいだは移動力と与えられる損害が 20% 低下する。"
 
 #: dat/outfits/utility/blink_drive.xml:2 dat/outfits/utility/blink_drive.xml:4
 #: dat/outfits/utility/hyperbolic_blink_engine.xml:4
@@ -17333,12 +17484,14 @@ msgid ""
 "often use such devices tend to have a higher amount of strong headaches than "
 "usual, but it must be safe, right?"
 msgstr ""
+"ブリンクドライブは、小さな時空折りたたみを作るように変更をくわえたハイパードライブ技術を使っていて、これで船は瞬間的に短い距離を渡れるようになる。このよう"
+"な駆動装置をひんぱんに使うパイロットは、強い頭痛にみまわれるのがふつうより多い傾向にある。でも安全第一、でしょ？"
 
 #: dat/outfits/utility/blink_drive.xml:11
 msgid ""
 "Blinks you 500 units in the direction you are facing. Can only be run once "
 "every 8 seconds. Performance degrades over 800 tonnes of mass."
-msgstr ""
+msgstr "瞬きするうちに、向かっている方向へ 500 ユニット移動する。8 秒ごとに一度だけ使用可能。質量が 800 トンをこえると性能が低下する。"
 
 #: dat/outfits/utility/boarding_androids_mk1.xml:2
 msgid "Boarding Androids MK1"
@@ -17356,6 +17509,8 @@ msgid ""
 "torch/can opener/spatula, the Boarding Android is ready for any situation, "
 "be it tactical or culinary."
 msgstr ""
+"アシモフディストラクティコープ・移乗用アンドロイドは、最新のロボット化敵対的乗っとり技術だ。多機能型プラズマブラスター・切断トーチ・缶切り・へらを装備した"
+"移乗用アンドロイドは、どのような状況にも対処する用意ができている。それが戦術的なものであろうと、料理であろうと。"
 
 #: dat/outfits/utility/boarding_androids_mk2.xml:2
 msgid "Boarding Androids MK2"
@@ -17367,6 +17522,8 @@ msgid ""
 "sported by its predecessor, additionally including scissor-hands and a "
 "sewing needle."
 msgstr ""
+"移乗用アンドロイドマーク 2 "
+"は、前機種が見せびらかしていた広くさまざまな道具類を改良したものだ。追加機能としては、たとえば、はさみがついた手とか、裁縫針とかがある。"
 
 #: dat/outfits/utility/cloaking_device.xml:2
 #: dat/outfits/utility/cloaking_device.xml:4
@@ -17376,7 +17533,7 @@ msgstr "遮蔽装置"
 
 #: dat/outfits/utility/cloaking_device.xml:10
 msgid "Uses 1 MJ of energy per 10 mass and drains shield in 0.5 seconds."
-msgstr ""
+msgstr "質量 10 トンあたり 1 MJ のエネルギーを使い、0.5 秒でシールドがなくなる。"
 
 #: dat/outfits/utility/combat_hologram_projector.xml:2
 msgid "Combat Hologram Projector"
@@ -17384,7 +17541,7 @@ msgstr "戦闘用ホログラム映写機"
 
 #: dat/outfits/utility/combat_hologram_projector.xml:4
 msgid "Holograph Projector"
-msgstr "ホログラム映写機"
+msgstr "ホログラフ映写機"
 
 #: dat/outfits/utility/combat_hologram_projector.xml:12
 msgid ""
@@ -17394,11 +17551,13 @@ msgid ""
 "creating confusion, however, when engaged in actual combat the cover is "
 "usually quickly blown away."
 msgstr ""
+"戦闘用ホログラム映写機は、本物の船とほとんど区別がつかない船のホログラフィーを作る最新の技術を使っている。そのようなホログラフィック表示器は、敵の砲火を引"
+"き離したり、混乱を招いたりするのにとても効果的だ。とはいえ、じっさいに戦闘がおきると、一般的にこの代役はすばやく消しとばされてしまう。"
 
 #: dat/outfits/utility/combat_hologram_projector.xml:13
 msgid ""
 "Creates a hologram of the current ship to distract the enemy ship target."
-msgstr ""
+msgstr "現在の船のホログラフィーを作って、敵の船を標的からそらす。"
 
 #: dat/outfits/utility/combatai/agility_combat_ai.xml:2
 msgid "Agility Combat AI"
@@ -17421,6 +17580,8 @@ msgid ""
 "to increase both the overall thrust and turn of the ship without actually "
 "modifying the hardware nor increasing the energy consumption."
 msgstr ""
+"この戦闘用 AI は、ふつうの船の機能性を機敏さに集中して増大させる。船の推進エンジンは注意深く調整されているが、この AI "
+"はじっさいに機器類の改造やエネルギー消費量を増やすことなく、全体的に船の推進力と旋回力を改善することができる。"
 
 #: dat/outfits/utility/combatai/bioneural_combat_ai.xml:2
 msgid "Bio-Neural Combat AI"
@@ -17434,6 +17595,9 @@ msgid ""
 "process all ship sensory data to predict future events, allowing the ship to "
 "seemingly gain an edge over other ships in reaction time."
 msgstr ""
+"純粋なソフトウェアからなるふつうの戦闘用 AI とはちがい、この AI は生きた組織と無機材料の両方から作られた、有機体に似たコプロセッサから構成されてい"
+"る。小さな側頭葉のようにふるまうこのコプロセッサは、船の全知覚情報を調べて将来の出来事を予言することが可能だ。これで船はほかの船にたいして反応時間であきら"
+"かな優位を得ることができるようになる。"
 
 #: dat/outfits/utility/combatai/cyclic_combat_ai.xml:2
 msgid "Cyclic Combat AI"
@@ -17446,6 +17610,8 @@ msgid ""
 "weapons, the AI is able to perform seemingly trivial modifications of "
 "parameters that lead to an overall increase in fire rate."
 msgstr ""
+"この戦闘用 AI は、前に向けて搭載した武器を発砲するときの周期的変動の最適化に焦点をあわせたものだ。この AI "
+"は、武器を発射する周期を注意深く分析することで、みたところささいな数値の修正をおこない、全体的な発砲率の向上につなげることができる。"
 
 #: dat/outfits/utility/combatai/hive_combat_ai.xml:2
 msgid "Hive Combat AI"
@@ -17459,6 +17625,8 @@ msgid ""
 "in more efficient movement of the fighters, and a better ability to respond "
 "to mishaps such as lost fighters."
 msgstr ""
+"ミツバチやその他の昆虫の群体からおおいに触発されたこのハイブ戦闘用 AI は、母艦と戦闘機のあいだのデータや設定の共有量を増やして、通信効率を向上できるよ"
+"うにする。これで戦闘機はもっと効率よく動くようになり、戦闘機を失うといった災難への対応能力が向上することになる。"
 
 #: dat/outfits/utility/combatai/hunting_combat_ai.xml:2
 msgid "Hunting Combat AI"
@@ -17471,6 +17639,8 @@ msgid ""
 "hulls, resulting in a slower firerate with significant increased damage for "
 "turret weapons."
 msgstr ""
+"待ち伏せ猟師の仕事のしかたと似ているハンティング戦闘用 AI "
+"は、奇襲の要素と敵の船殻の弱点を利用することに焦点をあわせられるものだ。砲塔型武器の発砲率低下と与える損害のいちじるしい増加がその結果となる。"
 
 #: dat/outfits/utility/combatai/pinpoint_combat_ai.xml:2
 msgid "Pinpoint Combat AI"
@@ -17484,6 +17654,9 @@ msgid ""
 "to increase both the range and the lock-on time of all missile launchers on "
 "the ship."
 msgstr ""
+"干し草の中の針的な問題を解決するために開発されたピンポイント戦闘用 AI "
+"は、広大な空間の中の小さな物体を見つけて捕捉するのにすぐれている。船のミサイル発射システムと連携することで、この AI "
+"は船のすべてのミサイル発射機の射程距離と捕捉時間の両方を向上させることができる。"
 
 #: dat/outfits/utility/combatai/scanning_combat_ai.xml:2
 msgid "Scanning Combat AI"
@@ -17495,6 +17668,8 @@ msgid ""
 "infrastructure. By making small tweaks online, it is able to effectively "
 "increase the range at which other ships are detected."
 msgstr ""
+"この戦闘用 AI "
+"は、船のセンサー基盤の最適化に焦点をあわせている。作動中にちょっとした微調整することで、これはほかの船を検出する距離を効果的に増やすことを可能とする。"
 
 #: dat/outfits/utility/cryogenic_repair_nanobots.xml:2
 msgid "Cryogenic Repair Nanobots"
@@ -17514,6 +17689,9 @@ msgid ""
 "provides an excellent opportunity for the nanobots to show what they are "
 "fully capable, and when the ship is in motion they go into hibernation."
 msgstr ""
+"修理用ナノボットは、奇跡に近いことをする。船殻と船の装甲をもとの状態に戻すのだ。ナノボットは実験室では注目すべきふるまいをみせるが、じっさいには働かせるの"
+"にかなり落ちついた環境が必要となる。船の冷却器作動期間は、ナノボットが完全に機能してみせるすばらしい機会を与える。そして船が動いているときには、ナノボット"
+"は冬眠状態になる。"
 
 #: dat/outfits/utility/cryogenic_repair_nanobots.xml:11
 msgid "Restores armour to full when performing an active cooldown."
@@ -17754,10 +17932,8 @@ msgstr "ミルスペック・ジャマー"
 
 #: dat/outfits/utility/milspec_jammer.xml:4
 #: dat/outfits/utility/unicorp_jammer.xml:4
-#, fuzzy
-#| msgid "Electronic Warfare"
 msgid "Electronic Warfare Jammer"
-msgstr "電子戦"
+msgstr "電子戦ジャマー"
 
 #: dat/outfits/utility/milspec_jammer.xml:9
 msgid ""
@@ -17775,10 +17951,8 @@ msgstr "ミルスペック・スクランブラー"
 
 #: dat/outfits/utility/milspec_scrambler.xml:4
 #: dat/outfits/utility/unicorp_scrambler.xml:4
-#, fuzzy
-#| msgid "Electronic Warfare"
 msgid "Electronic Warfare Scrambler"
-msgstr "電子戦"
+msgstr "電子戦スクランブラー"
 
 #: dat/outfits/utility/milspec_scrambler.xml:9
 msgid ""
@@ -19439,7 +19613,7 @@ msgstr ""
 
 #: dat/slots.xml:15
 msgid "Hull Modifications"
-msgstr ""
+msgstr "船殻修正"
 
 #: dat/slots.xml:16
 msgid ""
@@ -22520,7 +22694,7 @@ msgstr "帝国があなたを見守っている"
 
 #: dat/ai/empire.lua:46
 msgid "The Emperor sees all."
-msgstr "帝国はすべてを見ている"
+msgstr "皇帝はすべてを見ている"
 
 #. Set how far they attack
 #. Finish up creation
@@ -22604,7 +22778,7 @@ msgstr "迫害者を一掃せよ！"
 
 #: dat/ai/flf.lua:20
 msgid "You are no match for the FLF."
-msgstr "おまえでは FLF の相手にならない！"
+msgstr "おまえでは FLF の相手にならない。"
 
 #: dat/ai/flf.lua:21
 msgid "I've killed scum far more dangerous than you."
@@ -23476,24 +23650,22 @@ msgstr "｢一時的に発砲を停止｣"
 #. --
 #. First check, make sure required slots are equipped
 #: dat/autoequip.lua:19
-#, fuzzy
-#| msgid "Find Outfits"
 msgid "Missing Required Outfits"
-msgstr "艤装品を検索"
+msgstr "必須艤装品が見つからない"
 
 #: dat/autoequip.lua:19
 msgid "Please equip all required outfit slots first!"
-msgstr ""
+msgstr "最初に必須艤装品をすべてスロットに装備するようにお願いします！"
 
 #. Make sure
 #: dat/autoequip.lua:24
 msgid "Autoequip Confirmation"
-msgstr ""
+msgstr "自動装備の確認"
 
 #: dat/autoequip.lua:24
 msgid ""
 "This will re-equip your current pilot, are you sure you want to continue?"
-msgstr ""
+msgstr "これはあなたの現在のパイロットについて再装備をおこないます。ほんとうにつづけたいですか？"
 
 #. Remove all non-cores from the ship and add to invertory
 #. Store and remove old
@@ -23506,13 +23678,13 @@ msgstr ""
 #. Report success or failure
 #: dat/autoequip.lua:72
 msgid "Autoequipper Failure!"
-msgstr ""
+msgstr "自動装備の失敗！"
 
 #: dat/autoequip.lua:72
 msgid ""
 "Autoequipper failed to equip! Please make sure that the equipped required "
 "outfits are adequate for this ship."
-msgstr ""
+msgstr "自動装備ができませんでした！　装備されている必須艤装品が船に不足していないか確認をお願いします。"
 
 #.
 #. Small library to handle rendering a fullscreen background shader.
@@ -23690,11 +23862,8 @@ msgid_plural "Bribe fleet (%d pilots)"
 msgstr[0] "船団を買収 (%d 人のパイロット)"
 
 #: dat/comm.lua:257
-#, fuzzy
-#| msgid "Bribe fleet (%d pilot)"
-#| msgid_plural "Bribe fleet (%d pilots)"
 msgid "Bribe this pilot"
-msgstr "船団を買収 (%d 人のパイロット)"
+msgstr "このパイロットを買収"
 
 #.
 #. Bribing
@@ -23999,37 +24168,35 @@ msgstr "南の太陽風"
 #. subtitle = _("None"),
 #: dat/events/discovery.lua:258
 msgid "#HWild Ones Territory#0"
-msgstr ""
+msgstr "#H荒くれの領域#0"
 
 #: dat/events/discovery.lua:259
 msgid "#HUncontrolled and Raging Pirate Fury#0"
-msgstr ""
+msgstr "#H野放しで荒れ狂う海賊の激怒#0"
 
 #: dat/events/discovery.lua:269
 msgid "#HRaven Clan Territory#0"
-msgstr ""
+msgstr "#Hレイブン一味の領域#0"
 
 #: dat/events/discovery.lua:270
 msgid "#HDark Hand of the Black Market#0"
-msgstr ""
+msgstr "#Hやみ市場の黒ずんだ手#0"
 
 #: dat/events/discovery.lua:280
 msgid "#HBlack Lotus Territory#0"
-msgstr ""
+msgstr "#Hブラックロータスの領域#0"
 
 #: dat/events/discovery.lua:281
-#, fuzzy
-#| msgid "Piracy has never been better."
 msgid "#HPiracy has never been Snazzier#0"
-msgstr "海賊行為よりいいものなんてけっしてない。"
+msgstr "#H海賊行為はけっしてしゃれてなんかいない#0"
 
 #: dat/events/discovery.lua:291
 msgid "#HDreamer Clan Territory#0"
-msgstr ""
+msgstr "#Hドリーマー一味の領域#0"
 
 #: dat/events/discovery.lua:292
 msgid "#HPiracy to Rebel against Reality#0"
-msgstr ""
+msgstr "#H現実に反逆するための海賊行為#0"
 
 #. sfx = audio.newSource( 'snd/sounds/jingles/success.ogg' )
 #. Don't trigger if already done
@@ -27515,10 +27682,8 @@ msgid ""
 "again and flee back into your own ship. Whatever is on that derelict, you "
 "don't want to find out!"
 msgstr ""
-"エアロックを開けると、あなたは顔面にたたきこまれた。とんでもないにおいで、そ"
-"の場で気絶するところだったのだ。あなたはいそいでまたエアロックを閉じると、自"
-"分の船に逃げかえった。あの遺棄船になにがあるにせよ、さぐりだすなど願いさげ"
-"だ！"
+"エアロックを開けると、あなたは顔面にとんでもないにおいをたたきこまれた。その場で気絶するところだった。あなたはいそいでまたエアロックを閉じると、自分の船に"
+"逃げかえった。あの遺棄船になにがあるにせよ、さぐりだすなど願いさげだ！"
 
 #: dat/events/neutral/derelict.lua:31
 msgid ""
@@ -27543,14 +27708,10 @@ msgid ""
 "space ship, and so they ended up stranded and had to be rescued. Shaking "
 "your head, you return to your own ship."
 msgstr ""
-"この船の内部はけばけばしいやりかたで飾られていた。戸口にはかわいいぬいぐるみ"
-"がぶらさがっていて、のぞき窓は掛け布で覆われ、ほとんどの小部屋の隅にはクッ"
-"ションが置かれていて、ほぼすべての壁には愉快な落書きがあった。船のコンピュー"
-"ターをざっと調べると、この船は冒険好きな若い女性の三人組のものだとわかった。"
-"この人たちは、すてきな宇宙の旅をすることに決めたのだった。悲しいことに、けっ"
-"きょくそのなかのだれも宇宙船を飛ばす方法をほんとうには知っていなかったことが"
-"わかったのだ。だから最後は立ち往生し、救助してもらうことになってしまった。あ"
-"なたは首を振って、自分の船に戻った。"
+"この船の内部はけばけばしいやりかたで飾られていた。戸口にはかわいいぬいぐるみがぶらさがっていて、のぞき窓は掛け布で覆われ、ほとんどの小部屋の隅にはクッショ"
+"ンが置かれていて、ほぼすべての壁には愉快な落書きがあった。船のコンピューターをざっと調べると、この船は冒険好きな若い女性の三人組のものだとわかった。この人"
+"たちは、すてきな宇宙の旅をすることに決めたのだ。悲しいことに、けっきょく宇宙船を飛ばす方法をほんとうに知っている者がそのなかにひとりもいなかったことがわか"
+"った。だから最後は立ち往生し、救助してもらうことになってしまったのだ。あなたは首を振って、自分の船に戻った。"
 
 #: dat/events/neutral/derelict.lua:33
 msgid ""
@@ -29740,9 +29901,8 @@ msgid ""
 "Growth colony ship on display in one of the big rooms. Even scaled down like "
 "that, it's massive! Imagine how overwhelming the real ones must have been.\""
 msgstr ""
-"｢辺境博物館に行ったことは？　大きな部屋のひとつに、第一期拡大植民船の縮小模型"
-"が展示してあってね。小さくしてあるとはいえ、とても大きいんだよ！　ほんもの"
-"だったらどれだけ圧倒されるか想像してほしいね｣"
+"｢辺境博物館に行ったことは？　大きな部屋のひとつに、第一次拡大植民船の縮小模型が展示してあってね。小さくしてあるとはいえ、とても大きいんだよ！　"
+"ほんものだったらどれだけ圧倒されるか想像してほしいね｣"
 
 #: dat/events/neutral/npc.lua:178
 msgid ""
@@ -29752,10 +29912,8 @@ msgid ""
 "it. Some are said to have mysteriously disappeared. I wonder what happened "
 "to them?\""
 msgstr ""
-"｢真の辺境世界は 12 個ある。なぜなら 12 の植民船が第一期拡大のときに旅を成功し"
-"て終えたからだよ。でも初めは 20 隻の植民船があったのを知ってる？　8 隻はまる"
-"で成功しなかった。あるものは不可解にも消え去ったと言われてる。なにがおきたん"
-"だろうね？｣"
+"｢真の辺境世界は 12 個ある。なぜなら 12 の植民船が第一次拡大のときに旅を成功して終えたからだよ。でも初めは 20 隻の植民船があったのを知ってる？"
+"　8 隻はまるで成功しなかった。あるものは不可解にも消え去ったと言われてる。なにがおきたんだろうね？｣"
 
 #: dat/events/neutral/npc.lua:179
 msgid ""
@@ -30012,9 +30170,7 @@ msgstr ""
 msgid ""
 "\"If you don't watch the markets then you'll be hopping between planets in a "
 "jury-rigged ship in no time.\""
-msgstr ""
-"｢市場を注視していないと、安物の船で時間に追われて惑星から惑星へと飛びまわるこ"
-"とになるよ｣"
+msgstr "｢市場を注視していないと、即席にでっちあげた船で時間に追われて惑星から惑星へと飛びまわることになるよ｣"
 
 #: dat/events/neutral/npc.lua:217
 msgid ""
@@ -30282,9 +30438,7 @@ msgid ""
 "\"Don't forget to have your target selected. Even if you have forward-facing "
 "weapons, the weapons will swivel a bit to track your target. But it's "
 "absolutely essential for turreted weapons.\""
-msgstr ""
-"｢目標の選択を忘れないこと。前を向いた武器であっても、目標を狙ってすこし回転す"
-"るんだよ。でも砲塔型の武器なら、それがぜったい必須になる｣"
+msgstr "｢目標の選択を忘れないこと。前を向いた武器であっても、目標を狙ってすこし首を振るんだよ。でも砲塔型の武器なら、目標の選択がぜったい必須になる｣"
 
 #: dat/events/neutral/npc.lua:248
 msgid ""
@@ -30360,7 +30514,7 @@ msgstr ""
 msgid ""
 "\"Trade Lanes are the safest bet to travel around the universe. They have "
 "many patrols to keep you safe from pirates.\""
-msgstr ""
+msgstr "｢貿易用航路は宇宙を旅してまわるのには、もっとも安全な道だよ。海賊からの安全を確保する巡視隊がたくさんいるし｣"
 
 #. Jump point messages.
 #. For giving the location of a jump point in the current system to the player for free.
@@ -32619,21 +32773,19 @@ msgstr "海賊ハイエナ"
 #. @brief Spawns a small group of miners
 #: dat/factions/spawn/miner.lua:13
 msgid "Miner Llama"
-msgstr "鉱員ラマ"
+msgstr "採掘者ラマ"
 
 #: dat/factions/spawn/miner.lua:15
 msgid "Miner Koala"
-msgstr "鉱員コアラ"
+msgstr "採掘者コアラ"
 
 #: dat/factions/spawn/miner.lua:17
 msgid "Miner Mule"
-msgstr "鉱員ミュール"
+msgstr "採掘者ミュール"
 
 #: dat/factions/spawn/miner.lua:19
-#, fuzzy
-#| msgid "Trader Rhino"
 msgid "Miner Rhino"
-msgstr "貿易商ライノ"
+msgstr "採掘者ライノ"
 
 #. @brief Spawns a small patrol fleet.
 #. @brief Spawns a medium sized squadron.
@@ -33101,11 +33253,11 @@ msgstr "買収ずみ"
 #. Can't get friendly
 #: dat/factions/standing/marauder.lua:8
 msgid "Ignored"
-msgstr ""
+msgstr "無視"
 
 #: dat/factions/standing/marauder.lua:9
 msgid "Potential Victim"
-msgstr ""
+msgstr "犠牲者候補"
 
 #. Doesn't change through hits
 #. Faction caps.
@@ -33117,7 +33269,7 @@ msgstr ""
 #. Modulation from secondary
 #: dat/factions/standing/pirate.lua:6
 msgid "Respected"
-msgstr ""
+msgstr "尊敬すべき"
 
 #. Doesn't change through hits
 #. Kill cap
@@ -41486,47 +41638,35 @@ msgstr ""
 #: dat/missions/empire/longdistanceshipping/es_longdistancecargo.lua:30
 #: dat/missions/neutral/cargo.lua:43 dat/missions/neutral/cargo_rush.lua:51
 #: dat/missions/trader/trader_escort.lua:44
-#, fuzzy
-#| msgid "Piracy Risk: None"
 msgid "#nPiracy Risk:#0 None"
-msgstr "海賊行為の危険性: なし"
+msgstr "#n海賊行為の危険性 :#0 なし"
 
 #: dat/missions/empire/es_cargo.lua:27
 #: dat/missions/empire/longdistanceshipping/es_longdistancecargo.lua:31
 #: dat/missions/neutral/cargo.lua:44 dat/missions/neutral/cargo_rush.lua:52
 #: dat/missions/trader/trader_escort.lua:45
-#, fuzzy
-#| msgid "Piracy Risk: Low"
 msgid "#nPiracy Risk:#0 Low"
-msgstr "海賊行為の危険性: 低い"
+msgstr "#n海賊行為の危険性 :#0 低い"
 
 #: dat/missions/empire/es_cargo.lua:28
 #: dat/missions/empire/longdistanceshipping/es_longdistancecargo.lua:32
 #: dat/missions/neutral/cargo.lua:45 dat/missions/neutral/cargo_rush.lua:53
 #: dat/missions/trader/trader_escort.lua:46
-#, fuzzy
-#| msgid "Piracy Risk: Medium"
 msgid "#nPiracy Risk:#0 Medium"
-msgstr "海賊行為の危険性: 中程度"
+msgstr "#n海賊行為の危険性 :#0 中程度"
 
 #: dat/missions/empire/es_cargo.lua:29
 #: dat/missions/empire/longdistanceshipping/es_longdistancecargo.lua:33
 #: dat/missions/neutral/cargo.lua:46 dat/missions/neutral/cargo_rush.lua:54
 #: dat/missions/trader/trader_escort.lua:47
-#, fuzzy
-#| msgid "Piracy Risk: High"
 msgid "#nPiracy Risk:#0 High"
-msgstr "海賊行為の危険性: 高い"
+msgstr "#n海賊行為の危険性 :#0 高い"
 
 #: dat/missions/empire/es_cargo.lua:31
-#, fuzzy
-#| msgid ""
-#| "MISSION FAILED: You have failed to deliver the goods to the Empire on "
-#| "time!"
 msgid ""
 "#rMISSION FAILED: You have failed to deliver the goods to the Empire on time!"
 "#0"
-msgstr "任務に失敗 : 制限時間以内の帝国への物資の配達に失敗しました！"
+msgstr "#r任務に失敗 : 制限時間以内の帝国への物資の配達に失敗しました！#0"
 
 #.
 #. -- Common Empire Mission framework
@@ -56777,7 +56917,7 @@ msgstr "観光客"
 
 #: dat/missions/neutral/sightseeing.lua:158
 msgid "A bunch of sightseeing civilians."
-msgstr "観光中の民間人の一団"
+msgstr "観光中の民間人の一団。"
 
 #. The ship will have a unique name
 #: dat/missions/neutral/spacefamily.lua:31
@@ -57451,10 +57591,9 @@ msgstr ""
 #. Should not happen, but putting this here just in case.
 #. Set mission details
 #: dat/missions/pirate/empbounty_dead.lua:140 dat/missions/pirate/patrol.lua:70
-#, fuzzy, lua-format
-#| msgid "%s (%s)"
+#, lua-format
 msgid " (%s)"
-msgstr "%s (%s)"
+msgstr ""
 
 #. We're not on a pirate stronghold, so include a warning that the
 #. mission is in fact illegal (for new players).
@@ -58960,10 +59099,8 @@ msgid ""
 msgstr ""
 
 #: dat/missions/pirate/raid.lua:118
-#, fuzzy
-#| msgid "Pirate News Network."
 msgid "Fine-tuned Neural Networks"
-msgstr "海賊ニュースネットワーク。"
+msgstr ""
 
 #: dat/missions/pirate/raid.lua:118
 msgid ""
@@ -59096,10 +59233,8 @@ msgid "Pirate Raid"
 msgstr "海賊ライノ"
 
 #: dat/missions/pirate/raid.lua:179
-#, fuzzy
-#| msgid "Fly to the %s system"
 msgid "Go to the {sysname} system"
-msgstr "%s星系へ飛べ。"
+msgstr ""
 
 #: dat/missions/pirate/raid.lua:180
 msgid "Plunder {cargoname} from the convoy"
@@ -65967,10 +66102,8 @@ msgid "Destroy the practice drone near %s in the %s system"
 msgstr ""
 
 #: dat/missions/tutorial/tutorial.lua:95
-#, fuzzy
-#| msgid "Jump to the %s system by using your starmap"
 msgid "Jump to a nearby system by using your starmap"
-msgstr "星図を使って%s星系にジャンプせよ"
+msgstr "星図を使って近くの星系にジャンプせよ"
 
 #: dat/missions/tutorial/tutorial.lua:98
 msgid ""
@@ -68633,38 +68766,31 @@ msgstr[1] ""
 #. -- @param notes Any additional text the user should see on its own detail line, such as piracy risk. May be nil.
 #. --
 #: dat/scripts/cargo_common.lua:222
-#, fuzzy, lua-format
-#| msgid "Cargo: %s (%s)"
+#, lua-format
 msgid "#nCargo:#0 %s (%s)"
-msgstr "積み荷 : %s (%s)"
+msgstr "#n積み荷 :#0 %s (%s)"
 
 #: dat/scripts/cargo_common.lua:224
-#, fuzzy, lua-format
-#| msgid "Cargo: %s"
+#, lua-format
 msgid "#nCargo:#0 %s"
-msgstr "積み荷 : %s"
+msgstr "#n積み荷 :#0 %s"
 
 #: dat/scripts/cargo_common.lua:230
-#, fuzzy, lua-format
-#| msgid "Jumps: %d"
-#| msgid_plural "Jumps: %d"
+#, lua-format
 msgid "#nJumps:#0 %d"
 msgid_plural "#nJumps:#0 %d"
-msgstr[0] "ジャンプ回数 : %d"
+msgstr[0] "#nジャンプ回数 :#0 %d"
 
 #: dat/scripts/cargo_common.lua:232
-#, fuzzy, lua-format
-#| msgid "Travel distance: %s"
-#| msgid_plural "Travel distance: %s"
+#, lua-format
 msgid "#nTravel distance:#0 %s"
 msgid_plural "#nTravel distance:#0 %s"
-msgstr[0] "移動距離 : %s"
+msgstr[0] "#n移動距離 :#0 %s"
 
 #: dat/scripts/cargo_common.lua:239
-#, fuzzy, lua-format
-#| msgid "Time limit: %s"
+#, lua-format
 msgid "#nTime limit:#0 %s"
-msgstr "時間制限 : %s"
+msgstr "#n時間制限 :#0 %s"
 
 #.
 #. @brief Increases the reputation limit of the player.
@@ -68950,10 +69076,8 @@ msgstr ""
 #. Main equipment functions
 #. We assume standard cargo doesn't change over time
 #: dat/scripts/equipopt/cargo.lua:8
-#, fuzzy
-#| msgid "Loading Commodities..."
 msgid "No standard commodities!"
-msgstr "商品のロード中..."
+msgstr ""
 
 #. Bias towards fewer types
 #. Add the cargo
@@ -69543,15 +69667,15 @@ msgstr[0] "%s 回"
 #. --
 #: dat/scripts/format.lua:109
 msgid "{0} and {1}"
-msgstr ""
+msgstr "{0}と{1}"
 
 #: dat/scripts/format.lua:113
 msgid "{0}, and {1}"
-msgstr ""
+msgstr "{0}、{1}"
 
 #: dat/scripts/format.lua:116 dat/scripts/format.lua:120
 msgid "{0}, {1}"
-msgstr ""
+msgstr "{0}、{1}"
 
 #.
 #. Inspired by https://github.com/hishamhm/f-strings without debug stuff
@@ -73922,7 +74046,7 @@ msgstr "これを描画用の解像度を下げるのに使ってから、もと
 
 #: src/conf.c:849
 msgid "Scale factor for rendered nebula backgrounds."
-msgstr "背景の星雲を描画するのに使う拡大率"
+msgstr "背景の星雲を描画するのに使う拡大率。"
 
 #: src/conf.c:850
 msgid "Larger values can save time but lead to a blurrier appearance."
@@ -74068,11 +74192,11 @@ msgstr "-- 小さいサイズは: %d\n"
 #: src/conf.c:969
 msgid ""
 "Sets the velocity (px/s) to compress up to when time compression is enabled."
-msgstr "時間圧縮が有効なときの、圧縮する最大速度(px/s)の設定"
+msgstr "時間圧縮が有効なときの、圧縮する最大速度(px/s)の設定。"
 
 #: src/conf.c:973
 msgid "Sets the multiplier to compress up to when time compression is enabled."
-msgstr "時間圧縮が有効なときの、最大圧縮係数の設定"
+msgstr "時間圧縮が有効なときの、最大圧縮係数の設定。"
 
 #: src/conf.c:977
 msgid "Redirects log and error output to files"
@@ -74101,11 +74225,11 @@ msgstr "ダブルクリックの最大間隔 (0なら無効化)。"
 
 #: src/conf.c:1001
 msgid "Enemy distance at which autonav speed resets."
-msgstr ""
+msgstr "敵の距離がこの値になったら自動操縦の速度をもとに戻す。"
 
 #: src/conf.c:1005
 msgid "Shield value at which autonav speed resets."
-msgstr ""
+msgstr "シールドがこの値になったら自動操縦の速度をもとに戻す。"
 
 #: src/conf.c:1009
 msgid "Enables developer mode (universe editor and the likes)"
@@ -74426,16 +74550,12 @@ msgid "Land"
 msgstr "着陸"
 
 #: src/dev_sysedit.c:1330
-#, fuzzy
-#| msgid "Presence"
 msgid "Base Presence"
-msgstr "存在感"
+msgstr "基本的配備状況"
 
 #: src/dev_sysedit.c:1338
-#, fuzzy
-#| msgid "Presence"
 msgid "Bonus Presence"
-msgstr "存在感"
+msgstr "追加の配備状況"
 
 #: src/dev_sysedit.c:1346
 msgid "Range"
@@ -74556,10 +74676,8 @@ msgid "Save All"
 msgstr "すべて保存"
 
 #: src/dev_uniedit.c:209
-#, fuzzy
-#| msgid "Mode"
 msgid "View Mode"
-msgstr "モード"
+msgstr "表示モード"
 
 #: src/dev_uniedit.c:214
 msgid "Jump"
@@ -74588,31 +74706,23 @@ msgstr "配備状況 :"
 #. Create the window.
 #: src/dev_uniedit.c:392
 msgid "Select a View Mode"
-msgstr ""
+msgstr "表示モードの選択"
 
 #: src/dev_uniedit.c:397
-#, fuzzy
-#| msgid "Defaults"
 msgid "Default"
 msgstr "デフォルト"
 
 #: src/dev_uniedit.c:398
-#, fuzzy
-#| msgid "Add a Virtual Asset"
 msgid "Virtual Assets"
-msgstr "バーチャルアセットの追加"
+msgstr "バーチャルアセット"
 
 #: src/dev_uniedit.c:399
-#, fuzzy
-#| msgid "Systems"
 msgid "System Radius"
-msgstr "星系"
+msgstr "星系の半径"
 
 #: src/dev_uniedit.c:400
-#, fuzzy
-#| msgid "Enemy Presence"
 msgid "Sum of Presences"
-msgstr "敵の出現"
+msgstr "配備状況の合計"
 
 #: src/dev_uniedit.c:731
 msgid "Click to add a new system"
@@ -74623,17 +74733,15 @@ msgid "Click to toggle jump route"
 msgstr "クリックするとジャンプ航路の有無を切り替えます。"
 
 #: src/dev_uniedit.c:782
-#, fuzzy, c-format
-#| msgid "System: %s\n"
+#, c-format
 msgid "System Radius: %s"
-msgstr "星系 : %s\n"
+msgstr "星系の半径 : %s"
 
 #. Count assets.
 #: src/dev_uniedit.c:797
-#, fuzzy, c-format
-#| msgid "Radius: %.0f"
+#, c-format
 msgid "Total: %.0f"
-msgstr "半径 : %.0f"
+msgstr "合計 : %.0f"
 
 #: src/dev_uniedit.c:1061
 #, c-format
@@ -74750,10 +74858,9 @@ msgid "Add"
 msgstr "追加"
 
 #: src/dev_uniedit.c:1833
-#, fuzzy, c-format
-#| msgid "Failed to add virtual asset '%s'!"
+#, c-format
 msgid "Failed to remove virtual asset '%s'!"
-msgstr "バーチャルアセット ｢%s｣ を追加できませんでした！"
+msgstr "バーチャルアセット ｢%s｣ を削除できませんでした！"
 
 # ここでのVirtual Assetとは? 不明なので音訳
 #: src/dev_uniedit.c:1860
@@ -74875,10 +74982,8 @@ msgid "Unequip"
 msgstr "撤去"
 
 #: src/equipment.c:339
-#, fuzzy
-#| msgid "Unequip"
 msgid "Autoequip"
-msgstr "撤去"
+msgstr "自動装備"
 
 #. text
 #: src/equipment.c:363
@@ -75009,7 +75114,7 @@ msgstr "すべて"
 
 #: src/equipment.c:1631
 msgid "Very little space on equipment outfit tabs!"
-msgstr ""
+msgstr "Very little space on equipment outfit tabs!"
 
 #: src/equipment.c:1642 src/land_outfits.c:302
 msgid "Filter…"
@@ -75088,37 +75193,30 @@ msgid_plural "jumps"
 msgstr[0] "ジャンプ"
 
 #: src/equipment.c:1910
-#, fuzzy
-#| msgid "Available Outfits"
 msgid "Show all outfits"
-msgstr "使用可能な艤装品"
+msgstr "すべての艤装品を見る"
 
 #: src/equipment.c:1911
 msgid "Show only equipable outfits"
-msgstr ""
+msgstr "装備可能な艤装品だけを見る"
 
 #: src/equipment.c:1912
 msgid "Show only light outfits"
-msgstr ""
+msgstr "軽量艤装品だけを見る"
 
 #: src/equipment.c:1913
 msgid "Show only medium outfits"
-msgstr ""
+msgstr "中級艤装品だけを見る"
 
 #: src/equipment.c:1914
 msgid "Show only heavy outfits"
-msgstr ""
+msgstr "重量艤装品だけを見る"
 
 #: src/equipment.c:2058
-#, fuzzy
-#| msgid ""
-#| "You can not unequip your ship when you have more cargo than it can hold "
-#| "without modifications!"
 msgid ""
 "You can't unequip your ship when you have more cargo than it can hold "
 "without modifications!"
-msgstr ""
-"改造なしで保管できる量をこえる積み荷があるときには、船から撤去はできません！"
+msgstr "改造なしで保管できる量をこえる積み荷があるときには、船から撤去はできません！"
 
 #: src/equipment.c:2061
 msgid "Unequip Ship"
@@ -75130,36 +75228,32 @@ msgid "Are you sure you want to remove all equipment from your ship?"
 msgstr "ほんとうにすべての装備を船から撤去したいですか？"
 
 #: src/equipment.c:2065 src/land.c:185
-#, fuzzy
-#| msgid "Hyena Fighter"
 msgid "Recall Fighters"
-msgstr "ハイエナ戦闘機"
+msgstr "戦闘機の回収"
 
 #: src/equipment.c:2065 src/land.c:185
 msgid "This action will recall your deployed fighters. Is that OK?"
-msgstr ""
+msgstr "これは展開した戦闘機を呼びもどすことになります。それでいいですか？"
 
 #: src/equipment.c:2139 src/land.c:1476
-#, fuzzy, c-format
-#| msgid "Ship '%s' not found!"
+#, c-format
 msgid "File '%s' not found!"
-msgstr "Ship '%s' not found!"
+msgstr "File '%s' not found!"
 
 #: src/equipment.c:2147
-#, fuzzy, c-format
-#| msgid "Faction '%s': %s"
+#, c-format
 msgid "Failed to run '%s': %s"
-msgstr "Faction '%s': %s"
+msgstr "Failed to run '%s': %s"
 
 #: src/equipment.c:2156
 #, c-format
 msgid "'%s' doesn't have valid required 'autoequip' function!"
-msgstr ""
+msgstr "'%s' doesn't have valid required 'autoequip' function!"
 
 #: src/equipment.c:2162
 #, c-format
 msgid "'%s' failed to run required 'autoequip' function: %s"
-msgstr ""
+msgstr "'%s' failed to run required 'autoequip' function: %s"
 
 #: src/equipment.c:2203
 #, c-format
@@ -75194,10 +75288,9 @@ msgid "Please do not give the ship the same name as another of your ships."
 msgstr "あなたのほかの船と同じ名前をつけないでください。"
 
 #: src/escort.c:197
-#, fuzzy, c-format
-#| msgid "Pilot '%s' ai '%s' error: %s"
+#, c-format
 msgid "Pilot '%s' has escort '%s' docking error!"
-msgstr "Pilot '%s' ai '%s' error: %s"
+msgstr "Pilot '%s' has escort '%s' docking error!"
 
 #: src/escort.c:258
 #, c-format
@@ -75456,16 +75549,14 @@ msgid "Unknown node '%s' in faction '%s'"
 msgstr "Unknown node '%s' in faction '%s'"
 
 #: src/faction.c:1429
-#, fuzzy, c-format
-#| msgid "Faction '%s' missing player tag."
+#, c-format
 msgid "Faction '%s' missing 'player' tag."
-msgstr "Faction '%s' missing player tag."
+msgstr "Faction '%s' missing 'player' tag."
 
 #: src/faction.c:1431
-#, fuzzy, c-format
-#| msgid "Faction '%s' missing player tag."
+#, c-format
 msgid "Faction '%s' is known but missing 'description' tag."
-msgstr "Faction '%s' missing player tag."
+msgstr "Faction '%s' is known but missing 'description' tag."
 
 #: src/faction.c:1453
 #, c-format
@@ -75925,20 +76016,16 @@ msgstr ""
 "\n"
 
 #: src/info.c:556
-#, fuzzy
-#| msgid "Current Set Settings"
 msgid "Current Weapon Set Settings"
-msgstr "現在のセットの設定"
+msgstr "現在の武器セットの設定"
 
 #: src/info.c:559
-#, fuzzy
-#| msgid "Enable instant mode (only for weapons)"
 msgid "Enable instant Mode"
-msgstr "瞬間モードを有効にする (武器のみ)"
+msgstr "瞬間モードを有効にする"
 
 #: src/info.c:562
 msgid "(Weapons fire when this weapon set key is pressed)"
-msgstr ""
+msgstr "(この武器セットキーを押すと武器を発射する)"
 
 #: src/info.c:565
 msgid "Only shoot weapons that are in range"
@@ -76780,10 +76867,8 @@ msgid_plural "You have %d tonnes more cargo than the new ship can hold."
 msgstr[0] "新しい船の船倉より %dトン多い積み荷があります。"
 
 #: src/land.c:186
-#, fuzzy
-#| msgid "You have destealthed."
 msgid "You have deployed fighters."
-msgstr "ステルスを解除しました。"
+msgstr "戦闘機を展開しました。"
 
 #: src/land.c:294
 msgid "Approach"
@@ -76939,17 +77024,6 @@ msgid "Find Outfits"
 msgstr "艤装品を検索"
 
 #: src/land_outfits.c:197
-#, fuzzy
-#| msgid ""
-#| "Owned:\n"
-#| "\n"
-#| "Slot:\n"
-#| "Size:\n"
-#| "Mass:\n"
-#| "\n"
-#| "Price:\n"
-#| "Money:\n"
-#| "License:\n"
 msgid ""
 "Owned:\n"
 "Mass:\n"
@@ -76958,11 +77032,7 @@ msgid ""
 "License:\n"
 msgstr ""
 "所有数 :\n"
-"\n"
-"スロット :\n"
-"大きさ :\n"
 "質量 :\n"
-"\n"
 "価格 :\n"
 "所持金 :\n"
 "免許 :\n"
@@ -76972,17 +77042,7 @@ msgid "Other"
 msgstr "その他"
 
 #: src/land_outfits.c:372
-#, fuzzy, c-format
-#| msgid ""
-#| "N/A\n"
-#| "\n"
-#| "N/A\n"
-#| "N/A\n"
-#| "N/A\n"
-#| "\n"
-#| "N/A\n"
-#| "N/A\n"
-#| "N/A\n"
+#, c-format
 msgid ""
 "N/A\n"
 "N/A\n"
@@ -76991,35 +77051,22 @@ msgid ""
 "N/A\n"
 msgstr ""
 "—\n"
-"\n"
 "—\n"
-"—\n"
-"—\n"
-"\n"
 "—\n"
 "—\n"
 "—\n"
 
 #: src/land_outfits.c:424
-#, fuzzy, c-format
-#| msgid "#%c%s #%c%s #0slot"
+#, c-format
 msgid ""
 "%s\n"
 "#%c%s #%c%s #0slot"
-msgstr "#%c%s #%c%s #0スロット"
+msgstr ""
+"%s\n"
+"#%c%s #%c%s #0スロット"
 
 #: src/land_outfits.c:431
-#, fuzzy, c-format
-#| msgid ""
-#| "%d\n"
-#| "\n"
-#| "%s\n"
-#| "%s\n"
-#| "%.0f tonnes\n"
-#| "\n"
-#| "%s\n"
-#| "%s\n"
-#| "%s\n"
+#, c-format
 msgid ""
 "%d\n"
 "%.0f tonnes\n"
@@ -77028,11 +77075,7 @@ msgid ""
 "%s\n"
 msgstr ""
 "%d\n"
-"\n"
-"%s\n"
-"%s\n"
 "%.0fトン\n"
-"\n"
 "%s\n"
 "%s\n"
 "%s\n"
@@ -77604,10 +77647,8 @@ msgid "Multiple"
 msgstr "複数"
 
 #: src/map.c:679
-#, fuzzy
-#| msgid "Grave Lance"
 msgid "#gTrade Lane#0"
-msgstr "グレイブランス"
+msgstr "#g貿易用航路#0"
 
 #: src/map.c:689
 msgid "Dense "
@@ -77620,7 +77661,7 @@ msgstr "密度が低い"
 #: src/map.c:698
 #, c-format
 msgid "#rVolatile %sNebula (%.1f MW)#0"
-msgstr "#r%s激変する星雲 (%.1f MW)#0"
+msgstr "#r%s激変性星雲 (%.1f MW)#0"
 
 #: src/map.c:700
 #, c-format
@@ -77684,14 +77725,12 @@ msgid "%s: Trade"
 msgstr "差額 : %s"
 
 #: src/map.c:1964
-#, fuzzy
-#| msgid "Normie"
 msgid "Normal View"
-msgstr "大衆"
+msgstr "通常表示"
 
 #: src/map.c:1964
 msgid "Minimal View"
-msgstr ""
+msgstr "最小限表示"
 
 #: src/map.c:2735
 #, c-format
@@ -77820,7 +77859,7 @@ msgstr "｢%2$s｣ に一致する%1$sは見つかりませんでした！"
 
 #: src/map_find.c:1020
 msgid "Find..."
-msgstr "検索"
+msgstr "検索..."
 
 #: src/map_find.c:1029
 msgid "Enter keyword to search for:"
@@ -77875,7 +77914,7 @@ msgstr[0] "恒星の数 : %d\n"
 
 #: src/map_system.c:405
 msgid "Nebula: Volatile, "
-msgstr "星雲 : 激変、"
+msgstr "星雲 : 激変性、"
 
 #: src/map_system.c:407
 msgid "Nebula: Dangerous, "
@@ -77916,7 +77955,7 @@ msgstr "干渉 : 軽度\n"
 #: src/map_system.c:437
 #, c-format
 msgid "Asteroid field density: %.2g\n"
-msgstr "小惑星帯の密度 :  %.2g\n"
+msgstr "小惑星帯の密度 : %.2g\n"
 
 #: src/map_system.c:446
 msgid "Faction: Multiple\n"
@@ -79159,10 +79198,8 @@ msgid "Outfit is invalid."
 msgstr "Outfit is invalid."
 
 #: src/nlua_outfit.c:550
-#, fuzzy
-#| msgid "Outfit is invalid."
 msgid "Outfit has invalid damage type."
-msgstr "Outfit is invalid."
+msgstr "Outfit has invalid damage type."
 
 #: src/nlua_pilot.c:402
 msgid "Pilot is invalid."
@@ -79193,14 +79230,9 @@ msgid "Unknown slot type '%s'"
 msgstr "Unknown slot type '%s'"
 
 #: src/nlua_pilot.c:1883
-#, fuzzy, c-format
-#| msgid ""
-#| "Pilot '%s''s outfit '%s' -> 'outofenergy':\n"
-#| "%s"
+#, c-format
 msgid "Pilot '%s' outfit ID '%d' is out of range!"
-msgstr ""
-"Pilot '%s''s outfit '%s' -> 'outofenergy':\n"
-"%s"
+msgstr "Pilot '%s' outfit ID '%d' is out of range!"
 
 #: src/nlua_pilot.c:3477
 msgid ""
@@ -79879,7 +79911,7 @@ msgstr "敵の出現"
 #: src/options.c:545
 #, c-format
 msgid "Enemy within %s distance"
-msgstr ""
+msgstr "敵の距離が %s 以内"
 
 #: src/options.c:547
 #, c-format
@@ -80396,7 +80428,7 @@ msgid ""
 "%.1f Degree Swivel"
 msgstr ""
 "\n"
-"回転角度 : %.1f 度"
+"首振り角度 : %.1f 度"
 
 #: src/outfit.c:1360 src/outfit.c:2721 src/outfit.c:2727
 #, c-format
@@ -80497,14 +80529,9 @@ msgstr ""
 "#r作動させるか選べる艤装品#0"
 
 #: src/outfit.c:1802
-#, fuzzy, c-format
-#| msgid ""
-#| "\n"
-#| "%.1f Cooldown"
+#, c-format
 msgid " #r(%.1f s Cooldown)#0"
-msgstr ""
-"\n"
-"冷却期間 : %.1f"
+msgstr " #r(冷却期間 %.1f 秒)#0"
 
 #: src/outfit.c:1811
 #, c-format
@@ -80593,12 +80620,12 @@ msgstr "Outfit '%s' has unknown slot type '%s'."
 #: src/outfit.c:2322
 #, c-format
 msgid "Empty faction string for outfit '%s' legality!"
-msgstr ""
+msgstr "Empty faction string for outfit '%s' legality!"
 
 #: src/outfit.c:2328
 #, c-format
 msgid "Outfit '%s' has no factions defined in <illegalto> block!"
-msgstr ""
+msgstr "Outfit '%s' has no factions defined in <illegalto> block!"
 
 #: src/outfit.c:2331
 #, c-format
@@ -80667,31 +80694,29 @@ msgid_plural "Loaded %d Outfits"
 msgstr[0] "Loaded %d Outfit(s)"
 
 #: src/outfit.c:2610
-#, fuzzy
-#| msgid " (#rillegal#0)"
 msgid ""
 "\n"
 "#rIllegal to:#0"
-msgstr " (#r違法#0)"
+msgstr ""
+"\n"
+"#r違法とする党派 :#0"
 
 #: src/outfit.c:2612
-#, fuzzy, c-format
-#| msgid "#o%s#0\n"
+#, c-format
 msgid ""
 "\n"
 "#r- %s#0"
-msgstr "#o%s#0\n"
+msgstr ""
+"\n"
+"#r- %s#0"
 
 #: src/outfit.c:2622
-#, fuzzy, c-format
-#| msgid ""
-#| "Outfit '%s' Lua error:\n"
-#| "%s"
+#, c-format
 msgid ""
 "Outfit '%s' lua load error -> 'load':\n"
 "%s"
 msgstr ""
-"Outfit '%s' Lua error:\n"
+"Outfit '%s' lua load error -> 'load':\n"
 "%s"
 
 #: src/outfit.c:2651
@@ -80719,6 +80744,8 @@ msgid ""
 "\n"
 "%.1f Second In-Flight Calibration"
 msgstr ""
+"\n"
+"発射後捕捉時間 : %.1f 秒"
 
 #: src/outfit.c:2725
 msgid ""
@@ -80792,16 +80819,13 @@ msgstr ""
 "再装填 : %.1f 秒"
 
 #: src/outfit.c:2752
-#, fuzzy, c-format
-#| msgid ""
-#| "\n"
-#| "%.1f%% Jam Resistance"
+#, c-format
 msgid ""
 "\n"
 "%.0f%% Jam Resistance"
 msgstr ""
 "\n"
-"妨害耐性 : %.1f%%"
+"妨害耐性 : %.0f%%"
 
 #.
 #. * properties
@@ -80910,10 +80934,9 @@ msgid "You have been uncovered!"
 msgstr "あなたは発見されました！"
 
 #: src/pilot_ew.c:544
-#, fuzzy, c-format
-#| msgid "You have uncovered '%s'!"
+#, c-format
 msgid "You have uncovered '#%c%s#0'!"
-msgstr "あなたは ｢%s｣ を発見しました！"
+msgstr "あなたは ｢#%c%s#0｣ を発見しました！"
 
 #: src/pilot_hook.c:77 src/pilot_hook.c:89
 #, c-format
@@ -81145,15 +81168,12 @@ msgstr ""
 #. f, p, po
 #.
 #: src/pilot_outfit.c:1258
-#, fuzzy, c-format
-#| msgid ""
-#| "Pilot '%s''s outfit '%s' -> 'onhit':\n"
-#| "%s"
+#, c-format
 msgid ""
 "Pilot '%s''s outfit '%s' -> 'onadd':\n"
 "%s"
 msgstr ""
-"Pilot '%s''s outfit '%s' -> 'onhit':\n"
+"Pilot '%s''s outfit '%s' -> 'onadd':\n"
 "%s"
 
 #. Set up the function: init( p, po )
@@ -81162,15 +81182,12 @@ msgstr ""
 #. f, p, po
 #.
 #: src/pilot_outfit.c:1283
-#, fuzzy, c-format
-#| msgid ""
-#| "Pilot '%s''s outfit '%s' -> 'ontoggle':\n"
-#| "%s"
+#, c-format
 msgid ""
 "Pilot '%s''s outfit '%s' -> 'onremove':\n"
 "%s"
 msgstr ""
-"Pilot '%s''s outfit '%s' -> 'ontoggle':\n"
+"Pilot '%s''s outfit '%s' -> 'onremove':\n"
 "%s"
 
 #. Set up the function: init( p, po )
@@ -81280,15 +81297,12 @@ msgstr ""
 #. f, p, po
 #.
 #: src/pilot_outfit.c:1539
-#, fuzzy, c-format
-#| msgid ""
-#| "Pilot '%s''s outfit '%s' -> 'onhit':\n"
-#| "%s"
+#, c-format
 msgid ""
 "Pilot '%s''s outfit '%s' -> 'onshoot':\n"
 "%s"
 msgstr ""
-"Pilot '%s''s outfit '%s' -> 'onhit':\n"
+"Pilot '%s''s outfit '%s' -> 'onshoot':\n"
 "%s"
 
 #. Set the memory.
@@ -81301,15 +81315,12 @@ msgstr ""
 #. f, p, po, steathed
 #.
 #: src/pilot_outfit.c:1575
-#, fuzzy, c-format
-#| msgid ""
-#| "Pilot '%s''s outfit '%s' -> 'onhit':\n"
-#| "%s"
+#, c-format
 msgid ""
 "Pilot '%s''s outfit '%s' -> 'onstealth':\n"
 "%s"
 msgstr ""
-"Pilot '%s''s outfit '%s' -> 'onhit':\n"
+"Pilot '%s''s outfit '%s' -> 'onstealth':\n"
 "%s"
 
 #. Set the memory.
@@ -81322,15 +81333,12 @@ msgstr ""
 #. f, p, po, t
 #.
 #: src/pilot_outfit.c:1606
-#, fuzzy, c-format
-#| msgid ""
-#| "Pilot '%s''s outfit '%s' -> 'cleanup':\n"
-#| "%s"
+#, c-format
 msgid ""
 "Pilot '%s''s outfit '%s' -> 'onscan':\n"
 "%s"
 msgstr ""
-"Pilot '%s''s outfit '%s' -> 'cleanup':\n"
+"Pilot '%s''s outfit '%s' -> 'onscan':\n"
 "%s"
 
 #. Set the memory.
@@ -81343,15 +81351,12 @@ msgstr ""
 #. f, p, po, scanner
 #.
 #: src/pilot_outfit.c:1637
-#, fuzzy, c-format
-#| msgid ""
-#| "Pilot '%s''s outfit '%s' -> 'cleanup':\n"
-#| "%s"
+#, c-format
 msgid ""
 "Pilot '%s''s outfit '%s' -> 'onscanned':\n"
 "%s"
 msgstr ""
-"Pilot '%s''s outfit '%s' -> 'cleanup':\n"
+"Pilot '%s''s outfit '%s' -> 'onscanned':\n"
 "%s"
 
 #. Set the memory.
@@ -81575,12 +81580,10 @@ msgid "#oAutonav arrived at the %s system."
 msgstr "#o自動操縦で%s星系に到着しました。"
 
 #: src/player.c:1971
-#, fuzzy, c-format
-#| msgid "#oAutonav continuing until destination (%d jump left)."
-#| msgid_plural "#oAutonav continuing until destination (%d jumps left)."
+#, c-format
 msgid "#oAutonav continuing until %s (%d jump left)."
 msgid_plural "#oAutonav continuing until %s (%d jumps left)."
-msgstr[0] "#o自動操縦が目的地まで継続します。(残りジャンプ %d 回)"
+msgstr[0] "#o自動操縦が%sまで継続します。(残りジャンプ %d 回)"
 
 #. in case the crap system breaks :)
 #: src/player.c:2234
@@ -81815,26 +81818,22 @@ msgid "#rNot enough fuel to jump for autonav."
 msgstr "#r燃料が足りないので、自動操縦によるジャンプはできません。"
 
 #: src/player_autonav.c:93
-#, fuzzy, c-format
-#| msgid "#oAutonav: following %s."
+#, c-format
 msgid "#oAutonav: travelling to %s."
-msgstr "#o自動操縦装置 : %sにつづきます。"
+msgstr "#o自動操縦装置 : %sへ移動します。"
 
 #: src/player_autonav.c:177
-#, fuzzy
-#| msgid "#oAutonav: arrived at position."
 msgid "#oAutonav: heading to target position."
-msgstr "#o自動操縦装置 : 所定の位置に到着しました。"
+msgstr "#o自動操縦装置 : 目標の位置へ向かいます。"
 
 #: src/player_autonav.c:179
 msgid "position"
 msgstr "所定の位置"
 
 #: src/player_autonav.c:195
-#, fuzzy, c-format
-#| msgid "#oAutonav: following %s."
+#, c-format
 msgid "#oAutonav: landing on %s."
-msgstr "#o自動操縦装置 : %sにつづきます。"
+msgstr "#o自動操縦装置 : %sに着陸します。"
 
 #: src/player_autonav.c:217
 #, c-format
@@ -82200,10 +82199,8 @@ msgid "Stealth Discovered Speed"
 msgstr "ステルス発見速度"
 
 #: src/shipstats.c:113
-#, fuzzy
-#| msgid "Game Speed"
 msgid "Scanned Speed"
-msgstr "ゲームの速度"
+msgstr "スキャンされる速度"
 
 #: src/shipstats.c:115
 msgid "Fire Rate (Launcher)"
@@ -82395,7 +82392,7 @@ msgstr "星雲耐性"
 
 #: src/shipstats.c:173
 msgid "Missile jamming chance"
-msgstr ""
+msgstr "ミサイル妨害確率"
 
 #: src/shipstats.c:175
 msgid "Hidden Jump Detection"
@@ -82743,10 +82740,9 @@ msgid "Planet index '%d' out of range (max %d)"
 msgstr "Planet index '%d' out of range (max %d)"
 
 #: src/space.c:1115
-#, fuzzy, c-format
-#| msgid "Planet '%s' not found in the universe"
+#, c-format
 msgid "Virtual Asset '%s' not found in the universe"
-msgstr "Planet '%s' not found in the universe"
+msgstr "Virtual Asset '%s' not found in the universe"
 
 #: src/space.c:1133
 msgid "Trying to find NULL jump point..."
@@ -82844,6 +82840,8 @@ msgid ""
 "Creating new planet in non-debugging mode. Things are probably going to "
 "break horribly."
 msgstr ""
+"Creating new planet in non-debugging mode. Things are probably going to "
+"break horribly."
 
 #: src/space.c:1795
 #, c-format
@@ -82857,10 +82855,9 @@ msgstr ""
 "Most likely Lua file has improper syntax, please check"
 
 #: src/space.c:1904
-#, fuzzy, c-format
-#| msgid "Unknown node '%s' in planet '%s'"
+#, c-format
 msgid "Unknown node '%s' in virtual asset '%s'"
-msgstr "Unknown node '%s' in planet '%s'"
+msgstr "Unknown node '%s' in virtual asset '%s'"
 
 #. error has occurred
 #: src/space.c:2018
@@ -82939,16 +82936,14 @@ msgid "Unable to find planet '%s' and system '%s' in planet<->system stack."
 msgstr "Unable to find planet '%s' and system '%s' in planet<->system stack."
 
 #: src/space.c:2490
-#, fuzzy, c-format
-#| msgid "Unable to remove planet '%s' from NULL system."
+#, c-format
 msgid "Unable to remove virtual asset '%s' from NULL system."
-msgstr "Unable to remove planet '%s' from NULL system."
+msgstr "Unable to remove virtual asset '%s' from NULL system."
 
 #: src/space.c:2501
-#, fuzzy, c-format
-#| msgid "Planet '%s' not found in system '%s' for removal."
+#, c-format
 msgid "Virtual asset '%s' not found in system '%s' for removal."
-msgstr "Planet '%s' not found in system '%s' for removal."
+msgstr "Virtual asset '%s' not found in system '%s' for removal."
 
 #: src/space.c:2573
 #, c-format
@@ -82965,6 +82960,8 @@ msgid ""
 "Creating new system in non-debugging mode. Things are probably going to "
 "break horribly."
 msgstr ""
+"Creating new system in non-debugging mode. Things are probably going to "
+"break horribly."
 
 #: src/space.c:2815
 #, c-format
@@ -83374,10 +83371,9 @@ msgid "Unidiff '%s': Unknown hunk type '%s' for asset '%s'."
 msgstr "Unidiff '%s': Unknown hunk type '%s' for asset '%s'."
 
 #: src/unidiff.c:390
-#, fuzzy, c-format
-#| msgid "Unidiff '%s': Unknown hunk type '%s' for asset '%s'."
+#, c-format
 msgid "Unidiff '%s': Unknown hunk type '%s' for virtual asset '%s'."
-msgstr "Unidiff '%s': Unknown hunk type '%s' for asset '%s'."
+msgstr "Unidiff '%s': Unknown hunk type '%s' for virtual asset '%s'."
 
 #: src/unidiff.c:418
 #, c-format
@@ -83427,16 +83423,14 @@ msgid "   [%s] asset legalmarket: '%s'"
 msgstr "   [%s] asset legalmarket: '%s'"
 
 #: src/unidiff.c:753
-#, fuzzy, c-format
-#| msgid "   [%s] asset add: '%s'"
+#, c-format
 msgid "   [%s] virtual asset add: '%s'"
-msgstr "   [%s] asset add: '%s'"
+msgstr "   [%s] virtual asset add: '%s'"
 
 #: src/unidiff.c:756
-#, fuzzy, c-format
-#| msgid "   [%s] asset remove: '%s'"
+#, c-format
 msgid "   [%s] virtual asset remove: '%s'"
-msgstr "   [%s] asset remove: '%s'"
+msgstr "   [%s] virtual asset remove: '%s'"
 
 #: src/unidiff.c:759
 #, c-format
