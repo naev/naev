@@ -16,7 +16,7 @@
   <reload_time>60</reload_time>
   <amount>40</amount>
   <lockon>3</lockon>
-  <iflockon>5.0</iflockon>
+  <iflockon>2.5</iflockon>
   <trackmin>0</trackmin>
   <trackmax>6000</trackmax>
  </specific>

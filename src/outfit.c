@@ -2506,6 +2506,9 @@ int outfit_load (void)
                WARN(_("Outfit '%s' missing/invalid 'arc' element"), o->name);
          }
 
+         if (o->u.lau.iflockon >= o->u.lau.ammo->u.amm.duration)
+            WARN(_("Outfit '%s' has longer 'iflockon' than ammo 'duration'"), o->name);
+
          outfit_launcherDesc(o);
       }
       else if (outfit_isFighterBay(&outfit_stack[i]))
