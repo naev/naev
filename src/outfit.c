@@ -1739,7 +1739,7 @@ if (o) WARN(_("Outfit '%s' missing/invalid '%s' element"), temp->name, s) /**< D
  */
 static void outfit_parseSMod( Outfit* temp, const xmlNodePtr parent )
 {
-   int i;
+   int l;
    xmlNodePtr node;
    ShipStatList *ll;
    node = parent->children;
@@ -1793,23 +1793,17 @@ static void outfit_parseSMod( Outfit* temp, const xmlNodePtr parent )
 
    /* Set short description. */
    temp->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
-   i = scnprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
-         "%s"
-         "%s",
-         _(outfit_getType(temp)),
-         (temp->u.mod.active || temp->u.mod.lua_ontoggle != LUA_NOREF) ? _("\n#rActivated Outfit#0") : "" );
+   l = 0;
+   SDESC_ADD( l, temp, "%s", _(outfit_getType(temp)) );
+   if (temp->u.mod.active || temp->u.mod.lua_ontoggle != LUA_NOREF)
+      SDESC_ADD( l, temp, "%s", _("\n#rActivated Outfit#0") );
    if (temp->u.mod.active && temp->u.mod.cooldown > 0.)
-      i += scnprintf( &temp->desc_short[i], OUTFIT_SHORTDESC_MAX-i, _(" #r(%.1f s Cooldown)#0"), temp->u.mod.cooldown );
-
-#define DESC_ADD(x, s) \
-if ((x) != 0) \
-   do { \
-      i += scnprintf( &temp->desc_short[i], OUTFIT_SHORTDESC_MAX-i, "\n#%c", ((x)>0)?'g':'r' ); \
-      i += scnprintf( &temp->desc_short[i], OUTFIT_SHORTDESC_MAX-i, s, x ); \
-      i += scnprintf( &temp->desc_short[i], OUTFIT_SHORTDESC_MAX-i, "#0" ); \
-   } while(0)
-   DESC_ADD( temp->cpu,                _("%+.0f CPU") );
-#undef DESC_ADD
+      SDESC_ADD( l, temp, _(" #r(%.1f s Cooldown)#0"), temp->u.mod.cooldown );
+   if (temp->cpu != 0) {
+      SDESC_ADD( l, temp, "\n#%c", (temp->cpu>0)?'g':'r' );
+      SDESC_ADD( l, temp, _("%+.0f CPU"), temp->cpu );
+      SDESC_ADD( l, temp, "#0" );
+   }
 }
 
 
@@ -1825,6 +1819,7 @@ static void outfit_parseSAfterburner( Outfit* temp, const xmlNodePtr parent )
    xmlNodePtr node;
    node = parent->children;
    double C, area;
+   size_t l;
 
    /* Defaults. */
    temp->u.afb.sound = -1;
@@ -1870,23 +1865,16 @@ static void outfit_parseSAfterburner( Outfit* temp, const xmlNodePtr parent )
 
    /* Set short description. */
    temp->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
-   snprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
-         _("%s\n"
-         "#rActivated Outfit#0\n"
-         "%.0f CPU\n"
-         "Only one can be equipped\n"
-         "%.0f Maximum Effective Mass\n"
-         "%.0f%% Thrust\n"
-         "%.0f%% Maximum Speed\n"
-         "%.1f EPS\n"
-         "%.1f Rumble"),
-         _(outfit_getType(temp)),
-         temp->cpu,
-         temp->u.afb.mass_limit,
-         temp->u.afb.thrust + 100.,
-         temp->u.afb.speed + 100.,
-         temp->u.afb.energy,
-         temp->u.afb.rumble );
+   l = 0;
+   SDESC_ADD( l, temp, "%s", _(outfit_getType(temp)) );
+   SDESC_ADD( l, temp, _("\n#rActivated Outfit#0") );
+   SDESC_ADD( l, temp, _("\n%.0f CPU"), temp->cpu );
+   SDESC_ADD( l, temp, _("\nOnly one can be equipped") );
+   SDESC_ADD( l, temp, _("\n%.0f Maximum Effective Mass"), temp->u.afb.mass_limit );
+   SDESC_ADD( l, temp, _("\n%.0f%% Thrust"), temp->u.afb.thrust + 100. );
+   SDESC_ADD( l, temp, _("\n%.0f%% Maximum Speed"), temp->u.afb.speed + 100. );
+   SDESC_ADD( l, temp, _("\n%.1f EPS"), temp->u.afb.energy );
+   SDESC_ADD( l, temp, _("\n%.1f Rumble"), temp->u.afb.rumble );
 
    /* Post processing. */
    temp->u.afb.thrust /= 100.;
@@ -1922,6 +1910,7 @@ static void outfit_parseSFighterBay( Outfit *temp, const xmlNodePtr parent )
 {
    ShipStatList *ll;
    xmlNodePtr node;
+   size_t l;
    node = parent->children;
 
    do {
@@ -1947,16 +1936,12 @@ static void outfit_parseSFighterBay( Outfit *temp, const xmlNodePtr parent )
 
    /* Set short description. */
    temp->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
-   snprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
-         _("%s\n"
-         "%.0f CPU\n"
-         "%.1f Seconds Per Launch\n"
-         "Holds %d %s\n"
-         "%.1f Seconds to Reload"),
-         _(outfit_getType(temp)),
-         temp->cpu, temp->u.bay.delay,
-         temp->u.bay.amount, _(temp->u.bay.ammo_name),
-         temp->u.bay.reload_time);
+   l = 0;
+   SDESC_ADD( l, temp, "%s", _(outfit_getType(temp)) );
+   SDESC_ADD( l, temp, _("\n%.0f CPU"), temp->cpu );
+   SDESC_ADD( l, temp, _("\n%.1f Seconds Per Launch"), temp->u.bay.delay );
+   SDESC_ADD( l, temp, _("\nHolds %d %s"), temp->u.bay.amount, _(temp->u.bay.ammo_name) );
+   SDESC_ADD( l, temp, _("\n%.1f Seconds to Reload"), temp->u.bay.reload_time );
 
 #define MELEMENT(o,s) \
 if (o) WARN(_("Outfit '%s' missing/invalid '%s' element"), temp->name, s) /**< Define to help check for data errors. */
@@ -2411,7 +2396,7 @@ static int outfit_parse( Outfit* temp, const char* file )
             outfit_parseSLicense( temp, node );
 
          /* We add the ship stats to the description here. */
-         if (temp->desc_short) {
+         if (temp->desc_short != NULL) {
             l = strlen(temp->desc_short);
             ss_statsListDesc( temp->stats, &temp->desc_short[l], OUTFIT_SHORTDESC_MAX-l, 1 );
             /* Add extra description task if available. */
