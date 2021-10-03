@@ -80541,40 +80541,56 @@ msgstr "%+.0f CPU"
 #: src/outfit.c:1874
 #, c-format
 msgid ""
-"%s\n"
-"#rActivated Outfit#0\n"
-"%.0f CPU\n"
-"Only one can be equipped\n"
-"%.0f Maximum Effective Mass\n"
-"%.0f%% Thrust\n"
-"%.0f%% Maximum Speed\n"
-"%.1f EPS\n"
+"\n"
+"Only one can be equipped"
+msgstr ""
+"\n"
+"ひとつだけ装備できます"
+
+#: src/outfit.c:1874
+#, c-format
+msgid ""
+"\n"
+"%.0f Maximum Effective Mass"
+msgstr ""
+"\n"
+"最大有効質量 : %.0f"
+
+#: src/outfit.c:1874
+#, c-format
+msgid ""
+"\n"
+"%.0f%% Thrust"
+msgstr ""
+"\n"
+"推力 : %.0f%%"
+
+#: src/outfit.c:1874
+#, c-format
+msgid ""
+"\n"
+"%.0f%% Maximum Speed"
+msgstr ""
+"\n"
+"最大速度 : %.0f%%"
+
+#: src/outfit.c:1874
+#, c-format
+msgid ""
+"\n"
 "%.1f Rumble"
 msgstr ""
-"%s\n"
-"#r作動させるか選べる艤装品#0\n"
-"CPU: %.0f\n"
-"ひとつだけ装備できます\n"
-"最大有効質量 : %.0f\n"
-"推力 : %.0f%%\n"
-"最大速度 : %.0f%%\n"
-"エネルギー : %.1f/秒\n"
+"\n"
 "騒音 : %.1f"
 
 #: src/outfit.c:1951
 #, c-format
 msgid ""
-"%s\n"
-"%.0f CPU\n"
-"%.1f Seconds Per Launch\n"
-"Holds %d %s\n"
-"%.1f Seconds to Reload"
+"\n"
+"%.1f Seconds Per Launch"
 msgstr ""
-"%s\n"
-"CPU: %.0f\n"
-"発射間隔: %.1f 秒\n"
-"格納数 : %d 発の%s\n"
-"再装填 : %.1f 秒"
+"\n"
+"発射間隔: %.1f 秒"
 
 #: src/outfit.c:2049
 #, c-format
@@ -80759,10 +80775,10 @@ msgstr ""
 #, c-format
 msgid ""
 "\n"
-"Holds %d %s:"
+"Holds %d %s"
 msgstr ""
 "\n"
-"格納数 : %d 発の%s :"
+"格納数 : %d 発の%s"
 
 #: src/outfit.c:2737
 #, c-format
