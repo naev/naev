@@ -11,8 +11,8 @@ stds.Basic={
       table={
          fields={"unpack"}
       },
-      "warn", "_", "N_", "n_", "gettext",
    },
+   read_globals={"N_", "_", "__debugging", "gettext", "n_", "warn" },
 }
 stds.AI = {read_globals={"ai"}} -- the C function is ai_loadProfile() in this case
 stds.Audio = {read_globals={"audio"}}
@@ -161,5 +161,7 @@ files["landing.lua"].std = STANDARD .. "+API_land"
 files["missions/**/*.lua"].std = STANDARD .. "+Misn+Hook+Camera+Tex+Background+Music+Audio" .. TK
 files["outfits/**/*.lua"].std = STANDARD .. GFX .. "+PilotOutfit"
 files["rescue.lua"].std = STANDARD .. TK .. "+API_rescue"
-files["scripts/**/*.lua"].std = STANDARD  -- No way to be sure what type of environment will load these.
 files["snd/music.lua"].std = STANDARD .. "+Music"
+
+-- No way to be sure what type of environment will load these.
+files["scripts/**/*.lua"].std = STANDARD .. TK .. "+Misn+Hook+Camera+Tex+Background+Music+Audio" .. TK
