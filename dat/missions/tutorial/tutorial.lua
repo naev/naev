@@ -29,8 +29,8 @@ function create ()
    dest_planet_r = 200
 
    if not misn.claim( missys ) then
-      print( string.format(_( "Warning: 'Tutorial' mission was unable to claim system %s!"), missys:name() ) )
-      misn.finish( false )
+      print(fmt.f(_( "Warning: 'Tutorial' mission was unable to claim system {sysname}!"), {sysname=missys:name()} ) )
+      misn.finish( true ) -- We mark as clear anyway, but this is not good
    end
 
    misn.setTitle( _("Tutorial") )
@@ -321,8 +321,8 @@ function enter_timer ()
       vn.done( tut.shipai.transition )
       vn.run()
 
+      -- Normal finish of the tutorial
       tut.log(_([[Captain T. Practice, the Melendez employee who sold you your first ship, gave you a tutorial on how to pilot it, claiming afterwards that you are "a natural-born pilot".]]))
-
       misn.finish( true )
    end
 end
@@ -334,7 +334,7 @@ end
 function pilot_death_timer ()
    stage = 6
    misn.osdActive( 5 )
-   misn.markerAdd( destsys, "high" )
+   misn.markerAdd( destsys )
 
    vn.clear()
    vn.scene()
@@ -368,4 +368,8 @@ function spawn_drone ()
    p:setVisplayer()
    p:setHilight()
    hook.pilot( p, "death", "pilot_death" )
+end
+
+function abort ()
+   misn.finish( true ) -- Aborting finishes the mission properly
 end
