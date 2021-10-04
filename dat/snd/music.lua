@@ -8,10 +8,10 @@
 --    combat - player just got a hostile onscreen
 --    idle - current playing music ran out
 ]]--
-last = "idle"
+local last = "idle"
 
 -- Faction-specific songs.
-factional = {
+local factional = {
    Collective = { "collective1", "automat" },
    Pirate     = { "pirate1_theme1", "pirates_orchestra", "ambient4",
                   "terminal" },
@@ -24,29 +24,21 @@ factional = {
 }
 
 -- Planet-specific songs
-planet_songs = {
+local planet_songs = {
    ["Minerva Station"] = { "meeting_mtfox" },
    ["Strangelove Lab"] = { "landing_sinister" },
    ["One-Wing Goddard"] = { "/snd/sounds/songs/inca-spa.ogg" },
 }
 
 -- System-specific songs
-system_ambient_songs = {
+local system_ambient_songs = {
    Taiomi = { "/snd/sounds/songs/inca-spa.ogg" },
 }
 
-function choose( str )
-   -- Stores all the available sound types and their functions
-   choose_table = {
-      ["load"]    = choose_load,
-      ["intro"]   = choose_intro,
-      ["credits"] = choose_credits,
-      ["land"]    = choose_land,
-      ["takeoff"] = choose_takeoff,
-      ["ambient"] = choose_ambient,
-      ["combat"]  = choose_combat
-   }
+-- Stores all the available sound types and their functions
+local choose_table = {}
 
+function choose( str )
    -- Don't change or play music if a mission or event doesn't want us to
    if var.peek( "music_off" ) then
       return
@@ -67,14 +59,13 @@ function choose( str )
    end
 
    -- If we are over idling then we do weird stuff
-   local changed = false
+   local changed
    if str == "idle" and last ~= "idle" then
-
       -- We'll play the same as last unless it was takeoff
       if last == "takeoff" then
-         changed = choose_ambient()
+         changed = choose_table.ambient()
       else
-         changed = choose(last)
+         changed = choose( last )
       end
 
    -- Normal case
@@ -88,12 +79,12 @@ function choose( str )
 end
 
 
---[[
--- @brief Checks to see if a song is being played, if it is it stops it.
---
---    @return true if music is playing.
+--[[--
+Checks to see if a song is being played, if it is it stops it.
+
+      @return true if music is playing.
 --]]
-function checkIfPlayingOrStop( song )
+local function checkIfPlayingOrStop( song )
    if music.isPlaying() then
       if music.current() ~= song then
          music.stop()
@@ -104,10 +95,10 @@ function checkIfPlayingOrStop( song )
 end
 
 
---[[
--- @brief Play a song if it's not currently playing.
+--[[--
+Play a song if it's not currently playing.
 --]]
-function playIfNotPlaying( song )
+local function playIfNotPlaying( song )
    if checkIfPlayingOrStop( song ) then
       return true
    end
@@ -117,36 +108,37 @@ function playIfNotPlaying( song )
 end
 
 
---[[
--- @brief Chooses Loading songs.
+--[[--
+Chooses Loading songs.
 --]]
-function choose_load ()
+function choose_table.load ()
    return playIfNotPlaying( "machina" )
 end
 
 
---[[
--- @brief Chooses Intro songs.
+--[[--
+Chooses Intro songs.
 --]]
-function choose_intro ()
+function choose_table.intro ()
    return playIfNotPlaying( "intro" )
 end
 
 
---[[
--- @brief Chooses Credit songs.
+--[[--
+Chooses Credit songs.
 --]]
-function choose_credits ()
+function choose_table.credits ()
    return playIfNotPlaying( "empire1" )
 end
 
 
---[[
--- @brief Chooses landing songs.
+--[[--
+Chooses landing songs.
 --]]
-function choose_land ()
+function choose_table.land ()
    local pnt   = planet.cur()
    local class = pnt:class()
+   local mus
 
    -- Planet override
    local override = planet_songs[ pnt:nameRaw() ]
@@ -178,12 +170,12 @@ end
 
 
 -- Takeoff songs
-function choose_takeoff ()
+function choose_table.takeoff ()
    -- No need to restart
    if last == "takeoff" and music.isPlaying() then
       return true
    end
-   takeoff = { "liftoff", "launch2", "launch3chatstart" }
+   local takeoff = { "liftoff", "launch2", "launch3chatstart" }
    music.load( takeoff[ rnd.rnd(1,#takeoff) ])
    music.play()
    return true
@@ -191,20 +183,19 @@ end
 
 
 -- Save old data
-last_sysFaction  = nil
-last_sysNebuDens = nil
-last_sysNebuVol  = nil
-ambient_neutral  = { "ambient2", "mission",
+local last_sysFaction  = nil
+local last_sysNebuDens = nil
+local ambient_neutral  = { "ambient2", "mission",
       "peace1", "peace2", "peace4", "peace6",
       "void_sensor", "ambiphonic",
       "ambient4", "terminal", "eureka",
       "ambient2_5" }
---[[
--- @brief Chooses ambient songs.
+--[[--
+Chooses ambient songs.
 --]]
-function choose_ambient ()
+function choose_table.ambient ()
    local force = true
-   local add_neutral = false
+   local ambient
 
    -- Check to see if we want to update
    if music.isPlaying() then
@@ -265,7 +256,7 @@ function choose_ambient ()
       force = true
       last_sysNebuDens = nebu
    end
- 
+
    -- Must be forced
    if force then
       -- Choose the music, bias by faction first
@@ -324,7 +315,7 @@ end
 
 
 -- Faction-specific combat songs
-factional_combat = {
+local factional_combat = {
    Collective = { "collective2", "galacticbattle", "battlesomething1", "combat3" },
    Pirate     = { "battlesomething2", "blackmoor_tides", add_neutral = true },
    Empire     = { "galacticbattle", "battlesomething2"; add_neutral = true },
@@ -337,14 +328,15 @@ factional_combat = {
    ["Za'lek"] = { "collective2", "galacticbattle", "battlesomething1", add_neutral = true }
 }
 
---[[
--- @brief Chooses battle songs.
+--[[--
+Chooses battle songs.
 --]]
-function choose_combat ()
+function choose_table.combat ()
    -- Get some data about the system
    local sys                  = system.cur()
    local nebu_dens, nebu_vol  = sys:nebula()
-   
+   local combat
+
    local strongest = var.peek("music_combat_force")
    if strongest == nil then
       local presences = sys:presences()
