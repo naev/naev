@@ -2,6 +2,10 @@
 
 std = "lua51c+love+Basic"
 
+-- It would be nice to enforce a ~120 char limit for regular lines of code, but missions etc. have inline text of considerable size.
+-- Note: there's a `max_string_line_length` option, but that only applies when the line ending is inside a string. Useless.
+max_line_length = 4096
+
 -- The following standards correspond to nlua_load* functions.
 -- Most of them just load one metatable, but some have dependencies, like nlua_loadGFX.
 -- This is represented as: stds._GFX for the stuff loaded directly by nlua_loadGFX, and GFX representing all corresponding stds.
