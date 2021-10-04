@@ -9,17 +9,12 @@ for mo_path in "@build_root@"/po/*.gmo; do
     mkdir -p "@build_root@"/dat/gettext/$lang/LC_MESSAGES
     cp -v "$mo_path" "@build_root@"/dat/gettext/$lang/LC_MESSAGES/naev.mo
 done
-grep -q '%<PRI' "@build_root@"/po/*.gmo && echo "***WARNING: Naev can't translate 'sysdep' strings like %<PRIu64>. Try %.0f?"
 
 wrapper() {
-   if [[ "$WITHGDB" =~ "NO" ]]; then
-      "$@"
+   if [[ ! "$WITHGDB" =~ "NO" ]] && type "gdb" > /dev/null; then
+      exec gdb -x "@source_root@/.gdbinit" --args "$@"
    else
-      if type "gdb" > /dev/null; then
-         gdb -x "@source_root@/.gdbinit" --args "$@"
-      else
-         "$@"
-      fi
+      exec "$@"
    fi
 }
 
