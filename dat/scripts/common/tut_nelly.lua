@@ -1,9 +1,15 @@
+--[[
+
+   Common stuff for the Nelly tutorial campaign
+
+--]]
 local vn = require "vn"
 local mt = require 'merge_tables'
 local portrait = require 'portrait' -- temporary for now
 
 local tutnel = {}
 
+-- TODO replace with real portrait
 local pnelly  = portrait.getFemale()
 tutnel.nelly = {
    portrait = pnelly,
