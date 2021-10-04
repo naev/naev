@@ -5,6 +5,10 @@ local vn = require "vn"
 local vntk = {}
 
 function vntk.msg( title, text )
+   if type(text) ~= "table" then
+      text = {text}
+   end
+
    vn.reset()
    vn.scene()
    local c
@@ -14,7 +18,9 @@ function vntk.msg( title, text )
       c = vn.na
    end
    vn.transition( "blur", 0.2 )
-   c( text )
+   for k,t in ipairs(text) do
+      c( t )
+   end
    vn.done( "blur", 0.2 )
    vn.run()
 end
