@@ -15,6 +15,7 @@
    Initial Tutorial Mission
 
 --]]
+local fmt = require "format"
 local tut = require "common.tutorial"
 local neu = require "common.neutral"
 local vn = require "vn"
