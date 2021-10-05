@@ -7,6 +7,7 @@ lua_source = files(
    'portrait.lua',
    'pp_shaders.lua',
    'prng.lua',
+   'proximity.lua',
    'swapship.lua',
    'vn.lua',
 )
