@@ -138,7 +138,8 @@ const int input_numbinds = ( sizeof( keybind_info ) / sizeof( keybind_info[ 0 ] 
 /*
  * accel hacks
  */
-static unsigned int input_accelLast = 0; /**< Used to see if double tap */
+static unsigned int input_accelLast = 0; /**< Used to see if double tap accel. */
+static unsigned int input_revLast   = 0; /**< Used to see if double tap reverse. */
 static int input_accelButton        = 0; /**< Used to show whether accel is pressed. */
 
 
@@ -703,7 +704,6 @@ void input_update( double dt )
  */
 static void input_key( int keynum, double value, double kabs, int repeat )
 {
-   unsigned int t;
    HookParam hparam[3];
 
    /* Repetition stuff. */
@@ -731,6 +731,8 @@ static void input_key( int keynum, double value, double kabs, int repeat )
          input_accelButton = 1;
       }
       else { /* prevent it from getting stuck */
+         unsigned int t;
+
          if (value==KEY_PRESS) {
             player_restoreControl( PINPUT_MOVEMENT, NULL );
             player_setFlag(PLAYER_ACCEL);
@@ -799,6 +801,8 @@ static void input_key( int keynum, double value, double kabs, int repeat )
 
    /* turn around to face vel */
    } else if (KEY("reverse") && !repeat) {
+      unsigned int t;
+
       if (value==KEY_PRESS) {
          player_restoreControl( PINPUT_MOVEMENT, NULL );
          player_setFlag(PLAYER_REVERSE);
@@ -809,6 +813,16 @@ static void input_key( int keynum, double value, double kabs, int repeat )
          if (!player_isFlag(PLAYER_ACCEL))
             player_accelOver();
       }
+
+      /* double tap reverse = cooldown! */
+      t = SDL_GetTicks();
+      if ((conf.afterburn_sens != 0) &&
+            (value==KEY_PRESS) && INGAME() && NOHYP() && NODEAD() &&
+            (t-input_revLast <= conf.afterburn_sens))
+         player_brake();
+
+      if (value==KEY_PRESS)
+         input_revLast = t;
 
    /* try to enter stealth mode. */
    } else if (KEY("stealth") && !repeat && NOHYP() && NODEAD() && INGAME()) {
