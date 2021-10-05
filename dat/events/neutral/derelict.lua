@@ -219,13 +219,13 @@ function badevent()
             "Pirate Shark",
             "Pirate Shark",
          }
-         local enemies med1 = {
+         local enemies_med1 = {
             "Pirate Vendetta",
             "Pirate Vendetta",
             "Pirate Ancestor",
             "Pirate Ancestor",
          }
-         local enemies med2 = {
+         local enemies_med2 = {
             "Pirate Admonisher",
             "Pirate Shark",
             "Pirate Shark",

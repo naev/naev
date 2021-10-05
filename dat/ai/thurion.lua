@@ -7,7 +7,6 @@ mem.defensive     = true
 mem.enemyclose    = 500
 mem.whiteknight   = true
 mem.formation     = "cross"
-mem.distressmsgfunc = sos
 
 local sos_msg_list = {
    _("Local security: requesting assistance!"),
@@ -26,10 +25,12 @@ local bribe_no_list = {
 }
 
 -- Sends a distress signal which causes faction loss
-function sos ()
+local function sos ()
    ai.settarget( ai.taskdata() )
    ai.distress( sos_msg_list[ rnd.rnd(1,#sos_msg_list) ])
 end
+
+mem.distressmsgfunc = sos
 
 function create ()
    local price = ai.pilot():ship():price()
@@ -41,8 +42,6 @@ function create ()
 end
 
 function hail ()
-   local p = ai.pilot()
-
    -- Remove randomness from future calls
    if not mem.hailsetup then
       mem.refuel_base = rnd.rnd( 1000, 3000 )
