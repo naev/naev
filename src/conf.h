@@ -11,7 +11,7 @@
  * CONFIGURATION DEFAULTS
  */
 /* Gameplay options */
-#define AFTERBURNER_SENSITIVITY_DEFAULT      250   /**< Default afterburner sensitivity. */
+#define DOUBLETAP_SENSITIVITY_DEFAULT        250   /**< Default afterburner sensitivity. */
 #define TIME_COMPRESSION_DEFAULT_MAX         5000. /**< Maximum default level of time compression (target speed to match). */
 #define TIME_COMPRESSION_DEFAULT_MULT        200   /**< Default level of time compression multiplier. */
 #define REDIRECT_FILE_DEFAULT                1     /**< Whether output should be redirected to a file. */
@@ -137,7 +137,7 @@ typedef struct PlayerConf_s {
    double compression_mult; /**< Maximum time multiplier. */
    int redirect_file; /**< Redirect output to files. */
    int save_compress; /**< Compress saved game. */
-   unsigned int afterburn_sens; /**< Afterburn sensibility. */
+   unsigned int doubletap_sens; /**< Double tap key sensibility (used for afterburn and cooldown). */
    int mouse_fly; /**< Whether middle clicking enables mouse flying or not. */
    int mouse_thrust; /**< Whether mouse flying controls thrust. */
    double mouse_doubleclick; /**< How long to consider double-clicks for. */

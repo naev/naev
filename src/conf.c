@@ -80,8 +80,6 @@ extern int show_fps;
 extern int max_fps;
 extern int indjoystick;
 extern char* namjoystick;
-/* from input.c */
-extern unsigned int input_afterburnSensitivity;
 
 
 /*
@@ -184,7 +182,7 @@ void conf_setDefaults (void)
  */
 void conf_setGameplayDefaults (void)
 {
-   conf.afterburn_sens        = AFTERBURNER_SENSITIVITY_DEFAULT;
+   conf.doubletap_sens        = DOUBLETAP_SENSITIVITY_DEFAULT;
    conf.compression_velocity  = TIME_COMPRESSION_DEFAULT_MAX;
    conf.compression_mult      = TIME_COMPRESSION_DEFAULT_MULT;
    conf.save_compress         = SAVE_COMPRESSION_DEFAULT;
@@ -393,7 +391,7 @@ int conf_loadConfig ( const char* file )
       conf_loadFloat( lEnv, "compression_mult", conf.compression_mult );
       conf_loadBool( lEnv, "redirect_file", conf.redirect_file );
       conf_loadBool( lEnv, "save_compress", conf.save_compress );
-      conf_loadInt( lEnv, "afterburn_sensitivity", conf.afterburn_sens );
+      conf_loadInt( lEnv, "doubletap_sensitivity", conf.doubletap_sens );
       conf_loadBool( lEnv, "mouse_fly", conf.mouse_fly );
       conf_loadInt( lEnv, "mouse_thrust", conf.mouse_thrust );
       conf_loadFloat( lEnv, "mouse_doubleclick", conf.mouse_doubleclick );
@@ -982,8 +980,8 @@ int conf_saveConfig ( const char* file )
    conf_saveBool("save_compress",conf.save_compress);
    conf_saveEmptyLine();
 
-   conf_saveComment(_("Afterburner sensitivity"));
-   conf_saveInt("afterburn_sensitivity",conf.afterburn_sens);
+   conf_saveComment(_("Doubletap sensitivity (used for double tap accel for afterburner or double tap reverse for cooldown)"));
+   conf_saveInt("doubletap_sensitivity",conf.doubletap_sens);
    conf_saveEmptyLine();
 
    conf_saveComment(_("Whether or not clicking the middle mouse button toggles mouse flying mode."));

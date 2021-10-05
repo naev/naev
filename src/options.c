@@ -372,7 +372,7 @@ static void opt_gameplay( unsigned int wid )
          "chkZoomManual", _("Enable manual zoom control"), NULL, conf.zoom_manual );
    y -= 25;
    window_addCheckbox( wid, x, y, cw, 20,
-         "chkAfterburn", _("Enable double-tap afterburn"), NULL, conf.afterburn_sens );
+         "chkDoubletap", _("Enable double-tap afterburn/cooldown"), NULL, conf.doubletap_sens );
    y -= 25;
    window_addCheckbox( wid, x, y, cw, 20,
          "chkMouseFly", _("Enable mouse-flying (toggle with middle click)"), NULL, conf.mouse_fly );
@@ -428,9 +428,9 @@ static int opt_gameplaySave( unsigned int wid, const char *str )
    }
 
    /* Checkboxes. */
-   f = window_checkboxState( wid, "chkAfterburn" );
-   if (!!conf.afterburn_sens != f)
-      conf.afterburn_sens = (!!f)*250;
+   f = window_checkboxState( wid, "chkDoubletap" );
+   if (!!conf.doubletap_sens != f)
+      conf.doubletap_sens = (!!f)*250;
 
    conf.zoom_manual = window_checkboxState( wid, "chkZoomManual" );
    conf.mouse_thrust = window_checkboxState(wid, "chkMouseThrust" );
@@ -478,7 +478,7 @@ static void opt_gameplayDefaults( unsigned int wid, const char *str )
    /* Restore. */
    /* Checkboxes. */
    window_checkboxSet( wid, "chkZoomManual", MANUAL_ZOOM_DEFAULT );
-   window_checkboxSet( wid, "chkAfterburn", AFTERBURNER_SENSITIVITY_DEFAULT );
+   window_checkboxSet( wid, "chkDoubletap", DOUBLETAP_SENSITIVITY_DEFAULT );
    window_checkboxSet( wid, "chkMouseThrust", MOUSE_THRUST_DEFAULT );
    window_checkboxSet( wid, "chkCompress", SAVE_COMPRESSION_DEFAULT );
 
@@ -503,7 +503,7 @@ static void opt_gameplayUpdate( unsigned int wid, const char *str )
 
    /* Checkboxes. */
    window_checkboxSet( wid, "chkZoomManual", conf.zoom_manual );
-   window_checkboxSet( wid, "chkAfterburn", conf.afterburn_sens );
+   window_checkboxSet( wid, "chkDoubletap", conf.doubletap_sens );
    window_checkboxSet( wid, "chkMouseFly", conf.mouse_fly );
    window_checkboxSet( wid, "chkMouseThrust", conf.mouse_thrust );
    window_checkboxSet( wid, "chkCompress", conf.save_compress );

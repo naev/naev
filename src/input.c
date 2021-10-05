@@ -748,9 +748,9 @@ static void input_key( int keynum, double value, double kabs, int repeat )
 
          /* double tap accel = afterburn! */
          t = SDL_GetTicks();
-         if ((conf.afterburn_sens != 0) &&
+         if ((conf.doubletap_sens != 0) &&
                (value==KEY_PRESS) && INGAME() && NOHYP() && NODEAD() &&
-               (t-input_accelLast <= conf.afterburn_sens))
+               (t-input_accelLast <= conf.doubletap_sens))
             pilot_afterburn( player.p );
          else if (value==KEY_RELEASE)
             pilot_afterburnOver( player.p );
@@ -816,9 +816,9 @@ static void input_key( int keynum, double value, double kabs, int repeat )
 
       /* double tap reverse = cooldown! */
       t = SDL_GetTicks();
-      if ((conf.afterburn_sens != 0) &&
+      if ((conf.doubletap_sens != 0) &&
             (value==KEY_PRESS) && INGAME() && NOHYP() && NODEAD() &&
-            (t-input_revLast <= conf.afterburn_sens))
+            (t-input_revLast <= conf.doubletap_sens))
          player_brake();
 
       if (value==KEY_PRESS)

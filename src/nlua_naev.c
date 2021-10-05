@@ -382,7 +382,7 @@ static int naevL_conf( lua_State *L )
    PUSH_DOUBLE( L, "compression_mult", conf.compression_mult );
    PUSH_BOOL( L, "redirect_file", conf.redirect_file );
    PUSH_BOOL( L, "save_compress", conf.save_compress );
-   PUSH_INT( L, "afterburn_sensitivity", conf.afterburn_sens );
+   PUSH_INT( L, "doubletap_sensitivity", conf.doubletap_sens );
    PUSH_INT( L, "mouse_thrust", conf.mouse_thrust );
    PUSH_DOUBLE( L, "mouse_doubleclick", conf.mouse_doubleclick );
    PUSH_DOUBLE( L, "autonav_reset_dist", conf.autonav_reset_dist );
