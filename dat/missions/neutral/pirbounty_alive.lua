@@ -32,7 +32,6 @@ local vntk = require "vntk"
 require "missions.neutral.pirbounty_dead"
 
 -- Localization
-kill_instead_title   = _("Better Dead than Free")
 kill_instead_text    = {}
 kill_instead_text[1] = _([[As you return to your ship, you are contacted by an officer. "I see you were unable to capture %s," the officer says. "Disappointing. However, we would rather this pirate be dead than roaming free, so you will be paid %s if you finish them off right now."]])
 kill_instead_text[2] = _([[On your way back to your ship, you receive a message from an officer. It reads, "Your failure to capture %s is disappointing. We really wanted to capture this pirate alive. However, we would rather he be dead than roaming free, so if you kill the pirate now, you will be paid the lesser sum of %s."]])
@@ -56,8 +55,6 @@ pay_kill_text[4] = _("The officer seems disappointed, yet unsurprised that you f
 pay_kill_text[5] = _("When you ask the officer for your bounty on %s, they sigh, lead you into an office, go through some paperwork, and hand you your pay, mumbling something about how useless bounty hunters are.")
 pay_kill_text[6] = _("The officer verifies the death of %s, goes through the necessary paperwork, and hands you your pay, looking annoyed the entire time.")
 
-fail_kill_text = _("MISSION FAILURE! %s has been killed.")
-
 misn_title = {}
 misn_title[1] = _("Tiny Alive Bounty in %s")
 misn_title[2] = _("Small Alive Bounty in %s")
@@ -67,15 +64,13 @@ misn_title[5] = _("Dangerous Alive Bounty in %s")
 misn_desc   = _("The pirate known as %s was recently seen in the %s system. %s authorities want this pirate alive.")
 
 osd_msg[2] = _("Capture %s")
-osd_msg_kill = _("Kill %s")
-
 
 function pilot_death ()
    if board_failed then
       succeed()
       target_killed = true
    else
-      fail( fail_kill_text:format( name ) )
+      fail( _("MISSION FAILURE! %s has been killed."):format( name ) )
    end
 end
 
@@ -120,8 +115,8 @@ function board_fail ()
       credits = credits / 5
       local t = kill_instead_text[ rnd.rnd( 1, #kill_instead_text ) ]:format(
          name, fmt.credits( credits ) )
-      vntk.msg( kill_instead_title, t )
-      osd_msg[2] = osd_msg_kill:format( name )
+      vntk.msg( _("Better Dead than Free"), t )
+      osd_msg[2] = _("Kill %s"):format( name )
       misn.osdCreate( osd_title, osd_msg )
       misn.osdActive( 2 )
    end

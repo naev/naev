@@ -17,11 +17,6 @@
 
 --]]
 
-attacked_text = _("Hostility met in the %s system")
-jump_text = _("Jumped from the %s system to the %s system")
-land_text = _("Landed on %s in the %s system")
-
-
 function create ()
    shiplog.create( "travel", _("Travel Log"), _("Travel"), false, 20 )
 
@@ -36,7 +31,7 @@ end
 
 function player_attacked ()
    if not attacked then
-      shiplog.append( "travel", attacked_text:format( system.cur():name() ) )
+      shiplog.append( "travel", _("Hostility met in the %s system"):format( system.cur():name() ) )
       attacked = true
    end
 end
@@ -44,7 +39,7 @@ end
 
 function jumpin ()
    local s = system.cur()
-   shiplog.append( "travel", jump_text:format( lastsys:name(), s:name() ) )
+   shiplog.append( "travel", _("Jumped from the %s system to the %s system"):format( lastsys:name(), s:name() ) )
    lastsys = s
    attacked = false
 end
@@ -53,6 +48,6 @@ end
 function land ()
    local p = planet.cur()
    local s = p:system()
-   shiplog.append( "travel", land_text:format( p:name(), s:name() ) )
+   shiplog.append( "travel", _("Landed on %s in the %s system"):format( p:name(), s:name() ) )
    evt.finish( false )
 end

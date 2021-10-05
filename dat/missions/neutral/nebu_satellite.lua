@@ -32,9 +32,6 @@ local neu = require "common.neutral"
 
 
 -- localization stuff, translators would work here
-bar_desc = _("A bunch of scientists seem to be chattering nervously among themselves.")
-mtitle = {}
-mtitle[1] = _("Nebula Satellite")
 mdesc = {}
 mdesc[1] = _("Go to the %s system to launch the probe.")
 mdesc[2] = _("Drop off the scientists at %s in the %s system.")
@@ -50,10 +47,6 @@ text[2] = _([["We had a trip scheduled with a space trader ship, but they backed
 text[3] = _([["The plan is for you to take us to %s so we can launch the probe, and then return us to our home at %s in the %s system. The probe will automatically send us the data we need if all goes well. You'll be paid %s when we arrive."]])
 text[4] = _([[The scientists thank you for your help before going back to their home to continue their nebula research. One of them gives you a mock-up of the satellite you helped them launch as a keepsake.]])
 text[9] = _([["You do not have enough free cargo space to accept this mission!"]])
-launchtext = {}
-launchtext[1] = _("Preparing to launch satellite probe...")
-launchtext[2] = _("Launch in 5...")
-launchtext[3] = _("Satellite launch successful!")
 
 articles={}
 articles={
@@ -79,7 +72,7 @@ function create ()
    credits = 750000
 
    -- Set stuff up for the spaceport bar
-   misn.setNPC( _("Scientists"), "neutral/unique/neil.webp", bar_desc )
+   misn.setNPC( _("Scientists"), "neutral/unique/neil.webp", _("A bunch of scientists seem to be chattering nervously among themselves.") )
 
 end
 
@@ -101,7 +94,7 @@ function accept ()
    cargo = misn.cargoAdd( c, 3 )
 
    -- Set up mission information
-   misn.setTitle( mtitle[1] )
+   misn.setTitle( _("Nebula Satellite") )
    misn.setReward( fmt.credits(credits) )
    misn.setDesc( string.format( mdesc[1], satellite_sys:name() ) )
    misn_marker = misn.markerAdd( satellite_sys, "low" )
@@ -114,7 +107,7 @@ function accept ()
    tk.msg( title[2], string.format(text[3], satellite_sys:name(),
          homeworld:name(), homeworld_sys:name(), fmt.credits(credits) ) )
 
-   misn.osdCreate(mtitle[1], {mdesc[1]:format(satellite_sys:name())})
+   misn.osdCreate(_("Nebula Satellite"), {mdesc[1]:format(satellite_sys:name())})
    -- Set up hooks
    hook.land("land")
    hook.enter("jumpin")
@@ -147,13 +140,13 @@ end
    Launch process
 --]]
 function beginLaunch ()
-   player.msg( launchtext[1] )
+   player.msg( _("Preparing to launch satellite probe...") )
    misn.osdDestroy()
    hook.timer( 3.0, "beginCountdown" )
 end
 function beginCountdown ()
    countdown = 5
-   player.msg( launchtext[2] )
+   player.msg( _("Launch in 5...") )
    hook.timer( 1.0, "countLaunch" )
 end
 function countLaunch ()
@@ -172,9 +165,9 @@ function launchSatellite ()
 
 
    misn_stage = 1
-   player.msg( launchtext[3] )
+   player.msg( _("Satellite launch successful!") )
    misn.cargoJet( cargo )
    misn.setDesc( string.format( mdesc[2], homeworld:name(), homeworld_sys:name() ) )
-   misn.osdCreate(mtitle[1], {mdesc[2]:format(homeworld:name(), homeworld_sys:name())})
+   misn.osdCreate(_("Nebula Satellite"), {mdesc[2]:format(homeworld:name(), homeworld_sys:name())})
    misn.markerMove( misn_marker, homeworld_sys )
 end

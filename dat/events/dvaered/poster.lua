@@ -30,9 +30,6 @@ messages = {}
 messages[1] = _([[This is an advertisement for the Dvaered Army.]])
 messages[2] = _("Does this poster make you want to buy this book?")
 
-message_flf = _("The FLF has wrecked this Dvaered poster.")
-
-
 function create()
    local imageNmsg = imagesNmsg[ rnd.rnd(1,#imagesNmsg) ]
    myImg = imageNmsg[1]
@@ -40,7 +37,7 @@ function create()
    -- Did the FLF wreck this poster?
    flf = ( system.cur():presences()["FLF"] and rnd.rnd()<.3 )
    if flf then
-      myMsg = message_flf
+      myMsg = _("The FLF has wrecked this Dvaered poster.")
    else
       myMsg = messages[ imageNmsg[2] ]
    end

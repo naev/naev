@@ -35,10 +35,7 @@ local dv = require "common.dvaered"
 
 title = {}
 text = {}
-DVtitle = {}
-DVtext = {}
 osd_desc = {}
-DVosd = {}
 refuelmsg = {}
 
 title[1] = _("A chance to prove yourself")
@@ -65,35 +62,6 @@ text[6] = _([[Benito takes you to the station's bar and buys you what for lack o
 text[7] = _([["Of course, our work is only just beginning. No rest for the weary; we must continue the fight against the oppressors. I'm sure the road is still long, but I'm encouraged by the fact that we gained another valuable ally today. Check the mission computer for more tasks you can help us with. Please take this Pentagram of Valor as a token of appreciation. I'm sure you'll play an important role in our eventual victory over the Dvaered!"
     That last part earns a cheer from the assembled FLF soldiers. You decide to raise your glass with them, making a toast to the fortune of battle in the upcoming campaign - and the sweet victory that lies beyond.]])
 
-refusetitle = _("Some other time perhaps")
-refusetext = _([["I see. That's a fair answer, I'm sure you have your reasons. But if you ever change your mind, I'll be around on Sindbad. You won't have trouble finding me, I'm sure."]])
-
-DVtitle[1] = _("A tempting offer")
-DVtext[1] = _([[Your viewscreen shows a Dvaered Colonel. He looks tense. Normally, a tense Dvaered would be bad news, but then this one bothered to hail you in the heat of battle, so perhaps there is more here than meets the eye.]])
-
-DVtext[2] = _([["I am Colonel Urnus of the Dvaered Fleet, anti-terrorism division. I would normally never contact an enemy of House Dvaered, but my intelligence officer has looked through our records and found that you were recently a law-abiding citizen, doing honest freelance missions."]])
-
-DVtext[3] = _([["I know your type, %s. You take jobs where profit is to be had, and you side with the highest bidder. There are many like you in the galaxy, though admittedly not so many with your talent. That's why I'm willing to make you this offer: you will provide us with information on their base of operations and their combat strength. In return, I will convince my superiors that you were working for me all along, so you won't face any repercussions for assaulting Dvaered ships. Furthermore, I will transfer a considerable amount of credits in your account, as well as put you into a position to make an ally out of House Dvaered. If you refuse, however, I guarantee you that you will never again be safe in Dvaered space. What say you? Surely this proposition beats anything that rabble can do for you?"]])
-
-DVchoice1 = _("Accept the offer")
-DVchoice2 = _("Remain loyal to the FLF")
-
-DVtitle[4] = _("Opportunism is an art")
-DVtext[4] = _([[Colonel Urnus smiles broadly. "I knew you'd make the right choice, citizen!" He addresses someone on his bridge, out of the view of the camera. "Notify the flight group. This ship is now friendly. Cease fire." Then he turns back to you. "Proceed to %s in the %s system, citizen. I will personally meet you there."]])
-
-DVtitle[5] = _("End of negotiations")
-DVtext[5] = _([[Colonel Urnus is visibly annoyed by your response. "Very well then," he bites at you. "In that case you will be destroyed along with the rest of that terrorist scum. Helm, full speed ahead! All batteries, fire at will!"]])
-
-DVtitle[6] = _("A reward for a job well botched")
-DVtext[6] = _([[Soon after docking, you are picked up by a couple of soldiers, who escort you to Colonel Urnus's office. Urnus greets you warmly, and offers you a seat and a cigar. You take the former, not the latter.
-    "I am most pleased with the outcome of this situation, citizen," Urnus begins. "To be absolutely frank with you, I was beginning to get frustrated. My superiors have been breathing down my neck, demanding results on those blasted FLF, but they are as slippery as eels. Just when you think you've cornered them, poof! They're gone, lost in that nebula. Thick as soup, that thing. I don't know how they can even find their own way home!"]])
-
-DVtext[7] = _([[Urnus takes a puff of his cigar and blows out a ring of smoke. It doesn't take a genius to figure out you're the best thing that's happened to him in a long time.
-    "Anyway. I promised you money, status and opportunities, and I intend to make good on those promises. Your money is already in your account. Check your balance sheet later. As for status, I can assure you that no Dvaered will find out what you've been up to. As far as the military machine is concerned, you have nothing to do with the FLF. In fact, you're known as an important ally in the fight against them! Finally, opportunities. We're analyzing the data from your flight recorder as we speak, and you'll be asked a few questions after we're done here. Based on that, we can form a new strategy against the FLF. Unless I miss my guess by a long shot, we'll be moving against them in force very soon, and I will make sure you'll be given the chance to be part of that. I'm sure it'll be worth your while."]])
-
-DVtext[8] = _([[Urnus stands up, a sign that this meeting is drawing to a close. "Keep your eyes open for one of our liaisons, citizen. He'll be your ticket into the upcoming battle. Now, I'm a busy man so I'm going to have to ask you to leave. But I hope we'll meet again, and if you continue to build your career like you have today, I'm sure we will. Good day to you!"
-    You leave the Colonel's office. You are then taken to an interrogation room, where Dvaered petty officers question you politely yet persistently about your brief stay with the FLF. Once their curiosity is satisfied, they let you go, and you are free to return to your ship.]])
-
 flfcomm = {}
 flfcomm[1] = _("We have your back, %s!")
 flfcomm[2] = _("%s is selling us out! Eliminate the traitor!")
@@ -101,21 +69,14 @@ flfcomm[3] = _("Let's get out of here, %s! We'll meet you back at the base.")
 
 misn_title = _("FLF: Small Dvaered Patrol in %s")
 misn_desc = _("To prove yourself to the FLF, you must take out one of the Dvaered security patrols.")
-misn_rwrd = _("A chance to make friends with the FLF.")
 osd_title   = _("Dvaered Patrol")
 osd_desc[1] = _("Fly to the %s system")
 osd_desc[2] = _("Eliminate the Dvaered patrol")
 osd_desc[3] = _("Return to the FLF base")
 osd_desc["__save"] = true
-DVosd[1] = _("Fly to the %s system and land on %s")
-DVosd["__save"] = true
 
 npc_name = _("FLF petty officer")
 npc_desc = _("There is a low-ranking officer of the Frontier Liberation Front sitting at one of the tables. She seems somewhat more receptive than most people in the bar.")
-
-log_text_flf = _([[You earned the complete trust of the FLF by eliminating a Dvaered patrol and then refusing to change sides when the Dvaereds pressured you to. You can now consider yourself to be one of the FLF.]])
-log_text_dv = _([[As you were conducting a mission to earn the trust of the FLF, Dvaered Colonel Urnus offered you a deal: you could betray the FLF and provide information on the location of the hidden FLF base in exchange for a monetary reward and immunity against any punishment. You accepted the deal, leading to an enraged wing of FLF pilots attacking you in retaliation. The FLF terrorists were repelled, however, and Urnus told you to keep an eye out for one of the Dvaered liaisons so you can join the Dvaered in the upcoming mission to destroy Sindbad.]])
-
 
 function create ()
    missys = system.get( "Arcanis" )
@@ -137,7 +98,7 @@ function accept ()
       misn.setDesc( misn_desc )
       misn.setTitle( misn_title:format( missys:name() ) )
       marker = misn.markerAdd( missys, "low" )
-      misn.setReward( misn_rwrd )
+      misn.setReward( _("A chance to make friends with the FLF.") )
 
       DVplanet, DVsys = planet.get("Raelid Outpost")
 
@@ -149,7 +110,7 @@ function accept ()
       hook.jumpout( "leave" )
       hook.land( "leave" )
    else
-      tk.msg( refusetitle, refusetext )
+      tk.msg( _("Some other time perhaps"), _([["I see. That's a fair answer, I'm sure you have your reasons. But if you ever change your mind, I'll be around on Sindbad. You won't have trouble finding me, I'm sure."]]) )
       misn.finish( false )
    end
 end
@@ -236,12 +197,12 @@ function hail ()
    if hailer ~= nil then hook.rm( hailer ) end
    if rehailer ~= nil then hook.rm( rehailer ) end
    player.commClose()
-   tk.msg( DVtitle[1], DVtext[1] )
-   tk.msg( DVtitle[1], DVtext[2] )
-   choice = tk.choice( DVtitle[1], DVtext[3]:format( player.name() ),
-      DVchoice1, DVchoice2 )
+   tk.msg( _("A tempting offer"), _([[Your viewscreen shows a Dvaered Colonel. He looks tense. Normally, a tense Dvaered would be bad news, but then this one bothered to hail you in the heat of battle, so perhaps there is more here than meets the eye.]]) )
+   tk.msg( _("A tempting offer"), _([["I am Colonel Urnus of the Dvaered Fleet, anti-terrorism division. I would normally never contact an enemy of House Dvaered, but my intelligence officer has looked through our records and found that you were recently a law-abiding citizen, doing honest freelance missions."]]) )
+   choice = tk.choice( _("A tempting offer"), _([["I know your type, %s. You take jobs where profit is to be had, and you side with the highest bidder. There are many like you in the galaxy, though admittedly not so many with your talent. That's why I'm willing to make you this offer: you will provide us with information on their base of operations and their combat strength. In return, I will convince my superiors that you were working for me all along, so you won't face any repercussions for assaulting Dvaered ships. Furthermore, I will transfer a considerable amount of credits in your account, as well as put you into a position to make an ally out of House Dvaered. If you refuse, however, I guarantee you that you will never again be safe in Dvaered space. What say you? Surely this proposition beats anything that rabble can do for you?"]]):format( player.name() ),
+      _("Accept the offer"), _("Remain loyal to the FLF") )
    if choice == 1 then
-      tk.msg( DVtitle[4], DVtext[4]:format( DVplanet:name(), DVsys:name() ) )
+      tk.msg( _("Opportunism is an art"), _([[Colonel Urnus smiles broadly. "I knew you'd make the right choice, citizen!" He addresses someone on his bridge, out of the view of the camera. "Notify the flight group. This ship is now friendly. Cease fire." Then he turns back to you. "Proceed to %s in the %s system, citizen. I will personally meet you there."]]):format( DVplanet:name(), DVsys:name() ) )
 
       faction.get("FLF"):setPlayerStanding( -100 )
       local standing = faction.get("Dvaered"):playerStanding()
@@ -257,7 +218,7 @@ function hail ()
       end
 
       job_done = true
-      osd_desc[1] = DVosd[1]:format( DVsys:name(), DVplanet:name() )
+      osd_desc[1] = _("Fly to the %s system and land on %s"):format( DVsys:name(), DVplanet:name() )
       osd_desc[2] = nil
       misn.osdActive( 1 )
       misn.osdCreate( misn_title, osd_desc )
@@ -267,7 +228,7 @@ function hail ()
       spawner = hook.timer( 3.0, "timer_spawnHostileFLF" )
       hook.land( "land_dv" )
    else
-      tk.msg( DVtitle[5], DVtext[5] )
+      tk.msg( _("End of negotiations"), _([[Colonel Urnus is visibly annoyed by your response. "Very well then," he bites at you. "In that case you will be destroyed along with the rest of that terrorist scum. Helm, full speed ahead! All batteries, fire at will!"]]) )
       timer_spawnFLF()
    end
 end
@@ -377,7 +338,7 @@ function land_flf ()
       flf.setReputation( 10 )
       faction.get("FLF"):modPlayer( 1 )
       var.pop( "flfbase_intro" )
-      flf.addLog( log_text_flf )
+      flf.addLog( _([[You earned the complete trust of the FLF by eliminating a Dvaered patrol and then refusing to change sides when the Dvaereds pressured you to. You can now consider yourself to be one of the FLF.]]) )
       misn.finish( true )
    end
 end
@@ -386,13 +347,16 @@ end
 function land_dv ()
    leave()
    if planet.cur() == DVplanet then
-      tk.msg( DVtitle[6], DVtext[6] )
-      tk.msg( DVtitle[6], DVtext[7] )
-      tk.msg( DVtitle[6], DVtext[8] )
+      tk.msg( _("A reward for a job well botched"), _([[Soon after docking, you are picked up by a couple of soldiers, who escort you to Colonel Urnus's office. Urnus greets you warmly, and offers you a seat and a cigar. You take the former, not the latter.
+    "I am most pleased with the outcome of this situation, citizen," Urnus begins. "To be absolutely frank with you, I was beginning to get frustrated. My superiors have been breathing down my neck, demanding results on those blasted FLF, but they are as slippery as eels. Just when you think you've cornered them, poof! They're gone, lost in that nebula. Thick as soup, that thing. I don't know how they can even find their own way home!"]]) )
+      tk.msg( _("A reward for a job well botched"), _([[Urnus takes a puff of his cigar and blows out a ring of smoke. It doesn't take a genius to figure out you're the best thing that's happened to him in a long time.
+    "Anyway. I promised you money, status and opportunities, and I intend to make good on those promises. Your money is already in your account. Check your balance sheet later. As for status, I can assure you that no Dvaered will find out what you've been up to. As far as the military machine is concerned, you have nothing to do with the FLF. In fact, you're known as an important ally in the fight against them! Finally, opportunities. We're analyzing the data from your flight recorder as we speak, and you'll be asked a few questions after we're done here. Based on that, we can form a new strategy against the FLF. Unless I miss my guess by a long shot, we'll be moving against them in force very soon, and I will make sure you'll be given the chance to be part of that. I'm sure it'll be worth your while."]]) )
+      tk.msg( _("A reward for a job well botched"), _([[Urnus stands up, a sign that this meeting is drawing to a close. "Keep your eyes open for one of our liaisons, citizen. He'll be your ticket into the upcoming battle. Now, I'm a busy man so I'm going to have to ask you to leave. But I hope we'll meet again, and if you continue to build your career like you have today, I'm sure we will. Good day to you!"
+    You leave the Colonel's office. You are then taken to an interrogation room, where Dvaered petty officers question you politely yet persistently about your brief stay with the FLF. Once their curiosity is satisfied, they let you go, and you are free to return to your ship.]]) )
       player.pay( 70000 )
       var.push( "flfbase_intro", 3 )
       if diff.isApplied( "FLF_base" ) then diff.remove( "FLF_base" ) end
-      dv.addAntiFLFLog( log_text_dv )
+      dv.addAntiFLFLog( _([[As you were conducting a mission to earn the trust of the FLF, Dvaered Colonel Urnus offered you a deal: you could betray the FLF and provide information on the location of the hidden FLF base in exchange for a monetary reward and immunity against any punishment. You accepted the deal, leading to an enraged wing of FLF pilots attacking you in retaliation. The FLF terrorists were repelled, however, and Urnus told you to keep an eye out for one of the Dvaered liaisons so you can join the Dvaered in the upcoming mission to destroy Sindbad.]]) )
       misn.finish( true )
    end
 end

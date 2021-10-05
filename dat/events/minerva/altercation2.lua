@@ -23,7 +23,6 @@ local vn = require 'vn'
 local window = require 'love.window'
 local minerva = require 'common.minerva'
 
-thug1_name = _("Thug")
 thug1_image = "scavenger1.png"
 
 function create ()
@@ -31,7 +30,7 @@ function create ()
    vn.scene()
    vn.transition( "hexagon" )
    vn.music( minerva.loops.conflict )
-   local t1 = vn.newCharacter( thug1_name, { image=thug1_image, pos="left" } )
+   local t1 = vn.newCharacter( _("Thug"), { image=thug1_image, pos="left" } )
    local cc = vn.newCharacter( minerva.vn_cyborg_chicken({pos="right"}) )
    local lw, lh = window.getDesktopDimensions()
    vn.na(_("You once again hear a large commotion in one of the wings of Minerva station. As you get closer you see what seems to be a group of people chasing something small… Wait, is that a chicken?"))

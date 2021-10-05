@@ -54,15 +54,6 @@ text[1] = _([[The barman has just asked you for your order when the portmaster b
 title[11] = _("Volunteers")
 text[11] = _([["Take as many out of the fight early as you can," advises the Commodore before you board your ships. "If you can't chase them off, you might at least improve the odds. Good luck."]])
 
-commchatter = {}
-commchatter[1] = _("Eat vacuum, scum!")
-commchatter[2] = _("Die, pirate, die.")
-commchatter[3] = _("Eat cannon fire")
-commchatter[4] = _("Thieving parasites")
-commchatter[5] = _("I've got one on me!")
-
-commchatter[6] = _("We've got them on the run!")
-commchatter[7] = _("Well done, pilots. Return to port.")
 
 title[2] = _("On the way in")
 text[2] = _([[As you taxi in to land, you can make out the tiny figure of the Commodore saluting a small group of individuals to the side of the landing pads. After you and your fellow volunteers alight, she greets you with the portmaster by her side.]])
@@ -70,9 +61,6 @@ text[2] = _([[As you taxi in to land, you can make out the tiny figure of the Co
 title[3] = _("Thank you")
 text[3] = _([["That was good flying," the Commodore says with a tight smile. "Thank you all for your help. This gentleman has arranged a transfer of forty thousand credits to each of you. You can be proud of what you've done today."]])
 
-commchatter[8] = _("You fled from the battle. The Empire won't forget.")
-commchatter[9] = _("Comm Trader>You're a coward, %s. You better hope I never see you again.")
-commchatter[10] = _("Comm Trader>You're running away now, %s? The fight's finished, you know...")
 title[4] = _("Good job!")
 text[4] = _([[The debris from the battle disappears behind you in a blur of light. A moment after you emerge from hyperspace, a Imperial ship jumps in behind you and hails you.
     "Please hold course and confirm your identity, %s."  You send your license code and wait for a moment. "OK, that's fine. We're just making sure no pirates escaped. You were part of the battle, weren't you?  Surprised you didn't return for the bounty, pilot. Listen, I appreciate what you did back there. I have family on %s. When I'm not flying overhead, it's good to know there are good Samaritans like you who will step up. Thanks."
@@ -80,12 +68,6 @@ text[4] = _([[The debris from the battle disappears behind you in a blur of ligh
 title[5] = _("Left behind")
 text[5] = _([[The Commodore turns and walks off. Eight men and women follow her, but you stay put.
     A man in a jumpsuit at the next table nods at you. "What, they expect me to do their dirty work for them?" he shakes his head. "It's going to be a hot ride out of the system though, with all that going on upstairs."]])
-bounce_title = _("Not done yet.")
-bounce_text = _("The system isn't safe yet. Get back out there!")
-noReward = _("No reward for you.")
-noDesc = _("Watch others defend the system.")
-noTitle = _("Observe the action.")
-
 
 -- Create the mission on the current planet, and present the first Bar text.
 function create()
@@ -125,9 +107,9 @@ function create()
       misn.accept()
       var.push( "dts_firstSystem", "planet_name")
       tk.msg( title[5], text[5])
-      misn.setReward( noReward)
-      misn.setDesc( noDesc)
-      misn.setTitle( noTitle)
+      misn.setReward( _("No reward for you."))
+      misn.setDesc( _("Watch others defend the system."))
+      misn.setTitle( _("Observe the action."))
       defender = false
 
       -- hook an abstract deciding function to player entering a system when not part of defense
@@ -143,7 +125,7 @@ function enter_system()
       elseif victory == true and defender == true then
          hook.timer(1.0, "ship_enters")
       elseif defender == true then
-         player.msg( commchatter[8] )
+         player.msg( _("You fled from the battle. The Empire won't forget.") )
          faction.modPlayerSingle( "Empire", -3)
          misn.finish( true)
       elseif this_system == system.cur() and been_here_before ~= true then
@@ -211,7 +193,7 @@ function add_cas_and_check()
          end
          if victory ~= true then  -- A few seconds after victory, the system is back under control
             victory = true
-            player.msg( commchatter[6] )
+            player.msg( _("We've got them on the run!") )
             hook.timer(8.0, "victorious")
          end
       end
@@ -222,7 +204,7 @@ end
 function victorious()
 
    -- Call ships to base
-      player.msg( commchatter[7] )
+      player.msg( _("Well done, pilots. Return to port.") )
    -- Get a position near the player for late Empire re-enforcements
       starting_vect = player.pos()
       a = rnd.rnd() * 2 * math.pi
@@ -245,7 +227,7 @@ function celebrate_victory()
          tk.msg( title[3], text[3] )
          misn.finish( true)
       else
-         tk.msg( bounce_title, bounce_text)   -- If any pirates still alive, send player back out.
+         tk.msg( _("Not done yet."), _("The system isn't safe yet. Get back out there!"))   -- If any pirates still alive, send player back out.
          player.takeoff()
       end
 
@@ -268,9 +250,9 @@ function abort()
       if victory ~= true then
          faction.modPlayerSingle( "Empire", -10)
          faction.modPlayerSingle( "Trader", -10)
-         player.msg( string.format( commchatter[9], player.name() ) )
+         player.msg( string.format( _("Comm Trader>You're a coward, %s. You better hope I never see you again."), player.name() ) )
       else
-         player.msg( string.format( commchatter[10], player.name() ) )
+         player.msg( string.format( _("Comm Trader>You're running away now, %s? The fight's finished, you know..."), player.name() ) )
       end
 
 end

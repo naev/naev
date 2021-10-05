@@ -50,7 +50,6 @@ local fleet = require "fleet"
 local fmt = require "format"
 local emp = require "common.empire"
 
-bar_desc = _("Dimitri should be around here, but you can't see him. You should probably look for him.")
 misn_title = _("Operation Black Trinity")
 misn_desc = {}
 misn_desc[1] = _("Arrest the ESS Trinity in %s")
@@ -78,13 +77,6 @@ text[6] = _([[You see Commodore Keer with a dozen soldiers waiting for you outsi
 text[7] = _([[You see Commodore Keer with a dozen soldiers waiting for you outside the landing pad.
     "You weren't supposed to let the Trinity get away! Now we have no cards to play. We must wait for the Collective response or new information before being able to continue. We'll notify you if we have something you can do for us, but for now we just wait."]])
 
-chatter = {}
-chatter[1] = _("ESS Trinity: Please turn off your engines and prepare to be boarded.")
-chatter[2] = _("You will never take me alive!")
-chatter[3] = _("Very well then. All units engage ESS Trinity.")
-chatter[5] = _("Mission Success: Return to base.")
-chatter[6] = _("Mission Failure: Return to base.")
-chatter[7] = _("Incoming drones from hyperspace detected!")
 
 osd_msg = {}
 osd_msg[1] = _("Fly to the %s system")
@@ -92,23 +84,13 @@ osd_msg[2] = _("Apprehend or kill Zakred")
 osd_msg[3] = _("Report back to %s")
 osd_msg["__save"] = true
 
-taunts = {}
-taunts[1] = _("It is too late! The plan is being put into motion!")
-taunts[2] = _("You have no idea who you're messing with!")
-taunts[3] = _("My drones will make mincemeat of you!")
-
-log_text_intro = _([[Commodore Keer has taken over the Collective issue and explained more about the Collective. "The Collective was actually a project for the Empire. They were supposed to be the ultimate weapon in flexibility and offense. Commodore Welsh was in charge of the secret science facility on Eiroik. Shortly after the Incident, we stopped hearing from them. We sent a recon and were met with hostile Collective drones. It seems like the project had been a success, but the traitor Welsh went rogue. Under normal circumstances we would have easily crushed the Collective, but after the Incident these are hardly normal circumstances."]])
-log_text_succeed = _([[You successfully killed Zakred (a Collective spy) and destroyed the ESS Trinity. Commodore Keer told you to meet her again at the bar on Omega Station for an all-out attack on Collective territory.]])
-log_text_fail = _([[You failed to destroy the ESS Trinity, putting a wedge in the Empire's plans. You should meet back with Commodore Keer at the bar on Omega Station; she said that they would notify you if they have something more that you can do.]])
-
-
 function create ()
    missys = {system.get("Rockbed")}
    if not misn.claim(missys) then
       misn.finish(false)
    end
 
-   misn.setNPC( _("Dimitri?"), "unknown.webp", bar_desc )
+   misn.setNPC( _("Dimitri?"), "unknown.webp", _("Dimitri should be around here, but you can't see him. You should probably look for him.") )
    credits = 2000000
 end
 
@@ -143,7 +125,7 @@ function accept ()
 
    tk.msg( title[2], string.format(text[3], misn_base:name() ) )
    tk.msg( title[3], string.format(text[4], _("Eiroik")))
-   emp.addCollectiveLog( log_text_intro )
+   emp.addCollectiveLog( _([[Commodore Keer has taken over the Collective issue and explained more about the Collective. "The Collective was actually a project for the Empire. They were supposed to be the ultimate weapon in flexibility and offense. Commodore Welsh was in charge of the secret science facility on Eiroik. Shortly after the Incident, we stopped hearing from them. We sent a recon and were met with hostile Collective drones. It seems like the project had been a success, but the traitor Welsh went rogue. Under normal circumstances we would have easily crushed the Collective, but after the Incident these are hardly normal circumstances."]]) )
    tk.msg( title[4], string.format(text[5], misn_target_sys:name(), misn_target_sys:name() ) )
 
    -- Escorts
@@ -210,7 +192,7 @@ function enter ( from_sys )
    elseif misn_stage == 1 then
 
       misn_stage = 3
-      player.msg( chatter[6] )
+      player.msg( _("Mission Failure: Return to base.") )
       misn.setDesc( string.format(misn_desc[2],
             misn_base:name(), misn_base_sys:name() ))
       misn.markerMove( misn_marker, misn_base_sys )
@@ -223,20 +205,20 @@ function final_talk ()
    -- Empire talks about arresting
    if final_fight == 0 then
       talker = paci
-      talker:broadcast( chatter[1] )
+      talker:broadcast( _("ESS Trinity: Please turn off your engines and prepare to be boarded.") )
 
       final_fight = 1
       hook.timer(rnd.uniform( 3.0, 4.0 ), "final_talk")
    elseif final_fight == 1 then
       talker = trinity
-      talker:broadcast( chatter[2] )
+      talker:broadcast( _("You will never take me alive!") )
 
       final_fight = 2
       hook.timer(rnd.uniform( 3.0, 4.0 ), "final_talk")
    elseif final_fight == 2 then
       -- Talk
       talker = paci
-      talker:broadcast( chatter[3] )
+      talker:broadcast( _("Very well then. All units engage ESS Trinity.") )
 
       -- ESS Trinity becomes collective now.
       trinity:setFaction("Collective")
@@ -264,9 +246,9 @@ function trinity_check ()
    tri_checked = tri_checked + 1
 
    if tri_checked == 3 then
-      trinity:broadcast( taunts[1] )
+      trinity:broadcast( _("It is too late! The plan is being put into motion!") )
    elseif tri_checked == 6 then
-      trinity:broadcast( taunts[2] )
+      trinity:broadcast( _("You have no idea who you're messing with!") )
    end
 
    local a,s = trinity:health()
@@ -283,8 +265,8 @@ function trinity_flee ()
    tri_flee = true
    trinity:control()
    trinity:hyperspace( misn_flee_sys, true )
-   trinity:broadcast( taunts[3] )
-   player.msg( chatter[7] )
+   trinity:broadcast( _("My drones will make mincemeat of you!") )
+   player.msg( _("Incoming drones from hyperspace detected!") )
    hook.timer( rnd.uniform( 3.0, 5.0 ), "call_drones_jump" )
 end
 
@@ -370,12 +352,12 @@ function land ()
          tk.msg( title[5], text[7] )
          var.push("trinity", true)
          credits = credits / 2
-         emp.addCollectiveLog( log_text_fail )
+         emp.addCollectiveLog( _([[You failed to destroy the ESS Trinity, putting a wedge in the Empire's plans. You should meet back with Commodore Keer at the bar on Omega Station; she said that they would notify you if they have something more that you can do.]]) )
       else
          -- Successfully killed
          tk.msg( title[4], string.format(text[6], player.name()) )
          var.push("trinity", false)
-         emp.addCollectiveLog( log_text_succeed )
+         emp.addCollectiveLog( _([[You successfully killed Zakred (a Collective spy) and destroyed the ESS Trinity. Commodore Keer told you to meet her again at the bar on Omega Station for an all-out attack on Collective territory.]]) )
       end
 
       -- Rewards
@@ -389,7 +371,7 @@ end
 
 -- Trinity hooks
 function trinity_kill () -- Got killed
-   player.msg( chatter[5] )
+   player.msg( _("Mission Success: Return to base.") )
    misn_stage = 2
    misn.osdActive(3)
    trinity_alive = false
@@ -399,7 +381,7 @@ end
 
 
 function trinity_jump () -- Got away
-   player.msg( chatter[6] )
+   player.msg( _("Mission Failure: Return to base.") )
    misn_stage = 2
    misn.osdActive(3)
    trinity_alive = true

@@ -34,8 +34,6 @@ local portrait = require "portrait"
 
 title = {}
 text = {}
-comptitle = {}
-comptext = {}
 osd_msg = {}
 npc_desc = {}
 bar_desc = {}
@@ -43,15 +41,6 @@ bar_desc = {}
 title[1] = _("Do you want to take part to a challenge?")
 text[1] = _([["Hello, I'm a member of the staff of the Dvaered dogfight challenge. Here are the rules: you need to take off with a fighter-class ship and to join your starting mark. After that, you will try to disable your opponent. Don't kill them; the security staff won't forgive that. It is forbidden to use missiles, so you won't be allowed to have those equipped while taking off. It's also forbidden to board the opponent's ship and to attack him before the signal is given. You are not allowed to land on any planet or jump away during the championship.
     We are looking for pilots. Are you in?"]])
-
-refusetitle = _("Sorry, not interested")
-refusetext = _([["That's your choice. Goodbye, then."]])
-
-dismisstitle = _("You are dismissed")
-missiletext = _("You aren't allowed to use missiles")
-fightertext = _("You had to use a fighter")
-fleetext = _("You weren't supposed to go away.")
-cheetext = _("You weren't supposed to attack before the signal.")
 
 title[2] = _("Let's go")
 text[2] = _([[For this round, your opponent is %s. Remember: use a fighter with no launchers. You still have to defeat %s opponents to win.]])
@@ -67,26 +56,6 @@ text[5] = _([[Congratulations! The staff pays you %s.]])
 
 title[6] = _("Thanks for playing")
 text[6] = _([[The staff pays you %s.]])
-
-comptitle[1] = _("I am here to win the championship")
-comptext[1] = _([["Hello! I am here to claim my place as this cycle's champion! I've prepared myself since the first day I piloted a ship. Trust me, I'm nearly invincible and my Vendetta is indestructible.
-    "Did you know that the Vendetta is the best fighter in this part of the galaxy? It's the reason why every pilot who's won this championship had one."]])
-
-comptitle[2] = _("Hello")
-comptext[2] = _([["Are you here for the Dvaered dogfight championship? I am a competitor. I fly a Shark, so I don't hope to win lots of rounds... But I still enjoy the battle. Every cycle, a Dvaered pilot wins. Do you know why? It's because the rules of the championship advantage heavy armoured, well armed fighters, like the Vendetta. Imperial pilots are used to electronic warfare with guided missiles and stealth ships. Dvaered pilots, on the other hand, only understand basic dogfighting."]])
-
-comptitle[3] = _("Imperial Pilot")
-comptext[3] = _([["What a pity. I am the best in my squad. I trained cycles to be able to take down these pitiful Vendettas with my missiles before they even see my Lancelot on their radar. But in this championship, only armor and firepower are useful."]])
-
-comptitle[4] = _("Dvaered Pilot")
-comptext[4] = _([["Nice to see you. I am a Vendetta pilot. I hope I win this time! For us, being the champion here means that you become member of the senior staff, which makes you closer to Dvaered High Command! Who knows? Maybe one day I will become a Warlord."]])
-
-comptitle[5] = _("Obvious Pirate")
-comptext[5] = _([["Hi, I'm... err... I'm an independent pilot. I'm here to take part in the challenge and see the best Dvaered Vendetta pilots in motion. It helps to know how they fly in my job."]])
-
-comptitle[6] = _("I am here to win the championship")
-comptext[6] = _([["I am here to claim my place as this cycle's champion! I've prepared myself since the first day I piloted a ship. Trust me, I'm nearly invincible and my Vendetta is indestructible.
-    "Do you know who I am? I am the famous independent pilot who helped Dvaered High Command destroy the FLF base in the nebula! I managed to defeat lots of FLF fighters with my ship! I will tell you my adventures some other time, but for now, I need to concentrate."]])
 
 -- Mission details
 misn_title = _("The Dvaered Championship")
@@ -122,7 +91,6 @@ npc_portrait["__save"] = true
 
 -- OSD
 osd_title = _("The Dvaered Championship, round %n")
-final_title = _("The Dvaered Championship, final")
 osd_msg[1] = _("Go to the starting point")
 osd_msg[2] = _("Disable your opponent; DO NOT KILL")
 osd_msg[3] = _("Land on %s")
@@ -166,22 +134,24 @@ end
 
 function competitor1()
    if player.misnDone("Destroy the FLF base!") == true then
-      tk.msg(comptitle[6], comptext[6])
+      tk.msg(_("I am here to win the championship"), _([["I am here to claim my place as this cycle's champion! I've prepared myself since the first day I piloted a ship. Trust me, I'm nearly invincible and my Vendetta is indestructible.
+    "Do you know who I am? I am the famous independent pilot who helped Dvaered High Command destroy the FLF base in the nebula! I managed to defeat lots of FLF fighters with my ship! I will tell you my adventures some other time, but for now, I need to concentrate."]]))
    else
-      tk.msg(comptitle[1], comptext[1])
+      tk.msg(_("I am here to win the championship"), _([["Hello! I am here to claim my place as this cycle's champion! I've prepared myself since the first day I piloted a ship. Trust me, I'm nearly invincible and my Vendetta is indestructible.
+    "Did you know that the Vendetta is the best fighter in this part of the galaxy? It's the reason why every pilot who's won this championship had one."]]))
    end
 end
 function competitor2()
-   tk.msg(comptitle[2], comptext[2])
+   tk.msg(_("Hello"), _([["Are you here for the Dvaered dogfight championship? I am a competitor. I fly a Shark, so I don't hope to win lots of rounds... But I still enjoy the battle. Every cycle, a Dvaered pilot wins. Do you know why? It's because the rules of the championship advantage heavy armoured, well armed fighters, like the Vendetta. Imperial pilots are used to electronic warfare with guided missiles and stealth ships. Dvaered pilots, on the other hand, only understand basic dogfighting."]]))
 end
 function competitor3()
-   tk.msg(comptitle[3], comptext[3])
+   tk.msg(_("Imperial Pilot"), _([["What a pity. I am the best in my squad. I trained cycles to be able to take down these pitiful Vendettas with my missiles before they even see my Lancelot on their radar. But in this championship, only armor and firepower are useful."]]))
 end
 function competitor4()
-   tk.msg(comptitle[4], comptext[4])
+   tk.msg(_("Dvaered Pilot"), _([["Nice to see you. I am a Vendetta pilot. I hope I win this time! For us, being the champion here means that you become member of the senior staff, which makes you closer to Dvaered High Command! Who knows? Maybe one day I will become a Warlord."]]))
 end
 function competitor5()
-   tk.msg(comptitle[5], comptext[5])
+   tk.msg(_("Obvious Pirate"), _([["Hi, I'm... err... I'm an independent pilot. I'm here to take part in the challenge and see the best Dvaered Vendetta pilots in motion. It helps to know how they fly in my job."]]))
 end
 
 function accept()
@@ -205,7 +175,7 @@ function accept()
       beginbattle()
 
    else
-      tk.msg(refusetitle, refusetext)
+      tk.msg(_("Sorry, not interested"), _([["That's your choice. Goodbye, then."]]))
       misn.finish(false)
    end
 end
@@ -394,10 +364,10 @@ function enter()
       prox = hook.timer(0.5, "proximity", {location = start_pos, radius = 300, funcname = "assault"})
 
    elseif haslauncher == true then
-      tk.msg(dismisstitle, missiletext)
+      tk.msg(_("You are dismissed"), _("You aren't allowed to use missiles"))
       misn.finish(false)
    elseif playerclass ~= "Fighter" then
-      tk.msg(dismisstitle, fightertext)
+      tk.msg(_("You are dismissed"), _("You had to use a fighter"))
       misn.finish(false)
    end
 end
@@ -413,14 +383,14 @@ function oppo_attacked(pilot, attacker)  --The player tries to cheat by attackin
    if stage == 0 and (attacker == player.pilot()
             or attacker:leader() == player.pilot()) then
       land_everyone()
-      tk.msg(dismisstitle, cheetext)
+      tk.msg(_("You are dismissed"), _("You weren't supposed to attack before the signal."))
       system.mrkRm(mark)
       misn.finish(false)
    end
 end
 
 function jumpout()   --The player is never allowed to go away
-   tk.msg(dismisstitle, fleetext)
+   tk.msg(_("You are dismissed"), _("You weren't supposed to go away."))
    misn.finish(false)
 end
 
@@ -456,7 +426,7 @@ function land()
       misn.finish(true)
 
       elseif stage == 2 then
-      tk.msg(dismisstitle, fleetext)
+      tk.msg(_("You are dismissed"), _("You weren't supposed to go away."))
       misn.finish(false)
    end
 end

@@ -28,14 +28,11 @@ local pir = require "common.pirate"
 
 
 -- Bar information
-bar_desc = _("You see a shifty looking man sitting in a darkened corner of the bar. He is trying to discreetly motion you to join him, but is only managing to make himself look suspicious. Perhaps he's watched too many holovideos.")
 
 -- Mission details
 misn_title = _("Thug")
 misn_reward = _("Some easy money")
 misn_desc = _("A shifty businessman has tasked you with chasing away merchant competition in the %s system.")
-osd_desc_1 = _("Attack, but do not kill, Trader pilots in the %s system so that they run away")
-osd_desc_2 = _("Return to %s in the %s system for payment")
 
 -- Text
 title    = {}
@@ -47,7 +44,6 @@ text[2] = _([[Apparently relieved that you've accepted his offer, he continues, 
 text[3] = _([[As you inform your acquaintance that you successfully scared off the traders, he grins and transfers a sum of credits to your account. "That should teach them to stay out of my space."]])
 
 -- Messages
-success_msg = _("MISSION SUCCESS! Return for payment.")
 
 log_text = _([[You chased away a shifty merchant's competition and were paid a sum of credits by the shifty merchant for your services.]])
 
@@ -57,7 +53,7 @@ function create ()
    targetsystem = system.get("Delta Pavonis") -- Find target system
 
    -- Spaceport bar stuff
-   misn.setNPC( _("Shifty Trader"),  "neutral/unique/shifty_merchant.webp", bar_desc)
+   misn.setNPC( _("Shifty Trader"),  "neutral/unique/shifty_merchant.webp", _("You see a shifty looking man sitting in a darkened corner of the bar. He is trying to discreetly motion you to join him, but is only managing to make himself look suspicious. Perhaps he's watched too many holovideos."))
 end
 
 
@@ -83,8 +79,8 @@ function accept ()
    misn.setDesc( string.format( misn_desc, targetsystem:name() ) )
    misn_marker = misn.markerAdd( targetsystem, "low" )
    local osd_desc = {}
-   osd_desc[1] = osd_desc_1:format( targetsystem:name() )
-   osd_desc[2] = osd_desc_2:format( misn_base:name(), misn_base_sys:name() )
+   osd_desc[1] = _("Attack, but do not kill, Trader pilots in the %s system so that they run away"):format( targetsystem:name() )
+   osd_desc[2] = _("Return to %s in the %s system for payment"):format( misn_base:name(), misn_base_sys:name() )
    misn.osdCreate( misn_title, osd_desc )
    -- Some flavour text
    tk.msg( title[1], string.format( text[2], targetsystem:name()) )
@@ -136,7 +132,7 @@ function attack_finished()
       return
    end
    misn_done = true
-   player.msg( success_msg )
+   player.msg( _("MISSION SUCCESS! Return for payment.") )
    misn.markerRm( misn_marker )
    misn_marker = misn.markerAdd( misn_base_sys, "low" )
    misn.osdActive(2)

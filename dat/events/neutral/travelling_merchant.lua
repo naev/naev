@@ -29,10 +29,7 @@ broadcastmsg = {
    _("...and that's how I was able to get a third liver haha. Oops is this on? Er, nevermind that. Outfits for sale!"),
 }
 
-first_hail_message = _('"Howdy Human! Er, I mean, Greetings! If you want to take a look at my wonderful, exquisite, propitious, meretricious, effulgent, ... wait, what was I talking about? Oh yes, please come see my wares on my ship. You are welcome to board anytime!"')
-
 -- TODO boarding VN stuff should allow talking to Misi and such.
-board_message = _("You open the airlock and are immediately greeted by an intense humidity and heat, almost like a jungle. As you advance through the dimly lit ship you can see all types of mold and plants crowing in crevices in the wall. Wait, was that a small animal scurrying around? Eventually you reach the cargo hold that has been re-adapted as a sort of bazaar. It is a mess of different wares and most don't seem of much value, there might be some interesting find.")
 
 function create ()
    -- Make sure system isn't claimed, but we don't claim it
@@ -102,7 +99,7 @@ function hail ()
       local mm = vn.newCharacter( trader_name,
          { image=trader_image, color=trader_colour, shader=love_shaders.hologram() } )
       vn.transition("electric")
-      mm:say( first_hail_message )
+      mm:say( _('"Howdy Human! Er, I mean, Greetings! If you want to take a look at my wonderful, exquisite, propitious, meretricious, effulgent, ... wait, what was I talking about? Oh yes, please come see my wares on my ship. You are welcome to board anytime!"') )
       vn.done("electric")
       vn.run()
 
@@ -115,7 +112,7 @@ function board ()
    vn.clear()
    vn.scene()
    vn.transition()
-   vn.na( board_message )
+   vn.na( _("You open the airlock and are immediately greeted by an intense humidity and heat, almost like a jungle. As you advance through the dimly lit ship you can see all types of mold and plants crowing in crevices in the wall. Wait, was that a small animal scurrying around? Eventually you reach the cargo hold that has been re-adapted as a sort of bazaar. It is a mess of different wares and most don't seem of much value, there might be some interesting find.") )
    vn.run()
 
    --[[

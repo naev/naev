@@ -40,7 +40,6 @@ require "factions.equip.generic"
 
 
 title = _("Stealing a %s")
-reward = _("A brand new %s")
 description = _("Land on %s in the %s system and escape with your new %s")
 
 -- localization stuff, translators would work here
@@ -57,9 +56,6 @@ approval = {
    message = _([[You pay the informer, who tells you the ship in currently on %s, in the %s system. He also gives you its security codes and warns you about patrols.
     The pile of information he gives you also contains a way to land on the planet and to dissimulate your ship there.]])
 }
-
-not_enough_title = _("Not Enough Money")
-not_enough_msg = _([["Do you take me for a fool? Get out of here! Come back when you have enough money."]])
 
 success = {
    title = _("Ship successfully stolen!"),
@@ -302,9 +298,9 @@ function accept()
          player.pay( -theship.price )
          misn.accept()
 
-         -- Mission title, reward, description
+         -- Mission title, _("A brand new %s"), description
          misn.setTitle( title:format( _(theship.class) ) )
-         misn.setReward( reward:format( _(theship.class) ) )
+         misn.setReward( _("A brand new %s"):format( _(theship.class) ) )
          misn.setDesc( description:format(
             theship.planet:name(), theship.system:name(), _(theship.class) ) )
 
@@ -329,7 +325,7 @@ function accept()
          hook.land("land")
          hook.enter("enter")
       else
-         tk.msg( not_enough_title, not_enough_text )
+         tk.msg( _("Not Enough Money"), not_enough_text )
          misn.finish()
       end
    else

@@ -49,13 +49,6 @@ title[5] = _("You're grounded, young man")
 text[5] = _([[The boy's father awaits you at the spaceport. He gives his son and the young lady a stern look and curtly commands them to wait for him in the spaceport hall. The couple droops off, and the father turns to face you.
     "You've done me a service, captain," he says. "As promised, I have a reward for a job well done. You'll find it in your bank account. I'm going to give my son a reprimand he'll not soon forget, so hopefully he won't repeat this little stunt anytime soon. Well then, I must be going. Thank you again, and good luck on your travels."]])
 
-NPCname = _("A middle-aged man")
-NPCdesc = _("You see a middle-aged man, who appears to be one of the locals, looking around the bar, apparently in search of a suitable pilot.")
-
-misndesc = _("A disgruntled parent has asked you to fetch his son and his son's girlfriend, who have taken a yacht and are joyriding it in the %s system.")
-misnreward = _("You will be compensated for your efforts.")
-
-OSDtitle = _("The macho teenager")
 OSD = {}
 OSD[1] = _("Disable Gawain Credence")
 OSD[2] = _("Bring the teenagers back to planet %s")
@@ -65,16 +58,16 @@ function create ()
     cursys = system.cur()
     curplanet = planet.cur()
     OSD[2] = OSD[2]:format(planet.cur():name())
-    misn.setNPC(NPCname, "neutral/unique/middleaged.webp", NPCdesc)
+    misn.setNPC(_("A middle-aged man"), "neutral/unique/middleaged.webp", _("You see a middle-aged man, who appears to be one of the locals, looking around the bar, apparently in search of a suitable pilot."))
 end
 
 
 function accept ()
     if tk.yesno(title[1], text[1]) then
         misn.accept()
-        misn.setDesc(misndesc:format(cursys:name()))
-        misn.setReward(misnreward)
-        misn.osdCreate(OSDtitle, OSD)
+        misn.setDesc(_("A disgruntled parent has asked you to fetch his son and his son's girlfriend, who have taken a yacht and are joyriding it in the %s system."):format(cursys:name()))
+        misn.setReward(_("You will be compensated for your efforts."))
+        misn.osdCreate(_("The macho teenager"), OSD)
         tk.msg(title[2], text[2])
         hook.enter("enter")
         targetlive = true

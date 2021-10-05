@@ -25,8 +25,6 @@ DESCRIPTION: Pirates chase you to Ogat.
 local fmt = require "format"
 local fleet = require "fleet"
 
-NPC_name = _("A detective")
-bar_desc = _("A private detective is signalling you to come speak with him.")
 title = {}
 title[0] = _("Crimelord")
 title[1] = _("Good luck")
@@ -44,12 +42,11 @@ text[1] = _([[After quickly glancing around to make sure nobody's taken a partic
 text[2] = _("\"Excellent work. This data will ensure an arrest and swift prosecution. You've certainly done your part towards cleaning up the region. As for your compensation, I've had %s transferred to you.\"")
 text[3] = _("As you step out of your ship and seal the airlock, you spot a burly man purposefully heading towards you. You turn to flee, but there are others closing in on your position. Surrounded, and with several laser pistols trained on you, you see no option but to surrender the evidence.")
 misn_desc = _("Evade the thugs and deliver the evidence to %s")
-reward_desc = _("A generous compensation")
 
 function create ()
    targetsystem = system.get("Ogat")
 
-   misn.setNPC( NPC_name, "neutral/unique/hunter.webp", bar_desc )
+   misn.setNPC( _("A detective"), "neutral/unique/hunter.webp", _("A private detective is signalling you to come speak with him.") )
 end
 
 function accept ()
@@ -63,7 +60,7 @@ function accept ()
    reward = 600e3
    tk.msg( title[1], text[1] )
    misn.setTitle( title[0] )
-   misn.setReward( reward_desc )
+   misn.setReward( _("A generous compensation") )
    misn.setDesc( string.format( misn_desc, targetsystem:name() ) )
    misn.markerAdd( targetsystem, "low" )
    misn.osdCreate(title[0], {misn_desc:format(targetsystem:name())})

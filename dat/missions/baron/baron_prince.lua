@@ -39,9 +39,6 @@ text[1] = _([[As you approach the stranger, he extends his hand in greeting. He 
     "The Baron was quite pleased with your performance in that matter," he confides. "He has asked me to try to find you again for another job not unlike the last one. The Baron is a collector, you see, and his hunger for new possessions is a hard one to satiate." He makes a face. "Of course, his methods aren't always completely respectable, as you've experienced for yourself. But I assure you that the Baron is not a bad man, he is simply very enthusiastic."
     You decide to keep your opinion of the aristocrat to yourself. Instead you inquire as to what the man wants from you this time. "To tell the truth, I don't actually know," the man says. "The Baron wants you to meet him so he can brief you in person. You will find his ship in the %s system. Shall I inform his lordship that you will be paying him a visit?"]])
 
-refusetitle = _("Sorry, not today")
-refusetext = _([["Okay, fair enough," the man says with a disappointed look on his face. "I'll try to find someone else. But maybe we'll run into each other again, so if you change your mind..."]])
-
 title[2] = _("At your beck and call")
 text[2] = _([["Splendid. Please go see his lordship at the earliest opportunity. He doesn't like to be kept waiting. I will send word that you will be coming, so contact the Pinnacle when you arrive at %s, and they will allow you to board."]])
 
@@ -89,10 +86,6 @@ text[13] = _([[You hand Flintley the artifact you procured on %s. He examines it
 text[14] = _([[Flintley studies the object on the table for a while, checking the online database a number of times in the process. Then, finally, he turns to you. "I hate to say this, but it seems you've bought a counterfeit. It's a good one, though! That seller on %s must have known his stuff. You see, this is very similar to a number plate used by hovercars on Mars at the time of the Second Growth. However, it's missing a number of vital characteristics, and some details betray its recent manufacture. Close, %s, close. But no cigar."
     You dispose of the counterfeit artifact. Hopefully the next one will be what Sauterfeldt is looking for...]])
 
-flintdeftitle = _("Just passing through")
-
-flintdeftext = _([[Flintley greets you. "Do you have any objects for me to look at, %s? No? Well, alright. I'll be here if you need me. Good luck out there."]])
-
 title[10] = _("From days long gone")
 
 text[15] = _([[Flintley carefully studies the object in front of him, turning it around and consulting the online database via the bar table's terminal. After several hectoseconds he leans back and whistles. "Well I never. This has to be it, %s. I'd do a carbon dating if I could, but even without I'm positive. This object dates back to pre-Growth Earth. And it's in an amazingly good condition!"
@@ -115,18 +108,7 @@ misn_desc[2] = _("Baron Sauterfeldt has tasked you with finding an ancient artif
 
 -- NPC stuff
 npc_desc = _("An unfamiliar man")
-bar_desc = _("A man you've never seen before makes eye contact with you. It seems he knows who you are.")
 
-flint_npc1 = _("A reedy-looking man")
-flint_bar1 = _("You spot a thin, nervous looking individual. He does not seem to want to be here. This could be that Flintley fellow the Baron told you about.")
-
-flint_npc2 = _("Flintley")
-flint_bar2 = _("Flintley is here. He nervously sips from his drink, clearly uncomfortable in this environment.")
-
-dobuy = _("Buy the artifact (%s)")
-nobuy = _("Don't buy the artifact")
-
-nomoneytitle = _("Not enough money!")
 nomoneytext = _("You can't currently afford to buy this artifact. You need %s.")
 
 -- OSD stuff
@@ -139,7 +121,7 @@ log_text = _([[Baron Sauterfeldt sent you on a wild goose chase to find some anc
 
 function create ()
    -- Note: this mission makes no system claims.
-   misn.setNPC(npc_desc, "neutral/unique/unfamiliarman.webp", bar_desc)
+   misn.setNPC(npc_desc, "neutral/unique/unfamiliarman.webp", _("A man you've never seen before makes eye contact with you. It seems he knows who you are."))
 end
 
 function accept()
@@ -170,7 +152,7 @@ function accept()
 
       enterhook = hook.enter("enter")
    else
-      tk.msg(refusetitle, refusetext)
+      tk.msg(_("Sorry, not today"), _([["Okay, fair enough," the man says with a disappointed look on his face. "I'll try to find someone else. But maybe we'll run into each other again, so if you change your mind..."]]))
       abort()
    end
 end
@@ -225,9 +207,9 @@ function land()
       sellnpc = misn.npcAdd("seller", _("Artifact seller"), portrait.get("Pirate"), sellerdesc, 4)
    elseif planet.cur() == flintplanet then
       if flintleyfirst then
-         flintnpc = misn.npcAdd("flintley", flint_npc1, "neutral/unique/flintley.webp", flint_bar1, 4)
+         flintnpc = misn.npcAdd("flintley", _("A reedy-looking man"), "neutral/unique/flintley.webp", _("You spot a thin, nervous looking individual. He does not seem to want to be here. This could be that Flintley fellow the Baron told you about."), 4)
       else
-         flintnpc = misn.npcAdd("flintley", flint_npc2, "neutral/unique/flintley.webp", flint_bar2, 4)
+         flintnpc = misn.npcAdd("flintley", _("Flintley"), "neutral/unique/flintley.webp", _("Flintley is here. He nervously sips from his drink, clearly uncomfortable in this environment."), 4)
       end
    end
 end
@@ -239,7 +221,7 @@ function flintley()
       flintleyfirst = false
       tk.msg(title[7], text[8]:format(player.name()))
    elseif artifactA == nil and artifactB == nil and artifactC == nil then
-      tk.msg(flintdeftitle, flintdeftext:format(player.name()))
+      tk.msg(_("Just passing through"), _([[Flintley greets you. "Do you have any objects for me to look at, %s? No? Well, alright. I'll be here if you need me. Good luck out there."]]):format(player.name()))
    end
 
    if artifactA ~= nil then
@@ -295,7 +277,7 @@ end
 
 function seller()
    if planet.cur() == artifactplanetA then
-      if tk.choice(title[8], text[9], dobuy:format(fmt.credits(reward * 0.15)), nobuy) == 1 then
+      if tk.choice(title[8], text[9], _("Buy the artifact (%s)"):format(fmt.credits(reward * 0.15)), _("Don't buy the artifact")) == 1 then
          if player.credits() >= reward * 0.15 then
             misn.npcRm(sellnpc)
             player.pay( reward * 0.15 )
@@ -303,11 +285,11 @@ function seller()
             artifactA = misn.cargoAdd(c, 0)
             misn.markerRm(markerA)
          else
-            tk.msg(nomoneytitle, nomoneytext:format(fmt.credits(reward * 0.15)))
+            tk.msg(_("Not enough money!"), nomoneytext:format(fmt.credits(reward * 0.15)))
          end
       end
    elseif planet.cur() == artifactplanetB then
-      if tk.choice(title[8], text[10], dobuy:format(fmt.credits(reward * 0.15)), nobuy) == 1 then
+      if tk.choice(title[8], text[10], _("Buy the artifact (%s)"):format(fmt.credits(reward * 0.15)), _("Don't buy the artifact")) == 1 then
          if player.credits() >= reward * 0.15 then
             misn.npcRm(sellnpc)
             player.pay( reward * 0.15 )
@@ -315,11 +297,11 @@ function seller()
             artifactB = misn.cargoAdd(c, 0)
             misn.markerRm(markerB)
          else
-            tk.msg(nomoneytitle, nomoneytext:format(fmt.credits(reward * 0.15)))
+            tk.msg(_("Not enough money!"), nomoneytext:format(fmt.credits(reward * 0.15)))
          end
       end
    elseif planet.cur() == artifactplanetC then
-      if tk.choice(title[8], text[11], dobuy:format(fmt.credits(reward * 0.15)), nobuy) == 1 then
+      if tk.choice(title[8], text[11], _("Buy the artifact (%s)"):format(fmt.credits(reward * 0.15)), _("Don't buy the artifact")) == 1 then
          if player.credits() >= reward * 0.15 then
             misn.npcRm(sellnpc)
             player.pay( reward * 0.15 )
@@ -327,7 +309,7 @@ function seller()
             artifactC = misn.cargoAdd(c, 0)
             misn.markerRm(markerC)
          else
-            tk.msg(nomoneytitle, nomoneytext:format(fmt.credits(reward * 0.15)))
+            tk.msg(_("Not enough money!"), nomoneytext:format(fmt.credits(reward * 0.15)))
          end
       end
    end

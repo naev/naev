@@ -67,11 +67,8 @@ cargo_land_slow[1] = _("The containers of %s are carried out of your ship by a s
 cargo_land_slow[2] = _("The containers of %s are rushed out of your vessel by a team shortly after you land. Your late arrival is stretching quite a few schedules! Your pay is only %s instead of %s because of that.")
 cargo_land_slow[3] = _("The containers of %s are unloaded by an exhausted-looking bunch of dockworkers. You missed the deadline, so your reward is only %s instead of the %s you were hoping for.")
 
-msg_timeup = _("The delivery to %s has been canceled! You were too late.")
-
 osd_title = _("Rush cargo mission")
 osd_msg1 = _("Fly to %s in the %s system before %s\n(%s remaining)")
-osd_timeup = _("Fly to %s in the %s system\n(deadline missed, but you can still make a late delivery if you hurry)")
 
 -- Create the mission
 function create()
@@ -196,11 +193,11 @@ function tick()
       misn.osdCreate(osd_title, osd_msg)
    elseif timelimit2 <= time.get() then
       -- Case missed second deadline
-      player.msg( msg_timeup:format( destsys:name() ) )
+      player.msg( _("The delivery to %s has been canceled! You were too late."):format( destsys:name() ) )
       misn.finish(false)
    elseif intime then
       -- Case missed first deadline
-      osd_msg[1] = osd_timeup:format( destplanet:name(), destsys:name() )
+      osd_msg[1] = _("Fly to %s in the %s system\n(deadline missed, but you can still make a late delivery if you hurry)"):format( destplanet:name(), destsys:name() )
       misn.osdCreate(osd_title, osd_msg)
       intime = false
    end

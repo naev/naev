@@ -21,7 +21,6 @@ local fmt = require "format"
 local zlk = require "common.zalek"
 
 -- Bar Description
-bar_desc = _("This Za'lek scientist seems to be looking for someone.")
 
 -- Mission Details
 misn_title = _("Za'lek Shipping Delivery")
@@ -29,7 +28,6 @@ misn_reward = _("A handsome payment.")
 misn_desc = _("You agreed to help a Za'lek scientist pick up some cargo way out in the sticks. Hopefully this'll be worth it.")
 
 -- OSD
-OSDtitle = _("Za'lek Cargo Monkey")
 OSDdesc = {}
 OSDdesc[1] = _("Go pick up some equipment at %s in the %s system")
 OSDdesc[2] = _("Drop off the equipment at %s in the %s system")
@@ -74,7 +72,7 @@ log_text = _([[You helped a Za'lek scientist deliver some equipment and were pai
 function create ()
    -- Note: this mission does not make any system claims.
 
-   misn.setNPC( _("Za'lek Scientist"), "zalek/unique/logan.webp", bar_desc )  -- creates the scientist at the bar
+   misn.setNPC( _("Za'lek Scientist"), "zalek/unique/logan.webp", _("This Za'lek scientist seems to be looking for someone.") )  -- creates the scientist at the bar
 
    -- Planets
    pickupWorld, pickupSys  = planet.getLandable("Vilati Vilata")
@@ -111,7 +109,7 @@ function accept ()
       droppedoff = false
 
       marker = misn.markerAdd( pickupSys, "low" )  -- pickup
-      misn.osdCreate( OSDtitle, OSDdesc )  -- OSD
+      misn.osdCreate( _("Za'lek Cargo Monkey"), OSDdesc )  -- OSD
 
       tk.msg( title[2], text[2]:format( pickupWorld:name(), pickupSys:name(), delivWorld:name(), delivSys:name() ) )
 

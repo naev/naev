@@ -417,11 +417,6 @@ articles["Proteron"] = {}
 articles["Za'lek"] = {}
 articles["Thurion"] = {}
 
-econ_title = _("Current Market Prices")
-econ_header = _("\n\n%s in %s")
-econ_desc_part = _("\n%s: %s")
-
-
 -- Return an economy article based on the given commodity name, planet
 -- name, and number of credits. Wrapper for gettext.ngettext.
 function get_econ_article( commod_name, plnt_name, credits )
@@ -622,9 +617,9 @@ function add_econ_article ()
       for j, plnt in ipairs( sys:planets() ) do
          local commodities = plnt:commoditiesSold()
          if #commodities > 0 then
-            body = body .. econ_header:format( plnt:name(), sys:name() )
+            body = body .. _("\n\n%s in %s"):format( plnt:name(), sys:name() )
             for k, comm in ipairs( commodities ) do
-               body = body .. econ_desc_part:format( comm:name(),
+               body = body .. _("\n%s: %s"):format( comm:name(),
                      fmt.number( comm:priceAtTime( plnt, cur_t ) ) )
             end
             plnt:recordCommodityPriceAtTime( cur_t )
@@ -634,7 +629,7 @@ function add_econ_article ()
    if body ~= "" then
       -- Create news, expires immediately when time advances (i.e.
       -- when you take off from the planet).
-      local a = news.add( "Generic", econ_title, body,
+      local a = news.add( "Generic", _("Current Market Prices"), body,
             cur_t + time.create( 0, 0, 1 ) )
       a:bind( "econ" )
    end

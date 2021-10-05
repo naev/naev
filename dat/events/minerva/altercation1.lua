@@ -25,20 +25,18 @@ local minerva = require 'common.minerva'
 
 zalek_holo = "zalek_thug1.png"
 zalek_image = "zalek_thug1.png"
-zalek_name = _("Za'lek Belligerent")
 zalek_colour = {1, 0.4, 0.4}
 dvaered_holo = "dvaered_thug1.png"
 dvaered_image = "dvaered_thug1.png"
-dvaered_name = _("Dvaered Hooligan")
 dvaered_colour = {1, 0.7, 0.3}
 
 function create ()
    if not evt.claim( system.get("Limbo") ) then evt.finish( false ) end
 
    -- Create scuffle
-   local zl = vn.Character.new( zalek_name,
+   local zl = vn.Character.new( _("Za'lek Belligerent"),
          { image=zalek_image, color=zalek_colour, pos="left" } )
-   local dv = vn.Character.new( dvaered_name,
+   local dv = vn.Character.new( _("Dvaered Hooligan"),
          { image=dvaered_image, color=dvaered_colour, pos="right" } )
    vn.clear()
    vn.scene()
@@ -75,12 +73,12 @@ function takeoff ()
    local zlpos = pos + vec2.newP( 500, 300 )
    local unused, dvface = (zlpos-dvpos):polar()
    local unused, zlface = (dvpos-zlpos):polar()
-   dv = pilot.add("Dvaered Phalanx", "dv_thug", dvpos, dvaered_name, {ai="dvaered"} )
+   dv = pilot.add("Dvaered Phalanx", "dv_thug", dvpos, _("Dvaered Hooligan"), {ai="dvaered"} )
    local mem = dv:memory()
    mem.doscans = false
    dv:setDir( dvface )
    dv:setNoDisable( true )
-   zl = pilot.add("Za'lek Sting", "zl_thug", zlpos, zalek_name, {ai="zalek"} )
+   zl = pilot.add("Za'lek Sting", "zl_thug", zlpos, _("Za'lek Belligerent"), {ai="zalek"} )
    local mem = zl:memory()
    mem.doscans = false
    zl:setDir( zlface )
@@ -204,7 +202,7 @@ end
 function dv_hail ()
    vn.clear()
    vn.scene()
-   local dvc = vn.newCharacter( dvaered_name,
+   local dvc = vn.newCharacter( _("Dvaered Hooligan"),
       { image=dvaered_holo, color=dvaered_colour, shader=love_shaders.hologram() } )
    vn.transition("electric")
    dvc( _([["Thank you for the help with the Za'lek scum. Let us celebrate with a drink in the bar down at Minerva Station!"]]) )
@@ -241,7 +239,7 @@ end
 function zl_hail ()
    vn.clear()
    vn.scene()
-   local zlc = vn.newCharacter( zalek_name,
+   local zlc = vn.newCharacter( _("Za'lek Belligerent"),
       { image=zalek_holo, color=zalek_colour, shader=love_shaders.hologram() } )
    vn.transition("electric")
    zlc( _([["As my computations predicted, the Dvaered scum was no match for the Za'lek superiority. Let us celebrate with a drink down at Minerva Station"]]) )

@@ -41,33 +41,27 @@ local love_shaders = require 'love_shaders'
 local fmt = require "format"
 
 hint1_name = _("Prof. Sato") -- Computer Science / Mathematics
-hint1_description = _("You see a person in a fancy lab coat. It seems like they are enjoying their time off.")
 hint1_portrait = "zalek1.png"
 hint1_image = "zalek1.png"
 hint1_colour = nil
 
 hint2_name = _("Prof. Stova") -- Material Science
-hint2_description = _("You see a person in a fancy lab coat. It seems like they are enjoying their time off.")
 hint2_portrait = "zalek2.png"
 hint2_image = "zalek2.png"
 hint2_colour = nil
 
 hint3_name = _("Prof. Hsu") -- Philosophy
-hint3_description = _("You see a person in a fancy lab coat. It seems like they are enjoying their time off.")
 hint3_portrait = "zalek3.png"
 hint3_image = "zalek3.png"
 hint3_colour = nil
 
 hint4_name = _("Dr. Cayne") -- Dr. Shrimp
-hint4_description = _("You see a young fellow intently reading a book. There seems to be a shrimp in a floating aquarium bowl floating around him.")
 hint4_portrait = "drshrimp.png"
 hint4_image = "drshrimp.png"
 hint4_colour = nil
 
 strangelove = minerva.strangelove
-ecc_barname = _("Hologram Projector")
 ecc_portrait = strangelove.portrait
-ecc_description = _("An old decrepit hologram projector sits in the corner. It looks like you could use this to communicate with the owner of the station.")
 
 misn_title = _("Finding Maikki's Father")
 misn_reward = _("???")
@@ -312,19 +306,19 @@ function generate_npc ()
       npc_maikki = misn.npcAdd( "approach_maikki", minerva.maikki.name, minerva.maikki.portrait, minerva.maikki.description )
 
    elseif planet.cur() == planet.get( hintpnt[1] ) then
-      npc_hint1 = misn.npcAdd( "approach_hint1", hint1_name, hint1_portrait, hint1_description )
+      npc_hint1 = misn.npcAdd( "approach_hint1", hint1_name, hint1_portrait, _("You see a person in a fancy lab coat. It seems like they are enjoying their time off.") )
 
    elseif planet.cur() == planet.get( hintpnt[2] ) then
-      npc_hint2 = misn.npcAdd( "approach_hint2", hint2_name, hint2_portrait, hint2_description )
+      npc_hint2 = misn.npcAdd( "approach_hint2", hint2_name, hint2_portrait, _("You see a person in a fancy lab coat. It seems like they are enjoying their time off.") )
 
    elseif planet.cur() == planet.get( hintpnt[3] ) then
-      npc_hint3 = misn.npcAdd( "approach_hint3", hint3_name, hint3_portrait, hint3_description )
+      npc_hint3 = misn.npcAdd( "approach_hint3", hint3_name, hint3_portrait, _("You see a person in a fancy lab coat. It seems like they are enjoying their time off.") )
 
    elseif misn_state >= 1 and  planet.cur() == planet.get( hintpnt[4] ) then
-      npc_hint4 = misn.npcAdd( "approach_hint4", hint4_name, hint4_portrait, hint4_description )
+      npc_hint4 = misn.npcAdd( "approach_hint4", hint4_name, hint4_portrait, _("You see a young fellow intently reading a book. There seems to be a shrimp in a floating aquarium bowl floating around him.") )
 
    elseif diff.isApplied(eccdiff) and planet.cur() == planet.get(eccpnt) and misn_state < 6 then
-      npc_ecc = misn.npcAdd( "approach_eccentric", ecc_barname, ecc_portrait, ecc_description )
+      npc_ecc = misn.npcAdd( "approach_eccentric", _("Hologram Projector"), ecc_portrait, _("An old decrepit hologram projector sits in the corner. It looks like you could use this to communicate with the owner of the station.") )
    end
 end
 

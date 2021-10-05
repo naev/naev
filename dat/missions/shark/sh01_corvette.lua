@@ -41,15 +41,11 @@ title = {}
 text = {}
 osd_msg = {}
 npc_desc = {}
-bar_desc = {}
 
 title[1] = _("Nexus Shipyards needs you")
 text[1] = _([["I have another job for you. The Baron was unfortunately not as impressed as we hoped. So we need a better demonstration, and we think we know what to do: we're going to demonstrate that the Lancelot, our higher-end fighter design, is more than capable of defeating destroyer class ships.
     "Now, one small problem we face is that pirates almost never use destroyer class ships; they tend to stick to fighters, corvettes, and cruisers. More importantly, actually sending a fighter after a Destroyer is exceedingly dangerous, even if we could find a pirate piloting one. So we have another plan: we want someone to pilot a destroyer class ship and just let another pilot disable them with ion cannons.
     "What do you say? Are you interested?"]])
-
-refusetitle = _("Sorry, not interested")
-refusetext = _([["OK, that's alright."]])
 
 title[2] = _("Wonderful")
 text[2] = _([["Great! Go and meet our pilot in %s. After the job is done, meet me on %s in the %s system."]])
@@ -68,15 +64,11 @@ misn_desc = _("Nexus Shipyards wants you to fake a loss against a Lancelot while
 
 -- NPC
 npc_desc[1] = _("Arnold Smith")
-bar_desc[1] = _([[The Nexus employee seems to be looking for pilots. Maybe he has an other task for you.]])
 
 -- OSD
 osd_title = _("Sharkman Is Back")
 osd_msg[1] = _("Jump in %s with a destroyer class ship and let the Lancelot disable you")
 osd_msg[2] = _("Go to %s in %s to collect your pay")
-
-msg_run = _("MISSION FAILED: You ran away.")
-msg_destroyed = _("MISSION FAILED: You destroyed the Lancelot.")
 
 log_text = _([[You helped Nexus Shipyards fake a demonstration by allowing a Lancelot to disable your Destroyer-class ship.]])
 
@@ -98,7 +90,7 @@ function create ()
       misn.finish(false)
    end
 
-   misn.setNPC(npc_desc[1], "neutral/unique/arnoldsmith.webp", bar_desc[1])
+   misn.setNPC(npc_desc[1], "neutral/unique/arnoldsmith.webp", _([[The Nexus employee seems to be looking for pilots. Maybe he has an other task for you.]]))
 end
 
 function accept()
@@ -125,21 +117,21 @@ function accept()
       landhook = hook.land("land")
       enterhook = hook.enter("enter")
    else
-      tk.msg(refusetitle, refusetext)
+      tk.msg(_("Sorry, not interested"), _([["OK, that's alright."]]))
       misn.finish(false)
    end
 end
 
 function jumpout()
    if stage == 1 then --player trying to escape
-      player.msg( "#r" .. msg_run .. "#0" )
+      player.msg( "#r" .. _("MISSION FAILED: You ran away.") .. "#0" )
       misn.finish(false)
    end
 end
 
 function land()
    if stage == 1 then --player trying to escape
-      player.msg( "#r" .. msg_run .. "#0" )
+      player.msg( "#r" .. _("MISSION FAILED: You ran away.") .. "#0" )
       misn.finish(false)
    end
    if stage == 2 and planet.cur() == paypla then
@@ -196,7 +188,7 @@ function lets_go()
 end
 
 function shark_dead()  --you killed the shark
-   player.msg( "#r" .. msg_destroyed .. "#0" )
+   player.msg( "#r" .. _("MISSION FAILED: You destroyed the Lancelot.") .. "#0" )
    misn.finish(false)
 end
 

@@ -34,7 +34,6 @@
 local fmt = require "format"
 local emp = require "common.empire"
 
-bar_desc = _("You see Lt. Commander Dimitri at the bar as usual.")
 misn_title = _("Collective Distraction")
 misn_desc = {}
 misn_desc[1] = _("Go to draw the Collective's attention in the %s system")
@@ -58,7 +57,6 @@ osd_msg[1] = _("Fly to the %s system")
 osd_msg[2] = ""
 osd_msg[3] = _("Return to %s")
 osd_msg["__save"] = true
-osd_msg2 = _("%s (%s)")
 
 log_text = _([[You delivered a commando team to Eiroik for the Empire to set up more sophisticated surveillance of the Collective. Lt. Commander Dimitri said that they should be back in about 10 periods and that the Empire will probably need your assistance on Omega Station again at that time.]])
 
@@ -73,13 +71,13 @@ function setOSD (dronequota, droneleft)
          "%d remaining",
          "%d remaining",
          droneleft ):format( droneleft )
-   osd_msg[2] = osd_msg2:format(destroy_text, remaining_text)
+   osd_msg[2] = _("%s (%s)"):format(destroy_text, remaining_text)
 end
 
 
 function create ()
    -- Note: this mission does not make any system claims.
-   misn.setNPC( _("Dimitri"), "empire/unique/dimitri.webp", bar_desc )
+   misn.setNPC( _("Dimitri"), "empire/unique/dimitri.webp", _("You see Lt. Commander Dimitri at the bar as usual.") )
 end
 
 

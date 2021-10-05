@@ -33,10 +33,7 @@ local dv = require "common.dvaered"
 
 title = {}
 text = {}
-failtitle = {}
-failtext = {}
 osd_desc = {}
-comm_msg = {}
 
 title[1] = _("House Dvaered needs YOU")
 text[1] = _([[You join the Dvaered official at his table. He greets you in a cordial fashion, at least by Dvaered standards. You explain to him that you wish to know more about the anti-FLF operation that House Dvaered is supposedly working on.
@@ -70,18 +67,6 @@ text[6] = _([[As soon as you land, a Dvaered military operator contacts you and 
     "In addition," Urnus resumes, "Dvaered military command has decided that you may participate in the upcoming battle against the FLF stronghold, in recognition of your courage and your skill in battle. You may contact our liaison whenever you're ready."
     That concludes the pleasantries, and you are unceremoniously deposited outside the security compound. But at least you earned some money - and a chance to see some real action.]])
 
-refusetitle = _("House Dvaered is out of luck")
-refusetext = _([["I see. In that case, I'm going to have to ask you to leave. My job is to recruit a civilian, but you're clearly not the man I'm looking for. You may excuse yourself, citizen."]])
-
-failtitle[1] = _("You ran away!")
-failtext[1] = _("You have left the system without first completing your mission. The operation ended in failure.")
-
-failtitle[2] = _("You fought too hard!")
-failtext[2] = _("You have disabled a Dvaered ship, thereby violating your orders. The operation is canceled thanks to you. The Dvaered are less than pleased.")
-
-failtitle[3] = _("All the FLF are dead!")
-failtext[3] = _("Unfortunately, all the FLF ships have been destroyed before you managed to board one of them. The operation ended in failure.")
-
 npc_desc = _("This must be the Dvaered liaison you heard about. Allegedly, he may have a job for you that involves fighting the Frontier Liberation Front.")
 
 misn_title = _("Lure out the FLF")
@@ -93,9 +78,6 @@ osd_desc[5] = _("Return to any Dvaered world")
 
 misn_desc = _("You have been recruited to act as a red herring in a military operation of Dvaered design. Your chief purpose is to goad the FLF into showing themselves, then disable and board one of their ships. You will fail this mission if you disable or destroy any Dvaered ship, or if you leave the system before the operation is complete.")
 misn_reward = _("Serving alongside real Dvaered warlords")
-
-comm_msg["enter"] = _("Here come the FLF! All units, switch to EMPs and disable the terrorist ships!")
-comm_msg["victory"] = _("All targets neutralized. Download the flight log and let's get out of here!")
 
 log_text = _([[You aided the Dvaered in their efforts to locate a secret FLF base. You posed as an FLF pilot, luring real FLF pilots out so that one could be disabled and you could steal its flight logs. The Dvaered are now planning an assault on the terrorist base, and Colonel Urnus said that you can contact a Dvaered liaison whenever you're ready for the operation.]])
 
@@ -136,7 +118,7 @@ function accept()
         hook.enter("enter")
         hook.land("land")
     else
-        tk.msg(refusetitle, refusetext)
+        tk.msg(_("House Dvaered is out of luck"), _([["I see. In that case, I'm going to have to ask you to leave. My job is to recruit a civilian, but you're clearly not the man I'm looking for. You may excuse yourself, citizen."]]))
         misn.finish()
     end
 end
@@ -152,7 +134,7 @@ function enter()
         misn.osdActive(2)
         hook.timer(15.0, "spawnDV")
     elseif missionstarted then -- The player has jumped away from the mission theater, which instantly ends the mission.
-        tk.msg(failtitle[1], failtext[1])
+        tk.msg(_("You ran away!"), _("You have left the system without first completing your mission. The operation ended in failure."))
         faction.get("Dvaered"):modPlayerSingle(-10)
         abort()
     end
@@ -222,7 +204,7 @@ function spawnFLF()
     vecFLF = vec2.new(math.cos(angle) * dist, math.sin(angle) * dist)
     fleetFLF = fleet.add( 4, "Vendetta", "FLF", player.pos() + vecFLF, nil, {ai="flf_norun"} )
     flfactive = #fleetFLF
-    fleetDV[1]:comm(comm_msg["enter"])
+    fleetDV[1]:comm(_("Here come the FLF! All units, switch to EMPs and disable the terrorist ships!"))
 
     for i, j in ipairs(fleetFLF) do
         j:setHilight(true)
@@ -235,7 +217,7 @@ end
 
 function disableDV()
     if DVdisablefail then -- Only true as long as the FLF aren't there yet
-        tk.msg(failtitle[2], failtext[2])
+        tk.msg(_("You fought too hard!"), _("You have disabled a Dvaered ship, thereby violating your orders. The operation is canceled thanks to you. The Dvaered are less than pleased."))
         faction.get("Dvaered"):modPlayerSingle(-10)
         abort()
     end
@@ -247,7 +229,7 @@ function disableFLF()
     for i, j in ipairs(fleetDV) do
         if j:exists() then
             if flfactive == 0 and not messaged then
-               fleetDV[i]:comm(comm_msg["victory"])
+               fleetDV[i]:comm(_("All targets neutralized. Download the flight log and let's get out of here!"))
                messaged = true
             end
             j:changeAI("dvaered_norun")
@@ -258,7 +240,7 @@ end
 function deathFLF()
     flfdead = flfdead + 1
     if flfdead == 6 and not logsfound then
-        tk.msg(failtitle[3], failtext[3])
+        tk.msg(_("All the FLF are dead!"), _("Unfortunately, all the FLF ships have been destroyed before you managed to board one of them. The operation ended in failure."))
         abort()
     end
 end

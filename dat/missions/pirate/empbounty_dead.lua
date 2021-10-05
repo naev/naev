@@ -47,7 +47,6 @@ misn_title[4] = _("#rPIRACY:#0: Big Assassination Job in %s%s")
 misn_title[5] = _("#rPIRACY:#0: Dangerous Assassination Job in %s%s")
 misn_title[6] = _("#rPIRACY:#0: Highly Dangerous Assassination Job in %s%s")
 misn_desc   = _("A meddlesome %s pilot known as %s was recently seen in the %s system. Local crime lords want this pilot dead.%s")
-desc_illegal_warning = _("#rWARNING:#0 This mission is illegal and will get you in trouble with the authorities!")
 
 -- Messages
 msg    = {}
@@ -146,7 +145,7 @@ function create ()
    else
       -- We're not on a pirate stronghold, so include a warning that the
       -- mission is in fact illegal (for new players).
-      misn.setDesc( misn_desc:format( target_faction, name, missys:name(), faction_text ) .. "\n\n" .. desc_illegal_warning )
+      misn.setDesc( misn_desc:format( target_faction, name, missys:name(), faction_text ) .. "\n\n" .. _("#rWARNING:#0 This mission is illegal and will get you in trouble with the authorities!") )
    end
 
    misn.setReward( fmt.credits( credits ) )

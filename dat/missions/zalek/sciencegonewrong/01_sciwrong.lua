@@ -35,7 +35,6 @@ t_pla = { __save=true }
 --t_pla[1], t_sys[1] = planet.get("Gastan")
 t_sys[2] = system.get("Shikima")
 reward = 1e6
-shpnm = _("Tokera")
 -- Mission details
 title = {}
 text = {}
@@ -43,8 +42,6 @@ osd_msg = {}
 misn_title = _("The one with the Visit")
 misn_reward = _("The gratitude of science and a bit of compensation")
 misn_desc = _("You've been hired by Dr. Geller to retrieve technology he urgently needs to build his prototype.")
-bar_desc = _("You see Dr. Geller waving you over. Apparently he has another job for you.")
-
 
 title[1] = _([[In the bar]])
 text[1]  = _([["Ah, there you are! I've got a job for you. Specifically, some... acquisition... of technology from the Soromid, who haven't been very cooperative. Are you up for it?" It sounds like he wants you to do something that would get you in trouble with Soromid authorities. Do you accept the job?]])
@@ -59,14 +56,12 @@ text[5] = _([["How'd it go?" asks Dr. Geller. You show him the box. "Ah, marvelo
 -- if the player kills the ship before getting the tech
 title[4] = _([[What have you done?]])
 text[6] = _([[The ship explodes before your eyes and you realize that you will never be able to get the secret tech now.]])
-OSDtitle = _("The one with the Visit")
 osd_msg = {}
 osd_msg[1] = _("Go to the %s system and find the %s")
 osd_msg[2] = _("Board the %s and retrieve the secret technology")
 osd_msg[3] = _("Return to %s in the %s system")
 
 -- refusetext
-refusetitle = _("No Science Today")
 refusetext = _("But I really thought you were into science...")
 
 log_text = _([[You stole something called a "quantum sharpener" from a Soromid ship for Dr. Geller.]])
@@ -80,17 +75,17 @@ function create ()
    end
 
    -- Spaceport bar stuff
-   misn.setNPC( _("Dr. Geller"),  "zalek/unique/geller.webp", bar_desc )
+   misn.setNPC( _("Dr. Geller"),  "zalek/unique/geller.webp", _("You see Dr. Geller waving you over. Apparently he has another job for you.") )
 end
 function accept()
    -- Mission details:
    if not tk.yesno( title[1], text[1] ) then
-      tk.msg(refusetitle, refusetext)
+      tk.msg(_("No Science Today"), refusetext)
       misn.finish()
    end
-   tk.msg( title[1], text[2]:format(shpnm) )
+   tk.msg( title[1], text[2]:format(_("Tokera")) )
    misn.accept()
-   misn.osdCreate(misn_title, {osd_msg[1]:format(t_sys[2]:name(), shpnm), osd_msg[2]:format(shpnm), osd_msg[3]:format(t_pla[1]:name(), t_sys[1]:name())})
+   misn.osdCreate(misn_title, {osd_msg[1]:format(t_sys[2]:name(), _("Tokera")), osd_msg[2]:format(_("Tokera")), osd_msg[3]:format(t_pla[1]:name(), t_sys[1]:name())})
    misn.setDesc(misn_desc)
    misn.setTitle(misn_title)
    misn.setReward(misn_reward)
@@ -108,7 +103,7 @@ function sys_enter ()
       location = vec2.new(dist * math.cos(angle), dist * math.sin(angle)) -- Randomly spawn the Ship in the system
       target = pilot.add( "Soromid Odium", "Soromid", location )
       target:control()
-      target:rename(shpnm)
+      target:rename(_("Tokera"))
       target:setFaction("Soromid")
       target:memory().aggressive = true
       target:setHilight(true)

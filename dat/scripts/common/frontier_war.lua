@@ -13,12 +13,6 @@ pirate_price = 10e6
 
 wlrd_planet = "Buritt"
 
-instr_title = _("Instructions to escort")
-instr_text = _("What do you want the escort to do?")
-in_free = _("Attack nearby enemies")
-in_follow = _("Follow me")
-in_nevermind = _("Never mind")
-
 lords = { _("Lord Jim"),
           _("Lady Bitterfly"),
           _("Lady Pointblank"),
@@ -49,7 +43,7 @@ portrait_tronk      = "dvaered/dv_military_m5.webp" -- Private Tronk: subordinat
 
 -- When an escort is hailed
 function escort_hailed( pilot )
-   local c = tk.choice(instr_title, instr_text, in_free, in_follow, in_nevermind)
+   local c = tk.choice(_("Instructions to escort"), _("What do you want the escort to do?"), _("Attack nearby enemies"), _("Follow me"), _("Never mind"))
    if c == 1 then
       pilot:control(false)
    elseif c == 2 then

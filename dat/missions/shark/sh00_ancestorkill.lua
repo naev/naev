@@ -45,14 +45,10 @@ title = {}
 text = {}
 osd_msg = {}
 npc_desc = {}
-bar_desc = {}
 
 title[1] = _("Nexus Shipyards needs you")
 text[1] = _([[You approach the man and he introduces himself. "Hello, my name is Arnold Smith; I work for Nexus Shipyards. I'm looking for a talented pilot to make a demonstration to one of our potential customers.
     "Pretty simple, really: we want someone to show how great Nexus ship designs are by destroying a Pirate Ancestor with our lowest-grade ship, the Shark. Of course, the pilot of the Ancestor has a bounty on his head, so it won't be illegal. The sum of the bounty will be paid to you and Nexus will add a little extra. Would you be interested?"]])
-
-refusetitle = _("Sorry, not interested")
-refusetext = _([["That's your choice," the man says. "Don't hesitate to tell me if you change your mind."]])
 
 title[2] = _("Wonderful")
 text[2] = _([["Great! I knew I could trust you. I'll meet you on %s in the %s system. I'll be with my boss and our customer, Baron Sauterfeldt."]])
@@ -71,20 +67,14 @@ misn_desc = _("Nexus Shipyards needs you to demonstrate to Baron Sauterfeldt the
 
 -- NPC
 npc_desc[1] = _("An honest-looking man")
-bar_desc[1] = _("This man looks like a honest citizen. He glances in your direction.")
 
 npc_desc[2] = _("Arnold Smith")
-bar_desc[2] = _([[The Nexus employee who recruited you for a very special demo of the "Shark" fighter.]])
 
 -- OSD
 osd_title = _("A Shark Bites")
 osd_msg[1] = _("Buy a Shark (but not a Pirate Shark), then fly to the %s system and land on %s")
 osd_msg[2] = _("Go to %s and kill the pirate with your Shark")
 osd_msg[3] = _("Land on %s and collect your fee")
-
-leave_msg = _("MISSION FAILED: You left the pirate.")
-piratejump_msg = _("MISSION FAILED: The pirate ran away.")
-noshark_msg = _("MISSION FAILED: You were supposed to use a Shark.")
 
 log_text = _([[You helped Nexus Shipyards demonstrate the capabilities of their ships by destroying a Pirate Ancestor.]])
 
@@ -103,7 +93,7 @@ function create ()
       misn.finish(false)
    end
 
-   misn.setNPC(npc_desc[1], "neutral/unique/arnoldsmith.webp", bar_desc[1])
+   misn.setNPC(npc_desc[1], "neutral/unique/arnoldsmith.webp", _("This man looks like a honest citizen. He glances in your direction."))
 end
 
 function accept()
@@ -132,7 +122,7 @@ function accept()
       landhook = hook.land("land")
       enterhook = hook.enter("enter")
    else
-      tk.msg(refusetitle, refusetext)
+      tk.msg(_("Sorry, not interested"), _([["That's your choice," the man says. "Don't hesitate to tell me if you change your mind."]]))
       misn.finish(false)
    end
 end
@@ -142,7 +132,7 @@ function land()
 
    -- Did the player reach Ulios ?
    if planet.cur() == mispla and stage == 0 then
-      smith = misn.npcAdd("beginbattle", npc_desc[2], "neutral/unique/arnoldsmith.webp", bar_desc[2])
+      smith = misn.npcAdd("beginbattle", npc_desc[2], "neutral/unique/arnoldsmith.webp", _([[The Nexus employee who recruited you for a very special demo of the "Shark" fighter.]]))
    end
 
    -- Did the player land again on Ulios after having killed the pirate
@@ -162,7 +152,7 @@ end
 --jumping out the system
 function jumpout()
    if stage == 2 then   --You were supposed to kill him, not to go away !
-      player.msg( "#r" .. leave_msg .. "#0" )
+      player.msg( "#r" .. _("MISSION FAILED: You left the pirate.") .. "#0" )
       misn.finish(false)
    end
 end
@@ -176,7 +166,7 @@ function enter()
       playershipname = playership:nameRaw()
 
       if playershipname ~= "Shark" and playershipname ~= "Empire Shark" then
-         player.msg( "#r" .. noshark_msg .. "#0" )
+         player.msg( "#r" .. _("MISSION FAILED: You were supposed to use a Shark.") .. "#0" )
          misn.finish(false)
       end
 
@@ -210,7 +200,7 @@ function beginbattle()
 end
 
 function pirate_jump()  --he went away
-   player.msg( "#r" .. piratejump_msg .. "#0" )
+   player.msg( "#r" .. _("MISSION FAILED: The pirate ran away.") .. "#0" )
    misn.finish( false )
 end
 

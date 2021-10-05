@@ -22,15 +22,12 @@
 --]]
 
 -- Text
-broadcastmsg = _("SOS. This is %s. We are shipwrecked. Please #bboard#0 us by positioning your ship over ours and then #bdouble-clicking#0 on our ship.")
-shipname = _("August")
-shipwreck = _("Shipwrecked %s")
 
 function create ()
    -- Make sure system isn't claimed, but we don't claim it
    if not evt.claim( system.cur(), true ) then evt.finish() end
 
-    -- The shipwreck will be a random trader vessel.
+    -- The _("Shipwrecked %s") will be a random trader vessel.
     local r = rnd.rnd()
     if r > 0.95 then
         ship = "Gawain"
@@ -46,7 +43,7 @@ function create ()
     local pos   = vec2.newP( rnd.rnd(2000,3000), rnd.rnd()*360 )
     derelict    = pilot.add( ship, "Derelict", pos, nil, {ai="dummy"} )
     derelict:disable()
-    derelict:rename(shipwreck:format(shipname))
+    derelict:rename(_("Shipwrecked %s"):format(_("August")))
     -- Added extra visibility for big systems (A.)
     derelict:setVisplayer( true )
     derelict:setHilight( true )
@@ -65,14 +62,14 @@ function broadcast ()
     if not derelict:exists() then
         return
     end
-    derelict:broadcast( string.format(broadcastmsg, shipname), true )
+    derelict:broadcast( string.format(_("SOS. This is %s. We are shipwrecked. Please #bboard#0 us by positioning your ship over ours and then #bdouble-clicking#0 on our ship."), _("August")), true )
     timer_delay = timer_delay or 10
     timer_delay = timer_delay + 5
     bctimer = hook.timer(timer_delay, "broadcast")
 end
 
 function rescue ()
-    -- Player boards the shipwreck and rescues the crew, this spawns a new mission.
+    -- Player boards the _("Shipwrecked %s") and rescues the crew, this spawns a new mission.
     hook.rm(bctimer)
     naev.missionStart("The Space Family")
     evt.finish(true)

@@ -27,7 +27,6 @@ local neu = require "common.neutral"
 
 
 -- Bar Description
-bar_desc = _("You see a drunkard at the bar mumbling about how he was so close to getting his break.")
 
 -- Mission Details
 misn_title = _("Drunkard")
@@ -35,7 +34,6 @@ misn_reward = _("More than it's worth!")
 misn_desc = _("You've decided to help some drunkard at the bar by picking up some goods for some countess. Though you're not sure why you accepted.")
 
 -- OSD
-OSDtitle = _("Help the Drunkard")
 OSDdesc = {}
 OSDdesc[1] = _("Go pickup some goods at %s in the %s system")
 OSDdesc[2] = _("Drop off the goods at %s in the %s system")
@@ -80,7 +78,7 @@ log_text = _([[You helped some drunkard deliver goods for some countess. You tho
 function create ()
    -- Note: this mission does not make any system claims.
 
-   misn.setNPC( _("Drunkard"), "neutral/unique/drunkard.webp", bar_desc )  -- creates the drunkard at the bar
+   misn.setNPC( _("Drunkard"), "neutral/unique/drunkard.webp", _("You see a drunkard at the bar mumbling about how he was so close to getting his break.") )  -- creates the drunkard at the bar
 
    -- Planets
    pickupWorld, pickupSys  = planet.getLandable("INSS-2")
@@ -117,7 +115,7 @@ function accept ()
       droppedoff = false
 
       marker = misn.markerAdd( pickupSys, "low" )  -- pickup
-      misn.osdCreate( OSDtitle, OSDdesc )  -- OSD
+      misn.osdCreate( _("Help the Drunkard"), OSDdesc )  -- OSD
 
       tk.msg( title[2], text[2]:format( pickupWorld:name(), pickupSys:name(), delivWorld:name(), delivSys:name() ) )
 

@@ -38,8 +38,6 @@ text[3] = _([["Oh, okay. Let me know later on if you're able to."]])
 
 text[4] = _([["Oh, %s! Are you able to help me out now?"]])
 
-landtext = _([[As you dock you can barely stop Chelsea from jumping out of your ship and hurting herself. She seems to know exactly where to go and before you even know what's going on, she's purchased an old Llama, possibly the most rusty and worn-down Llama you've ever seen, but in working order nonetheless. You express concern about the condition of the ship, but she assures you that she will fix it up as she gets enough money to do so. She hugs you in a friendly embrace, thanks you, and hands you a credit chip. "Catch up with me again sometime, okay? I'll be hanging out in Soromid space doing my first missions as a pilot!" As you walk away, you see her getting her first close-up look at the mission computer with a look of excitement in her eyes.]])
-
 misn_title = _("Coming of Age")
 misn_desc = _("Chelsea needs you to take her to %s so she can buy her first ship and kick off her piloting career.")
 
@@ -95,7 +93,7 @@ end
 
 function land ()
    if planet.cur() == misplanet then
-      tk.msg( "", landtext )
+      tk.msg( "", _([[As you dock you can barely stop Chelsea from jumping out of your ship and hurting herself. She seems to know exactly where to go and before you even know what's going on, she's purchased an old Llama, possibly the most rusty and worn-down Llama you've ever seen, but in working order nonetheless. You express concern about the condition of the ship, but she assures you that she will fix it up as she gets enough money to do so. She hugs you in a friendly embrace, thanks you, and hands you a credit chip. "Catch up with me again sometime, okay? I'll be hanging out in Soromid space doing my first missions as a pilot!" As you walk away, you see her getting her first close-up look at the mission computer with a look of excitement in her eyes.]]) )
       player.pay(credits)
 
       local t = time.get():tonumber()

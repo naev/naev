@@ -25,9 +25,6 @@ local fmt = require "format"
 
 
 misn_desc = _("Smuggling contraband goods to %s in the %s system.%s")
-desc_illegal_warning = _("#rWARNING:#0 Contraband is illegal in most systems and you will face consequences if caught by patrols.")
-
-msg_timeup = _("MISSION FAILED: You have failed to deliver the goods on time!")
 
 osd_title = _("Smuggling %s")
 osd_msg1 = _("Fly to %s in the %s system before %s\n(%s remaining)")
@@ -177,7 +174,7 @@ function create()
    if pir.factionIsPirate( planet.cur():faction() ) then
       cargo_setDesc( misn_desc:format( destplanet:name(), destsys:name(), faction_text ), cargo, amount, destplanet, timelimit )
    else
-      cargo_setDesc( misn_desc:format( destplanet:name(), destsys:name(), faction_text ) .. "\n\n" .. desc_illegal_warning, cargo, amount, destplanet, timelimit )
+      cargo_setDesc( misn_desc:format( destplanet:name(), destsys:name(), faction_text ) .. "\n\n" .. _("#rWARNING:#0 Contraband is illegal in most systems and you will face consequences if caught by patrols."), cargo, amount, destplanet, timelimit )
    end
 
    misn.setReward( fmt.credits(reward) )
@@ -243,7 +240,7 @@ function tick()
       misn.osdCreate(string.format(osd_title,cargo), osd_msg)
    elseif timelimit <= time.get() then
       -- Case missed deadline
-      player.msg(msg_timeup)
+      player.msg(_("MISSION FAILED: You have failed to deliver the goods on time!"))
       misn.finish(false)
    end
 end

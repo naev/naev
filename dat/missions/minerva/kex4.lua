@@ -48,7 +48,6 @@ misn_desc = string.format(_("You have been assigned with obtaining information f
 -- TODO custom graphic?
 jie_portrait = portrait.get()
 jie_image = portrait.getFullPath(jie_portrait)
-jie_description = _("You see an individual matching the description of Jie de Luca.")
 
 money_reward = 700e3
 
@@ -103,7 +102,7 @@ function generate_npc ()
       npc_kex = misn.npcAdd( "approach_kex", minerva.kex.name, minerva.kex.portrait, minerva.kex.description )
 
    elseif misn_state==0 and planet.cur() == planet.get(targetplanet) then
-      npc_jie = misn.npcAdd( "approach_jie", _("Jie de Luca"), jie_portrait, jie_description )
+      npc_jie = misn.npcAdd( "approach_jie", _("Jie de Luca"), jie_portrait, _("You see an individual matching the description of Jie de Luca.") )
 
    end
 end

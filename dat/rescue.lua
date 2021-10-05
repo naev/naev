@@ -35,15 +35,13 @@ missing  = {} -- Array of empty required slots and their default outfits.
 nrequired = 0
 nequipped = 0
 
-msg_title = _("Stranded")
-
 -- Array of tasks for filling in missing slots in the following format:
 --    { { desc, callback }, ... }
 mtasks = {
    { _("Remove outfits and use default cores"), function() removeEquipDefaults() end },
    { _("Add missing default cores"), function() fillMissing( missing ) end },
    { _("Replace all cores with defaults"), function() equipDefaults( required ) end },
-   { _("Cancel"), function() tk.msg( msg_title, msg_refuse ) end }
+   { _("Cancel"), function() tk.msg( _("Stranded"), msg_refuse ) end }
    -- TODO: Possibly add a "Select from inventory" option
 }
 
@@ -54,18 +52,8 @@ tasks = {
    { _("Remove weapons"), function() removeNonCores( "Weapon" ) end },
    { _("Remove utility outfits"), function() removeNonCores( "Utility" ) end },
    { _("Remove structure outfits"), function() removeNonCores( "Structure" ) end },
-   { _("Cancel"), function() tk.msg( msg_title, msg_refuse ) end }
+   { _("Cancel"), function() tk.msg( _("Stranded"), msg_refuse ) end }
 }
-
-msg_prompt = _([[The following actions are available to make your ship spaceworthy:]])
-
-msg_failure = _([[Unfortunately, your ship still isn't spaceworthy. However, there are still other options for getting your ship airborne.]])
-
-msg_failure_final = _([[Well... this isn't good. Your ship has been restored to its default configuration, yet still isn't spaceworthy.
-
-Please report this to the developers along with a copy of your save file.]])
-
-msg_success_generic = _([[Your ship is now spaceworthy, though you should get to an outfitter as soon as possible.]])
 
 msg_refuse = _([[Very well, but it's unlikely you'll be able to take off.
 
@@ -108,7 +96,7 @@ function rescue()
       local msg_missing = gettext.ngettext(
          [[Your ship is missing %d core outfit. How do you want to resolve this?]],
          [[Your ship is missing %d core outfits. How do you want to resolve this?]], #missing)
-      local ind, str = tk.choice( msg_title,
+      local ind, str = tk.choice( _("Stranded"),
             string.format(msg_missing, #missing), table.unpack(strings) )
 
       opts[ind][2]() -- Run callback.
@@ -121,11 +109,11 @@ function rescue()
          local msg_success = gettext.ngettext(
             [[After adding the missing outfit, your ship is now spaceworthy, though it may have somewhat lower performance than usual. You should get to a planet with a proper shipyard and outfitter.]],
             [[After adding the missing outfits, your ship is now spaceworthy, though it may have somewhat lower performance than usual. You should get to a planet with a proper shipyard and outfitter.]], #missing)
-         tk.msg(msg_title, msg_success)
+         tk.msg(_("Stranded"), msg_success)
          return
       end
 
-      tk.msg( msg_title, msg_failure )
+      tk.msg( _("Stranded"), _([[Unfortunately, your ship still isn't spaceworthy. However, there are still other options for getting your ship airborne.]]) )
       buildTables() -- Rebuild tables, as we've added outfits.
    end
 
@@ -154,11 +142,13 @@ function rescue()
 
       -- Only "Cancel" remains, nothing to do.
       if #strings < 2 then
-         tk.msg(msg_title, msg_failure_final)
+         tk.msg(_("Stranded"), _([[Well... this isn't good. Your ship has been restored to its default configuration, yet still isn't spaceworthy.
+
+Please report this to the developers along with a copy of your save file.]]))
          return
       end
 
-      local ind, str = tk.choice( msg_title, msg_prompt, table.unpack(strings) )
+      local ind, str = tk.choice( _("Stranded"), _([[The following actions are available to make your ship spaceworthy:]]), table.unpack(strings) )
 
       opts[ind][2]() -- Run callback.
       if str == _("Cancel") then
@@ -166,7 +156,7 @@ function rescue()
       end
 
       if player.pilot():spaceworthy() then
-         tk.msg( msg_title, msg_success_generic )
+         tk.msg( _("Stranded"), _([[Your ship is now spaceworthy, though you should get to an outfitter as soon as possible.]]) )
          return
       end
 

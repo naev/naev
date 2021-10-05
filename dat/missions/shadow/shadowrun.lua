@@ -57,8 +57,6 @@ text[5] = _([["You know what to do," Rebina tells you. "You will find Jorek in t
     "You will be on a time schedule. You must meet Jorek within %d periods, or he will assume you are not coming and go back into hiding. You must also be at the meeting point %d periods from now. If you fail to meet with Jorek within the time limit or if you are prevented from taking him offworld for any other reason, make your way to the %s and report what happened. We'll take it from there. If you fail to show up at the designated time, we will assume you have failed, and the %s will leave."
     Rebina empties her glass and places it on the bar before rising to her feet. "That will be all. Good luck, and keep your wits about you."
     Then Rebina takes her leave from you and gracefully departs the spaceport bar. You order yourself another drink. You've got the feeling you're going to need it.]])
-refusal = _([["I see. What a shame." Rebina's demeanor conveys that she's disappointed but not upset. "I can understand your decision. One should not bite off more than one can chew, after all. It seems I will have to try to find another candidate." She tilts her head slightly. Then, "Although if you change your mind before I do, you're welcome to seek me out again. I'll be around."
-    Rebina finishes her drink and gets up. Then, with a cordial wave of her hand she sweeps out of the door. You momentarily regret not taking her up on her offer, but it passes. You've made the right decision, and that is that.]])
 
     -- Post-mission
 title[4] = _("Empty-handed")
@@ -78,37 +76,11 @@ text[8] = _([[You follow her gaze, and spot the crewmen making their way back to
 misn_title = _("Shadowrun")
 misn_reward = _("You were promised riches...")
 misn_desc = {}
-bar_desc = _("You spot a dark-haired woman sitting at the bar. Her elegant features and dress make her stand out, yet her presence here seems almost natural, as if she's in the right place at the right time, waiting for the right person. You wonder why she's all by herself.")
 misn_desc[1] = _("Fly to planet %s in the %s system and talk to Jorek. Once Jorek has boarded your ship, proceed to system %s and board the %s.")
 
 -- NPC stuff
-jorek_npc = {}
-jorek_npc["name"] = _("An unpleasant man.")
-jorek_npc["desc"] = _("A middle-aged, cranky looking man is sitting at a table by himself. You are fairly certain that this is the fellow you're looking for.")
-jorek_title = {}
-jorek_title[1] = _("An unpleasant man")
-jorek_title[2] = _("Jorek's scorn")
-jorek_title[3] = _("Dismissal")
-jorek_text = {}
-jorek_text[1] = _([[You join the man at his table. He doesn't particularly seem to welcome your company, though, because he gives you a look most people would reserve for particularly unwelcome guests. Determined not to let that get to you, you ask him if his name is indeed Jorek.
-    "Yeah, that's me," he replies. "What'd ya want, kid?"
-    You explain to him that you've come to see to his special needs. This earns you a sneer from Jorek. "Ha! So you're running errands for the little lady, are you? Oh don't tell me, I've got a pretty good idea what it is you want from me." He leans onto the table, bringing his face closer to yours. "Listen, buddy. I don't know if you noticed, but people are watchin' me. And you too, now that you're talkin' to me. Those goons over there? Yeah, they're here for me. Used to be fancy undercover agents, but I've been sittin' on my ass here for a long time and they figured out I was on to them, so they replaced 'em with a bunch of grunts. Cheaper, see."
-    "And it's not just them," Jorek continues. "On your way here, did you see the flotilla of 'patrol ships' hangin' around? You guessed it, they're waitin' for me to split this joint. I'm HOT, kid. If I step onto your ship, you'll be hot too. And you have absolutely no problem with that, is that what you're tellin' me?"]])
-jorek_text[2] = _([[Jorek roars with laughter. "Hah! Yeah, I'm sure you don't! I know what you're thinkin', I do. You'll take me outta here, pull a heroic bust past them Empire ships, save me, and the day while you're at it, then earn your stripes with the lady, am I right? S'yeah, I bet you'd take on the world for a pretty face and a coy smile." He doesn't so much as make an attempt to keep the mocking tone out of his voice.
-    "Well, good for you. You're a real hero, right enough. But you know what? I'm stayin' put. I don't care if you have the vixen's approval. I'm not gettin' on some random Joe's boat just so he can get us both blasted to smithereens."
-    Your patience with Jorek's abuse is finally at an end, and you heatedly make it clear to him that your abilities as a pilot aren't deserving of this treatment. Jorek, however, seems unimpressed. He tells you to stick it where the sun doesn't shine, gets up from his chair and squarely deposits himself at another table. Unwilling to stoop to his level, you choose not to follow him.]])
-jorek_text[3] = _([[Jorek exhales derisively. "No, I thought not. Probably thought this was going to be a walk in the park, didn't you? But when the chips are down, you back out. Wouldn't want to mess with be big scary Empire, would we?" He raises his voice for this, taunting the military personnel in the bar. They don't show any sign of having even heard Jorek speak. Jorek snorts, then focuses his attention back on you.
-    "I've got no use for wusses like yourself. Go on, get out of here. Go back to your ship and beat it off this rock. Maybe you should consider gettin' yourself a desk job, eh?"
-    With that, Jorek leaves your table and sits down at a nearby empty one. Clearly this conversation is over, and you're not going to get anything more out of him.]])
-jorek_text[4] = _([[Jorek pointedly ignores you. It doesn't seem like he's willing to give you the time of day any longer. You decide not to push your luck.]])
-off_npc = {}
-off_npc["name"] = _("Officer at the bar")
-off_npc["desc"] = _("You see a military officer with a drink at the bar. He doesn't seem to be very interested in it, though...")
 off_title = { _("You were ignored") }
 off_text = { _("You try to strike a conversation with the officer, but he doesn't seem interested what you have to say, so you give up.") }
-sol1_npc = {}
-sol1_npc["name"] = _("Soldier at the news kiosk")
-sol1_npc["desc"] = _("You see a soldier at a news kiosk. For some reason, he keeps reading the same articles over and over again.")
 sol1_title = { _("You were shooed away") }
 sol1_text = { _("Leave me alone. Can't you see I'm busy?") }
 sol2_npc = {}
@@ -119,7 +91,6 @@ sol2_text = { _("They don't seem to appreciate your company. You decide to leave
 
 -- OSD stuff
 osd_msg1  = {}
-osd_msg2  = {}
 
 osd_title = _("Shadowrun")
 
@@ -127,10 +98,6 @@ osd_msg1[1] = _("Fly to planet %s in the %s system and pick up Jorek")
 osd_msg1[2] = _("You have %s remaining")
 osd_msg1["__save"] = true
 
-osd_msg2[1] = _("You could not persuade Jorek to come with you")
-osd_msg2[2] = _("Fly to the %s system and dock with (board) %s to report your result")
-osd_msg2[3] = _("You have %s remaining")
-osd_msg2["__save"] = true
 
 log_text = _([[You participated in an operation for Captain Rebina. You thought you were rescuing a man named Jorek, but it turns out that you were actually helping smuggle something onto Captain Rebina's ship, the Seiryuu. You know next to nothing about Captain Rebina or who she works for.]])
 
@@ -144,7 +111,7 @@ function create ()
     timelimit1 = 20 -- In STP
     timelimit2 = 50 -- In STP
 
-    misn.setNPC( _("A dark-haired woman"), "neutral/unique/rebina_casual.webp", bar_desc )
+    misn.setNPC( _("A dark-haired woman"), "neutral/unique/rebina_casual.webp", _("You spot a dark-haired woman sitting at the bar. Her elegant features and dress make her stand out, yet her presence here seems almost natural, as if she's in the right place at the right time, waiting for the right person. You wonder why she's all by herself.") )
 end
 
 function accept()
@@ -176,7 +143,8 @@ function accept()
         hook.land("land")
         hook.enter("enter")
     else
-        tk.msg(title[1], refusal)
+        tk.msg(title[1], _([["I see. What a shame." Rebina's demeanor conveys that she's disappointed but not upset. "I can understand your decision. One should not bite off more than one can chew, after all. It seems I will have to try to find another candidate." She tilts her head slightly. Then, "Although if you change your mind before I do, you're welcome to seek me out again. I'll be around."
+    Rebina finishes her drink and gets up. Then, with a cordial wave of her hand she sweeps out of the door. You momentarily regret not taking her up on her offer, but it passes. You've made the right decision, and that is that.]]))
         var.push("shadowrun", 1) -- For future appearances of this mission
         misn.finish(false)
     end
@@ -185,9 +153,9 @@ end
 function land()
    local landed = planet.cur()
    if pnt == landed then
-      misn.npcAdd( "jorek", jorek_npc["name"], "neutral/unique/jorek.webp", jorek_npc["desc"] )
-      misn.npcAdd( "officer", off_npc["name"], portrait.getMaleMil("Empire"), off_npc["desc"] )
-      misn.npcAdd( "soldier1", sol1_npc["name"], portrait.getMaleMil("Empire"), sol1_npc["desc"] )
+      misn.npcAdd( "jorek", _("An unpleasant man."), "neutral/unique/jorek.webp", _("A middle-aged, cranky looking man is sitting at a table by himself. You are fairly certain that this is the fellow you're looking for.") )
+      misn.npcAdd( "officer", _("Officer at the bar"), portrait.getMaleMil("Empire"), _("You see a military officer with a drink at the bar. He doesn't seem to be very interested in it, though...") )
+      misn.npcAdd( "soldier1", _("Soldier at the news kiosk"), portrait.getMaleMil("Empire"), _("You see a soldier at a news kiosk. For some reason, he keeps reading the same articles over and over again.") )
       misn.npcAdd( "soldier2", sol2_npc["name"], portrait.getMil("Empire"), sol2_npc["desc"] )
       misn.npcAdd( "soldier2", sol2_npc["name"], portrait.getMil("Empire"), sol2_npc["desc"] )
    end
@@ -196,15 +164,22 @@ end
 -- Talking to Jorek
 function jorek()
    if shadowrun == 2 then
-      if tk.yesno( jorek_title[1], jorek_text[1] ) then
-         tk.msg( jorek_title[2], jorek_text[2] )
+      if tk.yesno( _("An unpleasant man"), _([[You join the man at his table. He doesn't particularly seem to welcome your company, though, because he gives you a look most people would reserve for particularly unwelcome guests. Determined not to let that get to you, you ask him if his name is indeed Jorek.
+    "Yeah, that's me," he replies. "What'd ya want, kid?"
+    You explain to him that you've come to see to his special needs. This earns you a sneer from Jorek. "Ha! So you're running errands for the little lady, are you? Oh don't tell me, I've got a pretty good idea what it is you want from me." He leans onto the table, bringing his face closer to yours. "Listen, buddy. I don't know if you noticed, but people are watchin' me. And you too, now that you're talkin' to me. Those goons over there? Yeah, they're here for me. Used to be fancy undercover agents, but I've been sittin' on my ass here for a long time and they figured out I was on to them, so they replaced 'em with a bunch of grunts. Cheaper, see."
+    "And it's not just them," Jorek continues. "On your way here, did you see the flotilla of 'patrol ships' hangin' around? You guessed it, they're waitin' for me to split this joint. I'm HOT, kid. If I step onto your ship, you'll be hot too. And you have absolutely no problem with that, is that what you're tellin' me?"]]) ) then
+         tk.msg( _("Jorek's scorn"), _([[Jorek roars with laughter. "Hah! Yeah, I'm sure you don't! I know what you're thinkin', I do. You'll take me outta here, pull a heroic bust past them Empire ships, save me, and the day while you're at it, then earn your stripes with the lady, am I right? S'yeah, I bet you'd take on the world for a pretty face and a coy smile." He doesn't so much as make an attempt to keep the mocking tone out of his voice.
+    "Well, good for you. You're a real hero, right enough. But you know what? I'm stayin' put. I don't care if you have the vixen's approval. I'm not gettin' on some random Joe's boat just so he can get us both blasted to smithereens."
+    Your patience with Jorek's abuse is finally at an end, and you heatedly make it clear to him that your abilities as a pilot aren't deserving of this treatment. Jorek, however, seems unimpressed. He tells you to stick it where the sun doesn't shine, gets up from his chair and squarely deposits himself at another table. Unwilling to stoop to his level, you choose not to follow him.]]) )
       else
-         tk.msg( jorek_title[2], jorek_text[3] )
+         tk.msg( _("Jorek's scorn"), _([[Jorek exhales derisively. "No, I thought not. Probably thought this was going to be a walk in the park, didn't you? But when the chips are down, you back out. Wouldn't want to mess with be big scary Empire, would we?" He raises his voice for this, taunting the military personnel in the bar. They don't show any sign of having even heard Jorek speak. Jorek snorts, then focuses his attention back on you.
+    "I've got no use for wusses like yourself. Go on, get out of here. Go back to your ship and beat it off this rock. Maybe you should consider gettin' yourself a desk job, eh?"
+    With that, Jorek leaves your table and sits down at a nearby empty one. Clearly this conversation is over, and you're not going to get anything more out of him.]]) )
       end
       shadowrun = 3
       misn.markerMove( misn_marker, sys2 )
    else
-      tk.msg( jorek_title[3], jorek_text[4] )
+      tk.msg( _("Dismissal"), _([[Jorek pointedly ignores you. It doesn't seem like he's willing to give you the time of day any longer. You decide not to push your luck.]]) )
    end
 end
 
@@ -227,9 +202,9 @@ function date()
                                   })
     elseif deadline2 >= time.get() and shadowrun == 3 then
         dateresolution(deadline2)
-        misn.osdCreate(osd_title, { osd_msg2[1],
-                                    string.format(osd_msg2[2], sysname2, shipname),
-                                    string.format(osd_msg2[3], time.str(deadline2 - time.get()))
+        misn.osdCreate(osd_title, { _("You could not persuade Jorek to come with you"),
+                                    string.format(_("Fly to the %s system and dock with (board) %s to report your result"), sysname2, shipname),
+                                    string.format(_("You have %s remaining"), time.str(deadline2 - time.get()))
                                   })
         misn.osdActive(2)
     else

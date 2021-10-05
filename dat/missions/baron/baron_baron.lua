@@ -76,18 +76,6 @@ text[18] = _([[The crewmen finally unpack the holopainting. You glance at the th
 
 text[19] = _([[You cough to get the Baron's attention. He looks up, clearly displeased at the disturbance, then notices you for the first time. "Ah, of course," he grunts. "I suppose you must be paid for your service. Here, have some credits. Now leave me alone. I have art to admire." The Baron tosses you a couple of credit chips, and then you are once again air to him. You are left with little choice but to return to your ship, undock, and be on your way.]])
 
-refusetitle = _("Never the wiser")
-refusetext = _([["Oh. Oh well, too bad. I'll just try to find someone who will take the job, then. Sorry for taking up your time. See you around!"]])
-
-angrytitle = _("Well, then...")
-angrytext = _([[The pilot frowns. "I see I misjudged you. I thought for sure you would be more open-minded. Get out of my sight and never show your face to me again! You are clearly useless to my employer."]])
-
-choice1 = _("Accept the job")
-choice2 = _("Politely decline")
-choice3 = _("Angrily refuse")
-
-comm1 = _("All troops, engage %s %s! It has broken %s law!")
-
 -- Mission details
 misn_title = _("Baron")
 misn_reward = _("A tidy sum of money")
@@ -103,10 +91,6 @@ osd_title = _("Baron")
 osd_msg[1] = _("Fly to the %s system and land on planet %s")
 osd_msg[2] = _("Fly to the %s system and dock with (board) Kahan Pinnacle")
 
-log_text_succeed = _([[You helped some selfish baron steal a Dvaered holopainting and were paid a measly sum of credits.]])
-log_text_refuse = _([[You were offered a sketchy-looking job by a nondescript pilot, but you angrily refused to accept the job. It seems whoever the pilot worked for won't be contacting you again.]])
-
-
 function create ()
    missys = {system.get("Darkstone")}
    if not misn.claim(missys) then
@@ -116,16 +100,16 @@ function create ()
    tk.msg(title[1], text[1])
    tk.msg(title[1], text[2])
    tk.msg(title[1], text[3])
-   local c = tk.choice(title[1], text[4], choice1, choice2, choice3)
+   local c = tk.choice(title[1], text[4], _("Accept the job"), _("Politely decline"), _("Angrily refuse"))
    if c == 1 then
       accept()
    elseif c == 2 then
-      tk.msg(refusetitle, refusetext)
+      tk.msg(_("Never the wiser"), _([["Oh. Oh well, too bad. I'll just try to find someone who will take the job, then. Sorry for taking up your time. See you around!"]]))
       abort()
    else
-      tk.msg(angrytitle, angrytext)
+      tk.msg(_("Well, then..."), _([[The pilot frowns. "I see I misjudged you. I thought for sure you would be more open-minded. Get out of my sight and never show your face to me again! You are clearly useless to my employer."]]))
       var.push("baron_hated", true)
-      neu.addMiscLog( log_text_refuse )
+      neu.addMiscLog( _([[You were offered a sketchy-looking job by a nondescript pilot, but you angrily refused to accept the job. It seems whoever the pilot worked for won't be contacting you again.]]) )
       abort()
    end
 end
@@ -211,7 +195,7 @@ function board()
    pinnacle:changeAI("flee")
    pinnacle:setHilight(false)
    pinnacle:setActiveBoard(false)
-   baron.addLog( log_text_succeed )
+   baron.addLog( _([[You helped some selfish baron steal a Dvaered holopainting and were paid a measly sum of credits.]]) )
    misn.finish(true)
 end
 
@@ -245,7 +229,7 @@ function takeoff()
       vendetta2:control()
       vendetta1:attack(player.pilot())
       vendetta2:attack(player.pilot())
-      vendetta1:broadcast(comm1:format(player.pilot():ship():baseType(), player.ship(), planetname), true)
+      vendetta1:broadcast(_("All troops, engage %s %s! It has broken %s law!"):format(player.pilot():ship():baseType(), player.ship(), planetname), true)
    end
 end
 

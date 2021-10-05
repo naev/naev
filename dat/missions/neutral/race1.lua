@@ -24,7 +24,6 @@ local fmt = require "format"
 
 text = {}
 title = {}
-ftitle = {}
 ftext = {}
 
 title[1] = _("Looking for a 4th")
@@ -37,29 +36,14 @@ title[3] = _("Checkpoint %s reached")
 text[3] = _("Proceed to Checkpoint %s")
 
 text[4] = _("Land on %s")
-refusetitle = _("Refusal")
-refusetext = _([["I guess we'll need to find another pilot."]])
 
-wintitle = _("You Won!")
-wintext = _([[The laid back person comes up to you and hands you a credit chip.
-   "Nice racing! Here's your prize money. Let's race again sometime soon!"]])
-
-ftitle[1] = _("Illegal ship!")
 ftext[1] = _([["You have switched to a ship that's not allowed in this race. Mission failed."]])
 
-ftitle[2] = _("You left the race!")
 ftext[2] = _([["Because you left the race, you have been disqualified."]])
 
-ftitle[3] = _("You failed to win the race.")
 ftext[3] = _([[As you congratulate the winner on a great race, the laid back person comes up to you.
    "That was a lot of fun! If you ever have time, let's race again. Maybe you'll win next time!"]])
 
-NPCname = _("A laid back person")
-NPCdesc = _("You see a laid back person, who appears to be one of the locals, looking around the bar.")
-
-misndesc = _("You're participating in a race!")
-
-OSDtitle = _("Racing Skills 1")
 OSD = {}
 OSD[1] = _("Board checkpoint 1")
 OSD[2] = _("Board checkpoint 2")
@@ -76,10 +60,6 @@ chatter[6] = _("Next!")
 timermsg = "%s"
 target = {1,1,1,1}
 
-positionmsg = _("%s just reached checkpoint %s")
-landmsg = _("%s just landed at %s and finished the race")
-
-
 function create ()
    this_planet, this_system = planet.cur()
    missys = {this_system}
@@ -88,7 +68,7 @@ function create ()
    end
    cursys = system.cur()
    curplanet = planet.cur()
-   misn.setNPC(NPCname, "neutral/unique/laidback.webp", NPCdesc)
+   misn.setNPC(_("A laid back person"), "neutral/unique/laidback.webp", _("You see a laid back person, who appears to be one of the locals, looking around the bar."))
    credits = rnd.rnd(20000, 100000)
 end
 
@@ -97,20 +77,20 @@ function accept ()
    if tk.yesno(title[1], text[1]:format(fmt.credits(credits))) then
       misn.accept()
       OSD[4] = string.format(OSD[4], curplanet:name())
-      misn.setDesc(misndesc)
+      misn.setDesc(_("You're participating in a race!"))
       misn.setReward(fmt.credits(credits))
-      misn.osdCreate(OSDtitle, OSD)
+      misn.osdCreate(_("Racing Skills 1"), OSD)
       tk.msg(title[2], string.format(text[2], curplanet:name(), curplanet:name()))
       hook.takeoff("takeoff")
    else
-      tk.msg(refusetitle, refusetext)
+      tk.msg(_("Refusal"), _([["I guess we'll need to find another pilot."]]))
    end
 end
 
 
 function takeoff()
    if player.pilot():ship():class() ~= "Yacht" then
-      tk.msg(ftitle[1], ftext[1])
+      tk.msg(_("Illegal ship!"), ftext[1])
       abort()
    end
    planetvec = planet.pos(curplanet)
@@ -189,7 +169,7 @@ end
 
 
 function racer1idle(p)
-   player.msg( string.format( positionmsg, p:name(),target[1]) )
+   player.msg( string.format( _("%s just reached checkpoint %s"), p:name(),target[1]) )
    p:broadcast(string.format( chatter[4], target[1]))
    target[1] = target[1] + 1
    hook.timer(2.0, "nexttarget1")
@@ -207,7 +187,7 @@ end
 
 
 function racer2idle(p)
-   player.msg( string.format( positionmsg, p:name(),target[2]) )
+   player.msg( string.format( _("%s just reached checkpoint %s"), p:name(),target[2]) )
    p:broadcast(chatter[5])
    target[2] = target[2] + 1
    hook.timer(2.0, "nexttarget2")
@@ -225,7 +205,7 @@ end
 
 
 function racer3idle(p)
-   player.msg( string.format( positionmsg, p:name(),target[3]) )
+   player.msg( string.format( _("%s just reached checkpoint %s"), p:name(),target[3]) )
    p:broadcast(chatter[6])
    target[3] = target[3] + 1
    hook.timer(2.0, "nexttarget3")
@@ -250,7 +230,7 @@ end
 function board(ship)
    for i,j in ipairs(checkpoint) do
       if ship == j and target[4] == i then
-         player.msg( string.format( positionmsg, player.name(),target[4]) )
+         player.msg( string.format( _("%s just reached checkpoint %s"), player.name(),target[4]) )
          misn.osdActive(i+1)
          target[4] = target[4] + 1
          if target[4] == 4 then
@@ -266,29 +246,30 @@ end
 
 
 function jumpin()
-   tk.msg(ftitle[2], ftext[2])
+   tk.msg(_("You left the race!"), ftext[2])
    abort()
 end
 
 
 function racerland(p)
-   player.msg( string.format(landmsg, p:name(), curplanet:name()))
+   player.msg( string.format(_("%s just landed at %s and finished the race"), p:name(), curplanet:name()))
 end
 
 
 function land()
    if target[4] == 4 then
       if racers[1]:exists() and racers[2]:exists() and racers[3]:exists() then
-         tk.msg(wintitle, wintext)
+         tk.msg(_("You Won!"), _([[The laid back person comes up to you and hands you a credit chip.
+   "Nice racing! Here's your prize money. Let's race again sometime soon!"]]))
          player.pay(credits)
          misn.finish(true)
       else
-         tk.msg(ftitle[3], ftext[3])
+         tk.msg(_("You failed to win the race."), ftext[3])
          abort()
 
       end
    else
-      tk.msg(ftitle[2], ftext[2])
+      tk.msg(_("You left the race!"), ftext[2])
       abort()
    end
 end

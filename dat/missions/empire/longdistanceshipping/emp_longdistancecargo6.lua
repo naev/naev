@@ -28,7 +28,6 @@ local fmt = require "format"
 local emp = require "common.empire"
 local lmisn = require "lmisn"
 
-bar_desc = _("Lieutenant Czesc from the Empire Armada Shipping Division is sitting at the bar.")
 misn_title = _("Empire Long Distance Recruitment")
 misn_desc = _("Deliver Lieutenant Czesc to Halir in the Gamma Polaris system")
 title = {}
@@ -53,7 +52,7 @@ function create ()
    targetworld_sys = system.get("Gamma Polaris")
    targetworld = planet.get("Halir")
 
-   misn.setNPC( _("Lieutenant"), "empire/unique/czesc.webp", bar_desc )
+   misn.setNPC( _("Lieutenant"), "empire/unique/czesc.webp", _("Lieutenant Czesc from the Empire Armada Shipping Division is sitting at the bar.") )
    if targetworld == startworld then --makes sure pilot is not currently on Gamma Polaris
        misn.finish(false)
     end

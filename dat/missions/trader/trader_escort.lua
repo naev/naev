@@ -49,30 +49,6 @@ piracyrisk[4] = _("#nPiracy Risk:#0 High")
 osd_title = _("Convey Escort")
 osd_msg = _("Escort a convoy of traders to %s in the %s system")
 
-slow = {}
-slow[1] = _("Not enough fuel")
-slow[2] = _([[The destination is %s away, but you only have enough fuel for %s. You cannot stop to refuel. Accept the mission anyway?]])
-
-landsuccesstitle = _("Success!")
-landsuccesstext = _("You successfully escorted the trading convoy to the destination. There wasn't a single casualty and you are rewarded the full amount.")
-
-landcasualtytitle = _("Success with Casualties")
-landcasualtytext = {}
-landcasualtytext[1] = _("You've arrived with the trading convoy more or less intact. Your pay is docked slightly due to the loss of part of the convoy.")
-landcasualtytext[2] = _("You arrive with what's left of the convoy. It's not much, but it's better than nothing. You are paid a steeply discounted amount.")
-
-convoydeathtitle = _("The convoy has been destroyed!")
-convoydeathtext = _([[All of the traders have been killed. You are a terrible escort.]])
-
-landfailtitle = _("You abandoned your mission!")
-landfailtext = _("You have landed, abandoning your mission to escort the trading convoy.")
-
-convoynolandtitle = _("You landed before the convoy!")
-convoynolandtext = _([[You landed at the planet before ensuring that the rest of your convoy was safe. You have abandoned your duties, and failed your mission.]])
-
-traderdistress = _("Convoy ships under attack! Requesting immediate assistance!")
-
-
 function create()
    --This mission does not make any system claims
    destplanet, destsys, numjumps, traveldist, cargo, avgrisk, tier = cargo_calculateRoute()
@@ -146,7 +122,7 @@ function accept()
    end
 
    if player.jumps() < numjumps then
-      if not tk.yesno( slow[1], slow[2]:format(
+      if not tk.yesno( _("Not enough fuel"), _([[The destination is %s away, but you only have enough fuel for %s. You cannot stop to refuel. Accept the mission anyway?]]):format(
             fmt.jumps(numjumps), fmt.jumps( player.jumps() ) ) ) then
          misn.finish()
       end
@@ -197,21 +173,21 @@ function land()
    alive = math.min( alive, exited )
 
    if planet.cur() ~= destplanet then
-      tk.msg(landfailtitle, landfailtext)
+      tk.msg(_("You abandoned your mission!"), _("You have landed, abandoning your mission to escort the trading convoy."))
       misn.finish(false)
    elseif alive <= 0 then
-      tk.msg(convoynolandtitle, convoynolandtext)
+      tk.msg(_("You landed before the convoy!"), _([[You landed at the planet before ensuring that the rest of your convoy was safe. You have abandoned your duties, and failed your mission.]]))
       misn.finish(false)
    else
       if alive >= orig_alive then
-         tk.msg( landsuccesstitle, landsuccesstext )
+         tk.msg( _("Success!"), _("You successfully escorted the trading convoy to the destination. There wasn't a single casualty and you are rewarded the full amount.") )
          player.pay( reward )
          faction.get("Traders Guild"):modPlayer(1)
       elseif alive / orig_alive >= 0.6 then
-         tk.msg( landcasualtytitle, landcasualtytext[1] )
+         tk.msg( _("Success with Casualties"), _("You've arrived with the trading convoy more or less intact. Your pay is docked slightly due to the loss of part of the convoy.") )
          player.pay( reward * alive / orig_alive )
       else
-         tk.msg( landcasualtytitle, landcasualtytext[2] )
+         tk.msg( _("Success with Casualties"), _("You arrive with what's left of the convoy. It's not much, but it's better than nothing. You are paid a steeply discounted amount.") )
          player.pay( reward * alive / orig_alive )
       end
       pir.reputationNormalMission(rnd.rnd(2,3))
@@ -262,7 +238,7 @@ function traderAttacked( p, attacker )
 
    if not shuttingup then
       shuttingup = true
-      p:comm( player.pilot(), traderdistress )
+      p:comm( player.pilot(), _("Convoy ships under attack! Requesting immediate assistance!") )
       hook.timer( 5.0, "traderShutup" ) -- Shuts him up for at least 5s.
    end
 end

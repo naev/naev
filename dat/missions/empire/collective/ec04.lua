@@ -55,11 +55,6 @@ text[5] = _([[You spend a while searching until you find a datapad on one of the
 text[6] = _([[Lt. Commander Dimitri's face cannot hide his sadness as he sees you approach with no commando members.
     "No survivors, eh? I had that gut feeling. At least you were able to salvage something? Good, at least it'll mean they didn't die in vain. Meet me in the bar in a while. We're going to try to process this datapad. It'll hopefully have the final results."]])
 
-escort_msg1 = _("Okay, %s, we'll flank the Collective force around the planet and try to draw their fire. You punch right through and land on that planet!")
-escort_msg2 = _("There's too many of them! Fall back! Everyone to the jump point!")
-land_msg = _("You can't land now! Get to the jump point!")
-markername = _("Empire flanking maneuver")
-
 osd_msg = {}
 osd_msg[1] = _("Fly to %s")
 osd_msg[2] = _("Land on %s")
@@ -125,7 +120,7 @@ function enter()
         empireAttack(fleet1)
         empireAttack(fleet2)
 
-        fleet1[1]:comm(escort_msg1:format(player.name()))
+        fleet1[1]:comm(_("Okay, %s, we'll flank the Collective force around the planet and try to draw their fire. You punch right through and land on that planet!"):format(player.name()))
         fleet1[1]:taskClear()
         fleet1[1]:moveto(waypoint1, false, false)
         fleet1[1]:moveto(waypoint12, false, false)
@@ -135,8 +130,8 @@ function enter()
         hook.pilot(fleet1[1], "idle", "idle")
         hook.pilot(fleet2[1], "idle", "idle")
 
-        system.mrkAdd(markername, waypoint1)
-        system.mrkAdd(markername, waypoint2)
+        system.mrkAdd(_("Empire flanking maneuver"), waypoint1)
+        system.mrkAdd(_("Empire flanking maneuver"), waypoint2)
 
         swarm1 = {}
         for i = 1,24 do
@@ -168,7 +163,7 @@ function enter()
         fleet2 = fleet.add( 1,  empire_flanking_fleet, "Empire", pv + vec2.new(-150, -500) )
         empireRetreat(fleet1)
         empireRetreat(fleet2)
-        fleet1[1]:comm(escort_msg2)
+        fleet1[1]:comm(_("There's too many of them! Fall back! Everyone to the jump point!"))
 
         -- TODO: Use heavier Collective ships here
         swarm1 = {}
@@ -191,7 +186,7 @@ function enter()
             swarm3[i]:setVisplayer()
         end
 
-        player.allowLand(false, land_msg)
+        player.allowLand(false, _("You can't land now! Get to the jump point!"))
         misn.osdActive(3)
     elseif misn_stage == 1 then
         -- Case jumped back out without landing

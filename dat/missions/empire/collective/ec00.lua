@@ -33,7 +33,6 @@ require "proximity"
 local fmt = require "format"
 local emp = require "common.empire"
 
-bar_desc = _("You see an Empire Lt. Commander who seems to be motioning you over to the counter.")
 misn_title = _("Collective Scout")
 misn_desc = {}
 misn_desc[1] = _("Find a scout last seen in the %s system")
@@ -51,18 +50,12 @@ text[3] = _([["Collective activity has increased heavily the last few decaperiod
     "It is of vital importance that you do not engage the drone. Report back as soon as you locate it."]])
 text[4] = _([[After landing, you head to the Empire military headquarters and find Lt. Commander Dimitri there.
     "Well it seems like the drone has some strange fixation on %s. We aren't quite sure what to make of it, but intelligence is working on it. Report back to the bar in a bit and we'll see what we can do about the Collective."]])
-msg_spotdrone = _("Drone spotted!")
-msg_killdrone = _("Mission Failed: You weren't supposed to kill the drone!")
 
 osd_msg = {}
 osd_msg[1] = _("Fly to the %s system")
 osd_msg[2] = _("Locate the Collective drone, but do not engage.")
 osd_msg[3] = _("Report back to %s in the %s system")
 osd_msg["__save"] = true
-
-log_text_success = _([[You scouted out a Collective drone on behalf of the Empire. Lt. Commander Dimitri told you to report back to the bar on Omega Station for your next mission.]])
-log_text_fail = _([[You killed the Collective drone you were supposed to scout out and failed your mission for the Empire as a result.]])
-
 
 function create ()
    misn_nearby = system.get("Acheron")
@@ -74,7 +67,7 @@ function create ()
         abort()
     end
 
-   misn.setNPC( _("Lt. Commander"), "empire/unique/dimitri.webp", bar_desc )
+   misn.setNPC( _("Lt. Commander"), "empire/unique/dimitri.webp", _("You see an Empire Lt. Commander who seems to be motioning you over to the counter.") )
 end
 
 
@@ -148,7 +141,7 @@ function spotdrone()
 
    -- update mission
    misn.osdActive(3)
-   player.msg(msg_spotdrone)
+   player.msg(_("Drone spotted!"))
    misn.setDesc( string.format(misn_desc[2], misn_base:name(), misn_base_sys:name()) )
    misn_stage = 1
    misn.markerMove( misn_marker, misn_base_sys )
@@ -161,7 +154,7 @@ function land()
       tk.msg( title[3], string.format(text[4], misn_target:name()) )
       faction.modPlayerSingle("Empire",5)
       player.pay(credits)
-      emp.addCollectiveLog( log_text_success )
+      emp.addCollectiveLog( _([[You scouted out a Collective drone on behalf of the Empire. Lt. Commander Dimitri told you to report back to the bar on Omega Station for your next mission.]]) )
       misn.finish(true)
    end
 end
@@ -179,9 +172,9 @@ function idle()
 end
 
 function kill()
-   player.msg( msg_killdrone )
+   player.msg( _("Mission Failed: You weren't supposed to kill the drone!") )
    var.push( "collective_fail", true )
-   emp.addCollectiveLog( log_text_fail )
+   emp.addCollectiveLog( _([[You killed the Collective drone you were supposed to scout out and failed your mission for the Empire as a result.]]) )
    misn.finish(true)
 end
 

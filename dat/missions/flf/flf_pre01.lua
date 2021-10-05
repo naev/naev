@@ -29,8 +29,6 @@ local dv = require "common.dvaered"
 
 title = {}
 text = {}
-turnintitle = {}
-turnintext = {}
 osd_desc = {}
 
 title[1] = _("Gregar joins the party")
@@ -61,32 +59,12 @@ text[5] = _([[The moment of tension passes, and the officer leans back in his ch
     "That threat delivered, I should at least extend my gratitude for helping one of ours in his time of need, though you had no reason to do so. That's why I will allow you to move freely on this station, at least to some extent, and I will allow you to leave when you please, as well as to return if you see the need. Who knows, maybe if you hit it off with the personnel stationed here, we might even come to consider you a friend."
     You exchange a few more polite words with the officer, then leave his office. As you head back to your ship, you consider your position. You have gained access to a center of FLF activity. Should you want to make an enemy of House Dvaered, perhaps this would be a good place to start...]])
 
-comm_msg = _("Nothing personal, mate, but we're expecting someone and you ain't him. No witnesses!")
-
-contacttitle = _("You have lost contact with your escorts!")
-contacttext = _([[Your escorts have disappeared from your sensor grid. Unfortunately, it seems you have no way of knowing where they went.
-    You notice that Gregar has disappeared from your cockpit. You search around your ship, but he's nowhere to be found. Seeing no other option, you give up on your search. Perhaps he'll turn up somewhere later.]])
-
-turnintitle[1] = _("An opportunity to uphold the law")
-turnintext[1] = _([[You have arrived at a Dvaered controlled world, and you are harboring a FLF fugitive on your ship. Fortunately, Gregar is still asleep. You could choose to alert the authorities and turn him in, and possibly collect a reward.
-    Would you like to do so?]])
-turnintitle[2] = _("Another criminal caught")
-turnintext[2] = _([[It doesn't take Dvaered security long to arrive at your landing bay. They board your ship, seize Gregar and take him away before he even comprehends what's going on.
-    "You have served House Dvaered adequately, citizen," the stone-faced captain of the security detail tells you. "In recognition of your service, we may allow you to participate in other operations regarding the FLF terrorists. If you have further questions, direct them to our public liaison."
-    The officer turns and leaves without waiting for an answer, and without rewarding you in any tangible way. You wonder if you should scout out this liaison, in hopes of at least getting something out of this whole situation.]])
-
 misn_title = _("Deal with the FLF agent")
 osd_desc[1] = _("Take Gregar, the FLF agent, to the %s system and make contact with the FLF")
 osd_desc[2] = _("Alternatively, turn Gregar in to the nearest Dvaered base")
 
-osd_adddesc = _("Follow the FLF ships to their secret base. Do not lose them!")
-
 misn_desc = _("You have taken onboard a member of the FLF. You must either take him where he wants to go, or turn him in to the Dvaered.")
 misn_reward = _("A chance to learn more about the FLF")
-
-log_text_flf = _([[You helped escort FLF Lt. Gregar Fletcher to the secret FLF base, Sindbad. This has earned you a small level of trust from the FLF and enabled you to freely access the FLF base.]])
-log_text_dv = _([[You turned in FLF Lt. Gregar Fletcher to Dvaered authorities. The Dvaered captain who took him off your hands said that you could join in on a campaign against the FLF terrorists; you can direct questions to a Dvaered public liaison. You may want to scout out this liaison.]])
-
 
 function create()
     missys = {system.get(var.peek("flfbase_sysname"))}
@@ -169,23 +147,26 @@ function land()
         tk.msg(title[4], text[5])
         var.push("flfbase_intro", 2)
         var.pop("flfbase_flfshipkilled")
-        flf.addLog( log_text_flf )
+        flf.addLog( _([[You helped escort FLF Lt. Gregar Fletcher to the secret FLF base, Sindbad. This has earned you a small level of trust from the FLF and enabled you to freely access the FLF base.]]) )
         misn.finish(true)
     -- Case Dvaered planet
     elseif planet.cur():faction() == faction.get("Dvaered") and not basefound then
-        if tk.yesno(turnintitle[1], turnintext[1]) then
-            tk.msg(turnintitle[2], turnintext[2])
+        if tk.yesno(_("An opportunity to uphold the law"), _([[You have arrived at a Dvaered controlled world, and you are harboring a FLF fugitive on your ship. Fortunately, Gregar is still asleep. You could choose to alert the authorities and turn him in, and possibly collect a reward.
+    Would you like to do so?]])) then
+            tk.msg(_("Another criminal caught"), _([[It doesn't take Dvaered security long to arrive at your landing bay. They board your ship, seize Gregar and take him away before he even comprehends what's going on.
+    "You have served House Dvaered adequately, citizen," the stone-faced captain of the security detail tells you. "In recognition of your service, we may allow you to participate in other operations regarding the FLF terrorists. If you have further questions, direct them to our public liaison."
+    The officer turns and leaves without waiting for an answer, and without rewarding you in any tangible way. You wonder if you should scout out this liaison, in hopes of at least getting something out of this whole situation.]]))
             faction.get("Dvaered"):modPlayerSingle(5)
             var.push("flfbase_intro", 1)
             var.pop("flfbase_flfshipkilled")
-            dv.addAntiFLFLog( log_text_dv )
+            dv.addAntiFLFLog( _([[You turned in FLF Lt. Gregar Fletcher to Dvaered authorities. The Dvaered captain who took him off your hands said that you could join in on a campaign against the FLF terrorists; you can direct questions to a Dvaered public liaison. You may want to scout out this liaison.]]) )
             misn.finish(true)
         end
     end
 end
 
 function commFLF()
-    fleetFLF[1]:comm(comm_msg)
+    fleetFLF[1]:comm(_("Nothing personal, mate, but we're expecting someone and you ain't him. No witnesses!"))
 end
 
 -- Gregar wakes up and calls off the FLF attackers. They agree to guide you to their hidden base.
@@ -208,7 +189,7 @@ function wakeUpGregarYouLazyBugger()
         tk.msg(title[2], text[2])
         tk.msg(title[2], text[3])
         faction.get("FLF"):setPlayerStanding( 5 ) -- Small buffer to ensure it doesn't go negative again right away.
-        misn.osdCreate(misn_title, {osd_desc[1]:format(destsysname), osd_adddesc, osd_desc[2]})
+        misn.osdCreate(misn_title, {osd_desc[1]:format(destsysname), _("Follow the FLF ships to their secret base. Do not lose them!"), osd_desc[2]})
         misn.osdActive(2)
         hook.timer(0.5, "inRange")
     end
@@ -286,7 +267,8 @@ function outOfRange()
     if mindist < 1500 then
         OORT = hook.timer(2.0, "outOfRange")
     else
-        tk.msg(contacttitle, contacttext)
+        tk.msg(_("You have lost contact with your escorts!"), _([[Your escorts have disappeared from your sensor grid. Unfortunately, it seems you have no way of knowing where they went.
+    You notice that Gregar has disappeared from your cockpit. You search around your ship, but he's nowhere to be found. Seeing no other option, you give up on your search. Perhaps he'll turn up somewhere later.]]))
         abort()
     end
 end

@@ -33,9 +33,6 @@ local fmt = require "format"
 local vntk = require "vntk"
 local lmisn = require "lmisn"
 
-nolux_title = _("Not Very Luxurious")
-nolux_text  = _("Since your ship is not a Luxury Yacht class ship, you will only be paid %s. Accept the mission anyway?")
-
 pay_title = _("Mission Completed")
 pay_text    = {}
 pay_text[1] = _("The passengers disembark with a new appreciation for the wonders of the universe.")
@@ -43,14 +40,12 @@ pay_text[2] = _("Going off-world has renewed your passengers sense of adventure.
 pay_text[3] = _("The passengers burst into cheers upon returning to the hanger. What a wonderful experience.")
 pay_text[4] = _("The passengers enjoyed their time aboard your vessel.")
 
-pay_s_lux_title = _("Unexpected Bonus")
 pay_s_lux_text    = {}
 pay_s_lux_text[1] = _("The passengers appreciate that you took them an a Luxury Yacht class ship after all. You are paid the original fare rather than the reduced fare.")
 pay_s_lux_text[2] = _("Your passengers were thrilled that they were able to ride in a Luxury Yacht after all. They insist on paying the originally offered fare as a show of appreciation.")
 pay_s_lux_text[3] = _("As your passengers disembark, one wealthy passenger personally thanks you for taking them on a Luxury Yacht after all and gives you a tip amounting to the difference between the original fare and what your passengers paid.")
 pay_s_lux_text[4] = _("When it comes time to collect your fare, the passengers collectively announce that they will be paying the original fare offered, since you took them on a Luxury Yacht after all.")
 
-pay_s_nolux_title = _("Disappointment")
 pay_s_nolux_text    = {}
 pay_s_nolux_text[1] = _("Several passengers are furious that you did not take them on your Luxury Yacht class ship after all. They refuse to pay, leaving you with much less overall payment.")
 pay_s_nolux_text[2] = _("While your passengers enjoyed the trip, they are not happy that you didn't take them on your Luxury Yacht class ship the entire way. They refuse to pay the full fare.")
@@ -143,7 +138,7 @@ end
 
 function accept ()
    if player.pilot():ship():classDisplay() ~= "Luxury Yacht" then
-      if tk.yesno( nolux_title, nolux_text:format( fmt.credits(credits_nolux) ) ) then
+      if tk.yesno( _("Not Very Luxurious"), _("Since your ship is not a Luxury Yacht class ship, you will only be paid %s. Accept the mission anyway?"):format( fmt.credits(credits_nolux) ) ) then
          nolux_known = true
          misn.setReward( fmt.credits( credits_nolux ) )
       else
@@ -202,10 +197,10 @@ function land ()
       local txt = pay_text[ rnd.rnd( 1, #pay_text ) ]
       if nolux ~= nolux_known then
          if nolux then
-            ttl = pay_s_nolux_title
+            ttl = _("Disappointment")
             txt = pay_s_nolux_text[ rnd.rnd( 1, #pay_s_nolux_text ) ]
          else
-            ttl = pay_s_lux_title
+            ttl = _("Unexpected Bonus")
             txt = pay_s_lux_text[ rnd.rnd( 1, #pay_s_lux_text ) ]
          end
       end

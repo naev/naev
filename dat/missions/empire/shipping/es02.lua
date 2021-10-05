@@ -40,7 +40,6 @@ local fmt = require "format"
 local emp = require "common.empire"
 
 -- Mission details
-bar_desc = _("Commander Soldner is waiting for you.")
 misn_title = _("Empire VIP Rescue")
 misn_desc = {}
 misn_desc[1] = _("Rescue the VIP from a transport ship in the %s system")
@@ -63,7 +62,6 @@ msg = {}
 msg[1] = _("MISSION FAILED: VIP is dead.")
 msg[2] = _("MISSION FAILED: You abandoned the VIP.")
 
-log_text_success = _([[You successfully rescued a VIP for the Empire and have been cleared for the Heavy Combat Vessel License; you can now buy one at the outfitter.]])
 log_text_fail = _([[You failed in your attempt to rescue a VIP for the Empire. Meet with Commander Soldner on Halir to try again.]])
 
 
@@ -81,7 +79,7 @@ function create ()
    end
 
    -- Add NPC.
-   misn.setNPC( _("Soldner"), "empire/unique/soldner.webp", bar_desc )
+   misn.setNPC( _("Soldner"), "empire/unique/soldner.webp", _("Commander Soldner is waiting for you.") )
 end
 
 
@@ -138,7 +136,7 @@ function land ()
          -- Flavour text
          tk.msg( title[3], text[5] )
 
-         emp.addShippingLog( log_text_success )
+         emp.addShippingLog( _([[You successfully rescued a VIP for the Empire and have been cleared for the Heavy Combat Vessel License; you can now buy one at the outfitter.]]) )
 
          misn.finish(true)
       end

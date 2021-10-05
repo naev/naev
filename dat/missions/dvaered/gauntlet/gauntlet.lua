@@ -18,8 +18,6 @@ local fmt = require "format"
 local equipopt = require 'equipopt'
 
 logidstr = "log_gauntlet"
-logname  = _("Totoran Tournament")
-logtype  = _("Totoran Tournament")
 
 -- TODO replace portraits/images
 npc_portrait   = "minerva_terminal.png"
@@ -84,7 +82,7 @@ function approach_gauntlet ()
    misn.setTitle( misn_title )
 
    -- Add to log
-   shiplog.create( logidstr, logname, logtype )
+   shiplog.create( logidstr, _("Totoran Tournament"), _("Totoran Tournament") )
 
    -- Create the OSD
    osd = misn.osdCreate( _("Crimson Gauntlet"),

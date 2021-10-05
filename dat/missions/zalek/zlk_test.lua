@@ -28,11 +28,6 @@ local fmt = require "format"
 misn_title = _("ZT test of %s")
 misn_desc = _("A Za'lek research team needs you to travel to %s in %s using an engine in order to test it.")
 
-msg_title = {}
-msg_title[1] = _("Mission Accepted")
-msg_title[2] = _("Too many missions")
-msg_title[3] = _("Successful Landing")
-msg_title[4] = _("Didn't you forget something?")
 
 engines = {_("engine with phase-change material cooling"),
            _("engine controlled with Zermatt-Henry theory"),   --Some random scientists names
@@ -59,32 +54,6 @@ znpcs[1] = _([[A group of university students greets you. "If your flight goes w
 znpcs[2] = _([[A very old Za'lek researcher needs you to fly with an instrumented device in order to take measurements.]])
 znpcs[3] = _([[A Za'lek student says: "Hello, I am preparing a Ph.D in system reliability. I need to make precise measurements on this engine in order to validate a stochastic failure model I developed."]])
 znpcs[4] = _([[A Za'lek researcher needs you to test the new propelling system they have implemented in this engine.]])
-
-msg_msg = {}
-msg_msg[1] = _("Za'lek technicians give you the engine. You will have to travel to %s in %s with this engine. The system will automatically take measures during the flight. Don't forget to equip the engine.")
-msg_msg[2] = _("You have too many active missions.")
-msg_msg[3] = _("Happy to be still alive, you land and give back the engine to a group of Za'lek scientists who were expecting you, collecting your fee along the way.")
-msg_msg[4] = _("It seems you forgot the engine you are supposed to test. Land again and put it on your ship.")
-misst = _("Mission failed")
-miss = _("You traveled without the engine.")
-
-teleport_title = _("What the hell is happening?")
-teleport_text = _("You suddenly feel a huge acceleration, as if your ship was going into hyperspace, then a sudden shock causes you to pass out. As you wake up, you find that your ship is damaged and you have ended up somewhere in the %s system!")
-
-slow_title = _("Where has the power gone?")
-slow_text = _("The engine makes a loud noise, and you notice that the engine has lost its ability to thrust at the rate that it's supposed to.")
-speed_title = _("Power is back.")
-speed_text = _("It seems the engine decided to work properly again.")
-
-outOf_title = _("This wasn't supposed to happen")
-outOf_text = _("Your ship is totally out of control. You curse under your breath at the defective engine.")
-noAn_title = _("Engine is dead")
-noAn_text = _("The engine has stopped working. It had better start working again soon; you don't want to die out here!")
-baTo_title = _("Back to normal")
-baTo_text = _("The engine is working again. You breathe a sigh of relief.")
-
-cannot_title = _("You cannot accept this mission")
-cannot_text = _("You are already testing another engine.")
 
 osd_title = _("Za'lek Test")
 osd_msg = {_("Fly to %s in the %s system")}
@@ -128,22 +97,22 @@ end
 function accept()
 
    if player.misnActive("Za'lek Test") then
-       tk.msg(cannot_title, cannot_text)
+       tk.msg(_("You cannot accept this mission"), _("You are already testing another engine."))
        misn.finish(false)
    end
 
    if misn.accept() then -- able to accept the mission
       stage = 0
       player.outfitAdd("Za'lek Test Engine")
-      tk.msg( msg_title[1], znpcs[ rnd.rnd(1, #znpcs) ] )
-      tk.msg( msg_title[1], string.format( msg_msg[1], destplanet:name(), destsys:name() ))
+      tk.msg( _("Mission Accepted"), znpcs[ rnd.rnd(1, #znpcs) ] )
+      tk.msg( _("Mission Accepted"), string.format( _("Za'lek technicians give you the engine. You will have to travel to %s in %s with this engine. The system will automatically take measures during the flight. Don't forget to equip the engine."), destplanet:name(), destsys:name() ))
 
       osd_msg[1] = string.format( osd_msg[1], destplanet:name(), destsys:name() )
       misn.osdCreate(osd_title, osd_msg)
       takehook = hook.takeoff( "takeoff" )
       enterhook = hook.enter("enter")
    else
-      tk.msg( msg_title[2], msg_msg[2] )
+      tk.msg( _("Too many missions"), _("You have too many active missions.") )
       misn.finish(false)
    end
 
@@ -162,7 +131,7 @@ function takeoff()  --must trigger at every takeoff to check if the player forgo
 
       else   --Player has forgotten the engine
       stage = 1
-      tk.msg( msg_title[4], msg_msg[4] )
+      tk.msg( _("Didn't you forget something?"), _("It seems you forgot the engine you are supposed to test. Land again and put it on your ship.") )
    end
 end
 
@@ -195,7 +164,7 @@ function land()
    end
 
    if planet.cur() == destplanet and stage == 0 then
-      tk.msg( msg_title[3], msg_msg[3])
+      tk.msg( _("Successful Landing"), _("Happy to be still alive, you land and give back the engine to a group of Za'lek scientists who were expecting you, collecting your fee along the way."))
       player.pay(reward)
       player.outfitRm("Za'lek Test Engine")
 
@@ -206,7 +175,7 @@ function land()
    end
 
    if planet.cur() ~= curplanet and stage == 1 then  --Lands elsewhere without the engine
-      tk.msg( misst, miss)
+      tk.msg( _("Mission failed"), _("You traveled without the engine."))
       abort()
    end
 
@@ -225,7 +194,7 @@ function teleportation()
    local newsyslist = lmisn.getSysAtDistance(system.cur(), 1, 3)
    local newsys = newsyslist[rnd.rnd(1, #newsyslist)]
    player.teleport(newsys)
-   tk.msg(teleport_title, teleport_text:format(newsys:name()))
+   tk.msg(_("What the hell is happening?"), _("You suddenly feel a huge acceleration, as if your ship was going into hyperspace, then a sudden shock causes you to pass out. As you wake up, you find that your ship is damaged and you have ended up somewhere in the %s system!"):format(newsys:name()))
    player.pilot():setHealth(50, 0)
    player.pilot():setEnergy(0)
 end
@@ -299,23 +268,23 @@ end
 
 --Displays texts
 function slowtext()
-   tk.msg(slow_title, slow_text)
+   tk.msg(_("Where has the power gone?"), _("The engine makes a loud noise, and you notice that the engine has lost its ability to thrust at the rate that it's supposed to."))
 end
 
 function speedtext()
-   tk.msg(speed_title, speed_text)
+   tk.msg(_("Power is back."), _("It seems the engine decided to work properly again."))
 end
 
 function outOftext()
-   tk.msg(outOf_title, outOf_text)
+   tk.msg(_("This wasn't supposed to happen"), _("Your ship is totally out of control. You curse under your breath at the defective engine."))
 end
 
 function noAntext()
-   tk.msg(noAn_title, noAn_text)
+   tk.msg(_("Engine is dead"), _("The engine has stopped working. It had better start working again soon; you don't want to die out here!"))
 end
 
 function baTotext()
-   tk.msg(baTo_title, baTo_text)
+   tk.msg(_("Back to normal"), _("The engine is working again. You breathe a sigh of relief."))
 end
 
 function abort()

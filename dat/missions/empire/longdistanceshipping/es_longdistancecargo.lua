@@ -32,8 +32,6 @@ piracyrisk[2] = _("#nPiracy Risk:#0 Low")
 piracyrisk[3] = _("#nPiracy Risk:#0 Medium")
 piracyrisk[4] = _("#nPiracy Risk:#0 High")
 
-msg_timeup = _("MISSION FAILED: You have failed to deliver the goods to the Empire on time!")
-
 osd_title = _("Long Distance Empire Shipping")
 osd_msg1 = _("Fly to %s in the %s system before %s\n(%s remaining)")
 
@@ -172,7 +170,7 @@ function tick()
       misn.osdCreate(osd_title, osd_msg)
    elseif timelimit <= time.get() then
       -- Case missed deadline
-      player.msg(msg_timeup)
+      player.msg(_("MISSION FAILED: You have failed to deliver the goods to the Empire on time!"))
       misn.finish(false)
    end
 end

@@ -42,24 +42,6 @@ local fmt = require "format"
 npc_name = _("Major Tam")
 npc_desc = _("The major seems to be waiting for you.")
 
-propose_title = _("Ready for some diplomacy?")
-propose_text = _([[Major Tam seems to be in a very good mood: "Hello, citizen %s! Have you got plans for tonight?" You fear he may invite you to a brawl-party, or any other kind of event Dvaered usually organize when they want to have good time, but he continues: "Because I've got a very important mission for you.
-   "Let me explain the context to you: I am currently in the middle of a secret diplomatic campaign with the Imperials, House Goddard and the Sirii. But there is a group of assassins who are constantly attacking me when I am moving. This is very annoying and we have already lost two pilots of Leblanc's squadron in these ambushes, including the second in command. The problem is that the ambushers use a mix of fighters, supported by medium ships. They even have a Kestrel!
-   "So we have decided to deal with this problem before we proceed with the diplomatic meetings. Are you in?"]])
-
-accept_title = _("This is how we deal with our problems")
-accept_text = _([["You won't regret that!" Tam says... "Unless you're killed in the process I guess... Anyway, I will go to %s in %s in my Vigilance. No doubt the assassins will set up an ambush somewhere on the way. You and a few pilots from the Special Operations Force (SOF) will locate them and wait for me to jump in. During the ambush, the assassins will be caught in the crossfire, and we will annihilate them to the last ship. Actually, that sounds much more attractive than a 3 periods long meeting with rogue Sirian diplomats, doesn't it?
-   "On our side, we will not have much firepower, so I count on you to provide with the armor and the guns (but you should still be able to outrun mid-range destroyers). You will team up with Lieutenant Strafer, because it worked well last time, and two other pilots. But the SOF does not have countless pilots, so the amount of your reward will depend on how many of them come back. Strafer will fly a scout with high performance sensors. He will be our eyes, so his death would mean the end of the mission.
-   "If you have any additional questions, I'll stay at the bar until we take off."]])
-
-refuse_title = _("Another time maybe")
-refuse_text = _([[Major Tam really seems disappointed. "As you wish, citizen..."]])
-
-
-lore_title = _("Ask your questions to Major Tam")
-lore_text0 = _("What do you want to ask to Major Tam?")
-lore_already_told = _("Hey, do you think I'm some kind of amnesic? You literally asked this question 10 seconds ago!")
-quittam = _("Goodbye, we meet in space.")
 question = {}
 lore_text = {}
 
@@ -79,69 +61,26 @@ question[4] = _("Ask news from Hamfresser")
 lore_text[4] = _([["Oh, the captain is doing well. He spent a few periods at the hospital, but it was not so serious. About the other ones, I'm not too sure. I don't know them very well actually, they are more like statistics to me. I know it's bad, but hey, I have so many things to think about right now.
    "Oh, and we went to the funerals of the one who died, the private Amadeus Tronk, officially killed in training, of course. It was nice. Leblanc's squadron has made an aerial meeting with a mace rocket concerto for the occasion, and we organized a fight to death between a convicted criminal and a gladiator in General Klank's private arena. The role of it is to honour the memory of the dead warrior, and also to have some fun."]])
 
-
-located_title = _("Enemies located")
-located_text = _([[You receive an encrypted message from Strafer. "I've located the hostiles. We need to follow them from afar, and get ready for action."]])
-scan_msg = _("Wait until Strafer has scanned the system")
-
-flee_title = _("What are you doing here?")
 flee_text = _("You were supposed to wait for Strafer to scan the system, and then if needed, kill the hostiles.")
 clean_text = _("You were supposed to clean the system before pursuing the fleeing ship.")
-sjump_text = _("You were supposed to jump to %s.")
-sland_text = _("You were supposed to land on %s.")
 
-failed_title = _("This is not good")
-jumpout_text = _([[While your sensors lose the signal of the target you were supposed to kill, you expect to receive a mission failure message, but instead, you hear Tam's ship communication: "One of them escaped. Continue destroying the others. Afterwards, %s, you will jump to %s and destroy that ship."]])
-land_text = _([[While your sensors lose the signal of the target you were supposed to kill, you expect to receive a mission failure message, but instead, you hear Tam's ship communication: "One of them escaped. Continue destroying the others. Afterwards, %s, you will land on %s to keep track on the pilot."]])
-tamdie_text = _([[The blinking cross marked "Major Tam" on your radar screen suddenly turns off. You first believe this is an output bug and hit the screen with your open hand, but soon, you realize that the radar works perfectly well. This means that the major's ship got annihilated by the ambushers, and therefore your mission is a miserable failure.]])
-strdie_text = _([[You suddenly realize that your radar doesn't receive Strafer's sensors data. This means that the Lieutenant got killed. As a result, the fleet is flying blind and the mission is failed.]])
 tflee_text = _([[Two of your targets went away. If there was only one, it could be manageable, but now, the mission has failed.]])
 
-execution_title = _("End of the hunt")
 execution_text1 = _([[You land and walk around the spacedock, in search of your target's ship. You finally see it. A mighty %s, covered by the stigmas of the battle that just occurred. You decide to hide yourself behind crates close to the ship and wait for the pilot to come back and take off in order to finish your job in space.
    When looking closer at the ship, you see ancient and recent marks on the hull, caused by all kinds of weapons during the lifetime of the ship, that have been repaired on spaceports. Among the ship's scars,you see a twisted welding around the ship's nose, filled with bubbles and think: "Damn! They've got to deal with the same old deficient welding android that fixed my airlock on Alteris last time!"
    Suddenly, you realize someone is whispering behind you "Hey, %s, you're wrecking my firing line!" You turn around and see nothing but a deformed crate that continues to speak: "It's me, Sergeant Nikolov. In the box. Hide yourself better or you will ruin our mission." You then remember that she is a member of the space infantry commandos, and Hamfresser's second in command. Tam probably sent her to execute the enemy pilot.]])
-execution_text2 = _([[A bit later, you see a woman coming from the empty corridor, anxiously looking behind her and pulling a key out of her pocket. While still approaching the ship, she presses the key's button and the ship beeps. At this very moment, a sudden and loud din erupts from all around you shake your stomach and the pilot falls without a word. Nikolov and two other soldiers emerge from the crates. The sergeant approaches the pilot, kneels and takes her pulse. She thoughtfully looks at her face "Damn! she looked like a nice person..." And then addresses to the soldiers: "All right, folks we pack up!" and the unit enters the ship with the body and takes off.
-   You stay alone, on the empty dock, with nothing but your thoughts. Even the broken crates have been picked up by the commandos. You think about all the causes that pilot must have served in her life. The just causes, the evil ones... and all the others. "Meh," you think "killing people in space is definitely much better for morale."]])
-execution_text3 = _([[When you finally go to the bar to think about something else, you get notified on your holowatch that %s have been transferred to your account. The leader of the ambushers has been identified: it's Colonel Hamelsen, who used to work for Battleaddict before his death. Unfortunately, the Colonel has escaped.]])
-
-execution_failed_text2 = _([[A few times later, you hear a message from Nikolov's radio: "Tam here. The target escaped and won't come back to the ship. Clear the spacedock." The spacemarines emerge from the crates and disappear in a blink, while you start heading to the bar. On the way, you meet Strafer who explains the situation: "We identified the hostile pilot: it was Colonel Hamelsen, Battleaddict's former second in command, but she got away using one of her other ships and we lost her track.
-   "Poor woman. It's hard to get a new post when you're the second in command of a dead warlord, you know. So I guess someone has managed to hire her to assassinate the major. Anyway, I guess you should have received your payment of %s by now."]])
-
-won_title = _("All targets eliminated")
-won_text = _([[All three primary targets have been eliminated. The remaining ones are not dangerous anymore now. You can land to get your reward.]])
 
 pay_title = _("Mission accomplished")
 pay_text = _("Your mission is a success, except for the escape of the enemy leader, Colonel Hamelsen. You can now collect your %s reward.")
 
-killMsg      = _("One of the targets was destroyed!")
 killAll      = _("The last target was destroyed! You can now land.")
-clearMsg     = _("No hostiles here. We can proceed to next system.")
-hostiMsg     = _("Hostiles spotted!")
-stampedeMsg  = _("Hostiles are running away. Don't let them escape!")
-killedMsg    = _("Hostiles eliminated.")
 pursuitMsg  = _("The target ran away again: continue the pursuit.")
-preAmbushMsg = _("All right, let's wait for Tam")
-preAmbush1   = _("There will be roasted Tam for lunch today!")
-
-baddie_taunt  = _("What about I cook you to death?")
-baddie_signal = _("Tam is in place, folks! don't miss him, this time!")
-ham_runaway   = _("You won't catch me alive! Never!")
-
 
 misn_desc = _("You take part of an operation whose goal is to trap and destroy a group of well armed henchmen who are after Major Tam.")
 misn_reward = _("It depends how many of your wingmen come back.")
 log_text = _("A group of killers, who were after Major Tam have been trapped and killed. For now, we don't know who has paid them, but they were led by Colonel Hamelsen, who has managed to escape.")
 
 osd_title = _("Dvaered Diplomacy")
-osd_text1 = _("Go to next system")
-osd_text2 = _("Wait until Strafer has scanned the system")
-osd_text3 = _("Wait for Tam and destroy the highlighted hostile ships")
-osd_text4 = _("Land anywhere to collect your pay")
-osd_text5 = _("Clean the current system")
-osd_text6 = _("Jump to %s to follow your target")
-osd_text7 = _("Land on %s to follow your target")
-
 
 function create()
    destpla, destsys = planet.get("Mannannan")
@@ -165,14 +104,18 @@ function create()
 end
 
 function accept()
-   if not tk.yesno( propose_title, propose_text:format(player.name()) ) then
-      tk.msg(refuse_title, refuse_text)
+   if not tk.yesno( _("Ready for some diplomacy?"), _([[Major Tam seems to be in a very good mood: "Hello, citizen %s! Have you got plans for tonight?" You fear he may invite you to a brawl-party, or any other kind of event Dvaered usually organize when they want to have good time, but he continues: "Because I've got a very important mission for you.
+   "Let me explain the context to you: I am currently in the middle of a secret diplomatic campaign with the Imperials, House Goddard and the Sirii. But there is a group of assassins who are constantly attacking me when I am moving. This is very annoying and we have already lost two pilots of Leblanc's squadron in these ambushes, including the second in command. The problem is that the ambushers use a mix of fighters, supported by medium ships. They even have a Kestrel!
+   "So we have decided to deal with this problem before we proceed with the diplomatic meetings. Are you in?"]]):format(player.name()) ) then
+      tk.msg(_("Another time maybe"), _([[Major Tam really seems disappointed. "As you wish, citizen..."]]))
       misn.finish(false)
    end
-   tk.msg(accept_title, accept_text:format(destpla:name(), destsys:name()))
+   tk.msg(_("This is how we deal with our problems"), _([["You won't regret that!" Tam says... "Unless you're killed in the process I guess... Anyway, I will go to %s in %s in my Vigilance. No doubt the assassins will set up an ambush somewhere on the way. You and a few pilots from the Special Operations Force (SOF) will locate them and wait for me to jump in. During the ambush, the assassins will be caught in the crossfire, and we will annihilate them to the last ship. Actually, that sounds much more attractive than a 3 periods long meeting with rogue Sirian diplomats, doesn't it?
+   "On our side, we will not have much firepower, so I count on you to provide with the armor and the guns (but you should still be able to outrun mid-range destroyers). You will team up with Lieutenant Strafer, because it worked well last time, and two other pilots. But the SOF does not have countless pilots, so the amount of your reward will depend on how many of them come back. Strafer will fly a scout with high performance sensors. He will be our eyes, so his death would mean the end of the mission.
+   "If you have any additional questions, I'll stay at the bar until we take off."]]):format(destpla:name(), destsys:name()))
 
    misn.accept()
-   misn.osdCreate( osd_title, {osd_text1, osd_text2, osd_text3, osd_text4 } )
+   misn.osdCreate( osd_title, {_("Go to next system"), _("Wait until Strafer has scanned the system"), _("Wait for Tam and destroy the highlighted hostile ships"), _("Land anywhere to collect your pay") } )
    misn.setDesc(misn_desc)
    misn.setReward(misn_reward)
 
@@ -200,12 +143,12 @@ end
 
 -- Discussions with Major Tam at the bar
 function discussWithTam()
-   local c = tk.choice( lore_title, lore_text0, question[1], question[2], question[3], question[4], quittam )
+   local c = tk.choice( _("Ask your questions to Major Tam"), _("What do you want to ask to Major Tam?"), question[1], question[2], question[3], question[4], _("Goodbye, we meet in space.") )
    if c <= 4 then
       if toldya[c] then
-         tk.msg( lore_title, lore_already_told )
+         tk.msg( _("Ask your questions to Major Tam"), _("Hey, do you think I'm some kind of amnesic? You literally asked this question 10 seconds ago!") )
       else
-         tk.msg( lore_title, lore_text[c] )
+         tk.msg( _("Ask your questions to Major Tam"), lore_text[c] )
          toldya[c] = true
       end
    end
@@ -259,13 +202,13 @@ function enter()
 
    -- Illegitimate system entrances
    elseif stage == 1 then
-      tk.msg(flee_title, flee_text)
+      tk.msg(_("What are you doing here?"), flee_text)
       misn.finish(false)
    elseif stage == 3 or stage == 5 then
-      tk.msg( flee_title, clean_text )
+      tk.msg( _("What are you doing here?"), clean_text )
       misn.finish(false)
    elseif stage == 6 then
-      tk.msg(flee_title, sland_text:format(nextt:name()))
+      tk.msg(_("What are you doing here?"), _("You were supposed to land on %s."):format(nextt:name()))
       misn.finish(false)
 
    -- Enter after a fleeing enemy
@@ -281,7 +224,7 @@ function enter()
          hook.pilot(target, "jump","lastOne_jump")
          hook.pilot(target, "land","lastOne_land")
       else
-      tk.msg(flee_title, sjump_text:format(nextt:name()))
+      tk.msg(_("What are you doing here?"), _("You were supposed to jump to %s."):format(nextt:name()))
          misn.finish(false)
       end
    end
@@ -292,7 +235,7 @@ end
 function land()
    -- Illegitimate landing
    if stage == 1 then
-      tk.msg(flee_title, flee_text)
+      tk.msg(_("What are you doing here?"), flee_text)
       misn.finish(false)
 
    -- Land for reward
@@ -303,10 +246,10 @@ function land()
 
    -- More illegitimate landings
    elseif stage == 3 or stage == 5 then
-      tk.msg( flee_title, clean_text )
+      tk.msg( _("What are you doing here?"), clean_text )
       misn.finish(false)
    elseif stage == 4 then
-      tk.msg(flee_title, sjump_text:format(nextt:name()))
+      tk.msg(_("What are you doing here?"), _("You were supposed to jump to %s."):format(nextt:name()))
       misn.finish(false)
 
    -- Landing after an enemy (victory as well)
@@ -314,16 +257,18 @@ function land()
       if planet.cur() == nextt then
          compute_reward()
          if shi:nameRaw() == "Kestrel" then -- it's Hamelsen and she escapes
-            tk.msg( execution_title, execution_text1:format(shi:name(), player.name()) )
-            tk.msg( execution_title, execution_failed_text2:format(fmt.credits(effective_credits)) )
+            tk.msg( _("End of the hunt"), execution_text1:format(shi:name(), player.name()) )
+            tk.msg( _("End of the hunt"), _([[A few times later, you hear a message from Nikolov's radio: "Tam here. The target escaped and won't come back to the ship. Clear the spacedock." The spacemarines emerge from the crates and disappear in a blink, while you start heading to the bar. On the way, you meet Strafer who explains the situation: "We identified the hostile pilot: it was Colonel Hamelsen, Battleaddict's former second in command, but she got away using one of her other ships and we lost her track.
+   "Poor woman. It's hard to get a new post when you're the second in command of a dead warlord, you know. So I guess someone has managed to hire her to assassinate the major. Anyway, I guess you should have received your payment of %s by now."]]):format(fmt.credits(effective_credits)) )
          else -- No pity for non-Hamelsen henchmen
-            tk.msg( execution_title, execution_text1:format(shi:name(), player.name()) )
-            tk.msg( execution_title, execution_text2, "portraits/neutral/female1.webp" )
-            tk.msg( execution_title, execution_text3:format(fmt.credits(effective_credits)) )
+            tk.msg( _("End of the hunt"), execution_text1:format(shi:name(), player.name()) )
+            tk.msg( _("End of the hunt"), _([[A bit later, you see a woman coming from the empty corridor, anxiously looking behind her and pulling a key out of her pocket. While still approaching the ship, she presses the key's button and the ship beeps. At this very moment, a sudden and loud din erupts from all around you shake your stomach and the pilot falls without a word. Nikolov and two other soldiers emerge from the crates. The sergeant approaches the pilot, kneels and takes her pulse. She thoughtfully looks at her face "Damn! she looked like a nice person..." And then addresses to the soldiers: "All right, folks we pack up!" and the unit enters the ship with the body and takes off.
+   You stay alone, on the empty dock, with nothing but your thoughts. Even the broken crates have been picked up by the commandos. You think about all the causes that pilot must have served in her life. The just causes, the evil ones... and all the others. "Meh," you think "killing people in space is definitely much better for morale."]]), "portraits/neutral/female1.webp" )
+            tk.msg( _("End of the hunt"), _([[When you finally go to the bar to think about something else, you get notified on your holowatch that %s have been transferred to your account. The leader of the ambushers has been identified: it's Colonel Hamelsen, who used to work for Battleaddict before his death. Unfortunately, the Colonel has escaped.]]):format(fmt.credits(effective_credits)) )
          end
          payNfinish()
       else
-         tk.msg(flee_title, sland_text:format(nextt:name()))
+         tk.msg(_("What are you doing here?"), _("You were supposed to land on %s."):format(nextt:name()))
          misn.finish(false)
       end
    end
@@ -440,7 +385,7 @@ end
 
 -- Strafer sees the bountyhunters
 function straferScans()
-   escort[1]:comm( hostiMsg, true )
+   escort[1]:comm( _("Hostiles spotted!"), true )
    for i = 1, 3 do
       badguys[i]:setVisible()
       badguys[i]:setHilight()
@@ -457,7 +402,7 @@ end
 
 -- Strafer doesn't see anybody and returns
 function straferReturns()
-   escort[1]:comm( clearMsg, true )
+   escort[1]:comm( _("No hostiles here. We can proceed to next system."), true )
    escort[1]:taskClear()
    escort[1]:follow( player.pilot(), true )
    stage = 0
@@ -468,23 +413,23 @@ end
 
 -- Baddies are in position: start the battle after a small delay
 function badInPosition()
-   badguys[1]:comm(preAmbushMsg)
+   badguys[1]:comm(_("All right, let's wait for Tam"))
    hook.timer(2.0, "roastedTam")
    hook.timer(4.0, "tamNattack")
 end
 function roastedTam()
-   badguys[2]:comm(preAmbush1)
+   badguys[2]:comm(_("There will be roasted Tam for lunch today!"))
 end
 function tamNattack()
    spawnTam( tamPoint )
-   badguys[1]:comm(baddie_signal)
+   badguys[1]:comm(_("Tam is in place, folks! don't miss him, this time!"))
    start_battle()
 end
 
 -- Death hooks
 function escort_died1( )
    alive[1] = false
-   tk.msg(failed_title,strdie_text)
+   tk.msg(_("This is not good"),_([[You suddenly realize that your radar doesn't receive Strafer's sensors data. This means that the Lieutenant got killed. As a result, the fleet is flying blind and the mission is failed.]]))
    misn.finish(false)
 end
 function escort_died2( )
@@ -494,7 +439,7 @@ function escort_died3( )
    alive[3] = false
 end
 function tamDied()
-   tk.msg(failed_title, tamdie_text)
+   tk.msg(_("This is not good"), _([[The blinking cross marked "Major Tam" on your radar screen suddenly turns off. You first believe this is an output bug and hit the screen with your open hand, but soon, you realize that the radar works perfectly well. This means that the major's ship got annihilated by the ambushers, and therefore your mission is a miserable failure.]]))
    misn.finish(false)
 end
 
@@ -503,7 +448,7 @@ function baddie_attacked()
    for i, h in ipairs(attackhooks) do
       hook.rm(h)
    end
-   badguys[1]:comm( baddie_taunt )
+   badguys[1]:comm( _("What about I cook you to death?") )
    start_battle()
 end
 
@@ -514,9 +459,9 @@ function baddie_death( pilot )
    -- See if it's one of the 3 targets
    if (elt_inlist( pilot, targetList ) > 0) then
       deadtarget = deadtarget + 1
-      player.msg( killMsg )
+      player.msg( _("One of the targets was destroyed!") )
       if deadtarget >= 3 then
-         tk.msg(won_title, won_text)
+         tk.msg(_("All targets eliminated"), _([[All three primary targets have been eliminated. The remaining ones are not dangerous anymore now. You can land to get your reward.]]))
          player.msg( killAll )
          stage = 2
          misn.osdActive(4)
@@ -535,13 +480,13 @@ function baddie_jump( pilot, jump )
          tem = pilot:temp()
          shi = pilot:ship()
 
-         tk.msg(failed_title, jumpout_text:format(player.name(), nextt:name())) -- TODO: ensure the cleaning doesn't take too long
+         tk.msg(_("This is not good"), _([[While your sensors lose the signal of the target you were supposed to kill, you expect to receive a mission failure message, but instead, you hear Tam's ship communication: "One of them escaped. Continue destroying the others. Afterwards, %s, you will jump to %s and destroy that ship."]]):format(player.name(), nextt:name())) -- TODO: ensure the cleaning doesn't take too long
          stage = 3
          misn.osdDestroy()
-         misn.osdCreate( osd_title, {osd_text5, osd_text6:format(nextt:name())} )
+         misn.osdCreate( osd_title, {_("Clean the current system"), _("Jump to %s to follow your target"):format(nextt:name())} )
          misn.markerAdd( nextt, "high" )
       else -- You won't follow several enemies
-         tk.msg(failed_title, tflee_text)
+         tk.msg(_("This is not good"), tflee_text)
          misn.finish(false)
       end
    end
@@ -553,14 +498,14 @@ function baddie_land( pilot, planet )
    if (elt_inlist( pilot, targetList ) > 0) then
       if stage == 1 then -- It's the first one who escapes
          nextt = planet
-         tk.msg(failed_title, land_text:format(player.name(), nextt:name()))
+         tk.msg(_("This is not good"), _([[While your sensors lose the signal of the target you were supposed to kill, you expect to receive a mission failure message, but instead, you hear Tam's ship communication: "One of them escaped. Continue destroying the others. Afterwards, %s, you will land on %s to keep track on the pilot."]]):format(player.name(), nextt:name()))
          stage = 5
 
          shi = pilot:ship()
          misn.osdDestroy()
-         misn.osdCreate( osd_title, {osd_text5, osd_text7:format(nextt:name())} )
+         misn.osdCreate( osd_title, {_("Clean the current system"), _("Land on %s to follow your target"):format(nextt:name())} )
       else -- You won't follow several enemies
-         tk.msg(failed_title, tflee_text)
+         tk.msg(_("This is not good"), tflee_text)
          misn.finish(false)
       end
    end
@@ -593,7 +538,7 @@ end
 function increment_baddie()
    deadbad = deadbad+1
    if deadbad >= maxbad/2 and stampede then -- time for stampede
-      escort[1]:comm( stampedeMsg, true )
+      escort[1]:comm( _("Hostiles are running away. Don't let them escape!"), true )
       stampede = false
       for i,p in ipairs(badguys) do
          if p:exists() then
@@ -603,7 +548,7 @@ function increment_baddie()
       end
    end
    if deadbad >= maxbad then -- System cleaned
-      escort[1]:comm( killedMsg, true )
+      escort[1]:comm( _("Hostiles eliminated."), true )
       if stage == 3 then
          stage = 4
          misn.osdActive(2)
@@ -660,7 +605,7 @@ function spawnHamelsen( origin )
    hamelsen:setFaction("Warlords")
    hamelsen:rename(_("Colonel Hamelsen"))
 
-   hamelsen:comm( ham_runaway )
+   hamelsen:comm( _("You won't catch me alive! Never!") )
    hamelsen:control()
    hamelsen:runaway( player.pilot(), true )
 end

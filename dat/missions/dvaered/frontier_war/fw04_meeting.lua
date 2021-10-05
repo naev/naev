@@ -39,30 +39,7 @@ local fmt = require "format"
 -- TODO: hooks to penalize attacking people
 
 npc_name = _("Lieutenant Strafer")
-npc_desc1 = _("Judging by how he looks at you, Strafer needs you for another mission along with the Dvaered Space Force.")
-npc_desc2 = _("Harsh voice, frank gaze and easy trigger. The lieutenant Strafer is a Dvaered pilot.")
 
-propose_title = _("We need you once more")
-propose_text = _([[As you sit at his table, the clearly anxious Dvaered pilot stops biting his nails and explains why he is here.
-   "The High Command summoned, under request of general Klank, an extraordinary meeting of the high council of Warlords, and all of them have agreed to come..." You frown, and before you have a chance to ask where is the problem, he continues: "... but we received an intelligence report according to which the ex-colonel Hamelsen (who has already tried to murder Major Tam several times) is going to take advantage of this meeting to take action against us."
-   "Do you want to help us against that threat?"]])
-
-accept_title = _("Here is the situation")
-accept_text = _([["General Klank has summoned the Warlords in order to present them the Frontier invasion plan. When a meeting of the high council of warlords occurs, a short truce takes place and they all come on the DHC station with their Goddards. This fact alone is already enough to put the station's security service under pressure, as the warlords constantly provoke each other and start brawls. But this time, we believe that Hamelsen will try either to assassinate warlords, or to record our invasion plan in order to sell it to hostile foreign powers.
-   "This is why Major Tam wants our squadron from the Special Operations Forces to support the regular units of the station. Fly to Dvaer Prime and meet me in the bar there."]])
-
-refuse_title = _("Too bad")
-refuse_text = _([[Mm. I see. you probably have many much more interesting things to do that being loyal to the Dvaered Nation...]])
-
-
-lore_title = _("Lieutenant Strafer")
-lore_text0 = _("What do you want to ask to the lieutenant before taking off?")
-
-lore_already_told1 = _("Hem... You asked the exact same question just before.")
-lore_already_told2 = _("You are obsessed with this question. Just move on, please.")
-lore_already_told3 = _("Is it a kind of joke?")
-
-quitstraf = _("Take off when you're ready for action!")
 question = {}
 lore_text = {}
 
@@ -83,79 +60,6 @@ question[4] = _("Ask how one becomes a warlord")
 lore_text[4] = _([["You wish to become one of them?" Before you have a chance to deny, he continues: "Anybody can become a warlord. One just has to have received the '9th grade commendation', and to conquer a planet (or a station). In the army, every rank gives you a commendation grade, for example, I have the 3rd grade. Civilians also obtain commendation for their high deeds; you obtained the first grade commendation for your involvement in the FLF destruction, if I am right. The 9th grade commendation, that is associated to the rank of first class General in the army, gives the right to own a military base, and by extension, to be granted the regal power over a region.
    "In the Dvaered army, everybody starts as a raw soldier, no matter if you're an infantryman, a pilot, a medic or even a General's child. And only Valor decides how quick you rise in the hierarchy. Warlord is the ultimate rank for the military (and private combat pilots, like yourself)"]])
 
-quit = _("I am ready for action!")
-
-briefing_title = _("Read your messages")
-briefing_text = _("Don't forget to read the messages Captain Leblanc will send to you. It contains valuable information.")
-
-briefing0 = _("I hope everyone is listening carefully.")
-briefing1 = _("Every incoming pilot must be visually controlled by one of us.")
-briefing2 = _("I will notify each of you when you have a pilot to control.")
-briefing3 = _("And you will hear the following audio signal.")
-briefing4 = _("Last thing: I remind you to beware the Warlords: some of them may want to shoot at you because they love to watch lighter ships dodge for their lives.")
-
-
-closer_title = _("An unidentified ship came close to the station")
-closer_text = _("A ship managed to approach the station, and you failed to control it. Fortunately, it was identified by the station's sensors and is not hostile. However, your failure to intercept it could have led to problems in the opposite case. As a consequence, your reward has been decreased.")
-
-lander_title = _("An unidentified ship landed on the station")
-lander_text = _("A ship managed to land on the station, and you failed to control it. Unidentified and potentially hostile individuals have entered the Dvaered High Command station: The mission is a failure.")
-
-noanswer_title = _("Incoming ship refuses control")
-noanswer_text = _([[When getting in range, you receive an alarm. This ship does not have an invitation. Suddenly, you see it accelerating as if the pilot wanted to force the blockade around the station. You hear an order from Captain Leblanc: "A-NightClaws Leader to %s: intercept and destroy %s".]])
-
-hamtitle1 = _("Hi there!")
-hamtext1 = _([[The fleeing ship suddenly hails you. You answer and the face of the Colonel Hamelsen emerges from your holoscreen. "No, you won't best me, %s. Not this time. Not anymore." Aware that she is now too far away for you to hope to catch her, you ask her what interest she finds in constantly harassing Major Tam. "This is all that I have left," she answers.
-   "My hate for Tam and Klank is all that remains now that my Lord is dead. I dedicated my entire life to the greatness of House Dvaered, I practiced and sharpened all my skills to serve the Army at best. When I got recruited by Lord Battleaddict, I became faithful to him because he was giving me the opportunity to serve House Dvaered through him. And then...
-   "Since the day when Klank assassinated my Lord, I have been rejected by the High Command. Rejected by the Warlords. Rejected by that nation that claims to reward Valor and Righteousness. Tell me when I have given up Valor! Tell me when I have given up Righteousness! Never! The Dvaered social contract is broken as far as I am concerned.
-   "All that remains of me is a vassal without suzerain, a colonel without regiment, a corpse without grave. I will haunt you until your demise. I will be in the way of any of your wishes, big ones as well as small ones. There will be no forgiveness, no remission, no relief, neither for you nor for me."
-   After this very encouraging speech, Hamelsen cuts off the communication channel and lands.]])
-
-hamtitle2 = _("Follow her!")
-hamtext2 = _([[A new message comes from Captain Leblanc. "This is obviously a diversion! Everyone, back to your positions! %s, go and investigate on %s. Bring me the head of the ex-colonel Hamelsen!"]])
-
-
-dv_name = _("Officer")
-dv_desc = _("This Dvaered officer is probably waiting for you and might have information about the ex-colonel Hamelsen's escape.")
-
-offtitle = _("No trace of Hamelsen")
-offtext = _([[You approach the soldier, who seems to recognize you. Probably your portrait has been transmitted by Captain Leblanc. "After we received the message from your captain, we seized the Hyena you were pursuing, but the pilot has managed to escape unnoticed."
-   Having no way to track Hamelsen on land, you decide it's better to take off again, and to wait for further instructions from Leblanc.]])
-
-spytitle = _("Something is happening at the station")
-spytext = _([[You start heading to the station, but you hear many messages coming from the NightClaws squadron. A Schroedinger has managed to take off unnoticed from the High Command station, presumably carrying classified information, and to sneak through the blockade. The squadrons have been taken by surprise, but Strafer is catching up.]])
-
-spychatter0 = _("A-NightClaws Leader to all pilots: Engage and destroy this Schroedinger at all costs!")
-spychatter1 = _("A-NightClaws Second to Leader: I'm on it!")
-spychatter2 = _("Bye, suckers!")
-spychatter3 = _("Just wait for my shredders to...")
-spychatter4 = _("Come on!")
-
-killertitle = _("Now, it's your turn")
-killertext = _([[Your sensors suddenly pick up three hostile signals coming from Laars, just when Captain Leblanc sends her message: "To all A-NightClaw pilots: follow and intercept the hostiles." You report about the three hostiles coming at you and she answers: "%s, take care of those three. Don't let any of them escape."]])
-
-killerchatter0 = _("You fell in our trap, %s!")
-killerchatter1 = _("You're so dead!")
-killerchatter2 = _("Without any support!")
-killerchatter3 = _("Folks, please do less chatting and more killing.")
-killerchatter4 = _("Aye-aye, boss!")
-killerchatter5 = _("Copy that!")
-killerchatter6 = _("I'm as silent as a carp.")
-killerchatter7 = _("Same for me!")
-
-kiltitle = _("Rid of them!")
-kiltext = _("As the last enemy ship explodes, you watch to your sensorscreen, and notice that the alpha squadron has left the system. The fleet leader orders you to land on Dvaer Prime.")
-
-
-debrief_title = _("Time for a gorgeous reward?")
-debrief_text1 = _([[At the very moment you step out of your ship, you see an officer, alone on the dock, obviously waiting for you. After having moved forward, you recognize the Major Tam. The cold wind unfolds the lapels of his coat, and make it whip his sad face.
-   "We had better days, isn't it, citizen? A spy managed to run away with what seems to be a copy of our invasion plan, they killed one of my best pilots and Hamelsen escaped... Once more." Tam looks at the sky that starts to rain "... and it's winter on the spacedock of Dvaer Prime. Shall we enter the building? I was told that the chemical plant works twice more in winter, and the rain often turns acid."
-   You enter and head to the military bar. Tam looks at you: "I've grown up on Nanek in Allous. For 13 years, the only part of the universe I used to know was my village on Nanek, and the only people I used to know were its inhabitants. And now, I've seen hundreds of planets, and thousands of people all around the galaxy. But most of them have been killed at some point, and they corpses are drifting here and there in space, along with the pitiful remains of their defeated ships. The night sky is constellated with the souls of dead pilots. Our control of space gave us access to experiences our forefathers could not even dream of, but you know what? No matter how cold the graves of my ancestors on Nanek are, they are warmer than the emptiness of infinite space."]])
-debrief_text2 = _([[You start wondering if the major will remember to pay you, but his voice suddenly changes: "We definitely had better days, but you know, the true valor of a warrior reveals itself in times of adversity. The dark clouds that drift above the horizon, pushed by the cruel wings of despair, are here to challenge the strength of our Dvaered souls. And it is up to us to accept this challenge.
-   "I did not anticipate that the traitor Hamelsen could reconstruct her group of mercenaries so fast, but you already killed some of them, and Leblanc's squadron will kill even more in the near future. We will then hunt the ex-colonel Hamelsen down, and finally we will carry this invasion on.
-   "Anyway, for now, we will transfer %s to your account, as a reward for this mission, and be certain that we will need you again soon!"]])
-
-
 lords_chatter = { _("Ahoy, suckers! Here comes the master!"),
                   _("Look down, you weaklings."),
                   _("Only submission will save you from my anger!"),
@@ -168,13 +72,7 @@ lords_chatter = { _("Ahoy, suckers! Here comes the master!"),
 
 order_control = _("A-NightClaws Leader to %s: intercept %s and control their security clearance code")
 
-flee_title = _("Look who is running away!")
-flee_text = _("You were supposed to secure a meeting, not to run away like that!")
-
-
-control_title = _("Controlling incoming ship")
 -- This might be hard to translate, but that is not a problem IMHO as it is actually supposed to be an automatically generated message.
-control_text = _([[As you approach the ship, your targeting array focuses on it, and its clearance code gets processed. You can soon read on your control pad: "This citizen is an honorable %s whose presence is required for the meeting: let the ship land on the station."]])
 
 occupations = { _("caterer"),
                 _("butcher"),
@@ -194,12 +92,8 @@ misn_reward = _("The greatness of House Dvaered.")
 log_text = _("You have taken part to the security of a meeting of Dvaered warlords which goal was to set the invasion plan of the Frontier. Unfortunately, the ex-colonel Hamelsen and her wingmen managed to seize data and escape the system. The Lieutenant Strafer has been killed in action during this incident.")
 
 osd_title = _("The Meeting")
-osd_text1 = _("Land on %s")
 osd_text2 = _("Stay close to %s and wait for orders")
 osd_text3 = _("Intercept suspect ship for visual identification")
-osd_text4 = _("Engage %s")
-osd_text5 = _("Eliminate the hostile fighters")
-
 
 function create()
    destpla, destsys = planet.get("Dvaer Prime")
@@ -214,18 +108,21 @@ function create()
       misn.finish(false)
    end
 
-   misn.setNPC(npc_name, portrait_strafer, npc_desc1)
+   misn.setNPC(npc_name, portrait_strafer, _("Judging by how he looks at you, Strafer needs you for another mission along with the Dvaered Space Force."))
 end
 
 function accept()
-   if not tk.yesno( propose_title, propose_text ) then
-      tk.msg(refuse_title, refuse_text)
+   if not tk.yesno( _("We need you once more"), _([[As you sit at his table, the clearly anxious Dvaered pilot stops biting his nails and explains why he is here.
+   "The High Command summoned, under request of general Klank, an extraordinary meeting of the high council of Warlords, and all of them have agreed to come..." You frown, and before you have a chance to ask where is the problem, he continues: "... but we received an intelligence report according to which the ex-colonel Hamelsen (who has already tried to murder Major Tam several times) is going to take advantage of this meeting to take action against us."
+   "Do you want to help us against that threat?"]]) ) then
+      tk.msg(_("Too bad"), _([[Mm. I see. you probably have many much more interesting things to do that being loyal to the Dvaered Nation...]]))
       misn.finish(false)
    end
-   tk.msg(accept_title, accept_text)
+   tk.msg(_("Here is the situation"), _([["General Klank has summoned the Warlords in order to present them the Frontier invasion plan. When a meeting of the high council of warlords occurs, a short truce takes place and they all come on the DHC station with their Goddards. This fact alone is already enough to put the station's security service under pressure, as the warlords constantly provoke each other and start brawls. But this time, we believe that Hamelsen will try either to assassinate warlords, or to record our invasion plan in order to sell it to hostile foreign powers.
+   "This is why Major Tam wants our squadron from the Special Operations Forces to support the regular units of the station. Fly to Dvaer Prime and meet me in the bar there."]]))
 
    misn.accept()
-   misn.osdCreate( osd_title, {osd_text1:format(destpla:name())} )
+   misn.osdCreate( osd_title, {_("Land on %s"):format(destpla:name())} )
    misn.setDesc(misn_desc)
    misn.setReward(misn_reward)
    misn.markerAdd(destsys, "low")
@@ -256,13 +153,17 @@ function land()
 
    -- Landing on Laars after Hamelsen
    elseif stage == 2 then
-      npc = misn.npcAdd("discussOff", dv_name, portrait.getMil( "Dvaered" ), dv_desc)
+      npc = misn.npcAdd("discussOff", _("Officer"), portrait.getMil( "Dvaered" ), _("This Dvaered officer is probably waiting for you and might have information about the ex-colonel Hamelsen's escape."))
       stage = 3
 
    -- Player killed attackers, and can finally land for reward
    elseif (stage == 4 and planet.cur() == destpla) then
-      tk.msg( debrief_title, debrief_text1, ("portraits/"..portrait_tam) )
-      tk.msg( debrief_title, debrief_text2:format(fmt.credits(reward)), ("portraits/"..portrait_tam) )
+      tk.msg( _("Time for a gorgeous reward?"), _([[At the very moment you step out of your ship, you see an officer, alone on the dock, obviously waiting for you. After having moved forward, you recognize the Major Tam. The cold wind unfolds the lapels of his coat, and make it whip his sad face.
+   "We had better days, isn't it, citizen? A spy managed to run away with what seems to be a copy of our invasion plan, they killed one of my best pilots and Hamelsen escaped... Once more." Tam looks at the sky that starts to rain "... and it's winter on the spacedock of Dvaer Prime. Shall we enter the building? I was told that the chemical plant works twice more in winter, and the rain often turns acid."
+   You enter and head to the military bar. Tam looks at you: "I've grown up on Nanek in Allous. For 13 years, the only part of the universe I used to know was my village on Nanek, and the only people I used to know were its inhabitants. And now, I've seen hundreds of planets, and thousands of people all around the galaxy. But most of them have been killed at some point, and they corpses are drifting here and there in space, along with the pitiful remains of their defeated ships. The night sky is constellated with the souls of dead pilots. Our control of space gave us access to experiences our forefathers could not even dream of, but you know what? No matter how cold the graves of my ancestors on Nanek are, they are warmer than the emptiness of infinite space."]]), ("portraits/"..portrait_tam) )
+      tk.msg( _("Time for a gorgeous reward?"), _([[You start wondering if the major will remember to pay you, but his voice suddenly changes: "We definitely had better days, but you know, the true valor of a warrior reveals itself in times of adversity. The dark clouds that drift above the horizon, pushed by the cruel wings of despair, are here to challenge the strength of our Dvaered souls. And it is up to us to accept this challenge.
+   "I did not anticipate that the traitor Hamelsen could reconstruct her group of mercenaries so fast, but you already killed some of them, and Leblanc's squadron will kill even more in the near future. We will then hunt the ex-colonel Hamelsen down, and finally we will carry this invasion on.
+   "Anyway, for now, we will transfer %s to your account, as a reward for this mission, and be certain that we will need you again soon!"]]):format(fmt.credits(reward)), ("portraits/"..portrait_tam) )
       player.pay(reward)
 
       local t = time.get():tonumber()
@@ -277,7 +178,7 @@ end
 -- Encounter with Strafer on Dvaer Prime
 function strNpc()
    toldya = {0,0,0,0}
-   strafer = misn.npcAdd("discussStr", npc_name, portrait_strafer, npc_desc2)
+   strafer = misn.npcAdd("discussStr", npc_name, portrait_strafer, _("Harsh voice, frank gaze and easy trigger. The lieutenant Strafer is a Dvaered pilot."))
 end
 
 function takeoff()
@@ -305,11 +206,11 @@ function takeoff()
       StraferNspy()
 
       -- Chatter
-      hook.timer( 0.7, "message", {pilot = alpha[1], msg = spychatter0} )
-      hook.timer( 1.4, "message", {pilot = alpha[2], msg = spychatter1} )
-      hook.timer( 2.1, "message", {pilot = spy, msg = spychatter2} )
-      hook.timer( 2.8, "message", {pilot = alpha[2], msg = spychatter3} )
-      hook.timer( 5.0, "message", {pilot = alpha[2], msg = spychatter4} )
+      hook.timer( 0.7, "message", {pilot = alpha[1], msg = _("A-NightClaws Leader to all pilots: Engage and destroy this Schroedinger at all costs!")} )
+      hook.timer( 1.4, "message", {pilot = alpha[2], msg = _("A-NightClaws Second to Leader: I'm on it!")} )
+      hook.timer( 2.1, "message", {pilot = spy, msg = _("Bye, suckers!")} )
+      hook.timer( 2.8, "message", {pilot = alpha[2], msg = _("Just wait for my shredders to...")} )
+      hook.timer( 5.0, "message", {pilot = alpha[2], msg = _("Come on!")} )
 
       hook.timer( 4.0, "deathOfStrafer" )
 
@@ -320,25 +221,25 @@ end
 
 -- Player flees from the system
 function flee()
-   tk.msg(flee_title, flee_text)
+   tk.msg(_("Look who is running away!"), _("You were supposed to secure a meeting, not to run away like that!"))
    misn.finish(false)
 end
 
 -- Player discusses with Lieutenant Strafer
 function discussStr()
-   local c = tk.choice( lore_title, lore_text0, question[1], question[2], question[3], question[4], quit )
+   local c = tk.choice( _("Lieutenant Strafer"), _("What do you want to ask to the lieutenant before taking off?"), question[1], question[2], question[3], question[4], _("I am ready for action!") )
    if c <= 4 then
       if toldya[c] >= 3 then -- Strafer gets annoyed if one asks several times the same question
-         tk.msg( lore_title, lore_already_told3 )
+         tk.msg( _("Lieutenant Strafer"), _("Is it a kind of joke?") )
          toldya[c] = 0
       elseif toldya[c] == 2 then
-         tk.msg( lore_title, lore_already_told2 )
+         tk.msg( _("Lieutenant Strafer"), _("You are obsessed with this question. Just move on, please.") )
          toldya[c] = 3
       elseif toldya[c] == 1 then
-         tk.msg( lore_title, lore_already_told1 )
+         tk.msg( _("Lieutenant Strafer"), _("Hem... You asked the exact same question just before.") )
          toldya[c] = 2
       else
-         tk.msg( lore_title, lore_text[c] )
+         tk.msg( _("Lieutenant Strafer"), lore_text[c] )
          toldya[c] = 1
       end
    end
@@ -427,13 +328,13 @@ function scheduleIncoming()
    hook.timer( 200.0, "spawnHam" ) -- Hamelsen comes in
 
    -- Briefing by Leblanc.
-   tk.msg( briefing_title, briefing_text )
-   hook.timer( 4.0, "message", {pilot = alpha[1], msg = briefing0} )
-   hook.timer( 8.0, "message", {pilot = alpha[1], msg = briefing1} )
-   hook.timer( 12.0, "message", {pilot = alpha[1], msg = briefing2} )
-   hook.timer( 16.0, "message", {pilot = alpha[1], msg = briefing3} )
+   tk.msg( _("Read your messages"), _("Don't forget to read the messages Captain Leblanc will send to you. It contains valuable information.") )
+   hook.timer( 4.0, "message", {pilot = alpha[1], msg = _("I hope everyone is listening carefully.")} )
+   hook.timer( 8.0, "message", {pilot = alpha[1], msg = _("Every incoming pilot must be visually controlled by one of us.")} )
+   hook.timer( 12.0, "message", {pilot = alpha[1], msg = _("I will notify each of you when you have a pilot to control.")} )
+   hook.timer( 16.0, "message", {pilot = alpha[1], msg = _("And you will hear the following audio signal.")} )
    hook.timer( 17.0, "beepMe" )
-   hook.timer( 20.0, "message", {pilot = alpha[1], msg = briefing4} )
+   hook.timer( 20.0, "message", {pilot = alpha[1], msg = _("Last thing: I remind you to beware the Warlords: some of them may want to shoot at you because they love to watch lighter ships dodge for their lives.")} )
 end
 
 -- Play a beep
@@ -501,7 +402,7 @@ end
 -- A controlled ship is too close from station
 function toocloseControl( ind )
    if (not canland[ind]) then -- Player failed to control a ship: penalty
-      tk.msg( closer_title, closer_text )
+      tk.msg( _("An unidentified ship came close to the station"), _("A ship managed to approach the station, and you failed to control it. Fortunately, it was identified by the station's sensors and is not hostile. However, your failure to intercept it could have led to problems in the opposite case. As a consequence, your reward has been decreased.") )
       reward = reward - 10000
    end
 end
@@ -554,7 +455,7 @@ end
 -- Player checks security clearance of a ship
 function checkClearance( self )
    myjob = occupations[ rnd.rnd(1,#occupations) ]
-   tk.msg( control_title, control_text:format(myjob) )
+   tk.msg( _("Controlling incoming ship"), _([[As you approach the ship, your targeting array focuses on it, and its clearance code gets processed. You can soon read on your control pad: "This citizen is an honorable %s whose presence is required for the meeting: let the ship land on the station."]]):format(myjob) )
    self:setHilight( false )
 
    -- Change osd if needed
@@ -621,13 +522,17 @@ end
 
 function hamelsenLanded()
    if stage == 1 then -- Hamelsen managed to land. That is badbadbad.
-      tk.msg( lander_title, lander_text )
+      tk.msg( _("An unidentified ship landed on the station"), _("A ship managed to land on the station, and you failed to control it. Unidentified and potentially hostile individuals have entered the Dvaered High Command station: The mission is a failure.") )
       misn.finish(false)
    else -- Landing on Laarss: indicate the player he has to follow her
-      tk.msg( hamtitle1, hamtext1:format( player.name() ) )
-      tk.msg( hamtitle2, hamtext2:format( player.name(), haltpla:name() ) )
+      tk.msg( _("Hi there!"), _([[The fleeing ship suddenly hails you. You answer and the face of the Colonel Hamelsen emerges from your holoscreen. "No, you won't best me, %s. Not this time. Not anymore." Aware that she is now too far away for you to hope to catch her, you ask her what interest she finds in constantly harassing Major Tam. "This is all that I have left," she answers.
+   "My hate for Tam and Klank is all that remains now that my Lord is dead. I dedicated my entire life to the greatness of House Dvaered, I practiced and sharpened all my skills to serve the Army at best. When I got recruited by Lord Battleaddict, I became faithful to him because he was giving me the opportunity to serve House Dvaered through him. And then...
+   "Since the day when Klank assassinated my Lord, I have been rejected by the High Command. Rejected by the Warlords. Rejected by that nation that claims to reward Valor and Righteousness. Tell me when I have given up Valor! Tell me when I have given up Righteousness! Never! The Dvaered social contract is broken as far as I am concerned.
+   "All that remains of me is a vassal without suzerain, a colonel without regiment, a corpse without grave. I will haunt you until your demise. I will be in the way of any of your wishes, big ones as well as small ones. There will be no forgiveness, no remission, no relief, neither for you nor for me."
+   After this very encouraging speech, Hamelsen cuts off the communication channel and lands.]]):format( player.name() ) )
+      tk.msg( _("Follow her!"), _([[A new message comes from Captain Leblanc. "This is obviously a diversion! Everyone, back to your positions! %s, go and investigate on %s. Bring me the head of the ex-colonel Hamelsen!"]]):format( player.name(), haltpla:name() ) )
       misn.osdDestroy()
-      misn.osdCreate( osd_title, {osd_text1:format(haltpla:name()) } )
+      misn.osdCreate( osd_title, {_("Land on %s"):format(haltpla:name()) } )
    end
 end
 
@@ -643,7 +548,7 @@ end
 
 -- Player checks security clearance of Hamelsen: let the fun begin
 function checkHamelsen()
-   tk.msg( noanswer_title, noanswer_text:format( player.name(), hamelsen:name() ) )
+   tk.msg( _("Incoming ship refuses control"), _([[When getting in range, you receive an alarm. This ship does not have an invitation. Suddenly, you see it accelerating as if the pilot wanted to force the blockade around the station. You hear an order from Captain Leblanc: "A-NightClaws Leader to %s: intercept and destroy %s".]]):format( player.name(), hamelsen:name() ) )
    hamelsen:setHostile()
    --hamelsen:rename( _("Suspect Hyena") )
 
@@ -659,12 +564,13 @@ function checkHamelsen()
 
    stage = 2
    misn.osdDestroy()
-   misn.osdCreate( osd_title, {osd_text4:format(hamelsen:name()) } )
+   misn.osdCreate( osd_title, {_("Engage %s"):format(hamelsen:name()) } )
 end
 
 -- Discuss with an officer on Laarss
 function discussOff()
-   tk.msg( offtitle, offtext )
+   tk.msg( _("No trace of Hamelsen"), _([[You approach the soldier, who seems to recognize you. Probably your portrait has been transmitted by Captain Leblanc. "After we received the message from your captain, we seized the Hyena you were pursuing, but the pilot has managed to escape unnoticed."
+   Having no way to track Hamelsen on land, you decide it's better to take off again, and to wait for further instructions from Leblanc.]]) )
    misn.npcRm( npc )
 end
 
@@ -704,7 +610,7 @@ function deathOfStrafer()
    player.cinematics( true, { gui = true } )
    camera.set( alpha[2], true, 20000 )
 
-   tk.msg( spytitle, spytext )
+   tk.msg( _("Something is happening at the station"), _([[You start heading to the station, but you hear many messages coming from the NightClaws squadron. A Schroedinger has managed to take off unnoticed from the High Command station, presumably carrying classified information, and to sneak through the blockade. The squadrons have been taken by surprise, but Strafer is catching up.]]) )
 
    attackers = {}
    for i = 1, 10 do
@@ -738,7 +644,7 @@ end
 -- Killers go after the player around Laarss
 function spawnKillers()
    misn.osdDestroy()
-   misn.osdCreate( osd_title, {osd_text5} )
+   misn.osdCreate( osd_title, {_("Eliminate the hostile fighters")} )
 
    killers = {}
    killers[1] = pilot.add( "Hyena", "Warlords", haltpla, _("Curiatius"), {ai="baddie_norun"} )
@@ -750,16 +656,16 @@ function spawnKillers()
       hook.pilot( killers[i], "exploded", "killerDied" )
    end
 
-   tk.msg( killertitle, killertext:format(player.name()) )
+   tk.msg( _("Now, it's your turn"), _([[Your sensors suddenly pick up three hostile signals coming from Laars, just when Captain Leblanc sends her message: "To all A-NightClaw pilots: follow and intercept the hostiles." You report about the three hostiles coming at you and she answers: "%s, take care of those three. Don't let any of them escape."]]):format(player.name()) )
 
-   hook.timer( 1.0, "message", {pilot = killers[1], msg = killerchatter0:format(player.name())} )
-   hook.timer( 3.0, "message", {pilot = killers[2], msg = killerchatter1} )
-   hook.timer( 5.0, "message", {pilot = killers[1], msg = killerchatter2} )
-   hook.timer( 7.0, "message", {pilot = killers[3], msg = killerchatter3} )
-   hook.timer( 9.0, "message", {pilot = killers[1], msg = killerchatter4} )
-   hook.timer( 11.0, "message", {pilot = killers[2], msg = killerchatter5} )
-   hook.timer( 13.0, "message", {pilot = killers[1], msg = killerchatter6} )
-   hook.timer( 15.0, "message", {pilot = killers[2], msg = killerchatter7} )
+   hook.timer( 1.0, "message", {pilot = killers[1], msg = _("You fell in our trap, %s!"):format(player.name())} )
+   hook.timer( 3.0, "message", {pilot = killers[2], msg = _("You're so dead!")} )
+   hook.timer( 5.0, "message", {pilot = killers[1], msg = _("Without any support!")} )
+   hook.timer( 7.0, "message", {pilot = killers[3], msg = _("Folks, please do less chatting and more killing.")} )
+   hook.timer( 9.0, "message", {pilot = killers[1], msg = _("Aye-aye, boss!")} )
+   hook.timer( 11.0, "message", {pilot = killers[2], msg = _("Copy that!")} )
+   hook.timer( 13.0, "message", {pilot = killers[1], msg = _("I'm as silent as a carp.")} )
+   hook.timer( 15.0, "message", {pilot = killers[2], msg = _("Same for me!")} )
 end
 
 -- A killer died
@@ -767,8 +673,8 @@ function killerDied()
    deadkillers = deadkillers + 1
    if deadkillers >= 3 then -- Watch out that 3 matches #killers
       stage = 4
-      tk.msg( kiltitle, kiltext )
+      tk.msg( _("Rid of them!"), _("As the last enemy ship explodes, you watch to your sensorscreen, and notice that the alpha squadron has left the system. The fleet leader orders you to land on Dvaer Prime.") )
       misn.osdDestroy()
-      misn.osdCreate( osd_title, {osd_text1:format(destpla:name())} )
+      misn.osdCreate( osd_title, {_("Land on %s"):format(destpla:name())} )
    end
 end

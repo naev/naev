@@ -16,10 +16,8 @@ local vn = require 'vn'
 local lg = require 'love.graphics'
 local fmt = require "format"
 
-shiplover_name    = _("Ship Enthusiast")
 shiplover_portrait= "shiplover.webp"
 shiplover_image   = "shiplover.webp"
-shiplover_desc    = _("You see a surprisingly young individual who is playing with a small ship model.")
 shiplover_priority= 5
 
 local function getNUnique( t, n )
@@ -322,7 +320,7 @@ function create ()
    end
 
    -- Set up NPC and hooks
-   evt.npcAdd("approach_shiplover", shiplover_name, shiplover_portrait, shiplover_desc, shiplover_priority )
+   evt.npcAdd("approach_shiplover", _("Ship Enthusiast"), shiplover_portrait, _("You see a surprisingly young individual who is playing with a small ship model."), shiplover_priority )
    hook.takeoff("event_end")
 end
 function event_end ()
@@ -335,7 +333,7 @@ function approach_shiplover ()
 
    vn.reset()
    vn.scene()
-   local sl = vn.newCharacter( shiplover_name, { image=shiplover_image, flip=false} )
+   local sl = vn.newCharacter( _("Ship Enthusiast"), { image=shiplover_image, flip=false} )
    vn.transition()
 
    -- First meeting

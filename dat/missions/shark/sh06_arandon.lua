@@ -32,13 +32,9 @@ title = {}
 text = {}
 osd_msg = {}
 npc_desc = {}
-bar_desc = {}
 
 title[1] = _("Let's go")
 text[1] = _([["Is your ship ready for the dangers of the Nebula?"]])
-
-refusetitle = _("...Or not")
-refusetext = _([["Come back when you are ready."]])
 
 title[2] = _("Go")
 text[2] = _([[Smith once again steps in your ship in order to go to a meeting.]])
@@ -61,7 +57,6 @@ misn_desc = _("You are to transport Arnold Smith to %s so that he can talk about
 
 -- NPC
 npc_desc[1] = _("Arnold Smith")
-bar_desc[1] = _([[He's waiting for you.]])
 
 -- OSD
 osd_title = _("A Journey To %s")
@@ -84,7 +79,7 @@ function create ()
       misn.finish(false)
    end
 
-   misn.setNPC(npc_desc[1], "neutral/unique/arnoldsmith.webp", bar_desc[1])
+   misn.setNPC(npc_desc[1], "neutral/unique/arnoldsmith.webp", _([[He's waiting for you.]]))
 end
 
 function accept()
@@ -113,7 +108,7 @@ function accept()
       landhook = hook.land("land")
       enterhook = hook.enter("enter")
       else
-      tk.msg(refusetitle, refusetext)
+      tk.msg(_("...Or not"), _([["Come back when you are ready."]]))
       misn.finish(false)
    end
 end

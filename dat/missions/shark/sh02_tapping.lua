@@ -41,7 +41,6 @@ title = {}
 text = {}
 osd_msg = {}
 npc_desc = {}
-bar_desc = {}
 
 title[1] = _("Nexus Shipyards needs you (again)")
 text[1] = _([[You sit at Smith's table and ask him if he has a job for you. "Of course," he answers. "But this time, it's... well...
@@ -49,9 +48,6 @@ text[1] = _([[You sit at Smith's table and ask him if he has a job for you. "Of 
     "But matters just got a little worse for us: it seems that House Sirius is looking to get in on the shipbuilding business as well, and the Frontier are prime targets. If they succeed, the Lancelot design could be completely pushed out of Frontier space, and we would be crushed in that market between House Dvaered and House Sirius. Sure, the FLF would still be using a few Pacifiers, but it would be a token business at best, and not to mention the authorities would start associating us with terrorism.
     "So we've conducted a bit of espionage. We have an agent who has recorded some hopefully revealing conversations between a House Sirius sales manager and representatives of the Frontier. All we need you to do is meet with the agent, get the recordings, and bring them back to me on %s in the %s system." You raise an eyebrow.
     "It's not exactly legal. That being said, you're just doing the delivery, so you almost certainly won't be implicated. What do you say? Is this something you can do?"]])
-
-refusetitle = _("Sorry, not interested")
-refusetext = _([["OK, sorry to bother you."]])
 
 title[2] = _("The job")
 text[2] = _([["I'm glad to hear it. Go meet our agent on %s in the %s system. Oh, yes, and I suppose I should mention that I'm known as 'James Neptune' to the agent. Good luck!"]])
@@ -69,9 +65,7 @@ misn_desc = _("Nexus Shipyards is in competition with House Sirius.")
 
 -- NPC
 npc_desc[1] = _("Arnold Smith")
-bar_desc[1] = _([[Arnold Smith is here. Perhaps he might have another job for you.]])
 npc_desc[2] = _("Nexus's agent")
-bar_desc[2] = _([[This guy seems to be the agent Arnold Smith was talking about.]])
 
 -- OSD
 osd_title = _("Unfair Competition")
@@ -93,7 +87,7 @@ function create ()
    paysys = system.get(psyname)
    paypla = planet.get(pplname)
 
-   misn.setNPC(npc_desc[1], "neutral/unique/arnoldsmith.webp", bar_desc[1])
+   misn.setNPC(npc_desc[1], "neutral/unique/arnoldsmith.webp", _([[Arnold Smith is here. Perhaps he might have another job for you.]]))
 end
 
 function accept()
@@ -120,7 +114,7 @@ function accept()
       landhook = hook.land("land")
       enterhook = hook.enter("enter")
    else
-      tk.msg(refusetitle, refusetext)
+      tk.msg(_("Sorry, not interested"), _([["OK, sorry to bother you."]]))
       misn.finish(false)
    end
 end
@@ -128,7 +122,7 @@ end
 function land()
    --The player is landing on the mission planet to get the box
    if stage == 0 and planet.cur() == mispla then
-      agent = misn.npcAdd("beginrun", npc_desc[2], "neutral/unique/nexus_agent.webp", bar_desc[2])
+      agent = misn.npcAdd("beginrun", npc_desc[2], "neutral/unique/nexus_agent.webp", _([[This guy seems to be the agent Arnold Smith was talking about.]]))
    end
 
    --Job is done

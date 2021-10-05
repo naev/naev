@@ -28,7 +28,6 @@ local fmt = require "format"
 local emp = require "common.empire"
 local lmisn = require "lmisn"
 
-bar_desc = _("Lieutenant Czesc from the Empire Armada Shipping Division is sitting at the bar.")
 misn_title = _("Sirius Long Distance Recruitment")
 misn_desc = _("Deliver a shipping diplomat for the Empire to Madria in the Esker system")
 title = {}
@@ -53,7 +52,7 @@ function create ()
    targetworld_sys = system.get("Esker")
    targetworld = planet.get("Madria")
 
-   misn.setNPC( _("Lieutenant"), "empire/unique/czesc.webp", bar_desc )
+   misn.setNPC( _("Lieutenant"), "empire/unique/czesc.webp", _("Lieutenant Czesc from the Empire Armada Shipping Division is sitting at the bar.") )
 end
 
 

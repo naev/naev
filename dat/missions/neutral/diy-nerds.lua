@@ -26,7 +26,6 @@ local pir = require "common.pirate"
 local fmt = require "format"
 
 -- Bar information, describes how the NPC appears in the bar
-bar_desc = _("You see a bunch of guys and gals, excitedly whispering over some papers, which seem to contain column after column of raw numbers. Two of them don't participate in the babbling, but look at you expectantly.")
 
 -- Mission details.
 misn_title = _("DIY Nerds")
@@ -139,10 +138,7 @@ textosd[7] = _("You didn't pick up the nerds in time")
 -- stage 3
 textosd[8] = _("Return the nerds to %s")
 
-textmsg = {}
 -- displayed if you leave without the nerd's authorization
-textmsg[1] = _("Have the nerds not told you to stay in the system? Mission failed!")
-textmsg[2] = _("Have the nerds not told you to pick them up at the bar? Mission failed!")
 
 -- the mission cargo (names as in commodity.xml)
 misn_cargo1 = N_("Group of Nerds")
@@ -156,7 +152,7 @@ misn_cargoamount2 = 4
 outfit = "Unicorp PT-16 Core System"
 
 function create ()
-   misn.setNPC( _("Young People"), "neutral/unique/mia.webp", bar_desc )
+   misn.setNPC( _("Young People"), "neutral/unique/mia.webp", _("You see a bunch of guys and gals, excitedly whispering over some papers, which seem to contain column after column of raw numbers. Two of them don't participate in the babbling, but look at you expectantly.") )
 end
 
 function accept ()
@@ -340,7 +336,7 @@ end
 
 -- hooked to leaving the system in stage 2
 function nerds_jump()
-   player.msg(textmsg[1])
+   player.msg(_("Have the nerds not told you to stay in the system? Mission failed!"))
    misn.finish(true)
 end
 
@@ -348,7 +344,7 @@ end
 function nerds_takeoff()
    hook.rm(jhook)
    hook.rm(lhook)
-   player.msg(textmsg[2])
+   player.msg(_("Have the nerds not told you to pick them up at the bar? Mission failed!"))
    misn.finish(true)
 end
 

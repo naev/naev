@@ -34,15 +34,11 @@ title = {}
 text = {}
 osd_msg = {}
 npc_desc = {}
-bar_desc = {}
 
 title[1] = _("The mission")
 text[1] = _([["Hello again. As you know, I've agreed with the FLF on a contract that will extend our sales of ships to them substantially. Of course, this deal must remain a secret, which is why it is being done through a false black market dealer.
     "However, we have reason to suspect that a few key influential pirates may have their eyes on the FLF as possible buyers of the Skull and Bones pirate ships. We don't think the FLF will have any interest in those ships, but the pirates' ambitions could give them motivation to attack our false dealer's trade posts, destroying our deal with the FLF anyway. We of course can't have that.
     "So what we want you to do, quite simply, is to eliminate these pirates. It's not that many of them; there are four pirates we need eliminated, and thankfully, they're all spread out. That being said, some of them do have quite big ships, so you will have to make sure you can handle that. Are you willing to do this job for us?"]])
-
-refusetitle = _("Sorry, not interested")
-refusetext = _([["I'm sorry to hear that. Don't hesitate to come back if you change your mind."]])
 
 title[2] = _("Very good")
 text[2] = _([["So, here are the details we have gathered about these pirates:
@@ -65,7 +61,6 @@ misn_desc = _("Nexus Shipyards has tasked you with killing four pirates.")
 
 -- NPC
 npc_desc[1] = _("Arnold Smith")
-bar_desc[1] = _([[Perhaps it would be worthwhile to see if he has another job for you.]])
 
 -- OSD
 osd_title = _("The Last Detail")
@@ -106,7 +101,7 @@ function create ()
       misn.finish(false)
    end
 
-   misn.setNPC(npc_desc[1], "neutral/unique/arnoldsmith.webp", bar_desc[1])
+   misn.setNPC(npc_desc[1], "neutral/unique/arnoldsmith.webp", _([[Perhaps it would be worthwhile to see if he has another job for you.]]))
 end
 
 function accept()
@@ -147,7 +142,7 @@ function accept()
       hook.land("land")
 
    else
-      tk.msg(refusetitle, refusetext)
+      tk.msg(_("Sorry, not interested"), _([["I'm sorry to hear that. Don't hesitate to come back if you change your mind."]]))
       misn.finish(false)
    end
 end

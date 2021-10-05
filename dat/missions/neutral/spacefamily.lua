@@ -21,9 +21,6 @@
 local lmisn = require "lmisn"
 local neu = require "common.neutral"
 
-
-shipname = _("August")
-
 title = {}
 text = {}
 directions = {}
@@ -39,9 +36,6 @@ text[2] = _([[Harrus is about to launch into another anecdote about his existenc
 title[2] = _("Next stop")
 directions[1] = _([["I know just the place," Harrus tells you. "Take us to planet %s in the %s system. I'm sure a man of my calibre can find everything he needs there. Captain, please notify me when we arrive." With that, Harrus turns and rejoins his family. The kids seem in the process of redecorating (if not wrecking) your quarters, and despite the apologetic glance the woman gives you you can't help but wonder if you did the right thing responding to that SOS.]])
 title[3] = _("Distractions on the bridge")
-harrass_msg = _([[You are going over a routine navigation check when Harrus enters your cabin unannounced. He seems to have recovered from his distressed state, and now radiates confidence.
-    "Captain," he says to you. "I hope I don't have to remind you that we must get to our destination as soon as possible. I have a wife and children to think of and frankly I find your, ah, facilities a bit lacking."
-    You consider ordering Harrus off your bridge, but he doesn't seem the kind of man to back off, so the only thing you would accomplish is to sour the mood on your ship. You inform Harrus that you're making every effort to get his family to a safe haven, which seems to satisfy him. Finally alone again, you take a moment to subside before completing that check.]])
 directions[2] = _([[Harrus steps out of your ship and takes a look around the spaceport you docked at. "No, no. This won't do at all," he says disapprovingly. "This place is a mess! Look at the dust and grime!" He rounds on you. "How are we supposed to make a decent living in a dump like this? You've brought us to the wrong place altogether. I must say I'm disappointed. I demand you take us away from this abysmal hole this minute! Let's see... Yes, %s in %s will do. At least they're civilized there!"
     You attempt to remind Harrus that it was in fact he who asked you to take him to this system in the first place, and that the spaceport is hardly a representation of the entire world, but the man doesn't want to hear it. He stalks back into your ship without another word, leaving you annoyed and frustrated. Harrus's wife worriedly peeks around the corner of the hatch, silently eyeing you her sympathy.
     You heave a sigh, and proceed to the registration desk to get the docking formalities out of the way.]])
@@ -62,9 +56,6 @@ misn_desc[1] = _("A shipwrecked space family has enlisted your aid. Can you take
 misn_desc[2] = _("Take the space family to %s in the %s system")
 
 -- Aborted mission
-msg_abortTitle = _("A parting of ways")
-msg_abort_space = _([[You unceremoniously shove your passengers out of the airlock and into the coldness of space. You're done playing taxi; it's time to get back to important things!]])
-msg_abort_landed = _([[You unceremoniously shove your passengers out of the airlock, leaving them to their fate on this planet. You're done playing taxi; it's time to get back to important things!]])
 
 -- OSD stuff
 osd_title = {}
@@ -89,7 +80,7 @@ function create ()
 
    -- Intro text, player meets family
    tk.msg(title[1], text[1])
-   tk.msg(title[1], string.format(text[2], shipname))
+   tk.msg(title[1], string.format(text[2], _("August")))
 
    local c = misn.cargoNew( N_("Space Family"), N_("A family who you rescued in space.") )
    carg_id = misn.cargoAdd( c, 0 )
@@ -182,14 +173,16 @@ function enter()
 end
 
 function harrassme()
-   tk.msg(title[3], harrass_msg)
+   tk.msg(title[3], _([[You are going over a routine navigation check when Harrus enters your cabin unannounced. He seems to have recovered from his distressed state, and now radiates confidence.
+    "Captain," he says to you. "I hope I don't have to remind you that we must get to our destination as soon as possible. I have a wife and children to think of and frankly I find your, ah, facilities a bit lacking."
+    You consider ordering Harrus off your bridge, but he doesn't seem the kind of man to back off, so the only thing you would accomplish is to sour the mood on your ship. You inform Harrus that you're making every effort to get his family to a safe haven, which seems to satisfy him. Finally alone again, you take a moment to subside before completing that check.]]))
 end
 
 function abort ()
    if inspace then
-      tk.msg(msg_abortTitle, msg_abort_space)
+      tk.msg(_("A parting of ways"), _([[You unceremoniously shove your passengers out of the airlock and into the coldness of space. You're done playing taxi; it's time to get back to important things!]]))
    else
-      tk.msg(msg_abortTitle, msg_abort_landed)
+      tk.msg(_("A parting of ways"), _([[You unceremoniously shove your passengers out of the airlock, leaving them to their fate on this planet. You're done playing taxi; it's time to get back to important things!]]))
    end
    misn.cargoJet(carg_id)
    misn.finish(true)

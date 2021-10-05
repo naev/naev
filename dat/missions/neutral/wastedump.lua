@@ -44,10 +44,6 @@ abort_text[1] = _("Sick and tired of smelling garbage, you illegally jettison th
 abort_text[2] = _("You decide that the nearest waste dump location is too far away for you to bother to go to and simply jettison the containers of waste. You hope you don't get caught.")
 abort_text[3] = _("You dump the waste containers into space illegally, noting that you should make sure not to get caught by authorities.")
 
-abort_landed_text = _("In your desperation to rid yourself of the garbage, you clumsily eject it from your cargo pod while you are still landed. Garbage spills all over the hangar and local officials immediately take notice. After you apologize profusely and explain the situation away as an accident, the officials let you off with a fine of %s.")
-
-noland_msg = _("Get lost, waste dumping scum! We don't want you here!")
-
 misn_title = _("Waste Dump")
 misn_reward = _("%s per tonne")
 misn_desc = _("Take as many waste containers off of here as your ship can hold and drop them off at any authorized garbage collection facility. You will be paid immediately, but any attempt to illegally jettison the waste into space will be severely punished if you are caught.")
@@ -133,7 +129,7 @@ function abort ()
    if landed then
       misn.cargoRm( cid )
       local fine = 2 * credits
-      vntk.msg( "", abort_landed_text:format( fmt.credits( fine ) ) )
+      vntk.msg( "", _("In your desperation to rid yourself of the garbage, you clumsily eject it from your cargo pod while you are still landed. Garbage spills all over the hangar and local officials immediately take notice. After you apologize profusely and explain the situation away as an accident, the officials let you off with a fine of %s."):format( fmt.credits( fine ) ) )
       player.pay( -fine )
       misn.finish( false )
    else
@@ -198,7 +194,7 @@ function abort ()
       end
 
       -- No landing, filthy waste dumper!
-      player.allowLand( false, noland_msg )
+      player.allowLand( false, _("Get lost, waste dumping scum! We don't want you here!") )
 
       misn.finish( true )
    end

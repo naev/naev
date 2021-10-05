@@ -30,11 +30,7 @@ local fleet = require "fleet"
 local fmt = require "format"
 local zlk = require "common.zalek"
 
-
-bar_desc = _("You see a scientist who is apparently looking for someone.")
-mtitle = _("Advanced Nebula Research")
 misn_reward = _("%s")
-mdesc = _("Escort the transport ship to the %s in the %s system. Make sure to stay close to the transport ship and wait until they jumped out of the system safely.")
 title = {}
 title[1] = _("Bar")
 title[2] = _("Departure")
@@ -60,17 +56,6 @@ text[6] = _([["The situation would have escalated anyway." argues Dr. Mensing, t
 text[7] = _([[After leaving the ship you meet up with Dr. Mensing who hands you over a chip worth %s and thanks you for your help.
     "We'll be able to return to Jorla safely from here on. You did science a great favor today. I'm sure the data we collected will help us to understand the cause for the Sol nebula's volatility."]])
 
-refueltitle = _("A short break")
-refueltext = _([[Once you are done with the refuel operations, you meet Dr. Mensing on her way back to the transport ship.
-    "I just met up with another 'scientist' working on this station. The purpose of this station is to collect data about the PSO nebula, but their scans are absolute garbage. Apparently the station is being run by an independent university. They couldn't possible keep up with the Za'lek standards in terms of proper scientific methods."
-    She is visibly upset about the apparent lack of dedication to science. "Let's head back to %s. Our own measurements are completed by now."]])
-
-transporterdeathtitle = _("The transporter was destroyed!")
-transporterdeathtext = _("The transporter was destroyed and all scientists died! Even worse, you failed science!")
-landfailtitle = _("You abandoned your mission!")
-landfailtext = _("You have landed, abandoning your mission to escort the transport ship. You failed science miserably!")
-transporterdistress = _("We're under attack!")
-
 -- Mission info stuff
 osd_msg   = {}
 osd_title = _("Advanced Nebula Research")
@@ -89,7 +74,7 @@ function create()
     credits = 800e3
 
     -- Spaceport bar stuff
-    misn.setNPC(_("A scientist"), "zalek/unique/mensing.webp", bar_desc)
+    misn.setNPC(_("A scientist"), "zalek/unique/mensing.webp", _("You see a scientist who is apparently looking for someone."))
 end
 
 function accept()
@@ -121,9 +106,9 @@ function accept()
 
     -- Set up mission information
     destsys = t_sys[1]
-    misn.setTitle(mtitle)
+    misn.setTitle(_("Advanced Nebula Research"))
     misn.setReward(string.format(misn_reward, fmt.credits(credits)))
-    misn.setDesc(string.format(mdesc, _(station), t_sys[5]:name()))
+    misn.setDesc(string.format(_("Escort the transport ship to the %s in the %s system. Make sure to stay close to the transport ship and wait until they jumped out of the system safely."), _(station), t_sys[5]:name()))
     nextsys = lmisn.getNextSystem(system.cur(), destsys) -- This variable holds the system the player is supposed to jump to NEXT.
 
     misn.accept()
@@ -201,10 +186,12 @@ end
 
 function land()
     if not exited then
-        tk.msg(landfailtitle, landfailtext)
+        tk.msg(_("You abandoned your mission!"), _("You have landed, abandoning your mission to escort the transport ship. You failed science miserably!"))
         misn.finish(false)
     elseif planet.cur() == planet.get(station) and not station_visited then
-        tk.msg(refueltitle, string.format(refueltext, _(homeworld)))
+        tk.msg(_("A short break"), string.format(_([[Once you are done with the refuel operations, you meet Dr. Mensing on her way back to the transport ship.
+    "I just met up with another 'scientist' working on this station. The purpose of this station is to collect data about the PSO nebula, but their scans are absolute garbage. Apparently the station is being run by an independent university. They couldn't possible keep up with the Za'lek standards in terms of proper scientific methods."
+    She is visibly upset about the apparent lack of dedication to science. "Let's head back to %s. Our own measurements are completed by now."]]), _(homeworld)))
         station_visited = true
     elseif planet.cur() == planet.get(homeworld) then
         tk.msg(title[5], string.format(text[7], fmt.credits(credits)))
@@ -271,7 +258,7 @@ function transporterAttacked(p, attacker)
 
     if not shuttingup then
         shuttingup = true
-        p:comm(player.pilot(), transporterdistress)
+        p:comm(player.pilot(), _("We're under attack!"))
         hook.timer(5.0, "transporterShutup") -- Shuts him up for at least 5s.
     end
 end
@@ -332,7 +319,7 @@ end
 
 -- Handle the destruction of the transporter. Abort the mission.
 function transporterDeath()
-    tk.msg(transporterdeathtitle, transporterdeathtext)
+    tk.msg(_("The transporter was destroyed!"), _("The transporter was destroyed and all scientists died! Even worse, you failed science!"))
     misn.finish(false)
 end
 

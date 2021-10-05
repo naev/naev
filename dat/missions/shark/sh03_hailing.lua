@@ -32,15 +32,11 @@ title = {}
 text = {}
 osd_msg = {}
 npc_desc = {}
-bar_desc = {}
 
 title[1] = _("A new job")
 text[1] = _([["Hello there, nice to meet you again! According to the information that you brought us, the negotiations between the Frontier officials and House Sirius are proceeding very quickly. We have to act now. There is a member of the Frontier Council who, for political reasons, could help us.
     "I can't send him a message without being spotted by the Sirii, so I need you to contact him. He's probably piloting his Hawking in the %s system. Go there, hail him, and let him know that I have to see him on %s in the %s system. He will understand.
     "Can I count on you to do this for me?"]])
-
-refusetitle = _("Sorry, not interested")
-refusetext = _([["OK, come back when you are interested."]])
 
 title[2] = _("Time to go")
 text[2] = _([["Fantastic! I am known as Donald Ulnish to the Council member. Good luck."]])
@@ -58,7 +54,6 @@ misn_desc = _("Nexus Shipyards asks you to help initiate a secret meeting")
 
 -- NPC
 npc_desc[1] = _("Arnold Smith")
-bar_desc[1] = _([[This guy is looking more and more shifty.]])
 
 -- OSD
 osd_title = _("Invitation")
@@ -82,7 +77,7 @@ function create ()
       misn.finish(false)
    end
 
-   misn.setNPC(npc_desc[1], "neutral/unique/arnoldsmith.webp", bar_desc[1])
+   misn.setNPC(npc_desc[1], "neutral/unique/arnoldsmith.webp", _([[This guy is looking more and more shifty.]]))
 end
 
 function accept()
@@ -108,7 +103,7 @@ function accept()
       landhook = hook.land("land")
       enterhook = hook.enter("enter")
       else
-      tk.msg(refusetitle, refusetext)
+      tk.msg(_("Sorry, not interested"), _([["OK, come back when you are interested."]]))
       misn.finish(false)
    end
 end

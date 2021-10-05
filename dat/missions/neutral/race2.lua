@@ -25,7 +25,6 @@ local fmt = require "format"
 
 text = {}
 title = {}
-ftitle = {}
 ftext = {}
 
 title[1] = _("Another race")
@@ -36,9 +35,6 @@ text[5] = _([["There are two races you can participate in: an easy one, which is
 title[6] = _("Hard Mode")
 text[6] = _([["You want a challenge huh? Remember, no afterburners on your ship or you will not be allowed to race. Let's go have some fun!"]])
 
-choice1 = _("Easy")
-choice2 = _("Hard")
-
 title[2] = _("Easy Mode ")
 text[2] = _([["Let's go have some fun then!"]])
 
@@ -46,32 +42,16 @@ title[3] = _("Checkpoint %s reached")
 text[3] = _("Proceed to Checkpoint %s")
 
 text[4] = _("Proceed to land at %s")
-refusetitle = _("Refusal")
-refusetext = _([["I guess we'll need to find another pilot."]])
 
-wintitle = _("You Won!")
-wintext = _([[A man in a suit and tie takes you up onto a stage. A large name tag on his jacket says 'Melendez Corporation'. "Congratulations on your win," he says, shaking your hand, "that was a great race. On behalf of Melendez Corporation, I would like to present to you your prize money of %s!" He hands you one of those fake oversized cheques for the audience, and then a credit chip with the actual prize money on it.]])
-firstwintext = _([[A man in a suit and tie takes you up onto a stage. A large name tag on his jacket says 'Melendez Corporation'. "Congratulations on your win," he says, shaking your hand, "that was a great race. On behalf of Melendez Corporation, I would like to present to you your trophy and prize money of %s!" He hands you one of those fake oversized cheques for the audience, and then a credit chip with the actual prize money on it. At least the trophy looks cool.]])
-
-ftitle[1] = _("Illegal ship!")
 ftext[1] = _([["You have switched to a ship that's not allowed in this race. Mission failed."]])
 
-ftitle[2] = _("You left the race!")
 ftext[2] = _([["Because you left the race, you have been disqualified."]])
 
-ftitle[3] = _("You failed to win the race.")
 ftext[3] = _([[As you congratulate the winner on a great race, the laid back person comes up to you.
    "That was a lot of fun! If you ever have time, let's race again. Maybe you'll win next time!"]])
 
-ftitle[4] = _("Illegal ship!")
 ftext[4] = _([["You have outfits on your ship which is not allowed in this race in hard mode. Mission failed."]])
 
-NPCname = _("A laid back person")
-NPCdesc = _("You see a laid back person, who appears to be one of the locals, looking around the bar, apparently in search of a suitable pilot.")
-
-misndesc = _("You're participating in another race!")
-
-OSDtitle = _("Racing Skills 2")
 OSD = {}
 OSD[1] = _("Board checkpoint 1")
 OSD[2] = _("Board checkpoint 2")
@@ -87,10 +67,6 @@ chatter[5] = _("Hooyah")
 chatter[6] = _("Next!")
 timermsg = "%s"
 target = {1,1,1,1}
-marketing = _("This race is sponsored by Melendez Corporation. Problem-free ships for problem-free voyages!")
-positionmsg = _("%s just reached checkpoint %s")
-landmsg = _("%s just landed at %s and finished the race")
-
 
 function create ()
 
@@ -101,7 +77,7 @@ function create ()
    end
    cursys = system.cur()
    curplanet = planet.cur()
-   misn.setNPC(NPCname, "neutral/unique/laidback.webp", NPCdesc)
+   misn.setNPC(_("A laid back person"), "neutral/unique/laidback.webp", _("You see a laid back person, who appears to be one of the locals, looking around the bar, apparently in search of a suitable pilot."))
    credits_easy = rnd.rnd(20000, 100000)
    credits_hard = rnd.rnd(200000, 300000)
 end
@@ -111,10 +87,10 @@ function accept ()
    if tk.yesno(title[1], text[1]) then
       misn.accept()
       OSD[4] = string.format(OSD[4], curplanet:name())
-      misn.setDesc(misndesc)
-      misn.osdCreate(OSDtitle, OSD)
+      misn.setDesc(_("You're participating in another race!"))
+      misn.osdCreate(_("Racing Skills 2"), OSD)
       local s = text[5]:format(fmt.credits(credits_easy), fmt.credits(credits_hard))
-      choice, choicetext = tk.choice(title[5], s, choice1, choice2)
+      choice, choicetext = tk.choice(title[5], s, _("Easy"), _("Hard"))
       if choice == 1 then
          credits = credits_easy
          tk.msg(title[2], text[2])
@@ -125,19 +101,19 @@ function accept ()
       misn.setReward(fmt.credits(credits))
       hook.takeoff("takeoff")
       else
-      tk.msg(refusetitle, refusetext)
+      tk.msg(_("Refusal"), _([["I guess we'll need to find another pilot."]]))
    end
 end
 
 function takeoff()
    if player.pilot():ship():class() ~= "Yacht" then
-      tk.msg(ftitle[1], ftext[1])
+      tk.msg(_("Illegal ship!"), ftext[1])
       misn.finish(false)
    end
    if choice ~= 1 then
       for k,v in ipairs(player.pilot():outfits()) do
          if v == outfit.get("Unicorp Light Afterburner") or v == outfit.get("Hellburner") then
-            tk.msg(ftitle[4], ftext[4])
+            tk.msg(_("Illegal ship!"), ftext[4])
             misn.finish(false)
          end
       end
@@ -227,7 +203,7 @@ function counter()
       hp1 = hook.pilot(racers[1], "idle", "racer1idle")
       hp2 = hook.pilot(racers[2], "idle", "racer2idle")
       hp3 = hook.pilot(racers[3], "idle", "racer3idle")
-      player.msg(marketing)
+      player.msg(_("This race is sponsored by Melendez Corporation. Problem-free ships for problem-free voyages!"))
       else
       player.omsgChange(omsg, timermsg:format(countdown), 0)
       counterhook = hook.timer(1.0, "counter")
@@ -235,7 +211,7 @@ function counter()
 end
 
 function racer1idle(p)
-   player.msg( string.format( positionmsg, p:name(),target[1]) )
+   player.msg( string.format( _("%s just reached checkpoint %s"), p:name(),target[1]) )
    p:broadcast(string.format( chatter[4], target[1]))
    target[1] = target[1] + 1
    hook.timer(2.0, "nexttarget1")
@@ -250,7 +226,7 @@ function nexttarget1()
 end
 
 function racer2idle(p)
-   player.msg( string.format( positionmsg, p:name(),target[2]) )
+   player.msg( string.format( _("%s just reached checkpoint %s"), p:name(),target[2]) )
    p:broadcast(chatter[5])
    target[2] = target[2] + 1
    hook.timer(2.0, "nexttarget2")
@@ -264,7 +240,7 @@ function nexttarget2()
    end
 end
 function racer3idle(p)
-   player.msg( string.format( positionmsg, p:name(),target[3]) )
+   player.msg( string.format( _("%s just reached checkpoint %s"), p:name(),target[3]) )
    p:broadcast(chatter[6])
    target[3] = target[3] + 1
    hook.timer(2.0, "nexttarget3")
@@ -283,7 +259,7 @@ end
 function board(ship)
    for i,j in ipairs(checkpoint) do
       if ship == j and target[4] == i then
-         player.msg( string.format( positionmsg, player.name(),target[4]) )
+         player.msg( string.format( _("%s just reached checkpoint %s"), player.name(),target[4]) )
          misn.osdActive(i+1)
          target[4] = target[4] + 1
          if target[4] == 4 then
@@ -298,31 +274,31 @@ function board(ship)
 end
 
 function jumpin()
-   tk.msg(ftitle[2], ftext[2])
+   tk.msg(_("You left the race!"), ftext[2])
    misn.finish(false)
 end
 
 function racerland(p)
-   player.msg( string.format(landmsg, p:name(), curplanet:name()))
+   player.msg( string.format(_("%s just landed at %s and finished the race"), p:name(), curplanet:name()))
 end
 
 function land()
    if target[4] == 4 then
       if racers[1]:exists() and racers[2]:exists() and racers[3]:exists() then
          if choice==2 and player.numOutfit("Racing Trophy") <= 0 then
-            tk.msg(wintitle, firstwintext:format(fmt.credits(credits)))
+            tk.msg(_("You Won!"), _([[A man in a suit and tie takes you up onto a stage. A large name tag on his jacket says 'Melendez Corporation'. "Congratulations on your win," he says, shaking your hand, "that was a great race. On behalf of Melendez Corporation, I would like to present to you your trophy and prize money of %s!" He hands you one of those fake oversized cheques for the audience, and then a credit chip with the actual prize money on it. At least the trophy looks cool.]]):format(fmt.credits(credits)))
             player.outfitAdd("Racing Trophy")
          else
-            tk.msg(wintitle, wintext:format(fmt.credits(credits)))
+            tk.msg(_("You Won!"), _([[A man in a suit and tie takes you up onto a stage. A large name tag on his jacket says 'Melendez Corporation'. "Congratulations on your win," he says, shaking your hand, "that was a great race. On behalf of Melendez Corporation, I would like to present to you your prize money of %s!" He hands you one of those fake oversized cheques for the audience, and then a credit chip with the actual prize money on it.]]):format(fmt.credits(credits)))
          end
          player.pay(credits)
          misn.finish(true)
       else
-         tk.msg(ftitle[3], ftext[3])
+         tk.msg(_("You failed to win the race."), ftext[3])
          misn.finish(false)
       end
    else
-      tk.msg(ftitle[2], ftext[2])
+      tk.msg(_("You left the race!"), ftext[2])
       misn.finish(false)
    end
 end

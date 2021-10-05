@@ -58,11 +58,7 @@ npc_desc = _("You see Chelsea looking contemplative.")
 osd_desc    = {}
 osd_desc[1] = _("Escort Chelsea to %s in the %s system.")
 
-cheljump_msg = _("Chelsea has jumped to %s.")
-chelland_msg = _("Chelsea has landed on %s.")
-chelkill_msg = _("MISSION FAILED: A rift in the space-time continuum causes you to have never met Chelsea in that bar.")
 chelflee_msg = _("MISSION FAILED: Chelsea has abandoned the mission.")
-plflee_msg = _("MISSION FAILED: You have abandoned the mission.")
 
 log_text = _([[You helped escort Chelsea through a dangerous cargo delivery mission where you had to protect her from the thugs of a shady company. She said that she would like to get back in touch with you again sometime for another mission.]])
 
@@ -201,7 +197,7 @@ function jumpin ()
       jumpNext()
       hook.timer( 5.0, "thug_timer" )
    else
-      fail( plflee_msg )
+      fail( _("MISSION FAILED: You have abandoned the mission.") )
    end
 end
 
@@ -228,13 +224,13 @@ end
 
 
 function chelsea_death ()
-   fail( chelkill_msg )
+   fail( _("MISSION FAILED: A rift in the space-time continuum causes you to have never met Chelsea in that bar.") )
 end
 
 
 function chelsea_jump( p, jump_point )
    if jump_point:dest() == lmisn.getNextSystem( system.cur(), missys ) then
-      player.msg( cheljump_msg:format( jump_point:dest():name() ) )
+      player.msg( _("Chelsea has jumped to %s."):format( jump_point:dest():name() ) )
       chelsea_jumped = true
    else
       fail( chelflee_msg )
@@ -244,7 +240,7 @@ end
 
 function chelsea_land( p, planet )
    if planet == misplanet then
-      player.msg( chelland_msg:format( planet:name() ) )
+      player.msg( _("Chelsea has landed on %s."):format( planet:name() ) )
       chelsea_jumped = true
    else
       fail( chelflee_msg )

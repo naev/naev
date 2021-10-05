@@ -40,14 +40,10 @@ title = {}
 text = {}
 osd_msg = {}
 npc_desc = {}
-bar_desc = {}
 
 title[1] = _("Nice to see you again!")
 text[1] = _([["Hello, %s! Are you ready to take part in another sales mission?
     "As you know, the FLF is a heavy user of our ships, but they're also heavy users of Dvaered ships, chiefly the Vendetta design. Since House Dvaered is an enemy of the FLF, we see this as an opportunity to expand our sales: we want to convince the FLF leaders to buy more Nexus ships and fewer Dvaered ships. This will be through a false contraband company so that word doesn't get out that we're supporting terrorists by selling them ships. What do you say? Can you help us once again?"]])
-
-refusetitle = _("Sorry, not interested")
-refusetext = _([["Alright, then. I'll see if anyone else is interested."]])
 
 title[2] = _("Good luck")
 text[2] = _([["Perfect! So, this mission is pretty simple: I want you to pass on this proposal to them." He hands you a data chip. "It's a request to meet with the FLF leaders on %s. If all goes well, I'll be asking you to take me there next.
@@ -68,7 +64,6 @@ misn_desc = _("Nexus Shipyards is looking to strike a better deal with the FLF."
 
 -- NPC
 npc_desc[1] = _("Arnold Smith")
-bar_desc[1] = _([[It looks like he has yet another job for you.]])
 
 -- OSD
 osd_title = _("The FLF Contact")
@@ -86,7 +81,7 @@ function create ()
 
    osd_msg[2] = osd_msg[2]:format(paypla:name(), paysys:name())
 
-   misn.setNPC(npc_desc[1], "neutral/unique/arnoldsmith.webp", bar_desc[1])
+   misn.setNPC(npc_desc[1], "neutral/unique/arnoldsmith.webp", _([[It looks like he has yet another job for you.]]))
 end
 
 function accept()
@@ -108,7 +103,7 @@ function accept()
       hook.hail( "hail" )
       hook.board( "board" )
    else
-      tk.msg(refusetitle, refusetext)
+      tk.msg(_("Sorry, not interested"), _([["Alright, then. I'll see if anyone else is interested."]]))
       misn.finish(false)
    end
 end

@@ -33,7 +33,6 @@ local fleet = require "fleet"
 local emp = require "common.empire"
 local fmt = require "format"
 
-bar_desc = _("You notice Lt. Commander Dimitri at one of the booths.")
 misn_title = _("Collective Espionage")
 misn_reward = fmt.credits(700e3)
 misn_desc = {}
@@ -71,7 +70,7 @@ function create ()
         abort()
     end
 
-   misn.setNPC( _("Dimitri"), "empire/unique/dimitri.webp", bar_desc )
+   misn.setNPC( _("Dimitri"), "empire/unique/dimitri.webp", _("You notice Lt. Commander Dimitri at one of the booths.") )
 end
 
 

@@ -34,13 +34,10 @@ destjumpname = "Doranthex"
 
 title = {}
 text = {}
-failtitle = {}
 failtext = {}
 osd_desc = {}
 comm_msg = {}
 chatter = {}
-passtitle = {}
-passtext = {}
 
 title[1] = _("The job offer")
 text[1] = _([[You walk up to the Dvaered official at his table. He mentions that he is looking for a pilot like yourself.
@@ -53,22 +50,12 @@ text[2] = _([["My General has just retired from the High Command and is now look
 text[3] = _([["That is where you come in. You will jump into %s and find the Hawk and its escorts. Before the Hawk is able to reach hyperspace, you will fire on it, and cause the fighters to engage with you. At this point, you should run away from the Hawk and the jump point, so that the fighters will give chase. Then we will jump into the system and destroy the Hawk before the fighters can return."]])
 text[4] = _([["We will jump in approximately 80 hectoseconds after you jump into %s, so the fighters must be far enough away by then not to come back and attack us."]])
 
-refusetitle = _("Nuts")
-refusetext = _([["I see. In that case, I'm going to have to ask you to leave. My job is to recruit a civilian, but you're clearly not the one I'm looking for. You may excuse yourself, citizen."]])
-
-failtitle[1] = _("You ran away!")
 failtext[1] = _("You have left the system without first completing your mission. The operation ended in failure.")
 
-failtitle[2] = _("The Hawk got away!")
 failtext[2] = _("The Hawk jumped out of the system. You have failed your mission.")
 
-failtitle[3] = _("The Hawk got away!")
 failtext[3] = _("The Hawk landed back on %s. You have failed your mission.")
-failtitle[4] = _("The Hawk is safe.")
 failtext[4] = _("The Hawk was able to fend off the attackers and destroy their flagship. You have failed your mission.")
-
-passtitle[1] = _("The Dvaered official sent you a message.")
-passtext[1] = _([["Thanks for the distraction. I've sent you a picture of all the medals I was awarded. Oh, and I also deposited 800,000 credits in your account."]])
 
 npc_desc = _("A high ranking Dvaered officer. It looks like he might have a job offer for you.")
 
@@ -122,7 +109,7 @@ function accept()
       hook.enter("enter")
       hook.land("land")
    else
-      tk.msg(refusetitle, refusetext)
+      tk.msg(_("Nuts"), _([["I see. In that case, I'm going to have to ask you to leave. My job is to recruit a civilian, but you're clearly not the one I'm looking for. You may excuse yourself, citizen."]]))
       misn.finish()
    end
 end
@@ -177,7 +164,7 @@ function enter()
       hook.pilot( hawk, "death", "hawk_dead" )
       hook.timer(80.0, "spawn_fleet")
    elseif missionstarted then -- The player has jumped away from the mission theater, which instantly ends the mission.
-      tk.msg(failtitle[1], failtext[1])
+      tk.msg(_("You ran away!"), failtext[1])
       faction.get("Dvaered"):modPlayerSingle(-5)
       abort()
    end
@@ -185,20 +172,20 @@ end
 
 function land()
    if missionstarted then -- The player has landed, which instantly ends the mission.
-      tk.msg(failtitle[1], failtext[1])
+      tk.msg(_("You ran away!"), failtext[1])
       faction.get("Dvaered"):modPlayerSingle(-5)
       abort()
    end
 end
 
 function hawk_jump () -- Got away
-   tk.msg(failtitle[2], failtext[2])
+   tk.msg(_("The Hawk got away!"), failtext[2])
    faction.get("Dvaered"):modPlayerSingle(-5)
    hook.timer(10.0, "abort")
 end
 
 function hawk_land () -- Got away
-   tk.msg(failtitle[3], failtext[3])
+   tk.msg(_("The Hawk got away!"), failtext[3])
    faction.get("Dvaered"):modPlayerSingle(-5)
    hook.timer(10.0, "abort")
 end
@@ -345,7 +332,7 @@ function jump_fleet_cap_dead () -- mission failed
 
    hawk:broadcast(chatter[12])
    hawk:setNoDeath()
-   tk.msg(failtitle[4], failtext[4])
+   tk.msg(_("The Hawk is safe."), failtext[4])
    faction.get("Dvaered"):modPlayerSingle(-5)
    hawk:land(planet.get(destplanetname))
    for i, j in ipairs(fleetdv) do
@@ -393,7 +380,7 @@ end
 
 function complete()
    cleanup()
-   tk.msg(passtitle[1], passtext[1])
+   tk.msg(_("The Dvaered official sent you a message."), _([["Thanks for the distraction. I've sent you a picture of all the medals I was awarded. Oh, and I also deposited 800,000 credits in your account."]]))
    camera.set(player.pilot())
    player.pay(800000)
    jump_fleet[6]:broadcast(string.format(chatter[13], destplanetname))

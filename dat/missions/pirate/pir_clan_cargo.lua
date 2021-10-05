@@ -31,7 +31,6 @@ local fmt = require "format"
 local portrait = require "portrait"
 local lmisn = require "lmisn"
 
-bar_desc = _("You see a pirate lord raving about something. A significant crowd has gathered around.")
 misn_title = _("Clans trade")
 misn_desc = _("Deliver some boxes to the pirate clan of %s, in the %s system.")
 title = {}
@@ -63,7 +62,7 @@ function create ()
    dest = planets[index][1]
    sys = planets[index][2]
 
-   misn.setNPC( _("Pirate Lord"), portrait.getMil("Pirate"), bar_desc )
+   misn.setNPC( _("Pirate Lord"), portrait.getMil("Pirate"), _("You see a pirate lord raving about something. A significant crowd has gathered around.") )
 end
 
 

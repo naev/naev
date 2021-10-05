@@ -37,9 +37,6 @@ require "cargo_common"
 local fmt = require "format"
 local portrait = require "portrait"
 
-
-bar_desc = _("You see a merchant at the bar in a clear state of anxiety.")
-
 --- Missions details
 misn_title = _("Anxious Merchant")
 
@@ -55,13 +52,6 @@ title[1] = _("Spaceport Bar")
 title[2] = _("Happy Day")
 title[3] = _("Deliver the Goods")
 title[4] = _("Deliver the Goods... late")
-
-
-full_title = _("No Room")
-full_text = _([[You don't have enough cargo space to accept this mission.]])
-
-slow_title = _("Too slow")
-slow_text = _([[The goods have to arrive in %s but it will take %s for your ship to reach %s. Accept the mission anyway?]])
 
 misn_desc = _("You decided to help a fraught merchant by delivering some goods to %s.")
 
@@ -86,7 +76,7 @@ function create()
       misn.finish(false)
    end
 
-   misn.setNPC(_("Merchant"), portrait.get("Trader"), bar_desc) -- creates the merchant at the bar
+   misn.setNPC(_("Merchant"), portrait.get("Trader"), _("You see a merchant at the bar in a clear state of anxiety.")) -- creates the merchant at the bar
 
    stu_distance = 0.2 * travel_dist
    stu_jumps = 10300 * num_jumps
@@ -110,14 +100,14 @@ function accept()
       misn.finish()
    end
    if player.pilot():cargoFree() < cargo_size then
-      tk.msg(full_title, full_text)  -- Not enough space
+      tk.msg(_("No Room"), _([[You don't have enough cargo space to accept this mission.]]))  -- Not enough space
       misn.finish()
    end
    player.pilot():cargoAdd(cargo, cargo_size)
    local player_best = cargoGetTransit(time_limit, num_jumps, travel_dist)
    player.pilot():cargoRm(cargo, cargo_size)
    if time_limit < player_best then
-      if not tk.yesno(slow_title, slow_text:format((time_limit - time.get()):str(), (player_best - time.get()):str(), dest_planet:name())) then
+      if not tk.yesno(_("Too slow"), _([[The goods have to arrive in %s but it will take %s for your ship to reach %s. Accept the mission anyway?]]):format((time_limit - time.get()):str(), (player_best - time.get()):str(), dest_planet:name())) then
          misn.finish()
       end
    end

@@ -29,7 +29,6 @@ local fmt = require "format"
 local emp = require "common.empire"
 
 -- Mission details
-bar_desc = _("You see Commander Soldner who is expecting you.")
 misn_title = _("Empire Shipping Delivery")
 misn_desc = {}
 misn_desc[1] = _("Pick up a package at %s in the %s system")
@@ -52,8 +51,6 @@ text[5] = _([[Workers quickly unload the package as mysteriously as it was loade
 text[6] = _([[You arrive at %s and report to Commander Soldner. He greets you and starts talking. "I heard you encountered resistance. At least you managed to deliver the package. Great work there. I've managed to get you cleared for the Heavy Weapon License. You'll still have to pay the fee for getting it, though.
     "If you're interested in more work, meet me in the bar in a bit. I've got some paperwork I need to finish first."]])
 -- Errors
-errtitle = {}
-errtitle[1] = _("Need More Space")
 
 log_text = _([[You successfully completed a package delivery for the Empire. As a result, you have been cleared for the Heavy Weapon License and can now buy it at an outfitter. Commander Soldner said that you can meet him in the bar at Halir if you're interested in more work.]])
 
@@ -70,7 +67,7 @@ function create ()
    end
 
    -- Bar NPC
-   misn.setNPC( _("Soldner"), "empire/unique/soldner.webp", bar_desc )
+   misn.setNPC( _("Soldner"), "empire/unique/soldner.webp", _("You see Commander Soldner who is expecting you.") )
 end
 
 function accept ()
@@ -114,7 +111,7 @@ function land ()
       -- Make sure player has room.
       if player.pilot():cargoFree() < 3 then
          local needed = 3 - player.pilot():cargoFree()
-         tk.msg( errtitle[1], string.format( gettext.ngettext(
+         tk.msg( _("Need More Space"), string.format( gettext.ngettext(
             "You do not have enough space to load the packages. You need to make room for %d more tonne.",
             "You do not have enough space to load the packages. You need to make room for %d more tonnes.",
             needed), needed ) )

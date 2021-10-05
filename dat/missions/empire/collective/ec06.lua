@@ -32,7 +32,6 @@ require "proximity"
 local fleet = require "fleet"
 local emp = require "common.empire"
 
-bar_desc = _("You see Commodore Keer at a table with a couple of other pilots. She motions for you to sit down with them.")
 misn_title = _("Operation Cold Metal")
 misn_reward = _("Fame and Glory")
 misn_desc = {}
@@ -43,7 +42,6 @@ title = {}
 title[1] = _("Bar")
 title[2] = _("Operation Cold Metal")
 title[3] = _("Mission Success")
-coward_title = _("Cowardly Behavior")
 text = {}
 text[1] = _([[You join Commodore Keer at her table.
     She begins, "We're going to finally attack the Collective. We've gotten the Emperor himself to bless the mission and send some of his better pilots. Would you be interested in joining the destruction of the Collective?"]])
@@ -53,22 +51,12 @@ text[3] = _([[As you do your approach to land on %s you notice big banners place
 text[4] = _([[She continues. "As a symbol of appreciation, you should find a deposit of 5,000,000 credits in your account. There will be a celebration later today in the officer's room if you want to join in."
     And so ends the Collective threat...
     You don't remember much of the after party, but you wake up groggily in your ship clutching an Empire officer's boot.]])
-coward_text = _([[You receive a message signed by Commodore Keer:
-    "There is no room for cowards in the Empire's fleet."
-    The signature does seem valid.]])
-
-start_comm = _("To all pilots, this is mission control! We are ready to begin our attack! Engage at will!")
 
 osd_msg = {}
 osd_msg[1] = _("Fly to %s via %s and meet up with the Imperial fleet")
 osd_msg[2] = _("Defeat the Starfire")
-osd_msg2alt = _("Defeat the Starfire and the Trinity")
 osd_msg[3] = _("Report back")
 osd_msg["__save"] = true
-
-log_text_succeed = _([[You helped the Empire to finally destroy the Collective once and for all. The Collective is now no more.]])
-log_text_fail = _([[You abandoned your mission to help the Empire destroy the Collective. Commander Keer transmitted a message: "There is no room for cowards in the Empire's fleet."]])
-
 
 function create ()
     missys = {system.get("C-59"), system.get("C-28"), system.get("C-00")}
@@ -76,7 +64,7 @@ function create ()
         misn.finish( false )
     end
 
-   misn.setNPC( _("Keer"), "empire/unique/keer.webp", bar_desc )
+   misn.setNPC( _("Keer"), "empire/unique/keer.webp", _("You see Commodore Keer at a table with a couple of other pilots. She motions for you to sit down with them.") )
 end
 
 
@@ -106,7 +94,7 @@ function accept ()
    misn.setDesc( string.format(misn_desc[1], misn_target_sys1:name() ))
    osd_msg[1] = osd_msg[1]:format(misn_final_sys:name(), misn_target_sys2:name())
     if var.peek("trinity") then
-        osd_msg[2] = osd_msg2alt
+        osd_msg[2] = _("Defeat the Starfire and the Trinity")
     end
    misn.osdCreate(misn_title, osd_msg)
 
@@ -184,7 +172,7 @@ function jumpin ()
                 j:setVisible()
             end
 
-            fleetE[1]:broadcast(start_comm)
+            fleetE[1]:broadcast(_("To all pilots, this is mission control! We are ready to begin our attack! Engage at will!"))
             misn.osdActive(2)
             misn_stage = 1
         elseif system.cur() == misn_target_sys1 or system.cur() == misn_target_sys2 then
@@ -207,8 +195,10 @@ end
 
 
 function fail_timer ()
-   tk.msg( coward_title, coward_text )
-   emp.addCollectiveLog( log_text_fail )
+   tk.msg( _("Cowardly Behavior"), _([[You receive a message signed by Commodore Keer:
+    "There is no room for cowards in the Empire's fleet."
+    The signature does seem valid.]]) )
+   emp.addCollectiveLog( _([[You abandoned your mission to help the Empire destroy the Collective. Commander Keer transmitted a message: "There is no room for cowards in the Empire's fleet."]]) )
    misn.finish( true )
 end
 
@@ -279,7 +269,7 @@ function land ()
       tk.msg( title[3], text[4] )
       player.outfitAdd("Left Boot")
 
-      emp.addCollectiveLog( log_text_succeed )
+      emp.addCollectiveLog( _([[You helped the Empire to finally destroy the Collective once and for all. The Collective is now no more.]]) )
 
       misn.finish(true) -- Run last
    end

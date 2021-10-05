@@ -38,7 +38,6 @@ local neu = require "common.neutral"
 
 
 -- Bar information
-bar_desc = _("The woman waves at you a bit desperately.")
 
 -- Mission details
 misn_title  = _("The Lost Brother")
@@ -66,8 +65,6 @@ text[5] = _([[You radio the ship with a message saying you have his sister on bo
     "My sister? What the heck could she want from me? Prepare for docking."]])
 text[7] = _([[The woman stands next to you while the airlock opens. You see the grin on the man's face change to a baffled expression, then hear the sound of a blaster. Before you even realize what has happened, the lady rushes past you and closes the airlock.
     You find an arrangement of credit chips she left in your ship along with a note: "Sorry."]])
-refusetitle = _("Sorry, I can't")
-refusetext = _([["How can you be such a heartless person? What has this universe become?..."]])
 
 log_text = _([[You were tricked into aiding an assassination. A woman claimed she needed help finding her brother, but when you brought her to her "brother", she killed him and ran off, leaving behind an arrangement of credit chips and a note that simply said, "Sorry."]])
 
@@ -88,7 +85,7 @@ function create ()
    reward = rnd.rnd(40,60)*1000
 
    -- Spaceport bar stuff
-   misn.setNPC( _("Ordinary Woman"), "neutral/unique/fakesister.webp", bar_desc )
+   misn.setNPC( _("Ordinary Woman"), "neutral/unique/fakesister.webp", _("The woman waves at you a bit desperately.") )
 end
 
 
@@ -98,7 +95,7 @@ Mission entry point.
 function accept ()
    -- Mission details:
    if not tk.yesno( title[1], text[1] ) then
-      tk.msg(refusetitle, refusetext)
+      tk.msg(_("Sorry, I can't"), _([["How can you be such a heartless person? What has this universe become?..."]]))
       misn.finish()
    end
    misn.accept()

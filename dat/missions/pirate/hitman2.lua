@@ -26,14 +26,11 @@ local pir = require "common.pirate"
 
 
 -- Bar information
-bar_desc = _("You see the shifty merchant who hired you previously. He looks somewhat anxious, perhaps he has more business to discuss.")
 
 -- Mission details
 misn_title  = _("Assassin")
 misn_reward = _("Some easy money")
 misn_desc = _("A shifty businessman has tasked you with killing merchant competition in the %s system.")
-osd_desc_1 = _("Kill Trader pilots in the %s system")
-osd_desc_2 = _("Return to %s in the %s system for payment")
 
 -- Text
 title    = {}
@@ -56,7 +53,7 @@ function create ()
    targetsystem = system.get("Delta Pavonis") -- Find target system
 
    -- Spaceport bar stuff
-   misn.setNPC( _("Shifty Trader"),  "neutral/unique/shifty_merchant.webp", bar_desc)
+   misn.setNPC( _("Shifty Trader"),  "neutral/unique/shifty_merchant.webp", _("You see the shifty merchant who hired you previously. He looks somewhat anxious, perhaps he has more business to discuss."))
 end
 
 
@@ -84,8 +81,8 @@ function accept ()
    misn.setDesc( string.format( misn_desc, targetsystem:name() ) )
    misn_marker = misn.markerAdd( targetsystem, "low" )
    local osd_desc = {}
-   osd_desc[1] = osd_desc_1:format( targetsystem:name() )
-   osd_desc[2] = osd_desc_2:format( misn_base:name(), misn_base_sys:name() )
+   osd_desc[1] = _("Kill Trader pilots in the %s system"):format( targetsystem:name() )
+   osd_desc[2] = _("Return to %s in the %s system for payment"):format( misn_base:name(), misn_base_sys:name() )
    misn.osdCreate( misn_title, osd_desc )
    -- Some flavour text
    tk.msg( title[1], string.format( text[2], targetsystem:name()) )

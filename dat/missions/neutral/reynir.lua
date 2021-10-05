@@ -45,7 +45,6 @@ local neu = require "common.neutral"
 -- This section stores the strings (text) for the mission.
 
 -- Bar information, describes how he appears in the bar
-bar_desc = _("You see an old man with a cap on, on which the letters R-E-Y-N-I-R are imprinted.")
 
 -- Mission details. We store some text for the mission with specific variables.
 misn_title = _("Rich reward from space!")
@@ -82,13 +81,9 @@ osd_msg[2] = _("Take Reynir home to %s")
 msg_abortTitle = ""
 msg_abort = [[]]
 
-log_text_good = _([[You took an old man named Reynir on a ride in outer space. He was happy and paid you in the form of %s of hot dogs.]])
-log_text_bad = _([[You took an old man named Reynir on a ride in outer space, but he was made very angry because the distance you traveled led to him getting injured and losing his hearing. Still, he begrudgingly paid you in the form of %s of hot dogs.]])
-
-
 function create ()
    -- Note: this mission does not make any system claims.
-   misn.setNPC( _("Reynir"), "neutral/unique/reynir.webp", bar_desc )
+   misn.setNPC( _("Reynir"), "neutral/unique/reynir.webp", _("You see an old man with a cap on, on which the letters R-E-Y-N-I-R are imprinted.") )
 
    -- Mission variables
    misn_base, misn_base_sys = planet.cur()
@@ -132,11 +127,11 @@ function landed()
       if misn_bleeding then
          reward = math.min(1, player.pilot():cargoFree())
          reward_text = text[7]
-         log_text = log_text_bad
+         log_text = _([[You took an old man named Reynir on a ride in outer space, but he was made very angry because the distance you traveled led to him getting injured and losing his hearing. Still, he begrudgingly paid you in the form of %s of hot dogs.]])
       else
          reward = player.pilot():cargoFree()
          reward_text = text[5]
-         log_text = log_text_good
+         log_text = _([[You took an old man named Reynir on a ride in outer space. He was happy and paid you in the form of %s of hot dogs.]])
       end
       tk.msg( title[4], string.format(reward_text, fmt.tonnes(reward)) )
       player.pilot():cargoAdd( cargoname, reward )

@@ -47,7 +47,6 @@ t_pla[1] = t_sys[1]:planets()[1]
 misn_title = _("The one with the Runaway")
 misn_reward = _("A peek at the new prototype and some compensation for your efforts")
 misn_desc = _("You've been hired by Dr. Geller to retrieve his prototype that ran away.")
-bar_desc = _("You see Dr. Geller going from one person to the next, seemingly asking for something.")
 
 title[1] = _([[In the bar]])
 title[2] = _([[On the intercom]])
@@ -73,14 +72,11 @@ text[14] = _([["NOOOOOOOOO! My drone! You imbecile! You failed me!"]])
 text[15] = _([["The things I do for science! Now let me go back to my lab and analyze the drone. I need to figure out exactly what happened and what went wrong. Once I know more I might need you again. Oh, and here, for your service!" A small bag containing a credit chip and a tiny toy drone is tossed your way.]])
 
 -- text if the mission is failed
-fail_text = _([["NOOOOOO! What have you done!? My prototype! It's going to take me weeks to rebuild it! You incompetent nincompoop!"]])
 -- osd_msg
 osd_msg[1] = _("Go to the %s system and hail the prototype")
 osd_msg[2] = _("Disable the prototype")
 osd_msg[3] = _("Return the prototype to %s in the %s system")
 -- refuestext
-refusetitle = _("No Science Today")
-refusetext = _("Don't you care about science?...")
 
 log_text = _([[You helped Dr. Geller retrieve his lost prototype drone.]])
 
@@ -93,12 +89,12 @@ function create ()
    end
 
    -- Spaceport bar stuff
-   misn.setNPC( _("Dr. Geller"),  "zalek/unique/geller.webp", bar_desc )
+   misn.setNPC( _("Dr. Geller"),  "zalek/unique/geller.webp", _("You see Dr. Geller going from one person to the next, seemingly asking for something.") )
 end
 function accept()
    -- Mission details:
    if not tk.yesno( title[1], text[1] ) then
-      tk.msg(refusetitle, refusetext)
+      tk.msg(_("No Science Today"), _("Don't you care about science?..."))
       misn.finish()
    end
    tk.msg( title[1], text[2] )
@@ -194,7 +190,7 @@ function sp_baddies()
 end
 
 function failed ()
-   tk.msg(title[2],fail_text)
+   tk.msg(title[2],_([["NOOOOOO! What have you done!? My prototype! It's going to take me weeks to rebuild it! You incompetent nincompoop!"]]))
    misn.finish(false)
 end
 

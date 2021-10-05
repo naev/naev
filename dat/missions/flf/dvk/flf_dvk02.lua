@@ -73,15 +73,12 @@ title[11] = _("Just The Edge We Need")
 text[11] = _([[You greet Benito in a friendly manner as always, sharing your story and telling her the good news before handing her a chip with the map data on it. She seems pleased. "Excellent," she says. "We'll begin sending our trading convoys out right away. We'll need lots of supplies for our next mission! Thank you for your service, %s. Your pay has been deposited into your account. It will be a while before we'll be ready for your next big mission, so you can do some missions on the mission computer in the meantime. And don't forget to visit the Pirate worlds yourself and bring your own ship up to par!
     "Oh, one last thing. Make sure you stay on good terms with the pirates, yeah? The next thing you should probably do is buy a Skull and Bones ship; pirates tend to respect those who use their ships more than those who don't. And make sure to destroy Dvaered scum with the pirates around! That should keep your reputation up." You make a mental note to do what she suggests as she excuses herself and heads off.]])
 
-comm_pirate = _("Har, har, har! You're hailing the wrong ship, buddy. Latest word from the boss is you're a weakling just waiting to be plundered!")
-comm_pirate_friendly = _("I guess you're not so bad after all!")
 comm_boss_insults = {}
 comm_boss_insults[1] = _("You call those weapons? They look more like babies' toys to me!")
 comm_boss_insults[2] = _("What a hopeless weakling!")
 comm_boss_insults[3] = _("What, did you really think I would be impressed that easily?")
 comm_boss_insults[4] = _("Keep hailing all you want, but I don't listen to weaklings!")
 comm_boss_insults[5] = _("We'll have your ship plundered in no time at all!")
-comm_boss_incomplete = _("Don't be bothering me without the loot, you hear?")
 
 misn_title = _("Pirate Alliance")
 misn_desc = _("You are to seek out pirates in the %s system and try to convince them to become trading partners with the FLF.")
@@ -96,12 +93,7 @@ osd_desc[1] = _("Fly to the %s system")
 osd_desc[2] = _("Find pirates and try to talk to (hail) them")
 osd_desc["__save"] = true
 
-osd_apnd    = {}
-osd_apnd[3] = _("Destroy some of the weaker pirate ships, then try to hail the Kestrel again")
-osd_apnd[4] = _("Bring %s of Ore to the Pirate Kestrel in the %s system")
-
-osd_final   = _("Return to FLF base")
-osd_desc[3] = osd_final
+osd_desc[3] = _("Return to FLF base")
 
 log_text = _([[You helped the Pirates to build a new base in the Anger system and established a trade alliance between the FLF and the Pirates. Benito suggested that you should buy a Skull and Bones ship from the pirates and destroy Dvaered ships in areas where pirates are to keep your reputation with the pirates up. She also suggested you may want to upgrade your ship now that you have access to the black market.]])
 
@@ -155,9 +147,9 @@ end
 function pilot_hail_pirate ()
    player.commClose()
    if stage <= 1 then
-      player.msg( comm_pirate )
+      player.msg( _("Har, har, har! You're hailing the wrong ship, buddy. Latest word from the boss is you're a weakling just waiting to be plundered!") )
    else
-      player.msg( comm_pirate_friendly )
+      player.msg( _("I guess you're not so bad after all!") )
    end
 end
 
@@ -195,8 +187,8 @@ function pilot_hail_boss ()
          if marker ~= nil then misn.markerRm( marker ) end
          marker = misn.markerAdd( missys2, "plot" )
 
-         osd_desc[4] = osd_apnd[4]:format( fmt.tonnes( ore_needed ), missys2:name() )
-         osd_desc[5] = osd_final
+         osd_desc[4] = _("Bring %s of Ore to the Pirate Kestrel in the %s system"):format( fmt.tonnes( ore_needed ), missys2:name() )
+         osd_desc[5] = _("Return to FLF base")
          misn.osdCreate( osd_title, osd_desc )
          misn.osdActive( 4 )
       else
@@ -206,8 +198,8 @@ function pilot_hail_boss ()
             boss_hailed = true
             if stage <= 0 then
                tk.msg( title[5], text[5] )
-               osd_desc[3] = osd_apnd[3]
-               osd_desc[4] = osd_final
+               osd_desc[3] = _("Destroy some of the weaker pirate ships, then try to hail the Kestrel again")
+               osd_desc[4] = _("Return to FLF base")
                misn.osdCreate( osd_title, osd_desc )
                misn.osdActive( 3 )
             else
@@ -224,7 +216,7 @@ function pilot_hail_boss ()
       misn.osdActive( 5 )
       if marker ~= nil then misn.markerRm( marker ) end
    else
-      player.msg( comm_boss_incomplete )
+      player.msg( _("Don't be bothering me without the loot, you hear?") )
    end
 end
 
@@ -272,7 +264,7 @@ function enter ()
 
          misn.osdActive( 2 )
       else
-         osd_desc[3] = osd_final
+         osd_desc[3] = _("Return to FLF base")
          osd_desc[4] = nil
          misn.osdCreate( osd_title, osd_desc )
          misn.osdActive( 1 )

@@ -18,15 +18,6 @@
 -- Player is attacked by a hitman. If player disables and boards the hitman, this enables the Dvaered Base mission
 --]]
 -- TODO: this event is neutralized because the "Dvaered Base" mission has not been written yet
-attk_warn = _("You are being attacked! You may get information from your attacker if you catch them alive!")
-
-death_title = _("Target destroyed")
-death_text = _([[While your attacker's ship gets transformed into a fireball, you hesitate between feeling relieved to be alive and disappointed not to have taken the pilot alive. There will however probably be other opportunities to do that.]])
-
-board_title = _("Boarding aborted")
-board_text = _([[After you have docked with the hostile ship, your crew combat androids start attacking its airlock with their torches. You recieve a message from your attacker:
-   "Get away from there! There is a detonator on the airlock! You'll get both of us killed!" At this very moment, a huge explosion illuminates your cockpit. The shock disconnects both ships and dispatches your androids. Your enemy's vessel swerves with a force that breaks its hull apart. You think the pilot is dead, but soon you hear his message:
-   "Damn. I thought being transpierced by a spar would hurt more. I guess you're not in a better shape than me. Too bad, none of us will see the Division Marius destroy the Dvaered fleet! Wait, is that my intestine drifting away? Oho! Come back. Hey! You belong to me. Come back into the inside of me, my intestine."]])
 
 function create ()
    source_system = system.cur()
@@ -111,19 +102,21 @@ end
 
 -- Player is attacked: remind what to do
 function playerAttacked()
-   omsg = player.omsgAdd(attk_warn, 5, 50)
+   omsg = player.omsgAdd(_("You are being attacked! You may get information from your attacker if you catch them alive!"), 5, 50)
    hook.rm(atthook)
 end
 
 -- Ambusher is death: event failed
 function baddieDead()
-   tk.msg(death_title,death_text)
+   tk.msg(_("Target destroyed"),_([[While your attacker's ship gets transformed into a fireball, you hesitate between feeling relieved to be alive and disappointed not to have taken the pilot alive. There will however probably be other opportunities to do that.]]))
    evt.finish(false)
 end
 
 -- Ambusher was boarded: start the Dvaered Base mission
 function baddieBoard()
-   tk.msg(board_title,board_text)
+   tk.msg(_("Boarding aborted"),_([[After you have docked with the hostile ship, your crew combat androids start attacking its airlock with their torches. You recieve a message from your attacker:
+   "Get away from there! There is a detonator on the airlock! You'll get both of us killed!" At this very moment, a huge explosion illuminates your cockpit. The shock disconnects both ships and dispatches your androids. Your enemy's vessel swerves with a force that breaks its hull apart. You think the pilot is dead, but soon you hear his message:
+   "Damn. I thought being transpierced by a spar would hurt more. I guess you're not in a better shape than me. Too bad, none of us will see the Division Marius destroy the Dvaered fleet! Wait, is that my intestine drifting away? Oho! Come back. Hey! You belong to me. Come back into the inside of me, my intestine."]]))
    -- TODO: unboard and destroy the ship
    naev.missionStart("Dvaered Base")
    evt.finish(true)

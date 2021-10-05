@@ -27,11 +27,8 @@ local love_shaders = require 'love_shaders'
 gambling_priority = 3
 important_npc_priority = 4
 terminal = minerva.terminal
-blackjack_name = _("Blackjack")
 blackjack_portrait = "blackjack.png"
-blackjack_desc = _("Seems to be one of the more popular card games where you can play blackjack against a \"cyborg chicken\".")
 blackjack_image = minerva.chicken.image
-chuckaluck_name = _("Chuck-a-luck")
 if var.peek("minerva_chuckaluck_change") then
    chuckaluck_portrait = portrait.get() -- Becomes a random NPC
    chuckaluck_image = portrait.getFullPath( chuckaluck_portrait )
@@ -39,7 +36,6 @@ else
    chuckaluck_portrait = minerva.mole.portrait
    chuckaluck_image = minerva.mole.image
 end
-chuckaluck_desc = _("A fast-paced luck-based betting game using dice.")
 greeter_portrait = portrait.get() -- TODO replace?
 
 -- Special
@@ -91,8 +87,8 @@ function create()
 
    -- Create NPCs
    npc_terminal = evt.npcAdd( "approach_terminal", terminal.name, terminal.portrait, terminal.description, gambling_priority )
-   npc_blackjack = evt.npcAdd( "approach_blackjack", blackjack_name, blackjack_portrait, blackjack_desc, gambling_priority )
-   npc_chuckaluck = evt.npcAdd( "approach_chuckaluck", chuckaluck_name, chuckaluck_portrait, chuckaluck_desc, gambling_priority )
+   npc_blackjack = evt.npcAdd( "approach_blackjack", _("Blackjack"), blackjack_portrait, _("Seems to be one of the more popular card games where you can play blackjack against a \"cyborg chicken\"."), gambling_priority )
+   npc_chuckaluck = evt.npcAdd( "approach_chuckaluck", _("Chuck-a-luck"), chuckaluck_portrait, _("A fast-paced luck-based betting game using dice."), gambling_priority )
 
    -- Some conditional NPCs
    if player.misnDone("Maikki's Father 2") then

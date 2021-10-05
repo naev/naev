@@ -87,12 +87,6 @@ text[4] = _([[You jump out of %s with the sweat still running down your face. Th
 title[5] = _("Left behind")
 text[5] = _([[Eight pilots step forward. The rest of you stand and watch as they file out the door. The portmaster spares a withering glance for those left behind.
     "Don't get your petticoats caught in the crossfire on your way out of atmo," he sneers. Then he turns to follow his volunteers.]])
-bounce_title = _("Not done yet.")
-bounce_text = _("The system isn't safe yet. Get back out there!")
-noReward = _("No reward for you.")
-noDesc = _("Watch others defend the system.")
-noTitle = _("Watch the action.")
-
 
 -- Create the mission on the current planet, and present the first Bar text.
 function create ()
@@ -131,9 +125,9 @@ function create ()
       misn.accept()
       var.push( "dts_firstSystem", "planet_name")
       tk.msg( title[5], text[5])
-      misn.setReward( noReward)
-      misn.setDesc( noDesc)
-      misn.setTitle( noTitle)
+      misn.setReward( _("No reward for you."))
+      misn.setDesc( _("Watch others defend the system."))
+      misn.setTitle( _("Watch the action."))
       defender = false
 
       -- hook an abstract deciding function to player entering a system when not part of defense
@@ -240,7 +234,7 @@ function celebrate_victory()
       tk.msg( title[3], string.format( text[3], system_name ) )
       misn.finish( true)
    else
-      tk.msg( bounce_title, bounce_text)   -- If any pirates still alive, send player back out.
+      tk.msg( _("Not done yet."), _("The system isn't safe yet. Get back out there!"))   -- If any pirates still alive, send player back out.
       player.takeoff()
    end
 end

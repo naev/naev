@@ -29,7 +29,6 @@ npc_desc[3] = _([[Strafer plays cards with a few other soldiers. Of course, they
 
 pay_title = _("Do you want to repay DHC?")
 pay_text = _("You still owe %s credits to the High Command. Do you want to repay now?")
-poor_text = _("You don't have enough money.")
 
 log_text = _("You repaid the Dvaered High Command. For now, your collaboration with House Dvaered has not been lucrative AT ALL.")
 
@@ -49,7 +48,7 @@ function pay()
          var.push("dv_pirate_debt", false)
          evt.finish(true)
       else
-         tk.msg(pay_title,poor_text)
+         tk.msg(pay_title,_("You don't have enough money."))
          evt.finish(false)
       end
    end

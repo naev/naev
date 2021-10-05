@@ -37,13 +37,8 @@ text[2] = _([["Excellent! My in-law will send someone to meet you at the spacepo
 
 text[3] = _([[As promised, there's someone at the spaceport who accepts the crate. In return, you receive a number of credit chips worth 200,000 credits, as per the arrangement. You go back into your ship to put the chips away before heading off to check in with the local authorities. But did you just hear something squeak...?]])
 
-NPCname = _("A Fyrra civilian")
-NPCdesc = _("There's a civilian here, from the Fyrra echelon by the looks of him. He's got some kind of crate with him.")
-
 misndesc = _("You've been hired to transport a crate of specially engineered rodents to %s (%s system).")
-misnreward = _("You will be paid 200,000 credits on arrival.")
 
-OSDtitle = _("Animal transport")
 OSD = {}
 OSD[1] = _("Fly to the %s system and land on planet %s")
 
@@ -74,7 +69,7 @@ function create ()
     misndesc = misndesc:format(destplanet:name(), destsys:name())
     OSD[1] = OSD[1]:format(destsys:name(), destplanet:name())
 
-    misn.setNPC(NPCname, "sirius/unique/rodentman.webp", NPCdesc)
+    misn.setNPC(_("A Fyrra civilian"), "sirius/unique/rodentman.webp", _("There's a civilian here, from the Fyrra echelon by the looks of him. He's got some kind of crate with him."))
 end
 
 
@@ -82,8 +77,8 @@ function accept ()
     if tk.yesno(title[1], text[1]:format(destplanet:name(), destsys:name(), destplanet:name())) then
         misn.accept()
         misn.setDesc(misndesc)
-        misn.setReward(misnreward)
-        misn.osdCreate(OSDtitle, OSD)
+        misn.setReward(_("You will be paid 200,000 credits on arrival."))
+        misn.osdCreate(_("Animal transport"), OSD)
         tk.msg(title[1], text[2])
         misn.markerAdd(destsys, "high")
         hook.land("land")

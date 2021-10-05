@@ -28,14 +28,6 @@ misn_desc = _([[This fake ID will allow you to conduct business with all major l
 Cost: %s]])
 misn_reward = _("None")
 
-lowmoney = _("You don't have enough money to buy a fake ID. The price is %s.")
-
-noticed_onplanet = _([[During a routine check, you hand over your fake ID as usual, but the person checking your ID eyes it strangely for a time that seems to be periods long. Eventually you are handed your ID back, but this is not a good sign.
-    When you check, you see that the secrecy of your identity is in jeopardy. You're safe for now, but you make a mental note to prepare for the worst when you take off, because your fake ID probably won't be of any further use by then.]])
-
-noticed_offplanet = _("It seems your actions have led to the discovery of your identity. As a result, your fake ID is now useless.")
-
-
 factions = {
    "Empire", "Goddard", "Dvaered", "Za'lek", "Sirius", "Soromid", "Frontier",
    --"Trader", "Miner"
@@ -79,7 +71,7 @@ end
 
 function accept ()
    if player.credits() < credits then
-      tk.msg( "", lowmoney:format( fmt.credits( credits ) ) )
+      tk.msg( "", _("You don't have enough money to buy a fake ID. The price is %s."):format( fmt.credits( credits ) ) )
       misn.finish()
    end
 
@@ -158,11 +150,12 @@ function abort ()
 
    restore_standing()
 
-   local msg = noticed_offplanet
+   local msg = _("It seems your actions have led to the discovery of your identity. As a result, your fake ID is now useless.")
    if landed then
       local f = planet.cur():faction()
       if f ~= nil and orig_standing[f:nameRaw()] ~= nil then
-         msg = noticed_onplanet
+         msg = _([[During a routine check, you hand over your fake ID as usual, but the person checking your ID eyes it strangely for a time that seems to be periods long. Eventually you are handed your ID back, but this is not a good sign.
+    When you check, you see that the secrecy of your identity is in jeopardy. You're safe for now, but you make a mental note to prepare for the worst when you take off, because your fake ID probably won't be of any further use by then.]])
       end
    end
 

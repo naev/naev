@@ -35,7 +35,6 @@ osd_msg = {}
 osd_msg[1] = _("Fly to the Unicorn system.")
 osd_msg[2] = ""
 osd_msg2 = _("Destroy some pirates! You have killed %d and have earned %s. If finished, return to %s.")
-osd_msg3 = _("You have reached your maximum payment. Return to %s.")
 
 function create ()
    rep = faction.playerStanding("Dvaered")
@@ -101,7 +100,7 @@ function death(pilot,killer)
       pirates_killed = pirates_killed + 1
       bounty_earned = math.min( max_payment, bounty_earned + reward_earned )
       if bounty_earned == max_payment then
-         osd_msg[2] = osd_msg3:format(planet_start_name)
+         osd_msg[2] = _("You have reached your maximum payment. Return to %s."):format(planet_start_name)
       else
          osd_msg[2] = osd_msg2:format(pirates_killed, fmt.credits( bounty_earned ), planet_start_name)
       end

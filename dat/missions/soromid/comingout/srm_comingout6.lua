@@ -56,10 +56,6 @@ osd_desc = {}
 osd_desc[1] = _("Fly to the %s system")
 osd_desc[2] = _("Protect Chelsea and help them kill or capture %s")
 
-chelkill_msg = _("MISSION FAILED: A rift in the space-time continuum causes you to have never met Chelsea in that bar.")
-chelflee_msg = _("MISSION FAILED: Chelsea has abandoned the mission.")
-plflee_msg = _("MISSION FAILED: You have abandoned the mission.")
-
 log_text = _([[You helped Chelsea hunt down a wanted pirate, earning a bounty for both of you and allowing Chelsea to acquire a retired Dvaered warlord's old Vigilance.]])
 
 
@@ -159,18 +155,18 @@ end
 function leave ()
    lastsys = system.cur()
    if lastsys == missys then
-      fail( plflee_msg )
+      fail( _("MISSION FAILED: You have abandoned the mission.") )
    end
 end
 
 
 function chelsea_death ()
-   fail( chelkill_msg )
+   fail( _("MISSION FAILED: A rift in the space-time continuum causes you to have never met Chelsea in that bar.") )
 end
 
 
 function chelsea_leave ()
-   fail( chelflee_msg )
+   fail( _("MISSION FAILED: Chelsea has abandoned the mission.") )
 end
 
 

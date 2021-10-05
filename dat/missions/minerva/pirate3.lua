@@ -38,7 +38,6 @@ harper_bribe_big = 1e6
 harper_bribe_sml = 1e5
 harper_bribe_tkn = 1000
 
-spa_name = _("Minerva Station Spa")
 spa_portrait = minerva.terminal.portrait
 spa_description = _("Present your winning ticket at the terminal to enter the Minerva Station Spa.")
 
@@ -99,7 +98,7 @@ function generate_npc ()
    if planet.cur() == planet.get("Minerva Station") then
       npc_pir = misn.npcAdd( "approach_pir", minerva.pirate.name, minerva.pirate.portrait, minerva.pirate.description )
       if misn_state == 4 then
-         npc_spa = misn.npcAdd( "approach_spa", spa_name, spa_portrait, spa_description )
+         npc_spa = misn.npcAdd( "approach_spa", _("Minerva Station Spa"), spa_portrait, spa_description )
       end
    end
 end
@@ -253,7 +252,7 @@ She beams you a smile.
       misn_state = 4
       osd = misn.osdCreate( _("Minerva Moles"),
          {_("Plant a listening device in the Spa.") } )
-      npc_spa = misn.npcAdd( "approach_spa", spa_name, spa_portrait, spa_description )
+      npc_spa = misn.npcAdd( "approach_spa", _("Minerva Station Spa"), spa_portrait, spa_description )
       minerva.log.pirate(_("You obtained the winning ticket to enter the Minerva Spa.") )
    end )
    vn.jump("menu_msg")

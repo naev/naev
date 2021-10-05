@@ -29,16 +29,8 @@ local srs = require "common.sirius"
 
 
 --beginning messages
-bmsg = {}
-bmsg[1] = _([[Draga is sitting at a table with a couple other people who appear to be official military types. They look at you as you approach. Draga stands and greets you. "Hello, %s," he says. "We have a situation, and we need your help.
-    "The Sirii are starting to take us seriously as a threat. This isn't what we hoped for; we hoped we could go a little longer underground, but it seems we're being forced into battle. As such, we need you to help us defend our system. Our goal here isn't to completely wipe out the Sirius threat, but rather just to drive them off and show them that we mean business. We want them to feel it.
-    "You will be outnumbered, outgunned, and officially declared an enemy of the state. Will you help us?"]])
-bmsg[2] = _([["Excellent! See, folks? I told you this one was a keeper! Our forces will meet you out there. Ah, and while I'm sure you would never do this, as before, desertion will not be tolerated. Do not land or leave the system until your mission is completed."]])
-bmsg[3] = _([["Do you not understand the seriousness of this situation?! I thought you were better than this!" He grumbles and shoos you away.]])
 
 --ending messages
-emsg = {}
-emsg[1] = _([[As you land, you see the Nasin forces desperately trying to regroup. "Hurry and get your ship ready for another battle," he says, "and meet me at the bar when you're ready! Payment has been transferred into your account. More importantly, we have a dire situation!"]])
 
 --mission OSD
 osd = {}
@@ -47,11 +39,7 @@ osd[2] = _("Return to %s")
 --random odds and ends
 misn_title = _("The Assault")
 npc_name = _("Draga")
-bar_desc = _("The familiar form of Draga is at a table with some officers. They look busy.")
-p_landing = _([[As you land, Draga sees you. He seems just about ready to kill you on the spot. "You abandon us now? When we need you the most?! I should never have put my trust in you! Filth! Get out of my sight before I kill you where you stand!" You do as he says, beginning to question your decision to abandon your mission at the very place Draga was. Nonetheless, you bury your head and make a mental note to get out of here as soon as possible.]])
-oos_failure = _([[You receive a scathing angry message from Draga chastising you for abandoning your mission. You put it behind you. There's no turning back now.]])
 misn_desc = _([[A Sirius assault fleet has just jumped into %s. You are to assist Nasin in destroying this fleet.]])
-time_to_come_home = _([[You receive a frantic message from Draga. "%s! This is worse than we ever thought. We need you back at the base! Stat!"]])
 
 log_text = _([[You helped Draga in an attempt to protect Nasin from the Sirius military. Draga ordered you to get your ship ready for another battle and meet him at the bar.]])
 
@@ -71,7 +59,7 @@ function create()
    end
    misn.setReward( fmt.credits( reward ) )
    misn.setTitle( misn_title )
-   misn.setNPC(npc_name, "sirius/unique/draga.webp", bar_desc)
+   misn.setNPC(npc_name, "sirius/unique/draga.webp", _("The familiar form of Draga is at a table with some officers. They look busy."))
 
    osd[1] = osd[1]:format(homeasset:name())
    osd[2] = osd[2]:format(homeasset:name())
@@ -80,8 +68,10 @@ function create()
 end
 
 function accept()
-   if tk.yesno(misn_title, bmsg[1]:format(player.name())) then
-      tk.msg( misn_title, bmsg[2] )
+   if tk.yesno(misn_title, _([[Draga is sitting at a table with a couple other people who appear to be official military types. They look at you as you approach. Draga stands and greets you. "Hello, %s," he says. "We have a situation, and we need your help.
+    "The Sirii are starting to take us seriously as a threat. This isn't what we hoped for; we hoped we could go a little longer underground, but it seems we're being forced into battle. As such, we need you to help us defend our system. Our goal here isn't to completely wipe out the Sirius threat, but rather just to drive them off and show them that we mean business. We want them to feel it.
+    "You will be outnumbered, outgunned, and officially declared an enemy of the state. Will you help us?"]]):format(player.name())) then
+      tk.msg( misn_title, _([["Excellent! See, folks? I told you this one was a keeper! Our forces will meet you out there. Ah, and while I'm sure you would never do this, as before, desertion will not be tolerated. Do not land or leave the system until your mission is completed."]]) )
 
       misn.accept()
       misn.setDesc(misn_desc)
@@ -94,7 +84,7 @@ function accept()
       hook.jumpin("out_sys_failure")
       hook.land("return_to_base")
    else
-      tk.msg( misn_title, bmsg[3] )
+      tk.msg( misn_title, _([["Do you not understand the seriousness of this situation?! I thought you were better than this!" He grumbles and shoos you away.]]) )
       misn.finish( false )
    end
 end
@@ -144,7 +134,7 @@ end
 function flee()
    returnchecker = true --used to show that deathcounter has been reached, and that the player is landing 'just because'
    misn.osdActive(2)
-   tk.msg(misn_title, time_to_come_home:format( player.name() ))
+   tk.msg(misn_title, _([[You receive a frantic message from Draga. "%s! This is worse than we ever thought. We need you back at the base! Stat!"]]):format( player.name() ))
    -- Send any surviving Nasin ships home.
    for _, j in ipairs(de_fence) do
       if j:exists() then
@@ -163,7 +153,7 @@ function flee()
 end
 
 function out_sys_failure() --feel like jumping out? AWOL! its easier this way. trust me.
-   tk.msg(misn_title,oos_failure)
+   tk.msg(misn_title,_([[You receive a scathing angry message from Draga chastising you for abandoning your mission. You put it behind you. There's no turning back now.]]))
    faction.modPlayerSingle("Nasin",-50)
    misn.finish(false)
 end
@@ -182,12 +172,12 @@ end
 
 function return_to_base()
    if not returnchecker then --feel like landing early? AWOL!
-      tk.msg(misn_title,p_landing)
+      tk.msg(misn_title,_([[As you land, Draga sees you. He seems just about ready to kill you on the spot. "You abandon us now? When we need you the most?! I should never have put my trust in you! Filth! Get out of my sight before I kill you where you stand!" You do as he says, beginning to question your decision to abandon your mission at the very place Draga was. Nonetheless, you bury your head and make a mental note to get out of here as soon as possible.]]))
       faction.modPlayerSingle("Nasin",-50)
       misn.finish(false) --mwahahahahaha!
    else
       player.pay(reward)
-      tk.msg(misn_title,emsg[1]:format( player.name() ))
+      tk.msg(misn_title,_([[As you land, you see the Nasin forces desperately trying to regroup. "Hurry and get your ship ready for another battle," he says, "and meet me at the bar when you're ready! Payment has been transferred into your account. More importantly, we have a dire situation!"]]):format( player.name() ))
       misn_tracker = misn_tracker + 1
       faction.modPlayer("Nasin",10)
       var.push("heretic_misn_tracker",misn_tracker)

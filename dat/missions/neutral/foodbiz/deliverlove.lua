@@ -28,23 +28,12 @@ local neu = require "common.neutral"
 
 misn_title = _([[Deliver Love]])
 npc_name = _("Old-Fashioned Man")
-bar_desc = _("A man sits in the corner of the bar, writing a letter.")
 
 title = _("Absence Makes The Heart Grow Fonder")
 
-firstcontact = _([[You can't help but wonder why the man in the corner is writing on paper instead of a datapad. As you approach the table he motions you to sit. "You must be wondering why I am using such an old fashioned way of recording information," he remarks with a grin. You take a sip of your drink as he continues. "I am writing a poem to my beloved. She lives on %s." You glance at the flowing hand writing, back at the man, and back at the paper. "You wouldn't happen to be heading to %s would you?" he asks.]])
-
-acceptornot = _([["It is a nice place I hear!" he exclaims visibly excited. "Say, I have written a ton of these letters at this point. You wouldn't be able to drop them off, would you?" You raise your eyebrow. "There would be a few credits in it for you... say, %s?" The man adds quickly with a hopeful expression. It seems like a low reward for a long journey...]])
-
 bargain = _([[The man grabs your arm as you begin to get up. "Alright, how about %s? Look, I wouldn't want The Empire reading these. The Emperor himself would blush." You sigh and give the man a long pause before answering.]])
 
-not_enough_cargospace = _([[You run a check of your cargo hold and notice it is packed to the brim. "Did I not mention I wrote a tonne of these letters? You don't have enough space for all of these," the man says. "I will be in the bar if you free some space up." You didn't expect him to have a LITERAL tonne of letters...]])
-
-ask_again = _([["Ah, are you able to deliver my ton of letters for me now?"]])
-
 misn_desc = _([[Deliver the love letters to %s in the %s system.]])
-
-misn_accomplished = _([[You deliver the letters to a young woman who excitedly takes them and thanks you profusely. It seems you really made her day. When you check your balance, you see that %s have been transferred into your account. It also seems like you forgot a letter in the ship, but there were enough that you don't think it will be missed.]])
 
 osd_desc = {}
 osd_desc[1] = _("Fly to %s in the %s system.")
@@ -63,29 +52,29 @@ function create () --No system shall be claimed by mission
    reward = 20000
    started = false
 
-   misn.setNPC( npc_name, "neutral/unique/michal.webp", bar_desc )
+   misn.setNPC( npc_name, "neutral/unique/michal.webp", _("A man sits in the corner of the bar, writing a letter.") )
 end
 
 
 function accept ()
    -- Introductions and a bit of bargaining
    if not started then
-      if not tk.yesno( title, firstcontact:format( targetworld:name(), targetworld:name() ) ) then
+      if not tk.yesno( title, _([[You can't help but wonder why the man in the corner is writing on paper instead of a datapad. As you approach the table he motions you to sit. "You must be wondering why I am using such an old fashioned way of recording information," he remarks with a grin. You take a sip of your drink as he continues. "I am writing a poem to my beloved. She lives on %s." You glance at the flowing hand writing, back at the man, and back at the paper. "You wouldn't happen to be heading to %s would you?" he asks.]]):format( targetworld:name(), targetworld:name() ) ) then
          misn.finish()
       end
       started = true
-      if not tk.yesno( title, acceptornot:format( fmt.credits( reward ) ) ) then
+      if not tk.yesno( title, _([["It is a nice place I hear!" he exclaims visibly excited. "Say, I have written a ton of these letters at this point. You wouldn't be able to drop them off, would you?" You raise your eyebrow. "There would be a few credits in it for you... say, %s?" The man adds quickly with a hopeful expression. It seems like a low reward for a long journey...]]):format( fmt.credits( reward ) ) ) then
          reward = reward * 2 --look at you go, double the reward
          if not tk.yesno(title, bargain:format( fmt.credits( reward ) ) ) then
             misn.finish()
          end
       end
       if player.pilot():cargoFree() <  1 then
-         tk.msg( title, not_enough_cargospace )
+         tk.msg( title, _([[You run a check of your cargo hold and notice it is packed to the brim. "Did I not mention I wrote a tonne of these letters? You don't have enough space for all of these," the man says. "I will be in the bar if you free some space up." You didn't expect him to have a LITERAL tonne of letters...]]) )
          misn.finish()
       end
    else
-      if not tk.yesno( title, ask_again ) then
+      if not tk.yesno( title, _([["Ah, are you able to deliver my ton of letters for me now?"]]) ) then
          misn.finish()
       end
    end
@@ -112,7 +101,7 @@ end
 function land()
    if planet.cur() == targetworld then
       player.pay( reward )
-      tk.msg( "", misn_accomplished:format( fmt.credits( reward ) ) )
+      tk.msg( "", _([[You deliver the letters to a young woman who excitedly takes them and thanks you profusely. It seems you really made her day. When you check your balance, you see that %s have been transferred into your account. It also seems like you forgot a letter in the ship, but there were enough that you don't think it will be missed.]]):format( fmt.credits( reward ) ) )
       player.outfitAdd("Love Letter")
       neu.addMiscLog( log_text )
       misn.finish( true )

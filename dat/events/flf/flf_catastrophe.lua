@@ -66,15 +66,6 @@ text[14] = _([[Fascinated, you finally speak up, prompting a smile from the uplo
     You affirm that you will keep the Thurion's secret safe. "Yes, welcome," Alicia says. "And do check out our bars and mission computers from time to time. We very well might have some missions for you in the future. In the meantime, buy yourself one of our nebula-resistant ships, and make yourself comfortable. You are our honored guest and, I hope, the first of many outsiders to learn the wonders of our way of life."
     The guards then promptly but politely escort you back to your ship, which has been refueled while you were gone. This should be an interesting experience....]])
 
-log_text_flf = _([[The Empire discovered Sindbad. Try as you might, you and your comrades could not stop the combined onslaught of the Empire and the Dvaereds, and Sindbad erupted in a fiery explosion, killing Benito and all of your other comrades who were within Sindbad. Before the station exploded, Benito gave you a map leading into the unknown reaches of the inner nebula and told you to use the map to find what lies within in the hopes that one day, you can help the FLF rise again and defeat the Dvaereds once and for all. Her last words were short, but memorable: "Goodbye, %s. Stay vigilant."]])
-
-log_text_betrayal = _([[You turned on the FLF and helped the Empire and the Dvaereds destroy Sindbad for some reason.]])
-
-log_text_thurion = _([[Having braved the nebula, you were introduced to the Thurion by Alicia, one of many uploaded Thurion. The Thurion are the remnants of a secret project initiated by the Empire, Project Thurion. The Za'lek, the Collective, and the now-dead Proteron were also "great projects" of the Empire, but Project Thurion was seen as an embarrassment, prompting the Empire to attempt to kill the Thurion so word of their existence wouldn't get out. However, the Thurion learned a way to upload the human mind to a computer, allowing them to escape and rebuild.
-    Now, the Thurion have formed a secret civilization. About half of the Thurion population is uploaded and Alicia was quick to extol the virtues of being uploaded, but also noted that you probably can't be uploaded due to a likelihood of excessive brain damage.
-    In any case, you have earned the Thurion's trust and have been granted permission to roam Thurion space freely. You have promised to keep the Thurion's secret safe. Alicia has said that the Thurion may have missions for you in the future and has also recommended that you buy one of the Thurion's nebula-resistant ships.]])
-
-
 function create ()
    if not evt.claim( system.cur() ) then
       evt.finish( false )
@@ -269,7 +260,7 @@ function pilot_death_sindbad( pilot, attacker, arg )
       -- reputation to "enemy", add a log entry, and finish the event
       -- without giving the usual rewards.
       faction.get("FLF"):setPlayerStanding( -100 )
-      flf.addLog( log_text_betrayal )
+      flf.addLog( _([[You turned on the FLF and helped the Empire and the Dvaereds destroy Sindbad for some reason.]]) )
       evt.finish( true )
    end
 
@@ -286,7 +277,7 @@ function pilot_death_sindbad( pilot, attacker, arg )
    tk.msg( title[6], text[7]:format( player.name() ) )
    flf.setReputation( 100 )
    faction.get("FLF"):setPlayerStanding( 100 )
-   flf.addLog( log_text_flf )
+   flf.addLog( _([[The Empire discovered Sindbad. Try as you might, you and your comrades could not stop the combined onslaught of the Empire and the Dvaereds, and Sindbad erupted in a fiery explosion, killing Benito and all of your other comrades who were within Sindbad. Before the station exploded, Benito gave you a map leading into the unknown reaches of the inner nebula and told you to use the map to find what lies within in the hopes that one day, you can help the FLF rise again and defeat the Dvaereds once and for all. Her last words were short, but memorable: "Goodbye, %s. Stay vigilant."]]) )
    player.outfitAdd( "Map: Inner Nebula Secret Jump" )
    hook.jumpin( "jumpin" )
    hook.land( "land" )
@@ -335,7 +326,9 @@ function land ()
       tk.msg( title[11], text[13] )
       tk.msg( title[11], text[14]:format( player.name() ) )
       faction.get("Thurion"):setKnown( true )
-      flf.addLog( log_text_thurion )
+      flf.addLog( _([[Having braved the nebula, you were introduced to the Thurion by Alicia, one of many uploaded Thurion. The Thurion are the remnants of a secret project initiated by the Empire, Project Thurion. The Za'lek, the Collective, and the now-dead Proteron were also "great projects" of the Empire, but Project Thurion was seen as an embarrassment, prompting the Empire to attempt to kill the Thurion so word of their existence wouldn't get out. However, the Thurion learned a way to upload the human mind to a computer, allowing them to escape and rebuild.
+    Now, the Thurion have formed a secret civilization. About half of the Thurion population is uploaded and Alicia was quick to extol the virtues of being uploaded, but also noted that you probably can't be uploaded due to a likelihood of excessive brain damage.
+    In any case, you have earned the Thurion's trust and have been granted permission to roam Thurion space freely. You have promised to keep the Thurion's secret safe. Alicia has said that the Thurion may have missions for you in the future and has also recommended that you buy one of the Thurion's nebula-resistant ships.]]) )
    elseif diff.isApplied( "Thurion_found" ) then
       diff.remove( "Thurion_found" )
    end

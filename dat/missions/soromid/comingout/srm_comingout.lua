@@ -62,18 +62,6 @@ reminders[7] = _("You start to forget for a while that you have a passenger unti
 reminders[8] = _("You talk to Chelsea a little about some interesting experiences you've had as a pilot.")
 reminders[9] = _("You have a brief conversation with Chelsea about interesting sights you both have seen in your travels.")
 
-landtext = {}
-
-landtext[1] = _([[As you step off the ship with Chelsea in tow, you can tell that she's nervous about the whole thing. She asks you one more favor. "Can you come with me, as a friend?" You smile and say that you can.
-    As it turns out, Chelsea has arranged to see her parents at the bar. When you arrive, Chelsea's parents immediately recognize and greet her, calling her by a different name. A look of sadness appears on Chelsea's face as she hears this, but she quickly hides it and her parents don't seem to notice. Chelsea greets her parents, introduces you as her friend, then sits down. You sit down next to her.]])
-
-landtext[2] = _([["It's been so long!" Chelsea's mother says. "Your hair's getting long! I'm so glad you were able to make it over."
-    Chelsea laughs nervously. "There's something I have to tell you," she says. "I, um... I'm transgender. I would like for you to call me Chelsea and refer to me with she/her pronouns from now on... if that's okay."
-    Chelsea's father responds immediately and briefly. "Sure," he says. "I don't have any problem with that. However you dress or whatever name you use, that's fine by me."
-    Her mother is silent for a moment, then gets up out of her chair. Chelsea gets up as well, a look of fear in her eyes, then a look of surprise as her mother locks her in an embrace. She hugs her mother back and starts to sob. "I'm proud of you, Chelsea," her mother says. Out of Chelsea's view, her father shrugs and finishes his drink.]])
-
-landtext[3] = _([[After Chelsea's mother releases her, she wipes a few tears from her eyes and gives you a friendly hug. "Thank you," she says. "You've been a great friend and joining me here has been a great help." She lets go of you. "I'm sure you must be busy! But hey, do come back once in a while, OK? I'm going to stick around on this planet for the time being. It'll be nice to see you again!"
-    Taking your cue, you say goodbye for now, excuse yourself from the table, and make your way back to your ship. As you enter your cockpit you find a credit chip worth %s! It's not much, but it's something.]])
 
 misn_title = _("Coming Out")
 misn_desc = _("Your new friend needs you to take them to their parents in %s.")
@@ -169,9 +157,14 @@ function land ()
          tk.msg( "", chatter[ chatter_index ] )
       end
 
-      tk.msg( "", landtext[1] )
-      tk.msg( "", landtext[2] )
-      tk.msg( "", landtext[3]:format( fmt.credits( credits ) ) )
+      tk.msg( "", _([[As you step off the ship with Chelsea in tow, you can tell that she's nervous about the whole thing. She asks you one more favor. "Can you come with me, as a friend?" You smile and say that you can.
+    As it turns out, Chelsea has arranged to see her parents at the bar. When you arrive, Chelsea's parents immediately recognize and greet her, calling her by a different name. A look of sadness appears on Chelsea's face as she hears this, but she quickly hides it and her parents don't seem to notice. Chelsea greets her parents, introduces you as her friend, then sits down. You sit down next to her.]]) )
+      tk.msg( "", _([["It's been so long!" Chelsea's mother says. "Your hair's getting long! I'm so glad you were able to make it over."
+    Chelsea laughs nervously. "There's something I have to tell you," she says. "I, um... I'm transgender. I would like for you to call me Chelsea and refer to me with she/her pronouns from now on... if that's okay."
+    Chelsea's father responds immediately and briefly. "Sure," he says. "I don't have any problem with that. However you dress or whatever name you use, that's fine by me."
+    Her mother is silent for a moment, then gets up out of her chair. Chelsea gets up as well, a look of fear in her eyes, then a look of surprise as her mother locks her in an embrace. She hugs her mother back and starts to sob. "I'm proud of you, Chelsea," her mother says. Out of Chelsea's view, her father shrugs and finishes his drink.]]) )
+      tk.msg( "", _([[After Chelsea's mother releases her, she wipes a few tears from her eyes and gives you a friendly hug. "Thank you," she says. "You've been a great friend and joining me here has been a great help." She lets go of you. "I'm sure you must be busy! But hey, do come back once in a while, OK? I'm going to stick around on this planet for the time being. It'll be nice to see you again!"
+    Taking your cue, you say goodbye for now, excuse yourself from the table, and make your way back to your ship. As you enter your cockpit you find a credit chip worth %s! It's not much, but it's something.]]):format( fmt.credits( credits ) ) )
       player.pay(credits)
 
       local t = time.get():tonumber()

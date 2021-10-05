@@ -24,7 +24,6 @@ require "proximity"
 
 title = {}
 text = {}
-Jorscene = {}
 
 title[1] = _("An urgent invitation")
 text[1] = _([[Suddenly, out of nowhere, one of the dormant panels in your cockpit springs to life. It shows you a face you've never seen before in your life, but you recognize the plain grey uniform as belonging to the Four Winds.
@@ -83,21 +82,6 @@ text[11] = _([[You find yourself back on the Seiryuu, in the company of Jorek an
     "It would seem that Giornio and his comrades have a vested interest in keeping me away from the truth. It's a good thing you managed to get out of that ambush and bring me that informant. I do hope he'll be able to shed more light on the situation. I've got a bad premonition, a hunch that we're going to have to act soon if we're going to avert disaster, whatever that may be. I trust that you will be willing to aid us again when that time comes, %s. We're going to need all the help we can get. For now, you will find a modest amount of credits in your account. I will be in touch when things are clearer."
     You return to your ship and undock from the Seiryuu. You reflect that you had to run for your life this time around, and by all accounts, things will only get worse with the Four Winds in the future. A lesser person might get nervous.]])
 
-Jorscene[1] = _([[Jorek> "That's my guy. We got to board his ship and get him off before we jump."]])
-Jorscene[2] = _([[Jorek> "Watch out for those patrols though. If they spot us, they'll be all over us."]])
-Jorscene[3] = _([[Jorek> "They're tougher than they look. Don't underestimate them."]])
-
-joefailtitle = _("You forgot the informant!")
-joefailtext = _([[Jorek is enraged. "Dammit, %s! I told you to pick up that informant on the way! Too late to go back now. I'll have to think of somethin' else. I'm disembarkin' at the next spaceport, don't bother taking me back to the Seiryuu."]])
-
-patrolcomm = _("All pilots, we've detected McArthy on that ship! Break and intercept!")
-
-NPCtitle = _("No Jorek")
-NPCtext = _([[You step into the bar, expecting to find Jorek McArthy sitting somewhere at a table. However, you don't see him anywhere. You decide to go for a drink to contemplate your next move. Then, you notice the barman is giving you a curious look.]])
-NPCdesc = _("The barman seems to be eyeing you in particular.")
-
-Jordesc = _("There he is, Jorek McArthy, the man you've been chasing across half the galaxy. What he's doing on this piece of junk is unclear.")
-
 -- Mission info stuff
 osd_title = {}
 osd_msg   = {}
@@ -107,21 +91,7 @@ osd_msg[0] = _("Look for Jorek on %s in the %s system") -- Note: indexing at 0 b
 osd2_msg[1] = _("Fetch the Four Winds informant from his ship")
 osd2_msg[2] = _("Return Jorek and the informant to the Seiryuu in the %s system")
 
-misn_desc1 = _([[You have been summoned to the %s system, where the Seiryuu is supposedly waiting for you in orbit around %s.]])
-misn_desc2 = _([[You have been tasked by Captain Rebina of the Four Winds to assist Jorek McArthy.]])
 misn_reward = _("A sum of money.")
-
-log_text_intro = _([[Captain Rebina has further explained the organization she works for.
-    "As I've said before, we are the Four Winds. Our organization is a very secretive one, as you've experienced firsthand. Very few outside our ranks know of our existence, and now you're one of those few.
-    "The Four Winds are old, %s. Very old indeed. The movement dates back to old Earth, before the Space Age, even. We have been with human civilization throughout the ages, at first only in the Eastern nations, later establishing a foothold worldwide. Our purpose was to guide humanity, prevent it from making mistakes it could not afford to make. We never came out in the open, we always worked behind the scenes, from the shadows. We were diplomats, scientists, journalists, politicians' spouses, sometimes even assassins. We used any means necessary to gather information and avert disaster, when we could.
-    "Of course, we didn't always succeed. We couldn't prevent the nuclear strikes on Japan, though we managed to prevent several others. We foiled the sabotage attempts on several of the colony ships launched during the First Growth, but sadly failed to do so in Maelstrom's case. We failed to stop the Faction Wars, though we managed to help the Empire gain the upper hand. Our most recent failure is the Incident - we should have seen it coming, but we were completely taken by surprise."]])
-log_text_suspicion = _([[Rebina has reported that she suspects there are traitors among the four Four Winds captains. "These are our flagships. Including this ship, they are the Seiryuu, Suzaku, Byakko and Genbu. I'm given to understand that these names, as well as our collective name, have their roots in ancient Asian mythology." The captain touched a control and four portraits appeared, superimposed over the ships. "These are the four captains of the flagships, which by extension makes them the highest level of authority within the Four Winds. You know me. The other three are called Giornio, Zurike and Farett.
-    "It is my belief that one or more of my fellow captains have abandoned their mission, and are misusing their resources for a different agenda. I have been unable to find out the details of Four Winds missions that I did not order myself, which is a bad sign. I am being stonewalled, and I don't like it."]])
-log_text_succeed = _([[You found Jorek and successfully retrieved his informant on behalf of Captain Rebina. The Genbu ambushed you, but you managed to get away and dock the Seiryuu. Captain Rebina remarked on the situation.
-    "It would seem that Giornio and his comrades have a vested interest in keeping me away from the truth. It's a good thing you managed to get out of that ambush and bring me that informant. I do hope he'll be able to shed more light on the situation. I've got a bad premonition, a hunch that we're going to have to act soon if we're going to avert disaster, whatever that may be."
-    She said she may need your services again in the future.]])
-log_text_fail = _([[You failed to pick up Jorek's informant. As such, he refused to allow you to take him to the Seiryuu.]])
-
 
 function create()
     var.push("darkshadow_active", true)
@@ -144,7 +114,7 @@ end
 -- This is the initial phase of the mission, when it still only shows up in the mission list. No OSD, reward or markers yet.
 function accept()
     misn.setReward(_("Unknown"))
-    misn.setDesc(misn_desc1:format(seirsys:name(), seirplanet:name()))
+    misn.setDesc(_([[You have been summoned to the %s system, where the Seiryuu is supposedly waiting for you in orbit around %s.]]):format(seirsys:name(), seirplanet:name()))
     misn.accept()
     misn.osdDestroy() -- This is here because setDesc initializes the OSD.
 
@@ -159,7 +129,7 @@ function accept2()
     tick["__save"] = true
     osd_msg[1] = osd_msg[0]:format(jorekplanet1:name(), joreksys1:name())
     misn.osdCreate(osd_title, osd_msg)
-    misn.setDesc(misn_desc2)
+    misn.setDesc(_([[You have been tasked by Captain Rebina of the Four Winds to assist Jorek McArthy.]]))
     misn.setReward(misn_reward)
     marker = misn.markerAdd(joreksys1, "low")
     landhook = hook.land("land")
@@ -174,7 +144,10 @@ function seiryuuBoard()
     if stage == 1 then -- Briefing
         tk.msg(title[2], text[2]:format(player.name()))
         tk.msg(title[2], text[3]:format(player.name()))
-        shadow.addLog( log_text_intro:format( player.name() ) )
+        shadow.addLog( _([[Captain Rebina has further explained the organization she works for.
+    "As I've said before, we are the Four Winds. Our organization is a very secretive one, as you've experienced firsthand. Very few outside our ranks know of our existence, and now you're one of those few.
+    "The Four Winds are old, %s. Very old indeed. The movement dates back to old Earth, before the Space Age, even. We have been with human civilization throughout the ages, at first only in the Eastern nations, later establishing a foothold worldwide. Our purpose was to guide humanity, prevent it from making mistakes it could not afford to make. We never came out in the open, we always worked behind the scenes, from the shadows. We were diplomats, scientists, journalists, politicians' spouses, sometimes even assassins. We used any means necessary to gather information and avert disaster, when we could.
+    "Of course, we didn't always succeed. We couldn't prevent the nuclear strikes on Japan, though we managed to prevent several others. We foiled the sabotage attempts on several of the colony ships launched during the First Growth, but sadly failed to do so in Maelstrom's case. We failed to stop the Faction Wars, though we managed to help the Empire gain the upper hand. Our most recent failure is the Incident - we should have seen it coming, but we were completely taken by surprise."]]):format( player.name() ) )
         tk.msg(title[2], text[4])
         tk.msg(title[2], text[5]:format(player.name(), jorekplanet1:name(), joreksys1:name(), jorekplanet1:name()))
         accept2()
@@ -186,7 +159,9 @@ function seiryuuBoard()
         seiryuu:control()
         seiryuu:hyperspace()
         var.pop("darkshadow_active")
-        shadow.addLog( log_text_succeed )
+        shadow.addLog( _([[You found Jorek and successfully retrieved his informant on behalf of Captain Rebina. The Genbu ambushed you, but you managed to get away and dock the Seiryuu. Captain Rebina remarked on the situation.
+    "It would seem that Giornio and his comrades have a vested interest in keeping me away from the truth. It's a good thing you managed to get out of that ambush and bring me that informant. I do hope he'll be able to shed more light on the situation. I've got a bad premonition, a hunch that we're going to have to act soon if we're going to avert disaster, whatever that may be."
+    She said she may need your services again in the future.]]) )
         misn.finish(true)
     end
 end
@@ -254,17 +229,17 @@ function enter()
         delay = delay + 2.0
         hook.timer(delay, "zoomTo", joe)
         delay = delay + 4.0
-        hook.timer(delay, "showText", Jorscene[1])
+        hook.timer(delay, "showText", _([[Jorek> "That's my guy. We got to board his ship and get him off before we jump."]]))
         delay = delay + 4.0
         hook.timer(delay, "zoomTo", leader[1])
         delay = delay + 1.0
-        hook.timer(delay, "showText", Jorscene[2])
+        hook.timer(delay, "showText", _([[Jorek> "Watch out for those patrols though. If they spot us, they'll be all over us."]]))
         delay = delay + 2.0
         hook.timer(delay, "zoomTo", leader[2])
         delay = delay + 3.0
         hook.timer(delay, "zoomTo", leader[3])
         delay = delay + 2.0
-        hook.timer(delay, "showText", Jorscene[3])
+        hook.timer(delay, "showText", _([[Jorek> "They're tougher than they look. Don't underestimate them."]]))
         delay = delay + 3.0
         hook.timer(delay, "zoomTo", leader[4])
         delay = delay + 4.0
@@ -283,8 +258,8 @@ function enter()
         hook.pilot(joe, "board", "joeBoard")
         poller = hook.timer(0.5, "patrolPoll")
     elseif system.cur() == ambushsys and stage == 4 then
-        tk.msg(joefailtitle, joefailtext:format(player.name()))
-        shadow.addLog( log_text_fail )
+        tk.msg(_("You forgot the informant!"), _([[Jorek is enraged. "Dammit, %s! I told you to pick up that informant on the way! Too late to go back now. I'll have to think of somethin' else. I'm disembarkin' at the next spaceport, don't bother taking me back to the Seiryuu."]]):format(player.name()))
+        shadow.addLog( _([[You failed to pick up Jorek's informant. As such, he refused to allow you to take him to the Seiryuu.]]) )
         abort()
     elseif system.cur() == ambushsys and stage == 5 then
         pilot.clear()
@@ -401,7 +376,7 @@ end
 function patrolPoll()
     for _, patroller in ipairs(leader) do
         if patroller ~= nil and patroller:exists() and vec2.dist(player.pos(), patroller:pos()) < 1200 then
-            patroller:broadcast(patrolcomm)
+            patroller:broadcast(_("All pilots, we've detected McArthy on that ship! Break and intercept!"))
             attacked()
             return
         end
@@ -468,10 +443,10 @@ end
 function land()
     if planet.cur() == jorekplanet1 and stage == 2 then
         -- Thank you player, but our SHITMAN is in another castle.
-        tk.msg(NPCtitle, NPCtext)
-        barmanNPC = misn.npcAdd("barman", "Barman", "neutral/barman.webp", NPCdesc, 4)
+        tk.msg(_("No Jorek"), _([[You step into the bar, expecting to find Jorek McArthy sitting somewhere at a table. However, you don't see him anywhere. You decide to go for a drink to contemplate your next move. Then, you notice the barman is giving you a curious look.]]))
+        barmanNPC = misn.npcAdd("barman", "Barman", "neutral/barman.webp", _("The barman seems to be eyeing you in particular."), 4)
     elseif planet.cur() == jorekplanet2 and stage == 3 then
-        joreknpc = misn.npcAdd("jorek", "Jorek", "neutral/unique/jorek.webp", Jordesc, 4)
+        joreknpc = misn.npcAdd("jorek", "Jorek", "neutral/unique/jorek.webp", _("There he is, Jorek McArthy, the man you've been chasing across half the galaxy. What he's doing on this piece of junk is unclear."), 4)
     end
 end
 

@@ -30,7 +30,6 @@ local fleet = require "fleet"
 local fmt = require "format"
 local emp = require "common.empire"
 
-bar_desc = _("You see an Empire Commander. He seems to have noticed you.")
 misn_title = _("Prisoner Exchange")
 misn_desc = {}
 misn_desc[1] = _("Go to %s in the %s system to exchange prisoners with the FLF")
@@ -65,7 +64,7 @@ function create ()
    end
 
    -- Spaceport bar stuff
-   misn.setNPC( _("Commander"), "empire/unique/soldner.webp", bar_desc )
+   misn.setNPC( _("Commander"), "empire/unique/soldner.webp", _("You see an Empire Commander. He seems to have noticed you.") )
 end
 
 

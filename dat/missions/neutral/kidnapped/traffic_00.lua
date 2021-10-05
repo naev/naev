@@ -72,24 +72,9 @@ text[7] = _([[You assure him that it is alright, and you will not hesitate to ta
     The father goes back to his children, and as you start walking back to your ship you notice the father and mother lavishing their children in love. You look over to the other children now sitting around, gazing at the loving family with envy. Sighing, you begin climbing into your ship as the mother runs up to you, "%s, wait a second! We know your name, but you don't know ours. I'm Janice." As she looks to her husband, who's talking animatedly with the children, she smiles. "My husband's name is Andrew. Thank you for everything." A tear rolls down her face as she looks at you with her bright hazel eyes and she kisses you on the cheek.
     You watch her return to her family. A child jumps into her arms, and you climb up into your ship.]])
 
-declinetitle = _("Another Time")
-declinetext = _([[You can hear that the the man is quite disappointed. "I'm sure you have a good reason to not want to help us. Perhaps you have something else more pressing..." Before the comm is cut you can hear the woman beginning to sob and the man consoling her.]])
-
-failedtitle = _("You killed the children")
-failedtext = _([[Having just destroyed the kidnappers, you also just killed the children. As you sit there in space, with your head against the dash, a tear rolls down your cheek as you think of the parents and how their children are forever stolen from them. If only you could rewind and try again; you know the next time you would be more cautious. If only it were so easy...]])
-
-choice1 = _("Rescue those children!")
-choice2 = _("Politely refuse")
-
-pirbroadcast = _([[You are damaging the goods! You are dead!]])
-
 -- Details for the mission
-mistitle = _("Kidnapped")
-reward = _("A Reunited Family")
-description = _([[Search for the kidnapped children, then rescue the children and return them to their parents.]])
 
 --OSD
-osdtitle = _("Kidnapped")
 osdmsg[1] = _("Fly to the %s system and land on planet %s")
 osdmsg[2] = _("Fly to the %s system and land on planet %s")
 osdmsg[3] = _("Fly to the %s system and disable (do not destroy) that Koala")
@@ -108,12 +93,12 @@ function create()
     abort()
   end
 
-  chosen = tk.choice(title[1], text[1]:format(player.name()), choice1, choice2)
+  chosen = tk.choice(title[1], text[1]:format(player.name()), _("Rescue those children!"), _("Politely refuse"))
 
   if chosen == 1 then
     accept()
   else
-    tk.msg(declinetitle, declinetext)
+    tk.msg(_("Another Time"), _([[You can hear that the the man is quite disappointed. "I'm sure you have a good reason to not want to help us. Perhaps you have something else more pressing..." Before the comm is cut you can hear the woman beginning to sob and the man consoling her.]]))
     abort()
   end
 end
@@ -122,12 +107,12 @@ function accept()
   misn.accept()
 
   tk.msg(title[2], text[2]:format(sysname3, bar1))
-  misn.setTitle(mistitle)
-  misn.setReward(reward)
-  misn.setDesc(description)
+  misn.setTitle(_("Kidnapped"))
+  misn.setReward(_("A Reunited Family"))
+  misn.setDesc(_([[Search for the kidnapped children, then rescue the children and return them to their parents.]]))
 
   osdmsg[1] = osdmsg[1]:format(sysname3, bar1)
-  misn.osdCreate(osdtitle, {osdmsg[1]})
+  misn.osdCreate(_("Kidnapped"), {osdmsg[1]})
 
   misn_mark = misn.markerAdd(system.get(sysname3), "low")
 
@@ -161,7 +146,7 @@ function firstpirates()
   misn.npcRm(bar1pir2)
 
   osdmsg[2] = osdmsg[2]:format(sysname4, bar2)
-  misn.osdCreate(osdtitle, {osdmsg[2]})
+  misn.osdCreate(_("Kidnapped"), {osdmsg[2]})
 
   misn.markerMove(misn_mark, system.get(sysname4))
 
@@ -178,7 +163,7 @@ function secondpirates()
   misn.npcRm(bar2pir2)
 
   osdmsg[3] = osdmsg[3]:format(sysname2)
-  misn.osdCreate(osdtitle, {osdmsg[3]})
+  misn.osdCreate(_("Kidnapped"), {osdmsg[3]})
 
   misn.markerMove(misn_mark, system.get(sysname2))
 
@@ -229,7 +214,7 @@ function attackedkidnappers()
     bodyguard1:attack(player.pilot())
     bodyguard2:attack(player.pilot())
     bodyguard3:attack(player.pilot())
-    bodyguard1:broadcast(pirbroadcast, true)
+    bodyguard1:broadcast(_([[You are damaging the goods! You are dead!]]), true)
     needpirates = false
   end
 
@@ -242,14 +227,14 @@ function explodedkidnappers()
 end
 
 function kidskilled()
-  tk.msg(failedtitle, failedtext)
+  tk.msg(_("You killed the children"), _([[Having just destroyed the kidnappers, you also just killed the children. As you sit there in space, with your head against the dash, a tear rolls down your cheek as you think of the parents and how their children are forever stolen from them. If only you could rewind and try again; you know the next time you would be more cautious. If only it were so easy...]]))
   misn.finish(false)
 end
 
 function boardkidnappers()
   tk.msg(title[5], text[5]:format(home))
   osdmsg[4] = osdmsg[4]:format(sysname1, home)
-  misn.osdCreate(osdtitle, {osdmsg[4]})
+  misn.osdCreate(_("Kidnapped"), {osdmsg[4]})
   misn.markerMove(misn_mark, system.get(sysname1))
   kidnappers:setHilight(false)
   kidnappers:hookClear()

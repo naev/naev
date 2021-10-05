@@ -14,11 +14,6 @@
 text = {}
 title = {}
 
-broadcastmsgDV = _("SOS. This is %s. Primary systems down. Requesting assistance.")
-broadcastmsgFLF = _("Calling all ships. This is %s. Engines down, ship damaged. Please help.")
-shipnameDV = _("Dvaered Patrol")
-shipnameFLF = _("Frontier Patrol")
-
 function create()
    if not evt.claim(system.cur()) then
       evt.finish(false)
@@ -43,8 +38,8 @@ function create()
    shipDV:setVisplayer()
    shipFLF:setVisplayer()
 
-   shipDV:rename(shipnameDV)
-   shipFLF:rename(shipnameFLF)
+   shipDV:rename(_("Dvaered Patrol"))
+   shipFLF:rename(_("Frontier Patrol"))
 
    timerDV = hook.timer(3.0, "broadcastDV")
    timerFLF = hook.timer(12.0, "broadcastFLF")
@@ -64,13 +59,13 @@ end
 
 function broadcastDV()
    -- Ship broadcasts an SOS every 10 seconds, until boarded or destroyed.
-   shipDV:broadcast(string.format(broadcastmsgDV, shipnameDV), true)
+   shipDV:broadcast(string.format(_("SOS. This is %s. Primary systems down. Requesting assistance."), _("Dvaered Patrol")), true)
    timerDV = hook.timer(20.0, "broadcastDV")
 end
 
 function broadcastFLF()
    -- Ship broadcasts an SOS every 10 seconds, until boarded or destroyed.
-   shipFLF:broadcast(string.format(broadcastmsgFLF, shipnameFLF), true)
+   shipFLF:broadcast(string.format(_("Calling all ships. This is %s. Engines down, ship damaged. Please help."), _("Frontier Patrol")), true)
    timerFLF = hook.timer(20.0, "broadcastFLF")
 end
 

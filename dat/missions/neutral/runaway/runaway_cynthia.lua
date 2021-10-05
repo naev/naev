@@ -25,22 +25,10 @@ local neu = require "common.neutral"
 
 
 npc_name = _("Young Teenager")
-bar_desc = _("A pretty teenager sits alone at a table.")
 title = _("The Runaway")
 cargoname = N_("Cynthia")
 cargodesc = N_("A young teenager.")
-misn_desc_pre_accept = _([[She looks out of place in the bar. As you approach, she seems to stiffen.
-    "H..H..Hi", she stutters. "My name is Cynthia. Could you give me a lift? I really need to get out of here.
-    I can't pay you much, just what I have on me, %s." You wonder who she must be to have this many credits on her person. "I need you to take me to Zhiru."
-    You wonder who she is, but you dare not ask. Do you accept?]])
-not_enough_cargospace = _("Your cargo hold doesn't have enough free space.")
 misn_desc = _("Deliver Cynthia safely to %s in the %s system.")
-reward_desc = _("%s on delivery.")
-
-post_accept = {}
-post_accept[1] = _([["Thank you. But we must leave now, before anyone sees me."]])
-misn_accomplished = _([[As you walk into the docking bay, she warns you to look out behind yourself.
-    When you look back to where she was, nothing remains but a tidy pile of credit chips and a worthless pendant.]])
 
 osd_text = {}
 osd_text[1] = _("Deliver Cynthia to Zhiru in the Goddard system")
@@ -56,20 +44,23 @@ function create ()
 
    reward = 500000
 
-   misn.setNPC( npc_name, "neutral/unique/cynthia.webp", bar_desc )
+   misn.setNPC( npc_name, "neutral/unique/cynthia.webp", _("A pretty teenager sits alone at a table.") )
 end
 
 
 function accept ()
    --This mission does not make any system claims
-   if not tk.yesno( title, string.format( misn_desc_pre_accept, fmt.credits(reward), targetworld:name() ) ) then
+   if not tk.yesno( title, string.format( _([[She looks out of place in the bar. As you approach, she seems to stiffen.
+    "H..H..Hi", she stutters. "My name is Cynthia. Could you give me a lift? I really need to get out of here.
+    I can't pay you much, just what I have on me, %s." You wonder who she must be to have this many credits on her person. "I need you to take me to Zhiru."
+    You wonder who she is, but you dare not ask. Do you accept?]]), fmt.credits(reward), targetworld:name() ) ) then
       misn.finish()
    end
 
    --Our *cargo* weighs nothing
    --This will probably cause a mess if this fails
    if player.pilot():cargoFree() < 0 then
-      tk.msg( title, not_enough_cargospace )
+      tk.msg( title, _("Your cargo hold doesn't have enough free space.") )
       misn.finish()
    end
 
@@ -83,12 +74,12 @@ function accept ()
 
    misn.setTitle( title )
 
-   misn.setReward( string.format( reward_desc, fmt.credits(reward) ) )
+   misn.setReward( string.format( _("%s on delivery."), fmt.credits(reward) ) )
 
    misn.setDesc( string.format( misn_desc, targetworld:name(), targetworld_sys:name() ) )
    misn.markerAdd( targetworld_sys, "high")
 
-   tk.msg( title, post_accept[1] )
+   tk.msg( title, _([["Thank you. But we must leave now, before anyone sees me."]]) )
 
    hook.land("land")
 end
@@ -99,7 +90,8 @@ function land ()
       misn.cargoRm( cargoID )
       player.pay( reward )
 
-      tk.msg( title, string.format( misn_accomplished, fmt.number(reward) ) )
+      tk.msg( title, string.format( _([[As you walk into the docking bay, she warns you to look out behind yourself.
+    When you look back to where she was, nothing remains but a tidy pile of credit chips and a worthless pendant.]]), fmt.number(reward) ) )
 
       neu.addMiscLog( log_text )
 

@@ -50,9 +50,7 @@ osd_msg = {}
 misn_title = _("The one with the Shopping")
 misn_reward = _("The gratitude of science and a bit of compensation")
 misn_desc = _("You've been hired by Dr. Geller to collect some materials he urgently needs for his research.")
-bar_desc = _("You see a scientist talking to various pilots. Perhaps you should see what he's looking for.")
 trd1_desc = _("A scientist conspicuously sits in the corner. Perhaps he might be the person you're supposed to get this stuff for.")
-trd2_desc = _("You see a shifty-looking dealer of some kind. Maybe he has what you're looking for.")
 
 title[1] = _([[In the bar]])
 text[1]  = _([["Oh, hello! You look like you're a pilot; is that right? I've got a job for you. Allow me to introduce myself; my name is Dr. Geller, and I am on the brink of revolutionizing science! I've basically already done it; there's just some minor fiddling to do. Would you like to help me out? I just need you to find some samples that I can study."]])
@@ -65,8 +63,6 @@ text[7] = _([["What are you still doing here? No phosphine, no trade."]])
 -- dialogue with 2nd trader
 -- %s for pho_mny
 text[8] = _([["You approach the dealer and explain what you are looking for. He raises his eyebrow. "It will be %s. But if you get caught by the authorities, you're on your own. Far as I'm concerned I never saw you. Deal?"]])
-mnytitle = _([[In the bar]])
-mnytext = _([["You don't have enough money. Stop wasting my time."]])
 text[9] = _([["Pleasure to do business with you."]])
 text[10] = _([["Then we have nothing to to discuss."]])
 -- call of the police
@@ -78,14 +74,12 @@ text[13] = _([["You are accused of violating regulation on the transport of toxi
 text[14] = _([[The inspectors search through your ship and cargo hold. It doesn't take long for them to find the phosphine; they confiscate it and fine you %s.]])
 text[15] = _([[Dr. Geller looks up at you as you approach. "Do you have what I was looking for?" You present the ghost ship piece and his face begins to glow. "Yes, that's it! Now I can continue my research. I've been looking everywhere for a sample!" You ask him about the so-called ghost ships. He seems amused by the question. "Some people believe in ridiculous nonsense related to this. There is no scientific explanation for the origin of these so-called ghost ships yet, but I think it has to do with some technology involved in the Incident. Hard to say exactly what, but hey, that's why we do research!"]])
 text[16] = _([[As he turns away, you audibly clear your throat, prompting him to turn back to you. "Oh, yes, of course you want some payment for your service. My apologies for forgetting." He hands you a credit chip with your payment. "I might need your services again in the future, so do stay in touch!"]])
-trd_disc = _([[This guy seems to be the trader, surrounded by bodyguards he looks a bit shifty.]])
 -- osd_msg
 osd_msg[1] = _("Go to the %s system and talk to the trader on %s")
 osd_msg[2] = _("Go to the %s system and talk to the contact person on %s")
 osd_msg[3] = _("Return to the %s system to the trader on %s")
 osd_msg[4] = _("Return to the %s system and deliver to Dr. Geller on %s")
 -- refusetext
-refusetitle = _("No Science Today")
 refusetext = _("I guess you don't care for science...")
 
 log_text = _([[You helped Dr. Geller at {pntname} in the {sysname} system toobtain a "ghost ship piece" for his research. When you asked about these so-called ghost ships, he seemed amused. "Some people believe in ridiculous nonsense related to this. There is no scientific explanation for the origin of these so-called ghost ships yet, but I think it has to do with some technology involved in the Incident. Hard to say exactly what, but hey, that's why we do research!"]])
@@ -97,12 +91,12 @@ function create ()
    t_pla[3], t_sys[3] = sciwrong.getCenterOperations()
 
    -- Spaceport bar stuff
-   misn.setNPC( _("A scientist"), "zalek/unique/geller.webp", bar_desc )
+   misn.setNPC( _("A scientist"), "zalek/unique/geller.webp", _("You see a scientist talking to various pilots. Perhaps you should see what he's looking for.") )
 end
 function accept()
    -- Mission details:
    if not tk.yesno( title[1], text[1] ) then
-      tk.msg(refusetitle, refusetext)
+      tk.msg(_("No Science Today"), refusetext)
       misn.finish()
    end
    tk.msg( title[1], text[2] )
@@ -126,7 +120,7 @@ end
 
 function land2()
    if planet.cur() == t_pla[2] and talked and not traded1 then
-      bar2pir1 = misn.npcAdd("second_trd", _("Contact Person"), "neutral/unique/dealer.webp", trd2_desc)
+      bar2pir1 = misn.npcAdd("second_trd", _("Contact Person"), "neutral/unique/dealer.webp", _("You see a shifty-looking dealer of some kind. Maybe he has what you're looking for."))
    end
 end
 
@@ -159,7 +153,7 @@ function second_trd()
   end
   -- take money from player, if player does not have the money, refuse
   if player.credits() < 50000 then
-     tk.msg(mnytitle, mnytext)
+     tk.msg(_([[In the bar]]), _([["You don't have enough money. Stop wasting my time."]]))
      return
   end
   player.pay(-pho_mny)

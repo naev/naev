@@ -23,8 +23,6 @@ local pir = require "common.pirate"
 local pilotname = require "pilotname"
 
 logidstr = "log_hiredescort"
-logname = _("Hired Escorts")
-logtype = _("Hired Escorts")
 
 npctext = {}
 npctext[1] = _([["Hi there! I'm looking to get some piloting experience. Here are my credentials. Would you be interested in hiring me?"]])
@@ -39,17 +37,6 @@ Royalty: %.1f%% of mission earnings
 
 Money: %s
 Current total royalties: %.1f%% of mission earnings]])
-
-description = _([[This pilot seems to be looking for work.
-
-Ship: %s
-Deposit: %s
-Royalty: %.1f%% of mission earnings]])
-
-pilot_action_text = _([[Would you like to do something with this pilot?
-
-Pilot credentials:]])
-
 
 function create ()
    lastplanet = nil
@@ -137,7 +124,11 @@ function createPilotNPCs ()
          newpilot.approachtext = npctext[rnd.rnd(1, #npctext)]
          local id = evt.npcAdd(
             "approachPilot", _("Pilot for Hire"), newpilot.portrait,
-            string.format(description, newpilot.ship, fmt.credits(newpilot.deposit), newpilot.royalty * 100), 9 )
+            string.format(_([[This pilot seems to be looking for work.
+
+Ship: %s
+Deposit: %s
+Royalty: %.1f%% of mission earnings]]), newpilot.ship, fmt.credits(newpilot.deposit), newpilot.royalty * 100), 9 )
 
          npcs[id] = newpilot
       end
@@ -345,7 +336,9 @@ end
 function pilot_askFire( edata, npc_id )
    local credits, scredits = player.credits(2)
    local approachtext = (
-         pilot_action_text .. "\n\n" .. credentials:format(
+         _([[Would you like to do something with this pilot?
+
+Pilot credentials:]]) .. "\n\n" .. credentials:format(
             edata.name, edata.ship, fmt.credits(edata.deposit),
             edata.royalty * 100, scredits, getTotalRoyalties() * 100 ) )
 
@@ -455,7 +448,7 @@ function approachPilot( npc_id )
    evt.save(true)
 
    local edata = escorts[i]
-   shiplog.create( logidstr, logname, logtype )
+   shiplog.create( logidstr, _("Hired Escorts"), _("Hired Escorts") )
    shiplog.append( logidstr, string.format(_("You hired a %s ship named '%s' for %s and %.1f%% of mission earnings."), edata.ship, edata.name, fmt.credits(edata.deposit), edata.royalty * 100 ) )
 end
 

@@ -32,7 +32,6 @@
 local fmt = require "format"
 local emp = require "common.empire"
 
-bar_desc = _("You notice Lt. Commander Dimitri motioning for you to come over to him.")
 misn_title = _("Collective Espionage")
 misn_desc = {}
 misn_desc[1] = _("Scan the Collective systems for wireless communications")
@@ -52,14 +51,12 @@ text[2] = _([["You need to jump to each of the systems indicated on your map, an
 text[3] = _([[After landing, Lt. Commander Dimitri greets you on the land pad.
     "I suppose all went well? Those drones can really give a beating. We'll have the researchers start looking at your logs right away. Meet me in the bar again in a while."]])
 
-timermsg = _("Scanning... %ss remaining.")
-
 log_text = _([[You helped gather intel on the Collective by scanning Collective systems. Lt. Commander Dimitri told you to meet him in the bar again on Omega Station.]])
 
 
 function create ()
    -- Note: this mission does not make any system claims.
-   misn.setNPC( _("Dimitri"), "empire/unique/dimitri.webp", bar_desc )
+   misn.setNPC( _("Dimitri"), "empire/unique/dimitri.webp", _("You notice Lt. Commander Dimitri motioning for you to come over to him.") )
 end
 
 
@@ -107,7 +104,7 @@ function enter()
 
     if (system.cur() == targsys1 and not sysdone1) or (system.cur() == targsys2 and not sysdone2) then
         scantime = 90 -- seconds
-        omsg = player.omsgAdd(timermsg:format(scantime), 0)
+        omsg = player.omsgAdd(_("Scanning... %ss remaining."):format(scantime), 0)
         timerhook = hook.timer(1.0, "scantimer")
         scanning = true
     end
@@ -133,7 +130,7 @@ function scantimer()
 
         return
     end
-    player.omsgChange(omsg, timermsg:format(scantime), 0)
+    player.omsgChange(omsg, _("Scanning... %ss remaining."):format(scantime), 0)
     timerhook = hook.timer(1.0, "scantimer")
 end
 

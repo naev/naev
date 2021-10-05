@@ -34,18 +34,9 @@ local dv = require "common.dvaered"
 
 title = {}
 text = {}
-failtitle = {}
-failtext = {}
 osd_desc = {}
 
 title[1] = _("One swift stroke")
-introfirst = _([[The Dvaered liaison spots you, and stands up to shake your hand.
-    "Well met, citizen %s. I have heard about your recent achievements in the fight against the FLF threat. Like many Dvaered, I am pleased that things are going so well, and in no small way thanks to your efforts! High Command apparently feels the same way, because they have given you the military clearance for the upcoming operation, and that doesn't happen to just anybody."
-    ]])
-
-introrepeat = _([[The Dvaered liaison greets you.
-    "I knew you'd be back, citizen %s. The operation hasn't started yet and we can still use your help, so maybe I should explain to you again what this is all about."
-    ]])
 
 text[1] = _([[The liaison's expression then turns wooden, and his voice becomes level. Clearly, he has been briefing people for a long time in his career, so he can probably do this in his sleep. It occurs to you that perhaps he DOES nap while doing this.
     "In the near future, the Dvaered fleet will move against enemies of the state in the %s system. The objective is to seek out and destroy all hostiles. This operation will be headed by the HDSF Obstinate, and all units in this battle will defer to its commanding officer, regardless of class and rank. The Obstinate and its battle group will concentrate on performing bombing runs on the primary target. Your task as an auxiliary unit will be to secure the flanks and engage any hostiles that threaten the success of the mission. Note that once you enter the combat theater, you are considered committed, and your leaving the system will be seen as an act of cowardice and treachery."
@@ -81,18 +72,6 @@ text[6] = _([[Colonel Urnus returns to his seat.
     "Let me tell you one thing, though. I doubt we've quite seen the last of the FLF. We may have dealt them a mortal blow by taking out their hidden base, but as long as rebel sentiment runs high among the Frontier worlds, they will rear their ugly heads again. That means my job isn't over, and maybe it means yours isn't either. Perhaps in the future we'll work together again - but this time it won't be just about removing a threat on our doorstep." Urnus smiles grimly. "It will be about rooting out the source of the problem once and for all."
     As you walk the corridor that leads out of the military complex, the Star of Valor glinting on your lapel, you find yourself thinking about what your decisions might ultimately lead to. Colonel Urnus hinted at war on the Frontier, and he also indicated that you would be involved. While the Dvaered have been treating you as well as can be expected from a military regime, perhaps you might want to reconsider your allegiance when the time comes...]])
 
-refusetitle = _("Refusal")
-refusetext = _([["Understood, citizen. Keep in mind, though, that as long as the operation isn't yet underway, you may still choose to participate. Simply come back to me if you change your mind."]])
-
-failtitle[1] = _("You ran away!")
-failtext[1] = _("You have left the system without first completing your mission. This treachery will not soon be forgotten by the Dvaered authorities!")
-
-failtitle[2] = _("The flagship is dead!")
-failtext[2] = _("The HDSF Obstinate has been destroyed by the FLF defending forces! This mission can no longer be completed.")
-
-flagattack = _("This is Obstinate, we're under fire!")
-phasetwo = _("This is Obstinate. Launching bombers.")
-
 npc_desc = _("This must be the Dvaered liaison you heard about. Allegedly, he may have a job for you that involves fighting the Frontier Liberation Front.")
 
 misn_title = _("Destroy the FLF base!")
@@ -121,9 +100,13 @@ function accept()
     DVplanet, DVsys = planet.get("Stalwart Station")
 
     if first then
-        txt = string.format(introfirst, player.name()) .. string.format(text[1], destsysname)
+        txt = string.format(_([[The Dvaered liaison spots you, and stands up to shake your hand.
+    "Well met, citizen %s. I have heard about your recent achievements in the fight against the FLF threat. Like many Dvaered, I am pleased that things are going so well, and in no small way thanks to your efforts! High Command apparently feels the same way, because they have given you the military clearance for the upcoming operation, and that doesn't happen to just anybody."
+    ]]), player.name()) .. string.format(text[1], destsysname)
     else
-        txt = string.format(introrepeat, player.name()) .. string.format(text[1], destsysname)
+        txt = string.format(_([[The Dvaered liaison greets you.
+    "I knew you'd be back, citizen %s. The operation hasn't started yet and we can still use your help, so maybe I should explain to you again what this is all about."
+    ]]), player.name()) .. string.format(text[1], destsysname)
     end
 
     if tk.yesno(title[1], txt) then
@@ -146,7 +129,7 @@ function accept()
         hook.enter("enter")
         hook.land("land")
     else
-        tk.msg(refusetitle, refusetext)
+        tk.msg(_("Refusal"), _([["Understood, citizen. Keep in mind, though, that as long as the operation isn't yet underway, you may still choose to participate. Simply come back to me if you change your mind."]]))
         misn.finish()
     end
 end
@@ -183,7 +166,7 @@ function enter()
     elseif system.cur() == DVsys and victorious then -- Make sure the player can finish the missions properly.
         DVplanet:landOverride(true)
     elseif missionstarted then -- The player has jumped away from the mission theater, which instantly ends the mission and with it, the mini-campaign.
-        tk.msg(failtitle[1], failtext[1])
+        tk.msg(_("You ran away!"), _("You have left the system without first completing your mission. This treachery will not soon be forgotten by the Dvaered authorities!"))
         faction.get("Dvaered"):modPlayerSingle(-10)
         abort()
     end
@@ -427,7 +410,7 @@ function nextStage()
         --player.msg("Starting stage 4.")
         local delay = 0
         delay = delay + 3.0
-        hook.timer(delay, "broadcast", {caster = obstinate, text = phasetwo})
+        hook.timer(delay, "broadcast", {caster = obstinate, text = _("This is Obstinate. Launching bombers.")})
         hook.timer(delay, "spawnDVbomber")
         delay = delay + 38.0
         hook.timer(delay, "engageBase")
@@ -576,7 +559,7 @@ end
 
 -- Handle mission failure.
 function deathObstinate()
-    tk.msg(failtitle[2], failtext[2])
+    tk.msg(_("The flagship is dead!"), _("The HDSF Obstinate has been destroyed by the FLF defending forces! This mission can no longer be completed."))
 
     for i, j in ipairs(fleetDV) do
         if j:exists() then
@@ -599,7 +582,7 @@ end
 
 function attackedObstinate()
     if wavefirst then
-        pilot.broadcast(obstinate, flagattack, true)
+        pilot.broadcast(obstinate, _("This is Obstinate, we're under fire!"), true)
         wavefirst = false
     end
     attacked()
