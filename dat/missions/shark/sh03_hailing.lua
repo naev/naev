@@ -83,7 +83,7 @@ end
 function accept()
 
    stage = 0
-   reward = 750000
+   reward = 750e3
 
    if tk.yesno(title[1], text[1]:format(missys:name(), nextpla:name(), nextsys:name())) then
       misn.accept()

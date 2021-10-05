@@ -83,7 +83,7 @@ function create ()
       misn.finish( false )
    end
 
-   credits = 50000
+   credits = 50e3
    started = false
    chatter_index = 0
 

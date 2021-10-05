@@ -55,9 +55,9 @@ function create ()
    if num_flf == nil then num_flf = 0 end
    dv_attention_target = num_dvaereds / 50
    credits = 200 * (num_dvaereds + num_empire - num_flf) * system.cur():jumpDist( missys, true ) / 3
-   credits = credits + rnd.sigma() * 10000
+   credits = credits + rnd.sigma() * 10e3
    reputation = math.max( (num_dvaereds + num_empire - num_flf) / 25, 1 )
-   if credits < 10000 then misn.finish( false ) end
+   if credits < 10e3 then misn.finish( false ) end
 
    -- Set mission details
    misn.setTitle( misn_title:format( missys:name() ) )

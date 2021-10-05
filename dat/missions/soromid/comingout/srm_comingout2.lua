@@ -54,7 +54,7 @@ function create ()
    misplanet, missys = planet.get( "Crow" )
    -- Note: This mission does not make system claims
 
-   credits = 50000
+   credits = 50e3
    started = false
 
    misn.setNPC( npc_name, "soromid/unique/chelsea.webp", npc_desc )

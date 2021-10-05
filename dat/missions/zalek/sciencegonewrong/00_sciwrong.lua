@@ -152,7 +152,7 @@ function second_trd()
      return
   end
   -- take money from player, if player does not have the money, refuse
-  if player.credits() < 50000 then
+  if player.credits() < 50e3 then
      tk.msg(_([[In the bar]]), _([["You don't have enough money. Stop wasting my time."]]))
      return
   end
@@ -258,7 +258,7 @@ function go_board ()
 end
 -- display msgs and have the ships disappear and fail the mission...
 function fine_vanish ()
-   fine = 100000
+   fine = 100e3
    tk.msg(title[3],text[13])
    tk.msg(title[3],text[14]:format(fmt.credits(fine)))
    if player.credits() > fine then

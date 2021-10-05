@@ -264,7 +264,7 @@ function land ()
       -- This was the last mission in the minor campaign, so bump the reputation cap.
       emp.modReputation( 10 )
       faction.modPlayerSingle("Empire",5)
-      player.pay( 5000000 ) -- 5m
+      player.pay( 5e6 )
 
       tk.msg( title[3], text[4] )
       player.outfitAdd("Left Boot")

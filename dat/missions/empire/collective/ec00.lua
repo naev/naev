@@ -82,7 +82,7 @@ function accept ()
 
    misn_stage = 0
    misn_marker = misn.markerAdd( misn_target, "low" )
-   credits = 500000
+   credits = 500e3
 
    -- Mission details
    misn.setTitle(misn_title)

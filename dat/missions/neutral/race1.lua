@@ -69,7 +69,7 @@ function create ()
    cursys = system.cur()
    curplanet = planet.cur()
    misn.setNPC(_("A laid back person"), "neutral/unique/laidback.webp", _("You see a laid back person, who appears to be one of the locals, looking around the bar."))
-   credits = rnd.rnd(20000, 100000)
+   credits = rnd.rnd(20e3, 100e3)
 end
 
 

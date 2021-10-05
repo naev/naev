@@ -84,7 +84,7 @@ end
 function accept ()
 
    commando_planet = "Eiroik"
-   credits = 1000000
+   credits = 1e6
 
    -- Intro text
    if tk.yesno( title[1], string.format(text[1], commando_planet) )

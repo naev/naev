@@ -48,8 +48,8 @@ function create ()
    targetworld_sys = system.get("Dohriabi")
    targetworld = planet.get("Niflheim")
 
-   releasereward = 25000
-   reward = 100000
+   releasereward = 25e3
+   reward = 100e3
 
    misn.setNPC( npc_name, "neutral/unique/cynthia_father.webp", _("An old man sits at a table with some missing person papers.") )
 end

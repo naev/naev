@@ -49,7 +49,7 @@ function create () --No system shall be claimed by mission
    startworld, startworld_sys = planet.cur()
    targetworld, targetworld_sys = planet.get( "Zhiru" )
 
-   reward = 20000
+   reward = 20e3
    started = false
 
    misn.setNPC( npc_name, "neutral/unique/michal.webp", _("A man sits in the corner of the bar, writing a letter.") )

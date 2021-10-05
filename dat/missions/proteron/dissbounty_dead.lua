@@ -105,7 +105,7 @@ function create ()
    level = 1
    name = _("Target Dissident")
    ship = "Schroedinger"
-   credits = 50000
+   credits = 50e3
    reputation = 0
    board_failed = false
    bounty_setup()
@@ -131,6 +131,6 @@ end
 function bounty_setup ()
    local choices = { "Schroedinger", "Hyena", "Llama", "Gawain" }
    ship = choices[ rnd.rnd( 1, #choices ) ]
-   credits = 150000 + rnd.sigma() * 15000
+   credits = 150e3 + rnd.sigma() * 15e3
    reputation = rnd.rnd( 1, 2 )
 end

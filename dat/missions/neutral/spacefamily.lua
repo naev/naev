@@ -127,7 +127,7 @@ function land()
    if planet.cur() == destplanet then -- We've arrived!
       if nextstop >= 3 then -- This is the last stop
          tk.msg(title[4], string.format(text[3], destsys:name())) -- Final message
-         player.pay(500000)
+         player.pay(500e3)
          misn.cargoJet(carg_id)
          neu.addMiscLog( log_text )
          misn.finish(true)

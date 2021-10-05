@@ -44,7 +44,7 @@ log_text = _([[You helped a rough-looking man deliver an illegal shipment. After
 function create()
    --this mission makes no mission claims
    --set the variables
-   reward = 200000 --reward algorithm after this mission = 100000 + (rnd.rnd(5,8)*2000 * (nasin_rep^1.51). flat rate for first mission.
+   reward = 200e3 --reward algorithm after this mission = 100e3 + (rnd.rnd(5,8)*2e3 * (nasin_rep^1.51). flat rate for first mission.
    startworld = planet.cur()
    targetasset = planet.get("Margot")
    targetsystem = system.get("Brendon")

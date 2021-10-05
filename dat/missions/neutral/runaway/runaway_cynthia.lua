@@ -38,11 +38,9 @@ log_text = _([[You gave a teenage girl named Cynthia a lift to Zhiru. When you g
 
 function create ()
    startworld, startworld_sys = planet.cur()
-
    targetworld_sys = system.get("Goddard")
    targetworld = planet.get("Zhiru")
-
-   reward = 500000
+   reward = 500e3
 
    misn.setNPC( npc_name, "neutral/unique/cynthia.webp", _("A pretty teenager sits alone at a table.") )
 end

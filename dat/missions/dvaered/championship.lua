@@ -155,9 +155,8 @@ function competitor5()
 end
 
 function accept()
-
    level = 0
-   reward = 50000
+   reward = 50e3
 
    if tk.yesno(title[1], text[1]) then
 

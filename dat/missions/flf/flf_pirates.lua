@@ -107,10 +107,10 @@ function create ()
       reputation = 20
    end
 
-   credits = ships * 190000 - flfships * 1000
-   if has_phalanx then credits = credits + 310000 end
-   if has_kestrel then credits = credits + 810000 end
-   credits = credits + rnd.sigma() * 8000
+   credits = ships * 190e3 - flfships * 1e3
+   if has_phalanx then credits = credits + 310e3 end
+   if has_kestrel then credits = credits + 810e3 end
+   credits = credits + rnd.sigma() * 8e3
 
    local desc = setDescription()
 

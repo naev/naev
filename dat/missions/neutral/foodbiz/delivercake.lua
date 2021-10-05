@@ -48,7 +48,7 @@ function create () --No system shall be claimed by mission
    startworld, startworld_sys = planet.cur()
    targetworld, targetworld_sys = planet.get( "Zeo" )
 
-   reward = 10000
+   reward = 10e3
 
    misn.setNPC( npc_name, "neutral/unique/paddy.webp", _("A familiar looking young woman is looking at you") )
 end
@@ -64,7 +64,7 @@ function accept()
    amount = player.pilot():cargoFree()
    if amount > 0 then
       misn.cargoAdd( cakes, amount )
-      reward = reward + ( 1000 * amount )
+      reward = reward + ( 1e3 * amount )
       tk.msg( title, _([["Great!" Paddy says with a smile. She hands you what appear to be recipes. "I just need you to deliver these recipes to him. Oh, and some of my homemade cake! I've packed that cake into your ship. Feel free to give it a taste! It's delicious! Anyway, Michal will pay you %s when you get there. Thank you so much!"
     When you arrive at your ship, you find your cargo hold packed to the brim with cake. You decide to try some, but the second it enters your mouth, you can't help but to spit it out in disgust. This is easily the most disgusting cake you've ever tasted. Well, as long as you get paid....]]):format( fmt.credits( reward ) ) )
    else

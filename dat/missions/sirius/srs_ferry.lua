@@ -198,7 +198,7 @@ function create()
 
     -- Choose mission reward. This depends on the priority and the passenger rank.
     finished_mod = 2.0 -- Modifier that should tend towards 1.0 as Naev is finished as a game
-    jumpreward = 10000
+    jumpreward = 10e3
     distreward = 0.18
     reward     = 1.4^(speed + rank) * (numjumps * jumpreward + traveldist * distreward) * finished_mod * (1. + 0.05*rnd.twosigma()) / (2-rank/2.0)
 

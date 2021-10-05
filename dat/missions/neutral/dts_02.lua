@@ -108,7 +108,7 @@ function create()
    if tk.yesno( title[1], text[1] ) then
       misn.accept()
       tk.msg( title[11], text[11])
-      reward = 40000
+      reward = 40e3
       misn.setReward( string.format( misn_reward, fmt.credits(reward)) )
       misn.setDesc( misn_desc)
       misn.setTitle( misn_title)

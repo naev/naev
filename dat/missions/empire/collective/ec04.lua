@@ -76,7 +76,7 @@ function create ()
    if tk.yesno( title[1], string.format(text[1], misn_target:name()) ) then
       misn.accept()
 
-      credits = 1000000
+      credits = 1e6
 
       misn_stage = 0
       misn_base, misn_base_sys = planet.get("Omega Station")

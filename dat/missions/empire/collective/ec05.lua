@@ -91,7 +91,7 @@ function create ()
    end
 
    misn.setNPC( _("Dimitri?"), "unknown.webp", _("Dimitri should be around here, but you can't see him. You should probably look for him.") )
-   credits = 2000000
+   credits = 2e6
 end
 
 

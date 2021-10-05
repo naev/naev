@@ -194,7 +194,7 @@ function create ()
    end
 
    ship = ships[rnd.rnd(1,#ships)]
-   credits = 1000000 + rnd.rnd()*500000
+   credits = 1e6 + rnd.rnd()*500e3
    cursys = 1
 
    -- Set mission details
@@ -432,7 +432,7 @@ function space_clue ()
 
    else -- Pilot wants payment
 
-      price = (5 + 5*rnd.rnd()) * 1000
+      price = (5 + 5*rnd.rnd()) * 1e3
       choice = tk.choice(_("How much money do you have?"), money_text[rnd.rnd(1,#money_text)]:format(name,fmt.credits(price)), _("Pay the sum"), _("Give up"), _("Threaten the pilot"))
 
       if choice == 1 then
@@ -525,7 +525,7 @@ function land ()
          know = 0
       elseif rnd.rnd() < .5 then -- NPC wants money
          know = 1
-         price = (5 + 5*rnd.rnd()) * 1000
+         price = (5 + 5*rnd.rnd()) * 1e3
       else -- NPC tells the clue
          know = 2
       end

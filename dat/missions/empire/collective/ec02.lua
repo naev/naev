@@ -112,7 +112,7 @@ function land()
 
       -- Rewards
       faction.modPlayerSingle("Empire",5)
-      player.pay( 700000 )
+      player.pay( 700e3 )
 
       emp.addCollectiveLog( log_text )
 

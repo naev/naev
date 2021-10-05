@@ -78,9 +78,9 @@ function create ()
       flfships = rnd.rnd( 2, 4 )
    end
 
-   credits = ships * 30000 - flfships * 1000
+   credits = ships * 30e3 - flfships * 1e3
    credits = credits * system.cur():jumpDist( missys, true ) / 3
-   credits = credits + rnd.sigma() * 8000
+   credits = credits + rnd.sigma() * 8e3
 
    local desc = setDescription()
 

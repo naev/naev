@@ -58,7 +58,7 @@ function accept()
     end
 
     if not tk.yesno(bar_title, string.format(_([["Hello there! You are a pilot, right? For my project I require a ship that can go to the Nebula. Certainly you must be interested in the proposal of researching the phenomenon that cut us off from mankind's patrimony.
-    "As this is the point where any other pilots I asked backed out, I should start by mentioning that due to some unfortunate circumstances the payment for this mission will be only %s. But rest assured, you will be mentioned in the acknowledgment section of my next paper!"]]), fmt.credits(50000))) then
+    "As this is the point where any other pilots I asked backed out, I should start by mentioning that due to some unfortunate circumstances the payment for this mission will be only %s. But rest assured, you will be mentioned in the acknowledgment section of my next paper!"]]), fmt.credits(50e3))) then
         if not tk.yesno(bar_title, _([["Hold up! Look, the problem is that my grant was not permitted to the extent that I asked for. Those assholes cut my funds because they just don't understand the relevance of my research. Just because I'm still a student they completely underestimate my abilities!
     "Now I've spent all my credits on this sensor suit without the ability to use it. You must know how this feels. I mean, your ship obviously could use some work. So why don't you just help me out here?"]]) ) then
             misn.finish()
@@ -80,7 +80,7 @@ function accept()
     -- Set up mission information
     misn.setTitle( _("Novice Nebula Research") )
     misn.setReward( string.format(
-        _("%s and the gratitude of a student"), fmt.credits(50000) ) )
+        _("%s and the gratitude of a student"), fmt.credits(50e3) ) )
     misn.setDesc( _("You have been asked by a Za'lek student to fly into the Nebula for some kind of research.") )
     misn_marker = misn.markerAdd(system.get(t_sys[1]), "low")
 

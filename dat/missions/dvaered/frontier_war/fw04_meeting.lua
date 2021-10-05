@@ -403,7 +403,7 @@ end
 function toocloseControl( ind )
    if (not canland[ind]) then -- Player failed to control a ship: penalty
       tk.msg( _("An unidentified ship came close to the station"), _("A ship managed to approach the station, and you failed to control it. Fortunately, it was identified by the station's sensors and is not hostile. However, your failure to intercept it could have led to problems in the opposite case. As a consequence, your reward has been decreased.") )
-      reward = reward - 10000
+      reward = reward - 10e3
    end
 end
 function toocloseControl1()

@@ -69,7 +69,7 @@ function create ()
       misn.finish( false )
    end
 
-   credits = 500000
+   credits = 500e3
    started = false
 
    misn.setNPC( npc_name, "soromid/unique/chelsea.webp", npc_desc )

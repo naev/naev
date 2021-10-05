@@ -68,8 +68,8 @@ function create ()
 
    -- Note: this mission makes no system claims
 
-   credits_factor = 1000 * dist
-   credits_mod = 10000 * rnd.sigma()
+   credits_factor = 1e3 * dist
+   credits_mod = 10e3 * rnd.sigma()
 
    landed = true
 
