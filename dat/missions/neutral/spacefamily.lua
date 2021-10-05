@@ -22,7 +22,7 @@ local lmisn = require "lmisn"
 local neu = require "common.neutral"
 
 
-shipname = _("August") --The ship will have a unique name
+shipname = _("August")
 
 title = {}
 text = {}

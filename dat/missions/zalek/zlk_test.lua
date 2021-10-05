@@ -143,7 +143,7 @@ function accept()
       takehook = hook.takeoff( "takeoff" )
       enterhook = hook.enter("enter")
    else
-      tk.msg( msg_title[2], msg_msg [2] )
+      tk.msg( msg_title[2], msg_msg[2] )
       misn.finish(false)
    end
 
@@ -162,7 +162,7 @@ function takeoff()  --must trigger at every takeoff to check if the player forgo
 
       else   --Player has forgotten the engine
       stage = 1
-      tk.msg( msg_title[4], msg_msg [4] )
+      tk.msg( msg_title[4], msg_msg[4] )
    end
 end
 

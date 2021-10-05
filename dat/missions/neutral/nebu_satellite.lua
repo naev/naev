@@ -50,10 +50,10 @@ text[2] = _([["We had a trip scheduled with a space trader ship, but they backed
 text[3] = _([["The plan is for you to take us to %s so we can launch the probe, and then return us to our home at %s in the %s system. The probe will automatically send us the data we need if all goes well. You'll be paid %s when we arrive."]])
 text[4] = _([[The scientists thank you for your help before going back to their home to continue their nebula research. One of them gives you a mock-up of the satellite you helped them launch as a keepsake.]])
 text[9] = _([["You do not have enough free cargo space to accept this mission!"]])
-launch = {}
-launch[1] = _("Preparing to launch satellite probe...")
-launch[2] = _("Launch in 5...")
-launch[3] = _("Satellite launch successful!")
+launchtext = {}
+launchtext[1] = _("Preparing to launch satellite probe...")
+launchtext[2] = _("Launch in 5...")
+launchtext[3] = _("Satellite launch successful!")
 
 articles={}
 articles={
@@ -147,13 +147,13 @@ end
    Launch process
 --]]
 function beginLaunch ()
-   player.msg( launch[1] )
+   player.msg( launchtext[1] )
    misn.osdDestroy()
    hook.timer( 3.0, "beginCountdown" )
 end
 function beginCountdown ()
    countdown = 5
-   player.msg( launch[2] )
+   player.msg( launchtext[2] )
    hook.timer( 1.0, "countLaunch" )
 end
 function countLaunch ()
@@ -172,7 +172,7 @@ function launchSatellite ()
 
 
    misn_stage = 1
-   player.msg( launch[3] )
+   player.msg( launchtext[3] )
    misn.cargoJet( cargo )
    misn.setDesc( string.format( mdesc[2], homeworld:name(), homeworld_sys:name() ) )
    misn.osdCreate(mtitle[1], {mdesc[2]:format(homeworld:name(), homeworld_sys:name())})

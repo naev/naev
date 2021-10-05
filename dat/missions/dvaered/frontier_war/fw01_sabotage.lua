@@ -118,7 +118,6 @@ duel1_text = _([[Colonel Urnus's ship broadcasts the message: "I, Colonel Urnus,
    A formal silence follows the words of the colonel, but soon Battleaddict and Klank respond: "It can not, Mister Commissioner." And Urnus continues: "I am witness to the fact that this duel conforms to the rules established by our ancestors. I have controlled both ships and I attest that I observed no irregularities. Let the fight begin, may the most virtuous of you both survive."]])
 
 epilogue_title = _("A good thing done")
--- FIXME The "here are _ credits" language might require a full ngettext() call.
 epilogue_text = _([[As you approach, the major tells the General Klank that you are the private pilot they had hired recently. "I see," says the general "so you are part of the people I have to thank for still being alive now." You answer that he apparently would not have needed help if Battleaddict had not cheated as well, and he responds: "Damn fake electricians; I should have suspected something. Anyway, citizen, rest assured that we will need your services again." A group of generals then approaches and congratulate Klank. He stands up and goes away with them, loudly exchanging dubious pleasantries with them.
    Major Tam then speaks to you: "Apparently, Battleaddict had got a commando unit to dress like electricians and to hide an EMP bomb in the General's Goddard, that exploded during the fight, just like our own bomb. And now, both ships have their systems ruined. Well, anyway, thank you for your help, here are %s for you!"]])
 

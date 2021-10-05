@@ -84,7 +84,6 @@ misn_desc[1] = _("Fly to planet %s in the %s system and talk to Jorek. Once Jore
 -- NPC stuff
 jorek_npc = {}
 jorek_npc["name"] = _("An unpleasant man.")
-jorek_npc["portrait"] = "neutral/unique/jorek.webp"
 jorek_npc["desc"] = _("A middle-aged, cranky looking man is sitting at a table by himself. You are fairly certain that this is the fellow you're looking for.")
 jorek_title = {}
 jorek_title[1] = _("An unpleasant man")
@@ -186,7 +185,7 @@ end
 function land()
    local landed = planet.cur()
    if pnt == landed then
-      misn.npcAdd( "jorek", jorek_npc["name"], jorek_npc["portrait"], jorek_npc["desc"] )
+      misn.npcAdd( "jorek", jorek_npc["name"], "neutral/unique/jorek.webp", jorek_npc["desc"] )
       misn.npcAdd( "officer", off_npc["name"], portrait.getMaleMil("Empire"), off_npc["desc"] )
       misn.npcAdd( "soldier1", sol1_npc["name"], portrait.getMaleMil("Empire"), sol1_npc["desc"] )
       misn.npcAdd( "soldier2", sol2_npc["name"], portrait.getMil("Empire"), sol2_npc["desc"] )
