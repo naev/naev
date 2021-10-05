@@ -73,7 +73,7 @@ function hail ()
       mem.bribe_prompt = string.format(_([["For %s I'll let your grievances slide."]]), fmt.credits(mem.bribe) )
       mem.bribe_paid = _([["Now get out of my sight and don't cause any more trouble."]])
    else
-      mem.bribe_no = bribe_no[ rnd.rnd(1,#bribe_no) ]
+      mem.bribe_no = bribe_no_list[ rnd.rnd(1,#bribe_no) ]
    end
 end
 
