@@ -78,14 +78,13 @@ text[6] = _([[You see Commodore Keer with a dozen soldiers waiting for you outsi
 text[7] = _([[You see Commodore Keer with a dozen soldiers waiting for you outside the landing pad.
     "You weren't supposed to let the Trinity get away! Now we have no cards to play. We must wait for the Collective response or new information before being able to continue. We'll notify you if we have something you can do for us, but for now we just wait."]])
 
--- Conversation between pilots
-talk = {}
-talk[1] = _("ESS Trinity: Please turn off your engines and prepare to be boarded.")
-talk[2] = _("You will never take me alive!")
-talk[3] = _("Very well then. All units engage ESS Trinity.")
-talk[5] = _("Mission Success: Return to base.")
-talk[6] = _("Mission Failure: Return to base.")
-talk[7] = _("Incoming drones from hyperspace detected!")
+chatter = {}
+chatter[1] = _("ESS Trinity: Please turn off your engines and prepare to be boarded.")
+chatter[2] = _("You will never take me alive!")
+chatter[3] = _("Very well then. All units engage ESS Trinity.")
+chatter[5] = _("Mission Success: Return to base.")
+chatter[6] = _("Mission Failure: Return to base.")
+chatter[7] = _("Incoming drones from hyperspace detected!")
 
 osd_msg = {}
 osd_msg[1] = _("Fly to the %s system")
@@ -211,7 +210,7 @@ function enter ( from_sys )
    elseif misn_stage == 1 then
 
       misn_stage = 3
-      player.msg( talk[6] )
+      player.msg( chatter[6] )
       misn.setDesc( string.format(misn_desc[2],
             misn_base:name(), misn_base_sys:name() ))
       misn.markerMove( misn_marker, misn_base_sys )
@@ -224,20 +223,20 @@ function final_talk ()
    -- Empire talks about arresting
    if final_fight == 0 then
       talker = paci
-      talker:broadcast( talk[1] )
+      talker:broadcast( chatter[1] )
 
       final_fight = 1
       hook.timer(rnd.uniform( 3.0, 4.0 ), "final_talk")
    elseif final_fight == 1 then
       talker = trinity
-      talker:broadcast( talk[2] )
+      talker:broadcast( chatter[2] )
 
       final_fight = 2
       hook.timer(rnd.uniform( 3.0, 4.0 ), "final_talk")
    elseif final_fight == 2 then
       -- Talk
       talker = paci
-      talker:broadcast( talk[3] )
+      talker:broadcast( chatter[3] )
 
       -- ESS Trinity becomes collective now.
       trinity:setFaction("Collective")
@@ -285,7 +284,7 @@ function trinity_flee ()
    trinity:control()
    trinity:hyperspace( misn_flee_sys, true )
    trinity:broadcast( taunts[3] )
-   player.msg( talk[7] )
+   player.msg( chatter[7] )
    hook.timer( rnd.uniform( 3.0, 5.0 ), "call_drones_jump" )
 end
 
@@ -390,7 +389,7 @@ end
 
 -- Trinity hooks
 function trinity_kill () -- Got killed
-   player.msg( talk[5] )
+   player.msg( chatter[5] )
    misn_stage = 2
    misn.osdActive(3)
    trinity_alive = false
@@ -400,7 +399,7 @@ end
 
 
 function trinity_jump () -- Got away
-   player.msg( talk[6] )
+   player.msg( chatter[6] )
    misn_stage = 2
    misn.osdActive(3)
    trinity_alive = true

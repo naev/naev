@@ -34,21 +34,16 @@
          * Stage five: In the bar afterward, another pilot wonders why the pirates behaved unusually.
 
 TO DO
-Make comm chatter appear during the battle
 Add some consequences if the player aborts the mission
 ]]--
 
 local fleet = require "fleet"
 local fmt = require "format"
 
--- This section stores the strings (text) for the mission.
-
--- Mission details
 misn_title = _("Defend the System")
 misn_reward = _("%s and the pleasure of serving the Empire.")
 misn_desc = _("Defend the system against a pirate fleet.")
 
--- Stage one: in the bar you hear a fleet of Pirates have invaded the system.
 title = {}
 text = {}
 title[1] = _("In the bar")
@@ -59,30 +54,25 @@ text[1] = _([[The barman has just asked you for your order when the portmaster b
 title[11] = _("Volunteers")
 text[11] = _([["Take as many out of the fight early as you can," advises the Commodore before you board your ships. "If you can't chase them off, you might at least improve the odds. Good luck."]])
 
--- Stage two: Vicious comm chatter
-comm = {}
-comm[1] = _("Eat vacuum, scum!")
-comm[2] = _("Die, pirate, die.")
-comm[3] = _("Eat cannon fire")
-comm[4] = _("Thieving parasites")
-comm[5] = _("I've got one on me!")
+commchatter = {}
+commchatter[1] = _("Eat vacuum, scum!")
+commchatter[2] = _("Die, pirate, die.")
+commchatter[3] = _("Eat cannon fire")
+commchatter[4] = _("Thieving parasites")
+commchatter[5] = _("I've got one on me!")
 
--- Stage three: Victorious comm chatter
-comm[6] = _("We've got them on the run!")
-comm[7] = _("Well done, pilots. Return to port.")
+commchatter[6] = _("We've got them on the run!")
+commchatter[7] = _("Well done, pilots. Return to port.")
 
--- Stage four: the commander is getting instructions when you land
 title[2] = _("On the way in")
 text[2] = _([[As you taxi in to land, you can make out the tiny figure of the Commodore saluting a small group of individuals to the side of the landing pads. After you and your fellow volunteers alight, she greets you with the portmaster by her side.]])
 
--- Stage five: the commander welcomes you back
 title[3] = _("Thank you")
 text[3] = _([["That was good flying," the Commodore says with a tight smile. "Thank you all for your help. This gentleman has arranged a transfer of forty thousand credits to each of you. You can be proud of what you've done today."]])
 
--- Other text for the mission
-comm[8] = _("You fled from the battle. The Empire won't forget.")
-comm[9] = _("Comm Trader>You're a coward, %s. You better hope I never see you again.")
-comm[10] = _("Comm Trader>You're running away now, %s? The fight's finished, you know...")
+commchatter[8] = _("You fled from the battle. The Empire won't forget.")
+commchatter[9] = _("Comm Trader>You're a coward, %s. You better hope I never see you again.")
+commchatter[10] = _("Comm Trader>You're running away now, %s? The fight's finished, you know...")
 title[4] = _("Good job!")
 text[4] = _([[The debris from the battle disappears behind you in a blur of light. A moment after you emerge from hyperspace, a Imperial ship jumps in behind you and hails you.
     "Please hold course and confirm your identity, %s."  You send your license code and wait for a moment. "OK, that's fine. We're just making sure no pirates escaped. You were part of the battle, weren't you?  Surprised you didn't return for the bounty, pilot. Listen, I appreciate what you did back there. I have family on %s. When I'm not flying overhead, it's good to know there are good Samaritans like you who will step up. Thanks."
@@ -153,7 +143,7 @@ function enter_system()
       elseif victory == true and defender == true then
          hook.timer(1.0, "ship_enters")
       elseif defender == true then
-         player.msg( comm[8])
+         player.msg( commchatter[8] )
          faction.modPlayerSingle( "Empire", -3)
          misn.finish( true)
       elseif this_system == system.cur() and been_here_before ~= true then
@@ -221,7 +211,7 @@ function add_cas_and_check()
          end
          if victory ~= true then  -- A few seconds after victory, the system is back under control
             victory = true
-            player.msg( comm[6])
+            player.msg( commchatter[6] )
             hook.timer(8.0, "victorious")
          end
       end
@@ -232,7 +222,7 @@ end
 function victorious()
 
    -- Call ships to base
-      player.msg( comm[7])
+      player.msg( commchatter[7] )
    -- Get a position near the player for late Empire re-enforcements
       starting_vect = player.pos()
       a = rnd.rnd() * 2 * math.pi
@@ -278,9 +268,9 @@ function abort()
       if victory ~= true then
          faction.modPlayerSingle( "Empire", -10)
          faction.modPlayerSingle( "Trader", -10)
-         player.msg( string.format( comm[9], player.name()))
+         player.msg( string.format( commchatter[9], player.name() ) )
       else
-         player.msg( string.format( comm[10], player.name()))
+         player.msg( string.format( commchatter[10], player.name() ) )
       end
 
 end

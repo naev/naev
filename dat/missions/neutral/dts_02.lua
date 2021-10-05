@@ -33,9 +33,6 @@
          * Stage four: The portmaster welcomes the fleet back and thanks them with money.
          * Stage five: In the bar afterward, another pilot wonders why the pirates behaved unusually.
 
-TO DO
-Make comm chatter appear during the battle
-
 NOTE
 Because of bad planning, this mission is badly organized.
 Anyone looking for a model of good mission-making should look elsewhere! -- the author
@@ -44,14 +41,10 @@ Anyone looking for a model of good mission-making should look elsewhere! -- the 
 local fleet = require "fleet"
 local fmt = require "format"
 
--- This section stores the strings (text) for the mission.
-
--- Mission details
 misn_title = _("Defend the System")
 misn_reward = _("%s and the pleasure of serving the Empire.")
 misn_desc = _("Defend the system against a pirate fleet.")
 
--- Stage one: in the bar you hear a fleet of Pirates have invaded the system.
 title = {}
 text = {}
 title[1] = _("In the bar")
@@ -62,31 +55,26 @@ text[1] = _([[The bar rests in the dull clink of glasses and the scattered murmu
 title[11] = _("Volunteers")
 text[11] = _([["These terrorists cannot sustain many losses," one of the young men explains as you and a group of other volunteers prepare for takeoff, "and they have no organization. We can destroy them if you team up and focus your fire on one ship at a time."]])
 
--- Stage two: comm chatter, now no longer used except to initialize the table
-comm = {}
+commchatter = {}
 
--- Stage three: Victorious comm chatter
-comm[6] = _("We've got them on the run!")
-comm[61] = _("Broadcast %s> The raiders are retreating!")
-comm[7] = _("Good flying, volunteers. The governor is waiting for us back in port.")
-comm[71] = _("Comm %s> Good flying, volunteers. The governor is waiting for you back in port.")
+commchatter[6] = _("We've got them on the run!")
+commchatter[61] = _("Broadcast %s> The raiders are retreating!")
+commchatter[7] = _("Good flying, volunteers. The governor is waiting for us back in port.")
+commchatter[71] = _("Comm %s> Good flying, volunteers. The governor is waiting for you back in port.")
 
--- Stage four: the governor greets you and the cadets in front of a crowd
 title[2] = _("A public occasion")
 text[2] = _([[Night is falling by the time you land back on %s. Looking solemn in front of a gathering crowd and news recorders, a large man with a fleshy face comes forward to greet the survivors of the fight. A flock of men and women follow him.
     When he shakes your hand, the Governor looks keenly at you at smiles, "Very well done."
     After meeting each surviving pilot, the tall man stands still for aide to attach an amplifier to his lapel. Then he turns his face to the news-casters and the crowd.]])
 
--- Stage five: the commander welcomes you back
 title[3] = _("The Governor's speech")
 text[3] = _([[
 "Even here on %s, even in the protective embrace of civilization, we face many dangers. The ties that bind us through space to other worlds are fragile. When criminals attack these precious connections, they trouble the very foundations of our peace. How glad we are now for the security of the Empire whose young navy cadets led a team of independent pilots to defend us today."  The Governor turns to the pair of officers-in-training. "In the name of the Emperor, I have the privilege of decorating these two young heroes with the %s Silver Heart. I hope they and their volunteers will not be too proud to also accept a generous purse, along with the gratitude of all our people. Please join me in applauding their bravery."
     The public ceremony lasts only a few hectoseconds. Afterwards, as interviewers draw the young navy officers aside and the crowd disperses, you catch sight of the elderly couple from the bar holding each other and looking up into the darkening sky.]])
 
--- Other text for the mission
-comm[8] = _("You fled from the battle. The Empire won't forget.")
-comm[9] = _("Comm Lancelot> You're a coward, %s. You better hope I never see you again.")
-comm[10] = _("Comm Lancelot> You're running away now, %s? The fight's finished, you know...")
+commchatter[8] = _("You fled from the battle. The Empire won't forget.")
+commchatter[9] = _("Comm Lancelot> You're a coward, %s. You better hope I never see you again.")
+commchatter[10] = _("Comm Lancelot> You're running away now, %s? The fight's finished, you know...")
 title[4] = _("Good job!")
 text[4] = _([[A freighter hails you as you jump into the system.
     "Thank you for responding, %s. Are you coming in from %s?  I have a delivery I need to get to %s and I can't wait much longer. Is the system safe now?"
@@ -163,7 +151,7 @@ function enter_system()
          pilot.add( "Koala", "Trader", player.pos(), _("Trader Koala"), {ai="def"} )
          hook.timer(1.0, "ship_enters")
       elseif defender == true then
-         player.msg( comm[8])
+         player.msg( commchatter[8] )
          faction.modPlayerSingle( "Empire", -3)
          misn.finish( true)
       elseif this_system == system.cur() and been_here_before ~= true then
@@ -253,7 +241,7 @@ function add_cas_and_check()
             second_wave_attacks()
          else
             victory = true
-            player.msg( comm[6])  -- A few seconds after victory, the system is back under control
+            player.msg( commchatter[6] )  -- A few seconds after victory, the system is back under control
             hook.timer(8.0, "victorious")
             return
          end
@@ -279,10 +267,10 @@ end
 function cadet_first_comm()
 
       if cadet1_alive then
-         cadet1:comm( comm[6])
+         cadet1:comm( commchatter[6] )
       elseif cadet2_alive then
-         cadet2:comm( comm[6])
-      else player.msg( string.format(comm[61], planet_name))
+         cadet2:comm( commchatter[6] )
+      else player.msg( string.format(commchatter[61], planet_name))
       end
 
 end
@@ -292,10 +280,10 @@ end
 function victorious()
 
       if cadet1_alive then
-         cadet1:comm( comm[7])
+         cadet1:comm( commchatter[7] )
       elseif cadet2_alive then
-         cadet2:comm( comm[7])
-      else player.msg( string.format(comm[71], planet_name))
+         cadet2:comm( commchatter[7] )
+      else player.msg( string.format(commchatter[71], planet_name))
       end
 
 end
@@ -334,9 +322,9 @@ function abort()
       if victory == false then
          faction.modPlayerSingle( "Empire", -10)
          faction.modPlayerSingle( "Trader", -10)
-         player.msg( string.format( comm[9], player.name()))
+         player.msg( string.format( commchatter[9], player.name()))
       else
-         player.msg( string.format( comm[10], player.name()))
+         player.msg( string.format( commchatter[10], player.name()))
       end
       misn.finish( true)
 

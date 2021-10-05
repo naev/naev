@@ -41,7 +41,6 @@ accept_text = _([["Very good choice, colleague!" The pilot answers. "Go to %s, a
 refuse_title = _("Too bad")
 refuse_text = _([["I see. Stay tuned, then, maybe we will see each other again!"]])
 
-loyal_title = _("You are a loyal citizen of House Dvaered")
 loyal_text1 = _([[As you land, you see the Captain Leblanc at the dock and she congratulates you: "I've heard good things about you, citizen %s. It seems that you have passed the test. You remained loyal to our general, in spite of the absurdly high reward they had proposed to you for betraying us."]])
 loyal_text2 = _([["Money matters are secondary matters, pilot. One day you are rich, and the next, you are poor. Valor, on the other hand, is the central matter of life for valor contains all the other qualities a Dvaered must have:
    "Righteousness to understand what has to be done,
@@ -125,6 +124,7 @@ end
 
 -- Reaction to player's choice at first landing
 function reaction()
+   local loyal_title = _("You are a loyal citizen of House Dvaered")
    if stage == 1 then -- Traitor
       tk.msg(traitor_title, traitor_text:format(player.name()), ("portraits/"..portrait_leblanc))
       var.push( "loyal2klank", false )

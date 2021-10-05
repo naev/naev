@@ -123,9 +123,7 @@ flint_bar1 = _("You spot a thin, nervous looking individual. He does not seem to
 flint_npc2 = _("Flintley")
 flint_bar2 = _("Flintley is here. He nervously sips from his drink, clearly uncomfortable in this environment.")
 
-sellerdesc = _("You spot a dodgy individual who matches one of the portraits in your ship's database. This must be one of the artifact sellers.")
-
-buy = _("Buy the artifact (%s)")
+dobuy = _("Buy the artifact (%s)")
 nobuy = _("Don't buy the artifact")
 
 nomoneytitle = _("Not enough money!")
@@ -218,6 +216,7 @@ function board()
 end
 
 function land()
+   local sellerdesc = _("You spot a dodgy individual who matches one of the portraits in your ship's database. This must be one of the artifact sellers.")
    if planet.cur() == artifactplanetA and not artifactA then
       sellnpc = misn.npcAdd("seller", _("Artifact seller"), portrait.get("Pirate"), sellerdesc, 4)
    elseif planet.cur() == artifactplanetB and not artifactB then
@@ -296,7 +295,7 @@ end
 
 function seller()
    if planet.cur() == artifactplanetA then
-      if tk.choice(title[8], text[9], buy:format(fmt.credits(reward * 0.15)), nobuy) == 1 then
+      if tk.choice(title[8], text[9], dobuy:format(fmt.credits(reward * 0.15)), nobuy) == 1 then
          if player.credits() >= reward * 0.15 then
             misn.npcRm(sellnpc)
             player.pay( reward * 0.15 )
@@ -308,7 +307,7 @@ function seller()
          end
       end
    elseif planet.cur() == artifactplanetB then
-      if tk.choice(title[8], text[10], buy:format(fmt.credits(reward * 0.15)), nobuy) == 1 then
+      if tk.choice(title[8], text[10], dobuy:format(fmt.credits(reward * 0.15)), nobuy) == 1 then
          if player.credits() >= reward * 0.15 then
             misn.npcRm(sellnpc)
             player.pay( reward * 0.15 )
@@ -320,7 +319,7 @@ function seller()
          end
       end
    elseif planet.cur() == artifactplanetC then
-      if tk.choice(title[8], text[11], buy:format(fmt.credits(reward * 0.15)), nobuy) == 1 then
+      if tk.choice(title[8], text[11], dobuy:format(fmt.credits(reward * 0.15)), nobuy) == 1 then
          if player.credits() >= reward * 0.15 then
             misn.npcRm(sellnpc)
             player.pay( reward * 0.15 )

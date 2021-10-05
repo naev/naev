@@ -35,6 +35,8 @@ missing  = {} -- Array of empty required slots and their default outfits.
 nrequired = 0
 nequipped = 0
 
+msg_title = _("Stranded")
+
 -- Array of tasks for filling in missing slots in the following format:
 --    { { desc, callback }, ... }
 mtasks = {
@@ -54,8 +56,6 @@ tasks = {
    { _("Remove structure outfits"), function() removeNonCores( "Structure" ) end },
    { _("Cancel"), function() tk.msg( msg_title, msg_refuse ) end }
 }
-
-msg_title = _("Stranded")
 
 msg_prompt = _([[The following actions are available to make your ship spaceworthy:]])
 
