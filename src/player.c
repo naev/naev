@@ -2537,13 +2537,11 @@ void player_shipsSort (void)
  */
 int player_ships( char** sships, glTexture** tships )
 {
-   int i;
-
    /* Sort. */
    player_shipsSort();
 
    /* Create the struct. */
-   for (i=0; i < array_size(player_stack); i++) {
+   for (int i=0; i < array_size(player_stack); i++) {
       sships[i] = strdup(player_stack[i].p->name);
       tships[i] = player_stack[i].p->ship->gfx_store;
    }
@@ -2580,14 +2578,12 @@ int player_nships (void)
  */
 int player_hasShip( const char *shipname )
 {
-   int i;
-
    /* Check current ship. */
    if ((player.p != NULL) && (strcmp(player.p->name,shipname)==0))
       return 1;
 
    /* Check stocked ships. */
-   for (i=0; i < array_size(player_stack); i++)
+   for (int i=0; i < array_size(player_stack); i++)
       if (strcmp(player_stack[i].p->name, shipname)==0)
          return 1;
    return 0;
@@ -2602,12 +2598,10 @@ int player_hasShip( const char *shipname )
  */
 Pilot *player_getShip( const char *shipname )
 {
-   int i;
-
    if ((player.p != NULL) && (strcmp(shipname,player.p->name)==0))
       return player.p;
 
-   for (i=0; i < array_size(player_stack); i++)
+   for (int i=0; i < array_size(player_stack); i++)
       if (strcmp(player_stack[i].p->name, shipname)==0)
          return player_stack[i].p;
 
@@ -2624,12 +2618,10 @@ Pilot *player_getShip( const char *shipname )
  */
 PlayerShip_t *player_getPlayerShip( const char *shipname )
 {
-   int i;
-
    if ((player.p != NULL) && (strcmp(shipname,player.p->name)==0))
       return NULL;
 
-   for (i=0; i < array_size(player_stack); i++)
+   for (int i=0; i < array_size(player_stack); i++)
       if (strcmp(player_stack[i].p->name, shipname)==0)
          return &player_stack[i];
 
@@ -2646,8 +2638,6 @@ PlayerShip_t *player_getPlayerShip( const char *shipname )
  */
 int player_outfitOwned( const Outfit* o )
 {
-   int i;
-
    /* Special case map. */
    if ((outfit_isMap(o) && map_isUseless(o)) ||
          (outfit_isLocalMap(o) && localmap_isUseless(o)))
@@ -2664,7 +2654,7 @@ int player_outfitOwned( const Outfit* o )
       return 1;
 
    /* Try to find it. */
-   for (i=0; i<array_size(player_outfits); i++)
+   for (int i=0; i<array_size(player_outfits); i++)
       if (player_outfits[i].o == o)
          return player_outfits[i].q;
 
@@ -2677,12 +2667,9 @@ int player_outfitOwned( const Outfit* o )
  */
 int player_outfitOwnedTotal( const Outfit* o )
 {
-   int i, q;
-
-   q  = player_outfitOwned(o);
-
+   int q = player_outfitOwned(o);
    q += pilot_numOutfit( player.p, o );
-   for (i=0; i<array_size(player_stack); i++)
+   for (int i=0; i<array_size(player_stack); i++)
       q += pilot_numOutfit( player_stack[i].p, o );
 
    return q;
@@ -2725,8 +2712,6 @@ const PlayerOutfit_t* player_getOutfits (void)
 int player_getOutfitsFiltered( const Outfit **outfits,
       int(*filter)( const Outfit *o ), const char *name )
 {
-   int i;
-
    if (array_size(player_outfits) == 0)
       return 0;
 
@@ -2734,7 +2719,7 @@ int player_getOutfitsFiltered( const Outfit **outfits,
    qsort( player_outfits, array_size(player_outfits),
          sizeof(PlayerOutfit_t), player_outfitCompare );
 
-   for (i=0; i<array_size(player_outfits); i++)
+   for (int i=0; i<array_size(player_outfits); i++)
       outfits[i] = (Outfit*)player_outfits[i].o;
 
    return outfits_filter( outfits, array_size(player_outfits), filter, name );
@@ -2761,7 +2746,6 @@ int player_numOutfits (void)
  */
 int player_addOutfit( const Outfit *o, int quantity )
 {
-   int i;
    PlayerOutfit_t *po;
 
    /* Validity check. */
@@ -2793,7 +2777,7 @@ int player_addOutfit( const Outfit *o, int quantity )
    }
 
    /* Try to find it. */
-   for (i=0; i<array_size(player_outfits); i++) {
+   for (int i=0; i<array_size(player_outfits); i++) {
       if (player_outfits[i].o == o) {
          player_outfits[i].q  += quantity;
          return quantity;
@@ -2819,13 +2803,11 @@ int player_addOutfit( const Outfit *o, int quantity )
  */
 int player_rmOutfit( const Outfit *o, int quantity )
 {
-   int i, q;
-
    /* Try to find it. */
-   for (i=0; i<array_size(player_outfits); i++) {
+   for (int i=0; i<array_size(player_outfits); i++) {
       if (player_outfits[i].o == o) {
          /* See how many to remove. */
-         q = MIN( player_outfits[i].q, quantity );
+         int q = MIN( player_outfits[i].q, quantity );
          player_outfits[i].q -= q;
 
          /* See if must remove element. */
@@ -2868,8 +2850,7 @@ void player_missionFinished( int id )
  */
 int player_missionAlreadyDone( int id )
 {
-   int i;
-   for (i=0; i<array_size(missions_done); i++)
+   for (int i=0; i<array_size(missions_done); i++)
       if (missions_done[i] == id)
          return 1;
    return 0;
@@ -2902,8 +2883,7 @@ void player_eventFinished( int id )
  */
 int player_eventAlreadyDone( int id )
 {
-   int i;
-   for (i=0; i<array_size(events_done); i++)
+   for (int i=0; i<array_size(events_done); i++)
       if (events_done[i] == id)
          return 1;
    return 0;
@@ -2981,9 +2961,7 @@ void player_runHooks (void)
  */
 static void player_clearEscorts (void)
 {
-   int i;
-
-   for (i=0; i<array_size(player.p->outfits); i++) {
+   for (int i=0; i<array_size(player.p->outfits); i++) {
       if (player.p->outfits[i]->outfit == NULL)
          continue;
 
@@ -3000,7 +2978,6 @@ static void player_clearEscorts (void)
  */
 int player_addEscorts (void)
 {
-   int i, j;
    double a;
    Vector2d v;
    unsigned int e;
@@ -3011,7 +2988,7 @@ int player_addEscorts (void)
    /* Clear escorts first. */
    player_clearEscorts();
 
-   for (i=0; i<array_size(player.p->escorts); i++) {
+   for (int i=0; i<array_size(player.p->escorts); i++) {
       if (!player.p->escorts[i].persist) {
          escort_rmListIndex(player.p, i);
          i--;
@@ -3026,7 +3003,7 @@ int player_addEscorts (void)
       if (player.p->escorts[i].type != ESCORT_TYPE_BAY)
          continue;
 
-      for (j=0; j<array_size(player.p->outfits); j++) {
+      for (int j=0; j<array_size(player.p->outfits); j++) {
          /* Must have outfit. */
          if (player.p->outfits[j]->outfit == NULL)
             continue;
@@ -3069,9 +3046,7 @@ int player_addEscorts (void)
  */
 static int player_saveEscorts( xmlTextWriterPtr writer )
 {
-   int i;
-
-   for (i=0; i<array_size(player.p->escorts); i++) {
+   for (int i=0; i<array_size(player.p->escorts); i++) {
       if (player.p->escorts[i].persist) {
          xmlw_startElem(writer, "escort");
          xmlw_attr(writer,"type","bay"); /**< @todo other types. */
@@ -3220,11 +3195,6 @@ static int player_saveShipSlot( xmlTextWriterPtr writer, PilotOutfitSlot *slot, 
  */
 static int player_saveShip( xmlTextWriterPtr writer, Pilot* ship, int favourite )
 {
-   int i, j, k;
-   int found;
-   const char *name;
-   PilotWeaponSetOutfit *weaps;
-
    xmlw_startElem(writer,"ship");
    xmlw_attr(writer,"name","%s",ship->name);
    xmlw_attr(writer,"model","%s",ship->ship->name);
@@ -3235,21 +3205,21 @@ static int player_saveShip( xmlTextWriterPtr writer, Pilot* ship, int favourite 
 
    /* save the outfits */
    xmlw_startElem(writer,"outfits_structure");
-   for (i=0; i<array_size(ship->outfit_structure); i++) {
+   for (int i=0; i<array_size(ship->outfit_structure); i++) {
       if (ship->outfit_structure[i].outfit==NULL)
          continue;
       player_saveShipSlot( writer, &ship->outfit_structure[i], i );
    }
    xmlw_endElem(writer); /* "outfits_structure" */
    xmlw_startElem(writer,"outfits_utility");
-   for (i=0; i<array_size(ship->outfit_utility); i++) {
+   for (int i=0; i<array_size(ship->outfit_utility); i++) {
       if (ship->outfit_utility[i].outfit==NULL)
          continue;
       player_saveShipSlot( writer, &ship->outfit_utility[i], i );
    }
    xmlw_endElem(writer); /* "outfits_utility" */
    xmlw_startElem(writer,"outfits_weapon");
-   for (i=0; i<array_size(ship->outfit_weapon); i++) {
+   for (int i=0; i<array_size(ship->outfit_weapon); i++) {
       if (ship->outfit_weapon[i].outfit==NULL)
          continue;
       player_saveShipSlot( writer, &ship->outfit_weapon[i], i );
@@ -3258,15 +3228,15 @@ static int player_saveShip( xmlTextWriterPtr writer, Pilot* ship, int favourite 
 
    /* save the commodities */
    xmlw_startElem(writer,"commodities");
-   for (i=0; i<array_size(ship->commodities); i++) {
+   for (int i=0; i<array_size(ship->commodities); i++) {
       /* Remove cargo with id and no mission. */
       if (ship->commodities[i].id > 0) {
-         found = 0;
-         for (j=0; j<MISSION_MAX; j++) {
+         int found = 0;
+         for (int j=0; j<MISSION_MAX; j++) {
             /* Only check active missions. */
             if (player_missions[j]->id > 0) {
                /* Now check if it's in the cargo list. */
-               for (k=0; k<array_size(player_missions[j]->cargo); k++) {
+               for (int k=0; k<array_size(player_missions[j]->cargo); k++) {
                   /* See if it matches a cargo. */
                   if (player_missions[j]->cargo[k] == ship->commodities[i].id) {
                      found = 1;
@@ -3300,18 +3270,18 @@ static int player_saveShip( xmlTextWriterPtr writer, Pilot* ship, int favourite 
    xmlw_attr(writer, "autoweap", "%d", ship->autoweap);
    xmlw_attr(writer, "active_set", "%d", ship->active_set);
    xmlw_attr(writer, "aim_lines", "%d", ship->aimLines);
-   for (i=0; i<PILOT_WEAPON_SETS; i++) {
-      weaps = pilot_weapSetList( ship, i );
+   for (int i=0; i<PILOT_WEAPON_SETS; i++) {
+      PilotWeaponSetOutfit *weaps = pilot_weapSetList( ship, i );
       xmlw_startElem(writer,"weaponset");
       /* Inrange isn't handled by autoweap for the player. */
       xmlw_attr(writer,"inrange","%d",pilot_weapSetInrangeCheck(ship,i));
       xmlw_attr(writer,"id","%d",i);
       if (!ship->autoweap) {
-         name = pilot_weapSetName(ship,i);
+         const char *name = pilot_weapSetName(ship,i);
          if (name != NULL)
             xmlw_attr(writer,"name","%s",name);
          xmlw_attr(writer,"type","%d",pilot_weapSetTypeCheck(ship,i));
-         for (j=0; j<array_size(weaps); j++) {
+         for (int j=0; j<array_size(weaps); j++) {
             xmlw_startElem(writer,"weapon");
             xmlw_attr(writer,"level","%d",weaps[j].level);
             xmlw_str(writer,"%d",weaps[j].slot->id);
@@ -3336,9 +3306,6 @@ static int player_saveShip( xmlTextWriterPtr writer, Pilot* ship, int favourite 
  */
 static int player_saveMetadata( xmlTextWriterPtr writer )
 {
-   int i;
-   size_t j;
-   char buf[STRMAX_SHORT];
    time_t t = time(NULL);
 
    /* Compute elapsed time. */
@@ -3360,9 +3327,10 @@ static int player_saveMetadata( xmlTextWriterPtr writer )
 
    /* Ships destroyed by class. */
    xmlw_startElem(writer,"ships_destroyed");
-   for (i=SHIP_CLASS_NULL+1; i<SHIP_CLASS_TOTAL; i++) {
+   for (int i=SHIP_CLASS_NULL+1; i<SHIP_CLASS_TOTAL; i++) {
+      char buf[STRMAX_SHORT];
       strncpy( buf, ship_classToString(i), sizeof(buf)-1 );
-      for (j=0; j<strlen(buf); j++)
+      for (size_t j=0; j<strlen(buf); j++)
          if (buf[j]==' ')
             buf[j]='_';
       xmlw_elem(writer, buf, "%u", player.ships_destroyed[i]);
@@ -3429,19 +3397,16 @@ Planet* player_load( xmlNodePtr parent )
  */
 static Planet* player_parse( xmlNodePtr parent )
 {
-   const char *planet, *found;
+   const char *planet;
    unsigned int services;
    Planet *pnt;
    xmlNodePtr node, cur;
-   int q;
-   const Outfit *o;
-   int i, map_overlay_enabled;
+   int map_overlay_enabled;
    StarSystem *sys;
    double a, r;
    Pilot *old_ship;
    PilotFlags flags;
-   int cycles, periods, seconds, time_set;
-   double rem;
+   int time_set;
 
    xmlr_attr_strd(parent, "name", player.name);
 
@@ -3480,9 +3445,9 @@ static Planet* player_parse( xmlNodePtr parent )
 
       /* Time. */
       if (xml_isNode(node,"time")) {
+         double rem = -1.;
+         int cycles=-1, periods=-1, seconds=-1;
          cur = node->xmlChildrenNode;
-         cycles = periods = seconds = -1;
-         rem = -1.;
          do {
             xmlr_int(cur, "SCU", cycles);
             xmlr_int(cur, "STP", periods);
@@ -3522,7 +3487,8 @@ static Planet* player_parse( xmlNodePtr parent )
          cur = node->xmlChildrenNode;
          do {
             if (xml_isNode(cur,"outfit")) {
-               o = outfit_get( xml_get(cur) );
+               int q;
+               const Outfit *o = outfit_get( xml_get(cur) );
                if (o == NULL) {
                   WARN(_("Outfit '%s' was saved but does not exist!"), xml_get(cur));
                   continue;
@@ -3603,8 +3569,8 @@ static Planet* player_parse( xmlNodePtr parent )
        * If no planet meeting the current criteria can be found, the next
        * set of criteria is tried until none remain.
        */
-      found = NULL;
-      for (i=0; i<3; i++) {
+      const char *found = NULL;
+      for (int i=0; i<3; i++) {
          services = PLANET_SERVICE_LAND | PLANET_SERVICE_INHABITED |
                PLANET_SERVICE_REFUEL;
 
@@ -3645,7 +3611,6 @@ static Planet* player_parse( xmlNodePtr parent )
    return pnt;
 }
 
-
 /**
  * @brief Filter function for space_getRndPlanet
  *
@@ -3657,7 +3622,6 @@ static int player_filterSuitablePlanet( Planet *p )
    return !areEnemies(p->presence.faction, FACTION_PLAYER);
 }
 
-
 /**
  * @brief Parses player's done missions.
  *
@@ -3666,14 +3630,10 @@ static int player_filterSuitablePlanet( Planet *p )
  */
 static int player_parseDoneMissions( xmlNodePtr parent )
 {
-   xmlNodePtr node;
-   int id;
-
-   node = parent->xmlChildrenNode;
-
+   xmlNodePtr node = parent->xmlChildrenNode;
    do {
       if (xml_isNode(node,"done")) {
-         id = mission_getID( xml_get(node) );
+         int id = mission_getID( xml_get(node) );
          if (id < 0)
             DEBUG(_("Mission '%s' doesn't seem to exist anymore, removing from save."),
                   xml_get(node));
@@ -3681,10 +3641,8 @@ static int player_parseDoneMissions( xmlNodePtr parent )
             player_missionFinished( id );
       }
    } while (xml_nextNode(node));
-
    return 0;
 }
-
 
 /**
  * @brief Parses player's done missions.
@@ -3694,14 +3652,10 @@ static int player_parseDoneMissions( xmlNodePtr parent )
  */
 static int player_parseDoneEvents( xmlNodePtr parent )
 {
-   xmlNodePtr node;
-   int id;
-
-   node = parent->xmlChildrenNode;
-
+   xmlNodePtr node = parent->xmlChildrenNode;
    do {
       if (xml_isNode(node,"done")) {
-         id = event_dataID( xml_get(node) );
+         int id = event_dataID( xml_get(node) );
          if (id < 0)
             DEBUG(_("Event '%s' doesn't seem to exist anymore, removing from save."),
                   xml_get(node));
@@ -3709,10 +3663,8 @@ static int player_parseDoneEvents( xmlNodePtr parent )
             player_eventFinished( id );
       }
    } while (xml_nextNode(node));
-
    return 0;
 }
-
 
 /**
  * @brief Parses player's licenses.
@@ -3722,14 +3674,10 @@ static int player_parseDoneEvents( xmlNodePtr parent )
  */
 static int player_parseLicenses( xmlNodePtr parent )
 {
-   xmlNodePtr node;
-   char *     name;
-
-   node = parent->xmlChildrenNode;
-
+   xmlNodePtr node = parent->xmlChildrenNode;
    do {
       if ( xml_isNode( node, "license" ) ) {
-         name = xml_get( node );
+         char *name = xml_get( node );
          if ( name == NULL ) {
             WARN( _( "License node is missing name attribute." ) );
             continue;
@@ -3737,10 +3685,8 @@ static int player_parseLicenses( xmlNodePtr parent )
          player_addLicense( name );
       }
    } while (xml_nextNode(node));
-
    return 0;
 }
-
 
 /**
  * @brief Parses the escorts from the escort node.
@@ -3750,14 +3696,12 @@ static int player_parseLicenses( xmlNodePtr parent )
  */
 static int player_parseEscorts( xmlNodePtr parent )
 {
-   xmlNodePtr node;
-   char *buf, *ship;
-   EscortType_t type;
-
-   node = parent->xmlChildrenNode;
-
+   xmlNodePtr node = parent->xmlChildrenNode;
    do {
       if (xml_isNode(node,"escort")) {
+         char *buf, *ship;
+         EscortType_t type;
+
          xmlr_attr_strd( node, "type", buf );
          if (strcmp(buf,"bay")==0)
             type = ESCORT_TYPE_BAY;
@@ -3773,7 +3717,6 @@ static int player_parseEscorts( xmlNodePtr parent )
          escort_addList( player.p, ship, type, 0, 1 );
       }
    } while (xml_nextNode(node));
-
    return 0;
 }
 
@@ -3786,12 +3729,7 @@ static int player_parseEscorts( xmlNodePtr parent )
  */
 static int player_parseMetadata( xmlNodePtr parent )
 {
-   xmlNodePtr node, cur;
-   size_t i;
-   int class;
-   char buf[STRMAX_SHORT];
-
-   node = parent->xmlChildrenNode;
+   xmlNodePtr node = parent->xmlChildrenNode;
    do {
       xml_onlyNodes(node);
 
@@ -3814,12 +3752,15 @@ static int player_parseMetadata( xmlNodePtr parent )
       else if (xml_isNode(node,"landed_times"))
          player.landed_times = xml_getUInt(node);
       else if (xml_isNode(node,"ships_destroyed")) {
-         cur = node->xmlChildrenNode;
+         xmlNodePtr cur = node->xmlChildrenNode;
          do {
+            char buf[STRMAX_SHORT];
+            int class;
+
             xml_onlyNodes(cur);
 
             strncpy( buf, (const char*)cur->name, sizeof(buf)-1 );
-            for (i=0; i<strlen(buf); i++)
+            for (size_t i=0; i<strlen(buf); i++)
                if (buf[i]=='_')
                   buf[i] = ' ';
 
@@ -3833,7 +3774,6 @@ static int player_parseMetadata( xmlNodePtr parent )
          } while (xml_nextNode(cur));
       }
    } while (xml_nextNode(node));
-
    return 0;
 }
 
@@ -3918,18 +3858,14 @@ static void player_parseShipSlot( xmlNodePtr node, Pilot *ship, PilotOutfitSlot 
 static int player_parseShip( xmlNodePtr parent, int is_player )
 {
    char *name, *model;
-   int i, n, id;
+   int n, id;
    int fuel;
    const Ship *ship_parsed;
    Pilot* ship;
-   xmlNodePtr node, cur, ccur;
+   xmlNodePtr node;
    int quantity;
-   const Outfit *o;
-   int ret;
-   /*const char *str;*/
    Commodity *com;
    PilotFlags flags;
-   unsigned int pid;
    int autoweap, level, weapid, active_set, aim_lines, in_range, weap_type;
    int favourite;
    PlayerShip_t *ps;
@@ -3961,7 +3897,7 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
 
    /* player is currently on this ship */
    if (is_player != 0) {
-      pid = pilot_create( ship_parsed, name, faction_get("Player"), "player", 0., NULL, NULL, flags, 0, 0 );
+      unsigned int pid = pilot_create( ship_parsed, name, faction_get("Player"), "player", 0., NULL, NULL, flags, 0, 0 );
       ship = player.p;
       cam_setTargetPilot( pid, 0 );
    }
@@ -3969,7 +3905,7 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
       ship = pilot_createEmpty( ship_parsed, name, faction_get("Player"), "player", flags );
 
    /* Ship should not have default outfits. */
-   for (i=0; i<array_size(ship->outfits); i++)
+   for (int i=0; i<array_size(ship->outfits); i++)
       pilot_rmOutfitRaw( ship, ship->outfits[i] );
 
    /* Clean up. */
@@ -3989,13 +3925,12 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
 
       /* New outfit loading. */
       if (xml_isNode(node,"outfits_structure")) {
-         cur = node->xmlChildrenNode;
+         xmlNodePtr cur = node->xmlChildrenNode;
          do { /* load each outfit */
             if (xml_isNode(cur,"outfit")) {
                xmlr_attr_int_def( cur, "slot", n, -1 );
                if ((n<0) || (n >= array_size(ship->outfit_structure))) {
-                  name = xml_get(cur);
-                  o = outfit_get(name);
+                  const Outfit *o = outfit_get( xml_get(cur) );
                   player_addOutfit( o, 1 );
                   WARN(_("Outfit slot out of range, not adding to ship."));
                   continue;
@@ -4005,7 +3940,7 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
          } while (xml_nextNode(cur));
       }
       else if (xml_isNode(node,"outfits_utility")) {
-         cur = node->xmlChildrenNode;
+         xmlNodePtr cur = node->xmlChildrenNode;
          do { /* load each outfit */
             if (xml_isNode(cur,"outfit")) {
                xmlr_attr_int_def( cur, "slot", n, -1 );
@@ -4018,7 +3953,7 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
          } while (xml_nextNode(cur));
       }
       else if (xml_isNode(node,"outfits_weapon")) {
-         cur = node->xmlChildrenNode;
+         xmlNodePtr cur = node->xmlChildrenNode;
          do { /* load each outfit */
             if (xml_isNode(cur,"outfit")) {
                xmlr_attr_int_def( cur, "slot", n, -1 );
@@ -4031,11 +3966,13 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
          } while (xml_nextNode(cur));
       }
       else if (xml_isNode(node, "commodities")) {
-         cur = node->xmlChildrenNode;
+         xmlNodePtr cur = node->xmlChildrenNode;
          do {
             if (xml_isNode(cur, "commodity")) {
+               int cid;
+
                xmlr_attr_int( cur, "quantity", quantity );
-               xmlr_attr_int( cur, "id", i );
+               xmlr_attr_int( cur, "id", cid );
 
                /* Get the commodity. */
                com = commodity_get(xml_get(cur));
@@ -4048,8 +3985,8 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
                 * Note that the player's cargo_free is ignored here.
                 */
                pilot_cargoAddRaw( ship, com, quantity, 0 );
-               if (i != 0)
-                  array_back(ship->commodities).id = i;
+               if (cid != 0)
+                  array_back(ship->commodities).id = cid;
             }
          } while (xml_nextNode(cur));
       }
@@ -4067,9 +4004,9 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
       DEBUG(_("Player ship '%s' failed slot validity check , removing all outfits and adding to stock."),
             ship->name );
       /* Remove all outfits. */
-      for (i=0; i<array_size(ship->outfits); i++) {
-         o = ship->outfits[i]->outfit;
-         ret = pilot_rmOutfitRaw( ship, ship->outfits[i] );
+      for (int i=0; i<array_size(ship->outfits); i++) {
+         const Outfit *o = ship->outfits[i]->outfit;
+         int ret = pilot_rmOutfitRaw( ship, ship->outfits[i] );
          if (ret==0)
             player_addOutfit( o, 1 );
       }
@@ -4086,13 +4023,15 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
       player.favourite = favourite;
 
    /* Sets inrange by default if weapon sets are missing. */
-   for (i=0; i<PILOT_WEAPON_SETS; i++)
+   for (int i=0; i<PILOT_WEAPON_SETS; i++)
       pilot_weapSetInrange( ship, i, WEAPSET_INRANGE_PLAYER_DEF );
 
    /* Second pass for weapon sets. */
    active_set = 0;
    node = parent->xmlChildrenNode;
    do {
+      xmlNodePtr cur;
+
       if (!xml_isNode(node,"weaponsets"))
          continue;
 
@@ -4108,6 +4047,8 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
       /* Parse weapon sets. */
       cur = node->xmlChildrenNode;
       do { /* Load each weapon set. */
+         xmlNodePtr ccur;
+
          xml_onlyNodes(cur);
          if (!xml_isNode(cur,"weaponset")) {
             WARN(_("Player ship '%s' has unknown node '%s' in 'weaponsets' (expected 'weaponset')."),

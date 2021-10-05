@@ -264,16 +264,15 @@ double pilot_heatEfficiencyMod( double T, double Tb, double Tc )
 void pilot_heatUpdateCooldown( Pilot *p )
 {
    double t;
-   int i, ammo_threshold;
-   PilotOutfitSlot *o;
-   const Outfit *ammo;
 
    t = pow2( 1. - p->ctimer / p->cdelay );
    p->heat_T = p->heat_start - CONST_SPACE_STAR_TEMP - (p->heat_start -
          CONST_SPACE_STAR_TEMP) * t + CONST_SPACE_STAR_TEMP;
 
-   for (i=0; i<array_size(p->outfits); i++) {
-      o = p->outfits[i];
+   for (int i=0; i<array_size(p->outfits); i++) {
+      int ammo_threshold;
+      const Outfit *ammo;
+      PilotOutfitSlot *o = p->outfits[i];
       o->heat_T = o->heat_start - CONST_SPACE_STAR_TEMP - (o->heat_start -
             CONST_SPACE_STAR_TEMP) * t + CONST_SPACE_STAR_TEMP;
 

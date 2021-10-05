@@ -130,7 +130,6 @@ void pilot_ewUpdateStatic( Pilot *p )
 void pilot_ewUpdateDynamic( Pilot *p, double dt )
 {
    Pilot *t;
-   HookParam hparam;
 
    /* Electronic warfare values. */
    p->ew_asteroid = pilot_ewAsteroid( p );
@@ -156,7 +155,7 @@ void pilot_ewUpdateDynamic( Pilot *p, double dt )
       p->scantimer -= dt;
 
       if (p->scantimer < 0.) {
-         hparam.type = HOOK_PARAM_PILOT;
+         HookParam hparam = { .type = HOOK_PARAM_PILOT };
          /* Run scan hook. */
          hparam.u.lp = t->id;
          pilot_runHookParam( p, PILOT_HOOK_SCAN, &hparam, 1 );
@@ -210,18 +209,14 @@ static double pilot_ewAsteroid( const Pilot *p )
  */
 static double pilot_ewJumpPoint( const Pilot *p )
 {
-   int i;
-   JumpPoint *jp;
-   double d2;
-
    /* Don't have to really check when not in stealth. */
    if (!pilot_isFlag(p,PILOT_STEALTH))
       return 1.;
 
    /* Gets lower when near jump. */
-   for (i=0; i<array_size(cur_system->jumps); i++) {
-      jp = &cur_system->jumps[i];
-      d2 = vect_dist2( &jp->pos, &p->solid->pos );
+   for (int i=0; i<array_size(cur_system->jumps); i++) {
+      JumpPoint *jp = &cur_system->jumps[i];
+      double d2 = vect_dist2( &jp->pos, &p->solid->pos );
       if (d2 <= pow2(2500.))
          return MAX( 0.5, sqrt(d2) / 2500.);
    }
@@ -447,10 +442,8 @@ double pilot_ewWeaponTrack( const Pilot *p, const Pilot *t, double trackmin, dou
  */
 static int pilot_ewStealthGetNearby( const Pilot *p, double *mod, int *close, int *isplayer )
 {
-   Pilot *t;
    Pilot *const* ps;
-   int i, n;
-   double dist;
+   int n;
 
    /* Check nearby non-allies. */
    if (mod != NULL)
@@ -461,8 +454,9 @@ static int pilot_ewStealthGetNearby( const Pilot *p, double *mod, int *close, in
       *isplayer = 0;
    n = 0;
    ps = pilot_getAll();
-   for (i=0; i<array_size(ps); i++) {
-      t = ps[i];
+   for (int i=0; i<array_size(ps); i++) {
+      double dist;
+      Pilot *t = ps[i];
       if (areAllies( p->faction, t->faction ) ||
             ((p->faction == FACTION_PLAYER) && pilot_isFriendly(t)) ||
             ((t->faction == FACTION_PLAYER) && pilot_isFriendly(p)))
