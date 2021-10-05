@@ -14,7 +14,7 @@ function control ()
 
       -- There is an enemy
       if enemy ~= nil then
-         if ai.dist(enemy) < enemy_dist or ai.haslockon() then
+         if ai.dist(enemy) < mem.enemy_dist or ai.haslockon() then
             ai.pushtask("runaway", enemy)
             return
          end
@@ -56,7 +56,7 @@ function control ()
    elseif task == "runaway" then
       enemy = ai.taskdata()
 
-      if ai.dist(enemy) > enemy_dist and ai.haslockon() == false then
+      if ai.dist(enemy) > mem.enemy_dist and ai.haslockon() == false then
          ai.poptask()
          return
       end
