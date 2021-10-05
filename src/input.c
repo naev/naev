@@ -101,7 +101,7 @@ const char *keybind_info[][3] = {
    { "jump", N_("Initiate Jump"), N_("Attempts to jump via a jump point.") },
    { "overlay", N_("Overlay Map"), N_("Opens the in-system overlay map.") },
    { "mousefly", N_("Mouse Flight"), N_("Toggles mouse flying.") },
-   { "autobrake", N_("Autobrake"), N_("Begins automatic braking or active cooldown, if stopped.") },
+   { "cooldown", N_("Active Cooldown"), N_("Begins active cooldown.") },
    /* Communication */
    { "log_up", N_("Log Scroll Up"), N_("Scrolls the log upwards.") },
    { "log_down", N_("Log Scroll Down"), N_("Scrolls the log downwards.") },
@@ -254,7 +254,7 @@ void input_setDefault ( int wasd )
    input_setKeybind( "jump", KEYBIND_KEYBOARD, SDLK_j, NMOD_NONE );
    input_setKeybind( "overlay", KEYBIND_KEYBOARD, SDLK_TAB, NMOD_ANY );
    input_setKeybind( "mousefly", KEYBIND_KEYBOARD, SDLK_x, NMOD_CTRL );
-   input_setKeybind( "autobrake", KEYBIND_KEYBOARD, SDLK_s, NMOD_CTRL );
+   input_setKeybind( "cooldown", KEYBIND_KEYBOARD, SDLK_s, NMOD_CTRL );
    /* Communication */
    input_setKeybind( "log_up", KEYBIND_KEYBOARD, SDLK_PAGEUP, NMOD_ANY );
    input_setKeybind( "log_down", KEYBIND_KEYBOARD, SDLK_PAGEDOWN, NMOD_ANY );
@@ -949,7 +949,7 @@ static void input_key( int keynum, double value, double kabs, int repeat )
    } else if (KEY("mousefly") && NODEAD() && !repeat) {
       if (value==KEY_PRESS)
          player_toggleMouseFly();
-   } else if (KEY("autobrake") && NOHYP() && NOLAND() && NODEAD() && !repeat) {
+   } else if (KEY("cooldown") && NOHYP() && NOLAND() && NODEAD() && !repeat) {
       if (value==KEY_PRESS) {
          player_restoreControl( PINPUT_BRAKING, NULL );
          player_brake();
