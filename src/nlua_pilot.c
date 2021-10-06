@@ -3547,8 +3547,7 @@ static int pilotL_cargoRm( lua_State *L )
  *
  * The list has the following members:<br />
  * <ul>
- * <li><b>name:</b> translated name of the cargo (equivalent to the output of commodity.name()).</li>
- * <li><b>nameRaw:</b> raw (untranslated) name of the cargo (equivalent to the output of commodity.nameRaw()).</li>
+ * <li><b>name:</b> raw (untranslated) name of the cargo (equivalent to the output of commodity.nameRaw()).</li>
  * <li><b>q:</b> quantity of the cargo.</li>
  * <li><b>m:</b> true if cargo is for a mission.</li>
  * </ul>
@@ -3561,20 +3560,14 @@ static int pilotL_cargoRm( lua_State *L )
  */
 static int pilotL_cargoList( lua_State *L )
 {
-   Pilot *p;
-   int i;
-
-   p = luaL_validpilot(L,1);
+   Pilot *p = luaL_validpilot(L,1);
    lua_newtable(L); /* t */
-   for (i=0; i<array_size(p->commodities); i++) {
+   for (int i=0; i<array_size(p->commodities); i++) {
       lua_pushnumber(L, i+1); /* t, i */
 
       /* Represents the cargo. */
       lua_newtable(L); /* t, i, t */
       lua_pushstring(L, "name"); /* t, i, t, i */
-      lua_pushstring(L, _(p->commodities[i].commodity->name)); /* t, i, t, i, s */
-      lua_rawset(L,-3); /* t, i, t */
-      lua_pushstring(L, "nameRaw"); /* t, i, t, i */
       lua_pushstring(L, p->commodities[i].commodity->name); /* t, i, t, i, s */
       lua_rawset(L,-3); /* t, i, t */
       lua_pushstring(L, "q"); /* t, i, t, i */

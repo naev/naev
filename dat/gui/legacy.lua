@@ -147,11 +147,11 @@ end
 -- @brief This function is run whenever the player changes their cargo.
 --]]
 function update_cargo ()
-   cargol = pp:cargoList()
+   local cargol = pp:cargoList()
    misc_cargo = ""
    for k,v in ipairs(cargol) do
       if v.q == 0 then
-         misc_cargo = misc_cargo .. v.name
+         misc_cargo = misc_cargo .. _(v.name)
       else
          misc_cargo = misc_cargo .. fmt.tonnes_short( v.q ) .. " " .. _(v.name)
       end

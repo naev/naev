@@ -54,18 +54,18 @@ function swapship.swap( template )
       local removals = {}
       for k,v in ipairs( cl ) do
          if not v.m then
-            v.p = commodity.get(v.nameRaw):price()
+            v.p = commodity.get(v.name):price()
          end
       end
       while space_needed > 0 do
          -- Find cheapest
          local cn, cq, ck
-         local cp = 1e10
+         local cp = math.huge
          for k,v in pairs( cl ) do
             if not v.m then
                if v.p < cp then
                   ck = k
-                  cn = v.nameRaw
+                  cn = v.name
                   cp = v.p
                   cq = v.q
                end
