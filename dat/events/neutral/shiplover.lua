@@ -227,8 +227,7 @@ function create ()
    -- Make sure not same system as last time
    local lastplanet = var.peek("shiplover_lastplanet")
    if lastplanet then
-      local pnt, sys = planet.get(lastplanet)
-      if sys == system.cur() then
+      if planet.get(lastplanet):system() == system.cur() then
          evt.finish()
       end
    end

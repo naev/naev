@@ -10,7 +10,6 @@ local graphics = require 'love.graphics'
 local window = require 'love.window'
 local filesystem = require 'love.filesystem'
 local audio = require 'love.audio'
-local love_image = require 'love.image'
 local lmusic = require 'lmusic'
 local transitions = require 'vn.transitions'
 

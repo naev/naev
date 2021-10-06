@@ -13,8 +13,6 @@ function create ()
 end
 
 function hail ()
-   local p = ai.pilot()
-
    -- Remove randomness from future calls
    if not mem.hailsetup then
       mem.refuel_base = rnd.rnd( 1000, 3000 )

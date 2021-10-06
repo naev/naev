@@ -11,7 +11,6 @@
 -- The random NPCs will tell the player things about the Naev universe in general, about their faction, or about the game itself.
 --]]
 local tut = require "common.tutorial"
-local pir = require "common.pirate"
 local portrait = require "portrait"
 local vn = require 'vn'
 

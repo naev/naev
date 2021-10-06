@@ -62,8 +62,6 @@ function create()
    local faction_text = pir.reputationMessage( reward_faction )
 
    origin_p, origin_s = planet.cur()
-   local routesys = origin_s
-   local routepos = origin_p:pos()
 
    -- target destination
    destplanet, destsys, numjumps, traveldist, cargo, avgrisk, tier = cargo_calculateRoute()

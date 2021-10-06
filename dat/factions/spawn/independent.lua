@@ -61,7 +61,6 @@ end
 
 function spawn_bounty_hunter( shiplist )
    local pilots = {}
-   local r      = rnd.rnd()
    local params = {name=_("Bounty Hunter"), ai="mercenary"}
    local shp    = shiplist[ rnd.rnd(1,#shiplist) ]
    scom.addPilot( pilots, shp, params )

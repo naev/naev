@@ -65,7 +65,6 @@ chatter[3] = _("Time to Shake 'n Bake")
 chatter[4] = _("Checkpoint %s baby!")
 chatter[5] = _("Hooyah")
 chatter[6] = _("Next!")
-timermsg = "%s"
 target = {1,1,1,1}
 
 function create ()
@@ -179,7 +178,7 @@ function takeoff()
    player.pilot():control()
    player.pilot():face(checkpoint[1]:pos(), true)
    countdown = 5 -- seconds
-   omsg = player.omsgAdd(timermsg:format(countdown), 0, 50)
+   omsg = player.omsgAdd(tostring(countdown), 0, 50)
    counting = true
    counterhook = hook.timer(1.0, "counter")
    hook.board("board")
@@ -205,7 +204,7 @@ function counter()
       hp3 = hook.pilot(racers[3], "idle", "racer3idle")
       player.msg(_("This race is sponsored by Melendez Corporation. Problem-free ships for problem-free voyages!"))
       else
-      player.omsgChange(omsg, timermsg:format(countdown), 0)
+      player.omsgChange(omsg, tostring(countdown), 0)
       counterhook = hook.timer(1.0, "counter")
    end
 end

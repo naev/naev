@@ -1,4 +1,3 @@
-local utf8  = require 'utf8'
 local vn    = require 'vn.core'
 
 function love.keypressed( key )

@@ -30,6 +30,7 @@ local function sos ()
    ai.distress( sos_msg_list[ rnd.rnd(1,#sos_msg_list) ])
 end
 
+-- Must be defined after sos
 mem.distressmsgfunc = sos
 
 function create ()

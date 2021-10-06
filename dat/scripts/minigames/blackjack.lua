@@ -256,7 +256,6 @@ function bj.draw( bx, by, bw, bh)
    -- Dealer
    if #bj.dealer > 0 then
       lg.setColor( 1, 1, 1 )
-      local tdealer = _total(bj.dealer)
       local str
       if not bj.done then
          str = "?"
@@ -370,10 +369,8 @@ function bj.mousepressed( mx, my, button )
    end
    for k,s in ipairs( buttons ) do
       local w = bj.font:getWidth( s )
-      local col
       if _inbox( mx, my, x, y, w+2*b, h+2*b ) then
          if bj.betting then
-            local credits = player.credits()
             if k==1 then
                trybet( 10000 )
             elseif k==2 then

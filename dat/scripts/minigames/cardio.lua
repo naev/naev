@@ -80,7 +80,6 @@ function cardio.newCardWestern( rank, suite )
    return c
 end
 local function _torankstr( rank )
-   local s
    if rank == 1 then
       return "A"
    elseif rank == 11 then

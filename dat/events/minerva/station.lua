@@ -21,7 +21,7 @@ local blackjack = require 'minigames.blackjack'
 local chuckaluck = require 'minigames.chuckaluck'
 local lg = require 'love.graphics'
 local window = require 'love.window'
-local love_shaders = require 'love_shaders'
+--local love_shaders = require 'love_shaders'
 
 -- NPC Stuff
 gambling_priority = 3
@@ -120,7 +120,6 @@ function create()
       greeterhook = hook.land( "bargreeter", "bar" )
    end
    -- End event on takeoff.
-   tokens_landed = minerva.tokens_get()
    hook.takeoff( "leave" )
    hook.custom( "minerva_molecaught", "molecaught" )
 end
@@ -615,6 +614,5 @@ end
 -- Event is over when player takes off.
 --]]
 function leave ()
-   local diff = minerva.tokens_get()-tokens_landed
    evt.finish()
 end

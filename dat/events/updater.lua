@@ -29,7 +29,6 @@ function updater090 ()
       if pirmod > 0 and vs==vsd and not v:isKnown() then
          v:setPlayerStanding( fpir+20 )
       end
-      local vs = v:playerStanding()
    end
    pir.updateStandings() -- Update pirate/marauder
 

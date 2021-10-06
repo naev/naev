@@ -22,7 +22,6 @@
 -- Torture the Dvaered Spy
 --]]
 local minerva = require "common.minerva"
-local portrait = require 'portrait'
 local vn = require 'vn'
 local love_shaders = require "love_shaders"
 local fmt = require "format"

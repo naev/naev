@@ -377,8 +377,6 @@ function lanes.getNonPointP( p, pos, rad, margin, biasdir )
    pos = pos or p:pos()
    rad = rad or math.min( 2000, ews )
    margin = margin or ews
-   local margin2 = margin*margin
-   local srad2 = math.pow( system.cur():radius(), 2 )
 
    local L = getCacheP( p )
    return lanes.getNonPoint( L, pos, rad, margin, biasdir )

@@ -29,7 +29,6 @@
 
 ]]--
 require "proximity"
-local fleet = require "fleet"
 local emp = require "common.empire"
 
 misn_title = _("Operation Cold Metal")

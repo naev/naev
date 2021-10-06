@@ -27,7 +27,6 @@ local nw2, nh2 = nw/2, nh/2
 function background ()
    -- Create particles and buffer
    local density = 200*200
-   local z = camera.getZoom()
    buffer = 200
    tw = zmax*nw+2*buffer
    th = zmax*nh+2*buffer

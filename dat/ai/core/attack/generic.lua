@@ -34,7 +34,6 @@ end
 -- Attacked function.
 --]]
 function atk_generic_attacked( attacker )
-   local task = ai.taskname()
    local si = _stateinfo( ai.taskname() )
 
    if mem.recharge then
@@ -228,8 +227,6 @@ end
 --]]
 function __atk_g_ranged( target, dist )
    local range = ai.getweaprange( 4 )
-   local relvel = ai.relvel( target )
-   local istargeted = (target:target()==ai.pilot())
    local wrange = math.min( ai.getweaprange(3,0), ai.getweaprange(3,1) )
 
    -- Pilot thinks dogfight is the best

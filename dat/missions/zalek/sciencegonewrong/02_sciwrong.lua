@@ -24,8 +24,6 @@
 
    Author: fart but based on Mission Ideas in wiki: wiki.naev.org/wiki/Mission_Ideas
 --]]
-local fleet = require "fleet"
-local zlk = require "common.zalek"
 local sciwrong = require "common.sciencegonewrong"
 
 

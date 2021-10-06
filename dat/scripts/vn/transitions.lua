@@ -2,10 +2,7 @@
 Transitions for the Visual Novel framework.
 @submodule vn
 --]]
-local utf8 = require 'utf8'
-local love = require 'love'
 local graphics = require 'love.graphics'
-local love_image = require 'love.image'
 local love_math = require 'love.math'
 local love_shaders = require 'love_shaders'
 

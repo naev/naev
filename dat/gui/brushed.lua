@@ -716,7 +716,6 @@ function render( dt )
       gfx.renderTex( popup_bottom_side_left, popup_right_x + 7 + mod_x, popup_right_y + mod_y )
       gfx.renderTexRaw( popup_bottom_side_left, popup_right_x + 158 + mod_x, popup_right_y + mod_y, -3, 19, 1, 1, 0, 0, 1, 1 )
 
-      local drawn
       for i=1, (amount+1) do
          local x = (i-1) % 3 * (bar_w+6) + popup_right_x + 14
          local y = math.floor( (i-1) / 3. ) * (bar_h+6) + 3 + popup_right_y
@@ -867,12 +866,10 @@ function render( dt )
 
    --Time
    local time_str = time.str(time.get())
-   local time_str_w = gfx.printDim(false, time_str)
    gfx.print( false, time_str, screen_w/2 - 78, tbar_y + tbar_h - tbar_center_h + 55, col_text, 156, true )
 
    --System name
    local sysname = system.cur():name()
-   local sysname_w = gfx.printDim(false, sysname)
    gfx.print( false, sysname, screen_w/2 - 67, tbar_y + tbar_h - tbar_center_h + 19, col_text, 132, true )
 
    for k, v in ipairs(buttontypes) do

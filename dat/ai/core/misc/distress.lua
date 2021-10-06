@@ -7,7 +7,7 @@ mem.enemyclose = 500
 mem.careful    = true
 
 -- Send a distress signal which causes faction loss
-function sos ()
+local function sos ()
    local plt = ai.pilot()
    local fname = plt:faction():name()
    local msg = {

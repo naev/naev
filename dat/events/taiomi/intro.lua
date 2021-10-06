@@ -19,8 +19,6 @@
 
 --]]
 local vn = require 'vn'
-local love_shaders = require "love_shaders"
-local graphics = require 'love.graphics'
 local taiomi = require 'common.taiomi'
 
 

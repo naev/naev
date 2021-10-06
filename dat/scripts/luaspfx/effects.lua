@@ -1,4 +1,3 @@
-local love = require 'love'
 local lg = require 'love.graphics'
 local audio = require 'love.audio'
 local love_shaders = require 'love_shaders'

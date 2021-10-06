@@ -18,7 +18,6 @@
 --
 -- Triggered from station.lua
 --]]
-local portrait = require "portrait"
 local vn = require 'vn'
 local window = require 'love.window'
 local minerva = require 'common.minerva'

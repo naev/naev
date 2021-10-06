@@ -23,7 +23,6 @@
    to steal some stuff before running away from tons of enemy ships.
 --]]
 local minerva = require "common.minerva"
-local portrait = require 'portrait'
 local love_shaders = require 'love_shaders'
 local vn = require 'vn'
 local fmt = require "format"
@@ -271,7 +270,6 @@ end
 
 -- Spawn enemies that will eventually bog down the player
 function spawn_enemies ()
-   local pp = player.pilot()
    local pnt = planet.get(targetplanet)
    local function addenemy( shipname )
       local p = pilot.add( shipname, fbaroness, pnt )

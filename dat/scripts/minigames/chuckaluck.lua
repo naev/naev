@@ -270,10 +270,8 @@ function cl.mousepressed( mx, my, button )
    end
    for k,s in ipairs( buttons ) do
       local w = cl.font:getWidth( s )
-      local col
       if _inbox( mx, my, x, y, w+2*b, h+2*b ) then
          if cl.betting then
-            local credits = player.credits()
             if k==1 then
                secretcode_status = math.max( secretcode_status, 0 )
                trybet( 10e3 )

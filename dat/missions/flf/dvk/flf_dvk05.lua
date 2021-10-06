@@ -21,7 +21,6 @@
    Alliance of Inconvenience
 
 --]]
-local fleet = require "fleet"
 local fmt = require "format"
 local flf = require "missions.flf.flf_common"
 require "missions.flf.flf_pirates"

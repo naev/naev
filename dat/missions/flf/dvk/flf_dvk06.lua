@@ -121,9 +121,7 @@ function enter ()
          pilot.clear()
          pilot.toggleSpawn( false )
 
-         local ro, ms, s
-
-         ro, s = planet.get( "Raglan Outpost" )
+         local ro, s = planet.get( "Raglan Outpost" )
 
          -- Spawn Raglan Outpost ship
          dv_base = pilot.add( "Raglan Outpost", "Dvaered", ro:pos() , nil, {ai="dvaered_norun"} )
@@ -156,7 +154,7 @@ function enter ()
 
          -- Spawn FLF ships
          local jmp, jmp2
-         jmp, jpm2 = jump.get( "Haleb", "Theras" )
+         jmp, jmp2 = jump.get( "Haleb", "Theras" )
          flf_fleet = fleet.add( 4, {"Vendetta", "Vendetta", "Lancelot"}, "FLF", jmp:pos() )
 
          for i, j in ipairs( flf_fleet ) do

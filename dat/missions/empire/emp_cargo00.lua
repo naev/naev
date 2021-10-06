@@ -47,7 +47,6 @@ log_text = _([[You were recruited into the Empire's shipping division and can no
 
 function create ()
    -- Note: this mission does not make any system claims.
-   local landed, landed_sys = planet.cur()
 
    -- target destination
    local planets = {}

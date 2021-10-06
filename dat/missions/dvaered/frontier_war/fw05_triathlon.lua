@@ -39,11 +39,7 @@ require "common.frontier_war"
 require "proximity"
 local portrait = require "portrait"
 
-reward_text2 = _("You recieve a %s and a %s as a reward.")
-
 mace_fail = _("Your only weapons should be Mace rockets: land and speak again with Major Tam.")
-
-timermsg = "%s"
 
 misn_desc = _("You are invited to a Mace Rocket Ballet in memory of Lieutenant Strafer.")
 misn_reward = _("Say goodbye to Lieutenant Strafer")
@@ -195,7 +191,8 @@ function spawnNpcs()
             player.outfitAdd("Handbook for Dvaered Good Manners") -- TODO: add lore about this Handbook
 
             -- Give a reward depending on the rank (10 is highest and 1 lowest)
-            playerRank = elt_inlist( 10, iter )
+            local playerRank = elt_inlist( 10, iter )
+
             if playerRank == 10 then
                tk.msg("",_("You recieve a %s as a reward."):format(_("Dvaered Vendetta")))
                player.addShip("Dvaered Vendetta")
@@ -203,11 +200,11 @@ function spawnNpcs()
                tk.msg("",_("You recieve a %s as a reward."):format(_("Vendetta")))
                player.addShip("Vendetta")
             elseif playerRank == 8 then
-               tk.msg("",reward_text2:format(_("Tricon Zephyr II Engine"),_("Emergency Shield Booster")))
+               tk.msg("",_("You recieve a %s and a %s as a reward."):format(_("Tricon Zephyr II Engine"),_("Emergency Shield Booster")))
                player.outfitAdd("Tricon Zephyr II Engine")
                player.outfitAdd("Emergency Shield Booster")
             elseif playerRank == 7 then
-               tk.msg("",reward_text2:format(_("Milspec Orion 3701 Core System"),_("Shield Capacitor I")))
+               tk.msg("",_("You recieve a %s and a %s as a reward."):format(_("Milspec Orion 3701 Core System"),_("Shield Capacitor I")))
                player.outfitAdd("Milspec Orion 3701 Core System")
                player.outfitAdd("Shield Capacitor I")
             elseif playerRank == 6 then
@@ -337,6 +334,7 @@ end
 
 -- Take off for the next stage
 function takeoff()
+   local pos
    center = destpla:pos() + vec2.new(0,radius)
 
    if stage == 2 then -- Mace Throw: spawn Llamas and competitors.
@@ -375,7 +373,7 @@ function takeoff()
          hook.timer( 10.0, "startThrow" )
          countdown = 10
          hook.timer( 1.0, "timerIncrement")
-         omsg = player.omsgAdd(timermsg:format(countdown), 0, 50)
+         omsg = player.omsgAdd(tostring(countdown), 0, 50)
 
       else -- Need to land and continue at previous stage
          misn.osdDestroy()
@@ -424,7 +422,7 @@ function takeoff()
       hook.timer( 10.0, "startStadion" )
       countdown = 10
       hook.timer( 1.0, "timerIncrement")
-      omsg = player.omsgAdd(timermsg:format(countdown), 0, 50)
+      omsg = player.omsgAdd(tostring(countdown), 0, 50)
 
    elseif stage == 6 then -- Mace Pankration: competitors and make teams
       -- Check the player only has mace rockets
@@ -455,7 +453,7 @@ function takeoff()
          hook.timer( 10.0, "startPankration" )
          countdown = 10
          hook.timer( 1.0, "timerIncrement")
-         omsg = player.omsgAdd(timermsg:format(countdown), 0, 50)
+         omsg = player.omsgAdd(tostring(countdown), 0, 50)
 
       else
          misn.osdDestroy()
@@ -484,7 +482,7 @@ function timerIncrement()
       player.omsgChange(omsg, _("Go!"), 3)
    else
       hook.timer( 1.0, "timerIncrement")
-      player.omsgChange(omsg, timermsg:format(countdown), 0)
+      player.omsgChange(omsg, tostring(countdown), 0)
    end
 end
 
@@ -495,7 +493,7 @@ function timerIncrementT()
       player.omsgChange(omsg, _("Time Over!"), 3)
    else
       hook.timer( 1.0, "timerIncrementT")
-      player.omsgChange(omsg, timermsg:format(countdown), 0)
+      player.omsgChange(omsg, tostring(countdown), 0)
    end
 end
 
@@ -530,7 +528,7 @@ end
 function endTimer()
    countdown = 10
    hook.timer( 1.0, "timerIncrementT" ) -- Near-end timer
-   omsg = player.omsgAdd(timermsg:format(countdown), 0, 50)
+   omsg = player.omsgAdd(tostring(countdown), 0, 50)
 end
 
 function startPankration()
@@ -582,7 +580,7 @@ end
 function spawnCompetitors( )
    competitors = {tam, leblanc, klank, strafer, caros, micoult, johnson, ernst, guo}
    for i = 1, 9 do
-      pos = center + vec2.newP( radius, i*360/10 - 90 )
+      local pos = center + vec2.newP( radius, i*360/10 - 90 )
       competitors[i] = pilot.add( "Dvaered Vendetta", "DHC", pos, competitors_names[i])
       equipVendettaMace( competitors[i] )
       competitors[i]:memory().Cindex = i -- Store their index
@@ -595,7 +593,7 @@ end
 
 -- One of the targets is idle (Mace Throw)
 function targetIdle( self )
-   pos = center + vec2.newP( rnd.rnd(0,radius), rnd.rnd(0,360) )
+   local pos = center + vec2.newP( rnd.rnd(0,radius), rnd.rnd(0,360) )
    self:moveto( pos, false, false )
 end
 

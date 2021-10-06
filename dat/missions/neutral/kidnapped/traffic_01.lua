@@ -33,7 +33,6 @@
 
 --]]
 
-local portrait = require "portrait"
 local neu = require "common.neutral"
 
 

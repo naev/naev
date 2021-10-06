@@ -474,7 +474,6 @@ function comm( plt )
       if ps.fuel < 200 then
          vn.jump("refuel_low")
       end
-      local msg = mem.refuel_msg
       local val = mem.refuel
       if val==nil or plt:flags("manualcontrol") then
          vn.jump("refuel_busy")

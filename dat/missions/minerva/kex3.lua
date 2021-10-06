@@ -22,7 +22,6 @@
    Go to planet A, get ambushed twice, and then duel in the Crimson Gauntlet.
 --]]
 local minerva  = require "common.minerva"
-local portrait = require 'portrait'
 local pp_shaders = require 'pp_shaders'
 local vn       = require 'vn'
 local equipopt = require 'equipopt'
@@ -424,8 +423,6 @@ function leave_the_ring ()
    for k,s in ipairs(system.getAll()) do
       s:setHidden(false)
    end
-   -- Undo player invincibility stuff and land
-   local pp = player.pilot()
    player.land( planet.get("Totoran") )
 end
 

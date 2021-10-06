@@ -26,7 +26,6 @@
 ]]--
 local fmt = require "format"
 local emp = require "common.empire"
-local lmisn = require "lmisn"
 
 misn_title = _("Sirius Long Distance Recruitment")
 misn_desc = _("Deliver a shipping diplomat for the Empire to Madria in the Esker system")

@@ -8,8 +8,6 @@
 require "bkg.default"
 local bgshaders = require "bkg.bgshaders"
 
-local love = require 'love'
-local lg = require 'love.graphics'
 local love_shaders = require 'love_shaders'
 
 function background ()

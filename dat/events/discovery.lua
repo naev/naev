@@ -362,7 +362,7 @@ function discover_trigger( event )
    local msg  = string.format(_("You found #o%s - %s!"),event.title,event.subtitle)
    -- Log and message
    player.msg( msg )
-   local logid = shiplog.create( "discovery", _("Discovery"), _("Travel") )
+   shiplog.create( "discovery", _("Discovery"), _("Travel") )
    shiplog.append( "discovery", msg )
 
    -- Break autonav
@@ -385,7 +385,7 @@ text_fadein = 1.5
 text_fadeout = 1.5
 text_length = 10.0
 function textinit( titletext, subtitletext )
-   local fontname = _("fonts/CormorantUnicase-Medium.ttf")
+   --local fontname = _("fonts/CormorantUnicase-Medium.ttf")
    -- Title
    title = { text=titletext, h=48 }
    title.font = lg.newFont( title.h )

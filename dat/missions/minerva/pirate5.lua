@@ -28,7 +28,6 @@
    There are also drones wandering around that are independent / depend on the hacking center.
 --]]
 local minerva = require "common.minerva"
-local portrait = require 'portrait'
 local vn = require 'vn'
 local equipopt = require 'equipopt'
 local fmt = require "format"
@@ -356,10 +355,10 @@ function enter ()
    mem.doscans          = false
 
    -- Now add the different patrol groups
-   local tiny_group = {
-      "Za'lek Light Drone",
-      "Za'lek Light Drone",
-   }
+   --local tiny_group = {
+   --   "Za'lek Light Drone",
+   --   "Za'lek Light Drone",
+   --}
    local small_group = {
       "Za'lek Heavy Drone",
       "Za'lek Light Drone",

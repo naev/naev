@@ -29,7 +29,6 @@
 ]]--
 local fmt = require "format"
 local portrait = require "portrait"
-local lmisn = require "lmisn"
 
 misn_title = _("Clans trade")
 misn_desc = _("Deliver some boxes to the pirate clan of %s, in the %s system.")

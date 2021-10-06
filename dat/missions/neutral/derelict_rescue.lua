@@ -18,8 +18,6 @@
 local fmt = require "format"
 local vn = require "vn"
 local vntk = require "vntk"
-local pir = require "common.pirate"
-local neu = require "common.neutral"
 local lmisn = require "lmisn"
 
 function create ()

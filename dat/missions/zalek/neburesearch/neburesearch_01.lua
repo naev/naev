@@ -122,7 +122,7 @@ function accept()
 end
 
 function updateGoalDisplay()
-    local s, i, osd_index, osd_active, omsg
+    local osd_index, osd_active, omsg
     osd_index = {1, 0, 0, 0, 2, 2, 2, 3}
     omsg = {}
     osd_active = 1

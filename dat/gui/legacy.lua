@@ -331,7 +331,6 @@ function render_target ()
    -- Display faction
    if scan and target_fact ~= nil and target_fact:known() then
       local faction = target_fact:name()
-      local w = gfx.printDim( nil, faction )
       gfx.print( true, faction, target_x, target_y-26, col_white, target_w )
    end
 

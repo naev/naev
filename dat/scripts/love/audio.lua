@@ -1,9 +1,6 @@
 --[[
 -- Audio
 --]]
-local class = require 'class'
-local love = require 'love'
-local object = require 'love.object'
 
 local love_audio = {}
 function love_audio.newSource( filename, type )

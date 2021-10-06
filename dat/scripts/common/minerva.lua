@@ -3,7 +3,6 @@
 --]]
 local vn = require 'vn'
 local colour = require 'colour'
-local portrait = require 'portrait'
 local mt = require 'merge_tables'
 local fmt = require "format"
 
