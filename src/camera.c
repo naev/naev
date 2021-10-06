@@ -131,8 +131,7 @@ void cam_getPos( double *x, double *y )
  */
 void cam_setTargetPilot( unsigned int follow, int soft_over )
 {
-   Pilot *p;
-   double dir, x, y;
+   double dir;
 
    /* Set the target. */
    camera_followpilot   = follow;
@@ -141,8 +140,9 @@ void cam_setTargetPilot( unsigned int follow, int soft_over )
    /* Set camera if necessary. */
    if (!soft_over) {
       if (follow != 0) {
-         p = pilot_get( follow );
+         Pilot *p = pilot_get( follow );
          if (p != NULL) {
+            double x, y;
             dir      = p->solid->dir;
             x        = p->solid->pos.x;
             y        = p->solid->pos.y;
@@ -300,7 +300,7 @@ static void cam_updateFly( double x, double y, double dt )
 static void cam_updatePilot( const Pilot *follow, double dt )
 {
    Pilot *target;
-   double a, r, dir, k;
+   double dir, k;
    double x,y, dx,dy, mx,my, targ_x,targ_y, bias_x,bias_y, vx,vy;
 
    /* Get target. */
@@ -349,8 +349,8 @@ static void cam_updatePilot( const Pilot *follow, double dt )
 
    /* Limit bias. */
    if (pow2(bias_x)+pow2(bias_y) > diag2/2.) {
-      a        = atan2( bias_y, bias_x );
-      r        = sqrt(diag2)/2.;
+      double a = atan2( bias_y, bias_x );
+      double r = sqrt(diag2)/2.;
       bias_x   = r*cos(a);
       bias_y   = r*sin(a);
    }
@@ -454,8 +454,8 @@ static void cam_updatePilotZoom( const Pilot *follow, const Pilot *target, doubl
          y += target->solid->pos.y - follow->solid->pos.y;
 
          /* Get distance ratio. */
-         dx = (SCREEN_W/2.) / (FABS(x) + 2*target->ship->gfx_space->sw);
-         dy = (SCREEN_H/2.) / (FABS(y) + 2*target->ship->gfx_space->sh);
+         dx = (SCREEN_W/2.) / (FABS(x) + 2.*target->ship->gfx_space->sw);
+         dy = (SCREEN_H/2.) / (FABS(y) + 2.*target->ship->gfx_space->sh);
 
          /* Get zoom. */
          tz = MIN( dx, dy );
@@ -467,7 +467,7 @@ static void cam_updatePilotZoom( const Pilot *follow, const Pilot *target, doubl
    /* Gradually zoom in/out. */
    d  = CLAMP(-conf.zoom_speed, conf.zoom_speed, tz - z);
    d *= dt / dt_mod; /* Remove dt dependence. */
-   if (d < 0) /** Speed up if needed. */
+   if (d < 0.) /** Speed up if needed. */
       d *= 2.;
    camera_Z =  CLAMP( zfar, znear, z + d);
 }

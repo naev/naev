@@ -56,7 +56,6 @@ double pilot_ewScanTime( const Pilot *p )
    return pow( p->solid->mass, 1./3. ) * 1.25 * p->stats.ew_hide * p->stats.ew_scanned_time;
 }
 
-
 /**
  * @brief Initializes the scan timer for a pilot.
  *
@@ -82,7 +81,6 @@ void pilot_ewScanStart( Pilot *p )
    p->scantimer = pilot_ewScanTime(p);
 }
 
-
 /**
  * @brief Checks to see if a scan is done.
  *
@@ -96,7 +94,6 @@ int pilot_ewScanCheck( const Pilot *p )
    return (p->scantimer < 0.);
 }
 
-
 /**
  * @brief Updates all the internal values.
  */
@@ -108,7 +105,6 @@ static void pilot_ewUpdate( Pilot *p )
    p->ew_stealth   = MAX( 1000., p->ew_mass / p->stats.ew_hide * 0.25 / p->stats.ew_stealth ) * p->ew_asteroid * ew_interference * p->ew_jumppoint;
 }
 
-
 /**
  * @brief Updates the pilot's static electronic warfare properties.
  *
@@ -119,7 +115,6 @@ void pilot_ewUpdateStatic( Pilot *p )
    p->ew_mass     = pilot_ewMass( p->solid->mass );
    pilot_ewUpdate( p );
 }
-
 
 /**
  * @brief Updates the pilot's dynamic electronic warfare properties.
@@ -167,11 +162,10 @@ void pilot_ewUpdateDynamic( Pilot *p, double dt )
          pilot_outfitLOnscan( p );
          pilot_outfitLOnscanned( t, p );
 
-         /* TODO handle case the player finished scaning by setting a flag or something. */
+         /* TODO handle case the player finished scanning by setting a flag or something. */
       }
    }
 }
-
 
 /**
  * @brief Gets the electronic warfare mass modifier for a given mass.
@@ -183,7 +177,6 @@ static double pilot_ewMass( double mass )
 {
    return pow(mass, 1./1.8) * 350.;
 }
-
 
 /**
  * @brief Gets the electronic warfare asteroid modifier.
@@ -199,7 +192,6 @@ static double pilot_ewAsteroid( const Pilot *p )
    else
       return 1.;
 }
-
 
 /**
  * @brief Gets the electronic warfare jump point modifier.
@@ -223,7 +215,6 @@ static double pilot_ewJumpPoint( const Pilot *p )
    return 1.;
 }
 
-
 /**
  * @brief Updates the system's base sensor range.
  */
@@ -231,7 +222,6 @@ void pilot_updateSensorRange (void)
 {
    ew_interference = 1. + cur_system->interference/100.;
 }
-
 
 /**
  * @brief Returns the default sensor range for the current system.
@@ -242,7 +232,6 @@ double pilot_sensorRange( void )
 {
    return 7500. / ew_interference;
 }
-
 
 /**
  * @brief Check to see if a position is in range of the pilot.
@@ -260,7 +249,6 @@ int pilot_inRange( const Pilot *p, double x, double y )
       return 1;
    return 0;
 }
-
 
 /**
  * @brief Check to see if a pilot is in sensor range of another.
@@ -305,7 +293,6 @@ int pilot_inRangePilot( const Pilot *p, const Pilot *target, double *dist2 )
    return 0;
 }
 
-
 /**
  * @brief Check to see if a planet is in sensor range of the pilot.
  *
@@ -334,7 +321,6 @@ int pilot_inRangePlanet( const Pilot *p, int target )
 
    return 0;
 }
-
 
 /**
  * @brief Check to see if an asteroid is in sensor range of the pilot.
@@ -370,7 +356,6 @@ int pilot_inRangeAsteroid( const Pilot *p, int ast, int fie )
 
    return 0;
 }
-
 
 /**
  * @brief Check to see if a jump point is in sensor range of the pilot.
@@ -429,7 +414,6 @@ double pilot_ewWeaponTrack( const Pilot *p, const Pilot *t, double trackmin, dou
    double mod = p->stats.ew_track * p->stats.ew_detect;
    return CLAMP( 0., 1., (t->ew_evasion * mod - trackmin) / (trackmax - trackmin) );
 }
-
 
 /**
  * @brief Checks to see if there are pilots nearby to a stealthed pilot that could break stealth.
@@ -496,7 +480,6 @@ static int pilot_ewStealthGetNearby( const Pilot *p, double *mod, int *close, in
    return n;
 }
 
-
 /**
  * @brief Updates the stealth mode and checks to see if it is getting broken.
  *
@@ -541,7 +524,6 @@ void pilot_ewUpdateStealth( Pilot *p, double dt )
    }
 }
 
-
 /**
  * @brief Stealths a pilot.
  */
@@ -559,7 +541,7 @@ int pilot_stealth( Pilot *p )
    /* Can't stealth if pilots nearby. */
    pilot_setFlag( p, PILOT_STEALTH );
    n = pilot_ewStealthGetNearby( p, NULL, NULL, NULL );
-   if (n>0) {
+   if (n > 0) {
       pilot_rmFlag( p, PILOT_STEALTH );
       return 0;
    }
@@ -577,7 +559,6 @@ int pilot_stealth( Pilot *p )
    pilot_runHookParam( p, PILOT_HOOK_STEALTH, &hparam, 1 );
    return 1;
 }
-
 
 /**
  * @brief Destealths a pilot.
