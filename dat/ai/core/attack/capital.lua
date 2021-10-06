@@ -7,8 +7,8 @@ end
 --[[
 -- Main control function for capital ship behavior.
 --]]
-function atk_capital( target )
-   target = __atk_com_think( target )
+function atk_capital( target, dokill )
+   target = __atk_com_think( target, dokill )
    if target == nil then return end
 
    -- Targeting stuff

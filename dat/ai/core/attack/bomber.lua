@@ -9,8 +9,8 @@ end
 -- Bombers are expected to have heavy weapons and target
 --ships bigger than they are
 --]]
-function atk_bomber( target )
-   target = __atk_com_think( target )
+function atk_bomber( target, dokill )
+   target = __atk_com_think( target, dokill )
    if target == nil then return end
 
    -- Targeting stuff

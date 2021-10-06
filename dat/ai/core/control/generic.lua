@@ -73,6 +73,12 @@ stateinfo = {
       attack   = true,
       noattack = true,
    },
+   attack_forced_kill = {
+      forced   = true,
+      fighting = true,
+      attack   = true,
+      noattack = true,
+   },
    return_lane = {
       running  = true,
       noattack = true,
@@ -200,9 +206,14 @@ function handle_messages( si, dopush )
                -- Attack target
                if msgtype == "e_attack" then
                   if data ~= nil and data:exists() then
-                     if data:leader() ~= l then
+                     if data:leader() ~= l then -- Don't kill from same team
                         clean_task( ai.taskname() )
-                        ai.pushtask("attack_forced", data)
+                        local tdata = ai.taskdata()
+                        if si.attack and ((si.forced and tdata==data) or (tdata and tdata:flags("disabled"))) then
+                           ai.pushtask("attack_forced_kill", data)
+                        else
+                           ai.pushtask("attack_forced", data)
+                        end
                         taskchange = true
                      end
                   end

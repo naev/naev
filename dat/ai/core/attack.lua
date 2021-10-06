@@ -68,16 +68,10 @@ function attack( target )
    end
 end
 
-
 --[[
--- Forced attack function that should focus on the enemy until dead
+-- Forced attack function that should focus on the enemy until done
 --]]
 function attack_forced( target )
-   if not target or not target:exists() then
-      ai.poptask()
-      return
-   end
-
    if mem.atk ~= nil then
       mem.atk( target )
    else
@@ -85,6 +79,16 @@ function attack_forced( target )
    end
 end
 
+--[[
+-- Forced attack function that should focus on the enemy until enemy is killed
+--]]
+function attack_forced_kill( target )
+   if mem.atk ~= nil then
+      mem.atk( target, true )
+   else
+      atk_generic( target, true )
+   end
+end
 
 --[[
 -- Wrapper for the attacked function.

@@ -39,8 +39,8 @@ end
 --[[
 -- Main control function for fighter behavior.
 --]]
-function atk_fighter( target )
-   target = __atk_com_think( target )
+function atk_fighter( target, dokill )
+   target = __atk_com_think( target, dokill )
    if target == nil then return end
 
    -- Targeting stuff

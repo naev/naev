@@ -54,8 +54,8 @@ function __atk_decide_zz()
    local target = ai.taskdata()
    local pilot  = ai.pilot()
    local range  = ai.getweaprange(3)
-   local dir = ai.idir(target)
-   local dist  = ai.dist( target )
+   local dir    = ai.idir(target)
+   local dist   = ai.dist( target )
 
    local m1, d1 = vec2.polar( pilot:vel() )
    local m2, d2 = vec2.polar( target:pos() - pilot:pos() )
@@ -114,9 +114,9 @@ end
 --[[
 -- Common control stuff
 --]]
-function __atk_com_think( target )
+function __atk_com_think( target, dokill )
    -- make sure pilot exists
-   if not target:exists() then
+   if not target or not target:exists() then
       ai.poptask()
       return
    end
@@ -125,6 +125,11 @@ function __atk_com_think( target )
    if ai.isbribed(target) then
       ai.poptask()
       return
+   end
+
+   -- Kill the target
+   if dokill then
+      return target
    end
 
    -- Check if we want to board

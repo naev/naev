@@ -65,8 +65,8 @@ end
 --[[
 -- Generic "brute force" attack.  Doesn't really do anything interesting.
 --]]
-function atk_generic( target )
-   target = __atk_com_think( target )
+function atk_generic( target, dokill )
+   target = __atk_com_think( target, dokill )
    if target == nil then return end
 
    ai.hostile(target) -- Mark as hostile
