@@ -192,6 +192,7 @@ function board()
       pinnacle:control(false)
       player.pay(reward)
       player.outfitAdd("Ugly Statue")
+      baron.addLog( log_text )
       misn.finish(true)
    end
    pinnacle:setHilight(false)
