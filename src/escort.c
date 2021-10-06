@@ -45,7 +45,6 @@ int escort_addList( Pilot *p, char *ship, EscortType_t type,
       unsigned int id, int persist )
 {
    Escort_t *escort;
-
    if (p->escorts == NULL)
       p->escorts = array_create( Escort_t );
    escort = &array_grow( &p->escorts );
@@ -62,12 +61,10 @@ int escort_addList( Pilot *p, char *ship, EscortType_t type,
  * @brief Remove all escorts from a pilot.
  *
  *    @param p Pilot to remove escorts from.
-
  */
-void escort_freeList( Pilot *p ) {
-   int i;
-
-   for (i=0; i<array_size(p->escorts); i++)
+void escort_freeList( Pilot *p )
+{
+   for (int i=0; i<array_size(p->escorts); i++)
       free(p->escorts[i].ship);
    array_free(p->escorts);
    p->escorts = NULL;
@@ -81,7 +78,8 @@ void escort_freeList( Pilot *p ) {
  *    @param i index of the pilot representing the escort.
 
  */
-void escort_rmListIndex( Pilot *p, int i ) {
+void escort_rmListIndex( Pilot *p, int i )
+{
    free(p->escorts[i].ship);
    array_erase( &p->escorts, &p->escorts[i], &p->escorts[i+1] );
 }
@@ -94,10 +92,9 @@ void escort_rmListIndex( Pilot *p, int i ) {
  *    @param id ID of the pilot representing the escort.
 
  */
-void escort_rmList( Pilot *p, unsigned int id ) {
-   int i;
-
-   for (i=0; i<array_size(p->escorts); i++) {
+void escort_rmList( Pilot *p, unsigned int id )
+{
+   for (int i=0; i<array_size(p->escorts); i++) {
       if (p->escorts[i].id == id) {
          escort_rmListIndex( p, i );
          break;
@@ -184,10 +181,9 @@ unsigned int escort_create( Pilot *p, char *ship,
  */
 int escort_clearDeployed( Pilot *p )
 {
-   int j, q = 0;
-   Pilot *pe;
-   for (j=array_size(p->escorts)-1; j>=0; j--) {
-      pe = pilot_get( p->escorts[j].id );
+   int q = 0;
+   for (int j=array_size(p->escorts)-1; j>=0; j--) {
+      Pilot *pe = pilot_get( p->escorts[j].id );
       if (pe==NULL)
          continue;
       /* Hack so it can dock. */
@@ -212,18 +208,15 @@ int escort_clearDeployed( Pilot *p )
  */
 static int escort_command( Pilot *parent, const char *cmd, unsigned int idx )
 {
-   int i;
-   Pilot *e;
-
    if (array_size(parent->escorts) == 0)
       return 1;
 
-   for (i=0; i<array_size(parent->escorts); i++) {
-      e = pilot_get( parent->escorts[i].id );
+   for (int i=0; i<array_size(parent->escorts); i++) {
+      Pilot *e = pilot_get( parent->escorts[i].id );
       if (e == NULL) /* Most likely died. */
          continue;
 
-      pilot_msg(parent, e, cmd, idx);
+      pilot_msg( parent, e, cmd, idx );
    }
 
    return 0;
@@ -254,8 +247,12 @@ int escorts_attack( Pilot *parent )
       ret = escort_command( parent, "e_attack", -1 );
       lua_pop(naevL, 1);
    }
-   if ((ret == 0) && (parent == player.p))
-      player_message(_("#gEscorts: #0Attacking %s."), t->name);
+   if ((ret == 0) && (parent == player.p)) {
+      if (pilot_isFlag(t, PILOT_DISABLED))
+         player_message(_("#gEscorts: #0Destroying %s."), t->name);
+      else
+         player_message(_("#gEscorts: #0Attacking %s."), t->name);
+   }
    return ret;
 }
 /**
@@ -265,8 +262,7 @@ int escorts_attack( Pilot *parent )
  */
 int escorts_hold( Pilot *parent )
 {
-   int ret;
-   ret = escort_command( parent, "e_hold", 0 );
+   int ret = escort_command( parent, "e_hold", 0 );
    if ((ret == 0) && (parent == player.p))
          player_message(_("#gEscorts: #0Holding position."));
    return ret;
@@ -278,8 +274,7 @@ int escorts_hold( Pilot *parent )
  */
 int escorts_return( Pilot *parent )
 {
-   int ret;
-   ret = escort_command( parent, "e_return", 0 );
+   int ret = escort_command( parent, "e_return", 0 );
    if ((ret == 0) && (parent == player.p))
       player_message(_("#gEscorts: #0Returning to ship."));
    return ret;
@@ -291,8 +286,7 @@ int escorts_return( Pilot *parent )
  */
 int escorts_clear( Pilot *parent )
 {
-   int ret;
-   ret = escort_command( parent, "e_clear", 0 );
+   int ret = escort_command( parent, "e_clear", 0 );
    if ((ret == 0) && (parent == player.p))
       player_message(_("#gEscorts: #0Clearing orders."));
    return ret;
@@ -307,7 +301,6 @@ int escorts_clear( Pilot *parent )
  */
 int escort_playerCommand( Pilot *e )
 {
-   int i;
    const char *title, *caption, *ret;
 
    /* "Attack My Target" order is omitted deliberately since e is your
@@ -318,7 +311,7 @@ int escort_playerCommand( Pilot *e )
       _("Clear Orders"),
       _("Cancel")
    };
-   int nopts = 4;
+   const int nopts = 4;
 
    /* Must not be NULL */
    if (e == NULL)
@@ -328,9 +321,8 @@ int escort_playerCommand( Pilot *e )
    caption = _("Select the order to give to this escort.");
 
    dialogue_makeChoice( title, caption, nopts );
-   for (i=0; i<nopts; i++) {
+   for (int i=0; i<nopts; i++)
       dialogue_addChoice( title, caption, opts[i] );
-   }
 
    ret = dialogue_runChoice();
    if (ret != NULL) {

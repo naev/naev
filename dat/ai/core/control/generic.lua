@@ -208,7 +208,8 @@ function handle_messages( si, dopush )
                   if data ~= nil and data:exists() then
                      if data:leader() ~= l then -- Don't kill from same team
                         clean_task()
-                        if (si.attack and si.forced and ai.taskdata()==data) or data:flags("disabled") then
+                        --if (si.attack and si.forced and ai.taskdata()==data) or data:flags("disabled") then
+                        if data:flags("disabled") then
                            ai.pushtask("attack_forced_kill", data)
                         else
                            ai.pushtask("attack_forced", data)
