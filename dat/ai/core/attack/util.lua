@@ -71,7 +71,6 @@ end
 --]]
 function _atk_zigzag()
    local target = ai.taskdata()
-   local range  = ai.getweaprange(3)
 
    if (not target:exists()) then
       ai.poptask()
@@ -87,15 +86,16 @@ function _atk_zigzag()
       return
    end
 
-   local dist  = ai.dist( target )
+   local dist = ai.dist( target )
 
    -- Are we ready to shoot?
+   local range  = ai.getweaprange(3)
    if dist < range then
       ai.popsubtask()
       return
    end
 
-   local dir = ai.dir(ai.taskdata())
+   local dir = ai.dir( target )
    __zigzag(dir, 30)
 end
 
@@ -132,7 +132,7 @@ function __atk_com_think( target )
 
    -- Check if we want to board
    if mem.atk_board and ai.canboard(target) then
-      ai.pushtask("board", target );
+      ai.pushtask("board", target )
       return
    end
 
