@@ -351,8 +351,7 @@ void input_exit (void)
  */
 void input_enableAll (void)
 {
-   int i;
-   for (i=0; keybind_info[i][0] != NULL; i++)
+   for (int i=0; keybind_info[i][0] != NULL; i++)
       input_keybinds[i].disabled = 0;
 }
 
@@ -362,8 +361,7 @@ void input_enableAll (void)
  */
 void input_disableAll (void)
 {
-   int i;
-   for (i=0; keybind_info[i][0] != NULL; i++)
+   for (int i=0; keybind_info[i][0] != NULL; i++)
       input_keybinds[i].disabled = 1;
 }
 
@@ -373,8 +371,7 @@ void input_disableAll (void)
  */
 void input_toggleEnable( const char *key, int enable )
 {
-   int i;
-   for (i=0; i<input_numbinds; i++) {
+   for (int i=0; i<input_numbinds; i++) {
       if (strcmp(key, input_keybinds[i].name)==0) {
          input_keybinds[i].disabled = !enable;
          break;
@@ -414,9 +411,7 @@ void input_mouseHide (void)
  */
 SDL_Keycode input_keyConv( const char *name )
 {
-   SDL_Keycode k;
-   k = SDL_GetKeyFromName( name );
-
+   SDL_Keycode k = SDL_GetKeyFromName( name );
    if (k == SDLK_UNKNOWN)
       WARN(_("Keyname '%s' doesn't match any key."), name);
 
@@ -434,8 +429,7 @@ SDL_Keycode input_keyConv( const char *name )
  */
 void input_setKeybind( const char *keybind, KeybindType type, SDL_Keycode key, SDL_Keymod mod )
 {
-   int i;
-   for (i=0; i<input_numbinds; i++) {
+   for (int i=0; i<input_numbinds; i++) {
       if (strcmp(keybind, input_keybinds[i].name)==0) {
          input_keybinds[i].type = type;
          input_keybinds[i].key = key;
@@ -458,8 +452,7 @@ void input_setKeybind( const char *keybind, KeybindType type, SDL_Keycode key, S
  */
 SDL_Keycode input_getKeybind( const char *keybind, KeybindType *type, SDL_Keymod *mod )
 {
-   int i;
-   for (i=0; i<input_numbinds; i++) {
+   for (int i=0; i<input_numbinds; i++) {
       if (strcmp(keybind, input_keybinds[i].name)==0) {
          if (type != NULL)
             (*type) = input_keybinds[i].type;
@@ -572,10 +565,8 @@ const char* input_modToText( SDL_Keymod mod )
  */
 const char *input_keyAlreadyBound( KeybindType type, SDL_Keycode key, SDL_Keymod mod )
 {
-   int i;
-   Keybind *k;
-   for (i=0; i<input_numbinds; i++) {
-      k = &input_keybinds[i];
+   for (int i=0; i<input_numbinds; i++) {
+      Keybind *k = &input_keybinds[i];
 
       /* Type must match. */
       if (k->type != type)
@@ -620,8 +611,7 @@ const char *input_keyAlreadyBound( KeybindType type, SDL_Keycode key, SDL_Keymod
  */
 const char* input_getKeybindDescription( const char *keybind )
 {
-   int i;
-   for (i=0; keybind_info[i][0] != NULL; i++)
+   for (int i=0; keybind_info[i][0] != NULL; i++)
       if (strcmp(keybind, input_keybinds[i].name)==0)
          return _(keybind_info[i][2]);
    WARN(_("Unable to get keybinding description '%s', that command doesn't exist"), keybind);
@@ -655,8 +645,6 @@ SDL_Keymod input_translateMod( SDL_Keymod mod )
  */
 void input_update( double dt )
 {
-   unsigned int t;
-
    if (input_mouseTimer > 0.) {
       input_mouseTimer -= dt;
 
@@ -667,6 +655,7 @@ void input_update( double dt )
 
    /* Key repeat if applicable. */
    if (conf.repeat_delay != 0) {
+      unsigned int t;
 
       /* Key must be repeating. */
       if (repeat_key == -1)
@@ -1071,13 +1060,12 @@ static void input_keyevent( const int event, const SDL_Keycode key, const SDL_Ke
  */
 static void input_joyaxis( const SDL_Keycode axis, const int value )
 {
-   int i, k;
-   for (i=0; i<input_numbinds; i++) {
+   for (int i=0; i<input_numbinds; i++) {
       if (input_keybinds[i].key == axis) {
          /* Positive axis keybinding. */
          if ((input_keybinds[i].type == KEYBIND_JAXISPOS)
                && (value >= 0)) {
-            k = (value > 0) ? KEY_PRESS : KEY_RELEASE;
+            int k = (value > 0) ? KEY_PRESS : KEY_RELEASE;
             if ((k == KEY_PRESS) && input_keybinds[i].disabled)
                continue;
             input_key( i, k, FABS(((double)value)/32767.), 0 );
@@ -1086,7 +1074,7 @@ static void input_joyaxis( const SDL_Keycode axis, const int value )
          /* Negative axis keybinding. */
          if ((input_keybinds[i].type == KEYBIND_JAXISNEG)
                && (value <= 0)) {
-            k = (value < 0) ? KEY_PRESS : KEY_RELEASE;
+            int k = (value < 0) ? KEY_PRESS : KEY_RELEASE;
             if ((k == KEY_PRESS) && input_keybinds[i].disabled)
                continue;
             input_key( i, k, FABS(((double)value)/32767.), 0 );
@@ -1101,8 +1089,7 @@ static void input_joyaxis( const SDL_Keycode axis, const int value )
  */
 static void input_joyevent( const int event, const SDL_Keycode button )
 {
-   int i;
-   for (i=0; i<input_numbinds; i++) {
+   for (int i=0; i<input_numbinds; i++) {
       if ((event == KEY_PRESS) && input_keybinds[i].disabled)
          continue;
       if ((input_keybinds[i].type == KEYBIND_JBUTTON) &&
@@ -1118,25 +1105,24 @@ static void input_joyevent( const int event, const SDL_Keycode button )
  */
 static void input_joyhatevent( const Uint8 value, const Uint8 hat )
 {
-   int i, event;
-   for (i=0; i<input_numbinds; i++) {
+   for (int i=0; i<input_numbinds; i++) {
       if (input_keybinds[i].key != hat)
          continue;
 
       if (input_keybinds[i].type == KEYBIND_JHAT_UP) {
-         event = (value & SDL_HAT_UP) ? KEY_PRESS : KEY_RELEASE;
+         int event = (value & SDL_HAT_UP) ? KEY_PRESS : KEY_RELEASE;
          if (!((event == KEY_PRESS) && input_keybinds[i].disabled))
             input_key(i, event, -1., 0);
       } else if (input_keybinds[i].type == KEYBIND_JHAT_DOWN) {
-         event = (value & SDL_HAT_DOWN) ? KEY_PRESS : KEY_RELEASE;
+         int event = (value & SDL_HAT_DOWN) ? KEY_PRESS : KEY_RELEASE;
          if (!((event == KEY_PRESS) && input_keybinds[i].disabled))
             input_key(i, event, -1., 0);
       } else if (input_keybinds[i].type == KEYBIND_JHAT_LEFT) {
-         event = (value & SDL_HAT_LEFT) ? KEY_PRESS : KEY_RELEASE;
+         int event = (value & SDL_HAT_LEFT) ? KEY_PRESS : KEY_RELEASE;
          if (!((event == KEY_PRESS) && input_keybinds[i].disabled))
             input_key(i, event, -1., 0);
       } else if (input_keybinds[i].type == KEYBIND_JHAT_RIGHT) {
-         event = (value & SDL_HAT_RIGHT) ? KEY_PRESS : KEY_RELEASE;
+         int event = (value & SDL_HAT_RIGHT) ? KEY_PRESS : KEY_RELEASE;
          if (!((event == KEY_PRESS) && input_keybinds[i].disabled))
             input_key(i, event, -1., 0);
       }
@@ -1156,13 +1142,9 @@ static void input_joyhatevent( const Uint8 value, const Uint8 hat )
  */
 static void input_keyevent( const int event, SDL_Keycode key, const SDL_Keymod mod, const int repeat )
 {
-   int i;
-   SDL_Keymod mod_filtered;
-
    /* Filter to "Naev" modifiers. */
-   mod_filtered = input_translateMod(mod);
-
-   for (i=0; i<input_numbinds; i++) {
+   SDL_Keymod mod_filtered = input_translateMod(mod);
+   for (int i=0; i<input_numbinds; i++) {
       if ((event == KEY_PRESS) && input_keybinds[i].disabled)
          continue;
       if ((input_keybinds[i].type == KEYBIND_KEYBOARD) &&
@@ -1192,7 +1174,6 @@ static void input_clickZoom( double modifier )
 static void input_mouseMove( SDL_Event* event )
 {
    int mx, my;
-
    gl_windowToScreenPos( &mx, &my, event->button.x, event->button.y );
    player.mousex = mx;
    player.mousey = my;
@@ -1438,9 +1419,7 @@ int input_clickedJump( int jump, int autonav )
  */
 int input_clickedPlanet( int planet, int autonav )
 {
-   Planet *pnt;
-   int ret;
-   pnt = cur_system->planets[ planet ];
+   Planet *pnt = cur_system->planets[ planet ];
 
    if (!planet_isKnown(pnt))
       return 0;
@@ -1456,7 +1435,7 @@ int input_clickedPlanet( int planet, int autonav )
       player_hyperspacePreempt(0);
       if ((pnt->presence.faction < 0) || pnt->can_land || pnt->bribed ||
             (pnt->land_override > 0)) {
-         ret = player_land(0);
+         int ret = player_land(0);
          if (ret == PLAYER_LAND_AGAIN) {
             player_rmFlag(PLAYER_BASICAPPROACH);
             player_autonavPnt(pnt->name);
@@ -1485,14 +1464,9 @@ int input_clickedPlanet( int planet, int autonav )
  */
 int input_clickedAsteroid( int field, int asteroid )
 {
-   Asteroid *ast;
-   AsteroidAnchor *anchor;
-
-   anchor = &cur_system->asteroids[ field ];
-   ast = &anchor->asteroids[ asteroid ];
-
+   AsteroidAnchor *anchor = &cur_system->asteroids[ field ];
+   Asteroid *ast = &anchor->asteroids[ asteroid ];
    player_targetAsteroidSet( field, asteroid );
-
    input_clicked( (void*)ast );
    return 1;
 }
