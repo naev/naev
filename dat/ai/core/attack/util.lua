@@ -49,6 +49,7 @@ end
 function __atk_decide_zz( target, dist )
    -- Some AI will not do fancy maneuvers
    if mem.simplecombat then return false end
+   if target:flags("disabled") then return false end -- Don't be fance with disabled ships
    -- The situation is the following: we're out of range, facing the target,
    -- going towards the target, and someone is shooting on us.
    local pilot  = ai.pilot()
@@ -70,6 +71,10 @@ end
 function _atk_zigzag( target )
    target = __atk_com_think( target )
    if target == nil then return end
+   if target:flags("disabled") then
+      ai.popsubtask()
+      return
+   end
 
    -- See if the enemy is still seeable
    if not __atk_check_seeable( target ) then return end
