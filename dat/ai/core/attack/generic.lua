@@ -69,12 +69,13 @@ function atk_generic( target )
    target = __atk_com_think( target )
    if target == nil then return end
 
-   -- Targeting stuff
    ai.hostile(target) -- Mark as hostile
-   ai.settarget(target)
 
    -- See if the enemy is still seeable
    if not __atk_check_seeable( target ) then return end
+
+   -- Targeting stuff
+   ai.settarget(target)
 
    -- Get stats about enemy
    local dist  = ai.dist( target ) -- get distance

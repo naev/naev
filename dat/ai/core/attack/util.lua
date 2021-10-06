@@ -69,27 +69,24 @@ end
 --[[
 -- Zig zags towards the target
 --]]
-function _atk_zigzag()
-   local target = ai.taskdata()
-
-   if (not target:exists()) then
-      ai.poptask()
-      return
-   end
+function _atk_zigzag( target )
+   target = __atk_com_think( target )
+   if target == nil then return end
 
    -- See if the enemy is still seeable
    if not __atk_check_seeable( target ) then return end
 
+   ai.settarget(target)
+
    -- Is there something to dodge?
-   if (not ai.hasprojectile()) then
+   if not ai.hasprojectile() then
       ai.popsubtask()
       return
    end
 
-   local dist = ai.dist( target )
-
    -- Are we ready to shoot?
-   local range  = ai.getweaprange(3)
+   local dist = ai.dist( target )
+   local range = ai.getweaprange(3)
    if dist < range then
       ai.popsubtask()
       return
