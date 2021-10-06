@@ -401,14 +401,14 @@ function update_faction()
 end
 
 function update_cargo()
-   cargol = pp:cargoList()
+   local cargol = pp:cargoList()
    cargofree = string.format( _(" (%s free)"), fmt.tonnes_short( pp:cargoFree() ) )
    cargofreel = gfx.printDim( true, cargofree )
    cargoterml = gfx.printDim( true, ", [...]" )
    cargo = {}
    for k,v in ipairs(cargol) do
       if v.q == 0 then
-         cargo[k] = v.name
+         cargo[k] = _(v.name)
       else
          cargo[k] = fmt.tonnes_short(v.q) .. " " .. _(v.name)
       end
