@@ -53,7 +53,7 @@ function __atk_drone_ranged( target, dist )
       end
    else
       -- First test if we should zz
-      if __atk_decide_zz() then
+      if __atk_decide_zz( target, dist ) then
          ai.pushsubtask("_atk_zigzag", target)
       end
    end
@@ -111,7 +111,7 @@ function __atk_d_flyby( target, dist )
    ai.weapset( 3 ) -- Forward/turrets
 
    -- First test if we should zz
-   if __atk_decide_zz() then
+   if __atk_decide_zz( target, dist ) then
       ai.pushsubtask("_atk_zigzag", target)
    end
 
@@ -175,7 +175,7 @@ function __atk_d_space_sup( target, dist )
    ai.weapset( 3 ) -- Forward/turrets
 
    -- First test if we should zz
-   if __atk_decide_zz() then
+   if __atk_decide_zz( target, dist ) then
       ai.pushsubtask("_atk_zigzag", target)
    end
 
