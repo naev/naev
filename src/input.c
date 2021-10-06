@@ -290,9 +290,6 @@ void input_setDefault ( int wasd )
  */
 void input_init (void)
 {
-   Keybind *temp;
-   int i;
-
    /* Window. */
    SDL_EventState( SDL_SYSWMEVENT,      SDL_DISABLE );
 
@@ -326,8 +323,8 @@ void input_init (void)
    input_keybinds = malloc( input_numbinds * sizeof(Keybind) );
 
    /* Create safe null keybinding for each. */
-   for (i=0; i<input_numbinds; i++) {
-      temp = &input_keybinds[i];
+   for (int i=0; i<input_numbinds; i++) {
+      Keybind *temp     = &input_keybinds[i];
       memset( temp, 0, sizeof(Keybind) );
       temp->name        = keybind_info[i][0];
       temp->type        = KEYBIND_NULL;
@@ -475,15 +472,10 @@ SDL_Keycode input_getKeybind( const char *keybind, KeybindType *type, SDL_Keymod
  */
 void input_getKeybindDisplay( const char *keybind, char *buf, int len )
 {
-   int p;
-   SDL_Keycode key;
-   KeybindType type;
-   SDL_Keymod mod;
-
    /* Get the keybinding. */
-   type =  KEYBIND_NULL;
-   mod = NMOD_NONE;
-   key = input_getKeybind( keybind, &type, &mod );
+   KeybindType type  = KEYBIND_NULL;
+   SDL_Keymod mod    = NMOD_NONE;
+   SDL_Keycode key   = input_getKeybind( keybind, &type, &mod );
 
    /* Handle type. */
    switch (type) {
@@ -492,7 +484,7 @@ void input_getKeybindDisplay( const char *keybind, char *buf, int len )
          break;
 
       case KEYBIND_KEYBOARD:
-         p = 0;
+         int p = 0;
          /* Handle mod. */
          if ((mod != NMOD_NONE) && (mod != NMOD_ANY))
             p += scnprintf( &buf[p], len-p, "%s + ", input_modToText(mod) );
@@ -501,7 +493,6 @@ void input_getKeybindDisplay( const char *keybind, char *buf, int len )
             p += scnprintf( &buf[p], len-p, "%c", toupper(key) );
          else
             p += scnprintf( &buf[p], len-p, "%s", _(SDL_GetKeyName(key)) );
-         (void)p;
          break;
 
       case KEYBIND_JBUTTON:
@@ -1288,11 +1279,6 @@ int input_clickPos( SDL_Event *event, double x, double y, double zoom, double mi
    Pilot *p;
    double r, rp;
    double d, dp;
-   Planet *pnt;
-   JumpPoint *jp;
-   Asteroid *ast;
-   AsteroidAnchor *field;
-   const AsteroidType *at;
    int pntid, jpid, astid, fieid;
 
    /* Don't allow selecting a new target with the right mouse button
@@ -1310,16 +1296,17 @@ int input_clickPos( SDL_Event *event, double x, double y, double zoom, double mi
    rp = MAX( 1.5 * PILOT_SIZE_APPROX * p->ship->gfx_space->sw / 2 * zoom,  minpr);
 
    if (pntid >=0) { /* Planet is closer. */
-      pnt = cur_system->planets[ pntid ];
+      Planet *pnt = cur_system->planets[ pntid ];
       r  = MAX( 1.5 * pnt->radius * zoom, minr );
    }
    else if (jpid >= 0) {
-      jp = &cur_system->jumps[ jpid ];
+      JumpPoint *jp = &cur_system->jumps[ jpid ];
       r  = MAX( 1.5 * jp->radius * zoom, minr );
    }
    else if (astid >= 0) {
-      field = &cur_system->asteroids[fieid];
-      ast   = &field->asteroids[astid];
+      const AsteroidType *at;
+      AsteroidAnchor *field = &cur_system->asteroids[fieid];
+      Asteroid *ast = &field->asteroids[astid];
 
       /* Recover the right gfx */
       at = space_getType( ast->type );
@@ -1383,8 +1370,7 @@ int input_clickPos( SDL_Event *event, double x, double y, double zoom, double mi
  */
 int input_clickedJump( int jump, int autonav )
 {
-   JumpPoint *jp;
-   jp = &cur_system->jumps[ jump ];
+   JumpPoint *jp = &cur_system->jumps[ jump ];
 
    if (!jp_isUsable(jp))
       return 0;
