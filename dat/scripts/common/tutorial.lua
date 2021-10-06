@@ -20,9 +20,12 @@ tut.shipai = {
    transition = "electric",
 }
 
+function tut.ainame ()
+   return var.peek("shipai_name") or tut.shipai.name
+end
+
 function tut.vn_shipai( params )
-   local name = var.peek("shipai_name") or tut.shipai.name
-   return vn.Character.new( name,
+   return vn.Character.new( tut.ainame(),
          mt.merge_tables( {
             image=tut.shipai.image,
             color=tut.shipai.colour,
@@ -67,6 +70,10 @@ end
 -- Capsule function for naev.keyGet() that adds a color code to the return string.
 function tut.getKey( command )
     return "#b" .. naev.keyGet(command) .. "#0"
+end
+
+function tut.isDisabled ()
+   return var.peek("tut_disable")
 end
 
 return tut
