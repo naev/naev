@@ -2253,8 +2253,8 @@ dat/events/start.lua
 dat/events/taiomi/find.lua
 dat/events/taiomi/intro.lua
 dat/events/taiomi/system.lua
-dat/events/tutorial/tutorial_enter.lua
-dat/events/tutorial/tutorial_land.lua
+dat/events/tutorial/tut_enter.lua
+dat/events/tutorial/tut_land.lua
 dat/events/updater.lua
 dat/factions/equip/dvaered.lua
 dat/factions/equip/empire.lua
