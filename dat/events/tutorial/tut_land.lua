@@ -25,15 +25,29 @@ function outfit_buy( outfitname )
    local o = outfit.get(outfitname)
    local tbroad = o:typeBroad()
 
-   if tbroad == "afterburner" and not var.peek( "tut_afterburner" ) then
+   if tbroad == "Afterburner" and not var.peek( "tut_afterburner" ) then
       vn.clear()
       vn.scene()
       local sai = vn.newCharacter( tut.vn_shipai() )
       vn.transition( tut.shipai.transition )
-      sai(fmt.f(_([["Looks like you just bought an #oafterburner#0 outfit. Afterburners are active outfits that you can only equip one of on any specific ship. You can either configure to be set to a weapon set keybinding in the Info menu (opened with {infokey}, or double tap {accelkey} to trigger it. Note that they are prone to overheating and use a lot of energy, so it is bes to use afterburners only when necessary."]]),{infokey=tut.getKey("info"), accelkey=tut.getKey("accel")}))
+      sai(fmt.f(_([["Looks like you just bought an #oAfterburner#0 outfit. Afterburners are active outfits that you can only equip one of on any specific ship. You can either configure to be set to a weapon set keybinding in the Info menu (opened with {infokey}, or double tap {accelkey} to trigger it. Note that they are prone to overheating and use a lot of energy, so it is bes to use afterburners only when necessary."]]),{infokey=tut.getKey("info"), accelkey=tut.getKey("accel")}))
       vn.done( tut.shipai.transition )
       vn.run()
       var.push( "tut_afterburner" )
+   elseif tbroad == "Launcher" and not var.peek( "tut_launcher" ) then
+      vn.clear()
+      vn.scene()
+      local sai = vn.newCharacter( tut.vn_shipai() )
+      vn.transition( tut.shipai.transition )
+      sai(_([["Looks like you just acquired your first #oLauncher#0 outfit. Launchers are ammo-based weapons that can have target tracking abilities. Seeking launchers have two important properties: '#oLock-on#0' and '#oIn-Flight Calibration#0'. Lock-on determines how many seconds it takes to be able to launch rockets after getting a new target. It is modulated depending if the target's '#oEvasion#0' is lower than the '#oOptimal Tracking#0'."]]))
+      sai(_([["'#oIn-Flight Calibration#0' is the amount of time it takes for the rocket after being launched to start tracking the target. When not locked-on it will fly in a straight line and damage all hostiles they encounter, however, once locked-on they will only damage the target unless jammed. In-Flight Calibration is not affected by the target's evasion, and is visualized by a coloured circle around the outfit that shrinks as the calibration finishes.."]]))
+      sai(_([["That leads us to the last important concept: jamming! Seeking rockets can be jammed depending on whether or not the target has jamming equipment, and the resistance of the rocket. The chance of a rocket being jammed is the difference between the jamming chance and the resistance. When a rocket becomes jammed it can either get slowed down, or get stuck in a random trajectory. Despite being jammed, they can still damage any hostiles they encounter."]]))
+      sai(fmt.f(_([["Finally, the ammo of launchers regenerates over time: there is no need to buy ammunition. By either performing a cooldown with {cooldownkey} or landing on a planet or station you can instantly refill the ammunition when necessary. Launchers can be very useful if you master them, please try them out with different configurations!"]]),{cooldownkey=tut.getKey("cooldown")}))
+      vn.done( tut.shipai.transition )
+      vn.run()
+      var.push( "tut_afterburner" )
+   elseif tbroad == "Fighter Bay" and not var.peek( "tut_fighterbay" ) then
+      --var.push( "tut_fighterbay" )
    end
 end
 
