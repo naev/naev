@@ -57,11 +57,10 @@ function ship_buy( shipname )
       vn.scene()
       local sai = vn.newCharacter( tut.vn_shipai() )
       vn.transition( tut.shipai.transition )
-
-      tk.msg( "", _([[The person who sells you the %s looks at your record and pauses. "Ah, I see you haven't owned a large ship before! Sorry to slow you down, but I just wanted to tell you some important things about your ship. I promise I'll be but a moment.
-   "Firstly, you may notice that the ship you bought has a 'Time Constant' rating. See, when operating a larger ship, you have to expend more time and effort performing the basic operations of the ship, causing your perception of time to speed up. Time Constant is simply a measure of how fast you will perceive the passage of time compared to a typical small ship; for example, a Time Constant rating of 200%% means that time appears to pass twice as fast as typical small ships.
-   "This, and the slower speed of your ship, may make it difficult to use forward-facing weapons as well as on smaller ships. For the largest classes - Destroyers and up - I would generally recommend use of turreted weapons, which will automatically aim at your opponent, rather than forward-facing weapons. That's of course up to you, though.
-   "That's all! Sorry to be a bother. I wish you good luck in your travels!" You thank the salesperson and continue on your way.]]):format(shp) )
+      sai(_([["Whoa, it looks like you just acquired your first large ship. You may have noticed by now, but ships have a '#oTime Constant#0' rating, which indicates how time feels to pass by when flying the ship. Smaller ships tend to have values below 100%, and thus time ends up passing slower in them than in other ships. On the other hand, large ships will have time constants above 100%, making time seem to pass faster. For example, a ship with a 150% time constant will have time passing 50% faster than a normal ship, and will help the ship feel less cumbersome to fly."]]))
+      sai(_([["In general, due to the low maneuverability of large ships, you should consider using turret weapons and/or fighter bays for self defense. They allow you to worry less about aiming, and more about getting jobs done. Turrets rely heavily on their tracking values. '#oMinimum Tracking#0' refers to the '#oEvasion#0' value of a target ship at which the turret will not be able to track. On the other hand, if the target ship is above the '#oOptimal Tracking#0', your turrets will be able to perfectly track them. It is best to try out different turrets and see what feels best for your ship."]]))
+      vn.done( tut.shipai.transition )
+      vn.run()
       var.push( "tut_timedil", true )
       return
    end
