@@ -484,6 +484,7 @@ void input_getKeybindDisplay( const char *keybind, char *buf, int len )
          break;
 
       case KEYBIND_KEYBOARD:
+      {
          int p = 0;
          /* Handle mod. */
          if ((mod != NMOD_NONE) && (mod != NMOD_ANY))
@@ -494,6 +495,7 @@ void input_getKeybindDisplay( const char *keybind, char *buf, int len )
          else
             p += scnprintf( &buf[p], len-p, "%s", _(SDL_GetKeyName(key)) );
          break;
+      }
 
       case KEYBIND_JBUTTON:
          snprintf( buf, len, _("joy button %d"), key );
