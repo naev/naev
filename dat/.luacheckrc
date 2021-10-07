@@ -15,6 +15,7 @@ stds.Basic={
       table={
          fields={"unpack"}
       },
+      "_LOADED", -- NLUA_LOAD_TABLE
    },
    read_globals={"N_", "_", "__debugging", "gettext", "n_", "warn" },
 }

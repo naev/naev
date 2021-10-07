@@ -163,10 +163,10 @@ function love.exec( path )
    love._path = package.path
 
    -- only add to path if not there, saves path pollution if crashing
-   local function addtopath( path )
-      local id = string.find( package.path, path, 1, true )
+   local function addtopath( newpath )
+      local id = string.find( package.path, newpath, 1, true )
       if id == nil then
-         package.path = package.path..path
+         package.path = package.path..newpath
       end
    end
    addtopath(";?.lua")
@@ -205,9 +205,9 @@ function love.exec( path )
    _clearfuncs()
    local t = _setdefaults()
 
-   local function dolua( path )
-      _LOADED[path] = nil -- reset loadedness
-      require(path)
+   local function dolua( scriptpath )
+      _LOADED[scriptpath] = nil -- reset loadedness
+      require(scriptpath)
    end
 
    -- Configure
