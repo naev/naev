@@ -125,7 +125,7 @@ function enter_ship()
 end
 
 function enter_spaceport()
-    local c = 0
+    local c
     time_left = time_left - 1
     if time_left < 0 then
         tk.msg(_("Time to visit the institute"), timeup_text)
@@ -175,7 +175,6 @@ function enter_spaceport()
 end
 
 function start_talk()
-    local c = 0
     local text1
     if has_lab_coat then
         text1 = _("Wearing a lab coat you blend in nicely with your audience.")
@@ -197,7 +196,7 @@ function start_talk()
     You start reciting the text you got from the student. You realize that you should have learned the text as some of the occurring terms are difficult to pronounce correctly.]]):format(text1))
     end
     tk.msg(_("Scientific Talk"), _([[Finally you are finished with your text and sigh in relief. After a brief applause someone raises his hand. Apparently he wants to ask a question. What should you do?]]))
-    c = tk.choice(_("Scientific Talk"), _([[You haven't understood the question, not even a single word.]]), _("This is a good question."), _("It's an open question."), _("Run!"))
+    local c = tk.choice(_("Scientific Talk"), _([[You haven't understood the question, not even a single word.]]), _("This is a good question."), _("It's an open question."), _("Run!"))
 
     if c == 3 then
         tk.msg(_("Tactical Retreat"), _([[You decide to run towards the closest door and leave the building as fast as possible. You continue running until you reach the spaceport and enter your ship. You can't be the first one running from a talk, right?]]))

@@ -25,7 +25,7 @@ function tutnel.vn_nelly( params )
             color=tutnel.nelly.colour,
          }, params) )
 end
-   
+
 function tutnel.log( text )
    shiplog.create( "tut_nelly", _("Nelly"), _("Neutral") )
    shiplog.append( "tut_nelly", text )
