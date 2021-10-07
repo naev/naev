@@ -56,7 +56,6 @@ int escort_addList( Pilot *p, char *ship, EscortType_t type,
    return 0;
 }
 
-
 /**
  * @brief Remove all escorts from a pilot.
  *
@@ -84,7 +83,6 @@ void escort_rmListIndex( Pilot *p, int i )
    array_erase( &p->escorts, &p->escorts[i], &p->escorts[i+1] );
 }
 
-
 /**
  * @brief Remove from escorts list.
  *
@@ -101,7 +99,6 @@ void escort_rmList( Pilot *p, unsigned int id )
       }
    }
 }
-
 
 /**
  * @brief Creates an escort.
@@ -175,7 +172,6 @@ unsigned int escort_create( Pilot *p, char *ship,
    return e;
 }
 
-
 /**
  * @brief Clears deployed escorts of a pilot.
  */
@@ -196,7 +192,6 @@ int escort_clearDeployed( Pilot *p )
    }
    return q;
 }
-
 
 /**
  * @brief Runs an escort command on all of a pilot's escorts.
@@ -221,7 +216,6 @@ static int escort_command( Pilot *parent, const char *cmd, unsigned int idx )
 
    return 0;
 }
-
 
 /**
  * @brief Have a pilot order its escorts to attack its target.
@@ -251,10 +245,11 @@ int escorts_attack( Pilot *parent )
       if (pilot_isFlag(t, PILOT_DISABLED))
          player_message(_("#gEscorts: #0Destroying %s."), t->name);
       else
-         player_message(_("#gEscorts: #0Attacking %s."), t->name);
+         player_message(_("#gEscorts: #0Engaging %s."), t->name);
    }
    return ret;
 }
+
 /**
  * @brief Have a pilot order its escorts to hold position.
  *
@@ -267,6 +262,7 @@ int escorts_hold( Pilot *parent )
          player_message(_("#gEscorts: #0Holding position."));
    return ret;
 }
+
 /**
  * @brief Have a pilot order its escorts to dock.
  *
@@ -279,6 +275,7 @@ int escorts_return( Pilot *parent )
       player_message(_("#gEscorts: #0Returning to ship."));
    return ret;
 }
+
 /**
  * @brief Have a pilot order its escorts to clear orders.
  *
@@ -291,7 +288,6 @@ int escorts_clear( Pilot *parent )
       player_message(_("#gEscorts: #0Clearing orders."));
    return ret;
 }
-
 
 /**
  * @brief Open a dialog for the player to issue a command to an escort.
@@ -341,7 +337,6 @@ int escort_playerCommand( Pilot *e )
    }
    return 1;
 }
-
 
 /**
  * @brief Have a pilot order its escorts to jump.
