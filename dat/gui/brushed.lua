@@ -440,13 +440,9 @@ function renderBar( name, value, light, locked, prefix, mod_x, mod_y, heat, stre
 
       -- Heat bar (only if heat is specified)
       if heat ~= nil then
-         if heat <= 1 then
-            heatcol = col_heat
-            heatcol_top = col_top_heat
-         end
-         gfx.renderRect( l_x + offsets[1], l_y + offsets[2], bar_w/2, heat/2 * bar_h * (value/100.), heatcol ) --Heat bar
+         gfx.renderRect( l_x + offsets[1], l_y + offsets[2], bar_w/2, heat/2 * bar_h * (value/100.), col_heat ) --Heat bar
          if heat < 2 then
-            gfx.renderRect( l_x + offsets[1], l_y + offsets[2] + heat/2 * bar_h * (value/100.), bar_w/2, 1, heatcol_top ) --top bit
+            gfx.renderRect( l_x + offsets[1], l_y + offsets[2] + heat/2 * bar_h * (value/100.), bar_w/2, 1, col_top_heat ) --top bit
          end
       end
 
@@ -492,10 +488,6 @@ function renderWeapBar( weapon, x, y )
       else
           width = bar_w
       end
-      if weapon.temp <= 1 then
-         heatcol = col_heat
-         heatcol_top = col_top_heat
-      end
 
       if weapon.is_outfit then
          icon = outfit.get( weapon.name ):icon()
@@ -534,9 +526,9 @@ function renderWeapBar( weapon, x, y )
       end
 
       gfx.renderTex( bar_bg, x + offsets[1], y + offsets[2] ) --Background
-      gfx.renderRect( x + offsets[1], y + offsets[2], width, weap_heat/2 *bar_h, heatcol ) --Heat bar, mandatory
+      gfx.renderRect( x + offsets[1], y + offsets[2], width, weap_heat/2 *bar_h, col_heat ) --Heat bar, mandatory
       if weap_heat < 2 then
-         gfx.renderRect( x + offsets[1], y + offsets[2] + weap_heat/2 * bar_h, width, 1, heatcol_top ) --top bit
+         gfx.renderRect( x + offsets[1], y + offsets[2] + weap_heat/2 * bar_h, width, 1, col_top_heat ) --top bit
       end
 
       if weapon.is_outfit then
