@@ -15,7 +15,7 @@ local tut = require "common.tutorial"
 local vn  = require "vn"
 
 function create ()
-   if tut.isDisabled() then return end
+   if tut.isDisabled() then evt.finish() end
 
    local enter_delay = 5
 
