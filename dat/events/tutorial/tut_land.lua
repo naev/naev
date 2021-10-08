@@ -25,6 +25,8 @@ function outfit_buy( outfitname )
    local o = outfit.get(outfitname)
    local tbroad = o:typeBroad()
 
+   -- TODO tutorials when buying licenses
+
    if tbroad == "Afterburner" and not var.peek( "tut_afterburner" ) then
       vn.clear()
       vn.scene()
