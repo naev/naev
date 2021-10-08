@@ -2208,7 +2208,7 @@ if (o) WARN(_("Outfit '%s' missing/invalid '%s' element"), temp->name, s)
  */
 static int outfit_parse( Outfit* temp, const char* file )
 {
-   xmlNodePtr cur, ccur, node, parent;
+   xmlNodePtr cur, node, parent;
    char *prop, *desc_extra;
    const char *cprop;
    int group, l;
@@ -2263,7 +2263,7 @@ static int outfit_parse( Outfit* temp, const char* file )
                continue;
             }
             else if (xml_isNode(cur,"gfx_overlays")) {
-               ccur = cur->children;
+               xmlNodePtr ccur = cur->children;
                temp->gfx_overlays = array_create_size( glTexture*, 2 );
                do {
                   xml_onlyNodes(ccur);

@@ -1339,7 +1339,7 @@ int faction_isFaction( int f )
 static int faction_parse( Faction* temp, xmlNodePtr parent )
 {
    xmlNodePtr node;
-   int player;
+   int saw_player;
    char buf[PATH_MAX], *ctmp;
 
    /* Clear memory. */
@@ -1348,7 +1348,7 @@ static int faction_parse( Faction* temp, xmlNodePtr parent )
    temp->env         = LUA_NOREF;
    temp->sched_env   = LUA_NOREF;
 
-   player = 0;
+   saw_player = 0;
    node   = parent->xmlChildrenNode;
    do {
       /* Only care about nodes. */
@@ -1357,7 +1357,7 @@ static int faction_parse( Faction* temp, xmlNodePtr parent )
       /* Can be 0 or negative, so we have to take that into account. */
       if (xml_isNode(node,"player")) {
          temp->player_def = xml_getFloat(node);
-         player = 1;
+         saw_player = 1;
          continue;
       }
 
@@ -1425,7 +1425,7 @@ static int faction_parse( Faction* temp, xmlNodePtr parent )
 
    if (temp->name == NULL)
       WARN(_("Unable to read data from '%s'"), FACTION_DATA_PATH);
-   if (player==0)
+   if (!saw_player)
       WARN(_("Faction '%s' missing 'player' tag."), temp->name);
    if (faction_isKnown_(temp) && !faction_isFlag(temp, FACTION_INVISIBLE) && temp->description==NULL)
       WARN(_("Faction '%s' is known but missing 'description' tag."), temp->name);
