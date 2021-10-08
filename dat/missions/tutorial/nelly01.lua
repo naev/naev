@@ -7,7 +7,7 @@
  <avail>
   <priority>1</priority>
   <chance>100</chance>
-  <cond>require("common.pirate").systemPresence() &lt;= 0</cond>
+  <cond>require("common.pirate").systemPresence() &lt;= 0 and not player.misnActive("Tutorial")</cond>
   <location>Bar</location>
   <faction>Dvaered</faction>
   <faction>Empire</faction>
@@ -17,7 +17,6 @@
   <faction>Sirius</faction>
   <faction>Soromid</faction>
   <faction>Za'lek</faction>
-  <done>Tutorial</done>
  </avail>
  <notes>
   <campaign>Tutorial Nelly</campaign>
