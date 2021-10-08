@@ -283,13 +283,10 @@ static int systemL_get( lua_State *L )
  */
 static int systemL_getAll( lua_State *L )
 {
-   StarSystem *sys;
-   int i;
+   StarSystem *sys = system_getAll();
 
    lua_newtable(L);
-   sys = system_getAll();
-
-   for (i=0; i<array_size(sys); i++) {
+   for (int i=0; i<array_size(sys); i++) {
       lua_pushsystem( L, system_index( &sys[i] ) );
       lua_rawseti( L, -2, i+1 );
    }
@@ -437,7 +434,7 @@ static int systemL_interference( lua_State *L )
  */
 static int systemL_jumpdistance( lua_State *L )
 {
-   StarSystem *sys, *sysp;
+   StarSystem *sys;
    StarSystem **s;
    const char *start, *goal;
    int h, k;
@@ -451,7 +448,7 @@ static int systemL_jumpdistance( lua_State *L )
       if (lua_isstring(L,2))
          goal = lua_tostring(L,2);
       else if (lua_issystem(L,2)) {
-         sysp = luaL_validsystem(L,2);
+         StarSystem *sysp = luaL_validsystem(L,2);
          goal = sysp->name;
       }
       else NLUA_INVALID_PARAMETER(L);
@@ -492,7 +489,7 @@ static int systemL_jumpPath( lua_State *L )
    LuaJump lj;
    StarSystem *sys, *sysp;
    StarSystem **s;
-   int i, sid, pushed, h;
+   int sid, pushed, h;
    const char *start, *goal;
 
    h   = lua_toboolean(L,3);
@@ -519,7 +516,7 @@ static int systemL_jumpPath( lua_State *L )
    lua_pushjump(L, lj);         /* value. */
    lua_rawseti(L, -2, ++pushed);
 
-   for (i=0; i<array_size(s)-1; i++) {
+   for (int i=0; i<array_size(s)-1; i++) {
       lj.srcid  = s[i]->id;
       lj.destid = s[i+1]->id;
 
@@ -544,8 +541,7 @@ static int systemL_jumpPath( lua_State *L )
  */
 static int systemL_adjacent( lua_State *L )
 {
-   int i, id, h;
-   LuaSystem sysp;
+   int id, h;
    StarSystem *s;
 
    id = 1;
@@ -554,7 +550,8 @@ static int systemL_adjacent( lua_State *L )
 
    /* Push all adjacent systems. */
    lua_newtable(L);
-   for (i=0; i<array_size(s->jumps); i++) {
+   for (int i=0; i<array_size(s->jumps); i++) {
+      LuaSystem sysp;
       if (jp_isFlag(&s->jumps[i], JP_EXITONLY ))
          continue;
       if (!h && jp_isFlag(&s->jumps[i], JP_HIDDEN))
@@ -580,8 +577,7 @@ static int systemL_adjacent( lua_State *L )
  */
 static int systemL_jumps( lua_State *L )
 {
-   int i, exitonly, pushed;
-   LuaJump lj;
+   int exitonly, pushed;
    StarSystem *s;
 
    s = luaL_validsystem(L,1);
@@ -590,7 +586,8 @@ static int systemL_jumps( lua_State *L )
 
    /* Push all jumps. */
    lua_newtable(L);
-   for (i=0; i<array_size(s->jumps); i++) {
+   for (int i=0; i<array_size(s->jumps); i++) {
+      LuaJump lj;
       /* Skip exit-only jumps if requested. */
       if ((exitonly) && (jp_isFlag( &s->jumps[i],  JP_EXITONLY)))
             continue;
@@ -616,13 +613,13 @@ static int systemL_jumps( lua_State *L )
  */
 static int systemL_asteroidFields( lua_State *L )
 {
-   int i, pushed;
+   int pushed;
    StarSystem *s = luaL_validsystem(L,1);
 
    /* Push all jumps. */
    pushed = 0;
    lua_newtable(L);
-   for (i=0; i<array_size(s->asteroids); i++) {
+   for (int i=0; i<array_size(s->asteroids); i++) {
       lua_newtable(L);              /* key, t */
 
       lua_pushstring(L,"pos");      /* key, t, k */
@@ -655,19 +652,15 @@ static int systemL_asteroidFields( lua_State *L )
  */
 static int systemL_asteroid( lua_State *L )
 {
-   int field, ast;
-   int bad_asteroid;
-   int i;
-
    if (array_size(cur_system->asteroids) > 0) {
-      field = RNG(0,array_size(cur_system->asteroids)-1);
-      ast   = RNG(0,cur_system->asteroids[field].nb-1);
-      bad_asteroid = 0;
+      int field = RNG(0,array_size(cur_system->asteroids)-1);
+      int ast   = RNG(0,cur_system->asteroids[field].nb-1);
+      int bad_asteroid = 0;
       if ( (cur_system->asteroids[field].asteroids[ast].appearing == ASTEROID_INVISIBLE) ||
             (cur_system->asteroids[field].asteroids[ast].appearing == ASTEROID_INIT)) {
          /* Switch to next index until we find a valid one, or until we come full-circle. */
          bad_asteroid = 1;
-         for (i=0; i<cur_system->asteroids[field].nb; i++) {
+         for (int i=0; i<cur_system->asteroids[field].nb; i++) {
             ast = (ast + 1) % cur_system->asteroids[field].nb;
             if ( (cur_system->asteroids[field].asteroids[ast].appearing != ASTEROID_INVISIBLE) &&
                   (cur_system->asteroids[field].asteroids[ast].appearing != ASTEROID_INIT)) {
@@ -704,10 +697,8 @@ static int systemL_asteroid( lua_State *L )
  */
 static int systemL_asteroidPos( lua_State *L )
 {
-   int field, ast;
-
-   field = luaL_checkint(L,1);
-   ast   = luaL_checkint(L,2);
+   int field = luaL_checkint(L,1);
+   int ast   = luaL_checkint(L,2);
 
    if ( field >= array_size(cur_system->asteroids) ) {
       WARN(_("field index %d too high"), field);
@@ -737,10 +728,9 @@ static int systemL_asteroidPos( lua_State *L )
  */
 static int systemL_asteroidDestroyed( lua_State *L )
 {
-   int field, ast, isdestroyed;
-
-   field = luaL_checkint(L,1);
-   ast   = luaL_checkint(L,2);
+   int isdestroyed;
+   int field = luaL_checkint(L,1);
+   int ast   = luaL_checkint(L,2);
 
    if ( field >= array_size(cur_system->asteroids) ) {
       WARN(_("field index %d too high"), field);
@@ -816,14 +806,11 @@ static int systemL_addGatherable( lua_State *L )
  */
 static int systemL_presences( lua_State *L )
 {
-   StarSystem *s;
-   int i;
-
-   s = luaL_validsystem(L,1);
+   StarSystem *s = luaL_validsystem(L,1);
 
    /* Return result in table */
    lua_newtable(L);
-   for (i=0; i<array_size(s->presence); i++) {
+   for (int i=0; i<array_size(s->presence); i++) {
       /* Only return positive presences. */
       if (s->presence[i].value <= 0)
          continue;
@@ -849,11 +836,10 @@ static int systemL_presences( lua_State *L )
  */
 static int systemL_planets( lua_State *L )
 {
-   int i;
    StarSystem *s = luaL_validsystem(L,1);
    /* Push all planets. */
    lua_newtable(L);
-   for (i=0; i<array_size(s->planets); i++) {
+   for (int i=0; i<array_size(s->planets); i++) {
       lua_pushplanet(L,planet_index( s->planets[i] )); /* value */
       lua_rawseti(L,-2,i+1);
    }
@@ -883,9 +869,8 @@ static int systemL_presence( lua_State *L )
 {
    StarSystem *sys;
    int *fct;
-   double presence, v;
-   int i, f, used;
-   const char *cmd;
+   double presence;
+   int f, used;
 
    /* Get parameters. */
    sys = luaL_validsystem(L, 1);
@@ -897,7 +882,7 @@ static int systemL_presence( lua_State *L )
    /* Get the second parameter. */
    if (lua_isstring(L, 2)) {
       /* A string command has been given. */
-      cmd  = lua_tostring(L, 2);
+      const char *cmd  = lua_tostring(L, 2);
       used = 1;
 
       /* Check the command string and get the appropriate faction group.*/
@@ -922,9 +907,9 @@ static int systemL_presence( lua_State *L )
 
    /* Add up the presence values. */
    presence = 0;
-   for (i=0; i<array_size(fct); i++) {
+   for (int i=0; i<array_size(fct); i++) {
       /* Only count positive presences. */
-      v = system_getPresence( sys, fct[i] );
+      double v = system_getPresence( sys, fct[i] );
       if (v > 0)
          presence += v;
    }
@@ -985,12 +970,12 @@ static int systemL_isknown( lua_State *L )
  */
 static int systemL_setknown( lua_State *L )
 {
-   int b, r, i;
+   int b, r;
    StarSystem *sys;
 
    NLUA_CHECKRW(L);
 
-   r = 0;
+   r   = 0;
    sys = luaL_validsystem(L, 1);
    b   = lua_toboolean(L, 2);
    if (lua_gettop(L) > 2)
@@ -1003,15 +988,15 @@ static int systemL_setknown( lua_State *L )
 
    if (r) {
       if (b) {
-         for (i=0; i < array_size(sys->planets); i++)
+         for (int i=0; i < array_size(sys->planets); i++)
             planet_setKnown( sys->planets[i] );
-         for (i=0; i < array_size(sys->jumps); i++)
+         for (int i=0; i < array_size(sys->jumps); i++)
             jp_setFlag( &sys->jumps[i], JP_KNOWN );
      }
      else {
-         for (i=0; i < array_size(sys->planets); i++)
+         for (int i=0; i < array_size(sys->planets); i++)
             planet_rmFlag( sys->planets[i], PLANET_KNOWN );
-         for (i=0; i < array_size(sys->jumps); i++)
+         for (int i=0; i < array_size(sys->jumps); i++)
             jp_rmFlag( &sys->jumps[i], JP_KNOWN );
      }
    }
