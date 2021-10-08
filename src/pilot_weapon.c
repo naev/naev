@@ -76,16 +76,15 @@ PilotWeaponSet* pilot_weapSet( Pilot* p, int id )
  */
 static int pilot_weapSetFire( Pilot *p, PilotWeaponSet *ws, int level )
 {
-   int i, j, ret, s;
+   int ret, s;
    Pilot *pt;
    AsteroidAnchor *field;
    Asteroid *ast;
    double time;
-   const Outfit *o;
 
    ret = 0;
-   for (i=0; i<array_size(ws->slots); i++) {
-      o = ws->slots[i].slot->outfit;
+   for (int i=0; i<array_size(ws->slots); i++) {
+      const Outfit *o = ws->slots[i].slot->outfit;
 
       /* Ignore NULL outfits. */
       if (o == NULL)
@@ -97,7 +96,7 @@ static int pilot_weapSetFire( Pilot *p, PilotWeaponSet *ws, int level )
 
       /* Only run once for each weapon type in the group. */
       s = 0;
-      for (j=0; j<i; j++) {
+      for (int j=0; j<i; j++) {
          /* Only active outfits. */
          if ((level != -1) && (ws->slots[j].level != level))
             continue;
@@ -156,10 +155,8 @@ static int pilot_weapSetFire( Pilot *p, PilotWeaponSet *ws, int level )
  */
 void pilot_weapSetAIClear( Pilot* p )
 {
-   int i;
-   PilotWeaponSet *ws;
-   for (i=0; i<PILOT_WEAPON_SETS; i++) {
-      ws = &p->weapon_sets[i];
+   for (int i=0; i<PILOT_WEAPON_SETS; i++) {
+      PilotWeaponSet *ws = &p->weapon_sets[i];
       ws->active = 0;
    }
 }
@@ -174,9 +171,8 @@ void pilot_weapSetAIClear( Pilot* p )
  */
 void pilot_weapSetPress( Pilot* p, int id, int type )
 {
-   int i, l, on, n;
-   PilotWeaponSet *ws;
-   ws = pilot_weapSet(p,id);
+   int l, on, n;
+   PilotWeaponSet *ws = pilot_weapSet(p,id);
    /* Case no outfits. */
    if (ws->slots == NULL)
       return;
@@ -220,7 +216,7 @@ void pilot_weapSetPress( Pilot* p, int id, int type )
          /* Decide what to do. */
          on = 1;
          l  = array_size(ws->slots);
-         for (i=0; i<l; i++) {
+         for (int i=0; i<l; i++) {
             if (ws->slots[i].slot->state == PILOT_OUTFIT_OFF) {
                on = 0;
                break;
@@ -230,7 +226,7 @@ void pilot_weapSetPress( Pilot* p, int id, int type )
          /* Turn them off. */
          n = 0;
          if (on) {
-            for (i=0; i<l; i++) {
+            for (int i=0; i<l; i++) {
                if (ws->slots[i].slot->state != PILOT_OUTFIT_ON)
                   continue;
 
@@ -240,7 +236,7 @@ void pilot_weapSetPress( Pilot* p, int id, int type )
          /* Turn them on. */
          else {
             pilotoutfit_modified = 0;
-            for (i=0; i<l; i++) {
+            for (int i=0; i<l; i++) {
                if (ws->slots[i].slot->state != PILOT_OUTFIT_OFF)
                   continue;
 
