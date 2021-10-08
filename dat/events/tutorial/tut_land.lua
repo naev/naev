@@ -46,7 +46,7 @@ function outfit_buy( outfitname )
       sai(fmt.f(_([["Finally, the ammo of launchers regenerates over time: there is no need to buy ammunition. By either performing a cooldown with {cooldownkey} or double-tapping {reversekey}, or landing on a planet or station you can instantly refill the ammunition when necessary. Launchers can be very useful if you master them, please try them out with different configurations!"]]),{cooldownkey=tut.getKey("cooldown"), reversekey=tut.getKey("reverse")}))
       vn.done( tut.shipai.transition )
       vn.run()
-      var.push( "tut_afterburner" )
+      var.push( "tut_launcher" )
 
    elseif tbroad == "Fighter Bay" and not var.peek( "tut_fighterbay" ) then
       vn.clear()
@@ -57,7 +57,7 @@ function outfit_buy( outfitname )
       sai(fmt.f(_([["Like ammunition in launchers, lost fighters will regenerate slowly over time, and you can restock them by either performing a cooldown operation with {cooldownkey} or double-tapping {reversekey}, or landing on a planet or station. You can either fly around with deployed fighters or keep them inside your ship and only deploy as necessary. You should try to see whatever works best for you!"]]),{cooldownkey=tut.getKey("cooldown"), reversekey=tut.getKey("reverse")}))
       vn.done( tut.shipai.transition )
       vn.run()
-      var.push( "tut_afterburner" )
+      var.push( "tut_fighterbay" )
    end
 end
 

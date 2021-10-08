@@ -72,8 +72,19 @@ function tut.getKey( command )
     return "#b" .. naev.keyGet(command) .. "#0"
 end
 
+-- Disables tutorial
 function tut.isDisabled ()
    return var.peek("tut_disable")
+end
+
+-- Resets all tutorial variables
+function tut.reset ()
+   var.pop( "tut_disable" )
+   var.pop( "tut_nebvol" )
+   var.pop( "tut_afterburner" )
+   var.pop( "tut_fighterbay" )
+   var.pop( "tut_buyship" )
+   var.pop( "tut_timedil" )
 end
 
 return tut
