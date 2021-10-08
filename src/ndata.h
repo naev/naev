@@ -77,6 +77,7 @@
 #define RESCUE_PATH              "rescue.lua"
 #define AUTOEQUIP_PATH           "autoequip.lua"
 #define COMM_PATH                "comm.lua"
+#define SHIPAI_PATH              "shipai.lua"
 
 void ndata_setupWriteDir (void);
 void ndata_setupReadDirs (void);

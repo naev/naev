@@ -25,6 +25,8 @@
 #include "map.h"
 #include "menu.h"
 #include "mission.h"
+#include "ndata.h"
+#include "nlua.h"
 #include "nstring.h"
 #include "ntime.h"
 #include "pilot.h"
@@ -87,6 +89,7 @@ static int logWidgetsReady=0;
 static void info_close( unsigned int wid, const char *str );
 static void info_openMain( unsigned int wid );
 static void info_setGui( unsigned int wid, const char *str );
+static void info_shipAI( unsigned int wid, const char *str );
 static void setgui_load( unsigned int wdw, const char *str );
 static void info_toggleGuiOverride( unsigned int wid, const char *name );
 static void info_openShip( unsigned int wid );
@@ -278,6 +281,9 @@ static void info_openMain( unsigned int wid )
    window_addButton( wid, -20 - (20+BUTTON_WIDTH), 20,
          BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnSetGUI", _("Set GUI"), info_setGui );
+   window_addButton( wid, -20 - 2*(20+BUTTON_WIDTH), 20,
+         BUTTON_WIDTH, BUTTON_HEIGHT,
+         "btnShipAI", _("Ship AI"), info_shipAI );
 
    buf = player_getLicenses();
    nlicenses = array_size( buf );
@@ -310,7 +316,6 @@ static void setgui_close( unsigned int wdw, const char *str )
    window_destroy( wdw );
 }
 
-
 /**
  * @brief Allows the player to set a different GUI.
  *
@@ -320,7 +325,6 @@ static void setgui_close( unsigned int wdw, const char *str )
 static void info_setGui( unsigned int wid, const char *str )
 {
    (void)str;
-   int i;
    char **guis;
    int nguis;
    char **gui_copy;
@@ -342,7 +346,7 @@ static void info_setGui( unsigned int wid, const char *str )
 
    /* Copy GUI. */
    gui_copy = malloc( sizeof(char*) * nguis );
-   for (i=0; i<nguis; i++)
+   for (int i=0; i<nguis; i++)
       gui_copy[i] = strdup( guis[i] );
 
    /* List */
@@ -367,6 +371,41 @@ static void info_setGui( unsigned int wid, const char *str )
    window_setAccept( wid, setgui_load );
 }
 
+/**
+ * @brief Allows the player to set a different GUI.
+ *
+ *    @param wid Window id.
+ *    @param name of widget.
+ */
+static void info_shipAI( unsigned int wid, const char *str )
+{
+   (void) wid;
+   (void) str;
+
+   size_t bufsize;
+   char *buf = ndata_read( SHIPAI_PATH, &bufsize );
+
+   nlua_env shipai_env = nlua_newEnv( 1 );
+   nlua_loadStandard( shipai_env );
+
+   if (nlua_dobufenv(shipai_env, buf, bufsize, SHIPAI_PATH) != 0) {
+      WARN( _("Error loading file: %s\n"
+            "%s\n"
+            "Most likely Lua file has improper syntax, please check"),
+            SHIPAI_PATH, lua_tostring(naevL,-1));
+      free(buf);
+      return;
+   }
+   free(buf);
+
+   nlua_getenv( shipai_env, "create" );
+   if (nlua_pcall( shipai_env, 0, 0 )) {
+      WARN( _("Ship AI: '%s'"), lua_tostring(naevL,-1));
+      lua_pop(naevL,1);
+   }
+
+   nlua_freeEnv( shipai_env );
+}
 
 /**
  * @brief Loads a GUI.

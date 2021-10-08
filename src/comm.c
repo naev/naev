@@ -83,7 +83,6 @@ void comm_queueClose (void)
  */
 int comm_openPilot( unsigned int pilot )
 {
-   int i;
    const char *msg;
    char c;
    unsigned int wid;
@@ -148,7 +147,7 @@ int comm_openPilot( unsigned int pilot )
 
    /* Run generic hail hooks on all pilots. */
    pltstk = pilot_getAll();
-   for (i=0; i<array_size(pltstk); i++)
+   for (int i=0; i<array_size(pltstk); i++)
       ai_hail( pltstk[i] );
 
    /* Close window if necessary. */
