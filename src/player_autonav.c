@@ -64,6 +64,8 @@ void player_autonavResetSpeed (void)
  */
 void player_autonavStart (void)
 {
+   StarSystem *dest;
+
    /* Not under manual control or disabled. */
    if (pilot_isFlag( player.p, PILOT_MANUAL_CONTROL ) ||
          pilot_isDisabled(player.p))
@@ -90,7 +92,8 @@ void player_autonavStart (void)
    if (player_autonavSetup())
       return;
 
-   player_message(_("#oAutonav: travelling to %s."), _(map_getDestination(NULL)->name));
+   dest = map_getDestination(NULL);
+   player_message(_("#oAutonav: travelling to %s."), (sys_isKnown(dest) ? _(dest->name) : _("Unknown")) );
    player.autonav = AUTONAV_JUMP_APPROACH;
 }
 
