@@ -63,14 +63,19 @@ function create ()
    vn.label("tutorials")
    sai(_([["What do you want to learn about?"]]))
    vn.menu{
-      {_("Combat"), "tut_combat"},
+      {_("Weapon Sets"), "tut_weaponsets"},
       {_("Electronic Warfare"), "tut_ewarfare"},
       {_("Stealth"), "tut_stealth"},
       {_("Nevermind"), "mainmenu"},
    }
 
-   vn.label("tut_combat")
-   sai(_([["A large part of combat is decided ahead of time by the ship classes and their load out. However, good piloting can turn the tables easily. It is important to assign weapon sets to be easy to use."]]))
+   vn.label("tut_weaponsets")
+   sai(_([["A large part of combat is decided ahead of time by the ship classes and their load out. However, good piloting can turn the tables easily. It is important to assign weapon sets to be easy to use. You can set weapon sets from the '#oWeapons#0' tab of the information window. You have 10 different weapon sets that can be configured separately for each ship."]])
+   sai(_([["There are three different types of weapon sets:
+- #oWeapons - Switched#0: activating the hotkey will set your primary and secondary weapons
+- #oWeapons - Instant#0: activating the hotkey will fire the weapons
+- #oAbilities - Toggled#0: activating the hotkey will toggle the state of the outfits]]))
+   sai(_([["By default, the weapon sets will be automatically managed by me, with forward bolts in set 1 (switched), turret weapons in set 2 (switched), and both turret and forward weapons in set 3 (switched). Seeker weapons are in set 4 (instant), and fighter bays in set 5 (instant). However, you can override this and set them however you prefer. Just remember to update them whenever you change your outfits."]]))
    vn.jump("tutorials")
 
    vn.label("tut_ewarfare")
