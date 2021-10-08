@@ -1114,8 +1114,6 @@ static void player_renderAimHelper( double dt )
 void player_think( Pilot* pplayer, const double dt )
 {
    Pilot *target;
-   AsteroidAnchor *field;
-   Asteroid *ast;
    double turn;
    int facing, fired;
 
@@ -1166,8 +1164,8 @@ void player_think( Pilot* pplayer, const double dt )
       }
       /* Try to face asteroid. */
       else if (player.p->nav_asteroid != -1) {
-         field = &cur_system->asteroids[player.p->nav_anchor];
-         ast = &field->asteroids[player.p->nav_asteroid];
+         AsteroidAnchor *field = &cur_system->asteroids[player.p->nav_anchor];
+         Asteroid *ast = &field->asteroids[player.p->nav_asteroid];
          pilot_face( pplayer,
                vect_angle( &player.p->solid->pos, &ast->pos ));
          /* Disable turning. */
@@ -1433,11 +1431,7 @@ void player_targetPlanetSet( int id )
  */
 void player_targetAsteroidSet( int field, int id )
 {
-   int old, i;
-   AsteroidAnchor *anchor;
-   Asteroid *ast;
-   const AsteroidType *at;
-   Commodity *com;
+   int old;
 
    if ((player.p == NULL) || pilot_isFlag( player.p, PILOT_LANDING ))
       return;
@@ -1451,13 +1445,13 @@ void player_targetAsteroidSet( int field, int id )
          /* See if the player has the asteroid scanner. */
          if (player.p->stats.misc_asteroid_scan) {
             /* Recover and display some info about the asteroid. */
-            anchor = &cur_system->asteroids[field];
-            ast = &anchor->asteroids[id];
-            at = space_getType( ast->type );
+            AsteroidAnchor *anchor = &cur_system->asteroids[field];
+            Asteroid *ast = &anchor->asteroids[id];
+            const AsteroidType *at = space_getType( ast->type );
 
             player_message( _("Asteroid targeted, composition: ") );
-            for (i=0; i<array_size(at->material); i++) {
-              com = at->material[i];
+            for (int i=0; i<array_size(at->material); i++) {
+              Commodity *com = at->material[i];
               player_message( _("%s, quantity: %i"), _(com->name), at->quantity[i] );
             }
             ast->scanned = 1;
@@ -1476,7 +1470,7 @@ void player_targetAsteroidSet( int field, int id )
  */
 void player_targetPlanet (void)
 {
-   int id, i;
+   int id;
 
    /* Not under manual control. */
    if (pilot_isFlag( player.p, PILOT_MANUAL_CONTROL ))
@@ -1490,7 +1484,7 @@ void player_targetPlanet (void)
    /* Try to select the lowest-indexed valid planet. */
    if (id >= array_size(cur_system->planets) ) {
       id = -1;
-      for (i=0; i<array_size(cur_system->planets); i++)
+      for (int i=0; i<array_size(cur_system->planets); i++)
          if (planet_isKnown( cur_system->planets[i] )) {
             id = i;
             break;
@@ -1510,9 +1504,8 @@ void player_targetPlanet (void)
  */
 int player_land( int loud )
 {
-   int i;
    int tp, silent;
-   double td, d;
+   double td;
    Planet *planet;
 
    silent = 0; /* Whether to suppress the land ack noise. */
@@ -1541,9 +1534,9 @@ int player_land( int loud )
    if (player.p->nav_planet == -1) { /* get nearest planet target */
       td = -1; /* temporary distance */
       tp = -1; /* temporary planet */
-      for (i=0; i<array_size(cur_system->planets); i++) {
+      for (int i=0; i<array_size(cur_system->planets); i++) {
          planet = cur_system->planets[i];
-         d = vect_dist(&player.p->solid->pos,&planet->pos);
+         double d = vect_dist(&player.p->solid->pos,&planet->pos);
          if (pilot_inRangePlanet( player.p, i ) &&
                planet_hasService(planet,PLANET_SERVICE_LAND) &&
                ((tp==-1) || ((td == -1) || (td > d)))) {
@@ -1733,7 +1726,7 @@ void player_targetHyperspaceSet( int id )
  */
 void player_targetHyperspace (void)
 {
-   int id, i;
+   int id;
 
    /* Not under manual control. */
    if (pilot_isFlag( player.p, PILOT_MANUAL_CONTROL ))
@@ -1748,7 +1741,7 @@ void player_targetHyperspace (void)
    /* Try to find the lowest-indexed valid jump. */
    if (id >= array_size(cur_system->jumps)) {
       id = -1;
-      for (i=0; i<array_size(cur_system->jumps); i++)
+      for (int i=0; i<array_size(cur_system->jumps); i++)
          if (jp_isUsable( &cur_system->jumps[i])) {
             id = i;
             break;
@@ -1826,8 +1819,8 @@ void player_hailStart (void)
  */
 int player_jump (void)
 {
-   int i, j;
-   double dist, mindist;
+   int j, h;
+   double mindist;
 
    /* Must have a jump target and not be already jumping. */
    if (pilot_isFlag(player.p, PILOT_HYPERSPACE))
@@ -1842,8 +1835,8 @@ int player_jump (void)
    if (player.p->nav_hyperspace == -1) {
       j        = -1;
       mindist  = INFINITY;
-      for (i=0; i<array_size(cur_system->jumps); i++) {
-         dist = vect_dist2( &player.p->solid->pos, &cur_system->jumps[i].pos );
+      for (int i=0; i<array_size(cur_system->jumps); i++) {
+         double dist = vect_dist2( &player.p->solid->pos, &cur_system->jumps[i].pos );
          if (dist < mindist && jp_isUsable(&cur_system->jumps[i])) {
             mindist  = dist;
             j        = i;
@@ -1870,12 +1863,12 @@ int player_jump (void)
    }
 
    /* Try to hyperspace. */
-   i = space_hyperspace(player.p);
-   if (i == -1)
+   h = space_hyperspace(player.p);
+   if (h == -1)
       player_message(_("#rYou are too far from a jump point to initiate hyperspace."));
-   else if (i == -2)
+   else if (h == -2)
       player_message(_("#rHyperspace drive is offline."));
-   else if (i == -3)
+   else if (h == -3)
       player_message(_("#rYou do not have enough fuel to hyperspace jump."));
    else {
       player_message(_("#oPreparing for hyperspace."));
@@ -1902,7 +1895,7 @@ void player_brokeHyperspace (void)
    StarSystem *sys, *destsys;
    JumpPoint *jp;
    Pilot *const* pilot_stack;
-   int i, map_npath;
+   int map_npath;
 
    /* First run jump hook. */
    hooks_run( "jumpout" );
@@ -1951,7 +1944,7 @@ void player_brokeHyperspace (void)
 
    /* Add persisted pilots */
    pilot_stack = pilot_getAll();
-   for (i=0; i<array_size(pilot_stack); i++) {
+   for (int i=0; i<array_size(pilot_stack); i++) {
       if (pilot_isFlag(pilot_stack[i], PILOT_PERSIST) || pilot_isFlag(pilot_stack[i], PILOT_PLAYER)) {
          pilot_clearHooks(pilot_stack[i]);
          ai_cleartasks(pilot_stack[i]);
@@ -2005,7 +1998,6 @@ void player_accel( double acc )
    if ((player.p == NULL) || pilot_isFlag(player.p, PILOT_HYP_PREP) ||
          pilot_isFlag(player.p, PILOT_HYPERSPACE))
       return;
-
 
    player_acc = acc;
    if (toolkit_isOpen() || paused)
@@ -2250,14 +2242,9 @@ void player_screenshot (void)
  */
 static void player_checkHail (void)
 {
-   int i;
-   Pilot *p;
-   Pilot *const* pilot_stack;
-
-   /* See if a pilot is hailing. */
-   pilot_stack = pilot_getAll();
-   for (i=0; i<array_size(pilot_stack); i++) {
-      p = pilot_stack[i];
+   Pilot *const* pilot_stack = pilot_getAll();
+   for (int i=0; i<array_size(pilot_stack); i++) {
+      Pilot *p = pilot_stack[i];
 
       /* Must be hailing. */
       if (pilot_isFlag(p, PILOT_HAILING))
@@ -2331,8 +2318,6 @@ void player_hailPlanet (void)
  */
 void player_autohail (void)
 {
-   int i;
-   Pilot *p;
    Pilot *const* pilot_stack;
 
    /* Not under manual control or disabled. */
@@ -2342,8 +2327,8 @@ void player_autohail (void)
 
    /* Find pilot to autohail. */
    pilot_stack = pilot_getAll();
-   for (i=0; i<array_size(pilot_stack); i++) {
-      p = pilot_stack[i];
+   for (int i=0; i<array_size(pilot_stack); i++) {
+      Pilot *p = pilot_stack[i];
 
       /* Must be hailing. */
       if (pilot_isFlag(p, PILOT_HAILING)) {
@@ -2418,7 +2403,7 @@ void player_brake(void)
  */
 static int player_thinkMouseFly(void)
 {
-   double px, py, r, x, y, acc;
+   double px, py, r, x, y;
 
    px = player.p->solid->pos.x;
    py = player.p->solid->pos.y;
@@ -2427,8 +2412,8 @@ static int player_thinkMouseFly(void)
    if (r > 50.) { /* Ignore mouse input within a 50 px radius of the centre. */
       pilot_face(player.p, atan2( y - py, x - px));
       if (conf.mouse_thrust) { /* Only alter thrust if option is enabled. */
-         acc = CLAMP(0., 1., (r - 100) / 200.);
-         acc = 3 * pow2(acc) - 2 * pow(acc, 3);
+         double acc = CLAMP(0., 1., (r - 100.) / 200.);
+         acc = 3. * pow2(acc) - 2. * pow(acc, 3.);
          /* Only accelerate when within 180 degrees of the intended direction. */
          if (ABS(angle_diff(atan2( y - py, x - px), player.p->solid->dir)) < M_PI_2 )
             player_accel(acc);
@@ -2978,17 +2963,15 @@ static void player_clearEscorts (void)
  */
 int player_addEscorts (void)
 {
-   double a;
-   Vector2d v;
-   unsigned int e;
-   const Outfit *o;
-   int q;
-   int dockslot = -1;
-
    /* Clear escorts first. */
    player_clearEscorts();
 
    for (int i=0; i<array_size(player.p->escorts); i++) {
+      double a;
+      Vector2d v;
+      unsigned int e;
+      int dockslot = -1;
+
       if (!player.p->escorts[i].persist) {
          escort_rmListIndex(player.p, i);
          i--;
@@ -3004,6 +2987,9 @@ int player_addEscorts (void)
          continue;
 
       for (int j=0; j<array_size(player.p->outfits); j++) {
+         int q;
+         const Outfit *o;
+
          /* Must have outfit. */
          if (player.p->outfits[j]->outfit == NULL)
             continue;
