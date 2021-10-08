@@ -94,412 +94,412 @@ osd2_msg[2] = _("Return Jorek and the informant to the Seiryuu in the %s system"
 misn_reward = _("A sum of money.")
 
 function create()
-    var.push("darkshadow_active", true)
+   var.push("darkshadow_active", true)
 
-    seirplanet, seirsys = planet.get("Edergast")
-    jorekplanet1, joreksys1 = planet.get("Manis")
-    jorekplanet2, joreksys2 = planet.get("The Wringer")
-    ambushsys = system.get("Herakin")
-    safesys = system.get("Eiderdown")
+   seirplanet, seirsys = planet.get("Edergast")
+   jorekplanet1, joreksys1 = planet.get("Manis")
+   jorekplanet2, joreksys2 = planet.get("The Wringer")
+   ambushsys = system.get("Herakin")
+   safesys = system.get("Eiderdown")
 
-    if not misn.claim ( {seirsys, joreksys2, ambushsys} ) then
-        abort()
-    end
+   if not misn.claim ( {seirsys, joreksys2, ambushsys} ) then
+      abort()
+   end
 
-    tk.msg(title[1], text[1]:format(player.name(), seirplanet:name(), seirsys:name()))
-    firstmarker = misn.markerAdd(seirsys, "low")
-    accept() -- The player automatically accepts this mission.
+   tk.msg(title[1], text[1]:format(player.name(), seirplanet:name(), seirsys:name()))
+   firstmarker = misn.markerAdd(seirsys, "low")
+   accept() -- The player automatically accepts this mission.
 end
 
 -- This is the initial phase of the mission, when it still only shows up in the mission list. No OSD, reward or markers yet.
 function accept()
-    misn.setReward(_("Unknown"))
-    misn.setDesc(_([[You have been summoned to the %s system, where the Seiryuu is supposedly waiting for you in orbit around %s.]]):format(seirsys:name(), seirplanet:name()))
-    misn.accept()
-    misn.osdDestroy() -- This is here because setDesc initializes the OSD.
+   misn.setReward(_("Unknown"))
+   misn.setDesc(_([[You have been summoned to the %s system, where the Seiryuu is supposedly waiting for you in orbit around %s.]]):format(seirsys:name(), seirplanet:name()))
+   misn.accept()
+   misn.osdDestroy() -- This is here because setDesc initializes the OSD.
 
-    stage = 1
+   stage = 1
 
-    hook.enter("enter")
+   hook.enter("enter")
 end
 
 -- This is the "real" start of the mission. Get yer mission variables here!
 function accept2()
-    tick = {false, false, false, false, false}
-    tick["__save"] = true
-    osd_msg[1] = osd_msg[0]:format(jorekplanet1:name(), joreksys1:name())
-    misn.osdCreate(osd_title, osd_msg)
-    misn.setDesc(_([[You have been tasked by Captain Rebina of the Four Winds to assist Jorek McArthy.]]))
-    misn.setReward(misn_reward)
-    marker = misn.markerAdd(joreksys1, "low")
-    landhook = hook.land("land")
-    jumpouthook = hook.jumpout("jumpout")
+   tick = {false, false, false, false, false}
+   tick["__save"] = true
+   osd_msg[1] = osd_msg[0]:format(jorekplanet1:name(), joreksys1:name())
+   misn.osdCreate(osd_title, osd_msg)
+   misn.setDesc(_([[You have been tasked by Captain Rebina of the Four Winds to assist Jorek McArthy.]]))
+   misn.setReward(misn_reward)
+   marker = misn.markerAdd(joreksys1, "low")
+   landhook = hook.land("land")
+   jumpouthook = hook.jumpout("jumpout")
 end
 
 -- Handle boarding of the Seiryuu
 function seiryuuBoard()
-    seiryuu:setActiveBoard(false)
-    seiryuu:setHilight(false)
-    player.unboard()
-    if stage == 1 then -- Briefing
-        tk.msg(title[2], text[2]:format(player.name()))
-        tk.msg(title[2], text[3]:format(player.name()))
-        shadow.addLog( _([[Captain Rebina has further explained the organization she works for.
+   seiryuu:setActiveBoard(false)
+   seiryuu:setHilight(false)
+   player.unboard()
+   if stage == 1 then -- Briefing
+      tk.msg(title[2], text[2]:format(player.name()))
+      tk.msg(title[2], text[3]:format(player.name()))
+      shadow.addLog( _([[Captain Rebina has further explained the organization she works for.
     "As I've said before, we are the Four Winds. Our organization is a very secretive one, as you've experienced firsthand. Very few outside our ranks know of our existence, and now you're one of those few.
     "The Four Winds are old, %s. Very old indeed. The movement dates back to old Earth, before the Space Age, even. We have been with human civilization throughout the ages, at first only in the Eastern nations, later establishing a foothold worldwide. Our purpose was to guide humanity, prevent it from making mistakes it could not afford to make. We never came out in the open, we always worked behind the scenes, from the shadows. We were diplomats, scientists, journalists, politicians' spouses, sometimes even assassins. We used any means necessary to gather information and avert disaster, when we could.
     "Of course, we didn't always succeed. We couldn't prevent the nuclear strikes on Japan, though we managed to prevent several others. We foiled the sabotage attempts on several of the colony ships launched during the First Growth, but sadly failed to do so in Maelstrom's case. We failed to stop the Faction Wars, though we managed to help the Empire gain the upper hand. Our most recent failure is the Incident - we should have seen it coming, but we were completely taken by surprise."]]):format( player.name() ) )
-        tk.msg(title[2], text[4])
-        tk.msg(title[2], text[5]:format(player.name(), jorekplanet1:name(), joreksys1:name(), jorekplanet1:name()))
-        accept2()
-        misn.markerRm(firstmarker)
-        stage = 2
-    elseif stage == 6 then -- Debriefing
-        tk.msg(title[7], text[11]:format(player.name(), player.name()))
-        player.pay(1e6)
-        seiryuu:control()
-        seiryuu:hyperspace()
-        var.pop("darkshadow_active")
-        shadow.addLog( _([[You found Jorek and successfully retrieved his informant on behalf of Captain Rebina. The Genbu ambushed you, but you managed to get away and dock the Seiryuu. Captain Rebina remarked on the situation.
+      tk.msg(title[2], text[4])
+      tk.msg(title[2], text[5]:format(player.name(), jorekplanet1:name(), joreksys1:name(), jorekplanet1:name()))
+      accept2()
+      misn.markerRm(firstmarker)
+      stage = 2
+   elseif stage == 6 then -- Debriefing
+      tk.msg(title[7], text[11]:format(player.name(), player.name()))
+      player.pay(1e6)
+      seiryuu:control()
+      seiryuu:hyperspace()
+      var.pop("darkshadow_active")
+      shadow.addLog( _([[You found Jorek and successfully retrieved his informant on behalf of Captain Rebina. The Genbu ambushed you, but you managed to get away and dock the Seiryuu. Captain Rebina remarked on the situation.
     "It would seem that Giornio and his comrades have a vested interest in keeping me away from the truth. It's a good thing you managed to get out of that ambush and bring me that informant. I do hope he'll be able to shed more light on the situation. I've got a bad premonition, a hunch that we're going to have to act soon if we're going to avert disaster, whatever that may be."
     She said she may need your services again in the future.]]) )
-        misn.finish(true)
-    end
+      misn.finish(true)
+   end
 end
 
 -- Board hook for Joe
 function joeBoard()
-    tk.msg(title[5], text[9]:format(player.name()))
-    local c = misn.cargoNew(_("Four Winds Informant"), _("Jorek's informant."))
-    misn.cargoAdd(c, 0)
-    player.unboard()
-    misn.markerMove(marker, seirsys)
-    misn.osdActive(2)
-    stage = 5
+   tk.msg(title[5], text[9]:format(player.name()))
+   local c = misn.cargoNew(_("Four Winds Informant"), _("Jorek's informant."))
+   misn.cargoAdd(c, 0)
+   player.unboard()
+   misn.markerMove(marker, seirsys)
+   misn.osdActive(2)
+   stage = 5
 end
 
 -- Jump-out hook
 function jumpout()
-    playerlastsys = system.cur() -- Keep track of which system the player came from
-    if not (patroller == nil) then
-        hook.rm(patroller)
-    end
-    if not (spinter == nil) then
-        hook.rm(spinter)
-    end
+   playerlastsys = system.cur() -- Keep track of which system the player came from
+   if not (patroller == nil) then
+      hook.rm(patroller)
+   end
+   if not (spinter == nil) then
+      hook.rm(spinter)
+   end
 end
 
 -- Enter hook
 function enter()
-    if system.cur() == seirsys then
-        seiryuu = pilot.add( "Pirate Kestrel", "Four Winds", vec2.new(300, 300) + seirplanet:pos(), _("Seiryuu"), {ai="trader"} )
-        seiryuu:setInvincible(true)
-        seiryuu:control()
-        if stage == 1 or stage == 6 then
-            seiryuu:setActiveBoard(true)
-            seiryuu:setHilight(true)
-            hook.pilot(seiryuu, "board", "seiryuuBoard")
-        else
-            seiryuu:setNoboard(true)
-        end
-    elseif system.cur() == joreksys2 and stage == 3 then
-        pilot.clear()
-        pilot.toggleSpawn(false)
-        spawnSquads(false)
-    elseif system.cur() == joreksys2 and stage == 4 then
-        pilot.clear()
-        pilot.toggleSpawn(false)
-        player.allowLand(false, _("Landing permission denied. Our docking clamps are currently undergoing maintenance."))
-        -- Meet Joe, our informant.
-        joe = pilot.add( "Vendetta", "Four Winds", vec2.new(-500, -4000), _("Four Winds Vendetta"), {ai="trader"} )
-        joe:control()
-        joe:rename(_("Four Winds Informant"))
-        joe:setHilight(true)
-        joe:setVisplayer()
-        joe:setInvincible(true)
-        joe:disable()
-        spawnSquads(true)
+   if system.cur() == seirsys then
+      seiryuu = pilot.add( "Pirate Kestrel", "Four Winds", vec2.new(300, 300) + seirplanet:pos(), _("Seiryuu"), {ai="trader"} )
+      seiryuu:setInvincible(true)
+      seiryuu:control()
+      if stage == 1 or stage == 6 then
+         seiryuu:setActiveBoard(true)
+         seiryuu:setHilight(true)
+         hook.pilot(seiryuu, "board", "seiryuuBoard")
+      else
+         seiryuu:setNoboard(true)
+      end
+   elseif system.cur() == joreksys2 and stage == 3 then
+      pilot.clear()
+      pilot.toggleSpawn(false)
+      spawnSquads(false)
+   elseif system.cur() == joreksys2 and stage == 4 then
+      pilot.clear()
+      pilot.toggleSpawn(false)
+      player.allowLand(false, _("Landing permission denied. Our docking clamps are currently undergoing maintenance."))
+      -- Meet Joe, our informant.
+      joe = pilot.add( "Vendetta", "Four Winds", vec2.new(-500, -4000), _("Four Winds Vendetta"), {ai="trader"} )
+      joe:control()
+      joe:rename(_("Four Winds Informant"))
+      joe:setHilight(true)
+      joe:setVisplayer()
+      joe:setInvincible(true)
+      joe:disable()
+      spawnSquads(true)
 
-        -- Make everyone visible for the cutscene
-        squadVis(true)
+      -- Make everyone visible for the cutscene
+      squadVis(true)
 
-        -- The cutscene itself
-        local delay = 0
-        zoomspeed = 2500
-        hook.timer(delay, "playerControl", true)
-        delay = delay + 2.0
-        hook.timer(delay, "zoomTo", joe)
-        delay = delay + 4.0
-        hook.timer(delay, "showText", _([[Jorek> "That's my guy. We got to board his ship and get him off before we jump."]]))
-        delay = delay + 4.0
-        hook.timer(delay, "zoomTo", leader[1])
-        delay = delay + 1.0
-        hook.timer(delay, "showText", _([[Jorek> "Watch out for those patrols though. If they spot us, they'll be all over us."]]))
-        delay = delay + 2.0
-        hook.timer(delay, "zoomTo", leader[2])
-        delay = delay + 3.0
-        hook.timer(delay, "zoomTo", leader[3])
-        delay = delay + 2.0
-        hook.timer(delay, "showText", _([[Jorek> "They're tougher than they look. Don't underestimate them."]]))
-        delay = delay + 3.0
-        hook.timer(delay, "zoomTo", leader[4])
-        delay = delay + 4.0
-        hook.timer(delay, "zoomTo", leader[5])
-        delay = delay + 4.0
-        hook.timer(delay, "zoomTo", player.pilot())
-        hook.timer(delay, "playerControl", false)
+      -- The cutscene itself
+      local delay = 0
+      zoomspeed = 2500
+      hook.timer(delay, "playerControl", true)
+      delay = delay + 2.0
+      hook.timer(delay, "zoomTo", joe)
+      delay = delay + 4.0
+      hook.timer(delay, "showText", _([[Jorek> "That's my guy. We got to board his ship and get him off before we jump."]]))
+      delay = delay + 4.0
+      hook.timer(delay, "zoomTo", leader[1])
+      delay = delay + 1.0
+      hook.timer(delay, "showText", _([[Jorek> "Watch out for those patrols though. If they spot us, they'll be all over us."]]))
+      delay = delay + 2.0
+      hook.timer(delay, "zoomTo", leader[2])
+      delay = delay + 3.0
+      hook.timer(delay, "zoomTo", leader[3])
+      delay = delay + 2.0
+      hook.timer(delay, "showText", _([[Jorek> "They're tougher than they look. Don't underestimate them."]]))
+      delay = delay + 3.0
+      hook.timer(delay, "zoomTo", leader[4])
+      delay = delay + 4.0
+      hook.timer(delay, "zoomTo", leader[5])
+      delay = delay + 4.0
+      hook.timer(delay, "zoomTo", player.pilot())
+      hook.timer(delay, "playerControl", false)
 
-        -- Hide everyone again
-        delay = delay + 2.0
-        hook.timer(delay, "squadVis", false)
-        delay = delay + 0.001
-        -- ...except the leaders.
-        hook.timer(delay, "leaderVis", true)
+      -- Hide everyone again
+      delay = delay + 2.0
+      hook.timer(delay, "squadVis", false)
+      delay = delay + 0.001
+      -- ...except the leaders.
+      hook.timer(delay, "leaderVis", true)
 
-        hook.pilot(joe, "board", "joeBoard")
-        poller = hook.timer(0.5, "patrolPoll")
-    elseif system.cur() == ambushsys and stage == 4 then
-        tk.msg(_("You forgot the informant!"), _([[Jorek is enraged. "Dammit, %s! I told you to pick up that informant on the way! Too late to go back now. I'll have to think of somethin' else. I'm disembarkin' at the next spaceport, don't bother taking me back to the Seiryuu."]]):format(player.name()))
-        shadow.addLog( _([[You failed to pick up Jorek's informant. As such, he refused to allow you to take him to the Seiryuu.]]) )
-        abort()
-    elseif system.cur() == ambushsys and stage == 5 then
-        pilot.clear()
-        pilot.toggleSpawn(false)
-        hook.timer(0.5, "invProximity", { location = jump.pos(system.cur(), "Suna"), radius = 8000, funcname = "startAmbush" }) -- Starts an inverse proximity poll for distance from the jump point.
-    elseif system.cur() == safesys and stage == 5 then
-        stage = 6 -- stop spawning the Genbu
-    elseif genbuspawned and stage == 5 then
-        spawnGenbu(playerlastsys) -- The Genbu follows you around, and will probably insta-kill you.
-        continueAmbush()
-    end
+      hook.pilot(joe, "board", "joeBoard")
+      poller = hook.timer(0.5, "patrolPoll")
+   elseif system.cur() == ambushsys and stage == 4 then
+      tk.msg(_("You forgot the informant!"), _([[Jorek is enraged. "Dammit, %s! I told you to pick up that informant on the way! Too late to go back now. I'll have to think of somethin' else. I'm disembarkin' at the next spaceport, don't bother taking me back to the Seiryuu."]]):format(player.name()))
+      shadow.addLog( _([[You failed to pick up Jorek's informant. As such, he refused to allow you to take him to the Seiryuu.]]) )
+      abort()
+   elseif system.cur() == ambushsys and stage == 5 then
+      pilot.clear()
+      pilot.toggleSpawn(false)
+      hook.timer(0.5, "invProximity", { location = jump.pos(system.cur(), "Suna"), radius = 8000, funcname = "startAmbush" }) -- Starts an inverse proximity poll for distance from the jump point.
+   elseif system.cur() == safesys and stage == 5 then
+      stage = 6 -- stop spawning the Genbu
+   elseif genbuspawned and stage == 5 then
+      spawnGenbu(playerlastsys) -- The Genbu follows you around, and will probably insta-kill you.
+      continueAmbush()
+   end
 end
 
 function spawnSquads(highlight)
-    -- Start positions for the leaders
-    leaderstart = {}
-    leaderstart[1] = vec2.new(-2500, -1500)
-    leaderstart[2] = vec2.new(2500, 1000)
-    leaderstart[3] = vec2.new(-3500, -4500)
-    leaderstart[4] = vec2.new(2500, -2500)
-    leaderstart[5] = vec2.new(-2500, -6500)
+   -- Start positions for the leaders
+   leaderstart = {}
+   leaderstart[1] = vec2.new(-2500, -1500)
+   leaderstart[2] = vec2.new(2500, 1000)
+   leaderstart[3] = vec2.new(-3500, -4500)
+   leaderstart[4] = vec2.new(2500, -2500)
+   leaderstart[5] = vec2.new(-2500, -6500)
 
-    -- Leaders will patrol between their start position and this one
-    leaderdest = {}
-    leaderdest[1] = vec2.new(2500, -1000)
-    leaderdest[2] = vec2.new(-500, 1500)
-    leaderdest[3] = vec2.new(-4500, -1500)
-    leaderdest[4] = vec2.new(2000, -6000)
-    leaderdest[5] = vec2.new(1000, -1500)
+   -- Leaders will patrol between their start position and this one
+   leaderdest = {}
+   leaderdest[1] = vec2.new(2500, -1000)
+   leaderdest[2] = vec2.new(-500, 1500)
+   leaderdest[3] = vec2.new(-4500, -1500)
+   leaderdest[4] = vec2.new(2000, -6000)
+   leaderdest[5] = vec2.new(1000, -1500)
 
-    squads = {}
-    squads[1] = fleet.add( 4, "Vendetta", "Rogue Four Winds", leaderstart[1], _("Four Winds Vendetta") )
-    squads[2] = fleet.add( 4, "Vendetta", "Rogue Four Winds", leaderstart[2], _("Four Winds Vendetta") )
-    squads[3] = fleet.add( 4, "Vendetta", "Rogue Four Winds", leaderstart[3], _("Four Winds Vendetta") )
-    squads[4] = fleet.add( 4, "Vendetta", "Rogue Four Winds", leaderstart[4], _("Four Winds Vendetta") )
-    squads[5] = fleet.add( 4, "Vendetta", "Rogue Four Winds", leaderstart[5], _("Four Winds Vendetta") )
+   squads = {}
+   squads[1] = fleet.add( 4, "Vendetta", "Rogue Four Winds", leaderstart[1], _("Four Winds Vendetta") )
+   squads[2] = fleet.add( 4, "Vendetta", "Rogue Four Winds", leaderstart[2], _("Four Winds Vendetta") )
+   squads[3] = fleet.add( 4, "Vendetta", "Rogue Four Winds", leaderstart[3], _("Four Winds Vendetta") )
+   squads[4] = fleet.add( 4, "Vendetta", "Rogue Four Winds", leaderstart[4], _("Four Winds Vendetta") )
+   squads[5] = fleet.add( 4, "Vendetta", "Rogue Four Winds", leaderstart[5], _("Four Winds Vendetta") )
 
-    for i, squad in ipairs(squads) do
-        for j, k in ipairs(squad) do
-            hook.pilot(k, "attacked", "attacked")
-            k:rename(_("Four Winds Patrol"))
-            k:control()
-            k:outfitRm("all")
-            k:outfitAdd("Cheater's Laser Cannon", 6) -- Equip these fellas with unfair weaponry
-            k:follow(squad[1]) -- Each ship in the squad follows the squad leader
-        end
-        squad[1]:taskClear() --...except the leader himself.
-    end
+   for i, squad in ipairs(squads) do
+      for j, k in ipairs(squad) do
+         hook.pilot(k, "attacked", "attacked")
+         k:rename(_("Four Winds Patrol"))
+         k:control()
+         k:outfitRm("all")
+         k:outfitAdd("Cheater's Laser Cannon", 6) -- Equip these fellas with unfair weaponry
+         k:follow(squad[1]) -- Each ship in the squad follows the squad leader
+      end
+      squad[1]:taskClear() --...except the leader himself.
+   end
 
-    -- Shorthand notation for the leader pilots
-    leader = {}
-    leader[1] = squads[1][1]
-    leader[2] = squads[2][1]
-    leader[3] = squads[3][1]
-    leader[4] = squads[4][1]
-    leader[5] = squads[5][1]
+   -- Shorthand notation for the leader pilots
+   leader = {}
+   leader[1] = squads[1][1]
+   leader[2] = squads[2][1]
+   leader[3] = squads[3][1]
+   leader[4] = squads[4][1]
+   leader[5] = squads[5][1]
 
-    leaderVis(highlight)
+   leaderVis(highlight)
 
-    -- Kickstart the patrol sequence
-    for i, j in ipairs(leader) do
-        j:moveto(leaderdest[i], false)
-    end
+   -- Kickstart the patrol sequence
+   for i, j in ipairs(leader) do
+      j:moveto(leaderdest[i], false)
+   end
 
-    -- Set up the rest of the patrol sequence
-    for _, j in ipairs(leader) do
-        hook.pilot(j, "idle", "leaderIdle")
-    end
+   -- Set up the rest of the patrol sequence
+   for _, j in ipairs(leader) do
+      hook.pilot(j, "idle", "leaderIdle")
+   end
 end
 
 -- Makes the squads either visible or hides them
 function squadVis(visible)
-    for _, squad in ipairs(squads) do
-        for _, k in ipairs(squad) do
-            k:setVisplayer(visible)
-        end
-    end
+   for _, squad in ipairs(squads) do
+      for _, k in ipairs(squad) do
+         k:setVisplayer(visible)
+      end
+   end
 end
 
 -- Makes the leaders visible or hides them, also highlights them (or not)
 function leaderVis(visible)
-    for _, j in ipairs(leader) do
-        j:setVisplayer(visible)
-        j:setHilight(visible)
-    end
+   for _, j in ipairs(leader) do
+      j:setVisplayer(visible)
+      j:setHilight(visible)
+   end
 end
 
 -- Hook for hostile actions against a squad member
 function attacked()
-    for _, squad in ipairs(squads) do
-        for _, k in ipairs(squad) do
-            k:hookClear()
-            k:control()
-            k:attack(player.pilot())
-        end
-    end
+   for _, squad in ipairs(squads) do
+      for _, k in ipairs(squad) do
+         k:hookClear()
+         k:control()
+         k:attack(player.pilot())
+      end
+   end
 end
 
 -- Hook for the idle status of the leader of a squad.
 -- Makes the squads patrol their routes.
 function leaderIdle(pilot)
-    for i, j in ipairs(leader) do
-        if j == pilot then
-            if tick[i] then pilot:moveto(leaderdest[i], false)
-            else pilot:moveto(leaderstart[i], false)
-            end
-            tick[i] = not tick[i]
-            return
-        end
-    end
+   for i, j in ipairs(leader) do
+      if j == pilot then
+         if tick[i] then pilot:moveto(leaderdest[i], false)
+         else pilot:moveto(leaderstart[i], false)
+         end
+         tick[i] = not tick[i]
+         return
+      end
+   end
 end
 
 -- Check if any of the patrolling leaders can see the player, and if so intercept.
 function patrolPoll()
-    for _, patroller in ipairs(leader) do
-        if patroller ~= nil and patroller:exists() and vec2.dist(player.pos(), patroller:pos()) < 1200 then
-            patroller:broadcast(_("All pilots, we've detected McArthy on that ship! Break and intercept!"))
-            attacked()
-            return
-        end
-    end
-    poller = hook.timer(0.5, "patrolPoll")
+   for _, patroller in ipairs(leader) do
+      if patroller ~= nil and patroller:exists() and vec2.dist(player.pos(), patroller:pos()) < 1200 then
+         patroller:broadcast(_("All pilots, we've detected McArthy on that ship! Break and intercept!"))
+         attacked()
+         return
+      end
+   end
+   poller = hook.timer(0.5, "patrolPoll")
 end
 
 -- Spawns the Genbu
 function spawnGenbu(sys)
-    genbu = pilot.add( "Pirate Kestrel", "Four Winds", sys, _("Genbu") )
-    genbu:outfitRm("all")
-    genbu:outfitAdd("Turbolaser", 3)
-    genbu:outfitAdd("Cheater's Ragnarok Beam", 3) -- You can't win. Seriously.
-    genbu:control()
-    genbu:setHilight()
-    genbu:setVisplayer()
-    genbu:setNoDeath(true)
-    genbuspawned = true
+   genbu = pilot.add( "Pirate Kestrel", "Four Winds", sys, _("Genbu") )
+   genbu:outfitRm("all")
+   genbu:outfitAdd("Turbolaser", 3)
+   genbu:outfitAdd("Cheater's Ragnarok Beam", 3) -- You can't win. Seriously.
+   genbu:control()
+   genbu:setHilight()
+   genbu:setVisplayer()
+   genbu:setNoDeath(true)
+   genbuspawned = true
 end
 
 -- The initial ambush cutscene
 function startAmbush()
-    spawnGenbu(system.get("Anrique"))
+   spawnGenbu(system.get("Anrique"))
 
-    local delay = 0
-    zoomspeed = 4500
-    hook.timer(delay, "playerControl", true)
-    hook.timer(delay, "zoomTo", genbu)
-    delay = delay + 5.0
-    hook.timer(delay, "showMsg", {title[6], text[10]:format(player.name())})
-    delay = delay + 1.0
-    hook.timer(delay, "zoomTo", player.pilot())
-    hook.timer(delay, "playerControl", false)
-    hook.timer(delay, "continueAmbush")
+   local delay = 0
+   zoomspeed = 4500
+   hook.timer(delay, "playerControl", true)
+   hook.timer(delay, "zoomTo", genbu)
+   delay = delay + 5.0
+   hook.timer(delay, "showMsg", {title[6], text[10]:format(player.name())})
+   delay = delay + 1.0
+   hook.timer(delay, "zoomTo", player.pilot())
+   hook.timer(delay, "playerControl", false)
+   hook.timer(delay, "continueAmbush")
 end
 
 -- The continuation of the ambush, for timer purposes
 function continueAmbush()
-    genbu:setHostile()
-    genbu:attack(player.pilot())
-    waves = 0
-    maxwaves = 5
-    spinter = hook.timer(5.0, "spawnInterceptors")
+   genbu:setHostile()
+   genbu:attack(player.pilot())
+   waves = 0
+   maxwaves = 5
+   spinter = hook.timer(5.0, "spawnInterceptors")
 end
 
 -- Spawns a wing of Lancelots that intercept the player.
 function spawnInterceptors()
-    inters = fleet.add( 3, "Lancelot", "Rogue Four Winds", genbu:pos(), _("Four Winds Lancelot") )
-    for _, j in ipairs(inters) do
-        j:outfitRm("all")
-        j:outfitAdd("Cheater's Laser Cannon", 4) -- Equip these fellas with unfair weaponry
-        j:outfitAdd("Engine Reroute", 1)
-        j:outfitAdd("Improved Stabilizer", 1)
-        j:control()
-        j:attack(player.pilot())
-    end
-    if waves < maxwaves then
-       waves = waves + 1
-       spinter = hook.timer(25.0, "spawnInterceptors")
-    end
+   inters = fleet.add( 3, "Lancelot", "Rogue Four Winds", genbu:pos(), _("Four Winds Lancelot") )
+   for _, j in ipairs(inters) do
+      j:outfitRm("all")
+      j:outfitAdd("Cheater's Laser Cannon", 4) -- Equip these fellas with unfair weaponry
+      j:outfitAdd("Engine Reroute", 1)
+      j:outfitAdd("Improved Stabilizer", 1)
+      j:control()
+      j:attack(player.pilot())
+   end
+   if waves < maxwaves then
+      waves = waves + 1
+      spinter = hook.timer(25.0, "spawnInterceptors")
+   end
 end
 
 -- Land hook
 function land()
-    if planet.cur() == jorekplanet1 and stage == 2 then
-        -- Thank you player, but our SHITMAN is in another castle.
-        tk.msg(_("No Jorek"), _([[You step into the bar, expecting to find Jorek McArthy sitting somewhere at a table. However, you don't see him anywhere. You decide to go for a drink to contemplate your next move. Then, you notice the barman is giving you a curious look.]]))
-        barmanNPC = misn.npcAdd("barman", "Barman", "neutral/barman.webp", _("The barman seems to be eyeing you in particular."), 4)
-    elseif planet.cur() == jorekplanet2 and stage == 3 then
-        joreknpc = misn.npcAdd("jorek", "Jorek", "neutral/unique/jorek.webp", _("There he is, Jorek McArthy, the man you've been chasing across half the galaxy. What he's doing on this piece of junk is unclear."), 4)
-    end
+   if planet.cur() == jorekplanet1 and stage == 2 then
+      -- Thank you player, but our SHITMAN is in another castle.
+      tk.msg(_("No Jorek"), _([[You step into the bar, expecting to find Jorek McArthy sitting somewhere at a table. However, you don't see him anywhere. You decide to go for a drink to contemplate your next move. Then, you notice the barman is giving you a curious look.]]))
+      barmanNPC = misn.npcAdd("barman", "Barman", "neutral/barman.webp", _("The barman seems to be eyeing you in particular."), 4)
+   elseif planet.cur() == jorekplanet2 and stage == 3 then
+      joreknpc = misn.npcAdd("jorek", "Jorek", "neutral/unique/jorek.webp", _("There he is, Jorek McArthy, the man you've been chasing across half the galaxy. What he's doing on this piece of junk is unclear."), 4)
+   end
 end
 
 -- NPC hook
 function barman()
-    tk.msg(title[3], text[6]:format(player.name(), joreksys2:name(), jorekplanet2:name()))
-    osd_msg[1] = osd_msg[0]:format(jorekplanet2:name(), joreksys2:name())
-    misn.osdCreate(osd_title, osd_msg)
-    misn.markerMove(marker, joreksys2)
-    misn.npcRm(barmanNPC)
-    stage = 3
+   tk.msg(title[3], text[6]:format(player.name(), joreksys2:name(), jorekplanet2:name()))
+   osd_msg[1] = osd_msg[0]:format(jorekplanet2:name(), joreksys2:name())
+   misn.osdCreate(osd_title, osd_msg)
+   misn.markerMove(marker, joreksys2)
+   misn.npcRm(barmanNPC)
+   stage = 3
 end
 
 -- NPC hook
 function jorek()
-    tk.msg(title[4], text[7]:format(player.name()))
-    tk.msg(title[4], text[8])
-    misn.npcRm(joreknpc)
-    local c = misn.cargoNew(_("Jorek"), _("An unpleasant man."))
-    misn.cargoAdd(c, 0)
+   tk.msg(title[4], text[7]:format(player.name()))
+   tk.msg(title[4], text[8])
+   misn.npcRm(joreknpc)
+   local c = misn.cargoNew(_("Jorek"), _("An unpleasant man."))
+   misn.cargoAdd(c, 0)
 
-    osd2_msg[2] = osd2_msg[2]:format(seirsys:name())
-    misn.osdCreate(osd_title, osd2_msg)
+   osd2_msg[2] = osd2_msg[2]:format(seirsys:name())
+   misn.osdCreate(osd_title, osd2_msg)
 
-    stage = 4
+   stage = 4
 end
 
 -- Capsule function for camera.set, for timer use
 function zoomTo(target)
-    camera.set(target, true, zoomspeed)
+   camera.set(target, true, zoomspeed)
 end
 
 -- Capsule function for player.msg, for timer use
 function showText(text)
-    player.msg(text)
+   player.msg(text)
 end
 
 -- Capsule function for tk.msg, for timer use
 function showMsg(content)
-    tk.msg(content[1], content[2])
+   tk.msg(content[1], content[2])
 end
 
 -- Capsule function for player.pilot():control(), for timer use
 -- Also saves the player's velocity.
 function playerControl(status)
-    player.pilot():control(status)
-    player.cinematics(status)
-    if status then
-        pvel = player.pilot():vel()
-        player.pilot():setVel(vec2.new(0, 0))
-    else
-        player.pilot():setVel(pvel)
-    end
+   player.pilot():control(status)
+   player.cinematics(status)
+   if status then
+      pvel = player.pilot():vel()
+      player.pilot():setVel(vec2.new(0, 0))
+   else
+      player.pilot():setVel(pvel)
+   end
 end
 
 -- Poll for player proximity to a point in space. Will trigger when the player is NOT within the specified distance.
@@ -508,15 +508,15 @@ end
 -- radius: The radius around the location
 -- funcname: The name of the function to be called when the player is out of proximity.
 function invProximity(trigger)
-    if vec2.dist(player.pos(), trigger.location) >= trigger.radius then
-        _G[trigger.funcname]()
-    else
-        hook.timer(0.5, "invProximity", trigger)
-    end
+   if vec2.dist(player.pos(), trigger.location) >= trigger.radius then
+      _G[trigger.funcname]()
+   else
+      hook.timer(0.5, "invProximity", trigger)
+   end
 end
 
 -- Handle the unsuccessful end of the mission.
 function abort()
-    var.pop("darkshadow_active")
-    misn.finish(false)
+   var.pop("darkshadow_active")
+   misn.finish(false)
 end
