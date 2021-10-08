@@ -58,7 +58,7 @@ text[5] = _([["You know what to do," Rebina tells you. "You will find Jorek in t
     Rebina empties her glass and places it on the bar before rising to her feet. "That will be all. Good luck, and keep your wits about you."
     Then Rebina takes her leave from you and gracefully departs the spaceport bar. You order yourself another drink. You've got the feeling you're going to need it.]])
 
-    -- Post-mission
+-- Post-mission
 title[4] = _("Empty-handed")
 title[5] = _("An unexpected reunion")
 text[6] = _([[You complete docking operations with the %s, well aware that your ship isn't carrying the man they were expecting. At the airlock, you are greeted by a pair of crewmen in grey uniforms. You explain to them that you were unable to bring Jorek to them, and they receive your report in a dry, businesslike manner. The meeting is short. The crewmen disappear back into their ship, closing the airlock behind them, and you return to your bridge.
@@ -98,56 +98,55 @@ osd_msg1[1] = _("Fly to planet %s in the %s system and pick up Jorek")
 osd_msg1[2] = _("You have %s remaining")
 osd_msg1["__save"] = true
 
-
 log_text = _([[You participated in an operation for Captain Rebina. You thought you were rescuing a man named Jorek, but it turns out that you were actually helping smuggle something onto Captain Rebina's ship, the Seiryuu. You know next to nothing about Captain Rebina or who she works for.]])
 
-
 function create ()
-    if not misn.claim( {sys, sys2} ) then
-    end
+   if not misn.claim( {sys, sys2} ) then
+      misn.finish()
+   end
 
-    credits = 400e3
-    -- Developer note: changing these numbers may have consequences for translators (if we support more languages later on).
-    timelimit1 = 20 -- In STP
-    timelimit2 = 50 -- In STP
+   credits = 400e3
+   -- Developer note: changing these numbers may have consequences for translators (if we support more languages later on).
+   timelimit1 = 20 -- In STP
+   timelimit2 = 50 -- In STP
 
-    misn.setNPC( _("A dark-haired woman"), "neutral/unique/rebina_casual.webp", _("You spot a dark-haired woman sitting at the bar. Her elegant features and dress make her stand out, yet her presence here seems almost natural, as if she's in the right place at the right time, waiting for the right person. You wonder why she's all by herself.") )
+   misn.setNPC( _("A dark-haired woman"), "neutral/unique/rebina_casual.webp", _("You spot a dark-haired woman sitting at the bar. Her elegant features and dress make her stand out, yet her presence here seems almost natural, as if she's in the right place at the right time, waiting for the right person. You wonder why she's all by herself.") )
 end
 
 function accept()
-    if var.peek("shadowrun") == 1 then
-        tk.msg(title[1], text[2])
-    else
-        tk.msg(title[1], text[1])
-    end
-    if tk.yesno(title[2], text[3]) then
-        misn.accept()
-        tk.msg(title[3], string.format(text[4], planetname, sysname, sysname2, shipname))
-        tk.msg(title[3], string.format(text[5], planetname, timelimit1, timelimit2, shipname, shipname))
+   if var.peek("shadowrun") == 1 then
+      tk.msg(title[1], text[2])
+   else
+      tk.msg(title[1], text[1])
+   end
+   if tk.yesno(title[2], text[3]) then
+      misn.accept()
+      tk.msg(title[3], string.format(text[4], planetname, sysname, sysname2, shipname))
+      tk.msg(title[3], string.format(text[5], planetname, timelimit1, timelimit2, shipname, shipname))
 
-        -- Set deadlines
-        deadline1 = time.get() + time.create(0, timelimit1, 0)
-        deadline2 = time.get() + time.create(0, timelimit2, 0)
+      -- Set deadlines
+      deadline1 = time.get() + time.create(0, timelimit1, 0)
+      deadline2 = time.get() + time.create(0, timelimit2, 0)
 
-        misn.setTitle(misn_title)
-        misn.setReward(misn_reward)
-        misn.setDesc(string.format(misn_desc[1], planetname, sysname, sysname2, shipname))
-        misn.osdCreate(osd_title, { string.format(osd_msg1[1], planetname, sysname),
-                                    string.format(osd_msg1[2], time.str(deadline1 - time.get()))
-                                  })
-        misn_marker = misn.markerAdd( sys, "low" )
-        shadowrun = 2
+      misn.setTitle(misn_title)
+      misn.setReward(misn_reward)
+      misn.setDesc(string.format(misn_desc[1], planetname, sysname, sysname2, shipname))
+      misn.osdCreate(osd_title, { string.format(osd_msg1[1], planetname, sysname),
+                                  string.format(osd_msg1[2], time.str(deadline1 - time.get()))
+                                })
+      misn_marker = misn.markerAdd( sys, "low" )
+      shadowrun = 2
 
-        dateres = 500
-        datehook = hook.date(time.create(0, 0, dateres), "date")
-        hook.land("land")
-        hook.enter("enter")
-    else
-        tk.msg(title[1], _([["I see. What a shame." Rebina's demeanor conveys that she's disappointed but not upset. "I can understand your decision. One should not bite off more than one can chew, after all. It seems I will have to try to find another candidate." She tilts her head slightly. Then, "Although if you change your mind before I do, you're welcome to seek me out again. I'll be around."
+      dateres = 500
+      datehook = hook.date(time.create(0, 0, dateres), "date")
+      hook.land("land")
+      hook.enter("enter")
+   else
+      tk.msg(title[1], _([["I see. What a shame." Rebina's demeanor conveys that she's disappointed but not upset. "I can understand your decision. One should not bite off more than one can chew, after all. It seems I will have to try to find another candidate." She tilts her head slightly. Then, "Although if you change your mind before I do, you're welcome to seek me out again. I'll be around."
     Rebina finishes her drink and gets up. Then, with a cordial wave of her hand she sweeps out of the door. You momentarily regret not taking her up on her offer, but it passes. You've made the right decision, and that is that.]]))
-        var.push("shadowrun", 1) -- For future appearances of this mission
-        misn.finish(false)
-    end
+      var.push("shadowrun", 1) -- For future appearances of this mission
+      misn.finish(false)
+   end
 end
 
 function land()
@@ -194,111 +193,111 @@ function soldier2()
 end
 
 function date()
-    -- Deadline stuff
-    if deadline1 >= time.get() and shadowrun == 2 then
-        dateresolution(deadline1)
-        misn.osdCreate(osd_title, { string.format(osd_msg1[1], planetname, sysname),
-                                    string.format(osd_msg1[2], time.str(deadline1 - time.get())),
-                                  })
-    elseif deadline2 >= time.get() and shadowrun == 3 then
-        dateresolution(deadline2)
-        misn.osdCreate(osd_title, { _("You could not persuade Jorek to come with you"),
-                                    string.format(_("Fly to the %s system and dock with (board) %s to report your result"), sysname2, shipname),
-                                    string.format(_("You have %s remaining"), time.str(deadline2 - time.get()))
-                                  })
-        misn.osdActive(2)
-    else
-        abort()
-    end
+   -- Deadline stuff
+   if deadline1 >= time.get() and shadowrun == 2 then
+      dateresolution(deadline1)
+      misn.osdCreate(osd_title, { string.format(osd_msg1[1], planetname, sysname),
+                                  string.format(osd_msg1[2], time.str(deadline1 - time.get())),
+                                })
+   elseif deadline2 >= time.get() and shadowrun == 3 then
+      dateresolution(deadline2)
+      misn.osdCreate(osd_title, { _("You could not persuade Jorek to come with you"),
+                                  string.format(_("Fly to the %s system and dock with (board) %s to report your result"), sysname2, shipname),
+                                  string.format(_("You have %s remaining"), time.str(deadline2 - time.get()))
+                                })
+      misn.osdActive(2)
+   else
+      abort()
+   end
 end
 
 function dateresolution(time)
-    if time - time.get() < time.create(0, 0, 5000) and dateres > 30 then
-        dateres = 30
-        hook.rm(datehook)
-        datehook = hook.date(time.create(0, 0, dateres), "date")
-    elseif time - time.get() < time.create(0, 1, 0) and dateres > 100 then
-        dateres = 100
-        hook.rm(datehook)
-        datehook = hook.date(time.create(0, 0, dateres), "date")
-    elseif time - time.get() >= time.create(0, 1, 0) and dateres < 500 then
-        dateres = 500
-        hook.rm(datehook)
-        datehook = hook.date(time.create(0, 0, dateres), "date")
-    end
+   if time - time.get() < time.create(0, 0, 5000) and dateres > 30 then
+      dateres = 30
+      hook.rm(datehook)
+      datehook = hook.date(time.create(0, 0, dateres), "date")
+   elseif time - time.get() < time.create(0, 1, 0) and dateres > 100 then
+      dateres = 100
+      hook.rm(datehook)
+      datehook = hook.date(time.create(0, 0, dateres), "date")
+   elseif time - time.get() >= time.create(0, 1, 0) and dateres < 500 then
+      dateres = 500
+      hook.rm(datehook)
+      datehook = hook.date(time.create(0, 0, dateres), "date")
+   end
 end
 
 function enter()
-    -- Random(?) pirate attacks when get closer to your system, and heavier ones when you fly away from it after meeting SHITMAN
-    if system.cur():jumpDist(sys) < 3 and system.cur():jumpDist(sys) > 0 and shadowrun == 2 then
-        pilot.clear()
-        pilot.toggleSpawn(false)
-        pirates = fleet.add( 4, "Hyena", "Pirate", vec2.new(0,0), _("Pirate Hyena") )
-    elseif system.cur():jumpDist(sys) < 3 and system.cur():jumpDist(sys) > 0 and shadowrun == 3 then
-        pilot.clear()
-        pilot.toggleSpawn(false)
-        fleet.add( 4, "Hyena", "Pirate", vec2.new(0,0), _("Pirate Hyena") )
-        pilot.add( "Pirate Ancestor", "Pirate", vec2.new(0,20) )
-        pilot.add( "Pirate Ancestor", "Pirate", vec2.new(-20,0) )
-        pilot.add( "Pirate Ancestor", "Pirate", vec2.new(0,-20) )
-    end
+   -- Random(?) pirate attacks when get closer to your system, and heavier ones when you fly away from it after meeting SHITMAN
+   if system.cur():jumpDist(sys) < 3 and system.cur():jumpDist(sys) > 0 and shadowrun == 2 then
+      pilot.clear()
+      pilot.toggleSpawn(false)
+      pirates = fleet.add( 4, "Hyena", "Pirate", vec2.new(0,0), _("Pirate Hyena") )
+   elseif system.cur():jumpDist(sys) < 3 and system.cur():jumpDist(sys) > 0 and shadowrun == 3 then
+      pilot.clear()
+      pilot.toggleSpawn(false)
+      fleet.add( 4, "Hyena", "Pirate", vec2.new(0,0), _("Pirate Hyena") )
+      pilot.add( "Pirate Ancestor", "Pirate", vec2.new(0,20) )
+      pilot.add( "Pirate Ancestor", "Pirate", vec2.new(-20,0) )
+      pilot.add( "Pirate Ancestor", "Pirate", vec2.new(0,-20) )
+   end
 
-    -- Empire ships around planet
-    if system.cur() == sys then
-        pilot.clear()
-        pilot.toggleSpawn(false)
-        planetpos = pnt:pos()
-        pilot.add( "Empire Pacifier", "Empire", planetpos + vec2.new(200,0), nil, {ai="empire_idle"} )
-        pilot.add( "Empire Pacifier", "Empire", planetpos + vec2.new(130,130), nil, {ai="empire_idle"} )
-        pilot.add( "Empire Pacifier", "Empire", planetpos + vec2.new(0,200), nil, {ai="empire_idle"} )
-        pilot.add( "Empire Pacifier", "Empire", planetpos + vec2.new(-130,130), nil, {ai="empire_idle"} )
-        pilot.add( "Empire Pacifier", "Empire", planetpos + vec2.new(-200,0), nil, {ai="empire_idle"} )
-        pilot.add( "Empire Pacifier", "Empire", planetpos + vec2.new(-130,-130), nil, {ai="empire_idle"} )
-        pilot.add( "Empire Pacifier", "Empire", planetpos + vec2.new(0,-200), nil, {ai="empire_idle"} )
-        pilot.add( "Empire Pacifier", "Empire", planetpos + vec2.new(130,-130), nil, {ai="empire_idle"} )
-    end
+   -- Empire ships around planet
+   if system.cur() == sys then
+      pilot.clear()
+      pilot.toggleSpawn(false)
+      planetpos = pnt:pos()
+      pilot.add( "Empire Pacifier", "Empire", planetpos + vec2.new(200,0), nil, {ai="empire_idle"} )
+      pilot.add( "Empire Pacifier", "Empire", planetpos + vec2.new(130,130), nil, {ai="empire_idle"} )
+      pilot.add( "Empire Pacifier", "Empire", planetpos + vec2.new(0,200), nil, {ai="empire_idle"} )
+      pilot.add( "Empire Pacifier", "Empire", planetpos + vec2.new(-130,130), nil, {ai="empire_idle"} )
+      pilot.add( "Empire Pacifier", "Empire", planetpos + vec2.new(-200,0), nil, {ai="empire_idle"} )
+      pilot.add( "Empire Pacifier", "Empire", planetpos + vec2.new(-130,-130), nil, {ai="empire_idle"} )
+      pilot.add( "Empire Pacifier", "Empire", planetpos + vec2.new(0,-200), nil, {ai="empire_idle"} )
+      pilot.add( "Empire Pacifier", "Empire", planetpos + vec2.new(130,-130), nil, {ai="empire_idle"} )
+   end
 
-    -- Handle the Seiryuu, the last stop on this mission
-    if shadowrun >= 2 and system.cur() == sys2 then
-        mypos = vec2.new(-1500, 600)
-        seiryuu = pilot.add( "Pirate Kestrel", "Four Winds", mypos , _("Seiryuu"), {ai="trader"} )
+   -- Handle the Seiryuu, the last stop on this mission
+   if shadowrun >= 2 and system.cur() == sys2 then
+      mypos = vec2.new(-1500, 600)
+      seiryuu = pilot.add( "Pirate Kestrel", "Four Winds", mypos , _("Seiryuu"), {ai="trader"} )
 
-        seiryuu:setActiveBoard(true)
-        seiryuu:control()
-        seiryuu:setInvincible(true)
-        seiryuu:setHilight(true)
+      seiryuu:setActiveBoard(true)
+      seiryuu:control()
+      seiryuu:setInvincible(true)
+      seiryuu:setHilight(true)
 
-        hook.pilot(seiryuu, "board", "board")
-        hook.pilot(seiryuu, "death", "abort")
-    end
+      hook.pilot(seiryuu, "board", "board")
+      hook.pilot(seiryuu, "death", "abort")
+   end
 end
 
 function board()
-    if shadowrun == 2 then
-        -- player reports in without SHITMAN
-        tk.msg(title[4], string.format(text[6], shipname, shipname, shipname, shipname))
-        var.push("shadowrun_failed", true)
-    else
-        -- player reports in with SHITMAN
-        tk.msg(title[5], string.format(text[7], shipname, shipname, player.name()))
-        tk.msg(title[5], string.format(text[8], planetname))
-        player.pay(credits)
-    end
+   if shadowrun == 2 then
+      -- player reports in without SHITMAN
+      tk.msg(title[4], string.format(text[6], shipname, shipname, shipname, shipname))
+      var.push("shadowrun_failed", true)
+   else
+      -- player reports in with SHITMAN
+      tk.msg(title[5], string.format(text[7], shipname, shipname, player.name()))
+      tk.msg(title[5], string.format(text[8], planetname))
+      player.pay(credits)
+   end
 
-    player.unboard()
-    seiryuu:setHealth(100, 100)
-    seiryuu:changeAI("flee")
-    seiryuu:setHilight(false)
-    seiryuu:setActiveBoard(false)
-    seiryuu:control(false)
+   player.unboard()
+   seiryuu:setHealth(100, 100)
+   seiryuu:changeAI("flee")
+   seiryuu:setHilight(false)
+   seiryuu:setActiveBoard(false)
+   seiryuu:control(false)
 
-    if var.peek("shadowrun") then
-       var.pop("shadowrun") -- in case it was used
-    end
-    shadow.addLog( log_text )
-    misn.finish(true)
+   if var.peek("shadowrun") then
+     var.pop("shadowrun") -- in case it was used
+   end
+   shadow.addLog( log_text )
+   misn.finish(true)
 end
 
 function abort()
-    misn.finish(false)
+   misn.finish(false)
 end
