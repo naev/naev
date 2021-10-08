@@ -587,7 +587,7 @@ void ovr_render( double dt )
 {
    SafeLane *safelanes;
    double w, h, res;
-   double x,y, r;
+   double x,y;
    double rx,ry, x2,y2, rw,rh;
 
    /* Must be open. */
@@ -613,6 +613,7 @@ void ovr_render( double dt )
    for (int i=0; i<array_size(safelanes); i++) {
       glColour col;
       Vector2d *posns[2];
+      double r;
       if (!ovr_safelaneKnown( &safelanes[i], posns ))
          continue;
 

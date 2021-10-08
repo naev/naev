@@ -1279,11 +1279,11 @@ void gui_renderPilot( const Pilot* p, RadarShape shape, double w, double h, doub
    scale = MAX(scale+2.0, 5.0); /* Compensate for outline. */
 
    if (pilot_isFlag(p, PILOT_HILIGHT)) {
-      glColour col = cRadar_hilight;
-      col.a = 0.3;
+      glColour highlighted = cRadar_hilight;
+      highlighted.a = 0.3;
       glUseProgram( shaders.hilight.program );
       glUniform1f( shaders.hilight.dt, animation_dt );
-      gl_renderShader( x, y, scale*2.0, scale*2.0, 0., &shaders.hilight, &col, 1 );
+      gl_renderShader( x, y, scale*2.0, scale*2.0, 0., &shaders.hilight, &highlighted, 1 );
    }
 
    glUseProgram(shaders.pilotmarker.program);
