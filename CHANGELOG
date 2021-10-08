@@ -32,6 +32,7 @@
       * Trade lane routes made explicit
       * More common and useful derelict ships
       * Missiles have lock-on reduced and in-flight calibration added
+      * Tutorial redone with Ship AI that is also accessible from the info menu
    * Quality of Life
       * Added automatic landing as an overlay double-click action (and on repeat of the "Land" key)
       * Comm window reworked and you can bribe multiple pilots at once
@@ -41,6 +42,7 @@
       * Able to filter equipable outfits
       * Minimal view mode for the map
       * More visible map markers
+      * More in-game tutorial-ish explanations for new mechanics as you encounter them
    * New locations
       * Added gambling resort "Minerva Station"
       * Added mysterious new system "Taiomi"
