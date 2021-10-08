@@ -381,10 +381,10 @@ static int gfxL_renderTexH( lua_State *L )
    glBindTexture( GL_TEXTURE_2D, t->texture );
    glUniform1i( shader->MainTex, 0 );
    for (int i=0; i<array_size(shader->tex); i++) {
-      LuaTexture_t *t = &shader->tex[i];
-      glActiveTexture( t->active );
-      glBindTexture( GL_TEXTURE_2D, t->texid );
-      glUniform1i( t->uniform, t->value );
+      LuaTexture_t *lt = &shader->tex[i];
+      glActiveTexture( lt->active );
+      glBindTexture( GL_TEXTURE_2D, lt->texid );
+      glUniform1i( lt->uniform, lt->value );
    }
    glActiveTexture( GL_TEXTURE0 );
 
