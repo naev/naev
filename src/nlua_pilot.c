@@ -1343,12 +1343,12 @@ static int pilotL_activeWeapset( lua_State *L )
 static int pilotL_weapset( lua_State *L )
 {
    Pilot *p, *target;
-   int i, j, k, n;
+   int k, n;
    PilotWeaponSetOutfit *po_list;
    PilotOutfitSlot *slot;
    const Outfit *ammo, *o;
    double delay, firemod, enermod, t;
-   int id, all, level, level_match;
+   int id, all, level;
    int is_lau, is_fb;
    const Damage *dmg;
    int has_beamid;
@@ -1385,12 +1385,12 @@ static int pilotL_weapset( lua_State *L )
 
    k = 0;
    lua_newtable(L);
-   for (j=0; j<=PILOT_WEAPSET_MAX_LEVELS; j++) {
+   for (int j=0; j<=PILOT_WEAPSET_MAX_LEVELS; j++) {
       /* Level to match. */
-      level_match = (j==PILOT_WEAPSET_MAX_LEVELS) ? -1 : j;
+      int level_match = (j==PILOT_WEAPSET_MAX_LEVELS) ? -1 : j;
 
       /* Iterate over weapons. */
-      for (i=0; i<n; i++) {
+      for (int i=0; i<n; i++) {
          /* Get base look ups. */
          slot = all ?  p->outfits[i] : po_list[i].slot;
          o        = slot->outfit;
@@ -1674,7 +1674,6 @@ static int pilotL_actives( lua_State *L )
 {
    Pilot *p;
    int k, sort;
-   PilotOutfitSlot *o;
    PilotOutfitSlot **outfits;
    const char *str;
    double d;
@@ -1695,7 +1694,7 @@ static int pilotL_actives( lua_State *L )
 
    for (int i=0; i<array_size(outfits); i++) {
       /* Get active outfits. */
-      o = outfits[i];
+      PilotOutfitSlot *o = outfits[i];
       if (o->outfit == NULL)
          continue;
       if (!o->active)
@@ -2664,7 +2663,6 @@ static int pilotL_setNoClear( lua_State *L )
  */
 static int pilotL_outfitAdd( lua_State *L )
 {
-   int i;
    Pilot *p;
    const Outfit *o;
    int ret;
@@ -2681,7 +2679,7 @@ static int pilotL_outfitAdd( lua_State *L )
 
    /* Add outfit. */
    added = 0;
-   for (i=0; i<array_size(p->outfits); i++) {
+   for (int i=0; i<array_size(p->outfits); i++) {
       /* Must still have to add outfit. */
       if (q <= 0)
          break;
@@ -2839,12 +2837,8 @@ static int pilotL_outfitRm( lua_State *L )
  */
 static int pilotL_setFuel( lua_State *L )
 {
-   Pilot *p;
-
    NLUA_CHECKRW(L);
-
-   /* Get the pilot. */
-   p = luaL_validpilot(L,1);
+   Pilot *p = luaL_validpilot(L,1);
 
    /* Get the parameter. */
    if (lua_isboolean(L,2)) {
