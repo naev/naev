@@ -16,7 +16,7 @@ function create ()
       local opts = {
          {_("Get Advice"), "advice"},
          {_("Get Information"), "tutorials"},
-         {_("Tutorial Options"), "opts"},
+         {_("Tutorial/Ship AI Options"), "opts"},
          {_("Close"), "close"},
       }
       return opts
@@ -29,6 +29,7 @@ function create ()
    vn.menu( function ()
       local opts = {
          {_("Reset all tutorials"), "reset"},
+         {_("Rename Ship AI"), "rename"},
          {_("Close"), "mainmenu"},
       }
       if tut.isDisabled() then
@@ -59,6 +60,18 @@ function create ()
    vn.func( function () tut.reset() end )
    sai(_([["All in-game tutorials have been set and enabled! They will naturally pop up as you do different things in the game."]]))
    vn.jump("mainmenu")
+
+   vn.label("rename")
+   vn.func( function ()
+      -- TODO integrate into vn
+      local ainame = tk.input( _("Name your Ship AI"), 1, 16, _("SAI") )
+      if ainame then
+         var.push("shipai_name",ainame)
+         sai:rename( ainame )
+      end
+   end )
+   sai(fmt.f(_([[Your Ship AI has been renamed '{ainame}'.]]),{tut.ainame()}))
+   vn.jump("opts")
 
    vn.label("tutorials")
    sai(_([["What do you want to learn about?"]]))
