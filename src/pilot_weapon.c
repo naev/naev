@@ -161,7 +161,6 @@ void pilot_weapSetAIClear( Pilot* p )
    }
 }
 
-
 /**
  * @brief Handles a weapon set press.
  *
@@ -181,7 +180,7 @@ void pilot_weapSetPress( Pilot* p, int id, int type )
    switch (ws->type) {
       case WEAPSET_TYPE_CHANGE:
          /* On press just change active weapon set to whatever is available. */
-         if (type > 0) {
+         if ((type > 0) && (array_size(ws->slots)>0)) {
             if (id != p->active_set)
                pilot_weapSetUpdateOutfits( p, ws );
             p->active_set = id;
