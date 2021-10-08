@@ -1,7 +1,7 @@
 project('sdl2-image', 'c', version: '2.0.5')
 
 cc = meson.get_compiler('c')
-foreach arg: ['-Wno-sign-compare', '-Wno-unused-function', '-Wno-unused-parameter']
+foreach arg: ['-Wno-misleading-indentation', '-Wno-sign-compare', '-Wno-unused-function', '-Wno-unused-parameter']
    if cc.has_argument(arg)
       add_project_arguments(arg, language : 'c')
    endif
