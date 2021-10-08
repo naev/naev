@@ -472,12 +472,9 @@ Pilot* player_newShip( const Ship* ship, const char *def_name,
  */
 static Pilot* player_newShipMake( const char* name )
 {
-   Vector2d vp, vv;
    PilotFlags flags;
    PlayerShip_t *ship;
    Pilot *new_pilot;
-   double px, py, dir;
-   unsigned int id;
 
    /* store the current ship if it exists */
    pilot_clearFlagsRaw( flags );
@@ -489,6 +486,10 @@ static Pilot* player_newShipMake( const char* name )
 
    /* create the player */
    if (player.p == NULL) {
+      double px, py, dir;
+      unsigned int id;
+      Vector2d vp, vv;
+
       /* Set position to defaults. */
       if (player.p != NULL) {
          px    = player.p->solid->pos.x;
@@ -540,12 +541,12 @@ static Pilot* player_newShipMake( const char* name )
  */
 void player_swapShip( const char *shipname, int move_cargo )
 {
-   int fav;
-   Pilot *ship;
-   Vector2d v;
-   double dir;
-
    for (int i=0; i<array_size(player_stack); i++) {
+      int fav;
+      Pilot *ship;
+      Vector2d v;
+      double dir;
+
       if (strcmp(shipname,player_stack[i].p->name)!=0)
          continue;
 
@@ -621,14 +622,13 @@ void player_swapShip( const char *shipname, int move_cargo )
  */
 credits_t player_shipPrice( const char *shipname )
 {
-   int i;
    Pilot *ship = NULL;
 
    if (strcmp(shipname,player.p->name)==0)
       ship = player.p;
    else {
       /* Find the ship. */
-      for (i=0; i<array_size(player_stack); i++) {
+      for (int i=0; i<array_size(player_stack); i++) {
          if (strcmp(shipname,player_stack[i].p->name)==0) {
             ship = player_stack[i].p;
             break;
@@ -653,9 +653,7 @@ credits_t player_shipPrice( const char *shipname )
  */
 void player_rmShip( const char *shipname )
 {
-   int i, w;
-
-   for (i=0; i<array_size(player_stack); i++) {
+   for (int i=0; i<array_size(player_stack); i++) {
       /* Not the ship we are looking for. */
       if (strcmp(shipname,player_stack[i].p->name)!=0)
          continue;
@@ -668,7 +666,7 @@ void player_rmShip( const char *shipname )
 
    /* Update ship list if landed. */
    if (landed) {
-      w = land_getWid( LAND_WINDOW_EQUIPMENT );
+      int w = land_getWid( LAND_WINDOW_EQUIPMENT );
       equipment_regenLists( w, 0, 1 );
    }
 }
@@ -679,8 +677,6 @@ void player_rmShip( const char *shipname )
  */
 void player_cleanup (void)
 {
-   int i;
-
    /* Enable all input. */
    input_enableAll();
 
@@ -724,7 +720,7 @@ void player_cleanup (void)
    ovr_setOpen(0);
 
    /* clean up the stack */
-   for (i=0; i<array_size(player_stack); i++)
+   for (int i=0; i<array_size(player_stack); i++)
       pilot_free(player_stack[i].p);
    array_free(player_stack);
    player_stack = NULL;
@@ -740,7 +736,7 @@ void player_cleanup (void)
    events_done = NULL;
 
    /* Clean up licenses. */
-   for (i=0; i<array_size(player_licenses); i++)
+   for (int i=0; i<array_size(player_licenses); i++)
       free(player_licenses[i]);
    array_free(player_licenses);
    player_licenses = NULL;
