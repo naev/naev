@@ -24,22 +24,16 @@ end
 
 -- Build a set of target planets
 function cargo_selectPlanets(missdist, routepos)
-   local planets = {}
-   lmisn.getSysAtDistance(system.cur(), missdist, missdist,
-      function(s)
-         for i, v in ipairs(s:planets()) do
-            if v:services()["inhabited"] and v ~= planet.cur()
-                  and not (s == system.cur()
-                     and ( vec2.dist( v:pos(), routepos ) < 2500 ) )
-                  and v:canLand() and cargoValidDest( v ) then
-               table.insert( planets, {v, s} )
-            end
+   local pcur = planet.cur()
+   return lmisn.getPlanetAtDistance( system.cur(), missdist, missdist, "Independent", false, function ( p )
+         if p ~= pcur
+            and not (p:system() == system.cur() and (vec2.dist( p:pos(), routepos) < 2500))
+            and p:canLand() and cargoValidDest( p ) then
+               return true
          end
-         return true
-      end,
+         return false
+         end,
       nil, cargo_use_hidden)
-
-   return planets
 end
 
 -- We have a destination, now we need to calculate how far away it is by simulating the journey there.
@@ -83,8 +77,8 @@ function cargo_calculateRoute ()
    end
 
    local index     = rnd.rnd(1, #planets)
-   local destplanet= planets[index][1]
-   local destsys   = planets[index][2]
+   local destplanet= planets[index]
+   local destsys   = destplanet:system()
 
    -- We have a destination, now we need to calculate how far away it is by simulating the journey there.
    -- Assume shortest route with no interruptions.
