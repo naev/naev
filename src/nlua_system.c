@@ -457,6 +457,12 @@ static int systemL_jumpdistance( lua_State *L )
    else
       goal = cur_system->name;
 
+   /* Trivial case same system. */
+   if (strcmp(start,goal)==0) {
+      lua_pushnumber(L, 0.);
+      return 1;
+   }
+
    s = map_getJumpPath( start, goal, k, h, NULL );
    if (s==NULL) {
       lua_pushnumber(L, HUGE_VAL);
