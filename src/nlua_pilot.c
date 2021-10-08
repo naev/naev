@@ -329,13 +329,9 @@ int nlua_loadPilot( nlua_env env )
  */
 static int pilotL_setFlagWrapper( lua_State *L, int flag )
 {
-   Pilot *p;
-   int state;
-
    NLUA_CHECKRW(L);
-
-   /* Get the pilot. */
-   p = luaL_validpilot(L,1);
+   int state;
+   Pilot *p = luaL_validpilot(L,1);
 
    /* Get state. */
    if (lua_isnone(L,2))
@@ -400,10 +396,7 @@ LuaPilot luaL_checkpilot( lua_State *L, int ind )
  */
 Pilot* luaL_validpilot( lua_State *L, int ind )
 {
-   Pilot *p;
-
-   /* Get the pilot. */
-   p  = pilot_get(luaL_checkpilot(L,ind));
+   Pilot *p = pilot_get(luaL_checkpilot(L,ind));
    if (p==NULL) {
       NLUA_ERROR(L,_("Pilot is invalid."));
       return NULL;
@@ -420,8 +413,7 @@ Pilot* luaL_validpilot( lua_State *L, int ind )
  */
 LuaPilot* lua_pushpilot( lua_State *L, LuaPilot pilot )
 {
-   LuaPilot *p;
-   p = (LuaPilot*) lua_newuserdata(L, sizeof(LuaPilot));
+   LuaPilot *p = (LuaPilot*) lua_newuserdata(L, sizeof(LuaPilot));
    *p = pilot;
    luaL_getmetatable(L, PILOT_METATABLE);
    lua_setmetatable(L, -2);
@@ -692,12 +684,8 @@ static int pilotL_add( lua_State *L )
  */
 static int pilotL_remove( lua_State *L )
 {
-   Pilot *p;
-
    NLUA_CHECKRW(L);
-
-   /* Get the pilot. */
-   p = luaL_validpilot(L,1);
+   Pilot *p = luaL_validpilot(L,1);
 
    /* Make sure it's not the player. */
    if (player.p == p) {
@@ -747,19 +735,16 @@ static int pilotL_clear( lua_State *L )
  */
 static int pilotL_toggleSpawn( lua_State *L )
 {
-   int i, f, b;
-
    NLUA_CHECKRW(L);
 
    /* Setting it directly. */
    if (lua_gettop(L) > 0) {
       if (lua_isfaction(L,1) || lua_isstring(L,1)) {
-
-         f = luaL_validfaction(L,1);
-         b = !lua_toboolean(L,2);
+         int f = luaL_validfaction(L,1);
+         int b = !lua_toboolean(L,2);
 
          /* Find the faction and set. */
-         for (i=0; i<array_size(cur_system->presence); i++) {
+         for (int i=0; i<array_size(cur_system->presence); i++) {
             if (cur_system->presence[i].faction != f)
                continue;
             cur_system->presence[i].disabled = b;
@@ -794,17 +779,12 @@ static int pilotL_toggleSpawn( lua_State *L )
  */
 static int pilotL_getPilots( lua_State *L )
 {
-   int i, j, k, d;
-   int *factions;
-   Pilot *const* pilot_stack;
-
-   /* Whether or not to get disabled. */
-   d = lua_toboolean(L,2);
-
-   pilot_stack = pilot_getAll();
+   int d = lua_toboolean(L,2); /* Whether or not to get disabled. */
+   Pilot *const* pilot_stack = pilot_getAll();
 
    /* Check for belonging to faction. */
    if (lua_istable(L,1) || lua_isfaction(L,1)) {
+      int *factions;
       if (lua_isfaction(L,1)) {
          factions = array_create( int );
          array_push_back( &factions, lua_tofaction(L,1) );
@@ -823,9 +803,9 @@ static int pilotL_getPilots( lua_State *L )
 
       /* Now put all the matching pilots in a table. */
       lua_newtable(L);
-      k = 1;
-      for (i=0; i<array_size(pilot_stack); i++) {
-         for (j=0; j<array_size(factions); j++) {
+      int k = 1;
+      for (int i=0; i<array_size(pilot_stack); i++) {
+         for (int j=0; j<array_size(factions); j++) {
             if ((pilot_stack[i]->faction == factions[j]) &&
                   (d || !pilot_isDisabled(pilot_stack[i])) &&
                   !pilot_isFlag(pilot_stack[i], PILOT_DELETE)) {
@@ -841,8 +821,8 @@ static int pilotL_getPilots( lua_State *L )
    else if ((lua_isnil(L,1)) || (lua_gettop(L) == 0)) {
       /* Now put all the matching pilots in a table. */
       lua_newtable(L);
-      k = 1;
-      for (i=0; i<array_size(pilot_stack); i++) {
+      int k = 1;
+      for (int i=0; i<array_size(pilot_stack); i++) {
          if ((d || !pilot_isDisabled(pilot_stack[i])) &&
                !pilot_isFlag(pilot_stack[i], PILOT_DELETE)) {
             lua_pushpilot(L, pilot_stack[i]->id); /* value */
@@ -863,9 +843,9 @@ static int pilotL_getPilots( lua_State *L )
  */
 static int pilotL_getFriendOrFoe( lua_State *L, int friend )
 {
-   int i, k;
+   int k;
    double dd, d2;
-   Pilot *p, *plt;
+   Pilot *p;
    double dist;
    int inrange, dis, fighters;
    Vector2d *v;
@@ -905,8 +885,8 @@ static int pilotL_getFriendOrFoe( lua_State *L, int friend )
    pilot_stack = pilot_getAll();
    lua_newtable(L);
    k = 1;
-   for (i=0; i<array_size(pilot_stack); i++) {
-      plt = pilot_stack[i];
+   for (int i=0; i<array_size(pilot_stack); i++) {
+      Pilot *plt = pilot_stack[i];
 
       /* Check if dead. */
       if (pilot_isFlag(plt, PILOT_DELETE))
@@ -1018,7 +998,7 @@ static int pilotL_getHostiles( lua_State *L )
  */
 static int pilotL_getVisible( lua_State *L )
 {
-   int i, k;
+   int k;
    Pilot *p = luaL_validpilot(L,1);
    int dis = lua_toboolean(L,2);
    Pilot *const* pilot_stack;
@@ -1027,7 +1007,7 @@ static int pilotL_getVisible( lua_State *L )
    pilot_stack = pilot_getAll();
    lua_newtable(L);
    k = 1;
-   for (i=0; i<array_size(pilot_stack); i++) {
+   for (int i=0; i<array_size(pilot_stack); i++) {
       /* Check if dead. */
       if (pilot_isFlag(pilot_stack[i], PILOT_DELETE))
          continue;
@@ -1109,11 +1089,8 @@ static int pilotL_id( lua_State *L )
  */
 static int pilotL_exists( lua_State *L )
 {
-   Pilot *p;
    int exists;
-
-   /* Parse parameters. */
-   p  = pilot_get( luaL_checkpilot(L,1) );
+   Pilot *p = pilot_get( luaL_checkpilot(L,1) );
 
    /* Must still be kicking and alive. */
    if (p==NULL)
@@ -1140,8 +1117,7 @@ static int pilotL_exists( lua_State *L )
  */
 static int pilotL_target( lua_State *L )
 {
-   Pilot *p;
-   p = luaL_validpilot(L,1);
+   Pilot *p = luaL_validpilot(L,1);
    if (p->target == 0)
       return 0;
    /* Must be targeted. */
@@ -1165,9 +1141,8 @@ static int pilotL_target( lua_State *L )
  */
 static int pilotL_setTarget( lua_State *L )
 {
-   Pilot *p;
    unsigned int t;
-   p = luaL_validpilot(L,1);
+   Pilot *p = luaL_validpilot(L,1);
    if (lua_isnoneornil(L,2))
       t = p->id;
    else
