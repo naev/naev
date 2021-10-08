@@ -2190,7 +2190,7 @@ void map_jump (void)
 void map_select( const StarSystem *sys, char shifted )
 {
    unsigned int wid;
-   int i, autonav;
+   int autonav;
 
    wid = 0;
    if (window_exists(MAP_WDWNAME))
@@ -2221,7 +2221,7 @@ void map_select( const StarSystem *sys, char shifted )
          }
          else  {
             /* see if it is a valid hyperspace target */
-            for (i=0; i<array_size(cur_system->jumps); i++) {
+            for (int i=0; i<array_size(cur_system->jumps); i++) {
                if (map_path[0] == cur_system->jumps[i].target) {
                   player_hyperspacePreempt(1);
                   player_targetHyperspaceSet( i );
