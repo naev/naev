@@ -1567,16 +1567,13 @@ static int pilotL_weapsetHeat( lua_State *L )
 {
    Pilot *p;
    PilotWeaponSetOutfit *po_list;
-   PilotOutfitSlot *slot;
-   const Outfit *o;
-   int i, j, n;
-   int id, all, level, level_match;
+   int n, id, all;
    double heat, heat_mean, heat_peak, nweapons;
 
    /* Defaults. */
    heat_mean = 0.;
    heat_peak = 0.;
-   nweapons = 0;
+   nweapons  = 0;
 
    /* Parse parameters. */
    all = 0;
@@ -1599,16 +1596,16 @@ static int pilotL_weapsetHeat( lua_State *L )
    po_list = all ? NULL : pilot_weapSetList( p, id );
    n = all ? array_size(p->outfits) : array_size(po_list);
 
-   for (j=0; j<=PILOT_WEAPSET_MAX_LEVELS; j++) {
+   for (int j=0; j<=PILOT_WEAPSET_MAX_LEVELS; j++) {
       /* Level to match. */
-      level_match = (j==PILOT_WEAPSET_MAX_LEVELS) ? -1 : j;
+      int level_match = (j==PILOT_WEAPSET_MAX_LEVELS) ? -1 : j;
 
        /* Iterate over weapons. */
-      for (i=0; i<n; i++) {
+      for (int i=0; i<n; i++) {
+         int level;
          /* Get base look ups. */
-         slot = all ?  p->outfits[i] : po_list[i].slot;
-
-         o = slot->outfit;
+         PilotOutfitSlot *slot = all ?  p->outfits[i] : po_list[i].slot;
+         const Outfit *o = slot->outfit;
          if (o == NULL)
             continue;
 
@@ -2762,10 +2759,8 @@ static int pilotL_outfitAdd( lua_State *L )
  */
 static int pilotL_outfitRm( lua_State *L )
 {
-   int i;
    Pilot *p;
    const char *outfit;
-   const Outfit *o;
    int q, removed, matched = 0;
 
    NLUA_CHECKRW(L);
@@ -2780,7 +2775,7 @@ static int pilotL_outfitRm( lua_State *L )
 
       /* If outfit is "all", we remove everything except cores. */
       if (strcmp(outfit,"all")==0) {
-         for (i=0; i<array_size(p->outfits); i++) {
+         for (int i=0; i<array_size(p->outfits); i++) {
             if (p->outfits[i]->sslot->required)
                continue;
             pilot_rmOutfitRaw( p, p->outfits[i] );
@@ -2791,7 +2786,7 @@ static int pilotL_outfitRm( lua_State *L )
       }
       /* If outfit is "cores", we remove cores only. */
       else if (strcmp(outfit,"cores")==0) {
-         for (i=0; i<array_size(p->outfits); i++) {
+         for (int i=0; i<array_size(p->outfits); i++) {
             if (!p->outfits[i]->sslot->required)
                continue;
             pilot_rmOutfitRaw( p, p->outfits[i] );
@@ -2803,10 +2798,10 @@ static int pilotL_outfitRm( lua_State *L )
    }
 
    if (!matched) {
-      o = luaL_validoutfit(L,2);
+      const Outfit *o = luaL_validoutfit(L,2);
 
       /* Remove the outfit outfit. */
-      for (i=0; i<array_size(p->outfits); i++) {
+      for (int i=0; i<array_size(p->outfits); i++) {
          /* Must still need to remove. */
          if (q <= 0)
             break;
@@ -2991,7 +2986,7 @@ static int pilotL_changeAI( lua_State *L )
 static int pilotL_setTemp( lua_State *L )
 {
    Pilot *p;
-   int i, setOutfits = 1;
+   int setOutfits = 1;
    double kelvins;
 
    NLUA_CHECKRW(L);
@@ -3009,7 +3004,7 @@ static int pilotL_setTemp( lua_State *L )
 
    /* Handle pilot outfits (maybe). */
    if (setOutfits)
-      for (i = 0; i < array_size(p->outfits); i++)
+      for (int i=0; i < array_size(p->outfits); i++)
          p->outfits[i]->heat_T = kelvins;
 
    return 0;
@@ -3346,10 +3341,7 @@ lua_rawset( L, -3 )
  */
 static int pilotL_getStats( lua_State *L )
 {
-   Pilot *p;
-
-   /* Get the pilot. */
-   p  = luaL_validpilot(L,1);
+   Pilot *p  = luaL_validpilot(L,1);
 
    /* Create table with information. */
    lua_newtable(L);
