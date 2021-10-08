@@ -432,7 +432,7 @@ static int systemL_interference( lua_State *L )
  *    @luatparam nil|string|Goal system param See description.
  *    @luatparam[opt=false] boolean hidden Whether or not to consider hidden jumps.
  *    @luatparam[opt=false] boolean known Whether or not to consider only jumps known by the player.
- *    @luatreturn number Number of jumps to system.
+ *    @luatreturn number Number of jumps to system or math.huge if no path found.
  * @luafunc jumpDist
  */
 static int systemL_jumpdistance( lua_State *L )
@@ -454,14 +454,19 @@ static int systemL_jumpdistance( lua_State *L )
          sysp = luaL_validsystem(L,2);
          goal = sysp->name;
       }
-      else NLUA_INVALID_PARAMETER(L);
+      else
+         NLUA_INVALID_PARAMETER(L);
    }
    else
       goal = cur_system->name;
 
    s = map_getJumpPath( start, goal, k, h, NULL );
-   lua_pushnumber(L,array_size(s));
+   if (s==NULL) {
+      lua_pushnumber(L, HUGE_VAL);
+      return 1;
+   }
 
+   lua_pushnumber(L,array_size(s));
    array_free(s);
    return 1;
 }
