@@ -13,6 +13,13 @@ copyright_holder = 'Naev Dev Team'
 
 # Tools
 cc = meson.get_compiler('c')
+foreach arg: ['-Wextra', '-Wshadow']
+   if cc.has_argument(arg)
+      add_project_arguments(arg, language : 'c')
+   endif
+endforeach
+
+cc = meson.get_compiler('c')
 subdir('utils')
 
 # Version Generation
