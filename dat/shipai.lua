@@ -70,7 +70,7 @@ function create ()
    }
 
    vn.label("tut_weaponsets")
-   sai(_([["A large part of combat is decided ahead of time by the ship classes and their load out. However, good piloting can turn the tables easily. It is important to assign weapon sets to be easy to use. You can set weapon sets from the '#oWeapons#0' tab of the information window. You have 10 different weapon sets that can be configured separately for each ship."]])
+   sai(_([["A large part of combat is decided ahead of time by the ship classes and their load out. However, good piloting can turn the tables easily. It is important to assign weapon sets to be easy to use. You can set weapon sets from the '#oWeapons#0' tab of the information window. You have 10 different weapon sets that can be configured separately for each ship."]]))
    sai(_([["There are three different types of weapon sets:
 - #oWeapons - Switched#0: activating the hotkey will set your primary and secondary weapons
 - #oWeapons - Instant#0: activating the hotkey will fire the weapons
