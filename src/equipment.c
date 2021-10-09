@@ -466,7 +466,6 @@ static void equipment_renderColumn( double x, double y, double w, double h,
       PilotOutfitSlot *lst, const char *txt,
       int selected, Outfit *o, Pilot *p, CstSlotWidget *wgt )
 {
-   int i, level;
    const glColour *c, *dc, *rc;
    glColour bc;
 
@@ -479,10 +478,10 @@ static void equipment_renderColumn( double x, double y, double w, double h,
          x-15., y+h+10., c, -1., txt );
 
    /* Iterate for all the slots. */
-   for (i=0; i<array_size(lst); i++) {
+   for (int i=0; i<array_size(lst); i++) {
       /* Choose default colour. */
       if (wgt->weapons >= 0) {
-         level = pilot_weapSetCheck( p, wgt->weapons, &lst[i] );
+         int level = pilot_weapSetCheck( p, wgt->weapons, &lst[i] );
          if (level == 0)
             dc = &cFontRed;
          else if (level == 1)
@@ -704,16 +703,14 @@ static void equipment_renderMisc( double bx, double by, double bw, double bh, vo
 static void equipment_renderOverlayColumn( double x, double y, double h,
       PilotOutfitSlot *lst, int mover, CstSlotWidget *wgt )
 {
-   int i;
    const glColour *c;
    glColour tc;
    int text_width, yoff, top;
    const char *display;
-   int subtitle;
 
    /* Iterate for all the slots. */
-   for (i=0; i<array_size(lst); i++) {
-      subtitle = 0;
+   for (int i=0; i<array_size(lst); i++) {
+      int subtitle = 0;
       if (lst[i].outfit != NULL) {
          /* See if needs a subtitle. */
          if ((outfit_isLauncher(lst[i].outfit) ||
@@ -981,9 +978,7 @@ static void equipment_renderShip( double bx, double by,
  */
 static int equipment_mouseInColumn( double y, double h, int n, double my )
 {
-   int i;
-
-   for (i=0; i<n; i++) {
+   for (int i=0; i<n; i++) {
       if ((my > y) && (my < y+h+20))
          return i;
       y -= h+20;
@@ -1009,9 +1004,7 @@ static int equipment_mouseColumn( unsigned int wid, SDL_Event* event,
       double mx, double my, double y, double h, PilotOutfitSlot* os,
       Pilot *p, int selected, CstSlotWidget *wgt )
 {
-   int ret, exists, level;
-
-   ret = equipment_mouseInColumn( y, h, array_size(os), my );
+   int ret = equipment_mouseInColumn( y, h, array_size(os), my );
    if (ret < 0)
       return 0;
 
@@ -1028,8 +1021,8 @@ static int equipment_mouseColumn( unsigned int wid, SDL_Event* event,
       }
       /* Viewing weapon slots. */
       else {
-         /* See if it exists. */
-         exists = pilot_weapSetCheck( p, wgt->weapons, &os[ret] );
+         int level;
+         int exists = pilot_weapSetCheck( p, wgt->weapons, &os[ret] );
          /* Get the level of the selection. */
          if (event->button.button == SDL_BUTTON_LEFT)
             level = 0;
@@ -1162,11 +1155,11 @@ static int equipment_mouseSlots( unsigned int wid, SDL_Event* event,
 static int equipment_swapSlot( unsigned int wid, Pilot *p, PilotOutfitSlot *slot )
 {
    int ret;
-   const Outfit *o, *ammo;
 
    /* Remove outfit. */
    if (slot->outfit != NULL) {
-      o = slot->outfit;
+      const Outfit *ammo;
+      const Outfit *o = slot->outfit;
 
       /* Must be able to remove. */
       if (pilot_canEquip( eq_wgt.selected, slot, NULL ) != NULL)
@@ -1185,7 +1178,7 @@ static int equipment_swapSlot( unsigned int wid, Pilot *p, PilotOutfitSlot *slot
    /* Add outfit. */
    else {
       /* Must have outfit. */
-      o = eq_wgt.outfit;
+      const Outfit *o = eq_wgt.outfit;
       if (o==NULL)
          return 0;
 
@@ -1243,7 +1236,7 @@ static int equipment_swapSlot( unsigned int wid, Pilot *p, PilotOutfitSlot *slot
  */
 void equipment_regenLists( unsigned int wid, int outfits, int ships )
 {
-   int i, ret;
+   int i;
    int nship;
    double offship;
    char selship[PATH_MAX];
@@ -1291,7 +1284,7 @@ void equipment_regenLists( unsigned int wid, int outfits, int ships )
       /* Try to maintain same ship selected. */
       s = toolkit_getImageArray( wid, EQUIPMENT_SHIPS );
       if ((s != NULL) && (strcmp(s,selship)!=0)) {
-         ret = toolkit_setImageArray( wid, EQUIPMENT_SHIPS, selship );
+         int ret = toolkit_setImageArray( wid, EQUIPMENT_SHIPS, selship );
          if (ret != 0) /* Failed to maintain. */
             toolkit_setImageArrayPos( wid, EQUIPMENT_SHIPS, nship );
 
@@ -1342,8 +1335,7 @@ void equipment_addAmmo (void)
  */
 int equipment_shipStats( char *buf, int max_len,  const Pilot *s, int dpseps )
 {
-   int j, l;
-   const Outfit *o;
+   int l;
    double mod_energy, mod_damage, mod_shots;
    double eps, dps, shots;
    const Damage *dmg;
@@ -1352,8 +1344,8 @@ int equipment_shipStats( char *buf, int max_len,  const Pilot *s, int dpseps )
    eps = 0.;
    /* Calculate damage and energy per second. */
    if (dpseps) {
-      for (j=0; j<array_size(s->outfits); j++) {
-         o = s->outfits[j]->outfit;
+      for (int j=0; j<array_size(s->outfits); j++) {
+         const Outfit *o = s->outfits[j]->outfit;
          if (o==NULL)
             continue;
          switch (o->type) {
@@ -1464,7 +1456,7 @@ static void equipment_genLists( unsigned int wid )
  */
 static void equipment_genShipList( unsigned int wid )
 {
-   int i, l;
+   int l;
    ImageArrayCell *cships;
    int nships;
    int w, h;
@@ -1505,7 +1497,7 @@ static void equipment_genShipList( unsigned int wid )
       if (planet_hasService(land_planet, PLANET_SERVICE_SHIPYARD)) {
          player_shipsSort();
          ps = player_getShipStack();
-         for (i=1; i<=array_size(ps); i++) {
+         for (int i=1; i<=array_size(ps); i++) {
             cships[i].image = gl_dupTexture( ps[i-1].p->ship->gfx_store );
             cships[i].caption = strdup( ps[i-1].p->name );
             cships[i].layers = gl_copyTexArray( ps[i-1].p->ship->gfx_overlays, &cships[i].nlayers );
@@ -1521,7 +1513,7 @@ static void equipment_genShipList( unsigned int wid )
          }
       }
       /* Ship stats in alt text. */
-      for (i=0; i<nships; i++) {
+      for (int i=0; i<nships; i++) {
          s        = player_getShip( cships[i].caption );
          cships[i].alt = malloc( STRMAX_SHORT );
          l        = snprintf( &cships[i].alt[0], STRMAX_SHORT, _("Ship Stats\n") );
@@ -1867,7 +1859,6 @@ void equipment_updateShips( unsigned int wid, const char* str )
  */
 void equipment_updateOutfits( unsigned int wid, const char* str )
 {
-   (void) wid;
    (void) str;
    int i, active;
 
@@ -2048,12 +2039,7 @@ static void equipment_changeShip( unsigned int wid )
 static void equipment_unequipShip( unsigned int wid, const char* str )
 {
    (void) str;
-   int ret;
-   int i;
-   Pilot *ship;
-   const Outfit *o, *ammo;
-
-   ship = eq_wgt.selected;
+   Pilot *ship = eq_wgt.selected;
 
    /*
     * Unequipping is disallowed under two conditions. Firstly, the ship may not
@@ -2076,8 +2062,10 @@ static void equipment_unequipShip( unsigned int wid, const char* str )
    }
 
    /* Remove all outfits. */
-   for (i=0; i<array_size(ship->outfits); i++) {
-      o = ship->outfits[i]->outfit;
+   for (int i=0; i<array_size(ship->outfits); i++) {
+      int ret;
+      const Outfit *ammo;
+      const Outfit *o = ship->outfits[i]->outfit;
 
       /* Skip null outfits. */
       if (o==NULL)

@@ -185,39 +185,39 @@ const char *ship_classToString( ShipClass class )
 
       /* Civilian. */
       case SHIP_CLASS_YACHT:
-         return gettext_noop("Yacht");
+         return N_("Yacht");
       case SHIP_CLASS_COURIER:
-         return gettext_noop("Courier");
+         return N_("Courier");
       case SHIP_CLASS_FREIGHTER:
-         return gettext_noop("Freighter");
+         return N_("Freighter");
       case SHIP_CLASS_BULK_CARRIER:
-         return gettext_noop("Bulk Carrier");
+         return N_("Bulk Carrier");
       case SHIP_CLASS_ARMOURED_TRANSPORT:
-         return gettext_noop("Armoured Transport");
+         return N_("Armoured Transport");
 
       /* Military. */
       case SHIP_CLASS_SCOUT:
-         return gettext_noop("Scout");
+         return N_("Scout");
       case SHIP_CLASS_INTERCEPTOR:
-         return gettext_noop("Interceptor");
+         return N_("Interceptor");
       case SHIP_CLASS_FIGHTER:
-         return gettext_noop("Fighter");
+         return N_("Fighter");
       case SHIP_CLASS_BOMBER:
-         return gettext_noop("Bomber");
+         return N_("Bomber");
       case SHIP_CLASS_CORVETTE:
-         return gettext_noop("Corvette");
+         return N_("Corvette");
       case SHIP_CLASS_DESTROYER:
-         return gettext_noop("Destroyer");
+         return N_("Destroyer");
       case SHIP_CLASS_CRUISER:
-         return gettext_noop("Cruiser");
+         return N_("Cruiser");
       case SHIP_CLASS_BATTLESHIP:
-         return gettext_noop("Battleship");
+         return N_("Battleship");
       case SHIP_CLASS_CARRIER:
-         return gettext_noop("Carrier");
+         return N_("Carrier");
 
       /* Unknown. */
       default:
-         return gettext_noop("Unknown");
+         return N_("Unknown");
    }
 }
 
@@ -979,8 +979,8 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
  */
 int ships_load (void)
 {
+   char **ship_files;
    size_t nfiles;
-   char **ship_files, *file;
 
    /* Validity. */
    ss_check();
@@ -993,6 +993,7 @@ int ships_load (void)
       ship_stack = array_create_size(Ship, nfiles);
 
    for (int i=0; ship_files[i]!=NULL; i++) {
+      char *file;
       xmlNodePtr node;
       xmlDocPtr doc;
 

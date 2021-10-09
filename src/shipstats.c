@@ -251,9 +251,7 @@ ShipStatList* ss_listFromXML( xmlNodePtr node )
  */
 int ss_check (void)
 {
-   ShipStatsType i;
-
-   for (i=0; i<=SS_TYPE_SENTINEL; i++) {
+   for (ShipStatsType i=0; i<=SS_TYPE_SENTINEL; i++) {
       if (ss_lookup[i].type != i) {
          WARN(_("ss_lookup: %s should have id %d but has %d"),
                ss_lookup[i].name, i, ss_lookup[i].type );
@@ -270,18 +268,14 @@ int ss_check (void)
  */
 int ss_statsInit( ShipStats *stats )
 {
-   int i;
    char *ptr;
-   char *fieldptr;
-   double *dbl;
-   const ShipStatsLookup *sl;
 
    /* Clear the memory. */
    memset( stats, 0, sizeof(ShipStats) );
 
    ptr = (char*) stats;
-   for (i=0; i<SS_TYPE_SENTINEL; i++) {
-      sl = &ss_lookup[ i ];
+   for (int i=0; i<SS_TYPE_SENTINEL; i++) {
+      const ShipStatsLookup *sl = &ss_lookup[ i ];
 
       /* Only want valid names. */
       if (sl->name == NULL)
@@ -290,7 +284,8 @@ int ss_statsInit( ShipStats *stats )
       /* Handle doubles. */
       switch (sl->data) {
          case SS_DATA_TYPE_DOUBLE:
-            fieldptr = &ptr[ sl->offset ];
+            double *dbl;
+            char *fieldptr = &ptr[ sl->offset ];
             memcpy(&dbl, &fieldptr, sizeof(double*));
             *dbl  = 1.0;
             break;
@@ -316,19 +311,17 @@ int ss_statsInit( ShipStats *stats )
  */
 int ss_statsMerge( ShipStats *dest, const ShipStats *src )
 {
-   int i;
    int *destint;
    const int *srcint;
    double *destdbl;
    const double *srcdbl;
    char *destptr;
    const char *srcptr;
-   const ShipStatsLookup *sl;
 
    destptr = (char*) dest;
    srcptr = (const char*) src;
-   for (i=0; i<SS_TYPE_SENTINEL; i++) {
-      sl = &ss_lookup[ i ];
+   for (int i=0; i<SS_TYPE_SENTINEL; i++) {
+      const ShipStatsLookup *sl = &ss_lookup[ i ];
 
       /* Only want valid names. */
       if (sl->name == NULL)
@@ -423,11 +416,8 @@ int ss_statsModSingle( ShipStats *stats, const ShipStatList* list )
  */
 int ss_statsModFromList( ShipStats *stats, const ShipStatList* list )
 {
-   int ret;
-   const ShipStatList *ll;
-
-   ret = 0;
-   for (ll = list; ll != NULL; ll = ll->next)
+   int ret = 0;
+   for (const ShipStatList *ll = list; ll != NULL; ll = ll->next)
       ret |= ss_statsModSingle( stats, ll );
 
    return ret;
@@ -468,8 +458,7 @@ size_t ss_offsetFromType( ShipStatsType type )
  */
 ShipStatsType ss_typeFromName( const char *name )
 {
-   int i;
-   for (i=0; i<SS_TYPE_SENTINEL; i++)
+   for (int i=0; i<SS_TYPE_SENTINEL; i++)
       if ((ss_lookup[i].name != NULL) && (strcmp(name,ss_lookup[i].name)==0))
          return ss_lookup[i].type;
 
@@ -625,17 +614,16 @@ int ss_statsListDesc( const ShipStatList *ll, char *buf, int len, int newline )
  */
 int ss_statsDesc( const ShipStats *s, char *buf, int len, int newline )
 {
-   int i, l, left;
+   int l, left;
    char *ptr;
    char *fieldptr;
    double *dbl;
    int *num;
-   const ShipStatsLookup *sl;
 
    l   = 0;
    ptr = (char*) s;
-   for (i=0; i<SS_TYPE_SENTINEL; i++) {
-      sl = &ss_lookup[ i ];
+   for (int i=0; i<SS_TYPE_SENTINEL; i++) {
+      const ShipStatsLookup *sl = &ss_lookup[ i ];
 
       /* Only want valid names. */
       if (sl->name == NULL)
@@ -842,9 +830,7 @@ static int ss_statsGetLuaInternal( lua_State *L, const ShipStats *s, ShipStatsTy
  */
 double ss_statsGet( const ShipStats *s, const char *name )
 {
-   ShipStatsType type;
-
-   type = ss_typeFromName( name );
+   ShipStatsType type = ss_typeFromName( name );
    if (type == SS_TYPE_NIL) {
       WARN(_("Unknown ship stat type '%s'!"), name );
       return 0;
@@ -878,13 +864,9 @@ int ss_statsGetLua( lua_State *L, const ShipStats *s, const char *name, int inte
  */
 int ss_statsGetLuaTable( lua_State *L, const ShipStats *s, int internal )
 {
-   int i;
-   const ShipStatsLookup *sl;
-
    lua_newtable(L);
-
-   for (i=0; i<SS_TYPE_SENTINEL; i++) {
-      sl = &ss_lookup[ i ];
+   for (int i=0; i<SS_TYPE_SENTINEL; i++) {
+      const ShipStatsLookup *sl = &ss_lookup[ i ];
 
       /* Only want valid names. */
       if (sl->name == NULL)
@@ -895,6 +877,5 @@ int ss_statsGetLuaTable( lua_State *L, const ShipStats *s, int internal )
       ss_statsGetLuaInternal( L, s, i, internal );
       lua_rawset( L, -3 );
    }
-
    return 0;
 }

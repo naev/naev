@@ -48,7 +48,7 @@
 
 #define XML_OUTFIT_TAG     "outfit"    /**< XML section identifier. */
 
-#define OUTFIT_SHORTDESC_MAX  1024 /**< Max length of the short description of the outfit. */
+#define OUTFIT_SHORTDESC_MAX  STRMAX_SHORT /**< Max length of the short description of the outfit. */
 
 
 /*
@@ -869,22 +869,22 @@ double outfit_cooldown( const Outfit* o )
 const char* outfit_getType( const Outfit* o )
 {
    const char* outfit_typename[] = {
-         N_("NULL"),
-         N_("Bolt Cannon"),
-         N_("Beam Cannon"),
-         N_("Bolt Turret"),
-         N_("Beam Turret"),
-         N_("Launcher"),
-         N_("Ammunition"),
-         N_("Turret Launcher"),
-         N_("Ship Modification"),
-         N_("Afterburner"),
-         N_("Fighter Bay"),
-         N_("Fighter"),
-         N_("Star Map"),
-         N_("Local Map"),
-         N_("GUI"),
-         N_("License"),
+      N_("NULL"),
+      N_("Bolt Cannon"),
+      N_("Beam Cannon"),
+      N_("Bolt Turret"),
+      N_("Beam Turret"),
+      N_("Launcher"),
+      N_("Ammunition"),
+      N_("Turret Launcher"),
+      N_("Ship Modification"),
+      N_("Afterburner"),
+      N_("Fighter Bay"),
+      N_("Fighter"),
+      N_("Star Map"),
+      N_("Local Map"),
+      N_("GUI"),
+      N_("License"),
    };
 
    /* Name override. */
@@ -1719,7 +1719,6 @@ if (o) WARN(_("Outfit '%s' missing/invalid '%s' element"), temp->name, s) /**< D
 static void outfit_parseSMod( Outfit* temp, const xmlNodePtr parent )
 {
    int l;
-   ShipStatList *ll;
    xmlNodePtr node = parent->children;
 
    /* Defaults. */
@@ -1739,6 +1738,8 @@ static void outfit_parseSMod( Outfit* temp, const xmlNodePtr parent )
    temp->u.mod.lua_cooldown   = LUA_NOREF;
 
    do { /* load all the data */
+      ShipStatList *ll;
+
       xml_onlyNodes(node);
       if (xml_isNode(node,"active")) {
          xmlr_attr_float(node, "cooldown", temp->u.mod.cooldown);
@@ -1789,7 +1790,6 @@ static void outfit_parseSMod( Outfit* temp, const xmlNodePtr parent )
  */
 static void outfit_parseSAfterburner( Outfit* temp, const xmlNodePtr parent )
 {
-   ShipStatList *ll;
    double C, area;
    size_t l;
    xmlNodePtr node = parent->children;
@@ -1804,6 +1804,8 @@ static void outfit_parseSAfterburner( Outfit* temp, const xmlNodePtr parent )
    temp->u.afb.speed  = 1.;
 
    do { /* parse the data */
+      ShipStatList *ll;
+
       xml_onlyNodes(node);
       xmlr_float(node,"rumble",temp->u.afb.rumble);
       if (xml_isNode(node,"sound_on")) {
@@ -1881,11 +1883,12 @@ if (o) WARN(_("Outfit '%s' missing/invalid '%s' element"), temp->name, s) /**< D
  */
 static void outfit_parseSFighterBay( Outfit *temp, const xmlNodePtr parent )
 {
-   ShipStatList *ll;
    size_t l;
    xmlNodePtr node = parent->children;
 
    do {
+      ShipStatList *ll;
+
       xml_onlyNodes(node);
       xmlr_int(node,"delay",temp->u.bay.delay);
       xmlr_int(node,"reload_time",temp->u.bay.reload_time);
@@ -2177,7 +2180,6 @@ static int outfit_parse( Outfit* temp, const char* file )
    char *prop, *desc_extra;
    const char *cprop;
    int group, l;
-   ShipStatList *ll;
 
    xmlDocPtr doc = xml_parsePhysFS( file );
    if (doc == NULL)
@@ -2285,6 +2287,8 @@ static int outfit_parse( Outfit* temp, const char* file )
       }
 
       if (xml_isNode(node,"stats")) {
+         ShipStatList *ll;
+
          cur = node->children;
          do {
             xml_onlyNodes(cur);
@@ -2433,7 +2437,7 @@ int outfit_load (void)
    /* First pass, loads up ammunition. */
    outfit_stack = array_create(Outfit);
    outfit_loadDir( OUTFIT_DATA_PATH );
-   array_shrink(&outfit_stack);
+   array_shrink( &outfit_stack );
    noutfits = array_size(outfit_stack);
    qsort( outfit_stack, noutfits, sizeof(Outfit), outfit_cmp );
 
