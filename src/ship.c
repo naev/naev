@@ -269,7 +269,7 @@ credits_t ship_buyPrice( const Ship* s )
 {
    /* Get base price. */
    credits_t price = ship_basePrice(s);
-   
+
    for (int i=0; i<array_size(s->outfit_structure); i++) {
       const Outfit *o = s->outfit_structure[i].data;
       if (o != NULL)

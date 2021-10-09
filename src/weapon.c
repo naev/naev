@@ -813,7 +813,7 @@ static void weapon_render( Weapon* w, const double dt )
             gl_gameToScreenCoords( &x, &y, w->solid->pos.x, w->solid->pos.y );
             gfx = outfit_gfx(w->outfit);
             r = gfx->sw * z * 0.75; /* Assume square. */
-  
+
             st = 1. - w->timer2 / w->paramf;
             col_blend( &col, &cYellow, &cRed, st );
             col.a = 0.5;
