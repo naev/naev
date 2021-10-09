@@ -76,14 +76,11 @@ static int ship_cmp( const void *p1, const void *p2 )
  */
 const Ship* ship_get( const char* name )
 {
-   const Ship s = {.name = (char*)name };
-   Ship* found = bsearch( &s, ship_stack, array_size(ship_stack), sizeof(Ship), ship_cmp );
-   if (found != NULL)
-      return found;
-   WARN(_("Ship %s does not exist"), name);
-   return NULL;
+   const Ship *s = ship_getW( name );
+   if (s==NULL)
+      WARN(_("Ship %s does not exist"), name);
+   return s;
 }
-
 
 /**
  * @brief Gets a ship based on its name without warning.
@@ -93,25 +90,16 @@ const Ship* ship_get( const char* name )
  */
 const Ship* ship_getW( const char* name )
 {
-   Ship *temp;
-   int i;
-
-   temp = ship_stack;
-   for (i=0; i < array_size(ship_stack); i++)
-      if (strcmp(temp[i].name, name)==0)
-         return &temp[i];
-
-   return NULL;
+   const Ship s = {.name = (char*)name };
+   return bsearch( &s, ship_stack, array_size(ship_stack), sizeof(Ship), ship_cmp );
 }
-
 
 /**
  * @brief Checks to see if an ship exists matching name (case insensitive).
  */
 const char *ship_existsCase( const char* name )
 {
-   int i;
-   for (i=0; i<array_size(ship_stack); i++)
+   for (int i=0; i<array_size(ship_stack); i++)
       if (strcasecmp(name,ship_stack[i].name)==0)
          return ship_stack[i].name;
    return NULL;
@@ -233,7 +221,6 @@ const char *ship_classToString( ShipClass class )
    }
 }
 
-
 #define STRTOSHIP( x, y ) if (strcmp(str,x)==0) return y
 /**
  * @brief Gets the machine ship class identifier from a human readable string.
@@ -242,75 +229,59 @@ const char *ship_classToString( ShipClass class )
  */
 ShipClass ship_classFromString( const char* str )
 {
-   if ( str != NULL ) {
-      /* Civilian */
-      STRTOSHIP( "Yacht",              SHIP_CLASS_YACHT );
-      STRTOSHIP( "Courier",            SHIP_CLASS_COURIER );
-      STRTOSHIP( "Freighter",          SHIP_CLASS_FREIGHTER );
-      STRTOSHIP( "Bulk Carrier",       SHIP_CLASS_BULK_CARRIER );
-      STRTOSHIP( "Armoured Transport", SHIP_CLASS_ARMOURED_TRANSPORT );
+   if (str==NULL)
+      return SHIP_CLASS_NULL;
+   /* Civilian */
+   STRTOSHIP( "Yacht",              SHIP_CLASS_YACHT );
+   STRTOSHIP( "Courier",            SHIP_CLASS_COURIER );
+   STRTOSHIP( "Freighter",          SHIP_CLASS_FREIGHTER );
+   STRTOSHIP( "Bulk Carrier",       SHIP_CLASS_BULK_CARRIER );
+   STRTOSHIP( "Armoured Transport", SHIP_CLASS_ARMOURED_TRANSPORT );
 
-      /* Military */
-      STRTOSHIP( "Scout",              SHIP_CLASS_SCOUT );
-      STRTOSHIP( "Interceptor",        SHIP_CLASS_INTERCEPTOR );
-      STRTOSHIP( "Fighter",            SHIP_CLASS_FIGHTER );
-      STRTOSHIP( "Bomber",             SHIP_CLASS_BOMBER );
-      STRTOSHIP( "Corvette",           SHIP_CLASS_CORVETTE );
-      STRTOSHIP( "Destroyer",          SHIP_CLASS_DESTROYER );
-      STRTOSHIP( "Cruiser",            SHIP_CLASS_CRUISER );
-      STRTOSHIP( "Battleship",         SHIP_CLASS_BATTLESHIP);
-      STRTOSHIP( "Carrier",            SHIP_CLASS_CARRIER );
-   }
+   /* Military */
+   STRTOSHIP( "Scout",              SHIP_CLASS_SCOUT );
+   STRTOSHIP( "Interceptor",        SHIP_CLASS_INTERCEPTOR );
+   STRTOSHIP( "Fighter",            SHIP_CLASS_FIGHTER );
+   STRTOSHIP( "Bomber",             SHIP_CLASS_BOMBER );
+   STRTOSHIP( "Corvette",           SHIP_CLASS_CORVETTE );
+   STRTOSHIP( "Destroyer",          SHIP_CLASS_DESTROYER );
+   STRTOSHIP( "Cruiser",            SHIP_CLASS_CRUISER );
+   STRTOSHIP( "Battleship",         SHIP_CLASS_BATTLESHIP);
+   STRTOSHIP( "Carrier",            SHIP_CLASS_CARRIER );
 
-  /* Unknown */
-  return SHIP_CLASS_NULL;
+   /* Unknown */
+   return SHIP_CLASS_NULL;
 }
 #undef STRTOSHIP
-
 
 /**
  * @brief Gets the ship's base price (no outfits).
  */
 credits_t ship_basePrice( const Ship* s )
 {
-   credits_t price;
-
-   /* Get ship base price. */
-   price = s->price;
-
-   if (price < 0) {
-      WARN(_("Negative ship base price!"));
-      price = 0;
-   }
-
-   return price;
+   return s->price;
 }
-
 
 /**
  * @brief The ship buy price, includes default outfits.
  */
 credits_t ship_buyPrice( const Ship* s )
 {
-   int i;
-   credits_t price;
-   const Outfit *o;
-
    /* Get base price. */
-   price = ship_basePrice(s);
-
-   for (i=0; i<array_size(s->outfit_structure); i++) {
-      o = s->outfit_structure[i].data;
+   credits_t price = ship_basePrice(s);
+   
+   for (int i=0; i<array_size(s->outfit_structure); i++) {
+      const Outfit *o = s->outfit_structure[i].data;
       if (o != NULL)
          price += o->price;
    }
-   for (i=0; i<array_size(s->outfit_utility); i++) {
-      o = s->outfit_utility[i].data;
+   for (int i=0; i<array_size(s->outfit_utility); i++) {
+      const Outfit *o = s->outfit_utility[i].data;
       if (o != NULL)
          price += o->price;
    }
-   for (i=0; i<array_size(s->outfit_weapon); i++) {
-      o = s->outfit_weapon[i].data;
+   for (int i=0; i<array_size(s->outfit_weapon); i++) {
+      const Outfit *o = s->outfit_weapon[i].data;
       if (o != NULL)
          price += o->price;
    }
@@ -553,12 +524,12 @@ static int ship_loadGFX( Ship *temp, const char *buf, int sx, int sy, int engine
  */
 static int ship_loadPLG( Ship *temp, const char *buf, int size_hint )
 {
-   char *file;
+   char file[PATH_MAX];
    CollPoly *polygon;
    xmlDocPtr doc;
-   xmlNodePtr node, cur;
+   xmlNodePtr node;
 
-   asprintf( &file, "%s%s.xml", SHIP_POLYGON_PATH, buf );
+   snprintf( file, sizeof(file), "%s%s.xml", SHIP_POLYGON_PATH, buf );
 
    /* See if the file does exist. */
    if (!PHYSFS_exists(file)) {
@@ -566,7 +537,6 @@ static int ship_loadPLG( Ship *temp, const char *buf, int size_hint )
                Please use the script 'polygon_from_sprite.py' if sprites are used,\n \
                And 'polygonSTL.py' if 3D model is used in game.\n \
                These files can be found in Naev's artwork repo."), file);
-      free(file);
       return 0;
    }
 
@@ -574,7 +544,6 @@ static int ship_loadPLG( Ship *temp, const char *buf, int size_hint )
    doc  = xml_parsePhysFS( file );
 
    if (doc == NULL) {
-      free(file);
       return 0;
    }
 
@@ -582,15 +551,12 @@ static int ship_loadPLG( Ship *temp, const char *buf, int size_hint )
    if (node == NULL) {
       xmlFreeDoc(doc);
       WARN(_("Malformed %s file: does not contain elements"), file);
-      free(file);
       return 0;
    }
 
-   free(file);
-
    do { /* load the polygon data */
       if (xml_isNode(node,"polygons")) {
-         cur = node->children;
+         xmlNodePtr cur = node->children;
          temp->polygon = array_create_size( CollPoly, size_hint );
          do {
             if (xml_isNode(cur,"polygon")) {
@@ -1015,9 +981,6 @@ int ships_load (void)
 {
    size_t nfiles;
    char **ship_files, *file;
-   int i;
-   xmlNodePtr node;
-   xmlDocPtr doc;
 
    /* Validity. */
    ss_check();
@@ -1029,7 +992,10 @@ int ships_load (void)
    if (ship_stack == NULL)
       ship_stack = array_create_size(Ship, nfiles);
 
-   for (i=0; ship_files[i]!=NULL; i++) {
+   for (int i=0; ship_files[i]!=NULL; i++) {
+      xmlNodePtr node;
+      xmlDocPtr doc;
+
       if (!ndata_matchExt( ship_files[i], "xml" ))
          continue;
 
@@ -1079,10 +1045,8 @@ int ships_load (void)
  */
 void ships_free (void)
 {
-   Ship *s;
-   int i, j;
-   for (i = 0; i < array_size(ship_stack); i++) {
-      s = &ship_stack[i];
+   for (int i=0; i < array_size(ship_stack); i++) {
+      Ship *s = &ship_stack[i];
 
       /* Free stored strings. */
       free(s->name);
@@ -1095,11 +1059,11 @@ void ships_free (void)
       free(s->desc_stats);
 
       /* Free outfits. */
-      for (j=0; j<array_size(s->outfit_structure); j++)
+      for (int j=0; j<array_size(s->outfit_structure); j++)
          outfit_freeSlot( &s->outfit_structure[j].slot );
-      for (j=0; j<array_size(s->outfit_utility); j++)
+      for (int j=0; j<array_size(s->outfit_utility); j++)
          outfit_freeSlot( &s->outfit_utility[j].slot );
-      for (j=0; j<array_size(s->outfit_weapon); j++)
+      for (int j=0; j<array_size(s->outfit_weapon); j++)
          outfit_freeSlot( &s->outfit_weapon[j].slot );
       array_free(s->outfit_structure);
       array_free(s->outfit_utility);
@@ -1114,12 +1078,12 @@ void ships_free (void)
       gl_freeTexture(s->gfx_target);
       gl_freeTexture(s->gfx_store);
       free(s->gfx_comm);
-      for (j=0; j<array_size(s->gfx_overlays); j++)
+      for (int j=0; j<array_size(s->gfx_overlays); j++)
          gl_freeTexture(s->gfx_overlays[j]);
       array_free(s->gfx_overlays);
 
       /* Free collision polygons. */
-      for (j=0; j<array_size(s->polygon); j++) {
+      for (int j=0; j<array_size(s->polygon); j++) {
          free(s->polygon[j].x);
          free(s->polygon[j].y);
       }

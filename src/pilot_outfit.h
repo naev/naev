@@ -31,18 +31,17 @@ int pilot_maxAmmoO( const Pilot* p, const Outfit *o );
 void pilot_fillAmmo( Pilot* pilot );
 
 /* Checks. */
-int pilot_slotsCheckSafety( Pilot *p );
-int pilot_slotsCheckRequired( Pilot *p );
-const char* pilot_checkSpaceworthy( Pilot *p );
-int pilot_reportSpaceworthy( Pilot *p, char buf[], int buffSize );
-const char* pilot_canEquip( Pilot *p, PilotOutfitSlot *s, const Outfit *o );
+int pilot_slotsCheckSafety( const Pilot *p );
+int pilot_slotsCheckRequired( const Pilot *p );
+const char* pilot_checkSpaceworthy( const Pilot *p );
+int pilot_reportSpaceworthy( const Pilot *p, char *buf, int buffSize );
+const char* pilot_canEquip( const Pilot *p, const PilotOutfitSlot *s, const Outfit *o );
 
 /* Lock-ons. */
 void pilot_lockUpdateSlot( Pilot *p, PilotOutfitSlot *o, Pilot *t, double *a, double dt );
 void pilot_lockClear( Pilot *p );
 
 /* Other. */
-char* pilot_getOutfits( const Pilot *pilot );
 void pilot_calcStats( Pilot *pilot );
 void pilot_updateMass( Pilot *pilot );
 void pilot_healLanded( Pilot *pilot );

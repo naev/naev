@@ -35,7 +35,7 @@
 /*
  * Prototypes.
  */
-static int pilot_hasOutfitLimit( Pilot *p, const char *limit );
+static int pilot_hasOutfitLimit( const Pilot *p, const char *limit );
 
 
 /**
@@ -125,11 +125,8 @@ void pilot_lockUpdateSlot( Pilot *p, PilotOutfitSlot *o, Pilot *t, double *a, do
  */
 void pilot_lockClear( Pilot *p )
 {
-   int i;
-   PilotOutfitSlot *o;
-
-   for (i=0; i<array_size(p->outfits); i++) {
-      o = p->outfits[i];
+   for (int i=0; i<array_size(p->outfits); i++) {
+      PilotOutfitSlot *o = p->outfits[i];
       if (o->outfit == NULL)
          continue;
       if (!outfit_isSeeker(o->outfit))
@@ -269,8 +266,7 @@ int pilot_dock( Pilot *p, Pilot *target )
  */
 int pilot_hasDeployed( Pilot *p )
 {
-   int i;
-   for (i=0; i<array_size(p->outfits); i++) {
+   for (int i=0; i<array_size(p->outfits); i++) {
       if (p->outfits[i]->outfit == NULL)
          continue;
       if (outfit_isFighterBay(p->outfits[i]->outfit))
@@ -390,10 +386,8 @@ int pilot_addOutfitTest( Pilot* pilot, const Outfit* outfit, PilotOutfitSlot *s,
  */
 int pilot_addOutfit( Pilot* pilot, const Outfit* outfit, PilotOutfitSlot *s )
 {
-   int ret;
-
    /* Test to see if outfit can be added. */
-   ret = pilot_addOutfitTest( pilot, outfit, s, 1 );
+   int ret = pilot_addOutfitTest( pilot, outfit, s, 1 );
    if (ret != 0)
       return -1;
 
@@ -466,10 +460,8 @@ int pilot_rmOutfitRaw( Pilot* pilot, PilotOutfitSlot *s )
  */
 int pilot_rmOutfit( Pilot* pilot, PilotOutfitSlot *s )
 {
-   const char *str;
    int ret;
-
-   str = pilot_canEquip( pilot, s, NULL );
+   const char *str = pilot_canEquip( pilot, s, NULL );
    if (str != NULL) {
       WARN(_("Pilot '%s': Trying to remove outfit but %s"),
             pilot->name, str );
@@ -483,55 +475,43 @@ int pilot_rmOutfit( Pilot* pilot, PilotOutfitSlot *s )
 
    return ret;
 }
-//TODO: fix comment to conform to Naev's style and represent changes
+
 /**
  * @brief Pilot slot safety check - makes sure stats are safe.
  *
  *    @param p Pilot to check.
  *    @return 0 if a slot doesn't fit, !0 otherwise.
  */
-int pilot_slotsCheckSafety( Pilot *p )
+int pilot_slotsCheckSafety( const Pilot *p )
 {
-   int i;
-   for (i=0; i<array_size(p->outfits); i++)
+   for (int i=0; i<array_size(p->outfits); i++)
       if ((p->outfits[i]->outfit != NULL) &&
             !outfit_fitsSlot( p->outfits[i]->outfit, &p->outfits[i]->sslot->slot ))
          return 0;
    return 1;
 }
-//TODO: fix comment to conform to Naev's style and represent changes
+
 /**
  * @brief Pilot required (core) slot filled check - makes sure they are filled.
  *
  *    @param p Pilot to check.
  *    @return 0 if a slot is missing, !0 otherwise.
  */
-int pilot_slotsCheckRequired( Pilot *p )
+int pilot_slotsCheckRequired( const Pilot *p )
 {
-   int i;
-
-   for (i=0; i < array_size(p->outfit_structure); i++)
-      if (p->outfit_structure[i].sslot->required && p->outfit_structure[i].outfit == NULL)
+   for (int i=0; i < array_size(p->outfits); i++)
+      if (p->outfits[i]->sslot->required && p->outfits[i]->outfit == NULL)
          return 0;
-
-   for (i=0; i < array_size(p->outfit_utility); i++)
-      if (p->outfit_utility[i].sslot->required && p->outfit_utility[i].outfit == NULL)
-         return 0;
-
-   for (i=0; i < array_size(p->outfit_weapon); i++)
-      if (p->outfit_weapon[i].sslot->required && p->outfit_weapon[i].outfit == NULL)
-         return 0;
-
    return 1;
 }
-//TODO: fix comment to conform to Naev's style and represent change
+
 /**
  * @brief Pilot safety check - makes sure stats are safe.
  *
  *    @param p Pilot to check.
  *    @return The reason why the pilot is not safe (or NULL if safe).
  */
-const char* pilot_checkSpaceworthy( Pilot *p )
+const char* pilot_checkSpaceworthy( const Pilot *p )
 {
    if (!pilot_slotsCheckSafety(p))
       return _("Doesn't fit slot");
@@ -585,9 +565,9 @@ const char* pilot_checkSpaceworthy( Pilot *p )
  *    @param bufSize Size of the buffer.
  *    @return Number of issues encountered.
  */
-int pilot_reportSpaceworthy( Pilot *p, char buf[], int bufSize )
+int pilot_reportSpaceworthy( const Pilot *p, char *buf, int bufSize )
 {
-   #define SPACEWORTHY_CHECK(cond,msg) \
+#define SPACEWORTHY_CHECK(cond,msg) \
    if (cond) { ret++; \
       pos += scnprintf( &buf[pos], bufSize-pos, (msg) ); }
    int pos = 0;
@@ -641,12 +621,10 @@ int pilot_reportSpaceworthy( Pilot *p, char buf[], int bufSize )
  *    @param limit Outfit (limiting) type to check.
  *    @return the amount of outfits of this type the pilot has.
  */
-static int pilot_hasOutfitLimit( Pilot *p, const char *limit )
+static int pilot_hasOutfitLimit( const Pilot *p, const char *limit )
 {
-   int i;
-   const Outfit *o;
-   for (i = 0; i<array_size(p->outfits); i++) {
-      o = p->outfits[i]->outfit;
+   for (int i = 0; i<array_size(p->outfits); i++) {
+      const Outfit *o = p->outfits[i]->outfit;
       if (o == NULL)
          continue;
       if ((o->limit != NULL) && (strcmp(o->limit,limit)==0))
@@ -663,7 +641,7 @@ static int pilot_hasOutfitLimit( Pilot *p, const char *limit )
  *    @param o Outfit to check (NULL if being removed).
  *    @return NULL if can swap, or error message if can't.
  */
-const char* pilot_canEquip( Pilot *p, PilotOutfitSlot *s, const Outfit *o )
+const char* pilot_canEquip( const Pilot *p, const PilotOutfitSlot *s, const Outfit *o )
 {
    /* Just in case. */
    if ((p==NULL) || (s==NULL))
@@ -702,7 +680,6 @@ const char* pilot_canEquip( Pilot *p, PilotOutfitSlot *s, const Outfit *o )
 int pilot_addAmmo( Pilot* pilot, PilotOutfitSlot *s, const Outfit* ammo, int quantity )
 {
    int q, max;
-   (void) pilot;
 
    /* Failure cases. */
    if (s->outfit == NULL) {
@@ -762,7 +739,6 @@ int pilot_addAmmo( Pilot* pilot, PilotOutfitSlot *s, const Outfit* ammo, int qua
  */
 int pilot_rmAmmo( Pilot* pilot, PilotOutfitSlot *s, int quantity )
 {
-   (void) pilot;
    int q;
 
    /* Failure cases. */
@@ -797,21 +773,20 @@ int pilot_rmAmmo( Pilot* pilot, PilotOutfitSlot *s, int quantity )
  *    @param pilot Pilot to count the ammo on
  *    @@return The integer count of ammo units on pilot
  */
-int pilot_countAmmo( const Pilot* pilot )
+int pilot_countAmmo( const Pilot *pilot )
 {
-   int nammo = 0, i;
-   PilotOutfitSlot* po;
-   const Outfit* outfit;
-   for (i=0; i<array_size(pilot->outfits); i++) {
-     po = pilot->outfits[i];
-     if (po == NULL)
-        continue;
-     outfit = po->outfit;
-     if (outfit == NULL)
-        continue;
-     if (!outfit_isLauncher(po->outfit))
-        continue;
-     nammo += po->u.ammo.quantity;
+   int nammo = 0;
+   for (int i=0; i<array_size(pilot->outfits); i++) {
+      const Outfit* outfit;
+      PilotOutfitSlot* po = pilot->outfits[i];
+      if (po == NULL)
+         continue;
+      outfit = po->outfit;
+      if (outfit == NULL)
+         continue;
+      if (!outfit_isLauncher(po->outfit))
+         continue;
+      nammo += po->u.ammo.quantity;
    }
    return nammo;
 }
@@ -823,31 +798,30 @@ int pilot_countAmmo( const Pilot* pilot )
  *    @param pilot Pilot to get the count from
  *    @@return An integer, the max amount of ammo that can be held.
  */
-int pilot_maxAmmo( const Pilot* pilot )
+int pilot_maxAmmo( const Pilot *pilot )
 {
-  int max = 0, i;
-  PilotOutfitSlot* po;
-  const Outfit* outfit;
-  for (i=0; i<array_size(pilot->outfits); i++) {
-     po = pilot->outfits[i];
-     if (po == NULL)
-        continue;
-     outfit = po->outfit;
-     if (outfit == NULL)
-        continue;
-     if (!outfit_isLauncher(outfit))
-        continue;
-     max += outfit->u.lau.amount;
-  }
-  max = round( (double)max * pilot->stats.ammo_capacity );
-  return max;
+   int max = 0;
+   for (int i=0; i<array_size(pilot->outfits); i++) {
+      const Outfit* outfit;
+      PilotOutfitSlot* po = pilot->outfits[i];
+      if (po == NULL)
+         continue;
+      outfit = po->outfit;
+      if (outfit == NULL)
+         continue;
+      if (!outfit_isLauncher(outfit))
+         continue;
+      max += outfit->u.lau.amount;
+   }
+   max = round( (double)max * pilot->stats.ammo_capacity );
+   return max;
 }
 
 
 /**
  * @brief Gets the maximum available ammo for a pilot for a specific outfit.
  */
-int pilot_maxAmmoO( const Pilot* p, const Outfit *o )
+int pilot_maxAmmoO( const Pilot *p, const Outfit *o )
 {
    int max;
    if (o==NULL)
@@ -869,11 +843,10 @@ int pilot_maxAmmoO( const Pilot* p, const Outfit *o )
  */
 void pilot_fillAmmo( Pilot* pilot )
 {
-   int i, ammo_threshold;
-   const Outfit *o, *ammo;
-
-   for (i=0; i<array_size(pilot->outfits); i++) {
-      o = pilot->outfits[i]->outfit;
+   for (int i=0; i<array_size(pilot->outfits); i++) {
+      int ammo_threshold;
+      const Outfit *ammo;
+      const Outfit *o = pilot->outfits[i]->outfit;
 
       /* Must be valid outfit. */
       if (o == NULL)
@@ -899,48 +872,12 @@ void pilot_fillAmmo( Pilot* pilot )
 
 
 /**
- * @brief Gets all the outfits in nice (localized) text form.
- *
- *    @param pilot Pilot to get the outfits from.
- *    @return A list of all the outfits in a nice form (in the currently set language).
- */
-char* pilot_getOutfits( const Pilot* pilot )
-{
-   int i;
-   char *buf;
-   int p, len;
-
-   len = 1024;
-
-   buf = malloc(len);
-   buf[0] = '\0';
-   p = 0;
-   for (i=1; i<array_size(pilot->outfits); i++) {
-      if (pilot->outfits[i]->outfit == NULL)
-         continue;
-      p += scnprintf( &buf[p], len-p, (p==0) ? "%s" : ", %s",
-            _(pilot->outfits[i]->outfit->name) );
-   }
-
-   if (p==0)
-      p += scnprintf( &buf[p], len-p, _("None") );
-
-   (void)p;
-
-   return buf;
-}
-
-
-/**
  * @brief Recalculates the pilot's stats based on his outfits.
  *
  *    @param pilot Pilot to recalculate his stats.
  */
 void pilot_calcStats( Pilot* pilot )
 {
-   int i;
-   const Outfit* o;
-   PilotOutfitSlot *slot;
    double ac, sc, ec, tm; /* temporary health coefficients to set */
    ShipStats *s;
 
@@ -986,9 +923,9 @@ void pilot_calcStats( Pilot* pilot )
     * Now add outfit changes
     */
    pilot->mass_outfit   = 0.;
-   for (i=0; i<array_size(pilot->outfits); i++) {
-      slot = pilot->outfits[i];
-      o    = slot->outfit;
+   for (int i=0; i<array_size(pilot->outfits); i++) {
+      PilotOutfitSlot *slot = pilot->outfits[i];
+      const Outfit* o       = slot->outfit;
 
       /* Outfit must exist. */
       if (o==NULL)
@@ -1137,7 +1074,6 @@ void pilot_calcStats( Pilot* pilot )
       player_resetSpeed();
 }
 
-
 /**
  * @brief Cures the pilot as if he was landed.
  */
@@ -1151,7 +1087,6 @@ void pilot_healLanded( Pilot *pilot )
    pilot->stimer = 0.;
    pilot->sbonus = 0.;
 }
-
 
 /**
  * @brief Updates the pilot stats after mass change.
@@ -1186,7 +1121,6 @@ void pilot_updateMass( Pilot *pilot )
    /* Need to recalculate electronic warfare mass change. */
    pilot_ewUpdateStatic( pilot );
 }
-
 
 /**
  * @brief Checks to see if a slot has an active outfit that can be toggleable.
@@ -1324,10 +1258,9 @@ int pilot_outfitLInit( Pilot *pilot, PilotOutfitSlot *po )
  */
 void pilot_outfitLUpdate( Pilot *pilot, double dt )
 {
-   PilotOutfitSlot *po;
    pilotoutfit_modified = 0;
    for (int i=0; i<array_size(pilot->outfits); i++) {
-      po = pilot->outfits[i];
+      PilotOutfitSlot *po = pilot->outfits[i];
       if (po->outfit==NULL || !outfit_isMod(po->outfit))
          continue;
       if (po->outfit->u.mod.lua_update == LUA_NOREF)
@@ -1361,10 +1294,9 @@ void pilot_outfitLUpdate( Pilot *pilot, double dt )
  */
 void pilot_outfitLOutfofenergy( Pilot *pilot )
 {
-   PilotOutfitSlot *po;
    pilotoutfit_modified = 0;
    for (int i=0; i<array_size(pilot->outfits); i++) {
-      po = pilot->outfits[i];
+      PilotOutfitSlot *po = pilot->outfits[i];
       if (po->outfit==NULL || !outfit_isMod(po->outfit))
          continue;
       if (po->outfit->u.mod.lua_outofenergy == LUA_NOREF)
@@ -1400,10 +1332,9 @@ void pilot_outfitLOutfofenergy( Pilot *pilot )
  */
 void pilot_outfitLOnhit( Pilot *pilot, double armour, double shield, unsigned int attacker )
 {
-   PilotOutfitSlot *po;
    pilotoutfit_modified = 0;
    for (int i=0; i<array_size(pilot->outfits); i++) {
-      po = pilot->outfits[i];
+      PilotOutfitSlot *po = pilot->outfits[i];
       if (po->outfit==NULL || !outfit_isMod(po->outfit))
          continue;
       if (po->outfit->u.mod.lua_onhit == LUA_NOREF)
@@ -1476,10 +1407,9 @@ int pilot_outfitLOntoggle( Pilot *pilot, PilotOutfitSlot *po, int on )
  */
 void pilot_outfitLCooldown( Pilot *pilot, int done, int success, double timer )
 {
-   PilotOutfitSlot *po;
    pilotoutfit_modified = 0;
    for (int i=0; i<array_size(pilot->outfits); i++) {
-      po = pilot->outfits[i];
+      PilotOutfitSlot *po = pilot->outfits[i];
       if (po->outfit==NULL || !outfit_isMod(po->outfit))
          continue;
       if (po->outfit->u.mod.lua_cooldown == LUA_NOREF)
@@ -1650,10 +1580,9 @@ void pilot_outfitLOnscanned( Pilot *pilot, const Pilot *scanner )
  */
 void pilot_outfitLCleanup( Pilot *pilot )
 {
-   PilotOutfitSlot *po;
    pilotoutfit_modified = 0;
    for (int i=0; i<array_size(pilot->outfits); i++) {
-      po = pilot->outfits[i];
+      PilotOutfitSlot *po = pilot->outfits[i];
       if (po->outfit==NULL || !outfit_isMod(po->outfit))
          continue;
       if (po->outfit->u.mod.lua_cleanup == LUA_NOREF)

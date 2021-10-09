@@ -109,10 +109,8 @@ void pilot_heatCalcSlot( PilotOutfitSlot *o )
  */
 void pilot_heatReset( Pilot *p )
 {
-   int i;
-
    p->heat_T = CONST_SPACE_STAR_TEMP;
-   for (i=0; i<array_size(p->outfits); i++)
+   for (int i=0; i<array_size(p->outfits); i++)
       p->outfits[i]->heat_T = CONST_SPACE_STAR_TEMP;
 }
 

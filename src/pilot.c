@@ -2310,7 +2310,7 @@ void pilot_update( Pilot* pilot, double dt )
    if (pilot_isFlag(pilot, PILOT_REFUELBOARDING))
       pilot_refuel(pilot, dt);
 
-   /* Pilot is boarding its target.  Hack to match speeds. */
+   /* Pilot is boarding its target. Hack to match speeds. */
    if (pilot_isFlag(pilot, PILOT_BOARDING)) {
       if (target==NULL)
          pilot_rmFlag(pilot, PILOT_BOARDING);
@@ -2707,8 +2707,7 @@ static void pilot_refuel( Pilot *p, double dt )
  */
 ntime_t pilot_hyperspaceDelay( Pilot *p )
 {
-   int stu;
-   stu = (int)(NT_PERIOD_SECONDS * p->stats.jump_delay);
+   int stu = (int)(NT_PERIOD_SECONDS * p->stats.jump_delay);
    return ntime_create( 0, 0, stu );
 }
 
@@ -2721,8 +2720,7 @@ ntime_t pilot_hyperspaceDelay( Pilot *p )
  */
 void pilot_untargetAsteroid( int anchor, int asteroid )
 {
-   int i;
-   for (i=0; i < array_size(pilot_stack); i++) {
+   for (int i=0; i < array_size(pilot_stack); i++) {
       if ((pilot_stack[i]->nav_asteroid == asteroid) && (pilot_stack[i]->nav_anchor == anchor)) {
          pilot_stack[i]->nav_asteroid = -1;
          pilot_stack[i]->nav_anchor   = -1;
@@ -2736,9 +2734,8 @@ void pilot_untargetAsteroid( int anchor, int asteroid )
  */
 int pilot_numOutfit( const Pilot *p, const Outfit *o )
 {
-   int i, q;
-   q = 0;
-   for (i=0; i<array_size(p->outfits); i++) {
+   int q = 0;
+   for (int i=0; i<array_size(p->outfits); i++) {
       if (p->outfits[i]->outfit == o)
          q++;
    }
@@ -2815,8 +2812,7 @@ static void pilot_init( Pilot* pilot, const Ship* ship, const char* name, int fa
       const double dir, const Vector2d* pos, const Vector2d* vel,
       const PilotFlags flags, unsigned int dockpilot, int dockslot )
 {
-   int i, j;
-   PilotOutfitSlot *dslot, *slot;
+   PilotOutfitSlot *dslot;
    PilotOutfitSlot **pilot_list_ptr[] = { &pilot->outfit_structure, &pilot->outfit_utility, &pilot->outfit_weapon };
    ShipOutfitSlot *ship_list[] = { ship->outfit_structure, ship->outfit_utility, ship->outfit_weapon };
 
@@ -2856,10 +2852,10 @@ static void pilot_init( Pilot* pilot, const Ship* ship, const char* name, int fa
    /* Allocate outfit memory. */
    pilot->outfits  = array_create( PilotOutfitSlot* );
    /* First pass copy data. */
-   for (i=0; i<3; i++) {
+   for (int i=0; i<3; i++) {
       *pilot_list_ptr[i] = array_create_size( PilotOutfitSlot, array_size(ship_list[i]) );
-      for (j=0; j<array_size(ship_list[i]); j++) {
-         slot = &array_grow( pilot_list_ptr[i] );
+      for (int j=0; j<array_size(ship_list[i]); j++) {
+         PilotOutfitSlot *slot = &array_grow( pilot_list_ptr[i] );
          memset( slot, 0, sizeof(PilotOutfitSlot) );
          slot->id    = array_size(pilot->outfits);
          slot->sslot = &ship_list[i][j];
@@ -2905,7 +2901,7 @@ static void pilot_init( Pilot* pilot, const Ship* ship, const char* name, int fa
    const char *str = pilot_checkSpaceworthy( pilot );
    if (str != NULL) {
       DEBUG( _("Pilot '%s' failed safety check: %s"), pilot->name, str );
-      for (i=0; i<array_size(pilot->outfits); i++) {
+      for (int i=0; i<array_size(pilot->outfits); i++) {
          if (pilot->outfits[i]->outfit != NULL)
             DEBUG(_("   [%d] %s"), i, _(pilot->outfits[i]->outfit->name) );
       }
@@ -2969,9 +2965,7 @@ static void pilot_init( Pilot* pilot, const Ship* ship, const char* name, int fa
  */
 static void pilot_init_trails( Pilot* p )
 {
-   int n;
-
-   n = array_size(p->ship->trail_emitters);
+   int n = array_size(p->ship->trail_emitters);
    if (p->trail == NULL)
       p->trail = array_create_size( Trail_spfx*, n );
 
@@ -3034,8 +3028,7 @@ unsigned int pilot_create( const Ship* ship, const char* name, int faction, cons
 Pilot* pilot_createEmpty( const Ship* ship, const char* name,
       int faction, const char *ai, PilotFlags flags )
 {
-   Pilot* dyn;
-   dyn = malloc(sizeof(Pilot));
+   Pilot *dyn = malloc(sizeof(Pilot));
    if (dyn == NULL) {
       WARN(_("Unable to allocate memory"));
       return 0;
@@ -3071,11 +3064,8 @@ Pilot* pilot_replacePlayer( Pilot* after )
  */
 void pilot_choosePoint( Vector2d *vp, Planet **planet, JumpPoint **jump, int lf, int ignore_rules, int guerilla )
 {
-   int i, j, *ind;
-   int *fact;
-   double chance, limit;
+   int *ind;
    JumpPoint **validJumpPoints;
-   JumpPoint *target;
 
    /* Initialize. */
    *planet = NULL;
@@ -3084,7 +3074,7 @@ void pilot_choosePoint( Vector2d *vp, Planet **planet, JumpPoint **jump, int lf,
 
    /* Build landable planet table. */
    ind = array_create_size( int, array_size(cur_system->planets) );
-   for (i=0; i<array_size(cur_system->planets); i++)
+   for (int i=0; i<array_size(cur_system->planets); i++)
       if (planet_hasService(cur_system->planets[i],PLANET_SERVICE_INHABITED) &&
             !areEnemies(lf,cur_system->planets[i]->presence.faction))
          array_push_back( &ind, i );
@@ -3092,18 +3082,17 @@ void pilot_choosePoint( Vector2d *vp, Planet **planet, JumpPoint **jump, int lf,
    /* Build jumpable jump table. */
    validJumpPoints = array_create_size( JumpPoint*, array_size(cur_system->jumps) );
    if (array_size(cur_system->jumps) > 0) {
-      for (i=0; i<array_size(cur_system->jumps); i++) {
+      for (int i=0; i<array_size(cur_system->jumps); i++) {
          /* The jump into the system must not be exit-only, and unless
           * ignore_rules is set, must also be non-hidden
           * (excepted if the pilot is guerilla) and have faction
           * presence matching the pilot's on the remote side.
           */
-         target = cur_system->jumps[i].returnJump;
-
-         limit = 0.;
+         JumpPoint *target = cur_system->jumps[i].returnJump;
+         double limit = 0.;
          if (guerilla) {/* Test enemy presence on the other side. */
-            fact = faction_getEnemies( lf );
-            for (j=0; j<array_size(fact); j++)
+            int *fact = faction_getEnemies( lf );
+            for (int j=0; j<array_size(fact); j++)
                limit += system_getPresence( cur_system->jumps[i].target, fact[j] );
          }
 
@@ -3119,7 +3108,7 @@ void pilot_choosePoint( Vector2d *vp, Planet **planet, JumpPoint **jump, int lf,
       if (guerilla) /* Guerilla ships are created far away in deep space. */
          vect_pset ( vp, 1.5*cur_system->radius, RNGF()*2*M_PI );
       else if (array_size(cur_system->jumps) > 0) {
-         for (i=0; i<array_size(cur_system->jumps); i++)
+         for (int i=0; i<array_size(cur_system->jumps); i++)
             array_push_back(&validJumpPoints, cur_system->jumps[i].returnJump);
       }
       else {
@@ -3130,7 +3119,7 @@ void pilot_choosePoint( Vector2d *vp, Planet **planet, JumpPoint **jump, int lf,
 
    /* Calculate jump chance. */
    if (array_size(ind)>0 || array_size(validJumpPoints)>0) {
-      chance = array_size(validJumpPoints);
+      double chance = array_size(validJumpPoints);
       chance = chance / (chance + array_size(ind));
 
       /* Random jump in. */
@@ -3154,8 +3143,6 @@ void pilot_choosePoint( Vector2d *vp, Planet **planet, JumpPoint **jump, int lf,
  */
 void pilot_free( Pilot* p )
 {
-   int i;
-
    /* Clear up pilot hooks. */
    pilot_clearHooks(p);
 
@@ -3190,7 +3177,7 @@ void pilot_free( Pilot* p )
    luaL_unref(naevL, p->messages, LUA_REGISTRYINDEX);
 
    /* Free animated trail. */
-   for (i=0; i<array_size(p->trail); i++) {
+   for (int i=0; i<array_size(p->trail); i++) {
       p->trail[i]->ontop = 0;
       spfx_trail_remove( p->trail[i] );
    }
@@ -3257,12 +3244,10 @@ void pilots_init (void)
  */
 void pilots_free (void)
 {
-   int i;
-
    pilot_freeGlobalHooks();
 
    /* First pass to stop outfits. */
-   for (i=0; i < array_size(pilot_stack); i++) {
+   for (int i=0; i < array_size(pilot_stack); i++) {
       /* Stop all outfits. */
       pilot_outfitOffAll(pilot_stack[i]);
       /* Handle Lua outfits. */
@@ -3270,7 +3255,7 @@ void pilots_free (void)
    }
 
    /* Free pilots. */
-   for (i=0; i < array_size(pilot_stack); i++)
+   for (int i=0; i < array_size(pilot_stack); i++)
       pilot_free(pilot_stack[i]);
    array_free(pilot_stack);
    pilot_stack = NULL;
@@ -3285,13 +3270,12 @@ void pilots_free (void)
  */
 void pilots_clean( int persist )
 {
-   int i, persist_count=0;
-   Pilot *p;
+   int persist_count=0;
 
    /* First pass to stop outfits without clearing stuff - this can call all
     * sorts of Lua stuff. */
-   for (i=0; i < array_size(pilot_stack); i++) {
-      p = pilot_stack[i];
+   for (int i=0; i < array_size(pilot_stack); i++) {
+      Pilot *p = pilot_stack[i];
       if (p == player.p &&
           (persist && pilot_isFlag(p, PILOT_PERSIST)))
          continue;
@@ -3302,12 +3286,12 @@ void pilots_clean( int persist )
    }
 
    /* Here we actually clean up stuff. */
-   for (i=0; i < array_size(pilot_stack); i++) {
+   for (int i=0; i < array_size(pilot_stack); i++) {
       /* move player and persisted pilots to start */
       if (pilot_stack[i] == player.p ||
           (persist && pilot_isFlag(pilot_stack[i], PILOT_PERSIST))) {
          /* Have to swap the pilots so it gets properly freed. */
-         p = pilot_stack[persist_count];
+         Pilot *p = pilot_stack[persist_count];
          pilot_stack[persist_count] = pilot_stack[i];
          pilot_stack[i] = p;
          p = pilot_stack[persist_count];
@@ -3342,19 +3326,16 @@ void pilots_newSystem (void)
       pilot_init_trails( pilot_stack[i] );
 }
 
-
 /**
  * @brief Clears all the pilots except the player and clear-exempt pilots.
  */
 void pilots_clear (void)
 {
-   int i;
-   for (i=0; i < array_size(pilot_stack); i++)
+   for (int i=0; i < array_size(pilot_stack); i++)
       if (!pilot_isPlayer(pilot_stack[i])
             && !pilot_isFlag(pilot_stack[i], PILOT_NOCLEAR))
          pilot_delete( pilot_stack[i] );
 }
-
 
 /**
  * @brief Even cleans up the player.
@@ -3369,7 +3350,6 @@ void pilots_cleanAll (void)
    array_erase( &pilot_stack, array_begin(pilot_stack), array_end(pilot_stack) );
 }
 
-
 /**
  * @brief Updates all the pilots.
  *
@@ -3377,12 +3357,9 @@ void pilots_cleanAll (void)
  */
 void pilots_update( double dt )
 {
-   int i;
-   Pilot *p;
-
    /* Now update all the pilots. */
-   for (i=0; i<array_size(pilot_stack); i++) {
-      p = pilot_stack[i];
+   for (int i=0; i<array_size(pilot_stack); i++) {
+      Pilot *p = pilot_stack[i];
 
       /* Destroy pilot and go on. */
       if (pilot_isFlag(p, PILOT_DELETE)) {
@@ -3427,8 +3404,8 @@ void pilots_update( double dt )
    }
 
    /* Now update all the pilots. */
-   for (i=0; i<array_size(pilot_stack); i++) {
-      p = pilot_stack[i];
+   for (int i=0; i<array_size(pilot_stack); i++) {
+      Pilot *p = pilot_stack[i];
 
       /* Ignore. */
       if (pilot_isFlag(p, PILOT_DELETE))
@@ -3444,7 +3421,6 @@ void pilots_update( double dt )
    }
 }
 
-
 /**
  * @brief Renders all the pilots.
  *
@@ -3452,8 +3428,7 @@ void pilots_update( double dt )
  */
 void pilots_render( double dt )
 {
-   int i;
-   for (i=0; i<array_size(pilot_stack); i++) {
+   for (int i=0; i<array_size(pilot_stack); i++) {
 
       /* Invisible, not doing anything. */
       if (pilot_isFlag(pilot_stack[i], PILOT_HIDE))
@@ -3464,7 +3439,6 @@ void pilots_render( double dt )
    }
 }
 
-
 /**
  * @brief Renders all the pilots overlays.
  *
@@ -3472,8 +3446,7 @@ void pilots_render( double dt )
  */
 void pilots_renderOverlay( double dt )
 {
-   int i;
-   for (i=0; i<array_size(pilot_stack); i++) {
+   for (int i=0; i<array_size(pilot_stack); i++) {
 
       /* Invisible, not doing anything. */
       if (pilot_isFlag(pilot_stack[i], PILOT_HIDE))
@@ -3484,7 +3457,6 @@ void pilots_renderOverlay( double dt )
    }
 }
 
-
 /**
  * @brief Clears the pilot's timers.
  *
@@ -3492,8 +3464,7 @@ void pilots_renderOverlay( double dt )
  */
 void pilot_clearTimers( Pilot *pilot )
 {
-   int i, n;
-   PilotOutfitSlot *o;
+   int n;
 
    /* Clear outfits first to not leave some outfits in dangling states. */
    pilot_outfitOffAll(pilot);
@@ -3503,11 +3474,11 @@ void pilot_clearTimers( Pilot *pilot )
    pilot->stimer     = 0.; /* Shield timer. */
    pilot->dtimer     = 0.; /* Disable timer. */
    pilot->otimer     = 0.; /* Outfit timer. */
-   for (i=0; i<MAX_AI_TIMERS; i++)
+   for (int i=0; i<MAX_AI_TIMERS; i++)
       pilot->timer[i] = 0.; /* Specific AI timers. */
    n = 0;
-   for (i=0; i<array_size(pilot->outfits); i++) {
-      o = pilot->outfits[i];
+   for (int i=0; i<array_size(pilot->outfits); i++) {
+      PilotOutfitSlot *o = pilot->outfits[i];
       o->timer    = 0.; /* Last used timer. */
       o->stimer   = 0.; /* State timer. */
       if (o->state != PILOT_OUTFIT_OFF) {
@@ -3521,7 +3492,6 @@ void pilot_clearTimers( Pilot *pilot )
       pilot_calcStats( pilot );
 }
 
-
 /**
  * @brief Gets the relative size(shipmass) between the current pilot and the specified target
  *
@@ -3531,7 +3501,7 @@ void pilot_clearTimers( Pilot *pilot )
  */
 double pilot_relsize( const Pilot* cur_pilot, const Pilot* p )
 {
-   return (1 - 1/(1 + ((double)cur_pilot->solid->mass / (double)p->solid->mass)));
+   return (1. - 1./(1. + ((double)cur_pilot->solid->mass / (double)p->solid->mass)));
 }
 
 /**
@@ -3543,15 +3513,13 @@ double pilot_relsize( const Pilot* cur_pilot, const Pilot* p )
  */
 double pilot_reldps( const Pilot* cur_pilot, const Pilot* p )
 {
-   int i;
    double DPSaccum_target = 0.;
    double DPSaccum_pilot = 0.;
    double delay_cache, damage_cache;
-   const Outfit *o;
    const Damage *dmg;
 
-   for (i=0; i<array_size(p->outfit_weapon); i++) {
-      o = p->outfit_weapon[i].outfit;
+   for (int i=0; i<array_size(p->outfit_weapon); i++) {
+      const Outfit *o = p->outfit_weapon[i].outfit;
       if (o == NULL)
          continue;
       dmg = outfit_damage( o );
@@ -3564,8 +3532,8 @@ double pilot_reldps( const Pilot* cur_pilot, const Pilot* p )
          DPSaccum_target += ( damage_cache/delay_cache );
    }
 
-   for (i=0; i<array_size(cur_pilot->outfit_weapon); i++) {
-      o = cur_pilot->outfit_weapon[i].outfit;
+   for (int i=0; i<array_size(cur_pilot->outfit_weapon); i++) {
+      const Outfit *o = cur_pilot->outfit_weapon[i].outfit;
       if (o == NULL)
          continue;
       dmg = outfit_damage( o );
@@ -3599,7 +3567,6 @@ double pilot_relhp( const Pilot* cur_pilot, const Pilot* p )
    return c_hp / (p_hp + c_hp);
 }
 
-
 /**
  * @brief Gets the price or worth of a pilot in credits.
  *
@@ -3609,11 +3576,10 @@ double pilot_relhp( const Pilot* cur_pilot, const Pilot* p )
 credits_t pilot_worth( const Pilot *p )
 {
    credits_t price;
-   int i;
 
    /* Ship price is base price + outfit prices. */
    price = ship_basePrice( p->ship );
-   for (i=0; i<array_size(p->outfits); i++) {
+   for (int i=0; i<array_size(p->outfits); i++) {
       if (p->outfits[i]->outfit == NULL)
          continue;
       /* Don't count unique outfits. */
@@ -3624,7 +3590,6 @@ credits_t pilot_worth( const Pilot *p )
 
    return price;
 }
-
 
 /**
  * @brief Sends a message
@@ -3657,7 +3622,6 @@ void pilot_msg(Pilot *p, Pilot *receiver, const char *type, unsigned int idx)
    lua_rawseti(naevL, -2, lua_objlen(naevL, -2)+1); /* data, msg, messages */
    lua_pop(naevL, 3); /*  */
 }
-
 
 /**
  * @brief Checks to see if the pilot has illegal stuf to a faction.
