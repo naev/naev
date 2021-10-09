@@ -52,10 +52,10 @@ You are skeptical of the sales pitch, of course; you really only bought this shi
    local ainame
    vn.func( function ()
       -- TODO integrate into vn
-      ainame = tk.input( _("Name your Ship AI"), 1, 16, _("SAI") )
+      ainame = tk.input( _("Name Ship AI"), 1, 16, _("Please enter a name for your Ship AI") )
       if ainame then
          var.push("shipai_name",ainame)
-         sai:rename( ainame )
+         sai.displayname = ainame -- Can't use rename here
          vn.jump("gavename")
          return
       end
@@ -72,9 +72,9 @@ You are skeptical of the sales pitch, of course; you really only bought this shi
    vn.jump("mainmenu")
 
    vn.label("noname")
-   sai(_([["You haven't given me a name. I will be continued to be called Ship AI or SAI for short. Is that OK?"]]))
+   sai(_([["You haven't given me a name. I will be continued to be called 'Ship AI' or SAI for short. Is that OK?"]]))
    vn.menu{
-      {_([["Ship AI is fine"]]), "renamedone"},
+      {_([["'Ship AI' is fine"]]), "renamedone"},
       {_("Rename"), "rename"},
    }
 
@@ -86,7 +86,7 @@ You are skeptical of the sales pitch, of course; you really only bought this shi
    vn.menu{
       {_("Do the tutorial"), "dotut"},
       {_("Skip the tutorial"), "skiptut"},
-      {_("Turn off all tutorials"), "offtut"},
+      {_("Turn off all tutorial hints"), "offtut"},
    }
 
    vn.label("skiptut")
@@ -98,9 +98,9 @@ You are skeptical of the sales pitch, of course; you really only bought this shi
    vn.done( tut.shipai.transition )
 
    vn.label("offtut")
-   sai(_([["Are you sure you want to disable all the tutorials? This includes explanation of advanced in-game mechanics you will meet as you play the game."]]))
+   sai(_([["Are you sure you want to disable all the hints? This includes explanation of advanced in-game mechanics you will meet as you play the game."]]))
    vn.menu{
-      {_("Disable all tutorials"), "offtut_yes"},
+      {_("Disable all hints"), "offtut_yes"},
       {_("Nevermind"), "mainmenu"},
    }
    vn.func( function ()

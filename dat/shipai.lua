@@ -28,37 +28,37 @@ function create ()
    vn.label("opts")
    vn.menu( function ()
       local opts = {
-         {_("Reset all tutorials"), "reset"},
+         {_("Reset all tutorial hints"), "reset"},
          {_("Rename Ship AI"), "rename"},
          {_("Close"), "mainmenu"},
       }
       if tut.isDisabled() then
-         table.insert( opts, 1, {_("Enable tutorials"), "enable"} )
+         table.insert( opts, 1, {_("Enable tutorial hints"), "enable"} )
       else
-         table.insert( opts, 1, {_("Disable tutorials"), "disable"} )
+         table.insert( opts, 1, {_("Disable tutorial hints"), "disable"} )
       end
       return opts
    end )
 
    vn.label("enable")
    vn.func( function () var.pop("tut_disable") end )
-   sai(_([["In-game tutorials are now enabled! If you want to revisit old tutorials, make sure to reset them."]]))
+   sai(_([["In-game hints are now enabled! If you want to revisit old tutorial hints, make sure to reset them."]]))
    vn.jump("mainmenu")
 
    vn.label("disable")
    vn.func( function () var.push("tut_disable", true) end )
-   sai(_([["In-game tutorials are now disabled."]]))
+   sai(_([["In-game tutorial hints are now disabled."]]))
    vn.jump("mainmenu")
 
    vn.label("reset")
-   sai(_([["This will reset and enable all in-game tutorials, are you sure you want to do this?"]]))
+   sai(_([["This will reset and enable all in-game tutorial hints, are you sure you want to do this?"]]))
    vn.menu{
-      {_("Reset tutorials"), "resetyes"},
+      {_("Reset tutorial hints"), "resetyes"},
       {_("Nevermind"), "opts"},
    }
    vn.label("resetyes")
    vn.func( function () tut.reset() end )
-   sai(_([["All in-game tutorials have been set and enabled! They will naturally pop up as you do different things in the game."]]))
+   sai(_([["All in-game tutorial hints have been set and enabled! They will naturally pop up as you do different things in the game."]]))
    vn.jump("mainmenu")
 
    vn.label("rename")
@@ -67,10 +67,10 @@ function create ()
       local ainame = tk.input( _("Name your Ship AI"), 1, 16, _("SAI") )
       if ainame then
          var.push("shipai_name",ainame)
-         sai:rename( ainame )
+         sai.displayname = ainame -- Can't use rename here
       end
    end )
-   sai(fmt.f(_([[Your Ship AI has been renamed '{ainame}'.]]),{tut.ainame()}))
+   sai( function () return fmt.f(_([[Your Ship AI has been renamed '{ainame}'.]]),{tut.ainame()}) end )
    vn.jump("opts")
 
    vn.label("tutorials")

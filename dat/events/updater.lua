@@ -78,8 +78,8 @@ function updater090 ()
       sai(_([["There are also a lot of other changes, for example, there are now patrol routes in systems that are more heavily guarded by local factions, seeking missiles can be jammed, and some factions have been completely reworked. You will notice a lot of smaller differences too as you play the game."]]))
       sai(_([["With that said, would you like me to provide small in-game advice as you do things throughout the game? Some might refer to things you are already familiar with, but it could help learn new things."]]))
       vn.menu{
-         {_("Enable the hints"), "enable"},
-         {_("Disable the hints"), "disable"},
+         {_("Enable tutorial hints"), "enable"},
+         {_("Disable tutorial hints"), "disable"},
       }
 
       vn.label("enable")
