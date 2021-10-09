@@ -74,8 +74,7 @@ void player_autonavStart (void)
    if ((player.p->nav_hyperspace == -1) && (player.p->nav_planet== -1))
       return;
    else if ((player.p->nav_planet != -1) && !player_getHypPreempt()) {
-      player_setFlag( PLAYER_BASICAPPROACH );
-      player_autonavPnt( cur_system->planets[ player.p->nav_planet ]->name );
+      player_autonavPnt( cur_system->planets[ player.p->nav_planet ]->name, 0 );
       return;
    }
 
@@ -188,18 +187,25 @@ void player_autonavPos( double x, double y )
 /**
  * @brief Starts autonav with a planet destination.
  */
-void player_autonavPnt( const char *name )
+void player_autonavPnt( const char *name, int tryland )
 {
    Planet *p;
 
    if (player_autonavSetup())
       return;
    p = planet_get( name );
-   player_message(_("#oAutonav: landing on %s."), _(p->name));
-   player.autonav    = AUTONAV_PNT_APPROACH;
    player.autonavmsg = strdup( _(p->name) );
    player.autonavcol = planet_getColourChar( p );
    vect_cset( &player.autonav_pos, p->pos.x, p->pos.y );
+
+   if (tryland) {
+      player.autonav = AUTONAV_PNT_LAND_APPROACH;
+      player_message(_("#oAutonav: landing on #%c%s#0."), player.autonavcol, player.autonavmsg );
+   }
+   else {
+      player.autonav = AUTONAV_PNT_APPROACH;
+      player_message(_("#oAutonav: approaching #%c%s#0."), player.autonavcol, player.autonavmsg );
+   }
 }
 
 
@@ -208,12 +214,8 @@ void player_autonavPnt( const char *name )
  */
 void player_autonavPil( unsigned int p )
 {
-   Pilot *pilot;
-   int inrange;
-
-   pilot = pilot_get( p );
-
-   inrange = pilot_inRangePilot( player.p, pilot, NULL );
+   Pilot *pilot = pilot_get( p );
+   int inrange  = pilot_inRangePilot( player.p, pilot, NULL );
    if (player_autonavSetup() || !inrange)
       return;
 
@@ -388,21 +390,24 @@ static void player_autonav (void)
       case AUTONAV_PNT_APPROACH:
          ret = player_autonavApproach( &player.autonav_pos, &d, 1 );
          if (ret) {
-            if (player_isFlag(PLAYER_BASICAPPROACH)) {
-               player_rmFlag(PLAYER_BASICAPPROACH);
-               player_message( _("#oAutonav: arrived at #%c%s#0."),
-                     player.autonavcol,
-                     player.autonavmsg );
-               player_autonavEnd();
-            }
-            else
-               player.autonav = AUTONAV_PNT_BRAKE;
+            player_message( _("#oAutonav: arrived at #%c%s#0."),
+                  player.autonavcol,
+                  player.autonavmsg );
+            player_autonavEnd();
          }
          else if (!tc_rampdown)
             player_autonavRampdown(d);
          break;
 
-      case AUTONAV_PNT_BRAKE:
+      case AUTONAV_PNT_LAND_APPROACH:
+         ret = player_autonavApproach( &player.autonav_pos, &d, 1 );
+         if (ret)
+            player.autonav = AUTONAV_PNT_LAND_BRAKE;
+         else if (!tc_rampdown)
+            player_autonavRampdown(d);
+         break;
+
+      case AUTONAV_PNT_LAND_BRAKE:
          ret = player_autonavBrake();
 
          /* Try to land. */

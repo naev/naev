@@ -924,8 +924,7 @@ static void input_key( int keynum, double value, double kabs, int repeat )
       if (value==KEY_PRESS) {
          if (player.p->nav_planet != -1) {
             if (player_land(0) == PLAYER_LAND_AGAIN) {
-               player_rmFlag(PLAYER_BASICAPPROACH);
-               player_autonavPnt(cur_system->planets[player.p->nav_planet]->name);
+               player_autonavPnt( cur_system->planets[player.p->nav_planet]->name, 1 );
             }
          } else
             player_land(1);
@@ -1414,8 +1413,7 @@ int input_clickedPlanet( int planet, int autonav )
 
    if (autonav) {
       player_targetPlanetSet(planet);
-      player_setFlag(PLAYER_BASICAPPROACH);
-      player_autonavPnt(pnt->name);
+      player_autonavPnt(pnt->name, 0);
       return 1;
    }
 
@@ -1425,12 +1423,10 @@ int input_clickedPlanet( int planet, int autonav )
             (pnt->land_override > 0)) {
          int ret = player_land(0);
          if (ret == PLAYER_LAND_AGAIN) {
-            player_rmFlag(PLAYER_BASICAPPROACH);
-            player_autonavPnt(pnt->name);
+            player_autonavPnt(pnt->name, 1);
          }
          else if (ret == PLAYER_LAND_DENIED) {
-            player_setFlag(PLAYER_BASICAPPROACH);
-            player_autonavPnt(pnt->name);
+            player_autonavPnt(pnt->name, 0);
          }
       }
       else

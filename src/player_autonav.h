@@ -18,7 +18,8 @@ enum {
    AUTONAV_JUMP_BRAKE,     /**< Player is braking at a jump. */
    AUTONAV_POS_APPROACH,   /**< Player is going to a position. */
    AUTONAV_PNT_APPROACH,   /**< Player is going to a planet. */
-   AUTONAV_PNT_BRAKE,      /**< Player is braking at a planet. */
+   AUTONAV_PNT_LAND_APPROACH,/**< Player is going to land on a planet. */
+   AUTONAV_PNT_LAND_BRAKE, /**< Player is braking to land at a planet. */
    AUTONAV_PLT_FOLLOW,     /**< Player is following a pilot. */
 };
 
@@ -33,7 +34,7 @@ void player_autonavAbort( const char *reason );
 int player_autonavShouldResetSpeed (void);
 void player_autonavStartWindow( unsigned int wid, const char *str);
 void player_autonavPos( double x, double y );
-void player_autonavPnt( const char *name );
+void player_autonavPnt( const char *name, int tryland );
 void player_autonavPil( unsigned int p );
 
 
