@@ -204,7 +204,7 @@ void player_autonavPnt( const char *name, int tryland )
    }
    else {
       player.autonav = AUTONAV_PNT_APPROACH;
-      player_message(_("#oAutonav: approaching on #%c%s#0."), player.autonavcol, player.autonavmsg );
+      player_message(_("#oAutonav: approaching #%c%s#0."), player.autonavcol, player.autonavmsg );
    }
 }
 
