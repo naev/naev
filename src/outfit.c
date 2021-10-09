@@ -115,14 +115,11 @@ static int outfit_cmp( const void *p1, const void *p2 )
  */
 const Outfit* outfit_get( const char* name )
 {
-   const Outfit s = {.name = (char*)name };
-   Outfit* found = bsearch( &s, outfit_stack, array_size(outfit_stack), sizeof(Outfit), outfit_cmp );
-   if (found != NULL)
-      return found;
-   WARN(_("Outfit '%s' not found in stack."), name);
+   const Outfit *o = outfit_getW( name );
+   if (o==NULL)
+      WARN(_("Outfit '%s' not found in stack."), name);
    return NULL;
 }
-
 
 /**
  * @brief Gets an outfit by name without warning on no-find.
@@ -132,13 +129,9 @@ const Outfit* outfit_get( const char* name )
  */
 const Outfit* outfit_getW( const char* name )
 {
-   int i;
-   for (i=0; i<array_size(outfit_stack); i++)
-      if (strcmp(name,outfit_stack[i].name)==0)
-         return &outfit_stack[i];
-   return NULL;
+   const Outfit s = {.name = (char*)name };
+   return bsearch( &s, outfit_stack, array_size(outfit_stack), sizeof(Outfit), outfit_cmp );
 }
-
 
 /**
  * @brief Gets the array (array.h) of all outfits.
@@ -148,14 +141,12 @@ const Outfit* outfit_getAll (void)
    return outfit_stack;
 }
 
-
 /**
  * @brief Checks to see if an outfit exists matching name (case insensitive).
  */
 const char *outfit_existsCase( const char* name )
 {
-   int i;
-   for (i=0; i<array_size(outfit_stack); i++)
+   for (int i=0; i<array_size(outfit_stack); i++)
       if (strcasecmp(name,outfit_stack[i].name)==0)
          return outfit_stack[i].name;
    return NULL;
@@ -167,7 +158,7 @@ const char *outfit_existsCase( const char* name )
  */
 char **outfit_searchFuzzyCase( const char* name, int *n )
 {
-   int i, len, nstack;
+   int len, nstack;
    char **names;
 
    /* Overallocate to maximum. */
@@ -176,7 +167,7 @@ char **outfit_searchFuzzyCase( const char* name, int *n )
 
    /* Do fuzzy search. */
    len = 0;
-   for (i=0; i<nstack; i++) {
+   for (int i=0; i<nstack; i++) {
       if (strcasestr( _(outfit_stack[i].name), name ) != NULL) {
          names[len] = outfit_stack[i].name;
          len++;
@@ -286,7 +277,6 @@ const char *outfit_slotName( const Outfit* o )
    return slotName( o->slot.type );
 }
 
-
 /**
  * @brief \see outfit_slotName
  */
@@ -308,13 +298,12 @@ const char *slotName( const OutfitSlotType type )
    }
 }
 
-
 /**
  * @brief Gets the slot size as a string.
  */
 const char *slotSize( const OutfitSlotSize o )
 {
-   switch( o ) {
+   switch (o) {
       case OUTFIT_SLOT_SIZE_NA:
          return gettext_noop("N/A");
       case OUTFIT_SLOT_SIZE_LIGHT:
@@ -328,7 +317,6 @@ const char *slotSize( const OutfitSlotSize o )
    }
 }
 
-
 /**
  * @brief Gets the name of the slot size of an outfit.
  *
@@ -339,7 +327,6 @@ const char *outfit_slotSize( const Outfit* o )
 {
    return slotSize( o->slot.size );
 }
-
 
 /**
  * @brief Gets the slot size colour for an outfit slot.
@@ -358,7 +345,6 @@ const glColour *outfit_slotSizeColour( const OutfitSlot* os )
    return NULL;
 }
 
-
 /**
  * @brief Gets a font colour character that roughly matches an outfit slot size colour.
  *
@@ -376,7 +362,6 @@ char outfit_slotSizeColourFont( const OutfitSlot* os )
    return '0';
 }
 
-
 /**
  * @brief Gets a font colour character that roughly matches an outfit slot type colour.
  *
@@ -393,7 +378,6 @@ char outfit_slotTypeColourFont( const OutfitSlot* os )
       return 'n';
    return '0';
 }
-
 
 /**
  * @brief Gets the outfit slot size from a human readable string.
@@ -418,7 +402,6 @@ OutfitSlotSize outfit_toSlotSize( const char *s )
    WARN(_("'%s' does not match any outfit slot sizes."), s);
    return OUTFIT_SLOT_SIZE_NA;
 }
-
 
 /**
  * @brief Sets the outfit slot size from default outfit properties.
@@ -451,7 +434,6 @@ int outfit_isActive( const Outfit* o )
    return 0;
 }
 
-
 /**
  * @brief Checks if outfit is a fixed mounted weapon.
  *    @param o Outfit to check.
@@ -459,7 +441,7 @@ int outfit_isActive( const Outfit* o )
  */
 int outfit_isForward( const Outfit* o )
 {
-   return ( (o->type==OUTFIT_TYPE_BOLT)      ||
+   return ( (o->type==OUTFIT_TYPE_BOLT) ||
          (o->type==OUTFIT_TYPE_BEAM) );
 }
 /**
@@ -469,7 +451,7 @@ int outfit_isForward( const Outfit* o )
  */
 int outfit_isBolt( const Outfit* o )
 {
-   return ( (o->type==OUTFIT_TYPE_BOLT)      ||
+   return ( (o->type==OUTFIT_TYPE_BOLT) ||
          (o->type==OUTFIT_TYPE_TURRET_BOLT) );
 }
 /**
@@ -479,7 +461,7 @@ int outfit_isBolt( const Outfit* o )
  */
 int outfit_isBeam( const Outfit* o )
 {
-   return ( (o->type==OUTFIT_TYPE_BEAM)      ||
+   return ( (o->type==OUTFIT_TYPE_BEAM) ||
          (o->type==OUTFIT_TYPE_TURRET_BEAM) );
 }
 /**
@@ -734,15 +716,14 @@ double outfit_cpu( const Outfit* o )
  */
 double outfit_range( const Outfit* o )
 {
-   const Outfit *amm;
-   double at, speedinc;
-
-   if (outfit_isBolt(o)) return o->u.blt.falloff + (o->u.blt.range - o->u.blt.falloff)/2.;
-   else if (outfit_isBeam(o)) return o->u.bem.range;
+   if (outfit_isBolt(o))
+      return o->u.blt.falloff + (o->u.blt.range - o->u.blt.falloff)/2.;
+   else if (outfit_isBeam(o))
+      return o->u.bem.range;
    else if (outfit_isAmmo(o)) {
       if (o->u.amm.thrust) {
-         speedinc = o->u.amm.speed_max - o->u.amm.speed;
-         at = speedinc / o->u.amm.thrust;
+         double speedinc = o->u.amm.speed_max - o->u.amm.speed;
+         double at = speedinc / o->u.amm.thrust;
          if (at < o->u.amm.duration)
             return speedinc * (o->u.amm.duration - at / 2.) + o->u.amm.speed * o->u.amm.duration;
 
@@ -752,7 +733,7 @@ double outfit_range( const Outfit* o )
       return o->u.amm.speed * o->u.amm.duration;
    }
    else if (outfit_isLauncher(o)) {
-      amm = outfit_ammo(o);
+      const Outfit *amm = outfit_ammo(o);
       if (amm != NULL)
          return outfit_range(amm);
    }
@@ -767,15 +748,13 @@ double outfit_range( const Outfit* o )
  */
 double outfit_speed( const Outfit* o )
 {
-   const Outfit *amm;
-   double t;
    if (outfit_isBolt(o))
       return o->u.blt.speed;
    else if (outfit_isAmmo(o)) {
       if (o->u.amm.thrust == 0.)
          return o->u.amm.speed;
       else { /* Gets the average speed. */
-         t = (o->u.amm.speed_max - o->u.amm.speed) / o->u.amm.thrust; /* Time to reach max speed */
+         double t = (o->u.amm.speed_max - o->u.amm.speed) / o->u.amm.thrust; /* Time to reach max speed */
          /* Reaches max speed. */
          if (t < o->u.amm.duration)
             return (o->u.amm.thrust * t * t / 2. + (o->u.amm.speed_max - o->u.amm.speed) * (o->u.amm.duration - t)) / o->u.amm.duration + o->u.amm.speed;
@@ -785,7 +764,7 @@ double outfit_speed( const Outfit* o )
       }
    }
    else if (outfit_isLauncher(o)) {
-      amm = outfit_ammo(o);
+      const Outfit *amm = outfit_ammo(o);
       if (amm != NULL)
          return outfit_speed(amm);
    }
@@ -855,14 +834,13 @@ int outfit_soundHit( const Outfit* o )
  */
 double outfit_duration( const Outfit* o )
 {
-   const Outfit *amm;
    if (outfit_isMod(o)) { if (o->u.mod.active) return o->u.mod.duration; }
    else if (outfit_isAfterburner(o)) return INFINITY;
    else if (outfit_isBolt(o)) return (o->u.blt.range / o->u.blt.speed);
    else if (outfit_isBeam(o)) return o->u.bem.duration;
    else if (outfit_isAmmo(o)) return o->u.amm.duration;
    else if (outfit_isLauncher(o)) {
-      amm = outfit_ammo(o);
+      const Outfit *amm = outfit_ammo(o);
       if (amm != NULL)
          return outfit_duration(amm);
    }
@@ -924,20 +902,20 @@ const char* outfit_getType( const Outfit* o )
  */
 const char* outfit_getTypeBroad( const Outfit* o )
 {
-   if (outfit_isBolt(o))            return gettext_noop("Bolt Weapon");
-   else if (outfit_isBeam(o))       return gettext_noop("Beam Weapon");
-   else if (outfit_isLauncher(o))   return gettext_noop("Launcher");
-   else if (outfit_isAmmo(o))       return gettext_noop("Ammo");
-   //else if (outfit_isTurret(o))     return gettext_noop("Turret");
-   else if (outfit_isMod(o))        return gettext_noop("Modification");
-   else if (outfit_isAfterburner(o)) return gettext_noop("Afterburner");
-   else if (outfit_isFighterBay(o)) return gettext_noop("Fighter Bay");
-   else if (outfit_isFighter(o))    return gettext_noop("Fighter");
-   else if (outfit_isMap(o))        return gettext_noop("Map");
-   else if (outfit_isLocalMap(o))   return gettext_noop("Local Map");
-   else if (outfit_isGUI(o))        return gettext_noop("GUI");
-   else if (outfit_isLicense(o))    return gettext_noop("License");
-   else                             return gettext_noop("Unknown");
+   if (outfit_isBolt(o))            return N_("Bolt Weapon");
+   else if (outfit_isBeam(o))       return N_("Beam Weapon");
+   else if (outfit_isLauncher(o))   return N_("Launcher");
+   else if (outfit_isAmmo(o))       return N_("Ammo");
+   //else if (outfit_isTurret(o))     return N_("Turret");
+   else if (outfit_isMod(o))        return N_("Modification");
+   else if (outfit_isAfterburner(o)) return N_("Afterburner");
+   else if (outfit_isFighterBay(o)) return N_("Fighter Bay");
+   else if (outfit_isFighter(o))    return N_("Fighter");
+   else if (outfit_isMap(o))        return N_("Map");
+   else if (outfit_isLocalMap(o))   return N_("Local Map");
+   else if (outfit_isGUI(o))        return N_("GUI");
+   else if (outfit_isLicense(o))    return N_("License");
+   else                             return N_("Unknown");
 }
 
 
@@ -949,9 +927,9 @@ const char* outfit_getTypeBroad( const Outfit* o )
 const char* outfit_getAmmoAI( const Outfit *o )
 {
    const char *ai_type[] = {
-      gettext_noop("Unguided"),
-      gettext_noop("Seek"),
-      gettext_noop("Smart")
+      N_("Unguided"),
+      N_("Seek"),
+      N_("Smart")
    };
 
    if (!outfit_isAmmo(o)) {
@@ -1017,8 +995,7 @@ int outfit_fitsSlot( const Outfit* o, const OutfitSlot* s )
  */
 int outfit_fitsSlotType( const Outfit* o, const OutfitSlot* s )
 {
-   const OutfitSlot *os;
-   os = &o->slot;
+   const OutfitSlot *os = &o->slot;
 
    /* Outfit must have valid slot type. */
    if ((os->type == OUTFIT_SLOT_NULL) ||
@@ -1091,7 +1068,6 @@ static OutfitType outfit_strToOutfitType( char *buf )
  */
 static int outfit_parseDamage( Damage *dmg, xmlNodePtr node )
 {
-   char *buf;
    xmlNodePtr cur;
 
    /* Defaults. */
@@ -1111,7 +1087,7 @@ static int outfit_parseDamage( Damage *dmg, xmlNodePtr node )
 
       /* Get type */
       if (xml_isNode(cur,"type")) {
-         buf         = xml_get( cur );
+         char *buf   = xml_get( cur );
          dmg->type   = dtype_get(buf);
          if (dmg->type < 0) { /* Case damage type in outfit.xml that isn't in damagetype.xml */
             dmg->type = 0;
@@ -1598,10 +1574,7 @@ if (o) WARN(_("Outfit '%s' missing '%s' element"), temp->name, s) /**< Define to
  */
 static void outfit_parseSAmmo( Outfit* temp, const xmlNodePtr parent )
 {
-   xmlNodePtr node;
-   char *buf;
-
-   node = parent->xmlChildrenNode;
+   xmlNodePtr node = parent->xmlChildrenNode;
 
    /* Defaults. */
    temp->slot.type         = OUTFIT_SLOT_NA;
@@ -1618,6 +1591,7 @@ static void outfit_parseSAmmo( Outfit* temp, const xmlNodePtr parent )
       xml_onlyNodes(node);
       /* Basic */
       if (xml_isNode(node,"duration")) {
+         char *buf;
          xmlr_attr_strd(node,"blowup",buf);
          if (buf != NULL) {
             if (strcmp(buf,"armour")==0)
@@ -1647,7 +1621,7 @@ static void outfit_parseSAmmo( Outfit* temp, const xmlNodePtr parent )
          if (temp->u.amm.spin != 0)
             outfit_setProp( temp, OUTFIT_PROP_WEAP_SPIN );
          /* Load the collision polygon. */
-         buf = xml_get(node);
+         char *buf = xml_get(node);
          outfit_loadPLG( temp, buf, 0 );
 
          /* Validity check: there must be 1 polygon per sprite. */
@@ -1680,14 +1654,14 @@ static void outfit_parseSAmmo( Outfit* temp, const xmlNodePtr parent )
       }
       if (xml_isNode(node,"trail_generator")) {
          xmlr_attr_float( node, "x", temp->u.amm.trail_x_offset );
-         buf = xml_get(node);
+         char *buf = xml_get(node);
          if (buf == NULL)
             buf = "default";
          temp->u.amm.trail_spec = trailSpec_get( buf );
          continue;
       }
       if (xml_isNode(node,"ai")) {
-         buf = xml_get(node);
+         char *buf = xml_get(node);
          if (buf != NULL) {
             if (strcmp(buf,"unguided")==0)
                temp->u.amm.ai = AMMO_AI_UNGUIDED;
@@ -1745,9 +1719,8 @@ if (o) WARN(_("Outfit '%s' missing/invalid '%s' element"), temp->name, s) /**< D
 static void outfit_parseSMod( Outfit* temp, const xmlNodePtr parent )
 {
    int l;
-   xmlNodePtr node;
    ShipStatList *ll;
-   node = parent->children;
+   xmlNodePtr node = parent->children;
 
    /* Defaults. */
    temp->u.mod.lua_env        = LUA_NOREF;
@@ -1817,10 +1790,9 @@ static void outfit_parseSMod( Outfit* temp, const xmlNodePtr parent )
 static void outfit_parseSAfterburner( Outfit* temp, const xmlNodePtr parent )
 {
    ShipStatList *ll;
-   xmlNodePtr node;
-   node = parent->children;
    double C, area;
    size_t l;
+   xmlNodePtr node = parent->children;
 
    /* Defaults. */
    temp->u.afb.sound = -1;
@@ -1910,9 +1882,8 @@ if (o) WARN(_("Outfit '%s' missing/invalid '%s' element"), temp->name, s) /**< D
 static void outfit_parseSFighterBay( Outfit *temp, const xmlNodePtr parent )
 {
    ShipStatList *ll;
-   xmlNodePtr node;
    size_t l;
-   node = parent->children;
+   xmlNodePtr node = parent->children;
 
    do {
       xml_onlyNodes(node);
@@ -1962,11 +1933,10 @@ if (o) WARN(_("Outfit '%s' missing/invalid '%s' element"), temp->name, s) /**< D
  */
 static void outfit_parseSFighter( Outfit *temp, const xmlNodePtr parent )
 {
-   xmlNodePtr node;
-   node = parent->children;
+   xmlNodePtr node = parent->children;
 
-   temp->slot.type         = OUTFIT_SLOT_NA;
-   temp->slot.size         = OUTFIT_SLOT_SIZE_NA;
+   temp->slot.type   = OUTFIT_SLOT_NA;
+   temp->slot.size   = OUTFIT_SLOT_SIZE_NA;
 
    do {
       xml_onlyNodes(node);
@@ -1996,7 +1966,6 @@ if (o) WARN(_("Outfit '%s' missing/invalid '%s' element"), temp->name, s)
  */
 static void outfit_parseSMap( Outfit *temp, const xmlNodePtr parent )
 {
-   int i, j;
    xmlNodePtr node, cur;
    char *buf;
    StarSystem *sys, *system_stack;
@@ -2057,11 +2026,11 @@ static void outfit_parseSMap( Outfit *temp, const xmlNodePtr parent )
       }
       else if (xml_isNode(node,"all")) { /* Add everything to the map */
          system_stack = system_getAll();
-         for (i=0;i<array_size(system_stack);i++) {
+         for (int i=0;i<array_size(system_stack);i++) {
             array_grow( &temp->u.map->systems ) = &system_stack[i];
-            for (j=0;j<array_size(system_stack[i].planets);j++)
+            for (int j=0;j<array_size(system_stack[i].planets);j++)
                array_grow( &temp->u.map->assets ) = system_stack[i].planets[j];
-            for (j=0;j<array_size(system_stack[i].jumps);j++)
+            for (int j=0;j<array_size(system_stack[i].jumps);j++)
                array_grow( &temp->u.map->jumps ) = &system_stack[i].jumps[j];
          }
       }
@@ -2098,11 +2067,10 @@ if (o) WARN(_("Outfit '%s' missing/invalid '%s' element"), temp->name, s)
  */
 static void outfit_parseSLocalMap( Outfit *temp, const xmlNodePtr parent )
 {
-   xmlNodePtr node;
-   node = parent->children;
+   xmlNodePtr node = parent->children;
 
-   temp->slot.type         = OUTFIT_SLOT_NA;
-   temp->slot.size         = OUTFIT_SLOT_SIZE_NA;
+   temp->slot.type   = OUTFIT_SLOT_NA;
+   temp->slot.size   = OUTFIT_SLOT_SIZE_NA;
 
    do {
       xml_onlyNodes(node);
@@ -2137,12 +2105,10 @@ if (o) WARN(_("Outfit '%s' missing/invalid '%s' element"), temp->name, s)
  */
 static void outfit_parseSGUI( Outfit *temp, const xmlNodePtr parent )
 {
-   xmlNodePtr node;
+   xmlNodePtr node = parent->children;
 
-   temp->slot.type         = OUTFIT_SLOT_NA;
-   temp->slot.size         = OUTFIT_SLOT_SIZE_NA;
-
-   node = parent->children;
+   temp->slot.type   = OUTFIT_SLOT_NA;
+   temp->slot.size   = OUTFIT_SLOT_SIZE_NA;
 
    do {
       xml_onlyNodes(node);
@@ -2173,11 +2139,10 @@ if (o) WARN(_("Outfit '%s' missing/invalid '%s' element"), temp->name, s)
  */
 static void outfit_parseSLicense( Outfit *temp, const xmlNodePtr parent )
 {
-   temp->slot.type         = OUTFIT_SLOT_NA;
-   temp->slot.size         = OUTFIT_SLOT_SIZE_NA;
+   xmlNodePtr node = parent->children;
 
-   xmlNodePtr node;
-   node = parent->children;
+   temp->slot.type   = OUTFIT_SLOT_NA;
+   temp->slot.size   = OUTFIT_SLOT_SIZE_NA;
 
    do {
       xml_onlyNodes(node);
@@ -2440,15 +2405,12 @@ if (o) WARN( _("Outfit '%s' missing/invalid '%s' element"), temp->name, s) /**< 
  */
 static int outfit_loadDir( char *dir )
 {
-   int i, n, ret;
-   char **outfit_files;
-
-   outfit_files = ndata_listRecursive( dir );
-   for ( i = 0; i < array_size( outfit_files ); i++ ) {
+   char **outfit_files = ndata_listRecursive( dir );
+   for (int i=0; i < array_size( outfit_files ); i++) {
       if (ndata_matchExt( outfit_files[i], "xml" )) {
-         ret = outfit_parse( &array_grow(&outfit_stack), outfit_files[i] );
+         int ret = outfit_parse( &array_grow(&outfit_stack), outfit_files[i] );
          if (ret < 0) {
-            n = array_size(outfit_stack);
+            int n = array_size(outfit_stack);
             array_erase( &outfit_stack, &outfit_stack[n-1], &outfit_stack[n] );
          }
       }
@@ -2624,15 +2586,14 @@ int outfit_loadPost (void)
  */
 int outfit_mapParse (void)
 {
-   Outfit *o;
-   size_t i;
-   xmlNodePtr node, cur;
-   xmlDocPtr doc;
-   char **map_files;
-   char *file, *n;
+   char **map_files = PHYSFS_enumerateFiles( MAP_DATA_PATH );
 
-   map_files = PHYSFS_enumerateFiles( MAP_DATA_PATH );
-   for (i=0; map_files[i]!=NULL; i++) {
+   for (size_t i=0; map_files[i]!=NULL; i++) {
+      xmlDocPtr doc;
+      xmlNodePtr node, cur;
+      Outfit *o;
+      char *file, *n;
+
       asprintf( &file, "%s%s", MAP_DATA_PATH, map_files[i] );
 
       doc = xml_parsePhysFS( file );
@@ -2771,10 +2732,8 @@ int outfit_checkIllegal( const Outfit* o, int fct )
  */
 void outfit_free (void)
 {
-   Outfit *o;
-
    for (int i=0; i < array_size(outfit_stack); i++) {
-      o = &outfit_stack[i];
+      Outfit *o = &outfit_stack[i];
 
       /* Free graphics */
       gl_freeTexture( (glTexture*) outfit_gfx(o)); /*< This is horrible and I should be ashamed. */
