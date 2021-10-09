@@ -172,7 +172,6 @@ static int tkL_msg( lua_State *L )
 {
    const char *title, *str, *img;
    int width, height;
-   NLUA_MIN_ARGS(2);
 
    // Get fixed arguments : title, string to display and image filename
    title = luaL_checkstring(L,1);
@@ -205,7 +204,6 @@ static int tkL_yesno( lua_State *L )
 {
    int ret;
    const char *title, *str;
-   NLUA_MIN_ARGS(2);
 
    title = luaL_checkstring(L,1);
    str   = luaL_checkstring(L,2);
@@ -231,7 +229,6 @@ static int tkL_input( lua_State *L )
    const char *title, *str;
    char *ret;
    int min, max;
-   NLUA_MIN_ARGS(4);
 
    title = luaL_checkstring(L,1);
    min   = luaL_checkint(L,2);
@@ -263,10 +260,9 @@ static int tkL_input( lua_State *L )
  */
 static int tkL_choice( lua_State *L )
 {
-   int ret, opts, i;
+   int ret, opts;
    const char *title, *str;
    char *result;
-   NLUA_MIN_ARGS(3);
 
    /* Handle parameters. */
    opts  = lua_gettop(L) - 2;
@@ -274,12 +270,12 @@ static int tkL_choice( lua_State *L )
    str   = luaL_checkstring(L,2);
 
    /* Do an initial scan for invalid arguments. */
-   for (i=0; i<opts; i++)
+   for (int i=0; i<opts; i++)
       luaL_checkstring(L, i+3);
 
    /* Create dialogue. */
    dialogue_makeChoice( title, str, opts );
-   for (i=0; i<opts; i++)
+   for (int i=0; i<opts; i++)
       dialogue_addChoice( title, str, luaL_checkstring(L,i+3) );
    result = dialogue_runChoice();
    if (result == NULL) /* Something went wrong, return nil. */
@@ -287,7 +283,7 @@ static int tkL_choice( lua_State *L )
 
    /* Handle results. */
    ret = -1;
-   for (i=0; i<opts && ret==-1; i++) {
+   for (int i=0; i<opts && ret==-1; i++) {
       if (strcmp(result, luaL_checkstring(L,i+3)) == 0)
          ret = i+1; /* Lua uses 1 as first index. */
    }
@@ -317,7 +313,7 @@ static int tkL_choice( lua_State *L )
  */
 static int tkL_list( lua_State *L )
 {
-   int ret, opts, i;
+   int ret, opts;
    const char *title, *str;
    char **choices;
    NLUA_MIN_ARGS(3);
@@ -328,12 +324,12 @@ static int tkL_list( lua_State *L )
    str   = luaL_checkstring(L,2);
 
    /* Do an initial scan for invalid arguments. */
-   for (i=0; i<opts; i++)
+   for (int i=0; i<opts; i++)
       luaL_checkstring(L, i+3);
 
    /* Will be freed by the toolkit. */
    choices = malloc( sizeof(char*) * opts );
-   for (i=0; i<opts; i++)
+   for (int i=0; i<opts; i++)
       choices[i] = strdup( luaL_checkstring(L, i+3) );
 
    ret = dialogue_listRaw( title, choices, opts, str );

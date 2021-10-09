@@ -66,16 +66,13 @@ function updater090 ()
       local ainame
       vn.func( function ()
          -- TODO integrate into vn
-         ainame = tk.input( _("Name your Ship AI"), 1, 16, _("SAI") )
+         ainame = tk.input( _("Name Ship AI"), 1, 16, _("Please enter a name for your Ship AI") )
          if ainame then
             var.push("shipai_name",ainame)
-            sai:rename( ainame )
-            vn.jump("gavename")
-            return
+            sai.displayname = ainame -- Can't use rename here
          end
-         vn.jump("noname")
       end )
-      sai( function () fmt.f(_([["Great! I'll use the name {ainame} from now on. If you want to change it, you can do so from the #oInformation#0 menu which you open with {infokey} by clicking on the '#oShip AI#0' button. From there you can also access explanations and change tutorial options."]]), {ainame=ainame, infokey=tut.getKey("info")}) end )
+      sai( function () return fmt.f(_([["Great! I'll use the name {ainame} from now on. If you want to change it, you can do so from the #oInformation#0 menu which you open with {infokey} by clicking on the '#oShip AI#0' button. From there you can also access explanations and change tutorial options."]]), {ainame=ainame, infokey=tut.getKey("info")}) end )
       sai(fmt.f(_([["With the update, a lot of new mechanics and features have been changed. The largest change includes a revamp of #oElectronic Warfare#0, which now includes a new stealth mechanic. In this new framework, you will be scanned by patrol ships, which means you have to be careful when carrying illegal cargo or outfits. You can activate stealth with {stealthkey} when no ships area nearby."]]),{stealthkey=tut.getKey("stealth")}))
       sai(_([["You may have also noticed that there has been a major change in outfits. Lots of outfits have been removed, added, or renamed, leading to a loss of outfits when updating old save games. Please make sure to take some time inspecting your ships and their equipment before taking off, you don't want to be flying a poorly equipped ship in space!"]]))
       sai(_([["There are also a lot of other changes, for example, there are now patrol routes in systems that are more heavily guarded by local factions, seeking missiles can be jammed, and some factions have been completely reworked. You will notice a lot of smaller differences too as you play the game."]]))
@@ -86,7 +83,7 @@ function updater090 ()
       }
 
       vn.label("enable")
-      sai(fmt.f(_([["Great! I'll be giving you short hints as you do things through the game. If you want to change my settings or turn off the hints, please do so from the '#oShip AI#o' button in the #oInformation#0 menu you can open with {infokey}. Now, let's go adventuring!"]]),{infokey=tut.getKey("info")}))
+      sai(fmt.f(_([["Great! I'll be giving you short hints as you do things through the game. If you want to change my settings or turn off the hints, please do so from the '#oShip AI#0' button in the #oInformation#0 menu you can open with {infokey}. Now, let's go adventuring!"]]),{infokey=tut.getKey("info")}))
       vn.done( tut.shipai.transition )
 
       vn.label("disable")
