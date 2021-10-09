@@ -62,11 +62,13 @@ You are skeptical of the sales pitch, of course; you really only bought this shi
       vn.jump("noname")
    end )
    vn.label("gavename")
-   sai(fmt.f(_([["You have given me the name of '{ainame}', is this correct?"]]),{ainame=ainame}))
-   vn.menu{
-      {fmt.f(_("Continue with '{ainame}'"),{ainame=ainame}), "renamedone"},
-      {_("Rename"), "rename"},
-   }
+   sai( function () fmt.f(_([["You have given me the name of '{ainame}', is this correct?"]]),{ainame=ainame}) end )
+   vn.menu( function ()
+      return {
+         {fmt.f(_("Continue with '{ainame}'"),{ainame=ainame}), "renamedone"},
+         {_("Rename"), "rename"},
+      }
+   end )
    vn.jump("mainmenu")
 
    vn.label("noname")
