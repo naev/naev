@@ -76,7 +76,7 @@ end
 --]]
 function __atk_f_flyby( target, dist )
    local range = ai.getweaprange(3)
-   local dir = 0
+   local dir
    ai.weapset( 3 ) -- Forward/turrets
 
    -- First test if we should zz
@@ -140,7 +140,7 @@ end
 --]]
 function __atk_f_space_sup( target, dist )
    local range = ai.getweaprange(3)
-   local dir   = 0
+   local dir
    ai.weapset( 3 ) -- Forward/turrets
 
    -- First test if we should zz
