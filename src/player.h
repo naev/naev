@@ -25,7 +25,6 @@ enum {
    PLAYER_PRIMARY_L,    /**< player shot primary weapon last frame. */
    PLAYER_SECONDARY,    /**< player is shooting secondary weapon */
    PLAYER_SECONDARY_L,  /**< player shot secondary last frame. */
-   PLAYER_BASICAPPROACH,/**< player is only doing a basic approach, no auto-landing (cleared on approach end). */
    PLAYER_LANDACK,      /**< player has permission to land */
    PLAYER_CREATING,     /**< player is being created */
    PLAYER_AUTONAV,      /**< player has autonavigation on. */
