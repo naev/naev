@@ -118,7 +118,7 @@ const Outfit* outfit_get( const char* name )
    const Outfit *o = outfit_getW( name );
    if (o==NULL)
       WARN(_("Outfit '%s' not found in stack."), name);
-   return NULL;
+   return o;
 }
 
 /**
