@@ -422,7 +422,7 @@ function approachPilot( npc_id )
       return -- Player rejected offer
    end
 
-   if pdata.deposit and pdata.deposit > player.credits() then
+   if pdata.deposit and pdata.deposit > credits() then
       tk.msg("", _("You don't have enough credits to pay for this pilot's deposit."))
       return
    end
