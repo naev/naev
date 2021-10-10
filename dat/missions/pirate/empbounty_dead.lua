@@ -46,7 +46,7 @@ misn_title[3] = _("#rPIRACY:#0: Moderate Assassination Job in %s%s")
 misn_title[4] = _("#rPIRACY:#0: Big Assassination Job in %s%s")
 misn_title[5] = _("#rPIRACY:#0: Dangerous Assassination Job in %s%s")
 misn_title[6] = _("#rPIRACY:#0: Highly Dangerous Assassination Job in %s%s")
-misn_desc   = _("A meddlesome %s pilot known as %s was recently seen in the %s system. Local crime lords want this pilot dead.%s")
+misn_desc   = _("A meddlesome {fctname} pilot known as {pltname} was recently seen in the {sysname} system. Local crime lords want this pilot dead. {pltname} is known to be flying a {shipclass}-class ship.{fcttext}")
 
 -- Messages
 msg    = {}
@@ -140,13 +140,13 @@ function create ()
       misn.setTitle( misn_title[level]:format( missys:name(), "" ) )
    end
 
-   if pir.factionIsPirate( planet.cur():faction() ) then
-      misn.setDesc( misn_desc:format( target_faction, name, missys:name(), faction_text ) )
-   else
+   local mdesc = fmt.f( misn_desc, {fctname=target_faction, pltname=name, sysname=missys:name(), shipclass=ship.get(pship):classDisplay(), fcttext=faction_text } )
+   if not pir.factionIsPirate( planet.cur():faction() ) then
       -- We're not on a pirate stronghold, so include a warning that the
       -- mission is in fact illegal (for new players).
-      misn.setDesc( misn_desc:format( target_faction, name, missys:name(), faction_text ) .. "\n\n" .. _("#rWARNING:#0 This mission is illegal and will get you in trouble with the authorities!") )
+      mdesc = mdesc .. "\n\n" .. _("#rWARNING:#0 This mission is illegal and will get you in trouble with the authorities!")
    end
+   misn.setDesc( mdesc )
 
    misn.setReward( fmt.credits( credits ) )
    marker = misn.markerAdd( missys, "computer" )
@@ -327,177 +327,177 @@ end
 
 -- Set up the ship, credits, and reputation based on the level.
 function bounty_setup ()
-   ship = "Schroedinger"
+   pship = "Schroedinger"
    credits = 50e3
    reputation = 0
 
    if target_faction == "Empire" then
       if level == 1 then
-         ship = "Empire Shark"
+         pship = "Empire Shark"
          credits = 200e3 + rnd.sigma() * 15e3
          reputation = 1
       elseif level == 2 then
-         ship = "Empire Lancelot"
+         pship = "Empire Lancelot"
          credits = 450e3 + rnd.sigma() * 50e3
          reputation = 2
       elseif level == 3 then
-         ship = "Empire Admonisher"
+         pship = "Empire Admonisher"
          credits = 800e3 + rnd.sigma() * 80e3
          reputation = 3
       elseif level == 4 then
-         ship = "Empire Pacifier"
+         pship = "Empire Pacifier"
          credits = 1200e3 + rnd.sigma() * 120e3
          reputation = 6
       elseif level == 5 then
-         ship = "Empire Hawking"
+         pship = "Empire Hawking"
          credits = 1800e3 + rnd.sigma() * 200e3
          reputation = 10
       elseif level == 6 then
-         ship = "Empire Peacemaker"
+         pship = "Empire Peacemaker"
          credits = 3e6 + rnd.sigma() * 500e3
          reputation = 20
       end
    elseif target_faction == "Dvaered" then
       if level <= 2 then
          if rnd.rnd() < 0.5 then
-            ship = "Dvaered Ancestor"
+            pship = "Dvaered Ancestor"
          else
-            ship = "Dvaered Vendetta"
+            pship = "Dvaered Vendetta"
          end
          credits = 450e3 + rnd.sigma() * 50e3
          reputation = 2
       elseif level == 3 then
-         ship = "Dvaered Phalanx"
+         pship = "Dvaered Phalanx"
          credits = 800e3 + rnd.sigma() * 80e3
          reputation = 3
       elseif level == 4 then
-         ship = "Dvaered Vigilance"
+         pship = "Dvaered Vigilance"
          credits = 1200e3 + rnd.sigma() * 120e3
          reputation = 6
       elseif level >= 5 then
-         ship = "Dvaered Goddard"
+         pship = "Dvaered Goddard"
          credits = 1800e3 + rnd.sigma() * 200e3
          reputation = 10
       end
    elseif target_faction == "Soromid" then
       if level == 1 then
-         ship = "Soromid Brigand"
+         pship = "Soromid Brigand"
          credits = 200e3 + rnd.sigma() * 15e3
          reputation = 1
       elseif level == 2 then
          if rnd.rnd() < 0.5 then
-            ship = "Soromid Reaver"
+            pship = "Soromid Reaver"
          else
-            ship = "Soromid Marauder"
+            pship = "Soromid Marauder"
          end
          credits = 450e3 + rnd.sigma() * 50e3
          reputation = 2
       elseif level == 3 then
-         ship = "Soromid Odium"
+         pship = "Soromid Odium"
          credits = 800e3 + rnd.sigma() * 80e3
          reputation = 3
       elseif level == 4 then
-         ship = "Soromid Nyx"
+         pship = "Soromid Nyx"
          credits = 1200e3 + rnd.sigma() * 120e3
          reputation = 6
       elseif level == 5 then
-         ship = "Soromid Ira"
+         pship = "Soromid Ira"
          credits = 1800e3 + rnd.sigma() * 200e3
          reputation = 10
       elseif level == 6 then
          if rnd.rnd() < 0.5 then
-            ship = "Soromid Arx"
+            pship = "Soromid Arx"
          else
-            ship = "Soromid Vox"
+            pship = "Soromid Vox"
          end
          credits = 3e6 + rnd.sigma() * 500e3
          reputation = 20
       end
    elseif target_faction == "Frontier" then
       if level == 1 then
-         ship = "Hyena"
+         pship = "Hyena"
          credits = 100e3 + rnd.sigma() * 7500
          reputation = 0
       elseif level == 2 then
          if rnd.rnd() < 0.5 then
-            ship = "Lancelot"
+            pship = "Lancelot"
          else
-            ship = "Ancestor"
+            pship = "Ancestor"
          end
          credits = 450e3 + rnd.sigma() * 50e3
          reputation = 2
       elseif level >= 3 then
-         ship = "Phalanx"
+         pship = "Phalanx"
          credits = 800e3 + rnd.sigma() * 80e3
          reputation = 3
       end
    elseif target_faction == "Sirius" then
       if level == 1 then
-         ship = "Sirius Fidelity"
+         pship = "Sirius Fidelity"
          credits = 200e3 + rnd.sigma() * 15e3
          reputation = 1
       elseif level == 2 then
-         ship = "Sirius Shaman"
+         pship = "Sirius Shaman"
          credits = 450e3 + rnd.sigma() * 50e3
          reputation = 2
       elseif level == 3 or level == 4 then
-         ship = "Sirius Preacher"
+         pship = "Sirius Preacher"
          credits = 800e3 + rnd.sigma() * 80e3
          reputation = 3
       elseif level == 5 then
-         ship = "Sirius Dogma"
+         pship = "Sirius Dogma"
          credits = 1800e3 + rnd.sigma() * 200e3
          reputation = 10
       elseif level == 6 then
-         ship = "Sirius Divinity"
+         pship = "Sirius Divinity"
          credits = 3e6 + rnd.sigma() * 500e3
          reputation = 20
       end
    elseif target_faction == "Za'lek" then
       if level <= 3 then
-         ship = "Za'lek Sting"
+         pship = "Za'lek Sting"
          credits = 80e3 + rnd.sigma() * 80e3
          reputation = 3
       elseif level == 4 then
-         ship = "Za'lek Demon"
+         pship = "Za'lek Demon"
          credits = 1200e3 + rnd.sigma() * 120e3
          reputation = 6
       elseif level == 5 then
          if rnd.rnd() < 0.5 then
-            ship = "Za'lek Diablo"
+            pship = "Za'lek Diablo"
          else
-            ship = "Za'lek Mephisto"
+            pship = "Za'lek Mephisto"
          end
          credits = 1800e3 + rnd.sigma() * 200e3
          reputation = 10
       elseif level == 6 then
-         ship = "Za'lek Hephaestus"
+         pship = "Za'lek Hephaestus"
          credits = 3e6 + rnd.sigma() * 500e3
          reputation = 20
       end
    elseif target_faction == "Trader" then
       if level == 1 then
          if rnd.rnd() < 0.5 then
-            ship = "Gawain"
+            pship = "Gawain"
          else
-            ship = "Koala"
+            pship = "Koala"
          end
          credits = 75e3 + rnd.sigma() * 5e3
          reputation = 0
       elseif level == 2 then
          if rnd.rnd() < 0.5 then
-            ship = "Llama"
+            pship = "Llama"
          else
-            ship = "Quicksilver"
+            pship = "Quicksilver"
          end
          credits = 350e3 + rnd.sigma() * 50e3
          reputation = 2
       elseif level >= 3 then
          if rnd.rnd() < 0.5 then
-            ship = "Rhino"
+            pship = "Rhino"
             credits = 800e3 + rnd.sigma() * 80e3
          else
-            ship = "Mule"
+            pship = "Mule"
             credits = 700e3 + rnd.sigma() * 80e3
          end
          reputation = 3
@@ -505,26 +505,26 @@ function bounty_setup ()
    elseif target_faction == "Traders Guild" then
       if level == 1 then
          if rnd.rnd() < 0.5 then
-            ship = "Gawain"
+            pship = "Gawain"
          else
-            ship = "Koala"
+            pship = "Koala"
          end
          credits = 100e3 + rnd.sigma() * 5e3
          reputation = 0
       elseif level == 2 then
          if rnd.rnd() < 0.5 then
-            ship = "Llama"
+            pship = "Llama"
          else
-            ship = "Quicksilver"
+            pship = "Quicksilver"
          end
          credits = 400e3 + rnd.sigma() * 50e3
          reputation = 2
       elseif level >= 3 then
          if rnd.rnd() < 0.5 then
-            ship = "Rhino"
+            pship = "Rhino"
             credits = 900e3 + rnd.sigma() * 80e3
          else
-            ship = "Mule"
+            pship = "Mule"
             credits = 800e3 + rnd.sigma() * 80e3
          end
          reputation = 3
@@ -536,7 +536,7 @@ function bounty_setup ()
       choices[3] = "Gawain"
       choices[4] = "Llama"
 
-      ship = choices[ rnd.rnd( 1, #choices ) ]
+      pship = choices[ rnd.rnd( 1, #choices ) ]
       credits = 50e3 + rnd.sigma() * 5e3
       reputation = 0
    end
@@ -548,7 +548,7 @@ function spawn_pirate( param )
    if not job_done and system.cur() == missys then
       if jumps_permitted >= 0 then
          misn.osdActive( 2 )
-         target_ship = pilot.add( ship, target_faction, param )
+         target_ship = pilot.add( pship, target_faction, param )
          target_ship:rename( name )
          target_ship:setHilight( true )
          hook.pilot( target_ship, "attacked", "pilot_attacked" )
