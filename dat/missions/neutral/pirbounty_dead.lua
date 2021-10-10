@@ -80,7 +80,7 @@ misn_title[2] = _("Small Dead or Alive Bounty in %s")
 misn_title[3] = _("Moderate Dead or Alive Bounty in %s")
 misn_title[4] = _("High Dead or Alive Bounty in %s")
 misn_title[5] = _("Dangerous Dead or Alive Bounty in %s")
-misn_desc   = _("The pirate known as %s was recently seen in the %s system. %s authorities want this pirate dead or alive.")
+misn_desc   = _("The pirate known as {pirname} was recently seen in the {sysname} system. {fctname} authorities want this pirate dead or alive. {pirname} is believed to be flying a {shipclass}-class ship.")
 
 -- Messages
 msg    = {}
@@ -136,7 +136,7 @@ function create ()
    end
 
    name = pilotname.pirate()
-   ship = "Hyena"
+   pship = "Hyena"
    credits = 50e3
    reputation = 0
    board_failed = false
@@ -144,7 +144,7 @@ function create ()
 
    -- Set mission details
    misn.setTitle( misn_title[level]:format( missys:name() ) )
-   misn.setDesc( misn_desc:format( name, missys:name(), paying_faction:name() ) )
+   misn.setDesc( fmt.f( misn_desc, {pirname=name, sysname=missys:name(), fctname=paying_faction:name(), shipclass=_(ship.get(pship):classDisplay()) } ) )
    misn.setReward( fmt.credits( credits ) )
    marker = misn.markerAdd( missys, "computer" )
 end
@@ -338,31 +338,31 @@ end
 -- Set up the ship, credits, and reputation based on the level.
 function bounty_setup ()
    if level == 1 then
-      ship = "Hyena"
+      pship = "Hyena"
       credits = 50e3 + rnd.sigma() * 15e3
       reputation = 0
    elseif level == 2 then
-      ship = "Pirate Shark"
+      pship = "Pirate Shark"
       credits = 150e3 + rnd.sigma() * 50e3
       reputation = 0
    elseif level == 3 then
       if rnd.rnd() < 0.5 then
-         ship = "Pirate Vendetta"
+         pship = "Pirate Vendetta"
       else
-         ship = "Pirate Ancestor"
+         pship = "Pirate Ancestor"
       end
       credits = 400e3 + rnd.sigma() * 80e3
       reputation = 1
    elseif level == 4 then
       if rnd.rnd() < 0.5 then
-         ship = "Pirate Admonisher"
+         pship = "Pirate Admonisher"
       else
-         ship = "Pirate Phalanx"
+         pship = "Pirate Phalanx"
       end
       credits = 700e3 + rnd.sigma() * 120e3
       reputation = 2
    elseif level == 5 then
-      ship = "Pirate Kestrel"
+      pship = "Pirate Kestrel"
       credits = 1.2e6 + rnd.sigma() * 200e3
       reputation = 4
    end
@@ -374,7 +374,7 @@ function spawn_pirate( param )
    if not job_done and system.cur() == missys then
       if jumps_permitted >= 0 then
          misn.osdActive( 2 )
-         target_ship = pilot.add( ship, target_faction or "Pirate", param )
+         target_ship = pilot.add( pship, target_faction or "Pirate", param )
          local mem = target_ship:memory()
          mem.loiter = math.huge -- Should make them loiter forever
          set_faction( target_ship )

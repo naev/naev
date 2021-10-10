@@ -61,7 +61,7 @@ misn_title[2] = _("Small Alive Bounty in %s")
 misn_title[3] = _("Moderate Alive Bounty in %s")
 misn_title[4] = _("High Alive Bounty in %s")
 misn_title[5] = _("Dangerous Alive Bounty in %s")
-misn_desc   = _("The pirate known as %s was recently seen in the %s system. %s authorities want this pirate alive.")
+misn_desc   = _("The pirate known as {pirname} was recently seen in the {sysname} system. {fctname} authorities want this pirate alive. {pirname} is believed to be flying a {shipclass}-class ship.")
 
 osd_msg[2] = _("Capture %s")
 
@@ -78,31 +78,31 @@ end
 -- Set up the ship, credits, and reputation based on the level.
 function bounty_setup ()
    if level == 1 then
-      ship = "Hyena"
+      pship = "Hyena"
       credits = 100e3 + rnd.sigma() * 30e3
       reputation = 0
    elseif level == 2 then
-      ship = "Pirate Shark"
+      pship = "Pirate Shark"
       credits = 300e3 + rnd.sigma() * 100e3
       reputation = 1
    elseif level == 3 then
       if rnd.rnd() < 0.5 then
-         ship = "Pirate Vendetta"
+         pship = "Pirate Vendetta"
       else
-         ship = "Pirate Ancestor"
+         pship = "Pirate Ancestor"
       end
       credits = 800e3 + rnd.sigma() * 160e3
       reputation = 3
    elseif level == 4 then
       if rnd.rnd() < 0.5 then
-         ship = "Pirate Admonisher"
+         pship = "Pirate Admonisher"
       else
-         ship = "Pirate Phalanx"
+         pship = "Pirate Phalanx"
       end
       credits = 1.4e6 + rnd.sigma() * 240e3
       reputation = 5
    elseif level == 5 then
-      ship = "Pirate Kestrel"
+      pship = "Pirate Kestrel"
       credits = 2.5e6 + rnd.sigma() * 500e3
       reputation = 7
    end
