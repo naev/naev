@@ -431,7 +431,7 @@ function approach_blackjack()
          -- TODO go back to normal music
       end )
    end
-   bj._draw = function( self )
+   bj._draw = function( _self )
       local x, y, w, h =  vn.textbox_x, vn.textbox_y, vn.textbox_w, vn.textbox_h
       -- Horrible hack where we draw ontop of the textbox a background
       lg.setColor( 0.5, 0.5, 0.5 )
@@ -442,10 +442,10 @@ function approach_blackjack()
       -- Draw blackjack game
       blackjack.draw( x, y, w, h)
    end
-   bj._keypressed = function( self, key )
+   bj._keypressed = function( _self, key )
       blackjack.keypressed( key )
    end
-   bj._mousepressed = function( self, mx, my, button )
+   bj._mousepressed = function( _self, mx, my, button )
       blackjack.mousepressed( mx, my, button )
    end
    -- Undo the resize
@@ -506,7 +506,7 @@ function approach_chuckaluck ()
          -- TODO go back to normal music
       end )
    end
-   cl._draw = function( self )
+   cl._draw = function( _self )
       local x, y, w, h =  vn.textbox_x, vn.textbox_y, vn.textbox_w, vn.textbox_h
       -- Horrible hack where we draw ontop of the textbox a background
       lg.setColor( 0.5, 0.5, 0.5 )
@@ -517,10 +517,10 @@ function approach_chuckaluck ()
       -- Draw chuckaluck game
       chuckaluck.draw( x, y, w, h)
    end
-   cl._keypressed = function( self, key )
+   cl._keypressed = function( _self, key )
       chuckaluck.keypressed( key )
    end
-   cl._mousepressed = function( self, mx, my, button )
+   cl._mousepressed = function( _self, mx, my, button )
       chuckaluck.mousepressed( mx, my, button )
    end
    -- Undo the resize

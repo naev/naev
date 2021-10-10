@@ -1,4 +1,4 @@
-function onstealth( p, po, stealthed )
+function onstealth( _p, po, stealthed )
    if stealthed then
       po:state( "on" )
    else

@@ -1,13 +1,13 @@
 threshold = 50
 
-function init( p, po )
+function init( _p, po )
    mem.t = nil
    mem.forced_on = false
    mem.forced_off = false
    po:state( "off" )
 end
 
-function update( p, po, dt )
+function update( p, po, _dt )
    -- Ignore if forced
    if mem.forced_on then return end
 
@@ -27,7 +27,7 @@ function update( p, po, dt )
    po:state( "on" )
 end
 
-function ontoggle( p, po, on )
+function ontoggle( _p, po, on )
    if on then
       po:state( "on" )
       mem.forced_on = true

@@ -102,7 +102,7 @@ function spawn ( presence, max )
    local pilots = scom.spawn()
 
    -- Make sure they don't die because of nebula
-   local nebu_dens, nebu_vol = system.cur():nebula()
+   local _nebu_dens, nebu_vol = system.cur():nebula()
    if nebu_vol > 0 then
       local new_pilots = {}
       for i, s in ipairs(pilots) do

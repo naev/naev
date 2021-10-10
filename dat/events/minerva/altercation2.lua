@@ -31,10 +31,9 @@ function create ()
    vn.music( minerva.loops.conflict )
    local t1 = vn.newCharacter( _("Thug"), { image=thug1_image, pos="left" } )
    local cc = vn.newCharacter( minerva.vn_cyborg_chicken({pos="right"}) )
-   local lw, lh = window.getDesktopDimensions()
    vn.na(_("You once again hear a large commotion in one of the wings of Minerva station. As you get closer you see what seems to be a group of people chasing something small… Wait, is that a chicken?"))
    local function runaround ( left, right )
-      local lw, lh = window.getDesktopDimensions()
+      local lw, _lh = window.getDesktopDimensions()
       left  = left or rnd.rnd( 0.25*lw, 0.4*lw )
       right = right or rnd.rnd( 0.6*lw, 0.75*lw )
       local function runinit ()
@@ -50,7 +49,7 @@ function create ()
          end
          return { t1pos, ccpos, t1newpos, ccnewpos }
       end
-      return vn.animation( 1, function (alpha, dt, params)
+      return vn.animation( 1, function (alpha, _dt, params)
          local t1pos, ccpos, t1newpos, ccnewpos = table.unpack(params)
          t1.offset = t1newpos*alpha + t1pos*(1-alpha)
          cc.offset = ccnewpos*alpha + ccpos*(1-alpha)
@@ -83,11 +82,11 @@ function create ()
 
    vn.label("chickenleft")
    local function chickenleft ()
-      local lw, lh = window.getDesktopDimensions()
+      local lw, _lh = window.getDesktopDimensions()
       local function runinit ()
          return cc.offset
       end
-      vn.animation( 1.5, function (alpha, dt, ccpos)
+      vn.animation( 1.5, function (alpha, _dt, ccpos)
          local ccnewpos = 1.5 * lw
          cc.offset = ccnewpos*alpha + ccpos*(1-alpha)
       end, nil, "ease-out", runinit )

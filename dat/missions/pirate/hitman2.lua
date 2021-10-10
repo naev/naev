@@ -101,7 +101,7 @@ function sys_enter ()
 end
 
 -- killed a trader
-function trader_death (hook_pilot, hook_attacker, hook_arg)
+function trader_death (hook_pilot, hook_attacker, _arg)
    if misn_done then
       return
    end

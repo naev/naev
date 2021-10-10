@@ -2,12 +2,12 @@ masslimit = 800^2 -- squared
 jumpdist = 500
 cooldown = 8
 
-function init( p, po )
+function init( _p, po )
    po:state("off")
    mem.timer = 0
 end
 
-function update( p, po, dt )
+function update( _p, po, dt )
    mem.timer = mem.timer - dt
    po:progress( mem.timer / cooldown )
    if mem.timer < 0 then

@@ -228,7 +228,7 @@ function chelsea_death ()
 end
 
 
-function chelsea_jump( p, jump_point )
+function chelsea_jump( _p, jump_point )
    if jump_point:dest() == lmisn.getNextSystem( system.cur(), missys ) then
       player.msg( _("Chelsea has jumped to %s."):format( jump_point:dest():name() ) )
       chelsea_jumped = true
@@ -238,7 +238,7 @@ function chelsea_jump( p, jump_point )
 end
 
 
-function chelsea_land( p, planet )
+function chelsea_land( _p, planet )
    if planet == misplanet then
       player.msg( _("Chelsea has landed on %s."):format( planet:name() ) )
       chelsea_jumped = true

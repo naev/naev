@@ -169,12 +169,12 @@ He looks down sadly at the floor for a while before looking at you again.]]))
    end
 
    kex(_([["He's dead. He's completely toasted! Why aren't we celebrating?! Why aren't we happy!?"]]))
-   vn.animation( 1.5, function (progress, dt)
+   vn.animation( 1.5, function (progress, _dt)
       lmusic.setPitch( nil, pitchlow + (pitchhigh-pitchlow)*progress )
    end )
    kex(_([["We should be dancing!"]]))
    local function saddance ()
-      vn.animation( 2.0, function (progress, dt, offset)
+      vn.animation( 2.0, function (progress, _dt, offset)
          kex.offset = offset + 100*math.sin( 2 * math.pi * progress )
       end, nil, nil, function () return kex.offset end )
    end
@@ -182,7 +182,7 @@ He looks down sadly at the floor for a while before looking at you again.]]))
    kex(_([["We should be partying!"]]))
    saddance()
    kex(_([["We should…"]]))
-   vn.animation( 0.5, function (progress, dt)
+   vn.animation( 0.5, function (progress, _dt)
       lmusic.setPitch( nil, pitchhigh + (pitchlow-pitchhigh)*progress )
    end )
    kex(_([["Shit, who am I kidding."

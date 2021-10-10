@@ -251,7 +251,7 @@ function trinity_check ()
       trinity:broadcast( _("You have no idea who you're messing with!") )
    end
 
-   local a,s = trinity:health()
+   local a = trinity:health()
    if a < 100 or tri_checked > 100 then
       trinity_flee()
    else

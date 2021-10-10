@@ -46,7 +46,6 @@
 --]]
 local tutnel= require "common.tut_nelly"
 local tut   = require "common.tutorial"
-local neu   = require "common.neutral"
 local pir   = require "common.pirate"
 local vn    = require 'vn'
 local vntk  = require 'vntk'
@@ -429,7 +428,7 @@ end
 
 function target_hyperspace ()
    -- TODO map mouse gets "stuck" here because the toolkit eats the mouse click up event
-   local tsys, jumps = player.autonavDest()
+   local tsys = player.autonavDest()
    if tsys ~= destsys then
       return
    end
@@ -469,7 +468,7 @@ function outfits ()
    hk_land_outfits = nil
 end
 
-function outfit_buy( name, q )
+function outfit_buy( name, _q )
    local o = outfit.get( name )
    local t = o:type()
    if t=="Map" or t=="Local Map" or t=="License" or t=="GUI" or t=="Unknown" then

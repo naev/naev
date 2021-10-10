@@ -197,7 +197,7 @@ function takeoff ()
 end
 
 
-function pilot_attacked( p, attacker, dmg )
+function pilot_attacked( _p, attacker, dmg )
    if attacker ~= nil then
       local found = false
 
@@ -217,7 +217,7 @@ function pilot_attacked( p, attacker, dmg )
 end
 
 
-function pilot_death( p, attacker )
+function pilot_death( _p, attacker )
    if attacker == player.pilot() or attacker:leader() == player.pilot() then
       succeed()
    else

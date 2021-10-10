@@ -26,7 +26,7 @@ function turnon( p, po )
    return true
 end
 
-function turnoff( p, po )
+function turnoff( _p, po )
    if not mem.active then
       return false
    end
@@ -38,7 +38,7 @@ function turnoff( p, po )
    return true
 end
 
-function init( p, po )
+function init( _p, po )
    turnoff()
    mem.timer = 0
    po:state("off")
@@ -48,7 +48,7 @@ function update( p, po, dt )
    mem.timer = mem.timer - dt
    if mem.active then
       po:progress( mem.timer / active )
-      local a, s = p:health()
+      local _a, s = p:health()
       if mem.timer < 0 or s > 99 then
          turnoff( p, po )
       end

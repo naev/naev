@@ -66,7 +66,7 @@ function hailme()
 end
 
 -- Triggered when the player hails the ship
-function hail(p)
+function hail( _p )
    hook.rm(hailhook)
 
    tk.msg(title[1], text[1]:format(player.name(), sysname, sysname))

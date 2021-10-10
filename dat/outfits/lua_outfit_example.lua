@@ -13,42 +13,42 @@ API and must be set in the XML file.
 --]]
 
 -- The init is run when the pilot is created
-function init( p, po )
+function init( _p, _po )
 end
 
 -- The update function is run periodically every 1/3 seconds
 -- 'dt' is the time elapsed since last time run in seconds
-function update( p, po, dt )
+function update( _p, _po, _dt )
 end
 
 -- When the pilot is out of energy, this function triggers. Note that before
 -- this triggers, 'ontoggle( p, po false )' will be run if it exists.
 -- This is especially useful for outfits that can't be toggled, but want to
 -- turn off when they run out of energy.
-function outofenergy( p, po )
+function outofenergy( _p, _po )
 end
 
 -- The onhit function is run when the pilot 'p' takes damage
 -- armour is the amount of armour damage taken (in MJ)
 -- shield is the amount of shield damage taken (in MJ)
 -- attacker is the pilot that attacked
-function onhit( p, po, armour, shield, attacker )
+function onhit( _p, _po, _armour, _shield, _attacker )
 end
 
 -- The onshoot function is run when the pilot 'p' shoots. This includes primary / secondary / instant weapon sets
-function onshoot( p, po )
+function onshoot( _p, _po )
 end
 
 -- The ontoggle function allows the oufit to be toggled by the player
 -- on is whether it was toggled "on" or "off" and is a boolean value
 -- the function returns whether or not the outfit changed state
-function ontoggle( p, po, on )
+function ontoggle( _p, _po, _on )
    return false
 end
 
 -- The onstealth function runs when the pilot stealths or destealths
 -- stealthed the current stealth status of the pilot
-function onstealth( p, po, stealthed )
+function onstealth( _p, _po, _stealthed )
 end
 
 -- The cooldown function is triggered when both cooldown starts and when
@@ -56,7 +56,7 @@ end
 -- finished. In the case done is false, opt will indicate the number of
 -- seconds the cooldown will take. If done is true, then opt will be a
 -- a boolean indicating whether or not it successfully completed.
-function cooldown( p, po, done, opt )
+function cooldown( _p, _po, _done, _opt )
 end
 
 
@@ -78,12 +78,12 @@ local function disable( po )
    po:state( "cooldown" )
    return true
 end
-function init( p, po )
+function init( _p, po )
    disable(po)
    po:state( "off" )
    mem.timer = nil
 end
-function update( p, po, dt )
+function update( _p, po, dt )
    if not mem.timer then return end
 
    -- Update timer
@@ -105,7 +105,7 @@ function update( p, po, dt )
       end
    end
 end
-function ontoggle( p, po, on )
+function ontoggle( _p, _po, on )
    if on then
       -- Ignore already active
       if mem.active then return end

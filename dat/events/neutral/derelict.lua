@@ -32,7 +32,7 @@ mission_list = {
 
 function create ()
    local cursys = system.cur()
-   local nebu_dens, nebu_vol = cursys:nebula()
+   local _nebu_dens, nebu_vol = cursys:nebula()
    if nebu_vol > 0 then
       evt.finish()
    end

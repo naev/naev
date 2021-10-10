@@ -43,8 +43,6 @@
 --]]
 local tutnel= require "common.tut_nelly"
 local tut   = require "common.tutorial"
-local neu   = require "common.neutral"
-local pir   = require "common.pirate"
 local vn    = require 'vn'
 local vntk  = require 'vntk'
 local fmt   = require "format"
@@ -67,7 +65,7 @@ misn_title = _("Helping Nelly Out")
 reward_amount = 60e3
 
 local function has_disable( o )
-   local dmg, dis = o:weapstats()
+   local _dmg, dis = o:weapstats()
    return dis and dis > 0
 end
 
@@ -138,7 +136,6 @@ function accept ()
    nel(fmt.f(_([["Thanks for the help again. So while I was preparing to take off on my ship, I heard a weird noise outside, and when I went to check out, the autonav locked me out and my ship took off without anyone in it! Now it's flying around in circles outside of {pntname}!"]]),{pntname=retpnt:name()}))
 
    local pp = player.pilot()
-   local hasoutfit = false
    local has_dis = false
    local has_dis_owned = false
    local owned = {}
@@ -434,7 +431,7 @@ function timer_pirate_nelly ()
    end
    vn.run()
 
-   local osdtitle, osdelem, osdactive = misn.osdGet()
+   local osdtitle, osdelem = misn.osdGet()
    table.insert( osdelem, 1, _("Hail and bribe the pirates") )
    misn.osdCreate( osdtitle, osdelem )
 end
@@ -549,7 +546,7 @@ She frowns.
 
    vn.run()
 
-   local osdtitle, osdelem, osdactive = misn.osdGet()
+   local osdtitle, osdelem = misn.osdGet()
    table.insert( osdelem, 2, fmt.f(_("Avoid Nelly's ex-colleague by using stealth with {stealthkey}"), {stealthkey=tut.getKey("stealth")}) )
    misn.osdCreate( osdtitle, osdelem )
    misn.osdActive(2)
@@ -561,8 +558,7 @@ function spotter_spot ()
    if not spotter:exists() then return end
 
    local pp    = player.pilot()
-   local detected, scanned = spotter:inrange( pp )
-   local d     = pp:pos():dist( spotter:pos() )
+   local _detected, scanned = spotter:inrange( pp )
    local iss   = pp:flags("stealth")
    -- Spotter lost track of them
    if spotter_scanning and (iss or not scanned) then

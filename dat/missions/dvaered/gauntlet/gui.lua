@@ -12,7 +12,7 @@ local gauntlet_modifiers = {
    { id = "doubleenemy", str = "Double Enemies", var = nil, enabled = false },
 }
 
-local function button_list( wdw, captions, bx, by, bw, bh, w, h, handler )
+local function button_list( wdw, captions, bx, by, bw, bh, w, _h, handler )
    local btns = {}
 
    local fitrow = math.min( #captions, math.floor( w/(bw+10) ) )
@@ -75,7 +75,7 @@ local function gauntlet_setoption( wgt )
    end
 
    local wdw = wgt.parent
-   local w, h = wdw.w, wdw.h
+   local w = wdw.w
    modifiers_divider = luatk.newRect( wdw, 20, headerh+144, w-40, 2, {0, 0, 0} )
 
    local strlist = {}
@@ -117,7 +117,7 @@ local function gauntlet_settype( wgt )
    end
 
    local wdw = wgt.parent
-   local w, h = wdw.w, wdw.h
+   local w = wdw.w
    if newtype == "Challenge" then
       btn_options, bh = button_list( wdw,
             {"Skirmisher", "Warrior", "Warlord"},

@@ -713,7 +713,7 @@ drone_msgs = {
    _("Please kill me!"),
 }
 
-function ecc_feral_boss_attacked( p )
+function ecc_feral_boss_attacked( _p )
    if not attacked_feral_drones then
       attacked_feral_drones = true
       feral_drone_boss:broadcast( drone_msgs[1] )

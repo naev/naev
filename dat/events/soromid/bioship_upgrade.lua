@@ -125,7 +125,7 @@ function get_bioship_parts ()
 end
 
 
-function pay( amount, reason )
+function pay( amount, _reason )
    local pp = player.pilot()
    local exp_gain = math.floor(amount / 10e3)
    if amount > 0 and has_bioship() then

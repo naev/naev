@@ -94,7 +94,7 @@ function init( p, po )
    mem.isp = player.pilot()==p -- is player?
 end
 
-function update( p, po, dt )
+function update( _p, po, dt )
    mem.timer = mem.timer - dt
    if mem.p then
       po:progress( mem.timer / active )

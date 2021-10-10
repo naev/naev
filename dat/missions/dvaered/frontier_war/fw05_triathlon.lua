@@ -553,7 +553,7 @@ function startPankration()
 end
 
 -- One of the competitors is killed
-function compDie( victim, attacker )
+function compDie( _victim, attacker )
    -- This was a bad idea
    if attacker == player.pilot() then
       tk.msg( _("That was not very smart."), _([[While contemplating the hull of your opponent's ship being dislocated under the impact of your rockets, you suddently remember with horror that this is all just a competition. You think that the Dvaered might probably blame you for that, but then you realize that they will probably simply kill you instead.]]) )
@@ -654,7 +654,7 @@ function competitorIdle( self )
 end
 
 -- A competitor is hit during Stadion (problematic if the player is the agressor)
-function compHitS( victim, attacker )
+function compHitS( _victim, attacker )
    if attacker == player.pilot() then
       tk.msg( _("This is not allowed!"), _("You are not supposed to shoot at the other competitors durnig the Mace Stadion. The Stadion has to be interrupted and you recieve 5 points of penalty. Land and speak again with Major Tam.") )
       for i, p in ipairs(competitors) do

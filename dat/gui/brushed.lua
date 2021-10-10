@@ -461,7 +461,7 @@ function renderBar( name, value, light, locked, prefix, mod_x, mod_y, heat, stre
    gfx.renderTex( l_icon, l_x + offsets[1], l_y + offsets[2] + bar_h/2 - icon_h/2 ) --Icon
    if light ~= false then
       gfx.renderTex( bar_frame_light, l_x, l_y ) --Frame
-      local show_light = false
+      local show_light
       if name == "fuel" then
          show_light = player.jumps() <= 0
          if autonav_hyp ~= nil then
@@ -482,6 +482,7 @@ function renderWeapBar( weapon, x, y )
    local offsets = { 2, 2, 4, 54, 13, 23, 47 } --third last is y of icon_weapon1, last two are the centers of the two weapon icons
    local outfit_yoffset = 31
    local name_offset = 17
+   local width
    if weapon ~= nil then
       if weapon.ammo ~= nil then
          width = bar_w/2
@@ -640,7 +641,7 @@ function renderButton( button )
    gfx.renderTex( v_button.icon, v_button.x+v_button.w/2-v_button.icon_w/2, v_button.y+v_button.h/2-v_button.icon_h/2 )
 end
 
-function render( dt )
+function render( _dt )
 
    --Values
    armour, shield, stress = pp:health()
@@ -924,8 +925,8 @@ function render( dt )
    -- Fleet functions
    -- TODO: Add an API for and implement fleet command buttons
    if #pp:followers() ~= 0 then
-      local base_x, y, panel_y, width, height
-      width, height = field_frame_center:dim()
+      local base_x, y, panel_y, width
+      local _width, height = field_frame_center:dim()
       base_x = nil
       y = tbar_y - height
 

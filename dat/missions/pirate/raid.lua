@@ -80,7 +80,7 @@ function create ()
          return false
       end
       -- Must have two jumps
-      local j1, j2, d = get_route( sys )
+      local j1, _j2, d = get_route( sys )
       if j1 ~= nil and d < 10e3*10e3 then
          return false
       end

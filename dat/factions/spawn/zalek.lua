@@ -1,6 +1,6 @@
 local scom = require "factions.spawn.lib.common"
 
-local sdronescout = ship.get("Za'lek Scout Drone")
+--local sdronescout = ship.get("Za'lek Scout Drone")
 local sdronelight = ship.get("Za'lek Light Drone")
 local sdronebomber= ship.get("Za'lek Bomber Drone")
 local sdroneheavy = ship.get("Za'lek Heavy Drone")

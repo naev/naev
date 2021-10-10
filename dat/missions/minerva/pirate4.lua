@@ -284,7 +284,7 @@ function attack_spam_over ()
    attacked_spam = false
 end
 
-function mainship_stealth( p, status )
+function mainship_stealth( _p, status )
    if status==false then
       mainship:comm(_("We have been discovered!"), true)
    end

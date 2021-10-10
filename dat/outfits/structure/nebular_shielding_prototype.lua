@@ -1,15 +1,15 @@
 max_regen = 30
 
 -- Init function run on creation
-function init( p, po )
+function init( _p, po )
    po:clear()
    po:state("off")
-   local nebu_dens, nebu_vol = system.cur():nebula()
+   local _nebu_dens, nebu_vol = system.cur():nebula()
    mem.nebu_vol = nebu_vol
    mem.force_off = false
 end
 
-function update( p, po )
+function update( _p, po )
    if mem.nebu_vol <= 0 or mem.force_off then
       return
    end
@@ -20,7 +20,7 @@ function update( p, po )
 end
 
 
-function ontoggle( p, po, on )
+function ontoggle( _p, po, on )
    if mem.nebu_vol <= 0 then
       return
    end
