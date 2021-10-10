@@ -206,7 +206,7 @@ function choose_table.ambient ()
       end
 
       -- Get music information.
-      local songname, songpos = music.current()
+      local _songname, songpos = music.current()
 
       -- Do not change songs so soon
       if songpos < 10. then
@@ -216,9 +216,9 @@ function choose_table.ambient ()
    end
 
    -- Get information about the current system
-   local sys                  = system.cur()
-   local factions             = sys:presences()
-   local nebu_dens, nebu_vol  = sys:nebula()
+   local sys       = system.cur()
+   local factions  = sys:presences()
+   local nebu_dens = sys:nebula()
 
    -- System
    local override = system_ambient_songs[ sys:nameRaw() ]
@@ -333,8 +333,8 @@ Chooses battle songs.
 --]]
 function choose_table.combat ()
    -- Get some data about the system
-   local sys                  = system.cur()
-   local nebu_dens, nebu_vol  = sys:nebula()
+   local sys       = system.cur()
+   local nebu_dens = sys:nebula()
    local combat
 
    local strongest = var.peek("music_combat_force")

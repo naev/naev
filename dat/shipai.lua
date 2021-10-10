@@ -126,11 +126,10 @@ function advice ()
    if #hostiles > 0 then
       table.insert( adv, _([["When being overwhelmed by hostile enemies, you can sometimes get out of a pinch by bribing them so that they leave you alone. Not all pilots or factions are susceptible to bribing, however."]]) )
    end
-   local hmean, hpeak = pp:weapsetHeat(true)
+   local _hmean, hpeak = pp:weapsetHeat(true)
    if pp:temp() > 300 or hpeak > 0.2 then
       table.insert( adv, fmt.f(_([["When your ship or weapons get very hot, it is usually a good idea to perform an active cooldown when it is safe to do so. You can actively cooldown with {cooldownkey} or double-tapping {reversekey}. The amount it takes to cooldown depends on the size of the ship, but when done, not only will your ship be cool, it will also have replenished all ammunition and fighters."]]),{cooldownkey=tut.getKey("cooldown"), reversekey=tut.getKey("reverse")}))
    end
-   local armour, shield = pp:health()
    local ppstats = pp:stats()
    if pp:armour() < 80 and ppstats.armour_regen <= 0 then
    end
