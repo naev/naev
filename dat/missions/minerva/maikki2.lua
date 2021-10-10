@@ -583,7 +583,7 @@ function enter ()
       pilot.clear()
       pilot.toggleSpawn(false)
 
-      local fdrone = faction.dynAdd( "Independent", "Feral Drone", _("Feral Drone"), {ai="drone_miner"} )
+      faction.dynAdd( "Independent", "Feral Drone", _("Feral Drone"), {ai="drone_miner"} )
       local function spawn_single( ship, pos )
          local p = pilot.add( ship, "Feral Drone", pos )
          p:setNoJump(true)
