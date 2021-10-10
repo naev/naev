@@ -593,14 +593,14 @@ function optimize.optimize( p, cores, outfit_list, params )
    local mmod = 1
    local smod = 1
    local done = true
+   local z, x, constraints
    repeat
       try = try + 1
       done = true
       -- All the magic is done here
       --lp:write_problem( "test.txt", true )
-      local z, x, constraints = lp:solve()
+      z, x, constraints = lp:solve()
       if not z then
-
          -- Try to relax constraints
          -- Mass constraint
          mmod = mmod * 2
@@ -632,13 +632,13 @@ function optimize.optimize( p, cores, outfit_list, params )
                z, x, constraints = lp:solve()
             end
          end
+      end
 
-         if not z then
-            -- Maybe should be error instead?
-            warn(string.format(_("Failed to solve equipopt linear program for pilot '%s': %s"), p:name(), x))
-            print_debug( p, st, ss, outfit_list, params, constraints, energygoal, emod, mmod, nebu_row, budget_row )
-            return false
-         end
+      if not z then
+         -- Maybe should be error instead?
+         warn(string.format(_("Failed to solve equipopt linear program for pilot '%s': %s"), p:name(), x))
+         print_debug( p, st, ss, outfit_list, params, constraints, energygoal, emod, mmod, nebu_row, budget_row )
+         return false
       end
 
       -- Interpret results
