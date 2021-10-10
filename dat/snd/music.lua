@@ -9,6 +9,7 @@
 --    idle - current playing music ran out
 ]]--
 local last = "idle"
+local last_track
 
 -- Faction-specific songs.
 local factional = {

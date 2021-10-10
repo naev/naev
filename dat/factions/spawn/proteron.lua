@@ -65,7 +65,6 @@ function spawn_capship ()
    end
 
    -- Generate the escorts
-   r = rnd.rnd()
    if r < 0.5 then
       scom.addPilot( pilots, sderivative )
       scom.addPilot( pilots, sderivative )

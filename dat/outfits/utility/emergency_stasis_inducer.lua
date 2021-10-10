@@ -1,8 +1,8 @@
 require 'outfits.shaders'
 
 -- Global constant variables for the outfit
-cooldown = 8 -- cooldown period in seconds
-ontime = 3 -- powered on time in seconds (it gets modulated by time_mod)
+local cooldown = 8 -- cooldown period in seconds
+local ontime = 3 -- powered on time in seconds (it gets modulated by time_mod)
 ppshader = shader_new([[
 #include "lib/blend.glsl"
 #include "lib/colour.glsl"

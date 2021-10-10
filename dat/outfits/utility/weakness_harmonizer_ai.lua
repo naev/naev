@@ -1,9 +1,9 @@
 -- Global constant variables for the outfit
-range = 2000
-bonus = 10
+local range = 2000
+local bonus = 10
 
 -- Only care about fighting classes
-function pilotToLevel( p )
+local function pilotToLevel( p )
    return p:ship():size()
 end
 

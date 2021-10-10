@@ -1,6 +1,6 @@
-masslimit = 800^2 -- squared
-jumpdist = 500
-cooldown = 8
+local masslimit = 800^2 -- squared
+local jumpdist = 500
+local cooldown = 8
 
 function init( _p, po )
    po:state("off")

@@ -1,8 +1,8 @@
-masslimit = 5000^2 -- squared
-jumpdist = 2000
-cooldown = 8
-warmup = 3
-penalty = -50
+local masslimit = 5000^2 -- squared
+local jumpdist = 2000
+local cooldown = 8
+local warmup = 3
+local penalty = -50
 
 function init( _p, po )
    po:state("off")

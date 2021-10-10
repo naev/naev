@@ -1,4 +1,4 @@
-threshold = 50
+local threshold = 50
 
 function init( _p, po )
    mem.t = nil

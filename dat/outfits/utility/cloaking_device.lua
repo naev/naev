@@ -1,9 +1,9 @@
 require 'outfits.shaders'
 
-active = 10 -- active time in seconds
-cooldown = 15 -- cooldown time in seconds
-shielddrain = 2 -- How fast shield drains
-energydrain = 0.1 -- How much energy per ton of mess
+local active = 10 -- active time in seconds
+local cooldown = 15 -- cooldown time in seconds
+local shielddrain = 2 -- How fast shield drains
+local energydrain = 0.1 -- How much energy per ton of mess
 ppshader = shader_new([[
 #include "lib/blend.glsl"
 const vec3 colmod = vec3( 0.0, 0.5, 1.0 );
@@ -19,7 +19,7 @@ vec4 effect( sampler2D tex, vec2 texcoord, vec2 pixcoord )
 shader_fade = 1
 
 
-function turnon( p, po )
+local function turnon( p, po )
    -- Still on cooldown
    if mem.timer and mem.timer > 0 then
       return false
@@ -44,7 +44,7 @@ function turnon( p, po )
    return true
 end
 
-function turnoff( p, po )
+local function turnoff( p, po )
    if not mem.active then
       return false
    end

@@ -14,7 +14,7 @@ local vn  = require 'vn'
 local fmt = require 'format'
 
 -- Runs on saves older than 0.9.0
-function updater090 ()
+local function updater090 ()
    -- Changed how the FLF base diff stuff works
    if diff.isApplied("flf_dead") and diff.isApplied("FLF_base") then
       diff.remove("FLF_base")

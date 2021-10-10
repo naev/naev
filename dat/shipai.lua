@@ -5,6 +5,9 @@ local fmt = require "format"
 local tut = require "common.tutorial"
 local vn  = require "vn"
 
+-- Functions:
+local advice
+
 function create ()
    vn.clear()
    vn.scene()
@@ -23,7 +26,7 @@ function create ()
    end )
 
    vn.label("advice")
-   sai( function () return advice() end )
+   sai( advice )
 
    vn.label("opts")
    vn.menu( function ()

@@ -87,7 +87,8 @@ stds.AI.globals = {
    "refuel",
 }
 stds.API_comm = {globals={"comm"}}      -- C function: comm_openPilot()
-stds.API_equip = {globals={"autoequip"}}-- C function: equipment_autoequipShip()
+stds.API_autoequip = {globals={"autoequip"}}            -- C function: equipment_autoequipShip()
+stds.API_equip = {globals={"equip", "equip_generic"}}   -- C function: ai_create
 stds.API_faction = {globals={
    "faction_hit",                       -- C function: faction_modPlayerLua()
    "faction_player_enemy",              -- C function: faction_isPlayerEnemy()
@@ -115,6 +116,7 @@ stds.API_land = {globals={
    "zlk_ruadan",
 }}
 stds.API_rescue = {globals={"rescue"}}  -- C function: land_stranded
+stds.API_shipai = {globals={"create"}}  -- C function: info_shipAI
 stds.API_spawn = {globals={
    "create",                            -- C function: system_scheduler()
    "decrease",                          -- C function: system_rmCurrentPresence()
@@ -160,11 +162,11 @@ stds.PilotOutfit.globals={
 table.insert(stds.PilotOutfit.globals, "mem")
 
 files["ai/**/*.lua"].std = STANDARD .. "+AI"
-files["autoequip.lua"].std = STANDARD .. TK .. "+API_equip"
+files["autoequip.lua"].std = STANDARD .. TK .. "+API_autoequip"
 files["bkg/*.lua"].std = STANDARD .. "+Tex+Col+Background+Camera"
 files["comm.lua"].std = STANDARD .. "+API_comm"
 files["events/**/*.lua"].std = STANDARD .. "+Evt+Hook+Camera+Tex+Background+Music+Audio" .. TK
-files["factions/equip/*.lua"].std = STANDARD
+files["factions/equip/*.lua"].std = STANDARD .. "+API_equip"
 files["factions/spawn/**/*.lua"].std = STANDARD .. "+API_spawn"
 files["factions/standing/**/*.lua"].std = STANDARD .. "+API_faction"
 files["gui/*.lua"].std = STANDARD .. GFX .. "+GUI" .. TK
@@ -172,6 +174,7 @@ files["landing.lua"].std = STANDARD .. "+API_land"
 files["missions/**/*.lua"].std = STANDARD .. "+Misn+Hook+Camera+Tex+Background+Music+Audio" .. TK
 files["outfits/**/*.lua"].std = STANDARD .. GFX .. "+PilotOutfit"
 files["rescue.lua"].std = STANDARD .. TK .. "+API_rescue"
+files["shipai.lua"].std = STANDARD .. "+API_shipai"
 files["snd/music.lua"].std = STANDARD .. "+Music"
 
 -- No way to be sure what type of environment will load these.

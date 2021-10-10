@@ -1,9 +1,9 @@
-
 require 'outfits.shaders'
-threshold = 30 -- armour shield damage to turn off at
-cooldown = 8 -- cooldown time in seconds
-drain_shield = 1.0 / 2.0 -- inverse of number of seconds needed to drain shield
-drain_armour = 1.0 / 50.0 -- inverse of number of seconds needed to drain armour (this is accelerated by this amount every second)
+
+local threshold = 30 -- armour shield damage to turn off at
+local cooldown = 8 -- cooldown time in seconds
+local drain_shield = 1.0 / 2.0 -- inverse of number of seconds needed to drain shield
+local drain_armour = 1.0 / 50.0 -- inverse of number of seconds needed to drain armour (this is accelerated by this amount every second)
 ppshader = shader_new([[
 #include "lib/blend.glsl"
 const vec3 colmod = vec3( 1.0, 0.0, 0.0 );
@@ -18,7 +18,7 @@ vec4 effect( sampler2D tex, vec2 texcoord, vec2 pixcoord )
 ]])
 
 
-function turnon( p, po )
+local function turnon( p, po )
    -- Still on cooldown
    if mem.timer and mem.timer > 0 then
       return false
@@ -45,7 +45,7 @@ function turnon( p, po )
    return true
 end
 
-function turnoff( _p, po )
+local function turnoff( _p, po )
    if not mem.active then
       return false
    end

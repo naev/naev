@@ -1,4 +1,4 @@
-max_regen = 30
+local max_regen = 30
 
 -- Init function run on creation
 function init( _p, po )

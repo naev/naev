@@ -1,7 +1,7 @@
 require 'outfits.shaders'
 
-active = 5 -- active time in seconds
-cooldown = 20 -- cooldown time in seconds
+local active = 5 -- active time in seconds
+local cooldown = 20 -- cooldown time in seconds
 ppshader = shader_new([[
 #include "lib/blend.glsl"
 #include "lib/colour.glsl"
@@ -18,7 +18,7 @@ vec4 effect( sampler2D tex, vec2 texcoord, vec2 pixcoord )
 ]])
 
 
-function turnon( _p, po )
+local function turnon( _p, po )
    -- Still on cooldown
    if mem.timer and mem.timer > 0 then
       return false
@@ -33,7 +33,7 @@ function turnon( _p, po )
    return true
 end
 
-function turnoff( _p, po )
+local function turnoff( _p, po )
    if not mem.active then
       return false
    end

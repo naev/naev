@@ -1,4 +1,5 @@
-local factions
+local factions, isactive
+
 function onload ()
    factions = outfit.get("Fake Transponder"):illegality()
 end

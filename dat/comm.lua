@@ -5,6 +5,8 @@ local vn = require 'vn'
 local lg = require 'love.graphics'
 local fmt = require "format"
 
+local bribe_group, bribeable, bribeable_all, bribe_nearby_cost, bribe_all_cost
+
 local function can_bribe( plt )
    local mem = plt:memory()
    if mem.bribe_no then
@@ -63,29 +65,29 @@ end
 -- Respects fleets
 local function nearby_bribeable( plt, difffactok )
    local pp = player.pilot()
-   local bribeable = {}
+   local ret = {}
    for k,v in ipairs(pp:getVisible()) do
       if (v:faction() == plt:faction() or (difffactok and not v:faction():areEnemies(plt:faction()))) and can_bribe(v) then
          local flt = bribe_fleet( v )
          if flt then
             for i,p in ipairs(flt) do
                local found = false
-               for j,c in ipairs(bribeable) do
+               for j,c in ipairs(ret) do
                   if c==p then
                      found = true
                      break
                   end
                end
                if not found then
-                  table.insert( bribeable, p )
+                  table.insert( ret, p )
                end
             end
          else
-            table.insert( bribeable, v )
+            table.insert( ret, v )
          end
       end
    end
-   return bribeable
+   return ret
 end
 
 local function bribe_cost( plt )
@@ -188,8 +190,8 @@ function comm( plt )
       local namebox_y = vn.namebox_y + vn.namebox_h -- Correct
       local namebox_text_w, wrapped = namebox_font:getWrap( namebox_text, nw )
       local namebox_b = 20
-      namebox_w = namebox_text_w + 2*namebox_b
-      namebox_h = namebox_font:getLineHeight()*#wrapped + 2*namebox_b
+      local namebox_w = namebox_text_w + 2*namebox_b
+      local namebox_h = namebox_font:getLineHeight()*#wrapped + 2*namebox_b
       namebox_y = namebox_y - namebox_h
 
       -- Get the logo

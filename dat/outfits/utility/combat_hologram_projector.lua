@@ -1,9 +1,9 @@
-cooldown = 20
-active = 15
-dist = 3000 -- Distance to possible change target of hostiles
-hologram = outfit.get("Combat Hologram Projector")
+local cooldown = 20
+local active = 15
+local dist = 3000 -- Distance to possible change target of hostiles
+local hologram = outfit.get("Combat Hologram Projector")
 
-function turnon( p, po )
+local function turnon( p, po )
    -- Make sure pilot has a target
    local t = p:target()
    if t == nil then return false end
@@ -67,15 +67,8 @@ function turnon( p, po )
 
    return true
 end
-function turnoff( po )
-   removehologram()
 
-   -- Set outfit state
-   mem.timer = cooldown
-   po:state("cooldown")
-   po:progress(1)
-end
-function removehologram()
+local function removehologram()
    -- get rid of hologram if exists
    if mem.p and mem.p:exists() then
       -- Remove all potential escorts
@@ -85,6 +78,15 @@ function removehologram()
       mem.p:rm()
    end
    mem.p = nil
+end
+
+local function turnoff( po )
+   removehologram()
+
+   -- Set outfit state
+   mem.timer = cooldown
+   po:state("cooldown")
+   po:progress(1)
 end
 
 function init( p, po )

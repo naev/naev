@@ -19,11 +19,11 @@ end
 --[[
 -- Converts the safelane structure to a nice list of vertices and edges
 --]]
-local function safelanesToGraph( lanes )
+local function safelanesToGraph( safelanes )
    local eps = 1e-5
    local vertices = {}
    local edges = {}
-   for k,v in ipairs(lanes) do
+   for k,v in ipairs(safelanes) do
       local v1, v2
       for i,p in ipairs(vertices) do
          if p:dist2(v[1]) < eps then
@@ -109,7 +109,7 @@ local function _dijkstra( vertices, edges, source, target )
    while #Q > 0 do
       -- Vertex with minimum distance
       table.sort( Q, function(a, b) return a.d < b.d end )
-      u = Q[1]
+      local u = Q[1]
       table.remove( Q, 1 )
 
       -- Search done
@@ -189,7 +189,7 @@ local function dijkstra_full( vertices, edges, source, target )
    while #Q > 0 do
       -- Vertex with minimum distance
       table.sort( Q, function(a, b) return a.d < b.d end )
-      u = Q[1]
+      local u = Q[1]
       table.remove( Q, 1 )
 
       -- Search done
@@ -337,7 +337,6 @@ end
 -- We'll project the pos into radius if it is out of bounds.
 --]]
 function lanes.getNonPoint( L, pos, rad, margin, biasdir )
-   margin = margin or ews
    local margin2 = margin*margin
    local srad2 = math.pow( system.cur():radius(), 2 )
 

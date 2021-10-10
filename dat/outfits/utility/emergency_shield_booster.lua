@@ -1,10 +1,10 @@
-active = 4 -- active time in seconds
-cooldown = 8 -- cooldown time in seconds
-boost = 5 -- How much the shield regen is increased by
-efficiency = 3 -- MJ of energy used per shield recovered
+local active = 4 -- active time in seconds
+local cooldown = 8 -- cooldown time in seconds
+local boost = 5 -- How much the shield regen is increased by
+local efficiency = 3 -- MJ of energy used per shield recovered
 
 
-function turnon( p, po )
+local function turnon( p, po )
    -- Still on cooldown
    if mem.timer > 0 then
       return false
@@ -26,7 +26,7 @@ function turnon( p, po )
    return true
 end
 
-function turnoff( _p, po )
+local function turnoff( _p, po )
    if not mem.active then
       return false
    end
