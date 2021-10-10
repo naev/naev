@@ -11,7 +11,7 @@ function create ()
    local sai = vn.newCharacter( tut.vn_shipai() )
    vn.transition( tut.shipai.transition )
    vn.label("mainmenu")
-   sai(fmt.f(_([["Hello {playername}! Is there anything you want to change or brushen up on?"]]),{playername=player.name()}))
+   sai(fmt.f(_([["Hello {playername}! Is there anything you want to change or brush up on?"]]),{playername=player.name()}))
    vn.menu( function ()
       local opts = {
          {_("Get Advice"), "advice"},
