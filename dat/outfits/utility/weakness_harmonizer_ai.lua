@@ -15,7 +15,7 @@ function init( p, po )
    mem.nearby = 0
 end
 
-function update( p, po, dt )
+function update( p, po, _dt )
    local h = p:getHostiles( range )
    local n = 0
    for k,v in ipairs(h) do

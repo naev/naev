@@ -13,7 +13,7 @@ local function fclear( f )
    var.pop("faket_"..f:nameRaw())
 end
 
-local function reset( p, po )
+local function reset( _p, po )
    for k,f in ipairs(factions) do
       local os = fget( f )
       local s  = f:playerStanding()
@@ -34,7 +34,7 @@ local function reset( p, po )
    isactive = true
 end
 
-local function disable( p, po )
+local function disable( _p, po )
    if not isactive then return end
    for k,f in ipairs(factions) do
       f:setPlayerStanding( fget( f ) )
@@ -57,11 +57,11 @@ function init( p, po )
    reset( p, po )
 end
 
-function onscanned( p, po, scanner )
+function onscanned( p, po, _scanner )
    disable( p, po )
 end
 
-function cooldown( p, po, done, opt )
+function cooldown( p, po, done, _opt )
    if not done then return end
    reset( p, po )
 end

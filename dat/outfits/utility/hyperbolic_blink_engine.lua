@@ -4,7 +4,7 @@ cooldown = 8
 warmup = 3
 penalty = -50
 
-function init( p, po )
+function init( _p, po )
    po:state("off")
    mem.timer = 0
    mem.warmup = false
@@ -53,7 +53,7 @@ function update( p, po, dt )
    end
 end
 
-function ontoggle( p, po, on )
+function ontoggle( _p, po, on )
    -- Only care about turning on (outfit never has the "on" state)
    if not on then return end
 

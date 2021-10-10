@@ -27,11 +27,11 @@ function init( p, po )
    shader_force_off()
 end
 
-function cleanup( p, po )
+function cleanup( _p, _po )
    shader_force_off()
 end
 
-function update( p, po, dt )
+function update( _p, po, dt )
    if not mem.timer then return end
    mem.timer = mem.timer - dt
    -- If active, we run until end
@@ -62,7 +62,7 @@ function update( p, po, dt )
    end
 end
 
-function onhit( p, po, armour, shield )
+function onhit( _p, po, armour, _shield )
    if not mem.active and armour > 0 then
       -- Don't run while cooling off
       if mem.timer and mem.timer > 0 then return end

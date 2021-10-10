@@ -24,7 +24,7 @@ function turnon( p, po )
       return false
    end
    -- Must be above armour threshold
-   local a, s = p:health()
+   local a = p:health()
    if a < threshold then
       return false
    end
@@ -45,7 +45,7 @@ function turnon( p, po )
    return true
 end
 
-function turnoff( p, po )
+function turnoff( _p, po )
    if not mem.active then
       return false
    end
@@ -77,7 +77,7 @@ end
 function update( p, po, dt )
    if mem.active then
       shader_update_on(dt)
-      local a, s = p:health()
+      local a = p:health()
       if a < threshold then
          turnoff( p, po )
       else

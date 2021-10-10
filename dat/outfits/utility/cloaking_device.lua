@@ -92,7 +92,7 @@ function update( p, po, dt )
 end
 
 -- Disable on hit
-function onhit( p, po, armour, shield )
+function onhit( p, po, _armour, _shield )
    if mem.active then
       turnoff( p, po )
    end
