@@ -83,9 +83,9 @@ local function connected( vertices, edges, source )
 end
 
 --[[
--- You run of the mill djikstra algorithm
+-- Your run of the mill Dijkstra algorithm. Currently dijkstra_full is used instead.
 --]]
-local function djikstra( vertices, edges, source, target )
+local function _dijkstra( vertices, edges, source, target )
    local Q = {}
    for k,v in ipairs(vertices) do
       local q = {
@@ -152,10 +152,10 @@ local function djikstra( vertices, edges, source, target )
 end
 
 --[[
--- Djikstra but considering everything is fully connected with different
+-- Dijkstra but considering everything is fully connected with different
 -- penalty for travelling through non-safe areas.
 --]]
-local function djikstra_full( vertices, edges, source, target )
+local function dijkstra_full( vertices, edges, source, target )
    local Q = {}
    local N = {}
    for k,v in ipairs(vertices) do
@@ -434,7 +434,7 @@ function lanes.getRoute( L, target, pos )
    -- Compute shortest path
    local sv = nearestVertex( lv, pos )
    local tv = nearestVertex( lv, target )
-   local S = djikstra_full( lv, le, tv, sv )
+   local S = dijkstra_full( lv, le, tv, sv )
 
    -- No path so just go straight
    if #S == 0 then
