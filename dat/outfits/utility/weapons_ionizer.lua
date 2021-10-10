@@ -16,7 +16,7 @@ function update( p, po, _dt )
    if t ~= mem.t then
       po:state( "off" )
       mem.t = t
-      forced_off = false
+      mem.forced_off = false
       return
    end
    if mem.forced_off then return end
