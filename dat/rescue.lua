@@ -320,22 +320,6 @@ function buildTables()
 end
 
 
--- Builds a table of outfits suitable for putting into a slot of a given
--- size and property.
-function buildOutfitTable( size, property, outfits )
-   local out = {}
-
-   for k,v in ipairs( outfits ) do
-      local _oname, osize, oprop = v:slot()
-      if size == osize and property == oprop then
-         table.insert(out, v:nameRaw())
-      end
-   end
-
-   return out
-end
-
-
 -- Removes all non-core outfits from the ship and adds them to the inventory.
 function removeNonCores( slottype )
    local pp = player.pilot() -- Convenience.
