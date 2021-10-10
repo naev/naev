@@ -35,134 +35,9 @@ missing  = {} -- Array of empty required slots and their default outfits.
 nrequired = 0
 nequipped = 0
 
--- Array of tasks for filling in missing slots in the following format:
---    { { desc, callback }, ... }
-mtasks = {
-   { _("Remove outfits and use default cores"), function() removeEquipDefaults() end },
-   { _("Add missing default cores"), function() fillMissing( missing ) end },
-   { _("Replace all cores with defaults"), function() equipDefaults( required ) end },
-   { _("Cancel"), function() tk.msg( _("Stranded"), msg_refuse ) end }
-   -- TODO: Possibly add a "Select from inventory" option
-}
-
-tasks = {
-   { _("Remove all outfits and set cores to defaults"), function() removeEquipDefaults() end },
-   { _("Replace all cores with defaults"), function() equipDefaults( required ) end },
-   { _("Remove all non-core outfits"), function() removeNonCores() end },
-   { _("Remove weapons"), function() removeNonCores( "Weapon" ) end },
-   { _("Remove utility outfits"), function() removeNonCores( "Utility" ) end },
-   { _("Remove structure outfits"), function() removeNonCores( "Structure" ) end },
-   { _("Cancel"), function() tk.msg( _("Stranded"), msg_refuse ) end }
-}
-
 msg_refuse = _([[Very well, but it's unlikely you'll be able to take off.
 
 If you can't find a way to make your ship spaceworthy, you can always attempt to take off again to trigger this dialogue, or try loading your backup save.]])
-
-
-function rescue()
-   -- Do nothing if already spaceworthy.
-   if player.pilot():spaceworthy() then
-      return
-   end
-
-   buildTables()
-
-   -- Bail out if the player has a reasonable chance of fixing their ship.
-   if not check_stranded( missing ) then
-      return
-   end
-
-   -- Add missing core outfits.
-   if #mtasks > 0 and #missing > 0 then
-      local defaults, _weapons, _utility, _structure = assessOutfits()
-
-      -- Build list of suitable tasks.
-      local opts = {}
-      for k,v in ipairs(mtasks) do
-         table.insert(opts, v)
-      end
-
-      if #missing == nrequired or defaults then
-         table.remove( opts, 2 )
-      end
-
-      local strings = {}
-      for k,v in ipairs(opts) do
-         strings[k] = v[1]
-      end
-
-
-      local msg_missing = gettext.ngettext(
-         [[Your ship is missing %d core outfit. How do you want to resolve this?]],
-         [[Your ship is missing %d core outfits. How do you want to resolve this?]], #missing)
-      local ind, str = tk.choice( _("Stranded"),
-            string.format(msg_missing, #missing), table.unpack(strings) )
-
-      opts[ind][2]() -- Run callback.
-      if str == _("Cancel") then
-         return
-      end
-
-      -- If ship is now spaceworthy, bail out.
-      if player.pilot():spaceworthy() then
-         local msg_success = gettext.ngettext(
-            [[After adding the missing outfit, your ship is now spaceworthy, though it may have somewhat lower performance than usual. You should get to a planet with a proper shipyard and outfitter.]],
-            [[After adding the missing outfits, your ship is now spaceworthy, though it may have somewhat lower performance than usual. You should get to a planet with a proper shipyard and outfitter.]], #missing)
-         tk.msg(_("Stranded"), msg_success)
-         return
-      end
-
-      tk.msg( _("Stranded"), _([[Unfortunately, your ship still isn't spaceworthy. However, there are still other options for getting your ship airborne.]]) )
-      buildTables() -- Rebuild tables, as we've added outfits.
-   end
-
-   -- Remove non-cores, replace cores with defaults, etc.
-   while true do
-      local defaults, weapons, utility, structure = assessOutfits()
-
-      -- Build list of suitable tasks.
-      local opts = {}
-      if not defaults then table.insert( opts, tasks[1] ) end
-
-      if weapons or utility or structure then
-         table.insert( opts, tasks[2] )
-      end
-
-      if weapons then table.insert( opts, tasks[3] ) end
-      if utility then table.insert( opts, tasks[4] ) end
-      if structure then table.insert( opts, tasks[5] ) end
-
-      table.insert( opts, tasks[6] ) -- "Cancel"
-
-      local strings = {}
-      for k,v in ipairs(opts) do
-         strings[k] = v[1]
-      end
-
-      -- Only "Cancel" remains, nothing to do.
-      if #strings < 2 then
-         tk.msg(_("Stranded"), _([[Well... this isn't good. Your ship has been restored to its default configuration, yet still isn't spaceworthy.
-
-Please report this to the developers along with a copy of your save file.]]))
-         return
-      end
-
-      local ind, str = tk.choice( _("Stranded"), _([[The following actions are available to make your ship spaceworthy:]]), table.unpack(strings) )
-
-      opts[ind][2]() -- Run callback.
-      if str == _("Cancel") then
-         return
-      end
-
-      if player.pilot():spaceworthy() then
-         tk.msg( _("Stranded"), _([[Your ship is now spaceworthy, though you should get to an outfitter as soon as possible.]]) )
-         return
-      end
-
-      buildTables() -- Rebuild tables, as we've added outfits.
-   end
-end
 
 
 --[[
@@ -353,6 +228,14 @@ function removeEquipDefaults()
 end
 
 
+function fillMissing( missing )
+   -- Fill empty core slots with defaults.
+   for k,v in pairs(missing) do
+      player.pilot():outfitAdd( v.outfit:nameRaw() )
+   end
+end
+
+
 -- Replace all cores with the ship's defaults.
 function equipDefaults( defaults )
    local pp = player.pilot() -- Convenience.
@@ -376,14 +259,6 @@ function equipDefaults( defaults )
 
    -- Add remaining outfits.
    fillMissing( defaults )
-end
-
-
-function fillMissing( missing )
-   -- Fill empty core slots with defaults.
-   for k,v in pairs(missing) do
-      player.pilot():outfitAdd( v.outfit:nameRaw() )
-   end
 end
 
 
@@ -413,4 +288,129 @@ function assessOutfits()
    end
 
    return defaults, weapons, utility, structure
+end
+
+
+-- Array of tasks for filling in missing slots in the following format:
+--    { { desc, callback }, ... }
+mtasks = {
+   { _("Remove outfits and use default cores"), function() removeEquipDefaults() end },
+   { _("Add missing default cores"), function() fillMissing( missing ) end },
+   { _("Replace all cores with defaults"), function() equipDefaults( required ) end },
+   { _("Cancel"), function() tk.msg( _("Stranded"), msg_refuse ) end }
+   -- TODO: Possibly add a "Select from inventory" option
+}
+
+tasks = {
+   { _("Remove all outfits and set cores to defaults"), function() removeEquipDefaults() end },
+   { _("Replace all cores with defaults"), function() equipDefaults( required ) end },
+   { _("Remove all non-core outfits"), function() removeNonCores() end },
+   { _("Remove weapons"), function() removeNonCores( "Weapon" ) end },
+   { _("Remove utility outfits"), function() removeNonCores( "Utility" ) end },
+   { _("Remove structure outfits"), function() removeNonCores( "Structure" ) end },
+   { _("Cancel"), function() tk.msg( _("Stranded"), msg_refuse ) end }
+}
+
+function rescue()
+   -- Do nothing if already spaceworthy.
+   if player.pilot():spaceworthy() then
+      return
+   end
+
+   buildTables()
+
+   -- Bail out if the player has a reasonable chance of fixing their ship.
+   if not check_stranded( missing ) then
+      return
+   end
+
+   -- Add missing core outfits.
+   if #mtasks > 0 and #missing > 0 then
+      local defaults, _weapons, _utility, _structure = assessOutfits()
+
+      -- Build list of suitable tasks.
+      local opts = {}
+      for k,v in ipairs(mtasks) do
+         table.insert(opts, v)
+      end
+
+      if #missing == nrequired or defaults then
+         table.remove( opts, 2 )
+      end
+
+      local strings = {}
+      for k,v in ipairs(opts) do
+         strings[k] = v[1]
+      end
+
+
+      local msg_missing = gettext.ngettext(
+         [[Your ship is missing %d core outfit. How do you want to resolve this?]],
+         [[Your ship is missing %d core outfits. How do you want to resolve this?]], #missing)
+      local ind, str = tk.choice( _("Stranded"),
+            string.format(msg_missing, #missing), table.unpack(strings) )
+
+      opts[ind][2]() -- Run callback.
+      if str == _("Cancel") then
+         return
+      end
+
+      -- If ship is now spaceworthy, bail out.
+      if player.pilot():spaceworthy() then
+         local msg_success = gettext.ngettext(
+            [[After adding the missing outfit, your ship is now spaceworthy, though it may have somewhat lower performance than usual. You should get to a planet with a proper shipyard and outfitter.]],
+            [[After adding the missing outfits, your ship is now spaceworthy, though it may have somewhat lower performance than usual. You should get to a planet with a proper shipyard and outfitter.]], #missing)
+         tk.msg(_("Stranded"), msg_success)
+         return
+      end
+
+      tk.msg( _("Stranded"), _([[Unfortunately, your ship still isn't spaceworthy. However, there are still other options for getting your ship airborne.]]) )
+      buildTables() -- Rebuild tables, as we've added outfits.
+   end
+
+   -- Remove non-cores, replace cores with defaults, etc.
+   while true do
+      local defaults, weapons, utility, structure = assessOutfits()
+
+      -- Build list of suitable tasks.
+      local opts = {}
+      if not defaults then table.insert( opts, tasks[1] ) end
+
+      if weapons or utility or structure then
+         table.insert( opts, tasks[2] )
+      end
+
+      if weapons then table.insert( opts, tasks[3] ) end
+      if utility then table.insert( opts, tasks[4] ) end
+      if structure then table.insert( opts, tasks[5] ) end
+
+      table.insert( opts, tasks[6] ) -- "Cancel"
+
+      local strings = {}
+      for k,v in ipairs(opts) do
+         strings[k] = v[1]
+      end
+
+      -- Only "Cancel" remains, nothing to do.
+      if #strings < 2 then
+         tk.msg(_("Stranded"), _([[Well... this isn't good. Your ship has been restored to its default configuration, yet still isn't spaceworthy.
+
+Please report this to the developers along with a copy of your save file.]]))
+         return
+      end
+
+      local ind, str = tk.choice( _("Stranded"), _([[The following actions are available to make your ship spaceworthy:]]), table.unpack(strings) )
+
+      opts[ind][2]() -- Run callback.
+      if str == _("Cancel") then
+         return
+      end
+
+      if player.pilot():spaceworthy() then
+         tk.msg( _("Stranded"), _([[Your ship is now spaceworthy, though you should get to an outfitter as soon as possible.]]) )
+         return
+      end
+
+      buildTables() -- Rebuild tables, as we've added outfits.
+   end
 end
