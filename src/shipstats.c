@@ -284,13 +284,15 @@ int ss_statsInit( ShipStats *stats )
       /* Handle doubles. */
       switch (sl->data) {
          case SS_DATA_TYPE_DOUBLE:
-            double *dbl;
-            char *fieldptr = &ptr[ sl->offset ];
-            memcpy(&dbl, &fieldptr, sizeof(double*));
-            *dbl  = 1.0;
-            break;
+            {
+               double *dbl;
+               char *fieldptr = &ptr[ sl->offset ];
+               memcpy(&dbl, &fieldptr, sizeof(double*));
+               *dbl  = 1.0;
+               break;
+            }
 
-         /* No need to set, memset does the work. */
+            /* No need to set, memset does the work. */
          case SS_DATA_TYPE_DOUBLE_ABSOLUTE:
          case SS_DATA_TYPE_DOUBLE_ABSOLUTE_PERCENT:
          case SS_DATA_TYPE_INTEGER:
