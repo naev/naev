@@ -57,7 +57,7 @@ local thurion_params = {
          },
       } end,
 }
-local function choose_one( t ) return t[ rnd.rnd(1,#t) ] end
+--local function choose_one( t ) return t[ rnd.rnd(1,#t) ] end
 local thurion_cores = {
 }
 
@@ -87,7 +87,13 @@ local function equip_thurion( p, opt_params )
    params = mt.merge_tables( params, opt_params )
 
    -- See cores
-   cores = ecores.get( p, { all="elite" } )
+   local cores
+   local thucor = thurion_cores[ sname ]
+   if thucor then
+      cores = thucor()
+   else
+      cores = ecores.get( p, { all="elite" } )
+   end
 
    -- Set some meta-data
    local mem = p:memory()
