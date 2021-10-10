@@ -305,7 +305,7 @@ function pir_reinforcements ()
    local function addpir( shipname, leader )
       local p = pilot.add( shipname, "Pirate", jmp, nil, {ai="guard"} )
       p:setFriendly(true)
-      p:setLeader(l)
+      p:setLeader(leader)
       local mem = p:memory()
       mem.guardpos = shippos -- Try to guard the Rhino
       table.insert( spawned_pirates, p )
