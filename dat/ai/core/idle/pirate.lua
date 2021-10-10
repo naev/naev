@@ -113,7 +113,7 @@ local function __loiter( p, taskname )
    end
    local target = lanes.getNonPointP( p, nil, nil, nil, targetdir )
    if target then
-      local m, a = (target - p:pos()):polar()
+      local _m, a = (target - p:pos()):polar()
       mem.lastdirection = a -- bias towards moving in a straight line
       ai.pushtask( taskname, target )
       return true

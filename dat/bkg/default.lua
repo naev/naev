@@ -46,7 +46,7 @@ stars = {
 function background ()
    -- We can do systems without nebula
    cur_sys = system.cur()
-   local nebud, nebuv = cur_sys:nebula()
+   local nebud, _nebuv = cur_sys:nebula()
    if nebud > 0 then
       return
    end
@@ -126,7 +126,6 @@ function star_add( added, num_added )
    local star  = stars[ num ]
    -- Load and set stuff
    local img   = tex.open( path .. star )
-   local w,h   = img:dim()
    -- Position should depend on whether there's more than a star in the system
    local r     = prng:random() * cur_sys:radius()/3
    if num_added > 0 then

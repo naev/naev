@@ -56,8 +56,8 @@ function __atk_decide_zz( target, dist )
    local range  = ai.getweaprange(3)
    local dir    = ai.idir(target)
 
-   local m1, d1 = vec2.polar( pilot:vel() )
-   local m2, d2 = vec2.polar( target:pos() - pilot:pos() )
+   local _m1, d1 = vec2.polar( pilot:vel() )
+   local _m2, d2 = vec2.polar( target:pos() - pilot:pos() )
    local d = d1-d2
 
    return ( (dist > range) and (ai.hasprojectile())

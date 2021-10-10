@@ -15,7 +15,7 @@ end
 --[[
 -- Mainly manages targeting nearest enemy.
 --]]
-function atk_generic_think( target, si )
+function atk_generic_think( target, _si )
    -- Get new target if it's closer
    local enemy  = ai.getenemy()
    if enemy ~= target and enemy ~= nil then
@@ -199,7 +199,7 @@ function ___atk_g_ranged_kite( target, dist )
    -- Try to keep velocity vector away from enemy
    local targetpos = target:pos()
    local selfpos = p:pos()
-   local unused, targetdir = (selfpos-targetpos):polar()
+   local _unused, targetdir = (selfpos-targetpos):polar()
    local velmod, veldir = p:vel():polar()
    if velmod < 0.8*p:stats().speed or math.abs(targetdir-veldir) > 30 then
       local dir = ai.face( target, true )
@@ -259,7 +259,7 @@ end
 --[[
 -- Approaches the target
 --]]
-function __atk_g_approach( target, dist )
+function __atk_g_approach( target, _dist )
    dir = ai.idir(target)
    if dir < 10 and dir > -10 then
       __atk_keep_distance()

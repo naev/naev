@@ -13,7 +13,7 @@ end
 --[[
 -- Mainly targets small fighters.
 --]]
-function atk_fighter_think( target, si )
+function atk_fighter_think( target, _si )
    local enemy    = ai.getenemy_size(0, 200)
    local nearest_enemy = ai.getenemy()
    local dist     = ai.dist(target)

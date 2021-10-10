@@ -343,7 +343,7 @@ function lanes.getNonPoint( L, pos, rad, margin, biasdir )
 
    -- Make sure pos is in radius
    if pos:dist2() > srad2 then
-      local m,a = pos:polar()
+      local _m,a = pos:polar()
       pos = vec2.newP( system.cur():radius(), a )
    end
 

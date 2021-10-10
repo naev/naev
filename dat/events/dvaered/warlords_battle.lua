@@ -226,7 +226,7 @@ function startBattle()
    end
 end
 
-function defenderAttacked(victim, attacker)
+function defenderAttacked(_victim, attacker)
    --The player chose his side
    if attacker == player.pilot() or attacker:leader() == player.pilot() then
       for i, p in ipairs(defenders) do
@@ -246,7 +246,7 @@ function defenderAttacked(victim, attacker)
    end
 end
 
-function attackerAttacked(victim, attacker)
+function attackerAttacked(_victim, attacker)
    --The player chose his side
    if attacker == player.pilot() or attacker:leader() == player.pilot() then
       for i, p in ipairs(attackers) do

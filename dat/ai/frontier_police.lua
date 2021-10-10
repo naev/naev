@@ -78,7 +78,7 @@ function hail ()
 end
 
 -- taunts
-function taunt ( target, offense )
+function taunt ( target, _offense )
    -- Only 50% of actually taunting.
    if rnd.rnd(0,1) == 0 then
       return

@@ -13,7 +13,7 @@ end
 --[[
 -- Mainly targets small drones.
 --]]
-function atk_drone_think( target, si )
+function atk_drone_think( target, _si )
    local enemy    = ai.getenemy_size(0, 200)  -- find a small ship to attack
    local nearest_enemy = ai.getenemy()
    local dist     = ai.dist(target)

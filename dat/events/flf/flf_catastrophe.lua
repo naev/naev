@@ -122,7 +122,7 @@ function takeoff ()
    pilot.toggleSpawn( false )
    pilot.clear()
 
-   local ss, s = planet.get( "Sindbad" )
+   local ss, _s = planet.get( "Sindbad" )
 
    flf_base = pilot.add( "Sindbad", "FLF", ss:pos(), nil, {ai="flf_norun"} )
    flf_base:outfitRm( "all" )
@@ -187,7 +187,7 @@ function takeoff ()
 end
 
 
-function pilot_death_emp( pilot, attacker, arg )
+function pilot_death_emp( _pilot, _attacker, _arg )
    local emp_alive = {}
    for i, j in ipairs( emp_ships ) do
       if j:exists() then
@@ -216,7 +216,7 @@ function pilot_death_emp( pilot, attacker, arg )
 end
 
 
-function pilot_attacked_sindbad( pilot, attacker, arg )
+function pilot_attacked_sindbad( _pilot, attacker, _arg )
    if (attacker == player.pilot() or attacker:leader() == player.pilot())
          and faction.get("FLF"):playerStanding() > -100 then
       -- Punish the player with a faction hit every time they attack
@@ -225,7 +225,7 @@ function pilot_attacked_sindbad( pilot, attacker, arg )
 end
 
 
-function pilot_death_sindbad( pilot, attacker, arg )
+function pilot_death_sindbad( pilot, attacker, _arg )
    player.pilot():setNoJump( false )
    pilot.toggleSpawn( true )
 
