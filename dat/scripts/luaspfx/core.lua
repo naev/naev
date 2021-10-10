@@ -4,15 +4,12 @@
 local love = require 'love'
 local lg = require 'love.graphics'
 local nw, nh = naev.gfx.dim()
-local unused, zmax, zmin = camera.getZoom()
-unused = nil
 love.x = 0
 love.y = 0
 love.w = nw
 love.h = nh
 lg.origin()
 -- some helpers to speed up computations
-local znw2, znh2 = zmax*nw/2, zmax*nh/2
 local nw2, nh2 = nw/2, nh/2
 
 local luaspfx = {}
@@ -39,7 +36,7 @@ local function __update_table( tbl, dt )
       table.remove( tbl, v )
    end
 end
-function __luaspfx_update( dt, realdt )
+function __luaspfx_update( dt, _realdt )
    local dt_mod = player.dt_mod()
    if dt_mod ~= luaspfx.__last_dt_mod then
       luaspfx.__last_dt_mod = dt_mod

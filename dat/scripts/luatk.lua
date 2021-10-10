@@ -51,7 +51,7 @@ end
 local function _checkbounds( b, mx, my )
    return not (mx < b.x or mx > b.x+b.w or my < b.y or my > b.y+b.h)
 end
-function luatk.mousepressed( mx, my, button )
+function luatk.mousepressed( mx, my, _button )
    local wdw = luatk._windows[ #luatk._windows ]
    if not wdw or not _checkbounds(wdw,mx,my) then return false end
    local x, y = mx-wdw.x, my-wdw.y
@@ -77,7 +77,7 @@ function luatk.mousemoved( mx, my )
 
    return false
 end
-function luatk.keypressed( key )
+function luatk.keypressed( _key )
    return false
 end
 
@@ -152,7 +152,7 @@ end
 function luatk.Widget:getDimensions()
    return self.x, self.y, self.w, self.h
 end
-function luatk.Widget:draw( x, y )
+function luatk.Widget.draw( _self, _x, _y )
 end
 
 --[[
@@ -168,7 +168,7 @@ function luatk.newButton( parent, x, y, w, h, text, handler )
    wgt.handler = handler
 
    local font = luatk._deffont or lg.getFont()
-   local sw, wrapped = font:getWrap( text, w )
+   local _sw, wrapped = font:getWrap( text, w )
    wgt.th = font:getHeight() + font:getLineHeight() * (#wrapped-1)
 
    return wgt

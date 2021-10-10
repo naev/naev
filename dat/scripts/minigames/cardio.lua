@@ -28,7 +28,7 @@ function cardio.newCard()
    local c = cardio.Card.new()
    return c
 end
-function cardio.Card:draw( x, y )
+function cardio.Card.draw( _self, x, y )
    lg.rectangle( "line", x, y, 75, 105 )
 end
 
@@ -104,7 +104,7 @@ local function _tosuitestr( suite )
       return "?"
    end
 end
-function cardio.CardWestern:drawBack( x, y )
+function cardio.CardWestern.drawBack( _self, x, y )
    -- background
    lg.setColor( 0.8, 0.8, 1 )
    lg.rectangle( "fill", x, y, 75, 105 )

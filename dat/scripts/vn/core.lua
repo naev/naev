@@ -478,7 +478,7 @@ function vn.StateCharacter:_init()
       c.displayname = c.who -- reset name
    end
    local pos = self.character.pos or "center"
-   local lw, lh = graphics.getDimensions()
+   local lw = graphics.getDimensions()
    if type(pos)=="number" then
       self.character.offset = pos*lw
    elseif pos == "center" then
@@ -519,7 +519,7 @@ function vn.StateSay:_init()
    -- Parse for line breaks and insert newlines
    local font = vn.textbox_font
    local bw = 20
-   local maxw, wrappedtext = font:getWrap( self._textbuf, vn.textbox_w-2*bw )
+   local _maxw, wrappedtext = font:getWrap( self._textbuf, vn.textbox_w-2*bw )
    self._textbuf = table.concat( wrappedtext, "\n" )
    -- Set up initial buffer
    self._timer = vn.speed
@@ -567,7 +567,7 @@ function vn.StateSay:_update( dt )
       local bw = 20
       local bh = 20
       local font = vn.textbox_font
-      local maxw, wrappedtext = font:getWrap( self._text, vn.textbox_w-2*bw )
+      local _maxw, wrappedtext = font:getWrap( self._text, vn.textbox_w-2*bw )
       local lh = font:getLineHeight()
       if (lh * #wrappedtext + bh + vn._buffer_y > vn.textbox_h) then
          vn._buffer_y = vn._buffer_y - lh
@@ -593,7 +593,6 @@ function vn.StateWait.new()
    return s
 end
 local function _check_scroll( lines )
-   local bw = 20
    local bh = 20
    local font = vn.textbox_font
    local lh = font:getLineHeight()
@@ -610,9 +609,8 @@ function vn.StateWait:_init()
    self._y = y+h-10-self._h
 
    local bw = 20
-   local bh = 20
    local font = vn.textbox_font
-   local maxw, wrappedtext = font:getWrap( vn._buffer, vn.textbox_w-2*bw )
+   local _maxw, wrappedtext = font:getWrap( vn._buffer, vn.textbox_w-2*bw )
    self._lines = wrappedtext
    self._lh = font:getLineHeight()
 end
@@ -634,7 +632,7 @@ local function wait_scrollorfinish( self )
       _finish(self)
    end
 end
-function vn.StateWait:_mousepressed( mx, my, button )
+function vn.StateWait:_mousepressed( _mx, _my, _button )
    wait_scrollorfinish( self )
 end
 function vn.StateWait:_keypressed( key )
@@ -754,7 +752,7 @@ function vn.StateMenu:_mousepressed( mx, my, button )
    local gx, gy = self._x, self._y
    local b = self._tb
    for k,v in ipairs(self._elem) do
-      local text, x, y, w, h = table.unpack(v)
+      local _text, x, y, w, h = table.unpack(v)
       if _inbox( mx, my, gx+x-b, gy+y-b, w+2*b, h+2*b ) then
          self:_choose(k)
          return
@@ -827,7 +825,7 @@ function vn.StateEnd.new()
    s._type = "End"
    return s
 end
-function vn.StateEnd:_init()
+function vn.StateEnd._init( _self )
    vn._state = #vn._states+1
 end
 --[[
@@ -922,12 +920,12 @@ function vn.StateAnimation:_update(dt)
       self._func( _animation_alpha(self), dt, self._params )
    end
 end
-function vn.StateAnimation:_draw(dt)
+function vn.StateAnimation:_draw( _dt )
    if self._drawfunc then
       self._drawfunc( _animation_alpha(self), self._params )
    end
 end
-function vn.StateAnimation:_drawoverride(dt)
+function vn.StateAnimation:_drawoverride( _dt )
    self._drawoverride( _animation_alpha(self), self._params )
 end
 
@@ -997,7 +995,7 @@ Renames a character on the fly.
    @tparam string newname New name to give the character.
 --]]
 function vn.Character:rename( newname )
-   vn.func( function (state)
+   vn.func( function ( _state )
       self.displayname = newname
    end )
 end

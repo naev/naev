@@ -21,7 +21,7 @@ end
 local secretcode = { 5, 6, 3, 1 }
 local secretcode_status = 0
 
-function cl.init( x, y, w, h, donefunc )
+function cl.init( x, y, w, _h, donefunc )
    cl.dice = { diceio.newDie(), diceio.newDie(), diceio.newDie() }
    cl.font = lg.newFont(16)
 
@@ -112,7 +112,7 @@ local function _inbox( mx, my, x, y, w, h )
    return (mx>=x and mx<=x+w and my>=y and my<=y+h)
 end
 
-function cl.draw( bx, by, bw, bh)
+function cl.draw( bx, by, bw, _bh )
    local sep = 25
    local w = 50
    local h = 50
@@ -253,7 +253,7 @@ function cl.keypressed( key )
    end
 end
 
-function cl.mousepressed( mx, my, button )
+function cl.mousepressed( mx, my, _button )
    local x, y, b
    local h = cl.font:getHeight()
    local buttons

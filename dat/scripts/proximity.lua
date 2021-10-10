@@ -75,7 +75,7 @@ end
 
 function _proximityScan( trigger )
     if trigger.focus ~= nil and trigger.anchor:exists() and trigger.focus:exists() then
-        local seen, scanned = trigger.anchor:inrange(trigger.focus)
+        local _seen, scanned = trigger.anchor:inrange(trigger.focus)
         if scanned then
             _G[trigger.funcname]()
             return

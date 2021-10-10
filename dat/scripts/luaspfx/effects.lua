@@ -58,7 +58,7 @@ function alert_meta.func( efx, x, y, z )
    love_shaders.img:draw( x-s*0.5, y-s*0.5, 0, s )
    lg.setShader( old_shader )
 end
-function alert_meta.init( efx, ttl, pos, vel )
+function alert_meta.init( efx, _ttl, pos, vel )
    local dt_mod = player.dt_mod()
    local px, py = pos:get()
    local vx, vy = vel:get()

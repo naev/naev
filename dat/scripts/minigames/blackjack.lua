@@ -238,7 +238,7 @@ local function _drawhand( x, y, cards, hidefirst )
    lg.pop()
 end
 
-function bj.draw( bx, by, bw, bh)
+function bj.draw( bx, by, bw, _bh )
    local sep = 25
    local w = 75
    local h = 105
@@ -356,7 +356,7 @@ function bj.keypressed( key )
    end
 end
 
-function bj.mousepressed( mx, my, button )
+function bj.mousepressed( mx, my, _button )
    local y = bj.bets_y
    local x = bj.bets_x
    local h = bj.font:getHeight()
