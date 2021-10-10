@@ -95,7 +95,7 @@ function window.setFullscreen( fullscreen )
    end
    return true
 end
-function window.getFullscreen( fullscreen ) return love.fullscreen end
+function window.getFullscreen() return love.fullscreen end
 function window.hasFocus() return love._focus end
 function window.hasMouseFocus() return love._focus end
 function window.showMessageBox( title, message, ... )

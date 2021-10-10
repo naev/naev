@@ -8,7 +8,7 @@ function love_audio.newSource( filename, _type )
    return naev.audio.new( filename )
 end
 function love_audio.setVolume( _volume ) end -- Don't allow setting master volume
-function love_audio.getVolume( volume )
+function love_audio.getVolume()
    return naev.audio.getVolume()
 end
 function love_audio.setPosition( _x, _y, _z ) end -- Don't allow setting position
