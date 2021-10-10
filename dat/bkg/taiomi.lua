@@ -13,8 +13,7 @@ local lg = require 'love.graphics'
 -- Since we don't actually activate the Love framework we have to fake the
 -- the dimensions and width, and set up the origins.
 local nw, nh = naev.gfx.dim()
-local unused, zmax, zmin = camera.getZoom()
-unused = nil
+local _z, zmax, _zmin = camera.getZoom()
 love.x = 0
 love.y = 0
 love.w = nw

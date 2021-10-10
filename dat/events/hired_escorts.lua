@@ -103,7 +103,7 @@ function createPilotNPCs ()
       local newpilot = {}
       local shipchoice = ship_choices[rnd.rnd(1, #ship_choices)]
       local p = pilot.add(shipchoice.ship, fac)
-      local n, deposit = p:ship():price()
+      local _n, deposit = p:ship():price()
       newpilot.outfits = {}
       newpilot.outfits["__save"] = true
 
@@ -334,7 +334,7 @@ end
 
 -- Asks the player whether or not they want to fire the pilot
 function pilot_askFire( edata, npc_id )
-   local credits, scredits = player.credits(2)
+   local _credits, scredits = player.credits(2)
    local approachtext = (
          _([[Would you like to do something with this pilot?
 
@@ -342,7 +342,7 @@ Pilot credentials:]]) .. "\n\n" .. credentials:format(
             edata.name, edata.ship, fmt.credits(edata.deposit),
             edata.royalty * 100, scredits, getTotalRoyalties() * 100 ) )
 
-   local n, s = tk.choice( "", approachtext, _("Fire pilot"), _("Do nothing") )
+   local n, _s = tk.choice( "", approachtext, _("Fire pilot"), _("Do nothing") )
    if n == 1 and tk.yesno(
          "", string.format(
             _("Are you sure you want to fire %s? This cannot be undone."),
@@ -357,7 +357,7 @@ Pilot credentials:]]) .. "\n\n" .. credentials:format(
 end
 
 -- Pilot was hailed by the player
-function pilot_hail( p, arg )
+function pilot_hail( _p, arg )
    local edata = escorts[arg]
    if not edata.alive then
       return
@@ -368,7 +368,7 @@ function pilot_hail( p, arg )
 end
 
 -- Check if player attacked his own escort
-function pilot_attacked( p, attacker, dmg, arg )
+function pilot_attacked( p, attacker, _dmg, _arg )
    -- Must have an attacker
    if attacker then
       local l = p:leader()
@@ -388,7 +388,7 @@ function pilot_attacked( p, attacker, dmg, arg )
 end
 
 -- Escort got killed
-function pilot_death( p, attacker, arg )
+function pilot_death( _p, _attacker, arg )
    local edata = escorts[arg]
    shiplog.append( logidstr, string.format(_("'%s' (%s) was killed in combat."), edata.name, edata.ship) )
    pilot_disbanded( edata )

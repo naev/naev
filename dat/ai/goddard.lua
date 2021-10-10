@@ -64,7 +64,7 @@ function hail ()
 end
 
 -- taunts
-function taunt ( target, offense )
+function taunt ( target, _offense )
    -- Offense is not actually used
    local taunts = taunt_list
    ai.pilot():comm( target, taunts[ rnd.rnd(1,#taunts) ] )

@@ -7,7 +7,7 @@
 --[[
 -- Mainly targets in biggest-to-smallest priority.
 --]]
-function atk_topdown_think( target, si )
+function atk_topdown_think( target, _si )
    local enemy_cat1 = ai.getenemy_size(2500, 10000)
    local enemy_cat2 = ai.getenemy_size(1000, 2500)
    local enemy_cat3 = ai.getenemy_size(600, 1000)
@@ -89,7 +89,7 @@ end
 --[[
 -- big game hunter attack pattern using heuristic target identification.
 --]]
-function atk_heuristic_big_game_think( target, si )
+function atk_heuristic_big_game_think( target, _si )
    local enemy         = ai.getenemy_heuristic(0.9, 0.9, 0.9, 20000)
    local nearest_enemy = ai.getenemy()
 

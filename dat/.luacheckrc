@@ -6,6 +6,12 @@ std = "lua51c+love+Basic"
 -- Note: there's a `max_string_line_length` option, but that only applies when the line ending is inside a string. Useless.
 max_line_length = 4096
 
+-- Ignore unused variables whose names start with "_".
+-- The default convention allows "_" itself as an unused variable, but we reserve that for gettext.
+-- Furthermore, ignore all unused loop variables.
+-- Iteration idioms in Lua all but require ipairs(), and whether we happen to use the key or value isn't fundamental.
+ignore = {"21./_.*", "213"}
+
 -- The following standards correspond to nlua_load* functions.
 -- Most of them just load one metatable, but some have dependencies, like nlua_loadGFX.
 -- This is represented as: stds._GFX for the stuff loaded directly by nlua_loadGFX, and GFX representing all corresponding stds.

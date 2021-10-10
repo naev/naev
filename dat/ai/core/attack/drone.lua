@@ -13,7 +13,7 @@ end
 --[[
 -- Mainly targets small drones.
 --]]
-function atk_drone_think( target, si )
+function atk_drone_think( target, _si )
    local enemy    = ai.getenemy_size(0, 200)  -- find a small ship to attack
    local nearest_enemy = ai.getenemy()
    local dist     = ai.dist(target)
@@ -107,7 +107,7 @@ end
 --]]
 function __atk_d_flyby( target, dist )
    local range = ai.getweaprange(3)
-   local dir = 0
+   local dir
    ai.weapset( 3 ) -- Forward/turrets
 
    -- First test if we should zz
@@ -171,7 +171,7 @@ end
 --]]
 function __atk_d_space_sup( target, dist )
    local range = ai.getweaprange(3)
-   local dir   = 0
+   local dir
    ai.weapset( 3 ) -- Forward/turrets
 
    -- First test if we should zz

@@ -878,7 +878,7 @@ function mine( fieldNast )
 
    local target, vel = system.asteroidPos( field, ast )
 
-   local dist, angle = vec2.polar( p:pos() - target )
+   local _dist, angle = vec2.polar( p:pos() - target )
 
    -- First task : place the ship close to the asteroid
    local goal = ai.face_accurate( target, vel, trange, angle, mem.Kp, mem.Kd )
@@ -1154,7 +1154,7 @@ end
 --[[
 -- Whether or not we want to scan, ignore players for now
 --]]
-function __wanttoscan( p, target )
+function __wanttoscan( _p, target )
    -- Don't care about stuff that doesn't need scan
    if not __needs_scan( target ) then
       return false
@@ -1233,7 +1233,7 @@ function __getscantarget ()
 end
 
 
-function stealth( target )
+function stealth( _target )
    ai.brake()
    if ai.isstopped() then
       ai.stop()

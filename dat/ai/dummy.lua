@@ -15,7 +15,7 @@ function control () end
 function control_manual () end
 
 -- No response
-function attacked ( attacker ) end
+function attacked ( _attacker ) end
 
 -- Does nothing
 function idle () end

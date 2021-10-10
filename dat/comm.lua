@@ -164,7 +164,7 @@ function comm( plt )
 
    -- Set up the namebox
    local function setup_namebox ()
-      local nw, nh = naev.gfx.dim()
+      local nw, _nh = naev.gfx.dim()
       vn.menu_x = math.min( -1, 500 - nw/2 )
       vn.namebox_alpha = 0
       local namebox_font = vn.namebox_font
@@ -172,7 +172,7 @@ function comm( plt )
       if plt:flags("bribed") then
          faction_str = _("#gBribed#0")
       else
-         local std, str = fac:playerStanding()
+         local _std, str = fac:playerStanding()
          if plt:hostile() then
             faction_str = _("#rHostile#0")
          else
@@ -278,7 +278,7 @@ function comm( plt )
 
    vn.label("bribe")
    p( function ()
-      local str, cost = bribe_msg( plt, bribe_group )
+      local str, _cost = bribe_msg( plt, bribe_group )
       return str
    end )
    vn.menu{

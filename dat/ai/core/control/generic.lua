@@ -273,7 +273,7 @@ function should_attack( enemy, si )
    -- Check to see if we want to go back to the lanes
    local lr = mem.enemyclose
    if mem.natural and lr then
-      local d, pos = lanes.getDistance2P( p, enemy:pos() )
+      local d, _pos = lanes.getDistance2P( p, enemy:pos() )
       if math.huge > d and d > lr*lr then
          return false
       end
@@ -699,7 +699,7 @@ function create_post ()
 end
 
 -- taunts
-function taunt ( target, offensive )
+function taunt ( _target, _offensive )
    -- Empty stub
 end
 
@@ -788,7 +788,7 @@ end
 
 
 -- Handles generating distress messages
-function gen_distress ( target )
+function gen_distress ( _target )
    -- Must have a valid distress rate
    if mem.distressrate <= 0 then
       return

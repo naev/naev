@@ -42,7 +42,7 @@ function autoequip( p )
    -- Get rid of cores
    local poutfits = {}
    for k,o in ipairs(poutfits_raw) do
-      local sn, ss, sd, req, exc = o:slot()
+      local _sn, _ss, _sd, req, _exc = o:slot()
       if not req then
          table.insert( poutfits, o )
       end

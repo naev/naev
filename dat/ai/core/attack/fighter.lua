@@ -13,7 +13,7 @@ end
 --[[
 -- Mainly targets small fighters.
 --]]
-function atk_fighter_think( target, si )
+function atk_fighter_think( target, _si )
    local enemy    = ai.getenemy_size(0, 200)
    local nearest_enemy = ai.getenemy()
    local dist     = ai.dist(target)
@@ -76,7 +76,7 @@ end
 --]]
 function __atk_f_flyby( target, dist )
    local range = ai.getweaprange(3)
-   local dir = 0
+   local dir
    ai.weapset( 3 ) -- Forward/turrets
 
    -- First test if we should zz
@@ -140,7 +140,7 @@ end
 --]]
 function __atk_f_space_sup( target, dist )
    local range = ai.getweaprange(3)
-   local dir   = 0
+   local dir
    ai.weapset( 3 ) -- Forward/turrets
 
    -- First test if we should zz

@@ -498,7 +498,7 @@ function textfg ()
       lg.setShader()
    end
 end
-function textupdate( dt, real_dt )
+function textupdate( dt, _real_dt )
    -- We want to show it regardless of the time compression and such
    -- TODO Why is real_dt not equal to dt / player.dt_mod()? :/
    texttimer = texttimer + dt / player.dt_mod()
