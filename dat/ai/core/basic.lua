@@ -35,7 +35,7 @@ function __sameFleet( pa, pb )
    local lb = pa:leader()
    if not la or not la:exists() then la = pa end
    if not lb or not lb:exists() then lb = pb end
-   return pa == pb
+   return la == lb
 end
 
 
