@@ -42,7 +42,7 @@ local sirius_outfits = eoutfits.merge{{
 local sirius_params = {
    --["Sirius Demon"] = function () return {
 }
-local function choose_one( t ) return t[ rnd.rnd(1,#t) ] end
+--local function choose_one( t ) return t[ rnd.rnd(1,#t) ] end
 local sirius_cores = {
    ["Sirius Fidelity"] = function () return {
          "Milspec Orion 2301 Core System",

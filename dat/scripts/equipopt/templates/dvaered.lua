@@ -49,7 +49,7 @@ local dvaered_params = {
          }
       } end,
 }
-local function choose_one( t ) return t[ rnd.rnd(1,#t) ] end
+--local function choose_one( t ) return t[ rnd.rnd(1,#t) ] end
 local dvaered_cores = { -- Basically elite hulls excluding stealth
    ["Dvaered Vendetta"] = function () return {
          "S&K Light Combat Plating",

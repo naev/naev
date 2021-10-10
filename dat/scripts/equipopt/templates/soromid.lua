@@ -51,7 +51,7 @@ local soromid_params = {
          },
       } end,
 }
-local function choose_one( t ) return t[ rnd.rnd(1,#t) ] end
+--local function choose_one( t ) return t[ rnd.rnd(1,#t) ] end
 local soromid_cores = {
 }
 

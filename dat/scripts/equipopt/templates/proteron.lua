@@ -37,7 +37,7 @@ local proteron_outfits = eoutfits.merge{{
 local proteron_params = {
    --["Proteron Demon"] = function () return {
 }
-local function choose_one( t ) return t[ rnd.rnd(1,#t) ] end
+--local function choose_one( t ) return t[ rnd.rnd(1,#t) ] end
 
 --[[
 -- @brief Does Proteron pilot equipping
