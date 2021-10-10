@@ -28,14 +28,13 @@
 
 --]]
 
-required = {} -- Slots that must be filled in order to take off.
-equipped = {} -- Outfits equipped in required slots.
-missing  = {} -- Array of empty required slots and their default outfits.
+local required = {} -- Slots that must be filled in order to take off.
+local equipped = {} -- Outfits equipped in required slots.
+local missing  = {} -- Array of empty required slots and their default outfits.
+local nrequired = 0
+local nequipped = 0
 
-nrequired = 0
-nequipped = 0
-
-msg_refuse = _([[Very well, but it's unlikely you'll be able to take off.
+local msg_refuse = _([[Very well, but it's unlikely you'll be able to take off.
 
 If you can't find a way to make your ship spaceworthy, you can always attempt to take off again to trigger this dialogue, or try loading your backup save.]])
 
@@ -66,7 +65,7 @@ If you can't find a way to make your ship spaceworthy, you can always attempt to
             and no other suitable core outfits are available.
 
 --]]
-function check_stranded( missing )
+local function check_stranded( missing )
    local pp = player.pilot()
    local services = planet.cur():services()
 
@@ -157,7 +156,7 @@ end
 
 
 -- Builds the tables of required, equipped, and missing outfits.
-function buildTables()
+local function buildTables()
    local slots   = player.pilot():ship():getSlots()
    local outfits = player.pilot():outfits()
 
@@ -196,7 +195,7 @@ end
 
 
 -- Removes all non-core outfits from the ship and adds them to the inventory.
-function removeNonCores( slottype )
+local function removeNonCores( slottype )
    local pp = player.pilot() -- Convenience.
 
    for k,v in pairs( pp:outfits() ) do
@@ -211,7 +210,7 @@ end
 
 
 -- Replace all cores with the ship's defaults.
-function removeEquipDefaults()
+local function removeEquipDefaults()
    local pp = player.pilot() -- Convenience.
 
    -- Store and remove old outfits
@@ -228,7 +227,7 @@ function removeEquipDefaults()
 end
 
 
-function fillMissing( missing )
+local function fillMissing( missing )
    -- Fill empty core slots with defaults.
    for k,v in pairs(missing) do
       player.pilot():outfitAdd( v.outfit:nameRaw() )
@@ -237,7 +236,7 @@ end
 
 
 -- Replace all cores with the ship's defaults.
-function equipDefaults( defaults )
+local function equipDefaults( defaults )
    local pp = player.pilot() -- Convenience.
 
    for k,v in ipairs( pp:outfits() ) do
@@ -262,7 +261,7 @@ function equipDefaults( defaults )
 end
 
 
-function assessOutfits()
+local function assessOutfits()
    local defaults  = true  -- Equipped cores are the same as defaults.
    local weapons   = false -- Ship has weapons.
    local utility   = false -- Ship has utility outfits.
@@ -293,7 +292,7 @@ end
 
 -- Array of tasks for filling in missing slots in the following format:
 --    { { desc, callback }, ... }
-mtasks = {
+local mtasks = {
    { _("Remove outfits and use default cores"), function() removeEquipDefaults() end },
    { _("Add missing default cores"), function() fillMissing( missing ) end },
    { _("Replace all cores with defaults"), function() equipDefaults( required ) end },
@@ -301,7 +300,7 @@ mtasks = {
    -- TODO: Possibly add a "Select from inventory" option
 }
 
-tasks = {
+local tasks = {
    { _("Remove all outfits and set cores to defaults"), function() removeEquipDefaults() end },
    { _("Replace all cores with defaults"), function() equipDefaults( required ) end },
    { _("Remove all non-core outfits"), function() removeNonCores() end },
