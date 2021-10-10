@@ -33,10 +33,7 @@ local equipped = {} -- Outfits equipped in required slots.
 local missing  = {} -- Array of empty required slots and their default outfits.
 local nrequired = 0
 local nequipped = 0
-
-local msg_refuse = _([[Very well, but it's unlikely you'll be able to take off.
-
-If you can't find a way to make your ship spaceworthy, you can always attempt to take off again to trigger this dialogue, or try loading your backup save.]])
+local cancelled = false -- Whether the player opted to stop the script.
 
 
 --[[
@@ -261,6 +258,14 @@ local function equipDefaults( defaults )
 end
 
 
+local function cancel()
+   cancelled = true
+   tk.msg( _("Stranded"), _([[Very well, but it's unlikely you'll be able to take off.
+
+If you can't find a way to make your ship spaceworthy, you can always attempt to take off again to trigger this dialogue, or try loading your backup save.]]) )
+end
+
+
 local function assessOutfits()
    local defaults  = true  -- Equipped cores are the same as defaults.
    local weapons   = false -- Ship has weapons.
@@ -296,7 +301,7 @@ local mtasks = {
    { _("Remove outfits and use default cores"), function() removeEquipDefaults() end },
    { _("Add missing default cores"), function() fillMissing( missing ) end },
    { _("Replace all cores with defaults"), function() equipDefaults( required ) end },
-   { _("Cancel"), function() tk.msg( _("Stranded"), msg_refuse ) end }
+   { _("Cancel"), cancel }
    -- TODO: Possibly add a "Select from inventory" option
 }
 
@@ -307,7 +312,7 @@ local tasks = {
    { _("Remove weapons"), function() removeNonCores( "Weapon" ) end },
    { _("Remove utility outfits"), function() removeNonCores( "Utility" ) end },
    { _("Remove structure outfits"), function() removeNonCores( "Structure" ) end },
-   { _("Cancel"), function() tk.msg( _("Stranded"), msg_refuse ) end }
+   { _("Cancel"), cancel }
 }
 
 function rescue()
@@ -343,14 +348,14 @@ function rescue()
       end
 
 
-      local msg_missing = gettext.ngettext(
+      local msg_missing = n_(
          [[Your ship is missing %d core outfit. How do you want to resolve this?]],
          [[Your ship is missing %d core outfits. How do you want to resolve this?]], #missing)
-      local ind, str = tk.choice( _("Stranded"),
+      local ind = tk.choice( _("Stranded"),
             string.format(msg_missing, #missing), table.unpack(strings) )
 
       opts[ind][2]() -- Run callback.
-      if str == _("Cancel") then
+      if cancelled then
          return
       end
 
@@ -398,10 +403,10 @@ Please report this to the developers along with a copy of your save file.]]))
          return
       end
 
-      local ind, str = tk.choice( _("Stranded"), _([[The following actions are available to make your ship spaceworthy:]]), table.unpack(strings) )
+      local ind = tk.choice( _("Stranded"), _([[The following actions are available to make your ship spaceworthy:]]), table.unpack(strings) )
 
       opts[ind][2]() -- Run callback.
-      if str == _("Cancel") then
+      if cancelled then
          return
       end
 
