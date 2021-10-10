@@ -12,7 +12,7 @@ mouse.down = {}
 function mouse.getX() return mouse.x end
 function mouse.getY() return mouse.y end
 function mouse.isDown( button ) return mouse.down[button]==true end
-function mouse.setVisible( visible )
+function mouse.setVisible( _visible )
    love._unimplemented()
 end
 

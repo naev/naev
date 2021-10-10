@@ -3,7 +3,7 @@
 --]]
 local event = {}
 
-function event.quit( exitstatus )
+function event.quit( _exitstatus )
    naev.tk.customDone()
 end
 

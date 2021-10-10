@@ -54,37 +54,37 @@ local zalek_params = {
 }
 local function choose_one( t ) return t[ rnd.rnd(1,#t) ] end
 local zalek_cores = {
-   ["Za'lek Sting"] = function (p) return {
+   ["Za'lek Sting"] = function (_p) return {
          choose_one{ "Milspec Orion 4801 Core System", "Milspec Thalos 4702 Core System" },
          "Tricon Cyclone Engine",
          choose_one{ "Nexus Medium Stealth Plating", "S&K Medium Combat Plating" },
       } end,
-   ["Za'lek Demon"] = function (p) return {
+   ["Za'lek Demon"] = function (_p) return {
          choose_one{ "Milspec Orion 5501 Core System", "Milspec Thalos 5402 Core System" },
          "Tricon Cyclone II Engine",
          choose_one{ "Nexus Medium Stealth Plating", "S&K Medium-Heavy Combat Plating" },
       } end,
-   ["Za'lek Mephisto"] = function (p) return {
+   ["Za'lek Mephisto"] = function (_p) return {
          "Milspec Orion 9901 Core System",
          choose_one{ "Unicorp Eagle 7000 Engine", "Tricon Typhoon II Engine" },
          choose_one{ "Unicorp D-48 Heavy Plating", "Unicorp D-68 Heavy Plating" },
       } end,
-   ["Za'lek Diablo"] = function (p) return {
+   ["Za'lek Diablo"] = function (_p) return {
          "Milspec Thalos 9802 Core System",
          choose_one{ "Unicorp D-48 Heavy Plating", "Unicorp D-68 Heavy Plating" },
          choose_one{ "Tricon Typhoon II Engine", "Melendez Mammoth XL Engine" },
       } end,
-   ["Za'lek Hephaestus"] = function (p) return {
+   ["Za'lek Hephaestus"] = function (_p) return {
          "Milspec Thalos 9802 Core System",
          choose_one{ "Unicorp D-68 Heavy Plating", "S&K Superheavy Combat Plating" },
          "Melendez Mammoth XL Engine",
       } end,
 }
 
---[[
--- @brief Does Za'lek pilot equipping
---
---    @param p Pilot to equip
+--[[--
+   Does Za'lek pilot equipping
+  
+      @param p Pilot to equip
 --]]
 local function equip_zalek( p, opt_params )
    opt_params = opt_params or {}

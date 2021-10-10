@@ -100,11 +100,12 @@ function format.times( times )
    return n_("%s time", "%s times", times):format(format.number(times))
 end
 
-
+--[[-- A version of string.gsub returning just the string. --]]
 local function _replace(template, index, text)
-   local str, unused = string.gsub(template, index, text)
+   local str = string.gsub(template, index, text)
    return str
 end
+
 --[[--
 Creates a translatable list of words.
 

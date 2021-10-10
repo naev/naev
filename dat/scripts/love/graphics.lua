@@ -232,24 +232,24 @@ function graphics.rotate( angle ) graphics._T[1]:rotate( angle ) end
 --]]
 graphics.SpriteBatch = class.inheritsFrom( graphics.Drawable )
 graphics.SpriteBatch._type = "SpriteBatch"
-function graphics.newSpriteBatch( image, maxsprites, usage  )
+function graphics.newSpriteBatch( image, _maxsprites, _usage  )
    love._unimplemented()
    local batch = graphics.SpriteBatch.new()
    batch.image = image
    batch:clear()
    return batch
 end
-function graphics.SpriteBatch:clear()
+function graphics.SpriteBatch.clear( _self )
    love._unimplemented()
 end
-function graphics.SpriteBatch:setColor()
+function graphics.SpriteBatch.setColor( _self )
    love._unimplemented()
 end
-function graphics.SpriteBatch:add( ... )
-   local arg = {...}
+function graphics.SpriteBatch.add( _self, ... )
+   local _arg = {...}
    love._unimplemented()
 end
-function graphics.SpriteBatch:draw()
+function graphics.SpriteBatch.draw( _self )
    love._unimplemented()
 end
 
@@ -286,7 +286,7 @@ function graphics.getBlendMode()
    return graphics._mode, graphics._alphamode
 end
 -- unimplemented
-function graphics.setLineStyle( style )
+function graphics.setLineStyle( _style )
    love._unimplemented()
 end
 
@@ -373,7 +373,7 @@ function graphics.printf( text, ... )
 
    local H = _H( x, y+font.height, 0, 1, 1 )
    local sx = graphics._T[1].T:get()[1][1] -- X scaling
-   local wrapped, maxw = naev.gfx.printfWrap( font.font, text, limit/sx )
+   local wrapped = naev.gfx.printfWrap( font.font, text, limit/sx )
 
    local atype
    if align=="left" then
@@ -615,7 +615,7 @@ graphics.Canvas._type = "Canvas"
 function graphics.newCanvas( width, height, settings )
    settings = settings or {}
    local c = graphics.Canvas.new()
-   local nw, nh, ns = naev.gfx.dim()
+   local nw, nh = naev.gfx.dim()
    width  = width or nw
    height = height or nh
    local dpiscale = settings.dpiscale or graphics.getDPIScale()
@@ -661,7 +661,7 @@ function graphics.Canvas:getDPIScale(...)return 1/self.s end
 function graphics.isGammaCorrect() return true end
 function graphics.isActive() return true end
 function graphics.getDPIScale()
-   local w,h,scale = naev.gfx.dim()
+   local _w, _h, scale = naev.gfx.dim()
    return 1/scale
 end
 

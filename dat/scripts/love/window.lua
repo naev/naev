@@ -55,21 +55,21 @@ function window.setMode( width, height, flags )
 end
 function window.isOpen() return true end
 function window.getDisplayCount() return 1 end
-function window.getDisplayName( displayindex ) return "Naev" end
+function window.getDisplayName( _displayindex ) return "Naev" end
 function window.getDesktopDimensions() return naev.gfx.dim() end
 --function window.getDimensions() return love.w, love.h end -- Removed in Love2D 10.0
 function window.getWidth() return love.w end
 function window.getHeight() return love.h end
 function window.getDPIScale()
-   local w,h,scale = naev.gfx.dim()
+   local _w, _h, scale = naev.gfx.dim()
    return 1/scale
 end
 function window.toPixels( value )
-   local w,h,scale = naev.gfx.dim()
+   local _w, _h, scale = naev.gfx.dim()
    return value / scale
 end
 function window.fromPixels( value )
-   local w,h,scale = naev.gfx.dim()
+   local _w, _h, scale = naev.gfx.dim()
    return value * scale
 end
 function window.getMode()

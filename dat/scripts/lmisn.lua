@@ -62,7 +62,7 @@ end
 
 lmisn.sysFilters = {}
 function lmisn.sysFilters.default ()
-   return function( sys )
+   return function( _sys )
       return true
    end
 end

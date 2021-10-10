@@ -7,34 +7,34 @@ local function cores_soromid( cores )
 --[[
       STANDARD SYSTEMS
 --]]
-cores.standard.systems["Soromid Brigand"] = function( heavy )
+cores.standard.systems["Soromid Brigand"] = function( _heavy )
    return choose_one{
       "Ultralight Brain Stage 1", "Ultralight Brain Stage 2",
       "Ultralight Brain Stage X",
    }
 end
-cores.standard.systems["Soromid Reaver"] = function( heavy )
+cores.standard.systems["Soromid Reaver"] = function( _heavy )
    return choose_one{
       "Light Brain Stage 1", "Light Brain Stage 2",
       "Light Brain Stage 3", "Light Brain Stage X",
    }
 end
 cores.standard.systems["Soromid Marauder"] = cores.standard.systems["Soromid Reaver"]
-cores.standard.systems["Soromid Odium"] = function( heavy )
+cores.standard.systems["Soromid Odium"] = function( _heavy )
    return choose_one{
       "Medium Brain Stage 1", "Medium Brain Stage 2",
       "Medium Brain Stage 3", "Medium Brain Stage 4",
       "Medium Brain Stage X",
    }
 end
-cores.standard.systems["Soromid Nyx"] = function( heavy )
+cores.standard.systems["Soromid Nyx"] = function( _heavy )
    return choose_one{
       "Medium-Heavy Brain Stage 1", "Medium-Heavy Brain Stage 2",
       "Medium-Heavy Brain Stage 3", "Medium-Heavy Brain Stage 4",
       "Medium-Heavy Brain Stage 5", "Medium-Heavy Brain Stage X",
    }
 end
-cores.standard.systems["Soromid Ira"] = function( heavy )
+cores.standard.systems["Soromid Ira"] = function( _heavy )
    return choose_one{
       "Heavy Brain Stage 1", "Heavy Brain Stage 2",
       "Heavy Brain Stage 3", "Heavy Brain Stage 4",
@@ -42,7 +42,7 @@ cores.standard.systems["Soromid Ira"] = function( heavy )
       "Heavy Brain Stage X",
    }
 end
-cores.standard.systems["Soromid Arx"] = function( heavy )
+cores.standard.systems["Soromid Arx"] = function( _heavy )
    return choose_one{
       "Superheavy Brain Stage 1", "Superheavy Brain Stage 2",
       "Superheavy Brain Stage 3", "Superheavy Brain Stage 4",
@@ -55,34 +55,34 @@ cores.standard.systems["Soromid Vox"] = cores.standard.systems["Soromid Arx"]
 --[[
       STANDARD HULLS
 --]]
-cores.standard.hulls["Soromid Brigand"] = function( heavy )
+cores.standard.hulls["Soromid Brigand"] = function( _heavy )
    return choose_one{
       "Ultralight Shell Stage 1", "Ultralight Shell Stage 2",
       "Ultralight Shell Stage X",
    }
 end
-cores.standard.hulls["Soromid Reaver"] = function( heavy )
+cores.standard.hulls["Soromid Reaver"] = function( _heavy )
    return choose_one{
       "Light Shell Stage 1", "Light Shell Stage 2",
       "Light Shell Stage 3", "Light Shell Stage X",
    }
 end
 cores.standard.hulls["Soromid Marauder"] = cores.standard.hulls["Soromid Reaver"]
-cores.standard.hulls["Soromid Odium"] = function( heavy )
+cores.standard.hulls["Soromid Odium"] = function( _heavy )
    return choose_one{
       "Medium Shell Stage 1", "Medium Shell Stage 2",
       "Medium Shell Stage 3", "Medium Shell Stage 4",
       "Medium Shell Stage X",
    }
 end
-cores.standard.hulls["Soromid Nyx"] = function( heavy )
+cores.standard.hulls["Soromid Nyx"] = function( _heavy )
    return choose_one{
       "Medium-Heavy Shell Stage 1", "Medium-Heavy Shell Stage 2",
       "Medium-Heavy Shell Stage 3", "Medium-Heavy Shell Stage 4",
       "Medium-Heavy Shell Stage 5", "Medium-Heavy Shell Stage X",
    }
 end
-cores.standard.hulls["Soromid Ira"] = function( heavy )
+cores.standard.hulls["Soromid Ira"] = function( _heavy )
    return choose_one{
       "Heavy Shell Stage 1", "Heavy Shell Stage 2",
       "Heavy Shell Stage 3", "Heavy Shell Stage 4",
@@ -90,7 +90,7 @@ cores.standard.hulls["Soromid Ira"] = function( heavy )
       "Heavy Shell Stage X",
    }
 end
-cores.standard.hulls["Soromid Arx"] = function( heavy )
+cores.standard.hulls["Soromid Arx"] = function( _heavy )
    return choose_one{
       "Superheavy Shell Stage 1", "Superheavy Shell Stage 2",
       "Superheavy Shell Stage 3", "Superheavy Shell Stage 4",
@@ -103,34 +103,34 @@ cores.standard.hulls["Soromid Vox"] = cores.standard.hulls["Soromid Arx"]
 --[[
       STANDARD ENGINES
 --]]
-cores.standard.engines["Soromid Brigand"] = function( heavy )
+cores.standard.engines["Soromid Brigand"] = function( _heavy )
    return choose_one{
       "Ultralight Fast Gene Drive Stage 1", "Ultralight Fast Gene Drive Stage 2",
       "Ultralight Fast Gene Drive Stage X",
    }
 end
-cores.standard.engines["Soromid Reaver"] = function( heavy )
+cores.standard.engines["Soromid Reaver"] = function( _heavy )
    return choose_one{
       "Light Fast Gene Drive Stage 1", "Light Fast Gene Drive Stage 2",
       "Light Fast Gene Drive Stage 3", "Light Fast Gene Drive Stage X",
    }
 end
 cores.standard.engines["Soromid Marauder"] = cores.standard.engines["Soromid Reaver"]
-cores.standard.engines["Soromid Odium"] = function( heavy )
+cores.standard.engines["Soromid Odium"] = function( _heavy )
    return choose_one{
       "Medium Fast Gene Drive Stage 1", "Medium Fast Gene Drive Stage 2",
       "Medium Fast Gene Drive Stage 3", "Medium Fast Gene Drive Stage 4",
       "Medium Fast Gene Drive Stage X",
    }
 end
-cores.standard.engines["Soromid Nyx"] = function( heavy )
+cores.standard.engines["Soromid Nyx"] = function( _heavy )
    return choose_one{
       "Medium-Heavy Fast Gene Drive Stage 1", "Medium-Heavy Fast Gene Drive Stage 2",
       "Medium-Heavy Fast Gene Drive Stage 3", "Medium-Heavy Fast Gene Drive Stage 4",
       "Medium-Heavy Fast Gene Drive Stage 5", "Medium-Heavy Fast Gene Drive Stage X",
    }
 end
-cores.standard.engines["Soromid Ira"] = function( heavy )
+cores.standard.engines["Soromid Ira"] = function( _heavy )
    return choose_one{
       "Heavy Fast Gene Drive Stage 1", "Heavy Fast Gene Drive Stage 2",
       "Heavy Fast Gene Drive Stage 3", "Heavy Fast Gene Drive Stage 4",
@@ -138,7 +138,7 @@ cores.standard.engines["Soromid Ira"] = function( heavy )
       "Heavy Fast Gene Drive Stage X",
    }
 end
-cores.standard.engines["Soromid Arx"] = function( heavy )
+cores.standard.engines["Soromid Arx"] = function( _heavy )
    return choose_one{
       "Superheavy Strong Gene Drive Stage 1", "Superheavy Strong Gene Drive Stage 2",
       "Superheavy Strong Gene Drive Stage 3", "Superheavy Strong Gene Drive Stage 4",
@@ -152,23 +152,23 @@ cores.standard.engines["Soromid Vox"] = cores.standard.engines["Soromid Arx"]
 --[[
       ELITE SYSTEMS
 --]]
-cores.elite.systems["Soromid Brigand"] = function( heavy )
+cores.elite.systems["Soromid Brigand"] = function( _heavy )
    return "Ultralight Brain Stage X"
 end
-cores.elite.systems["Soromid Reaver"] = function( heavy )
+cores.elite.systems["Soromid Reaver"] = function( _heavy )
    return "Light Brain Stage X"
 end
 cores.elite.systems["Soromid Marauder"] = cores.elite.systems["Soromid Reaver"]
-cores.elite.systems["Soromid Odium"] = function( heavy )
+cores.elite.systems["Soromid Odium"] = function( _heavy )
    return "Medium Brain Stage X"
 end
-cores.elite.systems["Soromid Nyx"] = function( heavy )
+cores.elite.systems["Soromid Nyx"] = function( _heavy )
    return "Medium-Heavy Brain Stage X"
 end
-cores.elite.systems["Soromid Ira"] = function( heavy )
+cores.elite.systems["Soromid Ira"] = function( _heavy )
    return "Heavy Brain Stage X"
 end
-cores.elite.systems["Soromid Arx"] = function( heavy )
+cores.elite.systems["Soromid Arx"] = function( _heavy )
    return "Superheavy Brain Stage X"
 end
 cores.elite.systems["Soromid Vox"] = cores.elite.systems["Soromid Arx"]
@@ -176,23 +176,23 @@ cores.elite.systems["Soromid Vox"] = cores.elite.systems["Soromid Arx"]
 --[[
       ELITE HULLS
 --]]
-cores.elite.hulls["Soromid Brigand"] = function( heavy )
+cores.elite.hulls["Soromid Brigand"] = function( _heavy )
    return "Ultralight Shell Stage X"
 end
-cores.elite.hulls["Soromid Reaver"] = function( heavy )
+cores.elite.hulls["Soromid Reaver"] = function( _heavy )
    return "Light Shell Stage X"
 end
 cores.elite.hulls["Soromid Marauder"] = cores.elite.hulls["Soromid Reaver"]
-cores.elite.hulls["Soromid Odium"] = function( heavy )
+cores.elite.hulls["Soromid Odium"] = function( _heavy )
    return "Medium Shell Stage X"
 end
-cores.elite.hulls["Soromid Nyx"] = function( heavy )
+cores.elite.hulls["Soromid Nyx"] = function( _heavy )
    return "Medium-Heavy Shell Stage X"
 end
-cores.elite.hulls["Soromid Ira"] = function( heavy )
+cores.elite.hulls["Soromid Ira"] = function( _heavy )
    return "Heavy Shell Stage X"
 end
-cores.elite.hulls["Soromid Arx"] = function( heavy )
+cores.elite.hulls["Soromid Arx"] = function( _heavy )
    return "Superheavy Shell Stage X"
 end
 cores.elite.hulls["Soromid Vox"] = cores.elite.hulls["Soromid Arx"]
@@ -200,23 +200,23 @@ cores.elite.hulls["Soromid Vox"] = cores.elite.hulls["Soromid Arx"]
 --[[
       ELITE ENGINES
 --]]
-cores.elite.engines["Soromid Brigand"] = function( heavy )
+cores.elite.engines["Soromid Brigand"] = function( _heavy )
    return "Ultralight Fast Gene Drive Stage X"
 end
-cores.elite.engines["Soromid Reaver"] = function( heavy )
+cores.elite.engines["Soromid Reaver"] = function( _heavy )
    return "Light Fast Gene Drive Stage X"
 end
 cores.elite.engines["Soromid Marauder"] = cores.elite.engines["Soromid Reaver"]
-cores.elite.engines["Soromid Odium"] = function( heavy )
+cores.elite.engines["Soromid Odium"] = function( _heavy )
    return "Medium Fast Gene Drive Stage X"
 end
-cores.elite.engines["Soromid Nyx"] = function( heavy )
+cores.elite.engines["Soromid Nyx"] = function( _heavy )
    return "Medium-Heavy Fast Gene Drive Stage X"
 end
-cores.elite.engines["Soromid Ira"] = function( heavy )
+cores.elite.engines["Soromid Ira"] = function( _heavy )
    return "Heavy Fast Gene Drive Stage X"
 end
-cores.elite.engines["Soromid Arx"] = function( heavy )
+cores.elite.engines["Soromid Arx"] = function( _heavy )
    return "Superheavy Strong Gene Drive Stage X"
 end
 cores.elite.engines["Soromid Vox"] = cores.elite.engines["Soromid Arx"]

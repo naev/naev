@@ -139,7 +139,7 @@ local function _mouse( x, y, mtype, button )
       return love.mousemoved( x, y, dx, dy, false )
    end
 end
-local function _keyboard( pressed, key, mod )
+local function _keyboard( pressed, key, _mod )
    if not love.keyboard then return false end
    local k = string.lower( key )
    love.keyboard._keystate[ k ] = pressed
