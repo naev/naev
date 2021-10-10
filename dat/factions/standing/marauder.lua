@@ -8,6 +8,6 @@ _ftext_standing = {}
 _ftext_standing[0]  = _("Ignored")
 _ftext_standing[-1] = _("Potential Victim")
 
-function faction_hit( current, amount, source, secondary )
+function faction_hit( current, _amount, _source, _secondary )
    return current -- Doesn't change through hits
 end

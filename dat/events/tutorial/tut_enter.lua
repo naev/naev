@@ -20,7 +20,7 @@ function create ()
    local enter_delay = 5
 
    local sys = system.cur()
-   local nebu_dens, nebu_volat = sys:nebula()
+   local _nebu_dens, nebu_volat = sys:nebula()
    if not var.peek( "tut_nebvol" ) and nebu_volat > 0 then
       hook.timer( enter_delay, "tut_volatility" )
    end
@@ -29,7 +29,7 @@ end
 
 function tut_volatility ()
    local sys = system.cur()
-   local nebden, nebvol = sys:nebula()
+   local _nebden, nebvol = sys:nebula()
 
    vn.clear()
    vn.scene()

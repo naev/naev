@@ -3,7 +3,7 @@ local scom = require "factions.spawn.lib.common"
 local shyena      = ship.get("Hyena")
 local sancestor   = ship.get("Ancestor")
 local slancelot   = ship.get("Lancelot")
-local svendetta   = ship.get("Vendetta")
+--local svendetta = ship.get("Vendetta")
 local sphalanx    = ship.get("Phalanx")
 
 -- @brief Spawns a small patrol fleet.

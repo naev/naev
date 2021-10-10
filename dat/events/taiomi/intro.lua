@@ -163,7 +163,7 @@ function cutscene01 ()
    -- Normal drones
    local pp = player.pilot()
    for k,d in ipairs(drones) do
-      local modulus, angle = (d:pos() - pp:pos()):polar()
+      local _modulus, angle = (d:pos() - pp:pos()):polar()
       local pos = pp:pos() + vec2.newP( 100+100*rnd.rnd(), angle )
 
       d:taskClear()

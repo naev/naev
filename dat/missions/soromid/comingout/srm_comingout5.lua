@@ -99,7 +99,7 @@ function accept ()
 end
 
 
-function spawnChelseaShip( param )
+function spawnChelseaShip( _param )
    fass = faction.dynAdd( "Independent", "Comingout_associates", _("Mercenary") )
 
    chelsea:outfitRm( "all" )

@@ -100,7 +100,7 @@ function updater090 ()
 end
 
 function create ()
-   local game_version, save_version = naev.version()
+   local _game_version, save_version = naev.version()
 
    -- Run on saves older than 0.9.0
    if not save_version or naev.versionTest( save_version, "0.9.0" ) < 0 then

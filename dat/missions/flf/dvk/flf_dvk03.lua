@@ -292,18 +292,18 @@ function hail ()
 end
 
 
-function pilot_attacked( pilot, attacker, arg )
+function pilot_attacked( pilot, _attacker, _arg )
    pilot:control( false )
 end
 
 
-function pilot_attacked_civilian( pilot, attacker, arg )
+function pilot_attacked_civilian( pilot, attacker, _arg )
    pilot:control( false )
    attacker:control( false )
 end
 
 
-function pilot_attacked_station( pilot, attacker, arg )
+function pilot_attacked_station( _pilot, _attacker, _arg )
    for i, j in ipairs( dv_fleet ) do
       if j:exists() then
          j:control( false )
@@ -318,7 +318,7 @@ function pilot_attacked_station( pilot, attacker, arg )
 end
 
 
-function pilot_death_civilian( pilot, attacker, arg )
+function pilot_death_civilian( _pilot, _attacker, _arg )
    for i, j in ipairs( pir_fleet ) do
       if j:exists() then
          j:control( false )
@@ -327,7 +327,7 @@ function pilot_death_civilian( pilot, attacker, arg )
 end
 
 
-function pilot_death_kestrel( pilot, attacker, arg )
+function pilot_death_kestrel( _pilot, _attacker, _arg )
    for i, j in ipairs( dv_fleet ) do
       if j:exists() then
          j:control( false )
@@ -336,7 +336,7 @@ function pilot_death_kestrel( pilot, attacker, arg )
 end
 
 
-function pilot_death_station( pilot, attacker, arg )
+function pilot_death_station( _pilot, _attacker, _arg )
    hook.timer( 3.0, "timer_station" )
 end
 

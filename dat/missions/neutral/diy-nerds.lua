@@ -156,7 +156,7 @@ function create ()
 end
 
 function accept ()
-   local cp,s = planet.cur()
+   local cp = planet.cur()
    srcPlanet = cp
    for i,p in ipairs(system.planets(system.cur())) do
       if planet.services(p)["land"] and p ~= cp and p:canLand() then
@@ -200,7 +200,7 @@ end
 
 -- invoked upon landing (stage 1: cart the nerds to destPlanet)
 function nerds_land1()
-    local cp, s = planet.cur()
+    local cp = planet.cur()
 
    if intime and cp ~= destPlanet then
       return
@@ -358,7 +358,7 @@ end
 
 -- hooked to 'land' in the final stage (returning the nerds)
 function nerds_land3()
-   local cp,s = planet.cur()
+   local cp = planet.cur()
    if cp == srcPlanet then
       if nerdswon then
          tk.msg(title[12], string.format(text[12], player.name()))

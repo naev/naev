@@ -71,8 +71,8 @@ function takeoff ()
    local pos = planet.get("Minerva Station"):pos()
    local dvpos = pos + vec2.newP( 700, 120 )
    local zlpos = pos + vec2.newP( 500, 300 )
-   local unused, dvface = (zlpos-dvpos):polar()
-   local unused, zlface = (dvpos-zlpos):polar()
+   local _dvdist, dvface = (zlpos-dvpos):polar()
+   local _zldist, zlface = (dvpos-zlpos):polar()
    dv = pilot.add("Dvaered Phalanx", "dv_thug", dvpos, _("Dvaered Hooligan"), {ai="dvaered"} )
    local mem = dv:memory()
    mem.doscans = false
@@ -153,7 +153,7 @@ function angrypeople ()
    angrytimer = hook.timer( timetonextanger, "angrypeople" )
 end
 
-function zl_attacked( victim, attacker )
+function zl_attacked( _victim, attacker )
    if attacker ~= player.pilot() then return end
    startattack()
    if player_side=="zalek" then
@@ -166,7 +166,7 @@ function zl_attacked( victim, attacker )
    end
 end
 
-function dv_attacked( victim, attacker )
+function dv_attacked( _victim, attacker )
    if attacker ~= player.pilot() then return end
    startattack()
    if player_side=="dvaered" then

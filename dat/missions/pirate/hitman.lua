@@ -99,7 +99,7 @@ function sys_enter ()
 end
 
 -- Attacked a trader
-function trader_attacked (hook_pilot, hook_attacker, hook_arg)
+function trader_attacked (hook_pilot, hook_attacker, _arg)
    if misn_done then
       return
    end
@@ -115,7 +115,7 @@ function trader_attacked (hook_pilot, hook_attacker, hook_arg)
 end
 
 -- An attacked Trader Jumped
-function trader_jumped (hook_pilot, hook_arg)
+function trader_jumped (_pilot, _arg)
    if misn_done then
       return
    end

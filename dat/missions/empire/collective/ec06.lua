@@ -222,7 +222,7 @@ function addRefuelShip ()
 
    -- Maximize fuel
    refship:outfitRm("all") -- Only will have fuel pods
-   local h,m,l = refship:ship():slots()
+   local _h, _m, l = refship:ship():slots()
    refship:outfitAdd( "Small Fuel Pod", l )
    refship:setFuel( true ) -- Set fuel to max
 
@@ -240,7 +240,7 @@ end
 
 
 -- Handles collective death
-function col_dead(victim)
+function col_dead( _victim )
     deathsC = deathsC + 1
     if var.peek("trinity") and deathsC < 2 then
         return

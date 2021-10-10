@@ -127,7 +127,7 @@ function enter ()
 end
 
 
-function player_scanned( pp, scanner )
+function player_scanned( _pp, scanner )
    player.msg(_("#rYou fake ID has been detected and your cover has been blown!"))
    scanner:setHostile(true)
    restore_standing()

@@ -434,7 +434,7 @@ end
 -- Hook to make Hamelsen run away
 function hamelsen_attacked( )
    -- Target was hit sufficiently to run away
-   local armour, shield = hamelsen:health()
+   local _armour, shield = hamelsen:health()
    if shield < 10 then
       hamelsen:control()
       hamelsen:memory().careful = true

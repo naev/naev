@@ -7,6 +7,6 @@ _ftext_standing[20] = _("Respected")
 _ftext_standing[0]  = _("Common Thief")
 _ftext_standing[-1] = _("Normie")
 
-function faction_hit( current, amount, source, secondary )
+function faction_hit( current, _amount, _source, _secondary )
    return current -- Doesn't change through hits
 end

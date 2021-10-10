@@ -464,7 +464,7 @@ end
 function wave_end ()
    if wave_round < #wave_round_enemies[wave_category] then
       -- TODO Cooler animation or something
-      local score_str, score = wave_compute_score()
+      local score_str = wave_compute_score()
       local n = #score_str
       local s = 1.2 -- time to display each message
       local f = (n+2)*s

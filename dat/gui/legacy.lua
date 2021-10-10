@@ -1,7 +1,7 @@
 local fmt = require "format"
 
---[[
-   @brief Obligatory create function.
+--[[--
+   Obligatory create function.
 
    Run when the GUI is loaded which is caused whenever the player gets in a different ship.
 --]]
@@ -103,16 +103,16 @@ function relativize( x, y )
 end
 
 
---[[
--- @brief This function is run whenever the player changes nav target (be in hyperspace or planet target).
+--[[--
+   This function is run whenever the player changes nav target (be in hyperspace or planet target).
 --]]
 function update_nav ()
    nav_pnt, nav_hyp = pp:nav()
 end
 
 
---[[
--- @brief This function is run whenever the player changes their pilot target.
+--[[--
+   This function is run whenever the player changes their pilot target.
 --]]
 function update_target ()
    -- Set target
@@ -134,8 +134,8 @@ function update_target ()
 end
 
 
---[[
--- @brief This function is run whenever the player modifies their ship outfits (when the ship is changed the gui is recreated).
+--[[--
+   This function is run whenever the player modifies their ship outfits (when the ship is changed the gui is recreated).
 --]]
 function update_ship ()
    stats = pp:stats()
@@ -143,8 +143,8 @@ function update_ship ()
 end
 
 
---[[
--- @brief This function is run whenever the player changes their cargo.
+--[[--
+   This function is run whenever the player changes their cargo.
 --]]
 function update_cargo ()
    local cargol = pp:cargoList()
@@ -163,21 +163,21 @@ function update_cargo ()
 end
 
 
---[[
--- @brief This function is run whenever the player changes system (every enter).
+--[[--
+   This function is run whenever the player changes system (every enter).
 --]]
 function update_system ()
 end
 
 
---[[
-   @brief Obligatory render function.
+--[[--
+   Obligatory render function.
 
    Run every frame. Note that the dt will be 0. if the game is paused.
 
       @param dt Current deltatick in seconds since last render.
 --]]
-function render( dt )
+function render( _dt )
    gfx.renderTex( frame, frame_x, frame_y )
    gui.radarRender( radar_x, radar_y )
    render_border()
@@ -392,8 +392,8 @@ function render_warnings ()
 end
 
 
---[[
-   @brief Optional destroy function.
+--[[--
+   Optional destroy function.
 
    Run when exiting the game on changing GUI. Graphics and stuff are cleaned up automatically.
 --]]

@@ -341,7 +341,7 @@ function harper_neardeath()
 end
 
 
-function harper_gotattacked( plt, attacker )
+function harper_gotattacked( _plt, attacker )
    if attacker == player.pilot() then
       if not harper_attacked then
          -- Run to land at the station

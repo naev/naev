@@ -158,7 +158,7 @@ function boardnothing ()
    player.unboard()
 end
 
-function boardothers( p )
+function boardothers( _p )
    numboarded = numboarded + 1
    if numboarded == 2 then
       board_flashback()
@@ -177,7 +177,7 @@ function board_flashback()
    vn.na(_("You find a paper notebook stuck in a part of damaged hull. Most people use the ship computers to store notes and information and rarely rely on physical storage."))
    vn.na(_("You begin to read the passages."))
 
-   local nw, nh, ns = naev.gfx.dim()
+   local nw, nh = naev.gfx.dim()
    paperbg = love_shaders.paper( nw, nh )
    oldify = love_shaders.oldify()
    vn.func( function ()

@@ -96,7 +96,7 @@ function land()
 end
 
 function enter_ship()
-    local c = 0
+    local c
     time_left = time_left - 1
     if time_left < 0 then
         tk.msg(_("Time to visit the institute"), timeup_text)

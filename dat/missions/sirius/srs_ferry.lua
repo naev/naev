@@ -240,7 +240,7 @@ function accept()
     end
 
     --if faction.get('Sirius'):playerStanding() <= 75 then
-    local can_land, can_bribe = destplanet:canLand()  -- Player with rank < 75 will not be allowed to land on Mutris
+    local can_land = destplanet:canLand()  -- Player with rank < 75 will not be allowed to land on Mutris
     if not can_land then
         -- Decide if the passenger will be OK with being dropped off at Urail or Gayathi, and if reward is reduced
         -- Then ask player if they're OK with that

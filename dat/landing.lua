@@ -141,7 +141,7 @@ function zlk_mil_restricted( pnt )
 end
 
 -- Za'lek's military center.
-function zlk_ruadan( pnt )
+function zlk_ruadan( _pnt )
    return false, "Permission denied. Ruadan space is off-limits to you."
 end
 

@@ -248,7 +248,7 @@ function update_wset()
 end
 
 
-function render_cooldown( percent, seconds )
+function render_cooldown( percent, _seconds )
    gfx.renderTex( cooldown_frame, cooldown_frame_x, cooldown_frame_y )
    gfx.renderTex( cooldown_bg, cooldown_bg_x, cooldown_bg_y )
    gfx.renderRect( cooldown_bg_x, cooldown_bg_y, percent * cooldown_bg_w, cooldown_bg_h, bar_heat_col )

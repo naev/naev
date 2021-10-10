@@ -244,7 +244,7 @@ function pilot_board ()
 end
 
 
-function pilot_attacked( p, attacker, dmg )
+function pilot_attacked( _p, attacker, dmg )
    if attacker ~= nil then
       local found = false
 
@@ -264,7 +264,7 @@ function pilot_attacked( p, attacker, dmg )
 end
 
 
-function pilot_death( p, attacker )
+function pilot_death( _p, attacker )
    if attacker == player.pilot() or attacker:leader() == player.pilot() then
       succeed()
       target_killed = true
@@ -317,7 +317,7 @@ function timer_hail( arg )
 end
 
 
-function hunter_hail( arg )
+function hunter_hail( _arg )
    if hailer ~= nil then hook.rm( hailer ) end
    if rehailer ~= nil then hook.rm( rehailer ) end
    player.commClose()

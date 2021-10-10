@@ -124,7 +124,7 @@ function takeoff() --for when the player takes off from the wringer.
    hook.timer(145.0,"second_coming")
 end
 
-function death(p)
+function death(_p)
    deathcounter = deathcounter + 1
    if deathcounter >= 9 then --9 ships is all the ships in the first fleet minus the 2 cruisers and the carrier. might adjust this later.
       flee()

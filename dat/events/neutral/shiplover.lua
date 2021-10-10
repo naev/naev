@@ -406,14 +406,14 @@ The lift up their toy Lancelot. You can barely make out a golden Efreeti etched 
 
 %s]]), question.question))
    elseif question.type == "ship_guess" then
-      local nw, nh = naev.gfx.dim()
+      local nw, _nh = naev.gfx.dim()
       local shipgfx = lg.newImage( ship.get(question.answer):gfxComm() )
       local shipchar = vn.Character.new( "ship", {image=shipgfx, pos="left"} )
       local function runinit ()
          slpos = sl.offset
          slnewpos = 0.75*nw
       end
-      vn.animation( 1, function( alpha, dt, params )
+      vn.animation( 1, function( alpha, _dt, _params )
          sl.offset = slnewpos*alpha + slpos*(1-alpha)
       end, nil, "ease-in-out", runinit )
       vn.appear( shipchar )
@@ -425,7 +425,7 @@ The lift up their toy Lancelot. You can barely make out a golden Efreeti etched 
 %s]]), question.question))
       function restore_vn ()
          vn.disappear( shipchar )
-         vn.animation( 1, function( alpha, dt, params )
+         vn.animation( 1, function( alpha, _dt, _params )
             sl.offset = slpos*alpha + slnewpos*(1-alpha)
          end, nil, "ease-in-out" )
       end

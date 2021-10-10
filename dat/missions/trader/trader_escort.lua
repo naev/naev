@@ -230,7 +230,7 @@ end
 
 
 -- Handle the convoy getting attacked.
-function traderAttacked( p, attacker )
+function traderAttacked( p, _attacker )
    unsafe = true
    p:control( false )
    p:setNoJump( true )

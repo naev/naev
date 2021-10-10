@@ -240,7 +240,7 @@ function transporterJump(p, j)
     end
 end
 
-function transporterLand(p, j)
+function transporterLand(p, _j)
     exited = true
     if p:exists() then
         player.msg(string.format(

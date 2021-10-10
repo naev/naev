@@ -274,7 +274,7 @@ function enter()
       end
 
       -- Equipment
-      local nhigh, nmedium, nlow = oppotype:slots()
+      local nhigh, _nmedium, nlow = oppotype:slots()
 
       -- TODO: decide if the "Faraday Tempest Coating" is a good idea
       opponent:outfitAdd("Battery I",nlow)
@@ -378,7 +378,7 @@ function land_everyone()
    end
 end
 
-function oppo_attacked(pilot, attacker)  --The player tries to cheat by attacking before the signal
+function oppo_attacked(_pilot, attacker)  --The player tries to cheat by attacking before the signal
    if stage == 0 and (attacker == player.pilot()
             or attacker:leader() == player.pilot()) then
       land_everyone()
@@ -487,7 +487,7 @@ function won()
    end
 end
 
-function escort_attacked(pilot,attacker) --someone attacked the escort
+function escort_attacked(pilot, attacker) --someone attacked the escort
 
    for i, k in ipairs({sec11, sec12, sec21, sec22}) do
       k:control()

@@ -134,7 +134,7 @@ function rm_attention ()
 end
 
 
-function pilot_attacked_dv( p, attacker )
+function pilot_attacked_dv( _p, attacker )
    if (attacker == player.pilot() or attacker:leader() == player.pilot())
          and not dv_coming and rnd.rnd() < 0.1 then
       dv_coming = true
@@ -143,7 +143,7 @@ function pilot_attacked_dv( p, attacker )
 end
 
 
-function pilot_death_dv( p, attacker )
+function pilot_death_dv( _p, attacker )
    if (attacker == player.pilot() or attacker:leader() == player.pilot())
          and not dv_coming then
       dv_coming = true
