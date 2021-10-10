@@ -104,7 +104,7 @@ function accept()
       misn.finish()
    end
    player.pilot():cargoAdd(cargo, cargo_size)
-   local player_best = cargoGetTransit(time_limit, num_jumps, travel_dist)
+   local player_best = cargoGetTransit(num_jumps, travel_dist)
    player.pilot():cargoRm(cargo, cargo_size)
    if time_limit < player_best then
       if not tk.yesno(_("Too slow"), _([[The goods have to arrive in %s but it will take %s for your ship to reach %s. Accept the mission anyway?]]):format((time_limit - time.get()):str(), (player_best - time.get()):str(), dest_planet:name())) then

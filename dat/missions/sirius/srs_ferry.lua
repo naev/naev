@@ -232,7 +232,7 @@ end
 
 -- Mission is accepted
 function accept()
-    local playerbest = cargoGetTransit( timelimit, numjumps, traveldist )
+    local playerbest = cargoGetTransit( numjumps, traveldist )
     if timelimit < playerbest then
         if not tk.yesno( slow[1], slow[2]:format( (timelimit - time.get()):str(), (playerbest - time.get()):str(), destplanet:name()) ) then
             misn.finish()

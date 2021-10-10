@@ -94,7 +94,7 @@ end
 
 -- Mission is accepted
 function accept()
-   local playerbest = cargoGetTransit( timelimit, numjumps, traveldist )
+   local playerbest = cargoGetTransit( numjumps, traveldist )
    if timelimit < playerbest then
       if not tk.yesno( _("Too slow"), string.format(
             _("This shipment must arrive within %s, but it will take at least %s for your ship to reach %s, missing the deadline. Accept the mission anyway?"),

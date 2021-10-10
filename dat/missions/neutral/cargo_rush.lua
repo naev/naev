@@ -135,7 +135,7 @@ function accept()
       misn.finish()
    end
    player.pilot():cargoAdd( cargo, amount )
-   local playerbest = cargoGetTransit( timelimit, numjumps, traveldist )
+   local playerbest = cargoGetTransit( numjumps, traveldist )
    player.pilot():cargoRm( cargo, amount )
    if timelimit < playerbest then
       if not tk.yesno( _("Too slow"), string.format(
