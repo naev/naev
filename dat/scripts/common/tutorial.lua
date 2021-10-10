@@ -85,6 +85,14 @@ function tut.reset ()
    var.pop( "tut_fighterbay" )
    var.pop( "tut_buyship" )
    var.pop( "tut_timedil" )
+   -- Licenses
+   var.pop( "tut_lic_largeciv" )
+   var.pop( "tut_lic_medweap" )
+   var.pop( "tut_lic_hvyweap" )
+   var.pop( "tut_lic_lightcom" )
+   var.pop( "tut_lic_medcom" )
+   var.pop( "tut_lic_hvycom" )
+   var.pop( "tut_lic_merc" )
 end
 
 return tut

@@ -25,8 +25,6 @@ function outfit_buy( outfitname )
    local o = outfit.get(outfitname)
    local tbroad = o:typeBroad()
 
-   -- TODO tutorials when buying licenses
-
    if tbroad == "Afterburner" and not var.peek( "tut_afterburner" ) then
       vn.clear()
       vn.scene()
@@ -35,7 +33,7 @@ function outfit_buy( outfitname )
       sai(fmt.f(_([["Looks like you just bought an #oAfterburner#0 outfit. Afterburners are active outfits that you can only equip one of on any specific ship. You can either configure to be set to a weapon set keybinding in the Info menu (opened with {infokey}, or double tap {accelkey} to trigger it. Note that they are prone to overheating and use a lot of energy, so it is bes to use afterburners only when necessary."]]),{infokey=tut.getKey("info"), accelkey=tut.getKey("accel")}))
       vn.done( tut.shipai.transition )
       vn.run()
-      var.push( "tut_afterburner" )
+      var.push( "tut_afterburner", true )
 
    elseif tbroad == "Launcher" and not var.peek( "tut_launcher" ) then
       vn.clear()
@@ -48,7 +46,7 @@ function outfit_buy( outfitname )
       sai(fmt.f(_([["Finally, the ammo of launchers regenerates over time: there is no need to buy ammunition. By either performing a cooldown with {cooldownkey} or double-tapping {reversekey}, or landing on a planet or station you can instantly refill the ammunition when necessary. Launchers can be very useful if you master them, please try them out with different configurations!"]]),{cooldownkey=tut.getKey("cooldown"), reversekey=tut.getKey("reverse")}))
       vn.done( tut.shipai.transition )
       vn.run()
-      var.push( "tut_launcher" )
+      var.push( "tut_launcher", true )
 
    elseif tbroad == "Fighter Bay" and not var.peek( "tut_fighterbay" ) then
       vn.clear()
@@ -59,7 +57,74 @@ function outfit_buy( outfitname )
       sai(fmt.f(_([["Like ammunition in launchers, lost fighters will regenerate slowly over time, and you can restock them by either performing a cooldown operation with {cooldownkey} or double-tapping {reversekey}, or landing on a planet or station. You can either fly around with deployed fighters or keep them inside your ship and only deploy as necessary. You should try to see whatever works best for you!"]]),{cooldownkey=tut.getKey("cooldown"), reversekey=tut.getKey("reverse")}))
       vn.done( tut.shipai.transition )
       vn.run()
-      var.push( "tut_fighterbay" )
+      var.push( "tut_fighterbay", true )
+
+   elseif tbroad == "License" then
+
+      local text
+      if o == outfit.get("Large Civilian Vessel License") and not var.peek( "tut_lic_largeciv" ) then
+         --[=[
+         text = {
+            _([[""]])
+         }
+         var.push("tut_lic_largeciv", true )
+         --]=]
+
+      elseif o == outfit.get("Medium Weapon License") and not var.peek( "tut_lic_medweap" )  then
+         text = {
+            _([["Oh, is that a Medium Weapon License? This will open the possibility of equipping larger weapons like turrets or launchers. Turrets can rotate any direction and take the burden of aiming off your ship. Launchers use ammunition and can lock on to enemy ships to make sure the payload hits the target. By mixing and matching weapons with complementary strengths you can greatly increase your combat ability."]]),
+            _([["Many of the newer weapons you'll now have access to have higher CPU requirements. To increase your CPU, you have to equip better #oCore Systems#0. How powerful of a core system you can equip is limited by the slot sizes of your ship. Larger slots give you more power, but come at the cost of more mass. If you want to stay nimble and stealthy, you should be careful about increasing your mass."]]),
+         }
+         var.push( "tut_lic_medweap", true )
+
+      elseif o == outfit.get("Heavy Weapon License") and not var.peek( "tut_lic_hvyweap" ) then
+         text = {
+            _([["Looks like you're finally ready to take on the big guns. Heavy Weapons License will allow you to buy the largest and most powerful of weaponry. These weapons are generally similar to their medium counterparts, but are on a different scale. They use much more energy, weigh much more, but also have much longer range and higher firepower."]]),
+            _([["One thing you will have to watch out is that heavy weapons tend to have large minimum tracking values and optimal tracking values. Ships with #oEvasion#0 lower than your weapons minimum tracking value will be able to easily dodge most of your shots. On the other hand, large ships with evasion above your optimal tracking value will be devastated by your shots. If you intend to deal with smaller ships too, make sure to equip fighter bays or lighter weapons!"]]),
+         }
+         var.push( "tut_lic_hvyweap", true )
+
+      elseif o == outfit.get("Light Combat Vessel License") and not var.peek( "tut_lic_lightcom" ) then
+         text = {
+            _([["It looks like you can finally get your hands on combat vessels with the #oLight Combat Vessel License#0! Combat vessels differ from civilians in that they are intrinsically suited for combat. This, in general, translates to higher mobility and firepower, at the cost of cargo capacity and utility. There are mainly three classes of light combat vessels: #oFighters#0, #oBombers#0, and #oInterceptors#0."]]),
+            _([["#oInterceptors#0 are the lightest of the three with limited slots, but low mass and high maneuverability. #oFighters#0 and #oBombers#0 are heavier but still very agile, with fighters specialized in closer combat with small craft, while bombers are known to carry torpedoes that can ravage even the largest of battleships."]]),
+            _([["To make the most of combat ships it is recommended you look at their strengths and weaknesses. Equipping only forward weapons on a #oBomber#0-class ship is not going to make for an effective combat vessel. Slots also play an important role, with #oInterceptor#0-class ships being more limited than #oFighter#0-class ships. Be sure to experiment with set ups to see what works well for you."]]),
+         }
+         var.push( "tut_lic_lightcom", true )
+
+      elseif o == outfit.get("Medium Combat Vessel License") and not var.peek( "tut_lic_medcom" ) then
+         text = {
+            _([["Looks like you've outgrown the Light Combat Vessel License. With the #oMedium Combat Vessel License#0 you'll get access to #oCorvette#0- and #oDestroyer#0-class ships, which can start to pack a real punch. Corvettes are the more agile of the two and can skirmish with smaller craft, while destroyers tend to be slower with much more firepower."]]),
+            _([["Medium combat vessels tend to have a good balance between firepower and utility, being able to both perform stealth operations and frontal assaults. As they also have more slots, they can be configured more extensively to play different roles. You should experiment and see what what works well for you."]]),
+         }
+         var.push( "tut_lic_medcom", true )
+
+      elseif o == outfit.get("Heavy Combat Vessel License") and not var.peek( "tut_lic_hvycom" ) then
+         text = {
+            _([["Looks like you finally got your hand on the #oHeavy Combat Vessel License#0! This will allow you to pilot the largest of the combat ships, which includes #oCruiser#0-, #oBattleship#0-, and #oCarrier#0-class ships. These ships sacrifice size and utility for survivability and firepower, being able to lay devasting barrages to devastate enemy forces."]]),
+            _([["#oCruisers#0 are the smallest of the three categories, but also the lowest mass and highest manoeuvrability. They can be seen more or less as a heavier version of a destroyer. #oBattleships#0 push the firepower to the max and can chew through any ship that is unable to evade their concentrated firepower. #oCarriers#0 use a different strategy of using fighter to do the combat for them while maximizing survivability."]]),
+            _([["Flying a heavy combat vessel is very different from other clases of ships. Given their size, usually time seems to pass at a faster rate than smaller ships which can be seen by their '#oTime dilation#0' value. Furthermore, given their size, stealth becomes difficult and they can be vulnerable to volleys of torpedoes. Escorts and fighter bays can help them deal with enemy bombers."]]),
+         }
+         var.push( "tut_lic_medcom", true )
+
+      elseif o == outfit.get("Mercenary License") and not var.peek( "tut_lic_merc" ) then
+         text = {
+            _([["It looks like you got a #oMercenary License#0. This will enable bounty collection missions that should start appearing in your mission computer screens from now on. These missions are usually generally combat-oriented and will require you to have a suitable combat vessel to succeed in them. They can be fairly challenging at the beginning so make sure your ship is properly equipped for combat."]]),
+         }
+         var.push( "tut_lic_merc", true )
+      end
+
+      if text then
+         vn.clear()
+         vn.scene()
+         local sai = vn.newCharacter( tut.vn_shipai() )
+         vn.transition( tut.shipai.transition )
+         for k,v in ipairs(text) do
+            sai( v )
+         end
+         vn.done( tut.shipai.transition )
+         vn.run()
+      end
    end
 end
 
