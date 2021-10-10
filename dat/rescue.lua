@@ -65,7 +65,7 @@ If you can't find a way to make your ship spaceworthy, you can always attempt to
             and no other suitable core outfits are available.
 
 --]]
-local function check_stranded( missing )
+local function check_stranded()
    local pp = player.pilot()
    local services = planet.cur():services()
 
@@ -126,7 +126,7 @@ local function check_stranded( missing )
 
    local last  = nil
    local found = 0
-   for k,o in ipairs(inv) do
+   for _k, o in ipairs(inv) do
       if #missing <= 0 then
          break
       end
@@ -135,7 +135,7 @@ local function check_stranded( missing )
       -- core outfit slots.
       if last and o ~= last then
          local _oname, osize, oprop = o:slot()
-         for k,r in ipairs(missing) do
+         for k, r in ipairs(missing) do
             if osize == r.size and oprop == r.property then
                table.remove(missing, k)
                found = found + 1
@@ -227,9 +227,9 @@ local function removeEquipDefaults()
 end
 
 
-local function fillMissing( missing )
+local function fillMissing( t )
    -- Fill empty core slots with defaults.
-   for k,v in pairs(missing) do
+   for k,v in pairs(t) do
       player.pilot():outfitAdd( v.outfit:nameRaw() )
    end
 end
@@ -240,10 +240,10 @@ local function equipDefaults( defaults )
    local pp = player.pilot() -- Convenience.
 
    for k,v in ipairs( pp:outfits() ) do
-      local _name, _size, prop, required = v:slot()
+      local _name, _size, prop, is_required = v:slot()
 
       -- Remove if required but not default.
-      if required and v ~= defaults[prop].outfit then
+      if is_required and v ~= defaults[prop].outfit then
          -- Store and remove old
          player.outfitAdd(v:nameRaw())
          pp:outfitRm(v:nameRaw())
@@ -319,7 +319,7 @@ function rescue()
    buildTables()
 
    -- Bail out if the player has a reasonable chance of fixing their ship.
-   if not check_stranded( missing ) then
+   if not check_stranded() then
       return
    end
 
