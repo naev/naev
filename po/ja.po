@@ -32,7 +32,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2021-10-03 12:18-0400\n"
-"PO-Revision-Date: 2021-10-03 14:39+0000\n"
+"PO-Revision-Date: 2021-10-10 15:04+0000\n"
 "Last-Translator: OOTA, Masato <ooyooxei+gh@gmail.com>\n"
 "Language-Team: Japanese <https://hosted.weblate.org/projects/naev/naev/ja/>\n"
 "Language: ja\n"
@@ -15670,10 +15670,8 @@ msgid ""
 "capital ships, providing superior performance in every field. Fly safe, fly "
 "Milspec."
 msgstr ""
-"ミルスペックはあなたの船のために高性能な機材を開発している。旅するあなたに宇"
-"宙が投げつけてきそうな危険にたいして、いつでも最適な用意をさせてくれるのだ。"
-"オリオン 8601 中核システムは主力艦むけの最高級製品で、どの方面にもすぐれた性"
-"能を発揮する。安全に飛ぼう。ミルスペックで飛ぼう。"
+"ミルスペックはあなたの船のために高性能な機材を開発しており、宇宙が旅するあなたに投げつけかねない危険にたいして、いつでも最適な用意をしています。オリオン "
+"8601 中核システムは主力艦むけの最高級製品で、どの方面にもすぐれた性能を発揮します。安全に飛ぼう。ミルスペックで飛ぼう。"
 
 #: dat/outfits/core_system/large/milspec_orion_9901_core_system.xml:2
 msgid "Milspec Orion 9901 Core System"
@@ -15687,10 +15685,8 @@ msgid ""
 "capital ships, providing superior performance in every field. Fly safe, fly "
 "Milspec."
 msgstr ""
-"ミルスペックはあなたの船のために高性能な機材を開発している。旅するあなたに宇"
-"宙が投げつけてきそうな危険にたいして、いつでも最適な用意をさせてくれるのだ。"
-"オリオン 9901 中核システムは主力艦むけの最高級製品で、どの方面にもすぐれた性"
-"能を発揮する。安全に飛ぼう。ミルスペックで飛ぼう。"
+"ミルスペックはあなたの船のために高性能な機材を開発しており、宇宙が旅するあなたに投げつけかねない危険にたいして、いつでも最適な用意をしています。オリオン "
+"9901 中核システムは主力艦むけの最高級製品で、どの方面にもすぐれた性能を発揮します。安全に飛ぼう。ミルスペックで飛ぼう。"
 
 #: dat/outfits/core_system/large/milspec_thalos_8502_core_system.xml:2
 msgid "Milspec Thalos 8502 Core System"
@@ -15703,10 +15699,9 @@ msgid ""
 "subsystem control whilst retaining the high standard in energy and shielding "
 "that Milspec prides itself on. Fly safe, fly Milspec."
 msgstr ""
-"ミルスペックは、船がただの部品の集まりでしかないことを知っている。それは部品"
-"をたくさんつければ船がもっとよくなるという意味だ。サロス 8502 は重要な下位シ"
-"ステム制御手段を提供するのと同時に、エネルギーとシールドについてミルスペック"
-"が誇りとする高い水準を維持している。安全に飛ぼう。ミルスペックで飛ぼう。"
+"ミルスペックは、船がただの部品の集まりでしかないことを知っています。それは部品をたくさんつければ船がもっとよくなるという意味です。サロス 8502 は重要"
+"な下位システム制御手段を提供するのと同時に、エネルギーとシールドについてミルスペックが誇りとする高い水準を維持しています。安全に飛ぼう。ミルスペックで飛ぼ"
+"う。"
 
 #: dat/outfits/core_system/large/milspec_thalos_9802_core_system.xml:2
 msgid "Milspec Thalos 9802 Core System"
@@ -15719,10 +15714,9 @@ msgid ""
 "subsystem control whilst retaining the high standard in energy and shielding "
 "that Milspec prides itself on. Fly safe, fly Milspec."
 msgstr ""
-"ミルスペックは、船がただの部品の集まりでしかないことを知っている。それは部品"
-"をたくさんつければ船がもっとよくなるという意味だ。サロス 9802 は重要な下位シ"
-"ステム制御手段を提供するのと同時に、エネルギーとシールドについてミルスペック"
-"が誇りとする高い水準を維持している。安全に飛ぼう。ミルスペックで飛ぼう。"
+"ミルスペックは、船がただの部品の集まりでしかないことを知っています。それは部品をたくさんつければ船がもっとよくなるという意味です。サロス 9802 は重要"
+"な下位システム制御手段を提供するのと同時に、エネルギーとシールドについてミルスペックが誇りとする高い水準を維持しています。安全に飛ぼう。ミルスペックで飛ぼ"
+"う。"
 
 #: dat/outfits/core_system/large/previous_generation_large_systems.xml:2
 msgid "Previous Generation Large Systems"
@@ -15777,10 +15771,8 @@ msgid ""
 "you on your travels. The Orion 4801 core system is affordable yet capable, "
 "recommended for the discerning captain. Fly safe, fly Milspec."
 msgstr ""
-"ミルスペックはあなたの船のために高性能な機材を開発している。旅するあなたに宇"
-"宙が投げつけてきそうな危険にたいして、いつでも最適な用意をさせてくれるのだ。"
-"オリオン 4801 中核システムは手ごろな価格であるうえに、必要な能力を備えている"
-"ので、見識の高い船長にお勧めである。安全に飛ぼう。ミルスペックで飛ぼう。"
+"ミルスペックはあなたの船のために高性能な機材を開発しており、宇宙が旅するあなたに投げつけかねない危険にたいして、いつでも最適な用意をしています。オリオン "
+"4801 中核システムは手ごろな価格であるうえに、必要な能力を備えているので、見識の高い船長にお勧めです。安全に飛ぼう。ミルスペックで飛ぼう。"
 
 #: dat/outfits/core_system/medium/milspec_orion_5501_core_system.xml:2
 msgid "Milspec Orion 5501 Core System"
@@ -15794,10 +15786,8 @@ msgid ""
 "medium ships, providing superior performance in every field. Fly safe, fly "
 "Milspec."
 msgstr ""
-"ミルスペックはあなたの船のために高性能な機材を開発している。旅するあなたに宇"
-"宙が投げつけてきそうな危険にたいして、いつでも最適な用意をさせてくれるのだ。"
-"オリオン 5501 中核システムは中型船むけの最高級製品で、どの方面にもすぐれた性"
-"能を発揮する。安全に飛ぼう。ミルスペックで飛ぼう。"
+"ミルスペックはあなたの船のために高性能な機材を開発しており、宇宙が旅するあなたに投げつけかねない危険にたいして、いつでも最適な用意をしています。オリオン "
+"5501 中核システムは中型船むけの最高級製品で、どの方面にもすぐれた性能を発揮します。安全に飛ぼう。ミルスペックで飛ぼう。"
 
 #: dat/outfits/core_system/medium/milspec_thalos_4702_core_system.xml:2
 msgid "Milspec Thalos 4702 Core System"
@@ -15810,10 +15800,9 @@ msgid ""
 "subsystem control whilst retaining the high standard in energy and shielding "
 "that Milspec prides itself on. Fly safe, fly Milspec."
 msgstr ""
-"ミルスペックは、船がただの部品の集まりでしかないことを知っている。それは部品"
-"をたくさんつければ船がもっとよくなるという意味だ。サロス 4702 は重要な下位シ"
-"ステム制御手段を提供するのと同時に、エネルギーとシールドについてミルスペック"
-"が誇りとする高い水準を維持している。安全に飛ぼう。ミルスペックで飛ぼう。"
+"ミルスペックは、船がただの部品の集まりでしかないことを知っています。それは部品をたくさんつければ船がもっとよくなるという意味です。サロス 4702 は重要"
+"な下位システム制御手段を提供するのと同時に、エネルギーとシールドについてミルスペックが誇りとする高い水準を維持しています。安全に飛ぼう。ミルスペックで飛ぼ"
+"う。"
 
 #: dat/outfits/core_system/medium/milspec_thalos_5402_core_system.xml:2
 msgid "Milspec Thalos 5402 Core System"
@@ -15826,10 +15815,9 @@ msgid ""
 "subsystem control whilst retaining the high standard in energy and shielding "
 "that Milspec prides itself on. Fly safe, fly Milspec."
 msgstr ""
-"ミルスペックは、船がただの部品の集まりでしかないことを知っている。それは部品"
-"をたくさんつければ船がもっとよくなるという意味だ。サロス 5402 は重要な下位シ"
-"ステム制御手段を提供するのと同時に、エネルギーとシールドについてミルスペック"
-"が誇りとする高い水準を維持している。安全に飛ぼう。ミルスペックで飛ぼう。"
+"ミルスペックは、船がただの部品の集まりでしかないことを知っています。それは部品をたくさんつければ船がもっとよくなるという意味です。サロス 5402 は重要"
+"な下位システム制御手段を提供するのと同時に、エネルギーとシールドについてミルスペックが誇りとする高い水準を維持しています。安全に飛ぼう。ミルスペックで飛ぼ"
+"う。"
 
 #: dat/outfits/core_system/medium/previous_generation_medium_systems.xml:2
 msgid "Previous Generation Medium Systems"
@@ -15872,10 +15860,8 @@ msgid ""
 "you on your travels. The Orion 2301 core system is affordable yet capable, "
 "recommended for the beginning captain. Fly safe, fly Milspec."
 msgstr ""
-"ミルスペックはあなたの船のために高性能な機材を開発している。旅するあなたに宇"
-"宙が投げつけてきそうな危険にたいして、いつでも最適な用意をさせてくれるのだ。"
-"オリオン 2301 中核システムは手ごろな価格であるうえに、必要な能力を備えている"
-"ので、かけだしの船長にお勧めである。安全に飛ぼう。ミルスペックで飛ぼう。"
+"ミルスペックはあなたの船のために高性能な機材を開発しており、宇宙が旅するあなたに投げつけかねない危険にたいして、いつでも最適な用意をしています。オリオン "
+"2301 中核システムは手ごろな価格であるうえに、必要な能力を備えているので、かけだしの船長にお勧めです。安全に飛ぼう。ミルスペックで飛ぼう。"
 
 #: dat/outfits/core_system/small/milspec_orion_3701_core_system.xml:2
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:310
@@ -15890,10 +15876,8 @@ msgid ""
 "small ships, providing superior performance in every field. Fly safe, fly "
 "Milspec."
 msgstr ""
-"ミルスペックはあなたの船のために高性能な機材を開発している。旅するあなたに宇"
-"宙が投げつけてきそうな危険にたいして、いつでも最適な用意をさせてくれるのだ。"
-"オリオン 3701 中核システムは小型船むけの最高級製品で、どの方面にもすぐれた性"
-"能を発揮する。安全に飛ぼう。ミルスペックで飛ぼう。"
+"ミルスペックはあなたの船のために高性能な機材を開発しており、宇宙が旅するあなたに投げつけかねない危険にたいして、いつでも最適な用意をしています。オリオン "
+"3701 中核システムは小型船むけの最高級製品で、どの方面にもすぐれた性能を発揮します。安全に飛ぼう。ミルスペックで飛ぼう。"
 
 #: dat/outfits/core_system/small/milspec_thalos_2202_core_system.xml:2
 msgid "Milspec Thalos 2202 Core System"
@@ -15906,10 +15890,9 @@ msgid ""
 "subsystem control whilst retaining the high standard in energy and shielding "
 "that Milspec prides itself on. Fly safe, fly Milspec."
 msgstr ""
-"ミルスペックは、船がただの部品の集まりでしかないことを知っている。それは部品"
-"をたくさんつければ船がもっとよくなるという意味だ。サロス 2202 は重要な下位シ"
-"ステム制御手段を提供するのと同時に、エネルギーとシールドについてミルスペック"
-"が誇りとする高い水準を維持している。安全に飛ぼう。ミルスペックで飛ぼう。"
+"ミルスペックは、船がただの部品の集まりでしかないことを知っています。それは部品をたくさんつければ船がもっとよくなるという意味です。サロス 2202 は重要"
+"な下位システム制御手段を提供するのと同時に、エネルギーとシールドについてミルスペックが誇りとする高い水準を維持しています。安全に飛ぼう。ミルスペックで飛ぼ"
+"う。"
 
 #: dat/outfits/core_system/small/milspec_thalos_3602_core_system.xml:2
 msgid "Milspec Thalos 3602 Core System"
@@ -15922,10 +15905,9 @@ msgid ""
 "subsystem control whilst retaining the high standard in energy and shielding "
 "that Milspec prides itself on. Fly safe, fly Milspec."
 msgstr ""
-"ミルスペックは、船がただの部品の集まりでしかないことを知っている。それは部品"
-"をたくさんつければ船がもっとよくなるという意味だ。サロス 3602 は重要な下位シ"
-"ステム制御手段を提供するのと同時に、エネルギーとシールドについてミルスペック"
-"が誇りとする高い水準を維持している。安全に飛ぼう。ミルスペックで飛ぼう。"
+"ミルスペックは、船がただの部品の集まりでしかないことを知っています。それは部品をたくさんつければ船がもっとよくなるという意味です。サロス 3602 は重要"
+"な下位システム制御手段を提供するのと同時に、エネルギーとシールドについてミルスペックが誇りとする高い水準を維持しています。安全に飛ぼう。ミルスペックで飛ぼ"
+"う。"
 
 #: dat/outfits/core_system/small/previous_generation_small_systems.xml:2
 msgid "Previous Generation Small Systems"
@@ -17764,9 +17746,7 @@ msgstr ""
 msgid ""
 "Blinks you 500 units in the direction you are facing. Can only be run once "
 "every 8 seconds. Performance degrades over 800 tonnes of mass."
-msgstr ""
-"瞬きするうちに、向かっている方向へ 500 ユニット移動する。8 秒ごとに一度だけ使"
-"用可能。質量が 800 トンをこえると性能が低下する。"
+msgstr "瞬きするうちに、向かっている方向へ 500 ユニット移動する。8 秒ごとに一度だけ使用可能。質量が 800トンをこえると性能が低下する。"
 
 #: dat/outfits/utility/boarding_androids_mk1.xml:2
 msgid "Boarding Androids MK1"
@@ -17989,7 +17969,7 @@ msgstr ""
 
 #: dat/outfits/utility/cryogenic_repair_nanobots.xml:11
 msgid "Restores armour to full when performing an active cooldown."
-msgstr ""
+msgstr "冷却器を作動させているときに、装甲を完全に修復する。"
 
 #: dat/outfits/utility/droid_repair_crew.xml:2
 msgid "Droid Repair Crew"
@@ -18004,10 +17984,13 @@ msgid ""
 "having a robotic repair crew. Due to the simplicity of the droid tools, they "
 "are unable to restore armour beyond 50%."
 msgstr ""
+"これは単純な保守用ドロイド要員で、あなたの船を磨いて宇宙の偶然で生じたどんな損害でも修理する。ドロイドはとても小さくて、船の内部と外部の両方で働くことがで"
+"きる。電力は船から取られてロボットに供給される。しかしその負荷は、一般的にはロボット修理要員がいることからくる利益と比べてとても低い。ドロイドの工具は簡素"
+"なものなので、50% をこえた装甲の修復をすることはできない。"
 
 #: dat/outfits/utility/droid_repair_crew.xml:11
 msgid "Can only restore armour when below 50%."
-msgstr ""
+msgstr "装甲が 50% 未満のときだけ修復可能。"
 
 #: dat/outfits/utility/emergency_shield_booster.xml:2
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:306
@@ -18027,12 +18010,16 @@ msgid ""
 "disproportionally high and the outfit can't be active for more than a "
 "certain period of time before needing entering a cooldown cycle."
 msgstr ""
+"この装置部品は、船の反応炉とシールドシステムの間に分岐接続して、予備エネルギーを供給するものだ。作動すると、この装置はシールドキャパシターに生のエネルギー"
+"を直接投入することで、船のシールド再生を急激に後押しする。その処置はとても非効率なので、エネルギー使用量は釣りあわないほど大きい。また、この艤装品は冷却期"
+"間に入る必要が生じるまでに、ある特定の期間以上は作動させることができない。"
 
 #: dat/outfits/utility/emergency_shield_booster.xml:10
 msgid ""
 "Increases shield regeneration by 500%. Active for 4 seconds with a cooldown "
 "of 8 seconds. Uses 3 MJ of energy for each MJ of shield recovered."
 msgstr ""
+"シールド再生を 500% 増加させる。4 秒の作動で 8 秒の冷却期間が必要。シールドを 1 MJ 回復させるごとに、3 MJ のエネルギーを使用する。"
 
 #: dat/outfits/utility/emergency_stasis_inducer.xml:2
 msgid "Emergency Stasis Inducer"
@@ -18046,10 +18033,13 @@ msgid ""
 "damage. It is not entirely clear how this effect is created, however, "
 "doctors do not recommend prolonged usage."
 msgstr ""
+"緊急停滞誘導器は、船のまわりに強い電磁場を作ることで作動する。この場により、時間がゆっくりと進むようになり、船の動きがいちじるしく加速するのだ。そしてこれ"
+"は装甲の損傷をきっかけとして作動するようになっている。けれども、どうやってこの効果が作られるのかが完全にはっきりしているわけではないし、医者も長いあいだ使"
+"うのをまったく勧めていない。"
 
 #: dat/outfits/utility/emergency_stasis_inducer.xml:10
 msgid "Triggered on armour damage. Lasts 3 seconds with 8 seconds cooldown."
-msgstr ""
+msgstr "装甲の損傷で起動される。3 秒つづき、8 秒の冷却期間がある。"
 
 #: dat/outfits/utility/hellburner.xml:2
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:320
@@ -18064,6 +18054,8 @@ msgid ""
 "efficiency is significantly lower than common models, so it consumes energy "
 "more rapidly and overheats much more quickly."
 msgstr ""
+"ヘルバーナーは市場にある小型アフターバーナーでも屈指のものだ。独占している加圧管を使うことで、ヘルバーナーは一般的な代替品よりはるかに大きな推力を生みだせ"
+"る。あいにく、これのエネルギー変換効率は一般のものよりいちじるしく低い。だからエネルギーをもっと急速に消費するし、ずっとすばやくオーバーヒートする。"
 
 #: dat/outfits/utility/hidden_jump_scanner.xml:2
 msgid "Hidden Jump Scanner"
@@ -18077,6 +18069,8 @@ msgid ""
 "needing to recharge, this scanner is capable of discovering jump points that "
 "regular sensors can't detect."
 msgstr ""
+"すぐ周囲にある空間の基本構造に存在する珍しい異常をスキャンできる特殊なセンサー技術の品だ。有効範囲は狭くて、再充電が必要になるまでに限られた時間しかスキャ"
+"ンできないが、このスキャナーはふつうのセンサーでは検出できないジャンプポイントを発見する能力がある。"
 
 #: dat/outfits/utility/hullcoating/faraday_tempest_coating.xml:2
 msgid "Faraday Tempest Coating"
@@ -18099,6 +18093,8 @@ msgid ""
 "harmless evanescent fields, greatly speeding up the recovery from system "
 "damage."
 msgstr ""
+"現代のイオン化武器類は、船の装甲を圧倒して傷つきやすい電子システムを直接攻撃する方法にたどり着いた。ファラデーテンペスト被覆は、無力化をねらった武器類を無"
+"害なエバネッセント場として消費することで中和できる。これでシステムが被害から回復する速さは大きく向上する。"
 
 #: dat/outfits/utility/hullcoating/lattice_thermal_coating.xml:2
 msgid "Lattice Thermal Coating"
@@ -18112,6 +18108,8 @@ msgid ""
 "a special nano-material that is able to radiate through itself, allowing for "
 "increased heat dissipation."
 msgstr ""
+"宇宙には大気がないことから、船は放射に頼って、受動的に過剰な熱を取り除いている。そのような放射は、一般的に船の大きさに制限される。ラティスサーマル被覆は、"
+"とくべつなナノ材料をもちいてこの限界を突破した。このナノ材料は自身をつらぬいた放射ができるため、熱放散を増加させることができる。"
 
 #: dat/outfits/utility/hullcoating/milspec_impactoplastic_coating.xml:2
 msgid "Milspec Impacto-Plastic Coating"
@@ -18123,6 +18121,8 @@ msgid ""
 "resist both impact and damage, quickly restoring the protected surface to "
 "its original state."
 msgstr ""
+"ミルスペックのインパクト゠プラスティック被覆は、衝撃と損傷の両方に抵抗する記憶ナノ合金をもとにしている。これにより、保護された表面はすばやくもとの状態に戻"
+"るのだ。"
 
 #: dat/outfits/utility/hullcoating/nebula_resistant_coating.xml:2
 msgid "Nebula Resistant Coating"
@@ -18136,6 +18136,8 @@ msgid ""
 "to the nebula effects, this hull coating does make a ship significantly more "
 "resistant, although prolonged exposure is still not recommended."
 msgstr ""
+"星雲の放射から船を保護するのは簡単な仕事ではない。発せられる放射のいろいろな種類の変動や特性を考えてみればわかるだろう。これはいまだ完全には理解されていな"
+"いのだ。船が星雲の効果を逃れるようにはできないが、この船殻被覆は船の耐性をはっきりと高くする。それでも、長く身をさらすことはやはり勧められない。"
 
 #: dat/outfits/utility/hullcoating/nexus_stealth_coating.xml:2
 msgid "Nexus Stealth Coating"
@@ -18148,6 +18150,8 @@ msgid ""
 "developed a breakthrough hull coating that using quantum entangled self-"
 "projections that can confuse gravitational readings."
 msgstr ""
+"現代の船のセンサーは、重力異常の検出によって船を発見している。これはたいていの状況においてはとても堅牢だ。ネクサス造船所は船殻被覆に突破口を開いた。量子も"
+"つれ自己投影を使用することで、重力測定値を狂わせることができたのだ。"
 
 #: dat/outfits/utility/hullcoating/photovoltaic_nanobot_coating.xml:2
 msgid "Photo-Voltaic Nanobot Coating"
@@ -18160,6 +18164,8 @@ msgid ""
 "The nanobots are self-regulating and self-repairing, requiring no "
 "maintenance once a colony has been established."
 msgstr ""
+"光電池ナノボットペンキの被覆は、船殻全体を覆って太陽エネルギーを利用し、船の電力系統へ送ることができる。ナノボットは自己調整と自己修復をする。群れが定着し"
+"てしまえば、保守は必要ない。"
 
 #: dat/outfits/utility/hyperbolic_blink_engine.xml:2
 msgid "Hyperbolic Blink Engine"
@@ -18175,6 +18181,9 @@ msgid ""
 "each space-time fold or \"blink\", it takes a while for the ship to be fully "
 "responsive again."
 msgstr ""
+"ハイパーボリックブリンクエンジンは、この質問への回答として設計されたようだ。｢時空を折りたたんで移動できるのはどのくらいの質量までだろう？｣。じっさいにそ"
+"のような時空折りたたみを制御可能にすることについては、かなり軽視されているらしく、焦点を当てられているのは移動できるかどうかだけである。船のシステムや人員"
+"に与える混乱は大きいので、時空折りたたみ、つまり ｢ブリンク｣ するごとに、船がまた完全に反応できるようになるまでにはしばらく時間が必要だ。"
 
 #: dat/outfits/utility/hyperbolic_blink_engine.xml:11
 msgid ""
@@ -18182,6 +18191,8 @@ msgid ""
 "only be run once every 20 seconds and incurs a 20% thrust and turn penalty "
 "during cooldown. Performance degrades over 5000 tonnes of mass."
 msgstr ""
+"準備に 3 秒かけてから、でたらめな方向に 2,000 ユニットブリンクする。20 秒ごとに一度しか動かないうえ、冷却中は推進力と旋回力に 20% "
+"の損失が発生する。質量が 5,000トンをこえると性能が低下する。"
 
 #: dat/outfits/utility/jump_scanner.xml:2
 msgid "Jump Scanner"
@@ -18198,6 +18209,10 @@ msgid ""
 "scanner will not detect jump points whose signature differs from the "
 "standard type."
 msgstr ""
+"この装置は船に補助のスキャンアレイをつけくわえるものだ。そのアレイには、超空間ジャンプに関連する空間異常の既知の特徴がプログラムされている。このスキャナー"
+"は、識別特性のなかでもとても具体的な性質を検出するので、精度を犠牲にしなくても容易に探知距離を増加させることができた。ようするに、船がこのスキャナーをひと"
+"つ以上搭載すれば、ジャンプポイントをもっと遠くから検出できるということになる。このスキャナーは、標準的な種類とは異なる識別特性をもつジャンプポイントは検出"
+"しない。"
 
 #: dat/outfits/utility/low_radiation_sensor_modulator.xml:2
 msgid "Low Radiation Sensor Modulator"
@@ -18215,6 +18230,8 @@ msgid ""
 "Low Radiation Sensor Modulator is able to increase the detection of nearby "
 "ships while also giving more sensibility to jump point signatures."
 msgstr ""
+"低放射環境にあわせて高度な調整をした特殊な変調をもちいることで、この低放射センサー変調器は近くの船の検出力を強化できるようになった。同時にジャンプポイント"
+"の識別特性についてもさらに感度が上がっている。"
 
 #: dat/outfits/utility/low_radiation_sensor_modulator.xml:11
 msgid "#pOnly active when in stealth.#0"
@@ -18238,6 +18255,9 @@ msgid ""
 "garble they're getting on their sensors, you will already have made your "
 "escape! Fly safe, fly Milspec."
 msgstr ""
+"あなたの仕事は危険な領域へ思いきって行くことを必要としますか？　あなたはシールドで対処できない妨害に直面していますか？　ミルスペックの U-9 "
+"｢メイガス｣ ジャマーがあなたの必要とするものです！　ボタンを押して、あなたのにおいをしつこい犬に投げつけよう。敵がまだ船のセンサーから得た誤情報を解釈し"
+"ようとしているあいだに、あなたはもう脱出していることでしょう！　安全に飛ぼう。ミルスペックで飛ぼう。"
 
 #: dat/outfits/utility/milspec_scrambler.xml:2
 msgid "Milspec Scrambler"
@@ -18255,6 +18275,9 @@ msgid ""
 "Milspec RX 500-C scrambler will put the wool over your enemies' sensors, at "
 "a minimal cost to you or your ship's reactor! Fly safe, fly Milspec."
 msgstr ""
+"ミルスペックは、外ではなにが重要なのか知っています。それは撃たれないということです！　"
+"そして撃たれないいちばんよい方法は、そもそも標的とされないことになります。ミルスペックの RX 500-C "
+"スクランブラーは、敵のセンサーをだましつつ、あなたと反応炉への負担は最小限です！　安全に飛ぼう。ミルスペックで飛ぼう。"
 
 #: dat/outfits/utility/neural_accelerator_interface.xml:2
 msgid "Neural Accelerator Interface"
@@ -18268,6 +18291,8 @@ msgid ""
 "large amounts of ship energy to change the perception of time and accelerate "
 "the piloted ship."
 msgstr ""
+"時間の流れは一般的に、定数のようには知覚されない。むしろそれは、状況に大きく依存して上下するものだ。最新の神経インターフェースを使用するニューラルアクセラ"
+"レーターインターフェースは、船のエネルギーを大量に活用することで、知覚時間を変更し、操縦する船を高速化できるようにするものだ。"
 
 #: dat/outfits/utility/neural_accelerator_interface.xml:12
 msgid "Active for 5 seconds with a cooldown of 20 seconds."
@@ -18290,10 +18315,13 @@ msgid ""
 "increases the accuracy of short-range tracking information used by your "
 "ship's weapons system."
 msgstr ""
+"センサーアレイは 4 重レンズ拡大光子変調を使い、遠くの船が発するかすかな信号をもっと容易に検出するものだ。これで宇宙にいるほかの船の確認と識別をする、あ"
+"なたの船の標準機能を効果的に増強することとなる。これが遮蔽機器による効果を妨害するのに役立つこともあり、そのうえ船の武器システムが使用する短距離追跡情報の"
+"精度も向上する。"
 
 #: dat/outfits/utility/targeting_array.xml:2
 msgid "Targeting Array"
-msgstr "捕捉アレイ"
+msgstr "標的選択アレイ"
 
 #: dat/outfits/utility/targeting_array.xml:4
 msgid "Weapon Modifier (Turret)"
@@ -18305,10 +18333,12 @@ msgid ""
 "targets, and minimizes accuracy losses at range. It requires a short period "
 "to compute an ideal vector, slightly slowing firing rates."
 msgstr ""
+"改良された標的選択アレイは、もっとすばやく目標を捕捉して、距離の精度低下を最小限度にできるようにする。理想的な方向を計算するのに短い時間が必要なため、わず"
+"かに発射率が低下する。"
 
 #: dat/outfits/utility/targeting_conduit.xml:2
 msgid "Targeting Conduit"
-msgstr "捕捉コンジット"
+msgstr "標的選択コンジット"
 
 #: dat/outfits/utility/targeting_conduit.xml:10
 msgid ""
@@ -18317,6 +18347,8 @@ msgid ""
 "the cost of reduced range due to the inherent instability caused by "
 "overloading the systems."
 msgstr ""
+"標的選択コンジットは、余ったシールドエネルギーを船の標的選択システムに振りむけて、目標を捕捉するのにかかる時間をずっと短くするものだ。ただし、その犠牲とし"
+"て有効距離が短くなる。これはシステムを過負荷にすることからとうぜん生じる不安定性によるものだ。"
 
 #: dat/outfits/utility/targeting_conduit.xml:11
 msgid "Only active when shield is above 70%."
@@ -18335,6 +18367,9 @@ msgid ""
 "effective, but it also uses a lot more power. For this reason, jammer "
 "systems are inactive until needed, and must be activated manually."
 msgstr ""
+"汎用スクランブラーシステムとはちがい、ジャマーは宇宙での真剣な電子戦に使用される重大な機材だ。ジャマーは、設置したの船の識別特性を変えるというより、近くの"
+"船のセンサーシステムを能動的に妨害することで機能する。これはずっと効果が高いが、もっとたくさんの電力を使用するということでもある。この理由から、ジャマーシ"
+"ステムは必要になるまで動作しないので、起動は自分の手でおこなわなければならない。"
 
 #: dat/outfits/utility/unicorp_light_afterburner.xml:2
 msgid "Unicorp Light Afterburner"
@@ -18348,6 +18383,8 @@ msgid ""
 "drain the ship's energy and also generate heat. If the afterburner gets too "
 "hot its effect will diminish, and eventually it will shut off entirely."
 msgstr ""
+"アフターバーナーは、作動させると船の推進力と速度を即座に増大させてくれる。とはいえ、アフターバーナーが作動しているあいだ、船のエネルギーはどんどん減ってい"
+"き、そのうえ熱も発生する。アフターバーナーが熱くなりすぎると、その効力は減少して、最終的には完全に停止する。"
 
 #: dat/outfits/utility/unicorp_medium_afterburner.xml:2
 msgid "Unicorp Medium Afterburner"
@@ -18366,6 +18403,9 @@ msgid ""
 "scramblers put a minimal strain on the ship's resources, and are always "
 "active."
 msgstr ""
+"スクランブラーは、船の電磁的識別特性をゆがめて、いろいろなセンサーから検出されにくくするものだ。ようするに、スクランブラーは船が検出・スキャン可能となる距"
+"離を短くして、ミサイルに捕捉されにくくする。効果はかなり限られたものだが、よい面を見れば、スクランブラーは船の資源に最小限の負担しかかけないし、つねに作動"
+"させておける。"
 
 #: dat/outfits/utility/weakness_harmonizer_ai.xml:2
 msgid "Weakness Harmonizer AI"
@@ -18379,12 +18419,14 @@ msgid ""
 "weaknesses in enemy ships. The more ships it is able to analyze and "
 "extrapolate from, the stronger the effect."
 msgstr ""
+"これは、近くの敵船の一般的な弱点を学べるようにする、センサーシステムの改良だ。この AI "
+"は、人間の目が見逃してしまう微妙な特徴を抽出し、きわめて詳細な外挿から敵船の弱点を指摘できる。解析して外挿できる船が増えるほど、効果は強くなる。"
 
 #: dat/outfits/utility/weakness_harmonizer_ai.xml:12
 msgid ""
 "10% additional damage for each fighting ship of same class or higher within "
 "2000 units."
-msgstr ""
+msgstr "2,000 ユニット以内にいる自分と同種かさらに大きな種別の船のそれぞれについて、戦闘中は 10% 追加の損害を与えられる。"
 
 #: dat/outfits/utility/weapons_ionizer.xml:2
 msgid "Weapons Ionizer"
@@ -18403,6 +18445,9 @@ msgid ""
 "automatically active when the target's armour is below 50%, but can also be "
 "triggered manually."
 msgstr ""
+"ウエポンズイオナイザーは、大量の武器エネルギーをイオン場生成器へ振りむけるしくみによって動作する。この艤装品が作動しているあいだ、エネルギー使用量は増えて"
+"、与えられる損害はいちじるしく低下するが、イオン場で通常兵器はイオン化ダメージを与えられるようになる。目標の装甲が 50% "
+"未満になると自動的に作動する設計となっているが、手動で起動することもできる。"
 
 #: dat/outfits/utility/weapons_ionizer.xml:12
 msgid "Automatically triggers when target armour is below 50%."
@@ -18416,7 +18461,7 @@ msgstr "ベースリッパー MK2"
 #: dat/outfits/weapons/cheaters_laser_cannon.xml:8
 #: dat/outfits/weapons/cheaters_ragnarok_beam.xml:8
 msgid "This weapon is a cheat. It is not meant to be used by players."
-msgstr ""
+msgstr "この武器はいかさまだ。プレイヤーに使用させるつもりはない。"
 
 #: dat/outfits/weapons/cheaters_laser_cannon.xml:2
 msgid "Cheater's Laser Cannon"
@@ -18438,6 +18483,8 @@ msgid ""
 "impact. Gauss Guns are popular among small time pirates for being an easy to "
 "use, reliable weapon."
 msgstr ""
+"ガウスガンは、こんにちの銀河ではとりわけ古い武器で、連邦時代にさかのぼるものだ。これは高速度の投射物からなる急流を発射して、運動力学的衝撃のみによって損害"
+"を与える。ガウスガンは三流の海賊のあいだで人気がある。使うのが簡単で、信頼できる武器だからだ。"
 
 #: dat/outfits/weapons/grave_beam.xml:2
 msgid "Grave Beam"
@@ -18449,6 +18496,8 @@ msgid ""
 "not deal as much damage, but its lighter size and more forgiving CPU "
 "requirements makes it a competitive contender."
 msgstr ""
+"グレイブビームは、ラグナロクビームを小さく速くしたようなものだ。同程度の損害は与えられないが、小型で CPU "
+"要求が厳しくないので、競合する対抗商品となっている。"
 
 #: dat/outfits/weapons/grave_lance.xml:2
 msgid "Grave Lance"
@@ -18460,6 +18509,8 @@ msgid ""
 "technology behind it is poorly understood by everyone except the Za'lek, who "
 "use it as a standard weapon."
 msgstr ""
+"グレイブランスは、ランス的な武器では屈指の強さをもっている。この背後にある技術は、ザレクを除けばだれもじゅうぶんには理解していない。ザレクはこれを標準的な"
+"兵器として使っている。"
 
 #: dat/outfits/weapons/heavy_ion_cannon.xml:2
 msgid "Heavy Ion Cannon"
@@ -18472,6 +18523,8 @@ msgid ""
 "weapons on specialized capture teams, but the design is licensed for public "
 "use as well."
 msgstr ""
+"重イオンキャノンは、標準型より船を無力化する仕事をはるかにうまくこなすが、中型の砲架を必要とする。ほとんどの軍隊では、専門の拿捕部隊がこの武器を使っている"
+"。しかしこれは、公共用途での使用も認められるものとして設計されている。"
 
 #: dat/outfits/weapons/heavy_ion_turret.xml:2
 msgid "Heavy Ion Turret"
@@ -18483,6 +18536,8 @@ msgid ""
 "its target's internal systems. When coupled with Razor weaponry, it is "
 "terribly efficient at reducing enemy warships to tumbling hunks of junk."
 msgstr ""
+"重イオン砲塔はシリウス軍の設計で、暴力を目標の内部システムに注入するものだ。かみそり武器類と組みあわせると、恐ろしく効果的に敵戦闘艦をばらばらのごみの山に"
+"してしまう。"
 
 #: dat/outfits/weapons/heavy_laser_turret.xml:2
 msgid "Heavy Laser Turret"
@@ -18494,6 +18549,8 @@ msgid ""
 "Turret, though some fundamental mechanisms had to be redesigned to adapt to "
 "the increased energy throughput found in this weapon."
 msgstr ""
+"重レーザー砲塔は、だいたいレーザー砲塔の規模を大きくしたものだといえる。もっとも、この武器が使う増加したエネルギー量に適応させるため、基本機構には再設計が"
+"必要だった。"
 
 #: dat/outfits/weapons/heavy_razor_turret.xml:2
 msgid "Heavy Razor Turret"
@@ -18505,6 +18562,8 @@ msgid ""
 "Where the standard razor turrets are ineffective, the heavy razor turret "
 "provides the necessary firepower to batter down virtually any shielding."
 msgstr ""
+"シリウス荘は、最大級の船には重かみそり砲塔を装備するのが一般的だ。標準型のかみそり砲塔ではあまり効果がないときに、重かみそり砲塔は必要な火力を提供して、事"
+"実上すべてのシールドをたたきつぶす。"
 
 #: dat/outfits/weapons/heavy_ripper_cannon.xml:2
 msgid "Heavy Ripper Cannon"
@@ -18518,6 +18577,8 @@ msgid ""
 "Cannon. The main drawback to this model is its increased bulk, which makes "
 "it unsuitable for smaller ships."
 msgstr ""
+"基本的なリッパーキャノンの周波数を調整することで、帝国軍はその射程距離・精度・破壊力を向上させた。そして電力管を再加工すると、その努力はついに圧倒的な重リ"
+"ッパーキャノンとして結実した。この機種のおもな欠点は、容積が増えたことである。それで小さめな船には不向きになってしまった。"
 
 #: dat/outfits/weapons/heavy_ripper_turret.xml:2
 msgid "Heavy Ripper Turret"
@@ -18529,6 +18590,8 @@ msgid ""
 "conventionally available to civilians. It's bulk, high energy requirements, "
 "and high damage make it unsuitable for non-capital ships."
 msgstr ""
+"重リッパーキャノンに取りつけなおしたリッパー砲塔は、慣習的に民間人が利用できるなかではもっとも重い砲塔だ。容積が大きく、必要エネルギーは多く、与える損害も"
+"大きいので、主力艦以外では不向きなものになっている。"
 
 #: dat/outfits/weapons/ion_cannon.xml:2
 msgid "Ion Cannon"
@@ -18542,6 +18605,8 @@ msgid ""
 "allows it to be mounted on small craft. This makes the Ion Cannon one of the "
 "most popular weapons for weaker pirates."
 msgstr ""
+"イオンキャノンは基本的な非致死性武器であり、船の内部システムをショートさせて船を無力化しつつ、その過程で乗員を殺さないように設計されている。標準型のイオン"
+"キャノンは、もっとも基本的かつ簡素な設計なので、小さな船にも設置できる。そのためイオンキャノンは、弱い海賊のあいだでとくに人気のある武器となっている。"
 
 #: dat/outfits/weapons/laser_cannon_mk1.xml:2
 msgid "Laser Cannon MK1"
@@ -18553,6 +18618,8 @@ msgid ""
 "energy beams that do a decent amount of damage to both shield and armour, "
 "while remaining efficient enough to mount several even on small ships."
 msgstr ""
+"レーザーキャノンは多くの船で標準的な武器となっている。これは濃縮したエネルギービームを発射するもので、そうとうな損害をシールドと装甲の両方に与える。いっぽ"
+"う、小さな船にもいくつか設置できるほど効率がよい。"
 
 #: dat/outfits/weapons/laser_cannon_mk2.xml:2
 msgid "Laser Cannon MK2"
@@ -18565,6 +18632,8 @@ msgid ""
 "keep order among the civilian populace, and it is capable of dealing with "
 "larger Corvette vessels with some effort."
 msgstr ""
+"レーザーキャノンの高出力型である MK2 は、帝国法執行機関と軍隊の船で一般的に見られるものだ。そのすぐれた火力は、一般大衆のなかでの治安を維持するのに役"
+"立っている。そしてこれは、いくらか努力すれば大型コルベットに対処する能力がある。"
 
 #: dat/outfits/weapons/laser_turret_mk1.xml:2
 msgid "Laser Turret MK1"
@@ -18576,6 +18645,8 @@ msgid ""
 "point-defense capabilities. With a full 360 degrees of rotation, laser "
 "turrets provide affordable, energy-efficient firepower to courier vessels."
 msgstr ""
+"一対のレーザーキャノンを回転砲塔に搭載したもので、優秀な拠点防衛能力を与えてくれる。完全に 360 "
+"度回転するレーザー砲塔は、配達船に手ごろでエネルギー効率のよい火力を提供する。"
 
 #: dat/outfits/weapons/laser_turret_mk2.xml:2
 msgid "Laser Turret MK2"
@@ -18587,6 +18658,7 @@ msgid ""
 "use against fleets of small to medium ships. This weapon is one of the "
 "mainstays in the Imperial space forces."
 msgstr ""
+"レーザー砲塔 MK2 は、帝国即応艦隊でよく見られるもので、小型から中型船からなる船団にたいして使われている。この武器は、帝国宇宙軍の頼みの綱のひとつだ。"
 
 #: dat/outfits/weapons/mass_driver.xml:2
 msgid "Mass Driver"
@@ -18598,6 +18670,7 @@ msgid ""
 "through kinetic impact and knocking the target back. One of the most "
 "economical heavy weapons in the galaxy."
 msgstr ""
+"マスドライバーは重い物体からなる弾を敵船に発射するものだ。運動力学的衝撃によって損害を与え、目標を弾きかえす。重火器としては銀河でもとくに経済的なものだ。"
 
 #: dat/outfits/weapons/neutron_disruptor.xml:2
 msgid "Neutron Disruptor"
@@ -18610,6 +18683,8 @@ msgid ""
 "popular with the Collective, whose drones were immune to early versions' "
 "lethal backscatter radiation."
 msgstr ""
+"中性子ディスラプターは、高エネルギー波動を利用して分子の基本組成を変えることで、大きな損害をひきおこす。この武器は最初に集合体で広まった。集合体のドローン"
+"は、初期の型がもつ致死の後方散乱放射の影響をうけない。"
 
 #: dat/outfits/weapons/neutron_disruptor_heavy.xml:2
 msgid "Heavy Neutron Disruptor"
@@ -18619,7 +18694,7 @@ msgstr "重中性子ディスラプター"
 msgid ""
 "The Heavy Neutron Disruptor improves upon the processes behind the smaller "
 "Neutron Disruptor, giving this weapon greater damage and range."
-msgstr ""
+msgstr "重中性子ディスラプターは、小型の中性子ディスラプターの裏方にある方式を改良したものだ。これでこの武器が与える損害と射程距離は大きくなった。"
 
 #: dat/outfits/weapons/orion_beam.xml:2
 msgid "Orion Beam"
@@ -18630,7 +18705,7 @@ msgid ""
 "The turret-mounted edition of the Orion design offers mid-sized ships "
 "exceptional short-duration firepower, a potent deterrent against lighter "
 "vessels."
-msgstr ""
+msgstr "オリオンの砲塔搭載型設計は、中型船に並はずれた短時間の火力を与え、小型船をおじけづかせる能力をもつ。"
 
 #: dat/outfits/weapons/orion_lance.xml:2
 msgid "Orion Lance"
@@ -18642,6 +18717,8 @@ msgid ""
 "and up. Based on a heavily-modified, liquid-cooled laser, it's capable of "
 "bursts of continuous fire, resulting in a destructive beam."
 msgstr ""
+"このオリオンランスは固定的に設置する武器であり、戦闘機かそれ以上にものに搭載するために設計された。大きく改造された液冷レーザーをもとにしていて、連続的な流"
+"れとして発射することができる。その結果が破壊的なビームだ。"
 
 #: dat/outfits/weapons/particle_beam.xml:2
 msgid "Particle Beam"
@@ -18651,7 +18728,7 @@ msgstr "粒子ビーム"
 msgid ""
 "A turret-mounted particle beam. The smallest possible turreted beam weapon, "
 "used as a last-ditch weapon against light enemies."
-msgstr ""
+msgstr "砲塔搭載型の粒子ビームだ。考えられるかぎりで最小のビーム兵器であり、軽快な敵にたいする土壇場の武器として使用される。"
 
 #: dat/outfits/weapons/particle_lance.xml:2
 msgid "Particle Lance"
@@ -18661,7 +18738,7 @@ msgstr "粒子ランス"
 msgid ""
 "This is the smallest direct beam weapon built, purpose-built by the Za'lek "
 "for their drones."
-msgstr ""
+msgstr "これは直射ビーム兵器として作られたものとしてはもっとも小さく、ザレクが自分たちのドローン用にとくべつに作ったものだ。"
 
 #: dat/outfits/weapons/plasma_blaster_mk1.xml:2
 msgid "Plasma Blaster MK1"
@@ -18673,6 +18750,8 @@ msgid ""
 "damaging armour, but less effective against shields. This weapon is often "
 "used by bounty hunters and mercenaries for its high killing potential."
 msgstr ""
+"プラズマブラスターは、装甲に損害を与えるのにとても効率的な過熱プラズマを発射するものだ。ただし、シールドにたいしてはあまり効率がよくない。この武器は破壊で"
+"きる可能性が大きいため、賞金稼ぎや傭兵によく使われている。"
 
 #: dat/outfits/weapons/plasma_blaster_mk2.xml:2
 msgid "Plasma Blaster MK2"
@@ -18685,6 +18764,8 @@ msgid ""
 "Its power is substantial enough that it even gets used by some militaries, "
 "typically in combination with anti-shield weaponry."
 msgstr ""
+"プラズマブラスター MK2 は、プラズマブラスターを強力にした型で、最大級のものを除けばすべての海賊船を宇宙の外へ吹き飛ばせる力がある。その力はいくつかの"
+"軍隊で使用されることもあるほどしっかりしたものだ。一般的には、対シールド兵器と組みあわせて使われる。"
 
 #: dat/outfits/weapons/plasma_cannon.xml:2
 msgid "Plasma Cannon"
@@ -18697,6 +18778,9 @@ msgid ""
 "engineering complexities of fitting such a powerful weapon into a small slot "
 "lead to much higher dependence on guidance from the ship's central computer."
 msgstr ""
+"プラズマキャノンはプラズマブラスターを大型化したもので、コルベットで使うために設計された。これにはきわだって強い打撃力を詰めこむことができたのだが、このよ"
+"うに強力な兵器を小さなスロットに収められるようにするのは工学的には複雑なことであり、船の中央コンピューターの誘導にずっと大きく依存することとなってしまった"
+"。"
 
 #: dat/outfits/weapons/plasma_cluster_cannon.xml:2
 msgid "Plasma Cluster Cannon"
@@ -28659,9 +28743,8 @@ msgid ""
 "\"more criminal gang than independence movement\", according to his "
 "publicist."
 msgstr ""
-"警察の専門家であるペート・ドウマーが近々出版する小論で、｢独立運動というより犯"
-"罪集団｣ であるというグループについて詳しく説明されると氏の広報担当者が述べ"
-"る。"
+"法執行機関の専門家であるペート・ドウマーが近々出版する小論で、｢独立運動というより犯罪集団｣ "
+"であるというグループについて詳しく説明されると氏の広報担当者が述べる。"
 
 #: dat/events/neutral/news.lua:199
 msgid "Front Responsible for Shipping Woes"
@@ -30528,10 +30611,8 @@ msgid ""
 "actually make it harder for them to lock on to your ship by equipping "
 "scramblers or jammers. Scout class ships are also harder to target.\""
 msgstr ""
-"｢この最新式のミサイルシステムってやつは！　最初に目標を捕捉しないと発射するこ"
-"ともできないよ！　でも同じことが敵にも当てはまる。じっさい、スクランブラーや"
-"ジャマーを装備すれば、敵が自分の船を捕捉するのを難しくすることができる。偵察"
-"船に分類される船も、捕捉するのが難しいね｣"
+"｢この最新式のミサイルシステムってやつは！　最初に目標を捕捉しないと発射することもできないよ！　でも同じことが敵にも当てはまる。じっさい、スクランブラーや"
+"ジャマーを装備すれば、敵が自分の船を捕捉するのを難しくすることができる。偵察船に分類される船も、目標とするのが難しいね｣"
 
 #: dat/events/neutral/npc.lua:228
 msgid ""
@@ -55179,28 +55260,28 @@ msgstr "任務完了"
 msgid ""
 "After going through some paperwork, an officer hands you your pay and sends "
 "you off."
-msgstr ""
+msgstr "いくつか書類仕事をやってから、役人があなたに報酬を手渡した。そしてあなたは送りだされた。"
 
 #: dat/missions/neutral/patrol.lua:40
 msgid ""
 "A tired-looking officer verifies your mission log and hands you your pay."
-msgstr ""
+msgstr "疲れた顔つきの役人が、任務の記録を確認してからあなたに報酬を手渡した。"
 
 #: dat/missions/neutral/patrol.lua:41
 msgid ""
 "The officer you deal with thanks you for your work, hands you your pay, and "
 "sends you off."
-msgstr ""
+msgstr "対応した役人があなたの仕事について礼を言い、あなたに報酬を手渡した。そしてあなたは送りだされた。"
 
 #: dat/missions/neutral/patrol.lua:42
 msgid ""
 "An officer goes through the necessary paperwork, looking bored the entire "
 "time, and hands you your fee."
-msgstr ""
+msgstr "最初から最後までうんざりした表情で、役人が必要な書類仕事をやりぬいた。それからあなたに報酬を手渡した。"
 
 #: dat/missions/neutral/patrol.lua:44 dat/missions/pirate/patrol.lua:36
 msgid "Mission Abandoned"
-msgstr ""
+msgstr "任務を放棄"
 
 #: dat/missions/neutral/patrol.lua:46
 msgid ""
@@ -55208,36 +55289,38 @@ msgid ""
 "mission is considered to be abandonment. As such, your contract is void and "
 "you will not receive payment."
 msgstr ""
+"あなたにメッセージが送られてきた。巡視任務の途中で着陸するのは放棄だとみなされるという通知だ。そういうわけで、あなたたちの関係は無効になった。だから報酬を"
+"受けとることはないだろう。"
 
 #. Mission details
 #: dat/missions/neutral/patrol.lua:50
 #, lua-format
 msgid "Patrol of the %s System"
-msgstr ""
+msgstr "%s星系の巡視"
 
 #: dat/missions/neutral/patrol.lua:51
 #, lua-format
 msgid ""
 "Patrol specified points in the %s system, eliminating any hostiles you "
 "encounter."
-msgstr ""
+msgstr "%s星系の指定された場所を巡視して、遭遇した敵をすべて除去せよ。"
 
 #. Messages
 #: dat/missions/neutral/patrol.lua:55 dat/missions/pirate/patrol.lua:47
 msgid "Point secure."
-msgstr ""
+msgstr "安全を確保した。"
 
 #: dat/missions/neutral/patrol.lua:56
 msgid "Hostiles detected. Engage hostiles."
-msgstr ""
+msgstr "敵を発見。攻撃せよ。"
 
 #: dat/missions/neutral/patrol.lua:58 dat/missions/pirate/patrol.lua:50
 msgid "Patrol complete. You can now collect your pay."
-msgstr ""
+msgstr "巡視を完了。もう報酬を受けとれる。"
 
 #: dat/missions/neutral/patrol.lua:59 dat/missions/pirate/patrol.lua:51
 msgid "MISSION FAILURE! You showed up too late."
-msgstr ""
+msgstr "任務に失敗！　来るのが遅すぎた。"
 
 #: dat/missions/neutral/patrol.lua:60
 #: dat/missions/neutral/pirbounty_dead.lua:88
@@ -55245,24 +55328,24 @@ msgstr ""
 #: dat/missions/proteron/dissbounty_dead.lua:72
 #, lua-format
 msgid "MISSION FAILURE! You have left the %s system."
-msgstr ""
+msgstr "任務に失敗！　%s星系を離れた。"
 
 #: dat/missions/neutral/patrol.lua:62 dat/missions/pirate/patrol.lua:54
 msgid "Patrol"
-msgstr ""
+msgstr "巡視"
 
 #: dat/missions/neutral/patrol.lua:66
 msgid "Eliminate hostiles"
-msgstr ""
+msgstr "敵を除去せよ。"
 
 #: dat/missions/neutral/patrol.lua:67 dat/missions/pirate/patrol.lua:59
 #, lua-format
 msgid "Land in %s territory to collect your pay"
-msgstr ""
+msgstr "%sの領土に着陸すると、報酬を受けとれる。"
 
 #: dat/missions/neutral/patrol.lua:70 dat/missions/pirate/patrol.lua:62
 msgid "Patrol Point"
-msgstr ""
+msgstr "巡視場所"
 
 #. Get the number of enemies in a particular system
 #. Set mission details
@@ -55270,8 +55353,7 @@ msgstr ""
 #, lua-format
 msgid "Go to indicated point (%d remaining)"
 msgid_plural "Go to indicated point (%d remaining)"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "指示された場所へ行け。(残り %d 回)"
 
 #. Fail the mission, showing message to the player.
 #. Pre-colourized, do nothing.
@@ -55308,7 +55390,7 @@ msgstr[1] ""
 #. Localization
 #: dat/missions/neutral/pirbounty_alive.lua:34
 msgid "Better Dead than Free"
-msgstr ""
+msgstr "自由なままより死んでたほうがまし"
 
 #: dat/missions/neutral/pirbounty_alive.lua:36
 #, lua-format
@@ -55318,6 +55400,8 @@ msgid ""
 "would rather this pirate be dead than roaming free, so you will be paid %s "
 "if you finish them off right now.\""
 msgstr ""
+"船に戻ると、役人から連絡があった。｢%sを捕まえられなかったのはわかっています｣ "
+"と、役人がいう。｢失望しています。とはいえ、自由にぶらつかれるよりは死んでいてくれたほうがいいでしょう。だから今おしまいにしてくれれば、%s 支払います｣"
 
 #: dat/missions/neutral/pirbounty_alive.lua:37
 #, lua-format
@@ -55327,6 +55411,9 @@ msgid ""
 "capture this pirate alive. However, we would rather he be dead than roaming "
 "free, so if you kill the pirate now, you will be paid the lesser sum of %s.\""
 msgstr ""
+"自分の船に戻る途中で、役人からメッセージを受けとった。それにはこう書いてあった。｢あなたが%sを逮捕できなかったのには失望しています。われわれは、ほんとう"
+"にこの海賊を生きたまま逮捕したかったのです。とはいえ、自由にぶらつかれるよりは死んでいてくれたほうがいいでしょう。だから今殺してくれるなら、"
+"減額した金額である %s を支払います｣"
 
 #: dat/missions/neutral/pirbounty_alive.lua:38
 #, lua-format
@@ -55338,6 +55425,9 @@ msgid ""
 "finish that scum off, you'll get %s. Just be snappy about it!\" Having "
 "finished delivering the message, the officer then ceases communication."
 msgstr ""
+"あなたが操縦席に戻ってくると、役人から連絡があった。｢へたくそ！　自分が担当だったら、賞金はなかったね！　下層民の海賊二人を撃退できなかったって ?!｣。"
+"役人がため息をつく。｢しかしあなたは運がよかった。わたしは担当ではないし、上司は%sを野放しにするより死んでもらいたがっています。だからそのくずを始末して"
+"くれるなら、あなたは %s 受けとれます。とにかくぱっぱとやってくれ！｣。いいたいことを伝えおわると、役人は交信を終了した。"
 
 #: dat/missions/neutral/pirbounty_alive.lua:39
 #, lua-format
@@ -55346,12 +55436,14 @@ msgid ""
 "kill %s; the reward is %s. Well, that's pitiful compared to what you were "
 "planning on collecting, but it's better than nothing."
 msgstr ""
+"あなたが船に戻ると、%sを殺すという新しい任務を与えるというメッセージがあった。報酬は %s "
+"だ。えー、もらう予定だったものと比べるとみじめなものだよ。でもなにもないよりはいい。"
 
 #: dat/missions/neutral/pirbounty_alive.lua:42
 #: dat/missions/neutral/pirbounty_dead.lua:61
 #, lua-format
 msgid "An officer takes %s into custody and hands you your pay."
-msgstr ""
+msgstr "役人が%sを勾留して、あなたに報酬を手渡した。"
 
 #: dat/missions/neutral/pirbounty_alive.lua:43
 #, lua-format
@@ -55360,13 +55452,15 @@ msgid ""
 "foolish. They carefully take the pirate off your hands, taking precautions "
 "you think are completely unnecessary, and then hand you your pay."
 msgstr ""
+"役人は、あなたが%sの生け捕り賞金稼ぎを引き受けたのは愚かだったと考えているようだ。役人は注意深くあなたの手から海賊を引き取った。あなたからすれば完全に不"
+"必要だと思える用心をしながらだ。それが終わると、役人はあなたに報酬を手渡した。"
 
 #: dat/missions/neutral/pirbounty_alive.lua:44
 #, lua-format
 msgid ""
 "The officer you deal with seems to especially dislike %s. They take the "
 "pirate off your hands and hand you your pay without speaking a word."
-msgstr ""
+msgstr "対応した役人は、%sがとくべつ嫌いなようだった。あなたの手から海賊を引き取ると、ひとことも話さずあなたに報酬を手渡した。"
 
 #: dat/missions/neutral/pirbounty_alive.lua:45
 #: dat/missions/neutral/pirbounty_dead.lua:64
@@ -55374,14 +55468,14 @@ msgstr ""
 msgid ""
 "A fearful-looking officer rushes %s into a secure hold, pays you the "
 "appropriate bounty, and then hurries off."
-msgstr ""
+msgstr "恐ろしい表情をした役人が%sをしっかりと確保した。あなたにふさわしい賞金を支払ってから、役人は急いで去っていった。"
 
 #: dat/missions/neutral/pirbounty_alive.lua:46
 #, lua-format
 msgid ""
 "The officer you deal with thanks you profusely for capturing %s alive, pays "
 "you, and sends you off."
-msgstr ""
+msgstr "対応した役人は、%sを生きたまま捕らえたことにやたらと礼を言い、あなたに報酬を支払った。それからあなたは送りだされた。"
 
 #: dat/missions/neutral/pirbounty_alive.lua:47
 #, lua-format
@@ -55390,6 +55484,8 @@ msgid ""
 "previously sported a defeated look suddenly brightens up. The pirate is "
 "swiftly taken into custody as you are handed your pay."
 msgstr ""
+"あなたがどうにか%sを生きたまま捕らえたことを知ると、それまで挫折感をただよわせた表情をしていた役人がとつぜん顔を輝かした。海賊はじんそくに勾留されて、あ"
+"なたは報酬を手渡された。"
 
 #: dat/missions/neutral/pirbounty_alive.lua:48
 #, lua-format
@@ -55398,19 +55494,21 @@ msgid ""
 "into custody, go through some paperwork, and hand you your pay, mumbling "
 "something about how useless capturing pirates alive is."
 msgstr ""
+"あなたが役人に%sの賞金を求めると、役人はため息をつき、海賊を勾留し、いくつかの書類仕事をやってから、あなたに報酬を手渡した。海賊を生きたまま捕らえること"
+"がどれだけ無意味かといったことをぶつぶついいながらだ。"
 
 #: dat/missions/neutral/pirbounty_alive.lua:51
 #: dat/missions/neutral/pirbounty_dead.lua:53
 #, lua-format
 msgid "After verifying that you killed %s, an officer hands you your pay."
-msgstr ""
+msgstr "あなたが%sを殺したことを確かめてから、役人はあなたに報酬を手渡した。"
 
 #: dat/missions/neutral/pirbounty_alive.lua:52
 #, lua-format
 msgid ""
 "After verifying that %s is indeed dead, the officer sighs and hands you your "
 "pay."
-msgstr ""
+msgstr "%sがほんとうに死んだことを確かめてから、役人はため息をついてあなたに報酬を手渡した。"
 
 #: dat/missions/neutral/pirbounty_alive.lua:53
 #, lua-format
@@ -55419,6 +55517,7 @@ msgid ""
 "incompetent bounty hunters the entire time as they takes care of the "
 "paperwork and hand you your bounty."
 msgstr ""
+"この役人は、あきらかに%sが死んだことに困っていた。無能な賞金稼ぎについてずっとぶつぶついいながら、書類仕事を処理してからあなたに賞金を支払った。"
 
 #: dat/missions/neutral/pirbounty_alive.lua:54
 #, lua-format
@@ -55426,6 +55525,8 @@ msgid ""
 "The officer seems disappointed, yet unsurprised that you failed to capture "
 "%s alive. You are handed your lesser bounty without a word."
 msgstr ""
+"役人は失望しているように見えた。それでもあなたが%sを生きたまま捕らえそこなったことには驚きを見せなかった。ひとことの会話もなくあなたは減額した賞金を手渡"
+"された。"
 
 #: dat/missions/neutral/pirbounty_alive.lua:55
 #, lua-format
@@ -55434,62 +55535,64 @@ msgid ""
 "office, go through some paperwork, and hand you your pay, mumbling something "
 "about how useless bounty hunters are."
 msgstr ""
+"あなたが役人に%sの賞金を求めると、役人はため息をつき、あなたを事務所に案内して、いくつかの書類仕事をやってから、あなたに報酬を手渡した。賞金稼ぎがどれだ"
+"け役立たずかといったことをぶつぶついいながらだ。"
 
 #: dat/missions/neutral/pirbounty_alive.lua:56
 #, lua-format
 msgid ""
 "The officer verifies the death of %s, goes through the necessary paperwork, "
 "and hands you your pay, looking annoyed the entire time."
-msgstr ""
+msgstr "役人は%sが死んだことを確かめて、必要な書類仕事をやると、あなたに報酬を手渡した。そのあいだ役人はずっといらいらした表情だった。"
 
 #: dat/missions/neutral/pirbounty_alive.lua:58
 #, lua-format
 msgid "MISSION FAILURE! %s has been killed."
-msgstr ""
+msgstr "任務に失敗！　%sを殺してしまった。"
 
 #: dat/missions/neutral/pirbounty_alive.lua:61
 #, lua-format
 msgid "Tiny Alive Bounty in %s"
-msgstr ""
+msgstr "%sでの極小規模の生け捕り賞金"
 
 #: dat/missions/neutral/pirbounty_alive.lua:62
 #, lua-format
 msgid "Small Alive Bounty in %s"
-msgstr ""
+msgstr "%sでの小規模の生け捕り賞金"
 
 #: dat/missions/neutral/pirbounty_alive.lua:63
 #, lua-format
 msgid "Moderate Alive Bounty in %s"
-msgstr ""
+msgstr "%sでの中程度な生け捕り賞金"
 
 #: dat/missions/neutral/pirbounty_alive.lua:64
 #, lua-format
 msgid "High Alive Bounty in %s"
-msgstr ""
+msgstr "%sでの高度な生け捕り賞金"
 
 #: dat/missions/neutral/pirbounty_alive.lua:65
 #, lua-format
 msgid "Dangerous Alive Bounty in %s"
-msgstr ""
+msgstr "%sでの危険な生け捕り賞金"
 
 #: dat/missions/neutral/pirbounty_alive.lua:66
 #, lua-format
 msgid ""
 "The pirate known as %s was recently seen in the %s system. %s authorities "
 "want this pirate alive."
-msgstr ""
+msgstr "%sという名で知られる海賊が最近%s星系で見られた。%s当局がこの海賊を生け捕りにしたがっている。"
 
 #: dat/missions/neutral/pirbounty_alive.lua:68
 #, lua-format
 msgid "Capture %s"
-msgstr ""
+msgstr "%sを捕まえろ。"
 
 #: dat/missions/neutral/pirbounty_alive.lua:69
 #: dat/missions/neutral/seek_n_destroy.lua:149
 #: dat/missions/pirate/empbounty_dead.lua:63
 #, lua-format
 msgid "Kill %s"
-msgstr ""
+msgstr "%sを殺せ。"
 
 #. Set up the ship, credits, and reputation based on the level.
 #.
@@ -55545,83 +55648,83 @@ msgstr ""
 #: dat/missions/neutral/pirbounty_dead.lua:35
 #: dat/missions/proteron/dissbounty_dead.lua:24
 msgid "Captured Alive"
-msgstr ""
+msgstr "生け捕り"
 
 #: dat/missions/neutral/pirbounty_dead.lua:37
 #, lua-format
 msgid ""
 "You and your crew infiltrate the ship's pathetic security and subdue %s. You "
 "transport the pirate to your ship."
-msgstr ""
+msgstr "あなたと乗員たちは、哀れな警備態勢をしいた船に侵入し、%sを鎮圧した。あなたは海賊を自分の船に移送した。"
 
 #: dat/missions/neutral/pirbounty_dead.lua:38
 #, lua-format
 msgid ""
 "Your crew has a difficult time getting past the ship's security, but "
 "eventually succeeds and subdues %s."
-msgstr ""
+msgstr "あなたの乗員たちは、この船の保安処置を突破するのに苦戦した。しかしけっきょく成功し、%sを鎮圧した。"
 
 #: dat/missions/neutral/pirbounty_dead.lua:39
 #, lua-format
 msgid ""
 "The pirate's security system turns out to be no match for your crew. You "
 "infiltrate the ship and capture %s."
-msgstr ""
+msgstr "海賊の保安システムはあなたの乗員たちの相手としては不足だったことがわかった。あなたたちは船に侵入し、%sを捕まえた。"
 
 #: dat/missions/neutral/pirbounty_dead.lua:40
 #, lua-format
 msgid "Your crew infiltrates the pirate's ship and captures %s."
-msgstr ""
+msgstr "あなたの乗員たちが海賊船に侵入し、%sを捕まえた。"
 
 #: dat/missions/neutral/pirbounty_dead.lua:41
 #, lua-format
 msgid ""
 "Getting past this ship's security was surprisingly easy. Didn't they know "
 "that %s was wanted?"
-msgstr ""
+msgstr "この船の保安態勢を突破するのは驚くほど簡単だった。%sが手配されていることを知らなかったのだろうか？"
 
 #: dat/missions/neutral/pirbounty_dead.lua:43
 #: dat/missions/proteron/dissbounty_dead.lua:32
 msgid "Capture Failed"
-msgstr ""
+msgstr "逮捕失敗"
 
 #: dat/missions/neutral/pirbounty_dead.lua:45
 msgid ""
 "Try as you might, you cannot get past the pirate's security system. "
 "Defeated, you and your crew return to the ship."
-msgstr ""
+msgstr "一生懸命がんばったが、あなたは海賊船の保安システムを突破することができなかった。挫折して、あなたと乗員たちは船に戻った。"
 
 #: dat/missions/neutral/pirbounty_dead.lua:46
 #: dat/missions/proteron/dissbounty_dead.lua:35
 msgid "The ship's security system locks you out."
-msgstr ""
+msgstr "船の保安システムがあなたをしめだした。"
 
 #: dat/missions/neutral/pirbounty_dead.lua:47
 msgid ""
 "Your crew comes close to getting past the pirate's security system, but "
 "ultimately fails."
-msgstr ""
+msgstr "あなたの乗員たちは、海賊の保安システムを突破しかけたが、最終的には失敗した。"
 
 #: dat/missions/neutral/pirbounty_dead.lua:48
 #: dat/missions/proteron/dissbounty_dead.lua:37
 msgid ""
 "It seems your crew is no match for this ship's security system. You return "
 "to your ship."
-msgstr ""
+msgstr "あなたの乗員たちは、この船の保安システムに歯が立たないようだ。あなたたちは自分の船に戻った。"
 
 #: dat/missions/neutral/pirbounty_dead.lua:54
 #, lua-format
 msgid ""
 "After verifying that %s is indeed dead, the tired-looking officer smiles and "
 "hands you your pay."
-msgstr ""
+msgstr "%sがほんとうに死んだことを確かめてから、疲れた顔をした役人がほほえんだ。そしてあなたに報酬を手渡した。"
 
 #: dat/missions/neutral/pirbounty_dead.lua:55
 #, lua-format
 msgid ""
 "The officer seems pleased that %s is finally dead. They thank you and "
 "promptly hand you your pay."
-msgstr ""
+msgstr "役人は%sがついに死んだことを喜んでいるようだ。あなたに礼をいうと、すぐに報酬を手渡した。"
 
 #: dat/missions/neutral/pirbounty_dead.lua:56
 #, lua-format
@@ -55629,6 +55732,8 @@ msgid ""
 "The paranoid-looking officer takes you into a locked room, where the death "
 "of %s is quietly verified. The officer then pays you and sends you off."
 msgstr ""
+"ひどく疑い深そうな顔つきの役人が、あなたを鍵のかかった部屋に連れていった。そこで%sが死んだことは静かに確認された。それから役人があなたに報酬を支払って、"
+"あなたは送りだされた。"
 
 #: dat/missions/neutral/pirbounty_dead.lua:57
 #, lua-format
@@ -55637,13 +55742,15 @@ msgid ""
 "office, go through some paperwork, and hand you your pay, mumbling something "
 "about how useless the bounty system is."
 msgstr ""
+"あなたが役人に%sの賞金を求めると、役人はため息をつき、あなたを事務所に案内して、いくつかの書類仕事をやってから、あなたに報酬を手渡した。賞金制度がどれだ"
+"け無益かといったことをぶつぶついいながらだ。"
 
 #: dat/missions/neutral/pirbounty_dead.lua:58
 #, lua-format
 msgid ""
 "The officer verifies the death of %s, goes through the necessary paperwork, "
 "and hands you your pay, looking bored the entire time."
-msgstr ""
+msgstr "役人は%sが死んだことを確かめて、必要な書類仕事をやると、あなたに報酬を手渡した。そのあいだ役人はずっとうんざりした表情だった。"
 
 #: dat/missions/neutral/pirbounty_dead.lua:62
 #, lua-format
@@ -55652,13 +55759,15 @@ msgid ""
 "They carefully take the pirate off your hands, taking precautions you think "
 "are completely unnecessary, and then hand you your pay"
 msgstr ""
+"役人は、あなたが%sを生け捕りにしようと決めたのは愚かだったと考えているようだ。役人は注意深くあなたの手から海賊を引き取った。あなたからすれば完全に不必要"
+"だと思える用心をしながらだ。それが終わると、役人はあなたに報酬を手渡した。"
 
 #: dat/missions/neutral/pirbounty_dead.lua:63
 #, lua-format
 msgid ""
 "The officer you deal with seems to especially dislike %s. The pirate is "
 "taken off your hands and you are handed your pay without a word."
-msgstr ""
+msgstr "対応した役人は、%sがとくべつ嫌いなようだった。あなたの手から海賊を引き取ると、ひとこともなくあなたに報酬を手渡した。"
 
 #: dat/missions/neutral/pirbounty_dead.lua:65
 #, lua-format
@@ -55667,11 +55776,12 @@ msgid ""
 "captured %s alive. Nonetheless, they politely take the pirate off of your "
 "hands and hand you your pay."
 msgstr ""
+"あなたを出迎えた役人は、%sを生け捕りにしたと言うと当惑した表情を見せた。それでも礼儀正しくあなたの手から海賊を引き取ると、あなたに報酬を手渡した。"
 
 #: dat/missions/neutral/pirbounty_dead.lua:67
 #: dat/missions/proteron/dissbounty_dead.lua:55
 msgid "A Smaller Reward"
-msgstr ""
+msgstr "賞金の減額"
 
 #: dat/missions/neutral/pirbounty_dead.lua:69
 #, lua-format
@@ -55681,6 +55791,8 @@ msgid ""
 "succeeded without your help, so I've transferred a portion of the bounty "
 "into your account.\""
 msgstr ""
+"｢ごきげんよう。あなたが%sの賞金を取ろうとしていたのはわかっています。えー、知ってのとおり、わたしがその賞金を稼ぎました。でもあなたの助力がなければ成功"
+"したとは思っていません。だから賞金の一部をあなたの口座に振りこみますよ｣"
 
 #: dat/missions/neutral/pirbounty_dead.lua:70
 #, lua-format
@@ -55691,6 +55803,9 @@ msgid ""
 "apology, I would like to offer you the portion of the bounty you clearly "
 "earned. The money will be in your account shortly.\""
 msgstr ""
+"｢あなたの賞金稼ぎをじゃまして申しわけない。じつのところ、かねのことはあまり気にしていなくて、銀河からくずを追い払っておきたいと思っただけなんです。ほら、"
+"わたしは%sの悪行を直接知っていたんですよ。だからおわびとして、あなたが疑いもなく稼いでいたはずの賞金の一部を提供させてください。まもなくあなたの口座に入"
+"りますよ｣"
 
 #: dat/missions/neutral/pirbounty_dead.lua:71
 #, lua-format
@@ -55700,6 +55815,8 @@ msgid ""
 "transferred what I think is your fair share of the bounty to your bank "
 "account.\""
 msgstr ""
+"｢やあ、さっきはあそこで助けてくれてありがとう。%sにひとりで対処できたかわからないよ！　"
+"とにかく、あなたはあれだけ大きな助力をしたんだから、賞金の正当な取り分だと思うものをあなたの銀行口座に振りこみます｣"
 
 #: dat/missions/neutral/pirbounty_dead.lua:72
 #, lua-format
@@ -55708,73 +55825,74 @@ msgid ""
 "still, I appreciate your assistance. Here, I'll transfer some of the bounty "
 "to you, as a token of my appreciation.\""
 msgstr ""
+"｢ええと、ありがとう！　自分で%sを破壊できたと思うけど、やっぱり援助には感謝しますよ。さて、賞金の一部をあなたに振りこみます。感謝のしるしですよ｣"
 
 #: dat/missions/neutral/pirbounty_dead.lua:73
 #: dat/missions/proteron/dissbounty_dead.lua:61
 msgid ""
 "\"Ha ha ha, looks like I beat you to it this time, eh? Well, I don't do this "
 "often, but here, have some of the bounty. I think you deserve it.\""
-msgstr ""
+msgstr "｢ハハハ、今回はわたしが勝ったようだね？　まあ、あまりしないことだけど、ほら、賞金の一部だよ。あなたは受けるにたると思うね｣"
 
 #. Mission details
 #: dat/missions/neutral/pirbounty_dead.lua:77
 #, lua-format
 msgid "Tiny Dead or Alive Bounty in %s"
-msgstr ""
+msgstr "%sでの極小規模の生死を問わない賞金"
 
 #: dat/missions/neutral/pirbounty_dead.lua:78
 #, lua-format
 msgid "Small Dead or Alive Bounty in %s"
-msgstr ""
+msgstr "%sでの小規模の生死を問わない賞金"
 
 #: dat/missions/neutral/pirbounty_dead.lua:79
 #, lua-format
 msgid "Moderate Dead or Alive Bounty in %s"
-msgstr ""
+msgstr "%sでの中規模の生死を問わない賞金"
 
 #: dat/missions/neutral/pirbounty_dead.lua:80
 #, lua-format
 msgid "High Dead or Alive Bounty in %s"
-msgstr ""
+msgstr "%sでの高度な生死を問わない賞金"
 
 #: dat/missions/neutral/pirbounty_dead.lua:81
 #, lua-format
 msgid "Dangerous Dead or Alive Bounty in %s"
-msgstr ""
+msgstr "%sでの危険な生死を問わない賞金"
 
 #: dat/missions/neutral/pirbounty_dead.lua:82
 #, lua-format
 msgid ""
 "The pirate known as %s was recently seen in the %s system. %s authorities "
 "want this pirate dead or alive."
-msgstr ""
+msgstr "%sという名で知られる海賊が最近%s星系で見られた。%s当局がこの海賊を生け捕りにするか死んでほしがっている。"
 
 #. Messages
 #: dat/missions/neutral/pirbounty_dead.lua:86
 #, lua-format
 msgid "MISSION FAILURE! %s got away."
-msgstr ""
+msgstr "任務に失敗！　%sが逃げた。"
 
 #: dat/missions/neutral/pirbounty_dead.lua:87
 #, lua-format
 msgid "MISSION FAILURE! Another pilot eliminated %s."
-msgstr ""
+msgstr "任務に失敗！　ほかのパイロットが%sを除去した。"
 
 #: dat/missions/neutral/pirbounty_dead.lua:90
 #: dat/missions/proteron/dissbounty_dead.lua:74
 msgid "Bounty Hunt"
-msgstr ""
+msgstr "賞金稼ぎ"
 
 #: dat/missions/neutral/pirbounty_dead.lua:93
 #, lua-format
 msgid "Kill or capture %s"
-msgstr ""
+msgstr "%sを殺すか捕まえろ。"
 
 #: dat/missions/neutral/pirbounty_dead.lua:94
 #: dat/missions/proteron/dissbounty_dead.lua:78
 #, lua-format
 msgid "Land in %s territory to collect your bounty"
-msgstr ""
+msgstr "%sの領土に着陸すると、賞金を受けとれる。"
 
 #. No pirates nearby
 #. Set mission details
@@ -55802,7 +55920,7 @@ msgstr ""
 #. --
 #: dat/missions/neutral/pirbounty_dead.lua:412 dat/scripts/common/shark.lua:9
 msgid "Wanted Pirate"
-msgstr ""
+msgstr "手配された海賊"
 
 #. Fail to board the ship; must kill the target instead
 #. (Unused in this mission; used by pirbounty_alive)
@@ -80755,7 +80873,7 @@ msgid ""
 "%s Optimal Tracking"
 msgstr ""
 "\n"
-"捕捉最大 : %s"
+"追跡最大 : %s"
 
 #: src/outfit.c:1361 src/outfit.c:2710 src/outfit.c:2716
 #, c-format
@@ -80764,7 +80882,7 @@ msgid ""
 "%s Minimal Tracking"
 msgstr ""
 "\n"
-"捕捉最小 : %s"
+"追跡最小 : %s"
 
 #: src/outfit.c:1364 src/outfit.c:1509 src/outfit.c:1712 src/outfit.c:1893
 #: src/outfit.c:1947 src/outfit.c:1983 src/outfit.c:2084 src/outfit.c:2123
@@ -80889,7 +81007,7 @@ msgid ""
 "%.0f%% Maximum Speed"
 msgstr ""
 "\n"
-"最大速度 : %.0f%%"
+"最高速度 : %.0f%%"
 
 #: src/outfit.c:1877
 #, c-format
@@ -80907,7 +81025,7 @@ msgid ""
 "%.1f Seconds Per Launch"
 msgstr ""
 "\n"
-"発射間隔: %.1f 秒"
+"発射間隔 : %.1f 秒"
 
 #: src/outfit.c:1943 src/outfit.c:2721
 #, c-format
@@ -80916,7 +81034,7 @@ msgid ""
 "Holds %d %s"
 msgstr ""
 "\n"
-"格納数 : %d 発の%s"
+"格納数 : %d 発の%s :"
 
 #: src/outfit.c:1944 src/outfit.c:2738
 #, c-format
@@ -81019,10 +81137,9 @@ msgid "Outfit '%s' missing/invalid 'arc' element"
 msgstr "Outfit '%s' missing/invalid 'arc' element"
 
 #: src/outfit.c:2495
-#, fuzzy, c-format
-#| msgid "Outfit '%s' is not an ammo outfit"
+#, c-format
 msgid "Outfit '%s' has longer 'iflockon' than ammo 'duration'"
-msgstr "Outfit '%s' is not an ammo outfit"
+msgstr "Outfit '%s' has longer 'iflockon' than ammo 'duration'"
 
 #: src/outfit.c:2509
 #, c-format
