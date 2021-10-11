@@ -122,11 +122,11 @@ function advice ()
    local adv = {}
    local adv_rnd = {}
    local pp = player.pilot()
+   local ppstats = pp:stats()
 
-   local fuel, consumption = pp:fuel()
    local msg_fuel = _([["When out of fuel, if there is an inhabitable planet you can land to refuel for free. However, if you want to save time or have no other option, it is possible to hail passing ships to get refueled, or even take fuel by force by boarding ships. Bribing hostile ships can also encourage them to give you fuel afterwards."]])
    table.insert( adv_rnd, msg_fuel )
-   if fuel < consumption then
+   if ppstats.fuel < ppstats.fuel_consumption then
       table.insert( adv, msg_fuel )
    end
 
@@ -144,10 +144,10 @@ function advice ()
       table.insert( adv, msg_heat )
    end
 
-   local ppstats = pp:stats()
+   local armour = pp:health()
    local msg_armour = _([["In general, ships are unable to regenerate armour damage in space. If you take heavy armour damage, it is best to try to find a safe place to land to get fully repaired. However, there exists many different outfits that allow you to repair your ship, and some ships have built-in  armour regeneration allowing you to survive longer in space."]])
    table.insert( adv_rnd, msg_armour )
-   if pp:armour() < 80 and ppstats.armour_regen <= 0 then
+   if armour < 80 and ppstats.armour_regen <= 0 then
       table.insert( adv, msg_armour )
    end
 
