@@ -556,22 +556,22 @@ function optimize.optimize( p, cores, outfit_list, params )
          end
          -- Check type range
          if ntype_range > 0 then
-            local r = params.type_range[ stats.name ]
+            local rn = params.type_range[ stats.name ]
             if rn then
-               table.insert( ia, r.id )
+               table.insert( ia, rn.id )
                table.insert( ja, c )
                table.insert( ar, 1 )
             end
-            local r = params.type_range[ stats.type ]
-            if r then
-               table.insert( ia, r.id )
+            rn = params.type_range[ stats.type ]
+            if rn then
+               table.insert( ia, rn.id )
                table.insert( ja, c )
                table.insert( ar, 1 )
             end
             if stats.type ~= stats.typebroad then
-               local r = params.type_range[ stats.typebroad ]
-               if r then
-                  table.insert( ia, r.id )
+               rn = params.type_range[ stats.typebroad ]
+               if rn then
+                  table.insert( ia, rn.id )
                   table.insert( ja, c )
                   table.insert( ar, 1 )
                end
@@ -641,7 +641,7 @@ function optimize.optimize( p, cores, outfit_list, params )
       end
 
       -- Interpret results
-      local c = 1
+      c = 1
       for i,s in ipairs(slots) do
          for j,o in ipairs(s.outfits) do
             if x[c] == 1 then
