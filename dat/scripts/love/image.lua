@@ -51,9 +51,9 @@ end
 function image.ImageData:paste( source, dx, dy, sx, sy, sw, sh )
    -- probably very slow
    for y = 0,sh-1 do
-      local dx = _id_pos(self, dx, dy+y )
-      local sx = _id_pos(source, sx, sy+y )
-      self.d:paste( source.d, dx, sx, 4*sw )
+      local dstx = _id_pos(self, dx, dy+y )
+      local srcx = _id_pos(source, sx, sy+y )
+      self.d:paste( source.d, dstx, srcx, 4*sw )
    end
    return self
 end

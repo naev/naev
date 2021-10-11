@@ -139,14 +139,15 @@ end
 function optimize.goodness_default( o, p )
    local os = o.stats
    -- Base attributes
-   base = p.cargo*(0.5*math.pow(o.cargo,0.3) + 0.1*(1-os.cargo_inertia)) + p.fuel*0.003*os.fuel
+   local base = p.cargo*(0.5*math.pow(o.cargo,0.3) + 0.1*(1-os.cargo_inertia)) + p.fuel*0.003*os.fuel
    -- Movement attributes
-   move = 0.1*o.thrust + 0.1*o.speed + 0.2*o.turn + 50*(os.time_speedup-1)
+   local move = 0.1*o.thrust + 0.1*o.speed + 0.2*o.turn + 50*(os.time_speedup-1)
    -- Health attributes
-   health = 0.01*o.shield + 0.02*o.armour + 0.9*o.shield_regen + 2*o.armour_regen + os.absorb/10
+   local health = 0.01*o.shield + 0.02*o.armour + 0.9*o.shield_regen + 2*o.armour_regen + os.absorb/10
    -- Energy attributes
-   energy = 0.003*o.energy + 0.18*o.energy_regen
+   local energy = 0.003*o.energy + 0.18*o.energy_regen
    -- Weapon attributes
+   local weap = 0
    if o.dps and o.dps > 0 then
       -- Compute damage
       weap = 0.5*(o.dps*p.damage + o.disable*p.disable)
@@ -174,11 +175,9 @@ function optimize.goodness_default( o, p )
       elseif o.typebroad == "Fighter Bay" then
          weap = weap * p.fighterbay
       end
-   else
-      weap = 0
    end
    -- Ewarfare attributes
-   ew = 3*(os.ew_detect-1) + 3*(os.ew_hide-1)
+   local ew = 3*(os.ew_detect-1) + 3*(os.ew_hide-1)
    -- Custom weight
    local w = goodness_special[o.name] or 1
    local g = p.constant + w*(base + p.move*move + p.health*health + p.energy*energy + p.weap*weap + p.ew*ew)
@@ -422,9 +421,9 @@ function optimize.optimize( p, cores, outfit_list, params )
          if ps:fitsSlot( k, o ) then
             table.insert( has_outfits, o )
             -- Check to see if it is in the similar list
-            for p,s in ipairs(same_list) do
+            for spos,s in ipairs(same_list) do
                if o==s then
-                  outfitpos[ #has_outfits ] = p
+                  outfitpos[ #has_outfits ] = spos
                   break
                end
             end
@@ -463,7 +462,7 @@ function optimize.optimize( p, cores, outfit_list, params )
    local ntype_range = 0
    for k,v in pairs(params.type_range) do ntype_range = ntype_range+1 end
    nrows = nrows + ntype_range
-   lp = linopt.new( "test", ncols, nrows, true )
+   local lp = linopt.new( "test", ncols, nrows, true )
    -- Add space worthy checks
    lp:set_row( 1, "CPU",          nil, st.cpu_max * ss.cpu_mod )
    local energygoal = math.max(params.min_energy_regen*st.energy_regen, params.min_energy_regen_abs)
@@ -592,7 +591,7 @@ function optimize.optimize( p, cores, outfit_list, params )
    local emod = 1
    local mmod = 1
    local smod = 1
-   local done = true
+   local done
    local z, x, constraints
    repeat
       try = try + 1
