@@ -35,6 +35,7 @@ static int naevL_version( lua_State *L );
 static int naevL_versionTest( lua_State *L);
 static int naevL_lastplayed( lua_State *L );
 static int naevL_ticks( lua_State *L );
+static int naevL_clock( lua_State *L );
 static int naevL_keyGet( lua_State *L );
 static int naevL_keyEnable( lua_State *L );
 static int naevL_keyEnableAll( lua_State *L );
@@ -49,6 +50,7 @@ static const luaL_Reg naev_methods[] = {
    { "versionTest", naevL_versionTest },
    { "lastplayed", naevL_lastplayed },
    { "ticks", naevL_ticks },
+   { "clock", naevL_clock },
    { "keyGet", naevL_keyGet },
    { "keyEnable", naevL_keyEnable },
    { "keyEnableAll", naevL_keyEnableAll },
@@ -155,16 +157,29 @@ static int naevL_lastplayed( lua_State *L )
 
 
 /**
- * @brief Gets the SDL ticks.
+ * @brief Gets the seconds since the program started running.
  *
  * Useful for doing timing on Lua functions.
  *
- *    @luatreturn number The SDL ticks since the application started running.
+ *    @luatreturn number The seconds since the application started running.
  * @luafunc ticks
  */
 static int naevL_ticks( lua_State *L )
 {
-   lua_pushinteger(L, SDL_GetTicks());
+   lua_pushnumber(L, SDL_GetTicks() / 1000.);
+   return 1;
+}
+
+
+/**
+ * @brief Gets the approximate CPU processing time.
+ *
+ *    @luatreturn number Seconds elapsed since start of the process.
+ * @luafunc clock
+ */
+static int naevL_clock( lua_State *L )
+{
+   lua_pushnumber(L, clock() / CLOCKS_PER_SEC );
    return 1;
 }
 

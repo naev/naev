@@ -248,10 +248,9 @@ static int shipL_get( lua_State *L )
  */
 static int shipL_getAll( lua_State *L )
 {
-   int i;
    const Ship *ships = ship_getAll();
    lua_newtable(L); /* t */
-   for (i=0; i<array_size(ships); i++) {
+   for (int i=0; i<array_size(ships); i++) {
       lua_pushship( L, &ships[i] );
       lua_rawseti( L, -2, i+1 );
    }
@@ -405,9 +404,7 @@ static int shipL_slots( lua_State *L )
  */
 static int shipL_getSlots( lua_State *L )
 {
-   int i, j, k;
-   const OutfitSlot *slot;
-   const ShipOutfitSlot *sslot;
+   int k;
    const Ship *s = luaL_validship(L,1);
    char *outfit_types[] = {"Structure", "Utility", "Weapon"};
    const ShipOutfitSlot *outfit_arrays[] = {
@@ -417,10 +414,10 @@ static int shipL_getSlots( lua_State *L )
 
    lua_newtable(L);
    k=1;
-   for (i=0; i<3 ; i++) {
-      for (j=0; j<array_size(outfit_arrays[i]) ; j++) {
-         slot  = &outfit_arrays[i][j].slot;
-         sslot = &outfit_arrays[i][j];
+   for (int i=0; i<3 ; i++) {
+      for (int j=0; j<array_size(outfit_arrays[i]) ; j++) {
+         const OutfitSlot *slot  = &outfit_arrays[i][j].slot;
+         const ShipOutfitSlot *sslot = &outfit_arrays[i][j];
 
          /* make the slot table and put it in */
          lua_pushnumber(L, k++); /* slot table key */
