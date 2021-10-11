@@ -6,6 +6,7 @@ Based on Love2D API
 ]]
 local utf8 = require 'utf8'
 local love = require 'love'
+local love_math = require 'love.math'
 local graphics = require 'love.graphics'
 local window = require 'love.window'
 local filesystem = require 'love.filesystem'

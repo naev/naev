@@ -123,13 +123,12 @@ function cl.draw( bx, by, bw, _bh )
    -- Special chatter
    if cl.chatter then
       lg.setColor( cl.chatter_color or {1,1,1} )
-      local w = cl.font:getWidth( cl.chatter )
-      lg.print( cl.chatter, cl.font, bx+(bw-w)/2, y )
+      local tw = cl.font:getWidth( cl.chatter )
+      lg.print( cl.chatter, cl.font, bx+(bw-tw)/2, y )
    end
    y = y + cl.font:getHeight()+20
 
    -- Dice
-   x = rs
    for k,die in ipairs(cl.dice) do
       die:draw( x, y )
       x = x + w+sep
@@ -139,8 +138,8 @@ function cl.draw( bx, by, bw, _bh )
    -- Print status
    if cl.msg ~= nil then
       lg.setColor( 1, 1, 1 )
-      local w = cl.font:getWidth( cl.msg )
-      lg.print( cl.msg, cl.font, bx+(bw-w)/2, y )
+      local tw = cl.font:getWidth( cl.msg )
+      lg.print( cl.msg, cl.font, bx+(bw-tw)/2, y )
    end
 
    -- Buttons
@@ -161,26 +160,26 @@ function cl.draw( bx, by, bw, _bh )
       cl.buttons_y = y
    end
    for k,s in ipairs(buttons) do
-      w = cl.font:getWidth( s )
+      local tw = cl.font:getWidth( s )
       local col
-      if _inbox( mx, my, x, y, w+2*b, h+2*b ) then
+      if _inbox( mx, my, x, y, tw+2*b, h+2*b ) then
          col = {0.5, 0.5, 0.5}
       else
          col = {0, 0, 0}
       end
       lg.setColor( 0.5, 0.5, 0.5 )
-      lg.rectangle( "fill", x, y, w+2*b, h+2*b )
+      lg.rectangle( "fill", x, y, tw+2*b, h+2*b )
       lg.setColor( col )
-      lg.rectangle( "fill", x+2, y+2, w+2*b-4, h+2*b-4 )
+      lg.rectangle( "fill", x+2, y+2, tw+2*b-4, h+2*b-4 )
       lg.setColor( 0.7, 0.7, 0.7 )
       lg.print( s, cl.font, x+b, y+b )
-      x = x + 3*b + w
+      x = x + 3*b + tw
    end
    y = y + h+3*b
    local tokens = minerva.tokens_get()
    local s = string.format(n_("You have %s credits and #p%s Minerva Token#0.", "You have %s credits and #p%s Minerva Tokens#0.", tokens), fmt.credits(player.credits()), fmt.number(tokens))
-   w = cl.font:getWidth( s )
-   lg.print( s, cl.font, bx+(bw-w)/2, y )
+   local tw = cl.font:getWidth( s )
+   lg.print( s, cl.font, bx+(bw-tw)/2, y )
 end
 
 local function trybet( betamount )

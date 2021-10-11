@@ -151,11 +151,11 @@ vec4 effect( vec4 color, Image tex, vec2 uv, vec2 px )
    local shader = graphics.newShader( pixelcode, _vertexcode )
    -- Since the kernel is separable we need two passes, one for x and one for y
    shader:send( "blurvec", 1, 0 )
-   pass1 = _shader2canvas( shader, image, w, h )
+   local pass1 = _shader2canvas( shader, image, w, h )
    local mode, alphamode = graphics.getBlendMode()
    graphics.setBlendMode( "alpha", "premultiplied" )
    shader:send( "blurvec", 0, 1 )
-   pass2 = _shader2canvas( shader, pass1, w, h )
+   local pass2 = _shader2canvas( shader, pass1, w, h )
    graphics.setBlendMode( mode, alphamode )
    return pass2
 end
@@ -168,7 +168,7 @@ Creates an oldify effect, meant for full screen effects.
 --]]
 function love_shaders.oldify( params )
    params = params or {}
-   strength = params.strength or 1.0
+   local strength = params.strength or 1.0
    local pixelcode = string.format( [[
 #include "lib/simplex.glsl"
 #include "lib/perlin.glsl"
@@ -256,7 +256,7 @@ A hologram effect, mainly meant for VN characters.
 --]]
 function love_shaders.hologram( params )
    params = params or {}
-   strength = params.strength or 1.0
+   local strength = params.strength or 1.0
    local pixelcode = string.format([[
 #include "lib/math.glsl"
 #include "lib/blur.glsl"
@@ -354,8 +354,8 @@ A corruption effect applies a noisy pixelated effect.
 @tparam @{shaderparams} params Parameter table where "strength" field is used.
 --]]
 function love_shaders.corruption( params )
-   paramas = params or {}
-   strength = strength or 1.0
+   params = params or {}
+   local strength = params.strength or 1.0
    local pixelcode = string.format([[
 #include "lib/math.glsl"
 
@@ -394,8 +394,8 @@ A rolling steamy effect. Meant as/for backgrounds.
 --]]
 function love_shaders.steam( params )
    params = params or {}
-   strength = params.strength or 1.0
-   speed = params.speed or 1.0
+   local strength = params.strength or 1.0
+   local speed = params.speed or 1.0
    local pixelcode = string.format([[
 #include "lib/math.glsl"
 #include "lib/simplex.glsl"
@@ -442,8 +442,8 @@ An electronic circuit-board like shader. Meant as/for backgrounds.
 --]]
 function love_shaders.circuit( params )
    params = params or {}
-   strength = params.strength or 1.0
-   speed = params.speed or 1.0
+   local strength = params.strength or 1.0
+   local speed = params.speed or 1.0
    local pixelcode = string.format([[
 #include "lib/math.glsl"
 
@@ -560,9 +560,9 @@ A windy type shader. Meant as/for backgrounds, however, it is highly transparent
 --]]
 function love_shaders.windy( params )
    params = params or {}
-   strength = params.strength or 1.0
-   speed = params.speed or 1.0
-   density = params.density or 1.0
+   local strength = params.strength or 1.0
+   local speed = params.speed or 1.0
+   local density = params.density or 1.0
    local pixelcode = string.format([[
 #include "lib/simplex.glsl"
 
@@ -628,10 +628,10 @@ The default size is 40 and refers to the standard deviation of the Gaussian blur
 --]]
 function love_shaders.aura( params )
    params = params or {}
-   color = params.color or {1, 0, 0}
-   strength = params.strength or 1
-   speed = params.speed or 1
-   size = params.size or 40 -- Gaussian blur sigma
+   local color = params.color or {1, 0, 0}
+   local strength = params.strength or 1
+   local speed = params.speed or 1
+   local size = params.size or 40 -- Gaussian blur sigma
    local pixelcode = string.format([[
 #include "lib/math.glsl"
 #include "lib/simplex.glsl"
@@ -693,7 +693,7 @@ Simple color modulation shader.
 @tparam @{shaderparams} params Parameter table where "color" field is used.
 --]]
 function love_shaders.color( params )
-   color = params.color or {1, 1, 1, 1}
+   local color = params.color or {1, 1, 1, 1}
    color[4] = color[4] or 1
    local pixelcode = string.format([[
 const vec4 basecolor = vec4( %f, %f, %f, %f );
