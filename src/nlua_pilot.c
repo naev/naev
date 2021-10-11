@@ -53,12 +53,12 @@ extern Pilot *cur_pilot;
  */
 static int pilotL_getFriendOrFoe( lua_State *L, int friend );
 static Task *pilotL_newtask( lua_State *L, Pilot* p, const char *task );
-static int pilotL_add( lua_State *L );
 static int outfit_compareActive( const void *slot1, const void *slot2 );
 static int pilotL_setFlagWrapper( lua_State *L, int flag );
 
 
 /* Pilot metatable methods. */
+static int pilotL_add( lua_State *L );
 static int pilotL_remove( lua_State *L );
 static int pilotL_clear( lua_State *L );
 static int pilotL_toggleSpawn( lua_State *L );
@@ -511,7 +511,6 @@ static int pilotL_add( lua_State *L )
 {
    const Ship *ship;
    const char *pilotname, *ai;
-   int i;
    unsigned int p;
    double a, r;
    Vector2d vv, vp, vn;
@@ -591,7 +590,7 @@ static int pilotL_add( lua_State *L )
 
    /* Handle system. */
    if (ss != NULL) {
-      for (i=0; i<array_size(cur_system->jumps); i++) {
+      for (int i=0; i<array_size(cur_system->jumps); i++) {
          if ((cur_system->jumps[i].target == ss)
                && !jp_isFlag( cur_system->jumps[i].returnJump, JP_EXITONLY )) {
             jump = cur_system->jumps[i].returnJump;

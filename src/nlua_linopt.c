@@ -472,7 +472,56 @@ static const char* linopt_error( int retval )
          return "Unknown error.";
    }
 }
+#define STRCHK( val, ret ) if (strcmp(str,(val))==0) return (ret);
+static int opt_br_tech( const char *str )
+{
+   if (str==NULL) return GLP_BR_DTH;
+   STRCHK( "ffv", GLP_BR_FFV );
+   STRCHK( "lfv", GLP_BR_LFV );
+   STRCHK( "mfv", GLP_BR_MFV );
+   STRCHK( "dth", GLP_BR_DTH );
+   STRCHK( "pch", GLP_BR_PCH );
+   WARN("Unknown br_tech value '%s'", str);
+   return GLP_BR_DTH;
+}
+static int opt_bt_tech( const char *str )
+{
+   if (str==NULL) return GLP_BT_BLB;
+   STRCHK( "dfs", GLP_BT_DFS );
+   STRCHK( "bfs", GLP_BT_BFS );
+   STRCHK( "blb", GLP_BT_BLB );
+   STRCHK( "bph", GLP_BT_BPH );
+   WARN("Unknown bt_tech value '%s'", str);
+   return GLP_BT_BLB;
+}
+static int opt_pp_tech( const char *str )
+{
+   if (str==NULL) return GLP_PP_ALL;
+   STRCHK( "none", GLP_PP_NONE );
+   STRCHK( "root", GLP_PP_ROOT );
+   STRCHK( "all", GLP_PP_ALL );
+   WARN("Unknown pp_tech value '%s'", str);
+   return GLP_PP_ALL;
+}
+static int opt_onoff( const char *str )
+{
+   if (str==NULL) return GLP_ON;
+   STRCHK( "on", GLP_ON );
+   STRCHK( "off", GLP_OFF );
+   WARN("Unknown onoff value '%s'", str);
+   return GLP_ON;
+}
+static int opt_offon( const char *str )
+{
+   if (str==NULL) return GLP_OFF;
+   STRCHK( "on", GLP_ON );
+   STRCHK( "off", GLP_OFF );
+   WARN("Unknown offon value '%s'", str);
+   return GLP_OFF;
+}
+#undef STRCHK
 
+#define GETOPT_IOCP( name, func ) do {lua_getfield(L,2,#name); parm_iocp.name = func( luaL_optstring(L,-1,NULL) ); lua_pop(L,1); } while (0)
 /**
  * @brief Solves the linear optimization problem.
  *
@@ -487,17 +536,42 @@ static int linoptL_solve( lua_State *L )
    double z;
    //const char *name;
    int ret, i, ismip;
+   glp_iocp parm_iocp;
+   glp_smcp parm_smcp;
 
    /* Parameters. */
    ismip = (glp_get_num_int( lp->prob ) > 0);
+   if (ismip) {
+      glp_init_iocp(&parm_iocp);
+      parm_iocp.msg_lev = GLP_MSG_ERR;
+      parm_iocp.presolve = GLP_ON; /* Need to presolve first. */
+   }
+   else {
+      glp_init_smcp(&parm_smcp);
+      parm_iocp.msg_lev = GLP_MSG_ERR;
+   }
+
+   /* Load parameters. */
+   if (!lua_isnoneornil(L,2)) {
+      if (ismip) {
+         GETOPT_IOCP( br_tech, opt_br_tech );
+         GETOPT_IOCP( bt_tech, opt_bt_tech );
+         GETOPT_IOCP( pp_tech, opt_pp_tech );
+         GETOPT_IOCP( sr_heur, opt_onoff );
+         GETOPT_IOCP( fp_heur, opt_offon );
+         GETOPT_IOCP( ps_heur, opt_offon );
+         GETOPT_IOCP( gmi_cuts, opt_offon );
+         GETOPT_IOCP( mir_cuts, opt_offon );
+         GETOPT_IOCP( cov_cuts, opt_offon );
+         GETOPT_IOCP( clq_cuts, opt_offon );
+      }
+      else {
+      }
+   }
 
    /* Optimization. */
    if (ismip) {
-      glp_iocp parm;
-      glp_init_iocp(&parm);
-      parm.presolve = GLP_ON; /* Need to presolve first. */
-      parm.msg_lev = GLP_MSG_ERR;
-      ret = glp_intopt( lp->prob, &parm );
+      ret = glp_intopt( lp->prob, &parm_iocp );
       if (ret != 0) {
          lua_pushnil(L);
          lua_pushstring(L, linopt_error(ret));
@@ -506,10 +580,8 @@ static int linoptL_solve( lua_State *L )
       z = glp_mip_obj_val( lp->prob );
    }
    else {
-      glp_smcp parm;
-      glp_init_smcp(&parm);
-      parm.msg_lev = GLP_MSG_ERR;
-      ret = glp_simplex( lp->prob, &parm );
+      glp_init_smcp(&parm_smcp);
+      ret = glp_simplex( lp->prob, &parm_smcp );
       if (ret != 0) {
          lua_pushnil(L);
          lua_pushstring(L, linopt_error(ret));
