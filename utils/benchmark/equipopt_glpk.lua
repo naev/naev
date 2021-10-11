@@ -1,4 +1,5 @@
 local equipopt = require 'equipopt'
+local reps = 10
 function benchmark( testname, sparams )
    local ships = {
       "Llama",
@@ -25,7 +26,6 @@ function benchmark( testname, sparams )
    }
 
    pilot.clear()
-   local reps = 10
    local pos = vec2.new(0,0)
    local vals = {}
    for i=1,reps do
@@ -54,12 +54,16 @@ function benchmark( testname, sparams )
    end
    stddev = math.sqrt(stddev / #vals)
 
-   return mean, stddev
+   return mean, stddev, vals
 end
 
 local csvfile = file.new("benchmark.csv")
 csvfile:open("w")
-csvfile:write( "mean,stddev,br_tech,bt_tech,pp_tech,sr_heur,fp_heur,ps_heur,gmi_cuts,mir_cuts,cov_cuts,clq_cuts\n" )
+csvfile:write( "mean,stddev,br_tech,bt_tech,pp_tech,sr_heur,fp_heur,ps_heur,gmi_cuts,mir_cuts,cov_cuts,clq_cuts" )
+for i=1,reps do
+   csvfile:write(string.format(",rep%d",i))
+end
+csvfile:write("\n")
 
 local tstart = naev.clock()
 local ntotal = math.pow(2,7)*3*4*5 + 1
@@ -84,15 +88,19 @@ local s = string.format("br=%s,bt=%s,pp=%s,sr=%s,fp=%s,ps=%s,gmi=%s,mir=%s,cov=%
    br_tech, bt_tech, pp_tech,
    sr_heur, fp_heur, ps_heur,
    gmi_cuts, mir_cuts, cov_cuts, clq_cuts )
-local mean, stddev = benchmark( s, {
+local mean, stddev, vals = benchmark( s, {
       br_tech=br_tech, bt_tech=bt_tech, pp_tech=pp_tech,
       sr_heur=sr_heur, fp_heur=fp_heur, ps_heur=ps_heur,
       gmi_cuts=gmi_cuts, mir_cuts=mir_cuts, cov_cuts=cov_cuts, clq_cuts=clq_cuts,
    } )
-csvfile:write( string.format("%f,%f,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s\n", mean, stddev,
+csvfile:write( string.format("%f,%f,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s", mean, stddev,
    br_tech, bt_tech, pp_tech,
    sr_heur, fp_heur, ps_heur,
    gmi_cuts, mir_cuts, cov_cuts, clq_cuts ) )
+for i,v in ipairs(vals) do
+   csvfile:write(string.format(",%f",v))
+end
+csvfile:write("\n")
 if mean < curbest then
    curbest = mean
 end
