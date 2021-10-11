@@ -156,6 +156,6 @@ function advice ()
       return adv[ rnd.rnd(1,#adv) ]
    end
 
-   -- Rterun any advice
+   -- Run random advice
    return adv_rnd[ rnd.rnd(1,#adv_rnd) ]
 end
