@@ -228,7 +228,7 @@ end
       @tparam[opt=nil] table|nil params Parameter list to use or nil for defaults.
       @treturn boolean Whether or not the pilot was properly equipped
 --]]
-function optimize.optimize( p, cores, outfit_list, params )
+function optimize.optimize( p, cores, outfit_list, params, sparams )
    params = params or eparams.default()
    params.goodness = params.goodness or optimize.goodness_default
 
@@ -597,8 +597,8 @@ function optimize.optimize( p, cores, outfit_list, params )
       try = try + 1
       done = true
       -- All the magic is done here
-      --lp:write_problem( "test.txt", true )
-      z, x, constraints = lp:solve()
+      --lp:write_problem( "test.mps" )
+      z, x, constraints = lp:solve( sparams )
       if not z then
          -- Try to relax constraints
          -- Mass constraint
@@ -610,7 +610,7 @@ function optimize.optimize( p, cores, outfit_list, params )
          lp:set_row( 2, "energy_regen", nil, st.energy_regen - emod*energygoal )
 
          -- Re-solve
-         z, x, constraints = lp:solve()
+         z, x, constraints = lp:solve( sparams )
 
          -- Likely nebula shield damage constraint if not resolved
          -- TODO this should probably just ignore the constraint and change it so that
@@ -620,7 +620,7 @@ function optimize.optimize( p, cores, outfit_list, params )
             lp:set_row( nebu_row, "shield_regen", smod*nebu_dmg-st.shield_regen, nil )
 
             -- Re-solve
-            z, x, constraints = lp:solve()
+            z, x, constraints = lp:solve( sparams )
 
             -- Check to see if that worked, and if not remove the constraint
             if not z then
@@ -628,7 +628,7 @@ function optimize.optimize( p, cores, outfit_list, params )
                lp:set_row( nebu_row, "shield_regen", nil, nil )
 
                -- Re-solve
-               z, x, constraints = lp:solve()
+               z, x, constraints = lp:solve( sparams )
             end
          end
       end
