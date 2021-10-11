@@ -238,7 +238,7 @@ function backoff( target )
    if mem.stealth then
       tdist = mem.ambushclose
    else
-      tdist = enemyclose
+      tdist = mem.enemyclose
    end
    tdist = tdist or 3000
    tdist = tdist * 1.5
