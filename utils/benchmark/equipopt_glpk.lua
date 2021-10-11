@@ -1,5 +1,5 @@
 local equipopt = require 'equipopt'
-local reps = 10
+local reps = 25
 function benchmark( testname, sparams )
    local ships = {
       "Llama",
@@ -65,14 +65,23 @@ for i=1,reps do
 end
 csvfile:write("\n")
 
+function csv_writereps( vals )
+   for i,v in ipairs(vals) do
+      csvfile:write(string.format(",%f",v))
+   end
+   csvfile:write("\n")
+end
+
 local tstart = naev.clock()
 local ntotal = math.pow(2,7)*3*4*5 + 1
 print("====== BENCHMARK START ======")
-local baseline = benchmark( "Baseline" )
-local defaults = benchmark( "Defaults", {} )
-csvfile:write(string.format("%f\n", baseline ) )
-csvfile:write(string.format("%f\n", defaults ) )
-local curbest = math.huge
+local bl_mean, bl_stddev, bl_vals = benchmark( "Baseline" )
+local def_mean, def_stddev, def_vals = benchmark( "Defaults", {} )
+csvfile:write(string.format("%f,%f,-,-,-,-,-,-,-,-,-,-", bl_mean, bl_stddev ) )
+csv_writereps( bl_vals )
+csvfile:write(string.format("%f,%f,def,def,def,def,def,def,def,def,def,def,def", def_mean, def_stddev ) )
+csv_writereps( def_vals )
+local curbest = def_mean
 local n = 2
 for i,br_tech in ipairs{"ffv","lfv","mfv","dth","pch"} do
    for i,bt_tech in ipairs{"dfs","bfs","blb","bph"} do
@@ -97,10 +106,7 @@ csvfile:write( string.format("%f,%f,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s", mean, stddev
    br_tech, bt_tech, pp_tech,
    sr_heur, fp_heur, ps_heur,
    gmi_cuts, mir_cuts, cov_cuts, clq_cuts ) )
-for i,v in ipairs(vals) do
-   csvfile:write(string.format(",%f",v))
-end
-csvfile:write("\n")
+csv_writereps( vals )
 if mean < curbest then
    curbest = mean
 end
