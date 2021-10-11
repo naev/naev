@@ -364,7 +364,7 @@ function wave_compute_score ()
    local bonus = 100
    local str = {}
 
-   local elapsed = (naev.ticks()-wave_started_time) / 1000
+   local elapsed = (naev.ticks()-wave_started_time)
    table.insert( str, string.format(_("%.1f seconds"), elapsed) )
 
    wave_killed = wave_killed or {}

@@ -2,7 +2,7 @@ require 'ai.core.idle.civilian'
 
 control_funcs.loiter = function ()
    local lastspammed = mem.adspamlast or 0
-   local curtime = naev.ticks() / 1e3
+   local curtime = naev.ticks()
    local delay = mem.adspamdelay or 15
 
    if curtime - lastspammed > delay then
