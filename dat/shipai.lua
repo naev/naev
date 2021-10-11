@@ -120,26 +120,42 @@ end
 -- Tries to give the player useful contextual information
 function advice ()
    local adv = {}
+   local adv_rnd = {}
    local pp = player.pilot()
+
    local fuel, consumption = pp:fuel()
+   local msg_fuel = _([["When out of fuel, if there is an inhabitable planet you can land to refuel for free. However, if you want to save time or have no other option, it is possible to hail passing ships to get refueled, or even take fuel by force by boarding ships. Bribing hostile ships can also encourage them to give you fuel afterwards."]])
+   table.insert( adv_rnd, msg_fuel )
    if fuel < consumption then
-      table.insert( adv, _([["When out of fuel, if there is an inhabitable planet you can land to refuel for free. However, if you want to save time or have no other option, it is possible to hail passing ships to get refueled, or even take fuel by force by boarding ships. Bribing hostile ships can also encourage them to give you fuel afterwards."]]) )
-   end
-   local hostiles = pp:getHostiles()
-   if #hostiles > 0 then
-      table.insert( adv, _([["When being overwhelmed by hostile enemies, you can sometimes get out of a pinch by bribing them so that they leave you alone. Not all pilots or factions are susceptible to bribing, however."]]) )
-   end
-   local _hmean, hpeak = pp:weapsetHeat(true)
-   if pp:temp() > 300 or hpeak > 0.2 then
-      table.insert( adv, fmt.f(_([["When your ship or weapons get very hot, it is usually a good idea to perform an active cooldown when it is safe to do so. You can actively cooldown with {cooldownkey} or double-tapping {reversekey}. The amount it takes to cooldown depends on the size of the ship, but when done, not only will your ship be cool, it will also have replenished all ammunition and fighters."]]),{cooldownkey=tut.getKey("cooldown"), reversekey=tut.getKey("reverse")}))
-   end
-   local ppstats = pp:stats()
-   if pp:armour() < 80 and ppstats.armour_regen <= 0 then
+      table.insert( adv, msg_fuel )
    end
 
+   local hostiles = pp:getHostiles()
+   local msg_hostiles = _([["When being overwhelmed by hostile enemies, you can sometimes get out of a pinch by bribing them so that they leave you alone. Not all pilots or factions are susceptible to bribing, however."]])
+   table.insert( adv_rnd, msg_hostiles )
+   if #hostiles > 0 then
+      table.insert( adv, msg_hostiles )
+   end
+
+   local _hmean, hpeak = pp:weapsetHeat(true)
+   local msg_heat = fmt.f(_([["When your ship or weapons get very hot, it is usually a good idea to perform an active cooldown when it is safe to do so. You can actively cooldown with {cooldownkey} or double-tapping {reversekey}. The amount it takes to cooldown depends on the size of the ship, but when done, not only will your ship be cool, it will also have replenished all ammunition and fighters."]]),{cooldownkey=tut.getKey("cooldown"), reversekey=tut.getKey("reverse")})
+   table.insert( adv_rnd, msg_heat )
+   if pp:temp() > 300 or hpeak > 0.2 then
+      table.insert( adv, msg_heat )
+   end
+
+   local ppstats = pp:stats()
+   local msg_armour = _([["In general, ships are unable to regenerate armour damage in space. If you take heavy armour damage, it is best to try to find a safe place to land to get fully repaired. However, there exists many different outfits that allow you to repair your ship, and some ships have built-in  armour regeneration allowing you to survive longer in space."]])
+   table.insert( adv_rnd, msg_armour )
+   if pp:armour() < 80 and ppstats.armour_regen <= 0 then
+      table.insert( adv, msg_armour )
+   end
+
+   -- Return important advice
    if #adv > 0 then
       return adv[ rnd.rnd(1,#adv) ]
    end
 
-   return "Generic advice"
+   -- Rterun any advice
+   return adv_rnd[ rnd.rnd(1,#adv_rnd) ]
 end
