@@ -58,7 +58,7 @@ function bgshaders.render( dt, col )
 
       -- Render to screen
       lg.setColor( 1, 1, 1, 1 )
-      bgcanvas:draw( 0, 0, 0, sf, sf )
+      bgcanvas:draw( 0, 0, 0, bgscale, bgscale )
       return
    end
 
