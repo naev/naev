@@ -166,7 +166,7 @@ static int naevL_lastplayed( lua_State *L )
  */
 static int naevL_ticks( lua_State *L )
 {
-   lua_pushnumber(L, SDL_GetTicks() / 1000.);
+   lua_pushnumber(L, (double)SDL_GetTicks() / 1000.);
    return 1;
 }
 
@@ -179,7 +179,7 @@ static int naevL_ticks( lua_State *L )
  */
 static int naevL_clock( lua_State *L )
 {
-   lua_pushnumber(L, clock() / CLOCKS_PER_SEC );
+   lua_pushnumber(L, (double)clock() / (double)CLOCKS_PER_SEC );
    return 1;
 }
 
