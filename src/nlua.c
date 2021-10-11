@@ -349,7 +349,7 @@ static int nlua_loadBasic( lua_State* L )
 {
    int i;
    const char *override[] = { /* unsafe functions */
-         "collectgarbage",
+         /*"collectgarbage",*/
          "dofile",
          "getfenv",
          "load",

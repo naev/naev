@@ -1,5 +1,5 @@
 local equipopt = require 'equipopt'
-local reps = 25
+local reps = 3
 function benchmark( testname, sparams )
    local ships = {
       "Llama",
@@ -29,6 +29,8 @@ function benchmark( testname, sparams )
    local pos = vec2.new(0,0)
    local vals = {}
    for i=1,reps do
+      collectgarbage("collect")
+      collectgarbage('stop')
       local rstart = naev.clock()
       for k,s in ipairs(ships) do
          for k,f in ipairs(factions) do
@@ -41,6 +43,7 @@ function benchmark( testname, sparams )
          end
       end
       table.insert( vals, (naev.clock()-rstart)*1000 )
+      collectgarbage('restart')
    end
 
    local mean = 0
