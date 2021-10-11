@@ -59,7 +59,7 @@ function formations.buffer(leader)
                   ["Interceptor"] = 1,
                   ["Scout"] = 1 } -- Need to keep track of positions already iterated through.
    for i, p in ipairs(pilots) do
-      ship_class = p:ship():class() -- For readability.
+      local ship_class = p:ship():class() -- For readability.
       if class_count[ship_class] == 1 then -- If there's only one ship in this specific class...
          angle = 0 --The angle needs to be zero.
       else -- If there's more than one ship in each class...

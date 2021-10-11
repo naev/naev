@@ -38,13 +38,21 @@ function tut.log( text )
    shiplog.append( "tutorial", text )
 end
 
+-- Capsule function for enabling basic, important keys.
+function tut.enableBasicKeys()
+    local alwaysEnable = { "speed", "menu", "screenshot", "console" }
+    for i, key in ipairs(alwaysEnable) do
+        naev.keyEnable(key, true)
+    end
+end
+
 -- Capsule function for tk.msg that disables all key input WHILE the msg is open.
 function tut.tkMsg( title, msg, keys )
     naev.keyDisableAll()
-    enableBasicKeys()
+    tut.enableBasicKeys()
     tk.msg(title, msg)
     if keys ~= nil then
-       enableKeys(keys)
+       tut.enableKeys(keys)
     else
        naev.keyEnableAll()
     end
@@ -56,15 +64,7 @@ function tut.enableKeys( keys )
     for i, key in ipairs(keys) do
         naev.keyEnable(key, true)
     end
-    enableBasicKeys()
-end
-
--- Capsule function for enabling basic, important keys.
-function tut.enableBasicKeys()
-    local alwaysEnable = { "speed", "menu", "screenshot", "console" }
-    for i, key in ipairs(alwaysEnable) do
-        naev.keyEnable(key, true)
-    end
+    tut.enableBasicKeys()
 end
 
 -- Capsule function for naev.keyGet() that adds a color code to the return string.

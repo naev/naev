@@ -44,18 +44,14 @@ The first pilot is set to be the fleet leader.
 function fleet.add( count, ship, faction, location, pilotname, parameters )
    count = count or 1
 
-   local pilotnames  = {}
-   local locations   = {}
-   local factions    = {}
-   local out         = {}
-
    -- Put lone ship into table
    if type(ship) ~= "table" then
       ship = { ship }
    end
-   pilotnames= _buildDupeTable( pilotname, #ship )
-   locations = _buildDupeTable( location,  #ship )
-   factions  = _buildDupeTable( faction,   #ship )
+   local pilotnames= _buildDupeTable( pilotname, #ship )
+   local locations = _buildDupeTable( location,  #ship )
+   local factions  = _buildDupeTable( faction,   #ship )
+   local out       = {}
    if factions[1] == nil then
       print(_("fleet.add: Error, raw ships must have factions!"))
       return

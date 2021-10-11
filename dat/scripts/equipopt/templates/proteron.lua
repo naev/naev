@@ -62,7 +62,7 @@ local function equip_proteron( p, opt_params )
    params = mt.merge_tables( params, opt_params )
 
    -- See cores
-   cores = ecores.get( p, { all="elite" } )
+   local cores = ecores.get( p, { all="elite" } )
 
    -- Set some meta-data
    local mem = p:memory()

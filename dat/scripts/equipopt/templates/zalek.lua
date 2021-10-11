@@ -83,7 +83,7 @@ local zalek_cores = {
 
 --[[--
    Does Za'lek pilot equipping
-  
+
       @param p Pilot to equip
 --]]
 local function equip_zalek( p, opt_params )
