@@ -96,6 +96,8 @@ typedef struct Faction_ {
 } Faction;
 
 static Faction* faction_stack = NULL; /**< Faction stack. */
+static int* faction_grid = NULL; /**< Grid of faction status. */
+static size_t faction_mgrid = 0; /**< Allocated memory. */
 
 
 /*
@@ -109,6 +111,7 @@ static void faction_modPlayerLua( int f, double mod, const char *source, int sec
 static int faction_parse( Faction* temp, xmlNodePtr parent );
 static void faction_parseSocial( xmlNodePtr parent );
 static void faction_addStandingScript( Faction* temp, const char* scriptname );
+static void faction_computeGrid (void);
 /* externed */
 int pfaction_save( xmlTextWriterPtr writer );
 int pfaction_load( xmlNodePtr parent );
@@ -131,12 +134,12 @@ static int faction_cmp( const void *p1, const void *p2 )
  */
 static int faction_getRaw( const char* name )
 {
-   int i;
    /* Escorts are part of the "player" faction. */
    if (strcmp(name, "Escort") == 0)
       return FACTION_PLAYER;
 
    if (name != NULL) {
+      int i;
       for (i=0; i<array_size(faction_stack); i++)
          if (strcmp(faction_stack[i].name, name)==0)
             break;
@@ -504,10 +507,6 @@ int* faction_getEnemies( int f )
  */
 int* faction_getAllies( int f )
 {
-   int i;
-   int *allies;
-   int *tmp;
-
    if (!faction_isFaction(f)) {
       WARN(_("Faction id '%d' is invalid."),f);
       return NULL;
@@ -515,11 +514,11 @@ int* faction_getAllies( int f )
 
    /* Player's faction ratings can change, so regenerate each call. */
    if (f == FACTION_PLAYER) {
-      allies = array_create( int );
+      int *allies = array_create( int );
 
-      for (i=0; i<array_size(faction_stack); i++)
+      for (int i=0; i<array_size(faction_stack); i++)
          if (faction_isPlayerFriend(i)) {
-            tmp = &array_grow( &allies );
+            int *tmp = &array_grow( &allies );
             *tmp = i;
          }
 
@@ -559,7 +558,7 @@ void faction_clearEnemy( int f )
 void faction_addEnemy( int f, int o )
 {
    Faction *ff;
-   int i, *tmp;
+   int *tmp;
 
    if (f==o) return;
 
@@ -585,7 +584,7 @@ void faction_addEnemy( int f, int o )
       return;
    }
 
-   for (i=0;i<array_size(ff->enemies);i++) {
+   for (int i=0;i<array_size(ff->enemies);i++) {
       if (ff->enemies[i] == o)
          return;
    }
@@ -652,7 +651,7 @@ void faction_clearAlly( int f )
 void faction_addAlly( int f, int o )
 {
    Faction *ff;
-   int i, *tmp;
+   int *tmp;
 
    if (f==o) return;
 
@@ -678,7 +677,7 @@ void faction_addAlly( int f, int o )
       return;
    }
 
-   for (i=0;i<array_size(ff->allies);i++) {
+   for (int i=0;i<array_size(ff->allies);i++) {
       if (ff->allies[i] == o)
          return;
    }
@@ -697,7 +696,6 @@ void faction_addAlly( int f, int o )
 void faction_rmAlly( int f, int o )
 {
    Faction *ff;
-   int i;
 
    if (f==o) return;
 
@@ -708,7 +706,7 @@ void faction_rmAlly( int f, int o )
       return;
    }
 
-   for (i=0;i<array_size(ff->allies);i++) {
+   for (int i=0;i<array_size(ff->allies);i++) {
       if (ff->allies[i] == o) {
          array_erase( &ff->allies, &ff->allies[i], &ff->allies[i+1] );
          return;
@@ -843,7 +841,6 @@ static void faction_modPlayerLua( int f, double mod, const char *source, int sec
  */
 void faction_modPlayer( int f, double mod, const char *source )
 {
-   int i;
    Faction *faction;
 
    if (!faction_isFaction(f)) {
@@ -856,12 +853,12 @@ void faction_modPlayer( int f, double mod, const char *source )
    faction_modPlayerLua( f, mod, source, 0 );
 
    /* Now mod allies to a lesser degree */
-   for (i=0; i<array_size(faction->allies); i++)
+   for (int i=0; i<array_size(faction->allies); i++)
       /* Modify faction standing */
       faction_modPlayerLua( faction->allies[i], mod, source, 1 );
 
    /* Now mod enemies */
-   for (i=0; i<array_size(faction->enemies); i++)
+   for (int i=0; i<array_size(faction->enemies); i++)
       /* Modify faction standing. */
       faction_modPlayerLua( faction->enemies[i], -mod, source, 1 );
 }
@@ -1009,14 +1006,13 @@ double faction_getPlayerDef( int f )
  */
 int faction_isPlayerFriend( int f )
 {
-   Faction *faction;
-   int r;
-
-   faction = &faction_stack[f];
+   Faction *faction = &faction_stack[f];
 
    if (faction->env == LUA_NOREF)
       return 0;
    else {
+      int r;
+
       /* Set up the function:
        * faction_player_friend( standing ) */
       nlua_getenv( faction->env, "faction_player_friend" );
@@ -1052,14 +1048,12 @@ int faction_isPlayerFriend( int f )
  */
 int faction_isPlayerEnemy( int f )
 {
-   Faction *faction;
-   int r;
-
-   faction = &faction_stack[f];
+   Faction *faction = &faction_stack[f];
 
    if (faction->env == LUA_NOREF)
       return 0;
    else {
+      int r;
       /* Set up the function:
        * faction_player_enemy( standing ) */
       nlua_getenv( faction->env, "faction_player_enemy" );
@@ -1228,25 +1222,12 @@ const char *faction_getStandingBroad( int f, int bribed, int override )
  */
 int areEnemies( int a, int b )
 {
-   Faction *fa, *fb;
+   /* luckily our factions aren't masochistic */
+   if (a==b) return 0;
 
-   if (a==b) return 0; /* luckily our factions aren't masochistic */
-
-   /* handle a */
-   if (faction_isFaction(a))
-      fa = &faction_stack[a];
-   else { /* a is invalid */
-      //WARN(_("Faction id '%d' is invalid."), a);
+   /* Make sure they're valid. */
+   if (!faction_isFaction(a) || !faction_isFaction(b))
       return 0;
-   }
-
-   /* handle b */
-   if (faction_isFaction(b))
-      fb = &faction_stack[b];
-   else { /* b is invalid */
-      //WARN(_("Faction id '%d' is invalid."), b);
-      return 0;
-   }
 
    /* player handled separately */
    if (a==FACTION_PLAYER)
@@ -1254,14 +1235,7 @@ int areEnemies( int a, int b )
    else if (b==FACTION_PLAYER)
       return faction_isPlayerEnemy(a);
 
-   for (int i=0;i<array_size(fa->enemies);i++)
-      if (fa->enemies[i] == b)
-         return 1;
-   for (int i=0;i<array_size(fb->enemies);i++)
-      if (fb->enemies[i] == a)
-         return 1;
-
-   return 0;
+   return faction_grid[ a * faction_mgrid + b ] < 0;
 }
 
 /**
@@ -1273,26 +1247,12 @@ int areEnemies( int a, int b )
  */
 int areAllies( int a, int b )
 {
-   Faction *fa, *fb;
-
    /* If they are the same they must be allies. */
    if (a==b) return 1;
 
-   /* handle a */
-   if (faction_isFaction(a))
-      fa = &faction_stack[a];
-   else { /* a is invalid */
-      //WARN(_("Faction id '%d' is invalid."), a);
+   /* Make sure they're valid. */
+   if (!faction_isFaction(a) || !faction_isFaction(b))
       return 0;
-   }
-
-   /* handle b */
-   if (faction_isFaction(b))
-      fb = &faction_stack[b];
-   else { /* b is invalid */
-      //WARN(_("Faction id '%d' is invalid."), b);
-      return 0;
-   }
 
    /* we assume player becomes allies with high rating */
    if (a==FACTION_PLAYER)
@@ -1300,14 +1260,7 @@ int areAllies( int a, int b )
    else if (b==FACTION_PLAYER)
       return faction_isPlayerFriend(a);
 
-   for (int i=0;i<array_size(fa->allies);i++)
-      if (fa->allies[i] == b)
-         return 1;
-   for (int i=0;i<array_size(fb->allies);i++)
-      if (fb->allies[i] == a)
-         return 1;
-
-   return 0;
+   return faction_grid[ a * faction_mgrid + b ] > 0;
 }
 
 /**
@@ -1687,6 +1640,8 @@ int factions_load (void)
 
    xmlFreeDoc(doc);
 
+   faction_computeGrid();
+
    DEBUG( n_( "Loaded %d Faction", "Loaded %d Factions", array_size(faction_stack) ), array_size(faction_stack) );
 
    return 0;
@@ -1722,11 +1677,16 @@ static void faction_freeOne( Faction *f )
  */
 void factions_free (void)
 {
-   /* free factions */
+   /* Free factions. */
    for (int i=0; i<array_size(faction_stack); i++)
       faction_freeOne( &faction_stack[i] );
    array_free(faction_stack);
    faction_stack = NULL;
+
+   /* Clean up faction grid. */
+   free( faction_grid );
+   faction_grid = NULL;
+   faction_mgrid = 0;
 }
 
 
@@ -1878,16 +1838,15 @@ const FactionGenerator* faction_generators( int f )
  */
 void factions_clearDynamic (void)
 {
-   int i;
-   Faction *f;
-   for (i=0; i<array_size(faction_stack); i++) {
-      f = &faction_stack[i];
+   for (int i=0; i<array_size(faction_stack); i++) {
+      Faction *f = &faction_stack[i];
       if (faction_isFlag(f, FACTION_DYNAMIC)) {
          faction_freeOne( f );
          array_erase( &faction_stack, f, f+1 );
          i--;
       }
    }
+   faction_computeGrid();
 }
 
 
@@ -1901,10 +1860,7 @@ void factions_clearDynamic (void)
  */
 int faction_dynAdd( int base, const char* name, const char* display, const char* ai )
 {
-   Faction *f;
-   int *tmp;
-
-   f = &array_grow( &faction_stack );
+   Faction *f = &array_grow( &faction_stack );
    memset( f, 0, sizeof(Faction) );
    f->name        = strdup( name );
    f->displayname = display==NULL ? NULL : strdup( display );
@@ -1925,11 +1881,11 @@ int faction_dynAdd( int base, const char* name, const char* display, const char*
          f->logo = gl_dupTexture( bf->logo );
 
       for (int i=0; i<array_size(bf->allies); i++) {
-         tmp = &array_grow( &f->allies );
+         int *tmp = &array_grow( &f->allies );
          *tmp = i;
       }
       for (int i=0; i<array_size(bf->enemies); i++) {
-         tmp = &array_grow( &f->enemies );
+         int *tmp = &array_grow( &f->enemies );
          *tmp = i;
       }
 
@@ -1941,5 +1897,43 @@ int faction_dynAdd( int base, const char* name, const char* display, const char*
       f->equip_env = bf->equip_env;
    }
 
+   /* TODO make this incremental. */
+   faction_computeGrid();
+
    return f-faction_stack;
+}
+
+
+/**
+ * @brief Computes the faction relationship grid.
+ */
+static void faction_computeGrid (void)
+{
+   size_t n = array_size(faction_stack);
+   if (faction_mgrid <= n) {
+      free( faction_grid );
+      faction_grid = calloc( n * n, sizeof(int) );
+      faction_mgrid = n;
+   }
+   for (size_t i=0; i<n; i++) {
+      Faction *fa = &faction_stack[i];
+      for (int k=0; k<array_size(fa->allies); k++) {
+         int j = fa->allies[k];
+#if DEBUGGING
+         if ((faction_grid[i*n+j] < 0) || (faction_grid[j*n+i]) < 0)
+            WARN("Incoherent faction grid!");
+#endif /* DEBUGGING */
+         faction_grid[i*n+j] = 1;
+         faction_grid[j*n+i] = 1;
+      }
+      for (int k=0; k<array_size(fa->enemies); k++) {
+         int j = fa->enemies[k];
+#if DEBUGGING
+         if ((faction_grid[i*n+j] > 0) || (faction_grid[j*n+i] > 0))
+            WARN("Incoherent faction grid!");
+#endif /* DEBUGGING */
+         faction_grid[i*n+j] = -1;
+         faction_grid[j*n+i] = -1;
+      }
+   }
 }
