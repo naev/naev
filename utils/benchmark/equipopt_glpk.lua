@@ -36,6 +36,7 @@ function benchmark( testname, sparams )
          for k,f in ipairs(factions) do
             local p = pilot.add( s, "Dummy", pos, nil, {naked=true} )
             if sparams then
+               equipopt.optimize.sparams = sparams
                f( p )
                --f( p, {rnd=0.0})
             end
@@ -135,6 +136,12 @@ for n, trial in ipairs(trials) do
    print(string.format("Best: %.3f ms, Cur: %.3f (%.3f) ms, (%d of %d done, %.3f hours left)",
    curbest, mean, stddev, 1+n, 1+#trials, elapsed * left / (1+n) / 3600) )
 end
+--[[
+local glpk_mean, glpk_stddev, glpk_vals = benchmark( "GLPK", { br_tech="dth", bt_tech="blb", pp_tech="all", sr_heur="on", fp_heur="off", ps_heur="off", gmi_cuts="off", mir_cuts="off", cov_cuts="off", clq_cuts="off"} )
+--local def_mean, def_stddev, def_vals = benchmark( "Defaults", {} )
+print( string.format( "% 10s: %.3f (%.3f)", "GLPK", glpk_mean, glpk_stddev ) )
+print( string.format( "% 10s: %.3f (%.3f)", "Defaults", def_mean, def_stddev ) )
+--]]
 print("====== BENCHMARK END ======")
 csvfile:close()
 

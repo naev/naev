@@ -228,9 +228,10 @@ end
       @tparam[opt=nil] table|nil params Parameter list to use or nil for defaults.
       @treturn boolean Whether or not the pilot was properly equipped
 --]]
-function optimize.optimize( p, cores, outfit_list, params, sparams )
+function optimize.optimize( p, cores, outfit_list, params )
    params = params or eparams.default()
    params.goodness = params.goodness or optimize.goodness_default
+   local sparams = optimize.sparams
 
    -- Naked ship
    local ps = p:ship()
