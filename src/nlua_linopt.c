@@ -459,7 +459,7 @@ static const char* linopt_error( int retval )
          return "Unknown error.";
    }
 }
-#if 0 /* GLPK Defaults. */
+#if 1 /* GLPK Defaults. */
 #define BR_TECH_DEF  GLP_BR_DTH
 #define BT_TECH_DEF  GLP_BT_BLB
 #define PP_TECH_DEF  GLP_PP_ALL
@@ -470,7 +470,7 @@ static const char* linopt_error( int retval )
 #define MIR_CUTS_DEF GLP_OFF
 #define COV_CUTS_DEF GLP_OFF
 #define CLQ_CUTS_DEF GLP_OFF
-#endif
+#else
 /* Customized "optimal" defaults. */
 #define BR_TECH_DEF  GLP_BR_PCH
 #define BT_TECH_DEF  GLP_BT_DFS
@@ -482,6 +482,7 @@ static const char* linopt_error( int retval )
 #define MIR_CUTS_DEF GLP_OFF
 #define COV_CUTS_DEF GLP_ON
 #define CLQ_CUTS_DEF GLP_ON
+#endif
 #define STRCHK( val, ret ) if (strcmp(str,(val))==0) return (ret);
 static int opt_br_tech( const char *str, int def )
 {
@@ -544,12 +545,12 @@ static int linoptL_solve( lua_State *L )
    ismip = (glp_get_num_int( lp->prob ) > 0);
    if (ismip) {
       glp_init_iocp(&parm_iocp);
-      parm_iocp.msg_lev = GLP_MSG_ERR;
+      parm_iocp.msg_lev  = GLP_MSG_ERR;
       parm_iocp.presolve = GLP_ON; /* Need to presolve first. */
    }
    else {
       glp_init_smcp(&parm_smcp);
-      parm_iocp.msg_lev = GLP_MSG_ERR;
+      parm_smcp.msg_lev = GLP_MSG_ERR;
    }
 
    /* Load parameters. */
@@ -569,6 +570,20 @@ static int linoptL_solve( lua_State *L )
       else {
       }
    }
+   else {
+      if (ismip) {
+         parm_iocp.br_tech  = BR_TECH_DEF;
+         parm_iocp.bt_tech  = BT_TECH_DEF;
+         parm_iocp.pp_tech  = PP_TECH_DEF;
+         parm_iocp.sr_heur  = SR_HEUR_DEF;
+         parm_iocp.fp_heur  = FP_HEUR_DEF;
+         parm_iocp.ps_heur  = PS_HEUR_DEF;
+         parm_iocp.gmi_cuts = GMI_CUTS_DEF;
+         parm_iocp.mir_cuts = MIR_CUTS_DEF;
+         parm_iocp.cov_cuts = COV_CUTS_DEF;
+         parm_iocp.clq_cuts = CLQ_CUTS_DEF;
+      }
+   }
 
    /* Optimization. */
    if (ismip) {
@@ -581,7 +596,6 @@ static int linoptL_solve( lua_State *L )
       z = glp_mip_obj_val( lp->prob );
    }
    else {
-      glp_init_smcp(&parm_smcp);
       ret = glp_simplex( lp->prob, &parm_smcp );
       if (ret != 0) {
          lua_pushnil(L);
