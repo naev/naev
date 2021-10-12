@@ -88,6 +88,21 @@ local empire_cores = {
       } end,
 }
 
+local empire_params_overwrite = {
+   -- Prefer to use the Empire utilities
+   prefer = {
+      ["Hunting Combat AI"] = 100,
+      ["Photo-Voltaic Nanobot Coating"] = 100,
+   },
+   type_range = {
+      ["Bolt Weapon"] = { min = 1 },
+      ["Launcher"] = { max = 2 },
+   },
+   max_same_stru = 3,
+   bolt = 1.5,
+   min_energy_regen = 1.0, -- Empire loves energy
+}
+
 --[[
 -- @brief Does Empire pilot equipping
 --
@@ -106,15 +121,7 @@ local function equip_empire( p, opt_params )
    --if empire_skip[sname] then return end
 
    -- Choose parameters and make Empire-ish
-   local params = eparams.choose( p )
-   -- Prefer to use the Empire utilities
-   params.prefer["Hunting Combat AI"] = 100
-   params.prefer["Photo-Voltaic Nanobot Coating"] = 100
-   params.type_range["Bolt Weapon"] = { min = 1 }
-   params.type_range["Launcher"] = { max = 2 }
-   params.max_same_stru = 3
-   params.bolt = 1.5
-   params.min_energy_regen = 1.0 -- Empire loves energy
+   local params = eparams.choose( p, empire_params_overwrite )
    params.max_mass = 0.95 + 0.1*rnd.rnd()
    -- Per ship tweaks
    local sp = empire_params[ sname ]

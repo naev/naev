@@ -55,6 +55,15 @@ local function choose_one( t ) return t[ rnd.rnd(1,#t) ] end
 local soromid_cores = {
 }
 
+local soromid_params_overwrite = {
+   -- Prefer to use the Soromid utilities
+   prefer = {
+      ["Bio-Neural Combat AI"]  = 100,
+      ["Nexus Stealth Coating"] = 100,
+   },
+   max_same_stru = 3,
+}
+
 --[[
 -- @brief Does Soromid pilot equipping
 --
@@ -66,11 +75,7 @@ local function equip_soromid( p, opt_params  )
    local sname = ps:nameRaw()
 
    -- Choose parameters and make Soromidish
-   local params = eparams.choose( p )
-   -- Prefer to use the Soromid utilities
-   params.prefer["Bio-Neural Combat AI"]  = 100
-   params.prefer["Nexus Stealth Coating"] = 100
-   params.max_same_stru = 3
+   local params = eparams.choose( p, soromid_params_overwrite )
    params.max_mass = 0.95 + 0.1*rnd.rnd()
    -- Per ship tweaks
    local sp = soromid_params[ sname ]

@@ -81,6 +81,15 @@ local zalek_cores = {
       } end,
 }
 
+local zalek_params_overwrite = {
+   -- Prefer to use the Za'lek utilities
+   prefer = {
+      ["Hive Combat AI"]          = 100,
+      ["Faraday Tempest Coating"] = 100,
+   },
+   max_same_stru = 3,
+}
+
 --[[
 -- @brief Does Za'lek pilot equipping
 --
@@ -93,11 +102,7 @@ local function equip_zalek( p, opt_params )
    local sname = ps:nameRaw()
 
    -- Choose parameters and make Za'lekish
-   local params = eparams.choose( p )
-   -- Prefer to use the Za'lek utilities
-   params.prefer["Hive Combat AI"]          = 100
-   params.prefer["Faraday Tempest Coating"] = 100
-   params.max_same_stru = 3
+   local params = eparams.choose( p, zalek_params_overite )
    params.max_mass = 0.95 + 0.2*rnd.rnd()
    -- Per ship tweaks
    local sp = zalek_params[ sname ]

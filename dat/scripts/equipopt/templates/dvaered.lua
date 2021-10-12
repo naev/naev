@@ -68,6 +68,20 @@ local dvaered_cores = { -- Basically elite hulls excluding stealth
       } end,
 }
 
+local dvaered_params_overwrite = {
+   -- Prefer to use the Dvaered utilities
+   prefer = {
+      ["Cyclic Combat AI"] = 100,
+      ["Milspec Impacto-Plastic Coating"] = 100,
+   },
+   type_range = {
+      ["Bolt Weapon"] = { min = 1 },
+   },
+   max_same_stru = 3,
+   ew = 0, -- Don't care about electronic warfare
+   min_energy_regen = 1.0, -- Davereds want more energy
+}
+
 --[[
 -- @brief Does Dvaered pilot equipping
 --
@@ -79,14 +93,7 @@ local function equip_dvaered( p, opt_params )
    --if dvaered_skip[sname] then return end
 
    -- Choose parameters and make Dvaeredish
-   local params = eparams.choose( p )
-   -- Prefer to use the Dvaered utilities
-   params.prefer["Cyclic Combat AI"] = 100
-   params.prefer["Milspec Impacto-Plastic Coating"] = 100
-   params.type_range["Bolt Weapon"] = { min = 1 }
-   params.max_same_stru = 3
-   params.ew = 0 -- Don't care about electronic warfare
-   params.min_energy_regen = 1.0 -- Dvaereds want more energy
+   local params = eparams.choose( p, dvaered_params_overwrite )
    params.max_mass = 0.95 + 0.2*rnd.rnd()
    -- Per ship tweaks
    local sp = dvaered_params[ sname ]
