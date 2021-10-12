@@ -570,6 +570,7 @@ static int linoptL_solve( lua_State *L )
       else {
       }
    }
+#if 0
    else {
       if (ismip) {
          parm_iocp.br_tech  = BR_TECH_DEF;
@@ -584,6 +585,7 @@ static int linoptL_solve( lua_State *L )
          parm_iocp.clq_cuts = CLQ_CUTS_DEF;
       }
    }
+#endif
 
    /* Optimization. */
    if (ismip) {
