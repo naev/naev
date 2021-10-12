@@ -914,6 +914,8 @@ void pilot_calcStats( Pilot* pilot )
    pilot->energy_max    = pilot->ship->energy;
    pilot->energy_regen  = pilot->ship->energy_regen;
    pilot->energy_loss   = 0.; /* Initially no net loss. */
+   /* Misc. */
+   pilot->outfitlupdate = 0;
    /* Stats. */
    s = &pilot->stats;
    tm = s->time_mod;
@@ -955,6 +957,9 @@ void pilot_calcStats( Pilot* pilot )
 
       /* Apply modifications. */
       if (outfit_isMod(o)) { /* Modification */
+         /* Has update function. */
+         if (o->u.mod.lua_update != LUA_NOREF)
+            pilot->outfitlupdate = 1;
          /* Active outfits must be on to affect stuff. */
          if (slot->active && !(slot->state==PILOT_OUTFIT_ON))
             continue;
@@ -1258,6 +1263,9 @@ int pilot_outfitLInit( Pilot *pilot, PilotOutfitSlot *po )
  */
 void pilot_outfitLUpdate( Pilot *pilot, double dt )
 {
+   if (!pilot->outfitlupdate)
+      return;
+
    pilotoutfit_modified = 0;
    for (int i=0; i<array_size(pilot->outfits); i++) {
       PilotOutfitSlot *po = pilot->outfits[i];

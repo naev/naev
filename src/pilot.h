@@ -315,6 +315,7 @@ typedef struct Pilot_ {
    int nbeams;        /**< Number of beams equipped. */
    int nfighterbays;  /**< Number of fighter bays available. */
    int nafterburners; /**< Number of afterburners equipped. */
+   int outfitlupdate; /**< Has outfits with Lua update scripts. */
 
    /* For easier usage. */
    PilotOutfitSlot *afterburner; /**< the afterburner */
