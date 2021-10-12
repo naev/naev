@@ -404,14 +404,13 @@ int space_hyperspace( Pilot* p )
  */
 int space_calcJumpInPos( const StarSystem *in, const StarSystem *out, Vector2d *pos, Vector2d *vel, double *dir, const Pilot *p )
 {
-   int i;
    JumpPoint *jp;
    double a, d, x, y;
    double ea, ed;
 
    /* Find the entry system. */
    jp = NULL;
-   for (i=0; i<array_size(in->jumps); i++)
+   for (int i=0; i<array_size(in->jumps); i++)
       if (in->jumps[i].target == out)
          jp = &in->jumps[i];
 
@@ -513,11 +512,8 @@ char** space_getFactionPlanet( int *factions, int landable )
 const char* space_getRndPlanet( int landable, unsigned int services,
       int (*filter)(Planet *p))
 {
-   Planet **tmp;
-   char *res;
-
-   res   = NULL;
-   tmp   = array_create( Planet* );
+   char *res = NULL;
+   Planet **tmp = array_create( Planet* );
 
    for (int i=0; i<array_size(systems_stack); i++) {
       for (int j=0; j<array_size(systems_stack[i].planets); j++) {
@@ -570,8 +566,7 @@ const char* space_getRndPlanet( int landable, unsigned int services,
  */
 double system_getClosest( const StarSystem *sys, int *pnt, int *jp, int *ast, int *fie, double x, double y )
 {
-   int k;
-   double d, td;
+   double d;
 
    /* Default output. */
    *pnt = -1;
@@ -582,6 +577,7 @@ double system_getClosest( const StarSystem *sys, int *pnt, int *jp, int *ast, in
 
    /* Planets. */
    for (int i=0; i<array_size(sys->planets); i++) {
+      double td;
       Planet *p  = sys->planets[i];
       if (!planet_isKnown(p))
          continue;
@@ -595,7 +591,8 @@ double system_getClosest( const StarSystem *sys, int *pnt, int *jp, int *ast, in
    /* Asteroids. */
    for (int i=0; i<array_size(sys->asteroids); i++) {
       AsteroidAnchor *f = &sys->asteroids[i];
-      for (k=0; k<f->nb; k++) {
+      for (int k=0; k<f->nb; k++) {
+         double td;
          Asteroid *as = &f->asteroids[k];
 
          /* Skip invisible asteroids */
@@ -618,6 +615,7 @@ double system_getClosest( const StarSystem *sys, int *pnt, int *jp, int *ast, in
 
    /* Jump points. */
    for (int i=0; i<array_size(sys->jumps); i++) {
+      double td;
       JumpPoint *j  = &sys->jumps[i];
       if (!jp_isKnown(j))
          continue;
@@ -887,7 +885,6 @@ int planet_hasSystem( const char* planetname )
    for (int i=0; i<array_size(planetname_stack); i++)
       if (strcmp(planetname_stack[i],planetname)==0)
          return 1;
-
    return 0;
 }
 
@@ -903,7 +900,6 @@ char* planet_getSystem( const char* planetname )
    for (int i=0; i<array_size(planetname_stack); i++)
       if (strcmp(planetname_stack[i],planetname)==0)
          return systemname_stack[i];
-
    DEBUG(_("Planet '%s' not found in planetname stack"), planetname);
    return NULL;
 }
@@ -925,7 +921,7 @@ static int planet_cmp( const void *p1, const void *p2 )
 Planet* planet_get( const char* planetname )
 {
    if (planetname==NULL) {
-      WARN(_("Trying to find NULL planet..."));
+      WARN(_("Trying to find NULL planet…"));
       return NULL;
    }
 
@@ -1295,15 +1291,6 @@ void space_checkLand (void)
  */
 void space_update( const double dt )
 {
-   double x, y;
-   Damage dmg;
-   HookParam hparam[3];
-   Debris *d;
-   Pilot *pplayer;
-   Solid *psolid;
-   int found_something;
-   Pilot *const* pilot_stack;
-
    /* Needs a current system. */
    if (cur_system == NULL)
       return;
@@ -1317,6 +1304,8 @@ void space_update( const double dt )
     */
    nebu_update( dt );
    if (cur_system->nebu_volatility > 0.) {
+      Pilot *const* pilot_stack;
+      Damage dmg;
       dmg.type          = dtype_get("nebula");
       dmg.damage        = cur_system->nebu_volatility * dt;
       dmg.penetration   = 1.; /* Full penetration. */
@@ -1342,10 +1331,12 @@ void space_update( const double dt )
    }
 
    if (!space_simulating) {
-      found_something = 0;
+      int found_something = 0;
       /* Planet updates */
       for (int i=0; i<array_size(cur_system->planets); i++) {
          if ((!planet_isKnown( cur_system->planets[i] )) && ( pilot_inRangePlanet( player.p, i ))) {
+            HookParam hparam[3];
+
             planet_setKnown( cur_system->planets[i] );
             player_message( _("You discovered #%c%s#0."),
                   planet_getColourChar( cur_system->planets[i] ),
@@ -1364,6 +1355,8 @@ void space_update( const double dt )
       /* Jump point updates */
       for (int i=0; i<array_size(cur_system->jumps); i++) {
          if ((!jp_isKnown( &cur_system->jumps[i] )) && ( pilot_inRangeJump( player.p, i ))) {
+            HookParam hparam[3];
+
             jp_setFlag( &cur_system->jumps[i], JP_KNOWN );
             player_message( _("You discovered a Jump Point.") );
             hparam[0].type  = HOOK_PARAM_STRING;
@@ -1387,6 +1380,8 @@ void space_update( const double dt )
 
    /* Asteroids/Debris update */
    for (int i=0; i<array_size(cur_system->asteroids); i++) {
+      double x, y;
+      Pilot *pplayer;
       AsteroidAnchor *ast = &cur_system->asteroids[i];
 
       for (int j=0; j<ast->nb; j++) {
@@ -1404,8 +1399,8 @@ void space_update( const double dt )
             a->timer += dt;
             if (a->timer >= ASTEROID_EXPLODE_INTERVAL) {
                a->timer = 0.;
-               if ( (RNGF() < ASTEROID_EXPLODE_CHANCE) ||
-                     (space_isInField(&a->pos) < 0) ) {
+               if ((RNGF() < ASTEROID_EXPLODE_CHANCE) ||
+                     (space_isInField(&a->pos) < 0)) {
                   asteroid_explode( a, ast, 0 );
                }
             }
@@ -1431,37 +1426,39 @@ void space_update( const double dt )
          else if (a->appearing == ASTEROID_EXPLODING) {
             /* Exploding asteroid */
             a->timer += dt;
-            if (a->timer >= .5) {
+            if (a->timer >= 0.5) {
                /* Make it explode */
                asteroid_explode( a, ast, 1 );
             }
          }
       }
 
-      x = 0;
-      y = 0;
+      x = 0.;
+      y = 0.;
       pplayer = pilot_get( PLAYER_ID );
       if (pplayer != NULL) {
-         psolid  = pplayer->solid;
+         Solid *psolid  = pplayer->solid;
          x = psolid->vel.x;
          y = psolid->vel.y;
       }
 
-      for (int j=0; j<ast->ndebris; j++) {
-         d = &ast->debris[j];
+      if (!space_simulating) {
+         for (int j=0; j<ast->ndebris; j++) {
+            Debris *d = &ast->debris[j];
 
-         d->pos.x += (d->vel.x-x) * dt;
-         d->pos.y += (d->vel.y-y) * dt;
+            d->pos.x += (d->vel.x-x) * dt;
+            d->pos.y += (d->vel.y-y) * dt;
 
-         /* Check boundaries */
-         if (d->pos.x > SCREEN_W + DEBRIS_BUFFER)
-            d->pos.x -= SCREEN_W + 2*DEBRIS_BUFFER;
-         else if (d->pos.y > SCREEN_H + DEBRIS_BUFFER)
-            d->pos.y -= SCREEN_H + 2*DEBRIS_BUFFER;
-         else if (d->pos.x < -DEBRIS_BUFFER)
-            d->pos.x += SCREEN_W + 2*DEBRIS_BUFFER;
-         else if (d->pos.y < -DEBRIS_BUFFER)
-            d->pos.y += SCREEN_H + 2*DEBRIS_BUFFER;
+            /* Check boundaries */
+            if (d->pos.x > SCREEN_W + DEBRIS_BUFFER)
+               d->pos.x -= SCREEN_W + 2*DEBRIS_BUFFER;
+            else if (d->pos.y > SCREEN_H + DEBRIS_BUFFER)
+               d->pos.y -= SCREEN_H + 2*DEBRIS_BUFFER;
+            else if (d->pos.x < -DEBRIS_BUFFER)
+               d->pos.x += SCREEN_W + 2*DEBRIS_BUFFER;
+            else if (d->pos.y < -DEBRIS_BUFFER)
+               d->pos.y += SCREEN_H + 2*DEBRIS_BUFFER;
+         }
       }
    }
 }
@@ -1482,7 +1479,7 @@ unsigned int space_isSimulation( void )
  */
 void space_init( const char* sysname )
 {
-   char* nt;
+   char *nt;
    int n, s;
 
    /* cleanup some stuff */
