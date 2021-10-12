@@ -478,7 +478,7 @@ function approach_chuckaluck ()
       { _("Leave"), "leave" },
    } )
    vn.label( "explanation" )
-   dealer(_([["Chuck-a-luck is a straight-forward game. You make your bet and then place a wager on what number the dice will come up as. If the number you chose matches one die, you get win a token for each 1000 credits you bet. If you match two dice, you get double the amount of tokens. Furthermore, if you match all three dice, you get ten times the amount of tokens!"]]))
+   dealer(_([["Chuck-a-luck is a straight-forward game. You make your bet and then place a wager on what number the dice will come up as. If the number you chose matches one die, you win a token for each 1000 credits you bet. If you match two dice, you get double the amount of tokens. Furthermore, if you match all three dice, you get ten times the amount of tokens!"]]))
    vn.jump("menu")
 
    vn.label( "chuckaluck" )
