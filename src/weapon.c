@@ -177,9 +177,7 @@ void weapon_init (void)
 void weapon_minimap( const double res, const double w,
       const double h, const RadarShape shape, double alpha )
 {
-   int i, rc, p;
-   double x, y;
-   Weapon *wp;
+   int rc, p;
    const glColour *c;
    GLsizei offset;
    Pilot *par;
@@ -194,8 +192,9 @@ void weapon_minimap( const double res, const double w,
       rc = 0;
 
    /* Draw the points for weapons on all layers. */
-   for (i=0; i<array_size(wbackLayer); i++) {
-      wp = wbackLayer[i];
+   for (int i=0; i<array_size(wbackLayer); i++) {
+      double x, y;
+      Weapon *wp = wbackLayer[i];
 
       /* Make sure is in range. */
       if (!pilot_inRange( player.p, wp->solid->pos.x, wp->solid->pos.y ))
@@ -240,8 +239,9 @@ void weapon_minimap( const double res, const double w,
       /* "Add" pixel. */
       p++;
    }
-   for (i=0; i<array_size(wfrontLayer); i++) {
-      wp = wfrontLayer[i];
+   for (int i=0; i<array_size(wfrontLayer); i++) {
+      double x, y;
+      Weapon *wp = wfrontLayer[i];
 
       /* Make sure is in range. */
       if (!pilot_inRange( player.p, wp->solid->pos.x, wp->solid->pos.y ))
@@ -472,7 +472,7 @@ static void think_beam( Weapon* w, const double dt )
    t = (w->target != w->parent) ? pilot_get(w->target) : NULL;
 
    /* Check the beam is still in range. */
-   if(slot->inrange) {
+   if (slot->inrange) {
       turn_off = 1;
       if (t != NULL) {
          if (vect_dist( &p->solid->pos, &t->solid->pos ) <= slot->outfit->u.bem.range)
@@ -564,11 +564,6 @@ void weapons_update( const double dt )
 static void weapons_updateLayer( const double dt, const WeaponLayer layer )
 {
    Weapon **wlayer;
-   Weapon *w;
-   int i;
-   int spfx;
-   int s;
-   Pilot *p;
 
    /* Choose layer. */
    switch (layer) {
@@ -584,8 +579,8 @@ static void weapons_updateLayer( const double dt, const WeaponLayer layer )
          return;
    }
 
-   for (i=0; i<array_size(wlayer); i++) {
-      w = wlayer[i];
+   for (int i=0; i<array_size(wlayer); i++) {
+      Weapon *w = wlayer[i];
 
       /* Ignore destroyed wapons. */
       if (weapon_isFlag(w, WEAPON_FLAG_DESTROYED))
@@ -599,7 +594,7 @@ static void weapons_updateLayer( const double dt, const WeaponLayer layer )
 
             w->timer -= dt;
             if (w->timer < 0.) {
-               spfx = -1;
+               int spfx = -1;
                /* See if we need armour death sprite. */
                if (outfit_isProp(w->outfit, OUTFIT_PROP_WEAP_BLOWUP_ARMOUR))
                   spfx = outfit_spfxArmour(w->outfit);
@@ -608,6 +603,7 @@ static void weapons_updateLayer( const double dt, const WeaponLayer layer )
                   spfx = outfit_spfxShield(w->outfit);
                /* Add death sprite if needed. */
                if (spfx != -1) {
+                  int s;
                   spfx_add( spfx, w->solid->pos.x, w->solid->pos.y,
                         w->solid->vel.x, w->solid->vel.y,
                         SPFX_LAYER_MIDDLE ); /* presume middle. */
@@ -629,7 +625,7 @@ static void weapons_updateLayer( const double dt, const WeaponLayer layer )
          case OUTFIT_TYPE_TURRET_BOLT:
             w->timer -= dt;
             if (w->timer < 0.) {
-               spfx = -1;
+               int spfx = -1;
                /* See if we need armour death sprite. */
                if (outfit_isProp(w->outfit, OUTFIT_PROP_WEAP_BLOWUP_ARMOUR))
                   spfx = outfit_spfxArmour(w->outfit);
@@ -638,6 +634,7 @@ static void weapons_updateLayer( const double dt, const WeaponLayer layer )
                   spfx = outfit_spfxShield(w->outfit);
                /* Add death sprite if needed. */
                if (spfx != -1) {
+                  int s;
                   spfx_add( spfx, w->solid->pos.x, w->solid->pos.y,
                         w->solid->vel.x, w->solid->vel.y,
                         SPFX_LAYER_MIDDLE ); /* presume middle. */
@@ -665,7 +662,7 @@ static void weapons_updateLayer( const double dt, const WeaponLayer layer )
             w->timer -= dt / (1.-pilot_heatAccuracyMod(w->mount->heat_T));
             if (w->timer < 0. || (w->outfit->u.bem.min_duration > 0. &&
                   w->mount->stimer < 0.)) {
-               p = pilot_get(w->parent);
+               Pilot *p = pilot_get(w->parent);
                if (p != NULL)
                   pilot_stopBeam(p, w->mount);
                weapon_destroy(w);
@@ -700,8 +697,7 @@ static void weapons_updateLayer( const double dt, const WeaponLayer layer )
  */
 static void weapons_purgeLayer( Weapon** layer )
 {
-   int i;
-   for (i=0; i<array_size(layer); i++) {
+   for (int i=0; i<array_size(layer); i++) {
       if (weapon_isFlag(layer[i],WEAPON_FLAG_DESTROYED)) {
          weapon_free(layer[i]);
          array_erase( &layer, &layer[i], &layer[i+1] );
@@ -720,7 +716,6 @@ static void weapons_purgeLayer( Weapon** layer )
 void weapons_render( const WeaponLayer layer, const double dt )
 {
    Weapon** wlayer;
-   int i;
 
    switch (layer) {
       case WEAPON_LAYER_BG:
@@ -735,12 +730,13 @@ void weapons_render( const WeaponLayer layer, const double dt )
          return;
    }
 
-   for (i=0; i<array_size(wlayer); i++)
+   for (int i=0; i<array_size(wlayer); i++)
       weapon_render( wlayer[i], dt );
 }
 
 
-static void weapon_renderBeam( Weapon* w, const double dt ) {
+static void weapon_renderBeam( Weapon* w, const double dt )
+{
    double x, y, z;
    gl_Matrix4 projection;
 
@@ -957,7 +953,7 @@ static int weapon_checkCanHit( const Weapon* w, const Pilot *p )
  */
 static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
 {
-   int i, j, b, psx, psy, k, n;
+   int b, psx, psy, k, n;
    unsigned int coll, usePoly=1;
    const glTexture *gfx;
    const CollPoly *plg, *polygon;
@@ -1008,7 +1004,7 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
       }
    }
 
-   for (i=0; i<array_size(pilot_stack); i++) {
+   for (int i=0; i<array_size(pilot_stack); i++) {
       p = pilot_stack[i];
 
       psx = pilot_stack[i]->tsx;
@@ -1086,9 +1082,9 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
 
    /* Collide with asteroids*/
    if (outfit_isAmmo(w->outfit)) {
-      for (i=0; i<array_size(cur_system->asteroids); i++) {
+      for (int i=0; i<array_size(cur_system->asteroids); i++) {
          ast = &cur_system->asteroids[i];
-         for (j=0; j<ast->nb; j++) {
+         for (int j=0; j<ast->nb; j++) {
             a = &ast->asteroids[j];
             at = space_getType ( a->type );
             if ( ((a->appearing == ASTEROID_VISIBLE)||(a->appearing == ASTEROID_EXPLODING)) &&
@@ -1102,9 +1098,9 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
       }
    }
    else if (outfit_isBolt(w->outfit)) {
-      for (i=0; i<array_size(cur_system->asteroids); i++) {
+      for (int i=0; i<array_size(cur_system->asteroids); i++) {
          ast = &cur_system->asteroids[i];
-         for (j=0; j<ast->nb; j++) {
+         for (int j=0; j<ast->nb; j++) {
             a = &ast->asteroids[j];
             at = space_getType ( a->type );
             if ( ((a->appearing == ASTEROID_VISIBLE)||(a->appearing == ASTEROID_EXPLODING)) &&
@@ -1118,9 +1114,9 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
       }
    }
    else if (b) { /* Beam */
-      for (i=0; i<array_size(cur_system->asteroids); i++) {
+      for (int i=0; i<array_size(cur_system->asteroids); i++) {
          ast = &cur_system->asteroids[i];
-         for (j=0; j<ast->nb; j++) {
+         for (int j=0; j<ast->nb; j++) {
             a = &ast->asteroids[j];
             at = space_getType ( a->type );
             if ( ((a->appearing == ASTEROID_VISIBLE)||(a->appearing == ASTEROID_EXPLODING)) &&
@@ -1189,10 +1185,6 @@ static void weapon_sample_trail( Weapon* w )
  */
 static void weapon_hitAI( Pilot *p, Pilot *shooter, double dmg )
 {
-   int i;
-   double d;
-   Pilot *const* pilot_stack;
-
    /* Must be a valid shooter. */
    if (shooter == NULL)
       return;
@@ -1203,7 +1195,7 @@ static void weapon_hitAI( Pilot *p, Pilot *shooter, double dmg )
 
    /* Player is handled differently. */
    if (shooter->faction == FACTION_PLAYER) {
-      pilot_stack = pilot_getAll();
+      Pilot *const* pilot_stack = pilot_getAll();
 
       /* Increment damage done to by player. */
       p->player_damage += dmg / (p->shield_max + p->armour_max);
@@ -1215,7 +1207,9 @@ static void weapon_hitAI( Pilot *p, Pilot *shooter, double dmg )
          ai_attacked( p, shooter->id, dmg );
 
          /* Trigger a pseudo-distress that incurs no faction loss. */
-         for (i=0; i<array_size(pilot_stack); i++) {
+         for (int i=0; i<array_size(pilot_stack); i++) {
+            double d;
+
             /* Skip if unsuitable. */
             if ((pilot_stack[i]->ai == NULL) || (pilot_stack[i]->id == p->id) ||
                   (pilot_isFlag(pilot_stack[i], PILOT_DEAD)) ||
@@ -1227,7 +1221,7 @@ static void weapon_hitAI( Pilot *p, Pilot *shooter, double dmg )
              * will immediately notice hostile actions.
              */
             d = vect_dist2( &p->solid->pos, &pilot_stack[i]->solid->pos );
-            if (d > (pilot_sensorRange() * 0.04 )) /* 0.2^2 */
+            if (d > pow2( pilot_sensorRange() * 0.2 )) /* 0.2^2 */
                continue;
 
             /* Send AI the distress signal. */
@@ -1409,7 +1403,6 @@ static void weapon_hitAstBeam( Weapon* w, Asteroid* a, WeaponLayer layer,
       Vector2d pos[2], const double dt )
 {
    (void) layer;
-   int spfx;
    Damage dmg;
    const Damage *odmg;
 
@@ -1424,7 +1417,7 @@ static void weapon_hitAstBeam( Weapon* w, Asteroid* a, WeaponLayer layer,
 
    /* Add sprite. */
    if (w->timer2 == -1.) {
-      spfx = outfit_spfxArmour(w->outfit);
+      int spfx = outfit_spfxArmour(w->outfit);
 
       /* Add graphic. */
       spfx_add( spfx, pos[0].x, pos[0].y,
@@ -1456,9 +1449,9 @@ static double weapon_aimTurret( const Outfit *outfit, const Pilot *parent,
    Asteroid *ast;
    Vector2d *target_pos;
    Vector2d *target_vel;
-   double rdir, lead;
+   double rdir;
    double rx, ry, x, y, t;
-   double off, trackmin, trackmax;
+   double off;
 
    if (pilot_target != NULL) {
       target_pos = &pilot_target->solid->pos;
@@ -1492,9 +1485,9 @@ static double weapon_aimTurret( const Outfit *outfit, const Pilot *parent,
 
    if (pilot_target != NULL) {
       /* Lead angle is determined from ewarfare. */
-      trackmin = outfit_trackmin(outfit);
-      trackmax = outfit_trackmax(outfit);
-      lead     = pilot_ewWeaponTrack( parent, pilot_target, trackmin, trackmax );
+      double trackmin = outfit_trackmin(outfit);
+      double trackmax = outfit_trackmax(outfit);
+      double lead     = pilot_ewWeaponTrack( parent, pilot_target, trackmin, trackmax );
       x        = lead * x + (1.-lead) * rx;
       y        = lead * y + (1.-lead) * ry;
    }
@@ -1707,7 +1700,6 @@ static Weapon* weapon_create( const Outfit* outfit, double T,
    Pilot *pilot_target;
    AsteroidAnchor *field;
    Asteroid *ast;
-
    Weapon* w;
 
    /* Create basic features */
@@ -1931,7 +1923,6 @@ unsigned int beam_start( const Outfit* outfit,
  */
 void beam_end( const unsigned int parent, unsigned int beam )
 {
-   int i;
    WeaponLayer layer;
    Weapon **curLayer;
 
@@ -1959,7 +1950,7 @@ void beam_end( const unsigned int parent, unsigned int beam )
 #endif /* DEBUGGING */
 
    /* Now try to destroy the beam. */
-   for (i=0; i<array_size(curLayer); i++) {
+   for (int i=0; i<array_size(curLayer); i++) {
       if (curLayer[i]->ID == beam) { /* Found it. */
          weapon_destroy(curLayer[i]);
          break;
@@ -1987,9 +1978,7 @@ static void weapon_destroy( Weapon* w )
  */
 static void weapon_free( Weapon* w )
 {
-   Pilot *pilot_target;
-
-   pilot_target = pilot_get( w->target );
+   Pilot *pilot_target = pilot_get( w->target );
 
    /* Decrement target lockons if needed */
    if (pilot_target != NULL) {
@@ -2026,14 +2015,13 @@ static void weapon_free( Weapon* w )
  */
 void weapon_clear (void)
 {
-   int i;
    /* Don't forget to stop the sounds. */
-   for (i=0; i < array_size(wbackLayer); i++) {
+   for (int i=0; i < array_size(wbackLayer); i++) {
       sound_stop(wbackLayer[i]->voice);
       weapon_free(wbackLayer[i]);
    }
    array_erase( &wbackLayer, array_begin(wbackLayer), array_end(wbackLayer) );
-   for (i=0; i < array_size(wfrontLayer); i++) {
+   for (int i=0; i < array_size(wfrontLayer); i++) {
       sound_stop(wfrontLayer[i]->voice);
       weapon_free(wfrontLayer[i]);
    }
@@ -2068,8 +2056,8 @@ void weapon_explode( double x, double y, double radius,
       int dtype, double damage,
       const Pilot *parent, int mode )
 {
-   (void)dtype;
-   (void)damage;
+   (void) dtype;
+   (void) damage;
    weapon_explodeLayer( WEAPON_LAYER_FG, x, y, radius, parent, mode );
    weapon_explodeLayer( WEAPON_LAYER_BG, x, y, radius, parent, mode );
 }
@@ -2083,9 +2071,8 @@ static void weapon_explodeLayer( WeaponLayer layer,
       const Pilot *parent, int mode )
 {
    (void)parent;
-   int i;
    Weapon **curLayer;
-   double dist, rad2;
+   double rad2;
 
    /* set the proper layer */
    switch (layer) {
@@ -2104,11 +2091,11 @@ static void weapon_explodeLayer( WeaponLayer layer,
    rad2 = radius*radius;
 
    /* Now try to destroy the weapons affected. */
-   for (i=0; i<array_size(curLayer); i++) {
+   for (int i=0; i<array_size(curLayer); i++) {
       if (((mode & EXPL_MODE_MISSILE) && outfit_isAmmo(curLayer[i]->outfit)) ||
             ((mode & EXPL_MODE_BOLT) && outfit_isBolt(curLayer[i]->outfit))) {
 
-         dist = pow2(curLayer[i]->solid->pos.x - x) +
+         double dist = pow2(curLayer[i]->solid->pos.x - x) +
                pow2(curLayer[i]->solid->pos.y - y);
 
          if (dist < rad2)
@@ -2116,5 +2103,3 @@ static void weapon_explodeLayer( WeaponLayer layer,
       }
    }
 }
-
-
