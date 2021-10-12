@@ -20,7 +20,6 @@
 #include "log.h"
 #include "nluadef.h"
 
-
 /**
  * @brief Our cute little linear program wrapper.
  */
@@ -29,7 +28,6 @@ typedef struct LuaLinOpt_s {
    int nrows;        /**< Number of auxiliary variables (constraints). */
    glp_prob *prob;   /**< Problem structure itself. */
 } LuaLinOpt_t;
-
 
 /* Optim metatable methods. */
 static int linoptL_gc( lua_State *L );
@@ -58,9 +56,6 @@ static const luaL_Reg linoptL_methods[] = {
    {0,0}
 }; /**< Optim metatable methods. */
 
-
-
-
 /**
  * @brief Loads the linopt library.
  *
@@ -72,7 +67,6 @@ int nlua_loadLinOpt( nlua_env env )
    nlua_register(env, LINOPT_METATABLE, linoptL_methods, 1);
    return 0;
 }
-
 
 /**
  * @brief Lua bindings to interact with linopts.
@@ -90,6 +84,7 @@ LuaLinOpt_t* lua_tolinopt( lua_State *L, int ind )
 {
    return (LuaLinOpt_t*) lua_touserdata(L,ind);
 }
+
 /**
  * @brief Gets linopt at index or raises error if there is no linopt at index.
  *
@@ -104,6 +99,7 @@ LuaLinOpt_t* luaL_checklinopt( lua_State *L, int ind )
    luaL_typerror(L, ind, LINOPT_METATABLE);
    return NULL;
 }
+
 /**
  * @brief Pushes a linopt on the stack.
  *
@@ -120,6 +116,7 @@ LuaLinOpt_t* lua_pushlinopt( lua_State *L, LuaLinOpt_t linopt )
    lua_setmetatable(L, -2);
    return c;
 }
+
 /**
  * @brief Checks to see if ind is a linopt.
  *
@@ -143,7 +140,6 @@ int lua_islinopt( lua_State *L, int ind )
    return ret;
 }
 
-
 /**
  * @brief Frees a linopt.
  *
@@ -156,7 +152,6 @@ static int linoptL_gc( lua_State *L )
    glp_delete_prob(lp->prob);
    return 0;
 }
-
 
 /**
  * @brief Compares two linopts to see if they are the same.
@@ -174,7 +169,6 @@ static int linoptL_eq( lua_State *L )
    lua_pushboolean( L, (memcmp( lp1, lp2, sizeof(LuaLinOpt_t))==0) );
    return 1;
 }
-
 
 /**
  * @brief Opens a new linopt.
@@ -215,7 +209,6 @@ static int linoptL_new( lua_State *L )
    return 1;
 }
 
-
 /**
  * @brief Adds columns to the linear program.
  *
@@ -231,7 +224,6 @@ static int linoptL_size( lua_State *L )
    lua_pushinteger( L, glp_get_num_rows( lp->prob ) );
    return 2;
 }
-
 
 /**
  * @brief Adds columns to the linear program.
@@ -249,7 +241,6 @@ static int linoptL_addcols( lua_State *L )
    return 0;
 }
 
-
 /**
  * @brief Adds rows to the linear program.
  *
@@ -265,7 +256,6 @@ static int linoptL_addrows( lua_State *L )
    lp->nrows += toadd;
    return 0;
 }
-
 
 /**
  * @brief Adds an optimization column.
@@ -326,7 +316,6 @@ static int linoptL_setcol( lua_State *L )
    return 0;
 }
 
-
 /**
  * @brief Adds an optimization row.
  *
@@ -370,7 +359,6 @@ static int linoptL_setrow( lua_State *L )
    return 0;
 }
 
-
 /**
  * @brief Loads the entire matrix for the linear program.
  *
@@ -382,7 +370,7 @@ static int linoptL_setrow( lua_State *L )
  */
 static int linoptL_loadmatrix( lua_State *L )
 {
-   size_t i, n;
+   size_t n;
    int *ia, *ja;
    double *ar;
    LuaLinOpt_t *lp   = luaL_checklinopt(L,1);
@@ -401,7 +389,7 @@ static int linoptL_loadmatrix( lua_State *L )
    ia = calloc( n+1, sizeof(int) );
    ja = calloc( n+1, sizeof(int) );
    ar = calloc( n+1, sizeof(double) );
-   for (i=1; i<=n; i++) {
+   for (size_t i=1; i<=n; i++) {
       lua_rawgeti(L, 2, i);
       lua_rawgeti(L, 3, i);
       lua_rawgeti(L, 4, i);
@@ -426,7 +414,6 @@ static int linoptL_loadmatrix( lua_State *L )
    free(ar);
    return 0;
 }
-
 
 static const char* linopt_error( int retval )
 {
@@ -472,56 +459,71 @@ static const char* linopt_error( int retval )
          return "Unknown error.";
    }
 }
+#if 0 /* GLPK Defaults. */
+#define BR_TECH_DEF  GLP_BR_DTH
+#define BT_TECH_DEF  GLP_BT_BLB
+#define PP_TECH_DEF  GLP_PP_ALL
+#define SR_HEUR_DEF  GLP_ON
+#define FP_HEUR_DEF  GLP_OFF
+#define PS_HEUR_DEF  GLP_OFF
+#define GMI_CUTS_DEF GLP_OFF
+#define MIR_CUTS_DEF GLP_OFF
+#define COV_CUTS_DEF GLP_OFF
+#define CLQ_CUTS_DEF GLP_OFF
+#endif
+/* Customized "optimal" defaults. */
+#define BR_TECH_DEF  GLP_BR_PCH
+#define BT_TECH_DEF  GLP_BT_DFS
+#define PP_TECH_DEF  GLP_PP_ALL
+#define SR_HEUR_DEF  GLP_ON
+#define FP_HEUR_DEF  GLP_OFF
+#define PS_HEUR_DEF  GLP_OFF
+#define GMI_CUTS_DEF GLP_ON
+#define MIR_CUTS_DEF GLP_OFF
+#define COV_CUTS_DEF GLP_ON
+#define CLQ_CUTS_DEF GLP_ON
 #define STRCHK( val, ret ) if (strcmp(str,(val))==0) return (ret);
-static int opt_br_tech( const char *str )
+static int opt_br_tech( const char *str, int def )
 {
-   if (str==NULL) return GLP_BR_DTH;
+   if (str==NULL) return def;
    STRCHK( "ffv", GLP_BR_FFV );
    STRCHK( "lfv", GLP_BR_LFV );
    STRCHK( "mfv", GLP_BR_MFV );
    STRCHK( "dth", GLP_BR_DTH );
    STRCHK( "pch", GLP_BR_PCH );
    WARN("Unknown br_tech value '%s'", str);
-   return GLP_BR_DTH;
+   return def;
 }
-static int opt_bt_tech( const char *str )
+static int opt_bt_tech( const char *str, int def )
 {
-   if (str==NULL) return GLP_BT_BLB;
+   if (str==NULL) return def;
    STRCHK( "dfs", GLP_BT_DFS );
    STRCHK( "bfs", GLP_BT_BFS );
    STRCHK( "blb", GLP_BT_BLB );
    STRCHK( "bph", GLP_BT_BPH );
    WARN("Unknown bt_tech value '%s'", str);
-   return GLP_BT_BLB;
+   return def;
 }
-static int opt_pp_tech( const char *str )
+static int opt_pp_tech( const char *str, int def )
 {
-   if (str==NULL) return GLP_PP_ALL;
+   if (str==NULL) return def;
    STRCHK( "none", GLP_PP_NONE );
    STRCHK( "root", GLP_PP_ROOT );
    STRCHK( "all", GLP_PP_ALL );
    WARN("Unknown pp_tech value '%s'", str);
-   return GLP_PP_ALL;
+   return def;
 }
-static int opt_onoff( const char *str )
+static int opt_onoff( const char *str, int def )
 {
-   if (str==NULL) return GLP_ON;
+   if (str==NULL) return def;
    STRCHK( "on", GLP_ON );
    STRCHK( "off", GLP_OFF );
    WARN("Unknown onoff value '%s'", str);
-   return GLP_ON;
-}
-static int opt_offon( const char *str )
-{
-   if (str==NULL) return GLP_OFF;
-   STRCHK( "on", GLP_ON );
-   STRCHK( "off", GLP_OFF );
-   WARN("Unknown offon value '%s'", str);
-   return GLP_OFF;
+   return def;
 }
 #undef STRCHK
 
-#define GETOPT_IOCP( name, func ) do {lua_getfield(L,2,#name); parm_iocp.name = func( luaL_optstring(L,-1,NULL) ); lua_pop(L,1); } while (0)
+#define GETOPT_IOCP( name, func, def ) do {lua_getfield(L,2,#name); parm_iocp.name = func( luaL_optstring(L,-1,NULL), def ); lua_pop(L,1); } while (0)
 /**
  * @brief Solves the linear optimization problem.
  *
@@ -532,10 +534,9 @@ static int opt_offon( const char *str )
  */
 static int linoptL_solve( lua_State *L )
 {
-   LuaLinOpt_t *lp   = luaL_checklinopt(L,1);
+   LuaLinOpt_t *lp = luaL_checklinopt(L,1);
    double z;
-   //const char *name;
-   int ret, i, ismip;
+   int ret, ismip;
    glp_iocp parm_iocp;
    glp_smcp parm_smcp;
 
@@ -554,16 +555,16 @@ static int linoptL_solve( lua_State *L )
    /* Load parameters. */
    if (!lua_isnoneornil(L,2)) {
       if (ismip) {
-         GETOPT_IOCP( br_tech, opt_br_tech );
-         GETOPT_IOCP( bt_tech, opt_bt_tech );
-         GETOPT_IOCP( pp_tech, opt_pp_tech );
-         GETOPT_IOCP( sr_heur, opt_onoff );
-         GETOPT_IOCP( fp_heur, opt_offon );
-         GETOPT_IOCP( ps_heur, opt_offon );
-         GETOPT_IOCP( gmi_cuts, opt_offon );
-         GETOPT_IOCP( mir_cuts, opt_offon );
-         GETOPT_IOCP( cov_cuts, opt_offon );
-         GETOPT_IOCP( clq_cuts, opt_offon );
+         GETOPT_IOCP( br_tech,  opt_br_tech, BR_TECH_DEF );
+         GETOPT_IOCP( bt_tech,  opt_bt_tech, BT_TECH_DEF );
+         GETOPT_IOCP( pp_tech,  opt_pp_tech, PP_TECH_DEF );
+         GETOPT_IOCP( sr_heur,  opt_onoff,   SR_HEUR_DEF );
+         GETOPT_IOCP( fp_heur,  opt_onoff,   FP_HEUR_DEF );
+         GETOPT_IOCP( ps_heur,  opt_onoff,   PS_HEUR_DEF );
+         GETOPT_IOCP( gmi_cuts, opt_onoff,   GMI_CUTS_DEF );
+         GETOPT_IOCP( mir_cuts, opt_onoff,   MIR_CUTS_DEF );
+         GETOPT_IOCP( cov_cuts, opt_onoff,   COV_CUTS_DEF );
+         GETOPT_IOCP( clq_cuts, opt_onoff,   CLQ_CUTS_DEF );
       }
       else {
       }
@@ -595,7 +596,7 @@ static int linoptL_solve( lua_State *L )
 
    /* Go over variables and store them. */
    lua_newtable(L); /* t */
-   for (i=1; i<=lp->ncols; i++) {
+   for (int i=1; i<=lp->ncols; i++) {
       if (ismip)
          z = glp_mip_col_val( lp->prob, i );
       else
@@ -606,7 +607,7 @@ static int linoptL_solve( lua_State *L )
 
    /* Go over constraints and store them. */
    lua_newtable(L); /* t */
-   for (i=1; i<=lp->nrows; i++) {
+   for (int i=1; i<=lp->nrows; i++) {
       if (ismip)
          z = glp_mip_row_val( lp->prob, i );
       else
@@ -617,7 +618,7 @@ static int linoptL_solve( lua_State *L )
 
    return 3;
 }
-
+#undef GETOPT_IOCP
 
 /**
  * @brief Writes a optimization problem to a file for debugging purposes.
