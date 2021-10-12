@@ -2401,7 +2401,7 @@ void pilot_sample_trails( Pilot* p, int none )
    /* Skip if far away (pretty heuristic-based but seems to work). */
    cam_getPos( &cx, &cy );
    d2 = pow2(cx-p->solid->pos.x) + pow2(cy-p->solid->pos.y);
-   if (d2 > pow2( MAX(SCREEN_W,SCREEN_H) * conf.zoom_far * 2. ))
+   if (d2 > pow2( MAX(SCREEN_W,SCREEN_H) / conf.zoom_far * 2. ))
       return;
 
    dircos = cos(p->solid->dir);
