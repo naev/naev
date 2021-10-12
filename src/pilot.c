@@ -80,7 +80,7 @@ static void pilot_refuel( Pilot *p, double dt );
 static void pilot_dead( Pilot* p, unsigned int killer );
 /* Misc. */
 static void pilot_setCommMsg( Pilot *p, const char *s );
-static int pilot_getStackPos( const unsigned int id );
+static int pilot_getStackPos( unsigned int id );
 static void pilot_init_trails( Pilot* p );
 static int pilot_trail_generated( Pilot* p, int generator );
 
@@ -108,7 +108,7 @@ static int compid(const void *id, const void *p) {
  *    @param id ID of the pilot to get.
  *    @return Position of pilot in stack or -1 if not found.
  */
-static int pilot_getStackPos( const unsigned int id )
+static int pilot_getStackPos( unsigned int id )
 {
    /* binary search */
    Pilot **pp = bsearch(&id, pilot_stack, array_size(pilot_stack), sizeof(Pilot*), compid);
@@ -126,7 +126,7 @@ static int pilot_getStackPos( const unsigned int id )
  *    @param mode Method to use when cycling.  0 is normal, 1 is hostiles.
  *    @return ID of next pilot or PLAYER_ID if no next pilot.
  */
-unsigned int pilot_getNextID( const unsigned int id, int mode )
+unsigned int pilot_getNextID( unsigned int id, int mode )
 {
    int m, p;
 
@@ -175,7 +175,7 @@ unsigned int pilot_getNextID( const unsigned int id, int mode )
  *    @param mode Method to use when cycling.  0 is normal, 1 is hostiles.
  *    @return ID of previous pilot or PLAYER_ID if no previous pilot.
  */
-unsigned int pilot_getPrevID( const unsigned int id, int mode )
+unsigned int pilot_getPrevID( unsigned int id, int mode )
 {
    int m, p;
 
@@ -599,7 +599,7 @@ double pilot_getNearestAng( const Pilot *p, unsigned int *tp, double ang, int di
  *    @param id ID of the pilot to get.
  *    @return The actual pilot who has matching ID or NULL if not found.
  */
-Pilot* pilot_get( const unsigned int id )
+Pilot* pilot_get( unsigned int id )
 {
    int m;
 
@@ -614,6 +614,31 @@ Pilot* pilot_get( const unsigned int id )
       return pilot_stack[m];
 }
 
+
+/**
+ * @brief Gets the target of a pilot using a fancy caching system.
+ */
+Pilot* pilot_getTarget( Pilot *p )
+{
+   Pilot *t;
+
+   /* Case no target. */
+   if (p->target==p->id)
+      return NULL;
+
+   t = p->ptarget;
+   /* Return ptarget if exists and valid. */
+   if (t != NULL) {
+      if (pilot_isFlag( t, PILOT_DELETE )) {
+         p->ptarget = NULL;
+         t = NULL;
+      }
+      return t;
+   }
+
+   p->ptarget = pilot_get( p->target );
+   return p->ptarget;
+}
 
 /**
  * @brief Sets the pilot's thrust.
@@ -1235,7 +1260,7 @@ void pilot_distress( Pilot *p, Pilot *attacker, const char *msg, int ignore_int 
 
    /* Use the victim's target if the attacker is unknown. */
    if (attacker == NULL)
-      attacker = pilot_get( p->target );
+      attacker = pilot_getTarget( p );
 
    /* Now proceed to see if player.p should incur faction loss because
     * of the broadcast signal. */
@@ -1416,7 +1441,7 @@ void pilot_setTarget( Pilot* p, unsigned int id )
  *    @param reset Whether the shield timer should be reset.
  *    @return The real damage done.
  */
-double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
+double pilot_hit( Pilot* p, const Solid* w, unsigned int shooter,
       const Damage *dmg, int reset )
 {
    int mod;
@@ -1607,7 +1632,7 @@ double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
  *    @param p The pilot in question.
  *    @param shooter Attacker that shot the pilot.
  */
-void pilot_updateDisable( Pilot* p, const unsigned int shooter )
+void pilot_updateDisable( Pilot* p, unsigned int shooter )
 {
    HookParam hparam;
 
@@ -1960,13 +1985,7 @@ void pilot_update( Pilot* pilot, double dt )
    dt *= pilot->stats.time_speedup;
 
    /* Check target validity. */
-   if (pilot->target != pilot->id) {
-      target = pilot_get(pilot->target);
-      if (target == NULL)
-         pilot_setTarget( pilot, pilot->id );
-   }
-   else
-      target = NULL;
+   target = pilot_getTarget( pilot );
 
    cooling = pilot_isFlag(pilot, PILOT_COOLDOWN);
 
@@ -2458,8 +2477,7 @@ void pilot_delete( Pilot* p )
 
    /* Unmark as deployed if necessary */
    dockslot = pilot_getDockSlot( p );
-   if (dockslot != NULL)
-   {
+   if (dockslot != NULL) {
       dockslot->u.ammo.deployed--;
       p->dockpilot = 0;
       p->dockslot = -1;
@@ -2626,7 +2644,7 @@ void pilot_hyperspaceAbort( Pilot* p )
  */
 int pilot_refuelStart( Pilot *p )
 {
-   Pilot *target = pilot_get(p->target);
+   Pilot *target = pilot_getTarget( p );
    /* Check to see if target exists, remove flag if not. */
    if (target == NULL) {
       pilot_rmFlag(p, PILOT_REFUELING);
@@ -2659,7 +2677,7 @@ static void pilot_refuel( Pilot *p, double dt )
 {
    (void) dt;
    /* Check to see if target exists, remove flag if not. */
-   Pilot *target = pilot_get(p->target);
+   Pilot *target = pilot_getTarget( p );
    if (target == NULL) {
       pilot_rmFlag(p, PILOT_REFUELBOARDING);
       pilot_rmFlag(p, PILOT_REFUELING);
@@ -3339,7 +3357,7 @@ void pilots_cleanAll (void)
  */
 void pilots_update( double dt )
 {
-   /* Now update all the pilots. */
+   /* Have all the pilots think. */
    for (int i=0; i<array_size(pilot_stack); i++) {
       Pilot *p = pilot_stack[i];
 
@@ -3349,6 +3367,9 @@ void pilots_update( double dt )
          i--; /* Must decrement iterator. */
          continue;
       }
+
+      /* Clear target. */
+      p->ptarget = NULL;
 
       /* Invisible, not doing anything. */
       if (pilot_isFlag(p, PILOT_HIDE))

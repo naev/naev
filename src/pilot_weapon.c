@@ -118,11 +118,9 @@ static int pilot_weapSetFire( Pilot *p, PilotWeaponSet *ws, int level )
       time = INFINITY;  /* With no target we just set time to infinity. */
 
       /* Calculate time to target if it is there. */
-      if (p->target != p->id) {
-         pt = pilot_get( p->target );
-         if (pt != NULL)
-            time = pilot_weapFlyTime( o, p, &pt->solid->pos, &pt->solid->vel);
-      }
+      pt = pilot_getTarget( p );
+      if (pt != NULL)
+         time = pilot_weapFlyTime( o, p, &pt->solid->pos, &pt->solid->vel);
       /* Looking for a closer targeted asteroid */
       if (p->nav_asteroid != -1) {
          field = &cur_system->asteroids[p->nav_anchor];

@@ -1045,7 +1045,7 @@ static void player_renderAimHelper( double dt )
    glColour c, c2;
    Pilot *target;
 
-   target = pilot_get(player.p->target);
+   target = pilot_getTarget( player.p );
    if (target == NULL)
       return;
 
@@ -1149,7 +1149,7 @@ void player_think( Pilot* pplayer, const double dt )
    if (!facing && player_isFlag(PLAYER_FACE)) {
       /* Try to face pilot target. */
       if (player.p->target != PLAYER_ID) {
-         target = pilot_get(player.p->target);
+         target = pilot_getTarget( player.p );
          if (target != NULL) {
             pilot_face( pplayer,
                   vect_angle( &player.p->solid->pos, &target->solid->pos ));
@@ -2136,7 +2136,6 @@ void player_targetClearAll (void)
 void player_targetEscort( int prev )
 {
    int i;
-
    /* Check if current target is an escort. */
    for (i=0; i<array_size(player.p->escorts); i++) {
       if (player.p->target == player.p->escorts[i].id) {

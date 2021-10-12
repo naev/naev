@@ -83,7 +83,7 @@ void player_board (void)
        * However, perhaps looking for first boardable target within a certain range
        * could be more interesting. */
       player_targetNearest();
-      p = pilot_get(player.p->target);
+      p = pilot_getTarget( player.p );
       if ((!pilot_isDisabled(p) && !pilot_isFlag(p,PILOT_BOARDABLE)) ||
             pilot_isFlag(p,PILOT_NOBOARD)) {
          player_targetClear();
@@ -92,7 +92,7 @@ void player_board (void)
       }
    }
    else
-      p = pilot_get(player.p->target);
+      p = pilot_getTarget( player.p );
    c = pilot_getFactionColourChar( p );
 
    /* More checks. */
@@ -221,9 +221,7 @@ void board_exit( unsigned int wdw, const char *str )
 static void board_stealCreds( unsigned int wdw, const char *str )
 {
    (void)str;
-   Pilot* p;
-
-   p = pilot_get(player.p->target);
+   Pilot* p = pilot_getTarget( player.p );
 
    if (p->credits==0) { /* you can't steal from the poor */
       player_message(_("#oThe ship has no credits."));
@@ -249,9 +247,7 @@ static void board_stealCargo( unsigned int wdw, const char *str )
 {
    (void) str;
    int q;
-   Pilot* p;
-
-   p = pilot_get(player.p->target);
+   Pilot* p = pilot_getTarget( player.p );
 
    if (array_size(p->commodities)==0) { /* no cargo */
       player_message(_("#oThe ship has no cargo."));
@@ -287,9 +283,7 @@ static void board_stealCargo( unsigned int wdw, const char *str )
 static void board_stealFuel( unsigned int wdw, const char *str )
 {
    (void)str;
-   Pilot* p;
-
-   p = pilot_get(player.p->target);
+   Pilot* p = pilot_getTarget( player.p );
 
    if (p->fuel <= 0) { /* no fuel. */
       player_message(_("#oThe ship has no fuel."));
@@ -335,7 +329,7 @@ static void board_stealAmmo( unsigned int wdw, const char *str )
      const Outfit *target_outfit, *ammo, *player_outfit;
      (void)str;
      nreloaded = 0;
-     p = pilot_get(player.p->target);
+     p = pilot_getTarget( player.p );
      /* Target has no ammo */
      if (pilot_countAmmo(p) <= 0) {
         player_message(_("#rThe ship has no ammo."));
@@ -419,7 +413,7 @@ static int board_trySteal( Pilot *p )
    //Damage dmg;
 
    /* Get the target. */
-   target = pilot_get(p->target);
+   target = pilot_getTarget( p );
    if (target == NULL)
       return 1;
 
@@ -487,9 +481,7 @@ static void board_update( unsigned int wdw )
    double c;
    char str[PATH_MAX];
    char cred[ECON_CRED_STRLEN];
-   Pilot* p;
-
-   p = pilot_get(player.p->target);
+   Pilot* p = pilot_getTarget( player.p );
    j = 0;
 
    /* Credits. */
@@ -541,7 +533,7 @@ int pilot_board( Pilot *p )
    HookParam hparam[2];
 
    /* Make sure target is valid. */
-   target = pilot_get(p->target);
+   target = pilot_getTarget( p );
    if (target == NULL) {
       DEBUG("NO TARGET");
       return 0;
@@ -592,7 +584,7 @@ void pilot_boardComplete( Pilot *p )
    char creds[ ECON_CRED_STRLEN ];
 
    /* Make sure target is valid. */
-   target = pilot_get(p->target);
+   target = pilot_getTarget( p );
    if (target == NULL)
       return;
 

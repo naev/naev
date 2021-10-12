@@ -426,7 +426,7 @@ static void player_autonav (void)
          break;
 
       case AUTONAV_PLT_FOLLOW:
-         p = pilot_get( player.p->target );
+         p = pilot_getTarget( player.p );
          if (p == NULL)
             p = pilot_get( PLAYER_ID );
          if ((p->id == PLAYER_ID) || (!pilot_inRangePilot( player.p, p, NULL ))) {

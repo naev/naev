@@ -28,7 +28,7 @@
 
 #define EW_ASTEROID_DIST      7500.
 #define EW_JUMPDETECT_DIST    7500.
-#define EW_PLANETDETECT_DIST  20000. /* TODO something better than this. */
+#define EW_PLANETDETECT_DIST  20e3 /* TODO something better than this. */
 
 
 static double ew_interference = 1.; /**< Interference factor. */
@@ -63,13 +63,7 @@ double pilot_ewScanTime( const Pilot *p )
  */
 void pilot_ewScanStart( Pilot *p )
 {
-   Pilot *target;
-
-   /* Ignore no target. */
-   if (p->target == p->id)
-      return;
-
-   target = pilot_get(p->target);
+   Pilot *target = pilot_getTarget( p );
    if (target==NULL)
       return;
 
@@ -131,22 +125,17 @@ void pilot_ewUpdateDynamic( Pilot *p, double dt )
    p->ew_jumppoint = pilot_ewJumpPoint( p );
    pilot_ewUpdate( p );
 
-   /* Scanning values. */
-   if (p->target == p->id)
-      return; /* Skip no target. */
-
    /* Already scanned so skipping. */
    if (p->scantimer < 0.)
       return;
 
    /* Get the target pilot. */
-   t = pilot_get( p->target );
+   t = pilot_getTarget( p );
    if (t == NULL)
       return;
 
    /* Must be in evasion range. */
-   if ((p->scantimer > 0.) &&
-         (vect_dist2( &p->solid->pos, &t->solid->pos ) < pow2( MAX( 0., p->stats.ew_detect * p->stats.ew_track * t->ew_evasion ) ))) {
+   if (vect_dist2( &p->solid->pos, &t->solid->pos ) < pow2( MAX( 0., p->stats.ew_detect * p->stats.ew_track * t->ew_evasion ) )) {
       p->scantimer -= dt;
 
       if (p->scantimer < 0.) {

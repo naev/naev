@@ -228,7 +228,7 @@ int escorts_attack( Pilot *parent )
    Pilot *t;
 
    /* Avoid killing self. */
-   t = pilot_get(parent->target);
+   t = pilot_getTarget( parent );
    if (t == NULL)
       return 1;
    if (t->faction == parent->faction)

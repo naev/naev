@@ -345,10 +345,11 @@ typedef struct Pilot_ {
 
    /* Targeting. */
    unsigned int target; /**< AI pilot target. */
-   int nav_planet;   /**< Planet land target. */
-   int nav_hyperspace; /**< Hyperspace target. */
-   int nav_anchor; /**< Asteroid anchor target. */
-   int nav_asteroid; /**< Asteroid target. */
+   void *ptarget;       /**< AI pilot real target. */
+   int nav_planet;      /**< Planet land target. */
+   int nav_hyperspace;  /**< Hyperspace target. */
+   int nav_anchor;      /**< Asteroid anchor target. */
+   int nav_asteroid;    /**< Asteroid target. */
 
    /* AI */
    AI_Profile* ai;   /**< AI personality profile */
@@ -395,9 +396,10 @@ typedef struct Pilot_ {
  * getting pilot stuff
  */
 Pilot*const* pilot_getAll (void);
-Pilot* pilot_get( const unsigned int id );
-unsigned int pilot_getNextID( const unsigned int id, int mode );
-unsigned int pilot_getPrevID( const unsigned int id, int mode );
+Pilot* pilot_get( unsigned int id );
+Pilot* pilot_getTarget( Pilot *p );
+unsigned int pilot_getNextID( unsigned int id, int mode );
+unsigned int pilot_getPrevID( unsigned int id, int mode );
 unsigned int pilot_getNearestEnemy( const Pilot* p );
 unsigned int pilot_getNearestEnemy_size( const Pilot* p, double target_mass_LB, double target_mass_UB );
 unsigned int pilot_getNearestEnemy_heuristic(const Pilot* p, double mass_factor, double health_factor, double damage_factor, double range_factor);
@@ -420,9 +422,9 @@ double pilot_relhp( const Pilot* cur_pilot, const Pilot* p );
  * Combat.
  */
 void pilot_setTarget( Pilot* p, unsigned int id );
-double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
+double pilot_hit( Pilot* p, const Solid* w, unsigned int shooter,
       const Damage *dmg, int reset );
-void pilot_updateDisable( Pilot* p, const unsigned int shooter );
+void pilot_updateDisable( Pilot* p, unsigned int shooter );
 void pilot_explode( double x, double y, double radius, const Damage *dmg, const Pilot *parent );
 double pilot_face( Pilot* p, const double dir );
 int pilot_brake( Pilot* p );
