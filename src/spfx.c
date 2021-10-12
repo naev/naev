@@ -827,9 +827,8 @@ static void spfx_trail_free( Trail_spfx* trail )
 void spfx_trail_draw( const Trail_spfx* trail )
 {
    double x1, y1, x2, y2, z;
-   const TrailPoint *tp, *tpp;
    const TrailStyle *sp, *spp, *styles;
-   size_t i, n;
+   size_t n;
    GLfloat len;
    gl_Matrix4 projection;
    double s;
@@ -850,20 +849,30 @@ void spfx_trail_draw( const Trail_spfx* trail )
 
    z   = cam_getZoom();
    len = 0.;
-   for (i = trail->iread + 1; i < trail->iwrite; i++) {
-      tp  = &trail_at( trail, i );
-      tpp = &trail_at( trail, i-1 );
+   for (size_t i=trail->iread + 1; i < trail->iwrite; i++) {
+      TrailPoint *tp  = &trail_at( trail, i );
+      TrailPoint *tpp = &trail_at( trail, i-1 );
 
       /* Ignore none modes. */
       if (tp->mode == MODE_NONE || tpp->mode == MODE_NONE)
          continue;
 
-      sp  = &styles[tp->mode];
-      spp = &styles[tpp->mode];
       gl_gameToScreenCoords( &x1, &y1,  tp->x,  tp->y );
       gl_gameToScreenCoords( &x2, &y2, tpp->x, tpp->y );
 
       s = hypot( x2-x1, y2-y1 );
+
+      /* Make sure in bounds. */
+      /*
+      if ((MAX(x1,x2) < 0.) || (MIN(x1,x2) > SCREEN_W*z) ||
+         (MAX(y1,y2) < 0.) || (MIN(y1,y2) > SCREEN_H*z)) {
+         len += s;
+         continue;
+      }
+      */
+
+      sp  = &styles[tp->mode];
+      spp = &styles[tpp->mode];
 
       /* Set vertex. */
       projection = gl_Matrix4_Translate(gl_view_matrix, x1, y1, 0);

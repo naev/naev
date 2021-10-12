@@ -322,12 +322,11 @@ int pilot_validEnemyDist( const Pilot* p, const Pilot* target, double *dist )
 unsigned int pilot_getNearestEnemy( const Pilot* p )
 {
    unsigned int tp;
-   int i;
    double d, td;
 
    tp = 0;
    d  = 0.;
-   for (i=0; i<array_size(pilot_stack); i++) {
+   for (int i=0; i<array_size(pilot_stack); i++) {
 
       if (!pilot_validEnemy( p, pilot_stack[i] ))
          continue;
@@ -353,12 +352,11 @@ unsigned int pilot_getNearestEnemy( const Pilot* p )
 unsigned int pilot_getNearestEnemy_size( const Pilot* p, double target_mass_LB, double target_mass_UB )
 {
    unsigned int tp;
-   int i;
    double d, td;
 
    tp = 0;
    d  = 0.;
-   for (i=0; i<array_size(pilot_stack); i++) {
+   for (int i=0; i<array_size(pilot_stack); i++) {
 
       if (!pilot_validEnemy( p, pilot_stack[i] ))
          continue;
@@ -392,15 +390,13 @@ unsigned int pilot_getNearestEnemy_heuristic( const Pilot* p,
       double damage_factor, double range_factor )
 {
    unsigned int tp;
-   int i;
    double temp, current_heuristic_value;
-   Pilot *target;
 
    current_heuristic_value = 10000.;
 
    tp = 0;
-   for (i=0; i<array_size(pilot_stack); i++) {
-      target = pilot_stack[i];
+   for (int i=0; i<array_size(pilot_stack); i++) {
+      Pilot *target = pilot_stack[i];
 
       if (!pilot_validEnemy( p, target ))
          continue;
@@ -444,8 +440,6 @@ unsigned int pilot_getNearestPilot( const Pilot* p )
 unsigned int pilot_getBoss( const Pilot* p )
 {
    unsigned int t;
-   int i;
-   double td, dx, dy;
    double relpower, ppower, curpower;
    /* TODO : all the parameters should be adjustable with arguments */
 
@@ -455,7 +449,8 @@ unsigned int pilot_getBoss( const Pilot* p )
    /* Initialized to 0.25 which would mean equivalent power. */
    ppower = 0.5*0.5;
 
-   for (i=0; i<array_size(pilot_stack); i++) {
+   for (int i=0; i<array_size(pilot_stack); i++) {
+      double dx, dy, td;
 
       /* Must not be self. */
       if (pilot_stack[i] == p)
@@ -511,12 +506,11 @@ unsigned int pilot_getBoss( const Pilot* p )
  */
 double pilot_getNearestPos( const Pilot *p, unsigned int *tp, double x, double y, int disabled )
 {
-   int i;
    double d, td;
 
    *tp = PLAYER_ID;
    d  = 0;
-   for (i=0; i<array_size(pilot_stack); i++) {
+   for (int i=0; i<array_size(pilot_stack); i++) {
       /* Must not be self. */
       if (pilot_stack[i] == p)
          continue;
@@ -556,13 +550,12 @@ double pilot_getNearestPos( const Pilot *p, unsigned int *tp, double x, double y
  */
 double pilot_getNearestAng( const Pilot *p, unsigned int *tp, double ang, int disabled )
 {
-   int i;
    double a, ta;
    double rx, ry;
 
    *tp = PLAYER_ID;
    a   = ang + M_PI;
-   for (i=0; i<array_size(pilot_stack); i++) {
+   for (int i=0; i<array_size(pilot_stack); i++) {
 
       /* Must not be self. */
       if (pilot_stack[i] == p)
@@ -652,10 +645,10 @@ void pilot_setTurn( Pilot *p, double turn )
  */
 int pilot_isHostile( const Pilot *p )
 {
-   if ( !pilot_isFriendly( p )
+   if (!pilot_isFriendly( p )
          && !pilot_isFlag( p, PILOT_BRIBED )
          && (pilot_isFlag( p, PILOT_HOSTILE ) ||
-            areEnemies( FACTION_PLAYER, p->faction ) ) )
+            areEnemies( FACTION_PLAYER, p->faction )))
       return 1;
 
    return 0;
@@ -1809,7 +1802,6 @@ void pilot_explode( double x, double y, double radius, const Damage *dmg, const 
  */
 void pilot_render( Pilot* p, const double dt )
 {
-   int i, g;
    (void) dt;
    double scale;
    glColour c = {.r=1., .g=1., .b=1., .a=1.};
@@ -1853,7 +1845,7 @@ void pilot_render( Pilot* p, const double dt )
 #endif /* DEBUGGING */
 
    /* Re-draw backwards trails. */
-   for (i=g=0; g<array_size(p->ship->trail_emitters); g++){
+   for (int i=0,g=0; g<array_size(p->ship->trail_emitters); g++){
 
 #ifdef DEBUGGING
       if (debug_isFlag(DEBUG_MARK_EMITTER)) {
