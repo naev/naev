@@ -85,7 +85,7 @@ csv_writereps( bl_vals )
 csvfile:write(string.format("%f,%f,def,def,def,def,def,def,def,def,def,def,def", def_mean, def_stddev ) )
 csv_writereps( def_vals )
 local curbest = def_mean
-local n = 2
+local trials = {}
 for i,br_tech in ipairs{"ffv","lfv","mfv","dth","pch"} do
    for i,bt_tech in ipairs{"dfs","bfs","blb","bph"} do
       for i,pp_tech in ipairs{"none","root","all"} do
@@ -96,28 +96,10 @@ for i,br_tech in ipairs{"ffv","lfv","mfv","dth","pch"} do
                      for i,mir_cuts in ipairs{"on","off"} do
                         for i,cov_cuts in ipairs{"on","off"} do
                            for i,clq_cuts in ipairs{"on","off"} do
-local s = string.format("br=%s,bt=%s,pp=%s,sr=%s,fp=%s,ps=%s,gmi=%s,mir=%s,cov=%s,clq=%s",
-   br_tech, bt_tech, pp_tech,
-   sr_heur, fp_heur, ps_heur,
-   gmi_cuts, mir_cuts, cov_cuts, clq_cuts )
-local mean, stddev, vals = benchmark( s, {
-      br_tech=br_tech, bt_tech=bt_tech, pp_tech=pp_tech,
-      sr_heur=sr_heur, fp_heur=fp_heur, ps_heur=ps_heur,
-      gmi_cuts=gmi_cuts, mir_cuts=mir_cuts, cov_cuts=cov_cuts, clq_cuts=clq_cuts,
-   } )
-csvfile:write( string.format("%f,%f,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s", mean, stddev,
-   br_tech, bt_tech, pp_tech,
-   sr_heur, fp_heur, ps_heur,
-   gmi_cuts, mir_cuts, cov_cuts, clq_cuts ) )
-csv_writereps( vals )
-if mean < curbest then
-   curbest = mean
-end
-local left = ntotal - n - 1
-local elapsed = naev.clock() - tstart
-print(string.format("Best: %.3f ms, Cur: %.3f (%.3f) ms, (%d of %d done, %.3f hours left)",
-   curbest, mean, stddev, n, ntotal, elapsed * left / n / 3600) )
-n = n+1
+                              -- Randomize in the hope of getting "close" in the search space earlier.
+                              -- May help data quality *a little* if the machine's speed varies over time too.
+                              table.insert(trials, 1+rnd.rnd(#trials), {br_tech, bt_tech, pp_tech,
+                              sr_heur, fp_heur, ps_heur, gmi_cuts, mir_cuts, cov_cuts, clq_cuts})
                            end
                         end
                      end
@@ -127,6 +109,31 @@ n = n+1
          end
       end
    end
+end
+for n, trial in ipairs(trials) do 
+   local br_tech, bt_tech, pp_tech, sr_heur, fp_heur, ps_heur, gmi_cuts, mir_cuts, cov_cuts, clq_cuts = table.unpack(trial)
+   local s = string.format("br=%s,bt=%s,pp=%s,sr=%s,fp=%s,ps=%s,gmi=%s,mir=%s,cov=%s,clq=%s",
+      br_tech, bt_tech, pp_tech,
+      sr_heur, fp_heur, ps_heur,
+      gmi_cuts, mir_cuts, cov_cuts, clq_cuts )
+   local mean, stddev, vals = benchmark( s, {
+         br_tech=br_tech, bt_tech=bt_tech, pp_tech=pp_tech,
+         sr_heur=sr_heur, fp_heur=fp_heur, ps_heur=ps_heur,
+         gmi_cuts=gmi_cuts, mir_cuts=mir_cuts, cov_cuts=cov_cuts,
+         clq_cuts=clq_cuts
+      } )
+   csvfile:write( string.format("%f,%f,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s", mean, stddev,
+      br_tech, bt_tech, pp_tech,
+      sr_heur, fp_heur, ps_heur,
+      gmi_cuts, mir_cuts, cov_cuts, clq_cuts ) )
+   csv_writereps( vals )
+   if mean < curbest then
+      curbest = mean
+   end
+   local left = #trials - n
+   local elapsed = naev.clock() - tstart
+   print(string.format("Best: %.3f ms, Cur: %.3f (%.3f) ms, (%d of %d done, %.3f hours left)",
+   curbest, mean, stddev, 1+n, 1+#trials, elapsed * left / (1+n) / 3600) )
 end
 print("====== BENCHMARK END ======")
 csvfile:close()
