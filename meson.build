@@ -85,7 +85,7 @@ if buildExec.disabled() == false
       libxml2 = cc.find_library('xml2', required: true)  # e.g., MacOSX SDK
    endif
 
-   use_system_physfs = ('glpk' not in get_option('force_fallback_for') and 'forcefallback' != get_option('wrap_mode'))
+   use_system_physfs = ('physfs' not in get_option('force_fallback_for') and 'forcefallback' != get_option('wrap_mode'))
    if use_system_physfs
       system_physfs = dependency('physfs', required: false)
       if not system_physfs.found()
