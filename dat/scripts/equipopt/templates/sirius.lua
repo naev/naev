@@ -51,6 +51,15 @@ local sirius_cores = {
       } end,
 }
 
+local sirius_params_overwrite = {
+   -- Prefer to use the Sirius utilities
+   prefer = {
+      ["Pinpoint Combat AI"]      = 100,
+      ["Lattice Thermal Coating"] = 100,
+   },
+   max_same_stru = 3,
+}
+
 --[[
 -- @brief Does Sirius pilot equipping
 --
@@ -62,11 +71,7 @@ local function equip_sirius( p, opt_params )
    local sname = ps:nameRaw()
 
    -- Choose parameters and make Siriusish
-   local params = eparams.choose( p )
-   -- Prefer to use the Sirius utilities
-   params.prefer["Pinpoint Combat AI"]      = 100
-   params.prefer["Lattice Thermal Coating"] = 100
-   params.max_same_stru = 3
+   local params = eparams.choose( p, sirius_params_overwrite )
    params.max_mass = 0.95 + 0.1*rnd.rnd()
    -- Per ship tweaks
    local sp = sirius_params[ sname ]

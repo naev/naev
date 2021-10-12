@@ -61,6 +61,16 @@ local thurion_params = {
 local thurion_cores = {
 }
 
+local thurion_params_overwrite = {
+   -- Prefer to use the Thurion utilities
+   prefer = {
+      ["Nebula Resistant Coating"] = 100,
+   },
+   max_same_util = 3,
+   max_same_stru = 3,
+   max_same_weap = 3,
+}
+
 --[[
 -- @brief Does Thurion pilot equipping
 --
@@ -72,12 +82,7 @@ local function equip_thurion( p, opt_params )
    local sname = ps:nameRaw()
 
    -- Choose parameters and make Thurion-ish
-   local params = eparams.choose( p )
-   -- Prefer to use the Thurion utilities
-   params.prefer["Nebula Resistant Coating"] = 100
-   params.max_same_util = 3
-   params.max_same_stru = 3
-   params.max_same_weap = 3
+   local params = eparams.choose( p, thurion_params_overwrite )
    params.max_mass = 0.95 + 0.1*rnd.rnd()
    -- Per ship tweaks
    local sp = thurion_params[ sname ]
