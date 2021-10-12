@@ -4017,7 +4017,7 @@ static int space_parseAssets( xmlNodePtr parent, StarSystem* sys )
  */
 static int getPresenceIndex( StarSystem *sys, int faction )
 {
-   int n; 
+   int n;
 
    /* Check for NULL and display a warning. */
    if (sys == NULL) {
