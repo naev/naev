@@ -468,8 +468,6 @@ static int pilot_ewStealthGetNearby( const Pilot *p, double *mod, int *close, in
       n++;
       if ((isplayer != NULL) && pilot_isPlayer(t))
          *isplayer = 1;
-
-      return 1;
    }
 
    return n;
