@@ -475,6 +475,8 @@ static int pilot_ewStealthGetNearby( const Pilot *p, double *mod, int *close, in
       n++;
       if ((isplayer != NULL) && pilot_isPlayer(t))
          *isplayer = 1;
+
+      return 1;
    }
 
    return n;
@@ -495,24 +497,25 @@ void pilot_ewUpdateStealth( Pilot *p, double dt )
       return;
 
    /* Get nearby pilots. */
-   if (pilot_isPlayer(p))
+   if (pilot_isPlayer(p)) {
       n = pilot_ewStealthGetNearby( p, &mod, &close, &isplayer );
+
+      /* Stop autonav if pilots are nearby. */
+      if (close>0)
+         player_autonavResetSpeed();
+   }
    else
       n = pilot_ewStealthGetNearby( p, &mod, NULL, &isplayer );
 
-   /* Stop autonav if pilots are nearby. */
-   if (pilot_isPlayer(p) && (close>0))
-      player_autonavResetSpeed();
-
    /* Increases if nobody nearby. */
    if (n == 0) {
-      p->ew_stealth_timer += dt * 5000. / p->ew_stealth;
+      p->ew_stealth_timer += dt * 5e3 / p->ew_stealth;
       if (p->ew_stealth_timer > 1.)
          p->ew_stealth_timer = 1.;
    }
    /* Otherwise decreases. */
    else {
-      p->ew_stealth_timer -= dt * (p->ew_stealth / 10000. + mod) * p->stats.ew_stealth_timer;
+      p->ew_stealth_timer -= dt * (p->ew_stealth / 10e3 + mod) * p->stats.ew_stealth_timer;
       if (p->ew_stealth_timer < 0.) {
          pilot_destealth( p );
          if (pilot_isPlayer(p))

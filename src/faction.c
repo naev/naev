@@ -1219,7 +1219,6 @@ const char *faction_getStandingBroad( int f, int bribed, int override )
    }
 }
 
-
 /**
  * @brief Checks whether two factions are enemies.
  *
@@ -1230,7 +1229,6 @@ const char *faction_getStandingBroad( int f, int bribed, int override )
 int areEnemies( int a, int b )
 {
    Faction *fa, *fb;
-   int i;
 
    if (a==b) return 0; /* luckily our factions aren't masochistic */
 
@@ -1256,16 +1254,15 @@ int areEnemies( int a, int b )
    else if (b==FACTION_PLAYER)
       return faction_isPlayerEnemy(a);
 
-   for (i=0;i<array_size(fa->enemies);i++)
+   for (int i=0;i<array_size(fa->enemies);i++)
       if (fa->enemies[i] == b)
          return 1;
-   for (i=0;i<array_size(fb->enemies);i++)
+   for (int i=0;i<array_size(fb->enemies);i++)
       if (fb->enemies[i] == a)
          return 1;
 
    return 0;
 }
-
 
 /**
  * @brief Checks whether two factions are allies or not.
@@ -1277,7 +1274,6 @@ int areEnemies( int a, int b )
 int areAllies( int a, int b )
 {
    Faction *fa, *fb;
-   int i;
 
    /* If they are the same they must be allies. */
    if (a==b) return 1;
@@ -1304,16 +1300,15 @@ int areAllies( int a, int b )
    else if (b==FACTION_PLAYER)
       return faction_isPlayerFriend(a);
 
-   for (i=0;i<array_size(fa->allies);i++)
+   for (int i=0;i<array_size(fa->allies);i++)
       if (fa->allies[i] == b)
          return 1;
-   for (i=0;i<array_size(fb->allies);i++)
+   for (int i=0;i<array_size(fb->allies);i++)
       if (fb->allies[i] == a)
          return 1;
 
    return 0;
 }
-
 
 /**
  * @brief Checks whether or not a faction is valid.
@@ -1327,7 +1322,6 @@ int faction_isFaction( int f )
       return 0;
    return 1;
 }
-
 
 /**
  * @brief Parses a single faction, but doesn't set the allies/enemies bit.
@@ -1433,7 +1427,6 @@ static int faction_parse( Faction* temp, xmlNodePtr parent )
    return 0;
 }
 
-
 /**
  * @brief Sets up a standing script for a faction.
  *
@@ -1459,7 +1452,6 @@ static void faction_addStandingScript( Faction* temp, const char* scriptname )
    }
    free(dat);
 }
-
 
 /**
  * @brief Parses the social tidbits of a faction: allies and enemies.
@@ -1587,13 +1579,11 @@ static void faction_parseSocial( xmlNodePtr parent )
  */
 void factions_reset (void)
 {
-   int i;
-   for (i=0; i<array_size(faction_stack); i++) {
+   for (int i=0; i<array_size(faction_stack); i++) {
       faction_stack[i].player = faction_stack[i].player_def;
       faction_stack[i].flags = faction_stack[i].oflags;
    }
 }
-
 
 /**
  * @brief Loads up all the factions from the data file.
@@ -1603,7 +1593,7 @@ void factions_reset (void)
 int factions_load (void)
 {
    xmlNodePtr factions, node;
-   int i, j, k, r;
+   int r;
    Faction *f, *sf;
 
 
@@ -1660,15 +1650,15 @@ int factions_load (void)
    } while (xml_nextNode(node));
 
    /* Third pass, Make allies/enemies symmetric. */
-   for (i=0; i<array_size(faction_stack); i++) {
+   for (int i=0; i<array_size(faction_stack); i++) {
       f = &faction_stack[i];
 
       /* First run over allies and make sure it's mutual. */
-      for (j=0; j < array_size(f->allies); j++) {
+      for (int j=0; j < array_size(f->allies); j++) {
          sf = &faction_stack[ f->allies[j] ];
 
          r = 0;
-         for (k=0; k < array_size(sf->allies); k++)
+         for (int k=0; k < array_size(sf->allies); k++)
             if (sf->allies[k] == i) {
                r = 1;
                break;
@@ -1680,11 +1670,11 @@ int factions_load (void)
       }
 
       /* Now run over enemies. */
-      for (j=0; j < array_size(f->enemies); j++) {
+      for (int j=0; j < array_size(f->enemies); j++) {
          sf = &faction_stack[ f->enemies[j] ];
 
          r = 0;
-         for (k=0; k < array_size(sf->enemies); k++)
+         for (int k=0; k < array_size(sf->enemies); k++)
             if (sf->enemies[k] == i) {
                r = 1;
                break;
@@ -1732,10 +1722,8 @@ static void faction_freeOne( Faction *f )
  */
 void factions_free (void)
 {
-   int i;
-
    /* free factions */
-   for (i=0; i<array_size(faction_stack); i++)
+   for (int i=0; i<array_size(faction_stack); i++)
       faction_freeOne( &faction_stack[i] );
    array_free(faction_stack);
    faction_stack = NULL;
@@ -1750,11 +1738,9 @@ void factions_free (void)
  */
 int pfaction_save( xmlTextWriterPtr writer )
 {
-   int i;
-
    xmlw_startElem(writer,"factions");
 
-   for (i=1; i<array_size(faction_stack); i++) { /* player is faction 0 */
+   for (int i=1; i<array_size(faction_stack); i++) { /* player is faction 0 */
       /* Must not be static. */
       if (faction_isFlag( &faction_stack[i], FACTION_STATIC ))
          continue;
@@ -1833,7 +1819,6 @@ int pfaction_load( xmlNodePtr parent )
 int *faction_getGroup( int which )
 {
    int *group;
-   int i;
 
    switch(which) {
       case 0: /* 'all' */
@@ -1841,21 +1826,21 @@ int *faction_getGroup( int which )
 
       case 1: /* 'friendly' */
          group = array_create( int );
-         for (i = 0; i < array_size(faction_stack); i++)
+         for (int i=0; i < array_size(faction_stack); i++)
             if (areAllies( FACTION_PLAYER, i ))
                array_push_back( &group, i );
          return group;
 
       case 2: /* 'neutral' */
          group = array_create( int );
-         for (i = 0; i < array_size(faction_stack); i++)
+         for (int i=0; i < array_size(faction_stack); i++)
             if (!areAllies( FACTION_PLAYER, i ) && !areEnemies( FACTION_PLAYER, i ))
                array_push_back( &group, i );
          return group;
 
       case 3: /* 'hostile' */
          group = array_create( int );
-         for (i = 0; i < array_size(faction_stack); i++)
+         for (int i=0; i < array_size(faction_stack); i++)
             if (areEnemies( FACTION_PLAYER, i ))
                array_push_back( &group, i );
          return group;
@@ -1916,8 +1901,8 @@ void factions_clearDynamic (void)
  */
 int faction_dynAdd( int base, const char* name, const char* display, const char* ai )
 {
-   Faction *f, *bf;
-   int i, *tmp;
+   Faction *f;
+   int *tmp;
 
    f = &array_grow( &faction_stack );
    memset( f, 0, sizeof(Faction) );
@@ -1932,18 +1917,18 @@ int faction_dynAdd( int base, const char* name, const char* display, const char*
    f->flags       = FACTION_STATIC | FACTION_INVISIBLE | FACTION_DYNAMIC | FACTION_KNOWN;
    faction_addStandingScript( f, "static" );
    if (base>=0) {
-      bf = &faction_stack[base];
+      Faction *bf = &faction_stack[base];
 
       if (bf->ai!=NULL && f->ai==NULL)
          f->ai = strdup( bf->ai );
       if (bf->logo!=NULL)
          f->logo = gl_dupTexture( bf->logo );
 
-      for (i=0; i<array_size(bf->allies); i++) {
+      for (int i=0; i<array_size(bf->allies); i++) {
          tmp = &array_grow( &f->allies );
          *tmp = i;
       }
-      for (i=0; i<array_size(bf->enemies); i++) {
+      for (int i=0; i<array_size(bf->enemies); i++) {
          tmp = &array_grow( &f->enemies );
          *tmp = i;
       }
