@@ -2397,12 +2397,20 @@ void pilot_update( Pilot* pilot, double dt )
 
 /**
  * @brief Updates the given pilot's trail emissions.
+ *
+ *    @param p Pilot to update trails of.
+ *    @param none Indicates that the pilot should update trails but skip their position.
  */
 void pilot_sample_trails( Pilot* p, int none )
 {
-   int i, g;
-   double dx, dy, dircos, dirsin, prod;
+   double d2, cx, cy, dircos, dirsin, prod;
    TrailMode mode;
+
+   /* Skip if far away (pretty heuristic-based but seems to work). */
+   cam_getPos( &cx, &cy );
+   d2 = pow2(cx-p->solid->pos.x) + pow2(cy-p->solid->pos.y);
+   if (d2 > pow2( MAX(SCREEN_W,SCREEN_H) * conf.zoom_far * 2. ))
+      return;
 
    dircos = cos(p->solid->dir);
    dirsin = sin(p->solid->dir);
@@ -2422,8 +2430,9 @@ void pilot_sample_trails( Pilot* p, int none )
    }
 
    /* Compute the engine offset and decide where to draw the trail. */
-   for (i=g=0; g<array_size(p->ship->trail_emitters); g++)
+   for (int i=0, g=0; g<array_size(p->ship->trail_emitters); g++) {
       if (pilot_trail_generated( p, g )) {
+         double dx, dy;
 
          p->trail[i]->ontop = 0;
          if (!(p->ship->trail_emitters[g].always_under) && (dirsin > 0)) {
@@ -2441,6 +2450,7 @@ void pilot_sample_trails( Pilot* p, int none )
               p->ship->trail_emitters[g].h_engine;
          spfx_trail_sample( p->trail[i++], p->solid->pos.x + dx, p->solid->pos.y + dy*M_SQRT1_2, mode, mode==MODE_NONE );
       }
+   }
 }
 
 
