@@ -73,6 +73,17 @@ local pirate_cores = {
       end,
 }
 
+local pirate_params_overwrite = {
+   -- Prefer to use the Pirate utilities
+   prefer = {
+      ["Scanning Combat AI"] = 100,
+   },
+   weap = 2, -- Focus on weapons!
+   -- much more diversity for pirates
+   max_same_stru = 1,
+   max_same_util = 1,
+}
+
 --[[
 -- @brief Does Pirate pilot equipping
 --
@@ -85,13 +96,7 @@ local function equip_pirate( p, opt_params )
    local sname = ps:nameRaw()
 
    -- Choose parameters and make Pirateish
-   local params = eparams.choose( p )
-   -- Prefer to use the Pirate utilities
-   params.prefer["Scanning Combat AI"]      = 100
-   params.weap = 2 -- Focus on weapons!
-   -- much more diversity for pirates
-   params.max_same_stru = 1
-   params.max_same_util = 1
+   local params = eparams.choose( p, pirate_params_overwrite )
    params.rnd = params.rnd * 1.5
    if pc == "Fighter" or pc == "Bomber" then
       params.max_same_weap = 1

@@ -194,7 +194,7 @@ function params.carrier( overwrite )
 end
 
 -- @brief Chooses a parameter table randomly for a certain pilot p
-function params.choose( p )
+function params.choose( p, overwrite )
    local choose_table = {
       ["Courier"]       = { "merchant" },
       ["Freighter"]     = { "merchant" },
@@ -214,7 +214,7 @@ function params.choose( p )
       return params.default()
    end
    c = c[ rnd.rnd(1,#c) ]
-   return params[c]()
+   return params[c]( overwrite )
 end
 
 return params

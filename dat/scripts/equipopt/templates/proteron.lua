@@ -39,6 +39,10 @@ local proteron_params = {
 }
 --local function choose_one( t ) return t[ rnd.rnd(1,#t) ] end
 
+local proteron_params_overwrite = {
+   max_same_stru = 3,
+}
+
 --[[
 -- @brief Does Proteron pilot equipping
 --
@@ -50,9 +54,7 @@ local function equip_proteron( p, opt_params )
    local sname = ps:nameRaw()
 
    -- Choose parameters and make Proteronish
-   local params = eparams.choose( p )
-   -- Prefer to use the Proteron utilities
-   params.max_same_stru = 3
+   local params = eparams.choose( p, proteron_params_overwrite )
    params.max_mass = 0.95 + 0.1*rnd.rnd()
    -- Per ship tweaks
    local sp = proteron_params[ sname ]
