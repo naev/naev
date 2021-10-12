@@ -430,10 +430,8 @@ static int pilot_ewStealthGetNearby( const Pilot *p, double *mod, int *close, in
    for (int i=0; i<array_size(ps); i++) {
       double dist;
       Pilot *t = ps[i];
-      if (areAllies( p->faction, t->faction ) ||
-            ((p->faction == FACTION_PLAYER) && pilot_isFriendly(t)) ||
-            ((t->faction == FACTION_PLAYER) && pilot_isFriendly(p)))
-         continue;
+
+      /* Quick checks first. */
       if (pilot_isDisabled(t))
          continue;
       if (!pilot_canTarget(t))
@@ -442,6 +440,12 @@ static int pilot_ewStealthGetNearby( const Pilot *p, double *mod, int *close, in
       /* Must not be landing nor taking off. */
       if (pilot_isFlag(t, PILOT_LANDING) ||
             pilot_isFlag(t, PILOT_TAKEOFF))
+         continue;
+
+      /* Allies are ignored. */
+      if (areAllies( p->faction, t->faction ) ||
+            ((p->faction == FACTION_PLAYER) && pilot_isFriendly(t)) ||
+            ((t->faction == FACTION_PLAYER) && pilot_isFriendly(p)))
          continue;
 
       /* Stealthed pilots don't reduce stealth. */
