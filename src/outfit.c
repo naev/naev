@@ -505,9 +505,9 @@ int outfit_isSeeker( const Outfit* o )
  */
 int outfit_isTurret( const Outfit* o )
 {
-   return ( (o->type==OUTFIT_TYPE_TURRET_BOLT)  ||
+   return ((o->type==OUTFIT_TYPE_TURRET_BOLT)   ||
          (o->type==OUTFIT_TYPE_TURRET_BEAM)     ||
-         (o->type==OUTFIT_TYPE_TURRET_LAUNCHER) );
+         (o->type==OUTFIT_TYPE_TURRET_LAUNCHER));
 }
 /**
  * @brief Checks if outfit is a ship modification.
