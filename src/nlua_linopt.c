@@ -460,6 +460,12 @@ static const char* linopt_error( int retval )
    }
 }
 #if 1 /* GLPK Defaults. */
+/* SMCP */
+#define METH_DEF     GLP_PRIMAL
+#define PRICING_DEF  GLP_PT_PSE
+#define R_TEST_DEF   GLP_RT_HAR
+#define PRESOLVE_DEF GLP_OFF
+/* IOCP */
 #define BR_TECH_DEF  GLP_BR_DTH
 #define BT_TECH_DEF  GLP_BT_BLB
 #define PP_TECH_DEF  GLP_PP_ALL
@@ -484,6 +490,31 @@ static const char* linopt_error( int retval )
 #define CLQ_CUTS_DEF GLP_ON
 #endif
 #define STRCHK( val, ret ) if (strcmp(str,(val))==0) return (ret);
+static int opt_meth( const char *str, int def )
+{
+   if (str==NULL) return def;
+   STRCHK( "primal", GLP_PRIMAL );
+   STRCHK( "dual",   GLP_DUAL );
+   STRCHK( "dualp",  GLP_DUALP );
+   WARN("Unknown meth value '%s'", str);
+   return def;
+}
+static int opt_pricing( const char *str, int def )
+{
+   if (str==NULL) return def;
+   STRCHK( "std", GLP_PT_STD );
+   STRCHK( "pse", GLP_PT_PSE );
+   WARN("Unknown pricing value '%s'", str);
+   return def;
+}
+static int opt_r_test( const char *str, int def )
+{
+   if (str==NULL) return def;
+   STRCHK( "std", GLP_RT_STD );
+   STRCHK( "har", GLP_RT_HAR );
+   WARN("Unknown r_test value '%s'", str);
+   return def;
+}
 static int opt_br_tech( const char *str, int def )
 {
    if (str==NULL) return def;
@@ -525,6 +556,7 @@ static int opt_onoff( const char *str, int def )
 #undef STRCHK
 
 #define GETOPT_IOCP( name, func, def ) do {lua_getfield(L,2,#name); parm_iocp.name = func( luaL_optstring(L,-1,NULL), def ); lua_pop(L,1); } while (0)
+#define GETOPT_SMCP( name, func, def ) do {lua_getfield(L,2,#name); parm_smcp.name = func( luaL_optstring(L,-1,NULL), def ); lua_pop(L,1); } while (0)
 /**
  * @brief Solves the linear optimization problem.
  *
@@ -543,18 +575,19 @@ static int linoptL_solve( lua_State *L )
 
    /* Parameters. */
    ismip = (glp_get_num_int( lp->prob ) > 0);
+   glp_init_smcp(&parm_smcp);
+   parm_smcp.msg_lev = GLP_MSG_ERR;
    if (ismip) {
       glp_init_iocp(&parm_iocp);
       parm_iocp.msg_lev  = GLP_MSG_ERR;
-      parm_iocp.presolve = GLP_ON; /* Need to presolve first. */
-   }
-   else {
-      glp_init_smcp(&parm_smcp);
-      parm_smcp.msg_lev = GLP_MSG_ERR;
    }
 
    /* Load parameters. */
    if (!lua_isnoneornil(L,2)) {
+      GETOPT_SMCP( meth,    opt_meth,    METH_DEF );
+      GETOPT_SMCP( pricing, opt_pricing, PRICING_DEF );
+      GETOPT_SMCP( r_test,  opt_r_test,  R_TEST_DEF );
+      GETOPT_SMCP( presolve,opt_onoff,   PRESOLVE_DEF );
       if (ismip) {
          GETOPT_IOCP( br_tech,  opt_br_tech, BR_TECH_DEF );
          GETOPT_IOCP( bt_tech,  opt_bt_tech, BT_TECH_DEF );
@@ -567,11 +600,13 @@ static int linoptL_solve( lua_State *L )
          GETOPT_IOCP( cov_cuts, opt_onoff,   COV_CUTS_DEF );
          GETOPT_IOCP( clq_cuts, opt_onoff,   CLQ_CUTS_DEF );
       }
-      else {
-      }
    }
 #if 0
    else {
+      parm_smcp.meth    = METH_DEF;
+      parm_smcp.pricing = PRICING_DEF;
+      parm_smcp.r_test  = R_TEST_DEF;
+      parm_smcp.presolve= PRESOLVE_DEF;
       if (ismip) {
          parm_iocp.br_tech  = BR_TECH_DEF;
          parm_iocp.bt_tech  = BT_TECH_DEF;
@@ -588,6 +623,12 @@ static int linoptL_solve( lua_State *L )
 #endif
 
    /* Optimization. */
+   ret = glp_simplex( lp->prob, &parm_smcp );
+   if (ret != 0) {
+      lua_pushnil(L);
+      lua_pushstring(L, linopt_error(ret));
+      return 2;
+   }
    if (ismip) {
       ret = glp_intopt( lp->prob, &parm_iocp );
       if (ret != 0) {
@@ -595,17 +636,8 @@ static int linoptL_solve( lua_State *L )
          lua_pushstring(L, linopt_error(ret));
          return 2;
       }
-      z = glp_mip_obj_val( lp->prob );
    }
-   else {
-      ret = glp_simplex( lp->prob, &parm_smcp );
-      if (ret != 0) {
-         lua_pushnil(L);
-         lua_pushstring(L, linopt_error(ret));
-         return 2;
-      }
-      z = glp_get_obj_val( lp->prob );
-   }
+   z = glp_get_obj_val( lp->prob );
 
    /* Output function value. */
    lua_pushnumber(L,z);
