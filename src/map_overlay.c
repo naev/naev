@@ -1,8 +1,6 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
-
 /** @cond */
 #include <float.h>
 #include "SDL.h"
@@ -24,9 +22,7 @@
 #include "safelanes.h"
 #include "space.h"
 
-
 #define OVERLAY_FADEIN        (1.0/3.0)
-
 
 /**
  * Structure for map overlay size.
@@ -36,7 +32,6 @@ typedef struct MapOverlayRadiusConstraint_ {
    int j;      /**< plus this radius... */
    double dist;/**< ... is at most this big. */
 } MapOverlayRadiusConstraint;
-
 
 /**
  * @brief An overlay map marker.
@@ -84,7 +79,6 @@ static void ovr_mrkRenderAll( double res );
 static void ovr_mrkCleanup(  ovr_marker_t *mrk );
 static ovr_marker_t *ovr_mrkNew (void);
 
-
 /**
  * @brief Check to see if the map overlay is open.
  */
@@ -93,7 +87,9 @@ int ovr_isOpen (void)
    return !!ovr_open;
 }
 
-
+/**
+ * @brief Converts map positions to screen positions for rendering.
+ */
 void map_overlayToScreenPos( double *ox, double *oy, double x, double y )
 {
    *ox = map_overlay_center_x() + x / ovr_res;
@@ -136,7 +132,6 @@ int ovr_input( SDL_Event *event )
 
    return input_clickPos( event, x, y, 1., 10. * ovr_res, 15. * ovr_res );
 }
-
 
 /**
  * @brief Refreshes the map overlay recalculating the dimensions it should have.
@@ -208,7 +203,6 @@ void ovr_refresh (void)
    free( mo );
    free( pos );
 }
-
 
 /**
  * @brief Makes a best effort to fit the given assets' overlay indicators and labels fit without collisions.
@@ -395,7 +389,6 @@ static void ovr_optimizeLayout( int items, const Vector2d** pos, MapOverlayPos**
    free( off_dy );
 }
 
-
 /**
  * @brief Compute a collision between two rectangles and direction to deduce the force.
  */
@@ -403,7 +396,6 @@ static void force_collision( float *ox, float *oy,
       float x, float y, float w, float h,
       float mx, float my, float mw, float mh )
 {
-
    /* No contact because of y offset (+tolerance). */
    if ((y+h < my+ovr_text_pixbuf) || (y+ovr_text_pixbuf > my+mh))
       *ox = 0;
@@ -437,7 +429,6 @@ static void force_collision( float *ox, float *oy,
    }
 }
 
-
 /**
  * @brief Compute how an element overlaps with text and force to move away.
  */
@@ -468,7 +459,6 @@ static void ovr_refresh_uzawa_overlap( float *forces_x, float *forces_y,
       force_collision( &forces_x[2*items*self+2*i], &forces_y[2*items*self+2*i], x, y, w, h, mx, my, mw, mh );
    }
 }
-
 
 void ovr_initAlpha (void)
 {
@@ -502,7 +492,6 @@ void ovr_initAlpha (void)
    ovr_dt = 0.;
 }
 
-
 /**
  * @brief Properly opens or closes the overlay map.
  *
@@ -522,7 +511,6 @@ void ovr_setOpen( int open )
       ovr_render_safelanes = NULL;
    }
 }
-
 
 /**
  * @brief Handles a keypress event.
@@ -547,7 +535,6 @@ void ovr_key( int type )
          ovr_setOpen(0);
    }
 }
-
 
 static int ovr_safelaneKnown( SafeLane *sf, Vector2d *posns[2] )
 {
@@ -576,7 +563,6 @@ static int ovr_safelaneKnown( SafeLane *sf, Vector2d *posns[2] )
    }
    return known;
 }
-
 
 /**
  * @brief Renders the overlay map.
@@ -787,7 +773,6 @@ void ovr_render( double dt )
    ovr_mrkRenderAll( res );
 }
 
-
 /**
  * @brief Renders all the markers.
  *
@@ -810,7 +795,6 @@ static void ovr_mrkRenderAll( double res )
    }
 }
 
-
 /**
  * @brief Frees up and clears all marker related stuff.
  */
@@ -824,7 +808,6 @@ void ovr_mrkFree (void)
    ovr_markers = NULL;
 }
 
-
 /**
  * @brief Clears the current markers.
  */
@@ -834,7 +817,6 @@ void ovr_mrkClear (void)
       ovr_mrkCleanup( &ovr_markers[i] );
    array_erase( &ovr_markers, array_begin(ovr_markers), array_end(ovr_markers) );
 }
-
 
 /**
  * @brief Clears up after an individual marker.
@@ -846,7 +828,6 @@ static void ovr_mrkCleanup( ovr_marker_t *mrk )
    free( mrk->text );
    mrk->text = NULL;
 }
-
 
 /**
  * @brief Creates a new marker.
@@ -865,7 +846,6 @@ static ovr_marker_t *ovr_mrkNew (void)
    mrk->id = ++mrk_idgen;
    return mrk;
 }
-
 
 /**
  * @brief Creates a new point marker.
@@ -887,7 +867,6 @@ unsigned int ovr_mrkAddPoint( const char *text, double x, double y )
    return mrk->id;
 }
 
-
 /**
  * @brief Removes a marker by id.
  *
@@ -903,5 +882,3 @@ void ovr_mrkRm( unsigned int id )
       break;
    }
 }
-
-

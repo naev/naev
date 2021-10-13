@@ -1064,7 +1064,7 @@ static int systemL_mrkAdd( lua_State *L )
    NLUA_CHECKRW(L);
 
    /* Handle parameters. */
-   str   = luaL_checkstring( L, 1 );
+   str   = luaL_optstring( L, 1, NULL );
    vec   = luaL_checkvector( L, 2 );
 
    /* Create marker. */
