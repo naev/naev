@@ -1,14 +1,11 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
 /**
  * @file player.c
  *
  * @brief Contains all the player related stuff.
  */
-
-
 /** @cond */
 #include <stdlib.h>
 #include "physfs.h"
@@ -64,9 +61,8 @@
 #include "toolkit.h"
 #include "unidiff.h"
 
-
 /*
- * player stuff
+ * Player stuff
  */
 Player_t player; /**< Local player. */
 static const Ship* player_ship      = NULL; /**< Temporary ship to hold when naming it */
@@ -82,7 +78,6 @@ static char **player_licenses = NULL; /**< Licenses player has. */
  * Default radar resolution.
  */
 #define RADAR_RES_DEFAULT  50. /**< Default resolution. */
-
 
 /*
  * player sounds.
@@ -104,18 +99,11 @@ static int player_lastEngineSound = -1; /**< Last engine sound. */
 static int player_hailCounter = 0; /**< Number of times to play the hail. */
 static double player_hailTimer = 0.; /**< Timer for hailing. */
 
-
 /*
- * player pilot stack - ships he has
+ * Player pilot stack (ships they have) and outfit (outfits they have) stacks (array.h)
  */
-static PlayerShip_t* player_stack   = NULL;  /**< Stack of ships player has. */
-
-
-/*
- * player outfit stack - outfits he has
- */
+static PlayerShip_t* player_stack      = NULL;  /**< Stack of ships player has. */
 static PlayerOutfit_t *player_outfits  = NULL;  /**< Outfits player has. */
-
 
 /*
  * player global properties
@@ -127,18 +115,11 @@ double player_acc          = 0.; /**< Accel velocity from input. */
 /* for death and such */
 static double player_timer = 0.; /**< For death and such. */
 
-
 /*
- * unique mission stack.
+ * unique mission and event stack.
  */
 static int* missions_done  = NULL; /**< Array (array.h): Saves position of completed missions. */
-
-
-/*
- * unique event stack.
- */
 static int* events_done  = NULL; /**< Array (array.h): Saves position of completed events. */
-
 
 /*
  * prototypes
@@ -177,12 +158,12 @@ static void player_planetOutOfRangeMsg (void);
 static int player_outfitCompare( const void *arg1, const void *arg2 );
 static int player_thinkMouseFly(void);
 static int preemption = 0; /* Hyperspace target/untarget preemption. */
+
 /*
  * externed
  */
 int player_save( xmlTextWriterPtr writer ); /* save.c */
 Planet* player_load( xmlNodePtr parent ); /* save.c */
-
 
 /**
  * @brief Initializes player stuff.
@@ -230,7 +211,6 @@ static void player_newSetup()
    /* Clear the init message for new game. */
    gui_clearMessages();
 }
-
 
 /**
  * @brief Creates a new player.
@@ -306,6 +286,9 @@ void player_new (void)
    /* Play music. */
    music_choose( "ambient" );
 
+   /* Set loaded version. */
+   player.loaded_version = strdup( naev_version(0) );
+
    /* Add the mission if found. */
    if (start_mission() != NULL) {
       if (mission_start(start_mission(), NULL) < 0)
@@ -324,7 +307,6 @@ void player_new (void)
    /* Load the GUI. */
    gui_load( gui_pick() );
 }
-
 
 /**
  * @brief Actually creates a new player.
@@ -391,7 +373,6 @@ static int player_newMake (void)
 
    return 0;
 }
-
 
 /**
  * @brief Creates a new ship for player.
@@ -532,7 +513,6 @@ static Pilot* player_newShipMake( const char* name )
    return new_pilot;
 }
 
-
 /**
  * @brief Swaps player's current ship with their ship named shipname.
  *
@@ -613,7 +593,6 @@ void player_swapShip( const char *shipname, int move_cargo )
    WARN( _("Unable to swap player.p with ship '%s': ship does not exist!"), shipname );
 }
 
-
 /**
  * @brief Calculates the price of one of the player's ships.
  *
@@ -645,7 +624,6 @@ credits_t player_shipPrice( const char *shipname )
    return pilot_worth( ship );
 }
 
-
 /**
  * @brief Removes one of the player's ships.
  *
@@ -670,7 +648,6 @@ void player_rmShip( const char *shipname )
       equipment_regenLists( w, 0, 1 );
    }
 }
-
 
 /**
  * @brief Cleans up player stuff like player_stack.
@@ -770,7 +747,6 @@ void player_cleanup (void)
    player_setFlag(PLAYER_CREATING);
 }
 
-
 static int player_soundReserved = 0; /**< Has the player already reserved sound? */
 /**
  * @brief Initializes the player sounds.
@@ -799,7 +775,6 @@ static void player_initSound (void)
    snd_hypJump          = sound_get("hyperspace_jump");
 }
 
-
 /**
  * @brief Plays a GUI sound (unaffected by time accel).
  *
@@ -811,7 +786,6 @@ void player_soundPlayGUI( int sound, int once )
    sound_playGroup( player_gui_group, sound, once );
 }
 
-
 /**
  * @brief Plays a sound at the player.
  *
@@ -822,7 +796,6 @@ void player_soundPlay( int sound, int once )
 {
    sound_playGroup( player_hyper_group, sound, once );
 }
-
 
 /**
  * @brief Stops playing player sounds.
@@ -840,7 +813,6 @@ void player_soundStop (void)
    player_lastEngineSound = -1;
 }
 
-
 /**
  * @brief Pauses the ship's sounds.
  */
@@ -851,7 +823,6 @@ void player_soundPause (void)
    if (player_hyper_group >= 0)
       sound_pauseGroup(player_hyper_group);
 }
-
 
 /**
  * @brief Resumes the ship's sounds.
@@ -864,7 +835,6 @@ void player_soundResume (void)
       sound_resumeGroup(player_hyper_group);
 }
 
-
 /**
  * @brief Warps the player to the new position
  *
@@ -875,7 +845,6 @@ void player_warp( const double x, const double y )
 {
    vect_cset( &player.p->solid->pos, x, y );
 }
-
 
 /**
  * @brief Clears the targets.
@@ -891,7 +860,6 @@ void player_clear (void)
    player_rmFlag( PLAYER_NOLAND );
 }
 
-
 /**
  * @brief Checks to see if the player has enough credits.
  *
@@ -903,7 +871,6 @@ int player_hasCredits( credits_t amount )
    return pilot_hasCredits( player.p, amount );
 }
 
-
 /**
  * @brief Modifies the amount of credits the player has.
  *
@@ -914,7 +881,6 @@ credits_t player_modCredits( credits_t amount )
 {
    return pilot_modCredits( player.p, amount );
 }
-
 
 /**
  * @brief Renders the player
@@ -953,7 +919,6 @@ void player_render( double dt )
    pilot_renderOverlay( player.p, dt );
 }
 
-
 /**
  * @brief Renders the player underlay.
  */
@@ -968,14 +933,13 @@ void player_renderUnderlay( double dt )
       player_renderStealthUnderlay( dt );
 }
 
-
 /**
  * @brief Renders the stealth overlay for the player.
  */
 static void player_renderStealthUnderlay( double dt )
 {
    (void) dt;
-   double detectz, x, y, r;
+   double detectz;
    glColour col;
    Pilot *const* ps;
 
@@ -989,6 +953,7 @@ static void player_renderStealthUnderlay( double dt )
    col.a = 0.3;
    ps = pilot_getAll();
    for (int i=0; i<array_size(ps); i++) {
+      double x, y, r;
       Pilot *t = ps[i];
       if (areAllies( player.p->faction, t->faction ) || pilot_isFriendly(t))
          continue;
@@ -1004,7 +969,6 @@ static void player_renderStealthUnderlay( double dt )
       gl_renderShader( x, y, r, r, 0., &shaders.stealthaura, &col, 1 );
    }
 }
-
 
 /**
  * @brief Renders the stealth overlay for the player.
@@ -1033,7 +997,6 @@ static void player_renderStealthOverlay( double dt )
    glUniform1f( shaders.stealthmarker.paramf, st );
    gl_renderShader( x, y, r*z, r*z, 0., &shaders.stealthmarker, &col, 1 );
 }
-
 
 /**
  * @brief Renders the aim helper.
@@ -1099,7 +1062,6 @@ static void player_renderAimHelper( double dt )
    gl_renderCircle( x2, y2, 10., &c3, 0 );
    gl_renderCircle( x2, y2, 9., &c2, 0 );
 }
-
 
 /**
  * @brief Basically uses keyboard input instead of AI input. Used in pilot.c.
@@ -1211,7 +1173,7 @@ void player_think( Pilot* pplayer, const double dt )
       }
    }
 
-   /* normal turning scheme */
+   /* Normal turning scheme */
    if (!facing) {
       turn = 0;
       if (player_isFlag(PLAYER_TURN_LEFT))
@@ -1254,7 +1216,6 @@ void player_think( Pilot* pplayer, const double dt )
    pilot_setThrust( pplayer, player_acc );
 }
 
-
 /**
  * @brief Player update function.
  *
@@ -1270,7 +1231,6 @@ void player_update( Pilot *pplayer, const double dt )
    if (!player_isFlag(PLAYER_DESTROYED))
       player_updateSpecific( pplayer, dt );
 }
-
 
 /**
  * @brief Does a player specific update.
@@ -1321,7 +1281,6 @@ void player_updateSpecific( Pilot *pplayer, const double dt )
    }
 }
 
-
 /*
  *    For use in keybindings
  */
@@ -1349,7 +1308,6 @@ void player_weapSetPress( int id, double value, int repeat )
    pilot_weapSetPress( player.p, id, type );
 }
 
-
 /**
  * @brief Resets the player speed stuff.
  */
@@ -1359,7 +1317,6 @@ void player_resetSpeed (void)
    pause_setSpeed( spd );
    sound_setSpeed( spd );
 }
-
 
 /**
  * @brief Aborts autonav and other states that take control of the ship.
@@ -1387,7 +1344,6 @@ void player_restoreControl( int reason, const char *str )
       }
    }
 }
-
 
 /**
  * @brief Sets the player's target planet.
@@ -1417,7 +1373,6 @@ void player_targetPlanetSet( int id )
    gui_forceBlink();
    gui_setNav();
 }
-
 
 /**
  * @brief Sets the player's target asteroid.
@@ -1460,7 +1415,6 @@ void player_targetAsteroidSet( int field, int id )
    player.p->nav_anchor = field;
 }
 
-
 /**
  * @brief Cycle through planet targets.
  */
@@ -1490,7 +1444,6 @@ void player_targetPlanet (void)
    /* Untarget if out of range. */
    player_targetPlanetSet( id );
 }
-
 
 /**
  * @brief Try to land or target closest planet if no land target.
@@ -1630,7 +1583,6 @@ int player_land( int loud )
    return PLAYER_LAND_OK;
 }
 
-
 /**
  * @brief Revokes landing authorization if the player's reputation is too low.
  */
@@ -1659,7 +1611,6 @@ void player_checkLandAck( void )
          planet_getColourChar(p), _(p->name) );
 }
 
-
 /**
  * @brief Checks whether the player's ship is able to takeoff.
  */
@@ -1667,7 +1618,6 @@ int player_canTakeoff(void)
 {
    return !pilot_checkSpaceworthy(player.p);
 }
-
 
 /**
  * @brief Sets the no land message.
@@ -1684,7 +1634,6 @@ void player_nolandMsg( const char *str )
    else
       player_message_noland = strdup(_("You are not allowed to land at this moment."));
 }
-
 
 /**
  * @brief Sets the player's hyperspace target.
@@ -1705,7 +1654,6 @@ void player_targetHyperspaceSet( int id )
          pilot_isFlag(player.p, PILOT_HYPERSPACE))
       return;
 
-
    old = player.p->nav_hyperspace;
    player.p->nav_hyperspace = id;
    player_hyperspacePreempt((id < 0) ? 0 : 1);
@@ -1715,7 +1663,6 @@ void player_targetHyperspaceSet( int id )
 
    hooks_run( "target_hyperspace" );
 }
-
 
 /**
  * @brief Gets a hyperspace target.
@@ -1753,7 +1700,6 @@ void player_targetHyperspace (void)
       map_select( cur_system->jumps[ id ].target, 0 );
 }
 
-
 /**
  * @brief Enables or disables jump points preempting planets in autoface and target clearing.
  *
@@ -1764,7 +1710,6 @@ void player_hyperspacePreempt( int preempt )
    preemption = preempt;
 }
 
-
 /**
  * @brief Returns whether the jump point target should preempt the planet target.
  *
@@ -1774,7 +1719,6 @@ int player_getHypPreempt(void)
 {
    return preemption;
 }
-
 
 /**
  * @brief Returns the player's total default time delta based on dt_mod and ship's dt_default.
@@ -1789,7 +1733,6 @@ double player_dt_default (void)
    return player.dt_mod;
 }
 
-
 /**
  * @brief Starts the hail sounds and aborts autoNav
  */
@@ -1800,13 +1743,12 @@ void player_hailStart (void)
    player_hailCounter = 5;
 
    input_getKeybindDisplay( "autohail", buf, sizeof(buf) );
-   player_message( _("#rReceiving hail! Press %s to respond."), buf );
+   player_message( _("#rReceiving hail! Press #b%s#0 to respond."), buf );
 
    /* Reset speed. */
    player_autonavResetSpeed();
    player.autonav_timer = MAX( player.autonav_timer, 10. );
 }
-
 
 /**
  * @brief Actually attempts to jump in hyperspace.
@@ -1815,7 +1757,7 @@ void player_hailStart (void)
  */
 int player_jump (void)
 {
-   int j, h;
+   int h;
    double mindist;
 
    /* Must have a jump target and not be already jumping. */
@@ -1829,7 +1771,7 @@ int player_jump (void)
 
    /* Select nearest jump if not target. */
    if (player.p->nav_hyperspace == -1) {
-      j        = -1;
+      int j    = -1;
       mindist  = INFINITY;
       for (int i=0; i<array_size(cur_system->jumps); i++) {
          double dist = vect_dist2( &player.p->solid->pos, &cur_system->jumps[i].pos );
@@ -1983,7 +1925,6 @@ void player_brokeHyperspace (void)
    player.jumped_times++;
 }
 
-
 /**
  * @brief Start accelerating.
  *
@@ -2000,7 +1941,6 @@ void player_accel( double acc )
       player_soundPause();
 }
 
-
 /**
  * @brief Done accelerating.
  */
@@ -2008,7 +1948,6 @@ void player_accelOver (void)
 {
    player_acc = 0.;
 }
-
 
 /**
  * @brief Sets the player's target.
@@ -2030,7 +1969,6 @@ void player_targetSet( unsigned int id )
    if (player_isFlag(PLAYER_AUTONAV) && player.autonav == AUTONAV_PLT_FOLLOW)
       player_autonavAbort(NULL);
 }
-
 
 /**
  * @brief Targets the nearest hostile enemy to the player.
@@ -2072,7 +2010,6 @@ void player_targetHostile (void)
    player_targetSet( tp );
 }
 
-
 /**
  * @brief Cycles to next target.
  *
@@ -2083,7 +2020,6 @@ void player_targetNext( int mode )
    player_targetSet( pilot_getNextID(player.p->target, mode) );
 }
 
-
 /**
  * @brief Cycles to previous target.
  *
@@ -2093,7 +2029,6 @@ void player_targetPrev( int mode )
 {
    player_targetSet( pilot_getPrevID(player.p->target, mode) );
 }
-
 
 /**
  * @brief Clears the player's ship, planet or hyperspace target, in that order.
@@ -2115,7 +2050,6 @@ void player_targetClear (void)
    gui_setNav();
 }
 
-
 /**
  * @brief Clears all player targets: hyperspace, planet, asteroid, etc...
  */
@@ -2126,7 +2060,6 @@ void player_targetClearAll (void)
    player_targetAsteroidSet( -1, -1 );
    player_targetSet( PLAYER_ID );
 }
-
 
 /**
  * @brief Targets the pilot.
@@ -2166,15 +2099,12 @@ void player_targetEscort( int prev )
          pilot_setTarget( player.p, player.p->id );
    }
 
-
    if (player.p->target != PLAYER_ID) {
       gui_forceBlink();
       player_soundPlayGUI( snd_target, 1 );
    }
    gui_setTarget();
 }
-
-
 
 /**
  * @brief Player targets nearest pilot.
@@ -2198,7 +2128,6 @@ void player_targetNearest (void)
 
    player_targetSet( t );
 }
-
 
 static int screenshot_cur = 0; /**< Current screenshot at. */
 /**
@@ -2230,7 +2159,6 @@ void player_screenshot (void)
    gl_screenshot(filename);
 }
 
-
 /**
  * @brief Checks to see if player is still being hailed and clears hail counters
  *        if he isn't.
@@ -2251,7 +2179,6 @@ static void player_checkHail (void)
    player_hailTimer     = 0.;
 }
 
-
 /**
  * @brief Displays an out of range message for the player's currently selected planet.
  */
@@ -2260,7 +2187,6 @@ static void player_planetOutOfRangeMsg (void)
    player_message( _("#r%s is out of comm range, unable to contact."),
          _(cur_system->planets[player.p->nav_planet]->name) );
 }
-
 
 /**
  * @brief Opens communication with the player's target.
@@ -2287,7 +2213,6 @@ void player_hail (void)
    player_checkHail();
 }
 
-
 /**
  * @brief Opens communication with the player's planet target.
  */
@@ -2306,7 +2231,6 @@ void player_hailPlanet (void)
    else
       player_message(_("#rNo target selected to hail."));
 }
-
 
 /**
  * @brief Automatically tries to hail a pilot that hailed the player.
@@ -2341,7 +2265,6 @@ void player_autohail (void)
    player_message(_("#rYou haven't been hailed by any pilots."));
 }
 
-
 /**
  * @brief Toggles mouse flying.
  */
@@ -2364,7 +2287,6 @@ void player_toggleMouseFly(void)
          player_accelOver();
    }
 }
-
 
 /**
  * @brief Starts braking or active cooldown.
@@ -2389,7 +2311,6 @@ void player_brake(void)
       pilot_setFlag(player.p, PILOT_COOLDOWN_BRAKE);
    }
 }
-
 
 /**
  * @brief Handles mouse flying based on cursor position.
@@ -2421,7 +2342,6 @@ static int player_thinkMouseFly(void)
       return 0;
 }
 
-
 /**
  * @brief Player got pwned.
  */
@@ -2434,7 +2354,6 @@ void player_dead (void)
    /* Close the overlay. */
    ovr_setOpen(0);
 }
-
 
 /**
  * @brief Player blew up in a fireball.
@@ -2460,7 +2379,6 @@ void player_destroyed (void)
    pause_setSpeed(1.);
    sound_setSpeed(1.);
 }
-
 
 /**
  * @brief PlayerShip_t compare function for qsort().
@@ -2493,7 +2411,6 @@ static int player_shipsCompare( const void *arg1, const void *arg2 )
    return strcmp( ps1->p->name, ps2->p->name );
 }
 
-
 /**
  * @brief Sorts the players ships.
  */
@@ -2505,7 +2422,6 @@ void player_shipsSort (void)
    /* Sort. */
    qsort( player_stack, array_size(player_stack), sizeof(PlayerShip_t), player_shipsCompare );
 }
-
 
 /**
  * @brief Returns a buffer with all the player's ships names.
@@ -2529,7 +2445,6 @@ int player_ships( char** sships, glTexture** tships )
    return array_size(player_stack);
 }
 
-
 /**
  * @brief Gets the array (array.h) of the player's ships.
  */
@@ -2537,7 +2452,6 @@ const PlayerShip_t* player_getShipStack (void)
 {
    return player_stack;
 }
-
 
 /**
  * @brief Gets the amount of ships player has in storage.
@@ -2548,7 +2462,6 @@ int player_nships (void)
 {
    return array_size(player_stack);
 }
-
 
 /**
  * @brief Sees if player has a ship of a name.
@@ -2569,7 +2482,6 @@ int player_hasShip( const char *shipname )
    return 0;
 }
 
-
 /**
  * @brief Gets a specific ship.
  *
@@ -2589,7 +2501,6 @@ Pilot *player_getShip( const char *shipname )
    return NULL;
 }
 
-
 /**
  * @brief Gets a specific ship.
  *
@@ -2608,7 +2519,6 @@ PlayerShip_t *player_getPlayerShip( const char *shipname )
    WARN(_("Player ship '%s' not found in stack"), shipname);
    return NULL;
 }
-
 
 /**
  * @brief Gets how many of the outfit the player owns.
@@ -2641,7 +2551,6 @@ int player_outfitOwned( const Outfit* o )
    return 0;
 }
 
-
 /**
  * Total number of an outfit owned by the player (including equipped).
  */
@@ -2654,7 +2563,6 @@ int player_outfitOwnedTotal( const Outfit* o )
 
    return q;
 }
-
 
 /**
  * @brief qsort() compare function for PlayerOutfit_t sorting.
@@ -2671,7 +2579,6 @@ static int player_outfitCompare( const void *arg1, const void *arg2 )
    return outfit_compareTech( &po1->o, &po2->o );
 }
 
-
 /**
  * @brief Gets an array (array.h) of the player's outfits.
  */
@@ -2679,7 +2586,6 @@ const PlayerOutfit_t* player_getOutfits (void)
 {
    return player_outfits;
 }
-
 
 /**
  * @brief Prepares two arrays for displaying in an image array.
@@ -2705,7 +2611,6 @@ int player_getOutfitsFiltered( const Outfit **outfits,
    return outfits_filter( outfits, array_size(player_outfits), filter, name );
 }
 
-
 /**
  * @brief Gets the amount of different outfits in the player outfit stack.
  *
@@ -2715,7 +2620,6 @@ int player_numOutfits (void)
 {
    return array_size(player_outfits);
 }
-
 
 /**
  * @brief Adds an outfit to the player outfit stack.
@@ -2773,7 +2677,6 @@ int player_addOutfit( const Outfit *o, int quantity )
    return quantity;
 }
 
-
 /**
  * @brief Remove an outfit from the player's outfit stack.
  *
@@ -2803,7 +2706,6 @@ int player_rmOutfit( const Outfit *o, int quantity )
    return 0;
 }
 
-
 /**
  * @brief Marks a mission as completed.
  *
@@ -2821,7 +2723,6 @@ void player_missionFinished( int id )
    array_push_back( &missions_done, id );
 }
 
-
 /**
  * @brief Checks to see if player has already completed a mission.
  *
@@ -2835,7 +2736,6 @@ int player_missionAlreadyDone( int id )
          return 1;
    return 0;
 }
-
 
 /**
  * @brief Marks a event as completed.
@@ -2854,7 +2754,6 @@ void player_eventFinished( int id )
    array_push_back( &events_done, id );
 }
 
-
 /**
  * @brief Checks to see if player has already completed a event.
  *
@@ -2868,7 +2767,6 @@ int player_eventAlreadyDone( int id )
          return 1;
    return 0;
 }
-
 
 /**
  * @brief Checks to see if player has license.
@@ -2888,7 +2786,6 @@ int player_hasLicense( const char *license )
    return 0;
 }
 
-
 /**
  * @brief Gives the player a license.
  *
@@ -2903,7 +2800,6 @@ void player_addLicense( const char *license )
    array_push_back( &player_licenses, strdup(license) );
 }
 
-
 /**
  * @brief Gets the array (array.h) of license names in the player's inventory.
  */
@@ -2911,7 +2807,6 @@ const char **player_getLicenses ()
 {
    return (const char**) player_licenses;
 }
-
 
 /**
  * @brief Runs hooks for the player.
@@ -2935,7 +2830,6 @@ void player_runHooks (void)
    }
 }
 
-
 /**
  * @brief Clears escorts to make sure deployment is safe.
  */
@@ -2949,7 +2843,6 @@ static void player_clearEscorts (void)
          player.p->outfits[i]->u.ammo.deployed = 0;
    }
 }
-
 
 /**
  * @brief Adds the player's escorts.
@@ -3021,7 +2914,6 @@ int player_addEscorts (void)
    return 0;
 }
 
-
 /**
  * @brief Saves the player's escorts.
  */
@@ -3038,7 +2930,6 @@ static int player_saveEscorts( xmlTextWriterPtr writer )
 
    return 0;
 }
-
 
 /**
  * @brief Save the freaking player in a freaking xmlfile.
@@ -3150,8 +3041,7 @@ int player_save( xmlTextWriterPtr writer )
  */
 static int player_saveShipSlot( xmlTextWriterPtr writer, PilotOutfitSlot *slot, int i )
 {
-   const Outfit *o;
-   o = slot->outfit;
+   const Outfit *o = slot->outfit;
    xmlw_startElem(writer,"outfit");
    xmlw_attr(writer,"slot","%d",i);
    if ((outfit_ammo(o) != NULL) &&
@@ -3164,7 +3054,6 @@ static int player_saveShipSlot( xmlTextWriterPtr writer, PilotOutfitSlot *slot, 
 
    return 0;
 }
-
 
 /**
  * @brief Saves a ship.
@@ -3278,7 +3167,6 @@ static int player_saveShip( xmlTextWriterPtr writer, Pilot* ship, int favourite 
    return 0;
 }
 
-
 /**
  * @brief Saves the player meta-data.
  *
@@ -3320,7 +3208,6 @@ static int player_saveMetadata( xmlTextWriterPtr writer )
 
    return 0;
 }
-
 
 /**
  * @brief Loads the player stuff.
@@ -3369,7 +3256,6 @@ Planet* player_load( xmlNodePtr parent )
    return pnt;
 }
 
-
 /**
  * @brief Parses the player node.
  *
@@ -3412,7 +3298,6 @@ static Planet* player_parse( xmlNodePtr parent )
    /* Parse rest. */
    node = parent->xmlChildrenNode;
    do {
-
       /* global stuff */
       xmlr_float(node, "dt_mod", player.dt_mod);
       xmlr_ulong(node, "credits", player_creds);
@@ -3701,7 +3586,6 @@ static int player_parseEscorts( xmlNodePtr parent )
    return 0;
 }
 
-
 /**
  * @brief Parses the player metadata.
  *
@@ -3758,7 +3642,6 @@ static int player_parseMetadata( xmlNodePtr parent )
    return 0;
 }
 
-
 /**
  * @brief Adds outfit to pilot if it can.
  */
@@ -3784,7 +3667,6 @@ static void player_addOutfitToPilot( Pilot* pilot, const Outfit* outfit, PilotOu
    /* Update stats. */
    pilot_calcStats( pilot );
 }
-
 
 /**
  * @brief Parses a ship outfit slot.
@@ -3827,7 +3709,6 @@ static void player_parseShipSlot( xmlNodePtr node, Pilot *ship, PilotOutfitSlot 
    if (q > 0)
       pilot_addAmmo( ship, slot, ammo, q );
 }
-
 
 /**
  * @brief Parses a player's ship.
@@ -4113,7 +3994,6 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
 
    return 0;
 }
-
 
 /**
  * @brief Input binding for toggling stealth for the player.

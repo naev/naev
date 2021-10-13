@@ -1,13 +1,11 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
 /**
  * @file load.c
  *
  * @brief Contains stuff to load a pilot or look up information about it.
  */
-
 
 /** @cond */
 #include "physfs.h"
@@ -46,7 +44,6 @@
 #define BUTTON_WIDTH    200 /**< Button width. */
 #define BUTTON_HEIGHT   30 /**< Button height. */
 
-
 /**
  * @brief Struct containing a file's name and stat structure.
  */
@@ -55,10 +52,8 @@ typedef struct filedata {
    PHYSFS_Stat stat;
 } filedata_t;
 
-
 static nsave_t *load_saves = NULL; /**< Array of save.s */
 extern int save_loaded; /**< From save.c */
-
 
 /*
  * Prototypes.
@@ -92,7 +87,6 @@ static int load_gameInternal( const char* file, const char* version );
 static int load_enumerateCallback( void* data, const char* origdir, const char* fname );
 static int load_sortCompare( const void *p1, const void *p2 );
 static xmlDocPtr load_xml_parsePhysFS( const char* filename );
-
 
 /**
  * @brief Loads an individual save.
@@ -180,7 +174,6 @@ static int load_load( nsave_t *save, const char *path )
    return 0;
 }
 
-
 /**
  * @brief Loads or refreshes saved games.
  */
@@ -188,8 +181,7 @@ int load_refresh (void)
 {
    char buf[PATH_MAX];
    filedata_t *files, tmp;
-   size_t len;
-   int i, ok;
+   int ok;
    nsave_t *ns;
 
    if (load_saves != NULL)
@@ -206,8 +198,8 @@ int load_refresh (void)
    }
 
    /* Make sure backups are after saves. */
-   for (i=0; i<array_size(files)-1; i++) {
-      len = strlen( files[i].name );
+   for (int i=0; i<array_size(files)-1; i++) {
+      size_t len = strlen( files[i].name );
 
       /* Only interested in swapping backup with file after it if it's not backup. */
       if ((len < 11) || strcmp( &files[i].name[len-10],".ns.backup" ))
@@ -227,7 +219,7 @@ int load_refresh (void)
    ok = 0;
    ns = NULL;
    load_saves = array_create_size( nsave_t, array_size(files) );
-   for (i=0; i<array_size(files); i++) {
+   for (int i=0; i<array_size(files); i++) {
       if (!ok)
          ns = &array_grow( &load_saves );
       snprintf( buf, sizeof(buf), "saves/%s", files[i].name );
@@ -239,13 +231,12 @@ int load_refresh (void)
       array_resize( &load_saves, array_size(load_saves)-1 );
 
    /* Clean up memory. */
-   for (i=0; i<array_size(files); i++)
+   for (int i=0; i<array_size(files); i++)
       free( files[i].name );
    array_free( files );
 
    return 0;
 }
-
 
 /**
  * @brief The PHYSFS_EnumerateCallback for load_refresh
@@ -280,7 +271,6 @@ static int load_enumerateCallback( void* data, const char* origdir, const char* 
    return PHYSFS_ENUM_OK;
 }
 
-
 /**
  * @brief qsort compare function for files.
  */
@@ -299,17 +289,13 @@ static int load_sortCompare( const void *p1, const void *p2 )
    return strcmp( f1->name, f2->name );
 }
 
-
 /**
  * @brief Frees loaded save stuff.
  */
 void load_free (void)
 {
-   int i;
-   nsave_t *ns;
-
-   for (i=0; i<array_size(load_saves); i++) {
-      ns = &load_saves[i];
+   for (int i=0; i<array_size(load_saves); i++) {
+      nsave_t *ns = &load_saves[i];
       free(ns->path);
       free(ns->name);
       free(ns->version);
@@ -321,7 +307,6 @@ void load_free (void)
    array_free( load_saves );
    load_saves = NULL;
 }
-
 
 /**
  * @brief Gets the array (array.h) of loaded saves.
@@ -339,7 +324,7 @@ void load_loadGameMenu (void)
    unsigned int wid;
    char **names, buf[PATH_MAX];
    nsave_t *ns;
-   int i, n, len;
+   int n, len;
 
    /* window */
    wid = window_create( "wdwLoadGameMenu", _("Load Game"), -1, -1, LOAD_WIDTH, LOAD_HEIGHT );
@@ -353,7 +338,7 @@ void load_loadGameMenu (void)
    n = array_size( load_saves );
    if (n > 0) {
       names = malloc( sizeof(char*)*n );
-      for (i=0; i<n; i++) {
+      for (int i=0; i<n; i++) {
          ns       = &load_saves[i];
          len      = strlen(ns->path);
          if (strcmp(&ns->path[len-10],".ns.backup")==0) {
@@ -387,6 +372,7 @@ void load_loadGameMenu (void)
    window_addButton( wid, 20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnDelete", _("Delete"), load_menu_delete );
 }
+
 /**
  * @brief Closes the load game menu.
  *    @param wdw Window triggering function.
@@ -397,6 +383,7 @@ static void load_menu_close( unsigned int wdw, const char *str )
    (void)str;
    window_destroy( wdw );
 }
+
 /**
  * @brief Updates the load menu.
  *    @param wid Widget triggering function.
@@ -441,6 +428,7 @@ static void load_menu_update( unsigned int wid, const char *str )
          credits, ns->shipname, ns->shipmodel );
    window_modifyText( wid, "txtPilot", buf );
 }
+
 /**
  * @brief Loads a new game.
  *    @param wdw Window triggering function.
@@ -486,6 +474,7 @@ static void load_menu_load( unsigned int wdw, const char *str )
       load_loadGameMenu();
    }
 }
+
 /**
  * @brief Deletes an old game.
  *    @param wdw Window to delete.
@@ -493,7 +482,7 @@ static void load_menu_load( unsigned int wdw, const char *str )
  */
 static void load_menu_delete( unsigned int wdw, const char *str )
 {
-   (void)str;
+   (void) str;
    const char *save;
    int wid, pos;
 
@@ -516,27 +505,26 @@ static void load_menu_delete( unsigned int wdw, const char *str )
    load_loadGameMenu();
 }
 
-
 static void load_compatSlots (void)
 {
    /* Vars for loading old saves. */
-   int i,j;
    char **sships;
    glTexture **tships;
    int nships;
    Pilot *ship;
-   ShipOutfitSlot *sslot;
 
    nships = player_nships();
    sships = malloc(nships * sizeof(char*));
    tships = malloc(nships * sizeof(glTexture*));
    nships = player_ships( sships, tships );
    ship   = player.p;
-   for (i=-1; i<nships; i++) {
+   for (int i=-1; i<nships; i++) {
       if (i >= 0)
          ship = player_getShip( sships[i] );
       /* Remove all outfits. */
-      for (j=0; j<array_size(ship->outfits); j++) {
+      for (int j=0; j<array_size(ship->outfits); j++) {
+         ShipOutfitSlot *sslot;
+
          if (ship->outfits[j]->outfit != NULL) {
             player_addOutfit( ship->outfits[j]->outfit, 1 );
             pilot_rmOutfitRaw( ship, ship->outfits[j] );
@@ -552,12 +540,11 @@ static void load_compatSlots (void)
    }
 
    /* Clean up. */
-   for (i=0; i<nships; i++)
+   for (int i=0; i<nships; i++)
       free(sships[i]);
    free(sships);
    free(tships);
 }
-
 
 /**
  * @brief Loads the diffs from game file.
@@ -599,7 +586,6 @@ err:
    return -1;
 }
 
-
 /**
  * @brief Loads the game from a file.
  *
@@ -611,7 +597,6 @@ int load_gameFile( const char *file )
    return load_gameInternal( file, naev_version(0) );
 }
 
-
 /**
  * @brief Actually loads a new game based on save structure.
  *
@@ -622,7 +607,6 @@ int load_game( nsave_t *ns )
 {
    return load_gameInternal( ns->path, ns->version );
 }
-
 
 /**
  * @brief Actually loads a new game.
@@ -724,14 +708,12 @@ err:
    return -1;
 }
 
-
 /**
  * @brief Temporary (hopefully) wrapper around xml_parsePhysFS in support of gzipped XML (like .ns files).
  */
 static xmlDocPtr load_xml_parsePhysFS( const char* filename )
 {
    char buf[PATH_MAX];
-
    snprintf( buf, sizeof(buf), "%s/%s", PHYSFS_getWriteDir(), filename);
    return xmlParseFile( buf );
 }
