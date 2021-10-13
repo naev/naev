@@ -227,12 +227,13 @@ if buildExec.disabled() == false
    config_data.set10('HAVE_STRNSTR', cc.has_function('strnstr'))
    config_data.set10('HAVE_VASPRINTF', cc.has_function('vasprintf'))
    # BLAS include tests
-   config_data.set10('HAVE_ACCELERATE_ACCELERATE_H', cc.has_header('Accelerate/Accelerate.h', dependencies: blas))
-   config_data.set10('HAVE_CBLAS_H', cc.has_header('cblas.h', dependencies: blas))
-   config_data.set10('HAVE_CBLAS_OPENBLAS_H', cc.has_header('cblas_openblas.h', dependencies: blas))
-   config_data.set10('HAVE_CBLAS_HYPHEN_OPENBLAS_H', cc.has_header('cblas-openblas.h', dependencies: blas))
+   cblas_test = '\nint main (void) { double x = 0; return (int)cblas_ddot( 1, &x, 1, &x, 1 ); }'
+   config_data.set10('HAVE_ACCELERATE_ACCELERATE_H', cc.links('#include <Accelerate/Accelerate.h>' + cblas_test, dependencies: blas))
+   config_data.set10('HAVE_CBLAS_H', cc.links('#include <cblas.h>' + cblas_test, dependencies: blas))
+   config_data.set10('HAVE_CBLAS_OPENBLAS_H', cc.links('#include <cblas_openblas.h>' + cblas_test, dependencies: blas))
+   config_data.set10('HAVE_CBLAS_HYPHEN_OPENBLAS_H', cc.links('#include <cblas-openblas.h>' + cblas_test, dependencies: blas))
+   config_data.set10('HAVE_OPENBLAS_CBLAS_H', cc.links('#include <openblas/cblas.h>' + cblas_test, dependencies: blas))
    config_data.set10('HAVE_F77BLAS_H', cc.has_header('f77blas.h', dependencies: blas))
-   config_data.set10('HAVE_OPENBLAS_CBLAS_H', cc.has_header('openblas/cblas.h', dependencies: blas))
 
    # OS declaration (Shows which OS we built this with in the options menu)
    if host_machine.system() == 'linux'
