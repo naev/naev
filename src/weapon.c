@@ -1,7 +1,6 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
 /**
  * @file weapon.c
  *
@@ -10,8 +9,6 @@
  * Weapons are what gets created when a pilot shoots.  They are based
  * on the outfit that created them.
  */
-
-
 /** @cond */
 #include <math.h>
 #include <stdlib.h>
@@ -35,7 +32,6 @@
 #include "rng.h"
 #include "spfx.h"
 
-
 #define weapon_isSmart(w)     (w->think != NULL) /**< Checks if the weapon w is smart. */
 
 /* Weapon status */
@@ -52,7 +48,6 @@ typedef enum WeaponStatus_ {
 #define weapon_isFlag(w,f)    ((w)->flags & (f))
 #define weapon_setFlag(w,f)   ((w)->flags |= (f))
 #define weapon_rmFlag(w,f)    ((w)->flags &= ~(f))
-
 
 /**
  * @struct Weapon
@@ -94,10 +89,8 @@ typedef struct Weapon_ {
    WeaponStatus status; /**< Weapon status - to check for jamming */
 } Weapon;
 
-
-/* behind player layer */
+/* Weapon layers. */
 static Weapon** wbackLayer = NULL; /**< behind pilots */
-/* behind player layer */
 static Weapon** wfrontLayer = NULL; /**< in front of pilots, behind player */
 
 /* Graphics. */
@@ -105,10 +98,8 @@ static gl_vbo  *weapon_vbo     = NULL; /**< Weapon VBO. */
 static GLfloat *weapon_vboData = NULL; /**< Data of weapon VBO. */
 static size_t weapon_vboSize   = 0; /**< Size of the VBO. */
 
-
 /* Internal stuff. */
 static unsigned int beam_idgen = 0; /**< Beam identifier generator. */
-
 
 /*
  * Prototypes
@@ -154,7 +145,6 @@ void weapon_minimap( const double res, const double w,
 static void weapon_setThrust( Weapon *w, double thrust );
 static void weapon_setTurn( Weapon *w, double turn );
 
-
 /**
  * @brief Initializes the weapon stuff.
  */
@@ -163,7 +153,6 @@ void weapon_init (void)
    wfrontLayer = array_create(Weapon*);
    wbackLayer  = array_create(Weapon*);
 }
-
 
 /**
  * @brief Draws the minimap weapons (used in player.c).
@@ -295,7 +284,6 @@ void weapon_minimap( const double res, const double w,
    }
 }
 
-
 /**
  * @brief Sets the weapon's thrust.
  */
@@ -304,7 +292,6 @@ static void weapon_setThrust( Weapon *w, double thrust )
    w->solid->thrust = thrust;
 }
 
-
 /**
  * @brief Sets the weapon's turn.
  */
@@ -312,7 +299,6 @@ static void weapon_setTurn( Weapon *w, double turn )
 {
    w->solid->dir_vel = turn;
 }
-
 
 /**
  * @brief The AI of seeker missiles.
@@ -426,7 +412,6 @@ static void think_seeker( Weapon* w, const double dt )
    //w->solid->speed_max = w->outfit->u.amm.speed * ewtrack;
 }
 
-
 /**
  * @brief The pseudo-ai of the beam weapons.
  *
@@ -537,7 +522,6 @@ static void think_beam( Weapon* w, const double dt )
    }
 }
 
-
 /**
  * @brief Updates all the weapon layers.
  *
@@ -553,7 +537,6 @@ void weapons_update( const double dt )
    weapons_purgeLayer( wbackLayer );
    weapons_purgeLayer( wfrontLayer );
 }
-
 
 /**
  * @brief Updates all the weapons in the layer.
@@ -689,7 +672,6 @@ static void weapons_updateLayer( const double dt, const WeaponLayer layer )
    }
 }
 
-
 /**
  * @brief Purges weapons marked for deletion.
  *
@@ -705,7 +687,6 @@ static void weapons_purgeLayer( Weapon** layer )
       }
    }
 }
-
 
 /**
  * @brief Renders all the weapons in a layer.
@@ -733,7 +714,6 @@ void weapons_render( const WeaponLayer layer, const double dt )
    for (int i=0; i<array_size(wlayer); i++)
       weapon_render( wlayer[i], dt );
 }
-
 
 static void weapon_renderBeam( Weapon* w, const double dt )
 {
@@ -783,7 +763,6 @@ static void weapon_renderBeam( Weapon* w, const double dt )
    /* anything failed? */
    gl_checkErr();
 }
-
 
 /**
  * @brief Renders an individual weapon.
@@ -873,7 +852,6 @@ static void weapon_render( Weapon* w, const double dt )
    }
 }
 
-
 /**
  * @brief Checks to see if the weapon can hit the pilot.
  *
@@ -942,7 +920,6 @@ static int weapon_checkCanHit( const Weapon* w, const Pilot *p )
 
    return 0;
 }
-
 
 /**
  * @brief Updates an individual weapon.
@@ -1148,7 +1125,6 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
       weapon_sample_trail( w );
 }
 
-
 /**
  * @brief Updates the animated trail for a weapon.
  */
@@ -1177,7 +1153,6 @@ static void weapon_sample_trail( Weapon* w )
 
    spfx_trail_sample( w->trail, w->solid->pos.x + dx, w->solid->pos.y + dy*M_SQRT1_2, mode, 0 );
 }
-
 
 /**
  * @brief Informs the AI if needed that it's been hit.
@@ -1239,7 +1214,6 @@ static void weapon_hitAI( Pilot *p, Pilot *shooter, double dmg )
    else
       ai_attacked( p, shooter->id, dmg );
 }
-
 
 /**
  * @brief Weapon hit the pilot.
@@ -1336,7 +1310,6 @@ static void weapon_hitAst( Weapon* w, Asteroid* a, WeaponLayer layer, Vector2d* 
       asteroid_hit( a, &dmg );
 }
 
-
 /**
  * @brief Weapon hit the pilot.
  *
@@ -1392,7 +1365,6 @@ static void weapon_hitBeam( Weapon* w, Pilot* p, WeaponLayer layer,
    }
 }
 
-
 /**
  * @brief Weapon hit an asteroid.
  *
@@ -1431,7 +1403,6 @@ static void weapon_hitAstBeam( Weapon* w, Asteroid* a, WeaponLayer layer,
    }
 }
 
-
 /**
  * @brief Gets the aim position of a turret weapon.
  *
@@ -1448,8 +1419,6 @@ static double weapon_aimTurret( const Outfit *outfit, const Pilot *parent,
       const Pilot *pilot_target, const Vector2d *pos, const Vector2d *vel, double dir,
       double swivel, double time )
 {
-   AsteroidAnchor *field;
-   Asteroid *ast;
    Vector2d *target_pos;
    Vector2d *target_vel;
    double rdir;
@@ -1464,8 +1433,8 @@ static double weapon_aimTurret( const Outfit *outfit, const Pilot *parent,
       if (parent->nav_asteroid < 0)
          return dir;
 
-      field = &cur_system->asteroids[parent->nav_anchor];
-      ast = &field->asteroids[parent->nav_asteroid];
+      AsteroidAnchor *field = &cur_system->asteroids[parent->nav_anchor];
+      Asteroid *ast = &field->asteroids[parent->nav_asteroid];
       target_pos = &ast->pos;
       target_vel = &ast->vel;
    }
@@ -1507,8 +1476,6 @@ static double weapon_aimTurret( const Outfit *outfit, const Pilot *parent,
 
    return rdir;
 }
-
-
 
 /**
  * @brief Creates the bolt specific properties of a weapon.
@@ -1579,7 +1546,6 @@ static void weapon_createBolt( Weapon *w, const Outfit* outfit, double T,
    gfx = outfit_gfx( w->outfit );
    gl_getSpriteFromDir( &w->sx, &w->sy, gfx, w->solid->dir );
 }
-
 
 /**
  * @brief Creates the ammo specific properties of a weapon.
@@ -1680,7 +1646,6 @@ static void weapon_createAmmo( Weapon *w, const Outfit* launcher, double T,
    if (ammo->u.amm.trail_spec != NULL)
       w->trail = spfx_trail_create( ammo->u.amm.trail_spec );
 }
-
 
 /**
  * @brief Creates a new weapon.
@@ -1794,7 +1759,6 @@ static Weapon* weapon_create( const Outfit* outfit, double T,
    return w;
 }
 
-
 /**
  * @brief Creates a new weapon.
  *
@@ -1851,7 +1815,6 @@ void weapon_add( const Outfit* outfit, const double T, const double dir,
       gl_vboData( weapon_vbo, size, weapon_vboData );
    }
 }
-
 
 /**
  * @brief Starts a beam weapon.
@@ -1917,7 +1880,6 @@ unsigned int beam_start( const Outfit* outfit,
    return w->ID;
 }
 
-
 /**
  * @brief Ends a beam weapon.
  *
@@ -1961,7 +1923,6 @@ void beam_end( const unsigned int parent, unsigned int beam )
    }
 }
 
-
 /**
  * @brief Destroys a weapon.
  *
@@ -1972,7 +1933,6 @@ static void weapon_destroy( Weapon* w )
    /* Just mark for removal. */
    weapon_setFlag( w, WEAPON_FLAG_DESTROYED );
 }
-
 
 /**
  * @brief Frees the weapon.
@@ -2051,7 +2011,6 @@ void weapon_exit (void)
    weapon_vbo = NULL;
 }
 
-
 /**
  * @brief Clears possible exploded weapons.
  */
@@ -2064,7 +2023,6 @@ void weapon_explode( double x, double y, double radius,
    weapon_explodeLayer( WEAPON_LAYER_FG, x, y, radius, parent, mode );
    weapon_explodeLayer( WEAPON_LAYER_BG, x, y, radius, parent, mode );
 }
-
 
 /**
  * @brief Explodes all the things on a layer.
