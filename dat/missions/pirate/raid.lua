@@ -225,8 +225,8 @@ function land ()
 end
 
 function enter_delay ()
-   mrkentry = system.mrkAdd( _("Convoy Entry Point"), convoy_enter:pos() )
-   mrkexit = system.mrkAdd( _("Convoy Exit Point"), convoy_exit:pos() )
+   mrkentry = system.mrkAdd( convoy_enter:pos(), _("Convoy Entry Point") )
+   mrkexit = system.mrkAdd( convoy_exit:pos(), _("Convoy Exit Point") )
 
    player.autonavReset( 5 )
    player.msg(fmt.f(_("The convoy will be coming in from {sysname} shortly!"), {sysname=convoy_enter:dest():name()}))

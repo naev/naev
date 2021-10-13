@@ -1050,8 +1050,8 @@ static int systemL_mrkClear( lua_State *L )
  *
  * @usage mrk_id = system.mrkAdd( "Hello", vec2.new( 50, 30 ) ) -- Creates a marker at (50,30)
  *
- *    @luatparam string str String to display next to marker.
  *    @luatparam Vec2 v Position to display marker at.
+ *    @luatparam string str String to display next to marker.
  *    @luatreturn number The id of the marker.
  * @luafunc mrkAdd
  */
@@ -1064,8 +1064,8 @@ static int systemL_mrkAdd( lua_State *L )
    NLUA_CHECKRW(L);
 
    /* Handle parameters. */
-   str   = luaL_optstring( L, 1, NULL );
-   vec   = luaL_checkvector( L, 2 );
+   vec   = luaL_checkvector( L, 1 );
+   str   = luaL_optstring( L, 2, NULL );
 
    /* Create marker. */
    id    = ovr_mrkAddPoint( str, vec->x, vec->y );

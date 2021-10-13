@@ -510,7 +510,7 @@ end
 
 function cutscene_timeout ()
    player.msg(_("#pYour ship has detected a curious signal originating from inside the system.#0"))
-   sysmarker = system.mrkAdd( _("Curious Signal"), pscavB:pos() )
+   sysmarker = system.mrkAdd( pscavB:pos(), _("Curious Signal") )
    cuttimeout = nil
 end
 

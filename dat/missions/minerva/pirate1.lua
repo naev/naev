@@ -177,8 +177,8 @@ function enter ()
       drone:control()
       drone:brake()
 
-      dronemarker = system.mrkAdd( _("Za'lek Drone"), drone:pos() )
-      thugsmarker = system.mrkAdd( _("Dvaered Thugs"), boss:pos() )
+      dronemarker = system.mrkAdd( drone:pos(), _("Za'lek Drone") )
+      thugsmarker = system.mrkAdd( boss:pos(), _("Dvaered Thugs") )
 
       hook.timer( 0.5, "heartbeat" )
    end

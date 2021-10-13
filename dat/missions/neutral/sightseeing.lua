@@ -275,6 +275,6 @@ function set_marks ()
    -- Add new marks
    marks = {}
    for i, p in ipairs(points) do
-      marks[i] = system.mrkAdd(mark_name, p:pos())
+      marks[i] = system.mrkAdd( p:pos(), mark_name )
    end
 end

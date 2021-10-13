@@ -214,7 +214,7 @@ function enter()
             end
         end
         rend_point = vec2.new(0,0)
-        start_marker = system.mrkAdd( "Rendezvous point", rend_point )
+        start_marker = system.mrkAdd( rend_point, _("Rendezvous point") )
         proxy = hook.timer(0.5, "proximity", {location = rend_point, radius = 500, funcname = "escortStart"})
     end
 end

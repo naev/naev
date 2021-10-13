@@ -359,7 +359,7 @@ function enter()
 
       --Adding the starting mark
       start_pos = mispla:pos() + vec2.new( -1000, -1500)
-      mark = system.mrkAdd( mark_name, start_pos )
+      mark = system.mrkAdd( start_pos, mark_name )
       prox = hook.timer(0.5, "proximity", {location = start_pos, radius = 300, funcname = "assault"})
 
    elseif haslauncher == true then

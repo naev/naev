@@ -273,7 +273,7 @@ function timer ()
       local point_pos = points[1]:pos()
 
       if mark == nil then
-         mark = system.mrkAdd( mark_name, point_pos )
+         mark = system.mrkAdd( point_pos, mark_name )
       end
 
       if player_pos:dist( point_pos ) < 500 then

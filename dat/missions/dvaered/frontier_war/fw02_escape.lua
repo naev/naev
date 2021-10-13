@@ -589,7 +589,7 @@ function straferDiscuss()
    -- Add some fuel, far away so that no npc gathers it
    pos = vec2.new( -1.2*system.cur():radius(), 0 )
    system.addGatherable( "Fuel", 1, pos, vec2.new(0,0), 3600 )
-   Imark = system.mrkAdd( mark_name, pos )
+   Imark = system.mrkAdd( pos, mark_name )
    gathHook = hook.gather("gather")
 end
 

@@ -184,7 +184,7 @@ function enter ()
       fzalek = faction.dynAdd( "Za'lek", "zalek_thugs", _("Za'lek") )
 
       drone1 = drone_create( drone1pos )
-      drone1marker = system.mrkAdd( _("Za'lek Drone"), drone1:pos() )
+      drone1marker = system.mrkAdd( drone1:pos(), _("Za'lek Drone") )
 
       drones_killed = 0
    end
@@ -200,7 +200,7 @@ function drone_death ()
    if drones_killed==1 then
       system.mrkRm( drone1marker )
       drone2 = drone_create( drone2pos )
-      drone2marker = system.mrkAdd( _("Za'lek Drone"), drone2:pos() )
+      drone2marker = system.mrkAdd( drone2:pos(), _("Za'lek Drone") )
       player.msg(_("You detected another Za'lek drone in the system!"))
       zalek_inbound = false
       hook.timer( 0.5, "heartbeat" )
