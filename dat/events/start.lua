@@ -54,6 +54,10 @@ function create()
    player.outfitAdd( "GUI - Slimv2" )
    player.outfitAdd( "GUI - Legacy" )
 
+   -- TODO remove when releasing 0.9.0
+   -- This line stops the tutorial updater from running
+   var.push( "tut_update", "0.9.0" )
+
    hook.timer(1.0, "timer_tutorial")
 end
 

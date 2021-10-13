@@ -11,10 +11,9 @@ local portrait = require 'portrait' -- temporary for now
 local tut = {}
 
 -- TODO replace with real portrait
-local pshipai  = portrait.get()
 tut.shipai = {
-   portrait = pshipai,
-   image = portrait.getFullPath( pshipai ),
+   portrait = "tutorial.webp",
+   image = "tutorial.webp",
    name = _("Ship AI"),
    color = { 0, 1, 1 },
    transition = "electric",

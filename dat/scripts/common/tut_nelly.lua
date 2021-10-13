@@ -10,10 +10,9 @@ local portrait = require 'portrait' -- temporary for now
 local tutnel = {}
 
 -- TODO replace with real portrait
-local pnelly  = portrait.getFemale()
 tutnel.nelly = {
-   portrait = pnelly,
-   image = portrait.getFullPath( pnelly ),
+   portrait = "nelly.webp",
+   image = "nelly.webp"
    name = _("Nelly"),
    color = nil,
 }

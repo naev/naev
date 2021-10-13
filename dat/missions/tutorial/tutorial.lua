@@ -121,7 +121,7 @@ You are skeptical of the sales pitch, of course; you really only bought this shi
    end
    misn.accept()
 
-   local posd = { startpnt=startplanet:name(), destpnt=dest_planet:name(), sysname=missys:name() }
+   local posd = { startpnt=start_planet:name(), destpnt=dest_planet:name(), sysname=missys:name() }
    misn.osdCreate( _("Tutorial"), {
       fmt.f(_("Fly to {startpnt} in the {sysname} system with the movement keys"),posd),
       fmt.f(_("Land on {startpnt} in the {sysname} system by double-clicking on it"),posd),
@@ -194,6 +194,7 @@ function land ()
    end
    if stage == 2 then
       stage = 3
+      -- TODO cut up
       msg_info{_([["Excellent! The landing was successful. As your Ship AI, I am in charge of guiding your ship and performing the landing procedure, which has cut down significantly on misfortunes during human-controlled manual landing procedures. When you land, your ship is refueled automatically and you can do things such as talk to civilians at the bar, buy new ship components, configure your ship, and most importantly, accept missions from the Mission Computer. Why don't we look around? As you can see, we are currently on the Landing Main tab, where you can learn about the planet and buy a local map. Click all the other tabs below and I'll give you a tour through what else you can do on a planet. When you are done, click the '#bTake Off#0' button so we can continue."]])}
 
       bar_hook       = hook.land("land_bar", "bar")
@@ -206,7 +207,7 @@ function land ()
 end
 
 function msg_info( msg )
-   vntk.msg( _("Tutorial"), msg )
+   vntk.msg( tut.ainame(), msg )
 end
 
 function land_bar ()
@@ -223,7 +224,7 @@ function land_mission ()
       mission_hook = nil
    end
    msg_info{_([["This is the Mission Computer, where you can find basic missions in the official mission database. Missions are how you make your living as a pilot, so I recommend you check this screen often to see where the money-making opportunities are! You can see that each mission is given a brief summary, and by clicking them, you will be able to see more information about the mission. Since many missions involve cargo, you can also see how much free space is available in your ship in the top-right."]]),
-      fmt.f(_([["When picking missions, pay attention to how much they pay. You'll want to strike a balance of choosing missions that you're capable of doing, but getting paid as much as possible to do them. Once you've chosen a mission, click the '#bAccept Mission#0' button on the bottom-right and it will be added to your active missions, which you can review via the Info screen by pressing {infokey}."]],{infokey=tut.getKey("info")})),
+      fmt.f(_([["When picking missions, pay attention to how much they pay. You'll want to strike a balance of choosing missions that you're capable of doing, but getting paid as much as possible to do them. Once you've chosen a mission, click the '#bAccept Mission#0' button on the bottom-right and it will be added to your active missions, which you can review via the Info screen by pressing {infokey}."]]),{infokey=tut.getKey("info")}),
       _([["As you gain reputation with other factions and characters, you will be given access to more complicated and well paying missions at the mission computer. That is why I recommend also checking the spaceport bar often when travelling."]]),
    }
 end
@@ -234,6 +235,7 @@ function land_outfits ()
       outfits_hook = nil
    end
    msg_info{_([["This is the Outfitter, where you can buy new outfits to make your starship even better! You can fit your ship with new weapons, extra cargo space, more powerful core systems, and more! Regional maps which can help you explore the galaxy more easily can also be purchased here, as well as licenses required for higher-end weaponry and starships. For example, you will require a Large Civilian Vessel License to purchase a Melendez Corporation Mule Bulk Cargo Starhip, widely sought after for its unmatched cargo capacity."]]),
+   -- TODO cut up
    _([["As you can see, a series of tabs at the top of your screen allow you to filter outfits by type: 'W' for weapons, 'U' for utilities, 'S' for structurals, 'Core' for cores, and 'Other' for anything outside of those categories, most notably, regional maps and licenses. When you see an outfit that interests you, click on it to see more information about it, then either click on the '#bBuy#0' button to buy it or click on the '#bSell#0' button to sell it if you have one in your possession. Different planets have different outfits available; if you don't see a specific outfit you're looking for, you can search for it via the '#bFind Outfits#0' button on the starmap screen. After buying new outfits make sure to equip them in the #oEquipment#0 window."]]),
    }
 end
@@ -253,6 +255,7 @@ function land_equipment ()
       hook.rm(equipment_hook)
       equipment_hook = nil
    end
+   -- TODO cut up
    msg_info{_([["This is the Equipment screen, which is available only on planets which have either an outfitter or a shipyard. Here, you can equip your ship with any outfits you have bought at the #oOutfitter#0. If and only if the current planet has a shipyard, you can also do so with any other ship you own, and you can swap which ship you are currently piloting by selecting another ship and clicking the '#bSwap Ship#0' button or #bdouble-clicking#0 on it. You can also sell those other ships, but not your current ship, with the '#bSell Ship#0' button, if you decide that you no longer need them. Selling a ship that still has outfits equipped will also lead to those outfits being sold along with the ship, so do keep that in mind if there's an outfit you need to keep."]]),
    _([["If you make any changes to your ship now, please ensure that you still have weapons equipped, as you will need those later for practicing combat and flying around space without any weapons can be very risky anyway."]]),
    }
@@ -263,8 +266,9 @@ function land_commodity ()
       hook.rm(commodity_hook)
       commodity_hook = nil
    end
+   -- TODO cut up
    msg_info{_([["This is the Commodity screen, where you can buy and sell commodities. Commodity prices vary from planet to planet and even over time, so you can use this screen to attempt to make money by buying low and selling high. Click on a commodity to see information about it, most notably its average price per tonne, and click on the '#bBuy#0' and '#bSell#0' buttons to buy or sell some of the commodity, respectively. Here, it's useful to hold the #bShift#0 and/or #bCtrl#0 keys to adjust the modifier of how many tonnes of the commodity you're buying or selling at once. This will reduce the number of times you have to click on the Buy and Sell buttons."]]),
-   fmt.f(_([["If you're unsure what's profitable to buy or sell, you can press {starmapkey} to view the star map and then click on the '#bMode#0' button for various price overviews. The news terminal at the bar also includes price information for specific nearby planets."]],{starmapkey=tut.getKey("starmap")}))
+   fmt.f(_([["If you're unsure what's profitable to buy or sell, you can press {starmapkey} to view the star map and then click on the '#bMode#0' button for various price overviews. The news terminal at the bar also includes price information for specific nearby planets."]]),{starmapkey=tut.getKey("starmap")})
    }
 end
 
@@ -310,7 +314,7 @@ function enter_timer ()
    elseif stage == 5 and system.cur() == missys then
       spawn_drone()
 
-   elseif stage == 6 and system.cur() == destsys then
+   elseif stage == 6 and system.cur() ~= missys then
       vn.clear()
       vn.scene()
       local sai = vn.newCharacter( tut.vn_shipai() )
