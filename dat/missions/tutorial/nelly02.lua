@@ -117,7 +117,7 @@ function accept ()
    vn.clear()
    vn.scene()
    local nel = vn.newCharacter( tutnel.vn_nelly() )
-
+   vn.transition( tutnel.nelly.transition )
    nel(_([[Nelly brightens up when you get near.
 "Hey, I thought was able to get my ship up and running, but before I was able to get in and do a test run, the thing went haywire and now it's spinning around in circles! You have an Ion Cannon, do you? Could you help me disable my ship and get it back?"]]))
    vn.menu{
@@ -128,8 +128,7 @@ function accept ()
    vn.label("decline")
    nel(_([[They look dejected.
 "I guess I'll have to see if there is any other way to solve my problem."]]))
-   vn.done()
-
+   vn.done( tutnel.nelly.transition )
 
    vn.label("accept")
    vn.func( function () doaccept = true end )
@@ -181,6 +180,7 @@ function accept ()
       nel(fmt.f(_([["It looks like you don't have any disabling weapons. Remember, you have to disable my ship and not destroy it! I think the nearby #o{nearplanet}#0 should have #o{outfitname}#0 for sale. You should buy and equip one before trying to disable my ship!"]]),{nearplanet=nearplanet:name(), outfit_tobuy:name()}))
    end
 
+   vn.done( tutnel.nelly.transition )
    vn.run()
 
    -- Check to see if truly accepted
@@ -297,8 +297,10 @@ function board ()
    vn.clear()
    vn.scene()
    local nel = vn.newCharacter( tutnel.vn_nelly() )
+   vn.transition( tutnel.nelly.transition )
    vn.na(_("You board Nelly's ship and quickly go to the control panel to turn off the autonav."))
    nel(fmt.f(_([["I hate when this happes. Err, I mean, this is the first time something like this has happened to me! Let me bring the ship back to {pntname} and meet me at the spaceport bar for your reward."]]),{pntname=retpnt:name()}))
+   vn.done( tutnel.nelly.transition )
    vn.run()
 
    -- Update objectives
@@ -336,8 +338,10 @@ function land ()
       vn.clear()
       vn.scene()
       local nel = vn.newCharacter( tutnel.vn_nelly() )
+      vn.transition( tutnel.nelly.transition )
       vn.na(_("You land and quickly Nelly goes over to the outfitter and seems to get into some sort of argument with the person in charge. After a bit you see they exchange something and she comes back with a grin on her face."))
       nel(fmt.f(_([["Got the parts! Cheaper than I expected to. Hopefully this will bring an end to my ship troubles. Let's go back to #o{pntname}#0 in #o{sysname}#0!"]]), {pntname=retpnt:name(), sysname=retsys:name()}))
+      vn.done( tutnel.nelly.transition )
       vn.run()
 
       local c = misn.cargoNew( N_("Jumpdrive Repair Parts"), N_("Spare parts that can be used to break a ship's broken jumpdrive.") )
@@ -351,6 +355,7 @@ function land ()
       vn.clear()
       vn.scene()
       local nel = vn.newCharacter( tutnel.vn_nelly() )
+      vn.transition( tutnel.nelly.transition )
       nel(_([["We finally made it. Nothing ever comes really easy does it? Ah, before I forget, let me reward you for your troubles."]]))
       vn.sfxVictory()
       vn.na(fmt.f(_("You have received #g{credits}#0."), {credits=fmt.credits(reward_amount)}))
@@ -359,6 +364,7 @@ function land ()
       end )
       nel(_([["I'm going to get my ship fixed and hopefully next time we meet it'll be in space. Have fun!"
 She runs off to where here ship is stored with the repair parts in hand.]]))
+      vn.done( tutnel.nelly.transition )
       vn.run()
 
       tutnel.log(_("You helped Nelly repair her ship."))
@@ -371,11 +377,13 @@ function approach_nelly ()
    vn.clear()
    vn.scene()
    local nel = vn.newCharacter( tutnel.vn_nelly() )
+   vn.transition( tutnel.nelly.transition )
    vn.na(_("As you approach her you can see she is a bit flustered."))
    nel(fmt.f(_([["I got my ship checked up again, and it looks like it wasn't just an autonav malfunction, but the jumpdrive is toast. I need a spare part, but they don't seem to have any here, and told me I'll have to wait at least a hectaperiod if I want it delivered. However, I was able to find that they seem to have replacements on #o{destpnt}#0 in #o{destsys}#0."]]),{destpnt=destpnt:name(), destsys=destsys:name()}))
    nel(fmt.f(_([[Before you can answer she grabs your arm and pulls you towards where your ship is docked.
 "Come on, let's head to #o{destpnt}#0 to grab a spare part so I can finally get my ship off the ground."]]),{destpnt=destpnt:name()}))
    vn.na(_("Looks like you'll have to do another round trip if you want to get paid."))
+   vn.done( tutnel.nelly.transition )
    vn.run()
 
    misn.osdCreate( misn_title, {
@@ -423,12 +431,14 @@ function timer_pirate_nelly ()
    vn.clear()
    vn.scene()
    local nel = vn.newCharacter( tutnel.vn_nelly() )
+   vn.transition( tutnel.nelly.transition )
    nel(_([["It looks like we've been spotted by a trio of Pirate Hyenas, normally I would say run, but I don't think we'll be able to outrun them. I think that bribing them may be the only way out."]]))
    nel(fmt.f(_([["If you target a pirate and hail them with {hailkey}, you should have an option to bribe them and their friends if they are hostile. Although it can be expensive, it beats getting blown to bits. Try targetting the nearest enemy with {targetkey}, hailing them with {hailkey}, and bribing them!"]]),{targetkey=tut.getKey("target_hostile"),hailkey=tut.getKey("hail")}))
    if player.credits() < 1000 then
       nel(fmt.f(_([["It looks like you won't have enough money to bribe them. Here, take #g{credits}#0, that should be enough hopefully."]]),{credits=fmt.credits(1e3)}))
       vn.func( function() player.pay(1000) end )
    end
+   vn.done( tutnel.nelly.transition )
    vn.run()
 
    local osdtitle, osdelem = misn.osdGet()
@@ -513,6 +523,7 @@ function timer_spotter_start ()
    vn.clear()
    vn.scene()
    local nel = vn.newCharacter( tutnel.vn_nelly() )
+   vn.transition( tutnel.nelly.transition )
    nel(_([[Nelly seems to get a bit nervous when seeing the pacifier appear on-screen.
 "Wait, that looks like Robin. Shit, I never paid her back did I?"
 She frowns.
@@ -532,7 +543,7 @@ She frowns.
    nel(_([["Besides making your ship invisible to other ships, #ostealth#0 slows down your ship heavily to mask your gravitational presence. This also has the effect of letting you jump out from jumpoints further away."]]))
    nel(_([["When not in stealth, ships can target your ship to perform a scan. This can uncover unwanted information, such as illegal cargo or outfits. The time to scan depends on the mass of the ship. If you don't want to be scanned, I recommend you to rely on stealth as much as possible."]]))
    nel(fmt.f(_([["To avoid getting spotted by {shipname}, you should first get away from nearby ships and stealth with {stealthkey}. Then avoid other ships using the overlay map you can open with {overlaykey}, where the detection radius will be shown in red circles. You should then be able to fly around {shipname} and get to the jump point. It shouldn't be hard, but be careful not to get close to them!"]]),{stealthkey=tut.getKey("stealth"),overlaykey=tut.getKey("overlay"),shipname=spotter:name()}))
-   vn.done()
+   vn.done( tutnel.nelly.transition )
 
    vn.label("nolearn")
    nel(_([["You sure you know how to avoid them? It can be a bit tricky."]]))
@@ -544,6 +555,7 @@ She frowns.
    vn.label("neverlearn")
    nel(fmt.f(_([["Great! Avoid getting scanned by them and let's head off to {pntname} in {sysname}!"]]),{pntname=destpnt:name(),sysname=destsys:name()}))
 
+   vn.done( tutnel.nelly.transition )
    vn.run()
 
    local osdtitle, osdelem = misn.osdGet()

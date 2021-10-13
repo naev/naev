@@ -12,9 +12,10 @@ local tutnel = {}
 -- TODO replace with real portrait
 tutnel.nelly = {
    portrait = "nelly.webp",
-   image = "nelly.webp"
+   image = "nelly.webp",
    name = _("Nelly"),
    color = nil,
+   transition = nil, -- Use default
 }
 
 function tutnel.vn_nelly( params )

@@ -115,6 +115,7 @@ function accept ()
    vn.clear()
    vn.scene()
    local nel = vn.newCharacter( tutnel.vn_nelly() )
+   vn.transition( tutnel.nelly.transition )
 
    nel(fmt.f(_([[The lone individual lightens up when you near.
 "Say, you look like a pilot with a working ship. I'm in a bit of a mess. You see, I was supposed to deliver some {cargoname} to {pntname} in the {sysname} system, but my ship broke down and I don't think I'll be able to deliver it any time soon. Would you be willing to help me take the cargo there and come back? I'll pay you your fair share."]]),
@@ -128,12 +129,12 @@ function accept ()
    vn.label("decline")
    nel(_([[They look dejected.
 "That's a shame. If you change your mind I'll be waiting here."]]))
-   vn.done()
+   vn.done( tutnel.nelly.transition )
 
    vn.label("nofreespace")
    nel(fmt.f(_([["You don't have enough free space to help me out. You'll need to carry {amount} of {cargo}. Please make free space by either selling unwanted cargo, or getting rid of it from the info menu which you can open with {infokey}."]]),
          {amount=fmt.tonnes(cargo_q), cargo=cargo_type, infokey=tut.getKey("info")}))
-   vn.done()
+   vn.done( tutnel.nelly.transition )
 
    vn.label("accept")
    vn.func( function ()
@@ -153,11 +154,12 @@ They cock their head a bit at you.
 
    vn.label("novice_yes")
    nel(_([["I knew it! You seem to have a nice fresh aura around you. Reminds me of back in the day when I was starting out. Starting out can be a bit tricky, so I hope you don't mind if I give you some advice on the road."]]))
-   vn.done()
+   vn.done( tutnel.nelly.transition )
 
    vn.label("novice_no")
    nel(_([["Weird. I could have sworn you had some sort of new pilot aura around you. Must have been my imagination. Let's get going!"]]))
 
+   vn.done( tutnel.nelly.transition )
    vn.run()
 
    -- Check to see if truly accepted
@@ -194,6 +196,7 @@ function land ()
       vn.clear()
       vn.scene()
       local nel = vn.newCharacter( tutnel.vn_nelly() )
+      vn.transition( tutnel.nelly.transition )
       vn.na(fmt.f(_([[You land on {pntname} and the dockworkers offload your cargo. This delivery stuff is quite easy.]]),{pntname=destpnt:name()}))
       nel(fmt.f(_([["Say, I heard this place sells #o{outfit}#0. If you want to be able to take down ships non-lethally, #oion damage#0 is your best bet. Here, I'll forward you {credits}. Do you need help buying and equipping the outfit?"]]),{outfit=outfit_tobuy:name(), credits=fmt.credits(outfit_tobuy:price())}))
       vn.func( function ()
@@ -209,11 +212,12 @@ function land ()
       vn.func( function ()
          wanthelp = false
       end )
-      vn.done()
+      vn.done( tutnel.nelly.transition )
 
       vn.label("help_yes")
       nel(_([["OK! I'll guide you through it. For now, please go to the #oOutfits Tab#0 of the landing window."]]))
 
+      vn.done( tutnel.nelly.transition )
       vn.run()
 
       player.pay( outfit_tobuy:price() )
@@ -235,6 +239,7 @@ function land ()
       vn.clear()
       vn.scene()
       local nel = vn.newCharacter( tutnel.vn_nelly() )
+      vn.transition( tutnel.nelly.transition )
       nel(_([["We made it! A job well done. Here let me pay you what I promised you.]]))
       vn.sfxVictory()
       vn.na(fmt.f(_("You have received #g{credits}#0."), {credits=fmt.credits(reward_amount)}))
@@ -247,6 +252,7 @@ They beam you a grin.
       if gotore then
          nel(_([["Oh, and don't forget to sell the ore you got from the derelict at the commodity exchange!"]]))
       end
+      vn.done( tutnel.nelly.transition )
       vn.run()
 
       tutnel.log(_("You helped Nelly complete a delivery mission."))
@@ -281,6 +287,7 @@ function enter ()
       vn.clear()
       vn.scene()
       local nel = vn.newCharacter( tutnel.vn_nelly() )
+      vn.transition( tutnel.nelly.transition )
       vn.na(fmt.f(_("After the dock workers load the cargo on your ship, you take off with Nelly aboard. On to {sysname}!"), {sysname=destsys:name()}))
       nel(_([[Just after taking off Nelly pipes up.
 "Say, are you familiar with the information window? It shows all the important things about your ship and current missions."]]))
@@ -291,7 +298,7 @@ function enter ()
 
       vn.label("info_no")
       nel(_([["OK, great! Then let's get going!"]]))
-      vn.done()
+      vn.done( tutnel.nelly.transition )
 
       vn.label("info_yes")
       nel(fmt.f(_([["The information window, which you can open with {infokey}, is critical to managing your ship and finding out where to go. Try opening the info menu with {infokey} and I will show you around it."]]),{infokey=tut.getKey("info")}))
@@ -299,6 +306,7 @@ function enter ()
          hk_info = hook.info( "info" )
          hk_info_timer = hook.timer( 15, "info_reminder" )
       end )
+      vn.done( tutnel.nelly.transition )
       vn.run()
 
       -- Advance so it deosn't do the same convo
@@ -323,9 +331,11 @@ function talk_derelict ()
    vn.clear()
    vn.scene()
    local nel = vn.newCharacter( tutnel.vn_nelly() )
+   vn.transition( tutnel.nelly.transition )
    vn.na(_([[After you enter the system, Nelly points something out on the radar.]]))
    -- TODO autoboard!
    nel(fmt.f(_([["Oooh, look at that. A Koala derelict is nearby. There might be something interesting on it! We should go board it. Try to bring the ship to a stop on top of them and either #odouble-click#0 or select them and board them with {boardkey}. You can toggle the overlay to see exactly where the ship is with {overlay}."]]),{boardkey=tut.getKey("board"), overlaykey=tut.get("overlay")}))
+   vn.done( tutnel.nelly.transition )
    vn.run()
 end
 
@@ -337,6 +347,7 @@ function board ()
    vn.na(_([[You enter the derelict ship which is eerily silent. A large hole in the engine room indicates that likely the core engine blew out, forcing the ship crew to abandon ship. Although you don't find anything of significant value, there is still lots of ore cargo available on the ship. You quickly load as much as you can onto your ship before you depart.]]))
    vn.appear( nel )
    nel(fmt.f(_([["Looks like your scored a lot of ore there. That should bring you a pretty penny at a planet with commodity exchange. Boarding derelicts is not always as easy as this and sometimes bad things can happen. We should head to {pntname} that should be nearby now."]]), {pntname=retpnt:name()}))
+   vn.done( tutnel.nelly.transition )
    vn.run()
 
    local pp = player.pilot()
