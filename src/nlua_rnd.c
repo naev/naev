@@ -1,13 +1,11 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
 /**
  * @file nlua_rnd.c
  *
  * @brief Lua bindings for the Naev random number generator.
  */
-
 /** @cond */
 #include <lauxlib.h>
 
@@ -21,7 +19,6 @@
 #include "ndata.h"
 #include "nluadef.h"
 #include "rng.h"
-
 
 /* Random methods. */
 static int rndL_int( lua_State *L );
@@ -40,7 +37,6 @@ static const luaL_Reg rnd_methods[] = {
    {0,0}
 }; /**< Random Lua methods. */
 
-
 /**
  * @brief Loads the Random Number Lua library.
  *
@@ -52,7 +48,6 @@ int nlua_loadRnd( nlua_env env )
    nlua_register(env, "rnd", rnd_methods, 0);
    return 0;
 }
-
 
 /**
  * @brief Bindings for interacting with the random number generator.
@@ -164,7 +159,6 @@ static int rndL_threesigma( lua_State *L )
    return 1;
 }
 
-
 /**
  * @brief Gets a random number in the given range, with a uniform distribution.
  *
@@ -179,27 +173,23 @@ static int rndL_threesigma( lua_State *L )
  */
 static int rndL_uniform( lua_State *L )
 {
-   int o;
-   double l,h;
-
-   o = lua_gettop( L );
+   int o = lua_gettop( L );
 
    if (o==0)
       lua_pushnumber( L, RNGF() ); /* random double 0 <= x <= 1 */
    else if (o==1) { /* random int 0 <= x <= parameter */
-      l = luaL_checknumber( L, 1 );
+      int l = luaL_checknumber( L, 1 );
       lua_pushnumber( L, RNGF() * l );
    }
    else if (o>=2) { /* random int parameter 1 <= x <= parameter 2 */
-      l = luaL_checknumber( L, 1 );
-      h = luaL_checknumber( L, 2 );
+      int l = luaL_checknumber( L, 1 );
+      int h = luaL_checknumber( L, 2 );
       lua_pushnumber( L, l + (h-l) * RNGF() );
    }
    else NLUA_INVALID_PARAMETER(L);
 
    return 1; /* unless it's returned 0 already it'll always return a parameter */
 }
-
 
 /**
  * @brief Creates a random permutation
@@ -218,7 +208,7 @@ static int rndL_uniform( lua_State *L )
 static int rndL_permutation( lua_State *L )
 {
    int *values;
-   int i, j, temp, max;
+   int max;
    int new_table;
 
    NLUA_MIN_ARGS(1);
@@ -235,32 +225,29 @@ static int rndL_permutation( lua_State *L )
 
    /* Create the list. */
    values = malloc( sizeof(int)*max );
-   for (i=0; i<max; i++)
+   for (int i=0; i<max; i++)
       values[i]=i;
 
    /* Fisher-Yates shuffling algorithm */
-   for (i = max-1; i >= 0; --i){
+   for (int i = max-1; i >= 0; --i){
       /* Generate a random number in the range [0, max-1] */
-      j = randint() % (i+1);
+      int j = randint() % (i+1);
 
       /* Swap the last element with an element at a random index. */
-      temp      = values[i];
+      int temp  = values[i];
       values[i] = values[j];
       values[j] = temp;
    }
 
    /* Now either return a new table or permute the given table. */
    lua_newtable(L);
-   for (i=0; i<max; i++) {
-      lua_pushnumber( L, i+1 );
+   for (int i=0; i<max; i++) {
       lua_pushnumber( L, values[i]+1 );
       if (!new_table)
          lua_gettable(   L, 1 );
-      lua_settable(   L, -3 );
+      lua_rawseti(   L, -2, i+1 );
    }
 
    free( values );
-
    return 1;
 }
-

@@ -1,13 +1,11 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
 /**
  * @file nlua_font.c
  *
  * @brief Handles fonts.
  */
-
 /** @cond */
 #include <lauxlib.h>
 
@@ -19,7 +17,6 @@
 #include "log.h"
 #include "ndata.h"
 #include "nluadef.h"
-
 
 /* Font metatable methods. */
 static int fontL_gc( lua_State *L );
@@ -40,9 +37,6 @@ static const luaL_Reg fontL_methods[] = {
    {0,0}
 }; /**< Font metatable methods. */
 
-
-
-
 /**
  * @brief Loads the font library.
  *
@@ -54,7 +48,6 @@ int nlua_loadFont( nlua_env env )
    nlua_register(env, FONT_METATABLE, fontL_methods, 1);
    return 0;
 }
-
 
 /**
  * @brief Lua bindings to interact with fonts.
@@ -125,7 +118,6 @@ int lua_isfont( lua_State *L, int ind )
    return ret;
 }
 
-
 /**
  * @brief Frees a font.
  *
@@ -137,7 +129,6 @@ static int fontL_gc( lua_State *L )
    gl_freeFont( luaL_checkfont(L, 1) );
    return 0;
 }
-
 
 /**
  * @brief Compares two fonts to see if they are the same.
@@ -155,7 +146,6 @@ static int fontL_eq( lua_State *L )
    lua_pushboolean( L, (memcmp( f1, f2, sizeof(glFont) )==0) );
    return 1;
 }
-
 
 /**
  * @brief Gets a font.
@@ -198,7 +188,6 @@ static int fontL_new( lua_State *L )
    return 3;
 }
 
-
 /**
  * @brief Gets the height of a font.
  *
@@ -212,7 +201,6 @@ static int fontL_height( lua_State *L )
    lua_pushnumber(L, font->h);
    return 1;
 }
-
 
 /**
  * @brief Gets the width of some text for a font.
@@ -230,7 +218,6 @@ static int fontL_width( lua_State *L )
    lua_pushinteger(L, width);
    return 1;
 }
-
 
 /**
  * @brief Sets the font minification and magnification filters.
@@ -257,7 +244,6 @@ static int fontL_setFilter( lua_State *L )
 
    return 0;
 }
-
 
 /**
  * @brief Adds a fallback to a font.

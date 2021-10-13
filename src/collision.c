@@ -1,13 +1,11 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
 /**
  * @file collision.c
  *
  * @brief Deals with 2d collisions.
  */
-
 
 /** @cond */
 #include "naev.h"
@@ -17,7 +15,6 @@
 
 #include "log.h"
 
-
 /*
  * Prototypes
  */
@@ -25,7 +22,6 @@ static int pointInPolygon( const CollPoly* at, const Vector2d* ap,
       float x, float y );
 static int LineOnPolygon( const CollPoly* at, const Vector2d* ap,
       float x1, float y1, float x2, float y2, Vector2d* crash );
-
 
 /**
  * @brief Loads a polygon from an xml node.
@@ -83,7 +79,6 @@ void LoadPolygon( CollPoly* polygon, xmlNodePtr node )
 
    return;
 }
-
 
 /**
  * @brief Checks whether or not two sprites collide.
@@ -172,7 +167,6 @@ int CollideSprite( const glTexture* at, const int asx, const int asy, const Vect
    return 0;
 }
 
-
 /**
  * @brief Checks whether or not a sprite collides with a polygon.
  *
@@ -247,7 +241,6 @@ int CollideSpritePolygon( const CollPoly* at, const Vector2d* ap,
 
    return 0;
 }
-
 
 /**
  * @brief Checks whether or not two polygons collide.
@@ -326,7 +319,6 @@ int CollidePolygon( const CollPoly* at, const Vector2d* ap,
    return 0;
 }
 
-
 /**
  * @brief Checks whether or not a point is inside a polygon.
  *
@@ -371,7 +363,6 @@ int pointInPolygon( const CollPoly* at, const Vector2d* ap,
    return 1;
 }
 
-
 /**
  * @brief Checks whether or not a line intersects a polygon.
  *
@@ -388,7 +379,6 @@ int LineOnPolygon( const CollPoly* at, const Vector2d* ap,
       float x1, float y1, float x2, float y2, Vector2d* crash )
 {
    float xi, xip, yi, yip;
-   int i;
 
    /* In this function, we are only looking for one collision point. */
 
@@ -398,7 +388,7 @@ int LineOnPolygon( const CollPoly* at, const Vector2d* ap,
    yip = at->y[0]         + ap->y;
    if ( CollideLineLine(x1, y1, x2, y2, xi, yi, xip, yip, crash) == 1 )
       return 1;
-   for (i=0; i<=at->npt-2; i++) {
+   for (int i=0; i<=at->npt-2; i++) {
       xi  = at->x[i]   + ap->x;
       xip = at->x[i+1] + ap->x;
       yi  = at->y[i]   + ap->y;
@@ -409,7 +399,6 @@ int LineOnPolygon( const CollPoly* at, const Vector2d* ap,
 
    return 0;
 }
-
 
 /**
  * @brief Checks to see if two lines collide.
@@ -459,7 +448,6 @@ int CollideLineLine( double s1x, double s1y, double e1x, double e1y,
          return 2;
    }
 }
-
 
 /**
  * @brief Checks to see if a line collides with a sprite.
@@ -613,7 +601,6 @@ int CollideLineSprite( const Vector2d* ap, double ad, double al,
    return 1;
 }
 
-
 /**
  * @brief Checks to see if a line collides with a polygon.
  *
@@ -633,7 +620,6 @@ int CollideLineSprite( const Vector2d* ap, double ad, double al,
 int CollideLinePolygon( const Vector2d* ap, double ad, double al,
       const CollPoly* bt, const Vector2d* bp, Vector2d crash[2] )
 {
-   int i;
    double ep[2], bl[2], tr[2];
    double xi, yi, xip, yip;
    int hits, real_hits;
@@ -717,7 +703,7 @@ int CollideLinePolygon( const Vector2d* ap, double ad, double al,
       if (real_hits == 2)
          return 1;
    }
-   for (i=0; i<=bt->npt-2; i++) {
+   for (int i=0; i<=bt->npt-2; i++) {
       xi  = (double)bt->x[i]   + bp->x;
       xip = (double)bt->x[i+1] + bp->x;
       yi  = (double)bt->y[i]   + bp->y;
@@ -747,7 +733,6 @@ int CollideLinePolygon( const Vector2d* ap, double ad, double al,
    return 1;
 }
 
-
 static int linePointOnSegment( double d1, double x1, double y1, double x2, double y2, double x, double y )
 {
    //double d1 = hypot( x2-x1, y2-y1 ); /* Distance between end-points. */
@@ -755,7 +740,6 @@ static int linePointOnSegment( double d1, double x1, double y1, double x2, doubl
    double d3 = hypot( x2-x,  y2-y );  /* Distance to the other end. */
    return fabs(d1 - d2 - d3) < 1e-8;   /* True if smaller than some tolerance. */
 }
-
 
 #define FX( A, B, C, x )   (-(A * x + C) / B)
 #define FY( A, B, C , y )  (-(B * y + C) / A)

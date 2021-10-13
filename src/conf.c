@@ -1,9 +1,6 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
-
-
 /** @cond */
 #include <getopt.h> /* getopt_long */
 #include <stdlib.h> /* atoi */
@@ -27,7 +24,6 @@
 #include "opengl.h"
 #include "player.h"
 #include "utf8.h"
-
 
 #define conf_loadInt( env, n, i )            \
    {                                         \
@@ -67,7 +63,6 @@
       lua_pop( naevL, 1 );                        \
    }
 
-
 /* Global configuration. */
 PlayerConf_t conf = {
    .ndata = NULL,
@@ -81,12 +76,10 @@ extern int max_fps;
 extern int indjoystick;
 extern char* namjoystick;
 
-
 /*
  * prototypes
  */
 static void print_usage( void );
-
 
 /*
  * prints usage
@@ -114,7 +107,6 @@ static void print_usage( void )
    LOG(_("   -h, --help            display this message and exit"));
    LOG(_("   -v, --version         print the version and exit"));
 }
-
 
 /**
  * @brief Sets the default configuration.
@@ -176,7 +168,6 @@ void conf_setDefaults (void)
    conf.dev_save_asset = strdup( DEV_SAVE_ASSET_DEFAULT );
 }
 
-
 /**
  * @brief Sets the gameplay defaults.
  */
@@ -194,7 +185,6 @@ void conf_setGameplayDefaults (void)
    conf.zoom_manual           = MANUAL_ZOOM_DEFAULT;
 }
 
-
 /**
  * @brief Sets the audio defaults.
  */
@@ -206,7 +196,6 @@ void conf_setAudioDefaults (void)
    conf.sound        = SOUND_VOLUME_DEFAULT;
    conf.music        = MUSIC_VOLUME_DEFAULT;
 }
-
 
 /**
  * @brief Sets the video defaults.
@@ -260,7 +249,6 @@ void conf_setVideoDefaults (void)
    conf.pause_show   = SHOW_PAUSE_DEFAULT;
 }
 
-
 /*
  * Frees some memory the conf allocated.
  */
@@ -268,7 +256,6 @@ void conf_cleanup (void)
 {
    conf_free( &conf );
 }
-
 
 /*
  * @brief Parses the local conf that dictates where user data goes.
@@ -286,7 +273,6 @@ void conf_loadConfigPath( void )
 
    nlua_freeEnv( lEnv );
 }
-
 
 /*
  * parses the config file
@@ -525,7 +511,6 @@ int conf_loadConfig ( const char* file )
    return 0;
 }
 
-
 /*
  * parses the CLI options
  */
@@ -631,7 +616,6 @@ void conf_parseCLI( int argc, char** argv )
    }
 }
 
-
 /**
  * @brief snprintf-like function to quote and escape a string for use in Lua source code
  *
@@ -710,7 +694,6 @@ static size_t quoteLuaString(char *str, size_t size, const char *text)
    return count;
 }
 
-
 #define  conf_saveComment(t)     \
 pos += scnprintf(&buf[pos], sizeof(buf)-pos, "-- %s\n", t);
 
@@ -739,13 +722,11 @@ if (sizeof(buf) != pos) \
 #define GENERATED_START_COMMENT  "START GENERATED SECTION"
 #define GENERATED_END_COMMENT    "END GENERATED SECTION"
 
-
 /*
  * saves the current configuration
  */
 int conf_saveConfig ( const char* file )
 {
-   int i;
    char *old;
    const char *oldfooter;
    size_t oldsize;
@@ -1043,7 +1024,7 @@ int conf_saveConfig ( const char* file )
    keyname[sizeof(keyname)-1] = '\0';
 
    /* Iterate over the keybinding names */
-   for (i=0; keybind_info[i][0] != NULL; i++) {
+   for (int i=0; keybind_info[i][0] != NULL; i++) {
       /* Save a comment line containing the description */
       conf_saveComment(input_getKeybindDescription( keybind_info[i][0] ));
 
@@ -1112,7 +1093,6 @@ int conf_saveConfig ( const char* file )
    return 0;
 }
 
-
 /**
  * @brief Copies a configuration over another.
  */
@@ -1132,7 +1112,6 @@ void conf_copy( PlayerConf_t *dest, const PlayerConf_t *src )
 #undef STRDUP
 }
 
-
 /**
  * @brief Frees a configuration.
  */
@@ -1150,4 +1129,3 @@ void conf_free( PlayerConf_t *config )
    /* Clear memory. */
    memset( config, 0, sizeof(PlayerConf_t) );
 }
-

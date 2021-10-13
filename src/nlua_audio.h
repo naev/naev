@@ -1,8 +1,6 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
-
 #ifndef NLUA_AUDIO_H
 #  define NLUA_AUDIO_H
 
@@ -12,9 +10,7 @@
 
 #include "nlua.h"
 
-
 #define AUDIO_METATABLE      "audio" /**< Audio metatable identifier. */
-
 
 typedef struct LuaBuffer_s {
    ALuint buffer; /**< Buffer to use. */
@@ -27,7 +23,6 @@ typedef struct LuaAudio_s {
    ALuint slot; /* Effects. */
 } LuaAudio_t;
 
-
 /*
  * Library loading
  */
@@ -39,7 +34,4 @@ LuaAudio_t* luaL_checkaudio( lua_State *L, int ind );
 LuaAudio_t* lua_pushaudio( lua_State *L, LuaAudio_t audio );
 int lua_isaudio( lua_State *L, int ind );
 
-
 #endif /* NLUA_AUDIO_H */
-
-

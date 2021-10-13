@@ -1,24 +1,18 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
-
 #ifndef NLUA_PLANET_H
 #  define NLUA_PLANET_H
-
 
 #include "nlua.h"
 #include "space.h"
 
-
 #define PLANET_METATABLE   "planet" /**< Planet metatable identifier. */
-
 
 /**
  * @brief Lua Planet Wrapper.
  */
 typedef int LuaPlanet;
-
 
 /*
  * Load the planet library.
@@ -34,6 +28,4 @@ LuaPlanet* lua_pushplanet( lua_State *L, LuaPlanet planet );
 Planet* luaL_validplanet( lua_State *L, int ind );
 int lua_isplanet( lua_State *L, int ind );
 
-
 #endif /* NLUA_PLANET_H */
-

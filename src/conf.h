@@ -1,9 +1,6 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
-
-
 #ifndef CONF_H
 #  define CONF_H
 
@@ -59,7 +56,6 @@
 #define DEV_SAVE_SYSTEM_DEFAULT           "../ssys/"
 #define DEV_SAVE_ASSET_DEFAULT            "../assets/"
 #define DEV_SAVE_MAP_DEFAULT              "../outfits/maps/"
-
 
 /**
  * @brief Struct containing player options.
@@ -159,7 +155,6 @@ typedef struct PlayerConf_s {
 } PlayerConf_t;
 extern PlayerConf_t conf; /**< Player configuration. */
 
-
 /*
  * loading
  */
@@ -172,18 +167,15 @@ int conf_loadConfig( const char* file );
 void conf_parseCLI( int argc, char** argv );
 void conf_cleanup (void);
 
-
 /*
  * Some handling.
  */
 void conf_copy( PlayerConf_t *dest, const PlayerConf_t *src );
 void conf_free( PlayerConf_t *config );
 
-
 /*
  * saving
  */
 int conf_saveConfig( const char* file );
-
 
 #endif /* CONF_H */

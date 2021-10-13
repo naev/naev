@@ -1,13 +1,11 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
 /**
  * @file nlua_planet.c
  *
  * @brief Lua planet module.
  */
-
 /** @cond */
 #include "naev.h"
 
@@ -34,7 +32,6 @@
 #include "nmath.h"
 #include "nstring.h"
 #include "rng.h"
-
 
 /* Planet metatable methods */
 static int planetL_cur( lua_State *L );
@@ -102,7 +99,6 @@ static const luaL_Reg planet_methods[] = {
    {0,0}
 }; /**< Planet metatable methods. */
 
-
 /**
  * @brief Loads the planet library.
  *
@@ -114,7 +110,6 @@ int nlua_loadPlanet( nlua_env env )
    nlua_register(env, PLANET_METATABLE, planet_methods, 1);
    return 0; /* No error */
 }
-
 
 /**
  * @brief This module allows you to handle the planets from Lua.
@@ -223,7 +218,6 @@ int lua_isplanet( lua_State *L, int ind )
    return ret;
 }
 
-
 /**
  * @brief Gets the current planet - MUST BE LANDED.
  *
@@ -245,7 +239,6 @@ static int planetL_cur( lua_State *L )
    lua_pushsystem(L,sys);
    return 2;
 }
-
 
 static int planetL_getBackend( lua_State *L, int landable )
 {
@@ -400,7 +393,6 @@ static int planetL_get( lua_State *L )
    return planetL_getBackend( L, 0 );
 }
 
-
 /**
  * @brief Gets a planet only if it's landable.
  *
@@ -417,7 +409,6 @@ static int planetL_getLandable( lua_State *L )
    return planetL_getBackend( L, 1 );
 }
 
-
 /**
  * @brief Gets all the planets.
  *    @luatreturn {Planet,...} An ordered list of all the planets.
@@ -425,18 +416,15 @@ static int planetL_getLandable( lua_State *L )
  */
 static int planetL_getAll( lua_State *L )
 {
-   Planet *p;
-   int i;
+   Planet *p = planet_getAll();
 
    lua_newtable(L);
-   p = planet_getAll();
-   for (i=0; i<array_size(p); i++) {
+   for (int i=0; i<array_size(p); i++) {
       lua_pushplanet( L, planet_index( &p[i] ) );
       lua_rawseti( L, -2, i+1 );
    }
    return 1;
 }
-
 
 /**
  * @brief Gets the system corresponding to a planet.
@@ -545,14 +533,12 @@ static int planetL_radius( lua_State *L )
  */
 static int planetL_faction( lua_State *L )
 {
-   Planet *p;
-   p = luaL_validplanet(L,1);
+   Planet *p = luaL_validplanet(L,1);
    if (p->presence.faction < 0)
       return 0;
    lua_pushfaction(L, p->presence.faction);
    return 1;
 }
-
 
 /**
  * @brief Gets a planet's colour based on its friendliness or hostility to the player.
@@ -565,17 +551,11 @@ static int planetL_faction( lua_State *L )
  */
 static int planetL_colour( lua_State *L )
 {
-   Planet *p;
-   const glColour *col;
-
-   p = luaL_validplanet(L,1);
-   col = planet_getColour( p );
-
+   Planet *p = luaL_validplanet(L,1);
+   const glColour *col = planet_getColour( p );
    lua_pushcolour( L, *col );
-
    return 1;
 }
-
 
 /**
  * @brief Gets the planet's class.
@@ -590,12 +570,10 @@ static int planetL_colour( lua_State *L )
  */
 static int planetL_class(lua_State *L )
 {
-   Planet *p;
-   p = luaL_validplanet(L,1);
+   Planet *p = luaL_validplanet(L,1);
    lua_pushstring(L,p->class);
    return 1;
 }
-
 
 /**
  * @brief Gets the planet's class in long human-readable format already translated.
@@ -607,12 +585,10 @@ static int planetL_class(lua_State *L )
  */
 static int planetL_classLong(lua_State *L )
 {
-   Planet *p;
-   p = luaL_validplanet(L,1);
+   Planet *p = luaL_validplanet(L,1);
    lua_pushstring(L, planet_getClassName(p->class));
    return 1;
 }
-
 
 /**
  * @brief Checks for planet services.
@@ -655,7 +631,6 @@ static int planetL_services( lua_State *L )
    return 1;
 }
 
-
 /**
  * @brief Checks for planet flags.
  *
@@ -682,7 +657,6 @@ static int planetL_flags( lua_State *L )
    return 1;
 }
 
-
 /**
  * @brief Gets whether or not the player can land on the planet (or bribe it).
  *
@@ -694,14 +668,12 @@ static int planetL_flags( lua_State *L )
  */
 static int planetL_canland( lua_State *L )
 {
-   Planet *p;
-   p = luaL_validplanet(L,1);
+   Planet *p = luaL_validplanet(L,1);
    planet_updateLand( p );
    lua_pushboolean( L, p->can_land );
    lua_pushboolean( L, p->bribe_price > 0 );
    return 2;
 }
-
 
 /**
  * @brief Lets player land on a planet no matter what. The override lasts until the player jumps or lands.
@@ -713,13 +685,9 @@ static int planetL_canland( lua_State *L )
  */
 static int planetL_landOverride( lua_State *L )
 {
-   Planet *p;
-   int old;
-
    NLUA_CHECKRW(L);
-
-   p   = luaL_validplanet(L,1);
-   old = p->land_override;
+   Planet *p = luaL_validplanet(L,1);
+   int old = p->land_override;
 
    p->land_override = !!lua_toboolean(L,2);
 
@@ -729,7 +697,6 @@ static int planetL_landOverride( lua_State *L )
 
    return 0;
 }
-
 
 /**
  * @brief Gets the land override status for a planet.
@@ -746,7 +713,6 @@ static int planetL_getLandOverride( lua_State *L )
    return 1;
 }
 
-
 /**
  * @brief Gets the position of the planet in the system.
  *
@@ -757,12 +723,10 @@ static int planetL_getLandOverride( lua_State *L )
  */
 static int planetL_position( lua_State *L )
 {
-   Planet *p;
-   p = luaL_validplanet(L,1);
+   Planet *p = luaL_validplanet(L,1);
    lua_pushvector(L, p->pos);
    return 1;
 }
-
 
 /**
  * @brief Gets the texture of the planet in space.
@@ -789,7 +753,6 @@ static int planetL_gfxSpace( lua_State *L )
    return 1;
 }
 
-
 /**
  * @brief Gets the texture of the planet in exterior.
  *
@@ -800,8 +763,7 @@ static int planetL_gfxSpace( lua_State *L )
  */
 static int planetL_gfxExterior( lua_State *L )
 {
-   Planet *p;
-   p = luaL_validplanet(L,1);
+   Planet *p = luaL_validplanet(L,1);
 
    /* If no exterior image just return nothing instead of crashing. */
    if (p->gfx_exterior==NULL)
@@ -810,7 +772,6 @@ static int planetL_gfxExterior( lua_State *L )
    lua_pushtex( L, gl_newImage( p->gfx_exterior, 0 ) );
    return 1;
 }
-
 
 /**
  * @brief Gets the ships sold at a planet.
@@ -821,17 +782,12 @@ static int planetL_gfxExterior( lua_State *L )
  */
 static int planetL_shipsSold( lua_State *L )
 {
-   Planet *p;
-   int i;
-   Ship **s;
-
-   /* Get result and tech. */
-   p = luaL_validplanet(L,1);
-   s = tech_getShip( p->tech );
+   Planet *p = luaL_validplanet(L,1);
+   Ship **s = tech_getShip( p->tech );
 
    /* Push results in a table. */
    lua_newtable(L);
-   for (i=0; i<array_size(s); i++) {
+   for (int i=0; i<array_size(s); i++) {
       lua_pushship(L,s[i]); /* value = LuaShip */
       lua_rawseti(L,-2,i+1); /* store the value in the table */
    }
@@ -839,7 +795,6 @@ static int planetL_shipsSold( lua_State *L )
    array_free(s);
    return 1;
 }
-
 
 /**
  * @brief Gets the outfits sold at a planet.
@@ -850,17 +805,12 @@ static int planetL_shipsSold( lua_State *L )
  */
 static int planetL_outfitsSold( lua_State *L )
 {
-   Planet *p;
-   int i;
-   Outfit **o;
-
-   /* Get result and tech. */
-   p = luaL_validplanet(L,1);
-   o = tech_getOutfit( p->tech );
+   Planet *p = luaL_validplanet(L,1);
+   Outfit **o = tech_getOutfit( p->tech );
 
    /* Push results in a table. */
    lua_newtable(L);
-   for (i=0; i<array_size(o); i++) {
+   for (int i=0; i<array_size(o); i++) {
       lua_pushoutfit(L,o[i]); /* value = LuaOutfit */
       lua_rawseti(L,-2,i+1); /* store the value in the table */
    }
@@ -868,7 +818,6 @@ static int planetL_outfitsSold( lua_State *L )
    array_free(o);
    return 1;
 }
-
 
 /**
  * @brief Gets the commodities sold at a planet.
@@ -911,7 +860,6 @@ static int planetL_isBlackMarket( lua_State *L )
    return 1;
 }
 
-
 /**
  * @brief Checks to see if a planet is restricted (has complicated land condition).
  *
@@ -927,7 +875,6 @@ static int planetL_isRestricted( lua_State *L )
    lua_pushboolean(L, p->land_func != NULL);
    return 1;
 }
-
 
 /**
  * @brief Checks to see if a planet is known by the player.
@@ -987,12 +934,9 @@ static int planetL_setKnown( lua_State *L )
  */
 static int planetL_recordCommodityPriceAtTime( lua_State *L )
 {
-   ntime_t t;
-   Planet *p;
    NLUA_CHECKRW(L);
-
-   p = luaL_validplanet(L,1);
-   t = luaL_validtime(L, 2);
+   Planet *p = luaL_validplanet(L,1);
+   ntime_t t = luaL_validtime(L, 2);
    planet_averageSeenPricesAtTime( p, t );
    return 0;
 }

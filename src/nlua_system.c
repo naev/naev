@@ -1,13 +1,11 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
 /**
  * @file nlua_system.c
  *
  * @brief Lua system module.
  */
-
 /** @cond */
 #include <lauxlib.h>
 
@@ -30,7 +28,6 @@
 #include "nluadef.h"
 #include "rng.h"
 #include "space.h"
-
 
 /* System metatable methods */
 static int systemL_cur( lua_State *L );
@@ -98,7 +95,6 @@ static const luaL_Reg system_methods[] = {
    {0,0}
 }; /**< System metatable methods. */
 
-
 /**
  * @brief Loads the system library.
  *
@@ -110,7 +106,6 @@ int nlua_loadSystem( nlua_env env )
    nlua_register(env, SYSTEM_METATABLE, system_methods, 1);
    return 0; /* No error */
 }
-
 
 /**
  * @brief Lua system module.
@@ -219,7 +214,6 @@ int lua_issystem( lua_State *L, int ind )
    return ret;
 }
 
-
 /**
  * @brief Gets the current system.
  *
@@ -233,7 +227,6 @@ static int systemL_cur( lua_State *L )
    lua_pushsystem(L,system_index( cur_system ));
    return 1;
 }
-
 
 /**
  * @brief Gets a system.
@@ -374,7 +367,6 @@ static int systemL_faction( lua_State *L )
 
 }
 
-
 /**
  * @brief Gets the system's nebula parameters.
  *
@@ -397,7 +389,6 @@ static int systemL_nebula( lua_State *L )
    return 2;
 }
 
-
 /**
  * @brief Gets the system's interference level.
  *
@@ -411,7 +402,6 @@ static int systemL_interference( lua_State *L )
    lua_pushnumber( L, s->interference );
    return 1;
 }
-
 
 /**
  * @brief Gets jump distance from current system, or to another.
@@ -473,7 +463,6 @@ static int systemL_jumpdistance( lua_State *L )
    array_free(s);
    return 1;
 }
-
 
 /**
  * @brief Gets jump path from current system, or to another.
@@ -539,7 +528,6 @@ static int systemL_jumpPath( lua_State *L )
    return 1;
 }
 
-
 /**
  * @brief Gets all the adjacent systems to a system.
  *
@@ -574,7 +562,6 @@ static int systemL_adjacent( lua_State *L )
 
    return 1;
 }
-
 
 /**
  * @brief Gets all the jumps in a system.
@@ -612,7 +599,6 @@ static int systemL_jumps( lua_State *L )
    return 1;
 }
 
-
 /**
  * @brief Gets all the asteroid fields in a system.
  *
@@ -624,11 +610,9 @@ static int systemL_jumps( lua_State *L )
  */
 static int systemL_asteroidFields( lua_State *L )
 {
-   int pushed;
    StarSystem *s = luaL_validsystem(L,1);
 
    /* Push all jumps. */
-   pushed = 0;
    lua_newtable(L);
    for (int i=0; i<array_size(s->asteroids); i++) {
       lua_newtable(L);              /* key, t */
@@ -645,12 +629,11 @@ static int systemL_asteroidFields( lua_State *L )
       lua_pushnumber(L,s->asteroids[i].radius); /* key, t, k, v */
       lua_rawset(L,-3);
 
-      lua_rawseti(L,-2,++pushed);
+      lua_rawseti(L,-2,i+1);
    }
 
    return 1;
 }
-
 
 /**
  * @brief Gets a random asteroid in the current system
@@ -694,7 +677,6 @@ static int systemL_asteroid( lua_State *L )
    return 0;
 }
 
-
 /**
  * @brief Gets the position and velocity of an asteroid
  *
@@ -725,7 +707,6 @@ static int systemL_asteroidPos( lua_State *L )
    lua_pushvector(L, cur_system->asteroids[field].asteroids[ast].vel);
    return 2;
 }
-
 
 /**
  * @brief Sees if a given asteroid has been destroyed recently
@@ -758,7 +739,6 @@ static int systemL_asteroidDestroyed( lua_State *L )
    lua_pushboolean(L, isdestroyed);
    return 1;
 }
-
 
 /**
  * @brief Adds a gatherable object
@@ -802,7 +782,6 @@ static int systemL_addGatherable( lua_State *L )
    return 1;
 }
 
-
 /**
  * @brief Returns the factions that have presence in a system and their respective presence values.
  *        Faction names are internal -- can be passed to other functions as a faction identifier, but
@@ -834,7 +813,6 @@ static int systemL_presences( lua_State *L )
    return 1;
 }
 
-
 /**
  * @brief Gets the planets in a system.
  *
@@ -857,7 +835,6 @@ static int systemL_planets( lua_State *L )
 
    return 1;
 }
-
 
 /**
  * @brief Gets the presence in the system.
@@ -933,7 +910,6 @@ static int systemL_presence( lua_State *L )
    return 1;
 }
 
-
 /**
  * @brief Gets the radius of the system.
  *
@@ -952,7 +928,6 @@ static int systemL_radius( lua_State *L )
    return 1;
 }
 
-
 /**
  * @brief Checks to see if a system is known by the player.
  *
@@ -968,7 +943,6 @@ static int systemL_isknown( lua_State *L )
    lua_pushboolean(L, sys_isKnown(sys));
    return 1;
 }
-
 
 /**
  * @brief Sets a system's known state.
@@ -1018,7 +992,6 @@ static int systemL_setknown( lua_State *L )
    return 0;
 }
 
-
 /**
  * @brief Checks to see if a system is hidden by the player.
  *
@@ -1034,7 +1007,6 @@ static int systemL_hidden( lua_State *L )
    lua_pushboolean(L, sys_isFlag( sys, SYSTEM_HIDDEN ));
    return 1;
 }
-
 
 /**
  * @brief Sets a system to be hidden to the player.
@@ -1056,7 +1028,6 @@ static int systemL_setHidden( lua_State *L )
    return 0;
 }
 
-
 /**
  * @brief Clears the system markers.
  *
@@ -1073,7 +1044,6 @@ static int systemL_mrkClear( lua_State *L )
    ovr_mrkClear();
    return 0;
 }
-
 
 /**
  * @brief Adds a system marker.
@@ -1103,7 +1073,6 @@ static int systemL_mrkAdd( lua_State *L )
    return 1;
 }
 
-
 /**
  * @brief Removes a system marker.
  *
@@ -1114,9 +1083,8 @@ static int systemL_mrkAdd( lua_State *L )
  */
 static int systemL_mrkRm( lua_State *L )
 {
-   unsigned int id;
    NLUA_CHECKRW(L);
-   id = luaL_checklong( L, 1 );
+   unsigned int id = luaL_checklong( L, 1 );
    ovr_mrkRm( id );
    return 0;
 }
@@ -1141,4 +1109,3 @@ static int systemL_tags( lua_State *L )
    }
    return 1;
 }
-

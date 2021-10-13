@@ -1,18 +1,12 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
-
-
-
 #ifndef COLLISION_H
 #  define COLLISION_H
-
 
 #include "nxml.h"
 #include "opengl.h"
 #include "physics.h"
-
 
 /**
  * @brief Represents a polygon used for collision detection.
@@ -26,7 +20,6 @@ typedef struct CollPoly_ {
    float ymax; /**< Max of y. */
    int npt; /**< Nb of points in the polygon. */
 } CollPoly;
-
 
 /* Loads a polygon data from xml. */
 void LoadPolygon( CollPoly* polygon, xmlNodePtr node );

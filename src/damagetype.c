@@ -1,14 +1,11 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
 /**
  * @file damagetype.c
  *
  * @brief Handles damage types.
  */
-
-
 /** @cond */
 #include <inttypes.h>
 #include "SDL.h"
@@ -26,7 +23,6 @@
 #include "pilot.h"
 #include "rng.h"
 #include "shipstats.h"
-
 
 #define DTYPE_XML_ID     "dtypes"   /**< XML Document tag. */
 #define DTYPE_XML_TAG    "dtype"    /**< DTYPE XML node tag. */
@@ -47,14 +43,12 @@ typedef struct DTYPE_ {
 
 static DTYPE* dtype_types  = NULL;  /**< Total damage types. */
 
-
 /*
  * prototypes
  */
 static int DTYPE_parse( DTYPE *temp, const xmlNodePtr parent );
 static void DTYPE_free( DTYPE *damtype );
 static DTYPE* dtype_validType( int type );
-
 
 /**
  * @brief Parses an xml node containing a DTYPE.
@@ -116,7 +110,6 @@ static int DTYPE_parse( DTYPE *temp, const xmlNodePtr parent )
    return 0;
 }
 
-
 /**
  * @brief Frees a DTYPE.
  *
@@ -128,7 +121,6 @@ static void DTYPE_free( DTYPE *damtype )
    damtype->name = NULL;
 }
 
-
 /**
  * @brief Gets the id of a dtype based on name.
  *
@@ -137,14 +129,12 @@ static void DTYPE_free( DTYPE *damtype )
  */
 int dtype_get( const char* name )
 {
-   int i;
-   for (i=0; i<array_size(dtype_types); i++)
+   for (int i=0; i<array_size(dtype_types); i++)
       if (strcmp(dtype_types[i].name, name)==0)
          return i;
    WARN(_("Damage type '%s' not found in stack."), name);
    return -1;
 }
-
 
 /**
  * @brief Gets the damage type.
@@ -158,7 +148,6 @@ static DTYPE* dtype_validType( int type )
    return &dtype_types[ type ];
 }
 
-
 /**
  * @brief Gets the human readable string from damage type.
  */
@@ -169,7 +158,6 @@ const char* dtype_damageTypeToStr( int type )
       return NULL;
    return dmg->name;
 }
-
 
 /**
  * @brief Loads the dtype stack.
@@ -222,21 +210,17 @@ int dtype_load (void)
    return 0;
 }
 
-
 /**
  * @brief Frees the dtype stack.
  */
 void dtype_free (void)
 {
-   int i;
-
    /* clear the damtypes */
-   for (i=0; i<array_size(dtype_types); i++)
+   for (int i=0; i<array_size(dtype_types); i++)
       DTYPE_free( &dtype_types[i] );
    array_free( dtype_types );
    dtype_types    = NULL;
 }
-
 
 /**
  * @brief Gets the raw modulation stats of a damage type.
@@ -260,7 +244,6 @@ int dtype_raw( int type, double *shield, double *armour, double *knockback )
       *knockback = dtype->knock;
    return 0;
 }
-
 
 /**
  * @brief Gives the real shield damage, armour damage and knockback modifier.
@@ -315,5 +298,3 @@ void dtype_calcDamage( double *dshield, double *darmour, double absorb, double *
    if (knockback != NULL)
       *knockback  = dtype->knock;
 }
-
-

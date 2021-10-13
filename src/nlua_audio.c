@@ -1,13 +1,11 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
 /**
  * @file nlua_audio.c
  *
  * @brief Bindings for Special effects functionality from Lua.
  */
-
 
 /** @cond */
 #include <lauxlib.h>
@@ -30,16 +28,13 @@
 #include "sound.h"
 #include "sound_openal.h"
 
-
 typedef struct LuaAudioEfx_s {
    char *name;
    ALuint effect;
    ALuint slot;
 } LuaAudioEfx_t;
 
-
 static LuaAudioEfx_t *lua_efx = NULL;
-
 
 /* Audio methods. */
 static int audioL_gc( lua_State *L );
@@ -98,7 +93,6 @@ static const luaL_Reg audioL_methods[] = {
    {0,0}
 }; /**< AudioLua methods. */
 
-
 /**
  * @brief Checks to see a boolean property of a source.
  */
@@ -115,7 +109,6 @@ static int audioL_isBool( lua_State *L, ALenum param )
    lua_pushboolean(L,b);
    return 1;
 }
-
 
 /**
  * @brief Checks to see the state of the source.
@@ -134,8 +127,6 @@ static int audioL_isState( lua_State *L, ALenum state )
    return 1;
 }
 
-
-
 /**
  * @brief Loads the audio library.
  *
@@ -147,7 +138,6 @@ int nlua_loadAudio( nlua_env env )
    nlua_register(env, AUDIO_METATABLE, audioL_methods, 1);
    return 0;
 }
-
 
 /**
  * @brief Gets audio at index.
@@ -212,7 +202,6 @@ int lua_isaudio( lua_State *L, int ind )
    return ret;
 }
 
-
 /**
  * @brief Lua bindings to interact with audio.
  *
@@ -244,7 +233,6 @@ static int audioL_gc( lua_State *L )
    return 0;
 }
 
-
 /**
  * @brief Compares two audios to see if they are the same.
  *
@@ -261,7 +249,6 @@ static int audioL_eq( lua_State *L )
    lua_pushboolean( L, (memcmp( a1, a2, sizeof(LuaAudio_t) )==0) );
    return 1;
 }
-
 
 /**
  * @brief Creates a new audio source.
@@ -330,7 +317,6 @@ static int audioL_new( lua_State *L )
    return 1;
 }
 
-
 /**
  * @brief Clones an existing audio source.
  *
@@ -375,7 +361,6 @@ static int audioL_clone( lua_State *L )
    return 1;
 }
 
-
 /**
  * @brief Plays a source.
  *
@@ -396,7 +381,6 @@ static int audioL_play( lua_State *L )
    return 1;
 }
 
-
 /**
  * @brief Pauses a source.
  *
@@ -416,7 +400,6 @@ static int audioL_pause( lua_State *L )
    return 0;
 }
 
-
 /**
  * @brief Checks to see if a source is paused.
  *
@@ -428,7 +411,6 @@ static int audioL_isPaused( lua_State *L )
 {
    return audioL_isState( L, AL_PAUSED );
 }
-
 
 /**
  * @brief Stops a source.
@@ -449,7 +431,6 @@ static int audioL_stop( lua_State *L )
    return 0;
 }
 
-
 /**
  * @brief Checks to see if a source is stopped.
  *
@@ -461,7 +442,6 @@ static int audioL_isStopped( lua_State *L )
 {
    return audioL_isState( L, AL_STOPPED );
 }
-
 
 /**
  * @brief Rewinds a source.
@@ -480,7 +460,6 @@ static int audioL_rewind( lua_State *L )
    }
    return 0;
 }
-
 
 /**
  * @brief Seeks a source.
@@ -508,7 +487,6 @@ static int audioL_seek( lua_State *L )
    }
    return 0;
 }
-
 
 /**
  * @brief Gets the position of a source.
@@ -538,7 +516,6 @@ static int audioL_tell( lua_State *L )
    return 1;
 }
 
-
 /**
  * @brief Sets the volume of a source.
  *
@@ -560,7 +537,6 @@ static int audioL_setVolume( lua_State *L )
    soundUnlock();
    return 0;
 }
-
 
 /**
  * @brief Gets the volume of a source.
@@ -593,7 +569,6 @@ static int audioL_getVolume( lua_State *L )
    return 1;
 }
 
-
 /**
  * @brief Sets whether a source is relative or not.
  *
@@ -612,7 +587,6 @@ static int audioL_setRelative( lua_State *L )
    soundUnlock();
    return 0;
 }
-
 
 /**
  * @brief Sets the position of a source.
@@ -640,7 +614,6 @@ static int audioL_setPosition( lua_State *L )
    soundUnlock();
    return 0;
 }
-
 
 /**
  * @brief Gets the position of a source.
@@ -673,7 +646,6 @@ static int audioL_getPosition( lua_State *L )
    return 3;
 }
 
-
 /**
  * @brief Sets the velocity of a source.
  *
@@ -700,7 +672,6 @@ static int audioL_setVelocity( lua_State *L )
    soundUnlock();
    return 0;
 }
-
 
 /**
  * @brief Gets the velocity of a source.
@@ -733,7 +704,6 @@ static int audioL_getVelocity( lua_State *L )
    return 3;
 }
 
-
 /**
  * @brief Sets a source to be looping or not.
  *
@@ -754,7 +724,6 @@ static int audioL_setLooping( lua_State *L )
    return 0;
 }
 
-
 /**
  * @brief Gets the looping state of a source.
  *
@@ -766,7 +735,6 @@ static int audioL_isLooping( lua_State *L )
 {
    return audioL_isBool( L, AL_LOOPING );
 }
-
 
 /**
  * @brief Sets the pitch of a source.
@@ -788,7 +756,6 @@ static int audioL_setPitch( lua_State *L )
    return 0;
 }
 
-
 /**
  * @brief Gets the pitch of a source.
  *
@@ -809,7 +776,6 @@ static int audioL_getPitch( lua_State *L )
    lua_pushnumber(L,p);
    return 1;
 }
-
 
 /**
  * @brief Plays a sound.
@@ -855,7 +821,6 @@ static int audioL_soundPlay( lua_State *L )
 
    return 0;
 }
-
 
 static void efx_setnum( lua_State *L, int pos, ALuint effect, const char *name, ALuint param ) {
    lua_getfield(L,pos,name);
@@ -1039,7 +1004,6 @@ static int audioL_setEffectGlobal( lua_State *L )
    return 0;
 }
 
-
 /**
  * @brief Sets effect stuff, behaves different if the first paramater is a source or not.
  *
@@ -1092,4 +1056,3 @@ static int audioL_setEffect( lua_State *L )
    lua_pushboolean(L,1);
    return 1;
 }
-
