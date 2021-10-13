@@ -277,7 +277,6 @@ static int systemL_get( lua_State *L )
 static int systemL_getAll( lua_State *L )
 {
    StarSystem *sys = system_getAll();
-
    lua_newtable(L);
    for (int i=0; i<array_size(sys); i++) {
       lua_pushsystem( L, system_index( &sys[i] ) );
@@ -381,11 +380,9 @@ static int systemL_faction( lua_State *L )
 static int systemL_nebula( lua_State *L )
 {
    StarSystem *s = luaL_validsystem(L,1);
-
    /* Push the density and volatility. */
    lua_pushnumber(L, s->nebu_density);
    lua_pushnumber(L, s->nebu_volatility);
-
    return 2;
 }
 
@@ -611,7 +608,6 @@ static int systemL_jumps( lua_State *L )
 static int systemL_asteroidFields( lua_State *L )
 {
    StarSystem *s = luaL_validsystem(L,1);
-
    /* Push all jumps. */
    lua_newtable(L);
    for (int i=0; i<array_size(s->asteroids); i++) {
@@ -631,7 +627,6 @@ static int systemL_asteroidFields( lua_State *L )
 
       lua_rawseti(L,-2,i+1);
    }
-
    return 1;
 }
 
@@ -797,7 +792,6 @@ static int systemL_addGatherable( lua_State *L )
 static int systemL_presences( lua_State *L )
 {
    StarSystem *s = luaL_validsystem(L,1);
-
    /* Return result in table */
    lua_newtable(L);
    for (int i=0; i<array_size(s->presence); i++) {
@@ -832,7 +826,6 @@ static int systemL_planets( lua_State *L )
       lua_pushplanet(L,planet_index( s->planets[i] )); /* value */
       lua_rawseti(L,-2,i+1);
    }
-
    return 1;
 }
 
@@ -858,7 +851,7 @@ static int systemL_presence( lua_State *L )
    StarSystem *sys;
    int *fct;
    double presence;
-   int f, used;
+   int used;
 
    /* Get parameters. */
    sys = luaL_validsystem(L, 1);
@@ -870,7 +863,7 @@ static int systemL_presence( lua_State *L )
    /* Get the second parameter. */
    if (lua_isstring(L, 2)) {
       /* A string command has been given. */
-      const char *cmd  = lua_tostring(L, 2);
+      const char *cmd = lua_tostring(L, 2);
       used = 1;
 
       /* Check the command string and get the appropriate faction group.*/
@@ -888,7 +881,7 @@ static int systemL_presence( lua_State *L )
 
    if (!used) {
       /* A faction id was given. */
-      f      = luaL_validfaction(L, 2);
+      int f  = luaL_validfaction(L, 2);
       fct    = array_create(int);
       array_push_back(&fct, f);
    }
