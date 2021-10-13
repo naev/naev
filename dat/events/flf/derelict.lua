@@ -2,8 +2,8 @@
 <?xml version='1.0' encoding='utf8'?>
 <event name="FLF/DV Derelicts">
  <trigger>enter</trigger>
- <chance>40</chance>
- <cond>faction.get("Dvaered"):playerStanding() &gt;= 0 and faction.get("Pirate"):playerStanding() &lt; 0 and system.cur() == system.get("Surano") and not (player.misnDone("Take the Dvaered crew home") or player.misnDone("Deal with the FLF agent")) and not (player.misnActive("Deal with the FLF agent") or player.misnActive("Take the Dvaered crew home")) </cond>
+ <chance>60</chance>
+ <cond>faction.get("Dvaered"):playerStanding() &gt;= 0 and system.cur() == system.get("Surano") and not (player.misnDone("Take the Dvaered crew home") or player.misnDone("Deal with the FLF agent")) and not (player.misnActive("Deal with the FLF agent") or player.misnActive("Take the Dvaered crew home")) </cond>
 </event>
 --]]
 --[[
