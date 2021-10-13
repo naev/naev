@@ -329,11 +329,12 @@ static void think_seeker( Weapon* w, const double dt )
    switch (w->status) {
       case WEAPON_STATUS_LOCKING: /* Check to see if we can get a lock on. */
          w->timer2 -= dt;
-         if (w->timer2 > 0.) {
+         if (w->timer2 >= 0.)
             weapon_setThrust( w, w->outfit->u.amm.thrust * w->outfit->mass );
-            break;
-         }
-         FALLTHROUGH;
+         else
+            w->status = WEAPON_STATUS_OK; /* Weapon locked on. */
+         /* Can't get jammed while locking on. */
+         break;
 
       case WEAPON_STATUS_OK: /* Check to see if can get jammed */
          jc = p->stats.jam_chance - w->outfit->u.amm.resist;
