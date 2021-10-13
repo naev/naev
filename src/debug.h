@@ -1,11 +1,8 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
-
 #ifndef DEBUG_H
 #  define DEBUG_H
-
 
 void debug_sigInit (void);
 void debug_sigClose (void);
@@ -13,7 +10,6 @@ void debug_enableFPUExcept (void);
 
 enum {
    DEBUG_MARK_EMITTER,        /**< Mark the trail emitters with a cross. */
-
    /* Sentinel. */
    DEBUG_FLAGS_MAX      /**< Maximum number of flags. */
 };
@@ -32,6 +28,4 @@ extern DebugFlags debug_flags;
 #define debug_rmFlag(f)     do {} while(0)       /**< Removes flag f. */
 #endif /* DEBUGGING */
 
-
 #endif /* DEBUG_H */
-

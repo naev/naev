@@ -1,7 +1,6 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
 #ifndef SPACE_H
 #  define SPACE_H
 
@@ -446,7 +445,6 @@ const char* space_getRndPlanet( int landable, unsigned int services,
 double system_getClosest( const StarSystem *sys, int *pnt, int *jp, int *ast, int *fie, double x, double y );
 double system_getClosestAng( const StarSystem *sys, int *pnt, int *jp, int *ast, int *fie, double x, double y, double ang );
 
-
 /*
  * Markers.
  */
@@ -457,7 +455,6 @@ void space_clearMarkers (void);
 void space_clearComputerMarkers (void);
 int system_hasPlanet( const StarSystem *sys );
 
-
 /*
  * Hyperspace.
  */
@@ -465,14 +462,12 @@ int space_canHyperspace( const Pilot* p);
 int space_hyperspace( Pilot* p );
 int space_calcJumpInPos( const StarSystem *in, const StarSystem *out, Vector2d *pos, Vector2d *vel, double *dir, const Pilot *p );
 
-
 /*
  * Asteroids
  */
 void asteroid_hit( Asteroid *a, const Damage *dmg );
 int space_isInField ( const Vector2d *p );
 const AsteroidType *space_getType ( int ID );
-
 
 /*
  * Misc.
@@ -482,6 +477,5 @@ void space_checkLand (void);
 void space_factionChange (void);
 void space_queueLand( Planet *pnt );
 const char *space_populationStr( uint64_t population );
-
 
 #endif /* SPACE_H */

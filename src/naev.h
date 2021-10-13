@@ -14,17 +14,13 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 /**
  * @file naev.h
  *
  * @brief Header file with generic functions and naev-specifics.
  */
-
-
 #ifndef NAEV_H
 #  define NAEV_H
-
 
 /** @cond */
 #include <inttypes.h>
@@ -35,7 +31,6 @@
 /** @endcond */
 
 #include "ncompat.h"
-
 
 #define APPNAME            "Naev" /**< Application name. */
 
@@ -57,10 +52,8 @@
 #endif /* PATH_MAX */
 
 /* Default maximum string length */
-#define STRMAX 4096
-#define STRMAX_SHORT 1024
-
-
+#define STRMAX             4096
+#define STRMAX_SHORT       1024
 
 /* For inferior OS. */
 #ifndef M_PI
@@ -72,7 +65,6 @@
 #ifndef M_SQRT2
 #  define M_SQRT2       1.41421356237309504880
 #endif
-
 
 /*
  * Misc stuff.
@@ -88,6 +80,5 @@ int naev_versionCompare( const char *version );
 void naev_quit (void);
 int naev_isQuit (void);
 double naev_getrealdt (void);
-
 
 #endif /* NAEV_H */

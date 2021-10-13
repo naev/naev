@@ -1,13 +1,11 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
 /**
  * @file space.c
  *
  * @brief Handles all the space stuff, namely systems and planets.
  */
-
 /** @cond */
 #include <float.h>
 #include <math.h>
@@ -79,7 +77,6 @@
 static char** planetname_stack = NULL; /**< Planet name stack corresponding to system. */
 static char** systemname_stack = NULL; /**< System name stack corresponding to planet. */
 
-
 /*
  * Arrays.
  */
@@ -111,12 +108,10 @@ glTexture **asteroid_gfx = NULL;
 static size_t nasterogfx = 0; /**< Nb of asteroid gfx. */
 static Planet *space_landQueuePlanet = NULL;
 
-
 /*
- * fleet spawn rate
+ * Fleet spawning.
  */
 int space_spawn = 1; /**< Spawn enabled by default. */
-
 
 /*
  * Internal Prototypes.
@@ -153,7 +148,6 @@ static void space_renderDebris( const Debris *d, double x, double y );
 int space_sysSave( xmlTextWriterPtr writer );
 int space_sysLoad( xmlNodePtr parent );
 
-
 /**
  * @brief Gets the (English) name for a service code.
  *
@@ -177,6 +171,9 @@ const char* planet_getServiceName( int service )
    return NULL;
 }
 
+/**
+ * @brief Converts name to planet service flag.
+ */
 int planet_getService( const char *name )
 {
    if (strcmp(name,"Land")==0)
@@ -199,7 +196,6 @@ int planet_getService( const char *name )
       return PLANET_SERVICE_BLACKMARKET;
    return -1;
 }
-
 
 /**
  * @brief Gets the long class name for a planet.
@@ -260,7 +256,6 @@ const char* planet_getClassName( const char *class )
    return class;
 }
 
-
 /**
  * @brief Gets the price of a commodity at a planet.
  *
@@ -299,22 +294,21 @@ credits_t planet_commodityPriceAtTime( const Planet *p, const Commodity *c, ntim
 /**
  * @brief Adds cost of commodities on planet p to known statistics at time t.
  *
- *     @param p Planet to get price at
- *     @param t time to get prices at
+ *    @param p Planet to get price at
+ *    @param tupdate Time to get prices at
  */
 void planet_averageSeenPricesAtTime( const Planet *p, const ntime_t tupdate )
 {
    economy_averageSeenPricesAtTime( p, tupdate );
 }
 
-
 /**
  * @brief Gets the average price of a commodity at a planet that has been seen so far.
  *
- * @param p Planet to get average price at.
- * @param c Commodity to get average price of.
- * @param[out] mean Sample mean, rounded to nearest credit.
- * @param[out] std Sample standard deviation (via uncorrected population formula).
+ *    @param p Planet to get average price at.
+ *    @param c Commodity to get average price of.
+ *    @param[out] mean Sample mean, rounded to nearest credit.
+ *    @param[out] std Sample standard deviation (via uncorrected population formula).
  */
 int planet_averagePlanetPrice( const Planet *p, const Commodity *c, credits_t *mean, double *std)
 {
@@ -333,7 +327,6 @@ int planet_setFaction( Planet *p, int faction )
    p->presence.faction = faction;
    return 0;
 }
-
 
 /**
  * @brief Checks to make sure if pilot is far enough away to hyperspace.
@@ -371,7 +364,6 @@ int space_canHyperspace( const Pilot* p )
    return 1;
 }
 
-
 /**
  * @brief Tries to get the pilot into hyperspace.
  *
@@ -391,7 +383,6 @@ int space_hyperspace( Pilot* p )
    pilot_setFlag(p, PILOT_HYP_PREP);
    return 0;
 }
-
 
 /**
  * @brief Calculates the jump in pos for a pilot.
@@ -501,7 +492,6 @@ char** space_getFactionPlanet( int *factions, int landable )
    return tmp;
 }
 
-
 /**
  * @brief Gets the name of a random planet.
  *
@@ -553,7 +543,6 @@ const char* space_getRndPlanet( int landable, unsigned int services,
    return res;
 }
 
-
 /**
  * @brief Gets the closest feature to a position in the system.
  *
@@ -567,14 +556,13 @@ const char* space_getRndPlanet( int landable, unsigned int services,
  */
 double system_getClosest( const StarSystem *sys, int *pnt, int *jp, int *ast, int *fie, double x, double y )
 {
-   double d;
+   double d = HUGE_VAL;
 
    /* Default output. */
    *pnt = -1;
    *jp  = -1;
    *ast = -1;
    *fie = -1;
-   d    = INFINITY;
 
    /* Planets. */
    for (int i=0; i<array_size(sys->planets); i++) {
@@ -701,7 +689,6 @@ double system_getClosestAng( const StarSystem *sys, int *pnt, int *jp, int *ast,
    return a;
 }
 
-
 /**
  * @brief Sees if a system is reachable.
  *
@@ -721,7 +708,6 @@ int space_sysReachable( const StarSystem *sys )
 
    return 0;
 }
-
 
 /**
  * @brief Sees if a system can be reached via jumping.
@@ -766,7 +752,6 @@ StarSystem* system_getAll (void)
    return systems_stack;
 }
 
-
 /**
  * @brief Checks to see if a system exists case insensitively.
  *
@@ -780,7 +765,6 @@ const char *system_existsCase( const char* sysname )
          return systems_stack[i].name;
    return NULL;
 }
-
 
 /**
  * @brief Does a fuzzy case matching. Searches translated names but returns internal names.
@@ -812,7 +796,9 @@ char **system_searchFuzzyCase( const char* sysname, int *n )
    return names;
 }
 
-
+/**
+ * @brief Comparison function for qsort'ing StarSystem by name.
+ */
 static int system_cmp( const void *p1, const void *p2 )
 {
    const StarSystem *s1, *s2;
@@ -820,6 +806,7 @@ static int system_cmp( const void *p1, const void *p2 )
    s2 = (const StarSystem*) p2;
    return strcmp(s1->name,s2->name);
 }
+
 /**
  * @brief Get the system from its name.
  *
@@ -850,7 +837,6 @@ StarSystem* system_get( const char* sysname )
    return NULL;
 }
 
-
 /**
  * @brief Get the system by its index.
  *
@@ -862,7 +848,6 @@ StarSystem* system_getIndex( int id )
    return &systems_stack[ id ];
 }
 
-
 /**
  * @brief Gets the index of a star system.
  *
@@ -873,7 +858,6 @@ int system_index( const StarSystem *sys )
 {
    return sys->id;
 }
-
 
 /**
  * @brief Get whether or not a planet has a system (i.e. is on the map).
@@ -888,7 +872,6 @@ int planet_hasSystem( const char* planetname )
          return 1;
    return 0;
 }
-
 
 /**
  * @brief Get the name of a system from a planetname.
@@ -905,7 +888,9 @@ char* planet_getSystem( const char* planetname )
    return NULL;
 }
 
-
+/**
+ * @brief Comparison function for qsort'ing Planet by name.
+ */
 static int planet_cmp( const void *p1, const void *p2 )
 {
    const Planet *pnt1, *pnt2;
@@ -913,6 +898,7 @@ static int planet_cmp( const void *p1, const void *p2 )
    pnt2 = (const Planet*) p2;
    return strcmp(pnt1->name,pnt2->name);
 }
+
 /**
  * @brief Gets a planet based on its name.
  *
@@ -945,7 +931,6 @@ Planet* planet_get( const char* planetname )
    return NULL;
 }
 
-
 /**
  * @brief Gets planet by index.
  *
@@ -963,7 +948,6 @@ Planet* planet_getIndex( int ind )
    return &planet_stack[ ind ];
 }
 
-
 /**
  * @brief Gets the ID of a planet.
  *
@@ -975,7 +959,6 @@ int planet_index( const Planet *p )
    return p->id;
 }
 
-
 /**
  * @brief Gets an array (array.h) of all planets.
  */
@@ -984,7 +967,6 @@ Planet* planet_getAll (void)
    return planet_stack;
 }
 
-
 /**
  * @brief Sets a planet's known status, if it's real.
  */
@@ -992,7 +974,6 @@ void planet_setKnown( Planet *p )
 {
    planet_setFlag(p, PLANET_KNOWN);
 }
-
 
 /**
  * @brief Check to see if a planet exists.
@@ -1008,7 +989,6 @@ int planet_exists( const char* planetname )
    return 0;
 }
 
-
 /**
  * @brief Check to see if a planet exists (case insensitive).
  *
@@ -1022,7 +1002,6 @@ const char* planet_existsCase( const char* planetname )
          return planet_stack[i].name;
    return NULL;
 }
-
 
 /**
  * @brief Does a fuzzy case matching. Searches translated names but returns internal names.
@@ -1054,7 +1033,6 @@ char **planet_searchFuzzyCase( const char* planetname, int *n )
    return names;
 }
 
-
 /**
  * @brief Gets all the virtual assets.
  */
@@ -1063,7 +1041,9 @@ VirtualAsset* virtualasset_getAll (void)
    return vasset_stack;
 }
 
-
+/**
+ * @brief Comparison function for qsort'ing VirtuaAsset by name.
+ */
 static int virtualasset_cmp( const void *p1, const void *p2 )
 {
    const VirtualAsset *v1, *v2;
@@ -1071,6 +1051,7 @@ static int virtualasset_cmp( const void *p1, const void *p2 )
    v2 = (const VirtualAsset*) p2;
    return strcmp(v1->name,v2->name);
 }
+
 /**
  * @brief Gets a virtual asset by matching name.
  */
@@ -1083,7 +1064,6 @@ VirtualAsset* virtualasset_get( const char *name )
    WARN(_("Virtual Asset '%s' not found in the universe"), name);
    return NULL;
 }
-
 
 /**
  * @brief Gets a jump point based on its target and system.
@@ -1109,7 +1089,6 @@ JumpPoint* jump_get( const char* jumpname, const StarSystem* sys )
    return NULL;
 }
 
-
 /**
  * @brief Less safe version of jump_get that works with pointers.
  *
@@ -1128,7 +1107,6 @@ JumpPoint* jump_getTarget( const StarSystem* target, const StarSystem* sys )
    return NULL;
 }
 
-
 /**
  * @brief Gets the jump point symbol.
  */
@@ -1136,10 +1114,8 @@ const char *jump_getSymbol( const JumpPoint *jp )
 {
    if (jp_isFlag(jp, JP_HIDDEN))
       return "* ";
-
    return "";
 }
-
 
 /**
  * @brief Controls fleet spawning.
@@ -1263,7 +1239,6 @@ static void system_scheduler( double dt, int init )
    }
 }
 
-
 /**
  * @brief Mark when a faction changes.
  */
@@ -1271,7 +1246,6 @@ void space_factionChange (void)
 {
    space_fchg = 1;
 }
-
 
 /**
  * @brief Handles landing if necessary.
@@ -1283,7 +1257,6 @@ void space_checkLand (void)
       space_landQueuePlanet = NULL;
    }
 }
-
 
 /**
  * @brief Controls fleet spawning.
@@ -1623,7 +1596,6 @@ void space_init( const char* sysname )
    background_load( cur_system->background );
 }
 
-
 /**
  * @brief Initializes an asteroid.
  *    @param ast Asteroid to initialize.
@@ -1673,7 +1645,6 @@ void asteroid_init( Asteroid *ast, AsteroidAnchor *field )
    ast->appearing = ASTEROID_GROWING;
    ast->timer = 0.;
 }
-
 
 /**
  * @brief Initializes a debris.
@@ -1730,7 +1701,6 @@ Planet *planet_new (void)
 
    return p;
 }
-
 
 /**
  * @brief Loads all the planets in the game.
@@ -1806,7 +1776,6 @@ static int planets_load (void)
    return 0;
 }
 
-
 /**
  * @brief Loads all the virtual assets.
  *
@@ -1877,7 +1846,6 @@ static int virtualassets_load (void)
    return 0;
 }
 
-
 /**
  * @brief Gets the planet colour char.
  */
@@ -1896,7 +1864,6 @@ char planet_getColourChar( const Planet *p )
       return 'H';
    return 'R';
 }
-
 
 /**
  * @brief Gets the planet symbol.
@@ -1920,7 +1887,6 @@ const char *planet_getSymbol( const Planet *p )
    return "* ";
 }
 
-
 /**
  * @brief Gets the planet colour.
  */
@@ -1939,7 +1905,6 @@ const glColour* planet_getColour( const Planet *p )
       return &cHostile;
    return &cRestricted;
 }
-
 
 /**
  * @brief Updates the land possibilities of a planet.
@@ -2016,7 +1981,6 @@ void planet_updateLand( Planet *p )
       p->bribed = 0;
 }
 
-
 /**
  * @brief Loads a planet's graphics (and radius).
  */
@@ -2028,7 +1992,6 @@ void planet_gfxLoad( Planet *planet )
    }
 }
 
-
 /**
  * @brief Loads all the graphics for a star system.
  *
@@ -2039,7 +2002,6 @@ void space_gfxLoad( StarSystem *sys )
    for (int i=0; i<array_size(sys->planets); i++)
       planet_gfxLoad( sys->planets[i] );
 }
-
 
 /**
  * @brief Unloads all the graphics for a star system.
@@ -2054,7 +2016,6 @@ void space_gfxUnload( StarSystem *sys )
       planet->gfx_space = NULL;
    }
 }
-
 
 /**
  * @brief Parsess an asset presence from xml.
@@ -2079,7 +2040,6 @@ static int asset_parsePresence( xmlNodePtr node, AssetPresence *ap )
    } while (xml_nextNode(cur));
    return 0;
 }
-
 
 /**
  * @brief Parses a planet from an xml node.
@@ -2252,7 +2212,7 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent, Commodity **st
       planet->services &= ~PLANET_SERVICE_INHABITED;
 
 /*
- * verification
+ * Verification
  */
 #define MELEMENT(o,s)   if (o) WARN(_("Planet '%s' missing '%s' element"), planet->name, s)
    /* Issue warnings on missing items only it the asset is real. */
@@ -2310,7 +2270,6 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent, Commodity **st
    return 0;
 }
 
-
 /**
  * @brief Adds a planet to a star system.
  *
@@ -2346,7 +2305,6 @@ int system_addPlanet( StarSystem *sys, const char *planetname )
    return 0;
 }
 
-
 /**
  * @brief Removes a planet from a star system.
  *
@@ -2356,7 +2314,7 @@ int system_addPlanet( StarSystem *sys, const char *planetname )
  */
 int system_rmPlanet( StarSystem *sys, const char *planetname )
 {
-   int i,found;
+   int i, found;
    Planet *planet;
 
    if (sys == NULL) {
@@ -2403,7 +2361,6 @@ int system_rmPlanet( StarSystem *sys, const char *planetname )
    return 0;
 }
 
-
 /**
  * @brief Adds a virtual asset to a system.
  *
@@ -2427,7 +2384,6 @@ int system_addVirtualAsset( StarSystem *sys, const char *assetname )
 
    return 0;
 }
-
 
 /**
  * @brief Removes a virtual asset from a system.
@@ -2467,7 +2423,6 @@ int system_rmVirtualAsset( StarSystem *sys, const char *assetname )
    return 0;
 }
 
-
 /**
  * @brief Adds a jump point to a star system from a diff.
  *
@@ -2486,7 +2441,6 @@ int system_addJumpDiff( StarSystem *sys, xmlNodePtr node )
 
    return 1;
 }
-
 
 /**
  * @brief Adds a jump point to a star system.

@@ -1,16 +1,11 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
-
 /**
  * @file pilot_ew.c
  *
  * @brief Pilot electronic warfare information.
  */
-
-
-
 /** @cond */
 #include <math.h>
 
@@ -25,14 +20,11 @@
 #include "player_autonav.h"
 #include "space.h"
 
-
 #define EW_ASTEROID_DIST      7500.
 #define EW_JUMPDETECT_DIST    7500.
 #define EW_PLANETDETECT_DIST  20e3 /* TODO something better than this. */
 
-
 static double ew_interference = 1.; /**< Interference factor. */
-
 
 /*
  * Prototypes.
@@ -42,7 +34,6 @@ static double pilot_ewMass( double mass );
 static double pilot_ewAsteroid( const Pilot *p );
 static double pilot_ewJumpPoint( const Pilot *p );
 static int pilot_ewStealthGetNearby( const Pilot *p, double *mod, int *close, int *isplayer );
-
 
 /**
  * @brief Gets the time it takes to scan a pilot.
@@ -544,8 +535,8 @@ int pilot_stealth( Pilot *p )
    pilot_outfitOffAll( p );
 
    /* Got into stealth. */
-   pilot_outfitLOnstealth( p );
-   pilot_calcStats(p);
+   if (!pilot_outfitLOnstealth( p ))
+      pilot_calcStats(p);
    p->ew_stealth_timer = 0.;
 
    /* Run hook. */
@@ -563,8 +554,8 @@ void pilot_destealth( Pilot *p )
       return;
    pilot_rmFlag( p, PILOT_STEALTH );
    p->ew_stealth_timer = 0.;
-   pilot_outfitLOnstealth( p );
-   pilot_calcStats(p); /* TODO skip this when outfits updated pilot. */
+   if (!pilot_outfitLOnstealth( p ))
+      pilot_calcStats(p);
 
    /* Run hook. */
    const HookParam hparam = { .type = HOOK_PARAM_BOOL, .u.b = 0 };

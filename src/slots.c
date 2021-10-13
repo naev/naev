@@ -1,14 +1,11 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
 /**
  * @file slots.c
  *
  * @brief Handles the slot properties.
  */
-
-
 /** @cond */
 #include "naev.h"
 /** @endcond */
@@ -19,12 +16,10 @@
 #include "log.h"
 #include "nxml.h"
 
-
 #define SP_XML_ID     "Slots" /**< XML Document tag. */
 #define SP_XML_TAG    "slot" /**< SP XML node tag. */
 
 #define SP_DATA_PATH  "slots.xml" /**< Location of the sp datafile. */
-
 
 /**
  * @brief Representation of a slot property.
@@ -37,15 +32,12 @@ typedef struct SlotProperty_s {
    int exclusive;       /**< Exclusive slot property. */
 } SlotProperty_t;
 
-
 static SlotProperty_t *sp_array = NULL; /**< Slot property array. */
-
 
 /*
  * Prototypes.
  */
 static int sp_check( unsigned int spid );
-
 
 /**
  * @brief Initializes the slot properties.
@@ -114,16 +106,13 @@ int sp_load (void)
    return 0;
 }
 
-
 /**
  * @brief Cleans up after the slot properties.
  */
 void sp_cleanup (void)
 {
-   int i;
-   SlotProperty_t *sp;
-   for (i=0; i<array_size(sp_array); i++) {
-      sp = &sp_array[i];
+   for (int i=0; i<array_size(sp_array); i++) {
+      SlotProperty_t *sp = &sp_array[i];
       free( sp->name );
       free( sp->display );
       free( sp->description );
@@ -131,7 +120,6 @@ void sp_cleanup (void)
    array_free( sp_array );
    sp_array = NULL;
 }
-
 
 /**
  * @brief Gets the id of a slot property.
@@ -141,19 +129,16 @@ void sp_cleanup (void)
  */
 unsigned int sp_get( const char *name )
 {
-   int i;
-   SlotProperty_t *sp;
    if (name==NULL)
       return 0;
-   for (i=0; i<array_size(sp_array); i++) {
-      sp = &sp_array[i];
+   for (int i=0; i<array_size(sp_array); i++) {
+      SlotProperty_t *sp = &sp_array[i];
       if (strcmp( sp->name, name ) == 0)
          return i+1;
    }
    WARN(_("Slot property '%s' not found in array."), name);
    return 0;
 }
-
 
 /**
  * @brief Checks to see if in bound of array.
@@ -164,7 +149,6 @@ static int sp_check( unsigned int spid )
       return 1;
    return 0;
 }
-
 
 /**
  * @brief Gets the display name of a slot property (in English).
@@ -187,7 +171,6 @@ const char *sp_description( unsigned int spid )
    return sp_array[ spid-1 ].description;
 }
 
-
 /**
  * @brief Gets whether or not a slot property is required.
  */
@@ -198,7 +181,6 @@ int sp_required( unsigned int spid )
    return sp_array[ spid-1 ].required;
 }
 
-
 /**
  * @brief Gets whether or not a slot property is exclusive.
  */
@@ -208,7 +190,4 @@ int sp_exclusive( unsigned int spid )
       return 0;
    return sp_array[ spid-1 ].exclusive;
 }
-
-
-
 

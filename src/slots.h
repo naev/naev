@@ -1,12 +1,8 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
-
-
 #ifndef SLOTPROPERTY_H
 #  define SLOTPROPERTY_H
-
 
 /* Load/exit. */
 int sp_load (void);
@@ -19,6 +15,4 @@ const char *sp_description( unsigned int sp );
 int sp_required( unsigned int spid );
 int sp_exclusive( unsigned int spid );
 
-
 #endif /* SLOTPROPERTY_H */
-

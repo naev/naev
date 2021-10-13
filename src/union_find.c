@@ -1,17 +1,14 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
 /**
  * @file union_find.c
  *
  * @brief Implements ye olde disjoint-set-forest data structure.
  */
-
 #include "union_find.h"
 
 #include "array.h"
-
 
 /** @brief Creates a UnionFind structure on {0, ..., n}. */
 void unionfind_init( UnionFind* uf, int n )
@@ -24,7 +21,6 @@ void unionfind_init( UnionFind* uf, int n )
    }
 }
 
-
 /** @brief Frees resources associated with uf. */
 void unionfind_free( UnionFind* uf )
 {
@@ -33,7 +29,6 @@ void unionfind_free( UnionFind* uf )
    array_free( uf->rank );
    uf->rank = NULL;
 }
-
 
 /** @brief Declares x and y to be in the same subset. */
 void unionfind_union( UnionFind* uf, int x, int y )
@@ -49,7 +44,6 @@ void unionfind_union( UnionFind* uf, int x, int y )
    }
 }
 
-
 /** @brief Finds the designated representative of the subset containing x. */
 int unionfind_find( UnionFind* uf, int x )
 {
@@ -58,14 +52,11 @@ int unionfind_find( UnionFind* uf, int x )
    return uf->parent[x];
 }
 
-
 /** @brief Returns a designated representative of each subset in an array (array.h). */
 int* unionfind_findall( UnionFind* uf )
 {
-   int i, *a;
-
-   a = array_create( int );
-   for (i=0; i<array_size(uf->parent); i++)
+   int *a = array_create( int );
+   for (int i=0; i<array_size(uf->parent); i++)
       if (uf->parent[i] == i)
          array_push_back( &a, i );
    return a;

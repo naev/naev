@@ -1,14 +1,11 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
 /**
  * @file ship.c
  *
  * @brief Handles the ship details.
  */
-
-
 /** @cond */
 #include <limits.h>
 #include "physfsrwops.h"
@@ -32,7 +29,6 @@
 #include "toolkit.h"
 #include "unistd.h"
 
-
 #define XML_SHIP  "ship" /**< XML individual ship identifier. */
 
 #define SHIP_ENGINE  "_engine" /**< Engine graphic extension. */
@@ -47,9 +43,7 @@
 
 #define STATS_DESC_MAX 256 /**< Maximum length for statistics description. */
 
-
 static Ship* ship_stack = NULL; /**< Stack of ships available in the game. */
-
 
 /*
  * Prototypes
@@ -58,7 +52,9 @@ static int ship_loadGFX( Ship *temp, const char *buf, int sx, int sy, int engine
 static int ship_loadPLG( Ship *temp, const char *buf, int size_hint );
 static int ship_parse( Ship *temp, xmlNodePtr parent );
 
-
+/**
+ * @brief Compares two ship pointers for qsort.
+ */
 static int ship_cmp( const void *p1, const void *p2 )
 {
    const Ship *s1, *s2;
@@ -66,7 +62,6 @@ static int ship_cmp( const void *p1, const void *p2 )
    s2 = (const Ship*) p2;
    return strcmp( s1->name, s2->name );
 }
-
 
 /**
  * @brief Gets a ship based on its name.
@@ -105,9 +100,6 @@ const char *ship_existsCase( const char* name )
    return NULL;
 }
 
-
-
-
 /**
  * @brief Gets the array (array.h) of all ships.
  */
@@ -115,7 +107,6 @@ const Ship* ship_getAll (void)
 {
    return ship_stack;
 }
-
 
 /**
  * @brief Comparison function for qsort().
@@ -144,7 +135,6 @@ int ship_compareTech( const void *arg1, const void *arg2 )
    return strcmp( s1->name, s2->name );
 }
 
-
 /**
  * @brief Gets the ship's class name in human readable form.
  *
@@ -155,7 +145,6 @@ const char* ship_class( const Ship* s )
 {
    return ship_classToString( s->class );
 }
-
 
 /**
  * @brief Gets the ship's display class in human readable form.
@@ -170,7 +159,6 @@ const char* ship_classDisplay( const Ship* s )
    return ship_class( s );
 }
 
-
 /**
  * @brief Gets the ship class name in human readable form.
  *
@@ -182,7 +170,6 @@ const char *ship_classToString( ShipClass class )
    switch (class) {
       case SHIP_CLASS_NULL:
          return "NULL";
-
       /* Civilian. */
       case SHIP_CLASS_YACHT:
          return N_("Yacht");
@@ -194,7 +181,6 @@ const char *ship_classToString( ShipClass class )
          return N_("Bulk Carrier");
       case SHIP_CLASS_ARMOURED_TRANSPORT:
          return N_("Armoured Transport");
-
       /* Military. */
       case SHIP_CLASS_SCOUT:
          return N_("Scout");
@@ -214,7 +200,6 @@ const char *ship_classToString( ShipClass class )
          return N_("Battleship");
       case SHIP_CLASS_CARRIER:
          return N_("Carrier");
-
       /* Unknown. */
       default:
          return N_("Unknown");
@@ -289,7 +274,6 @@ credits_t ship_buyPrice( const Ship* s )
    return price;
 }
 
-
 /**
  * @brief Loads the ship's comm graphic.
  *
@@ -301,7 +285,6 @@ glTexture* ship_loadCommGFX( const Ship* s )
       return gl_newImage( s->gfx_comm, 0 );
    return NULL;
 }
-
 
 /**
  * @brief Gets the size of the ship.
@@ -343,7 +326,6 @@ int ship_size( const Ship *s )
    }
 }
 
-
 /**
  * @brief Generates a target graphic for a ship.
  */
@@ -352,12 +334,6 @@ static int ship_genTargetGFX( Ship *temp, SDL_Surface *surface, int sx, int sy )
    SDL_Surface *gfx, *gfx_store;
    int x, y, sw, sh;
    SDL_Rect rtemp, dstrect;
-#if 0 /* Required for scanlines. */
-   int i, j;
-   uint32_t *pix;
-   double r, g, b, a;
-   double h, s, v;
-#endif
    char buf[PATH_MAX];
 
    /* Get sprite size. */
@@ -408,7 +384,6 @@ static int ship_genTargetGFX( Ship *temp, SDL_Surface *surface, int sx, int sy )
    return 0;
 }
 
-
 /**
  * @brief Loads the space graphics for a ship from an image.
  *
@@ -451,7 +426,6 @@ static int ship_loadSpaceImage( Ship *temp, char *str, int sx, int sy )
    return 0;
 }
 
-
 /**
  * @brief Loads the space graphics for a ship from an image.
  *
@@ -465,7 +439,6 @@ static int ship_loadEngineImage( Ship *temp, char *str, int sx, int sy )
    temp->gfx_engine = gl_newSprite( str, sx, sy, OPENGL_TEX_MIPMAPS );
    return (temp->gfx_engine != NULL);
 }
-
 
 /**
  * @brief Loads the graphics for a ship.
@@ -513,7 +486,6 @@ static int ship_loadGFX( Ship *temp, const char *buf, int sx, int sy, int engine
 
    return 0;
 }
-
 
 /**
  * @brief Loads the collision polygon for a ship.
@@ -570,7 +542,6 @@ static int ship_loadPLG( Ship *temp, const char *buf, int size_hint )
    xmlFreeDoc(doc);
    return 0;
 }
-
 
 /**
  * @brief Parses a slot for a ship.
@@ -971,7 +942,6 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
    return 0;
 }
 
-
 /**
  * @brief Loads all the ships in the data files.
  *
@@ -1039,7 +1009,6 @@ int ships_load (void)
 
    return 0;
 }
-
 
 /**
  * @brief Frees all the ships.

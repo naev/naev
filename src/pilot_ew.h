@@ -1,15 +1,10 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
-
 #ifndef PILOT_EW_H
 #  define PILOT_EW_H
 
-
 #include "pilot.h"
-
-
 
 /*
  * Sensors and range.
@@ -42,6 +37,5 @@ void pilot_ewUpdateDynamic( Pilot *p, double dt );
 void pilot_ewUpdateStealth( Pilot *p, double dt );
 int pilot_stealth( Pilot *p );
 void pilot_destealth( Pilot *p );
-
 
 #endif /* PILOT_EW_H */

@@ -162,7 +162,7 @@ int naev_isQuit (void)
  */
 int main( int argc, char** argv )
 {
-   char conf_file_path[PATH_MAX], **search_path, **p;
+   char conf_file_path[PATH_MAX], **search_path;
 
 #ifdef DEBUGGING
    /* Set Debugging flags. */
@@ -255,7 +255,7 @@ int main( int argc, char** argv )
    LOG( _("Loaded configuration: %s"), conf_file_path );
    search_path = PHYSFS_getSearchPath();
    LOG( "%s", _("Read locations, searched in order:") );
-   for (p = search_path; *p != NULL; p++)
+   for (char **p = search_path; *p != NULL; p++)
       LOG( "    %s", *p );
    PHYSFS_freeList( search_path );
    /* Logging the cache path is noisy, noisy is good at the DEBUG level. */
@@ -942,14 +942,13 @@ void display_fps( const double dt )
  */
 static void update_all (void)
 {
-   int i, n;
-   double nf, microdt, accumdt;
-
    if ((real_dt > 0.25) && (fps_skipped==0)) { /* slow timers down and rerun calculations */
       fps_skipped = 1;
       return;
    }
    else if (game_dt > fps_min) { /* we'll force a minimum FPS for physics to work alright. */
+      int n;
+      double nf, microdt, accumdt;
 
       /* Number of frames. */
       nf = ceil( game_dt / fps_min );
@@ -958,7 +957,7 @@ static void update_all (void)
 
       /* Update as much as needed, evenly. */
       accumdt = 0.;
-      for (i=0; i<n; i++) {
+      for (int i=0; i<n; i++) {
          update_routine( microdt, 0 );
          /* OK, so we need a bit of hackish logic here in case we are chopping up a
           * very large dt and it turns out time compression changes so we're now
@@ -988,8 +987,6 @@ static void update_all (void)
  */
 void update_routine( double dt, int enter_sys )
 {
-   HookParam h[3];
-
    if (!enter_sys) {
       hook_exclusionStart();
 
@@ -1007,8 +1004,8 @@ void update_routine( double dt, int enter_sys )
    cam_update( dt );
 
    if (!enter_sys) {
+      HookParam h[3];
       hook_exclusionEnd( dt );
-
       /* Hook set up. */
       h[0].type = HOOK_PARAM_NUMBER;
       h[0].u.num = dt;
@@ -1074,8 +1071,8 @@ char *naev_version( int long_version )
 }
 
 
-static int
-binary_comparison (int x, int y) {
+static int binary_comparison( int x, int y )
+{
   if (x == y) return 0;
   if (x > y) return 1;
   return -1;
@@ -1103,7 +1100,6 @@ int naev_versionCompare( const char *version )
    semver_free( &sv );
    return res;
 }
-
 
 /**
  * @brief Prints the SDL version to console.
@@ -1134,8 +1130,10 @@ static void print_SDLversion (void)
       WARN( _("SDL is older than compiled version.") );
 }
 
+/**
+ * @brief Gets the last delta-tick.
+ */
 double naev_getrealdt (void)
 {
    return real_dt;
 }
-

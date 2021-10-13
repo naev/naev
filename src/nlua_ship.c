@@ -568,7 +568,7 @@ static int shipL_getSize( lua_State *L )
 
 
 /**
- * @brief Gets the ship's target graphics.
+ * @brief Gets the ship's comm graphics.
  *
  * Will not work without access to the Tex module.
  *

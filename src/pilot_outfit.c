@@ -1,16 +1,11 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
-
 /**
  * @file pilot_outfit.c
  *
  * @brief Handles pilot outfits.
  */
-
-
-
 /** @cond */
 #include "naev.h"
 /** @endcond */
@@ -31,12 +26,10 @@
 #include "nlua_pilot.h"
 #include "nlua_pilotoutfit.h"
 
-
 /*
  * Prototypes.
  */
 static int pilot_hasOutfitLimit( const Pilot *p, const char *limit );
-
 
 /**
  * @brief Updates the lockons on the pilot's launchers
@@ -117,7 +110,6 @@ void pilot_lockUpdateSlot( Pilot *p, PilotOutfitSlot *o, Pilot *t, double *a, do
    }
 }
 
-
 /**
  * @brief Clears pilot's missile lockon timers.
  *
@@ -139,7 +131,6 @@ void pilot_lockClear( Pilot *p )
       o->u.ammo.in_arc = 0;
    }
 }
-
 
 /**
  * @brief Gets the mount position of a pilot.
@@ -184,7 +175,6 @@ int pilot_getMount( const Pilot *p, const PilotOutfitSlot *w, Vector2d *v )
 
    return 0;
 }
-
 
 /**
  * @brief Docks the pilot on its target pilot.
@@ -257,7 +247,6 @@ int pilot_dock( Pilot *p, Pilot *target )
    return 0;
 }
 
-
 /**
  * @brief Checks to see if the pilot has deployed ships.
  *
@@ -275,7 +264,6 @@ int pilot_hasDeployed( Pilot *p )
    }
    return 0;
 }
-
 
 /**
  * @brief Adds an outfit to the pilot, ignoring CPU or other limits.
@@ -337,7 +325,6 @@ int pilot_addOutfitRaw( Pilot* pilot, const Outfit* outfit, PilotOutfitSlot *s )
    return 0;
 }
 
-
 /**
  * @brief Tests to see if an outfit can be added.
  *
@@ -374,8 +361,6 @@ int pilot_addOutfitTest( Pilot* pilot, const Outfit* outfit, PilotOutfitSlot *s,
    return 0;
 }
 
-
-
 /**
  * @brief Adds an outfit to the pilot.
  *
@@ -399,7 +384,6 @@ int pilot_addOutfit( Pilot* pilot, const Outfit* outfit, PilotOutfitSlot *s )
 
    return ret;
 }
-
 
 /**
  * @brief Removes an outfit from the pilot without doing any checks.
@@ -557,6 +541,7 @@ const char* pilot_checkSpaceworthy( const Pilot *p )
    /* All OK. */
    return NULL;
 }
+
 /**
  * @brief Pilot safety report - makes sure stats are safe.
  *
@@ -667,7 +652,6 @@ const char* pilot_canEquip( const Pilot *p, const PilotOutfitSlot *s, const Outf
    return NULL;
 }
 
-
 /**
  * @brief Adds some ammo to the pilot stock.
  *
@@ -728,7 +712,6 @@ int pilot_addAmmo( Pilot* pilot, PilotOutfitSlot *s, const Outfit* ammo, int qua
    return q;
 }
 
-
 /**
  * @brief Removes some ammo from the pilot stock.
  *
@@ -766,7 +749,6 @@ int pilot_rmAmmo( Pilot* pilot, PilotOutfitSlot *s, int quantity )
    return q;
 }
 
-
 /**
  * @brief Gets the number of ammo units on the ship
  *
@@ -790,7 +772,6 @@ int pilot_countAmmo( const Pilot *pilot )
    }
    return nammo;
 }
-
 
 /**
  * @brief The maximum amount of ammo the pilot's current ship can hold.
@@ -817,7 +798,6 @@ int pilot_maxAmmo( const Pilot *pilot )
    return max;
 }
 
-
 /**
  * @brief Gets the maximum available ammo for a pilot for a specific outfit.
  */
@@ -834,7 +814,6 @@ int pilot_maxAmmoO( const Pilot *p, const Outfit *o )
       max = 0;
    return max;
 }
-
 
 /**
  * @brief Fills pilot's ammo completely.
@@ -869,7 +848,6 @@ void pilot_fillAmmo( Pilot* pilot )
          ammo_threshold - pilot->outfits[i]->u.ammo.quantity );
    }
 }
-
 
 /**
  * @brief Recalculates the pilot's stats based on his outfits.
@@ -1148,6 +1126,9 @@ int pilot_slotIsActive( const PilotOutfitSlot *o )
    return 1;
 }
 
+/**
+ * @brief Sets up the outfit memory for a slot.
+ */
 static void pilot_outfitLmem( PilotOutfitSlot *po )
 {
    /* Create the memory if necessary and initialize stats. */
@@ -1487,8 +1468,9 @@ void pilot_outfitLOnshoot( Pilot *pilot )
  * @brief Runs the pilot's Lua outfits onhit script.
  *
  *    @param pilot Pilot to run Lua outfits for.
+ *    @return 1 if ship stats were recalculated.
  */
-void pilot_outfitLOnstealth( Pilot *pilot )
+int pilot_outfitLOnstealth( Pilot *pilot )
 {
    pilotoutfit_modified = 0;
    for (int i=0; i<array_size(pilot->outfits); i++) {
@@ -1517,8 +1499,14 @@ void pilot_outfitLOnstealth( Pilot *pilot )
    /* Recalculate if anything changed. */
    if (pilotoutfit_modified)
       pilot_calcStats( pilot );
+   return pilotoutfit_modified;
 }
 
+/**
+ * @brief Runs Lua outfits when pilot scanned their target.
+ *
+ *    @param pilot Pilot being handled.
+ */
 void pilot_outfitLOnscan( Pilot *pilot )
 {
    pilotoutfit_modified = 0;
@@ -1535,7 +1523,7 @@ void pilot_outfitLOnscan( Pilot *pilot )
       lua_rawgeti(naevL, LUA_REGISTRYINDEX, po->lua_mem); /* mem */
       nlua_setenv(env, "mem"); /* */
 
-      /* Set up the function: onscan( p, po, stealthed ) */
+      /* Set up the function: onscan( p, po, target ) */
       lua_rawgeti(naevL, LUA_REGISTRYINDEX, po->outfit->u.mod.lua_onscan); /* f */
       lua_pushpilot(naevL, pilot->id); /* f, p */
       lua_pushpilotoutfit(naevL, po);  /* f, p, po */
@@ -1550,6 +1538,12 @@ void pilot_outfitLOnscan( Pilot *pilot )
       pilot_calcStats( pilot );
 }
 
+/**
+ * @brief Runs Lua outfits when pilot was scanned by scanner.
+ *
+ *    @param pilot Pilot being handled.
+ *    @param scanner Pilot that scanned the pilot.
+ */
 void pilot_outfitLOnscanned( Pilot *pilot, const Pilot *scanner )
 {
    pilotoutfit_modified = 0;

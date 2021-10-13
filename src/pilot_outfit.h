@@ -1,17 +1,12 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
-
 #ifndef PILOT_OUTFIT_H
 #  define PILOT_OUTFIT_H
 
-
 #include "pilot.h"
 
-
 #define PILOT_OUTFIT_LUA_UPDATE_DT     (1.0/10.0)   /* How often the Lua outfits run their update script (in seconds).  */
-
 
 /* Raw changes. */
 int pilot_addOutfitRaw( Pilot* pilot, const Outfit* outfit, PilotOutfitSlot *s );
@@ -61,10 +56,9 @@ void pilot_outfitLOnhit( Pilot *pilot, double armour, double shield, unsigned in
 int pilot_outfitLOntoggle( Pilot *pilot, PilotOutfitSlot *po, int on );
 void pilot_outfitLCooldown( Pilot *pilot, int done, int success, double timer );
 void pilot_outfitLOnshoot( Pilot *pilot );
-void pilot_outfitLOnstealth( Pilot *pilot );
+int pilot_outfitLOnstealth( Pilot *pilot );
 void pilot_outfitLOnscan( Pilot *pilot );
 void pilot_outfitLOnscanned( Pilot *pilot, const Pilot *scanner );
 void pilot_outfitLCleanup( Pilot *pilot );
-
 
 #endif /* PILOT_OUTFIT_H */

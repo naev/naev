@@ -1,12 +1,8 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
-
-
 #ifndef SHIP_H
 #  define SHIP_H
-
 
 #include "collision.h"
 #include "commodity.h"
@@ -17,11 +13,9 @@
 #include "sound.h"
 #include "spfx.h"
 
-
 /* target gfx dimensions */
 #define SHIP_TARGET_W   128 /**< Ship target graphic width. */
 #define SHIP_TARGET_H   128 /**< Ship target graphic height. */
-
 
 /**
  * @brief Contains the different types of ships.
@@ -53,7 +47,6 @@ typedef enum ShipClass_ {
    SHIP_CLASS_TOTAL,       /**< Sentinal for total amount of ship classes. */
 } ShipClass;
 
-
 /**
  * @brief Represents a ship weapon mount point.
  */
@@ -62,7 +55,6 @@ typedef struct ShipMount_ {
    double y; /**< Y position of the mount point. */
    double h; /**< Mount point height (displacement). */
 } ShipMount;
-
 
 /**
  * @brief Ship outfit slot.
@@ -75,7 +67,6 @@ typedef struct ShipOutfitSlot_ {
    ShipMount mount;  /**< Mountpoint, only used for weapon slots. */
 } ShipOutfitSlot;
 
-
 /**
  * @brief Ship trail emitter.
  */
@@ -86,7 +77,6 @@ typedef struct ShipTrailEmitter_ {
    unsigned int always_under; /**< Should this trail be always drawn under the ship? */
    const TrailSpec* trail_spec; /**< Trail type to emit. */
 } ShipTrailEmitter;
-
 
 /**
  * @brief Represents a space ship.
@@ -162,7 +152,6 @@ typedef struct Ship_ {
    ShipStats stats_array;  /**< Laid out stats for referencing purposes. */
 } Ship;
 
-
 /*
  * load/quit
  */
@@ -185,11 +174,9 @@ credits_t ship_buyPrice( const Ship* s );
 glTexture* ship_loadCommGFX( const Ship* s );
 int ship_size( const Ship *s );
 
-
 /*
  * misc.
  */
 int ship_compareTech( const void *arg1, const void *arg2 );
-
 
 #endif /* SHIP_H */
