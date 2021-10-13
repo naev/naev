@@ -1,13 +1,11 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
 /**
  * @file cond.c
  *
  * @brief Handles lua conditionals.
  */
-
 
 /** @cond */
 #include "naev.h"
@@ -19,9 +17,7 @@
 #include "nlua.h"
 #include "nluadef.h"
 
-
 static nlua_env cond_env = LUA_NOREF; /** Conditional Lua env. */
-
 
 /**
  * @brief Initializes the conditional subsystem.
@@ -40,7 +36,6 @@ int cond_init (void)
    return 0;
 }
 
-
 /**
  * @brief Destroys the conditional subsystem.
  */
@@ -53,7 +48,6 @@ void cond_exit (void)
    cond_env = LUA_NOREF;
 }
 
-
 /**
  * @brief Checks to see if a condition is true.
  *
@@ -62,7 +56,6 @@ void cond_exit (void)
  */
 int cond_check( const char* cond )
 {
-   int b;
    int ret;
 
    /* Load the string. */
@@ -90,7 +83,7 @@ int cond_check( const char* cond )
 
    /* Check the result. */
    if (lua_isboolean(naevL, -1)) {
-      b = lua_toboolean(naevL, -1);
+      int b = lua_toboolean(naevL, -1);
       lua_pop(naevL, 1);
       if (b)
          ret = 1;

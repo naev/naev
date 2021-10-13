@@ -1,12 +1,8 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
-
-
 #ifndef COMMODITY_H
 #  define COMMODITY_H
-
 
 /** @cond */
 #include <stdint.h>
@@ -14,10 +10,8 @@
 
 #include "opengl.h"
 
-
 #define ECON_CRED_STRLEN      32 /**< Maximum length a credits2str string can reach. */
 #define ECON_MASS_STRLEN      32 /**< Maximum length a tonnes2str string can reach. */
-
 
 typedef int64_t credits_t;
 #define CREDITS_MAX        (((credits_t)1) << 53) /**< Maximum credits_t value that round-trips through Lua. */
@@ -87,7 +81,6 @@ typedef struct Gatherable_ {
    int quantity; /**< Quantity of material. */
 } Gatherable;
 
-
 /*
  * Commodity stuff.
  */
@@ -101,14 +94,12 @@ void commodity_free (void);
 
 int commodity_checkIllegal( const Commodity *com, int faction );
 
-
 /*
  * Temporary commodities.
  */
 int commodity_isTemp( const char* name );
 Commodity* commodity_newTemp( const char* name, const char* desc );
 int commodity_tempIllegalto( Commodity *com, int faction );
-
 
 /*
  * Gatherable objects
@@ -121,7 +112,6 @@ void gatherable_free( void );
 void gatherable_update( double dt );
 void gatherable_gather( int pilot );
 
-
 /*
  * Misc stuff.
  */
@@ -132,6 +122,4 @@ void commodity_Jettison( int pilot, const Commodity* com, int quantity );
 int commodity_compareTech( const void *commodity1, const void *commodity2 );
 Commodity ** standard_commodities (void);
 
-
 #endif /* COMMODITY_H */
-

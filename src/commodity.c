@@ -1,7 +1,6 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
 /**
  * @file economy.c
  *
@@ -11,7 +10,6 @@
  *  jump routes are resistances and production is modelled as node intensity.
  *  This is then solved with linear algebra after each time increment.
  */
-
 
 /** @cond */
 #include <stdio.h>
@@ -36,14 +34,11 @@
 #include "space.h"
 #include "spfx.h"
 
-
 #define XML_COMMODITY_ID      "Commodities" /**< XML document identifier */
 #define XML_COMMODITY_TAG     "commodity" /**< XML commodity identifier. */
 
-
 /* Gatherables */
 #define GATHER_DIST 30. /**< Maximum distance a gatherable can be gathered. */
-
 
 /* commodity stack */
 Commodity* commodity_stack = NULL; /**< Contains all the commodities. */
@@ -51,11 +46,10 @@ static Commodity** commodity_temp = NULL; /**< Contains all the temporary commod
 
 /* gatherables stack */
 static Gatherable* gatherable_stack = NULL; /**< Contains the gatherable stuff floating around. */
-static float noscoop_timer                 = 1.; /**< Timer for the "full cargo" message . */
+static float noscoop_timer = 1.; /**< Timer for the "full cargo" message . */
 
 /* @TODO remove externs. */
 extern int *econ_comm;
-
 
 /*
  * Prototypes.
@@ -63,7 +57,6 @@ extern int *econ_comm;
 /* Commodity. */
 static void commodity_freeOne( Commodity* com );
 static int commodity_parse( Commodity *temp, xmlNodePtr parent );
-
 
 /**
  * @brief Converts credits to a usable string for displaying.
@@ -113,7 +106,6 @@ void price2str(char *str, credits_t price, credits_t credits, int decimals )
    free(buf);
 }
 
-
 /**
  * @brief Converts tonnes to a usable string for displaying.
  *
@@ -133,11 +125,10 @@ void tonnes2str( char *str, int tonnes )
  */
 Commodity* commodity_get( const char* name )
 {
-   int i;
-   for (i=0; i<array_size(commodity_stack); i++)
+   for (int i=0; i<array_size(commodity_stack); i++)
       if (strcmp(commodity_stack[i].name,name)==0)
          return &commodity_stack[i];
-   for (i=0; i<array_size(commodity_temp); i++)
+   for (int i=0; i<array_size(commodity_temp); i++)
       if (strcmp(commodity_temp[i]->name, name) == 0)
          return commodity_temp[i];
 

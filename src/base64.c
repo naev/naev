@@ -1,11 +1,9 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
 /*
  * compliant with rfc3548
  */
-
 /** @cond */
 #include <stdint.h>
 #include <stdlib.h>
@@ -14,7 +12,6 @@
 #include "base64.h"
 
 #include "nstring.h"
-
 
 /* encode table - base 64 alphabet as defined by the rfc */
 static const char cb64[64]="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
@@ -152,7 +149,6 @@ static const signed char cd64[256] = { /* makes it much faster */
       B64 (252), B64 (253), B64 (254), B64 (255)
 };
 
-
 /*
  * encodes src of sz length storing the new length in len
  */
@@ -205,7 +201,6 @@ char* base64_encode( size_t *len, const char *src, size_t sz )
    return r;
 }
 
-
 /*
  * decode the buffer, same syntax as base64_encode
  */
@@ -255,7 +250,6 @@ char* base64_decode( size_t *len, const char *src, size_t sz )
    return r;
 }
 
-
 /*
  * encodes src of sz length storing the new length in len
  */
@@ -264,7 +258,6 @@ char* base64_encode_to_cstr( const char *src, size_t sz )
    size_t len;
    return base64_encode( &len, src, sz );
 }
-
 
 /*
  * encodes src of sz length storing the new length in len

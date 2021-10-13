@@ -1,13 +1,11 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
 /**
  * @file log.c
  *
  * @brief Home of logprintf.
  */
-
 /** @cond */
 #include <stdarg.h>
 #include <stdio.h>
@@ -23,7 +21,6 @@
 #include "console.h"
 #include "ndata.h"
 #include "nstring.h"
-
 
 /**< Temporary storage buffers. */
 static char *outcopy = NULL;
@@ -46,7 +43,6 @@ static int copying = 0;
 static PHYSFS_File *logout_file = NULL;
 static PHYSFS_File *logerr_file = NULL;
 
-
 /*
  * Prototypes
  */
@@ -61,7 +57,7 @@ static void log_purge (void);
 int logprintf( FILE *stream, int newline, const char *fmt, ... )
 {
    va_list ap;
-   char buf[2048];
+   char buf[STRMAX];
    size_t n;
 
    if (fmt == NULL)
@@ -117,7 +113,6 @@ int logprintf( FILE *stream, int newline, const char *fmt, ... )
    return n;
 }
 
-
 /**
  * @brief Sets up redirection of stdout and stderr to files.
  * PhysicsFS must be initialized for this to work.
@@ -150,7 +145,6 @@ void log_redirect (void)
    log_copy(0);
 }
 
-
 /**
  * @brief Sets up the logging subsystem.
  * (Calling this ensures logging output is preserved until we have a place to save it.
@@ -161,7 +155,6 @@ void log_init (void)
 {
    log_copy( conf.redirect_file );
 }
-
 
 /**
  * @brief Sets up or terminates copying of standard streams into memory.
@@ -201,7 +194,6 @@ void log_copy( int enable )
    log_purge();
 }
 
-
 /**
  * @brief Deletes copied output without printing the contents.
  */
@@ -219,7 +211,6 @@ static void log_purge (void)
    copying = 0;
 }
 
-
 /**
  * @brief Deletes useless (empty) log files from the current session.
  */
@@ -228,7 +219,6 @@ void log_clean (void)
    log_cleanStream( &logout_file, "logs/stdout.txt", outfiledouble );
    log_cleanStream( &logerr_file, "logs/stderr.txt", errfiledouble );
 }
-
 
 /**
  * @brief \see log_clean
@@ -252,7 +242,6 @@ static void log_cleanStream( PHYSFS_File **file, const char *fname, const char *
       ndata_copyIfExists( fname, filedouble );
 }
 
-
 /**
  * @brief Appends a message to a stream's in-memory buffer.
  *
@@ -261,9 +250,7 @@ static void log_cleanStream( PHYSFS_File **file, const char *fname, const char *
  */
 static void log_append( FILE *stream, char *str )
 {
-   int len;
-
-   len = strlen(str);
+   int len = strlen(str);
    if (stream == stdout) {
       while ((len + noutcopy) >= (int)moutcopy) {
          moutcopy *= 2;
