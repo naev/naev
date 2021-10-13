@@ -1545,6 +1545,7 @@ static void info_changeTab( unsigned int wid, const char *str, int old, int new 
       case INFO_WIN_MISN:  hookname = "info_mission"; break;
       case INFO_WIN_STAND: hookname = "info_standing";break;
       case INFO_WIN_SHIPLOG:hookname= "info_shiplog"; break;
+      default: ERR( _("Invalid info tab ID: %d"), new );
    }
    hooks_run( hookname );
 }

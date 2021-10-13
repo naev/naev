@@ -1852,8 +1852,9 @@ void pilot_render( Pilot* p, const double dt )
 
 #ifdef DEBUGGING
    double dircos, dirsin, x, y;
+   int debug_mark_emitter = debug_isFlag(DEBUG_MARK_EMITTER);
    Vector2d v;
-   if (debug_isFlag(DEBUG_MARK_EMITTER)) {
+   if (debug_mark_emitter) {
       dircos = cos(p->solid->dir);
       dirsin = sin(p->solid->dir);
    }
@@ -1862,7 +1863,7 @@ void pilot_render( Pilot* p, const double dt )
    /* Re-draw backwards trails. */
    for (int i=0,g=0; g<array_size(p->ship->trail_emitters); g++) {
 #ifdef DEBUGGING
-      if (debug_isFlag(DEBUG_MARK_EMITTER)) {
+      if (debug_mark_emitter) {
          /* Visualize the trail emitters. */
          v.x = p->ship->trail_emitters[g].x_engine * dircos -
               p->ship->trail_emitters[g].y_engine * dirsin;
