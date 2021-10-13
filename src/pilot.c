@@ -1,15 +1,11 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
-
 /**
  * @file pilot.c
  *
  * @brief Handles the pilot stuff.
  */
-
-
 /** @cond */
 #include <limits.h>
 #include <math.h>
@@ -49,22 +45,17 @@
 #include "rng.h"
 #include "weapon.h"
 
-
 #define PILOT_SIZE_MIN 128 /**< Minimum chunks to increment pilot_stack by */
 
 /* ID Generators. */
 static unsigned int pilot_id = PLAYER_ID; /**< Stack of pilot ids to assure uniqueness */
 
-
 /* stack of pilots */
 static Pilot** pilot_stack = NULL; /**< All the pilots in space. (Player may have other Pilot objects, e.g. backup ships.) */
-
 
 /* misc */
 static const double pilot_commTimeout  = 15.; /**< Time for text above pilot to time out. */
 static const double pilot_commFade     = 5.; /**< Time for text above pilot to fade out. */
-
-
 
 /*
  * Prototypes
@@ -84,7 +75,6 @@ static int pilot_getStackPos( unsigned int id );
 static void pilot_init_trails( Pilot* p );
 static int pilot_trail_generated( Pilot* p, int generator );
 
-
 /**
  * @brief Gets the pilot stack.
  */
@@ -93,14 +83,13 @@ Pilot*const* pilot_getAll (void)
    return pilot_stack;
 }
 
-
 /**
  * @brief Compare id (for use with bsearch)
  */
-static int compid(const void *id, const void *p) {
+static int compid(const void *id, const void *p)
+{
     return *((const unsigned int*)id) - (*((Pilot**)p))->id;
 }
-
 
 /**
  * @brief Gets the pilot's position in the stack.
@@ -117,7 +106,6 @@ static int pilot_getStackPos( unsigned int id )
    else
       return pp - pilot_stack;
 }
-
 
 /**
  * @brief Gets the next pilot based on id.
@@ -166,7 +154,6 @@ unsigned int pilot_getNextID( unsigned int id, int mode )
    /* None found. */
    return PLAYER_ID;
 }
-
 
 /**
  * @brief Gets the previous pilot based on ID.
@@ -220,7 +207,6 @@ unsigned int pilot_getPrevID( unsigned int id, int mode )
    return PLAYER_ID;
 }
 
-
 /**
  * @brief Checks to see if a pilot is a valid target for another pilot.
  *
@@ -244,7 +230,6 @@ int pilot_validTarget( const Pilot* p, const Pilot* target )
    return 1;
 }
 
-
 /**
  * @brief Same as pilot_validTarget but without the range check.
  */
@@ -264,7 +249,6 @@ int pilot_canTarget( const Pilot* p )
    return 1;
 }
 
-
 /**
  * @brief Checks to see if a pilot is a valid enemy for another pilot.
  *
@@ -276,7 +260,6 @@ int pilot_validEnemy( const Pilot* p, const Pilot* target )
 {
    return pilot_validEnemyDist( p, target, NULL );
 }
-
 
 /**
  * @brief Same as pilot_validEnemy, but able to store the distance too.
@@ -311,7 +294,6 @@ int pilot_validEnemyDist( const Pilot* p, const Pilot* target, double *dist )
    /* They're ok. */
    return 1;
 }
-
 
 /**
  * @brief Gets the nearest enemy to the pilot.
@@ -426,7 +408,6 @@ unsigned int pilot_getNearestPilot( const Pilot* p )
    return t;
 }
 
-
 /**
  * @brief Get the strongest ally in a given range.
  *
@@ -535,7 +516,6 @@ double pilot_getNearestPos( const Pilot *p, unsigned int *tp, double x, double y
    return d;
 }
 
-
 /**
  * @brief Get the pilot closest to an angle extending from another pilot.
  *
@@ -588,7 +568,6 @@ double pilot_getNearestAng( const Pilot *p, unsigned int *tp, double ang, int di
    return a;
 }
 
-
 /**
  * @brief Pulls a pilot out of the pilot_stack based on ID.
  *
@@ -613,7 +592,6 @@ Pilot* pilot_get( unsigned int id )
    else
       return pilot_stack[m];
 }
-
 
 /**
  * @brief Gets the target of a pilot using a fancy caching system.
@@ -648,7 +626,6 @@ void pilot_setThrust( Pilot *p, double thrust )
    p->solid->thrust = p->thrust * thrust;
 }
 
-
 /**
  * @brief Sets the pilot's turn.
  */
@@ -656,7 +633,6 @@ void pilot_setTurn( Pilot *p, double turn )
 {
    p->solid->dir_vel = p->turn * turn;
 }
-
 
 /**
  * @brief Checks to see if pilot is hostile to the player.
@@ -675,7 +651,6 @@ int pilot_isHostile( const Pilot *p )
    return 0;
 }
 
-
 /**
  * @brief Checks to see if pilot is neutral to the player.
  *
@@ -688,7 +663,6 @@ int pilot_isNeutral( const Pilot *p )
       return 1;
    return 0;
 }
-
 
 /**
  * @brief Checks to see if pilot is friendly to the player.
@@ -705,7 +679,6 @@ int pilot_isFriendly( const Pilot *p )
 
    return 0;
 }
-
 
 /**
  * @brief Like areAllies but for pilots.
@@ -730,7 +703,6 @@ int pilot_areAllies( const Pilot *p, const Pilot *target )
    }
    return 0;
 }
-
 
 /**
  * @brief Like areEnemies but for pilots.
@@ -760,8 +732,6 @@ int pilot_areEnemies( const Pilot *p, const Pilot *target )
    return 0;
 }
 
-
-
 /**
  * @brief Gets the dock slot of the pilot.
  *
@@ -782,7 +752,6 @@ PilotOutfitSlot* pilot_getDockSlot( Pilot* p )
    return NULL;
 }
 
-
 /**
  * @brief Tries to turn the pilot to face dir.
  *
@@ -801,7 +770,6 @@ double pilot_face( Pilot* p, const double dir )
 
    return diff;
 }
-
 
 /**
  * @brief Causes the pilot to turn around and brake.
@@ -846,7 +814,6 @@ int pilot_brake( Pilot *p )
 
    return 0;
 }
-
 
 /**
  * @brief Gets the braking distance for a pilot.
@@ -895,7 +862,6 @@ double pilot_brakeDist( Pilot *p, Vector2d *pos )
 
    return dist;
 }
-
 
 /**
  * @brief Attempts to make the pilot pass through a given point.
@@ -953,7 +919,6 @@ int pilot_interceptPos( Pilot *p, double x, double y )
 
    return 0;
 }
-
 
 /**
  * @brief Begins active cooldown, reducing hull and outfit temperatures.
@@ -1017,7 +982,6 @@ void pilot_cooldown( Pilot *p )
    pilot_outfitLCooldown(p, 0, 0, p->ctimer);
 }
 
-
 /**
  * @brief Terminates active cooldown.
  *
@@ -1055,7 +1019,6 @@ void pilot_cooldownEnd( Pilot *p, const char *reason )
       pilot_outfitLCooldown(p,1,0, 0.);
    }
 }
-
 
 /**
  * @brief Returns the angle for a pilot to aim at an other pilot
@@ -1146,7 +1109,6 @@ void pilot_setHostile( Pilot* p )
    pilot_rmFlag( p, PILOT_BRIBED );
 }
 
-
 /**
  * @brief Gets the faction colour char, works like faction_getColourChar but for a pilot.
  *
@@ -1163,7 +1125,6 @@ char pilot_getFactionColourChar( const Pilot *p )
    return faction_getColourChar(p->faction);
 }
 
-
 /**
  * @brief Sets the overhead communication message of the pilot.
  */
@@ -1174,7 +1135,6 @@ static void pilot_setCommMsg( Pilot *p, const char *s )
    p->comm_msgWidth  = gl_printWidthRaw( NULL, s );
    p->comm_msgTimer  = pilot_commTimeout;
 }
-
 
 /**
  * @brief Have pilot send a message to another.
@@ -1211,7 +1171,6 @@ void pilot_message( Pilot *p, unsigned int target, const char *msg, int ignore_i
    }
 }
 
-
 /**
  * @brief Has the pilot broadcast a message.
  *
@@ -1237,7 +1196,6 @@ void pilot_broadcast( Pilot *p, const char *msg, int ignore_int )
    /* Set comm message. */
    pilot_setCommMsg( p, msg );
 }
-
 
 /**
  * @brief Has the pilot broadcast a distress signal.
@@ -1321,7 +1279,6 @@ void pilot_distress( Pilot *p, Pilot *attacker, const char *msg, int ignore_int 
    }
 }
 
-
 /**
  * @brief Unmarks a pilot as hostile to player.
  *
@@ -1350,7 +1307,6 @@ void pilot_rmHostile( Pilot* p )
       pilot_setFlag(p, PILOT_BRIBED);
 }
 
-
 /**
  * @brief Marks pilot as friendly to player.
  *
@@ -1362,7 +1318,6 @@ void pilot_setFriendly( Pilot* p )
    pilot_setFlag(p, PILOT_FRIENDLY);
 }
 
-
 /**
  * @brief Unmarks a pilot as friendly to player.
  *
@@ -1372,7 +1327,6 @@ void pilot_rmFriendly( Pilot* p )
 {
    pilot_rmFlag(p, PILOT_FRIENDLY);
 }
-
 
 /**
  * @brief Gets the amount of jumps the pilot has left.
@@ -1384,7 +1338,6 @@ int pilot_getJumps( const Pilot* p )
 {
    return p->fuel / p->fuel_consumption;
 }
-
 
 /**
  * @brief Gets a pilot's colour.
@@ -1410,7 +1363,6 @@ const glColour* pilot_getColour( const Pilot* p )
    return col;
 }
 
-
 /**
  * @brief Sets the target of the pilot.
  *
@@ -1429,7 +1381,6 @@ void pilot_setTarget( Pilot* p, unsigned int id )
    /* Set the scan timer. */
    pilot_ewScanStart( p );
 }
-
 
 /**
  * @brief Damages the pilot.
@@ -1480,7 +1431,6 @@ double pilot_hit( Pilot* p, const Solid* w, unsigned int shooter,
       disable       *= absorb;
    tdshield = 0.;
    tdarmour = 0.;
-
 
    /*
     * Shields take entire blow.
@@ -1625,7 +1575,6 @@ double pilot_hit( Pilot* p, const Solid* w, unsigned int shooter,
    return ddmg;
 }
 
-
 /**
  * @brief Handles pilot disabling. Set or unset the disable status depending on health and stress values.
  *
@@ -1757,7 +1706,6 @@ static void pilot_dead( Pilot* p, unsigned int killer )
       pilot_setFlag( p, PILOT_DEAD );
 }
 
-
 /**
  * @brief Makes the pilot explosion.
  *    @param x X position of the pilot.
@@ -1807,7 +1755,6 @@ void pilot_explode( double x, double y, double radius, const Damage *dmg, const 
          spfx_shake( pow2(ddmg.damage) / pow2(100.) );
    }
 }
-
 
 /**
  * @brief Renders the pilot.
@@ -1956,7 +1903,6 @@ void pilot_renderOverlay( Pilot* p, const double dt )
       }
    }
 }
-
 
 /**
  * @brief Updates the pilot.
@@ -2387,7 +2333,6 @@ void pilot_update( Pilot* pilot, double dt )
    }
 }
 
-
 /**
  * @brief Updates the given pilot's trail emissions.
  *
@@ -2396,7 +2341,7 @@ void pilot_update( Pilot* pilot, double dt )
  */
 void pilot_sample_trails( Pilot* p, int none )
 {
-   double d2, cx, cy, dircos, dirsin, prod;
+   double d2, cx, cy, dircos, dirsin;
    TrailMode mode;
 
    /* Ignore for simulation. */
@@ -2429,7 +2374,7 @@ void pilot_sample_trails( Pilot* p, int none )
    /* Compute the engine offset and decide where to draw the trail. */
    for (int i=0, g=0; g<array_size(p->ship->trail_emitters); g++) {
       if (pilot_trail_generated( p, g )) {
-         double dx, dy;
+         double dx, dy, prod;
 
          p->trail[i]->ontop = 0;
          if (!(p->ship->trail_emitters[g].always_under) && (dirsin > 0)) {
@@ -2450,7 +2395,6 @@ void pilot_sample_trails( Pilot* p, int none )
    }
 }
 
-
 /**
  * @brief Return true if the given trail_emitters index has a corresponding generated trail.
  */
@@ -2458,7 +2402,6 @@ static int pilot_trail_generated( Pilot* p, int generator )
 {
    return !p->ship->trail_emitters[generator].trail_spec->nebula || cur_system->nebu_density>0;
 }
-
 
 /**
  * @brief Deletes a pilot.
@@ -2487,7 +2430,6 @@ void pilot_delete( Pilot* p )
    /* Set flag to mark for deletion. */
    pilot_setFlag(p, PILOT_DELETE);
 }
-
 
 /**
  * @brief Handles pilot's hyperspace states.
@@ -2612,7 +2554,6 @@ static void pilot_hyperspace( Pilot* p, double dt )
       player_updateSpecific( p, dt );
 }
 
-
 /**
  * @brief Stops the pilot from hyperspacing.
  *
@@ -2636,7 +2577,6 @@ void pilot_hyperspaceAbort( Pilot* p )
    pilot_rmFlag(p, PILOT_HYP_BRAKE);
    pilot_rmFlag(p, PILOT_HYP_PREP);
 }
-
 
 /**
  * @brief Attempts to start refueling the pilot's target.
@@ -2666,7 +2606,6 @@ int pilot_refuelStart( Pilot *p )
    p->ptimer  = PILOT_REFUEL_TIME; /* Use timer to handle refueling. */
    return 1;
 }
-
 
 /**
  * @brief Has the pilot refuel its target.
@@ -2699,7 +2638,6 @@ static void pilot_refuel( Pilot *p, double dt )
    }
 }
 
-
 /**
  * @brief Calculates the hyperspace delay for a pilot.
  *
@@ -2711,7 +2649,6 @@ ntime_t pilot_hyperspaceDelay( Pilot *p )
    int stu = (int)(NT_PERIOD_SECONDS * p->stats.jump_delay);
    return ntime_create( 0, 0, stu );
 }
-
 
 /**
  * @brief Loops over pilot stack to remove an asteroid as target.
@@ -2729,7 +2666,6 @@ void pilot_untargetAsteroid( int anchor, int asteroid )
    }
 }
 
-
 /**
  * @brief Checks to see how many of an outfit a pilot has.
  */
@@ -2742,7 +2678,6 @@ int pilot_numOutfit( const Pilot *p, const Outfit *o )
    }
    return q;
 }
-
 
 /**
  * @brief Checks to see if the pilot has at least a certain amount of credits.
@@ -2757,7 +2692,6 @@ int pilot_hasCredits( Pilot *p, credits_t amount )
       return 1;
    return (amount <= p->credits);
 }
-
 
 /**
  * @brief Modifies the amount of credits the pilot has.
@@ -2792,7 +2726,6 @@ credits_t pilot_modCredits( Pilot *p, credits_t amount )
    }
    return p->credits;
 }
-
 
 /**
  * @brief Initialize pilot.
@@ -2960,7 +2893,6 @@ static void pilot_init( Pilot* pilot, const Ship* ship, const char* name, int fa
    pilot->shoot_indicator = 0;
 }
 
-
 /**
  * @brief Initialize pilot's trails according to the ship type and current system characteristics.
  */
@@ -2975,7 +2907,6 @@ static void pilot_init_trails( Pilot* p )
          array_push_back( &p->trail, spfx_trail_create( p->ship->trail_emitters[g].trail_spec ) );
    array_shrink( &p->trail );
 }
-
 
 /**
  * @brief Creates a new pilot
@@ -3015,7 +2946,6 @@ unsigned int pilot_create( const Ship* ship, const char* name, int faction, cons
    return dyn->id;
 }
 
-
 /**
  * @brief Creates a pilot without adding it to the stack.
  *
@@ -3039,7 +2969,6 @@ Pilot* pilot_createEmpty( const Ship* ship, const char* name,
    return dyn;
 }
 
-
 /**
  * @brief Replaces the player's pilot with an alternate ship with the same ID.
  * @return The new pilot.
@@ -3056,7 +2985,6 @@ Pilot* pilot_replacePlayer( Pilot* after )
    pilot_outfitLInitAll( after );
    return after;
 }
-
 
 /**
  * @brief Finds a spawn point for a pilot
@@ -3136,7 +3064,6 @@ void pilot_choosePoint( Vector2d *vp, Planet **planet, JumpPoint **jump, int lf,
    array_free(validJumpPoints);
 }
 
-
 /**
  * @brief Frees and cleans up a pilot
  *
@@ -3191,7 +3118,6 @@ void pilot_free( Pilot* p )
    free(p);
 }
 
-
 /**
  * @brief Destroys pilot from stack
  *
@@ -3203,7 +3129,7 @@ void pilot_destroy(Pilot* p)
    PilotOutfitSlot* dockslot;
 
    /* find the pilot */
-   i = pilot_getStackPos(p->id);
+   i = pilot_getStackPos( p->id );
 
    /* Stop all outfits. */
    pilot_outfitOffAll(p);
@@ -3219,7 +3145,7 @@ void pilot_destroy(Pilot* p)
 
    /* Unmark as deployed if necessary */
    dockslot = pilot_getDockSlot( p );
-   if ( dockslot != NULL ) {
+   if (dockslot != NULL) {
       dockslot->u.ammo.deployed--;
       p->dockpilot = 0;
       p->dockslot = -1;
@@ -3230,7 +3156,6 @@ void pilot_destroy(Pilot* p)
    array_erase( &pilot_stack, &pilot_stack[i], &pilot_stack[i+1] );
 }
 
-
 /**
  * @brief Initializes pilot stuff.
  */
@@ -3238,7 +3163,6 @@ void pilots_init (void)
 {
    pilot_stack = array_create_size( Pilot*, PILOT_SIZE_MIN );
 }
-
 
 /**
  * @brief Frees the pilot stack.
@@ -3262,7 +3186,6 @@ void pilots_free (void)
    pilot_stack = NULL;
    player.p = NULL;
 }
-
 
 /**
  * @brief Cleans up the pilot stack - leaves the player
@@ -3315,7 +3238,6 @@ void pilots_clean( int persist )
    /* Clear global hooks. */
    pilots_clearGlobalHooks();
 }
-
 
 /**
  * @brief Updates pilot state which depends on the system (sensor range, nebula trails...)
@@ -3509,6 +3431,77 @@ double pilot_relsize( const Pilot* cur_pilot, const Pilot* p )
 }
 
 /**
+ * @brief Calculates the dps and eps of a pilot.
+ *
+ *    @param p Pilot to compute stats of.
+ *    @param[out] pdps DPS of pilot.
+ *    @param[out] peps EPS of pilot.
+ */
+void pilot_dpseps( const Pilot *p, double *pdps, double *peps )
+{
+   double shots, dps=0., eps=0.;
+   for (int i=0; i<array_size(p->outfits); i++) {
+      const Damage *dmg;
+      double mod_energy, mod_damage, mod_shots;
+      const Outfit *o = p->outfits[i]->outfit;
+      if (o==NULL)
+         continue;
+      switch (o->type) {
+         case OUTFIT_TYPE_BOLT:
+            mod_energy = p->stats.fwd_energy;
+            mod_damage = p->stats.fwd_damage;
+            mod_shots  = 1. / p->stats.fwd_firerate;
+            break;
+         case OUTFIT_TYPE_TURRET_BOLT:
+            mod_energy = p->stats.tur_energy;
+            mod_damage = p->stats.tur_damage;
+            mod_shots  = 1. / p->stats.tur_firerate;
+            break;
+         case OUTFIT_TYPE_LAUNCHER:
+         case OUTFIT_TYPE_TURRET_LAUNCHER:
+            mod_energy = 1.;
+            mod_damage = p->stats.launch_damage;
+            mod_shots  = 1. / p->stats.launch_rate;
+            break;
+         case OUTFIT_TYPE_BEAM:
+         case OUTFIT_TYPE_TURRET_BEAM:
+            /* Special case due to continuous fire. */
+            if (o->type == OUTFIT_TYPE_BEAM) {
+               mod_energy = p->stats.fwd_energy;
+               mod_damage = p->stats.fwd_damage;
+               mod_shots  = 1. / p->stats.fwd_firerate;
+            }
+            else {
+               mod_energy = p->stats.tur_energy;
+               mod_damage = p->stats.tur_damage;
+               mod_shots  = 1. / p->stats.tur_firerate;
+            }
+            shots = outfit_duration(o);
+            mod_shots = shots / (shots + mod_shots * outfit_delay(o));
+            dps += mod_shots * mod_damage * outfit_damage(o)->damage;
+            eps += mod_shots * mod_energy * outfit_energy(o);
+            continue;
+
+         default:
+            continue;
+      }
+      shots = 1. / (mod_shots * outfit_delay(o));
+
+      /* Special case: Ammo-based weapons. */
+      if (outfit_isLauncher(o))
+         dmg = outfit_damage(o->u.lau.ammo);
+      else
+         dmg = outfit_damage(o);
+      dps  += shots * mod_damage * dmg->damage;
+      eps  += shots * mod_energy * MAX( outfit_energy(o), 0. );
+   }
+   if (pdps != NULL)
+      *pdps = dps;
+   if (peps != NULL)
+      *peps = eps;
+}
+
+/**
  * @brief Gets the relative damage output(total DPS) between the current pilot and the specified target
  *
  *    @param cur_pilot Reference pilot to compare against.
@@ -3517,44 +3510,16 @@ double pilot_relsize( const Pilot* cur_pilot, const Pilot* p )
  */
 double pilot_reldps( const Pilot* cur_pilot, const Pilot* p )
 {
-   double DPSaccum_target = 0.;
-   double DPSaccum_pilot = 0.;
-   double delay_cache, damage_cache;
-   const Damage *dmg;
+   double DPSaccum_target, DPSaccum_pilot;
 
-   for (int i=0; i<array_size(p->outfit_weapon); i++) {
-      const Outfit *o = p->outfit_weapon[i].outfit;
-      if (o == NULL)
-         continue;
-      dmg = outfit_damage( o );
-      if (dmg == NULL)
-         continue;
-
-      damage_cache   = dmg->damage;
-      delay_cache    = outfit_delay( o );
-      if ((damage_cache > 0) && (delay_cache > 0))
-         DPSaccum_target += ( damage_cache/delay_cache );
-   }
-
-   for (int i=0; i<array_size(cur_pilot->outfit_weapon); i++) {
-      const Outfit *o = cur_pilot->outfit_weapon[i].outfit;
-      if (o == NULL)
-         continue;
-      dmg = outfit_damage( o );
-      if (dmg == NULL)
-         continue;
-
-      damage_cache   = dmg->damage;
-      delay_cache    = outfit_delay( o );
-      if ((damage_cache > 0) && (delay_cache > 0))
-         DPSaccum_pilot += ( damage_cache/delay_cache );
-   }
+   pilot_dpseps( p, &DPSaccum_target, NULL );
+   pilot_dpseps( cur_pilot, &DPSaccum_pilot, NULL );
 
    if ((DPSaccum_target > 1e-6) && (DPSaccum_pilot > 1e-6))
       return DPSaccum_pilot / (DPSaccum_target + DPSaccum_pilot);
    else if (DPSaccum_pilot > 0.)
-      return 1;
-   return 0;
+      return 1.;
+   return 0.;
 }
 
 /**
@@ -3579,10 +3544,8 @@ double pilot_relhp( const Pilot* cur_pilot, const Pilot* p )
  */
 credits_t pilot_worth( const Pilot *p )
 {
-   credits_t price;
-
    /* Ship price is base price + outfit prices. */
-   price = ship_basePrice( p->ship );
+   credits_t price = ship_basePrice( p->ship );
    for (int i=0; i<array_size(p->outfits); i++) {
       if (p->outfits[i]->outfit == NULL)
          continue;
@@ -3598,12 +3561,12 @@ credits_t pilot_worth( const Pilot *p )
 /**
  * @brief Sends a message
  *
- * @param p Pilot to send message
- * @param receiver Pilot to receive it
- * @param type Type of message.
- * @param idx Index of data on lua stack or 0
+ *    @param p Pilot to send message
+ *    @param receiver Pilot to receive it
+ *    @param type Type of message.
+ *    @param idx Index of data on lua stack or 0
  */
-void pilot_msg(Pilot *p, Pilot *receiver, const char *type, unsigned int idx)
+void pilot_msg( Pilot *p, Pilot *receiver, const char *type, unsigned int idx )
 {
    if (idx != 0)
       lua_pushvalue(naevL, idx); /* data */

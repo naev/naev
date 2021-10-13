@@ -1,8 +1,6 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
-
 #ifndef PILOT_H
 #  define PILOT_H
 
@@ -19,9 +17,7 @@
 #include "space.h"
 #include "spfx.h"
 
-
 #define PLAYER_ID       1 /**< Player pilot ID. */
-
 
 /* Hyperspace parameters. */
 #define HYPERSPACE_ENGINE_DELAY  3. /**< Time to warm up engine (seconds). */
@@ -47,7 +43,6 @@
 #define PILOT_WEAPSET_MAX_LEVELS 2     /**< Maximum amount of weapon levels. */
 #define PILOT_REVERSE_THRUST     0.4   /**< Ratio of normal thrust to apply when reversing. */
 
-
 /* hooks */
 enum {
    PILOT_HOOK_NONE,      /**< No hook. */
@@ -69,11 +64,9 @@ enum {
    PILOT_HOOK_STEALTH,   /**< Pilot either stealthed or destealthed. */
 };
 
-
 /* damage */
 #define PILOT_HOSTILE_THRESHOLD  0.09 /**< Point at which pilot becomes hostile. */
 #define PILOT_HOSTILE_DECAY      0.005 /**< Rate at which hostility decays. */
-
 
 /* makes life easier */
 #define pilot_isPlayer(p)   pilot_isFlag(p,PILOT_PLAYER) /**< Checks if pilot is a player. */
@@ -81,7 +74,6 @@ enum {
 #define pilot_isStopped(p)  (VMOD(p->solid->vel) <= MIN_VEL_ERR)
 /* We would really have to recursively go up all the parents to check, but we're being cheap. */
 #define pilot_isWithPlayer(p) ((p)->faction == FACTION_PLAYER || ((p)->parent == PLAYER_ID))
-
 
 /**
  * @brief Contains the state of the outfit.
@@ -95,7 +87,6 @@ typedef enum PilotOutfitState_ {
    PILOT_OUTFIT_COOLDOWN /**< Outfit is cooling down. */
 } PilotOutfitState;
 
-
 /**
  * @brief Stores outfit ammo.
  */
@@ -106,7 +97,6 @@ typedef struct PilotOutfitAmmo_ {
    double lockon_timer; /**< Locking on timer. */
    int in_arc;          /**< In arc. */
 } PilotOutfitAmmo;
-
 
 /**
  * @brief Stores an outfit the pilot has.
@@ -146,7 +136,6 @@ typedef struct PilotOutfitSlot_ {
    ShipStats lua_stats; /**< Intrinsic ship stats for the outfit calculated on the fly. Used only by Lua outfits. */
 } PilotOutfitSlot;
 
-
 /**
  * @brief A pilot Weapon Set Outfit.
  */
@@ -155,7 +144,6 @@ typedef struct PilotWeaponSetOutfit_ {
    double range2;          /**< Range squared of this specific outfit. */
    PilotOutfitSlot *slot;  /**< Slot associated with it. */
 } PilotWeaponSetOutfit;
-
 
 /**
  * @brief A weapon set represents a set of weapons that have an action.
@@ -173,7 +161,6 @@ typedef struct PilotWeaponSet_ {
    double speed[PILOT_WEAPSET_MAX_LEVELS]; /**< Speed of the levels in the outfit slot. */
 } PilotWeaponSet;
 
-
 /**
  * @brief Stores a pilot commodity.
  */
@@ -183,7 +170,6 @@ typedef struct PilotCommodity_ {
    unsigned int id;        /**< Special mission id for cargo, 0 means none. */
 } PilotCommodity;
 
-
 /**
  * @brief A wrapper for pilot hooks.
  */
@@ -191,7 +177,6 @@ typedef struct PilotHook_ {
    int type;         /**< Type of hook. */
    unsigned int id;  /**< Hook ID associated with pilot hook. */
 } PilotHook;
-
 
 /**
  * @brief Different types of escorts.
@@ -203,7 +188,6 @@ typedef enum EscortType_e {
    ESCORT_TYPE_ALLY        /**< Escort is an ally, uncontrollable. */
 } EscortType_t;
 
-
 /**
  * @brief Stores an escort.
  */
@@ -214,7 +198,6 @@ typedef struct Escort_s {
    /* TODO: something better than this */
    int persist;         /**< True if escort should respawn on takeoff/landing */
 } Escort_t;
-
 
 /**
  * @brief The representation of an in-game pilot.
@@ -383,14 +366,13 @@ typedef struct Pilot_ {
    int messages;       /**< Queued messages (Lua ref). */
 } Pilot;
 
-
+/* These depend on Pilot being defined first. */
 #include "pilot_cargo.h"
 #include "pilot_heat.h"
 #include "pilot_hook.h"
 #include "pilot_outfit.h"
 #include "pilot_weapon.h"
 #include "pilot_ew.h"
-
 
 /*
  * getting pilot stuff
@@ -442,10 +424,9 @@ int pilot_validEnemyDist( const Pilot* p, const Pilot* target, double *dist );
 int pilot_areAllies( const Pilot *p, const Pilot *target );
 int pilot_areEnemies( const Pilot *p, const Pilot *target );
 
-
 /* Outfits */
 int pilot_numOutfit( const Pilot *p, const Outfit *o );
-
+void pilot_dpseps( const Pilot *p, double *pdps, double *peps );
 
 /* Misc. */
 int pilot_hasCredits( Pilot *p, credits_t amount );
@@ -459,9 +440,8 @@ ntime_t pilot_hyperspaceDelay( Pilot *p );
 void pilot_untargetAsteroid( int anchor, int asteroid );
 PilotOutfitSlot* pilot_getDockSlot( Pilot* p );
 
-
 /*
- * creation
+ * Creation
  */
 unsigned int pilot_create( const Ship* ship, const char* name, int faction, const char *ai,
       const double dir, const Vector2d* pos, const Vector2d* vel,
@@ -472,9 +452,8 @@ Pilot* pilot_replacePlayer( Pilot* after );
 void pilot_choosePoint( Vector2d *vp, Planet **planet, JumpPoint **jump, int lf, int ignore_rules, int guerilla );
 void pilot_delete( Pilot *p );
 
-
 /*
- * init/cleanup
+ * Init and cleanup
  */
 void pilot_destroy(Pilot* p);
 void pilots_init (void);
@@ -484,7 +463,6 @@ void pilots_newSystem (void);
 void pilots_clear (void);
 void pilots_cleanAll (void);
 void pilot_free( Pilot* p );
-
 
 /*
  * Movement.
@@ -502,14 +480,12 @@ void pilots_renderOverlay( double dt );
 void pilot_render( Pilot* pilot, const double dt );
 void pilot_renderOverlay( Pilot* p, const double dt );
 
-
 /*
  * communication
  */
 void pilot_message( Pilot *p, unsigned int target, const char *msg, int ignore_int );
 void pilot_broadcast( Pilot *p, const char *msg, int ignore_int );
 void pilot_distress( Pilot *p, Pilot *attacker, const char *msg, int ignore_int );
-
 
 /*
  * faction
@@ -523,14 +499,12 @@ int pilot_isNeutral( const Pilot *p );
 int pilot_isFriendly( const Pilot *p );
 char pilot_getFactionColourChar( const Pilot *p );
 
-
 /*
  * Misc details.
  */
 credits_t pilot_worth( const Pilot *p );
-void pilot_msg(Pilot *p, Pilot *receiver, const char *type, unsigned int index);
+void pilot_msg( Pilot *p, Pilot *receiver, const char *type, unsigned int index );
 void pilot_sample_trails( Pilot* p, int none );
 int pilot_hasIllegal( const Pilot *p, int faction );
-
 
 #endif /* PILOT_H */

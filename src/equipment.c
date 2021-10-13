@@ -1336,67 +1336,13 @@ void equipment_addAmmo (void)
 int equipment_shipStats( char *buf, int max_len,  const Pilot *s, int dpseps )
 {
    int l;
-   double mod_energy, mod_damage, mod_shots;
-   double eps, dps, shots;
-   const Damage *dmg;
+   double eps, dps;
 
    dps = 0.;
    eps = 0.;
    /* Calculate damage and energy per second. */
    if (dpseps) {
-      for (int j=0; j<array_size(s->outfits); j++) {
-         const Outfit *o = s->outfits[j]->outfit;
-         if (o==NULL)
-            continue;
-         switch (o->type) {
-            case OUTFIT_TYPE_BOLT:
-               mod_energy = s->stats.fwd_energy;
-               mod_damage = s->stats.fwd_damage;
-               mod_shots  = 1. / s->stats.fwd_firerate;
-               break;
-            case OUTFIT_TYPE_TURRET_BOLT:
-               mod_energy = s->stats.tur_energy;
-               mod_damage = s->stats.tur_damage;
-               mod_shots  = 1. / s->stats.tur_firerate;
-               break;
-            case OUTFIT_TYPE_LAUNCHER:
-            case OUTFIT_TYPE_TURRET_LAUNCHER:
-               mod_energy = 1.;
-               mod_damage = s->stats.launch_damage;
-               mod_shots  = 1. / s->stats.launch_rate;
-               break;
-            case OUTFIT_TYPE_BEAM:
-            case OUTFIT_TYPE_TURRET_BEAM:
-               /* Special case due to continuous fire. */
-               if (o->type == OUTFIT_TYPE_BEAM) {
-                  mod_energy = s->stats.fwd_energy;
-                  mod_damage = s->stats.fwd_damage;
-                  mod_shots  = 1. / s->stats.fwd_firerate;
-               }
-               else {
-                  mod_energy = s->stats.tur_energy;
-                  mod_damage = s->stats.tur_damage;
-                  mod_shots  = 1. / s->stats.tur_firerate;
-               }
-               shots = outfit_duration(o);
-               mod_shots = shots / (shots + mod_shots * outfit_delay(o));
-               dps += mod_shots * mod_damage * outfit_damage(o)->damage;
-               eps += mod_shots * mod_energy * outfit_energy(o);
-               continue;
-
-            default:
-               continue;
-         }
-         shots = 1. / (mod_shots * outfit_delay(o));
-
-         /* Special case: Ammo-based weapons. */
-         if (outfit_isLauncher(o))
-            dmg = outfit_damage(o->u.lau.ammo);
-         else
-            dmg = outfit_damage(o);
-         dps  += shots * mod_damage * dmg->damage;
-         eps  += shots * mod_energy * MAX( outfit_energy(o), 0. );
-      }
+      pilot_dpseps( s, &dps, &eps );
    }
 
    /* Write to buffer. */
