@@ -399,8 +399,8 @@ void nebu_prep( double density, double volatility, double hue )
    /* Set density parameters. */
    nebu_density = density;
    nebu_update( 0. );
-   nebu_dt   = (2.*density + 200.) / 10000.; /* Faster at higher density */
-   nebu_dx   = 15000. / pow(density, 1./3.); /* Closer at higher density */
+   nebu_dt   = (2.*density + 200.) / 10e3; /* Faster at higher density */
+   nebu_dx   = 15e3 / pow(density, 1./3.); /* Closer at higher density */
    nebu_time = 0.;
 
    nebu_npuffs = density/2.;

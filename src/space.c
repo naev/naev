@@ -106,6 +106,7 @@ static glTexture *jumpbuoy_gfx = NULL; /**< Jump buoy graphics. */
 static nlua_env landing_env = LUA_NOREF; /**< Landing lua env. */
 static int space_fchg = 0; /**< Faction change counter, to avoid unnecessary calls. */
 static int space_simulating = 0; /**< Are we simulating space? */
+static int space_simulating_effects = 0; /**< Are we doing special effects? */
 glTexture **asteroid_gfx = NULL;
 static size_t nasterogfx = 0; /**< Nb of asteroid gfx. */
 static Planet *space_landQueuePlanet = NULL;
@@ -1464,13 +1465,20 @@ void space_update( const double dt )
 }
 
 /**
- * @brief returns wether we're just simulating.
+ * @brief returns whether we're just simulating.
  */
-unsigned int space_isSimulation( void )
+int space_isSimulation( void )
 {
    return space_simulating;
 }
 
+/**
+ * @brief returns whether or not we're simulating with effects.
+ */
+int space_isSimulationEffects (void)
+{
+   return space_simulating_effects;
+}
 
 /**
  * @brief Initializes the system.
@@ -1481,6 +1489,7 @@ void space_init( const char* sysname )
 {
    char *nt;
    int n, s;
+   const double fps_min_simulation = fps_min * 2.;
 
    /* cleanup some stuff */
    player_clear(); /* clears targets */
@@ -1583,15 +1592,20 @@ void space_init( const char* sysname )
 
    /* Simulate system. */
    space_simulating = 1;
+   space_simulating_effects = 0;
    if (player.p != NULL)
       pilot_setFlag( player.p, PILOT_HIDE );
    player_messageToggle( 0 );
    s = sound_disabled;
    sound_disabled = 1;
    ntime_allowUpdate( 0 );
-   n = SYSTEM_SIMULATE_TIME / fps_min;
+   n = SYSTEM_SIMULATE_TIME_PRE / fps_min_simulation;
    for (int i=0; i<n; i++)
-      update_routine( fps_min, 1 );
+      update_routine( fps_min_simulation, 1 );
+   space_simulating_effects = 1;
+   n = SYSTEM_SIMULATE_TIME_POST / fps_min_simulation;
+   for (int i=0; i<n; i++)
+      update_routine( fps_min_simulation, 1 );
    ntime_allowUpdate( 1 );
    sound_disabled = s;
    player_messageToggle( 1 );
@@ -3095,7 +3109,7 @@ static int system_parseAsteroidField( const xmlNodePtr node, StarSystem *sys )
 
    /* Compute number of asteroids */
    a->nb      = floor( ABS(a->area) / ASTEROID_REF_AREA * a->density );
-   a->ndebris = floor(100*a->density);
+   a->ndebris = floor( 100.*a->density );
 
    return 0;
 }

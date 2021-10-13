@@ -1634,11 +1634,10 @@ double pilot_hit( Pilot* p, const Solid* w, unsigned int shooter,
  */
 void pilot_updateDisable( Pilot* p, unsigned int shooter )
 {
-   HookParam hparam;
-
    if ((!pilot_isFlag(p, PILOT_DISABLED)) &&
        (!pilot_isFlag(p, PILOT_NODISABLE) || (p->armour <= 0.)) &&
        (p->armour <= p->stress)) { /* Pilot should be disabled. */
+      HookParam hparam;
 
       /* Cooldown is an active process, so cancel it. */
       if (pilot_isFlag(p, PILOT_COOLDOWN))
@@ -1861,8 +1860,7 @@ void pilot_render( Pilot* p, const double dt )
 #endif /* DEBUGGING */
 
    /* Re-draw backwards trails. */
-   for (int i=0,g=0; g<array_size(p->ship->trail_emitters); g++){
-
+   for (int i=0,g=0; g<array_size(p->ship->trail_emitters); g++) {
 #ifdef DEBUGGING
       if (debug_isFlag(DEBUG_MARK_EMITTER)) {
          /* Visualize the trail emitters. */
@@ -1887,9 +1885,7 @@ void pilot_render( Pilot* p, const double dt )
          i++;
       }
    }
-
 }
-
 
 /**
  * @brief Renders the pilot overlay.
@@ -2401,6 +2397,10 @@ void pilot_sample_trails( Pilot* p, int none )
 {
    double d2, cx, cy, dircos, dirsin, prod;
    TrailMode mode;
+
+   /* Ignore for simulation. */
+   if (!space_isSimulationEffects())
+      return;
 
    /* Skip if far away (pretty heuristic-based but seems to work). */
    cam_getPos( &cx, &cy );

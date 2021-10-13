@@ -1157,6 +1157,9 @@ static void weapon_sample_trail( Weapon* w )
    double a, dx, dy;
    TrailMode mode;
 
+   if (!space_isSimulationEffects())
+      return;
+
    /* Compute the engine offset. */
    a  = w->solid->dir;
    dx = w->outfit->u.amm.trail_x_offset * cos(a);

@@ -21,10 +21,8 @@
 #include "rng.h"
 #include "spfx.h"
 
-
 static int *debris_spfx = NULL; /**< Debris special effects. */
 static int debris_nspfx = 0; /**< Number of debris special effects. */
-
 
 /**
  * @brief Cleans up after the debris.
@@ -34,7 +32,6 @@ void debris_cleanup (void)
    free(debris_spfx);
    debris_spfx = NULL;
 }
-
 
 /**
  * @brief Loads the debris spfx into an array.
@@ -72,7 +69,6 @@ static int debris_load (void)
    return 0;
 }
 
-
 /**
  * @brief Creates a cloud of debris.
  *
@@ -86,9 +82,10 @@ static int debris_load (void)
 void debris_add( double mass, double r, double px, double py,
       double vx, double vy )
 {
-   int i, n;
-   double npx,npy, nvx,nvy;
-   double a, d;
+   int n;
+
+   if (!space_isSimulationEffects())
+      return;
 
    /* Lazy allocator. */
    if (debris_spfx == NULL)
@@ -99,7 +96,10 @@ void debris_add( double mass, double r, double px, double py,
    n = (int) ceil( sqrt(mass) / 1.5 );
 
    /* Now add the spfx. */
-   for (i=0; i<n; i++) {
+   for (int i=0; i<n; i++) {
+      double npx,npy, nvx,nvy;
+      double a, d;
+
       /* Get position. */
       d = r/2. * RNG_2SIGMA();
       a = RNGF()*2*M_PI;
@@ -117,4 +117,3 @@ void debris_add( double mass, double r, double px, double py,
             npx, npy, nvx, nvy, RNG(0,1) );
    }
 }
-

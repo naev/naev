@@ -426,8 +426,6 @@ int spfx_load (void)
  */
 void spfx_free (void)
 {
-   int i;
-
    /* Clean up the debris. */
    debris_cleanup();
 
@@ -441,7 +439,7 @@ void spfx_free (void)
    spfx_stack_back = NULL;
 
    /* now clear the effects */
-   for (i=0; i<array_size(spfx_effects); i++)
+   for (int i=0; i<array_size(spfx_effects); i++)
       spfx_base_free( &spfx_effects[i] );
    array_free(spfx_effects);
    spfx_effects = NULL;
@@ -450,12 +448,12 @@ void spfx_free (void)
    noise_delete( shake_noise );
 
    /* Free the trails. */
-   for (i=0; i<array_size(trail_spfx_stack); i++)
+   for (int i=0; i<array_size(trail_spfx_stack); i++)
       spfx_trail_free( trail_spfx_stack[i] );
    array_free( trail_spfx_stack );
 
    /* Free the trail styles. */
-   for (i=0; i<array_size(trail_spec_stack); i++)
+   for (int i=0; i<array_size(trail_spec_stack); i++)
       free( trail_spec_stack[i].name );
    array_free( trail_spec_stack );
 }
