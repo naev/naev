@@ -1,23 +1,21 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <event name="Warlords battle">
-  <trigger>enter</trigger>
-  <chance>5</chance>
-  <cond>system.cur():faction() == faction.get("Dvaered") and not player.evtActive ("Warlords battle")</cond>
-  <flags>
-  </flags>
-  <notes>
-   <tier>3</tier>
-  </notes>
- </event>
- --]]
+ <trigger>enter</trigger>
+ <chance>5</chance>
+ <cond>system.cur():faction() == faction.get("Dvaered") and not player.evtActive ("Warlords battle")</cond>
+ <flags>
+ </flags>
+ <notes>
+  <tier>3</tier>
+ </notes>
+</event>
+--]]
 --  A battle between two Dvaered warlords. The player can join one of them and get a reward
-
 local fleet = require "fleet"
 require "proximity"
 local fmt = require "format"
 local formation = require "formation"
-
 
 title = {}
 text = {}
