@@ -1,25 +1,19 @@
---common
 --[[
---
--- Rehabilitation Mission
---
--- This mission allows you to remain neutral with a faction until you've done services for them.
--- This file is used by the various faction missions, which must set the faction variable.
---
---]]
-local fmt = require "format"
 
+   Rehabilitation Mission Framework
+
+   This mission allows you to remain neutral with a faction until you've done services for them.
+   This file is used by the various faction missions, which must set the faction variable.
+
+--]]
+local fmt   = require "format"
+local vntk  = require 'vntk'
 
 misn_title = _("%s Rehabilitation")
 misn_desc = _([[You may pay a fine for a chance to redeem yourself in the eyes of a faction you have offended. You may interact with this faction as if your reputation were neutral, but your reputation will not actually improve until you've regained their trust. ANY hostile action against this faction will immediately void this agreement.
 Faction: %s
 Cost: %s]])
 misn_reward = _("None")
-
-osd_msg = {}
-osd_msg[1] = "(null)"
-osd_msg["__save"] = true
-
 
 function create()
     -- Note: this mission does not make any system claims.
@@ -31,7 +25,7 @@ function create()
     end
 
     -- Don't spawn this mission if the player is buddies with this faction's enemies.
-    for _, enemy in pairs(fac:enemies()) do
+    for _k, enemy in pairs(fac:enemies()) do
        if enemy:playerStanding() > 20 then
           misn.finish()
        end
@@ -46,22 +40,22 @@ end
 
 function accept()
     if player.credits() < fine then
-        tk.msg("", _("You don't have enough money. You need at least %s to buy a cessation of hostilities with this faction."):format(fmt.credits(fine)))
+        vntk.msg("", _("You don't have enough money. You need at least %s to buy a cessation of hostilities with this faction."):format(fmt.credits(fine)))
         misn.finish()
     end
 
     player.pay(-fine)
-    tk.msg(misn_title:format(fac:name()), _([[Your application has been processed. The %s security forces will no longer attack you on sight. You may conduct your business in %s space again, but remember that you still have a criminal record! If you attack any traders, civilians or %s ships, or commit any other felony against this faction, you will immediately become their enemy again.
+    vntk.msg(misn_title:format(fac:name()), _([[Your application has been processed. The %s security forces will no longer attack you on sight. You may conduct your business in %s space again, but remember that you still have a criminal record! If you attack any traders, civilians or %s ships, or commit any other felony against this faction, you will immediately become their enemy again.
 While this agreement is active your reputation will not change, but if you continue to behave properly and perform beneficial services, your past offenses will eventually be stricken from the record.]]):format(fac:name(), fac:name(), fac:name()))
 
     fac:modPlayerRaw(-rep)
 
     misn.accept()
-    osd_msg[1] = gettext.ngettext(
+    local osd_msg = { n_(
        "You need to gain %d more reputation",
        "You need to gain %d more reputation",
        -rep
-    ):format(-rep)
+    ):format(-rep) }
     misn.osdCreate(misn_title:format(fac:name()), osd_msg)
 
     standhook = hook.standing("standing")
@@ -83,17 +77,17 @@ function standing(hookfac, delta)
                 -- The player has successfully erased his criminal record.
                 excess = excess + delta
                 fac:modPlayerRaw(-delta + rep)
-                tk.msg(_("%s Rehabilitation Successful"):format(fac:name()), _([[Congratulations, you have successfully worked your way back into good standing with this faction. Try not to relapse into your life of crime!]]))
+                vntk.msg(_("%s Rehabilitation Successful"):format(fac:name()), _([[Congratulations, you have successfully worked your way back into good standing with this faction. Try not to relapse into your life of crime!]]))
                 misn.finish(true)
             end
 
             excess = excess + delta
             fac:modPlayerRaw(-delta)
-            osd_msg[1] = gettext.ngettext(
+            local osd_msg = { n_(
                "You need to gain %d more reputation",
                "You need to gain %d more reputation",
                -rep
-            ):format(-rep)
+            ):format(-rep) }
             misn.osdCreate(misn_title:format(fac:name()), osd_msg)
         else
             excess = excess + delta
@@ -112,6 +106,6 @@ function abort()
     -- Reapply the original negative reputation.
     fac:modPlayerRaw(rep)
 
-    tk.msg(_("%s Rehabilitation Canceled"):format(fac:name()), _([[You have committed another offense against this faction! Your rehabilitation procedure has been canceled, and your reputation is once again bad. You may start another rehabilitation procedure at a later time.]]))
+    vntk.msg(_("%s Rehabilitation Canceled"):format(fac:name()), _([[You have committed another offense against this faction! Your rehabilitation procedure has been canceled, and your reputation is once again bad. You may start another rehabilitation procedure at a later time.]]))
     misn.finish(false)
 end
