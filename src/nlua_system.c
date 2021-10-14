@@ -1057,11 +1057,11 @@ static int systemL_mrkAdd( lua_State *L )
    NLUA_CHECKRW(L);
 
    /* Handle parameters. */
-   vec   = luaL_checkvector( L, 1 );
-   str   = luaL_optstring( L, 2, NULL );
+   vec = luaL_checkvector( L, 1 );
+   str = luaL_optstring( L, 2, NULL );
 
    /* Create marker. */
-   id    = ovr_mrkAddPoint( str, vec->x, vec->y );
+   id  = ovr_mrkAddPoint( str, vec->x, vec->y );
    lua_pushnumber( L, id );
    return 1;
 }
