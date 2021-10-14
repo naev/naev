@@ -38,7 +38,7 @@ for i,meth in ipairs{"primal","dual","dualp"} do
       end
    end
 end
-for n, trial in ipairs(trials) do 
+for n, trial in ipairs(trials) do
    local meth, pricing, r_test, presolve = table.unpack(trial)
    local s = string.format("meth=%s,pricing=%s,r_test=%s,presolve=%s",
       meth, pricing, r_test, presolve )

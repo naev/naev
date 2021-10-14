@@ -52,7 +52,7 @@ for i,br_tech in ipairs{"ffv","lfv","mfv","dth","pch"} do
       end
    end
 end
-for n, trial in ipairs(trials) do 
+for n, trial in ipairs(trials) do
    local br_tech, bt_tech, pp_tech, sr_heur, fp_heur, ps_heur, gmi_cuts, mir_cuts, cov_cuts, clq_cuts = table.unpack(trial)
    local s = string.format("br=%s,bt=%s,pp=%s,sr=%s,fp=%s,ps=%s,gmi=%s,mir=%s,cov=%s,clq=%s",
       br_tech, bt_tech, pp_tech,
