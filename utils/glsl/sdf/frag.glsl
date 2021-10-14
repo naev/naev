@@ -338,8 +338,8 @@ vec4 sdf_jumpmarker( vec4 colour, vec2 uv )
 
    uv = vec2( uv.y, uv.x );
 
-   float db = sdBox( uv+vec2(0.0,0.3), vec2(0.2,0.8) );
-   float dt = 2.0*sdTriangleIsosceles( 0.5*uv+vec2(0.0,0.2), vec2(0.5, 0.75) );
+   float db = sdBox( uv+vec2(0.0,0.6), vec2(0.2,0.6) );
+   float dt = 2.0*sdTriangleIsosceles( 0.5*uv+vec2(0.0,0.2), vec2(0.5-m, 0.5) );
    float d = sdSmoothUnion( db, dt, 0.5 );
    d = max( d, abs(uv.y)-1.0+2.0*m );
    d = abs(d);
@@ -527,7 +527,7 @@ vec4 effect( vec4 colour, Image tex, vec2 uv, vec2 px )
    //col_out = sdf_planet( colour, uv_rel );
    //col_out = sdf_planet2( colour, uv_rel );
    //col_out = sdf_blinkmarker( colour, uv_rel );
-   //col_out = sdf_jumpmarker( colour, uv_rel );
+   col_out = sdf_jumpmarker( colour, uv_rel );
    //col_out = sdf_pilotmarker( colour, uv_rel );
    //col_out = sdf_playermarker( colour, uv_rel );
    //col_out = sdf_stealth( colour, uv_rel );
@@ -536,7 +536,7 @@ vec4 effect( vec4 colour, Image tex, vec2 uv, vec2 px )
    //col_out = sdf_sysrhombus( colour, uv_rel );
    //col_out = sdf_sysmarker( colour, uv_rel );
    //col_out = sdf_missilelockon( colour, uv_rel );
-   col_out = sdf_selectposition( colour, uv_rel );
+   //col_out = sdf_selectposition( colour, uv_rel );
 
    return mix( bg(uv), col_out, col_out.a );
 }
