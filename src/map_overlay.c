@@ -40,6 +40,7 @@ typedef struct ovr_marker_s {
    unsigned int id;  /**< ID of the marker. */
    char *text;       /**< Marker display text. */
    int type;         /**< Marker type. */
+   int refcount;     /**< Refcount. */
    union {
       struct {
          double x;   /**< X center of point marker. */
@@ -843,6 +844,7 @@ static ovr_marker_t *ovr_mrkNew (void)
    mrk = &array_grow( &ovr_markers );
    memset( mrk, 0, sizeof( ovr_marker_t ) );
    mrk->id = ++mrk_idgen;
+   mrk->refcount = 1;
    return mrk;
 }
 
@@ -856,7 +858,25 @@ static ovr_marker_t *ovr_mrkNew (void)
  */
 unsigned int ovr_mrkAddPoint( const char *text, double x, double y )
 {
-   ovr_marker_t *mrk = ovr_mrkNew();
+   ovr_marker_t *mrk;
+
+   /* Check existing ones first. */
+   for (int i=0; i<array_size(ovr_markers); i++) {
+      mrk = &ovr_markers[i];
+      if (((text==NULL) && (mrk->text!=NULL)) ||
+            ((text!=NULL) && ((mrk->text==NULL) || strcmp(text,mrk->text)!=0)))
+         continue;
+
+      if (hypotf( x-mrk->u.pt.x, y-mrk->u.pt.y ) > 1e-3)
+         continue;
+
+      /* Found same marker already! */
+      mrk->refcount++;
+      return mrk->id;
+   }
+
+   /* Create new one. */
+   mrk = ovr_mrkNew();
    mrk->type = 0;
    if (text != NULL)
       mrk->text = strdup( text );
@@ -874,10 +894,16 @@ unsigned int ovr_mrkAddPoint( const char *text, double x, double y )
 void ovr_mrkRm( unsigned int id )
 {
    for (int i=0; i<array_size(ovr_markers); i++) {
-      if (id!=ovr_markers[i].id)
+      ovr_marker_t *m = &ovr_markers[i];
+      if (id != m->id)
          continue;
-      ovr_mrkCleanup( &ovr_markers[i] );
-      array_erase( &ovr_markers, &ovr_markers[i], &ovr_markers[i+1] );
+
+      m->refcount--;
+      if (m->refcount > 0)
+         return;
+
+      ovr_mrkCleanup( m );
+      array_erase( &ovr_markers, &m[0], &m[1] );
       break;
    }
 }
