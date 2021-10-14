@@ -1,18 +1,14 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
-
 #ifndef MISSION_H
 #  define MISSION_H
-
 
 #include "claim.h"
 #include "commodity.h"
 #include "nlua.h"
 #include "nxml.h"
 #include "opengl.h"
-
 
 /* availability by location */
 enum {
@@ -26,14 +22,12 @@ enum {
    MIS_AVAIL_SPACE       /**< Mission is available in space. */
 };
 
-
 /* flag functions */
 #define mis_isFlag(m,f)    ((m)->flags & (f))
 #define mis_setFlag(m,f)   ((m)->flags |= (f))
 #define mis_rmFlag(m,f)    ((m)->flags &= ~(f))
 /* actual flags */
 #define MISSION_UNIQUE        (1<<0) /**< Unique missions can't be repeated */
-
 
 /**
  * @brief Different type of system markers.
@@ -44,7 +38,6 @@ typedef enum SysMarker_ {
    SYSMARKER_HIGH,      /**< Marker is for high priority mission targets. */
    SYSMARKER_PLOT       /**< Marker is for plot priority (ultra high) mission targets. */
 } SysMarker;
-
 
 /**
  * @brief Defines the availability of a mission.
@@ -66,7 +59,6 @@ typedef struct MissionAvail_s {
    int priority; /**< Mission priority: 0 = main plot, 5 = default, 10 = insignificant. */
 } MissionAvail_t;
 
-
 /**
  * @struct MissionData
  *
@@ -82,7 +74,6 @@ typedef struct MissionData_ {
    char* sourcefile; /**< Source file name. */
 } MissionData;
 
-
 /**
  * @brief Mission system marker.
  */
@@ -91,7 +82,6 @@ typedef struct MissionMarker_ {
    int sys; /**< ID of marked system. */
    SysMarker type; /**< Marker type. */
 } MissionMarker;
-
 
 /**
  * @struct Mission
@@ -126,13 +116,11 @@ typedef struct Mission_ {
    nlua_env env; /**< The environment of the running Lua code. */
 } Mission;
 
-
 /*
  * current player missions
  */
 #define MISSION_MAX  12 /**< No sense in allowing the player have infinite missions. */
 extern Mission *player_missions[MISSION_MAX]; /**< Player's active missions. */
-
 
 /*
  * creates missions for a planet and such
@@ -154,13 +142,11 @@ int mission_addMarker( Mission *misn, int id, int sys, SysMarker type );
 void mission_sysMark (void);
 void mission_sysComputerMark( const Mission* misn );
 
-
 /*
  * cargo stuff
  */
 int mission_linkCargo( Mission* misn, unsigned int cargo_id );
 int mission_unlinkCargo( Mission* misn, unsigned int cargo_id );
-
 
 /*
  * load/quit
@@ -188,6 +174,5 @@ int misn_run( Mission *misn, const char *func );
  * Claims.
  */
 void missions_activateClaims (void);
-
 
 #endif /* MISSION_H */

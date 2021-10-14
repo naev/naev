@@ -1,14 +1,11 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
 /**
  * @file mission.c
  *
  * @brief Handles missions.
  */
-
-
 /** @cond */
 #include <stdint.h>
 #include <stdlib.h>
@@ -40,9 +37,7 @@
 #include "rng.h"
 #include "space.h"
 
-
 #define XML_MISSION_TAG       "mission" /**< XML mission tag. */
-
 
 /*
  * current player missions
@@ -50,12 +45,10 @@
 static unsigned int mission_id = 0; /**< Mission ID generator. */
 Mission *player_missions[MISSION_MAX]; /**< Player's active missions. */
 
-
 /*
  * mission stack
  */
 static MissionData *mission_stack = NULL; /**< Unmutable after creation */
-
 
 /*
  * prototypes
@@ -76,7 +69,6 @@ static int missions_cmp( const void *a, const void *b );
 static int mission_parseFile( const char* file );
 static int mission_parseXML( MissionData *temp, const xmlNodePtr parent );
 static int missions_parseActive( xmlNodePtr parent );
-
 
 /**
  * @brief Generates a new id for the mission.
@@ -104,16 +96,13 @@ static unsigned int mission_genID (void)
  */
 int mission_getID( const char* name )
 {
-   int i;
-
-   for (i=0; i<array_size(mission_stack); i++)
+   for (int i=0; i<array_size(mission_stack); i++)
       if (strcmp(name,mission_stack[i].name)==0)
          return i;
 
    DEBUG(_("Mission '%s' not found in stack"), name);
    return -1;
 }
-
 
 /**
  * @brief Gets a MissionData based on ID.
@@ -127,21 +116,17 @@ MissionData* mission_get( int id )
    return &mission_stack[id];
 }
 
-
 /**
  * @brief Gets mission data from a name.
  */
 MissionData* mission_getFromName( const char* name )
 {
-   int id;
-
-   id = mission_getID( name );
+   int id = mission_getID( name );
    if (id < 0)
       return NULL;
 
    return mission_get( id );
 }
-
 
 /**
  * @brief Initializes a mission.
@@ -198,7 +183,6 @@ static int mission_init( Mission* mission, MissionData* misn, int genid, int cre
    return 0;
 }
 
-
 /**
  * @brief Small wrapper for misn_run.
  *
@@ -213,7 +197,6 @@ int mission_accept( Mission* mission )
    return misn_run( mission, "accept" );
 }
 
-
 /**
  * @brief Checks to see if mission is already running.
  *
@@ -227,7 +210,6 @@ int mission_alreadyRunning( const MissionData* misn )
          return 1;
    return 0;
 }
-
 
 /**
  * @brief Checks to see if a mission meets the requirements.
@@ -285,7 +267,6 @@ static int mission_meetReq( int mission, int faction,
   return 1;
 }
 
-
 /**
  * @brief Runs missions matching location, all Lua side and one-shot.
  *
@@ -296,13 +277,11 @@ static int mission_meetReq( int mission, int faction,
  */
 void missions_run( int loc, int faction, const char* planet, const char* sysname )
 {
-   MissionData* misn;
-   Mission mission;
-   int i;
-   double chance;
+   for (int i=0; i<array_size(mission_stack); i++) {
+      Mission mission;
+      double chance;
+      MissionData *misn = &mission_stack[i];
 
-   for (i=0; i<array_size(mission_stack); i++) {
-      misn = &mission_stack[i];
       if (misn->avail.loc != loc)
          continue;
 
@@ -319,7 +298,6 @@ void missions_run( int loc, int faction, const char* planet, const char* sysname
       }
    }
 }
-
 
 /**
  * @brief Starts a mission.
@@ -353,14 +331,13 @@ int mission_start( const char *name, unsigned int *id )
    return ret;
 }
 
-
 /**
  * @brief Adds a system marker to a mission.
  */
 int mission_addMarker( Mission *misn, int id, int sys, SysMarker type )
 {
    MissionMarker *marker;
-   int i, n, m;
+   int n, m;
 
    /* Create array. */
    if (misn->markers == NULL)
@@ -370,7 +347,7 @@ int mission_addMarker( Mission *misn, int id, int sys, SysMarker type )
    if (id < 0) {
       m = -1;
       n = array_size( misn->markers );
-      for (i=0; i<n; i++)
+      for (int i=0; i<n; i++)
          if (misn->markers[i].id > m)
             m = misn->markers[i].id;
       id = m+1;
@@ -384,7 +361,6 @@ int mission_addMarker( Mission *misn, int id, int sys, SysMarker type )
 
    return marker->id;
 }
-
 
 /**
  * @brief Marks all active systems that need marking.
@@ -410,7 +386,6 @@ void mission_sysMark (void)
    }
 }
 
-
 /**
  * @brief Marks the system of the computer mission to reflect where it will head to.
  *
@@ -420,20 +395,18 @@ void mission_sysMark (void)
  */
 void mission_sysComputerMark( const Mission* misn )
 {
-   StarSystem *sys;
-   int i, n;
+   int n;
 
    /* Clear markers. */
    space_clearComputerMarkers();
 
    /* Set all the markers. */
    n = array_size(misn->markers);
-   for (i=0; i<n; i++) {
-      sys = system_getIndex( misn->markers[i].sys );
+   for (int i=0; i<n; i++) {
+      StarSystem *sys = system_getIndex( misn->markers[i].sys );
       sys_setFlag( sys,SYSTEM_CMARKED );
    }
 }
-
 
 /**
  * @brief Links cargo to the mission for posterior cleanup.
@@ -450,7 +423,6 @@ int mission_linkCargo( Mission* misn, unsigned int cargo_id )
 
    return 0;
 }
-
 
 /**
  * @brief Unlinks cargo from the mission, removes it from the player.
@@ -478,7 +450,6 @@ int mission_unlinkCargo( Mission* misn, unsigned int cargo_id )
    return 0;
 }
 
-
 /**
  * @brief Cleans up a mission.
  *
@@ -486,7 +457,7 @@ int mission_unlinkCargo( Mission* misn, unsigned int cargo_id )
  */
 void mission_cleanup( Mission* misn )
 {
-   int i, ret;
+   int ret;
 
    /* Hooks and missions. */
    if (misn->id != 0) {
@@ -495,7 +466,7 @@ void mission_cleanup( Mission* misn )
    }
 
    /* Cargo. */
-   for (i=0; i<array_size(misn->cargo); i++) { /* must unlink all the cargo */
+   for (int i=0; i<array_size(misn->cargo); i++) { /* must unlink all the cargo */
       if (player.p != NULL) { /* Only remove if player exists. */
          ret = pilot_rmMissionCargo( player.p, misn->cargo[i], 0 );
          if (ret)
@@ -532,7 +503,6 @@ void mission_cleanup( Mission* misn )
    memset( misn, 0, sizeof(Mission) );
 }
 
-
 /**
  * @brief Puts the specified mission at the end of the player_missions array.
  *
@@ -556,7 +526,6 @@ void mission_shift( int pos )
    player_missions[MISSION_MAX - 1] = misn;
 }
 
-
 /**
  * @brief Frees MissionData.
  *
@@ -579,7 +548,6 @@ static void mission_freeData( MissionData* mission )
 #endif /* DEBUGGING */
 }
 
-
 /**
  * @brief Checks to see if a mission matches the faction requirements.
  *
@@ -589,33 +557,27 @@ static void mission_freeData( MissionData* mission )
  */
 static int mission_matchFaction( MissionData* misn, int faction )
 {
-   int i;
-
    /* No faction always accepted. */
    if (array_size(misn->avail.factions) == 0)
       return 1;
 
    /* Check factions. */
-   for (i=0; i<array_size(misn->avail.factions); i++)
+   for (int i=0; i<array_size(misn->avail.factions); i++)
       if (faction == misn->avail.factions[i])
          return 1;
 
    return 0;
 }
 
-
 /**
  * @brief Activates mission claims.
  */
 void missions_activateClaims (void)
 {
-   int i;
-
-   for (i=0; i<MISSION_MAX; i++)
+   for (int i=0; i<MISSION_MAX; i++)
       if (player_missions[i]->claims != NULL)
          claim_activate( player_missions[i]->claims );
 }
-
 
 /**
  * @brief Compares to missions to see which has more priority.
@@ -645,7 +607,6 @@ static int mission_compare( const void* arg1, const void* arg2 )
    /* Tied. */
    return strcmp(m1->data->name, m2->data->name);
 }
-
 
 /**
  * @brief Generates a mission list. This runs create() so won't work with all
@@ -714,7 +675,6 @@ Mission* missions_genList( int *n, int faction,
    return tmp;
 }
 
-
 /**
  * @brief Gets location based on a human readable string.
  *
@@ -743,7 +703,6 @@ static int mission_location( const char *loc )
    }
    return -1;
 }
-
 
 /**
  * @brief Parses a node of a mission.
@@ -824,7 +783,6 @@ static int mission_parseXML( MissionData *temp, const xmlNodePtr parent )
    return 0;
 }
 
-
 /**
  * @brief Ordering function for missions.
  */
@@ -840,7 +798,6 @@ static int missions_cmp( const void *a, const void *b )
    return strcmp( ma->name, mb->name );
 }
 
-
 /**
  * @brief Loads all the mission data.
  *
@@ -848,17 +805,16 @@ static int missions_cmp( const void *a, const void *b )
  */
 int missions_load (void)
 {
-   int    i;
    char **mission_files;
 
    /* Allocate player missions. */
-   for (i=0; i<MISSION_MAX; i++)
+   for (int i=0; i<MISSION_MAX; i++)
       player_missions[i] = calloc(1, sizeof(Mission));
 
    /* Run over missions. */
    mission_files = ndata_listRecursive( MISSION_DATA_PATH );
    mission_stack = array_create_size( MissionData, array_size( mission_files ) );
-   for ( i = 0; i < array_size( mission_files ); i++ ) {
+   for (int i=0; i < array_size( mission_files ); i++) {
       mission_parseFile( mission_files[i] );
       free( mission_files[i] );
    }
@@ -872,7 +828,6 @@ int missions_load (void)
 
    return 0;
 }
-
 
 /**
  * @brief Parses a single mission.
@@ -952,40 +907,33 @@ static int mission_parseFile( const char* file )
    return 0;
 }
 
-
 /**
  * @brief Frees all the mission data.
  */
 void missions_free (void)
 {
-   int i;
-
    /* Free all the player missions. */
    missions_cleanup();
 
    /* Free the mission data. */
-   for (i=0; i<array_size(mission_stack); i++)
+   for (int i=0; i<array_size(mission_stack); i++)
       mission_freeData( &mission_stack[i] );
    array_free( mission_stack );
    mission_stack = NULL;
 
    /* Free the player mission stack. */
-   for (i=0; i<MISSION_MAX; i++)
+   for (int i=0; i<MISSION_MAX; i++)
       free(player_missions[i]);
 }
-
 
 /**
  * @brief Cleans up all the player's active missions.
  */
 void missions_cleanup (void)
 {
-   int i;
-
-   for (i=0; i<MISSION_MAX; i++)
+   for (int i=0; i<MISSION_MAX; i++)
       mission_cleanup( player_missions[i] );
 }
-
 
 /**
  * @brief Saves the player's active missions.
@@ -995,16 +943,12 @@ void missions_cleanup (void)
  */
 int missions_saveActive( xmlTextWriterPtr writer )
 {
-   int i,j,n;
-   char **items;
-   const Commodity *c;
-
    /* We also save specially created cargos here. Since it can only be mission
     * cargo and can only be placed on the player's main ship, we don't have to
     * worry about it being on other ships. */
    xmlw_startElem(writer,"mission_cargo");
-   for (i=0; i<array_size(player.p->commodities); i++) {
-      c = player.p->commodities[i].commodity;
+   for (int i=0; i<array_size(player.p->commodities); i++) {
+      const Commodity *c = player.p->commodities[i].commodity;
       if (!c->istemp)
          continue;
       xmlw_startElem(writer,"cargo");
@@ -1014,8 +958,10 @@ int missions_saveActive( xmlTextWriterPtr writer )
    xmlw_endElem(writer); /* "missions_cargo */
 
    xmlw_startElem(writer,"missions");
-   for (i=0; i<MISSION_MAX; i++) {
+   for (int i=0; i<MISSION_MAX; i++) {
       if (player_missions[i]->id != 0) {
+         int n;
+
          xmlw_startElem(writer,"mission");
 
          /* data and id are attributes because they must be loaded first */
@@ -1029,7 +975,7 @@ int missions_saveActive( xmlTextWriterPtr writer )
          /* Markers. */
          xmlw_startElem( writer, "markers" );
          n = array_size( player_missions[i]->markers );
-         for (j=0; j<n; j++) {
+         for (int j=0; j<n; j++) {
             xmlw_startElem(writer,"marker");
             xmlw_attr(writer,"id","%d",player_missions[i]->markers[j].id);
             xmlw_attr(writer,"type","%d",player_missions[i]->markers[j].type);
@@ -1040,12 +986,14 @@ int missions_saveActive( xmlTextWriterPtr writer )
 
          /* Cargo */
          xmlw_startElem(writer,"cargos");
-         for (j=0; j<array_size(player_missions[i]->cargo); j++)
+         for (int j=0; j<array_size(player_missions[i]->cargo); j++)
             xmlw_elem(writer,"cargo","%u", player_missions[i]->cargo[j]);
          xmlw_endElem(writer); /* "cargos" */
 
          /* OSD. */
          if (player_missions[i]->osd > 0) {
+            char **items;
+
             xmlw_startElem(writer,"osd");
 
             /* Save attributes. */
@@ -1055,7 +1003,7 @@ int missions_saveActive( xmlTextWriterPtr writer )
             xmlw_attr(writer,"active","%d",osd_getActive(player_missions[i]->osd));
 
             /* Save messages. */
-            for (j=0; j<array_size(items); j++)
+            for (int j=0; j<array_size(items); j++)
                xmlw_elem(writer,"msg","%s",items[j]);
 
             xmlw_endElem(writer); /* "osd" */
@@ -1079,7 +1027,6 @@ int missions_saveActive( xmlTextWriterPtr writer )
    return 0;
 }
 
-
 /**
  * @brief Saves a temporary commodity's defintion into the current node.
  *
@@ -1091,11 +1038,10 @@ int missions_saveTempCommodity( xmlTextWriterPtr writer, const Commodity *c )
 {
    xmlw_attr( writer, "name", "%s", c->name );
    xmlw_attr( writer, "description", "%s", c->description );
-   for ( int j = 0; j < array_size( c->illegalto ); j++ )
+   for (int j=0; j < array_size( c->illegalto ); j++)
       xmlw_elem( writer, "illegalto", "%s", faction_name( c->illegalto[ j ] ) );
    return 0;
 }
-
 
 /**
  * @brief Loads the player's special mission commodities.
@@ -1125,7 +1071,6 @@ int missions_loadCommodity( xmlNodePtr parent )
 
    return 0;
 }
-
 
 /**
  * @brief Loads a temporary commodity.
@@ -1175,7 +1120,6 @@ Commodity *missions_loadTempCommodity( xmlNodePtr cur )
    return c;
 }
 
-
 /**
  * @brief Loads the player's active missions from a save.
  *
@@ -1202,7 +1146,6 @@ int missions_loadActive( xmlNodePtr parent )
 
    return 0;
 }
-
 
 /**
  * @brief Parses the actual individual mission nodes.
@@ -1326,8 +1269,6 @@ static int missions_parseActive( xmlNodePtr parent )
 
          } while (xml_nextNode(cur));
 
-
-
          m++; /* next mission */
          if (m >= MISSION_MAX) break; /* full of missions, must be an error */
       }
@@ -1335,5 +1276,3 @@ static int missions_parseActive( xmlNodePtr parent )
 
    return 0;
 }
-
-
