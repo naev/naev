@@ -1,7 +1,6 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
 /**
  * @file nlua.c
  *
@@ -45,10 +44,8 @@
 #include "nluadef.h"
 #include "nstring.h"
 
-
 lua_State *naevL = NULL;
 nlua_env __NLUA_CURENV = LUA_NOREF;
-
 
 /*
  * prototypes
@@ -114,12 +111,10 @@ static int nlua_ngettext( lua_State *L )
  */
 static int nlua_gettext_noop( lua_State *L )
 {
-   const char *str;
-   str = luaL_checkstring(L, 1);
+   const char *str = luaL_checkstring(L, 1);
    lua_pushstring(L, str );
    return 1;
 }
-
 
 /*
  * @brief Initializes the global Lua state.
@@ -129,7 +124,6 @@ void lua_init(void) {
    nlua_loadBasic(naevL);
 }
 
-
 /*
  * @brief Closes the global Lua state.
  */
@@ -137,7 +131,6 @@ void lua_exit(void) {
    lua_close(naevL);
    naevL = NULL;
 }
-
 
 /*
  * @brief Run code from buffer in Lua environment.
@@ -160,7 +153,6 @@ int nlua_dobufenv(nlua_env env,
    return 0;
 }
 
-
 /*
  * @brief Run code a file in Lua environment.
  *
@@ -177,7 +169,6 @@ int nlua_dofileenv(nlua_env env, const char *filename)
       return -1;
    return 0;
 }
-
 
 /*
  * @brief Create an new environment in global Lua state.
@@ -238,7 +229,6 @@ nlua_env nlua_newEnv(int rw) {
    return ref;
 }
 
-
 /*
  * @brief Frees an environment created with nlua_newEnv()
  *
@@ -249,7 +239,6 @@ void nlua_freeEnv(nlua_env env) {
       luaL_unref(naevL, LUA_REGISTRYINDEX, env);
 }
 
-
 /*
  * @brief Push environment table to stack
  *
@@ -258,7 +247,6 @@ void nlua_freeEnv(nlua_env env) {
 void nlua_pushenv(nlua_env env) {
    lua_rawgeti(naevL, LUA_REGISTRYINDEX, env);
 }
-
 
 /*
  * @brief Gets variable from enviornment and pushes it to stack
@@ -273,7 +261,6 @@ void nlua_getenv(nlua_env env, const char *name) {
    lua_getfield(naevL, -1, name);   /* env, value */
    lua_remove(naevL, -2);           /* value */
 }
-
 
 /*
  * @brief Pops a value from the stack and sets it in the environment.
@@ -290,7 +277,6 @@ void nlua_setenv(nlua_env env, const char *name) {
    lua_setfield(naevL, -2, name);   /* env */
    lua_pop(naevL, 1);               /*  */
 }
-
 
 /*
  * @brief Registers C functions as lua library in environment
@@ -318,7 +304,6 @@ void nlua_register(nlua_env env, const char *libname,
    nlua_setenv(env, libname);       /* */
 }
 
-
 /**
  * @brief Wrapper around luaL_newstate.
  *
@@ -326,18 +311,14 @@ void nlua_register(nlua_env env, const char *libname,
  */
 static lua_State *nlua_newState (void)
 {
-   lua_State *L;
-
-   /* try to create the new state */
-   L = luaL_newstate();
+   /* Try to create the new state */
+   lua_State *L = luaL_newstate();
    if (L == NULL) {
       WARN(_("Failed to create new Lua state."));
       return NULL;
    }
-
    return L;
 }
-
 
 /**
  * @brief Loads specially modified basic stuff.
@@ -389,7 +370,6 @@ static int nlua_loadBasic( lua_State* L )
    return 0;
 }
 
-
 /**
  * @brief include( string module )
  *
@@ -406,7 +386,7 @@ static int nlua_require( lua_State* L )
    char *buf, *q;
    char path_filename[PATH_MAX], tmpname[PATH_MAX], tried_paths[STRMAX];
    const char *packagepath, *start, *end;
-   int i, done;
+   int done;
 
    /* Environment table to load module into */
    envtab = lua_upvalueindex(1);
@@ -480,7 +460,7 @@ static int nlua_require( lua_State* L )
 
       /* Replace all '.' before the last '.' with '/' as they are a security risk. */
       q = strrchr( path_filename, '.' );
-      for (i=0; i < q-path_filename; i++)
+      for (int i=0; i < q-path_filename; i++)
          if (path_filename[i]=='.')
             path_filename[i] = '/';
 
@@ -496,7 +476,6 @@ static int nlua_require( lua_State* L )
       strncat( tried_paths, "\n   ", sizeof(tried_paths)-len_tried_paths-1 );
       strncat( tried_paths, path_filename, sizeof(tried_paths)-len_tried_paths-1 );
    }
-
 
    /* Must have buf by now. */
    if (buf == NULL) {
@@ -539,7 +518,6 @@ static int nlua_require( lua_State* L )
    free(buf);
    return 1;
 }
-
 
 /**
  * @brief Loads the standard Naev Lua API.
@@ -601,8 +579,6 @@ int nlua_loadStandard( nlua_env env )
    return r;
 }
 
-
-
 /**
  * @brief Gets a trace from Lua.
  */
@@ -629,7 +605,6 @@ int nlua_errTrace( lua_State *L )
    lua_call(L, 2, 1);
    return 1;
 }
-
 
 /*
  * @brief Wrapper around lua_pcall() that handles errors and enviornments
@@ -664,7 +639,6 @@ int nlua_pcall( nlua_env env, int nargs, int nresults ) {
    return ret;
 }
 
-
 /**
  * @brief Gets the reference of a global in a lua environment.
  *
@@ -680,7 +654,6 @@ int nlua_refenv( nlua_env env, const char *name )
    lua_pop(naevL, 1);
    return LUA_NOREF;
 }
-
 
 /**
  * @brief Gets the reference of a global in a lua environment if it matches a type.
