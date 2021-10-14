@@ -1,14 +1,11 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
 /**
  * @file info.h
  *
  * @brief Handles the info menu.
  */
-
-
 /** @cond */
 #include "naev.h"
 /** @endcond */
@@ -65,7 +62,6 @@ static const char *info_names[INFO_WINDOWS] = {
    N_("Ship log"),
 }; /**< Name of the tab windows. */
 
-
 static unsigned int info_wid = 0;
 static unsigned int *info_windows = NULL;
 
@@ -119,14 +115,12 @@ static void info_openShipLog( unsigned int wid );
 static const char* info_getLogTypeFilter( int lstPos );
 static void info_changeTab( unsigned int wid, const char *str, int old, int new );
 
-
 /**
  * @brief Opens the information menu.
  */
 void menu_info( int window )
 {
    int w, h;
-   size_t i;
    const char *names[INFO_WINDOWS];
 
    /* Not under manual control. */
@@ -150,7 +144,7 @@ void menu_info( int window )
    window_setCancel( info_wid, info_close );
 
    /* Create tabbed window. */
-   for (i=0; i<INFO_WINDOWS; i++)
+   for (size_t i=0; i<INFO_WINDOWS; i++)
       names[i] = _(info_names[i]);
    info_windows = window_addTabbedWindow( info_wid, -1, -1, -1, -1, "tabInfo",
          INFO_WINDOWS, names, 0 );
@@ -188,7 +182,6 @@ static void info_close( unsigned int wid, const char *str )
    }
 }
 
-
 /**
  * @brief Updates the info windows.
  */
@@ -197,7 +190,6 @@ void info_update (void)
    if (info_windows != NULL)
       weapons_genList( info_windows[ INFO_WIN_WEAP ] );
 }
-
 
 /**
  * @brief Opens the main info window.
@@ -303,7 +295,6 @@ static void info_openMain( unsigned int wid )
          "lstLicenses", licenses, MAX(nlicenses, 1), 0, NULL, NULL );
 }
 
-
 /**
  * @brief Closes the GUI selection menu.
  *
@@ -312,7 +303,7 @@ static void info_openMain( unsigned int wid )
  */
 static void setgui_close( unsigned int wdw, const char *str )
 {
-   (void)str;
+   (void) str;
    window_destroy( wdw );
 }
 
@@ -324,7 +315,7 @@ static void setgui_close( unsigned int wdw, const char *str )
  */
 static void info_setGui( unsigned int wid, const char *str )
 {
-   (void)str;
+   (void) str;
    char **guis;
    int nguis;
    char **gui_copy;
@@ -381,7 +372,6 @@ static void info_shipAI( unsigned int wid, const char *str )
 {
    (void) wid;
    (void) str;
-
    size_t bufsize;
    char *buf = ndata_read( SHIPAI_PATH, &bufsize );
 
@@ -446,7 +436,6 @@ static void setgui_load( unsigned int wdw, const char *str )
    gui_load( gui_pick() );
 }
 
-
 /**
  * @brief GUI override was toggled.
  *
@@ -460,7 +449,6 @@ static void info_toggleGuiOverride( unsigned int wid, const char *name )
    if (player.guiOverride == 0)
       toolkit_setList( wid, "lstGUI", gui_pick() );
 }
-
 
 /**
  * @brief Shows the player what outfits he has.
@@ -514,7 +502,6 @@ static void info_openShip( unsigned int wid )
    /* Update ship. */
    ship_update( wid );
 }
-
 
 /**
  * @brief Updates the ship stuff.
@@ -571,7 +558,6 @@ static void ship_update( unsigned int wid )
    free( hyp_delay );
 }
 
-
 /**
  * @brief Opens the weapons window.
  */
@@ -627,15 +613,13 @@ static void info_openWeapons( unsigned int wid )
          "closeCargo", _("Close"), info_close );
 }
 
-
 /**
  * @brief Generates the weapons list.
  */
 static void weapons_genList( unsigned int wid )
 {
-   const char *str;
    char **buf, tbuf[STRMAX_SHORT];
-   int i, n;
+   int n;
    int w, h;
 
    /* Get the dimensions. */
@@ -651,8 +635,8 @@ static void weapons_genList( unsigned int wid )
 
    /* List */
    buf = malloc( sizeof(char*) * PILOT_WEAPON_SETS );
-   for (i=0; i<PILOT_WEAPON_SETS; i++) {
-      str = pilot_weapSetName( info_eq_weaps.selected, i );
+   for (int i=0; i<PILOT_WEAPON_SETS; i++) {
+      const char *str = pilot_weapSetName( info_eq_weaps.selected, i );
       if (str == NULL)
          snprintf( tbuf, sizeof(tbuf), "%d - ??", (i+1)%10 );
       else
@@ -668,7 +652,6 @@ static void weapons_genList( unsigned int wid )
    if (n >= 0)
       toolkit_setListPos( wid, "lstWeapSets", n );
 }
-
 
 /**
  * @brief Updates the weapon sets.
@@ -696,20 +679,17 @@ static void weapons_update( unsigned int wid, const char *str )
    window_checkboxSet( wid, "chkAutoweap", player.p->autoweap );
 }
 
-
 /**
  * @brief Toggles autoweap for the ship.
  */
 static void weapons_autoweap( unsigned int wid, const char *str )
 {
-   int state, sure;
-
    /* Set state. */
-   state = window_checkboxState( wid, str );
+   int state = window_checkboxState( wid, str );
 
    /* Run autoweapons if needed. */
    if (state) {
-      sure = dialogue_YesNoRaw( _("Enable autoweapons?"),
+      int sure = dialogue_YesNoRaw( _("Enable autoweapons?"),
             _("Are you sure you want to enable automatic weapon groups for the "
             "ship?\n\nThis will overwrite all manually-tweaked weapons groups.") );
       if (!sure) {
@@ -723,7 +703,6 @@ static void weapons_autoweap( unsigned int wid, const char *str )
    else
       player.p->autoweap = 0;
 }
-
 
 /**
  * @brief Sets the fire mode.
@@ -765,32 +744,23 @@ static void weapons_fire( unsigned int wid, const char *str )
    weapons_genList( wid );
 }
 
-
 /**
  * @brief Sets the inrange property.
  */
 static void weapons_inrange( unsigned int wid, const char *str )
 {
-   int state;
-
-   /* Set state. */
-   state = window_checkboxState( wid, str );
+   int state = window_checkboxState( wid, str );
    pilot_weapSetInrange( player.p, info_eq_weaps.weapons, state );
 }
-
 
 /**
  * @brief Sets the aim lines property.
  */
 static void aim_lines( unsigned int wid, const char *str )
 {
-   int state;
-
-   /* Set state. */
-   state = window_checkboxState( wid, str );
+   int state = window_checkboxState( wid, str );
    player.p->aimLines = state;
 }
-
 
 /**
  * @brief Renders the legend.
@@ -817,7 +787,6 @@ static void weapons_renderLegend( double bx, double by, double bw, double bh, vo
    toolkit_drawRect( bx, y, 10, 10, &cFontRed, NULL );
    gl_print( &gl_smallFont, bx+20, y, &cFontWhite, _("Primary Weapon (Left click toggles)") );
 }
-
 
 /**
  * @brief Shows the player their cargo.
@@ -854,7 +823,6 @@ static void cargo_genList( unsigned int wid )
 {
    char **buf;
    int nbuf;
-   int i;
    int w, h;
 
    /* Get the dimensions. */
@@ -874,7 +842,7 @@ static void cargo_genList( unsigned int wid )
    else {
       /* List the player's cargo */
       buf = malloc( sizeof(char*) * array_size(player.p->commodities) );
-      for (i=0; i<array_size(player.p->commodities); i++) {
+      for (int i=0; i<array_size(player.p->commodities); i++) {
          asprintf(&buf[i], "%s%s %d%s",
                _(player.p->commodities[i].commodity->name),
                (player.p->commodities[i].id != 0) ? "*" : "",
@@ -895,7 +863,7 @@ static void cargo_update( unsigned int wid, const char *str )
 {
    (void) str;
    char desc[STRMAX];
-   int pos, l, i, f;
+   int pos, l;
    const Commodity *com;
 
    if (array_size(player.p->commodities)==0)
@@ -919,8 +887,8 @@ static void cargo_update( unsigned int wid, const char *str )
       l = scnprintf( desc, sizeof(desc), "%s\n\n%s", _(com->name), _(com->description) );
    if (array_size(com->illegalto) > 0) {
       l += scnprintf( &desc[l], sizeof(desc)-l, "\n\n%s", _("Illegalized by the following factions:\n") );
-      for (i=0; i<array_size(com->illegalto); i++) {
-         f = com->illegalto[i];
+      for (int i=0; i<array_size(com->illegalto); i++) {
+         int f = com->illegalto[i];
          if (!faction_isKnown(f))
             continue;
 
@@ -936,7 +904,7 @@ static void cargo_update( unsigned int wid, const char *str )
 static void cargo_jettison( unsigned int wid, const char *str )
 {
    (void)str;
-   int i, j, f, pos, ret;
+   int pos, ret;
    Mission *misn;
 
    if (array_size(player.p->commodities)==0)
@@ -946,28 +914,30 @@ static void cargo_jettison( unsigned int wid, const char *str )
 
    /* Special case mission cargo. */
    if (player.p->commodities[pos].id != 0) {
+      int f;
+
       if (!dialogue_YesNo( _("Abort Mission"),
                _("Are you sure you want to abort this mission?") ))
          return;
 
       /* Get the mission. */
-      f = 0;
-      for (i=0; i<MISSION_MAX; i++) {
-         for (j=0; j<array_size(player_missions[i]->cargo); j++) {
+      f = -1;
+      for (int i=0; i<MISSION_MAX; i++) {
+         for (int j=0; j<array_size(player_missions[i]->cargo); j++) {
             if (player_missions[i]->cargo[j] == player.p->commodities[pos].id) {
-               f = 1;
+               f = i;
                break;
             }
          }
-         if (f==1)
+         if (f >= 0)
             break;
       }
-      if (!f) {
+      if (f < 0) {
          WARN(_("Cargo '%d' does not belong to any active mission."),
                player.p->commodities[pos].id);
          return;
       }
-      misn = player_missions[i];
+      misn = player_missions[f];
 
       /* We run the "abort" function if it's found. */
       ret = misn_tryRun( misn, "abort" );
@@ -1000,7 +970,6 @@ static void cargo_jettison( unsigned int wid, const char *str )
    cargo_genList( wid );
 }
 
-
 /**
  * @brief Gets the window standings window dimensions.
  */
@@ -1010,7 +979,6 @@ static void info_getDim( unsigned int wid, int *w, int *h, int *lw )
    window_dimWindow( wid, w, h );
    *lw = *w-60-BUTTON_WIDTH-120;
 }
-
 
 /**
  * @brief Closes the faction stuff.
@@ -1022,7 +990,6 @@ static void standings_close( unsigned int wid, const char *str )
    array_free(info_factions);
    info_factions = NULL;
 }
-
 
 static int factionsSort( const void *p1, const void *p2 )
 {
@@ -1043,8 +1010,6 @@ static int factionsSort( const void *p1, const void *p2 )
  */
 static void info_openStandings( unsigned int wid )
 {
-   int i;
-   int m;
    char **str;
    int w, h, lw;
 
@@ -1075,8 +1040,8 @@ static void info_openStandings( unsigned int wid )
    qsort( info_factions, array_size(info_factions), sizeof(int), factionsSort );
 
    /* Create list. */
-   for (i=0; i<array_size(info_factions); i++) {
-      m = round( faction_getPlayer( info_factions[i] ) );
+   for (int i=0; i<array_size(info_factions); i++) {
+      int m = round( faction_getPlayer( info_factions[i] ) );
       asprintf( &str[i], "%s   [ #%c%+d%%#0 ]",
             faction_longname( info_factions[i] ),
             faction_getColourChar( info_factions[i] ), m );
@@ -1087,7 +1052,6 @@ static void info_openStandings( unsigned int wid )
          str, array_size(info_factions), 0, standings_update, NULL );
 }
 
-
 /**
  * @brief Updates the standings menu.
  */
@@ -1096,7 +1060,7 @@ static void standings_update( unsigned int wid, const char *str )
    (void) str;
    int p, y;
    const glTexture *t;
-   int w, h, lw, tw, th;
+   int w, h, lw;
    char buf[STRMAX_SHORT];
    int m;
 
@@ -1109,8 +1073,8 @@ static void standings_update( unsigned int wid, const char *str )
    /* Render logo. */
    t = faction_logo( info_factions[p] );
    if (t != NULL) {
-      tw = t->w * (double)FACTION_LOGO_SM / MAX( t->w, t->h );
-      th = t->h * (double)FACTION_LOGO_SM / MAX( t->w, t->h );
+      int tw = t->w * (double)FACTION_LOGO_SM / MAX( t->w, t->h );
+      int th = t->h * (double)FACTION_LOGO_SM / MAX( t->w, t->h );
       window_modifyImage( wid, "imgLogo", t, tw, th );
       y  = -40;
       window_moveWidget( wid, "imgLogo", lw+40 + (w-(lw+60)-tw)/2, y );
@@ -1136,7 +1100,6 @@ static void standings_update( unsigned int wid, const char *str )
    window_modifyText( wid, "txtDescription", faction_description( info_factions[p] ) );
    window_moveWidget( wid, "txtDescription", lw+40, y );
 }
-
 
 /**
  * @brief Shows the player's active missions.
@@ -1180,7 +1143,7 @@ static void info_openMissions( unsigned int wid )
  */
 static void mission_menu_genList( unsigned int wid, int first )
 {
-   int i,j;
+   int j;
    char** misn_names;
    int w, h;
 
@@ -1193,7 +1156,7 @@ static void mission_menu_genList( unsigned int wid, int first )
    /* list */
    misn_names = malloc(sizeof(char*) * MISSION_MAX);
    j = 0;
-   for (i=0; i<MISSION_MAX; i++)
+   for (int i=0; i<MISSION_MAX; i++)
       if (player_missions[i]->id != 0)
          misn_names[j++] = (player_missions[i]->title != NULL) ?
                strdup(player_missions[i]->title) : NULL;
@@ -1246,34 +1209,34 @@ static void mission_menu_abort( unsigned int wid, const char *str )
    Mission *misn;
    int ret;
 
-   if (dialogue_YesNo( _("Abort Mission"),
-            _("Are you sure you want to abort this mission?") )) {
+   if (!dialogue_YesNo( _("Abort Mission"),
+            _("Are you sure you want to abort this mission?") ))
+      return;
 
-      /* Get the mission. */
-      pos = toolkit_getListPos(wid, "lstMission" );
-      misn = player_missions[pos];
+   /* Get the mission. */
+   pos = toolkit_getListPos(wid, "lstMission" );
+   misn = player_missions[pos];
 
-      /* We run the "abort" function if it's found. */
-      ret = misn_tryRun( misn, "abort" );
+   /* We run the "abort" function if it's found. */
+   ret = misn_tryRun( misn, "abort" );
 
-      /* Now clean up mission. */
-      if (ret != 2) {
-         mission_cleanup( misn );
-         mission_shift(pos);
-      }
-
-      /* Reset markers. */
-      mission_sysMark();
-
-      /* Reset claims. */
-      claim_activateAll();
-
-      /* Regenerate list. */
-      mission_menu_genList(wid ,0);
-
-      /* Regenerate bar if landed. */
-      bar_regen();
+   /* Now clean up mission. */
+   if (ret != 2) {
+      mission_cleanup( misn );
+      mission_shift(pos);
    }
+
+   /* Reset markers. */
+   mission_sysMark();
+
+   /* Reset claims. */
+   claim_activateAll();
+
+   /* Regenerate list. */
+   mission_menu_genList(wid ,0);
+
+   /* Regenerate bar if landed. */
+   bar_regen();
 }
 
 /* amount of screen available for logs: -20 below button, -20 above button, -40 from top, -20 x2 between logs.*/
@@ -1335,7 +1298,6 @@ static void shiplog_menu_update( unsigned int wid, const char *str )
    }
 }
 
-
 /**
  * @brief Translates a position in "lstLogType" to a shiplog "type" filter.
  */
@@ -1345,7 +1307,6 @@ static const char* info_getLogTypeFilter( int lstPos )
       return NULL; /* "All" */
    return logTypes[lstPos];
 }
-
 
 /**
  * @brief Generates the ship log information
@@ -1396,11 +1357,11 @@ static void shiplog_menu_genList( unsigned int wid, int first )
 
 static void info_shiplogMenuDelete( unsigned int wid, const char *str )
 {
+   (void) str;
    char buf[STRMAX_SHORT];
    int ret, logid;
-   (void) str;
 
-   if ( logIDs[selectedLog] == LOG_ID_ALL ) {
+   if (logIDs[selectedLog] == LOG_ID_ALL) {
       dialogue_msg( "", _("You are currently viewing all logs in the selected log type. Please select a log title to delete.") );
       return;
    }
@@ -1409,36 +1370,36 @@ static void info_shiplogMenuDelete( unsigned int wid, const char *str )
          _("This will delete ALL \"%s\" log entries. This operation cannot be undone. Are you sure?"),
          logs[selectedLog]);
    ret = dialogue_YesNoRaw( "", buf );
-   if ( ret ) {
-      /* There could be several logs of the same name, so make sure we get the correct one. */
-      /* selectedLog-1 since not including the "All" */
-      logid = shiplog_getIdOfLogOfType( info_getLogTypeFilter(selectedLogType), selectedLog-1 );
-      if ( logid >= 0 )
-         shiplog_delete( logid );
-      selectedLog = 0;
-      selectedLogType = 0;
-      shiplog_menu_genList(wid, 0);
-   }
+   if (!ret)
+      return;
+   /* There could be several logs of the same name, so make sure we get the correct one. */
+   /* selectedLog-1 since not including the "All" */
+   logid = shiplog_getIdOfLogOfType( info_getLogTypeFilter(selectedLogType), selectedLog-1 );
+   if (logid >= 0)
+      shiplog_delete( logid );
+   selectedLog = 0;
+   selectedLogType = 0;
+   shiplog_menu_genList(wid, 0);
 }
 
 static void info_shiplogView( unsigned int wid, const char *str )
 {
    char **logentries;
    int nentries;
-   int i;
+   int pos;
    (void) str;
 
-   i = toolkit_getListPos( wid, "lstLogEntries" );
-   if ( i < 0 )
+   pos = toolkit_getListPos( wid, "lstLogEntries" );
+   if (pos < 0)
       return;
    shiplog_listLog(
          logIDs[selectedLog], info_getLogTypeFilter(selectedLogType), &nentries,
          &logentries, 1);
 
-   if ( i < nentries )
-      dialogue_msgRaw( _("Log message"), logentries[i] );
+   if (pos < nentries)
+      dialogue_msgRaw( _("Log message"), logentries[pos] );
 
-   for (i=0; i<nentries; i++)
+   for (int i=0; i<nentries; i++)
       free( logentries[i] );
    free( logentries );
 }
@@ -1480,7 +1441,6 @@ static void info_shiplogAdd( unsigned int wid, const char *str )
    shiplog_menu_genList( wid, 0 );
 
 }
-
 
 /**
  * @brief Shows the player's ship log.
@@ -1526,7 +1486,6 @@ static void info_openShipLog( unsigned int wid )
    /* list */
    shiplog_menu_genList(wid ,1);
 }
-
 
 /**
  * @brief Handles tab window changes.
