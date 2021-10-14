@@ -452,11 +452,13 @@ function taunt ()
    end
 
    local armour, shield = captainTP:health()
+   local taunts
    if shield >= 40 then
-      captainTP:comm( tp_taunt_healthy[ rnd.rnd(1,#tp_taunt_healthy) ] )
+      taunts = tp_taunt_healthy
    else
-      captainTP:comm( tp_taunt_weak[ rnd.rnd(1,#tp_taunt_weak) ] )
+      taunts = tp_taunt_weak
    end
+   captainTP:comm( taunts[ rnd.rnd(1,#taunts) ] )
 
    hook.timer( 4, "taunt" )
 end
