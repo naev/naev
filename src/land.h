@@ -1,17 +1,12 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
-
-
 #ifndef LAND_H
 #  define LAND_H
-
 
 #include "conf.h"
 #include "nstring.h"
 #include "space.h"
-
 
 /*
  * The window interfaces.
@@ -27,13 +22,11 @@ enum {
    LAND_NUMWINDOWS           /**< Number of land windows. */
 };
 
-
 /* global/main window */
 #define LAND_WIDTH   RESOLUTION_W_MIN /**< Land window width. */
 #define LAND_HEIGHT  RESOLUTION_H_MIN /**< Land window height. */
-#define PORTRAIT_WIDTH 200
+#define PORTRAIT_WIDTH  200
 #define PORTRAIT_HEIGHT 150
-
 
 /*
  * Default button sizes.
@@ -41,12 +34,10 @@ enum {
 #define LAND_BUTTON_WIDTH 200 /**< Default button width. */
 #define LAND_BUTTON_HEIGHT 40 /**< Default button height. */
 
-
 /*
  * Minor hack, for 'buy map' button.
  */
 #define LOCAL_MAP_NAME "Local System Map"
-
 
 /*
  * Landed at.
@@ -54,12 +45,10 @@ enum {
 extern int landed;
 extern Planet* land_planet;
 
-
 /* Tracking for which tabs have been generated. */
 #define land_tabGenerate(w)       (land_generated |= (1 << w)) /**< Mark tab generated. */
 #define land_tabGenerated(w)     (land_generated & (1 << w)) /**< Check if tab has been generated. */
 extern unsigned int land_generated;
-
 
 /*
  * Main interface.
@@ -72,7 +61,6 @@ void takeoff( int delay );
 void land_cleanup (void);
 void land_exit (void);
 int land_setWindow( int window );
-
 
 /*
  * Internal usage.
@@ -91,6 +79,5 @@ int  can_swapEquipment( const char *shipname );
 int  can_sell( const char *shipname );
 int  land_errDialogue( const char *name, const char *type );
 PRINTF_FORMAT( 1, 2 ) void land_errDialogueBuild( const char *fmt, ... );
-
 
 #endif /* LAND_H */

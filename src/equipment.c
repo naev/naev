@@ -2059,9 +2059,12 @@ static void equipment_autoequipShip( unsigned int wid, const char* str )
       nlua_loadTk( autoequip_env );
       if (nlua_dobufenv(autoequip_env, buf, bufsize, file) != 0) {
          WARN(_("Failed to run '%s': %s"), file, lua_tostring(naevL,-1));
+         free(buf);
          lua_pop(naevL,1);
          goto autoequip_cleanup;
       }
+
+      free(buf);
    }
 
    /* Run func. */
@@ -2097,14 +2100,12 @@ autoequip_cleanup:
 static void equipment_sellShip( unsigned int wid, const char* str )
 {
    (void)str;
-   const char *shipname;
    char buf[ECON_CRED_STRLEN], *name;
    credits_t price;
    Pilot *p;
    const Ship *s;
    HookParam hparam[3];
-
-   shipname = toolkit_getImageArray( wid, EQUIPMENT_SHIPS );
+   const char *shipname = toolkit_getImageArray( wid, EQUIPMENT_SHIPS );
 
    if (land_errDialogue( shipname, "sell" ))
       return;

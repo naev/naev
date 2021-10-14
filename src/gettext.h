@@ -1,8 +1,6 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
-
 #ifndef GETTEXT_H
 #define GETTEXT_H
 

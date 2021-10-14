@@ -1,11 +1,8 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
-
 #ifndef MAP_H
 #  define MAP_H
-
 
 #include "attributes.h"
 #include "space.h"
@@ -65,4 +62,3 @@ void map_updateFactionPresence( const unsigned int wid, const char *name, const 
 int map_load (void);
 
 #endif /* MAP_H */
-

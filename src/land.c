@@ -1,13 +1,11 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
 /**
  * @file land.c
  *
  * @brief Handles all the landing menus and actions.
  */
-
 
 /** @cond */
 #include <math.h>
@@ -50,7 +48,6 @@
 #include "save.h"
 #include "shiplog.h"
 #include "toolkit.h"
-
 
 /*
  * we use visited flags to not duplicate missions generated
@@ -97,7 +94,6 @@ static glTexture *mission_portrait = NULL; /**< Mission portrait. */
  */
 static int last_window = 0; /**< Default window. */
 
-
 /*
  * Error handling.
  */
@@ -106,13 +102,11 @@ static char errorreason[STRMAX_SHORT];
 static int errorappend;
 static char *errorlist_ptr;
 
-
 /*
  * Rescue.
  */
 static nlua_env rescue_env = LUA_NOREF; /**< Rescue Lua env. */
 static void land_stranded (void);
-
 
 /*
  * prototypes
@@ -136,7 +130,6 @@ static void misn_accept( unsigned int wid, const char *str );
 static void misn_genList( unsigned int wid, int first );
 static void misn_update( unsigned int wid, const char *str );
 
-
 /**
  * @brief Queue a takeoff.
  */
@@ -144,7 +137,6 @@ void land_queueTakeoff (void)
 {
    land_takeoff = 1;
 }
-
 
 /**
  * @brief Check to see if finished loading.
@@ -155,7 +147,6 @@ int land_doneLoading (void)
       return 1;
    return 0;
 }
-
 
 /**
  * @brief Makes sure it's valid to change ships in the equipment view.
@@ -189,7 +180,6 @@ int can_swapEquipment( const char *shipname )
    }
    return !failure;
 }
-
 
 /**
  * @brief Generates error dialogues used by several landing tabs.
@@ -246,7 +236,6 @@ void land_errDialogueBuild( const char *fmt, ... )
       scnprintf( &errorlist[errorappend],  sizeof(errorlist)-errorappend, "\n%s", errorreason );
    errorlist_ptr = errorlist;
 }
-
 
 /**
  * @brief Gets the dimensions of the spaceport bar window.
@@ -549,7 +538,6 @@ static int news_load (void)
 }
 
 
-
 /**
  * @brief Opens the mission computer window.
  */
@@ -753,7 +741,6 @@ static void misn_update( unsigned int wid, const char *str )
    window_enableButton( wid, "btnAcceptMission" );
 }
 
-
 /**
  * @brief Refuels the player's current ship, if possible.
  */
@@ -775,7 +762,6 @@ void land_refuel (void)
    if (w > 0)
       equipment_updateShips( w, NULL ); /* Must update counter. */
 }
-
 
 /**
  * @brief Buys a local system map.
@@ -811,7 +797,6 @@ static void spaceport_buyMap( unsigned int wid, const char *str )
    /* Update main tab. */
    land_updateMainTab();
 }
-
 
 /**
  * @brief Adds the "Buy Local Map" button if needed and updates info.
@@ -867,7 +852,6 @@ void land_updateMainTab (void)
       window_disableButtonSoft( land_windows[0], "btnMap" );
 }
 
-
 /**
  * @brief Wrapper for takeoff mission button.
  *
@@ -881,7 +865,6 @@ void land_buttonTakeoff( unsigned int wid, const char *unused )
    /* We'll want the time delay. */
    takeoff(1);
 }
-
 
 /**
  * @brief Cleans up the land window.
@@ -907,7 +890,6 @@ static void land_cleanupWindow( unsigned int wid, const char *name )
    }
 }
 
-
 /**
  * @brief Gets the WID of a window by type.
  *
@@ -920,7 +902,6 @@ unsigned int land_getWid( int window )
       return 0;
    return land_windows[ land_windowsMap[window] ];
 }
-
 
 /**
  * @brief Recreates the land windows.
@@ -1041,7 +1022,6 @@ void land_genWindows( int load, int changetab )
                MIS_AVAIL_COMPUTER );
    }
 
-
    /* 4) Create other tabs. */
 #define should_open(s, w) \
    (planet_hasService(land_planet, s) && (!land_tabGenerated(w)))
@@ -1104,7 +1084,6 @@ void land_genWindows( int load, int changetab )
    window_lower( land_wid );
 }
 
-
 /**
  * @brief Sets the land window tab.
  *
@@ -1118,7 +1097,6 @@ int land_setWindow( int window )
    window_tabWinSetActive( land_wid, "tabLand", land_windowsMap[window] );
    return 0;
 }
-
 
 /**
  * @brief Opens up all the land dialogue stuff.
@@ -1176,7 +1154,6 @@ void land( Planet* p, int load )
    if (land_takeoff)
       takeoff(0);
 }
-
 
 /**
  * @brief Creates the main tab.
@@ -1247,7 +1224,6 @@ static void land_createMainTab( unsigned int wid )
    }
 }
 
-
 /**
  * @brief Saves the last place the player was.
  *
@@ -1258,21 +1234,16 @@ static void land_createMainTab( unsigned int wid )
  */
 static void land_changeTab( unsigned int wid, const char *wgt, int old, int tab )
 {
-   int i;
    (void) wid;
    (void) wgt;
    (void) old;
-
    unsigned int w;
-   const char *torun_hook;
-   unsigned int to_visit;
-
    /* Safe defaults. */
-   torun_hook = NULL;
-   to_visit   = 0;
+   const char *torun_hook = NULL;
+   unsigned int to_visit = 0;
 
    /* Find what switched. */
-   for (i=0; i<LAND_NUMWINDOWS; i++) {
+   for (int i=0; i<LAND_NUMWINDOWS; i++) {
       if (land_windowsMap[i] == tab) {
          last_window = i;
          w = land_getWid( i );
@@ -1340,7 +1311,6 @@ static void land_changeTab( unsigned int wid, const char *wgt, int old, int tab 
          takeoff(1);
    }
 }
-
 
 /**
  * @brief Makes the player take off if landed.
@@ -1452,7 +1422,6 @@ void takeoff( int delay )
    player_autonavResetSpeed();
 }
 
-
 /**
  * @brief Runs the rescue script if players are stuck.
  */
@@ -1495,14 +1464,11 @@ static void land_stranded (void)
    }
 }
 
-
 /**
  * @brief Cleans up some land-related variables.
  */
 void land_cleanup (void)
 {
-   int i;
-
    /* Clean up default stuff. */
    land_regen     = 0;
    land_planet    = NULL;
@@ -1521,7 +1487,7 @@ void land_cleanup (void)
    gfx_exterior   = NULL;
 
    /* Clean up mission computer. */
-   for (i=0; i<mission_ncomputer; i++)
+   for (int i=0; i<mission_ncomputer; i++)
       mission_cleanup( &mission_computer[i] );
    free(mission_computer);
    mission_computer  = NULL;
@@ -1540,7 +1506,6 @@ void land_cleanup (void)
    }
 }
 
-
 /**
  * @brief Exits all the landing stuff.
  */
@@ -1550,5 +1515,3 @@ void land_exit (void)
    equipment_cleanup();
    outfits_cleanup();
 }
-
-

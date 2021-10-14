@@ -1,8 +1,6 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
-
 /** @cond */
 #include <float.h>
 #include <math.h>
@@ -35,13 +33,11 @@
 #include "toolkit.h"
 #include "utf8.h"
 
-
 typedef struct FactionPresence_ {
    const char *name;
    double value;
    int known;
 } FactionPresence;
-
 
 typedef enum MapMode_ {
    MAPMODE_TRAVEL,
@@ -49,10 +45,8 @@ typedef enum MapMode_ {
    MAPMODE_TRADE,
 } MapMode;
 
-
 #define BUTTON_WIDTH    100 /**< Map button width. */
 #define BUTTON_HEIGHT   30 /**< Map button height. */
-
 
 #define MAP_LOOP_PROT   1000 /**< Number of iterations max in pathfinding before
                                  aborting. */
@@ -125,7 +119,6 @@ static void map_genModeList(void);
 static void map_update_commod_av_price();
 static void map_window_close( unsigned int wid, const char *str );
 
-
 /**
  * @brief Initializes the map subsystem.
  *
@@ -136,22 +129,18 @@ int map_init (void)
    return 0;
 }
 
-
 /**
  * @brief Destroys the map subsystem.
  */
 void map_exit (void)
 {
-   int i;
-
    if (decorator_stack != NULL) {
-      for (i=0; i<array_size(decorator_stack); i++)
+      for (int i=0; i<array_size(decorator_stack); i++)
          gl_freeTexture( decorator_stack[i].image );
       array_free( decorator_stack );
       decorator_stack = NULL;
    }
 }
-
 
 /**
  * @brief Handles key input to the map window.
@@ -168,7 +157,6 @@ static int map_keyHandler( unsigned int wid, SDL_Keycode key, SDL_Keymod mod )
    return 0;
 }
 
-
 /**
  * @brief Opens the map window.
  */
@@ -176,7 +164,6 @@ void map_open (void)
 {
    unsigned int wid;
    StarSystem *cur;
-   int i, j;
    int w, h, x, y, rw;
    const int indent = MAP_TEXT_INDENT;
 
@@ -198,12 +185,12 @@ void map_open (void)
    }
 
    /* Mark systems as discovered as necessary. */
-   for (i=0; i<array_size(systems_stack); i++) {
+   for (int i=0; i<array_size(systems_stack); i++) {
       StarSystem *sys = &systems_stack[i];
       sys_rmFlag( sys, SYSTEM_DISCOVERED );
 
       int known = 1;
-      for (j=0; j<array_size(sys->jumps); j++) {
+      for (int j=0; j<array_size(sys->jumps); j++) {
          JumpPoint *jp = &sys->jumps[j];
          if (jp_isFlag(jp, JP_EXITONLY) || jp_isFlag(jp, JP_HIDDEN))
             continue;
@@ -214,7 +201,7 @@ void map_open (void)
       }
       if (known) {
          /* Check planets. */
-         for (j=0; j<array_size(sys->planets); j++) {
+         for (int j=0; j<array_size(sys->planets); j++) {
             Planet *p = sys->planets[j];
             if (!planet_isKnown(p)) {
                known = 0;
@@ -365,52 +352,50 @@ void map_open (void)
 /*
  * Prepares economy info for rendering.  Called when cur_commod changes.
  */
-
-static void map_update_commod_av_price()
+static void map_update_commod_av_price (void)
 {
    Commodity *c;
-   int i,j,k;
-   StarSystem *sys;
-   Planet *p;
+   
    if (cur_commod == -1 || map_selected == -1) {
       commod_av_gal_price = 0;
       return;
    }
+
    c = commod_known[cur_commod];
-   if ( cur_commod_mode == 0 ) {
+   if (cur_commod_mode == 0) {
       double totPrice = 0;
       int totPriceCnt = 0;
-      for (i=0; i<array_size(systems_stack); i++) {
-         sys = system_getIndex( i );
+      for (int i=0; i<array_size(systems_stack); i++) {
+         StarSystem *sys = system_getIndex( i );
 
          /* if system is not known, reachable, or marked. and we are not in the editor */
          if ((!sys_isKnown(sys) && !sys_isFlag(sys, SYSTEM_MARKED | SYSTEM_CMARKED)
               && !space_sysReachable(sys)))
             continue;
          if ((sys_isKnown(sys)) && (system_hasPlanet(sys))) {
-            double sumPrice=0;
-            int sumCnt=0;
+            double sumPrice = 0;
+            int sumCnt = 0;
             double thisPrice;
-            for ( j=0 ; j<array_size(sys->planets); j++) {
-               p=sys->planets[j];
-               for ( k=0; k<array_size(p->commodities); k++) {
-                  if ( p->commodities[k] == c ) {
-                     if ( p->commodityPrice[k].cnt > 0 ) {/*commodity is known about*/
+            for (int j=0 ; j<array_size(sys->planets); j++) {
+               Planet *p = sys->planets[j];
+               for (int k=0; k<array_size(p->commodities); k++) {
+                  if (p->commodities[k] == c) {
+                     if (p->commodityPrice[k].cnt > 0) { /*commodity is known about*/
                         thisPrice = p->commodityPrice[k].sum / p->commodityPrice[k].cnt;
-                        sumPrice+=thisPrice;
-                        sumCnt+=1;
+                        sumPrice += thisPrice;
+                        sumCnt += 1;
                         break;
                      }
                   }
                }
             }
-            if ( sumCnt>0 ) {
+            if (sumCnt>0) {
                totPrice += sumPrice / sumCnt;
                totPriceCnt++;
             }
          }
       }
-      if ( totPriceCnt > 0 )
+      if (totPriceCnt > 0)
          totPrice /= totPriceCnt;
       commod_av_gal_price = totPrice;
 
@@ -426,7 +411,7 @@ static void map_update_commod_av_price()
  */
 static void map_update( unsigned int wid )
 {
-   int i, found;
+   int found, multiple;
    StarSystem *sys;
    int f, h, x, y, logow, logoh;
    unsigned int services, services_h, services_u;
@@ -437,7 +422,6 @@ static void map_update( unsigned int wid )
    int p;
    const glTexture *logo;
    double w, dmg, itf;
-   Commodity *c;
    const int indent = MAP_TEXT_INDENT;
 
    /* Needs map to update. */
@@ -458,7 +442,7 @@ static void map_update( unsigned int wid )
 
    /* Economy button */
    if (map_mode == MAPMODE_TRADE) {
-      c = commod_known[cur_commod];
+      Commodity *c = commod_known[cur_commod];
       if ( cur_commod_mode == 1 ) {
          snprintf( buf, sizeof(buf),
                    _("%s prices trading from %s shown: Positive/blue values mean a profit\n"
@@ -530,11 +514,12 @@ static void map_update( unsigned int wid )
    /* System is known */
    window_modifyText( wid, "txtSysname", _(sys->name) );
 
-   f         = -1;
-   for (i=0; i<array_size(sys->planets); i++) {
+   f = -1;
+   multiple = 0;
+   for (int i=0; i<array_size(sys->planets); i++) {
       if (!planet_isKnown(sys->planets[i]))
          continue;
-      if ( (sys->planets[i]->presence.faction > 0)
+      if ((sys->planets[i]->presence.faction > 0)
             && (!faction_isKnown(sys->planets[i]->presence.faction)) )
          continue;
 
@@ -544,6 +529,7 @@ static void map_update( unsigned int wid )
       else if (f != sys->planets[i]->presence.faction /** @todo more verbosity */
                && (sys->planets[i]->presence.faction > 0)) {
          snprintf( buf, sizeof(buf), _("Multiple") );
+         multiple = 1;
          break;
       }
    }
@@ -554,7 +540,7 @@ static void map_update( unsigned int wid )
       h = gl_smallFont.h;
    }
    else {
-      if (i==array_size(sys->planets)) /* saw them all and all the same */
+      if (!multiple) /* saw them all and all the same */
          snprintf( buf, sizeof(buf), "%s", faction_longname(f) );
 
       /* Modify the image. */
@@ -595,7 +581,7 @@ static void map_update( unsigned int wid )
    hasPlanets = 0;
    p = 0;
    buf[0] = '\0';
-   for (i=0; i<array_size(sys->planets); i++) {
+   for (int i=0; i<array_size(sys->planets); i++) {
       if (!planet_isKnown(sys->planets[i]))
          continue;
 
@@ -630,7 +616,7 @@ static void map_update( unsigned int wid )
    services = 0;
    services_h = 0;
    services_u = 0;
-   for (i=0; i<array_size(sys->planets); i++)
+   for (int i=0; i<array_size(sys->planets); i++)
       if (planet_isKnown(sys->planets[i])) {
          if (sys->planets[i]->can_land)
             services |= sys->planets[i]->services;
@@ -642,7 +628,7 @@ static void map_update( unsigned int wid )
    buf[0] = '\0';
    p = 0;
    /*snprintf(buf, sizeof(buf), "%f\n", sys->prices[0]);*/ /*Hack to control prices. */
-   for (i=PLANET_SERVICE_MISSIONS; i<=PLANET_SERVICE_SHIPYARD; i<<=1)
+   for (int i=PLANET_SERVICE_MISSIONS; i<=PLANET_SERVICE_SHIPYARD; i<<=1)
       if (services & i)
          p += scnprintf( &buf[p], sizeof(buf)-p, "%s\n", _(planet_getServiceName(i)) );
       else if (services_h & i)
@@ -667,7 +653,7 @@ static void map_update( unsigned int wid )
 
       /* Mention trade lanes if applicable. */
       found = 0;
-      for (i=0; i<array_size(sys->jumps); i++) {
+      for (int i=0; i<array_size(sys->jumps); i++) {
          if (sys->jumps[i].hide<=0.) {
             found = 1;
             break;
@@ -724,7 +710,7 @@ static void map_update( unsigned int wid )
             p += scnprintf(&buf[p], sizeof(buf)-p, _(", "));
 
          density = 0.;
-         for (i=0; i<array_size(sys->asteroids); i++) {
+         for (int i=0; i<array_size(sys->asteroids); i++) {
             density += sys->asteroids[i].area * sys->asteroids[i].density;
          }
 
@@ -739,7 +725,6 @@ static void map_update( unsigned int wid )
    }
 }
 
-
 /**
  * @brief Checks to see if the map is open.
  *
@@ -749,7 +734,6 @@ int map_isOpen (void)
 {
    return window_exists(MAP_WDWNAME);
 }
-
 
 /**
  * @brief Draws a mission marker on the map.
@@ -920,7 +904,6 @@ else (x) = MAX( y, (x) - dt )
          1.5*r, &col, 0 );
 }
 
-
 /**
  * @brief Gets the render parameters.
  */
@@ -992,20 +975,16 @@ void map_renderDecorators( double x, double y, int editor, double alpha )
    }
 }
 
-
 /**
  * @brief Renders the faction disks.
  */
 void map_renderFactionDisks( double x, double y, double r, int editor, double alpha )
 {
-   int i;
-   const glColour *col;
-   glColour c;
-   StarSystem *sys;
-   double tx, ty, sr, presence;
-
-   for (i=0; i<array_size(systems_stack); i++) {
-      sys = system_getIndex( i );
+   for (int i=0; i<array_size(systems_stack); i++) {
+      const glColour *col;
+      glColour c;
+      double tx, ty, sr, presence;
+      StarSystem *sys = system_getIndex( i );
 
       if (sys_isFlag(sys,SYSTEM_HIDDEN))
          continue;
@@ -1037,21 +1016,18 @@ void map_renderFactionDisks( double x, double y, double r, int editor, double al
    }
 }
 
-
 /**
  * @brief Renders the faction disks.
  */
 void map_renderSystemEnvironment( double x, double y, int editor, double alpha )
 {
-   int i;
-   StarSystem *sys;
-   int sw, sh;
-   double tx, ty;
-   /* Fade in the disks to allow toggling between commodity and nothing */
-   gl_Matrix4 projection;
 
-   for (i=0; i<array_size(systems_stack); i++) {
-      sys = system_getIndex( i );
+   for (int i=0; i<array_size(systems_stack); i++) {
+      int sw, sh;
+      double tx, ty;
+      /* Fade in the disks to allow toggling between commodity and nothing */
+      gl_Matrix4 projection;
+      StarSystem *sys = system_getIndex( i );
 
       if (sys_isFlag(sys,SYSTEM_HIDDEN))
          continue;
@@ -1097,19 +1073,15 @@ void map_renderSystemEnvironment( double x, double y, int editor, double alpha )
    }
 }
 
-
 /**
  * @brief Renders the jump routes between systems.
  */
 void map_renderJumps( double x, double y, double radius, int editor )
 {
-   int i, j, k;
-   double x1,y1, x2,y2, rx,ry, r, rw,rh;
-   const glColour *col, *cole;
-   StarSystem *sys, *jsys;
 
-   for (i=0; i<array_size(systems_stack); i++) {
-      sys = system_getIndex( i );
+   for (int i=0; i<array_size(systems_stack); i++) {
+      double x1,y1;
+      StarSystem *sys = system_getIndex( i );
 
       if (sys_isFlag(sys,SYSTEM_HIDDEN))
          continue;
@@ -1120,8 +1092,10 @@ void map_renderJumps( double x, double y, double radius, int editor )
       x1 = x + sys->pos.x * map_zoom;
       y1 = y + sys->pos.y * map_zoom;
 
-      for (j=0; j < array_size(sys->jumps); j++) {
-         jsys = sys->jumps[j].target;
+      for (int j=0; j < array_size(sys->jumps); j++) {
+         double x2,y2, rx,ry, r, rw,rh;
+         const glColour *col, *cole;
+         StarSystem *jsys = sys->jumps[j].target;
          if (sys_isFlag(jsys,SYSTEM_HIDDEN))
             continue;
          if (!space_sysReachableFromSys(jsys,sys) && !editor)
@@ -1129,7 +1103,7 @@ void map_renderJumps( double x, double y, double radius, int editor )
 
          /* Choose colours. */
          cole = &cAquaBlue;
-         for (k=0; k < array_size(jsys->jumps); k++) {
+         for (int k=0; k < array_size(jsys->jumps); k++) {
             if (jsys->jumps[k].target == sys) {
                if (jp_isFlag(&jsys->jumps[k], JP_EXITONLY))
                   cole = &cGrey80;
@@ -1168,20 +1142,17 @@ void map_renderJumps( double x, double y, double radius, int editor )
    }
 }
 
-
 /**
  * @brief Renders the systems.
  */
 void map_renderSystems( double bx, double by, double x, double y,
       double w, double h, double r, int editor)
 {
-   int i;
-   const glColour *col;
-   StarSystem *sys;
-   double tx, ty;
 
-   for (i=0; i<array_size(systems_stack); i++) {
-      sys = system_getIndex( i );
+   for (int i=0; i<array_size(systems_stack); i++) {
+      const glColour *col;
+      double tx, ty;
+      StarSystem *sys = system_getIndex( i );
 
       if (sys_isFlag(sys,SYSTEM_HIDDEN))
          continue;
@@ -1210,10 +1181,14 @@ void map_renderSystems( double bx, double by, double x, double y,
          if (!system_hasPlanet(sys))
             continue;
          /* Planet colours */
-         if (!editor && !sys_isKnown(sys)) col = &cInert;
-         else if (sys->faction < 0) col = &cInert;
-         else if (editor) col = &cNeutral;
-         else col = faction_getColour( sys->faction );
+         if (!editor && !sys_isKnown(sys))
+            col = &cInert;
+         else if (sys->faction < 0)
+            col = &cInert;
+         else if (editor)
+            col = &cNeutral;
+         else
+            col = faction_getColour( sys->faction );
 
          if (editor) {
             /* Radius slightly shorter. */
@@ -1230,57 +1205,54 @@ void map_renderSystems( double bx, double by, double x, double y,
    }
 }
 
-
 /**
  * @brief Render the map path.
  */
 static void map_renderPath( double x, double y, double radius, double alpha )
 {
-   int j;
-   glColour col;
-   double x1,y1, x2,y2, rx,ry, rw,rh, r;
-   StarSystem *sys1, *sys2;
+   StarSystem *sys1 = cur_system;
    int jmax, jcur;
 
-   if (array_size(map_path) != 0) {
-      sys1 = cur_system;
-      jmax = pilot_getJumps(player.p); /* Maximum jumps. */
-      jcur = jmax; /* Jump range remaining. */
+   if (array_size(map_path) == 0)
+      return;
+   
+   jmax = pilot_getJumps(player.p); /* Maximum jumps. */
+   jcur = jmax; /* Jump range remaining. */
 
-      for (j=0; j<array_size(map_path); j++) {
-         sys2 = map_path[j];
-         if (sys_isFlag(sys1,SYSTEM_HIDDEN) || sys_isFlag(sys2,SYSTEM_HIDDEN))
-            continue;
-         if (jcur == jmax && jmax > 0)
-            col = cGreen;
-         else if (jcur < 1)
-            col = cRed;
-         else
-            col = cYellow;
-         col.a = alpha;
+   for (int j=0; j<array_size(map_path); j++) {
+      glColour col;
+      double x1,y1, x2,y2, rx,ry, rw,rh, r;
+      StarSystem *sys2 = map_path[j];
+      if (sys_isFlag(sys1,SYSTEM_HIDDEN) || sys_isFlag(sys2,SYSTEM_HIDDEN))
+         continue;
+      if (jcur == jmax && jmax > 0)
+         col = cGreen;
+      else if (jcur < 1)
+         col = cRed;
+      else
+         col = cYellow;
+      col.a = alpha;
 
-         x1 = x + sys1->pos.x * map_zoom;
-         y1 = y + sys1->pos.y * map_zoom;
-         x2 = x + sys2->pos.x * map_zoom;
-         y2 = y + sys2->pos.y * map_zoom;
-         rx = x2-x1;
-         ry = y2-y1;
-         r  = atan2( ry, rx );
-         rw = (MOD(rx,ry)+radius)/2.;
-         rh = 5.;
+      x1 = x + sys1->pos.x * map_zoom;
+      y1 = y + sys1->pos.y * map_zoom;
+      x2 = x + sys2->pos.x * map_zoom;
+      y2 = y + sys2->pos.y * map_zoom;
+      rx = x2-x1;
+      ry = y2-y1;
+      r  = atan2( ry, rx );
+      rw = (MOD(rx,ry)+radius)/2.;
+      rh = 5.;
 
-         glUseProgram( shaders.jumplanegoto.program );
-         glUniform1f( shaders.jumplanegoto.dt, map_dt );
-         glUniform1f( shaders.jumplanegoto.paramf, radius );
-         glUniform1i( shaders.jumplanegoto.parami, (jcur >= 1) );
-         gl_renderShader( (x1+x2)/2., (y1+y2)/2., rw, rh, r, &shaders.jumplanegoto, &col, 1 );
+      glUseProgram( shaders.jumplanegoto.program );
+      glUniform1f( shaders.jumplanegoto.dt, map_dt );
+      glUniform1f( shaders.jumplanegoto.paramf, radius );
+      glUniform1i( shaders.jumplanegoto.parami, (jcur >= 1) );
+      gl_renderShader( (x1+x2)/2., (y1+y2)/2., rw, rh, r, &shaders.jumplanegoto, &col, 1 );
 
-         jcur--;
-         sys1 = sys2;
-      }
+      jcur--;
+      sys1 = sys2;
    }
 }
-
 
 /**
  * @brief Renders the system names on the map.
@@ -1290,14 +1262,12 @@ void map_renderNames( double bx, double by, double x, double y,
 {
    double tx,ty, vx,vy, d,n;
    int textw;
-   StarSystem *sys, *jsys;
-   int i, j;
    char buf[32];
    glColour col;
    glFont *font;
 
-   for (i=0; i<array_size(systems_stack); i++) {
-      sys = system_getIndex( i );
+   for (int i=0; i<array_size(systems_stack); i++) {
+      StarSystem *sys = system_getIndex( i );
 
       if (sys_isFlag(sys,SYSTEM_HIDDEN))
          continue;
@@ -1326,10 +1296,10 @@ void map_renderNames( double bx, double by, double x, double y,
    if (!editor || (map_zoom <= 1.0))
       return;
 
-   for (i=0; i<array_size(systems_stack); i++) {
-      sys = system_getIndex( i );
-      for (j=0; j<array_size(sys->jumps); j++) {
-         jsys = sys->jumps[j].target;
+   for (int i=0; i<array_size(systems_stack); i++) {
+      StarSystem *sys = system_getIndex( i );
+      for (int j=0; j<array_size(sys->jumps); j++) {
+         StarSystem *jsys = sys->jumps[j].target;
          /* Calculate offset. */
          vx  = jsys->pos.x - sys->pos.x;
          vy  = jsys->pos.y - sys->pos.y;
@@ -1352,18 +1322,15 @@ void map_renderNames( double bx, double by, double x, double y,
    }
 }
 
-
 /**
  * @brief Renders the map markers.
  */
 static void map_renderMarkers( double x, double y, double r, double a )
 {
-   double tx, ty;
-   int i, j, n, m;
-   StarSystem *sys;
-
-   for (i=0; i<array_size(systems_stack); i++) {
-      sys = system_getIndex( i );
+   for (int i=0; i<array_size(systems_stack); i++) {
+      double tx, ty;
+      int j, n, m;
+      StarSystem *sys = system_getIndex( i );
 
       /* We only care about marked now. */
       if (!sys_isFlag(sys, SYSTEM_MARKED | SYSTEM_CMARKED))
@@ -1410,13 +1377,10 @@ static void map_renderMarkers( double x, double y, double r, double a )
  */
 static void map_renderSysBlack(double bx, double by, double x,double y, double w, double h, double r, int editor)
 {
-   int i;
-   StarSystem *sys;
-   double tx,ty;
-   glColour ccol;
-
-   for (i=0; i<array_size(systems_stack); i++) {
-      sys = system_getIndex( i );
+   for (int i=0; i<array_size(systems_stack); i++) {
+      double tx,ty;
+      glColour ccol;
+      StarSystem *sys = system_getIndex( i );
 
       if (sys_isFlag(sys,SYSTEM_HIDDEN))
          continue;
@@ -1441,7 +1405,6 @@ static void map_renderSysBlack(double bx, double by, double x,double y, double w
    }
 }
 
-
 /*
  * Renders the economy information
  */
@@ -1460,16 +1423,16 @@ void map_renderCommod( double bx, double by, double x, double y,
    if (cur_commod == -1 || map_selected == -1)
       return;
 
-   c=commod_known[cur_commod];
+   c = commod_known[cur_commod];
    if (cur_commod_mode == 1) {/*showing price difference to selected system*/
      /* Get commodity price in selected system.  If selected system is current
         system, and if landed, then get price of commodity where we are */
       curMaxPrice=0.;
       curMinPrice=0.;
       sys = system_getIndex( map_selected );
-      if ( sys == cur_system && landed ) {
-         for ( k=0; k<array_size(land_planet->commodities); k++ ) {
-            if ( land_planet->commodities[k] == c ) {
+      if (sys == cur_system && landed) {
+         for (k=0; k<array_size(land_planet->commodities); k++) {
+            if (land_planet->commodities[k] == c) {
                /* current planet has the commodity of interest */
                curMinPrice = land_planet->commodityPrice[k].sum / land_planet->commodityPrice[k].cnt;
                curMaxPrice = curMinPrice;
@@ -1547,7 +1510,6 @@ void map_renderCommod( double bx, double by, double x, double y,
                   }
                }
             }
-
 
             /* Calculate best and worst profits */
             if ( maxPrice > 0 ) {
@@ -1636,11 +1598,9 @@ void map_renderCommod( double bx, double by, double x, double y,
    }
 }
 
-
 /*
  * Renders the economy information
  */
-
 static void map_renderCommodIgnorance( double x, double y, StarSystem *sys, Commodity *c ) {
    int textw;
    char buf[80], *line2;
@@ -1656,7 +1616,6 @@ static void map_renderCommodIgnorance( double x, double y, StarSystem *sys, Comm
    textw = gl_printWidthRaw( &gl_smallFont, buf );
    gl_printRaw( &gl_smallFont,x + sys->pos.x *map_zoom- textw/2, y + (sys->pos.y+10)*map_zoom, &cRed, -1, buf );
 }
-
 
 static int factionPresenceCompare( const void *a, const void *b )
 {
@@ -1680,15 +1639,15 @@ static int factionPresenceCompare( const void *a, const void *b )
  */
 void map_updateFactionPresence( const unsigned int wid, const char *name, const StarSystem *sys, int omniscient )
 {
-   int    i, j, matched;
    size_t l;
    char   buf[STRMAX_SHORT] = {'\0'};
-   FactionPresence *presence, *p;
+   FactionPresence *presence;
    char col;
 
    /* Build the faction presence array. */
    presence = array_create( FactionPresence );
-   for (i=0; i<array_size(sys->presence); i++) {
+   for (int i=0; i<array_size(sys->presence); i++) {
+      int matched;
       FactionPresence fp;
       if (sys->presence[i].value <= 0.)
          continue;
@@ -1707,7 +1666,7 @@ void map_updateFactionPresence( const unsigned int wid, const char *name, const 
 
       /* Try to add to existing. */
       matched = 0;
-      for (j=0; j<array_size(presence); j++) {
+      for (int j=0; j<array_size(presence); j++) {
          if (strcmp(fp.name,presence[j].name)==0) {
             presence[j].value += fp.value;
             matched = 1;
@@ -1721,8 +1680,8 @@ void map_updateFactionPresence( const unsigned int wid, const char *name, const 
    qsort( presence, array_size(presence), sizeof(FactionPresence), factionPresenceCompare );
 
    l = 0;
-   for (i=0; i<array_size(presence); i++) {
-      p = &presence[i];
+   for (int i=0; i<array_size(presence); i++) {
+      FactionPresence *p = &presence[i];
       if (faction_exists( p->name ))
          col = faction_getColourChar( faction_get(p->name) );
       else
@@ -1759,11 +1718,7 @@ static int map_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
    (void) data;
    (void) rx;
    (void) ry;
-   int i;
-   double x,y, t;
-   StarSystem *sys;
-
-   t = 15.*15.; /* threshold */
+   const double t = 15.*15.; /* threshold */
 
    switch (event->type) {
    case SDL_MOUSEWHEEL:
@@ -1787,8 +1742,9 @@ static int map_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
          my -= h/2 - map_ypos;
          map_drag = 1;
 
-         for (i=0; i<array_size(systems_stack); i++) {
-            sys = system_getIndex( i );
+         for (int i=0; i<array_size(systems_stack); i++) {
+            double x, y;
+            StarSystem *sys = system_getIndex( i );
 
             if (sys_isFlag(sys, SYSTEM_HIDDEN))
                continue;
@@ -1868,27 +1824,25 @@ static void map_buttonZoom( unsigned int wid, const char* str )
  */
 static void map_genModeList(void)
 {
-   int i,j,k,l;
-   Planet *p;
-   StarSystem *sys;
+   int l;
    int totGot = 0;
-   const char *odd_template, *even_template, *commod_text;
+   const char *odd_template, *even_template;
 
    if ( commod_known == NULL )
       commod_known = malloc(sizeof(Commodity*) * commodity_getN());
    memset(commod_known,0,sizeof(Commodity*)*commodity_getN());
-   for (i=0; i<array_size(systems_stack); i++) {
-      sys = system_getIndex( i );
-      for ( j=0 ; j<array_size(sys->planets); j++) {
-         p = sys->planets[j];
-         for ( k=0; k<array_size(p->commodities); k++) {
-            if ( p->commodityPrice[k].cnt > 0 ) {/*commodity is known about*/
+   for (int i=0; i<array_size(systems_stack); i++) {
+      StarSystem *sys = system_getIndex( i );
+      for (int j=0 ; j<array_size(sys->planets); j++) {
+         Planet *p = sys->planets[j];
+         for (int k=0; k<array_size(p->commodities); k++) {
+            if (p->commodityPrice[k].cnt > 0 ) {/*commodity is known about*/
                /* find out which commodity this is */
-               for ( l=0 ; l<totGot; l++) {
+               for (l=0 ; l<totGot; l++) {
                   if ( p->commodities[k] == commod_known[l] )
                      break;
                }
-               if ( l == totGot ) {
+               if (l == totGot) {
                   commod_known[totGot] = p->commodities[k];
                   totGot++;
                }
@@ -1897,7 +1851,7 @@ static void map_genModeList(void)
          }
       }
    }
-   for ( i=0; i<array_size(map_modes); i++)
+   for (int i=0; i<array_size(map_modes); i++)
       free( map_modes[i] );
    array_free ( map_modes );
    map_modes = array_create_size( char*, 2*totGot + 1 );
@@ -1906,8 +1860,8 @@ static void map_genModeList(void)
 
    even_template = _("%s: Cost");
    odd_template = _("%s: Trade");
-   for ( i=0; i<totGot; i++ ) {
-      commod_text = _(commod_known[i]->name);
+   for (int i=0; i<totGot; i++ ) {
+      const char *commod_text = _(commod_known[i]->name);
       asprintf( &array_grow( &map_modes ), even_template, commod_text );
       asprintf( &array_grow( &map_modes ), odd_template, commod_text );
    }
@@ -1921,9 +1875,8 @@ static void map_genModeList(void)
  */
 static void map_modeUpdate( unsigned int wid, const char* str )
 {
-  (void)str;
-  int listpos;
-   listpos=toolkit_getListPos( wid, "lstMapMode" );
+   (void) str;
+   int listpos = listpos=toolkit_getListPos( wid, "lstMapMode" );
    if ( listMapModeVisible==2) {
       listMapModeVisible=1;
    } else if ( listMapModeVisible == 1 ) {
@@ -1955,7 +1908,6 @@ static void map_modeActivate( unsigned int wid, const char* str )
    map_modeUpdate( wid, str );
    window_destroyWidget( wid, str );
 }
-
 
 static void map_setMinimal( unsigned int wid, int value )
 {
@@ -2036,16 +1988,14 @@ static void map_buttonCommodity( unsigned int wid, const char* str )
    }
 }
 
-
 /**
  * @brief Cleans up the map stuff.
  */
 static void map_window_close( unsigned int wid, const char *str )
 {
-   int i;
-   free ( commod_known );
+   free( commod_known );
    commod_known = NULL;
-   for ( i=0; i<array_size(map_modes); i++ )
+   for (int i=0; i<array_size(map_modes); i++)
       free ( map_modes[i] );
    array_free ( map_modes );
    map_modes = NULL;
@@ -2059,19 +2009,15 @@ void map_cleanup (void)
    map_clear();
 }
 
-
 /**
  * @brief Closes the map.
  */
 void map_close (void)
 {
-   unsigned int wid;
-
-   wid = window_get(MAP_WDWNAME);
+   unsigned int wid = window_get(MAP_WDWNAME);
    if (wid > 0)
       window_destroy(wid);
 }
-
 
 /**
  * @brief Sets the map to safe defaults
@@ -2109,7 +2055,6 @@ static void map_reset (void)
    map_alpha_markers      = 1.;
 }
 
-
 /**
  * @brief Tries to select the current system.
  */
@@ -2121,7 +2066,6 @@ static void map_selectCur (void)
       /* will probably segfault now */
       map_selected = -1;
 }
-
 
 /**
  * @brief Gets the destination system.
@@ -2139,7 +2083,6 @@ StarSystem* map_getDestination( int *jumps )
 
    return array_back( map_path );
 }
-
 
 /**
  * @brief Updates the map after a jump.
@@ -2181,7 +2124,6 @@ void map_jump (void)
    gui_setNav();
 }
 
-
 /**
  * @brief Selects the system in the map.
  *
@@ -2189,10 +2131,9 @@ void map_jump (void)
  */
 void map_select( const StarSystem *sys, char shifted )
 {
-   unsigned int wid;
    int autonav;
+   unsigned int wid = 0;
 
-   wid = 0;
    if (window_exists(MAP_WDWNAME))
       wid = window_get(MAP_WDWNAME);
 
@@ -2529,7 +2470,6 @@ StarSystem** map_getJumpPath( const char* sysstart, const char* sysend,
    return res;
 }
 
-
 /**
  * @brief Marks maps around a radius of currently system as known.
  *
@@ -2539,20 +2479,17 @@ StarSystem** map_getJumpPath( const char* sysstart, const char* sysend,
  */
 int map_map( const Outfit *map )
 {
-   int i;
-
-   for (i=0; i<array_size(map->u.map->systems);i++)
+   for (int i=0; i<array_size(map->u.map->systems);i++)
       sys_setFlag(map->u.map->systems[i], SYSTEM_KNOWN);
 
-   for (i=0; i<array_size(map->u.map->assets);i++)
+   for (int i=0; i<array_size(map->u.map->assets);i++)
       planet_setKnown(map->u.map->assets[i]);
 
-   for (i=0; i<array_size(map->u.map->jumps);i++)
+   for (int i=0; i<array_size(map->u.map->jumps);i++)
       jp_setFlag(map->u.map->jumps[i], JP_KNOWN);
 
    return 1;
 }
-
 
 /**
  * @brief Check to see if map data is limited to locations which are known
@@ -2563,37 +2500,30 @@ int map_map( const Outfit *map )
  */
 int map_isUseless( const Outfit* map )
 {
-   int i;
-   Planet *p;
-
-   for (i=0; i<array_size(map->u.map->systems);i++)
+   for (int i=0; i<array_size(map->u.map->systems);i++)
       if (!sys_isKnown(map->u.map->systems[i]))
          return 0;
 
-   for (i=0; i<array_size(map->u.map->assets);i++) {
-      p = map->u.map->assets[i];
+   for (int i=0; i<array_size(map->u.map->assets);i++) {
+      Planet *p = map->u.map->assets[i];
       if (!planet_hasSystem( p->name ) )
          continue;
       if (!planet_isKnown(p))
          return 0;
    }
 
-   for (i=0; i<array_size(map->u.map->jumps);i++)
+   for (int i=0; i<array_size(map->u.map->jumps);i++)
       if (!jp_isKnown(map->u.map->jumps[i]))
          return 0;
 
    return 1;
 }
 
-
 /**
  * @brief Maps a local map.
  */
 int localmap_map( const Outfit *lmap )
 {
-   int i;
-   JumpPoint *jp;
-   Planet *p;
    double detect, mod;
 
    if (cur_system==NULL)
@@ -2602,8 +2532,8 @@ int localmap_map( const Outfit *lmap )
    mod = pow2( 200. / (cur_system->interference + 200.) );
 
    detect = lmap->u.lmap.jump_detect;
-   for (i=0; i<array_size(cur_system->jumps); i++) {
-      jp = &cur_system->jumps[i];
+   for (int i=0; i<array_size(cur_system->jumps); i++) {
+      JumpPoint *jp = &cur_system->jumps[i];
       if (jp_isFlag(jp, JP_EXITONLY) || jp_isFlag(jp, JP_HIDDEN))
          continue;
       if (mod*jp->hide <= detect)
@@ -2611,8 +2541,8 @@ int localmap_map( const Outfit *lmap )
    }
 
    detect = lmap->u.lmap.asset_detect;
-   for (i=0; i<array_size(cur_system->planets); i++) {
-      p = cur_system->planets[i];
+   for (int i=0; i<array_size(cur_system->planets); i++) {
+      Planet *p = cur_system->planets[i];
       if (!planet_hasSystem( p->name ) )
          continue;
       if (mod*p->hide <= detect)
@@ -2627,9 +2557,6 @@ int localmap_map( const Outfit *lmap )
  */
 int localmap_isUseless( const Outfit *lmap )
 {
-   int i;
-   JumpPoint *jp;
-   Planet *p;
    double detect, mod;
 
    if (cur_system==NULL)
@@ -2638,8 +2565,8 @@ int localmap_isUseless( const Outfit *lmap )
    mod = pow2( 200. / (cur_system->interference + 200.) );
 
    detect = lmap->u.lmap.jump_detect;
-   for (i=0; i<array_size(cur_system->jumps); i++) {
-      jp = &cur_system->jumps[i];
+   for (int i=0; i<array_size(cur_system->jumps); i++) {
+      JumpPoint *jp = &cur_system->jumps[i];
       if (jp_isFlag(jp, JP_EXITONLY) || jp_isFlag(jp, JP_HIDDEN))
          continue;
       if ((mod*jp->hide <= detect) && !jp_isKnown( jp ))
@@ -2647,14 +2574,13 @@ int localmap_isUseless( const Outfit *lmap )
    }
 
    detect = lmap->u.lmap.asset_detect;
-   for (i=0; i<array_size(cur_system->planets); i++) {
-      p = cur_system->planets[i];
+   for (int i=0; i<array_size(cur_system->planets); i++) {
+      Planet *p = cur_system->planets[i];
       if ((mod*p->hide <= detect) && !planet_isKnown( p ))
          return 0;
    }
    return 1;
 }
-
 
 /**
  * @brief Shows a map at x, y (relative to wid) with size w,h.
@@ -2690,7 +2616,6 @@ void map_show( int wid, int x, int y, int w, int h, double zoom )
          "cstMap", 1, map_render, map_mouse, NULL );
 }
 
-
 /**
  * @brief Centers the map on a planet.
  *
@@ -2699,10 +2624,8 @@ void map_show( int wid, int x, int y, int w, int h, double zoom )
  */
 int map_center( const char *sys )
 {
-   StarSystem *ssys;
-
    /* Get the system. */
-   ssys = system_get( sys );
+   StarSystem *ssys = system_get( sys );
    if (ssys == NULL)
       return -1;
 

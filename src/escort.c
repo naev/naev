@@ -1,13 +1,11 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
 /**
  * @file escort.c
  *
  * @brief Handles the player's escorts.
  */
-
 /** @cond */
 #include "naev.h"
 /** @endcond */
@@ -23,13 +21,11 @@
 #include "nstring.h"
 #include "player.h"
 
-
 /*
  * Prototypes.
  */
 /* Static */
 static int escort_command( Pilot *parent, const char *cmd, unsigned int index );
-
 
 /**
  * @brief Adds an escort to the escort list of a pilot.
@@ -41,7 +37,7 @@ static int escort_command( Pilot *parent, const char *cmd, unsigned int index );
  *    @param persist True if escort should respawn on takeoff/landing.
  *    @return 0 on success.
  */
-int escort_addList( Pilot *p, char *ship, EscortType_t type,
+int escort_addList( Pilot *p, const char *ship, EscortType_t type,
       unsigned int id, int persist )
 {
    Escort_t *escort;
@@ -68,7 +64,6 @@ void escort_freeList( Pilot *p )
    array_free(p->escorts);
    p->escorts = NULL;
 }
-
 
 /**
  * @brief Remove from escorts list.
@@ -113,8 +108,8 @@ void escort_rmList( Pilot *p, unsigned int id )
  *    @param dockslot The outfit slot which launched the escort (-1 if N/A)
  *    @return The ID of the escort on success.
  */
-unsigned int escort_create( Pilot *p, char *ship,
-      Vector2d *pos, Vector2d *vel, double dir,
+unsigned int escort_create( Pilot *p, const char *ship,
+      const Vector2d *pos, const Vector2d *vel, double dir,
       EscortType_t type, int add, int dockslot )
 {
    const Ship *s;
