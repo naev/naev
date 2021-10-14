@@ -73,4 +73,3 @@ function autoequip( p )
    end
    return success
 end
-

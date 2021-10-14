@@ -563,11 +563,13 @@ function optimize.optimize( p, cores, outfit_list, params )
                table.insert( ja, c )
                table.insert( ar, 1 )
             end
-            rn = params.type_range[ stats.type ]
-            if rn then
-               table.insert( ia, rn.id )
-               table.insert( ja, c )
-               table.insert( ar, 1 )
+            if stats.name ~= stats.type then
+               rn = params.type_range[ stats.type ]
+               if rn then
+                  table.insert( ia, rn.id )
+                  table.insert( ja, c )
+                  table.insert( ar, 1 )
+               end
             end
             if stats.type ~= stats.typebroad then
                rn = params.type_range[ stats.typebroad ]
