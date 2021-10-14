@@ -180,10 +180,11 @@ function timer ()
       sai(_([["Let's now practice combat. You won't need this if you stick to the safe systems in the Empire core, but sadly, we are likely to encounter hostile ships if you venture further out, so you need to know how to defend yourself. Fortunately, your ship comes pre-equipped with a state-of-the-art laser cannon for just that reason!"]]))
       sai(fmt.f(_([["I will launch a combat practice drone off of {pntname} now for you to fight. Don't worry; our drone does not have any weapons and will not harm you. Target the drone by clicking on it or by pressing {targethostilekey}, then use your weapons, controlled with {primarykey} and {secondarykey}, to take out the drone!"
 "Ah, yes, one more tip before I launch the drone: if your weapons start losing their accuracy, it's because they're becoming overheated. You can remedy that by pressing {cooldownkey} or double tapping {reversekey} to engage active cooling."]]),{pntname=dest_planet:name(), targethostilekey=tut.getKey("target_hostile"), primarykey=tut.getKey("primary"), secondarykey=tut.getKey("secondary"), cooldownkey=tut.getKey("cooldown"), reversekey=tut.getKey("reverse")}))
+      sai(_("The Drone's AI can be a bit quirky, but don't pay attention to it. Being an artificial intelligence it doesn't have feelings, you know? Not like me, ha ha."))
       vn.done( tut.shipai.transition )
       vn.run()
 
-      spawn_drone()
+      spawn_captain_tp ()
    end
 end
 
@@ -312,7 +313,7 @@ function enter_timer ()
       vn.run()
 
    elseif stage == 5 and system.cur() == missys then
-      spawn_drone()
+      spawn_captain_tp ()
 
    elseif stage == 6 and system.cur() ~= missys then
       vn.clear()
@@ -354,7 +355,7 @@ function pilot_death_timer ()
    vn.run()
 end
 
-function spawn_drone ()
+function spawn_captain_tp ()
    local p = pilot.add( "Hyena", "Dummy", dest_planet, _("Captain T. Practice"), {ai="baddie_norun"} )
    p:outfitRm( "all" )
    p:outfitRm( "cores" )
@@ -371,6 +372,93 @@ function spawn_drone ()
    p:setVisplayer()
    p:setHilight()
    hook.pilot( p, "death", "pilot_death" )
+
+   captainTP = p
+   hook.timer(7, "taunt")
+end
+
+local tp_taunt_healthy = {
+   _("Bring on the pain!"),
+   _("You're no match for the fearsome T. Practice!"),
+   _("I've been shot by ships ten times your size!"),
+   _("Let's get it on!"),
+   _("I  haven't got all day."),
+   _("You're as threatening as an unborn child!"),
+   _("I've snacked on foes much larger than yourself!"),
+   _("Who's your daddy? I am!"),
+   _("You're less intimidating than a fruit cake!"),
+   _("My ship is the best in the galaxy!"),
+   _("Bow down before me, and I may spare your life!"),
+   _("Someone's about to set you up the bomb."),
+   _("Your crew quarters are as pungent as an over-ripe banana!"),
+   _("I'm invincible, I cannot be vinced!"),
+   _("You think you can take me?"),
+   _("When I'm done, you'll look like pastrami!"),
+   _("I've got better things to do. Hurry up and die!"),
+   _("You call that a barrage? Pah!"),
+   _("You mother isn't much to look at, either!"),
+   _("You're not exactly a crack-shot, are you?"),
+   _("I've had meals that gave me more resistance than you!"),
+   _("You're a pathetic excuse for a pilot!"),
+   _("Surrender or face destruction!"),
+   _("That all you got?"),
+   _("I am Iron Man!"),
+   _("My shields are holding fine!"),
+   _("You'd be dead if I'd remembered to pack my weapons!"),
+   _("I'll end you!"),
+   _("… Right after I finish eating this bucket of fried chicken!"),
+   _("Em 5 Fried Chicken. Eat only the best."),
+   _("This is your last chance to surrender!"),
+   _("Don't do school, stay in milk."),
+   _("I'm going to report you to the NPC Rights watchdog."),
+   _("Keep going, see what happens!"),
+   _("You don't scare me!"),
+   _("What do you think this is, knitting hour?"),
+   _("I mean, good lord, man."),
+   _("It's been several minutes of non-stop banter!"),
+   _("Haven't I sufficiently annoyed you yet?"),
+   _("Go on, shoot me."),
+   _("You can do it! I believe in you."),
+   _("Shoot me!"),
+   _("Okay, listen. I'm doing this for attention."),
+   _("But if you don't shoot me, I'll tell the galaxy your terrible secret."),
+}
+local tp_taunt_weak = {
+   _("Okay, that's about enough."),
+   _("You can stop now."),
+   _("I was wrong about you."),
+   _("Forgive and forget?"),
+   _("Let's be pals, I'll buy you an ale!"),
+   _("Game over, you win."),
+   _("I've got a wife and kids! And a cat!"),
+   _("Surely you must have some mercy?"),
+   _("Please stop!"),
+   _("I'm sorry!"),
+   _("Leave me alone!"),
+   _("What did I ever do to you?"),
+   _("I didn't sign up for this!"),
+   _("Not my ship, anything but my ship!"),
+   _("We can talk this out!"),
+   _("I'm scared! Hold me."),
+   _("Make the bad man go away, mommy!"),
+   _("If you don't stop I'll cry!"),
+   _("Here I go, filling my cabin up with tears."),
+   _("U- oh it a-pears my te-rs hav- da--age t-e co-mand cons-le."),
+   _("I a- T. Pr-ct---! Y-- w--l fe-r m- na-e --- Bzzzt!"),
+}
+function taunt ()
+   if not captainTP or not captainTP:exists() then
+      return
+   end
+
+   local armour, shield = captainTP:health()
+   if shield >= 40 then
+      captainTP:comm( tp_taunt_healthy[ rnd.rnd(1,#tp_taunt_healthy) ] )
+   else
+      captainTP:comm( tp_taunt_weak[ rnd.rnd(1,#tp_taunt_weak) ] )
+   end
+
+   hook.timer( 4, "taunt" )
 end
 
 function abort ()
