@@ -639,6 +639,9 @@ function vn.StateWait:_keypressed( key )
    elseif key=="home" then
       vn._buffer_y = 0
       return true
+   elseif key=="end" then
+      vn._buffer_y = (vn.textbox_h - 40) - vn.textbox_font:getLineHeight() * (#self._lines)
+      return true
    end
    wait_scrollorfinish( self )
    return true
