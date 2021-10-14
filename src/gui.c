@@ -426,7 +426,7 @@ static void gui_renderPlanetTarget (void)
       AsteroidAnchor *field = &cur_system->asteroids[player.p->nav_anchor];
       Asteroid *ast = &field->asteroids[player.p->nav_asteroid];
       const AsteroidType *at = space_getType( ast->type );
-      c     = &cWhite;
+      c = &cWhite;
 
       /* Recover the right gfx */
       if (ast->gfxID >= array_size(at->gfxs)) {
@@ -1515,11 +1515,14 @@ void gui_renderJumpPoint( int ind, RadarShape shape, double w, double h, double 
 {
    GLfloat cx, cy, x, y, r, vr;
    glColour col;
-   JumpPoint *jp;
    char buf[STRMAX_SHORT];
+   JumpPoint *jp = &cur_system->jumps[ind];
+
+   /* Check if known */
+   if (!jp_isKnown(jp))
+      return;
 
    /* Default values. */
-   jp    = &cur_system->jumps[ind];
    r     = jumppoint_gfx->sw/2. / res;
    vr    = overlay ? jp->mo.radius : MAX( r, 5. );
    if (overlay) {
@@ -1530,10 +1533,6 @@ void gui_renderJumpPoint( int ind, RadarShape shape, double w, double h, double 
       cx    = (jp->pos.x - player.p->solid->pos.x) / res;
       cy    = (jp->pos.y - player.p->solid->pos.y) / res;
    }
-
-   /* Check if known */
-   if (!jp_isKnown(jp))
-      return;
 
    /* Check if in range. */
    if (shape == RADAR_RECT) {
