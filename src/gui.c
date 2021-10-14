@@ -1516,6 +1516,7 @@ void gui_renderJumpPoint( int ind, RadarShape shape, double w, double h, double 
    GLfloat cx, cy, x, y, r, vr;
    glColour col;
    char buf[STRMAX_SHORT];
+   StarSystem *s;
    JumpPoint *jp = &cur_system->jumps[ind];
 
    /* Check if known */
@@ -1560,6 +1561,16 @@ void gui_renderJumpPoint( int ind, RadarShape shape, double w, double h, double 
       cy += map_overlay_center_y();
       w  *= 2.;
       h  *= 2.;
+   }
+
+   /* See if far side is marked. */
+   s = jp->target;
+   if (sys_isKnown(s) && sys_isMarked(s)) {
+      glColour highlighted = cRadar_hilight;
+      highlighted.a = 0.3;
+      glUseProgram( shaders.hilight.program );
+      glUniform1f( shaders.hilight.dt, animation_dt );
+      gl_renderShader( cx, cy, vr*3.0, vr*3.0, 0., &shaders.hilight, &highlighted, 1 );
    }
 
    if (ind == player.p->nav_hyperspace)
