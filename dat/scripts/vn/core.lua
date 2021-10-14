@@ -92,7 +92,6 @@ function vn._checkstarted()
    end
 end
 
-
 --[[--
 Sets the current drawing colour of the VN.
 
@@ -166,7 +165,6 @@ local function _draw_character( c )
    graphics.draw( c.image, x, y, r, flip*scale, scale )
    graphics.setShader()
 end
-
 
 --[[
 -- Main drawing function.
@@ -276,7 +274,6 @@ local function _draw_to_canvas( canvas )
    graphics.setCanvas( oldcanvas )
 end
 
-
 --[[--
 Main updating function. Has to be called each loop in "love.update"
    @tparam number dt Update tick in seconds.
@@ -316,7 +313,6 @@ function vn.update(dt)
    s:update( dt )
 end
 
-
 --[[--
 Key press handler.
    @tparam string key Name of the key pressed.
@@ -344,7 +340,6 @@ function vn.keypressed( key )
    return s:keypressed( key )
 end
 
-
 --[[--
 Mouse press handler.
    @tparam number mx X position of the click.
@@ -356,7 +351,6 @@ function vn.mousepressed( mx, my, button )
    local s = vn._states[ vn._state ]
    return s:mousepressed( mx, my, button )
 end
-
 
 -- Helpers
 --[[--
@@ -930,7 +924,6 @@ function vn.StateAnimation:_drawoverride( _dt )
    self._drawoverride( _animation_alpha(self), self._params )
 end
 
-
 --[[--
 A visual novel character.
 
@@ -1218,7 +1211,6 @@ function vn.musicStop( filename )
    end )
 end
 
-
 --[[--
 Sets the pitch for playing music.
 
@@ -1269,7 +1261,6 @@ function vn.animation( seconds, func, drawfunc, transition, initfunc, drawoverri
    vn._checkstarted()
    table.insert( vn._states, vn.StateAnimation.new( seconds, func, drawfunc, transition, initfunc, drawoverride ) )
 end
-
 
 --[[--
 Creates a transition state.
@@ -1382,7 +1373,6 @@ function vn.custom()
    return s
 end
 
-
 --[[--
 Sets the shader to be used for post-processing the VN.
 
@@ -1458,7 +1448,6 @@ function vn._checkDone()
    end
 end
 
-
 --[[--
 Checks to see if the VN is done running or not.
    @treturn bool true if it is done running, false otherwise
@@ -1466,7 +1455,6 @@ Checks to see if the VN is done running or not.
 function vn.isDone()
    return vn._state > #vn._states
 end
-
 
 --[[--
 Runs the visual novel environment.
