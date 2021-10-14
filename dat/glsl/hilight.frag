@@ -13,5 +13,5 @@ void main(void) {
    float alpha = smoothstep(-1.0, 0.0, -d);
    color_out   = color;
    color_out.a *= alpha;
+   color_out.a *= 0.6 + 0.4*length(pos);
 }
-
