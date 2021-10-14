@@ -1,14 +1,11 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
 /**
  * @file nlua_player.c
  *
  * @brief Lua player module.
  */
-
-
 /** @cond */
 #include <lauxlib.h>
 #include <lua.h>
@@ -46,9 +43,7 @@
 #include "pause.h"
 #include "player.h"
 
-
 #define PLAYER_CHECK() if (player.p == NULL) return 0
-
 
 /* Player methods. */
 static int playerL_getname( lua_State *L );
@@ -150,7 +145,6 @@ static const luaL_Reg playerL_methods[] = {
    {0,0}
 }; /**< Player Lua methods. */
 
-
 /**
  * @brief Loads the player Lua library.
  *    @param env Lua environment.
@@ -160,7 +154,6 @@ int nlua_loadPlayer( nlua_env env )
    nlua_register(env, "player", playerL_methods, 0);
    return 0;
 }
-
 
 /**
  * @brief Lua bindings to interact with the player.
@@ -449,7 +442,6 @@ static int playerL_getPilot( lua_State *L )
    return 1;
 }
 
-
 /**
  * @brief Gets a player's jump range based on their remaining fuel.
  *
@@ -464,7 +456,6 @@ static int playerL_jumps( lua_State *L )
    lua_pushnumber(L, pilot_getJumps(player.p));
    return 1;
 }
-
 
 /**
  * @brief Gets the amount of fuel a player has.
@@ -482,7 +473,6 @@ static int playerL_fuel( lua_State *L )
    lua_pushnumber(L,player.p->fuel_consumption);
    return 2;
 }
-
 
 /**
  * @brief Refuels the player.
@@ -513,7 +503,6 @@ static int playerL_refuel( lua_State *L )
    return 0;
 }
 
-
 /**
  * @brief Checks to see if the player has autonav enabled.
  *
@@ -527,7 +516,6 @@ static int playerL_autonav( lua_State *L )
    lua_pushboolean( L, player_isFlag( PLAYER_AUTONAV ) );
    return 1;
 }
-
 
 /**
  * @brief Gets the player's long term autonav destination.
@@ -555,7 +543,6 @@ static int playerL_autonavDest( lua_State *L )
    return 2;
 }
 
-
 /**
  * @brief Stops the players autonav if active.
  *
@@ -573,7 +560,6 @@ static int playerL_autonavAbort( lua_State *L )
    return 0;
 }
 
-
 /**
  * @brief Resets the game speed without disabling autonav.
  *
@@ -589,8 +575,6 @@ static int playerL_autonavReset( lua_State *L )
    player.autonav_timer = timer;
    return 0;
 }
-
-
 
 /**
  * @brief Puts the game in cinematics mode or back to regular mode.
@@ -671,7 +655,6 @@ static int playerL_cinematics( lua_State *L )
    return 0;
 }
 
-
 /**
  * @brief Applies the damage effects to the player.
  *
@@ -686,7 +669,6 @@ static int playerL_damageSPFX( lua_State *L )
    return 0;
 }
 
-
 /**
  * @brief Takes a screenshot (same as the keyboard action).
  *
@@ -698,7 +680,6 @@ static int playerL_screenshot( lua_State *L )
    player_screenshot();
    return 0;
 }
-
 
 /**
  * @brief Unboards the player from its boarded target.
@@ -717,7 +698,6 @@ static int playerL_unboard( lua_State *L )
    return 0;
 }
 
-
 /**
  * @brief Checks to see if the player is landed or not.
  *
@@ -729,7 +709,6 @@ static int playerL_isLanded( lua_State *L )
    lua_pushboolean( L, landed );
    return 1;
 }
-
 
 /**
  * @brief Forces the player to take off if they are landed.
@@ -752,7 +731,6 @@ static int playerL_takeoff( lua_State *L )
 
    return 0;
 }
-
 
 /**
  * @brief Automagically lands the player on a planet.
@@ -794,7 +772,6 @@ static int playerL_land( lua_State *L )
    return 0;
 }
 
-
 /**
  * @brief Allows or disallows the player to land.
  *
@@ -833,7 +810,6 @@ static int playerL_allowLand( lua_State *L )
    }
    return 0;
 }
-
 
 /**
  * @brief Sets the active land window.
@@ -890,7 +866,6 @@ static int playerL_landWindow( lua_State *L )
    return 1;
 }
 
-
 /**
  * @brief Forces the player to close comm if they are chatting.
  *
@@ -903,7 +878,6 @@ static int playerL_commclose( lua_State *L )
    comm_queueClose();
    return 0;
 }
-
 
 /**
  * @brief Gets the names of the player's ships.
@@ -930,7 +904,6 @@ static int playerL_ships( lua_State *L )
    }
    return 1;
 }
-
 
 /**
  * @brief Gets the outfits for one of the player's ships.
@@ -989,7 +962,6 @@ static int playerL_shipOutfits( lua_State *L )
    return 1;
 }
 
-
 /**
  * @brief Gets all the outfits the player owns.
  *
@@ -1010,7 +982,6 @@ static int playerL_outfits( lua_State *L )
    }
    return 1;
 }
-
 
 /**
  * @brief Gets the number of outfits the player owns in their list (excludes equipped on ships).
@@ -1127,7 +1098,6 @@ static int playerL_rmOutfit( lua_State *L )
    return 0;
 }
 
-
 /**
  * @brief Gives the player a new ship.
  *
@@ -1157,7 +1127,6 @@ static int playerL_addShip( lua_State *L )
    lua_pushstring( L, new_ship->name );
    return 1;
 }
-
 
 /**
  * @brief Swaps the player's current ship with a ship they own by name.
@@ -1241,11 +1210,9 @@ static int playerL_misnActive( lua_State *L )
  */
 static int playerL_misnDone( lua_State *L )
 {
-   const char *str;
    int id;
-
    /* Handle parameters. */
-   str = luaL_checkstring(L, 1);
+   const char *str = luaL_checkstring(L, 1);
 
    /* Get mission ID. */
    id = mission_getID( str );
@@ -1258,7 +1225,6 @@ static int playerL_misnDone( lua_State *L )
    return 1;
 }
 
-
 /**
  * @brief Checks to see if the player has an event active.
  *
@@ -1270,11 +1236,8 @@ static int playerL_misnDone( lua_State *L )
  */
 static int playerL_evtActive( lua_State *L )
 {
-   int evtid;
-   const char *str;
-
-   str  = luaL_checkstring(L,1);
-   evtid = event_dataID( str );
+   const char *str= luaL_checkstring(L,1);
+   int evtid      = event_dataID( str );
    if (evtid < 0) {
       NLUA_ERROR(L, _("Event '%s' not found in stack"), str);
       return 0;
@@ -1283,7 +1246,6 @@ static int playerL_evtActive( lua_State *L )
    lua_pushboolean( L, event_alreadyRunning( evtid ) );
    return 1;
 }
-
 
 /**
  * @brief Checks to see if player has done an event.
@@ -1297,11 +1259,9 @@ static int playerL_evtActive( lua_State *L )
  */
 static int playerL_evtDone( lua_State *L )
 {
-   const char *str;
    int id;
-
    /* Handle parameters. */
-   str = luaL_checkstring(L, 1);
+   const char *str = luaL_checkstring(L, 1);
 
    /* Get event ID. */
    id = event_dataID( str );
@@ -1313,7 +1273,6 @@ static int playerL_evtDone( lua_State *L )
    lua_pushboolean( L, player_eventAlreadyDone( id ) );
    return 1;
 }
-
 
 /**
  * @brief Teleports the player to a new planet or system (only if not landed).
@@ -1437,7 +1396,6 @@ static int playerL_teleport( lua_State *L )
    return 0;
 }
 
-
 /**
  * @brief Gets the dt_mod of the player, which multiplies all time stuff.
  */
@@ -1446,4 +1404,3 @@ static int playerL_dt_mod( lua_State *L )
    lua_pushnumber(L,dt_mod);
    return 1;
 }
-
