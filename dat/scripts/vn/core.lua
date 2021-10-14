@@ -337,7 +337,10 @@ function vn.keypressed( key )
 
    if vn.isDone() then return end
    local s = vn._states[ vn._state ]
-   return s:keypressed( key )
+   --return s:keypressed( key )
+   -- Always eat all keys for now
+   s:keypressed( key )
+   return true
 end
 
 --[[--
@@ -608,6 +611,8 @@ function vn.StateWait:_init()
    local _maxw, wrappedtext = font:getWrap( vn._buffer, vn.textbox_w-2*bw )
    self._lines = wrappedtext
    self._lh = font:getLineHeight()
+
+   self._scrolled = _check_scroll( self._lines )
 end
 function vn.StateWait:_draw()
    vn.setColor( vn._bufcol )
@@ -616,13 +621,15 @@ function vn.StateWait:_draw()
    end
    if _check_scroll( self._lines ) then
       graphics.print( "↓", self._font, self._x-5, self._y-5 )
-   else
+   elseif not self._scrolled then
       graphics.print( self._text, self._font, self._x, self._y )
    end
 end
 local function wait_scrollorfinish( self )
    if _check_scroll( self._lines ) then
       vn._buffer_y = vn._buffer_y - self._lh
+   elseif self._scrolled then
+      self._scrolled = false
    else
       _finish(self)
    end
@@ -643,6 +650,25 @@ function vn.StateWait:_keypressed( key )
       vn._buffer_y = (vn.textbox_h - 40) - vn.textbox_font:getLineHeight() * (#self._lines)
       return true
    end
+
+   local whitelist = {
+      "enter",
+      "space",
+      "right",
+      "tabe",
+      "escape",
+   }
+   local found = false
+   for k,v in ipairs(whitelist) do
+      if key == v then
+         found = true
+         break
+      end
+   end
+   if not found then
+      return false
+   end
+
    wait_scrollorfinish( self )
    return true
 end
