@@ -1041,10 +1041,10 @@ static int systemL_mrkClear( lua_State *L )
 /**
  * @brief Adds a system marker.
  *
- * @usage mrk_id = system.mrkAdd( "Hello", vec2.new( 50, 30 ) ) -- Creates a marker at (50,30)
+ * @usage mrk_id = system.mrkAdd( vec2.new( 50, 30 ), "Hello" ) -- Creates a marker at (50,30)
  *
  *    @luatparam Vec2 v Position to display marker at.
- *    @luatparam string str String to display next to marker.
+ *    @luatparam[opt] string str String to display next to marker.
  *    @luatreturn number The id of the marker.
  * @luafunc mrkAdd
  */
