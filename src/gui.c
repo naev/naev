@@ -1,15 +1,11 @@
 /*
-
  * See Licensing and Copyright notice in naev.h
  */
-
 /**
  * @file gui.c
  *
  * @brief Contains the GUI stuff for the player.
  */
-
-
 /** @cond */
 #include <stdlib.h>
 
@@ -64,13 +60,11 @@
 #include "toolkit.h"
 #include "unidiff.h"
 
-
 #define XML_GUI_ID   "GUIs" /**< XML section identifier for GUI document. */
 #define XML_GUI_TAG  "gui" /**<  XML Section identifier for GUI tags. */
 
 #define RADAR_BLINK_PILOT        0.5 /**< Blink rate of the pilot target on radar. */
 #define RADAR_BLINK_PLANET       1. /**< Blink rate of the planet target on radar. */
-
 
 /* some blinking stuff. */
 static double blink_pilot     = 0.; /**< Timer on target blinking on radar. */
@@ -83,9 +77,7 @@ static gl_vbo *gui_radar_select_vbo = NULL;
 static int gui_getMessage     = 1; /**< Whether or not the player should receive messages. */
 static char *gui_name         = NULL; /**< Name of the GUI (for errors and such). */
 
-
 extern unsigned int land_wid; /**< From land.c */
-
 
 /**
  * GUI Lua stuff.
@@ -93,7 +85,6 @@ extern unsigned int land_wid; /**< From land.c */
 static nlua_env gui_env = LUA_NOREF; /**< Current GUI Lua environment. */
 static int gui_L_mclick = 0; /**< Use mouse click callback. */
 static int gui_L_mmove = 0; /**< Use mouse movement callback. */
-
 
 /**
  * Cropping.
@@ -205,7 +196,6 @@ static glTexture *gui_ico_hail      = NULL; /**< Hailing icon. */
 static glTexture *gui_target_planet = NULL; /**< Planet targeting icon. */
 static glTexture *gui_target_pilot  = NULL; /**< Pilot targeting icon. */
 
-
 /*
  * prototypes
  */
@@ -235,8 +225,6 @@ static int gui_doFunc( const char* func );
 static int gui_prepFunc( const char* func );
 static int gui_runFunc( const char* func, int nargs, int nret );
 
-
-
 /**
  * Sets the GUI to defaults.
  */
@@ -245,7 +233,6 @@ void gui_setDefaults (void)
    gui_setRadarResolution( player.radar_res );
    gui_clearMessages();
 }
-
 
 /**
  * @brief Initializes the message system.
@@ -260,7 +247,6 @@ void gui_messageInit( int width, int x, int y )
    gui_mesg_x = x;
    gui_mesg_y = y;
 }
-
 
 /**
  * @brief Scrolls up the message box.
@@ -283,7 +269,6 @@ void gui_messageScrollUp( int lines )
       o += mesg_max;
    o = mesg_max - 2*conf.mesg_visible - o;
 
-
    /* Calculate max line movement. */
    if (lines > o)
       lines = o;
@@ -291,7 +276,6 @@ void gui_messageScrollUp( int lines )
    /* Move viewpoint. */
    mesg_viewpoint = (mesg_viewpoint - lines) % mesg_max;
 }
-
 
 /**
  * @brief Scrolls up the message box.
@@ -323,7 +307,6 @@ void gui_messageScrollDown( int lines )
    mesg_viewpoint = (mesg_viewpoint + lines) % mesg_max;
 }
 
-
 /**
  * @brief Toggles if player should receive messages.
  *
@@ -333,7 +316,6 @@ void player_messageToggle( int enable )
 {
    gui_getMessage = enable;
 }
-
 
 /**
  * @brief Adds a mesg to the queue to be displayed on screen.
@@ -394,7 +376,6 @@ void player_message( const char *fmt, ... )
    free( buf );
 }
 
-
 /**
  * @brief Sets up rendering of planet and jump point targeting reticles.
  */
@@ -402,11 +383,6 @@ static void gui_renderPlanetTarget (void)
 {
    double x,y, r;
    const glColour *c;
-   Planet *planet;
-   JumpPoint *jp;
-   AsteroidAnchor *field;
-   Asteroid *ast;
-   const AsteroidType *at;
 
    /* no need to draw if pilot is dead */
    if (player_isFlag(PLAYER_DESTROYED) || player_isFlag(PLAYER_CREATING) ||
@@ -428,7 +404,7 @@ static void gui_renderPlanetTarget (void)
 
    /* Draw planet and jump point target graphics. */
    if (player.p->nav_hyperspace >= 0) {
-      jp = &cur_system->jumps[player.p->nav_hyperspace];
+      JumpPoint *jp = &cur_system->jumps[player.p->nav_hyperspace];
 
       c = &cGreen;
 
@@ -438,7 +414,7 @@ static void gui_renderPlanetTarget (void)
       gui_renderTargetReticles( &shaders.targetplanet, x, y, r, 0., c );
    }
    if (player.p->nav_planet >= 0) {
-      planet = cur_system->planets[player.p->nav_planet];
+      Planet *planet = cur_system->planets[player.p->nav_planet];
       c = planet_getColour( planet );
 
       x = planet->pos.x;
@@ -447,12 +423,12 @@ static void gui_renderPlanetTarget (void)
       gui_renderTargetReticles( &shaders.targetplanet, x, y, r, 0., c );
    }
    if (player.p->nav_asteroid >= 0) {
-      field = &cur_system->asteroids[player.p->nav_anchor];
-      ast   = &field->asteroids[player.p->nav_asteroid];
+      AsteroidAnchor *field = &cur_system->asteroids[player.p->nav_anchor];
+      Asteroid *ast = &field->asteroids[player.p->nav_asteroid];
+      const AsteroidType *at = space_getType( ast->type );
       c     = &cWhite;
 
       /* Recover the right gfx */
-      at = space_getType( ast->type );
       if (ast->gfxID >= array_size(at->gfxs)) {
          WARN(_("Gfx index out of range"));
          return;
@@ -464,7 +440,6 @@ static void gui_renderPlanetTarget (void)
       gui_renderTargetReticles( &shaders.targetship, x, y, r, 0., c );
    }
 }
-
 
 /**
  * @brief Renders planet and jump point targeting reticles.
@@ -491,7 +466,6 @@ static void gui_renderTargetReticles( const SimpleShader *shd, double x, double 
    glUniform1f(shd->paramf, radius);
    gl_renderShader( rx, ry, r, r, angle, shd, c, 1 );
 }
-
 
 /**
  * @brief Renders the players pilot target.
@@ -536,7 +510,6 @@ static void gui_renderPilotTarget (void)
 
    gui_renderTargetReticles( &shaders.targetship, p->solid->pos.x, p->solid->pos.y, p->ship->gfx_space->sw * 0.5, p->solid->dir, c );
 }
-
 
 /**
  * @brief Gets the intersection with the border.
@@ -587,7 +560,6 @@ static void gui_borderIntersection( double *cx, double *cy, double rx, double ry
    *cy += hh;
 }
 
-
 /**
  * @brief Renders the ships/planets in the border.
  *
@@ -596,10 +568,6 @@ static void gui_borderIntersection( double *cx, double *cy, double rx, double ry
 static void gui_renderBorder( double dt )
 {
    (void) dt;
-   int i;
-   Pilot *plt;
-   Planet *pnt;
-   JumpPoint *jp;
    int hw, hh;
    double rx,ry;
    double cx,cy;
@@ -617,8 +585,8 @@ static void gui_renderBorder( double dt )
    gl_renderRect( 15., SCREEN_H - 15., SCREEN_W - 30., 15., &cBlackHilight );
 
    /* Draw planets. */
-   for (i=0; i<array_size(cur_system->planets); i++) {
-      pnt = cur_system->planets[i];
+   for (int i=0; i<array_size(cur_system->planets); i++) {
+      Planet *pnt = cur_system->planets[i];
 
       /* Skip if unknown. */
       if (!planet_isKnown( pnt ))
@@ -636,8 +604,8 @@ static void gui_renderBorder( double dt )
    }
 
    /* Draw jump routes. */
-   for (i=0; i<array_size(cur_system->jumps); i++) {
-      jp  = &cur_system->jumps[i];
+   for (int i=0; i<array_size(cur_system->jumps); i++) {
+      JumpPoint *jp = &cur_system->jumps[i];
 
       /* Skip if unknown or exit-only. */
       if (!jp_isKnown( jp ) || jp_isFlag( jp, JP_EXITONLY ))
@@ -660,8 +628,8 @@ static void gui_renderBorder( double dt )
 
    /* Draw pilots. */
    pilot_stack = pilot_getAll();
-   for (i=1; i<array_size(pilot_stack); i++) { /* skip the player */
-      plt = pilot_stack[i];
+   for (int i=1; i<array_size(pilot_stack); i++) { /* skip the player */
+      Pilot *plt = pilot_stack[i];
 
       /* See if in sensor range. */
       if (!pilot_inRangePilot(player.p, plt, NULL))
@@ -678,7 +646,6 @@ static void gui_renderBorder( double dt )
       }
    }
 }
-
 
 /**
  * @brief Takes a pilot and returns whether it's on screen, plus its relative position.
@@ -715,7 +682,6 @@ int gui_onScreenPilot( double *rx, double *ry, const Pilot *pilot )
 
    return 1;
 }
-
 
 /**
  * @brief Takes a planet or jump point and returns whether it's on screen, plus its relative position.
@@ -759,7 +725,6 @@ int gui_onScreenAsset( double *rx, double *ry, const JumpPoint *jp, const Planet
    return 1;
 }
 
-
 /**
  * @brief Renders the gui targeting reticles.
  *
@@ -776,7 +741,6 @@ void gui_renderReticles( double dt )
    gui_renderPlanetTarget();
    gui_renderPilotTarget();
 }
-
 
 static int can_jump = 0; /**< Stores whether or not the player is able to jump. */
 /**
@@ -841,7 +805,6 @@ void gui_render( double dt )
 
    /* Messages. */
    gui_renderMessages(dt);
-
 
    /* OSD. */
    osd_render();
@@ -912,7 +875,6 @@ void gui_render( double dt )
    omsg_render( dt );
 }
 
-
 /**
  * @brief Notifies GUI scripts that the player broke out of cooldown.
  */
@@ -921,7 +883,6 @@ void gui_cooldownEnd (void)
    if (gui_env != LUA_NOREF)
       gui_doFunc( "end_cooldown" );
 }
-
 
 /**
  * @brief Sets map overlay bounds.
@@ -981,7 +942,6 @@ int gui_getMapOverlayBoundLeft(void)
   return map_overlay.boundLeft;
 }
 
-
 /**
  * @brief Initializes the radar.
  *
@@ -998,7 +958,6 @@ int gui_radarInit( int circle, int w, int h )
    return 0;
 }
 
-
 /**
  * @brief Renders the GUI radar.
  *
@@ -1007,9 +966,8 @@ int gui_radarInit( int circle, int w, int h )
  */
 void gui_radarRender( double x, double y )
 {
-   int i, j;
+   int f;
    Radar *radar;
-   AsteroidAnchor *ast;
    gl_Matrix4 view_matrix_prev;
    Pilot *const* pilot_stack;
 
@@ -1033,7 +991,7 @@ void gui_radarRender( double x, double y )
    /*
     * planets
     */
-   for (i=0; i<array_size(cur_system->planets); i++)
+   for (int i=0; i<array_size(cur_system->planets); i++)
       if (i != player.p->nav_planet)
          gui_renderPlanet( i, radar->shape, radar->w, radar->h, radar->res, 1., 0 );
    if (player.p->nav_planet > -1)
@@ -1042,7 +1000,7 @@ void gui_radarRender( double x, double y )
    /*
     * Jump points.
     */
-   for (i=0; i<array_size(cur_system->jumps); i++)
+   for (int i=0; i<array_size(cur_system->jumps); i++)
       if (i != player.p->nav_hyperspace && jp_isUsable(&cur_system->jumps[i]))
          gui_renderJumpPoint( i, radar->shape, radar->w, radar->h, radar->res, 1., 0 );
    if (player.p->nav_hyperspace > -1)
@@ -1054,24 +1012,23 @@ void gui_radarRender( double x, double y )
    weapon_minimap( radar->res, radar->w, radar->h,
          radar->shape, 1. );
 
-
    /* render the pilot */
    pilot_stack = pilot_getAll();
-   j = 0;
-   for (i=1; i<array_size(pilot_stack); i++) { /* skip the player */
+   f = 0;
+   for (int i=1; i<array_size(pilot_stack); i++) { /* skip the player */
       if (pilot_stack[i]->id == player.p->target)
-         j = i;
+         f = i;
       else
          gui_renderPilot( pilot_stack[i], radar->shape, radar->w, radar->h, radar->res, 0 );
    }
    /* render the targeted pilot */
-   if (j!=0)
-      gui_renderPilot( pilot_stack[j], radar->shape, radar->w, radar->h, radar->res, 0 );
+   if (f != 0)
+      gui_renderPilot( pilot_stack[f], radar->shape, radar->w, radar->h, radar->res, 0 );
 
    /* render the asteroids */
-   for (i=0; i<array_size(cur_system->asteroids); i++) {
-      ast = &cur_system->asteroids[i];
-      for (j=0; j<ast->nb; j++)
+   for (int i=0; i<array_size(cur_system->asteroids); i++) {
+      AsteroidAnchor *ast = &cur_system->asteroids[i];
+      for (int j=0; j<ast->nb; j++)
          gui_renderAsteroid( &ast->asteroids[j], radar->w, radar->h, radar->res, 0 );
    }
 
@@ -1083,7 +1040,6 @@ void gui_radarRender( double x, double y )
       gl_unclipRect();
 }
 
-
 /**
  * @brief Outputs the radar's resolution.
  *
@@ -1094,17 +1050,15 @@ void gui_radarGetRes( double* res )
    *res = gui_radar.res;
 }
 
-
 /**
  * @brief Clears the GUI messages.
  */
 void gui_clearMessages (void)
 {
-   for (int i = 0; i < mesg_max; i++)
+   for (int i=0; i < mesg_max; i++)
       free( mesg_stack[i].str );
    memset( mesg_stack, 0, sizeof(Mesg)*mesg_max );
 }
-
 
 /**
  * @brief Renders the player's messages on screen.
@@ -1198,7 +1152,6 @@ static void gui_renderMessages( double dt )
    }
 }
 
-
 /**
  * @brief Gets a pilot's colour, with a special colour for targets.
  *
@@ -1218,7 +1171,6 @@ static const glColour* gui_getPilotColour( const Pilot* p )
 
    return col;
 }
-
 
 /**
  * @brief Renders a pilot in the GUI radar.
@@ -1298,7 +1250,6 @@ void gui_renderPilot( const Pilot* p, RadarShape shape, double w, double h, doub
       gl_printMarkerRaw( &gl_smallFont, x+scale+5., y-gl_smallFont.h/2., col, p->name );
 }
 
-
 /**
  * @brief Renders an asteroid in the GUI radar.
  *
@@ -1370,7 +1321,6 @@ void gui_renderAsteroid( const Asteroid* a, double w, double h, double res, int 
       gui_blink( px, py, MAX(7., 2.0*r), col, RADAR_BLINK_PILOT, blink_pilot );
 }
 
-
 /**
  * @brief Renders the player cross on the radar or whatever.
  */
@@ -1395,7 +1345,6 @@ void gui_renderPlayer( double res, int overlay )
    gl_renderShader( x, y, r, r, player.p->solid->dir, &shaders.playermarker, &cRadar_player, 1 );
 }
 
-
 /**
  * @brief Gets the colour of a planet.
  *
@@ -1405,9 +1354,7 @@ void gui_renderPlayer( double res, int overlay )
 static const glColour *gui_getPlanetColour( int i )
 {
    const glColour *col;
-   Planet *planet;
-
-   planet = cur_system->planets[i];
+   Planet *planet = cur_system->planets[i];
 
    if (i == player.p->nav_planet)
       col = &cRadar_tPlanet;
@@ -1417,7 +1364,6 @@ static const glColour *gui_getPlanetColour( int i )
    return col;
 }
 
-
 /**
  * @brief Force sets the planet and pilot radar blink.
  */
@@ -1426,7 +1372,6 @@ void gui_forceBlink (void)
    blink_pilot  = 0.;
    blink_planet = 0.;
 }
-
 
 /**
  * @brief Renders the planet blink around a position on the minimap.
@@ -1438,7 +1383,6 @@ static void gui_blink( double cx, double cy, double vr, const glColour *col, dou
    glUseProgram(shaders.blinkmarker.program);
    gl_renderShader( cx, cy, vr, vr, 0., &shaders.blinkmarker, col, 1 );
 }
-
 
 /**
  * @brief Renders an out of range marker for the planet.
@@ -1477,7 +1421,6 @@ static void gui_renderRadarOutOfRange( RadarShape sh, int w, int h, int cx, int 
 
    gl_renderLine( x, y, x2, y2, col );
 }
-
 
 /**
  * @brief Draws the planets in the minimap.
@@ -1539,7 +1482,6 @@ void gui_renderPlanet( int ind, RadarShape shape, double w, double h, double res
       h  *= 2.;
    }
 
-
    /* Get the colour. */
    col = *gui_getPlanetColour(ind);
    col.a *= alpha;
@@ -1558,7 +1500,6 @@ void gui_renderPlanet( int ind, RadarShape shape, double w, double h, double res
    }
 }
 
-
 /**
  * @brief Renders a jump point on the minimap.
  *
@@ -1576,7 +1517,6 @@ void gui_renderJumpPoint( int ind, RadarShape shape, double w, double h, double 
    glColour col;
    JumpPoint *jp;
    char buf[STRMAX_SHORT];
-
 
    /* Default values. */
    jp    = &cur_system->jumps[ind];
@@ -1647,7 +1587,6 @@ void gui_renderJumpPoint( int ind, RadarShape shape, double w, double h, double 
    }
 }
 
-
 /**
  * @brief Sets the viewport.
  */
@@ -1666,7 +1605,6 @@ void gui_setViewport( double x, double y, double w, double h )
    gui_calcBorders();
 }
 
-
 /**
  * @brief Resets the viewport.
  */
@@ -1675,7 +1613,6 @@ void gui_clearViewport (void)
    gl_setDefViewport( 0., 0., gl_screen.nw, gl_screen.nh );
    gl_defViewport();
 }
-
 
 /**
  * @brief Calculates and sets the GUI borders.
@@ -1704,7 +1641,6 @@ static void gui_calcBorders (void)
    if (gui_br < 0.)
       gui_br += 2*M_PI;
 }
-
 
 /**
  * @brief Initializes the GUI system.
@@ -1776,7 +1712,6 @@ int gui_init (void)
    return 0;
 }
 
-
 /**
  * @brief Runs a GUI Lua function.
  *
@@ -1790,7 +1725,6 @@ static int gui_doFunc( const char* func )
       return ret;
    return gui_runFunc( func, 0, 0 );
 }
-
 
 /**
  * @brief Prepares to run a function.
@@ -1815,7 +1749,6 @@ static int gui_prepFunc( const char* func )
 #endif /* DEBUGGING */
    return 0;
 }
-
 
 /**
  * @brief Runs a function.
@@ -1842,7 +1775,6 @@ static int gui_runFunc( const char* func, int nargs, int nret )
    return ret;
 }
 
-
 /**
  * @brief Reloads the GUI.
  */
@@ -1854,7 +1786,6 @@ void gui_reload (void)
    gui_load( gui_pick() );
 }
 
-
 /**
  * @brief Player just changed their cargo.
  */
@@ -1863,7 +1794,6 @@ void gui_setCargo (void)
    if (gui_env != LUA_NOREF)
       gui_doFunc( "update_cargo" );
 }
-
 
 /**
  * @brief Player just changed their nav computer target.
@@ -1874,7 +1804,6 @@ void gui_setNav (void)
       gui_doFunc( "update_nav" );
 }
 
-
 /**
  * @brief Player just changed their pilot target.
  */
@@ -1883,7 +1812,6 @@ void gui_setTarget (void)
    if (gui_env != LUA_NOREF)
       gui_doFunc( "update_target" );
 }
-
 
 /**
  * @brief Player just upgraded their ship or modified it.
@@ -1894,7 +1822,6 @@ void gui_setShip (void)
       gui_doFunc( "update_ship" );
 }
 
-
 /**
  * @brief Player just changed their system.
  */
@@ -1904,7 +1831,6 @@ void gui_setSystem (void)
       gui_doFunc( "update_system" );
 }
 
-
 /**
  * @brief Player's relationship with a faction was modified.
  */
@@ -1913,7 +1839,6 @@ void gui_updateFaction (void)
    if (gui_env != LUA_NOREF && player.p->nav_planet != -1)
       gui_doFunc( "update_faction" );
 }
-
 
 /**
  * @brief Calls trigger functions depending on who the pilot is.
@@ -1937,7 +1862,6 @@ void gui_setGeneric( Pilot* pilot )
    }
 }
 
-
 /**
  * @brief Determines which GUI should be used.
  */
@@ -1955,7 +1879,6 @@ char* gui_pick (void)
       gui = player.p->ship->gui;
    return gui;
 }
-
 
 /**
  * @brief Attempts to load the actual GUI.
@@ -2021,7 +1944,6 @@ int gui_load( const char* name )
    return 0;
 }
 
-
 /**
  * @brief Cleans up the GUI.
  */
@@ -2058,7 +1980,6 @@ void gui_cleanup (void)
    animation_dt = 0.;
 }
 
-
 /**
  * @brief Frees the gui stuff.
  */
@@ -2086,7 +2007,6 @@ void gui_free (void)
    omsg_cleanup();
 }
 
-
 /**
  * @brief Sets the radar resolution.
  *
@@ -2096,7 +2016,6 @@ void gui_setRadarResolution( double res )
 {
    gui_radar.res = CLAMP( RADAR_RES_MIN, RADAR_RES_MAX, res );
 }
-
 
 /**
  * @brief Modifies the radar resolution.
@@ -2110,7 +2029,6 @@ void gui_setRadarRel( int mod )
    player_message( _("#oRadar set to %dx."), (int)gui_radar.res );
 }
 
-
 /**
  * @brief Gets the GUI offset.
  *
@@ -2123,7 +2041,6 @@ void gui_getOffset( double *x, double *y )
    *y = gui_yoff;
 }
 
-
 /**
  * @brief Gets the hail icon texture.
  */
@@ -2131,7 +2048,6 @@ glTexture* gui_hailIcon (void)
 {
    return gui_ico_hail;
 }
-
 
 /**
  * @brief Sets the planet target GFX.
@@ -2141,7 +2057,6 @@ void gui_targetPlanetGFX( glTexture *gfx )
    gl_freeTexture( gui_target_planet );
    gui_target_planet = gl_dupTexture( gfx );
 }
-
 
 /**
  * @brief Sets the pilot target GFX.
@@ -2159,7 +2074,6 @@ static void gui_eventToScreenPos( int* sx, int* sy, int ex, int ey )
 {
    gl_windowToScreenPos( sx, sy, ex - gui_viewport_x, ey - gui_viewport_y );
 }
-
 
 /**
  * @brief Handles a click at a position in the current system
@@ -2241,7 +2155,6 @@ int gui_handleEvent( SDL_Event *evt )
    return ret;
 }
 
-
 /**
  * @brief Enables the mouse click callback.
  */
@@ -2249,7 +2162,6 @@ void gui_mouseClickEnable( int enable )
 {
    gui_L_mclick = enable;
 }
-
 
 /**
  * @brief Enables the mouse movement callback.
