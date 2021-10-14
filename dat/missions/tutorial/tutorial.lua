@@ -138,6 +138,7 @@ You are skeptical of the sales pitch, of course; you really only bought this shi
    -- Set stuff known as necessary
    dest_planet:setKnown(true)
    jump.get( system.cur(), destsys ):setKnown(true)
+   system.mrkAdd( start_planet:pos() )
 
    stage = 1
 end
@@ -184,6 +185,7 @@ function timer ()
       vn.done( tut.shipai.transition )
       vn.run()
 
+      system.mrkRm( sysmarker )
       spawn_captain_tp ()
    end
 end
@@ -311,6 +313,8 @@ function enter_timer ()
       sai(fmt.f(_([["Why don't you try using Autonav to fly over to {pntname}? You should be able to see it on your overlay map which you can activate with {overlaykey}."]]),{pntname=dest_planet:name(), overlaykey=tut.getKey("overlay")}))
       vn.done( tut.shipai.transition )
       vn.run()
+
+      sysmarker = system.mrkAdd( dest_planet:pos() )
 
    elseif stage == 5 and system.cur() == missys then
       spawn_captain_tp ()
