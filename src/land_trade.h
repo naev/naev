@@ -1,12 +1,8 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
-
-
 #ifndef LAND_TRADE_H
 #  define LAND_TRADE_H
-
 
 #include "land.h"
 #include "land_takeoff.h"

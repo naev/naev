@@ -1,7 +1,6 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
 /**
  * @file start.c
  *
@@ -9,7 +8,6 @@
  *
  * This information is important when creating a new game.
  */
-
 /** @cond */
 #include "naev.h"
 /** @endcond */
@@ -20,9 +18,7 @@
 #include "ndata.h"
 #include "nxml.h"
 
-
 #define XML_START_ID    "Start"  /**< XML document tag of module start file. */
-
 
 /**
  * @brief The start data structure.
@@ -40,7 +36,6 @@ typedef struct ndata_start_s {
    char *event; /**< Starting event. */
 } ndata_start_t;
 static ndata_start_t start_data; /**< The actual starting data. */
-
 
 /**
  * @brief Loads the module start data.
@@ -147,7 +142,6 @@ int start_load (void)
    return 0;
 }
 
-
 /**
  * @brief Cleans up after the module start data.
  */
@@ -162,7 +156,6 @@ void start_cleanup (void)
    memset( &start_data, 0, sizeof(start_data) );
 }
 
-
 /**
  * @brief Gets the module name.
  *    @return Name of the module.
@@ -171,7 +164,6 @@ const char* start_name (void)
 {
    return start_data.name;
 }
-
 
 /**
  * @brief Gets the module player starting ship.
@@ -182,7 +174,6 @@ const char* start_ship (void)
    return start_data.ship;
 }
 
-
 /**
  * @brief Gets the module's starting ship's name.
  *    @return The default name of the starting ship.
@@ -191,7 +182,6 @@ const char* start_shipname (void)
 {
    return start_data.shipname;
 }
-
 
 /**
  * @brief Gets the player's starting credits.
@@ -202,7 +192,6 @@ unsigned int start_credits (void)
    return start_data.credits;
 }
 
-
 /**
  * @brief Gets the starting date.
  *    @return The starting date of the player.
@@ -212,7 +201,6 @@ ntime_t start_date (void)
    return start_data.date;
 }
 
-
 /**
  * @brief Gets the starting system name.
  *    @return The name of the starting system.
@@ -221,7 +209,6 @@ const char* start_system (void)
 {
    return start_data.system;
 }
-
 
 /**
  * @brief Gets the starting position of the player.
@@ -234,7 +221,6 @@ void start_position( double *x, double *y )
    *y = start_data.y;
 }
 
-
 /**
  * @brief Gets the starting mission of the player.
  *    @return The starting mission of the player (or NULL if inapplicable).
@@ -244,7 +230,6 @@ const char* start_mission (void)
    return start_data.mission;
 }
 
-
 /**
  * @brief Gets the starting event of the player.
  *    @return The starting event of the player (or NULL if inapplicable).
@@ -253,4 +238,3 @@ const char* start_event (void)
 {
    return start_data.event;
 }
-

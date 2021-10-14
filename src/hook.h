@@ -1,11 +1,8 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
-
 #ifndef HOOK_H
 #  define HOOK_H
-
 
 #include "mission.h"
 #include "nlua_faction.h"
@@ -13,9 +10,7 @@
 #include "nlua_pilot.h"
 #include "nlua_planet.h"
 
-
 #define HOOK_MAX_PARAM  3 /**< Maximum hook params, to avoid dynamic allocation. */
-
 
 /**
  * @brief The hook parameter types.
@@ -113,6 +108,4 @@ void hooks_updateDate( ntime_t change );
 unsigned int hook_addDateMisn( unsigned int parent, const char *func, ntime_t resolution );
 unsigned int hook_addDateEvt( unsigned int parent, const char *func, ntime_t resolution );
 
-
 #endif /* HOOK_H */
-

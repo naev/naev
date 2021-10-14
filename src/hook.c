@@ -1,7 +1,6 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
 /**
  * @file hook.c
  *
@@ -20,8 +19,6 @@
  *
  * Therefore we must tread carefully. Hooks are serious business.
  */
-
-
 /** @cond */
 #include <assert.h>
 #include <stdlib.h>
@@ -44,7 +41,6 @@
 #include "player.h"
 #include "space.h"
 
-
 /**
  * @brief Hook queue to delay execution.
  */
@@ -58,7 +54,6 @@ static HookQueue_t *hook_queue   = NULL; /**< The hook queue. */
 static int hook_atomic           = 0; /**< Whether or not hooks should be queued. */
 static ntime_t hook_time_accum   = 0; /**< Time accumulator. */
 
-
 /**
  * @brief Types of hook.
  */
@@ -68,7 +63,6 @@ typedef enum HookType_e {
    HOOK_TYPE_EVENT,  /**< Event hook type. */
    HOOK_TYPE_FUNC    /**< C function hook type. */
 } HookType_t;
-
 
 /**
  * @struct Hook
@@ -107,7 +101,6 @@ typedef struct Hook_ {
    } u; /**< Type specific data. */
 } Hook;
 
-
 /*
  * the stack
  */
@@ -115,7 +108,6 @@ static unsigned int hook_id   = 0; /**< Unique hook id generator. */
 static Hook* hook_list        = NULL; /**< Stack of hooks. */
 static int hook_runningstack  = 0; /**< Check if stack is running. */
 static int hook_loadingstack  = 0; /**< Check if the hooks are being loaded. */
-
 
 /*
  * prototypes
@@ -142,7 +134,6 @@ int hook_load( xmlNodePtr parent );
 /* Misc. */
 static Mission *hook_getMission( Hook *hook );
 
-
 /**
  * Adds a hook to the queue.
  */
@@ -162,7 +153,6 @@ static int hq_add( HookQueue_t *hq )
    return 0;
 }
 
-
 /**
  * @brief Frees a queued hook.
  */
@@ -171,7 +161,6 @@ static void hq_free( HookQueue_t *hq )
    free(hq->stack);
    free(hq);
 }
-
 
 /**
  * @brief Clears the queued hooks.
@@ -186,7 +175,6 @@ static void hq_clear (void)
    }
 }
 
-
 /**
  * @brief Starts the hook exclusion zone, this makes hooks queue until exclusion is done.
  */
@@ -194,7 +182,6 @@ void hook_exclusionStart (void)
 {
    hook_atomic = 1;
 }
-
 
 /**
  * @brief Ends exclusion zone and runs all the queued hooks.
@@ -232,7 +219,6 @@ void hook_exclusionEnd( double dt )
    /* Purge the dead. */
    hooks_purgeList();
 }
-
 
 /**
  * @brief Parses hook parameters.
@@ -286,7 +272,6 @@ static int hook_parseParam( lua_State *L, const HookParam *param )
 
    return n;
 }
-
 
 /**
  * @brief Runs a mission hook.
@@ -346,7 +331,6 @@ static int hook_runMisn( Hook *hook, const HookParam *param, int claims )
    return 0;
 }
 
-
 /**
  * @brief Runs a Event function hook.
  *
@@ -396,7 +380,6 @@ static int hook_runEvent( Hook *hook, const HookParam *param, int claims )
    return 0;
 }
 
-
 /**
  * @brief Runs a hook.
  *
@@ -435,7 +418,6 @@ static int hook_run( Hook *hook, const HookParam *param, int claims )
    return ret;
 }
 
-
 /**
  * @brief Generates a new hook id.
  *
@@ -443,22 +425,19 @@ static int hook_run( Hook *hook, const HookParam *param, int claims )
  */
 static unsigned int hook_genID (void)
 {
-   unsigned int id;
-   Hook *h;
-   id = ++hook_id; /* default id, not safe if loading */
+   unsigned int id = ++hook_id; /* default id, not safe if loading */
 
    /* If not loading we can just return. */
    if (!hook_loadingstack)
       return id;
 
    /* Must check ids for collisions. */
-   for (h=hook_list; h!=NULL; h=h->next)
+   for (Hook *h=hook_list; h!=NULL; h=h->next)
       if (id == h->id) /* Check for collision. */
          return hook_genID(); /* recursively try again */
 
    return id;
 }
-
 
 /**
  * @brief Generates and allocates a new hook.
@@ -469,10 +448,8 @@ static unsigned int hook_genID (void)
  */
 static Hook* hook_new( HookType_t type, const char *stack )
 {
-   Hook *new_hook;
-
    /* Get and create new hook. */
-   new_hook = calloc( 1, sizeof(Hook) );
+   Hook *new_hook = calloc( 1, sizeof(Hook) );
    if (hook_list == NULL)
       hook_list = new_hook;
    else {
@@ -494,7 +471,6 @@ static Hook* hook_new( HookType_t type, const char *stack )
    return new_hook;
 }
 
-
 /**
  * @brief Adds a new mission type hook.
  *
@@ -505,10 +481,8 @@ static Hook* hook_new( HookType_t type, const char *stack )
  */
 unsigned int hook_addMisn( unsigned int parent, const char *func, const char *stack )
 {
-   Hook *new_hook;
-
    /* Create the new hook. */
-   new_hook = hook_new( HOOK_TYPE_MISN, stack );
+   Hook *new_hook = hook_new( HOOK_TYPE_MISN, stack );
 
    /* Put mission specific details. */
    new_hook->u.misn.parent = parent;
@@ -516,7 +490,6 @@ unsigned int hook_addMisn( unsigned int parent, const char *func, const char *st
 
    return new_hook->id;
 }
-
 
 /**
  * @brief Adds a new event type hook.
@@ -528,10 +501,8 @@ unsigned int hook_addMisn( unsigned int parent, const char *func, const char *st
  */
 unsigned int hook_addEvent( unsigned int parent, const char *func, const char *stack )
 {
-   Hook *new_hook;
-
    /* Create the new hook. */
-   new_hook = hook_new( HOOK_TYPE_EVENT, stack );
+   Hook *new_hook = hook_new( HOOK_TYPE_EVENT, stack );
 
    /* Put event specific details. */
    new_hook->u.event.parent = parent;
@@ -539,7 +510,6 @@ unsigned int hook_addEvent( unsigned int parent, const char *func, const char *s
 
    return new_hook->id;
 }
-
 
 /**
  * @brief Adds a new mission type hook timer hook.
@@ -551,10 +521,8 @@ unsigned int hook_addEvent( unsigned int parent, const char *func, const char *s
  */
 unsigned int hook_addTimerMisn( unsigned int parent, const char *func, double ms )
 {
-   Hook *new_hook;
-
    /* Create the new hook. */
-   new_hook = hook_new( HOOK_TYPE_MISN, "timer" );
+   Hook *new_hook = hook_new( HOOK_TYPE_MISN, "timer" );
 
    /* Put mission specific details. */
    new_hook->u.misn.parent = parent;
@@ -567,7 +535,6 @@ unsigned int hook_addTimerMisn( unsigned int parent, const char *func, double ms
    return new_hook->id;
 }
 
-
 /**
  * @brief Adds a new event type hook timer.
  *
@@ -578,10 +545,8 @@ unsigned int hook_addTimerMisn( unsigned int parent, const char *func, double ms
  */
 unsigned int hook_addTimerEvt( unsigned int parent, const char *func, double ms )
 {
-   Hook *new_hook;
-
    /* Create the new hook. */
-   new_hook = hook_new( HOOK_TYPE_EVENT, "timer" );
+   Hook *new_hook = hook_new( HOOK_TYPE_EVENT, "timer" );
 
    /* Put event specific details. */
    new_hook->u.event.parent = parent;
@@ -593,7 +558,6 @@ unsigned int hook_addTimerEvt( unsigned int parent, const char *func, double ms 
 
    return new_hook->id;
 }
-
 
 /**
  * @brief Purges the list of deletable hooks.
@@ -634,7 +598,6 @@ static void hooks_purgeList (void)
    }
 }
 
-
 /**
  * @brief Updates the time to see if it should be updated.
  */
@@ -644,27 +607,23 @@ void hooks_updateDate( ntime_t change )
       hook_time_accum += change;
 }
 
-
 /**
  * @brief Updates date hooks and runs them if necessary.
  */
 static void hooks_updateDateExecute( ntime_t change )
 {
-   int j;
-   Hook *h;
-
    /* Don't update without player. */
    if ((player.p == NULL) || player_isFlag(PLAYER_CREATING))
       return;
 
    /* Clear creation flags. */
-   for (h=hook_list; h!=NULL; h=h->next)
+   for (Hook *h=hook_list; h!=NULL; h=h->next)
       h->created = 0;
 
    /* On j=0 we increment all timers and try to run, then on j=1 we update the timers. */
    hook_runningstack++; /* running hooks */
-   for (j=1; j>=0; j--) {
-      for (h=hook_list; h!=NULL; h=h->next) {
+   for (int j=1; j>=0; j--) {
+      for (Hook *h=hook_list; h!=NULL; h=h->next) {
          /* Not be deleting. */
          if (h->delete)
             continue;
@@ -696,13 +655,10 @@ static void hooks_updateDateExecute( ntime_t change )
    hooks_purgeList();
 }
 
-
 unsigned int hook_addDateMisn( unsigned int parent, const char *func, ntime_t resolution )
 {
-   Hook *new_hook;
-
    /* Create the new hook. */
-   new_hook = hook_new( HOOK_TYPE_MISN, "date" );
+   Hook *new_hook = hook_new( HOOK_TYPE_MISN, "date" );
 
    /* Put mission specific details. */
    new_hook->u.misn.parent = parent;
@@ -716,13 +672,10 @@ unsigned int hook_addDateMisn( unsigned int parent, const char *func, ntime_t re
    return new_hook->id;
 }
 
-
 unsigned int hook_addDateEvt( unsigned int parent, const char *func, ntime_t resolution )
 {
-   Hook *new_hook;
-
    /* Create the new hook. */
-   new_hook = hook_new( HOOK_TYPE_EVENT, "date" );
+   Hook *new_hook = hook_new( HOOK_TYPE_EVENT, "date" );
 
    /* Put event specific details. */
    new_hook->u.event.parent = parent;
@@ -735,7 +688,6 @@ unsigned int hook_addDateEvt( unsigned int parent, const char *func, ntime_t res
 
    return new_hook->id;
 }
-
 
 /**
  * @brief Updates all the hook timer related stuff.
@@ -783,20 +735,17 @@ void hooks_update( double dt )
    hooks_purgeList();
 }
 
-
 /**
  * @brief Gets the mission of a hook.
  */
 static Mission *hook_getMission( Hook *hook )
 {
-   int i;
-   for (i=0; i<MISSION_MAX; i++)
+   for (int i=0; i<MISSION_MAX; i++)
       if (player_missions[i]->id == hook->u.misn.parent)
          return player_missions[i];
 
    return NULL;
 }
-
 
 /**
  * @brief Removes a hook.
@@ -805,15 +754,12 @@ static Mission *hook_getMission( Hook *hook )
  */
 void hook_rm( unsigned int id )
 {
-   Hook *h;
-
-   h = hook_get( id );
+   Hook *h = hook_get( id );
    if (h==NULL)
       return;
 
    hook_rmRaw( h );
 }
-
 
 /**
  * @brief Removes a hook.
@@ -824,7 +770,6 @@ static void hook_rmRaw( Hook *h )
    hookL_unsetarg( h->id );
 }
 
-
 /**
  * @brief Removes all hooks belonging to parent mission.
  *
@@ -832,13 +777,10 @@ static void hook_rmRaw( Hook *h )
  */
 void hook_rmMisnParent( unsigned int parent )
 {
-   Hook *h;
-
-   for (h=hook_list; h!=NULL; h=h->next)
+   for (Hook *h=hook_list; h!=NULL; h=h->next)
       if ((h->type==HOOK_TYPE_MISN) && (parent == h->u.misn.parent))
          h->delete = 1;
 }
-
 
 /**
  * @brief Removes all hooks belonging to parent event.
@@ -847,13 +789,10 @@ void hook_rmMisnParent( unsigned int parent )
  */
 void hook_rmEventParent( unsigned int parent )
 {
-   Hook *h;
-
-   for (h=hook_list; h!=NULL; h=h->next)
+   for (Hook *h=hook_list; h!=NULL; h=h->next)
       if ((h->type==HOOK_TYPE_EVENT) && (parent == h->u.event.parent))
          h->delete = 1;
 }
-
 
 /**
  * @brief Checks to see how many hooks there are with the same mission parent.
@@ -863,17 +802,13 @@ void hook_rmEventParent( unsigned int parent )
  */
 int hook_hasMisnParent( unsigned int parent )
 {
-   int num;
-   Hook *h;
-
-   num = 0;
-   for (h=hook_list; h!=NULL; h=h->next)
+   int num = 0;
+   for (Hook *h=hook_list; h!=NULL; h=h->next)
       if ((h->type==HOOK_TYPE_MISN) && (parent == h->u.misn.parent))
          num++;
 
    return num;
 }
-
 
 /**
  * @brief Checks to see how many hooks there are with the same event parent.
@@ -883,31 +818,24 @@ int hook_hasMisnParent( unsigned int parent )
  */
 int hook_hasEventParent( unsigned int parent )
 {
-   int num;
-   Hook *h;
-
-   num = 0;
-   for (h=hook_list; h!=NULL; h=h->next)
+   int num = 0;
+   for (Hook *h=hook_list; h!=NULL; h=h->next)
       if ((h->type==HOOK_TYPE_EVENT) && (parent == h->u.event.parent))
          num++;
 
    return num;
 }
 
-
-
 static int hooks_executeParam( const char* stack, const HookParam *param )
 {
-   int j;
    int run;
-   Hook *h;
 
    /* Don't update if player is dead. */
    if ((player.p == NULL) || player_isFlag(PLAYER_DESTROYED))
       return 0;
 
    /* Reset the current stack's ran and creation flags. */
-   for (h=hook_list; h!=NULL; h=h->next)
+   for (Hook *h=hook_list; h!=NULL; h=h->next)
       if (strcmp(stack, h->stack)==0) {
          h->ran_once = 0;
          h->created = 0;
@@ -915,8 +843,8 @@ static int hooks_executeParam( const char* stack, const HookParam *param )
 
    run = 0;
    hook_runningstack++; /* running hooks */
-   for (j=1; j>=0; j--) {
-      for (h=hook_list; h!=NULL; h=h->next) {
+   for (int j=1; j>=0; j--) {
+      for (Hook *h=hook_list; h!=NULL; h=h->next) {
          /* Should be deleted. */
          if (h->delete)
             continue;
@@ -943,7 +871,6 @@ static int hooks_executeParam( const char* stack, const HookParam *param )
 
    return run;
 }
-
 
 /**
  * @brief Runs all the hooks of stack in the next frame. Does not trigger right away.
@@ -977,7 +904,6 @@ int hooks_runParamDeferred( const char* stack, const HookParam *param )
    return 0;
 }
 
-
 /**
  * @brief Runs all the hooks of stack.
  *
@@ -999,7 +925,6 @@ int hooks_runParam( const char* stack, const HookParam *param )
    return hooks_executeParam( stack, param );
 }
 
-
 /**
  * @brief Runs all the hooks of stack.
  *
@@ -1011,20 +936,17 @@ int hooks_run( const char* stack )
    return hooks_runParam( stack, NULL );
 }
 
-
 /**
  * @brief Gets a hook by ID.
  */
 static Hook* hook_get( unsigned int id )
 {
-   Hook *h;
-   for (h=hook_list; h!=NULL; h=h->next)
+   for (Hook *h=hook_list; h!=NULL; h=h->next)
       if (h->id == id)
          return h;
 
    return NULL;
 }
-
 
 /**
  * @brief Gets the lua env for a hook.
@@ -1056,7 +978,6 @@ nlua_env hook_env( unsigned int hook )
    return LUA_NOREF;
 }
 
-
 /**
  * @brief Runs a single hook by id.
  *
@@ -1083,7 +1004,6 @@ int hook_runIDparam( unsigned int id, const HookParam *param )
    return 0;
 }
 
-
 /**
  * @brief Runs a single hook by id.
  *
@@ -1094,7 +1014,6 @@ int hook_runID( unsigned int id )
 {
    return hook_runIDparam( id, 0 );
 }
-
 
 /**
  * @brief Frees a hook.
@@ -1126,13 +1045,12 @@ static void hook_free( Hook *h )
    free( h );
 }
 
-
 /**
  * @brief Gets rid of all current hooks.
  */
 void hook_cleanup (void)
 {
-   Hook *h, *hn;
+   Hook *h;
 
    if (hook_runningstack)
       WARN(_("Running hook_cleanup while hook stack is being run!"));
@@ -1142,14 +1060,13 @@ void hook_cleanup (void)
 
    h = hook_list;
    while (h != NULL) {
-      hn = h->next;
+      Hook *hn = h->next;
       hook_free( h );
       h = hn;
    }
    /* safe defaults just in case */
    hook_list  = NULL;
 }
-
 
 /**
  * @brief Checks if a hook needs to be saved.
@@ -1159,7 +1076,6 @@ void hook_cleanup (void)
  */
 static int hook_needSave( Hook *h )
 {
-   int i;
    const char *nosave[] = {
          "p_death", "p_board", "p_disable", "p_jump", "p_attacked", "p_idle", /* pilot hooks */
          "timer", /* timers */
@@ -1178,12 +1094,11 @@ static int hook_needSave( Hook *h )
       return 0;
 
    /* Make sure it's in the proper stack. */
-   for (i=0; strcmp(nosave[i],"end") != 0; i++)
+   for (int i=0; strcmp(nosave[i],"end") != 0; i++)
       if (strcmp(nosave[i],h->stack)==0) return 0;
 
    return 1;
 }
-
 
 /**
  * @brief Saves all the hooks.
@@ -1193,10 +1108,8 @@ static int hook_needSave( Hook *h )
  */
 int hook_save( xmlTextWriterPtr writer )
 {
-   Hook *h;
-
    xmlw_startElem(writer,"hooks");
-   for (h=hook_list; h!=NULL; h=h->next) {
+   for (Hook *h=hook_list; h!=NULL; h=h->next) {
 
       if (!hook_needSave(h))
          continue; /* no need to save it */
@@ -1236,7 +1149,6 @@ int hook_save( xmlTextWriterPtr writer )
    return 0;
 }
 
-
 /**
  * @brief Loads hooks for a player.
  *
@@ -1246,7 +1158,6 @@ int hook_save( xmlTextWriterPtr writer )
 int hook_load( xmlNodePtr parent )
 {
    xmlNodePtr node;
-   Hook *h;
 
    hook_cleanup();
 
@@ -1263,12 +1174,11 @@ int hook_load( xmlNodePtr parent )
    hook_loadingstack = 0;
 
    /* Set ID gen to highest hook. */
-   for (h=hook_list; h!=NULL; h=h->next)
+   for (Hook *h=hook_list; h!=NULL; h=h->next)
       hook_id = MAX( h->id, hook_id );
 
    return 0;
 }
-
 
 /**
  * @brief Parses an individual hook.

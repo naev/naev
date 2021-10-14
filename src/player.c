@@ -222,7 +222,6 @@ static void player_newSetup()
  */
 void player_new (void)
 {
-   int r;
    const char *title, *caption;
    char *ret, buf[PATH_MAX];
 
@@ -249,7 +248,7 @@ void player_new (void)
 
    snprintf( buf, sizeof(buf), "saves/%s.ns", player.name);
    if (PHYSFS_exists( buf )) {
-      r = dialogue_YesNo(_("Overwrite"),
+      int r = dialogue_YesNo(_("Overwrite"),
             _("You already have a pilot named %s. Overwrite?"),player.name);
       if (r==0) { /* no */
          player_new();
@@ -389,7 +388,7 @@ Pilot* player_newShip( const Ship* ship, const char *def_name,
       int trade, int noname )
 {
    char *ship_name, *old_name;
-   int i, len, w;
+   int w;
    Pilot *new_ship;
 
    /* temporary values while player doesn't exist */
@@ -403,6 +402,8 @@ Pilot* player_newShip( const Ship* ship, const char *def_name,
 
    /* Dialogue cancelled. */
    if (ship_name == NULL) {
+      int i, len;
+
       /* No default name, fail. */
       if (def_name == NULL)
          return NULL;
@@ -454,7 +455,6 @@ Pilot* player_newShip( const Ship* ship, const char *def_name,
 static Pilot* player_newShipMake( const char* name )
 {
    PilotFlags flags;
-   PlayerShip_t *ship;
    Pilot *new_pilot;
 
    /* store the current ship if it exists */
@@ -493,7 +493,7 @@ static Pilot* player_newShipMake( const char* name )
    }
    else {
       /* Grow memory. */
-      ship        = &array_grow( &player_stack );
+      PlayerShip_t *ship = &array_grow( &player_stack );
       /* Create the ship. */
       ship->p     = pilot_createEmpty( player_ship, name, faction_get("Player"), "player", flags );
       new_pilot   = ship->p;

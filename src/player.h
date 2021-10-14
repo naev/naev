@@ -1,14 +1,10 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
-
 #ifndef PLAYER_H
 #  define PLAYER_H
 
-
 #include <time.h>
-
 
 #include "nstring.h"
 #include "pilot.h"
@@ -48,12 +44,10 @@ enum {
 
 typedef char PlayerFlags[ PLAYER_FLAGS_MAX ];
 
-
 /* flag functions */
 #define player_isFlag(f)   (player.flags[f])
 #define player_setFlag(f)  (player.flags[f] = 1)
 #define player_rmFlag(f)   (player.flags[f] = 0)
-
 
 /* Control restoration reasons. */
 enum {

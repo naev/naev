@@ -1,14 +1,11 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
 /**
  * @file land_trade.c
  *
  * @brief Handles the Trading Center at land.
  */
-
-
 /** @cond */
 #include <assert.h>
 #include <math.h>
@@ -39,7 +36,6 @@
  * Quantity to buy on one click
 */
 static int commodity_mod = 10;
-
 
 /**
  * @brief Opens the local market window.
@@ -137,7 +133,6 @@ void commodity_exchange_open( unsigned int wid )
    window_setFocus( wid , "iarTrade" );
  }
 
-
 /**
  * @brief Updates the commodity window.
  *    @param wid Window to update.
@@ -224,7 +219,6 @@ void commodity_update( unsigned int wid, const char *str )
       window_disableButtonSoft( wid, "btnCommoditySell" );
 }
 
-
 int commodity_canBuy( const Commodity* com )
 {
    int failure;
@@ -248,21 +242,15 @@ int commodity_canBuy( const Commodity* com )
    return !failure;
 }
 
-
 int commodity_canSell( const Commodity* com )
 {
-   int failure;
-
-   failure = 0;
-
+   int failure = 0;
    if (pilot_cargoOwned( player.p, com ) == 0) {
       land_errDialogueBuild(_("You can't sell something you don't have!"));
       failure = 1;
    }
-
    return !failure;
 }
-
 
 /**
  * @brief Buys the selected commodity.
@@ -305,6 +293,7 @@ void commodity_buy( unsigned int wid, const char *str )
    if (land_takeoff)
       takeoff(1);
 }
+
 /**
  * @brief Attempts to sell a commodity.
  *    @param wid Window selling commodity from.
@@ -354,11 +343,8 @@ void commodity_sell( unsigned int wid, const char *str )
  */
 int commodity_getMod (void)
 {
-   SDL_Keymod mods;
-   int q;
-
-   mods = SDL_GetModState();
-   q = 10;
+   SDL_Keymod mods = SDL_GetModState();
+   int q = 10;
    if (mods & (KMOD_LCTRL | KMOD_RCTRL))
       q *= 5;
    if (mods & (KMOD_LSHIFT | KMOD_RSHIFT))
@@ -366,6 +352,7 @@ int commodity_getMod (void)
 
    return q;
 }
+
 /**
  * @brief Renders the commodity buying modifier.
  *    @param bx Base X position to render at.
