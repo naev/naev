@@ -1,7 +1,6 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
 #ifndef COLOUR_H
 #  define COLOUR_H
 
@@ -36,4 +35,3 @@ void col_rgb2hsv( float *h, float *s, float *v, float r, float g, float b );
 void col_blend( glColour *blend, const glColour *fg, const glColour *bg, float alpha );
 
 #endif /* COLOUR_H */
-

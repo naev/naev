@@ -1778,7 +1778,6 @@ void weapon_add( const Outfit* outfit, const double T, const double dir,
 {
    WeaponLayer layer;
    Weapon *w, **m;
-   GLsizei size;
    size_t bufsize;
 
    if (!outfit_isBolt(outfit) &&
@@ -1808,6 +1807,7 @@ void weapon_add( const Outfit* outfit, const double T, const double dir,
    /* Grow the vertex stuff if needed. */
    bufsize = array_reserved(wfrontLayer) + array_reserved(wbackLayer);
    if (bufsize != weapon_vboSize) {
+      GLsizei size;
       weapon_vboSize = bufsize;
       size = sizeof(GLfloat) * (2+4) * weapon_vboSize;
       weapon_vboData = realloc( weapon_vboData, size );

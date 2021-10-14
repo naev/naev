@@ -1,16 +1,11 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
-
-
 #ifndef SHIPSTATS_H
 #  define SHIPSTATS_H
 
-
 #include "nxml.h"
 #include "nlua.h"
-
 
 /**
  * @brief Lists all the possible types.
@@ -171,7 +166,6 @@ typedef struct ShipStatList_ {
    } d; /**< Stat data. */
 } ShipStatList;
 
-
 /**
  * @brief Represents ship statistics, properties ship can use.
  *
@@ -185,6 +179,9 @@ typedef struct ShipStatList_ {
  *
  * Absolute and Integers:
  *  Absolute values in whatever units it's meant to use.
+ *
+ * Absolute Percentage:
+ *  Absolute percentage values (get added together).
  *
  * Booleans:
  *  1 or 0 values wher 1 indicates property is set.
@@ -296,7 +293,6 @@ typedef struct ShipStats_ {
    double jump_distance;      /**< Modifies how far the pilot can jump from the jump point. */
 } ShipStats;
 
-
 /*
  * Safety.
  */
@@ -332,6 +328,5 @@ int ss_statsSet( ShipStats *s, const char *name, double value, int overwrite );
 double ss_statsGet( const ShipStats *s, const char *name );
 int ss_statsGetLua( lua_State *L, const ShipStats *s, const char *name, int internal );
 int ss_statsGetLuaTable( lua_State *L, const ShipStats *s, int internal );
-
 
 #endif /* SHIPSTATS_H */

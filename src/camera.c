@@ -1,13 +1,11 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
 /**
  * @file camera.c
  *
  * @brief Handles the camera.
  */
-
 
 /** @cond */
 #include "naev.h"
@@ -24,9 +22,7 @@
 #include "player.h"
 #include "space.h"
 
-
 #define CAMERA_DIR      (M_PI/2.)
-
 
 static unsigned int camera_followpilot = 0; /**< Pilot to follow. */
 static int zoom_override   = 0; /**< Whether or not to override the zoom. */
@@ -44,7 +40,6 @@ static double target_Y     = 0.; /**< Target Y position. */
 static int camera_fly      = 0; /**< Camera is flying to target. */
 static double camera_flyspeed = 0.; /**< Speed when flying. */
 
-
 /*
  * Prototypes.
  */
@@ -52,7 +47,6 @@ static void cam_updateFly( double x, double y, double dt );
 static void cam_updatePilot( Pilot *follow, double dt );
 static void cam_updatePilotZoom( const Pilot *follow, const Pilot *target, double dt );
 static void cam_updateManualZoom( double dt );
-
 
 /**
  * @brief Overrides the zoom system.
@@ -63,7 +57,6 @@ void cam_zoomOverride( int enable )
 {
    zoom_override = enable;
 }
-
 
 /**
  * @brief Sets the camera zoom.
@@ -77,7 +70,6 @@ void cam_setZoom( double zoom )
    camera_Z = CLAMP( conf.zoom_far, conf.zoom_near, zoom );
 }
 
-
 /**
  * @brief Sets the camera zoom target.
  *
@@ -90,7 +82,6 @@ void cam_setZoomTarget( double zoom )
    target_Z = CLAMP( conf.zoom_far, conf.zoom_near, zoom );
 }
 
-
 /**
  * @brief Gets the camera zoom.
  *
@@ -101,7 +92,6 @@ double cam_getZoom (void)
    return camera_Z;
 }
 
-
 /**
  * @brief Gets the camera zoom.
  *
@@ -111,7 +101,6 @@ double cam_getZoomTarget (void)
 {
    return target_Z;
 }
-
 
 /**
  * @brief Gets the camera position.
@@ -124,7 +113,6 @@ void cam_getPos( double *x, double *y )
    *x = camera_X;
    *y = camera_Y;
 }
-
 
 /**
  * @brief Sets the target to follow.
@@ -163,7 +151,6 @@ void cam_setTargetPilot( unsigned int follow, int soft_over )
    sound_updateListener( dir, camera_X, camera_Y, 0., 0. );
 }
 
-
 /**
  * @brief Sets the camera target to a position.
  */
@@ -191,7 +178,6 @@ void cam_setTargetPos( double x, double y, int soft_over )
    sound_updateListener( CAMERA_DIR, camera_X, camera_Y, 0., 0. );
 }
 
-
 /**
  * @brief Returns the camera's current target.
  *
@@ -201,7 +187,6 @@ int cam_getTarget( void )
 {
    return camera_followpilot;
 }
-
 
 /**
  * @brief Updates the camera.
@@ -262,22 +247,20 @@ void cam_update( double dt )
    }
 }
 
-
 /**
  * @brief Updates the camera flying to a position.
  */
 static void cam_updateFly( double x, double y, double dt )
 {
    double k, dx,dy, max;
-   double a, r;
 
    max = camera_flyspeed*dt;
    k   = 25.*dt;
    dx  = (x - camera_X)*k;
    dy  = (y - camera_Y)*k;
    if (pow2(dx)+pow2(dy) > pow2(max)) {
-      a  = atan2( dy, dx );
-      r  = max;
+      double a = atan2( dy, dx );
+      double r = max;
       dx = r*cos(a);
       dy = r*sin(a);
    }
@@ -292,7 +275,6 @@ static void cam_updateFly( double x, double y, double dt )
       camera_fly = 0;
    }
 }
-
 
 /**
  * @brief Updates a camera following a pilot.
@@ -402,7 +384,6 @@ static void cam_updateManualZoom( double dt )
    camera_Z =  CLAMP( conf.zoom_far, conf.zoom_near, camera_Z + d );
 }
 
-
 /**
  * @brief Updates the camera zoom.
  */
@@ -471,5 +452,3 @@ static void cam_updatePilotZoom( const Pilot *follow, const Pilot *target, doubl
       d *= 2.;
    camera_Z =  CLAMP( zfar, znear, z + d);
 }
-
-

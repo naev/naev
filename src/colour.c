@@ -1,13 +1,11 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
 /**
  * @file colour.c
  *
  * @brief Predefined colours for use with Naev.
  */
-
 
 /** @cond */
 #include <math.h>
@@ -40,7 +38,6 @@ __attribute__((const)) double gammaToLinear( double x )
    return pow((x + 0.055) / 1.055, 2.4);
 }
 
-
 void col_linearToGamma( glColour *c )
 {
    c->r = linearToGamma( c->r );
@@ -48,14 +45,12 @@ void col_linearToGamma( glColour *c )
    c->b = linearToGamma( c->b );
 }
 
-
 void col_gammaToLinear( glColour *c )
 {
    c->r = gammaToLinear( c->r );
    c->g = gammaToLinear( c->g );
    c->b = gammaToLinear( c->b );
 }
-
 
 /**
  * @brief Changes colour space from HSV to RGB.
@@ -98,7 +93,6 @@ void col_hsv2rgb( glColour *c, float h, float s, float v )
    c->g = gammaToLinear( c->g );
    c->b = gammaToLinear( c->b );
 }
-
 
 /**
  * @brief Changes colour space from RGB to HSV.
@@ -186,7 +180,6 @@ void col_rgb2hsv( float *H, float *S, float *V, float R, float G, float B )
    *S = S1;
    *V = V1;
 }
-
 
 /**
  * @brief Blends two colours.

@@ -1,14 +1,11 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
 /**
  * @file board.c
  *
  * @brief Deals with boarding ships.
  */
-
-
 /** @cond */
 #include "naev.h"
 /** @endcond */
@@ -27,17 +24,14 @@
 #include "space.h"
 #include "toolkit.h"
 
-
 #define BOARDING_WIDTH  380 /**< Boarding window width. */
 #define BOARDING_HEIGHT 200 /**< Boarding window height. */
 
 #define BUTTON_WIDTH     50 /**< Boarding button width. */
 #define BUTTON_HEIGHT    30 /**< Boarding button height. */
 
-
 static int board_stopboard = 0; /**< Whether or not to unboard. */
 static int board_boarded   = 0;
-
 
 /*
  * prototypes
@@ -50,7 +44,6 @@ static int board_trySteal( Pilot *p );
 static int board_fail( unsigned int wdw );
 static void board_update( unsigned int wdw );
 
-
 /**
  * @brief Gets if the player is boarded.
  */
@@ -58,7 +51,6 @@ int player_isBoarded (void)
 {
    return board_boarded;
 }
-
 
 /**
  * @fn void player_board (void)
@@ -186,7 +178,6 @@ void player_board (void)
    board_update(wdw);
 }
 
-
 /**
  * @brief Forces unboarding of the pilot.
  */
@@ -194,7 +185,6 @@ void board_unboard (void)
 {
    board_stopboard = 1;
 }
-
 
 /**
  * @brief Closes the boarding window.
@@ -211,7 +201,6 @@ void board_exit( unsigned int wdw, const char *str )
    board_boarded = 0;
 }
 
-
 /**
  * @brief Attempt to steal the boarded ship's credits.
  *
@@ -220,7 +209,7 @@ void board_exit( unsigned int wdw, const char *str )
  */
 static void board_stealCreds( unsigned int wdw, const char *str )
 {
-   (void)str;
+   (void) str;
    Pilot* p = pilot_getTarget( player.p );
 
    if (p->credits==0) { /* you can't steal from the poor */
@@ -235,7 +224,6 @@ static void board_stealCreds( unsigned int wdw, const char *str )
    board_update( wdw ); /* update the lack of credits */
    player_message(_("#oYou manage to steal the ship's credits."));
 }
-
 
 /**
  * @brief Attempt to steal the boarded ship's cargo.
@@ -272,7 +260,6 @@ static void board_stealCargo( unsigned int wdw, const char *str )
    board_update( wdw );
    player_message(_("#oYou manage to steal the ship's cargo."));
 }
-
 
 /**
  * @brief Attempt to steal the boarded ship's fuel.
@@ -313,7 +300,6 @@ static void board_stealFuel( unsigned int wdw, const char *str )
    board_update( wdw );
    player_message(_("#oYou manage to steal the ship's fuel."));
 }
-
 
 /**
  * @brief Attempt to steal the boarded ship's ammo.
@@ -400,7 +386,6 @@ static void board_stealAmmo( unsigned int wdw, const char *str )
      board_update(wdw);
 }
 
-
 /**
  * @brief Checks to see if the pilot can steal from its target.
  *
@@ -444,7 +429,6 @@ static int board_trySteal( Pilot *p )
    return 0;
 }
 
-
 /**
  * @brief Checks to see if the hijack attempt failed.
  *
@@ -452,9 +436,7 @@ static int board_trySteal( Pilot *p )
  */
 static int board_fail( unsigned int wdw )
 {
-   int ret;
-
-   ret = board_trySteal( player.p );
+   int ret = board_trySteal( player.p );
 
    if (ret == 0)
       return 0;
@@ -467,7 +449,6 @@ static int board_fail( unsigned int wdw )
    board_exit( wdw, NULL);
    return 1;
 }
-
 
 /**
  * @brief Updates the boarding window fields.
@@ -520,7 +501,6 @@ static void board_update( unsigned int wdw )
    window_modifyText( wdw, "txtData", str );
 }
 
-
 /**
  * @brief Has a pilot attempt to board another pilot.
  *
@@ -570,7 +550,6 @@ int pilot_board( Pilot *p )
    return 1;
 }
 
-
 /**
  * @brief Finishes the boarding.
  *
@@ -578,19 +557,15 @@ int pilot_board( Pilot *p )
  */
 void pilot_boardComplete( Pilot *p )
 {
-   int ret;
-   Pilot *target;
-   credits_t worth;
-   char creds[ ECON_CRED_STRLEN ];
-
    /* Make sure target is valid. */
-   target = pilot_getTarget( p );
+   Pilot *target = pilot_getTarget( p );
    if (target == NULL)
       return;
 
    /* In the case of the player take fewer credits. */
    if (pilot_isPlayer(target)) {
-      worth = MIN( 0.1*pilot_worth(target), target->credits );
+      char creds[ ECON_CRED_STRLEN ];
+      credits_t worth   = MIN( 0.1*pilot_worth(target), target->credits );
       p->credits       += worth * p->stats.loot_mod;
       target->credits  -= worth;
       credits2str( creds, worth, 2 );
@@ -600,7 +575,7 @@ void pilot_boardComplete( Pilot *p )
    }
    else {
       /* Steal stuff, we only do credits for now. */
-      ret = board_trySteal(p);
+      int ret = board_trySteal(p);
       if (ret == 0) {
          /* Normally just plunder it all. */
          p->credits += target->credits * p->stats.loot_mod;
@@ -611,5 +586,3 @@ void pilot_boardComplete( Pilot *p )
    /* Finish the boarding. */
    pilot_rmFlag(p, PILOT_BOARDING);
 }
-
-

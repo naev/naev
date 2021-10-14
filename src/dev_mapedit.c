@@ -1,13 +1,11 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
 /**
  * @file dev_mapedit.c
  *
  * @brief Handles the star system editor.
  */
-
 /** @cond */
 #include "physfs.h"
 #include "SDL.h"
@@ -38,17 +36,13 @@
 #include "toolkit.h"
 #include "unidiff.h"
 
-
 extern StarSystem *systems_stack;
-
 
 #define BUTTON_WIDTH    80 /**< Map button width. */
 #define BUTTON_HEIGHT   30 /**< Map button height. */
 
-
 #define MAPEDIT_EDIT_WIDTH       400 /**< System editor width. */
 #define MAPEDIT_EDIT_HEIGHT      450 /**< System editor height. */
-
 
 #define MAPEDIT_DRAG_THRESHOLD   300   /**< Drag threshold. */
 #define MAPEDIT_MOVE_THRESHOLD   10    /**< Movement threshold. */
@@ -97,7 +91,6 @@ static double mapedit_my      = 0.; /**< Y mouse position. */
 static unsigned int mapedit_widLoad = 0; /**< Load Map Outfit wid. */
 static char *mapedit_sLoadMapName = NULL; /**< Loaded Map Outfit. */
 
-
 /*
  * Universe editor Prototypes.
  */
@@ -129,7 +122,6 @@ void mapedit_setGlobalLoadedInfos( mapOutfitsList_t* ns );
 /* Management of Map files list. */
 static int  mapedit_mapsList_refresh (void);
 static void mapsList_free (void);
-
 
 /**
  * @brief Opens the system editor interface.
@@ -262,8 +254,6 @@ void mapedit_open( unsigned int wid_unused, const char *unused )
    textPos++;
    linesPos+=curLines+1;
 
-   (void)linesPos;
-
    /* Zoom buttons */
    window_addButtonKey( wid, 40, 20, 30, 30, "btnZoomIn", "+", mapedit_buttonZoom, SDLK_EQUALS );
    window_addButtonKey( wid, 80, 20, 30, 30, "btnZoomOut", "-", mapedit_buttonZoom, SDLK_MINUS );
@@ -275,7 +265,6 @@ void mapedit_open( unsigned int wid_unused, const char *unused )
    /* Deselect everything. */
    mapedit_deselect();
 }
-
 
 /**
  * @brief Handles keybindings.
@@ -294,7 +283,6 @@ static int mapedit_keys( unsigned int wid, SDL_Keycode key, SDL_Keymod mod )
          return 0;
    }
 }
-
 
 /**
  * @brief Closes the system editor widget.
@@ -339,7 +327,6 @@ static void mapedit_btnOpen( unsigned int wid_unused, const char *unused )
 
 }
 
-
 /**
  * @brief System editor custom widget rendering.
  */
@@ -347,8 +334,6 @@ static void mapedit_render( double bx, double by, double w, double h, void *data
 {
    (void) data;
    double x,y,r;
-   StarSystem *sys;
-   int i;
 
    /* Parameters. */
    map_renderParams( bx, by, mapedit_xpos, mapedit_ypos, w, h, mapedit_zoom, &x, &y, &r );
@@ -356,8 +341,8 @@ static void mapedit_render( double bx, double by, double w, double h, void *data
    uniedit_renderMap( bx, by, w, h, x, y, r );
 
    /* Render the selected system selections. */
-   for (i=0; i<mapedit_nsys; i++) {
-      sys = mapedit_sys[i];
+   for (int i=0; i<mapedit_nsys; i++) {
+      StarSystem *sys = mapedit_sys[i];
       gl_renderCircle( x + sys->pos.x * mapedit_zoom, y + sys->pos.y * mapedit_zoom,
             1.8*r, &cRed, 0 );
       gl_renderCircle( x + sys->pos.x * mapedit_zoom, y + sys->pos.y * mapedit_zoom,
@@ -366,7 +351,7 @@ static void mapedit_render( double bx, double by, double w, double h, void *data
 
    /* Render last clicked system */
    if (mapedit_iLastClickedSystem != 0) {
-      sys = system_getIndex( mapedit_iLastClickedSystem );
+      StarSystem *sys = system_getIndex( mapedit_iLastClickedSystem );
       gl_renderCircle( x + sys->pos.x * mapedit_zoom, y + sys->pos.y * mapedit_zoom,
             2.4*r, &cBlue, 0 );
       gl_renderCircle( x + sys->pos.x * mapedit_zoom, y + sys->pos.y * mapedit_zoom,
@@ -384,7 +369,6 @@ static int mapedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
 {
    (void) wid;
    (void) data;
-   int i;
    int found;
    double x,y, t;
    StarSystem *sys;
@@ -422,7 +406,7 @@ static int mapedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
             mx -= w/2 - mapedit_xpos;
             my -= h/2 - mapedit_ypos;
 
-            for (i=0; i<array_size(systems_stack); i++) {
+            for (int i=0; i<array_size(systems_stack); i++) {
                sys = system_getIndex( i );
 
                /* get position */
@@ -435,14 +419,13 @@ static int mapedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
 
                   /* Try to find in selected systems. */
                   found = 0;
-                  for (i=0; i<mapedit_nsys; i++) {
+                  for (int j=0; j<mapedit_nsys; j++) {
                      /* Must match. */
-                     if (mapedit_sys[i] == sys) {
+                     if (mapedit_sys[j] == sys) {
                         found = 1;
                         break;
-                     } else {
+                     } else
                         continue;
-                     }
                   }
 
                   /* Toggle system selection. */
@@ -488,7 +471,6 @@ static int mapedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
    return 0;
 }
 
-
 /**
  * @brief Deselects selected targets.
  */
@@ -504,7 +486,6 @@ static void mapedit_deselect (void)
    window_modifyText( mapedit_wid, "txtSelected", "No selection" );
    window_modifyText( mapedit_wid, "txtCurrentNumSystems", "0" );
 }
-
 
 /**
  * @brief Adds a system to the selection.
@@ -531,14 +512,12 @@ static void mapedit_selectAdd( StarSystem *sys )
    mapedit_selectText();
 }
 
-
 /**
  * @brief Removes a system from the selection.
  */
 static void mapedit_selectRm( StarSystem *sys )
 {
-   int i;
-   for (i=0; i<mapedit_nsys; i++) {
+   for (int i=0; i<mapedit_nsys; i++) {
       if (mapedit_sys[i] == sys) {
          mapedit_nsys--;
          memmove( &mapedit_sys[i], &mapedit_sys[i+1], sizeof(StarSystem*) * (mapedit_nsys - i) );
@@ -547,7 +526,6 @@ static void mapedit_selectRm( StarSystem *sys )
       }
    }
 }
-
 
 /**
  * @brief Sets the selected system text.
@@ -589,7 +567,6 @@ void mapedit_selectText (void)
    }
 }
 
-
 /**
  * @brief Handles the button zoom clicks.
  *
@@ -621,7 +598,6 @@ static void mapedit_buttonZoom( unsigned int wid, const char* str )
    mapedit_xpos *= mapedit_zoom;
    mapedit_ypos *= mapedit_zoom;
 }
-
 
 /**
  * @brief Opens the load map outfit menu.
@@ -677,7 +653,6 @@ void mapedit_loadMapMenu_open (void)
          "btnDelete", "Del", mapedit_loadMapMenu_close );
 }
 
-
 /**
  * @brief Updates the load menu.
  *    @param wdw Window triggering function.
@@ -716,7 +691,6 @@ static void mapedit_loadMapMenu_update( unsigned int wdw, const char *str )
    window_modifyText( wdw, "txtMapInfo", buf );
 }
 
-
 /**
  * @brief Closes the load map outfit menu.
  *    @param wdw Window triggering function.
@@ -724,11 +698,9 @@ static void mapedit_loadMapMenu_update( unsigned int wdw, const char *str )
  */
 static void mapedit_loadMapMenu_close( unsigned int wdw, const char *str )
 {
-   (void)str;
-
+   (void) str;
    window_destroy( wdw );
 }
-
 
 /**
  * @brief Load the selected Map.
@@ -839,7 +811,6 @@ static void mapedit_loadMapMenu_load( unsigned int wdw, const char *str )
    window_destroy( wdw );
 }
 
-
 /**
  * @brief Save the current Map to selected file.
  */
@@ -867,7 +838,7 @@ static void mapedit_btnSaveMapAs( unsigned int wdw, const char *unused )
  */
 void mapedit_setGlobalLoadedInfos( mapOutfitsList_t* ns )
 {
-   char buf[8];
+   char buf[32];
 
    /* Displaying info strings */
    window_setInput( mapedit_wid, "inpFileName",    ns->fileName );
@@ -885,7 +856,6 @@ void mapedit_setGlobalLoadedInfos( mapOutfitsList_t* ns )
    mapedit_sLoadMapName = strdup( ns->mapName );
 }
 
-
 /**
  * @brief Gets the list of all the maps names.
  *   from outfit_mapParse()
@@ -893,13 +863,11 @@ void mapedit_setGlobalLoadedInfos( mapOutfitsList_t* ns )
  */
 static int mapedit_mapsList_refresh (void)
 {
-   int is_map, nSystems, rarity;
-   size_t i;
+   int is_map, nSystems;
    xmlNodePtr node, cur;
    xmlDocPtr doc;
    char **map_files;
-   char *file, *name, *description, *outfitType;
-   credits_t price;
+   char *file, *name, *outfitType;
    mapOutfitsList_t *newMapItem;
 
    mapsList_free();
@@ -907,10 +875,10 @@ static int mapedit_mapsList_refresh (void)
 
    map_files = PHYSFS_enumerateFiles( MAP_DATA_PATH );
    newMapItem = NULL;
-   for (i=0; map_files[i]!=NULL; i++) {
-      description = NULL;
-      price = 1000;
-      rarity = 0;
+   for (size_t i=0; map_files[i]!=NULL; i++) {
+      char *description = NULL;
+      credits_t price = 1000;
+      int rarity = 0;
 
       asprintf( &file, "%s%s", MAP_DATA_PATH, map_files[i] );
 
@@ -1007,16 +975,13 @@ static int mapedit_mapsList_refresh (void)
    return 0;
 }
 
-
 /**
  * @brief Frees the loaded map.
  */
 static void mapsList_free (void)
 {
-   unsigned int n, i;
-
-   n = array_size( mapList );
-   for (i=0; i<n; i++) {
+   unsigned int n = array_size( mapList );
+   for (unsigned int i=0; i<n; i++) {
       free( mapList[i].fileName );
       free( mapList[i].mapName );
       free( mapList[i].description );
@@ -1028,7 +993,6 @@ static void mapsList_free (void)
    mapedit_sLoadMapName = NULL;
 }
 
-
 /**
  * @brief Saves selected systems as a map outfit file.
  *
@@ -1036,10 +1000,8 @@ static void mapsList_free (void)
  */
 static int mapedit_saveMap( StarSystem **uniedit_sys, mapOutfitsList_t* ns )
 {
-   int i, j, k;
    xmlDocPtr doc;
    xmlTextWriterPtr writer;
-   StarSystem *s;
    char *file;
 
    /* Create the writer. */
@@ -1072,20 +1034,20 @@ static int mapedit_saveMap( StarSystem **uniedit_sys, mapOutfitsList_t* ns )
    xmlw_attr( writer, "type", "map" );
 
    /* Iterate over all selected systems. Save said systems and any NORMAL jumps they might share. */
-   for (i = 0; i < ns->numSystems; i++) {
-      s = uniedit_sys[i];
+   for (int i=0; i < ns->numSystems; i++) {
+      StarSystem *s = uniedit_sys[i];
       xmlw_startElem( writer, "sys" );
       xmlw_attr( writer, "name", "%s", s->name );
 
       /* Iterate jumps and see if they lead to any other systems in our array. */
-      for (j = 0; j < array_size(s->jumps); j++) {
+      for (int j=0; j < array_size(s->jumps); j++) {
          /* Ignore hidden and exit-only jumps. */
          if (jp_isFlag(&s->jumps[j], JP_EXITONLY ))
             continue;
          if (jp_isFlag(&s->jumps[j], JP_HIDDEN))
             continue;
          /* This is a normal jump. */
-         for (k = 0; k < ns->numSystems; k++) {
+         for (int k=0; k < ns->numSystems; k++) {
             if (s->jumps[j].target == uniedit_sys[k]) {
                xmlw_elem( writer, "jump", "%s", uniedit_sys[k]->name );
                break;
@@ -1094,7 +1056,7 @@ static int mapedit_saveMap( StarSystem **uniedit_sys, mapOutfitsList_t* ns )
       }
 
       /* Iterate assets and add them */
-      for (j = 0; j < array_size(s->planets); j++)
+      for (int j=0; j < array_size(s->planets); j++)
          xmlw_elem( writer, "asset", "%s", s->planets[j]->name );
 
       xmlw_endElem( writer ); /* "sys" */

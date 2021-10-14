@@ -1,13 +1,11 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
 /**
  * @file claim.c
  *
  * @brief Handles claiming of systems.
  */
-
 /** @cond */
 #include "naev.h"
 /** @endcond */
@@ -20,7 +18,6 @@
 #include "mission.h"
 #include "space.h"
 
-
 /**
  * @brief The claim structure.
  */
@@ -32,7 +29,6 @@ struct Claim_s {
 
 static char **claimed_strs = NULL; /**< Global claimed strings. */
 
-
 /**
  * @brief Creates a system claim.
  *
@@ -40,16 +36,13 @@ static char **claimed_strs = NULL; /**< Global claimed strings. */
  */
 Claim_t *claim_create (void)
 {
-   Claim_t *claim;
-
-   claim         = malloc( sizeof(Claim_t) );
+   Claim_t *claim= malloc( sizeof(Claim_t) );
    claim->active = 0;
    claim->ids    = NULL;
    claim->strs   = NULL;
 
    return claim;
 }
-
 
 /**
  * @brief Adds a string claim to a claim.
@@ -72,7 +65,6 @@ int claim_addStr( Claim_t *claim, const char *str )
    return 0;
 }
 
-
 /**
  * @brief Adds a claim to a system claim.
  *
@@ -94,7 +86,6 @@ int claim_addSys( Claim_t *claim, int ss_id )
    return 0;
 }
 
-
 /**
  * @brief See if a claim actually contains data.
  *
@@ -111,7 +102,6 @@ int claim_isNull( const Claim_t *claim )
 
    return 0;
 }
-
 
 /**
  * @brief Tests to see if a system claim would have collisions.
@@ -145,7 +135,6 @@ int claim_test( const Claim_t *claim )
    return 0;
 }
 
-
 /**
  * @brief Tests to see if a system is claimed by a system claim.
  *
@@ -155,21 +144,18 @@ int claim_test( const Claim_t *claim )
  */
 int claim_testStr( const Claim_t *claim, const char *str )
 {
-   int i;
-
    /* Must actually have a claim. */
    if (claim == NULL)
       return 0;
 
    /* Check strings. */
-   for (i=0; i<array_size(claim->strs); i++) {
+   for (int i=0; i<array_size(claim->strs); i++) {
       if (strcmp( claim->strs[i], str )==0)
          return 1;
    }
 
    return 0;
 }
-
 
 /**
  * @brief Tests to see if a system is claimed by a system claim.
@@ -180,20 +166,17 @@ int claim_testStr( const Claim_t *claim, const char *str )
  */
 int claim_testSys( const Claim_t *claim, int sys )
 {
-   int i;
-
    /* Must actually have a claim. */
    if (claim == NULL)
       return 0;
 
    /* See if the system is claimed. */
-   for (i=0; i<array_size(claim->ids); i++)
+   for (int i=0; i<array_size(claim->ids); i++)
       if (claim->ids[i] == sys)
          return 1;
 
    return 0;
 }
-
 
 /**
  * @brief Destroys a system claim.
@@ -202,40 +185,33 @@ int claim_testSys( const Claim_t *claim, int sys )
  */
 void claim_destroy( Claim_t *claim )
 {
-   int i;
-
    if (claim->active)
-      for (i=0; i<array_size(claim->ids); i++)
+      for (int i=0; i<array_size(claim->ids); i++)
          sys_rmFlag( system_getIndex(claim->ids[i]), SYSTEM_CLAIMED );
    array_free( claim->ids );
 
    if (claim->active)
-      for (i=0; i<array_size(claim->strs); i++)
+      for (int i=0; i<array_size(claim->strs); i++)
          free( claim->strs[i] );
    array_free( claim->strs );
    free(claim);
 }
-
 
 /**
  * @brief Clears the claims on all systems.
  */
 void claim_clear (void)
 {
-   StarSystem *sys;
-   int i;
-
    /* Clears all the flags. */
-   sys = system_getAll();
-   for (i=0; i<array_size(sys); i++)
+   StarSystem *sys = system_getAll();
+   for (int i=0; i<array_size(sys); i++)
       sys_rmFlag( &sys[i], SYSTEM_CLAIMED );
 
-   for (i=0; i<array_size(claimed_strs); i++)
+   for (int i=0; i<array_size(claimed_strs); i++)
       free(claimed_strs[i]);
    array_free(claimed_strs);
    claimed_strs = NULL;
 }
-
 
 /**
  * @brief Activates all the claims.
@@ -247,7 +223,6 @@ void claim_activateAll (void)
    missions_activateClaims();
 }
 
-
 /**
  * @brief Activates a claim on a system.
  *
@@ -255,23 +230,19 @@ void claim_activateAll (void)
  */
 void claim_activate( Claim_t *claim )
 {
-   int i;
-   char **s;
-
    /* Add flags. */
-   for (i=0; i<array_size(claim->ids); i++)
+   for (int i=0; i<array_size(claim->ids); i++)
       sys_setFlag( system_getIndex(claim->ids[i]), SYSTEM_CLAIMED );
 
    /* Add strings. */
    if ((claimed_strs == NULL) && (array_size(claim->strs) > 0))
       claimed_strs = array_create( char* );
-   for (i=0; i<array_size(claim->strs); i++) {
-      s = &array_grow( &claimed_strs );
+   for (int i=0; i<array_size(claim->strs); i++) {
+      char **s = &array_grow( &claimed_strs );
       *s = strdup( claim->strs[i] );
    }
    claim->active = 1;
 }
-
 
 /**
  * @brief Saves all the systems in a claim in XML.
@@ -283,26 +254,22 @@ void claim_activate( Claim_t *claim )
  */
 int claim_xmlSave( xmlTextWriterPtr writer, const Claim_t *claim )
 {
-   int i;
-   StarSystem *sys;
-
    if (claim == NULL)
       return 0;
 
-   for (i=0; i<array_size(claim->ids); i++) {
-      sys = system_getIndex( claim->ids[i] );
+   for (int i=0; i<array_size(claim->ids); i++) {
+      StarSystem *sys = system_getIndex( claim->ids[i] );
       if (sys != NULL)
          xmlw_elem( writer, "sys", "%s", sys->name );
       else
          WARN(_("System Claim has inexistent system"));
    }
 
-   for (i=0; i<array_size(claim->strs); i++)
+   for (int i=0; i<array_size(claim->strs); i++)
       xmlw_elem( writer, "str", "%s", claim->strs[i] );
 
    return 0;
 }
-
 
 /**
  * @brief Loads a claim.
@@ -314,8 +281,6 @@ Claim_t *claim_xmlLoad( xmlNodePtr parent )
 {
    Claim_t *claim;
    xmlNodePtr node;
-   StarSystem *sys;
-   char *str;
 
    /* Create the claim. */
    claim = claim_create();
@@ -324,14 +289,14 @@ Claim_t *claim_xmlLoad( xmlNodePtr parent )
    node = parent->xmlChildrenNode;
    do {
       if (xml_isNode(node,"sys")) {
-         sys = system_get( xml_get(node) );
+         StarSystem *sys = system_get( xml_get(node) );
          if (sys != NULL)
             claim_addSys( claim, system_index(sys) );
          else
             WARN(_("System Claim trying to load system '%s' which doesn't exist"), xml_get(node));
       }
       else if (xml_isNode(node,"str")) {
-         str = xml_get(node);
+         char *str = xml_get(node);
          claim_addStr( claim, str );
       }
    } while (xml_nextNode(node));
@@ -341,6 +306,3 @@ Claim_t *claim_xmlLoad( xmlNodePtr parent )
 
    return claim;
 }
-
-
-

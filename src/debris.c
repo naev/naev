@@ -1,13 +1,11 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
 /**
  * @file debris.c
  *
  * @brief Handles scattering debris around.
  */
-
 
 /** @cond */
 #include "naev.h"

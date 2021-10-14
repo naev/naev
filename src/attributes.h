@@ -1,7 +1,6 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
 #pragma once
 
 #ifndef __has_attribute

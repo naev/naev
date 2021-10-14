@@ -1,13 +1,11 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
 /**
  * @file shipstats.c
  *
  * @brief Handles the ship statistics.
  */
-
 
 /** @cond */
 #include "naev.h"
@@ -17,7 +15,6 @@
 
 #include "log.h"
 #include "nstring.h"
-
 
 /**
  * @brief The data type.
@@ -29,7 +26,6 @@ typedef enum StatDataType_ {
    SS_DATA_TYPE_INTEGER,         /**< Absolute integer value. */
    SS_DATA_TYPE_BOOLEAN          /**< Boolean value, defaults 0. */
 } StatDataType;
-
 
 /**
  * @brief Internal look up table for ship stats.
@@ -49,7 +45,6 @@ typedef struct ShipStatsLookup_ {
    /* Self calculated. */
    size_t offset;       /**< Stores the byte offset in the structure. */
 } ShipStatsLookup;
-
 
 /* Flexible do everything macro. */
 #define ELEM( t, n, dsp, d , i) \
@@ -184,7 +179,6 @@ static const ShipStatsLookup ss_lookup[] = {
    N__ELEM( SS_TYPE_SENTINEL )
 };
 
-
 /*
  * Prototypes.
  */
@@ -196,7 +190,6 @@ static int ss_printI( char *buf, int len, int newline, int i, const ShipStatsLoo
 static int ss_printB( char *buf, int len, int newline, int b, const ShipStatsLookup *sl );
 static double ss_statsGetInternal( const ShipStats *s, ShipStatsType type );
 static int ss_statsGetLuaInternal( lua_State *L, const ShipStats *s, ShipStatsType type, int internal );
-
 
 /**
  * @brief Creatse a shipstat list element from an xml node.
@@ -245,7 +238,6 @@ ShipStatList* ss_listFromXML( xmlNodePtr node )
    return ll;
 }
 
-
 /**
  * @brief Checks for validity.
  */
@@ -261,7 +253,6 @@ int ss_check (void)
 
    return 0;
 }
-
 
 /**
  * @brief Initializes a stat structure.
@@ -303,7 +294,6 @@ int ss_statsInit( ShipStats *stats )
 
    return 0;
 }
-
 
 /**
  * @brief Merges two different ship stats.
@@ -360,7 +350,6 @@ int ss_statsMerge( ShipStats *dest, const ShipStats *src )
    return 0;
 }
 
-
 /**
  * @brief Modifies a stat structure using a single element.
  *
@@ -409,7 +398,6 @@ int ss_statsModSingle( ShipStats *stats, const ShipStatList* list )
    return 0;
 }
 
-
 /**
  * @brief Updates a stat structure from a stat list.
  *
@@ -425,7 +413,6 @@ int ss_statsModFromList( ShipStats *stats, const ShipStatList* list )
    return ret;
 }
 
-
 /**
  * @brief Gets the name from type.
  *
@@ -439,7 +426,6 @@ const char* ss_nameFromType( ShipStatsType type )
    return ss_lookup[ type ].name;
 }
 
-
 /**
  * @brief Gets the offset from type.
  *
@@ -450,7 +436,6 @@ size_t ss_offsetFromType( ShipStatsType type )
 {
    return ss_lookup[ type ].offset;
 }
-
 
 /**
  * @brief Gets the type from the name.
@@ -467,7 +452,6 @@ ShipStatsType ss_typeFromName( const char *name )
    WARN(_("ss_typeFromName: No ship stat matching '%s'"), name);
    return SS_TYPE_NIL;
 }
-
 
 /**
  * @brief Some colour coding for ship stats doubles.
@@ -500,7 +484,6 @@ static const char* ss_printI_colour( int i, const ShipStatsLookup *sl )
    return "r";
 }
 
-
 /**
  * @brief Helper to print doubles.
  */
@@ -513,7 +496,6 @@ static int ss_printD( char *buf, int len, int newline, double d, const ShipStats
          ss_printD_colour( d, sl ),
          d*100., _(sl->display) );
 }
-
 
 /**
  * @brief Helper to print absolute doubles.
@@ -528,7 +510,6 @@ static int ss_printA( char *buf, int len, int newline, double d, const ShipStats
          d, _(sl->display) );
 }
 
-
 /**
  * @brief Helper to print integers.
  */
@@ -542,7 +523,6 @@ static int ss_printI( char *buf, int len, int newline, int i, const ShipStatsLoo
          i, _(sl->display) );
 }
 
-
 /**
  * @brief Helper to print booleans.
  */
@@ -555,9 +535,6 @@ static int ss_printB( char *buf, int len, int newline, int b, const ShipStatsLoo
          ss_printI_colour( b, sl ),
          _(sl->display) );
 }
-
-
-
 
 /**
  * @brief Writes the ship statistics description.
@@ -603,7 +580,6 @@ int ss_statsListDesc( const ShipStatList *ll, char *buf, int len, int newline )
    }
    return i;
 }
-
 
 /**
  * @brief Writes the ship statistics description.
@@ -672,7 +648,6 @@ int ss_statsDesc( const ShipStats *s, char *buf, int len, int newline )
    return l;
 }
 
-
 /**
  * @brief Frees a list of ship stats.
  *
@@ -686,8 +661,6 @@ void ss_free( ShipStatList *ll )
       free(tmp);
    }
 }
-
-
 
 /**
  * @brief Sets a ship stat by name.
@@ -748,7 +721,6 @@ int ss_statsSet( ShipStats *s, const char *name, double value, int overwrite )
    return 0;
 }
 
-
 static double ss_statsGetInternal( const ShipStats *s, ShipStatsType type )
 {
    const ShipStatsLookup *sl;
@@ -778,7 +750,6 @@ static double ss_statsGetInternal( const ShipStats *s, ShipStatsType type )
    }
    return 0.;
 }
-
 
 static int ss_statsGetLuaInternal( lua_State *L, const ShipStats *s, ShipStatsType type, int internal )
 {
@@ -825,8 +796,6 @@ static int ss_statsGetLuaInternal( lua_State *L, const ShipStats *s, ShipStatsTy
    return -1;
 }
 
-
-
 /**
  * @brief Gets a ship stat value by name.
  */
@@ -859,7 +828,6 @@ int ss_statsGetLua( lua_State *L, const ShipStats *s, const char *name, int inte
 
    return ss_statsGetLuaInternal( L, s, type, internal );
 }
-
 
 /**
  * @brief Converts ship stats to a Lua table, which is pushed on the Lua stack.

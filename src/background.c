@@ -1,13 +1,11 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
 /**
  * @file background.c
  *
  * @brief Handles displaying backgrounds.
  */
-
 /** @cond */
 #include "naev.h"
 /** @endcond */
@@ -33,7 +31,6 @@
 #include "player.h"
 #include "rng.h"
 
-
 /**
  * @brief Represents a background image like say a Nebula.
  */
@@ -50,9 +47,7 @@ typedef struct background_image_s {
 static background_image_t *bkg_image_arr_bk = NULL; /**< Background image array to display (behind stars). */
 static background_image_t *bkg_image_arr_ft = NULL; /**< Background image array to display (in front of stars). */
 
-
 static unsigned int bkg_idgen = 0; /**< ID generator for backgrounds. */
-
 
 /**
  * @brief Backgrounds.
@@ -63,7 +58,6 @@ static int bkg_L_renderbg = LUA_NOREF; /**< Background rendering function. */
 static int bkg_L_renderfg = LUA_NOREF; /**< Foreground rendering function. */
 static int bkg_L_renderov = LUA_NOREF; /**< Overlay rendering function. */
 
-
 /*
  * Background stars.
  */
@@ -72,7 +66,6 @@ static gl_vbo *star_vertexVBO = NULL; /**< Star Vertex VBO. */
 static unsigned int nstars = 0; /**< Total stars. */
 static GLfloat star_x = 0.; /**< Star X movement. */
 static GLfloat star_y = 0.; /**< Star Y movement. */
-
 
 /*
  * Prototypes.
@@ -85,7 +78,6 @@ static void background_clearImgArr( background_image_t **arr );
 static int bkg_compare( const void *p1, const void *p2 );
 static void bkg_sort( background_image_t *arr );
 
-
 /**
  * @brief Initializes background stars.
  *
@@ -93,7 +85,6 @@ static void bkg_sort( background_image_t *arr );
  */
 void background_initStars( int n )
 {
-   unsigned int i;
    GLfloat w, h, hw, hh;
    double size;
    GLfloat *star_vertex;
@@ -117,7 +108,7 @@ void background_initStars( int n )
    /* Create data. */
    star_vertex = malloc( nstars * sizeof(GLfloat) * 6 );
 
-   for (i=0; i < nstars; i++) {
+   for (unsigned int i=0; i < nstars; i++) {
       /* Set the position. */
       star_vertex[6*i+0] = RNGF()*w - hw;
       star_vertex[6*i+1] = RNGF()*h - hh;
@@ -136,7 +127,6 @@ void background_initStars( int n )
    free(star_vertex);
 }
 
-
 /**
  * @brief Displaces the stars, useful with camera.
  */
@@ -148,7 +138,6 @@ void background_moveStars( double x, double y )
    /* Puffs also need moving. */
    nebu_movePuffs( x, y );
 }
-
 
 /**
  * @brief Renders the starry background.
@@ -227,7 +216,6 @@ void background_renderStars( const double dt )
    gl_checkErr();
 }
 
-
 /**
  * @brief Render the background.
  */
@@ -256,7 +244,6 @@ void background_render( double dt )
    }
 }
 
-
 /**
  * @brief Renders the background overlay.
  */
@@ -271,7 +258,6 @@ void background_renderOverlay( double dt )
       }
    }
 }
-
 
 /**
  * @brief Compares two different backgrounds and sorts them.
@@ -290,7 +276,6 @@ static int bkg_compare( const void *p1, const void *p2 )
    return  0;
 }
 
-
 /**
  * @brief Sorts the backgrounds by movement.
  */
@@ -298,7 +283,6 @@ static void bkg_sort( background_image_t *arr )
 {
    qsort( arr, array_size(arr), sizeof(background_image_t), bkg_compare );
 }
-
 
 /**
  * @brief Adds a new background image.
@@ -334,24 +318,20 @@ unsigned int background_addImage( glTexture *image, double x, double y,
    return bkg_idgen;
 }
 
-
 /**
  * @brief Renders the background images.
  */
 static void background_renderImages( background_image_t *bkg_arr )
 {
-   int i;
-   background_image_t *bkg;
-   double px,py, x,y, xs,ys, z;
-   glColour col;
-
    /* Skip rendering altogether if disabled. */
    if (conf.bg_brightness <= 0.)
       return;
 
    /* Render images in order. */
-   for (i=0; i<array_size(bkg_arr); i++) {
-      bkg = &bkg_arr[i];
+   for (int i=0; i<array_size(bkg_arr); i++) {
+      double px,py, x,y, xs,ys, z;
+      glColour col;
+      background_image_t *bkg = &bkg_arr[i];
 
       cam_getPos( &px, &py );
       x  = px + (bkg->x - px) * bkg->move - bkg->scale*bkg->image->sw/2.;
@@ -368,7 +348,6 @@ static void background_renderImages( background_image_t *bkg_arr )
       gl_renderTexture( bkg->image, xs, ys, z*bkg->image->sw, z*bkg->image->sh, 0., 0., bkg->image->srw, bkg->image->srh, &col, bkg->angle );
    }
 }
-
 
 /**
  * @brief Creates a background Lua state from a script.
@@ -414,7 +393,6 @@ static nlua_env background_create( const char *name )
    return env;
 }
 
-
 /**
  * @brief Initializes the background system.
  */
@@ -422,10 +400,8 @@ int background_init (void)
 {
    /* Load Lua. */
    bkg_def_env = background_create( "default" );
-
    return 0;
 }
-
 
 /**
  * @brief Loads a background script by name.
@@ -434,7 +410,6 @@ int background_load( const char *name )
 {
    int ret;
    nlua_env env;
-   const char *err;
 
    /* Free if exists. */
    background_clearCurrent();
@@ -455,7 +430,7 @@ int background_load( const char *name )
    nlua_getenv(env,"background");
    ret = nlua_pcall(env, 0, 0);
    if (ret != 0) { /* error has occurred */
-      err = (lua_isstring(naevL,-1)) ? lua_tostring(naevL,-1) : NULL;
+      const char *err = (lua_isstring(naevL,-1)) ? lua_tostring(naevL,-1) : NULL;
       WARN( _("Background -> 'background' : %s"),
             (err) ? err : _("unknown error"));
       lua_pop(naevL, 1);
@@ -468,7 +443,6 @@ int background_load( const char *name )
 
    return ret;
 }
-
 
 /**
  * @brief Destroys the current running background script.
@@ -489,7 +463,6 @@ static void background_clearCurrent (void)
    bkg_L_renderov = LUA_NOREF;
 }
 
-
 /**
  * @brief Cleans up the background stuff.
  */
@@ -503,7 +476,6 @@ void background_clear (void)
    background_clearImgArr( &bkg_image_arr_ft );
 }
 
-
 /**
  * @brief Clears a background image array.
  *
@@ -511,18 +483,14 @@ void background_clear (void)
  */
 static void background_clearImgArr( background_image_t **arr )
 {
-   int i;
-   background_image_t *bkg;
-
-   for (i=0; i<array_size(*arr); i++) {
-      bkg = &((*arr)[i]);
+   for (int i=0; i<array_size(*arr); i++) {
+      background_image_t *bkg = &((*arr)[i]);
       gl_freeTexture( bkg->image );
    }
 
    /* Erase it all. */
    array_erase( arr, array_begin(*arr), array_end(*arr) );
 }
-
 
 /**
  * @brief Cleans up and frees memory after the backgrounds.
@@ -557,11 +525,8 @@ void background_free (void)
  */
 glTexture** background_getTextures (void)
 {
-  int i;
-  glTexture **imgs;
-
-  imgs = array_create_size( glTexture*, array_size( bkg_image_arr_bk ));
-  for ( i=0; i<array_size(bkg_image_arr_bk); i++ )
+  glTexture **imgs = array_create_size( glTexture*, array_size( bkg_image_arr_bk ));
+  for (int i=0; i<array_size(bkg_image_arr_bk); i++)
     array_push_back( &imgs, gl_dupTexture(bkg_image_arr_bk[i].image) );
   return imgs;
 }

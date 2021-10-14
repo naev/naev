@@ -1,13 +1,11 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
 /**
  * @file console.c
  *
  * @brief Handles the Lua console.
  */
-
 /** @cond */
 #define lua_c
 #include <ctype.h>
@@ -44,10 +42,8 @@
 #include "nstring.h"
 #include "toolkit.h"
 
-
 #define BUTTON_WIDTH    50 /**< Button width. */
 #define BUTTON_HEIGHT   20 /**< Button height. */
-
 
 /*
  * Global stuff.
@@ -58,7 +54,7 @@ static glFont *cli_font     = NULL; /**< CLI font to use. */
 /*
  * Buffers.
  */
-#define CLI_MAX_INPUT      1024 /** Maximum characters typed into console. */
+#define CLI_MAX_INPUT      STRMAX_SHORT /** Maximum characters typed into console. */
 #define CLI_WIDTH          (SCREEN_W - 100) /**< Console width. */
 #define CLI_HEIGHT         (SCREEN_H - 100) /**< Console height. */
 /** Height of console box */
@@ -70,12 +66,10 @@ static int cli_history     = 0; /**< Position in history. */
 static int cli_scroll_pos  = -1; /**< Pistion in scrolling through output */
 static int cli_firstOpen   = 1; /**< First time opening. */
 
-
 /*
  * Input handling.
  */
 static int cli_firstline   = 1; /**< Is this the first line? */
-
 
 /*
  * CLI stuff.
@@ -89,8 +83,6 @@ static const luaL_Reg cli_methods[] = {
    {NULL, NULL}
 }; /**< Console only functions. */
 
-
-
 /*
  * Prototypes.
  */
@@ -100,7 +92,6 @@ static void cli_printCoreString( const char *s, int escape );
 static int cli_printCore( lua_State *L, int cli_only );
 void cli_tabComplete( unsigned int wid );
 static int cli_initLua (void);
-
 
 static char* cli_escapeString( int *len_out, const char *s, int len )
 {
@@ -116,14 +107,12 @@ static char* cli_escapeString( int *len_out, const char *s, int len )
    return buf;
 }
 
-
 /**
  * @brief Prints a string.
  */
 static void cli_printCoreString( const char *s, int escape )
 {
    int len;
-   char *buf;
    glPrintLineIterator iter;
 
    if (s[0] == '\0') {
@@ -134,7 +123,7 @@ static void cli_printCoreString( const char *s, int escape )
    gl_printLineIteratorInit( &iter, cli_font, s, CLI_WIDTH-40 );
    while (gl_printLineIteratorNext( &iter )) {
       if (escape) {
-         buf = cli_escapeString( &len, &s[iter.l_begin], iter.l_end - iter.l_begin );
+         char *buf = cli_escapeString( &len, &s[iter.l_begin], iter.l_end - iter.l_begin );
          cli_addMessageMax( buf, len );
          free(buf);
       }
@@ -142,7 +131,6 @@ static void cli_printCoreString( const char *s, int escape )
          cli_addMessageMax( &s[iter.l_begin], iter.l_end - iter.l_begin );
    }
 }
-
 
 /**
  * @brief Back end for the Lua print functionality.
@@ -176,7 +164,6 @@ static int cli_printCore( lua_State *L, int cli_only )
    return 0;
 }
 
-
 /**
  * @brief Barebones warn implementation for Lua, allowing scripts to print warnings to stderr.
  *
@@ -191,7 +178,6 @@ int cli_warn( lua_State *L )
    return 0;
 }
 
-
 /**
  * @brief Replacement for the internal Lua print to print to both the console and the terminal.
  */
@@ -199,7 +185,6 @@ int cli_print( lua_State *L )
 {
    return cli_printCore( L, 0 );
 }
-
 
 /**
  * @brief Replacement for the internal Lua print to print to console instead of terminal.
@@ -210,7 +195,6 @@ static int cli_printOnly( lua_State *L )
    return cli_printCore( L, 1 );
 }
 #endif
-
 
 /**
  * @brief Would be like "dofile" from the base Lua lib.
@@ -254,7 +238,6 @@ static int cli_script( lua_State *L )
    return lua_gettop(L) - n;
 }
 
-
 /**
  * @brief Adds a message to the buffer.
  *
@@ -270,7 +253,6 @@ void cli_addMessage( const char *msg )
    array_grow(&cli_buffer) = buf;
    cli_history = array_size(cli_buffer) - 1;
 }
-
 
 /**
  * @brief Adds a message to the buffer.
@@ -289,26 +271,24 @@ void cli_addMessageMax( const char *msg, const int l )
    cli_history = array_size(cli_buffer) - 1;
 }
 
-
 /**
  * @brief Render function for the custom widget.
  */
 static void cli_render( double bx, double by, double w, double h, void *data )
 {
    (void) data;
-   int i, start;
+   int start;
 
    if (cli_scroll_pos == -1)
       start = MAX(0, array_size(cli_buffer) - CLI_MAX_LINES);
    else
       start = cli_scroll_pos;
 
-   for (i=start; i<array_size(cli_buffer); i++)
+   for (int i=start; i<array_size(cli_buffer); i++)
       gl_printMaxRaw( cli_font, w, bx,
             by + h - (i+1-start)*(cli_font->h+5),
             &cFontWhite, -1., cli_buffer[i] );
 }
-
 
 /**
  * @brief Key handler for the console window.
@@ -391,12 +371,11 @@ static int cli_keyhandler( unsigned int wid, SDL_Keycode key, SDL_Keymod mod )
    return 0;
 }
 
-
 /**
  * @brief Basic tab completion for console.
  */
-void cli_tabComplete( unsigned int wid ) {
-   int i;
+void cli_tabComplete( unsigned int wid )
+{
    const char *match, *old;
    char *str, *cur, *new;
 
@@ -405,7 +384,7 @@ void cli_tabComplete( unsigned int wid ) {
 
    nlua_pushenv(cli_env);
    cur = str;
-   for (i=0; str[i] != '\0'; i++) {
+   for (int i=0; str[i] != '\0'; i++) {
       if (str[i] == '.' || str[i] == ':') {
          str[i] = '\0';
          lua_getfield(naevL, -1, cur);
@@ -454,11 +433,9 @@ void cli_tabComplete( unsigned int wid ) {
          lua_pop(naevL, 1);
       }
    }
-
    free(str);
    lua_pop(naevL, 1);
 }
-
 
 static int cli_initLua (void)
 {
@@ -490,7 +467,6 @@ static int cli_initLua (void)
    return 0;
 }
 
-
 /**
  * @brief Initializes the CLI environment.
  */
@@ -508,14 +484,11 @@ int cli_init (void)
    return 0;
 }
 
-
 /**
  * @brief Destroys the CLI environment.
  */
 void cli_exit (void)
 {
-   int i;
-
    /* Destroy the state. */
    if (cli_env != LUA_NOREF) {
       nlua_freeEnv( cli_env );
@@ -527,12 +500,11 @@ void cli_exit (void)
    cli_font = NULL;
 
    /* Free the buffer. */
-   for (i=0; i<array_size(cli_buffer); i++)
+   for (int i=0; i<array_size(cli_buffer); i++)
       free(cli_buffer[i]);
    array_free(cli_buffer);
    cli_buffer = NULL;
 }
-
 
 /**
  * @brief Handles the CLI input.
@@ -627,7 +599,6 @@ static void cli_input( unsigned int wid, const char *unused )
    cli_scroll_pos = -1;
 }
 
-
 /**
  * @brief Opens the console.
  */
@@ -682,5 +653,3 @@ void cli_open (void)
          CLI_WIDTH-40, CLI_CONSOLE_HEIGHT,
          "cstConsole", 0, cli_render, NULL, NULL );
 }
-
-

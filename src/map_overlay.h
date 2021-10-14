@@ -1,9 +1,6 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
-
-
 #ifndef MAP_OVERLAY_H
 #  define MAP_OVERLAY_H
 
@@ -26,6 +23,4 @@ void ovr_mrkClear (void);
 unsigned int ovr_mrkAddPoint( const char *text, double x, double y );
 void ovr_mrkRm( unsigned int id );
 
-
 #endif /* MAP_OVERLAY_H */
-

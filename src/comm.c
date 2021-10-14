@@ -1,14 +1,11 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
-
 /**
  * @file comm.c
  *
  * @brief For communicating with planets/pilots.
  */
-
 
 /** @cond */
 #include "naev.h"
@@ -37,12 +34,10 @@
 #define GRAPHIC_WIDTH  256 /**< Width of graphic. */
 #define GRAPHIC_HEIGHT 256 /**< Height of graphic. */
 
-
 static Planet *comm_planet     = NULL; /**< Planet currently talking to. */
 static glTexture *comm_graphic = NULL; /**< Pilot's graphic. */
 static int comm_commClose      = 0; /**< Close comm when done. */
 static nlua_env comm_env       = LUA_NOREF; /**< Comm Lua env. */
-
 
 /*
  * Prototypes.
@@ -54,7 +49,6 @@ static void comm_close( unsigned int wid, const char *unused );
 static void comm_bribePlanet( unsigned int wid, const char *unused );
 static const char* comm_getString( const Pilot *p, const char *str );
 
-
 /**
  * @brief Checks to see if comm is open.
  *
@@ -65,7 +59,6 @@ int comm_isOpen (void)
    return window_exists( "wdwComm" );
 }
 
-
 /**
  * @brief Queues a close command when possible.
  */
@@ -73,7 +66,6 @@ void comm_queueClose (void)
 {
    comm_commClose = 1;
 }
-
 
 /**
  * @brief Opens the communication dialogue with a pilot.
@@ -187,7 +179,6 @@ int comm_openPilot( unsigned int pilot )
    return 0;
 }
 
-
 /**
  * @brief Opens a communication dialogue with a planet.
  *
@@ -224,7 +215,6 @@ int comm_openPlanet( Planet *planet )
 
    return 0;
 }
-
 
 /**
  * @brief Sets up the comm window.
@@ -345,7 +335,6 @@ static unsigned int comm_open( glTexture *gfx, int faction,
    return wid;
 }
 
-
 /**
  * @brief Closes the comm window.
  *
@@ -360,7 +349,6 @@ static void comm_close( unsigned int wid, const char *unused )
    /* Close the window. */
    window_close( wid, unused );
 }
-
 
 /**
  * @brief Tries to bribe the planet
@@ -409,7 +397,6 @@ static void comm_bribePlanet( unsigned int wid, const char *unused )
    window_destroy( wid );
    comm_openPlanet( comm_planet );
 }
-
 
 /**
  * @brief Gets a string from the pilot's memory.

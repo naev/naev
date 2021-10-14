@@ -540,10 +540,10 @@ static int ovr_safelaneKnown( SafeLane *sf, Vector2d *posns[2] )
 {
    /* This is a bit asinine, but should be easily replaceable by decent code when we have a System Objects API.
       * Specifically, a generic pos and isKnown test would clean this up nicely. */
-   Planet *pnt;
-   JumpPoint *jp;
    int known = 1;
    for (int j=0; j<2; j++) {
+      Planet *pnt;
+      JumpPoint *jp;
       switch(sf->point_type[j]) {
          case SAFELANE_LOC_PLANET:
             pnt = planet_getIndex( sf->point_id[j] );

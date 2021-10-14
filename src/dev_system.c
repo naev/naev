@@ -1,13 +1,11 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
 /**
  * @file dev_system.c
  *
  * @brief Handles development of star system stuff.
  */
-
 /** @cond */
 #include <stdlib.h> /* qsort */
 
@@ -25,13 +23,11 @@
 #include "space.h"
 #include "nebula.h"
 
-
 /*
  * Prototypes.
  */
 static int dsys_compPlanet( const void *planet1, const void *planet2 );
 static int dsys_compJump( const void *jmp1, const void *jmp2 );
-
 
 /**
  * @brief Compare function for planet qsort.
@@ -50,7 +46,6 @@ static int dsys_compPlanet( const void *planet1, const void *planet2 )
    return strcmp( p1->name, p2->name );
 }
 
-
 /**
  * @brief Compare function for asset qsort.
  *
@@ -67,7 +62,6 @@ static int dsys_compVirtualAsset( const void *asset1, const void *asset2 )
 
    return strcmp( va1->name, va2->name );
 }
-
 
 /**
  * @brief Function for qsorting jumppoints.
@@ -86,8 +80,6 @@ static int dsys_compJump( const void *jmp1, const void *jmp2 )
    return strcmp( jp1->target->name, jp2->target->name );
 }
 
-
-
 /**
  * @brief Saves a star system.
  *
@@ -96,7 +88,6 @@ static int dsys_compJump( const void *jmp1, const void *jmp2 )
  */
 int dsys_saveSystem( StarSystem *sys )
 {
-   int i, j;
    xmlDocPtr doc;
    xmlTextWriterPtr writer;
    const Planet **sorted_planets;
@@ -161,9 +152,9 @@ int dsys_saveSystem( StarSystem *sys )
 
    /* Write assets and clean up. */
    xmlw_startElem( writer, "assets" );
-   for (i=0; i<array_size(sys->planets); i++)
+   for (int i=0; i<array_size(sys->planets); i++)
       xmlw_elem( writer, "asset", "%s", sorted_planets[i]->name );
-   for (i=0; i<array_size(sys->assets_virtual); i++)
+   for (int i=0; i<array_size(sys->assets_virtual); i++)
       xmlw_elem( writer, "asset_virtual", "%s", sorted_assets[i]->name );
    xmlw_endElem( writer ); /* "assets" */
    free(sorted_planets);
@@ -171,11 +162,11 @@ int dsys_saveSystem( StarSystem *sys )
 
    /* Jumps. */
    sorted_jumps = malloc( sizeof(JumpPoint*) * array_size(sys->jumps) );
-   for (i=0; i<array_size(sys->jumps); i++)
+   for (int i=0; i<array_size(sys->jumps); i++)
       sorted_jumps[i] = &sys->jumps[i];
    qsort( sorted_jumps, array_size(sys->jumps), sizeof(JumpPoint*), dsys_compJump );
    xmlw_startElem( writer, "jumps" );
-   for (i=0; i<array_size(sys->jumps); i++) {
+   for (int i=0; i<array_size(sys->jumps); i++) {
       jp = sorted_jumps[i];
       xmlw_startElem( writer, "jump" );
       xmlw_attr( writer, "target", "%s", jp->target->name );
@@ -205,14 +196,14 @@ int dsys_saveSystem( StarSystem *sys )
    /* Asteroids. */
    if (array_size(sys->asteroids) > 0 || array_size(sys->astexclude) > 0) {
       xmlw_startElem( writer, "asteroids" );
-      for (i=0; i<array_size(sys->asteroids); i++) {
+      for (int i=0; i<array_size(sys->asteroids); i++) {
          ast = &sys->asteroids[i];
          xmlw_startElem( writer, "asteroid" );
 
          /* Types */
          if (!(ast->ntype == 1 && ast->type[0] == 0)) {
             /* With no <type>, the first asteroid type is the default */
-            for (j=0; j<ast->ntype; j++) {
+            for (int j=0; j<ast->ntype; j++) {
                xmlw_elem( writer, "type", "%s", space_getType(ast->type[j])->ID );
             }
          }
@@ -230,7 +221,7 @@ int dsys_saveSystem( StarSystem *sys )
          xmlw_elem( writer, "density", "%f", ast->density );
          xmlw_endElem( writer ); /* "asteroid" */
       }
-      for (i=0; i<array_size(sys->astexclude); i++) {
+      for (int i=0; i<array_size(sys->astexclude); i++) {
          aexcl = &sys->astexclude[i];
          xmlw_startElem( writer, "exclusion" );
 
@@ -248,7 +239,7 @@ int dsys_saveSystem( StarSystem *sys )
 
    if (array_size(sys->tags)>0) {
       xmlw_startElem( writer, "tags" );
-      for (i=0; i<array_size(sys->tags); i++)
+      for (int i=0; i<array_size(sys->tags); i++)
          xmlw_elem( writer, "tag", "%s", sys->tags[i] );
       xmlw_endElem( writer ); /* "tags" */
    }
@@ -273,7 +264,6 @@ int dsys_saveSystem( StarSystem *sys )
    return 0;
 }
 
-
 /**
  * @brief Saves all the star systems.
  *
@@ -281,13 +271,10 @@ int dsys_saveSystem( StarSystem *sys )
  */
 int dsys_saveAll (void)
 {
-   int i;
-   StarSystem *sys;
-
-   sys = system_getAll();
+   StarSystem *sys = system_getAll();
 
    /* Write systems. */
-   for (i=0; i<array_size(sys); i++)
+   for (int i=0; i<array_size(sys); i++)
       dsys_saveSystem( &sys[i] );
 
    return 0;

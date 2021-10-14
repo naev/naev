@@ -1,9 +1,6 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
-
-
 #ifndef DEV_MAPEDIT_H
 #  define DEV_MAPEDIT_H
 
@@ -12,6 +9,5 @@
 
 void mapedit_open( unsigned int wid_unused, const char *unused );
 void mapedit_selectText (void);
-
 
 #endif /* DEV_MAPEDIT_H */

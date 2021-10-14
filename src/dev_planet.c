@@ -1,14 +1,11 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
 /**
  * @file dev_planet.c
  *
  * @brief Handles the planet stuff.
  */
-
-
 /** @cond */
 #include <stdlib.h>
 
@@ -24,7 +21,6 @@
 #include "nxml.h"
 #include "physics.h"
 
-
 /**
  * @brief Saves a planet.
  *
@@ -36,7 +32,6 @@ int dpl_savePlanet( const Planet *p )
    xmlDocPtr doc;
    xmlTextWriterPtr writer;
    char *file, *cleanName;
-   int i;
 
    /* Create the writer. */
    writer = xmlNewTextWriterDoc(&doc, 0);
@@ -111,7 +106,7 @@ int dpl_savePlanet( const Planet *p )
    if (planet_hasService( p, PLANET_SERVICE_LAND )) {
       if (p->presence.faction > 0) {
          xmlw_startElem( writer, "commodities" );
-         for (i=0; i<array_size(p->commodities); i++) {
+         for (int i=0; i<array_size(p->commodities); i++) {
             if (p->commodities[i]->standard == 0)
                xmlw_elem( writer, "commodity", "%s", p->commodities[i]->name );
          }
@@ -130,7 +125,7 @@ int dpl_savePlanet( const Planet *p )
 
    if (array_size(p->tags)>0) {
       xmlw_startElem( writer, "tags" );
-      for (i=0; i<array_size(p->tags); i++)
+      for (int i=0; i<array_size(p->tags); i++)
          xmlw_elem( writer, "tag", "%s", p->tags[i] );
       xmlw_endElem( writer ); /* "tags" */
    }
@@ -155,7 +150,6 @@ int dpl_savePlanet( const Planet *p )
    return 0;
 }
 
-
 /**
  * @brief Saves all the star planets.
  *
@@ -163,16 +157,11 @@ int dpl_savePlanet( const Planet *p )
  */
 int dpl_saveAll (void)
 {
-   int i;
-   const Planet *p;
-
-   p = planet_getAll();
+   const Planet *p = planet_getAll();
 
    /* Write planets. */
-   for (i=0; i<array_size(p); i++)
+   for (int i=0; i<array_size(p); i++)
       dpl_savePlanet( &p[i] );
 
    return 0;
 }
-
-

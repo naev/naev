@@ -1,7 +1,6 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
 /**
  * @file array.h
  *
@@ -34,7 +33,6 @@
  * my_array = NULL;
  * @endcode
  */
-
 #ifndef ARRAY_H
 #  define ARRAY_H
 
@@ -60,7 +58,6 @@ typedef struct {
    size_t _size;          /**< Number of elements in the array */
    char alignas(max_align_t) _array[0];  /**< Begin of the array */
 } _private_container;
-
 
 void *_array_create_helper(size_t e_size, size_t initial_size);
 void *_array_grow_helper(void **a, size_t e_size);
@@ -222,7 +219,4 @@ ALWAYS_INLINE static inline int array_size(const void *array)
 #define array_copy(basic_type, ptr_array) \
       ((basic_type *)(_array_copy_helper(sizeof(basic_type), (void *)(ptr_array))))
 
-
 #endif /* ARRAY_H */
-
-
