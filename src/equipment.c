@@ -1,13 +1,11 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
 /**
  * @file equipment.c
  *
  * @brief Handles equipping ships.
  */
-
 
 /** @cond */
 #include <math.h>
@@ -45,7 +43,6 @@
 #include "tk/toolkit_priv.h" /* Yes, I'm a bad person, abstractions be damned! */
 #include "toolkit.h"
 
-
 /*
  * Image array names.
  */
@@ -55,11 +52,9 @@
 #define  EQUIPMENT_FILTER     "inpFilterOutfits"
 #define  OUTFIT_TABS          5
 
-
 /* global/main window */
 #define BUTTON_WIDTH    200 /**< Default button width. */
 #define BUTTON_HEIGHT   40 /**< Default button height. */
-
 
 /*
  * equipment stuff
@@ -114,7 +109,6 @@ static void equipment_outfitPopdown( unsigned int wid, const char* str );
 static void equipment_changeTab( unsigned int wid, const char *wgt, int old, int tab );
 static int equipment_playerAddOutfit( const Outfit *o, int quantity );
 static int equipment_playerRmOutfit( const Outfit *o, int quantity );
-
 
 /**
  * @brief Handles right-click on unequipped outfit.
@@ -432,7 +426,6 @@ void equipment_open( unsigned int wid )
    window_setFocus( wid , EQUIPMENT_SHIPS );
 }
 
-
 /**
  * @brief Creates the slot widget and initializes it.
  *
@@ -539,7 +532,6 @@ static void equipment_renderColumn( double x, double y, double w, double h,
       y -= h+20;
    }
 }
-
 
 /**
  * @brief Calculates the size the slots need to be for a given window.
@@ -688,7 +680,6 @@ static void equipment_renderMisc( double bx, double by, double bw, double bh, vo
          (1. - p->speed / p->speed_base) * 100);
    }
 }
-
 
 /**
  * @brief Renders an outfit column.
@@ -878,7 +869,6 @@ static void equipment_renderOverlaySlots( double bx, double by, double bw, doubl
    /* Draw the text. */
    toolkit_drawAltText( bx + wgt->altx, by + wgt->alty, alt );
 }
-
 
 /**
  * @brief Renders the ship in the equipment window.
@@ -1088,7 +1078,7 @@ static int equipment_mouseSlots( unsigned int wid, SDL_Event* event,
    (void) rx;
    (void) ry;
    Pilot *p;
-   int selected, ret;
+   int selected;
    double x, y;
    double w, h;
    double tw;
@@ -1117,7 +1107,7 @@ static int equipment_mouseSlots( unsigned int wid, SDL_Event* event,
    x  = (tw-w)/2;
    y  = bh - (h+20) + (h+20-h)/2 - 10;
    if ((mx > x-10) && (mx < x+w+10)) {
-      ret = equipment_mouseColumn( wid, event, mx, my, y, h,
+      int ret = equipment_mouseColumn( wid, event, mx, my, y, h,
             p->outfit_weapon, p, selected, wgt );
       if (ret)
          return !!(event->type == SDL_MOUSEBUTTONDOWN);
@@ -1125,7 +1115,7 @@ static int equipment_mouseSlots( unsigned int wid, SDL_Event* event,
    selected += array_size(p->outfit_weapon);
    x += tw;
    if ((mx > x-10) && (mx < x+w+10)) {
-      ret = equipment_mouseColumn( wid, event, mx, my, y, h,
+      int ret = equipment_mouseColumn( wid, event, mx, my, y, h,
             p->outfit_utility, p, selected, wgt );
       if (ret)
          return !!(event->type == SDL_MOUSEBUTTONDOWN);
@@ -1133,7 +1123,7 @@ static int equipment_mouseSlots( unsigned int wid, SDL_Event* event,
    selected += array_size(p->outfit_utility);
    x += tw;
    if ((mx > x-10) && (mx < x+w+10)) {
-      ret = equipment_mouseColumn( wid, event, mx, my, y, h,
+      int ret = equipment_mouseColumn( wid, event, mx, my, y, h,
             p->outfit_structure, p, selected, wgt );
       if (ret)
          return !!(event->type == SDL_MOUSEBUTTONDOWN);
@@ -1144,7 +1134,6 @@ static int equipment_mouseSlots( unsigned int wid, SDL_Event* event,
    return 0;
 }
 
-
 /**
  * @brief Swaps an equipment slot.
  *
@@ -1154,10 +1143,9 @@ static int equipment_mouseSlots( unsigned int wid, SDL_Event* event,
  */
 static int equipment_swapSlot( unsigned int wid, Pilot *p, PilotOutfitSlot *slot )
 {
-   int ret;
-
    /* Remove outfit. */
    if (slot->outfit != NULL) {
+      int ret;
       const Outfit *ammo;
       const Outfit *o = slot->outfit;
 
@@ -1177,8 +1165,9 @@ static int equipment_swapSlot( unsigned int wid, Pilot *p, PilotOutfitSlot *slot
    }
    /* Add outfit. */
    else {
-      /* Must have outfit. */
+      int ret;
       const Outfit *o = eq_wgt.outfit;
+      /* Must have outfit. */
       if (o==NULL)
          return 0;
 
@@ -1225,7 +1214,6 @@ static int equipment_swapSlot( unsigned int wid, Pilot *p, PilotOutfitSlot *slot
 
    return 0;
 }
-
 
 /**
  * @brief Regenerates the equipment window lists.
@@ -1298,7 +1286,6 @@ void equipment_regenLists( unsigned int wid, int outfits, int ships )
    free(focused);
 }
 
-
 /**
  * @brief Adds all the ammo it can to the player.
  */
@@ -1323,7 +1310,6 @@ void equipment_addAmmo (void)
    /* Notify GUI of modification. */
    gui_setShip();
 }
-
 
 /**
  * @brief Creates and allocates a string containing the ship stats.
@@ -1354,28 +1340,24 @@ int equipment_shipStats( char *buf, int max_len,  const Pilot *s, int dpseps )
    return l;
 }
 
-
 /**
  * @brief Handles toggling of the favourite checkbox.
  */
 static void equipment_toggleFav( unsigned int wid, const char *wgt )
 {
-   const char *shipname;
-   PlayerShip_t *ps;
    int state = window_checkboxState( wid, wgt );
-   shipname = toolkit_getImageArray( wid, EQUIPMENT_SHIPS );
+   const char *shipname = toolkit_getImageArray( wid, EQUIPMENT_SHIPS );
    if (strcmp(shipname,player.p->name)==0) { /* no ships */
       player.favourite = state;
    }
    else {
-      ps = player_getPlayerShip( shipname );
+      PlayerShip_t *ps = player_getPlayerShip( shipname );
       ps->favourite = state;
    }
 
    /* Update ship to reflect changes. */
    equipment_regenLists( wid, 0, 1 );
 }
-
 
 /**
  * @brief Generates a new ship/outfit lists if needed.
@@ -1394,7 +1376,6 @@ static void equipment_genLists( unsigned int wid )
    equipment_updateOutfits(wid, NULL);
    equipment_updateShips(wid, NULL);
 }
-
 
 /**
  * @brief Generates the ship list.
@@ -1522,7 +1503,6 @@ static int equipment_filterCore( const Outfit *o ) {
    return equipment_filter(o) && outfit_filterCore(o);
 }
 
-
 /**
  * @brief Generates the outfit list.
  *    @param wid Window to generate list on.
@@ -1581,7 +1561,6 @@ static void equipment_genOutfitList( unsigned int wid )
       window_buttonCustomRender( wid, "btnOutfitFilter", window_buttonCustomRenderGear );
       iw -= 35;
 
-
       /* Set text filter. */
       window_addInput( wid, ix, iy, iw, ih, EQUIPMENT_FILTER, 32, 1, NULL );
       inp_setEmptyText( wid, EQUIPMENT_FILTER, _("Filter…") );
@@ -1631,7 +1610,6 @@ static void equipment_genOutfitList( unsigned int wid )
    toolkit_setImageArrayAccept( wid, EQUIPMENT_OUTFITS, equipment_rightClickOutfits );
 }
 
-
 /**
  * @brief Gets the colour for comparing a current value vs a ship base value.
  */
@@ -1644,7 +1622,6 @@ static char eq_qCol( double cur, double base, int inv )
    return '0';
 }
 
-
 /**
  * @brief Gets the symbol for comparing a current value vs a ship base value.
  */
@@ -1656,7 +1633,6 @@ static const char* eq_qSym( double cur, double base, int inv )
       return (inv) ? "" : "!! ";
    return "";
 }
-
 
 #define EQ_COMP( cur, base, inv ) \
 eq_qCol( cur, base, inv ), eq_qSym( cur, base, inv ), cur
@@ -1974,8 +1950,6 @@ static void equipment_changeShip( unsigned int wid )
    toolkit_setImageArrayOffset( wid, EQUIPMENT_SHIPS, 0. );
 }
 
-
-
 /**
  * @brief Unequips the player's ship.
  *
@@ -2048,7 +2022,6 @@ static void equipment_unequipShip( unsigned int wid, const char* str )
    gui_setShip();
 }
 
-
 /**
  * @brief Does the autoequip magic on the player's ship.
  */
@@ -2116,7 +2089,6 @@ autoequip_cleanup:
    }
 }
 
-
 /**
  * @brief Player tries to sell a ship.
  *    @param wid Window player is selling ships in.
@@ -2175,7 +2147,6 @@ static void equipment_sellShip( unsigned int wid, const char* str )
    free(name);
 }
 
-
 /**
  * @brief Renames the selected ship.
  *
@@ -2185,13 +2156,9 @@ static void equipment_sellShip( unsigned int wid, const char* str )
 static void equipment_renameShip( unsigned int wid, const char *str )
 {
    (void)str;
-   Pilot *ship;
-   const char *shipname;
-   char *newname;
-
-   shipname = toolkit_getImageArray( wid, EQUIPMENT_SHIPS );
-   ship = player_getShip(shipname);
-   newname = dialogue_input( _("Ship Name"), 1, 60,
+   const char *shipname = toolkit_getImageArray( wid, EQUIPMENT_SHIPS );
+   Pilot *ship = player_getShip(shipname);
+   char *newname = dialogue_input( _("Ship Name"), 1, 60,
          _("Please enter a new name for your %s:"), _(ship->ship->name) );
 
    /* Player cancelled the dialogue. */
@@ -2213,7 +2180,6 @@ static void equipment_renameShip( unsigned int wid, const char *str )
    equipment_regenLists( wid, 0, 1 );
 }
 
-
 /**
  * @brief Wrapper to only add unique outfits.
  */
@@ -2224,7 +2190,6 @@ static int equipment_playerAddOutfit( const Outfit *o, int quantity )
    return player_addOutfit(o,quantity);
 }
 
-
 /**
  * @brief Wrapper to only remove unique outfits.
  */
@@ -2234,7 +2199,6 @@ static int equipment_playerRmOutfit( const Outfit *o, int quantity )
       return 1;
    return player_rmOutfit(o,quantity);
 }
-
 
 /**
  * @brief Cleans up after the equipment stuff.
@@ -2251,4 +2215,3 @@ void equipment_cleanup (void)
       iar_outfits = NULL;
    }
 }
-

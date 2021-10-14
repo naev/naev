@@ -1,29 +1,22 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
-
 #ifndef FACTION_H
 #  define FACTION_H
-
 
 #include "colour.h"
 #include "nlua.h"
 #include "opengl.h"
 
-
 extern int faction_player;
-
 
 #define FACTION_PLAYER  faction_player  /**< Hardcoded player faction identifier. */
 #define FACTION_LOGO_SM 64 /**< Size of "small" logo. */
-
 
 typedef struct FactionGenerator_ {
    int id;        /**< Id of the generator. */
    double weight; /**< Weight modifier. */
 } FactionGenerator;
-
 
 /* get stuff */
 int faction_isFaction( int f );
@@ -89,6 +82,5 @@ void faction_clearKnown (void);
 /* Dynamic factions. */
 void factions_clearDynamic (void);
 int faction_dynAdd( int base, const char* name, const char* display, const char* ai );
-
 
 #endif /* FACTION_H */

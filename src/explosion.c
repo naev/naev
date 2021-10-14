@@ -1,13 +1,11 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
 /**
  * @file explosion.c
  *
  * @brief Handles gigantic explosions.
  */
-
 
 /** @cond */
 #include "naev.h"
@@ -21,7 +19,6 @@
 #include "spfx.h"
 #include "weapon.h"
 
-
 static int exp_s = -1; /**< Small explosion spfx. */
 static int exp_m = -1; /**< Medium explosion spfx. */
 static int exp_l = -1; /**< Large explosion spfx. */
@@ -30,7 +27,6 @@ static int exp_300 = -1; /**< 300 radius explosion spfx. */
 static int exp_400 = -1; /**< 400 radius explosion spfx. */
 static int exp_500 = -1; /**< 500 radius explosion spfx. */
 static int exp_600 = -1; /**< 600 radius explosion spfx. */
-
 
 /**
  * @brief Does explosion in a radius (damage and graphics).
@@ -92,8 +88,6 @@ void expl_explode( double x, double y, double vx, double vy,
       expl_explodeDamage( x, y, radius, dmg, parent, mode );
 }
 
-
-
 /**
  * @brief Does explosion damage in a radius.
  *
@@ -115,4 +109,3 @@ void expl_explodeDamage( double x, double y, double radius,
    if ((mode & EXPL_MODE_MISSILE) || (mode & EXPL_MODE_BOLT))
       weapon_explode( x, y, radius, dmg->type, dmg->damage, parent, mode );
 }
-

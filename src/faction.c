@@ -1,13 +1,11 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
 /**
  * @file faction.c
  *
  * @brief Handles the Naev factions.
  */
-
 
 /** @cond */
 #include <assert.h>
@@ -32,10 +30,8 @@
 #include "rng.h"
 #include "space.h"
 
-
 #define XML_FACTION_ID     "Factions"   /**< XML section identifier */
 #define XML_FACTION_TAG    "faction" /**< XML tag identifier. */
-
 
 #define FACTION_STATIC        (1<<0) /**< Faction doesn't change standing with player. */
 #define FACTION_INVISIBLE     (1<<1) /**< Faction isn't exposed to the player. */
@@ -99,7 +95,6 @@ static Faction* faction_stack = NULL; /**< Faction stack. */
 static int* faction_grid = NULL; /**< Grid of faction status. */
 static size_t faction_mgrid = 0; /**< Allocated memory. */
 
-
 /*
  * Prototypes
  */
@@ -116,7 +111,6 @@ static void faction_computeGrid (void);
 int pfaction_save( xmlTextWriterPtr writer );
 int pfaction_load( xmlNodePtr parent );
 
-
 static int faction_cmp( const void *p1, const void *p2 )
 {
    const Faction *f1, *f2;
@@ -124,7 +118,6 @@ static int faction_cmp( const void *p1, const void *p2 )
    f2 = (const Faction*) p2;
    return strcmp(f1->name,f2->name);
 }
-
 
 /**
  * @brief Gets a faction ID by name.
@@ -157,7 +150,6 @@ static int faction_getRaw( const char* name )
    return -1;
 }
 
-
 /**
  * @brief Checks to see if a faction exists by name.
  *
@@ -168,7 +160,6 @@ int faction_exists( const char* name )
 {
    return faction_getRaw(name)!=-1;
 }
-
 
 /**
  * @brief Gets a faction ID by name.
@@ -184,22 +175,17 @@ int faction_get( const char* name )
    return id;
 }
 
-
 /**
  * @brief Returns all faction IDs in an array (array.h).
  */
 int* faction_getAll (void)
 {
-   int i;
-   int *f;
-
-   f = array_create_size( int, array_size(faction_stack) );
-   for (i=0; i<array_size(faction_stack); i++)
+   int *f = array_create_size( int, array_size(faction_stack) );
+   for (int i=0; i<array_size(faction_stack); i++)
       array_push_back( &f, i );
 
    return f;
 }
-
 
 /**
  * @brief Returns all non-invisible faction IDs in an array (array.h).
@@ -281,7 +267,6 @@ int faction_isKnown( int id )
    return faction_isKnown_( &faction_stack[id] );
 }
 
-
 /**
  * @brief Is faction dynamic.
  */
@@ -322,7 +307,6 @@ const char* faction_name( int f )
    return faction_stack[f].name;
 }
 
-
 /**
  * @brief Gets a factions short name (human-readable).
  *
@@ -346,7 +330,6 @@ const char* faction_shortname( int f )
    return _(faction_stack[f].name);
 }
 
-
 /**
  * @brief Gets the faction's long name (formal, human-readable).
  *
@@ -363,7 +346,6 @@ const char* faction_longname( int f )
       return _(faction_stack[f].longname);
    return _(faction_stack[f].name);
 }
-
 
 /**
  * @brief Gets the faction's map name (translated).
@@ -382,7 +364,6 @@ const char* faction_mapname( int f )
    return _(faction_stack[f].name);
 }
 
-
 /**
  * @brief Gets the faction's description (translated).
  *
@@ -400,7 +381,6 @@ const char* faction_description( int f )
    return NULL;
 }
 
-
 /**
  * @brief Gets the name of the default AI profile for the faction's pilots.
  *
@@ -416,7 +396,6 @@ const char* faction_default_ai( int f )
    return faction_stack[f].ai;
 }
 
-
 /**
  * @brief Gets the faction's weight for patrolled safe-lane construction (0 means they don't build lanes).
  */
@@ -428,7 +407,6 @@ double faction_lane_length_per_presence( int f )
    }
    return faction_stack[f].lane_length_per_presence;
 }
-
 
 /**
  * @brief Gets the faction's logo (ideally 256x256).
@@ -446,7 +424,6 @@ const glTexture* faction_logo( int f )
    return faction_stack[f].logo;
 }
 
-
 /**
  * @brief Gets the colour of the faction
  *
@@ -462,7 +439,6 @@ const glColour* faction_colour( int f )
 
    return &faction_stack[f].colour;
 }
-
 
 /**
  * @brief Gets the list of enemies of a faction.
@@ -498,7 +474,6 @@ int* faction_getEnemies( int f )
    return faction_stack[f].enemies;
 }
 
-
 /**
  * @brief Gets the list of allies of a faction.
  *
@@ -529,7 +504,6 @@ int* faction_getAllies( int f )
    return faction_stack[f].allies;
 }
 
-
 /**
  * @brief Clears all the enemies of a dynamic faction.
  *
@@ -547,7 +521,6 @@ void faction_clearEnemy( int f )
    }
    array_erase( &ff->enemies, array_begin(ff->enemies), array_end(ff->enemies) );
 }
-
 
 /**
  * @brief Adds an enemy to the faction's enemies list.
@@ -593,7 +566,6 @@ void faction_addEnemy( int f, int o )
    *tmp = o;
 }
 
-
 /**
  * @brief Removes an enemy from the faction's enemies list.
  *
@@ -603,7 +575,6 @@ void faction_addEnemy( int f, int o )
 void faction_rmEnemy( int f, int o )
 {
    Faction *ff;
-   int i;
 
    if (f==o) return;
 
@@ -614,14 +585,13 @@ void faction_rmEnemy( int f, int o )
       return;
    }
 
-   for (i=0;i<array_size(ff->enemies);i++) {
+   for (int i=0;i<array_size(ff->enemies);i++) {
       if (ff->enemies[i] == o) {
          array_erase( &ff->enemies, &ff->enemies[i], &ff->enemies[i+1] );
          return;
       }
    }
 }
-
 
 /**
  * @brief Clears all the ally of a dynamic faction.
@@ -640,7 +610,6 @@ void faction_clearAlly( int f )
    }
    array_erase( &ff->allies, array_begin(ff->allies), array_end(ff->allies) );
 }
-
 
 /**
  * @brief Adds an ally to the faction's allies list.
@@ -686,7 +655,6 @@ void faction_addAlly( int f, int o )
    *tmp = o;
 }
 
-
 /**
  * @brief Removes an ally from the faction's allies list.
  *
@@ -714,7 +682,6 @@ void faction_rmAlly( int f, int o )
    }
 }
 
-
 /**
  * @brief Gets the state associated to the faction scheduler.
  */
@@ -727,7 +694,6 @@ nlua_env faction_getScheduler( int f )
 
    return faction_stack[f].sched_env;
 }
-
 
 /**
  * @brief Gets the equipper state associated to the faction scheduler.
@@ -742,7 +708,6 @@ nlua_env faction_getEquipper( int f )
    return faction_stack[f].equip_env;
 }
 
-
 /**
  * @brief Sanitizes player faction standing.
  *
@@ -750,12 +715,8 @@ nlua_env faction_getEquipper( int f )
  */
 static void faction_sanitizePlayer( Faction* faction )
 {
-   if (faction->player > 100.)
-      faction->player = 100.;
-   else if (faction->player < -100.)
-      faction->player = -100.;
+   faction->player = CLAMP( -100., 100., faction->player );
 }
-
 
 /**
  * @brief Mods player using the power of Lua.
@@ -823,7 +784,6 @@ static void faction_modPlayerLua( int f, double mod, const char *source, int sec
    }
 }
 
-
 /**
  * @brief Modifies the player's standing with a faction.
  *
@@ -889,7 +849,6 @@ void faction_modPlayerSingle( int f, double mod, const char *source )
    faction_modPlayerLua( f, mod, source, 0 );
 }
 
-
 /**
  * @brief Modifies the player's standing without affecting others.
  *
@@ -927,7 +886,6 @@ void faction_modPlayerRaw( int f, double mod )
    space_factionChange();
 }
 
-
 /**
  * @brief Sets the player's standing with a faction.
  *
@@ -963,7 +921,6 @@ void faction_setPlayer( int f, double value )
    space_factionChange();
 }
 
-
 /**
  * @brief Gets the player's standing with a faction.
  *
@@ -976,10 +933,9 @@ double faction_getPlayer( int f )
       return faction_stack[f].player;
    else {
       WARN(_("Faction id '%d' is invalid."), f);
-      return -1000;
+      return -1000.;
    }
 }
-
 
 /**
  * @brief Gets the player's default standing with a faction.
@@ -993,10 +949,9 @@ double faction_getPlayerDef( int f )
       return faction_stack[f].player_def;
    else {
       WARN(_("Faction id '%d' is invalid."), f);
-      return -1000;
+      return -1000.;
    }
 }
-
 
 /**
  * @brief Gets whether or not the player is a friend of the faction.
@@ -1039,7 +994,6 @@ int faction_isPlayerFriend( int f )
    }
 }
 
-
 /**
  * @brief Gets whether or not the player is an enemy of the faction.
  *
@@ -1080,7 +1034,6 @@ int faction_isPlayerEnemy( int f )
    }
 }
 
-
 /**
  * @brief Gets the colour of the faction based on it's standing with the player.
  *
@@ -1096,7 +1049,6 @@ const glColour* faction_getColour( int f )
    else if (areEnemies(FACTION_PLAYER,f)) return &cHostile;
    else return &cNeutral;
 }
-
 
 /**
  * @brief Gets the faction character associated to its standing with the player.
@@ -1114,7 +1066,6 @@ char faction_getColourChar( int f )
    else if (areAllies(FACTION_PLAYER,f)) return 'F';
    else return 'N';
 }
-
 
 /**
  * @brief Gets the player's standing in human readable form.
@@ -1162,7 +1113,6 @@ const char *faction_getStandingText( int f )
    }
 }
 
-
 /**
  * @brief Gets the broad faction standing.
  *
@@ -1174,7 +1124,6 @@ const char *faction_getStandingText( int f )
 const char *faction_getStandingBroad( int f, int bribed, int override )
 {
    Faction *faction;
-   const char *r;
 
    /* Escorts always have the same standing. */
    if (f == FACTION_PLAYER)
@@ -1185,6 +1134,7 @@ const char *faction_getStandingBroad( int f, int bribed, int override )
    if (faction->env == LUA_NOREF)
       return "???";
    else {
+      const char *r;
       /* Set up the function:
        * faction_standing_broad( standing, bribed, override ) */
       nlua_getenv( faction->env, "faction_standing_broad" );
@@ -1526,7 +1476,6 @@ static void faction_parseSocial( xmlNodePtr parent )
       WARN(_("Faction '%s' has no Lua and isn't static!"), base->name);
 }
 
-
 /**
  * @brief Resets player standing and flags of factions to default.
  */
@@ -1548,7 +1497,6 @@ int factions_load (void)
    xmlNodePtr factions, node;
    int r;
    Faction *f, *sf;
-
 
    /* Load the document. */
    xmlDocPtr doc = xml_parsePhysFS( FACTION_DATA_PATH );
@@ -1647,7 +1595,6 @@ int factions_load (void)
    return 0;
 }
 
-
 /**
  * @brief Frees a single faction.
  */
@@ -1671,7 +1618,6 @@ static void faction_freeOne( Faction *f )
       nlua_freeEnv( f->equip_env );
 }
 
-
 /**
  * @brief Frees the factions.
  */
@@ -1688,7 +1634,6 @@ void factions_free (void)
    faction_grid = NULL;
    faction_mgrid = 0;
 }
-
 
 /**
  * @brief Saves player's standings with the factions.
@@ -1720,7 +1665,6 @@ int pfaction_save( xmlTextWriterPtr writer )
 
    return 0;
 }
-
 
 /**
  * @brief Loads the player's faction standings.
@@ -1769,7 +1713,6 @@ int pfaction_load( xmlNodePtr parent )
    return 0;
 }
 
-
 /**
  * @brief Returns an array of faction ids.
  *
@@ -1810,7 +1753,6 @@ int *faction_getGroup( int which )
    }
 }
 
-
 /**
  * @brief Checks to see if a faction uses hidden jumps.
  */
@@ -1821,7 +1763,6 @@ int faction_usesHiddenJumps( int f )
    return 0;
 }
 
-
 /**
  * @brief Gets the faction's generators.
  */
@@ -1831,7 +1772,6 @@ const FactionGenerator* faction_generators( int f )
       return faction_stack[f].generators;
    return NULL;
 }
-
 
 /**
  * @brief Clears dynamic factions.
@@ -1848,7 +1788,6 @@ void factions_clearDynamic (void)
    }
    faction_computeGrid();
 }
-
 
 /**
  * @brief Dynamically add a faction.
@@ -1902,7 +1841,6 @@ int faction_dynAdd( int base, const char* name, const char* display, const char*
 
    return f-faction_stack;
 }
-
 
 /**
  * @brief Computes the faction relationship grid.
