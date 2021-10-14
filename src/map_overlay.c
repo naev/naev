@@ -209,10 +209,9 @@ void ovr_refresh (void)
  */
 static void ovr_optimizeLayout( int items, const Vector2d** pos, MapOverlayPos** mo )
 {
-   int i, j, k, iter;
    float cx, cy, r, sx, sy;
    float x, y, w, h, mx, my, mw, mh;
-   float fx, fy, best, bx, by, val;
+   float fx, fy, best, bx, by;
    float *forces_xa, *forces_ya, *off_buffx, *off_buffy, *off_0x, *off_0y, old_bx, old_by, *off_dx, *off_dy;
 
    /* Parameters for the map overlay optimization. */
@@ -236,7 +235,7 @@ static void ovr_optimizeLayout( int items, const Vector2d** pos, MapOverlayPos**
    while (array_size( fits ) > 0) {
       float shrink_factor = 0;
       memset( must_shrink, 0, items );
-      for (i = 0; i < array_size( fits ); i++) {
+      for (int i=0; i < array_size( fits ); i++) {
          r = fits[i].dist / (mo[fits[i].i]->radius + mo[fits[i].j]->radius);
          if (r >= 1)
             array_erase( &fits, &fits[i], &fits[i+1] );
@@ -245,7 +244,7 @@ static void ovr_optimizeLayout( int items, const Vector2d** pos, MapOverlayPos**
             must_shrink[fits[i].i] = must_shrink[fits[i].j] = 1;
          }
       }
-      for (i=0; i<items; i++)
+      for (int i=0; i<items; i++)
          if (must_shrink[i])
             mo[i]->radius *= shrink_factor;
    }
@@ -253,7 +252,7 @@ static void ovr_optimizeLayout( int items, const Vector2d** pos, MapOverlayPos**
    array_free( fits );
 
    /* Limit shrinkage. */
-   for (i=0; i<items; i++)
+   for (int i=0; i<items; i++)
       mo[i]->radius = MAX( mo[i]->radius, 4 );
 
    /* Initialization offset list. */
@@ -261,7 +260,7 @@ static void ovr_optimizeLayout( int items, const Vector2d** pos, MapOverlayPos**
    off_0y = calloc( items, sizeof(float) );
 
    /* Initialize all items. */
-   for (i=0; i<items; i++) {
+   for (int i=0; i<items; i++) {
       /* Test to see what side is best to put the text on.
        * We actually compute the text overlap also so hopefully it will alternate
        * sides when stuff is clustered together. */
@@ -278,11 +277,11 @@ static void ovr_optimizeLayout( int items, const Vector2d** pos, MapOverlayPos**
       bx = 0.;
       by = 0.;
       best = HUGE_VALF;
-      for (k=0; k<4; k++) {
-         val = 0.;
+      for (int k=0; k<4; k++) {
+         double val = 0.;
 
          /* Test intersection with the planet indicators. */
-         for (j=0; j<items; j++) {
+         for (int j=0; j<items; j++) {
             fx = fy = 0.;
             mw = 2.*mo[j]->radius;
             mh = mw;
@@ -329,9 +328,9 @@ static void ovr_optimizeLayout( int items, const Vector2d** pos, MapOverlayPos**
    off_dy    = calloc( items, sizeof(float) );
 
    /* Main Uzawa Loop. */
-   for (iter=0; iter<max_iters; iter++) {
-      val = 0; /* This stores the stagnation indicator. */
-      for (i=0; i<items; i++) {
+   for (int iter=0; iter<max_iters; iter++) {
+      double val = 0; /* This stores the stagnation indicator. */
+      for (int i=0; i<items; i++) {
          cx = pos[i]->x / ovr_res;
          cy = pos[i]->y / ovr_res;
          /* Compute the forces. */
@@ -345,7 +344,7 @@ static void ovr_optimizeLayout( int items, const Vector2d** pos, MapOverlayPos**
 
          /* Do the sum. */
          sx = sy = 0.;
-         for (j=0; j<2*items; j++) {
+         for (int j=0; j<2*items; j++) {
             sx += forces_xa[2*items*i+j];
             sy += forces_ya[2*items*i+j];
          }
@@ -362,7 +361,7 @@ static void ovr_optimizeLayout( int items, const Vector2d** pos, MapOverlayPos**
       }
 
       /* Offsets are actually updated once the first loop is over. */
-      for (i=0; i<items; i++) {
+      for (int i=0; i<items; i++) {
          off_dx[i] = off_buffx[i];
          off_dy[i] = off_buffy[i];
       }
@@ -373,7 +372,7 @@ static void ovr_optimizeLayout( int items, const Vector2d** pos, MapOverlayPos**
    }
 
    /* Permanently add the initialization offset to total offset. */
-   for (i=0; i<items; i++) {
+   for (int i=0; i<items; i++) {
       mo[i]->text_offx = off_dx[i] + off_0x[i];
       mo[i]->text_offy = off_dy[i] + off_0y[i];
    }
