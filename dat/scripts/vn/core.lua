@@ -1,17 +1,17 @@
 --[[--
-Visual Novel API for Naev
+   Visual Novel API for Naev
 
-Based on Love2D API
-@module vn
+   Based on Love2D API
+   @module vn
 ]]
-local utf8 = require 'utf8'
-local love = require 'love'
-local love_math = require 'love.math'
-local graphics = require 'love.graphics'
-local window = require 'love.window'
-local filesystem = require 'love.filesystem'
-local audio = require 'love.audio'
-local lmusic = require 'lmusic'
+local utf8        = require 'utf8'
+local love        = require 'love'
+local love_math   = require 'love.math'
+local graphics    = require 'love.graphics'
+local window      = require 'love.window'
+local filesystem  = require 'love.filesystem'
+local audio       = require 'love.audio'
+local lmusic      = require 'lmusic'
 local transitions = require 'vn.transitions'
 
 local vn = {
