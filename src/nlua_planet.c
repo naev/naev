@@ -242,7 +242,6 @@ static int planetL_cur( lua_State *L )
 
 static int planetL_getBackend( lua_State *L, int landable )
 {
-   int i;
    int *factions;
    char **planets;
    const char *rndplanet;
@@ -325,7 +324,7 @@ static int planetL_getBackend( lua_State *L, int landable )
    if (rndplanet == NULL) {
       arrayShuffle( (void**)planets );
 
-      for (i=0; i<array_size(planets); i++) {
+      for (int i=0; i<array_size(planets); i++) {
          if (landable) {
             /* Check landing. */
             pnt = planet_get( planets[i] );
@@ -417,7 +416,6 @@ static int planetL_getLandable( lua_State *L )
 static int planetL_getAll( lua_State *L )
 {
    Planet *p = planet_getAll();
-
    lua_newtable(L);
    for (int i=0; i<array_size(p); i++) {
       lua_pushplanet( L, planet_index( &p[i] ) );
@@ -459,10 +457,10 @@ static int planetL_system( lua_State *L )
  */
 static int planetL_eq( lua_State *L )
 {
-   LuaPlanet *a, *b;
+   LuaPlanet a, b;
    a = luaL_checkplanet(L,1);
    b = luaL_checkplanet(L,2);
-   lua_pushboolean(L,(*a == *b));
+   lua_pushboolean(L,(a == b));
    return 1;
 }
 
@@ -480,8 +478,7 @@ static int planetL_eq( lua_State *L )
  */
 static int planetL_name( lua_State *L )
 {
-   Planet *p;
-   p = luaL_validplanet(L,1);
+   Planet *p = luaL_validplanet(L,1);
    lua_pushstring(L, _(p->name));
    return 1;
 }
@@ -500,8 +497,7 @@ static int planetL_name( lua_State *L )
  */
 static int planetL_nameRaw( lua_State *L )
 {
-   Planet *p;
-   p = luaL_validplanet(L,1);
+   Planet *p = luaL_validplanet(L,1);
    lua_pushstring(L, p->name);
    return 1;
 }
@@ -516,8 +512,7 @@ static int planetL_nameRaw( lua_State *L )
  */
 static int planetL_radius( lua_State *L )
 {
-   Planet *p;
-   p = luaL_validplanet(L,1);
+   Planet *p = luaL_validplanet(L,1);
    planet_gfxLoad(p);  /* Ensure graphics measurements are available. */
    lua_pushnumber(L,p->radius);
    return 1;
@@ -645,15 +640,12 @@ static int planetL_services( lua_State *L )
 static int planetL_flags( lua_State *L )
 {
    Planet *p = luaL_validplanet(L,1);
-
    lua_newtable(L);
-
    if (planet_isFlag( p, PLANET_NOMISNSPAWN )) {
       lua_pushstring(L, "nomissionspawn");
       lua_pushboolean(L, 1);
       lua_settable(L,-3);
    }
-
    return 1;
 }
 
