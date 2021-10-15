@@ -23,7 +23,7 @@ function cargo_selectMissionDistance ()
 end
 
 -- Build a set of target planets
-function cargo_selectPlanets(missdist, routepos)
+function cargo_selectPlanets( missdist, routepos )
    local pcur = planet.cur()
    return lmisn.getPlanetAtDistance( system.cur(), missdist, missdist, "Independent", false, function ( p )
          if p ~= pcur
@@ -71,7 +71,7 @@ function cargo_calculateRoute ()
 
    -- Farther distances have a lower chance of appearing.
    local missdist = cargo_selectMissionDistance()
-   local planets = cargo_selectPlanets(missdist, routepos)
+   local planets = cargo_selectPlanets( missdist, routepos )
    if #planets == 0 then
       return
    end

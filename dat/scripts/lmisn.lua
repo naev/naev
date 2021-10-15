@@ -172,11 +172,11 @@ end
    Filter is applied on a planet level.
 --]]
 function lmisn.getPlanetAtDistance( sys, min, max, fct, samefct, filter, data, hidden )
+   local pnts = {}
    local candidates = lmisn.getSysAtDistance( sys, min, max, lmisn.sysFilters.factionLandable( fct ), nil, hidden )
    if #candidates == 0 then
-      return nil, nil
+      return pnts
    end
-   local pnts = {}
    for k,s in ipairs(candidates) do
       local lp = lmisn.getLandablePlanets( s, fct, samefct )
       for i,p in ipairs(lp) do
@@ -212,7 +212,6 @@ function lmisn.anyMissionActive( names )
          return true
       end
    end
-
    return false
 end
 
