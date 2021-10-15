@@ -326,6 +326,9 @@ int mission_start( const char *name, unsigned int *id )
    return ret;
 }
 
+/**
+ * @brief Gets the name of the mission marker target.
+ */
 static const char* mission_markerTarget( MissionMarker *m )
 {
    switch (m->type) {
@@ -342,6 +345,9 @@ static const char* mission_markerTarget( MissionMarker *m )
    }
 }
 
+/**
+ * @brief Loads a mission marker from xml.
+ */
 static int mission_markerLoad( Mission *misn, xmlNodePtr node )
 {
    int id;
