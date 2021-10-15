@@ -275,7 +275,7 @@ static int nxml_persistDataNode( lua_State *L, xmlTextWriterPtr writer, int inta
       /* User data must be handled here. */
       case LUA_TUSERDATA:
          if (lua_isplanet(L,-1)) {
-            pnt = planet_getIndex( *lua_toplanet(L,-1) );
+            pnt = planet_getIndex( lua_toplanet(L,-1) );
             if (pnt != NULL)
                nxml_saveData( writer, PLANET_METATABLE, name, name_len, pnt->name, keynum );
             else

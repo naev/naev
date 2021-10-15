@@ -34,6 +34,7 @@
 #include "nlua_faction.h"
 #include "nlua_hook.h"
 #include "nlua_music.h"
+#include "nlua_planet.h"
 #include "nlua_player.h"
 #include "nlua_system.h"
 #include "nlua_tex.h"
@@ -371,34 +372,44 @@ static int misn_setReward( lua_State *L )
  */
 static int misn_markerAdd( lua_State *L )
 {
-   int id;
-   LuaSystem sys;
+   int id, issys, objid;
    const char *stype;
    MissionMarkerType type;
    Mission *cur_mission;
 
    /* Check parameters. */
-   sys   = luaL_checksystem( L, 1 );
+   if (lua_isplanet(L,1)) {
+      issys = 0;
+      objid = luaL_checkplanet(L,1);
+   }
+   else {
+      issys = 1;
+      objid = luaL_checksystem(L,1);
+   }
    stype = luaL_optstring( L, 2, "high" );
 
    /* Handle types. */
    if (strcmp(stype, "computer")==0)
-      type = SYSMARKER_COMPUTER;
+      type = PNTMARKER_COMPUTER;
    else if (strcmp(stype, "low")==0)
-      type = SYSMARKER_LOW;
+      type = PNTMARKER_LOW;
    else if (strcmp(stype, "high")==0)
-      type = SYSMARKER_HIGH;
+      type = PNTMARKER_HIGH;
    else if (strcmp(stype, "plot")==0)
-      type = SYSMARKER_PLOT;
+      type = PNTMARKER_PLOT;
    else {
       NLUA_ERROR(L, _("Unknown marker type: %s"), stype);
       return 0;
    }
 
+   /* Convert planet -> system. */
+   if (issys)
+      type = mission_markerTypePlanetToSystem( type );
+
    cur_mission = misn_getFromLua(L);
 
    /* Add the marker. */
-   id = mission_addMarker( cur_mission, -1, sys, type );
+   id = mission_addMarker( cur_mission, -1, objid, type );
 
    /* Update system markers. */
    mission_sysMark();
@@ -464,7 +475,6 @@ static int misn_markerMove( lua_State *L )
 static int misn_markerRm( lua_State *L )
 {
    int id;
-   int n;
    MissionMarker *marker;
    Mission *cur_mission;
 
@@ -475,8 +485,7 @@ static int misn_markerRm( lua_State *L )
 
    /* Check id. */
    marker = NULL;
-   n = array_size( cur_mission->markers );
-   for (int i=0; i<n; i++) {
+   for (int i=0; i<array_size( cur_mission->markers ); i++) {
       if (id == cur_mission->markers[i].id) {
          marker = &cur_mission->markers[i];
          break;
@@ -488,7 +497,7 @@ static int misn_markerRm( lua_State *L )
    }
 
    /* Remove the marker. */
-   array_erase( &cur_mission->markers, marker, &marker[1] );
+   array_erase( &cur_mission->markers, &marker[0], &marker[1] );
 
    /* Update system markers. */
    mission_sysMark();

@@ -133,9 +133,9 @@ int nlua_loadPlanet( nlua_env env )
  *    @param ind Index position to find the planet.
  *    @return Planet found at the index in the state.
  */
-LuaPlanet* lua_toplanet( lua_State *L, int ind )
+LuaPlanet lua_toplanet( lua_State *L, int ind )
 {
-   return (LuaPlanet*) lua_touserdata(L,ind);
+   return *((LuaPlanet*) lua_touserdata(L,ind));
 }
 /**
  * @brief Gets planet at index raising an error if isn't a planet.
@@ -144,12 +144,12 @@ LuaPlanet* lua_toplanet( lua_State *L, int ind )
  *    @param ind Index position to find the planet.
  *    @return Planet found at the index in the state.
  */
-LuaPlanet* luaL_checkplanet( lua_State *L, int ind )
+LuaPlanet luaL_checkplanet( lua_State *L, int ind )
 {
    if (lua_isplanet(L,ind))
       return lua_toplanet(L,ind);
    luaL_typerror(L, ind, PLANET_METATABLE);
-   return NULL;
+   return 0;
 }
 /**
  * @brief Gets a planet directly.
@@ -160,12 +160,12 @@ LuaPlanet* luaL_checkplanet( lua_State *L, int ind )
  */
 Planet* luaL_validplanet( lua_State *L, int ind )
 {
-   LuaPlanet *lp;
+   LuaPlanet lp;
    Planet *p;
 
    if (lua_isplanet(L, ind)) {
       lp = luaL_checkplanet(L, ind);
-      p  = planet_getIndex(*lp);
+      p  = planet_getIndex(lp);
    }
    else if (lua_isstring(L, ind))
       p = planet_get( lua_tostring(L, ind) );
