@@ -1482,6 +1482,15 @@ void gui_renderPlanet( int ind, RadarShape shape, double w, double h, double res
       h  *= 2.;
    }
 
+   /* Is marked. */
+   if (planet_isKnown( planet ) && planet_isFlag( planet, PLANET_MARKED )) {
+      glColour highlighted = cRadar_hilight;
+      highlighted.a = 0.3;
+      glUseProgram( shaders.hilight.program );
+      glUniform1f( shaders.hilight.dt, animation_dt );
+      gl_renderShader( cx, cy, vr*3.0, vr*3.0, 0., &shaders.hilight, &highlighted, 1 );
+   }
+
    /* Get the colour. */
    col = *gui_getPlanetColour(ind);
    col.a *= alpha;

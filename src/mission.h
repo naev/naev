@@ -125,6 +125,7 @@ int mission_addMarker( Mission *misn, int id, int sys, MissionMarkerType type );
 void mission_sysMark (void);
 const StarSystem* mission_sysComputerMark( const Mission* misn );
 const StarSystem* mission_getSystemMarker( const Mission* misn );
+MissionMarkerType mission_markerTypePlanetToSystem( MissionMarkerType t );
 
 /*
  * cargo stuff

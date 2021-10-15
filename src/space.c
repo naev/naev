@@ -3815,10 +3815,22 @@ static int space_addMarkerSystem( int sysid, MissionMarkerType type )
 static int space_addMarkerPlanet( int pntid, MissionMarkerType type )
 {
    (void) type; /* Unhandled for now. */
+   const char *sys;
+   MissionMarkerType stype;
    Planet *pnt = planet_getIndex( pntid );
+
+   /* Mark planet. */
    pnt->markers++;
    planet_setFlag( pnt, PLANET_MARKED );
-   return 0;
+
+   /* Now try to mark system. */
+   sys = planet_getSystem( pnt->name );
+   if (sys == NULL) {
+      WARN(_("Marking planet '%s' that is not in any system!"), pnt->name);
+      return 0;
+   }
+   stype = mission_markerTypePlanetToSystem( type );
+   return space_addMarkerSystem( system_index( system_get(sys) ), stype );
 }
 
 /**
@@ -3836,7 +3848,10 @@ int space_addMarker( int objid, MissionMarkerType type )
       case SYSMARKER_HIGH:
       case SYSMARKER_PLOT:
          return space_addMarkerSystem( objid, type );
+      case PNTMARKER_COMPUTER:
+      case PNTMARKER_LOW:
       case PNTMARKER_HIGH:
+      case PNTMARKER_PLOT:
          return space_addMarkerPlanet( objid, type );
       default:
          WARN(_("Unknown marker type."));
@@ -3888,11 +3903,21 @@ static int space_rmMarkerSystem( int sys, MissionMarkerType type )
 static int space_rmMarkerPlanet( int pntid, MissionMarkerType type )
 {
    (void) type;
+   const char *sys;
+   MissionMarkerType stype;
    Planet *pnt = planet_getIndex( pntid );
+
+   /* Remove planet marker. */
    pnt->markers--;
    if (pnt->markers <= 0)
       planet_rmFlag( pnt, PLANET_MARKED );
-   return 0;
+
+   /* Now try to remove system. */
+   sys = planet_getSystem( pnt->name );
+   if (sys == NULL)
+      return 0;
+   stype = mission_markerTypePlanetToSystem( type );
+   return space_rmMarkerSystem( system_index( system_get(sys) ), stype );
 }
 
 /**
@@ -3910,7 +3935,10 @@ int space_rmMarker( int objid, MissionMarkerType type )
       case SYSMARKER_HIGH:
       case SYSMARKER_PLOT:
          return space_rmMarkerSystem( objid, type );
+      case PNTMARKER_COMPUTER:
+      case PNTMARKER_LOW:
       case PNTMARKER_HIGH:
+      case PNTMARKER_PLOT:
          return space_rmMarkerPlanet( objid, type );
       default:
          WARN(_("Unknown marker type."));

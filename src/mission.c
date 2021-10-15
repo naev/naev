@@ -337,11 +337,36 @@ static const char* mission_markerTarget( MissionMarker *m )
       case SYSMARKER_HIGH:
       case SYSMARKER_PLOT:
          return system_getIndex( m->objid )->name;
+      case PNTMARKER_COMPUTER:
+      case PNTMARKER_LOW:
       case PNTMARKER_HIGH:
+      case PNTMARKER_PLOT:
          return planet_getIndex( m->objid )->name;
       default:
          WARN(_("Unknown marker type."));
          return NULL;
+   }
+}
+
+MissionMarkerType mission_markerTypePlanetToSystem( MissionMarkerType t )
+{
+   switch (t) {
+      case SYSMARKER_COMPUTER:
+      case SYSMARKER_LOW:
+      case SYSMARKER_HIGH:
+      case SYSMARKER_PLOT:
+         return t;
+      case PNTMARKER_COMPUTER:
+         return SYSMARKER_COMPUTER;
+      case PNTMARKER_LOW:
+         return SYSMARKER_LOW;
+      case PNTMARKER_HIGH:
+         return SYSMARKER_HIGH;
+      case PNTMARKER_PLOT:
+         return SYSMARKER_PLOT;
+      default:
+         WARN(_("Unknown marker type."));
+         return -1;
    }
 }
 
@@ -369,7 +394,10 @@ static int mission_markerLoad( Mission *misn, xmlNodePtr node )
             return -1;
          }
          return mission_addMarker( misn, id, system_index(ssys), type );
+      case PNTMARKER_COMPUTER:
+      case PNTMARKER_LOW:
       case PNTMARKER_HIGH:
+      case PNTMARKER_PLOT:
          pnt = planet_get( xml_get( node ));
          if (pnt == NULL) {
             WARN( _("Mission Marker to planet '%s' does not exist"), xml_get( node ) );
