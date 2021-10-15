@@ -779,7 +779,7 @@ static int mission_location( const char *loc )
  */
 static int mission_parseXML( MissionData *temp, const xmlNodePtr parent )
 {
-   xmlNodePtr cur, node;
+   xmlNodePtr node;
 
    /* Clear memory. */
    memset( temp, 0, sizeof(MissionData) );
@@ -799,7 +799,7 @@ static int mission_parseXML( MissionData *temp, const xmlNodePtr parent )
       xml_onlyNodes(node);
 
       if (xml_isNode(node,"flags")) { /* set the various flags */
-         cur = node->children;
+         xmlNodePtr cur = node->children;
          do {
             xml_onlyNodes(cur);
             if (xml_isNode(cur,"unique")) {
@@ -811,7 +811,7 @@ static int mission_parseXML( MissionData *temp, const xmlNodePtr parent )
          continue;
       }
       else if (xml_isNode(node,"avail")) { /* mission availability */
-         cur = node->children;
+         xmlNodePtr cur = node->children;
          do {
             xml_onlyNodes(cur);
             if (xml_isNode(cur,"location")) {
@@ -1108,7 +1108,7 @@ int missions_saveTempCommodity( xmlTextWriterPtr writer, const Commodity *c )
  */
 int missions_loadCommodity( xmlNodePtr parent )
 {
-   xmlNodePtr node, cur;
+   xmlNodePtr node;
 
    /* We have to ensure the mission_cargo stuff is loaded first. */
    node = parent->xmlChildrenNode;
@@ -1116,15 +1116,15 @@ int missions_loadCommodity( xmlNodePtr parent )
       xml_onlyNodes(node);
 
       if (xml_isNode(node,"mission_cargo")) {
-         cur = node->xmlChildrenNode;
+         xmlNodePtr cur = node->xmlChildrenNode;
          do {
             xml_onlyNodes(cur);
-            if ( xml_isNode( cur, "cargo" ) )
+            if (xml_isNode( cur, "cargo" ))
                (void)missions_loadTempCommodity( cur );
-         } while ( xml_nextNode( cur ) );
+         } while (xml_nextNode( cur ));
          continue;
       }
-   } while ( xml_nextNode( node ) );
+   } while (xml_nextNode( node ));
 
    return 0;
 }
@@ -1140,7 +1140,6 @@ Commodity *missions_loadTempCommodity( xmlNodePtr cur )
    xmlNodePtr ccur;
    char *     name, *desc;
    Commodity *c;
-   int        f;
 
    xmlr_attr_strd( cur, "name", name );
    if ( name == NULL ) {
@@ -1167,7 +1166,7 @@ Commodity *missions_loadTempCommodity( xmlNodePtr cur )
    do {
       xml_onlyNodes( ccur );
       if ( xml_isNode( ccur, "illegalto" ) ) {
-         f = faction_get( xml_get( ccur ) );
+         int f = faction_get( xml_get( ccur ) );
          commodity_tempIllegalto( c, f );
       }
    } while ( xml_nextNode( ccur ) );
