@@ -20,14 +20,14 @@ local tut = require "common.tutorial"
 local vn = require "vn"
 local vntk = require "vntk"
 
-function create ()
-   missys = system.get( "Delta Polaris" )
-   destsys = system.get( "Jade" )
-   start_planet = planet.get( "Bolero" )
-   start_planet_r = 200
-   dest_planet = planet.get( "Benteen" )
-   dest_planet_r = 200
+local missys = system.get( "Delta Polaris" )
+local destsys = system.get( "Jade" )
+local start_planet = planet.get( "Bolero" )
+local start_planet_r = 200
+local dest_planet = planet.get( "Benteen" )
+local dest_planet_r = 200
 
+function create ()
    if not misn.claim( missys ) then
       print(fmt.f(_( "Warning: 'Tutorial' mission was unable to claim system {sysname}!"), {sysname=missys:name()} ) )
       misn.finish( true ) -- We mark as clear anyway, but this is not good
@@ -411,7 +411,7 @@ local tp_taunt_healthy = {
    _("You'd be dead if I'd remembered to pack my weapons!"),
    _("I'll end you!"),
    _("… Right after I finish eating this bucket of fried chicken!"),
-   _("Em 5 Fried Chicken. Eat only the best."),
+   fmt.f(_("{pntname} Fried Chicken. Eat only the best."), {pntname=dest_planet:name()}),
    _("This is your last chance to surrender!"),
    _("Don't do school, stay in milk."),
    _("I'm going to report you to the NPC Rights watchdog."),
@@ -450,6 +450,7 @@ local tp_taunt_weak = {
    _("U- oh it a-pears my te-rs hav- da--age t-e co-mand cons-le."),
    _("I a- T. Pr-ct---! Y-- w--l fe-r m- na-e --- Bzzzt!"),
 }
+
 function taunt ()
    if not captainTP or not captainTP:exists() then
       return
