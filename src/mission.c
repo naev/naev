@@ -403,7 +403,7 @@ static int mission_markerLoad( Mission *misn, xmlNodePtr node )
             WARN( _("Mission Marker to planet '%s' does not exist"), xml_get( node ) );
             return -1;
          }
-         return mission_addMarker( misn, id, system_index(ssys), type );
+         return mission_addMarker( misn, id, planet_index(pnt), type );
       default:
          WARN(_("Unknown marker type."));
          return -1;
