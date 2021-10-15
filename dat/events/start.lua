@@ -43,7 +43,7 @@ function create()
    local pp = player.pilot()
    pp:rename( name() ) -- Assign a random name to the player's ship.
    pp:outfitAdd( "Laser Cannon MK1", 1 )
-   --jump.setKnown( "Hakoi", "Eneguoz" )
+   jump.setKnown( "Delta Polaris", "Jade" )
 
    -- Give all GUIs
    -- TODO: Would be better to remove these outfits and the association,

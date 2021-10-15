@@ -44,9 +44,10 @@ function create ()
    local sai = vn.newCharacter( tut.vn_shipai() )
    vn.transition( tut.shipai.transition )
    vn.na(_("As you are admiring the view from your cockpit, suddenly a holographic projection appears in front of you."))
-   sai(fmt.f(_([["Congratulations on your first space ship, {playername}! You made an excellent decision to purchase from Melendez Corporation! Our ships are prized for their reliability and affordability. I promise you won't be disappointed!"
-You are skeptical of the sales pitch, of course; you really only bought this ship because it was the only one you could afford. Still, you tactfully thank the hologram.]]),{playername=player.name()}))
-   sai(_([["I am your ship AI, but don't worry if you get a new ship. I can be transferred over without an issue. If you have any question or comment about how your ship works or how to do things, I am always ready to help. As your new Ship AI, would you like to give me a name?"]]))
+   sai(fmt.f(_([["Congratulations on your first space ship, {playername}! What, what am I? I am your personal Ship AI. Always ready to be of your assistance."
+They stare at you for a few seconds.
+"Say, you look very familiar. You wouldn't be related my late previous owner? Terrible what happened…"]]),{playername=player.name()}))
+   sai(_([["Anyway, from now on, I will be your ship AI, but don't worry if you get a new ship, I will be transferred over without an issue. If you have any question or comment about how your ship works or how to do things, I believe I can be ofhelp. As your new Ship AI, would you like to give me a name?"]]))
    vn.label("rename")
    local ainame
    vn.func( function ()
@@ -161,9 +162,9 @@ function timer ()
       vn.scene()
       local sai = vn.newCharacter( tut.vn_shipai() )
       vn.transition( tut.shipai.transition )
-      sai(fmt.f(_([["Perfect! That was easy enough, right? I recommend this manner of flight, which we call 'keyboard flight'. However, there is one other way you can fly if you so choose: press {mouseflykey} on your console and your ship will follow your #bmouse pointer#0 automatically! It's up to you which method you prefer to use."]]),{mouseflykey=tut.getKey("mousefly")}))
-      sai(_([["You may also have noticed the mission on-screen display on your monitor! As you can see, you completed your first objective of the Tutorial mission, so the next objective is now being highlighted."]]))
-      sai(fmt.f(_([["On that note, let's go over landing! All kinds of actions, like landing on planets, hailing ships, boarding disabled ships, and jumping to other systems can be accomplished by #bdouble-clicking#0 on an applicable target, or alternatively by pressing certain buttons on your control console. How about you try landing on {pntname}?"]]),{pntname=start_planet:name()}))
+      sai(fmt.f(_([["Perfect! That was easy enough, right? I recommend this manner of flight, known as 'keyboard flight'. However, there is one other way you can fly if you so choose: press {mouseflykey} on your console and your ship will follow your #bmouse pointer#0 automatically. It's up to you which method you prefer to use."]]),{mouseflykey=tut.getKey("mousefly")}))
+      sai(_([["You may also have noticed the mission on-screen display on your monitor. As you can see, you completed your first objective of the Tutorial mission, so the next objective is now being focused."]]))
+      sai(fmt.f(_([["On that note, let's go over landing. All kinds of actions, like landing on planets, hailing ships, boarding disabled ships, and jumping to other systems can be accomplished by #bdouble-clicking#0 on an applicable target, or alternatively by pressing certain buttons on your control console. How about you try landing on {pntname}?"]]),{pntname=start_planet:name()}))
       sai(fmt.f(_([["To land on {pntname}, you need to slow down your ship on top of the planet, and engage the landing system. You can do this manually with the movement keys and engage your landing gears with {landkey}, or this can all be done automatically by targeting the planet with either #bclicking#0 on it, or with {targetplanetkey}, and then using the {landkey}. You can also #bdouble click#0 on the planet to engage the same behaviour. Give it a try!"]]),{pntname=start_planet:name(), targetplanetkey=tut.getKey("target_planet"), landkey=tut.getKey("land")}))
       vn.done( tut.shipai.transition )
       vn.run()
@@ -178,7 +179,7 @@ function timer ()
       vn.transition( tut.shipai.transition )
       sai(_([["Great job! As you can see, by using your ship's Autonav features, the perceived duration of your trip was cut substantially. You will grow to appreciate this feature in your ship in time, especially as you travel from system to system delivering goods and such, given the vastness of space."]]))
       sai(_([["I hope you noticed some of the features of the overview map when you had it activated. Not only are objects such as planets, ships, and asteroids visible on the overview map, but faction #opatrol routes#0 are also shown with thick lines. These routes denote areas that are commonly patrolled and used by ships. Sticking to these routes is generally the best way to travel around, but they don't guarantee your safety. When starting out it is probably best to not stray too far."]]))
-      sai(_([["Let's now practice combat. You won't need this if you stick to the safe systems in the Empire core, but sadly, we are likely to encounter hostile ships if you venture further out, so you need to know how to defend yourself. Fortunately, your ship comes pre-equipped with a state-of-the-art laser cannon for just that reason!"]]))
+      sai(_([["Let's now practice combat. You won't need this if you stick to the safe systems in the Empire core, but sadly, we are likely to encounter hostile ships if you venture further out, so you need to know how to defend yourself. Fortunately, your ship comes pre-equipped with a state-of-the-art laser cannon for just that reason! If all goes well you won't end up like ship ornament like my late previous owner after encountering… Anyway, on to the drone."]]))
       sai(fmt.f(_([["I will launch a combat practice drone off of {pntname} now for you to fight. Don't worry; our drone does not have any weapons and will not harm you. Target the drone by clicking on it or by pressing {targethostilekey}, then use your weapons, controlled with {primarykey} and {secondarykey}, to take out the drone!"
 "Ah, yes, one more tip before I launch the drone: if your weapons start losing their accuracy, it's because they're becoming overheated. You can remedy that by pressing {cooldownkey} or double tapping {reversekey} to engage active cooling."]]),{pntname=dest_planet:name(), targethostilekey=tut.getKey("target_hostile"), primarykey=tut.getKey("primary"), secondarykey=tut.getKey("secondary"), cooldownkey=tut.getKey("cooldown"), reversekey=tut.getKey("reverse")}))
       sai(_("The Drone's AI can be a bit quirky, but don't pay attention to it. Being an artificial intelligence it doesn't have feelings, you know? Not like me, ha ha."))
@@ -197,7 +198,6 @@ function land ()
    end
    if stage == 2 then
       stage = 3
-      -- TODO cut up
       msg_info{_([["Excellent! The landing was successful. As your Ship AI, I am in charge of guiding your ship and performing the landing procedure, which has cut down significantly on misfortunes during human-controlled manual landing procedures. When you land, your ship is refueled automatically and you can do things such as talk to civilians at the bar, buy new ship components, configure your ship, and most importantly, accept missions from the Mission Computer. Why don't we look around? As you can see, we are currently on the Landing Main tab, where you can learn about the planet and buy a local map. Click all the other tabs below and I'll give you a tour through what else you can do on a planet. When you are done, click the '#bTake Off#0' button so we can continue."]])}
 
       bar_hook       = hook.land("land_bar", "bar")
@@ -237,8 +237,7 @@ function land_outfits ()
       hook.rm(outfits_hook)
       outfits_hook = nil
    end
-   msg_info{_([["This is the Outfitter, where you can buy new outfits to make your starship even better! You can fit your ship with new weapons, extra cargo space, more powerful core systems, and more! Regional maps which can help you explore the galaxy more easily can also be purchased here, as well as licenses required for higher-end weaponry and starships. For example, you will require a Large Civilian Vessel License to purchase a Melendez Corporation Mule Bulk Cargo Starhip, widely sought after for its unmatched cargo capacity."]]),
-   -- TODO cut up
+   msg_info{_([["This is the Outfitter, where you can buy new outfits to make your starship even better! You can fit your ship with new weapons, extra cargo space, more powerful core systems, and more! Regional maps which can help you explore the galaxy more easily can also be purchased here, as well as licenses required for higher-end weaponry and starships. For example, you will require a Large Civilian Vessel License to purchase a Melendez Corporation Mule Bulk Cargo Starhip. As my previous owner found out, they don't do too well in combat, however."]]),
    _([["As you can see, a series of tabs at the top of your screen allow you to filter outfits by type: 'W' for weapons, 'U' for utilities, 'S' for structurals, 'Core' for cores, and 'Other' for anything outside of those categories, most notably, regional maps and licenses. When you see an outfit that interests you, click on it to see more information about it, then either click on the '#bBuy#0' button to buy it or click on the '#bSell#0' button to sell it if you have one in your possession. Different planets have different outfits available; if you don't see a specific outfit you're looking for, you can search for it via the '#bFind Outfits#0' button on the starmap screen. After buying new outfits make sure to equip them in the #oEquipment#0 window."]]),
    }
 end
@@ -308,9 +307,9 @@ function enter_timer ()
       vn.scene()
       local sai = vn.newCharacter( tut.vn_shipai() )
       vn.transition( tut.shipai.transition )
-      sai(fmt.f(_([["Welcome back to space, {playername}! Let's continue discussing moving around in space. As mentioned before, you can move around space manually, no problem. However, you will often want to travel large distances, and navigating everywhere manually could be a bit tedious. A good option is to delegate the travelling to me, your ship AI, using the Autonav functionality available on all ships."]]),{playername=player.name()}))
-      sai(fmt.f(_([["Autonav is simple and elegant. Simply press {overlaykey} to open your ship's overlay map, then simply #bright-click#0 on any location, planet, ship, or jump point to instantly take your ship right to it! The trip will take just as long, but time compression allows you to step away from your controls, making it seem as though time is passing at a faster rate. And don't worry; if any hostile pilots are detected, the Autonav system automatically alerts you so that you can observe the situation and respond in whatever fashion is deemed necessary. This can be configured from your ship's Options menu, which you can access by pressing {menukey}.]]),{overlaykey=tut.getKey("overlay"), menukey=tut.getKey("menu")}))
-      sai(fmt.f(_([["Why don't you try using Autonav to fly over to {pntname}? You should be able to see it on your overlay map which you can activate with {overlaykey}."]]),{pntname=dest_planet:name(), overlaykey=tut.getKey("overlay")}))
+      sai(fmt.f(_([["Welcome back to space, {playername}! Let's continue discussing moving around in space. As mentioned before, you can move around space manually, no problem. However, you will often want to travel large distances, and navigating everywhere manually could be a bit tedious. A good option is to delegate the travelling to me, your ship AI, using the Autonav functionality available on all ships. You can trust me as I've only under 4 fatal accidents."]]),{playername=player.name()}))
+      sai(fmt.f(_([["Autonav is simple and elegant. Simply press {overlaykey} to open your ship's overlay map, then simply #bright-click#0 on any location, planet, ship, or jump point to instantly take your ship right to it! The trip will take just as long, but time compression allows you to step away from your controls, making it seem as though time is passing at a faster rate. And don't worry; if any hostile pilots are detected, the Autonav system automatically alerts you so that you can observe the situation and respond in whatever fashion is deemed necessary. This can be configured from your ship's #oOptions#0 menu, which you can access by pressing {menukey}.]]),{overlaykey=tut.getKey("overlay"), menukey=tut.getKey("menu")}))
+      sai(fmt.f(_([["Why don't you try using Autonav to fly over to {pntname}? You should be able to see it highlighted on your overlay map which you can activate with {overlaykey}."]]),{pntname=dest_planet:name(), overlaykey=tut.getKey("overlay")}))
       vn.done( tut.shipai.transition )
       vn.run()
 
@@ -326,12 +325,12 @@ function enter_timer ()
       vn.transition( tut.shipai.transition )
       sai(fmt.f(_([["You have done very well, {playername}! As you can see, the trip consumed fuel. You consume fuel any time you make a jump and can refuel by landing on a friendly planet. If you find yourself in a pinch, you may also be able to buy fuel from other pilots in the system; hail a pilot by #bdouble-clicking#0 on them, or by selecting them with {targetnextkey} and then pressing {hailkey}."]]),{playername=player.name(), targetnextkey=tut.getKey("target_next"), hailkey=tut.getKey("hail")}))
       sai(_([["Ah, that reminds me: you can also attempt to bribe hostile ships, such as pirates, by hailing them. Bribes work better on some factions than on others; pirates will happily take your offer and may even sell you fuel afterwards, but many other factions may be less forthcoming."]]))
-      sai(fmt.f(_([["I think that's it! I must say, you are a natural-born pilot and your new ship suits you well! This concludes the basic tutorial, but as you encounter new things I will appear periodically. If you need to refresh your knowledge or what to change my settings, you can do so from the info menu which you open with {infokey}. Now let us go out and adventure! I recommend you to head to the nearest planet and check out the spaceport bar to see if anybody can offer us some work."]]),{infokey=tut.getKey("info")}))
+      sai(fmt.f(_([["I think that's it! I must say, you are a natural-born pilot and your new ship suits you well! This concludes the basic tutorial, but as you encounter new things I will appear periodically. If you need to refresh your knowledge or what to change my settings, you can do so from the #oInfo#0 menu which you open with {infokey}. Now let us go out and adventure! I recommend you to head to the nearest planet and check out the spaceport bar to see if anybody can offer us some work to get started out."]]),{infokey=tut.getKey("info")}))
       vn.done( tut.shipai.transition )
       vn.run()
 
       -- Normal finish of the tutorial
-      tut.log(_([[Your ship AI gave you a tutorial on how to pilot your ship.]]))
+      tut.log(_([[Your ship AI gave you a tutorial on how to pilot your ship. Hopefully you will fair better than their late previous owner.]]))
       misn.finish( true )
    end
 end
@@ -349,11 +348,11 @@ function pilot_death_timer ()
    vn.scene()
    local sai = vn.newCharacter( tut.vn_shipai() )
    vn.transition( tut.shipai.transition )
-   sai(_([["Excellent work taking out that drone! As you may have noticed, shield regenerates over time, but armor does not. This is not universal, of course; some ships, particularly larger ships, feature advanced armor repair technology. But even then, armor regeneration is usually much slower than shield regeneration."]]))
+   sai(_([["Excellent work taking out that drone! As you may have noticed, shield regenerates over time, but armour does not. This is not universal, of course; some ships, particularly larger ships, feature advanced armour repair technology. But even then, armour regeneration is usually much slower than shield regeneration."]]))
    sai(fmt.f(_([["You may have also noticed your heat meters going up and your weapons becoming less accurate as your ship and weapons got hot. This is normal, but too much heat can make your weapons difficult to use, which is why it is recommended to use active cooling when it is safe to do so. You can engage active cooling by pressing {cooldownkey} or double tapping {reversekey}. Alternatively, you can cool off your ship instantly by landing on any planet or station."]]),{cooldownkey=tut.getKey("cooldown"), reversekey=tut.getKey("reverse")}))
-   sai(fmt.f(_([["It is also worth noting that you can configure the way your weapons shoot from the Info screen, which can be accessed by pressing {infokey} or through the button on the top of your screen. The Info screen also lets you view information about your ship, cargo, current missions, and reputation with the various factions. You will likely be referencing it a lot."]]),{infokey=tut.getKey("info")}))
-   sai(fmt.f(_([["I think we should try venturing outside of this system! There are many systems in the universe; this one is but a tiny sliver of what can be found out there! Traveling through systems is accomplished through jump points. Like planets, you usually need to find these by exploring the area, talking to the locals, or buying maps. Once you have found a jump point, you can use it by right-clicking on it or using the {jumpkey}."]]),{jumpkey=tut.getKey("jump")}))
-   sai(fmt.f(_([["But there is yet a better way to navigate across systems! By pressing {starmapkey}, you can open your starmap. The starmap shows you all of the systems you currently know about. Through your starmap, you can click on a system and click on the Autonav button to be automatically transported to the system! Of course, this only works if you know a valid route to get there, but you will find that this method of travel greatly simplifies things."]]),{starmapkey=tut.getKey("starmap")}))
+   sai(fmt.f(_([["It is also worth noting that you can configure the way your weapons shoot from the #oInfo#0 screen, which can be accessed by pressing {infokey} or through the button on the top of your screen. The #oInfo#0 screen also lets you view information about your ship, cargo, current missions, and reputation with the various factions. You will likely be referencing it a lot as we explore the galaxy."]]),{infokey=tut.getKey("info")}))
+   sai(fmt.f(_([["I think we should try venturing outside of this system. There are many systems in the universe; this one is but a tiny sliver of what can be found out there! Traveling through systems is accomplished through jump points. Like planets, you usually need to find these by exploring the area, talking to the locals, or buying maps. Once you have found a jump point, you can use it by #bright-click#0ing on it or using the {jumpkey}."]]),{jumpkey=tut.getKey("jump")}))
+   sai(fmt.f(_([["But there is yet a better way to navigate across systems! By pressing {starmapkey}, you can open your #oStarmap#0. The #oStarmap#0 shows you all of the systems you currently know about. Through your #oStarmap#0, you can click on a system and click on the '#bAutonav#0' button to be automatically transported to the system! Of course, this only works if you know a valid route to get there, but you will find that this method of travel greatly simplifies things."]]),{starmapkey=tut.getKey("starmap")}))
    sai(fmt.f(_([["Why don't you give it a try and jump to the nearby {sysname} system? You should see an indicator blip on your map; missions often use these blips to show you where to go next. You will have to make two jumps and may have to do some exploration to find the second jump point. Let's see what you've learned!"]]),{sysname=destsys:name()}))
    vn.done( tut.shipai.transition )
    vn.run()
@@ -376,6 +375,10 @@ function spawn_captain_tp ()
    p:setVisplayer()
    p:setHilight()
    hook.pilot( p, "death", "pilot_death" )
+
+   -- Don't distress just in case
+   local mem = p:memory()
+   mem.distress = false
 
    captainTP = p
    hook.timer(7, "taunt")
