@@ -137,6 +137,11 @@ static void system_parseAsteroids( const xmlNodePtr parent, StarSystem *sys );
 static int getPresenceIndex( StarSystem *sys, int faction );
 static void system_scheduler( double dt, int init );
 static void asteroid_explode ( Asteroid *a, AsteroidAnchor *field, int give_reward );
+/* Markers. */
+static int space_addMarkerSystem( int sysid, MissionMarkerType type );
+static int space_addMarkerPlanet( int pntid, MissionMarkerType type );
+static int space_rmMarkerSystem( int sysid, MissionMarkerType type );
+static int space_rmMarkerPlanet( int pntid, MissionMarkerType type );
 /* Render. */
 static void space_renderJumpPoint( const JumpPoint *jp, int i );
 static void space_renderPlanet( const Planet *p );
@@ -3771,21 +3776,13 @@ void space_clearComputerMarkers (void)
       sys_rmFlag(&systems_stack[i],SYSTEM_CMARKED);
 }
 
-
-/**
- * @brief Adds a marker to a system.
- *
- *    @param sys ID of the system to add marker to.
- *    @param type Type of the marker to add.
- *    @return 0 on success.
- */
-int space_addMarker( int sys, SysMarker type )
+static int space_addMarkerSystem( int sysid, MissionMarkerType type )
 {
    StarSystem *ssys;
    int *markers;
 
    /* Get the system. */
-   ssys = system_getIndex(sys);
+   ssys = system_getIndex(sysid);
    if (ssys == NULL)
       return -1;
 
@@ -3815,15 +3812,39 @@ int space_addMarker( int sys, SysMarker type )
    return 0;
 }
 
+static int space_addMarkerPlanet( int pntid, MissionMarkerType type )
+{
+   (void) pntid;
+   (void) type;
+   return 0;
+}
 
 /**
- * @brief Removes a marker from a system.
+ * @brief Adds a marker to a system.
  *
- *    @param sys ID of the system to remove marker from.
- *    @param type Type of the marker to remove.
+ *    @param objid ID of the object to add marker to.
+ *    @param type Type of the marker to add.
  *    @return 0 on success.
  */
-int space_rmMarker( int sys, SysMarker type )
+int space_addMarker( int objid, MissionMarkerType type )
+{
+   switch (type) {
+      case SYSMARKER_COMPUTER:
+      case SYSMARKER_LOW:
+      case SYSMARKER_HIGH:
+      case SYSMARKER_PLOT:
+         return space_addMarkerSystem( objid, type );
+      case PNTMARKER_HIGH:
+         return space_addMarkerPlanet( objid, type );
+      default:
+         WARN(_("Unknown marker type."));
+         return -1;
+   }
+   return 0;
+}
+
+
+static int space_rmMarkerSystem( int sys, MissionMarkerType type )
 {
    StarSystem *ssys;
    int *markers;
@@ -3860,6 +3881,36 @@ int space_rmMarker( int sys, SysMarker type )
    }
 
    return 0;
+}
+
+static int space_rmMarkerPlanet( int pntid, MissionMarkerType type )
+{
+   (void) pntid;
+   (void) type;
+   return 0;
+}
+
+/**
+ * @brief Removes a marker from a system.
+ *
+ *    @param objid ID of the object to remove marker from.
+ *    @param type Type of the marker to remove.
+ *    @return 0 on success.
+ */
+int space_rmMarker( int objid, MissionMarkerType type )
+{
+   switch (type) {
+      case SYSMARKER_COMPUTER:
+      case SYSMARKER_LOW:
+      case SYSMARKER_HIGH:
+      case SYSMARKER_PLOT:
+         return space_rmMarkerSystem( objid, type );
+      case PNTMARKER_HIGH:
+         return space_rmMarkerPlanet( objid, type );
+      default:
+         WARN(_("Unknown marker type."));
+         return -1;
+   }
 }
 
 

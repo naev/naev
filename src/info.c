@@ -1178,6 +1178,7 @@ static void mission_menu_update( unsigned int wid, const char *str )
    (void)str;
    const char *active_misn;
    Mission* misn;
+   const StarSystem *sys;
 
    active_misn = toolkit_getList( wid, "lstMission" );
    if ((active_misn==NULL) || (strcmp(active_misn,_("No Missions"))==0)) {
@@ -1195,8 +1196,9 @@ static void mission_menu_update( unsigned int wid, const char *str )
    window_enableButton( wid, "btnAbortMission" );
 
    /* Select the system. */
-   if (misn->markers != NULL)
-      map_center( system_getIndex( misn->markers[0].sys )->name );
+   sys = mission_getSystemMarker( misn );
+   if (sys != NULL)
+      map_center( sys->name );
 }
 /**
  * @brief Aborts a mission in the mission menu.

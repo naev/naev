@@ -248,6 +248,7 @@ headers = files(
    'md5.h',
    'menu.h',
    'mission.h',
+   'mission_markers.h',
    'msgcat.h',
    'music.h',
    'music_openal.h',

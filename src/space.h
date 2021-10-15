@@ -12,7 +12,7 @@ typedef struct JumpPoint_ JumpPoint;
 #include "commodity.h"
 #include "explosion.h"
 #include "faction.h"
-#include "mission.h"
+#include "mission_markers.h"
 #include "opengl.h"
 #include "pilot.h"
 #include "tech.h"
@@ -141,6 +141,7 @@ typedef struct Planet_ {
    unsigned int flags; /**< flags for planet properties */
    MapOverlayPos mo;   /**< Overlay layout data. */
    double map_alpha;   /**< Alpha to display on the map. */
+   int markers;        /**< Markers enabled on the planet. */
 } Planet;
 
 /*
@@ -448,8 +449,8 @@ double system_getClosestAng( const StarSystem *sys, int *pnt, int *jp, int *ast,
 /*
  * Markers.
  */
-int space_addMarker( int sys, SysMarker type );
-int space_rmMarker( int sys, SysMarker type );
+int space_addMarker( int sys, MissionMarkerType type );
+int space_rmMarker( int sys, MissionMarkerType type );
 void space_clearKnown (void);
 void space_clearMarkers (void);
 void space_clearComputerMarkers (void);

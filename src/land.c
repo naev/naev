@@ -6,7 +6,6 @@
  *
  * @brief Handles all the landing menus and actions.
  */
-
 /** @cond */
 #include <math.h>
 #include <stdio.h>
@@ -709,6 +708,7 @@ static void misn_update( unsigned int wid, const char *str )
    (void) str;
    const char *active_misn;
    Mission* misn;
+   const StarSystem *sys;
    char txt[STRMAX_SHORT], *buf;
 
    /* Clear computer markers. */
@@ -732,9 +732,9 @@ static void misn_update( unsigned int wid, const char *str )
    }
 
    misn = &mission_computer[ toolkit_getListPos( wid, "lstMission" ) ];
-   mission_sysComputerMark( misn );
-   if (misn->markers != NULL)
-      map_center( system_getIndex( misn->markers[0].sys )->name );
+   sys = mission_sysComputerMark( misn );
+   if (sys!=NULL)
+      map_center( sys->name );
    snprintf( txt, sizeof(txt), _("#nReward:#0 %s"), misn->reward );
    window_modifyText( wid, "txtReward", txt );
    window_modifyText( wid, "txtDesc", misn->desc );

@@ -69,6 +69,8 @@ static int missions_cmp( const void *a, const void *b );
 static int mission_parseFile( const char* file );
 static int mission_parseXML( MissionData *temp, const xmlNodePtr parent );
 static int missions_parseActive( xmlNodePtr parent );
+/* Misc. */
+static const char* mission_markerTarget( MissionMarker *m );
 
 /**
  * @brief Generates a new id for the mission.
@@ -77,12 +79,9 @@ static int missions_parseActive( xmlNodePtr parent );
  */
 static unsigned int mission_genID (void)
 {
-   unsigned int id;
-   int i;
-   id = ++mission_id; /* default id, not safe if loading */
-
+   unsigned int id = ++mission_id; /* default id, not safe if loading */
    /* we save mission ids, so check for collisions with player's missions */
-   for (i=0; i<MISSION_MAX; i++)
+   for (int i=0; i<MISSION_MAX; i++)
       if (id == player_missions[i]->id) /* mission id was loaded from save */
          return mission_genID(); /* recursively try again */
    return id;
@@ -140,8 +139,6 @@ MissionData* mission_getFromName( const char* name )
  */
 static int mission_init( Mission* mission, MissionData* misn, int genid, int create, unsigned int *id )
 {
-   int ret;
-
    /* clear the mission */
    memset( mission, 0, sizeof(Mission) );
 
@@ -173,7 +170,7 @@ static int mission_init( Mission* mission, MissionData* misn, int genid, int cre
    /* run create function */
    if (create) {
       /* Failed to create. */
-      ret = misn_run( mission, "create");
+      int ret = misn_run( mission, "create");
       if (ret) {
          mission_cleanup(mission);
          return ret;
@@ -223,10 +220,7 @@ int mission_alreadyRunning( const MissionData* misn )
 static int mission_meetReq( int mission, int faction,
       const char* planet, const char* sysname )
 {
-   MissionData* misn;
-   int c;
-
-   misn = mission_get( mission );
+   MissionData* misn = mission_get( mission );
    if (misn == NULL) /* In case it doesn't exist */
       return 0;
 
@@ -250,7 +244,7 @@ static int mission_meetReq( int mission, int faction,
 
    /* Must meet Lua condition. */
    if (misn->avail.cond != NULL) {
-      c = cond_check(misn->avail.cond);
+      int c = cond_check(misn->avail.cond);
       if (c < 0) {
          WARN(_("Conditional for mission '%s' failed to run"), misn->name);
          return 0;
@@ -331,10 +325,26 @@ int mission_start( const char *name, unsigned int *id )
    return ret;
 }
 
+static const char* mission_markerTarget( MissionMarker *m )
+{
+   switch (m->type) {
+      case SYSMARKER_COMPUTER:
+      case SYSMARKER_LOW:
+      case SYSMARKER_HIGH:
+      case SYSMARKER_PLOT:
+         return system_getIndex( m->objid )->name;
+      case PNTMARKER_HIGH:
+         return planet_getIndex( m->objid )->name;
+      default:
+         WARN(_("Unknown marker type."));
+         return NULL;
+   }
+}
+
 /**
  * @brief Adds a system marker to a mission.
  */
-int mission_addMarker( Mission *misn, int id, int sys, SysMarker type )
+int mission_addMarker( Mission *misn, int id, int objid, MissionMarkerType type )
 {
    MissionMarker *marker;
    int n, m;
@@ -356,7 +366,7 @@ int mission_addMarker( Mission *misn, int id, int sys, SysMarker type )
    /* Create the marker. */
    marker      = &array_grow( &misn->markers );
    marker->id  = id;
-   marker->sys = sys;
+   marker->objid = objid;
    marker->type = type;
 
    return marker->id;
@@ -370,18 +380,15 @@ void mission_sysMark (void)
    /* Clear markers. */
    space_clearMarkers();
    for (int i=0; i<MISSION_MAX; i++) {
-      int n;
-
       /* Must be a valid player mission. */
       if (player_missions[i]->id == 0)
          continue;
 
-      n = array_size( player_missions[i]->markers );
-      for (int j=0; j<n; j++) {
+      for (int j=0; j<array_size(player_missions[i]->markers); j++) {
          MissionMarker *m = &player_missions[i]->markers[j];
 
          /* Add the individual markers. */
-         space_addMarker( m->sys, m->type );
+         space_addMarker( m->objid, m->type );
       }
    }
 }
@@ -393,19 +400,42 @@ void mission_sysMark (void)
  *
  *    @param misn Mission to mark.
  */
-void mission_sysComputerMark( const Mission* misn )
+const StarSystem* mission_sysComputerMark( const Mission* misn )
 {
-   int n;
+   StarSystem *firstsys = NULL;
 
    /* Clear markers. */
    space_clearComputerMarkers();
 
    /* Set all the markers. */
-   n = array_size(misn->markers);
-   for (int i=0; i<n; i++) {
-      StarSystem *sys = system_getIndex( misn->markers[i].sys );
-      sys_setFlag( sys,SYSTEM_CMARKED );
+   for (int i=0; i<array_size(misn->markers); i++) {
+      StarSystem *sys;
+      MissionMarker *m = &misn->markers[i];;
+
+      if (m->type!=SYSMARKER_COMPUTER && m->type!=SYSMARKER_LOW && m->type!=SYSMARKER_HIGH && m->type!=SYSMARKER_PLOT)
+         continue;
+
+      sys = system_getIndex( misn->markers[i].objid );
+      sys_setFlag( sys, SYSTEM_CMARKED );
+
+      if (firstsys==NULL)
+         firstsys = sys;
    }
+   return firstsys;
+}
+
+const StarSystem* mission_getSystemMarker( const Mission* misn )
+{
+   /* Set all the markers. */
+   for (int i=0; i<array_size(misn->markers); i++) {
+      MissionMarker *m = &misn->markers[i];;
+
+      if (m->type!=SYSMARKER_COMPUTER && m->type!=SYSMARKER_LOW && m->type!=SYSMARKER_HIGH && m->type!=SYSMARKER_PLOT)
+         continue;
+
+      return system_getIndex( misn->markers[i].objid );
+   }
+   return NULL;
 }
 
 /**
@@ -976,10 +1006,11 @@ int missions_saveActive( xmlTextWriterPtr writer )
          xmlw_startElem( writer, "markers" );
          n = array_size( player_missions[i]->markers );
          for (int j=0; j<n; j++) {
+            MissionMarker *m = &player_missions[i]->markers[j];
             xmlw_startElem(writer,"marker");
-            xmlw_attr(writer,"id","%d",player_missions[i]->markers[j].id);
-            xmlw_attr(writer,"type","%d",player_missions[i]->markers[j].type);
-            xmlw_str(writer,"%s", system_getIndex(player_missions[i]->markers[j].sys)->name);
+            xmlw_attr(writer,"id","%d",m->id);
+            xmlw_attr(writer,"type","%d",m->type);
+            xmlw_str(writer,"%s", mission_markerTarget( m ));
             xmlw_endElem(writer); /* "marker" */
          }
          xmlw_endElem( writer ); /* "markers" */
@@ -1275,4 +1306,15 @@ static int missions_parseActive( xmlNodePtr parent )
    } while (xml_nextNode(node));
 
    return 0;
+}
+
+StarSystem *mission_getMarkedSystem( const Mission* misn )
+{
+   for (int i=0; i<array_size(misn->markers); i++) {
+      MissionMarker *m = &misn->markers[i];
+      if (m->type==SYSMARKER_COMPUTER || m->type==SYSMARKER_LOW || m->type==SYSMARKER_HIGH || m->type==SYSMARKER_PLOT) {
+         return system_getIndex( m->objid );
+      }
+   }
+   return NULL;
 }

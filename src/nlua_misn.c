@@ -374,7 +374,7 @@ static int misn_markerAdd( lua_State *L )
    int id;
    LuaSystem sys;
    const char *stype;
-   SysMarker type;
+   MissionMarkerType type;
    Mission *cur_mission;
 
    /* Check parameters. */
@@ -446,7 +446,7 @@ static int misn_markerMove( lua_State *L )
    }
 
    /* Update system. */
-   marker->sys = sys;
+   marker->objid = sys;
 
    /* Update system markers. */
    mission_sysMark();
@@ -464,7 +464,7 @@ static int misn_markerMove( lua_State *L )
 static int misn_markerRm( lua_State *L )
 {
    int id;
-   int i, n;
+   int n;
    MissionMarker *marker;
    Mission *cur_mission;
 
@@ -476,7 +476,7 @@ static int misn_markerRm( lua_State *L )
    /* Check id. */
    marker = NULL;
    n = array_size( cur_mission->markers );
-   for (i=0; i<n; i++) {
+   for (int i=0; i<n; i++) {
       if (id == cur_mission->markers[i].id) {
          marker = &cur_mission->markers[i];
          break;

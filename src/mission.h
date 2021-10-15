@@ -9,6 +9,8 @@
 #include "nlua.h"
 #include "nxml.h"
 #include "opengl.h"
+#include "space.h"
+#include "mission_markers.h"
 
 /* availability by location */
 enum {
@@ -28,16 +30,6 @@ enum {
 #define mis_rmFlag(m,f)    ((m)->flags &= ~(f))
 /* actual flags */
 #define MISSION_UNIQUE        (1<<0) /**< Unique missions can't be repeated */
-
-/**
- * @brief Different type of system markers.
- */
-typedef enum SysMarker_ {
-   SYSMARKER_COMPUTER,  /**< Marker is for mission computer missions. */
-   SYSMARKER_LOW,       /**< Marker is for low priority mission targets. */
-   SYSMARKER_HIGH,      /**< Marker is for high priority mission targets. */
-   SYSMARKER_PLOT       /**< Marker is for plot priority (ultra high) mission targets. */
-} SysMarker;
 
 /**
  * @brief Defines the availability of a mission.
@@ -73,15 +65,6 @@ typedef struct MissionData_ {
    char* lua; /**< Lua data to use. */
    char* sourcefile; /**< Source file name. */
 } MissionData;
-
-/**
- * @brief Mission system marker.
- */
-typedef struct MissionMarker_ {
-   int id; /**< ID of the mission marker. */
-   int sys; /**< ID of marked system. */
-   SysMarker type; /**< Marker type. */
-} MissionMarker;
 
 /**
  * @struct Mission
@@ -138,9 +121,10 @@ int mission_alreadyRunning( const MissionData* misn );
 int mission_getID( const char* name );
 MissionData* mission_get( int id );
 MissionData* mission_getFromName( const char* name );
-int mission_addMarker( Mission *misn, int id, int sys, SysMarker type );
+int mission_addMarker( Mission *misn, int id, int sys, MissionMarkerType type );
 void mission_sysMark (void);
-void mission_sysComputerMark( const Mission* misn );
+const StarSystem* mission_sysComputerMark( const Mission* misn );
+const StarSystem* mission_getSystemMarker( const Mission* misn );
 
 /*
  * cargo stuff
