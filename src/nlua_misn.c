@@ -1,14 +1,11 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
 /**
  * @file nlua_misn.c
  *
  * @brief Handles the mission Lua bindings.
  */
-
-
 /** @cond */
 #include <math.h>
 #include <stdio.h>
@@ -48,7 +45,6 @@
 #include "shiplog.h"
 #include "toolkit.h"
 
-
 /**
  * @brief Mission Lua bindings.
  *
@@ -59,12 +55,6 @@
  *
  * @luamod misn
  */
-
-
-/*
- * prototypes
- */
-
 
 /*
  * libraries
@@ -118,7 +108,6 @@ static const luaL_Reg misn_methods[] = {
    {0,0}
 }; /**< Mission Lua methods. */
 
-
 /**
  * @brief Registers all the mission libraries.
  *
@@ -151,7 +140,6 @@ int nlua_loadMisn( nlua_env env )
    return 0;
 }
 
-
 /**
  * @brief Tries to run a mission, but doesn't err if it fails.
  *
@@ -163,7 +151,6 @@ int nlua_loadMisn( nlua_env env )
 int misn_tryRun( Mission *misn, const char *func )
 {
    int ret;
-
    /* Get the function to run. */
    misn_runStart( misn, func );
    if (lua_isnil( naevL, -1 )) {
@@ -173,7 +160,6 @@ int misn_tryRun( Mission *misn, const char *func )
    ret = misn_runFunc( misn, func, 0 );
    return ret;
 }
-
 
 /**
  * @brief Runs a mission function.
@@ -186,13 +172,11 @@ int misn_tryRun( Mission *misn, const char *func )
 int misn_run( Mission *misn, const char *func )
 {
    int ret;
-
    /* Run the function. */
    misn_runStart( misn, func );
    ret = misn_runFunc( misn, func, 0 );
    return ret;
 }
-
 
 /**
  * @brief Gets the mission that's being currently run in Lua.
@@ -211,7 +195,6 @@ Mission* misn_getFromLua( lua_State *L )
    return misn;
 }
 
-
 /**
  * @brief Sets up the mission to run misn_runFunc.
  */
@@ -225,7 +208,6 @@ void misn_runStart( Mission *misn, const char *func )
    /* Set the Lua state. */
    nlua_getenv( misn->env, func );
 }
-
 
 /**
  * @brief Runs a mission set up with misn_runStart.
@@ -292,7 +274,6 @@ int misn_runFunc( Mission *misn, const char *func, int nargs )
 
    return ret;
 }
-
 
 /**
  * @brief Sets the current mission title.
@@ -430,22 +411,26 @@ static int misn_markerAdd( lua_State *L )
  */
 static int misn_markerMove( lua_State *L )
 {
-   int id;
-   LuaSystem sys;
+   int id, objid, issys;
    MissionMarker *marker;
-   int n;
    Mission *cur_mission;
 
    /* Handle parameters. */
    id    = luaL_checkinteger( L, 1 );
-   sys   = luaL_checksystem( L, 2 );
+   if (lua_isplanet(L,2)) {
+      issys = 0;
+      objid = luaL_checkplanet(L,2);
+   }
+   else {
+      issys = 1;
+      objid = luaL_checksystem(L,2);
+   }
 
    cur_mission = misn_getFromLua(L);
 
    /* Check id. */
    marker = NULL;
-   n = array_size( cur_mission->markers );
-   for (int i=0; i<n; i++) {
+   for (int i=0; i<array_size(cur_mission->markers); i++) {
       if (id == cur_mission->markers[i].id) {
          marker = &cur_mission->markers[i];
          break;
@@ -457,7 +442,11 @@ static int misn_markerMove( lua_State *L )
    }
 
    /* Update system. */
-   marker->objid = sys;
+   if (issys)
+      marker->type = mission_markerTypePlanetToSystem( marker->type );
+   else
+      marker->type = mission_markerTypeSystemToPlanet( marker->type );
+   marker->objid = objid;
 
    /* Update system markers. */
    mission_sysMark();
@@ -503,7 +492,6 @@ static int misn_markerRm( lua_State *L )
    mission_sysMark();
    return 0;
 }
-
 
 /**
  * @brief Sets the current mission NPC.
@@ -558,7 +546,6 @@ static int misn_setNPC( lua_State *L )
 
    return 0;
 }
-
 
 /**
  * @brief Gets the factions the mission is available for.
@@ -663,7 +650,6 @@ static int misn_finish( lua_State *L )
 
    return 0;
 }
-
 
 /**
  * @brief Creates a new temporary commodity meant for missions. If a temporary commodity with the same name exists, that gets returned instead.
@@ -793,7 +779,6 @@ static int misn_cargoJet( lua_State *L )
    return 1;
 }
 
-
 /**
  * @brief Creates a mission OSD.
  *
@@ -811,10 +796,7 @@ static int misn_osdCreate( lua_State *L )
    const char *title;
    int nitems;
    char **items;
-   int i;
-   Mission *cur_mission;
-
-   cur_mission = misn_getFromLua(L);
+   Mission *cur_mission = misn_getFromLua(L);
 
    /* Must be accepted. */
    if (!cur_mission->accepted) {
@@ -837,7 +819,7 @@ static int misn_osdCreate( lua_State *L )
    items = calloc( nitems, sizeof(char *) );
 
    /* Get items. */
-   for (i=0; i<nitems; i++) {
+   for (int i=0; i<nitems; i++) {
       lua_pushnumber(L,i+1);
       lua_gettable(L,2);
       if (!lua_isstring(L,-1)) {
@@ -855,13 +837,12 @@ static int misn_osdCreate( lua_State *L )
    cur_mission->osd_set = 1; /* OSD was explicitly set. */
 
    /* Free items. */
-   for (i=0; i<nitems; i++)
+   for (int i=0; i<nitems; i++)
       free(items[i]);
    free(items);
 
    return 0;
 }
-
 
 /**
  * @brief Destroys the mission OSD.
@@ -870,8 +851,7 @@ static int misn_osdCreate( lua_State *L )
  */
 static int misn_osdDestroy( lua_State *L )
 {
-   Mission *cur_mission;
-   cur_mission = misn_getFromLua(L);
+   Mission *cur_mission = misn_getFromLua(L);
 
    if (cur_mission->osd != 0) {
       osd_destroy( cur_mission->osd );
@@ -880,7 +860,6 @@ static int misn_osdDestroy( lua_State *L )
 
    return 0;
 }
-
 
 /**
  * @brief Sets active in mission OSD.
@@ -914,9 +893,7 @@ static int misn_osdActive( lua_State *L )
  */
 static int misn_osdGetActiveItem( lua_State *L )
 {
-   Mission *cur_mission;
-   cur_mission = misn_getFromLua(L);
-
+   Mission *cur_mission = misn_getFromLua(L);
    char **items = osd_getItems(cur_mission->osd);
    int active   = osd_getActive(cur_mission->osd);
 
@@ -928,7 +905,6 @@ static int misn_osdGetActiveItem( lua_State *L )
    lua_pushstring(L, items[active]);
    return 1;
 }
-
 
 /**
  * @brief Gets the current mission OSD information.
@@ -956,7 +932,6 @@ static int misn_osdGet( lua_State *L )
    lua_pushinteger( L, osd_getActive(cur_mission->osd) );
    return 3;
 }
-
 
 /**
  * @brief Adds an NPC.
@@ -1011,7 +986,6 @@ static int misn_npcAdd( lua_State *L )
    return 0;
 }
 
-
 /**
  * @brief Removes an NPC.
  *
@@ -1022,13 +996,9 @@ static int misn_npcAdd( lua_State *L )
  */
 static int misn_npcRm( lua_State *L )
 {
-   unsigned int id;
-   int ret;
-   Mission *cur_mission;
-
-   id = luaL_checklong(L, 1);
-   cur_mission = misn_getFromLua(L);
-   ret = npc_rm_mission( id, cur_mission->id );
+   unsigned int id = luaL_checklong(L, 1);
+   Mission *cur_mission = misn_getFromLua(L);
+   int ret = npc_rm_mission( id, cur_mission->id );
 
    /* Regenerate bar. */
    bar_regen();
@@ -1037,7 +1007,6 @@ static int misn_npcRm( lua_State *L )
       NLUA_ERROR(L, _("Invalid NPC ID!"));
    return 0;
 }
-
 
 /**
  * @brief Tries to claim systems or strings.
@@ -1115,4 +1084,3 @@ static int misn_claim( lua_State *L )
    lua_pushboolean(L,1);
    return 1;
 }
-

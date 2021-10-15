@@ -370,6 +370,28 @@ MissionMarkerType mission_markerTypePlanetToSystem( MissionMarkerType t )
    }
 }
 
+MissionMarkerType mission_markerTypeSystemToPlanet( MissionMarkerType t )
+{
+   switch (t) {
+      case SYSMARKER_COMPUTER:
+         return PNTMARKER_COMPUTER;
+      case SYSMARKER_LOW:
+         return PNTMARKER_LOW;
+      case SYSMARKER_HIGH:
+         return PNTMARKER_HIGH;
+      case SYSMARKER_PLOT:
+         return PNTMARKER_PLOT;
+      case PNTMARKER_COMPUTER:
+      case PNTMARKER_LOW:
+      case PNTMARKER_HIGH:
+      case PNTMARKER_PLOT:
+         return t;
+      default:
+         WARN(_("Unknown marker type."));
+         return -1;
+   }
+}
+
 /**
  * @brief Loads a mission marker from xml.
  */

@@ -345,7 +345,7 @@ function land ()
 
       local c = misn.cargoNew( N_("Jumpdrive Repair Parts"), N_("Spare parts that can be used to break a ship's broken jumpdrive.") )
       misn.cargoAdd( c, 0 )
-      misn.markerMove( misn_marker, retsys )
+      misn.markerMove( misn_marker, retpnt )
       misn.osdActive(2)
       misn_state = 4
 
@@ -389,7 +389,7 @@ function approach_nelly ()
       fmt.f(_("Go to {pntname} in {sysname}"),{pntname=destpnt:name(), sysname=destsys:name()}),
       fmt.f(_("Return to {pntname} in {sysname}"),{pntname=retpnt:name(), sysname=retsys:name()}),
    } )
-   misn.markerMove( misn_marker, destsys )
+   misn.markerMove( misn_marker, destpnt )
 
    misn.npcRm( npc_nel )
    misn_state = 2

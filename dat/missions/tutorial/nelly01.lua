@@ -171,7 +171,7 @@ They cock their head a bit at you.
 
    cargo_id = misn.cargoAdd( cargo_type, cargo_q )
 
-   misn_marker = misn.markerAdd( destsys )
+   misn_marker = misn.markerAdd( destpnt )
 
    misn.osdCreate( _("Helping Nelly Out"), {
       fmt.f(_("Deliver cargo to {pntname} in {sysname}"), {sysname=destsys:name(), pntname=destpnt:name()} ),
@@ -227,7 +227,7 @@ function land ()
       misn_state = 2
       misn.osdActive(2)
 
-      misn.markerMove( misn_marker, retsys )
+      misn.markerMove( misn_marker, retpnt )
 
       -- Hook the outfits
       if wanthelp then
