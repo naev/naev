@@ -3758,11 +3758,17 @@ void space_clearKnown (void)
 void space_clearMarkers (void)
 {
    for (int i=0; i<array_size(systems_stack); i++) {
-      sys_rmFlag(&systems_stack[i], SYSTEM_MARKED);
-      systems_stack[i].markers_computer = 0;
-      systems_stack[i].markers_plot  = 0;
-      systems_stack[i].markers_high  = 0;
-      systems_stack[i].markers_low   = 0;
+      StarSystem *sys = &systems_stack[i];
+      sys_rmFlag( sys, SYSTEM_MARKED );
+      sys->markers_computer = 0;
+      sys->markers_plot  = 0;
+      sys->markers_high  = 0;
+      sys->markers_low   = 0;
+   }
+   for (int i=0; i<array_size(planet_stack); i++) {
+      Planet *pnt = &planet_stack[i];
+      planet_rmFlag( pnt, PLANET_MARKED );
+      pnt->markers = 0;
    }
 }
 
