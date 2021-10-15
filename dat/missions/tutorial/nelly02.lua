@@ -97,7 +97,6 @@ function create ()
    end
    destpnt, destsys = lmisn.getRandomPlanetAtDistance( system.cur(), 1, 1, "Independent", false, pntfilter )
    if not destpnt then
-      warn("No destpnt found")
       misn.finish()
    end
    if not misn.claim{ retsys, destsys } then
