@@ -20,6 +20,8 @@ local tut = require "common.tutorial"
 local vn = require "vn"
 local vntk = require "vntk"
 
+local tp_taunt_healty, tp_taunt_weak
+
 function create ()
    missys = system.get( "Delta Polaris" )
    destsys = system.get( "Jade" )
@@ -375,9 +377,8 @@ function spawn_captain_tp ()
 
    captainTP = p
    hook.timer(7, "taunt")
-end
 
-local tp_taunt_healthy = {
+   tp_taunt_healthy = {
    _("Bring on the pain!"),
    _("You're no match for the fearsome T. Practice!"),
    _("I've been shot by ships ten times your size!"),
@@ -407,7 +408,7 @@ local tp_taunt_healthy = {
    _("You'd be dead if I'd remembered to pack my weapons!"),
    _("I'll end you!"),
    _("… Right after I finish eating this bucket of fried chicken!"),
-   _("Em 5 Fried Chicken. Eat only the best."),
+   fmt.f(_("{pntname} Fried Chicken. Eat only the best."), {pntname=dest_planet:name()}),
    _("This is your last chance to surrender!"),
    _("Don't do school, stay in milk."),
    _("I'm going to report you to the NPC Rights watchdog."),
@@ -422,8 +423,8 @@ local tp_taunt_healthy = {
    _("Shoot me!"),
    _("Okay, listen. I'm doing this for attention."),
    _("But if you don't shoot me, I'll tell the galaxy your terrible secret."),
-}
-local tp_taunt_weak = {
+   }
+   tp_taunt_weak = {
    _("Okay, that's about enough."),
    _("You can stop now."),
    _("I was wrong about you."),
@@ -445,7 +446,9 @@ local tp_taunt_weak = {
    _("Here I go, filling my cabin up with tears."),
    _("U- oh it a-pears my te-rs hav- da--age t-e co-mand cons-le."),
    _("I a- T. Pr-ct---! Y-- w--l fe-r m- na-e --- Bzzzt!"),
-}
+   }
+end
+
 function taunt ()
    if not captainTP or not captainTP:exists() then
       return
