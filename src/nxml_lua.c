@@ -1,14 +1,11 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
 /**
  * @file nxml_lua.c
  *
  * @brief Handles the saving and writing of a nlua state to XML.
  */
-
-
 /** @cond */
 #include "naev.h"
 /** @endcond */
@@ -28,8 +25,8 @@
 #include "nlua_time.h"
 #include "nluadef.h"
 #include "nstring.h"
+#include "mission.h"
 #include "utf8.h"
-
 
 /*
  * Prototypes.
@@ -85,7 +82,6 @@ static int nxml_saveData( xmlTextWriterPtr writer, const char *type, const char 
    return 0;
 }
 
-
 /**
  * @brief Commodity-specific nxml_saveData derivative.
  *
@@ -117,7 +113,6 @@ static int nxml_saveCommodity( xmlTextWriterPtr writer, const char *name, size_t
    return status;
 }
 
-
 /**
  * @brief Reverse of nxml_saveCommodity.
  */
@@ -141,7 +136,6 @@ static Commodity* nxml_loadCommodity( xmlNodePtr node )
    }
    return c;
 }
-
 
 /**
  * @brief Jump-specific nxml_saveData derivative.
@@ -167,7 +161,6 @@ static int nxml_saveJump( xmlTextWriterPtr writer, const char *name, size_t name
 
    return 0;
 }
-
 
 /**
  * @brief Persists the node on the top of the stack and pops it.
@@ -365,7 +358,6 @@ static int nxml_persistDataNode( lua_State *L, xmlTextWriterPtr writer, int inta
    return ret;
 }
 
-
 /**
  * @brief Persists all the nxml Lua data.
  *
@@ -393,7 +385,6 @@ int nxml_persistLua( nlua_env env, xmlTextWriterPtr writer )
 
    return ret;
 }
-
 
 /**
  * @brief Unpersists Lua data.
@@ -517,7 +508,6 @@ static int nxml_unpersistDataNode( lua_State *L, xmlNodePtr parent )
    return 0;
 }
 
-
 /**
  * @brief Unpersists Lua data.
  *
@@ -535,7 +525,6 @@ int nxml_unpersistLua( nlua_env env, xmlNodePtr parent )
 
    return ret;
 }
-
 
 /**
  * @brief Checks whether saving the given string (from lua_tolstring)

@@ -3814,8 +3814,10 @@ static int space_addMarkerSystem( int sysid, MissionMarkerType type )
 
 static int space_addMarkerPlanet( int pntid, MissionMarkerType type )
 {
-   (void) pntid;
-   (void) type;
+   (void) type; /* Unhandled for now. */
+   Planet *pnt = planet_getIndex( pntid );
+   pnt->markers++;
+   planet_setFlag( pnt, PLANET_MARKED );
    return 0;
 }
 
@@ -3885,8 +3887,11 @@ static int space_rmMarkerSystem( int sys, MissionMarkerType type )
 
 static int space_rmMarkerPlanet( int pntid, MissionMarkerType type )
 {
-   (void) pntid;
    (void) type;
+   Planet *pnt = planet_getIndex( pntid );
+   pnt->markers--;
+   if (pnt->markers <= 0)
+      planet_rmFlag( pnt, PLANET_MARKED );
    return 0;
 }
 

@@ -56,6 +56,7 @@ enum {
 #define PLANET_BLACKMARKET (1<<1) /**< Planet is a black market. */
 #define PLANET_NOMISNSPAWN (1<<2) /**< No missions spawn nor trigger on this asset. */
 #define PLANET_UNINHABITED (1<<3) /**< Force planet to be uninhabited. */
+#define PLANET_MARKED      (1<<4) /**< Planet is marked. */
 #define planet_isFlag(p,f)    ((p)->flags & (f)) /**< Checks planet flag. */
 #define planet_setFlag(p,f)   ((p)->flags |= (f)) /**< Sets a planet flag. */
 #define planet_rmFlag(p,f)    ((p)->flags &= ~(f)) /**< Removes a planet flag. */
