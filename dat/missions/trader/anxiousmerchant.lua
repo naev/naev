@@ -118,7 +118,7 @@ function accept()
    misn.setTitle(misn_title)
    misn.setReward(fmt.credits(payment))
    misn.setDesc(misn_desc:format(dest_planet:name()))
-   marker = misn.markerAdd(dest_sys, "low") -- destination
+   marker = misn.markerAdd(dest_planet, "low") -- destination
    cargo_ID = misn.cargoAdd(cargo, cargo_size) -- adds cargo
 
    -- OSD
@@ -143,10 +143,6 @@ function land()
          tk.msg(title[4], text[4])
       end
       misn.cargoRm(cargo_ID)
-      misn.osdDestroy(osd)
-      misn.markerRm(marker)
-      hook.rm(land_hook)
-      hook.rm(date_hook)
       misn.finish(true)
    end
 end

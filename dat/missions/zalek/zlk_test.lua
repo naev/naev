@@ -87,7 +87,7 @@ function create()
    local typeOfEng = engines[rnd.rnd(1, #engines)]
 
    misn.setTitle( misn_title:format( typeOfEng ))
-   misn.markerAdd(destsys, "computer")
+   misn.markerAdd(destplanet, "computer")
    cargo_setDesc( misn_desc:format( destplanet:name(), destsys:name() ), nil, nil, destplanet )
    misn.setReward(fmt.credits(reward))
 end

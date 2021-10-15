@@ -96,7 +96,7 @@ function create()
    misn.setTitle( misn_title[convoysize]:format(
       destplanet:name(), destsys:name() ) )
    cargo_setDesc( misn_desc:format( destplanet:name(), destsys:name() ), cargo, nil, destplanet, nil, piracyrisk );
-   misn.markerAdd(destsys, "computer")
+   misn.markerAdd(destplanet, "computer")
    misn.setReward( fmt.credits(reward) )
 end
 
