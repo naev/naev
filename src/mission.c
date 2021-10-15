@@ -71,6 +71,7 @@ static int mission_parseXML( MissionData *temp, const xmlNodePtr parent );
 static int missions_parseActive( xmlNodePtr parent );
 /* Misc. */
 static const char* mission_markerTarget( MissionMarker *m );
+static int mission_markerLoad( Mission *misn, xmlNodePtr node );
 
 /**
  * @brief Generates a new id for the mission.
@@ -338,6 +339,40 @@ static const char* mission_markerTarget( MissionMarker *m )
       default:
          WARN(_("Unknown marker type."));
          return NULL;
+   }
+}
+
+static int mission_markerLoad( Mission *misn, xmlNodePtr node )
+{
+   int id;
+   MissionMarkerType type;
+   StarSystem *ssys;
+   Planet *pnt;
+
+   xmlr_attr_int_def( node, "id", id, -1 );
+   xmlr_attr_int_def( node, "type", type, -1 );
+
+   switch (type) {
+      case SYSMARKER_COMPUTER:
+      case SYSMARKER_LOW:
+      case SYSMARKER_HIGH:
+      case SYSMARKER_PLOT:
+         ssys = system_get( xml_get( node ));
+         if (ssys == NULL) {
+            WARN( _("Mission Marker to system '%s' does not exist"), xml_get( node ) );
+            return -1;
+         }
+         return mission_addMarker( misn, id, system_index(ssys), type );
+      case PNTMARKER_HIGH:
+         pnt = planet_get( xml_get( node ));
+         if (pnt == NULL) {
+            WARN( _("Mission Marker to planet '%s' does not exist"), xml_get( node ) );
+            return -1;
+         }
+         return mission_addMarker( misn, id, system_index(ssys), type );
+      default:
+         WARN(_("Unknown marker type."));
+         return -1;
    }
 }
 
@@ -1184,8 +1219,6 @@ static int missions_parseActive( xmlNodePtr parent )
    char *title;
    const char **items;
    int nitems, active;
-   int id, sys, type;
-   StarSystem *ssys;
 
    xmlNodePtr node, cur, nest;
 
@@ -1226,18 +1259,8 @@ static int missions_parseActive( xmlNodePtr parent )
             if (xml_isNode(cur,"markers")) {
                nest = cur->xmlChildrenNode;
                do {
-                  if (xml_isNode(nest,"marker")) {
-                     xmlr_attr_int_def( nest, "id", id, -1 );
-                     xmlr_attr_int_def( nest, "type", type, -1 );
-                     /* Get system. */
-                     ssys = system_get( xml_get( nest ));
-                     if (ssys == NULL) {
-                        WARN( _("System Marker to '%s' does not exist"), xml_get( nest ) );
-                        continue;
-                     }
-                     sys = system_index( ssys );
-                     mission_addMarker( misn, id, sys, type );
-                  }
+                  if (xml_isNode(nest,"marker"))
+                     mission_markerLoad( misn, nest );
                } while (xml_nextNode(nest));
             }
 
