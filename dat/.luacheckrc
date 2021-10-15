@@ -138,7 +138,7 @@ stds.GUI.globals = {
    "update_system",
    "update_target",
 }
-stds.Misn.globals={"accept", "create"}
+stds.Misn.globals={"abort", "accept", "create"}
 stds.Music.globals={"choose"}
 stds.PilotOutfit.globals={
    "cleanup",
