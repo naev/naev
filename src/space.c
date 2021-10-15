@@ -3814,10 +3814,11 @@ static int space_addMarkerSystem( int sysid, MissionMarkerType type )
 
 static int space_addMarkerPlanet( int pntid, MissionMarkerType type )
 {
-   (void) type; /* Unhandled for now. */
    const char *sys;
    MissionMarkerType stype;
    Planet *pnt = planet_getIndex( pntid );
+   if (pnt==NULL)
+      return -1;
 
    /* Mark planet. */
    pnt->markers++;
