@@ -171,10 +171,10 @@ function board()
       stage = 2
 
       misn.markerRm(marker)
-      markerA = misn.markerAdd(artifactsysA, "low")
-      markerB = misn.markerAdd(artifactsysB, "low")
-      markerC = misn.markerAdd(artifactsysC, "low")
-      flintmarker = misn.markerAdd(flintsys, "high")
+      markerA = misn.markerAdd(artifactplanetA, "low")
+      markerB = misn.markerAdd(artifactplanetB, "low")
+      markerC = misn.markerAdd(artifactplanetC, "low")
+      flintmarker = misn.markerAdd(flintplanet, "high")
 
       hook.land("land")
       player.unboard()

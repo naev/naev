@@ -94,7 +94,7 @@ function create ()
    destplanet = getlandable(destsys) -- pick a landable planet in the destination system
    tk.msg(title[2], string.format(directions[nextstop], destplanet:name(), destsys:name())) -- NPC telling you where to go
    misn.osdCreate(misn_title, {misn_desc[2]:format(destplanet:name(), destsys:name())})
-   misn_marker = misn.markerAdd( destsys, "low" )
+   misn_marker = misn.markerAdd( destplanet, "low" )
 
    -- Force unboard
    player.unboard()
@@ -140,7 +140,7 @@ function land()
          destplanet = getlandable(destsys) -- pick a landable planet in the destination system
          tk.msg(title[2], string.format(directions[nextstop], destplanet:name(), destsys:name())) -- NPC telling you where to go
          misn.osdCreate(misn_title, {misn_desc[2]:format(destplanet:name(), destsys:name())})
-         misn.markerMove( misn_marker, destsys )
+         misn.markerMove( misn_marker, destplanet )
       end
    end
    inspace = false

@@ -159,15 +159,13 @@ function countLaunch ()
    end
 end
 function launchSatellite ()
-
    articles[1][4]=time.get()+time.create(0,3,0)
    news.add(articles)
-
 
    misn_stage = 1
    player.msg( _("Satellite launch successful!") )
    misn.cargoJet( cargo )
    misn.setDesc( string.format( mdesc[2], homeworld:name(), homeworld_sys:name() ) )
    misn.osdCreate(_("Nebula Satellite"), {mdesc[2]:format(homeworld:name(), homeworld_sys:name())})
-   misn.markerMove( misn_marker, homeworld_sys )
+   misn.markerMove( misn_marker, homeworld )
 end

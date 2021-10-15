@@ -174,7 +174,7 @@ function accept ()
    if not tk.yesno( title[1], string.format(text[1], destPlanet:name() )) then
       misn.finish(false)
    else
-         if player.pilot():cargoFree() < 4 then
+      if player.pilot():cargoFree() < 4 then
          tk.msg(title[16], text[16])
          misn.finish(false)
       end
@@ -183,7 +183,7 @@ function accept ()
       misn.setTitle( misn_title)
       misn.setReward( misn_reward)
       misn.setDesc( misn_desc)
-      marker = misn.markerAdd( system.cur(), "low" )
+      marker = misn.markerAdd( destPlanet, "low" )
 
       tk.msg(title[2], string.format(text[2], destPlanet:name()))
       local distance = vec2.dist( planet.pos(srcPlanet), planet.pos(destPlanet) )
@@ -375,9 +375,6 @@ function nerds_land3()
          end
       end
       rmNerdCargo()
-      hook.rm(dhook)
-      hook.rm(lhook)
-      misn.markerRm(marker)
       pir.reputationNormalMission(rnd.rnd(2,3))
       misn.finish(true)
    end

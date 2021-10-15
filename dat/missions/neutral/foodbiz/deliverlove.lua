@@ -91,7 +91,7 @@ function accept ()
 
    osd_desc[1] = osd_desc[1]:format( targetworld:name(), targetworld_sys:name() )
    misn.osdCreate( misn_title, osd_desc )
-   misn.markerAdd( targetworld_sys, "low" )
+   misn.markerAdd( targetworld, "low" )
 
    -- set up hooks
 

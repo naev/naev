@@ -20,10 +20,8 @@ Author: iwaschosen
 Plot: on Zhiru you meet the same girl who received the love letters,her name is Paddy. Asks if you'd be willing to run another delivery and work with Michal on food biz. she says the man is an entrepreneur, and is trying to build a Food business
  on Zeo where he will sell her baked goodies etc. asks if you can take recipes and plans to him on Zeo. Fills you cargo hold with cake which you don’t like. You can sell cake or bring to Michal who will pay a lot of $ for the cake, player doesn’t know that he will get payed for cake he brings.
 --]]
-
 local fmt = require "format"
 local neu = require "common.neutral"
-
 
 -- Dialogue
 title = _("A Tasty Job")
@@ -78,7 +76,7 @@ function accept()
 
    osd_desc[1] = osd_desc[1]:format( targetworld:name(), targetworld_sys:name() )
    misn.osdCreate( title, osd_desc )
-   misn.markerAdd( targetworld_sys, "low" )
+   misn.markerAdd( targetworld, "low" )
 
    --set up hooks
    landhook = hook.land( "land" )

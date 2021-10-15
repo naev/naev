@@ -117,6 +117,7 @@ end
 function land()
    if planet.cur() == destplanet then
       -- Semi-random message.
+      lmisn.sfxMoney()
       vntk.msg( cargo_land_title, cargo_land[rnd.rnd(1, #cargo_land)]:format(_(cargo)) )
       player.pay(reward)
       pir.reputationNormalMission(rnd.rnd(2,3))

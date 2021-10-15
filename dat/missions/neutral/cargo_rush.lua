@@ -169,9 +169,11 @@ function land()
    if planet.cur() == destplanet then
       if intime then
       -- Semi-random message.
+      lmisn.sfxMoney()
       vntk.msg( cargo_land_title, cargo_land[rnd.rnd(1, #cargo_land)]:format(_(cargo)) )
    else
       -- Semi-random message for being late.
+      lmisn.sfxMoney()
       vntk.msg( cargo_land_title, cargo_land_slow[rnd.rnd(1, #cargo_land_slow)]:format(
          _(cargo), fmt.credits(reward / 2), fmt.credits(reward) ) )
       reward = reward / 2

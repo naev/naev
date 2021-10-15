@@ -19,7 +19,6 @@
 This is the "The Runaway" mission as described on the wiki.
 There will be more missions to detail how you are perceived as the kidnapper of "Cynthia"
 --]]
-
 local fmt = require "format"
 local neu = require "common.neutral"
 
@@ -75,7 +74,7 @@ function accept ()
    misn.setReward( string.format( _("%s on delivery."), fmt.credits(reward) ) )
 
    misn.setDesc( string.format( misn_desc, targetworld:name(), targetworld_sys:name() ) )
-   misn.markerAdd( targetworld_sys, "high")
+   misn.markerAdd( targetworld, "high")
 
    tk.msg( title, _([["Thank you. But we must leave now, before anyone sees me."]]) )
 

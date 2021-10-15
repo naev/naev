@@ -204,6 +204,7 @@ function land ()
             txt = pay_s_lux_text[ rnd.rnd( 1, #pay_s_lux_text ) ]
          end
       end
+      lmisn.sfxMoney()
       vntk.msg( ttl, txt )
 
       pir.reputationNormalMission(rnd.rnd(2,3))

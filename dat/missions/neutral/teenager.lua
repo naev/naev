@@ -17,16 +17,13 @@
 </mission>
 --]]
 --[[
---
--- MISSION: The macho teenager
--- DESCRIPTION: A man tells you that his son has taken one of his yachts without permission and
--- is joyriding it with his girlfriend to impress her. Disable the yacht and board it, then take
--- the couple back to the planet (destroying the yacht incurs a penalty)
---
+
+   MISSION: The macho teenager
+   DESCRIPTION: A man tells you that his son has taken one of his yachts without permission and
+   is joyriding it with his girlfriend to impress her. Disable the yacht and board it, then take
+   the couple back to the planet (destroying the yacht incurs a penalty)
+
 --]]
-
--- Localization, choosing a language if Naev is translated for non-english-speaking locales.
-
 local fmt = require "format"
 
 

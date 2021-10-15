@@ -130,7 +130,7 @@ function accept()
    osd_msg[2] = osd_msg[2]:format(sysname2)
    misn.osdCreate(osd_title, osd_msg)
 
-   misn_marker = misn.markerAdd( system.get(sysname1), "low" )
+   misn_marker = misn.markerAdd( planet.get(planetname), "low" )
 
    talked = false
    stopping = false

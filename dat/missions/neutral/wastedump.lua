@@ -55,7 +55,6 @@ osd_msg[1] = _("Land on any garbage collection facility (indicated on your map) 
 -- List of possible waste dump planets.
 dest_planets = { "The Stinker", "Eiroik" }
 
-
 function create ()
    local dist = nil
    local p, sys
@@ -76,7 +75,7 @@ function create ()
    for i, j in ipairs( dest_planets ) do
       local p, sys
       p, sys = planet.get( j )
-      misn.markerAdd( sys, "computer" )
+      misn.markerAdd( p, "computer" )
    end
 
    -- Set mission details
@@ -115,7 +114,7 @@ function land ()
    landed = true
 
    for i, j in ipairs( dest_planets ) do
-      if planet.get( j ) == planet.cur() then
+      if planet.get(j) == planet.cur() then
          local txt = finish_text[ rnd.rnd( 1, #finish_text ) ]
          vntk.msg( "", txt )
          pir.reputationNormalMission(rnd.rnd(2,3))

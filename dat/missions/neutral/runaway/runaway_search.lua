@@ -71,10 +71,9 @@ function accept ()
    misn.setReward( string.format( _("%s on delivery."), fmt.credits(reward) ) )
 
    misn.setDesc( string.format( misn_desc, targetworld:name(), targetworld_sys:name() ) )
-   runawayMarker = misn.markerAdd(system.get("Dohriabi"), "low")
+   runawayMarker = misn.markerAdd( targetworld, "low" )
 
    tk.msg( title, _([[Looking at the picture, you see that the locket matches the one that Cynthia wore, so you hand it to her father. "I believe that this was hers." Stunned, the man hands you a list of planets that they wanted to look for her on.]]) )
-
 
    hook.land("land")
 end
@@ -90,7 +89,7 @@ function land ()
       targetworld = planet.get("Nova Shakar")
       tk.msg(title, _("After thoroughly searching the spaceport, you decide that she wasn't there."))
       misn.osdActive(2)
-      misn.markerMove(runawayMarker, system.get("Shakar"))
+      misn.markerMove(runawayMarker, targetworld)
 
    --If we land on Nova Shakar, display message, reset target and carry on.
    elseif planet.cur() == planet.get("Nova Shakar") then
@@ -106,7 +105,7 @@ function land ()
       misn.osdCreate(title,osd_text)
       misn.osdActive(3)
 
-      misn.markerMove(runawayMarker, system.get("Cygnus"))
+      misn.markerMove(runawayMarker, targetworld)
 
    --If we land on Torloth, change OSD, display message, reset target and carry on.
    elseif planet.cur() == planet.get("Torloth") then
@@ -127,11 +126,10 @@ function land ()
       misn.osdCreate(title,osd_text)
       misn.osdActive(4)
 
-      misn.markerMove(runawayMarker, system.get("Goddard"))
+      misn.markerMove(runawayMarker, targetworld)
 
    --If we land on Zhiru to finish the mission, clean up, reward, and leave.
    elseif planet.cur() == planet.get("Zhiru") then
-      misn.markerRm(runawayMarker)
 
       --Talk to the father and get the reward
       if misn.osdGetActive() == osd4 then

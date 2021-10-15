@@ -83,7 +83,7 @@ function accept ()
         misn.setReward(_("Fair monetary compensation"))
         OSD[1] = OSD[1]:format(destplanet:name(), destsys:name())
         misn.osdCreate(_("The old woman"), OSD)
-        misn.markerAdd(destsys, "high")
+        misn.markerAdd(destplanet, "high")
 
         dist_total = cargo_calculateDistance(system.cur(), planet.cur():pos(), destsys, destplanet)
         complaint = 0

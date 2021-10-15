@@ -99,7 +99,7 @@ function accept ()
    else
       misn.accept()
 
-      landmarker = misn.markerAdd( cluesys, "low" )
+      landmarker = misn.markerAdd( clueplanet, "low" )
 
       -- mission details
       misn.setTitle( misn_title )
@@ -129,7 +129,7 @@ function land ()
 
          -- next planet
          clueplanet, cluesys = getclueplanet(1, 3)
-         misn.markerMove( landmarker, cluesys )
+         misn.markerMove( landmarker, clueplanet )
          prevPlanets[#prevPlanets+1] = clueplanet
 
          tk.msg( _("Clue"), _([[You walk into the bar and approach the bartender. You describe the drink, but the bartender doesn't seem to know what you're talking about. There is another bartender that they think may be able to help you though, at %s in the %s system.]]):format(
@@ -143,7 +143,7 @@ function land ()
 
             -- next planet
             clueplanet, cluesys = getclueplanet(1, 5)
-            misn.markerMove( landmarker, cluesys )
+            misn.markerMove( landmarker, clueplanet )
             prevPlanets[#prevPlanets+1] = clueplanet
 
             tk.msg( _("A bit more info..."), moreinfotxt[fintendergen]:format(
@@ -155,7 +155,7 @@ function land ()
 
                -- next planet
                clueplanet, cluesys = getclueplanet(1, 5)
-               misn.markerMove( landmarker, cluesys )
+               misn.markerMove( landmarker, clueplanet )
                prevPlanets[#prevPlanets+1] = clueplanet
 
                tk.msg( _("Is this it?"), _([[You walk into the bar fully confident that this is the bar. You walk up to the bartender and ask for a Swamp Bombing. "A wha???" Guess this isn't the right bar. You get another possible clue, %s in the %s system, and head on your way.]]):format(
@@ -166,11 +166,12 @@ function land ()
 
                tk.msg( _("This is it!"), worktxt[fintendergen] )
 
-               misn.markerMove(landmarker, startsys)
+               misn.markerMove(landmarker, startplanet)
             end
          end
       end
    elseif hasDrink and planet.cur() == startplanet then
+      lmisn.sfxVictory()
       tk.msg( _("Delivery"), _([["Ahh! I was just thinking how much I wanted one of those drinks! I'm so glad that you managed to find it. You sure seemed to take your time though." You give him his drink and tell him that it wasn't easy, and how many systems you had to go through. "Hmm. That is quite a few systems. No reason for you to be this late though." He takes a sip from his drink. "Ahh! That is good though. I suppose you'll be wanting to get paid for your troubles. You did go through a lot of trouble. Then again, you did take quite a long time. I suppose %s should be appropriate."
     Considering the amount of effort that you went through, you feel almost cheated. You don't feel like arguing with the snobby aristocrat though, so you just leave him to his drink without another word. It's probably the most that anyone's ever paid for a drink like that anyway.
     When you get back to your ship you realize you have a drink left over. It might look good like an ornament?]]):format( fmt.credits(payment) ) )
