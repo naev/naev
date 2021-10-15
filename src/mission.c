@@ -477,12 +477,31 @@ const StarSystem* mission_sysComputerMark( const Mission* misn )
    /* Set all the markers. */
    for (int i=0; i<array_size(misn->markers); i++) {
       StarSystem *sys;
-      MissionMarker *m = &misn->markers[i];;
+      Planet *pnt;
+      const char *sysname;
+      MissionMarker *m = &misn->markers[i];
 
-      if (m->type!=SYSMARKER_COMPUTER && m->type!=SYSMARKER_LOW && m->type!=SYSMARKER_HIGH && m->type!=SYSMARKER_PLOT)
-         continue;
+      switch (m->type) {
+         case SYSMARKER_COMPUTER:
+         case SYSMARKER_LOW:
+         case SYSMARKER_HIGH:
+         case SYSMARKER_PLOT:
+            sys = system_getIndex( m->objid );
+            break;
+         case PNTMARKER_COMPUTER:
+         case PNTMARKER_LOW:
+         case PNTMARKER_HIGH:
+         case PNTMARKER_PLOT:
+            pnt = planet_getIndex( m->objid );
+            sysname = planet_getSystem( pnt->name );
+            if (sysname==NULL) {
+               WARN(_("Marked planet '%s' is not in any system!"), pnt->name);
+               continue;
+            }
+            sys = system_get( sysname );
+            break;
+      }
 
-      sys = system_getIndex( misn->markers[i].objid );
       sys_setFlag( sys, SYSTEM_CMARKED );
 
       if (firstsys==NULL)
@@ -501,12 +520,33 @@ const StarSystem* mission_getSystemMarker( const Mission* misn )
 {
    /* Set all the markers. */
    for (int i=0; i<array_size(misn->markers); i++) {
+      StarSystem *sys;
+      Planet *pnt;
+      const char *sysname;
       MissionMarker *m = &misn->markers[i];;
 
-      if (m->type!=SYSMARKER_COMPUTER && m->type!=SYSMARKER_LOW && m->type!=SYSMARKER_HIGH && m->type!=SYSMARKER_PLOT)
-         continue;
+      switch (m->type) {
+         case SYSMARKER_COMPUTER:
+         case SYSMARKER_LOW:
+         case SYSMARKER_HIGH:
+         case SYSMARKER_PLOT:
+            sys = system_getIndex( m->objid );
+            break;
+         case PNTMARKER_COMPUTER:
+         case PNTMARKER_LOW:
+         case PNTMARKER_HIGH:
+         case PNTMARKER_PLOT:
+            pnt = planet_getIndex( m->objid );
+            sysname = planet_getSystem( pnt->name );
+            if (sysname==NULL) {
+               WARN(_("Marked planet '%s' is not in any system!"), pnt->name);
+               continue;
+            }
+            sys = system_get( sysname );
+            break;
+      }
 
-      return system_getIndex( misn->markers[i].objid );
+      return sys;
    }
    return NULL;
 }

@@ -92,7 +92,7 @@ function create()
 
    misn.setTitle( _("Shipment to %s in %s (%s)"):format(
          destplanet:name(), destsys:name(), fmt.tonnes(amount) ) )
-   misn.markerAdd(destsys, "computer")
+   misn.markerAdd(destplanet, "computer")
    cargo_setDesc( misn_desc[tier]:format( destplanet:name(), destsys:name() ), cargo, amount, destplanet, nil, piracyrisk )
    misn.setReward( fmt.credits(reward) )
 end

@@ -70,7 +70,7 @@ function create ()
    misn.osdCreate( _("Derelict Rescue"), {
       fmt.f(_("Take the rescued crew to {planetname} in {sysname}"), {planetname=destpnt:name(), sysname=destsys:name()})
    } )
-   misn.markerAdd( destsys, "low" )
+   misn.markerAdd( destpnt, "low" )
 
    hook.land("land")
 end

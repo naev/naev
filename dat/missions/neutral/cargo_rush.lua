@@ -120,7 +120,7 @@ function create()
 
    misn.setTitle( misn_title[tier]:format(
       destplanet:name(), destsys:name(), fmt.tonnes(amount) ) )
-   misn.markerAdd(destsys, "computer")
+   misn.markerAdd(destplanet, "computer")
    cargo_setDesc( misn_desc[tier]:format( destplanet:name(), destsys:name() ), cargo, amount, destplanet, timelimit, piracyrisk );
    misn.setReward( fmt.credits(reward) )
 end
