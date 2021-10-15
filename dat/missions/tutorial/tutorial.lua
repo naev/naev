@@ -20,16 +20,14 @@ local tut = require "common.tutorial"
 local vn = require "vn"
 local vntk = require "vntk"
 
-local tp_taunt_healty, tp_taunt_weak
+local missys = system.get( "Delta Polaris" )
+local destsys = system.get( "Jade" )
+local start_planet = planet.get( "Bolero" )
+local start_planet_r = 200
+local dest_planet = planet.get( "Benteen" )
+local dest_planet_r = 200
 
 function create ()
-   missys = system.get( "Delta Polaris" )
-   destsys = system.get( "Jade" )
-   start_planet = planet.get( "Bolero" )
-   start_planet_r = 200
-   dest_planet = planet.get( "Benteen" )
-   dest_planet_r = 200
-
    if not misn.claim( missys ) then
       print(fmt.f(_( "Warning: 'Tutorial' mission was unable to claim system {sysname}!"), {sysname=missys:name()} ) )
       misn.finish( true ) -- We mark as clear anyway, but this is not good
@@ -377,8 +375,9 @@ function spawn_captain_tp ()
 
    captainTP = p
    hook.timer(7, "taunt")
+end
 
-   tp_taunt_healthy = {
+local tp_taunt_healthy = {
    _("Bring on the pain!"),
    _("You're no match for the fearsome T. Practice!"),
    _("I've been shot by ships ten times your size!"),
@@ -423,8 +422,8 @@ function spawn_captain_tp ()
    _("Shoot me!"),
    _("Okay, listen. I'm doing this for attention."),
    _("But if you don't shoot me, I'll tell the galaxy your terrible secret."),
-   }
-   tp_taunt_weak = {
+}
+local tp_taunt_weak = {
    _("Okay, that's about enough."),
    _("You can stop now."),
    _("I was wrong about you."),
@@ -446,8 +445,7 @@ function spawn_captain_tp ()
    _("Here I go, filling my cabin up with tears."),
    _("U- oh it a-pears my te-rs hav- da--age t-e co-mand cons-le."),
    _("I a- T. Pr-ct---! Y-- w--l fe-r m- na-e --- Bzzzt!"),
-   }
-end
+}
 
 function taunt ()
    if not captainTP or not captainTP:exists() then
