@@ -77,7 +77,7 @@ function create ()
    vn.jump("opts")
 
    vn.label("tutorials")
-   sai(_([["What do you want to learn about?"]]))
+   sai(fmt.f(_([["Hello {playername}. What do you want to learn about?"]]),{playername=player.name()}))
    vn.menu{
       {_("Weapon Sets"), "tut_weaponsets"},
       {_("Electronic Warfare"), "tut_ewarfare"},
