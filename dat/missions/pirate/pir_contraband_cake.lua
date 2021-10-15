@@ -145,7 +145,7 @@ They go to the restroom and come back holding a nondescript brown box that seems
    misn.setTitle(_("Deliver Cake"))
    misn.setReward( fmt.credits(reward) )
    misn.setDesc( string.format(_("Deliver a cake to %s in the %s system. Apparently it has a special frosting and will be damaged if you are scanned. Use stealth to avoid getting scanned."), destplanet, destsys ) )
-   misn.markerAdd(destsys)
+   misn.markerAdd(destplanet)
 
    hook.land( "land" ) -- only hook after accepting
 end

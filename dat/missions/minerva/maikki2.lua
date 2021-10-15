@@ -113,9 +113,9 @@ function accept ()
    end
 
    -- Set up mission stuff
-   markerhint1 = misn.markerAdd( system.get(hintsys[1]), "low")
-   markerhint2 = misn.markerAdd( system.get(hintsys[2]), "low")
-   markerhint3 = misn.markerAdd( system.get(hintsys[3]), "low")
+   markerhint1 = misn.markerAdd( planet.get(hintpnt[1]), "low")
+   markerhint2 = misn.markerAdd( planet.get(hintpnt[2]), "low")
+   markerhint3 = misn.markerAdd( planet.get(hintpnt[3]), "low")
    hintosd()
    hook.land("generate_npc")
    hook.load("generate_npc")
@@ -340,7 +340,7 @@ end
 function visited ()
    if misn_state==0 and visitedhints()==3 then
       misn_state = 1
-      markerhint4 = misn.markerAdd( system.get(hintsys[4]), "low" )
+      markerhint4 = misn.markerAdd( planet.get(hintpnt[4]), "low" )
       minerva.log.maikki(_("You met the three researchers that Maikki told you about and found out a lead about another researcher.") )
    end
    hintosd()
@@ -866,7 +866,7 @@ His voice gets softer and softer as he keeps on mumbling.]]))
       misn_state = 6
       misn.npcRm( npc_ecc )
       misn.osdCreate( misn_title, {_("Report back to Maikki in the Limbo system")} )
-      misn.markerAdd( system.get("Limbo"), "low")
+      misn.markerAdd( planet.get("Minerva Station"), "low")
       misn.markerRm( marker_ecc )
       minerva.log.maikki(_("You learned that Dr. Strangelove saved what appears to be Kex and another individual from a wreck in the nebula. Kex appears to have run away and is likely held by thugs at Minerva station." ) )
    end )

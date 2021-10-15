@@ -81,7 +81,7 @@ function accept ()
    osd = misn.osdCreate( _("Minerva Moles"),
          {_("Plant a listening device in a VIP room.") } )
 
-   misn.markerAdd( system.cur() )
+   misn.markerAdd( planet.get("Minerva Station") )
 
    minerva.log.pirate(_("You accepted another job from the shady individual to uncover moles at Minerva Station.") )
 

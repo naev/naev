@@ -168,7 +168,7 @@ function create()
          _("#rPIRACY:#0 Smuggle %s of %s"), fmt.tonnes(amount),
          _(cargo) ) )
    end
-   misn.markerAdd(destsys, "computer")
+   misn.markerAdd(destplanet, "computer")
    if pir.factionIsPirate( planet.cur():faction() ) then
       cargo_setDesc( misn_desc:format( destplanet:name(), destsys:name(), faction_text ), cargo, amount, destplanet, timelimit )
    else

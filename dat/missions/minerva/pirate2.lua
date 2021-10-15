@@ -87,7 +87,7 @@ They smiles at you.]]))
           _("Go back to Minerva Station") } )
    misn.osdActive(1)
 
-   misn.markerAdd( system.cur() )
+   misnmarker = misn.markerAdd( system.cur() )
 
    minerva.log.pirate(_("You accept another job from the shady individual to destroy some Za'lek scout drones around Minerva Station with Dvaered weapons only to make it seem like the Dvaered are targeting Za'lek drones.") )
 
@@ -209,6 +209,7 @@ function drone_death ()
       misn_state = 1
       misn.osdActive(2)
       pilot.toggleSpawn(true)
+      misn.markerMove( misnmarker, planet.get("Minerva Station") )
    end
 end
 function drone_attacked( p )

@@ -100,7 +100,7 @@ They beam a smile at you.]]),_(runawaysys)))
           _("Go back to Minerva Station") } )
    misn.osdActive(1)
 
-   misn.markerAdd( system.cur() )
+   misnmarker = misn.markerAdd( system.cur() )
 
    hook.enter("enter")
    hook.load("land")
@@ -142,6 +142,7 @@ function enter ()
       if system.cur()==system.get(runawaysys) then
          misn_state=4
          misn.osdActive(4)
+         misn.markerMove( misnmarker, planet.get("Minerva Station") )
       else
          player.msg(string.format(_("#rMISSION FAILED! You were supposed to jump to the %s system!"),_(runawaysys)))
          misn.finish(false)

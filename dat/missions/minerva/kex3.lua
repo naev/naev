@@ -81,7 +81,7 @@ function accept ()
    misn.osdCreate( misn_title,
       { string.format(_("Go to %s in the %s system to find Major Malik"), _(targetplanet), _(targetsys) ),
       _("Return to Kex at Minerva Station") } )
-   misn_marker = misn.markerAdd( system.get(targetsys) )
+   misn_marker = misn.markerAdd( planet.get(targetplanet) )
 
    hook.land("generate_npc")
    hook.load("generate_npc")
@@ -106,7 +106,7 @@ function generate_npc ()
 
       -- Advance the state
       misn_state = 1
-      misn.markerMove( misn_marker, system.get(lastsys) )
+      misn.markerMove( misn_marker, planet.get(lastplanet) )
       misn.osdCreate( misn_title,
          { string.format(_("Look for Major Malik at %s in the %s system"), _(lastplanet), _(lastsys) ),
          _("Return to Kex at Minerva Station") } )
@@ -130,7 +130,7 @@ function generate_npc ()
 
       misn_state = 5 -- We're done here, go back to kex:)
       misn.osdActive(2)
-      misn.markerMove( misn_marker, system.get("Limbo") )
+      misn.markerMove( misn_marker, planet.get("Minerva Station") )
    end
 end
 

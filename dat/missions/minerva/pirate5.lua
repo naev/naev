@@ -455,7 +455,7 @@ function drone_control_update ()
    end
 end
 function hacking_center_dead ()
-   misn.markerMove( mrk_mainsys, system.get("Limbo") )
+   misn.markerMove( mrk_mainsys, planet.get("Minerva Station") )
    misn.osdActive(3)
    misn_state = 3
    player.msg("#gThe hacking center has been destroyed!#0")

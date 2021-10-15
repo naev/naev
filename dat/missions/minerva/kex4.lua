@@ -76,7 +76,7 @@ function accept ()
    misn.osdCreate( misn_title,
       { string.format(_("Go to %s in the %s system to find Jie de Luca"), _(targetplanet), _(targetsys) ),
       _("Return to Kex at Minerva Station") } )
-   misn_marker = misn.markerAdd( system.get(targetsys) )
+   misn_marker = misn.markerAdd( planet.get(targetplanet) )
 
    hook.land("generate_npc")
    hook.load("load_game")
@@ -419,7 +419,7 @@ function thug_heartbeat ()
 end
 
 function jie_death ()
-   misn.markerMove( misn_marker, system.get("Limbo") )
+   misn.markerMove( misn_marker, system.get("Minerva Station") )
    misn.osdActive(2)
    misn_state = 2
 

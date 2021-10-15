@@ -70,7 +70,7 @@ function accept ()
       { string.format(_("Go to %s in the %s system and hack the main database"), _(targetplanet), _(targetsys) ),
       _("Return to Kex at Minerva Station") } )
 
-   misn_marker = misn.markerAdd( system.get(targetsys) )
+   misn_marker = misn.markerAdd( system.get(targetplanet) )
 
    hook.land("generate_npc")
    hook.load("generate_npc")
@@ -100,7 +100,7 @@ function generate_npc ()
       vn.run()
 
       -- Advance mission and get out of there
-      misn.markerMove( misn_marker, system.get("Limbo") )
+      misn.markerMove( misn_marker, planet.get("Minerva Station") )
       misn_state = 1
       misn.osdActive(2)
       player.takeoff()

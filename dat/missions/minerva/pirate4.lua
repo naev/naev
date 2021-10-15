@@ -68,7 +68,7 @@ function accept ()
       _("Find out who the mole is"),
    } )
 
-   misn.markerAdd( system.cur() )
+   sysmarker = misn.markerAdd( planet.get("Minerva Station") )
 
    minerva.log.pirate(_("You accepted another job from the shady individual deal with a mole at Minerva Station.") )
 
@@ -174,7 +174,7 @@ They make a cutting gesture from their belly up to their neck.
    osd = misn.osdCreate( misn_title, {
       string.format(_("Take the mole to the interrogation facility at %s"), mainsys),
    } )
-   misn.markerAdd( system.get(mainsys) )
+   misn.markerMove( misnmarker, system.get(mainsys) )
    misn.npcRm( npc_pir )
 end
 
