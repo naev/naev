@@ -45,8 +45,9 @@ function create ()
       table.insert(msg, _("Do you love your Emperor as much as he loves you?"))
       table.insert(msg, _("You're quick and dependable? The Emperor needs you in the Armada!"))
       table.insert(msg, _("Made money hauling cargo? Remember to file your EW-59831 every cycle or face the consequences."))
-      table.insert(msg, _("Need help with your EW-59831? Try Bob's Bureaucratic Bazaar at Semper!"))
+      table.insert(msg, _("Need help with your EW-59831 form? Try Bob's Bureaucratic Bazaar at Semper!"))
       table.insert(msg, _("Not filing your EE-91726 for unauthorized pet iguanas is a crime. Report to your Empire Animal Bureau now."))
+      table.insert(msg, _("Keep your documents properly filed. Unicorp Filing Cabinets."))
    end
 
    local fdv = fpres["Dvaered"] or 0
@@ -56,6 +57,36 @@ function create ()
       table.insert(msg, _("Bet on Totoran and win incredible sums thanks to the Crimson Gauntlet!"))
       table.insert(msg, _("Mace rockets lacking shine? Try Lady Killington's premium rocket polish!"))
       table.insert(msg, _("Other warlords not letting you enjoy bloodshed? Join Lord Easytrigger's battalion today!"))
+      local badwords = {
+         _("Butthead"),
+         _("Nincompoop"),
+         _("Dunderhead"),
+         _("Ass"),
+         _("Fool"),
+         _("Coward"),
+      }
+      -- TODO probably merge this with 'common.frontier_war' into a separate module
+      local lords = { _("Lord Jim"),
+         _("Lady Bitterfly"),
+         _("Lady Pointblank"),
+         _("Lord Chainsaw"),
+         _("Lord Painbishop"),
+         _("Lord Kriegsreich Hundertfeuer"),
+         _("Lady Blackswan"),
+         _("Lady Killington"),
+         _("Lord Richthofen"),
+         _("Lady Dewinter"),
+         _("Lord Easytrigger"),
+         _("Lady Sainte-Beuverie"),
+         _("Lord Louverture"),
+         _("Lord Abdelkiller"),
+         _("Lady Proserpina") }
+      local r = rnd.rnd(1,#lords)
+      local butthead = lords[r]
+      table.remove( lords r )
+      local sponser = lords[ rnd.rnd(1,#lords) ]
+      table.insert(msg, fmt.f(_("{butthead} is a {badword}. Ad sponsered by {sponser}."),
+            {butthead=butthead, badword=badwords[rnd.rnd(1,#badwords)], sponser=sponser}))
    end
 
    local fsr = fpres["Soromid"] or 0
@@ -65,6 +96,10 @@ function create ()
       table.insert(msg, _("Endogenous DNA damage hampering your Gene Drive? Drop by your local Chromosomal Rearrangement Laboratory for a check-up."))
       table.insert(msg, _("Visit Bohr Laboratory for all your epistatic mutation woes. 10 locations and counting!"))
       table.insert(msg, _("Worried about your bio-ship adenosine triphosphate output? Leave it to ATP Specialists!"))
+   end
+
+   if fsr > 1 and fem > 1 then
+      table.insert(msg, _("Remember to fill in your EX-29528-B form if returning to the Empire from Soromid territory."))
    end
 
    local fzl = fpres["Za'lek"] or 0
@@ -78,7 +113,8 @@ function create ()
       table.insert(msg, _("Want to solve a large-dimensional stochastic PDE? The LMKSTD method is what you need!"))
       table.insert(msg, _("Love non-convex minimization? Join Ruadan's Computation Science Lab!"))
       table.insert(msg, _("Keeping your drones in top shape. Prof. Imarisha's Robotic Laboratory."))
-      table.insert(msg, _("Interested in Genetic Lifeforms research? Apply to Interstice Science!")) -- Used as a synonym for Aperture Science from Portal
+      table.insert(msg, _("Interested in Genetic Lifeforms research? Apply to Interstice Science!")) -- Reference to Aperture Science (synonyms) from Portal
+      table.insert(msg, _("Want to learn about Anti-Mass Spectometry? Join Ebony Plateau today!")) -- Reference to Black Mesa (synonyms) from Half-Life
    end
 
    local fsi = fpres["Sirius"] or 0
