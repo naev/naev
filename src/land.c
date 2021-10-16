@@ -70,6 +70,7 @@ unsigned int land_generated = 0;
  */
 int landed = 0; /**< Is player landed. */
 int land_loaded = 0; /**< Finished loading? */
+int land_takeoff = 0; /**< Takeoff. */
 unsigned int land_wid = 0; /**< Land window ID, also used in gui.c */
 static int land_regen = 0; /**< Whether or not regenning. */
 static int land_windowsMap[LAND_NUMWINDOWS]; /**< Mapping of windows. */

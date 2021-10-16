@@ -4,7 +4,6 @@
 #pragma once
 
 #include "land.h"
-#include "land_takeoff.h"
 
 /*
  * Helper functions.

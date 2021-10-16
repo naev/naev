@@ -27,7 +27,6 @@
 #include "info.h"
 #include "land.h"
 #include "land_outfits.h"
-#include "land_takeoff.h"
 #include "log.h"
 #include "map.h"
 #include "mission.h"

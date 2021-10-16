@@ -23,7 +23,6 @@
 #include "array.h"
 #include "dialogue.h"
 #include "hook.h"
-#include "land_takeoff.h"
 #include "log.h"
 #include "map_find.h"
 #include "ndata.h"

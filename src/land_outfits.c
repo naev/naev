@@ -23,7 +23,6 @@
 #include "dialogue.h"
 #include "equipment.h"
 #include "hook.h"
-#include "land_takeoff.h"
 #include "log.h"
 #include "map.h"
 #include "map_find.h"

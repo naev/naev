@@ -43,6 +43,7 @@ enum {
  */
 extern int landed;
 extern Planet* land_planet;
+extern int land_takeoff;
 
 /* Tracking for which tabs have been generated. */
 #define land_tabGenerate(w)       (land_generated |= (1 << w)) /**< Mark tab generated. */

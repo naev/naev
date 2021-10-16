@@ -235,7 +235,6 @@ headers = files(
    'land.h',
    'land_outfits.h',
    'land_shipyard.h',
-   'land_takeoff.h',
    'land_trade.h',
    'load.h',
    'log.h',
