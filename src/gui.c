@@ -1574,7 +1574,7 @@ void gui_renderJumpPoint( int ind, RadarShape shape, double w, double h, double 
 
    /* See if far side is marked. */
    s = jp->target;
-   if (sys_isKnown(s) && sys_isMarked(s)) {
+   if (sys_isMarked(s)) {
       glColour highlighted = cRadar_hilight;
       highlighted.a = 0.3;
       glUseProgram( shaders.hilight.program );
