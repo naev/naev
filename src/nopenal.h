@@ -1,10 +1,7 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
-
-#ifndef NOPENAL_H
-#  define NOPENAL_H
+#pragma once
 
 /** @cond */
 #include "AL/alc.h"
@@ -114,5 +111,3 @@ void al_checkHandleError( const char *func, int line );
 #else /* DEBUGGING */
 #define al_checkErr() /**< Hack to ignore errors when debugging. */
 #endif /* DEBUGGING */
-
-#endif /* NOPENAL_H */

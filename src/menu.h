@@ -1,12 +1,7 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
-
-
-#ifndef MENU_H
-#  define MENU_H
-
+#pragma once
 
 /*
  * Menu status.
@@ -20,7 +15,6 @@
 #define MENU_EDITORS    (1<<6) /**< Editors menu. */
 #define menu_isOpen(f)  (menu_open & (f)) /**< Checks if a certain menu is opened. */
 extern int menu_open; /**< Used internally by menu_isOpen() */
-
 
 /*
  * Menu opening routines.
@@ -36,10 +30,7 @@ int menu_askQuit (void);
  */
 void menu_main_close (void);
 
-
 /*
  * Misc.
  */
 void menu_main_resize (void);
-
-#endif /* MENU_H */

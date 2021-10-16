@@ -1,11 +1,7 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
-
-
-#ifndef NEWS_H
-#  define NEWS_H
+#pragma once
 
 #include "nlua.h"
 #include "ntime.h"
@@ -28,7 +24,6 @@ typedef struct news_s {
    struct news_s* next; /**< pointer to next article in the list */
 } news_t;
 
-
 /*
  * Create/destroy
  */
@@ -48,8 +43,3 @@ news_t* new_article( char* title, char* content, const char* faction, ntime_t da
       ntime_t date_to_rm );
 int free_article(int id);
 news_t* news_get(int id);
-
-
-
-
-#endif /* NEWS_H */

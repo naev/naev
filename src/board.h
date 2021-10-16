@@ -1,8 +1,7 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-#ifndef BOARD_H
-#  define BOARD_H
+#pragma once
 
 #include "pilot.h"
 
@@ -12,5 +11,3 @@ void board_unboard (void);
 int pilot_board( Pilot *p );
 void pilot_boardComplete( Pilot *p );
 void board_exit( unsigned int wdw, const char* str );
-
-#endif

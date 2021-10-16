@@ -1,12 +1,7 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
-
-
-#ifndef OUTFIT_H
-#  define OUTFIT_H
-
+#pragma once
 
 #include "collision.h"
 #include "commodity.h"
@@ -15,7 +10,6 @@
 #include "sound.h"
 #include "spfx.h"
 #include "nlua.h"
-
 
 /*
  * properties
@@ -40,12 +34,10 @@
 /** Color-coded abbreviation for "Core [outfit]", short enough to use as a tab/column title. */
 #define OUTFIT_LABEL_CORE              N_("#oCore")
 
-
 /*
  * Needed because some outfittypes call other outfits.
  */
 struct Outfit_;
-
 
 /**
  * @brief Different types of existing outfits.
@@ -74,7 +66,6 @@ typedef enum OutfitType_ {
    OUTFIT_TYPE_SENTINEL /**< indicates last type */
 } OutfitType;
 
-
 /**
  * @brief Outfit slot types.
  */
@@ -86,7 +77,6 @@ typedef enum OutfitSlotType_ {
    OUTFIT_SLOT_WEAPON /**< High energy slot. */
 } OutfitSlotType;
 
-
 /**
  * @brief Outfit slot sizes.
  */
@@ -96,7 +86,6 @@ typedef enum OutfitSlotSize_ {
    OUTFIT_SLOT_SIZE_MEDIUM, /**< Medium slot size. */
    OUTFIT_SLOT_SIZE_HEAVY /**< Heavy slot size. */
 } OutfitSlotSize;
-
 
 /**
  * @brief Ammo AI types.
@@ -117,7 +106,6 @@ typedef struct OutfitSlot_ {
    OutfitSlotSize size; /**< Size of the outfit. */
 } OutfitSlot;
 
-
 /**
  * @brief Core damage that an outfit does.
  */
@@ -127,7 +115,6 @@ typedef struct Damage_ {
    double damage;       /**< Amount of damage, this counts towards killing the ship. */
    double disable;      /**< Amount of disable damage, this counts towards disabling the ship. */
 } Damage;
-
 
 /**
  * @brief Represents the particular properties of a bolt weapon.
@@ -467,5 +454,3 @@ int outfit_fitsSlotType( const Outfit* o, const OutfitSlot* s );
 void outfit_freeSlot( OutfitSlot* s );
 glTexture* rarity_texture( int rarity );
 int outfit_checkIllegal( const Outfit* o, int fct );
-
-#endif /* OUTFIT_H */

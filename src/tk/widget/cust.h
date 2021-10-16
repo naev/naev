@@ -1,17 +1,11 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
-
-
-#ifndef WGT_CUST_H
-#  define WGT_CUST_H
-
+#pragma once
 
 /** @cond */
 #include "SDL.h"
 /** @endcond */
-
 
 /**
  * @brief The custom widget data.
@@ -25,7 +19,6 @@ typedef struct WidgetCustData_ {
    void *userdata;
 } WidgetCustData;
 
-
 /* Required functions. */
 void window_addCust( unsigned int wid,
       const int x, const int y, /* position */
@@ -35,12 +28,7 @@ void window_addCust( unsigned int wid,
       int (*mouse) (unsigned int wid, SDL_Event* event, double x, double y, double w, double h, double rx, double ry, void* data),
       void *data );
 
-
 void window_custSetClipping( unsigned int wid, const char *name, int clip );
 void window_custSetOverlay( unsigned int wid, const char *name,
       void (*renderOverlay) (double bx, double by, double bw, double bh, void* data) );
 void *window_custGetData( unsigned int wid, const char *name );
-
-
-#endif /* WGT_CUST_H */
-

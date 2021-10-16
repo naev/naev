@@ -1,11 +1,7 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
-
-#ifndef WGT_BUTTON_H
-#  define WGT_BUTTON_H
-
+#pragma once
 
 #include "colour.h"
 
@@ -20,7 +16,6 @@ typedef struct WidgetButtonData_ {
    SDL_Keycode key; /**< Keybinding key. */
    void (*cst_render)( double x, double y, double w, double h, const glColour *c ); /**< Custom render function. */
 } WidgetButtonData;
-
 
 /* Required functions. */
 void window_addButtonKey( unsigned int wid,
@@ -43,6 +38,3 @@ void window_enableButton( unsigned int wid, const char *name );
 void window_buttonCaption( unsigned int wid, const char *name, const char *display );
 void window_buttonCustomRender( unsigned int wid, const char *name, void (*func)( double, double, double, double, const glColour* ) );
 void window_buttonCustomRenderGear( double x, double y, double w, double h, const glColour *c );
-
-
-#endif /* WGT_BUTTON_H */

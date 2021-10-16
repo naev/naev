@@ -1,20 +1,14 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
-
-#ifndef NTIME_H
-#  define NTIME_H
-
+#pragma once
 
 /** @cond */
 #include <stdint.h>
 /** @endcond */
 
-
 #define NT_CYCLE_PERIODS   (5000)      /**< periods in a cycle */
 #define NT_PERIOD_SECONDS   (10000)     /**< seconds in a period */
-
 
 typedef int64_t ntime_t;         /**< Core time type. */
 
@@ -44,6 +38,3 @@ void ntime_incLagged( ntime_t t );
 /* misc */
 void ntime_refresh (void);
 void ntime_allowUpdate( int enable );
-
-
-#endif /* NTIME_H */

@@ -1,22 +1,15 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
-
-#ifndef NLUA_DATA_H
-#  define NLUA_DATA_H
-
+#pragma once
 
 #include "nlua.h"
 
-
 #define DATA_METATABLE      "data" /**< Data metatable identifier. */
-
 
 typedef enum LuaDataType_e {
    LUADATA_NUMBER,
 } LuaDataType_t;
-
 
 /**
  * @brief Wrapper to datas.
@@ -28,7 +21,6 @@ typedef struct LuaData_s {
    LuaDataType_t type; /**< Type of the data. */
 } LuaData_t;
 
-
 /*
  * Library loading
  */
@@ -39,8 +31,3 @@ LuaData_t* lua_todata( lua_State *L, int ind );
 LuaData_t* luaL_checkdata( lua_State *L, int ind );
 LuaData_t* lua_pushdata( lua_State *L, LuaData_t data );
 int lua_isdata( lua_State *L, int ind );
-
-
-#endif /* NLUA_DATA_H */
-
-

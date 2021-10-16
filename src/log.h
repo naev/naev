@@ -1,8 +1,7 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-#ifndef LOG_H
-#  define LOG_H
+#pragma once
 
 /** @cond */
 #include <signal.h>
@@ -35,5 +34,3 @@ PRINTF_FORMAT( 3, 4 ) int logprintf( FILE *stream, int newline, const char *fmt,
 void log_init (void);
 void log_redirect (void);
 void log_clean (void);
-
-#endif /* LOG_H */

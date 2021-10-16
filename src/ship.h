@@ -1,8 +1,7 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-#ifndef SHIP_H
-#  define SHIP_H
+#pragma once
 
 #include "collision.h"
 #include "commodity.h"
@@ -178,5 +177,3 @@ int ship_size( const Ship *s );
  * misc.
  */
 int ship_compareTech( const void *arg1, const void *arg2 );
-
-#endif /* SHIP_H */

@@ -1,12 +1,7 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
-
-
-#ifndef WGT_LIST_H
-#  define WGT_LIST_H
-
+#pragma once
 
 /**
  * @brief The list widget data.
@@ -20,7 +15,6 @@ typedef struct WidgetListData_ {
    void (*onActivate) (unsigned int,const char*); /**< Activate callback - triggered on double-click. */
    int height; /**< Real height. */
 } WidgetListData;
-
 
 /* Required functions. */
 void window_addList( unsigned int wid,
@@ -37,7 +31,3 @@ const char* toolkit_setList( unsigned int wid, const char* name, const char* val
 const char* toolkit_setListPos( unsigned int wid, const char* name, int pos );
 int toolkit_getListOffset( unsigned int wid, const char* name );
 int toolkit_setListOffset( unsigned int wid, const char* name, int off );
-
-
-#endif /* WGT_LIST_H */
-

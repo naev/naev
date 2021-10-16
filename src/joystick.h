@@ -1,12 +1,7 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
-
-
-#ifndef JOYSTICK_H
-#  define JOYSTICK_H
-
+#pragma once
 
 /*
  * gets the joystick index number based on its name
@@ -23,6 +18,3 @@ int joystick_use( int indjoystick );
  */
 int joystick_init (void);
 void joystick_exit (void);
-
-
-#endif /* JOYSTICK_H */

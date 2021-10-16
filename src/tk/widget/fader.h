@@ -1,16 +1,10 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
-
-
-#ifndef WGT_FADER_H
-#  define WGT_FADER_H
-
+#pragma once
 
 #include "colour.h"
 #include "font.h"
-
 
 /**
  * @brief The fader widget data.
@@ -22,7 +16,6 @@ typedef struct WidgetFaderData_{
    void (*fptr) (unsigned int,const char*); /**< Modify callback - triggered on value change. */
    void (*scrolldone) (unsigned int,const char*); /**< Scroll done callback. */
 } WidgetFaderData;
-
 
 /* Required functions. */
 void window_addFader( unsigned int wid,
@@ -42,7 +35,3 @@ void window_faderBounds( unsigned int wid,
 double window_getFaderValue( unsigned int wid, const char* name );
 void window_faderScrollDone( unsigned int wid,
       const char* name, void (*func)(unsigned int,const char*) );
-
-
-#endif /* WGT_FADER_H */
-

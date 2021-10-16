@@ -1,18 +1,12 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
-
-
-#ifndef TECH_H
-#  define TECH_H
-
+#pragma once
 
 #include "commodity.h"
 #include "nxml.h"
 #include "outfit.h"
 #include "ship.h"
-
 
 /*
  * Forward declaration of tech group struct.
@@ -20,13 +14,11 @@
 struct tech_group_s;
 typedef struct tech_group_s tech_group_t;
 
-
 /*
  * Load/free.
  */
 int tech_load (void);
 void tech_free (void);
-
 
 /*
  * Group creation/destruction.
@@ -36,7 +28,6 @@ tech_group_t *tech_groupCreateXML( xmlNodePtr node );
 void tech_groupDestroy( tech_group_t *grp );
 int tech_groupWrite( xmlTextWriterPtr writer, tech_group_t *grp );
 
-
 /*
  * Group addition/removal.
  */
@@ -44,7 +35,6 @@ int tech_addItemTech( tech_group_t *tech, const char *value );
 int tech_rmItemTech( tech_group_t *tech, const char *value );
 int tech_addItem( const char *name, const char *value );
 int tech_rmItem( const char *name, const char *value );
-
 
 /*
  * Get.
@@ -59,6 +49,3 @@ Ship** tech_getShip( const tech_group_t *tech );
 Ship** tech_getShipArray( tech_group_t **tech, int num );
 Commodity** tech_getCommodity( const tech_group_t *tech );
 Commodity** tech_getCommodityArray( tech_group_t **tech, int num );
-
-
-#endif /* TECH_H */

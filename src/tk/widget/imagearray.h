@@ -1,12 +1,7 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
-
-
-#ifndef WGT_IMAGEARRAY_H
-#  define WGT_IMAGEARRAY_H
-
+#pragma once
 
 #include "colour.h"
 #include "font.h"
@@ -23,7 +18,6 @@ typedef struct ImageArrayCell_ {
    glTexture** layers; /**< Layers to be added. */
    int nlayers; /**< Total number of layers. */
 } ImageArrayCell;
-
 
 /**
  * @brief The image array widget data.
@@ -48,7 +42,6 @@ typedef struct WidgetImageArrayData_ {
    void (*accept) (unsigned int, const char*); /**< Accept function pointer (when hitting enter). */
 } WidgetImageArrayData;
 
-
 /**
  * @brief Stores position and offset data for an image array.
  */
@@ -56,7 +49,6 @@ typedef struct iar_data_s {
    int pos;        /**< Position (index) of the selected item. */
    double offset;  /**< Scroll position of the image array. */
 } iar_data_t;
-
 
 /* Required functions. */
 void window_addImageArray( unsigned int wid,
@@ -81,6 +73,3 @@ int toolkit_unsetSelection( unsigned int wid, const char *name );
 void toolkit_setImageArrayAccept( unsigned int wid, const char *name, void (*fptr)(unsigned int,const char*) );
 int toolkit_getImageArrayVisibleElements( unsigned int wid, const char *name );
 int toolkit_simImageArrayVisibleElements( int w, int h, int iw, int ih );
-
-#endif /* WGT_IMAGEARRAY_H */
-

@@ -1,15 +1,10 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
-
-#ifndef EVENT_H
-#  define EVENT_H
-
+#pragma once
 
 #include "claim.h"
 #include "nlua.h"
-
 
 /**
  * @brief Activated event structure.
@@ -22,7 +17,6 @@ typedef struct Event_s {
    Claim_t *claims; /**< Event claims. */
 } Event_t;
 
-
 /**
  * @brief Possibly event triggers.
  */
@@ -34,7 +28,6 @@ typedef enum EventTrigger_s {
    EVENT_TRIGGER_LOAD   /**< Loading or starting a new save game. */
 } EventTrigger_t;
 
-
 /*
  * Loading/exiting.
  */
@@ -43,13 +36,11 @@ void events_exit (void);
 void events_cleanup (void);
 void event_checkValidity (void);
 
-
 /*
  * Triggering.
  */
 int event_start( const char *name, unsigned int *id );
 void events_trigger( EventTrigger_t trigger );
-
 
 /*
  * Handling.
@@ -60,13 +51,11 @@ int event_save( unsigned int eventid );
 const char *event_getData( unsigned int eventid );
 int event_isUnique( unsigned int eventid );
 
-
 /*
  * Data.
  */
 int event_dataID( const char *evdata );
 const char *event_dataName( int dataid );
-
 
 /*
  * Claims.
@@ -74,13 +63,7 @@ const char *event_dataName( int dataid );
 void event_activateClaims (void);
 int event_testClaims( unsigned int eventid, int sys );
 
-
 /*
  * Misc.
  */
 int event_alreadyRunning( int data );
-
-
-#endif /* EVENT_H */
-
-

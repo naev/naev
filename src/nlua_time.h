@@ -1,18 +1,12 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
-
-#ifndef NLUA_TIME_H
-#  define NLUA_TIME_H
-
+#pragma once
 
 #include "nlua.h"
 #include "ntime.h"
 
-
 #define TIME_METATABLE   "time" /**< Planet metatable identifier. */
-
 
 /*
  * Library stuff.
@@ -27,8 +21,3 @@ ntime_t* luaL_checktime( lua_State *L, int ind );
 ntime_t* lua_pushtime( lua_State *L, ntime_t time );
 ntime_t luaL_validtime( lua_State *L, int ind );
 int lua_istime( lua_State *L, int ind );
-
-
-#endif /* NLUA_TIME_H */
-
-

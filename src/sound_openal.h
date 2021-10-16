@@ -1,11 +1,7 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
-
-#ifndef SOUND_OPENAL_H
-#  define SOUND_OPENAL_H
-
+#pragma once
 
 /** @cond */
 #include <vorbis/vorbisfile.h>
@@ -14,7 +10,6 @@
 
 #include "nopenal.h"
 #include "sound.h"
-
 
 /**
  * @struct alSound
@@ -29,7 +24,6 @@ typedef struct alSound_ {
    ALuint buf; /**< Buffer data. */
 } alSound;
 
-
 /**
  * @typedef voice_state_t
  * @brief The state of a voice.
@@ -41,7 +35,6 @@ typedef enum voice_state_ {
    VOICE_FADEOUT, /**< Voice is fading out. */
    VOICE_DESTROY  /**< Voice should get destroyed asap. */
 } voice_state_t;
-
 
 /**
  * @struct alVoice
@@ -65,12 +58,10 @@ typedef struct alVoice_ {
    ALuint buffer; /**< Buffer attached to the voice. */
 } alVoice;
 
-
 /*
  * Sound list.
  */
 extern alVoice *voice_active; /**< Active voices. */
-
 
 /*
  * Voice management.
@@ -81,13 +72,11 @@ alVoice* voice_new (void);
 int voice_add( alVoice* v );
 alVoice* voice_get( int id );
 
-
 /*
  * Vorbis stuff.
  */
 extern ov_callbacks sound_al_ovcall;
 extern ov_callbacks sound_al_ovcall_noclose;
-
 
 /*
  * Context info.
@@ -103,14 +92,12 @@ typedef struct alInfo_s {
 } alInfo_t;
 extern alInfo_t al_info;
 
-
 /*
  * Creation.
  */
 int sound_al_init (void);
 void sound_al_free_sources_locked (void);
 void sound_al_exit_locked (void);
-
 
 /*
  * Sound creation.
@@ -119,14 +106,12 @@ int sound_al_buffer( ALuint *buf, SDL_RWops *rw, const char *name );
 int sound_al_load( alSound *snd, SDL_RWops *rw, const char *name );
 void sound_al_free( alSound *snd );
 
-
 /*
  * Sound settings.
  */
 int sound_al_volume( const double vol );
 double sound_al_getVolume (void);
 double sound_al_getVolumeLog(void);
-
 
 /*
  * Sound playing.
@@ -148,7 +133,6 @@ void sound_al_resume (void);
 void sound_al_setSpeed( double s );
 void sound_al_setSpeedVolume( double vol );
 
-
 /*
  * Listener.
  */
@@ -166,11 +150,7 @@ void sound_al_resumeGroup( int group );
 void sound_al_speedGroup( int group, int enable );
 void sound_al_volumeGroup( int group, double volume );
 
-
 /*
  * Env.
  */
 int sound_al_env( SoundEnv_t env, double param );
-
-
-#endif /* SOUND_OPENAL_H */

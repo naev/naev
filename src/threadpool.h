@@ -12,15 +12,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
-
-#ifndef THREADPOOL_H
-#  define THREADPOOL_H
-
+#pragma once
 
 struct ThreadQueue_;
 typedef struct ThreadQueue_ ThreadQueue;
-
 
 /* Initializes the threadpool */
 int threadpool_init( void );
@@ -38,7 +33,3 @@ void vpool_enqueue( ThreadQueue* queue, int (*function)(void *), void *data );
 /* Run every job in the vpool queue and block until every job in the queue is
  * done. It destroys the queue when it's done. */
 void vpool_wait( ThreadQueue* queue );
-
-
-
-#endif

@@ -1,15 +1,9 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
-
-
-#ifndef DIALOGUE_H
-#  define DIALOGUE_H
-
+#pragma once
 
 #include "nstring.h"
-
 
 /*
  * popups and alerts
@@ -61,12 +55,7 @@ void dialogue_custom( const char* caption, int width, int height,
 int dialogue_customFullscreen( int enable );
 int dialogue_customResize( int width, int height );
 
-
 /*
  * misc
  */
 int dialogue_isOpen (void);
-
-
-#endif /* DIALOGUE_H */
-

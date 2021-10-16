@@ -1,18 +1,11 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
-
-
-#ifndef GUI_OMSG_H
-#  define GUI_OMSG_H
-
+#pragma once
 
 #include "colour.h"
 
-
 #define OMSG_FONT_DEFAULT_SIZE      16
-
 
 /*
  * Creation and management.
@@ -28,6 +21,3 @@ void omsg_rm( unsigned int id );
 void omsg_position( double center_x, double center_y, double width );
 void omsg_cleanup (void);
 void omsg_render( double dt );
-
-
-#endif /* GUI_OMSG_H */

@@ -1,7 +1,4 @@
-
-#ifndef LUTF8LIB_H
-#  define LUTF8LIB_H
-
+#pragma once
 
 /** @cond */
 #include <lauxlib.h>
@@ -10,7 +7,3 @@
 /** @endcond */
 
 int luaopen_utf8 (lua_State *L);
-
-
-#endif /* LUTF8LIB_H */
-

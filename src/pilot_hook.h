@@ -1,14 +1,9 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
-
-#ifndef PILOT_HOOK_H
-#  define PILOT_HOOK_H
-
+#pragma once
 
 #include "pilot.h"
-
 
 /*
  * Hooks.
@@ -18,7 +13,6 @@ int pilot_runHook( Pilot* p, int hook_type );
 void pilots_rmHook( unsigned int hook );
 void pilot_clearHooks( Pilot *p );
 
-
 /*
  * Global hooks.
  */
@@ -26,6 +20,3 @@ void pilots_addGlobalHook( int type, unsigned int hook );
 void pilots_rmGlobalHook( unsigned int hook );
 void pilots_clearGlobalHooks (void);
 void pilot_freeGlobalHooks (void);
-
-
-#endif /* PILOT_HOOK_H */

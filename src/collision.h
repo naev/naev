@@ -1,8 +1,7 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-#ifndef COLLISION_H
-#  define COLLISION_H
+#pragma once
 
 #include "nxml.h"
 #include "opengl.h"
@@ -42,5 +41,3 @@ int CollidePolygon( const CollPoly* at, const Vector2d* ap,
       const CollPoly* bt, const Vector2d* bp, Vector2d* crash );
 int CollideLineCircle( const Vector2d* p1, const Vector2d* p2,
       const Vector2d *cc, double cr, Vector2d crash[2] );
-
-#endif /* COLLISION_H */

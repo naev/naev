@@ -1,14 +1,9 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
-
-#ifndef NEBULA_H
-#  define NEBULA_H
-
+#pragma once
 
 #define NEBULA_DEFAULT_HUE    260.0 /**< Default hue (in degrees) for the nebula. */
-
 
 /*
  * Init/Exit
@@ -34,6 +29,3 @@ void nebu_update( double dt );
 double nebu_getSightRadius (void);
 void nebu_prep( double density, double volatility, double hue );
 void nebu_movePuffs( double x, double y );
-
-
-#endif /* NEBULA_H */

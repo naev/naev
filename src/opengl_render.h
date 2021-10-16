@@ -1,17 +1,12 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
-
-#ifndef OPENGL_RENDER_H
-#  define OPENGL_RENDER_H
-
+#pragma once
 
 #include "opengl.h"
 #include "opengl_tex.h"
 #include "opengl_vbo.h"
 #include "shaders.gen.h"
-
 
 /*
  * Init/cleanup.
@@ -19,14 +14,12 @@
 int gl_initRender (void);
 void gl_exitRender (void);
 
-
 /*
  * Coordinate translation.
  */
 void gl_gameToScreenCoords( double *nx, double *ny, double bx, double by );
 __attribute__((const)) gl_Matrix4 gl_gameToScreenMatrix( gl_Matrix4 lhs );
 void gl_screenToGameCoords( double *nx, double *ny, int bx, int by );
-
 
 /*
  * Rendering.
@@ -77,7 +70,6 @@ void gl_renderScaleAspect( const glTexture* texture,
 void gl_renderStatic( const glTexture* texture,
       const double bx, const double by, const glColour *c );
 
-
 extern gl_vbo *gl_squareVBO;
 extern gl_vbo *gl_circleVBO;
 void gl_beginSolidProgram(gl_Matrix4 projection, const glColour *c);
@@ -112,7 +104,3 @@ void gl_renderTriangleEmpty( double x, double y, double a, double s, double leng
 /* Clipping. */
 void gl_clipRect( int x, int y, int w, int h );
 void gl_unclipRect (void);
-
-
-#endif /* OPENGL_RENDER_H */
-

@@ -1,8 +1,7 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-#ifndef GETTEXT_H
-#define GETTEXT_H
+#pragma once
 
 /** @cond */
 #include <stdint.h>
@@ -54,5 +53,3 @@ FORMAT_ARG(1) static inline const char* n_( const char* msgid, const char* msgid
  * The letter 'p' stands for 'particular' or 'special'.
  */
 #define p_( msgctxt, msgid )          gettext_pgettext( msgctxt GETTEXT_CONTEXT_GLUE msgid, msgid )
-
-#endif /* GETTEXT_H */

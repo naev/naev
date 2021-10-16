@@ -1,8 +1,7 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-#ifndef EQUIPMENT_H
-#  define EQUIPMENT_H
+#pragma once
 
 #include "outfit.h"
 #include "pilot.h"
@@ -38,5 +37,3 @@ typedef struct CstSlotWidget_ {
 void equipment_slotWidget( unsigned int wid,
       double x, double y, double w, double h,
       CstSlotWidget *data );
-
-#endif /* EQUIPMENT_H */

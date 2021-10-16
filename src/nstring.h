@@ -1,11 +1,7 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
-
-#ifndef NSTRING_H
-#  define NSTRING_H
-
+#pragma once
 
 /** @cond */
 #include <stdio.h>
@@ -41,5 +37,3 @@ int strsort( const void *p1, const void *p2 );
 #define NUM2STRLEN   16
 int num2str( char dest[NUM2STRLEN], double n, int decimals );
 const char* num2strU( double n, int decimals );
-
-#endif /* NSTRING_H */

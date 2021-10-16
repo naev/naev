@@ -1,8 +1,7 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-#ifndef LAND_H
-#  define LAND_H
+#pragma once
 
 #include "conf.h"
 #include "nstring.h"
@@ -79,5 +78,3 @@ int  can_swapEquipment( const char *shipname );
 int  can_sell( const char *shipname );
 int  land_errDialogue( const char *name, const char *type );
 PRINTF_FORMAT( 1, 2 ) void land_errDialogueBuild( const char *fmt, ... );
-
-#endif /* LAND_H */

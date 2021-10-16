@@ -1,12 +1,7 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
-
-
-#ifndef WIDGET_H
-#  define WIDGET_H
-
+#pragma once
 
 #include "tk/widget/button.h"
 #include "tk/widget/checkbox.h"
@@ -19,7 +14,3 @@
 #include "tk/widget/rect.h"
 #include "tk/widget/tabwin.h"
 #include "tk/widget/text.h"
-
-
-#endif /* WIDGET_H */
-

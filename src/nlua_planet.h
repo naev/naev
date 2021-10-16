@@ -1,8 +1,7 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-#ifndef NLUA_PLANET_H
-#  define NLUA_PLANET_H
+#pragma once
 
 #include "nlua.h"
 #include "space.h"
@@ -27,5 +26,3 @@ LuaPlanet luaL_checkplanet( lua_State *L, int ind );
 LuaPlanet* lua_pushplanet( lua_State *L, LuaPlanet planet );
 Planet* luaL_validplanet( lua_State *L, int ind );
 int lua_isplanet( lua_State *L, int ind );
-
-#endif /* NLUA_PLANET_H */

@@ -1,11 +1,7 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
-
-#ifndef NFILE_H
-#define NFILE_H
-
+#pragma once
 
 /** @cond */
 #include <stdint.h>
@@ -13,7 +9,6 @@
 
 #include "array.h"
 #include "attributes.h"
-
 
 SENTINEL( 0 ) int _nfile_concatPaths( char buf[ static 1 ], int maxLength, const char path[ static 1 ], ... );
 /**
@@ -27,7 +22,6 @@ SENTINEL( 0 ) int _nfile_concatPaths( char buf[ static 1 ], int maxLength, const
  */
 #define nfile_concatPaths( buf, maxLength, path, ... ) _nfile_concatPaths( buf, maxLength, path, ##__VA_ARGS__, NULL )
 
-
 const char *nfile_configPath( void );
 const char *nfile_cachePath( void );
 
@@ -40,6 +34,3 @@ char *nfile_readFile( size_t *filesize, const char *path );
 int nfile_touch( const char *path );
 int nfile_writeFile( const char *data, size_t len, const char *path );
 int nfile_isSeparator( uint32_t c );
-
-
-#endif /* NFILE_H */

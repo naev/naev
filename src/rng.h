@@ -1,12 +1,7 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
-
-
-#ifndef RNG_H
-#  define RNG_H
-
+#pragma once
 
 /**
  * @brief Gets a random number between L and H (L <= RNG <= H).
@@ -43,7 +38,6 @@
  */
 #define RNG_3SIGMA()       NormalInverse(0.0013498985 + RNGF()*(1.-0.0013498985*2.))
 
-
 /* Init */
 void rng_init (void);
 
@@ -54,6 +48,3 @@ double randfp (void);
 /* Probability functions */
 double Normal( double x );
 double NormalInverse( double p );
-
-
-#endif /* RNG_H */

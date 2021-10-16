@@ -1,17 +1,11 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
-
-
-#ifndef INPUT_H
-#  define INPUT_H
-
+#pragma once
 
 /** @cond */
 #include "SDL.h"
 /** @endcond */
-
 
 #define NMOD_NONE    0
 #define NMOD_SHIFT   (1<<0)
@@ -20,10 +14,8 @@
 #define NMOD_META    (1<<3)
 #define NMOD_ANY     0xFFFF /**< Comfort thing SDL is lacking. */
 
-
 #define KEY_PRESS    ( 1.) /**< Key is pressed. */
 #define KEY_RELEASE  (-1.) /**< Key is released. */
-
 
 /* input types */
 typedef enum {
@@ -38,10 +30,8 @@ typedef enum {
    KEYBIND_JHAT_RIGHT /**< Joystick hat right direction keybinding. */
 } KeybindType; /**< Keybind types. */
 
-
 extern const char *keybind_info[][ 3 ];
 extern const int   input_numbinds;
-
 
 /*
  * set input
@@ -86,12 +76,8 @@ void input_exit (void);
  */
 void input_update( double dt );
 
-
 /*
  * Mouse.
  */
 void input_mouseShow (void);
 void input_mouseHide (void);
-
-
-#endif /* INPUT_H */

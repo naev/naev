@@ -19,8 +19,7 @@
  *
  * @brief Header file with generic functions and naev-specifics.
  */
-#ifndef NAEV_H
-#  define NAEV_H
+#pragma once
 
 /** @cond */
 #include <inttypes.h>
@@ -80,5 +79,3 @@ int naev_versionCompare( const char *version );
 void naev_quit (void);
 int naev_isQuit (void);
 double naev_getrealdt (void);
-
-#endif /* NAEV_H */

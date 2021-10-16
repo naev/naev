@@ -1,26 +1,19 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
-
-#ifndef NLUA_H
-#  define NLUA_H
-
+#pragma once
 
 /** @cond */
 #include <lua.h>
 #include <lauxlib.h>
 /** @endcond */
 
-
 #define NLUA_LOAD_TABLE "_LOADED" /**< Table to use to store the status of required libraries. */
 
 #define NLUA_DONE       "__done__"
 
-
 #define nluaL_optarg(L,ind,def,checkfunc) \
    (lua_isnoneornil(L,ind) ? (def) : checkfunc(L,ind))
-
 
 typedef int nlua_env;
 extern lua_State *naevL;
@@ -48,6 +41,3 @@ int nlua_errTrace( lua_State *L );
 int nlua_pcall( nlua_env env, int nargs, int nresults );
 int nlua_refenv( nlua_env env, const char *name );
 int nlua_refenvtype( nlua_env env, const char *name, int type );
-
-
-#endif /* NLUA_H */

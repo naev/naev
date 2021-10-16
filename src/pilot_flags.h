@@ -1,9 +1,7 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
-#ifndef PILOT_FLAGS_H
-#define PILOT_FLAGS_H
+#pragma once
 
 #define pilot_clearFlagsRaw(a) memset((a), 0, PILOT_FLAGS_MAX) /**< Clears the pilot flags. */
 #define pilot_copyFlagsRaw(d,s) memcpy((d), (s), PILOT_FLAGS_MAX) /**< Copies the pilot flags from s to d. */
@@ -86,5 +84,3 @@ enum {
    PILOT_FLAGS_MAX      /**< Maximum number of flags. */
 };
 typedef char PilotFlags[ PILOT_FLAGS_MAX ];
-
-#endif

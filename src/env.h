@@ -1,8 +1,7 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-#ifndef ENV_H
-#define ENV_H
+#pragma once
 
 /** @cond */
 #include <stdlib.h>
@@ -19,5 +18,3 @@ extern env_t env;
 void env_detect( int argc, char **argv );
 
 int nsetenv( const char *name, const char *value, int overwrite );
-
-#endif /* ENV_H */

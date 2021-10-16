@@ -1,8 +1,7 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-#ifndef MAP_H
-#  define MAP_H
+#pragma once
 
 #include "attributes.h"
 #include "space.h"
@@ -60,5 +59,3 @@ void map_renderNames( double bx, double by, double x, double y,
       double w, double h, int editor, double alpha );
 void map_updateFactionPresence( const unsigned int wid, const char *name, const StarSystem *sys, int omniscient );
 int map_load (void);
-
-#endif /* MAP_H */

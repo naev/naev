@@ -1,37 +1,27 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
-
-
-#ifndef MUSIC_H
-#  define MUSIC_H
-
+#pragma once
 
 /** @cond */
 #include <lua.h>
 /** @endcond */
 
-
 #define MUSIC_FADEOUT_DELAY   1000 /**< Time it takes to fade out. */
 #define MUSIC_FADEIN_DELAY    2000 /**< Time it takes to fade in. */
 
-
 extern int music_disabled;
-
 
 /*
  * updating
  */
 void music_update( double dt );
 
-
 /*
  * init/exit
  */
 int music_init (void);
 void music_exit (void);
-
 
 /*
  * music control
@@ -49,7 +39,6 @@ int music_isPlaying (void);
 const char *music_playingName (void);
 double music_playingTime (void);
 
-
 /*
  * Lua control
  */
@@ -60,6 +49,3 @@ int music_chooseDelay( const char* situation, double delay );
 void music_rechoose (void);
 void music_tempDisable( int disable );
 void music_repeat( int repeat );
-
-
-#endif /* MUSIC_H */

@@ -1,22 +1,15 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
-
-#ifndef NLUA_COL_H
-#  define NLUA_COL_H
-
+#pragma once
 
 #include "colour.h"
 #include "nlua.h"
 
-
 #define COL_METATABLE      "colour" /**< COL metatable identifier. */
-
 
 /* Helper. */
 #define luaL_optcolour(L,ind,def)   nluaL_optarg(L,ind,def,luaL_checkcolour)
-
 
 /*
  * Library loading
@@ -30,8 +23,4 @@ glColour* lua_tocolour( lua_State *L, int ind );
 glColour* luaL_checkcolour( lua_State *L, int ind );
 glColour* lua_pushcolour( lua_State *L, glColour col );
 int lua_iscolour( lua_State *L, int ind );
-
-
-#endif /* NLUA_COL_H */
-
 

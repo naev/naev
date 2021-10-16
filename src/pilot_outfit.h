@@ -1,8 +1,7 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-#ifndef PILOT_OUTFIT_H
-#  define PILOT_OUTFIT_H
+#pragma once
 
 #include "pilot.h"
 
@@ -60,5 +59,3 @@ int pilot_outfitLOnstealth( Pilot *pilot );
 void pilot_outfitLOnscan( Pilot *pilot );
 void pilot_outfitLOnscanned( Pilot *pilot, const Pilot *scanner );
 void pilot_outfitLCleanup( Pilot *pilot );
-
-#endif /* PILOT_OUTFIT_H */

@@ -1,11 +1,7 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
-
-#ifndef OPENGL_TEX_H
-#  define OPENGL_TEX_H
-
+#pragma once
 
 /** @cond */
 #include <stdint.h>
@@ -15,14 +11,12 @@
 #include "colour.h"
 #include "physics.h"
 
-
 /* Recommended for compatibility and such */
 #define RMASK   SDL_SwapLE32(0x000000ff) /**< Red bit mask. */
 #define GMASK   SDL_SwapLE32(0x0000ff00) /**< Green bit mask. */
 #define BMASK   SDL_SwapLE32(0x00ff0000) /**< Blue bit mask. */
 #define AMASK   SDL_SwapLE32(0xff000000) /**< Alpha bit mask. */
 #define RGBAMASK  RMASK,GMASK,BMASK,AMASK
-
 
 /*
  * Texture flags.
@@ -59,7 +53,6 @@ typedef struct glTexture_ {
    /* properties */
    uint8_t flags; /**< flags used for texture properties */
 } glTexture;
-
 
 /*
  * Init/exit.
@@ -101,7 +94,3 @@ int gl_isTrans( const glTexture* t, const int x, const int y );
 void gl_getSpriteFromDir( int* x, int* y, const glTexture* t, const double dir );
 glTexture** gl_copyTexArray( glTexture **tex, int *n );
 glTexture** gl_addTexArray( glTexture **tex, int *n, glTexture *t );
-
-
-#endif /* OPENGL_TEX_H */
-

@@ -1,11 +1,7 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
-
-#ifndef LOAD_H
-#  define LOAD_H
-
+#pragma once
 
 /** @cond */
 #include <stdint.h>
@@ -13,7 +9,6 @@
 /** @endcond */
 
 #include "ntime.h"
-
 
 /**
  * @brief A naev save.
@@ -36,7 +31,6 @@ typedef struct nsave_s {
    char *shipmodel; /**< Model of the ship. */
 } nsave_t;
 
-
 void load_loadGameMenu (void);
 int load_gameDiff( const char* file );
 int load_gameFile( const char* file );
@@ -45,6 +39,3 @@ int load_game( nsave_t *ns );
 int load_refresh (void);
 void load_free (void);
 const nsave_t *load_getList (void);
-
-
-#endif /* LOAD_H */

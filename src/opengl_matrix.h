@@ -1,21 +1,15 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
-
-#ifndef OPENGL_MATRIX_H
-#  define OPENGL_MATRIX_H
-
+#pragma once
 
 #include "opengl.h"
-
 
 /*
  * Init/cleanup.
  */
 int gl_initMatrix (void);
 void gl_exitMatrix (void);
-
 
 typedef struct gl_Matrix4_ {
    /* Column-major; m[x][y] */
@@ -34,6 +28,3 @@ __attribute__((const)) gl_Matrix4 gl_Matrix4_Rotate2d( gl_Matrix4 m, double angl
 __attribute__((const)) gl_Matrix4 gl_Matrix4_Rotate2dv( gl_Matrix4 m, double x, double y );
 GLfloat *gl_Matrix4_Ptr( gl_Matrix4 *m );
 void gl_Matrix4_Uniform( GLint location, gl_Matrix4 m );
-
-#endif /* OPENGL_MATRIX_H */
-

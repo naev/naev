@@ -1,8 +1,7 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-#ifndef HOOK_H
-#  define HOOK_H
+#pragma once
 
 #include "mission.h"
 #include "nlua_faction.h"
@@ -107,5 +106,3 @@ unsigned int hook_addTimerEvt( unsigned int parent, const char *func, double ms 
 void hooks_updateDate( ntime_t change );
 unsigned int hook_addDateMisn( unsigned int parent, const char *func, ntime_t resolution );
 unsigned int hook_addDateEvt( unsigned int parent, const char *func, ntime_t resolution );
-
-#endif /* HOOK_H */

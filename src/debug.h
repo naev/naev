@@ -1,8 +1,7 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-#ifndef DEBUG_H
-#  define DEBUG_H
+#pragma once
 
 void debug_sigInit (void);
 void debug_sigClose (void);
@@ -27,5 +26,3 @@ extern DebugFlags debug_flags;
 #define debug_isFlag(f)     0                    /**< Checks if flag f is set. */
 #define debug_rmFlag(f)     do {} while(0)       /**< Removes flag f. */
 #endif /* DEBUGGING */
-
-#endif /* DEBUG_H */

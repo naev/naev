@@ -1,8 +1,7 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-#ifndef MISSION_H
-#  define MISSION_H
+#pragma once
 
 #include "claim.h"
 #include "commodity.h"
@@ -160,5 +159,3 @@ int misn_run( Mission *misn, const char *func );
  * Claims.
  */
 void missions_activateClaims (void);
-
-#endif /* MISSION_H */

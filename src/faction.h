@@ -1,8 +1,7 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-#ifndef FACTION_H
-#  define FACTION_H
+#pragma once
 
 #include "colour.h"
 #include "nlua.h"
@@ -82,5 +81,3 @@ void faction_clearKnown (void);
 /* Dynamic factions. */
 void factions_clearDynamic (void);
 int faction_dynAdd( int base, const char* name, const char* display, const char* ai );
-
-#endif /* FACTION_H */

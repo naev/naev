@@ -1,8 +1,7 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-#ifndef NLUA_SYSTEM_H
-#  define NLUA_SYSTEM_H
+#pragma once
 
 #include "nlua.h"
 #include "space.h"
@@ -27,5 +26,3 @@ LuaSystem luaL_checksystem( lua_State *L, int ind );
 LuaSystem* lua_pushsystem( lua_State *L, LuaSystem sys );
 StarSystem* luaL_validsystem( lua_State *L, int ind );
 int lua_issystem( lua_State *L, int ind );
-
-#endif /* NLUA_SYSTEM_H */

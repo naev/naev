@@ -1,8 +1,7 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-#ifndef COMMODITY_H
-#  define COMMODITY_H
+#pragma once
 
 /** @cond */
 #include <stdint.h>
@@ -121,5 +120,3 @@ void tonnes2str( char *str, int tonnes );
 void commodity_Jettison( int pilot, const Commodity* com, int quantity );
 int commodity_compareTech( const void *commodity1, const void *commodity2 );
 Commodity ** standard_commodities (void);
-
-#endif /* COMMODITY_H */

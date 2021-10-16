@@ -1,16 +1,10 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
-
-
-#ifndef NPC_H
-#  define NPC_H
-
+#pragma once
 
 #include "mission.h"
 #include "opengl.h"
-
 
 /*
  * Adding.
@@ -46,6 +40,3 @@ glTexture *npc_getTexture( int i );
 const char *npc_getDesc( int i );
 int npc_isImportant( int i );
 int npc_approach( int i );
-
-
-#endif /* NPC_H */

@@ -1,8 +1,7 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-#ifndef PILOT_H
-#  define PILOT_H
+#pragma once
 
 #include "pilot_flags.h"
 
@@ -506,5 +505,3 @@ credits_t pilot_worth( const Pilot *p );
 void pilot_msg( Pilot *p, Pilot *receiver, const char *type, unsigned int index );
 void pilot_sample_trails( Pilot* p, int none );
 int pilot_hasIllegal( const Pilot *p, int faction );
-
-#endif /* PILOT_H */

@@ -1,16 +1,10 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
-
-
-#ifndef WGT_IMAGE_H
-#  define WGT_IMAGE_H
-
+#pragma once
 
 #include "colour.h"
 #include "font.h"
-
 
 /**
  * @brief The image widget data
@@ -23,7 +17,6 @@ typedef struct WidgetImageData_{
    glTexture** layers; /**< Layers to be added. */
    int nlayers; /**< Total number of layers. */
 } WidgetImageData;
-
 
 /* Required functions. */
 void window_addImage( unsigned int wid,
@@ -39,7 +32,3 @@ void window_imgColour( unsigned int wid,
 glTexture* window_getImage( unsigned int wid, char* name );
 void window_modifyImageLayers( unsigned int wid,
       char* name, glTexture** layers, int n );
-
-
-#endif /* WGT_IMAGE_H */
-

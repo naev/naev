@@ -1,8 +1,7 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-#ifndef WEAPON_H
-#  define WEAPON_H
+#pragma once
 
 #include "outfit.h"
 #include "physics.h"
@@ -50,5 +49,3 @@ void weapons_render( const WeaponLayer layer, const double dt );
 void weapon_init (void);
 void weapon_clear (void);
 void weapon_exit (void);
-
-#endif /* WEAPON_H */

@@ -1,18 +1,13 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
-
-#ifndef NLUA_EVT
-#  define NLUA_EVT
-
+#pragma once
 
 /** @cond */
 #include <lua.h>
 /** @endcond */
 
 #include "event.h"
-
 
 /* Run Lua for an event. */
 Event_t *event_getFromLua( lua_State *L );
@@ -22,6 +17,3 @@ int event_run( unsigned int eventid, const char *func );
 
 /* individual library stuff */
 int nlua_loadEvt( nlua_env env );
-
-
-#endif /* NLUA_EVT */

@@ -1,11 +1,7 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
-
-#ifndef NLUA_CANVAS_H
-#  define NLUA_CANVAS_H
-
+#pragma once
 
 /** @cond */
 #include "SDL.h"
@@ -15,9 +11,7 @@
 
 #include "opengl.h"
 
-
 #define CANVAS_METATABLE      "canvas" /**< Canvas metatable identifier. */
-
 
 /**
  * @brief Wrapper to canvass.
@@ -26,7 +20,6 @@ typedef struct LuaCanvas_s {
    GLuint fbo;    /**< Frame buffer object. */
    glTexture *tex;/**< Texture object. */
 } LuaCanvas_t;
-
 
 /*
  * Library loading
@@ -43,8 +36,3 @@ int lua_iscanvas( lua_State *L, int ind );
  * Misc helpers.
  */
 int canvas_new( LuaCanvas_t *lc, int w, int h );
-
-
-#endif /* NLUA_CANVAS_H */
-
-

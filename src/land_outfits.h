@@ -1,17 +1,11 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
-
-
-#ifndef LAND_OUTFITS_H
-#  define LAND_OUTFITS_H
-
+#pragma once
 
 #include "land.h"
 #include "outfit.h"
 #include "tk/widget/imagearray.h"
-
 
 int outfit_altText( char *buf, int n, const Outfit *o );
 
@@ -22,9 +16,6 @@ void outfits_updateEquipmentOutfits( void );
 int outfits_filter( const Outfit **outfits, int n,
       int(*filter)( const Outfit *o ), const char *name );
 ImageArrayCell *outfits_imageArrayCells( const Outfit **outfits, int *n );
-int             outfit_canBuy( const char *outfit, Planet *planet );
-int             outfit_canSell( const char *outfit );
+int outfit_canBuy( const char *outfit, Planet *planet );
+int outfit_canSell( const char *outfit );
 void outfits_cleanup( void );
-
-
-#endif /* LAND_OUTFITS_H */

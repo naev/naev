@@ -1,18 +1,12 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
-
-#ifndef NLUA_COMMODITY_H
-#  define NLUA_COMMODITY_H
-
+#pragma once
 
 #include "commodity.h"
 #include "nlua.h"
 
-
 #define COMMODITY_METATABLE   "commodity" /**< Commodity metatable identifier. */
-
 
 /*
  * Library loading
@@ -27,8 +21,4 @@ Commodity* luaL_checkcommodity( lua_State *L, int ind );
 Commodity* luaL_validcommodity( lua_State *L, int ind );
 Commodity** lua_pushcommodity( lua_State *L, Commodity* commodity );
 int lua_iscommodity( lua_State *L, int ind );
-
-
-#endif /* NLUA_COMMODITY_H */
-
 

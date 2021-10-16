@@ -1,14 +1,9 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
-
-#ifndef RENDER_H
-#  define RENDER_H
-
+#pragma once
 
 #include "nlua_shader.h"
-
 
 enum {
    PP_LAYER_GAME, /**< Applied ontop of the in-game graphics. */
@@ -16,7 +11,6 @@ enum {
    PP_LAYER_FINAL, /**< Applied ontop of everything! */
    PP_LAYER_MAX,
 };
-
 
 void fps_setPos( double x, double y );
 void render_all( double game_dt, double real_dt );
@@ -28,7 +22,3 @@ int render_postprocessRm( unsigned int id );
 
 /* Special post-processing shaders. */
 void render_setGamma( double gamma );
-
-
-#endif /* RENDER_H */
-

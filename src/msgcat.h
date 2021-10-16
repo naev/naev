@@ -1,9 +1,7 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
-#ifndef PLURALFORM_H
-#define PLURALFORM_H
+#pragma once
 
 /** @cond */
 #include <stdint.h>
@@ -18,5 +16,3 @@ typedef struct msgcat {
 
 void msgcat_init( msgcat_t* p, const void* map, size_t map_size );
 const char* msgcat_ngettext( const msgcat_t* p, const char* msgid1, const char* msgid2, uint64_t n );
-
-#endif

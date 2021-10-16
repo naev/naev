@@ -1,11 +1,7 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
-
-#ifndef PLAYER_GUI_H
-#  define PLAYER_GUI_H
-
+#pragma once
 
 /* Clean up. */
 void player_guiCleanup (void);
@@ -17,7 +13,3 @@ int player_guiCheck( char* name );
 
 /* High level. */
 char** player_guiList (void);
-
-
-#endif /* PLAYER_GUI_H */
-

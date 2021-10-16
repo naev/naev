@@ -1,12 +1,7 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
-
-
-#ifndef WGT_CHECKBOX_H
-#  define WGT_CHECKBOX_H
-
+#pragma once
 
 /**
  * @brief The checkbox widget.
@@ -16,7 +11,6 @@ typedef struct WidgetCheckboxData_ {
    char *display; /**< Displayed text. */
    int state; /**< Current checkbox status. */
 } WidgetCheckboxData;
-
 
 /* Required functions. */
 void window_addCheckbox( unsigned int wid,
@@ -30,7 +24,3 @@ void window_addCheckbox( unsigned int wid,
 void window_checkboxCaption( unsigned int wid, const char *name, char *display );
 int window_checkboxState( unsigned int wid, const char *name );
 int window_checkboxSet( unsigned int wid, const char *name, int state );
-
-
-#endif /* WGT_CHECKBOX_H */
-

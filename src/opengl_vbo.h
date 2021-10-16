@@ -1,18 +1,12 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
-
-#ifndef OPENGL_VBO_H
-#  define OPENGL_VBO_H
-
+#pragma once
 
 #include "opengl.h"
 
-
 struct gl_vbo_s;
 typedef struct gl_vbo_s gl_vbo;
-
 
 /*
  * Init/cleanup.
@@ -20,14 +14,12 @@ typedef struct gl_vbo_s gl_vbo;
 int gl_initVBO (void);
 void gl_exitVBO (void);
 
-
 /*
  * Create.
  */
 gl_vbo* gl_vboCreateStream( GLsizei size, const void* data );
 gl_vbo* gl_vboCreateDynamic( GLsizei size, const void* data );
 gl_vbo* gl_vboCreateStatic( GLsizei size, const void* data );
-
 
 /*
  * Modify.
@@ -42,12 +34,7 @@ void gl_vboActivateOffset( gl_vbo *vbo, GLuint class, GLuint offset,
 void gl_vboActivateAttribOffset( gl_vbo *vbo, GLuint index, GLuint offset,
       GLint size, GLenum type, GLsizei stride );
 
-
 /*
  * Destroy.
  */
 void gl_vboDestroy( gl_vbo* vbo );
-
-
-#endif /* OPENGL_VBO_H */
-

@@ -1,12 +1,7 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
-
-
-#ifndef TOOLKIT_PRIV_H
-#  define TOOLKIT_PRIV_H
-
+#pragma once
 
 /** @cond */
 #include "naev.h"
@@ -14,7 +9,6 @@
 
 #include "log.h"
 #include "tk/widget.h"
-
 
 /*
  * Colours to use.
@@ -28,7 +22,6 @@ extern const glColour* tab_activeB;
 extern const glColour* tab_inactive;
 extern const glColour* tab_inactiveB;
 extern const glColour* tab_background;
-
 
 /**
  * @typedef WidgetType
@@ -50,7 +43,6 @@ typedef enum WidgetType_ {
    WIDGET_CHECKBOX
 } WidgetType;
 
-
 /**
  * @typedef WidgetStatus
  *
@@ -65,7 +57,6 @@ typedef enum WidgetStatus_ {
    WIDGET_STATUS_SCROLLING
 } WidgetStatus;
 
-
 #define WGT_FLAG_CANFOCUS     (1<<0)   /**< Widget can get focus. */
 #define WGT_FLAG_RAWINPUT     (1<<1)   /**< Widget should always get raw input. */
 #define WGT_FLAG_ALWAYSMMOVE  (1<<2)   /**< Widget should always get mouse motion events. */
@@ -74,7 +65,6 @@ typedef enum WidgetStatus_ {
 #define wgt_setFlag(w,f)      ((w)->flags |= (f)) /**< Sets a widget flag. */
 #define wgt_rmFlag(w,f)       ((w)->flags &= ~(f)) /**< Removes a widget flag. */
 #define wgt_isFlag(w,f)       ((w)->flags & (f)) /**< Checks if a widget has a fla.g */
-
 
 /**
  * @struct Widget
@@ -137,7 +127,6 @@ typedef struct Widget_ {
    } dat; /**< Stores the widget specific data. */
 } Widget;
 
-
 #define WINDOW_NOFOCUS     (1<<0) /**< Window can not be active window. */
 #define WINDOW_NOINPUT     (1<<1) /**< Window receives no input. */
 #define WINDOW_NORENDER    (1<<2) /**< Window does not render even if it should. */
@@ -149,7 +138,6 @@ typedef struct Widget_ {
 #define window_isFlag(w,f) ((w)->flags & (f)) /**< Checks a window flag. */
 #define window_setFlag(w,f) ((w)->flags |= (f)) /**< Sets a window flag. */
 #define window_rmFlag(w,f) ((w)->flags &= ~(f)) /**< Removes a window flag. */
-
 
 /**
  * @struct Window
@@ -187,7 +175,6 @@ typedef struct Window_ {
    void *udata; /**< Custom data of the window. */
 } Window;
 
-
 /* Window stuff. */
 Window* toolkit_getActiveWindow (void);
 Window* window_wget( const unsigned int wid );
@@ -195,7 +182,6 @@ void toolkit_setWindowPos( Window *wdw, int x, int y );
 int toolkit_inputWindow( Window *wdw, SDL_Event *event, int purge );
 void window_render( Window* w );
 void window_renderOverlay( Window* w );
-
 
 /* Widget stuff. */
 Widget* window_newWidget( Window* w, const char *name );
@@ -209,7 +195,6 @@ void toolkit_prevFocus( Window *wdw );
 void toolkit_focusWidget( Window *wdw, Widget *wgt );
 void toolkit_defocusWidget( Window *wdw, Widget *wgt );
 
-
 /* Render stuff. */
 void toolkit_drawOutline( int x, int y, int w, int h, int b,
                           const glColour* c, const glColour* lc );
@@ -222,11 +207,6 @@ void toolkit_drawTriangle( int x1, int y1, int x2, int y2, int x3, int y3,
                        const glColour* c );
 void toolkit_drawAltText( int bx, int by, const char *alt );
 
-
 /* Input stuff. */
 Uint32 toolkit_inputTranslateCoords( Window *w, SDL_Event *event,
       int *x, int *y, int *rx, int *ry );
-
-
-#endif /* TOOLKIT_PRIV_H */
-

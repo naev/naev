@@ -1,8 +1,7 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-#ifndef SPACE_H
-#  define SPACE_H
+#pragma once
 
 /* Forward declarations. */
 typedef struct StarSystem_ StarSystem;
@@ -479,5 +478,3 @@ void space_checkLand (void);
 void space_factionChange (void);
 void space_queueLand( Planet *pnt );
 const char *space_populationStr( uint64_t population );
-
-#endif /* SPACE_H */

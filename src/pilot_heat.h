@@ -1,20 +1,14 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
-
-#ifndef PILOT_HEAT_H
-#  define PILOT_HEAT_H
-
+#pragma once
 
 #include "pilot.h"
-
 
 /*
  * Fundamental heat properties.
  */
 #define HEAT_WORST_ACCURACY         (38./180.*M_PI) /**< Pretty bad accuracy, a 76 degree arc. */
-
 
 /*
  * Some random physics constants.
@@ -27,7 +21,6 @@
 #define CONST_SPACE_STAR_TEMP_4     \
 (CONST_SPACE_STAR_TEMP*CONST_SPACE_STAR_TEMP*CONST_SPACE_STAR_TEMP*CONST_SPACE_STAR_TEMP) /**< CONST_SPACE_STAR_TEMP^4 */
 
-
 /*
  * Properties of steel.
  *
@@ -36,7 +29,6 @@
 #define STEEL_HEAT_CONDUCTIVITY     (54.) /**< Thermal conductivity of steel (@ 25C). [W/(m*K)] */
 #define STEEL_HEAT_CAPACITY         (0.49) /**< Thermal capacity of steel. [J/(kg*K)] */
 #define STEEL_DENSITY               (7.88e3) /**< Density of steel. [kg/m^3] */
-
 
 /*
  * Outfit core value calculations.
@@ -67,6 +59,3 @@ double pilot_heatEfficiencyMod( double T, double Tb, double Tc );
 double pilot_heatAccuracyMod( double T );
 double pilot_heatFireRateMod( double T );
 double pilot_heatFirePercent( double T );
-
-
-#endif /* PILOT_HEAT_H */

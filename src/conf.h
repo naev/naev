@@ -1,8 +1,7 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-#ifndef CONF_H
-#  define CONF_H
+#pragma once
 
 /**
  * CONFIGURATION DEFAULTS
@@ -177,5 +176,3 @@ void conf_free( PlayerConf_t *config );
  * saving
  */
 int conf_saveConfig( const char* file );
-
-#endif /* CONF_H */

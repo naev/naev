@@ -1,15 +1,9 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
-
-
-#ifndef MAP_FIND_H
-#  define MAP_FIND_H
-
+#pragma once
 
 #include "space.h"
-
 
 /**
  * @brief Represents a found target.
@@ -22,10 +16,5 @@ typedef struct map_find_s {
    double distance;     /**< Distance to system. */
 } map_find_t;
 
-
 void map_inputFind( unsigned int parent, const char* str );
 void map_inputFindType( unsigned int parent, const char *type );
-
-
-#endif /* MAP_FIND_H */
-

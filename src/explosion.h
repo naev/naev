@@ -1,8 +1,7 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-#ifndef EXPLOSION_H
-#  define EXPLOSION_H
+#pragma once
 
 #include "outfit.h"
 #include "pilot.h"
@@ -16,5 +15,3 @@ void expl_explode( double x, double y, double vx, double vy,
       const Pilot *parent, int mode );
 void expl_explodeDamage( double x, double y, double radius,
       const Damage *dmg, const Pilot *parent, int mode );
-
-#endif /* EXPLOSION_H */

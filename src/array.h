@@ -33,8 +33,7 @@
  * my_array = NULL;
  * @endcode
  */
-#ifndef ARRAY_H
-#  define ARRAY_H
+#pragma once
 
 /** @cond */
 #include <assert.h>
@@ -218,5 +217,3 @@ ALWAYS_INLINE static inline int array_size(const void *array)
 /** @brief Returns a shallow copy of the input array.  */
 #define array_copy(basic_type, ptr_array) \
       ((basic_type *)(_array_copy_helper(sizeof(basic_type), (void *)(ptr_array))))
-
-#endif /* ARRAY_H */

@@ -1,12 +1,9 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-#ifndef NLUA_PLAYER
-#  define NLUA_PLAYER
+#pragma once
 
 #include "nlua.h"
 
 /* individual library stuff */
 int nlua_loadPlayer( nlua_env env );
-
-#endif /* NLUA_PLAYER */

@@ -1,8 +1,7 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-#ifndef INFO_H
-#  define INFO_H
+#pragma once
 
 #define INFO_MAIN       0 /**< Main info window. */
 #define INFO_SHIP       1 /**< Ship info window. */
@@ -17,5 +16,3 @@
  */
 void menu_info( int window );
 void info_update (void);
-
-#endif /* INFO_H */

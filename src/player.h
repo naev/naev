@@ -1,8 +1,7 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-#ifndef PLAYER_H
-#  define PLAYER_H
+#pragma once
 
 #include <time.h>
 
@@ -291,5 +290,3 @@ void player_autohail (void);
 void player_toggleMouseFly (void);
 void player_brake (void);
 void player_stealth (void);
-
-#endif /* PLAYER_H */

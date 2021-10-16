@@ -1,12 +1,7 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
-
-
-#ifndef NCOMPAT_H
-#  define NCOMPAT_H
-
+#pragma once
 
 /* Standard specific. */
 /**
@@ -30,7 +25,3 @@
 #else
 #define HAS_POSIX 0
 #endif
-
-
-#endif /* NCOMPAT_H */
-

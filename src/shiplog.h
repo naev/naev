@@ -1,11 +1,7 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
-
-#ifndef SHIPLOG_H
-#  define SHIPLOG_H
-
+#pragma once
 
 /** @cond */
 #include <stdio.h>
@@ -41,6 +37,3 @@ void shiplog_listLogsOfType( const char *type, int *nlogs, char ***logsOut, int 
 int shiplog_getIdOfLogOfType ( const char *type, int selectedLog );
 void shiplog_listLog( int logid, const char *type,int *nentries, char ***logentries,int incempty );
 int shiplog_getID( const char *idstr );
-
-
-#endif

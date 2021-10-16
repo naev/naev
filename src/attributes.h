@@ -57,7 +57,6 @@
    #define ALWAYS_INLINE
 #endif
 
-
 // User defined diagnosis
 #if __has_attribute( diagnose_if )
    #define WARN_IF( c, m ) __attribute__( ( diagnose_if( c, m, "warning" ) ) )

@@ -1,17 +1,11 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
-
-
-#ifndef SPFX_H
-#  define SPFX_H
-
+#pragma once
 
 #include "ntime.h"
 #include "opengl.h"
 #include "physics.h"
-
 
 #define SPFX_LAYER_FRONT   0 /**< Front spfx layer. */
 #define SPFX_LAYER_MIDDLE  1 /**< Middle spfx layer. */
@@ -25,7 +19,6 @@
 #define SPFX_SHAKE_MOD     1.0 /**< Rumblemax parameter */
 #define SPFX_SHAKE_MAX     1.0 /**< Rumblemax parameter */
 
-
 /**
  * @brief Represents the appearance characteristics for a given trail mode.
  */
@@ -33,7 +26,6 @@ typedef struct TrailStyle_ {
    glColour col; /**< Colour. */
    float thick;  /**< Thickness. */
 } TrailStyle;
-
 
 /**
  * @brief IDs for the type of emission. (It's modal: one trail can have segments of different types.)
@@ -44,7 +36,6 @@ typedef enum TrailMode_ {
 } TrailMode;
 
 #define MODE_TAGS {"idle", "glow", "afterburn", "jumping", "none",}
-
 
 /**
  * @brief represents a set of styles for trails.
@@ -58,13 +49,11 @@ typedef struct TrailSpec_ {
    int nebula;      /**< Whether or not the trail should be only active in the nebula. */
 } TrailSpec;
 
-
 typedef struct TrailPoint {
    GLfloat x, y;     /**< Control points for the trail. */
    GLfloat t;        /**< Timer, normalized to the time to live of the trail (starts at 1, ends at 0). */
    TrailMode mode;   /**< Type of trail emission at this point. */
 } TrailPoint;
-
 
 /**
  * @struct Trail_spfx
@@ -92,7 +81,6 @@ typedef struct Trail_spfx_ {
 /** @brief Returns the last element of a trail's circular buffer.  */
 #define trail_back( trail ) trail_at( trail, (trail)->iwrite-1 )
 
-
 /*
  * stack manipulation
  */
@@ -102,7 +90,6 @@ void spfx_add( const int effect,
       const double px, const double py,
       const double vx, const double vy,
       const int layer );
-
 
 /*
  * stack mass manipulation functions
@@ -115,25 +102,19 @@ void spfx_trail_sample( Trail_spfx* trail, double x, double y, TrailMode mode, i
 void spfx_trail_remove( Trail_spfx* trail );
 void spfx_trail_draw( const Trail_spfx* trail );
 
-
 /*
  * Misc effects.
  */
 void spfx_shake( double mod );
 void spfx_damage( double mod );
 
-
 /*
  * other effects
  */
 void spfx_cinematic (void);
-
 
 /*
  * spfx effect loading and freeing
  */
 int spfx_load (void);
 void spfx_free (void);
-
-
-#endif /* SPFX_H */

@@ -1,16 +1,11 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
-
-#ifndef GUI_H
-#  define GUI_H
-
+#pragma once
 
 #include "opengl.h"
 #include "pilot.h"
 #include "space.h"
-
 
 /*
  * enums
@@ -20,7 +15,6 @@ typedef enum RadarShape_ {
    RADAR_CIRCLE /**< Circular radar. */
 } RadarShape; /**< Player's radar shape. */
 
-
 /*
  * Loading/cleaning up.
  */
@@ -29,7 +23,6 @@ void gui_free (void);
 int gui_load( const char* name );
 void gui_cleanup (void);
 void gui_reload (void);
-
 
 /*
  * Triggers.
@@ -43,7 +36,7 @@ void gui_updateFaction (void);
 void gui_setGeneric( Pilot* pilot );
 
 /*
- * render
+ * Rendering.
  */
 void gui_renderReticles( double dt );
 void gui_render( double dt );
@@ -57,7 +50,6 @@ void gui_clearMessages (void);
 void gui_cooldownEnd (void);
 void gui_messageScrollUp( int lines );
 void gui_messageScrollDown( int lines );
-
 
 /*
  * Map overlay
@@ -82,7 +74,6 @@ void gui_radarRender( double x, double y );
 void gui_radarGetRes( double* res );
 int gui_radarClickEvent( SDL_Event* event );
 
-
 /*
  * Render radar.
  */
@@ -92,13 +83,11 @@ void gui_renderPilot( const Pilot* p, RadarShape shape, double w, double h, doub
 void gui_renderAsteroid( const Asteroid* a, double w, double h, double res, int overlay );
 void gui_renderPlayer( double res, int overlay );
 
-
 /*
  * Targeting.
  */
 void gui_targetPlanetGFX( glTexture *gfx );
 void gui_targetPilotGFX( glTexture *gfx );
-
 
 /*
  * Mouse.
@@ -107,9 +96,8 @@ int gui_handleEvent( SDL_Event *evt );
 void gui_mouseClickEnable( int enabel );
 void gui_mouseMoveEnable( int enabel );
 
-
 /*
- * misc
+ * Misc.
  */
 void gui_setViewport( double x, double y, double w, double h );
 void gui_clearViewport (void);
@@ -121,6 +109,3 @@ glTexture* gui_hailIcon (void);
 char* gui_pick (void);
 int gui_onScreenPilot( double *rx, double *ry, const Pilot *pilot );
 int gui_onScreenAsset( double *rx, double *ry, const JumpPoint *jp, const Planet *pnt );
-
-
-#endif /* GUI_H */

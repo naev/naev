@@ -1,9 +1,7 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
-#ifndef ECONOMY_H
-#  define ECONOMY_H
+#pragma once
 
 /** @cond */
 #include <stdint.h>
@@ -11,7 +9,6 @@
 
 #include "opengl.h"
 #include "space.h"
-
 
 /*
  * Economy stuff.
@@ -40,5 +37,3 @@ credits_t economy_getPriceAtTime( const Commodity *com, const StarSystem *sys, c
 void economy_initialiseCommodityPrices(void);
 int economy_getAveragePrice( const Commodity *com, credits_t *mean, double *std );
 void economy_initialiseSingleSystem( StarSystem *sys, Planet *planet );
-
-#endif /* ECONOMY_H */

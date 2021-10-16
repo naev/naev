@@ -1,8 +1,7 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-#ifndef COLOUR_H
-#  define COLOUR_H
+#pragma once
 
 /** @cond */
 #include "glad.h"
@@ -33,5 +32,3 @@ void col_gammaToLinear( glColour *c );
 void col_hsv2rgb( glColour *c, float h, float s, float v );
 void col_rgb2hsv( float *h, float *s, float *v, float r, float g, float b );
 void col_blend( glColour *blend, const glColour *fg, const glColour *bg, float alpha );
-
-#endif /* COLOUR_H */

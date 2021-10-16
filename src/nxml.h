@@ -1,11 +1,7 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
-
-
-#ifndef XML_H
-#  define XML_H
+#pragma once
 
 /** @cond */
 #include <errno.h>
@@ -28,7 +24,6 @@
 
 #include "log.h"
 #include "opengl.h"
-
 
 #define XML_NODE_START  1
 #define XML_NODE_TEXT   3
@@ -58,7 +53,6 @@
 #define xml_getULong(n)       ((xml_get(n) == NULL) ? 0  : strtoull(xml_raw(n), (char**)NULL, 10))
 #define xml_getFloat(n)       ((xml_get(n) == NULL) ? 0. : atof(xml_raw(n)))
 #define xml_getStrd(n)        ((xml_get(n) == NULL) ? NULL : strdup(xml_raw(n)))
-
 
 /*
  * reader crap
@@ -147,7 +141,6 @@ do {if (xmlTextWriterStartDocument(writer, NULL, "UTF-8", NULL) < 0) { \
 do {if (xmlTextWriterEndDocument(w) < 0) { \
    ERR("xmlw: unable to end document"); return -1; } } while (0)
 
-
 /*
  * Functions for generic complex reading.
  */
@@ -162,6 +155,3 @@ int xml_parseTime( xmlNodePtr node, time_t *t );
  */
 void xmlw_setParams( xmlTextWriterPtr writer );
 int xmlw_saveTime( xmlTextWriterPtr writer, const char *name, time_t t );
-
-
-#endif /* XML_H */

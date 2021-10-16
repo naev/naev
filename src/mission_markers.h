@@ -1,8 +1,7 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-#ifndef MISSION_MARKERS_H
-#  define MISSION_MARKERS_H
+#pragma once
 
 /**
  * @brief Different type of markers.
@@ -26,5 +25,3 @@ typedef struct MissionMarker_ {
    int objid;              /**< ID of marked system. */
    MissionMarkerType type; /**< Marker type. */
 } MissionMarker;
-
-#endif /* MISSION_MARKERS_H */

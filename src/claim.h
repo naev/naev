@@ -1,8 +1,7 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-#ifndef CLAIM_H
-#  define CLAIM_H
+#pragma once
 
 #include "nxml.h"
 
@@ -34,5 +33,3 @@ void claim_activate( Claim_t *claim );
  */
 int claim_xmlSave( xmlTextWriterPtr writer, const Claim_t *claim );
 Claim_t *claim_xmlLoad( xmlNodePtr parent );
-
-#endif /* CLAIM_H */

@@ -1,17 +1,11 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
-
-
-#ifndef PHYSICS_H
-#  define PHYSICS_H
-
+#pragma once
 
 /** @cond */
 #include <math.h>
 /** @endcond */
-
 
 #define VX(v)     ((v).x) /**< Gets the X component of a vector. */
 #define VY(v)     ((v).y) /**< Gets the Y component of a vector. */
@@ -32,7 +26,6 @@
 #define SOLID_UPDATE_RK4      0 /**< Default Runge-Kutta 3-4 update. */
 #define SOLID_UPDATE_EULER    1 /**< Simple Euler update. */
 
-
 /**
  * @brief Represents a 2d vector.
  */
@@ -43,12 +36,10 @@ typedef struct Vector2d_ {
    double angle; /**< Angle of the vector. */
 } Vector2d; /**< 2 dimensional vector. */
 
-
 /*
  * misc
  */
 double angle_diff( const double ref, double a );
-
 
 /*
  * vector manipulation
@@ -65,7 +56,6 @@ double vect_dot( Vector2d* a, Vector2d* b );
 void vect_uv(double* u, double *v, Vector2d* source, Vector2d* reference);
 void vect_uv_decomp(Vector2d* u, Vector2d* v, Vector2d* reference);
 
-
 /**
  * @brief Represents a solid in the game.
  */
@@ -80,7 +70,6 @@ typedef struct Solid_ {
    void (*update)( struct Solid_*, const double ); /**< Update method. */
 } Solid;
 
-
 /*
  * solid manipulation
  */
@@ -90,8 +79,3 @@ void solid_init( Solid* dest, const double mass, const double dir,
 Solid* solid_create( const double mass, const double dir,
       const Vector2d* pos, const Vector2d* vel, int update );
 void solid_free( Solid* src );
-
-
-#endif /* PHYSICS_H */
-
-

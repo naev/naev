@@ -1,8 +1,7 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-#ifndef ESCORT_H
-#  define ESCORT_H
+#pragma once
 
 #include "physics.h"
 #include "pilot.h"
@@ -26,5 +25,3 @@ int escorts_return( Pilot *parent );
 int escorts_clear( Pilot *parent );
 int escorts_jump( Pilot *parent, JumpPoint *jp );
 int escort_playerCommand( Pilot *e );
-
-#endif /* ESCORT_H */

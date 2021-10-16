@@ -1,8 +1,7 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-#ifndef SHIPSTATS_H
-#  define SHIPSTATS_H
+#pragma once
 
 #include "nxml.h"
 #include "nlua.h"
@@ -328,5 +327,3 @@ int ss_statsSet( ShipStats *s, const char *name, double value, int overwrite );
 double ss_statsGet( const ShipStats *s, const char *name );
 int ss_statsGetLua( lua_State *L, const ShipStats *s, const char *name, int internal );
 int ss_statsGetLuaTable( lua_State *L, const ShipStats *s, int internal );
-
-#endif /* SHIPSTATS_H */

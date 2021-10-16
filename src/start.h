@@ -1,9 +1,7 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
-#ifndef START_H
-#  define START_H
+#pragma once
 
 #include "ntime.h"
 
@@ -25,5 +23,3 @@ const char* start_system (void);
 void start_position( double *x, double *y );
 const char* start_mission (void);
 const char* start_event (void);
-
-#endif /* START_H */

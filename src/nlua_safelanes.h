@@ -1,9 +1,7 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
-#ifndef NLUA_SAFELANES_H
-#  define NLUA_SAFELANES_H
+#pragma once
 
 #include "nlua.h"
 
@@ -11,5 +9,3 @@
 
 /* Library loading */
 int nlua_loadSafelanes( nlua_env env );
-
-#endif /* NLUA_SAFELANES_H */

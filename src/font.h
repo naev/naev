@@ -1,22 +1,14 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
-
-
-#ifndef FONT_H
-#  define FONT_H
-
+#pragma once
 
 #include "nstring.h"
 #include "opengl.h"
 
-
 #define FONT_COLOUR_CODE      '#'
 
-
 #define FONT_FLAG_DONTREUSE   (1<<1) /**< Don't reuse the font if it's loaded somewhere else. */
-
 
 /**
  * @brief Represents a font in memory.
@@ -29,14 +21,12 @@ extern glFont gl_defFont; /**< Default font. */
 extern glFont gl_smallFont; /**< Small font. */
 extern glFont gl_defFontMono; /**< Default mono font. */
 
-
 /**
  * @brief Evil hack to allow restoring, yes it makes me cry myself to sleep.
  */
 typedef struct glFontRestore_s {
    const glColour *col; /**< Colour to restore. */
 } glFontRestore;
-
 
 /**
  * @brief The state of a line iteration. This matches the process of rendering text into an on-screen box:
@@ -56,7 +46,6 @@ typedef struct glPrintLineIterator_s {
    uint8_t no_soft_breaks;      /**< Disable word wrapping, e.g. for one-line input widgets. */
 } glPrintLineIterator;
 
-
 /*
  * glFont loading / freeing
  *
@@ -66,7 +55,6 @@ int gl_fontInit( glFont* font, const char *fname, const unsigned int h, const ch
 int gl_fontAddFallback( glFont* font, const char *fname, const char *prefix );
 int gl_fontAddFallbackFont( glFont* font, const glFont *f );
 void gl_freeFont( glFont* font );
-
 
 /*
  * const char printing
@@ -89,7 +77,6 @@ int gl_printTextRaw( const glFont *ft_font,
 void gl_printMarkerRaw( const glFont *ft_font,
       const double x, const double y,
       const glColour* c, const char *text);
-
 
 /*
  * printf style printing.
@@ -129,7 +116,3 @@ void gl_printStore( glFontRestore *restore, const char *text );
 
 /* Misc stuff. */
 void gl_fontSetFilter( const glFont *ft_font, GLint min, GLint mag );
-
-
-#endif /* FONT_H */
-

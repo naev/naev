@@ -1,12 +1,7 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
-
-
-#ifndef MAPDATA_H
-#  define MAPDATA_H
-
+#pragma once
 
 #include "space.h"
 
@@ -20,5 +15,3 @@ struct OutfitMapData_s {
    JumpPoint **jumps; /**< jump points to mark as known. */
    Planet **assets; /**< assets to mark as known. */
 };
-
-#endif /* MAPDATA_H */

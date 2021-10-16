@@ -1,10 +1,7 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
-
-#ifndef MUSIC_OPENAL_H
-#  define MUSIC_OPENAL_H
+#pragma once
 
 /** @cond */
 #include "SDL_rwops.h"
@@ -12,20 +9,17 @@
 
 #include "nopenal.h"
 
-
 /*
  * Init/exit.
  */
 int music_al_init (void);
 void music_al_exit (void);
 
-
 /*
  * Loading.
  */
 int music_al_load( const char* name, SDL_RWops *rw );
 void music_al_free (void);
-
 
 /*
  * Music control.
@@ -39,5 +33,3 @@ void music_al_pause (void);
 void music_al_resume (void);
 void music_al_setPos( double sec );
 int music_al_isPlaying (void);
-
-#endif /* MUSIC_OPENAL_H */

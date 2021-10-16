@@ -1,8 +1,7 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-#ifndef NLUA_FONT_H
-#  define NLUA_FONT_H
+#pragma once
 
 #include "font.h"
 #include "nlua.h"
@@ -21,5 +20,3 @@ glFont* lua_tofont( lua_State *L, int ind );
 glFont* luaL_checkfont( lua_State *L, int ind );
 glFont* lua_pushfont( lua_State *L, glFont font );
 int lua_isfont( lua_State *L, int ind );
-
-#endif /* NLUA_FONT_H */

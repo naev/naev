@@ -1,12 +1,7 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
-
-
-#ifndef TOOLKIT_H
-#  define TOOLKIT_H
-
+#pragma once
 
 /** @cond */
 #include "SDL.h"
@@ -16,9 +11,7 @@
 #include "opengl.h"
 #include "tk/widget.h"
 
-
 int toolkit_isOpen (void);
-
 
 /*
  * creation
@@ -48,7 +41,6 @@ void window_raise( unsigned int wid );
 void window_lower( unsigned int wid );
 int window_setDisplayname( unsigned int wid, const char *displayname );
 
-
 /*
  * get
  */
@@ -77,19 +69,16 @@ void window_setParent( unsigned int wid, unsigned int parent );
 unsigned int window_getParent( unsigned int wid );
 void window_onClose( unsigned int wid, void (*fptr)(unsigned int,const char*) );
 
-
 /*
  * data
  */
 void window_setData( unsigned int wid, void *data );
 void* window_getData( unsigned int wid );
 
-
 /*
  * render
  */
 void toolkit_render (void);
-
 
 /*
  * input
@@ -98,20 +87,14 @@ int toolkit_input( SDL_Event* event );
 void toolkit_update (void);
 void toolkit_clearKey (void);
 
-
 /*
  * init/exit
  */
 int toolkit_init (void);
 void toolkit_exit (void);
 
-
 /*
  * hacks
  */
 void toolkit_reposition (void);
 void toolkit_delay (void);
-
-
-#endif /* TOOLKIT_H */
-

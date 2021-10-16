@@ -1,8 +1,7 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-#ifndef BACKGROUND_H
-#  define BACKGROUND_H
+#pragma once
 
 #include "colour.h"
 #include "opengl.h"
@@ -30,5 +29,3 @@ void background_free (void);
 
 /* Get image textures */
 glTexture** background_getTextures (void);
-
-#endif /* BACKGROUND_H */

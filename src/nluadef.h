@@ -1,11 +1,7 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
-
-#ifndef NLUADEF_H
-# define NLUADEF_H
-
+#pragma once
 
 /** @cond */
 #include <lauxlib.h>
@@ -15,7 +11,6 @@
 
 #include "attributes.h"
 #include "log.h"
-
 
 /*
  * A number of lua error functions don't ruturn, but arnen't marked
@@ -54,7 +49,6 @@ NORETURN extern int luaL_typerror( lua_State *L, int narg, const char *tname );
       return 0; \
    }
 
-
 /*
  * Error stuff.
  */
@@ -70,6 +64,3 @@ NORETURN extern int luaL_typerror( lua_State *L, int narg, const char *tname );
    } \
    lua_pop(L, 1); \
 }
-
-
-#endif /* NLUADEF_H */

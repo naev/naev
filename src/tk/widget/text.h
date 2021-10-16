@@ -1,15 +1,9 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
-
-
-#ifndef WGT_TEXT_H
-#  define WGT_TEXT_H
-
+#pragma once
 
 #include "font.h"
-
 
 /**
  * @brief The text widget data.
@@ -21,7 +15,6 @@ typedef struct WidgetTextData_ {
    int centered; /**< 1 if text is centered, 0 if it isn't. */
 } WidgetTextData;
 
-
 /* Required functions. */
 void window_addText( unsigned int wid,
       const int x, const int y, /* position */
@@ -32,6 +25,3 @@ void window_addText( unsigned int wid,
 /* Misc functions. */
 void window_modifyText( unsigned int wid, const char *name, const char *newstring );
 int  window_getTextHeight( unsigned int wid, const char *name );
-
-#endif /* WGT_TEXT_H */
-

@@ -1,15 +1,9 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
-
-
-#ifndef WGT_INPUT_H
-#  define WGT_INPUT_H
-
+#pragma once
 
 #include "font.h"
-
 
 /**
  * @brief The input widget data.
@@ -26,7 +20,6 @@ typedef struct WidgetInputData_ {
    glFont *font; /**< Font to use. */
    void (*fptr) (unsigned int,const char*); /**< Modify callback - triggered on text input. */
 } WidgetInputData;
-
 
 /* Required functions. */
 void window_addInput( unsigned int wid,
@@ -48,7 +41,3 @@ void window_setInputCallback( unsigned int wid, const char* name, void (*fptr)(u
 #define INPUT_FILTER_NUMBER     "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ[]{}()-=*/\\'\"~<>!@#$%^&|_`"
 /* For inputting resolution, we want numbers and 'x'. */
 #define INPUT_FILTER_RESOLUTION "abcdefghijklmnopqrstuvwyzABCDEFGHIJKLMNOPQRSTUVWXYZ[]{}()-=*/\\'\"~<>!@#$%^&|_`"
-
-
-#endif /* WGT_INPUT_H */
-

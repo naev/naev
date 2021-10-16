@@ -1,10 +1,7 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
-
-#ifndef OPENGL_H
-#  define OPENGL_H
+#pragma once
 
 /** @cond */
 #include <stdint.h>
@@ -25,9 +22,7 @@
 #include "physics.h"
 #include "shaders.gen.h"
 
-
 #define OPENGL_NUM_FBOS    3 /**< Number of FBOs to allocate and deal with. */
-
 
 /*
  * Contains info about the opengl screen
@@ -82,13 +77,11 @@ extern gl_Matrix4 gl_view_matrix;
 #define  SCREEN_W gl_screen.w /**< Screen width. */
 #define  SCREEN_H gl_screen.h /**< Screen height. */
 
-
 /*
  * used with colour.h
  */
 #define COLOUR(x)    glColor4d((x).r,(x).g,(x).b,(x).a) /**< Change colour. */
 #define ACOLOUR(x,a) glColor4d((x).r,(x).g,(x).b,a) /**< Change colour and override alpha. */
-
 
 /*
  * initialization / cleanup
@@ -97,12 +90,10 @@ int gl_init (void);
 void gl_exit (void);
 void gl_resize (void);
 
-
 /*
  * Extensions and version.
  */
 GLboolean gl_hasVersion( int major, int minor );
-
 
 /*
  * Viewport.
@@ -113,7 +104,6 @@ void gl_viewport( int x, int y, int w, int h );
 void gl_defViewport (void);
 void gl_setDefViewport( int x, int y, int w, int h );
 int gl_setupFullscreen (void);
-
 
 /*
  * misc
@@ -128,7 +118,3 @@ void gl_checkHandleError( const char *func, int line );
 #else /* DEBUGGING */
 #define gl_checkErr() /**< Hack to ignore errors when debugging. */
 #endif /* DEBUGGING */
-
-
-#endif /* OPENGL_H */
-

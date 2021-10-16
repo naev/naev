@@ -1,8 +1,7 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-#ifndef PILOT_WEAPON_H
-#  define PILOT_WEAPON_H
+#pragma once
 
 #include "pilot.h"
 
@@ -59,5 +58,3 @@ void pilot_afterburnOver ( Pilot *p );
 int pilot_outfitOff( Pilot *p, PilotOutfitSlot *o );
 int pilot_outfitOffAll( Pilot *p );
 int pilot_outfitOn( Pilot *p, PilotOutfitSlot *o );
-
-#endif /* PILOT_WEAPON_H */

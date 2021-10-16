@@ -1,12 +1,7 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
-
-
-#ifndef AI_H
-#  define AI_H
-
+#pragma once
 
 #include "nlua.h"
 #include "physics.h"
@@ -15,18 +10,14 @@
 struct Pilot_;
 typedef struct Pilot_ Pilot;
 
-
 #define AI_MEM          "__mem" /**< Internal pilot memory. */
-
 
 #define MIN_DIR_ERR     5.0*M_PI/180. /**< Minimum direction error. */
 #define MAX_DIR_ERR     0.5*M_PI/180. /**< Maximum direction error. */
 #define MIN_VEL_ERR     5.0 /**< Minimum velocity error. */
 
-
 /* maximum number of AI timers */
 #define MAX_AI_TIMERS   2 /**< Max amount of AI timers. */
-
 
 /**
  * @struct Task
@@ -44,7 +35,6 @@ typedef struct Task_ {
    int dat; /**< Lua reference to the data (index in registry). */
 } Task;
 
-
 /**
  * @struct AI_Profile
  *
@@ -58,19 +48,16 @@ typedef struct AI_Profile_ {
    int ref_refuel; /**< Profile refuel reference function. */
 } AI_Profile;
 
-
 /*
  * misc
  */
 AI_Profile* ai_getProfile( char* name );
-
 
 /*
  * init/exit
  */
 int ai_load (void);
 void ai_exit (void);
-
 
 /*
  * Init, destruction.
@@ -96,6 +83,3 @@ void ai_refuel( Pilot* refueler, unsigned int target );
 void ai_getDistress( Pilot *p, const Pilot *distressed, const Pilot *attacker );
 void ai_think( Pilot* pilot, const double dt );
 void ai_setPilot( Pilot *p );
-
-
-#endif /* AI_H */

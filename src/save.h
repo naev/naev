@@ -1,14 +1,7 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
-
-#ifndef SAVE_H
-#  define SAVE_H
-
+#pragma once
 
 int save_all (void);
 void save_reload (void);
-
-
-#endif /* SAVE_H */
