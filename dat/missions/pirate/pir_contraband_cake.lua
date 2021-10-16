@@ -24,7 +24,7 @@
 local pir = require "common.pirate"
 local portrait = require 'portrait'
 local vn = require 'vn'
-require "common.cargo"
+local car = require "common.cargo"
 local fmt = require "format"
 
 

@@ -20,7 +20,7 @@
 
 ]]--
 local pir = require "common.pirate"
-require "common.cargo"
+local car = require "common.cargo"
 local fmt = require "format"
 
 
