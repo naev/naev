@@ -158,7 +158,7 @@ function default_hit( current, amount, source, secondary )
             -- Positive kill, which means an enemy of this faction got killed.
             -- We need to check if this happened in the faction's territory, otherwise it doesn't count.
             -- NOTE: virtual assets are NOT counted when determining territory!
-            for _, planet in ipairs(system.cur():planets()) do
+            for _k, planet in ipairs(system.cur():planets()) do
                 if planet:faction() == _fthis then
                    -- Planet belonging to this faction found. Modify reputation.
                    f = math.min( cap, f + math.min(delta[2], amount * clerp( f, 0, 1, cap, 0.2 )) )
@@ -168,7 +168,7 @@ function default_hit( current, amount, source, secondary )
             end
             local witness = pilot.get( { _fthis } )
             if not has_planet and witness then
-               for _, pilot in ipairs(witness) do
+               for _k, pilot in ipairs(witness) do
                   if player.pos():dist( pilot:pos() ) < 5000 then
                      -- Halve impact relative to a normal secondary hit.
                      f = math.min( cap, f + math.min(delta[2], amount * 0.5 * clerp( f, 0, 1, cap, 0.2 )) )
