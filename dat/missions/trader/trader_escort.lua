@@ -27,7 +27,7 @@
 local pir = require "common.pirate"
 local fleet = require "fleet"
 local lmisn = require "lmisn"
-require "cargo_common"
+require "common.cargo"
 local fmt = require "format"
 
 

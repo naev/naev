@@ -37,7 +37,7 @@
 --
 --]]
 
-require "cargo_common"
+require "common.cargo"
 local fmt = require "format"
 
 misn_title = _("SR: %s pilgrimage transport for %s-class citizen")

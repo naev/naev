@@ -24,7 +24,7 @@
 --
 --]]
 
-require "cargo_common"
+require "common.cargo"
 local neu = require "common.neutral"
 
 

@@ -20,7 +20,7 @@
 
 ]]--
 
-require "cargo_common"
+require "common.cargo"
 local fmt = require "format"
 
 
@@ -41,7 +41,7 @@ osd_msg1 = _("Fly to %s in the %s system before %s\n(%s remaining)")
 --]]
 
 
--- This is in cargo_common, but we need to increase the range
+-- This is in common.cargo, but we need to increase the range
 function cargo_selectMissionDistance ()
    return rnd.rnd( 5, 12 )
 end

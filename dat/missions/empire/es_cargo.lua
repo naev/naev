@@ -17,7 +17,7 @@
 
 ]]--
 local pir = require "common.pirate"
-require "cargo_common"
+require "common.cargo"
 local fmt = require "format"
 
 misn_desc  = _("Official Empire cargo transport to %s in the %s system.")

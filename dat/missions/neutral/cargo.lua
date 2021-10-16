@@ -29,7 +29,7 @@
 local pir = require "common.pirate"
 local fmt = require "format"
 local vntk = require "vntk"
-require "cargo_common"
+require "common.cargo"
 
 misn_desc = {}
 -- Note: indexed from 0 to match mission tiers.

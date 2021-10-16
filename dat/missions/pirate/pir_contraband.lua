@@ -20,7 +20,7 @@
 
 ]]--
 local pir = require "common.pirate"
-require "cargo_common"
+require "common.cargo"
 local fmt = require "format"
 
 
@@ -40,7 +40,7 @@ cargo_always_available = true
 --   and pays a lot more then the rush missions
 --]]
 
--- This is in cargo_common, but we need to increase the range
+-- This is in common.cargo, but we need to increase the range
 function cargo_selectMissionDistance ()
    return rnd.rnd( 5, 10 )
 end

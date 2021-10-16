@@ -24,7 +24,7 @@
 local pir = require "common.pirate"
 local portrait = require 'portrait'
 local vn = require 'vn'
-require "cargo_common"
+require "common.cargo"
 local fmt = require "format"
 
 
@@ -41,7 +41,7 @@ cargo_use_hidden = false
 -- Always available
 cargo_always_available = true
 
--- This is in cargo_common, but we need to increase the range
+-- This is in common.cargo, but we need to increase the range
 function cargo_selectMissionDistance ()
    return rnd.rnd( 5, 10 )
 end

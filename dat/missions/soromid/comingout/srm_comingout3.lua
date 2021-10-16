@@ -25,7 +25,7 @@
 --]]
 local lmisn = require "lmisn"
 local fmt = require "format"
-require "cargo_common"
+require "common.cargo"
 local srm = require "common.soromid"
 
 title = {}

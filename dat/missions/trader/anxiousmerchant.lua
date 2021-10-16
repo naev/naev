@@ -33,7 +33,7 @@
 
 ]]--
 
-require "cargo_common"
+require "common.cargo"
 local fmt = require "format"
 local portrait = require "portrait"
 

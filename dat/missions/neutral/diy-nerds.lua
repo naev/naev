@@ -187,7 +187,7 @@ function accept ()
 
       tk.msg(title[2], string.format(text[2], destPlanet:name()))
       local distance = vec2.dist( planet.pos(srcPlanet), planet.pos(destPlanet) )
-      local stuperpx = 1 / player.pilot():stats().speed_max * 30 -- from cargo_common
+      local stuperpx = 1 / player.pilot():stats().speed_max * 30 -- from common.cargo
       expiryDate = time.get() + time.create(0, 0, 10010 + distance * stuperpx + 3300 ) -- takeoff + min travel time + leeway
 
       addNerdCargo()
