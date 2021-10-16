@@ -115,10 +115,9 @@ function create ()
       local butthead = lords[r]
       table.remove( lords, r )
       local sponser = lords[ rnd.rnd(1,#lords) ]
-      table.insert(msg, fmt.f(_("I hereby declare {butthead} is a {badword}. -{sponser}"),
-            {butthead=butthead, badword=badwords[rnd.rnd(1,#badwords)], sponser=sponser}))
-      table.insert(msg, fmt.f(_("Let it be known that {butthead} is a {badword}. -{sponser}"),
-            {butthead=butthead, badword=badwords[rnd.rnd(1,#badwords)], sponser=sponser}))
+      local params = {butthead=butthead, badword=badwords[rnd.rnd(1,#badwords)], sponser=sponser}
+      table.insert(msg, fmt.f(_("I hereby declare {butthead} is a {badword}. -{sponser}"), params))
+      table.insert(msg, fmt.f(_("Let it be known that {butthead} is a {badword}. -{sponser}"), params))
    end
 
    -- Soromid messages
