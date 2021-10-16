@@ -58,7 +58,7 @@ function create()
    -- This line stops the tutorial updater from running
    var.push( "tut_update", "0.9.0" )
 
-   hook.timer(5.0, "timer_tutorial")
+   hook.timer(3.0, "timer_tutorial")
 end
 
 function timer_tutorial()
