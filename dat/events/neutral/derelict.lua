@@ -17,7 +17,7 @@
 local vntk = require 'vntk'
 local fmt = require 'format'
 
-mission_list = {
+local mission_list = {
    --[[
    {
       name = "Mission Name",
@@ -134,7 +134,7 @@ function goodevent()
       end,
       function ()
          local factions = {"Empire", "Dvaered", "Sirius", "Soromid", "Za'lek", "Frontier"}
-         rndfact = factions[rnd.rnd(1, #factions)]
+         local rndfact = factions[rnd.rnd(1, #factions)]
          vntk.msg(gtitle, fmt.f(_([[This ship looks like any old piece of scrap at a glance, but it is actually an antique, one of the very first of its kind ever produced! Museums all over the galaxy would love to have a ship like this. You plant a beacon on the derelict to mark it for salvaging, and contact the {factname} authorities. Your reputation with them has slightly improved.]]), {factname=rndfact}))
          faction.modPlayerSingle(rndfact, 3)
       end,
@@ -188,7 +188,6 @@ function goodevent()
    goodevent_list[ rnd.rnd(1,#goodevent_list) ]()
    destroyevent()
 end
-
 
 function badevent()
    local btitle = _("Oh no!")
