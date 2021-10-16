@@ -29,12 +29,6 @@ misn_desc = _("Smuggling contraband goods to %s in the %s system.%s")
 osd_title = _("Smuggling %s")
 osd_msg1 = _("Fly to %s in the %s system before %s\n(%s remaining)")
 
--- Use hidden jumps
-cargo_use_hidden = false
-
--- Always available
-cargo_always_available = true
-
 --[[
 --   Pirates shipping missions are always timed, but quite lax on the schedules
 --   and pays a lot more then the rush missions
@@ -63,8 +57,8 @@ function create()
 
    origin_p, origin_s = planet.cur()
 
-   -- target destination
-   destplanet, destsys, numjumps, traveldist, cargo, avgrisk, tier = cargo_calculateRoute()
+   -- target destination. Override "always_available" to true.
+   destplanet, destsys, numjumps, traveldist, cargo, avgrisk, tier = car.calculateRoute( cargo_selectMissionDistance, true )
    if destplanet == nil or pir.factionIsPirate( destplanet:faction() ) then
       misn.finish(false)
    end
@@ -170,9 +164,9 @@ function create()
    end
    misn.markerAdd(destplanet, "computer")
    if pir.factionIsPirate( planet.cur():faction() ) then
-      cargo_setDesc( misn_desc:format( destplanet:name(), destsys:name(), faction_text ), cargo, amount, destplanet, timelimit )
+      car.setDesc( misn_desc:format( destplanet:name(), destsys:name(), faction_text ), cargo, amount, destplanet, timelimit )
    else
-      cargo_setDesc( misn_desc:format( destplanet:name(), destsys:name(), faction_text ) .. "\n\n" .. _("#rWARNING:#0 Contraband is illegal in most systems and you will face consequences if caught by patrols."), cargo, amount, destplanet, timelimit )
+      car.setDesc( misn_desc:format( destplanet:name(), destsys:name(), faction_text ) .. "\n\n" .. _("#rWARNING:#0 Contraband is illegal in most systems and you will face consequences if caught by patrols."), cargo, amount, destplanet, timelimit )
    end
 
    misn.setReward( fmt.credits(reward) )
@@ -180,7 +174,7 @@ end
 
 -- Mission is accepted
 function accept()
-   local playerbest = cargoGetTransit( numjumps, traveldist )
+   local playerbest = car.getTransit( numjumps, traveldist )
    if timelimit < playerbest then
       if not tk.yesno( _("Too slow"), string.format(
             _("This shipment must arrive within %s, but it will take at least %s for your ship to reach %s, missing the deadline. Accept the mission anyway?"),

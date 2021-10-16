@@ -17,7 +17,7 @@
 
 ]]--
 local pir = require "common.pirate"
-require "common.cargo"
+local car = require "common.cargo"
 local fmt = require "format"
 
 misn_desc  = _("Official Empire cargo transport to %s in the %s system.")
@@ -43,7 +43,7 @@ function create()
    origin_p, origin_s = planet.cur()
 
    -- target destination
-   destplanet, destsys, numjumps, traveldist, cargo, avgrisk, tier = cargo_calculateRoute()
+   destplanet, destsys, numjumps, traveldist, cargo, avgrisk, tier = car.calculateRoute()
    if destplanet == nil then
       misn.finish(false)
    end
@@ -88,13 +88,13 @@ function create()
    misn.setTitle( string.format(
       _("ES: Cargo transport to %s in %s (%s)"), destplanet:name(), destsys:name(), fmt.tonnes(amount) ) )
    misn.markerAdd(destsys, "computer")
-   cargo_setDesc( misn_desc:format( destplanet:name(), destsys:name() ), cargo, amount, destplanet, timelimit, piracyrisk );
+   car.setDesc( misn_desc:format( destplanet:name(), destsys:name() ), cargo, amount, destplanet, timelimit, piracyrisk )
    misn.setReward( fmt.credits(reward) )
 end
 
 -- Mission is accepted
 function accept()
-   local playerbest = cargoGetTransit( numjumps, traveldist )
+   local playerbest = car.getTransit( numjumps, traveldist )
    if timelimit < playerbest then
       if not tk.yesno( _("Too slow"), string.format(
             _("This shipment must arrive within %s, but it will take at least %s for your ship to reach %s, missing the deadline. Accept the mission anyway?"),

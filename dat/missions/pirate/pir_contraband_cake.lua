@@ -35,12 +35,6 @@ local giverimage = portrait.getFullPath(giverportrait)
 local receivername = _("Burly Individual")
 local receiverimage = portrait.getFullPath(portrait.get())
 
--- Use hidden jumps
-cargo_use_hidden = false
-
--- Always available
-cargo_always_available = true
-
 -- This is in common.cargo, but we need to increase the range
 function cargo_selectMissionDistance ()
    return rnd.rnd( 5, 10 )
@@ -52,8 +46,8 @@ function create()
 
    origin_p, origin_s = planet.cur()
 
-   -- target destination
-   destplanet, destsys, numjumps, traveldist, cargo, avgrisk, tier = cargo_calculateRoute()
+   -- target destination. Override "always_available" to true.
+   destplanet, destsys, numjumps, traveldist, cargo, avgrisk, tier = car.calculateRoute( cargo_selectMissionDistance, true )
    if destplanet == nil or pir.factionIsPirate( destplanet:faction() ) then
       misn.finish(false)
    end

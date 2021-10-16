@@ -20,7 +20,7 @@
 
 ]]--
 
-require "common.cargo"
+local car = require "common.cargo"
 local fmt = require "format"
 
 
@@ -54,7 +54,7 @@ function create()
    origin_p, origin_s = planet.cur()
 
    -- target destination
-   destplanet, destsys, numjumps, traveldist, cargo, avgrisk, tier = cargo_calculateRoute()
+   destplanet, destsys, numjumps, traveldist, cargo, avgrisk, tier = car.calculateRoute( cargo_selectMissionDistance )
    if destplanet == nil then
       misn.finish(false)
    end
@@ -100,13 +100,13 @@ function create()
       _("ES: Long distance cargo transport (%s of %s)"), fmt.tonnes(amount),
       _(cargo) ) )
    misn.markerAdd(destsys, "computer")
-   cargo_setDesc( misn_desc:format( destplanet:name(), destsys:name() ), cargo, amount, destplanet, timelimit, piracyrisk );
+   car.setDesc( misn_desc:format( destplanet:name(), destsys:name() ), cargo, amount, destplanet, timelimit, piracyrisk )
    misn.setReward( fmt.credits(reward) )
 end
 
 -- Mission is accepted
 function accept()
-   local playerbest = cargoGetTransit( numjumps, traveldist )
+   local playerbest = car.getTransit( numjumps, traveldist )
    if timelimit < playerbest then
       if not tk.yesno( _("Too slow"), string.format(
             _("This shipment must arrive within %s, but it will take at least %s for your ship to reach %s, missing the deadline. Accept the mission anyway?"),

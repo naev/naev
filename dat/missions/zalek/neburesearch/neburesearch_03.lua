@@ -23,7 +23,7 @@
 
 --]]
 
-require "common.cargo"
+local car = require "common.cargo"
 local fmt = require "format"
 local zlk = require "common.zalek"
 
@@ -47,7 +47,7 @@ function create()
     lab_coat_price = 25e3
     glasses_price = 40e3
     local numjumps = homeworld_sys:jumpDist(dest_sys, false)
-    local traveldist = cargo_calculateDistance(homeworld_sys, homeworld:pos(), dest_sys, dest_planet)
+    local traveldist = car.calculateDistance(homeworld_sys, homeworld:pos(), dest_sys, dest_planet)
     local stuperpx   = 0.225
     local stuperjump = 10000
     local stupertakeoff = 10500

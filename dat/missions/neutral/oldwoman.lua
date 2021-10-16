@@ -24,8 +24,9 @@
 --
 --]]
 
-require "common.cargo"
+local car = require "common.cargo"
 local neu = require "common.neutral"
+local lmisn = require "lmisn"
 
 
 -- Localization, choosing a language if Naev is translated for non-english-speaking locales.
@@ -85,7 +86,7 @@ function accept ()
         misn.osdCreate(_("The old woman"), OSD)
         misn.markerAdd(destplanet, "high")
 
-        dist_total = cargo_calculateDistance(system.cur(), planet.cur():pos(), destsys, destplanet)
+        dist_total = car.calculateDistance(system.cur(), planet.cur():pos(), destsys, destplanet)
         complaint = 0
 
         hook.date(time.create(0, 0, 300), "date")
@@ -97,7 +98,7 @@ end
 
 -- Date hook.
 function date()
-    local dist_now = cargo_calculateDistance(system.cur(), player.pos(), destsys, destplanet)
+    local dist_now = car.calculateDistance(system.cur(), player.pos(), destsys, destplanet)
     local complaint_now = math.floor(((dist_total - dist_now) / dist_total) * #complaints + 0.5)
     if complaint_now > complaint then
         complaint = complaint_now

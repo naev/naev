@@ -27,7 +27,7 @@
 local pir = require "common.pirate"
 local fleet = require "fleet"
 local lmisn = require "lmisn"
-require "common.cargo"
+local car = require "common.cargo"
 local fmt = require "format"
 
 
@@ -51,7 +51,7 @@ osd_msg = _("Escort a convoy of traders to %s in the %s system")
 
 function create()
    --This mission does not make any system claims
-   destplanet, destsys, numjumps, traveldist, cargo, avgrisk, tier = cargo_calculateRoute()
+   destplanet, destsys, numjumps, traveldist, cargo, avgrisk, tier = car.calculateRoute()
 
    if destplanet == nil then
       misn.finish(false)
@@ -95,7 +95,7 @@ function create()
 
    misn.setTitle( misn_title[convoysize]:format(
       destplanet:name(), destsys:name() ) )
-   cargo_setDesc( misn_desc:format( destplanet:name(), destsys:name() ), cargo, nil, destplanet, nil, piracyrisk );
+   car.setDesc( misn_desc:format( destplanet:name(), destsys:name() ), cargo, nil, destplanet, nil, piracyrisk )
    misn.markerAdd(destplanet, "computer")
    misn.setReward( fmt.credits(reward) )
 end

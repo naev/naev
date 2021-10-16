@@ -37,7 +37,7 @@
 --
 --]]
 
-require "common.cargo"
+local car = require "common.cargo"
 local fmt = require "format"
 
 misn_title = _("SR: %s pilgrimage transport for %s-class citizen")
@@ -146,7 +146,7 @@ function ferry_calculateRoute (dplanet, dsys)
     -- This is used to calculate the reward.
 
     local numjumps   = origin_s:jumpDist(destsys)
-    local traveldist = cargo_calculateDistance(routesys, routepos, destsys, destplanet)
+    local traveldist = car.calculateDistance(routesys, routepos, destsys, destplanet)
 
     -- Return lots of stuff
     return destplanet, destsys, numjumps, traveldist, speed, rank --cargo, tier
@@ -208,7 +208,7 @@ function create()
 
     misn.markerAdd(destsys, "computer")
     misn.setTitle( string.format(misn_title, ferrytime[print_speed], prank[rank]) )
-    cargo_setDesc( misn_desc:format( ferrytime[print_speed], destplanet:name(), prank[rank]), nil, nil, destplanet, timelimit );
+    car.setDesc( misn_desc:format( ferrytime[print_speed], destplanet:name(), prank[rank]), nil, nil, destplanet, timelimit )
     misn.setReward(fmt.credits(reward))
 
     -- Set up passenger details so player cannot keep trying to get a better outcome
@@ -232,7 +232,7 @@ end
 
 -- Mission is accepted
 function accept()
-    local playerbest = cargoGetTransit( numjumps, traveldist )
+    local playerbest = car.getTransit( numjumps, traveldist )
     if timelimit < playerbest then
         if not tk.yesno( slow[1], slow[2]:format( (timelimit - time.get()):str(), (playerbest - time.get()):str(), destplanet:name()) ) then
             misn.finish()
@@ -287,7 +287,7 @@ function accept()
         end
 
         destplanet = altplanets[altdest]
-        cargo_setDesc( misn_desc:format( ferrytime[print_speed], destplanet:name(), prank[rank]), nil, nil, destplanet, timelimit );
+        car.setDesc( misn_desc:format( ferrytime[print_speed], destplanet:name(), prank[rank]), nil, nil, destplanet, timelimit )
         --wants_sirian = false    -- Don't care what kind of ship you're flying
     end
 

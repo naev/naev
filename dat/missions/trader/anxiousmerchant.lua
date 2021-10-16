@@ -33,7 +33,7 @@
 
 ]]--
 
-require "common.cargo"
+local car = require "common.cargo"
 local fmt = require "format"
 local portrait = require "portrait"
 
@@ -71,7 +71,7 @@ function create()
    -- Note: this mission does not make any system claims.
 
    -- Calculate the route, distance, jumps and cargo to take
-   dest_planet, dest_sys, num_jumps, travel_dist, cargo, tier = cargo_calculateRoute()
+   dest_planet, dest_sys, num_jumps, travel_dist, cargo, tier = car.calculateRoute()
    if dest_planet == nil or dest_sys == system.cur() then
       misn.finish(false)
    end
@@ -104,7 +104,7 @@ function accept()
       misn.finish()
    end
    player.pilot():cargoAdd(cargo, cargo_size)
-   local player_best = cargoGetTransit(num_jumps, travel_dist)
+   local player_best = car.getTransit(num_jumps, travel_dist)
    player.pilot():cargoRm(cargo, cargo_size)
    if time_limit < player_best then
       if not tk.yesno(_("Too slow"), _([[The goods have to arrive in %s but it will take %s for your ship to reach %s. Accept the mission anyway?]]):format((time_limit - time.get()):str(), (player_best - time.get()):str(), dest_planet:name())) then

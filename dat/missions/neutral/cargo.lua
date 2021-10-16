@@ -29,7 +29,8 @@
 local pir = require "common.pirate"
 local fmt = require "format"
 local vntk = require "vntk"
-require "common.cargo"
+local car = require "common.cargo"
+local lmisn = require "lmisn"
 
 misn_desc = {}
 -- Note: indexed from 0 to match mission tiers.
@@ -62,7 +63,7 @@ function create()
    -- Note: this mission does not make any system claims.
 
    -- Calculate the route, distance, jumps, risk of piracy, and cargo to take
-   destplanet, destsys, numjumps, traveldist, cargo, avgrisk, tier = cargo_calculateRoute()
+   destplanet, destsys, numjumps, traveldist, cargo, avgrisk, tier = car.calculateRoute()
    if destplanet == nil then
       misn.finish(false)
    end
@@ -93,7 +94,7 @@ function create()
    misn.setTitle( _("Shipment to %s in %s (%s)"):format(
          destplanet:name(), destsys:name(), fmt.tonnes(amount) ) )
    misn.markerAdd(destplanet, "computer")
-   cargo_setDesc( misn_desc[tier]:format( destplanet:name(), destsys:name() ), cargo, amount, destplanet, nil, piracyrisk )
+   car.setDesc( misn_desc[tier]:format( destplanet:name(), destsys:name() ), cargo, amount, destplanet, nil, piracyrisk )
    misn.setReward( fmt.credits(reward) )
 end
 

@@ -2,14 +2,12 @@ local lmisn = require "lmisn"
 local pir = require 'common.pirate'
 local fmt = require "format"
 
--- Don't use hidden jumps by default; set this to true to use hidden jumps.
-cargo_use_hidden = false
+local car = {}
 
--- By default, only generate if commodities available. Set to true to always generate.
-cargo_always_available = false
-
--- Find an inhabited planet 0-3 jumps away.
-function cargo_selectMissionDistance ()
+--[[--
+   Find an inhabited planet 0-3 jumps away.
+--]]
+function car.selectMissionDistance ()
    local seed = rnd.rnd()
 
    -- 70% chance of 0-3 jump distance
@@ -22,27 +20,31 @@ function cargo_selectMissionDistance ()
    return missdist
 end
 
--- Build a set of target planets
-function cargo_selectPlanets( missdist, routepos )
+--[[--
+   Build a set of target planets
+--]]
+function car.selectPlanets( missdist, routepos, use_hidden )
    local pcur = planet.cur()
    return lmisn.getPlanetAtDistance( system.cur(), missdist, missdist, "Independent", false, function ( p )
          if p ~= pcur
             and not (p:system() == system.cur() and (vec2.dist( p:pos(), routepos) < 2500))
-            and p:canLand() and cargoValidDest( p ) then
+            and p:canLand() and car.validDest( p ) then
                return true
          end
          return false
          end,
-      nil, cargo_use_hidden)
+      nil, use_hidden or false )
 end
 
--- We have a destination, now we need to calculate how far away it is by simulating the journey there.
--- Assume shortest route with no interruptions.
--- This is used to calculate the reward.
-function cargo_calculateDistance(routesys, routepos, destsys, destplanet)
+--[[--
+   We have a destination, now we need to calculate how far away it is by simulating the journey there.
+   Assume shortest route with no interruptions.
+   This is used to calculate the reward.
+--]]
+function car.calculateDistance(routesys, routepos, destsys, destplanet, use_hidden)
    local traveldist = 0
 
-   local jumps = routesys:jumpPath( destsys, cargo_use_hidden )
+   local jumps = routesys:jumpPath( destsys, use_hidden )
    if jumps then
       for k, v in ipairs(jumps) do
          -- We're not in the destination system yet.
@@ -61,7 +63,14 @@ function cargo_calculateDistance(routesys, routepos, destsys, destplanet)
    return traveldist
 end
 
-function cargo_calculateRoute ()
+
+--[[--
+   Plan out a mission and return the parameters.
+   @tparam[opt] function distfunc Randomized distance function to use in place of the default car.selectMissionDistance.
+   @tparam[opt=false] always_available If true, always generate; otherwise, only generate if commodities are available.
+   @tparam[opt=false] use_hidden If true, allow hidden jumps to be part of the route.
+--]]
+function car.calculateRoute( distfunc, always_available, use_hidden )
    local origin_p, origin_s = planet.cur()
    local routesys = origin_s
    local routepos = origin_p:pos()
@@ -70,8 +79,9 @@ function cargo_calculateRoute ()
    local tier = rnd.rnd(0, 4)
 
    -- Farther distances have a lower chance of appearing.
+   local cargo_selectMissionDistance = distfunc or car.selectMissionDistance
    local missdist = cargo_selectMissionDistance()
-   local planets = cargo_selectPlanets( missdist, routepos )
+   local planets = car.selectPlanets( missdist, routepos, use_hidden )
    if #planets == 0 then
       return
    end
@@ -84,8 +94,8 @@ function cargo_calculateRoute ()
    -- Assume shortest route with no interruptions.
    -- This is used to calculate the reward.
 
-   local numjumps   = origin_s:jumpDist(destsys, cargo_use_hidden)
-   local traveldist = cargo_calculateDistance(routesys, routepos, destsys, destplanet)
+   local numjumps   = origin_s:jumpDist( destsys, use_hidden )
+   local traveldist = car.calculateDistance(routesys, routepos, destsys, destplanet, use_hidden)
 
    -- Guarding factions
    local _guards = {
@@ -126,7 +136,7 @@ function cargo_calculateRoute ()
    local cargo
    local cargoes = difference(planet.cur():commoditiesSold(),destplanet:commoditiesSold())
    if #cargoes == 0 then
-      if cargo_always_available then
+      if always_available then
          cargo = nil
       else
          return
@@ -140,8 +150,10 @@ function cargo_calculateRoute ()
 end
 
 
--- Calculates the minimum possible time taken for the player to reach a destination.
-function cargoGetTransit( numjumps, traveldist )
+--[[--
+   Calculates the minimum possible time taken for the player to reach a destination.
+--]]
+function car.getTransit( numjumps, traveldist )
    local pstats   = player.pilot():stats()
    local stuperpx = 1 / pstats.speed_max * 30
    local arrivalt = time.get() + time.create(0, 0, traveldist * stuperpx +
@@ -160,7 +172,8 @@ local _hidden_fact = {
    faction.get("Proteron"),
    faction.get("Thurion"),
 }
-function cargoValidDest( targetplanet )
+
+function car.validDest( targetplanet )
    -- factions which cannot be delivered to by factions other than themselves
    local tfact = targetplanet:faction()
    for i, f in ipairs(_hidden_fact) do
@@ -200,37 +213,40 @@ function difference(a, b)
    return r
 end
 
---[[
--- @brief Returns a block of mission-description text for the given cargo.
--- @tparam string misn_desc Translated title-level description, e.g. _("Cargo transport to %s in the %s system."):format(...).
--- @tparam string cargo Cargo type (raw name). May be nil.
--- @tparam number amount Cargo amount in tonnes. May be nil.
--- @param target Target planet for the delivery.
--- @param deadline Target delivery time. May be nil.
--- @param notes Any additional text the user should see on its own detail line, such as piracy risk. May be nil.
+--[[--
+   Returns a block of mission-description text for the given cargo.
+   @tparam string misn_desc Translated title-level description, e.g. _("Cargo transport to %s in the %s system."):format(...).
+   @tparam string cargo Cargo type (raw name). May be nil.
+   @tparam number amount Cargo amount in tonnes. May be nil.
+   @param target Target planet for the delivery.
+   @param deadline Target delivery time. May be nil.
+   @param notes Any additional text the user should see on its own detail line, such as piracy risk. May be nil.
+   @tparam[opt=false] bool use_hidden Whether the description accounts for hidden jumps in its distances.
 -- ]]
-function cargo_setDesc( misn_desc, cargo, amount, target, deadline, notes )
-   local t = { misn_desc, "" };
+function car.setDesc( misn_desc, cargo, amount, target, deadline, notes, use_hidden )
+   local t = { misn_desc, "" }
    if amount ~= nil then
-      table.insert( t, _("#nCargo:#0 %s (%s)"):format( _(cargo), fmt.tonnes(amount) ) );
+      table.insert( t, _("#nCargo:#0 %s (%s)"):format( _(cargo), fmt.tonnes(amount) ) )
    elseif cargo ~= nil then
-      table.insert( t, _("#nCargo:#0 %s"):format( _(cargo) ) );
+      table.insert( t, _("#nCargo:#0 %s"):format( _(cargo) ) )
    end
 
-   local numjumps   = system.cur():jumpDist( target:system(), cargo_use_hidden )
-   local dist = cargo_calculateDistance( system.cur(), planet.cur():pos(), target:system(), target )
+   local numjumps   = system.cur():jumpDist( target:system(), use_hidden )
+   local dist = car.calculateDistance( system.cur(), planet.cur():pos(), target:system(), target, use_hidden )
    table.insert( t,
       gettext.ngettext( "#nJumps:#0 %d", "#nJumps:#0 %d", numjumps ):format( numjumps )
       .. "\n"
       .. gettext.ngettext("#nTravel distance:#0 %s", "#nTravel distance:#0 %s", dist):format( fmt.number(dist) ) )
 
    if notes ~= nil then
-      table.insert( t, notes );
+      table.insert( t, notes )
    end
 
    if deadline ~= nil then
-      table.insert( t, _("#nTime limit:#0 %s"):format( tostring(deadline - time.get()) ) );
+      table.insert( t, _("#nTime limit:#0 %s"):format( tostring(deadline - time.get()) ) )
    end
 
-   misn.setDesc( table.concat(t, "\n" ) );
+   misn.setDesc( table.concat(t, "\n" ) )
 end
+
+return car

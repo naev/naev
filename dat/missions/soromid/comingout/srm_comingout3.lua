@@ -25,7 +25,7 @@
 --]]
 local lmisn = require "lmisn"
 local fmt = require "format"
-require "common.cargo"
+local car = require "common.cargo"
 local srm = require "common.soromid"
 
 title = {}
@@ -64,7 +64,7 @@ log_text = _([[You helped escort Chelsea through a dangerous cargo delivery miss
 
 
 function create ()
-   misplanet, missys, njumps, tdist, cargo, avgrisk = cargo_calculateRoute()
+   misplanet, missys, njumps, tdist, cargo, avgrisk = car.calculateRoute( cargo_selectMissionDistance )
    if misplanet == nil or missys == nil or avgrisk > 0 then
       misn.finish( false )
    end
