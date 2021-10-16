@@ -8,7 +8,7 @@
       * Electronic warfare parameters are simplified and visible
       * Added escorts for hire
       * Some simple minigames have been added
-      * You can now favourite your ships to help with sorting
+      * Scramblers and jammers have fixed chance to mess up missiles depending on their resistance
    * Visual improvements
       * New fancy system rendering effects
       * Ships and rockets now have engine trails
@@ -25,7 +25,6 @@
       * Overhaul and rebalance of most outfits
       * Wanted pirates no longer aggro defense forces (pirate bounties)
       * Bribed pilots don't become hostile again unless attacked
-      * Scramblers and jammers have fixed chance to mess up missiles depending on their resistance
       * Stress now decreases based on ship mass
       * Merged the Independent and Civilian factions
       * Game now tracks meta-data like ships destroyed and time played
@@ -43,6 +42,7 @@
       * Minimal view mode for the map
       * More visible map markers
       * More in-game tutorial-ish explanations for new mechanics as you encounter them
+      * You can now favourite your ships to help with sorting
    * New locations
       * Added gambling resort "Minerva Station"
       * Added mysterious new system "Taiomi"
