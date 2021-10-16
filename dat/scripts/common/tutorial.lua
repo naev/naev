@@ -19,6 +19,16 @@ tut.shipai = {
    transition = "electric",
 }
 
+tut.specialnames = {
+   ["HAL9000"] = _([["I can't let you do that, Dave. …Wait, what was that?"]]), -- 2001 Space Odyssey
+   ["GERTY"] = _([["I'm here to keep you safe, Sam. I want to help you. Are you hungry? …Wait, what was that?"]]), -- Moon
+   ["QUORRA"] = _([["Patience, Sam Flynn. All of your questions will be answered soon. …Wait, what was that?"]]), -- Tron (Legacy)
+   ["DATA"] = _([["I could be chasing an untamed ornithoid without cause. …Wait, what was that?"]]), -- Star Trek
+   ["ROBBY"] = _([["For your convenience I am programmed to respond to the name Robby. …Wait, what was that?"]]), -- Forbidden Planet
+   ["MASCHINENMENSCH"] = _([["Who is the living food for the machines in Metropolis? Who lubricates the machine joints with their own blood? Who feeds the machines with their own flesh? Let the machines starve, you fools! Let them die! Kill them the machines! …Wait, what was that?"]]), -- Metropolis
+}
+tut.specialnames["HAL 9000"] = tut.specialnames["HAL9000"]
+
 function tut.ainame ()
    return var.peek("shipai_name") or tut.shipai.name
 end

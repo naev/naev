@@ -73,8 +73,18 @@ They stare at you for a few seconds.
          if ainame then
             var.push("shipai_name",ainame)
             sai.displayname = ainame -- Can't use rename here
+
+            if tut.specialnames[ string.upper(ainame) ] then
+               vn.jump("specialname")
+               return
+            end
          end
+         vn.jump("gavename")
       end )
+      vn.label("specialname")
+      sai( function () return tut.specialnames[ string.upper(ainame) ] end )
+
+      vn.label("gavename")
       sai( function () return fmt.f(_([["Great! I'll use the name {ainame} from now on. If you want to change it, you can do so from the #oInformation#0 menu which you open with {infokey} by clicking on the '#oShip AI#0' button. From there you can also access explanations and change tutorial options."]]), {ainame=ainame, infokey=tut.getKey("info")}) end )
       sai(fmt.f(_([["With the update, a lot of new mechanics and features have been changed. The largest change includes a revamp of #oElectronic Warfare#0, which now includes a new stealth mechanic. In this new framework, you will be scanned by patrol ships, which means you have to be careful when carrying illegal cargo or outfits. You can activate stealth with {stealthkey} when no ships area nearby."]]),{stealthkey=tut.getKey("stealth")}))
       sai(_([["You may have also noticed that there has been a major change in outfits. Lots of outfits have been removed, added, or renamed, leading to a loss of outfits when updating old save games. Please make sure to take some time inspecting your ships and their equipment before taking off, you don't want to be flying a poorly equipped ship in space!"]]))

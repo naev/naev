@@ -50,15 +50,6 @@ They stare at you for a few seconds.
    sai(_([["Anyway, from now on, I will be your ship AI, but don't worry if you get a new ship, I will be transferred over without an issue. If you have any question or comment about how your ship works or how to do things, I believe I can be of help. As your new Ship AI, would you like to give me a name?"]]))
    vn.label("rename")
    local ainame
-   local specialnames = {
-      ["HAL9000"] = _([["I can't let you do that, Dave. …Wait, what was that?"]]), -- 2001 Space Odyssey
-      ["GERTY"] = _([["I'm here to keep you safe, Sam. I want to help you. Are you hungry? …Wait, what was that?"]]), -- Moon
-      ["QUORRA"] = _([["Patience, Sam Flynn. All of your questions will be answered soon. …Wait, what was that?"]]), -- Tron (Legacy)
-      ["DATA"] = _([["I could be chasing an untamed ornithoid without cause. …Wait, what was that?"]]), -- Star Trek
-      ["ROBBY"] = _([["For your convenience I am programmed to respond to the name Robby. …Wait, what was that?"]]), -- Forbidden Planet
-      ["MASCHINENMENSCH"] = _([["Who is the living food for the machines in Metropolis? Who lubricates the machine joints with their own blood? Who feeds the machines with their own flesh? Let the machines starve, you fools! Let them die! Kill them the machines! …Wait, what was that?"]]), -- Metropolis
-   }
-   specialnames["HAL 9000"] = specialnames["HAL9000"]
    vn.func( function ()
       -- TODO integrate into vn
       ainame = tk.input( _("Name Ship AI"), 1, 16, _("Please enter a name for your Ship AI") )
@@ -66,7 +57,7 @@ They stare at you for a few seconds.
          var.push("shipai_name",ainame)
          sai.displayname = ainame -- Can't use rename here
 
-         if specialnames[ string.upper(ainame) ] then
+         if tut.specialnames[ string.upper(ainame) ] then
             vn.jump("specialname")
             return
          end
@@ -77,7 +68,7 @@ They stare at you for a few seconds.
       vn.jump("noname")
    end )
    vn.label("specialname")
-   sai( function () return specialnames[ string.upper(ainame) ] end )
+   sai( function () return tut.specialnames[ string.upper(ainame) ] end )
 
    vn.label("gavename")
    sai( function () return fmt.f(_([["You have given me the name of '{ainame}', is this correct?"]]),{ainame=ainame}) end )

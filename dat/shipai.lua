@@ -65,14 +65,25 @@ function create ()
    vn.jump("mainmenu")
 
    vn.label("rename")
+   local ainame
    vn.func( function ()
       -- TODO integrate into vn
-      local ainame = tk.input( _("Name your Ship AI"), 1, 16, _("SAI") )
+      ainame = tk.input( _("Name your Ship AI"), 1, 16, _("SAI") )
       if ainame then
          var.push("shipai_name",ainame)
          sai.displayname = ainame -- Can't use rename here
+
+         if tut.specialnames[ string.upper(ainame) ] then
+            vn.jump("specialname")
+            return
+         end
       end
+      vn.jump("gavename")
    end )
+   vn.label("specialname")
+   sai( function () return tut.specialnames[ string.upper(ainame) ] end )
+
+   vn.label("gavename")
    sai( function () return fmt.f(_([[Your Ship AI has been renamed '{ainame}'.]]),{tut.ainame()}) end )
    vn.jump("opts")
 
