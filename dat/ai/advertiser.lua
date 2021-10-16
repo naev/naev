@@ -63,17 +63,22 @@ function create ()
       table.insert(msg, _("Special offer on Crow: buy one IR-eye, and the second comes for free!"))
       table.insert(msg, _("Looking to modify an entire species? Visit Dr. Hu's Gene Clinic at Point Zero Station!"))
       table.insert(msg, _("Endogenous DNA damage hampering your Gene Drive? Drop by your local Chromosomal Rearrangement Laboratory for a check-up."))
+      table.insert(msg, _("Visit Bohr Laboratory for all your epistatic mutation woes. 10 locations and counting!"))
+      table.insert(msg, _("Worried about your bio-ship adenosine triphosphate output? Leave it to ATP Specialists!"))
    end
 
    local fzl = fpres["Za'lek"] or 0
    if fzl > 1 then
       -- Note that when running in the main menu background, player.name() might not exist (==nil), so
       -- we need to add a check for that.
-      if player.name() then
-         table.insert(msg, string.format(_("Dear Prof. %s, your recent work has left a deep impression on us. Due to the advance, novelty, and possible wide application of your innovation, we invite you to contribute other unpublished papers of relevant fields to the Interstellar Pay-to-win Journal for Mathematics and Applications."),player.name()))
+      local pn = player.name()
+      if pn then
+         table.insert(msg, string.format(_("Dear Prof. %s, your recent work has left a deep impression on us. Due to the advance, novelty, and possible wide application of your innovation, we invite you to contribute other unpublished papers of relevant fields to the Interstellar Pay-to-win Journal for Mathematics and Applications."),pn))
       end
       table.insert(msg, _("Want to solve a large-dimensional stochastic PDE? The LMKSTD method is what you need!"))
       table.insert(msg, _("Love non-convex minimization? Join Ruadan's Computation Science Lab!"))
+      table.insert(msg, _("Keeping your drones in top shape. Prof. Imarisha Robotic Laboratory."))
+      table.insert(msg, _("Interested in Genetic Lifeforms research? Apply to Interstice Science!")) -- Used as a synonym for Aperture Science from Portal
    end
 
    local fsi = fpres["Sirius"] or 0
