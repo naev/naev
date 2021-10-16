@@ -135,7 +135,7 @@ They stare at you for a few seconds.
    misn.osdCreate( _("Tutorial"), {
       fmt.f(_("Fly to {startpnt} in the {sysname} system with the movement keys"),posd),
       fmt.f(_("Land on {startpnt} in the {sysname} system by double-clicking on it"),posd),
-      fmt.f(_("Go to {startpnt} in the {sysname} system by right-clicking it on the overview map"),posd),
+      fmt.f(_("Go to {destpnt} in the {sysname} system by right-clicking it on the overview map"),posd),
       fmt.f(_("Destroy the practice drone near {destpnt} in the {sysname} system"),posd),
       _("Jump to a nearby system by using your starmap"),
    } )
@@ -148,7 +148,7 @@ They stare at you for a few seconds.
    -- Set stuff known as necessary
    dest_planet:setKnown(true)
    jump.get( system.cur(), destsys ):setKnown(true)
-   system.mrkAdd( start_planet:pos() )
+   misnmarker = misn.markerAdd( start_planet )
 
    stage = 1
 end
@@ -158,7 +158,7 @@ function timer ()
       hook.rm( timer_hook )
       timer_hook = nil
    end
-   timer_hook = hook.timer( 5.0, "timer" )
+   timer_hook = hook.timer( 1.0, "timer" )
 
    -- Have to be in the mission system
    if not system.cur() == missys then return end
@@ -191,12 +191,13 @@ function timer ()
       sai(_([["Let's now practice combat. You won't need this if you stick to the safe systems in the Empire core, but sadly, we are likely to encounter hostile ships if you venture further out, so you need to know how to defend yourself. Fortunately, your ship comes pre-equipped with a state-of-the-art laser cannon for just that reason! If all goes well you won't end up like ship ornament like my late previous owner after encountering… Anyway, on to the drone."]]))
       sai(fmt.f(_([["I will launch a combat practice drone off of {pntname} now for you to fight. Don't worry; our drone does not have any weapons and will not harm you. Target the drone by clicking on it or by pressing {targethostilekey}, then use your weapons, controlled with {primarykey} and {secondarykey}, to take out the drone!"
 "Ah, yes, one more tip before I launch the drone: if your weapons start losing their accuracy, it's because they're becoming overheated. You can remedy that by pressing {cooldownkey} or double tapping {reversekey} to engage active cooling."]]),{pntname=dest_planet:name(), targethostilekey=tut.getKey("target_hostile"), primarykey=tut.getKey("primary"), secondarykey=tut.getKey("secondary"), cooldownkey=tut.getKey("cooldown"), reversekey=tut.getKey("reverse")}))
-      sai(_("The Drone's AI can be a bit quirky, but don't pay attention to it. Being an artificial intelligence it doesn't have feelings, you know? Not like me, ha ha."))
+      sai(_([["The Drone's AI can be a bit quirky, but don't pay attention to it. Being an artificial intelligence it doesn't have feelings, you know? Not like me, ha ha."]]))
       vn.done( tut.shipai.transition )
       vn.run()
 
-      system.mrkRm( sysmarker )
       spawn_captain_tp ()
+
+      misn.markerRm( misnmarker )
    end
 end
 
@@ -215,6 +216,8 @@ function land ()
       shipyard_hook  = hook.land("land_shipyard", "shipyard")
       equipment_hook = hook.land("land_equipment", "equipment")
       commodity_hook = hook.land("land_commodity", "commodity")
+
+      misn.markerRm( misnmarker )
    end
 end
 
@@ -322,7 +325,7 @@ function enter_timer ()
       vn.done( tut.shipai.transition )
       vn.run()
 
-      sysmarker = system.mrkAdd( dest_planet:pos() )
+      misnmarker = misn.markerAdd( dest_planet )
 
    elseif stage == 5 and system.cur() == missys then
       spawn_captain_tp ()
