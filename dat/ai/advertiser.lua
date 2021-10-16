@@ -91,11 +91,13 @@ function create ()
 
    local fsr = fpres["Soromid"] or 0
    if fsr > 1 then
+      table.insert(msg, _("Remember Sorom."))
       table.insert(msg, _("Special offer on Crow: buy one IR-eye, and the second comes for free!"))
       table.insert(msg, _("Looking to modify an entire species? Visit Dr. Hu's Gene Clinic at Point Zero Station!"))
       table.insert(msg, _("Endogenous DNA damage hampering your Gene Drive? Drop by your local Chromosomal Rearrangement Laboratory for a check-up."))
       table.insert(msg, _("Visit Bohr Laboratory for all your epistatic mutation woes. 10 locations and counting!"))
       table.insert(msg, _("Worried about your bio-ship adenosine triphosphate output? Leave it to ATP Specialists!"))
+      table.insert(msg, _("Preemptively treat your bio-ship for space fleas with Dr. Nastya's Ointment!"))
    end
 
    if fsr > 1 and fem > 1 then
