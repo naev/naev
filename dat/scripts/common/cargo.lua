@@ -63,6 +63,22 @@ function car.calculateDistance(routesys, routepos, destsys, destplanet, use_hidd
    return traveldist
 end
 
+--Determines the items in table a that are not in table b.
+--Used to determine what cargo is sold at current planet but not at destination planet.
+local function difference(a, b)
+   local ai = {}
+   local r = {}
+   for k,v in pairs(a) do
+      r[k] = v
+      ai[v]=true
+   end
+   for k,v in pairs(b) do
+      if ai[v]~=nil then
+         r[k] = nil
+      end
+   end
+   return r
+end
 
 --[[--
    Plan out a mission and return the parameters.
@@ -194,23 +210,6 @@ function car.validDest( targetplanet )
    end
 
    return true
-end
-
---Determines the items in table a that are not in table b.
---Used to determine what cargo is sold at current planet but not at destination planet.
-function difference(a, b)
-   local ai = {}
-   local r = {}
-   for k,v in pairs(a) do
-      r[k] = v
-      ai[v]=true
-   end
-   for k,v in pairs(b) do
-      if ai[v]~=nil then
-         r[k] = nil
-      end
-   end
-   return r
 end
 
 --[[--
