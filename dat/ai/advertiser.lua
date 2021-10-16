@@ -83,7 +83,7 @@ function create ()
          _("Lady Proserpina") }
       local r = rnd.rnd(1,#lords)
       local butthead = lords[r]
-      table.remove( lords r )
+      table.remove( lords, r )
       local sponser = lords[ rnd.rnd(1,#lords) ]
       table.insert(msg, fmt.f(_("{butthead} is a {badword}. Ad sponsered by {sponser}."),
             {butthead=butthead, badword=badwords[rnd.rnd(1,#badwords)], sponser=sponser}))
