@@ -355,7 +355,7 @@ void map_open (void)
 static void map_update_commod_av_price (void)
 {
    Commodity *c;
-   
+
    if (cur_commod == -1 || map_selected == -1) {
       commod_av_gal_price = 0;
       return;
@@ -1215,7 +1215,7 @@ static void map_renderPath( double x, double y, double radius, double alpha )
 
    if (array_size(map_path) == 0)
       return;
-   
+
    jmax = pilot_getJumps(player.p); /* Maximum jumps. */
    jcur = jmax; /* Jump range remaining. */
 
