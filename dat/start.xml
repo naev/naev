@@ -6,8 +6,8 @@
   <credits>30000</credits>
   <system>
    <name>Delta Polaris</name>
-   <x>-12000</x>
-   <y>-3000</y>
+   <x>-12500</x>
+   <y>-3500</y>
   </system>
   <event>start_event</event>
  </player>
