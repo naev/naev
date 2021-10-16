@@ -77,7 +77,7 @@ function create ()
       end
       table.insert(msg, _("Want to solve a large-dimensional stochastic PDE? The LMKSTD method is what you need!"))
       table.insert(msg, _("Love non-convex minimization? Join Ruadan's Computation Science Lab!"))
-      table.insert(msg, _("Keeping your drones in top shape. Prof. Imarisha Robotic Laboratory."))
+      table.insert(msg, _("Keeping your drones in top shape. Prof. Imarisha's Robotic Laboratory."))
       table.insert(msg, _("Interested in Genetic Lifeforms research? Apply to Interstice Science!")) -- Used as a synonym for Aperture Science from Portal
    end
 
