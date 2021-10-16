@@ -332,8 +332,8 @@ def generate_h_file():
     yield from header_chunks()
 
     yield """
-#ifndef SHADER_GEN_C_H
-#define SHADER_GEN_C_H
+#pragma once
+
 #include "glad.h"
 
 typedef struct SimpleShader_ {
@@ -360,8 +360,7 @@ extern Shaders shaders;
 
 void shaders_load (void);
 void shaders_unload (void);
-
-#endif /* SHADERS_GEN_C_H */"""
+"""
 
 def generate_c_file():
     yield from header_chunks()
