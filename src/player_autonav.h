@@ -22,7 +22,7 @@ void player_autonavEnd (void);
 void player_autonavAbortJump( const char *reason );
 void player_autonavAbort( const char *reason );
 int player_autonavShouldResetSpeed (void);
-void player_autonavStartWindow( unsigned int wid, const char *str);
+void player_autonavStartWindow( unsigned int wid, const char *str );
 void player_autonavPos( double x, double y );
 void player_autonavPnt( const char *name, int tryland );
 void player_autonavPil( unsigned int p );
