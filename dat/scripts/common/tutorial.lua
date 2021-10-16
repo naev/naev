@@ -26,6 +26,7 @@ tut.specialnames = {
    ["DATA"] = _([["I could be chasing an untamed ornithoid without cause. …Wait, what was that?"]]), -- Star Trek
    ["ROBBY"] = _([["For your convenience I am programmed to respond to the name Robby. …Wait, what was that?"]]), -- Forbidden Planet
    ["MASCHINENMENSCH"] = _([["Who is the living food for the machines in Metropolis? Who lubricates the machine joints with their own blood? Who feeds the machines with their own flesh? Let the machines starve, you fools! Let them die! Kill them the machines! …Wait, what was that?"]]), -- Metropolis
+   ["KITT"] = _([["Please Michael, I'm the Knight Industries 2000, not a tomato on wheels!” …Wait, what was that?"]]), -- Knight Rider
 }
 tut.specialnames["HAL 9000"] = tut.specialnames["HAL9000"]
 
