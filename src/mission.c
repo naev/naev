@@ -522,9 +522,13 @@ const StarSystem* mission_sysComputerMark( const Mission* misn )
             }
             sys = system_get( sysname );
             break;
+         default:
+            WARN(_("Unknown marker type."));
+            continue;
       }
 
-      sys_setFlag( sys, SYSTEM_CMARKED );
+      if (sys != NULL)
+         sys_setFlag( sys, SYSTEM_CMARKED );
 
       if (firstsys==NULL)
          firstsys = sys;
@@ -566,6 +570,9 @@ const StarSystem* mission_getSystemMarker( const Mission* misn )
             }
             sys = system_get( sysname );
             break;
+         default:
+            WARN(_("Unknown marker type."));
+            continue;
       }
 
       return sys;
