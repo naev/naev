@@ -12,12 +12,10 @@ local function selectMissionDistance ()
 
    -- 70% chance of 0-3 jump distance
    if seed < 0.7 then
-      missdist = rnd.rnd(0, 3)
+      return rnd.rnd(0, 3)
    else
-      missdist = rnd.rnd(4, 6)
+      return rnd.rnd(4, 6)
    end
-
-   return missdist
 end
 
 --[[--
