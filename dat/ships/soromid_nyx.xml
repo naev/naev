@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Soromid Nyx">
- <points>45</points>
+ <points>67.5</points>
  <base_type>Nyx</base_type>
  <GFX size="96" sx="10" sy="10">nyx</GFX>
  <rarity>2</rarity>

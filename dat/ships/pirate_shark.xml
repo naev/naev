@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Pirate Shark">
- <points>15</points>
+ <points>22.5</points>
  <base_type>Shark</base_type>
  <GFX size="54">shark_pirate</GFX>
  <rarity>2</rarity>

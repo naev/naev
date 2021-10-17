@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Soromid Brigand">
- <points>15</points>
+ <points>22.5</points>
  <base_type>Brigand</base_type>
  <GFX>brigand</GFX>
  <rarity>2</rarity>

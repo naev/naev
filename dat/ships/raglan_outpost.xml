@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Raglan Outpost">
- <points>500</points>
+ <points>750</points>
  <base_type>Raglan Outpost</base_type>
  <gfx_space sx="1" sy="1">planet/space/station-battlestation.webp</gfx_space>
  <gfx_comm>planet/exterior/station05.webp</gfx_comm>

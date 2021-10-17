@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Pirate Starbridge">
- <points>40</points>
+ <points>60</points>
  <base_type>Starbridge</base_type>
  <GFX sx="10" sy="10">starbridge_pirate</GFX>
  <rarity>2</rarity>

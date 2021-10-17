@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Quicksilver">
- <points>20</points>
+ <points>30</points>
  <base_type>Quicksilver</base_type>
  <GFX size="70" sx="10" sy="10">quicksilver</GFX>
  <GUI>brushed</GUI>

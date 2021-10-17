@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Soromid Reaver">
- <points>20</points>
+ <points>30</points>
  <base_type>Reaver</base_type>
  <GFX size="68">reaver</GFX>
  <rarity>2</rarity>

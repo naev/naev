@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Sirius Divinity">
- <points>100</points>
+ <points>150</points>
  <base_type>Divinity</base_type>
  <GFX size="140" sx="12" sy="12">divinity</GFX>
  <rarity>2</rarity>

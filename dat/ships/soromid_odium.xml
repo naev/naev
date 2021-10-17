@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Soromid Odium">
- <points>30</points>
+ <points>45</points>
  <base_type>Odium</base_type>
  <GFX>odium</GFX>
  <rarity>2</rarity>
