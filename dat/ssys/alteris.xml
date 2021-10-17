@@ -19,6 +19,7 @@
   <asset>Takeru</asset>
   <asset_virtual>Empire Small</asset_virtual>
   <asset_virtual>Miner Small</asset_virtual>
+  <asset_virtual>Pirate Small</asset_virtual>
  </assets>
  <jumps>
   <jump target="Coriolis">

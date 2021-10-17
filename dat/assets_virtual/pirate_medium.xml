@@ -4,6 +4,6 @@
   <faction>Pirate</faction>
   <base>100.000000</base>
   <bonus>50.000000</bonus>
-  <range>2</range>
+  <range>3</range>
  </presence>
 </asset>
