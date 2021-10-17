@@ -21,7 +21,6 @@
 
 local fleet = require "fleet"
 require "proximity"
-require "enum"
 local srs = require "common.sirius"
 local fmt = require "format"
 
@@ -55,6 +54,7 @@ misn_reward = fmt.credits(1.5e6)
 
 log_text = _([[You were hired by Joanne to deliver an invitation to Harja to talk with her. He agreed on the condition that you first deal with associates of his that were coming after him. When Joanne and Harja met, they came to an agreement that neither of them were responsible for the hack of the High Academy main computer which was the source of their feud. Joanne said that she will probably call for you again when she's figured out how to proceed.]])
 
+local stages = {start=1, findHarja=2, killAssociates=3, fetchHarja=4, finish=5}
 
 function create()
    -- Note: this mission does not make any system claims.
@@ -63,9 +63,7 @@ function create()
     The message is from Joanne, the woman you've had dealings with in the past. Her recorded image looks at you from the screen. "Dear %s," she begins. "You have helped me on several occasions in regard with my personal problem. I've given it some thought since then, and I've come to the conclusion that I want to get to the bottom of this. To do so, I will need your help yet again. I'm currently on assignment on %s in the %s system. Please meet me there at the earliest opportunity."
     The message ends. You save it for later reference. Maybe you should swing by %s to see what Joanne wants.]]):format(player.name(), startplanet:name(), startsys:name(), startplanet:name()))
 
-   stages = enumerate({"start", "findHarja", "killAssociates", "fetchHarja", "finish"})
-   stages["__save"] = true
-   stage = 1
+   stage = stages.start
 
    -- This mission auto-accepts, but a choice will be offered to the player later. No OSD yet.
    misn.accept()
