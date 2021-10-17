@@ -1125,7 +1125,7 @@ static int font_makeChar( glFontStash *stsh, font_char_t *c, uint32_t ch )
          rh = h;
          c->data = malloc( sizeof(GLubyte) * w*h );
          memset( c->data, 0, sizeof(GLubyte) * w*h );
-	 vmax = 1.0; /* arbitrary */
+         vmax = 1.0; /* arbitrary */
       }
       else {
          /* Create a larger image using an extra border and center glyph. */
