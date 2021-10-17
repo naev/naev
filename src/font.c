@@ -1082,7 +1082,7 @@ static int font_makeChar( glFontStash *stsh, font_char_t *c, uint32_t ch )
    int len = array_size(stsh->ft);
    for (int i=0; i<len; i++) {
       FT_UInt glyph_index;
-      int u,v, w,h, rw,rh, b;
+      int w,h, rw,rh, b;
       double vmax;
       GLubyte *buffer;
       FT_Bitmap bitmap;
@@ -1133,8 +1133,8 @@ static int font_makeChar( glFontStash *stsh, font_char_t *c, uint32_t ch )
          rw = w+b*2;
          rh = h+b*2;
          buffer = calloc( rw*rh, sizeof(GLubyte) );
-         for (v=0; v<h; v++)
-            for (u=0; u<w; u++)
+         for (int v=0; v<h; v++)
+            for (int u=0; u<w; u++)
                buffer[ (b+v)*rw+(b+u) ] = bitmap.buffer[ v*w+u ];
          /* Compute signed fdistance field with buffered glyph. */
          c->dataf = make_distance_mapbf( buffer, rw, rh, &vmax );
