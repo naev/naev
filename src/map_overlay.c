@@ -634,6 +634,16 @@ void ovr_render( double dt )
    array_free( ovr_render_safelanes );
    ovr_render_safelanes = safelanes;
 
+   /* Check if player has goto target. */
+   if (player_isFlag(PLAYER_AUTONAV) && (player.autonav == AUTONAV_POS_APPROACH)) {
+      glColour col = cRadar_hilight;
+      col.a = 0.6;
+      map_overlayToScreenPos( &x, &y, player.autonav_pos.x, player.autonav_pos.y );
+      glUseProgram( shaders.selectposition.program );
+      gl_renderShader( x, y, 9., 9., 0., &shaders.selectposition, &col, 1 );
+      gl_printMarkerRaw( &gl_smallFont, x+10., y-gl_smallFont.h/2., &cRadar_hilight, _("TARGET") );
+   }
+
    /* Render planets. */
    for (int i=0; i<array_size(cur_system->planets); i++) {
       Planet *pnt = cur_system->planets[i];
@@ -755,16 +765,6 @@ void ovr_render( double dt )
    /* Render the targeted pilot */
    if (t!=0)
       gui_renderPilot( pstk[t], RADAR_RECT, w, h, res, 1 );
-
-   /* Check if player has goto target. */
-   if (player_isFlag(PLAYER_AUTONAV) && (player.autonav == AUTONAV_POS_APPROACH)) {
-      glColour col = cRadar_hilight;
-      col.a = 0.6;
-      map_overlayToScreenPos( &x, &y, player.autonav_pos.x, player.autonav_pos.y );
-      glUseProgram( shaders.selectposition.program );
-      gl_renderShader( x, y, 9., 9., 0., &shaders.selectposition, &col, 1 );
-      gl_printMarkerRaw( &gl_smallFont, x+10., y-gl_smallFont.h/2., &cRadar_hilight, _("TARGET") );
-   }
 
    /* Render the player. */
    gui_renderPlayer( res, 1 );
