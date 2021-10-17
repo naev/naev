@@ -21,7 +21,7 @@ local vntk = require "vntk"
 local lmisn = require "lmisn"
 
 function create ()
-   destpnt, destsys = lmisn.getRandomPlanetAtDistance( system.cur(), 0, 5, "Indpendent" )
+   destpnt, destsys = lmisn.getRandomPlanetAtDistance( system.cur(), 0, 5, "Independent" )
 
    -- See if we got something
    if not destpnt then
