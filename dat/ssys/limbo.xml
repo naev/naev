@@ -16,6 +16,7 @@
   <asset>Limbo II</asset>
   <asset>Malebolge</asset>
   <asset>Minerva Station</asset>
+  <asset_virtual>Pirate Small</asset_virtual>
  </assets>
  <jumps>
   <jump target="Fried">
