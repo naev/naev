@@ -21,7 +21,7 @@ end
 --[[--
    Build a set of target planets
 --]]
-function car.selectPlanets( missdist, routepos, use_hidden )
+local function selectPlanets( missdist, routepos, use_hidden )
    local pcur = planet.cur()
    return lmisn.getPlanetAtDistance( system.cur(), missdist, missdist, "Independent", false, function ( p )
          if p ~= pcur
@@ -39,7 +39,7 @@ end
    Assume shortest route with no interruptions.
    This is used to calculate the reward.
 --]]
-function car.calculateDistance(routesys, routepos, destsys, destplanet, use_hidden)
+function car.calculateDistance( routesys, routepos, destsys, destplanet, use_hidden )
    local traveldist = 0
 
    local jumps = routesys:jumpPath( destsys, use_hidden )
@@ -95,7 +95,7 @@ function car.calculateRoute( missdist, always_available, use_hidden )
    if missdist == nil then
       missdist = selectMissionDistance()
    end
-   local planets = car.selectPlanets( missdist, routepos, use_hidden )
+   local planets = selectPlanets( missdist, routepos, use_hidden )
    if #planets == 0 then
       return
    end
