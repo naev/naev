@@ -244,34 +244,26 @@ static int playerL_pay( lua_State *L )
  * @usage monies = player.credits()
  * @usage monies, readable = player.credits( 2 )
  *
- *    @luatparam number decimal Optional argument that makes it return human readable form with so many decimals.
+ *    @luatparam[opt] number decimal Optional argument that makes it return human readable form with so many decimals.
  *    @luatreturn number The amount of credits in numerical form.
  *    @luatreturn string The amount of credits in human-readable form.
  * @luafunc credits
  */
 static int playerL_credits( lua_State *L )
 {
-   char buf[ ECON_CRED_STRLEN ];
-   int has_dec, decimals;
-
    PLAYER_CHECK();
-
    /* Parse parameters. */
-   if (lua_isnumber(L,1)) {
-      has_dec  = 1;
-      decimals = lua_tointeger(L,1);
-   }
-   else
-      has_dec  = 0;
+   int decimals = luaL_optinteger(L,1,-1);
 
    /* Push return. */
    lua_pushnumber(L, player.p->credits);
-   if (has_dec) {
+   if (decimals >= 0) {
+      char buf[ ECON_CRED_STRLEN ];
       credits2str( buf, player.p->credits, decimals );
       lua_pushstring(L, buf);
+      return 2;
    }
-
-   return 1 + has_dec;
+   return 1;
 }
 /**
  * @brief Sends the player an in-game message.
