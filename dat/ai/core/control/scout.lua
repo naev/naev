@@ -8,6 +8,7 @@ control_rate = 2
 -- Required "control" function
 function control ()
    local task = ai.taskname()
+   local planet
 
    if task == nil or task == "idle" then
       local enemy = ai.getenemy()
@@ -22,7 +23,7 @@ function control ()
 
       -- nothing to do so check if we are too far form the planet (if there is one)
       if mem.approach == nil then
-         local planet = ai.rndplanet()
+         planet = ai.rndplanet()
          if planet ~= nil then
             mem.approach = planet:pos()
          end
@@ -44,7 +45,7 @@ function control ()
 
    -- Check if we are near enough
    elseif task == "approach" then
-      local planet = mem.approach
+      planet = mem.approach
 
       if ai.dist( planet ) < mem.planet_dist + ai.minbrakedist() then
          ai.poptask()
@@ -54,7 +55,7 @@ function control ()
 
    -- Check if we need to run more
    elseif task == "runaway" then
-      enemy = ai.taskdata()
+      local enemy = ai.taskdata()
 
       if ai.dist(enemy) > mem.enemy_dist and ai.haslockon() == false then
          ai.poptask()
@@ -66,7 +67,7 @@ end
 
 -- Required "attacked" function
 function attacked ( attacker )
-   task = ai.taskname()
+   local task = ai.taskname()
 
    -- Start running away
    if task ~= "runaway" then
@@ -98,8 +99,8 @@ end
 -- Approaches the target
 function approach ()
    local target = mem.approach
-   local dir = ai.face(target)
    local dist = ai.dist(target)
+   ai.face(target)
 
    -- See if should accel or brake
    if dist > mem.planet_dist then

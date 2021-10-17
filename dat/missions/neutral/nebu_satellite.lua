@@ -48,8 +48,7 @@ text[3] = _([["The plan is for you to take us to %s so we can launch the probe, 
 text[4] = _([[The scientists thank you for your help before going back to their home to continue their nebula research. One of them gives you a mock-up of the satellite you helped them launch as a keepsake.]])
 text[9] = _([["You do not have enough free cargo space to accept this mission!"]])
 
-articles={}
-articles={
+local articles={
    {
       "Generic",
       _("Scientists Launch Research Probe Into Nebula"),

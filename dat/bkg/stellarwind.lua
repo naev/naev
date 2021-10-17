@@ -7,6 +7,8 @@ require "bkg.default"
 local bgshaders = require "bkg.bgshaders"
 local love_shaders = require 'love_shaders'
 
+local shader, sf
+
 function background ()
    -- Scale factor that controls computation cost. As this shader is really
    -- really expensive, we can't compute it at full resolution

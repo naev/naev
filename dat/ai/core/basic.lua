@@ -308,7 +308,7 @@ function follow_fleet ()
          end
 
       else
-         local dir   = ai.face(goal)
+         ai.face(goal)
          if dist > 300 then   -- Must approach
             mem.app = 1
          else   -- Face forward

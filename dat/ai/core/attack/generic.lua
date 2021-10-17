@@ -260,7 +260,7 @@ end
 -- Approaches the target
 --]]
 function __atk_g_approach( target, _dist )
-   dir = ai.idir(target)
+   local dir = ai.idir(target)
    if dir < 10 and dir > -10 then
       __atk_keep_distance()
    else

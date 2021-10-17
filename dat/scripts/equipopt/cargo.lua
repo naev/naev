@@ -24,7 +24,7 @@ function cargo.add( p )
    -- Add the cargo
    local q = 0
    for i=1,ncargo do
-      local cf = p:cargoFree()
+      cf = p:cargoFree()
       local amount = rnd.rnd( math.floor(0.5*cf/ncargo), math.floor(cf) )
       q = q + p:cargoAdd( avail_cargo[ rnd.rnd( 1, #avail_cargo ) ]:nameRaw(), amount )
    end

@@ -87,10 +87,8 @@ greet_table["Soromid"] = {
 }
 greet_table["Thurion"] = {""}
 
-articles={}
 
-
-articles = {}
+local articles = {}
 
 articles["Generic"] = {
    --[[

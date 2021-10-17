@@ -22,6 +22,7 @@ lg.origin()
 -- some helpers to speed up computations
 local znw2, znh2 = zmax*nw/2, zmax*nh/2
 local nw2, nh2 = nw/2, nh/2
+local buffer, tw, th, fgparts, bgparts, wing, pos
 
 function background ()
    -- Create particles and buffer
@@ -66,7 +67,7 @@ function background ()
       { i = lg.newImage( 'gfx/ship/admonisher/admonisher_empire.webp' ), s = 8 },
       { i = lg.newImage( 'gfx/ship/pacifier/pacifier_empire.webp' ), s = 10 },
    }
-   images = {}
+   local images = {}
    for k,v in ipairs(images_raw) do
       local w, h = v.i:getDimensions()
       v.w = w / v.s

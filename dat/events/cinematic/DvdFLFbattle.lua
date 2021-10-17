@@ -21,9 +21,7 @@
 ]]--
 
 
-articles={}
-
-articles=
+local articles=
 {
 
 {
