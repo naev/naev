@@ -64,7 +64,7 @@ log_text = _([[You helped escort Chelsea through a dangerous cargo delivery miss
 
 
 function create ()
-   misplanet, missys, njumps, tdist, cargo, avgrisk = car.calculateRoute( cargo_selectMissionDistance )
+   misplanet, missys, njumps, tdist, cargo, avgrisk = car.calculateRoute( 3 )
    if misplanet == nil or missys == nil or avgrisk > 0 then
       misn.finish( false )
    end
@@ -108,11 +108,6 @@ function accept ()
       tk.msg( title[1], text[3] )
       misn.finish()
    end
-end
-
-
-function cargo_selectMissionDistance ()
-   return 3
 end
 
 

@@ -5,9 +5,9 @@ local fmt = require "format"
 local car = {}
 
 --[[--
-   Find an inhabited planet 0-3 jumps away.
+   Return a random jump distance, biased toward short missions (0-3 jumps).
 --]]
-function car.selectMissionDistance ()
+local function selectMissionDistance ()
    local seed = rnd.rnd()
 
    -- 70% chance of 0-3 jump distance
@@ -82,11 +82,11 @@ end
 
 --[[--
    Plan out a mission and return the parameters.
-   @tparam[opt] function distfunc Randomized distance function to use in place of the default car.selectMissionDistance.
+   @tparam[opt] function missdist Length in jumps, chosen at random via selectMissionDistance() by default.
    @tparam[opt=false] always_available If true, always generate; otherwise, only generate if commodities are available.
    @tparam[opt=false] use_hidden If true, allow hidden jumps to be part of the route.
 --]]
-function car.calculateRoute( distfunc, always_available, use_hidden )
+function car.calculateRoute( missdist, always_available, use_hidden )
    local origin_p, origin_s = planet.cur()
    local routesys = origin_s
    local routepos = origin_p:pos()
@@ -94,9 +94,9 @@ function car.calculateRoute( distfunc, always_available, use_hidden )
    -- Select mission tier.
    local tier = rnd.rnd(0, 4)
 
-   -- Farther distances have a lower chance of appearing.
-   local cargo_selectMissionDistance = distfunc or car.selectMissionDistance
-   local missdist = cargo_selectMissionDistance()
+   if missdist == nil then
+      missdist = selectMissionDistance()
+   end
    local planets = car.selectPlanets( missdist, routepos, use_hidden )
    if #planets == 0 then
       return

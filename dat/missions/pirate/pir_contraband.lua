@@ -35,11 +35,6 @@ osd_msg1 = _("Fly to %s in the %s system before %s\n(%s remaining)")
 --]]
 
 -- This is in common.cargo, but we need to increase the range
-function cargo_selectMissionDistance ()
-   return rnd.rnd( 5, 10 )
-end
-
-
 function create()
    -- Note: this mission does not make any system claims.
    local pntf = planet.cur():faction()
@@ -58,7 +53,7 @@ function create()
    origin_p, origin_s = planet.cur()
 
    -- target destination. Override "always_available" to true.
-   destplanet, destsys, numjumps, traveldist, cargo, avgrisk, tier = car.calculateRoute( cargo_selectMissionDistance, true )
+   destplanet, destsys, numjumps, traveldist, cargo, avgrisk, tier = car.calculateRoute( rnd.rnd(5, 10), true )
    if destplanet == nil or pir.factionIsPirate( destplanet:faction() ) then
       misn.finish(false)
    end
