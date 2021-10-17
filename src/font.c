@@ -1084,7 +1084,6 @@ static int font_makeChar( glFontStash *stsh, font_char_t *c, uint32_t ch )
       FT_UInt glyph_index;
       int w,h, rw,rh, b;
       double vmax;
-      GLubyte *buffer;
       FT_Bitmap bitmap;
       FT_GlyphSlot slot;
       glFontStashFreetype *ft = &stsh->ft[i];
@@ -1128,6 +1127,7 @@ static int font_makeChar( glFontStash *stsh, font_char_t *c, uint32_t ch )
          vmax = 1.0; /* arbitrary */
       }
       else {
+         GLubyte *buffer;
          /* Create a larger image using an extra border and center glyph. */
          b = 1 + ((MAX_EFFECT_RADIUS+1) * FONT_DISTANCE_FIELD_SIZE - 1) / stsh->h;
          rw = w+b*2;
@@ -1167,7 +1167,7 @@ static void gl_fontRenderStartH( const glFontStash* stsh, const gl_Matrix4 *H, c
    double a, scale;
    const glColour *col;
 
-   outlineR = outlineR==-1 ? 1 : MAX( outlineR, 0 );
+   outlineR = (outlineR==-1) ? 1 : MAX( outlineR, 0 );
 
    /* Handle colour. */
    a = (c==NULL) ? 1. : c->a;
@@ -1348,17 +1348,16 @@ static int gl_fontKernGlyph( glFontStash* stsh, uint32_t ch, glFontGlyph* glyph 
 static int gl_fontRenderGlyph( glFontStash* stsh, uint32_t ch, const glColour *c, int state )
 {
    double scale;
-   double a;
-   const glColour *col;
    int kern_adv_x;
+   glFontGlyph *glyph;
 
    /* Handle escape sequences. */
    if ((ch == FONT_COLOUR_CODE) && (state==0)) { /* Start sequence. */
       return 1;
    }
    if ((state == 1) && (ch != FONT_COLOUR_CODE)) {
-      col = gl_fontGetColour( ch );
-      a = (c==NULL) ? 1. : c->a;
+      const glColour *col = gl_fontGetColour( ch );
+      double a = (c==NULL) ? 1. : c->a;
       if (col != NULL)
          gl_uniformAColor(shaders.font.color, col, a );
       else if (c==NULL)
@@ -1371,7 +1370,6 @@ static int gl_fontRenderGlyph( glFontStash* stsh, uint32_t ch, const glColour *c
 
    /* Unicode goes here.
     * First try to find the glyph. */
-   glFontGlyph *glyph;
    glyph = gl_fontGetGlyph( stsh, ch );
    if (glyph == NULL) {
       WARN(_("Unable to find glyph '%d'!"), ch );

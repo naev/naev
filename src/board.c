@@ -53,8 +53,6 @@ int player_isBoarded (void)
 }
 
 /**
- * @fn void player_board (void)
- *
  * @brief Attempt to board the player's target.
  *
  * Creates the window on success.
