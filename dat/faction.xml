@@ -89,7 +89,7 @@
   <equip>pirate</equip>
   <useshiddenjumps/>
   <description>The Raven Pirate Clan is a band of pirates that lead over the widespread Qorel sector between the Empire and Dvaered systems.</description>
-  <generator weight="0.8">Pirate</generator>
+  <generator weight="0.5">Pirate</generator>
   <generator weight="0.5">Marauder</generator>
   <allies>
    <ally>Pirate</ally>
@@ -124,8 +124,8 @@
   <equip>pirate</equip>
   <useshiddenjumps/>
   <description>The Wild Ones Pirate Clan is a violent and loosely organized band of pirates that control the Haven sector between Empire and Soromid territories.</description>
-  <generator weight="0.5">Pirate</generator>
-  <generator weight="0.8">Marauder</generator>
+  <generator weight="0.35">Pirate</generator>
+  <generator weight="0.65">Marauder</generator>
   <allies>
    <ally>Pirate</ally>
   </allies>
@@ -159,8 +159,8 @@
   <equip>pirate</equip>
   <useshiddenjumps/>
   <description>The Black Lotus Pirate Clan is a fiercely organized pirate clan located between the Za'lek and Sirius space.</description>
-  <generator weight="0.8">Pirate</generator>
-  <generator weight="0.5">Marauder</generator>
+  <generator weight="0.65">Pirate</generator>
+  <generator weight="0.35">Marauder</generator>
   <allies>
    <ally>Pirate</ally>
   </allies>
@@ -194,8 +194,8 @@
   <equip>pirate</equip>
   <useshiddenjumps/>
   <description>The Dreamer Pirate Clan consists largely of disgruntled pirates from the Frontier, fed up with both the FLF terrorism and Empire tyranny.</description>
-  <generator weight="0.7">Pirate</generator>
-  <generator weight="0.7">Marauder</generator>
+  <generator weight="0.4">Pirate</generator>
+  <generator weight="0.4">Marauder</generator>
   <allies>
    <ally>Pirate</ally>
   </allies>
