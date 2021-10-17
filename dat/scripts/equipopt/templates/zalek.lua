@@ -102,7 +102,7 @@ local function equip_zalek( p, opt_params )
    local sname = ps:nameRaw()
 
    -- Choose parameters and make Za'lekish
-   local params = eparams.choose( p, zalek_params_overite )
+   local params = eparams.choose( p, zalek_params_overwrite )
    params.max_mass = 0.95 + 0.2*rnd.rnd()
    -- Per ship tweaks
    local sp = zalek_params[ sname ]
