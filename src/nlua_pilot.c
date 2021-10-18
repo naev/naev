@@ -690,7 +690,6 @@ static int pilotL_remove( lua_State *L )
 }
 /**
  * @brief Removes all pilots belonging to a faction from the system.
- *        Skips over disabled pilots because of reasons.
  *
  * @luatparam Faction fac Faction name/object to selectively clear.
  *
@@ -707,7 +706,6 @@ static int pilotL_clearSelect( lua_State *L )
 
    for (int i=0; i<array_size(pilot_stack); i++)
          if ((pilot_stack[i]->faction == f) &&
-               !pilot_isDisabled(pilot_stack[i]) &&
                !pilot_isFlag(pilot_stack[i], PILOT_DELETE) &&
                !pilot_isFlag(pilot_stack[i], PILOT_DEAD) &&
                !pilot_isFlag(pilot_stack[i], PILOT_HIDE))
