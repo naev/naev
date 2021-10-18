@@ -35,7 +35,6 @@
 
 local lmisn = require "lmisn"
 require "proximity"
-require "selectiveclear"
 local fw = require "common.frontier_war"
 local fmt = require "format"
 

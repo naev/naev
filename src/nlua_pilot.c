@@ -57,6 +57,7 @@ static int pilotL_setFlagWrapper( lua_State *L, int flag );
 static int pilotL_add( lua_State *L );
 static int pilotL_remove( lua_State *L );
 static int pilotL_clear( lua_State *L );
+static int pilotL_clearSelect( lua_State *L );
 static int pilotL_toggleSpawn( lua_State *L );
 static int pilotL_getPilots( lua_State *L );
 static int pilotL_getAllies( lua_State *L );
@@ -218,6 +219,7 @@ static const luaL_Reg pilotL_methods[] = {
    { "hasIllegal", pilotL_hasIllegal },
    /* System. */
    { "clear", pilotL_clear },
+   { "clearSelect", pilotL_clearSelect },
    { "toggleSpawn", pilotL_toggleSpawn },
    /* Modify. */
    { "changeAI", pilotL_changeAI },
@@ -683,6 +685,33 @@ static int pilotL_remove( lua_State *L )
 
    /* Deletes the pilot. */
    pilot_delete(p);
+
+   return 0;
+}
+/**
+ * @brief Removes all pilots belonging to a faction from the system.
+ *        Skips over disabled pilots because of reasons.
+ *
+ * @luatparam Faction fac Faction name/object to selectively clear.
+ *
+ * @usage pilot.clearSelect("Empire")
+ *
+ * @luafunc clearSelect
+ */
+static int pilotL_clearSelect( lua_State *L )
+{
+   NLUA_CHECKRW(L);
+
+   int f = luaL_validfaction(L,1);
+   Pilot *const* pilot_stack = pilot_getAll();
+
+   for (int i=0; i<array_size(pilot_stack); i++)
+         if ((pilot_stack[i]->faction == f) &&
+               !pilot_isDisabled(pilot_stack[i]) &&
+               !pilot_isFlag(pilot_stack[i], PILOT_DELETE) &&
+               !pilot_isFlag(pilot_stack[i], PILOT_DEAD) &&
+               !pilot_isFlag(pilot_stack[i], PILOT_HIDE))
+            pilot_delete(pilot_stack[i]);
 
    return 0;
 }

@@ -2575,7 +2575,6 @@ dat/scripts/pp_shaders.lua
 dat/scripts/prng.lua
 dat/scripts/proximity.lua
 dat/scripts/reverb_preset.lua
-dat/scripts/selectiveclear.lua
 dat/scripts/swapship.lua
 dat/scripts/vn.lua
 dat/scripts/vn/conf.lua

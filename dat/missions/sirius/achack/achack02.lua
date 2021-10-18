@@ -23,7 +23,6 @@
 --]]
 local lmisn = require "lmisn"
 local fleet = require "fleet"
-require "selectiveclear"
 require "proximity"
 local srs = require "common.sirius"
 local fmt = require "format"

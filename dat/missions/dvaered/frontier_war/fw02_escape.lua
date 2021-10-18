@@ -38,7 +38,6 @@
    9) Accepted Pirate solution: can cross any blockade, but has paid cash
 --]]
 local lmisn = require "lmisn"
-require "selectiveclear"
 require "proximity"
 local portrait = require "portrait"
 local fw = require "common.frontier_war"

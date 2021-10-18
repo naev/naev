@@ -33,7 +33,6 @@
    8) Land at last system
 --]]
 require "proximity"
-require "selectiveclear"
 local fw = require "common.frontier_war"
 local lmisn = require "lmisn"
 local fmt = require "format"
