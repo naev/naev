@@ -12,6 +12,7 @@
 -- To use: land, put this line in the Lua console, and take off:
 -- naev.eventStart("System Tour")
 --]]
+local systems, idx
 
 function create()
    player.pilot():setInvincible()
