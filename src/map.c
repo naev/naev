@@ -2345,10 +2345,8 @@ void map_setZoom(double zoom)
 StarSystem** map_getJumpPath( const char* sysstart, const char* sysend,
     int ignore_known, int show_hidden, StarSystem** old_data )
 {
-   int i, j, cost, njumps, ojumps;
-
-   StarSystem *sys, *ssys, *esys, **res;
-   JumpPoint *jp;
+   int j, cost, njumps, ojumps;
+   StarSystem *ssys, *esys, **res;
 
    SysNode *cur,   *neighbour;
    SysNode *open,  *closed;
@@ -2402,9 +2400,9 @@ StarSystem** map_getJumpPath( const char* sysstart, const char* sysend,
       closed = A_add( closed, cur );
       cost   = A_g(cur) + 1; /* Base unit is jump and always increases by 1. */
 
-      for (i=0; i<array_size(cur->sys->jumps); i++) {
-         jp  = &cur->sys->jumps[i];
-         sys = jp->target;
+      for (int i=0; i<array_size(cur->sys->jumps); i++) {
+         JumpPoint *jp  = &cur->sys->jumps[i];
+         StarSystem *sys = jp->target;
 
          /* Make sure it's reachable */
          if (!ignore_known) {
@@ -2448,14 +2446,14 @@ StarSystem** map_getJumpPath( const char* sysstart, const char* sysend,
    }
 
    /* Build path backwards if not broken from loop. */
-   if ( cur != NULL && esys == cur->sys ) {
+   if (cur != NULL && esys == cur->sys) {
       njumps = A_g(cur) + ojumps;
       assert( njumps > ojumps );
       if (res == NULL)
          res = array_create_size( StarSystem*, njumps );
       array_resize( &res, njumps );
       /* Build path. */
-      for (i=0; i<njumps-ojumps; i++) {
+      for (int i=0; i<njumps-ojumps; i++) {
          res[njumps-i-1] = cur->sys;
          cur = cur->parent;
       }
