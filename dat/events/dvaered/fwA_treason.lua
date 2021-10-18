@@ -27,7 +27,7 @@
 require "common.frontier_war"
 local fmt = require "format"
 
-credits = 2000000
+credits = 2e6
 
 
 -- Start at previous system
@@ -71,11 +71,21 @@ end
 -- Player answers to hail
 function hail()
    player.commClose()
-   local c = tk.choice(_("You are needed for a special job"), _([[The pilot of the fighter says, over an encrypted channel: "I have finally found you, %s. Better late than never. My employers want to congratulate you about how effective you have been with Lord Battleaddict. I am afraid there won't be many people to mourn him." You answer that you don't know what this is about, and that as far as you know, Lord Battleaddict has been killed in an honest duel by the General Klank. The interlocutor laughs "You're playing your part, eh? I can understand you, after all, they pay you well... Wait, no, they don't pay well. Not at all! How much was it for risking your life twice with this EMP bomb trick? %s? Haw haw haw! You can make better money with a cargo mission!
+   local c = tk.choice(
+      _("You are needed for a special job"),
+      fmt.f(
+         _([[The pilot of the fighter says, over an encrypted channel: "I have finally found you, {player}. Better late than never. My employers want to congratulate you about how effective you have been with Lord Battleaddict. I am afraid there won't be many people to mourn him." You answer that you don't know what this is about, and that as far as you know, Lord Battleaddict has been killed in an honest duel by the General Klank. The interlocutor laughs "You're playing your part, eh? I can understand you, after all, they pay you well... Wait, no, they don't pay well. Not at all! How much was it for risking your life twice with this EMP bomb trick? {credits_01}? Haw haw haw! You can make better money with a cargo mission!
    "I've even heard that once, they paid you with gauss guns! Those guys are so pitiful, aren't they?
-   "Now, let's talk seriously: you want money and I want a pilot. We're made to get along, you and me! I need you for a special task. I won't deny it implies going against the interests of General Klank and Major Tam and co, but if you do it well, they won't ever know that you are implicated, and you'll receive %s in the process. Oh yes, that's different from what you're used to! What do you say?"]]):format(player.name(), fmt.credits(credits_01), fmt.credits(credits)), _("Accept the offer"), _("Refuse and miss a unique opportunity"))
+   "Now, let's talk seriously: you want money and I want a pilot. We're made to get along, you and me! I need you for a special task. I won't deny it implies going against the interests of General Klank and Major Tam and co, but if you do it well, they won't ever know that you are implicated, and you'll receive {credits} in the process. Oh yes, that's different from what you're used to! What do you say?"]]),
+      {player=player.name(), credits_01=fmt.credits(credits_01), credits=fmt.credits(credits)} ),
+   _("Accept the offer"),
+   _("Refuse and miss a unique opportunity") )
    if c == 1 then
-      tk.msg(_("Your task"), _([["Very good choice, colleague!" The pilot answers. "Go to %s, and you will be hailed by an other Vendetta for your briefing."]]):format(targetsys:name()))
+      tk.msg(
+         _("Your task"),
+         fmt.f(
+            _([["Very good choice, colleague!" The pilot answers. "Go to {system}, and you will be hailed by an other Vendetta for your briefing."]]),
+            {system=targetsys:name()} ) )
       stage = 1
    elseif c == 2 then
       tk.msg(_("Too bad"), _([["I see. Stay tuned, then, maybe we will see each other again!"]]))
@@ -94,13 +104,24 @@ end
 function reaction()
    local loyal_title = _("You are a loyal citizen of House Dvaered")
    if stage == 1 then -- Traitor
-      tk.msg(_("You tried to betray us"), _([[As you land, you see the Captain Leblanc at the dock and she reprimands you: "It was a trap, %s. The fact that you fell into it proves that you are disloyal. Disloyal and stupid by the way, as the trap was quite obvious if I may add. And the High Command can not afford to work with disloyal and stupid people. With regards to how well you have helped us in the past, we will exceptionally let you live, but don't expect us to trust you anymore!"]]):format(player.name()), ("portraits/"..portrait_leblanc))
+      tk.msg(
+         _("You tried to betray us"),
+         fmt.f(
+            _([[As you land, you see the Captain Leblanc at the dock and she reprimands you: "It was a trap, {player}. The fact that you fell into it proves that you are disloyal. Disloyal and stupid by the way, as the trap was quite obvious if I may add. And the High Command can not afford to work with disloyal and stupid people. With regards to how well you have helped us in the past, we will exceptionally let you live, but don't expect us to trust you anymore!"]]),
+            {player=player.name()} ),
+         ("portraits/"..portrait_leblanc) )
       var.push( "loyal2klank", false )
       shiplog.create( "dvaered_military", _("Dvaered Military Coordination"), _("Dvaered") )
       shiplog.append( "dvaered_military", _("Major Tam and Captain Leblanc, from the DHC, have tested your loyalty to the General Klank... and you miserably failed. By chance, they did not kill you, but you'll have to find other employers.") )
       evt.finish(true)
    else -- Loyal
-      tk.choice(loyal_title, _([[As you land, you see the Captain Leblanc at the dock and she congratulates you: "I've heard good things about you, citizen %s. It seems that you have passed the test. You remained loyal to our general, in spite of the absurdly high reward they had proposed to you for betraying us."]]):format(player.name()), _("The amount of your rewards is pathetic"), _("Money is not important, captain")) -- Actually we don't care of the answer
+      tk.choice(
+         loyal_title,
+         fmt.f(
+            _([[As you land, you see the Captain Leblanc at the dock and she congratulates you: "I've heard good things about you, citizen {player}. It seems that you have passed the test. You remained loyal to our general, in spite of the absurdly high reward they had proposed to you for betraying us."]]),
+            {player=player.name()} ),
+         _("The amount of your rewards is pathetic"),
+         _("Money is not important, captain") ) -- Actually we don't care of the answer
       tk.msg(loyal_title, _([["Money matters are secondary matters, pilot. One day you are rich, and the next, you are poor. Valor, on the other hand, is the central matter of life for valor contains all the other qualities a Dvaered must have:
    "Righteousness to understand what has to be done,
    "Loyalty to know who you can trust to help you in your duty,
