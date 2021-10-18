@@ -34,7 +34,7 @@
 --]]
 require "proximity"
 require "selectiveclear"
-require "common.frontier_war"
+local fw = require "common.frontier_war"
 local lmisn = require "lmisn"
 local fmt = require "format"
 
@@ -59,7 +59,7 @@ function create()
    end
 
    destpla1, destsys1 = planet.get("Ginni")
-   destpla2, destsys2 = planet.get(wlrd_planet)
+   destpla2, destsys2 = planet.get(fw.wlrd_planet)
    destpla3, destsys3 = planet.get("Laarss")
 
    fleepla, fleesys = planet.get("Odonga m1")
@@ -72,7 +72,7 @@ function create()
       misn.finish(false)
    end
 
-   misn.setNPC(_("Dvaered officer"), portrait_tam, _("This Dvaered senior officer could be looking for a pilot for hire. Why else would he stay at this bar?"))
+   misn.setNPC(_("Dvaered officer"), fw.portrait_tam, _("This Dvaered senior officer could be looking for a pilot for hire. Why else would he stay at this bar?"))
 
    previous = planet:cur()
 end
@@ -262,11 +262,11 @@ function land() -- The player is only allowed to land on special occasions
    elseif stage == 8 then
       shiplog.create( "dvaered_military", _("Dvaered Military Coordination"), _("Dvaered") )
       shiplog.append( "dvaered_military", log_text )
-      tk.msg(_("Thank you, citizen"), _([[As you land, Major Tam greets you at the spaceport. "After the losses they got today, I doubt those mercenaries will come back at me anytime soon. I need to report back at the Dvaer High Command station in Dvaer, and I don't need any more escorting. Oh, and, err... about the payment, I am afraid there is a little setback..." You start getting afraid he would try to stiff pay you, but he continues: "I don't know why, but the High Command has not credited the payment account yet... Well do you know what we are going to do? I will give you a set of Gauss Guns worth %s! One always needs Gauss Guns, no?"]]):format(fmt.credits(credits_00)))
+      tk.msg(_("Thank you, citizen"), _([[As you land, Major Tam greets you at the spaceport. "After the losses they got today, I doubt those mercenaries will come back at me anytime soon. I need to report back at the Dvaer High Command station in Dvaer, and I don't need any more escorting. Oh, and, err... about the payment, I am afraid there is a little setback..." You start getting afraid he would try to stiff pay you, but he continues: "I don't know why, but the High Command has not credited the payment account yet... Well do you know what we are going to do? I will give you a set of Gauss Guns worth %s! One always needs Gauss Guns, no?"]]):format(fmt.credits(fw.credits_00)))
 
       -- Major Tam gives Gauss Guns instead of credits, because Major Tam is a freak.
       GGprice = outfit.get("Gauss Gun"):price()
-      nb = math.floor(credits_00/GGprice+0.5)
+      nb = math.floor(fw.credits_00/GGprice+0.5)
       player.outfitAdd("Gauss Gun", nb)
       misn.finish(true)
    else
@@ -276,11 +276,11 @@ function land() -- The player is only allowed to land on special occasions
    --hook.rm(jumpingTam)
    tamJumped = true
    previous = planet.cur()
-   boozingTam = misn.npcAdd("discussWithTam", npc_name, portrait_tam, npc_desc)
+   boozingTam = misn.npcAdd("discussWithTam", npc_name, fw.portrait_tam, npc_desc)
 end
 
 function loading()
-   boozingTam = misn.npcAdd("discussWithTam", npc_name, portrait_tam, npc_desc)
+   boozingTam = misn.npcAdd("discussWithTam", npc_name, fw.portrait_tam, npc_desc)
 end
 
 function meeting_timer() -- Delay the triggering of the meeting

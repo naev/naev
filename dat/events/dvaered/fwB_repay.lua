@@ -15,12 +15,12 @@
 --Event for Frontier Invasion campaign. The player must repay general Klank
 --]]
 
-require "common.frontier_war"
+local fw = require "common.frontier_war"
 local fmt = require "format"
 
 npc_name = { _("Major Tam"), _("Captain Leblanc"), _("Lieutenant Strafer") }
 
-portraits = { portrait_tam, portrait_leblanc, portrait_strafer }
+portraits = { fw.portrait_tam, fw.portrait_leblanc, fw.portrait_strafer }
 
 npc_desc = {}
 npc_desc[1] = _("In the Dvaered military reserved bar, where you now have access, you see the major, sitting at a table with a few High Command officers that you don't happen to know.")
@@ -40,9 +40,9 @@ function create()
 end
 
 function pay()
-   if tk.yesno(pay_title, pay_text:format(fmt.number(pirate_price))) then
-      if player.credits() >= pirate_price then
-         player.pay(-pirate_price)
+   if tk.yesno(pay_title, pay_text:format(fmt.number(fw.pirate_price))) then
+      if player.credits() >= fw.pirate_price then
+         player.pay(-fw.pirate_price)
          shiplog.create( "frontier_war", _("Frontier War"), _("Dvaered") )
          shiplog.append( "frontier_war", log_text )
          var.push("dv_pirate_debt", false)

@@ -36,8 +36,11 @@
 local lmisn = require "lmisn"
 require "proximity"
 require "selectiveclear"
-require "common.frontier_war"
+local fw = require "common.frontier_war"
 local fmt = require "format"
+
+-- common hooks
+message = fw.message
 
 npc_name = _("Captain Hamfresser")
 npc_desc = _("A tall and very large cyborg soldier sits against a wall, right next to the emergency exit. He loudly drinks an orange juice through a pink straw and suspiciously examines the other customers. By the power of his eyes he cleared a large area around him as people seem to prefer to move away instead of meeting his half-robotic gaze. Unfortunately, he matches the description of your contact, which means you will have to overcome your fear and talk to him.")
@@ -54,7 +57,7 @@ bombMass = 100
 
 function create()
    hampla, hamsys     = planet.get("Stutee") --Morgan Station
-   sabotpla, sabotsys = planet.get(wlrd_planet)
+   sabotpla, sabotsys = planet.get(fw.wlrd_planet)
    duelpla, duelsys   = planet.get("Dvaer Prime")
    intpla, intsys     = planet.get("Timu")
 
@@ -66,7 +69,7 @@ function create()
       misn.finish(false)
    end
 
-   misn.setNPC(_("Major Tam"), portrait_tam, _("Major Tam may be in need of a pilot."))
+   misn.setNPC(_("Major Tam"), fw.portrait_tam, _("Major Tam may be in need of a pilot."))
 end
 
 function accept()
@@ -91,20 +94,20 @@ end
 
 function land()
    if stage == 0 and planet.cur() == hampla then -- Meet Captain Hamfresser
-      captain = misn.npcAdd("hamfresser", npc_name, portrait_hamfresser, npc_desc)
+      captain = misn.npcAdd("hamfresser", npc_name, fw.portrait_hamfresser, npc_desc)
 
    elseif stage == 2 then -- The player landed somewhere on Battleaddict's system
       tk.msg( _("What are you doing here?"), _("This planet belongs to Lord Battleaddict. You will be captured if you land here. The mission failed.") )
       misn.finish(false)
 
    elseif stage == 5 and planet.cur() == duelpla then -- Report back
-      tam = misn.npcAdd("majorTam", _("Major Tam and Captain Leblanc"), portrait_tam, _("Major Tam and Captain Leblanc seem to be waiting for you."))
-      leb = misn.npcAdd("majorTam", _("Major Tam and Captain Leblanc"), portrait_leblanc, _("Major Tam and Captain Leblanc seem to be waiting for you."))
+      tam = misn.npcAdd("majorTam", _("Major Tam and Captain Leblanc"), fw.portrait_tam, _("Major Tam and Captain Leblanc seem to be waiting for you."))
+      leb = misn.npcAdd("majorTam", _("Major Tam and Captain Leblanc"), fw.portrait_leblanc, _("Major Tam and Captain Leblanc seem to be waiting for you."))
 
    elseif stage == 7 and planet.cur() == duelpla then -- Epilogue
-      tam = misn.npcAdd("endMisn", _("Your employers"), portrait_tam, _("Tam and Leblanc are congratulating their general."))
-      leb = misn.npcAdd("endMisn", _("Your employers"), portrait_leblanc, _("Tam and Leblanc are congratulating their general."))
-      kla = misn.npcAdd("endMisn", _("Your employers"), portrait_klank, _("Tam and Leblanc are congratulating their general."))
+      tam = misn.npcAdd("endMisn", _("Your employers"), fw.portrait_tam, _("Tam and Leblanc are congratulating their general."))
+      leb = misn.npcAdd("endMisn", _("Your employers"), fw.portrait_leblanc, _("Tam and Leblanc are congratulating their general."))
+      kla = misn.npcAdd("endMisn", _("Your employers"), fw.portrait_klank, _("Tam and Leblanc are congratulating their general."))
    end
 end
 
@@ -454,7 +457,7 @@ function fighterDuel()
    klank2:rename( "General Klank" )
    klank2:control(true)
    klank2:setFaction("DHC")
-   equipVendettaMace( klank2 ) -- Klank's superior equipment should ensure victory once more
+   fw.equipVendettaMace( klank2 ) -- Klank's superior equipment should ensure victory once more
 
    battleaddict2 = pilot.add( "Dvaered Vendetta", "Dvaered", battleaddict:pos() )
    battleaddict2:rename( "Lord Battleaddict" )
@@ -513,8 +516,8 @@ end
 -- Epilogue
 function endMisn()
    tk.msg( _("A good thing done"), _([[As you approach, the major tells the General Klank that you are the private pilot they had hired recently. "I see," says the general "so you are part of the people I have to thank for still being alive now." You answer that he apparently would not have needed help if Battleaddict had not cheated as well, and he responds: "Damn fake electricians; I should have suspected something. Anyway, citizen, rest assured that we will need your services again." A group of generals then approaches and congratulate Klank. He stands up and goes away with them, loudly exchanging dubious pleasantries with them.
-   Major Tam then speaks to you: "Apparently, Battleaddict had got a commando unit to dress like electricians and to hide an EMP bomb in the General's Goddard, that exploded during the fight, just like our own bomb. And now, both ships have their systems ruined. Well, anyway, thank you for your help, here are %s for you!"]]):format(fmt.credits(credits_01)) )
-   player.pay(credits_01)
+   Major Tam then speaks to you: "Apparently, Battleaddict had got a commando unit to dress like electricians and to hide an EMP bomb in the General's Goddard, that exploded during the fight, just like our own bomb. And now, both ships have their systems ruined. Well, anyway, thank you for your help, here are %s for you!"]]):format(fmt.credits(fw.credits_01)) )
+   player.pay(fw.credits_01)
    shiplog.create( "dvaered_military", _("Dvaered Military Coordination"), _("Dvaered") )
    shiplog.append( "dvaered_military", log_text )
    var.push( "loyal2klank", false ) -- This ensures the next mission will be available only once the traitor event is done

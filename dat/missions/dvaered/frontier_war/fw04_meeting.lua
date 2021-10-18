@@ -31,10 +31,13 @@
    4) Land on Laars and get rewarded
 --]]
 
-require "common.frontier_war"
+local fw = require "common.frontier_war"
 require "proximity"
 local portrait = require "portrait"
 local fmt = require "format"
+
+-- common hooks
+message = fw.message
 
 -- TODO: hooks to penalize attacking people
 
@@ -106,7 +109,7 @@ function create()
       misn.finish(false)
    end
 
-   misn.setNPC(npc_name, portrait_strafer, _("Judging by how he looks at you, Strafer needs you for another mission along with the Dvaered Space Force."))
+   misn.setNPC(npc_name, fw.portrait_strafer, _("Judging by how he looks at you, Strafer needs you for another mission along with the Dvaered Space Force."))
 end
 
 function accept()
@@ -128,7 +131,7 @@ function accept()
    stage = 0
    hook.land("land")
    loadhook = hook.load("loading")
-   reward = credits_04
+   reward = fw.credits_04
 end
 
 function loading()
@@ -158,10 +161,10 @@ function land()
    elseif (stage == 4 and planet.cur() == destpla) then
       tk.msg( _("Time for a gorgeous reward?"), _([[At the very moment you step out of your ship, you see an officer, alone on the dock, obviously waiting for you. After having moved forward, you recognize the Major Tam. The cold wind unfolds the lapels of his coat, and make it whip his sad face.
    "We had better days, isn't it, citizen? A spy managed to run away with what seems to be a copy of our invasion plan, they killed one of my best pilots and Hamelsen escaped... Once more." Tam looks at the sky that starts to rain "... and it's winter on the spacedock of Dvaer Prime. Shall we enter the building? I was told that the chemical plant works twice more in winter, and the rain often turns acid."
-   You enter and head to the military bar. Tam looks at you: "I've grown up on Nanek in Allous. For 13 years, the only part of the universe I used to know was my village on Nanek, and the only people I used to know were its inhabitants. And now, I've seen hundreds of planets, and thousands of people all around the galaxy. But most of them have been killed at some point, and they corpses are drifting here and there in space, along with the pitiful remains of their defeated ships. The night sky is constellated with the souls of dead pilots. Our control of space gave us access to experiences our forefathers could not even dream of, but you know what? No matter how cold the graves of my ancestors on Nanek are, they are warmer than the emptiness of infinite space."]]), ("portraits/"..portrait_tam) )
+   You enter and head to the military bar. Tam looks at you: "I've grown up on Nanek in Allous. For 13 years, the only part of the universe I used to know was my village on Nanek, and the only people I used to know were its inhabitants. And now, I've seen hundreds of planets, and thousands of people all around the galaxy. But most of them have been killed at some point, and they corpses are drifting here and there in space, along with the pitiful remains of their defeated ships. The night sky is constellated with the souls of dead pilots. Our control of space gave us access to experiences our forefathers could not even dream of, but you know what? No matter how cold the graves of my ancestors on Nanek are, they are warmer than the emptiness of infinite space."]]), ("portraits/" .. fw.portrait_tam) )
       tk.msg( _("Time for a gorgeous reward?"), _([[You start wondering if the major will remember to pay you, but his voice suddenly changes: "We definitely had better days, but you know, the true valor of a warrior reveals itself in times of adversity. The dark clouds that drift above the horizon, pushed by the cruel wings of despair, are here to challenge the strength of our Dvaered souls. And it is up to us to accept this challenge.
    "I did not anticipate that the traitor Hamelsen could reconstruct her group of mercenaries so fast, but you already killed some of them, and Leblanc's squadron will kill even more in the near future. We will then hunt the ex-colonel Hamelsen down, and finally we will carry this invasion on.
-   "Anyway, for now, we will transfer %s to your account, as a reward for this mission, and be certain that we will need you again soon!"]]):format(fmt.credits(reward)), ("portraits/"..portrait_tam) )
+   "Anyway, for now, we will transfer %s to your account, as a reward for this mission, and be certain that we will need you again soon!"]]):format(fmt.credits(reward)), ("portraits/" .. fw.portrait_tam) )
       player.pay(reward)
 
       local t = time.get():tonumber()
@@ -176,7 +179,7 @@ end
 -- Encounter with Strafer on Dvaer Prime
 function strNpc()
    toldya = {0,0,0,0}
-   strafer = misn.npcAdd("discussStr", npc_name, portrait_strafer, _("Harsh voice, frank gaze and easy trigger. The lieutenant Strafer is a Dvaered pilot."))
+   strafer = misn.npcAdd("discussStr", npc_name, fw.portrait_strafer, _("Harsh voice, frank gaze and easy trigger. The lieutenant Strafer is a Dvaered pilot."))
 end
 
 function takeoff()
@@ -352,7 +355,7 @@ end
 
 -- Spawn one warlord
 function spawn1Wrlrd( origin )
-   wrlrds[noWrlrd] = pilot.add( "Dvaered Goddard", "Warlords", origin, lords[noWrlrd] )
+   wrlrds[noWrlrd] = pilot.add( "Dvaered Goddard", "Warlords", origin, fw.lords[noWrlrd] )
    wrlrds[noWrlrd]:control()
 
    -- Decide if the Warlord will play ar shooting at the player

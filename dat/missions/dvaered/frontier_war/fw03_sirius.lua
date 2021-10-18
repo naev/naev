@@ -34,10 +34,13 @@
    6) Pursuit: you may land after the target
 --]]
 local lmisn = require "lmisn"
-require "common.frontier_war"
+local fw = require "common.frontier_war"
 require "selectiveclear"
 require "proximity"
 local fmt = require "format"
+
+-- common hooks
+escort_hailed = fw.escort_hailed
 
 npc_name = _("Major Tam")
 npc_desc = _("The major seems to be waiting for you.")
@@ -96,7 +99,7 @@ function create()
       misn.finish(false)
    end
 
-   misn.setNPC(npc_name, portrait_tam, npc_desc)
+   misn.setNPC(npc_name, fw.portrait_tam, npc_desc)
 end
 
 function accept()
@@ -134,7 +137,7 @@ function accept()
    alive["__save"] = true
 
    toldya = {false,false,false,false}
-   boozingTam = misn.npcAdd("discussWithTam", npc_name, portrait_tam, npc_desc)
+   boozingTam = misn.npcAdd("discussWithTam", npc_name, fw.portrait_tam, npc_desc)
 end
 
 -- Discussions with Major Tam at the bar
@@ -453,7 +456,7 @@ function baddie_death( pilot )
    increment_baddie()
 
    -- See if it's one of the 3 targets
-   if (elt_inlist( pilot, targetList ) > 0) then
+   if (fw.elt_inlist( pilot, targetList ) > 0) then
       deadtarget = deadtarget + 1
       player.msg( _("One of the targets was destroyed!") )
       if deadtarget >= 3 then
@@ -469,7 +472,7 @@ function baddie_death( pilot )
 end
 
 function baddie_jump( pilot, jump )
-   if (elt_inlist( pilot, targetList ) > 0) then
+   if (fw.elt_inlist( pilot, targetList ) > 0) then
       if stage == 1 then -- It's the first one who escapes
          nextt = jump:dest()
          arm, sld, str = pilot:health() -- Store target values
@@ -491,7 +494,7 @@ end
 
 -- Actually, after checking, this is very unlikely to happen...
 function baddie_land( pilot, planet )
-   if (elt_inlist( pilot, targetList ) > 0) then
+   if (fw.elt_inlist( pilot, targetList ) > 0) then
       if stage == 1 then -- It's the first one who escapes
          nextt = planet
          tk.msg(_("This is not good"), _([[While your sensors lose the signal of the target you were supposed to kill, you expect to receive a mission failure message, but instead, you hear Tam's ship communication: "One of them escaped. Continue destroying the others. Afterwards, %s, you will land on %s to keep track on the pilot."]]):format(player.name(), nextt:name()))
@@ -586,10 +589,10 @@ end
 
 -- Compute the effective reward from nb of alive pilots
 function compute_reward()
-   effective_credits = credits_03
+   effective_credits = fw.credits_03
    for i, j in ipairs(alive) do
       if j then
-         effective_credits = effective_credits + credits_03
+         effective_credits = effective_credits + fw.credits_03
       end
    end
 end

@@ -35,9 +35,12 @@
    7) Mace Pankration performed
 --]]
 
-require "common.frontier_war"
+local fw = require "common.frontier_war"
 require "proximity"
 local portrait = require "portrait"
+
+-- common hooks
+message = fw.message
 
 mace_fail = _("Your only weapons should be Mace rockets: land and speak again with Major Tam.")
 
@@ -69,7 +72,7 @@ function create()
    end
 
    tk.msg( _("An invitation"), _([[Your communication channel informs you that your ship has recieved an holographic message through the Dvaered Army Long-Distance Messaging System. As you press the "Enter" button, the face of a teenage version of Lieutenant Strafer emerges from your holoprojector:
-   "I am Private Helmut Strafer and this is my death announcement." A strange smile appears on his face as he continues: "Yep, this is happening. It is my ultmost privilege to have been killed in service to the Dvaered Nation, Great House of the Glorious Galactic Empire. You recieve this recording because you are on the list of people I considered to be my friends, and that are invited to my funeral ceremony, which I sincerely hope you will enjoy. As I obviously don't know yet either the circumstances of my death, or the details about the ceremony, all I can do is to invite you to find more informations in the attached data. Now that I have merged with the void, I would be honoured if my memory would be part of the things that help you remain right, loyal and strong for the rest of your own lifetime."]]), ("portraits/"..portrait_strafer) )
+   "I am Private Helmut Strafer and this is my death announcement." A strange smile appears on his face as he continues: "Yep, this is happening. It is my ultmost privilege to have been killed in service to the Dvaered Nation, Great House of the Glorious Galactic Empire. You recieve this recording because you are on the list of people I considered to be my friends, and that are invited to my funeral ceremony, which I sincerely hope you will enjoy. As I obviously don't know yet either the circumstances of my death, or the details about the ceremony, all I can do is to invite you to find more informations in the attached data. Now that I have merged with the void, I would be honoured if my memory would be part of the things that help you remain right, loyal and strong for the rest of your own lifetime."]]), ("portraits/" .. fw.portrait_strafer) )
    if not tk.yesno( _("An invitation"), _([[You browse the attached folder and find out that the ceremony will take place around Dvaer Prime. As a pilot, you are invited to take part to a Mace Rocket ballet in memory of Lieutenant Strafer, and are strongly advised to show up with a fighter and mace launchers.
    Are you going to go there?]]) ) then
       misn.finish(false)
@@ -182,7 +185,7 @@ function spawnNpcs()
          populate_bar()
 
          if stage == 1 or stage == 3 or stage == 5 then
-            tam = misn.npcAdd("tamCommon", _("Major Tam"), portrait_tam, _("Major Tam is ready to explain the next stage of the ceremony to you."))
+            tam = misn.npcAdd("tamCommon", _("Major Tam"), fw.portrait_tam, _("Major Tam is ready to explain the next stage of the ceremony to you."))
          elseif stage == 7 then
             tk.msg( totalTitle, totalString ) -- Ex-aequo always profit the player.
             tk.msg("",_([[While landing, you see the other participants of the ceremony gathered on the dock. Strafer's father, being the master of ceremony, announces:
@@ -191,7 +194,7 @@ function spawnNpcs()
             player.outfitAdd("Handbook for Dvaered Good Manners") -- TODO: add lore about this Handbook
 
             -- Give a reward depending on the rank (10 is highest and 1 lowest)
-            local playerRank = elt_inlist( 10, iter )
+            local playerRank = fw.elt_inlist( 10, iter )
 
             if playerRank == 10 then
                tk.msg("",_("You recieve a %s as a reward."):format(_("Dvaered Vendetta")))
@@ -267,10 +270,10 @@ end
 
 -- Add the random people
 function populate_bar()
-   lbl = misn.npcAdd("discussLbl", _("Captain Leblanc"), portrait_leblanc, _("Leblanc is surrounded by her pilots, who somehow exchange jokes about their respective collections of chopped heads. The ambiance feels surprisingly relaxed."))
-   klk = misn.npcAdd("discussKlk", _("General Klank"), portrait_klank, _("The general is talking to Major Tam."))
-   nkv = misn.npcAdd("discussNkv", _("Sergeant Nikolov"), portrait_nikolov, _("Nikolov is arm-wrestling half a dozen of soldiers. The cyborg sergeant seems to be very cautious in order not to harm them."))
-   ham = misn.npcAdd("discussHam", _("Captain Hamfresser"), portrait_hamfresser, _("Hamfresser stays behind a group of army technicians. He bows towards them, probably attempting to take part to the conversation, but no one seems to give him any attention. His face seems to reflect not only boredom, but also shame not to be able to fit among the group. He swings his unused cybernetic arms around his hips."))
+   lbl = misn.npcAdd("discussLbl", _("Captain Leblanc"), fw.portrait_leblanc, _("Leblanc is surrounded by her pilots, who somehow exchange jokes about their respective collections of chopped heads. The ambiance feels surprisingly relaxed."))
+   klk = misn.npcAdd("discussKlk", _("General Klank"), fw.portrait_klank, _("The general is talking to Major Tam."))
+   nkv = misn.npcAdd("discussNkv", _("Sergeant Nikolov"), fw.portrait_nikolov, _("Nikolov is arm-wrestling half a dozen of soldiers. The cyborg sergeant seems to be very cautious in order not to harm them."))
+   ham = misn.npcAdd("discussHam", _("Captain Hamfresser"), fw.portrait_hamfresser, _("Hamfresser stays behind a group of army technicians. He bows towards them, probably attempting to take part to the conversation, but no one seems to give him any attention. His face seems to reflect not only boredom, but also shame not to be able to fit among the group. He swings his unused cybernetic arms around his hips."))
    wdw = misn.npcAdd("discussWdw", _("Well-dressed woman"), portrait_wdw, _("One of the rare civilians around, this woman seems however to fit in the place. You think that she must be used to hang out with soldiers."))
    dad = misn.npcAdd("discussDad", _("Retired soldier"), portrait_dad, _("An old captain who seems to have ironed his pageantry uniform for the occasion is talking to some civilians. His shoulders carry the weight of years spent fighting in space while his face is bent over by days of anguish for comrades he loved and lost fighting up there."))
    sst = misn.npcAdd("discussSst", _("Sergeant"), portrait_sst, _("This pilot is not a member of Leblanc's squadron, however, she discusses with them."))
@@ -403,7 +406,7 @@ function takeoff()
       for i = 1, 10 do
          pos = center + vec2.newP( rnd.rnd(0,radius-500), rnd.rnd(0,360) )
          annoyers[i] = pilot.add( "Dvaered Vendetta", "Warlords", pos, _("Shooter"))
-         equipVendettaMace( annoyers[i] )
+         fw.equipVendettaMace( annoyers[i] )
          annoyers[i]:setSpeedLimit( .0001 )
          annoyers[i]:control()
       end
@@ -582,7 +585,7 @@ function spawnCompetitors( )
    for i = 1, 9 do
       local pos = center + vec2.newP( radius, i*360/10 - 90 )
       competitors[i] = pilot.add( "Dvaered Vendetta", "DHC", pos, competitors_names[i])
-      equipVendettaMace( competitors[i] )
+      fw.equipVendettaMace( competitors[i] )
       competitors[i]:memory().Cindex = i -- Store their index
       competitors[i]:setVisible()
       competitors[i]:control()
