@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2021-10-17 21:01-0400\n"
+"POT-Creation-Date: 2021-10-17 21:44-0400\n"
 "PO-Revision-Date: 2021-08-30 16:38+0000\n"
 "Last-Translator: Anthony Gregory Souza dos Santos "
 "<antonigregorysouza123@gmail.com>\n"
@@ -13370,8 +13370,8 @@ msgstr ""
 
 #. Ship to go back to
 #. Set up Major Malik
-#: dat/faction.xml:462 dat/events/dvaered/fwA_treason.lua:99
-#: dat/events/dvaered/fwA_treason.lua:114 dat/events/dvaered/fwB_repay.lua:46
+#: dat/faction.xml:462 dat/events/dvaered/fwA_treason.lua:114
+#: dat/events/dvaered/fwA_treason.lua:135 dat/events/dvaered/fwB_repay.lua:46
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:263
 #: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:518
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:147
@@ -24121,91 +24121,88 @@ msgstr ""
 #. TODO: not sure it's needed.
 #. thissystem and source_system must be adjacent (for those who use player.teleport)
 #. Player answers to hail
-#: dat/events/dvaered/fwA_treason.lua:74
+#: dat/events/dvaered/fwA_treason.lua:75
 msgid "You are needed for a special job"
 msgstr ""
 
-#: dat/events/dvaered/fwA_treason.lua:74
-#, lua-format
+#: dat/events/dvaered/fwA_treason.lua:77
 msgid ""
 "The pilot of the fighter says, over an encrypted channel: \"I have finally "
-"found you, %s. Better late than never. My employers want to congratulate you "
-"about how effective you have been with Lord Battleaddict. I am afraid there "
-"won't be many people to mourn him.\" You answer that you don't know what "
-"this is about, and that as far as you know, Lord Battleaddict has been "
-"killed in an honest duel by the General Klank. The interlocutor laughs "
-"\"You're playing your part, eh? I can understand you, after all, they pay "
-"you well... Wait, no, they don't pay well. Not at all! How much was it for "
-"risking your life twice with this EMP bomb trick? %s? Haw haw haw! You can "
-"make better money with a cargo mission!\n"
+"found you, {player}. Better late than never. My employers want to "
+"congratulate you about how effective you have been with Lord Battleaddict. I "
+"am afraid there won't be many people to mourn him.\" You answer that you "
+"don't know what this is about, and that as far as you know, Lord "
+"Battleaddict has been killed in an honest duel by the General Klank. The "
+"interlocutor laughs \"You're playing your part, eh? I can understand you, "
+"after all, they pay you well... Wait, no, they don't pay well. Not at all! "
+"How much was it for risking your life twice with this EMP bomb trick? "
+"{credits_01}? Haw haw haw! You can make better money with a cargo mission!\n"
 "   \"I've even heard that once, they paid you with gauss guns! Those guys "
 "are so pitiful, aren't they?\n"
 "   \"Now, let's talk seriously: you want money and I want a pilot. We're "
 "made to get along, you and me! I need you for a special task. I won't deny "
 "it implies going against the interests of General Klank and Major Tam and "
 "co, but if you do it well, they won't ever know that you are implicated, and "
-"you'll receive %s in the process. Oh yes, that's different from what you're "
-"used to! What do you say?\""
+"you'll receive {credits} in the process. Oh yes, that's different from what "
+"you're used to! What do you say?\""
 msgstr ""
 
-#: dat/events/dvaered/fwA_treason.lua:76 dat/missions/flf/flf_pre02.lua:203
+#: dat/events/dvaered/fwA_treason.lua:81 dat/missions/flf/flf_pre02.lua:203
 msgid "Accept the offer"
 msgstr ""
 
-#: dat/events/dvaered/fwA_treason.lua:76
+#: dat/events/dvaered/fwA_treason.lua:82
 msgid "Refuse and miss a unique opportunity"
 msgstr ""
 
-#: dat/events/dvaered/fwA_treason.lua:78
+#: dat/events/dvaered/fwA_treason.lua:85
 msgid "Your task"
 msgstr ""
 
-#: dat/events/dvaered/fwA_treason.lua:78
-#, lua-format
+#: dat/events/dvaered/fwA_treason.lua:87
 msgid ""
-"\"Very good choice, colleague!\" The pilot answers. \"Go to %s, and you will "
-"be hailed by an other Vendetta for your briefing.\""
+"\"Very good choice, colleague!\" The pilot answers. \"Go to {system}, and "
+"you will be hailed by an other Vendetta for your briefing.\""
 msgstr ""
 
-#: dat/events/dvaered/fwA_treason.lua:81
+#: dat/events/dvaered/fwA_treason.lua:91
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:82
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:88
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:116
 msgid "Too bad"
 msgstr ""
 
-#: dat/events/dvaered/fwA_treason.lua:81
+#: dat/events/dvaered/fwA_treason.lua:91
 msgid "\"I see. Stay tuned, then, maybe we will see each other again!\""
 msgstr ""
 
 #. Reaction to player's choice at first landing
-#: dat/events/dvaered/fwA_treason.lua:95
+#: dat/events/dvaered/fwA_treason.lua:105
 msgid "You are a loyal citizen of House Dvaered"
 msgstr ""
 
 #. Traitor
-#: dat/events/dvaered/fwA_treason.lua:97
+#: dat/events/dvaered/fwA_treason.lua:108
 msgid "You tried to betray us"
 msgstr ""
 
-#: dat/events/dvaered/fwA_treason.lua:97
-#, lua-format
+#: dat/events/dvaered/fwA_treason.lua:110
 msgid ""
 "As you land, you see the Captain Leblanc at the dock and she reprimands you: "
-"\"It was a trap, %s. The fact that you fell into it proves that you are "
-"disloyal. Disloyal and stupid by the way, as the trap was quite obvious if I "
-"may add. And the High Command can not afford to work with disloyal and "
+"\"It was a trap, {player}. The fact that you fell into it proves that you "
+"are disloyal. Disloyal and stupid by the way, as the trap was quite obvious "
+"if I may add. And the High Command can not afford to work with disloyal and "
 "stupid people. With regards to how well you have helped us in the past, we "
 "will exceptionally let you live, but don't expect us to trust you anymore!\""
 msgstr ""
 
-#: dat/events/dvaered/fwA_treason.lua:99
+#: dat/events/dvaered/fwA_treason.lua:114
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:263
 #: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:518
 msgid "Dvaered Military Coordination"
 msgstr ""
 
-#: dat/events/dvaered/fwA_treason.lua:100
+#: dat/events/dvaered/fwA_treason.lua:115
 msgid ""
 "Major Tam and Captain Leblanc, from the DHC, have tested your loyalty to the "
 "General Klank... and you miserably failed. By chance, they did not kill you, "
@@ -24213,25 +24210,24 @@ msgid ""
 msgstr ""
 
 #. Loyal
-#: dat/events/dvaered/fwA_treason.lua:103
-#, lua-format
+#: dat/events/dvaered/fwA_treason.lua:121
 msgid ""
 "As you land, you see the Captain Leblanc at the dock and she congratulates "
-"you: \"I've heard good things about you, citizen %s. It seems that you have "
-"passed the test. You remained loyal to our general, in spite of the absurdly "
-"high reward they had proposed to you for betraying us.\""
+"you: \"I've heard good things about you, citizen {player}. It seems that you "
+"have passed the test. You remained loyal to our general, in spite of the "
+"absurdly high reward they had proposed to you for betraying us.\""
 msgstr ""
 
-#: dat/events/dvaered/fwA_treason.lua:103
+#: dat/events/dvaered/fwA_treason.lua:123
 msgid "The amount of your rewards is pathetic"
 msgstr ""
 
-#: dat/events/dvaered/fwA_treason.lua:103
+#: dat/events/dvaered/fwA_treason.lua:124
 msgid "Money is not important, captain"
 msgstr ""
 
 #. Actually we don't care of the answer
-#: dat/events/dvaered/fwA_treason.lua:104
+#: dat/events/dvaered/fwA_treason.lua:125
 msgid ""
 "\"Money matters are secondary matters, pilot. One day you are rich, and the "
 "next, you are poor. Valor, on the other hand, is the central matter of life "
@@ -24251,7 +24247,7 @@ msgid ""
 "Sirius or the Soromid.\""
 msgstr ""
 
-#: dat/events/dvaered/fwA_treason.lua:109
+#: dat/events/dvaered/fwA_treason.lua:130
 msgid ""
 "\"House Dvaered has been built in respect of this ethic of life and death, "
 "that is taught to all children around all worlds in Dvaered space. You did "
@@ -24276,7 +24272,7 @@ msgid ""
 "on other fronts.\""
 msgstr ""
 
-#: dat/events/dvaered/fwA_treason.lua:112
+#: dat/events/dvaered/fwA_treason.lua:133
 msgid ""
 "\"This is why the General Klank proposed an effective invasion plan, that "
 "requires coordinating the efforts of all the warlords, as well as supporting "
@@ -24291,7 +24287,7 @@ msgstr ""
 #. Each time the player lands, he meets a member of the team who proposes to pay
 #. Pay and finish the mission
 #. Timer for the next mission
-#: dat/events/dvaered/fwA_treason.lua:114 dat/events/dvaered/fwB_repay.lua:46
+#: dat/events/dvaered/fwA_treason.lua:135 dat/events/dvaered/fwB_repay.lua:46
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:147
 #: dat/missions/dvaered/frontier_war/fw03_sirius.lua:612
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:170
@@ -24299,7 +24295,7 @@ msgstr ""
 msgid "Frontier War"
 msgstr ""
 
-#: dat/events/dvaered/fwA_treason.lua:115
+#: dat/events/dvaered/fwA_treason.lua:136
 msgid ""
 "Major Tam and Captain Leblanc, from the DHC, have tested your loyalty to the "
 "General Klank. The test has proven to be conclusive, and Leblanc revealed to "
