@@ -783,7 +783,7 @@ static int systemL_addGatherable( lua_State *L )
  *        should not be shown to the user without being translated by _().
  *
  *  @usage if sys:presences()["Empire"] then -- Checks to see if Empire has ships in the system
- *  @usage if sys:presences()[faction.get("Pirate"):nameRaw()] then -- Checks to see if the Pirates have ships in the system
+ *  @usage if sys:presences()[faction.get("Dvaered"):nameRaw()] then -- Checks to see if the Dvaered have ships in the system
  *
  *    @luatparam System s System to get the factional presences of.
  *    @luatreturn {Faction,...} A table with the factions that have presence in the system.
