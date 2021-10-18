@@ -36,6 +36,7 @@ require "proximity"
 local fw = require "common.frontier_war"
 local lmisn = require "lmisn"
 local fmt = require "format"
+local pir = require "common.pirate"
 
 npc_name = _("Major Tam")
 npc_desc = _("Major Tam is a very friendly man. At least by Dvaered military standards.")
@@ -207,9 +208,10 @@ function spawnTam( origin )
 end
 
 function encounterWarlord( name, origin )
-
-   pilot.toggleSpawn("Pirate", false) -- Make sure Pirates don't get on the way
-   pilot.clearSelect("Pirate")
+   for k,f in ipairs(pir.factions) do
+      pilot.toggleSpawn(f, false) -- Make sure Pirates don't get on the way
+      pilot.clearSelect(f)
+   end
 
    warlord = pilot.add( "Dvaered Goddard", "Dvaered", origin )
    warlord:rename( name )

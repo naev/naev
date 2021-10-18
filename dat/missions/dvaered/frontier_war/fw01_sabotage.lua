@@ -37,6 +37,7 @@ local lmisn = require "lmisn"
 require "proximity"
 local fw = require "common.frontier_war"
 local fmt = require "format"
+local pir = require "common.pirate"
 
 -- common hooks
 message = fw.message
@@ -137,8 +138,10 @@ function enter()
    if stage == 1 and system.cur() == sabotsys then
       pilot.toggleSpawn("FLF") -- TODO : It's only for testing. It can be removed once FLF is dead
       pilot.clearSelect("FLF") --
-      pilot.toggleSpawn("Pirate")
-      pilot.clearSelect("Pirate")
+      for k,f in ipairs(pir.factions) do
+         pilot.toggleSpawn(f)
+         pilot.clearSelect(f)
+      end
 
       warlord = pilot.add( "Dvaered Goddard", "Dvaered", sabotpla )
       warlord:rename( "Lord Battleaddict" )

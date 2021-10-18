@@ -37,6 +37,7 @@ local lmisn = require "lmisn"
 local fw = require "common.frontier_war"
 require "proximity"
 local fmt = require "format"
+local pir = require "common.pirate"
 
 -- common hooks
 escort_hailed = fw.escort_hailed
@@ -175,8 +176,10 @@ function enter()
          escort[1]:moveto( ambJp:pos() )  -- Let's say Strafer knows where they are supposed to come from...
 
          if system.cur() == ambushsys then
-            pilot.toggleSpawn("Pirate")
-            pilot.clearSelect("Pirate")
+            for k,f in ipairs(pir.factions) do
+               pilot.toggleSpawn(f)
+               pilot.clearSelect(f)
+            end
             spawnBaddies( ambStart )
 
             -- Find the waiting point: on the line tamPoint -> ambJp, at 3000 of tamPoint

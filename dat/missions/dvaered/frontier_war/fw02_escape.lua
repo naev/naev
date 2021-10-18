@@ -42,6 +42,7 @@ require "proximity"
 local portrait = require "portrait"
 local fw = require "common.frontier_war"
 local fmt = require "format"
+local pir = require "common.pirate"
 
 -- common hooks
 escort_hailed = fw.escort_hailed
@@ -325,8 +326,10 @@ function enter()
       if index > 0 then -- /!\ We did not claim this system /!\
          pilot.toggleSpawn("Za'lek")
          pilot.clearSelect("Za'lek")
-         pilot.toggleSpawn("Pirate")
-         pilot.clearSelect("Pirate")
+         for k,f in ipairs(pir.factions) do
+            pilot.toggleSpawn(f)
+            pilot.clearSelect(f)
+         end
 
          if firstBloc then
             scanHooks = {}
