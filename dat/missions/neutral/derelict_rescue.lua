@@ -19,6 +19,7 @@ local fmt = require "format"
 local vn = require "vn"
 local vntk = require "vntk"
 local lmisn = require "lmisn"
+local der = require "common.derelict"
 
 function create ()
    destpnt, destsys = lmisn.getRandomPlanetAtDistance( system.cur(), 0, 5, "Independent" )
@@ -35,6 +36,8 @@ function create ()
    local doaccept = false
    vn.clear()
    vn.scene()
+   vn.music( der.sfx.ambient )
+   vn.sfx( der.sfx.board )
    vn.transition()
    vn.na(fmt.f(_("You enter and begin to scour the ship for anything of value. As you make through the hallways you hear a noise. After investigating, you end up finding the entire crew of the ship locked up in a dormitory room. They offer you {credits} to take them to safety to {planetname} in the {sysname} system."), {planetname=destpnt:name(), sysname=destsys:name(), credits=fmt.credits(reward_amount)}))
    vn.menu{
@@ -44,6 +47,7 @@ function create ()
 
    vn.label("refuse")
    vn.na(_("You refuse to help them and leave them to the mercy of the stars."))
+   vn.sfx( der.sfx.unboard )
    vn.done()
 
    vn.label("help")
@@ -52,7 +56,9 @@ function create ()
       doaccept = true
    end )
 
+   vn.sfx( der.sfx.unboard )
    vn.run()
+
 
    -- Player didn't accept
    if not doaccept then
