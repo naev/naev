@@ -220,8 +220,7 @@ void misn_runStart( Mission *misn, const char *func )
  */
 int misn_runFunc( Mission *misn, const char *func, int nargs )
 {
-   int i, ret;
-   const char* err;
+   int ret;
    int misn_delete;
    Mission *cur_mission;
    nlua_env env;
@@ -240,7 +239,7 @@ int misn_runFunc( Mission *misn, const char *func, int nargs )
    lua_pop(naevL, 1);
 
    if (ret != 0) { /* error has occurred */
-      err = (lua_isstring(naevL,-1)) ? lua_tostring(naevL,-1) : NULL;
+      const char* err = (lua_isstring(naevL,-1)) ? lua_tostring(naevL,-1) : NULL;
       if ((err==NULL) || (strcmp(err,NLUA_DONE)!=0)) {
          WARN(_("Mission '%s' -> '%s': %s"),
                cur_mission->data->name, func, (err) ? err : _("unknown error"));
@@ -260,7 +259,7 @@ int misn_runFunc( Mission *misn, const char *func, int nargs )
    if (misn_delete) {
       ret = 2;
       mission_cleanup( cur_mission );
-      for (i=0; i<MISSION_MAX; i++) {
+      for (int i=0; i<MISSION_MAX; i++) {
          if (cur_mission != player_missions[i])
             continue;
 
