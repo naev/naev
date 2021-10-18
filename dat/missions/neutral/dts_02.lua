@@ -40,6 +40,7 @@ Anyone looking for a model of good mission-making should look elsewhere! -- the 
 
 local fleet = require "fleet"
 local fmt = require "format"
+local pir = require "common.pirate"
 
 misn_title = _("Defend the System")
 misn_reward = _("%s and the pleasure of serving the Empire.")
@@ -80,7 +81,7 @@ text[5] = _([[You stand by the grieving couple as the two cadets lead a group of
 -- Create the mission on the current planet, and present the first Bar text.
 function create()
    this_planet, this_system = planet.cur()
-   if ( this_system:presences()["Pirate"]
+   if ( pir.systemPresence(this_system) > 0
          or this_system:presences()["Collective"]
          or this_system:presences()["FLF"]
          or this_system == system.get("Gamma Polaris")

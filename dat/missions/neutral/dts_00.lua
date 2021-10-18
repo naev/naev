@@ -42,6 +42,7 @@ Add some consequences if the player aborts the mission
 
 local fleet = require "fleet"
 local fmt = require "format"
+local pir = require "common.pirate"
 
 
 misn_title = _("Defend the System")
@@ -79,7 +80,7 @@ text[5] = _([[Eight pilots step forward. The rest of you stand and watch as they
 -- Create the mission on the current planet, and present the first Bar text.
 function create ()
    this_planet, this_system = planet.cur()
-   if ( this_system:presences()["Pirate"]
+   if ( pir.systemPresence(this_system) > 0
          or this_system:presences()["Collective"]
          or this_system:presences()["FLF"] ) then
       misn.finish(false)

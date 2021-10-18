@@ -39,6 +39,7 @@ Add some consequences if the player aborts the mission
 
 local fleet = require "fleet"
 local fmt = require "format"
+local pir = require "common.pirate"
 
 misn_title = _("Defend the System")
 misn_reward = _("%s and the pleasure of serving the Empire.")
@@ -73,7 +74,7 @@ text[5] = _([[The Commodore turns and walks off. Eight men and women follow her,
 function create()
 
    this_planet, this_system = planet.cur()
-   if ( this_system:presences()["Pirate"]
+   if ( pir.systemPresence(this_system) > 0
          or this_system:presences()["Collective"]
          or this_system:presences()["FLF"] ) then
       misn.finish(false)
