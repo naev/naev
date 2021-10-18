@@ -238,11 +238,11 @@ function damage_standing(class, faction_name)
    local modifier = 1
 
    -- “Oh dude, that guy is capable! He managed to steal one of our own ships!”
-   if faction == "Pirate" then
+   if faction_name == "Pirate" then
       return
    end
 
-   if faction == "Independent" or faction == "Frontier" then
+   if faction_name == "Independent" or faction_name == "Frontier" then
       modifier = 0.5
    end
 
