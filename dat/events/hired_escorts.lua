@@ -22,21 +22,21 @@ local portrait = require "portrait"
 local pir = require "common.pirate"
 local pilotname = require "pilotname"
 
-logidstr = "log_hiredescort"
+local logidstr = "log_hiredescort"
 
-npctext = {}
+local npctext = {}
 npctext[1] = _([["Hi there! I'm looking to get some piloting experience. Here are my credentials. Would you be interested in hiring me?"]])
 npctext[2] = _([["Hello! I'm looking to join someone's fleet. Here's my credentials. What do you say, would you like me on board?"]])
 npctext[3] = _([["Hi! You look like you could use a pilot! I'm available and charge some of the best rates in the galaxy, and I promise you I'm perfect for the job! Here's my info. Well, what do you think? Would you like to add me to your fleet?"]])
 
-credentials = _([[
-Pilot name: %s
-Ship: %s
-Deposit: %s
-Royalty: %.1f%% of mission earnings
+local credentials = _([[
+Pilot name: {name}
+Ship: {ship}
+Deposit: {deposit}
+Royalty: {royalty:.1f}% of mission earnings
 
-Money: %s
-Current total royalties: %.1f%% of mission earnings]])
+Money: {credits}
+Current total royalties: {total:.1f}% of mission earnings]])
 
 function create ()
    lastplanet = nil
@@ -136,7 +136,7 @@ Royalty: %.1f%% of mission earnings]]), newpilot.ship, fmt.credits(newpilot.depo
 end
 
 
-function getTotalRoyalties ()
+local function getTotalRoyalties ()
    local royalties = 0
    for i, edata in ipairs(escorts) do
       if edata.alive then
@@ -338,9 +338,9 @@ function pilot_askFire( edata, npc_id )
    local approachtext = (
          _([[Would you like to do something with this pilot?
 
-Pilot credentials:]]) .. "\n\n" .. credentials:format(
-            edata.name, edata.ship, fmt.credits(edata.deposit),
-            edata.royalty * 100, scredits, getTotalRoyalties() * 100 ) )
+Pilot credentials:]]) .. "\n\n" .. fmt.f( credentials, {
+            name=edata.name, ship=edata.ship, deposit=fmt.credits(edata.deposit),
+            royalty=edata.royalty*100, credits=scredits, total=getTotalRoyalties()*100 } ) )
 
    local n, _s = tk.choice( "", approachtext, _("Fire pilot"), _("Do nothing") )
    if n == 1 and tk.yesno(
@@ -414,15 +414,15 @@ function approachPilot( npc_id )
    end
 
    local credits, scredits = player.credits(2)
-   local cstr = credentials:format(
-         pdata.name, pdata.ship, fmt.credits(pdata.deposit),
-         pdata.royalty * 100, scredits, getTotalRoyalties() * 100 )
+   local cstr = fmt.f( credentials, {
+         name=pdata.name, ship=pdata.ship, deposit=fmt.credits(pdata.deposit),
+         royalty=pdata.royalty*100, credits=scredits, total=getTotalRoyalties()*100 } )
 
    if not tk.yesno("", pdata.approachtext .. "\n\n" .. cstr) then
       return -- Player rejected offer
    end
 
-   if pdata.deposit and pdata.deposit > credits() then
+   if pdata.deposit and pdata.deposit > credits then
       tk.msg("", _("You don't have enough credits to pay for this pilot's deposit."))
       return
    end
