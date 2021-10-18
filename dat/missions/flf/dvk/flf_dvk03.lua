@@ -252,8 +252,8 @@ function timer_pirates ()
       _("Pirate Hyena"), _("Pirate Shark"), _("Pirate Admonisher"),
       _("Pirate Vendetta"), _("Pirate Ancestor") }
 
-   pir_boss = pilot.add( "Pirate Kestrel", "Pirate", src )
-   pir_fleet = fleet.add( 9, ships, "Pirate", src, pilotnames )
+   pir_boss = pilot.add( "Pirate Kestrel", "Dreamer Clan", src )
+   pir_fleet = fleet.add( 9, ships, "Dreamer Clan", src, pilotnames )
    pir_fleet[ #pir_fleet + 1 ] = pir_boss
    hook.pilot( pir_boss, "death", "pilot_death_kestrel" )
 
