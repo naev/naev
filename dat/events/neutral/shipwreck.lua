@@ -3,7 +3,7 @@
 <event name="Shipwreck">
   <trigger>enter</trigger>
   <chance>3</chance>
-  <cond>system.cur():presence("Pirate") &gt; 0</cond>
+  <cond>require("common.pirate").systemPresence() &gt; 0</cond>
   <flags>
    <unique />
   </flags>

@@ -8,7 +8,7 @@
   <priority>3</priority>
   <chance>20</chance>
   <location>Bar</location>
-  <cond>system.cur():presence("Pirate") &gt; 0</cond>
+  <cond>require("common.pirate").systemPresence() &gt; 0</cond>
  </avail>
  <notes>
   <tier>1</tier>
