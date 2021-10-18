@@ -10,21 +10,23 @@
 local format = {}
 
 --[[--
-Converts an integer into a human readable string, delimiting every third digit with a comma.
+Converts a nonnegative integer into a human readable string, delimiting every third digit with a comma.
+If you pass a more exotic "number" value, you'll get a string back, but you won't attain happiness.
 
    @param number The number to format. Will be rounded to the nearest integer.
 --]]
 function format.number( number )
-   if number == math.huge then
-      return "∞" -- Infinity
-   end
-   number = math.floor(number + 0.5)
    local numberstring = ""
-   while number >= 1000 do
-      numberstring = string.format( ",%03d%s", number % 1000, numberstring )
-      number = math.floor(number / 1000)
+   if number > -math.huge and number < math.huge then
+      number = math.floor(number + 0.5)
+      while number >= 1000 do
+         numberstring = string.format( ",%03d%s", number % 1000, numberstring )
+         number = math.floor(number / 1000)
+      end
+      numberstring = number % 1000 .. numberstring
+   else
+      numberstring = tostring(number):gsub("inf", "∞")
    end
-   numberstring = number % 1000 .. numberstring
    return numberstring
 end
 
