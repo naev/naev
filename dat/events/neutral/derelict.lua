@@ -96,7 +96,7 @@ function board()
    local stats = pp:stats()
    if stats.fuel < stats.fuel_consumption and rnd.rnd() < 0.8 then
       derelict_msg(gtitle, _([[The derelict appears deserted, with most everything of value long gone. As explore the ship you suddenly pick up a back-up fuel tank hidden in the walls. The fuel is in good state and you siphon it off to fill your ships fuel tanks. Talk about good timing.]]) )
-      pp:refuel()
+      pp:setFuel( true )
       destroyevent()
       return
    end
@@ -184,7 +184,7 @@ function goodevent()
    if stats.fuel < 2*stats.fuel_consumption then
       table.insert( goodevent_list, function ()
          derelict_msg(gtitle, _([[The derelict appears deserted, with most everything of value long gone. As explore the ship you suddenly pick up a back-up fuel tank hidden in the walls. The fuel is in good state and you siphon it off to fill your ships fuel tanks.]]) )
-         pp:refuel()
+         pp:setFuel(true)
       end )
    end
 
