@@ -15,6 +15,9 @@ Converts an integer into a human readable string, delimiting every third digit w
    @param number The number to format. Will be rounded to the nearest integer.
 --]]
 function format.number( number )
+   if number == math.huge then
+      return "∞" -- Infinity
+   end
    number = math.floor(number + 0.5)
    local numberstring = ""
    while number >= 1000 do
