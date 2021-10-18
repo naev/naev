@@ -2490,7 +2490,6 @@ dat/outfits/utility/targeting_conduit.lua
 dat/outfits/utility/weakness_harmonizer_ai.lua
 dat/outfits/utility/weapons_ionizer.lua
 dat/rescue.lua
-dat/scripts/chatter.lua
 dat/scripts/class.lua
 dat/scripts/colour.lua
 dat/scripts/common/baron.lua

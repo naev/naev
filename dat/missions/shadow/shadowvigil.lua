@@ -79,6 +79,18 @@ osd_msg0 = _("Fly to the %s system.")
 misn_desc = _([[Captain Rebina of the Four Winds has asked you to help Four Winds agents protect an Imperial diplomat.]])
 misn_reward = _("A sum of money.")
 
+-- Make a pilot say a line, if he is alive. Mainly useful in sequential chat messages.
+-- argument chat: A table containing:
+-- pilot: The pilot to say the text
+-- text: The text to be said
+--
+-- Example usage: hook.timer(2.0, "chatter", {pilot = p, text = "Hello, space!"})
+local function chatter(chat)
+    if chat.pilot:exists() then
+        chat.pilot:comm(chat.text)
+    end
+end
+
 -- After having accepted the mission from the hailing Vendetta
 function create()
    misn.accept()
