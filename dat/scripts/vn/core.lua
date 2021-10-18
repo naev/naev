@@ -13,6 +13,7 @@ local filesystem  = require 'love.filesystem'
 local audio       = require 'love.audio'
 local lmusic      = require 'lmusic'
 local transitions = require 'vn.transitions'
+local log         = require "vn.log"
 
 local vn = {
    speed = 0.04,
@@ -79,6 +80,8 @@ local function _setdefaults()
    graphics.setCanvas( oldcanvas )
    -- Music stuff
    vn._handle_music = false
+   -- Logging
+   vn._show_log = false
 end
 
 --[[--
@@ -265,6 +268,11 @@ function vn.draw()
    else
       _draw( false )
    end
+
+   -- Draw on top
+   if vn._show_log then
+      log.draw()
+   end
 end
 local function _draw_to_canvas( canvas )
    local oldcanvas = graphics.getCanvas()
@@ -280,6 +288,12 @@ Main updating function. Has to be called each loop in "love.update"
 ]]
 function vn.update(dt)
    lmusic.update( dt )
+
+   -- Basically skip the entire VN framework
+   if vn._show_log then
+      log.update()
+      return
+   end
 
    -- Out of states
    if vn._state > #vn._states then
@@ -335,6 +349,11 @@ function vn.keypressed( key )
       end
    end
 
+   if key=="tab" then
+      vn._show_log = not vn._show_log
+      return true
+   end
+
    if vn.isDone() then return end
    local s = vn._states[ vn._state ]
    --return s:keypressed( key )
@@ -350,6 +369,7 @@ Mouse press handler.
    @tparam number button Button that was pressed.
 --]]
 function vn.mousepressed( mx, my, button )
+   if vn._show_log then return true end
    if vn.isDone() then return false end
    local s = vn._states[ vn._state ]
    return s:mousepressed( mx, my, button )
@@ -575,12 +595,20 @@ end
 function vn.StateSay:_finish()
    self._text = self._textbuf
    vn._buffer = self._text
+
+   local c = vn._getCharacter( self.who )
+   log.add{
+      who   = c.displayname or c.who,
+      what  = c.what,
+      colour= c.color or vn._default._bufcol,
+   }
+
    _finish( self )
 end
 --[[
 -- Wait
 --]]
-vn.StateWait ={}
+vn.StateWait = {}
 function vn.StateWait.new()
    local s = vn.State.new()
    s._init = vn.StateWait._init
@@ -655,7 +683,6 @@ function vn.StateWait:_keypressed( key )
       "enter",
       "space",
       "right",
-      "tabe",
       "escape",
    }
    local found = false
