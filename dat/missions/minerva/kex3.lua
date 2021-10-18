@@ -510,9 +510,7 @@ function malik_disabled ()
    end
 
    -- Maikki and friends go away
-   for k,v in ipairs(pilot.get({faction.get("Pirate")})) do
-      v:rm()
-   end
+   pilot.clearSelect("Wild Ones")
 end
 function player_death ()
    if noise_shader then
@@ -559,7 +557,7 @@ function maikki_arrives ()
    end
 end
 function maikki_arrives_real( pos )
-   local p = pilot.add( "Pirate Kestrel", "Pirate", pos, _("Pink Demon"), {naked=true} )
+   local p = pilot.add( "Pirate Kestrel", "Wild Ones", pos, _("Pink Demon"), {naked=true} )
    equipopt.pirate( p, {
       type_range = {
          ["Launcher"] = { max = 0 },
@@ -600,7 +598,7 @@ function maikki_arrives_extra ()
    hook.timer( 2, "maikki_arrives_extra_real", pos )
 end
 function maikki_arrives_extra_real( pos )
-   local p = pilot.add( "Pirate Shark", "Pirate", pos )
+   local p = pilot.add( "Pirate Shark", "Wild Ones", pos )
    p:setFriendly(true)
    p:intrinsicSet( "armour", 1e5 )
    p:intrinsicSet( "shield", 1e5 )

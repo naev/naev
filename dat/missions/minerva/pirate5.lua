@@ -106,7 +106,7 @@ They grin at you.
       vn.func( function () -- Rewards
          player.pay( reward_amount )
          minerva.log.pirate(_("You took down an advanced Za'lek hacking center and got rewarded for your efforts.") )
-         faction.modPlayerSingle("Pirate", 5)
+         faction.modPlayerSingle("Wild Ones", 5)
       end )
       vn.na(string.format(_("You have received #g%s#0."), fmt.credits(reward_amount)))
       vn.run()

@@ -193,7 +193,7 @@ function enter ()
       pilot.toggleSpawn(false)
 
       -- Main ship player has to protect
-      mainship = pilot.add( "Pirate Rhino", "Pirate", shippos, nil, {ai="guard"} )
+      mainship = pilot.add( "Pirate Rhino", "Wild Ones", shippos, nil, {ai="guard"} )
       local mem = mainship:memory()
       mem.aggressive = false -- only fight back
       mem.guardpos = shippos -- Stay around origin
@@ -303,7 +303,7 @@ function pir_reinforcements ()
    -- Reinforcement spawners
    local jmp = system.get(piratesys)
    local function addpir( shipname, leader )
-      local p = pilot.add( shipname, "Pirate", jmp, nil, {ai="guard"} )
+      local p = pilot.add( shipname, "Wild Ones", jmp, nil, {ai="guard"} )
       p:setFriendly(true)
       p:setLeader(leader)
       local mem = p:memory()
@@ -435,7 +435,7 @@ They give you a tired grin.
    vn.func( function () -- Rewards
       player.pay( reward_amount )
       minerva.log.pirate(_("You helped defend an interrogation ship from Dvaered vessels.") )
-      faction.modPlayerSingle("Pirate", 5)
+      faction.modPlayerSingle("Wild Ones", 5)
    end )
    vn.sfxVictory()
    vn.done("electric")
