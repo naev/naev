@@ -362,14 +362,14 @@ Makes the player say something.
    @tparam string what What is being said.
    @tparam bool nowait Whether or not to wait for player input when said.
 ]]
-function vn.me( what, nowait ) vn.say( "me", what, nowait ) end
+function vn.me( what, nowait ) vn.say( "You", what, nowait ) end
 --[[--
 Makes the narrator say something.
 
    @tparam string what What is being said.
    @tparam bool nowait Whether or not to wait for player input when said.
 ]]
-function vn.na( what, nowait ) vn.say( "narrator", what, nowait ) end
+function vn.na( what, nowait ) vn.say( "Narrator", what, nowait ) end
 
 --[[
 -- State
@@ -1151,7 +1151,7 @@ end
 --[[--
 Has a character say something.
 
-<em>Note</em> "me" and "narrator" are specila meta-characters.
+<em>Note</em> "You" and "Narrator" are special meta-characters.
 
    @tparam string who The name of the character that is saying something.
    @tparam string what What the character is saying.
@@ -1545,8 +1545,8 @@ function vn.reset()
 end
 
 -- Default characters
-vn._me = vn.Character.new( "me", { color={1, 1, 1}, hidetitle=true } )
-vn._na = vn.Character.new( "narrator", { color={0.5, 0.5, 0.5}, hidetitle=true } )
+vn._me = vn.Character.new( "You", { color={1, 1, 1}, hidetitle=true } )
+vn._na = vn.Character.new( "Narrator", { color={0.5, 0.5, 0.5}, hidetitle=true } )
 
 -- Set defaults
 _setdefaults()
