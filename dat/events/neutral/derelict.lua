@@ -16,6 +16,8 @@
 --]]
 local vntk = require 'vntk'
 local fmt = require 'format'
+local der = require 'common.derelict'
+local vn = require 'vn'
 
 local mission_list = {
    --[[
@@ -74,6 +76,18 @@ function create ()
    hook.land("destroyevent")
 end
 
+function derelict_msg( title, text )
+   vntk.msg( title, text, {
+      pre = function ()
+         vn.music( der.sfx.ambient )
+         vn.sfx( der.sfx.board )
+      end,
+      post = function ()
+         vn.sfx( der.sfx.unboard )
+      end,
+   } )
+end
+
 function board()
    player.unboard()
 
@@ -81,7 +95,7 @@ function board()
    local pp = player.pilot()
    local stats = pp:stats()
    if stats.fuel < stats.fuel_consumption and rnd.rnd() < 0.8 then
-      vntk.msg(gtitle, _([[The derelict appears deserted, with most everything of value long gone. As explore the ship you suddenly pick up a back-up fuel tank hidden in the walls. The fuel is in good state and you siphon it off to fill your ships fuel tanks. Talk about good timing.]]) )
+      derelict_msg(gtitle, _([[The derelict appears deserted, with most everything of value long gone. As explore the ship you suddenly pick up a back-up fuel tank hidden in the walls. The fuel is in good state and you siphon it off to fill your ships fuel tanks. Talk about good timing.]]) )
       pp:refuel()
       destroyevent()
       return
@@ -120,7 +134,7 @@ function neutralevent()
    }
 
    -- Pick a random message from the list, display it, unboard.
-   vntk.msg(ntitle, ntext[rnd.rnd(1, #ntext)])
+   derelict_msg( ntitle, ntext[rnd.rnd(1, #ntext)] )
    destroyevent()
 end
 
@@ -129,13 +143,13 @@ function goodevent()
 
    local goodevent_list = {
       function ()
-         vntk.msg(gtitle, _([[The derelict appears deserted, its passengers long gone. However, they seem to have left behind a small amount of credit chips in their hurry to leave! You decide to help yourself to them, and leave the derelict.]]) )
+         derelict_msg(gtitle, _([[The derelict appears deserted, its passengers long gone. However, they seem to have left behind a small amount of credit chips in their hurry to leave! You decide to help yourself to them, and leave the derelict.]]) )
          player.pay( rnd.rnd(5e3,30e3) )
       end,
       function ()
          local factions = {"Empire", "Dvaered", "Sirius", "Soromid", "Za'lek", "Frontier"}
          local rndfact = factions[rnd.rnd(1, #factions)]
-         vntk.msg(gtitle, fmt.f(_([[This ship looks like any old piece of scrap at a glance, but it is actually an antique, one of the very first of its kind ever produced! Museums all over the galaxy would love to have a ship like this. You plant a beacon on the derelict to mark it for salvaging, and contact the {factname} authorities. Your reputation with them has slightly improved.]]), {factname=rndfact}))
+         derelict_msg(gtitle, fmt.f(_([[This ship looks like any old piece of scrap at a glance, but it is actually an antique, one of the very first of its kind ever produced! Museums all over the galaxy would love to have a ship like this. You plant a beacon on the derelict to mark it for salvaging, and contact the {factname} authorities. Your reputation with them has slightly improved.]]), {factname=rndfact}))
          faction.modPlayerSingle(rndfact, 3)
       end,
    }
@@ -159,7 +173,7 @@ function goodevent()
    if #unknown > 0 then
       table.insert( goodevent_list, function ()
          local choice = unknown[rnd.rnd(1,#unknown)]
-         vntk.msg(gtitle, fmt.f(_([[The derelict is empty, and seems to have been thoroughly picked over by other space buccaneers. However, the ship's computer contains a map of the {mapname}! You download it into your own computer.]]), {mapname=maps[choice]}))
+         derelict_msg(gtitle, fmt.f(_([[The derelict is empty, and seems to have been thoroughly picked over by other space buccaneers. However, the ship's computer contains a map of the {mapname}! You download it into your own computer.]]), {mapname=maps[choice]}))
          player.outfitAdd(choice, 1)
       end )
    end
@@ -169,7 +183,7 @@ function goodevent()
    local stats = pp:stats()
    if stats.fuel < 2*stats.fuel_consumption then
       table.insert( goodevent_list, function ()
-         vntk.msg(gtitle, _([[The derelict appears deserted, with most everything of value long gone. As explore the ship you suddenly pick up a back-up fuel tank hidden in the walls. The fuel is in good state and you siphon it off to fill your ships fuel tanks.]]) )
+         derelict_msg(gtitle, _([[The derelict appears deserted, with most everything of value long gone. As explore the ship you suddenly pick up a back-up fuel tank hidden in the walls. The fuel is in good state and you siphon it off to fill your ships fuel tanks.]]) )
          pp:refuel()
       end )
    end
@@ -178,7 +192,7 @@ function goodevent()
    local armour, shield = pp:health()
    if armour < 50 and stats.armour_regen <= 0 then
       table.insert( goodevent_list, function ()
-         vntk.msg(gtitle, _([[The derelict is deserted and striped of everything of value, however, you notice that the ship hull is in very good shape. In fact, it is rather suspicious that a ship in such good ship became a derelict. Without thinking much deeper about it you strip hull components and are able to repair your ship's armour.]]) )
+         derelict_msg(gtitle, _([[The derelict is deserted and striped of everything of value, however, you notice that the ship hull is in very good shape. In fact, it is rather suspicious that a ship in such good ship became a derelict. Without thinking much deeper about it you strip hull components and are able to repair your ship's armour.]]) )
          pp:setHealth( 100, shield )
       end )
    end
@@ -193,18 +207,18 @@ function badevent()
    local badevent_list = {
       function ()
          derelict:hookClear() -- So the pilot doesn't end the event by dying.
-         vntk.msg(btitle, _([[The moment you affix your boarding clamp to the derelict ship, it triggers a booby trap! The derelict explodes, severely damaging your ship. You escaped death this time, but it was a close call!]]))
+         derelict_msg(btitle, _([[The moment you affix your boarding clamp to the derelict ship, it triggers a booby trap! The derelict explodes, severely damaging your ship. You escaped death this time, but it was a close call!]]))
          derelict:setHealth(0,0)
          player.pilot():control(true)
          hook.pilot(derelict, "exploded", "derelict_exploded")
       end,
       function ()
-         vntk.msg(btitle, _([[You board the derelict ship and search its interior, but you find nothing. When you return to your ship, however, it turns out there were Space Leeches onboard the derelict - and they've now attached themselves to your ship! You scorch them off with a plasma torch, but it's too late. The little buggers have already drunk all of your fuel. You're not jumping anywhere until you find some more!]]))
+         derelict_msg(btitle, _([[You board the derelict ship and search its interior, but you find nothing. When you return to your ship, however, it turns out there were Space Leeches onboard the derelict - and they've now attached themselves to your ship! You scorch them off with a plasma torch, but it's too late. The little buggers have already drunk all of your fuel. You're not jumping anywhere until you find some more!]]))
          player.pilot():setFuel(false)
          destroyevent()
       end,
       function ()
-         vntk.msg(btitle, _([[You affix your boarding clamp and walk aboard the derelict ship. You've only spent a couple of hectoseconds searching the interior when there is a proximity alarm from your ship! Pirates are closing on your position! Clearly this derelict was a trap! You run back onto your ship and prepare to unboard, but you've lost precious time. The pirates are already in firing range…]]))
+         derelict_msg(btitle, _([[You affix your boarding clamp and walk aboard the derelict ship. You've only spent a couple of hectoseconds searching the interior when there is a proximity alarm from your ship! Pirates are closing on your position! Clearly this derelict was a trap! You run back onto your ship and prepare to unboard, but you've lost precious time. The pirates are already in firing range…]]))
 
          local s = player.pilot():ship():size()
          local enemies_tiny = {
