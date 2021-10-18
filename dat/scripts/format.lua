@@ -155,7 +155,7 @@ String interpolation, inspired by <a href="https://github.com/hishamhm/f-strings
 --]]
 function format.f( str, tab )
    return (str:gsub("%b{}", function(block)
-      local code, fmt = block:match("{(.*):(%%.*)}")
+      local code, fmt = block:match("{(.*):(.*)}")
       code = code or block:match("{(.*)}")
       local fn, err = loads("return "..code, string.format(_("format expression `%s`"),code), tab)
       if fn then
@@ -163,7 +163,7 @@ function format.f( str, tab )
          if fn==nil then
             warn(string.format(_("fmt.f: string '%s' has '%s'==nil!"),str,code))
          end
-         return fmt and string.format(fmt, fn) or tostring(fn)
+         return fmt and string.format('%'..fmt, fn) or tostring(fn)
       else
          error(err, 0)
       end
