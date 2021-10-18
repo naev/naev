@@ -3,6 +3,8 @@
    FLF mission common functions.
 
 --]]
+local pir = require "common.pirate"
+
 local flf = {}
 
 -- Get a random system with FLF presence.
@@ -50,7 +52,7 @@ function flf.getPirateSystem ()
    local choices = {}
    for i, j in ipairs( system.getAll() ) do
       local p = j:presences()
-      if p[ "FLF" ] and p[ "Pirate" ] then
+      if p[ "FLF" ] and pir.systemPresence( j ) then
          choices[#choices + 1] = j:nameRaw()
       end
    end
