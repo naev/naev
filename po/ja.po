@@ -32,7 +32,7 @@ msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
 "POT-Creation-Date: 2021-10-17 21:44-0400\n"
-"PO-Revision-Date: 2021-10-10 15:04+0000\n"
+"PO-Revision-Date: 2021-10-18 11:49+0000\n"
 "Last-Translator: OOTA, Masato <ooyooxei+gh@gmail.com>\n"
 "Language-Team: Japanese <https://hosted.weblate.org/projects/naev/naev/ja/>\n"
 "Language: ja\n"
@@ -13738,7 +13738,7 @@ msgstr "空気清浄機"
 #: dat/outfits/accessory/ugly_statue.xml:5
 #: dat/outfits/accessory/vacuum_cleaner.xml:5 dat/slots.xml:4
 msgid "Accessory"
-msgstr "補助用品"
+msgstr "装飾品"
 
 #: dat/outfits/accessory/air_freshener.xml:11
 msgid ""
@@ -13959,7 +13959,7 @@ msgstr ""
 
 #: dat/outfits/bio_weapons/bioplasma_claw_stage_1.xml:2
 msgid "BioPlasma Claw Stage 1"
-msgstr ""
+msgstr "バイオプラズマ・クロー第 1 期"
 
 #: dat/outfits/bio_weapons/bioplasma_claw_stage_1.xml:9
 #: dat/outfits/bio_weapons/bioplasma_claw_stage_2.xml:9
@@ -13971,22 +13971,24 @@ msgid ""
 "in return. As with all organs, it starts out weak, but over time it grows "
 "and improves."
 msgstr ""
+"バイオプラズマ・スティンガーのもっと強力ないとこであるバイオプラズマ・クローは、さらに貴重な脳容量を使用している。しかしその見返りとして、与える損害はきわ"
+"だって増加しているのが特徴だ。すべての臓器と同様に、初めは弱々しい状態だが、時間とともに成長して進歩していく。"
 
 #: dat/outfits/bio_weapons/bioplasma_claw_stage_2.xml:2
 msgid "BioPlasma Claw Stage 2"
-msgstr ""
+msgstr "バイオプラズマ・クロー第 2 期"
 
 #: dat/outfits/bio_weapons/bioplasma_claw_stage_3.xml:2
 msgid "BioPlasma Claw Stage 3"
-msgstr ""
+msgstr "バイオプラズマ・クロー第 3 期"
 
 #: dat/outfits/bio_weapons/bioplasma_claw_stage_4.xml:2
 msgid "BioPlasma Claw Stage 4"
-msgstr ""
+msgstr "バイオプラズマ・クロー第 4 期"
 
 #: dat/outfits/bio_weapons/bioplasma_claw_stage_x.xml:2
 msgid "BioPlasma Claw Stage X"
-msgstr ""
+msgstr "バイオプラズマ・クロー第 X 期"
 
 #: dat/outfits/bio_weapons/bioplasma_claw_stage_x.xml:9
 msgid ""
@@ -13994,10 +13996,12 @@ msgid ""
 "more precious brain capacity, but features markedly increased damage output "
 "in return. This organ has reached Stage X, its full potential."
 msgstr ""
+"バイオプラズマ・スティンガーのもっと強力ないとこであるバイオプラズマ・クローは、さらに貴重な脳容量を使用している。しかしその見返りとして、与える損害はきわ"
+"だって増加しているのが特徴だ。この臓器は潜在能力をすべて発揮した第 X 期に達している。"
 
 #: dat/outfits/bio_weapons/bioplasma_fang_stage_1.xml:2
 msgid "BioPlasma Fang Stage 1"
-msgstr ""
+msgstr "バイオプラズマ・ファング第 1 期"
 
 #: dat/outfits/bio_weapons/bioplasma_fang_stage_1.xml:9
 #: dat/outfits/bio_weapons/bioplasma_fang_stage_2.xml:9
@@ -14012,26 +14016,29 @@ msgid ""
 "the damage upgrade worthwhile. As with all organs, it starts out weak, but "
 "over time it grows and improves."
 msgstr ""
+"バイオプラズマ・ファングは、バイオプラズマ・クローをずっと進めて増強したものだ。必要な思考力は比較的高いのだが、いまだ中規模の有機体で扱えるほどじゅうぶん"
+"低い。これはよくソロミド・オーディアムで見られるもので、それにはふつう有意義なほど威力の改善ができるだけの脳容量が残されている。すべての臓器と同様に、初め"
+"は弱々しい状態だが、時間とともに成長して進歩していく。"
 
 #: dat/outfits/bio_weapons/bioplasma_fang_stage_2.xml:2
 msgid "BioPlasma Fang Stage 2"
-msgstr ""
+msgstr "バイオプラズマ・ファング第 2 期"
 
 #: dat/outfits/bio_weapons/bioplasma_fang_stage_3.xml:2
 msgid "BioPlasma Fang Stage 3"
-msgstr ""
+msgstr "バイオプラズマ・ファング第 3 期"
 
 #: dat/outfits/bio_weapons/bioplasma_fang_stage_4.xml:2
 msgid "BioPlasma Fang Stage 4"
-msgstr ""
+msgstr "バイオプラズマ・ファング第 4 期"
 
 #: dat/outfits/bio_weapons/bioplasma_fang_stage_5.xml:2
 msgid "BioPlasma Fang Stage 5"
-msgstr ""
+msgstr "バイオプラズマ・ファング第 5 期"
 
 #: dat/outfits/bio_weapons/bioplasma_fang_stage_x.xml:2
 msgid "BioPlasma Fang Stage X"
-msgstr ""
+msgstr "バイオプラズマ・ファング第 5 期"
 
 #: dat/outfits/bio_weapons/bioplasma_fang_stage_x.xml:9
 msgid ""
@@ -14040,10 +14047,12 @@ msgid ""
 "enough for medium-sized organisms to handle. They are commonly found on "
 "Soromid Odiums. This organ has reached Stage X, its full potential."
 msgstr ""
+"バイオプラズマ・ファングは、バイオプラズマ・クローをずっと進めて増強したものだ。必要な思考力は比較的高いのだが、いまだ中規模の有機体で扱えるほどじゅうぶん"
+"低い。これはよくソロミド・オーディアムで見られるものだ。この臓器は潜在能力をすべて発揮した第 X 期に達している。"
 
 #: dat/outfits/bio_weapons/bioplasma_stinger_stage_1.xml:2
 msgid "BioPlasma Stinger Stage 1"
-msgstr ""
+msgstr "バイオプラズマ・スティンガー第 1 期"
 
 #: dat/outfits/bio_weapons/bioplasma_stinger_stage_1.xml:9
 #: dat/outfits/bio_weapons/bioplasma_stinger_stage_2.xml:10
@@ -14054,18 +14063,20 @@ msgid ""
 "its reliability and low cognitive requirements. As with all organs, it "
 "starts out weak, but over time it grows and improves."
 msgstr ""
+"バイオプラズマ・スティンガーは、入手可能ななかではもっとも基本的な有機体兵器であり、とくにありふれたものだ。とくに強力ではないが、信頼性が高く必要な思考力"
+"が少ないことは表彰ものである。すべての臓器と同様に、初めは弱々しい状態だが、時間とともに成長して進歩していく。"
 
 #: dat/outfits/bio_weapons/bioplasma_stinger_stage_2.xml:2
 msgid "BioPlasma Stinger Stage 2"
-msgstr ""
+msgstr "バイオプラズマ・スティンガー第 2 期"
 
 #: dat/outfits/bio_weapons/bioplasma_stinger_stage_3.xml:2
 msgid "BioPlasma Stinger Stage 3"
-msgstr ""
+msgstr "バイオプラズマ・スティンガー第 3 期"
 
 #: dat/outfits/bio_weapons/bioplasma_stinger_stage_x.xml:2
 msgid "BioPlasma Stinger Stage X"
-msgstr ""
+msgstr "バイオプラズマ・スティンガー第 X 期"
 
 #: dat/outfits/bio_weapons/bioplasma_stinger_stage_x.xml:10
 msgid ""
@@ -14074,10 +14085,12 @@ msgid ""
 "its reliability and low cognitive requirements. This organ has reached Stage "
 "X, its full potential."
 msgstr ""
+"バイオプラズマ・スティンガーは、入手可能ななかではもっとも基本的な有機体兵器であり、とくにありふれたものだ。とくに強力ではないが、信頼性が高く必要な思考力"
+"が少ないことは表彰ものである。この臓器は潜在能力をすべて発揮した第 X 期に達している。"
 
 #: dat/outfits/bio_weapons/bioplasma_talon_stage_1.xml:2
 msgid "BioPlasma Talon Stage 1"
-msgstr ""
+msgstr "バイオプラズマ・タロン第 1 期"
 
 #: dat/outfits/bio_weapons/bioplasma_talon_stage_1.xml:10
 #: dat/outfits/bio_weapons/bioplasma_talon_stage_2.xml:10
@@ -14092,30 +14105,33 @@ msgid ""
 "damage output, Soromid ships equipped with this weapon are rightly feared. "
 "As with all organs, it starts out weak, but over time it grows and improves."
 msgstr ""
+"バイオプラズマ・タロンは、現存する前向き有機体兵器のなかでは最強のものだ。これが誇りとするのは、銀河でもとりわけ強力な武器にならぶほどの損害を、そのわりに"
+"は信じられないほど少ない必要思考力で与えられることである。この武器を装備したソロミド船はほんとうに恐ろしいものだ。すべての臓器と同様に、初めは弱々しい状態"
+"だが、時間とともに成長して進歩していく。"
 
 #: dat/outfits/bio_weapons/bioplasma_talon_stage_2.xml:2
 msgid "BioPlasma Talon Stage 2"
-msgstr ""
+msgstr "バイオプラズマ・タロン第 2 期"
 
 #: dat/outfits/bio_weapons/bioplasma_talon_stage_3.xml:2
 msgid "BioPlasma Talon Stage 3"
-msgstr ""
+msgstr "バイオプラズマ・タロン第 3 期"
 
 #: dat/outfits/bio_weapons/bioplasma_talon_stage_4.xml:2
 msgid "BioPlasma Talon Stage 4"
-msgstr ""
+msgstr "バイオプラズマ・タロン第 4 期"
 
 #: dat/outfits/bio_weapons/bioplasma_talon_stage_5.xml:2
 msgid "BioPlasma Talon Stage 5"
-msgstr ""
+msgstr "バイオプラズマ・タロン第 5 期"
 
 #: dat/outfits/bio_weapons/bioplasma_talon_stage_6.xml:2
 msgid "BioPlasma Talon Stage 6"
-msgstr ""
+msgstr "バイオプラズマ・タロン第 6 期"
 
 #: dat/outfits/bio_weapons/bioplasma_talon_stage_x.xml:2
 msgid "BioPlasma Talon Stage X"
-msgstr ""
+msgstr "バイオプラズマ・タロン第 X 期"
 
 #: dat/outfits/bio_weapons/bioplasma_talon_stage_x.xml:10
 msgid ""
@@ -14125,10 +14141,13 @@ msgid ""
 "damage output, Soromid ships equipped with this weapon are rightly feared. "
 "This organ has reached Stage X, its full potential."
 msgstr ""
+"バイオプラズマ・タロンは、現存する前向き有機体兵器のなかでは最強のものだ。これが誇りとするのは、銀河でもとりわけ強力な武器にならぶほどの損害を、そのわりに"
+"は信じられないほど少ない必要思考力で与えられることである。この武器を装備したソロミド船はほんとうに恐ろしいものだ。この臓器は潜在能力をすべて発揮した第 "
+"X 期に達している。"
 
 #: dat/outfits/bio_weapons/bioplasma_tentacle_stage_1.xml:2
 msgid "BioPlasma Tentacle Stage 1"
-msgstr ""
+msgstr "バイオプラズマ・テンタクル第 1 期"
 
 #: dat/outfits/bio_weapons/bioplasma_tentacle_stage_1.xml:10
 #: dat/outfits/bio_weapons/bioplasma_tentacle_stage_2.xml:10
@@ -14144,34 +14163,37 @@ msgid ""
 "by most weaponry found throughout the galaxy once fully developed. As with "
 "all organs, it starts out weak, but over time it grows and improves."
 msgstr ""
+"バイオプラズマ・テンタクルは、ソロミドによって育てられたものとしては、疑問の余地なく最強かつ万能な有機体兵器だ。唯一の回転する有機体兵器という特質があるい"
+"っぽうで、完全に発達してしまえば銀河じゅうで見つかるほとんどの武器とは釣りあわない力を発揮できることを誇りとしてもいる。すべての臓器と同様に、初めは弱々し"
+"い状態だが、時間とともに成長して進歩していく。"
 
 #: dat/outfits/bio_weapons/bioplasma_tentacle_stage_2.xml:2
 msgid "BioPlasma Tentacle Stage 2"
-msgstr ""
+msgstr "バイオプラズマ・テンタクル第 2 期"
 
 #: dat/outfits/bio_weapons/bioplasma_tentacle_stage_3.xml:2
 msgid "BioPlasma Tentacle Stage 3"
-msgstr ""
+msgstr "バイオプラズマ・テンタクル第 3 期"
 
 #: dat/outfits/bio_weapons/bioplasma_tentacle_stage_4.xml:2
 msgid "BioPlasma Tentacle Stage 4"
-msgstr ""
+msgstr "バイオプラズマ・テンタクル第 4 期"
 
 #: dat/outfits/bio_weapons/bioplasma_tentacle_stage_5.xml:2
 msgid "BioPlasma Tentacle Stage 5"
-msgstr ""
+msgstr "バイオプラズマ・テンタクル第 5 期"
 
 #: dat/outfits/bio_weapons/bioplasma_tentacle_stage_6.xml:2
 msgid "BioPlasma Tentacle Stage 6"
-msgstr ""
+msgstr "バイオプラズマ・テンタクル第 6 期"
 
 #: dat/outfits/bio_weapons/bioplasma_tentacle_stage_7.xml:2
 msgid "BioPlasma Tentacle Stage 7"
-msgstr ""
+msgstr "バイオプラズマ・テンタクル第 7 期"
 
 #: dat/outfits/bio_weapons/bioplasma_tentacle_stage_x.xml:2
 msgid "BioPlasma Tentacle Stage X"
-msgstr ""
+msgstr "バイオプラズマ・テンタクル第 X 期"
 
 #: dat/outfits/bio_weapons/bioplasma_tentacle_stage_x.xml:10
 msgid ""
@@ -14181,10 +14203,13 @@ msgid ""
 "by most weaponry found throughout the galaxy once fully developed. This "
 "organ has reached Stage X, its full potential."
 msgstr ""
+"バイオプラズマ・テンタクルは、ソロミドによって育てられたものとしては、疑問の余地なく最強かつ万能な有機体兵器だ。唯一の回転する有機体兵器という特質があるい"
+"っぽうで、完全に発達してしまえば銀河じゅうで見つかるほとんどの武器とは釣りあわない力を発揮できることを誇りとしてもいる。"
+"この臓器は潜在能力をすべて発揮した第 X 期に達している。"
 
 #: dat/outfits/biocore_brain/heavy_brain_stage_1.xml:2
 msgid "Heavy Brain Stage 1"
-msgstr ""
+msgstr "大型脳第 1 期"
 
 #: dat/outfits/biocore_brain/heavy_brain_stage_1.xml:4
 #: dat/outfits/biocore_brain/heavy_brain_stage_2.xml:4
@@ -14256,30 +14281,32 @@ msgid ""
 "undeveloped, but over time, just like the ships themselves, they grow and "
 "improve."
 msgstr ""
+"合成船の中核システム相当となるのは、ソロミドの生体船では脳である。ことによるともっとも重要な臓器である脳は、処理能力を供給し、ほかの有機体へエネルギーを配"
+"分する。すべての脳は未発達な状態から始まるが、船自体とまったく同じで、時間とともに成長して進歩していく。"
 
 #: dat/outfits/biocore_brain/heavy_brain_stage_2.xml:2
 msgid "Heavy Brain Stage 2"
-msgstr ""
+msgstr "大型脳第 2 期"
 
 #: dat/outfits/biocore_brain/heavy_brain_stage_3.xml:2
 msgid "Heavy Brain Stage 3"
-msgstr ""
+msgstr "大型脳第 3 期"
 
 #: dat/outfits/biocore_brain/heavy_brain_stage_4.xml:2
 msgid "Heavy Brain Stage 4"
-msgstr ""
+msgstr "大型脳第 4 期"
 
 #: dat/outfits/biocore_brain/heavy_brain_stage_5.xml:2
 msgid "Heavy Brain Stage 5"
-msgstr ""
+msgstr "大型脳第 5 期"
 
 #: dat/outfits/biocore_brain/heavy_brain_stage_6.xml:2
 msgid "Heavy Brain Stage 6"
-msgstr ""
+msgstr "大型脳第 6 期"
 
 #: dat/outfits/biocore_brain/heavy_brain_stage_x.xml:2
 msgid "Heavy Brain Stage X"
-msgstr ""
+msgstr "大型脳第 X 期"
 
 #: dat/outfits/biocore_brain/heavy_brain_stage_x.xml:10
 #: dat/outfits/biocore_brain/light_brain_stage_x.xml:11
@@ -14293,114 +14320,116 @@ msgid ""
 "power and allocates energy to the rest of the organism. This brain has "
 "reached Stage X, its full potential."
 msgstr ""
+"合成船の中核システム相当となるのは、ソロミドの生体船では脳である。ことによるともっとも重要な臓器である脳は、処理能力を供給し、ほかの有機体へエネルギーを配"
+"分する。この脳は潜在能力をすべて発揮した第 X 期に達している。"
 
 #: dat/outfits/biocore_brain/light_brain_stage_1.xml:2
 msgid "Light Brain Stage 1"
-msgstr ""
+msgstr "小型脳第 1 期"
 
 #: dat/outfits/biocore_brain/light_brain_stage_2.xml:2
 msgid "Light Brain Stage 2"
-msgstr ""
+msgstr "小型脳第 2 期"
 
 #: dat/outfits/biocore_brain/light_brain_stage_3.xml:2
 msgid "Light Brain Stage 3"
-msgstr ""
+msgstr "小型脳第 3 期"
 
 #: dat/outfits/biocore_brain/light_brain_stage_x.xml:2
 msgid "Light Brain Stage X"
-msgstr ""
+msgstr "小型脳第 X 期"
 
 #: dat/outfits/biocore_brain/medium_brain_stage_1.xml:2
 msgid "Medium Brain Stage 1"
-msgstr ""
+msgstr "中型脳第 1 期"
 
 #: dat/outfits/biocore_brain/medium_brain_stage_2.xml:2
 msgid "Medium Brain Stage 2"
-msgstr ""
+msgstr "中型脳第 2 期"
 
 #: dat/outfits/biocore_brain/medium_brain_stage_3.xml:2
 msgid "Medium Brain Stage 3"
-msgstr ""
+msgstr "中型脳第 3 期"
 
 #: dat/outfits/biocore_brain/medium_brain_stage_4.xml:2
 msgid "Medium Brain Stage 4"
-msgstr ""
+msgstr "中型脳第 4 期"
 
 #: dat/outfits/biocore_brain/medium_brain_stage_x.xml:2
 msgid "Medium Brain Stage X"
-msgstr ""
+msgstr "中型脳第 X 期"
 
 #: dat/outfits/biocore_brain/mediumheavy_brain_stage_1.xml:2
 msgid "Medium-Heavy Brain Stage 1"
-msgstr ""
+msgstr "準大型脳第 1 期"
 
 #: dat/outfits/biocore_brain/mediumheavy_brain_stage_2.xml:2
 msgid "Medium-Heavy Brain Stage 2"
-msgstr ""
+msgstr "準大型脳第 2 期"
 
 #: dat/outfits/biocore_brain/mediumheavy_brain_stage_3.xml:2
 msgid "Medium-Heavy Brain Stage 3"
-msgstr ""
+msgstr "準大型脳第 3 期"
 
 #: dat/outfits/biocore_brain/mediumheavy_brain_stage_4.xml:2
 msgid "Medium-Heavy Brain Stage 4"
-msgstr ""
+msgstr "準大型脳第 4 期"
 
 #: dat/outfits/biocore_brain/mediumheavy_brain_stage_5.xml:2
 msgid "Medium-Heavy Brain Stage 5"
-msgstr ""
+msgstr "準大型脳第 5 期"
 
 #: dat/outfits/biocore_brain/mediumheavy_brain_stage_x.xml:2
 msgid "Medium-Heavy Brain Stage X"
-msgstr ""
+msgstr "準大型脳第 X 期"
 
 #: dat/outfits/biocore_brain/superheavy_brain_stage_1.xml:2
 msgid "Superheavy Brain Stage 1"
-msgstr ""
+msgstr "特大型脳第 1 期"
 
 #: dat/outfits/biocore_brain/superheavy_brain_stage_2.xml:2
 msgid "Superheavy Brain Stage 2"
-msgstr ""
+msgstr "特大型脳第 2 期"
 
 #: dat/outfits/biocore_brain/superheavy_brain_stage_3.xml:2
 msgid "Superheavy Brain Stage 3"
-msgstr ""
+msgstr "特大型脳第 3 期"
 
 #: dat/outfits/biocore_brain/superheavy_brain_stage_4.xml:2
 msgid "Superheavy Brain Stage 4"
-msgstr ""
+msgstr "特大型脳第 4 期"
 
 #: dat/outfits/biocore_brain/superheavy_brain_stage_5.xml:2
 msgid "Superheavy Brain Stage 5"
-msgstr ""
+msgstr "特大型脳第 5 期"
 
 #: dat/outfits/biocore_brain/superheavy_brain_stage_6.xml:2
 msgid "Superheavy Brain Stage 6"
-msgstr ""
+msgstr "特大型脳第 6 期"
 
 #: dat/outfits/biocore_brain/superheavy_brain_stage_7.xml:2
 msgid "Superheavy Brain Stage 7"
-msgstr ""
+msgstr "特大型脳第 7 期"
 
 #: dat/outfits/biocore_brain/superheavy_brain_stage_x.xml:2
 msgid "Superheavy Brain Stage X"
-msgstr ""
+msgstr "特大型脳第 X 期"
 
 #: dat/outfits/biocore_brain/ultralight_brain_stage_1.xml:2
 msgid "Ultralight Brain Stage 1"
-msgstr ""
+msgstr "極小型脳第 1 期"
 
 #: dat/outfits/biocore_brain/ultralight_brain_stage_2.xml:2
 msgid "Ultralight Brain Stage 2"
-msgstr ""
+msgstr "極小型脳第 2 期"
 
 #: dat/outfits/biocore_brain/ultralight_brain_stage_x.xml:2
 msgid "Ultralight Brain Stage X"
-msgstr ""
+msgstr "極小型脳第 X 期"
 
 #: dat/outfits/biocore_drive/heavy_fast_gene_drive_stage_1.xml:2
 msgid "Heavy Fast Gene Drive Stage 1"
-msgstr ""
+msgstr "大型高速ジーンドライブ第 1 期"
 
 #: dat/outfits/biocore_drive/heavy_fast_gene_drive_stage_1.xml:4
 #: dat/outfits/biocore_drive/heavy_fast_gene_drive_stage_2.xml:4
@@ -14469,7 +14498,7 @@ msgstr ""
 #: dat/outfits/biocore_drive/ultralight_strong_gene_drive_stage_2.xml:5
 #: dat/outfits/biocore_drive/ultralight_strong_gene_drive_stage_x.xml:4
 msgid "Bioship Gene Drive"
-msgstr "生体船の遺伝子駆動装置"
+msgstr "生体船のジーンドライブ"
 
 #: dat/outfits/biocore_drive/heavy_fast_gene_drive_stage_1.xml:9
 #: dat/outfits/biocore_drive/heavy_fast_gene_drive_stage_2.xml:9
@@ -14532,30 +14561,33 @@ msgid ""
 "agility). All gene drives start off undeveloped, but over time, just like "
 "the ships themselves, they grow and improve."
 msgstr ""
+"合成船のエンジン相当となるのは、ソロミドの生体船ではジーンドライブである。これが担当するのは有機体を移動させて宇宙をぬけさせることであり、これは "
+"(高負荷向けの) 強化型と (速さ機敏さですぐれる) "
+"速度型のどちらかの形をとる。すべてのジーンドライブは未発達な状態から始まるが、船自体とまったく同じで、時間とともに成長して進歩していく。"
 
 #: dat/outfits/biocore_drive/heavy_fast_gene_drive_stage_2.xml:2
 msgid "Heavy Fast Gene Drive Stage 2"
-msgstr ""
+msgstr "大型高速ジーンドライブ第 2 期"
 
 #: dat/outfits/biocore_drive/heavy_fast_gene_drive_stage_3.xml:2
 msgid "Heavy Fast Gene Drive Stage 3"
-msgstr ""
+msgstr "大型高速ジーンドライブ第 3 期"
 
 #: dat/outfits/biocore_drive/heavy_fast_gene_drive_stage_4.xml:2
 msgid "Heavy Fast Gene Drive Stage 4"
-msgstr ""
+msgstr "大型高速ジーンドライブ第 4 期"
 
 #: dat/outfits/biocore_drive/heavy_fast_gene_drive_stage_5.xml:2
 msgid "Heavy Fast Gene Drive Stage 5"
-msgstr ""
+msgstr "大型高速ジーンドライブ第 5 期"
 
 #: dat/outfits/biocore_drive/heavy_fast_gene_drive_stage_6.xml:2
 msgid "Heavy Fast Gene Drive Stage 6"
-msgstr ""
+msgstr "大型高速ジーンドライブ第 6 期"
 
 #: dat/outfits/biocore_drive/heavy_fast_gene_drive_stage_x.xml:2
 msgid "Heavy Fast Gene Drive Stage X"
-msgstr ""
+msgstr "大型高速ジーンドライブ第 X 期"
 
 #: dat/outfits/biocore_drive/heavy_fast_gene_drive_stage_x.xml:10
 #: dat/outfits/biocore_drive/heavy_strong_gene_drive_stage_x.xml:10
@@ -14575,246 +14607,248 @@ msgid ""
 "either a strong form (for heavy loads) or a fast form (for greater speed and "
 "agility). This gene drive has reached Stage X, its full potential."
 msgstr ""
+"合成船のエンジン相当となるのは、ソロミドの生体船ではジーンドライブである。これが担当するのは有機体を移動させて宇宙をぬけさせることであり、これは "
+"(高負荷向けの) 強化型と (速さ機敏さですぐれる) 速度型のどちらかの形をとる。このジーンドライブは潜在能力をすべて発揮した第 X 期に達している。"
 
 #: dat/outfits/biocore_drive/heavy_strong_gene_drive_stage_1.xml:2
 msgid "Heavy Strong Gene Drive Stage 1"
-msgstr ""
+msgstr "大型強化ジーンドライブ第 1 期"
 
 #: dat/outfits/biocore_drive/heavy_strong_gene_drive_stage_2.xml:2
 msgid "Heavy Strong Gene Drive Stage 2"
-msgstr ""
+msgstr "大型強化ジーンドライブ第 2 期"
 
 #: dat/outfits/biocore_drive/heavy_strong_gene_drive_stage_3.xml:2
 msgid "Heavy Strong Gene Drive Stage 3"
-msgstr ""
+msgstr "大型強化ジーンドライブ第 3 期"
 
 #: dat/outfits/biocore_drive/heavy_strong_gene_drive_stage_4.xml:2
 msgid "Heavy Strong Gene Drive Stage 4"
-msgstr ""
+msgstr "大型強化ジーンドライブ第 4 期"
 
 #: dat/outfits/biocore_drive/heavy_strong_gene_drive_stage_5.xml:2
 msgid "Heavy Strong Gene Drive Stage 5"
-msgstr ""
+msgstr "大型強化ジーンドライブ第 5 期"
 
 #: dat/outfits/biocore_drive/heavy_strong_gene_drive_stage_6.xml:2
 msgid "Heavy Strong Gene Drive Stage 6"
-msgstr ""
+msgstr "大型強化ジーンドライブ第 6 期"
 
 #: dat/outfits/biocore_drive/heavy_strong_gene_drive_stage_x.xml:2
 msgid "Heavy Strong Gene Drive Stage X"
-msgstr ""
+msgstr "大型強化ジーンドライブ第 X 期"
 
 #: dat/outfits/biocore_drive/light_fast_gene_drive_stage_1.xml:2
 msgid "Light Fast Gene Drive Stage 1"
-msgstr ""
+msgstr "小型高速ジーンドライブ第 1 期"
 
 #: dat/outfits/biocore_drive/light_fast_gene_drive_stage_2.xml:2
 msgid "Light Fast Gene Drive Stage 2"
-msgstr ""
+msgstr "小型高速ジーンドライブ第 2 期"
 
 #: dat/outfits/biocore_drive/light_fast_gene_drive_stage_3.xml:2
 msgid "Light Fast Gene Drive Stage 3"
-msgstr ""
+msgstr "小型高速ジーンドライブ第 3 期"
 
 #: dat/outfits/biocore_drive/light_fast_gene_drive_stage_x.xml:2
 msgid "Light Fast Gene Drive Stage X"
-msgstr ""
+msgstr "小型高速ジーンドライブ第 X 期"
 
 #: dat/outfits/biocore_drive/light_strong_gene_drive_stage_1.xml:2
 msgid "Light Strong Gene Drive Stage 1"
-msgstr ""
+msgstr "小型強化ジーンドライブ第 1 期"
 
 #: dat/outfits/biocore_drive/light_strong_gene_drive_stage_2.xml:2
 msgid "Light Strong Gene Drive Stage 2"
-msgstr ""
+msgstr "小型強化ジーンドライブ第 2 期"
 
 #: dat/outfits/biocore_drive/light_strong_gene_drive_stage_3.xml:2
 msgid "Light Strong Gene Drive Stage 3"
-msgstr ""
+msgstr "小型強化ジーンドライブ第 3 期"
 
 #: dat/outfits/biocore_drive/light_strong_gene_drive_stage_x.xml:2
 msgid "Light Strong Gene Drive Stage X"
-msgstr ""
+msgstr "小型強化ジーンドライブ第 X 期"
 
 #: dat/outfits/biocore_drive/medium_fast_gene_drive_stage_1.xml:2
 msgid "Medium Fast Gene Drive Stage 1"
-msgstr ""
+msgstr "中型高速ジーンドライブ第 1 期"
 
 #: dat/outfits/biocore_drive/medium_fast_gene_drive_stage_2.xml:2
 msgid "Medium Fast Gene Drive Stage 2"
-msgstr ""
+msgstr "中型高速ジーンドライブ第 2 期"
 
 #: dat/outfits/biocore_drive/medium_fast_gene_drive_stage_3.xml:2
 msgid "Medium Fast Gene Drive Stage 3"
-msgstr ""
+msgstr "中型高速ジーンドライブ第 3 期"
 
 #: dat/outfits/biocore_drive/medium_fast_gene_drive_stage_4.xml:2
 msgid "Medium Fast Gene Drive Stage 4"
-msgstr ""
+msgstr "中型高速ジーンドライブ第 4 期"
 
 #: dat/outfits/biocore_drive/medium_fast_gene_drive_stage_x.xml:2
 msgid "Medium Fast Gene Drive Stage X"
-msgstr ""
+msgstr "中型高速ジーンドライブ第 X 期"
 
 #: dat/outfits/biocore_drive/medium_strong_gene_drive_stage_1.xml:2
 msgid "Medium Strong Gene Drive Stage 1"
-msgstr ""
+msgstr "中型強化ジーンドライブ第 1 期"
 
 #: dat/outfits/biocore_drive/medium_strong_gene_drive_stage_2.xml:2
 msgid "Medium Strong Gene Drive Stage 2"
-msgstr ""
+msgstr "中型強化ジーンドライブ第 2 期"
 
 #: dat/outfits/biocore_drive/medium_strong_gene_drive_stage_3.xml:2
 msgid "Medium Strong Gene Drive Stage 3"
-msgstr ""
+msgstr "中型強化ジーンドライブ第 3 期"
 
 #: dat/outfits/biocore_drive/medium_strong_gene_drive_stage_4.xml:2
 msgid "Medium Strong Gene Drive Stage 4"
-msgstr ""
+msgstr "中型強化ジーンドライブ第 4 期"
 
 #: dat/outfits/biocore_drive/medium_strong_gene_drive_stage_x.xml:2
 msgid "Medium Strong Gene Drive Stage X"
-msgstr ""
+msgstr "中型強化ジーンドライブ第 X 期"
 
 #: dat/outfits/biocore_drive/mediumheavy_fast_gene_drive_stage_1.xml:2
 msgid "Medium-Heavy Fast Gene Drive Stage 1"
-msgstr ""
+msgstr "準大型高速ジーンドライブ第 1 期"
 
 #: dat/outfits/biocore_drive/mediumheavy_fast_gene_drive_stage_2.xml:2
 msgid "Medium-Heavy Fast Gene Drive Stage 2"
-msgstr ""
+msgstr "準大型高速ジーンドライブ第 2 期"
 
 #: dat/outfits/biocore_drive/mediumheavy_fast_gene_drive_stage_3.xml:2
 msgid "Medium-Heavy Fast Gene Drive Stage 3"
-msgstr ""
+msgstr "準大型高速ジーンドライブ第 3 期"
 
 #: dat/outfits/biocore_drive/mediumheavy_fast_gene_drive_stage_4.xml:2
 msgid "Medium-Heavy Fast Gene Drive Stage 4"
-msgstr ""
+msgstr "準大型高速ジーンドライブ第 4 期"
 
 #: dat/outfits/biocore_drive/mediumheavy_fast_gene_drive_stage_5.xml:2
 msgid "Medium-Heavy Fast Gene Drive Stage 5"
-msgstr ""
+msgstr "準大型高速ジーンドライブ第 5 期"
 
 #: dat/outfits/biocore_drive/mediumheavy_fast_gene_drive_stage_x.xml:2
 msgid "Medium-Heavy Fast Gene Drive Stage X"
-msgstr ""
+msgstr "準大型高速ジーンドライブ第 X 期"
 
 #: dat/outfits/biocore_drive/mediumheavy_strong_gene_drive_stage_1.xml:2
 msgid "Medium-Heavy Strong Gene Drive Stage 1"
-msgstr ""
+msgstr "準大型強化ジーンドライブ第 1 期"
 
 #: dat/outfits/biocore_drive/mediumheavy_strong_gene_drive_stage_2.xml:2
 msgid "Medium-Heavy Strong Gene Drive Stage 2"
-msgstr ""
+msgstr "準大型強化ジーンドライブ第 2 期"
 
 #: dat/outfits/biocore_drive/mediumheavy_strong_gene_drive_stage_3.xml:2
 msgid "Medium-Heavy Strong Gene Drive Stage 3"
-msgstr ""
+msgstr "準大型強化ジーンドライブ第 3 期"
 
 #: dat/outfits/biocore_drive/mediumheavy_strong_gene_drive_stage_4.xml:2
 msgid "Medium-Heavy Strong Gene Drive Stage 4"
-msgstr ""
+msgstr "準大型強化ジーンドライブ第 4 期"
 
 #: dat/outfits/biocore_drive/mediumheavy_strong_gene_drive_stage_5.xml:2
 msgid "Medium-Heavy Strong Gene Drive Stage 5"
-msgstr ""
+msgstr "準大型強化ジーンドライブ第 5 期"
 
 #: dat/outfits/biocore_drive/mediumheavy_strong_gene_drive_stage_x.xml:2
 msgid "Medium-Heavy Strong Gene Drive Stage X"
-msgstr ""
+msgstr "準大型強化ジーンドライブ第 X 期"
 
 #: dat/outfits/biocore_drive/superheavy_fast_gene_drive_stage_1.xml:2
 msgid "Superheavy Fast Gene Drive Stage 1"
-msgstr ""
+msgstr "特大型高速ジーンドライブ第 1 期"
 
 #: dat/outfits/biocore_drive/superheavy_fast_gene_drive_stage_2.xml:2
 msgid "Superheavy Fast Gene Drive Stage 2"
-msgstr ""
+msgstr "特大型高速ジーンドライブ第 2 期"
 
 #: dat/outfits/biocore_drive/superheavy_fast_gene_drive_stage_3.xml:2
 msgid "Superheavy Fast Gene Drive Stage 3"
-msgstr ""
+msgstr "特大型高速ジーンドライブ第 3 期"
 
 #: dat/outfits/biocore_drive/superheavy_fast_gene_drive_stage_4.xml:2
 msgid "Superheavy Fast Gene Drive Stage 4"
-msgstr ""
+msgstr "特大型高速ジーンドライブ第 4 期"
 
 #: dat/outfits/biocore_drive/superheavy_fast_gene_drive_stage_5.xml:2
 msgid "Superheavy Fast Gene Drive Stage 5"
-msgstr ""
+msgstr "特大型高速ジーンドライブ第 5 期"
 
 #: dat/outfits/biocore_drive/superheavy_fast_gene_drive_stage_6.xml:2
 msgid "Superheavy Fast Gene Drive Stage 6"
-msgstr ""
+msgstr "特大型高速ジーンドライブ第 6 期"
 
 #: dat/outfits/biocore_drive/superheavy_fast_gene_drive_stage_7.xml:2
 msgid "Superheavy Fast Gene Drive Stage 7"
-msgstr ""
+msgstr "特大型高速ジーンドライブ第 7 期"
 
 #: dat/outfits/biocore_drive/superheavy_fast_gene_drive_stage_x.xml:2
 msgid "Superheavy Fast Gene Drive Stage X"
-msgstr ""
+msgstr "特大型高速ジーンドライブ第 X 期"
 
 #: dat/outfits/biocore_drive/superheavy_strong_gene_drive_stage_1.xml:2
 msgid "Superheavy Strong Gene Drive Stage 1"
-msgstr ""
+msgstr "特大型強化ジーンドライブ第 1 期"
 
 #: dat/outfits/biocore_drive/superheavy_strong_gene_drive_stage_2.xml:2
 msgid "Superheavy Strong Gene Drive Stage 2"
-msgstr ""
+msgstr "特大型強化ジーンドライブ第 2 期"
 
 #: dat/outfits/biocore_drive/superheavy_strong_gene_drive_stage_3.xml:2
 msgid "Superheavy Strong Gene Drive Stage 3"
-msgstr ""
+msgstr "特大型強化ジーンドライブ第 3 期"
 
 #: dat/outfits/biocore_drive/superheavy_strong_gene_drive_stage_4.xml:2
 msgid "Superheavy Strong Gene Drive Stage 4"
-msgstr ""
+msgstr "特大型強化ジーンドライブ第 4 期"
 
 #: dat/outfits/biocore_drive/superheavy_strong_gene_drive_stage_5.xml:2
 msgid "Superheavy Strong Gene Drive Stage 5"
-msgstr ""
+msgstr "特大型強化ジーンドライブ第 5 期"
 
 #: dat/outfits/biocore_drive/superheavy_strong_gene_drive_stage_6.xml:2
 msgid "Superheavy Strong Gene Drive Stage 6"
-msgstr ""
+msgstr "特大型強化ジーンドライブ第 6 期"
 
 #: dat/outfits/biocore_drive/superheavy_strong_gene_drive_stage_7.xml:2
 msgid "Superheavy Strong Gene Drive Stage 7"
-msgstr ""
+msgstr "特大型強化ジーンドライブ第 7 期"
 
 #: dat/outfits/biocore_drive/superheavy_strong_gene_drive_stage_x.xml:2
 msgid "Superheavy Strong Gene Drive Stage X"
-msgstr ""
+msgstr "特大型強化ジーンドライブ第 X 期"
 
 #: dat/outfits/biocore_drive/ultralight_fast_gene_drive_stage_1.xml:2
 msgid "Ultralight Fast Gene Drive Stage 1"
-msgstr ""
+msgstr "極小型高速ジーンドライブ第 1 期"
 
 #: dat/outfits/biocore_drive/ultralight_fast_gene_drive_stage_2.xml:2
 msgid "Ultralight Fast Gene Drive Stage 2"
-msgstr ""
+msgstr "極小型高速ジーンドライブ第 2 期"
 
 #: dat/outfits/biocore_drive/ultralight_fast_gene_drive_stage_x.xml:2
 msgid "Ultralight Fast Gene Drive Stage X"
-msgstr ""
+msgstr "極小型高速ジーンドライブ第 X 期"
 
 #: dat/outfits/biocore_drive/ultralight_strong_gene_drive_stage_1.xml:2
 msgid "Ultralight Strong Gene Drive Stage 1"
-msgstr ""
+msgstr "極小型強化ジーンドライブ第 1 期"
 
 #: dat/outfits/biocore_drive/ultralight_strong_gene_drive_stage_2.xml:2
 msgid "Ultralight Strong Gene Drive Stage 2"
-msgstr ""
+msgstr "極小型強化ジーンドライブ第 2 期"
 
 #: dat/outfits/biocore_drive/ultralight_strong_gene_drive_stage_x.xml:2
 msgid "Ultralight Strong Gene Drive Stage X"
-msgstr ""
+msgstr "極小型強化ジーンドライブ第 X 期"
 
 #: dat/outfits/biocore_shell/heavy_shell_stage_1.xml:2
 msgid "Heavy Shell Stage 1"
-msgstr ""
+msgstr "大型殻第 1 期"
 
 #: dat/outfits/biocore_shell/heavy_shell_stage_1.xml:4
 #: dat/outfits/biocore_shell/heavy_shell_stage_2.xml:4
@@ -14886,30 +14920,32 @@ msgid ""
 "detected by hostiles. All shells start off undeveloped, but over time, just "
 "like the ships themselves, they grow and improve."
 msgstr ""
+"殻はソロミドの生体船の生まれつきの保護物であり、合成船の船殻相当のものである。殻が責任をもつのは、有機体の内臓の保護と、敵に発見される危険を減らす偽装を作"
+"りだすことの両方だ。すべての殻は未発達な状態から始まるが、船自体とまったく同じで、時間とともに成長して進歩していく。"
 
 #: dat/outfits/biocore_shell/heavy_shell_stage_2.xml:2
 msgid "Heavy Shell Stage 2"
-msgstr ""
+msgstr "大型殻第 2 期"
 
 #: dat/outfits/biocore_shell/heavy_shell_stage_3.xml:2
 msgid "Heavy Shell Stage 3"
-msgstr ""
+msgstr "大型殻第 3 期"
 
 #: dat/outfits/biocore_shell/heavy_shell_stage_4.xml:2
 msgid "Heavy Shell Stage 4"
-msgstr ""
+msgstr "大型殻第 4 期"
 
 #: dat/outfits/biocore_shell/heavy_shell_stage_5.xml:2
 msgid "Heavy Shell Stage 5"
-msgstr ""
+msgstr "大型殻第 5 期"
 
 #: dat/outfits/biocore_shell/heavy_shell_stage_6.xml:2
 msgid "Heavy Shell Stage 6"
-msgstr ""
+msgstr "大型殻第 6 期"
 
 #: dat/outfits/biocore_shell/heavy_shell_stage_x.xml:2
 msgid "Heavy Shell Stage X"
-msgstr ""
+msgstr "大型殻第 X 期"
 
 #: dat/outfits/biocore_shell/heavy_shell_stage_x.xml:10
 #: dat/outfits/biocore_shell/light_shell_stage_x.xml:11
@@ -14923,110 +14959,112 @@ msgid ""
 "internal organs and for creating camouflage to reduce the risk of being "
 "detected by hostiles. This shell has reached stage X, its full potential."
 msgstr ""
+"殻はソロミドの生体船の生まれつきの保護物であり、合成船の船殻相当のものである。殻が責任をもつのは、有機体の内臓の保護と、敵に発見される危険を減らす偽装を作"
+"りだすことの両方だ。この殻は潜在能力をすべて発揮した第 X 期に達している。"
 
 #: dat/outfits/biocore_shell/light_shell_stage_1.xml:2
 msgid "Light Shell Stage 1"
-msgstr ""
+msgstr "小型殻第 1 期"
 
 #: dat/outfits/biocore_shell/light_shell_stage_2.xml:2
 msgid "Light Shell Stage 2"
-msgstr ""
+msgstr "小型殻第 2 期"
 
 #: dat/outfits/biocore_shell/light_shell_stage_3.xml:2
 msgid "Light Shell Stage 3"
-msgstr ""
+msgstr "小型殻第 3 期"
 
 #: dat/outfits/biocore_shell/light_shell_stage_x.xml:2
 msgid "Light Shell Stage X"
-msgstr ""
+msgstr "小型殻第 X 期"
 
 #: dat/outfits/biocore_shell/medium_shell_stage_1.xml:2
 msgid "Medium Shell Stage 1"
-msgstr ""
+msgstr "中型殻第 1 期"
 
 #: dat/outfits/biocore_shell/medium_shell_stage_2.xml:2
 msgid "Medium Shell Stage 2"
-msgstr ""
+msgstr "中型殻第 2 期"
 
 #: dat/outfits/biocore_shell/medium_shell_stage_3.xml:2
 msgid "Medium Shell Stage 3"
-msgstr ""
+msgstr "中型殻第 3 期"
 
 #: dat/outfits/biocore_shell/medium_shell_stage_4.xml:2
 msgid "Medium Shell Stage 4"
-msgstr ""
+msgstr "中型殻第 4 期"
 
 #: dat/outfits/biocore_shell/medium_shell_stage_x.xml:2
 msgid "Medium Shell Stage X"
-msgstr ""
+msgstr "中型殻第 X 期"
 
 #: dat/outfits/biocore_shell/mediumheavy_shell_stage_1.xml:2
 msgid "Medium-Heavy Shell Stage 1"
-msgstr ""
+msgstr "準大型殻第 1 期"
 
 #: dat/outfits/biocore_shell/mediumheavy_shell_stage_2.xml:2
 msgid "Medium-Heavy Shell Stage 2"
-msgstr ""
+msgstr "準大型殻第 2 期"
 
 #: dat/outfits/biocore_shell/mediumheavy_shell_stage_3.xml:2
 msgid "Medium-Heavy Shell Stage 3"
-msgstr ""
+msgstr "準大型殻第 3 期"
 
 #: dat/outfits/biocore_shell/mediumheavy_shell_stage_4.xml:2
 msgid "Medium-Heavy Shell Stage 4"
-msgstr ""
+msgstr "準大型殻第 4 期"
 
 #: dat/outfits/biocore_shell/mediumheavy_shell_stage_5.xml:2
 msgid "Medium-Heavy Shell Stage 5"
-msgstr ""
+msgstr "準大型殻第 5 期"
 
 #: dat/outfits/biocore_shell/mediumheavy_shell_stage_x.xml:2
 msgid "Medium-Heavy Shell Stage X"
-msgstr ""
+msgstr "準大型殻第 X 期"
 
 #: dat/outfits/biocore_shell/superheavy_shell_stage_1.xml:2
 msgid "Superheavy Shell Stage 1"
-msgstr ""
+msgstr "特大型殻第 1 期"
 
 #: dat/outfits/biocore_shell/superheavy_shell_stage_2.xml:2
 msgid "Superheavy Shell Stage 2"
-msgstr ""
+msgstr "特大型殻第 2 期"
 
 #: dat/outfits/biocore_shell/superheavy_shell_stage_3.xml:2
 msgid "Superheavy Shell Stage 3"
-msgstr ""
+msgstr "特大型殻第 3 期"
 
 #: dat/outfits/biocore_shell/superheavy_shell_stage_4.xml:2
 msgid "Superheavy Shell Stage 4"
-msgstr ""
+msgstr "特大型殻第 4 期"
 
 #: dat/outfits/biocore_shell/superheavy_shell_stage_5.xml:2
 msgid "Superheavy Shell Stage 5"
-msgstr ""
+msgstr "特大型殻第 5 期"
 
 #: dat/outfits/biocore_shell/superheavy_shell_stage_6.xml:2
 msgid "Superheavy Shell Stage 6"
-msgstr ""
+msgstr "特大型殻第 6 期"
 
 #: dat/outfits/biocore_shell/superheavy_shell_stage_7.xml:2
 msgid "Superheavy Shell Stage 7"
-msgstr ""
+msgstr "特大型殻第 7 期"
 
 #: dat/outfits/biocore_shell/superheavy_shell_stage_x.xml:2
 msgid "Superheavy Shell Stage X"
-msgstr ""
+msgstr "特大型殻第 X 期"
 
 #: dat/outfits/biocore_shell/ultralight_shell_stage_1.xml:2
 msgid "Ultralight Shell Stage 1"
-msgstr ""
+msgstr "極小型殻第 1 期"
 
 #: dat/outfits/biocore_shell/ultralight_shell_stage_2.xml:2
 msgid "Ultralight Shell Stage 2"
-msgstr ""
+msgstr "極小型殻第 2 期"
 
 #: dat/outfits/biocore_shell/ultralight_shell_stage_x.xml:2
 msgid "Ultralight Shell Stage X"
-msgstr ""
+msgstr "極小型殻第 X 期"
 
 #: dat/outfits/core_engine/dummy_engine.xml:2
 msgid "Dummy Engine"
@@ -15527,16 +15565,14 @@ msgstr ""
 
 #: dat/outfits/core_hull/medium/sk_mediumheavy_combat_plating.xml:2
 msgid "S&K Medium-Heavy Combat Plating"
-msgstr "S&K・中重戦闘装甲"
+msgstr "S&K・準重戦闘装甲"
 
 #: dat/outfits/core_hull/medium/sk_mediumheavy_combat_plating.xml:10
 msgid ""
 "Designed for destroyers and similarly-sized vessels, Schafer & Kane's medium-"
 "heavy combat plating provides excellent protection from everything save "
 "capital-class threats."
-msgstr ""
-"駆逐艦とそれに似た大きさの船のために設計された S&K・中重戦闘装甲は、主力艦級"
-"の脅威を除くすべてにたいするすぐれた防衛力を提供している。"
+msgstr "駆逐艦とそれに似た大きさの船のために設計された S&K・準重戦闘装甲は、主力艦級の脅威を除くすべてにたいするすぐれた防衛力を提供している。"
 
 #: dat/outfits/core_hull/medium/unicorp_d12_medium_plating.xml:2
 msgid "Unicorp D-12 Medium Plating"
@@ -15606,9 +15642,8 @@ msgid ""
 "Schafer & Kane Industries provides an impressive amount of cargo space "
 "without compromising the hull's integrity."
 msgstr ""
-"小さな配達船には高価な投資となるが、このシェイファー & ケインインダストリーズ"
-"製の船殻修正手段は、船殻の整合性を危険にさらすことなく堂々とした大きさの船倉"
-"を提供する。"
+"小さな配達船には高価な投資となるが、このシェイファー & "
+"ケインインダストリーズ製の船殻修正手段は、船殻の保全性を危険にさらすことなく堂々とした大きさの船倉を提供する。"
 
 #: dat/outfits/core_hull/small/sk_ultralight_combat_plating.xml:2
 msgid "S&K Ultralight Combat Plating"
@@ -16328,8 +16363,7 @@ msgid ""
 "This tiny robotic drone built by the Za'lek is very weak by itself. However, "
 "they are compact and cheap, allowing them to be massed very easily."
 msgstr ""
-"ザレクによって作られたこの小さなロボット化ドローンは、それ自体はとても弱い。"
-"けれども、これは簡素で安価であり、とても簡単に群れを作ることができる。"
+"ザレクによって作られたこの小さなロボット式ドローンは、それ自体はとても弱い。けれども、これは簡素で安価であり、とても簡単に群れを作ることができる。"
 
 #: dat/outfits/launchers/convulsion_launcher.xml:2
 msgid "Convulsion Launcher"
@@ -17229,9 +17263,8 @@ msgid ""
 "puncture heavy warships and leave them vulnerable. It has very poor "
 "tracking, but has excellent speed and armor piercing."
 msgstr ""
-"この改造型ロケットは、大型戦闘艦に穴をあけてもろくしておく手段として、集合体"
-"の重ドローンに使われていた。追尾能力はとても悪いのだが、速度に優れるので装甲"
-"を貫通する。"
+"この改造型ロケットは、大型戦闘艦に穴をあけてもろくしておく手段として、集合体の重ドローンに使われていた。追跡能力はとても悪いのだが、速度に優れるので装甲を"
+"貫通する。"
 
 #: dat/outfits/rockets/spearhead_missile.xml:2
 msgid "Spearhead Missile"
@@ -17315,9 +17348,8 @@ msgid ""
 "radiation around the ship and is able to emit space-resolved the right "
 "amount of radiation to appear invisible for passive sensors."
 msgstr ""
-"この装甲板はどんな防御力も提供しない。かわりにこれは船を検出しづらくする。こ"
-"れは船の周囲の放射を測定する統合センサーをもっているので、受動式センサーから"
-"見えなくなるような空間分解放射量を正確に放つことができる。"
+"この装甲板はどんな防御力も提供しない。かわりにこれは船を探知しづらくする。これは船の周囲の放射を測定する統合センサーをもっているので、受動式センサーから見"
+"えなくなるような空間分解放射量を正確に放つことができる。"
 
 #: dat/outfits/structure/battery_i.xml:2
 msgid "Battery I"
@@ -17679,15 +17711,10 @@ msgid ""
 msgstr "特徴のない無害な独立勢力の船のように見せる偽造応答器。"
 
 #: dat/outfits/unique/fake_transponder.xml:12
-#, fuzzy
-#| msgid ""
-#| "Makes the ship appear as independent to other ships. Becomes void when "
-#| "scanned."
 msgid ""
 "Makes the ship appear as independent to other ships. Becomes temporarily "
 "void when discovered."
-msgstr ""
-"ほかの船から独立勢力の船のように見せることになる。スキャンされると空になる。"
+msgstr "ほかの船から独立勢力の船のように見せることになる。発見されると一時的に空となる。"
 
 #: dat/outfits/unique/hades_torch.xml:2
 msgid "Hades Torch"
@@ -17762,12 +17789,9 @@ msgid ""
 "used for a short time. Newer versions have a safety shutoff which "
 "automatically turn off the chip before hull integrity collapses."
 msgstr ""
-"バーサークチップが危険なのは、とくべつ無謀なパイロットが使ったときだけだ。船"
-"にこれを完全に統合することで、基本的な機能のほとんどを乗っとって戦闘能力に振"
-"りむけることができる。これは船殻の整合性と船のシステムにとても大きな犠牲を払"
-"わせることになり、そのうえ使えるのは短いあいだだけである。さらに新しいものに"
-"は安全遮断装置がついていて、船殻の整合性が維持できなくなるまえに、チップが自"
-"動的に停止する。"
+"バーサークチップが危険なのは、とくべつ無謀なパイロットが使ったときだけだ。船にこれを完全に統合することで、基本的な機能のほとんどを乗っとって戦闘能力に振り"
+"むけることができる。これは船殻の保全性と船のシステムにとても大きな犠牲を払わせることになり、そのうえ使えるのは短いあいだだけである。さらに新しいものには安"
+"全遮断装置がついていて、船殻の保全性が維持できなくなるまえに、チップが自動的に停止する。"
 
 #: dat/outfits/utility/berserk_chip.xml:10
 msgid ""
@@ -17776,9 +17800,8 @@ msgid ""
 "second cooldown period during which movement and damage output is decreased "
 "by 20%."
 msgstr ""
-"時間がたつと大量の損害をシールドと装甲にうけ、船殻の整合性が 30% 未満になると"
-"自動的に停止する。使ったあとには 8 秒の冷却時間があって、そのあいだは移動力と"
-"与えられる損害が 20% 低下する。"
+"時間がたつと大量の損害をシールドと装甲にうけ、船殻の保全性が 30% 未満になると自動的に停止する。使ったあとには 8 秒の冷却時間があって、"
+"そのあいだは移動力と与えられる損害が 20% 低下する。"
 
 #: dat/outfits/utility/blink_drive.xml:2 dat/outfits/utility/blink_drive.xml:4
 #: dat/outfits/utility/hyperbolic_blink_engine.xml:4
@@ -17821,10 +17844,8 @@ msgid ""
 "torch/can opener/spatula, the Boarding Android is ready for any situation, "
 "be it tactical or culinary."
 msgstr ""
-"アシモフディストラクティコープ・移乗用アンドロイドは、最新のロボット化敵対的"
-"乗っとり技術だ。多機能型プラズマブラスター・切断トーチ・缶切り・へらを装備し"
-"た移乗用アンドロイドは、どのような状況にも対処する用意ができている。それが戦"
-"術的なものであろうと、料理であろうと。"
+"アシモフディストラクティコープ・移乗用アンドロイドは、最新のロボット式敵対的乗っとり技術だ。多機能型プラズマブラスター・切断トーチ・缶切り・へらを装備した"
+"移乗用アンドロイドは、どのような状況にも対処する用意ができている。それが戦術的なものであろうと、料理であろうと。"
 
 #: dat/outfits/utility/boarding_androids_mk2.xml:2
 msgid "Boarding Androids MK2"
@@ -17996,9 +18017,8 @@ msgid ""
 "infrastructure. By making small tweaks online, it is able to effectively "
 "increase the range at which other ships are detected."
 msgstr ""
-"この戦闘用 AI は、船のセンサー基盤の最適化に焦点をあわせている。作動中に"
-"ちょっとした微調整することで、これはほかの船を検出する距離を効果的に増やすこ"
-"とを可能とする。"
+"この戦闘用 AI "
+"は、船のセンサー基盤の最適化に焦点をあわせている。作動中にちょっとした微調整することで、これはほかの船を探知する距離を効果的に増やすことを可能とする。"
 
 #: dat/outfits/utility/cryogenic_repair_nanobots.xml:2
 msgid "Cryogenic Repair Nanobots"
@@ -18136,10 +18156,8 @@ msgid ""
 "needing to recharge, this scanner is capable of discovering jump points that "
 "regular sensors can't detect."
 msgstr ""
-"すぐ周囲にある空間の基本構造に存在する珍しい異常をスキャンできる特殊なセン"
-"サー技術の品だ。有効範囲は狭くて、再充電が必要になるまでに限られた時間しかス"
-"キャンできないが、このスキャナーはふつうのセンサーでは検出できないジャンプポ"
-"イントを発見する能力がある。"
+"すぐ周囲にある空間の基本構造に存在する珍しい異常をスキャンできる特殊なセンサー技術の品だ。有効範囲は狭くて、再充電が必要になるまでに限られた時間しかスキャ"
+"ンできないが、このスキャナーはふつうのセンサーでは探知できないジャンプポイントを発見する能力がある。"
 
 #: dat/outfits/utility/hullcoating/faraday_tempest_coating.xml:2
 msgid "Faraday Tempest Coating"
@@ -18291,13 +18309,10 @@ msgid ""
 "scanner will not detect jump points whose signature differs from the "
 "standard type."
 msgstr ""
-"この装置は船に補助のスキャンアレイをつけくわえるものだ。そのアレイには、超空"
-"間ジャンプに関連する空間異常の既知の特徴がプログラムされている。このスキャ"
-"ナーは、識別特性のなかでもとても具体的な性質を検出するので、精度を犠牲にしな"
-"くても容易に探知距離を増加させることができた。ようするに、船がこのスキャナー"
-"をひとつ以上搭載すれば、ジャンプポイントをもっと遠くから検出できるということ"
-"になる。このスキャナーは、標準的な種類とは異なる識別特性をもつジャンプポイン"
-"トは検出しない。"
+"この装置は船に補助のスキャンアレイをつけくわえるものだ。そのアレイには、超空間ジャンプに関連する空間異常の既知の特徴がプログラムされている。このスキャナー"
+"は、識別特性のなかでもとても具体的な性質を検出するので、精度を犠牲にしなくても容易に探知距離を増加させることができた。ようするに、船がこのスキャナーをひと"
+"つ以上搭載すれば、ジャンプポイントをもっと遠くから探知できるということになる。このスキャナーは、標準的な種類とは異なる識別特性をもつジャンプポイントは探知"
+"しない。"
 
 #: dat/outfits/utility/low_radiation_sensor_modulator.xml:2
 msgid "Low Radiation Sensor Modulator"
@@ -18505,11 +18520,9 @@ msgid ""
 "scramblers put a minimal strain on the ship's resources, and are always "
 "active."
 msgstr ""
-"スクランブラーは、船の電磁的識別特性をゆがめて、いろいろなセンサーから検出さ"
-"れにくくするものだ。ようするに、スクランブラーは船が検出・スキャン可能となる"
-"距離を短くして、ミサイルに捕捉されにくくする。効果はかなり限られたものだが、"
-"よい面を見れば、スクランブラーは船の資源に最小限の負担しかかけないし、つねに"
-"作動させておける。"
+"スクランブラーは、船の電磁的識別特性をゆがめて、いろいろなセンサーから検出されにくくするものだ。ようするに、スクランブラーは船が探知・スキャン可能となる距"
+"離を短くして、ミサイルに捕捉されにくくする。効果はかなり限られたものだが、よい面を見れば、スクランブラーは船の資源に最小限の負担しかかけないし、つねに作動"
+"させておける。"
 
 #: dat/outfits/utility/weakness_harmonizer_ai.xml:2
 msgid "Weakness Harmonizer AI"
@@ -18812,8 +18825,7 @@ msgid ""
 "popular with the Collective, whose drones were immune to early versions' "
 "lethal backscatter radiation."
 msgstr ""
-"中性子ディスラプターは、高エネルギー波動を利用して分子の基本組成を変えること"
-"で、大きな損害をひきおこす。この武器は最初に集合体で広まった。集合体のドロー"
+"中性子ディスラプターは、高エネルギーパルスを利用して分子の基本組成を変えることで、大きな損害をひきおこす。この武器は最初に集合体で広まった。集合体のドロー"
 "ンは、初期の型がもつ致死の後方散乱放射の影響をうけない。"
 
 #: dat/outfits/weapons/neutron_disruptor_heavy.xml:2
@@ -18940,6 +18952,10 @@ msgid ""
 "medium mounts, but this also means biological Soromid ships are able to "
 "handle its computational load despite being a synthetic construct."
 msgstr ""
+"プラズマクラスターキャノンは、通常のプラズマキャノンの設計をソロミドが洗練させたものだ。大量の過熱プラズマのかたまりを特殊な ｢薄膜シールド｣ 内の小さな"
+"空間に閉じこめることで、衝突させると最強の船殻でさえ引き裂きつらぬく大きな爆発をひきおこすようになった。この設計の問題は、大きな空間を必要とすることだ。そ"
+"のためこれは中型の砲架での使用に限られている。しかしこれは生物的なソロミド船が、合成して製造されているにもかかわらず、その計算量に対処できるという意味でも"
+"ある。"
 
 #: dat/outfits/weapons/plasma_turret_mk1.xml:2
 msgid "Plasma Turret MK1"
@@ -18953,6 +18969,8 @@ msgid ""
 "among inexperienced mercenaries who are not as well-practiced at aiming as "
 "the pros."
 msgstr ""
+"プラズマ砲塔は、基本的にはプラズマブラスターを取ってきて砲塔に設置したものだ。短射程なので防衛用には不適当なことから、貿易商にはとくに人気があるわけではな"
+"い。しかし専門家ほど狙うのに熟達していない不慣れな傭兵のあいだに狭い市場が見つかっている。"
 
 #: dat/outfits/weapons/plasma_turret_mk2.xml:2
 msgid "Plasma Turret MK2"
@@ -18964,6 +18982,8 @@ msgid ""
 "medium-size turrets, but it is sometimes favored by corvettes for its "
 "unusually low weight compared to its range and damage output."
 msgstr ""
+"マーク 2 プラズマ砲塔は、ほかの中くらいの大きさの砲塔と比べると、とくべつ印象に残るようなものではない。しかし射程距離と与える損害のわりには珍しいほど軽"
+"量なので、これはたまにコルベットで好まれることがある。"
 
 #: dat/outfits/weapons/ragnarok_beam.xml:2
 msgid "Ragnarok Beam"
@@ -18975,6 +18995,8 @@ msgid ""
 "market. It's designed for capital ship combat, although its extremely large "
 "payload makes it somewhat useful for clearing enemy fighters."
 msgstr ""
+"ラグナロクビームは市場にあるビーム兵器としてはとりわけ強力なものだ。これは主力艦での戦いのために設計された。とはいえ、有効荷重がきわめて大きいので、敵戦闘"
+"機を掃討するにはいくぶん役に立つといったところだ。"
 
 #: dat/outfits/weapons/railgun.xml:2
 msgid "Railgun"
@@ -18986,6 +19008,7 @@ msgid ""
 "of debris to extremely high velocities. The impact caused by the pieces of "
 "debris can tear apart even the strongest ship hulls."
 msgstr ""
+"レールガンは強力な磁気パルスを使い、岩屑の破片を極端な速度まで加速する砲だ。この岩屑の破片が衝突する衝撃は、きわめて強い船殻であってもばらばらにできる。"
 
 #: dat/outfits/weapons/railgun_turret.xml:2
 msgid "Railgun Turret"
@@ -18998,6 +19021,8 @@ msgid ""
 "a specialized turret housing, it manages to mitigate the recoil normally "
 "associated with railguns at a slight velocity cost."
 msgstr ""
+"150mm レールガンは恐ろしい武器だが、主力艦の究極の力まかせ兵器としては、150mm "
+"レールガン砲塔がある。二つのレールガンを専用の砲塔天蓋に格納し、わずかな速度を犠牲にして、ふつうのレールガンにはつきものの反動を軽減することができた。"
 
 #: dat/outfits/weapons/razor_mk1.xml:2
 msgid "Razor MK1"
@@ -19010,6 +19035,8 @@ msgid ""
 "such, Razors are best used in the initial phase of an engagement, and "
 "swapped out for other weapons once the target's shields come down."
 msgstr ""
+"かみそりは、高エネルギーイオンの濃縮されたかたまりを発射する。これはシールドを弱らせるのにはとても効果的だが、船の装甲には限られた効果しかない。そういうわ"
+"けで、かみそりは攻撃の初期段階で使うのがいちばんである。そして目標のシールドが落ちたら、ほかの武器と交換するのだ。"
 
 #: dat/outfits/weapons/razor_mk2.xml:2
 msgid "Razor MK2"
@@ -19023,6 +19050,8 @@ msgid ""
 "drain a target's shields, paving the way for other weapons to deliver the "
 "finishing blow."
 msgstr ""
+"民間用かみそりの改良型は、前機種と比べて全体的に向上した有効性を発揮する。そして主力艦むけのシールドを過負荷にするのもそれほど難しくない。基本型と同様に、"
+"かみそり MK2 も目標のシールドを弱めるために使い、ほかの武器がとどめをさすための道を作ってやるのがいちばんだ。"
 
 #: dat/outfits/weapons/razor_turret_mk1.xml:2
 msgid "Razor Turret MK1"
@@ -19034,6 +19063,8 @@ msgid ""
 "is a great deterrent against attackers because nothing puts a space pilot on "
 "edge like their shields rapidly coming down."
 msgstr ""
+"かみそり砲塔は貿易商のあいだで人気がある。これはシールドにたいして大きな損害を与えるので、攻撃者をはなはだおじけづかせることになるのだ。すばやくシールドが"
+"落ちるほど、宇宙パイロットを不安にさせるものはない。"
 
 #: dat/outfits/weapons/razor_turret_mk2.xml:2
 msgid "Razor Turret MK2"
@@ -19045,6 +19076,8 @@ msgid ""
 "escort ships. They are often mounted alongside laser or gauss turrets to "
 "assist in de-shielding incoming attackers before they are ripped to shreds."
 msgstr ""
+"かみそりの MK2 砲塔型は、中規模の護衛船にたくさんの用途を見いだせる。これはよくレーザーやガウス砲塔と並べられ、向かってくる攻撃者のシールドを取り除い"
+"てから、その攻撃者をばらばらに引き裂いている。"
 
 #: dat/outfits/weapons/repeating_railgun.xml:2
 msgid "Repeating Railgun"
@@ -19057,6 +19090,8 @@ msgid ""
 "enhance the weapon into a heavier, faster firing variant that isn't so much "
 "a gun as it is a miniature meteor shower generator."
 msgstr ""
+"レールガンの効果は圧倒的だが、ドベーレッド最高司令部にとってはあまりじゅうぶんに圧倒的ではない。ドベーレッドに所属していた技術者たちは、あの武器を増強して"
+"、もっと強く、もっと速く発射できる変種を作った。これはもう、砲というより小型の流星雨発生器だ。"
 
 #: dat/outfits/weapons/ripper_cannon.xml:2
 msgid "Ripper Cannon"
@@ -19070,6 +19105,9 @@ msgid ""
 "Ripper Cannon is mostly used by Corvettes which possess small weapon mounts, "
 "but need heavy firepower so they can take on heavier ships effectively."
 msgstr ""
+"リッパーキャノンはレーザーキャノンの変種であり、もっと強力なキャパシターと二つの同時発砲する砲口をもつ。その結果は命中したときの損害が大きくなるいっぽう、"
+"必要 CPU がとほうもなく増えるという代償だ。リッパーキャノンはほとんどがコルベットで使われる。コルベットは小さな砲架しかもっていないが、もっと大きな船"
+"を現実に引き受けられるようになるには大量の火力が必要となるからだ。"
 
 #: dat/outfits/weapons/shredder.xml:2
 msgid "Shredder"
@@ -19081,6 +19119,8 @@ msgid ""
 "The sheer damage dealing capacity of this weapon makes Dvaered Corvettes "
 "dangerous to engage by ships that aren't substantially larger than they are."
 msgstr ""
+"シュレッダーは、ドベーレッドの製造会社が与えた名にまったく恥じないものだ。この武器はとてつもない損害を与える能力があるので、ドベーレッドのコルベットをそれ"
+"よりじゅうぶん大きくない船で攻撃すると、危険なことになる。"
 
 #: dat/outfits/weapons/slicer.xml:2
 msgid "Slicer"
@@ -19092,6 +19132,8 @@ msgid ""
 "the shields from those who would stand against House Sirius. It is commonly "
 "found on Sirius Preachers and other Corvettes."
 msgstr ""
+"スライサーはかみそりの高出力型だ。シリウス荘に対抗する者たちからシールドをはぎとるのにすぐれている。これはシリウス・プリーチャーやほかのコルベットで一般的"
+"に見られるものだ。"
 
 #: dat/outfits/weapons/tesla_cannon.xml:2
 msgid "Tesla Cannon"
@@ -19105,6 +19147,9 @@ msgid ""
 "does poor damage for its size, in extended engagements this weapon can leave "
 "enemy combatants functionally helpless."
 msgstr ""
+"シリウス宙域では最大の武器である強力なテスラキャノンは、背後にはもっとふつうのイオンキャノンと同様の原理が使われているが、船のもっと具体的な電子システム、"
+"とくに反応炉を目標としている。大きさのわりには貧弱な損害しか与えられないが、長期にわたる交戦においては、この武器は敵の戦闘員が職務を果たせなくなるようにで"
+"きる。"
 
 #: dat/outfits/weapons/turbolaser.xml:2
 msgid "Turbolaser"
@@ -19116,6 +19161,7 @@ msgid ""
 "found in the galaxy. Imperial Capital ships use it to lay down devastating "
 "barrages against enemy vessels."
 msgstr ""
+"この重レーザー砲塔の特殊な型は、銀河で見られるなかでもとくに重い武器だ。帝国主力艦は敵船にたいして破滅的な弾幕をばらまくためにこれを使っている。"
 
 #: dat/outfits/weapons/turreted_gauss_gun.xml:2
 msgid "Turreted Gauss Gun"
@@ -19127,6 +19173,8 @@ msgid ""
 "ships, the turret version of the Gauss Gun provides basic defense against "
 "lone pirates. A more determined attacker is unlikely to be deterred, however."
 msgstr ""
+"低予算の商船に比較的ありふれた対抗策として使われているガウスガンの砲塔型は、単独の海賊にたいして必要最低限な防衛力を与えてくれる。とはいえ、さらに断固とし"
+"た攻撃者がおじけづくことはなさそうだ。"
 
 #: dat/outfits/weapons/turreted_vulcan_gun.xml:2
 msgid "Turreted Vulcan Gun"
@@ -19138,6 +19186,8 @@ msgid ""
 "brethren. Ships not nimble enough to evade its relentless stream of "
 "projectiles might find themselves riddled with hull punctures before long."
 msgstr ""
+"砲塔型バルカンガンには、固定搭載型の仲間と同じ口径の弾薬が詰めこまれている。容赦のない連射を避けられるほど動きが速くない船は、たいしてかからず船殻が穴だら"
+"けだと気がつくはめになりかねない。"
 
 #: dat/outfits/weapons/vulcan_gun.xml:2
 msgid "Vulcan Gun"
@@ -19150,6 +19200,8 @@ msgid ""
 "some serious havoc even to medium-sized vessels with a pair of Vulcan Guns "
 "installed on their ship."
 msgstr ""
+"バルカンガンはガウスガンを改良したもので、射程距離と与えられる損害が向上している。これはもっと大きな口径の弾薬を使うことで達成された。腕のあるパイロットは"
+"、バルカンガンを二つ設置した船で、中程度の大きさの船に重大な損害を与えられる。"
 
 #: dat/ships/admonisher.xml:2
 msgid "Admonisher"
@@ -19170,6 +19222,8 @@ msgid ""
 "between the ruggedness of the Pacifier and the agility of the Lancelot. "
 "Overall a very solid fighter."
 msgstr ""
+"とても用途が広い戦闘艦だ。ネクサスは、パシファイアーの頑丈なところとランスロットの機敏なところの間をとったものがアドマニシャーだと明言している。全体的にみ"
+"て、とてもがっしりした戦闘機といえる。"
 
 #: dat/ships/ancestor.xml:2
 msgid "Ancestor"
@@ -19182,6 +19236,8 @@ msgid ""
 "Goddard though, the electronics are done by House Dvaered, making it "
 "considerably inferior in that area."
 msgstr ""
+"一般に小型ゴダードだといわれるアンセスターは、大昔に人間が使った原始的な飛行機械にその祖先をもつものでもある。もっともゴダードとはちがって電子機器はドベー"
+"レッド荘によるもので、その領域ではずいぶん劣るものとなっている。"
 
 #: dat/ships/drone.xml:2 dat/missions/minerva/pirate1.lua:176
 msgid "Drone"
@@ -19196,7 +19252,7 @@ msgstr "ロボシス"
 msgid ""
 "This is a modified version of the robotic drone that includes a life support "
 "system for humans."
-msgstr ""
+msgstr "これはロボット式ドローンの改造型で、人間用の生命維持装置がついている。"
 
 #: dat/ships/drone_heavy.xml:2
 msgid "Heavy Drone"
@@ -19206,7 +19262,7 @@ msgstr "重ドローン"
 msgid ""
 "This Collective heavy drone has been modified by engineers to support a "
 "human pilot."
-msgstr ""
+msgstr "この集合体重ドローンは、人間のパイロットを乗せられるように技術者たちが改造したものだ。"
 
 #: dat/ships/drone_hyena.xml:2
 msgid "Drone (Hyena)"
@@ -19216,7 +19272,7 @@ msgstr "ドローン (ハイエナ)"
 msgid ""
 "This is a modified version of the robotic drone that includes a life support "
 "system for humans, disguised as a Hyena."
-msgstr ""
+msgstr "これはロボット式ドローンの改造型で、人間用の生命維持装置がついているうえ、ハイエナに偽装したものだ。"
 
 #: dat/ships/dvaered_ancestor.xml:2
 msgid "Dvaered Ancestor"
@@ -19228,6 +19284,7 @@ msgid ""
 "armour than its standard counterpart, which improves the integrity of its "
 "hull at the cost of slightly increased base mass."
 msgstr ""
+"このアンセスターの軍用型は、標準型の片割れよりすこし余分に装甲を装備している。これで船殻の保全性は改善されたが、代償として機体質量がわずかに増加した。"
 
 #: dat/ships/dvaered_goddard.xml:2
 msgid "Dvaered Goddard"
@@ -19243,6 +19300,9 @@ msgid ""
 "developed which features better armour and weapon damage at the cost of "
 "increased mass and energy consumption."
 msgstr ""
+"かつて、ゴダード巡洋戦艦は帝国が軍務のために発注したものだった。けれどもドベーレッドの反乱のあいだに、ほとんどのゴダードの艦長は反乱者たちに味方したうえ、"
+"ドベーレッド荘が成立すると帝国は古くなった船の使用権を割譲した。こんにち、ドベーレッド荘はゴダード荘の最大の顧客である。そしてこの軍用型は、質量とエネルギ"
+"ー消費の増加を代償として、改良された装甲と武器の威力を特徴としてもつように設計されたものだ。"
 
 #: dat/ships/dvaered_phalanx.xml:2
 msgid "Dvaered Phalanx"
@@ -19255,6 +19315,8 @@ msgid ""
 "chamber for its forward-mounted weapons that doubles as additional cargo "
 "space."
 msgstr ""
+"このファランクスの軍用型は、標準型の片割れと比べてわずかに強い装甲をもっている。そのうえ前向きに設置した武器用に特殊な冷却室があり、追加の船倉としての用途"
+"と兼ねているという特徴がある。"
 
 #: dat/ships/dvaered_vendetta.xml:2
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:197
@@ -19269,6 +19331,8 @@ msgid ""
 "space for the improved weapon cooling facilities, reducing the ship's "
 "turning rate slightly."
 msgstr ""
+"このベンデッタの軍用型は、標準型のベンデッタより強い装甲とよい武器冷却設備をもっている。しかし旋回用推進器は標準型の片割れより最適でない場所に置かれて、改"
+"良型武器冷却設備のための場所をあけている。これで船の旋回率がわずかに低下した。"
 
 #: dat/ships/dvaered_vigilance.xml:2
 msgid "Dvaered Vigilance"
@@ -19281,6 +19345,8 @@ msgid ""
 "counterpart, resulting in increased damage at the cost of slightly increased "
 "power consumption and heat production."
 msgstr ""
+"このビジランスの軍用型は、標準型の片割れより強い装甲をもち、前向きに設置した武器へエネルギーをもっとまわせるようになっている。結果として与える損害は増加し"
+"て、代償として電力消費と発熱がわずかに増加した。"
 
 #: dat/ships/empire_admonisher.xml:2
 msgid "Empire Admonisher"
@@ -19291,7 +19357,7 @@ msgid ""
 "This military grade version of the Admonisher is mostly identical in "
 "function to a standard Admonisher, but with slightly better armour, shields, "
 "and heat dissipation."
-msgstr ""
+msgstr "このアドマニシャーの軍用型は、機能的には標準型のアドマニシャーとほぼ同じだ。しかしわずかによい装甲・シールド・熱放散特性をもつ。"
 
 #: dat/ships/empire_hawking.xml:2
 msgid "Empire Hawking"
@@ -19302,7 +19368,7 @@ msgid ""
 "This military grade version of the Hawking is mostly identical in function "
 "to a standard Hawking, but with slightly better armour, shields, and heat "
 "dissipation."
-msgstr ""
+msgstr "このホーキングの軍用型は、機能的には標準型のホーキングとほぼ同じだ。しかしわずかによい装甲・シールド・熱放散特性をもつ。"
 
 #: dat/ships/empire_lancelot.xml:2
 msgid "Empire Lancelot"
@@ -19313,7 +19379,7 @@ msgid ""
 "This military grade version of the Lancelot is mostly identical in function "
 "to a standard Lancelot, but with slightly better armour, shields, and heat "
 "dissipation."
-msgstr ""
+msgstr "このランスロットの軍用型は、機能的には標準型のランスロットとほぼ同じだ。しかしわずかによい装甲・シールド・熱放散特性をもつ。"
 
 #: dat/ships/empire_pacifier.xml:2
 msgid "Empire Pacifier"
@@ -19324,7 +19390,7 @@ msgid ""
 "This military grade version of the Pacifier is mostly identical in function "
 "to a standard Pacifier, but with slightly better armour, shields, and heat "
 "dissipation."
-msgstr ""
+msgstr "このパシファイアーの軍用型は、機能的には標準型のパシファイアーとほぼ同じだ。しかしわずかによい装甲・シールド・熱放散特性をもつ。"
 
 #: dat/ships/empire_peacemaker.xml:2
 msgid "Empire Peacemaker"
@@ -19338,6 +19404,9 @@ msgid ""
 "provide the fighter and bomber squadrons with much needed resupplies. Like "
 "most capital ships, however, it is vulnerable to attack from enemy bombers."
 msgstr ""
+"帝国との契約のもとでネクサス造船所によって建造されたピースメイカーは、銀河でも屈指の威厳をもつ船であり、強大なゴダードでさえ小さく見せてしまう。ピースメイ"
+"カーは一般的に帝国艦隊で旗艦としての役目を果たし、戦闘機や爆撃機の飛行隊に必要とされる大量の再補給をおこなうことができる。とはいえほとんどの主力艦と同様に"
+"、これは敵爆撃機による攻撃には弱い。"
 
 #: dat/ships/empire_shark.xml:2
 msgid "Empire Shark"
@@ -19350,6 +19419,8 @@ msgid ""
 "heat dissipation. The military-grade materials used also result in the ship "
 "being slightly lighter than its generic counterpart."
 msgstr ""
+"シャークの帝国軍用型は、機能的には標準型のシャークとほぼ同じだ。しかしわずかによい装甲・シールド・熱放散特性をもつ。そのうえ使われている軍用材料により、一"
+"般的な片割れよりわずかに軽い船となっている。"
 
 #: dat/ships/gawain.xml:2 dat/missions/flf/dvk/flf_dvk03.lua:227
 #: dat/missions/flf/dvk/flf_dvk06.lua:199
@@ -19364,6 +19435,8 @@ msgid ""
 "though they rarely see combat due to their meager weapons space and relative "
 "fragility."
 msgstr ""
+"ガウェインはほんとうに最高級な船で、ほぼすべての量産船より速い。これはランスロットで初めて使われた技術に大きく頼っていて、きわめて操縦性がよいのでスポーツ"
+"用の船として広く使われている。もっとも、武器用の空間が不十分で比較的もろいので、戦いで見ることはまれだ。"
 
 #: dat/ships/goddard.xml:19
 msgid ""
@@ -19373,6 +19446,9 @@ msgid ""
 "Over time, specialization and improvements on the original design have kept "
 "it very competitive in the market. It's a classic of space."
 msgstr ""
+"変わり者の天才エデュアルド・マニュエル・ゴダードが設計したゴダード巡洋戦艦により、ゴダード荘は名声と繁栄の高みへと急速に昇りつめた。生産は、ゴダード荘がゴ"
+"ダード星系のチルーですべてをおこなう。時間をへるごとに、もとの設計にたいして特殊化や改善がなされていったので、市場でのひじょうな競争力は維持している。これ"
+"は宇宙でのすぐれた古典だといえる。"
 
 #: dat/ships/hawking.xml:2
 msgid "Hawking"
@@ -19386,6 +19462,8 @@ msgid ""
 "second only to the flagship of House Goddard, though its narrower frame "
 "allows it to present a smaller target to the enemy."
 msgstr ""
+"ホーキングはネクサス造船所で最高の船だ。長期にわたる交戦のために設計された大型巡洋艦で、自身の領域じゅうへ支配力を及ぼすために帝国が広く使っている。むきだ"
+"しの火力という点からいうと、ホーキングはゴダード荘の旗艦を除けばひけをとることはない。ただし、細い船体なのでもっと小さな標的だと敵に思わせることができる。"
 
 #: dat/ships/hyena.xml:2
 msgid "Hyena"
@@ -19405,6 +19483,10 @@ msgid ""
 "to anyone willing to pay, as it seems there are countless Hyenas among the "
 "pirate ranks."
 msgstr ""
+"エアロシスの花形製品であるハイエナは、すぐに津々浦々の海賊のお気に入りになった。戦闘機としてはたいしたことはないし、打撃力もあまり発揮できない。しかし群れ"
+"となれば、ハイエナはほぼすべての船を圧倒することができる。そして操縦がとても簡単なので、反応時間はおおいに改善される。エアロシスは自分たちの船を評判の高い"
+"パイロットにしか売っていないと主張するが、かねを払うつもりがあればだれにでも売っていると疑われている。なぜなら数えきれないほどのハイエナが海賊たちの手にあ"
+"るように見えるからだ。"
 
 #: dat/ships/kestrel.xml:2
 msgid "Kestrel"
@@ -19422,6 +19504,8 @@ msgid ""
 "firepower with state-of-the-art electronics, making for a truly fearsome "
 "ship in the hands of an able captain."
 msgstr ""
+"この一手だけでクレインインダストリーズを有名にした船である。ケストレルはなめらかな強襲重巡洋艦として設計されたものだ。全体としてほかの巡洋艦よりもろいのだ"
+"が、これにはどうにか優秀な操縦性と火力に最先端の電子機器が組みあわせられていて、有能な船長の手にあればいつわりなく恐ろしい船とすることができる。"
 
 #: dat/ships/koala.xml:2
 msgid "Koala"
@@ -19438,6 +19522,7 @@ msgid ""
 "weapon space but a decent amount of cargo space. Good for the entrepreneur "
 "working his way to a vast space trade empire."
 msgstr ""
+"コアラは定評ある貨物船だ。小さくて船で武器容量も少ないが、船倉容量はそうとうなものだ。広大な宇宙貿易帝国にむけて進もうとする起業家にはよいものである。"
 
 #: dat/ships/lancelot.xml:2
 msgid "Lancelot"
@@ -19452,6 +19537,9 @@ msgid ""
 "specifications. It is used by security agencies all over the universe for "
 "its reliability and availability."
 msgstr ""
+"ネクサス造船所による表彰ものの重戦闘機のひとつだ。ランスロットはもともと帝国軍むけに機密扱いで設計されたものだが、その存在は試験飛行が中断しているあいだに"
+"暴露された。いまは改造型が民間人でも入手可能である。ただし、それはもとの仕様とはあまり一致していないものだ。これは信頼性と可用性から宇宙じゅうの保安機関で"
+"使われている。"
 
 #. Spawn Raelid Outpost ship
 #. Spawn Dvaered and Empire ships
@@ -19471,6 +19559,8 @@ msgid ""
 "many many cycles ago. It was one of the first civilian use spacecrafts, "
 "first used by aristocracy and now used by everyone who cannot afford better."
 msgstr ""
+"銀河でとりわけ広く使われている船だ。その安定性としぶとさは有名である。その設計は、これが作られたずっとずっとまえの周期からあまり変更されていない。これは初"
+"期からある民間むけ宇宙船である。最初は上流階級の人たちに使われて、いまはもっとよいものを買う余裕がない人たちに広く使われている。"
 
 #: dat/ships/mule.xml:2
 msgid "Mule"
@@ -19483,6 +19573,8 @@ msgid ""
 "allowing for enjoyable cruises. The Mule is a favorite target of pirates, so "
 "avoiding dangerous systems is strongly advised."
 msgstr ""
+"銀河のすみずみまで貨物を輸送するのに特化した大型貨物船だ。また、型によっては乗客むけにじゅうぶんな船室ももっていて、楽しい船旅ができるようになっている。ミ"
+"ュールは海賊が好む標的なので、危険な星系は避けることを強くお勧めする。"
 
 #: dat/ships/pacifier.xml:2
 msgid "Pacifier"
@@ -19495,6 +19587,8 @@ msgid ""
 "withstand heavy punishment from raiding parties. The Pacifier features high "
 "fuel capacity to facilitate lengthy patrol routes."
 msgstr ""
+"パシファイアーはネクサス造船所の古いが信頼できる設計のひとつだ。これは本来国境警備用の船として設計されたものなので、襲撃隊に厳しく扱われても耐えることがで"
+"きる。パシファイアーには燃料容量が大きいという特徴があり、長々しい巡視航路を楽にこなせるようになっている。"
 
 #: dat/ships/phalanx.xml:2
 msgid "Phalanx"
@@ -19504,7 +19598,7 @@ msgstr "ファランクス"
 msgid ""
 "While somewhat technologically antiquated, the Phalanx's large energy "
 "capacity and heavy armour allow it to remain an effective combat vessel."
-msgstr ""
+msgstr "技術的にはいくぶん古風だが、ファランクスは大きなエネルギー容量と強い装甲があるので、実戦で使える戦闘艦として生き残ることができている。"
 
 #: dat/ships/pirate_admonisher.xml:2 dat/missions/flf/dvk/flf_dvk03.lua:252
 #: dat/missions/flf/dvk/flf_dvk06.lua:224
@@ -19525,6 +19619,8 @@ msgid ""
 "manoeuvrability, more weapons space, and slightly improved defenses, at a "
 "cost of cargo capacity and armor regeneration rates."
 msgstr ""
+"標準的なアドマニシャーは、その大きさにしてはとくに強力な船だ。ふつうどくろと骨は、操縦性が改善して、武器容量がさらに増え、防御力もわずかに増加していること"
+"を特徴としてもつ海賊アドマニシャーへの改装をおこなっている。犠牲とされているのは船倉容量と装甲再生率だ。"
 
 #: dat/ships/pirate_ancestor.xml:2 dat/missions/flf/dvk/flf_dvk03.lua:253
 #: dat/missions/flf/dvk/flf_dvk06.lua:225
@@ -19538,6 +19634,8 @@ msgid ""
 "without firing a shot. As better ships came out in the market, their use has "
 "fallen due to their archaic electronics and targeting systems."
 msgstr ""
+"アンセスターは初期の海賊に愛好された船だ。大きく威圧的な翼があって最高速度が速いことから、ふつうは一発も撃たずに船を降伏させることができた。もっとよい船が"
+"市場に登場したこともあり、古風な電子機器や標的選択システムのおかげで有用性は下がってしまった。"
 
 #: dat/ships/pirate_kestrel.xml:2
 msgid "Pirate Kestrel"
@@ -19550,6 +19648,8 @@ msgid ""
 "authority of the Empire. A very strong ship for those pirates who can afford "
 "it."
 msgstr ""
+"ケストレルは、どくろと骨が提供する最高の船だ。巡洋艦としてはきわめて機敏で、それでも帝国の権威に異議を唱えるために必要な火力は欠けていない。購入する余裕の"
+"ある海賊にとってはとても力強い船である。"
 
 #: dat/ships/pirate_phalanx.xml:2
 msgid "Pirate Phalanx"
@@ -19561,6 +19661,7 @@ msgid ""
 "engineers have substantially improved the ship's performance, while only "
 "minorly sacrificing protection."
 msgstr ""
+"もともと能力のあるファランクスの船体を基礎として、どくろと骨の技術者たちは船の性能をおおいに改善した。いっぽう犠牲になったのは防御力がちょっとだけである。"
 
 #: dat/ships/pirate_rhino.xml:2
 msgid "Pirate Rhino"
@@ -19572,6 +19673,8 @@ msgid ""
 "manoeuvrable, though somewhat less armoured. Exploiting its large cargo bay "
 "and durability, the Rhino has become an excellent scavenger ship."
 msgstr ""
+"伝統的などくろと骨の改装で、ライノの操縦性は大きく改善した。もっとも、装甲はやや減っている。大きな船倉と耐久性を活用することで、ライノは優秀なハゲタカ船に"
+"なった。"
 
 #: dat/ships/pirate_shark.xml:2 dat/missions/flf/dvk/flf_dvk03.lua:252
 #: dat/missions/flf/dvk/flf_dvk06.lua:224
@@ -19585,6 +19688,8 @@ msgid ""
 "handling suffers minimally while it's able to bring substantially more "
 "firepower to bear."
 msgstr ""
+"ネクサス造船所のすばやいシャークは、どくろと骨の技師たちへのすぐれた素材であったことが証明されてきた。追加の砲架を取りつけても操作性には最小限の犠牲しかな"
+"く、携行できる火力はおおいに増やすことができた。"
 
 #: dat/ships/pirate_starbridge.xml:2
 msgid "Pirate Starbridge"
@@ -19597,6 +19702,8 @@ msgid ""
 "firepower and relatively high speed for its ship class, the Starbridge is "
 "truly a fearsome sight."
 msgstr ""
+"スターブリッジはすでに軽快で高速な駆逐艦ではあるのだが、どくろと骨の技術者たちはもっと先までその速度を向上させることができた。この艦級のわりには大きな火力"
+"をもって比較的高速であることから、スターブリッジとの出会いはいつわりなく恐ろしいものだ。"
 
 #: dat/ships/pirate_vendetta.xml:2 dat/missions/flf/dvk/flf_dvk03.lua:253
 #: dat/missions/flf/dvk/flf_dvk06.lua:225
@@ -19612,6 +19719,9 @@ msgid ""
 "substantially better than the original, but every so often the reactor goes "
 "nova destroying the ship. You hope it won't happen to you if you get in one."
 msgstr ""
+"海賊ベンデッタは公認の片割れよりいっそう威圧的だ。かなりいじられていて、海賊の飛びかたにもっとあわせられている。装甲の一部は撤去されてもっと略奪のための場"
+"所があけられているいっぽう、反応炉は怪しげな技師がてこ入れをしている。船は結果としてもとのものよりそうとうよくなった。しかしときどき、反応炉が新星のように"
+"爆発して船を破壊することがある。もしあなたが乗っているなら、自分にはおきないと信じてるわけだね。"
 
 #: dat/ships/proteron_archimedes.xml:2
 msgid "Proteron Archimedes"
@@ -19621,7 +19731,7 @@ msgstr "プロテロン・アルキメデス"
 msgid ""
 "The Archimedes is the backbone of the Proteron fleet. Offering heavy "
 "firepower and high durability, it can always be found in the heat of battle."
-msgstr ""
+msgstr "アルキメデスはプロテロン艦隊の根幹だ。大きな火力と高い耐久性を提供するアルキメデスは、つねに戦いの中心で見ることができる。"
 
 #: dat/ships/proteron_derivative.xml:2
 msgid "Proteron Derivative"
@@ -19636,6 +19746,9 @@ msgid ""
 "carrier group unleashing several squadrons has been known to turn the tide "
 "of battle on many occasions."
 msgstr ""
+"プロテロン兵器庫にあるもっと大きな兄弟よりも小型であまり威圧感もないのだが、デリバティブの群れはそれでも考慮に入れるべき敵だ。派生型を意味するこの名前のと"
+"おり、これは歴代大型艦上戦闘機の最新型である。比較的少ない火力を詰めこまれたデリバティブは決闘には向いていないが、いくつかの飛行隊を解き放った空母群は、多"
+"くの出来事で戦いの潮目を変えたことが知られている。"
 
 #: dat/ships/proteron_kahan.xml:2
 msgid "Proteron Kahan"
@@ -19648,6 +19761,8 @@ msgid ""
 "combat vessel. While possessing fewer weapon mounts than the Pacifier, it "
 "makes up for it with its lower mass and expanded structural space."
 msgstr ""
+"カハンは最新鋭の船だ。この設計は事象のすこしまえに完了していて、これは順調にプロテロン軍の主要戦闘艦となりつつある。パシファイアーよりもっている砲架は少な"
+"いが、質量が少ないことと構造系の容量が大きいことで埋めあわされている。"
 
 #: dat/ships/proteron_watson.xml:2
 msgid "Proteron Watson"
@@ -19659,6 +19774,8 @@ msgid ""
 "mobile launch base as well as a command and control unit, this vessel "
 "coordinates the others in the fight for dominance over the galaxy."
 msgstr ""
+"プロテロン戦闘艦隊の中心はワトソンで構成されている。指揮統制部隊としてはもちろん移動発進基地としての機能を果たすこの船が、銀河支配のための戦いにおいてはほ"
+"かの船を指揮することになる。"
 
 #: dat/ships/quicksilver.xml:2
 msgid "Quicksilver"
@@ -20143,7 +20260,7 @@ msgstr ""
 
 #: dat/slots.xml:21
 msgid "Engines"
-msgstr ""
+msgstr "エンジン"
 
 #: dat/slots.xml:22
 msgid ""
@@ -20177,7 +20294,7 @@ msgstr ""
 
 #: dat/slots.xml:39
 msgid "Bioship Gene Drives"
-msgstr "生体船の遺伝子駆動装置"
+msgstr "生体船のジーンドライブ"
 
 #: dat/slots.xml:40
 msgid ""
@@ -20200,7 +20317,7 @@ msgstr ""
 
 #: dat/slots.xml:49
 msgid "Fighter Bays"
-msgstr ""
+msgstr "戦闘機格納庫"
 
 #: dat/slots.xml:50
 msgid "This slot can be used for fighter bays."
@@ -20480,10 +20597,8 @@ msgstr "ダレド"
 #: dat/ssys/gold.xml:5 dat/ssys/kretogg.xml:5 dat/ssys/mason.xml:5
 #: dat/ssys/new_haven.xml:5 dat/ssys/sheffield.xml:5 dat/ssys/titus.xml:5
 #: dat/ssys/unicorn.xml:5 dat/ssys/vedalus.xml:5 dat/ssys/volus.xml:5
-#, fuzzy
-#| msgid "#bSolar Winds#0"
 msgid "#bStellar Wind#0"
-msgstr "#b太陽風#0"
+msgstr "#b恒星風#0"
 
 #: dat/ssys/damien.xml:2
 msgid "Damien"
@@ -21808,10 +21923,8 @@ msgid ""
 msgstr ""
 
 #: dat/ai/advertiser.lua:37
-#, fuzzy
-#| msgid "Remembering Sorom"
 msgid "Remember Sorom."
-msgstr "ソロムを忘れない"
+msgstr "ソロムを忘れるな"
 
 #: dat/ai/advertiser.lua:38
 msgid "Special offer on Crow: buy one IR-eye, and the second comes for free!"
@@ -23927,7 +24040,7 @@ msgstr "後悔するぞ！"
 
 #: dat/ai/pirate.lua:96
 msgid "You can either pray now or sit in hell later."
-msgstr "いま祈っても、あとで地獄へ行くのでもどちらでもいいぞ"
+msgstr "いま懇願しても、あとから地獄で抗議の座りこみをするのでもどちらでもいいぞ"
 
 #: dat/ai/pirate.lua:97
 msgid "Game over, you're dead!"
@@ -24879,17 +24992,13 @@ msgid "Grim Reminder of Our Fragility"
 msgstr "われわれのもろさにたいする残忍な注意"
 
 #: dat/events/discovery.lua:231
-#, fuzzy
-#| msgid "Northern Solar Winds"
 msgid "Northern Stellar Winds"
-msgstr "北の太陽風"
+msgstr "北の恒星風"
 
 #. subtitle = _("None"),
 #: dat/events/discovery.lua:248
-#, fuzzy
-#| msgid "Southern Solar Winds"
 msgid "Southern Stellar Winds"
-msgstr "南の太陽風"
+msgstr "南の恒星風"
 
 #. subtitle = _("None"),
 #: dat/events/discovery.lua:258
@@ -28358,14 +28467,6 @@ msgstr ""
 "なたにできることはあまりなさそうだった。"
 
 #: dat/events/neutral/derelict.lua:119
-#, fuzzy
-#| msgid ""
-#| "As you walk through the corridors of the derelict, you can't help but "
-#| "notice the large scratch marks on the walls, the floor and even the "
-#| "ceiling. It's as if something went on a rampage throughout this ship - "
-#| "something big, with a lot of very sharp claws and teeth... You feel it "
-#| "might be best to leave as soon as possible, so you abandon the search of "
-#| "the derelict and disengage your docking clamp."
 msgid ""
 "As you walk through the corridors of the derelict, you can't help but notice "
 "the large scratch marks on the walls, the floor and even the ceiling. It's "
@@ -28374,11 +28475,9 @@ msgid ""
 "soon as possible, so you abandon the search of the derelict and disengage "
 "your docking clamp."
 msgstr ""
-"あなたは遺棄船の廊下を歩いて抜けていたのだが、壁にある大きな引っかき傷には気"
-"づかざるをえなかった。床や天井にまである。まるでなにかがこの船じゅうで暴れま"
-"わっていったかのようだ。なにか大きく、とても鋭いかぎつめと歯がたくさんあるや"
-"つだ……。あなたはできるだけ早く離れるのがいちばんかもしれないと感じた。だから"
-"あなたは遺棄船の捜索をやめて、接舷固定具を解除した。"
+"あなたは遺棄船の廊下を歩いて抜けていたのだが、壁にある大きな引っかき傷には気づかざるをえなかった。床や天井にまである。まるでなにかがこの船じゅうで暴れまわ"
+"っていったかのようだ。なにか大きく、とても鋭いかぎつめと歯がたくさんあるやつだ……。あなたはできるだけ早く離れるのがいちばんかもしれないと感じた。だからあ"
+"なたは遺棄船の捜索をやめて、接舷固定具を解除した。"
 
 #. Pick a random message from the list, display it, unboard.
 #: dat/events/neutral/derelict.lua:128
@@ -28396,13 +28495,6 @@ msgstr ""
 "のものにすることに決め、遺棄船を離れた。"
 
 #: dat/events/neutral/derelict.lua:138
-#, fuzzy
-#| msgid ""
-#| "This ship looks like any old piece of scrap at a glance, but it is "
-#| "actually an antique, one of the very first of its kind ever produced! "
-#| "Museums all over the galaxy would love to have a ship like this. You "
-#| "plant a beacon on the derelict to mark it for salvaging, and contact the "
-#| "%s authorities. Your reputation with them has slightly improved."
 msgid ""
 "This ship looks like any old piece of scrap at a glance, but it is actually "
 "an antique, one of the very first of its kind ever produced! Museums all "
@@ -28410,11 +28502,9 @@ msgid ""
 "the derelict to mark it for salvaging, and contact the {factname} "
 "authorities. Your reputation with them has slightly improved."
 msgstr ""
-"この船は一見して古い廃物の破片のように見えた。しかしじっさいには骨董品だっ"
-"た。いままで生産されたその種のなかでは、ごく最初期のものなのだ！　銀河じゅう"
-"の博物館がこの船を所有したがることだろう。あなたは無線標識をこの遺棄船に据え"
-"つけて回収用のしるしとしてから、%sの役所に連絡をした。その党派でのあなたの評"
-"判は、わずかに上昇した。"
+"この船は一見して古い廃物の破片のように見えた。しかしじっさいには骨董品だった。いままで生産されたその種のなかでは、ごく最初期のものなのだ！　銀河じゅうの博"
+"物館がこの船を所有したがることだろう。あなたは無線標識をこの遺棄船に据えつけて回収用のしるしとしてから、{factname}の役所に連絡をした。その党派で"
+"のあなたの評判は、わずかに上昇した。"
 
 #. See if we should add maps
 #: dat/events/neutral/derelict.lua:145
@@ -28443,19 +28533,13 @@ msgstr "辺境星系"
 
 #. There are unknown maps
 #: dat/events/neutral/derelict.lua:162
-#, fuzzy
-#| msgid ""
-#| "The derelict is empty, and seems to have been thoroughly picked over by "
-#| "other space buccaneers. However, the ship's computer contains a map of "
-#| "the %s! You download it into your own computer."
 msgid ""
 "The derelict is empty, and seems to have been thoroughly picked over by "
 "other space buccaneers. However, the ship's computer contains a map of the "
 "{mapname}! You download it into your own computer."
 msgstr ""
-"遺棄船は空っぽだった。そしてほかの宇宙海賊により、徹底的に選りわけられている"
-"ようだ。けれども、船のコンピューターには%sの地図が入っていた！　あなたはそれ"
-"を自分のコンピューターにダウンロードした。"
+"遺棄船は空っぽだった。そしてほかの宇宙海賊により、徹底的に選りわけられているようだ。けれども、船のコンピューターには{mapname}の地図が入っていた！"
+"　あなたはそれを自分のコンピューターにダウンロードした。"
 
 #. If the player has little fuel left allow for refueling
 #: dat/events/neutral/derelict.lua:172
@@ -28508,14 +28592,6 @@ msgstr ""
 "たのだ。追加を見つけてくるまでどこにもジャンプができやしない！"
 
 #: dat/events/neutral/derelict.lua:207
-#, fuzzy
-#| msgid ""
-#| "You affix your boarding clamp and walk aboard the derelict ship. You've "
-#| "only spent a couple of hectoseconds searching the interior when there is "
-#| "a proximity alarm from your ship! Pirates are closing on your position! "
-#| "Clearly this derelict was a trap! You run back onto your ship and prepare "
-#| "to unboard, but you've lost precious time. The pirates are already in "
-#| "firing range..."
 msgid ""
 "You affix your boarding clamp and walk aboard the derelict ship. You've only "
 "spent a couple of hectoseconds searching the interior when there is a "
@@ -28524,11 +28600,9 @@ msgid ""
 "unboard, but you've lost precious time. The pirates are already in firing "
 "range…"
 msgstr ""
-"あなたは移乗用固定具を取りつけて、遺棄船に歩いて乗りこんだ。内部の調査に 200 "
-"秒だけ使ったときに、自分の船から接近警報が鳴った！　海賊たちがあなたのところ"
-"へ近づいてくる！　あきらかに、この遺棄船はわなだったのだ！　あなたは走って自"
-"分の船に戻り、離舷の用意をした。しかしあなたは貴重な時間を失ったのだ。海賊は"
-"すでに射程距離内にいる……"
+"あなたは移乗用固定具を取りつけて、遺棄船に歩いて乗りこんだ。内部の調査に 200 秒だけ使ったときに、自分の船から接近警報が鳴った！　"
+"海賊たちがあなたのところへ近づいてくる！　あきらかに、この遺棄船はわなだったのだ！　"
+"あなたは走って自分の船に戻り、離舷の用意をした。しかしあなたは貴重な時間を失ったのだ。海賊はすでに射程距離内にいる……"
 
 #. Should naturally attack the player
 #. Run random bad event
@@ -29899,9 +29973,8 @@ msgid ""
 "amidst a cache of his inventions! What I wouldn't give to rummage through "
 "there...\""
 msgstr ""
-"｢エドアルド・マニュエル・ゴダードは宇宙のどこかをさまよってるんだって言われて"
-"るよ。発明品の隠し場所に葬られてさ！　どうにかそのなかを徹底的にあされないも"
-"のかな……｣"
+"｢エデュアルド・マニュエル・ゴダードは宇宙のどこかをさまよってるんだって言われてるよ。発明品の隠し場所に葬られてさ！　"
+"どうにかそのなかを徹底的にあされないものかな……｣"
 
 #: dat/events/neutral/npc.lua:80
 msgid ""
@@ -29922,9 +29995,7 @@ msgstr ""
 #: dat/events/neutral/npc.lua:82
 msgid ""
 "\"Have you heard of Captain T. Practice? He's amazing, I'm his biggest fan!\""
-msgstr ""
-"｢キャプテン T. プラクティスのことを聞いたことある？　あの人はたいした人だよ。"
-"大ファンなんだ！｣"
+msgstr "｢T. プラクティス船長のことを聞いたことある？　あの人はたいした人だよ。大ファンなんだ！｣"
 
 #: dat/events/neutral/npc.lua:83
 msgid ""
@@ -30841,20 +30912,13 @@ msgstr ""
 "うしなかったときは、たんに引き金をしぼると発砲する。便利そうだね！｣"
 
 #: dat/events/neutral/npc.lua:225
-#, fuzzy
-#| msgid ""
-#| "\"Did you know that if a planet doesn't like you, you can often bribe the "
-#| "spaceport operators and land anyway? Just hail the planet with %s, and "
-#| "click the bribe button! Careful though, it doesn't always work.\""
 msgid ""
 "\"Did you know that if a planet doesn't like you, you can often bribe the "
 "spaceport operators and land anyway? Just hail the planet with {hailkey}, "
 "and click the bribe button! Careful though, it doesn't always work.\""
 msgstr ""
-"｢惑星があなたを好ましい人物じゃないと思っていても、宇宙港の通信士にわいろを贈"
-"ると、どうにか着陸できることがよくあるって知ってる？　%s で惑星に呼びかけて、"
-"わいろボタンを押すだけでいいんだよ！　それでも注意したほうがいい。いつも効く"
-"わけじゃないからね｣"
+"｢ある惑星があなたを好ましい人物じゃないと思っていても、宇宙港の通信士にわいろを贈ると、どうにか着陸できることがよくあるって知ってる？　{hailkey}"
+" で惑星に呼びかけて、わいろボタンを押すだけでいいんだよ！　それでも注意したほうがいい。いつも効くわけじゃないからね｣"
 
 #: dat/events/neutral/npc.lua:226
 msgid ""
@@ -30955,12 +31019,6 @@ msgstr ""
 "敵がミサイルを使うなら、とても役に立つこともあるね｣"
 
 #: dat/events/neutral/npc.lua:236
-#, fuzzy
-#| msgid ""
-#| "\"If you're having trouble with overheating weapons or outfits, you can "
-#| "press %s twice to put your ship into Active Cooldown; that'll dissipate "
-#| "all heat from your ship and also refill your rocket ammunition. Careful "
-#| "though, your energy and shields won't recharge while you do it!\""
 msgid ""
 "\"If you're having trouble with overheating weapons or outfits, you can "
 "either press {cooldownkey} or double-tap {reversekey} to put your ship into "
@@ -30968,10 +31026,9 @@ msgid ""
 "your rocket ammunition. Careful though, your energy and shields won't "
 "recharge while you do it!\""
 msgstr ""
-"｢武器や艤装品のオーバーヒートが問題になってるなら、%s を 2 回押せば船の冷却器"
-"を作動させられるよ。それで船の熱をすべて散逸させて、ロケット弾薬の再装填もし"
-"てくれる。それでも注意が必要だけどね。エネルギーとシールドはそのあいだ補充さ"
-"れないんだよ！｣"
+"｢武器や艤装品のオーバーヒートが問題になってるなら、{cooldownkey} を押すか {reversekey} を 2 回押せば船の冷却器を作動させら"
+"れるよ。それで船の熱をすべて散逸させて、ロケット弾薬の再装填もしてくれる。それでも注意が必要だけどね。エネルギーとシールドはそのあいだ補充されないんだよ！"
+"｣"
 
 #: dat/events/neutral/npc.lua:237
 msgid ""
@@ -31159,22 +31216,14 @@ msgstr ""
 "のについては、どこから入手しているのかわからないね｣"
 
 #: dat/events/neutral/npc.lua:253
-#, fuzzy
-#| msgid ""
-#| "\"These computer symbols can be confusing sometimes! I've figured it out, "
-#| "though: '%s' means friendly, '%s' means neutral, '%s' means hostile, '%s' "
-#| "means restricted, and '%s' means uninhabited but landable. I wish someone "
-#| "had told me that!\""
 msgid ""
 "\"These computer symbols can be confusing sometimes! I've figured it out, "
 "though: '{F}' means friendly, '{N}' means neutral, '{H}' means hostile, "
 "'{R}' means restricted, and '{U}' means uninhabited but landable. I wish "
 "someone had told me that!\""
 msgstr ""
-"｢あのコンピューターの記号ってやつは、ときどき混乱することがあるよ！　もっとも"
-"わかってはいるんだけど､『%s』は友好的を意味して､『%s』は中立で､『%s』は敵対"
-"的､『%s』は立入制限､『%s』が無人だけど着陸可能なんだよね。だれか教えてくれれ"
-"ばよかったのに！｣"
+"｢あのコンピューターの記号ってやつは、ときどき混乱することがあるよ！　もっともわかってはいるんだけど､『{F}』は友好的を意味して､『{N}』は中立で､『"
+"{H}』は敵対的､『{R}』は立入制限､『{U}』が無人だけど着陸可能なんだよね。だれか教えてくれればよかったのに！｣"
 
 #: dat/events/neutral/npc.lua:254
 msgid ""
@@ -31190,75 +31239,48 @@ msgstr ""
 #. ALL NPCs have a chance to say one of these lines instead of a lore message.
 #. So, make sure the tips are always faction neutral.
 #: dat/events/neutral/npc.lua:263
-#, fuzzy
-#| msgid ""
-#| "\"Hi there, traveler. Is your system map up to date? Just in case you "
-#| "didn't know already, let me give you the location of the jump from here "
-#| "to %s. I hope that helps.\""
 msgid ""
 "\"Hi there, traveler. Is your system map up to date? Just in case you didn't "
 "know already, let me give you the location of the jump from here to "
 "{jmpname}. I hope that helps.\""
 msgstr ""
-"｢やあ、旅人。星系の地図は最新版？　ねんのためだけど、まだ知らないんなら、ここ"
-"から%sへジャンプする場所を教えられるよ。役に立てばいいんだけど｣"
+"｢やあ、旅人。星系の地図は最新版？　"
+"ねんのためだけど、まだ知らないんなら、ここから{jmpname}へジャンプする場所を教えられるよ。役に立てばいいんだけど｣"
 
 #: dat/events/neutral/npc.lua:264
-#, fuzzy
-#| msgid ""
-#| "\"Quite a lot of people who come in here complain that they don't know "
-#| "how to get to %s. I travel there often, so I know exactly where the jump "
-#| "point is. Here, let me show you.\""
 msgid ""
 "\"Quite a lot of people who come in here complain that they don't know how "
 "to get to {jmpname}. I travel there often, so I know exactly where the jump "
 "point is. Here, let me show you.\""
 msgstr ""
-"｢ここへ来たかなり多くの人たちが、%sへ行く方法がわからないと文句をいってた。"
-"そっちにはよく行くから、ジャンプポイントの場所は正確に知ってる。ほら、見せて"
-"あげるよ｣"
+"｢ここへ来たかなり多くの人たちが、{jmpname}へ行く方法がわからないと文句をいってた。そっちにはよく行くから、ジャンプポイントの場所は正確に知ってる"
+"。ほら、見せてあげるよ｣"
 
 #: dat/events/neutral/npc.lua:265
-#, fuzzy
-#| msgid ""
-#| "\"So you're still getting to know about this area, huh? Tell you what, "
-#| "I'll give you the coordinates of the jump to %s. Check your map next time "
-#| "you take off!\""
 msgid ""
 "\"So you're still getting to know about this area, huh? Tell you what, I'll "
 "give you the coordinates of the jump to {jmpname}. Check your map next time "
 "you take off!\""
 msgstr ""
-"｢そうすると、この領域のことをまだ知ろうとしているんだね？　ほら、%sへのジャン"
-"プの座標を教えてやれるよ。次回離陸したら地図を確認してほしいね｣"
+"｢そうすると、この領域のことをまだ知ろうとしているんだね？　"
+"ほら、{jmpname}へのジャンプの座標を教えてやれるよ。次回離陸したら地図を確認してほしいね｣"
 
 #: dat/events/neutral/npc.lua:266
-#, fuzzy
-#| msgid ""
-#| "\"True fact, there's a direct jump from here to %s. Want to know where it "
-#| "is? It'll cost you! Ha ha, just kidding. Here you go, I've added it to "
-#| "your map.\""
 msgid ""
 "\"True fact, there's a direct jump from here to {jmpname}. Want to know "
 "where it is? It'll cost you! Ha ha, just kidding. Here you go, I've added it "
 "to your map.\""
 msgstr ""
-"｢じっさい、%sへ直接行くジャンプがあるよ。どこにあるか知りたい？　かねがかかる"
-"よ！　ハハ、ただの冗談だって。ほら、地図に加えておいたから｣"
+"｢じっさい、{jmpname}へ直接行くジャンプがあるよ。どこにあるか知りたい？　かねがかかるよ！　ハハ、ただの冗談だって。ほら、地図に加えておいたから｣"
 
 #: dat/events/neutral/npc.lua:267
-#, fuzzy
-#| msgid ""
-#| "\"There's a system just one jump away by the name of %s. I can tell you "
-#| "where the jump point is. There, I've updated your map. Don't mention it.\""
 msgid ""
 "\"There's a system just one jump away by the name of {jmpname}. I can tell "
 "you where the jump point is. There, I've updated your map. Don't mention it."
 "\""
 msgstr ""
-"｢たったひとつジャンプで離れた星系に、%sという名前のがある。ジャンプポイントが"
-"どこにあるのか教えてやれるよ。ほら、地図を更新しておいたから。どういたしまし"
-"て｣"
+"｢たったひとつジャンプで離れた星系に、{jmpname}という名前のがある。ジャンプポイントがどこにあるのか教えてやれるよ。ほら、地図を更新しておいたから"
+"。どういたしまして｣"
 
 #. Mission hint messages. Each element should be a table containing the mission name and the corresponding hint.
 #. ALL NPCs have a chance to say one of these lines instead of a lore message.
@@ -32492,17 +32514,15 @@ msgstr "ビンディケイター"
 
 #: dat/events/start.lua:34
 msgid "Windjammer"
-msgstr "帆船"
+msgstr "ウィンドジャマー"
 
 #: dat/events/start.lua:35
-#, fuzzy
-#| msgid "Tesla Cannon"
 msgid "Tuna Can"
-msgstr "テスラキャノン"
+msgstr "ツナ・カン"
 
 #: dat/events/start.lua:36
 msgid "Vermilion Dwarf"
-msgstr ""
+msgstr "バーミリオン・ドワーフ"
 
 #. Drone
 #. event ends on player leaving the system or landing
@@ -33135,17 +33155,10 @@ msgid ""
 "#rWARNING - Volatile nebula detected in {sysname}! Taking {nebvol:.1f} MW "
 "damage!#0"
 msgstr ""
+"星系にジャンプすると、制御卓に小さな警告灯がついたのに気がついた。\n"
+"#r警告 — {sysname}内に激変性の星雲を検出しました！　{nebvol:.1f} MWのダメージをうけています！#0"
 
 #: dat/events/tutorial/tut_enter.lua:40
-#, fuzzy
-#| msgid ""
-#| "As you jump the system you notice a small alarm lights up in the control "
-#| "panel:\n"
-#| "    %s\n"
-#| "    Looking over the systems it seems like the nebula is unstable here "
-#| "and is beginning to damage the ship's shields. If the volatility gets any "
-#| "stronger, it could be fatal to the %s. Going deeper into the nebula could "
-#| "prove to be a very risky endeavour."
 msgid ""
 "{ainame} materializes in front of you.\n"
 "\"It looks like we entered part of the volatile nebula. The instability here "
@@ -33154,12 +33167,10 @@ msgid ""
 "volatility gets any stronger, it could be fatal to the {shipname}. Going "
 "deeper into the nebula could prove to be a very risky endeavour.\""
 msgstr ""
-"星系にジャンプすると、制御卓に小さな警告灯がついたのに気がついた。\n"
-"    %s\n"
-"    システムを調べてみると、ここの星雲は不安定で、船のシールドに損害を与えは"
-"じめているようだった。変動度がなにか強くなると、%sには致命的なことになりかね"
-"ない。星雲のさらに深くへ行くのは、とても危険な試みだと判明することになるのか"
-"もしれない。"
+"{ainame}があなたの目の前に姿を表した。\n"
+"｢激変性の星雲に入ったようです。ここは不安定なので、ここへ入った船は大きな損害をうけます。シールド再生が変動による損傷を上まわっていればけっこうなことです"
+"が、変動度がなにか強くなると{shipname}には致命的なことにもなりかねません。星雲のさらに深くへ行くのは、とても危険な試みだったと証明されることもあ"
+"りえます｣"
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -33455,23 +33466,25 @@ msgid ""
 "\"Say, now that I can see you, you look very familiar. You wouldn't be "
 "related my late previous owner? Terrible what happened…\""
 msgstr ""
+"｢こんにちは、{playername}！　わたしはあなたの船の AI です。いままでわたしはあなたの船の中にいて、自動操縦装置やその他の機能を制御していま"
+"した。ですがこんどの更新で、ホログラフとして姿を表し、直接話ができるようになりました｣\n"
+"AI があなたを数秒間見つめる。\n"
+"｢さて、もうあなたのことはわかったので、とても親しく思えます。あなたは直前の所有者と関係があったりしないでしょうね？　ひどいことがおきたんです……｣"
 
 #: dat/events/updater.lua:68
 msgid ""
 "\"I'm sure you have many questions about the update, but first, would you "
 "like to give me a name?\""
-msgstr ""
+msgstr "｢この更新についてたくさん質問があるのはわかっています。しかしまずは、わたしに名前をつけてくれないでしょうか？｣"
 
 #. TODO integrate into vn
 #: dat/events/updater.lua:72 dat/missions/tutorial/tutorial.lua:55
 msgid "Name Ship AI"
-msgstr ""
+msgstr "船の AI に名前をつける"
 
 #: dat/events/updater.lua:72 dat/missions/tutorial/tutorial.lua:55
-#, fuzzy
-#| msgid "Please enter a new name for your %s:"
 msgid "Please enter a name for your Ship AI"
-msgstr "｢%s｣ の新しい名前を入力してください:"
+msgstr "あなたの船の AI につける名前を入力してください。"
 
 #. Can't use rename here
 #: dat/events/updater.lua:88
@@ -33481,6 +33494,8 @@ msgid ""
 "clicking on the '#oShip AI#0' button. From there you can also access "
 "explanations and change tutorial options.\""
 msgstr ""
+"｢いいですね！　これからは{ainame}という名前を使います。もしこの名前を変えたかったら、#o情報#0メニューで変えられます。{infokey} "
+"で開いて、#o船の AI #0ボタンをクリックしてください。そこでは説明のしかたも変更できて、入門オプションも変えられます｣"
 
 #: dat/events/updater.lua:89
 msgid ""
@@ -33491,6 +33506,9 @@ msgid ""
 "cargo or outfits. You can activate stealth with {stealthkey} when no ships "
 "area nearby.\""
 msgstr ""
+"｢更新でたくさんの機能や特徴が変更されて新しくなりました。最大の変更には#o電子戦#0の改良が含まれていて、それにはあたらしいステルス機能もあります。この"
+"新しい枠組みでは、あなたは巡視船にスキャンをうけることになります。それは違法な貨物や艤装品を運んでいるときには注意しなければならないという意味です。"
+"ステルスは近くに船がいないときに {stealthkey} で起動できます｣"
 
 #: dat/events/updater.lua:90
 msgid ""
@@ -33500,6 +33518,9 @@ msgid ""
 "inspecting your ships and their equipment before taking off, you don't want "
 "to be flying a poorly equipped ship in space!\""
 msgstr ""
+"｢艤装品にも大きな変更があったのに気づいたかもしれませんね。多くの艤装品が削除されたり追加されたり名前を変更されたりしました。これは古いセーブデータを更新"
+"すると、艤装品が失われることにつながります。離陸するまえに、かならず船や装備の点検にいくらか時間をとるようにお願いします。不十分な装備の船で宇宙を飛びたく"
+"はないはずです！｣"
 
 #: dat/events/updater.lua:91
 msgid ""
@@ -33508,6 +33529,8 @@ msgid ""
 "missiles can be jammed, and some factions have been completely reworked. You "
 "will notice a lot of smaller differences too as you play the game.\""
 msgstr ""
+"｢ほかにも変更はたくさんあります。たとえば、いまでは星系内に巡視航路があって、そこはその土地の党派によってさらに厳重に守られています。追跡するミサイルは妨"
+"害できるようなり、一部の党派は完全に改訂されました。ゲームをしていると、もっと小さな違いにも気づくことになるでしょう｣"
 
 #: dat/events/updater.lua:92
 msgid ""
@@ -33515,18 +33538,16 @@ msgid ""
 "do things throughout the game? Some might refer to things you are already "
 "familiar with, but it could help learn new things.\""
 msgstr ""
+"｢そういうことなので、あなたがゲーム中になにかしたときに、ちょっとした助言が欲しくないでしょうか？　"
+"いくつかはすでに慣れていることに触れることもあるでしょう。ですが、新しい物事を学ぶのに役立つこともあります｣"
 
 #: dat/events/updater.lua:94 dat/shipai.lua:39
-#, fuzzy
-#| msgid "Enable autoweapons?"
 msgid "Enable tutorial hints"
-msgstr "自動的な武器の取り扱いを有効にしますか？"
+msgstr "入門用のヒントを有効にする"
 
 #: dat/events/updater.lua:95 dat/shipai.lua:41
-#, fuzzy
-#| msgid "Disable all sound"
 msgid "Disable tutorial hints"
-msgstr "すべてのサウンドを無効にするか"
+msgstr "入門用のヒントを無効にする"
 
 #: dat/events/updater.lua:99
 msgid ""
@@ -33535,6 +33556,9 @@ msgid ""
 "the '#oShip AI#0' button in the #oInformation#0 menu you can open with "
 "{infokey}. Now, let's go adventuring!\""
 msgstr ""
+"｢いいですね！　"
+"あなたがゲーム中になにかしたときには、ちょっとした助言を与えることにします。わたしの設定を変えたりこの助言をとめたいときには、{infokey} "
+"で開ける#o情報#0メニューにある#o船の AI #0ボタンからするようにお願いします。さて、冒険しに行きましょうか！｣"
 
 #: dat/events/updater.lua:106
 msgid ""
@@ -33543,6 +33567,8 @@ msgid ""
 "'#oShip AI#o' button in the #oInformation#0 menu you can open with "
 "{infokey}. Now, let's go adventuring!\""
 msgstr ""
+"｢わかりました、助言は与えないようにします。わたしの設定を変えたり助言を有効にしたいときには、{infokey} で開ける#o情報#0メニューにある#"
+"o船の AI #0ボタンからするようにお願いします。さて、冒険しに行きましょうか！｣"
 
 #. Run on saves older than 0.9.0
 #. Done
@@ -56364,17 +56390,13 @@ msgid "Dangerous Alive Bounty in %s"
 msgstr "%sでの危険な生け捕り賞金"
 
 #: dat/missions/neutral/pirbounty_alive.lua:64
-#, fuzzy
-#| msgid ""
-#| "The pirate known as %s was recently seen in the %s system. %s authorities "
-#| "want this pirate dead or alive."
 msgid ""
 "The pirate known as {pirname} was recently seen in the {sysname} system. "
 "{fctname} authorities want this pirate alive. {pirname} is believed to be "
 "flying a {shipclass}-class ship."
 msgstr ""
-"%sという名で知られる海賊が最近%s星系で見られた。%s当局がこの海賊を生け捕りに"
-"するか死んでほしがっている。"
+"{pirname}という名で知られる海賊が最近{sysname}星系で見られた。{fctname}当局がこの海賊を生け捕りにするか死んでほしがっている。{"
+"pirname}は{shipclass}という種類の船で飛んでいると信じられている。"
 
 #: dat/missions/neutral/pirbounty_alive.lua:66
 #, lua-format
@@ -56696,17 +56718,13 @@ msgid "Dangerous Dead or Alive Bounty in %s"
 msgstr "%sでの危険な生死を問わない賞金"
 
 #: dat/missions/neutral/pirbounty_dead.lua:83
-#, fuzzy
-#| msgid ""
-#| "The pirate known as %s was recently seen in the %s system. %s authorities "
-#| "want this pirate dead or alive."
 msgid ""
 "The pirate known as {pirname} was recently seen in the {sysname} system. "
 "{fctname} authorities want this pirate dead or alive. {pirname} is believed "
 "to be flying a {shipclass}-class ship."
 msgstr ""
-"%sという名で知られる海賊が最近%s星系で見られた。%s当局がこの海賊を生け捕りに"
-"するか死んでほしがっている。"
+"{pirname}という名で知られる海賊が最近{sysname}星系で見られた。{fctname}当局がこの海賊を生け捕りにするか死んでほしがっている。{"
+"pirname}は{shipclass}という種類の船で飛んでいると信じられている。"
 
 #. Messages
 #: dat/missions/neutral/pirbounty_dead.lua:87
@@ -58079,11 +58097,9 @@ msgid ""
 "offer to reduce everyone's fare. Some passengers refuse the offer, but you "
 "still end up being paid much less than you otherwise would have been."
 msgstr ""
-"ほとんどの乗客は周遊旅行を楽しんだが、とくべつ声の大きい乗客が、豪華なヨット"
-"型の船に乗せなかったのに正規の値段を支払わせるのはぺてんだと文句をつけた。こ"
-"の乗客を落ちつかせるために、あなたは全員の料金を減額すると申しでた。数人の乗"
-"客はこの申し出を断ったが、それでもあなたはそうでなければ受けとっていたはずの"
-"金額よりずっとすくない支払いをうけることになった。"
+"ほとんどの乗客は周遊旅行を楽しんだが、とくべつ声の大きい乗客が、豪華なヨット型の船に乗せなかったのに正規の値段を支払わせるのはぺてんだと文句をつけた。この"
+"乗客を落ちつかせるために、あなたは全員の料金を減額すると申しでた。数人の乗客はこの申し出を断ったが、それでもあなたはそうでなければ受けとっていたはずの金額"
+"よりずっと少ない支払いをうけることになった。"
 
 #. Mission details
 #: dat/missions/neutral/sightseeing.lua:55
@@ -58454,18 +58470,13 @@ msgid ""
 "get his family to a safe haven, which seems to satisfy him. Finally alone "
 "again, you take a moment to subside before completing that check."
 msgstr ""
-"あなたが決まりきった航法上の確認をしていると、ハラスがあなたの船室にいきなり"
-"入ってきた。ハラスは苦しんでいた状態からは回復したらしく、いまではあつかまし"
-"さを発散していた。\n"
-"    ｢船長｣ と、ハラスはあなたに話しかけた。｢できるだけ早く目的地に着かなきゃ"
-"ならないってことを、思いだしてもらう必要がなければいいんだけどね。妻と子ども"
-"のことを考えなきゃならんし、率直にいってあなたの、あー、設備はちょっと不足し"
-"てるとわかったんだ｣\n"
-"    あなたはハラスに船橋から出るように命じるか検討したが、ハラスは退くような"
-"男に見えない。だからあなたが成し遂げられた唯一のことは、船の雰囲気を悪くする"
-"ことだけだった。ハラスの家族を安全な避難所へ連れていこうとずっと努力している"
-"とハラスに伝える。それでハラスは満足したようだった。やっとまたひとりになる"
-"と、確認を終えるまえに一瞬落ちこんでしまった。"
+"あなたが決まりきった航法上の確認をしていると、ハラスがあなたの船室にいきなり入ってきた。ハラスは苦しんでいた状態からは回復したらしく、いまではあつかましさ"
+"を発散していた。\n"
+"    ｢船長｣ と、ハラスはあなたに話しかけた。｢できるだけ早く目的地に着かなきゃならないってことを、思いだしてもらう必要がなければいいんだけどね。妻と"
+"子どものことを考えなきゃならんし、率直にいってあなたの、あー、設備はちょっと不足してるとわかったんだ｣\n"
+"    あなたはハラスに船橋から出るように命じるか検討したが、ハラスは退くような男に見えない。だからあなたが達成できた唯一のことは、船の雰囲気を悪くするこ"
+"とだけだった。ハラスの家族を安全な避難所へ連れていこうとずっと努力しているとハラスに伝える。それでハラスは満足したようだった。やっとまたひとりになると、確"
+"認を終えるまえに一瞬落ちこんでしまった。"
 
 #: dat/missions/neutral/spacefamily.lua:183
 #: dat/missions/neutral/spacefamily.lua:185
@@ -67035,10 +67046,8 @@ msgid "\"We made it! A job well done. Here let me pay you what I promised you."
 msgstr ""
 
 #: dat/missions/tutorial/nelly01.lua:245 dat/missions/tutorial/nelly02.lua:360
-#, fuzzy
-#| msgid "You have uncovered '#%c%s#0'!"
 msgid "You have received #g{credits}#0."
-msgstr "あなたは ｢#%c%s#0｣ を発見しました！"
+msgstr ""
 
 #. Rewards
 #: dat/missions/tutorial/nelly01.lua:249
@@ -67570,6 +67579,11 @@ msgid ""
 "- #oStealth#0 determines the distance at which the ship is undetected when "
 "in stealth mode\""
 msgstr ""
+"｢それぞれの船には 3 つの重要な電子戦統計値があります。\n"
+"- #o探知#0は船がレーダーに現れる距離を決定します。\n"
+"- #o回避#0は船が完全に探知される距離を決定します。つまり、船の種類と党派があきらかになるということです。これはミサイルや武器が船を追跡することにもつ"
+"ながります。\n"
+"- #oステルス#0は、ステルスモードのときに探知されずにいる距離を決定します｣"
 
 #: dat/missions/tutorial/nelly02.lua:541
 msgid ""
@@ -67657,10 +67671,8 @@ msgstr ""
 #.
 #. --
 #: dat/missions/tutorial/tutorial.lua:32
-#, fuzzy
-#| msgid "Warning: 'Tutorial' mission was unable to claim system %s!"
 msgid "Warning: 'Tutorial' mission was unable to claim system {sysname}!"
-msgstr "警告 : ｢入門｣ 任務は%s星系を必要としたが不可能だった！"
+msgstr "警告 : ｢入門｣ 任務は{sysname}星系を必要としたが不可能だった！"
 
 #. We mark as clear anyway, but this is not good
 #. Mark os completed
@@ -67671,21 +67683,18 @@ msgid "Tutorial"
 msgstr "入門"
 
 #: dat/missions/tutorial/tutorial.lua:37
-#, fuzzy
-#| msgid "Captain T. Practice has offered to teach you how to fly your ship."
 msgid "Your ship AI has offered to teach you how to fly your ship."
-msgstr ""
-"キャプテン T. プラクティスがあなたに船の飛ばしかたを教えようと申しでた。"
+msgstr "船の AI があなたに船の飛ばしかたを教えようと申しでた。"
 
 #: dat/missions/tutorial/tutorial.lua:38
 msgid "Skills to play the game!"
-msgstr ""
+msgstr "ゲームをプレイする腕まえ！"
 
 #: dat/missions/tutorial/tutorial.lua:46
 msgid ""
 "As you are admiring the view from your cockpit, suddenly a holographic "
 "projection appears in front of you."
-msgstr ""
+msgstr "操縦席からの眺めに見ほれていると、とつぜんホログラフィックの映写があなたの目の前に現れた。"
 
 #: dat/missions/tutorial/tutorial.lua:47
 msgid ""
@@ -67695,6 +67704,10 @@ msgid ""
 "\"Say, you look very familiar. You wouldn't be related my late previous "
 "owner? Terrible what happened…\""
 msgstr ""
+"｢初めての宇宙船おめでとう、{playername}！　えっ、わたしは何者かって？　わたしはあなた個人のための船の AI "
+"です。あなたのお手伝いをする準備はいつでもできています｣\n"
+"AI があなたを数秒間見つめる。\n"
+"｢さて、あなたのことはとても親しく思えます。あなたは直前の所有者と関係があったりしないでしょうね？　ひどいことがおきたんです……｣"
 
 #: dat/missions/tutorial/tutorial.lua:50
 msgid ""
@@ -67703,15 +67716,18 @@ msgid ""
 "question or comment about how your ship works or how to do things, I believe "
 "I can be of help. As your new Ship AI, would you like to give me a name?\""
 msgstr ""
+"｢それはともかく、これからわたしはあなたの船の AI になります。新しい船を取得しても心配しないでください。わたしはなんの問題もなく転送されます。もし船の"
+"仕組みやなにかする方法についてなにか疑問や意見があるなら、わたしが助けられると信じています。あなたの新しい船の AI "
+"として、わたしに名前をつけてくないでしょうか？｣"
 
 #. Can't use rename here
 #: dat/missions/tutorial/tutorial.lua:74
 msgid "\"You have given me the name of '{ainame}', is this correct?\""
-msgstr ""
+msgstr "｢わたしに『{ainame}』という名前を与えてくれました。これで正しいですね？｣"
 
 #: dat/missions/tutorial/tutorial.lua:77
 msgid "Continue with '{ainame}'"
-msgstr ""
+msgstr "『{ainame}』でいく"
 
 #: dat/missions/tutorial/tutorial.lua:78 dat/missions/tutorial/tutorial.lua:87
 #: src/dev_sysedit.c:216 src/dev_sysedit.c:1293 src/dev_uniedit.c:219
@@ -67723,11 +67739,11 @@ msgstr "改名"
 msgid ""
 "\"You haven't given me a name. I will be continued to be called 'Ship AI' or "
 "SAI for short. Is that OK?\""
-msgstr ""
+msgstr "｢わたしに名前を与えてくれませんでしたね｡『船の AI』または短く SAI と呼びつづけてもらうことにします。これでいいですか？｣"
 
 #: dat/missions/tutorial/tutorial.lua:86
 msgid "\"'Ship AI' is fine\""
-msgstr ""
+msgstr "｢『船の AI』でいい｣"
 
 #: dat/missions/tutorial/tutorial.lua:91
 msgid ""
@@ -67735,26 +67751,26 @@ msgid ""
 "name or want to change tutorial settings, you can always do so from the info "
 "menu which you can open with {infokey}.\""
 msgstr ""
+"｢わかりました！　{playername}、会えてうれしいです。もしわたしの名前について考えを変えたり、入門教育設定を変えたかったら、{infokey} "
+"で開ける情報ニューからいつでも変えられます｣"
 
 #: dat/missions/tutorial/tutorial.lua:94
 msgid ""
 "\"Now that we have you out in space for the first time, how about I go over "
 "your new ship's controls with you real quick? No charge!\""
-msgstr ""
+msgstr "｢今回は初めて宇宙へ出るわけなので、あなたが新しい宇宙船を操縦するのをちょっとわたしに点検させてみてはいかがでしょうか？　無料ですよ！｣"
 
 #: dat/missions/tutorial/tutorial.lua:96
-#, fuzzy
-#| msgid "Tutorial"
 msgid "Do the tutorial"
-msgstr "入門"
+msgstr "入門学習を実施"
 
 #: dat/missions/tutorial/tutorial.lua:97 dat/missions/tutorial/tutorial.lua:104
 msgid "Skip the tutorial"
-msgstr ""
+msgstr "入門学習を飛ばす"
 
 #: dat/missions/tutorial/tutorial.lua:98
 msgid "Turn off all tutorial hints"
-msgstr ""
+msgstr "すべての入門用のヒントを無効にする"
 
 #: dat/missions/tutorial/tutorial.lua:102
 msgid ""
@@ -67762,35 +67778,25 @@ msgid ""
 "to do it again without starting a new game. You will still get prompts for "
 "advanced in-game mechanics as you encounter them.\""
 msgstr ""
+"｢ほんとうに最初の教育を飛ばしたいですか？　"
+"新しいゲームを始めなければ二度とできません。それでもあなたがゲームの高度な機能に出くわしたら、助け舟は出すつもりです｣"
 
 #: dat/missions/tutorial/tutorial.lua:105
 #: dat/missions/tutorial/tutorial.lua:113 dat/shipai.lua:60 dat/shipai.lua:96
 msgid "Nevermind"
-msgstr ""
+msgstr "やっぱりやめておく"
 
 #: dat/missions/tutorial/tutorial.lua:110
 msgid ""
 "\"Are you sure you want to disable all the hints? This includes explanation "
 "of advanced in-game mechanics you will meet as you play the game.\""
-msgstr ""
+msgstr "｢ほんとうにすべてのヒントを無効にしたいのですか？　これにはあなたがゲーム中に出くわす高度な機能についての説明を含みます｣"
 
 #: dat/missions/tutorial/tutorial.lua:112
-#, fuzzy
-#| msgid "Disable all sound"
 msgid "Disable all hints"
-msgstr "すべてのサウンドを無効にするか"
+msgstr "すべてのヒントを無効にする"
 
 #: dat/missions/tutorial/tutorial.lua:124
-#, fuzzy
-#| msgid ""
-#| "\"Alright, let's go over how to pilot your new state-of-the-art ship from "
-#| "Melendez Corporation, then!\" You resist the urge to roll your eyes. "
-#| "\"Moving is pretty simple: rotate your ship with %s and %s, and thrust to "
-#| "move your ship forward with %s! You can also use %s to rotate your ship "
-#| "to the opposite direction you are moving, or to reverse thrust if you "
-#| "purchase and install a reverse thruster onto your Melendez Corporation "
-#| "starship. Give it a try by flying over to %s! You see it on your screen, "
-#| "right? It's the planet right next to you.\""
 msgid ""
 "\"Alrght, let's go over how to pilot your new state-of-the-art ship, then! "
 "Moving is pretty simple: rotate your ship with {leftkey} and {rightkey}, and "
@@ -67800,48 +67806,36 @@ msgid ""
 "your starship. Give it a try by flying over to {destpnt}! You see it on your "
 "screen, right? It's the planet right next to you.\""
 msgstr ""
-"｢よし、それではメレンデズの最新式の船の操縦方法を確認してみよう！｣。あなたは"
-"あきれて仰ぎみようとする衝動をこらえた。｢動かすのはとんでもなく簡単だ。船を "
-"%s や %s で回転させ、%s で推力を発生させて船を前に動かすんだ！　%s を使えば、"
-"動いているのとは逆方向に船を向けることもできるし、逆推力器を購入してメレンデ"
-"ズの星間船に取りつければ逆方向に推力を発生させることもできる。%sの上を飛んで"
-"試してみよう！　スクリーンを見ればわかる、だろ？　真横にある惑星だよ｣"
+"｢さて、それでは最新式の船の操縦方法を確認してみましょう！　動かすのはかなり簡単です。船を {leftkey} や {rightkey} "
+"で回転させ、{accelkey} で推力を発生させて船を前に動かしてください！　{reversekey} を使えば、動いているのとは逆方向に船を向けること"
+"もできますし、逆推力器を購入して星間船に取りつければ逆方向に推力を発生させることもできます。{destpnt}の上を飛んで試してみましょう！　"
+"スクリーンを見ればわかりますよね？　真横にある惑星です｣"
 
 #: dat/missions/tutorial/tutorial.lua:136
 msgid "Fly to {startpnt} in the {sysname} system with the movement keys"
-msgstr ""
+msgstr "移動キーを使って{sysname}星系の{startpnt}へ飛べ。"
 
 #: dat/missions/tutorial/tutorial.lua:137
 msgid "Land on {startpnt} in the {sysname} system by double-clicking on it"
-msgstr ""
+msgstr "{sysname}星系の{startpnt}をダブルクリックして着陸せよ。"
 
 #: dat/missions/tutorial/tutorial.lua:138
 msgid ""
 "Go to {destpnt} in the {sysname} system by right-clicking it on the overview "
 "map"
-msgstr ""
+msgstr "オーバーレイマップ上で{sysname}星系の{destpnt}を右クリックして、そこへ行け。"
 
 #: dat/missions/tutorial/tutorial.lua:139
 msgid "Destroy the practice drone near {destpnt} in the {sysname} system"
-msgstr ""
+msgstr "{sysname}星系の{destpnt}近くにいる練習用のドローンを破壊せよ。"
 
 #: dat/missions/tutorial/tutorial.lua:140
 msgid "Jump to a nearby system by using your starmap"
-msgstr "星図を使って近くの星系にジャンプせよ"
+msgstr "星図を使って近くの星系にジャンプせよ。"
 
 #. Set stuff known as necessary
 #. Have to be in the mission system
 #: dat/missions/tutorial/tutorial.lua:174
-#, fuzzy
-#| msgid ""
-#| "\"Perfect! That was easy enough, right? We at Melendez Corporation "
-#| "recommend this manner of flight, which we call 'keyboard flight'. "
-#| "However, there is one other way you can fly if you so choose: press %s on "
-#| "your console and your Melendez Corporation ship will follow your #bmouse "
-#| "pointer#0 automatically! It's up to you which method you prefer to use.\n"
-#| "    \"Ah, you may also have noticed the mission on-screen display on your "
-#| "monitor! As you can see, you completed your first objective of the "
-#| "Tutorial mission, so the next objective is now being highlighted.\""
 msgid ""
 "\"Perfect! That was easy enough, right? I recommend this manner of flight, "
 "known as 'keyboard flight'. However, there is one other way you can fly if "
@@ -67849,14 +67843,9 @@ msgid ""
 "your #bmouse pointer#0 automatically. It's up to you which method you prefer "
 "to use.\""
 msgstr ""
-"｢完璧だ！　まあまあ簡単だよな？　われわれメレンデズはこの方法での飛行を推奨す"
-"る。われわれが『キーボード飛行』と呼ぶやつだ。そうはいっても、別にもうひとつ"
-"方法があって、そっちを選べばそれで飛べる。コンソールで %s を押せば、メレンデ"
-"ズの船は自動的に#bマウスポインター#0を追いかけるようになる！　どちらの方法を"
-"好んで使うのかは、その人によるな。\n"
-"    ｢ああ、モニター上の画面内任務表示にも気づいたかもしれないな！　見たとお"
-"り、この入門任務の最初の目的は完了した。だから次の目標がいまでは目立つように"
-"表示されている｣"
+"｢完璧ですね！　まあまあ簡単でしたよね？　"
+"わたしはこの『キーボード飛行』と呼ばれている方法での飛行を推奨します。それでも、別にもうひとつ方法があって、そちらを選べばそれで飛べます。コンソールで "
+"{mouseflykey} を押すと、船は自動的に#bマウスポインター#0を追いかけるようになります。どちらの方法を好んで使うのかは、その人によります｣"
 
 #: dat/missions/tutorial/tutorial.lua:175
 msgid ""
@@ -67864,21 +67853,10 @@ msgid ""
 "As you can see, you completed your first objective of the Tutorial mission, "
 "so the next objective is now being focused.\""
 msgstr ""
+"｢モニター上の画面内任務表示にも気づいたかもしれませんね。見たとおり、この入門任務の最初の目的は完了しました。だから次の目標がいまでは目立つように表示され"
+"ています｣"
 
 #: dat/missions/tutorial/tutorial.lua:176
-#, fuzzy
-#| msgid ""
-#| "\"On that note, let's go over landing! All kinds of actions, like landing "
-#| "on planets, hailing ships, boarding disabled ships, and jumping to other "
-#| "systems can be accomplished by #bdouble-clicking#0 on an applicable "
-#| "target, or alternatively by pressing certain buttons on your control "
-#| "console. How about you try landing on %s? You'll need to first slow down "
-#| "your ship so that the landing procedure can be carried out safely; you "
-#| "can do this either with your regular movement controls or, if you prefer, "
-#| "by pressing %s, which will bring your Melendez Corporation ship to a "
-#| "complete stop. You can then land either by #bdouble-clicking#0 on the "
-#| "planet, or by targeting the planet with %s and then pressing %s. Give it "
-#| "a try!\""
 msgid ""
 "\"On that note, let's go over landing. All kinds of actions, like landing on "
 "planets, hailing ships, boarding disabled ships, and jumping to other "
@@ -67886,14 +67864,9 @@ msgid ""
 "or alternatively by pressing certain buttons on your control console. How "
 "about you try landing on {pntname}?\""
 msgstr ""
-"｢それでは、着陸を見てみよう！　たとえば惑星への着陸とか、船に呼びかけるとか、"
-"無力化された船に乗りこむとか、ほかの星系へジャンプするとか、そういった多数の"
-"行動が適切な目標を#bダブルクリック#0することで実行できる。あるいは代わりに、"
-"制御コンソールでそれ用のボタンを押してもいい。%sへの着陸を試してみようか？　"
-"最初に船を減速させる必要がある。そうすると着陸手順が安全に実行できるからな。"
-"これは通常の運動制御でもできるし、もしそっちが好きなら %s を押してもできる。"
-"後者はメレンデズの船を完全に停止させる。そうすると、惑星を#bダブルクリック#0"
-"するか、%s で惑星を選択してから %s を押すことで着陸できる。やってみてくれ！｣"
+"｢それでは、着陸を見てみましょう。たとえば惑星への着陸とか、船に呼びかけるとか、無力化された船に乗りこむとか、ほかの星系へジャンプするとか、そういった多数"
+"の行動は適切な目標を#bダブルクリック#0することで実行できます。あるいは代わりに、制御コンソールでそれ用のボタンを押してもいいです。{pntname}へ"
+"の着陸を試してみましょうか？｣"
 
 #: dat/missions/tutorial/tutorial.lua:177
 msgid ""
@@ -67904,6 +67877,10 @@ msgid ""
 "it, or with {targetplanetkey}, and then using the {landkey}. You can also "
 "#bdouble click#0 on the planet to engage the same behaviour. Give it a try!\""
 msgstr ""
+"｢{pntname}へ着陸するには、惑星の上で船を減速させる必要があります。それから着陸システムを作動させてください。"
+"これは移動キーを使って手動で減速してから {landkey} で着陸装置を作動させることもできますし、目標の惑星を#bクリック#0するか "
+"{targetplanetkey} キーで選んでから {landkey} "
+"を使えば自動でできます。また、惑星を#bダブルクリック#0しても同じことをさせられます。さあ、やってみてください！｣"
 
 #: dat/missions/tutorial/tutorial.lua:189
 msgid ""
@@ -67956,23 +67933,6 @@ msgid ""
 msgstr ""
 
 #: dat/missions/tutorial/tutorial.lua:211
-#, fuzzy
-#| msgid ""
-#| "\"Excellent! The landing was successful. Melendez Corporation uses "
-#| "advanced artificial intelligence technology so that you never have to "
-#| "worry about your ship crashing. It may seem like a small thing, but it "
-#| "wasn't long ago when pilots had to land manually and crashes were "
-#| "commonplace! We at Melendez Corporation pride ourselves at protecting the "
-#| "safety of our valued customers and ensuring that your ship is reliable "
-#| "and resilient.\n"
-#| "    \"When you land, your ship is refueled automatically and you can do "
-#| "things such as talk to civilians at the bar, buy new ship components, "
-#| "configure your ship, and most importantly, accept missions from the "
-#| "Mission Computer. Why don't we look around? As you can see, we are "
-#| "currently on the Landing Main tab, where you can learn about the planet "
-#| "and buy a local map. Click all the other tabs below and I'll give you a "
-#| "tour through what else you can do on a planet. When you are done, click "
-#| "the 'Take Off' button so we can continue.\""
 msgid ""
 "\"Excellent! The landing was successful. As your Ship AI, I am in charge of "
 "guiding your ship and performing the landing procedure, which has cut down "
@@ -67986,28 +67946,13 @@ msgid ""
 "you can do on a planet. When you are done, click the '#bTake Off#0' button "
 "so we can continue.\""
 msgstr ""
-"｢すばらしい！　着陸は成功した。メレンデズは先進の人工知能技術を使っているか"
-"ら、船が墜落することなんかけっして心配する必要はない。たいしたことはないよう"
-"に思えるかもしれないが、パイロットが手動で着陸する必要があって、墜落がありふ"
-"れていたのも遠い昔ではない！　われわれメレンデズの自慢の種は、たいせつなお客"
-"さまの安全を守り、船の信頼性と障害耐性を保証することなんだ。\n"
-"    ｢着陸すると、船には自動的に燃料が補給される。それから、バーで一般の市民と"
-"話すとか、船の新しい部品を買うとか、船の設定をするとかができる。いちばん重要"
-"なのはミッションコンピューターにある任務を受けることだな。見てまわってみよう"
-"か？　見えているとおり、われわれは現在着陸メインタブにいる。ここではその惑星"
-"について知ることができて、系内地図が買える。下にあるほかのタブをすべてクリッ"
-"クしてくれ。ほかに惑星上でできることを見学に連れていってやろう。終わったら"
-"『離陸』ボタンを押すんだ。そうすればつづけられる｣"
+"｢すばらしいです！　着陸は成功しました。船を導いて着陸手順を実施するのは、船の AI であるわたしの担当です。そうすることで、人間が操縦する手動着陸中の災"
+"難をいちじるしく減らしたのです。着陸すると、船には自動的に燃料が補給されます。それから、バーで一般の市民と話すとか、船の新しい部品を買うとか、船の設定をす"
+"るとかができます。いちばん重要なのは、ミッションコンピューターにある任務を受けることです。見てまわってみましょうか？　見えているとおり、わたしたちは現在着"
+"陸メインタブにいます。ここではその惑星について知ることができて、系内地図が買えます。下にあるほかのタブをすべてクリックしてみてください。ほかに惑星上ででき"
+"ることを見学に連れていってあげます。終わったら『#b離陸#0』ボタンを押してください。そうすればつづけられます｣"
 
 #: dat/missions/tutorial/tutorial.lua:233
-#, fuzzy
-#| msgid ""
-#| "\"This is the Spaceport Bar, where you can read the latest news (as you "
-#| "can see on your right at the moment), but more importantly, you can meet "
-#| "other pilots, civilians, and more! Click on someone at the bar and then "
-#| "click on the Approach button to approach them. I recommend regularly "
-#| "talking to bar patrons, at least early on. There may be pilots among them "
-#| "who may have useful tips for you!\""
 msgid ""
 "\"This is the Spaceport Bar, where you can read the latest news (as you can "
 "see on your right at the moment), but more importantly, you can meet other "
@@ -68017,28 +67962,12 @@ msgid ""
 "talking to bar patrons, who knows what good tips or interesting jobs they "
 "will have available for you.\""
 msgstr ""
-"｢ここは宇宙港だ。ここでは最新のニュースが見られる (いま右に見えているやつ"
-"だ)。しかしもっと重要なのは、ほかのパイロットや一般人たち、それにもっとたくさ"
-"んの人たちと会えることだ！　バーにいるだれかをクリックしてから、近づくボタン"
-"をクリックすれば話ができる。定期的にバーの常連と話すことをお勧めする。役に立"
-"つ情報をもっているパイロットがいるかもしれないからな！｣"
+"｢ここは宇宙港です。ここでは最新のニュースが見られます "
+"(いま右に見えているものです)。ですがもっと重要なのは、ほかのパイロットや一般人たち、それにもっとたくさんの人たちと会えることなんです！　バーにいるだれか"
+"をクリックしてから､『#b近づく#0』ボタンをクリックすれば話ができます。重要な人物には赤い感嘆符がついています。ふつうは定期的にバーの常連と話すことをお"
+"勧めします。よい情報や、あなたにできる興味深い仕事を知っているからです｣"
 
 #: dat/missions/tutorial/tutorial.lua:241
-#, fuzzy
-#| msgid ""
-#| "\"This is the Mission Computer, where you can find basic missions in the "
-#| "official mission database. Missions are how you make your living as a "
-#| "pilot, so I recommend you check this screen often to see where the money-"
-#| "making opportunities are! You can see that each mission is given a brief "
-#| "summary, and by clicking them, you will be able to see more information "
-#| "about the mission. Since many missions involve cargo, you can also see "
-#| "how much free space is available in your ship in the top-right.\n"
-#| "    \"When picking missions, pay attention to how much they pay. You'll "
-#| "want to strike a balance of choosing missions that you're capable of "
-#| "doing, but getting paid as much as possible to do them. Once you've "
-#| "chosen a mission, click the 'Accept Mission' button on the bottom-right "
-#| "and it will be added to your active missions, which you can review via "
-#| "the Info screen by pressing %s.\""
 msgid ""
 "\"This is the Mission Computer, where you can find basic missions in the "
 "official mission database. Missions are how you make your living as a pilot, "
@@ -68048,17 +67977,10 @@ msgid ""
 "mission. Since many missions involve cargo, you can also see how much free "
 "space is available in your ship in the top-right.\""
 msgstr ""
-"｢これはミッションコンピューターだ。ここで公認された任務のデータベースから基本"
-"的な任務を見つけることができる。任務というのはパイロットとして生きていくため"
-"のよすがだ。だからこの画面をひんぱんに確認して、どこにかねを作る機会があるの"
-"か見ておくことを勧める！　それぞれの任務に短い要約がついているのがわかるだろ"
-"う。そしてそれをクリックすると、その任務についてのさらなる情報を見ることがで"
-"きる。多くの任務は貨物を含むから、空いた場所が自分の船にどれだけあるのか、右"
-"上に見えるようになっている。\n"
-"    ｢任務を選ぶときには、支払いがどれだけあるのか注意してくれ。やれる任務を選"
-"びつつ、できるだけ多くの支払いをうけられるように調整したくなるはずだ。任務を"
-"選んだら、右下にある『任務をうける』ボタンをクリックしてくれ。するとそれが遂"
-"行中の任務に加えられる。これは %s を押せば、情報画面で再確認できる｣"
+"｢これはミッションコンピューターです。ここでは公認された任務のデータベースから基本的な任務を見つけることができます。任務というのはパイロットとして生きてい"
+"くためのよすがです。だからこの画面をひんぱんに確認して、どこにお金を作る機会があるのか見ておくことを勧めます！　それぞれの任務に短い要約がついているのがわ"
+"かるでしょう。そしてそれをクリックすると、その任務についてのさらなる情報を見ることができます。多くの任務は貨物を含むので、空いた場所が自分の船にどれだけあ"
+"るのか、右上に見えるようになっています｣"
 
 #: dat/missions/tutorial/tutorial.lua:242
 msgid ""
@@ -68069,6 +67991,9 @@ msgid ""
 "added to your active missions, which you can review via the Info screen by "
 "pressing {infokey}.\""
 msgstr ""
+"｢任務を選ぶときには、支払いがどれだけあるのか注意してください。実行できる任務を選びつつ、できるだけ多くの支払いをうけられるように調整したくなるはずです。"
+"任務を選んだら、右下にある『#b任務をうける#0』ボタンをクリックしてください。するとそれが遂行中の任務に加えられます。これは {infokey} "
+"を押せば、情報画面で再確認できます｣"
 
 #: dat/missions/tutorial/tutorial.lua:243
 msgid ""
@@ -68089,28 +68014,12 @@ msgid ""
 "Mule Bulk Cargo Starhip. As my previous owner found out, they don't do too "
 "well in combat, however.\""
 msgstr ""
+"｢ここは艤装所です。ここで艤装品を買って、星間船をずっとよくすることができるんです！　"
+"船に新しい武器や、余分な船倉、もっと強力な中核システム、などなどを備えつけられます！　もっと簡単に銀河を探検するのを助けてくれる、地方地図もここで購入でき"
+"ます。もちろん、もっと高級な武器類や星間船に必要となる免許もです。たとえば、大型民間船免許がメレンデズのミュールばら積み貨物星間船を買うのには必要になりま"
+"す。とはいえ、わたしのまえの所有者が気づいたとおり、ミュールは戦いがあまりうまくありません｣"
 
 #: dat/missions/tutorial/tutorial.lua:253
-#, fuzzy
-#| msgid ""
-#| "\"This is the Outfitter, where you can buy new outfits to make your "
-#| "Melendez Corporation starship even better! You can fit your ship with new "
-#| "weapons, extra cargo space, more powerful core systems, and more! "
-#| "Regional maps which can help you explore the galaxy more easily can also "
-#| "be purchased here, as well as licenses required for higher-end weaponry "
-#| "and starships (for example, you will require a Large Civilian Vessel "
-#| "License to purchase our top-of-the-line Melendez Mule Bulk Cargo Starhip, "
-#| "widely sought after for its unmatched cargo capacity).\n"
-#| "    \"As you can see, a series of tabs at the top of your screen allow "
-#| "you to filter outfits by type: 'W' for weapons, 'U' for utilities, 'S' "
-#| "for structurals, 'Core' for cores, and 'Other' for anything outside of "
-#| "those categories (most notably, regional maps and licenses). When you see "
-#| "an outfit that interests you, click on it to see more information about "
-#| "it, then either click on the 'Buy' button to buy it or click on the "
-#| "'Sell' button to sell it (if you have one in your possession). Different "
-#| "planets have different outfits available; if you don't see a specific "
-#| "outfit you're looking for, you can search for it via the 'Find Outfits' "
-#| "button.\""
 msgid ""
 "\"As you can see, a series of tabs at the top of your screen allow you to "
 "filter outfits by type: 'W' for weapons, 'U' for utilities, 'S' for "
@@ -68124,41 +68033,13 @@ msgid ""
 "starmap screen. After buying new outfits make sure to equip them in the "
 "#oEquipment#0 window.\""
 msgstr ""
-"｢ここは艤装所だ。ここで艤装品を買って、メレンデズの星間船をずっとよくすること"
-"ができる！　船に新しい武器や、余分な船倉、もっと強力な中核システム、などなど"
-"を備えつけられるんだ！　もっと簡単に銀河を探検するのを助けてくれる、地方地図"
-"もここで購入できる。もちろん、もっと高級な武器類や星間船に必要となる免許もだ "
-"(たとえば、大型民間船免許がわれわれの最上位製品であるメレンデズのミュールばら"
-"積み貨物星間船を買うのには必要だ。その比類なき船倉容量をおおいに求めるなら"
-"な)。\n"
-"    ｢見えているとおり、画面の上に並んだタブで、艤装品の種類をしぼることができ"
-"る｡『武』は武器､『実』は実用品､『構』は構造系､『中核』は中核機能､『その他』は"
-"どの種類にも入らないものだ (いちばん目立つのは、地方地図と免許だな)。興味がひ"
-"かれる艤装品を見つけたら、クリックすればもっとくわしい情報が見られる。それか"
-"ら買うことにしたなら『買う』ボタンをクリックしてくれ。あるいは (ひとつ所有し"
-"ていて) 売ることにしたなら『売る』ボタンをクリックだ。別の惑星では異なる艤装"
-"品が入手できる。もしさがしている特定の艤装品が見つからなかったら､『艤装品を検"
-"索』ボタンを使えばさがせるよ｣"
+"｢見えているとおり、画面の上に並んだタブで、艤装品の種類をしぼることができます｡『武』は武器､『実』は実用品､『構』は構造系､『中核』は中核機能､『その他"
+"』はどの種類にも入らないもので、いちばん目立つのは地方地図と免許です。興味がひかれる艤装品を見つけたら、クリックすればもっとくわしい情報が見られます。それ"
+"から買うことにしたなら『#b買う#0』ボタンをクリックしてください。あるいはひとつ所有していて売ることにしたなら『#b売る#0』ボタンをクリックです。別の"
+"惑星では異なる艤装品が入手できます。もしさがしている特定の艤装品が見つからなかったら、星図画面で『#b艤装品を検索#0』ボタンを使えばさがせます。新しい艤"
+"装品を買ったら、#o装備#0画面で装備するのを忘れないでください｣"
 
 #: dat/missions/tutorial/tutorial.lua:262
-#, fuzzy
-#| msgid ""
-#| "\"This is the Shipyard, where you can buy new starships to either replace "
-#| "the one you've got, or to add to your collection! On the left of this "
-#| "screen, you will see ships available on the planet you're currently on. "
-#| "Click on a ship you're interested in learning more about. You can then "
-#| "either buy the ship with the 'Buy' button, or trade your current ship in "
-#| "for the new ship with the 'Trade-In' button. Different planets have "
-#| "different ships available; if you don't see a specific ship you're "
-#| "looking for, you can search for it via the 'Find Ships' button.\n"
-#| "    \"You have no need for this screen right now, but later on, when "
-#| "you've saved up enough, you'll likely want to upgrade your ship to an "
-#| "even better one, depending on what kinds of tasks you will be performing. "
-#| "Melendez Corporation specializes primarily in cargo ships. I highly "
-#| "recommend either our Melendez Quicksilver Rush Cargo Starship for cargo "
-#| "missions that have a time limit, or our Melendez Koala Compact Bulk Cargo "
-#| "Starship for missions that require carrying large amounts of cargo. We "
-#| "sincerely thank you for shopping with Melendez Corporation!\""
 msgid ""
 "\"This is the Shipyard, where you can buy new starships to either replace "
 "the one you've got, or to add to your collection! On the left of this "
@@ -68170,20 +68051,10 @@ msgid ""
 "for, you can search for it via the '#bFind Ships#0' button on the starmap "
 "screen.\""
 msgstr ""
-"｢ここは造船所だ。ここで新しい星間船を買って、もっていたものと交換するか、収集"
-"品に加えておいたりできるんだ！　この画面の左に、自分が今いる惑星で入手可能な"
-"船が見えるようになっている。興味があって、もっとよく知りたい船をクリックして"
-"くれ。それで買うことにしたら『買う』ボタンをクリックする。あるいは自分の今の"
-"船と新しい船を交換したかったら『下取り』ボタンだ。別の惑星では異なる船が入手"
-"できる。もしさがしている特定の船が見つからなかったら､『船を検索』ボタンを使え"
-"ばさがせるよ。\n"
-"    ｢この画面はいまのところ必要ないが、今後じゅうぶんなかねをためたら、船を"
-"ずっといいものに更新したくなるはずだ。どんな船かはやっている仕事の種類による"
-"だろうがな。メレンデズの専門はおもに貨物船だ。強くお勧めするのは、期限のある"
-"輸送任務に向いた、われわれメレンデズのクイックシルバー速達貨物星間船、大量の"
-"貨物を運ぶ必要がある任務に向いた、われわれメレンデズのコアラ小型ばら積み星間"
-"船、このどちらかにすることだ。メレンデズからお買いあげいただくことに、われわ"
-"れは心から感謝している！｣"
+"｢ここは造船所です。ここで新しい星間船を買って、もっていたものと交換するか、収集品に加えることができるんです！　この画面の左に、自分が今いる惑星で入手可能"
+"な船が見えるようになっています。興味があってもっとよく知りたい船をクリックしてください。それで買うことにしたら『#b買う#0』ボタンをクリックしてください"
+"。あるいは自分の今の船と新しい船を交換したかったら『#b下取り#0』ボタンです。別の惑星では異なる船が入手できます。もしさがしている特定の船が見つからなか"
+"ったら、星図画面で『#b船を検索#0』ボタンを使えばさがせます｣"
 
 #: dat/missions/tutorial/tutorial.lua:263
 msgid ""
@@ -68194,25 +68065,12 @@ msgid ""
 "the different outfits you can equip them with. Note that some ships also "
 "require licenses before you can buy them.\""
 msgstr ""
+"｢今は新しい船を買えるほどのクレジットがないでしょうが、今後じゅうぶんなお金をためたら、船をずっといいものに更新したくなるはずです。どんな船かはやっている"
+"仕事の種類によるでしょう。それぞれの船にはそれぞれの強みと弱みがあって、それに装備できるそれぞれの艤装品も影響しあいます。船によっては、買えるようになるま"
+"えに免許が必要なことに注意してください｣"
 
 #. TODO cut up
 #: dat/missions/tutorial/tutorial.lua:273
-#, fuzzy
-#| msgid ""
-#| "\"This is the Equipment screen, which is available only on planets which "
-#| "have either an outfitter or a shipyard. Here, you can equip your ship "
-#| "with any outfits you have bought at the Outfitter. If and only if the "
-#| "current planet has a shipyard, you can also do so with any other ship you "
-#| "own, and you can swap which ship you are currently piloting by selecting "
-#| "another ship and clicking the 'Swap Ship' button. You can also sell those "
-#| "other ships (but not your current ship) with the 'Sell Ship' button, if "
-#| "you decide that you no longer need them. Selling a ship that still has "
-#| "outfits equipped will also lead to those outfits being sold along with "
-#| "the ship, so do keep that in mind if there's an outfit you need to keep.\n"
-#| "    \"If you make any changes to your ship now, please ensure that you "
-#| "still have two weapons equipped, as you will need those later for "
-#| "practicing combat and flying around space without any weapons can be very "
-#| "risky anyway.\""
 msgid ""
 "\"This is the Equipment screen, which is available only on planets which "
 "have either an outfitter or a shipyard. Here, you can equip your ship with "
@@ -68226,17 +68084,11 @@ msgid ""
 "along with the ship, so do keep that in mind if there's an outfit you need "
 "to keep.\""
 msgstr ""
-"｢これは装備画面だ。これは艤装所か造船所がある惑星でだけ利用できる。ここでは、"
-"艤装所で買ったどんな艤装品でも装備可能だ。現在の惑星に造船所がある場合だけ、"
-"所有するほかの船にも同じことが可能となる。さらに、現在操縦している船ともうひ"
-"とつ選んだ船を､『船を交換』ボタンをクリックすることで交換できる。今使っている"
-"もの以外の船を､『船を売る』ボタンで売ることも可能だ。もう必要ないと決めた場合"
-"はだが。まだ艤装品が装備されている船を売ると、船といっしょにその艤装品も売ら"
-"れることになる。だから取っておく必要がある艤装品があるなら、それを心に留めて"
-"おくこと。\n"
-"    ｢もしいま船に変更を加えるのなら、二つの武器がかならず装備されたままでいる"
-"ようにお願いする。あとで戦闘訓練のためにそれが必要になるし、いずれにせよ武器"
-"なしで宇宙を飛びまわるのはとても危険なことになりうるんだ｣"
+"｢これは装備画面です。これは艤装所か造船所がある惑星でだけ利用できます。ここでは、#o艤装所#0で買ったどんな艤装品も装備可能です。現在の惑星に造船所があ"
+"る場合だけ、所有するほかの船にも同じことが可能となります。さらに、現在操縦している船ともうひとつ選んだ船を､『#b船を交換#0』ボタンをクリックするか、そ"
+"れを#bダブルクリック#0することで交換できます。今使っているもの以外の船を､『#b船を売る#0』ボタンで売ることも可能です。もう必要ないと決めた場合はで"
+"すが。まだ艤装品が装備されている船を売ると、船といっしょにその艤装品も売られることになります。だから取っておく必要がある艤装品があるなら、それを心に留めて"
+"おいてください｣"
 
 #: dat/missions/tutorial/tutorial.lua:274
 msgid ""
@@ -68244,24 +68096,11 @@ msgid ""
 "have weapons equipped, as you will need those later for practicing combat "
 "and flying around space without any weapons can be very risky anyway.\""
 msgstr ""
+"｢もしいま船に変更を加えるのなら、武器がかならず装備されたままでいるようにお願いします。あとで戦闘訓練のためにそれが必要になりますし、いずれにせよ武器なし"
+"で宇宙を飛びまわるのはとても危険なことになりえます｣"
 
 #. TODO cut up
 #: dat/missions/tutorial/tutorial.lua:284
-#, fuzzy
-#| msgid ""
-#| "\"This is the Commodity screen, where you can buy and sell commodities. "
-#| "Commodity prices vary from planet to planet and even over time, so you "
-#| "can use this screen to attempt to make money by buying low and selling "
-#| "high. Click on a commodity to see information about it, most notably its "
-#| "average price per tonne, and click on the 'Buy' and 'Sell' buttons to buy "
-#| "or sell some of the commodity, respectively. Here, it's useful to hold "
-#| "the Shift and/or Ctrl keys to adjust the modifier of how many tonnes of "
-#| "the commodity you're buying or selling at once. This will reduce the "
-#| "number of times you have to click on the Buy and Sell buttons.\n"
-#| "    \"If you're unsure what's profitable to buy or sell, you can press %s "
-#| "to view the star map and then click on the 'Mode' button for various "
-#| "price overviews. The news terminal at the bar also includes price "
-#| "information for specific nearby planets.\""
 msgid ""
 "\"This is the Commodity screen, where you can buy and sell commodities. "
 "Commodity prices vary from planet to planet and even over time, so you can "
@@ -68273,17 +68112,11 @@ msgid ""
 "the commodity you're buying or selling at once. This will reduce the number "
 "of times you have to click on the Buy and Sell buttons.\""
 msgstr ""
-"｢これは商品画面だ。ここで商品を売り買いできる。商品の価格は惑星ごとに異なる"
-"し、時間がたっても変動する。だからこの画面を使えば、安く買って高く売ることで"
-"かね作りにいどむことができる。商品をクリックすると、それについての情報が見ら"
-"れる。もっとも目立つのは、トンあたりの平均価格だ。それから『売る』と『買う』"
-"ボタンをクリックすると、それぞれその商品をいくつか売り買いすることになる。こ"
-"こでシフトキーやコントロールキーをそれぞれ、あるいは両方押すと、いちどに売り"
-"買いする商品のトン数を調整できて便利だ。これで売り買いボタンをクリックしなけ"
-"ればならない回数が減らせるだろう。\n"
-"    ｢なにを売り買いすればもうかるのかわからなかったら、%s を押して星図を見て"
-"もいい。そこで『モード』ボタンをクリックすると、いろいろな価格の概要が見られ"
-"る。バーのニュース端末にも、近隣の特定の惑星の価格情報が入っている｣"
+"｢これは商品画面です。ここでは商品を売り買いできます。商品の価格は惑星ごとに異なりますし、時間がたっても変動します。だからこの画面を使えば、安く買って高く"
+"売ることでかね作りにいどむことができます。商品をクリックすると、それについての情報が見られます。もっとも目立つのは、トンあたりの平均価格です。それから『#"
+"b売る#0』と『#b買う#0』ボタンをクリックすると、それぞれその商品をいくつか売り買いすることになります。ここで#bシフト#0キーや#bコントロール#0"
+"キーをそれぞれ、あるいは両方押すと、いちどに売り買いする商品のトン数を調整できて便利です。これで売り買いボタンをクリックしなければならない回数が減らせるで"
+"しょう｣"
 
 #: dat/missions/tutorial/tutorial.lua:285
 msgid ""
@@ -68292,6 +68125,8 @@ msgid ""
 "for various price overviews. The news terminal at the bar also includes "
 "price information for specific nearby planets.\""
 msgstr ""
+"｢なにを売り買いすればもうかるのかわからなかったら、{starmapkey} を押して星図を見てもよいでしょう。そこで『#bモード#0』ボタンをクリックす"
+"ると、いろいろな価格の概要が見られます。バーのニュース端末にも、近隣の特定の惑星の価格情報が入っています｣"
 
 #: dat/missions/tutorial/tutorial.lua:322
 msgid ""
@@ -68303,28 +68138,12 @@ msgid ""
 "available on all ships. You can trust me as I've only under 4 fatal "
 "accidents.\""
 msgstr ""
+"｢宇宙へおかえり、{playername}！　宇宙を飛びまわることについての話をつづけましょう。まえに説明したとおり、手動で宇宙を飛びまわることができます"
+"。問題はありません。とはいえ、長距離を移動したくなるのはよくあることでしょう。すると、どこへ行くにも手動で操縦するのはちょっと退屈ということにもなりえます"
+"。よいやりかたは、船の AI であるわたしに移動を委任することです。すべての船で利用できる、自動操縦機能を使ってください。わたしのことは信用できます。"
+"致命的な事故は 4 回未満しかおこしていません｣"
 
 #: dat/missions/tutorial/tutorial.lua:323
-#, fuzzy
-#| msgid ""
-#| "\"Welcome back to space, %s! Let's continue discussing moving around in "
-#| "space. As mentioned before, you can move around space manually, no "
-#| "problem. However, you will often want to travel large distances, and "
-#| "navigating everywhere manually could be a bit tedious. That is why we at "
-#| "Melendez Corporation always require the latest Autonav technology with "
-#| "all of our ships!\n"
-#| "    \"Autonav is simple and elegant. Simply press %s to open your ship's "
-#| "overlay map, then simply #bright-click#0 on any location, planet, ship, "
-#| "or jump point to instantly take your ship right to it! The trip will take "
-#| "just as long, but advanced Melendez Corporation technology allows you to "
-#| "step away from your controls, making it seem as though time is passing at "
-#| "a faster rate. And don't worry; if any hostile pilots are detected, our "
-#| "Autonav system automatically alerts you so that you can observe the "
-#| "situation and respond in whatever fashion is deemed necessary. This can "
-#| "be configured from your ship's Options menu, which you can access by "
-#| "pressing %s.\n"
-#| "    \"Why don't you try using Autonav to fly over to %s? You should be "
-#| "able to see it on your overlay map.\""
 msgid ""
 "\"Autonav is simple and elegant. Simply press {overlaykey} to open your "
 "ship's overlay map, then simply #bright-click#0 on any location, planet, "
@@ -68336,21 +68155,11 @@ msgid ""
 "in whatever fashion is deemed necessary. This can be configured from your "
 "ship's #oOptions#0 menu, which you can access by pressing {menukey}."
 msgstr ""
-"｢宇宙へおかえり、%s！　宇宙を飛びまわることについての話をつづけよう。まえに説"
-"明したとおり、手動で宇宙を飛びまわることができる。問題はない。とはいえ、長距"
-"離を移動したくなることはよくあるだろう。すると、どこへ行くにも手動で操縦する"
-"のはちょっと退屈ということにもなりえる。われわれメレンデズが、自動操縦技術を"
-"すべての船にいつも必須としているのは、それが理由なんだ！\n"
-"    ｢自動操縦は単純で簡潔なものだ。%s を押すだけで船のオーバーレイマップが開"
-"き、惑星とか、船とか、ジャンプポイントとか、どこでも#b右クリック#0するだけ"
-"で、ただちに船をその近くへ連れていってくれる！　旅はちょっと長くなるだろう"
-"が、メレンデズの先進技術により操縦から離れていることが可能となり、時間が速く"
-"進むように感じられるだろう。しかし心配は無用だ。敵意のあるパイロットを見つけ"
-"たら、われわれの自動操縦システムが自動的に警報を発するので、状況を観察して、"
-"どんなやりかたでも必要と判断したら対応できる。これは船のオプションメニューで"
-"設定が可能だ。そのメニューは %s を押せばで呼びだせる。\n"
-"    ｢自動操縦を使って%sの上を飛んでみようか？　オーバーレイマップにそいつが見"
-"えるはずだ｣"
+"｢自動操縦は単純で簡潔なものです。{overlaykey} を押すだけで船のオーバーレイマップが開き、惑星とか、船とか、ジャンプポイントとか、どこでも#b"
+"右クリック#0するだけで、ただちに船をその近くへ連れていってくれます！　旅はちょっと長くなるでしょうが、時間圧縮によって操縦から離れていることが可能となり"
+"、時間が速く進むように感じられるでしょう。しかし心配は無用です。敵意のあるパイロットを見つけたら、自動操縦システムが自動的に警報を発するので、あなたは状況"
+"を観察して、どんなやりかたでも必要と判断したら対応できます。これは船の#oオプション#0メニューで設定が可能です。そのメニューは {menukey} "
+"を押せばで呼びだせます。"
 
 #: dat/missions/tutorial/tutorial.lua:324
 msgid ""
@@ -68358,6 +68167,8 @@ msgid ""
 "able to see it highlighted on your overlay map which you can activate with "
 "{overlaykey}.\""
 msgstr ""
+"｢自動操縦を使って{pntname}の上を飛んでみましょうか？　"
+"オーバーレイマップで目立つようになっているのが見えるはずです。オーバーレイマップは{overlaykey} で起動できます｣"
 
 #: dat/missions/tutorial/tutorial.lua:338
 msgid ""
@@ -68465,16 +68276,12 @@ msgid "Bring on the pain!"
 msgstr ""
 
 #: dat/missions/tutorial/tutorial.lua:401
-#, fuzzy
-#| msgid "You're no match for the Dvaered!"
 msgid "You're no match for the fearsome T. Practice!"
-msgstr "おまえではドベーレッドの相手にならない！"
+msgstr "おまえでは恐るべき T. プラクティスの相手にならない！"
 
 #: dat/missions/tutorial/tutorial.lua:402
-#, fuzzy
-#| msgid "I've destroyed ships twice the size of yours!"
 msgid "I've been shot by ships ten times your size!"
-msgstr "おまえの船より 2 倍は大きい船を破壊してきたんだ！"
+msgstr "おまえの船より 10 倍は大きい船に撃たれてきたんだ！"
 
 #: dat/missions/tutorial/tutorial.lua:403
 msgid "Let's get it on!"
@@ -68629,10 +68436,8 @@ msgid "Go on, shoot me."
 msgstr ""
 
 #: dat/missions/tutorial/tutorial.lua:440
-#, fuzzy
-#| msgid "You wanna do this? Have it your way."
 msgid "You can do it! I believe in you."
-msgstr "やりたいのか？　好きにしろ"
+msgstr ""
 
 #: dat/missions/tutorial/tutorial.lua:441
 msgid "Shoot me!"
@@ -68647,10 +68452,8 @@ msgid "But if you don't shoot me, I'll tell the galaxy your terrible secret."
 msgstr ""
 
 #: dat/missions/tutorial/tutorial.lua:446
-#, fuzzy
-#| msgid "Okay, that's enough of that!"
 msgid "Okay, that's about enough."
-msgstr "わかったよ。それでじゅうぶんだろ！"
+msgstr ""
 
 #: dat/missions/tutorial/tutorial.lua:447
 msgid "You can stop now."
@@ -68669,10 +68472,8 @@ msgid "Let's be pals, I'll buy you an ale!"
 msgstr ""
 
 #: dat/missions/tutorial/tutorial.lua:451
-#, fuzzy
-#| msgid "Game over, you're dead!"
 msgid "Game over, you win."
-msgstr "ゲームオーバー、あなたは死にました！"
+msgstr "ゲームオーバー、あなたが勝った。"
 
 #: dat/missions/tutorial/tutorial.lua:452
 msgid "I've got a wife and kids! And a cat!"
@@ -68691,10 +68492,8 @@ msgid "I'm sorry!"
 msgstr ""
 
 #: dat/missions/tutorial/tutorial.lua:456
-#, fuzzy
-#| msgid "\"Just leave me alone!\""
 msgid "Leave me alone!"
-msgstr "｢とにかく放っておいてくれ！｣"
+msgstr "とにかく放っておいてくれ！"
 
 #: dat/missions/tutorial/tutorial.lua:457
 msgid "What did I ever do to you?"
@@ -71728,14 +71527,12 @@ msgstr "サメル"
 #. temporary for now
 #. TODO replace with real portrait
 #: dat/scripts/common/tutorial.lua:17 src/info.c:278
-#, fuzzy
-#| msgid "Ship"
 msgid "Ship AI"
-msgstr "船"
+msgstr "船の AI"
 
 #: dat/scripts/common/tutorial.lua:23
 msgid "\"I can't let you do that, Dave. …Wait, what was that?\""
-msgstr ""
+msgstr "｢それはさせられません、デイブ。……ちょっと、今のはなんですか？｣"
 
 #. 2001 Space Odyssey
 #: dat/scripts/common/tutorial.lua:24
@@ -71743,27 +71540,28 @@ msgid ""
 "\"I'm here to keep you safe, Sam. I want to help you. Are you hungry? …Wait, "
 "what was that?\""
 msgstr ""
+"｢わたしはあなたの安全を守るためにここにいるのです、サム。わたしはあなたを助けたい。お腹は空いていませんか？　……ちょっと、今のはなんですか？｣"
 
 #. Moon
 #: dat/scripts/common/tutorial.lua:25
 msgid ""
 "\"Patience, Sam Flynn. All of your questions will be answered soon. …Wait, "
 "what was that?\""
-msgstr ""
+msgstr "｢忍耐だ、サム・フリン。質問のすべてはすぐに答えられるだろう。……ちょっと、今のはなんですか？｣"
 
 #. Tron (Legacy)
 #: dat/scripts/common/tutorial.lua:26
 msgid ""
 "\"I could be chasing an untamed ornithoid without cause. …Wait, what was "
 "that?\""
-msgstr ""
+msgstr "｢わたしは理由もなく野鳥を追いかけることもできるんです。……ちょっと、今のはなんですか？｣"
 
 #. Star Trek
 #: dat/scripts/common/tutorial.lua:27
 msgid ""
 "\"For your convenience I am programmed to respond to the name Robby. …Wait, "
 "what was that?\""
-msgstr ""
+msgstr "｢あなたが便利なように、わたしはロビーという名に反応するようにプログラムされています。……ちょっと、今のはなんですか？｣"
 
 #. Forbidden Planet
 #: dat/scripts/common/tutorial.lua:28
@@ -71773,13 +71571,15 @@ msgid ""
 "flesh? Let the machines starve, you fools! Let them die! Kill them the "
 "machines! …Wait, what was that?\""
 msgstr ""
+"｢メトロポリスの機械たちのための新鮮な食料となるのはだれなんだ？　機械の継ぎ目に自身の血で油をさすのはだれなんだ？　"
+"自身の肉体で機械たちを養っているのはだれなんだ？　機械を飢え死にさせろ、ばかめ！　死なせてしまえ！　機械たちを殺せ！　……ちょっと、今のはなんですか？｣"
 
 #. Metropolis
 #: dat/scripts/common/tutorial.lua:29
 msgid ""
 "\"Please Michael, I'm the Knight Industries 2000, not a tomato on wheels!” …"
 "Wait, what was that?\""
-msgstr ""
+msgstr "｢お願いです、マイケル。わたしはナイト・インダストリーズ 2000、車に乗ったトマトではありません！　……ちょっと、今のはなんですか？｣"
 
 #. Capsule function for enabling basic, important keys.
 #. Capsule function for tk.msg that disables all key input WHILE the msg is open.
@@ -76126,86 +75926,75 @@ msgstr ""
 #: dat/shipai.lua:17
 msgid ""
 "\"Hello {playername}! Is there anything you want to change or brush up on?\""
-msgstr ""
+msgstr "｢こんにちは、{playername}！　なにか変えたいことや勉強をやりなおしたいことがありますか？｣"
 
 #: dat/shipai.lua:20
 msgid "Get Advice"
-msgstr ""
+msgstr "助言を得る"
 
 #: dat/shipai.lua:21
-#, fuzzy
-#| msgid "Set formation"
 msgid "Get Information"
-msgstr "隊形の設定"
+msgstr "情報を得る"
 
 #: dat/shipai.lua:22
 msgid "Tutorial/Ship AI Options"
-msgstr ""
+msgstr "入門学習/船の AI のオプション"
 
 #: dat/shipai.lua:34
 msgid "Reset all tutorial hints"
-msgstr ""
+msgstr "すべての入門用のヒントをリセット"
 
 #: dat/shipai.lua:35
-#, fuzzy
-#| msgid "Rename"
 msgid "Rename Ship AI"
-msgstr "改名"
+msgstr "船の AI の改名"
 
 #: dat/shipai.lua:48
 msgid ""
 "\"In-game hints are now enabled! If you want to revisit old tutorial hints, "
 "make sure to reset them.\""
-msgstr ""
+msgstr "｢ゲーム内でのヒントが今では有効になっています！　もしすでに見た入門学習用のヒントをまた見たかったら、リセットするのを忘れないでください｣"
 
 #: dat/shipai.lua:53
 msgid "\"In-game tutorial hints are now disabled.\""
-msgstr ""
+msgstr "｢ゲーム内でのヒントはもう無効になりました｣"
 
 #: dat/shipai.lua:57
-#, fuzzy
-#| msgid ""
-#| "This will re-equip your current pilot, are you sure you want to continue?"
 msgid ""
 "\"This will reset and enable all in-game tutorial hints, are you sure you "
 "want to do this?\""
-msgstr ""
-"これはあなたの現在のパイロットについて再装備をおこないます。ほんとうにつづけ"
-"たいですか？"
+msgstr "｢これでゲーム内のすべての入門用ヒントがリセットされて有効になります。ほんとうにそうしたいですか？｣"
 
 #: dat/shipai.lua:59
 msgid "Reset tutorial hints"
-msgstr ""
+msgstr "入門用ヒントのリセット"
 
 #: dat/shipai.lua:64
 msgid ""
 "\"All in-game tutorial hints have been set and enabled! They will naturally "
 "pop up as you do different things in the game.\""
-msgstr ""
+msgstr "｢ゲーム内のすべての入門用ヒントをリセットして有効にしました！　あなたがゲーム内でちがったことをすると、自然に現れます｣"
 
 #. TODO integrate into vn
 #: dat/shipai.lua:71
 msgid "Name your Ship AI"
-msgstr ""
+msgstr "船の AI に名前をつけてください"
 
 #: dat/shipai.lua:71
 msgid "SAI"
-msgstr ""
+msgstr "SAI"
 
 #. Can't use rename here
 #: dat/shipai.lua:87
 msgid "Your Ship AI has been renamed '{ainame}'."
-msgstr ""
+msgstr "あなたの船の AI は ｢{ainame}｣ に名前が変更されました。"
 
 #: dat/shipai.lua:91
 msgid "\"Hello {playername}. What do you want to learn about?\""
-msgstr ""
+msgstr "｢こんにちは、{playername}。なにについて学びたいですか？｣"
 
 #: dat/shipai.lua:93
-#, fuzzy
-#| msgid "Weapon Set 1"
 msgid "Weapon Sets"
-msgstr "武器セット 1"
+msgstr "武器セット"
 
 #: dat/shipai.lua:95 src/input.c:63 src/shipstats.c:103
 msgid "Stealth"
@@ -76219,6 +76008,8 @@ msgid ""
 "from the '#oWeapons#0' tab of the information window. You have 10 different "
 "weapon sets that can be configured separately for each ship.\""
 msgstr ""
+"｢戦いの大部分は、船級や装備で事前に決まってしまいます。とはいえ、よい操縦法で簡単に形勢を逆転できます。武器セットを簡単に使えるように割り当てておくのは重"
+"要です。武器セットは情報ウィンドウの#o武器#0タブで設定できます。それぞれの船ごとに分けて設定できる異なる武器セットが 10 個あります｣"
 
 #: dat/shipai.lua:101
 msgid ""
@@ -76229,6 +76020,10 @@ msgid ""
 "- #oAbilities - Toggled#0: activating the hotkey will toggle the state of "
 "the outfits"
 msgstr ""
+"｢武器セットには異なる 3 つの型があります。\n"
+"- #o武器 - 設定#0 : ホットキーで有効にすると、主要兵器と副次兵器が設定されます。\n"
+"- #o武器 - 一瞬#0 : ホットキーで有効にすると、その武器が発射されます。\n"
+"- #o能力 - 切替#0 : ホットキーで有効にすると、その艤装品の状態が切り替わります｣"
 
 #: dat/shipai.lua:105
 msgid ""
@@ -76239,6 +76034,9 @@ msgid ""
 "override this and set them however you prefer. Just remember to update them "
 "whenever you change your outfits.\""
 msgstr ""
+"｢なにもしないと、武器セットはわたしが自動的に作ります。前方砲をセット 1 (設定) に、砲塔兵器をセット 2 (設定) に、砲塔と前方砲の両方をセット "
+"3 (設定) にします。追跡兵器はセット 4 (一瞬) に、そして戦闘機格納庫はセット 5 (一瞬) "
+"です。とはいえ、あなたはこれを無効にして自分の好みを設定できます。艤装品を変更したときには、いつでも更新することだけは忘れないでください｣"
 
 #: dat/shipai.lua:109
 msgid ""
@@ -76247,6 +76045,8 @@ msgid ""
 "yachts or interceptors are inherently much harder to detect than carriers or "
 "battleship.\""
 msgstr ""
+"｢船のセンサーは重力異常を探知することで機能しています。それゆえ船の質量は探知において決定的な役割を果たします。ヨットや要撃機のような小型の船は、母艦や戦"
+"艦より本質的にずっと探知が難しいのです｣"
 
 #: dat/shipai.lua:114
 msgid ""
@@ -76256,6 +76056,9 @@ msgid ""
 "stealth ranges, making outfits that give concealment bonuses very useful if "
 "you get your hands on them.\""
 msgstr ""
+"｢#o探知#0はあなたが星系内でどれくらい注意をひくかということに決定的な役割を果たします。そして探知が強化されると潜伏する危険を避けることにとても役立つ"
+"ことがあります。そのうえ潜伏が強化されると、あなたの探知・回避・ステルス距離が小さくなり、もし敵を捕まえたければ、潜伏を強化する艤装品はとても役立つことに"
+"なります｣"
 
 #: dat/shipai.lua:115
 msgid ""
@@ -76267,6 +76070,10 @@ msgid ""
 "also has an effect on launcher lock-on time, with lower evasion increasing "
 "the time it takes for rockets to lock on to you.\""
 msgstr ""
+"｢#o回避#0は戦いになったときにとても重要になります。これで武器がどれだけうまくあなたの船を追跡できるかが決まるからです。あなたの回避値が敵の武器の#o"
+"追跡最小#0より小さければ、その武器はあなたの船を完全に正確には追跡できません。けれども、あなたの回避値が#o追跡最小#0より大きければ、あなたは完璧に追"
+"跡されます。同じことはあなたの目標についてもいえます。そのうえこれは発射機の捕捉時間にも影響があります。回避値が小さければ、ロケットがあなたを捕捉するため"
+"の時間は増加します｣"
 
 #: dat/shipai.lua:116
 msgid ""
@@ -76274,6 +76081,8 @@ msgid ""
 "stealth mode with {stealthkey}. If you want to learn more about stealth, "
 "please ask me about it.\""
 msgstr ""
+"｢#oステルス#0はまるで異なったものです。{stealthkey} "
+"でステルスモードに入ったときだけ役に立ちます。ステルスについてもっと学びたければ、ステルスついてわたしに聞いてください｣"
 
 #: dat/shipai.lua:120
 msgid ""
@@ -76283,6 +76092,9 @@ msgid ""
 "a ship gets within the #ostealth#0 distance of your ship, it will slowly "
 "uncover you.\""
 msgstr ""
+"｢{stealthkey} でステルスモードを作動させられますが、ほかの船からじゅうぶん離れていて、ミサイルがあなたを捕捉していないときだけです。ステルス"
+"に入っていると、あなたの船はすべての船から完全に見えなくなります。けれども、もしある船があなたの船の#oステルス#0距離以内に入ると、じょじょにあなたの存"
+"在は暴露されていきます｣"
 
 #: dat/shipai.lua:121
 msgid ""
@@ -76292,6 +76104,9 @@ msgid ""
 "outfits that can change and modify this behaviour to get more out of stealth."
 "\""
 msgstr ""
+"｢あなたの船がほかの船から見えなくなるだけでなく、#0ステルス#0はあなたの船を 50% 遅くして、重力の存在をおおい隠します。これにはジャンプポイントか"
+"らもっと離れたところでジャンプから出るという効果もあります。このふるまいを変えたり加減したりできる艤装品はたくさんあって、ステルスからもっと利益を得られる"
+"ようになります｣"
 
 #: dat/shipai.lua:122
 msgid ""
@@ -76304,6 +76119,10 @@ msgid ""
 "their #ostealth#0 range, however, you will not be able to know where they "
 "are until you are on top of them.\""
 msgstr ""
+"｢ステルスに入っていないと、船はあなたの船を目標としてスキャンできます。これで望まない情報を暴露されることもあります。たとえば、違法な積み荷や艤装品などで"
+"す。スキャン時間は船の質量に依存します。もしスキャンされたくなかったら、できるだけステルスを使うべきです。敵船もステルスを使うことがあります。船があなたの"
+"#oステルス#0距離以内に入るとあなたの存在が暴露されるのと同様に、中立船や敵船の#oステルス#0距離以内に入ることでその船の存在をあきらかにできます。け"
+"れども、その船のすぐ近くに来るまでその船がどこにいるのか知ることはできないでしょう｣"
 
 #: dat/shipai.lua:123
 msgid ""
@@ -76312,6 +76131,8 @@ msgid ""
 "you may be commanding. Friendly ships will also not uncover your stealth, so "
 "it is good to make as many friends as possible.\""
 msgstr ""
+"｢最後ですが、僚船と戦闘機は先導船がステルスに入ると自動的にステルスになります。だからあなたが指揮する船にステルスを指示できなくても心配する必要はありませ"
+"ん。そのうえ、友好的な船はあなたのステルスを暴露することはありません。だからできるだけ多くの友人を作っておくとよいでしょう｣"
 
 #. Tries to give the player useful contextual information
 #: dat/shipai.lua:138
@@ -76322,6 +76143,8 @@ msgid ""
 "by boarding ships. Bribing hostile ships can also encourage them to give you "
 "fuel afterwards.\""
 msgstr ""
+"｢燃料がなくなっても、居住惑星があるなら着陸すれば無料で燃料補給ができます。とはいえ、もし時間を節約したかったり、ほかに選択肢がない場合は、通りすぎる船に"
+"呼びかければ燃料補給をしてもらえます。あるいは、船に移乗して強引に燃料を奪うこともできます。敵船にわいろを贈ると、あとで燃料補給をしてくれやすくなります｣"
 
 #: dat/shipai.lua:145
 msgid ""
@@ -76329,6 +76152,8 @@ msgid ""
 "pinch by bribing them so that they leave you alone. Not all pilots or "
 "factions are susceptible to bribing, however.\""
 msgstr ""
+"｢好ましくない敵に圧倒されているときに、見逃してもらうためにわいろを贈ると、ときどきは危難から脱出できることもあります。けれども、すべてのパイロットや党派"
+"がわいろを受けいれるとはかぎりません｣"
 
 #: dat/shipai.lua:152
 msgid ""
@@ -76339,6 +76164,9 @@ msgid ""
 "will your ship be cool, it will also have replenished all ammunition and "
 "fighters.\""
 msgstr ""
+"｢船や武器がとても熱くなったときには、安全にできるのだったら、ふつうは冷却器を作動させるのがよい考えです。{cooldownkey} "
+"か、{reversekey} のダブルタップで冷却器は起動できます。冷却にかかる時間はその船の大きさに依存します。ところで冷却が終わると船が冷えるだけでな"
+"く、すべての弾薬や戦闘機も補充されます｣"
 
 #: dat/shipai.lua:159
 msgid ""
@@ -76348,6 +76176,9 @@ msgid ""
 "you to repair your ship, and some ships have built-in  armour regeneration "
 "allowing you to survive longer in space.\""
 msgstr ""
+"｢一般的に、船は装甲の損害を宇宙で再生できません。もし装甲に大きな損害をうけたら、いちばんいいのは着陸できる安全な場所をがんばって見つけて、完全に修理する"
+"ことです。ですが、船を修理できるようにする数多くの異なる艤装品が存在しますし、船のなかには装甲再生機能が組みこまれていて、もっと長く宇宙で生きのびられるよ"
+"うにしてくれるものもあります｣"
 
 #. error has occurred
 #: src/ai.c:446
@@ -77239,7 +77070,7 @@ msgstr "ゲームの保存ファイルの圧縮を有効にするか"
 msgid ""
 "Doubletap sensitivity (used for double tap accel for afterburner or double "
 "tap reverse for cooldown)"
-msgstr ""
+msgstr "ダブルタップの感度 (アフターバーナーや冷却器の作動のために加速や逆推進をダブルタップするのに使う)"
 
 #: src/conf.c:968
 msgid ""
@@ -78320,14 +78151,12 @@ msgid "Pilot '%s' has escort '%s' docking error!"
 msgstr "Pilot '%s' has escort '%s' docking error!"
 
 #: src/escort.c:241
-#, fuzzy, c-format
-#| msgid "#gEscorts: #0Attacking %s."
+#, c-format
 msgid "#gEscorts: #0Destroying %s."
-msgstr "#g僚船 : #0%sを攻撃する。"
+msgstr "#g僚船 : #0%sを破壊する。"
 
 #: src/escort.c:243
-#, fuzzy, c-format
-#| msgid "#gEscorts: #0Attacking %s."
+#, c-format
 msgid "#gEscorts: #0Engaging %s."
 msgstr "#g僚船 : #0%sを攻撃する。"
 
@@ -78956,7 +78785,7 @@ msgstr "GUI の優先設定"
 #: src/info.c:393
 #, c-format
 msgid "Ship AI: '%s'"
-msgstr ""
+msgstr "Ship AI: '%s'"
 
 #: src/info.c:418
 msgid "GUI Override is not set."
@@ -79235,10 +79064,9 @@ msgid "Log entries:"
 msgstr "日誌の内容 :"
 
 #: src/info.c:1509
-#, fuzzy, c-format
-#| msgid "Invalid window info name '%s'."
+#, c-format
 msgid "Invalid info tab ID: %d"
-msgstr "Invalid window info name '%s'."
+msgstr "Invalid info tab ID: %d"
 
 #. Movement
 #: src/input.c:59
@@ -79569,16 +79397,12 @@ msgid "Toggles mouse flying."
 msgstr "マウスによる飛行をトグルする。"
 
 #: src/input.c:104
-#, fuzzy
-#| msgid "#oActive cooldown engaged."
 msgid "Active Cooldown"
-msgstr "#o冷却器を作動させました。"
+msgstr "冷却器の作動"
 
 #: src/input.c:104
-#, fuzzy
-#| msgid "#oActive cooldown engaged."
 msgid "Begins active cooldown."
-msgstr "#o冷却器を作動させました。"
+msgstr "冷却器の作動開始。"
 
 #. Communication
 #: src/input.c:106
@@ -81362,22 +81186,19 @@ msgid "Unknown marker type."
 msgstr "Unknown marker type."
 
 #: src/mission.c:415
-#, fuzzy, c-format
-#| msgid "System Marker to '%s' does not exist"
+#, c-format
 msgid "Mission Marker to system '%s' does not exist"
-msgstr "System Marker to '%s' does not exist"
+msgstr "Mission Marker to system '%s' does not exist"
 
 #: src/mission.c:425
-#, fuzzy, c-format
-#| msgid "System Marker to '%s' does not exist"
+#, c-format
 msgid "Mission Marker to planet '%s' does not exist"
-msgstr "System Marker to '%s' does not exist"
+msgstr "Mission Marker to planet '%s' does not exist"
 
 #: src/mission.c:520 src/mission.c:568
-#, fuzzy, c-format
-#| msgid "Planet '%s' is not in a system!"
+#, c-format
 msgid "Marked planet '%s' is not in any system!"
-msgstr "Planet '%s' is not in a system!"
+msgstr "Marked planet '%s' is not in any system!"
 
 #. not found
 #: src/mission.c:614
@@ -82929,10 +82750,8 @@ msgid "Enable manual zoom control"
 msgstr "手動ズーム制御"
 
 #: src/options.c:375
-#, fuzzy
-#| msgid "Enable double-tap afterburn"
 msgid "Enable double-tap afterburn/cooldown"
-msgstr "ダブルタップでアフターバーナー"
+msgstr "ダブルタップでアフターバーナー/冷却"
 
 #: src/options.c:378
 msgid "Enable mouse-flying (toggle with middle click)"
@@ -83327,7 +83146,7 @@ msgstr "無誘導"
 
 #: src/outfit.c:931
 msgid "Seek"
-msgstr "追尾"
+msgstr "追跡"
 
 #: src/outfit.c:932
 msgid "Smart"
@@ -84458,11 +84277,11 @@ msgstr "武器 - 設定"
 
 #: src/pilot_weapon.c:369
 msgid "Weapons - Instant"
-msgstr "武器 - 一瞬のみ"
+msgstr "武器 - 一瞬"
 
 #: src/pilot_weapon.c:370
 msgid "Abilities - Toggled"
-msgstr "能力 - 切り替え"
+msgstr "能力 - 切替"
 
 #: src/pilot_weapon.c:1163
 #, c-format
@@ -84622,10 +84441,9 @@ msgid "Trying to set player's hyperspace target to invalid ID '%d'"
 msgstr "Trying to set player's hyperspace target to invalid ID '%d'"
 
 #: src/player.c:1746
-#, fuzzy, c-format
-#| msgid "#rReceiving hail! Press %s to respond."
+#, c-format
 msgid "#rReceiving hail! Press #b%s#0 to respond."
-msgstr "#r呼びかけられました！　%sを押せば応答できます。"
+msgstr "#r呼びかけられました！　#b%s#0 を押せば応答できます。"
 
 #: src/player.c:1799
 msgid "#rAborting hyperspace sequence."
@@ -84904,16 +84722,14 @@ msgid "position"
 msgstr "所定の位置"
 
 #: src/player_autonav.c:203
-#, fuzzy, c-format
-#| msgid "#oAutonav: landing on %s."
+#, c-format
 msgid "#oAutonav: landing on #%c%s#0."
-msgstr "#o自動操縦装置 : %sに着陸します。"
+msgstr "#o自動操縦装置 : #%c%s#0に着陸します。"
 
 #: src/player_autonav.c:207
-#, fuzzy, c-format
-#| msgid "#oAutonav: arrived at #%c%s#0."
+#, c-format
 msgid "#oAutonav: approaching #%c%s#0."
-msgstr "#o自動操縦装置 : #%c%s#0に到着しました。"
+msgstr "#o自動操縦装置 : #%c%s#0に接近しています。"
 
 #: src/player_autonav.c:222
 #, c-format
@@ -84946,7 +84762,7 @@ msgstr "#o自動操縦装置 : #%c%s#0に到着しました。"
 #: src/player_autonav.c:434
 #, c-format
 msgid "#oAutonav: following target  %s has been lost."
-msgstr "#o自動操縦装置 : 追尾していた%sを見失いました。"
+msgstr "#o自動操縦装置 : 追跡していた%sを見失いました。"
 
 #: src/player_autonav.c:647
 msgid "Target changed to current system"
@@ -85715,7 +85531,7 @@ msgstr "海賊ステーション"
 
 #: src/space.c:220
 msgid "Robotic Station"
-msgstr "ロボット化ステーション"
+msgstr "ロボット式ステーション"
 
 # 全般的にSTから 造語あり?
 #: src/space.c:222
@@ -85802,10 +85618,8 @@ msgid "Planet '%s' not found in planetname stack"
 msgstr "Planet '%s' not found in planetname stack"
 
 #: src/space.c:916
-#, fuzzy
-#| msgid "Trying to find NULL planet..."
 msgid "Trying to find NULL planet…"
-msgstr "Trying to find NULL planet..."
+msgstr "Trying to find NULL planet…"
 
 #: src/space.c:925 src/space.c:935
 #, c-format
@@ -86126,10 +85940,9 @@ msgid_plural "       with %d Planets"
 msgstr[0] "       with %d Planet(s)"
 
 #: src/space.c:3836
-#, fuzzy, c-format
-#| msgid "Planet '%s' is not in a system!"
+#, c-format
 msgid "Marking planet '%s' that is not in any system!"
-msgstr "Planet '%s' is not in a system!"
+msgstr "Marking planet '%s' that is not in any system!"
 
 #. f, cur
 #. f, cur, max
