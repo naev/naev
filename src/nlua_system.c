@@ -408,7 +408,7 @@ static int systemL_interference( lua_State *L )
  *    - string : Gets distance to system matching name.
  *    - system : Gets distance to system
  *
- * @usage d = sys:jumpDist() -- Distance from sys to current system.
+ * @usage d = sys:jumpDist() -- Distance the current system to sys.
  * @usage d = sys:jumpDist( "Draygar" ) -- Distance from sys to system Draygar.
  * @usage d = sys:jumpDist( another_sys ) -- Distance from sys to another_sys.
  *
@@ -441,8 +441,10 @@ static int systemL_jumpdistance( lua_State *L )
       else
          NLUA_INVALID_PARAMETER(L);
    }
-   else
-      goal = cur_system->name;
+   else {
+      goal  = sys->name;
+      start = cur_system->name;
+   }
 
    /* Trivial case same system. */
    if (strcmp(start,goal)==0) {
