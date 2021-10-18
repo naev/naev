@@ -5,7 +5,6 @@
 --]]
 local vn = require "vn"
 local mt = require 'merge_tables'
-local portrait = require 'portrait' -- temporary for now
 
 local tutnel = {}
 

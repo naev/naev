@@ -6,7 +6,6 @@
 local vn = require "vn"
 local mt = require 'merge_tables'
 local love_shaders = require "love_shaders"
-local portrait = require 'portrait' -- temporary for now
 
 local tut = {}
 
