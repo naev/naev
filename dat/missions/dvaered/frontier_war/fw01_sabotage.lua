@@ -42,10 +42,6 @@ local fmt = require "format"
 npc_name = _("Captain Hamfresser")
 npc_desc = _("A tall and very large cyborg soldier sits against a wall, right next to the emergency exit. He loudly drinks an orange juice through a pink straw and suspiciously examines the other customers. By the power of his eyes he cleared a large area around him as people seem to prefer to move away instead of meeting his half-robotic gaze. Unfortunately, he matches the description of your contact, which means you will have to overcome your fear and talk to him.")
 
-tam_desc = _("Major Tam and Captain Leblanc seem to be waiting for you.")
-
-team_desc = _("Tam and Leblanc are congratulating their general.")
-
 osd_title = _("Dvaered Sabotage")
 
 misn_desc = _("You have to sabotage Lord Battleaddict's cruiser in order to ensure General Klank's victory at a duel.")
@@ -102,13 +98,13 @@ function land()
       misn.finish(false)
 
    elseif stage == 5 and planet.cur() == duelpla then -- Report back
-      tam = misn.npcAdd("majorTam", _("Major Tam and Captain Leblanc"), portrait_tam, tam_desc)
-      leb = misn.npcAdd("majorTam", _("Major Tam and Captain Leblanc"), portrait_leblanc, tam_desc)
+      tam = misn.npcAdd("majorTam", _("Major Tam and Captain Leblanc"), portrait_tam, _("Major Tam and Captain Leblanc seem to be waiting for you."))
+      leb = misn.npcAdd("majorTam", _("Major Tam and Captain Leblanc"), portrait_leblanc, _("Major Tam and Captain Leblanc seem to be waiting for you."))
 
    elseif stage == 7 and planet.cur() == duelpla then -- Epilogue
-      tam = misn.npcAdd("endMisn", _("Your employers"), portrait_tam, team_desc)
-      leb = misn.npcAdd("endMisn", _("Your employers"), portrait_leblanc, team_desc)
-      kla = misn.npcAdd("endMisn", _("Your employers"), portrait_klank, team_desc)
+      tam = misn.npcAdd("endMisn", _("Your employers"), portrait_tam, _("Tam and Leblanc are congratulating their general."))
+      leb = misn.npcAdd("endMisn", _("Your employers"), portrait_leblanc, _("Tam and Leblanc are congratulating their general."))
+      kla = misn.npcAdd("endMisn", _("Your employers"), portrait_klank, _("Tam and Leblanc are congratulating their general."))
    end
 end
 

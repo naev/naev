@@ -69,7 +69,6 @@ cargo_land_slow[2] = _("The containers of %s are rushed out of your vessel by a 
 cargo_land_slow[3] = _("The containers of %s are unloaded by an exhausted-looking bunch of dockworkers. You missed the deadline, so your reward is only %s instead of the %s you were hoping for.")
 
 osd_title = _("Rush cargo mission")
-osd_msg1 = _("Fly to %s in the %s system before %s\n(%s remaining)")
 
 -- Create the mission
 function create()
@@ -157,7 +156,7 @@ function accept()
    intime = true
    misn.cargoAdd(cargo, amount)
    local osd_msg = {}
-   osd_msg[1] = osd_msg1:format(
+   osd_msg[1] = _("Fly to %s in the %s system before %s\n(%s remaining)"):format(
       destplanet:name(), destsys:name(), timelimit:str(),
       (timelimit - time.get()):str() )
    misn.osdCreate(osd_title, osd_msg)
@@ -190,7 +189,7 @@ function tick()
    local osd_msg = {}
    if timelimit >= time.get() then
       -- Case still in time
-      osd_msg[1] = osd_msg1:format(
+      osd_msg[1] = _("Fly to %s in the %s system before %s\n(%s remaining)"):format(
          destplanet:name(), destsys:name(), timelimit:str(),
          (timelimit - time.get()):str() )
       misn.osdCreate(osd_title, osd_msg)

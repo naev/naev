@@ -79,9 +79,6 @@ osd_msg0 = _("Fly to the %s system.")
 misn_desc = _([[Captain Rebina of the Four Winds has asked you to help Four Winds agents protect an Imperial diplomat.]])
 misn_reward = _("A sum of money.")
 
-log_text_fail = _([[You failed to escort a diplomat to safety for the Four Winds.]])
-
-
 -- After having accepted the mission from the hailing Vendetta
 function create()
    misn.accept()
@@ -169,7 +166,7 @@ end
 function jumpout()
     if stage == 4 and not dpjump then
         tk.msg(_("You have left your charge behind!"), _([[You have jumped before the diplomat you were supposed to be protecting did. By doing so you have abandoned your duties, and failed your mission.]]))
-        shadow.addLog( log_text_fail )
+        shadow.addLog( _([[You failed to escort a diplomat to safety for the Four Winds.]]) )
         abort()
     end
     origin = system.cur()
@@ -239,7 +236,7 @@ function jumpin()
 
     if stage >= 3 and system.cur() ~= nextsys then -- case player is escorting AND jumped to somewhere other than the next escort destination
         tk.msg(_("You diverged!"), _([[You have jumped to the wrong system! You are no longer part of the mission to escort the diplomat.]]))
-        shadow.addLog( log_text_fail )
+        shadow.addLog( _([[You failed to escort a diplomat to safety for the Four Winds.]]) )
         abort()
     end
 
@@ -449,7 +446,7 @@ function escortDeath()
     elseif alive[2] then alive[2] = false
     else -- all escorts dead
         tk.msg(_("The escorts are dead!"), _([[All of the escorts have been destroyed. With the flight leader out of the picture, the diplomat has decided to call off the mission.]]))
-        shadow.addLog( log_text_fail )
+        shadow.addLog( _([[You failed to escort a diplomat to safety for the Four Winds.]]) )
         abort()
     end
 end
@@ -462,7 +459,7 @@ function diplomatDeath()
             j:control(false)
         end
     end
-    shadow.addLog( log_text_fail )
+    shadow.addLog( _([[You failed to escort a diplomat to safety for the Four Winds.]]) )
     abort()
 end
 

@@ -58,15 +58,6 @@ text[1] = _([[The bar is buzzing when you walk in. All the pilots are talking at
 title[11] = _("Volunteers")
 text[11] = _([[You step forward and eight other pilots join you. Together, all of you march off to the your ships and take off to face the pirate horde.]])
 
-commchatter = {}
-commchatter[1] = _("Eat vacuum, scum!")
-commchatter[2] = _("Die, pirate, die.")
-commchatter[3] = _("Eat cannon fire")
-commchatter[4] = _("Thieving parasites")
-commchatter[5] = _("I've got one on me!")
-
-commchatter[6] = _("That's right, run away you cowards.")
-commchatter[7] = _("Good job, everyone. Let's get back planetside and get our reward.")
 
 title[2] = _("Welcome back")
 text[2] = _([[The portmaster greets the crowd of volunteers on the spaceport causeway.
@@ -77,9 +68,6 @@ title[3] = _("Over drinks")
 text[3] = _([[Many periods later, the celebration has wound down. You find yourself drinking with a small group of 'veterans of the Battle of %s,' as some of them are calling it. A older pilot sits across the table and stares pensively into his drink.
     "It's strange, though," he mutters. "I've never seen pirates swarm like that before."]])
 
-commchatter[8] = _("You fled from the battle. The Empire won't forget.")
-commchatter[9] = _("Comm Trader>You're a coward, %s. You better hope I never see you again.")
-commchatter[10] = _("Comm Trader>You're running away now, %s? The fight's finished, you know...")
 title[4] = _("Good job!")
 text[4] = _([[You jump out of %s with the sweat still running down your face. The fight to clear the system was brief but intense. After a moment, another ship enters on the same vector. The blast marks on the sides of his craft show that it too comes from combat with the pirates. Your comm beeps.
     "Good flying, mate. We got those pirates on the run!" the pilot exclaims. "You didn't want to go back for the cash either, eh? I don't blame you. I hate pirates, but I don't want the Empire's money!" He smiles grimly. "It's strange, though. I've never seen pirates swarm that way before."
@@ -143,7 +131,7 @@ function enter_system()
       elseif victory == true and defender == true then
          hook.timer(1.0, "ship_enters")
       elseif defender == true then
-         player.msg( commchatter[8] )
+         player.msg( _("You fled from the battle. The Empire won't forget.") )
          faction.modPlayerSingle( "Empire", -3)
          misn.finish( true)
       elseif this_system == system.cur() and been_here_before ~= true then
@@ -198,7 +186,7 @@ function defend_system()
    end
 
    if pilot.get(fraider) == {} then
-      player.msg( commchatter[7] )
+      player.msg( _("Good job, everyone. Let's get back planetside and get our reward.") )
    end
 end
 
@@ -214,7 +202,7 @@ function add_cas_and_check()
    end
    if victory ~= true then   -- A few seconds after the raiders start to flee declare victory
    victory = true
-player.msg( commchatter[6] )
+player.msg( _("That's right, run away you cowards.") )
    hook.timer(8.0, "victorious")
    end
    end
@@ -222,7 +210,7 @@ end
 
    -- Call ships back to base
 function victorious()
-   player.msg( commchatter[7] )
+   player.msg( _("Good job, everyone. Let's get back planetside and get our reward.") )
 end
 
 -- The player lands to a warm welcome (if the job is done).
@@ -254,8 +242,8 @@ function abort()
    if victory ~= true then
       faction.modPlayerSingle( "Empire", -10)
       faction.modPlayerSingle( "Trader", -10)
-      player.msg( string.format( commchatter[9], player.name()) )
+      player.msg( string.format( _("Comm Trader>You're a coward, %s. You better hope I never see you again."), player.name()) )
    else
-      player.msg( string.format( commchatter[10], player.name()) )
+      player.msg( string.format( _("Comm Trader>You're running away now, %s? The fight's finished, you know..."), player.name()) )
    end
 end

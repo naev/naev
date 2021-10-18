@@ -58,8 +58,6 @@ npc_desc = _("You see Chelsea looking contemplative.")
 osd_desc    = {}
 osd_desc[1] = _("Escort Chelsea to %s in the %s system.")
 
-chelflee_msg = _("MISSION FAILED: Chelsea has abandoned the mission.")
-
 log_text = _([[You helped escort Chelsea through a dangerous cargo delivery mission where you had to protect her from the thugs of a shady company. She said that she would like to get back in touch with you again sometime for another mission.]])
 
 
@@ -228,7 +226,7 @@ function chelsea_jump( _p, jump_point )
       player.msg( _("Chelsea has jumped to %s."):format( jump_point:dest():name() ) )
       chelsea_jumped = true
    else
-      fail( chelflee_msg )
+      fail( _("MISSION FAILED: Chelsea has abandoned the mission.") )
    end
 end
 
@@ -238,7 +236,7 @@ function chelsea_land( _p, planet )
       player.msg( _("Chelsea has landed on %s."):format( planet:name() ) )
       chelsea_jumped = true
    else
-      fail( chelflee_msg )
+      fail( _("MISSION FAILED: Chelsea has abandoned the mission.") )
    end
 end
 

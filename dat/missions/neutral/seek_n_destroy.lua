@@ -36,7 +36,6 @@ local portrait = require "portrait"
 local pilotname = require "pilotname"
 local lmisn = require "lmisn"
 
-clue_title   = _("I know the pilot you're looking for")
 clue_text    = {}
 clue_text[1] = _("You ask for information about %s and the pilot tells you that this outlaw is supposed to have business in %s soon.")
 clue_text[2] = _([["%s? Yes, I know that scum. I've heard they like to hang around in %s. Good luck!"]])
@@ -116,7 +115,6 @@ pay_text[2] = _("No one will miss this outlaw pilot! The bounty has been deposit
 
 osd_title = _("Seek and Destroy")
 osd_msg    = {}
-osd_msg1_r = _("Fly to the %s system and search for clues")
 osd_msg[1] = " "
 osd_msg[2] = _("Kill %s")
 osd_msg[3] = _("Land on any %s planet and collect your bounty")
@@ -228,7 +226,7 @@ function accept ()
    hailhook = hook.hail( "hail" )
    landhook = hook.land( "land" )
 
-   osd_msg[1] = osd_msg1_r:format( mysys[1]:name() )
+   osd_msg[1] = _("Fly to the %s system and search for clues"):format( mysys[1]:name() )
    osd_msg[2] = osd_msg[2]:format( name )
    osd_msg[3] = osd_msg[3]:format( paying_faction:name() )
    misn.osdCreate( osd_title, osd_msg )
@@ -393,7 +391,7 @@ function hail( p )
          if not know then -- NPC does not know the target
             tk.msg( _("No clue"), dono_text[rnd.rnd(1,#dono_text)]:format( name ) )
          elseif tells then
-            tk.msg( clue_title, clue_text[rnd.rnd(1,#clue_text)]:format( name, mysys[cursys+1]:name() ) )
+            tk.msg( _("I know the pilot you're looking for"), clue_text[rnd.rnd(1,#clue_text)]:format( name, mysys[cursys+1]:name() ) )
             next_sys()
             target:setHostile( false )
          else
@@ -438,7 +436,7 @@ function space_clue ()
       if choice == 1 then
          if player.credits() >= price then
             player.pay(-price)
-            tk.msg( clue_title, clue_text[rnd.rnd(1,#clue_text)]:format( name, mysys[cursys+1]:name() ) )
+            tk.msg( _("I know the pilot you're looking for"), clue_text[rnd.rnd(1,#clue_text)]:format( name, mysys[cursys+1]:name() ) )
             next_sys()
             target:setHostile( false )
             target:comm(thank_comm[rnd.rnd(1,#thank_comm)])
@@ -556,7 +554,7 @@ function clue_bar()
          if choice == 1 then
             if player.credits() >= price then
                player.pay(-price)
-               tk.msg( clue_title, clue_text[rnd.rnd(1,#clue_text)]:format( name, mysys[cursys+1]:name() ) )
+               tk.msg( _("I know the pilot you're looking for"), clue_text[rnd.rnd(1,#clue_text)]:format( name, mysys[cursys+1]:name() ) )
                next_sys()
             else
                tk.msg( _("Not enough money"), _("You don't have enough money.") )
@@ -566,7 +564,7 @@ function clue_bar()
          end
 
       else -- NPC tells the clue
-         tk.msg( clue_title, clue_text[rnd.rnd(1,#clue_text)]:format( name, mysys[cursys+1]:name() ) )
+         tk.msg( _("I know the pilot you're looking for"), clue_text[rnd.rnd(1,#clue_text)]:format( name, mysys[cursys+1]:name() ) )
          next_sys()
       end
 
@@ -576,7 +574,7 @@ end
 
 function next_sys ()
    misn.markerMove (marker, mysys[cursys+1])
-   osd_msg[1] = osd_msg1_r:format( mysys[cursys+1]:name() )
+   osd_msg[1] = _("Fly to the %s system and search for clues"):format( mysys[cursys+1]:name() )
    misn.osdCreate( osd_title, osd_msg )
    increment = true
 end

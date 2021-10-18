@@ -29,7 +29,6 @@ piracyrisk[3] = _("#nPiracy Risk:#0 Medium")
 piracyrisk[4] = _("#nPiracy Risk:#0 High")
 
 osd_title = _("Empire Shipping")
-osd_msg1 = _("Fly to %s in the %s system before %s\n(%s remaining)")
 
 --[[
 --    Empire shipping missions are always timed, but quite lax on the schedules
@@ -118,7 +117,7 @@ function accept()
       _("The Empire workers load the %s of %s onto your ship."),
       fmt.tonnes(amount), _(cargo) ) )
    local osd_msg = {}
-   osd_msg[1] = osd_msg1:format(
+   osd_msg[1] = _("Fly to %s in the %s system before %s\n(%s remaining)"):format(
       destplanet:name(), destsys:name(), timelimit:str(),
       ( timelimit - time.get() ):str() )
    misn.osdCreate(osd_title, osd_msg)
@@ -152,7 +151,7 @@ function tick()
    if timelimit >= time.get() then
       -- Case still in time
       local osd_msg = {}
-      osd_msg[1] = osd_msg1:format(
+      osd_msg[1] = _("Fly to %s in the %s system before %s\n(%s remaining)"):format(
          destplanet:name(), destsys:name(), timelimit:str(),
          ( timelimit - time.get() ):str() )
       misn.osdCreate(osd_title, osd_msg)

@@ -51,7 +51,6 @@ oldman_portrait = "old_man.png"
 oldman_image = "old_man.png"
 
 scav_portrait = "scavenger1.png"
-scav_desc = _("You see a pair of dirty looking fellows talking loudly among themselves.")
 scavengera_image = "scavenger1.png"
 scavengerb_image = scavengera_image
 scavengera_portrait = "scavenger1.png"
@@ -114,7 +113,7 @@ function generate_npc ()
    if planet.cur() == planet.get("Cerberus") then
       npc_oldman = misn.npcAdd( "approach_oldman", _("Old Man"), oldman_portrait, _("You see a nonchalant old man sipping on his drink with a carefree aura.") )
       if misn_state==3 or misn_state==4 or bribed_scavengers==true then
-         npc_scavenger = misn.npcAdd( "approach_scavengers", _("Scavengers"), scav_portrait, scav_desc )
+         npc_scavenger = misn.npcAdd( "approach_scavengers", _("Scavengers"), scav_portrait, _("You see a pair of dirty looking fellows talking loudly among themselves.") )
       end
    elseif planet.cur() == planet.get("Minerva Station") then
       npc_maikki = misn.npcAdd( "approach_maikki", minerva.maikki.name, minerva.maikki.portrait, minerva.maikki.description )
@@ -341,7 +340,7 @@ He downs his drink and orders another.]]))
    vn.func( function ()
       if misn_state==2 then
          misn_state=3
-         npc_scavenger = misn.npcAdd( "approach_scavengers", _("Scavengers"), scav_portrait, scav_desc )
+         npc_scavenger = misn.npcAdd( "approach_scavengers", _("Scavengers"), scav_portrait, _("You see a pair of dirty looking fellows talking loudly among themselves.") )
       end
    end )
    vn.jump( "menu_msg" )

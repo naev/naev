@@ -62,7 +62,6 @@ lore_text[4] = _([["Oh, the captain is doing well. He spent a few periods at the
    "Oh, and we went to the funerals of the one who died, the private Amadeus Tronk, officially killed in training, of course. It was nice. Leblanc's squadron has made an aerial meeting with a mace rocket concerto for the occasion, and we organized a fight to death between a convicted criminal and a gladiator in General Klank's private arena. The role of it is to honour the memory of the dead warrior, and also to have some fun."]])
 
 flee_text = _("You were supposed to wait for Strafer to scan the system, and then if needed, kill the hostiles.")
-clean_text = _("You were supposed to clean the system before pursuing the fleeing ship.")
 
 tflee_text = _([[Two of your targets went away. If there was only one, it could be manageable, but now, the mission has failed.]])
 
@@ -72,9 +71,6 @@ execution_text1 = _([[You land and walk around the spacedock, in search of your 
 
 pay_title = _("Mission accomplished")
 pay_text = _("Your mission is a success, except for the escape of the enemy leader, Colonel Hamelsen. You can now collect your %s reward.")
-
-killAll      = _("The last target was destroyed! You can now land.")
-pursuitMsg  = _("The target ran away again: continue the pursuit.")
 
 misn_desc = _("You take part of an operation whose goal is to trap and destroy a group of well armed henchmen who are after Major Tam.")
 misn_reward = _("It depends how many of your wingmen come back.")
@@ -205,7 +201,7 @@ function enter()
       tk.msg(_("What are you doing here?"), flee_text)
       misn.finish(false)
    elseif stage == 3 or stage == 5 then
-      tk.msg( _("What are you doing here?"), clean_text )
+      tk.msg( _("What are you doing here?"), _("You were supposed to clean the system before pursuing the fleeing ship.") )
       misn.finish(false)
    elseif stage == 6 then
       tk.msg(_("What are you doing here?"), _("You were supposed to land on %s."):format(nextt:name()))
@@ -246,7 +242,7 @@ function land()
 
    -- More illegitimate landings
    elseif stage == 3 or stage == 5 then
-      tk.msg( _("What are you doing here?"), clean_text )
+      tk.msg( _("What are you doing here?"), _("You were supposed to clean the system before pursuing the fleeing ship.") )
       misn.finish(false)
    elseif stage == 4 then
       tk.msg(_("What are you doing here?"), _("You were supposed to jump to %s."):format(nextt:name()))
@@ -462,7 +458,7 @@ function baddie_death( pilot )
       player.msg( _("One of the targets was destroyed!") )
       if deadtarget >= 3 then
          tk.msg(_("All targets eliminated"), _([[All three primary targets have been eliminated. The remaining ones are not dangerous anymore now. You can land to get your reward.]]))
-         player.msg( killAll )
+         player.msg( _("The last target was destroyed! You can now land.") )
          stage = 2
          misn.osdActive(4)
       end
@@ -562,7 +558,7 @@ end
 
 -- Killed the last enemy after the pursuit
 function lastOne_died()
-   player.msg( killAll )
+   player.msg( _("The last target was destroyed! You can now land.") )
    stage = 2
    misn.osdActive(4)
    if shi:nameRaw() == "Kestrel" then
@@ -572,7 +568,7 @@ end
 
 -- Pursued enemy jumped out (this is actually kind of unlikely, but...)
 function lastOne_jumped( pilot, jump )
-   player.msg(pursuitMsg)
+   player.msg(_("The target ran away again: continue the pursuit."))
    stage = 4
    nextt = jump:dest()
    arm, sld, str = pilot:health()
@@ -582,7 +578,7 @@ end
 
 -- Pursued enemy landed (this is actually kind of unlikely, but...)
 function lastOne_landed( pilot, planet )
-   player.msg(pursuitMsg)
+   player.msg(_("The target ran away again: continue the pursuit."))
    stage = 6
    nextt = planet
    shi = pilot:ship()

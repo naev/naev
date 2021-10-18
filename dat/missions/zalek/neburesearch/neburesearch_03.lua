@@ -30,12 +30,10 @@ local zlk = require "common.zalek"
 misn_reward = _("a reputation as scientist (?)")
 lab_coat_text = _([[You enter a shop that sells only lab coats. The assortment of lab coats is impressive: lab coats of all colors, different materials, and cuts. There are distinct sections for casual and working lab coats. Whatever the difference is, it is too subtle for you to grasp. You settle on a "business" lab coat because something formal is probably suitable for your talk. The price tag reads %s. %s]])
 electronics_text = _([[While walking through a store selling electronics you notice a pair of glasses with integrated displays. You could use them to display the text you are supposed to recite. They are rather expensive though, %s. %s]])
-timeup_text = _([[It's time to go to the institute.]])
 
 -- Mission info stuff
 osd_msg   = {}
 osd_title = _("The Substitute Speaker")
-osd_msg1 = _("Fly to %s in the %s system before %s\n(%s remaining)")
 
 log_text = _([[You gave a scientific talk in %s. Did anyone noticed you're not a scientist?]])
 
@@ -78,7 +76,7 @@ function accept()
     misn_marker = misn.markerAdd(dest_sys, "high")
 
     misn.accept()
-    osd_msg[1] = osd_msg1:format(dest_planet:name(), dest_sys:name(), timelimit:str(), (timelimit - time.get()):str())
+    osd_msg[1] = _("Fly to %s in the %s system before %s\n(%s remaining)"):format(dest_planet:name(), dest_sys:name(), timelimit:str(), (timelimit - time.get()):str())
     misn.osdCreate(osd_title, osd_msg)
 
     hook.land("land")
@@ -99,7 +97,7 @@ function enter_ship()
     local c
     time_left = time_left - 1
     if time_left < 0 then
-        tk.msg(_("Time to visit the institute"), timeup_text)
+        tk.msg(_("Time to visit the institute"), _([[It's time to go to the institute.]]))
         start_talk()
         return
     end
@@ -128,7 +126,7 @@ function enter_spaceport()
     local c
     time_left = time_left - 1
     if time_left < 0 then
-        tk.msg(_("Time to visit the institute"), timeup_text)
+        tk.msg(_("Time to visit the institute"), _([[It's time to go to the institute.]]))
         start_talk()
         return
     end
@@ -219,7 +217,7 @@ function tick()
         player.msg(_("You were too late. You're never going to be a great scientist!"))
         misn.finish(false)
     else
-        osd_msg[1] = osd_msg1:format(dest_planet:name(), dest_sys:name(), timelimit:str(), (timelimit - time.get()):str())
+        osd_msg[1] = _("Fly to %s in the %s system before %s\n(%s remaining)"):format(dest_planet:name(), dest_sys:name(), timelimit:str(), (timelimit - time.get()):str())
         misn.osdCreate(osd_title, osd_msg)
     end
 end

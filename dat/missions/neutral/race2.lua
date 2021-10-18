@@ -25,7 +25,6 @@ local fmt = require "format"
 
 text = {}
 title = {}
-ftext = {}
 
 title[1] = _("Another race")
 text[1] = _([["Hey there, great to see you back! You want to have another race?"]])
@@ -42,15 +41,6 @@ title[3] = _("Checkpoint %s reached")
 text[3] = _("Proceed to Checkpoint %s")
 
 text[4] = _("Proceed to land at %s")
-
-ftext[1] = _([["You have switched to a ship that's not allowed in this race. Mission failed."]])
-
-ftext[2] = _([["Because you left the race, you have been disqualified."]])
-
-ftext[3] = _([[As you congratulate the winner on a great race, the laid back person comes up to you.
-   "That was a lot of fun! If you ever have time, let's race again. Maybe you'll win next time!"]])
-
-ftext[4] = _([["You have outfits on your ship which is not allowed in this race in hard mode. Mission failed."]])
 
 OSD = {}
 OSD[1] = _("Board checkpoint 1")
@@ -106,13 +96,13 @@ end
 
 function takeoff()
    if player.pilot():ship():class() ~= "Yacht" then
-      tk.msg(_("Illegal ship!"), ftext[1])
+      tk.msg(_("Illegal ship!"), _([["You have switched to a ship that's not allowed in this race. Mission failed."]]))
       misn.finish(false)
    end
    if choice ~= 1 then
       for k,v in ipairs(player.pilot():outfits()) do
          if v == outfit.get("Unicorp Light Afterburner") or v == outfit.get("Hellburner") then
-            tk.msg(_("Illegal ship!"), ftext[4])
+            tk.msg(_("Illegal ship!"), _([["You have outfits on your ship which is not allowed in this race in hard mode. Mission failed."]]))
             misn.finish(false)
          end
       end
@@ -273,7 +263,7 @@ function board(ship)
 end
 
 function jumpin()
-   tk.msg(_("You left the race!"), ftext[2])
+   tk.msg(_("You left the race!"), _([["Because you left the race, you have been disqualified."]]))
    misn.finish(false)
 end
 
@@ -293,11 +283,12 @@ function land()
          player.pay(credits)
          misn.finish(true)
       else
-         tk.msg(_("You failed to win the race."), ftext[3])
+         tk.msg(_("You failed to win the race."), _([[As you congratulate the winner on a great race, the laid back person comes up to you.
+   "That was a lot of fun! If you ever have time, let's race again. Maybe you'll win next time!"]]))
          misn.finish(false)
       end
    else
-      tk.msg(_("You left the race!"), ftext[2])
+      tk.msg(_("You left the race!"), _([["Because you left the race, you have been disqualified."]]))
       misn.finish(false)
    end
 end

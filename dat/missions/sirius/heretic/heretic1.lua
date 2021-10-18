@@ -33,7 +33,6 @@ local srs = require "common.sirius"
 --random odds and ends
 misn_title = _("The Return")
 npc_name = _("A Tall Man")
-bar_desc = _("A tall man sitting at a table littered with papers.")
 misn_desc = _("Shaman of Nasin has hired you to deliver the message to %s in the %s system.")
 osd = {}
 osd[1] = _("Fly to %s in the %s system and deliver the message")
@@ -51,8 +50,8 @@ function create()
    --set the mission stuff
    misn.setTitle(misn_title)
    misn.setReward(fmt.credits(reward))
-   misn.setNPC(npc_name, "sirius/unique/shaman.webp", bar_desc)
-   misn.setDesc(bar_desc)
+   misn.setNPC(npc_name, "sirius/unique/shaman.webp", _("A tall man sitting at a table littered with papers."))
+   misn.setDesc(_("A tall man sitting at a table littered with papers."))
 
    osd[1] = osd[1]:format(targetasset:name(),targetsystem:name())
    misn_desc = misn_desc:format(targetasset:name(),targetsystem:name())

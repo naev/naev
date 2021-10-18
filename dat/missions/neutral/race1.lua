@@ -24,7 +24,6 @@ local fmt = require "format"
 
 text = {}
 title = {}
-ftext = {}
 
 title[1] = _("Looking for a 4th")
 text[1] = _([["Hiya there! We're having a race around this system system soon and need a 4th person to participate. You have to bring a Yacht class ship, and there's a prize of %s if you win. Interested?"]])
@@ -36,13 +35,6 @@ title[3] = _("Checkpoint %s reached")
 text[3] = _("Proceed to Checkpoint %s")
 
 text[4] = _("Land on %s")
-
-ftext[1] = _([["You have switched to a ship that's not allowed in this race. Mission failed."]])
-
-ftext[2] = _([["Because you left the race, you have been disqualified."]])
-
-ftext[3] = _([[As you congratulate the winner on a great race, the laid back person comes up to you.
-   "That was a lot of fun! If you ever have time, let's race again. Maybe you'll win next time!"]])
 
 OSD = {}
 OSD[1] = _("Board checkpoint 1")
@@ -89,7 +81,7 @@ end
 
 function takeoff()
    if player.pilot():ship():class() ~= "Yacht" then
-      tk.msg(_("Illegal ship!"), ftext[1])
+      tk.msg(_("Illegal ship!"), _([["You have switched to a ship that's not allowed in this race. Mission failed."]]))
       abort()
    end
    planetvec = planet.pos(curplanet)
@@ -245,7 +237,7 @@ end
 
 
 function jumpin()
-   tk.msg(_("You left the race!"), ftext[2])
+   tk.msg(_("You left the race!"), _([["Because you left the race, you have been disqualified."]]))
    abort()
 end
 
@@ -263,12 +255,13 @@ function land()
          player.pay(credits)
          misn.finish(true)
       else
-         tk.msg(_("You failed to win the race."), ftext[3])
+         tk.msg(_("You failed to win the race."), _([[As you congratulate the winner on a great race, the laid back person comes up to you.
+   "That was a lot of fun! If you ever have time, let's race again. Maybe you'll win next time!"]]))
          abort()
 
       end
    else
-      tk.msg(_("You left the race!"), ftext[2])
+      tk.msg(_("You left the race!"), _([["Because you left the race, you have been disqualified."]]))
       abort()
    end
 end

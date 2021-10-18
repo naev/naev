@@ -125,18 +125,9 @@ title[20] = _("No room, no job")
 text[20] = _([[As you enter the bar, the nerds are immediately upon you. "What is it with you?" Mia asks. "Is it so hard to make some room for our box? I am fed up with you. Consider our agreement nullified. I hope to never again have business with you." Some angry stares later, the nerds are gone, trying to find another pilot.]])
 
 -- OSD texts
-textosd = {}
 -- stage 1
-textosd[1] = _("Bring the nerds and their box to %s before %s")
-textosd[2] = _("You have %s remaining")
-textosd[3] = _("You're late and the nerds are getting angry and abusive; land to get rid of the nerds and their box")
 -- stage 2
-textosd[4] = _("Wait several periods in this system until hailed by the nerds for their return trip")
-textosd[5] = _("Pick up the nerds on %s for their return trip to %s")
-textosd[6] = _("The nerds are getting impatient")
-textosd[7] = _("You didn't pick up the nerds in time")
 -- stage 3
-textosd[8] = _("Return the nerds to %s")
 
 -- displayed if you leave without the nerd's authorization
 
@@ -192,7 +183,7 @@ function accept ()
 
       addNerdCargo()
       lhook = hook.land("nerds_land1", "land")
-      misn.osdCreate( misn_title, {string.format(textosd[1], destPlanet:name(), time.str(expiryDate, 1)), string.format(textosd[2], time.str(expiryDate - time.get(), 1))})
+      misn.osdCreate( misn_title, {string.format(_("Bring the nerds and their box to %s before %s"), destPlanet:name(), time.str(expiryDate, 1)), string.format(_("You have %s remaining"), time.str(expiryDate - time.get(), 1))})
       dhook = hook.date(time.create(0, 0, 100), "nerds_fly1")
    end
 end
@@ -214,7 +205,7 @@ function nerds_land1()
       if intime then
       -- in time, right planet
          tk.msg(title[3], string.format(text[3], player.name(), srcPlanet:name() ))
-           misn.osdCreate( misn_title, {textosd[4]} )
+           misn.osdCreate( misn_title, {_("Wait several periods in this system until hailed by the nerds for their return trip")} )
          expiryDate = time.get() + time.create(0, 0, 36000+rnd.rnd(-7500,7500), 0)
          hailed = false
          impatient = false
@@ -240,9 +231,9 @@ end
 function nerds_fly1()
    intime = expiryDate >= time.get()
    if intime then
-      misn.osdCreate( misn_title, {string.format(textosd[1], destPlanet:name(), time.str(expiryDate, 2)), string.format(textosd[2], time.str(expiryDate - time.get(), 1))})
+      misn.osdCreate( misn_title, {string.format(_("Bring the nerds and their box to %s before %s"), destPlanet:name(), time.str(expiryDate, 2)), string.format(_("You have %s remaining"), time.str(expiryDate - time.get(), 1))})
    else
-      misn.osdCreate( misn_title, {string.format(textosd[1], destPlanet:name(), time.str(expiryDate, 2)), textosd[3]})
+      misn.osdCreate( misn_title, {string.format(_("Bring the nerds and their box to %s before %s"), destPlanet:name(), time.str(expiryDate, 2)), _("You're late and the nerds are getting angry and abusive; land to get rid of the nerds and their box")})
       misn.osdActive(2)
    end
 end
@@ -298,7 +289,7 @@ end
 function nerds_fly2()
    if not hailed and time.get() > expiryDate then
       tk.msg(title[6], string.format(text[6], srcPlanet:name()) )
-        misn.osdCreate( misn_title, {string.format(textosd[5], destPlanet:name(), srcPlanet:name())})
+        misn.osdCreate( misn_title, {string.format(_("Pick up the nerds on %s for their return trip to %s"), destPlanet:name(), srcPlanet:name())})
       hailed = true
    end
 
@@ -306,7 +297,7 @@ function nerds_fly2()
 
    -- no pickup since hail+2STP+1STP: mission failed (however, you must still land somewhere)
    if not intime then
-        misn.osdCreate( misn_title, {string.format(textosd[5], destPlanet:name(), srcPlanet:name()), textosd[7] })
+        misn.osdCreate( misn_title, {string.format(_("Pick up the nerds on %s for their return trip to %s"), destPlanet:name(), srcPlanet:name()), _("You didn't pick up the nerds in time") })
         misn.osdActive(2)
    end
 
@@ -316,7 +307,7 @@ function nerds_fly2()
          tk.msg(title[7], string.format(text[7], srcPlanet:name()) )
          impatient = true
       end
-        misn.osdCreate( misn_title, {string.format(textosd[5], destPlanet:name(), srcPlanet:name()), textosd[6], string.format(textosd[2], time.str(expiryDate + time.create(0,3,0) - time.get(), 2)) })
+        misn.osdCreate( misn_title, {string.format(_("Pick up the nerds on %s for their return trip to %s"), destPlanet:name(), srcPlanet:name()), _("The nerds are getting impatient"), string.format(_("You have %s remaining"), time.str(expiryDate + time.create(0,3,0) - time.get(), 2)) })
         misn.osdActive(2)
    end
 end
@@ -352,7 +343,7 @@ end
 -- common prep for the final stage
 function nerds_return()
    addNerdCargo()
-   misn.osdCreate(misn_title, { string.format(textosd[8], srcPlanet:name() ) })
+   misn.osdCreate(misn_title, { string.format(_("Return the nerds to %s"), srcPlanet:name() ) })
    lhook = hook.land("nerds_land3", "land")
 end
 

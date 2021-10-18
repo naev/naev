@@ -42,7 +42,6 @@ osd_text[4] = _("Search for Cynthia on Emperor's Fist in Gamma Polaris")
 osd_text["__save"] = true
 
 -- Can't let them see what's coming up, can I?
-osd4 = _("Return Cynthia to her father on Zhiru in the Goddard system")
 
 function create ()
    targetworld_sys = system.get("Dohriabi")
@@ -98,7 +97,7 @@ function land ()
 
       --Add in the *secret* OSD text
       osd_text[3] = _("Catch Cynthia on Torloth in Cygnus")
-      osd_text[4] = osd4
+      osd_text[4] = _("Return Cynthia to her father on Zhiru in the Goddard system")
 
       --Update the OSD
       misn.osdDestroy()
@@ -132,7 +131,7 @@ function land ()
    elseif planet.cur() == planet.get("Zhiru") then
 
       --Talk to the father and get the reward
-      if misn.osdGetActive() == osd4 then
+      if misn.osdGetActive() == _("Return Cynthia to her father on Zhiru in the Goddard system") then
          tk.msg(title, _("As Cynthia sees her father, she begins her crying anew. You overhear the father talking about how her abusive mother died. Cynthia becomes visibly happier, so you pick up your payment and depart."))
          player.pay(reward)
          misn.cargoRm(cargoID)

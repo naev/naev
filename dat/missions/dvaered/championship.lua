@@ -36,7 +36,6 @@ title = {}
 text = {}
 osd_msg = {}
 npc_desc = {}
-bar_desc = {}
 
 title[1] = _("Do you want to take part to a challenge?")
 text[1] = _([["Hello, I'm a member of the staff of the Dvaered dogfight challenge. Here are the rules: you need to take off with a fighter-class ship and to join your starting mark. After that, you will try to disable your opponent. Don't kill them; the security staff won't forgive that. It is forbidden to use missiles, so you won't be allowed to have those equipped while taking off. It's also forbidden to board the opponent's ship and to attack him before the signal is given. You are not allowed to land on any planet or jump away during the championship.
@@ -64,22 +63,16 @@ misn_desc = _("You are taking part in a fight contest. Try to do your best!")
 
 -- NPC
 npc_desc[1] = _("An official")
-bar_desc[1] = _("This person seems to be looking for suitable combat pilots.")
 
 npc_desc[2] = _("Pilot")
-bar_desc[2] = _("This pilot looks very self-confident")
 
 npc_desc[3] = _("Pilot")
-bar_desc[3] = _("This pilot seems to work as a private combat pilot")
 
 npc_desc[4] = _("Imperial pilot")
-bar_desc[4] = _([[This pilot is is clearly from the Empire.]])
 
 npc_desc[5] = _("Dvaered pilot")
-bar_desc[5] = _([[This pilot surely works as a Vendetta pilot.]])
 
 npc_desc[6] = _("Strange pilot")
-bar_desc[6] = _([[This pilot looks like a pirate, but strangely enough, the authorities don't seem worried.]])
 
 npc_portrait = {}
 npc_portrait[2] = portrait.get()
@@ -111,24 +104,24 @@ function create ()
    end
 
    officialFace = portrait.getMil( "Dvaered" )
-   official = misn.setNPC(npc_desc[1], officialFace, bar_desc[1])
+   official = misn.setNPC(npc_desc[1], officialFace, _("This person seems to be looking for suitable combat pilots."))
 end
 
 function populate_bar() --add some random npcs
    if rnd.rnd() < 0.5 then
-      misn.npcAdd("competitor1", npc_desc[2], npc_portrait[2], bar_desc[2])
+      misn.npcAdd("competitor1", npc_desc[2], npc_portrait[2], _("This pilot looks very self-confident"))
    end
    if rnd.rnd() < 0.5 then
-      misn.npcAdd("competitor2", npc_desc[3], npc_portrait[3], bar_desc[3])
+      misn.npcAdd("competitor2", npc_desc[3], npc_portrait[3], _("This pilot seems to work as a private combat pilot"))
    end
    if rnd.rnd() < 0.5 then
-      misn.npcAdd("competitor3", npc_desc[4], npc_portrait[4], bar_desc[4])
+      misn.npcAdd("competitor3", npc_desc[4], npc_portrait[4], _([[This pilot is is clearly from the Empire.]]))
    end
    if rnd.rnd() < 0.5 then
-      misn.npcAdd("competitor4", npc_desc[5], npc_portrait[5], bar_desc[5])
+      misn.npcAdd("competitor4", npc_desc[5], npc_portrait[5], _([[This pilot surely works as a Vendetta pilot.]]))
    end
    if rnd.rnd() < 0.5 then
-      misn.npcAdd("competitor5", npc_desc[6], npc_portrait[6], bar_desc[6])
+      misn.npcAdd("competitor5", npc_desc[6], npc_portrait[6], _([[This pilot looks like a pirate, but strangely enough, the authorities don't seem worried.]]))
    end
 end
 
@@ -409,7 +402,7 @@ function land()
       tk.msg(title[3], text[3])
 
       populate_bar()
-      official = misn.npcAdd("cleanNbegin", npc_desc[1], officialFace, bar_desc[1])
+      official = misn.npcAdd("cleanNbegin", npc_desc[1], officialFace, _("This person seems to be looking for suitable combat pilots."))
 
       elseif stage == 3 and planet.cur() == mispla then  --player will be payed
 

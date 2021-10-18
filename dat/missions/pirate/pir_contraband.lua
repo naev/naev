@@ -27,7 +27,6 @@ local fmt = require "format"
 misn_desc = _("Smuggling contraband goods to %s in the %s system.%s")
 
 osd_title = _("Smuggling %s")
-osd_msg1 = _("Fly to %s in the %s system before %s\n(%s remaining)")
 
 --[[
 --   Pirates shipping missions are always timed, but quite lax on the schedules
@@ -193,7 +192,7 @@ function accept()
       _("%s of %s are loaded onto your ship."), fmt.tonnes(amount),
       _(cargo) ) )
    local osd_msg = {}
-   osd_msg[1] = osd_msg1:format(
+   osd_msg[1] = _("Fly to %s in the %s system before %s\n(%s remaining)"):format(
       destplanet:name(), destsys:name(), timelimit:str(),
       (timelimit - time.get()):str() )
    misn.osdCreate( string.format(osd_title,cargo), osd_msg)
@@ -221,7 +220,7 @@ function tick()
    if timelimit >= time.get() then
       -- Case still in time
       local osd_msg = {}
-      osd_msg[1] = osd_msg1:format(
+      osd_msg[1] = _("Fly to %s in the %s system before %s\n(%s remaining)"):format(
          destplanet:name(), destsys:name(), timelimit:str(),
          ( timelimit - time.get() ):str() )
       misn.osdCreate(string.format(osd_title,cargo), osd_msg)

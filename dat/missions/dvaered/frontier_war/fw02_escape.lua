@@ -58,7 +58,6 @@ misn_desc = _("You will help a Goddard executive to evade his Za'lek prison.")
 misn_reward = _("Hopefully something better than Gauss Guns...")
 
 osd_title = _("Dvaered Escape")
-osd_msg4  = _("Land anywhere to let Hamfresser steal a machine. Time left: %s")
 osd_msg7  = _("Escape to %s in %s. Thanks to your new fake transponder, the squadrons should not stop you anymore")
 
 commMass = 4
@@ -459,13 +458,13 @@ function weNeed2land()
    "Then, Tronk paralyzed all the prisoners and we identified and recovered the target. That's why the guy is blue actually. But in his hurry, Tronk used the armor-piercing dose. According to the medic, it is worse that we first thought. Apparently, she can keep the guy alive for a few periods, but she needs a machine that is not on board to save him. So at next stop, I'm afraid we will have to steal the machine at the spaceport's hospital. It really annoys me as it's the kind of operation that can get ugly very quickly, especially since the killing interdiction still runs, but we have no choice. I'll just be waiting for your signal at the bar next time we land.
    "If I may, I'd advise you to land somewhere within 3 periods, otherwise the VIP is likely to die, and to choose a place with a shipyard and an outfitter so that you'll be able to prepare your ship at best in case we need to escape quickly."]]))
    timelimit = time.get() + time.create(0,3,0)
-   misn.osdCreate(osd_title, {osd_msg4:format((timelimit - time.get()):str())})
+   misn.osdCreate(osd_title, {_("Land anywhere to let Hamfresser steal a machine. Time left: %s"):format((timelimit - time.get()):str())})
    datehook = hook.date(time.create(0, 0, 100), "tick")
 end
 
 function tick()
    if timelimit >= time.get() then
-      misn.osdCreate(osd_title, {osd_msg4:format((timelimit - time.get()):str())})
+      misn.osdCreate(osd_title, {_("Land anywhere to let Hamfresser steal a machine. Time left: %s"):format((timelimit - time.get()):str())})
    else
       tk.msg(_("The mission failed"), _([[Hamfresser rushes to the bridge. "All is lost, %s! The guy died. Our mission failed!"]]):format(player.name()))
       misn.finish(false)

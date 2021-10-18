@@ -90,13 +90,9 @@ sol2_title = { _("They didn't need a third player") }
 sol2_text = { _("They don't seem to appreciate your company. You decide to leave them to their game.") }
 
 -- OSD stuff
-osd_msg1  = {}
 
 osd_title = _("Shadowrun")
 
-osd_msg1[1] = _("Fly to planet %s in the %s system and pick up Jorek")
-osd_msg1[2] = _("You have %s remaining")
-osd_msg1["__save"] = true
 
 log_text = _([[You participated in an operation for Captain Rebina. You thought you were rescuing a man named Jorek, but it turns out that you were actually helping smuggle something onto Captain Rebina's ship, the Seiryuu. You know next to nothing about Captain Rebina or who she works for.]])
 
@@ -131,8 +127,8 @@ function accept()
       misn.setTitle(misn_title)
       misn.setReward(misn_reward)
       misn.setDesc(string.format(misn_desc[1], planetname, sysname, sysname2, shipname))
-      misn.osdCreate(osd_title, { string.format(osd_msg1[1], planetname, sysname),
-                                  string.format(osd_msg1[2], time.str(deadline1 - time.get()))
+      misn.osdCreate(osd_title, { string.format(_("Fly to planet %s in the %s system and pick up Jorek"), planetname, sysname),
+                                  string.format(_("You have %s remaining"), time.str(deadline1 - time.get()))
                                 })
       misn_marker = misn.markerAdd( sys, "low" )
       shadowrun = 2
@@ -196,8 +192,8 @@ function date()
    -- Deadline stuff
    if deadline1 >= time.get() and shadowrun == 2 then
       dateresolution(deadline1)
-      misn.osdCreate(osd_title, { string.format(osd_msg1[1], planetname, sysname),
-                                  string.format(osd_msg1[2], time.str(deadline1 - time.get())),
+      misn.osdCreate(osd_title, { string.format(_("Fly to planet %s in the %s system and pick up Jorek"), planetname, sysname),
+                                  string.format(_("You have %s remaining"), time.str(deadline1 - time.get())),
                                 })
    elseif deadline2 >= time.get() and shadowrun == 3 then
       dateresolution(deadline2)

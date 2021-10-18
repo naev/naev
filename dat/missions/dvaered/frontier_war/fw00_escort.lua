@@ -41,11 +41,7 @@ local fmt = require "format"
 npc_name = _("Major Tam")
 npc_desc = _("Major Tam is a very friendly man. At least by Dvaered military standards.")
 
-flee_text = _("You were supposed to escort Major Tam, weren't you?")
-
 meet_text1 = _([[After Tam boards the Goddard, you wait for about half a period until his ship undocks from the warlord's cruiser. You then receive a message from him "Everything is right, we will now land on %s in order to refuel and rest for some time."]])
-
-meeting_broadcast = _("%s should be waiting for us in orbit around %s.")
 
 log_text = _("The Major Tam, from the Space Force Headquarters of Dvaered High Command (DHC) has employed you in the framework of the military coordination. One of the Warlords he was trying to pay a visit to, Lord Battleaddict, has tried to kill him twice, with help of his second in command, Colonel Hamelsen. It looks like trying to coordinate Dvaered warlords is a really dangerous job.")
 
@@ -105,7 +101,7 @@ end
 
 function enter()
    if not (tamJumped and system.cur() == nextsys) then
-      tk.msg(_("What are you doing here?"), flee_text)
+      tk.msg(_("What are you doing here?"), _("You were supposed to escort Major Tam, weren't you?"))
       misn.finish(false)
    end
 
@@ -178,13 +174,13 @@ end
 
 -- Messages when encountering warlords
 function meeting_msg1()
-   majorTam:comm( meeting_broadcast:format("Lady Bitterfly", destpla1:name()) )
+   majorTam:comm( _("%s should be waiting for us in orbit around %s."):format("Lady Bitterfly", destpla1:name()) )
 end
 function meeting_msg2()
-   majorTam:comm( meeting_broadcast:format("Lord Battleaddict", destpla2:name()) )
+   majorTam:comm( _("%s should be waiting for us in orbit around %s."):format("Lord Battleaddict", destpla2:name()) )
 end
 function meeting_msg3()
-   majorTam:comm( meeting_broadcast:format("Lord Jim", destpla3:name()) )
+   majorTam:comm( _("%s should be waiting for us in orbit around %s."):format("Lord Jim", destpla3:name()) )
 end
 
 function spawnTam( origin )
@@ -274,7 +270,7 @@ function land() -- The player is only allowed to land on special occasions
       player.outfitAdd("Gauss Gun", nb)
       misn.finish(true)
    else
-      tk.msg(_("What are you doing here?"), flee_text)
+      tk.msg(_("What are you doing here?"), _("You were supposed to escort Major Tam, weren't you?"))
       misn.finish(false)
    end
    --hook.rm(jumpingTam)

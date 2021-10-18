@@ -32,9 +32,6 @@ local neu = require "common.neutral"
 
 
 -- localization stuff, translators would work here
-mdesc = {}
-mdesc[1] = _("Go to the %s system to launch the probe.")
-mdesc[2] = _("Drop off the scientists at %s in the %s system.")
 title = {}
 title[1] = _("Bar")
 title[2] = _("Scientific Exploration")
@@ -95,7 +92,7 @@ function accept ()
    -- Set up mission information
    misn.setTitle( _("Nebula Satellite") )
    misn.setReward( fmt.credits(credits) )
-   misn.setDesc( string.format( mdesc[1], satellite_sys:name() ) )
+   misn.setDesc( string.format( _("Go to the %s system to launch the probe."), satellite_sys:name() ) )
    misn_marker = misn.markerAdd( satellite_sys, "low" )
 
    -- Add mission
@@ -106,7 +103,7 @@ function accept ()
    tk.msg( title[2], string.format(text[3], satellite_sys:name(),
          homeworld:name(), homeworld_sys:name(), fmt.credits(credits) ) )
 
-   misn.osdCreate(_("Nebula Satellite"), {mdesc[1]:format(satellite_sys:name())})
+   misn.osdCreate(_("Nebula Satellite"), {_("Go to the %s system to launch the probe."):format(satellite_sys:name())})
    -- Set up hooks
    hook.land("land")
    hook.enter("jumpin")
@@ -164,7 +161,7 @@ function launchSatellite ()
    misn_stage = 1
    player.msg( _("Satellite launch successful!") )
    misn.cargoJet( cargo )
-   misn.setDesc( string.format( mdesc[2], homeworld:name(), homeworld_sys:name() ) )
-   misn.osdCreate(_("Nebula Satellite"), {mdesc[2]:format(homeworld:name(), homeworld_sys:name())})
+   misn.setDesc( string.format( _("Drop off the scientists at %s in the %s system."), homeworld:name(), homeworld_sys:name() ) )
+   misn.osdCreate(_("Nebula Satellite"), {_("Drop off the scientists at %s in the %s system."):format(homeworld:name(), homeworld_sys:name())})
    misn.markerMove( misn_marker, homeworld )
 end

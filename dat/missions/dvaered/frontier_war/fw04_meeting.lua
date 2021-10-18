@@ -92,8 +92,6 @@ misn_reward = _("The greatness of House Dvaered.")
 log_text = _("You have taken part to the security of a meeting of Dvaered warlords which goal was to set the invasion plan of the Frontier. Unfortunately, the ex-colonel Hamelsen and her wingmen managed to seize data and escape the system. The Lieutenant Strafer has been killed in action during this incident.")
 
 osd_title = _("The Meeting")
-osd_text2 = _("Stay close to %s and wait for orders")
-osd_text3 = _("Intercept suspect ship for visual identification")
 
 function create()
    destpla, destsys = planet.get("Dvaer Prime")
@@ -145,7 +143,7 @@ function land()
       takhook = hook.takeoff("takeoff")
       stage = 1
       misn.osdDestroy()
-      misn.osdCreate( osd_title, {osd_text2:format(targpla:name()), osd_text3 } )
+      misn.osdCreate( osd_title, {_("Stay close to %s and wait for orders"):format(targpla:name()), _("Intercept suspect ship for visual identification") } )
 
    -- Player is running away
    elseif (stage == 1 or stage == 3 or (stage == 2 and (not planet.cur() == haltpla) )) then
@@ -215,7 +213,7 @@ function takeoff()
       hook.timer( 4.0, "deathOfStrafer" )
 
       misn.osdDestroy()
-      misn.osdCreate( osd_title, {osd_text2:format(targpla:name()), osd_text3 } )
+      misn.osdCreate( osd_title, {_("Stay close to %s and wait for orders"):format(targpla:name()), _("Intercept suspect ship for visual identification") } )
    end
 end
 

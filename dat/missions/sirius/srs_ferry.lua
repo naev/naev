@@ -88,8 +88,6 @@ altplanet[1] = "Gayathi"
 
 -- If you don't have a Sirian ship
 
-no_ship_p1 = _("As you arrive at the hangar, the Sirian looks at your ship")
-
 -- If you change ships mid-journey
 change_ship = {}
 change_ship[1] = _("On landing, the passenger gives you a brief glare. \"I had paid for transportation in a Sirian ship,\" they remark. \"This alternate arrangement is quite disappointing.\" They hand you %s, but it's definitely less than you were expecting.")
@@ -112,13 +110,10 @@ ferry_land_p3[0] = _("%s, on seeing the time, looks at you with veiled hurt and 
 ferry_land_p3[1] = _("%s counts out %s with pursed lips, and walks off before you have time to say anything.")
 ferry_land_p3[2] = _("%s tersely expresses their displeasure with the late arrival, and snaps %s down on the seat, with a look suggesting they hardly think you deserve that much.")
 
-timeup_1 = _("You've missed the scheduled arrival time! But better late than never...")
-
 osd_title = _("Pilgrimage transport")
 osd_msg = {}
 osd_msg[1] = _("Fly to %s in the %s system before %s")
 osd_msg[2] = _("You have %s remaining")
-osd_msg1 = _("Fly to %s in the %s system before %s")
 
 function ferry_calculateRoute (dplanet, dsys)
     origin_p, origin_s = planet.cur()
@@ -299,12 +294,12 @@ function accept()
 
         if picky > 2 then
             -- Demands to be delivered in a Sirian ship
-            tk.msg(_("Transportation details"), _("%s and remarks, \"What? This is to be the ship for my pilgrimage? This is unacceptable - such a crude ship must not be allowed to touch the sacred soil of Mutris. I will wait for a pilot who can ferry me in a true Sirian vessel.\""):format( no_ship_p1 ))
+            tk.msg(_("Transportation details"), _("%s and remarks, \"What? This is to be the ship for my pilgrimage? This is unacceptable - such a crude ship must not be allowed to touch the sacred soil of Mutris. I will wait for a pilot who can ferry me in a true Sirian vessel.\""):format( _("As you arrive at the hangar, the Sirian looks at your ship") ))
             misn.finish()
         elseif picky > 0 then
             -- Could be persuaded, for a discount
             reward = reward*0.6666
-            if not tk.yesno(_("Transportation details"), _("%s and remarks, \"Oh, you didn't tell me your ship is not from our native Sirian shipyards. Since that is the case, I would prefer to wait for another pilot. A pilgrimage is a sacred matter, and the vessel should be likewise.\"\nThe Sirian looks like they might be open to negotiating, however. Would you offer to fly the mission for %s?"):format(no_ship_p1, fmt.credits(reward))) then
+            if not tk.yesno(_("Transportation details"), _("%s and remarks, \"Oh, you didn't tell me your ship is not from our native Sirian shipyards. Since that is the case, I would prefer to wait for another pilot. A pilgrimage is a sacred matter, and the vessel should be likewise.\"\nThe Sirian looks like they might be open to negotiating, however. Would you offer to fly the mission for %s?"):format(_("As you arrive at the hangar, the Sirian looks at your ship"), fmt.credits(reward))) then
                 misn.finish() -- Player won't offer a discount
             end
             if picky > 1 then
@@ -314,7 +309,7 @@ function accept()
                 tk.msg(_("Offer accepted"), _("\"Very well. For a price that reasonable, I will adjust my expectations.\""))  -- discount is ok
             end
         elseif picky <= 0 then
-            tk.msg(_("Transportation details"), _("%s, and you catch a hint of disappointment on their face, before they notice you and quickly hide it."):format(no_ship_p1)) -- ok with the arrangements
+            tk.msg(_("Transportation details"), _("%s, and you catch a hint of disappointment on their face, before they notice you and quickly hide it."):format(_("As you arrive at the hangar, the Sirian looks at your ship"))) -- ok with the arrangements
         end
 
         wants_sirian = false  -- Will not expect to arrive in a Sirian ship
@@ -327,7 +322,7 @@ function accept()
     overtime = false
     local c = misn.cargoNew( N_("Pilgrims"), N_("A bunch of giddy Sirian pilgrims.") )
     misn.cargoAdd(c, 0)  -- We'll assume you can hold as many pilgrims as you want?
-    osd_msg[1] = osd_msg1:format(destplanet:name(), destsys:name(), timelimit:str())
+    osd_msg[1] = _("Fly to %s in the %s system before %s"):format(destplanet:name(), destsys:name(), timelimit:str())
     osd_msg[2] = _("You have %s remaining"):format((timelimit - time.get()):str())
     misn.osdCreate(osd_title, osd_msg)
     hook.land("land")
@@ -385,7 +380,7 @@ end
 function tick()
     if timelimit >= time.get() then
         -- Case still in time
-        osd_msg[1] = osd_msg1:format(destplanet:name(), destsys:name(), timelimit:str())
+        osd_msg[1] = _("Fly to %s in the %s system before %s"):format(destplanet:name(), destsys:name(), timelimit:str())
         osd_msg[2] = _("You have %s remaining"):format((timelimit - time.get()):str())
         misn.osdCreate(osd_title, osd_msg)
     elseif timelimit2 <= time.get() and not overtime then
@@ -396,9 +391,9 @@ function tick()
         overtime = true
     elseif intime then
         -- Case missed first deadline
-        player.msg(timeup_1)
+        player.msg(_("You've missed the scheduled arrival time! But better late than never..."))
         osd_msg[1] = osd_msg[1]:format(destplanet:name(), destsys:name(), timelimit:str())
-        osd_msg[2] = timeup_1--:format(destsys:name())
+        osd_msg[2] = _("You've missed the scheduled arrival time! But better late than never...")--:format(destsys:name())
         misn.osdCreate(osd_title, osd_msg)
         intime = false
     end

@@ -109,8 +109,6 @@ misn_desc[2] = _("Baron Sauterfeldt has tasked you with finding an ancient artif
 -- NPC stuff
 npc_desc = _("An unfamiliar man")
 
-nomoneytext = _("You can't currently afford to buy this artifact. You need %s.")
-
 -- OSD stuff
 osd_msg[1] = _("Fly to the %s system and dock with (board) Kahan Pinnacle")
 osd_msg[2] = _("Buy the artifact and take it to Flintley")
@@ -286,7 +284,7 @@ function seller()
             artifactA = misn.cargoAdd(c, 0)
             misn.markerRm(markerA)
          else
-            tk.msg(_("Not enough money!"), nomoneytext:format(fmt.credits(reward * 0.15)))
+            tk.msg(_("Not enough money!"), _("You can't currently afford to buy this artifact. You need %s."):format(fmt.credits(reward * 0.15)))
          end
       end
    elseif planet.cur() == artifactplanetB then
@@ -298,7 +296,7 @@ function seller()
             artifactB = misn.cargoAdd(c, 0)
             misn.markerRm(markerB)
          else
-            tk.msg(_("Not enough money!"), nomoneytext:format(fmt.credits(reward * 0.15)))
+            tk.msg(_("Not enough money!"), _("You can't currently afford to buy this artifact. You need %s."):format(fmt.credits(reward * 0.15)))
          end
       end
    elseif planet.cur() == artifactplanetC then
@@ -310,7 +308,7 @@ function seller()
             artifactC = misn.cargoAdd(c, 0)
             misn.markerRm(markerC)
          else
-            tk.msg(_("Not enough money!"), nomoneytext:format(fmt.credits(reward * 0.15)))
+            tk.msg(_("Not enough money!"), _("You can't currently afford to buy this artifact. You need %s."):format(fmt.credits(reward * 0.15)))
          end
       end
    end
