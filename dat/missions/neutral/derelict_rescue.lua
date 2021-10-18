@@ -35,6 +35,7 @@ function create ()
    local doaccept = false
    vn.clear()
    vn.scene()
+   vn.transition()
    vn.na(fmt.f(_("You enter and begin to scour the ship for anything of value. As you make through the hallways you hear a noise. After investigating, you end up finding the entire crew of the ship locked up in a dormitory room. They offer you {credits} to take them to safety to {planetname} in the {sysname} system."), {planetname=destpnt:name(), sysname=destsys:name(), credits=fmt.credits(reward_amount)}))
    vn.menu{
       { _("Help them out"), "help" },
