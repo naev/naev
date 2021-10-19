@@ -42,7 +42,8 @@ function log.open ()
    if th < lh-200 then
       log.y = (lh-200-th)/2
    else
-      log.y = 100
+      log.y = th-lh-200
+      log.miny = log.y
    end
 end
 
@@ -55,14 +56,16 @@ function log.draw ()
    local x = (lw-1080)/2
    local headerx = x
    local bodyx = x+200
-   local y = log.y
    local lineh = font:getLineHeight()
+   local y = log.y - lineh
    for k,v in ipairs(_header) do
       local c = _colour[k]
-      graphics.setColor( c[1], c[2], c[3], 1 )
-      graphics.print( _header[k], font, headerx, y )
-      graphics.print( _body[k],   font, bodyx,   y )
       y = y+lineh
+      if y > 0 and y < lh then
+         graphics.setColor( c[1], c[2], c[3], 1 )
+         graphics.print( _header[k], font, headerx, y )
+         graphics.print( _body[k],   font, bodyx,   y )
+      end
    end
 end
 
@@ -73,7 +76,9 @@ function log.keypress( key )
    if key=="up" or key=="pageup" then
    elseif key=="down" or key=="pagedown" then
    elseif key=="home" then
+      log.y = 100
    elseif key=="end" then
+      log.y = log.miny
    end
 end
 
