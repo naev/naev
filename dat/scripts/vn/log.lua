@@ -3,12 +3,16 @@ local graphics = require 'love.graphics'
 local log = {
    border = 100,
    spacer = 10,
+   headerw = 280,
+   bodyw = 800
 }
 
 local _log, _header, _body, _colour
 
 function log.reset ()
-   _log = {}
+   _log = {
+      { nil, _("[START]"), nil },
+   }
 end
 
 function log.add( entry )
@@ -23,8 +27,8 @@ function log.open ()
    -- TODO use vn.textbox_font
    log.font = graphics.newFont(16)
    local font = log.font
-   local headerw = 280
-   local bodyw = 800
+   local headerw = log.headerw
+   local bodyw = log.bodyw
    _header = {}
    _body = {}
    _colour = {}
@@ -75,6 +79,12 @@ function log.draw ()
             graphics.print( _body[k],   font, bodyx,   y )
          end
       end
+   end
+
+   if log.y < log.maxy then
+   end
+
+   if log.y > log.miny then
    end
 end
 
