@@ -82,6 +82,7 @@ local function _setdefaults()
    vn._handle_music = false
    -- Logging
    vn._show_log = false
+   log.reset()
 end
 
 --[[--
@@ -351,6 +352,12 @@ function vn.keypressed( key )
 
    if key=="tab" then
       vn._show_log = not vn._show_log
+      log.open()
+      return true
+   end
+
+   if vn._show_log then
+      log.keypress( key )
       return true
    end
 
@@ -369,7 +376,10 @@ Mouse press handler.
    @tparam number button Button that was pressed.
 --]]
 function vn.mousepressed( mx, my, button )
-   if vn._show_log then return true end
+   if vn._show_log then
+      log.mousepressed( mx, my, button )
+      return true
+   end
    if vn.isDone() then return false end
    local s = vn._states[ vn._state ]
    return s:mousepressed( mx, my, button )
@@ -599,7 +609,7 @@ function vn.StateSay:_finish()
    local c = vn._getCharacter( self.who )
    log.add{
       who   = c.displayname or c.who,
-      what  = c.what,
+      what  = self._text,
       colour= c.color or vn._default._bufcol,
    }
 
@@ -820,6 +830,11 @@ end
 function vn.StateMenu:_choose( n )
    vn._sfx.ui.option:play()
    self.handler( self._items[n][2] )
+   log.add{
+      who   = _("CHOICE"),
+      what  = self._items[n][1],
+      colour= vn._default._bufcol,
+   }
    _finish( self )
 end
 --[[
