@@ -97,6 +97,13 @@ function log.keypress( key )
       log.y = log.miny
    end
    log.y = math.max( log.miny, math.min( log.maxy, log.y ) )
+
+   local done = false
+   if key=="tab" or key=="escape" or key=="space" or key=="enter" then
+      done = true
+   end
+
+   return true, done
 end
 
 function log.mousepressed( mx, my, button )

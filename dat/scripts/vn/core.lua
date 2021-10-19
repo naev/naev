@@ -350,14 +350,15 @@ function vn.keypressed( key )
       end
    end
 
-   if key=="tab" then
+   if key=="tab" or key=="escape" then
       vn._show_log = not vn._show_log
       log.open()
       return true
    end
 
    if vn._show_log then
-      log.keypress( key )
+      local ret, _log = log.keypress( key )
+      vn._show_log = _log
       return true
    end
 
@@ -830,7 +831,7 @@ function vn.StateMenu:_choose( n )
    vn._sfx.ui.option:play()
    self.handler( self._items[n][2] )
    log.add{
-      who   = _("CHOICE"),
+      who   = _("[CHOICE]"),
       what  = self._items[n][1],
       colour= vn._default._bufcol,
    }
