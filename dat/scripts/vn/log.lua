@@ -1,6 +1,9 @@
 local graphics = require 'love.graphics'
 
-local log = {}
+local log = {
+   border = 100,
+   spacer = 10,
+}
 
 local _log, _header, _body, _colour
 
@@ -14,7 +17,7 @@ end
 
 function log.open ()
    local lw, lh = graphics.getDimensions()
-   local border = 100
+   local border = log.border
 
    -- Build the tables
    -- TODO use vn.textbox_font
@@ -26,7 +29,8 @@ function log.open ()
    _body = {}
    _colour = {}
    local th = 0
-   for k,v in ipairs(_log) do
+   for id=#_log,1,-1 do
+      local v = _log[id]
       local _maxw, headertext = font:getWrap( v.who, headerw )
       local _maxw, bodytext = font:getWrap( v.what, bodyw )
 
@@ -36,13 +40,16 @@ function log.open ()
          table.insert( _body,   bodytext[k] or "" )
          table.insert( _colour, v.colour )
       end
-      th = th + nlines * font:getLineHeight()
+      table.insert( _header, "_" )
+      table.insert( _body, "_" )
+      table.insert( _colour, "_" )
+      th = th + nlines * font:getLineHeight() + log.spacer
    end
 
    -- Determine offset
    log.y = lh-border-th
    log.miny = log.y
-   log.maxy = 100
+   log.maxy = log.border
 end
 
 function log.draw ()
@@ -58,11 +65,15 @@ function log.draw ()
    local y = log.y - lineh
    for k = 1,#_header do
       local c = _colour[k]
-      y = y+lineh
-      if y > 0 and y < lh then
-         graphics.setColor( c[1], c[2], c[3], 1 )
-         graphics.print( _header[k], font, headerx, y )
-         graphics.print( _body[k],   font, bodyx,   y )
+      if c == "_" then
+         y = y+log.spacer
+      else
+         y = y+lineh
+         if y > 0 and y < lh then
+            graphics.setColor( c[1], c[2], c[3], 1 )
+            graphics.print( _header[k], font, headerx, y )
+            graphics.print( _body[k],   font, bodyx,   y )
+         end
       end
    end
 end
