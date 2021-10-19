@@ -9,11 +9,12 @@ function log.reset ()
 end
 
 function log.add( entry )
-   table.insert( _log, entry )
+   table.insert( _log, 1, entry )
 end
 
 function log.open ()
    local lw, lh = graphics.getDimensions()
+   local border = 100
 
    -- Build the tables
    -- TODO use vn.textbox_font
@@ -39,12 +40,9 @@ function log.open ()
    end
 
    -- Determine offset
-   if th < lh-200 then
-      log.y = (lh-200-th)/2
-   else
-      log.y = th-lh-200
-      log.miny = log.y
-   end
+   log.y = lh-border-th
+   log.miny = log.y
+   log.maxy = 100
 end
 
 function log.draw ()
@@ -58,7 +56,7 @@ function log.draw ()
    local bodyx = x+200
    local lineh = font:getLineHeight()
    local y = log.y - lineh
-   for k,v in ipairs(_header) do
+   for k = 1,#_header do
       local c = _colour[k]
       y = y+lineh
       if y > 0 and y < lh then
@@ -73,13 +71,21 @@ function log.update ()
 end
 
 function log.keypress( key )
-   if key=="up" or key=="pageup" then
-   elseif key=="down" or key=="pagedown" then
+   local lh = log.font:getLineHeight()
+   if key=="up" then
+      log.y = log.y + lh
+   elseif key=="pageup" then
+      log.y = log.y + 20*lh
+   elseif key=="down" then
+      log.y = log.y - lh
+   elseif key=="pagedown" then
+      log.y = log.y - 20*lh
    elseif key=="home" then
-      log.y = 100
+      log.y = log.maxy
    elseif key=="end" then
       log.y = log.miny
    end
+   log.y = math.max( log.miny, math.min( log.maxy, log.y ) )
 end
 
 function log.mousepressed( mx, my, button )
