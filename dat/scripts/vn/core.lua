@@ -540,10 +540,9 @@ end
 function vn.StateSay:_init()
    -- Get the main text
    if type(self.what)=="function" then
-      self._textbuf = self.what()
-   else
-      self._textbuf = self.what
+      self.what = self.what()
    end
+   self._textbuf = self.what
    -- Parse for line breaks and insert newlines
    local font = vn.textbox_font
    local bw = 20
@@ -609,7 +608,7 @@ function vn.StateSay:_finish()
    local c = vn._getCharacter( self.who )
    log.add{
       who   = c.displayname or c.who,
-      what  = self._text,
+      what  = self.what, -- Avoids newlines
       colour= c.color or vn._default._bufcol,
    }
 
