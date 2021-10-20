@@ -93,7 +93,7 @@ function love.draw ()
    local x, y = 0, 0
    local parami = 0
    local function draw_shader( w )
-      local h = w
+      local h = w/3
       shader:send("u_size",w/2)
       if shader:hasUniform("parami") then
          shader:send("parami", parami )
