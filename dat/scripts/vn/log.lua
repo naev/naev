@@ -24,6 +24,10 @@ end
 function log.open ()
    local lw, lh = graphics.getDimensions()
    local border = log.border
+   log.uparrow_alpha = 0
+   log.downarrow_alpha = 0
+   log.alpha = 0
+   log.closing = false
 
    -- Build the tables
    -- TODO use vn.textbox_font
@@ -86,7 +90,7 @@ vec4 effect( vec4 colour, Image tex, vec2 pos, vec2 px )
 end
 
 function log.draw ()
-   graphics.setColor( 0, 0, 0, 0.9 )
+   graphics.setColor( 0, 0, 0, 0.9*log.alpha )
    local lw, lh = graphics.getDimensions()
    graphics.rectangle( "fill", 0, 0, lw, lh )
 
@@ -103,22 +107,23 @@ function log.draw ()
       else
          y = y+lineh
          if y > 0 and y < lh then
-            graphics.setColor( c[1], c[2], c[3], 1 )
+            graphics.setColor( c[1], c[2], c[3], log.alpha )
             graphics.print( _header[k], font, headerx, y )
             graphics.print( _body[k],   font, bodyx,   y )
          end
       end
    end
 
-   graphics.setColor( 0, 1, 1, 1 )
    x = log.border + log.headerw + log.bodyw + log.spacer
-   if log.y < log.maxy then
+   if log.uparrow_alpha > 0 then
+      graphics.setColor( 0, 1, 1, log.uparrow_alpha )
       graphics.setShader( log.shader.arrow )
       graphics.draw( love_shaders.img, x, 100, -math.pi/2, 60, 20 )
       graphics.setShader()
    end
 
-   if log.y > log.miny then
+   if log.downarrow_alpha > 0 then
+      graphics.setColor( 0, 1, 1, log.downarrow_alpha )
       graphics.setShader( log.shader.arrow )
       graphics.draw( love_shaders.img, x, lh-100, math.pi/2, 60, 20 )
       graphics.setShader()
@@ -126,6 +131,29 @@ function log.draw ()
 end
 
 function log.update( dt )
+   local fadespeed = 5
+   if log.y < log.maxy then
+      log.uparrow_alpha = math.min( 1, log.uparrow_alpha+fadespeed*dt )
+   else
+      log.uparrow_alpha = math.max( 0, log.uparrow_alpha-fadespeed*dt )
+   end
+
+   if log.y > log.miny then
+      log.downarrow_alpha = math.min( 1, log.downarrow_alpha+fadespeed*dt )
+   else
+      log.downarrow_alpha = math.max( 0, log.downarrow_alpha-fadespeed*dt )
+   end
+
+   if log.closing then
+      log.alpha = log.alpha - fadespeed*dt
+      if log.alpha <= 0 then
+         return false
+      end
+   else
+      log.alpha = math.min( 1, log.alpha+fadespeed*dt )
+   end
+
+   return true
 end
 
 function log.keypress( key )
@@ -146,10 +174,10 @@ function log.keypress( key )
    log.y = math.max( log.miny, math.min( log.maxy, log.y ) )
 
    if key=="tab" or key=="escape" or key=="space" or key=="enter" then
-      return true, false
+      log.closing = true
    end
 
-   return true, true
+   return true
 end
 
 function log.mousepressed( mx, my, button )
