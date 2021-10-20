@@ -81,8 +81,7 @@ vec4 effect( vec4 colour, Image tex, vec2 pos, vec2 px )
 
    d = abs(d)-0.01;
 
-   colour.a *= step( 0.0, -d );
-   colour.a += pow( 1.0-d, 20.0 );
+   colour.a *= step( 0.0, -d ) + pow( 1.0-d, 20.0 );
    return colour;
 }
 ]], love_shaders.vertexcode)
@@ -131,26 +130,27 @@ function log.draw ()
 end
 
 function log.update( dt )
-   local fadespeed = 5
+   dt = 5  * dt
+
    if log.y < log.maxy then
-      log.uparrow_alpha = math.min( 1, log.uparrow_alpha+fadespeed*dt )
+      log.uparrow_alpha = math.min( 1, log.uparrow_alpha+dt )
    else
-      log.uparrow_alpha = math.max( 0, log.uparrow_alpha-fadespeed*dt )
+      log.uparrow_alpha = math.max( 0, log.uparrow_alpha-dt )
    end
 
    if log.y > log.miny then
-      log.downarrow_alpha = math.min( 1, log.downarrow_alpha+fadespeed*dt )
+      log.downarrow_alpha = math.min( 1, log.downarrow_alpha+dt )
    else
-      log.downarrow_alpha = math.max( 0, log.downarrow_alpha-fadespeed*dt )
+      log.downarrow_alpha = math.max( 0, log.downarrow_alpha-dt )
    end
 
    if log.closing then
-      log.alpha = log.alpha - fadespeed*dt
+      log.alpha = log.alpha - dt
       if log.alpha <= 0 then
          return false
       end
    else
-      log.alpha = math.min( 1, log.alpha+fadespeed*dt )
+      log.alpha = math.min( 1, log.alpha + dt )
    end
 
    return true
