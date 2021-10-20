@@ -8,7 +8,7 @@ uniform float paramf;
 in vec2 pos;
 out vec4 color_out;
 
-void main(void) {
+void main (void) {
    float a = paramf * M_PI;
    float c = cos(a);
    float s = sin(a);

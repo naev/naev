@@ -287,12 +287,12 @@ end
 Main updating function. Has to be called each loop in "love.update"
    @tparam number dt Update tick in seconds.
 ]]
-function vn.update(dt)
+function vn.update( dt )
    lmusic.update( dt )
 
    -- Basically skip the entire VN framework
    if vn._show_log then
-      log.update()
+      vn._show_log = log.update( dt )
       return
    end
 
@@ -350,16 +350,14 @@ function vn.keypressed( key )
       end
    end
 
-   if key=="tab" or key=="escape" then
-      vn._show_log = not vn._show_log
-      log.open()
-      return true
-   end
-
-   if vn._show_log then
-      local ret, _log = log.keypress( key )
-      vn._show_log = _log
-      return true
+   if not vn._show_log then
+      if key=="tab" or key=="escape" then
+         vn._show_log = not vn._show_log
+         log.open()
+         return true
+      end
+   else
+      return log.keypress( key )
    end
 
    if vn.isDone() then return end
