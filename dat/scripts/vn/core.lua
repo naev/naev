@@ -13,6 +13,7 @@ local filesystem  = require 'love.filesystem'
 local audio       = require 'love.audio'
 local lmusic      = require 'lmusic'
 local transitions = require 'vn.transitions'
+local log         = require "vn.log"
 
 local vn = {
    speed = 0.04,
@@ -79,6 +80,9 @@ local function _setdefaults()
    graphics.setCanvas( oldcanvas )
    -- Music stuff
    vn._handle_music = false
+   -- Logging
+   vn._show_log = false
+   log.reset()
 end
 
 --[[--
@@ -265,6 +269,11 @@ function vn.draw()
    else
       _draw( false )
    end
+
+   -- Draw on top
+   if vn._show_log then
+      log.draw()
+   end
 end
 local function _draw_to_canvas( canvas )
    local oldcanvas = graphics.getCanvas()
@@ -280,6 +289,12 @@ Main updating function. Has to be called each loop in "love.update"
 ]]
 function vn.update(dt)
    lmusic.update( dt )
+
+   -- Basically skip the entire VN framework
+   if vn._show_log then
+      log.update()
+      return
+   end
 
    -- Out of states
    if vn._state > #vn._states then
@@ -335,6 +350,18 @@ function vn.keypressed( key )
       end
    end
 
+   if key=="tab" or key=="escape" then
+      vn._show_log = not vn._show_log
+      log.open()
+      return true
+   end
+
+   if vn._show_log then
+      local ret, _log = log.keypress( key )
+      vn._show_log = _log
+      return true
+   end
+
    if vn.isDone() then return end
    local s = vn._states[ vn._state ]
    --return s:keypressed( key )
@@ -350,6 +377,10 @@ Mouse press handler.
    @tparam number button Button that was pressed.
 --]]
 function vn.mousepressed( mx, my, button )
+   if vn._show_log then
+      log.mousepressed( mx, my, button )
+      return true
+   end
    if vn.isDone() then return false end
    local s = vn._states[ vn._state ]
    return s:mousepressed( mx, my, button )
@@ -362,14 +393,14 @@ Makes the player say something.
    @tparam string what What is being said.
    @tparam bool nowait Whether or not to wait for player input when said.
 ]]
-function vn.me( what, nowait ) vn.say( "me", what, nowait ) end
+function vn.me( what, nowait ) vn.say( "You", what, nowait ) end
 --[[--
 Makes the narrator say something.
 
    @tparam string what What is being said.
    @tparam bool nowait Whether or not to wait for player input when said.
 ]]
-function vn.na( what, nowait ) vn.say( "narrator", what, nowait ) end
+function vn.na( what, nowait ) vn.say( "Narrator", what, nowait ) end
 
 --[[
 -- State
@@ -510,10 +541,9 @@ end
 function vn.StateSay:_init()
    -- Get the main text
    if type(self.what)=="function" then
-      self._textbuf = self.what()
-   else
-      self._textbuf = self.what
+      self.what = self.what()
    end
+   self._textbuf = self.what
    -- Parse for line breaks and insert newlines
    local font = vn.textbox_font
    local bw = 20
@@ -575,12 +605,20 @@ end
 function vn.StateSay:_finish()
    self._text = self._textbuf
    vn._buffer = self._text
+
+   local c = vn._getCharacter( self.who )
+   log.add{
+      who   = c.displayname or c.who,
+      what  = self.what, -- Avoids newlines
+      colour= c.color or vn._default._bufcol,
+   }
+
    _finish( self )
 end
 --[[
 -- Wait
 --]]
-vn.StateWait ={}
+vn.StateWait = {}
 function vn.StateWait.new()
    local s = vn.State.new()
    s._init = vn.StateWait._init
@@ -655,7 +693,6 @@ function vn.StateWait:_keypressed( key )
       "enter",
       "space",
       "right",
-      "tabe",
       "escape",
    }
    local found = false
@@ -793,6 +830,11 @@ end
 function vn.StateMenu:_choose( n )
    vn._sfx.ui.option:play()
    self.handler( self._items[n][2] )
+   log.add{
+      who   = _("[CHOICE]"),
+      what  = self._items[n][1],
+      colour= vn._default._bufcol,
+   }
    _finish( self )
 end
 --[[
@@ -1151,7 +1193,7 @@ end
 --[[--
 Has a character say something.
 
-<em>Note</em> "me" and "narrator" are specila meta-characters.
+<em>Note</em> "You" and "Narrator" are special meta-characters.
 
    @tparam string who The name of the character that is saying something.
    @tparam string what What the character is saying.
@@ -1545,8 +1587,8 @@ function vn.reset()
 end
 
 -- Default characters
-vn._me = vn.Character.new( "me", { color={1, 1, 1}, hidetitle=true } )
-vn._na = vn.Character.new( "narrator", { color={0.5, 0.5, 0.5}, hidetitle=true } )
+vn._me = vn.Character.new( "You", { color={1, 1, 1}, hidetitle=true } )
+vn._na = vn.Character.new( "Narrator", { color={0.5, 0.5, 0.5}, hidetitle=true } )
 
 -- Set defaults
 _setdefaults()

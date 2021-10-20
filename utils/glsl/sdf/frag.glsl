@@ -503,6 +503,17 @@ vec4 sdf_selectposition( vec4 colour, vec2 uv )
    return colour;
 }
 
+vec4 sdf_vnarrow( vec4 colour, vec2 uv )
+{
+   float m = 1.0 / dimensions.x;
+   uv = abs( uv );
+   if (uv.y < uv.x)
+      uv.xy = uv.yx;
+   float d = sdSegment( uv, vec2(0.2+m,1.0-2.0*m), vec2(1.0,1.0)-2.0*m );
+   colour.a *= smoothstep( -m, 0.0, -d );
+   return colour;
+}
+
 vec4 bg( vec2 uv )
 {
    vec3 c;
@@ -527,7 +538,7 @@ vec4 effect( vec4 colour, Image tex, vec2 uv, vec2 px )
    //col_out = sdf_planet( colour, uv_rel );
    //col_out = sdf_planet2( colour, uv_rel );
    //col_out = sdf_blinkmarker( colour, uv_rel );
-   col_out = sdf_jumpmarker( colour, uv_rel );
+   //col_out = sdf_jumpmarker( colour, uv_rel );
    //col_out = sdf_pilotmarker( colour, uv_rel );
    //col_out = sdf_playermarker( colour, uv_rel );
    //col_out = sdf_stealth( colour, uv_rel );
@@ -537,6 +548,7 @@ vec4 effect( vec4 colour, Image tex, vec2 uv, vec2 px )
    //col_out = sdf_sysmarker( colour, uv_rel );
    //col_out = sdf_missilelockon( colour, uv_rel );
    //col_out = sdf_selectposition( colour, uv_rel );
+   col_out = sdf_vnarrow( colour, uv_rel );
 
    return mix( bg(uv), col_out, col_out.a );
 }

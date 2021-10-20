@@ -386,12 +386,14 @@ function transitions.get( name, seconds, transition )
    -- Sane defaults
    name = name or "blur"
    transition = transition or "linear"
-   if name=="blur" then
-      seconds = seconds or 0.5
+   if name=="blur" or name=="fade" then
+      seconds = seconds or 0.2
    elseif name=="electric" then
       seconds = seconds or 1.0
-   else
+   elseif name=="burn" or name=="ripple" or name=="perlin" or name=="wave" then
       seconds = seconds or 2.0
+   else
+      seconds = seconds or 1.0
    end
 
    local prefix = string.format( [[

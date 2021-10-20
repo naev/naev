@@ -31,7 +31,7 @@ function lmisn.getLandablePlanets( sys, fct, fctmatch )
    local pnt_candidates = {}
    for k,p in ipairs(sys:planets()) do
       local s = p:services()
-      if s.land and s.inhabited then
+      if s.land and s.inhabited and not p:tags().restricted then
          if not fct then
             table.insert( pnt_candidates, p )
          else

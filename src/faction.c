@@ -1850,9 +1850,10 @@ static void faction_computeGrid (void)
    size_t n = array_size(faction_stack);
    if (faction_mgrid <= n) {
       free( faction_grid );
-      faction_grid = calloc( n * n, sizeof(int) );
+      faction_grid = malloc( n * n * sizeof(int) );
       faction_mgrid = n;
    }
+   memset( faction_grid, 0, n*n*sizeof(int) );
    for (size_t i=0; i<n; i++) {
       Faction *fa = &faction_stack[i];
       for (int k=0; k<array_size(fa->allies); k++) {

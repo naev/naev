@@ -197,8 +197,12 @@ function approach_terminal()
    vn.transition()
    vn.label( "start" )
    t:say( function() return string.format(
-         n_([["VALUED CUSTOMER, YOU HAVE #p%s MINERVA TOKEN#0.%s\n\nWHAT DO YOU WISH TO DO TODAY?"]],
-            [["VALUED CUSTOMER, YOU HAVE #p%s MINERVA TOKENS#0.%s\n\nWHAT DO YOU WISH TO DO TODAY?"]], minerva.tokens_get()),
+         n_([["VALUED CUSTOMER, YOU HAVE #p%s MINERVA TOKEN#0.%s
+
+WHAT DO YOU WISH TO DO TODAY?"]],
+            [["VALUED CUSTOMER, YOU HAVE #p%s MINERVA TOKENS#0.%s
+
+WHAT DO YOU WISH TO DO TODAY?"]], minerva.tokens_get()),
                fmt.number(minerva.tokens_get()), msgs[rnd.rnd(1,#msgs)]) end )
    vn.menu( {
       {_("Information"), "info"},
@@ -324,7 +328,8 @@ function approach_terminal()
    -- Buying stuff
    vn.label( "trade_confirm" )
    t:say( function () return string.format(
-         _([["ARE YOU SURE YOU WANT TO TRADE IN FOR THE '#w%s#0'? THE DESCRIPTION IS AS FOLLOWS:"\n#w%s#0]]),
+         _([["ARE YOU SURE YOU WANT TO TRADE IN FOR THE '#w%s#0'? THE DESCRIPTION IS AS FOLLOWS:"
+#w%s#0]]),
          _(tradein_item[1]), _(tradein_item.description) ) end )
    vn.menu( {
       { _("Trade"), "trade_consumate" },

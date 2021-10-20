@@ -41,6 +41,7 @@ local function _clearfuncs()
       "mousemoved",
       "mousepressed",
       "mousereleased",
+      "wheelmoved",
    }
    for k,v in ipairs(f) do
       love[v] = _noop
