@@ -287,12 +287,12 @@ end
 Main updating function. Has to be called each loop in "love.update"
    @tparam number dt Update tick in seconds.
 ]]
-function vn.update(dt)
+function vn.update( dt )
    lmusic.update( dt )
 
    -- Basically skip the entire VN framework
    if vn._show_log then
-      log.update()
+      log.update( dt )
       return
    end
 
