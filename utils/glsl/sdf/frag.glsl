@@ -503,6 +503,7 @@ vec4 sdf_selectposition( vec4 colour, vec2 uv )
    return colour;
 }
 
+#if 0
 vec4 sdf_vnarrow( vec4 colour, vec2 uv )
 {
    float m = 1.0 / dimensions.x;
@@ -516,7 +517,27 @@ vec4 sdf_vnarrow( vec4 colour, vec2 uv )
    d = abs(d)-0.01;
 
    colour.a *= smoothstep( -m, 0.0, -d );
-   //colour.a += pow( 1.0-d, 10.0 );
+   colour.a += pow( 1.0-d, 10.0 );
+   return colour;
+}
+#endif
+
+vec4 sdf_vnarrow( vec4 colour, vec2 uv )
+{
+   float m = 1.0 / dimensions.x;
+   uv = vec2(uv.y,-uv.x);
+
+   float d1 = sdTriangleIsosceles( uv+vec2(0.0,-0.4), vec2(0.6,0.4) );
+   float d2 = sdTriangleIsosceles( uv+vec2(0.0,0.2),  vec2(0.6,0.4) );
+   float d3 = sdTriangleIsosceles( uv+vec2(0.0,0.8),  vec2(0.6,0.4) );
+   //d1 = max(d1, -sdTriangleIsosceles( uv+vec2(0.0,-0.8), vec2(3.0,0.35) ) );
+
+   float d = min(min(d1, d2), d3);
+
+   d = abs(d)-0.01;
+
+   colour.a *= smoothstep( -m, 0.0, -d );
+   colour.a += pow( 1.0-d, 20.0 );
    return colour;
 }
 

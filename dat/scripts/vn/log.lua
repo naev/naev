@@ -1,10 +1,12 @@
 local graphics = require 'love.graphics'
+local love_shaders = require "love_shaders"
 
 local log = {
    border = 100,
    spacer = 10,
    headerw = 280,
-   bodyw = 800
+   bodyw = 800,
+   shader = {},
 }
 
 local _log, _header, _body, _colour
@@ -57,6 +59,30 @@ function log.open ()
    log.y = lh-border-th
    log.miny = log.y
    log.maxy = log.border
+
+   -- Compile shaders
+   if not log.shader.arrow then
+      log.shader.arrow = graphics.newShader( [[
+#include "lib/sdf.glsl"
+vec4 effect( vec4 colour, Image tex, vec2 pos, vec2 px )
+{
+   vec2 uv = pos*2.0-1.0;
+   uv = vec2(-uv.y,-uv.x);
+
+   float d1 = sdTriangleIsosceles( uv+vec2(0.0,-0.4), vec2(0.6,0.4) );
+   float d2 = sdTriangleIsosceles( uv+vec2(0.0,0.2),  vec2(0.6,0.4) );
+   float d3 = sdTriangleIsosceles( uv+vec2(0.0,0.8),  vec2(0.6,0.4) );
+
+   float d = min(min(d1, d2), d3);
+
+   d = abs(d)-0.01;
+
+   colour.a *= step( 0.0, -d );
+   colour.a += pow( 1.0-d, 20.0 );
+   return colour;
+}
+]], love_shaders.vertexcode)
+   end
 end
 
 function log.draw ()
@@ -84,18 +110,22 @@ function log.draw ()
       end
    end
 
-   graphics.setColor( 1, 1, 1, 1 )
+   graphics.setColor( 0, 1, 1, 1 )
    x = log.border + log.headerw + log.bodyw + log.spacer
    if log.y < log.maxy then
-      graphics.print( "↑", font, x, 100 )
+      graphics.setShader( log.shader.arrow )
+      graphics.draw( love_shaders.img, x, 100, -math.pi/2, 60, 20 )
+      graphics.setShader()
    end
 
    if log.y > log.miny then
-      graphics.print( "↓", font, x, lh-100 )
+      graphics.setShader( log.shader.arrow )
+      graphics.draw( love_shaders.img, x, lh-100, math.pi/2, 60, 20 )
+      graphics.setShader()
    end
 end
 
-function log.update ()
+function log.update( dt )
 end
 
 function log.keypress( key )
