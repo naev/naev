@@ -506,11 +506,17 @@ vec4 sdf_selectposition( vec4 colour, vec2 uv )
 vec4 sdf_vnarrow( vec4 colour, vec2 uv )
 {
    float m = 1.0 / dimensions.x;
-   uv = abs( uv );
-   if (uv.y < uv.x)
-      uv.xy = uv.yx;
-   float d = sdSegment( uv, vec2(0.2+m,1.0-2.0*m), vec2(1.0,1.0)-2.0*m );
+   uv = vec2(uv.y,-uv.x);
+
+   uv.y = fract(uv.y*1.5 + 0.5);
+
+   float d = sdTriangleIsosceles( uv+vec2(0.0,-0.1), vec2(0.9,0.8) );
+   d = max(d, -sdTriangleIsosceles( uv+vec2(0.0,-0.75), vec2(3.0,0.35) ) );
+
+   d = abs(d)-0.01;
+
    colour.a *= smoothstep( -m, 0.0, -d );
+   //colour.a += pow( 1.0-d, 10.0 );
    return colour;
 }
 
