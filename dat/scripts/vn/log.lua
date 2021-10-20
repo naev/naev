@@ -11,7 +11,7 @@ local _log, _header, _body, _colour
 
 function log.reset ()
    _log = {
-      { nil, _("[START]"), nil },
+      { who="", what=_("[START]"), colour={1,1,1} },
    }
 end
 
@@ -33,6 +33,9 @@ function log.open ()
    _body = {}
    _colour = {}
    local th = 0
+   for id=#_log,1,-1 do
+      local v = _log[id]
+   end
    for id=#_log,1,-1 do
       local v = _log[id]
       local _maxw, headertext = font:getWrap( v.who, headerw )
@@ -81,10 +84,14 @@ function log.draw ()
       end
    end
 
+   graphics.setColor( 1, 1, 1, 1 )
+   x = log.border + log.headerw + log.bodyw + log.spacer
    if log.y < log.maxy then
+      graphics.print( "↑", font, x, 100 )
    end
 
    if log.y > log.miny then
+      graphics.print( "↓", font, x, lh-100 )
    end
 end
 
@@ -108,12 +115,11 @@ function log.keypress( key )
    end
    log.y = math.max( log.miny, math.min( log.maxy, log.y ) )
 
-   local done = false
    if key=="tab" or key=="escape" or key=="space" or key=="enter" then
-      done = true
+      return true, false
    end
 
-   return true, done
+   return true, true
 end
 
 function log.mousepressed( mx, my, button )
