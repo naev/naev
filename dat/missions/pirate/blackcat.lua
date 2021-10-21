@@ -224,6 +224,7 @@ end
 function owner_hail ()
    if owner_was_hailed then
       owner:comm( _("P-p-please bring them o-over.") )
+      player.commClose()
       return
    end
 
