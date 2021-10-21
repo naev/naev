@@ -22,12 +22,19 @@ local vn  = require 'vn'
 local vntk= require 'vntk'
 local tut = require "common.tutorial"
 local der = require 'common.derelict'
+local portrait = require 'portrait'
 local audio = require 'love.audio'
+local love_shaders = require "love_shaders"
 
 local cat_image = "blackcat.webp"
 local cat_colour = nil
 
+local owner_image = portrait.getFullPath( portrait.get() )
+local owner_colour = nil
+
 local meow = audio.newSource( "snd/sounds/meow.ogg" )
+
+local credit_reward = 200e3
 
 function create ()
    local tookcat = false
@@ -81,6 +88,10 @@ It seems like it wants to come back with you. What do you do?]]))
 
    misn.accept()
 
+   misn.setTitle(_("Black Cat"))
+   misn.setDesc(_("You found a black cat on a derelict ship. It seems to want to go back somewhere, but you aren't sure where. Maybe if you could find their owner?"))
+   misn.setReward(_("Unknown"))
+
    local c = misn.cargoNew( N_("Black Cat"), N_([[A cute four-legged mammal "Felis catus" that seems to enjoy chasing random things around the ship.]]) )
    misn.cargoAdd( c, 0 )
 
@@ -101,7 +112,7 @@ local event_list = {
       local t = pp:temp()
       pp:setTemp( math.max(400, t+50) )
       meow:play()
-      player.msg(_("Black cat hair has clogged your radiator and overheated your ship!"), true)
+      player.msg(_("Black cat hair has clogged the radiators and overheated the ship!"), true)
    end,
    function () -- Temporary disable
       local pp = player.pilot()
@@ -121,11 +132,11 @@ local event_list = {
 }
 function event ()
    -- Larger chance of just random messages
-   if rnd.rnd() < 0.5 then
+   if rnd.rnd() < 2/3 then
       local msg_list = {
          _("The black cat stares at you ominously."),
          _("A waft of black cat hair flies around."),
-         _("The black cat's tail fluffs up ad it sprints away."),
+         _("The black cat's tail fluffs up and it sprints away."),
          _("The black cat scratches he airlock. It wants out?"),
          _("The black cat unceremoniously barfs up a hairball."),
          _("You hear weird noises from the black cat freaking out over nothing."),
@@ -133,6 +144,7 @@ function event ()
          _("The black cat curls up and falls asleep on top of the control panel."),
          _("The black cat shows you its belly, but bites you when you pet it."),
          _("The black cat uses the commander chair as a scratching post."),
+         _("The black cat bumps into your ship's self-destruct button, but you manage to abort it in time."),
       }
       meow:play()
       player.msg( msg_list[rnd.rnd(1,#msg_list)], true )
@@ -161,17 +173,103 @@ function enter ()
    if event_check_hook then
       hook.rm( event_check_hook )
    end
-   event_check_hook = hook.timer( 20+10*rnd.rnd(), "event_check" )
+   if not event_finish then
+      event_check_hook = hook.timer( 20+10*rnd.rnd(), "event_check" )
+   end
 end
 
 function jumpin ()
+   -- This hook is run _BEFORE_ the enter hook.
    times_jumped = times_jumped+1
-   local chance = math.max( (times_jumped-20), 0 )
+   event_finish = false
+   local chance = math.max( (times_jumped-20)*0.05, 0 )
    if rnd.rnd() < chance or system.cur():presence("Wild Ones") < 50 then
       return
    end
 
    -- Set up event ending
+   event_finish = true
+
+   local fwo = faction.get("Wild Ones")
+   fpir = faction.dynAdd( fwo, "blackcat_owner", fwo:name(), {clear_enemies=true, clear_allies=true} )
+
+   local pos = vec.newP( 0.8*system.cur():radius()*rnd.rnd(), rnd.rnd()*360 )
+   owner = pilot.add( "Pirate Shark", fpir, pos )
+   owner:control(true)
+   owner:follow( player.pilot() )
+   hook.timer( 1, "owner_hail_check" )
+   hook.pilot( owner, "hail", "owner_hail" )
+   hook.pilot( owner, "board", "owner_board" )
+end
+
+function owner_hail_check ()
+   if not owner or not owner:exists() then return end
+
+   local pp = player.pilot()
+   local det, scan = pp:inrange( owner )
+
+   if det and scan then
+      owner:hailPlayer( true )
+      return
+   end
+
+   hook.timer( 1, "owner_hail_check" )
+end
+
+function owner_hail ()
+   vn.clear()
+   vn.scene()
+   local o = vn.newCharacter( _("Nervious Individual"), {image=owner_image, color=owner_colour, shader=love_shaders.hologram()} )
+   vn.transition("electric")
+   vn.na(fmt.f(_("You open the communication channels with the {shipname} and a hologram of a nervous-looking individual materializes in front of you."),{shipname=owner:name()}))
+   o(_([["H-h-hello there. You w-w-wouldn't happen to have a c-cat onboard?"]]))
+   vn.menu{
+      {_([["Yes."]]), "catyes"},
+      {_([["No (lie)."]]), "catno"},
+   }
+
+   vn.label("catno")
+   vn.sfx( meow )
+   vn.na(_([[Just as you utter the word "No", the black cat drowns out your reply with a resonating "meow", that is clearly heard on the other side of the communication channel.]]))
+   vn.jump("catyes")
+
+   vn.label("catyes")
+   o(_([[They let out a sigh of relief.
+"You f-f-found them! I thought I was a g-g-goner! I'll b-brake my ship so you c-can bring them over."]]))
+   vn.na(fmt.f(_("Given the streak of bad luck the feline has brought you, you figure it is in your best interest to bring the cat over to the {shipname}"),{shipname=owner:name()}))
+
+   vn.done("electric")
+   vn.run()
+
+   owner:control()
+   owner:brake()
+   owner:setActiveBoard(true)
+
+   player.commClose()
+end
+
+function owner_board ()
+   vn.clear()
+   vn.scene()
+   local cat = vn.Character.new(_("Black Cat"), {image=cat_image, color=cat_colour})
+   vn.sfx( der.sfx.board )
+   vn.transition()
+   vn.na(fmt.f(_("Your ship locks its boarding clamps on the {shipname}, and the airlock opens up revealing some strangely musty air and pitch black darkness. How odd."),{shipname=owner:name()}))
+   vn.na(_("You realize the cat is no where to be seen, and start to search for it to bring them over. Funny how it always seems to be where you don't want it and when you need it you can't find it."))
+   vn.sfx( meow )
+   vn.na(_("You scour the ship and end up going back to the commander chair, as you are about to look behind it, you hear a sonorous meow and a black shadow flies past you towards the airlock."))
+   vn.sfx( der.sfx.unboard )
+   vn.na(_("You run to try to catch it, but hear the sound of the airlock closing and detaching of the locking clamps. You run back to your command chair to see what the other ship is doing, but you can not find it anywhere. They seem to have a knack for fleeing."))
+   vn.na(fmt.f(_("You sit resigned and outwitted at your command chair when you notice a small envelope on the floor. You open it and find a credit chip with {credits}."),{fmt.credits(credit_reward)}))
+   vn.run()
+
+   player.unboard()
+   hook.safe("owner_gone")
+end
+
+function owner_gone ()
+   owner:rm()
+   misn.finish(true)
 end
 
 function abort ()
