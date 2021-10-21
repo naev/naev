@@ -204,6 +204,7 @@ function jumpin ()
    hook.timer( 1, "owner_hail_check" )
    hook.pilot( owner, "hail", "owner_hail" )
    hook.pilot( owner, "board", "owner_board" )
+   owner_was_hailed = false
 end
 
 function owner_hail_check ()
@@ -221,6 +222,11 @@ function owner_hail_check ()
 end
 
 function owner_hail ()
+   if owner_was_hailed then
+      owner:comm( _("P-p-please bring them o-over.") )
+      return
+   end
+
    vn.clear()
    vn.scene()
    local o = vn.newCharacter( _("Nervious Individual"), {image=owner_image, color=owner_colour, shader=love_shaders.hologram()} )
@@ -251,6 +257,7 @@ function owner_hail ()
    owner:setActiveBoard(true)
    owner:setHilight()
 
+   owner_was_hailed = true
    player.commClose()
 end
 
