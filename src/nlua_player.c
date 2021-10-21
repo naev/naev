@@ -1053,7 +1053,7 @@ static int playerL_rmOutfit( lua_State *L )
    q = luaL_optinteger(L, 2, 1);
 
    /* Handle special case it's "all". */
-   if (!lua_isnoneornil(L,1)) {
+   if (lua_isstring(L, 1)) {
       const char *str = luaL_checkstring(L, 1);
 
       if (strcmp(str,"all")==0) {
@@ -1074,7 +1074,6 @@ static int playerL_rmOutfit( lua_State *L )
          outfits_updateEquipmentOutfits();
          return 0;
       }
-      NLUA_ERROR(L, _("Unknown string '%s' passed to player.rmOutfit!"), str);
    }
 
    /* Usual case. */
