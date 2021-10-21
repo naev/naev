@@ -115,6 +115,11 @@ function create()
       npc_patrons[id] = npcdata
    end
 
+   -- If scavengers are not dead, they sometimes appear
+   if var.peek("maikki_scavengers_alive") and rnd.rnd() < 0.05 then
+      evt.npcAdd( "approach_scavengers", _("Scavengers"), scav_portrait, _("You see a pair of dirty looking fellows talking loudly among themselves.") )
+   end
+
    -- If they player never had tokens, it is probably their first time
    if not var.peek( "minerva_tokens" ) then
       greeterhook = hook.land( "bargreeter", "bar" )
@@ -559,6 +564,19 @@ function approach_patron( id )
    -- Handle random bar events if necessary
    -- TODO should patrons also generate random events?
    random_event()
+end
+
+function approach_scavengers ()
+   vn.clear()
+   vn.scene()
+   local scavA = vn.newCharacter( _("Scavenger A"),
+         { image=scavengera_image, color=scavengera_colour, pos="left" } )
+   local scavB = vn.newCharacter( _("Scavenger B"),
+         { image=scavengerb_image, color=scavengerb_colour, pos="right" } )
+   vn.transition()
+   -- TODO maybe more text?
+   scavB(_([["What are you looking at?"]]))
+   vn.done()
 end
 
 function approach_maikki ()
