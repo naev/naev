@@ -1,8 +1,6 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
-
 /**
  * @file intro.c
  *
@@ -10,8 +8,6 @@
  *
  * @todo Allow handling of images and other fancy things once we get them.
  */
-
-
 /** @cond */
 #include "SDL.h"
 
@@ -29,11 +25,9 @@
 #include "nstring.h"
 #include "toolkit.h"
 
-
 #define INTRO_SPEED        30. /**< Speed of text in characters / second. */
 #define SIDE_MARGIN       100. /**< Minimum space on either side of the text. */
 #define IMAGE_WIDTH       300. /**< Width to reserve for images on the side. */
-
 
 /** @brief Intro Image: to be displayed to the side of the scrolling. */
 typedef struct intro_img_t_ {
@@ -56,7 +50,6 @@ typedef struct intro_cmd_t_ {
    const char *operand;
 } intro_cmd_t;
 
-
 /*
  * State.
  */
@@ -64,7 +57,6 @@ static intro_cmd_t *intro_cmds = NULL;   /**< Array (array.h): Introduction text
 static char *intro_buf = NULL;           /**< Allocated buffer read from the raw intro-file and modified as we split lines. */
 static glFont intro_font;                /**< Introduction font. */
 static int has_side_gfx = 0;             /* Determines how wide to make the text. */
-
 
 /*
  * Prototypes.
@@ -76,7 +68,6 @@ static void initialize_image( intro_img_t *img );
 static void load_image( intro_img_t *img, const char *img_file );
 static void intro_fade_image_in( intro_img_t *side, intro_img_t *transition, const char *img_file );
 static int  intro_draw_text( char **const sb_list, int sb_size, int sb_index, double offset, double line_height );
-
 
 /**
  * @brief Loads the intro stuff.
@@ -127,7 +118,6 @@ static int intro_load( const char *text )
    return 0;
 }
 
-
 /**
  * @brief Cleans up the intro stuff.
  */
@@ -156,7 +146,6 @@ static void initialize_image( intro_img_t *img )
    img->fade_rate = 0.0;
 }
 
-
 /**
  * @brief Initialize an intro_img_t to default values.
  *
@@ -173,7 +162,6 @@ static void load_image( intro_img_t *img, const char *img_file )
       img->c.a = 0.0;
       img->fade_rate = 0.1;
 }
-
 
 /**
  * @brief Fade an image in.
@@ -212,7 +200,6 @@ static void intro_fade_image_in( intro_img_t *side, intro_img_t *transition,
    }
 }
 
-
 /**
  * @brief Handle user events (mouse clicks, key presses, etc.).
  *
@@ -221,8 +208,7 @@ static void intro_fade_image_in( intro_img_t *side, intro_img_t *transition,
  */
 static void intro_event_handler( int *stop, double *offset, double *vel )
 {
-   SDL_Event event;           /* user key-press, mouse-push, etc. */
-
+   SDL_Event event; /* user key-press, mouse-push, etc. */
    while (SDL_PollEvent(&event)) {
       if (event.type == SDL_WINDOWEVENT &&
             event.window.event == SDL_WINDOWEVENT_RESIZED) {

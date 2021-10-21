@@ -1,7 +1,6 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
 /**
  * @file unidiff.c
  *
@@ -11,7 +10,6 @@
  *  These are meant to be applied after the player triggers them, mostly
  *  through missions.
  */
-
 
 /** @cond */
 #include <stdlib.h>
@@ -31,7 +29,6 @@
 #include "safelanes.h"
 #include "space.h"
 
-
 /**
  * @brief Universe diff filepath list.
  */
@@ -40,7 +37,6 @@ typedef struct UniDiffData_ {
    char *filename; /**< Filename of the diff. */
 } UniDiffData_t;
 static UniDiffData_t *diff_available = NULL; /**< Available diffs. */
-
 
 /**
  * @enum UniHunkTargetType_t
@@ -55,7 +51,6 @@ typedef enum UniHunkTargetType_ {
    HUNK_TARGET_FACTION,
 } UniHunkTargetType_t;
 
-
 /**
  * @struct UniHunkTarget_t
  *
@@ -67,7 +62,6 @@ typedef struct UniHunkTarget_ {
       char *name; /**< Name of the target. */
    } u; /**< Union of possible target types. */
 } UniHunkTarget_t;
-
 
 /**
  * @enum UniHunkType_t
@@ -104,7 +98,6 @@ typedef enum UniHunkType_ {
    HUNK_TYPE_FACTION_REALIGN, /* For internal usage. */
 } UniHunkType_t;
 
-
 /**
  * @struct UniHunk_t
  *
@@ -124,7 +117,6 @@ typedef struct UniHunk_ {
    } o; /** Old data to possibly replace. */
 } UniHunk_t;
 
-
 /**
  * @struct UniDiff_t
  *
@@ -136,7 +128,6 @@ typedef struct UniDiff_ {
    UniHunk_t *failed; /**< Failed hunks. */
 } UniDiff_t;
 
-
 /*
  * Diff stack.
  */
@@ -144,7 +135,6 @@ static UniDiff_t *diff_stack = NULL; /**< Currently applied universe diffs. */
 
 /* Useful variables. */
 static int diff_universe_changed = 0; /**< Whether or not the universe changed. */
-
 
 /*
  * Prototypes.
@@ -167,7 +157,6 @@ static int diff_checkUpdateUniverse (void);
 int diff_save( xmlTextWriterPtr writer ); /**< Used in save.c */
 int diff_load( xmlNodePtr parent ); /**< Used in save.c */
 
-
 /**
  * @brief Loads available universe diffs.
  *
@@ -175,15 +164,13 @@ int diff_load( xmlNodePtr parent ); /**< Used in save.c */
  */
 int diff_loadAvailable (void)
 {
-   int i;
-   char **diff_files;
-   xmlDocPtr doc;
-   xmlNodePtr node;
-   UniDiffData_t *diff;
+   char **diff_files = ndata_listRecursive( UNIDIFF_DATA_PATH );
+   diff_available    = array_create_size( UniDiffData_t, array_size( diff_files ) );
+   for (int i=0; i < array_size( diff_files ); i++ ) {
+      xmlDocPtr doc;
+      xmlNodePtr node;
+      UniDiffData_t *diff;
 
-   diff_files     = ndata_listRecursive( UNIDIFF_DATA_PATH );
-   diff_available = array_create_size( UniDiffData_t, array_size( diff_files ) );
-   for ( i = 0; i < array_size( diff_files ); i++ ) {
       /* Parse the header. */
       doc = xml_parsePhysFS( diff_files[i] );
       if (doc == NULL)
@@ -208,7 +195,6 @@ int diff_loadAvailable (void)
    return 0;
 }
 
-
 /**
  * @brief Checks if a diff is currently applied.
  *
@@ -222,7 +208,6 @@ int diff_isApplied( const char *name )
    return 0;
 }
 
-
 /**
  * @brief Gets a diff by name.
  *
@@ -231,13 +216,11 @@ int diff_isApplied( const char *name )
  */
 static UniDiff_t* diff_get( const char *name )
 {
-   int i;
-   for (i=0; i<array_size(diff_stack); i++)
+   for (int i=0; i<array_size(diff_stack); i++)
       if (strcmp(diff_stack[i].name,name)==0)
          return &diff_stack[i];
    return NULL;
 }
-
 
 /**
  * @brief Applies a diff to the universe.
@@ -249,7 +232,6 @@ int diff_apply( const char *name )
 {
    return diff_applyInternal( name, 1 );
 }
-
 
 /**
  * @brief Applies a diff to the universe.
@@ -308,7 +290,6 @@ static int diff_applyInternal( const char *name, int oneshot )
 
    return 0;
 }
-
 
 /**
  * @brief Patches a system.
@@ -462,7 +443,6 @@ static int diff_patchSystem( UniDiff_t *diff, xmlNodePtr node )
    return 0;
 }
 
-
 /**
  * @brief Patches a tech.
  *
@@ -532,7 +512,6 @@ static int diff_patchTech( UniDiff_t *diff, xmlNodePtr node )
    return 0;
 }
 
-
 /**
  * @brief Patches a asset.
  *
@@ -584,7 +563,6 @@ static int diff_patchAsset( UniDiff_t *diff, xmlNodePtr node )
 
    return 0;
 }
-
 
 /**
  * @brief Patches a faction.
@@ -686,7 +664,6 @@ static int diff_patchFaction( UniDiff_t *diff, xmlNodePtr node )
    return 0;
 }
 
-
 /**
  * @brief Actually applies a diff in XML node form.
  *
@@ -695,11 +672,8 @@ static int diff_patchFaction( UniDiff_t *diff, xmlNodePtr node )
  */
 static int diff_patch( xmlNodePtr parent )
 {
-   int i;
    UniDiff_t *diff;
-   UniHunk_t *fail;
    xmlNodePtr node;
-   char *target;
    int nfailed;
 
    /* Prepare it. */
@@ -733,9 +707,9 @@ static int diff_patch( xmlNodePtr parent )
       WARN(
          n_( "Unidiff '%s' failed to apply %d hunk.", "Unidiff '%s' failed to apply %d hunks.", nfailed ),
          diff->name, nfailed );
-      for (i=0; i<nfailed; i++) {
-         fail   = &diff->failed[i];
-         target = fail->target.u.name;
+      for (int i=0; i<nfailed; i++) {
+         UniHunk_t *fail = &diff->failed[i];
+         char *target = fail->target.u.name;
          switch (fail->type) {
             case HUNK_TYPE_ASSET_ADD:
                WARN(_("   [%s] asset add: '%s'"), target, fail->u.name);
@@ -813,7 +787,6 @@ static int diff_patch( xmlNodePtr parent )
    ovr_refresh();
    return 0;
 }
-
 
 /**
  * @brief Applies a hunk and adds it to the diff.
@@ -984,7 +957,6 @@ static int diff_patchHunk( UniHunk_t *hunk )
    return -1;
 }
 
-
 /**
  * @brief Adds a hunk to the failed list.
  *
@@ -999,7 +971,6 @@ static void diff_hunkFailed( UniDiff_t *diff, UniHunk_t *hunk )
       diff->failed = array_create( UniHunk_t );
    array_grow( &diff->failed ) = *hunk;
 }
-
 
 /**
  * @brief Adds a hunk to the applied list.
@@ -1016,7 +987,6 @@ static void diff_hunkSuccess( UniDiff_t *diff, UniHunk_t *hunk )
    array_grow( &diff->applied ) = *hunk;
 }
 
-
 /**
  * @brief Removes a diff from the universe.
  *
@@ -1024,10 +994,8 @@ static void diff_hunkSuccess( UniDiff_t *diff, UniHunk_t *hunk )
  */
 void diff_remove( const char *name )
 {
-   UniDiff_t *diff;
-
    /* Check if already applied. */
-   diff = diff_get(name);
+   UniDiff_t *diff = diff_get(name);
    if (diff == NULL)
       return;
 
@@ -1036,7 +1004,6 @@ void diff_remove( const char *name )
    economy_execQueued();
    diff_checkUpdateUniverse();
 }
-
 
 /**
  * @brief Removes all active diffs. (Call before economy_destroy().)
@@ -1049,7 +1016,6 @@ void diff_clear (void)
    economy_execQueued();
    diff_checkUpdateUniverse();
 }
-
 
 /**
  * @brief Clean up after diff_loadAvailable().
@@ -1065,7 +1031,6 @@ void diff_free (void)
    diff_available = NULL;
 }
 
-
 /**
  * @brief Creates a new UniDiff_t for usage.
  *
@@ -1078,7 +1043,6 @@ static UniDiff_t *diff_newDiff (void)
       diff_stack = array_create( UniDiff_t );
    return &array_grow(&diff_stack);
 }
-
 
 /**
  * @brief Removes a diff.
@@ -1172,7 +1136,6 @@ static int diff_removeDiff( UniDiff_t *diff )
    return 0;
 }
 
-
 /**
  * @brief Cleans up a diff.
  *
@@ -1180,18 +1143,15 @@ static int diff_removeDiff( UniDiff_t *diff )
  */
 static void diff_cleanup( UniDiff_t *diff )
 {
-   int i;
-
    free(diff->name);
-   for (i=0; i<array_size(diff->applied); i++)
+   for (int i=0; i<array_size(diff->applied); i++)
       diff_cleanupHunk(&diff->applied[i]);
    array_free(diff->applied);
-   for (i=0; i<array_size(diff->failed); i++)
+   for (int i=0; i<array_size(diff->failed); i++)
       diff_cleanupHunk(&diff->failed[i]);
    array_free(diff->failed);
    memset(diff, 0, sizeof(UniDiff_t));
 }
-
 
 /**
  * @brief Cleans up a hunk.
@@ -1234,7 +1194,6 @@ static void diff_cleanupHunk( UniHunk_t *hunk )
    memset( hunk, 0, sizeof(UniHunk_t) );
 }
 
-
 /**
  * @brief Saves the active diffs.
  *
@@ -1243,19 +1202,15 @@ static void diff_cleanupHunk( UniHunk_t *hunk )
  */
 int diff_save( xmlTextWriterPtr writer )
 {
-   int i;
-   UniDiff_t *diff;
-
    xmlw_startElem(writer,"diffs");
    if (diff_stack != NULL) {
-      for (i=0; i<array_size(diff_stack); i++) {
-         diff = &diff_stack[i];
+      for (int i=0; i<array_size(diff_stack); i++) {
+         UniDiff_t *diff = &diff_stack[i];
 
          xmlw_elem(writer, "diff", "%s", diff->name);
       }
    }
    xmlw_endElem(writer); /* "diffs" */
-
    return 0;
 
 }
@@ -1297,7 +1252,6 @@ int diff_load( xmlNodePtr parent )
    return 0;
 }
 
-
 /**
  * @brief Checks and updates the universe if necessary.
  */
@@ -1310,4 +1264,3 @@ static int diff_checkUpdateUniverse (void)
    diff_universe_changed = 0;
    return 1;
 }
-

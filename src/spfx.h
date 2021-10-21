@@ -86,16 +86,16 @@ typedef struct Trail_spfx_ {
  */
 int spfx_get( char* name );
 const TrailSpec* trailSpec_get( const char* name );
-void spfx_add( const int effect,
+void spfx_add( int effect,
       const double px, const double py,
       const double vx, const double vy,
-      const int layer );
+      int layer );
 
 /*
  * stack mass manipulation functions
  */
 void spfx_update( const double dt, const double real_dt );
-void spfx_render( const int layer );
+void spfx_render( int layer );
 void spfx_clear (void);
 Trail_spfx* spfx_trail_create( const TrailSpec* spec );
 void spfx_trail_sample( Trail_spfx* trail, double x, double y, TrailMode mode, int force );

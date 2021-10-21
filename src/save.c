@@ -1,13 +1,11 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
 /**
  * @file save.c
  *
  * @brief Handles saving/loading games.
  */
-
 /** @cond */
 #include <errno.h>
 #include "physfs.h"
@@ -38,7 +36,6 @@
 
 int save_loaded   = 0; /**< Just loaded the saved game. */
 
-
 /*
  * prototypes
  */
@@ -64,7 +61,6 @@ extern int diff_save( xmlTextWriterPtr writer ); /**< Saves the universe diffs. 
 /* static */
 static int save_data( xmlTextWriterPtr writer );
 
-
 /**
  * @brief Saves all the player's game data.
  *
@@ -87,7 +83,6 @@ static int save_data( xmlTextWriterPtr writer )
    if (shiplog_save(writer) < 0) return -1;
    return 0;
 }
-
 
 /**
  * @brief Saves the current game.

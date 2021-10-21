@@ -6,7 +6,6 @@
  *
  * @brief Handles the ship statistics.
  */
-
 /** @cond */
 #include "naev.h"
 /** @endcond */
