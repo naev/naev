@@ -1169,15 +1169,12 @@ static int pilotL_setTarget( lua_State *L )
  */
 static int pilotL_inrange( lua_State *L )
 {
-   Pilot *p, *t;
-   int ret;
-
    /* Parse parameters. */
-   p = luaL_validpilot(L,1);
-   t = luaL_validpilot(L,2);
+   Pilot *p = luaL_validpilot(L,1);
+   Pilot *t = luaL_validpilot(L,2);
 
    /* Check if in range. */
-   ret = pilot_inRangePilot( p, t, NULL );
+   int ret = pilot_inRangePilot( p, t, NULL );
    if (ret == 1) { /* In range. */
       lua_pushboolean(L,1);
       lua_pushboolean(L,1);
