@@ -1,14 +1,11 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
 /**
  * @file spfx.c
  *
  * @brief Handles the special effects.
  */
-
-
 /** @cond */
 #include <inttypes.h>
 #include "SDL.h"
@@ -34,7 +31,6 @@
 #include "space.h"
 #include "nlua_shader.h"
 
-
 #define SPFX_XML_ID    "spfx" /**< SPFX XML node tag. */
 
 /*
@@ -46,12 +42,10 @@
 
 #define HAPTIC_UPDATE_INTERVAL   0.1 /**< Time between haptic updates. */
 
-
 /* Trail stuff. */
 #define TRAIL_UPDATE_DT       0.05  /**< Rate (in seconds) at which trail is updated. */
 static TrailSpec* trail_spec_stack; /**< Trail specifications. */
 static Trail_spfx** trail_spfx_stack; /**< Active trail effects. */
-
 
 /*
  * Special hard-coded special effects
@@ -76,7 +70,6 @@ static unsigned int damage_shader_pp_id = 0; /**< ID of the post-processing shad
 static LuaShader_t damage_shader; /**< Shader to use. */
 static double damage_strength = 0.; /**< Damage shader strength intensity. */
 
-
 /*
  * Trail colours handling.
  */
@@ -84,14 +77,11 @@ static int trailSpec_load (void);
 static void trailSpec_parse( xmlNodePtr cur, TrailSpec *tc );
 static TrailSpec* trailSpec_getRaw( const char* name );
 
-
 /*
  * Misc functions.
  */
 static void spfx_updateShake( double dt );
 static void spfx_updateDamage( double dt );
-
-
 
 /**
  * @struct SPFX_Base
@@ -119,7 +109,6 @@ typedef struct SPFX_Base_ {
 
 static SPFX_Base *spfx_effects = NULL; /**< Total special effects. */
 
-
 /**
  * @struct SPFX
  *
@@ -139,12 +128,10 @@ typedef struct SPFX_ {
    GLfloat unique; /**< Uniqueness value in the shader. */
 } SPFX;
 
-
 /* front stack is for effects on player, back is for the rest */
 static SPFX *spfx_stack_front = NULL; /**< Frontal special effect layer. */
 static SPFX *spfx_stack_middle = NULL; /**< Middle special effect layer. */
 static SPFX *spfx_stack_back = NULL; /**< Back special effect layer. */
-
 
 /*
  * prototypes
@@ -160,7 +147,6 @@ static void spfx_hapticRumble( double mod );
 static void spfx_update_trails( double dt );
 static void spfx_trail_update( Trail_spfx* trail, double dt );
 static void spfx_trail_free( Trail_spfx* trail );
-
 
 /**
  * @brief Parses an xml node containing a SPFX.
@@ -326,7 +312,6 @@ static int spfx_base_parse( SPFX_Base *temp, const char *filename )
    return 0;
 }
 
-
 /**
  * @brief Frees a SPFX_Base.
  *
@@ -338,7 +323,6 @@ static void spfx_base_free( SPFX_Base *effect )
    gl_freeTexture(effect->gfx);
 }
 
-
 /**
  * @brief Gets the id of an spfx based on name.
  *
@@ -347,13 +331,11 @@ static void spfx_base_free( SPFX_Base *effect )
  */
 int spfx_get( char* name )
 {
-   int i;
-   for (i=0; i<array_size(spfx_effects); i++)
+   for (int i=0; i<array_size(spfx_effects); i++)
       if (strcmp(spfx_effects[i].name, name)==0)
          return i;
    return -1;
 }
-
 
 /**
  * @brief Loads the spfx stack.
@@ -364,13 +346,13 @@ int spfx_get( char* name )
  */
 int spfx_load (void)
 {
-   int i, n, ret;
+   int n, ret;
    char **spfx_files;
 
    spfx_effects = array_create(SPFX_Base);
 
    spfx_files = ndata_listRecursive( SPFX_DATA_PATH );
-   for (i=0; i<array_size(spfx_files); i++) {
+   for (int i=0; i<array_size(spfx_files); i++) {
       if (!ndata_matchExt( spfx_files[i], "xml" ))
          continue;
 
@@ -419,8 +401,6 @@ int spfx_load (void)
    return 0;
 }
 
-
-
 /**
  * @brief Frees the spfx stack.
  */
@@ -458,7 +438,6 @@ void spfx_free (void)
    array_free( trail_spec_stack );
 }
 
-
 /**
  * @brief Creates a new special effect.
  *
@@ -472,7 +451,7 @@ void spfx_free (void)
 void spfx_add( int effect,
       const double px, const double py,
       const double vx, const double vy,
-      const int layer )
+      int layer )
 {
    SPFX *cur_spfx;
    double ttl, anim;
@@ -513,14 +492,11 @@ void spfx_add( int effect,
    cur_spfx->time = 0.0;
 }
 
-
 /**
  * @brief Clears all the currently running effects.
  */
 void spfx_clear (void)
 {
-   int i;
-
    /* Clear rumble */
    shake_force_mod = 0.;
    shake_force_mean = 0.;
@@ -533,11 +509,10 @@ void spfx_clear (void)
       render_postprocessRm( damage_shader_pp_id );
    damage_shader_pp_id = 0;
 
-   for (i=0; i<array_size(trail_spfx_stack); i++)
+   for (int i=0; i<array_size(trail_spfx_stack); i++)
       spfx_trail_free( trail_spfx_stack[i] );
    array_erase( &trail_spfx_stack, array_begin(trail_spfx_stack), array_end(trail_spfx_stack) );
 }
-
 
 /**
  * @brief Updates all the spfx.
@@ -563,7 +538,6 @@ void spfx_update( const double dt, const double real_dt )
    spfx_updateDamage( dt );
 }
 
-
 /**
  * @brief Updates an individual spfx.
  *
@@ -572,9 +546,7 @@ void spfx_update( const double dt, const double real_dt )
  */
 static void spfx_update_layer( SPFX *layer, const double dt )
 {
-   int i;
-
-   for (i=0; i<array_size(layer); i++) {
+   for (int i=0; i<array_size(layer); i++) {
       layer[i].timer -= dt; /* less time to live */
 
       /* time to die! */
@@ -589,7 +561,6 @@ static void spfx_update_layer( SPFX *layer, const double dt )
       vect_cadd( &layer[i].pos, dt*VX(layer[i].vel), dt*VY(layer[i].vel) );
    }
 }
-
 
 /**
  * @brief Updates the shake position.
@@ -656,7 +627,6 @@ static void spfx_updateShake( double dt )
    gl_checkErr();
 }
 
-
 static void spfx_updateDamage( double dt )
 {
    /* Must still be on. */
@@ -680,7 +650,6 @@ static void spfx_updateDamage( double dt )
    gl_checkErr();
 }
 
-
 /**
  * @brief Initalizes a trail.
  *
@@ -688,9 +657,7 @@ static void spfx_updateDamage( double dt )
  */
 Trail_spfx* spfx_trail_create( const TrailSpec* spec )
 {
-   Trail_spfx *trail;
-
-   trail = calloc( 1, sizeof(Trail_spfx) );
+   Trail_spfx *trail = calloc( 1, sizeof(Trail_spfx) );
    trail->spec = spec;
    trail->capacity = 1;
    trail->iread = trail->iwrite = 0;
@@ -706,19 +673,16 @@ Trail_spfx* spfx_trail_create( const TrailSpec* spec )
    return trail;
 }
 
-
 /**
  * @brief Updates all trails (handling dispersal/fadeout).
  *
  *    @param dt Update interval.
  */
-void spfx_update_trails( double dt ) {
-   int i, n;
-   Trail_spfx *trail;
-
-   n = array_size( trail_spfx_stack );
-   for (i=0; i<n; i++) {
-      trail = trail_spfx_stack[i];
+void spfx_update_trails( double dt )
+{
+   int n = array_size( trail_spfx_stack );
+   for (int i=0; i<n; i++) {
+      Trail_spfx *trail = trail_spfx_stack[i];
       spfx_trail_update( trail, dt );
       if (!trail->refcount && !trail_size(trail) ) {
          spfx_trail_free( trail );
@@ -729,7 +693,6 @@ void spfx_update_trails( double dt ) {
       array_resize( &trail_spfx_stack, n );
 }
 
-
 /**
  * @brief Updates a trail.
  *
@@ -738,22 +701,18 @@ void spfx_update_trails( double dt ) {
  */
 static void spfx_trail_update( Trail_spfx* trail, double dt )
 {
-   size_t i;
-   GLfloat rel_dt;
-
-   rel_dt = dt/ trail->spec->ttl;
+   GLfloat rel_dt = dt/ trail->spec->ttl;
    /* Remove outdated elements. */
    while (trail->iread < trail->iwrite && trail_front(trail).t < rel_dt)
       trail->iread++;
 
    /* Update others' timestamps. */
-   for (i = trail->iread; i < trail->iwrite; i++)
+   for (size_t i = trail->iread; i < trail->iwrite; i++)
       trail_at( trail, i ).t -= rel_dt;
 
    /* Update timer. */
    trail->dt += dt;
 }
-
 
 /**
  * @brief Makes a trail grow.
@@ -795,7 +754,6 @@ void spfx_trail_sample( Trail_spfx* trail, double x, double y, TrailMode mode, i
    trail_at( trail, trail->iwrite++ ) = p;
 }
 
-
 /**
  * @brief Removes a trail.
  *
@@ -807,7 +765,6 @@ void spfx_trail_remove( Trail_spfx* trail )
       trail->refcount--;
 }
 
-
 /**
  * @brief Deallocates an unreferenced, expired trail.
  */
@@ -817,7 +774,6 @@ static void spfx_trail_free( Trail_spfx* trail )
    free(trail->point_ringbuf);
    free(trail);
 }
-
 
 /**
  * @brief Draws a trail on screen.
@@ -898,7 +854,6 @@ void spfx_trail_draw( const Trail_spfx* trail )
    gl_checkErr();
 }
 
-
 /**
  * @brief Increases the current rumble level.
  *
@@ -919,7 +874,6 @@ void spfx_shake( double mod )
       shake_shader_pp_id = render_postprocessAdd( &shake_shader, PP_LAYER_GAME, 99 );
 }
 
-
 /**
  * @brief Increases the current damage level.
  *
@@ -935,7 +889,6 @@ void spfx_damage( double mod )
    if (damage_shader_pp_id==0)
       damage_shader_pp_id = render_postprocessAdd( &damage_shader, PP_LAYER_GUI, 98 );
 }
-
 
 /**
  * @brief Initializes the rumble effect.
@@ -968,7 +921,6 @@ static int spfx_hapticInit (void)
 
    return 0;
 }
-
 
 /**
  * @brief Runs a rumble effect.
@@ -1012,7 +964,6 @@ static void spfx_hapticRumble( double mod )
    haptic_lastUpdate += HAPTIC_UPDATE_INTERVAL;
 }
 
-
 /**
  * @brief Sets the cinematic mode.
  *
@@ -1024,20 +975,16 @@ void spfx_cinematic (void)
    gl_renderRect( 0., SCREEN_H*0.8, SCREEN_W, SCREEN_H,     &cBlack );
 }
 
-
 /**
  * @brief Renders the entire spfx layer.
  *
  *    @param layer Layer to render.
  */
-void spfx_render( const int layer )
+void spfx_render( int layer )
 {
-   SPFX *spfx_stack, *spfx;
-   int i;
-   SPFX_Base *effect;
+   SPFX *spfx_stack;
    int sx, sy;
    double time;
-   Trail_spfx *trail;
 
    /* get the appropriate layer */
    switch (layer) {
@@ -1060,16 +1007,16 @@ void spfx_render( const int layer )
 
    /* Trails are special (for now?). */
    if (layer == SPFX_LAYER_BACK)
-      for (i=0; i<array_size(trail_spfx_stack); i++) {
-         trail = trail_spfx_stack[i];
+      for (int i=0; i<array_size(trail_spfx_stack); i++) {
+         Trail_spfx *trail = trail_spfx_stack[i];
          if (!trail->ontop)
             spfx_trail_draw( trail );
       }
 
    /* Now render the layer */
-   for (i=array_size(spfx_stack)-1; i>=0; i--) {
-      spfx   = &spfx_stack[i];
-      effect = &spfx_effects[ spfx->effect ];
+   for (int i=array_size(spfx_stack)-1; i>=0; i--) {
+      SPFX *spfx        = &spfx_stack[i];
+      SPFX_Base *effect = &spfx_effects[ spfx->effect ];
 
       /* Render shader. */
       if (effect->shader >= 0) {
@@ -1138,7 +1085,6 @@ void spfx_render( const int layer )
    }
 }
 
-
 /**
  * @brief Parses raw values out of a "trail" element.
  * \warning This means values like idle->thick aren't ready to use.
@@ -1146,8 +1092,6 @@ void spfx_render( const int layer )
 static void trailSpec_parse( xmlNodePtr node, TrailSpec *tc )
 {
    static const char *mode_tags[] = MODE_TAGS;
-   char *type;
-   int i;
    xmlNodePtr cur = node->children;
 
    do {
@@ -1157,7 +1101,7 @@ static void trailSpec_parse( xmlNodePtr node, TrailSpec *tc )
       else if (xml_isNode(cur, "ttl"))
          tc->ttl = xml_getFloat( cur );
       else if (xml_isNode(cur, "type")) {
-         type = xml_get(cur);
+         char *type = xml_get(cur);
          if (gl_has( OPENGL_SUBROUTINES )) {
             tc->type = glGetSubroutineIndex( shaders.trail.program, GL_FRAGMENT_SHADER, type );
             if (tc->type == GL_INVALID_INDEX)
@@ -1167,6 +1111,7 @@ static void trailSpec_parse( xmlNodePtr node, TrailSpec *tc )
       else if (xml_isNode(cur, "nebula"))
          tc->nebula = xml_getInt( cur );
       else {
+         int i;
          for (i=0; i<MODE_MAX; i++)
             if (xml_isNode(cur, mode_tags[i])) {
                xmlr_attr_float_opt( cur, "r", tc->style[i].col.r );
@@ -1187,7 +1132,6 @@ static void trailSpec_parse( xmlNodePtr node, TrailSpec *tc )
    MELEMENT( tc->ttl==0, "ttl" );
 #undef MELEMENT
 }
-
 
 /**
  * @brief Loads the trail colour sets.
@@ -1286,20 +1230,15 @@ static int trailSpec_load (void)
    return 0;
 }
 
-
 static TrailSpec* trailSpec_getRaw( const char* name )
 {
-   int i;
-
-   for (i=0; i<array_size(trail_spec_stack); i++) {
+   for (int i=0; i<array_size(trail_spec_stack); i++) {
       if ( strcmp(trail_spec_stack[i].name, name)==0 )
          return &trail_spec_stack[i];
    }
-
    WARN(_("Trail type '%s' not found in stack"), name);
    return NULL;
 }
-
 
 /**
  * @brief Gets a trail spec by name.

@@ -273,12 +273,10 @@ static int playerL_credits( lua_State *L )
  */
 static int playerL_msg( lua_State *L )
 {
-   const char* str;
-
    NLUA_CHECKRW(L);
    PLAYER_CHECK();
 
-   str = luaL_checkstring(L,1);
+   const char *str = luaL_checkstring(L,1);
    player_messageRaw(str);
 
    return 0;
@@ -375,10 +373,9 @@ static int playerL_omsgChange( lua_State *L )
  */
 static int playerL_omsgRm( lua_State *L )
 {
-   unsigned int id;
    NLUA_CHECKRW(L);
    PLAYER_CHECK();
-   id       = luaL_checklong(L,1);
+   unsigned int id = luaL_checklong(L,1);
    omsg_rm( id );
    return 0;
 }
@@ -787,12 +784,12 @@ static int playerL_allowLand( lua_State *L )
 
    str = NULL;
    if (lua_gettop(L) > 0) {
-      b     = lua_toboolean(L,1);
+      b  = lua_toboolean(L,1);
       if (lua_isstring(L,2))
          str   = lua_tostring(L,2);
    }
    else
-      b     = 1;
+      b  = 1;
 
    if (b)
       player_rmFlag( PLAYER_NOLAND );
@@ -1015,14 +1012,11 @@ static int playerL_numOutfit( lua_State *L )
  */
 static int playerL_addOutfit( lua_State *L  )
 {
-   const Outfit *o;
-   int q;
-
    NLUA_CHECKRW(L);
 
    /* Handle parameters. */
-   o = luaL_validoutfit(L, 1);
-   q = luaL_optinteger(L, 2, 1);
+   const Outfit *o = luaL_validoutfit(L, 1);
+   int q = luaL_optinteger(L, 2, 1);
 
    /* Add the outfits. */
    player_addOutfit( o, q );
@@ -1045,10 +1039,8 @@ static int playerL_addOutfit( lua_State *L  )
  */
 static int playerL_rmOutfit( lua_State *L )
 {
-   const char *str;
-   const Outfit *o, **outfits;
-   const PlayerOutfit_t *poutfits;
-   int i, q;
+   const Outfit *o;
+   int q;
 
    NLUA_CHECKRW(L);
    NLUA_MIN_ARGS(1);
@@ -1057,16 +1049,16 @@ static int playerL_rmOutfit( lua_State *L )
    q = luaL_optinteger(L, 2, 1);
 
    /* Handle special case it's "all". */
-   if (lua_isstring(L, 1)) {
-      str = luaL_checkstring(L, 1);
+   if (!lua_isnoneornil(L,1)) {
+      const char *str = luaL_checkstring(L, 1);
 
       if (strcmp(str,"all")==0) {
-         poutfits = player_getOutfits();
-         outfits = array_create_size( const Outfit*, array_size( poutfits ) );
-         for (i=0; i<array_size(poutfits); i++)
+         const PlayerOutfit_t *poutfits = player_getOutfits();
+         const Outfit **outfits = array_create_size( const Outfit*, array_size( poutfits ) );
+         for (int i=0; i<array_size(poutfits); i++)
             array_push_back( &outfits, poutfits[i].o );
 
-         for (i=0; i<array_size(outfits); i++) {
+         for (int i=0; i<array_size(outfits); i++) {
             o = outfits[i];
             q = player_outfitOwned(o);
             player_rmOutfit(o, q);
@@ -1078,6 +1070,7 @@ static int playerL_rmOutfit( lua_State *L )
          outfits_updateEquipmentOutfits();
          return 0;
       }
+      NLUA_ERROR(L, _("Unknown string '%s' passed to player.rmOutfit!"), str);
    }
 
    /* Usual case. */
@@ -1176,16 +1169,12 @@ static int playerL_missions( lua_State *L )
  */
 static int playerL_misnActive( lua_State *L )
 {
-   MissionData *misn;
-   const char *str;
-
-   str  = luaL_checkstring(L,1);
-   misn = mission_getFromName( str );
+   const char *str = luaL_checkstring(L,1);
+   MissionData *misn = mission_getFromName( str );
    if (misn == NULL) {
       NLUA_ERROR(L, _("Mission '%s' not found in stack"), str);
       return 0;
    }
-
    lua_pushboolean( L, mission_alreadyRunning( misn ) );
    return 1;
 }
@@ -1202,17 +1191,12 @@ static int playerL_misnActive( lua_State *L )
  */
 static int playerL_misnDone( lua_State *L )
 {
-   int id;
-   /* Handle parameters. */
    const char *str = luaL_checkstring(L, 1);
-
-   /* Get mission ID. */
-   id = mission_getID( str );
+   int id          = mission_getID( str );
    if (id == -1) {
       NLUA_ERROR(L, _("Mission '%s' not found in stack"), str);
       return 0;
    }
-
    lua_pushboolean( L, player_missionAlreadyDone( id ) );
    return 1;
 }
@@ -1234,7 +1218,6 @@ static int playerL_evtActive( lua_State *L )
       NLUA_ERROR(L, _("Event '%s' not found in stack"), str);
       return 0;
    }
-
    lua_pushboolean( L, event_alreadyRunning( evtid ) );
    return 1;
 }
@@ -1251,17 +1234,12 @@ static int playerL_evtActive( lua_State *L )
  */
 static int playerL_evtDone( lua_State *L )
 {
-   int id;
-   /* Handle parameters. */
    const char *str = luaL_checkstring(L, 1);
-
-   /* Get event ID. */
-   id = event_dataID( str );
+   int id          = event_dataID( str );
    if (id == -1) {
       NLUA_ERROR(L, _("Event '%s' not found in stack"), str);
       return 0;
    }
-
    lua_pushboolean( L, player_eventAlreadyDone( id ) );
    return 1;
 }

@@ -1,16 +1,12 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
-
 /**
  * @file object.c
  *
  * @brief Object Loader.
  * http://www.paulbourke.net/dataformats/obj/
  */
-
-
 /** @cond */
 #include <assert.h>
 #include <libgen.h>
@@ -36,7 +32,6 @@
 #define DELIM " \t\n"
 #define NAEV_ORTHO_SCALE 10.       /**< The cam.ortho_scale defined in the Blender script */
 #define NAEV_ORTHO_DIST 9.*M_SQRT2/**< Distance from camera to origin in the Blender script */
-
 
 typedef struct Material_ {
    char *name;
@@ -64,11 +59,9 @@ typedef struct {
    GLfloat nor[3];
 } Vertex;
 
-
 static glTexture *zeroTexture       = NULL;
 static glTexture *oneTexture        = NULL;
 static unsigned int emptyTextureRefs= 0;
-
 
 static void mesh_create( Mesh **meshes, const char* name,
                          Vertex *corners, int material )
@@ -115,7 +108,6 @@ static int readGLmaterial( GLfloat col[3], char **saveptr )
    */
    return ret;
 }
-
 
 static void materials_readFromFile( const char *filename, Material **materials )
 {
@@ -221,7 +213,6 @@ static void materials_readFromFile( const char *filename, Material **materials )
    free(filebuf);
 }
 
-
 /**
  * @brief Loads object
  *
@@ -234,7 +225,6 @@ static void materials_readFromFile( const char *filename, Material **materials )
 Object *object_loadFromFile( const char *filename )
 {
    GLfloat *v;
-   int i;
    GLfloat *vertex = array_create(GLfloat);   /**< vertex coordinates */
    GLfloat *texture = array_create(GLfloat);  /**< texture coordinates */
    GLfloat *normal = array_create(GLfloat);  /**< normal coordinates */
@@ -251,10 +241,10 @@ Object *object_loadFromFile( const char *filename )
    int material = -1;
 
    if (emptyTextureRefs++ == 0) {
-      float zero[] = {0., 0., 0., 0.};
+      float zero[]= {0., 0., 0., 0.};
       float one[] = {1., 1., 1., 1.};
       zeroTexture = gl_loadImageData( zero, 1, 1, 1, 1, "solid_zero" );
-      oneTexture = gl_loadImageData( one, 1, 1, 1, 1, "solid_white" );
+      oneTexture  = gl_loadImageData( one, 1, 1, 1, 1, "solid_white" );
    }
 
    Object *object = calloc(1, sizeof(Object));
@@ -346,7 +336,7 @@ Object *object_loadFromFile( const char *filename )
    free(name);
 
    /* Calculate maximum mesh size (from center). */
-   for (i=0; i<array_size(corners); i++) {
+   for (int i=0; i<array_size(corners); i++) {
       v = corners[i].ver;
       object->radius = MAX( object->radius, v[0]*v[0]+v[1]*v[1]+v[2]*v[2] );
    }
@@ -362,18 +352,15 @@ Object *object_loadFromFile( const char *filename )
    return object;
 }
 
-
 /**
  * @brief Frees memory reserved for the object
  */
 void object_free( Object *object )
 {
-   int i;
-
    if (object == NULL)
       return;
 
-   for (i = 0; i < (int)array_size(object->materials); ++i) {
+   for (int i=0; i < array_size(object->materials); ++i) {
       Material *material = &object->materials[i];
       free(material->name);
       gl_freeTexture(material->map_Kd);
@@ -382,7 +369,7 @@ void object_free( Object *object )
       gl_freeTexture(material->map_Bump);
    }
 
-   for (i = 0; i < (int)array_size(object->meshes); ++i) {
+   for (int i=0; i < array_size(object->meshes); ++i) {
       Mesh *mesh = &object->meshes[i];
       free(mesh->name);
       gl_vboDestroy(mesh->vbo);
@@ -449,11 +436,9 @@ static void object_renderMesh( const Object *object, int part, GLfloat alpha )
    glDrawArrays(GL_TRIANGLES, 0, mesh->num_corners);
 }
 
-
 void object_renderSolidPart( const Object *object, const Solid *solid, const char *part_name, GLfloat alpha, double scale )
 {
    gl_Matrix4 projection, model;
-   int i;
    const GLfloat od = NAEV_ORTHO_DIST;
    const GLfloat os = NAEV_ORTHO_SCALE / scale;
    double x, y; //, r;
@@ -481,13 +466,15 @@ void object_renderSolidPart( const Object *object, const Solid *solid, const cha
    gl_Matrix4_Uniform(shaders.material.projection, projection);
    gl_Matrix4_Uniform(shaders.material.model, model);
 
+   /* Actually need depth testing now. */
    glEnable(GL_DEPTH_TEST);
-   glDepthFunc(GL_LESS);  /* XXX this changes the global DepthFunc */
+   glDepthFunc(GL_LESS);
 
-   for (i = 0; i < array_size(object->meshes); ++i)
+   for (int i=0; i < array_size(object->meshes); ++i)
       if (strcmp(part_name, object->meshes[i].name) == 0)
          object_renderMesh(object, i, alpha);
 
+   /* Restore defaults. */
    glDisable(GL_DEPTH_TEST);
    glUseProgram(0);
    gl_checkErr();
