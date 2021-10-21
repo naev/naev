@@ -282,6 +282,9 @@ function owner_board ()
    player.pay( credit_reward )
    player.outfitAdd( "Black Cat Doll" )
 
+   pir.addMiscLog(_("You rescued a black cat from a derelict ship and safely delivered it to its owner, who was flying a Wild Ones pirate ship."))
+   faction.get("Wild Ones"):modPlayer(3)
+
    player.unboard()
    hook.safe("owner_gone")
 end
