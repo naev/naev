@@ -332,7 +332,7 @@ function missionevent()
    local available_missions = {}
    local weights = 0
    for k,m in ipairs(mission_list) do
-      if not player.misnDone(m.name) and (not m.cond or m.cond()) then
+      if not player.misnDone(m.name) and not player.misnActive(m.name) and (not m.cond or m.cond()) then
          weights = weights + (m.weight or 1)
          m.chance = weights
          table.insert( available_missions, m )
