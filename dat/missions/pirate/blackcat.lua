@@ -96,22 +96,72 @@ It seems like it wants to come back with you. What do you do?]]))
 end
 
 local event_list = {
-   function () -- Just a message
-   end,
-   function () -- Ship alarm goes off
-      return _([[]])
-   end,
    function () -- Overheat
+      local pp = player.pilot()
+      local t = pp:temp()
+      pp:setTemp( math.max(400, t+50) )
+      meow:play()
+      player.msg(_("Black cat hair has clogged your radiator and overheated your ship!"), true)
    end,
    function () -- Temporary disable
+      local pp = player.pilot()
+      local a, s, st, dis = pp:health()
+      if dis then return end -- Already disabled
+      pp:disable( true )
+      hook.timer( 5, "disable_restart" )
+      meow:play()
+      player.msg(_("The black cat accidentally hit the ship restart button!"), true)
    end,
-   function ()
+   function () -- Energy discharge
+      local pp = player.pilot()
+      pp:setEnergy( 0 )
+      meow:play()
+      player.msg(_("The black cat managed to accidentally disconnect the energy capacitors!"), true)
    end,
 }
 function event ()
+   -- Larger chance of just random messages
+   if rnd.rnd() < 0.5 then
+      local msg_list = {
+         _("The black cat stares at you ominously."),
+         _("A waft of black cat hair flies around."),
+         _("The black cat's tail fluffs up ad it sprints away."),
+         _("The black cat scratches he airlock. It wants out?"),
+         _("The black cat unceremoniously barfs up a hairball."),
+         _("You hear weird noises from the black cat freaking out over nothing."),
+         _("The black cat suddenly sprints through the ship."),
+         _("The black cat curls up and falls asleep on top of the control panel."),
+         _("The black cat shows you its belly, but bites you when you pet it."),
+         _("The black cat uses the commander chair as a scratching post."),
+      }
+      meow:play()
+      player.msg( msg_list[rnd.rnd(1,#msg_list)], true )
+      return
+   end
+   -- Proper (bad) events
+   event_list[ rnd.rnd(1,#event_list) ]()
+end
+
+function disable_restart ()
+   local pp = player.pilot()
+   local a, s = pp:health()
+   pp:setHealth( a, s, 0 )
+end
+
+function event_check ()
+   if rnd.rnd() < 0.05 then
+      event()
+      event_check_hook = hook.timer( 20+10*rnd.rnd(), "event_check" )
+      return
+   end
+   event_check_hook = hook.timer( 10+5*rnd.rnd(), "event_check" )
 end
 
 function enter ()
+   if event_check_hook then
+      hook.rm( event_check_hook )
+   end
+   event_check_hook = hook.timer( 20+10*rnd.rnd(), "event_check" )
 end
 
 function jumpin ()
