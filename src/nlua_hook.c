@@ -1,14 +1,11 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
 /**
  * @file nlua_hook.c
  *
  * @brief Lua hook module.
  */
-
-
 /** @cond */
 #include <lauxlib.h>
 #include <lua.h>
@@ -31,7 +28,6 @@
 #include "nlua_time.h"
 #include "nluadef.h"
 #include "nstring.h"
-
 
 /* Hook methods. */
 static int hookL_rm( lua_State *L );
@@ -104,13 +100,11 @@ static const luaL_Reg hookL_methods[] = {
    {0,0}
 }; /**< Hook Lua methods. */
 
-
 /*
  * Prototypes.
  */
 static int hookL_setarg( unsigned int hook, int ind );
 static unsigned int hookL_generic( lua_State *L, const char* stack, double ms, int pos, ntime_t date );
-
 
 /**
  * @brief Loads the hook Lua library.
@@ -122,7 +116,6 @@ int nlua_loadHook( nlua_env env )
    nlua_register(env, "hook", hookL_methods, 0);
    return 0;
 }
-
 
 /**
  * @brief Lua bindings to manipulate hooks.
@@ -145,7 +138,6 @@ int nlua_loadHook( nlua_env env )
  * @luamod hook
  */
 
-
 /**
  * @brief Removes a hook previously created.
  *
@@ -156,10 +148,8 @@ int nlua_loadHook( nlua_env env )
  */
 static int hookL_rm( lua_State *L )
 {
-   long h;
-
    /* Remove the hook. */
-   h = luaL_optlong( L, 1, -1 );
+   long h = luaL_optlong( L, 1, -1 );
    /* ... Or do a no-op if caller passes nil. */
    if (h < 0)
       return 0;
@@ -176,7 +166,6 @@ static int hookL_rm( lua_State *L )
 
    return 0;
 }
-
 
 /**
  * @brief Sets a Lua argument for a hook.
@@ -212,7 +201,6 @@ static int hookL_setarg( unsigned int hook, int ind )
    return 0;
 }
 
-
 /**
  * @brief Unsets a Lua argument.
  */
@@ -231,7 +219,6 @@ void hookL_unsetarg( unsigned int hook )
    }
    lua_pop( naevL, 1 );
 }
-
 
 /**
  * @brief Gets a Lua argument for a hook.
@@ -257,7 +244,6 @@ int hookL_getarg( unsigned int hook )
    return 0;
 }
 
-
 /**
  * @brief Creates a mission hook to a certain stack.
  *
@@ -272,7 +258,6 @@ int hookL_getarg( unsigned int hook )
  */
 static unsigned int hookL_generic( lua_State *L, const char* stack, double sec, int pos, ntime_t date )
 {
-   int i;
    const char *func;
    unsigned int h;
    Event_t *running_event;
@@ -286,6 +271,7 @@ static unsigned int hookL_generic( lua_State *L, const char* stack, double sec, 
    running_mission = misn_getFromLua(L);
 
    if (running_mission != NULL) {
+      int i;
       /* make sure mission is a player mission */
       for (i=0; i<MISSION_MAX; i++)
          if (player_missions[i]->id == running_mission->id)
@@ -326,6 +312,7 @@ static unsigned int hookL_generic( lua_State *L, const char* stack, double sec, 
 
    return h;
 }
+
 /**
  * @brief Hooks the function to the player landing.
  *
@@ -350,13 +337,12 @@ static unsigned int hookL_generic( lua_State *L, const char* stack, double sec, 
  */
 static int hookL_land( lua_State *L )
 {
-   const char *where;
    unsigned int h;
 
    if (lua_isnone(L,2))
       h = hookL_generic( L, "land", 0., 1, 0 );
    else {
-      where = luaL_checkstring(L, 2);
+      const char *where = luaL_checkstring(L, 2);
       /* TODO validity checking? */
       h = hookL_generic( L, where, 0., 1, 0 );
    }
@@ -364,6 +350,7 @@ static int hookL_land( lua_State *L )
    lua_pushnumber( L, h );
    return 1;
 }
+
 /**
  * @brief Hooks the function to the info menu.
  *
@@ -388,14 +375,13 @@ static int hookL_land( lua_State *L )
  */
 static int hookL_info( lua_State *L )
 {
-   const char *where;
-   char buf[128];
    unsigned int h;
 
    if (lua_isnone(L,2))
       h = hookL_generic( L, "info", 0., 1, 0 );
    else {
-      where = luaL_checkstring(L, 2);
+      char buf[128];
+      const char *where = luaL_checkstring(L, 2);
       snprintf( buf, sizeof(buf), "info_%s", where );
       /* TODO validity checking? */
       h = hookL_generic( L, buf, 0., 1, 0 );
@@ -404,6 +390,7 @@ static int hookL_info( lua_State *L )
    lua_pushnumber( L, h );
    return 1;
 }
+
 /**
  * @brief Hooks the function to the player loading the game (starts landed).
  *
@@ -416,11 +403,11 @@ static int hookL_info( lua_State *L )
  */
 static int hookL_load( lua_State *L )
 {
-   unsigned int h;
-   h = hookL_generic( L, "load", 0., 1, 0 );
+   unsigned int h = hookL_generic( L, "load", 0., 1, 0 );
    lua_pushnumber( L, h );
    return 1;
 }
+
 /**
  * @brief Hooks the function to the player taking off.
  *
@@ -435,6 +422,7 @@ static int hookL_takeoff( lua_State *L )
    lua_pushnumber( L, h );
    return 1;
 }
+
 /**
  * @brief Hooks the function to the player jumping (before changing systems).
  *
@@ -449,6 +437,7 @@ static int hookL_jumpout( lua_State *L )
    lua_pushnumber( L, h );
    return 1;
 }
+
 /**
  * @brief Hooks the function to the player jumping (after changing systems).
  *
@@ -463,6 +452,7 @@ static int hookL_jumpin( lua_State *L )
    lua_pushnumber( L, h );
    return 1;
 }
+
 /**
  * @brief Hooks the function to the player entering a system (triggers when taking
  *  off too).
@@ -478,6 +468,7 @@ static int hookL_enter( lua_State *L )
    lua_pushnumber( L, h );
    return 1;
 }
+
 /**
  * @brief Hooks the function to the player hailing any ship (not a planet).
  *
@@ -494,6 +485,7 @@ static int hookL_hail( lua_State *L )
    lua_pushnumber( L, h );
    return 1;
 }
+
 /**
  * @brief Hooks the function to the player boarding any ship.
  *
@@ -510,6 +502,7 @@ static int hookL_boarding( lua_State *L )
    lua_pushnumber( L, h );
    return 1;
 }
+
 /**
  * @brief Hooks the function to the player boarding any ship.
  *
@@ -526,6 +519,7 @@ static int hookL_board( lua_State *L )
    lua_pushnumber( L, h );
    return 1;
 }
+
 /**
  * @brief Hooks a timer.
  *
@@ -544,6 +538,7 @@ static int hookL_timer( lua_State *L )
    lua_pushnumber( L, h );
    return 1;
 }
+
 /**
  * @brief Hooks a date change with custom resolution.
  *
@@ -564,6 +559,7 @@ static int hookL_date( lua_State *L )
    lua_pushnumber( L, h );
    return 1;
 }
+
 /**
  * @brief Hooks the function to the player buying any sort of commodity.
  *
@@ -580,6 +576,7 @@ static int hookL_commbuy( lua_State *L )
    lua_pushnumber( L, h );
    return 1;
 }
+
 /**
  * @brief Hooks the function to the player selling any sort of commodity.
  *
@@ -596,6 +593,7 @@ static int hookL_commsell( lua_State *L )
    lua_pushnumber( L, h );
    return 1;
 }
+
 /**
  * @brief Hooks the function to the player gatehring any sort of commodity in space.
  *
@@ -612,6 +610,7 @@ static int hookL_gather( lua_State *L )
    lua_pushnumber( L, h );
    return 1;
 }
+
 /**
  * @brief Hooks the function to the player buying any sort of outfit.
  *
@@ -628,6 +627,7 @@ static int hookL_outfitbuy( lua_State *L )
    lua_pushnumber( L, h );
    return 1;
 }
+
 /**
  * @brief Hooks the function to the player selling any sort of outfit.
  *
@@ -644,6 +644,7 @@ static int hookL_outfitsell( lua_State *L )
    lua_pushnumber( L, h );
    return 1;
 }
+
 /**
  * @brief Hooks the function to the player equipping or deequipping any outfit.
  *
@@ -658,6 +659,7 @@ static int hookL_equip( lua_State *L )
    lua_pushnumber( L, h );
    return 1;
 }
+
 /**
  * @brief Hooks the function to the player buying any sort of ship.
  *
@@ -674,6 +676,7 @@ static int hookL_shipbuy( lua_State *L )
    lua_pushnumber( L, h );
    return 1;
 }
+
 /**
  * @brief Hooks the function to the player selling any sort of ship.
  *
@@ -690,6 +693,7 @@ static int hookL_shipsell( lua_State *L )
    lua_pushnumber( L, h );
    return 1;
 }
+
 /**
  * @brief Hooks the function to the player pressing any input.
  *
@@ -709,6 +713,7 @@ static int hookL_input( lua_State *L )
    lua_pushnumber( L, h );
    return 1;
 }
+
 /**
  * @brief Hooks the function to the player clicking the mouse.
  *
@@ -725,6 +730,7 @@ static int hookL_mouse( lua_State *L )
    lua_pushnumber( L, h );
    return 1;
 }
+
 /**
  * @brief Hooks the function to any faction standing change.
  *
@@ -743,6 +749,7 @@ static int hookL_standing( lua_State *L )
    lua_pushnumber( L, h );
    return 1;
 }
+
 /**
  * @brief Hooks the function to when the player discovers an asset, jump point or the likes.
  *
@@ -763,6 +770,7 @@ static int hookL_discover( lua_State *L )
    lua_pushnumber( L, h );
    return 1;
 }
+
 /**
  * @brief Hooks the function to when the player receives  or loses money through player.pay() (the Lua function only).
  *
@@ -780,6 +788,7 @@ static int hookL_pay( lua_State *L )
    lua_pushnumber( L, h );
    return 1;
 }
+
 /**
  * @brief Hook run once at the end of the next frame regardless of anything that can happen.
  *
@@ -796,6 +805,7 @@ static int hookL_safe( lua_State *L )
    lua_pushnumber( L, h );
    return 1;
 }
+
 /**
  * @brief Hook run at the end of each frame when the update routine is run (game is not paused, etc.).
  *
@@ -815,6 +825,7 @@ static int hookL_update( lua_State *L )
    lua_pushnumber( L, h );
    return 1;
 }
+
 /**
  * @brief Hook that runs during rendering the background (just above the static background stuff). Meant to be only for rendering things.
  *
@@ -829,6 +840,7 @@ static int hookL_renderbg( lua_State *L )
    lua_pushnumber( L, h );
    return 1;
 }
+
 /**
  * @brief Hook that runs during rendering the foreground (just below the gui stuff). Meant to be only for rendering things.
  *
@@ -843,6 +855,7 @@ static int hookL_renderfg( lua_State *L )
    lua_pushnumber( L, h );
    return 1;
 }
+
 /**
  * @brief Hook run once at the end of the next frame regardless when manually triggered.
  *
@@ -860,6 +873,7 @@ static int hookL_custom( lua_State *L )
    lua_pushnumber( L, h );
    return 1;
 }
+
 /**
  * @brief Triggers manually a hook stack. This is run deferred (next frame). Meant mainly to be used with hook.custom, but can work with other hooks too (if you know what you are doing).
  *
@@ -872,13 +886,13 @@ static int hookL_custom( lua_State *L )
 static int hookL_trigger( lua_State *L )
 {
    int i, n;
-   HookParam hp[HOOK_MAX_PARAM], *p;
+   HookParam hp[HOOK_MAX_PARAM];
    const char *hookname = luaL_checkstring(L,1);
    n = lua_gettop(L);
 
    /* Set up hooks. */
    for (i=0; i< MIN(n, HOOK_MAX_PARAM-1); i++) {
-      p = &hp[i];
+      HookParam *p = &hp[i];
       switch (lua_type(L,i+1)) {
          case LUA_TNIL:
             p->type = HOOK_PARAM_NIL;
@@ -923,6 +937,7 @@ static int hookL_trigger( lua_State *L )
    hooks_runParamDeferred( hookname, hp );
    return 0;
 }
+
 /**
  * @brief Hooks the function to a specific pilot.
  *
