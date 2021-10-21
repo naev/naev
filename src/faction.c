@@ -192,11 +192,8 @@ int* faction_getAll (void)
  */
 int* faction_getAllVisible (void)
 {
-   int i;
-   int *f;
-
-   f = array_create_size( int, array_size(faction_stack) );
-   for (i=0; i<array_size(faction_stack); i++)
+   int *f = array_create_size( int, array_size(faction_stack) );
+   for (int i=0; i<array_size(faction_stack); i++)
       if (!faction_isFlag( &faction_stack[i], FACTION_INVISIBLE ))
          array_push_back( &f, i );
 
@@ -208,14 +205,9 @@ int* faction_getAllVisible (void)
  */
 int* faction_getKnown()
 {
-   int i;
-   int *f;
-
-   /* Set up. */
-   f  = array_create_size( int, array_size(faction_stack) );
-
+   int *f = array_create_size( int, array_size(faction_stack) );
    /* Get IDs. */
-   for (i=0; i<array_size(faction_stack); i++)
+   for (int i=0; i<array_size(faction_stack); i++)
       if (!faction_isFlag( &faction_stack[i], FACTION_INVISIBLE ) && faction_isKnown_( &faction_stack[i] ))
          array_push_back( &f, i );
 
@@ -227,9 +219,7 @@ int* faction_getKnown()
  */
 void faction_clearKnown()
 {
-   int i;
-
-   for (i=0; i<array_size(faction_stack); i++)
+   for (int i=0; i<array_size(faction_stack); i++)
       if (faction_isKnown_( &faction_stack[i] ))
          faction_rmFlag( &faction_stack[i], FACTION_KNOWN );
 }
@@ -564,6 +554,8 @@ void faction_addEnemy( int f, int o )
 
    tmp = &array_grow( &ff->enemies );
    *tmp = o;
+
+   faction_computeGrid();
 }
 
 /**
@@ -588,6 +580,7 @@ void faction_rmEnemy( int f, int o )
    for (int i=0;i<array_size(ff->enemies);i++) {
       if (ff->enemies[i] == o) {
          array_erase( &ff->enemies, &ff->enemies[i], &ff->enemies[i+1] );
+         faction_computeGrid();
          return;
       }
    }
@@ -609,6 +602,7 @@ void faction_clearAlly( int f )
       return;
    }
    array_erase( &ff->allies, array_begin(ff->allies), array_end(ff->allies) );
+   faction_computeGrid();
 }
 
 /**
@@ -653,6 +647,8 @@ void faction_addAlly( int f, int o )
 
    tmp = &array_grow( &ff->allies );
    *tmp = o;
+
+   faction_computeGrid();
 }
 
 /**
@@ -677,6 +673,7 @@ void faction_rmAlly( int f, int o )
    for (int i=0;i<array_size(ff->allies);i++) {
       if (ff->allies[i] == o) {
          array_erase( &ff->allies, &ff->allies[i], &ff->allies[i+1] );
+         faction_computeGrid();
          return;
       }
    }
@@ -1821,11 +1818,11 @@ int faction_dynAdd( int base, const char* name, const char* display, const char*
 
       for (int i=0; i<array_size(bf->allies); i++) {
          int *tmp = &array_grow( &f->allies );
-         *tmp = i;
+         *tmp = bf->allies[i];
       }
       for (int i=0; i<array_size(bf->enemies); i++) {
          int *tmp = &array_grow( &f->enemies );
-         *tmp = i;
+         *tmp = bf->enemies[i];
       }
 
       f->player_def = bf->player_def;
@@ -1860,7 +1857,7 @@ static void faction_computeGrid (void)
          int j = fa->allies[k];
 #if DEBUGGING
          if ((faction_grid[i*n+j] < 0) || (faction_grid[j*n+i]) < 0)
-            WARN("Incoherent faction grid!");
+            WARN("Incoherent faction grid! '%s' and '%s' are already enemies, but trying to set to allies!", faction_stack[i].name, faction_stack[j].name );
 #endif /* DEBUGGING */
          faction_grid[i*n+j] = 1;
          faction_grid[j*n+i] = 1;
@@ -1869,7 +1866,7 @@ static void faction_computeGrid (void)
          int j = fa->enemies[k];
 #if DEBUGGING
          if ((faction_grid[i*n+j] > 0) || (faction_grid[j*n+i] > 0))
-            WARN("Incoherent faction grid!");
+            WARN("Incoherent faction grid! '%s' and '%s' are already allies, but trying to set to enemies!", faction_stack[i].name, faction_stack[j].name );
 #endif /* DEBUGGING */
          faction_grid[i*n+j] = -1;
          faction_grid[j*n+i] = -1;
