@@ -1197,6 +1197,7 @@ dat/damagetype.xml
 dat/faction.xml
 dat/map.xml
 dat/outfits/accessory/air_freshener.xml
+dat/outfits/accessory/black_cat_doll.xml
 dat/outfits/accessory/dv_handbook.xml
 dat/outfits/accessory/fuzzy_dice.xml
 dat/outfits/accessory/left_boot.xml
@@ -2413,6 +2414,7 @@ dat/missions/neutral/sightseeing.lua
 dat/missions/neutral/spacefamily.lua
 dat/missions/neutral/teenager.lua
 dat/missions/neutral/wastedump.lua
+dat/missions/pirate/blackcat.lua
 dat/missions/pirate/empbounty_dead.lua
 dat/missions/pirate/fake_id.lua
 dat/missions/pirate/hitman.lua
@@ -2472,6 +2474,7 @@ dat/missions/zalek/sciencegonewrong/02_sciwrong.lua
 dat/missions/zalek/zlk_cargorun.lua
 dat/missions/zalek/zlk_rehab.lua
 dat/missions/zalek/zlk_test.lua
+dat/outfits/accessory/black_cat_doll.lua
 dat/outfits/lua_outfit_example.lua
 dat/outfits/structure/nebular_shielding_prototype.lua
 dat/outfits/unique/fake_transponder.lua
@@ -2494,6 +2497,8 @@ dat/scripts/class.lua
 dat/scripts/colour.lua
 dat/scripts/common/baron.lua
 dat/scripts/common/cargo.lua
+dat/scripts/common/comm.lua
+dat/scripts/common/derelict.lua
 dat/scripts/common/dvaered.lua
 dat/scripts/common/empire.lua
 dat/scripts/common/frontier_war.lua
@@ -2579,6 +2584,7 @@ dat/scripts/swapship.lua
 dat/scripts/vn.lua
 dat/scripts/vn/conf.lua
 dat/scripts/vn/core.lua
+dat/scripts/vn/log.lua
 dat/scripts/vn/main.lua
 dat/scripts/vn/transitions.lua
 dat/scripts/vntk.lua
