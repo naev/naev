@@ -87,6 +87,41 @@ It seems like it wants to come back with you. What do you do?]]))
    misn.osdCreate( _("Black Cat"), {
       _("Find the Black Cat's owner"),
    } )
+
+   -- Important variables
+   times_jumped = 0
+
+   hook.enter("enter")
+   hook.jumpin("jumpin")
+end
+
+local event_list = {
+   function () _-- Just a message
+   end,
+   function () -- Ship alarm goes off
+      return _([[]])
+   end,
+   function () -- Overheat
+   end,
+   function () -- Temporary disable
+   end,
+   function ()
+   end,
+}
+function event ()
+end
+
+function enter ()
+end
+
+function jumpin ()
+   times_jumped = times_jumped+1
+   local chance = math.max( (times_jumped-20), 0 )
+   if rnd.rnd() < chance or system.cur():presence("Wild Ones") < 50 then
+      return
+   end
+
+   -- Set up event ending
 end
 
 function abort ()
