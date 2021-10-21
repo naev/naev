@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2021-10-21 19:23-0400\n"
+"POT-Creation-Date: 2021-10-21 19:24-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -69365,7 +69365,7 @@ msgstr ""
 #. Factions which cannot deliver to factions other than themselves
 #. --
 #. Returns a block of mission-description text for the given cargo.
-#. @tparam string misn_desc Translated title-level description, e.g. _("Cargo transport to %s in the %s system."):format(...).
+#. @tparam string misn_desc Translated title-level description, e.g., "Cargo transport to Zeo in the Apez system."
 #. @tparam string cargo Cargo type (raw name). May be nil.
 #. @tparam number amount Cargo amount in tonnes. May be nil.
 #. @param target Target planet for the delivery.
@@ -69374,32 +69374,27 @@ msgstr ""
 #. @tparam[opt=false] bool use_hidden Whether the description accounts for hidden jumps in its distances.
 #. --
 #: dat/scripts/common/cargo.lua:226
-#, lua-format
-msgid "#nCargo:#0 %s (%s)"
+msgid "#nCargo:#0 {cargo} ({mass})"
 msgstr ""
 
 #: dat/scripts/common/cargo.lua:228
-#, lua-format
-msgid "#nCargo:#0 %s"
+msgid "#nCargo:#0 {cargo}"
 msgstr ""
 
 #: dat/scripts/common/cargo.lua:234
-#, lua-format
-msgid "#nJumps:#0 %d"
-msgid_plural "#nJumps:#0 %d"
+msgid "#nJumps:#0 {jumps}"
+msgid_plural "#nJumps:#0 {jumps}"
 msgstr[0] ""
 msgstr[1] ""
 
 #: dat/scripts/common/cargo.lua:236
-#, lua-format
-msgid "#nTravel distance:#0 %s"
-msgid_plural "#nTravel distance:#0 %s"
+msgid "#nTravel distance:#0 {dist}"
+msgid_plural "#nTravel distance:#0 {dist}"
 msgstr[0] ""
 msgstr[1] ""
 
 #: dat/scripts/common/cargo.lua:243
-#, lua-format
-msgid "#nTime limit:#0 %s"
+msgid "#nTime limit:#0 {deadline}"
 msgstr ""
 
 #. stolen from scripts/vn.lua

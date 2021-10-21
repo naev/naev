@@ -212,7 +212,7 @@ end
 
 --[[--
    Returns a block of mission-description text for the given cargo.
-   @tparam string misn_desc Translated title-level description, e.g. _("Cargo transport to %s in the %s system."):format(...).
+   @tparam string misn_desc Translated title-level description, e.g., "Cargo transport to Zeo in the Apez system."
    @tparam string cargo Cargo type (raw name). May be nil.
    @tparam number amount Cargo amount in tonnes. May be nil.
    @param target Target planet for the delivery.
@@ -223,24 +223,24 @@ end
 function car.setDesc( misn_desc, cargo, amount, target, deadline, notes, use_hidden )
    local t = { misn_desc, "" }
    if amount ~= nil then
-      table.insert( t, _("#nCargo:#0 %s (%s)"):format( _(cargo), fmt.tonnes(amount) ) )
+      table.insert( t, fmt.f( _("#nCargo:#0 {cargo} ({mass})"), {cargo=_(cargo), mass=fmt.tonnes(amount)} ) )
    elseif cargo ~= nil then
-      table.insert( t, _("#nCargo:#0 %s"):format( _(cargo) ) )
+      table.insert( t, fmt.f( _("#nCargo:#0 {cargo}"), {cargo=_(cargo)} ) )
    end
 
    local numjumps   = system.cur():jumpDist( target:system(), use_hidden )
    local dist = car.calculateDistance( system.cur(), planet.cur():pos(), target:system(), target, use_hidden )
    table.insert( t,
-      gettext.ngettext( "#nJumps:#0 %d", "#nJumps:#0 %d", numjumps ):format( numjumps )
+      fmt.f( n_( "#nJumps:#0 {jumps}", "#nJumps:#0 {jumps}", numjumps ), {jumps=numjumps} )
       .. "\n"
-      .. gettext.ngettext("#nTravel distance:#0 %s", "#nTravel distance:#0 %s", dist):format( fmt.number(dist) ) )
+      .. fmt.f( n_("#nTravel distance:#0 {dist}", "#nTravel distance:#0 {dist}", dist), {dist=fmt.number(dist)} ) )
 
    if notes ~= nil then
       table.insert( t, notes )
    end
 
    if deadline ~= nil then
-      table.insert( t, _("#nTime limit:#0 %s"):format( tostring(deadline - time.get()) ) )
+      table.insert( t, fmt.f( _("#nTime limit:#0 {deadline}"), {deadline=tostring(deadline - time.get())} ) )
    end
 
    misn.setDesc( table.concat(t, "\n" ) )

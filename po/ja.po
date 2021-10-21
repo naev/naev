@@ -71220,30 +71220,30 @@ msgstr ""
 #. --
 #: dat/scripts/common/cargo.lua:226
 #, lua-format
-msgid "#nCargo:#0 %s (%s)"
-msgstr "#n積み荷 :#0 %s (%s)"
+msgid "#nCargo:#0 {cargo} ({mass})"
+msgstr "#n積み荷 :#0 {cargo} ({mass})"
 
 #: dat/scripts/common/cargo.lua:228
 #, lua-format
-msgid "#nCargo:#0 %s"
-msgstr "#n積み荷 :#0 %s"
+msgid "#nCargo:#0 {cargo}"
+msgstr "#n積み荷 :#0 {cargo}"
 
 #: dat/scripts/common/cargo.lua:234
 #, lua-format
-msgid "#nJumps:#0 %d"
-msgid_plural "#nJumps:#0 %d"
-msgstr[0] "#nジャンプ回数 :#0 %d"
+msgid "#nJumps:#0 {jumps}"
+msgid_plural "#nJumps:#0 {jumps}"
+msgstr[0] "#nジャンプ回数 :#0 {jumps}"
 
 #: dat/scripts/common/cargo.lua:236
 #, lua-format
-msgid "#nTravel distance:#0 %s"
-msgid_plural "#nTravel distance:#0 %s"
-msgstr[0] "#n移動距離 :#0 %s"
+msgid "#nTravel distance:#0 {dist}"
+msgid_plural "#nTravel distance:#0 {dist}"
+msgstr[0] "#n移動距離 :#0 {dist}"
 
 #: dat/scripts/common/cargo.lua:243
 #, lua-format
-msgid "#nTime limit:#0 %s"
-msgstr "#n時間制限 :#0 %s"
+msgid "#nTime limit:#0 {deadline}"
+msgstr "#n時間制限 :#0 {deadline}"
 
 #.
 #. @brief Increases the reputation limit of the player.

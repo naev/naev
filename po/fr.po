@@ -69833,36 +69833,32 @@ msgstr ""
 #. @tparam[opt=false] bool use_hidden Whether the description accounts for hidden jumps in its distances.
 #. --
 #: dat/scripts/common/cargo.lua:226
-#, fuzzy, lua-format
-#| msgid "Cargo: %s (%s)"
-msgid "#nCargo:#0 %s (%s)"
-msgstr "Cargo: %s (%s)"
+#, lua-format
+msgid "#nCargo:#0 {cargo} ({mass})"
+msgstr "#nCargo:#0 {cargo} ({mass})"
 
 #: dat/scripts/common/cargo.lua:228
-#, fuzzy, lua-format
-#| msgid "Cargo: %s"
-msgid "#nCargo:#0 %s"
-msgstr "Cargo: %s"
+#, lua-format
+msgid "#nCargo:#0 {cargo}"
+msgstr "#nCargo:#0 {cargo}"
 
 #: dat/scripts/common/cargo.lua:234
-#, fuzzy, lua-format
-#| msgid "Jumps: %d"
-#| msgid_plural "Jumps: %d"
-msgid "#nJumps:#0 %d"
-msgid_plural "#nJumps:#0 %d"
-msgstr[0] "Sauts: %d"
-msgstr[1] "Sauts: %d"
+#, lua-format
+msgid "#nJumps:#0 {jumps}"
+msgid_plural "#nJumps:#0 {jumps}"
+msgstr[0] "#nSauts:#0 {jumps}"
+msgstr[1] "#nSauts:#0 {jumps}"
 
 #: dat/scripts/common/cargo.lua:236
 #, lua-format
-msgid "#nTravel distance:#0 %s"
-msgid_plural "#nTravel distance:#0 %s"
+msgid "#nTravel distance:#0 {dist}"
+msgid_plural "#nTravel distance:#0 {dist}"
 msgstr[0] ""
 msgstr[1] ""
 
 #: dat/scripts/common/cargo.lua:243
 #, lua-format
-msgid "#nTime limit:#0 %s"
+msgid "#nTime limit:#0 {deadline}"
 msgstr ""
 
 #.
