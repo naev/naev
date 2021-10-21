@@ -1,14 +1,11 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
 /**
  * @file npc.c
  *
  * @brief Handles NPC stuff.
  */
-
-
 /** @cond */
 #include <lua.h>
 
@@ -26,7 +23,6 @@
 #include "nstring.h"
 #include "opengl.h"
 #include "ndata.h"
-
 
 /**
  * @brief NPC types.
@@ -86,27 +82,23 @@ static void npc_free( NPC_t *npc );
 /* Missions. */
 static Mission* npc_getMisn( const NPC_t *npc );
 
-
 /**
  * Gets the mission associated with an NPC.
  */
 static Mission* npc_getMisn( const NPC_t *npc )
 {
-   int i;
-
    /* First check active missions. */
-   for (i=0; i<MISSION_MAX; i++)
+   for (int i=0; i<MISSION_MAX; i++)
       if (player_missions[i]->id == npc->u.m.id)
          return player_missions[i];
 
    /* Now check npc missions. */
-   for (i=0; i<array_size(npc_missions); i++)
+   for (int i=0; i<array_size(npc_missions); i++)
       if (npc_missions[i].id == npc->u.m.id)
          return &npc_missions[i];
 
    return NULL;
 }
-
 
 /**
  * @brief Adds an NPC to the spaceport bar.
@@ -135,7 +127,6 @@ static unsigned int npc_add( NPC_t *npc )
    new_npc->id = ++npc_array_idgen;
    return new_npc->id;
 }
-
 
 /**
  * @brief Adds a mission giver NPC to the mission computer.
@@ -171,7 +162,6 @@ static unsigned int npc_add_giver( Mission *misn )
    return npc_add( &npc );
 }
 
-
 /**
  * @brief Adds a mission NPC to the mission computer.
  */
@@ -195,7 +185,6 @@ unsigned int npc_add_mission( unsigned int mid, const char *func, const char *na
 
    return npc_add( &npc );
 }
-
 
 /**
  * @brief Adds a event NPC to the mission computer.
@@ -221,42 +210,34 @@ unsigned int npc_add_event( unsigned int evt, const char *func, const char *name
    return npc_add( &npc );
 }
 
-
 /**
  * @brief Removes an npc from the spaceport bar.
  */
 static int npc_rm( NPC_t *npc )
 {
    npc_free(npc);
-
    array_erase( &npc_array, &npc[0], &npc[1] );
-
    return 0;
 }
-
 
 /**
  * @brief Gets an NPC by ID.
  */
 static NPC_t *npc_arrayGet( unsigned int id )
 {
-   int i;
-   for (i=0; i<array_size( npc_array ); i++)
+   for (int i=0; i<array_size( npc_array ); i++)
       if (npc_array[i].id == id)
          return &npc_array[i];
    return NULL;
 }
-
 
 /**
  * @brief removes an event NPC.
  */
 int npc_rm_event( unsigned int id, unsigned int evt )
 {
-   NPC_t *npc;
-
    /* Get the NPC. */
-   npc = npc_arrayGet( id );
+   NPC_t *npc = npc_arrayGet( id );
    if (npc == NULL)
       return -1;
 
@@ -272,16 +253,13 @@ int npc_rm_event( unsigned int id, unsigned int evt )
    return npc_rm( npc );
 }
 
-
 /**
  * @brief removes a mission NPC.
  */
 int npc_rm_mission( unsigned int id, unsigned int mid )
 {
-   NPC_t *npc;
-
    /* Get the NPC. */
-   npc = npc_arrayGet( id );
+   NPC_t *npc = npc_arrayGet( id );
    if (npc == NULL)
       return -1;
 
@@ -297,18 +275,14 @@ int npc_rm_mission( unsigned int id, unsigned int mid )
    return npc_rm( npc );
 }
 
-
 /**
  * @brief Removes all the npc belonging to an event.
  */
 int npc_rm_parentEvent( unsigned int id )
 {
-   int i, n;
-   NPC_t *npc;
-
-   n = 0;
-   for (i=0; i<array_size(npc_array); i++) {
-      npc = &npc_array[i];
+   int n = 0;
+   for (int i=0; i<array_size(npc_array); i++) {
+      NPC_t *npc = &npc_array[i];
       if (npc->type != NPC_TYPE_EVENT)
          continue;
       if (npc->u.e.id != id )
@@ -325,18 +299,14 @@ int npc_rm_parentEvent( unsigned int id )
    return n;
 }
 
-
 /**
  * @brief Removes all the npc belonging to a mission.
  */
 int npc_rm_parentMission( unsigned int mid )
 {
-   int i, n;
-   NPC_t *npc;
-
-   n = 0;
-   for (i=0; i<array_size(npc_array); i++) {
-      npc = &npc_array[i];
+   int n = 0;
+   for (int i=0; i<array_size(npc_array); i++) {
+      NPC_t *npc = &npc_array[i];
       if (npc->type != NPC_TYPE_MISSION)
          continue;
       if (npc->u.m.id != mid )
@@ -352,7 +322,6 @@ int npc_rm_parentMission( unsigned int mid )
 
    return n;
 }
-
 
 /**
  * @brief NPC compare function.
@@ -384,7 +353,6 @@ static int npc_compare( const void *arg1, const void *arg2 )
    return 0;
 }
 
-
 /**
  * @brief Sorts the NPCs.
  */
@@ -394,14 +362,12 @@ void npc_sort (void)
       qsort( npc_array, array_size(npc_array), sizeof(NPC_t), npc_compare );
 }
 
-
 /**
  * @brief Generates the bar missions.
  */
 void npc_generateMissions (void)
 {
-   int i;
-   Mission *missions, *m;
+   Mission *missions;
    int nmissions;
 
    if (npc_missions == NULL)
@@ -415,8 +381,8 @@ void npc_generateMissions (void)
     * run, so NPCs should be running wild (except givers). */
 
    /* Add to the bar NPC stack and add npc. */
-   for (i=0; i<nmissions; i++) {
-      m = &missions[i];
+   for (int i=0; i<nmissions; i++) {
+      Mission *m = &missions[i];
       array_push_back( &npc_missions, *m );
 
       /* See if need to add NPC. */
@@ -447,7 +413,6 @@ void npc_generateMissions (void)
    npc_sort();
 }
 
-
 /**
  * @brief Patches a new mission bar npc into the bar system.
  *
@@ -470,7 +435,6 @@ void npc_patchMission( Mission *misn )
    /* Sort NPC. */
    npc_sort();
 }
-
 
 /**
  * @brief Frees a single npc.
@@ -503,22 +467,20 @@ static void npc_free( NPC_t *npc )
    }
 }
 
-
 /**
  * @brief Cleans up the spaceport bar NPC.
  */
 void npc_clear (void)
 {
-   int i, j;
-
    /* Clear the npcs. */
-   for (i=0; i<array_size( npc_array ); i++)
+   for (int i=0; i<array_size( npc_array ); i++)
       npc_free( &npc_array[i] );
    array_free( npc_array );
    npc_array = NULL;
 
    /* Clear all the missions. */
-   for (i=0; i<array_size( npc_missions ); i++) {
+   for (int i=0; i<array_size( npc_missions ); i++) {
+      int j;
       /* TODO this is horrible and should be removed */
       /* Clean up all missions that haven't been moved to the active missions. */
       for (j=0; j<MISSION_MAX; j++)
@@ -531,7 +493,6 @@ void npc_clear (void)
    npc_missions = NULL;
 }
 
-
 /**
  * @brief Get the size of the npc array.
  */
@@ -539,7 +500,6 @@ int npc_getArraySize (void)
 {
    return array_size( npc_array );
 }
-
 
 /**
  * @brief Get the name of an NPC.
@@ -552,7 +512,6 @@ const char *npc_getName( int i )
 
    return npc_array[i].name;
 }
-
 
 /**
  * @brief Get the background of an NPC.
@@ -569,7 +528,6 @@ glTexture *npc_getBackground( int i )
    return npc_array[i].background;
 }
 
-
 /**
  * @brief Get the texture of an NPC.
  */
@@ -582,7 +540,6 @@ glTexture *npc_getTexture( int i )
    return npc_array[i].portrait;
 }
 
-
 /**
  * @brief Gets the NPC description.
  */
@@ -594,7 +551,6 @@ const char *npc_getDesc( int i )
 
    return npc_array[i].desc;
 }
-
 
 /**
  * @brief Checks to see if the NPC is important or not.
@@ -609,7 +565,6 @@ int npc_isImportant( int i )
       return 1;
    return 0;
 }
-
 
 /**
  * @brief Approaches a mission giver guy.
@@ -651,7 +606,6 @@ static int npc_approach_giver( NPC_t *npc )
 
    return ret;
 }
-
 
 /**
  * @brief Approaches the NPC.
@@ -699,4 +653,3 @@ int npc_approach( int i )
 
    return 0;
 }
-
