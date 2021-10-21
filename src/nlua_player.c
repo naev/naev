@@ -269,6 +269,7 @@ static int playerL_credits( lua_State *L )
  * @brief Sends the player an in-game message.
  *
  *    @luatparam string message Message to send the player.
+ *    @luatparam[opt=false] boolean display Display the message over the player's ship (like a broadcast message).
  * @luafunc msg
  */
 static int playerL_msg( lua_State *L )
@@ -277,7 +278,10 @@ static int playerL_msg( lua_State *L )
    PLAYER_CHECK();
 
    const char *str = luaL_checkstring(L,1);
+   int display = lua_toboolean(L,2);
    player_messageRaw(str);
+   if (display)
+      pilot_setCommMsg( player.p, str );
 
    return 0;
 }

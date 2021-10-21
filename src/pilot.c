@@ -70,7 +70,6 @@ static void pilot_refuel( Pilot *p, double dt );
 /* Clean up. */
 static void pilot_dead( Pilot* p, unsigned int killer );
 /* Misc. */
-static void pilot_setCommMsg( Pilot *p, const char *s );
 static int pilot_getStackPos( unsigned int id );
 static void pilot_init_trails( Pilot* p );
 static int pilot_trail_generated( Pilot* p, int generator );
@@ -1128,7 +1127,7 @@ char pilot_getFactionColourChar( const Pilot *p )
 /**
  * @brief Sets the overhead communication message of the pilot.
  */
-static void pilot_setCommMsg( Pilot *p, const char *s )
+void pilot_setCommMsg( Pilot *p, const char *s )
 {
    free( p->comm_msg );
    p->comm_msg       = strdup( s );
