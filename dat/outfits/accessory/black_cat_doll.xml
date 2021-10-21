@@ -14,6 +14,6 @@
  <rarity>6</rarity></general>
  <specific type="modification">
   <lua>outfits/accessory/black_cat_doll.lua</lua>
-  <speed_mod>25</speed_mod>
+  <speed_mod>15</speed_mod>
  </specific>
 </outfit>
