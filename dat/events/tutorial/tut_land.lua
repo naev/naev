@@ -12,6 +12,7 @@
 --]]
 local fmt = require "format"
 local tut = require "common.tutorial"
+local vn  = require 'vn'
 
 function create ()
    if tut.isDisabled() then evt.finish() end
