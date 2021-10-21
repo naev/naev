@@ -96,7 +96,7 @@ It seems like it wants to come back with you. What do you do?]]))
 end
 
 local event_list = {
-   function () _-- Just a message
+   function () -- Just a message
    end,
    function () -- Ship alarm goes off
       return _([[]])
