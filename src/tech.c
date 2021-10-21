@@ -500,7 +500,6 @@ int tech_rmItemTech( tech_group_t *tech, const char *value )
    return -1;
 }
 
-
 /**
  * @brief Removes a tech item.
  */

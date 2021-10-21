@@ -1,14 +1,11 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
 /**
  * @file options.c
  *
  * @brief Options menu
  */
-
-
 /** @cond */
 #include <ctype.h>
 #include "physfs.h"
@@ -55,13 +52,11 @@ static const glColour *cHeader = &cFontGrey;
 static int opt_restart = 0;
 static PlayerConf_t local_conf;
 
-
 /*
  * External stuff.
  */
 static const char *opt_selectedKeybind; /**< Selected keybinding. */
 static int opt_lastKeyPress = 0; /**< Last keypress. */
-
 
 /*
  * prototypes
@@ -110,13 +105,11 @@ static int opt_setKeyEvent( unsigned int wid, SDL_Event *event );
 static void opt_setKey( unsigned int wid, const char *str );
 static void opt_unsetKey( unsigned int wid, const char *str );
 
-
 /**
  * @brief Creates the options menu thingy.
  */
 void opt_menu (void)
 {
-   size_t i;
    int w, h;
    const char **names;
 
@@ -133,7 +126,7 @@ void opt_menu (void)
 
    /* Create tabbed window. */
    names = calloc( sizeof(char*), sizeof(opt_names)/sizeof(char*) );
-   for (i=0; i<sizeof(opt_names)/sizeof(char*); i++)
+   for (size_t i=0; i<sizeof(opt_names)/sizeof(char*); i++)
       names[i] = _(opt_names[i]);
    opt_windows = window_addTabbedWindow( opt_wid, -1, -1, -1, -1, "tabOpt",
          OPT_WINDOWS, (const char**)names, 0 );
@@ -149,7 +142,6 @@ void opt_menu (void)
    if (opt_restart)
       opt_needRestart();
 }
-
 
 /**
  * @brief Saves all options and closes the options screen.
@@ -198,7 +190,6 @@ static void opt_close( unsigned int wid, const char *name )
    conf_free( &local_conf );
 }
 
-
 /**
  * @brief Handles resize events nfor the options menu.
  */
@@ -217,7 +208,6 @@ void opt_resize (void)
    window_setInput( opt_windows[OPT_WIN_VIDEO], "inpRes", buf );
 }
 
-
 /*
  * Gets the list of languages available.
  */
@@ -225,7 +215,6 @@ static char** lang_list( int *n )
 {
    char **ls;
    char **subdirs;
-   size_t i;
 
    /* Default English only. */
    ls = malloc( sizeof(char*)*128 );
@@ -235,13 +224,12 @@ static char** lang_list( int *n )
 
    /* Try to open the available languages. */
    subdirs = PHYSFS_enumerateFiles( GETTEXT_PATH );
-   for (i=0; subdirs[i]!=NULL; i++)
+   for (size_t i=0; subdirs[i]!=NULL; i++)
       ls[(*n)++] = strdup( subdirs[i] );
    PHYSFS_freeList( subdirs );
 
    return ls;
 }
-
 
 /**
  * @brief Opens the gameplay menu.
@@ -293,7 +281,6 @@ static void opt_gameplay( unsigned int wid )
    y -= 40;
    by = y;
 
-
    /* Compiletime stuff. */
    cw = (w-60)/2 - 40;
    y  = by;
@@ -341,7 +328,6 @@ static void opt_gameplay( unsigned int wid )
          "Using LuaJIT\n"
 #endif
          );
-
 
    y -= window_getTextHeight(wid, "txtFlags") + 10;
 
@@ -523,7 +509,6 @@ static void opt_gameplayUpdate( unsigned int wid, const char *str )
    window_setInput( wid, "inpTMax", tmax );
 }
 
-
 /**
  * @brief Callback to set autonav abort threshold.
  *
@@ -551,7 +536,6 @@ static void opt_setAutonavResetSpeed( unsigned int wid, const char *str )
    window_modifyText( wid, "txtAutonav", buf );
 }
 
-
 /**
  * @brief Gets the keybind menu dimensions.
  */
@@ -573,7 +557,6 @@ static void menuKeybinds_getDim( unsigned int wid, int *w, int *h,
    if (lh != NULL)
       *lh = *h - 60;
 }
-
 
 /**
  * @brief Opens the keybindings menu.
@@ -605,7 +588,6 @@ static void opt_keybinds( unsigned int wid )
    menuKeybinds_genList( wid );
 }
 
-
 /**
  * @brief Generates the keybindings list.
  *
@@ -613,7 +595,7 @@ static void opt_keybinds( unsigned int wid )
  */
 static void menuKeybinds_genList( unsigned int wid )
 {
-   int         j, l, p;
+   int l, p;
    char **str, mod_text[64];
    SDL_Keycode key;
    KeybindType type;
@@ -627,7 +609,7 @@ static void menuKeybinds_genList( unsigned int wid )
 
    /* Create the list. */
    str = malloc( sizeof( char * ) * input_numbinds );
-   for ( j = 0; j < input_numbinds; j++ ) {
+   for (int j = 0; j < input_numbinds; j++) {
       l = 128; /* GCC deduces 68 because we have a format string "%s <%s%c>"
                 * where "char mod_text[64]" is one of the "%s" args.
                 * (that plus brackets plus %c + null gets to 68.
@@ -701,7 +683,6 @@ static void menuKeybinds_genList( unsigned int wid )
    }
 }
 
-
 /**
  * @brief Updates the keybindings menu.
  *
@@ -717,7 +698,7 @@ static void menuKeybinds_update( unsigned int wid, const char *name )
    SDL_Keycode key;
    KeybindType type;
    SDL_Keymod mod;
-   char buf[1024];
+   char buf[STRMAX_SHORT];
    char binding[64];
 
    /* Get the keybind. */
@@ -778,7 +759,6 @@ static void menuKeybinds_update( unsigned int wid, const char *name )
    window_modifyText( wid, "txtDesc", buf );
 }
 
-
 /**
  * @brief Restores the key defaults.
  */
@@ -786,7 +766,7 @@ static void opt_keyDefaults( unsigned int wid, const char *str )
 {
    (void) str;
    const char *title, *caption, *ret;
-   int i, ind;
+   int ind;
 
    const int n = 3;
    const char *opts[] = {
@@ -800,7 +780,7 @@ static void opt_keyDefaults( unsigned int wid, const char *str )
 
    dialogue_makeChoice( title, caption, n );
 
-   for (i=0; i<n; i++)
+   for (int i=0; i<n; i++)
       dialogue_addChoice( title, caption, opts[i] );
 
    ret = dialogue_runChoice();
@@ -809,7 +789,7 @@ static void opt_keyDefaults( unsigned int wid, const char *str )
 
    /* Find the index of the matched option. */
    ind = 0;
-   for (i=0; i<n; i++)
+   for (int i=0; i<n; i++)
       if (strcmp(ret, opts[i]) == 0) {
          ind = i;
          break;
@@ -827,7 +807,6 @@ static void opt_keyDefaults( unsigned int wid, const char *str )
    /* Alert user it worked. */
    dialogue_msgRaw( _("Defaults Restored"), _("Keybindings restored to defaults."));
 }
-
 
 /**
  * @brief Callback to set the sound or music level.
@@ -855,7 +834,6 @@ static void opt_setAudioLevel( unsigned int wid, const char *str )
    window_modifyText( wid, widget, buf );
 }
 
-
 /**
  * @brief Sets the sound or music volume string based on level.
  *
@@ -879,7 +857,6 @@ static void opt_audioLevelStr( char *buf, int max, int type, double pos )
       snprintf( buf, max, _("%s: %.2f (%.0f dB)"), str, pos, log(vol) * magic );
    }
 }
-
 
 /**
  * @brief Opens the audio settings menu.
@@ -914,7 +891,6 @@ static void opt_audio( unsigned int wid )
    window_addCheckbox( wid, x, y, cw, 20,
          "chkEFX", _("EFX (More CPU)"), NULL, conf.al_efx );
 
-
    /* Sound levels. */
    x = 20 + cw + 20;
    y = -60;
@@ -945,14 +921,12 @@ static void opt_audio( unsigned int wid )
    opt_audioUpdate(wid);
 }
 
-
 static void opt_beep( unsigned int wid, const char *str )
 {
    (void) wid;
    (void) str;
    player_soundPlayGUI( snd_target, 1 );
 }
-
 
 /**
  * @brief Saves the audio stuff.
@@ -981,7 +955,6 @@ static int opt_audioSave( unsigned int wid, const char *str )
    return 0;
 }
 
-
 /**
  * @brief Sets the audio defaults.
  */
@@ -999,7 +972,6 @@ static void opt_audioDefaults( unsigned int wid, const char *str )
    window_checkboxSet( wid, "chkEFX", USE_EFX_DEFAULT );
 }
 
-
 /**
  * @brief Updates the gameplay options.
  */
@@ -1013,7 +985,6 @@ static void opt_audioUpdate( unsigned int wid )
    window_faderValue( wid, "fadSound", conf.sound );
    window_faderValue( wid, "fadMusic", conf.music );
 }
-
 
 /**
  * @brief Tries to set the key from an event.
@@ -1128,7 +1099,6 @@ static int opt_setKeyEvent( unsigned int wid, SDL_Event *event )
    return 0;
 }
 
-
 /**
  * @brief Rebinds a key.
  */
@@ -1168,7 +1138,6 @@ static void opt_setKey( unsigned int wid, const char *str )
          "chkAny", _("Set any modifier"), NULL, 0 );
 }
 
-
 /**
  * @brief Unsets the key.
  */
@@ -1187,7 +1156,6 @@ static void opt_unsetKey( unsigned int wid, const char *str )
    parent = window_getParent( wid );
    menuKeybinds_genList( parent );
 }
-
 
 /**
  * @brief Initializes the video window.
@@ -1375,7 +1343,6 @@ static void opt_needRestart (void)
    window_modifyText( opt_windows[ OPT_WIN_AUDIO ], "txtRestart", s );
 }
 
-
 /**
  * @brief Callback when resolution changes.
  */
@@ -1384,7 +1351,6 @@ static void opt_videoRes( unsigned int wid, const char *str )
    const char *buf = toolkit_getList( wid, str );
    window_setInput( wid, "inpRes", buf );
 }
-
 
 /**
  * @brief Saves the video settings.
@@ -1437,7 +1403,6 @@ static int opt_videoSave( unsigned int wid, const char *str )
    return 0;
 }
 
-
 /**
  * @brief Handles the colorblind checkbox being checked.
  */
@@ -1447,7 +1412,6 @@ static void opt_checkColorblind( unsigned int wid, const char *str )
    conf.colorblind = f;
    gl_colorblind( f );
 }
-
 
 /**
  * @brief Applies new video-mode options.
@@ -1505,7 +1469,6 @@ int opt_setVideoMode( int w, int h, int fullscreen, int confirm )
    return 0;
 }
 
-
 /**
  * @brief Detects the video-mode options corresponding to the gl_screen we have set up.
  *
@@ -1529,7 +1492,6 @@ static void opt_getVideoMode( int *w, int *h, int *fullscreen )
    else
       SDL_GetWindowSize( gl_screen.window, w, h );
 }
-
 
 /**
  * @brief Sets video defaults.
@@ -1580,7 +1542,6 @@ static void opt_setScalefactor( unsigned int wid, const char *str )
       opt_needRestart();
 }
 
-
 /**
  * @brief Callback to set the far zoom.
  *
@@ -1603,7 +1564,6 @@ static void opt_setZoomFar( unsigned int wid, const char *str )
       opt_needRestart();
 }
 
-
 /**
  * @brief Callback to set the far zoom.
  *
@@ -1625,7 +1585,6 @@ static void opt_setZoomNear( unsigned int wid, const char *str )
    if (FABS(conf.zoom_near-local_conf.zoom_near) > 1e-4)
       opt_needRestart();
 }
-
 
 /**
  * @brief Callback to set the background brightness.
@@ -1671,5 +1630,3 @@ static void opt_setMapOverlayOpacity( unsigned int wid, const char *str )
    snprintf( buf, sizeof(buf), _("Map Overlay Opacity: %.0f%%"), 100.*fad );
    window_modifyText( wid, "txtMOpacity", buf );
 }
-
-
