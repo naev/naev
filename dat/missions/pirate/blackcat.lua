@@ -113,6 +113,7 @@ local event_list = {
       pp:setTemp( math.max(400, t+50) )
       meow:play()
       player.msg(_("Black cat hair has clogged the radiators and overheated the ship!"), true)
+      player.autonavReset()
    end,
    function () -- Temporary disable
       local pp = player.pilot()
@@ -122,12 +123,14 @@ local event_list = {
       hook.timer( 5, "disable_restart" )
       meow:play()
       player.msg(_("The black cat accidentally hit the ship restart button!"), true)
+      player.autonavReset()
    end,
    function () -- Energy discharge
       local pp = player.pilot()
       pp:setEnergy( 0 )
       meow:play()
       player.msg(_("The black cat managed to accidentally disconnect the energy capacitors!"), true)
+      player.autonavReset()
    end,
 }
 function event ()
@@ -182,7 +185,7 @@ function jumpin ()
    -- This hook is run _BEFORE_ the enter hook.
    times_jumped = times_jumped+1
    event_finish = false
-   local chance = math.max( (times_jumped-20)*0.05, 0 )
+   local chance = math.max( (times_jumped-10)*0.05, 0 )
    if rnd.rnd() < chance or system.cur():presence("Wild Ones") < 50 then
       return
    end
@@ -191,9 +194,10 @@ function jumpin ()
    event_finish = true
 
    local fwo = faction.get("Wild Ones")
-   fpir = faction.dynAdd( fwo, "blackcat_owner", fwo:name(), {clear_enemies=true, clear_allies=true} )
+   fpir = faction.dynAdd( fwo, "blackcat_owner", fwo:name(), {clear_enemies=true, clear_allies=true, player=0} )
+   fpir:setPlayerStanding(0)
 
-   local pos = vec.newP( 0.8*system.cur():radius()*rnd.rnd(), rnd.rnd()*360 )
+   local pos = vec2.newP( 0.8*system.cur():radius()*rnd.rnd(), rnd.rnd()*360 )
    owner = pilot.add( "Pirate Shark", fpir, pos )
    owner:control(true)
    owner:follow( player.pilot() )
@@ -242,8 +246,10 @@ function owner_hail ()
    vn.run()
 
    owner:control()
+   owner:taskClear()
    owner:brake()
    owner:setActiveBoard(true)
+   owner:setHilight()
 
    player.commClose()
 end
@@ -260,7 +266,7 @@ function owner_board ()
    vn.na(_("You scour the ship and end up going back to the commander chair, as you are about to look behind it, you hear a sonorous meow and a black shadow flies past you towards the airlock."))
    vn.sfx( der.sfx.unboard )
    vn.na(_("You run to try to catch it, but hear the sound of the airlock closing and detaching of the locking clamps. You run back to your command chair to see what the other ship is doing, but you can not find it anywhere. They seem to have a knack for fleeing."))
-   vn.na(fmt.f(_("You sit resigned and outwitted at your command chair when you notice a small envelope on the floor. You open it and find a credit chip with {credits}."),{fmt.credits(credit_reward)}))
+   vn.na(fmt.f(_("You sit resigned and outwitted at your command chair when you notice a small envelope on the floor. You open it and find a credit chip with {credits}."),{credits=fmt.credits(credit_reward)}))
    vn.run()
 
    player.unboard()
