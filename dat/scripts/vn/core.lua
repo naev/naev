@@ -15,6 +15,7 @@ local lmusic      = require 'lmusic'
 local transitions = require 'vn.transitions'
 local log         = require "vn.log"
 local sdf         = require "vn.sdf"
+local opt         = require "vn.options"
 
 local vn = {
    speed = 0.025,
@@ -311,6 +312,10 @@ function vn.draw()
    if vn._show_log then
       log.draw()
    end
+
+   if vn._show_options then
+      opt.draw()
+   end
 end
 local function _draw_to_canvas( canvas )
    local oldcanvas = graphics.getCanvas()
@@ -326,6 +331,11 @@ Main updating function. Has to be called each loop in "love.update"
 ]]
 function vn.update( dt )
    lmusic.update( dt )
+
+   if vn._show_options then
+      vn._show_options = opt.update( dt )
+      return
+   end
 
    -- Basically skip the entire VN framework
    if vn._show_log then
@@ -370,6 +380,11 @@ Key press handler.
    @tparam string key Name of the key pressed.
 --]]
 function vn.keypressed( key )
+   if vn._show_options then
+      opt.keypressed( key )
+      return true
+   end
+
    -- Skip modifier keys
    local blacklist = {
       "left alt",
@@ -412,12 +427,18 @@ end
 --[[--
 Mouse move handler.
 --]]
-function vn.mousemoved( mx, my, dx, dy )
+function vn.mousemoved( mx, my )
+   if vn._show_options then
+      opt.mousemoved( mx, my )
+      return true
+   end
+
    if vn.show_options and _inbox( mx, my, vn.options_x, vn.options_y, vn.options_w, vn.options_h ) then
       vn._options_over = true
    else
       vn._options_over = false
    end
+   return true
 end
 
 --[[--
@@ -427,13 +448,19 @@ Mouse press handler.
    @tparam number button Button that was pressed.
 --]]
 function vn.mousepressed( mx, my, button )
+   if vn._show_options then
+      opt.mousepressed( mx, my, button )
+      return true
+   end
+
    if vn._show_log then
       log.mousepressed( mx, my, button )
       return true
    end
 
    if vn.show_options and _inbox( mx, my, vn.options_x, vn.options_y, vn.options_w, vn.options_h ) then
-      --opt.open()
+      opt.open()
+      vn._show_options = true
       return
    end
 

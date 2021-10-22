@@ -123,6 +123,9 @@ function luatk.Window:update(dt)
       end
    end
 end
+function luatk.close ()
+   luatk._windows = {}
+end
 
 --[[
 -- Widget class
