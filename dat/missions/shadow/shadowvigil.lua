@@ -21,7 +21,6 @@
 local lmisn = require "lmisn"
 require "proximity"
 local fleet = require "fleet"
-require "chatter"
 local shadow = require "common.shadow"
 local pir = require "common.pirate"
 
