@@ -591,7 +591,8 @@ static int outfitL_weapStats( lua_State *L )
    lua_pushnumber( L, outfit_trackmax(o) );
    if (outfit_isLauncher(o)) {
       lua_pushnumber( L, o->u.lau.lockon );
-      return 7;
+      lua_pushnumber( L, o->u.lau.iflockon );
+      return 8;
    }
    return 6;
 }
@@ -682,6 +683,7 @@ static int outfitL_specificStats( lua_State *L )
          SETFIELDI("amount",     o->u.lau.amount );
          SETFIELD( "reload_time",o->u.lau.reload_time );
          SETFIELD( "lockon",     o->u.lau.lockon );
+         SETFIELD( "iflockon",   o->u.lau.iflockon );
          SETFIELD( "trackmin",   o->u.lau.trackmin );
          SETFIELD( "trackmax",   o->u.lau.trackmax );
          SETFIELD( "arc",        o->u.lau.arc );

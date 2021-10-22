@@ -157,6 +157,8 @@ function optimize.goodness_default( o, p )
       mod = mod * math.min( 1, o.range/p.range )
       -- Absorption modifier
       mod = mod * (1 + math.min(0, o.penetration-p.t_absorb))
+      -- Launcher modification
+      mod = mod * math.max( 0, (p.duration - o.lockon) / p.duration )
       -- More modifications
       weap = weap * (0.9*mod+0.1)
       if o.isturret then
@@ -346,10 +348,10 @@ function optimize.optimize( p, cores, outfit_list, params )
       oo.outfit   = out
       local os = outfit_stats[oo.name]
       oo.stats    = os
-      oo.dps, oo.disable, oo.eps, oo.range, oo.trackmin, oo.trackmax, oo.lockon = out:weapstats( p )
+      oo.dps, oo.disable, oo.eps, oo.range, oo.trackmin, oo.trackmax, oo.lockon, oo.iflockon = out:weapstats( p )
       oo.trackmin = oo.trackmin or 0
       oo.trackmax = oo.trackmax or 0
-      oo.lockon   = oo.lockon or 0
+      oo.lockon   = (oo.lockon or 0) + (oo.iflockon or 0)
       oo.cpu      = os.cpu
       oo.mass     = os.mass * ss.mass_mod
       oo.price    = os.price
@@ -463,7 +465,7 @@ function optimize.optimize( p, cores, outfit_list, params )
    local ntype_range = 0
    for k,v in pairs(params.type_range) do ntype_range = ntype_range+1 end
    nrows = nrows + ntype_range
-   local lp = linopt.new( "test", ncols, nrows, true )
+   local lp = linopt.new( "equipopt", ncols, nrows, true )
    -- Add space worthy checks
    lp:set_row( 1, "CPU",          nil, st.cpu_max * ss.cpu_mod )
    local energygoal = math.max(params.min_energy_regen*st.energy_regen, params.min_energy_regen_abs)

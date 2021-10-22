@@ -41,6 +41,7 @@ function params.default( overwrite )
       t_absorb    = 0.2, -- assumed target absorption
       t_speed     = 250, -- assumed target speed
       t_track     = 10000, -- ew_detect enemies we want to target
+      duration    = 15, -- estimated fight time duration
       range       = 2000, -- ideal minimum range we want
       damage      = 1, -- weight for normal damage
       disable     = 1, -- weight for disable damage
@@ -97,23 +98,25 @@ function params.scout( overwrite )
    }, overwrite )
 end
 
-function params.light_fighter( overwrite )
+function params.interceptor( overwrite )
    return _merge_tables( params.default{
       eps_weight  = 0.2,
       t_absorb    = 0,
       t_speed     = 400,
       t_track     = 4000,
       t_range     = 1000,
+      duration    = 5,
    }, overwrite )
 end
 
-function params.heavy_fighter( overwrite )
+function params.fighter( overwrite )
    return _merge_tables( params.default{
       eps_weight  = 0.3,
       t_absorb    = 0.10,
       t_speed     = 300,
       t_track     = 7000,
       t_range     = 1000,
+      duration    = 10,
    }, overwrite )
 end
 
@@ -123,6 +126,7 @@ function params.light_bomber( overwrite )
       t_speed     = 200,
       t_track     = 15e3,
       t_range     = 5000,
+      duration    = 20,
       launcher    = 2,
       type_range  = {
          ["Launcher"] = { max=3 },
@@ -136,6 +140,7 @@ function params.heavy_bomber( overwrite )
       t_speed     = 50,
       t_track     = 25e3,
       t_range     = 5000,
+      duration    = 40,
       launcher    = 2,
       type_range  = {
          ["Launcher"] = { max=3 },
@@ -162,24 +167,27 @@ function params.destroyer( overwrite )
       t_speed     = 150,
       t_track     = 15e3,
       t_range     = 3000,
+      duration    = 25,
    }, overwrite )
 end
 
-function params.light_cruiser( overwrite )
+function params.cruiser( overwrite )
    return _merge_tables( params.default{
       t_absorb    = 0.50,
       t_speed     = 130,
       t_track     = 20e3,
       t_range     = 4000,
+      duration    = 30,
    }, overwrite )
 end
 
-function params.heavy_cruiser( overwrite )
+function params.battleship( overwrite )
    return _merge_tables( params.default{
       t_absorb    = 0.70,
       t_speed     = 70,
       t_track     = 35e3,
       t_range     = 4000,
+      duration    = 40,
    }, overwrite )
 end
 
@@ -190,6 +198,7 @@ function params.carrier( overwrite )
       t_track     = 35e3,
       t_range     = 5000,
       fighterbay  = 2,
+      duration    = 50,
    }, overwrite )
 end
 
@@ -200,13 +209,13 @@ function params.choose( p, overwrite )
       ["Freighter"]     = { "merchant" },
       ["Bulk Freighter"]= { "merchant" },
       ["Armoured Transport"] = { "armoured_transport" },
-      ["Interceptor"]   = { "light_fighter" },
-      ["Fighter"]       = { "heavy_fighter" },
+      ["Interceptor"]   = { "interceptor" },
+      ["Fighter"]       = { "fighter" },
       ["Bomber"]        = { "light_bomber", "heavy_bomber" },
       ["Corvette"]      = { "corvette" },
       ["Destroyer"]     = { "destroyer" },
-      ["Cruiser"]       = { "light_cruiser" },
-      ["Battleship"]    = { "heavy_cruiser" },
+      ["Cruiser"]       = { "cruiser" },
+      ["Battleship"]    = { "battleship" },
       ["Carrier"]       = { "carrier" },
    }
    local c = choose_table[ p:ship():class() ]
