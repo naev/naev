@@ -67,6 +67,7 @@ function background_nebula ()
    local path  = "gfx/bkg/"
    local nebula = nebulae[ prng:random(1,#nebulae) ]
    local img   = tex.open( path .. nebula )
+   local nw,nh = gfx.dim()
    local w,h   = img:dim()
    local r     = prng:random() * cur_sys:radius()/2
    local a     = 2*math.pi*prng:random()
@@ -75,7 +76,10 @@ function background_nebula ()
    local move  = 0.01 + prng:random()*0.01
    local scale = 1 + (prng:random()*0.5 + 0.5)*((2000+2000)/(w+h))
    local angle = prng:random()*360
-   if scale > 1.9 then scale = 1.9 end
+   if scale > 1.9 then
+      scale = 1.9
+   end
+   scale = scale * (nw*nh)/(1280*720)
    bkg.image( img, x, y, move, scale, angle )
 end
 
@@ -134,9 +138,9 @@ function star_add( added, num_added )
    local a     = 2*math.pi*prng:random()
    local x     = r*math.cos(a)
    local y     = r*math.sin(a)
-   local nmove = math.max( .05, prng:random()*0.1 )
+   local nmove = math.max( 0.05, prng:random()*0.1 )
    local move  = 0.02 + nmove
-   local scale = 1.0 - (1. - nmove/0.2)/5
+   local scale = 1.0 - (1 - nmove/0.2)/5
    bkg.image( img, x, y, move, scale ) -- On the background
    return num
 end
