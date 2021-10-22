@@ -39,12 +39,11 @@ end
 
 -- See if a target is vulnerable
 local function __vulnerable( p, plt, threshold, r )
-   if mem.vulnignore then return true end
+   if mem.vulnignore or not mem.natural then return true end
    local pos = plt:pos()
    r = r or math.pow( mem.lanedistance, 2 )
    -- Make sure not in safe lanes
-   if mem.natural and lanes.getDistance2P( p, pos ) > r then
-
+   if lanes.getDistance2P( p, pos ) > r then
       -- Check to see vulnerability
       local H = 1+__estimate_strength( p:getHostiles( mem.vulnrange, pos, true ) )
       local F = 1+__estimate_strength( __join_tables(
