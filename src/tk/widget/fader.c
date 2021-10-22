@@ -1,20 +1,15 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
 /**
  * @file fader.c
  *
  * @brief Fader widget.
  */
-
-
 #include "tk/toolkit_priv.h"
-
 
 #define KNOB_DEF_THICKNESS 15.
 #define TRACK_DEF_THICKNESS 5.
-
 
 static void fad_render( Widget* fad, double bx, double by );
 static int fad_mclick( Widget* fad, int button, int x, int y );
@@ -22,7 +17,6 @@ static int fad_mmove( Widget* fad, int x, int y, int rx, int ry );
 static int fad_key( Widget* fad, SDL_Keycode key, SDL_Keymod mod );
 static void fad_setValue( Widget *fad, double value );
 static void fad_scrolldone( Widget *wgt );
-
 
 /**
  * @brief Adds a Fader widget.
@@ -80,7 +74,6 @@ void window_addFader( unsigned int wid,
       toolkit_nextFocus( wdw );
 }
 
-
 /**
  * @brief Renders a fader
  *
@@ -90,7 +83,6 @@ void window_addFader( unsigned int wid,
  */
 static void fad_render( Widget* fad, double bx, double by )
 {
-
    double pos;
    double w,h;
    double tx,ty, tw,th;
@@ -126,7 +118,6 @@ static void fad_render( Widget* fad, double bx, double by )
    toolkit_drawOutline(kx + 1, ky, kw - 1, kh - 1, 1., toolkit_colDark, NULL);
 }
 
-
 /**
  * @brief handles mouse movements over the fader.
  *
@@ -160,7 +151,6 @@ static int fad_mmove( Widget* fad, int x, int y, int rx, int ry )
    return 1;
 }
 
-
 /**
  * @brief Handles fader mouse clicks.
  */
@@ -178,7 +168,6 @@ static int fad_mclick( Widget* fad, int button, int x, int y )
 
    return 0;
 }
-
 
 /**
  * @brief Handles input for a fader widget.
@@ -219,7 +208,6 @@ static int fad_key( Widget* fad, SDL_Keycode key, SDL_Keymod mod )
    return ret;
 }
 
-
 /**
  * @brief Gets value of fader widget.
  *
@@ -228,10 +216,8 @@ static int fad_key( Widget* fad, SDL_Keycode key, SDL_Keymod mod )
  */
 double window_getFaderValue( unsigned int wid, const char* name )
 {
-   Widget *wgt;
-
    /* Get the widget. */
-   wgt = window_getwgt(wid,name);
+   Widget *wgt = window_getwgt(wid,name);
    if (wgt == NULL)
       return 0.;
 
@@ -244,7 +230,6 @@ double window_getFaderValue( unsigned int wid, const char* name )
    /* Return the value. */
    return (wgt) ? wgt->dat.fad.value : 0.;
 }
-
 
 /**
  * @brief Changes fader value.
@@ -267,7 +252,6 @@ static void fad_setValue( Widget *fad, double value )
       (*fad->dat.fad.fptr)(fad->wdw, fad->name);
 }
 
-
 /**
  * @brief Sets a fader widget's value.
  *
@@ -278,10 +262,8 @@ static void fad_setValue( Widget *fad, double value )
 void window_faderValue( unsigned int wid,
       const char* name, double value )
 {
-   Widget *wgt;
-
    /* Get the widget. */
-   wgt = window_getwgt(wid,name);
+   Widget *wgt = window_getwgt(wid,name);
    if (wgt == NULL)
       return;
 
@@ -294,7 +276,6 @@ void window_faderValue( unsigned int wid,
    /* Set fader value. */
    fad_setValue(wgt, value);
 }
-
 
 /**
  * @brief Sets a fader widget value within range of bounds.
@@ -316,10 +297,7 @@ void window_faderSetBoundedValue( unsigned int wid,
 {
    const double INTRINSIC_MIN = 0.;
    const double INTRINSIC_MAX = 1.;
-   Widget *wgt;
-
-   /* Get the widget. */
-   wgt = window_getwgt(wid, name);
+   Widget *wgt = window_getwgt(wid, name);
    if (wgt == NULL)
       return;
 
@@ -339,7 +317,6 @@ void window_faderSetBoundedValue( unsigned int wid,
    fad_setValue(wgt, value);
 }
 
-
 /**
  * @brief Sets a fader widget's boundaries.
  *
@@ -351,10 +328,8 @@ void window_faderSetBoundedValue( unsigned int wid,
 void window_faderBounds( unsigned int wid,
       const char* name, double min, double max )
 {
-   Widget *wgt;
-
    /* Get the widget. */
-   wgt = window_getwgt(wid,name);
+   Widget *wgt = window_getwgt(wid,name);
    if (wgt == NULL)
       return;
 
@@ -381,7 +356,6 @@ static void fad_scrolldone( Widget *wgt )
       wgt->dat.fad.scrolldone( wgt->wdw, wgt->name );
 }
 
-
 /**
  * @brief Sets the scroll done callback for a fader.
  *
@@ -392,10 +366,8 @@ static void fad_scrolldone( Widget *wgt )
 void window_faderScrollDone( unsigned int wid,
       const char *name, void (*func)(unsigned int,const char*) )
 {
-   Widget *wgt;
-
    /* Get the widget. */
-   wgt = window_getwgt(wid,name);
+   Widget *wgt = window_getwgt(wid,name);
    if (wgt == NULL)
       return;
 
@@ -407,4 +379,3 @@ void window_faderScrollDone( unsigned int wid,
 
    wgt->dat.fad.scrolldone = func;
 }
-
