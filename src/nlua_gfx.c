@@ -1,13 +1,11 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
 /**
  * @file nlua_gfx.c
  *
  * @brief Handles the rendering of graphics on the screen.
  */
-
 /** @cond */
 #include <lauxlib.h>
 
@@ -28,7 +26,6 @@
 #include "nluadef.h"
 #include "opengl.h"
 #include "array.h"
-
 
 /* GFX methods. */
 static int gfxL_dim( lua_State *L );
@@ -84,7 +81,6 @@ static const luaL_Reg gfxL_methods[] = {
    {0,0}
 }; /**< GFX methods. */
 
-
 /**
  * @brief Loads the graphics library.
  *
@@ -107,7 +103,6 @@ int nlua_loadGFX( nlua_env env )
    return 0;
 }
 
-
 /**
  * @brief Lua bindings to interact with rendering and the Naev graphical environment.
  *
@@ -119,7 +114,6 @@ int nlua_loadGFX( nlua_env env )
  *
  * @luamod gfx
  */
-
 
 /**
  * @brief Gets the dimensions of the Naev window.
@@ -138,7 +132,6 @@ static int gfxL_dim( lua_State *L )
    lua_pushnumber( L, gl_screen.scale );
    return 3;
 }
-
 
 /**
  * @brief Renders a texture.
@@ -201,7 +194,6 @@ static int gfxL_renderTex( lua_State *L )
    return 0;
 }
 
-
 /**
  * @brief DEPRECATED: Renders a texture, scaled. Ultimately, love.graphics should handle this.
  *
@@ -259,7 +251,6 @@ static int gfxL_renderTexScale( lua_State *L )
 
    return 0;
 }
-
 
 /**
  * @brief Renders a texture using the core render function.
@@ -334,7 +325,6 @@ static int gfxL_renderTexRaw( lua_State *L )
    return 0;
 }
 
-
 /**
  * @brief Renders a texture using a transformation matrix.
  *
@@ -408,7 +398,6 @@ static int gfxL_renderTexH( lua_State *L )
    return 0;
 }
 
-
 /**
  * @brief Renders a rectangle.
  *
@@ -448,7 +437,6 @@ static int gfxL_renderRect( lua_State *L )
    return 0;
 }
 
-
 /**
  * @brief Renders a rectangle given a transformation matrix.
  *
@@ -471,7 +459,6 @@ static int gfxL_renderRectH( lua_State *L )
 
    return 0;
 }
-
 
 /**
  * @brief Renders a circle
@@ -504,7 +491,6 @@ static int gfxL_renderCircle( lua_State *L )
    return 0;
 }
 
-
 /**
  * @brief Renders a circle given a transformation matrix.
  *
@@ -528,7 +514,6 @@ static int gfxL_renderCircleH( lua_State *L )
    return 0;
 }
 
-
 /**
  * @brief Gets the size of the font.
  *
@@ -538,12 +523,10 @@ static int gfxL_renderCircleH( lua_State *L )
  */
 static int gfxL_fontSize( lua_State *L )
 {
-   int small;
-   small = lua_toboolean(L,1);
+   int small = lua_toboolean(L,1);
    lua_pushnumber( L, small ? gl_smallFont.h : gl_defFont.h );
    return 1;
 }
-
 
 /**
  * @brief Gets the size of the text to print.
@@ -575,7 +558,6 @@ static int gfxL_printDim( lua_State *L )
    return 1;
 }
 
-
 /**
  * @brief Gets the size of the text to print.
  *
@@ -602,7 +584,6 @@ static int gfxL_printfDim( lua_State *L )
       lua_pushnumber( L, gl_printHeightRaw( font, width, str ) );
    return 1;
 }
-
 
 /**
  * @brief Gets the wrap for text.
@@ -652,7 +633,6 @@ static int gfxL_printfWrap( lua_State *L )
    return 2;
 }
 
-
 /**
  * @brief Clears the saved internal colour state.
  * @luafunc printRestoreClear
@@ -664,7 +644,6 @@ static int gfxL_printRestoreClear( lua_State *L )
    return 0;
 }
 
-
 /**
  * @brief Restores the last saved internal colour state.
  * @luafunc printRestoreLast
@@ -675,7 +654,6 @@ static int gfxL_printRestoreLast( lua_State *L )
    gl_printRestoreLast();
    return 0;
 }
-
 
 /**
  * @brief Prints text on the screen using a font.
@@ -720,7 +698,6 @@ static int gfxL_printf( lua_State *L )
    return 0;
 }
 
-
 /**
  * @brief Prints text on the screen using a font with a transformation matirx.
  *
@@ -752,7 +729,6 @@ static int gfxL_printH( lua_State *L )
    gl_printRawH( font, H, col, outline, str );
    return 0;
 }
-
 
 /**
  * @brief Prints text on the screen.
@@ -799,7 +775,6 @@ static int gfxL_print( lua_State *L )
    return 0;
 }
 
-
 /**
  * @brief Prints a block of text on the screen.
  *
@@ -840,7 +815,6 @@ static int gfxL_printText( lua_State *L )
 
    return 0;
 }
-
 
 /**
  * @brief Sets the OpenGL blending mode. See https://love2d.org/wiki/love.graphics.setBlendMode as of version 0.10.
@@ -903,7 +877,6 @@ static int gfxL_setBlendMode( lua_State *L )
    return 0;
 }
 
-
 /**
  * @brief Sets the scissor clipping.
  *
@@ -917,14 +890,11 @@ static int gfxL_setBlendMode( lua_State *L )
  */
 static int gfxL_setScissor( lua_State *L )
 {
-   GLint x, y;
-   GLsizei w, h;
-
    if (lua_gettop(L)>0) {
-      x = luaL_optinteger(L,1,0);
-      y = luaL_optinteger(L,2,0);
-      w = luaL_optinteger(L,3,0);
-      h = luaL_optinteger(L,4,0);
+      GLint x   = luaL_optinteger(L,1,0);
+      GLint y   = luaL_optinteger(L,2,0);
+      GLsizei w = luaL_optinteger(L,3,0);
+      GLsizei h = luaL_optinteger(L,4,0);
       gl_clipRect( x, y, w, h );
    }
    else
@@ -932,7 +902,6 @@ static int gfxL_setScissor( lua_State *L )
 
    return 0;
 }
-
 
 /**
  * @brief Takes the current rendered game screen and returns it as a canvas.

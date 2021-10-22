@@ -23,6 +23,7 @@
 #include "nlua_col.h"
 #include "nlua_tex.h"
 #include "nlua_camera.h"
+#include "nlua_gfx.h"
 #include "nluadef.h"
 #include "nstring.h"
 #include "nxml.h"
@@ -369,6 +370,7 @@ static nlua_env background_create( const char *name )
    nlua_loadCol(env);
    nlua_loadBackground(env);
    nlua_loadCamera(env);
+   nlua_loadGFX(env);
 
    /* Open file. */
    buf = ndata_read( path, &bufsize );
