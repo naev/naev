@@ -1,13 +1,11 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
 /**
  * @file nlua_naev.c
  *
  * @brief Contains Naev generic Lua bindings.
  */
-
 /** @cond */
 #include <lauxlib.h>
 
@@ -26,9 +24,7 @@
 #include "player.h"
 #include "semver.h"
 
-
 static int cache_table = LUA_NOREF; /* No reference. */
-
 
 /* Naev methods. */
 static int naevL_version( lua_State *L );
@@ -44,6 +40,7 @@ static int naevL_eventStart( lua_State *L );
 static int naevL_missionStart( lua_State *L );
 static int naevL_isSimulation( lua_State *L );
 static int naevL_conf( lua_State *L );
+static int naevL_confSet( lua_State *L );
 static int naevL_cache( lua_State *L );
 static const luaL_Reg naev_methods[] = {
    { "version", naevL_version },
@@ -59,10 +56,10 @@ static const luaL_Reg naev_methods[] = {
    { "missionStart", naevL_missionStart },
    { "isSimulation", naevL_isSimulation },
    { "conf", naevL_conf },
+   { "confSet", naevL_confSet },
    { "cache", naevL_cache },
    {0,0}
 }; /**< Naev Lua methods. */
-
 
 /**
  * @brief Loads the Naev Lua library.
@@ -108,7 +105,6 @@ static int naevL_version( lua_State *L )
    return 2;
 }
 
-
 /**
  * @brief Tests two semver version strings.
  *
@@ -141,7 +137,6 @@ static int naevL_versionTest( lua_State *L)
    return 1;
 }
 
-
 /**
  * @brief Gets how many days it has been since the player last played Naev.
  *
@@ -154,7 +149,6 @@ static int naevL_lastplayed( lua_State *L )
    lua_pushnumber(L, d/(3600.*24.)); /*< convert to days */
    return 1;
 }
-
 
 /**
  * @brief Gets the seconds since the program started running.
@@ -170,7 +164,6 @@ static int naevL_ticks( lua_State *L )
    return 1;
 }
 
-
 /**
  * @brief Gets the approximate CPU processing time.
  *
@@ -182,7 +175,6 @@ static int naevL_clock( lua_State *L )
    lua_pushnumber(L, (double)clock() / (double)CLOCKS_PER_SEC );
    return 1;
 }
-
 
 /**
  * @brief Gets a human-readable name for the key bound to a function.
@@ -205,7 +197,6 @@ static int naevL_keyGet( lua_State *L )
 
    return 1;
 }
-
 
 /**
  * @brief Disables or enables a specific keybinding.
@@ -232,7 +223,6 @@ static int naevL_keyEnable( lua_State *L )
    return 0;
 }
 
-
 /**
  * @brief Enables all inputs.
  *
@@ -246,7 +236,6 @@ static int naevL_keyEnableAll( lua_State *L )
    return 0;
 }
 
-
 /**
  * @brief Disables all inputs.
  *
@@ -259,7 +248,6 @@ static int naevL_keyDisableAll( lua_State *L )
    input_disableAll();
    return 0;
 }
-
 
 /**
  * @brief Starts an event, does not start check conditions.
@@ -289,7 +277,6 @@ static int naevL_eventStart( lua_State *L )
    return 1;
 }
 
-
 /**
  * @brief Starts a mission, does no check start conditions.
  *
@@ -318,7 +305,6 @@ static int naevL_missionStart( lua_State *L )
    return 1;
 }
 
-
 /**
  * @brief Gets whether or not the universe is being simulated or not.
  *
@@ -330,7 +316,6 @@ static int naevL_isSimulation( lua_State *L )
    lua_pushboolean( L, space_isSimulation() );
    return 1;
 }
-
 
 #define PUSH_STRING( L, name, value ) \
 lua_pushstring( L, name ); \
@@ -417,6 +402,17 @@ static int naevL_conf( lua_State *L )
 #undef PUSH_INT
 #undef PUSH_BOOL
 
+/**
+ * @brief Sets configuration variables. Note that not all are supported.
+ *
+ *    @luatparam string name Configuration variable name.
+ *    @luatparam number|string value Value to set to.
+ * @luafunc confSet
+ */
+static int naevL_confSet( lua_State *L )
+{
+   return 0;
+}
 
 /**
  * @brief Gets the global Lua runtime cache. This is shared among all
