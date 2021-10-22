@@ -4111,7 +4111,7 @@ static int pilotL_follow( lua_State *L )
  */
 static int pilotL_attack( lua_State *L )
 {
-   Pilot *p, *pt;
+   Pilot *p;
    Task *t;
    unsigned int pid;
 
@@ -4119,8 +4119,8 @@ static int pilotL_attack( lua_State *L )
 
    /* Get parameters. */
    p  = luaL_validpilot(L,1);
-   if (lua_isnoneornil(L,2)) {
-      pt  = luaL_validpilot(L,2);
+   if (!lua_isnoneornil(L,2)) {
+      Pilot *pt = luaL_validpilot(L,2);
       pid = pt->id;
    }
    else {
@@ -4130,7 +4130,7 @@ static int pilotL_attack( lua_State *L )
    }
 
    /* Set the task. */
-   t        = pilotL_newtask( L, p, "attack" );
+   t        = pilotL_newtask( L, p, "attack_forced" );
    lua_pushpilot(L, pid);
    t->dat = luaL_ref(L, LUA_REGISTRYINDEX);
 
