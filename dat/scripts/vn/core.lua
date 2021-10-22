@@ -141,7 +141,7 @@ local function _draw_character( c )
    if c.talking then
       col = { 1, 1, 1 }
    else
-      col = { 0.9, 0.9, 0.9 }
+      col = { 0.95, 0.95, 0.95 }
    end
    local flip
    if c.params.flip~=nil then
