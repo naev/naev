@@ -16,7 +16,7 @@ local transitions = require 'vn.transitions'
 local log         = require "vn.log"
 
 local vn = {
-   speed = 0.04,
+   speed = 0.025,
    color = {1,1,1},
 
    -- Internal usage
