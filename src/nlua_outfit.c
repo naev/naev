@@ -592,7 +592,8 @@ static int outfitL_weapStats( lua_State *L )
    if (outfit_isLauncher(o)) {
       lua_pushnumber( L, o->u.lau.lockon );
       lua_pushnumber( L, o->u.lau.iflockon );
-      return 8;
+      lua_pushboolean( L, o->u.lau.ammo->u.amm.ai!=AMMO_AI_UNGUIDED );
+      return 9;
    }
    return 6;
 }

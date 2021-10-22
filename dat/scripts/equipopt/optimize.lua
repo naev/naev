@@ -37,7 +37,7 @@ for k,o in ipairs(outfit.getAll()) do
             end
          end
       end
-      dps = dps * ss.amount * 0.5
+      dps = dps * ss.amount
       fbay_dps[ o:nameRaw() ] = 5*math.sqrt(dps)
    end
 end
@@ -166,6 +166,9 @@ function optimize.goodness_default( o, p )
       else
          weap = weap * p.forward
       end
+      if o.seeker then
+         weap = weap * p.seeker
+      end
       if o.typebroad == "Bolt Weapon" then
          weap = weap * p.bolt
       elseif o.typebroad == "Beam Weapon" then
@@ -271,6 +274,11 @@ function optimize.optimize( p, cores, outfit_list, params )
    local ss = p:shipstat( nil, true ) -- Should include cores!!
    local st = p:stats() -- also include cores
 
+   -- Modify forward weapon bonus depending on turn rate
+   if st.turn < 150 then
+      params.forward = params.forward *  math.max( 0.5, st.turn/100 )
+   end
+
    -- Determine what outfits from outfit_list we can actually equip
    -- We actually remove duplicates too
    local usable_outfits = {}
@@ -349,7 +357,7 @@ function optimize.optimize( p, cores, outfit_list, params )
       oo.slot, oo.size = out:slot()
       local os = outfit_stats[oo.name]
       oo.stats    = os
-      oo.dps, oo.disable, oo.eps, oo.range, oo.trackmin, oo.trackmax, oo.lockon, oo.iflockon = out:weapstats( p )
+      oo.dps, oo.disable, oo.eps, oo.range, oo.trackmin, oo.trackmax, oo.lockon, oo.iflockon, oo.seeker = out:weapstats( p )
       oo.trackmin = oo.trackmin or 0
       oo.trackmax = oo.trackmax or 0
       oo.lockon   = (oo.lockon or 0) + (oo.iflockon or 0)
@@ -397,7 +405,7 @@ function optimize.optimize( p, cores, outfit_list, params )
          oo.disable  = 0
          oo.eps      = 0
          oo.range    = 10e3
-         oo.penetration = 0
+         oo.penetration = 0.5
       elseif oo.type == "Afterburner" then
          -- We add it as movement, but weaken the effect a bit
          oo.thrust   = oo.thrust + 1.5*math.sqrt(oo.spec.thrust * st.thrust)

@@ -41,9 +41,9 @@ function params.default( overwrite )
       -- Weapon stuff
       t_absorb    = 0.2, -- assumed target absorption
       t_speed     = 250, -- assumed target speed
-      t_track     = 10000, -- ew_detect enemies we want to target
+      t_track     = 10e3, -- ew_evasion enemies we want to target
       duration    = 15, -- estimated fight time duration
-      range       = 2000, -- ideal minimum range we want
+      range       = 2e3, -- ideal minimum range we want
       damage      = 1, -- weight for normal damage
       disable     = 1, -- weight for disable damage
       turret      = 1,
@@ -52,6 +52,7 @@ function params.default( overwrite )
       beam        = 1,
       bolt        = 1,
       fighterbay  = 1,
+      seeker      = 1,
    }, overwrite )
 end
 
@@ -60,8 +61,8 @@ function params.civilian( overwrite )
       weap        = 0.5, -- low weapons
       t_absorb    = 0,
       t_speed     = 300,
-      t_track     = 4000,
-      t_range     = 1000,
+      t_track     = 4e3,
+      t_range     = 1e3,
    }, overwrite )
 end
 
@@ -70,8 +71,8 @@ function params.merchant( overwrite )
       weap        = 0.5, -- low weapons
       t_absorb    = 0,
       t_speed     = 300,
-      t_track     = 4000,
-      t_range     = 1000,
+      t_track     = 4e3,
+      t_range     = 1e3,
       cargo       = 2,
       forward     = 0.5, -- Less forward weapons
    }, overwrite )
@@ -81,8 +82,8 @@ function params.armoured_transport( overwrite )
    return _merge_tables( params.default{
       t_absorb    = 0,
       t_speed     = 300,
-      t_track     = 4000,
-      t_range     = 1000,
+      t_track     = 4e3,
+      t_range     = 1e3,
       cargo       = 1.5,
       forward     = 0.3, -- Less forward weapons
    }, overwrite )
@@ -94,8 +95,8 @@ function params.scout( overwrite )
       ew          = 2,
       t_absorb    = 0,
       t_speed     = 400,
-      t_track     = 4000,
-      t_range     = 1000,
+      t_track     = 4e3,
+      t_range     = 1e3,
    }, overwrite )
 end
 
@@ -104,8 +105,8 @@ function params.interceptor( overwrite )
       eps_weight  = 0.2,
       t_absorb    = 0,
       t_speed     = 400,
-      t_track     = 4000,
-      t_range     = 1000,
+      t_track     = 4e3,
+      t_range     = 1e3,
       duration    = 5,
    }, overwrite )
 end
@@ -115,8 +116,8 @@ function params.fighter( overwrite )
       eps_weight  = 0.3,
       t_absorb    = 0.10,
       t_speed     = 300,
-      t_track     = 7000,
-      t_range     = 1000,
+      t_track     = 7e3,
+      t_range     = 1e3,
       duration    = 10,
    }, overwrite )
 end
@@ -124,11 +125,25 @@ end
 function params.light_bomber( overwrite )
    return _merge_tables( params.default{
       t_absorb    = 0.30,
+      t_speed     = 300,
+      t_track     = 10e3,
+      t_range     = 5e3,
+      duration    = 20,
+      seeker      = 1.5,
+      type_range  = {
+         ["Launcher"] = { max=3 },
+      },
+   }, overwrite )
+end
+
+function params.medium_bomber( overwrite )
+   return _merge_tables( params.default{
+      t_absorb    = 0.30,
       t_speed     = 200,
       t_track     = 15e3,
-      t_range     = 5000,
-      duration    = 20,
-      launcher    = 2,
+      t_range     = 5e3,
+      duration    = 30,
+      seeker      = 1.5,
       type_range  = {
          ["Launcher"] = { max=3 },
       },
@@ -139,10 +154,10 @@ function params.heavy_bomber( overwrite )
    return _merge_tables( params.default{
       t_absorb    = 0.60,
       t_speed     = 50,
-      t_track     = 25e3,
-      t_range     = 5000,
+      t_track     = 20e3,
+      t_range     = 5e3,
       duration    = 40,
-      launcher    = 2,
+      seeker      = 1.5,
       type_range  = {
          ["Launcher"] = { max=3 },
       },
@@ -155,7 +170,7 @@ function params.corvette( overwrite )
       t_absorb    = 0.20,
       t_speed     = 250,
       t_track     = 10e3,
-      t_range     = 3000,
+      t_range     = 3e3,
       type_range  = {
          ["Launcher"] = { max=3 },
       },
@@ -167,7 +182,7 @@ function params.destroyer( overwrite )
       t_absorb    = 0.30,
       t_speed     = 150,
       t_track     = 15e3,
-      t_range     = 3000,
+      t_range     = 3e3,
       duration    = 25,
    }, overwrite )
 end
@@ -177,7 +192,7 @@ function params.cruiser( overwrite )
       t_absorb    = 0.50,
       t_speed     = 130,
       t_track     = 20e3,
-      t_range     = 4000,
+      t_range     = 4e3,
       duration    = 30,
    }, overwrite )
 end
@@ -189,6 +204,7 @@ function params.battleship( overwrite )
       t_track     = 35e3,
       t_range     = 4000,
       duration    = 40,
+      launcher    = 0.8,
    }, overwrite )
 end
 
@@ -197,8 +213,8 @@ function params.carrier( overwrite )
       t_absorb    = 0.50,
       t_speed     = 70,
       t_track     = 35e3,
-      t_range     = 5000,
-      fighterbay  = 2,
+      t_range     = 5e3,
+      fighterbay  = 1.5,
       duration    = 50,
    }, overwrite )
 end
@@ -212,7 +228,7 @@ function params.choose( p, overwrite )
       ["Armoured Transport"] = { "armoured_transport" },
       ["Interceptor"]   = { "interceptor" },
       ["Fighter"]       = { "fighter" },
-      ["Bomber"]        = { "light_bomber", "heavy_bomber" },
+      ["Bomber"]        = { "light_bomber", "medium_bomber", "heavy_bomber" },
       ["Corvette"]      = { "corvette" },
       ["Destroyer"]     = { "destroyer" },
       ["Cruiser"]       = { "cruiser" },
