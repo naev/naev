@@ -1,4 +1,6 @@
-wave_score_table = {
+local tables = {}
+
+tables.wave_score = {
    -- Fighters
    Hyena = 1000,
    Shark = 2000,
@@ -20,7 +22,7 @@ wave_score_table = {
    ["Dvaered Goddard"] = 45000,
    -- Carriers
 }
-wave_round_enemies = {
+tables.wave_round_enemies = {
    skirmisher = {
       { "Hyena" }, -- 1
       { "Ancestor" },
@@ -69,3 +71,4 @@ wave_round_enemies = {
    }
 }
 
+return tables

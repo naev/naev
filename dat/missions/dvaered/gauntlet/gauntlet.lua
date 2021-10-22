@@ -13,7 +13,7 @@
 local vn = require 'vn'
 local gauntlet = require 'common.gauntlet'
 local gauntlet_gui = require 'missions.dvaered.gauntlet.gui'
-require 'missions.dvaered.gauntlet.tables'
+local tables = require 'missions.dvaered.gauntlet.tables'
 local fmt = require "format"
 local equipopt = require 'equipopt'
 
@@ -339,7 +339,7 @@ function wave_round_setup ()
       return e
    end
 
-   local round_enemies = wave_round_enemies[wave_category]
+   local round_enemies = tables.wave_round_enemies[wave_category]
    local enemies_list = round_enemies[wave_round]
    if gmods.doubleenemy then
       local doublelist = {}
@@ -369,7 +369,7 @@ function wave_compute_score ()
 
    wave_killed = wave_killed or {}
    for k,n in ipairs(wave_enemies) do
-      local s = wave_score_table[n]
+      local s = tables.wave_score[n]
       table.insert( str, string.format("#o%s %d", _(n), s ) )
       score = score + s
       -- Store all the stuff the pilot killed
@@ -462,7 +462,7 @@ function wave_end_msg( d )
    -- TODO add sound
 end
 function wave_end ()
-   if wave_round < #wave_round_enemies[wave_category] then
+   if wave_round < #tables.wave_round_enemies[wave_category] then
       -- TODO Cooler animation or something
       local score_str = wave_compute_score()
       local n = #score_str
