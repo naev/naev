@@ -158,7 +158,11 @@ luatk.Button_mt = { __index = luatk.Button }
 function luatk.newButton( parent, x, y, w, h, text, handler )
    local wgt   = luatk.newWidget( parent, x, y, w, h )
    setmetatable( wgt, luatk.Button_mt )
-   wgt.text    = text
+   if type(text)=="function" then
+      wgt.render  = text
+   else
+      wgt.text    = text
+   end
    wgt.handler = handler
 
    local font = luatk._deffont or lg.getFont()
@@ -192,7 +196,11 @@ function luatk.Button:draw( bx, by )
    lg.setColor( c )
    lg.rectangle( "fill", x, y, w, h )
    lg.setColor( fc )
-   lg.printf( self.text, font, x, y+(h-self.th)/2, w, 'center' )
+   if self.text then
+      lg.printf( self.text, font, x, y+(h-self.th)/2, w, 'center' )
+   else
+      wgt.render( x, y, w, h )
+   end
 end
 function luatk.Button:clicked()
    if self.disabled then
