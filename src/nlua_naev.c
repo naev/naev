@@ -411,6 +411,7 @@ static int naevL_conf( lua_State *L )
  */
 static int naevL_confSet( lua_State *L )
 {
+   (void) L;
    return 0;
 }
 
