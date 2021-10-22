@@ -3,7 +3,6 @@
 --]]
 local lg = require 'love.graphics'
 
-
 local luatk = {
    _windows = {},
 
@@ -26,14 +25,12 @@ local luatk = {
    _deffont = nil,
 }
 
-
 --[[
 -- Global functions
 --]]
 function luatk.setDefaultFont( font )
    luatk._deffont = font
 end
-
 
 --[[
 -- Important functions
@@ -81,8 +78,6 @@ function luatk.keypressed( _key )
    return false
 end
 
-
-
 --[[
 -- Window class
 --]]
@@ -128,7 +123,6 @@ function luatk.Window:update(dt)
       end
    end
 end
-
 
 --[[
 -- Widget class
