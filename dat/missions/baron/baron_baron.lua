@@ -221,16 +221,19 @@ end
 
 function takeoff()
    if talked and system.cur() == system.get(sysname1) then
-      local pos = player.pos()
-      vendetta1 = pilot.add( "Dvaered Vendetta", "Dvaered", pos+vec2.new(800,0), nil, {ai="dvaered_norun"} )
-      vendetta2 = pilot.add( "Dvaered Vendetta", "Dvaered", pos+vec2.new(-800,0), nil, {ai="dvaered_norun"} )
-      local pp = player.pilot()
-      for k,v in ipairs{vendetta1, vendetta2} do
-         v:rename(_("Dvaered Police Vendetta"))
-         v:setHostile(true)
-      end
-      vendetta1:broadcast(_("All troops, engage %s %s! It has broken %s law!"):format(player.pilot():ship():baseType(), player.ship(), planetname), true)
+      hook.timer( 3, "takeoff_delay" )
    end
+end
+
+function takeoff_delay ()
+   local pnt = planet.get(planetname)
+   vendetta1 = pilot.add( "Dvaered Vendetta", "Dvaered", pnt, nil, {ai="dvaered_norun"} )
+   vendetta2 = pilot.add( "Dvaered Vendetta", "Dvaered", pnt, nil, {ai="dvaered_norun"} )
+   for k,v in ipairs{vendetta1, vendetta2} do
+      v:rename(_("Dvaered Police Vendetta"))
+      v:setHostile(true)
+   end
+   vendetta1:broadcast(_("All troops, engage %s %s! It has broken %s law!"):format(player.pilot():ship():baseType(), player.ship(), planetname), true)
 end
 
 function abort()
