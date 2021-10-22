@@ -391,17 +391,16 @@ static int commodityL_priceAtTime( lua_State *L )
 static int commodityL_illegalto( lua_State *L )
 {
    Commodity *c = luaL_validcommodity(L,1);
-   int f;
    if (lua_istable(L,2)) {
       lua_pushnil(L); /* nil */
       while (lua_next(L,-2) != 0) { /* k, v */
-         f  = luaL_validfaction(L,-1);
+         int f = luaL_validfaction(L,-1);
          commodity_tempIllegalto( c, f );
          lua_pop(L,1); /* k */
       }
    }
    else {
-      f = luaL_validfaction(L,2);
+      int f = luaL_validfaction(L,2);
       commodity_tempIllegalto( c, f );
    }
    return 0;

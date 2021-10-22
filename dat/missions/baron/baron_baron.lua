@@ -23,7 +23,6 @@ local portrait = require "portrait"
 local baron = require "common.baron"
 local neu = require "common.neutral"
 
-
 sysname1 = "Darkstone"
 sysname2 = "Ingot"
 planetname = "Varia"
@@ -212,6 +211,7 @@ function talkthieves()
    talked = true
    local c = misn.cargoNew( N_("The Baron's holopainting"), N_("A rectangular chest containing a holopainting.") )
    carg_id = misn.cargoAdd(c, 0)
+   c:illegalto( "Dvaered" )
 
    misn.osdActive(2)
    misn.markerMove( misn_marker, system.get(sysname2) )
@@ -221,14 +221,14 @@ end
 
 function takeoff()
    if talked and system.cur() == system.get(sysname1) then
-      vendetta1 = pilot.add( "Dvaered Vendetta", "Dvaered", vec2.new(500,0), nil, {ai="dvaered_norun"} )
-      vendetta2 = pilot.add( "Dvaered Vendetta", "Dvaered", vec2.new(-500,0), nil, {ai="dvaered_norun"} )
-      vendetta1:rename(_("Dvaered Police Vendetta"))
-      vendetta2:rename(_("Dvaered Police Vendetta"))
-      vendetta1:control()
-      vendetta2:control()
-      vendetta1:attack(player.pilot())
-      vendetta2:attack(player.pilot())
+      local pos = player.pos()
+      vendetta1 = pilot.add( "Dvaered Vendetta", "Dvaered", pos+vec2.new(800,0), nil, {ai="dvaered_norun"} )
+      vendetta2 = pilot.add( "Dvaered Vendetta", "Dvaered", pos+vec2.new(-800,0), nil, {ai="dvaered_norun"} )
+      local pp = player.pilot()
+      for k,v in ipairs{vendetta1, vendetta2} do
+         v:rename(_("Dvaered Police Vendetta"))
+         v:setHostile(true)
+      end
       vendetta1:broadcast(_("All troops, engage %s %s! It has broken %s law!"):format(player.pilot():ship():baseType(), player.ship(), planetname), true)
    end
 end
