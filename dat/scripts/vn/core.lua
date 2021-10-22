@@ -18,7 +18,7 @@ local sdf         = require "vn.sdf"
 local opt         = require "vn.options"
 
 local vn = {
-   speed = 0.025,
+   speed = var.peek("vn_textspeed") or 0.025,
    color = {1,1,1},
 
    -- Internal usage
@@ -334,6 +334,9 @@ function vn.update( dt )
 
    if vn._show_options then
       vn._show_options = opt.update( dt )
+      if vn._show_options then
+         vn.speed = var.peek("vn_textspeed") or 0.025
+      end
       return
    end
 

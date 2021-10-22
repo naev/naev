@@ -32,13 +32,14 @@ function opt.open ()
 
    local txtspeed = var.peek("vn_textspeed") or 0.025
    local txtspeedtxt = luatk.newText( wdw, 20, 50, w-40, 20, nil, luatk.colour.text )
-   local txtspeedfad = luatk.newFader( wdw, 20, 80, w-40, 20, 0, 0.1, txtspeed, function ( wgt, val )
-      txtspeedtxt:set(fmt.f(_("#nText Speed#0: {val} seconds per character"),{val=val}))
+   local txtspeedfad = luatk.newFader( wdw, 20, 80, w-80, 40, 0, 0.1, txtspeed, function ( wgt, val )
+      txtspeedtxt:set(fmt.f(_("#nText Speed#0: {val:.3f} seconds per character"),{val=val}))
       var.push( "vn_textspeed", txtspeed )
    end )
    txtspeedfad:set( txtspeed )
 
    luatk.newButton( wdw, w-120-20, h-40-20, 120, 40, _("Done"), function ()
+      var.push( "vn_textspeed", txtspeedfad:get() )
       luatk.close()
       opt.running = false
       return true
