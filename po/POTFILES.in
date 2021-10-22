@@ -2586,6 +2586,7 @@ dat/scripts/vn/conf.lua
 dat/scripts/vn/core.lua
 dat/scripts/vn/log.lua
 dat/scripts/vn/main.lua
+dat/scripts/vn/sdf.lua
 dat/scripts/vn/transitions.lua
 dat/scripts/vntk.lua
 dat/shipai.lua
