@@ -411,7 +411,7 @@ The lift up their toy Lancelot. You can barely make out a golden Efreeti etched 
       local shipchar = vn.Character.new( "ship", {image=shipgfx, pos="left"} )
       local function runinit ()
          slpos = sl.offset
-         slnewpos = 0.75*nw
+         slnewpos = 0.75
       end
       vn.animation( 1, function( alpha, _dt, _params )
          sl.offset = slnewpos*alpha + slpos*(1-alpha)

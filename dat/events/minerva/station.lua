@@ -424,7 +424,7 @@ function approach_blackjack()
    local setup_blackjack = function (alpha)
       if dealer_x == nil then
          dealer_x = cc.offset -- cc.offset is only set up when the they appear in the VN
-         dealer_newx = 0.2*lw
+         dealer_newx = 0.2
       end
       vn.textbox_h = textbox_h + (blackjack_h - textbox_h)*alpha
       vn.textbox_x = textbox_x + (blackjack_x - textbox_x)*alpha
@@ -499,7 +499,7 @@ function approach_chuckaluck ()
    local setup_chuckaluck = function (alpha)
       if dealer_x == nil then
          dealer_x = dealer.offset -- dealer.offset is only set up when the they appear in the VN
-         dealer_newx = 0.2*lw
+         dealer_newx = 0.2
       end
       vn.textbox_h = textbox_h + (chuckaluck_h - textbox_h)*alpha
       vn.textbox_x = textbox_x + (chuckaluck_x - textbox_x)*alpha

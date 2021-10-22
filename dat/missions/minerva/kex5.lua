@@ -175,7 +175,7 @@ He looks down sadly at the floor for a while before looking at you again.]]))
    kex(_([["We should be dancing!"]]))
    local function saddance ()
       vn.animation( 2.0, function (progress, _dt, offset)
-         kex.offset = offset + 100*math.sin( 2 * math.pi * progress )
+         kex.offset = offset + (100/vn.display_w)*math.sin( 2 * math.pi * progress )
       end, nil, nil, function () return kex.offset end )
    end
    saddance()

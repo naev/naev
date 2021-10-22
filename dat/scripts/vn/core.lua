@@ -45,13 +45,18 @@ local vn = {
 -- Drawing
 local function _setdefaults()
    local lw, lh = window.getDesktopDimensions()
+   local mw, mh = 1280, 720
+   local ox, oy = (lw-mw)/2, (lh-mh)/2
+   vn._default.display_w = mw
+   vn._default.display_h = mh
+
    vn._default.textbox_font = graphics.newFont(16)
    vn._default.textbox_font:setOutline( 0.5 )
    vn._default.textbox_w = 800
    local fonth = vn._default.textbox_font:getLineHeight()
    vn._default.textbox_h = math.floor(200 / fonth) * fonth + 20*2
-   vn._default.textbox_x = (lw-vn._default.textbox_w)/2
-   vn._default.textbox_y = lh-30-vn._default.textbox_h
+   vn._default.textbox_x = ox + (mw-vn._default.textbox_w)/2
+   vn._default.textbox_y = oy + mh-30-vn._default.textbox_h
    vn._default.textbox_bg = {0, 0, 0, 1}
    vn._default.textbox_bg_alpha = 1
    vn._default.textbox_text_alpha = 1
@@ -126,16 +131,16 @@ local function _draw_character( c )
       isportrait = c.params.isportrait
    end
    local lw, lh = love.graphics.getDimensions()
-   local mw, mh = vn.textbox_w, vn.textbox_y
+   local tw, th = vn.textbox_w, vn.textbox_h
    local scale, x, y
    if isportrait then
-      scale = math.min( mw/w, mh/h )
-      x = c.offset - w*scale/2
-      y = mh-scale*h
+      scale = math.min( tw/w, (vn.display_h-th)/h )
+      x = (lw-vn.display_w)/2 + c.offset*vn.display_w - w*scale/2
+      y = vn.textbox_y-scale*h
    else
-      scale = lh/h
-      x = c.offset - w*scale/2
-      y = 0
+      scale = vn.display_h/h
+      x = (lw-vn.display_w)/2 + c.offset*vn.display_w - w*scale/2
+      y = (lh-vn.display_h)/2
    end
    local col
    if c.talking then
@@ -152,7 +157,7 @@ local function _draw_character( c )
          flip = 1
       end
    else
-      if c.offset > 0.5*lw then
+      if c.offset > 0.5 then
          flip = -1
          x = x + scale*w
       else
@@ -186,6 +191,8 @@ local function _draw( tocanvas )
       vn._draw_bg()
    end
 
+   local lw, lh = window.getDesktopDimensions()
+   graphics.setScissor( (lw-vn.display_w)/2, (lh-vn.display_h)/2, vn.display_w, vn.display_h )
    -- Draw characters
    for k,c in ipairs( vn._characters ) do
       if not c.talking then
@@ -197,6 +204,7 @@ local function _draw( tocanvas )
          _draw_character( c )
       end
    end
+   graphics.setScissor()
 
    -- Textbox
    local font = vn.textbox_font
@@ -505,19 +513,18 @@ function vn.StateCharacter:_init()
       c.displayname = c.who -- reset name
    end
    local pos = self.character.pos or "center"
-   local lw = graphics.getDimensions()
    if type(pos)=="number" then
-      self.character.offset = pos*lw
+      self.character.offset = pos
    elseif pos == "center" then
-      self.character.offset = 0.5*lw
+      self.character.offset = 0.5
    elseif pos == "left" then
-      self.character.offset = 0.25*lw
+      self.character.offset = 0.25
    elseif pos == "right" then
-      self.character.offset = 0.75*lw
+      self.character.offset = 0.75
    elseif pos == "farleft" then
-      self.character.offset = 0.15*lw
+      self.character.offset = 0.15
    elseif pos == "farright" then
-      self.character.offset = 0.85*lw
+      self.character.offset = 0.85
    end
    _finish(self)
 end

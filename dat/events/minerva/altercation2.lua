@@ -12,35 +12,33 @@
  </notes>
 </event>
 --]]
-
 --[[
--- Bad people try to do bad things to cyborg chicken
---
--- Triggered from station.lua
+   Bad people try to do bad things to cyborg chicken
+
+   Triggered from station.lua
 --]]
 local vn = require 'vn'
 local window = require 'love.window'
 local minerva = require 'common.minerva'
 
-thug1_image = "scavenger1.png"
+local thug1_image = "scavenger1.png"
 
 function create ()
    vn.clear()
    vn.scene()
-   vn.transition( "hexagon" )
    vn.music( minerva.loops.conflict )
    local t1 = vn.newCharacter( _("Thug"), { image=thug1_image, pos="left" } )
    local cc = vn.newCharacter( minerva.vn_cyborg_chicken({pos="right"}) )
+   vn.transition( "hexagon" )
    vn.na(_("You once again hear a large commotion in one of the wings of Minerva station. As you get closer you see what seems to be a group of people chasing something small… Wait, is that a chicken?"))
-   local function runaround ( left, right )
-      local lw, _lh = window.getDesktopDimensions()
-      left  = left or rnd.rnd( 0.25*lw, 0.4*lw )
-      right = right or rnd.rnd( 0.6*lw, 0.75*lw )
+   local function runaround ()
+      local left = 0.25 + 0.15 * rnd.rnd()
+      local right = 0.6 + 0.15 * rnd.rnd()
       local function runinit ()
          local t1pos = t1.offset
          local ccpos = cc.offset
          local t1newpos, ccnewpos
-         if t1pos < 0.5*lw then
+         if t1pos < 0.5 then
             t1newpos = right
             ccnewpos = left
          else
@@ -82,12 +80,11 @@ function create ()
 
    vn.label("chickenleft")
    local function chickenleft ()
-      local lw, _lh = window.getDesktopDimensions()
       local function runinit ()
          return cc.offset
       end
       vn.animation( 1.5, function (alpha, _dt, ccpos)
-         local ccnewpos = 1.5 * lw
+         local ccnewpos = 1.5
          cc.offset = ccnewpos*alpha + ccpos*(1-alpha)
       end, nil, "ease-out", runinit )
       vn.disappear( cc )
@@ -101,5 +98,3 @@ function create ()
    minerva.log.misc(_("You sort of helped cyborg chicken get away from a thug."))
    evt.finish(true)
 end
-
-
