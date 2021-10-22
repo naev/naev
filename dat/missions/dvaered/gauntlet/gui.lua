@@ -7,9 +7,9 @@ local luatk = require 'luatk'
 local lg = require 'love.graphics'
 
 local gauntlet_modifiers = {
-   { id = "doubledmgtaken", str = "Double Damage Enemies (#g+50%#0)", var = "gauntlet_unlock_doubledmgtaken", enabled = false },
-   { id = "nohealing", str = "No Healing Between Waves (#g+25%)", var = "gauntlet_unlock_nohealing", enabled = false },
-   { id = "doubleenemy", str = "Double Enemies", var = nil, enabled = false },
+   { id = "doubledmgtaken", str = _("Double Damage Enemies (#g+50%#0)"), var = "gauntlet_unlock_doubledmgtaken", enabled = false },
+   { id = "nohealing", str = _("No Healing Between Waves (#g+25%#0)"), var = "gauntlet_unlock_nohealing", enabled = false },
+   { id = "doubleenemy", str = _("Double Enemies"), var = nil, enabled = false },
 }
 
 local function button_list( wdw, captions, bx, by, bw, bh, w, _h, handler )
@@ -120,7 +120,7 @@ local function gauntlet_settype( wgt )
    local w = wdw.w
    if newtype == "Challenge" then
       btn_options, bh = button_list( wdw,
-            {"Skirmisher", "Warrior", "Warlord"},
+            {_("Skirmisher"), _("Warrior"), _("Warlord")},
             0, headerh+90, 160, 40, w, 100, gauntlet_setoption )
       if not var.peek("gauntlet_unlock_warrior") then
          btn_options[2]:disable()
@@ -175,7 +175,7 @@ function love.load ()
 
    -- Tournament Types
    btn_types = button_list( wdw,
-         {"Tournament", "Challenge", "Infinity Arena", "Special"},
+         {_("Tournament"), _("Challenge"), _("Infinity Arena"), _("Special")},
          0, headerh+20, 160, 40, w, h, gauntlet_settype )
    if not var.peek( "gauntlet_unlock_tournament" ) then
       btn_types[1]:disable()
@@ -196,9 +196,9 @@ function love.load ()
 
    -- Close or Cancel
    luatk.newRect(   wdw, 20,       h-40-35, w-40, 2, {0, 0, 0} )
-   btn_enter = luatk.newButton( wdw, 250,      h-40-20, 160, 40, "ENTER ARENA", gauntlet_enter )
+   btn_enter = luatk.newButton( wdw, 250,      h-40-20, 160, 40, _("ENTER ARENA"), gauntlet_enter )
    btn_enter:disable()
-   luatk.newButton( wdw, w-250-80, h-40-20, 120, 40, "Cancel", gauntlet_cancel )
+   luatk.newButton( wdw, w-250-80, h-40-20, 120, 40, _("Cancel"), gauntlet_cancel )
 
    -- Load defaults
    if gauntlet_type then
