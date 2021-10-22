@@ -1,9 +1,6 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
-
-
 /** @cond */
 #include <stdio.h>
 #include <stdlib.h>
@@ -15,15 +12,13 @@
 #include "nstring.h"
 #include "physics.h"
 
-
 /*
  * M I S C
  */
 static double angle_cleanup( double a )
 {
-   double na;
    if (FABS(a) >= 2.*M_PI) {
-      na = fmod(a, 2.*M_PI);
+      double na = fmod(a, 2.*M_PI);
       if (a < 0.)
          na += 2.*M_PI;
       return  na;
@@ -38,20 +33,16 @@ static double angle_cleanup( double a )
  */
 double angle_diff( const double ref, double a )
 {
-   double d;
-   double a1, a2;
-
    /* Get angles. */
-   a1 = angle_cleanup(ref);
-   a2 = angle_cleanup(a);
-   d  = a2 - a1;
+   double a1 = angle_cleanup(ref);
+   double a2 = angle_cleanup(a);
+   double d  = a2 - a1;
 
    /* Filter offsets. */
    d  = (d < M_PI)  ? d : d - 2.*M_PI;
    d  = (d > -M_PI) ? d : d + 2.*M_PI;
    return d;
 }
-
 
 /*
  *
@@ -73,7 +64,6 @@ void vect_cset( Vector2d* v, const double x, const double y )
    v->angle = ANGLE(x,y);
 }
 
-
 /**
  * @brief Creates a minimal vector only valid for blitting and not other operations.
  *
@@ -86,7 +76,6 @@ void vect_csetmin( Vector2d* v, const double x, const double y )
    v->x = x;
    v->y = y;
 }
-
 
 /**
  * @brief Set the vector value using polar coordinates.
@@ -103,7 +92,6 @@ void vect_pset( Vector2d* v, const double mod, const double angle )
    v->y     = v->mod*sin(v->angle);
 }
 
-
 /**
  * @brief Sets a vector to NULL.
  *
@@ -117,7 +105,6 @@ void vectnull( Vector2d* v )
    v->angle = 0.;
 }
 
-
 /**
  * @brief Get the direction pointed to by two vectors (from ref to v).
  *
@@ -127,14 +114,10 @@ void vectnull( Vector2d* v )
  */
 double vect_angle( const Vector2d* ref, const Vector2d* v )
 {
-   double x,y;
-
-   x = v->x - ref->x;
-   y = v->y - ref->y;
-
+   double x = v->x - ref->x;
+   double y = v->y - ref->y;
    return ANGLE( x, y );
 }
-
 
 /**
  * @brief Adds x and y to the current vector
@@ -151,7 +134,6 @@ void vect_cadd( Vector2d* v, const double x, const double y )
    v->angle = ANGLE(v->x,v->y);
 }
 
-
 /**
  * @brief Adds a polar 2d vector to the current vector.
  *
@@ -167,7 +149,6 @@ void vect_padd( Vector2d* v, const double m, const double a )
    v->angle = ANGLE(v->x,v->y);
 }
 
-
 /**
  * @brief Mirrors a vector off another, stores results in vector.
  *
@@ -177,15 +158,12 @@ void vect_padd( Vector2d* v, const double m, const double a )
  */
 void vect_reflect( Vector2d* r, Vector2d* v, Vector2d* n )
 {
-   double dot;
-
-   dot      = vect_dot( v, n );
+   double dot = vect_dot( v, n );
    r->x     = v->x - ((2. * dot) * n->x);
    r->y     = v->y - ((2. * dot) * n->y);
    r->mod   = MOD(r->x,r->y);
    r->angle = MOD(r->x,r->y);
 }
-
 
 /**
  * @brief Vector dot product.
@@ -198,7 +176,6 @@ double vect_dot( Vector2d* a, Vector2d* b )
 {
    return a->x * b->x + a->y * b->y;
 }
-
 
 /**
  * @brief Determines the magnitude of the source vector components.
@@ -230,7 +207,6 @@ void vect_uv_decomp( Vector2d* u, Vector2d* v, Vector2d* reference_vector )
    vect_pset(u, 1, VANGLE(*reference_vector));
    vect_pset(v, 1, VANGLE(*reference_vector)+M_PI_2);
 }
-
 
 /*
  * S O L I D
@@ -290,7 +266,6 @@ static void solid_update_euler (Solid *obj, const double dt)
    vect_cset( &obj->pos, px, py );
 }
 
-
 /**
  * @brief Runge-Kutta method of updating a solid based on its acceleration.
  *
@@ -317,9 +292,9 @@ static void solid_update_euler (Solid *obj, const double dt)
 #define RK4_MIN_H 0.01 /**< Minimal pass we want. */
 static void solid_update_rk4 (Solid *obj, const double dt)
 {
-   int i, N; /* for iteration, and pass calculation */
+   int N; /* for iteration, and pass calculation */
    double h, px,py, vx,vy; /* pass, and position/velocity values */
-   double ix,iy, tx,ty, ax,ay, th; /* initial and temporary cartesian vector values */
+   double ix,iy, tx,ty, th; /* initial and temporary cartesian vector values */
    double vmod, vang;
    int vint;
    int limit; /* limit speed? */
@@ -345,11 +320,10 @@ static void solid_update_rk4 (Solid *obj, const double dt)
    /* Movement Quantity Theorem:  m*a = \sum f */
    th = obj->thrust  / obj->mass;
 
-   for (i=0; i < N; i++) { /* iterations */
-
+   for (int i=0; i < N; i++) { /* iterations */
       /* Calculate acceleration for the frame. */
-      ax = th*cos(obj->dir);
-      ay = th*sin(obj->dir);
+      double ax = th*cos(obj->dir);
+      double ay = th*sin(obj->dir);
 
       /* Limit the speed. */
       if (limit) {
@@ -398,7 +372,6 @@ static void solid_update_rk4 (Solid *obj, const double dt)
       obj->dir += 2.*M_PI;
 }
 
-
 /**
  * @brief Gets the maximum speed of any object with speed and thrust.
  */
@@ -406,7 +379,6 @@ double solid_maxspeed( Solid *s, double speed, double thrust )
 {
    return speed + thrust / (s->mass * 3.);
 }
-
 
 /**
  * @brief Initializes a new Solid.
@@ -467,7 +439,6 @@ void solid_init( Solid* dest, const double mass, const double dir,
    }
 }
 
-
 /**
  * @brief Creates a new Solid.
  *
@@ -487,7 +458,6 @@ Solid* solid_create( const double mass, const double dir,
    return dyn;
 }
 
-
 /**
  * @brief Frees an existing solid.
  *
@@ -497,4 +467,3 @@ void solid_free( Solid* src )
 {
    free(src);
 }
-

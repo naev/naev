@@ -1,7 +1,6 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
 /**
  * @file pause.c
  *
@@ -10,8 +9,6 @@
  * Main trick to pausing/unpausing is to allow things based on time to
  *  behavie properly when the toolkit opens a window.
  */
-
-
 /** @cond */
 #include "naev.h"
 /** @endcond */
@@ -21,11 +18,9 @@
 #include "player.h"
 #include "sound.h"
 
-
 int paused     = 0; /**< is paused? */
 int player_paused = 0; /**< Whether the player initiated the pause. */
 double dt_mod  = 1.; /**< dt modifier. */
-
 
 /**
  * @brief Pauses the game.
@@ -45,7 +40,6 @@ void pause_game (void)
    player_paused = 0;
 }
 
-
 /**
  * @brief Unpauses the game.
  */
@@ -64,7 +58,6 @@ void unpause_game (void)
    player_paused = 0;
 }
 
-
 /**
  * @brief Adjusts the game's dt modifier.
  */
@@ -72,7 +65,6 @@ void pause_setSpeed( double mod )
 {
    dt_mod = mod;
 }
-
 
 /**
  * @brief Pauses the game and marks the pause as player-initiated.

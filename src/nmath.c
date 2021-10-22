@@ -1,13 +1,11 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
 /**
  * @file nmath.c
  *
  * @brief Some math routines for naev.
  */
-
 /** @cond */
 #include <math.h>
 
@@ -20,7 +18,6 @@
 #include "log.h"
 #include "rng.h"
 
-
 /**
  * @brief Solves the equation:  a * x^2 + b * x + c = 0
  *
@@ -32,10 +29,8 @@
  */
 int nmath_solve2Eq( double results[2], double a, double b, double c )
 {
-   double root;
-
    /* Calculate the root. */
-   root = b * b - 4 * a * c;
+   double root = b * b - 4 * a * c;
    if (root < 0.)
       return -1;
    root = sqrt(root);
@@ -47,19 +42,15 @@ int nmath_solve2Eq( double results[2], double a, double b, double c )
    return 0;
 }
 
-
 /**
  * @brief Returns the maximum of 3 values.
  */
 double max3( double v1, double v2, double v3 )
 {
-   double max;
-
-   max = (v1 > v2) ? v1 : v2;
+   double max = (v1 > v2) ? v1 : v2;
    max = (max > v3) ? max : v3;
    return(max);
 }
-
 
 /**
  * @brief Returns the minimum of 3 values.
@@ -78,17 +69,13 @@ double min3( double v1, double v2, double v3 )
  */
 void arrayShuffle( void** array )
 {
-   void* tmp;
-   int n, k;
-
-   for (n = array_size( array ); n > 1; ) {
-      k        = RNG(0, n);
-      tmp      = array[--n];
-      array[n] = array[k];
-      array[k] = tmp;
+   for (int n=array_size( array ); n > 1; ) {
+      int k       = RNG(0, n);
+      void *tmp   = array[--n];
+      array[n]    = array[k];
+      array[k]    = tmp;
    }
 }
-
 
 /**
  * @brief Checks whether two rectangles overlap at any point.

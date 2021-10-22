@@ -1,14 +1,11 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
 /**
  * @file joystick.c
  *
  * @brief Handles joystick initialization.
  */
-
-
 /** @cond */
 #include "SDL.h"
 #include "SDL_haptic.h"
@@ -22,18 +19,15 @@
 #include "log.h"
 #include "nstring.h"
 
-
 static SDL_Joystick *joystick = NULL; /**< Current joystick in use. */
 static int has_haptic = 0; /**< Does the player have haptic? */
 SDL_Haptic *haptic = NULL; /**< Current haptic in use, externed in spfx.c. */
 unsigned int haptic_query = 0; /**< Properties of the haptic device. */
 
-
 /*
  * Prototypes.
  */
 static void joystick_initHaptic (void);
-
 
 /**
  * @brief Gets the joystick index by name.
@@ -43,10 +37,8 @@ static void joystick_initHaptic (void);
  */
 int joystick_get( const char* namjoystick )
 {
-   const char *jname;
-   int i;
-   for (i=0; i < SDL_NumJoysticks(); i++) {
-      jname = SDL_JoystickNameForIndex(i);
+   for (int i=0; i < SDL_NumJoysticks(); i++) {
+      const char *jname = SDL_JoystickNameForIndex(i);
       if (strstr( jname, namjoystick ))
          return i;
    }
@@ -55,7 +47,6 @@ int joystick_get( const char* namjoystick )
          namjoystick, SDL_JoystickName(0));
    return 0;
 }
-
 
 /**
  * @brief Makes the game use a joystick by index.
@@ -101,39 +92,37 @@ int joystick_use( int indjoystick )
    return 0;
 }
 
-
 /**
  * @brief Initializes force feedback for the loaded device.
  */
 static void joystick_initHaptic (void)
 {
-   if (has_haptic && SDL_JoystickIsHaptic(joystick)) {
+   if (!has_haptic || !SDL_JoystickIsHaptic(joystick))
+      return;
 
-      /* Close haptic if already open. */
-      if (haptic != NULL) {
-         SDL_HapticClose(haptic);
-         haptic = NULL;
-      }
-
-      /* Try to create haptic device. */
-      haptic = SDL_HapticOpenFromJoystick(joystick);
-      if (haptic == NULL) {
-         WARN(_("Unable to initialize force feedback: %s"), SDL_GetError());
-         return;
-      }
-
-      /* Check to see what it supports. */
-      haptic_query = SDL_HapticQuery(haptic);
-      if (!(haptic_query & SDL_HAPTIC_SINE)) {
-         SDL_HapticClose(haptic);
-         haptic = NULL;
-         return;
-      }
-
-      DEBUG(_("   force feedback enabled"));
+   /* Close haptic if already open. */
+   if (haptic != NULL) {
+      SDL_HapticClose(haptic);
+      haptic = NULL;
    }
-}
 
+   /* Try to create haptic device. */
+   haptic = SDL_HapticOpenFromJoystick(joystick);
+   if (haptic == NULL) {
+      WARN(_("Unable to initialize force feedback: %s"), SDL_GetError());
+      return;
+   }
+
+   /* Check to see what it supports. */
+   haptic_query = SDL_HapticQuery(haptic);
+   if (!(haptic_query & SDL_HAPTIC_SINE)) {
+      SDL_HapticClose(haptic);
+      haptic = NULL;
+      return;
+   }
+
+   DEBUG(_("   force feedback enabled"));
+}
 
 #if DEBUGGING
 /**
@@ -141,19 +130,15 @@ static void joystick_initHaptic (void)
  */
 static void joystick_debug (void)
 {
-   int numjoysticks, i;
-
    /* figure out how many joysticks there are */
-   numjoysticks = SDL_NumJoysticks();
+   int numjoysticks = SDL_NumJoysticks();
    DEBUG( n_("%d joystick detected", "%d joysticks detected", numjoysticks), numjoysticks );
-   for (i=0; i < numjoysticks; i++) {
-      const char *jname;
-      jname = SDL_JoystickNameForIndex(i);
+   for (int i=0; i < numjoysticks; i++) {
+      const char *jname = SDL_JoystickNameForIndex(i);
       DEBUG("  %d. %s", i, jname);
    }
 }
-#endif
-
+#endif /* DEBUGGING */
 
 /**
  * @brief Initializes the joystick subsystem.
@@ -173,14 +158,13 @@ int joystick_init (void)
 
 #if DEBUGGING
    joystick_debug();
-#endif
+#endif /* DEBUGGING */
 
    /* enables joystick events */
    SDL_JoystickEventState(SDL_ENABLE);
 
    return 0;
 }
-
 
 /**
  * @brief Exits the joystick subsystem.
@@ -197,5 +181,3 @@ void joystick_exit (void)
       joystick = NULL;
    }
 }
-
-
