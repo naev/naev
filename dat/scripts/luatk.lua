@@ -262,8 +262,12 @@ function luatk.newText( parent, x, y, w, h, text, col, align, font )
    return wgt
 end
 function luatk.Text:draw( bx, by )
+   if not self.text then return end
    lg.setColor( self.col )
    lg.printf( self.text, self.font, bx+self.x, by+self.y, self.w, self.align )
+end
+function luatk.Text:set( text )
+   self.text = text
 end
 
 --[[
@@ -321,12 +325,26 @@ function luatk.newFader( parent, x, y, w, h, min, max, def, handler )
    return wgt
 end
 function luatk.Fader:draw( bx, by )
+   local x, y, w, h = bx+self.x, by+self.y, self.w, self.h
+   local cx = x + (self.val-self.min)/(self.max-self.min) * w
+   local cy = y + h*0.5
+
+   -- Track
+   lg.setColor( luatk.colour.outline )
+   lg.rectangle( "fill", x, cy-2, w, 5 )
+
+   -- Knob
+   lg.setColor( luatk.colour.dark )
+   lg.rectangle( "fill", cx-8, y-1, 17, h+2 )
+   lg.setColor( luatk.colour.outline )
+   lg.rectangle( "fill", cx-7, y, 15, h )
 end
 function luatk.Fader:get()
    return self.val
 end
 function luatk.Fader:set( val )
    self.val = math.max( self.min, math.min( self.max, val ) )
+   self.handler( self, self.val )
 end
 
 return luatk

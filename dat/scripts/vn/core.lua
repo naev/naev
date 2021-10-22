@@ -475,7 +475,7 @@ Mouse released handler.
    @tparam number my Y position of the click.
    @tparam number button Button that was pressed.
 --]]
-function vn.mousepressed( mx, my, button )
+function vn.mousereleased( mx, my, button )
    if vn._show_options then
       opt.mousereleased( mx, my, button )
    end

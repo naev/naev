@@ -111,7 +111,7 @@ static void fad_render( Widget* fad, double bx, double by )
    kx = tx + (horizontal ? tw * pos - kw / 2 : (-kw + tw) / 2);
    ky = ty + (!horizontal ? th * pos - kh / 2 : (-kh + th) / 2);
 
-   toolkit_drawRect(tx, ty, tw , th, toolkit_colLight, NULL);
+   toolkit_drawRect(tx, ty, tw, th, toolkit_colLight, NULL);
 
    /* Draw. */
    toolkit_drawRect(kx, ky, kw, kh, toolkit_colLight, NULL);

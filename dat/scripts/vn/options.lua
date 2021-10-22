@@ -1,4 +1,5 @@
 local luatk = require "luatk"
+local fmt = require "format"
 
 local opt = {}
 
@@ -23,15 +24,24 @@ function opt.update( dt )
 end
 
 function opt.open ()
-   local w = 400
+   local w = 600
    local h = 300
    local wdw = luatk.newWindow( nil, nil, w, h )
 
    luatk.newText( wdw, 0, 10, w, h, _("VN Options"), luatk.colour.text, "center" )
 
+   local txtspeed = var.peek("vn_textspeed") or 0.025
+   local txtspeedtxt = luatk.newText( wdw, 20, 50, w-40, 20, nil, luatk.colour.text )
+   local txtspeedfad = luatk.newFader( wdw, 20, 80, w-40, 20, 0, 0.1, txtspeed, function ( wgt, val )
+      txtspeedtxt:set(fmt.f(_("#nText Speed#0: {val} seconds per character"),{val=val}))
+      var.push( "vn_textspeed", txtspeed )
+   end )
+   txtspeedfad:set( txtspeed )
+
    luatk.newButton( wdw, w-120-20, h-40-20, 120, 40, _("Done"), function ()
       luatk.close()
       opt.running = false
+      return true
    end )
 
    opt.running = true
