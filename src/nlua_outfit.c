@@ -1,13 +1,11 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
 /**
  * @file nlua_outfit.c
  *
  * @brief Handles the Lua outfit bindings.
  */
-
 /** @cond */
 #include <lauxlib.h>
 
@@ -26,7 +24,6 @@
 #include "nluadef.h"
 #include "rng.h"
 #include "slots.h"
-
 
 /* Outfit metatable methods. */
 static int outfitL_eq( lua_State *L );
@@ -72,8 +69,6 @@ static const luaL_Reg outfitL_methods[] = {
    {0,0}
 }; /**< Outfit metatable methods. */
 
-
-
 /**
  * @brief Loads the outfit library.
  *
@@ -85,7 +80,6 @@ int nlua_loadOutfit( nlua_env env )
    nlua_register(env, OUTFIT_METATABLE, outfitL_methods, 1);
    return 0;
 }
-
 
 /**
  * @brief Lua bindings to interact with outfits.
@@ -190,7 +184,6 @@ int lua_isoutfit( lua_State *L, int ind )
    return ret;
 }
 
-
 /**
  * @brief Checks to see if two outfits are the same.
  *
@@ -214,7 +207,6 @@ static int outfitL_eq( lua_State *L )
    return 1;
 }
 
-
 /**
  * @brief Gets a outfit.
  *
@@ -231,12 +223,11 @@ static int outfitL_get( lua_State *L )
    return 1;
 }
 
-
 /**
  * @brief Gets all the outfits.
  *
  *    @luatreturn Table Table containing all the outfits.
- * @luafunc get
+ * @luafunc getAll
  */
 static int outfitL_getAll( lua_State *L )
 {
@@ -248,7 +239,6 @@ static int outfitL_getAll( lua_State *L )
    }
    return 1;
 }
-
 
 /**
  * @brief Gets the translated name of the outfit.
@@ -270,7 +260,6 @@ static int outfitL_name( lua_State *L )
    return 1;
 }
 
-
 /**
  * @brief Gets the raw (untranslated) name of the outfit.
  *
@@ -291,7 +280,6 @@ static int outfitL_nameRaw( lua_State *L )
    return 1;
 }
 
-
 /**
  * @brief Gets the type of an outfit.
  *
@@ -307,7 +295,6 @@ static int outfitL_type( lua_State *L )
    lua_pushstring(L, outfit_getType(o));
    return 1;
 }
-
 
 /**
  * @brief Gets the broad type of an outfit.
@@ -327,7 +314,6 @@ static int outfitL_typeBroad( lua_State *L )
    return 1;
 }
 
-
 /**
  * @brief Gets the cpu usage of an outfit.
  *
@@ -344,7 +330,6 @@ static int outfitL_cpu( lua_State *L )
    return 1;
 }
 
-
 /**
  * @brief Gets the mass of an outfit.
  *
@@ -360,7 +345,6 @@ static int outfitL_mass( lua_State *L )
    lua_pushnumber(L, o->mass);
    return 1;
 }
-
 
 /**
  * @brief Gets the slot name, size and property of an outfit.
@@ -386,7 +370,6 @@ static int outfitL_slot( lua_State *L )
    return 5;
 }
 
-
 /**
  * @brief Gets the limit string of the outfit. Only one outfit can be equipped at the same time for each limit string.
  *
@@ -404,7 +387,6 @@ static int outfitL_limit( lua_State *L )
    return 0;
 }
 
-
 /**
  * @brief Gets the store icon for an outfit.
  *
@@ -420,7 +402,6 @@ static int outfitL_icon( lua_State *L )
    lua_pushtex( L, gl_dupTexture( o->gfx_store ) );
    return 1;
 }
-
 
 /**
  * @brief Gets the price of an outfit.
@@ -438,7 +419,6 @@ static int outfitL_price( lua_State *L )
    return 1;
 }
 
-
 /**
  * @brief Gets the description of an outfit.
  *
@@ -455,7 +435,6 @@ static int outfitL_description( lua_State *L )
    return 1;
 }
 
-
 /**
  * @brief Gets whether or not an outfit is unique
  *
@@ -471,7 +450,6 @@ static int outfitL_unique( lua_State *L )
    lua_pushboolean(L, outfit_isProp(o, OUTFIT_PROP_UNIQUE));
    return 1;
 }
-
 
 /**
  * @brief Gets a shipstat from an Outfit by name, or a table containing all the ship stats if not specified.
@@ -493,7 +471,6 @@ static int outfitL_getShipStat( lua_State *L )
    ss_statsGetLua( L, &ss, str, internal );
    return 1;
 }
-
 
 /**
  * @brief Computes statistics for weapons.
@@ -618,7 +595,6 @@ static int outfitL_weapStats( lua_State *L )
    }
    return 6;
 }
-
 
 #define SETFIELD( name, value )  \
    lua_pushnumber( L, value ); \
