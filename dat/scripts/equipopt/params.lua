@@ -26,6 +26,7 @@ function params.default( overwrite )
       prefer = {
          --["Hive Combat AI"] = 100,
       },
+      mismatch    = 0.7, -- Penalty for slot size mismatch
 
       -- High level weights
       move        = 1,

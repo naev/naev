@@ -420,7 +420,6 @@ static int shipL_getSlots( lua_State *L )
          const ShipOutfitSlot *sslot = &outfit_arrays[i][j];
 
          /* make the slot table and put it in */
-         lua_pushnumber(L, k++); /* slot table key */
          lua_newtable(L);
 
          lua_pushstring(L, "type"); /* key */
@@ -449,7 +448,7 @@ static int shipL_getSlots( lua_State *L )
             lua_rawset(L, -3); /* table[key] = value */
          }
 
-         lua_rawset(L, -3);   /* put the slot table in */
+         lua_rawseti(L, -2, k++);   /* put the slot table in */
       }
    }
 

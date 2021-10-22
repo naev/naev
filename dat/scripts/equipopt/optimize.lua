@@ -346,6 +346,7 @@ function optimize.optimize( p, cores, outfit_list, params )
       local oo    = {}
       oo.name     = out:nameRaw()
       oo.outfit   = out
+      oo.slot, oo.size = out:slot()
       local os = outfit_stats[oo.name]
       oo.stats    = os
       oo.dps, oo.disable, oo.eps, oo.range, oo.trackmin, oo.trackmax, oo.lockon, oo.iflockon = out:weapstats( p )
@@ -514,6 +515,7 @@ function optimize.optimize( p, cores, outfit_list, params )
       for j,o in ipairs(s.outfits) do
          local stats = outfit_cache[o]
          local name = string.format("s%d-%s", i, stats.name)
+         local slotmod = ((slots.size==stats.size) and 1) or params.mismatch
          local objf = (1+params.rnd*rnd.sigma()) * stats.goodness -- contribution to objective function
          lp:set_col( c, name, objf, "binary" ) -- constraints set automatically
          -- CPU constraint
