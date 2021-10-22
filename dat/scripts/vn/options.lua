@@ -5,6 +5,9 @@ local opt = {}
 function opt.mousepressed( mx, my, btn )
    return luatk.mousepressed( mx, my, btn )
 end
+function opt.mousereleased( mx, my, btn )
+   return luatk.mousereleased( mx, my, btn )
+end
 function opt.mousemoved( mx, my )
    return luatk.mousemoved( mx, my )
 end

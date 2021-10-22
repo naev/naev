@@ -8,6 +8,10 @@ function love.mousepressed( mx, my, button )
    vn.mousepressed( mx, my, button )
 end
 
+function love.mousereleased( mx, my, button )
+   vn.mousereleased( mx, my, button )
+end
+
 function love.mousemoved( mx, my, dx, dy )
    vn.mousemoved( mx, my, dx, dy )
 end

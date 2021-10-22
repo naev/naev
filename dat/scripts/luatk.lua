@@ -56,9 +56,26 @@ function luatk.mousepressed( mx, my, _button )
 
    for k,wgt in ipairs(wdw._widgets) do
       if wgt.clicked and _checkbounds(wgt,x,y) then
+         wgt.pressed = true
          if wgt.clicked( wgt ) then
             return true
          end
+      end
+   end
+
+   return false
+end
+function luatk.mousereleased( mx, my, button )
+   local wdw = luatk._windows[ #luatk._windows ]
+   local x, y = mx-wdw.x, my-wdw.y
+
+   for k,wgt in ipairs(wdw._widgets) do
+      wgt.pressed = false
+      if wgt.released then
+         wgt.released( wgt )
+      end
+      if _checkbounds(wgt,x,y) then
+         wgt.mouseover = true
       end
    end
 
@@ -70,7 +87,9 @@ function luatk.mousemoved( mx, my )
    local x, y = mx-wdw.x, my-wdw.y
 
    for k,wgt in ipairs(wdw._widgets) do
-      wgt.mouseover = _checkbounds(wgt,x,y)
+      if not wgt.pressed then
+         wgt.mouseover = _checkbounds(wgt,x,y)
+      end
    end
 
    return false
@@ -284,6 +303,30 @@ end
 function luatk.Image:draw( bx, by )
    lg.setColor( self.col )
    self.img:draw( bx+self.x, by+self.y, self.rot, self.w, self.h )
+end
+
+--[[
+-- Fader widget
+--]]
+luatk.Fader = {}
+setmetatable( luatk.Fader, { __index = luatk.Widget } )
+luatk.Fader_mt = { __index = luatk.Fader }
+function luatk.newFader( parent, x, y, w, h, min, max, def, handler )
+   local wgt   = luatk.newWidget( parent, x, y, w, h )
+   setmetatable( wgt, luatk.Fader_mt )
+   wgt.handler = handler
+   wgt.min = min
+   wgt.max = max
+   wgt.val = def
+   return wgt
+end
+function luatk.Fader:draw( bx, by )
+end
+function luatk.Fader:get()
+   return self.val
+end
+function luatk.Fader:set( val )
+   self.val = math.max( self.min, math.min( self.max, val ) )
 end
 
 return luatk

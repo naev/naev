@@ -469,6 +469,19 @@ function vn.mousepressed( mx, my, button )
    return s:mousepressed( mx, my, button )
 end
 
+--[[--
+Mouse released handler.
+   @tparam number mx X position of the click.
+   @tparam number my Y position of the click.
+   @tparam number button Button that was pressed.
+--]]
+function vn.mousepressed( mx, my, button )
+   if vn._show_options then
+      opt.mousereleased( mx, my, button )
+   end
+   return true
+end
+
 -- Helpers
 --[[--
 Makes the player say something.
