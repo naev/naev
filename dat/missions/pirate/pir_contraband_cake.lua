@@ -73,11 +73,11 @@ They coughs to the side somewhat exaggeratedly while looking at you from the cor
    g(string.format(_([[They lean closer to you and lower their voice.
 "I was asked to deliver a… a…"
 They furrow their brows for a second.
-"…a cake! To %s in the %s system."]]), destplanet, destsys))
+"…a cake! To %s in the %s system."]]), destplanet:name(), destsys:name()))
    g(_([["It's nothing out of the ordinary, I swear! Only that this cake you see, it's got some special… icing that is really sensitive. Like super sensitive. The slightest disturbance can melt it and lay it all to waste. In particular, any radiation can easily melt it even though it is shielded. Especially stuff like scanning radiation. You catch my drift?"]]))
    g(string.format(_([["All you would have to do is take the cake and go to %s in the %s system, without getting any of that nasty scanning radiation on you."
 They shiver with disgust to emphasize and you can see some of their sweat fly off onto the bar floor.
-"Once you deliver it I'll split the money half and half with you."]]), destplanet, destsys))
+"Once you deliver it I'll split the money half and half with you."]]), destplanet:name(), destsys:name()))
    vn.na("You stare at them coldly.")
    g(string.format(_([["Fine fine, take it all. It should be %s. Just remember no scanning means no problems."
 They extend their sweaty hand towards you.
@@ -115,7 +115,7 @@ They lean forward and get a bit more serious.
    vn.label("notut")
    g(string.format(_([["Great. One second, let me get the cake."
 They go to the restroom and come back holding a nondescript brown box that seems to have 'Cake' hastily scribbled on it. They promptly hand it over to you while looking both ways.
-"OK, so that's it. Make sure to take this to %s in the %s system, and watch out for scanning!"]]), destplanet, destsys))
+"OK, so that's it. Make sure to take this to %s in the %s system, and watch out for scanning!"]]), destplanet:name(), destsys:name()))
    vn.na(_("As leave them behind you can hear them let out a big sigh of what you can only assume is relief."))
    vn.run()
 
@@ -129,11 +129,11 @@ They go to the restroom and come back holding a nondescript brown box that seems
    c:illegalto( {"Empire", "Dvaered", "Soromid", "Sirius", "Za'lek", "Frontier"} )
    carg_id = misn.cargoAdd( c, 0 )
 
-   misn.osdCreate( _("Deliver Cake"), { string.format(_("Fly to %s in the %s system without getting scanned"), destplanet, destsys) } )
+   misn.osdCreate( _("Deliver Cake"), { string.format(_("Fly to %s in the %s system without getting scanned"), destplanet:name(), destsys:name()) } )
 
    misn.setTitle(_("Deliver Cake"))
    misn.setReward( fmt.credits(reward) )
-   misn.setDesc( string.format(_("Deliver a cake to %s in the %s system. Apparently it has a special frosting and will be damaged if you are scanned. Use stealth to avoid getting scanned."), destplanet, destsys ) )
+   misn.setDesc( string.format(_("Deliver a cake to %s in the %s system. Apparently it has a special frosting and will be damaged if you are scanned. Use stealth to avoid getting scanned."), destplanet:name(), destsys:name() ) )
    misn.markerAdd(destplanet)
 
    hook.land( "land" ) -- only hook after accepting
