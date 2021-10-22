@@ -72,7 +72,7 @@ function create ()
    -- Create the derelict.
    local dist  = rnd.rnd() * cursys:radius() * 0.8
    local pos   = vec2.newP( dist, rnd.rnd()*360 )
-   derelict    = pilot.add(ship, "Derelict", pos, nil, {ai="dummy"})
+   derelict    = pilot.add(ship, "Derelict", pos, nil, {ai="dummy", naked=true})
    derelict:disable()
    derelict:rename("Derelict")
    derelict:intrinsicSet( "ew_hide", -75 ) -- Much more visible
