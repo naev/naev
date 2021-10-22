@@ -439,7 +439,7 @@ static int opt_gameplaySave( unsigned int wid, const char *str )
    }
    else {
       conf.autonav_reset_dist    = -1.;
-      conf.autonav_reset_shield  = reset * 0.5;
+      conf.autonav_reset_shield  = reset / 0.5;
    }
 
    /* Input boxes. */
