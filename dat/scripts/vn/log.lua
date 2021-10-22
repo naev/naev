@@ -104,14 +104,14 @@ function log.draw ()
    if log.uparrow_alpha > 0 then
       graphics.setColor( 0, 1, 1, log.uparrow_alpha )
       graphics.setShader( log.shader.arrow )
-      graphics.draw( love_shaders.img, x, 100, -math.pi/2, 60, 20 )
+      graphics.draw( sdf.img, x, 100, -math.pi/2, 60, 20 )
       graphics.setShader()
    end
 
    if log.downarrow_alpha > 0 then
       graphics.setColor( 0, 1, 1, log.downarrow_alpha )
       graphics.setShader( log.shader.arrow )
-      graphics.draw( love_shaders.img, x, lh-100, math.pi/2, 60, 20 )
+      graphics.draw( sdf.img, x, lh-100, math.pi/2, 60, 20 )
       graphics.setShader()
    end
 end
