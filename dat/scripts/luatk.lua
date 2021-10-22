@@ -10,6 +10,7 @@ local luatk = {
       bg       = { 0.2,  0.2,  0.2  },
       outline  = { 0.5,  0.5,  0.5  },
       dark     = { 0.05, 0.05, 0.05 },
+      text     = { 0.95, 0.95, 0.95 },
    },
    button = {
       colour = {

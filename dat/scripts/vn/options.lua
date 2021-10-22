@@ -20,9 +20,11 @@ function opt.update( dt )
 end
 
 function opt.open ()
-   local w = 800
-   local h = 600
-   local wdw = luatk.newWindow( nil, nil, 800, 600 )
+   local w = 400
+   local h = 300
+   local wdw = luatk.newWindow( nil, nil, w, h )
+
+   luatk.newText( wdw, 0, 10, w, h, _("VN Options"), luatk.colour.text, "center" )
 
    luatk.newButton( wdw, w-120-20, h-40-20, 120, 40, _("Done"), function ()
       luatk.close()

@@ -26,7 +26,7 @@ local vn = {
       _characters = {},
       _states = {},
       _state = 0,
-      _bufcol = { 1, 1, 1 },
+      _bufcol = { 0.95, 0.95, 0.95 },
       _buffer = "",
       _title = nil,
       _globalalpha = 1,
@@ -270,7 +270,7 @@ local function _draw( tocanvas )
       end
       _draw_bg( x, y, w, h, colbg, nil, 1 )
       graphics.setShader( sdf.gear )
-      vn.setColor( {0.7,0.7,0.7} )
+      vn.setColor( {0.95,0.95,0.95} )
       sdf.img:draw( x+5, y+5, 0, w-10, h-10 )
       graphics.setShader()
    end
