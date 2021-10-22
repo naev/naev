@@ -59,9 +59,15 @@ function log.open( font )
    end
 
    -- Determine offset
-   log.y = lh-border-th
-   log.miny = log.y
-   log.maxy = log.border
+   if th < lh then
+      log.y    = (lh-th)/2
+      log.miny = log.y
+      log.maxy = log.y
+   else
+      log.y    = lh-border-th
+      log.miny = log.y
+      log.maxy = log.border
+   end
 
    -- Compile shaders
    if not log.shader.arrow then
