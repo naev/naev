@@ -1665,14 +1665,14 @@ void debris_init( Debris *deb )
 
    /* And a random velocity */
    theta = RNGF()*2.*M_PI;
-   mod = RNGF() * 20;
+   mod = RNGF() * 20.;
    vect_pset( &deb->vel, mod, theta );
 
    /* Randomly init the gfx ID */
    deb->gfxID = RNG(0,(int)nasterogfx-1);
 
    /* Random height vs player. */
-   deb->height = .8 + RNGF()*.4;
+   deb->height = 0.8 + RNGF()*0.4;
 }
 
 
