@@ -14,6 +14,7 @@ local audio       = require 'love.audio'
 local lmusic      = require 'lmusic'
 local transitions = require 'vn.transitions'
 local log         = require "vn.log"
+local sdf         = require "vn.sdf"
 
 local vn = {
    speed = 0.025,
@@ -73,6 +74,14 @@ local function _setdefaults()
    vn._default._draw_fg = nil
    vn._default._draw_bg = nil
    vn._default._updatefunc = nil
+   -- Options
+   vn._default.options_x = vn._default.textbox_x + vn._default.textbox_w + 20
+   vn._default.options_y = vn._default.textbox_y
+   vn._default.options_w = 30
+   vn._default.options_h = 30
+   vn._default.show_options = true
+   vn._default._options_over = false
+   vn._default._show_options = false
    -- These are implicitly dependent on lw, lh, so should be recalculated with the above.
    vn._canvas     = graphics.newCanvas()
    vn._prevcanvas = graphics.newCanvas()
@@ -245,6 +254,26 @@ local function _draw( tocanvas )
       graphics.print( vn._title, font, x+bw, y+bh )
    end
 
+   -- Options
+   if vn.show_options then
+      x = vn.options_x
+      y = vn.options_y
+      w = vn.options_w
+      h = vn.options_h
+      local colbg, colfg
+      if vn._options_over then
+         local c = vn.textbox_bg
+         colbg = {0.3, 0.3, 0.3 }
+      else
+         colbg = vn.textbox_bg
+      end
+      _draw_bg( x, y, w, h, colbg, nil, 1 )
+      graphics.setShader( sdf.gear )
+      vn.setColor( {0.7,0.7,0.7} )
+      sdf.img:draw( x+5, y+5, 0, w-10, h-10 )
+      graphics.setShader()
+   end
+
    -- Draw if necessary
    if not vn.isDone() then
       local s = vn._states[ vn._state ]
@@ -376,6 +405,21 @@ function vn.keypressed( key )
    return true
 end
 
+local function _inbox( mx, my, x, y, w, h )
+   return (mx>=x and mx<=x+w and my>=y and my<=y+h)
+end
+
+--[[--
+Mouse move handler.
+--]]
+function vn.mousemoved( mx, my, dx, dy )
+   if vn.show_options and _inbox( mx, my, vn.options_x, vn.options_y, vn.options_w, vn.options_h ) then
+      vn._options_over = true
+   else
+      vn._options_over = false
+   end
+end
+
 --[[--
 Mouse press handler.
    @tparam number mx X position of the click.
@@ -387,6 +431,12 @@ function vn.mousepressed( mx, my, button )
       log.mousepressed( mx, my, button )
       return true
    end
+
+   if vn.show_options and _inbox( mx, my, vn.options_x, vn.options_y, vn.options_w, vn.options_h ) then
+      --opt.open()
+      return
+   end
+
    if vn.isDone() then return false end
    local s = vn._states[ vn._state ]
    return s:mousepressed( mx, my, button )
@@ -415,9 +465,6 @@ vn.State = {}
 vn.State_mt = { __index = vn.State }
 local function _dummy() end
 local function _finish(self) self.done = true end
-local function _inbox( mx, my, x, y, w, h )
-   return (mx>=x and mx<=x+w and my>=y and my<=y+h)
-end
 function vn.State.new()
    local s = {}
    setmetatable( s, vn.State_mt )

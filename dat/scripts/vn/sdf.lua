@@ -28,7 +28,8 @@ sdf.gear = graphics.newShader( [[
 #include "lib/math.glsl"
 
 vec4 effect( vec4 colour, Image tex, vec2 pos, vec2 px )
-   vec2 uv = vec2( pos.y, pos.x );
+{
+   vec2 uv = vec2( pos.y, pos.x )*2.0-1.0;
    float m = 1.0 / love_ScreenSize.x;
 
    float d = sdCircle( uv, 0.75 );
