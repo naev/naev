@@ -891,17 +891,9 @@ void ai_discovered( Pilot* discovered )
  */
 void ai_hail( Pilot* recipient )
 {
-   HookParam hparam[2];
-
    /* Make sure it's getable. */
    if (!pilot_canTarget( recipient ))
       return;
-
-   hparam[0].type       = HOOK_PARAM_PILOT;
-   hparam[0].u.lp       = recipient->id;
-   hparam[1].type       = HOOK_PARAM_SENTINEL;
-   hooks_runParam( "hail", hparam );
-   pilot_runHook( recipient, PILOT_HOOK_HAIL );
 
    /* Must have an AI profile and not be player. */
    if (recipient->ai == NULL)

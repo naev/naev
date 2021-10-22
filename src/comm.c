@@ -137,6 +137,13 @@ int comm_openPilot( unsigned int pilot )
    /* Don't close automatically. */
    comm_commClose = 0;
 
+   /* Run specific hail hooks on hailing pilot. */
+   HookParam hparam[] = { { .type = HOOK_PARAM_PILOT, .u = { .lp = p->id } }, { .type = HOOK_PARAM_SENTINEL } };
+   if (pilot_canTarget( p )) {
+      hooks_runParam( "hail", hparam );
+      pilot_runHook( p, PILOT_HOOK_HAIL );
+   }
+
    /* Run generic hail hooks on all pilots. */
    pltstk = pilot_getAll();
    for (int i=0; i<array_size(pltstk); i++)
