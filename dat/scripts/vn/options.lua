@@ -1,5 +1,6 @@
 local luatk = require "luatk"
 local fmt = require "format"
+local graphics = require "love.graphics"
 
 local opt = {}
 
@@ -24,8 +25,10 @@ function opt.update( dt )
 end
 
 function opt.open ()
-   local w = 600
-   local h = 300
+   luatk.setDefaultFont( graphics.newFont(naev.conf().font_size_def) )
+
+   local w = 400
+   local h = 200
    local wdw = luatk.newWindow( nil, nil, w, h )
 
    luatk.newText( wdw, 0, 10, w, h, _("VN Options"), luatk.colour.text, "center" )

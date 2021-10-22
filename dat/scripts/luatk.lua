@@ -262,7 +262,7 @@ function luatk.newText( parent, x, y, w, h, text, col, align, font )
    wgt.text    = text
    wgt.col     = col or {1,1,1}
    wgt.align   = align or "left"
-   wgt.font    = font or lg.newFont( 16 )
+   wgt.font    = font or luatk._deffont or lg.newFont( 16 )
    return wgt
 end
 function luatk.Text:draw( bx, by )
