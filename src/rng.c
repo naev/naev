@@ -1,7 +1,6 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
 /**
  * @file rng.c
  *
@@ -9,8 +8,6 @@
  *
  * Random numbers are currently generated using the mersenne twister.
  */
-
-
 /** @cond */
 #include <errno.h>
 #include <math.h>
@@ -35,14 +32,12 @@
 
 #include "log.h"
 
-
 /*
  * mersenne twister state
  */
 static uint32_t MT[624]; /**< Mersenne twister state. */
 static uint32_t mt_y; /**< Internal mersenne twister variable. */
 static int mt_pos = 0; /**< Current number being used. */
-
 
 /*
  * prototypes
@@ -52,7 +47,6 @@ static uint32_t rng_timeEntropy (void);
 static void mt_initArray( uint32_t seed );
 static void mt_genArray (void);
 static uint32_t mt_getInt (void);
-
 
 /**
  * @fn void rng_init (void)
@@ -88,7 +82,6 @@ void rng_init (void)
       mt_genArray();
 }
 
-
 /**
  * @fn static uint32_t rng_timeEntropy (void)
  *
@@ -113,7 +106,6 @@ static uint32_t rng_timeEntropy (void)
    return i;
 }
 
-
 /**
  * @fn static void mt_initArray( uint32_t seed )
  *
@@ -121,14 +113,11 @@ static uint32_t rng_timeEntropy (void)
  */
 static void mt_initArray( uint32_t seed )
 {
-   int i;
-
    MT[0] = seed;
-   for (i=1; i<624; i++)
+   for (int i=1; i<624; i++)
       MT[i] = 1812433253 * (MT[i-1] ^ (((MT[i-1])) + i) >> 30);
    mt_pos = 0;
 }
-
 
 /**
  * @fn static void mt_genArray (void)
@@ -137,9 +126,7 @@ static void mt_initArray( uint32_t seed )
  */
 static void mt_genArray (void)
 {
-   int i;
-
-   for (i=0; i<624; i++ ) {
+   for (int i=0; i<624; i++ ) {
       mt_y = (MT[i] & 0x80000000) + ((MT[i] % 624) & 0x7FFFFFFF);
       if (mt_y % 2) /* odd */
          MT[i] = (MT[(i+397) % 624] ^ (mt_y >> 1)) ^ 2567483615U;
@@ -148,7 +135,6 @@ static void mt_genArray (void)
    }
    mt_pos = 0;
 }
-
 
 /**
  * @fn static uint32_t mt_getInt (void)
@@ -159,7 +145,8 @@ static void mt_genArray (void)
  */
 static uint32_t mt_getInt (void)
 {
-   if (mt_pos >= 624) mt_genArray();
+   if (mt_pos >= 624)
+      mt_genArray();
 
    mt_y = MT[mt_pos++];
    mt_y ^= mt_y >> 11;
@@ -169,7 +156,6 @@ static uint32_t mt_getInt (void)
 
    return mt_y;
 }
-
 
 /**
  * @fn unsigned int randint (void)
@@ -182,7 +168,6 @@ unsigned int randint (void)
 {
    return mt_getInt();
 }
-
 
 /**
  * @fn double randfp (void)
@@ -197,7 +182,6 @@ double randfp (void)
    double m = (double)mt_getInt();
    return m / m_div;
 }
-
 
 /**
  * @fn double Normal( double x )
@@ -233,7 +217,6 @@ double Normal( double x )
          ( t *( t * ( t * ( t * b5 + b4 ) + b3 ) + b2 ) + b1 ));
    return (x > 0.) ? 1. - series : series;
 }
-
 
 /**
  * @fn double NormalInverse( double p )
@@ -342,6 +325,3 @@ double NormalInverse( double p )
 
    return x;
 }
-
-
-

@@ -1,13 +1,11 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
 /**
  * @file toolkit.c
  *
  * @brief Handles windows and widgets.
  */
-
 /** @cond */
 #include <stdarg.h>
 
@@ -24,17 +22,13 @@
 #include "pause.h"
 #include "tk/toolkit_priv.h"
 
-
 #define INPUT_DELAY      conf.repeat_delay /**< Delay before starting to repeat. */
 #define INPUT_FREQ       conf.repeat_freq /**< Interval between repetition. */
 
-
 static unsigned int genwid = 0; /**< Generates unique window ids, > 0 */
-
 
 static int toolkit_open = 0; /**< 1 if toolkit is in use, 0 else. */
 static int toolkit_delayCounter = 0; /**< Horrible hack around secondary loop. */
-
 
 /*
  * window stuff
@@ -43,13 +37,11 @@ static int toolkit_delayCounter = 0; /**< Horrible hack around secondary loop. *
 static Window *windows = NULL; /**< Window linked list, not to be confused with MS windows. */
 static int window_dead = 0; /**< There are dead windows lying around. */
 
-
 /*
  * simulate keypresses when holding
  */
 static SDL_Keycode input_key   = 0; /**< Current pressed key. */
 static SDL_Keymod input_mod    = 0; /**< Current pressed modifier. */
-
 
 /*
  * default outline colours
@@ -67,13 +59,11 @@ const glColour* tab_inactive  = &cGrey15; /**< Normal outline colour. */
 const glColour* tab_inactiveB = &cGrey10; /**< Normal outline colour. */
 const glColour* tab_background= &cBlack; /**< Dark outline colour. */
 
-
 /*
  * VBO
  */
 static gl_vbo *toolkit_vbo; /**< Toolkit VBO. */
 static GLsizei toolkit_vboColourOffset; /**< Colour offset. */
-
 
 /*
  * static prototypes
@@ -95,7 +85,6 @@ static void widget_kill( Widget *wgt );
 static void window_kill( Window *wdw );
 static void toolkit_purgeDead (void);
 
-
 /**
  * @brief Checks to see if the toolkit is open.
  *
@@ -106,7 +95,6 @@ int toolkit_isOpen (void)
    return !!toolkit_open;
 }
 
-
 /**
  * @brief Delays the toolkit purge by an iteration, useful for dialogues.
  */
@@ -114,7 +102,6 @@ void toolkit_delay (void)
 {
    toolkit_delayCounter++;
 }
-
 
 /**
  * @brief Sets the internal widget position.
@@ -138,7 +125,6 @@ void toolkit_setPos( Window *wdw, Widget *wgt, int x, int y )
    else
       wgt->y = (double) y;
 }
-
 
 /**
  * @brief Moves a window to the specified coordinates.
@@ -178,7 +164,6 @@ void toolkit_setWindowPos( Window *wdw, int x, int y )
       wdw->y = (double) y;
 }
 
-
 /**
  * @brief Moves a window to the specified coordinates.
  *
@@ -188,16 +173,13 @@ void toolkit_setWindowPos( Window *wdw, int x, int y )
  */
 void window_move( unsigned int wid, int x, int y )
 {
-   Window *wdw;
-
    /* Get the window. */
-   wdw = window_wget(wid);
+   Window *wdw = window_wget(wid);
    if (wdw == NULL)
       return;
 
    toolkit_setWindowPos( wdw, x, y );
 }
-
 
 /**
  * @brief Resizes the window.
@@ -230,7 +212,6 @@ void window_resize( unsigned int wid, int w, int h )
          toolkit_setWindowPos( wdw, -1, -1 );
    }
 }
-
 
 /**
  * @brief Allocates room for a new widget.
@@ -305,7 +286,6 @@ Widget* window_newWidget( Window* w, const char *name )
    return wgt;
 }
 
-
 /**
  * @brief Gets a Window by ID.
  *
@@ -314,18 +294,16 @@ Widget* window_newWidget( Window* w, const char *name )
  */
 Window* window_wget( unsigned int wid )
 {
-   Window *w;
    if (windows == NULL) {
       WARN(_("Window '%u' not found in list!"), wid );
       return NULL;
    }
-   for (w = windows; w != NULL; w = w->next)
+   for (Window *w = windows; w != NULL; w = w->next)
       if (w->id == wid)
          return w;
    WARN(_("Window '%u' not found in list!"), wid );
    return NULL;
 }
-
 
 /**
  * @brief Gets a widget from window id and widgetname.
@@ -336,25 +314,21 @@ Window* window_wget( unsigned int wid )
  */
 Widget* window_getwgt( unsigned int wid, const char* name )
 {
-   Window *wdw;
-   Widget *wgt;
-
    /* Get the window. */
-   wdw = window_wget(wid);
+   Window *wdw = window_wget(wid);
    if (wdw == NULL) {
       WARN(_("Widget '%s' not found in window '%u'!"), name, wid );
       return NULL;
    }
 
    /* Find the widget. */
-   for (wgt=wdw->widgets; wgt!=NULL; wgt=wgt->next)
+   for (Widget *wgt=wdw->widgets; wgt!=NULL; wgt=wgt->next)
       if (strcmp(wgt->name, name)==0)
          return wgt;
 
    WARN(_("Widget '%s' not found in window '%u'!"), name, wid );
    return NULL;
 }
-
 
 /**
  * @brief Gets the dimensions of a window.
@@ -365,10 +339,8 @@ Widget* window_getwgt( unsigned int wid, const char* name )
  */
 void window_dimWindow( unsigned int wid, int *w, int *h )
 {
-   Window *wdw;
-
    /* Get the window. */
-   wdw = window_wget(wid);
+   Window *wdw = window_wget(wid);
    if (wdw == NULL) {
       *w = -1;
       *h = -1;
@@ -380,7 +352,6 @@ void window_dimWindow( unsigned int wid, int *w, int *h )
    *h = wdw->h;
 }
 
-
 /**
  * @brief Gets the dimensions of a window.
  *
@@ -390,10 +361,8 @@ void window_dimWindow( unsigned int wid, int *w, int *h )
  */
 void window_posWindow( unsigned int wid, int *x, int *y )
 {
-   Window *wdw;
-
    /* Get the window. */
-   wdw = window_wget(wid);
+   Window *wdw = window_wget(wid);
    if (wdw == NULL) {
       *x = -1;
       *y = -1;
@@ -405,7 +374,6 @@ void window_posWindow( unsigned int wid, int *x, int *y )
    *y = wdw->y;
 }
 
-
 /**
  * @brief Gets the dimensions of a widget.
  *
@@ -416,10 +384,8 @@ void window_posWindow( unsigned int wid, int *x, int *y )
  */
 void window_dimWidget( unsigned int wid, const char *name, int *w, int *h )
 {
-   Widget *wgt;
-
    /* Get widget. */
-   wgt = window_getwgt(wid, name);
+   Widget *wgt = window_getwgt(wid, name);
    if (wgt == NULL) {
       *w = -1;
       *h = -1;
@@ -429,7 +395,6 @@ void window_dimWidget( unsigned int wid, const char *name, int *w, int *h )
    *w = wgt->w;
    *h = wgt->h;
 }
-
 
 /**
  * @brief Gets a widget's position.
@@ -484,7 +449,6 @@ void window_moveWidget( unsigned int wid,
    toolkit_setPos( wdw, wgt, x, y );
 }
 
-
 /**
  * @brief Resizes a widget.
  *
@@ -514,7 +478,6 @@ void window_resizeWidget( unsigned int wid,
    wgt->h = h;
 }
 
-
 /**
  * @brief Checks to see if a window is at the top.
  *
@@ -534,7 +497,6 @@ int window_isTop( unsigned int wid )
    return 1;
 }
 
-
 /**
  * @brief Checks to see if a window exists.
  *
@@ -543,15 +505,13 @@ int window_isTop( unsigned int wid )
  */
 int window_exists( const char* wdwname )
 {
-   Window *w;
    if (windows == NULL)
       return 0;
-   for (w = windows; w != NULL; w = w->next)
+   for (Window *w = windows; w != NULL; w = w->next)
       if ((strcmp(w->name,wdwname)==0) && !window_isFlag(w, WINDOW_KILL))
          return 1;
    return 0; /* doesn't exist */
 }
-
 
 /**
  * @brief Checks to see if a window with a certain ID exists.
@@ -561,15 +521,13 @@ int window_exists( const char* wdwname )
  */
 int window_existsID( unsigned int wid )
 {
-   Window *w;
    if (windows == NULL)
       return 0;
-   for (w = windows; w != NULL; w = w->next)
+   for (Window *w = windows; w != NULL; w = w->next)
       if ((w->id==wid) && !window_isFlag(w, WINDOW_KILL))
          return 1;
    return 0; /* doesn't exist */
 }
-
 
 /**
  * @brief Sets the displayname of a window.
@@ -590,7 +548,6 @@ int window_setDisplayname( unsigned int wid, const char *displayname )
    return 0;
 }
 
-
 /**
  * @brief Gets the ID of a window.
  *
@@ -601,18 +558,17 @@ int window_setDisplayname( unsigned int wid, const char *displayname )
  */
 unsigned int window_get( const char* wdwname )
 {
-   Window *w, *last;
+   Window *last;
    if (windows == NULL)
       return 0;
    last = NULL;
-   for (w = windows; w != NULL; w = w->next)
+   for (Window *w = windows; w != NULL; w = w->next)
       if ((strcmp(w->name,wdwname)==0) && !window_isFlag(w, WINDOW_KILL))
          last = w;
    if (last==NULL)
       return 0;
    return last->id;
 }
-
 
 /**
  * @brief Creates a window.
@@ -630,7 +586,6 @@ unsigned int window_create( const char* name, const char *displayname,
 {
    return window_createFlags( name, displayname, x, y, w, h, 0 );
 }
-
 
 /**
  * @brief Creates a window.
@@ -702,7 +657,7 @@ unsigned int window_createFlags( const char* name, const char *displayname,
       }
 
       wlast = windows;
-      while ( 1 ) {
+      while (1) {
          if ( ( strcmp( wlast->name, name ) == 0 ) && !window_isFlag( wlast, WINDOW_KILL )
               && !window_isFlag( wlast, WINDOW_NOFOCUS ) )
             WARN( _( "Window with name '%s' already exists!" ), wlast->name );
@@ -719,7 +674,6 @@ unsigned int window_createFlags( const char* name, const char *displayname,
    return wid;
 }
 
-
 /**
  * @brief Sets a window as a window's parent.
  *
@@ -730,17 +684,14 @@ unsigned int window_createFlags( const char* name, const char *displayname,
  */
 void window_setParent( unsigned int wid, unsigned int parent )
 {
-   Window *wdw;
-
    /* Get the window. */
-   wdw = window_wget( wid );
+   Window *wdw = window_wget( wid );
    if (wdw == NULL)
       return;
 
    /* Set the parent. */
    wdw->parent = parent;
 }
-
 
 /**
  * @brief Gets the window's parent.
@@ -750,17 +701,14 @@ void window_setParent( unsigned int wid, unsigned int parent )
  */
 unsigned int window_getParent( unsigned int wid )
 {
-   Window *wdw;
-
    /* Get the window. */
-   wdw = window_wget( wid );
+   Window *wdw = window_wget( wid );
    if (wdw == NULL)
       return 0;
 
    /* Get the parent. */
    return wdw->parent;
 }
-
 
 /**
  * @brief Sets the default close function of the window.
@@ -773,17 +721,14 @@ unsigned int window_getParent( unsigned int wid )
  */
 void window_onClose( unsigned int wid, void (*fptr)(unsigned int,const char*) )
 {
-   Window *wdw;
-
    /* Get the window. */
-   wdw = window_wget( wid );
+   Window *wdw = window_wget( wid );
    if (wdw == NULL)
       return;
 
    /* Set the close function. */
    wdw->close_fptr = fptr;
 }
-
 
 /**
  * @brief Sets the default accept function of the window.
@@ -797,17 +742,14 @@ void window_onClose( unsigned int wid, void (*fptr)(unsigned int,const char*) )
  */
 void window_setAccept( unsigned int wid, void (*accept)(unsigned int,const char*) )
 {
-   Window *wdw;
-
    /* Get the window. */
-   wdw = window_wget( wid );
+   Window *wdw = window_wget( wid );
    if (wdw == NULL)
       return;
 
    /* Set the accept function. */
    wdw->accept_fptr = accept;
 }
-
 
 /**
  * @brief Sets the default cancel function of the window.
@@ -821,17 +763,14 @@ void window_setAccept( unsigned int wid, void (*accept)(unsigned int,const char*
  */
 void window_setCancel( unsigned int wid, void (*cancel)(unsigned int,const char*) )
 {
-   Window *wdw;
-
    /* Get the window. */
-   wdw = window_wget( wid );
+   Window *wdw = window_wget( wid );
    if (wdw == NULL)
       return;
 
    /* Set the cancel function. */
    wdw->cancel_fptr = cancel;
 }
-
 
 /**
  * @brief Sets custom data for a window.
@@ -841,17 +780,14 @@ void window_setCancel( unsigned int wid, void (*cancel)(unsigned int,const char*
  */
 void window_setData( unsigned int wid, void *data )
 {
-   Window *wdw;
-
    /* Get the window. */
-   wdw = window_wget( wid );
+   Window *wdw = window_wget( wid );
    if (wdw == NULL)
       return;
 
    /* Set data. */
    wdw->udata = data;
 }
-
 
 /**
  * @brief Gets the custom data of a window.
@@ -861,17 +797,14 @@ void window_setData( unsigned int wid, void *data )
  */
 void* window_getData( unsigned int wid )
 {
-   Window *wdw;
-
    /* Get the window. */
-   wdw = window_wget( wid );
+   Window *wdw = window_wget( wid );
    if (wdw == NULL)
       return NULL;
 
    /* Get data. */
    return wdw->udata;
 }
-
 
 /**
  * @brief Sets or removes the border of a window.
@@ -883,10 +816,8 @@ void* window_getData( unsigned int wid )
  */
 void window_setBorder( unsigned int wid, int enable )
 {
-   Window *wdw;
-
    /* Get the window. */
-   wdw = window_wget( wid );
+   Window *wdw = window_wget( wid );
    if (wdw == NULL)
       return;
 
@@ -895,7 +826,6 @@ void window_setBorder( unsigned int wid, int enable )
    else
       window_setFlag( wdw, WINDOW_NOBORDER );
 }
-
 
 /**
  * @brief Sets the key handler for the window.
@@ -906,17 +836,14 @@ void window_setBorder( unsigned int wid, int enable )
 void window_handleKeys( unsigned int wid,
       int (*keyhandler)(unsigned int,SDL_Keycode,SDL_Keymod) )
 {
-   Window *wdw;
-
    /* Get the window. */
-   wdw = window_wget( wid );
+   Window *wdw = window_wget( wid );
    if (wdw == NULL)
       return;
 
    /* Set key event handler function. */
    wdw->keyevent = keyhandler;
 }
-
 
 /**
  * @brief Sets the event handler for the window.
@@ -926,17 +853,14 @@ void window_handleKeys( unsigned int wid,
 void window_handleEvents( unsigned int wid,
       int (*eventhandler)(unsigned int,SDL_Event*) )
 {
-   Window *wdw;
-
    /* Get the window. */
-   wdw = window_wget( wid );
+   Window *wdw = window_wget( wid );
    if (wdw == NULL)
       return;
 
    /* Set key event handler function. */
    wdw->eventevent = eventhandler;
 }
-
 
 /**
  * @brief Destroys a widget.
@@ -953,17 +877,14 @@ void widget_cleanup( Widget *widget )
    free(widget->name);
 }
 
-
 /**
  * @brief Closes all open toolkit windows.
  */
 void toolkit_closeAll( void )
 {
-   Window *w;
-   for (w = windows; w != NULL; w = w->next)
+   for (Window *w = windows; w != NULL; w = w->next)
       window_destroy( w->id );
 }
-
 
 /**
  * @brief Helper function to automatically close the window calling it.
@@ -974,10 +895,8 @@ void toolkit_closeAll( void )
 void window_close( unsigned int wid, const char *str )
 {
    (void) str;
-
    window_destroy( wid );
 }
-
 
 /**
  * @brief Kills the window.
@@ -987,11 +906,11 @@ void window_close( unsigned int wid, const char *str )
  */
 void window_destroy( unsigned int wid )
 {
-   Window *wdw, *w;
    if (windows == NULL)
       return;
    /* Destroy the window */
-   for (wdw = windows; wdw != NULL; wdw = wdw->next) {
+   for (Window *wdw = windows; wdw != NULL; wdw = wdw->next) {
+      Window *wactive;
 
       /* Not the window we're looking for. */
       if (wdw->id != wid)
@@ -1002,7 +921,7 @@ void window_destroy( unsigned int wid )
          continue;
 
       /* Mark children for death. */
-      for (w = windows; w != NULL; w = w->next)
+      for (Window *w = windows; w != NULL; w = w->next)
          if (w->parent == wid)
             window_destroy( w->id );
 
@@ -1018,15 +937,14 @@ void window_destroy( unsigned int wid )
       /* Disable text input, etc. */
       toolkit_focusClear( wdw );
 
-      w = toolkit_getActiveWindow();
-      if (w == NULL)
+      wactive = toolkit_getActiveWindow();
+      if (wactive == NULL)
          break;
 
-      toolkit_expose( w, 1 );
+      toolkit_expose( wactive, 1 );
       break;
    }
 }
-
 
 /**
  * @brief Kills the window.
@@ -1035,7 +953,7 @@ void window_destroy( unsigned int wid )
  */
 static void window_kill( Window *wdw )
 {
-   Widget *wgt, *wgtkill;
+   Widget *wgt;
 
    /* Run the close function first. */
    if (wdw->close_fptr != NULL)
@@ -1047,7 +965,7 @@ static void window_kill( Window *wdw )
    free(wdw->displayname);
    wgt = wdw->widgets;
    while (wgt != NULL) {
-      wgtkill = wgt;
+      Widget *wgtkill = wgt;
       wgt = wgtkill->next;
       widget_kill(wgtkill);
    }
@@ -1056,7 +974,6 @@ static void window_kill( Window *wdw )
    /* Clear key repeat, since toolkit could miss the keyup event. */
    toolkit_clearKey();
 }
-
 
 /**
  * @brief Checks to see if a widget exists.
@@ -1067,23 +984,20 @@ static void window_kill( Window *wdw )
  */
 int widget_exists( unsigned int wid, const char* wgtname )
 {
-   Window *w = window_wget(wid);
-   Widget *wgt;
-
    /* Get window. */
+   Window *w = window_wget(wid);
    if (w==NULL) {
       WARN(_("window '%d' does not exist"), wid);
       return 0;
    }
 
    /* Check for widget. */
-   for (wgt=w->widgets; wgt!=NULL; wgt=wgt->next)
+   for (Widget *wgt=w->widgets; wgt!=NULL; wgt=wgt->next)
       if (strcmp(wgtname, wgt->name)==0)
          return !wgt_isFlag(wgt, WGT_FLAG_KILL);
 
    return 0;
 }
-
 
 /**
  * @brief Destroys a widget in a window.
@@ -1121,7 +1035,6 @@ void window_destroyWidget( unsigned int wid, const char* wgtname )
    wgt_setFlag( wgt, WGT_FLAG_KILL );
 }
 
-
 /**
  * @brief Destroy a widget really.
  */
@@ -1131,7 +1044,6 @@ static void widget_kill( Widget *wgt )
    widget_cleanup(wgt);
    free(wgt);
 }
-
 
 /**
  * @brief Draws an outline.
@@ -1210,7 +1122,6 @@ void toolkit_drawOutlineThick( int x, int y, int w, int h, int b,
    glDrawArrays( GL_TRIANGLE_STRIP, 0, 10 );
    gl_endSmoothProgram();
 }
-
 
 /**
  * @brief Draws an outline.
@@ -1312,7 +1223,6 @@ void toolkit_drawRect( int x, int y, int w, int h,
    gl_endSmoothProgram();
 }
 
-
 /**
  * @brief Draws a rectangle.
  *
@@ -1355,8 +1265,6 @@ void toolkit_drawTriangle( int x1, int y1, int x2, int y2, int x3, int y3,
    gl_endSmoothProgram();
 }
 
-
-
 /**
  * @brief Draws an alt text.
  *
@@ -1397,7 +1305,6 @@ void toolkit_drawAltText( int bx, int by, const char *alt )
    gl_printTextRaw( &gl_smallFont, w , h, x + 9, y + 9, 0, &cFontWhite, -1., alt );
 }
 
-
 /**
  * @brief Renders a window border.
  *
@@ -1405,11 +1312,9 @@ void toolkit_drawAltText( int bx, int by, const char *alt )
  */
 static void window_renderBorder( Window* w )
 {
-   double x, y;
-
-   /* position */
-   x = w->x;
-   y = w->y;
+   /* Position */
+   double x = w->x;
+   double y = w->y;
 
    /*
     * Case fullscreen.
@@ -1438,7 +1343,6 @@ static void window_renderBorder( Window* w )
          &cFontWhite, -1., w->displayname );
 }
 
-
 /**
  * @brief Renders a window.
  *
@@ -1447,7 +1351,6 @@ static void window_renderBorder( Window* w )
 void window_render( Window *w )
 {
    double x, y, wid, hei;
-   Widget *wgt;
 
    /* Do not render dead windows. */
    if (window_isFlag( w, WINDOW_KILL ))
@@ -1464,7 +1367,7 @@ void window_render( Window *w )
    /*
     * widgets
     */
-   for (wgt=w->widgets; wgt!=NULL; wgt=wgt->next)
+   for (Widget *wgt=w->widgets; wgt!=NULL; wgt=wgt->next)
       if ((wgt->render != NULL) && !wgt_isFlag(wgt, WGT_FLAG_KILL))
          wgt->render( wgt, x, y );
 
@@ -1472,7 +1375,7 @@ void window_render( Window *w )
     * focused widget
     */
    if (w->focus != -1){
-      wgt = toolkit_getFocus( w );
+      Widget *wgt = toolkit_getFocus( w );
       if ((wgt == NULL) || wgt_isFlag(wgt, WGT_FLAG_KILL))
          return;
       x  += wgt->x-2;
@@ -1483,7 +1386,6 @@ void window_render( Window *w )
    }
 }
 
-
 /**
  * @brief Renders the window overlays.
  *
@@ -1492,7 +1394,6 @@ void window_render( Window *w )
 void window_renderOverlay( Window *w )
 {
    double x, y;
-   Widget *wgt;
 
    /* Do not render dead windows. */
    if (window_isFlag( w, WINDOW_KILL ))
@@ -1505,11 +1406,10 @@ void window_renderOverlay( Window *w )
    /*
     * overlays
     */
-   for (wgt=w->widgets; wgt!=NULL; wgt=wgt->next)
+   for (Widget *wgt=w->widgets; wgt!=NULL; wgt=wgt->next)
       if ((wgt->renderOverlay != NULL) && !wgt_isFlag(wgt, WGT_FLAG_KILL))
          wgt->renderOverlay( wgt, x, y );
 }
-
 
 /**
  * @brief Draws a scrollbar.
@@ -1533,20 +1433,17 @@ void toolkit_drawScrollbar( int x, int y, int w, int h, double pos )
    toolkit_drawOutline( x + 1, sy, w - 1, 30., 0., toolkit_colDark, NULL );
 }
 
-
 /**
  * @brief Renders the windows.
  */
 void toolkit_render (void)
 {
-   Window *w;
-
    /* Only render if open. */
    if (!toolkit_isOpen())
       return;
 
    /* Render base. */
-   for (w = windows; w!=NULL; w = w->next) {
+   for (Window *w = windows; w!=NULL; w = w->next) {
       if (!window_isFlag(w, WINDOW_NORENDER) &&
             !window_isFlag(w, WINDOW_KILL)) {
          window_render(w);
@@ -1554,7 +1451,6 @@ void toolkit_render (void)
       }
    }
 }
-
 
 /**
  * @brief Toolkit input handled here.
@@ -1564,10 +1460,8 @@ void toolkit_render (void)
  */
 int toolkit_input( SDL_Event* event )
 {
-   Window *wdw;
-
    /* Get window that can be focused. */
-   wdw = toolkit_getActiveWindow();
+   Window *wdw = toolkit_getActiveWindow();
    if (wdw == NULL)
       return 0;
 
@@ -1575,17 +1469,15 @@ int toolkit_input( SDL_Event* event )
    return toolkit_inputWindow( wdw, event, 1 );
 }
 
-
 /**
  * @brief Toolkit window input is handled here.
  */
 int toolkit_inputWindow( Window *wdw, SDL_Event *event, int purge )
 {
    int ret;
-   Widget *wgt;
 
    /* See if widget needs event. */
-   for (wgt=wdw->widgets; wgt!=NULL; wgt=wgt->next) {
+   for (Widget *wgt=wdw->widgets; wgt!=NULL; wgt=wgt->next) {
       if (wgt_isFlag( wgt, WGT_FLAG_RAWINPUT )) {
          if (wgt->rawevent != NULL) {
             ret = wgt->rawevent( wgt, event );
@@ -1638,7 +1530,6 @@ int toolkit_inputWindow( Window *wdw, SDL_Event *event, int purge )
    return ret; /* don't block input */
 }
 
-
 /**
  * @brief Translates the mouse coordinates.
  *
@@ -1684,7 +1575,6 @@ Uint32 toolkit_inputTranslateCoords( Window *w, SDL_Event *event,
 
    return event->type;
 }
-
 
 static int toolkit_mouseEventSingle( Window *w, SDL_Event* event,
    Widget *wgt, int x, int y, int rx, int ry )
@@ -1741,7 +1631,6 @@ static int toolkit_mouseEvent( Window *w, SDL_Event* event )
       return toolkit_mouseEventReverse( w, event, w->widgets, x, y, rx, ry );
    return 0;
 }
-
 
 /**
  * @brief Handle widget mouse input.
@@ -1869,7 +1758,6 @@ static int toolkit_mouseEventWidget( Window *w, Widget *wgt,
 
    return ret;
 }
-
 
 /**
  * @brief Maps modifier keysyms (ctrl, alt, shift) to SDL_Keymods.
@@ -2059,7 +1947,6 @@ static int toolkit_textEvent( Window *wdw, SDL_Event* event )
    return 0;
 }
 
-
 /**
  * @brief Purges the dead windows.
  */
@@ -2130,7 +2017,6 @@ static void toolkit_purgeDead (void)
    window_dead = 0;
 }
 
-
 /**
  * @brief Updates the toolkit input for repeating keys.
  */
@@ -2154,7 +2040,6 @@ void toolkit_update (void)
    }
 }
 
-
 /**
  * @brief Exposes or hides a window and notifies its widgets.
  *
@@ -2163,8 +2048,6 @@ void toolkit_update (void)
  */
 static void toolkit_expose( Window *wdw, int expose )
 {
-   Widget *wgt;
-
    if (expose == wdw->exposed)
       return;
    else
@@ -2179,30 +2062,26 @@ static void toolkit_expose( Window *wdw, int expose )
       return;
 
    /* Notify widgets (for tabbed children, etc.) */
-   for (wgt = wdw->widgets; wgt != NULL; wgt = wgt->next)
+   for (Widget *wgt = wdw->widgets; wgt != NULL; wgt = wgt->next)
       if (wgt->exposeevent != NULL)
          wgt->exposeevent( wgt, expose );
 }
-
 
 /**
  * @brief Clears the window focus.
  */
 void toolkit_focusClear( Window *wdw )
 {
-   Widget *wgt;
-
    if (wdw->focus == -1)
       return;
 
-   for (wgt=wdw->widgets; wgt!=NULL; wgt=wgt->next) {
+   for (Widget *wgt=wdw->widgets; wgt!=NULL; wgt=wgt->next) {
       if (wdw->focus == wgt->id)
          toolkit_defocusWidget( wdw, wgt );
 
       wgt_rmFlag( wgt, WGT_FLAG_FOCUSED );
    }
 }
-
 
 /**
  * @brief Sanitizes the focus of a window.
@@ -2211,8 +2090,6 @@ void toolkit_focusClear( Window *wdw )
  */
 void toolkit_focusSanitize( Window *wdw )
 {
-   Widget *wgt;
-
    /* Clear focus. */
    toolkit_focusClear( wdw );
 
@@ -2221,7 +2098,7 @@ void toolkit_focusSanitize( Window *wdw )
       return;
 
    /* Check focused widget. */
-   for (wgt=wdw->widgets; wgt!=NULL; wgt=wgt->next) {
+   for (Widget *wgt=wdw->widgets; wgt!=NULL; wgt=wgt->next) {
       if (wdw->focus == wgt->id) {
          /* Not focusable. */
          if (!toolkit_isFocusable(wgt)) {
@@ -2236,13 +2113,11 @@ void toolkit_focusSanitize( Window *wdw )
    }
 }
 
-
 /**
  * @brief Focus next widget.
  */
 void toolkit_nextFocus( Window *wdw )
 {
-   Widget *wgt;
    int next;
 
    /* Clear focus. */
@@ -2250,7 +2125,7 @@ void toolkit_nextFocus( Window *wdw )
 
    /* See what to focus. */
    next = (wdw->focus == -1);
-   for (wgt=wdw->widgets; wgt!=NULL; wgt=wgt->next) {
+   for (Widget *wgt=wdw->widgets; wgt!=NULL; wgt=wgt->next) {
       if (!toolkit_isFocusable(wgt))
          continue;
 
@@ -2268,20 +2143,19 @@ void toolkit_nextFocus( Window *wdw )
    return;
 }
 
-
 /**
  * @brief Focus previous widget.
  */
 void toolkit_prevFocus( Window *wdw )
 {
-   Widget *wgt, *prev;
+   Widget *prev;
 
    /* Clear focus. */
    toolkit_focusClear( wdw );
 
    /* See what to focus. */
    prev = NULL;
-   for (wgt=wdw->widgets; wgt!=NULL; wgt=wgt->next) {
+   for (Widget *wgt=wdw->widgets; wgt!=NULL; wgt=wgt->next) {
       if (!toolkit_isFocusable(wgt))
          continue;
 
@@ -2308,7 +2182,6 @@ void toolkit_prevFocus( Window *wdw )
    return;
 }
 
-
 /**
  * @brief Focuses a widget in a window.
  */
@@ -2323,7 +2196,6 @@ void toolkit_focusWidget( Window *wdw, Widget *wgt )
       wgt->focusGain( wgt );
 }
 
-
 /**
  * @brief Defocuses the focused widget in a window.
  */
@@ -2336,7 +2208,6 @@ void toolkit_defocusWidget( Window *wdw, Widget *wgt )
    if (wgt->focusLose != NULL)
       wgt->focusLose( wgt );
 }
-
 
 /**
  * @brief Checks to see if a widget is focusable.
@@ -2352,7 +2223,6 @@ static int toolkit_isFocusable( Widget *wgt )
    return wgt_isFlag(wgt, WGT_FLAG_CANFOCUS);
 }
 
-
 /**
  * @brief Gets the active window in the toolkit.
  *
@@ -2360,17 +2230,16 @@ static int toolkit_isFocusable( Widget *wgt )
  */
 Window* toolkit_getActiveWindow (void)
 {
-   Window *wdw, *wlast;
+   Window *wlast;
 
    /* Get window that can be focused. */
    wlast = NULL;
-   for (wdw = windows; wdw!=NULL; wdw = wdw->next)
+   for (Window *wdw = windows; wdw!=NULL; wdw = wdw->next)
       if (!window_isFlag(wdw, WINDOW_NOFOCUS) &&
             !window_isFlag(wdw, WINDOW_KILL))
          wlast = wdw;
    return wlast;
 }
-
 
 /**
  * @brief Gets the focused widget in a window.
@@ -2380,14 +2249,12 @@ Window* toolkit_getActiveWindow (void)
  */
 static Widget* toolkit_getFocus( Window *wdw )
 {
-   Widget *wgt;
-
    /* No focus. */
    if (wdw->focus == -1)
       return NULL;
 
    /* Find focus. */
-   for (wgt=wdw->widgets; wgt!=NULL; wgt=wgt->next)
+   for (Widget *wgt=wdw->widgets; wgt!=NULL; wgt=wgt->next)
       if (wdw->focus == wgt->id)
          return wgt;
 
@@ -2396,7 +2263,6 @@ static Widget* toolkit_getFocus( Window *wdw )
    wdw->focus = -1;
    return NULL;
 }
-
 
 /**
  * @brief Sets the focused widget in a window.
@@ -2425,7 +2291,6 @@ void window_setFocus( unsigned int wid, const char* wgtname )
    toolkit_focusWidget( wdw, wgt );
 }
 
-
 /**
  * @brief Gets the focused widget in a window (does strdup!!).
  *
@@ -2435,7 +2300,6 @@ void window_setFocus( unsigned int wid, const char* wgtname )
 char* window_getFocus( unsigned int wid )
 {
    Window *wdw;
-   Widget *wgt;
 
    /* Get window. */
    wdw = window_wget(wid);
@@ -2443,13 +2307,12 @@ char* window_getFocus( unsigned int wid )
       return NULL;
 
    /* Find focused widget. */
-   for (wgt=wdw->widgets; wgt!=NULL; wgt=wgt->next)
+   for (Widget *wgt=wdw->widgets; wgt!=NULL; wgt=wgt->next)
       if (wgt->id == wdw->focus)
          return strdup( wgt->name );
 
    return NULL;
 }
-
 
 /**
  * @brief Raises a window (causes all other windows to appear below it).
@@ -2493,7 +2356,6 @@ void window_raise( unsigned int wid )
    toolkit_expose( wdw, 1 );  /* wdw is visible */
 }
 
-
 /**
  * @brief Lowers a window (causes all other windows to appear above it).
  *
@@ -2530,17 +2392,14 @@ void window_lower( unsigned int wid )
    toolkit_expose( wdw, 0 );  /* wdw is hidden */
 }
 
-
 /**
  * @brief Repositions windows and their children if resolution changes.
  */
 void toolkit_reposition (void)
 {
-   Window *w, *wtmp;
-   Widget *wgt;
-   int i, xorig, yorig, xdiff, ydiff;
+   for (Window *w = windows; w != NULL; w = w->next) {
+      int xorig, yorig, xdiff, ydiff;
 
-   for (w = windows; w != NULL; w = w->next) {
       /* Fullscreen windows must always be full size, though their widgets
        * don't auto-scale. */
       if (window_isFlag( w, WINDOW_FULLSCREEN )) {
@@ -2569,19 +2428,18 @@ void toolkit_reposition (void)
       }
 
       /* Tabwin children aren't in the stack and must be manually updated. */
-      for (wgt=w->widgets; wgt!=NULL; wgt=wgt->next) {
+      for (Widget *wgt=w->widgets; wgt!=NULL; wgt=wgt->next) {
          if (wgt->type != WIDGET_TABBEDWINDOW)
             continue;
 
-         for (i=0; i<wgt->dat.tab.ntabs; i++) {
-            wtmp = window_wget( wgt->dat.tab.windows[i] );
+         for (int i=0; i<wgt->dat.tab.ntabs; i++) {
+            Window *wtmp = window_wget( wgt->dat.tab.windows[i] );
             wtmp->x += xdiff;
             wtmp->y += ydiff;
          }
       }
    }
 }
-
 
 /**
  * @brief Initializes the toolkit.
@@ -2603,7 +2461,6 @@ int toolkit_init (void)
    return 0;
 }
 
-
 /**
  * @brief Exits the toolkit.
  */
@@ -2622,4 +2479,3 @@ void toolkit_exit (void)
    gl_vboDestroy( toolkit_vbo );
    toolkit_vbo = NULL;
 }
-
