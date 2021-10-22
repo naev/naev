@@ -361,7 +361,7 @@ function vn.keypressed( key )
    if not vn._show_log then
       if key=="tab" or key=="escape" then
          vn._show_log = not vn._show_log
-         log.open()
+         log.open( vn.textbox_font )
          return true
       end
    else

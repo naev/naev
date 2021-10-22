@@ -21,7 +21,7 @@ function log.add( entry )
    table.insert( _log, 1, entry )
 end
 
-function log.open ()
+function log.open( font )
    local lw, lh = graphics.getDimensions()
    local border = log.border
    log.uparrow_alpha = 0
@@ -30,8 +30,7 @@ function log.open ()
    log.closing = false
 
    -- Build the tables
-   -- TODO use vn.textbox_font
-   log.font = graphics.newFont(16)
+   log.font = font
    local font = log.font
    local headerw = log.headerw
    local bodyw = log.bodyw
