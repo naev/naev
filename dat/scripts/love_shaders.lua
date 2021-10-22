@@ -278,31 +278,31 @@ vec4 effect( vec4 color, Image tex, vec2 uv, vec2 screen_coords )
    /* Strength-based constants. */
    const float BLURAMPLITUDE     = 6.0 * strength;
    const float BLURSPEED         = 0.15 * strength;
-   const float HIGHLIGHTSPEED    = 0.15 + 0.15 * strength;
-   const float HIGHLIGHTRANGE    = 0.25 + 0.15 * strength;
-   const float HIGHLIGHTCOUNT    = 5.0 + 2.5 * strength;
+   const float HIGHLIGHTSPEED    = 0.05 + 0.05 * strength;
+   const float HIGHLIGHTRANGE    = 0.1 + 0.05 * strength;
+   const float HIGHLIGHTCOUNT    = 4.0 + 2.5 * strength;
    const float SHADOWSPEED       = 0.17 + 0.14 * strength;
    const float SHADOWRANGE       = 0.07 + 0.05 * strength;
    const float SHADOWCOUNT       = 4.7 + 2.3 * strength;
-   const float GRAINSTRENGTH     = 32.0 + 32.0 * strength;
-   const float WOBBLEAMPLITUDEX  = 0.005 * strength;
-   const float WOBBLEAMPLITUDEY  = 0.025 * strength;
-   const float WOBBLESPEED       = 0.1 + 0.1 * strength;
+   const float GRAINSTRENGTH     = 32.0 + 48.0 * strength;
+   const float WOBBLEAMPLITUDEX  = 0.0025 * strength;
+   const float WOBBLEAMPLITUDEY  = 0.003 * strength;
+   const float WOBBLESPEED       = 0.1 * strength;
 
    /* Truly constant values. */
    //const vec3 bluetint           = vec3( 0.075, 0.215, 0.604 );/* Gamma: vec3(0.3, 0.5, 0.8); */
    const vec3 bluetint           = vec3( 0.1, 0.3, 0.7 );/* Gamma: vec3(0.3, 0.5, 0.8); */
-   const float BRIGHTNESS        = 0.5;
-   const float CONTRAST          = 2.0;
+   const float BRIGHTNESS        = 0.1;
+   const float CONTRAST          = 1.0/0.2;
    const float SCANLINEMEAN      = 0.9;
    const float SCANLINEAMPLITUDE = 0.2;
-   const float SCANLINESPEED     = 3.0;
+   const float SCANLINESPEED     = 1.0;
 
    /* Get the texture. */
    vec2 look      = uv;
    float tmod     = mod(u_time/4.0,1.0);
    float window   = 1.0 / (1.0+20.0*(look.y-tmod)*(look.y-tmod));
-   look.x += WOBBLEAMPLITUDEX * sin(look.y*10.0 + u_time)*onOff(4.0,4.0,WOBBLESPEED)*(1.0+cos(u_time*80.0))*window;
+   look.x += WOBBLEAMPLITUDEX * sin(look.y*10.0 + u_time)*onOff(1.0,1.0,WOBBLESPEED)*(1.0+cos(u_time*80.0))*window;
    float vShift   = WOBBLEAMPLITUDEY * onOff(2.0,3.0,M_PI*WOBBLESPEED)*(sin(u_time)*sin(u_time*20.0)+(0.5 + 0.1*sin(u_time*200.0)*cos(u_time)));
    look.y = mod( look.y + vShift, 1.0 );
 
