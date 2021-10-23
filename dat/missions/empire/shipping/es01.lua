@@ -120,7 +120,7 @@ function land ()
 
       -- Update mission
       local c = misn.cargoNew(_("Packages"), _("Several packages of \"food\"."))
-      package = misn.cargoAdd(c, 3)
+      packages = misn.cargoAdd(c, 3)
       misn_stage = 1
       jumped = 0
       misn.setDesc( string.format(misn_desc[2], dest:name(), destsys:name()))
@@ -131,8 +131,7 @@ function land ()
       tk.msg( title[2], string.format( text[4], dest:name(), destsys:name()) )
 
    elseif landed == dest and misn_stage == 1 then
-      if misn.cargoRm(package) then
-
+      if misn.cargoRm(packages) then
          -- Update mission
          misn_stage = 2
          misn.setDesc( string.format(misn_desc[3], ret:name(), retsys:name()))
@@ -141,7 +140,6 @@ function land ()
 
          -- Some text
          tk.msg( title[3], string.format(text[5], ret:name(), retsys:name()) )
-
       end
    elseif landed == ret and misn_stage == 2 then
 

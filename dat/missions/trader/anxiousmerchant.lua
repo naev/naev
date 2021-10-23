@@ -128,7 +128,6 @@ function accept()
    tk.msg(title[2], text[2]:format(dest_planet:name(), fmt.credits(payment)))
 
    intime = true
-   faction = faction.get("Traders Guild")
    land_hook = hook.land("land")
    date_hook = hook.date(time.create(0, 0, 42), "tick") -- 42STU per tick
 end
@@ -136,7 +135,7 @@ end
 function land()
    if planet.cur() == dest_planet then
       if intime then
-         faction:modPlayerSingle(1)
+         faction.modPlayerSingle("Traders Guild", 1)
          tk.msg(title[3], text[3])
          player.pay(payment)
       else

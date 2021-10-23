@@ -155,7 +155,7 @@ function flf_people ()
    pacifier:setInvincible( true )
    hook.pilot( pacifier, "hail", "hail_pacifier" )
    hook.pilot( pacifier, "death", "dead" )
-   hook.pilot( pacifier, "jump", "jump" )
+   hook.pilot( pacifier, "jump", "failed" )
 end
 
 function hail_pacifier()
@@ -186,7 +186,7 @@ function dead()  --Actually, I don't know how it could happened...
    misn.finish(false)
 end
 
-function jump()
+function failed()
    misn.finish(false)
 end
 

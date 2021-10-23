@@ -173,6 +173,7 @@ function create ()
 
    aname = nil
    bname = nil
+   local ships
    if target_faction == faction.get("FLF") then
       name = pilotname.generic()
       ships = {"Lancelot", "Vendetta", "Pacifier"}
@@ -186,7 +187,7 @@ function create ()
       bname = _("Pirate Hyena")
    end
 
-   ship = ships[rnd.rnd(1,#ships)]
+   tgtship = ships[rnd.rnd(1,#ships)]
    credits = 1e6 + rnd.rnd()*500e3
    cursys = 1
 
@@ -268,7 +269,7 @@ function enter ()
          pilot.toggleSpawn( false )
          pilot.clear()
 
-         target_ship = pilot.add( ship, target_faction, pos )
+         target_ship = pilot.add( tgtship, target_faction, pos )
          target_ship:rename( name )
          target_ship:setHilight( true )
          target_ship:setVisplayer()

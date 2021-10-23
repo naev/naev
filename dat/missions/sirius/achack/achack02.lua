@@ -107,7 +107,7 @@ function accept()
 
    hook.land("land")
    hook.enter("enter")
-   hook.load("load")
+   hook.load("on_load")
 end
 
 -- Land hook.
@@ -255,7 +255,7 @@ function ambusherDead()
 end
 
 -- Load hook. Makes sure the player can't start on military stations.
-function load()
+function on_load()
    if stage > 1 and stage < 5 then
       tk.msg(_("Another stop successfully reached"), stoptext:format(planet.cur():name()))
       player.takeoff()
