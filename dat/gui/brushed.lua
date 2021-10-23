@@ -6,13 +6,15 @@ local fmt = require "format"
 local playerform = require "scripts/playerform"
 local formation = require "scripts/formation"
 
+-- This script has a lot of globals. It really loves them.
+-- This is what it would look like to forward-declare the ones that aren't part of the GUI API and aren't accessed via _G:
+--local armour, autonav_hyp, autonav_jumps, bar_bg, bar_frame, bar_frame_light, bar_h, bar_light, bar_lock, bars, bar_w, bar_x, bar_y, button_disabled, button_hilighted, button_mouseover, button_normal, button_pressed, buttons, buttontypes, cargo, circle_h, circle_w, cooldown_omsg, end_right, end_right_h, end_right_w, energy, ext_right, field_bg_left, field_frame_center, field_frame_left, field_frame_right, field_h, fields_w, fields_x, fields_y, field_w, first_time, fleet_pane_b, fleet_pane_m, fleet_pane_t, fuel, left_side_h, left_side_w, lmouse, main, margin, mesg_w, mesg_x, mesg_y, nav_hyp, nav_planet, nav_pnt, navstring, planet_bg, planet_pane_b, planet_pane_m, planet_pane_t, pl_speed_x, pl_speed_y, pntflags, popup_body, popup_bottom, popup_bottom2, popup_bottom_side_left, popup_empty, popup_left_x, popup_left_y, popup_pilot, popup_right_x, popup_right_y, popup_top, pp, ptarget, question, question_h, question_w, radar_h, radar_w, radar_x, radar_y, right_side_x, screen_h, screen_w, services, shield, smallfont_h, speed_light, speed_light_double, speed_light_off, stats, ta_dir, ta_flt_pane_h, ta_flt_pane_h_b, ta_flt_pane_h_m, ta_flt_pane_w, ta_flt_pane_w_b, ta_flt_pane_w_m, ta_flt_pane_x, ta_flt_pane_y, ta_gfx, ta_gfx_draw_h, ta_gfx_draw_w, ta_pnt_center_x, ta_pnt_center_y, ta_pnt_faction_gfx, ta_pnt_fact_x, ta_pnt_fact_y, ta_pnt_gfx, ta_pnt_gfx_draw_h, ta_pnt_gfx_draw_w, ta_pnt_gfx_h, ta_pnt_gfx_w, ta_pnt_image_x, ta_pnt_image_y, ta_pnt_pane_h_b, ta_pnt_pane_h_m, ta_pnt_pane_w_b, ta_pnt_pane_w_m, ta_pnt_pane_x, ta_pnt_pane_y, target_bg, target_frame, target_image_h, target_image_w, target_image_x, target_image_y, ta_stats, ta_sx, ta_sy, tbar_center_h, tbar_center_w, tbar_center_x, tbar_h, tbar_left_h, tbar_left_w, tbar_right_h, tbar_right_w, tbar_w, tbar_y, top_bar, top_bar_center, top_bar_left, top_bar_right, top_icon, weapbars
+--Unfortunately, it is an error to make any function a closure over more than 60 variables.
+
 function create()
    --Get Player
    pp = player.pilot()
    pp = player.pilot()
-   pfact = pp:faction()
-   pname = player.name()
-   pship = pp:ship()
 
    -- Set default formation
    local savedform = var.peek("player_formation") or "Circle"
@@ -20,7 +22,6 @@ function create()
 
    --Get sizes
    screen_w, screen_h = gfx.dim()
-   deffont_h = gfx.fontSize()
    smallfont_h = gfx.fontSize(true)
 
    --Colors
@@ -62,7 +63,6 @@ function create()
    bar_bg = tex_open( "barBg.webp" )
    bar_frame_light = tex_open( "barFrameLight.png" )
    bar_frame = tex_open( "barFrame.png" )
-   bar_light = tex_open( "light.png" )
    bar_light = tex_open( "light.png" )
    bar_lock = tex_open( "lock.webp" )
    planet_pane_t = tex_open( "frame_planet_top.png" )
@@ -149,9 +149,9 @@ function create()
    pl_speed_x = 38
    pl_speed_y = 2
 
-   target_bar_x = 57
-   target_bar_y = 92
-   bars_target = { "target_shield", "target_armour", "target_energy" }
+   local target_bar_x = 57
+   local target_bar_y = 92
+   local bars_target = { "target_shield", "target_armour", "target_energy" }
    for k, v in ipairs( bars_target ) do
       _G[ "x_" .. v ] = target_bar_x + (k-1)*(bar_w + 6)
       _G[ "y_" .. v ] = target_bar_y
@@ -203,8 +203,8 @@ function create()
       fields_x = (screen_w - 1024) / 2
    end
 
-   buttons_y = tbar_y + tbar_h - 34
-   buttons_w, buttons_h = button_normal:dim()
+   local buttons_y = tbar_y + tbar_h - 34
+   local buttons_w, buttons_h = button_normal:dim()
    buttontypes = { "missions", "cargo", "ship", "weapons" }
    buttons = {}
    for k, v in ipairs(buttontypes) do
@@ -219,7 +219,7 @@ function create()
    gui.mesgInit( mesg_w, mesg_x, mesg_y )
 
    -- Planet pane
-   ta_pnt_pane_w, ta_pnt_pane_h = planet_pane_t:dim()
+   local ta_pnt_pane_w, ta_pnt_pane_h = planet_pane_t:dim()
    ta_pnt_pane_w_m, ta_pnt_pane_h_m = planet_pane_m:dim()
    ta_pnt_pane_w_b, ta_pnt_pane_h_b = planet_pane_b:dim()
    ta_pnt_pane_x = math.max( screen_w - ta_pnt_pane_w - 16, tbar_center_x + tbar_center_w/2 - 10 )
@@ -246,7 +246,7 @@ function create()
    ta_pnt_image_y = ta_pnt_pane_y
 
    -- Planet image center
-   ta_pnt_image_w, ta_pnt_image_h = planet_bg:dim()
+   local ta_pnt_image_w, ta_pnt_image_h = planet_bg:dim()
    ta_pnt_center_x = ta_pnt_image_x + ta_pnt_image_w / 2
    ta_pnt_center_y = ta_pnt_image_y + ta_pnt_image_h / 2
 
@@ -272,21 +272,21 @@ function create()
    update_cargo()
 end
 
-function roundto(num, idp)
+local function roundto(num, idp)
    return string.format("%.0" .. (idp or 0) .. "f", num)
 end
 
-function round(num)
+local function round(num)
    return math.floor( num + 0.5 )
 end
 
-function largeNumber( number, idp )
+local function largeNumber( number, idp )
    local formatted
    local units = { "k", "M", "B", "T", "Q" }
    if number < 1e4 then
       formatted = math.floor(number)
    elseif number < 1e18 then
-      len = math.floor(math.log10(number))
+      local len = math.floor(math.log10(number))
       formatted = roundto( number / 10^math.floor(len-len%3), idp) .. units[(math.floor(len/3))]
    else
       formatted = _("Too big!")
@@ -300,11 +300,10 @@ function update_target()
       ta_dir = ptarget:dir()
       ta_gfx = ptarget:ship():gfx()
       ta_sx, ta_sy = ta_gfx:spriteFromDir( ta_dir )
-      ta_gfx_w, ta_gfx_h, ta_gfx_sw, ta_gfx_sh = ta_gfx:dim()
-      ta_fact = ptarget:faction()
+      local ta_gfx_w, ta_gfx_h, ta_gfx_sw, ta_gfx_sh = ta_gfx:dim()
       ta_stats = ptarget:stats()
 
-      ta_gfx_aspect = ta_gfx_sw / ta_gfx_sh
+      local ta_gfx_aspect = ta_gfx_sw / ta_gfx_sh
 
       if ta_gfx_aspect >= 1 then
          if ta_gfx_sw > target_image_w then
@@ -327,7 +326,7 @@ function update_target()
 end
 
 function update_nav()
-   planet = {}
+   nav_planet = {}
    nav_pnt, nav_hyp = pp:nav()
    autonav_hyp, autonav_jumps = player.autonavDest()
    if nav_pnt then
@@ -335,9 +334,9 @@ function update_nav()
 
       ta_pnt_gfx = nav_pnt:gfxSpace()
       ta_pnt_gfx_w, ta_pnt_gfx_h = ta_pnt_gfx:dim()
-      ta_pntfact = nav_pnt:faction()
+      local ta_pntfact = nav_pnt:faction()
 
-      ta_pnt_gfx_aspect = ta_pnt_gfx_w / ta_pnt_gfx_h
+      local ta_pnt_gfx_aspect = ta_pnt_gfx_w / ta_pnt_gfx_h
       if math.max( ta_pnt_gfx_w, ta_pnt_gfx_h ) > 140 then
          ta_pnt_gfx_draw_w = math.min( 140, 140 * ta_pnt_gfx_aspect )
          ta_pnt_gfx_draw_h = math.min( 140, 140 / ta_pnt_gfx_aspect )
@@ -348,7 +347,7 @@ function update_nav()
          ta_pnt_faction_gfx = ta_pntfact:logo()
       end
 
-      planet = { -- Table for convenience.
+      nav_planet = { -- Table for convenience.
          name = nav_pnt:name(),
          pos = nav_pnt:pos(),
          class = nav_pnt:class(),
@@ -360,11 +359,11 @@ function update_nav()
          services = { "bar", "missions", "outfits", "shipyard", "commodity" }
 
          -- "Spaceport" is nicer than "Land"
-         table.insert( planet.services, N_("Spaceport") )
+         table.insert( nav_planet.services, N_("Spaceport") )
          for k,v in ipairs(services) do
-            table.insert( planet.services, pntflags[v] )
+            table.insert( nav_planet.services, pntflags[v] )
          end
-         planet.nservices = #planet.services
+         nav_planet.nservices = #nav_planet.services
       end
    end
    if nav_hyp then
@@ -386,10 +385,9 @@ end
 
 function update_cargo()
    cargo = pp:cargoFree()
-   cargolist = pp:cargoList()
 
    if not first_time[1] then
-      if #cargolist == 0 then
+      if #pp:cargoList() == 0 then
          buttons["cargo"].state = "disabled"
       else
          if buttons["cargo"].state ~= "mouseover" then buttons["cargo"].state = "hilighted" end
@@ -417,7 +415,7 @@ end
 function update_system()
 end
 
-function renderBar( name, value, light, locked, prefix, mod_x, mod_y, heat, stress )
+local function renderBar( name, value, light, locked, prefix, mod_x, mod_y, heat, stress )
    local offsets = { 2, 2, 4, 54, 12, -2 } --Bar/Icon x, Bar y, Sheen x, Sheen y, light x, light y
 
    local vars = { "col", "col_top", "x", "y", "icon" }
@@ -478,11 +476,11 @@ function renderBar( name, value, light, locked, prefix, mod_x, mod_y, heat, stre
    end
 end
 
-function renderWeapBar( weapon, x, y )
+local function renderWeapBar( weapon, x, y )
    local offsets = { 2, 2, 4, 54, 13, 23, 47 } --third last is y of icon_weapon1, last two are the centers of the two weapon icons
    local outfit_yoffset = 31
    local name_offset = 17
-   local width
+   local bottom_icon, bottom_icon_w, bottom_icon_h, top_icon_w, top_icon_h, icon, weap_heat, width
    if weapon ~= nil then
       if weapon.ammo ~= nil then
          width = bar_w/2
@@ -585,12 +583,12 @@ function renderWeapBar( weapon, x, y )
    end
 end
 
-function renderField( text, x, y, w, col, icon )
+local function renderField( text, x, y, w, col, icon )
    local offsets = { 3, 14, 6 } --Sheen x and y, Icon x
    local onetwo = 1
 
    gfx.renderTex( field_bg_left, x, y )
-   drawn_w = 14
+   local drawn_w = 14
    while drawn_w < w - 14 do
       gfx.renderTex( _G[ "field_bg_center" .. tostring(onetwo) ], x + drawn_w, y )
       if onetwo == 1 then
@@ -623,7 +621,7 @@ function renderField( text, x, y, w, col, icon )
    end
 end
 
-function renderButton( button )
+local function renderButton( button )
    local v_button = buttons[button]
 
    if v_button.state == "hilighted" then
@@ -642,17 +640,17 @@ function renderButton( button )
 end
 
 function render( _dt )
-
+   local wbars_right
    --Values
    armour, shield, stress = pp:health()
    energy = pp:energy()
    fuel = player.fuel() / stats.fuel_max * 100
-   heat = math.max( math.min( (pp:temp() - 250)/87.5, 2 ), 0 )
-   wset_name, pwset = pp:weapset( true )
-   wset_id = string.format( "%d", pp:activeWeapset() )
+   local heat = math.max( math.min( (pp:temp() - 250)/87.5, 2 ), 0 )
+   local _wset_name, pwset = pp:weapset( true )
+   local wset_id = string.format( "%d", pp:activeWeapset() )
    if wset_id == 10 then wset_id = 0 end
-   wset = {}
-   aset = pp:actives( true )
+   local wset = {}
+   local aset = pp:actives( true )
    table.sort( aset, function(a,b)
       local aset = a.weapset or 99
       local bset = b.weapset or 99
@@ -670,9 +668,9 @@ function render( _dt )
       wset[ #wset + 1 ] = v
    end
 
-   credits, credits_h = player.credits(2)
-   autonav = player.autonav()
-   lockons = pp:lockon()
+   local _credits, credits_h = player.credits(2)
+   local autonav = player.autonav()
+   local lockons = pp:lockon()
 
    -- Top Bar
    gfx.renderTexRaw( top_bar, margin + tbar_left_w, tbar_y, screen_w - 2*margin - tbar_left_w - tbar_right_w, tbar_h, 1, 1, 0, 0, 1, 1 )
@@ -685,23 +683,23 @@ function render( _dt )
    else
       wbars_right = #wset
    end
-   right_side_w = (bar_w + 6)*wbars_right - 1
-   gui_w = right_side_w + left_side_w - 10
-   mod_x = math.max( margin, math.min(
+   local right_side_w = (bar_w + 6)*wbars_right - 1
+   local gui_w = right_side_w + left_side_w - 10
+   local mod_x = math.max( margin, math.min(
          screen_w - 2*margin - math.max( gui_w, 1024 ),
          math.floor( (screen_w - 2*margin - gui_w)/3 ) ) )
-   mod_y = margin
+   local mod_y = margin
    gfx.renderTexRaw( ext_right, left_side_w - 10 + mod_x, mod_y, right_side_w, end_right_h, 1, 1, 0, 0, 1, 1 )
    gfx.renderTex( end_right, right_side_x + right_side_w + mod_x, mod_y )
 
-   right_side_h = end_right_h
+   local right_side_h = end_right_h
    for k=1,wbars_right do
       renderWeapBar( wset[k], right_side_x + 6 + (k-1)*(bar_w + 6) + mod_x, bar_y + mod_y )
    end
    if wbars_right ~= #wset then
       --Draw a popup of (theoretically) arbitrary size.
-      amount = #wset - wbars_right
-      height = math.ceil(amount/3. ) * (bar_h+6) - 3
+      local amount = #wset - wbars_right
+      local height = math.ceil(amount/3. ) * (bar_h+6) - 3
       right_side_h = right_side_h + height
       gfx.renderTex( popup_bottom2, popup_right_x + mod_x, popup_right_y + mod_y )
       gfx.renderTex( popup_top, popup_right_x + mod_x, popup_right_y + 6 + height + mod_y )
@@ -779,22 +777,22 @@ function render( _dt )
 
    --Popup left
    if ptarget ~= nil then
-      ta_detect, ta_scanned = pp:inrange(ptarget)
+      local ta_detect, ta_scanned = pp:inrange(ptarget)
 
       if ta_detect then
          gfx.renderTex( popup_pilot, popup_left_x + mod_x, popup_left_y + mod_y ) --Frame
 
          --Target Image
          gfx.renderTex( target_bg, target_image_x + mod_x, target_image_y + mod_y )
-         ta_dist = pp:pos():dist(ptarget:pos())
+         local ta_dist = pp:pos():dist(ptarget:pos())
          if ta_scanned then
             if ta_dir ~= ptarget:dir() then
                update_target()
             end
-            ta_armour, ta_shield, ta_stress = ptarget:health()
-            ta_heat = math.max( math.min( (ptarget:temp() - 250)/87.5, 2 ), 0 )
-            ta_energy = ptarget:energy()
-            ta_name = ptarget:name()
+            local ta_armour, ta_shield, ta_stress = ptarget:health()
+            local ta_heat = math.max( math.min( (ptarget:temp() - 250)/87.5, 2 ), 0 )
+            local ta_energy = ptarget:energy()
+            local ta_name = ptarget:name()
             gfx.renderTexRaw( ta_gfx, target_image_x + target_image_w/2 - ta_gfx_draw_w/2 + mod_x, target_image_y + target_image_h/2 - ta_gfx_draw_h/2 + mod_y, ta_gfx_draw_w, ta_gfx_draw_h, ta_sx, ta_sy, 0, 0, 1, 1 )
             renderBar( "shield", ta_shield, false, false, "target", mod_x, mod_y )
             renderBar( "armour", ta_armour, false, false, "target", mod_x, mod_y, ta_heat, ta_stress )
@@ -813,8 +811,8 @@ function render( _dt )
          gfx.renderTex( target_frame, target_image_x + mod_x, target_image_y + mod_y )
 
          --Speed Lights
-         local nlights = 7
-         local value = round( ptarget:vel():mod() * nlights / ta_stats.speed_max )
+         nlights = 7
+         value = round( ptarget:vel():mod() * nlights / ta_stats.speed_max )
          if value > nlights * 2 then value = nlights * 2 end
          for i=1, value do
             if i <= nlights then
@@ -871,12 +869,12 @@ function render( _dt )
 
    -- Planet pane
    if nav_pnt then
-      ta_pnt_dist = pp:pos():dist( planet.pos )
+      local ta_pnt_dist = pp:pos():dist( nav_planet.pos )
 
       -- Extend the pane depending on the services available.
-      services_h = 60
+      local services_h = 60
       if pntflags.land then
-         services_h = services_h + (20 * planet.nservices)
+         services_h = services_h + (20 * nav_planet.nservices)
       end
 
       -- Render background images.
@@ -896,25 +894,21 @@ function render( _dt )
          gfx.renderTex( ta_pnt_gfx, ta_pnt_center_x - ta_pnt_gfx_w / 2, ta_pnt_center_y - ta_pnt_gfx_h / 2)
       end
       gfx.print( true, _("TARGETED"), ta_pnt_pane_x + 14, ta_pnt_pane_y + 170, col_text )
-      gfx.print( true, planet.name, ta_pnt_pane_x + 14, ta_pnt_pane_y + 150, planet.col )
+      gfx.print( true, nav_planet.name, ta_pnt_pane_x + 14, ta_pnt_pane_y + 150, nav_planet.col )
       gfx.print( true, string.format(
             _("DISTANCE: %s"), largeNumber(ta_pnt_dist, 1) ),
          ta_pnt_pane_x + 14, ta_pnt_pane_y - 20, col_text )
-      gfx.print( true, string.format( _("CLASS: %s"), planet.class ),
+      gfx.print( true, string.format( _("CLASS: %s"), nav_planet.class ),
          ta_pnt_pane_x + 14, ta_pnt_pane_y - 40, col_text )
 
       if ta_pnt_faction_gfx then
          gfx.renderTexScale( ta_pnt_faction_gfx, ta_pnt_fact_x, ta_pnt_fact_y, 24, 24 )
       end
 
-      x1, y1 = vec2.get(planet.pos)
-      x2, y2 = vec2.get(player.pos())
-      ta_pnt_dir = math.atan2(y2 - y1, x2 - x1) + math.pi
-
       -- Space out the text.
       if pntflags.land then
          gfx.print( true, _("SERVICES:"), ta_pnt_pane_x + 14, ta_pnt_pane_y - 60, col_text )
-         for k,v in ipairs(planet.services) do
+         for k,v in ipairs(nav_planet.services) do
             gfx.print(true, _(v), ta_pnt_pane_x + 40, ta_pnt_pane_y - 60 - k*20, col_text )
          end
       else
@@ -983,12 +977,21 @@ function render( _dt )
    end
 end
 
+local function mouseInsideButton( x, y )
+   for k, v in pairs(buttons) do
+      if x > v.x and x < v.x+v.w and y > v.y and y < v.y+v.h then
+         return v
+      end
+   end
+   return nil
+end
+
 function mouse_click( button, x, y, state )
    if button ~= 2 then
       return false
    else
       lmouse = state
-      pressed = mouseInsideButton( x, y )
+      local pressed = mouseInsideButton( x, y )
 
       if pressed == nil then
          if not state then
@@ -1017,7 +1020,7 @@ function mouse_click( button, x, y, state )
 end
 
 function mouse_move( x, y )
-   pressed = mouseInsideButton( x, y )
+   local pressed = mouseInsideButton( x, y )
    if pressed ~= nil then
       if pressed.state ~= "disabled" and not lmouse then
          pressed.state = "mouseover"
@@ -1031,15 +1034,6 @@ function mouse_move( x, y )
          end
       end
    end
-end
-
-function mouseInsideButton( x, y )
-   for k, v in pairs(buttons) do
-      if x > v.x and x < v.x+v.w and y > v.y and y < v.y+v.h then
-         return v
-      end
-   end
-   return nil
 end
 
 function action_missions()
