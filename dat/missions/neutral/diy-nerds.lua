@@ -140,7 +140,7 @@ misn_cargodesc2 = N_("A homebrew processing unit.")
 misn_cargoamount2 = 4
 
 -- the outfit name as in outfit.xml
-outfit = "Unicorp PT-16 Core System"
+local reward_outfit = "Unicorp PT-16 Core System"
 
 function create ()
    misn.setNPC( _("Young People"), "neutral/unique/mia.webp", _("You see a bunch of guys and gals, excitedly whispering over some papers, which seem to contain column after column of raw numbers. Two of them don't participate in the babbling, but look at you expectantly.") )
@@ -358,9 +358,9 @@ function nerds_land3()
          if not tk.yesno(title[13], text[13]) then
             tk.msg(title[14], text[14])
          end
-         tk.msg(title[15], text[15]:format( outfit ))
+         tk.msg(title[15], text[15]:format( _(reward_outfit) ))
          time.inc(time.create(0,0,5000))
-         player.outfitAdd(outfit)
+         player.outfitAdd(reward_outfit)
          if planet.services(cp)["outfits"] then
             player.landWindow("equipment")
          end

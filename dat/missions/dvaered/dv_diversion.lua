@@ -214,7 +214,7 @@ end
 function broadcast_first(fleet, msg) -- Find the first alive ship and broadcast a message
    for k, v in ipairs(fleet) do
       if v:exists() then
-         _, _, disabled = v:health()
+         local _armour, _shield, disabled = v:health()
          if not disabled then
             v:broadcast(msg)
             break
@@ -231,7 +231,7 @@ function hawk_dead () -- mission accomplished
    messages = {5, 6, 7}
    for k, v in ipairs(fleetdv) do
       if v:exists() then
-         _, _, disabled = v:health()
+         local _armour, _shield, disabled = v:health()
          if not disabled then
             msg = table.remove(messages, 1)
             if msg then
