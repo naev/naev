@@ -29,6 +29,7 @@
 #include "land.h"
 #include "log.h"
 #include "map.h"
+#include "map_overlay.h"
 #include "menu.h"
 #include "mission.h"
 #include "music.h"
