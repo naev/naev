@@ -104,6 +104,7 @@ They stare at you for a few seconds.
       {_("Skip the tutorial"), "skiptut_yes"},
       {_("Nevermind"), "mainmenu"},
    }
+   vn.label("skiptut_yes")
    vn.done( tut.shipai.transition )
 
    vn.label("offtut")
