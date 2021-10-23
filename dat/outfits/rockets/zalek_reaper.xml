@@ -22,7 +22,7 @@
   <damage>
    <type>normal</type>
    <penetrate>80</penetrate>
-   <physical>900</physical>
+   <physical>800</physical>
   </damage>
   <ai>smart</ai>
  </specific>
