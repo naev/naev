@@ -23,7 +23,7 @@
   </jump>
   <jump target="Gyrios">
    <pos x="20450.192730" y="22311.207588"/>
-   <hide>1.118030</hide>
+   <hide>1.000000</hide>
   </jump>
   <jump target="Nougat">
    <autopos/>
