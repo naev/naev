@@ -340,7 +340,7 @@ local function render_target ()
 
    -- Render faction logo.
    if scan and target_gfxFact ~= nil then
-      gfx.renderTexScale( target_gfxFact, target_x + target_w - target_gf_w/2 - 15, target_y - target_gf_h/2 - 9, target_gf_w, target_gf_h )
+      gfx.renderTexScale( target_gfxFact, target_x + target_w - target_gf_w/2 - 15, target_y - target_gf_h - 15, target_gf_w, target_gf_h )
    end
 end
 
