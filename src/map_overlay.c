@@ -68,9 +68,6 @@ typedef struct OverlayBounds_s {
    double h;
    double x;
    double y;
-   double sx;
-   double sy;
-   int init;
 } OverlayBounds_t;
 static OverlayBounds_t ovr_bounds;
 
@@ -102,16 +99,25 @@ int ovr_isOpen (void)
    return !!ovr_open;
 }
 
+/**
+ * @brief Updates the bound parameters.
+ */
 static void ovr_boundsUpdate (void)
 {
    ovr_bounds.w = SCREEN_W - ovr_bounds.l - ovr_bounds.r;
    ovr_bounds.h = SCREEN_H - ovr_bounds.t - ovr_bounds.b;
    ovr_bounds.x = ovr_bounds.w / 2. + ovr_bounds.l;
    ovr_bounds.y = ovr_bounds.h / 2. + ovr_bounds.b;
-   ovr_bounds.sx = ovr_bounds.w / SCREEN_W;
-   ovr_bounds.sy = ovr_bounds.h / SCREEN_H;
 }
 
+/**
+ * @brief Sets the bounds for the overlay map (in pixels).
+ *
+ *    @param top Top bound.
+ *    @param right Right bound.
+ *    @param bottom Bottom bound.
+ *    @param left Left bound.
+ */
 void ovr_boundsSet( double top, double right, double bottom, double left )
 {
    ovr_bounds.t = top;
@@ -121,30 +127,16 @@ void ovr_boundsSet( double top, double right, double bottom, double left )
    ovr_boundsUpdate();
 }
 
-void ovr_boundsGet( double *top, double *right, double *bottom, double *left )
-{
-   *top = ovr_bounds.t;
-   *right = ovr_bounds.r;
-   *bottom = ovr_bounds.b;
-   *left = ovr_bounds.l;
-}
-
-void ovr_dim( double *w, double *h )
-{
-   *w = ovr_bounds.w;
-   *h = ovr_bounds.h;
-}
-
+/**
+ * @brief Gets the center of the overlay map (in pixels).
+ *
+ *    @param[out] x X center position.
+ *    @param[out] y Y center position.
+ */
 void ovr_center( double *x, double *y )
 {
    *x = ovr_bounds.x;
    *y = ovr_bounds.y;
-}
-
-void ovr_scale( double *sx, double *sy )
-{
-   *sx = ovr_bounds.sx;
-   *sy = ovr_bounds.sy;
 }
 
 /**
