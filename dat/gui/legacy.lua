@@ -1,5 +1,21 @@
 local fmt = require "format"
 
+local armour_col, armour_h, armour_w, armour_x, armour_y
+local col_console, col_gray, col_warn, col_white
+local deffont_h, smallfont_h
+local energy, energy_col, energy_h, energy_w, energy_x, energy_y
+local frame, frame_h, frame_w, frame_x, frame_y
+local fuel, fuel_col, fuel_h, fuel_max, fuel_w, fuel_x, fuel_y
+local misc_cargo, misc_h, misc_w, misc_x, misc_y, nav_hyp, nav_pnt, nav_w, nav_x, nav_y, pp, ptarget
+local radar_r, radar_x, radar_y, screen_h, screen_w
+local shield_col, shield_h, shield_w, shield_x, shield_y
+local target_fact, target_gf_h, target_gf_w, target_gfx, target_gfxFact, target_gfx_h, target_gfx_w
+local target_h, target_w, target_x, target_y, weapon_w, weapon_x, weapon_y
+
+local function relativize( x, y )
+   return frame_x + x, frame_y + frame_h - y
+end
+
 --[[--
    Obligatory create function.
 
@@ -8,7 +24,6 @@ local fmt = require "format"
 function create()
    -- Get the player
    pp = player.pilot()
-   pfact = pp:faction()
 
    -- Get sizes
    screen_w, screen_h = gfx.dim()
@@ -22,7 +37,6 @@ function create()
    col_white   = colour.new()
    col_warn    = colour.new( "Red" )
    col_gray    = colour.new( "Grey70" )
-   col_neut    = colour.new( 0.9, 1.0, 0.3, 1.0 )
    col_console = colour.new( 0.1, 0.9, 0.1, 1.0 )
    shield_col  = colour.new( 0.2, 0.2, 0.8, 0.8 )
    armour_col  = colour.new( 0.5, 0.5, 0.5, 0.8 )
@@ -69,12 +83,12 @@ function create()
 
    -- NAV position
    nav_w = 135
-   nav_h = 40
+   --nav_h = 40
    nav_x, nav_y = relativize( 35, 220 )
 
    -- Weapon position
    weapon_w = 135
-   weapon_h = 32
+   --weapon_h = 32
    weapon_x, weapon_y = relativize( 35, 294 )
 
    -- Target position
@@ -96,10 +110,6 @@ function create()
    update_target()
    update_ship()
    update_system()
-end
-
-function relativize( x, y )
-   return frame_x + x, frame_y + frame_h - y
 end
 
 
@@ -138,7 +148,7 @@ end
    This function is run whenever the player modifies their ship outfits (when the ship is changed the gui is recreated).
 --]]
 function update_ship ()
-   stats = pp:stats()
+   local stats = pp:stats()
    fuel_max = stats.fuel
 end
 
@@ -170,36 +180,16 @@ function update_system ()
 end
 
 
---[[--
-   Obligatory render function.
-
-   Run every frame. Note that the dt will be 0. if the game is paused.
-
-      @param dt Current deltatick in seconds since last render.
---]]
-function render( _dt )
-   gfx.renderTex( frame, frame_x, frame_y )
-   gui.radarRender( radar_x, radar_y )
-   render_border()
-   render_nav()
-   render_health()
-   render_weapon()
-   render_target()
-   render_misc()
-   render_warnings()
-end
-
-
-function render_border ()
+local function render_border ()
    --gfx.renderRect( 0, 0, screen_w/2, 20, col_white )
 end
 
 
 -- Renders the navigation computer
-function render_nav ()
+local function render_nav ()
    if nav_pnt ~= nil or nav_hyp ~= nil then
       local y = nav_y - 3 - deffont_h
-      local str
+      local col, str
       gfx.print( nil, _("Landing"), nav_x, y, col_console, nav_w, true )
       y = y - 5 - smallfont_h
       if nav_pnt ~= nil then
@@ -234,12 +224,8 @@ function render_nav ()
 end
 
 
-function update_faction()
-end
-
-
 -- Renders the health bars
-function render_health ()
+local function render_health ()
    local arm, shi = pp:health()
    gfx.renderRect( shield_x, shield_y, shi/100.*shield_w, shield_h, shield_col )
    gfx.renderRect( armour_x, armour_y, arm/100.*armour_w, armour_h, armour_col )
@@ -251,9 +237,9 @@ end
 
 
 -- Renders the weapon systems
-function render_weapon ()
-   col = col_console
-   ws_name, ws = pp:weapset()
+local function render_weapon ()
+   local col = col_console
+   local ws_name = pp:weapset()
    gfx.print( nil, _(ws_name), weapon_x, weapon_y-25, col, weapon_w, true )
    --[[
    local sec, amm, rdy = pp:secondary()
@@ -278,8 +264,13 @@ function render_weapon ()
 end
 
 
+local function render_targetnone ()
+   gfx.print( false, _("No Target"), target_x, target_y-(target_h-deffont_h)/2-deffont_h, col_gray, target_w, true )
+end
+
+
 -- Renders the pilot target
-function render_target ()
+local function render_target ()
    -- Target must exist
    if ptarget == nil then
       render_targetnone()
@@ -294,8 +285,8 @@ function render_target ()
       return
    end
 
-   local col, shi, arm, stress, dis
-   arm, shi, stress, dis = ptarget:health()
+   local col
+   local arm, shi, _stress, dis = ptarget:health()
 
    -- Get colour
    if dis or not scan then
@@ -305,9 +296,9 @@ function render_target ()
    end
 
    -- Render target graphic
-   local x, y
+   local x, y, w
    if not scan then
-      str = _("Unknown")
+      local str = _("Unknown")
       w = gfx.printDim( true, str )
       x = target_x + (target_w - w)/2
       y = target_y - (target_h - smallfont_h)/2
@@ -325,7 +316,7 @@ function render_target ()
    else
       name = ptarget:name()
    end
-   local w = gfx.printDim( nil, name )
+   w = gfx.printDim( nil, name )
    gfx.print( w > target_w, name, target_x, target_y-13, col, target_w )
 
    -- Display faction
@@ -352,18 +343,15 @@ function render_target ()
       gfx.renderTexScale( target_gfxFact, target_x + target_w - target_gf_w - 3, target_y - 2*target_gf_h + 3, 24, 24 )
    end
 end
-function render_targetnone ()
-   gfx.print( false, _("No Target"), target_x, target_y-(target_h-deffont_h)/2-deffont_h, col_gray, target_w, true )
-end
 
 
 -- Renders the miscellaneous stuff
-function render_misc ()
-   creds_num, creds = player.credits(2)
-   h = 5 + smallfont_h
-   y = misc_y - h
+local function render_misc ()
+   local _creds_num, creds = player.credits(2)
+   local h = 5 + smallfont_h
+   local y = misc_y - h
    gfx.print( true, _("Creds:"), misc_x, y, col_console, misc_w, false )
-   w = gfx.printDim( true, creds )
+   local w = gfx.printDim( true, creds )
    gfx.print( true, creds, misc_x+misc_w-w-3, y, col_white, misc_w, false )
    y = y - h
    gfx.print( true, _("Cargo Free:"), misc_x, y, col_console, misc_w, false )
@@ -377,10 +365,10 @@ end
 
 
 -- Renders the warnings like system volatility
-function render_warnings ()
+local function render_warnings ()
    -- Render warnings
    local sys = system.cur()
-   local nebu_dens, nebu_vol = sys:nebula()
+   local _nebu_dens, nebu_vol = sys:nebula()
    local y = screen_h - 50 - deffont_h
    if pp:lockon() > 0 then
       gfx.print( nil, _("LOCK-ON DETECTED"), 0, y, col_warn, screen_w, true )
@@ -393,11 +381,26 @@ end
 
 
 --[[--
-   Optional destroy function.
+   Obligatory render function.
 
-   Run when exiting the game on changing GUI. Graphics and stuff are cleaned up automatically.
+   Run every frame. Note that the dt will be 0. if the game is paused.
+
+      @param dt Current deltatick in seconds since last render.
 --]]
-function destroy()
+function render( _dt )
+   gfx.renderTex( frame, frame_x, frame_y )
+   gui.radarRender( radar_x, radar_y )
+   render_border()
+   render_nav()
+   render_health()
+   render_weapon()
+   render_target()
+   render_misc()
+   render_warnings()
+end
+
+
+function update_faction()
 end
 
 -- Game crashes if this isn't defined
