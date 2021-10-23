@@ -1,4 +1,4 @@
-local formation = require "scripts.formation"
+local formation = require "formation"
 local lanes = require 'ai.core.misc.lanes'
 
 --[[

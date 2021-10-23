@@ -4,9 +4,11 @@
 
 local fmt = require "format"
 
+local col_black, col_slot_bg, col_slot_heat, col_txt_enm, col_txt_std, col_txt_wrn
+local radar_h, radar_w, radar_x, radar_y, screen_h, screen_w
 -- This script has a lot of globals. It really loves them.
 -- This is what it would look like to forward-declare the ones that aren't part of the GUI API and aren't accessed via _G:
---local active, active_icons, aset, bar_bg, bar_bg_h, bar_bg_w, bar_h, bar_heat2_col, bar_sheen, bar_speed2_col, bar_speed_col, bar_stress_col, bar_w, blinkcol, cargo_free, cargo_w, cargo_x, cargo_y, col_black, col_slot_bg, col_slot_heat, col_txt_enm, col_txt_std, col_txt_wrn, cooldown, cooldown_bg, cooldown_bg_h, cooldown_bg_w, cooldown_bg_x, cooldown_bg_y, cooldown_frame, cooldown_frame_h, cooldown_frame_w, cooldown_frame_x, cooldown_frame_y, cooldown_panel, cooldown_panel_x, cooldown_panel_y, cooldown_sheen, cooldown_sheen_x, cooldown_sheen_y, credits_w, credits_x, credits_y, deffont_h, lockonA, lockonB, lockon_h, lockon_w, max_slots, player_pane, pl_pane_h, pl_pane_w, pl_pane_x, pl_pane_y, pp, ptarget, radar_h, radar_w, radar_x, radar_y, s_col, screen_h, screen_w, slot_img_offs_x, slot_img_offs_y, slot_img_w, slot_start_x, slot_txt_offs_x, slot_txt_offs_y, slot_txt_w, slot_w, stats, timers, time_w, time_x, time_y, weap_icons, wset, _wset_name
+--local active, active_icons, aset, bar_bg, bar_bg_h, bar_bg_w, bar_h, bar_heat2_col, bar_sheen, bar_speed2_col, bar_speed_col, bar_stress_col, bar_w, blinkcol, cargo_free, cargo_w, cargo_x, cargo_y, cooldown, cooldown_bg, cooldown_bg_h, cooldown_bg_w, cooldown_bg_x, cooldown_bg_y, cooldown_frame, cooldown_frame_h, cooldown_frame_w, cooldown_frame_x, cooldown_frame_y, cooldown_panel, cooldown_panel_x, cooldown_panel_y, cooldown_sheen, cooldown_sheen_x, cooldown_sheen_y, credits_w, credits_x, credits_y, deffont_h, lockonA, lockonB, lockon_h, lockon_w, max_slots, player_pane, pl_pane_h, pl_pane_w, pl_pane_x, pl_pane_y, pp, ptarget, s_col, slot_img_offs_x, slot_img_offs_y, slot_img_w, slot_start_x, slot_txt_offs_x, slot_txt_offs_y, slot_txt_w, slot_w, stats, timers, time_w, time_x, time_y, weap_icons, wset, _wset_name
 --Unfortunately, it is an error to make any function a closure over more than 60 variables.
 
 
