@@ -252,6 +252,7 @@ void ovr_refresh (void)
 
    /* We need to calculate the radius of the rendering from the maximum radius of the system. */
    ovr_res = 2. * 1.2 * MAX( max_x / ovr_bounds.w, max_y / ovr_bounds.h );
+   ovr_res = MAX( ovr_res, 25. );
    for (int i=0; i<items; i++)
       mo[i]->radius = MAX( 2.+mo[i]->radius / ovr_res, i<jumpitems ? 5. : 7.5 );
 
