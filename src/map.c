@@ -997,7 +997,6 @@ void map_renderFactionDisks( double x, double y, double r, int editor, double al
 
       /* System has faction and is known or we are in editor. */
       if (sys->faction != -1) {
-         /* Cache to avoid repeated sqrt() */
          presence = sqrt(sys->ownerpresence);
 
          /* draws the disk representing the faction */
