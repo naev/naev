@@ -22,8 +22,8 @@ local love_shaders = require "love_shaders"
 local graphics = require 'love.graphics'
 
 -- Threshold distances to detect the drone
-dist_detect_mule = 3000 -- first encounter at mule
-dist_detect_jump = 3000 -- second encounter at jump
+local dist_detect_mule = 3e3 -- first encounter at mule
+local dist_detect_jump = 3e3 -- second encounter at jump
 
 --[[
 -- Event states:
@@ -203,6 +203,7 @@ function board_flashback()
       vn.textbox_y = (nh-vn.textbox_h)/2
       vn.textbox_w = math.min( 0.8*nw, 1000 )
       vn.textbox_x = (nw-vn.textbox_w)/2
+      vn.show_options = false
    end )
    vn.scene()
    local log = vn.newCharacter( "Notebook", { color={0, 0, 0}, hidetitle=true } )
@@ -306,6 +307,7 @@ A---s--hm---t---
       vn.textbox_x = textbox_x
       vn.textbox_y = textbox_y
       vn.textbox_font = textbox_font
+      vn.show_options = true
    end )
    vn.transition()
    vn.sfxEerie()
