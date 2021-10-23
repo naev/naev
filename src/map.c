@@ -1310,7 +1310,7 @@ void map_renderNames( double bx, double by, double x, double y,
          tx  = x + map_zoom*sys->pos.x + d*vx;
          ty  = y + map_zoom*sys->pos.y + d*vy;
          /* Display. */
-         n = sqrt(sys->jumps[j].hide);
+         n = sys->jumps[j].hide;
          if (n == 0.)
             snprintf( buf, sizeof(buf), "#gH: %.2f", n );
          else
