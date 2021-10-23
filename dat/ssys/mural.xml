@@ -29,11 +29,11 @@
   </jump>
   <jump target="Borla">
    <autopos/>
-   <hide>1.118034</hide>
+   <hide>1.000000</hide>
   </jump>
   <jump target="Salvador">
    <autopos/>
-   <hide>1.118034</hide>
+   <hide>1.000000</hide>
   </jump>
  </jumps>
 </ssys>

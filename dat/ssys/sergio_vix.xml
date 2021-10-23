@@ -25,7 +25,7 @@
   </jump>
   <jump target="Elza">
    <autopos/>
-   <hide>1.118034</hide>
+   <hide>1.000000</hide>
   </jump>
   <jump target="Hatter">
    <pos x="19754.322856" y="-13904.725724"/>

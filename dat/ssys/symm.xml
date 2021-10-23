@@ -23,19 +23,19 @@
  <jumps>
   <jump target="Hadosh">
    <autopos/>
-   <hide>1.118034</hide>
+   <hide>1.000000</hide>
   </jump>
   <jump target="Jervis">
    <autopos/>
-   <hide>1.118034</hide>
+   <hide>1.000000</hide>
   </jump>
   <jump target="Moordra">
    <autopos/>
-   <hide>1.118034</hide>
+   <hide>1.000000</hide>
   </jump>
   <jump target="Tandar">
    <autopos/>
-   <hide>1.118034</hide>
+   <hide>1.000000</hide>
   </jump>
  </jumps>
 </ssys>

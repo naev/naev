@@ -16,7 +16,7 @@
  <jumps>
   <jump target="Straight Row">
    <autopos/>
-   <hide>1.118034</hide>
+   <hide>1.000000</hide>
   </jump>
   <jump target="Unicorn">
    <autopos/>

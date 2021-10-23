@@ -19,11 +19,11 @@
  <jumps>
   <jump target="Kretogg">
    <autopos/>
-   <hide>1.118034</hide>
+   <hide>1.000000</hide>
   </jump>
   <jump target="Marat">
    <autopos/>
-   <hide>1.118034</hide>
+   <hide>1.000000</hide>
   </jump>
   <jump target="Nunavut">
    <autopos/>
@@ -32,7 +32,7 @@
   </jump>
   <jump target="Volus">
    <autopos/>
-   <hide>1.118034</hide>
+   <hide>1.000000</hide>
   </jump>
  </jumps>
 </ssys>

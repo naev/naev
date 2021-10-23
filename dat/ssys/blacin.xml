@@ -14,7 +14,7 @@
  <jumps>
   <jump target="Ekkodu">
    <autopos/>
-   <hide>1.118034</hide>
+   <hide>1.000000</hide>
   </jump>
   <jump target="Gremlin">
    <autopos/>
@@ -23,7 +23,7 @@
   </jump>
   <jump target="Trohem">
    <autopos/>
-   <hide>1.118034</hide>
+   <hide>1.000000</hide>
   </jump>
  </jumps>
 </ssys>

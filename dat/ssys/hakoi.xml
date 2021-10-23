@@ -20,7 +20,7 @@
  <jumps>
   <jump target="Eneguoz">
    <autopos/>
-   <hide>1.118034</hide>
+   <hide>1.000000</hide>
   </jump>
   <jump target="Salvador">
    <pos x="9216.302743" y="120.608077"/>

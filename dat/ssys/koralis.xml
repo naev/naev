@@ -30,7 +30,7 @@
   </jump>
   <jump target="Qex">
    <pos x="-8810.152489" y="-15443.708459"/>
-   <hide>1.118034</hide>
+   <hide>1.000000</hide>
   </jump>
  </jumps>
 </ssys>

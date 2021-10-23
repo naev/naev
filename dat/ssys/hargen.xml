@@ -16,7 +16,7 @@
  <jumps>
   <jump target="Ganth">
    <autopos/>
-   <hide>1.118034</hide>
+   <hide>1.000000</hide>
   </jump>
   <jump target="Pultatis">
    <autopos/>
@@ -28,7 +28,7 @@
   </jump>
   <jump target="Seelie">
    <autopos/>
-   <hide>1.118034</hide>
+   <hide>1.000000</hide>
   </jump>
  </jumps>
 </ssys>
