@@ -20,8 +20,8 @@
 #include "player_autonav.h"
 #include "space.h"
 
-#define EW_ASTEROID_DIST      7500.
-#define EW_JUMPDETECT_DIST    7500.
+#define EW_ASTEROID_DIST      7.5e3
+#define EW_JUMPDETECT_DIST    7.5e3
 #define EW_PLANETDETECT_DIST  20e3 /* TODO something better than this. */
 
 static double ew_interference = 1.; /**< Interference factor. */
@@ -331,7 +331,8 @@ int pilot_inRangeAsteroid( const Pilot *p, int ast, int fie )
    /* Get distance. */
    d = vect_dist2( &p->solid->pos, &as->pos );
 
-   if (d < pow2( MAX( 0., sense * p->stats.ew_detect ) ) ) /* By default, asteroid's hide score is 1. It could be made changeable via xml.*/
+   /* By default, asteroid's hide score is 1. It could be made changeable via xml.*/
+   if (d < pow2( MAX( 0., sense * p->stats.ew_detect ) ) )
       return 1;
 
    return 0;
