@@ -1231,10 +1231,8 @@ static void uniedit_toggleJump( StarSystem *sys )
  */
 static void uniedit_jumpAdd( StarSystem *sys, StarSystem *targ )
 {
-   JumpPoint *jp;
-
    /* Add the jump. */
-   jp          = &array_grow( &sys->jumps );
+   JumpPoint *jp = &array_grow( &sys->jumps );
    memset( jp, 0, sizeof(JumpPoint) );
 
    /* Fill it out with basics. */

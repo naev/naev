@@ -3,7 +3,7 @@
  */
 #pragma once
 
-#define HIDE_DEFAULT_JUMP        1.25 /**< Default hide value for new jumps. */
+#define HIDE_DEFAULT_JUMP        1.0 /**< Default hide value for new jumps. */
 #define RADIUS_DEFAULT           10e3 /**< Default radius for new systems. */
 #define STARS_DENSITY_DEFAULT    400 /**< Default stars density for new systems. */
 
