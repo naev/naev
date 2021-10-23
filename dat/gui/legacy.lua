@@ -136,8 +136,8 @@ function update_target ()
          target_gfxFact = target_fact:logo()
          if target_gfxFact ~= nil then
             target_gf_w, target_gf_h = target_gfxFact:dim()
-            target_gf_w = ( target_gf_w + 24 ) / 2
-            target_gf_h = ( target_gf_h + 24 ) / 2
+            local ls = 24 / math.max( target_gf_w, target_gf_h )
+            target_gf_w, target_gf_h = ls*target_gf_w, ls*target_gf_h
          end
       end
    end
@@ -340,7 +340,7 @@ local function render_target ()
 
    -- Render faction logo.
    if scan and target_gfxFact ~= nil then
-      gfx.renderTexScale( target_gfxFact, target_x + target_w - target_gf_w - 3, target_y - 2*target_gf_h + 3, 24, 24 )
+      gfx.renderTexScale( target_gfxFact, target_x + target_w - target_gf_w/2 - 15, target_y - target_gf_h/2 - 9, target_gf_w, target_gf_h )
    end
 end
 

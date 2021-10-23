@@ -238,9 +238,9 @@ function create()
        ta_flt_pane_y = tbar_y + tbar_h - 32 - ta_flt_pane_h
    end
 
-   -- Planet faction icon
-   ta_pnt_fact_x = ta_pnt_pane_x + 140
-   ta_pnt_fact_y = ta_pnt_pane_y + 155
+   -- Planet faction icon center
+   ta_pnt_fact_x = ta_pnt_pane_x + 152
+   ta_pnt_fact_y = ta_pnt_pane_y + 167
 
    -- Planet image background
    ta_pnt_image_x = ta_pnt_pane_x + 14
@@ -903,7 +903,9 @@ function render( _dt )
          ta_pnt_pane_x + 14, ta_pnt_pane_y - 40, col_text )
 
       if ta_pnt_faction_gfx then
-         gfx.renderTexScale( ta_pnt_faction_gfx, ta_pnt_fact_x, ta_pnt_fact_y, 24, 24 )
+         local lw, lh = ta_pnt_faction_gfx:dim()
+         local ls = 24 / math.max( lw, lh )
+         gfx.renderTexScale( ta_pnt_faction_gfx, ta_pnt_fact_x - ls*lw/2, ta_pnt_fact_y - ls*lh/2, ls*lw, ls*lh )
       end
 
       -- Space out the text.
