@@ -16,19 +16,19 @@
  <jumps>
   <jump target="Rauthia">
    <autopos/>
-   <hide>1.250000</hide>
+   <hide>1.000000</hide>
   </jump>
   <jump target="Rotide">
    <autopos/>
-   <hide>1.250000</hide>
+   <hide>1.000000</hide>
   </jump>
   <jump target="Seport">
    <autopos/>
-   <hide>1.250000</hide>
+   <hide>1.000000</hide>
   </jump>
   <jump target="Tide">
    <autopos/>
-   <hide>1.250000</hide>
+   <hide>1.000000</hide>
   </jump>
  </jumps>
 </ssys>

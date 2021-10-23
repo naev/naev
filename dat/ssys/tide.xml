@@ -14,7 +14,7 @@
  <jumps>
   <jump target="Antares">
    <autopos/>
-   <hide>1.250000</hide>
+   <hide>1.000000</hide>
   </jump>
   <jump target="Sol">
    <autopos/>

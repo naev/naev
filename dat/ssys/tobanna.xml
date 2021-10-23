@@ -22,7 +22,7 @@
  <jumps>
   <jump target="Rotide">
    <autopos/>
-   <hide>1.250000</hide>
+   <hide>1.000000</hide>
   </jump>
  </jumps>
  <asteroids>
