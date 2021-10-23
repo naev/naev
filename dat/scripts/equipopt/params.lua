@@ -26,7 +26,7 @@ function params.default( overwrite )
       prefer = {
          --["Hive Combat AI"] = 100,
       },
-      mismatch    = 0.7, -- Penalty for slot size mismatch
+      mismatch    = 0.5, -- Penalty for slot size mismatch
 
       -- High level weights
       move        = 1,
@@ -182,7 +182,7 @@ function params.destroyer( overwrite )
       t_absorb    = 0.30,
       t_speed     = 150,
       t_track     = 15e3,
-      t_range     = 3e3,
+      t_range     = 2e3,
       duration    = 25,
    }, overwrite )
 end
@@ -192,17 +192,17 @@ function params.cruiser( overwrite )
       t_absorb    = 0.50,
       t_speed     = 130,
       t_track     = 20e3,
-      t_range     = 4e3,
+      t_range     = 2.5e3,
       duration    = 30,
    }, overwrite )
 end
 
 function params.battleship( overwrite )
    return _merge_tables( params.default{
-      t_absorb    = 0.70,
+      t_absorb    = 0.80,
       t_speed     = 70,
-      t_track     = 35e3,
-      t_range     = 4000,
+      t_track     = 25e3,
+      t_range     = 3e3,
       duration    = 40,
       launcher    = 0.8,
    }, overwrite )
@@ -212,7 +212,7 @@ function params.carrier( overwrite )
    return _merge_tables( params.default{
       t_absorb    = 0.50,
       t_speed     = 70,
-      t_track     = 35e3,
+      t_track     = 25e3,
       t_range     = 5e3,
       fighterbay  = 1.5,
       duration    = 50,
