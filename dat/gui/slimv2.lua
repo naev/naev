@@ -4,25 +4,48 @@
 
 local fmt = require "format"
 
-function create()
+-- This script has a lot of globals. It really loves them.
+-- This is what it would look like to forward-declare the ones that aren't part of the GUI API and aren't accessed via _G:
+--local active, active_icons, aset, bar_bg, bar_bg_h, bar_bg_w, bar_h, bar_heat2_col, bar_sheen, bar_speed2_col, bar_speed_col, bar_stress_col, bar_w, blinkcol, cargo_free, cargo_w, cargo_x, cargo_y, col_black, col_slot_bg, col_slot_heat, col_txt_enm, col_txt_std, col_txt_wrn, cooldown, cooldown_bg, cooldown_bg_h, cooldown_bg_w, cooldown_bg_x, cooldown_bg_y, cooldown_frame, cooldown_frame_h, cooldown_frame_w, cooldown_frame_x, cooldown_frame_y, cooldown_panel, cooldown_panel_x, cooldown_panel_y, cooldown_sheen, cooldown_sheen_x, cooldown_sheen_y, credits_w, credits_x, credits_y, deffont_h, lockonA, lockonB, lockon_h, lockon_w, max_slots, player_pane, pl_pane_h, pl_pane_w, pl_pane_x, pl_pane_y, pp, ptarget, radar_h, radar_w, radar_x, radar_y, s_col, screen_h, screen_w, slot_img_offs_x, slot_img_offs_y, slot_img_w, slot_start_x, slot_txt_offs_x, slot_txt_offs_y, slot_txt_w, slot_w, stats, timers, time_w, time_x, time_y, weap_icons, wset, _wset_name
+--Unfortunately, it is an error to make any function a closure over more than 60 variables.
 
+
+local function update_wset()
+   _wset_name, wset  = pp:weapset()
+   weap_icons = {}
+
+   for k, v in ipairs( wset ) do
+      if k > max_slots then
+         break
+      end
+      weap_icons[k] = outfit.get( v.name ):icon()
+   end
+
+   aset = pp:actives()
+   active_icons = {}
+
+   for k, v in ipairs( aset ) do
+      if k > max_slots then
+         break
+      end
+      active_icons[k] = outfit.get( v.name ):icon()
+    end
+end
+
+
+function create()
    --Get player
    pp = player.pilot()
-   pfact = pp:faction()
-   pname = player.name()
-   pship = pp:ship()
 
    --Get sizes
    screen_w, screen_h = gfx.dim()
    deffont_h = gfx.fontSize()
-   smallfont_h = gfx.fontSize(true)
    gui.viewport( 0, 0, screen_w, screen_h )
 
    --Colors
    col_txt_std = colour.new( 192/255, 198/255, 217/255 )
    col_txt_wrn = colour.new( 127/255,  31/255,  31/255 )
    col_txt_enm = colour.new( 222/255,  28/255,  28/255 )
-   col_txt_all = colour.new(  19/255, 152/255,  41/255 )
    bar_shield_col = colour.new( 40/255,  51/255,  88/255 )
    bar_armour_col = colour.new( 72/255,  73/255,  60/255 )
    bar_energy_col = colour.new( 41/255,  92/255,  47/255 )
@@ -56,9 +79,6 @@ function create()
    slotAe = tex.open( base .. "slot1e.png" )
    slotBe = tex.open( base .. "slot2-3e.png" )
    slotCe = tex.open( base .. "slot4e.png" )
-   warnlight1 = tex.open( base .. "warnlight1.png" )
-   warnlight2 = tex.open( base .. "warnlight2.png" )
-   warnlight3 = tex.open( base .. "warnlight3.png" )
    cooldown = tex.open( base .. "cooldown.png", 6, 6 )
    lockonA = tex.open( base .. "padlockA.png" )
    lockonB = tex.open( base .. "padlockB.png" )
@@ -117,8 +137,6 @@ function create()
    bar_armour_y = 103
 
    bar_shield_x = bar_armour_x-- Missile lock warning
-   missile_lock_text = "Warning - Missile Lock-on Detected"
-   missile_lock_length = gfx.printDim( false, missile_lock_text )
    bar_shield_y = 75
 
    bar_fuel_x = pl_pane_x + 7
@@ -148,22 +166,6 @@ function create()
    cooldown_bg_w, cooldown_bg_h = cooldown_bg:dim()
    cooldown_sheen_x = cooldown_bg_x
    cooldown_sheen_y = cooldown_bg_y + 12
-
-   -- Missile lock warning
-   missile_lock_text = "Warning - Missile Lock-on Detected"
-   missile_lock_length = gfx.printDim( false, missile_lock_text )
-
-   --Lock-on warning light
-   warning_lockon_c_x = pl_pane_x + 125 + 9
-   warning_lockon_c_y = 130 + 9
-
-   --Autonav warning light
-   warning_autonav_c_x = pl_pane_x + 145 + 9
-   warning_autonav_c_y = warning_lockon_c_y
-
-   --Low armour warning light
-   warning_armour_c_x = pl_pane_x + 167 + 16
-   warning_armour_c_y = warning_lockon_c_y
 
    -- Set FPS
    gui.fpsPos( 20, screen_h - 20 - deffont_h )
@@ -225,28 +227,6 @@ function update_cargo()
    cargo_free = fmt.tonnes_short(pp:cargoFree())
 end
 
-function update_wset()
-   wset_name, wset  = pp:weapset()
-   weap_icons = {}
-
-   for k, v in ipairs( wset ) do
-      if k > max_slots then
-         break
-      end
-      weap_icons[k] = outfit.get( v.name ):icon()
-   end
-
-   aset = pp:actives()
-   active_icons = {}
-
-   for k, v in ipairs( aset ) do
-      if k > max_slots then
-         break
-      end
-      active_icons[k] = outfit.get( v.name ):icon()
-    end
-end
-
 
 function render_cooldown( percent, _seconds )
    gfx.renderTex( cooldown_frame, cooldown_frame_x, cooldown_frame_y )
@@ -259,10 +239,10 @@ function render_cooldown( percent, _seconds )
 end
 
 
-function render_bar( left, name, value, text, txtcol, stress )
+local function render_bar( left, name, value, text, txtcol, stress )
    --stress is only used for armour
    --Get values
-   values = { "x", "y", "icon", "col" }
+   local values = { "x", "y", "icon", "col" }
    for k, v in ipairs(values) do
       _G[ "s_" .. v ] = _G[ "bar_" .. name .. "_" .. v ]
    end
@@ -291,38 +271,46 @@ function render_bar( left, name, value, text, txtcol, stress )
       gfx.renderRect( s_x + bar_w * (1-stress), s_y, bar_w * stress, bar_h, bar_stress_col )
    end
    --Draw border
-   scal = 1
-   bg_x = s_x - 30
+   local scal = 1
+   local bg_x = s_x - 30
    if left then
       scal = -1
       bg_x = s_x + bar_w + 30
    end
    gfx.renderTexRaw( bar_bg, bg_x, s_y-2, bar_bg_w * scal, bar_bg_h, 1, 1, 0, 0, 1, 1 )
    --Icon
-   ic_w, ic_h = s_icon:dim()
-   ic_c_x = s_x - 15
+   local ic_w, ic_h = s_icon:dim()
+   local ic_c_x = s_x - 15
    if left then
       ic_c_x = s_x + bar_w + 15
    end
-   ic_c_y = s_y + bar_h/2
+   local ic_c_y = s_y + bar_h/2
    gfx.renderTex( s_icon, math.floor(ic_c_x - ic_w/2), math.floor(ic_c_y - ic_h/2), 1, 1)
    --Sheen
    gfx.renderTex( bar_sheen, s_x+1, s_y+13, 1, 1)
    --Text
-   small = false
+   local small = false
    if gfx.printDim(small, text) >= bar_w then
       small = true
    end
    gfx.print( small, text, s_x, s_y + 6, txtcol, bar_w, true )
 end
 
-function largeNumber( number, idp )
+local function round(num)
+   return math.floor( num + 0.5 )
+end
+
+local function roundto(num, idp)
+   return string.format("%.0" .. (idp or 0) .. "f", num)
+end
+
+local function largeNumber( number, idp )
    local formatted
    local units = { "k", "M", "G", "T", "P" }
    if number < 1e4 then
       formatted = math.floor(number)
    elseif number < 1e18 then
-      len = math.floor(math.log10(number))
+      local len = math.floor(math.log10(number))
       formatted = roundto( number / 10^math.floor(len-len%3), idp) .. units[(math.floor(len/3))]
    else
       formatted = "Too big!"
@@ -330,30 +318,17 @@ function largeNumber( number, idp )
    return formatted
 end
 
-function roundto(num, idp)
-   return string.format("%.0" .. (idp or 0) .. "f", num)
-end
-
-function round(num)
-   return math.floor( num + 0.5 )
-end
-
-function destroy()
-end
-
 function render( dt, dt_mod )
 
    --Values
-   armour, shield, stress = pp:health()
-   energy = pp:energy()
-   speed = pp:vel():dist()
-   heat = pp:temp()
-   fuel, consumption = player.fuel()
-   fuel_max = pp:stats().fuel_max
-   jumps = player.jumps()
-   lockons = pp:lockon()
-   autonav = player.autonav()
-   credits = player.credits()
+   local armour, shield, stress = pp:health()
+   local energy = pp:energy()
+   local speed = pp:vel():dist()
+   local heat = pp:temp()
+   local fuel = player.fuel()
+   local fuel_max = stats.fuel_max
+   local jumps = player.jumps()
+   local credits = player.credits()
    update_wset() --Rather hacky, waiting for fix
 
    --Radar
@@ -494,8 +469,8 @@ function render( dt, dt_mod )
 
    --Bars
    --Fuel
-   txt = string.format( "%.0f (%s)", fuel, fmt.jumps(jumps) )
-   col = col_txt_std
+   local txt = string.format( "%.0f (%s)", fuel, fmt.jumps(jumps) )
+   local col = col_txt_std
    if jumps == 1 then
       col = col_txt_wrn
    elseif fuel == 0. then
@@ -568,11 +543,10 @@ function render( dt, dt_mod )
    gfx.print( true, cargo_free, cargo_x, cargo_y, col_txt_std, cargo_w, true)
 
    --Money
-   gfx.print( true, largeNumber( player.credits(), 2 ), credits_x, credits_y, col_txt_std, credits_w, true )
+   gfx.print( true, largeNumber( credits, 2 ), credits_x, credits_y, col_txt_std, credits_w, true )
 
    --Time
    gfx.print( true, time.str( time.get(), 2 ), time_x, time_y, col_txt_std, time_w, true )
-
 end
 
 function end_cooldown ()
