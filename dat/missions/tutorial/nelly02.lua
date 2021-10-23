@@ -298,7 +298,7 @@ function board ()
    local nel = vn.newCharacter( tutnel.vn_nelly() )
    vn.transition( tutnel.nelly.transition )
    vn.na(_("You board Nelly's ship and quickly go to the control panel to turn off the autonav."))
-   nel(fmt.f(_([["I hate when this happes. Err, I mean, this is the first time something like this has happened to me! Let me bring the ship back to {pntname} and meet me at the spaceport bar for your reward."]]),{pntname=retpnt:name()}))
+   nel(fmt.f(_([["I hate when this happens. Err, I mean, this is the first time something like this has happened to me! Let me bring the ship back to {pntname} and meet me at the spaceport bar for your reward."]]),{pntname=retpnt:name()}))
    vn.done( tutnel.nelly.transition )
    vn.run()
 
