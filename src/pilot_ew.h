@@ -5,6 +5,8 @@
 
 #include "pilot.h"
 
+#define EW_JUMP_BONUS_RANGE   2500.
+
 /*
  * Sensors and range.
  */

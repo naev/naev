@@ -189,8 +189,8 @@ static double pilot_ewJumpPoint( const Pilot *p )
    for (int i=0; i<array_size(cur_system->jumps); i++) {
       JumpPoint *jp = &cur_system->jumps[i];
       double d2 = vect_dist2( &jp->pos, &p->solid->pos );
-      if (d2 <= pow2(2500.))
-         return MAX( 0.5, sqrt(d2) / 2500.);
+      if (d2 <= pow2(EW_JUMP_BONUS_RANGE))
+         return MAX( 0.5, sqrt(d2) / EW_JUMP_BONUS_RANGE);
    }
    return 1.;
 }

@@ -272,8 +272,8 @@ static void ovr_optimizeLayout( int items, const Vector2d** pos, MapOverlayPos**
 
    /* Parameters for the map overlay optimization. */
    const int max_iters = 15;    /**< Maximum amount of iterations to do. */
-   const float kx      = .015;  /**< x softness factor. */
-   const float ky      = .045;  /**< y softness factor (moving along y is more likely to be the right solution). */
+   const float kx      = 0.015; /**< x softness factor. */
+   const float ky      = 0.045; /**< y softness factor (moving along y is more likely to be the right solution). */
    const float eps_con = 1.3;   /**< Convergence criterion. */
 
    if (items <= 0)
@@ -774,6 +774,15 @@ void ovr_render( double dt )
       }
 
       glBlendEquation( GL_MAX );
+      for (int i=0; i<array_size(cur_system->jumps); i++) {
+         double r;
+         JumpPoint *jp = &cur_system->jumps[i];
+         map_overlayToScreenPos( &x, &y, jp->pos.x, jp->pos.y );
+         r = EW_JUMP_BONUS_RANGE / res;
+         glUseProgram( shaders.astaura.program );
+         gl_renderShader( x, y, r, r, 0., &shaders.astaura, &col, 1 );
+      }
+
       detect = player.p->ew_stealth / res;
       col.r = 1.;
       col.g = 0.;
