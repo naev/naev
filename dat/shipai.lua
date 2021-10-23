@@ -7,8 +7,11 @@ local vn  = require "vn"
 
 -- Functions:
 local advice
+local gave_advice
 
 function create ()
+   gave_advice = false
+
    vn.clear()
    vn.scene()
    local sai = vn.newCharacter( tut.vn_shipai() )
@@ -163,7 +166,8 @@ function advice ()
    end
 
    -- Return important advice
-   if #adv > 0 then
+   if not gave_advice and #adv > 0 then
+      gave_advice = true
       return adv[ rnd.rnd(1,#adv) ]
    end
 
