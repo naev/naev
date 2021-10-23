@@ -19,8 +19,8 @@
   <damage>
    <type>shieldbreaker</type>
    <penetrate>24</penetrate>
-   <physical>15</physical>
-   <disable>5</disable>
+   <physical>13</physical>
+   <disable>3</disable>
   </damage>
   <ai>unguided</ai>
  </specific>

@@ -83,6 +83,7 @@ local goodness_special = {
    ["Enygma Systems Spearhead Launcher"] = 0.4, -- high damage but shield only
    ["TeraCom Medusa Launcher"] = 0.5,           -- really high disable
    ["Droid Repair Crew"] = 0.5, -- Only work until 50%
+   ["Electron Burst Cannon"] = 0.7, -- Shieldbreaker damage
 }
 
 
