@@ -1,13 +1,11 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
 /**
  * @file dev_uniedit.c
  *
  * @brief Handles the star system editor.
  */
-
 /** @cond */
 #include "SDL.h"
 
@@ -34,10 +32,8 @@
 #include "toolkit.h"
 #include "unidiff.h"
 
-
 #define BUTTON_WIDTH    90 /**< Map button width. */
 #define BUTTON_HEIGHT   30 /**< Map button height. */
-
 
 #define UNIEDIT_EDIT_WIDTH       400 /**< System editor width. */
 #define UNIEDIT_EDIT_HEIGHT      450 /**< System editor height. */
@@ -71,9 +67,7 @@ typedef enum UniEditViewMode_ {
    UNIEDIT_VIEW_PRESENCE,
 } UniEditViewMode;
 
-
 extern StarSystem *systems_stack;
-
 
 static UniEditMode uniedit_mode = UNIEDIT_DEFAULT; /**< Editor mode. */
 static UniEditViewMode uniedit_viewmode = UNIEDIT_VIEW_DEFAULT; /**< Editor view mode. */
@@ -97,7 +91,6 @@ static double uniedit_dt      = 0.; /**< Deltatick. */
 
 static map_find_t *found_cur  = NULL;  /**< Pointer to found stuff. */
 static int found_ncur         = 0;     /**< Number of found stuff. */
-
 
 /*
  * Universe editor Prototypes.
@@ -151,7 +144,6 @@ static void uniedit_btnOpen( unsigned int wid_unused, const char *unused );
 static void uniedit_btnFind( unsigned int wid_unused, const char *unused );
 /* Keybindings handling. */
 static int uniedit_keys( unsigned int wid, SDL_Keycode key, SDL_Keymod mod );
-
 
 /**
  * @brief Opens the system editor interface.
@@ -268,7 +260,6 @@ void uniedit_open( unsigned int wid_unused, const char *unused )
    uniedit_deselect();
 }
 
-
 /**
  * @brief Handles keybindings.
  */
@@ -287,7 +278,6 @@ static int uniedit_keys( unsigned int wid, SDL_Keycode key, SDL_Keymod mod )
          return 0;
    }
 }
-
 
 /**
  * @brief Closes the system editor widget.
@@ -319,7 +309,6 @@ static void uniedit_save( unsigned int wid_unused, const char *unused )
    dpl_saveAll();
 }
 
-
 /*
  * @brief Toggles autosave.
  */
@@ -331,7 +320,6 @@ void uniedit_autosave( unsigned int wid_unused, const char *unused )
    conf.devautosave = window_checkboxState( wid_unused, "chkEditAutoSave" );
 }
 
-
 /*
  * @brief Updates autosave check box.
  */
@@ -339,7 +327,6 @@ void uniedit_updateAutosave (void)
 {
    window_checkboxSet( uniedit_wid, "chkEditAutoSave", conf.devautosave );
 }
-
 
 static int factionGenerates( int f, int tocheck, double *w )
 {
@@ -353,7 +340,6 @@ static int factionGenerates( int f, int tocheck, double *w )
    }
    return 0;
 }
-
 
 /**
  * @brief Allows selecting the view.
@@ -421,7 +407,6 @@ static void uniedit_btnView( unsigned int wid_unused, const char *unused )
    array_free( factions );
 }
 
-
 /**
  * @brief Enters the editor in new jump mode.
  */
@@ -432,7 +417,6 @@ static void uniedit_btnJump( unsigned int wid_unused, const char *unused )
 
    uniedit_mode = UNIEDIT_JUMP;
 }
-
 
 /**
  * @brief Renames selected systems.
@@ -445,7 +429,6 @@ static void uniedit_btnRename( unsigned int wid_unused, const char *unused )
    uniedit_renameSys();
 }
 
-
 /**
  * @brief Enters the editor in new system mode.
  */
@@ -456,7 +439,6 @@ static void uniedit_btnNew( unsigned int wid_unused, const char *unused )
 
    uniedit_mode = UNIEDIT_NEWSYS;
 }
-
 
 /**
  * @brief Opens up a system.
@@ -472,7 +454,6 @@ static void uniedit_btnOpen( unsigned int wid_unused, const char *unused )
    sysedit_open( uniedit_sys[0] );
 }
 
-
 /**
  * @brief Opens the system property editor.
  */
@@ -484,7 +465,6 @@ static void uniedit_btnFind( unsigned int wid_unused, const char *unused )
    uniedit_findSys();
 }
 
-
 /**
  * @brief Opens the system property editor.
  */
@@ -495,7 +475,6 @@ static void uniedit_btnEdit( unsigned int wid_unused, const char *unused )
 
    uniedit_editSys();
 }
-
 
 static void uniedit_renderFactionDisks( double x, double y, double r )
 {
@@ -530,19 +509,16 @@ static void uniedit_renderFactionDisks( double x, double y, double r )
    }
 }
 
-
 static void uniedit_renderVirtualAssets( double x, double y, double r )
 {
-   int i;
    glColour c;
-   StarSystem *sys;
-   double tx, ty, sr;
 
    c   = cWhite;
    c.a = 0.3;
 
-   for (i=0; i<array_size(systems_stack); i++) {
-      sys = system_getIndex( i );
+   for (int i=0; i<array_size(systems_stack); i++) {
+      double tx, ty, sr;
+      StarSystem *sys = system_getIndex( i );
 
       tx = x + sys->pos.x*uniedit_zoom;
       ty = y + sys->pos.y*uniedit_zoom;
@@ -555,19 +531,14 @@ static void uniedit_renderVirtualAssets( double x, double y, double r )
    }
 }
 
-
 static void uniedit_renderRadius( double x, double y, double r )
 {
-   int i;
-   glColour c;
-   StarSystem *sys;
-   double tx, ty, sr;
-
-   c   = cWhite;
+   glColour c = cWhite;
    c.a = 0.3;
 
-   for (i=0; i<array_size(systems_stack); i++) {
-      sys = system_getIndex( i );
+   for (int i=0; i<array_size(systems_stack); i++) {
+      double tx, ty, sr;
+      StarSystem *sys = system_getIndex( i );
 
       tx = x + sys->pos.x*uniedit_zoom;
       ty = y + sys->pos.y*uniedit_zoom;
@@ -580,22 +551,17 @@ static void uniedit_renderRadius( double x, double y, double r )
    }
 }
 
-
 static void uniedit_renderPresenceSum( double x, double y, double r )
 {
-   int i, j;
-   glColour c;
-   StarSystem *sys;
-   double tx, ty, sr, total;
-
-   c   = cWhite;
+   glColour c = cWhite;
    c.a = 0.3;
 
-   for (i=0; i<array_size(systems_stack); i++) {
-      sys = system_getIndex( i );
+   for (int i=0; i<array_size(systems_stack); i++) {
+      double tx, ty, sr;
+      StarSystem *sys = system_getIndex( i );
 
-      total = 0.;
-      for (j=0; j<array_size(sys->presence); j++)
+      double total = 0.;
+      for (int j=0; j<array_size(sys->presence); j++)
          total += MAX( 0., sys->presence[j].value );
 
       tx = x + sys->pos.x*uniedit_zoom;
@@ -608,7 +574,6 @@ static void uniedit_renderPresenceSum( double x, double y, double r )
       gl_renderCircle( tx, ty, sr, &c, 1 );
    }
 }
-
 
 /* @brief Renders important map stuff.
  */
@@ -654,7 +619,6 @@ void uniedit_renderMap( double bx, double by, double w, double h, double x, doub
    map_renderNames( bx, by, x, y, w, h, 1, 1. );
 }
 
-
 /**
  * @brief System editor custom widget rendering.
  */
@@ -662,8 +626,6 @@ static void uniedit_render( double bx, double by, double w, double h, void *data
 {
    (void) data;
    double x,y,r;
-   StarSystem *sys;
-   int i;
 
    uniedit_dt += naev_getrealdt();
 
@@ -674,15 +636,14 @@ static void uniedit_render( double bx, double by, double w, double h, void *data
    uniedit_renderMap( bx, by, w, h, x, y, r );
 
    /* Render the selected system selections. */
-   for (i=0; i<array_size(uniedit_sys); i++) {
-      sys = uniedit_sys[i];
+   for (int i=0; i<array_size(uniedit_sys); i++) {
+      StarSystem *sys = uniedit_sys[i];
       glUseProgram( shaders.selectplanet.program );
       glUniform1f( shaders.selectplanet.dt, uniedit_dt );
       gl_renderShader( x + sys->pos.x * uniedit_zoom, y + sys->pos.y * uniedit_zoom,
             1.5*r, 1.5*r, 0., &shaders.selectplanet, &cWhite, 1 );
    }
 }
-
 
 static char getValCol( double val )
 {
@@ -1045,7 +1006,6 @@ static int uniedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
    return 0;
 }
 
-
 /**
  * @brief Checks to see if a system name is already in use.
  *
@@ -1053,10 +1013,8 @@ static int uniedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
  */
 static int uniedit_checkName( const char *name )
 {
-   int i;
-
    /* Avoid name collisions. */
-   for (i=0; i<array_size(systems_stack); i++) {
+   for (int i=0; i<array_size(systems_stack); i++) {
       if (strcmp(name, system_getIndex(i)->name)==0) {
          dialogue_alert( _("The Star System '%s' already exists!"), name );
          return 1;
@@ -1065,15 +1023,11 @@ static int uniedit_checkName( const char *name )
    return 0;
 }
 
-
 char *uniedit_nameFilter( const char *name )
 {
-   int i, pos;
-   char *out;
-
-   out = calloc( 1, (strlen(name)+1)  );
-   pos = 0;
-   for (i=0; i<(int)strlen(name); i++) {
+   char *out = calloc( 1, (strlen(name)+1)  );
+   int pos = 0;
+   for (int i=0; i<(int)strlen(name); i++) {
       if (!ispunct(name[i])) {
          if (name[i] == ' ')
             out[pos] = '_';
@@ -1086,18 +1040,14 @@ char *uniedit_nameFilter( const char *name )
    return out;
 }
 
-
 /**
  * @brief Renames all the currently selected systems.
  */
 static void uniedit_renameSys (void)
 {
-   int i, j;
-   char *name, *oldName, *newName, *filtered;
-   StarSystem *sys;
-
-   for (i=0; i<array_size(uniedit_sys); i++) {
-      sys = uniedit_sys[i];
+   for (int i=0; i<array_size(uniedit_sys); i++) {
+      char *name, *oldName, *newName, *filtered;
+      StarSystem *sys = uniedit_sys[i];
 
       /* Get name. */
       name = dialogue_input( _("Rename Star System"), 1, 32, _("What do you want to rename #r%s#0?"), sys->name );
@@ -1132,11 +1082,10 @@ static void uniedit_renameSys (void)
       dsys_saveSystem(sys);
 
       /* Re-save adjacent systems. */
-      for (j=0; j<array_size(sys->jumps); j++)
+      for (int j=0; j<array_size(sys->jumps); j++)
          dsys_saveSystem( sys->jumps[j].target );
    }
 }
-
 
 /**
  * @brief Creates a new system.
@@ -1178,21 +1127,17 @@ static void uniedit_newSys( double x, double y )
       dsys_saveSystem( sys );
 }
 
-
 /**
  * @brief Toggles the jump point for the selected systems.
  */
 static void uniedit_toggleJump( StarSystem *sys )
 {
-   int i, j, rm;
-   StarSystem *isys, *target;
-
-   isys = NULL;
-   for (i=0; i<array_size(uniedit_sys); i++) {
-      isys  = uniedit_sys[i];
-      rm    = 0;
-      for (j=0; j<array_size(isys->jumps); j++) {
-         target = isys->jumps[j].target;
+   StarSystem *isys = NULL;
+   for (int i=0; i<array_size(uniedit_sys); i++) {
+      int rm = 0;
+      isys   = uniedit_sys[i];
+      for (int j=0; j<array_size(isys->jumps); j++) {
+         StarSystem *target = isys->jumps[j].target;
          /* Target already exists, remove. */
          if (target == sys) {
             uniedit_jumpRm( isys, sys );
@@ -1225,7 +1170,6 @@ static void uniedit_toggleJump( StarSystem *sys )
    uniedit_selectText();
 }
 
-
 /**
  * @brief Adds a new Star System jump.
  */
@@ -1242,7 +1186,6 @@ static void uniedit_jumpAdd( StarSystem *sys, StarSystem *targ )
    jp->flags   = JP_AUTOPOS; /* Will automatically create position. */
    jp->hide    = HIDE_DEFAULT_JUMP;
 }
-
 
 /**
  * @brief Removes a Star System jump.
@@ -1266,7 +1209,6 @@ static void uniedit_jumpRm( StarSystem *sys, StarSystem *targ )
    array_erase( &sys->jumps, &sys->jumps[i], &sys->jumps[i+1] );
 }
 
-
 /**
  * @brief Deselects selected targets.
  */
@@ -1284,7 +1226,6 @@ static void uniedit_deselect (void)
    window_modifyText( uniedit_wid, "txtNebula", _("N/A") );
    window_modifyText( uniedit_wid, "txtPresence", _("N/A") );
 }
-
 
 /**
  * @brief Adds a system to the selection.
@@ -1309,14 +1250,12 @@ static void uniedit_selectAdd( StarSystem *sys )
       window_disableButton( uniedit_wid, "btnOpen" );
 }
 
-
 /**
  * @brief Removes a system from the selection.
  */
 static void uniedit_selectRm( StarSystem *sys )
 {
-   int i;
-   for (i=0; i<array_size(uniedit_sys); i++) {
+   for (int i=0; i<array_size(uniedit_sys); i++) {
       if (uniedit_sys[i] == sys) {
          array_erase( &uniedit_sys, &uniedit_sys[i], &uniedit_sys[i+1] );
          uniedit_selectText();
@@ -1329,7 +1268,6 @@ static void uniedit_selectRm( StarSystem *sys )
    }
    WARN(_("Trying to remove system '%s' from selection when not selected."), sys->name);
 }
-
 
 /**
  * @brief Sets the selected system text.
@@ -1368,7 +1306,6 @@ void uniedit_selectText (void)
    }
 }
 
-
 /**
  * @brief Handles the button zoom clicks.
  *
@@ -1400,7 +1337,6 @@ static void uniedit_buttonZoom( unsigned int wid, const char* str )
    uniedit_xpos *= uniedit_zoom;
    uniedit_ypos *= uniedit_zoom;
 }
-
 
 /**
  * @brief Finds systems and assets.
@@ -1438,20 +1374,16 @@ static void uniedit_findSys (void)
    window_setFocus( wid, "inpFind" );
 }
 
-
 /**
  * @brief Searches for planets and systems.
  */
 static void uniedit_findSearch( unsigned int wid, const char *str )
 {
    (void) str;
-   int i, n, nplanets, nsystems;
+   int n, nplanets, nsystems;
    const char *name;
    char **planets, **systems;
-   const char *sysname;
    map_find_t *found;
-   StarSystem *sys;
-   Planet *pnt;
 
    name = window_getInput( wid, "inpFind" );
 
@@ -1467,17 +1399,17 @@ static void uniedit_findSearch( unsigned int wid, const char *str )
    n = 0;
 
    /* Add planets to the found table. */
-   for (i=0; i<nplanets; i++) {
+   for (int i=0; i<nplanets; i++) {
       /* Planet must be real. */
-      pnt = planet_get( planets[i] );
+      Planet *pnt = planet_get( planets[i] );
       if (pnt == NULL)
          continue;
 
-      sysname = planet_getSystem( planets[i] );
+      char *sysname = planet_getSystem( planets[i] );
       if (sysname == NULL)
          continue;
 
-      sys = system_get( sysname );
+      StarSystem *sys = system_get( sysname );
       if (sys == NULL)
          continue;
 
@@ -1493,8 +1425,8 @@ static void uniedit_findSearch( unsigned int wid, const char *str )
    free(planets);
 
    /* Add systems to the found table. */
-   for (i=0; i<nsystems; i++) {
-      sys = system_get( systems[i] );
+   for (int i=0; i<nsystems; i++) {
+      StarSystem *sys = system_get( systems[i] );
 
       /* Set some values. */
       found[n].pnt      = NULL;
@@ -1512,7 +1444,6 @@ static void uniedit_findSearch( unsigned int wid, const char *str )
    /* Display results. */
    uniedit_findShowResults( wid, found, n );
 }
-
 
 /**
  * @brief Generates the virtual asset list.
@@ -1547,7 +1478,6 @@ static void uniedit_findShowResults( unsigned int wid, map_find_t *found, int n 
          "lstResults", str, n, 0, uniedit_centerSystem, NULL );
 }
 
-
 /**
  * @brief Closes the search dialogue.
  */
@@ -1560,7 +1490,6 @@ static void uniedit_findSysClose( unsigned int wid, const char *name )
    /* Close the window. */
    window_close( wid, name );
 }
-
 
 /**
  * @brief Centers the selected system.
@@ -1586,7 +1515,6 @@ static void uniedit_centerSystem( unsigned int wid, const char *unused )
    uniedit_ypos = sys->pos.y * uniedit_zoom;
 }
 
-
 /**
  * @brief qsort compare function for map finds.
  */
@@ -1601,7 +1529,6 @@ static int uniedit_sortCompare( const void *p1, const void *p2 )
    /* Sort by name, nothing more. */
    return strcasecmp( f1->sys->name, f2->sys->name );
 }
-
 
 /**
  * @brief Edits an individual system or group of systems.
@@ -1721,13 +1648,12 @@ static void uniedit_editSys (void)
    uniedit_editGenList( wid );
 }
 
-
 /**
  * @brief Generates the virtual asset list.
  */
 static void uniedit_editGenList( unsigned int wid )
 {
-   int i, j, n;
+   int j, n;
    StarSystem *sys;
    const VirtualAsset *va;
    char **str;
@@ -1749,7 +1675,7 @@ static void uniedit_editGenList( unsigned int wid )
    str   = malloc( sizeof(char*) * (n+1) );
    if (has_assets) {
       /* Virtual asset button. */
-      for (i=0; i<n; i++) {
+      for (int i=0; i<n; i++) {
          va    = sys->assets_virtual[i];
          str[j++] = strdup( va->name );
       }
@@ -1771,7 +1697,6 @@ static void uniedit_editGenList( unsigned int wid )
       window_addButton( wid, -40-BUTTON_WIDTH, y+3, BUTTON_WIDTH, BUTTON_HEIGHT,
             "btnAddAsset", _("Add"), uniedit_btnEditAddAsset );
 }
-
 
 /**
  * @brief Closes the system property editor, saving the changes made.
@@ -1808,7 +1733,6 @@ static void uniedit_editSysClose( unsigned int wid, const char *name )
    window_close( wid, name );
 }
 
-
 /**
  * @brief Removes a selected asset.
  */
@@ -1838,7 +1762,6 @@ static void uniedit_btnEditRmAsset( unsigned int wid, const char *unused )
    uniedit_editGenList( wid );
 }
 
-
 /**
  * @brief Adds a new virtual asset.
  */
@@ -1847,7 +1770,6 @@ static void uniedit_btnEditAddAsset( unsigned int parent, const char *unused )
    (void) parent;
    (void) unused;
    unsigned int wid;
-   int i;
    const VirtualAsset *va;
    char **str;
    int h;
@@ -1864,8 +1786,8 @@ static void uniedit_btnEditAddAsset( unsigned int parent, const char *unused )
    window_setCancel( wid, window_close );
 
    /* Add virtual asset list. */
-   str  = malloc( sizeof(char*) * array_size(va) );
-   for (i=0; i<array_size(va); i++)
+   str = malloc( sizeof(char*) * array_size(va) );
+   for (int i=0; i<array_size(va); i++)
       str[i] = strdup( va[i].name );
    h = UNIEDIT_EDIT_HEIGHT-60-(BUTTON_HEIGHT+20);
    window_addList( wid, 20, -40, UNIEDIT_EDIT_WIDTH-40, h,
@@ -1879,7 +1801,6 @@ static void uniedit_btnEditAddAsset( unsigned int parent, const char *unused )
    window_addButton( wid, -20-(BUTTON_WIDTH+20), 20, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnAdd", _("Add"), uniedit_btnEditAddAssetAdd );
 }
-
 
 /**
  * @brief Actually adds the virtual asset.
@@ -1914,7 +1835,6 @@ static void uniedit_btnEditAddAssetAdd( unsigned int wid, const char *unused )
    window_close( wid, unused );
 }
 
-
 /**
  * @brief Renames the systems in the system editor.
  */
@@ -1930,7 +1850,6 @@ static void uniedit_btnEditRename( unsigned int wid, const char *unused )
    snprintf( buf, sizeof(buf), _("Name: %s"), (array_size(uniedit_sys) > 1) ? _("#rvarious") : uniedit_sys[0]->name );
    window_modifyText( wid, "txtName", buf );
 }
-
 
 /**
  * @brief Actually adds the virtual asset.
