@@ -16,6 +16,13 @@ void ovr_render( double dt );
 void ovr_refresh (void);
 void ovr_initAlpha (void);
 
+/* Size stuff. */
+void ovr_boundsSet( double top, double right, double bottom, double left );
+void ovr_boundsGet( double *top, double *right, double *bottom, double *left );
+void ovr_dim( double *w, double *h );
+void ovr_center( double *x, double *y );
+void ovr_scale( double *x, double *y );
+
 /* Markers. */
 void ovr_mrkFree (void);
 void ovr_mrkClear (void);

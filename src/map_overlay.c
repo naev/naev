@@ -59,6 +59,20 @@ static double ovr_res = 10.;  /**< Resolution. */
 static double ovr_dt = 0.; /**< For animations and stuff. */
 static const double ovr_text_pixbuf = 5.; /**< Extra margin around overlay text. */
 /* Rem: high pix_buffer ovr_text_pixbuff allows to do less iterations. */
+typedef struct OverlayBounds_s {
+   double t;
+   double r;
+   double b;
+   double l;
+   double w;
+   double h;
+   double x;
+   double y;
+   double sx;
+   double sy;
+   int init;
+} OverlayBounds_t;
+static OverlayBounds_t ovr_bounds;
 
 /*
  * Prototypes
@@ -74,7 +88,7 @@ static void ovr_refresh_uzawa_overlap( float *forces_x, float *forces_y,
       float *offx, float *offy, float *offdx, float *offdy );
 /* Render. */
 static int ovr_safelaneKnown( SafeLane *sf, Vector2d *posns[2] );
-void map_overlayToScreenPos( double *ox, double *oy, double x, double y );
+static void map_overlayToScreenPos( double *ox, double *oy, double x, double y );
 /* Markers. */
 static void ovr_mrkRenderAll( double res );
 static void ovr_mrkCleanup(  ovr_marker_t *mrk );
@@ -88,13 +102,58 @@ int ovr_isOpen (void)
    return !!ovr_open;
 }
 
+static void ovr_boundsUpdate (void)
+{
+   ovr_bounds.w = SCREEN_W - ovr_bounds.l - ovr_bounds.r;
+   ovr_bounds.h = SCREEN_H - ovr_bounds.t - ovr_bounds.b;
+   ovr_bounds.x = ovr_bounds.w / 2. + ovr_bounds.l;
+   ovr_bounds.y = ovr_bounds.h / 2. + ovr_bounds.b;
+   ovr_bounds.sx = ovr_bounds.w / SCREEN_W;
+   ovr_bounds.sy = ovr_bounds.h / SCREEN_H;
+}
+
+void ovr_boundsSet( double top, double right, double bottom, double left )
+{
+   ovr_bounds.t = top;
+   ovr_bounds.r = right;
+   ovr_bounds.b = bottom;
+   ovr_bounds.l = left;
+   ovr_boundsUpdate();
+}
+
+void ovr_boundsGet( double *top, double *right, double *bottom, double *left )
+{
+   *top = ovr_bounds.t;
+   *right = ovr_bounds.r;
+   *bottom = ovr_bounds.b;
+   *left = ovr_bounds.l;
+}
+
+void ovr_dim( double *w, double *h )
+{
+   *w = ovr_bounds.w;
+   *h = ovr_bounds.h;
+}
+
+void ovr_center( double *x, double *y )
+{
+   *x = ovr_bounds.x;
+   *y = ovr_bounds.y;
+}
+
+void ovr_scale( double *sx, double *sy )
+{
+   *sx = ovr_bounds.sx;
+   *sy = ovr_bounds.sy;
+}
+
 /**
  * @brief Converts map positions to screen positions for rendering.
  */
-void map_overlayToScreenPos( double *ox, double *oy, double x, double y )
+static void map_overlayToScreenPos( double *ox, double *oy, double x, double y )
 {
-   *ox = map_overlay_center_x() + x / ovr_res;
-   *oy = map_overlay_center_y() + y / ovr_res;
+   *ox = ovr_bounds.x + x / ovr_res;
+   *oy = ovr_bounds.y + y / ovr_res;
 }
 
 /**
@@ -128,8 +187,8 @@ int ovr_input( SDL_Event *event )
    gl_windowToScreenPos( &mx, &my, mx, my );
 
    /* Translate to space coords. */
-   x = ((double)mx - (double)map_overlay_center_x()) * ovr_res;
-   y = ((double)my - (double)map_overlay_center_y()) * ovr_res;
+   x = ((double)mx - ovr_bounds.x) * ovr_res;
+   y = ((double)my - ovr_bounds.y) * ovr_res;
 
    return input_clickPos( event, x, y, 1., 10. * ovr_res, 15. * ovr_res );
 }
@@ -150,6 +209,9 @@ void ovr_refresh (void)
    /* Must be open. */
    if (!ovr_isOpen())
       return;
+
+   /* Update bounds if necessary. */
+   ovr_boundsUpdate();
 
    /* Calculate max size. */
    items = 0;
@@ -189,7 +251,7 @@ void ovr_refresh (void)
    }
 
    /* We need to calculate the radius of the rendering from the maximum radius of the system. */
-   ovr_res = 2. * 1.2 * MAX( max_x / map_overlay_width(), max_y / map_overlay_height() );
+   ovr_res = 2. * 1.2 * MAX( max_x / ovr_bounds.w, max_y / ovr_bounds.h );
    for (int i=0; i<items; i++)
       mo[i]->radius = MAX( 2.+mo[i]->radius / ovr_res, i<jumpitems ? 5. : 7.5 );
 
@@ -585,14 +647,14 @@ void ovr_render( double dt )
       return;
 
    /* Default values. */
-   w     = map_overlay_width();
-   h     = map_overlay_height();
+   w     = ovr_bounds.w;
+   h     = ovr_bounds.h;
    res   = ovr_res;
    ovr_dt += dt;
 
    /* First render the background overlay. */
    glColour c = { .r=0., .g=0., .b=0., .a= conf.map_overlay_opacity };
-   gl_renderRect( (double)gui_getMapOverlayBoundLeft(), (double)gui_getMapOverlayBoundRight(), w, h, &c );
+   gl_renderRect( ovr_bounds.l, ovr_bounds.r, w, h, &c );
 
    /* Render the safe lanes */
    safelanes = safelanes_get( -1, 0, cur_system );

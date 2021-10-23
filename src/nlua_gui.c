@@ -1,13 +1,11 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
 /**
  * @file nlua_gui.c
  *
  * @brief Bindings for GUI functionality from Lua.
  */
-
 /** @cond */
 #include <lauxlib.h>
 
@@ -22,9 +20,9 @@
 #include "info.h"
 #include "log.h"
 #include "menu.h"
+#include "map_overlay.h"
 #include "nlua_tex.h"
 #include "nluadef.h"
-
 
 /* GUI methods. */
 static int guiL_viewport( lua_State *L );
@@ -59,9 +57,6 @@ static const luaL_Reg guiL_methods[] = {
    {0,0}
 }; /**< GUI methods. */
 
-
-
-
 /**
  * @brief Loads the GUI library.
  *
@@ -76,7 +71,6 @@ int nlua_loadGUI( nlua_env env )
    return 0;
 }
 
-
 /**
  * @brief Lua bindings to interact with the GUI elements.
  *
@@ -87,7 +81,6 @@ int nlua_loadGUI( nlua_env env )
  *
  * @luamod gui
  */
-
 
 /**
  * @brief Sets the gui viewport.
@@ -108,21 +101,18 @@ int nlua_loadGUI( nlua_env env )
  */
 static int guiL_viewport( lua_State *L )
 {
-   double x,y, w,h;
-
    NLUA_CHECKRW(L);
 
    /* Parameters. */
-   x = luaL_checknumber(L,1);
-   y = luaL_checknumber(L,2);
-   w = luaL_checknumber(L,3);
-   h = luaL_checknumber(L,4);
+   double x = luaL_checknumber(L,1);
+   double y = luaL_checknumber(L,2);
+   double w = luaL_checknumber(L,3);
+   double h = luaL_checknumber(L,4);
 
    /* Set the viewport. */
    gui_setViewport( x, y, w, h );
    return 0;
 }
-
 
 /**
  * @brief Sets the position for the fps stuff.
@@ -135,14 +125,12 @@ static int guiL_viewport( lua_State *L )
  */
 static int guiL_fpsPos( lua_State *L )
 {
-   double x,y;
    NLUA_CHECKRW(L);
-   x = luaL_checknumber(L,1);
-   y = luaL_checknumber(L,2);
+   double x = luaL_checknumber(L,1);
+   double y = luaL_checknumber(L,2);
    fps_setPos( x, y );
    return 0;
 }
-
 
 /**
  * @brief Initializes the mission OSD (on-screen display).
@@ -155,21 +143,18 @@ static int guiL_fpsPos( lua_State *L )
  */
 static int guiL_osdInit( lua_State *L )
 {
-   int x,y, w,h;
-
    NLUA_CHECKRW(L);
 
    /* Parameters. */
-   x = luaL_checkinteger(L,1);
-   y = luaL_checkinteger(L,2);
-   w = luaL_checkinteger(L,3);
-   h = luaL_checkinteger(L,4);
+   int x = luaL_checkinteger(L,1);
+   int y = luaL_checkinteger(L,2);
+   int w = luaL_checkinteger(L,3);
+   int h = luaL_checkinteger(L,4);
 
    /* Set up. */
    osd_setup( x, y, w, h );
    return 0;
 }
-
 
 /**
  * @brief Sets up the message box from which the player receives input.
@@ -181,20 +166,17 @@ static int guiL_osdInit( lua_State *L )
  */
 static int guiL_mesgInit( lua_State *L )
 {
-   int w, x, y;
-
    NLUA_CHECKRW(L);
 
    /* Parse parameters. */
-   w = luaL_checkinteger( L, 1 );
-   x = luaL_checkinteger( L, 2 );
-   y = luaL_checkinteger( L, 3 );
+   int w = luaL_checkinteger( L, 1 );
+   int x = luaL_checkinteger( L, 2 );
+   int y = luaL_checkinteger( L, 3 );
 
    /* Initialize. */
    gui_messageInit( w, x, y );
    return 0;
 }
-
 
 /**
  * @brief Sets the center of the omsg messages and width.
@@ -206,20 +188,17 @@ static int guiL_mesgInit( lua_State *L )
  */
 static int guiL_omsgInit( lua_State *L )
 {
-   double w, x, y;
-
    NLUA_CHECKRW(L);
 
    /* Parse parameters. */
-   w = luaL_checkinteger( L, 1 );
-   x = luaL_checkinteger( L, 2 );
-   y = luaL_checkinteger( L, 3 );
+   double w = luaL_checkinteger( L, 1 );
+   double x = luaL_checkinteger( L, 2 );
+   double y = luaL_checkinteger( L, 3 );
 
    /* Initialize. */
    omsg_position( x, y, w );
    return 0;
 }
-
 
 /**
  * @brief Initializes the radar.
@@ -251,7 +230,6 @@ static int guiL_radarInit( lua_State *L )
    return 1;
 }
 
-
 /**
  * @brief Renders the radar.
  *
@@ -263,19 +241,16 @@ static int guiL_radarInit( lua_State *L )
  */
 static int guiL_radarRender( lua_State *L )
 {
-   double x, y;
-
    NLUA_CHECKRW(L);
 
    /* Parse parameters. */
-   x     = luaL_checknumber( L, 1 );
-   y     = luaL_checknumber( L, 2 );
+   double x = luaL_checknumber( L, 1 );
+   double y = luaL_checknumber( L, 2 );
 
    /* Render the radar. */
    gui_radarRender( x, y );
    return 0;
 }
-
 
 /**
  * @brief Sets the Lua planet target GFX.
@@ -290,7 +265,6 @@ static int guiL_targetPlanetGFX( lua_State *L )
    return 0;
 }
 
-
 /**
  * @brief Sets the Lua pilot target GFX.
  *
@@ -303,7 +277,6 @@ static int guiL_targetPilotGFX( lua_State *L )
    gui_targetPilotGFX( luaL_checktex( L, 1 ) );
    return 0;
 }
-
 
 /**
  * @brief Enables mouse clicking callback.
@@ -327,7 +300,6 @@ static int guiL_mouseClickEnable( lua_State *L )
    return 0;
 }
 
-
 /**
  * @brief Enables mouse movement callback.
  *
@@ -349,7 +321,6 @@ static int guiL_mouseMoveEnable( lua_State *L )
    gui_mouseMoveEnable( b );
    return 0;
 }
-
 
 /**
  * @brief Opens the info menu window.
@@ -409,7 +380,6 @@ static int guiL_menuInfo( lua_State *L )
    return 0;
 }
 
-
 /**
  * @brief Opens the small menu window.
  *
@@ -427,7 +397,6 @@ static int guiL_menuSmall( lua_State *L )
    return 0;
 }
 
-
 /**
  * @brief Sets map boundaries
  *
@@ -439,15 +408,13 @@ static int guiL_menuSmall( lua_State *L )
  */
 static int guiL_setMapOverlayBounds( lua_State *L )
 {
-   int top, right, bottom, left;
    NLUA_CHECKRW(L);
 
-   top = luaL_checkinteger(L,1);
-   right = luaL_checkinteger(L,2);
-   bottom = luaL_checkinteger(L,3);
-   left = luaL_checkinteger(L,4);
+   int top    = luaL_checkinteger(L,1);
+   int right  = luaL_checkinteger(L,2);
+   int bottom = luaL_checkinteger(L,3);
+   int left   = luaL_checkinteger(L,4);
 
-   gui_setMapOverlayBounds(top, right, bottom, left);
+   ovr_boundsSet( top, right, bottom, left );
    return 0;
 }
-

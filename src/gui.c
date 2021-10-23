@@ -95,53 +95,6 @@ static double gui_viewport_w = 0.; /**< GUI Viewport width. */
 static double gui_viewport_h = 0.; /**< GUI Viewport height. */
 
 /**
- * Map overlay
- */
-/**
- * @struct MapOverlay
- *
- * @brief Represents map overlay config values
- */
-typedef struct MapOverlay_ {
-   /* GUI parameters */
-   int boundTop;
-   int boundRight;
-   int boundBottom;
-   int boundLeft;
-} MapOverlay;
-static MapOverlay map_overlay = {
-  .boundTop    = 0,
-  .boundRight  = 0,
-  .boundBottom = 0,
-  .boundLeft   = 0,
-};
-
-int map_overlay_height(void)
-{
-   return SCREEN_H - map_overlay.boundTop - map_overlay.boundBottom;
-}
-int map_overlay_width(void)
-{
-   return SCREEN_W - map_overlay.boundLeft - map_overlay.boundRight;
-}
-int map_overlay_center_x(void)
-{
-   return map_overlay_width() / 2 + map_overlay.boundLeft;
-}
-int map_overlay_center_y(void)
-{
-   return map_overlay_height() / 2 + map_overlay.boundBottom;
-}
-double map_overlay_scale_x(void)
-{
-  return (double)map_overlay_width() / (double)SCREEN_W;
-}
-double map_overlay_scale_y(void)
-{
-  return (double)map_overlay_height() / (double)SCREEN_H;
-}
-
-/**
  * @struct Radar
  *
  * @brief Represents the player's radar.
@@ -885,64 +838,6 @@ void gui_cooldownEnd (void)
 }
 
 /**
- * @brief Sets map overlay bounds.
- *
- *    @param top Top boundary in pixels
- *    @param right Right boundary in pixels
- *    @param bottom Bottom boundary in pixels
- *    @param left Left boundary in pixels
- *
- *    @return 0 on success
- */
-void gui_setMapOverlayBounds( int top, int right, int bottom, int left )
-{
-   map_overlay.boundTop = top;
-   map_overlay.boundRight = right;
-   map_overlay.boundBottom = bottom;
-   map_overlay.boundLeft = left;
-}
-
-/**
- * @brief Gets map overlay bound (top)
- *
- *    @return Map overlay bound (top) in px
- */
-int gui_getMapOverlayBoundTop(void)
-{
-  return map_overlay.boundTop;
-}
-
-/**
- * @brief Gets map overlay bound (right)
- *
- *    @return Map overlay bound (right) in px
- */
-int gui_getMapOverlayBoundRight(void)
-{
-  return map_overlay.boundRight;
-}
-
-/**
- * @brief Gets map overlay bound (bottom)
- *
- *    @return Map overlay bound (bottom) in px
- */
-int gui_getMapOverlayBoundBottom(void)
-{
-  return map_overlay.boundBottom;
-}
-
-/**
- * @brief Gets map overlay bound (left)
- *
- *    @return Map overlay bound (left) in px
- */
-int gui_getMapOverlayBoundLeft(void)
-{
-  return map_overlay.boundLeft;
-}
-
-/**
  * @brief Initializes the radar.
  *
  *    @param circle Whether or not the radar is circular.
@@ -1217,8 +1112,10 @@ void gui_renderPilot( const Pilot* p, RadarShape shape, double w, double h, doub
 
    /* Transform coordinates into the 0,0 -> SCREEN_W, SCREEN_H range. */
    if (overlay) {
-      x += map_overlay_center_x();
-      y += map_overlay_center_y();
+      double ox, oy;
+      ovr_center( &ox, &oy );
+      x += ox;
+      y += oy;
       w *= 2.;
       h *= 2.;
    }
@@ -1294,8 +1191,10 @@ void gui_renderAsteroid( const Asteroid* a, double w, double h, double res, int 
 
    /* Transform coordinates into the 0,0 -> SCREEN_W, SCREEN_H range. */
    if (overlay) {
-      x += map_overlay_center_x();
-      y += map_overlay_center_y();
+      double ox, oy;
+      ovr_center( &ox, &oy );
+      x += ox;
+      y += oy;
       w *= 2.;
       h *= 2.;
    }
@@ -1333,8 +1232,10 @@ void gui_renderPlayer( double res, int overlay )
     * larger than a capital ship.. */
    r = (sqrt(24.) + 1.)/2. * (1. + RADAR_RES_REF / res );
    if (overlay) {
-      x = player.p->solid->pos.x / res + map_overlay_center_x();
-      y = player.p->solid->pos.y / res + map_overlay_center_y();
+      double ox, oy;
+      ovr_center( &ox, &oy );
+      x = player.p->solid->pos.x / res + ox;
+      y = player.p->solid->pos.y / res + oy;
       r = MAX( 17., r );
    } else {
       x = y = 0.;
@@ -1475,9 +1376,11 @@ void gui_renderPlanet( int ind, RadarShape shape, double w, double h, double res
    }
 
    if (overlay) {
+      double ox, oy;
+      ovr_center( &ox, &oy );
       /* Transform coordinates. */
-      cx += map_overlay_center_x();
-      cy += map_overlay_center_y();
+      cx += ox;
+      cy += oy;
       w  *= 2.;
       h  *= 2.;
    }
@@ -1565,9 +1468,11 @@ void gui_renderJumpPoint( int ind, RadarShape shape, double w, double h, double 
    }
 
    if (overlay) {
+      double ox, oy;
+      ovr_center( &ox, &oy );
       /* Transform coordinates. */
-      cx += map_overlay_center_x();
-      cy += map_overlay_center_y();
+      cx += ox;
+      cy += oy;
       w  *= 2.;
       h  *= 2.;
    }
