@@ -1,14 +1,11 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
 /**
  * @file nlua_evt.c
  *
  * @brief Handles the event Lua bindings.
  */
-
-
 /** @cond */
 #include <math.h>
 #include <stdio.h>
@@ -32,7 +29,6 @@
 #include "nstring.h"
 #include "player.h"
 
-
 /**
  * @brief Event system Lua bindings.
  *
@@ -43,7 +39,6 @@
  *
  * @luamod evt
  */
-
 
 /*
  * libraries
@@ -63,7 +58,6 @@ static const luaL_Reg evtL_methods[] = {
    {0,0}
 }; /**< Mission Lua methods. */
 
-
 /*
  * individual library loading
  */
@@ -77,16 +71,13 @@ int nlua_loadEvt( nlua_env env )
    return 0;
 }
 
-
 /**
  * @brief Starts running a function, allows programmer to set up arguments.
  */
 void event_runStart( unsigned int eventid, const char *func )
 {
    uintptr_t *evptr;
-   Event_t *ev;
-
-   ev = event_get( eventid );
+   Event_t *ev = event_get( eventid );
    if (ev == NULL)
       return;
 
@@ -98,7 +89,6 @@ void event_runStart( unsigned int eventid, const char *func )
    /* Get function. */
    nlua_getenv(ev->env, func );
 }
-
 
 /**
  * @brief Runs the event function.
@@ -114,7 +104,6 @@ int event_run( unsigned int eventid, const char *func )
    ret = event_runFunc( eventid, func, 0 );
    return ret;
 }
-
 
 /**
  * @brief Gets the current running event from user data.
@@ -132,7 +121,6 @@ Event_t *event_getFromLua( lua_State *L )
    return ev;
 }
 
-
 /**
  * @brief Runs a function previously set up with event_runStart.
  *
@@ -149,7 +137,6 @@ int event_runFunc( unsigned int eventid, const char *func, int nargs )
    ev = event_get( eventid );
    if (ev == NULL)
       return 0;
-
 
    ret = nlua_pcall(ev->env, nargs, 0);
    if (ret != 0) { /* error has occurred */
@@ -176,7 +163,6 @@ int event_runFunc( unsigned int eventid, const char *func, int nargs )
 
    return ret;
 }
-
 
 /**
  * @brief Adds an NPC.
@@ -230,7 +216,6 @@ static int evtL_npcAdd( lua_State *L )
    return 0;
 }
 
-
 /**
  * @brief Removes an NPC.
  *
@@ -257,7 +242,6 @@ static int evtL_npcRm( lua_State *L )
    return 0;
 }
 
-
 /**
  * @brief Finishes the event.
  *
@@ -268,12 +252,8 @@ static int evtL_npcRm( lua_State *L )
  */
 static int evtL_finish( lua_State *L )
 {
-   int b;
-   Event_t *cur_event;
-
-   cur_event = event_getFromLua(L);
-
-   b = lua_toboolean(L,1);
+   Event_t *cur_event = event_getFromLua(L);
+   int b = lua_toboolean(L,1);
    lua_pushboolean( L, 1 );
    nlua_setenv(cur_event->env, "__evt_delete");
 
@@ -286,7 +266,6 @@ static int evtL_finish( lua_State *L )
    return 0;
 }
 
-
 /**
  * @brief Saves an event.
  *
@@ -298,16 +277,14 @@ static int evtL_finish( lua_State *L )
 static int evtL_save( lua_State *L )
 {
    int b;
-   Event_t *cur_event;
+   Event_t *cur_event = event_getFromLua(L);
    if (lua_gettop(L)==0)
       b = 1;
    else
       b = lua_toboolean(L,1);
-   cur_event = event_getFromLua(L);
    cur_event->save = b;
    return 0;
 }
-
 
 /**
  * @brief Tries to claim systems or strings.
@@ -386,4 +363,3 @@ static int evtL_claim( lua_State *L )
    lua_pushboolean(L,1);
    return 1;
 }
-
