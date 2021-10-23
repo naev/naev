@@ -61,10 +61,11 @@ local lmisn = require "lmisn"
 --]]
 misn_state = nil
 
-cargo_type  = "Food"
-cargo_q     = 5
-reward_amount = 40e3
-outfit_tobuy = outfit.get("Ion Cannon")
+-- Constants
+local cargo_type  = "Food"
+local cargo_q     = 5
+local reward_amount = 40e3
+local outfit_tobuy = outfit.get("Ion Cannon") -- If changed, references to ion cannons/damage below should too.
 
 function create ()
    -- Save current system to return to
@@ -198,7 +199,7 @@ function land ()
       local nel = vn.newCharacter( tutnel.vn_nelly() )
       vn.transition( tutnel.nelly.transition )
       vn.na(fmt.f(_([[You land on {pntname} and the dockworkers offload your cargo. This delivery stuff is quite easy.]]),{pntname=destpnt:name()}))
-      nel(fmt.f(_([["Say, I heard this place sells #o{outfit}s#0. If you want to be able to take down ships non-lethally, #oion damage#0 is your best bet. Here, I'll forward you {credits}. Do you need help buying and equipping the outfit?"]]),{outfit=outfit_tobuy:name(), credits=fmt.credits(outfit_tobuy:price())}))
+      nel(fmt.f(_([["Say, I heard this place sells #oIon Cannons#0. If you want to be able to take down ships non-lethally, #oion damage#0 is your best bet. Here, I'll forward you {credits}. Do you need help buying and equipping the outfit?"]]),{credits=fmt.credits(outfit_tobuy:price())}))
       vn.func( function ()
          player.pay( outfit_tobuy:price() )
       end )
