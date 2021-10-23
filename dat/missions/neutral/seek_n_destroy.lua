@@ -255,10 +255,10 @@ function enter ()
          misn.osdActive( 2 )
 
          -- Get the position of the target
-         jp  = jump.get(system.cur(), last_sys)
+         local jp  = jump.get(system.cur(), last_sys)
          if jp ~= nil then
-            x = 6000 * rnd.rnd() - 3000
-            y = 6000 * rnd.rnd() - 3000
+            local x = 6000 * rnd.rnd() - 3000
+            local y = 6000 * rnd.rnd() - 3000
             pos = jp:pos() + vec2.new(x,y)
          else
             pos = nil
@@ -280,8 +280,8 @@ function enter ()
          jumpout = hook.jumpout( "player_flee" )
 
          -- If the target is weaker, runaway
-         pstat = player.pilot():stats()
-         tstat = target_ship:stats()
+         local pstat = player.pilot():stats()
+         local tstat = target_ship:stats()
          if ( (1.1*(pstat.armour + pstat.shield)) > (tstat.armour + tstat.shield) ) then
             target_ship:control()
             target_ship:runaway(player.pilot())
@@ -293,7 +293,8 @@ end
 
 -- Enemies wait for the player
 function trigger_ambush()
-   jp     = jump.get(system.cur(), last_sys)
+   local jp     = jump.get(system.cur(), last_sys)
+   local x, y
    ambush = {}
 
    x = 4000 * rnd.rnd() - 2000
@@ -330,9 +331,9 @@ function ambust_msg()
 end
 
 function spawn_advisor ()
-   jp     = jump.get(system.cur(), last_sys)
-   x = 4000 * rnd.rnd() - 2000
-   y = 4000 * rnd.rnd() - 2000
+   local jp     = jump.get(system.cur(), last_sys)
+   local x = 4000 * rnd.rnd() - 2000
+   local y = 4000 * rnd.rnd() - 2000
    pos = jp:pos() + vec2.new(x,y)
 
    advisor = pilot.add( "Lancelot", "Mercenary", pos, nil, {ai="baddie_norun"} )
@@ -482,8 +483,8 @@ end
 
 -- Decides if the pilot is scared by the player
 function isScared (t)
-   pstat = player.pilot():stats()
-   tstat = t:stats()
+   local pstat = player.pilot():stats()
+   local tstat = t:stats()
 
    -- If target is stronger, no fear
    if tstat.armour+tstat.shield > 1.1 * (pstat.armour+pstat.shield) and rnd.rnd() > .2 then
