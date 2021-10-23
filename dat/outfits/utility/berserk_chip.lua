@@ -1,10 +1,10 @@
-require 'outfits.shaders'
+local osh = require 'outfits.shaders'
 
 local threshold = 30 -- armour shield damage to turn off at
 local cooldown = 8 -- cooldown time in seconds
 local drain_shield = 1.0 / 2.0 -- inverse of number of seconds needed to drain shield
 local drain_armour = 1.0 / 50.0 -- inverse of number of seconds needed to drain armour (this is accelerated by this amount every second)
-ppshader = shader_new([[
+local oshader = osh.new([[
 #include "lib/blend.glsl"
 const vec3 colmod = vec3( 1.0, 0.0, 0.0 );
 uniform float progress = 0;
@@ -40,7 +40,7 @@ local function turnon( p, po )
    po:set( "shield_regen_malus",  ps.shield * drain_shield ) -- shield gone in 2 secs
 
    -- Visual effect
-   if mem.isp then shader_on() end
+   if mem.isp then oshader:on() end
 
    return true
 end
@@ -53,7 +53,7 @@ local function turnoff( _p, po )
    po:progress(1)
    mem.timer = cooldown
    mem.active = false
-   shader_off()
+   oshader:off()
    po:set( "armour_regen_malus", 0 )
    po:set( "shield_regen_malus",  0 )
    po:set( "launch_damage", -20 )
@@ -71,12 +71,12 @@ function init( p, po )
    po:state("off")
    po:clear() -- clear stat modifications
    mem.isp = (p == player.pilot())
-   shader_force_off()
+   oshader:force_off()
 end
 
 function update( p, po, dt )
    if mem.active then
-      shader_update_on(dt)
+      oshader:update_on(dt)
       local a = p:health()
       if a < threshold then
          turnoff( p, po )
@@ -86,14 +86,14 @@ function update( p, po, dt )
       end
    else
       if mem.timer then
-         shader_update_cooldown(dt)
+         oshader:update_cooldown(dt)
          mem.timer = mem.timer - dt
          po:progress( mem.timer / cooldown )
          if mem.timer < 0 then
             po:state("off")
             po:clear() -- clear stat modifications
             mem.timer = nil
-            shader_force_off()
+            oshader:force_off()
          end
       end
    end

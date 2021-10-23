@@ -1,8 +1,8 @@
-require 'outfits.shaders'
+local osh = require 'outfits.shaders'
 
 local active = 5 -- active time in seconds
 local cooldown = 20 -- cooldown time in seconds
-ppshader = shader_new([[
+local oshader = osh.new([[
 #include "lib/blend.glsl"
 #include "lib/colour.glsl"
 const vec3 colmod = vec3( 1.0, 0.0, 0.0 );
@@ -29,7 +29,7 @@ local function turnon( _p, po )
    mem.active = true
 
    -- Visual effect
-   if mem.isp then shader_on() end
+   if mem.isp then oshader:on() end
    return true
 end
 
@@ -41,7 +41,7 @@ local function turnoff( _p, po )
    po:progress(1)
    mem.timer = cooldown
    mem.active = false
-   shader_off()
+   oshader:off()
    return true
 end
 
@@ -51,7 +51,7 @@ function init( p, po )
    po:state("off")
    po:clear() -- clear stat modifications
    mem.isp = (p == player.pilot())
-   shader_force_off()
+   oshader:force_off()
 end
 
 function update( p, po, dt )
@@ -59,18 +59,18 @@ function update( p, po, dt )
 
    mem.timer = mem.timer - dt
    if mem.active then
-      shader_update_on( dt )
+      oshader:update_on( dt )
       po:progress( mem.timer / active )
       if mem.timer < 0 then
          turnoff( p, po )
       end
    else
-      shader_update_cooldown( dt )
+      oshader:update_cooldown( dt )
       po:progress( mem.timer / cooldown )
       if mem.timer < 0 then
          po:state("off")
          mem.timer = nil
-         shader_force_off()
+         oshader:force_off()
       end
    end
 end

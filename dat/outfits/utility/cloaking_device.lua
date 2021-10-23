@@ -1,10 +1,10 @@
-require 'outfits.shaders'
+local osh = require 'outfits.shaders'
 
 local active = 10 -- active time in seconds
 local cooldown = 15 -- cooldown time in seconds
 local shielddrain = 2 -- How fast shield drains
 local energydrain = 0.1 -- How much energy per ton of mess
-ppshader = shader_new([[
+local oshader = osh.new([[
 #include "lib/blend.glsl"
 const vec3 colmod = vec3( 0.0, 0.5, 1.0 );
 uniform float progress = 0;
@@ -16,7 +16,7 @@ vec4 effect( sampler2D tex, vec2 texcoord, vec2 pixcoord )
    return color;
 }
 ]])
-shader_fade = 1
+oshader.fade = 1
 
 
 local function turnon( p, po )
@@ -36,7 +36,7 @@ local function turnon( p, po )
    -- Make invisible
    p:setInvisible( true )
    if mem.isp then
-      shader_on()
+      oshader:on()
    else
       p:setNoRender( true )
    end
@@ -57,7 +57,7 @@ local function turnoff( p, po )
    p:setNoRender( false )
 
    -- Turn off shader
-   shader_off()
+   oshader:off()
 
    mem.timer = cooldown
    mem.active = false
@@ -69,20 +69,20 @@ function init( p, po )
    mem.timer = nil
    po:state("off")
    mem.isp = (p == player.pilot())
-   shader_force_off()
+   oshader:force_off()
 end
 
 function update( p, po, dt )
    if not mem.timer then return end
    mem.timer = mem.timer - dt
    if mem.active then
-      shader_update_on(dt)
+      oshader:update_on(dt)
       po:progress( mem.timer / active )
       if mem.timer < 0 then
          turnoff( p, po )
       end
    else
-      shader_update_cooldown(dt)
+      oshader:update_cooldown(dt)
       po:progress( mem.timer / cooldown )
       if mem.timer < 0 then
          po:state("off")

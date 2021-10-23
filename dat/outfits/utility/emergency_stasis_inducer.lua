@@ -1,9 +1,9 @@
-require 'outfits.shaders'
+local osh = require 'outfits.shaders'
 
 -- Global constant variables for the outfit
 local cooldown = 8 -- cooldown period in seconds
 local ontime = 3 -- powered on time in seconds (it gets modulated by time_mod)
-ppshader = shader_new([[
+local oshader = osh.new([[
 #include "lib/blend.glsl"
 #include "lib/colour.glsl"
 const vec3 colmod = vec3( 1.0, 0.0, 0.0 );
@@ -24,11 +24,11 @@ function init( p, po )
    mem.active = false
    po:state( "off" )
    mem.isp = (p == player.pilot())
-   shader_force_off()
+   oshader:force_off()
 end
 
 function cleanup( _p, _po )
-   shader_force_off()
+   oshader:force_off()
 end
 
 function update( _p, po, dt )
@@ -36,25 +36,25 @@ function update( _p, po, dt )
    mem.timer = mem.timer - dt
    -- If active, we run until end
    if mem.active then
-      shader_update_on(dt)
+      oshader:update_on(dt)
       if mem.timer <= 0 then
          mem.timer = cooldown
          mem.active = false
          po:state( "cooldown" )
          po:progress(1)
 
-         shader_force_off()
+         oshader:force_off()
          return
       else
          po:progress( mem.timer / ontime )
       end
    else
       po:progress( mem.timer / cooldown )
-      shader_update_cooldown(dt)
+      oshader:update_cooldown(dt)
       if mem.timer <= 0 then
          po:state( "off" )
          mem.timer = nil
-         shader_force_off()
+         oshader:force_off()
       end
    end
 end
@@ -69,6 +69,6 @@ function onhit( _p, po, armour, _shield )
       po:progress(1)
 
       -- Visual effect
-      if mem.isp then shader_on() end
+      if mem.isp then oshader:on() end
    end
 end
