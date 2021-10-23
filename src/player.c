@@ -3193,6 +3193,7 @@ static int player_saveMetadata( xmlTextWriterPtr writer )
    xmlw_elem(writer, "dmg_taken_armour", "%f", player.dmg_taken_armour);
    xmlw_elem(writer, "jumped_times", "%u", player.jumped_times);
    xmlw_elem(writer, "landed_times", "%u", player.landed_times);
+   xmlw_elem(writer, "death_counter", "%u", player.death_counter);
 
    /* Ships destroyed by class. */
    xmlw_startElem(writer,"ships_destroyed");
@@ -3616,6 +3617,8 @@ static int player_parseMetadata( xmlNodePtr parent )
          player.jumped_times = xml_getUInt(node);
       else if (xml_isNode(node,"landed_times"))
          player.landed_times = xml_getUInt(node);
+      else if (xml_isNode(node,"death_counter"))
+         player.death_counter = xml_getUInt(node);
       else if (xml_isNode(node,"ships_destroyed")) {
          xmlNodePtr cur = node->xmlChildrenNode;
          do {

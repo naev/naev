@@ -534,6 +534,7 @@ static void menu_death_continue( unsigned int wid, const char *str )
    menu_Close(MENU_DEATH);
 
    save_reload();
+   player.death_counter++; /* Add death here. */
 }
 
 /**

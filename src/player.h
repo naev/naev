@@ -103,6 +103,7 @@ typedef struct Player_s {
    unsigned int ships_destroyed[SHIP_CLASS_TOTAL]; /**< Total number of ships destroyed. */
    unsigned int jumped_times; /**< Times the player jumped. */
    unsigned int landed_times; /**< Times the player landed. */
+   unsigned int death_counter; /**< Times the player got annihilated. */
 
    /* Meta-meta-data. */
    time_t time_since_save; /**< Time since last saved. */
