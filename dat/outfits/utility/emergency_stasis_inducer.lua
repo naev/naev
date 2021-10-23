@@ -43,10 +43,7 @@ function update( _p, po, dt )
          po:state( "cooldown" )
          po:progress(1)
 
-         if mem.shader then
-            shader.rmPPShader( ppshader )
-         end
-         mem.shader = nil
+         shader_force_off()
          return
       else
          po:progress( mem.timer / ontime )
