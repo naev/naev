@@ -399,6 +399,32 @@ function hail( p )
    end
 end
 
+-- Decides if the pilot is scared by the player
+local function isScared (t)
+   local pstat = player.pilot():stats()
+   local tstat = t:stats()
+
+   -- If target is stronger, no fear
+   if tstat.armour+tstat.shield > 1.1 * (pstat.armour+pstat.shield) and rnd.rnd() > .2 then
+      return false
+   end
+
+   -- If target is quicker, no fear
+   if tstat.speed_max > pstat.speed_max and rnd.rnd() > .2 then
+      if t:hostile() then
+         target:control()
+         target:runaway(player.pilot())
+      end
+      return false
+   end
+
+   if rnd.rnd() > .8 then
+      return false
+   end
+
+   return true
+end
+
 -- The NPC knows the target. The player has to convince him to give info
 function space_clue ()
 
@@ -479,32 +505,6 @@ function clue_attacked( p, attacker )
       next_sys()
       hook.rm(attack)
    end
-end
-
--- Decides if the pilot is scared by the player
-function isScared (t)
-   local pstat = player.pilot():stats()
-   local tstat = t:stats()
-
-   -- If target is stronger, no fear
-   if tstat.armour+tstat.shield > 1.1 * (pstat.armour+pstat.shield) and rnd.rnd() > .2 then
-      return false
-   end
-
-   -- If target is quicker, no fear
-   if tstat.speed_max > pstat.speed_max and rnd.rnd() > .2 then
-      if t:hostile() then
-         target:control()
-         target:runaway(player.pilot())
-      end
-      return false
-   end
-
-   if rnd.rnd() > .8 then
-      return false
-   end
-
-   return true
 end
 
 -- Spawn NPCs at bar, that give info
