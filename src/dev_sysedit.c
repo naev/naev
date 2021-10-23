@@ -1897,7 +1897,7 @@ static void sysedit_btnFaction( unsigned int wid_unused, const char *unused )
    (void) wid_unused;
    (void) unused;
    unsigned int wid;
-   int pos, i, j, y, h, bw, *factions;
+   int pos, j, y, h, bw, *factions;
    char **str;
    const char *s;
    Planet *p;
@@ -1913,16 +1913,20 @@ static void sysedit_btnFaction( unsigned int wid_unused, const char *unused )
    str = malloc( sizeof(char*) * (array_size(factions) + 1) );
    str[0] = strdup(_("None"));
    j      = 1;
-   for (i=0; i<array_size(factions); i++)
+   for (int i=0; i<array_size(factions); i++)
       str[j++] = strdup( faction_name( factions[i] ) ); /* Not translating so we can use faction_get */
    qsort( &str[1], j-1, sizeof(char*), strsort );
 
    /* Get current faction. */
-   pos    = 0;
-   s      = faction_name(p->presence.faction);
-   for (i=0; i<j; i++)
-      if (strcmp(s,str[i])==0)
-         pos = i;
+   if (p->presence.faction >= 0) {
+      pos    = 0;
+      s      = faction_name(p->presence.faction);
+      for (int i=0; i<j; i++)
+         if (strcmp(s,str[i])==0)
+            pos = i;
+   }
+   else
+      pos = -1;
 
    bw = (SYSEDIT_EDIT_WIDTH - 40 - 15 * 3) / 4.;
    y = 20 + BUTTON_HEIGHT + 15;
