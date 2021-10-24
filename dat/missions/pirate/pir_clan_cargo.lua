@@ -169,7 +169,7 @@ function invoke_enemies()
       -- Add pilots
       local p = pilot.add( v, "Pirate", enter_vect, nil, {ai="mercenary"} )
       -- Set hostile
-      for k,v in ipairs(p) do
+      for k2,v2 in ipairs(p) do
          v:setHostile()
       end
    end

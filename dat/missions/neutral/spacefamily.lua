@@ -129,7 +129,7 @@ end
 
 -- Only gets landable systems
 function getlandablesystems( systems )
-   t = {}
+   local t = {}
    for k,v in ipairs(systems) do
       for k,p in ipairs(v:planets()) do
          if p:services()["inhabited"] and p:canLand() then

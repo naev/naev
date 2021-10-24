@@ -5,7 +5,7 @@ local audio = require 'love.audio'
 local derelict = {}
 
 derelict.sfx = setmetatable( {}, {
-   __index = function( self, key )
+   __index = function( _self, key )
       derelict.sfx = {
          board = audio.newSource( "snd/sounds/spaceship_door_open.ogg" ),
          unboard = audio.newSource( "snd/sounds/spaceship_door_close.ogg" ),

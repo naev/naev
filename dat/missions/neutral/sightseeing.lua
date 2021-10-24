@@ -102,8 +102,8 @@ function create ()
       misn.finish( false )
    end
 
-   friend = missys:presence("friendly")
-   foe = missys:presence("hostile")
+   local friend = missys:presence("friendly")
+   local foe = missys:presence("hostile")
    if friend < foe then
       misn.finish( false )
    end
