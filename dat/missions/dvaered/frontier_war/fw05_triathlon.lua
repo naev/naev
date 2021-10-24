@@ -190,7 +190,7 @@ function spawnNpcs()
          populate_bar()
 
          if stage == 1 or stage == 3 or stage == 5 then
-            tam = misn.npcAdd("tamCommon", _("Major Tam"), fw.portrait_tam, _("Major Tam is ready to explain the next stage of the ceremony to you."))
+            misn.npcAdd("tamCommon", _("Major Tam"), fw.portrait_tam, _("Major Tam is ready to explain the next stage of the ceremony to you."))
          elseif stage == 7 then
             tk.msg( totalTitle, totalString ) -- Ex-aequo always profit the player.
             tk.msg("",_([[While landing, you see the other participants of the ceremony gathered on the dock. Strafer's father, being the master of ceremony, announces:

@@ -57,9 +57,8 @@ tronk_desc = _("The young cyborg sits to the left of his captain, and looks susp
 theru_desc = _("This soldier is the team's medic. As such, she seems to be slightly less combat-suited than the others, but her large cybernetically-enhanced arms still make her look like she could crush a bull.")
 straf_desc = _("The pilot is the only one in the group who looks like the other people with whom you are used to working. His presence along with the others makes the group even stranger.")
 
-osd_msg7  = _("Escape to %s in %s. Thanks to your new fake transponder, the squadrons should not stop you anymore")
-
-commMass = 4
+local commMass = 4
+local fzlk = faction.get("Za'lek")
 
 function create()
    hampla, hamsys = planet.get("Vilati Vilata")
@@ -107,11 +106,11 @@ function land()
 
    -- You land at the commando's planet
    if stage == 0 and planet.cur() == hampla then
-      hamfresser = misn.npcAdd("discussHam", _("Captain Hamfresser"), fw.portrait_hamfresser, hamfr_desc)
-      nikolov = misn.npcAdd("discussNik", _("Sergeant Nikolov"), fw.portrait_nikolov, nikol_desc)
-      tronk = misn.npcAdd("discussTro", _("Private Tronk"), fw.portrait_tronk, tronk_desc)
-      therus = misn.npcAdd("discussThe", _("Corporal Therus"), fw.portrait_therus, theru_desc)
-      strafer = misn.npcAdd("discussStr", _("Lieutenant Strafer"), fw.portrait_strafer, straf_desc)
+      misn.npcAdd("discussHam", _("Captain Hamfresser"), fw.portrait_hamfresser, hamfr_desc)
+      misn.npcAdd("discussNik", _("Sergeant Nikolov"), fw.portrait_nikolov, nikol_desc)
+      misn.npcAdd("discussTro", _("Private Tronk"), fw.portrait_tronk, tronk_desc)
+      misn.npcAdd("discussThe", _("Corporal Therus"), fw.portrait_therus, theru_desc)
+      misn.npcAdd("discussStr", _("Lieutenant Strafer"), fw.portrait_strafer, straf_desc)
 
       local c = misn.cargoNew( N_("Commando"), N_("A commando unit.") )
       commando = misn.cargoAdd( c, commMass ) -- TODO: see if it gets auto-removed at the end of mission
@@ -123,7 +122,7 @@ function land()
 
    -- You land to steal a medical machine
    elseif stage == 3 then
-      hamfresser = misn.npcAdd("fireSteal", _("Captain Hamfresser"), fw.portrait_hamfresser, hamfr_des2)
+      misn.npcAdd("fireSteal", _("Captain Hamfresser"), fw.portrait_hamfresser, hamfr_des2)
 
    -- Land at an Imperial planet and meet the agents
    elseif stage == 5 and planet.cur():faction() == faction.get("Empire") then
@@ -180,13 +179,13 @@ end
 -- Put the npcs back at loading
 function load()
    if stage == 1 and planet.cur() == hampla then
-      hamfresser = misn.npcAdd("discussHam", _("Captain Hamfresser"), fw.portrait_hamfresser, hamfr_desc)
-      nikolov = misn.npcAdd("discussNik", _("Sergeant Nikolov"), fw.portrait_nikolov, nikol_desc)
-      tronk = misn.npcAdd("discussTro", _("Private Tronk"), fw.portrait_tronk, tronk_desc)
-      therus = misn.npcAdd("discussThe", _("Corporal Therus"), fw.portrait_therus, theru_desc)
-      strafer = misn.npcAdd("discussStr", _("Lieutenant Strafer"), fw.portrait_strafer, straf_desc)
+      misn.npcAdd("discussHam", _("Captain Hamfresser"), fw.portrait_hamfresser, hamfr_desc)
+      misn.npcAdd("discussNik", _("Sergeant Nikolov"), fw.portrait_nikolov, nikol_desc)
+      misn.npcAdd("discussTro", _("Private Tronk"), fw.portrait_tronk, tronk_desc)
+      misn.npcAdd("discussThe", _("Corporal Therus"), fw.portrait_therus, theru_desc)
+      misn.npcAdd("discussStr", _("Lieutenant Strafer"), fw.portrait_strafer, straf_desc)
    elseif stage == 3 then
-      hamfresser = misn.npcAdd("fireSteal", _("Captain Hamfresser"), fw.portrait_hamfresser, hamfr_des2)
+      misn.npcAdd("fireSteal", _("Captain Hamfresser"), fw.portrait_hamfresser, hamfr_des2)
    --elseif stage == 4 then -- TODO: decide if we do that
       --player.takeoff()
    end
@@ -231,7 +230,7 @@ end
 
 -- Test to see if the player killed a zlk inhabited ship
 function killed_zlk(pilot,killer)
-   if pilot:faction() == faction.get("Za'lek")
+   if pilot:faction() == fzlk
          and (killer == player.pilot()
             or killer:leader() == player.pilot()) then
       killed_ship = pilot:ship():nameRaw()
@@ -245,7 +244,6 @@ end
 function enter()
    -- Intercept the ship
    if stage == 1 and system.cur() == intsys then
-      fzlk = faction.get("Za'lek")
       stand0 = fzlk:playerStanding() -- To reset it after the fight
 
       pilot.toggleSpawn(false)
@@ -330,7 +328,7 @@ function enter()
             jpoutHook = hook.jumpout("rmScanHooks")
          end
          for i, j in ipairs(zlk_lisj[index]) do
-            jp = jump.get( system.cur(), j )
+            local jp = jump.get( system.cur(), j )
             pos = jp:pos()
             spawnZlkSquadron( pos, (stage < 8) )
          end
@@ -357,7 +355,7 @@ function enter()
          pilot.clearSelect("Pirate")
 
          for i, j in ipairs(emp_lisj[index]) do
-            jp = jump.get( system.cur(), j )
+            local jp = jump.get( system.cur(), j )
             pos = jp:pos()
             if system.cur() == system.get("Arcturus") and j == "Goddard" and stage == 7 then -- Special case: JP from Arcturus to Goddard
                spawnEmpSquadron( pos, false )
@@ -438,7 +436,7 @@ function targetBoarded()
    mark = misn.markerAdd(repsys, "low")
 
    -- Reset the zlk standing
-   stand1 = fzlk:playerStanding()
+   local stand1 = fzlk:playerStanding()
    fzlk:modPlayerRaw( stand0-stand1 )
 end
 function targetDied()
@@ -478,7 +476,7 @@ function takeoff( )
 
       -- Clear all Zlk pilots in a given radius of the player to avoid being insta-killed at takeoff
       local dmin2 = 500^2
-      zlkPilots = pilot.get( { faction.get("Za'lek") } )
+      zlkPilots = pilot.get( { fzlk } )
       for i, p in ipairs(zlkPilots) do
          if vec2.dist2(player.pos()-p:pos()) < dmin2 then
             p:rm()
@@ -638,7 +636,7 @@ function pirateDealer()
          player.pay(-fw.pirate_price)
          tk.msg(_("Immediate payment"),_([[When you give the credit chip, the pirate looks surprised: "Whow, mate, I didn't know I was talking to a millionaire. Well then thanks, here is your transponder."]]))
          misn.osdDestroy()
-         misn.osdCreate( _("Dvaered Escape"), {osd_msg7:format(reppla:name(), repsys:name())} )
+         misn.osdCreate( _("Dvaered Escape"), {_("Escape to %s in %s. Thanks to your new fake transponder, the squadrons should not stop you anymore"):format(reppla:name(), repsys:name())} )
          misn.npcRm(pirag)
          stage = 9
       else
@@ -647,7 +645,7 @@ function pirateDealer()
    elseif c == 2 then
       tk.msg(_("Pirate debt"),_([["Here is your transponder," the pirate says. "Don't forget to pay once you can, otherwise..."]]))
       misn.osdDestroy()
-      misn.osdCreate( _("Dvaered Escape"), {osd_msg7:format(reppla:name(), repsys:name())} )
+      misn.osdCreate( _("Dvaered Escape"), {_("Escape to %s in %s. Thanks to your new fake transponder, the squadrons should not stop you anymore"):format(reppla:name(), repsys:name())} )
       misn.npcRm(pirag)
       stage = 8
    else
@@ -678,7 +676,7 @@ end
 -- Aborting if stage >= 4: reset zlk reputation
 function abort()
    if stage >= 4 then
-      stand1 = fzlk:playerStanding()
+      local stand1 = fzlk:playerStanding()
       fzlk:modPlayerRaw( stand0-stand1 )
    end
 end

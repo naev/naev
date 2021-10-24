@@ -165,7 +165,7 @@ end
 -- Encounter with Strafer on Dvaer Prime
 function strNpc()
    toldya = {0,0,0,0}
-   strafer = misn.npcAdd("discussStr", _("Lieutenant Strafer"), fw.portrait_strafer, _("Harsh voice, frank gaze and easy trigger. The lieutenant Strafer is a Dvaered pilot."))
+   misn.npcAdd("discussStr", _("Lieutenant Strafer"), fw.portrait_strafer, _("Harsh voice, frank gaze and easy trigger. The lieutenant Strafer is a Dvaered pilot."))
 end
 
 function takeoff()

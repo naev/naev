@@ -42,7 +42,7 @@ local pir = require "common.pirate"
 -- common hooks
 message = fw.message
 
-bombMass = 100
+local bombMass = 100
 
 
 function create()
@@ -84,20 +84,20 @@ end
 
 function land()
    if stage == 0 and planet.cur() == hampla then -- Meet Captain Hamfresser
-      captain = misn.npcAdd("hamfresser", _("Captain Hamfresser"), fw.portrait_hamfresser, _("A tall and very large cyborg soldier sits against a wall, right next to the emergency exit. He loudly drinks an orange juice through a pink straw and suspiciously examines the other customers. By the power of his eyes he cleared a large area around him as people seem to prefer to move away instead of meeting his half-robotic gaze. Unfortunately, he matches the description of your contact, which means you will have to overcome your fear and talk to him."))
+      misn.npcAdd("hamfresser", _("Captain Hamfresser"), fw.portrait_hamfresser, _("A tall and very large cyborg soldier sits against a wall, right next to the emergency exit. He loudly drinks an orange juice through a pink straw and suspiciously examines the other customers. By the power of his eyes he cleared a large area around him as people seem to prefer to move away instead of meeting his half-robotic gaze. Unfortunately, he matches the description of your contact, which means you will have to overcome your fear and talk to him."))
 
    elseif stage == 2 then -- The player landed somewhere on Battleaddict's system
       tk.msg( _("What are you doing here?"), _("This planet belongs to Lord Battleaddict. You will be captured if you land here. The mission failed.") )
       misn.finish(false)
 
    elseif stage == 5 and planet.cur() == duelpla then -- Report back
-      tam = misn.npcAdd("majorTam", _("Major Tam and Captain Leblanc"), fw.portrait_tam, _("Major Tam and Captain Leblanc seem to be waiting for you."))
-      leb = misn.npcAdd("majorTam", _("Major Tam and Captain Leblanc"), fw.portrait_leblanc, _("Major Tam and Captain Leblanc seem to be waiting for you."))
+      misn.npcAdd("majorTam", _("Major Tam and Captain Leblanc"), fw.portrait_tam, _("Major Tam and Captain Leblanc seem to be waiting for you."))
+      misn.npcAdd("majorTam", _("Major Tam and Captain Leblanc"), fw.portrait_leblanc, _("Major Tam and Captain Leblanc seem to be waiting for you."))
 
    elseif stage == 7 and planet.cur() == duelpla then -- Epilogue
-      tam = misn.npcAdd("endMisn", _("Your employers"), fw.portrait_tam, _("Tam and Leblanc are congratulating their general."))
-      leb = misn.npcAdd("endMisn", _("Your employers"), fw.portrait_leblanc, _("Tam and Leblanc are congratulating their general."))
-      kla = misn.npcAdd("endMisn", _("Your employers"), fw.portrait_klank, _("Tam and Leblanc are congratulating their general."))
+      misn.npcAdd("endMisn", _("Your employers"), fw.portrait_tam, _("Tam and Leblanc are congratulating their general."))
+      misn.npcAdd("endMisn", _("Your employers"), fw.portrait_leblanc, _("Tam and Leblanc are congratulating their general."))
+      misn.npcAdd("endMisn", _("Your employers"), fw.portrait_klank, _("Tam and Leblanc are congratulating their general."))
    end
 end
 
@@ -498,7 +498,7 @@ function battleaddict_killed()
 end
 
 function everyoneLands()
-   everyone = { klank, klank2, urnus, tam, leblanc, hamelsen, randguy }
+   local everyone = { klank, klank2, urnus, tam, leblanc, hamelsen, randguy }
    for i, p in ipairs(everyone) do
       p:taskClear()
       p:land(duelpla)

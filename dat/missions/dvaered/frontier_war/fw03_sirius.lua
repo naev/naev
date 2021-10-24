@@ -120,7 +120,7 @@ function accept()
    alive["__save"] = true
 
    toldya = {false,false,false,false}
-   boozingTam = misn.npcAdd("discussWithTam", _("Major Tam"), fw.portrait_tam, _("The major seems to be waiting for you."))
+   misn.npcAdd("discussWithTam", _("Major Tam"), fw.portrait_tam, _("The major seems to be waiting for you."))
 end
 
 -- Discussions with Major Tam at the bar
