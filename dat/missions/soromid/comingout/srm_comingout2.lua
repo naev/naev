@@ -25,8 +25,6 @@
 local fmt = require "format"
 local srm = require "common.soromid"
 
-osd_desc    = {}
-osd_desc[1] = _("Go to the %s system and land on the planet %s.")
 
 function create ()
    misplanet, missys = planet.get( "Crow" )
@@ -59,8 +57,9 @@ function accept ()
       misn.setReward( fmt.credits( credits ) )
       marker = misn.markerAdd( missys, "low" )
 
-      osd_desc[1] = osd_desc[1]:format( missys:name(), misplanet:name() )
-      misn.osdCreate( _("Coming of Age"), osd_desc )
+      misn.osdCreate( _("Coming of Age"), {
+         _("Go to the %s system and land on the planet %s."):format( missys:name(), misplanet:name() ),
+      } )
 
       hook.land( "land" )
    else

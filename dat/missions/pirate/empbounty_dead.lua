@@ -54,11 +54,6 @@ msg[2] = _("MISSION FAILURE! Another pilot eliminated your target.")
 msg[3] = _("MISSION FAILURE! You have left the %s system.")
 msg[4] = _("MISSION SUCCESS! Pay has been transferred into your account.")
 
-osd_msg    = {}
-osd_msg[1] = _("Fly to the %s system")
-osd_msg[2] = _("Kill %s")
-osd_msg["__save"] = true
-
 hunters = {}
 hunter_hits = {}
 
@@ -154,9 +149,10 @@ end
 function accept ()
    misn.accept()
 
-   osd_msg[1] = osd_msg[1]:format( missys:name() )
-   osd_msg[2] = osd_msg[2]:format( name )
-   misn.osdCreate( _("Assassination"), osd_msg )
+   misn.osdCreate( _("Assassination"), {
+      _("Fly to the %s system"):format( missys:name() ),
+      _("Kill %s"):format( name ),
+   } )
 
    last_sys = system.cur()
 

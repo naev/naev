@@ -77,8 +77,9 @@ function accept ()
       misn.setReward( fmt.credits( credits ) )
       marker = misn.markerAdd( missys, "low" )
 
-      osd_desc[1] = osd_desc[1]:format( misplanet:name(), missys:name() )
-      misn.osdCreate( misn_title, osd_desc )
+      misn.osdCreate( misn_title, {
+         _("Escort Chelsea to %s in the %s system."):format( misplanet:name(), missys:name() ),
+      } )
 
       startplanet = planet.cur()
 

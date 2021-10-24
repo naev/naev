@@ -53,11 +53,6 @@ cargo_land[3] = _("The containers of %s are unloaded from your vessel by a team 
 cargo_land[4] = _("The containers of %s are unloaded by robotic drones that scan and tally the contents. The human overseer hands you %s when they finish.")
 
 osd_title = _("Commodity Delivery")
-osd_msg    = {}
-osd_msg[1] = _("Buy as much %s as possible")
-osd_msg[2] = _("Take the %s to %s in the %s system")
-osd_msg["__save"] = true
-
 paying_faction = faction.get("Independent")
 
 
@@ -124,9 +119,10 @@ function accept ()
    misn.accept()
    update_active_runs( 1 )
 
-   osd_msg[1] = osd_msg[1]:format( comm:name() )
-   osd_msg[2] = osd_msg[2]:format( comm:name(), misplanet:name(), missys:name() )
-   misn.osdCreate(osd_title, osd_msg)
+   misn.osdCreate(osd_title, {
+      _("Buy as much %s as possible"):format( comm:name() ),
+      _("Take the %s to %s in the %s system"):format( comm:name(), misplanet:name(), missys:name() ),
+   })
 
    hook.enter("enter")
    hook.land("land")
