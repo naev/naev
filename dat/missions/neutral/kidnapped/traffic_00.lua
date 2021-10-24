@@ -26,13 +26,13 @@ local fmt = require "format"
 local portrait = require "portrait"
 local neu = require "common.neutral"
 
-sysname1 = "Arcturus"
-sysname2 = "Goddard"
-sysname3 = "Ogat"
-sysname4 = "Delta Pavonis"
-bar1 = "Praxis"
-bar2 = "Seanich"
-home = "Brooks"
+local sys1 = system.get("Arcturus")
+local sys2 = system.get("Goddard")
+local sys3 = system.get("Ogat")
+local sys4 = system.get("Delta Pavonis")
+local pnt1 = planet.get("Praxis")
+local pnt2 = planet.get("Seanich")
+local pnthome = planet.get("Brooks")
 
 --NPCs
 local pir1_disc = _([[The two pirates seem to be talking rather quietly, but loud enough for you to overhear if you are careful.]])
@@ -59,14 +59,14 @@ end
 function accept()
   misn.accept()
 
-  tk.msg(_("Thank you!"), fmt.f(_([[The two parents immediately begin thanking you quite profusely, spending a few hectoseconds simply telling you how much they truly appreciate your assistance. After a while, you realize that if these children are going to be rescued this cycle you are going to need to get started sooner rather than later. "Yes, quite right," the father replies. "No need to delay any longer than absolutely necessary. I don't know a whole lot, but you should be able to eavesdrop on some pirates at a bar. The bar in {sys} on {pnt} has been known to serve pirates occasionally, so stopping there would be a good course of action. We will anticipate your return. Again, this means so much to us." Before you know it, the two parents are at it again, thanking you like it's all they know how to do. Before it gets really bad, you bid farewell, break communication, and get on your way.]]), {sys=sysname3, pnt=bar1}))
+  tk.msg(_("Thank you!"), fmt.f(_([[The two parents immediately begin thanking you quite profusely, spending a few hectoseconds simply telling you how much they truly appreciate your assistance. After a while, you realize that if these children are going to be rescued this cycle you are going to need to get started sooner rather than later. "Yes, quite right," the father replies. "No need to delay any longer than absolutely necessary. I don't know a whole lot, but you should be able to eavesdrop on some pirates at a bar. The bar in {sys} on {pnt} has been known to serve pirates occasionally, so stopping there would be a good course of action. We will anticipate your return. Again, this means so much to us." Before you know it, the two parents are at it again, thanking you like it's all they know how to do. Before it gets really bad, you bid farewell, break communication, and get on your way.]]), {sys=sys3, pnt=pnt1}))
   misn.setTitle(_("Kidnapped"))
   misn.setReward(_("A Reunited Family"))
   misn.setDesc(_([[Search for the kidnapped children, then rescue the children and return them to their parents.]]))
 
-  misn.osdCreate(_("Kidnapped"), {fmt.f(_("Fly to the {sys} system and land on planet {pnt}"), {sys=sysname3, pnt=bar1})})
+  misn.osdCreate(_("Kidnapped"), {fmt.f(_("Fly to the {sys} system and land on planet {pnt}"), {sys=sys3, pnt=pnt1})})
 
-  misn_mark = misn.markerAdd(system.get(sysname3), "low")
+  misn_mark = misn.markerAdd(sys3, "low")
 
   eavesdropped1 = false
   eavesdropped2 = false
@@ -78,14 +78,14 @@ function accept()
 end
 
 function land1()
-  if planet.cur() == planet.get(bar1) and not eavesdropped1 and not eavesdropped2 then
+  if planet.cur() == pnt1 and not eavesdropped1 and not eavesdropped2 then
     bar1pir1 = misn.npcAdd("firstpirates", _("Pirate"), portrait.getMale("Pirate"), pir1_disc)
     bar1pir2 = misn.npcAdd("firstpirates", _("Pirate"), portrait.get("Pirate"), pir1_disc)
   end
 end
 
 function land2()
-  if planet.cur() == planet.get(bar2) and eavesdropped1 and not eavesdropped2 then
+  if planet.cur() == pnt2 and eavesdropped1 and not eavesdropped2 then
     bar2pir1 = misn.npcAdd("secondpirates", _("Pirate"), portrait.get("Pirate"), pir2_disc)
     bar2pir2 = misn.npcAdd("secondpirates", _("Pirate"), portrait.get("Pirate"), pir2_disc)
   end
@@ -97,14 +97,14 @@ function firstpirates()
     "Human trafficking? No way man, that stuff gives me the heebie jeebies!" The other pirate replies.
     "Whatever, man."
     After a brief pause the first pirate starts talking, "So I was seeing the doctor the other day and he said that rash on my back is probably an allergic reaction."
-    From that point you figure the conversation will not be picking up again, and having a lead you decide to take it.]]), {pnt=bar2}))
+    From that point you figure the conversation will not be picking up again, and having a lead you decide to take it.]]), {pnt=pnt2}))
 
   misn.npcRm(bar1pir1)
   misn.npcRm(bar1pir2)
 
-  misn.osdCreate(_("Kidnapped"), {fmt.f(_("Fly to the {sys} system and land on planet {pnt}"), {sys=sysname4, pnt=bar2})})
+  misn.osdCreate(_("Kidnapped"), {fmt.f(_("Fly to the {sys} system and land on planet {pnt}"), {sys=sys4, pnt=pnt2})})
 
-  misn.markerMove(misn_mark, system.get(sysname4))
+  misn.markerMove(misn_mark, sys4)
 
   hook.rm(lhook)
   lhook = hook.land("land2", "land")
@@ -116,14 +116,14 @@ function secondpirates()
   tk.msg(_("The Dirt"), fmt.f(_([[You don't even bother sitting down too close to these two pirates considering how loudly they're talking. It doesn't take too much listening before you get exactly what you need as one of the pirates is telling his recent tales to the other.
     "So this dummy thought he could out-fly me in his pathetic Llama! So I took him offline in like 2 seconds, got on that ship, and took the kids. The guy tried to fight back, but I stopped that quick enough. Then the woman says they was on a vacation, like I care! Ha! Fools think they can even bother to mess with me when I have work to do.
     "So I took the kids to the {sys} system where they were loaded into this Trader Koala named the Progeny. Clever name if you ask me! No one will ever even wonder what it's carrying. It looks like the most innocent little guy flying around there. Little does everyone know it's waiting to fill up its load of brats!"
-    Having listened to this dirt-bag, you feel like going over there and giving that pirate a good beating. But if you get yourself killed now you will never be able to save those children, and you don't even want to think what will happen to those children if you don't rescue them.]]), {sys=sysname2}))
+    Having listened to this dirt-bag, you feel like going over there and giving that pirate a good beating. But if you get yourself killed now you will never be able to save those children, and you don't even want to think what will happen to those children if you don't rescue them.]]), {sys=sys2}))
 
   misn.npcRm(bar2pir1)
   misn.npcRm(bar2pir2)
 
-  misn.osdCreate(_("Kidnapped"), {fmt.f(_("Fly to the {sys} system and disable (do not destroy) that Koala"),{sys=sysname2})})
+  misn.osdCreate(_("Kidnapped"), {fmt.f(_("Fly to the {sys} system and disable (do not destroy) that Koala"), {sys=sys2})})
 
-  misn.markerMove(misn_mark, system.get(sysname2))
+  misn.markerMove(misn_mark, sys2)
 
   hook.rm(lhook)
 
@@ -133,7 +133,7 @@ end
 function enter()
    local fkidnappers = faction.dynAdd( "Pirate", "Kidnappers", _("Kidnappers"), { clear_allies=true, clear_enemies=true, ai="trader" } )
 
-  if eavesdropped1 and eavesdropped2 and system.cur() == system.get(sysname2) and (not rescued) then
+  if eavesdropped1 and eavesdropped2 and system.cur() == sys2 and (not rescued) then
     kidnappers = pilot.add( "Koala", fkidnappers, planet.get("Zhiru"):pos() + vec2.new(-800,-800), _("Trader Koala") )
     kidnappers:rename(_("Progeny"))
     kidnappers:setHilight(true)
@@ -190,9 +190,9 @@ function kidskilled()
 end
 
 function boardkidnappers()
-  tk.msg(_("You did it!"), fmt.f(_([[After disabling the ship, you take your small crew along with you and go in ready for a fight! But when you get on the small Koala you find only two men guarding it, and it turns out they are not prepared for fighting at all. They can drive a ship, but fighting is not their forte. After you tie them up, you go to the cargo hold to rescue the children. When you get there, you find a few more than three; there are probably a couple dozen! This is all probably just the tip of the iceberg, too. Either way, it's time to head back to {pnt} and reunite the parents with their children.]]), {pnt=home}))
-  misn.osdCreate(_("Kidnapped"), {fmt.f(_("Return the children to the {sys} system on planet {pnt}"), {sys=sysname1, pnt=home})})
-  misn.markerMove(misn_mark, system.get(sysname1))
+  tk.msg(_("You did it!"), fmt.f(_([[After disabling the ship, you take your small crew along with you and go in ready for a fight! But when you get on the small Koala you find only two men guarding it, and it turns out they are not prepared for fighting at all. They can drive a ship, but fighting is not their forte. After you tie them up, you go to the cargo hold to rescue the children. When you get there, you find a few more than three; there are probably a couple dozen! This is all probably just the tip of the iceberg, too. Either way, it's time to head back to {pnt} and reunite the parents with their children.]]), {pnt=pnthome}))
+  misn.osdCreate(_("Kidnapped"), {fmt.f(_("Return the children to the {sys} system on planet {pnt}"), {sys=sys1, pnt=pnthome})})
+  misn.markerMove(misn_mark, sys1)
   kidnappers:setHilight(false)
   kidnappers:hookClear()
   local c = misn.cargoNew( N_("Children"), N_("The rescued children.") )
@@ -204,7 +204,7 @@ function boardkidnappers()
 end
 
 function land3()
-  if planet.cur() == planet.get(home) and rescued then
+  if planet.cur() == pnthome and rescued then
     tk.msg(_("Reunited"), fmt.f(_([[As you step off the landing deck with a couple dozen children in tow, the two parents you spoke with over the comm run up to you. From behind you hear a few children yelling, "Mom! Dad!" Three children shove their way out to the front and the parents and children meet in a big group of hugs, kisses, tears, and smiles from ear to ear.
     You and the children stand off to the side and watch one of the most beautiful reunions you have ever seen. After a little while the father approaches you, wiping a tear from his cheek, and takes you in an embrace. Releasing you and drying his eyes, he says, "Thank you so much, {player}. You have no idea what this means to us. I would love to be able to repay you somehow, but I just have no idea how I can do so right now. You have rescued my children and brought them back to me. Thank you isn't enough, but I'm afraid for now it's the best I can do. If there is anything I can ever do for you, feel free to ask me, my friend."]]), {player=player.name()}))
     tk.msg(_("Reunited"), fmt.f(_([[You assure him that it is alright, and you will not hesitate to take him up on his offer. After a while the smile fades from his face. "You see how happy my family is? Well, look at all these other children here who are still separated from their parents. I want to return them all home. I'd also like to fight against all this human trafficking, but that will take a lot of planning. For now, I want to be with my family. Come back soon though if you're willing. I would like to get something organized."

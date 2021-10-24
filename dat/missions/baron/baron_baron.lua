@@ -24,9 +24,9 @@ local portrait = require "portrait"
 local baron = require "common.baron"
 local neu = require "common.neutral"
 
-sysname1 = "Darkstone"
-sysname2 = "Ingot"
-planetname = "Varia"
+local sys1 = system.get("Darkstone")
+local sys2 = system.get("Ingot")
+local pnt = planet.get("Varia")
 
 credits = 40e3
 
@@ -57,10 +57,10 @@ function create ()
 end
 
 function accept()
-   tk.msg(_("A risky retrieval"), _([["Oh, that's great! Okay, here's what Baron Sauterfeldt needs you to do. You should fly to the Dvaered world %s. There's an art museum dedicated to one of the greatest Warlords in recent Dvaered history. I forget his name. Drovan or something? Durvan? Uh, anyway. This museum has a holopainting of the Warlord and his military entourage. His Lordship really wants this piece of art, but the museum has refused to sell it to him. So, we've sent agents to... appropriate... the holopainting."]]):format(planetname))
-   tk.msg(_("A risky retrieval"), _([[You raise an eyebrow, but the pilot on the other end seems to be oblivious to the gesture. "So, right, you're going to %s to meet with our agents. You should find them in the spaceport bar. They'll get the item onto your ship, and you'll transport it out of Dvaered space. All quiet-like of course. No need for the authorities to know until you're long gone. Don't worry, our people are pros. It'll go off without a hitch, trust me."]]):format(planetname))
+   tk.msg(_("A risky retrieval"), _([["Oh, that's great! Okay, here's what Baron Sauterfeldt needs you to do. You should fly to the Dvaered world %s. There's an art museum dedicated to one of the greatest Warlords in recent Dvaered history. I forget his name. Drovan or something? Durvan? Uh, anyway. This museum has a holopainting of the Warlord and his military entourage. His Lordship really wants this piece of art, but the museum has refused to sell it to him. So, we've sent agents to... appropriate... the holopainting."]]):format(pnt:name()))
+   tk.msg(_("A risky retrieval"), _([[You raise an eyebrow, but the pilot on the other end seems to be oblivious to the gesture. "So, right, you're going to %s to meet with our agents. You should find them in the spaceport bar. They'll get the item onto your ship, and you'll transport it out of Dvaered space. All quiet-like of course. No need for the authorities to know until you're long gone. Don't worry, our people are pros. It'll go off without a hitch, trust me."]]):format(pnt:name()))
    tk.msg(_("A risky retrieval"), _([[You smirk at that. You know from experience that things seldom 'go off without a hitch', and this particular plan doesn't seem to be all that well thought out. Still, it doesn't seem like you'll be in a lot of danger. If things go south, they'll go south well before you are even in the picture. And even if the authorities somehow get on your case, you'll only have to deal with the planetary police, not the entirety of House Dvaered.]]))
-   tk.msg(_("A risky retrieval"), _([[You ask the Baron's messenger where this holopainting needs to be delivered. "His Lordship will be taking your delivery in the %s system, aboard his ship the Pinnacle," he replies. "Once you arrive with the holopainting onboard your ship, hail the Pinnacle and ask for docking permission. They'll know who you are, so you should be allowed to dock. You'll be paid on delivery. Any questions?" You indicate that you know what to do, then cut the connection. Next stop: planet %s.]]):format(sysname2, planetname))
+   tk.msg(_("A risky retrieval"), _([[You ask the Baron's messenger where this holopainting needs to be delivered. "His Lordship will be taking your delivery in the %s system, aboard his ship the Pinnacle," he replies. "Once you arrive with the holopainting onboard your ship, hail the Pinnacle and ask for docking permission. They'll know who you are, so you should be allowed to dock. You'll be paid on delivery. Any questions?" You indicate that you know what to do, then cut the connection. Next stop: planet %s.]]):format(sys2:name(), pnt:name()))
 
    misn.accept()
 
@@ -69,11 +69,11 @@ function accept()
    misn.setDesc(_("You've been hired as a courier for one Baron Sauterfeldt. Your job is to transport a holopainting from a Dvaered world to the Baron's ship."))
 
    misn.osdCreate(_("Baron"), {
-      fmt.f(_("Fly to the {sys} system and land on planet {pnt}"), {sys=sysname1, pnt=planetname}),
-      fmt.f(_("Fly to the {sys} system and dock with (board) Kahan Pinnacle"), {sys=sysname2}),
+      fmt.f(_("Fly to the {sys} system and land on planet {pnt}"), {sys=sys1, pnt=pnt}),
+      fmt.f(_("Fly to the {sys} system and dock with (board) Kahan Pinnacle"), {sys=sys2}),
    })
 
-   misn_marker = misn.markerAdd( planet.get(planetname), "low" )
+   misn_marker = misn.markerAdd( pnt, "low" )
 
    talked = false
    stopping = false
@@ -84,7 +84,7 @@ function accept()
 end
 
 function land()
-   if planet.cur() == planet.get(planetname) and not talked then
+   if planet.cur() == pnt and not talked then
       thief1 = misn.npcAdd("talkthieves", _("Sauterfeldt's agents"), portrait.get("Pirate"), npc_desc)
       thief2 = misn.npcAdd("talkthieves", _("Sauterfeldt's agents"), portrait.get("Pirate"), npc_desc)
       thief3 = misn.npcAdd("talkthieves", _("Sauterfeldt's agents"), portrait.get("Pirate"), npc_desc)
@@ -92,7 +92,7 @@ function land()
 end
 
 function jumpin()
-   if talked and system.cur() == system.get(sysname2) then
+   if talked and system.cur() == sys2 then
       pinnacle = pilot.add( "Proteron Kahan", "Proteron", planet.get("Ulios"):pos() + vec2.new(-400,-400), nil, {ai="trader"} )
       pinnacle:setFaction("Independent")
       pinnacle:rename(_("Pinnacle"))
@@ -158,26 +158,25 @@ function talkthieves()
    c:illegalto( "Dvaered" )
 
    misn.osdActive(2)
-   misn.markerMove( misn_marker, system.get(sysname2) )
+   misn.markerMove( misn_marker, sys2 )
 
    player.takeoff()
 end
 
 function takeoff()
-   if talked and system.cur() == system.get(sysname1) then
+   if talked and system.cur() == sys1 then
       hook.timer( 3, "takeoff_delay" )
    end
 end
 
 function takeoff_delay ()
-   local pnt = planet.get(planetname)
    vendetta1 = pilot.add( "Dvaered Vendetta", "Dvaered", pnt, nil, {ai="dvaered_norun"} )
    vendetta2 = pilot.add( "Dvaered Vendetta", "Dvaered", pnt, nil, {ai="dvaered_norun"} )
    for k,v in ipairs{vendetta1, vendetta2} do
       v:rename(_("Dvaered Police Vendetta"))
       v:setHostile(true)
    end
-   vendetta1:broadcast(_("All troops, engage %s %s! It has broken %s law!"):format(player.pilot():ship():baseType(), player.ship(), planetname), true)
+   vendetta1:broadcast(_("All troops, engage %s %s! It has broken %s law!"):format(player.pilot():ship():baseType(), player.ship(), pnt:name()), true)
 end
 
 function abort()
