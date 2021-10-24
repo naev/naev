@@ -40,16 +40,16 @@
 local car = require "common.cargo"
 local fmt = require "format"
 
-dest_planet_name = "Mutris"
-dest_sys_name = "Aesir"
+local dest_planet = planet.get("Mutris")
+local dest_sys = system.get("Aesir")
 
 -- passenger rank
-prank = {}
+local prank = {}
 prank[0] = _("Shaira")
 prank[1] = _("Fyrra")
 prank[2] = _("Serra")
 
-ferrytime = {}
+local ferrytime = {}
 ferrytime[0] = _("Economy") -- Note: indexed from 0, to match mission tiers.
 ferrytime[1] = _("Priority")
 ferrytime[2] = _("Express")
@@ -65,16 +65,10 @@ no_clearance_p2[3] = _("Apparently you are not fit to be the pilot for my pilgri
 
 -- Outcomes for each of the 4 options above:
 -- We pick random number (1-4), then use this as our index into nc_probs[rank]
-nc_probs = {}
+local nc_probs = {}
 nc_probs[0] = {0, 0, 0, 1}
 nc_probs[1] = {0, 1, 1, 2}
 nc_probs[2] = {2, 3, 3, 3}
-
-altplanet = {}
-altplanet[0] = "Urail"
-altplanet[1] = "Gayathi"
-
--- If you don't have a Sirian ship
 
 -- If you change ships mid-journey
 change_ship = {}
@@ -98,10 +92,7 @@ ferry_land_p3[0] = _("%s, on seeing the time, looks at you with veiled hurt and 
 ferry_land_p3[1] = _("%s counts out %s with pursed lips, and walks off before you have time to say anything.")
 ferry_land_p3[2] = _("%s tersely expresses their displeasure with the late arrival, and snaps %s down on the seat, with a look suggesting they hardly think you deserve that much.")
 
-osd_msg = {}
-osd_msg[1] = _("Fly to %s in the %s system before %s")
-osd_msg[2] = _("You have %s remaining")
-
+-- Customization of car.calculateRoute in common.cargo
 function ferry_calculateRoute (dplanet, dsys)
     origin_p, origin_s = planet.cur()
     local routesys = origin_s
@@ -119,19 +110,9 @@ function ferry_calculateRoute (dplanet, dsys)
     end
 
     local speed = rnd.rnd(0,2)  -- how long you have; priority of the ticket
-
-    local destplanet = planet.get(dplanet)
-    local destsys = system.get(dsys)
-
-    -- We have a destination, now we need to calculate how far away it is by simulating the journey there.
-    -- Assume shortest route with no interruptions.
-    -- This is used to calculate the reward.
-
-    local numjumps   = origin_s:jumpDist(destsys)
-    local traveldist = car.calculateDistance(routesys, routepos, destsys, destplanet)
-
-    -- Return lots of stuff
-    return destplanet, destsys, numjumps, traveldist, speed, rank --cargo, tier
+    local numjumps   = origin_s:jumpDist(dsys)
+    local traveldist = car.calculateDistance(routesys, routepos, dsys, dplanet)
+    return dplanet, dsys, numjumps, traveldist, speed, rank --cargo, tier
 end
 
 
@@ -145,17 +126,17 @@ function create()
     --   Lower-class citizens are more likely to be OK with this
 
     -- Dest planet will be Mutris, dest system is Aesir, unless things change in the game
-    if not system.get(dest_sys_name):known() then
+    if not dest_sys:known() then
        misn.finish(false)
     end
 
     origin_p, origin_s = planet.cur()
-    if origin_s == system.get(dest_sys_name) then
+    if origin_s == dest_sys then
        misn.finish(false)
     end
 
     -- Calculate the route, distance, jumps, time limit, and priority
-    destplanet, destsys, numjumps, traveldist, print_speed, rank = ferry_calculateRoute(dest_planet_name, dest_sys_name)
+    destplanet, destsys, numjumps, traveldist, print_speed, rank = ferry_calculateRoute(dest_planet, dest_sys)
 
     if numjumps < 2 then  -- don't show mission on really close systems; they don't need you for short hops
        misn.finish(false)
@@ -311,9 +292,7 @@ Accept the mission anyway?]]):format( (timelimit - time.get()):str(), (playerbes
     overtime = false
     local c = misn.cargoNew( N_("Pilgrims"), N_("A bunch of giddy Sirian pilgrims.") )
     misn.cargoAdd(c, 0)  -- We'll assume you can hold as many pilgrims as you want?
-    osd_msg[1] = _("Fly to %s in the %s system before %s"):format(destplanet:name(), destsys:name(), timelimit:str())
-    osd_msg[2] = _("You have %s remaining"):format((timelimit - time.get()):str())
-    misn.osdCreate(_("Pilgrimage transport"), osd_msg)
+    tick()
     hook.land("land")
     hook.date(time.create(0, 0, 100), "tick") -- 100STU per tick
 end
@@ -367,9 +346,10 @@ end
 
 -- Date hook
 function tick()
+    local osd_msg = {}
+    osd_msg[1] = _("Fly to %s in the %s system before %s"):format(destplanet:name(), destsys:name(), timelimit:str())
     if timelimit >= time.get() then
         -- Case still in time
-        osd_msg[1] = _("Fly to %s in the %s system before %s"):format(destplanet:name(), destsys:name(), timelimit:str())
         osd_msg[2] = _("You have %s remaining"):format((timelimit - time.get()):str())
         misn.osdCreate(_("Pilgrimage transport"), osd_msg)
     elseif timelimit2 <= time.get() and not overtime then
@@ -381,8 +361,7 @@ function tick()
     elseif intime then
         -- Case missed first deadline
         player.msg(_("You've missed the scheduled arrival time! But better late than never..."))
-        osd_msg[1] = osd_msg[1]:format(destplanet:name(), destsys:name(), timelimit:str())
-        osd_msg[2] = _("You've missed the scheduled arrival time! But better late than never...")--:format(destsys:name())
+        osd_msg[2] = _("You've missed the scheduled arrival time! But better late than never...")
         misn.osdCreate(_("Pilgrimage transport"), osd_msg)
         intime = false
     end
