@@ -32,16 +32,6 @@ local fmt = require "format"
 local srs = require "common.sirius"
 
 
---beginning messages
-
---ending messages
-
---mission OSD
-osd = {}
-osd[1] = _("Fly the refugees to %s in the %s system.")
-
---random odds and ends
-
 function create()
    --this mission make no system claims.
    --initialize your variables
@@ -52,8 +42,6 @@ function create()
    targetasset, targetsys = planet.get("Ulios") --this will be the new HQ for the Nasin in the next part.
    --set some mission stuff
    misn.setNPC(_("Draga"), "sirius/unique/draga.webp", _("Draga is running around, helping the few Nasin in the bar to get stuff together and get out."))
-
-   osd[1] = osd[1]:format(targetasset:name(), targetsys:name())
 end
 
 function accept()
@@ -74,7 +62,9 @@ function accept()
    misn.setTitle(_("The Egress"))
    misn.setReward(fmt.credits(reward))
    misn.setDesc(_("Assist the Nasin refugees by flying to %s in %s, and unloading them there."):format( targetasset:name(), targetsys:name()))
-   misn.osdCreate(_("The Egress"),osd)
+   misn.osdCreate(_("The Egress"), {
+      _("Fly the refugees to %s in the %s system."):format(targetasset:name(), targetsys:name()),
+   })
    local c = misn.cargoNew( N_("Refugees"), N_("Nasin refugees.") )
    refugees = misn.cargoAdd(c,free_cargo)
    player.takeoff()

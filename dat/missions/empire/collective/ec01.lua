@@ -32,11 +32,6 @@
 local fmt = require "format"
 local emp = require "common.empire"
 
-misn_desc = {}
-misn_desc[1] = _("Scan the Collective systems for wireless communications")
-misn_desc[2] = _("Travel back to %s in %s")
-misn_desc["__save"] = true
-
 
 function create ()
    -- Note: this mission does not make any system claims.
@@ -63,13 +58,15 @@ function accept ()
    targsys2 = system.get("C-59")
 
    -- Mission details
-   misn_desc[2] = misn_desc[2]:format(misn_base:name(), misn_base_sys:name())
    misn.setTitle(_("Collective Espionage"))
    misn.setReward( fmt.credits( credits ) )
-   misn.setDesc(misn_desc[1])
+   misn.setDesc(_("Scan the Collective systems for wireless communications"))
    misn_marker1 = misn.markerAdd(targsys1, "low")
    misn_marker2 = misn.markerAdd(targsys2, "low")
-   misn.osdCreate(_("Collective Espionage"), misn_desc)
+   misn.osdCreate(_("Collective Espionage"), {
+      _("Scan the Collective systems for wireless communications"),
+      _("Travel back to %s in %s"):format(misn_base:name(), misn_base_sys:name()),
+   })
 
    tk.msg( _("Collective Espionage"), _([["You need to jump to each of the systems indicated on your map, and stay in the system until the scan finishes. If you jump out prematurely, you'll have to restart the scan from scratch when you return.
    "Of course, we're not sending you in unprepared. I have updated your ship's computer with a map of the Collective systems, at least the part we know about. I'm afraid it's not very complete intel, but it should be enough.

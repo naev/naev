@@ -27,17 +27,6 @@ local fleet = require "fleet"
 local fmt = require "format"
 local srs = require "common.sirius"
 
-
---beginning messages
-
---message at the end
---mission OSD
-osd = {}
-osd[1] = _("Destroy the Sirius patrol")
-osd[2] = _("Land on %s")
---random odds and ends
-misn_desc = _("You have been hired once again by Nasin, this time to destroy a Sirius patrol that has entered %s.")
-
 function create()
    --this mission does make one system claim, in Suna.
    --initialize the variables
@@ -58,11 +47,6 @@ function create()
    misn.setTitle(_("The Patrol"))
    misn.setReward(fmt.credits(reward))
    misn.setNPC(_("An Imposing Man"), "sirius/unique/draga.webp", _("This man leans against the bar while looking right at you."))
-
-   -- Format OSD
-   osd[2] = osd[2]:format( homeasset:name() )
-
-   misn_desc = misn_desc:format(homesys:name())
 end
 
 function accept()
@@ -72,9 +56,12 @@ function accept()
       tk.msg( _("The Patrol"), _([["Marvelous! I knew I could count on you! Don't you worry; you'll be fighting alongside some of our finest pilots. I know you can drive those Sirii off!
     "Oh, and one last thing: don't even think of bailing out on us at the last second. If you jump out or land before your mission is completed, consider yourself fired."]]) )
 
-      misn.setDesc(misn_desc)
+      misn.setDesc(_("You have been hired once again by Nasin, this time to destroy a Sirius patrol that has entered %s."):format(homesys:name()))
       misn.markerAdd(homesys,"high")
-      misn.osdCreate(_("The Patrol"),osd)
+      misn.osdCreate(_("The Patrol"), {
+         _("Destroy the Sirius patrol"),
+         _("Land on %s"):format( homeasset:name() ),
+      })
       misn.osdActive(1)
       hook.takeoff("takeoff")
       hook.jumpin("out_sys_failure")

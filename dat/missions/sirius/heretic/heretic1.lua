@@ -25,16 +25,6 @@
 local fmt = require "format"
 local srs = require "common.sirius"
 
-
---all the messages before the mission starts
-
---all the messages after the player lands on the target asset
-
---random odds and ends
-misn_desc = _("Shaman of Nasin has hired you to deliver the message to %s in the %s system.")
-osd = {}
-osd[1] = _("Fly to %s in the %s system and deliver the message")
-
 function create()
    --this mission makes no system claims
    --create some mission variables
@@ -47,9 +37,6 @@ function create()
    misn.setReward(fmt.credits(reward))
    misn.setNPC(_("A Tall Man"), "sirius/unique/shaman.webp", _("A tall man sitting at a table littered with papers."))
    misn.setDesc(_("A tall man sitting at a table littered with papers."))
-
-   osd[1] = osd[1]:format(targetasset:name(),targetsystem:name())
-   misn_desc = misn_desc:format(targetasset:name(),targetsystem:name())
 end
 
 function accept()
@@ -69,9 +56,11 @@ function accept()
 
    tk.msg(_("The Return"), _([["Fantastic!" He hands you the message. "They will take care of your payment there. Thank you for aiding the true followers of Sirichana."]]))
    misn.accept()
-   misn.setDesc(misn_desc)
+   misn.setDesc(_("Shaman of Nasin has hired you to deliver the message to %s in the %s system."):format(targetasset:name(),targetsystem:name()))
    misn.markerAdd(targetsystem,"high")
-   misn.osdCreate(_("The Return"),osd)
+   misn.osdCreate(_("The Return"), {
+      _("Fly to %s in the %s system and deliver the message"):format(targetasset:name(),targetsystem:name()),
+   })
    misn.osdActive(1)
    local c = misn.cargoNew( N_("Message"), N_("A message of seemingly high importance.") )
    message = misn.cargoAdd(c,0)
