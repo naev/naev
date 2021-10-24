@@ -27,8 +27,6 @@ local neu = require "common.neutral"
 cargoname = N_("Cynthia")
 cargodesc = N_("A young teenager.")
 
-misn_capture = "Cynthia stops crying and proceeds to hide in the farthest corner of your ship. Attemps to talk to her turn up fruitless."
-
 -- Here are stored the fake texts for the OSD
 osd_text = {}
 osd_text[1] = _("Search for Cynthia on Niflheim in Dohriabi")
@@ -111,7 +109,7 @@ function land ()
          osd_text[4] = _("Go to Zhiru in Goddard to lie to Cynthia's father")
          tk.msg(_("The Search for Cynthia"), _([["Please, please, please don't ever come looking for me again, I beg of you!"]]))
       else
-         tk.msg(_("The Search for Cynthia"), misn_capture)
+         tk.msg(_("The Search for Cynthia"), _([[Cynthia stops crying and proceeds to hide in the farthest corner of your ship. Attemps to talk to her turn up fruitless.]]))
          local c = misn.cargoNew( cargoname, cargodesc )
          cargoID = misn.cargoAdd( c, 0 )
       end
