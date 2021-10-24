@@ -13733,16 +13733,16 @@ msgstr ""
 "がなくなるので、このごろでは美容的な目的だけしかない。"
 
 #: dat/outfits/accessory/black_cat_doll.xml:2
-#, fuzzy
-#| msgid "Blackwell"
 msgid "Black Cat Doll"
-msgstr "ブラックウェル"
+msgstr "黒ネコの人形"
 
 #: dat/outfits/accessory/black_cat_doll.xml:11
 msgid ""
 "A crude doll of a black cat made from authentic \"Felis catus\" fur you that "
 "was all over your ship. It's quite cute."
 msgstr ""
+"黒ネコのぞんざいな人形で、あなたの船じゅうにいた真正の ｢フェーリス・カトゥ"
+"ス｣ の毛皮からできている。かなりかわいい。"
 
 #: dat/outfits/accessory/black_cat_doll.xml:13
 #: dat/outfits/utility/low_radiation_sensor_modulator.xml:11
@@ -13896,7 +13896,7 @@ msgstr ""
 
 #: dat/outfits/accessory/trading_card_common.xml:2
 msgid "Trading Card (Common)"
-msgstr ""
+msgstr "トレーディングカード (ふつうのもの)"
 
 #: dat/outfits/accessory/trading_card_common.xml:11
 msgid ""
@@ -13905,10 +13905,14 @@ msgid ""
 "models of the Hyena put so much strain on the pilots that it could crush "
 "them during high acceleration?"
 msgstr ""
+"ふつうに出まわっている#oハイエナ#0のトレーディングカード。ハイエナの重要な特"
+"性値はすべて詳細まで記述されている。ハイエナの初期型ではパイロットにもっと大"
+"きな負担をかけていたので、加速度を高くするとパイロットが潰れることもあったっ"
+"て知ってた？"
 
 #: dat/outfits/accessory/trading_card_rare.xml:2
 msgid "Trading Card (Rare)"
-msgstr ""
+msgstr "トレーディングカード (貴重)"
 
 #: dat/outfits/accessory/trading_card_rare.xml:11
 msgid ""
@@ -13916,10 +13920,13 @@ msgid ""
 "going into the important details of the ship, it just shows a high "
 "definition holographic rendition of the supposed Golden Llama."
 msgstr ""
+"#p貴重な#0#oゴールデンラマ#0のトレーディングカード。細かく船の重要なところを"
+"説明する代わりに、ゴールデンラマと思われるものの高解像度ホログラフィックによ"
+"る描写を見せてくれるだけだ。"
 
 #: dat/outfits/accessory/trading_card_uncommon.xml:2
 msgid "Trading Card (Uncommon)"
-msgstr ""
+msgstr "トレーディングカード (珍しい)"
 
 #: dat/outfits/accessory/trading_card_uncommon.xml:11
 msgid ""
@@ -13929,6 +13936,10 @@ msgid ""
 "allowing the crew to man it past damage that would usually incapacitate "
 "normal ships?"
 msgstr ""
+"#b珍しい#0#oドベーレッド・ビジランス#0のトレーディングカード。ドベーレッド・"
+"ビジランスの重要な特性値はすべて詳細まで記述されている。ビジランスが 3 重冗長"
+"生命維持装置をもっていて、標準的な船ならふつうは能力を失う損害をうけたばかり"
+"でも、乗員が配置についていられるって知ってた？"
 
 #: dat/outfits/accessory/ugly_statue.xml:2
 msgid "Ugly Statue"
@@ -17736,13 +17747,13 @@ msgstr "小型シールド増幅器"
 #: dat/outfits/unique/fake_transponder.xml:2
 #: dat/outfits/unique/fake_transponder.xml:6
 msgid "Fake Transponder"
-msgstr "偽造応答器"
+msgstr "偽装応答器"
 
 #: dat/outfits/unique/fake_transponder.xml:11
 msgid ""
 "A fake transponder to make ship appear like a non-descript and harmless "
 "independent ship."
-msgstr "特徴のない無害な独立勢力の船のように見せる偽造応答器。"
+msgstr "特徴のない無害な独立勢力の船のように見せる偽装応答器。"
 
 #: dat/outfits/unique/fake_transponder.xml:12
 msgid ""
@@ -18037,13 +18048,6 @@ msgid "Pinpoint Combat AI"
 msgstr "ピンポイント戦闘用 AI"
 
 #: dat/outfits/utility/combatai/pinpoint_combat_ai.xml:11
-#, fuzzy
-#| msgid ""
-#| "Developed to solve needle in haystack-type problems, the Pinpoint Combat "
-#| "AI excels at finding and locking on small objects in the vastness of "
-#| "space. Through fusing it with the ship's missile launching systems, the "
-#| "AI is able to increase both the range and the lock-on time of all missile "
-#| "launchers on the ship."
 msgid ""
 "Developed to solve needle in haystack-type problems, the Pinpoint Combat AI "
 "excels at finding and locking on small objects in the vastness of space. "
@@ -18054,7 +18058,7 @@ msgstr ""
 "干し草の中の針的な問題を解決するために開発されたピンポイント戦闘用 AI は、広"
 "大な空間の中の小さな物体を見つけて捕捉するのにすぐれている。船のミサイル発射"
 "システムと連携することで、この AI は船のすべてのミサイル発射機の射程距離と捕"
-"捉時間の両方を向上させることができる。"
+"捉速度の両方を向上させることができる。"
 
 #: dat/outfits/utility/combatai/scanning_combat_ai.xml:2
 msgid "Scanning Combat AI"
@@ -18380,20 +18384,15 @@ msgid "System Improvement"
 msgstr "システム改良"
 
 #: dat/outfits/utility/low_radiation_sensor_modulator.xml:10
-#, fuzzy
-#| msgid ""
-#| "By using special modulation highly tuned for low radiation environments, "
-#| "the Low Radiation Sensor Modulator is able to increase the detection of "
-#| "nearby ships while also giving more sensibility to jump point signatures."
 msgid ""
 "By using special modulation highly tuned for low radiation environments, the "
 "Low Radiation Sensor Modulator is able to increase the detection of nearby "
 "ships while also giving more sensibility to jump point signatures when "
 "stealthed."
 msgstr ""
-"低放射環境にあわせて高度な調整をした特殊な変調をもちいることで、この低放射セ"
-"ンサー変調器は近くの船の検出力を強化できるようになった。同時にジャンプポイン"
-"トの識別特性についてもさらに感度が上がっている。"
+"低放射環境にあわせて高度な調整をした特殊な変調を用いることで、この低放射セン"
+"サー変調器は近くの船の検出力を強化できるようになった。同時にステルス中のジャ"
+"ンプポイントの識別特性についてもさらに感度が上がっている。"
 
 #: dat/outfits/utility/milspec_jammer.xml:2
 msgid "Milspec Jammer"
@@ -19185,9 +19184,9 @@ msgid ""
 msgstr ""
 "リッパーキャノンはレーザーキャノンの変種であり、もっと強力なキャパシターと二"
 "つの同時発砲する砲口をもつ。その結果は命中したときの損害が大きくなるいっぽ"
-"う、必要 CPU がとほうもなく増えるという代償だ。リッパーキャノンはほとんどがコ"
-"ルベットで使われる。コルベットは小さな砲架しかもっていないが、もっと大きな船"
-"を現実に引き受けられるようになるには大量の火力が必要となるからだ。"
+"う、必要 CPU が途方もなく増えるという代償だ。リッパーキャノンはほとんどがコル"
+"ベットで使われる。コルベットは小さな砲架しかもっていないが、もっと大きな船を"
+"現実に引き受けられるようになるには大量の火力が必要となるからだ。"
 
 #: dat/outfits/weapons/shredder.xml:2
 msgid "Shredder"
@@ -19715,8 +19714,8 @@ msgid ""
 msgstr ""
 "パシファイアーはネクサス造船所の古いが信頼できる設計のひとつだ。これは本来国"
 "境警備用の船として設計されたものなので、襲撃隊に厳しく扱われても耐えることが"
-"できる。パシファイアーには燃料容量が大きいという特徴があり、長々しい巡視航路"
-"を楽にこなせるようになっている。"
+"できる。パシファイアーには燃料容量が大きいという特徴があり、長々しい巡視路を"
+"楽にこなせるようになっている。"
 
 #: dat/ships/phalanx.xml:2
 msgid "Phalanx"
@@ -19937,6 +19936,9 @@ msgid ""
 "Melendez's other offerings. Featuring a streamlined frame and oversized "
 "engines, it's the prime choice for expedient shipping."
 msgstr ""
+"まだ貨物輸送船ではあるものの、クイックシルバーはメレンデズがほかに提供してい"
+"るものとはかなり異なる。これは流線型の船体と特大のエンジンを特徴としており、"
+"応急的な輸送には最良の選択だ。"
 
 #: dat/ships/raelid_outpost.xml:12 dat/ships/raglan_outpost.xml:12
 #: dat/ships/sindbad.xml:12 src/dev_uniedit.c:242 src/dev_uniedit.c:248
@@ -19948,7 +19950,7 @@ msgstr "—"
 #: dat/ships/raelid_outpost.xml:13 dat/ships/raglan_outpost.xml:13
 #: dat/ships/sindbad.xml:13
 msgid "This is a base. It's for AI use only. Don't buy it. Seriously."
-msgstr ""
+msgstr "これは基地だ。AI だけが使用する。買ってはならない。本気だ。"
 
 #: dat/ships/rhino.xml:2
 msgid "Rhino"
@@ -19962,6 +19964,10 @@ msgid ""
 "Its modular bays allow it to function as a personnel transport, a fact not "
 "lost on modern militaries."
 msgstr ""
+"メレンデズの設計としてはとくべつ頑丈であるライノは、高価で危険の大きな船荷の"
+"輸送によく向いている。専用の貨物船より貨物の密度はずっと低くなっているが、き"
+"わめて有効な自衛力がある。組み立て式の仕切り部分があって、兵員輸送船として機"
+"能させることもできる。この事実は現代の軍隊でも役に立っていないわけではない。"
 
 #: dat/ships/schroedinger.xml:2
 msgid "Schroedinger"
@@ -19983,6 +19989,11 @@ msgid ""
 "and low amount of weapons space. It is also equipped with a pair of Eraedon "
 "engines, making it highly manoeuvrable."
 msgstr ""
+"シュレディンガーは、おもに偵察船として使われている。これには進んだ自動化下位"
+"システムがあるので、最小限の乗員しか必要としていない。そしてこれが搭載する燃"
+"料タンクは、ほとんどの船よりずっと長い航続距離を可能としている。欠点は、軽量"
+"な装甲と武器容量が小さいことから、攻撃には極端に弱いことだ。これはイレードン"
+"エンジンを二つ装備しているので、操縦性も高くなっている。"
 
 #: dat/ships/shark.xml:2 dat/scripts/pilotname/generic.lua:77
 msgid "Shark"
@@ -19994,6 +20005,9 @@ msgid ""
 "for in-system patrolling. While it's not as capable as its larger relative, "
 "the Lancelot, it's still an effective addition to any fleet."
 msgstr ""
+"ネクサス造船所のさらに新しい設計であるシャークは、星系内の巡視用に設計された"
+"機敏な軽量戦闘機だ。もっと大きな親類であるランスロットほどの能力はないが、い"
+"かなる船団に追加してもやはり実戦力とみなせるものだ。"
 
 #: dat/ships/sirius_divinity.xml:2
 msgid "Sirius Divinity"
@@ -20007,6 +20021,11 @@ msgid ""
 "multitude of fighters gives it unparalleled flexibility in combat, serving "
 "as a key logistical vessel in any sizable fleet."
 msgstr ""
+"ドグマがどのシリウス艦隊でも中核をなすと言われるが、実戦にたずさわるパイロッ"
+"トでディビニティーの重要性を認めない者もほとんどいない。直接的な戦いでは並は"
+"ずれて手ごわいということもないのだが、多数の戦闘機を展開するディビニティーの"
+"能力は、戦いでは並ぶもののない適応力を与えてくれる。そしてそうとう大きな艦隊"
+"では、どこでも重要な兵站船を務めているのだ。"
 
 #: dat/ships/sirius_dogma.xml:2
 msgid "Sirius Dogma"
@@ -20018,6 +20037,8 @@ msgid ""
 "Trimmed in gold and silver and fielding a large array of weapons, the Dogma "
 "is seldom surpassed in either prestige or military might."
 msgstr ""
+"シリウス荘艦隊の根幹であるドグマには目が釘づけになる。金銀で飾りつけられ、多"
+"数の砲列を並べたドグマは、威信でも軍事力でもめったに負けることはない。"
 
 #: dat/ships/sirius_fidelity.xml:2
 msgid "Sirius Fidelity"
@@ -20029,6 +20050,9 @@ msgid ""
 "competent alone, it's often employed as a forward scout, bringing with it "
 "far deadlier allies."
 msgstr ""
+"フィデリティーはシリウス荘の軽量戦闘機だ。単体ではとくに能力があるわけではな"
+"いが、よく前方の偵察に使われていて、遠くにいる致死的な味方にそれを伝えてい"
+"る。"
 
 #: dat/ships/sirius_preacher.xml:2
 msgid "Sirius Preacher"
@@ -20040,6 +20064,9 @@ msgid ""
 "Sirius projects its message and will. Fielding a large array of weaponry, "
 "the Preacher is adept at making converts out of unbelievers."
 msgstr ""
+"プリーチャーは、説教者を意味するその名前が暗示するとおり、シリウス荘がそれに"
+"よって意図と意思を伝えようとした最初の船だ。多数の砲列を並べたプリーチャー"
+"は、不信心者を改宗者にするのが得意である。"
 
 #: dat/ships/sirius_reverence.xml:2
 msgid "Sirius Reverence"
@@ -20052,6 +20079,10 @@ msgid ""
 "Sirichana's will within themselves. Protected by the best shields money can "
 "buy, the Reverence is nevertheless weak in offense."
 msgstr ""
+"もっと一般的なプリーチャーの改造型であるレベレンスは、純粋な者のなかでもとり"
+"わけ純粋な者だけが使用できる。その者たちとは、シリチャナの意志の断片を自身の"
+"中にたずさえている者たちだ。かねで買える最高のシールドで守られたレベレンス"
+"は、それでも攻撃には弱い。"
 
 #: dat/ships/sirius_shaman.xml:2
 msgid "Sirius Shaman"
@@ -20063,6 +20094,9 @@ msgid ""
 "fighter from a distance, the Shaman is anything but. A purpose-built light "
 "missile platform, few enemies escape the reach of the Shaman."
 msgstr ""
+"比較的なめらかな形状なので、遠くからだと軽量戦闘機と見まちがえることもあるか"
+"もしれないが、シャーマンはそんなものではない。小型のミサイル拠点という目的で"
+"建造されたシャーマンの手の届く範囲から逃げられる敵は数少ないのだ。"
 
 #: dat/ships/soromid_arx.xml:2
 msgid "Soromid Arx"
@@ -20076,6 +20110,11 @@ msgid ""
 "to be a more lightweight carrier than is typically found in non-Soromid "
 "fleets, without sacrificing carrying capacity."
 msgstr ""
+"ソロミド・アークスはふつうソロミド艦隊のなかで司令船や戦闘機母艦として重要な"
+"役割を果たしている。その比類ない特性により、スロットあたりに運べる船がさらに"
+"多くなっていて、少ないスロット数を容易に埋めあわせることができる。アークスは"
+"ソロミド以外の艦隊で典型的に見られる母艦よりも、艦載容量を犠牲とすることな"
+"く、もっと軽量であることが多い。"
 
 #: dat/ships/soromid_brigand.xml:2
 msgid "Soromid Brigand"
@@ -20088,6 +20127,9 @@ msgid ""
 "but it makes up for this by being fast to grow and therefore relatively "
 "expendable."
 msgstr ""
+"ブリガンドは速くて操縦性のよい生体船で、ソロミドは星系の巡視と警察活動に用い"
+"ている。この船は装甲が軽量でかなりもろいが、成長が速いことで埋めあわせてい"
+"る。それゆえ比較的消耗用とされる。"
 
 #: dat/ships/soromid_ira.xml:2
 msgid "Soromid Ira"
@@ -20099,6 +20141,9 @@ msgid ""
 "forces. While its armor is somewhat weak, this rarely saves those met with "
 "its devastating barrage."
 msgstr ""
+"アイラはとくべつな目的のために育てられた軽巡洋艦で、一般にソロミド部隊を率い"
+"ているところが見られる。装甲はやや弱いのだが、圧倒的な弾幕に出会った者がそれ"
+"に助けられることはまれだ。"
 
 #: dat/ships/soromid_marauder.xml:2
 msgid "Soromid Marauder"
@@ -20111,6 +20156,10 @@ msgid ""
 "which calls for increased durability and ammunition chambers. This makes it "
 "quite a bit slower than its distant cousin."
 msgstr ""
+"マローダーはブリガンドと同じ出発点から開発されたのだが、この二つの船はかなり"
+"異なっている。マローダーは爆撃機としての役割を満足させるように開発されたの"
+"で、耐久力と弾薬室を増加させる必要があった。それでこれは遠い親類よりかなり遅"
+"いものとなっている。"
 
 #: dat/ships/soromid_nyx.xml:2
 msgid "Soromid Nyx"
@@ -20122,6 +20171,9 @@ msgid ""
 "firepower in heated battles and agile enough to withdraw when needed, this "
 "ship usually forms the backbone of any sizable Soromid fleet."
 msgstr ""
+"ニクスはソロミド軍事力のしるしだ。激しい戦いに猛烈な火力を提供できて、必要な"
+"ら撤退できるほど身の軽いこの船は、ソロミド大艦隊ではふつうどこでも根幹をなし"
+"ている。"
 
 #: dat/ships/soromid_odium.xml:2
 msgid "Soromid Odium"
@@ -20133,6 +20185,9 @@ msgid ""
 "impressive amount of system hardpoints for a ship its size. It can often be "
 "found dominating smaller military engagements."
 msgstr ""
+"オーディアムは釣りあいのよいシールドと装甲を提供している。もちろん、その大き"
+"さのわりにはどうどうとした量のシステム取りつけ部の数もだ。この船は小規模の軍"
+"事衝突で優位に立っているところがよく見られる。"
 
 #: dat/ships/soromid_reaver.xml:2
 msgid "Soromid Reaver"
@@ -20144,6 +20199,9 @@ msgid ""
 "Their good speed and maneuverability are compounded by their durability, "
 "making the Reaver one of the most effective heavy fighters in the galaxy."
 msgstr ""
+"リーバーはソロミド軍事攻撃の先頭に立っているところがよく見られる。すぐれた速"
+"度と操縦性が耐久力と結びつけられたことで、リーバーは銀河でも屈指の実力をもつ"
+"重戦闘機となった。"
 
 #: dat/ships/soromid_vox.xml:2
 msgid "Soromid Vox"
@@ -20155,6 +20213,8 @@ msgid ""
 "serves as the core of any given Soromid war fleet and only called upon in "
 "notable engagements."
 msgstr ""
+"ボクスはソロミドが戦場に持ちだす最大の船だ。この戦艦は所定のソロミド戦闘艦隊"
+"のすべてで中核を務め、注目に値する戦いに参加するだけだ。"
 
 #: dat/ships/starbridge.xml:2
 msgid "Starbridge"
@@ -20167,6 +20227,9 @@ msgid ""
 "comparable maximum speed. It's low mass comes at the cost of reduced "
 "structural space."
 msgstr ""
+"スターブリッジはクレインインダストリーズが設計した最新の船だ。これは軽量な駆"
+"逐艦で、コルベットと同じ操縦性に達していて、最高速度も匹敵している。質量が小"
+"さいのは、代償として構造容量を削減したことによる。"
 
 #: dat/ships/thurion_apprehension.xml:2
 msgid "Thurion Apprehension"
@@ -20200,6 +20263,12 @@ msgid ""
 "hot, it can quickly retreat to recharge and regenerate. Also, like every "
 "Thurian ship, the electronics are well above average."
 msgstr ""
+"ザーリオン・インジェヌーイティーは生き残るために作られた戦闘機だ。すべての"
+"ザーリオン船と同様に、これには最初に防衛能力が与えられた。そして次が攻撃能力"
+"だ。とはいえ、インジェヌーイティーはけっして貧弱な戦闘機ではない。これは戦い"
+"にとどまって殴りつける能力がある。そして物事が激しくなりすぎたら、すばやく退"
+"却して再充填と再生をすることができる。そのうえ、すべてのザーリオン船と同じ"
+"く、電子機器は平均よりよいものだ。"
 
 #: dat/ships/thurion_perspicacity.xml:2
 msgid "Thurion Perspicacity"
@@ -20210,6 +20279,8 @@ msgid ""
 "The Thurion Perspicacity is a fast, light fighter typically used for "
 "scouting or attacking in swarms."
 msgstr ""
+"ザーリオン・パースピカシティーは速くて軽量な戦闘機で、偵察や群れをなしての攻"
+"撃に使われるのが典型的だ。"
 
 #: dat/ships/thurion_scintillation.xml:2
 msgid "Thurion Scintillation"
@@ -20221,6 +20292,9 @@ msgid ""
 "distance. It is better armed than any other Thurion ship of comparable size, "
 "but still not as well as other bombers."
 msgstr ""
+"ザーリオン・シンティレイションは長距離からの攻撃をするために設計された爆撃機"
+"だ。ほかの同等の大きさのザーリオン船のどれよりもよい武装がされているが、それ"
+"でもほかの爆撃機ほどではない。"
 
 #: dat/ships/thurion_taciturnity.xml:2
 msgid "Thurion Taciturnity"
@@ -20231,6 +20305,8 @@ msgid ""
 "The Thurion Taciturnity is an armoured and stealthy transport capable both "
 "of surviving the harsh nebula and defending itself from attack."
 msgstr ""
+"ザーリオン・タシターニティーは、装甲化された忍びやかな輸送船で、過酷な星雲に"
+"生き残ることと、攻撃から自分の身を守ることの両方の能力がある。"
 
 #: dat/ships/thurion_virtuosity.xml:2
 msgid "Thurion Virtuosity"
@@ -20242,6 +20318,9 @@ msgid ""
 "assaults. While weapon space is less than stellar, the vessel's superior "
 "electronics and resistance to the harsh nebula more than make up for it."
 msgstr ""
+"ザーリオン・バーチュオシティーは中型船で、ザーリオンは正面攻撃に使っている。"
+"武器容量は一流のものより少ないが、船のすぐれた電子機器と過酷な星雲への抵抗力"
+"は、それを埋めあわせてあまりある。"
 
 #: dat/ships/vendetta.xml:2
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:197
@@ -20257,6 +20336,12 @@ msgid ""
 "shield and energy regeneration compared to other ships of its class, though "
 "it can unleash a truly fearsome barrage."
 msgstr ""
+"ベンデッタは、ドベーレッド荘の処世感をとてもよく表している。船に与えられてい"
+"るのは、威圧的な多数の砲や、層をなす重装甲、軽視された電子機器である。ベン"
+"デッタには旧式の電子機器が使われているので、長期にわたる戦闘より小競りあいの"
+"ほうにもっと向いている。これと同等のほかの船と比べて所有するシールドとエネル"
+"ギー再生は劣っているからだ。それでも、これはいつわりなく恐るべき弾幕を浴びせ"
+"かけることができる。"
 
 #: dat/ships/vigilance.xml:2
 msgid "Vigilance"
@@ -20269,6 +20354,10 @@ msgid ""
 "possible. Given its Dvaered origins, it possesses inferior technology "
 "relative to its counterparts."
 msgstr ""
+"ビジランスはドベーレッドの処世感を具体化したものだ。ぼうだいなエネルギー備蓄"
+"と 6 つの武器取りつけ部が特徴であり、できるだけ厳しい打撃を与えられるように設"
+"計されている。ドベーレッドの生まれなので、使われている技術はこれと比較される"
+"船よりは劣っている。"
 
 #: dat/ships/zalek_demon.xml:2
 msgid "Za'lek Demon"
@@ -20278,7 +20367,7 @@ msgstr "ザレク・ディーモン"
 #: dat/ships/zalek_hephaestus.xml:16 dat/ships/zalek_mephisto.xml:14
 #: dat/ships/zalek_sting.xml:16
 msgid "Za'lek Fabricators"
-msgstr "ザレク・ファブリケイターズ"
+msgstr "ザレクファブリケイターズ"
 
 #: dat/ships/zalek_demon.xml:18
 msgid ""
@@ -20287,6 +20376,10 @@ msgid ""
 "Its handling suffers, and has poor armor like all Za'lek ships, but this "
 "comes as poor consolation to the Za'lek's enemies."
 msgstr ""
+"凶暴な名前をつけられたザレク荘の駆逐艦は、不釣りあいに強力なシールドとエネル"
+"ギー処理能力と、もちろんその大きさのこともあるが、それによってあだ名をつけら"
+"れたのだ。その操作性はひどく、すべてのザレク船と同様に装甲は不十分だが、ザレ"
+"クの敵には不十分な慰めにしかならない。"
 
 #: dat/ships/zalek_diablo.xml:2
 msgid "Za'lek Diablo"
@@ -20298,6 +20391,9 @@ msgid ""
 "equipped with heavy shields, they are meant to serve as a platform for "
 "devastating drone swarms, not frontline combat."
 msgstr ""
+"この母艦は典型的なザレクの戦闘艦だ。実質的には装甲がなく、強いシールドを装備"
+"しているこの船は、圧倒的なドローンの群れの拠点を務めることを意図していて、前"
+"線で戦うことではない。"
 
 #: dat/ships/zalek_drone_bomber.xml:2
 msgid "Za'lek Bomber Drone"
@@ -20306,13 +20402,15 @@ msgstr "ザレク・爆撃ドローン"
 #: dat/ships/zalek_drone_bomber.xml:13 dat/ships/zalek_drone_heavy.xml:13
 #: dat/ships/zalek_drone_light.xml:13 dat/ships/zalek_drone_scout.xml:13
 msgid "Za'lek Robotics"
-msgstr "ザレク・ロボティクス"
+msgstr "ザレクロボティクス"
 
 #: dat/ships/zalek_drone_bomber.xml:14
 msgid ""
 "This is the Za'lek Bomber Drone. Built for attacking heavy ships. Not to be "
 "flown by the player."
 msgstr ""
+"これはザレクの爆撃ドローンだ。大型艦を攻撃するために作られた。プレイヤーが飛"
+"ばすものではない。"
 
 #: dat/ships/zalek_drone_heavy.xml:2
 msgid "Za'lek Heavy Drone"
@@ -20323,6 +20421,8 @@ msgid ""
 "This is the Za'lek Heavy Drone. Fewer and not as crap. Not to be flown by "
 "the player."
 msgstr ""
+"これはザレクの重ドローンだ。数は少なく、がらくたではない。プレイヤーが飛ばす"
+"ものでもない。"
 
 #: dat/ships/zalek_drone_light.xml:2
 msgid "Za'lek Light Drone"
@@ -20333,6 +20433,8 @@ msgid ""
 "This is the Za'lek Light Drone. Very weak, cheap and numerous. Not to be "
 "flown by the player."
 msgstr ""
+"これはザレクの軽ドローンだ。とても弱くて、安価で多数いる。プレイヤーが飛ばす"
+"ものではない。"
 
 #. If not accepted, misn_state will still be nil
 #: dat/ships/zalek_drone_scout.xml:2 dat/missions/minerva/pirate2.lua:82
@@ -20344,6 +20446,8 @@ msgid ""
 "This is the Za'lek Scout Drone. Built for scouting, not for battle. Not to "
 "be flown by the player."
 msgstr ""
+"これはザレクの偵察ドローンだ。偵察のために作られたもので、戦いのためではな"
+"い。プレイヤーが飛ばすものでもない。"
 
 #: dat/ships/zalek_hephaestus.xml:2
 msgid "Za'lek Hephaestus"
@@ -20356,6 +20460,10 @@ msgid ""
 "fleet, thanks to their superior sensor suite. The Hephaestus is rarely-seen, "
 "but commands respect."
 msgstr ""
+"ザレク荘防衛艦隊の王冠である。この誇るに足るザレクの理想の支えは、ザレク戦闘"
+"艦隊の中枢神経としての役目をひんぱんに務めている。これはこの船がもつひとそろ"
+"いのすぐれたセンサーによるものだ。ヘパイストスが見られるのはまれだが、尊敬を"
+"集めている。"
 
 #: dat/ships/zalek_mephisto.xml:2
 msgid "Za'lek Mephisto"
@@ -20367,6 +20475,9 @@ msgid ""
 "its shields allow it to shrug off a lot of abuse. A core of these ships can "
 "reduce even powerful fleets to slag in short order."
 msgstr ""
+"強力な船だ。メフィストはどうどうとしたエネルギーとシールド処理能力があり、そ"
+"のシールドによって多くの攻撃を無視することができる。この船の眼目は、強力な艦"
+"隊でさえてっとり早く金屑にしてしまえることにある。"
 
 #: dat/ships/zalek_sting.xml:2
 msgid "Za'lek Sting"
@@ -20378,6 +20489,8 @@ msgid ""
 "suite, impressive weapons loadout, and tough shields makes it a good "
 "backbone to the fleet of House Za'lek."
 msgstr ""
+"スティングコルベットは大きさがやや大きめだが、進んだセンサー一式と感動的な積"
+"載武器、それに頑丈なシールドにより、ザレク荘艦隊のすぐれた根幹となっている。"
 
 #: dat/slots.xml:5
 msgid ""
@@ -20385,6 +20498,8 @@ msgid ""
 "performance. Outfits that fit in these slots are not generally acquirable by "
 "normal means."
 msgstr ""
+"このスロットは、船の性能を強化可能な装飾品を装備するために使われる。このス"
+"ロットに適合する艤装品は、たいがいはふつうの手段では取得できない。"
 
 #: dat/slots.xml:9
 msgid "Core Systems"
@@ -20396,10 +20511,13 @@ msgid ""
 "rely on this system to manage them, and the bulk of the ship's power and "
 "shield generation also happens here."
 msgstr ""
+"このスロットは、船の中核システム専用に使われる。ほかの下位システムは、このシ"
+"ステムによる管理に依存していて、船の電力とシールド再生の大部分も、ここで生成"
+"される。"
 
 #: dat/slots.xml:15
 msgid "Hull Modifications"
-msgstr "船殻修正"
+msgstr "船殻変更"
 
 #: dat/slots.xml:16
 msgid ""
@@ -20407,6 +20525,9 @@ msgid ""
 "represents the base layer of armour plating, and also greatly affects mass, "
 "cargo space and available weapon slots."
 msgstr ""
+"このスロットは、船殻に構造的な改造をするために使われる。このスロットは装甲の"
+"基層を表現するものだ。そのうえこれは、質量や船倉容量、使用可能な武器スロット"
+"に大きく影響を及ぼす。"
 
 #: dat/slots.xml:21
 msgid "Engines"
@@ -20417,6 +20538,9 @@ msgid ""
 "This slot is used for engines. Engines propel the ship, which is kind of "
 "important. Engines require energy from the core system to function."
 msgstr ""
+"このスロットは、エンジンのために使われる。エンジンは船を進ませるもので、重要"
+"なものである。エンジンは機能するのに中核システムからのエネルギーを必要とす"
+"る。"
 
 #: dat/slots.xml:27
 msgid "Bioship Brains"
@@ -20429,6 +20553,9 @@ msgid ""
 "rest of the organism and allocating energy reserves for the battery and "
 "shield."
 msgstr ""
+"このスロットは、中核システムの生物学的相当品である脳のために使われる。有機体"
+"の脳は、ほかの有機体を機能させて、エネルギーの蓄えをバッテリーやシールドに取"
+"りわける責任をもつ。"
 
 #: dat/slots.xml:33
 msgid "Bioship Shells"
@@ -20441,6 +20568,9 @@ msgid ""
 "protecting critical organs from damage. It is also helps determine the "
 "organism's cargo space."
 msgstr ""
+"このスロットは、船殻変更の生物学的相当品である殻のために使われる。殻は有機体"
+"のための最下層の防衛力であり、重大な臓器を損害から守っている。そのうえ、これ"
+"が関係して有機体の船倉容量は決まってくる。"
 
 #: dat/slots.xml:39
 msgid "Bioship Gene Drives"
@@ -20451,6 +20581,8 @@ msgid ""
 "This slot is used for the gene drives, the biological equivalent to Engines. "
 "Gene drives propel the organism through space."
 msgstr ""
+"このスロットは、エンジンの生物学的相当品であるジーンドライブのために使われ"
+"る。ジーンドライブは宇宙空間の中で有機体を進ませる。"
 
 #: dat/slots.xml:45
 msgid "Bioship Weapons"
@@ -20464,6 +20596,10 @@ msgid ""
 "is important to compensate for the reduced CPU capacity of the brain in "
 "comparison to synthetic constructs."
 msgstr ""
+"標準的な武器に加えて、このスロットは生体船にだけ装備できるとくべつな有機体兵"
+"器のために使用できる。有機体兵器はだいたいにおいて人工的な同等品と似たものだ"
+"が、もっと効率がよいものである。これは脳の CPU 容量が、人工的な構成物と比較し"
+"て減っていることを補償するのに重要だ。"
 
 #: dat/slots.xml:49
 msgid "Fighter Bays"
@@ -20471,7 +20607,7 @@ msgstr "戦闘機格納庫"
 
 #: dat/slots.xml:50
 msgid "This slot can be used for fighter bays."
-msgstr ""
+msgstr "このスロットは、戦闘機格納庫に使用できる。"
 
 #: dat/ssys/acheron.xml:2
 msgid "Acheron"
@@ -22017,6 +22153,8 @@ msgstr "人生は短い。リンボ星系のミネルバ・ステーションで
 #: dat/ai/advertiser.lua:19
 msgid "Insuperable Sleekness. Introducing the Krain Industries Starbridge."
 msgstr ""
+"打ち勝ちがたいなめらかさ。クレインインダストリーズのスターブリッジを紹介しま"
+"す"
 
 #: dat/ai/advertiser.lua:22
 msgid "Do you love your Emperor as much as he loves you?"
@@ -22032,21 +22170,28 @@ msgid ""
 "Made money hauling cargo? Remember to file your EW-59831 every cycle or face "
 "the consequences."
 msgstr ""
+"貨物を運んでかねを作った？　周期ごとに EW-59831 を送付するのを忘れずに。さも"
+"ないとその責任をとることになる"
 
 #: dat/ai/advertiser.lua:25
 msgid ""
 "Need help with your EW-59831 form? Try Bob's Bureaucratic Bazaar at Semper!"
 msgstr ""
+"EW-59831 書式のことで手助けが必要？　ゼンパーへ行ってボブの官僚政治バザールを"
+"試してみよう！"
 
 #: dat/ai/advertiser.lua:26
 msgid ""
 "Not filing your EE-91726 for unauthorized pet iguanas is a crime. Report to "
 "your Empire Animal Bureau now."
 msgstr ""
+"認定されていないペットのイグアナについて EE-91726 を送付しないのは犯罪です。"
+"帝国動物局にいま報告しよう"
 
 #: dat/ai/advertiser.lua:27
 msgid "Keep your documents properly filed. Unicorp Filing Cabinets."
 msgstr ""
+"あなたの文書を適切に整理して保存しよう。ユニコープ・ファイリングキャビネット"
 
 #: dat/ai/advertiser.lua:30
 msgid "Only your hard work will save the Dvaered economy!"
@@ -22059,18 +22204,22 @@ msgstr "連帯し、経済危機を打ち負かしていこう！"
 #: dat/ai/advertiser.lua:32
 msgid "Bet on Totoran and win incredible sums thanks to the Crimson Gauntlet!"
 msgstr ""
-"トトーランで賭け、クリムゾン・ガントレットでとほうもない金額を勝ちとろう！"
+"トトーランで賭け、クリムゾン・ガントレットで途方もない金額を勝ちとろう！"
 
 #: dat/ai/advertiser.lua:33
 msgid ""
 "Mace rockets lacking shine? Try Lady Killington's premium rocket polish!"
 msgstr ""
+"メイスロケットに輝きが足りない？　レディーキリングトンのプレミアムロケットポ"
+"リッシュを試してください！"
 
 #: dat/ai/advertiser.lua:34
 msgid ""
 "Other warlords not letting you enjoy bloodshed? Join Lord Easytrigger's "
 "battalion today!"
 msgstr ""
+"ほかの軍閥領袖たちは虐殺を楽しませてくれませんか？　イージートリガー卿の軍団"
+"に今日参加しよう！"
 
 #: dat/ai/advertiser.lua:37
 msgid "Remember Sorom."
@@ -22095,23 +22244,29 @@ msgid ""
 "Endogenous DNA damage hampering your Gene Drive? Drop by your local "
 "Chromosomal Rearrangement Laboratory for a check-up."
 msgstr ""
+"内因性の DNA 損傷があなたのジーンドライブの動きを妨げている？　お近くの染色体"
+"再配列研究所に降ろして診断を"
 
 #: dat/ai/advertiser.lua:41
 msgid ""
 "Visit Bohr Laboratory for all your epistatic mutation woes. 10 locations and "
 "counting!"
 msgstr ""
+"エピスタシス突然変異の悩みならなんでもボーア研究所へ。現在 10 カ所にあり、さ"
+"らに増加中です！"
 
 #: dat/ai/advertiser.lua:42
 msgid ""
 "Worried about your bio-ship adenosine triphosphate output? Leave it to ATP "
 "Specialists!"
 msgstr ""
+"あなたの生体船のアデノシン三リン酸出力のことが心配ですか？　ATP の専門家に任"
+"せましょう！"
 
 #: dat/ai/advertiser.lua:43
 msgid ""
 "Preemptively treat your bio-ship for space fleas with Dr. Nastya's Ointment!"
-msgstr ""
+msgstr "生体船の宇宙ノミにはドクターナスティアの軟膏で先に対処しよう！"
 
 #: dat/ai/advertiser.lua:46
 msgid ""
@@ -22126,16 +22281,17 @@ msgstr "非凸最小化が大好き？　ルアダンの計算科学研究所に
 
 #: dat/ai/advertiser.lua:48
 msgid "Keeping your drones in top shape. Prof. Imarisha's Robotic Laboratory."
-msgstr ""
+msgstr "ドローンは最高の状態に維持しよう。イマリシャ教授のロボット研究所"
 
 #: dat/ai/advertiser.lua:49
 msgid "Interested in Genetic Lifeforms research? Apply to Interstice Science!"
-msgstr ""
+msgstr "遺伝生命研究所にご興味は？　すき間科学に専念しよう！"
 
 #. Reference to Aperture Science (synonyms) from Portal
 #: dat/ai/advertiser.lua:50
 msgid "Want to learn about Anti-Mass Spectometry? Join Ebony Plateau today!"
 msgstr ""
+"反質量分光測定について学びたいですか？　エボニープラトーに今日参加しよう！"
 
 #. Reference to Black Mesa (synonyms) from Half-Life
 #: dat/ai/advertiser.lua:53
@@ -22239,27 +22395,27 @@ msgstr "｢%s で燃料の補給をしてやろう｣"
 #. Dvaered messages
 #: dat/ai/advertiser.lua:91
 msgid "Butthead"
-msgstr ""
+msgstr "ぬけ作"
 
 #: dat/ai/advertiser.lua:92
 msgid "Nincompoop"
-msgstr ""
+msgstr "とんま"
 
 #: dat/ai/advertiser.lua:93
 msgid "Dunderhead"
-msgstr ""
+msgstr "のろま"
 
 #: dat/ai/advertiser.lua:94 dat/scripts/pilotname/pirate.lua:232
 msgid "Ass"
-msgstr ""
+msgstr "ばか者"
 
 #: dat/ai/advertiser.lua:95
 msgid "Fool"
-msgstr ""
+msgstr "おろか者"
 
 #: dat/ai/advertiser.lua:96
 msgid "Coward"
-msgstr ""
+msgstr "臆病者"
 
 #. TODO probably merge this with 'common.frontier_war' into a separate module
 #. Travel to third rendezvous
@@ -22272,7 +22428,7 @@ msgstr ""
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:137
 #: dat/scripts/common/frontier_war.lua:18
 msgid "Lord Jim"
-msgstr ""
+msgstr "ジム卿"
 
 #. Go to first rendezvous
 #. Spawn the Warlord
@@ -22280,11 +22436,11 @@ msgstr ""
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:104
 #: dat/scripts/common/frontier_war.lua:19
 msgid "Lady Bitterfly"
-msgstr ""
+msgstr "レディービタフライ"
 
 #: dat/ai/advertiser.lua:101 dat/scripts/common/frontier_war.lua:20
 msgid "Lady Pointblank"
-msgstr ""
+msgstr "レディーポイントブランク"
 
 #: dat/ai/advertiser.lua:102 dat/scripts/common/frontier_war.lua:21
 msgid "Lord Chainsaw"
@@ -22292,55 +22448,55 @@ msgstr "チェーンソー卿"
 
 #: dat/ai/advertiser.lua:103 dat/scripts/common/frontier_war.lua:22
 msgid "Lord Painbishop"
-msgstr ""
+msgstr "ペインビショップ卿"
 
 #: dat/ai/advertiser.lua:104 dat/scripts/common/frontier_war.lua:23
 msgid "Lord Kriegsreich Hundertfeuer"
-msgstr ""
+msgstr "クレイクスレイヒ・フンデルトフェウアー卿"
 
 #: dat/ai/advertiser.lua:105 dat/scripts/common/frontier_war.lua:24
 msgid "Lady Blackswan"
-msgstr ""
+msgstr "レディーブラックスワン"
 
 #: dat/ai/advertiser.lua:106 dat/scripts/common/frontier_war.lua:25
 msgid "Lady Killington"
-msgstr ""
+msgstr "レディーキリングトン"
 
 #: dat/ai/advertiser.lua:107 dat/scripts/common/frontier_war.lua:26
 msgid "Lord Richthofen"
-msgstr ""
+msgstr "リヒトホーフェン卿"
 
 #: dat/ai/advertiser.lua:108 dat/scripts/common/frontier_war.lua:27
 msgid "Lady Dewinter"
-msgstr ""
+msgstr "レディーデウィンター"
 
 #: dat/ai/advertiser.lua:109 dat/scripts/common/frontier_war.lua:28
 msgid "Lord Easytrigger"
-msgstr ""
+msgstr "イージートリガー卿"
 
 #: dat/ai/advertiser.lua:110 dat/scripts/common/frontier_war.lua:29
 msgid "Lady Sainte-Beuverie"
-msgstr ""
+msgstr "レディーサント゠ビューベリー"
 
 #: dat/ai/advertiser.lua:111 dat/scripts/common/frontier_war.lua:30
 msgid "Lord Louverture"
-msgstr ""
+msgstr "ルーバーチュア卿"
 
 #: dat/ai/advertiser.lua:112 dat/scripts/common/frontier_war.lua:31
 msgid "Lord Abdelkiller"
-msgstr ""
+msgstr "アブデルキラー卿"
 
 #: dat/ai/advertiser.lua:113 dat/scripts/common/frontier_war.lua:32
 msgid "Lady Proserpina"
-msgstr ""
+msgstr "レディープロセルピナ"
 
 #: dat/ai/advertiser.lua:119
 msgid "I hereby declare {butthead} is a {badword}. -{sponsor}"
-msgstr ""
+msgstr "わたしはここに、{butthead}が{badword}であると宣言する。—{sponsor}"
 
 #: dat/ai/advertiser.lua:120
 msgid "Let it be known that {butthead} is a {badword}. -{sponsor}"
-msgstr ""
+msgstr "{butthead}が{badword}であることを広めよう。—{sponsor}"
 
 #. Soromid messages
 #. Soromid+Empire messages
@@ -22349,6 +22505,7 @@ msgid ""
 "Remember to fill in your EX-29528-B form if returning to the Empire from "
 "Soromid territory."
 msgstr ""
+"ソロミド領域から帝国へ戻るなら、忘れずにEX-29528-B 書式を送付してください"
 
 #. Za'lek messages
 #. Note that when running in the main menu background, player.name() might not exist (==nil), so
@@ -28311,6 +28468,10 @@ msgid ""
 "walls. The fuel is in good state and you siphon it off to fill your ships "
 "fuel tanks. Talk about good timing."
 msgstr ""
+"遺棄船は見捨てられたらしい。価値のあるほとんどのものはとっくになくなってい"
+"た。船を捜索していると、あなたは不意に壁の中に隠された予備の燃料タンクを発見"
+"した。燃料はよい状態だったので、あなたはそれを吸いあげ自分の船の燃料タンクを"
+"満たした。こんなに都合がいいこともあるものだな。"
 
 #. Roll for events
 #.
@@ -28604,6 +28765,10 @@ msgid ""
 "walls. The fuel is in good state and you siphon it off to fill your ships "
 "fuel tanks."
 msgstr ""
+"遺棄船は見捨てられたらしい。価値のあるほとんどのものはとっくになくなってい"
+"た。船を捜索していると、あなたは不意に壁の中に隠された予備の燃料タンクを発見"
+"した。燃料はよい状態だったので、あなたはそれを吸いあげ自分の船の燃料タンクを"
+"満たした。"
 
 #. If the player is low on health and not regenerating, offer armour repairs
 #: dat/events/neutral/derelict.lua:202
@@ -28614,6 +28779,10 @@ msgid ""
 "much deeper about it you strip hull components and are able to repair your "
 "ship's armour."
 msgstr ""
+"遺棄船は見捨てられていて、価値のあるすべてのものが奪いとられていた。とはい"
+"え、船殻はとてもよい様子であるのに気がついた。じっさい、このようなよい船が遺"
+"棄船になっているのがむしろ疑わしい。それについて深く考えるのはやめ、あなたは"
+"船殻部品を取りはずし、自分の船の装甲の修理をすることができた。"
 
 #. Run random good event
 #: dat/events/neutral/derelict.lua:213
@@ -31627,12 +31796,12 @@ msgstr ""
 #: dat/events/neutral/shiplover.lua:154
 #, lua-format
 msgid "\"What class is the #o%s#0 ship?\""
-msgstr ""
+msgstr "｢#o%s#0は何級の船か？｣"
 
 #. Create question
 #: dat/events/neutral/shiplover.lua:170
 msgid "\"What is the name of this ship?\""
-msgstr ""
+msgstr "｢この船の名前は？｣"
 
 #. elseif difficulty == 2 then
 #. Ignore claimed systems (don't want to ruin the atmosphere)
@@ -31648,7 +31817,7 @@ msgstr ""
 #. Create the log if necessary.
 #: dat/events/neutral/shiplover.lua:281
 msgid "Ship Quiz"
-msgstr ""
+msgstr "船クイズ"
 
 #: dat/events/neutral/shiplover.lua:281 dat/factions/standing/lib/base.lua:32
 #: dat/factions/standing/lib/base.lua:38
@@ -31661,7 +31830,7 @@ msgstr "中立"
 #: dat/events/neutral/shiplover.lua:288
 #, lua-format
 msgid "You obtained a %s from the Ship Enthusiast for getting 5 quizzes right."
-msgstr ""
+msgstr "あなたは 5 問のクイズに正解したので、宇宙船愛好家から%sを獲得した。"
 
 #: dat/events/neutral/shiplover.lua:291
 msgid ""
@@ -31669,6 +31838,9 @@ msgid ""
 "reward. Here, take this special trading card. Don't worry, I have a dozen "
 "like it. I'll have to step up my quiz game from now on.\""
 msgstr ""
+"｢うーん、5 回もクイズに正解した。これはとくべつな賞に値するね。ほら、この特殊"
+"なトレーディングカードをあげるよ。気にしなくていい。そんなのは 10 枚はもって"
+"るから。これからはクイズをもっと難しくしなくちゃ｣"
 
 #: dat/events/neutral/shiplover.lua:292 dat/events/neutral/shiplover.lua:301
 #: dat/events/neutral/shiplover.lua:310 dat/events/neutral/shiplover.lua:318
@@ -31677,13 +31849,13 @@ msgstr ""
 #: dat/missions/minerva/pirate5.lua:108
 #, lua-format
 msgid "You have received #g%s#0."
-msgstr ""
+msgstr "あなたは #g%s#0 を受けとった。"
 
 #: dat/events/neutral/shiplover.lua:297
 #, lua-format
 msgid ""
 "You obtained a %s from the Ship Enthusiast for getting 10 quizzes right."
-msgstr ""
+msgstr "あなたは 10 問のクイズに正解したので、宇宙船愛好家から%sを獲得した。"
 
 #: dat/events/neutral/shiplover.lua:300
 msgid ""
@@ -31692,12 +31864,15 @@ msgid ""
 "Make sure not to lose it, this one is fairly special! I'll have to think of "
 "better quizzes from now on.\""
 msgstr ""
+"｢うーん、10 回もクイズに正解した。予想よりずっとうまくやったね。ほら、気に"
+"入ってるトレーディングカードを 1 枚あげるよ。なくさないでね。これはかなりとく"
+"べつなやつなんだ！　これからはクイズをもっと難しくしなくちゃ｣"
 
 #: dat/events/neutral/shiplover.lua:306
 #, lua-format
 msgid ""
 "You obtained a %s from the Ship Enthusiast for getting 25 quizzes right."
-msgstr ""
+msgstr "あなたは 25 問のクイズに正解したので、宇宙船愛好家から%sを獲得した。"
 
 #: dat/events/neutral/shiplover.lua:309
 msgid ""
@@ -31707,11 +31882,16 @@ msgid ""
 "copy of this one so make sure to take good care of it. No! Don't take it out "
 "of the card foil! It might get damaged that way!\""
 msgstr ""
+"｢ちくしょう。25 回もクイズに正解した。だれもこんなに長くクイズをやれなかった"
+"んだけど。これはとくべつな方法で祝わなきゃならないようだね。ほら、集めたなか"
+"でもとくに珍しいカードを 1 枚あげるよ。これはひとつしかもってないやつだから、"
+"しっかり大切にしてほしいね。だめっ！　カードの包みをはがさないで！　そんなこ"
+"としたら傷つくかもしれないでしょ！｣"
 
 #: dat/events/neutral/shiplover.lua:314
 #, lua-format
 msgid "You obtained a %s from the Ship Enthusiast for getting a quiz right."
-msgstr ""
+msgstr "あなたはクイズに正解したので、宇宙船愛好家から%sを獲得した。"
 
 #. Don't trigger hooks
 #: dat/events/neutral/shiplover.lua:317
@@ -31721,17 +31901,19 @@ msgid ""
 "time you got my quiz right! Here, take this as a reward for your performance."
 "\""
 msgstr ""
+"｢正解！　ちくしょう、これは知らないと思ったんだけどな。%d 回クイズに正解した"
+"ね！　ほら、これはその成績にたいする賞だよ｣"
 
 #. Set up NPC and hooks
 #: dat/events/neutral/shiplover.lua:322 dat/events/neutral/shiplover.lua:335
 msgid "Ship Enthusiast"
-msgstr ""
+msgstr "宇宙船愛好家"
 
 #: dat/events/neutral/shiplover.lua:322
 msgid ""
 "You see a surprisingly young individual who is playing with a small ship "
 "model."
-msgstr ""
+msgstr "小さな船の模型で遊んでいる驚くほど若い人物だとわかった。"
 
 #. First meeting
 #: dat/events/neutral/shiplover.lua:340
@@ -31739,34 +31921,38 @@ msgid ""
 "You approach the individual who is making weird noises, likely imitating "
 "space ship noises, while playing with a space ship toy."
 msgstr ""
+"奇妙な音をたてている人物に近づいた。宇宙船の音をまねているようだ。宇宙船のお"
+"もちゃで遊んでいる。"
 
 #: dat/events/neutral/shiplover.lua:341
 msgid ""
 "\"Why hello there. How do you like my new limited edition Lancelot figurine?"
 "\""
-msgstr ""
+msgstr "｢やあ、こんにちは。新しい限定品のランスロットの模型なんだけど？｣"
 
 #: dat/events/neutral/shiplover.lua:344
 msgid "\"It looks great!\""
-msgstr ""
+msgstr "｢すごいね！｣"
 
 #: dat/events/neutral/shiplover.lua:345
 msgid "\"It's awful.\""
-msgstr ""
+msgstr "｢ひどいね｣"
 
 #: dat/events/neutral/shiplover.lua:346
 msgid "\"Aren't you too young to be here?\""
-msgstr ""
+msgstr "｢こんなところにいるには若すぎない？｣"
 
 #: dat/events/neutral/shiplover.lua:357
 msgid "\"You know I own a real one.\""
-msgstr ""
+msgstr "｢ほら、本物をもってるから｣"
 
 #: dat/events/neutral/shiplover.lua:363
 msgid ""
 "\"I know right! It cost me a lot to find it. It was sold out all over! But "
 "it was all worth it in the end.\""
 msgstr ""
+"｢わかってるね！　見つけるのにたくさんかかったんだよ。ずっと売りきれてて！　で"
+"もけっきょく報われたんだ｣"
 
 #: dat/events/neutral/shiplover.lua:367
 msgid ""
@@ -31776,12 +31962,19 @@ msgid ""
 "You look closely and indeed are able to see the pilots. The level of detail "
 "is fairly ridiculous."
 msgstr ""
+"｢プー。この美しさがわかってないね。この曲線を見てよ！　この輝くライト！　内部"
+"まで完全に正しい 1/128 縮小模型なんだ！　操縦席にパイロットがいるのだって見え"
+"る｣\n"
+"あなたは近くから見て、たしかにパイロットを見ることができた。この詳細度はかな"
+"りばかげている。"
 
 #: dat/events/neutral/shiplover.lua:372
 msgid ""
 "\"Aren't you too old to be here? It's not like I'm drinking or anything.\"\n"
 "They stick their tongue out at you as they still play with the space ship."
 msgstr ""
+"｢ここにいるには年寄りすぎない？　飲むようなことしてないでしょ｣\n"
+"あなたに舌を出してみせてながら、まだ宇宙船で遊びつづけている。"
 
 #: dat/events/neutral/shiplover.lua:377
 msgid ""
@@ -31791,6 +31984,11 @@ msgid ""
 "The lift up their toy Lancelot. You can barely make out a golden Efreeti "
 "etched on the side."
 msgstr ""
+"｢ほんとう？　シグマ 5 飛行隊のゴールデンイフリート型も ?!　なんのことだかわか"
+"らないでしょ？　余計なことをいうのはやめて。たぶんただの大量量産型のランス"
+"ロットでしかなくて、歴史を背負ってたりしないんでしょ。これは名作なんだよ！｣\n"
+"そういっておもちゃのランスロットを持ちあげる。脇に刻まれた金色のイフリートが"
+"あなたにもなんとか見わけられた。"
 
 #: dat/events/neutral/shiplover.lua:382
 msgid ""
@@ -31798,39 +31996,43 @@ msgid ""
 "I'll ask you a question and if you get it right, I'll give you a nice "
 "reward. What do you say?\""
 msgstr ""
+"｢ねえ、ゲームをしようよ。どんな船のことでもぜんぶ知ってるんだ。質問するから、"
+"もし正しく答えられたらいい賞品をあげるよ。やりたい？｣"
 
 #. Met, didn't play quiz and came back
 #: dat/events/neutral/shiplover.lua:388
 msgid "You once again approach the ship enthusiast."
-msgstr ""
+msgstr "あなたはまた、あの宇宙船愛好家に近づいた。"
 
 #: dat/events/neutral/shiplover.lua:389
 msgid ""
 "\"So you're back. Did you change your mind about playing my ship quiz?\""
-msgstr ""
+msgstr "｢じゃあ戻ってきたんだ。船のクイズをやるのも考えなおした？｣"
 
 #: dat/events/neutral/shiplover.lua:391
 msgid ""
 "You once again approach the ship enthusiast. They seem to move about a lot."
 msgstr ""
+"あなたはまた、あの宇宙船愛好家に近づいた。どうもかなりあちこちと移動している"
+"らしい。"
 
 #: dat/events/neutral/shiplover.lua:392
 msgid ""
 "\"Would you like to play another round of the ship quiz? I think the "
 "question I prepared will stump you completely.\""
-msgstr ""
+msgstr "｢船のクイズをまたやりたい？　用意した質問には完全にまいると思うな｣"
 
 #: dat/events/neutral/shiplover.lua:395 dat/missions/minerva/maikki2.lua:194
 msgid "\"Yes!\""
-msgstr ""
+msgstr "｢はい！｣"
 
 #: dat/events/neutral/shiplover.lua:396 dat/missions/minerva/kex4.lua:150
 msgid "\"No.\""
-msgstr ""
+msgstr "｢いいえ｣"
 
 #: dat/events/neutral/shiplover.lua:400
 msgid "\"Oh well, your loss!\""
-msgstr ""
+msgstr "｢しかたがないな。もったいなかったね！｣"
 
 #: dat/events/neutral/shiplover.lua:405
 #, lua-format
@@ -31839,6 +32041,9 @@ msgid ""
 "\n"
 "%s"
 msgstr ""
+"｢いいね！　じゃあやるよ。よく聞いててね｣\n"
+"\n"
+"%s"
 
 #: dat/events/neutral/shiplover.lua:423
 #, lua-format
@@ -31847,12 +32052,15 @@ msgid ""
 "\n"
 "%s"
 msgstr ""
+"｢いいね！　じゃあこの船を見て、よく聞いててね｣\n"
+"\n"
+"%s"
 
 #. Show choices
 #. Give reward
 #: dat/events/neutral/shiplover.lua:465
 msgid "You got the Ship Enthusiast's quiz wrong."
-msgstr ""
+msgstr "あなたは宇宙船愛好家のクイズで不正解だった。"
 
 #. TODO wrong sound
 #: dat/events/neutral/shiplover.lua:469
@@ -31862,6 +32070,9 @@ msgid ""
 "\"The correct answer was #g%s#0! Better luck next time.\"\n"
 "They take their leave."
 msgstr ""
+"気取って見せながら愛好家が叫ぶ。｢まちがい！｣\n"
+"｢正解は#g%s#0！　次回をお楽しみに｣\n"
+"宇宙船愛好家は立ち去った。"
 
 #. Finish event (removes npc)
 #.
@@ -32068,12 +32279,12 @@ msgstr "旅行日誌"
 #: dat/events/shiplog.lua:34
 #, lua-format
 msgid "Hostility met in the %s system"
-msgstr ""
+msgstr "敵意のあるものに%s星系で出会った。"
 
 #: dat/events/shiplog.lua:42
 #, lua-format
 msgid "Jumped from the %s system to the %s system"
-msgstr ""
+msgstr "%s星系から%s星系へジャンプした。"
 
 #: dat/events/shiplog.lua:51
 #, lua-format
@@ -33263,6 +33474,12 @@ msgid ""
 "they are prone to overheating and use a lot of energy, so it is bes to use "
 "afterburners only when necessary.\""
 msgstr ""
+"｢#oアフターバーナー#0艤装品をちょうど買ったところのようですね。アフターバー"
+"ナーは作動させて使う艤装品で、特定の船にはひとつしか装備できません。"
+"{infokey} で開く情報メニューで武器セットのキーに割り当てるように設定すること"
+"も、{accelkey} を二回押すことで起動することもできます。これはオーバーヒートし"
+"やすく、たくさんのエネルギーを使うことにも注意してください。だからアフター"
+"バーナーは、必要なときだけ使うのがいちばんです｣"
 
 #: dat/events/tutorial/tut_land.lua:44
 msgid ""
@@ -33273,6 +33490,11 @@ msgid ""
 "launch rockets after getting a new target. It is modulated depending if the "
 "target's '#oEvasion#0' is lower than the '#oOptimal Tracking#0'.\""
 msgstr ""
+"｢初めて#o発射機#0艤装品を取得したばかりのようですね。発射機は弾薬を使う武器"
+"で、目標を追跡する能力があります。追跡する発射機は二つの重要な特性､『#o捕捉"
+"#0』と『#o発射後捕捉#0』をもっています。捕捉は、新しい目標を指定してからロ"
+"ケットを発射できるようになるまでにかかる秒数を決定します。もし目標の『#o回避"
+"#0』が『#o最適追跡#0』より小さかったら、それに依存してこの値は悪化します｣"
 
 #: dat/events/tutorial/tut_land.lua:45
 msgid ""
@@ -33284,6 +33506,11 @@ msgid ""
 "coloured circle around the outfit that shrinks as the calibration finishes.."
 "\""
 msgstr ""
+"｢発射したあとにロケットが目標の追跡を開始するまでにかかる時間が『#o発射後捕捉"
+"#0』になります。捕捉していないと、これはまっすぐ飛んで、出くわした敵ならなん"
+"でも損害を与えます。けれどもいちど捕捉したら、妨害されないかぎり目標だけに損"
+"害を与えます。発射後捕捉は目標の回避値に影響されません。艤装品の周囲にある色"
+"つきの円が縮んでいくことで、捕捉の完了は視覚化されます｣"
 
 #: dat/events/tutorial/tut_land.lua:46
 msgid ""
@@ -33295,6 +33522,12 @@ msgid ""
 "trajectory. Despite being jammed, they can still damage any hostiles they "
 "encounter.\""
 msgstr ""
+"｢そしてわたしたちは最後の重要な概念に導かれます。妨害です！　追跡ロケットは妨"
+"害されることがあり、それは目標が妨害装置を積んでいるかどうかと、ロケットの耐"
+"性に左右されます。ロケットが妨害される確率は、妨害確率と耐性の差になります。"
+"ロケットが妨害されると、ロケットは遅くなるかでたらめな軌道をとります。妨害さ"
+"れたとしても、まだロケットは出会った敵ならなんにでも損害を与えることが可能で"
+"す｣"
 
 #: dat/events/tutorial/tut_land.lua:47
 msgid ""
@@ -33304,6 +33537,11 @@ msgid ""
 "refill the ammunition when necessary. Launchers can be very useful if you "
 "master them, please try them out with different configurations!\""
 msgstr ""
+"｢これで最後ですが、発射機の弾薬は時間とともに再生されていきます。だから弾薬を"
+"買う必要はありません。必要なら {cooldownkey} を押したり {reversekey} を二回押"
+"したりして冷却させるか、惑星やステーションに着陸することで、即座に弾薬が補充"
+"できます。使いこなせば発射機というのはとても役立つことにもなりえます。構成を"
+"変えたりしてじゅうぶんに試してください！｣"
 
 #: dat/events/tutorial/tut_land.lua:57
 msgid ""
@@ -33315,6 +33553,12 @@ msgid ""
 "#ohold position#0 with {eholdkey}, and #oreturn to ship#0 with {ereturnkey}."
 "\""
 msgstr ""
+"｢出世して最初の#o戦闘機格納庫#0艤装品をもったようですね！　あなたも予想してい"
+"ると思いますが、戦闘機格納庫は要撃機級や戦闘機級の護衛船を発進させて制御でき"
+"るようにしてくれます。護衛船は展開されるとあなたの船を自律的に防衛します。ま"
+"た、とくべつな命令を与えることもできます。{eattackkey} であなたの目標を#o攻撃"
+"#0させたり、{eclearkey} で#o指示を取り消し#0たり、{eholdkey} で#o位置にとどま"
+"る#0ように指示したり、{ereturnkey} で#o船に戻る#0ようにさせたりできます｣"
 
 #: dat/events/tutorial/tut_land.lua:58
 msgid ""
@@ -33325,6 +33569,11 @@ msgid ""
 "inside your ship and only deploy as necessary. You should try to see "
 "whatever works best for you!\""
 msgstr ""
+"｢発射機の弾薬と同様に、失われた戦闘機は時間とともにゆっくりと再生されます。さ"
+"らに {cooldownkey} を押したり {reversekey} を二回押したりして冷却させるか、惑"
+"星やステーションに着陸することで補充できます。戦闘機を展開して飛びまわらせて"
+"おくことも、船の中にとどめて必要なときだけ展開することもできます。どうすれば"
+"自分にとっていちばんなのか、試して確認したほうがよいでしょう｣"
 
 #.
 #. text = {
@@ -33341,6 +33590,11 @@ msgid ""
 "target. By mixing and matching weapons with complementary strengths you can "
 "greatly increase your combat ability.\""
 msgstr ""
+"｢ああ、それは中型武器免許ですね？　それは砲塔や発射機のようなもっと大きな武器"
+"の装備を可能にしてくれます。砲塔は全方向に回転して、狙いをつけるという重荷を"
+"船から取り除きます。発射機は弾薬を使って敵の船を捕捉できるようにして、弾頭を"
+"目標に命中するようにします。相補的な強みをもつ武器を混ぜてそろえると、戦闘能"
+"力を大きく向上させることもできるでしょう｣"
 
 #: dat/events/tutorial/tut_land.lua:77
 msgid ""
@@ -33351,6 +33605,12 @@ msgid ""
 "cost of more mass. If you want to stay nimble and stealthy, you should be "
 "careful about increasing your mass.\""
 msgstr ""
+"｢あなたが今入手できるようになった新しい武器の多くは、必要な CPU がもっと多く"
+"なっています。あなたのもっている CPU を増やすには、もっとよい#o中核システム#0"
+"を装備しなければなりません。あなたが装備できる中核システムの性能は、船のス"
+"ロットの大きさで制限されます。大きいスロットであるほど高い性能を与えてくれま"
+"すが、質量も大きくなるという代償があります。すばやくひそやかなままでいたけれ"
+"ば、質量を増やすことについては慎重になるべきです｣"
 
 #: dat/events/tutorial/tut_land.lua:83
 msgid ""
@@ -33360,6 +33620,10 @@ msgid ""
 "a different scale. They use much more energy, weigh much more, but also have "
 "much longer range and higher firepower.\""
 msgstr ""
+"｢ついに大砲を手にする用意ができたようですね。大型武器免許はとりわけ大きくて強"
+"力な武器類を買えるようにするものです。そういう武器は一般的には中型の片割れと"
+"似ていますが、規模に違いがあります。ずっとたくさんエネルギーを使って重さも"
+"ずっとありますが、射程ももっと長くて火力も大きいんです｣"
 
 #: dat/events/tutorial/tut_land.lua:84
 msgid ""
@@ -33371,6 +33635,12 @@ msgid ""
 "intend to deal with smaller ships too, make sure to equip fighter bays or "
 "lighter weapons!\""
 msgstr ""
+"｢ひとつ注意すべきことは、大型の武器は追跡限界と最適追跡値が大きくなりがちだと"
+"いうことです。あなたの武器の追跡限界より小さな#o回避#0値をもつ船は、あなたの"
+"射撃のほとんどを容易に避けることができます。その反面、あなたの最適追跡値より"
+"大きな回避値をもつ大型の船は、あなたの射撃で途方にくれることになるでしょう。"
+"もしあなたが小さな船への対処も目指しているなら、かならず戦闘機格納庫か小型の"
+"武器を装備するようにしてください！｣"
 
 #: dat/events/tutorial/tut_land.lua:90
 msgid ""
@@ -33381,6 +33651,11 @@ msgid ""
 "There are mainly three classes of light combat vessels: #oFighters#0, "
 "#oBombers#0, and #oInterceptors#0.\""
 msgstr ""
+"｢#o小型戦闘艦免許#0で、あなたはついに戦闘艦を手にできるようになったようです"
+"ね！　戦闘艦は、もとから戦闘に向いているという点で、民間船とは異なります。こ"
+"れはふつう、機動性と火力がもっと高く、船倉容量と使い勝手が犠牲になっていると"
+"いい換えられます。小型戦闘艦にはおもに 3 つの種類があります。#o戦闘機#0、#o爆"
+"撃機#0、そして#o要撃機#0です｣"
 
 #: dat/events/tutorial/tut_land.lua:91
 msgid ""
@@ -33390,6 +33665,10 @@ msgid ""
 "craft, while bombers are known to carry torpedoes that can ravage even the "
 "largest of battleships.\""
 msgstr ""
+"｢#o要撃機#0は、3 つのなかでもっとも小さく、スロットも限られていますが、質量が"
+"小さく操縦性も高いです。#o戦闘機#0と#o爆撃機#0はそれより大きいですが、まだと"
+"ても機敏です。戦闘機は小さな船との接近戦を専門としていますが、爆撃機は魚雷を"
+"搭載することで、最大級の戦艦でさえ破壊できることで知られています｣"
 
 #: dat/events/tutorial/tut_land.lua:92
 msgid ""
@@ -33400,6 +33679,11 @@ msgid ""
 "than #oFighter#0-class ships. Be sure to experiment with set ups to see what "
 "works well for you.\""
 msgstr ""
+"｢たいていの戦闘艦を仕立てあげるときには、その強みと弱みを観察しておくことを勧"
+"めます。#o爆撃機#0級の船に前向きの武器だけを装備すると、効果的な戦闘艦にはな"
+"らないでしょう。スロットも重要な役割を演じます。#o要撃機#0級の船は#o戦闘機#0"
+"級の船よりスロットが制限されています。いくつかの構成でかならず実験をして、ど"
+"うすれば自分にとってうまくいくのか確認してください｣"
 
 #: dat/events/tutorial/tut_land.lua:98
 msgid ""
@@ -33409,6 +33693,11 @@ msgid ""
 "are the more agile of the two and can skirmish with smaller craft, while "
 "destroyers tend to be slower with much more firepower.\""
 msgstr ""
+"｢小型戦闘艦免許では追いつかなくなったようですね。#o中型戦闘艦免許#0があれば、"
+"#oコルベット#0と#o駆逐艦#0級の船が入手可能になります。これで本物の打撃力を発"
+"揮しはじめることができます。コルベットは二つのなかでは機敏なほうで、もっと小"
+"型の船と小競りあいができます。いっぽう駆逐艦はそれより遅いですが、ずっと大き"
+"な火力をもつ傾向にあります｣"
 
 #: dat/events/tutorial/tut_land.lua:99
 msgid ""
@@ -33418,6 +33707,11 @@ msgid ""
 "play different roles. You should experiment and see what what works well for "
 "you.\""
 msgstr ""
+"｢中型戦闘艦は、火力と使い勝手の釣りあいがうまくとれていることが多いです。ステ"
+"ルス作戦と正面からの襲撃の両方を実施することができます。中型戦闘艦はスロット"
+"も多めなので、もっと広範囲な構成変更をして、異なる役割を演じさせることが可能"
+"です。どうすれば自分にとってうまくいくのか、実験をして確認したほうがよいで"
+"しょう｣"
 
 #: dat/events/tutorial/tut_land.lua:105
 msgid ""
@@ -33427,6 +33721,11 @@ msgid ""
 "These ships sacrifice size and utility for survivability and firepower, "
 "being able to lay devasting barrages to devastate enemy forces.\""
 msgstr ""
+"｢ついに#o大型戦闘艦免許#0を手にしたようですね！　これは最大級の戦闘艦を操縦で"
+"きるようにしてくれるものです。これには#o巡洋艦#0や、#o戦艦#0、#o母艦#0級の船"
+"が含まれます。大型戦闘艦は、大きさと使い勝手を犠牲にして、生存性と火力を強化"
+"しています。そのため圧倒的な弾幕で埋めつくし、敵の部隊を打ちのめすことが可能"
+"です｣"
 
 #: dat/events/tutorial/tut_land.lua:106
 msgid ""
@@ -33437,6 +33736,11 @@ msgid ""
 "firepower. #oCarriers#0 use a different strategy of using fighter to do the "
 "combat for them while maximizing survivability.\""
 msgstr ""
+"｢#o巡洋艦#0は、3 つの種類のなかでは最小ですが、もっとも小さい質量ともっとも高"
+"い操縦性をもっています。これはだいたい大きめな駆逐艦とみなすこともできます。"
+"#o戦艦#0は、火力を完全に押しすすめたもので、集中した火力を避けられなかった船"
+"はなんでも粉砕できます。#o母艦#0は異なった方策をとっていて、戦いには戦闘機を"
+"使いながら、生存性も最大限に高めています｣"
 
 #: dat/events/tutorial/tut_land.lua:107
 msgid ""
@@ -33447,6 +33751,10 @@ msgid ""
 "volleys of torpedoes. Escorts and fighter bays can help them deal with enemy "
 "bombers.\""
 msgstr ""
+"｢大型戦闘艦を飛ばすのは、ほかの種類の船とはとても異なっています。あの大きさな"
+"ので、時間はふつう小さな船より速くすぎていくように思えます。これは船の#o時間"
+"定数#0の値でわかります。そのうえステルスは難しくなるので、魚雷の斉射が弱点と"
+"なることもあります。護衛と戦闘機格納庫が、敵の爆撃機への対処に役立つでしょう｣"
 
 #: dat/events/tutorial/tut_land.lua:113
 msgid ""
@@ -33457,6 +33765,11 @@ msgid ""
 "They can be fairly challenging at the beginning so make sure your ship is "
 "properly equipped for combat.\""
 msgstr ""
+"｢#o傭兵免許#0を取得したようですね。これで賞金をもらう任務ができるようになり、"
+"今からミッションコンピューター画面にその任務が出はじめるはずです。その任務は"
+"一般的に戦闘がからんでくるのがふつうで、成功するためには戦いにむいた船をもっ"
+"ていることが求められます。初めのうちはまあまあ挑戦的なこともありますので、船"
+"が戦いにむけた適切な装備になっているのか確かめてください｣"
 
 #: dat/events/tutorial/tut_land.lua:140
 msgid ""
@@ -33469,6 +33782,13 @@ msgid ""
 "getting a diversity of ships and switching to the one that best fits your "
 "need is a great way to get things done.\""
 msgstr ""
+"｢新しい{shipname}の購入おめでとう！　船を下取りに出さないかぎり、新しい船を買"
+"うと、使用可能な船に追加されます。一般的に、その船は中核となる艤装品だけが装"
+"備されています。だから#o装備#0ウィンドウへ行って、船を飾りたてたり、今の船と"
+"使いたい艤装品を交換すべきです。造船所がある惑星やステーションなら、どこでも"
+"船を交換できます。交換にさいして不利益や費用はかかりません。じつは、多様な船"
+"を手にして必要性をいちばんよく満たす船に変えるのが、ものごとをこなすすぐれた"
+"方法なんです｣"
 
 #: dat/events/tutorial/tut_land.lua:141
 msgid ""
@@ -33476,6 +33796,8 @@ msgid ""
 "automatically transferred between your ships. You can't get away from me, ha "
 "ha.\""
 msgstr ""
+"｢それから、船の AI が変わる心配はありません。わたしは自動的に船から船へと転送"
+"されます。わたしから逃げることなんかできませんよ。ハハッ｣"
 
 #: dat/events/tutorial/tut_land.lua:152
 msgid ""
@@ -33488,6 +33810,14 @@ msgid ""
 "constant will have time passing 50% faster than a normal ship, and will help "
 "the ship feel less cumbersome to fly.\""
 msgstr ""
+"｢おっと、ちょうど大きな船を初めて取得したところのようですね。もう気がついてい"
+"るかもしれませんが、船には#o時間定数#0値があります。これは船を飛ばすのにどれ"
+"くらい時間が速くすぎるように感じるかを示しています。小さな船は 100% 未満の値"
+"になることが多く、それゆえほかの船よりその船に乗っているときのほうが時間が"
+"ゆっくりすぎていくようになります。その反面、大きな船は 100% をこえる時間定数"
+"になっていて、時間が速くすぎさるように感じます。たとえば、150% の時間定数をも"
+"つ船だと、通常の船より 50% 速く時間がすぎていきます。これは船を飛ばすのをあま"
+"りわずらわしく感じさせないようにしてくれます｣"
 
 #: dat/events/tutorial/tut_land.lua:153
 msgid ""
@@ -33500,6 +33830,13 @@ msgid ""
 "Tracking#0', your turrets will be able to perfectly track them. It is best "
 "to try out different turrets and see what feels best for your ship.\""
 msgstr ""
+"｢一般的に、大きい船は操縦性が低いので、自衛のために砲塔型兵器や戦闘機格納庫の"
+"使用を検討すべきです。そうすると、あまり狙うことに気をとられないですみます"
+"し、仕事にもっと集中できます。砲塔は追跡値に大きく依存します。#o追跡限界#0と"
+"目標の船の#o回避#0値により、砲塔が追跡できなくなるかどうかが決まります。その"
+"反面、もし目標の船の#o回避#0が#o最適追跡#0より大きかったら、あなたの砲塔は完"
+"璧に目標を追跡できます。いろいろな砲塔を試して、自分の船にはどれがもっとも"
+"しっくりいくのか確認するのがいちばんです｣"
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -33609,10 +33946,10 @@ msgid ""
 "missiles can be jammed, and some factions have been completely reworked. You "
 "will notice a lot of smaller differences too as you play the game.\""
 msgstr ""
-"｢ほかにも変更はたくさんあります。たとえば、いまでは星系内に巡視航路があって、"
-"そこはその土地の党派によってさらに厳重に守られています。追跡するミサイルは妨"
-"害できるようなり、一部の党派は完全に改訂されました。ゲームをしていると、もっ"
-"と小さな違いにも気づくことになるでしょう｣"
+"｢ほかにも変更はたくさんあります。たとえば、いまでは星系内に巡視路があって、そ"
+"こはその土地の党派によってさらに厳重に守られています。追跡するミサイルは妨害"
+"できるようなり、一部の党派は完全に改訂されました。ゲームをしていると、もっと"
+"小さな違いにも気づくことになるでしょう｣"
 
 #: dat/events/updater.lua:92
 msgid ""
@@ -33815,14 +34152,14 @@ msgstr "賞金稼ぎ"
 #. Safety check
 #: dat/factions/spawn/lib/common.lua:90
 msgid "No weight specified"
-msgstr ""
+msgstr "No weight specified"
 
 #. Normalize
 #. Job done
 #. @brief Chooses what to spawn
 #: dat/factions/spawn/lib/common.lua:112
 msgid "No spawn function found"
-msgstr ""
+msgstr "No spawn function found"
 
 #. @brief Actually spawns the pilots
 #. Case no pilots
@@ -34661,11 +34998,11 @@ msgstr "船倉容量 :"
 #. Render warnings
 #: dat/gui/legacy.lua:374
 msgid "LOCK-ON DETECTED"
-msgstr "捕捉警報"
+msgstr "捕捉されました。"
 
 #: dat/gui/legacy.lua:378
 msgid "VOLATILE ENVIRONMENT DETECTED"
-msgstr "激変性環境警報"
+msgstr "激変性環境を検出しました。"
 
 #. --
 #. Obligatory render function.
@@ -34701,7 +35038,7 @@ msgstr "激変性環境警報"
 #. Missile lock warning
 #: dat/gui/slim.lua:187
 msgid "Warning - Missile Lock-on Detected"
-msgstr "ミサイル捕捉警報"
+msgstr "警告 — ミサイルに捕捉されました。"
 
 #. Colour the planet name based on friendliness.
 #: dat/gui/slim.lua:392
@@ -34933,97 +35270,97 @@ msgstr "皇帝に近づくことは許されない。"
 
 #: dat/landing.lua:84
 msgid "Only the faithful may land here. Request denied."
-msgstr ""
+msgstr "誠実な者だけがここには着陸できる。要請を拒絶する。"
 
 #: dat/landing.lua:86 dat/landing.lua:95
 msgid "\"The faithful will never be swayed by money.\""
-msgstr ""
+msgstr "｢誠実であればけっしてかねに動かされることはない｣"
 
 #. Sirius Mutris.
 #: dat/landing.lua:92
 msgid "Welcome to Mutris, home of Sirichana."
-msgstr ""
+msgstr "シリチャナの家、ミュートリスへようこそ。"
 
 #: dat/landing.lua:93
 msgid "You may not approach the home of Sirichana yet."
-msgstr ""
+msgstr "あなたはまだシリチャナの家に近づくことは許されない。"
 
 #: dat/landing.lua:102
 msgid "Your rank is too low, citizen. Access denied."
-msgstr ""
+msgstr "市民、あなたの階級は低すぎる。立ち入りは拒否する。"
 
 #: dat/landing.lua:104 dat/landing.lua:113
 msgid "\"Money won't buy you access to our restricted facilities, citizen.\""
-msgstr ""
+msgstr "｢制限された施設への立ち入り許可をかねで買うことはできない、市民｣"
 
 #. Dvaered High Command.
 #: dat/landing.lua:110
 msgid "Permission to land granted, captain."
-msgstr ""
+msgstr "着陸の許可を与える、船長。"
 
 #: dat/landing.lua:111
 msgid "Only high ranking personnel allowed. Landing request denied."
-msgstr ""
+msgstr "高い地位にある人物だけが許可される。着陸の要請を拒絶する。"
 
 #: dat/landing.lua:120
 msgid "Permission denied. You're not truly one of us."
-msgstr ""
+msgstr "許可できない。おまえはわれわれに忠実ではない。"
 
 #: dat/landing.lua:122 dat/landing.lua:131
 msgid "\"We don't need your money, outsider.\""
-msgstr ""
+msgstr "｢われわれはおまえのかねを必要としていない、よそ者｣"
 
 #: dat/landing.lua:129
 msgid "Only friends of the Soromid may set foot on Kataka."
-msgstr ""
+msgstr "ソロミドの友人だけがカタカの地を踏める。"
 
 #. Za'lek's military assets.
 #: dat/landing.lua:137
 msgid "Docking sequence transmitted."
-msgstr ""
+msgstr "着岸手順を送信した。"
 
 #: dat/landing.lua:138
 msgid "Authorization level too low to grant access."
-msgstr ""
+msgstr "許可水準が低すぎるので、立ち入り許可は与えられない。"
 
 #: dat/landing.lua:139
 msgid "Authorization denied."
-msgstr ""
+msgstr "許可は与えられない。"
 
 #: dat/landing.lua:140
 msgid "Money is irrelevant."
-msgstr ""
+msgstr "かねは無関係だ。"
 
 #: dat/landing.lua:154
 msgid "We Proteron don't take kindly to bribery."
-msgstr ""
+msgstr "われわれプロテロンはわいろを好んでいはいない。"
 
 #. Thurion military assets.
 #: dat/landing.lua:160
 #, lua-format
 msgid "Welcome, friend %s. You may dock when ready."
-msgstr ""
+msgstr "ようこそ、わが友%s。用意ができたら着岸できる。"
 
 #: dat/landing.lua:161
 msgid "I'm sorry, we can't trust you to land here just yet."
-msgstr ""
+msgstr "残念だが、今はまだここへ着陸させるほどの信頼はできない。"
 
 #: dat/landing.lua:163
 msgid "We have no need for your credits."
-msgstr ""
+msgstr "あなたのクレジットは必要としていない。"
 
 #. Pirate clanworld.
 #: dat/landing.lua:174
 msgid "Permission to land granted. Welcome, mate."
-msgstr ""
+msgstr "着陸の許可を与える。ようこそ、相棒。"
 
 #: dat/landing.lua:176
 msgid "Small time pirates have no business on our clanworld!"
-msgstr ""
+msgstr "三流の海賊がおれたち一味の世界に用はないだろ！"
 
 #: dat/landing.lua:178
 msgid "Get out of here!"
-msgstr ""
+msgstr "ここから出てけ！"
 
 #. Calculate bribe price. Custom for pirates.
 #. 36K max, at -50 rep. Pirates are supposed to be cheaper than regular factions.
@@ -35033,10 +35370,11 @@ msgid ""
 "\"Well, I think you're scum, but I'm willing to look the other way for %s. "
 "Deal?\""
 msgstr ""
+"｢うーん、あんたはくずだと思うが、%s で別の方法を見つけてもいいな。出すか？｣"
 
 #: dat/landing.lua:189
 msgid "Heh heh, thanks. Now get off the comm, I'm busy!"
-msgstr ""
+msgstr "へっへっ、ありがとうよ。さあ通信を切ってくれ。忙しいんだ！"
 
 #. Helper function for determining the bribe cost multiplier for the player's current ship.
 #. Returns the factor the bribe cost is multiplied by when the player tries to bribe.
@@ -35046,7 +35384,7 @@ msgstr ""
 #. Returns whether the planet can be bribed, and the cost for doing so.
 #: dat/landing.lua:207
 msgid "\"I'm not dealing with dangerous criminals like you!\""
-msgstr ""
+msgstr "｢おまえのような危険な犯罪者と取引はしない！｣"
 
 #. Calculate bribe price. Note: Assumes bribe floor < land_floor.
 #. TODO: different rates for different factions.
@@ -35057,10 +35395,13 @@ msgid ""
 "\n"
 "Pay %s?"
 msgstr ""
+"｢着陸させるのに穏当な金額は %s だろう｣\n"
+"\n"
+"%s 支払うか？"
 
 #: dat/landing.lua:236
 msgid "Make it quick."
-msgstr ""
+msgstr "急げ。"
 
 #. Military planet landing logic.
 #. Expects the planet, the lowest standing at which landing is allowed, and four strings:
@@ -41613,19 +41954,16 @@ msgstr ""
 
 #: dat/missions/dvaered/gauntlet/gui.lua:123
 #, fuzzy
-#| msgid "Admonisher"
 msgid "Skirmisher"
 msgstr "アドマニシャー"
 
 #: dat/missions/dvaered/gauntlet/gui.lua:123
 #, fuzzy
-#| msgid "Clan Warrior"
 msgid "Warrior"
 msgstr "一味の戦士"
 
 #: dat/missions/dvaered/gauntlet/gui.lua:123
 #, fuzzy
-#| msgid "Warlords"
 msgid "Warlord"
 msgstr "軍閥領袖"
 
@@ -41643,19 +41981,16 @@ msgstr ""
 #. Tournament Types
 #: dat/missions/dvaered/gauntlet/gui.lua:178
 #, fuzzy
-#| msgid "Concealment"
 msgid "Tournament"
 msgstr "潜伏"
 
 #: dat/missions/dvaered/gauntlet/gui.lua:178
 #, fuzzy
-#| msgid "Wellen"
 msgid "Challenge"
 msgstr "ウェレン"
 
 #: dat/missions/dvaered/gauntlet/gui.lua:178
 #, fuzzy
-#| msgid "Infinity"
 msgid "Infinity Arena"
 msgstr "インフィニティー"
 
@@ -42951,6 +43286,10 @@ msgid ""
 "We're having another recruitment operation and would be interested in having "
 "another pilot among us. Would you be interested in working for the Empire?\""
 msgstr ""
+"あなたは帝国の大尉に近づいた。\n"
+"    ｢こんにちは、わたしは帝国艦隊輸送局のチェシチ大尉です。われわれはまた新兵"
+"募集活動をしていまして、われわれのなかにまたパイロットを迎えるのにも興味があ"
+"ります。帝国のために仕事をすることには関心がありますか？｣"
 
 #: dat/missions/empire/emp_cargo00.lua:34
 #, lua-format
@@ -42965,6 +43304,15 @@ msgid ""
 "parcels to %s. The best pilots started delivering papers and ended up flying "
 "into combat against gigantic warships with the Interception Division.\""
 msgstr ""
+"｢船にようこそ｣ と、チェシチはいって、あなたと固い握手をかわした。｢最初は、貨"
+"物輸送任務で試されるだけです。同時にわれわれはあなたの飛ばす腕前について情報"
+"を集めます。あとになって、あなたはもっと重要な任務に呼ばれるかもしれません。"
+"ことによったら、あなたは次のヤオ・プテルノフになる可能性だってあります。われ"
+"われの艦隊に今までいたなかでも最高のパイロットですよ｣\n"
+"    チェシチが手首にあるコンピューターのボタンを二つたたくと、コンピューター"
+"はとつじょ活動を開始した。｢あなたのための簡単な仕事はもうあるようです。この小"
+"包を%sへ配達してください。屈指のパイロットたちは書類の配達から始めて、最後は"
+"迎撃局に所属して戦いのなかを巨大な戦闘艦にむかって飛ぶことになるんです｣"
 
 #: dat/missions/empire/emp_cargo00.lua:36
 #, lua-format
@@ -42977,6 +43325,13 @@ msgid ""
 "    You aren't too sure of what to make of your encounter with the Empire. "
 "Only time will tell..."
 msgstr ""
+"あなたは%sの宇宙港にある帝国輸送所に小包を届けた。そのあと担当者はあなたにい"
+"くつか書類を書かせて、帝国へのあなたの関与を法的に有効なものとした。それから"
+"あなたは、帝国輸送を表す ES と目印をつけられた任務に目を光らせておくようにと"
+"いわれる。もうあなたはその任務をミッションコンピューターから入手できるの"
+"だ。\n"
+"    帝国とかかわったことでどういうことになっていくのか、あなたにはあまり自信"
+"がなかった。時だけが教えてくれることだろう……"
 
 #. Note: this mission does not make any system claims.
 #. target destination
@@ -42992,11 +43347,11 @@ msgstr ""
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo5.lua:45
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo6.lua:45
 msgid "Lieutenant"
-msgstr "副官"
+msgstr "大尉"
 
 #: dat/missions/empire/emp_cargo00.lua:58
 msgid "You see an Empire Lieutenant who seems to be looking at you."
-msgstr ""
+msgstr "帝国の大尉はあなたを見ていたらしいとわかった。"
 
 #. Intro text
 #. Set marker to a system, visible in any mission computer and the onboard computer.
@@ -43174,7 +43529,7 @@ msgstr "宇宙港のバー"
 #: dat/missions/empire/emp_cargo00.lua:80
 #: dat/missions/empire/emp_cargo00.lua:81
 msgid "Empire Recruitment"
-msgstr ""
+msgstr "帝国の新兵募集"
 
 #: dat/missions/empire/emp_cargo00.lua:77
 #: dat/missions/empire/emp_cargo00.lua:81
@@ -43185,11 +43540,11 @@ msgstr ""
 #. Set up the goal
 #: dat/missions/empire/emp_cargo00.lua:84
 msgid "Parcels"
-msgstr ""
+msgstr "小包"
 
 #: dat/missions/empire/emp_cargo00.lua:84
 msgid "A bunch of boring Empire parcels."
-msgstr ""
+msgstr "うんざりする帝国の小包の山。"
 
 #: dat/missions/empire/emp_cargo00.lua:99
 msgid ""
@@ -43197,6 +43552,9 @@ msgid ""
 "missions labeled ES, which stands for Empire Shipping. You aren't too sure "
 "of what to make of your encounter with the Empire. Only time will tell..."
 msgstr ""
+"あなたは帝国輸送局に徴募されて、今では帝国輸送を表す ES と目印をつけられた任"
+"務ができるようになった。帝国とかかわったことでどういうことになっていくのか、"
+"あなたにはあまり自信がなかった。時だけが教えてくれることだろう……"
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -43364,13 +43722,13 @@ msgstr ""
 #: dat/missions/pirate/pir_contraband.lua:186
 #: dat/missions/zalek/zlk_test.lua:101 dat/missions/zalek/zlk_test.lua:102
 msgid "Mission Accepted"
-msgstr ""
+msgstr "任務を受諾"
 
 #: dat/missions/empire/es_cargo.lua:113
 #: dat/missions/empire/longdistanceshipping/es_longdistancecargo.lua:118
 #, lua-format
 msgid "The Empire workers load the %s of %s onto your ship."
-msgstr ""
+msgstr "帝国の労働者たちがあなたの船に %sトンの%sを積みこんだ。"
 
 #. increase faction
 #. Date hook
@@ -43402,7 +43760,7 @@ msgstr ""
 #: dat/missions/empire/es_cargo.lua:119 dat/missions/empire/es_cargo.lua:153
 #: dat/scripts/common/empire.lua:18
 msgid "Empire Shipping"
-msgstr ""
+msgstr "帝国の輸送任務"
 
 #. only hook after accepting
 #. 100STU per tick
@@ -43426,7 +43784,7 @@ msgstr "配達に成功"
 #: dat/missions/empire/longdistanceshipping/es_longdistancecargo.lua:133
 #, lua-format
 msgid "The Empire workers unload the %s at the docks."
-msgstr ""
+msgstr "帝国の労働者たちが着岸所に%sを降ろした。"
 
 #. Case missed deadline
 #: dat/missions/empire/es_cargo.lua:156
@@ -54097,7 +54455,6 @@ msgstr ""
 
 #: dat/missions/neutral/derelict_rescue.lua:45
 #, fuzzy
-#| msgid "Refuse"
 msgid "Refuse to help"
 msgstr "拒否"
 
@@ -54115,7 +54472,6 @@ msgstr ""
 #: dat/missions/neutral/derelict_rescue.lua:70
 #: dat/missions/neutral/derelict_rescue.lua:77
 #, fuzzy
-#| msgid "Derelict"
 msgid "Derelict Rescue"
 msgstr "遺棄"
 
@@ -56872,8 +57228,8 @@ msgid ""
 "flying a {shipclass}-class ship."
 msgstr ""
 "{pirname}という名で知られる海賊が最近{sysname}星系で見られた。{fctname}当局が"
-"この海賊を生け捕りにするか死んでほしがっている。{pirname}は{shipclass}という"
-"種類の船で飛んでいると信じられている。"
+"この海賊を生け捕りにするか死んでほしがっている。{pirname}は{shipclass}級の船"
+"で飛んでいると信じられている。"
 
 #: dat/missions/neutral/pirbounty_alive.lua:66
 #, lua-format
@@ -58621,7 +58977,7 @@ msgstr ""
 
 #: dat/missions/neutral/sightseeing.lua:67
 msgid "Truly a sight to behold for the passengers."
-msgstr "乗客たちにとって、いつわりなく見るべき眺めだった。"
+msgstr "乗客たちは、いつわりなく目をみはっていた。"
 
 #: dat/missions/neutral/sightseeing.lua:71
 msgid "Go to all indicated points"
@@ -59294,10 +59650,8 @@ msgstr ""
 #: dat/missions/pirate/blackcat.lua:46 dat/missions/pirate/blackcat.lua:91
 #: dat/missions/pirate/blackcat.lua:95 dat/missions/pirate/blackcat.lua:98
 #: dat/missions/pirate/blackcat.lua:268
-#, fuzzy
-#| msgid "Black Lotus"
 msgid "Black Cat"
-msgstr "ブラックロータス"
+msgstr "黒ネコ"
 
 #: dat/missions/pirate/blackcat.lua:48
 msgid ""
@@ -59342,10 +59696,8 @@ msgid ""
 msgstr ""
 
 #: dat/missions/pirate/blackcat.lua:61
-#, fuzzy
-#| msgid "Death awaits you!"
 msgid "Take the cat with you"
-msgstr "死がおまえを待っている！"
+msgstr ""
 
 #: dat/missions/pirate/blackcat.lua:62
 msgid "Let the cat be"
@@ -61065,7 +61417,6 @@ msgstr ""
 
 #: dat/missions/pirate/raid.lua:105
 #, fuzzy
-#| msgid "Nebular Shielding Prototype"
 msgid "Research Prototypes"
 msgstr "星雲シールド試作機"
 
@@ -61096,13 +61447,11 @@ msgstr ""
 
 #: dat/missions/pirate/raid.lua:108
 #, fuzzy
-#| msgid "Luxury Goods"
 msgid "Brand Goods"
 msgstr "ぜいたく品"
 
 #: dat/missions/pirate/raid.lua:108
 #, fuzzy
-#| msgid "All sorts of high quality luxury goods."
 msgid "A variety of high quality brand luxury goods."
 msgstr "あらゆる種の高品質ぜいたく品。"
 
@@ -61136,7 +61485,6 @@ msgstr ""
 
 #: dat/missions/pirate/raid.lua:112
 #, fuzzy
-#| msgid "Nebula Resistance"
 msgid "Nebula Artefacts"
 msgstr "星雲耐性"
 
@@ -61213,7 +61561,6 @@ msgstr ""
 
 #: dat/missions/pirate/raid.lua:121
 #, fuzzy
-#| msgid "Target Planet"
 msgid "Rare Plants"
 msgstr "惑星を選択"
 
@@ -61305,7 +61652,6 @@ msgstr ""
 
 #: dat/missions/pirate/raid.lua:177
 #, fuzzy
-#| msgid "Pirate Rhino"
 msgid "Pirate Raid"
 msgstr "海賊ライノ"
 
@@ -61522,16 +61868,12 @@ msgid "PD: Dead or Alive Bounty in %s"
 msgstr ""
 
 #: dat/missions/proteron/dissbounty_dead.lua:105
-#, fuzzy
-#| msgid ""
-#| "The pirate known as %s was recently seen in the %s system. %s authorities "
-#| "want this pirate alive."
 msgid ""
 "A political dissident was recently seen in the {sysname} system. {fctname} "
 "authorities want this dissident dead or alive."
 msgstr ""
-"%sという名で知られる海賊が最近%s星系で見られた。%s当局がこの海賊を生け捕りに"
-"したがっている。"
+"政治体制に反対する者が最近{sysname}星系で見られた。{fctname}当局がこの反対者"
+"を生け捕りにするか死んでほしがっている。"
 
 #: dat/missions/proteron/dissbounty_dead.lua:113
 msgid "Proteron Dissident"
@@ -68207,13 +68549,11 @@ msgstr ""
 
 #: dat/missions/tutorial/nelly02.lua:233
 #, fuzzy
-#| msgid "Plasma Blaster MK2"
 msgid "Llaminator MK2"
 msgstr "プラズマブラスター MK2"
 
 #: dat/missions/tutorial/nelly02.lua:265
 #, fuzzy
-#| msgid "Pacifier"
 msgid "Noisy Pacifier"
 msgstr "パシファイアー"
 
@@ -68238,7 +68578,6 @@ msgstr ""
 
 #: dat/missions/tutorial/nelly02.lua:306
 #, fuzzy
-#| msgid "Return To Ship"
 msgid "Return to {pntname}"
 msgstr "船に戻る"
 
@@ -68357,7 +68696,6 @@ msgstr ""
 
 #: dat/missions/tutorial/nelly02.lua:465
 #, fuzzy
-#| msgid "\"I should be able to refuel you for %s.\""
 msgid "Nelly: \"Now we should be able to get out of here safely.\""
 msgstr "｢%s で燃料補給ができるはずだ｣"
 
@@ -68412,7 +68750,6 @@ msgstr ""
 
 #: dat/missions/tutorial/nelly02.lua:530 dat/missions/tutorial/nelly02.lua:549
 #, fuzzy
-#| msgid "Electronic Warfare"
 msgid "Learn about Electronic Warfare"
 msgstr "電子戦"
 
@@ -68481,7 +68818,6 @@ msgstr ""
 
 #: dat/missions/tutorial/nelly02.lua:550
 #, fuzzy
-#| msgid "Electronic Warfare"
 msgid "\"Call me Dr. Electronic Warfare\""
 msgstr "電子戦"
 
@@ -68579,9 +68915,9 @@ msgid ""
 msgstr ""
 "｢それはともかく、これからわたしはあなたの船の AI になります。新しい船を取得し"
 "ても心配しないでください。わたしはなんの問題もなく転送されます。もし船の仕組"
-"みやなにかする方法についてなにか疑問や意見があるなら、わたしが助けられると信"
-"じています。あなたの新しい船の AI として、わたしに名前をつけてくないでしょう"
-"か？｣"
+"みやなにかをする方法について疑問や意見がすこしでもあるなら、わたしが助けられ"
+"ると信じています。あなたの新しい船の AI として、わたしに名前をつけてくないで"
+"しょうか？｣"
 
 #. Can't use rename here
 #: dat/missions/tutorial/tutorial.lua:74
@@ -68626,7 +68962,7 @@ msgid ""
 "\"Now that we have you out in space for the first time, how about I go over "
 "your new ship's controls with you real quick? No charge!\""
 msgstr ""
-"｢今回は初めて宇宙へ出るわけなので、あなたが新しい宇宙船を操縦するのをちょっと"
+"｢今回は初めて宇宙へ出るわけなので、あなたが新しい宇宙船を操縦するのをすばやく"
 "わたしに点検させてみてはいかがでしょうか？　無料ですよ！｣"
 
 #: dat/missions/tutorial/tutorial.lua:96
@@ -68771,6 +69107,10 @@ msgid ""
 "appreciate this feature in your ship in time, especially as you travel from "
 "system to system delivering goods and such, given the vastness of space.\""
 msgstr ""
+"｢いい仕事ぶりです！　わかったと思いますが、船の自動操縦機能を使うと、知覚でき"
+"る旅の期間が実質的には短くなります。そのうち船のこの機能をどんどん高く評価す"
+"るようになるでしょう。とくに、星系から星系へと品物やなにかを運ぶときにはで"
+"す。宇宙は広大ですから｣"
 
 #: dat/missions/tutorial/tutorial.lua:191
 msgid ""
@@ -68782,6 +69122,12 @@ msgid ""
 "around, but they don't guarantee your safety. When starting out it is "
 "probably best to not stray too far.\""
 msgstr ""
+"｢オーバーレイマップを起動したときに、いくつか目立つものがあったのに気づいたと"
+"思います。惑星や船や小惑星のような物体だけがオーバーレイマップに見えるのでは"
+"なく、党派の#o巡視路#0も太線で表示されています。この航路は船がよく巡視したり"
+"使ったりしている領域を意味しています。この航路から離れないのが、ふつうは旅し"
+"てまわるときのもっともよい方法です。ですが、その人たちもあなたの安全を保証は"
+"していません。旅に出たら、あまり遠くまで離れないのがおそらくいちばんです｣"
 
 #: dat/missions/tutorial/tutorial.lua:192
 msgid ""
@@ -68793,6 +69139,13 @@ msgid ""
 "ship ornament like my late previous owner after encountering… Anyway, on to "
 "the drone.\""
 msgstr ""
+"｢さあ、戦闘訓練といきましょうか。帝国の中核となる安全な星系に固執していれば、"
+"これは必要とならないでしょう。ですが悲しいことに、思いきってもっと遠くまで乗"
+"りだしていけば、敵対的な船と出会うことになるでしょう。だから身を守る方法は"
+"知っておく必要があります。さいわいにも、この船には最新式のレーザーキャノンが"
+"あらかじめ搭載されています。まさにそれが道理というものですよね！　すべてがう"
+"まくいけば、あなたは船の飾りみたいなものになることはないでしょう。運悪くわた"
+"しの前回の所有者がなったようには……。とにかく、ドローンの話をしましょう｣"
 
 #: dat/missions/tutorial/tutorial.lua:193
 msgid ""
@@ -68806,6 +69159,15 @@ msgid ""
 "remedy that by pressing {cooldownkey} or double tapping {reversekey} to "
 "engage active cooling.\""
 msgstr ""
+"｢今{pntname}から戦闘訓練用のドローンを発進させて飛ばします。心配無用ですよ。"
+"このドローンはなんの武器も積んでいないので、傷つくことはありません。ドローン"
+"をクリックするか、{targethostilekey} を押して選択してください。それから武器を"
+"使います。{primarykey} と {secondarykey} で思うとおりに撃って、ドローンを破壊"
+"してください！｣\n"
+"｢ああ、そういえば。ドローンを発進させるまえに、もうひとつこつを教えておきま"
+"す。武器の精度が悪くなりはじめたら、オーバーヒートしてるからです。"
+"{cooldownkey} を押すか {reversekey}を二回押すと、冷却器を起動して治すことがで"
+"きます｣"
 
 #: dat/missions/tutorial/tutorial.lua:195
 msgid ""
@@ -68813,6 +69175,9 @@ msgid ""
 "it. Being an artificial intelligence it is unable to compute feelings you "
 "know? Not like me, ha ha. HUMOUR PROCEDURE TERMINATED\""
 msgstr ""
+"｢ドローンの AI はちょっと変なことを言いますが、それは気にしないでください。人"
+"工知能って、感情は計算できないでしょう？　わたしとはちがってね。ハハハ。ユー"
+"モアサブルーチンが終了しました｣"
 
 #: dat/missions/tutorial/tutorial.lua:212
 msgid ""
@@ -68832,7 +69197,7 @@ msgstr ""
 "の AI であるわたしの担当です。そうすることで、人間が操縦する手動着陸中の災難"
 "をいちじるしく減らしたのです。着陸すると、船には自動的に燃料が補給されます。"
 "それから、バーで一般の市民と話すとか、船の新しい部品を買うとか、船の設定をす"
-"るとかができます。いちばん重要なのは、ミッションコンピューターにある任務を受"
+"るとかができます。いちばん重要なのは、ミッションコンピューターにある任務をう"
 "けることです。見てまわってみましょうか？　見えているとおり、わたしたちは現在"
 "着陸メインタブにいます。ここではその惑星について知ることができて、系内地図が"
 "買えます。下にあるほかのタブをすべてクリックしてみてください。ほかに惑星上で"
@@ -68896,6 +69261,9 @@ msgid ""
 "computer. That is why I recommend also checking the spaceport bar often when "
 "travelling.\""
 msgstr ""
+"｢ほかの党派や人物から評判を得ると、もっと複雑で支払いがよい任務をミッションコ"
+"ンピューターから得られるようになります。そういう理由があるので、旅するときに"
+"はひんぱんに宇宙港のバーも確認することをお勧めしています｣"
 
 #: dat/missions/tutorial/tutorial.lua:253
 msgid ""
@@ -69081,7 +69449,7 @@ msgstr ""
 "進むように感じられるでしょう。しかし心配は無用です。敵意のあるパイロットを見"
 "つけたら、自動操縦システムが自動的に警報を発するので、あなたは状況を観察し"
 "て、どんなやりかたでも必要と判断したら対応できます。これは船の#oオプション#0"
-"メニューで設定が可能です。そのメニューは {menukey} を押せばで呼びだせます。"
+"メニューで設定が可能です。そのメニューは {menukey} を押せばで呼びだせます｣"
 
 #: dat/missions/tutorial/tutorial.lua:325
 msgid ""
@@ -69090,8 +69458,8 @@ msgid ""
 "{overlaykey}.\""
 msgstr ""
 "｢自動操縦を使って{pntname}の上を飛んでみましょうか？　オーバーレイマップで目"
-"立つようになっているのが見えるはずです。オーバーレイマップは{overlaykey} で起"
-"動できます｣"
+"立つようになっているのが見えるはずです。オーバーレイマップは {overlaykey} で"
+"起動できます｣"
 
 #: dat/missions/tutorial/tutorial.lua:339
 msgid ""
@@ -69102,6 +69470,11 @@ msgid ""
 "clicking#0 on them, or by selecting them with {targetnextkey} and then "
 "pressing {hailkey}.\""
 msgstr ""
+"｢とてもうまくできましたね、{playername}！　見てわかるとおり、旅は燃料を消費し"
+"ます。ジャンプをすればいつでも燃料を消費しますが、友好的な惑星に着陸すること"
+"で燃料を補給できます。困難な状況にあるのがわかったら、星系内にいるほかのパイ"
+"ロットから燃料を買うこともできます。パイロットを#bダブルクリック#0して呼びか"
+"けるか、{targetnextkey} で選択してから {hailkey} を押してもできます｣"
 
 #: dat/missions/tutorial/tutorial.lua:340
 msgid ""
@@ -69110,6 +69483,11 @@ msgid ""
 "others; pirates will happily take your offer and may even sell you fuel "
 "afterwards, but many other factions may be less forthcoming.\""
 msgstr ""
+"｢ああ、それで思いだしました。海賊のような敵意のある船でも、呼びかけてわいろを"
+"試すことができます。ほかの党派よりわいろがうまく効く党派もあります。さいわい"
+"にも海賊は申し出をうけてくれるでしょう。それにそのあとでは燃料を売ってくれる"
+"ことさえあります。しかしほかの多くの党派は、たぶんあまり協力的ではないでしょ"
+"う｣"
 
 #: dat/missions/tutorial/tutorial.lua:341
 msgid ""
@@ -69121,6 +69499,13 @@ msgid ""
 "head to the nearest planet and check out the spaceport bar to see if anybody "
 "can offer us some work to get started out.\""
 msgstr ""
+"｢ではこれでおしまいなようですね！　正直にいいますが、あなたは生まれながらのパ"
+"イロットで、新しい船にとても向いています！　これで基本的な教育は終わりです"
+"が、あなたが新しい出来事に出会ったら、わたしはその場に出現します。もし自分の"
+"知識を再確認する必要があったり、わたしの設定を変更したければ、{infokey} で開"
+"ける#o情報#0メニューでできるようになっています。さて、冒険にでかけましょう"
+"か！　わたしのお勧めは、いちばん近い惑星へ向かうことです。宇宙港のバーで、手"
+"始めにできる仕事をだれかが提供してくれないか確認するんです｣"
 
 #. Normal finish of the tutorial
 #: dat/missions/tutorial/tutorial.lua:346
@@ -69128,6 +69513,8 @@ msgid ""
 "Your ship AI gave you a tutorial on how to pilot your ship. Hopefully you "
 "will fair better than their late previous owner."
 msgstr ""
+"船の AI が船の飛ばしかたを指導してくれた。うまくいけば、この AI の前回の所有"
+"者よりはかなりうまくやれるだろう。"
 
 #: dat/missions/tutorial/tutorial.lua:364
 msgid ""
@@ -69137,6 +69524,11 @@ msgid ""
 "repair technology. But even then, armour regeneration is usually much slower "
 "than shield regeneration.\""
 msgstr ""
+"｢すばらしい手際であのドローンを破壊しましたね！　気づいたかもしれませんが、"
+"シールドは時間とともに再生しますが、装甲はしません。これはもちろん、例外がな"
+"いわけではありません。一部の船には、とくに大型の船ですが、先進の装甲修理技術"
+"を目玉にしているものがあります。しかしそういうものでさえ、装甲の再生は一般的"
+"にシールド再生よりずっと遅いんです｣"
 
 #: dat/missions/tutorial/tutorial.lua:365
 msgid ""
@@ -69148,6 +69540,12 @@ msgid ""
 "Alternatively, you can cool off your ship instantly by landing on any planet "
 "or station.\""
 msgstr ""
+"｢熱の計器の値が上昇したのと、船や武器が熱くなるにつれて武器の精度が低下したの"
+"にも気づいたかもしれませんね。これはふつうのことですが、発熱しすぎて武器を使"
+"うのが難しくなることもあります。それが理由で、安全にできるときには冷却器を使"
+"うことが勧められているんです。冷却器は {cooldownkey} を押すか、{reversekey} "
+"二回押せば起動できます。代わりに、船を惑星やステーションに着陸させてもすぐに"
+"船を冷やすことが可能です｣"
 
 #: dat/missions/tutorial/tutorial.lua:366
 msgid ""
@@ -69158,6 +69556,11 @@ msgid ""
 "reputation with the various factions. You will likely be referencing it a "
 "lot as we explore the galaxy.\""
 msgstr ""
+"｢これもいっておく価値がありますね。#o情報#0画面から武器の発砲方法を設定するこ"
+"とができます。情報画面は {infokey} を押すか、画面の上にあるボタンで出せます。"
+"#o情報#0画面は、船や積み荷、現在の任務、そしていろいろな党派からの評判につい"
+"ての情報も示してくれます。銀河を探検していると、おそらくかなりたくさん参照す"
+"ることになるでしょう｣"
 
 #: dat/missions/tutorial/tutorial.lua:367
 msgid ""
@@ -69168,6 +69571,12 @@ msgid ""
 "to the locals, or buying maps. Once you have found a jump point, you can use "
 "it by #bright-click#0ing on it or using the {jumpkey}.\""
 msgstr ""
+"｢試しに思いきってこの星系の外まで乗りだしてみたほうがいいと思います。宇宙には"
+"たくさんの星系があります。この星系は、外で見つけられるものからするとちっぽけ"
+"な小片でしかありません！　星系間の旅は、ジャンプポイントをとおしておこないま"
+"す。惑星と同様に、ふつうは領域を探索したり、土地の者と話したり、地図を買うこ"
+"とでジャンプポイントを見つける必要があります。ジャンプポイントを見つけたら、"
+"#b右クリック#0か {jumpkey} を使うことで使用できます｣"
 
 #: dat/missions/tutorial/tutorial.lua:368
 msgid ""
@@ -69179,6 +69588,12 @@ msgid ""
 "route to get there, but you will find that this method of travel greatly "
 "simplifies things.\""
 msgstr ""
+"｢ですが、星系をよこぎって飛行するにはさらによい方法があります！　"
+"{starmapkey} を押すと、#o星図#0が開けます。#o星図#0には、現在知っている星系が"
+"すべて載っています。#o星図#0の中で、星系をクリックして#b自動操縦#0ボタンをク"
+"リックすると、自動的にその星系まで運んでもらえるんです！　もちろん、これはそ"
+"こへ行ける確かな航路を知っている場合だけ作動します。しかしこの方法による旅"
+"は、物事をおおいに単純化するとわかるでしょう｣"
 
 #: dat/missions/tutorial/tutorial.lua:369
 msgid ""
@@ -69188,15 +69603,20 @@ msgid ""
 "do some exploration to find the second jump point. Let's see what you've "
 "learned!\""
 msgstr ""
+"｢近くの{sysname}星系へのジャンプを試してみましょうか？　地図の上で標識が点滅"
+"しているのが見えるはずです。任務では次に行く場所を示すのに、よくこの点滅を使"
+"うんです。ジャンプを二回しなければならなくて、いくらか探索して二つめのジャン"
+"プポイントを見つける必要が出てくることもおそらくあるでしょう。では、学んだこ"
+"とを確認してみましょう！｣"
 
 #: dat/missions/tutorial/tutorial.lua:375
 msgid "Captain T. Practice"
-msgstr ""
+msgstr " T. プラクティス船長"
 
 #. Don't distress just in case
 #: dat/missions/tutorial/tutorial.lua:401
 msgid "Bring on the pain!"
-msgstr ""
+msgstr "苦痛をもたらしてやる！"
 
 #: dat/missions/tutorial/tutorial.lua:402
 msgid "You're no match for the fearsome T. Practice!"
@@ -69208,257 +69628,252 @@ msgstr "おまえの船より 10 倍は大きい船に撃たれてきたん�
 
 #: dat/missions/tutorial/tutorial.lua:404
 msgid "Let's get it on!"
-msgstr ""
+msgstr "楽しもうぜ！"
 
 #: dat/missions/tutorial/tutorial.lua:405
 msgid "I  haven't got all day."
-msgstr ""
+msgstr "まる 1 日かけるわけにはいかないぞ。"
 
 #: dat/missions/tutorial/tutorial.lua:406
 msgid "You're as threatening as an unborn child!"
-msgstr ""
+msgstr "あんたは生まれるまえの子どもくらい怖いな！"
 
 #: dat/missions/tutorial/tutorial.lua:407
 msgid "I've snacked on foes much larger than yourself!"
-msgstr ""
+msgstr "おまえよりずっと大きな敵を軽く料理してきたんだ！"
 
 #: dat/missions/tutorial/tutorial.lua:408
 msgid "Who's your daddy? I am!"
-msgstr ""
+msgstr "きみのパパはだれ？　おれだ！"
 
 #: dat/missions/tutorial/tutorial.lua:409
 msgid "You're less intimidating than a fruit cake!"
-msgstr ""
+msgstr "あんたはフルーツケーキより威圧感がないな！"
 
 #: dat/missions/tutorial/tutorial.lua:410
 msgid "My ship is the best in the galaxy!"
-msgstr ""
+msgstr "おれの船は銀河でいちばんなんだ！"
 
 #: dat/missions/tutorial/tutorial.lua:411
 msgid "Bow down before me, and I may spare your life!"
-msgstr ""
+msgstr "おれに屈して頭を下げろ。そうすれば命は助けてやろう！"
 
 #: dat/missions/tutorial/tutorial.lua:412
 msgid "Someone's about to set you up the bomb."
-msgstr ""
+msgstr "だれかがあんたに爆弾をしかけようとしているぞ。"
 
 #: dat/missions/tutorial/tutorial.lua:413
 msgid "Your crew quarters are as pungent as an over-ripe banana!"
-msgstr ""
+msgstr "あんたのところの乗員室は、熟れすぎたバナナみたいにツンとくるな！"
 
 #: dat/missions/tutorial/tutorial.lua:414
 msgid "I'm invincible, I cannot be vinced!"
-msgstr ""
+msgstr "おれは無敵だ。征服することはできない！"
 
 #: dat/missions/tutorial/tutorial.lua:415
-#, fuzzy
-#| msgid "You think that you can take me on?"
 msgid "You think you can take me?"
-msgstr "おれの相手になると思ってるのかよ？"
+msgstr "おれを捕らえられると思ってるんだ？"
 
 #: dat/missions/tutorial/tutorial.lua:416
 msgid "When I'm done, you'll look like pastrami!"
-msgstr ""
+msgstr "おれがやりおえたら、あんたは牛肉の切り身みたいに見えるだろうさ！"
 
 #: dat/missions/tutorial/tutorial.lua:417
 msgid "I've got better things to do. Hurry up and die!"
-msgstr ""
+msgstr "もっとやりたいことがあるんだよ。急いで死んでくれ！"
 
 #: dat/missions/tutorial/tutorial.lua:418
 msgid "You call that a barrage? Pah!"
-msgstr ""
+msgstr "それを弾幕だといってるのか？　へー！"
 
 #: dat/missions/tutorial/tutorial.lua:419
 msgid "You mother isn't much to look at, either!"
-msgstr ""
+msgstr "あんたの母親もあまり見栄えはよくなかったな！"
 
 #: dat/missions/tutorial/tutorial.lua:420
 msgid "You're not exactly a crack-shot, are you?"
-msgstr ""
+msgstr "まさに射撃の名手ってわけじゃないね？"
 
 #: dat/missions/tutorial/tutorial.lua:421
 msgid "I've had meals that gave me more resistance than you!"
-msgstr ""
+msgstr "おれは食事をとってあんたより耐久力を得た！"
 
 #: dat/missions/tutorial/tutorial.lua:422
 msgid "You're a pathetic excuse for a pilot!"
-msgstr ""
+msgstr "パイロットというには哀れなものだな！"
 
 #: dat/missions/tutorial/tutorial.lua:423
 msgid "Surrender or face destruction!"
-msgstr ""
+msgstr "降伏せよ。さもなければ破滅に向きあえ！"
 
 #: dat/missions/tutorial/tutorial.lua:424
 msgid "That all you got?"
-msgstr ""
+msgstr "それだけ？"
 
 #: dat/missions/tutorial/tutorial.lua:425
 msgid "I am Iron Man!"
-msgstr ""
+msgstr "おれはアイアンマンだ！"
 
 #: dat/missions/tutorial/tutorial.lua:426
 msgid "My shields are holding fine!"
-msgstr ""
+msgstr "おれのシールドは砲火に耐えているぞ！"
 
 #: dat/missions/tutorial/tutorial.lua:427
 msgid "You'd be dead if I'd remembered to pack my weapons!"
-msgstr ""
+msgstr "おまえは死ぬ。もしおれが武器を積むのを忘れてなければ！"
 
 #: dat/missions/tutorial/tutorial.lua:428
 msgid "I'll end you!"
-msgstr ""
+msgstr "終わりにしてやる！"
 
 #: dat/missions/tutorial/tutorial.lua:429
 msgid "… Right after I finish eating this bucket of fried chicken!"
-msgstr ""
+msgstr "……このフライドチキンバケットを食べおわったらすぐにだ！"
 
 #: dat/missions/tutorial/tutorial.lua:430
 msgid "{pntname} Fried Chicken. Eat only the best."
-msgstr ""
+msgstr "{pntname}フライドチキン。最高のものだけを食べよう。"
 
 #: dat/missions/tutorial/tutorial.lua:431
 msgid "This is your last chance to surrender!"
-msgstr ""
+msgstr "降伏する最後の機会だ！"
 
 #: dat/missions/tutorial/tutorial.lua:432
 msgid "Don't do school, stay in milk."
-msgstr ""
+msgstr "学校をせず、牛乳にいなさい。"
 
 #: dat/missions/tutorial/tutorial.lua:433
 msgid "I'm going to report you to the NPC Rights watchdog."
-msgstr ""
+msgstr "あんたのことを NPC の権利の番人に報告するつもりだ。"
 
 #: dat/missions/tutorial/tutorial.lua:434
 msgid "Keep going, see what happens!"
-msgstr ""
+msgstr "つづけてくれ。どうなるのか見てみよう！"
 
 #: dat/missions/tutorial/tutorial.lua:435
-#, fuzzy
-#| msgid "You can't bribe me!"
 msgid "You don't scare me!"
-msgstr "わたしは買収されない！"
+msgstr "あんたは怖くないね！"
 
 #: dat/missions/tutorial/tutorial.lua:436
 msgid "What do you think this is, knitting hour?"
-msgstr ""
+msgstr "あんたは今やってるのをどう思ってるんだ？　編み物の時間？"
 
 #: dat/missions/tutorial/tutorial.lua:437
 msgid "I mean, good lord, man."
-msgstr ""
+msgstr "つまりだな、なんてこった、きみ。"
 
 #: dat/missions/tutorial/tutorial.lua:438
 msgid "It's been several minutes of non-stop banter!"
-msgstr ""
+msgstr "数分間連続でからかってやった！"
 
 #: dat/missions/tutorial/tutorial.lua:439
 msgid "Haven't I sufficiently annoyed you yet?"
-msgstr ""
+msgstr "まだ困らせてほしいのか？"
 
 #: dat/missions/tutorial/tutorial.lua:440
 msgid "Go on, shoot me."
-msgstr ""
+msgstr "つづけてくれ。撃てよ。"
 
 #: dat/missions/tutorial/tutorial.lua:441
 msgid "You can do it! I believe in you."
-msgstr ""
+msgstr "できるだろ！　信じてるぞ。"
 
 #: dat/missions/tutorial/tutorial.lua:442
 msgid "Shoot me!"
-msgstr ""
+msgstr "撃ってみろよ！"
 
 #: dat/missions/tutorial/tutorial.lua:443
 msgid "Okay, listen. I'm doing this for attention."
-msgstr ""
+msgstr "よし、聞いてくれ。注意を引くためにやってるんだ。"
 
 #: dat/missions/tutorial/tutorial.lua:444
 msgid "But if you don't shoot me, I'll tell the galaxy your terrible secret."
 msgstr ""
+"だがもしおれを撃たないんなら、あんたの恐ろしい秘密を銀河じゅうにばらす。"
 
 #: dat/missions/tutorial/tutorial.lua:447
 msgid "Okay, that's about enough."
-msgstr ""
+msgstr "わかったよ。これくらいにしておこう。"
 
 #: dat/missions/tutorial/tutorial.lua:448
 msgid "You can stop now."
-msgstr ""
+msgstr "もうやめていいぞ。"
 
 #: dat/missions/tutorial/tutorial.lua:449
 msgid "I was wrong about you."
-msgstr ""
+msgstr "あんたのことではまちがった判断をしたな。"
 
 #: dat/missions/tutorial/tutorial.lua:450
 msgid "Forgive and forget?"
-msgstr ""
+msgstr "許そう。そして忘れよう？"
 
 #: dat/missions/tutorial/tutorial.lua:451
 msgid "Let's be pals, I'll buy you an ale!"
-msgstr ""
+msgstr "仲間になろうじゃないか。エールをおごってやるよ！"
 
 #: dat/missions/tutorial/tutorial.lua:452
 msgid "Game over, you win."
-msgstr "ゲームオーバー、あなたが勝った。"
+msgstr "ゲームオーバー、あなたが勝ちました。"
 
 #: dat/missions/tutorial/tutorial.lua:453
 msgid "I've got a wife and kids! And a cat!"
-msgstr ""
+msgstr "わたしには妻と子どもがいるんです！　それにネコも！"
 
 #: dat/missions/tutorial/tutorial.lua:454
 msgid "Surely you must have some mercy?"
-msgstr ""
+msgstr "もちろんあんたにも情けってものがあるはずだよな？"
 
 #: dat/missions/tutorial/tutorial.lua:455
 msgid "Please stop!"
-msgstr ""
+msgstr "やめてくれ！"
 
 #: dat/missions/tutorial/tutorial.lua:456
 msgid "I'm sorry!"
-msgstr ""
+msgstr "すまなかった！"
 
 #: dat/missions/tutorial/tutorial.lua:457
 msgid "Leave me alone!"
-msgstr "とにかく放っておいてくれ！"
+msgstr "放っておいてくれ！"
 
 #: dat/missions/tutorial/tutorial.lua:458
 msgid "What did I ever do to you?"
-msgstr ""
+msgstr "おれがなにをしたっていうんだ？"
 
 #: dat/missions/tutorial/tutorial.lua:459
-#, fuzzy
-#| msgid "This isn't what I signed up for!"
 msgid "I didn't sign up for this!"
-msgstr "これは契約とはちがうけどな！"
+msgstr "こんなのにサインしてないぞ！"
 
 #: dat/missions/tutorial/tutorial.lua:460
 msgid "Not my ship, anything but my ship!"
-msgstr ""
+msgstr "おれの船はやめてくれ。ほかの船ならなんでもいいから！"
 
 #: dat/missions/tutorial/tutorial.lua:461
 msgid "We can talk this out!"
-msgstr ""
+msgstr "話しあえる！"
 
 #: dat/missions/tutorial/tutorial.lua:462
 msgid "I'm scared! Hold me."
-msgstr ""
+msgstr "怖いよ！　だっこして。"
 
 #: dat/missions/tutorial/tutorial.lua:463
 msgid "Make the bad man go away, mommy!"
-msgstr ""
+msgstr "悪いおじちゃんをどっかにやって、ママ！"
 
 #: dat/missions/tutorial/tutorial.lua:464
 msgid "If you don't stop I'll cry!"
-msgstr ""
+msgstr "やめないと泣くぞ！"
 
 #: dat/missions/tutorial/tutorial.lua:465
 msgid "Here I go, filling my cabin up with tears."
-msgstr ""
+msgstr "やるぞ、船室を涙でいっぱいにしてやる。"
 
 #: dat/missions/tutorial/tutorial.lua:466
 msgid "U- oh it a-pears my te-rs hav- da--age t-e co-mand cons-le."
-msgstr ""
+msgstr "あ—うー、涙でコマ—ドコンソ—ルが壊—たら—い。"
 
 #: dat/missions/tutorial/tutorial.lua:467
 msgid "I a- T. Pr-ct---! Y-- w--l fe-r m- na-e --- Bzzzt!"
-msgstr ""
+msgstr "お—は T. プラ—ティ——！　あ——たは怖—————ブー！"
 
 #. Aborting finishes the mission properly
 #.
@@ -72469,10 +72884,8 @@ msgstr ""
 #. TODO replace with real portrait
 #. Use default
 #: dat/scripts/common/tut_nelly.lua:15 dat/scripts/common/tut_nelly.lua:29
-#, fuzzy
-#| msgid "Samell"
 msgid "Nelly"
-msgstr "サメル"
+msgstr "ネリー"
 
 #.
 #.
@@ -73239,12 +73652,12 @@ msgstr "{0}、{1}"
 #: dat/scripts/format.lua:165
 #, lua-format
 msgid "format expression `%s`"
-msgstr ""
+msgstr "format expression `%s`"
 
 #: dat/scripts/format.lua:169
 #, lua-format
 msgid "fmt.f: string '%s' has '%s'==nil!"
-msgstr ""
+msgstr "fmt.f: string '%s' has '%s'==nil!"
 
 #. Cross logic. Forms an X.
 #. Spokes start rotated at a 45 degree angle.
@@ -73359,7 +73772,7 @@ msgstr ""
 #: dat/scripts/lmusic.lua:19
 #, lua-format
 msgid "lmusic: Trying to find music '%s', but it is not playing!"
-msgstr ""
+msgstr "lmusic: Trying to find music '%s', but it is not playing!"
 
 #. ---
 #. Plays a music with fade-in and fade-out.
@@ -73391,7 +73804,7 @@ msgstr ""
 #. --
 #: dat/scripts/love.lua:31
 msgid "unimplemented"
-msgstr ""
+msgstr "unimplemented"
 
 #. Only stuff we care about atm
 #. The window title (string)
@@ -73418,7 +73831,7 @@ msgstr ""
 #. Restore the package.path
 #: dat/scripts/love.lua:160 dat/scripts/love.lua:258
 msgid "can only run one Love2D instance at a time!"
-msgstr ""
+msgstr "can only run one Love2D instance at a time!"
 
 #. Save path to restore it later
 #. only add to path if not there, saves path pollution if crashing
@@ -73427,12 +73840,12 @@ msgstr ""
 #: dat/scripts/love.lua:193
 #, lua-format
 msgid "'%s' is an unknown filetype '%s'"
-msgstr ""
+msgstr "'%s' is an unknown filetype '%s'"
 
 #: dat/scripts/love.lua:201
 #, lua-format
 msgid "'%s' is not a valid love2d game!"
-msgstr ""
+msgstr "'%s' is not a valid love2d game!"
 
 #. Set up defaults
 #. Configure
@@ -73469,7 +73882,7 @@ msgstr ""
 #: dat/scripts/love/graphics.lua:22
 #, lua-format
 msgid "Unknown fill mode '%s'"
-msgstr ""
+msgstr "Unknown fill mode '%s'"
 
 #. TODO don't do this for every drawing...
 #. Rendering to canvas
@@ -73484,7 +73897,7 @@ msgstr ""
 #. Set defaults
 #: dat/scripts/love/graphics.lua:107
 msgid "wrong parameter type"
-msgstr ""
+msgstr "wrong parameter type"
 
 #. x, y, r, sx, sy
 #. quad, x, y, r, sx, sy
@@ -73521,7 +73934,7 @@ msgstr ""
 #. Naev default
 #: dat/scripts/love/graphics.lua:458
 msgid "failed to set fallback font"
-msgstr ""
+msgstr "failed to set fallback font"
 
 #. setOutline is a Naev extension!!
 #.
@@ -74004,49 +74417,47 @@ msgstr[1] ""
 #. way that works less well as a name.
 #: dat/scripts/pilotname/generic.lua:8
 msgid "Aurochs"
-msgstr ""
+msgstr "オーロックス"
 
 #: dat/scripts/pilotname/generic.lua:9 dat/scripts/pilotname/pirate.lua:237
 msgid "Axis"
-msgstr ""
+msgstr "アクシス"
 
 #: dat/scripts/pilotname/generic.lua:10
 msgid "Bear"
-msgstr ""
+msgstr "ベア"
 
 #: dat/scripts/pilotname/generic.lua:11
 msgid "Beetle"
-msgstr ""
+msgstr "ビートル"
 
 #: dat/scripts/pilotname/generic.lua:12 dat/scripts/pilotname/pirate.lua:246
 msgid "Black Hole"
-msgstr ""
+msgstr "ブラックホール"
 
 #: dat/scripts/pilotname/generic.lua:13 dat/scripts/pilotname/pirate.lua:249
 msgid "Blizzard"
-msgstr ""
+msgstr "ブリザード"
 
 #: dat/scripts/pilotname/generic.lua:14 dat/scripts/pilotname/pirate.lua:250
 msgid "Blood"
-msgstr ""
+msgstr "ブラッド"
 
 #: dat/scripts/pilotname/generic.lua:15 dat/scripts/pilotname/pirate.lua:194
 msgid "Blue"
-msgstr ""
+msgstr "ブルー"
 
 #: dat/scripts/pilotname/generic.lua:16
-#, fuzzy
-#| msgid "Borla"
 msgid "Boa"
-msgstr "ボーラ"
+msgstr "ボア"
 
 #: dat/scripts/pilotname/generic.lua:17
 msgid "Boulder"
-msgstr ""
+msgstr "ボールダー"
 
 #: dat/scripts/pilotname/generic.lua:18
 msgid "Bullet"
-msgstr ""
+msgstr "ブリト"
 
 #: dat/scripts/pilotname/generic.lua:19 dat/scripts/pilotname/pirate.lua:263
 msgid "Chainsaw"
@@ -74054,35 +74465,33 @@ msgstr "チェーンソー"
 
 #: dat/scripts/pilotname/generic.lua:20 dat/scripts/pilotname/pirate.lua:269
 msgid "Claw"
-msgstr ""
+msgstr "クロー"
 
 #: dat/scripts/pilotname/generic.lua:21
-#, fuzzy
-#| msgid "Poster"
 msgid "Cluster"
-msgstr "貼り紙"
+msgstr "クラスター"
 
 #: dat/scripts/pilotname/generic.lua:22 dat/scripts/pilotname/pirate.lua:275
 msgid "Cougar"
-msgstr ""
+msgstr "クーガー"
 
 #: dat/scripts/pilotname/generic.lua:23 dat/scripts/pilotname/pirate.lua:37
 #: dat/scripts/pilotname/pirate.lua:276
 msgid "Crisis"
-msgstr ""
+msgstr "クライシス"
 
 #: dat/scripts/pilotname/generic.lua:25
 msgid "Dart"
-msgstr ""
+msgstr "ダート"
 
 #: dat/scripts/pilotname/generic.lua:26 dat/scripts/pilotname/pirate.lua:283
 #: src/menu.c:561
 msgid "Death"
-msgstr "死"
+msgstr "デス"
 
 #: dat/scripts/pilotname/generic.lua:27 dat/scripts/pilotname/pirate.lua:284
 msgid "Deity"
-msgstr ""
+msgstr "ディーアティー"
 
 #: dat/scripts/pilotname/generic.lua:28 dat/scripts/pilotname/pirate.lua:285
 #: src/space.c:260
@@ -74090,2229 +74499,2067 @@ msgid "Demon"
 msgstr "ディーモン"
 
 #: dat/scripts/pilotname/generic.lua:30
-#, fuzzy
-#| msgid "Wolf"
 msgid "Dire Wolf"
-msgstr "ウルフ"
+msgstr "ダイアウルフ"
 
 #: dat/scripts/pilotname/generic.lua:31 dat/scripts/pilotname/pirate.lua:294
 msgid "Dragon"
-msgstr ""
+msgstr "ドラゴン"
 
 #: dat/scripts/pilotname/generic.lua:32 dat/scripts/pilotname/pirate.lua:299
 msgid "Eagle"
-msgstr ""
+msgstr "イーグル"
 
 #: dat/scripts/pilotname/generic.lua:33
 msgid "Earthquake"
-msgstr ""
+msgstr "アースクエイク"
 
 #: dat/scripts/pilotname/generic.lua:34
-#, fuzzy
-#| msgid "Electronic Warfare"
 msgid "Electron"
-msgstr "電子戦"
+msgstr "エレクトロン"
 
 #: dat/scripts/pilotname/generic.lua:35
 msgid "Falcon"
-msgstr ""
+msgstr "ファルコン"
 
 #: dat/scripts/pilotname/generic.lua:36 dat/scripts/pilotname/pirate.lua:306
 msgid "Fang"
-msgstr ""
+msgstr "ファング"
 
 #: dat/scripts/pilotname/generic.lua:37
 msgid "Fire"
-msgstr ""
+msgstr "ファイアー"
 
 #: dat/scripts/pilotname/generic.lua:38 dat/scripts/pilotname/pirate.lua:309
 msgid "Fox"
-msgstr ""
+msgstr "フォックス"
 
 #: dat/scripts/pilotname/generic.lua:39
 msgid "Glory"
-msgstr ""
+msgstr "グローリー"
 
 #: dat/scripts/pilotname/generic.lua:40 dat/scripts/pilotname/pirate.lua:322
 msgid "Hammer"
-msgstr ""
+msgstr "ハマー"
 
 #: dat/scripts/pilotname/generic.lua:42
 msgid "Hornet"
-msgstr ""
+msgstr "ホーネット"
 
 #: dat/scripts/pilotname/generic.lua:43 dat/scripts/pilotname/pirate.lua:328
 msgid "Hunter"
-msgstr ""
+msgstr "ハンター"
 
 #: dat/scripts/pilotname/generic.lua:44
 msgid "Hurricane"
-msgstr ""
+msgstr "ハリケーン"
 
 #: dat/scripts/pilotname/generic.lua:45
 msgid "Ice"
-msgstr ""
+msgstr "アイス"
 
 #: dat/scripts/pilotname/generic.lua:46
-#, fuzzy
-#| msgid "Ian"
 msgid "Ion"
-msgstr "イーアン"
+msgstr "イオン"
 
 #: dat/scripts/pilotname/generic.lua:47 dat/scripts/pilotname/pirate.lua:366
 msgid "Lantern"
-msgstr ""
+msgstr "ランタン"
 
 #: dat/scripts/pilotname/generic.lua:48
 msgid "Leopard"
-msgstr ""
+msgstr "レオパルド"
 
 #: dat/scripts/pilotname/generic.lua:49
-#, fuzzy
-#| msgid "Light "
 msgid "Light"
-msgstr "密度が低い"
+msgstr "ライト"
 
 #: dat/scripts/pilotname/generic.lua:50
 msgid "Lion"
-msgstr ""
+msgstr "ライオン"
 
 #: dat/scripts/pilotname/generic.lua:51
-#, fuzzy
-#| msgid "Mizar"
 msgid "Lizard"
-msgstr "ミザール"
+msgstr "リザード"
 
 #: dat/scripts/pilotname/generic.lua:52
 msgid "Mammoth"
-msgstr ""
+msgstr "マンモス"
 
 #: dat/scripts/pilotname/generic.lua:53
-#, fuzzy
-#| msgid "Atlantis"
 msgid "Mantis"
-msgstr "アトランティス"
+msgstr "マンティス"
 
 #: dat/scripts/pilotname/generic.lua:54 dat/scripts/pilotname/pirate.lua:377
 msgid "Mech"
-msgstr ""
+msgstr "メック"
 
 #: dat/scripts/pilotname/generic.lua:55 dat/scripts/pilotname/pirate.lua:382
 msgid "Mosquito"
-msgstr ""
+msgstr "モスキート"
 
 #: dat/scripts/pilotname/generic.lua:56
-#, fuzzy
-#| msgid "Neutral"
 msgid "Neutron"
-msgstr "中立"
+msgstr "ニュートロン"
 
 #: dat/scripts/pilotname/generic.lua:57 dat/scripts/pilotname/pirate.lua:394
 msgid "Nova"
-msgstr ""
+msgstr "ノバ"
 
 #: dat/scripts/pilotname/generic.lua:58
 msgid "Orca"
-msgstr ""
+msgstr "オルカ"
 
 #: dat/scripts/pilotname/generic.lua:59 dat/scripts/pilotname/pirate.lua:401
 msgid "Panther"
-msgstr ""
+msgstr "パンサー"
 
 #: dat/scripts/pilotname/generic.lua:60 dat/scripts/pilotname/pirate.lua:405
 msgid "Peril"
-msgstr ""
+msgstr "ペリル"
 
 #: dat/scripts/pilotname/generic.lua:61
 msgid "Photon"
-msgstr ""
+msgstr "フォトン"
 
 #: dat/scripts/pilotname/generic.lua:62 dat/scripts/pilotname/pirate.lua:412
 msgid "Pride"
-msgstr ""
+msgstr "プライド"
 
 #: dat/scripts/pilotname/generic.lua:63
-#, fuzzy
-#| msgid "Proteron"
 msgid "Proton"
-msgstr "プロテロン"
+msgstr "プロトン"
 
 #: dat/scripts/pilotname/generic.lua:64 dat/scripts/pilotname/pirate.lua:416
 msgid "Python"
-msgstr ""
+msgstr "パイソン"
 
 #: dat/scripts/pilotname/generic.lua:65 dat/scripts/pilotname/pirate.lua:422
 msgid "Raven"
-msgstr ""
+msgstr "レイブン"
 
 #: dat/scripts/pilotname/generic.lua:66
 msgid "Rebirth"
-msgstr ""
+msgstr "リバース"
 
 #: dat/scripts/pilotname/generic.lua:67 dat/scripts/pilotname/pirate.lua:213
-#, fuzzy
-#| msgid "Reidd"
 msgid "Red"
-msgstr "リード"
+msgstr "レッド"
 
 #: dat/scripts/pilotname/generic.lua:68
-#, fuzzy
-#| msgid "Raptor Station"
 msgid "Raptor"
-msgstr "ラプター・ステーション"
+msgstr "ラプター"
 
 #: dat/scripts/pilotname/generic.lua:69
-#, fuzzy
-#| msgid "Qex"
 msgid "Rex"
-msgstr "ケクス"
+msgstr "レックス"
 
 #: dat/scripts/pilotname/generic.lua:70
-#, fuzzy
-#| msgid "Rocker"
 msgid "Rocket"
-msgstr "ロッカー"
+msgstr "ロケット"
 
 #: dat/scripts/pilotname/generic.lua:71 src/space.c:256
 msgid "Rogue"
 msgstr "ローグ"
 
 #: dat/scripts/pilotname/generic.lua:72
-#, fuzzy
-#| msgid "Sabe"
 msgid "Saber"
-msgstr "セイブ"
+msgstr "セイバー"
 
 #: dat/scripts/pilotname/generic.lua:73
-#, fuzzy
-#| msgid "Norpin"
 msgid "Scorpion"
-msgstr "ノルピン"
+msgstr "スコーピオン"
 
 #: dat/scripts/pilotname/generic.lua:74 dat/scripts/pilotname/pirate.lua:436
 msgid "Scythe"
-msgstr ""
+msgstr "サイス"
 
 #: dat/scripts/pilotname/generic.lua:75 dat/scripts/pilotname/pirate.lua:441
 msgid "Serpent"
-msgstr ""
+msgstr "サーペント"
 
 #: dat/scripts/pilotname/generic.lua:78
-#, fuzzy
-#| msgid "Killerog"
 msgid "Star Killer"
-msgstr "キラーログ"
+msgstr "スターキラー"
 
 #: dat/scripts/pilotname/generic.lua:79 dat/scripts/pilotname/pirate.lua:451
 msgid "Spade"
-msgstr ""
+msgstr "スペイド"
 
 #: dat/scripts/pilotname/generic.lua:80 dat/scripts/pilotname/pirate.lua:454
 msgid "Spider"
-msgstr ""
+msgstr "スパイダー"
 
 #: dat/scripts/pilotname/generic.lua:81
 msgid "Talon"
-msgstr ""
+msgstr "タロン"
 
 #: dat/scripts/pilotname/generic.lua:82 dat/scripts/pilotname/pirate.lua:470
 msgid "Thunder"
-msgstr ""
+msgstr "サンダー"
 
 #: dat/scripts/pilotname/generic.lua:84
-#, fuzzy
-#| msgid "Scorch"
 msgid "Torch"
-msgstr "スコーチ"
+msgstr "トーチ"
 
 #: dat/scripts/pilotname/generic.lua:85
 msgid "Tsunami"
-msgstr ""
+msgstr "ツナミ"
 
 #: dat/scripts/pilotname/generic.lua:86
 msgid "Turtle"
-msgstr ""
+msgstr "タートル"
 
 #: dat/scripts/pilotname/generic.lua:87
 msgid "Typhoon"
-msgstr ""
+msgstr "タイフーン"
 
 #: dat/scripts/pilotname/generic.lua:88 dat/scripts/pilotname/pirate.lua:484
 msgid "Velocity"
-msgstr ""
+msgstr "ベロシティー"
 
 #: dat/scripts/pilotname/generic.lua:89 dat/scripts/pilotname/pirate.lua:485
 msgid "Vengeance"
-msgstr ""
+msgstr "ベンジャンス"
 
 #: dat/scripts/pilotname/generic.lua:90 dat/scripts/pilotname/pirate.lua:486
 msgid "Void"
-msgstr ""
+msgstr "ボイド"
 
 #: dat/scripts/pilotname/generic.lua:91
 msgid "Wasp"
-msgstr ""
+msgstr "ワスプ"
 
 #: dat/scripts/pilotname/generic.lua:92 dat/scripts/pilotname/pirate.lua:495
 msgid "Wind"
-msgstr ""
+msgstr "ウィンド"
 
 #: dat/scripts/pilotname/generic.lua:93
 msgid "Wing"
-msgstr ""
+msgstr "ウィング"
 
 #: dat/scripts/pilotname/generic.lua:95
 msgid "Wraith"
-msgstr ""
+msgstr "レイス"
 
 #: dat/scripts/pilotname/generic.lua:96 dat/scripts/pilotname/pirate.lua:505
 msgid "Zombie"
-msgstr ""
+msgstr "ゾンビ"
 
 #.
 #. -- @brief Generates generic pilot names
 #. --
 #: dat/scripts/pilotname/generic.lua:115
 msgid "{letter}-{number}"
-msgstr ""
+msgstr "{letter}-{number}"
 
 #: dat/scripts/pilotname/generic.lua:118
 msgid "{name} {suffix}"
-msgstr ""
+msgstr "{name} {suffix}"
 
 #. For translation, just transliterate if necessary.
 #: dat/scripts/pilotname/pirate.lua:5
-#, fuzzy
-#| msgid "Pas"
 msgid "Das"
-msgstr "パス"
+msgstr "ダス"
 
 #: dat/scripts/pilotname/pirate.lua:6
-#, fuzzy
-#| msgid "Dvaer"
 msgid "Der"
-msgstr "ドベーア"
+msgstr "デア"
 
 #: dat/scripts/pilotname/pirate.lua:7
 msgid "Kono"
-msgstr ""
+msgstr "この"
 
 #: dat/scripts/pilotname/pirate.lua:8
-#, fuzzy
-#| msgid "Land"
 msgid "La"
-msgstr "着陸"
+msgstr "ラ"
 
 #: dat/scripts/pilotname/pirate.lua:9
-#, fuzzy
-#| msgid "Leo"
 msgid "Le"
-msgstr "レオ"
+msgstr "ル"
 
 #: dat/scripts/pilotname/pirate.lua:10
-#, fuzzy
-#| msgid "Theras"
 msgid "The"
-msgstr "セーラス"
+msgstr "ザ"
 
 #: dat/scripts/pilotname/pirate.lua:11
-#, fuzzy
-#| msgid "Yes"
 msgid "Ye"
-msgstr "はい"
+msgstr "ジャ"
 
 #: dat/scripts/pilotname/pirate.lua:14
 msgid "Aerobic"
-msgstr ""
+msgstr "エアロビック"
 
 #: dat/scripts/pilotname/pirate.lua:15
 msgid "Aku No"
-msgstr ""
+msgstr "悪の"
 
 #: dat/scripts/pilotname/pirate.lua:16
 msgid "Amai"
-msgstr ""
+msgstr "甘い"
 
 #: dat/scripts/pilotname/pirate.lua:17
 msgid "Ancient"
-msgstr ""
+msgstr "エインシャント"
 
 #: dat/scripts/pilotname/pirate.lua:18
 msgid "Astro"
-msgstr ""
+msgstr "アストロ"
 
 #: dat/scripts/pilotname/pirate.lua:19
 msgid "Baggy"
-msgstr ""
+msgstr "バギー"
 
 #: dat/scripts/pilotname/pirate.lua:20
 msgid "Bakana"
-msgstr ""
+msgstr "馬鹿な"
 
 #: dat/scripts/pilotname/pirate.lua:21
 msgid "Bald"
-msgstr ""
+msgstr "ボールド"
 
 #: dat/scripts/pilotname/pirate.lua:22
 msgid "Beautiful"
-msgstr ""
+msgstr "ビューティフル"
 
 #: dat/scripts/pilotname/pirate.lua:23
 msgid "Benevolent"
-msgstr ""
+msgstr "ベネボレント"
 
 #: dat/scripts/pilotname/pirate.lua:24
 msgid "Bedrohliche"
-msgstr ""
+msgstr "べドローリッヒ"
 
 #: dat/scripts/pilotname/pirate.lua:25
 msgid "Big"
-msgstr ""
+msgstr "ビッグ"
 
 #: dat/scripts/pilotname/pirate.lua:26
-#, fuzzy
-#| msgid "Big Fred"
 msgid "Big Bad"
-msgstr "ビッグ・フレッド"
+msgstr "ビッグ・バッド"
 
 #: dat/scripts/pilotname/pirate.lua:27
 msgid "Bloody"
-msgstr ""
+msgstr "ブラディ"
 
 #: dat/scripts/pilotname/pirate.lua:28
-#, fuzzy
-#| msgid "Light "
 msgid "Bright"
-msgstr "密度が低い"
+msgstr "ブライト"
 
 #: dat/scripts/pilotname/pirate.lua:29
-#, fuzzy
-#| msgid "Boarding"
 msgid "Brooding"
-msgstr "移乗"
+msgstr "ブルーディング"
 
 #: dat/scripts/pilotname/pirate.lua:30
 msgid "BT"
-msgstr ""
+msgstr "BT"
 
 #: dat/scripts/pilotname/pirate.lua:31
 msgid "Bureina"
-msgstr ""
+msgstr "無礼な"
 
 #: dat/scripts/pilotname/pirate.lua:32
 msgid "Caped"
-msgstr ""
+msgstr "ケプト"
 
 #: dat/scripts/pilotname/pirate.lua:33
 msgid "Citrus"
-msgstr ""
+msgstr "シトラス"
 
 #: dat/scripts/pilotname/pirate.lua:34
 msgid "Clustered"
-msgstr ""
+msgstr "クラスタード"
 
 #: dat/scripts/pilotname/pirate.lua:35
 msgid "Cocky"
-msgstr ""
+msgstr "コキ"
 
 #: dat/scripts/pilotname/pirate.lua:36
 msgid "Creamy"
-msgstr ""
+msgstr "クリーミー"
 
 #: dat/scripts/pilotname/pirate.lua:38
-#, fuzzy
-#| msgid "Thrust"
 msgid "Crusty"
-msgstr "推力"
+msgstr "クラスティー"
 
 #: dat/scripts/pilotname/pirate.lua:39
-#, fuzzy
-#| msgid "Darkshed"
 msgid "Dark"
-msgstr "ダークシェド"
+msgstr "ダーク"
 
 #: dat/scripts/pilotname/pirate.lua:40
 msgid "Deadly"
-msgstr ""
+msgstr "デッドリー"
 
 #: dat/scripts/pilotname/pirate.lua:41
-#, fuzzy
-#| msgid "Death"
 msgid "Deathly"
-msgstr "死"
+msgstr "デスリー"
 
 #: dat/scripts/pilotname/pirate.lua:42
 msgid "Defiant"
-msgstr ""
+msgstr "ディファイアント"
 
 #: dat/scripts/pilotname/pirate.lua:43
 msgid "Delicious"
-msgstr ""
+msgstr "デリシャス"
 
 #: dat/scripts/pilotname/pirate.lua:44
-#, fuzzy
-#| msgid "Disabled"
 msgid "Despicable"
-msgstr "無効"
+msgstr "デスピカブル"
 
 #: dat/scripts/pilotname/pirate.lua:45
-#, fuzzy
-#| msgid "Structure"
 msgid "Destructive"
-msgstr "構造"
+msgstr "ディストラクティブ"
 
 #: dat/scripts/pilotname/pirate.lua:46
 msgid "Diligent"
-msgstr ""
+msgstr "ディリジェント"
 
 #: dat/scripts/pilotname/pirate.lua:47
 msgid "Drunk"
-msgstr ""
+msgstr "ドランク"
 
 #: dat/scripts/pilotname/pirate.lua:48
 msgid "Egotistical"
-msgstr ""
+msgstr "イーガティスティカル"
 
 #: dat/scripts/pilotname/pirate.lua:49
-#, fuzzy
-#| msgid "Electronic Warfare"
 msgid "Electromagnetic"
-msgstr "電子戦"
+msgstr "エレクトロマグネティック"
 
 #: dat/scripts/pilotname/pirate.lua:50
 msgid "Erroneous"
-msgstr ""
+msgstr "エローニアス"
 
 #: dat/scripts/pilotname/pirate.lua:51
 msgid "Escaped"
-msgstr ""
+msgstr "エスケイプト"
 
 #: dat/scripts/pilotname/pirate.lua:52
-#, fuzzy
-#| msgid "Aldernael"
 msgid "Eternal"
-msgstr "オルダーネール"
+msgstr "エターナル"
 
 #: dat/scripts/pilotname/pirate.lua:53
 msgid "Evil"
-msgstr ""
+msgstr "イビル"
 
 #: dat/scripts/pilotname/pirate.lua:54
-#, fuzzy
-#| msgid "Wellen"
 msgid "Fallen"
-msgstr "ウェレン"
+msgstr "フォーレン"
 
 #: dat/scripts/pilotname/pirate.lua:55
 msgid "Fearless"
-msgstr ""
+msgstr "フィアレス"
 
 #: dat/scripts/pilotname/pirate.lua:56
 msgid "Fearsome"
-msgstr ""
+msgstr "フィアサム"
 
 #: dat/scripts/pilotname/pirate.lua:57
 msgid "Filthy"
-msgstr ""
+msgstr "フィルシー"
 
 #: dat/scripts/pilotname/pirate.lua:58
-#, fuzzy
-#| msgid "Fighter"
 msgid "Flightless"
-msgstr "戦闘機"
+msgstr "フライトレス"
 
 #: dat/scripts/pilotname/pirate.lua:59
 msgid "Flying"
-msgstr ""
+msgstr "フライング"
 
 #: dat/scripts/pilotname/pirate.lua:60
-#, fuzzy
-#| msgid "Boarding"
 msgid "Foreboding"
-msgstr "移乗"
+msgstr "フォーボディング"
 
 #: dat/scripts/pilotname/pirate.lua:61
-#, fuzzy
-#| msgid "Peter"
 msgid "Fuketeru"
-msgstr "ピーター"
+msgstr "老けてる"
 
 #: dat/scripts/pilotname/pirate.lua:62
 msgid "Full-Motion"
-msgstr ""
+msgstr "フルモーション"
 
 #: dat/scripts/pilotname/pirate.lua:63
 msgid "Furchtlose"
-msgstr ""
+msgstr "ファーチトローズ"
 
 #: dat/scripts/pilotname/pirate.lua:64
 msgid "General"
-msgstr ""
+msgstr "ジェネラル"
 
 #: dat/scripts/pilotname/pirate.lua:65
-#, fuzzy
-#| msgid "Oriantis"
 msgid "Gigantic"
-msgstr "オリアンティス"
+msgstr "ジャイガンティク"
 
 #: dat/scripts/pilotname/pirate.lua:66
-#, fuzzy
-#| msgid "Gutter"
 msgid "Glittery"
-msgstr "ガター"
+msgstr "グリタリー"
 
 #: dat/scripts/pilotname/pirate.lua:67
-#, fuzzy
-#| msgid "Coriolis"
 msgid "Glorious"
-msgstr "コリオリ"
+msgstr "グローリアス"
 
 #: dat/scripts/pilotname/pirate.lua:68
 msgid "Great"
-msgstr ""
+msgstr "グレート"
 
 #: dat/scripts/pilotname/pirate.lua:69
 msgid "Groß"
-msgstr ""
+msgstr "グロース"
 
 #: dat/scripts/pilotname/pirate.lua:70
 msgid "Grumpy"
-msgstr ""
+msgstr "グランピー"
 
 #: dat/scripts/pilotname/pirate.lua:71
 msgid "Hairy"
-msgstr ""
+msgstr "ヘアリー"
 
 #: dat/scripts/pilotname/pirate.lua:72
 msgid "Hammy"
-msgstr ""
+msgstr "ハミー"
 
 #: dat/scripts/pilotname/pirate.lua:73
 msgid "Handsome"
-msgstr ""
+msgstr "ハンサム"
 
 #: dat/scripts/pilotname/pirate.lua:74
 msgid "Happy"
-msgstr ""
+msgstr "ハッピー"
 
 #: dat/scripts/pilotname/pirate.lua:75
-#, fuzzy
-#| msgid "Hatter"
 msgid "Hashitteru"
-msgstr "ハッター"
+msgstr "走ってる"
 
 #: dat/scripts/pilotname/pirate.lua:76
-#, fuzzy
-#| msgid "Wellen"
 msgid "Hellen"
-msgstr "ウェレン"
+msgstr "ヘレン"
 
 #: dat/scripts/pilotname/pirate.lua:77
 msgid "Hen'na"
-msgstr ""
+msgstr "変な"
 
 #: dat/scripts/pilotname/pirate.lua:78
 msgid "Hidoi"
-msgstr ""
+msgstr "ひどい"
 
 #: dat/scripts/pilotname/pirate.lua:79
-#, fuzzy
-#| msgid "#rvarious"
 msgid "Hilarious"
-msgstr "#rいろいろ"
+msgstr "ヒレリアス"
 
 #: dat/scripts/pilotname/pirate.lua:80
 msgid "Hitori No"
-msgstr ""
+msgstr "ひとりの"
 
 #: dat/scripts/pilotname/pirate.lua:81
 msgid "Horrible"
-msgstr ""
+msgstr "ホーリブル"
 
 #: dat/scripts/pilotname/pirate.lua:82
 msgid "IDS"
-msgstr ""
+msgstr "IDS"
 
 #: dat/scripts/pilotname/pirate.lua:83
 msgid "Imperial"
-msgstr ""
+msgstr "インペリアル"
 
 #: dat/scripts/pilotname/pirate.lua:84
 msgid "Impressive"
-msgstr ""
+msgstr "インプレシブ"
 
 #: dat/scripts/pilotname/pirate.lua:85
-#, fuzzy
-#| msgid "Variable"
 msgid "Insatiable"
-msgstr "不定"
+msgstr "インセイシャブル"
 
 #: dat/scripts/pilotname/pirate.lua:86
 msgid "Ionic"
-msgstr ""
+msgstr "イオニック"
 
 #: dat/scripts/pilotname/pirate.lua:87
 msgid "Iron"
-msgstr ""
+msgstr "アイアン"
 
 #: dat/scripts/pilotname/pirate.lua:88
 msgid "Justice"
-msgstr ""
+msgstr "ジャスティス"
 
 #: dat/scripts/pilotname/pirate.lua:89
 msgid "Kakkowarui"
-msgstr ""
+msgstr "かっこわるい"
 
 #: dat/scripts/pilotname/pirate.lua:90
 msgid "Koronderu"
-msgstr ""
+msgstr "ころんでる"
 
 #: dat/scripts/pilotname/pirate.lua:91
 msgid "Kowai"
-msgstr ""
+msgstr "怖い"
 
 #: dat/scripts/pilotname/pirate.lua:92
 msgid "Lesser"
-msgstr ""
+msgstr "レッサー"
 
 #: dat/scripts/pilotname/pirate.lua:93
-#, fuzzy
-#| msgid "Sightseers"
 msgid "Lightspeed"
-msgstr "観光客"
+msgstr "ライトスピード"
 
 #: dat/scripts/pilotname/pirate.lua:94
 msgid "Lone"
-msgstr ""
+msgstr "ローン"
 
 #: dat/scripts/pilotname/pirate.lua:95
 msgid "Loud"
-msgstr ""
+msgstr "ラウド"
 
 #: dat/scripts/pilotname/pirate.lua:96
 msgid "Lovely"
-msgstr ""
+msgstr "ラブリー"
 
 #: dat/scripts/pilotname/pirate.lua:97
 msgid "Lustful"
-msgstr ""
+msgstr "ラストフル"
 
 #: dat/scripts/pilotname/pirate.lua:98
 msgid "Mächtige"
-msgstr ""
+msgstr "メヒティヒ"
 
 #: dat/scripts/pilotname/pirate.lua:99
-#, fuzzy
-#| msgid "Midoros"
 msgid "Malodorous"
-msgstr "ミドロス"
+msgstr "マロードラス"
 
 #: dat/scripts/pilotname/pirate.lua:100
 msgid "Messy"
-msgstr ""
+msgstr "メシー"
 
 #: dat/scripts/pilotname/pirate.lua:101
-#, fuzzy
-#| msgid "Light "
 msgid "Mighty"
-msgstr "密度が低い"
+msgstr "マイティー"
 
 #: dat/scripts/pilotname/pirate.lua:102
 msgid "Mijikai"
-msgstr ""
+msgstr "短い"
 
 #: dat/scripts/pilotname/pirate.lua:103
 msgid "Morbid"
-msgstr ""
+msgstr "モービド"
 
 #: dat/scripts/pilotname/pirate.lua:104
 msgid "Mukashi No"
-msgstr ""
+msgstr "昔の"
 
 #: dat/scripts/pilotname/pirate.lua:105
 msgid "Murderous"
-msgstr ""
+msgstr "マーデラス"
 
 #: dat/scripts/pilotname/pirate.lua:106
-#, fuzzy
-#| msgid "Nappi"
 msgid "Nai"
-msgstr "ナッピ"
+msgstr "ない"
 
 #: dat/scripts/pilotname/pirate.lua:107
 msgid "Naïve"
-msgstr ""
+msgstr "ナイーブ"
 
 #: dat/scripts/pilotname/pirate.lua:108
-#, fuzzy
-#| msgid "Accelerate"
 msgid "Neutron-Accelerated"
-msgstr "加速"
+msgstr "ニュートロンアクセラレイティド"
 
 #: dat/scripts/pilotname/pirate.lua:109
-#, fuzzy
-#| msgid "News"
 msgid "New"
-msgstr "ニュース"
+msgstr "ニュー"
 
 #: dat/scripts/pilotname/pirate.lua:110
-#, fuzzy
-#| msgid "Light "
 msgid "Night's"
-msgstr "密度が低い"
+msgstr "ナイツ"
 
 #: dat/scripts/pilotname/pirate.lua:111
 msgid "Nimble"
-msgstr ""
+msgstr "ニンブル"
 
 #: dat/scripts/pilotname/pirate.lua:112
 msgid "Ninkyōna"
-msgstr ""
+msgstr "任侠な"
 
 #: dat/scripts/pilotname/pirate.lua:113
 msgid "No Good"
-msgstr ""
+msgstr "ノーグッド"
 
 #: dat/scripts/pilotname/pirate.lua:114
 msgid "Numb"
-msgstr ""
+msgstr "ナム"
 
 #: dat/scripts/pilotname/pirate.lua:115
 msgid "Oishī"
-msgstr ""
+msgstr "おいしい"
 
 #: dat/scripts/pilotname/pirate.lua:116
 msgid "Ōkina"
-msgstr ""
+msgstr "大きな"
 
 #: dat/scripts/pilotname/pirate.lua:117
-#, fuzzy
-#| msgid "Old Man"
 msgid "Old"
-msgstr "老人"
+msgstr "オールド"
 
 #: dat/scripts/pilotname/pirate.lua:118
 msgid "Oshirisu No"
-msgstr ""
+msgstr "オシリスの"
 
 #: dat/scripts/pilotname/pirate.lua:119
 msgid "Oyoideru"
-msgstr ""
+msgstr "泳いでる"
 
 #: dat/scripts/pilotname/pirate.lua:120
 msgid "Pale"
-msgstr ""
+msgstr "ペイル"
 
 #: dat/scripts/pilotname/pirate.lua:121
 msgid "Perilous"
-msgstr ""
+msgstr "ペリラス"
 
 #: dat/scripts/pilotname/pirate.lua:122
-#, fuzzy
-#| msgid "Pirate"
 msgid "Pirate's"
-msgstr "海賊"
+msgstr "パイレーツ"
 
 #: dat/scripts/pilotname/pirate.lua:123
-#, fuzzy
-#| msgid "Rocker"
 msgid "Pocket"
-msgstr "ロッカー"
+msgstr "ポケット"
 
 #: dat/scripts/pilotname/pirate.lua:124
 msgid "Princeless"
-msgstr ""
+msgstr "プリンスレス"
 
 #: dat/scripts/pilotname/pirate.lua:125
 msgid "Psychic"
-msgstr ""
+msgstr "サイキック"
 
 #: dat/scripts/pilotname/pirate.lua:126
 msgid "Raging"
-msgstr ""
+msgstr "レイジング"
 
 #: dat/scripts/pilotname/pirate.lua:127
-#, fuzzy
-#| msgid " [exclusive]"
 msgid "Reclusive"
-msgstr " [排他的]"
+msgstr "リクルシブ"
 
 #: dat/scripts/pilotname/pirate.lua:128
 msgid "Relentless"
-msgstr ""
+msgstr "リレントレス"
 
 #: dat/scripts/pilotname/pirate.lua:129
-#, fuzzy
-#| msgid "Hostile"
 msgid "Rostige"
-msgstr "敵対的"
+msgstr "ロスティヒ"
 
 #: dat/scripts/pilotname/pirate.lua:130
 msgid "Rough"
-msgstr ""
+msgstr "ラフ"
 
 #: dat/scripts/pilotname/pirate.lua:131
 msgid "Ruthless"
-msgstr ""
+msgstr "ルースレス"
 
 #: dat/scripts/pilotname/pirate.lua:132
-#, fuzzy
-#| msgid "Zazarin"
 msgid "Saccharin"
-msgstr "ザザーリン"
+msgstr "サッカリン"
 
 #: dat/scripts/pilotname/pirate.lua:133
 msgid "Salty"
-msgstr ""
+msgstr "ソールティ"
 
 #: dat/scripts/pilotname/pirate.lua:134
 msgid "Samui"
-msgstr ""
+msgstr "寒い"
 
 #: dat/scripts/pilotname/pirate.lua:135
-#, fuzzy
-#| msgid "Seanich"
 msgid "Satanic"
-msgstr "シーニッチ"
+msgstr "サタニック"
 
 #: dat/scripts/pilotname/pirate.lua:136
 msgid "Secluded"
-msgstr ""
+msgstr "シクルーディド"
 
 #: dat/scripts/pilotname/pirate.lua:137
 msgid "Seltsame"
-msgstr ""
+msgstr "ゼルトザーム"
 
 #: dat/scripts/pilotname/pirate.lua:138
 msgid "Serial"
-msgstr ""
+msgstr "シリアル"
 
 #: dat/scripts/pilotname/pirate.lua:139
-#, fuzzy
-#| msgid "Oring"
 msgid "Sharing"
-msgstr "オーリング"
+msgstr "シェアリング"
 
 #: dat/scripts/pilotname/pirate.lua:140
 msgid "Silly"
-msgstr ""
+msgstr "シリー"
 
 #: dat/scripts/pilotname/pirate.lua:141
 msgid "Single"
-msgstr ""
+msgstr "シングル"
 
 #: dat/scripts/pilotname/pirate.lua:142
 msgid "Sleepy"
-msgstr ""
+msgstr "スリーピー"
 
 #: dat/scripts/pilotname/pirate.lua:143
 msgid "Slimy"
-msgstr ""
+msgstr "スライミー"
 
 #: dat/scripts/pilotname/pirate.lua:144
-#, fuzzy
-#| msgid "Samell"
 msgid "Smelly"
-msgstr "サメル"
+msgstr "スメリー"
 
 #: dat/scripts/pilotname/pirate.lua:145
-#, fuzzy
-#| msgid "Sola"
 msgid "Solar"
-msgstr "ソラ"
+msgstr "ソーラー"
 
 #: dat/scripts/pilotname/pirate.lua:146
-#, fuzzy
-#| msgid "Spaceport"
 msgid "Space"
-msgstr "宇宙港"
+msgstr "スペース"
 
 #: dat/scripts/pilotname/pirate.lua:147
-#, fuzzy
-#| msgid "Stained Soul"
 msgid "Stained"
-msgstr "ステインド・ソウル"
+msgstr "ステインド"
 
 #: dat/scripts/pilotname/pirate.lua:148
 msgid "Static"
-msgstr ""
+msgstr "スタティック"
 
 #: dat/scripts/pilotname/pirate.lua:149
 msgid "Steel"
-msgstr ""
+msgstr "スティール"
 
 #: dat/scripts/pilotname/pirate.lua:150
-#, fuzzy
-#| msgid "Strangelove"
 msgid "Strange"
-msgstr "ストレンジラブ"
+msgstr "ストレンジ"
 
 #: dat/scripts/pilotname/pirate.lua:151
-#, fuzzy
-#| msgid "Straight Row"
 msgid "Strawhat"
-msgstr "ストレート・ロー"
+msgstr "ストローハット"
 
 #: dat/scripts/pilotname/pirate.lua:152
 msgid "Sukina"
-msgstr ""
+msgstr "好きな"
 
 #: dat/scripts/pilotname/pirate.lua:153
 msgid "Super"
-msgstr ""
+msgstr "スーパー"
 
 #: dat/scripts/pilotname/pirate.lua:154
 msgid "Sweaty"
-msgstr ""
+msgstr "スウェティー"
 
 #: dat/scripts/pilotname/pirate.lua:155
 msgid "Sweet"
-msgstr ""
+msgstr "スウィート"
 
 #: dat/scripts/pilotname/pirate.lua:156
 msgid "Tall"
-msgstr ""
+msgstr "トール"
 
 #: dat/scripts/pilotname/pirate.lua:157
 msgid "Takai"
-msgstr ""
+msgstr "高い"
 
 #: dat/scripts/pilotname/pirate.lua:158
-#, fuzzy
-#| msgid "The Crucible"
 msgid "Terrible"
-msgstr "クルーシブル"
+msgstr "テリブル"
 
 #: dat/scripts/pilotname/pirate.lua:159
 msgid "Tired"
-msgstr ""
+msgstr "タイアド"
 
 #: dat/scripts/pilotname/pirate.lua:160
 msgid "Toothless"
-msgstr ""
+msgstr "トゥースレス"
 
 #: dat/scripts/pilotname/pirate.lua:161
 msgid "Tropical"
-msgstr ""
+msgstr "トロピカル"
 
 #: dat/scripts/pilotname/pirate.lua:162
 msgid "Tsukareteru"
-msgstr ""
+msgstr "疲れてる"
 
 #: dat/scripts/pilotname/pirate.lua:163
 msgid "Typical"
-msgstr ""
+msgstr "ティピカル"
 
 #: dat/scripts/pilotname/pirate.lua:164
 msgid "Ultimate"
-msgstr ""
+msgstr "アルティマト"
 
 #: dat/scripts/pilotname/pirate.lua:165
 msgid "Umai"
-msgstr ""
+msgstr "うまい"
 
 #: dat/scripts/pilotname/pirate.lua:166
 msgid "Uncombed"
-msgstr ""
+msgstr "アンコンド"
 
 #: dat/scripts/pilotname/pirate.lua:167
-#, fuzzy
-#| msgid "Undergate"
 msgid "Undead"
-msgstr "アンダーゲイト"
+msgstr "アンデッド"
 
 #: dat/scripts/pilotname/pirate.lua:168
 msgid "Unersättliche"
-msgstr ""
+msgstr "オンエルザトリッヘ"
 
 #: dat/scripts/pilotname/pirate.lua:169
-#, fuzzy
-#| msgid "Stealth"
 msgid "Unhealthy"
-msgstr "ステルス"
+msgstr "アンヘルシー"
 
 #: dat/scripts/pilotname/pirate.lua:170
 msgid "Unreal"
-msgstr ""
+msgstr "アンリアル"
 
 #: dat/scripts/pilotname/pirate.lua:171
 msgid "Unsightly"
-msgstr ""
+msgstr "アンサイトリー"
 
 #: dat/scripts/pilotname/pirate.lua:172
 msgid "Urusai"
-msgstr ""
+msgstr "うるさい"
 
 #: dat/scripts/pilotname/pirate.lua:173
 msgid "Utsukushī"
-msgstr ""
+msgstr "美しい"
 
 #: dat/scripts/pilotname/pirate.lua:174
 msgid "Vengeful"
-msgstr ""
+msgstr "ベンジフル"
 
 #: dat/scripts/pilotname/pirate.lua:175
 msgid "Very Bad"
-msgstr ""
+msgstr "ベリーバッド"
 
 #: dat/scripts/pilotname/pirate.lua:176
-#, fuzzy
-#| msgid "Solene"
 msgid "Violent"
-msgstr "ソレン"
+msgstr "バイオレント"
 
 #: dat/scripts/pilotname/pirate.lua:177
 msgid "Warui"
-msgstr ""
+msgstr "悪い"
 
 #: dat/scripts/pilotname/pirate.lua:178
 msgid "Weeping"
-msgstr ""
+msgstr "ウィーピング"
 
 #: dat/scripts/pilotname/pirate.lua:179
 msgid "Wild"
-msgstr ""
+msgstr "ワイルド"
 
 #: dat/scripts/pilotname/pirate.lua:180
-#, fuzzy
-#| msgid "Ginger"
 msgid "Winged"
-msgstr "ジンジャー"
+msgstr "ウィングド"
 
 #: dat/scripts/pilotname/pirate.lua:181
 msgid "Wretched"
-msgstr ""
+msgstr "レッチド"
 
 #: dat/scripts/pilotname/pirate.lua:182
-#, fuzzy
-#| msgid "Peter"
 msgid "Yaseteru"
-msgstr "ピーター"
+msgstr "やせてる"
 
 #: dat/scripts/pilotname/pirate.lua:183
 msgid "Yasui"
-msgstr ""
+msgstr "安い"
 
 #: dat/scripts/pilotname/pirate.lua:184
 msgid "Yasashī"
-msgstr ""
+msgstr "優しい"
 
 #: dat/scripts/pilotname/pirate.lua:185
-#, fuzzy
-#| msgid "Dummy"
 msgid "Yummy"
-msgstr "ダミー"
+msgstr "ヤミー"
 
 #: dat/scripts/pilotname/pirate.lua:188
 msgid "Akai"
-msgstr ""
+msgstr "赤い"
 
 #: dat/scripts/pilotname/pirate.lua:189
-#, fuzzy
-#| msgid "Amaroq"
 msgid "Amarillo"
-msgstr "アマロク"
+msgstr "アマリロ"
 
 #: dat/scripts/pilotname/pirate.lua:190
 msgid "Aoi"
-msgstr ""
+msgstr "青い"
 
 #: dat/scripts/pilotname/pirate.lua:191
 msgid "Azul"
-msgstr ""
+msgstr "アズール"
 
 #: dat/scripts/pilotname/pirate.lua:192
 msgid "Blau"
-msgstr ""
+msgstr "ブラウ"
 
 #: dat/scripts/pilotname/pirate.lua:193
 msgid "Bleu"
-msgstr ""
+msgstr "ブルー"
 
 #: dat/scripts/pilotname/pirate.lua:195
 msgid "Chairo No"
-msgstr ""
+msgstr "茶色の"
 
 #: dat/scripts/pilotname/pirate.lua:196
-#, fuzzy
-#| msgid "Brimstone"
 msgid "Crimson"
-msgstr "ブリムストーン"
+msgstr "クリムゾン"
 
 #: dat/scripts/pilotname/pirate.lua:197
 msgid "Cyan"
-msgstr ""
+msgstr "シアン"
 
 #: dat/scripts/pilotname/pirate.lua:198
 msgid "Gelb"
-msgstr ""
+msgstr "ゲルプ"
 
 #: dat/scripts/pilotname/pirate.lua:199
 msgid "Gin'iro No"
-msgstr ""
+msgstr "銀色の"
 
 #: dat/scripts/pilotname/pirate.lua:200
-#, fuzzy
-#| msgid "Gold"
 msgid "Golden"
-msgstr "ゴールド"
+msgstr "ゴールデン"
 
 #: dat/scripts/pilotname/pirate.lua:201
 msgid "Gray"
-msgstr ""
+msgstr "グレイ"
 
 #: dat/scripts/pilotname/pirate.lua:202
-#, fuzzy
-#| msgid "Green Eye"
 msgid "Green"
-msgstr "グリーン・アイ"
+msgstr "グリーン"
 
 #: dat/scripts/pilotname/pirate.lua:203
 msgid "Grün"
-msgstr ""
+msgstr "グリューン"
 
 #: dat/scripts/pilotname/pirate.lua:204
 msgid "Haiiro No"
-msgstr ""
+msgstr "灰色の"
 
 #: dat/scripts/pilotname/pirate.lua:205
-#, fuzzy
-#| msgid "Eiroik"
 msgid "Kiiroi"
-msgstr "アイロイク"
+msgstr "黄色い"
 
 #: dat/scripts/pilotname/pirate.lua:206
 msgid "Kin'iro No"
-msgstr ""
+msgstr "金色の"
 
 #: dat/scripts/pilotname/pirate.lua:207
 msgid "Kuroi"
-msgstr ""
+msgstr "黒い"
 
 #: dat/scripts/pilotname/pirate.lua:208
 msgid "Mauve"
-msgstr ""
+msgstr "モーブ"
 
 #: dat/scripts/pilotname/pirate.lua:209
-#, fuzzy
-#| msgid "Midoros"
 msgid "Midori No"
-msgstr "ミドロス"
+msgstr "緑の"
 
 #: dat/scripts/pilotname/pirate.lua:210
 msgid "Murasaki No"
-msgstr ""
+msgstr "紫の"
 
 #: dat/scripts/pilotname/pirate.lua:211
 msgid "Pink"
-msgstr ""
+msgstr "ピンク"
 
 #: dat/scripts/pilotname/pirate.lua:212
 msgid "Purple"
-msgstr ""
+msgstr "パープル"
 
 #: dat/scripts/pilotname/pirate.lua:214
 msgid "Roho"
-msgstr ""
+msgstr "ロホ"
 
 #: dat/scripts/pilotname/pirate.lua:215
 msgid "Schwarz"
-msgstr ""
+msgstr "シュバルツ"
 
 #: dat/scripts/pilotname/pirate.lua:216
-#, fuzzy
-#| msgid "Eiroik"
 msgid "Shiroi"
-msgstr "アイロイク"
+msgstr "白い"
 
 #: dat/scripts/pilotname/pirate.lua:217
-#, fuzzy
-#| msgid "Silverstone"
 msgid "Silver"
-msgstr "シルバーストーン"
+msgstr "シルバー"
 
 #: dat/scripts/pilotname/pirate.lua:218
 msgid "Violet"
-msgstr ""
+msgstr "バイオレット"
 
 #: dat/scripts/pilotname/pirate.lua:219
-#, fuzzy
-#| msgid "Willow"
 msgid "Yellow"
-msgstr "ウィロー"
+msgstr "イエロー"
 
 #: dat/scripts/pilotname/pirate.lua:222
 msgid "1024"
-msgstr ""
+msgstr "1024"
 
 #: dat/scripts/pilotname/pirate.lua:223
 msgid "Aku"
-msgstr ""
+msgstr "悪"
 
 #: dat/scripts/pilotname/pirate.lua:224
 msgid "Akuma"
-msgstr ""
+msgstr "悪魔"
 
 #: dat/scripts/pilotname/pirate.lua:225
 msgid "Alphabet Soup"
-msgstr ""
+msgstr "アルファベットスープ"
 
 #: dat/scripts/pilotname/pirate.lua:226
 msgid "Amigo"
-msgstr ""
+msgstr "アミーゴー"
 
 #: dat/scripts/pilotname/pirate.lua:227
 msgid "Angel"
-msgstr ""
+msgstr "エンジェル"
 
 #: dat/scripts/pilotname/pirate.lua:228
 msgid "Angle Grinder"
-msgstr ""
+msgstr "アングルグラインダー"
 
 #: dat/scripts/pilotname/pirate.lua:229
 msgid "Anvil"
-msgstr ""
+msgstr "アンビル"
 
 #: dat/scripts/pilotname/pirate.lua:230
 msgid "Ari"
-msgstr ""
+msgstr "あり"
 
 #: dat/scripts/pilotname/pirate.lua:231
 msgid "Arrow"
-msgstr ""
+msgstr "アロー"
 
 #: dat/scripts/pilotname/pirate.lua:233
 msgid "Atama"
-msgstr ""
+msgstr "頭"
 
 #: dat/scripts/pilotname/pirate.lua:234
 msgid "Aunt"
-msgstr ""
+msgstr "アント"
 
 #: dat/scripts/pilotname/pirate.lua:235
 msgid "Auster"
-msgstr ""
+msgstr "オースター"
 
 #: dat/scripts/pilotname/pirate.lua:236
 msgid "Avenger"
-msgstr ""
+msgstr "アベンジャー"
 
 #: dat/scripts/pilotname/pirate.lua:238
 msgid "Baka"
-msgstr ""
+msgstr "馬鹿"
 
 #: dat/scripts/pilotname/pirate.lua:239
 msgid "Bakemono"
-msgstr ""
+msgstr "化け物"
 
 #: dat/scripts/pilotname/pirate.lua:240
 msgid "Band Saw"
-msgstr ""
+msgstr "バンドソー"
 
 #: dat/scripts/pilotname/pirate.lua:241
 msgid "Bat"
-msgstr ""
+msgstr "バット"
 
 #: dat/scripts/pilotname/pirate.lua:242
 msgid "Beard"
-msgstr ""
+msgstr "ビアード"
 
 #: dat/scripts/pilotname/pirate.lua:243
 msgid "Belt Sander"
-msgstr ""
+msgstr "ベルトサンダー"
 
 #: dat/scripts/pilotname/pirate.lua:244
 msgid "Bench Grinder"
-msgstr ""
+msgstr "ベンチグラインダー"
 
 #: dat/scripts/pilotname/pirate.lua:245
 msgid "Bengoshi"
-msgstr ""
+msgstr "弁護士"
 
 #: dat/scripts/pilotname/pirate.lua:247
 msgid "Blarg"
-msgstr ""
+msgstr "ブラーグ"
 
 #: dat/scripts/pilotname/pirate.lua:248
 msgid "Blitzschneider"
-msgstr ""
+msgstr "ブリッツシュナイダー"
 
 #: dat/scripts/pilotname/pirate.lua:251
 msgid "Blunder"
-msgstr ""
+msgstr "ブランダー"
 
 #: dat/scripts/pilotname/pirate.lua:252
 msgid "Boot"
-msgstr ""
+msgstr "ブート"
 
 #: dat/scripts/pilotname/pirate.lua:253
 msgid "Bobber"
-msgstr ""
+msgstr "バーバー"
 
 #: dat/scripts/pilotname/pirate.lua:254
 msgid "Bolt Cutter"
-msgstr ""
+msgstr "ボルトカッター"
 
 #: dat/scripts/pilotname/pirate.lua:255
 msgid "Bōshi"
-msgstr ""
+msgstr "帽子"
 
 #: dat/scripts/pilotname/pirate.lua:256
 msgid "Brain"
-msgstr ""
+msgstr "ブレイン"
 
 #: dat/scripts/pilotname/pirate.lua:257
 msgid "Breeze"
-msgstr ""
+msgstr "ブリーズ"
 
 #: dat/scripts/pilotname/pirate.lua:258
 msgid "Bride"
-msgstr ""
+msgstr "ブライド"
 
 #: dat/scripts/pilotname/pirate.lua:259
 msgid "Brigand"
-msgstr ""
+msgstr "ブリガンド"
 
 #: dat/scripts/pilotname/pirate.lua:260
 msgid "Bulk"
-msgstr ""
+msgstr "バルク"
 
 #: dat/scripts/pilotname/pirate.lua:261
 msgid "Burglar"
-msgstr ""
+msgstr "バーグラー"
 
 #: dat/scripts/pilotname/pirate.lua:262
 msgid "Cane"
-msgstr ""
+msgstr "ケイン"
 
 #: dat/scripts/pilotname/pirate.lua:264
 msgid "Cheese"
-msgstr ""
+msgstr "チーズ"
 
 #: dat/scripts/pilotname/pirate.lua:265
 msgid "Cheese Grater"
-msgstr ""
+msgstr "チーズグレーター"
 
 #: dat/scripts/pilotname/pirate.lua:266
 msgid "Chi"
-msgstr ""
+msgstr "血"
 
 #: dat/scripts/pilotname/pirate.lua:267
 msgid "Chicken"
-msgstr ""
+msgstr "チキン"
 
 #: dat/scripts/pilotname/pirate.lua:268
 msgid "Circle"
-msgstr ""
+msgstr "サークル"
 
 #: dat/scripts/pilotname/pirate.lua:270
 msgid "Claw Hammer"
-msgstr ""
+msgstr "クロウハマー"
 
 #: dat/scripts/pilotname/pirate.lua:271
 msgid "Club"
-msgstr ""
+msgstr "クラブ"
 
 #: dat/scripts/pilotname/pirate.lua:272
 msgid "Coconut"
-msgstr ""
+msgstr "ココナツ"
 
 #: dat/scripts/pilotname/pirate.lua:273
 msgid "Coot"
-msgstr ""
+msgstr "クート"
 
 #: dat/scripts/pilotname/pirate.lua:274
 msgid "Corsair"
-msgstr ""
+msgstr "コルセア"
 
 #: dat/scripts/pilotname/pirate.lua:278
 msgid "Crowbar"
-msgstr ""
+msgstr "クロウバール"
 
 #: dat/scripts/pilotname/pirate.lua:279
 msgid "Crusader"
-msgstr ""
+msgstr "クルーセイダー"
 
 #: dat/scripts/pilotname/pirate.lua:280
 msgid "Curse"
-msgstr ""
+msgstr "カース"
 
 #: dat/scripts/pilotname/pirate.lua:281
 msgid "Cyborg"
-msgstr ""
+msgstr "サイボーグ"
 
 #: dat/scripts/pilotname/pirate.lua:282
 msgid "Darkness"
-msgstr ""
+msgstr "ダークネス"
 
 #: dat/scripts/pilotname/pirate.lua:286
 msgid "Destruction"
-msgstr ""
+msgstr "ディストラクション"
 
 #: dat/scripts/pilotname/pirate.lua:287
 msgid "Devil"
-msgstr ""
+msgstr "デビル"
 
 #: dat/scripts/pilotname/pirate.lua:288
 msgid "Dictator"
-msgstr ""
+msgstr "ディクテイター"
 
 #: dat/scripts/pilotname/pirate.lua:289
 msgid "Disaster"
-msgstr ""
+msgstr "ディザスター"
 
 #: dat/scripts/pilotname/pirate.lua:290
 msgid "Discord"
-msgstr ""
+msgstr "ディスコード"
 
 #: dat/scripts/pilotname/pirate.lua:291
 msgid "Donkey"
-msgstr ""
+msgstr "ドンキー"
 
 #: dat/scripts/pilotname/pirate.lua:292
 msgid "Doom"
-msgstr ""
+msgstr "ドゥーム"
 
 #: dat/scripts/pilotname/pirate.lua:293
 msgid "Drache"
-msgstr ""
+msgstr "ドラッヘ"
 
 #: dat/scripts/pilotname/pirate.lua:295
 msgid "Dread"
-msgstr ""
+msgstr "ドレッド"
 
 #: dat/scripts/pilotname/pirate.lua:296
 msgid "Drifter"
-msgstr ""
+msgstr "ドリフター"
 
 #: dat/scripts/pilotname/pirate.lua:297
 msgid "Drill Press"
-msgstr ""
+msgstr "ドリルプレス"
 
 #: dat/scripts/pilotname/pirate.lua:298
 msgid "Duckling"
-msgstr ""
+msgstr "ダクリング"
 
 #: dat/scripts/pilotname/pirate.lua:300
 msgid "Eggplant"
-msgstr ""
+msgstr "エグプラント"
 
 #: dat/scripts/pilotname/pirate.lua:301
 msgid "Ego"
-msgstr ""
+msgstr "エゴ"
 
 #: dat/scripts/pilotname/pirate.lua:302
 msgid "Electricity"
-msgstr ""
+msgstr "エレクトリシティー"
 
 #: dat/scripts/pilotname/pirate.lua:303
 msgid "Emperor"
-msgstr "皇帝"
+msgstr "エンペラー"
 
 #: dat/scripts/pilotname/pirate.lua:304
 msgid "Energy-Volt"
-msgstr ""
+msgstr "エナジーボルト"
 
 #: dat/scripts/pilotname/pirate.lua:305
 msgid "Engine"
-msgstr ""
+msgstr "エンジン"
 
 #: dat/scripts/pilotname/pirate.lua:307
 msgid "Flare"
-msgstr ""
+msgstr "フレア"
 
 #: dat/scripts/pilotname/pirate.lua:308
 msgid "Flash"
-msgstr ""
+msgstr "フラッシュ"
 
 #: dat/scripts/pilotname/pirate.lua:310
 msgid "Friend"
-msgstr ""
+msgstr "フレンド"
 
 #: dat/scripts/pilotname/pirate.lua:311
 msgid "Fugitive"
-msgstr ""
+msgstr "フュージティブ"
 
 #: dat/scripts/pilotname/pirate.lua:312
 msgid "Gaki"
-msgstr ""
+msgstr "餓鬼"
 
 #: dat/scripts/pilotname/pirate.lua:313
 msgid "Geschützturmdrehbank"
-msgstr ""
+msgstr "ゲシュトツトウルムドレーバンク"
 
 #: dat/scripts/pilotname/pirate.lua:314
 msgid "Giant"
-msgstr ""
+msgstr "ジャイアント"
 
 #: dat/scripts/pilotname/pirate.lua:315
 msgid "Gift"
-msgstr ""
+msgstr "ギフト"
 
 #: dat/scripts/pilotname/pirate.lua:316
 msgid "Gohan"
-msgstr ""
+msgstr "ご飯"
 
 #: dat/scripts/pilotname/pirate.lua:317
 msgid "Goose"
-msgstr ""
+msgstr "グース"
 
 #: dat/scripts/pilotname/pirate.lua:318
 msgid "Gorilla"
-msgstr ""
+msgstr "ゴリラ"
 
 #: dat/scripts/pilotname/pirate.lua:319
 msgid "Gun"
-msgstr ""
+msgstr "ガン"
 
 #: dat/scripts/pilotname/pirate.lua:320
 msgid "Hae"
-msgstr ""
+msgstr "蝿"
 
 #: dat/scripts/pilotname/pirate.lua:321
 msgid "Hamburger"
-msgstr ""
+msgstr "ハンバーガー"
 
 #: dat/scripts/pilotname/pirate.lua:323
 msgid "Headache"
-msgstr ""
+msgstr "ヘデイク"
 
 #: dat/scripts/pilotname/pirate.lua:324
 msgid "Hex"
-msgstr ""
+msgstr "ヘクス"
 
 #: dat/scripts/pilotname/pirate.lua:325
 msgid "Hikari"
-msgstr ""
+msgstr "光"
 
 #: dat/scripts/pilotname/pirate.lua:326
 msgid "Horobi"
-msgstr ""
+msgstr "滅び"
 
 #: dat/scripts/pilotname/pirate.lua:327
 msgid "Horror"
-msgstr ""
+msgstr "ホラー"
 
 #: dat/scripts/pilotname/pirate.lua:329
 msgid "Husband"
-msgstr ""
+msgstr "ハズバンド"
 
 #: dat/scripts/pilotname/pirate.lua:330
 msgid "Ichigo"
-msgstr ""
+msgstr "苺"
 
 #: dat/scripts/pilotname/pirate.lua:331
 msgid "Id"
-msgstr ""
+msgstr "イド"
 
 #: dat/scripts/pilotname/pirate.lua:332
 msgid "Impact Wrench"
-msgstr ""
+msgstr "インパクトレンチ"
 
 #: dat/scripts/pilotname/pirate.lua:333
 msgid "Inazuma"
-msgstr ""
+msgstr "稲妻"
 
 #: dat/scripts/pilotname/pirate.lua:334
 msgid "Ionizer"
-msgstr ""
+msgstr "イオナイザー"
 
 #: dat/scripts/pilotname/pirate.lua:335
 msgid "Ishi"
-msgstr ""
+msgstr "石"
 
 #: dat/scripts/pilotname/pirate.lua:336
 msgid "Itoyōji"
-msgstr ""
+msgstr "糸ようじ"
 
 #: dat/scripts/pilotname/pirate.lua:337
 msgid "Jalapeño"
-msgstr ""
+msgstr "ハラペーニョ"
 
 #: dat/scripts/pilotname/pirate.lua:338
 msgid "Jigsaw"
-msgstr ""
+msgstr "ジグソー"
 
 #: dat/scripts/pilotname/pirate.lua:339
 msgid "Jishin"
-msgstr ""
+msgstr "地震"
 
 #: dat/scripts/pilotname/pirate.lua:340
 msgid "Jinx"
-msgstr ""
+msgstr "ジンクス"
 
 #: dat/scripts/pilotname/pirate.lua:341
 msgid "Ka"
-msgstr ""
+msgstr "蚊"
 
 #: dat/scripts/pilotname/pirate.lua:342
 msgid "Kailan"
-msgstr ""
+msgstr "カイラン"
 
 #: dat/scripts/pilotname/pirate.lua:343
 msgid "Kaji"
-msgstr ""
+msgstr "火事"
 
 #: dat/scripts/pilotname/pirate.lua:344
 msgid "Kamakiri"
-msgstr ""
+msgstr "かまきり"
 
 #: dat/scripts/pilotname/pirate.lua:345
 msgid "Kame"
-msgstr ""
+msgstr "亀"
 
 #: dat/scripts/pilotname/pirate.lua:346
 msgid "Kami"
-msgstr ""
+msgstr "神"
 
 #: dat/scripts/pilotname/pirate.lua:347
 msgid "Kamikaze"
-msgstr ""
+msgstr "神風"
 
 #: dat/scripts/pilotname/pirate.lua:348
 msgid "Kappa"
-msgstr ""
+msgstr "河童"
 
 #: dat/scripts/pilotname/pirate.lua:349
 msgid "Karaoke"
-msgstr ""
+msgstr "からおけ"
 
 #: dat/scripts/pilotname/pirate.lua:350
 msgid "Katana"
-msgstr ""
+msgstr "刀"
 
 #: dat/scripts/pilotname/pirate.lua:351
 msgid "Kaze"
-msgstr ""
+msgstr "風"
 
 #: dat/scripts/pilotname/pirate.lua:352
 msgid "Keel"
-msgstr ""
+msgstr "キール"
 
 #: dat/scripts/pilotname/pirate.lua:354
 msgid "Killer"
-msgstr ""
+msgstr "キラー"
 
 #: dat/scripts/pilotname/pirate.lua:355
 msgid "Kirin"
-msgstr ""
+msgstr "きりん"
 
 #: dat/scripts/pilotname/pirate.lua:356
 msgid "Kitchen Knife"
-msgstr ""
+msgstr "キッチンナイフ"
 
 #: dat/scripts/pilotname/pirate.lua:357
 msgid "Kitsune"
-msgstr ""
+msgstr "狐"
 
 #: dat/scripts/pilotname/pirate.lua:358
 msgid "Kitten"
-msgstr ""
+msgstr "キトゥン"
 
 #: dat/scripts/pilotname/pirate.lua:360
 msgid "Knife"
-msgstr ""
+msgstr "ナイフ"
 
 #: dat/scripts/pilotname/pirate.lua:361
 msgid "Knight"
-msgstr ""
+msgstr "ナイト"
 
 #: dat/scripts/pilotname/pirate.lua:362
 msgid "Kōmori"
-msgstr ""
+msgstr "こうもり"
 
 #: dat/scripts/pilotname/pirate.lua:363
 msgid "Kumo"
-msgstr ""
+msgstr "蜘蛛"
 
 #: dat/scripts/pilotname/pirate.lua:364
 msgid "Lance"
-msgstr ""
+msgstr "ランス"
 
 #: dat/scripts/pilotname/pirate.lua:367
 msgid "Lawyer"
-msgstr ""
+msgstr "ローヤー"
 
 #: dat/scripts/pilotname/pirate.lua:368
 msgid "League"
-msgstr ""
+msgstr "リーグ"
 
 #: dat/scripts/pilotname/pirate.lua:369
 msgid "Lust"
-msgstr ""
+msgstr "ラスト"
 
 #: dat/scripts/pilotname/pirate.lua:370
 msgid "Madōshi"
-msgstr ""
+msgstr "魔道士"
 
 #: dat/scripts/pilotname/pirate.lua:371
 msgid "Magician"
-msgstr ""
+msgstr "マジシャン"
 
 #: dat/scripts/pilotname/pirate.lua:372
 msgid "Mahō"
-msgstr ""
+msgstr "魔法"
 
 #: dat/scripts/pilotname/pirate.lua:373
 msgid "Maize"
-msgstr ""
+msgstr "メイズ"
 
 #: dat/scripts/pilotname/pirate.lua:374
 msgid "Mangaka"
-msgstr ""
+msgstr "まんが家"
 
 #: dat/scripts/pilotname/pirate.lua:375
 msgid "Mangekyō"
-msgstr ""
+msgstr "万華鏡"
 
 #: dat/scripts/pilotname/pirate.lua:376
 msgid "Mango"
-msgstr ""
+msgstr "マンゴー"
 
 #: dat/scripts/pilotname/pirate.lua:378
 msgid "Melon"
-msgstr ""
+msgstr "メロン"
 
 #: dat/scripts/pilotname/pirate.lua:379
 msgid "Mind"
-msgstr ""
+msgstr "マインド"
 
 #: dat/scripts/pilotname/pirate.lua:380
 msgid "Model"
-msgstr ""
+msgstr "モデル"
 
 #: dat/scripts/pilotname/pirate.lua:381
 msgid "Monster"
-msgstr ""
+msgstr "モンスター"
 
 #: dat/scripts/pilotname/pirate.lua:383
 msgid "Moustache"
-msgstr ""
+msgstr "マスターシュ"
 
 #: dat/scripts/pilotname/pirate.lua:384
 msgid "Mugi"
-msgstr ""
+msgstr "麦"
 
 #: dat/scripts/pilotname/pirate.lua:385
 msgid "Nanika"
-msgstr ""
+msgstr "なにか"
 
 #: dat/scripts/pilotname/pirate.lua:386
 msgid "Neckbeard"
-msgstr ""
+msgstr "ネックビアード"
 
 #: dat/scripts/pilotname/pirate.lua:387
 msgid "Necromancer"
-msgstr ""
+msgstr "ネクロマンサー"
 
 #: dat/scripts/pilotname/pirate.lua:388
 msgid "Neko"
-msgstr ""
+msgstr "猫"
 
 #: dat/scripts/pilotname/pirate.lua:389
 msgid "Nezumi"
-msgstr ""
+msgstr "ねずみ"
 
 #: dat/scripts/pilotname/pirate.lua:390
 msgid "Night"
-msgstr ""
+msgstr "ナイト"
 
 #: dat/scripts/pilotname/pirate.lua:391
 msgid "Niku"
-msgstr ""
+msgstr "肉"
 
 #: dat/scripts/pilotname/pirate.lua:392
 msgid "Ninja"
-msgstr ""
+msgstr "忍者"
 
 #: dat/scripts/pilotname/pirate.lua:393
 msgid "Niwatori"
-msgstr ""
+msgstr "にわとり"
 
 #: dat/scripts/pilotname/pirate.lua:395
 msgid "Ogre"
-msgstr ""
+msgstr "オーガ"
 
 #: dat/scripts/pilotname/pirate.lua:397
 msgid "Onion"
-msgstr ""
+msgstr "オニオン"
 
 #: dat/scripts/pilotname/pirate.lua:398
 msgid "Osiris"
-msgstr ""
+msgstr "オシリス"
 
 #: dat/scripts/pilotname/pirate.lua:400
 msgid "Oyster"
-msgstr ""
+msgstr "オイスター"
 
 #: dat/scripts/pilotname/pirate.lua:402
 msgid "Paste"
-msgstr ""
+msgstr "ペースト"
 
 #: dat/scripts/pilotname/pirate.lua:403
 msgid "Pea"
-msgstr ""
+msgstr "ピー"
 
 #: dat/scripts/pilotname/pirate.lua:404
 msgid "Peapod"
-msgstr ""
+msgstr "ピーポード"
 
 #: dat/scripts/pilotname/pirate.lua:406
 msgid "Pickaxe"
-msgstr ""
+msgstr "ピキャクス"
 
 #: dat/scripts/pilotname/pirate.lua:407
 msgid "Pipe Wrench"
-msgstr ""
+msgstr "パイプレンチ"
 
 #: dat/scripts/pilotname/pirate.lua:408
 msgid "Pitchfork"
-msgstr ""
+msgstr "ピッチフォーク"
 
 #: dat/scripts/pilotname/pirate.lua:409
 msgid "Politician"
-msgstr ""
+msgstr "ポリティシャン"
 
 #: dat/scripts/pilotname/pirate.lua:410
 msgid "Potato"
-msgstr ""
+msgstr "ポテト"
 
 #: dat/scripts/pilotname/pirate.lua:411
 msgid "Potter"
-msgstr ""
+msgstr "ポター"
 
 #: dat/scripts/pilotname/pirate.lua:413
 msgid "Princess"
-msgstr ""
+msgstr "プリンセス"
 
 #: dat/scripts/pilotname/pirate.lua:414
 msgid "Pulse"
-msgstr ""
+msgstr "パルス"
 
 #: dat/scripts/pilotname/pirate.lua:415
 msgid "Puppy"
-msgstr ""
+msgstr "パピー"
 
 #: dat/scripts/pilotname/pirate.lua:417
 msgid "Raigeki"
-msgstr ""
+msgstr "雷撃"
 
 #: dat/scripts/pilotname/pirate.lua:419
 msgid "Rat"
-msgstr ""
+msgstr "ラット"
 
 #: dat/scripts/pilotname/pirate.lua:420
 msgid "Ratte"
-msgstr ""
+msgstr "ラッテ"
 
 #: dat/scripts/pilotname/pirate.lua:421
 msgid "Ravager"
-msgstr ""
+msgstr "ラビジャー"
 
 #: dat/scripts/pilotname/pirate.lua:423
 msgid "Reaver"
-msgstr ""
+msgstr "リーバー"
 
 #: dat/scripts/pilotname/pirate.lua:424
 msgid "Recluse"
-msgstr ""
+msgstr "リクルース"
 
 #: dat/scripts/pilotname/pirate.lua:425
 msgid "Rice"
-msgstr ""
+msgstr "ライス"
 
 #: dat/scripts/pilotname/pirate.lua:426
 msgid "Ring"
-msgstr ""
+msgstr "リング"
 
 #: dat/scripts/pilotname/pirate.lua:427
 msgid "River"
-msgstr ""
+msgstr "リバー"
 
 #: dat/scripts/pilotname/pirate.lua:428
 msgid "Roba"
-msgstr ""
+msgstr "ロバ"
 
 #: dat/scripts/pilotname/pirate.lua:429
 msgid "Rōjin"
-msgstr ""
+msgstr "老人"
 
 #: dat/scripts/pilotname/pirate.lua:430
 msgid "Rubber Mallet"
-msgstr ""
+msgstr "ラバーマレット"
 
 #: dat/scripts/pilotname/pirate.lua:431
 msgid "Ryū"
-msgstr ""
+msgstr "龍"
 
 #: dat/scripts/pilotname/pirate.lua:432
 msgid "Sakura"
-msgstr ""
+msgstr "桜"
 
 #: dat/scripts/pilotname/pirate.lua:433
 msgid "Salad"
-msgstr ""
+msgstr "サラダ"
 
 #: dat/scripts/pilotname/pirate.lua:434
 msgid "Samurai"
-msgstr ""
+msgstr "侍"
 
 #: dat/scripts/pilotname/pirate.lua:435
 msgid "Sasori"
-msgstr ""
+msgstr "さそり"
 
 #: dat/scripts/pilotname/pirate.lua:437
 msgid "Sea"
-msgstr ""
+msgstr "シー"
 
 #: dat/scripts/pilotname/pirate.lua:438
 msgid "Seaweed"
-msgstr ""
+msgstr "シーウィード"
 
 #: dat/scripts/pilotname/pirate.lua:439
 msgid "Seijika"
-msgstr ""
+msgstr "政治家"
 
 #: dat/scripts/pilotname/pirate.lua:440
 msgid "Sentinel"
-msgstr ""
+msgstr "センチネル"
 
 #: dat/scripts/pilotname/pirate.lua:442
 msgid "Shepherd"
-msgstr ""
+msgstr "シェパード"
 
 #: dat/scripts/pilotname/pirate.lua:443
 msgid "Shinigami"
-msgstr ""
+msgstr "死神"
 
 #: dat/scripts/pilotname/pirate.lua:444
 msgid "Shinobi"
-msgstr ""
+msgstr "忍び"
 
 #: dat/scripts/pilotname/pirate.lua:445
 msgid "Shock"
-msgstr ""
+msgstr "ショック"
 
 #: dat/scripts/pilotname/pirate.lua:446
 msgid "Shovel"
-msgstr ""
+msgstr "シャベル"
 
 #: dat/scripts/pilotname/pirate.lua:447
 msgid "Shujin"
-msgstr ""
+msgstr "主人"
 
 #: dat/scripts/pilotname/pirate.lua:448
 msgid "Siren"
-msgstr ""
+msgstr "サイレン"
 
 #: dat/scripts/pilotname/pirate.lua:449
 msgid "Slayer"
-msgstr ""
+msgstr "スレイヤー"
 
 #: dat/scripts/pilotname/pirate.lua:450
 msgid "Space Dog"
-msgstr ""
+msgstr "スペースドッグ"
 
 #: dat/scripts/pilotname/pirate.lua:452
 msgid "Spaghetti"
-msgstr ""
+msgstr "スパゲッティー"
 
 #: dat/scripts/pilotname/pirate.lua:453
 msgid "Spaghetti Monster"
-msgstr ""
+msgstr "スパゲッティーモンスター"
 
 #: dat/scripts/pilotname/pirate.lua:455
 msgid "Squeegee"
-msgstr ""
+msgstr "スキージー"
 
 #: dat/scripts/pilotname/pirate.lua:456
 msgid "Staple Gun"
-msgstr ""
+msgstr "ステープルガン"
 
 #: dat/scripts/pilotname/pirate.lua:457
 msgid "Stern"
-msgstr ""
+msgstr "スターン"
 
 #: dat/scripts/pilotname/pirate.lua:458
 msgid "Stir-fry"
-msgstr ""
+msgstr "スターフライ"
 
 #: dat/scripts/pilotname/pirate.lua:459
 msgid "Storm"
-msgstr ""
+msgstr "ストーム"
 
 #: dat/scripts/pilotname/pirate.lua:460
 msgid "Supernova"
-msgstr ""
+msgstr "スーパーノバ"
 
 #: dat/scripts/pilotname/pirate.lua:461
 msgid "Surströmming"
-msgstr ""
+msgstr "シュールストレミング"
 
 #: dat/scripts/pilotname/pirate.lua:462
 msgid "Table Saw"
-msgstr ""
+msgstr "テーブルソー"
 
 #: dat/scripts/pilotname/pirate.lua:463
 msgid "Tallman"
-msgstr ""
+msgstr "トールマン"
 
 #: dat/scripts/pilotname/pirate.lua:464
 msgid "Tanoshimi"
-msgstr ""
+msgstr "楽しみ"
 
 #: dat/scripts/pilotname/pirate.lua:465
 msgid "Tatsumaki"
-msgstr ""
+msgstr "竜巻"
 
 #: dat/scripts/pilotname/pirate.lua:466
 msgid "Tegami"
-msgstr ""
+msgstr "手紙"
 
 #: dat/scripts/pilotname/pirate.lua:467
 msgid "Teineigo"
-msgstr ""
+msgstr "丁寧語"
 
 #: dat/scripts/pilotname/pirate.lua:468
 msgid "Tenkūryū"
-msgstr ""
+msgstr "天空竜"
 
 #: dat/scripts/pilotname/pirate.lua:469
 msgid "Terror"
-msgstr ""
+msgstr "テラー"
 
 #: dat/scripts/pilotname/pirate.lua:471
 msgid "Tomodachi"
-msgstr ""
+msgstr "友だち"
 
 #: dat/scripts/pilotname/pirate.lua:472
 msgid "Tooth"
-msgstr ""
+msgstr "トゥース"
 
 #: dat/scripts/pilotname/pirate.lua:475
 msgid "Treasure Hunter"
-msgstr ""
+msgstr "トレジャーハンター"
 
 #: dat/scripts/pilotname/pirate.lua:476
 msgid "Tree"
-msgstr ""
+msgstr "ツリー"
 
 #: dat/scripts/pilotname/pirate.lua:477
 msgid "Tsuchi"
-msgstr ""
+msgstr "つち"
 
 #: dat/scripts/pilotname/pirate.lua:478
 msgid "Tumbler"
-msgstr ""
+msgstr "タンブラー"
 
 #: dat/scripts/pilotname/pirate.lua:479
 msgid "Turret Lathe"
-msgstr ""
+msgstr "タレットレイズ"
 
 #: dat/scripts/pilotname/pirate.lua:480
 msgid "Twilight"
-msgstr ""
+msgstr "トゥワイライト"
 
 #: dat/scripts/pilotname/pirate.lua:481
 msgid "Tyrant"
-msgstr ""
+msgstr "タイラント"
 
 #: dat/scripts/pilotname/pirate.lua:482
 msgid "Umi"
-msgstr ""
+msgstr "海"
 
 #: dat/scripts/pilotname/pirate.lua:483
 msgid "Urchin"
-msgstr ""
+msgstr "アーチン"
 
 #: dat/scripts/pilotname/pirate.lua:487
 msgid "Vomit"
-msgstr ""
+msgstr "ボミット"
 
 #: dat/scripts/pilotname/pirate.lua:488
 msgid "Wache"
-msgstr ""
+msgstr "バッヘ"
 
 #: dat/scripts/pilotname/pirate.lua:489
 msgid "Watcher"
-msgstr ""
+msgstr "ウォッチャー"
 
 #: dat/scripts/pilotname/pirate.lua:490
 msgid "Wedge"
-msgstr ""
+msgstr "ウェッジ"
 
 #: dat/scripts/pilotname/pirate.lua:491
 msgid "Widget"
-msgstr ""
+msgstr "ウィジェット"
 
 #: dat/scripts/pilotname/pirate.lua:492
 msgid "Widow"
-msgstr ""
+msgstr "ウィドウ"
 
 #: dat/scripts/pilotname/pirate.lua:493
 msgid "Wight"
-msgstr ""
+msgstr "ワイト"
 
 #: dat/scripts/pilotname/pirate.lua:496
 msgid "Wizard"
-msgstr ""
+msgstr "ウィザード"
 
 #: dat/scripts/pilotname/pirate.lua:498
 msgid "Yakuza"
-msgstr ""
+msgstr "やくざ"
 
 #: dat/scripts/pilotname/pirate.lua:499
 msgid "Yama"
-msgstr ""
+msgstr "山"
 
 #: dat/scripts/pilotname/pirate.lua:500
 msgid "Yami"
-msgstr ""
+msgstr "やみ"
 
 #: dat/scripts/pilotname/pirate.lua:501
 msgid "Yarou"
-msgstr ""
+msgstr "野郎"
 
 #: dat/scripts/pilotname/pirate.lua:502
 msgid "Yasai"
-msgstr ""
+msgstr "野菜"
 
 #: dat/scripts/pilotname/pirate.lua:503
 msgid "Yatsu"
-msgstr ""
+msgstr "やつ"
 
 #: dat/scripts/pilotname/pirate.lua:504
 msgid "Youma"
-msgstr ""
+msgstr "妖魔"
 
 #.
 #. -- @brief Generates pirate names
 #. --
 #: dat/scripts/pilotname/pirate.lua:520
-#, fuzzy
-#| msgid "Particle Lance"
 msgid "{article} {actor}"
-msgstr "粒子ランス"
+msgstr "{article}・{actor}"
 
 #: dat/scripts/pilotname/pirate.lua:522
 msgid "{colour} {actor}"
-msgstr ""
+msgstr "{colour}・{actor}"
 
 #: dat/scripts/pilotname/pirate.lua:524
 msgid "{descriptor} {actor}"
-msgstr ""
+msgstr "{descriptor}・{actor}"
 
 #: dat/scripts/pilotname/pirate.lua:526
 msgid "{article} {descriptor} {actor}"
-msgstr ""
+msgstr "{article}・{descriptor}・{actor}"
 
 #: dat/scripts/pilotname/pirate.lua:528
 msgid "{article} {colour} {actor}"
-msgstr ""
+msgstr "{article}・{colour}・{actor}"
 
 #: dat/scripts/pilotname/pirate.lua:530
 msgid "{article} {descriptor} {colour} {actor}"
-msgstr ""
+msgstr "{article}・{descriptor}・{colour}・{actor}"
 
 #.
 #. -- @brief Encodes a number as a roman numeral.
@@ -76487,13 +76734,15 @@ msgstr ""
 #. Ask if the player is fine with removing the cargo
 #: dat/scripts/swapship.lua:92
 msgid "Too much cargo for new ship"
-msgstr ""
+msgstr "新しい船に積み荷が入らない"
 
 #: dat/scripts/swapship.lua:93
 msgid ""
 "You do not have enough space to move your cargo to the new ship. Get rid of "
 "the following to make room?"
 msgstr ""
+"新しい船には積み荷を移動できるだけの空きがありません。次のものを処分して空き"
+"を作りますか？"
 
 #. Get rid of the cargo
 #. Player abandoned attempting to free cargo
@@ -76525,7 +76774,7 @@ msgstr ""
 #. --
 #: dat/scripts/vn/core.lua:110
 msgid "vn: can't modify states when running"
-msgstr ""
+msgstr "vn: can't modify states when running"
 
 #. --
 #. Sets the current drawing colour of the VN.
@@ -76612,7 +76861,7 @@ msgstr ""
 #. --
 #: dat/scripts/vn/core.lua:597
 msgid "character not found to remove!"
-msgstr ""
+msgstr "character not found to remove!"
 
 #. reset name
 #.
@@ -76636,7 +76885,7 @@ msgstr ""
 #. Check to see if function
 #: dat/scripts/vn/core.lua:833
 msgid "[VN]: menu has no options!"
-msgstr ""
+msgstr "[VN]: menu has no options!"
 
 #. Set up the graphics stuff
 #. Border information
@@ -76647,7 +76896,7 @@ msgstr ""
 #. Mouse over
 #: dat/scripts/vn/core.lua:929
 msgid "[CHOICE]"
-msgstr ""
+msgstr "[選択]"
 
 #.
 #. -- Label
@@ -76690,7 +76939,7 @@ msgstr ""
 #: dat/scripts/vn/core.lua:1135
 #, lua-format
 msgid "vn: character image '%s' not found!"
-msgstr ""
+msgstr "vn: character image '%s' not found!"
 
 #. --
 #. Renames a character on the fly.
@@ -76855,12 +77104,12 @@ msgstr ""
 #: dat/scripts/vn/core.lua:1589
 #, lua-format
 msgid "vn: unable to find label '%s'"
-msgstr ""
+msgstr "vn: unable to find label '%s'"
 
 #: dat/scripts/vn/core.lua:1599
 #, lua-format
 msgid "vn: character '%s' not found!"
-msgstr ""
+msgstr "vn: character '%s' not found!"
 
 #. Recursive :D
 #. --
@@ -76875,7 +77124,7 @@ msgstr ""
 #. --
 #: dat/scripts/vn/core.lua:1633
 msgid "vn: run without any states"
-msgstr ""
+msgstr "vn: run without any states"
 
 #. Destroy remaining lmusic stuff if necessary
 #. --
@@ -76893,7 +77142,7 @@ msgstr ""
 #. Set defaults
 #: dat/scripts/vn/log.lua:16
 msgid "[START]"
-msgstr ""
+msgstr "[開始]"
 
 #. Build the tables
 #. Determine offset
@@ -76905,14 +77154,12 @@ msgstr ""
 #. Insert start and end state if necessary
 #. table.insert( vn._states, vn.StateEnd.new() )
 #: dat/scripts/vn/options.lua:34
-#, fuzzy
-#| msgid "Options"
 msgid "VN Options"
-msgstr "オプション"
+msgstr "VN オプション"
 
 #: dat/scripts/vn/options.lua:39
 msgid "#nText Speed#0: {val:.3f} seconds per character"
-msgstr ""
+msgstr "#n文章の速度#0 : 1 文字あたり {val:.3f} 秒"
 
 #: dat/scripts/vn/options.lua:44 src/dialogue.c:501
 msgid "Done"
@@ -76926,7 +77173,7 @@ msgstr "完了"
 #: dat/scripts/vn/transitions.lua:407
 #, lua-format
 msgid "vn: unknown transition type'%s'"
-msgstr ""
+msgstr "vn: unknown transition type'%s'"
 
 #.
 #. Small wrapper around vn to do toolkit type stuff.
@@ -77102,7 +77349,7 @@ msgstr ""
 "｢#o回避#0は戦いになったときにとても重要になります。これで武器がどれだけうまく"
 "あなたの船を追跡できるかが決まるからです。あなたの回避値が敵の武器の#o追跡最"
 "小#0より小さければ、その武器はあなたの船を完全に正確には追跡できません。けれ"
-"ども、あなたの回避値が#o追跡最小#0より大きければ、あなたは完璧に追跡されま"
+"ども、あなたの回避値が#o追跡限界#0より大きければ、あなたは完璧に追跡されま"
 "す。同じことはあなたの目標についてもいえます。そのうえこれは発射機の捕捉時間"
 "にも影響があります。回避値が小さければ、ロケットがあなたを捕捉するための時間"
 "は増加します｣"
@@ -77211,9 +77458,9 @@ msgid ""
 "fighters.\""
 msgstr ""
 "｢船や武器がとても熱くなったときには、安全にできるのだったら、ふつうは冷却器を"
-"作動させるのがよい考えです。{cooldownkey} か、{reversekey} のダブルタップで冷"
-"却器は起動できます。冷却にかかる時間はその船の大きさに依存します。ところで冷"
-"却が終わると船が冷えるだけでなく、すべての弾薬や戦闘機も補充されます｣"
+"作動させるのがよい考えです。{cooldownkey} を押すか、{reversekey} を二回押せば"
+"冷却器は起動できます。冷却にかかる時間はその船の大きさに依存します。ところで"
+"冷却が終わると船が冷えるだけでなく、すべての弾薬や戦闘機も補充されます｣"
 
 #: dat/shipai.lua:162
 msgid ""
@@ -79736,21 +79983,6 @@ msgid "Info"
 msgstr "情報"
 
 #: src/info.c:221
-#, fuzzy
-#| msgid ""
-#| "#nPilot:\n"
-#| "Date:\n"
-#| "\n"
-#| "Money:\n"
-#| "Ship:\n"
-#| "Fuel:\n"
-#| "\n"
-#| "Time played:\n"
-#| "Times jumped:\n"
-#| "Times landed:\n"
-#| "Damage done:\n"
-#| "Damage taken:\n"
-#| "Ships destroyed:"
 msgid ""
 "#nPilot:\n"
 "Date:\n"
@@ -79775,6 +80007,7 @@ msgstr ""
 "燃料 :\n"
 "\n"
 "プレイ時間 :\n"
+"死亡回数 :\n"
 "ジャンプ回数 :\n"
 "着陸回数 :\n"
 "与えた損害 :\n"
@@ -79782,21 +80015,7 @@ msgstr ""
 "破壊した船 :"
 
 #: src/info.c:244
-#, fuzzy, c-format
-#| msgid ""
-#| "%s\n"
-#| "%s\n"
-#| "\n"
-#| "%s\n"
-#| "%s\n"
-#| "%d (%d %s)\n"
-#| "\n"
-#| "%.1f hours\n"
-#| "%s\n"
-#| "%s\n"
-#| "%s MJ\n"
-#| "%s MJ\n"
-#| "%s"
+#, c-format
 msgid ""
 "%s\n"
 "%s\n"
@@ -79821,6 +80040,7 @@ msgstr ""
 "%d (%d %s)\n"
 "\n"
 "%.1f 時間\n"
+"%s\n"
 "%s\n"
 "%s\n"
 "%s MJ\n"
@@ -84386,7 +84606,7 @@ msgid ""
 "%s Optimal Tracking"
 msgstr ""
 "\n"
-"追跡最大 : %s"
+"最適追跡 : %s"
 
 #: src/outfit.c:1342 src/outfit.c:2676 src/outfit.c:2682
 #, c-format
@@ -84395,7 +84615,7 @@ msgid ""
 "%s Minimal Tracking"
 msgstr ""
 "\n"
-"追跡最小 : %s"
+"追跡限界 : %s"
 
 #: src/outfit.c:1345 src/outfit.c:1490 src/outfit.c:1691 src/outfit.c:1868
 #: src/outfit.c:1922 src/outfit.c:1957 src/outfit.c:2057 src/outfit.c:2095
@@ -85406,9 +85626,9 @@ msgid ""
 "speed is probably what you want.)"
 msgstr ""
 "ゲームは通常速度か低速を指定できます。低速は、宇宙での時間が通常速度より半分"
-"の割合で進みます。もしあなたが通常速度でのゲームをプレイするのが難しいのであ"
-"れば、それが役に立つかもしれません。この人物では、通常速度と低速のどちらを使"
-"いたいですか？　(よくわからなければ、おそらく通常速度のほうがいいでしょう)"
+"の割合で進みます。もし通常速度でのゲームをプレイするのが難しいのであれば、こ"
+"れが役に立つかもしれません。この人物では、通常速度と低速のどちらを使いたいで"
+"すか？　(よくわからなければ、おそらく通常速度のほうがいいでしょう)"
 
 #: src/player.c:294
 #, c-format
@@ -87521,6 +87741,40 @@ msgstr "Invalid WEAPON_LAYER specified"
 #: src/weapon.c:1913
 msgid "Trying to remove beam with ID 0!"
 msgstr "Trying to remove beam with ID 0!"
+
+#. OSD stuff
+#.
+#. <?xml version='1.0' encoding='utf8'?>
+#. <mission name="Kidnapped">
+#. <flags>
+#. <unique />
+#. </flags>
+#. <avail>
+#. <priority>4</priority>
+#. <chance>100</chance>
+#. <location>None</location>
+#. </avail>
+#. <notes>
+#. <done_evt name="Kidnapped">Triggers</done_evt>
+#. <campaign>Kidnapping</campaign>
+#. </notes>
+#. </mission>
+#. --
+#.
+#. MISSION: Kidnapped
+#. AUTHOR: Superkoop - John Koopman
+#.
+#. The first mission in a series of missions surrounding human trafficking. This mission consists of overhearing pirate a couple pirate conversations, disabling a trader ship, and returning the children home to their parents. It essentially sets up everything for the following 4 missions.
+#. --
+#. Details for the mission
+#. OSD
+#: dat/missions/baron/baron_baron.lua:53
+#: dat/missions/neutral/animaltransport.lua:44
+#: dat/missions/neutral/kidnapped/traffic_00.lua:42
+#: dat/missions/neutral/kidnapped/traffic_00.lua:43
+#, lua-format
+msgid "Fly to the %s system and land on planet %s"
+msgstr "%s星系へ飛んで、惑星%sに着陸せよ。"
 
 #~ msgid "The space family"
 #~ msgstr "宇宙家族"
