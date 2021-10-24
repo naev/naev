@@ -28,9 +28,9 @@ local fleet = require "fleet"
 local portrait = require "portrait"
 
 
-destsysname = "Torg"
-destplanetname = "Jorcan"
-destjumpname = "Doranthex"
+local destsys = system.get("Torg")
+local destplanet = planet.get("Jorcan")
+local destjump = system.get("Doranthex")
 
 failtext = {}
 osd_desc = {}
@@ -63,7 +63,7 @@ chatter[12] = _("Pathetic, can't even take down an unarmed ship.")
 chatter[13] = _("I declare myself the Warlord of %s!")
 
 function create()
-   missys = {system.get(destsysname)}
+   missys = {destsys}
    if not misn.claim(missys) then
       abort()
    end
@@ -76,16 +76,16 @@ function accept()
 "I am looking for a skilled pilot to do a simple job for me, interested?"]])) then
       tk.msg(_("A small distraction"), string.format(_([["My General has just retired from the High Command and is now looking to become the Warlord of a planetary system. Unfortunately, our loyal forces seem insufficient to take on any existing planetary defense forces head on.
       "However, it looks like there may be an opportunity for us in %s. Warlord Khan of %s has been building his newest flagship, the Hawk, and will be onboard the Hawk as it tests its hyperspace capabilities. Since its engines and weapons have not been fully installed yet, it will be substantially slower than normal and unable to defend itself.
-"To protect himself and the Hawk, Khan will have deployed a substantial escort fighter fleet to defend against any surprise attack."]]), destsysname, destplanetname))
-      tk.msg(_("A small distraction"), string.format(_([["That is where you come in. You will jump into %s and find the Hawk and its escorts. Before the Hawk is able to reach hyperspace, you will fire on it, and cause the fighters to engage with you. At this point, you should run away from the Hawk and the jump point, so that the fighters will give chase. Then we will jump into the system and destroy the Hawk before the fighters can return."]]), destsysname))
-      tk.msg(_("A small distraction"), string.format(_([["We will jump in approximately 80 hectoseconds after you jump into %s, so the fighters must be far enough away by then not to come back and attack us."]]), destsysname))
+"To protect himself and the Hawk, Khan will have deployed a substantial escort fighter fleet to defend against any surprise attack."]]), destsys:name(), destplanet:name()))
+      tk.msg(_("A small distraction"), string.format(_([["That is where you come in. You will jump into %s and find the Hawk and its escorts. Before the Hawk is able to reach hyperspace, you will fire on it, and cause the fighters to engage with you. At this point, you should run away from the Hawk and the jump point, so that the fighters will give chase. Then we will jump into the system and destroy the Hawk before the fighters can return."]]), destsys:name()))
+      tk.msg(_("A small distraction"), string.format(_([["We will jump in approximately 80 hectoseconds after you jump into %s, so the fighters must be far enough away by then not to come back and attack us."]]), destsys:name()))
 
       misn.accept()
-      osd_desc[1] = string.format(osd_desc[1], destsysname)
+      osd_desc[1] = string.format(osd_desc[1], destsys:name())
       misn.osdCreate(_("A Small Distraction"), osd_desc)
       misn.setDesc(_("You have been recruited to distract the Dvaered fighter escorts and lead them away from the jump gate and the capital ship Hawk. The Dvaered task force will jump in and attempt to destroy the Hawk before the escort ships can return. The mission will fail if the Hawk survives or the Dvaered task force is eliminated."))
       misn.setTitle(_("A Small Distraction"))
-      marker = misn.markerAdd( system.get(destsysname), "low" )
+      marker = misn.markerAdd( destsys, "low" )
 
       missionstarted = false
       jump_fleet_entered = false
@@ -104,7 +104,7 @@ function jumpout()
 end
 
 function enter()
-   if system.cur() == system.get(destsysname) then
+   if system.cur() == destsys then
       -- Create the custom factions
       hawkfaction = faction.dynAdd( "Dummy", "The Hawk", _("The Hawk"), {ai="dvaered_norun"} )
       attkfaction = faction.dynAdd( "Dummy", "Attackers", _("Attackers"), {ai="dvaered_norun"} )
@@ -115,7 +115,7 @@ function enter()
       pilot.clear()
       misn.osdActive(2)
       missionstarted = true
-      j = jump.get(destsysname, destjumpname)
+      j = jump.get(destsys, destjump)
       v = j:pos()
       hawk = pilot.add( "Dvaered Goddard", "Dvaered", v-vec2.new(1500,8000), nil, {ai="dvaered_norun"} )
       hawk:outfitRm("all")
@@ -128,8 +128,8 @@ function enter()
       hawk:setVisible(true)
       hawk:cargoAdd("Food", 500)
       hawk:control()
-      hawk:hyperspace(system.get(destjumpname))
-      hawk:broadcast(string.format(chatter[0], destjumpname))
+      hawk:hyperspace(destjump)
+      hawk:broadcast(string.format(chatter[0], destjump:name()))
       hawk:setFaction(hawkfaction)
       fleethooks = {}
       fleetdv = fleet.add( 14, "Dvaered Vendetta", "Dvaered", hawk:pos()-vec2.new(1000,1500), nil, {ai="dvaered_norun"} )
@@ -179,7 +179,7 @@ function hawk_attacked () -- chased
    if not jump_fleet_entered then
       hawk:broadcast(chatter[1])
       hawk:control()
-      hawk:hyperspace(system.get(destjumpname))
+      hawk:hyperspace(destjump)
       broadcast_first(fleetdv, chatter[2])
    end
 
@@ -189,7 +189,7 @@ end
 function fleetdv_attacked () -- chased
    if not jump_fleet_entered then
       hawk:control()
-      hawk:hyperspace(system.get(destjumpname))
+      hawk:hyperspace(destjump)
       broadcast_first(fleetdv, chatter[3])
    end
 
@@ -235,7 +235,7 @@ function hawk_dead () -- mission accomplished
    hook.timer(10.0, "complete")
    for i, j in ipairs(jump_fleet) do
       if j:exists() then
-         j:land(planet.get(destplanetname))
+         j:land(destplanet)
       end
    end
 end
@@ -274,8 +274,8 @@ function spawn_fleet() -- spawn warlord killing fleet
    player.cinematics(false)
    jump_fleet_entered = true
    local dv_med_force = { "Dvaered Vendetta", "Dvaered Vendetta", "Dvaered Ancestor", "Dvaered Ancestor", "Dvaered Phalanx", "Dvaered Vigilance" }
-   jump_fleet = fleet.add( 1, dv_med_force, "Dvaered", system.get(destjumpname), nil, {ai="dvaered_norun"} )
-   broadcast_first(jump_fleet, string.format(chatter[8], destplanetname))
+   jump_fleet = fleet.add( 1, dv_med_force, "Dvaered", destjump, nil, {ai="dvaered_norun"} )
+   broadcast_first(jump_fleet, string.format(chatter[8], destplanet:name()))
    for i, j in ipairs(jump_fleet) do
       j:changeAI("dvaered_norun")
       j:setFaction(attkfaction)
@@ -289,7 +289,7 @@ function spawn_fleet() -- spawn warlord killing fleet
    hawk:broadcast(chatter[9])
    broadcast_first(fleetdv, chatter[10])
    hawk:control()
-   hawk:land(planet.get(destplanetname))
+   hawk:land(destplanet)
 
    for i, j in ipairs(fleetdv) do
       if j:exists() then
@@ -319,7 +319,7 @@ function jump_fleet_cap_dead () -- mission failed
    hawk:setNoDeath()
    tk.msg(_("The Hawk is safe."), failtext[4])
    faction.get("Dvaered"):modPlayerSingle(-5)
-   hawk:land(planet.get(destplanetname))
+   hawk:land(destplanet)
    for i, j in ipairs(fleetdv) do
       if j:exists() then
          j:control()
@@ -368,7 +368,7 @@ function complete()
    tk.msg(_("The Dvaered official sent you a message."), _([["Thanks for the distraction. I've sent you a picture of all the medals I was awarded. Oh, and I also deposited 800,000 credits in your account."]]))
    camera.set(player.pilot())
    player.pay(800e3)
-   jump_fleet[6]:broadcast(string.format(chatter[13], destplanetname))
+   jump_fleet[6]:broadcast(string.format(chatter[13], destplanet:name()))
    jump_fleet[6]:setNoDeath(false)
    misn.finish(true)
 end

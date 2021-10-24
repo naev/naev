@@ -62,7 +62,7 @@ local lmisn = require "lmisn"
 misn_state = nil
 
 -- Constants
-local cargo_type  = "Food"
+local cargo_type  = commodity.get("Food")
 local cargo_q     = 5
 local reward_amount = 40e3
 local outfit_tobuy = outfit.get("Ion Cannon") -- If changed, references to ion cannons/damage below should too.
