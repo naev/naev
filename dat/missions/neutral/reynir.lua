@@ -42,38 +42,8 @@ local fmt = require "format"
 local neu = require "common.neutral"
 
 
--- This section stores the strings (text) for the mission.
-
--- Bar information, describes how he appears in the bar
-
--- Mission details. We store some text for the mission with specific variables.
-
 cargoname = "Food"
 
--- Stage one
-title = {}    --Each dialog box has a title.
-text = {}      --We store mission text in tables.  As we need them, we create them.
-title[1] = _("Spaceport Bar")    --Each chunk of text is stored by index in the table.
-text[1] = _([["Do you like money?"]])     --Use double brackets _([[]]) for block quotes over several lines.
-
-text[2] = _([["Ever since I was a kid I've wanted to go to space. However, my doctor says I can't go to space because I have an elevated pressure in my cochlea, a common disease around here.
-    "I am getting old now, as you can see. Before I die I want to travel to space, and I want you to fly me there! I own a hot dog factory, so I can reward you richly! Will you do it?"]])
-text[3] = _([["Thank you so much! Just fly me around in the system, preferably near %s."]])
-
-title[4] = _("Reynir")
-text[4] = _([[Reynir walks out of the ship. You notice that he's bleeding out of both ears. "Where have you taken me?! Get me back to %s right now!!"]])
-text[5] = _([["Thank you so much! Here's %s of hot dogs. They're worth more than their weight in gold, aren't they?"]])
-text[6] = _([[Reynir walks out of the ship, amazed by the view. "So this is how %s looks like! I've always wondered... I want to go back to %s now, please."]])
-text[7] = _([[Reynir doesn't look happy when you meet him outside the ship.
-    "I lost my hearing out there! Damn you!! I made a promise, though, so I'd better keep it. Here's your reward, %s of hot dogs..."]])
-
--- Comm chatter -- ??
-talk = {}
-talk[1] = ""
-
--- Other text for the mission -- ??
-msg_abortTitle = ""
-msg_abort = [[]]
 
 function create ()
    -- Note: this mission does not make any system claims.
@@ -96,7 +66,8 @@ function accept ()
             end
             return count > 1
          end) ()
-      and tk.yesno( title[1], text[1] ) and tk.yesno( title[1], text[2] ) then
+      and tk.yesno( _("Spaceport Bar"), _([["Do you like money?"]]) ) and tk.yesno( _("Spaceport Bar"), _([["Ever since I was a kid I've wanted to go to space. However, my doctor says I can't go to space because I have an elevated pressure in my cochlea, a common disease around here.
+    "I am getting old now, as you can see. Before I die I want to travel to space, and I want you to fly me there! I own a hot dog factory, so I can reward you richly! Will you do it?"]]) ) then
 
       misn.accept()  -- For missions from the Bar only.
 
@@ -105,7 +76,7 @@ function accept ()
       misn.setDesc( _("Reynir wants to travel to space and will reward you richly.") )
       hook.land( "landed" )
 
-      tk.msg( title[4], string.format(text[3], misn_base:name()) )
+      tk.msg( _("Reynir"), string.format(_([["Thank you so much! Just fly me around in the system, preferably near %s."]]), misn_base:name()) )
       misn.osdCreate(_("Rich reward from space!"), {_("Fly around in the system, preferably near %s"):format(misn_base:name())})
       local c = misn.cargoNew( N_("Reynir"), N_("A old man who wants to see space.") )
       cargoID = misn.cargoAdd( c, 0 )
@@ -120,24 +91,25 @@ function landed()
       misn.cargoRm( cargoID )
       if misn_bleeding then
          reward = math.min(1, player.pilot():cargoFree())
-         reward_text = text[7]
+         reward_text = _([[Reynir doesn't look happy when you meet him outside the ship.
+    "I lost my hearing out there! Damn you!! I made a promise, though, so I'd better keep it. Here's your reward, %s of hot dogs..."]])
          log_text = _([[You took an old man named Reynir on a ride in outer space, but he was made very angry because the distance you traveled led to him getting injured and losing his hearing. Still, he begrudgingly paid you in the form of %s of hot dogs.]])
       else
          reward = player.pilot():cargoFree()
-         reward_text = text[5]
+         reward_text = _([["Thank you so much! Here's %s of hot dogs. They're worth more than their weight in gold, aren't they?"]])
          log_text = _([[You took an old man named Reynir on a ride in outer space. He was happy and paid you in the form of %s of hot dogs.]])
       end
-      tk.msg( title[4], string.format(reward_text, fmt.tonnes(reward)) )
+      tk.msg( _("Reynir"), string.format(reward_text, fmt.tonnes(reward)) )
       player.pilot():cargoAdd( cargoname, reward )
       neu.addMiscLog( log_text:format( fmt.tonnes(reward) ) )
       misn.finish(true)
    -- If we're in misn_base_sys but not on misn_base then...
    elseif system.cur() == misn_base_sys then
-      tk.msg( title[4], string.format(text[6], planet.cur():name(), misn_base:name()) )
+      tk.msg( _("Reynir"), string.format(_([[Reynir walks out of the ship, amazed by the view. "So this is how %s looks like! I've always wondered... I want to go back to %s now, please."]]), planet.cur():name(), misn_base:name()) )
       misn.osdCreate(_("Rich reward from space!"), {_("Take Reynir home to %s"):format(misn_base:name())})
    -- If we're in another system then make Reynir bleed out his ears ;)
    else
-      tk.msg( title[4], string.format(text[4], misn_base:name()) )
+      tk.msg( _("Reynir"), string.format(_([[Reynir walks out of the ship. You notice that he's bleeding out of both ears. "Where have you taken me?! Get me back to %s right now!!"]]), misn_base:name()) )
       misn.osdCreate(_("Rich reward from space!"), {_("Take Reynir home to %s"):format(misn_base:name())})
       misn_bleeding = true
    end
