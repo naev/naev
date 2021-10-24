@@ -773,6 +773,8 @@ void ovr_render( double dt )
       for (int i=0; i<array_size(cur_system->jumps); i++) {
          double r;
          JumpPoint *jp = &cur_system->jumps[i];
+         if (!jp_isUsable(jp) || !jp_isKnown(jp))
+            continue;
          map_overlayToScreenPos( &x, &y, jp->pos.x, jp->pos.y );
          r = EW_JUMP_BONUS_RANGE / res;
          glUseProgram( shaders.astaura.program );
