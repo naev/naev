@@ -35,13 +35,6 @@
 
 local neu = require "common.neutral"
 
-
--- Bar information
-
--- Mission details
-misn_reward = _("Some money and a happy sister.") -- Possibly some hard to get contraband once it is introduced
-
-
 function create ()
    targetsys = {system.get("Mural"),system.get("Darkstone"),system.get("Haleb")}
    targetsys["__save"] = true
@@ -82,7 +75,7 @@ function accept ()
 
    -- Set mission details
    misn.setTitle( _("The Lost Brother") )
-   misn.setReward( string.format( misn_reward, reward) )
+   misn.setReward( string.format( _("Some money and a happy sister."), reward) )
    misn.setDesc( string.format( _("Locate the brother in the %s system"), targetsys[1]:name(), targetsys[2]:name(), targetsys[3]:name() ) )
    misn.osdCreate(_("The Lost Brother"), {_("Locate the brother in the %s system, the %s system, or the %s system"):format(targetsys[1]:name(), targetsys[2]:name(), targetsys[3]:name()), _("Hail the Poppy Seed and board it to reunite the siblings")})
    misn_marker = {[1]=misn.markerAdd( targetsys[1], "low" ), [2]=misn.markerAdd( targetsys[2], "low" ), [3]=misn.markerAdd( targetsys[3], "low" )}

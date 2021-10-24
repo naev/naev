@@ -25,7 +25,6 @@
 local portrait = require "portrait"
 local neu = require "common.neutral"
 
-
 sysname1 = "Arcturus"
 sysname2 = "Goddard"
 sysname3 = "Ogat"
@@ -34,19 +33,9 @@ bar1 = "Praxis"
 bar2 = "Seanich"
 home = "Brooks"
 
-osdmsg = {}
-
--- Details for the mission
-
---OSD
-osdmsg[1] = _("Fly to the %s system and land on planet %s")
-osdmsg[2] = _("Fly to the %s system and land on planet %s")
-osdmsg[3] = _("Fly to the %s system and disable (do not destroy) that Koala")
-osdmsg[4] = _("Return the children to the %s system on planet %s")
-
 --NPCs
-pir1_disc = _([[The two pirates seem to be talking rather quietly, but loud enough for you to overhear if you are careful.]])
-pir2_disc = _([[The pirates have both drank their wallet's worth today, so overhearing shouldn't be too much of an issue.]])
+local pir1_disc = _([[The two pirates seem to be talking rather quietly, but loud enough for you to overhear if you are careful.]])
+local pir2_disc = _([[The pirates have both drank their wallet's worth today, so overhearing shouldn't be too much of an issue.]])
 
 function create()
   claimsystem = {system.get("Goddard")}
@@ -74,8 +63,7 @@ function accept()
   misn.setReward(_("A Reunited Family"))
   misn.setDesc(_([[Search for the kidnapped children, then rescue the children and return them to their parents.]]))
 
-  osdmsg[1] = osdmsg[1]:format(sysname3, bar1)
-  misn.osdCreate(_("Kidnapped"), {osdmsg[1]})
+  misn.osdCreate(_("Kidnapped"), {_("Fly to the %s system and land on planet %s"):format(sysname3, bar1)})
 
   misn_mark = misn.markerAdd(system.get(sysname3), "low")
 
@@ -113,8 +101,7 @@ function firstpirates()
   misn.npcRm(bar1pir1)
   misn.npcRm(bar1pir2)
 
-  osdmsg[2] = osdmsg[2]:format(sysname4, bar2)
-  misn.osdCreate(_("Kidnapped"), {osdmsg[2]})
+  misn.osdCreate(_("Kidnapped"), {_("Fly to the %s system and land on planet %s"):format(sysname4, bar2)})
 
   misn.markerMove(misn_mark, system.get(sysname4))
 
@@ -133,8 +120,7 @@ function secondpirates()
   misn.npcRm(bar2pir1)
   misn.npcRm(bar2pir2)
 
-  osdmsg[3] = osdmsg[3]:format(sysname2)
-  misn.osdCreate(_("Kidnapped"), {osdmsg[3]})
+  misn.osdCreate(_("Kidnapped"), {_("Fly to the %s system and disable (do not destroy) that Koala"):format(sysname2)})
 
   misn.markerMove(misn_mark, system.get(sysname2))
 
@@ -204,8 +190,7 @@ end
 
 function boardkidnappers()
   tk.msg(_("You did it!"), _([[After disabling the ship, you take your small crew along with you and go in ready for a fight! But when you get on the small Koala you find only two men guarding it, and it turns out they are not prepared for fighting at all. They can drive a ship, but fighting is not their forte. After you tie them up, you go to the cargo hold to rescue the children. When you get there, you find a few more than three; there are probably a couple dozen! This is all probably just the tip of the iceberg, too. Either way, it's time to head back to %s and reunite the parents with their children.]]):format(home))
-  osdmsg[4] = osdmsg[4]:format(sysname1, home)
-  misn.osdCreate(_("Kidnapped"), {osdmsg[4]})
+  misn.osdCreate(_("Kidnapped"), {_("Return the children to the %s system on planet %s"):format(sysname1, home)})
   misn.markerMove(misn_mark, system.get(sysname1))
   kidnappers:setHilight(false)
   kidnappers:hookClear()
