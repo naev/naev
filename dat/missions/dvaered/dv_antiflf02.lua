@@ -172,9 +172,7 @@ function spawnFLF()
         -- Re-outfit the ships to use disable weapons. Kind of ugly, should probably be handled via AI orders in the future.
         j:outfitAdd("EMP Grenade Launcher", 3)
     end
-    angle = rnd.rnd() * 2 * math.pi
-    dist = 800
-    vecFLF = vec2.new(math.cos(angle) * dist, math.sin(angle) * dist)
+    local vecFLF = vec2.newP(800, rnd.rnd() * 360)
     fleetFLF = fleet.add( 4, "Vendetta", "FLF", player.pos() + vecFLF, nil, {ai="flf_norun"} )
     flfactive = #fleetFLF
     fleetDV[1]:comm(_("Here come the FLF! All units, switch to EMPs and disable the terrorist ships!"))
