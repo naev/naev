@@ -35,14 +35,12 @@ local fmt = require "format"
 local vntk = require "vntk"
 local lmisn = require "lmisn"
 
-pay_title = _("Mission Completed")
 pay_text    = {}
 pay_text[1] = _("After going through some paperwork, an officer hands you your pay and sends you off.")
 pay_text[2] = _("A tired-looking officer verifies your mission log and hands you your pay.")
 pay_text[3] = _("The officer you deal with thanks you for your work, hands you your pay, and sends you off.")
 pay_text[4] = _("An officer goes through the necessary paperwork, looking bored the entire time, and hands you your fee.")
 
-abandon_title = _("Mission Abandoned")
 abandon_text    = {}
 abandon_text[1] = _("You are sent a message informing you that landing in the middle of a patrol mission is considered to be abandonment. As such, your contract is void and you will not receive payment.")
 
@@ -60,16 +58,12 @@ msg[4] = _("Patrol complete. You can now collect your pay.")
 msg[5] = _("MISSION FAILURE! You showed up too late.")
 msg[6] = _("MISSION FAILURE! You have left the %s system.")
 
-osd_title  = _("Patrol")
 osd_msg    = {}
 osd_msg[1] = _("Fly to the %s system")
 osd_msg[2] = "(null)"
 osd_msg[3] = _("Eliminate hostiles")
 osd_msg[4] = _("Land in %s territory to collect your pay")
 osd_msg["__save"] = true
-
-mark_name = _("Patrol Point")
-
 
 use_hidden_jumps = false
 
@@ -158,7 +152,7 @@ function accept ()
       #points
    ):format( #points )
    osd_msg[4] = osd_msg[4]:format( paying_faction:name() )
-   misn.osdCreate( osd_title, osd_msg )
+   misn.osdCreate( _("Patrol"), osd_msg )
 
    job_done = false
 
@@ -202,7 +196,7 @@ function land ()
    jumps_permitted = jumps_permitted - 1
    if job_done and planet.cur():faction() == paying_faction then
       local txt = pay_text[ rnd.rnd( 1, #pay_text ) ]
-      vntk.msg( pay_title, txt )
+      vntk.msg( _("Mission Completed"), txt )
       player.pay( credits )
       if not pir.factionIsPirate( paying_faction ) then
          pir.reputationNormalMission( reputation )
@@ -211,7 +205,7 @@ function land ()
       misn.finish( true )
    elseif not job_done and system.cur() == missys then
       local txt = abandon_text[ rnd.rnd( 1, #abandon_text ) ]
-      vntk.msg( abandon_title, txt )
+      vntk.msg( _("Mission Abandoned"), txt )
       misn.finish( false )
    end
 end
@@ -273,7 +267,7 @@ function timer ()
       local point_pos = points[1]:pos()
 
       if mark == nil then
-         mark = system.mrkAdd( point_pos, mark_name )
+         mark = system.mrkAdd( point_pos, _("Patrol Point") )
       end
 
       if player_pos:dist( point_pos ) < 500 then
@@ -290,7 +284,7 @@ function timer ()
             "Go to indicated point (%d remaining)",
             #points
          ):format( #points )
-         misn.osdCreate( osd_title, osd_msg )
+         misn.osdCreate( _("Patrol"), osd_msg )
          misn.osdActive(2)
          if mark ~= nil then
             system.mrkRm( mark )

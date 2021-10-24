@@ -26,14 +26,12 @@
 local pir = require "common.pirate"
 require "missions.neutral.patrol"
 
-pay_title = _("Mission Completed")
 pay_text    = {}
 pay_text[1] = _("The crime boss grins and hands you your pay.")
 pay_text[2] = _("The local crime boss pays what you were promised, though not before trying (and failing) to pick your pocket.")
 pay_text[3] = _("You are hit in the face with something and glare in the direction it came from, only to see the crime boss waving at you. When you look down, you see that it is your agreed-upon payment, so you take it and let out a grin.")
 pay_text[4] = _("You are handed your pay in what seems to be a million different credit chips by the crime boss, but sure enough, it adds up to exactly the amount promised.")
 
-abandon_title = _("Mission Abandoned")
 abandon_text    = {}
 abandon_text[1] = _("You are sent a message informing you that landing in the middle of the job is considered to be abandonment. As such, your contract is void and you will not receive payment.")
 
@@ -51,15 +49,12 @@ msg[4] = _("Patrol complete. You can now collect your pay.")
 msg[5] = _("MISSION FAILURE! You showed up too late.")
 msg[6] = _("MISSION FAILURE! You have left the %s system.")
 
-osd_title  = _("Patrol")
 osd_msg    = {}
 osd_msg[1] = _("Fly to the %s system")
 osd_msg[2] = "(null)"
 osd_msg[3] = _("Eliminate outsiders")
 osd_msg[4] = _("Land in %s territory to collect your pay")
 osd_msg["__save"] = true
-
-mark_name = _("Patrol Point")
 
 use_hidden_jumps = true
 
