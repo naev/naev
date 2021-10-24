@@ -268,7 +268,7 @@ void map_system_show( int wid, int x, int y, int w, int h)
 static void map_system_render( double bx, double by, double w, double h, void *data )
 {
    (void) data;
-   int i,j;
+   int i, vis_index;
    double iw, ih;
    StarSystem *sys=cur_sys_sel;
    Planet *p;
@@ -300,11 +300,12 @@ static void map_system_render( double bx, double by, double w, double h, void *d
    /* background */
    gl_renderRect( bx, by, w, h, &cBlack );
 
-   j=0;
+   vis_index=0;
    offset = h - pitch*nshow;
    for ( i=0; i<array_size(sys->planets); i++ ) {
       p=sys->planets[i];
-      j++;
+      if (planet_isKnown( p ))
+         vis_index++;
       if ( p->gfx_space == NULL) {
          WARN( _("No gfx for %s...\n"),p->name );
       } else {
@@ -314,10 +315,10 @@ static void map_system_render( double bx, double by, double w, double h, void *d
             ih = ih * p->gfx_space->h / p->gfx_space->w;
          else if ( p->gfx_space->w < p->gfx_space->h )
             iw = iw * p->gfx_space->w / p->gfx_space->h;
-         gl_renderScale( p->gfx_space, bx+2, by+(nshow-j-1)*pitch + (pitch-ih)/2 + offset, iw, ih, &cWhite );
+         gl_renderScale( p->gfx_space, bx+2, by+(nshow-vis_index-1)*pitch + (pitch-ih)/2 + offset, iw, ih, &cWhite );
       }
-      gl_printRaw( &gl_smallFont, bx + 5 + pitch, by + (nshow-j-0.5)*pitch + offset,
-            (cur_planet_sel == j ? &cFontGreen : &cFontWhite), -1., _(p->name) );
+      gl_printRaw( &gl_smallFont, bx + 5 + pitch, by + (nshow-vis_index-0.5)*pitch + offset,
+            (cur_planet_sel == vis_index ? &cFontGreen : &cFontWhite), -1., _(p->name) );
    }
    /* draw the star */
    ih=pitch;
