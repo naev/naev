@@ -82,7 +82,7 @@ COLOURS = [
     Colour( "Neutral",      221./255., 204./255., 119./255. ),
     Colour( "Friend",        68./255., 170./255., 153./255. ),
     Colour( "Hostile",      204./255.,  68./255., 153./255. ),
-    Colour( "Restricted",   204./255., 153./255.,  68./255. ),
+    Colour( "Restricted",   221./255., 153./255.,  51./255. ),
     # Mission Markers
     # https://packages.tesselle.org/khroma/articles/tol.html#vibrant
     Colour( "MarkerNew",        0x33/255., 0xBB/255., 0xEE/255. ),
