@@ -87,7 +87,7 @@ function create ()
    sai( function () return tut.specialnames[ string.upper(ainame) ] end )
 
    vn.label("gavename")
-   sai( function () return fmt.f(_([[Your Ship AI has been renamed '{ainame}'.]]),{tut.ainame()}) end )
+   sai( function () return fmt.f(_([[Your Ship AI has been renamed '{ainame}'.]]),{ainame=tut.ainame()}) end )
    vn.jump("opts")
 
    vn.label("tutorials")
