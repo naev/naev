@@ -1775,7 +1775,7 @@ void gui_setSystem (void)
  */
 void gui_updateFaction (void)
 {
-   if (player.p->nav_planet != -1)
+   if (player.p != NULL && player.p->nav_planet != -1)
       gui_doFunc( gui_lua_update_faction, "update_faction" );
 }
 
