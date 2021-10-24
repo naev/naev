@@ -1636,7 +1636,6 @@ void map_updateFactionPresence( const unsigned int wid, const char *name, const 
    size_t l;
    char   buf[STRMAX_SHORT] = {'\0'};
    FactionPresence *presence;
-   char col;
 
    /* Build the faction presence array. */
    presence = array_create( FactionPresence );
@@ -1675,6 +1674,7 @@ void map_updateFactionPresence( const unsigned int wid, const char *name, const 
 
    l = 0;
    for (int i=0; i<array_size(presence); i++) {
+      char col;
       FactionPresence *p = &presence[i];
       if (faction_exists( p->name ))
          col = faction_getColourChar( faction_get(p->name) );
@@ -1818,7 +1818,6 @@ static void map_buttonZoom( unsigned int wid, const char* str )
  */
 static void map_genModeList(void)
 {
-   int l;
    int totGot = 0;
    const char *odd_template, *even_template;
 
@@ -1831,6 +1830,7 @@ static void map_genModeList(void)
          Planet *p = sys->planets[j];
          for (int k=0; k<array_size(p->commodities); k++) {
             if (p->commodityPrice[k].cnt > 0 ) {/*commodity is known about*/
+               int l;
                /* find out which commodity this is */
                for (l=0 ; l<totGot; l++) {
                   if ( p->commodities[k] == commod_known[l] )
@@ -1853,7 +1853,7 @@ static void map_genModeList(void)
 
    even_template = _("%s: Cost");
    odd_template = _("%s: Trade");
-   for (int i=0; i<totGot; i++ ) {
+   for (int i=0; i<totGot; i++) {
       const char *commod_text = _(commod_known[i]->name);
       asprintf( &array_grow( &map_modes ), even_template, commod_text );
       asprintf( &array_grow( &map_modes ), odd_template, commod_text );
@@ -1927,7 +1927,7 @@ static void map_buttonMinimal( unsigned int wid, const char* str )
  */
 static void map_buttonCommodity( unsigned int wid, const char* str )
 {
-   (void)str;
+   (void) str;
    SDL_Keymod mods;
    char **this_map_modes;
    static int cur_commod_last = 0;
@@ -1977,7 +1977,7 @@ static void map_buttonCommodity( unsigned int wid, const char* str )
             defpos = cur_commod*2 + MAPMODE_TRADE - cur_commod_mode;
 
          window_addList( wid, -10, 60, 200, 200, "lstMapMode",
-                         this_map_modes, array_size(map_modes), defpos, map_modeUpdate, map_modeActivate );
+               this_map_modes, array_size(map_modes), defpos, map_modeUpdate, map_modeActivate );
       }
    }
 }
