@@ -46,8 +46,6 @@ local vntk = require "vntk"
 misn_title = _("%s Delivery")
 misn_desc = _("%s has an insufficient supply of %s to satisfy the current demand. Go to any planet which sells this commodity and bring as much of it back as possible.")
 
-cargo_land_title = _("Delivery success!")
-
 cargo_land = {}
 cargo_land[1] = _("The containers of %s are carried out of your ship and tallied. After several different men double-check the register to confirm the amount, you are paid %s and summarily dismissed.")
 cargo_land[2] = _("The containers of %s are quickly and efficiently unloaded, labeled, and readied for distribution. The delivery manager thanks you with a credit chip worth %s.")
@@ -151,7 +149,7 @@ function land ()
    if planet.cur() == misplanet and amount > 0 then
       local txt = cargo_land[rnd.rnd(1, #cargo_land)]:format(
             _(chosen_comm), fmt.credits(reward) )
-      vntk.msg(cargo_land_title, txt)
+      vntk.msg(_("Delivery success!"), txt)
       pilot.cargoRm(player.pilot(), chosen_comm, amount)
       player.pay(reward)
       if not pir.factionIsPirate( paying_faction ) then
