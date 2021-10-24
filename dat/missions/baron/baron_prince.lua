@@ -28,14 +28,6 @@ local fmt = require "format"
 local portrait = require "portrait"
 local baron = require "common.baron"
 
-
-
--- Mission details
-
--- NPC stuff
-
--- OSD stuff
-
 function create ()
    -- Note: this mission makes no system claims.
    misn.setNPC(_("An unfamiliar man"), "neutral/unique/unfamiliarman.webp", _("A man you've never seen before makes eye contact with you. It seems he knows who you are."))
@@ -65,8 +57,9 @@ function accept()
       misn.setTitle(_("Prince"))
       misn.setReward(_("You weren't told!"))
       misn.setDesc(_("Baron Sauterfeldt has summoned you to his ship, which is in the %s system."):format(baronsys:name()))
-      misn.osdCreate(_("Prince"), { _("Fly to the %s system and dock with (board) Kahan Pinnacle"):format(baronsys:name()),
-                           })
+      misn.osdCreate(_("Prince"), {
+         fmt.f(_("Fly to the {sys} system and dock with (board) Kahan Pinnacle"), {sys=baronsys}),
+      })
       marker = misn.markerAdd(baronsys, "low")
 
       enterhook = hook.enter("enter")
@@ -84,9 +77,10 @@ function board()
     "I've narrowed down my search to three of these people. I'm confident that one of them is selling the genuine article, while the other two are shams. And this is where you come in, %s. I want you to visit these vendors, buy their wares off them and bring me the authentic artifact. You will have the help of a man named Flintley, who is a history buff or some such rot. You will find him on %s in the %s system. Simply tell him you're working for me and show him any artifacts in your possession. He will tell you which are authentic and which are fake.
     "I should warn you, %s. Some of my, ah, colleagues have also set their sights on this item, and so you can expect their henchmen to try to take it off you. I trust you are equipped to defend yourself against their despicable sort."]]):format(mangle(player.name()), flintplanet:name(), flintsys:name(), mangle(player.name())))
       tk.msg(_("Off to the shops"), _([[You are swiftly escorted back to your ship. You didn't really get the chance to ask the Baron any questions, such as who these potential attackers are, how you're supposed to pay for the artifacts once you locate the sellers, or what you will get out of all this. You do, however, find an update to your galaxy map that shows the location of the sellers, as well as a list of names and portraits. It would seem that the only way to find out what you're dealing with is the hard way.]]))
-      misn.osdCreate(_("Prince"), { _("Fly to the %s system and dock with (board) Kahan Pinnacle"):format(baronsys:name()),
-                            _("Buy the artifact and take it to Flintley")
-                           })
+      misn.osdCreate(_("Prince"), {
+         fmt.f(_("Fly to the {sys} system and dock with (board) Kahan Pinnacle"), {sys=baronsys}),
+         _("Buy the artifact and take it to Flintley"),
+      })
       misn.setDesc(_("Baron Sauterfeldt has tasked you with finding an ancient artifact, but he doesn't know exactly where to get it."))
       misn.osdActive(2)
 
@@ -191,10 +185,11 @@ function flintley()
     You take another look at the thing. It resembles a small flat surface, apart from the crook at one end. On one side, there are cylindrical, solid protrusions that don't seem to serve any useful purpose at all. You are at a loss as to the artifact's purpose.
     "It's called a skate-board," Flintley continues. "The records about it are a bit sketchy and a lot is nothing but conjecture, but it appears it was once used in primitive communal rituals. The exact nature of these rituals is unknown, but they may have been tribal initiations or even mating rituals. The patterns in the board itself are thought to have a spiritual or mystical meaning. Also, according to some theories, people used to stand on top of the skate-board, with the cylinder wheels facing the ground. This has led some historians to believe that the feet were once central to human psychology."
     Flintley seems to have a lot more to say on the subject, but you're not that interested, so you thank him and return to your ship with the ancient artifact. You can only hope that the Baron is as enthusiastic about this skate-board as his historian!]]):format(player.name()))
-      misn.osdCreate(_("Prince"), { _("Fly to the %s system and dock with (board) Kahan Pinnacle"):format(baronsys:name()),
-                            _("Buy the artifact and take it to Flintley"),
-                            _("Take the artifact to Baron Sauterfeldt")
-                           })
+      misn.osdCreate(_("Prince"), {
+         fmt.f(_("Fly to the {sys} system and dock with (board) Kahan Pinnacle"), {sys=baronsys}),
+         _("Buy the artifact and take it to Flintley"),
+         _("Take the artifact to Baron Sauterfeldt"),
+      })
       misn.osdActive(3)
       stage = 3
 

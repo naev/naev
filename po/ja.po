@@ -35145,8 +35145,8 @@ msgstr ""
 #: dat/missions/neutral/kidnapped/traffic_00.lua:42
 #: dat/missions/neutral/kidnapped/traffic_00.lua:43
 #, lua-format
-msgid "Fly to the %s system and land on planet %s"
-msgstr "%s星系へ飛んで、惑星%sに着陸せよ。"
+msgid "Fly to the {sys} system and land on planet {pnt}"
+msgstr "{sys}星系へ飛んで、惑星{pnt}に着陸せよ。"
 
 #: dat/missions/baron/baron_baron.lua:54 dat/missions/baron/baron_prince.lua:68
 #: dat/missions/baron/baron_prince.lua:87

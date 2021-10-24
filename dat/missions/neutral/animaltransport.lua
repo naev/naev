@@ -30,11 +30,6 @@ local fmt = require "format"
 
 money_reward = 200e3
 
-misndesc = _("You've been hired to transport a crate of specially engineered rodents to %s (%s system).")
-
-OSD = {}
-OSD[1] = _("Fly to the %s system and land on planet %s")
-
 function create ()
     -- Get an M-class Sirius planet at least 2 and at most 4 jumps away. If not found, don't spawn the mission.
    local planets = {}
@@ -56,8 +51,6 @@ function create ()
    destplanet = planets[index][1]
    destsys = planets[index][2]
 
-   misndesc = misndesc:format(destplanet:name(), destsys:name())
-   OSD[1] = OSD[1]:format(destsys:name(), destplanet:name())
 
    misn.setNPC(_("A Fyrra civilian"), "sirius/unique/rodentman.webp", _("There's a civilian here, from the Fyrra echelon by the looks of him. He's got some kind of crate with him."))
 end
@@ -66,9 +59,9 @@ end
 function accept ()
    if tk.yesno(_("Animal transport"), fmt.f(_([["Good day to you, captain. I'm looking for someone with a ship who can take this crate here to planet {pntname} in the {sysname} system. The crate contains a colony of rodents I've bred myself, and my in-law has a pet shop on {pntname} where I hope to sell them. Upon delivery, you will be paid {credits}. Are you interested in the job?"]]), {credits=fmt.credits(money_reward), pntname=destplanet:name(), sysname=destsys:name()})) then
       misn.accept()
-      misn.setDesc(misndesc)
+      misn.setDesc(fmt.f(_("You've been hired to transport a crate of specially engineered rodents to {pnt} ({sys} system)."), {pnt=destplanet, sys=destsys}))
       misn.setReward(fmt.f(_("You will be paid {credits} on arrival."),{credits=fmt.credits(money_reward)}))
-      misn.osdCreate(_("Animal transport"), OSD)
+      misn.osdCreate(_("Animal transport"), {fmt.f(_("Fly to the {sys} system and land on planet {pnt}"), {sys=destsys, pnt=destplanet})})
       tk.msg(_("Animal transport"), _([["Excellent! My in-law will send someone to meet you at the spaceport to take the crate off your hands, and you'll be paid immediately on delivery. Thanks again!"]]))
       misn.markerAdd( destplanet, "high" )
       hook.land("land")

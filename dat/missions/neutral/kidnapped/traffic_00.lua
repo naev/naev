@@ -64,7 +64,7 @@ function accept()
   misn.setReward(_("A Reunited Family"))
   misn.setDesc(_([[Search for the kidnapped children, then rescue the children and return them to their parents.]]))
 
-  misn.osdCreate(_("Kidnapped"), {_("Fly to the %s system and land on planet %s"):format(sysname3, bar1)})
+  misn.osdCreate(_("Kidnapped"), {fmt.f(_("Fly to the {sys} system and land on planet {pnt}"), {sys=sysname3, pnt=bar1})})
 
   misn_mark = misn.markerAdd(system.get(sysname3), "low")
 
@@ -102,7 +102,7 @@ function firstpirates()
   misn.npcRm(bar1pir1)
   misn.npcRm(bar1pir2)
 
-  misn.osdCreate(_("Kidnapped"), {_("Fly to the %s system and land on planet %s"):format(sysname4, bar2)})
+  misn.osdCreate(_("Kidnapped"), {fmt.f(_("Fly to the {sys} system and land on planet {pnt}"), {sys=sysname4, pnt=bar2})})
 
   misn.markerMove(misn_mark, system.get(sysname4))
 

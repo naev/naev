@@ -19,6 +19,7 @@
 -- This is the first mission in the baron string.
 --]]
 
+local fmt = require "format"
 local portrait = require "portrait"
 local baron = require "common.baron"
 local neu = require "common.neutral"
@@ -27,18 +28,10 @@ sysname1 = "Darkstone"
 sysname2 = "Ingot"
 planetname = "Varia"
 
-osd_msg = {}
-
--- Mission details
-
 credits = 40e3
 
 -- NPC stuff
 npc_desc = _("These must be the 'agents' hired by this Baron Sauterfeldt. They look shifty. Why must people involved in underhanded business always look shifty?")
-
--- OSD stuff
-osd_msg[1] = _("Fly to the %s system and land on planet %s")
-osd_msg[2] = _("Fly to the %s system and dock with (board) Kahan Pinnacle")
 
 function create ()
    missys = {system.get("Darkstone")}
@@ -75,9 +68,10 @@ function accept()
    misn.setReward(_("A tidy sum of money"))
    misn.setDesc(_("You've been hired as a courier for one Baron Sauterfeldt. Your job is to transport a holopainting from a Dvaered world to the Baron's ship."))
 
-   osd_msg[1] = osd_msg[1]:format(sysname1, planetname)
-   osd_msg[2] = osd_msg[2]:format(sysname2)
-   misn.osdCreate(_("Baron"), osd_msg)
+   misn.osdCreate(_("Baron"), {
+      fmt.f(_("Fly to the {sys} system and land on planet {pnt}"), {sys=sysname1, pnt=planetname}),
+      fmt.f(_("Fly to the {sys} system and dock with (board) Kahan Pinnacle"), {sys=sysname2}),
+   })
 
    misn_marker = misn.markerAdd( planet.get(planetname), "low" )
 
