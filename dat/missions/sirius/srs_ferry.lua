@@ -40,8 +40,6 @@
 local car = require "common.cargo"
 local fmt = require "format"
 
-misn_title = _("SR: %s pilgrimage transport for %s-class citizen")
-
 dest_planet_name = "Mutris"
 dest_sys_name = "Aesir"
 
@@ -55,8 +53,6 @@ ferrytime = {}
 ferrytime[0] = _("Economy") -- Note: indexed from 0, to match mission tiers.
 ferrytime[1] = _("Priority")
 ferrytime[2] = _("Express")
-
-misn_desc = _("%s space transport to %s for %s-class citizen")
 
 -- Note: please leave the trailing space on the line below! Needed to make the newline show up.
 
@@ -110,7 +106,6 @@ ferry_land_p3[0] = _("%s, on seeing the time, looks at you with veiled hurt and 
 ferry_land_p3[1] = _("%s counts out %s with pursed lips, and walks off before you have time to say anything.")
 ferry_land_p3[2] = _("%s tersely expresses their displeasure with the late arrival, and snaps %s down on the seat, with a look suggesting they hardly think you deserve that much.")
 
-osd_title = _("Pilgrimage transport")
 osd_msg = {}
 osd_msg[1] = _("Fly to %s in the %s system before %s")
 osd_msg[2] = _("You have %s remaining")
@@ -202,8 +197,8 @@ function create()
     distbonus_minjumps = 5 -- This is the minimum distance needed to get a reputation bonus. Distances less than this don't incur a bonus.
 
     misn.markerAdd(destsys, "computer")
-    misn.setTitle( string.format(misn_title, ferrytime[print_speed], prank[rank]) )
-    car.setDesc( misn_desc:format( ferrytime[print_speed], destplanet:name(), prank[rank]), nil, nil, destplanet, timelimit )
+    misn.setTitle( string.format(_("SR: %s pilgrimage transport for %s-class citizen"), ferrytime[print_speed], prank[rank]) )
+    car.setDesc( _("%s space transport to %s for %s-class citizen"):format( ferrytime[print_speed], destplanet:name(), prank[rank]), nil, nil, destplanet, timelimit )
     misn.setReward(fmt.credits(reward))
 
     -- Set up passenger details so player cannot keep trying to get a better outcome
@@ -282,7 +277,7 @@ function accept()
         end
 
         destplanet = altplanets[altdest]
-        car.setDesc( misn_desc:format( ferrytime[print_speed], destplanet:name(), prank[rank]), nil, nil, destplanet, timelimit )
+        car.setDesc( _("%s space transport to %s for %s-class citizen"):format( ferrytime[print_speed], destplanet:name(), prank[rank]), nil, nil, destplanet, timelimit )
         --wants_sirian = false    -- Don't care what kind of ship you're flying
     end
 
@@ -324,7 +319,7 @@ function accept()
     misn.cargoAdd(c, 0)  -- We'll assume you can hold as many pilgrims as you want?
     osd_msg[1] = _("Fly to %s in the %s system before %s"):format(destplanet:name(), destsys:name(), timelimit:str())
     osd_msg[2] = _("You have %s remaining"):format((timelimit - time.get()):str())
-    misn.osdCreate(osd_title, osd_msg)
+    misn.osdCreate(_("Pilgrimage transport"), osd_msg)
     hook.land("land")
     hook.date(time.create(0, 0, 100), "tick") -- 100STU per tick
 end
@@ -382,7 +377,7 @@ function tick()
         -- Case still in time
         osd_msg[1] = _("Fly to %s in the %s system before %s"):format(destplanet:name(), destsys:name(), timelimit:str())
         osd_msg[2] = _("You have %s remaining"):format((timelimit - time.get()):str())
-        misn.osdCreate(osd_title, osd_msg)
+        misn.osdCreate(_("Pilgrimage transport"), osd_msg)
     elseif timelimit2 <= time.get() and not overtime then
         -- Case missed second deadline
         player.msg(_("You're far too late ... best to drop your passengers off on the nearest planet before tempers run any higher."))
@@ -394,7 +389,7 @@ function tick()
         player.msg(_("You've missed the scheduled arrival time! But better late than never..."))
         osd_msg[1] = osd_msg[1]:format(destplanet:name(), destsys:name(), timelimit:str())
         osd_msg[2] = _("You've missed the scheduled arrival time! But better late than never...")--:format(destsys:name())
-        misn.osdCreate(osd_title, osd_msg)
+        misn.osdCreate(_("Pilgrimage transport"), osd_msg)
         intime = false
     end
 end

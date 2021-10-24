@@ -41,8 +41,6 @@ message = fw.message
 
 -- TODO: hooks to penalize attacking people
 
-npc_name = _("Lieutenant Strafer")
-
 question = {}
 lore_text = {}
 
@@ -89,13 +87,6 @@ occupations = { _("caterer"),
                 _("drug dealer"),
                 _("torturer"), }
 
-
-misn_desc = _("You are part of the space security service for an extraordinary meeting of the high council of Warlords, where the invasion plan of the frontier will be discussed.")
-misn_reward = _("The greatness of House Dvaered.")
-log_text = _("You have taken part to the security of a meeting of Dvaered warlords which goal was to set the invasion plan of the Frontier. Unfortunately, the ex-colonel Hamelsen and her wingmen managed to seize data and escape the system. The Lieutenant Strafer has been killed in action during this incident.")
-
-osd_title = _("The Meeting")
-
 function create()
    destpla, destsys = planet.get("Dvaer Prime")
    targpla = planet.get("Dvaered High Command")
@@ -109,7 +100,7 @@ function create()
       misn.finish(false)
    end
 
-   misn.setNPC(npc_name, fw.portrait_strafer, _("Judging by how he looks at you, Strafer needs you for another mission along with the Dvaered Space Force."))
+   misn.setNPC(_("Lieutenant Strafer"), fw.portrait_strafer, _("Judging by how he looks at you, Strafer needs you for another mission along with the Dvaered Space Force."))
 end
 
 function accept()
@@ -123,9 +114,9 @@ function accept()
    "This is why Major Tam wants our squadron from the Special Operations Forces to support the regular units of the station. Fly to Dvaer Prime and meet me in the bar there."]]))
 
    misn.accept()
-   misn.osdCreate( osd_title, {_("Land on %s"):format(destpla:name())} )
-   misn.setDesc(misn_desc)
-   misn.setReward(misn_reward)
+   misn.osdCreate( _("The Meeting"), {_("Land on %s"):format(destpla:name())} )
+   misn.setDesc(_("You are part of the space security service for an extraordinary meeting of the high council of Warlords, where the invasion plan of the frontier will be discussed."))
+   misn.setReward(_("The greatness of House Dvaered."))
    misn.markerAdd(destsys, "low")
 
    stage = 0
@@ -146,7 +137,7 @@ function land()
       takhook = hook.takeoff("takeoff")
       stage = 1
       misn.osdDestroy()
-      misn.osdCreate( osd_title, {_("Stay close to %s and wait for orders"):format(targpla:name()), _("Intercept suspect ship for visual identification") } )
+      misn.osdCreate( _("The Meeting"), {_("Stay close to %s and wait for orders"):format(targpla:name()), _("Intercept suspect ship for visual identification") } )
 
    -- Player is running away
    elseif (stage == 1 or stage == 3 or (stage == 2 and (not planet.cur() == haltpla) )) then
@@ -171,7 +162,7 @@ function land()
       var.push( "invasion_time", t ) -- Timer for the next mission
 
       shiplog.create( "frontier_war", _("Frontier War"), _("Dvaered") )
-      shiplog.append( "frontier_war", log_text )
+      shiplog.append( "frontier_war", _("You have taken part to the security of a meeting of Dvaered warlords which goal was to set the invasion plan of the Frontier. Unfortunately, the ex-colonel Hamelsen and her wingmen managed to seize data and escape the system. The Lieutenant Strafer has been killed in action during this incident.") )
       misn.finish(true)
    end
 end
@@ -179,7 +170,7 @@ end
 -- Encounter with Strafer on Dvaer Prime
 function strNpc()
    toldya = {0,0,0,0}
-   strafer = misn.npcAdd("discussStr", npc_name, fw.portrait_strafer, _("Harsh voice, frank gaze and easy trigger. The lieutenant Strafer is a Dvaered pilot."))
+   strafer = misn.npcAdd("discussStr", _("Lieutenant Strafer"), fw.portrait_strafer, _("Harsh voice, frank gaze and easy trigger. The lieutenant Strafer is a Dvaered pilot."))
 end
 
 function takeoff()
@@ -216,7 +207,7 @@ function takeoff()
       hook.timer( 4.0, "deathOfStrafer" )
 
       misn.osdDestroy()
-      misn.osdCreate( osd_title, {_("Stay close to %s and wait for orders"):format(targpla:name()), _("Intercept suspect ship for visual identification") } )
+      misn.osdCreate( _("The Meeting"), {_("Stay close to %s and wait for orders"):format(targpla:name()), _("Intercept suspect ship for visual identification") } )
    end
 end
 
@@ -533,7 +524,7 @@ function hamelsenLanded()
    After this very encouraging speech, Hamelsen cuts off the communication channel and lands.]]):format( player.name() ) )
       tk.msg( _("Follow her!"), _([[A new message comes from Captain Leblanc. "This is obviously a diversion! Everyone, back to your positions! %s, go and investigate on %s. Bring me the head of the ex-colonel Hamelsen!"]]):format( player.name(), haltpla:name() ) )
       misn.osdDestroy()
-      misn.osdCreate( osd_title, {_("Land on %s"):format(haltpla:name()) } )
+      misn.osdCreate( _("The Meeting"), {_("Land on %s"):format(haltpla:name()) } )
    end
 end
 
@@ -565,7 +556,7 @@ function checkHamelsen()
 
    stage = 2
    misn.osdDestroy()
-   misn.osdCreate( osd_title, {_("Engage %s"):format(hamelsen:name()) } )
+   misn.osdCreate( _("The Meeting"), {_("Engage %s"):format(hamelsen:name()) } )
 end
 
 -- Discuss with an officer on Laarss
@@ -645,7 +636,7 @@ end
 -- Killers go after the player around Laarss
 function spawnKillers()
    misn.osdDestroy()
-   misn.osdCreate( osd_title, {_("Eliminate the hostile fighters")} )
+   misn.osdCreate( _("The Meeting"), {_("Eliminate the hostile fighters")} )
 
    killers = {}
    killers[1] = pilot.add( "Hyena", "Warlords", haltpla, _("Curiatius"), {ai="baddie_norun"} )
@@ -676,6 +667,6 @@ function killerDied()
       stage = 4
       tk.msg( _("Rid of them!"), _("As the last enemy ship explodes, you watch to your sensorscreen, and notice that the alpha squadron has left the system. The fleet leader orders you to land on Dvaer Prime.") )
       misn.osdDestroy()
-      misn.osdCreate( osd_title, {_("Land on %s"):format(destpla:name())} )
+      misn.osdCreate( _("The Meeting"), {_("Land on %s"):format(destpla:name())} )
    end
 end

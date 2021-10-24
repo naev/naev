@@ -33,14 +33,7 @@ local fleet = require "fleet"
 local emp = require "common.empire"
 local fmt = require "format"
 
-misn_title = _("Collective Espionage")
 misn_reward = fmt.credits(700e3)
-misn_desc = {}
-misn_desc[1] = _("Land on %s in the %s system to monitor Collective communications")
-misn_desc[2] = _("Travel back to %s in %s")
-title = {}
-title[1] = _("Collective Espionage")
-title[2] = _("Mission Accomplished")
 text = {}
 text[1] = _([[You head over to Lt. Commander Dimitri to see what the results are.
     "Hello there again, %s. Bad news on your latest run, you got nothing other than the usual robotic chatter. We'll have to send you out again, but this time we'll follow a different approach. Interested in giving it another shot?"]])
@@ -58,9 +51,6 @@ osd_msg[1] = _("Fly to %s and land on %s")
 osd_msg[2] = _("Return to %s with your findings")
 osd_msg["__save"] = true
 
-log_text = _([[You monitored Collective communications for the Empire again, this time while landed on Eiroik. Lt. Commander Dimitri told you to meet him in the bar on Omega Station again later.]])
-
-
 function create ()
    misn_base, misn_base_sys = planet.get("Omega Station")
    misn_target, misn_target_sys = planet.get("Eiroik")
@@ -76,7 +66,7 @@ end
 
 function accept ()
    -- Intro text
-   if not tk.yesno( title[1], string.format(text[1], player.name()) ) then
+   if not tk.yesno( _("Collective Espionage"), string.format(text[1], player.name()) ) then
       misn.finish()
    end
 
@@ -87,15 +77,15 @@ function accept ()
    misn_marker = misn.markerAdd( misn_target_sys, "low" )
 
    -- Mission details
-   misn.setTitle(misn_title)
+   misn.setTitle(_("Collective Espionage"))
    misn.setReward( misn_reward )
-   misn.setDesc( string.format(misn_desc[1], misn_target:name(), misn_target_sys:name() ))
+   misn.setDesc( string.format(_("Land on %s in the %s system to monitor Collective communications"), misn_target:name(), misn_target_sys:name() ))
    osd_msg[1] = osd_msg[1]:format(misn_target_sys:name(), misn_target:name())
    osd_msg[2] = osd_msg[2]:format(misn_base:name())
-   misn.osdCreate(misn_title, osd_msg)
+   misn.osdCreate(_("Collective Espionage"), osd_msg)
 
-   tk.msg( title[1], string.format(text[2], misn_target:name()) )
-   tk.msg( title[1], string.format(text[3], misn_target:name(), misn_target_sys:name()) )
+   tk.msg( _("Collective Espionage"), string.format(text[2], misn_target:name()) )
+   tk.msg( _("Collective Espionage"), string.format(text[3], misn_target:name(), misn_target_sys:name()) )
 
    hook.land("land")
 end
@@ -108,13 +98,13 @@ function land()
       player.takeoff()
    -- Return bit
    elseif misn_stage == 1 and planet.cur() == misn_base then
-      tk.msg( title[2], text[6] )
+      tk.msg( _("Mission Accomplished"), text[6] )
 
       -- Rewards
       faction.modPlayerSingle("Empire",5)
       player.pay( 700e3 )
 
-      emp.addCollectiveLog( log_text )
+      emp.addCollectiveLog( _([[You monitored Collective communications for the Empire again, this time while landed on Eiroik. Lt. Commander Dimitri told you to meet him in the bar on Omega Station again later.]]) )
 
       misn.finish(true)
    end
@@ -126,8 +116,8 @@ function takeoff()
     music.play()
 
     -- Some text
-    tk.msg( title[1], string.format(text[4], misn_target:name()) )
-    misn.setDesc( string.format(misn_desc[2], misn_base:name(), misn_base_sys:name() ))
+    tk.msg( _("Collective Espionage"), string.format(text[4], misn_target:name()) )
+    misn.setDesc( string.format(_("Travel back to %s in %s"), misn_base:name(), misn_base_sys:name() ))
 
     local sml_swarm = { "Drone", "Drone", "Drone", "Heavy Drone" }
 
@@ -187,7 +177,7 @@ function endCutscene()
     removeSwarm(swarm1)
     removeSwarm(swarm2)
     removeSwarm(swarm3)
-    tk.msg(title[1], text[5])
+    tk.msg(_("Collective Espionage"), text[5])
     misn_stage = 1
     misn.markerMove( misn_marker, misn_base_sys )
     player.pilot():setHide(false)

@@ -27,19 +27,10 @@
 local fmt = require "format"
 local emp = require "common.empire"
 
-misn_title = _("Dvaered Long Distance Recruitment")
-misn_desc = _("Deliver a shipping diplomat for the Empire to Praxis in the Ogat system")
-title = {}
-title[1] = _("Spaceport Bar")
-title[2] = _("Dvaered Long Distance Recruitment")
-title[3] = _("Mission Accomplished")
 text = {}
 text[1] = _([[Lieutenant Czesc waves you over when he notices you enter the bar. "I knew we would run into each other soon enough. Great job delivering that bureaucrat. We should be up and running in Soromid space in no time!" He presses a button on his wrist computer. "We're hoping to expand to Dvaered territory next. Can I count on your help?"]])
 text[2] = _([["Great!" says Lieutenant Czesc. "I'll send a message to the bureaucrat to meet you at the hanger. The Dvaered are, of course, allies of the Empire. Still, they offend easily, so try not to talk too much. Your mission is to drop the bureaucrat off on Praxis in the Ogat system. He will take it from there and report back to me when the shipping contract has been confirmed. Afterwards, keep an eye out for me in Empire space and we can continue the operation."]])
 text[3] = _([[You drop the bureaucrat off on Praxis, and he hands you a credit chip. You remember Lieutenant Czesc told you to look for him on Empire controlled planets after you finish.]])
-
-log_text = _([[You delivered a shipping bureaucrat to Praxis for the Empire. Lieutenant Czesc told you to look for him on Empire controlled planets after you finish.]])
-
 
 function create ()
  -- Note: this mission does not make any system claims.
@@ -60,20 +51,20 @@ function accept ()
    -- Set marker to a system, visible in any mission computer and the onboard computer.
    misn.markerAdd( targetworld_sys, "low")
    ---Intro Text
-   if not tk.yesno( title[1], text[1] ) then
+   if not tk.yesno( _("Spaceport Bar"), text[1] ) then
       misn.finish()
    end
    -- Flavour text and mini-briefing
-   tk.msg( title[2], text[2] )
+   tk.msg( _("Dvaered Long Distance Recruitment"), text[2] )
    ---Accept the mission
    misn.accept()
 
    -- Description is visible in OSD and the onboard computer, it shouldn't be too long either.
    reward = 500e3
-   misn.setTitle(misn_title)
+   misn.setTitle(_("Dvaered Long Distance Recruitment"))
    misn.setReward(fmt.credits(reward))
-   misn.setDesc( string.format( misn_desc, targetworld:name(), targetworld_sys:name() ) )
-   misn.osdCreate(title[2], {misn_desc})
+   misn.setDesc( string.format( _("Deliver a shipping diplomat for the Empire to Praxis in the Ogat system"), targetworld:name(), targetworld_sys:name() ) )
+   misn.osdCreate(_("Dvaered Long Distance Recruitment"), {_("Deliver a shipping diplomat for the Empire to Praxis in the Ogat system")})
    -- Set up the goal
    hook.land("land")
    local c = misn.cargoNew( N_("Diplomat"), N_("An Imperial trade representative.") )
@@ -87,9 +78,9 @@ function land()
          misn.cargoRm( person )
          player.pay( reward )
          -- More flavour text
-         tk.msg( title[3], text[3] )
+         tk.msg( _("Mission Accomplished"), text[3] )
          faction.modPlayerSingle( "Empire",3 )
-         emp.addShippingLog( log_text )
+         emp.addShippingLog( _([[You delivered a shipping bureaucrat to Praxis for the Empire. Lieutenant Czesc told you to look for him on Empire controlled planets after you finish.]]) )
          misn.finish(true)
    end
 end

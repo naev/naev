@@ -28,9 +28,6 @@ local vn = require 'vn'
 local love_shaders = require "love_shaders"
 local fmt = require "format"
 
-misn_title = _("Finding the Dvaered Spy")
-misn_reward = _("Cold hard credits")
-misn_desc = _("Someone wants you to find a Dvaered spy that appears to be located at Minerva Station.")
 reward_amount = 200e3 -- 200k
 
 harper_image = portrait.getFullPath( portrait.get() ) -- TODO replace?
@@ -60,9 +57,9 @@ function create ()
       misn.finish( false )
    end
    misn.setNPC( minerva.pirate.name, minerva.pirate.portrait, minerva.pirate.description )
-   misn.setDesc( misn_desc )
-   misn.setReward( misn_reward )
-   misn.setTitle( misn_title )
+   misn.setDesc( _("Someone wants you to find a Dvaered spy that appears to be located at Minerva Station.") )
+   misn.setReward( _("Cold hard credits") )
+   misn.setTitle( _("Finding the Dvaered Spy") )
 end
 
 

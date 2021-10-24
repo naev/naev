@@ -38,19 +38,15 @@ targetsys = "Provectus Nova"
 jumpinsys = "Waterhole"
 jumpoutsys = "Limbo"
 
-misn_reward = _("A step closer to Kex's freedom")
-misn_title = _("Freeing Kex")
-misn_desc = _("Kex wants you to help him find dirt on the Minerva CEO by raiding a transport headed to Minerva Station.")
-
 money_reward = 150e3
 
 function create ()
    if not misn.claim( system.get(targetsys) ) then
       misn.finish( false )
    end
-   misn.setReward( misn_reward )
-   misn.setTitle( misn_title )
-   misn.setDesc( misn_desc )
+   misn.setReward( _("A step closer to Kex's freedom") )
+   misn.setTitle( _("Freeing Kex") )
+   misn.setDesc( _("Kex wants you to help him find dirt on the Minerva CEO by raiding a transport headed to Minerva Station.") )
 
    -- We avoid creating a giver NPC and directly use "normal NPC"
    -- Have to make sure to check if misn.accept() works
@@ -203,7 +199,7 @@ He looks at you with determination.
 
          minerva.log.kex(_("You agreed to help Kex to find dirt on the Minerva Station CEO to try to get him free."))
          misn_marker = misn.markerAdd( system.get(targetsys) )
-         misn.osdCreate( misn_title,
+         misn.osdCreate( _("Freeing Kex"),
             { string.format(_("Intercept the transport at %s"), _(targetsys)),
             _("Return to Kex at Minerva Station") } )
          misn_state = 0

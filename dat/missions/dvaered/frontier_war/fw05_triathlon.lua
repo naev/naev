@@ -44,12 +44,6 @@ message = fw.message
 
 mace_fail = _("Your only weapons should be Mace rockets: land and speak again with Major Tam.")
 
-misn_desc = _("You are invited to a Mace Rocket Ballet in memory of Lieutenant Strafer.")
-misn_reward = _("Say goodbye to Lieutenant Strafer")
-log_text = _("You took part to a Mace Rocket Ballet in memory of Lieutenant Strafer, and won an atonishing prize. Major Tam warned you that hitmen are on your tracks and requested you to catch one of them alive.")
-
-osd_title = _("Dvaered Ballet")
-
 -- Pointless chatter
 
 -- Joy cries (for the Mace throw)
@@ -80,9 +74,9 @@ function create()
 
    misn.accept()
 
-   misn.osdCreate( osd_title, {_("Fly to %s"):format(destpla:name())} )
-   misn.setDesc(misn_desc)
-   misn.setReward(misn_reward)
+   misn.osdCreate( _("Dvaered Ballet"), {_("Fly to %s"):format(destpla:name())} )
+   misn.setDesc(_("You are invited to a Mace Rocket Ballet in memory of Lieutenant Strafer."))
+   misn.setReward(_("Say goodbye to Lieutenant Strafer"))
    misn.markerAdd(destsys, "low")
 
    stage = 0
@@ -243,7 +237,7 @@ function spawnNpcs()
    "In conclusion, if you want to honor the memory of Helmut Strafer as well as it deserves it, please do worthy things: please do work for the Nation!"]]))
 
             shiplog.create( "frontier_war", _("Frontier War"), _("Dvaered") )
-            shiplog.append( "frontier_war", log_text )
+            shiplog.append( "frontier_war", _("You took part to a Mace Rocket Ballet in memory of Lieutenant Strafer, and won an atonishing prize. Major Tam warned you that hitmen are on your tracks and requested you to catch one of them alive.") )
             misn.finish(true)
          end
       end
@@ -344,7 +338,7 @@ function takeoff()
       -- Check the player only has mace rockets
       if checkMace() then
          misn.osdDestroy()
-         misn.osdCreate( osd_title, {_("Wait for the signal"),_("Hit the most targets before your opponents"),_("Land on %s"):format(destpla:name())} )
+         misn.osdCreate( _("Dvaered Ballet"), {_("Wait for the signal"),_("Hit the most targets before your opponents"),_("Land on %s"):format(destpla:name())} )
 
          score_throw = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }
          pilot.toggleSpawn(false)
@@ -380,7 +374,7 @@ function takeoff()
 
       else -- Need to land and continue at previous stage
          misn.osdDestroy()
-         misn.osdCreate( osd_title, {_("Land on %s"):format(destpla:name())} )
+         misn.osdCreate( _("Dvaered Ballet"), {_("Land on %s"):format(destpla:name())} )
          tk.msg("", mace_fail)
          stage = 1
       end
@@ -388,7 +382,7 @@ function takeoff()
    elseif stage == 4 then -- Mace Stadion: spawn flowers, competitors and annoyers
       -- No need to check the player only has mace rockets
       misn.osdDestroy()
-      misn.osdCreate( osd_title, {_("Wait for the signal"),_("Catch the most flowers possible"),_("Land on %s"):format(destpla:name())} )
+      misn.osdCreate( _("Dvaered Ballet"), {_("Wait for the signal"),_("Catch the most flowers possible"),_("Land on %s"):format(destpla:name())} )
 
       score_stadion = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }
       pilot.toggleSpawn(false)
@@ -431,7 +425,7 @@ function takeoff()
       -- Check the player only has mace rockets
       if checkMace() then
          misn.osdDestroy()
-         misn.osdCreate( osd_title, {_("Wait for the signal"),_("Defeat your opponent %s (nullify their shield)"):format(competitors_names[5]),_("Land on %s"):format(destpla:name())} )
+         misn.osdCreate( _("Dvaered Ballet"), {_("Wait for the signal"),_("Defeat your opponent %s (nullify their shield)"):format(competitors_names[5]),_("Land on %s"):format(destpla:name())} )
 
          score_pankration = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }
          pilot.toggleSpawn(false)
@@ -460,7 +454,7 @@ function takeoff()
 
       else
          misn.osdDestroy()
-         misn.osdCreate( osd_title, {_("Land on %s"):format(destpla:name())} )
+         misn.osdCreate( _("Dvaered Ballet"), {_("Land on %s"):format(destpla:name())} )
          tk.msg("", mace_fail)
          stage = 5
       end

@@ -27,11 +27,6 @@ npc_desc[1] = _("In the Dvaered military reserved bar, where you now have access
 npc_desc[2] = _("Leblanc is relaxing at a table, with a group of Dvaered pilots.")
 npc_desc[3] = _([[Strafer plays cards with a few other soldiers. Of course, they don't use real money because "Dvaered Warriors never seize money of others, except the dead bodies of defeated enemies." As it is written on the Dvaered etiquette manual Strafer gave to you recently.]])
 
-pay_title = _("Do you want to repay DHC?")
-pay_text = _("You still owe %s credits to the High Command. Do you want to repay now?")
-
-log_text = _("You repaid the Dvaered High Command. For now, your collaboration with House Dvaered has not been lucrative AT ALL.")
-
 -- Each time the player lands, he meets a member of the team who proposes to pay
 function create()
    local who = rnd.rnd(1,#npc_name)
@@ -40,15 +35,15 @@ function create()
 end
 
 function pay()
-   if tk.yesno(pay_title, pay_text:format(fmt.number(fw.pirate_price))) then
+   if tk.yesno(_("Do you want to repay DHC?"), _("You still owe %s credits to the High Command. Do you want to repay now?"):format(fmt.number(fw.pirate_price))) then
       if player.credits() >= fw.pirate_price then
          player.pay(-fw.pirate_price)
          shiplog.create( "frontier_war", _("Frontier War"), _("Dvaered") )
-         shiplog.append( "frontier_war", log_text )
+         shiplog.append( "frontier_war", _("You repaid the Dvaered High Command. For now, your collaboration with House Dvaered has not been lucrative AT ALL.") )
          var.push("dv_pirate_debt", false)
          evt.finish(true)
       else
-         tk.msg(pay_title,_("You don't have enough money."))
+         tk.msg(_("Do you want to repay DHC?"),_("You don't have enough money."))
          evt.finish(false)
       end
    end

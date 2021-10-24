@@ -202,9 +202,9 @@ function create()
    -- ? image
    ta_question_w, ta_question_h = question:dim()
 
-   --Target Faction icon
-   ta_fact_x = ta_pane_x + 110
-   ta_fact_y = ta_pane_y + 110
+   --Target Faction icon center
+   ta_fact_x = ta_pane_x + 122
+   ta_fact_y = ta_pane_y + 122
 
    --Small Shield Bar
    local x_shield_sm = ta_pane_x + 13
@@ -912,7 +912,9 @@ function render( dt, dt_mod )
 
             --Faction Logo
             if ptarget_faction_gfx then
-               gfx.renderTexScale( ptarget_faction_gfx, ta_fact_x, ta_fact_y, 24, 24 )
+               local lw, lh = ptarget_faction_gfx:dim()
+               local ls = 24 / math.max( lw, lh )
+               gfx.renderTexScale( ptarget_faction_gfx, ta_fact_x - ls*lw/2, ta_fact_y - ls*lh/2, ls*lw, ls*lh )
             end
 
             -- Cargo light cargo_light_off
@@ -1008,7 +1010,9 @@ function render( dt, dt_mod )
       gfx.print( true, _("CLASS:"), ta_pnt_pane_x + 14, ta_pnt_pane_y - 34, col_txt_top )
 
       if ta_pnt_faction_gfx then
-         gfx.renderTexScale( ta_pnt_faction_gfx, ta_pnt_fact_x, ta_pnt_fact_y, 24, 24 )
+         local lw, lh = ta_pnt_faction_gfx:dim()
+         local ls = 24 / math.max( lw, lh )
+         gfx.renderTexScale( ta_pnt_faction_gfx, ta_pnt_fact_x - ls*lw/2, ta_pnt_fact_y - ls*lh/2, ls*lw, ls*lh )
       end
 
       local x1, y1 = vec2.get(nav_planet.pos)

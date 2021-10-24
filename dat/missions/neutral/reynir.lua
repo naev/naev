@@ -47,9 +47,6 @@ local neu = require "common.neutral"
 -- Bar information, describes how he appears in the bar
 
 -- Mission details. We store some text for the mission with specific variables.
-misn_title = _("Rich reward from space!")
-misn_reward = _("Lots of cash")
-misn_desc = _("Reynir wants to travel to space and will reward you richly.")
 
 cargoname = "Food"
 
@@ -75,9 +72,6 @@ talk = {}
 talk[1] = ""
 
 -- Other text for the mission -- ??
-osd_msg = {}
-osd_msg[1] = _("Fly around in the system, preferably near %s")
-osd_msg[2] = _("Take Reynir home to %s")
 msg_abortTitle = ""
 msg_abort = [[]]
 
@@ -106,13 +100,13 @@ function accept ()
 
       misn.accept()  -- For missions from the Bar only.
 
-      misn.setTitle( misn_title )
-      misn.setReward( misn_reward )
-      misn.setDesc( misn_desc )
+      misn.setTitle( _("Rich reward from space!") )
+      misn.setReward( _("Lots of cash") )
+      misn.setDesc( _("Reynir wants to travel to space and will reward you richly.") )
       hook.land( "landed" )
 
       tk.msg( title[4], string.format(text[3], misn_base:name()) )
-      misn.osdCreate(misn_title, {osd_msg[1]:format(misn_base:name())})
+      misn.osdCreate(_("Rich reward from space!"), {_("Fly around in the system, preferably near %s"):format(misn_base:name())})
       local c = misn.cargoNew( N_("Reynir"), N_("A old man who wants to see space.") )
       cargoID = misn.cargoAdd( c, 0 )
    end
@@ -140,11 +134,11 @@ function landed()
    -- If we're in misn_base_sys but not on misn_base then...
    elseif system.cur() == misn_base_sys then
       tk.msg( title[4], string.format(text[6], planet.cur():name(), misn_base:name()) )
-      misn.osdCreate(misn_title, {osd_msg[2]:format(misn_base:name())})
+      misn.osdCreate(_("Rich reward from space!"), {_("Take Reynir home to %s"):format(misn_base:name())})
    -- If we're in another system then make Reynir bleed out his ears ;)
    else
       tk.msg( title[4], string.format(text[4], misn_base:name()) )
-      misn.osdCreate(misn_title, {osd_msg[2]:format(misn_base:name())})
+      misn.osdCreate(_("Rich reward from space!"), {_("Take Reynir home to %s"):format(misn_base:name())})
       misn_bleeding = true
    end
 end

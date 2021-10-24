@@ -61,7 +61,6 @@ local lmisn = require "lmisn"
 --]]
 misn_state = nil
 
-misn_title = _("Helping Nelly Out")
 reward_amount = 60e3
 
 local function has_disable( o )
@@ -199,7 +198,7 @@ function accept ()
       misn_state = -2
    end
    table.insert( osdtxt, fmt.f(_("Disable and board Nelly's ship in {sysname}"), {sysname=destsys:name()}) )
-   misn.osdCreate( misn_title, osdtxt )
+   misn.osdCreate( _("Helping Nelly Out"), osdtxt )
 
    if misn_state < 0 then
       hk_equip = hook.equip( "equip" )
@@ -298,12 +297,12 @@ function board ()
    local nel = vn.newCharacter( tutnel.vn_nelly() )
    vn.transition( tutnel.nelly.transition )
    vn.na(_("You board Nelly's ship and quickly go to the control panel to turn off the autonav."))
-   nel(fmt.f(_([["I hate when this happes. Err, I mean, this is the first time something like this has happened to me! Let me bring the ship back to {pntname} and meet me at the spaceport bar for your reward."]]),{pntname=retpnt:name()}))
+   nel(fmt.f(_([["I hate when this happens. Err, I mean, this is the first time something like this has happened to me! Let me bring the ship back to {pntname} and meet me at the spaceport bar for your reward."]]),{pntname=retpnt:name()}))
    vn.done( tutnel.nelly.transition )
    vn.run()
 
    -- Update objectives
-   misn.osdCreate( misn_title, {
+   misn.osdCreate( _("Helping Nelly Out"), {
       fmt.f(_("Return to {pntname}"),{pntname=retpnt:name()})
    } )
 
@@ -385,7 +384,7 @@ function approach_nelly ()
    vn.done( tutnel.nelly.transition )
    vn.run()
 
-   misn.osdCreate( misn_title, {
+   misn.osdCreate( _("Helping Nelly Out"), {
       fmt.f(_("Go to {pntname} in {sysname}"),{pntname=destpnt:name(), sysname=destsys:name()}),
       fmt.f(_("Return to {pntname} in {sysname}"),{pntname=retpnt:name(), sysname=retsys:name()}),
    } )
@@ -484,7 +483,7 @@ function timer_pirate_checkbribe ()
 end
 
 function reset_osd ()
-   misn.osdCreate( misn_title, {
+   misn.osdCreate( _("Helping Nelly Out"), {
       fmt.f(_("Go to {pntname} in {sysname}"),{pntname=destpnt:name(), sysname=destsys:name()}),
       fmt.f(_("Return to {pntname} in {sysname}"),{pntname=retpnt:name(), sysname=retsys:name()}),
    } )

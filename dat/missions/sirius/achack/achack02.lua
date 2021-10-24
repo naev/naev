@@ -37,18 +37,13 @@ stoptext = _("You dock with %s, and the spacedock personnel immediately begins t
 -- Mission info stuff
 
 osd_msg   = {}
-osd_title = _("Harja's Vengeance")
 osd_msg[1] = _("Follow Joanne's ship")
 osd_msg[2] = _("Defeat Joanne's attackers")
 osd_msg["__save"] = true
 osd_final = {_("Land on Sroolu to get your reward")}
 osd_final["__save"] = true
 
-misn_desc = _("Joanne needs you to escort her ship and fight off mercenaries sent to kill her.")
 misn_reward = fmt.credits(750e3)
-
-log_text = _([[Joanne, the Serra military officer who Harja tried to hire you to assassinate, enlisted you to aid her against would-be assassins. Along the way, she explained that Harja was a classmate of hers in the High Academy. According to her, Harja had hacked into the academy's main computer to change all of her grades to perfect scores in an attempt to sabotage her by making her look like a cheater.]])
-
 
 function create()
    if not misn.claim ( {system.get("Humdrum"), system.get("Lapis")} ) then
@@ -101,13 +96,13 @@ function accept()
    warnFuel = true
 
    misn.accept()
-   misn.setDesc(misn_desc)
+   misn.setDesc(_("Joanne needs you to escort her ship and fight off mercenaries sent to kill her."))
    misn.setReward(misn_reward)
-   misn.osdCreate(osd_title, osd_msg)
+   misn.osdCreate(_("Harja's Vengeance"), osd_msg)
 
    hook.land("land")
    hook.enter("enter")
-   hook.load("load")
+   hook.load("on_load")
 end
 
 -- Land hook.
@@ -124,12 +119,12 @@ function land()
    elseif planet.cur() == destplanet and joannelanded and stage == 4 then
       tk.msg(_("Mission accomplished"), text4:format(player.name()))
       stage = stage + 1
-      misn.osdCreate(osd_title, osd_final)
+      misn.osdCreate(_("Harja's Vengeance"), osd_final)
       origin = planet.cur()
       destplanet, destsys = planet.get(route[stage])
       misn.markerMove( mark, destsys )
       joannejumped = true -- She "jumped" into the current system by taking off.
-      misn.osdCreate(osd_title, osd_final)
+      misn.osdCreate(_("Harja's Vengeance"), osd_final)
       player.takeoff()
    elseif stage < 4 then
       tk.msg(_("You didn't follow Joanne!"), _("You landed on a planet Joanne didn't land on. Your mission is a failure!"))
@@ -148,7 +143,7 @@ function land()
     Joanne leaves the spaceport bar. You can't help but reflect that even in the highest levels of society, you can find envy and vice.]]):format(player.name()))
       player.pay(750e3)
       var.pop("achack02repeat")
-      srs.addAcHackLog( log_text )
+      srs.addAcHackLog( _([[Joanne, the Serra military officer who Harja tried to hire you to assassinate, enlisted you to aid her against would-be assassins. Along the way, she explained that Harja was a classmate of hers in the High Academy. According to her, Harja had hacked into the academy's main computer to change all of her grades to perfect scores in an attempt to sabotage her by making her look like a cheater.]]) )
       misn.finish(true)
    end
 end
@@ -255,7 +250,7 @@ function ambusherDead()
 end
 
 -- Load hook. Makes sure the player can't start on military stations.
-function load()
+function on_load()
    if stage > 1 and stage < 5 then
       tk.msg(_("Another stop successfully reached"), stoptext:format(planet.cur():name()))
       player.takeoff()

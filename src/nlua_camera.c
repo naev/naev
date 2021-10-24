@@ -1,13 +1,11 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
 /**
  * @file nlua_camera.c
  *
  * @brief Bindings for Camera functionality from Lua.
  */
-
 /** @cond */
 #include <lauxlib.h>
 
@@ -25,7 +23,6 @@
 #include "player.h"
 #include "spfx.h"
 
-
 /* Camera methods. */
 static int camL_set( lua_State *L );
 static int camL_get( lua_State *L );
@@ -41,9 +38,6 @@ static const luaL_Reg cameraL_methods[] = {
    {0,0}
 }; /**< Camera Lua methods. */
 
-
-
-
 /**
  * @brief Loads the camera library.
  *
@@ -56,7 +50,6 @@ int nlua_loadCamera( nlua_env env )
    return 0;
 }
 
-
 /**
  * @brief Lua bindings to interact with the Camera.
  *
@@ -66,7 +59,6 @@ int nlua_loadCamera( nlua_env env )
  *
  * @luamod camera
  */
-
 
 /**
  * @brief Sets the camera.
@@ -86,7 +78,6 @@ static int camL_set( lua_State *L )
 {
    LuaPilot lp;
    Vector2d *vec;
-   Pilot *p;
    int soft_over, speed;
 
    NLUA_CHECKRW(L);
@@ -103,7 +94,7 @@ static int camL_set( lua_State *L )
 
    /* Set the camera. */
    if (lp != 0) {
-      p = pilot_get( lp );
+      Pilot *p = pilot_get( lp );
       if (p != NULL)
          cam_setTargetPilot( p->id, soft_over*speed );
    }
@@ -115,7 +106,6 @@ static int camL_set( lua_State *L )
    }
    return 0;
 }
-
 
 /**
  * @brief Gets the camera position.
@@ -131,7 +121,6 @@ static int camL_get( lua_State *L )
    return 1;
 }
 
-
 /**
  * @brief Sets the camera zoom.
  *
@@ -145,10 +134,10 @@ static int camL_get( lua_State *L )
  */
 static int camL_setZoom( lua_State *L )
 {
+   NLUA_CHECKRW(L);
+
    double zoom = luaL_optnumber(L,1,-1.0);
    int hard_over = lua_toboolean(L,2);
-
-   NLUA_CHECKRW(L);
 
    /* Handle arguments. */
    if (zoom > 0) {
@@ -166,7 +155,6 @@ static int camL_setZoom( lua_State *L )
    return 0;
 }
 
-
 /**
  * @brief Gets the camera zoom.
  *
@@ -182,7 +170,6 @@ static int camL_getZoom( lua_State *L )
    lua_pushnumber( L, 1.0/conf.zoom_near );
    return 3;
 }
-
 
 /**
  * @brief Makes the camera shake.
@@ -200,4 +187,3 @@ static int camL_shake( lua_State *L )
    spfx_shake( amplitude );
    return 0;
 }
-

@@ -17,14 +17,6 @@ require "proximity"
 local fmt = require "format"
 local formation = require "formation"
 
-title = {}
-text = {}
-
-title[1] = _("A battle is about to begin")
-text[1] = _([["Hey, you," the captain of the ship says. "You seem not to know what is going to happen here: a mighty warlord from %s is going to attack %s. You shouldn't stay there, unless you are a mercenary. Do you know how it works? If you attack a warlord's ship, and he loses the battle, the other warlord will reward you. But if he wins, you will be hunted down."]])
-
-title[2] = _("Here comes your reward")
-text[2] = _([["Hello captain," a Dvaered officer says, "You helped us in this battle. I am authorized to give you %s as a reward."]])
 
 function create ()
    source_system = system.cur()
@@ -90,7 +82,7 @@ end
 
 function hail()
    hook.rm(hailhook)
-   tk.msg(title[1], text[1]:format(source_system:name(), source_planet:name()))
+   tk.msg(_("A battle is about to begin"), _([["Hey, you," the captain of the ship says. "You seem not to know what is going to happen here: a mighty warlord from %s is going to attack %s. You shouldn't stay there, unless you are a mercenary. Do you know how it works? If you attack a warlord's ship, and he loses the battle, the other warlord will reward you. But if he wins, you will be hunted down."]]):format(source_system:name(), source_planet:name()))
    player.commClose()
 end
 
@@ -101,7 +93,7 @@ end
 
 function hailagain()
    hook.rm(hailhook)
-   tk.msg(title[2], text[2]:format(fmt.credits(reward)))
+   tk.msg(_("Here comes your reward"), _([["Hello captain," a Dvaered officer says, "You helped us in this battle. I am authorized to give you %s as a reward."]]):format(fmt.credits(reward)))
    player.pay(reward)
 end
 

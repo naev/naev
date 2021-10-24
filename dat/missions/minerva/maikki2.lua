@@ -62,10 +62,6 @@ hint4_colour = nil
 strangelove = minerva.strangelove
 ecc_portrait = strangelove.portrait
 
-misn_title = _("Finding Maikki's Father")
-misn_reward = _("???")
-misn_desc = _("Maikki wants you to help her find out what happened to her father.")
-
 hintpnt = {
    "Jorla",
    "Cantina Station",
@@ -98,9 +94,9 @@ function create ()
       misn.finish( false )
    end
    misn.setNPC( minerva.maikki.name, minerva.maikki.portrait, minerva.maikki.description )
-   misn.setDesc( misn_desc )
-   misn.setReward( misn_reward )
-   misn.setTitle( misn_title )
+   misn.setDesc( _("Maikki wants you to help her find out what happened to her father.") )
+   misn.setReward( _("???") )
+   misn.setTitle( _("Finding Maikki's Father") )
 end
 
 
@@ -150,7 +146,7 @@ function hintosd ()
       return
    end
 
-   misn.osdCreate( misn_title, osd )
+   misn.osdCreate( _("Finding Maikki's Father"), osd )
 end
 
 
@@ -556,7 +552,7 @@ He activates her feeding system and a food pellet drops out.]]))
       asked_strangelove = true
       if misn_state==1 then
          misn_state = 2
-         misn.osdCreate( misn_title, {string.format(_("\tGo to %s"), _(eccsys))} )
+         misn.osdCreate( _("Finding Maikki's Father"), {string.format(_("\tGo to %s"), _(eccsys))} )
          misn.markerRm( markerhint4 )
          marker_ecc = misn.markerAdd( system.get(eccsys), "low" )
          minerva.log.maikki(_("You found about a strange researcher who appears to be in Westhaven and is related to the nebula research.") )
@@ -699,7 +695,7 @@ function ecc_feral_boss_dead ()
    local c = misn.cargoNew( N_("Nebula Artifact?"), N_("A very damaged thing that seems to be mainly biological. I guess this is the nebula artifact?") )
    nebula_artifacts = misn.cargoAdd( c, 0 )
    misn_state = 5
-   misn.osdCreate( misn_title, {_("Go back to Dr. Strangelove")} )
+   misn.osdCreate( _("Finding Maikki's Father"), {_("Go back to Dr. Strangelove")} )
    minerva.log.maikki(_("You recovered a nebula artifact that Dr. Strangelove wanted from feral drones.") )
 end
 
@@ -803,7 +799,7 @@ He coughs, wracking his body.]]))
 He glares at you.]]))
    dr(_([["While the drones themselves are dispensable, I need you to recover the nebula artifacts used in their upgrading. They should be roaming around the asteroid field and should be fairly easy to find. Make sure to recover the parts in one piece!"]]))
    vn.func( function ()
-      misn.osdCreate( misn_title, {string.format(_("Recover nebula artifacts from the %s asteroid field"),_(eccsys))} )
+      misn.osdCreate( _("Finding Maikki's Father"), {string.format(_("Recover nebula artifacts from the %s asteroid field"),_(eccsys))} )
       misn_state = 4
       minerva.log.maikki(_("You accepted Dr. Strangelove's request to recover nebula artifacts from feral drones in Westhaven." ) )
    end )
@@ -865,7 +861,7 @@ His voice gets softer and softer as he keeps on mumbling.]]))
       misn.cargoRm( nebula_artifacts )
       misn_state = 6
       misn.npcRm( npc_ecc )
-      misn.osdCreate( misn_title, {_("Report back to Maikki in the Limbo system")} )
+      misn.osdCreate( _("Finding Maikki's Father"), {_("Report back to Maikki in the Limbo system")} )
       misn.markerAdd( planet.get("Minerva Station"), "low")
       misn.markerRm( marker_ecc )
       minerva.log.maikki(_("You learned that Dr. Strangelove saved what appears to be Kex and another individual from a wreck in the nebula. Kex appears to have run away and is likely held by thugs at Minerva station." ) )

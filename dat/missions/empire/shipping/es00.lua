@@ -30,14 +30,6 @@ local fleet = require "fleet"
 local fmt = require "format"
 local emp = require "common.empire"
 
-misn_title = _("Prisoner Exchange")
-misn_desc = {}
-misn_desc[1] = _("Go to %s in the %s system to exchange prisoners with the FLF")
-misn_desc[2] = _("Return to %s in the %s system to report what happened")
-title = {}
-title[1] = _("Spaceport Bar")
-title[2] = _("Prisoner Exchange")
-title[3] = _("Mission Report")
 text = {}
 text[1] = _([[You approach the Empire Commander.
     "Hello, you must be %s. I've heard about you. I'm Commander Soldner. We've got some harder missions for someone like you in the Empire Shipping division. There would be some real danger involved in these missions, unlike the ones you've recently completed for the division. Would you be up for the challenge?"]])
@@ -51,9 +43,6 @@ text[5] = _([[All of a sudden a siren blares and you hear shooting break out. Yo
 text[6] = _([[After you leave your ship in the starport, you meet up with Commander Soldner. From the look on his face, it seems like he already knows what happened.
     "It was all the Dvaered's fault. They just came in out of nowhere and started shooting. What a horrible mess. We're already working on sorting out the blame."
     He sighs. "We had good men there. And we certainly didn't want you to start with a mess like this, but if you're interested in another, meet me up in the bar in a while. We get no rest around here. The payment has already been transferred to your bank account."]])
-
-log_text = _([[You took part in a prisoner exchange with the FLF on behalf of the Empire. Unfortunately, the prisoner exchange failed. "It was all the Dvaered's fault. They just came in out of nowhere and started shooting." Commander Soldner has asked you to meet him in the bar on Halir if you're interested in another mission.]])
-
 
 function create ()
    -- Target destination
@@ -70,7 +59,7 @@ end
 
 function accept ()
    -- Intro text
-   if not tk.yesno( title[1], string.format( text[1], player.name() ) ) then
+   if not tk.yesno( _("Spaceport Bar"), string.format( text[1], player.name() ) ) then
       misn.finish()
    end
 
@@ -83,18 +72,18 @@ function accept ()
    -- Mission details
    misn_stage = 0
    reward = 500e3
-   misn.setTitle(misn_title)
+   misn.setTitle(_("Prisoner Exchange"))
    misn.setReward( fmt.credits(reward) )
-   misn.setDesc( string.format(misn_desc[1], dest:name(), destsys:name()))
+   misn.setDesc( string.format(_("Go to %s in the %s system to exchange prisoners with the FLF"), dest:name(), destsys:name()))
 
    -- Flavour text and mini-briefing
-   tk.msg( title[2], string.format( text[2], dest:name(), destsys:name(),
+   tk.msg( _("Prisoner Exchange"), string.format( text[2], dest:name(), destsys:name(),
          dest:name(), ret:name(), retsys:name() ))
-   misn.osdCreate(title[2], {misn_desc[1]:format(dest:name(),destsys:name())})
+   misn.osdCreate(_("Prisoner Exchange"), {_("Go to %s in the %s system to exchange prisoners with the FLF"):format(dest:name(),destsys:name())})
    -- Set up the goal
    local c = misn.cargoNew( N_("Prisoners"), N_("FLF prisoners.") )
    prisoners = misn.cargoAdd( c, 0 )
-   tk.msg( title[2], text[3] )
+   tk.msg( _("Prisoner Exchange"), text[3] )
 
    -- Set hooks
    hook.land("land")
@@ -111,11 +100,11 @@ function land ()
          misn_stage = 1
 
          -- Some text
-         tk.msg(title[2], text[4] )
-         tk.msg(title[2], text[5] )
+         tk.msg(_("Prisoner Exchange"), text[4] )
+         tk.msg(_("Prisoner Exchange"), text[5] )
          misn.markerMove( misn_marker, retsys )
-         misn.setDesc( string.format(misn_desc[2], ret:name(), retsys:name()))
-         misn.osdCreate(title[2], {misn_desc[2]:format(ret:name(),retsys:name())})
+         misn.setDesc( string.format(_("Return to %s in the %s system to report what happened"), ret:name(), retsys:name()))
+         misn.osdCreate(_("Prisoner Exchange"), {_("Return to %s in the %s system to report what happened"):format(ret:name(),retsys:name())})
 
          -- Prevent players from saving on the destination planet
          player.allowSave(false)
@@ -133,9 +122,9 @@ function land ()
       faction.modPlayerSingle("Empire",5);
 
       -- Flavour text
-      tk.msg(title[3], text[6] )
+      tk.msg(_("Mission Report"), text[6] )
 
-      emp.addShippingLog( log_text )
+      emp.addShippingLog( _([[You took part in a prisoner exchange with the FLF on behalf of the Empire. Unfortunately, the prisoner exchange failed. "It was all the Dvaered's fault. They just came in out of nowhere and started shooting." Commander Soldner has asked you to meet him in the bar on Halir if you're interested in another mission.]]) )
 
       misn.finish(true)
    end

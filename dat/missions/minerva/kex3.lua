@@ -46,8 +46,6 @@ lastsys = planet.get(lastplanet):system():nameRaw()
 
 gauntletsys = system.get("Crimson Gauntlet")
 
-misn_reward = _("A step closer to Kex's freedom")
-misn_title = _("Freeing Kex")
 misn_desc = string.format(_("You have been assigned with obtaining information from Major Malik at %s in the %s system."), _(targetplanet), _(targetsys))
 
 malik_portrait = "major_malik.webp"
@@ -59,8 +57,8 @@ function create ()
    if not misn.claim( {system.get(targetsys), system.get(lastsys)} ) then
       misn.finish( false )
    end
-   misn.setReward( misn_reward )
-   misn.setTitle( misn_title )
+   misn.setReward( _("A step closer to Kex's freedom") )
+   misn.setTitle( _("Freeing Kex") )
    misn.setDesc( misn_desc )
 
    misn.setNPC( minerva.kex.name, minerva.kex.portrait, minerva.kex.description )
@@ -78,7 +76,7 @@ function accept ()
 
    minerva.log.kex(_("You have agreed to help Kex obtain information from Major Malik.") )
 
-   misn.osdCreate( misn_title,
+   misn.osdCreate( _("Freeing Kex"),
       { string.format(_("Go to %s in the %s system to find Major Malik"), _(targetplanet), _(targetsys) ),
       _("Return to Kex at Minerva Station") } )
    misn_marker = misn.markerAdd( planet.get(targetplanet) )
@@ -107,7 +105,7 @@ function generate_npc ()
       -- Advance the state
       misn_state = 1
       misn.markerMove( misn_marker, planet.get(lastplanet) )
-      misn.osdCreate( misn_title,
+      misn.osdCreate( _("Freeing Kex"),
          { string.format(_("Look for Major Malik at %s in the %s system"), _(lastplanet), _(lastsys) ),
          _("Return to Kex at Minerva Station") } )
 

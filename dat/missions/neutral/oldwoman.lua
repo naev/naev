@@ -43,9 +43,6 @@ complaints[7] = _([["All this automation is making people lax, I tell you. My un
 OSD = {}
 OSD[1] = _("Take the old woman to %s (%s system)")
 
-log_text = _([[You escorted an old woman to her cousin in Sirian space. She was nice, albeit somewhat overly chatty.]])
-
-
 function create ()
     cursys = system.cur()
 
@@ -114,7 +111,7 @@ function land()
     "Thank you, young captain, I don't know what I would have done without you. It seems there are still decent folk out there even now. Take this, as a token of my appreciation."
     The lady hands you a credit chip. Then she disappears through the terminal. Well, that was quite a passenger!]]))
         player.pay(500e3)
-        neu.addMiscLog( log_text )
+        neu.addMiscLog( _([[You escorted an old woman to her cousin in Sirian space. She was nice, albeit somewhat overly chatty.]]) )
         misn.finish(true)
     end
 end

@@ -41,12 +41,6 @@ osd = {}
 osd[1] = _("Fly the refugees to %s in the %s system.")
 
 --random odds and ends
-misn_title = _("The Egress")
-npc_name = _("Draga")
-misn_desc = _("Assist the Nasin refugees by flying to %s in %s, and unloading them there.")
-
-log_text = _([[You helped rescue as many Nasin as your ship could hold to Ulios. Draga was killed by a Sirian soldier as he attempted to rescue his people. When you made it to Ulios, a man named Jimmy gave you a credit chip and said that he "will be forever in your debt".]])
-
 
 function create()
    --this mission make no system claims.
@@ -57,7 +51,7 @@ function create()
    homeasset = planet.cur()
    targetasset, targetsys = planet.get("Ulios") --this will be the new HQ for the Nasin in the next part.
    --set some mission stuff
-   misn.setNPC(npc_name, "sirius/unique/draga.webp", _("Draga is running around, helping the few Nasin in the bar to get stuff together and get out."))
+   misn.setNPC(_("Draga"), "sirius/unique/draga.webp", _("Draga is running around, helping the few Nasin in the bar to get stuff together and get out."))
 
    osd[1] = osd[1]:format(targetasset:name(), targetsys:name())
 end
@@ -66,21 +60,21 @@ function accept()
    --initial convo. Kept it a yes/no to help with the urgent feeling of the situation.
 
    local msg = _([[You run up to Draga, who has a look of desperation on his face. "We need to go, now," he says. "The Sirii are overwhelming us, they're about to finish us off. Will you take me and as many Nasin as you can carry to %s in the %s system? This is our most desperate hour!"]]):format( targetasset:name(), targetsys:name() )
-   if not tk.yesno(misn_title, msg) then
+   if not tk.yesno(_("The Egress"), msg) then
       misn.finish ()
    end
    misn.accept()
    player.allowSave(false) -- so the player won't get stuck with a mission they can't complete.
-   tk.msg(misn_title,_([["Thank you! I knew you would do it!" Draga then proceeds to file as many people as can possibly fit onto your ship, enough to fill your ship's cargo hold to the brim. The number of Nasin members shocks you as they are packed into your ship.
+   tk.msg(_("The Egress"),_([["Thank you! I knew you would do it!" Draga then proceeds to file as many people as can possibly fit onto your ship, enough to fill your ship's cargo hold to the brim. The number of Nasin members shocks you as they are packed into your ship.
     As the Sirii approach ever closer, Draga yells at you to get the ship going and take off. You begin taking off just in time to see Draga under fire by a Sirian soldier who has infiltrated the base. The last thing you see as you take off is him lying on the ground, lifeless.]]))
    --convo over. time to finish setting the mission stuff.
    misn.markerAdd(targetsys,"high")
    free_cargo = player.pilot():cargoFree()
    people_carried =  (16 * free_cargo) + 7 --average weight per person is 62kg. one ton / 62 is 16. added the +7 for ships with 0 cargo.
-   misn.setTitle(misn_title)
+   misn.setTitle(_("The Egress"))
    misn.setReward(fmt.credits(reward))
-   misn.setDesc(misn_desc:format( targetasset:name(), targetsys:name()))
-   misn.osdCreate(misn_title,osd)
+   misn.setDesc(_("Assist the Nasin refugees by flying to %s in %s, and unloading them there."):format( targetasset:name(), targetsys:name()))
+   misn.osdCreate(_("The Egress"),osd)
    local c = misn.cargoNew( N_("Refugees"), N_("Nasin refugees.") )
    refugees = misn.cargoAdd(c,free_cargo)
    player.takeoff()
@@ -148,7 +142,7 @@ end
 function misn_over() --aren't you glad thats over?
    if planet.cur() == planet.get("Ulios") then
       --introing one of the characters in the next chapter.
-      tk.msg(misn_title,_([[You land on %s and open the bay doors. You are still amazed at how many people Draga had helped get into the cargo hold. As you help everyone out of your ship, a man walks up to you. "Hello, my name is Jimmy. Thank you for helping all of these people. I am grateful. I've heard about you from Draga, and I will be forever in your debt. Here, please, take this." He presses a credit chip in your hand just as you finish helping everyone out of your ship. It seems it was a job well done.]]):format( targetasset:name() ))
+      tk.msg(_("The Egress"),_([[You land on %s and open the bay doors. You are still amazed at how many people Draga had helped get into the cargo hold. As you help everyone out of your ship, a man walks up to you. "Hello, my name is Jimmy. Thank you for helping all of these people. I am grateful. I've heard about you from Draga, and I will be forever in your debt. Here, please, take this." He presses a credit chip in your hand just as you finish helping everyone out of your ship. It seems it was a job well done.]]):format( targetasset:name() ))
       player.pay(reward)
       misn.cargoRm(refugees)
       misn_tracker = misn_tracker + 1
@@ -156,13 +150,13 @@ function misn_over() --aren't you glad thats over?
       var.push("heretic_misn_tracker",misn_tracker)
       misn.osdDestroy()
       player.allowSave(true)
-      srs.addHereticLog( log_text )
+      srs.addHereticLog( _([[You helped rescue as many Nasin as your ship could hold to Ulios. Draga was killed by a Sirian soldier as he attempted to rescue his people. When you made it to Ulios, a man named Jimmy gave you a credit chip and said that he "will be forever in your debt".]]) )
       misn.finish(true)
    end
 end
 
 function abort()
-   tk.msg(misn_title,_([[You decide that this mission is just too much. You open up the cargo doors and jettison all %s people out into the cold emptiness of space. The Nasin will hate you forever, but you did what you had to do.]]):format(fmt.number(people_carried)))
+   tk.msg(_("The Egress"),_([[You decide that this mission is just too much. You open up the cargo doors and jettison all %s people out into the cold emptiness of space. The Nasin will hate you forever, but you did what you had to do.]]):format(fmt.number(people_carried)))
    misn.cargoJet(refugees)
    faction.modPlayerSingle("Nasin",-200)
    player.allowSave(true)

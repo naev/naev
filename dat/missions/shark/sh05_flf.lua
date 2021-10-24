@@ -36,42 +36,15 @@ local pir = require "common.pirate"
 local fmt = require "format"
 local shark = require "common.shark"
 
-title = {}
-text = {}
 osd_msg = {}
-npc_desc = {}
-
-title[1] = _("Nice to see you again!")
-text[1] = _([["Hello, %s! Are you ready to take part in another sales mission?
-    "As you know, the FLF is a heavy user of our ships, but they're also heavy users of Dvaered ships, chiefly the Vendetta design. Since House Dvaered is an enemy of the FLF, we see this as an opportunity to expand our sales: we want to convince the FLF leaders to buy more Nexus ships and fewer Dvaered ships. This will be through a false contraband company so that word doesn't get out that we're supporting terrorists by selling them ships. What do you say? Can you help us once again?"]])
-
-title[2] = _("Good luck")
-text[2] = _([["Perfect! So, this mission is pretty simple: I want you to pass on this proposal to them." He hands you a data chip. "It's a request to meet with the FLF leaders on %s. If all goes well, I'll be asking you to take me there next.
-    "Any FLF ship should do the job. Try hailing them and see if you get a response. If they won't talk, disable and board them so you can force them to listen. Pretty simple, really. Good luck!"]])
-
-title[3] = _("Good news")
-text[3] = _([[Smith is clearly pleased with the results. "I have received word that the FLF leaders are indeed interested. Meet me at the bar whenever you're ready to take me to %s. And here's your payment."]])
-
-title[4] = _("Peaceful Resolution")
-text[4] = _([[The FLF ship peacefully responds to you. You explain the details of what is going on and transmit the proposal, after which you both go your separate ways.]])
-
-title[5] = _("Some Resistance Encountered")
-text[5] = _([[The FLF officers are clearly ready for battle, but after subduing them, you assure them that you're just here to talk. Eventually, you are able to give them a copy of the proposal and leave peacefully, for lack of a better word.]])
 
 -- Mission details
-misn_title = _("The FLF Contact")
-misn_desc = _("Nexus Shipyards is looking to strike a better deal with the FLF.")
 
 -- NPC
-npc_desc[1] = _("Arnold Smith")
 
 -- OSD
-osd_title = _("The FLF Contact")
 osd_msg[1] = _("Hail any FLF ship, or disable and board one if necessary")
 osd_msg[2] = _("Go back to %s in %s")
-
-log_text = _([[You helped Arnold Smith establish a contact with the FLF. He said to meet you at the bar on Alteris when you're ready to take him to Arandon.]])
-
 
 function create ()
 
@@ -81,7 +54,7 @@ function create ()
 
    osd_msg[2] = osd_msg[2]:format(paypla:name(), paysys:name())
 
-   misn.setNPC(npc_desc[1], "neutral/unique/arnoldsmith.webp", _([[It looks like he has yet another job for you.]]))
+   misn.setNPC(_("Arnold Smith"), "neutral/unique/arnoldsmith.webp", _([[It looks like he has yet another job for you.]]))
 end
 
 function accept()
@@ -89,14 +62,16 @@ function accept()
    stage = 0
    reward = 1e6
 
-   if tk.yesno(title[1], text[1]:format(player.name())) then
+   if tk.yesno(_("Nice to see you again!"), _([["Hello, %s! Are you ready to take part in another sales mission?
+    "As you know, the FLF is a heavy user of our ships, but they're also heavy users of Dvaered ships, chiefly the Vendetta design. Since House Dvaered is an enemy of the FLF, we see this as an opportunity to expand our sales: we want to convince the FLF leaders to buy more Nexus ships and fewer Dvaered ships. This will be through a false contraband company so that word doesn't get out that we're supporting terrorists by selling them ships. What do you say? Can you help us once again?"]]):format(player.name())) then
       misn.accept()
-      tk.msg(title[2], text[2]:format(nextsys:name()))
+      tk.msg(_("Good luck"), _([["Perfect! So, this mission is pretty simple: I want you to pass on this proposal to them." He hands you a data chip. "It's a request to meet with the FLF leaders on %s. If all goes well, I'll be asking you to take me there next.
+    "Any FLF ship should do the job. Try hailing them and see if you get a response. If they won't talk, disable and board them so you can force them to listen. Pretty simple, really. Good luck!"]]):format(nextsys:name()))
 
-      misn.setTitle(misn_title)
+      misn.setTitle(_("The FLF Contact"))
       misn.setReward(fmt.credits(reward))
-      misn.setDesc(misn_desc)
-      osd = misn.osdCreate(osd_title, osd_msg)
+      misn.setDesc(_("Nexus Shipyards is looking to strike a better deal with the FLF."))
+      osd = misn.osdCreate(_("The FLF Contact"), osd_msg)
       misn.osdActive(1)
 
       hook.land( "land" )
@@ -111,10 +86,10 @@ end
 function land()
    --Job is done
    if stage == 1 and planet.cur() == paypla then
-      tk.msg(title[3], text[3]:format(nextsys:name()))
+      tk.msg(_("Good news"), _([[Smith is clearly pleased with the results. "I have received word that the FLF leaders are indeed interested. Meet me at the bar whenever you're ready to take me to %s. And here's your payment."]]):format(nextsys:name()))
       pir.reputationNormalMission(rnd.rnd(2,3))
       player.pay(reward)
-      shark.addLog( log_text )
+      shark.addLog( _([[You helped Arnold Smith establish a contact with the FLF. He said to meet you at the bar on Alteris when you're ready to take him to Arandon.]]) )
       misn.finish(true)
    end
 end
@@ -122,7 +97,7 @@ end
 function hail( p )
    if stage == 0 and p:faction() == faction.get("FLF") and not p:hostile() then
       player.commClose()
-      tk.msg(title[4], text[4])
+      tk.msg(_("Peaceful Resolution"), _([[The FLF ship peacefully responds to you. You explain the details of what is going on and transmit the proposal, after which you both go your separate ways.]]))
       stage = 1
       misn.osdActive(2)
       marker2 = misn.markerAdd(paysys, "low")
@@ -132,7 +107,7 @@ end
 function board( p )
    if stage == 0 and p:faction() == faction.get("FLF") then
       player.unboard()
-      tk.msg(title[5], text[5])
+      tk.msg(_("Some Resistance Encountered"), _([[The FLF officers are clearly ready for battle, but after subduing them, you assure them that you're just here to talk. Eventually, you are able to give them a copy of the proposal and leave peacefully, for lack of a better word.]]))
       stage = 1
       misn.osdActive(2)
       marker2 = misn.markerAdd(paysys, "low")

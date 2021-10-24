@@ -32,10 +32,6 @@ local neu = require "common.neutral"
 
 
 -- localization stuff, translators would work here
-title = {}
-title[1] = _("Bar")
-title[2] = _("Scientific Exploration")
-title[3] = _("Mission Success")
 text = {}
 text[1] = _([[You approach the scientists. They seem a bit nervous and one mutters something about whether it's a good idea or not. Eventually one of them comes up to you.
     "Hello Captain, we're looking for a ship to take us into the Sol Nebula. Would you be willing to take us there?"]])
@@ -52,9 +48,6 @@ local articles={
       _("A group of scientists have successfully launched a science probe into the Nebula. The probe was specifically designed to be resistant to the corrosive environment of the Nebula and is supposed to find new clues about the nature of the gas and where it's from."),
    }
 }
-
-log_text = _([[You helped a group of scientists launch a research probe into the Nebula.]])
-
 
 function create ()
    -- Note: this mission does not make any system claims.
@@ -75,13 +68,13 @@ end
 
 function accept ()
    -- See if rejects mission
-   if not tk.yesno( title[1], text[1] ) then
+   if not tk.yesno( _("Bar"), text[1] ) then
       misn.finish()
    end
 
    -- Check for cargo space
    if player.pilot():cargoFree() <  3 then
-      tk.msg( title[1], text[9] )
+      tk.msg( _("Bar"), text[9] )
       misn.finish()
    end
 
@@ -99,8 +92,8 @@ function accept ()
    misn.accept()
 
    -- More flavour text
-   tk.msg( title[2], string.format(text[2], satellite_sys:name()) )
-   tk.msg( title[2], string.format(text[3], satellite_sys:name(),
+   tk.msg( _("Scientific Exploration"), string.format(text[2], satellite_sys:name()) )
+   tk.msg( _("Scientific Exploration"), string.format(text[3], satellite_sys:name(),
          homeworld:name(), homeworld_sys:name(), fmt.credits(credits) ) )
 
    misn.osdCreate(_("Nebula Satellite"), {_("Go to the %s system to launch the probe."):format(satellite_sys:name())})
@@ -114,11 +107,11 @@ function land ()
    landed = planet.cur()
    -- Mission success
    if misn_stage == 1 and landed == homeworld then
-      tk.msg( title[3], text[4] )
+      tk.msg( _("Mission Success"), text[4] )
       player.outfitAdd( "Satellite Mock-up" )
       pir.reputationNormalMission(rnd.rnd(2,3))
       player.pay( credits )
-      neu.addMiscLog( log_text )
+      neu.addMiscLog( _([[You helped a group of scientists launch a research probe into the Nebula.]]) )
       misn.finish(true)
    end
 end

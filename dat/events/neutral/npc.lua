@@ -374,15 +374,15 @@ function spawnNPC()
    local desc = civ_desc[rnd.rnd(1, #civ_desc)]
 
    -- Select what this NPC should say.
-   select = rnd.rnd()
+   local r = rnd.rnd()
    local msg
-   if select < jm_chance then
+   if r < jm_chance then
       -- Jump point message.
       msg, func = getJmpMessage(fac)
-   elseif select <= 0.55 then
+   elseif r <= 0.55 then
       -- Lore message.
       msg = getLoreMessage(fac)
-   elseif select <= 0.8 then
+   elseif r <= 0.8 then
       -- Gameplay tip message.
       msg = getTipMessage(fac)
    else
@@ -411,9 +411,9 @@ function getLoreMessage(fac)
    end
 
    -- Select a string, then remove it from the list of valid strings. This ensures all NPCs have something different to say.
-   local select = rnd.rnd(1, #facmsg)
-   local pick = facmsg[select]
-   table.remove(facmsg, select)
+   local r = rnd.rnd(1, #facmsg)
+   local pick = facmsg[r]
+   table.remove(facmsg, r)
    return pick
 end
 

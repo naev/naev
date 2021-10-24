@@ -22,7 +22,6 @@ local fmt = require "format"
 local flf = require "missions.flf.flf_common"
 
 -- localization stuff
-misn_title  = _("FLF: Diversion in %s")
 
 success_text = {}
 success_text[1] = _("You receive a transmission from an FLF officer saying that the operation has completed, and you can now return to the base.")
@@ -31,11 +30,6 @@ pay_text = {}
 pay_text[1] = _("The FLF officer in charge of the primary operation thanks you for your contribution and hands you your pay.")
 pay_text[2] = _("You greet the FLF officer in charge of the primary operation, who seems happy that the mission was a success. You congratulate each other, and the officer hands you your pay.")
 
-misn_desc = _("A fleet of FLF ships will be conducting an operation against the Dvaered forces. Create a diversion from this operation by wreaking havoc in the nearby %s system.")
-
-msg = _("%s has warped in!")
-
-osd_title   = _("FLF Diversion")
 osd_desc    = {}
 osd_desc[1] = _("Fly to the %s system")
 osd_desc[2] = _("Engage and destroy Dvaered ships to get their attention")
@@ -60,8 +54,8 @@ function create ()
    if credits < 10e3 then misn.finish( false ) end
 
    -- Set mission details
-   misn.setTitle( misn_title:format( missys:name() ) )
-   misn.setDesc( misn_desc:format( missys:name() ) )
+   misn.setTitle( _("FLF: Diversion in %s"):format( missys:name() ) )
+   misn.setDesc( _("A fleet of FLF ships will be conducting an operation against the Dvaered forces. Create a diversion from this operation by wreaking havoc in the nearby %s system."):format( missys:name() ) )
    misn.setReward( fmt.credits( credits ) )
    marker = misn.markerAdd( missys, "computer" )
 end
@@ -71,7 +65,7 @@ function accept ()
    misn.accept()
 
    osd_desc[1] = osd_desc[1]:format( missys:name() )
-   misn.osdCreate( osd_title, osd_desc )
+   misn.osdCreate( _("FLF Diversion"), osd_desc )
 
    dv_attention = 0
    dv_coming = false
@@ -169,7 +163,7 @@ function timer_spawn_dv ()
          fleetname = _("Dvaered Big Patrol")
       end
 
-      player.msg( msg:format( _(fleetname) ) )
+      player.msg( _("%s has warped in!"):format( _(fleetname) ) )
       for i, j in ipairs( fleet.add( 1,  ships, "Dvaered" ) ) do
          add_attention( j )
       end

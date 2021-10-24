@@ -54,25 +54,26 @@ function create ()
    if not evt.claim( cursys, true ) then evt.finish() end
 
    -- Get the derelict's ship.
+   local dship
    local r = rnd.rnd()
    if r < 0.2 then
-      ship = "Llama"
+      dship = "Llama"
    elseif r < 0.3 then
-      ship = "Hyena"
+      dship = "Hyena"
    elseif r < 0.5 then
-      ship = "Koala"
+      dship = "Koala"
    elseif r < 0.7 then
-      ship = "Quicksilver"
+      dship = "Quicksilver"
    elseif r < 0.9 then
-      ship = "Mule"
+      dship = "Mule"
    else
-      ship = "Gawain"
+      dship = "Gawain"
    end
 
    -- Create the derelict.
    local dist  = rnd.rnd() * cursys:radius() * 0.8
    local pos   = vec2.newP( dist, rnd.rnd()*360 )
-   derelict    = pilot.add(ship, "Derelict", pos, nil, {ai="dummy", naked=true})
+   derelict    = pilot.add(dship, "Derelict", pos, nil, {ai="dummy", naked=true})
    derelict:disable()
    derelict:rename("Derelict")
    derelict:intrinsicSet( "ew_hide", -75 ) -- Much more visible

@@ -24,11 +24,8 @@ local fmt = require "format"
 local neu = require "common.neutral"
 
 -- Dialogue
-title = _("A Tasty Job")
-npc_name = _("Familiar Face")
 
 -- Mission Computer text
-misn_desc = _([[Deliver the recipes to Michal on %s in the %s system.]])
 
 -- Mission Ending
 finish = _([[As Michal takes the recipes and cake off your hands, you can't help but wonder how quickly his business will fail with food as bad as the cake you tried. When he remarks how delicious he apparently thinks the cake is, that confirms in your mind that he doesn't have a clue what he's doing. You bite your tongue, however, wishing him good luck as you take your pay.]])
@@ -36,8 +33,6 @@ finish = _([[As Michal takes the recipes and cake off your hands, you can't help
 osd_desc = {}
 osd_desc[1] = _("Fly to %s in the %s system.")
 osd_desc["__save"] = true
-
-log_text = _([[You delivered a whole lot of the most disgusting cake you've ever tasted in your life as well as recipes for making said cake to Michal, the man who had you deliver a literal tonne of love letters before. Supposedly this is for an attempt to start a restaurant, but with food as disgusting as that cake, you're sure the business will fail.]])
 
 cakes = "Food"
 
@@ -48,12 +43,12 @@ function create () --No system shall be claimed by mission
 
    reward = 10e3
 
-   misn.setNPC( npc_name, "neutral/unique/paddy.webp", _("A familiar looking young woman is looking at you") )
+   misn.setNPC( _("Familiar Face"), "neutral/unique/paddy.webp", _("A familiar looking young woman is looking at you") )
 end
 
 function accept()
-   if not tk.yesno( title, _([[The woman smiles. "Aren't you the pilot that delivered those sweet love letters to me? I think you are! My name is Paddy, sorry I didn't introduce myself before. I was caught up in the moment; Michal's letters are always very exciting." She blushes. "Anyway, Michal is trying to start a restaurant on %s. Would you be interested in giving him a hand?"]]):format( targetworld:name() ) ) then
-      tk.msg( title, _([["Oh, that's too bad. I thought it was such a good idea, too...."]]) )
+   if not tk.yesno( _("A Tasty Job"), _([[The woman smiles. "Aren't you the pilot that delivered those sweet love letters to me? I think you are! My name is Paddy, sorry I didn't introduce myself before. I was caught up in the moment; Michal's letters are always very exciting." She blushes. "Anyway, Michal is trying to start a restaurant on %s. Would you be interested in giving him a hand?"]]):format( targetworld:name() ) ) then
+      tk.msg( _("A Tasty Job"), _([["Oh, that's too bad. I thought it was such a good idea, too...."]]) )
       misn.finish()
    end
 
@@ -63,19 +58,19 @@ function accept()
    if amount > 0 then
       misn.cargoAdd( cakes, amount )
       reward = reward + ( 1e3 * amount )
-      tk.msg( title, _([["Great!" Paddy says with a smile. She hands you what appear to be recipes. "I just need you to deliver these recipes to him. Oh, and some of my homemade cake! I've packed that cake into your ship. Feel free to give it a taste! It's delicious! Anyway, Michal will pay you %s when you get there. Thank you so much!"
+      tk.msg( _("A Tasty Job"), _([["Great!" Paddy says with a smile. She hands you what appear to be recipes. "I just need you to deliver these recipes to him. Oh, and some of my homemade cake! I've packed that cake into your ship. Feel free to give it a taste! It's delicious! Anyway, Michal will pay you %s when you get there. Thank you so much!"
     When you arrive at your ship, you find your cargo hold packed to the brim with cake. You decide to try some, but the second it enters your mouth, you can't help but to spit it out in disgust. This is easily the most disgusting cake you've ever tasted. Well, as long as you get paid....]]):format( fmt.credits( reward ) ) )
    else
-      tk.msg( title, _([["Great!" Paddy says with a smile. She hands you what appear to be recipes. "I just need you to deliver these recipes to him. I was hoping to deliver some cake to him too, but it seems your ship doesn't have enough space for it, so that's unfortunate. In any case, Michal will pay you %s when you arrive. Thank you so much!"]]):format( fmt.credits( reward ) ) )
+      tk.msg( _("A Tasty Job"), _([["Great!" Paddy says with a smile. She hands you what appear to be recipes. "I just need you to deliver these recipes to him. I was hoping to deliver some cake to him too, but it seems your ship doesn't have enough space for it, so that's unfortunate. In any case, Michal will pay you %s when you arrive. Thank you so much!"]]):format( fmt.credits( reward ) ) )
    end
 
    -- set up mission computer
-   misn.setTitle( title )
+   misn.setTitle( _("A Tasty Job") )
    misn.setReward( fmt.credits( reward ) )
-   misn.setDesc( misn_desc:format( targetworld:name(), targetworld_sys:name() ) )
+   misn.setDesc( _([[Deliver the recipes to Michal on %s in the %s system.]]):format( targetworld:name(), targetworld_sys:name() ) )
 
    osd_desc[1] = osd_desc[1]:format( targetworld:name(), targetworld_sys:name() )
-   misn.osdCreate( title, osd_desc )
+   misn.osdCreate( _("A Tasty Job"), osd_desc )
    misn.markerAdd( targetworld, "low" )
 
    --set up hooks
@@ -86,7 +81,7 @@ function land()
    if planet.cur() == targetworld then
       if amount > 0 then
          tk.msg( "", finish )
-         neu.addMiscLog( log_text )
+         neu.addMiscLog( _([[You delivered a whole lot of the most disgusting cake you've ever tasted in your life as well as recipes for making said cake to Michal, the man who had you deliver a literal tonne of love letters before. Supposedly this is for an attempt to start a restaurant, but with food as disgusting as that cake, you're sure the business will fail.]]) )
       else
          tk.msg( "", _([[Michal takes the recipes from you gleefully and tells you how unfortunate it is that you weren't able to taste Paddy's cake, which he says is delicious. You shrug it off and collect your pay.]]) )
          neu.addMiscLog( _([[You delivered recipes for making some kind of cake to Michal, the man who had you deliver a literal tonne of love letters before.]]) )

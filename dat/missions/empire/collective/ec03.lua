@@ -34,13 +34,6 @@
 local fmt = require "format"
 local emp = require "common.empire"
 
-misn_title = _("Collective Distraction")
-misn_desc = {}
-misn_desc[1] = _("Go to draw the Collective's attention in the %s system")
-misn_desc[2] = _("Travel back to %s in %s")
-title = {}
-title[1] = _("Collective Espionage")
-title[2] = _("Mission Accomplished")
 text = {}
 text[1] = _([[As you approach Lt. Commander Dimitri you notice he seems somewhat excited.
     "It looks like you got something. It's not very clear because of %s's atmosphere creating a lot of noise, but it does seem to be similar to Empire transmissions. We've got another plan to try for a cleaner signal. It'll be uglier then the last one. You in?"]])
@@ -57,9 +50,6 @@ osd_msg[1] = _("Fly to the %s system")
 osd_msg[2] = ""
 osd_msg[3] = _("Return to %s")
 osd_msg["__save"] = true
-
-log_text = _([[You delivered a commando team to Eiroik for the Empire to set up more sophisticated surveillance of the Collective. Lt. Commander Dimitri said that they should be back in about 10 periods and that the Empire will probably need your assistance on Omega Station again at that time.]])
-
 
 function setOSD (dronequota, droneleft)
    local destroy_text, remaining_text
@@ -87,7 +77,7 @@ function accept ()
    credits = 1e6
 
    -- Intro text
-   if tk.yesno( title[1], string.format(text[1], commando_planet) )
+   if tk.yesno( _("Collective Espionage"), string.format(text[1], commando_planet) )
       then
       misn.accept()
 
@@ -99,16 +89,16 @@ function accept ()
       misn_marker = misn.markerAdd( misn_target_sys, "low" )
 
       -- Mission details
-      misn.setTitle(misn_title)
+      misn.setTitle(_("Collective Distraction"))
       misn.setReward( fmt.credits( credits ) )
-      misn.setDesc( string.format(misn_desc[1], misn_target_sys:name() ))
+      misn.setDesc( string.format(_("Go to draw the Collective's attention in the %s system"), misn_target_sys:name() ))
 
-      tk.msg( title[1], string.format(text[2], commando_planet, commando_planet ) )
-      tk.msg( title[1], text[3] )
+      tk.msg( _("Collective Espionage"), string.format(text[2], commando_planet, commando_planet ) )
+      tk.msg( _("Collective Espionage"), text[3] )
       osd_msg[1] = osd_msg[1]:format(misn_target_sys:name())
       setOSD(dronequota, droneleft)
       osd_msg[3] = osd_msg[3]:format(misn_base:name())
-      misn.osdCreate(misn_title, osd_msg)
+      misn.osdCreate(_("Collective Distraction"), osd_msg)
 
       hook.enter("jumpin")
       hook.land("land")
@@ -129,7 +119,7 @@ function death(pilot)
     if pilot:faction() == faction.get("Collective") and (pilot:ship() == ship.get("Drone") or pilot:ship() == ship.get("Heavy Drone")) and droneleft > 0 then
         droneleft = droneleft - 1
         setOSD(dronequota, droneleft)
-        misn.osdCreate(misn_title, osd_msg)
+        misn.osdCreate(_("Collective Distraction"), osd_msg)
         misn.osdActive(2)
         if droneleft == 0 then
             misn_stage = 1
@@ -142,7 +132,7 @@ end
 -- Handles arrival back to base
 function land()
    if misn_stage == 1 and planet.cur() == misn_base then
-      tk.msg(title[2], text[4])
+      tk.msg(_("Mission Accomplished"), text[4])
 
       -- Store time commando theoretically landed
       var.push( "emp_commando", time.tonumber(time.get() + time.create( 0, 10, 0 )) )
@@ -151,7 +141,7 @@ function land()
       player.pay(credits)
       faction.modPlayerSingle("Empire",5)
 
-      emp.addCollectiveLog( log_text )
+      emp.addCollectiveLog( _([[You delivered a commando team to Eiroik for the Empire to set up more sophisticated surveillance of the Collective. Lt. Commander Dimitri said that they should be back in about 10 periods and that the Empire will probably need your assistance on Omega Station again at that time.]]) )
 
       misn.finish(true)
    end

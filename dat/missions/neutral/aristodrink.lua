@@ -30,9 +30,6 @@ local neu = require "common.neutral"
 local lmisn = require "lmisn"
 
 -- Mission Details
-misn_title = _("Drinking Aristocrat")
-misn_reward = _("He will pay handsomely.")
-misn_desc = _("Go find a specific drink for an aristocrat.")
 
 -- OSD
 OSDdesc = _("Go to %s in the %s system and look for the special drink that the Aristocrat wants")
@@ -70,9 +67,6 @@ worktxt[2] = _([[You walk into the bar and know instantly that you are finally h
 worktxt[3] = _([[You walk into the bar and know instantly that you are finally here! This is the place! You walk up to the bartender, who smiles. This has to be her. You start to describe the drink to her and she interrupts. "A Swamp Bombing. Of course, that's my specialty." You ask if she can make it to go, prompting a bit of a chuckle. "Sure, why not?"
     Just as she's about to start making it, though, you stop her and say you'll have one here after all. As long as you've come all this way, you might as well try it. You're amazed at how quickly and gracefully her trained hands move, flipping bottles and shaking various containers. Before you know it, she's set a drink before you and closed another container to take with you. You taste it expecting something incredible. It's alright, but you doubt it was worth all this trouble.]])
 
-log_text = _([[You delivered a special drink called a Swamp Bombing to an aristocrat.]])
-
-
 function create ()
    -- Note: this mission does not make any system claims.
 
@@ -102,9 +96,9 @@ function accept ()
       landmarker = misn.markerAdd( clueplanet, "low" )
 
       -- mission details
-      misn.setTitle( misn_title )
-      misn.setReward( misn_reward )
-      misn.setDesc( misn_desc )
+      misn.setTitle( _("Drinking Aristocrat") )
+      misn.setReward( _("He will pay handsomely.") )
+      misn.setDesc( _("Go find a specific drink for an aristocrat.") )
 
       tk.msg( title[2], text[2] )
 
@@ -180,7 +174,7 @@ function land ()
 
       hook.rm(landhook)
       hook.rm(takeoffhook)
-      neu.addMiscLog( log_text )
+      neu.addMiscLog( _([[You delivered a special drink called a Swamp Bombing to an aristocrat.]]) )
       misn.finish( true )
    end
 end

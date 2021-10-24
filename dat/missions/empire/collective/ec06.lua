@@ -31,16 +31,6 @@
 require "proximity"
 local emp = require "common.empire"
 
-misn_title = _("Operation Cold Metal")
-misn_reward = _("Fame and Glory")
-misn_desc = {}
-misn_desc[1] = _("Neutralize enemy forces in %s")
-misn_desc[2] = _("Destroy the Starfire and hostiles in %s")
-misn_desc[3] = _("Return to %s in the %s system")
-title = {}
-title[1] = _("Bar")
-title[2] = _("Operation Cold Metal")
-title[3] = _("Mission Success")
 text = {}
 text[1] = _([[You join Commodore Keer at her table.
     She begins, "We're going to finally attack the Collective. We've gotten the Emperor himself to bless the mission and send some of his better pilots. Would you be interested in joining the destruction of the Collective?"]])
@@ -71,7 +61,7 @@ end
 function accept ()
 
    -- Intro text
-   if not tk.yesno( title[1], text[1] ) then
+   if not tk.yesno( _("Bar"), text[1] ) then
       misn.finish()
    end
 
@@ -88,16 +78,16 @@ function accept ()
    misn_marker = misn.markerAdd( misn_final_sys, "high" )
 
    -- Mission details
-   misn.setTitle(misn_title)
-   misn.setReward( misn_reward )
-   misn.setDesc( string.format(misn_desc[1], misn_target_sys1:name() ))
+   misn.setTitle(_("Operation Cold Metal"))
+   misn.setReward( _("Fame and Glory") )
+   misn.setDesc( string.format(_("Neutralize enemy forces in %s"), misn_target_sys1:name() ))
    osd_msg[1] = osd_msg[1]:format(misn_final_sys:name(), misn_target_sys2:name())
     if var.peek("trinity") then
         osd_msg[2] = _("Defeat the Starfire and the Trinity")
     end
-   misn.osdCreate(misn_title, osd_msg)
+   misn.osdCreate(_("Operation Cold Metal"), osd_msg)
 
-   tk.msg( title[2], string.format( text[2],
+   tk.msg( _("Operation Cold Metal"), string.format( text[2],
          misn_target_sys1:name(), misn_final_sys:name() ) )
 
    hook.jumpout("jumpout")
@@ -257,7 +247,7 @@ function land ()
    -- Final landing stage
    if misn_stage == 4 and planet.cur() == misn_base then
 
-      tk.msg( title[3], string.format(text[3], misn_base:name()) )
+      tk.msg( _("Mission Success"), string.format(text[3], misn_base:name()) )
 
       -- Rewards
       -- This was the last mission in the minor campaign, so bump the reputation cap.
@@ -265,7 +255,7 @@ function land ()
       faction.modPlayerSingle("Empire",5)
       player.pay( 5e6 )
 
-      tk.msg( title[3], text[4] )
+      tk.msg( _("Mission Success"), text[4] )
       player.outfitAdd("Left Boot")
 
       emp.addCollectiveLog( _([[You helped the Empire to finally destroy the Collective once and for all. The Collective is now no more.]]) )

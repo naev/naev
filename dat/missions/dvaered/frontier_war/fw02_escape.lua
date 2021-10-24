@@ -57,15 +57,9 @@ tronk_desc = _("The young cyborg sits to the left of his captain, and looks susp
 theru_desc = _("This soldier is the team's medic. As such, she seems to be slightly less combat-suited than the others, but her large cybernetically-enhanced arms still make her look like she could crush a bull.")
 straf_desc = _("The pilot is the only one in the group who looks like the other people with whom you are used to working. His presence along with the others makes the group even stranger.")
 
-misn_desc = _("You will help a Goddard executive to evade his Za'lek prison.")
-misn_reward = _("Hopefully something better than Gauss Guns...")
-
-osd_title = _("Dvaered Escape")
 osd_msg7  = _("Escape to %s in %s. Thanks to your new fake transponder, the squadrons should not stop you anymore")
 
 commMass = 4
-
-mark_name = _("FUEL")
 
 function create()
    hampla, hamsys = planet.get("Vilati Vilata")
@@ -98,13 +92,13 @@ function accept()
   "A fake transponder will be implemented on both our ships. This will ensure that, provided we don't do anything stupid on our way back, we will not be recognized as hostile by the Za'lek patrols and ground control services. So we should be able to refuel without any problem on Za'lek planets."]]):format(pripla:name(), prisys:name(), zlkpla:name(), zlksys:name(), hampla:name(), hamsys:name(), intsys:name(), reppla:name() ))
 
    misn.accept()
-   misn.setDesc(misn_desc)
-   misn.setReward(misn_reward)
+   misn.setDesc(_("You will help a Goddard executive to evade his Za'lek prison."))
+   misn.setReward(_("Hopefully something better than Gauss Guns..."))
 
    stage = 0
    hook.land("land")
    hook.enter("enter")
-   misn.osdCreate( osd_title, {_("Meet the rest of the team in %s in %s"):format(hampla:name(), hamsys:name()), _("Intercept the convoy in %s. Your Vendetta escort must survive"):format(intsys:name()), _("Report back on %s in %s"):format(reppla:name(), repsys:name())} )
+   misn.osdCreate( _("Dvaered Escape"), {_("Meet the rest of the team in %s in %s"):format(hampla:name(), hamsys:name()), _("Intercept the convoy in %s. Your Vendetta escort must survive"):format(intsys:name()), _("Report back on %s in %s"):format(reppla:name(), repsys:name())} )
    mark = misn.markerAdd(hamsys, "low")
 end
 
@@ -224,7 +218,7 @@ function fireSteal()
       tk.msg(_("At the hospital"), _([[After giving the signal to Hamfresser, you join the cockpit of your ship and start the motors in anticipation of an escape. A heavy explosion coming from the distance shakes your ship, followed by detonations that seem to approach. After a while, you see the commandos running in your direction, pursued by Za'lek police androids. When the last member of the team enters the ship, you take off in a hurry, closely followed by a few drones. "We made a mess, out there!" Says Hamfresser "But at least we've got the machine!"]]))
       stage = 4
       misn.osdDestroy()
-      misn.osdCreate( osd_title, {_("Escape to %s in %s. Do NOT destroy any Za'lek inhabited ship (only drones are allowed)"):format(reppla:name(), repsys:name())} )
+      misn.osdCreate( _("Dvaered Escape"), {_("Escape to %s in %s. Do NOT destroy any Za'lek inhabited ship (only drones are allowed)"):format(reppla:name(), repsys:name())} )
       hook.pilot(nil, "death", "killed_zlk")
 
       hospPlanet = planet.cur()
@@ -463,13 +457,13 @@ function weNeed2land()
    "Then, Tronk paralyzed all the prisoners and we identified and recovered the target. That's why the guy is blue actually. But in his hurry, Tronk used the armor-piercing dose. According to the medic, it is worse that we first thought. Apparently, she can keep the guy alive for a few periods, but she needs a machine that is not on board to save him. So at next stop, I'm afraid we will have to steal the machine at the spaceport's hospital. It really annoys me as it's the kind of operation that can get ugly very quickly, especially since the killing interdiction still runs, but we have no choice. I'll just be waiting for your signal at the bar next time we land.
    "If I may, I'd advise you to land somewhere within 3 periods, otherwise the VIP is likely to die, and to choose a place with a shipyard and an outfitter so that you'll be able to prepare your ship at best in case we need to escape quickly."]]))
    timelimit = time.get() + time.create(0,3,0)
-   misn.osdCreate(osd_title, {_("Land anywhere to let Hamfresser steal a machine. Time left: %s"):format((timelimit - time.get()):str())})
+   misn.osdCreate(_("Dvaered Escape"), {_("Land anywhere to let Hamfresser steal a machine. Time left: %s"):format((timelimit - time.get()):str())})
    datehook = hook.date(time.create(0, 0, 100), "tick")
 end
 
 function tick()
    if timelimit >= time.get() then
-      misn.osdCreate(osd_title, {_("Land anywhere to let Hamfresser steal a machine. Time left: %s"):format((timelimit - time.get()):str())})
+      misn.osdCreate(_("Dvaered Escape"), {_("Land anywhere to let Hamfresser steal a machine. Time left: %s"):format((timelimit - time.get()):str())})
    else
       tk.msg(_("The mission failed"), _([[Hamfresser rushes to the bridge. "All is lost, %s! The guy died. Our mission failed!"]]):format(player.name()))
       misn.finish(false)
@@ -593,7 +587,7 @@ function straferDiscuss()
    -- Add some fuel, far away so that no npc gathers it
    pos = vec2.new( -1.2*system.cur():radius(), 0 )
    system.addGatherable( "Fuel", 1, pos, vec2.new(0,0), 3600 )
-   Imark = system.mrkAdd( pos, mark_name )
+   Imark = system.mrkAdd( pos, _("FUEL") )
    gathHook = hook.gather("gather")
 end
 
@@ -644,7 +638,7 @@ function pirateDealer()
          player.pay(-fw.pirate_price)
          tk.msg(_("Immediate payment"),_([[When you give the credit chip, the pirate looks surprised: "Whow, mate, I didn't know I was talking to a millionaire. Well then thanks, here is your transponder."]]))
          misn.osdDestroy()
-         misn.osdCreate( osd_title, {osd_msg7:format(reppla:name(), repsys:name())} )
+         misn.osdCreate( _("Dvaered Escape"), {osd_msg7:format(reppla:name(), repsys:name())} )
          misn.npcRm(pirag)
          stage = 9
       else
@@ -653,7 +647,7 @@ function pirateDealer()
    elseif c == 2 then
       tk.msg(_("Pirate debt"),_([["Here is your transponder," the pirate says. "Don't forget to pay once you can, otherwise..."]]))
       misn.osdDestroy()
-      misn.osdCreate( osd_title, {osd_msg7:format(reppla:name(), repsys:name())} )
+      misn.osdCreate( _("Dvaered Escape"), {osd_msg7:format(reppla:name(), repsys:name())} )
       misn.npcRm(pirag)
       stage = 8
    else
@@ -666,7 +660,7 @@ function imperialAgent()
       tk.msg(_("You made the only good choice"),_([[After accepting, you invite the agent to follow you to the dock. You then enter your ship, where the commandos are waiting for you and inform Hamfresser on the situation. He anxiously looks at the two other remaining members of his team. Nikolov grimaces and Therus nervously hits the wall. "If you think we have no other choice..." Says the captain. After removing his uniform jacket (where his name and rank are written), Hamfresser takes a deep breath and joins the imperial agent outside, in front of the ship. From a window, you see them having what looks like a peaceful conversation.
    After a while, Hamfresser returns in the ship and the agent waves to indicate that you're allowed to take off. Nikolov ask her captain: "And?" "Who knows what these imperial weirdos wanted to know? I tried to dodge all the questions, but well. You never know."]]))
       misn.osdDestroy()
-      misn.osdCreate( osd_title, {_("Escape to %s in %s. Thanks to your deal with the Empire, the squadron in Alteris won't prevent you from jumping to Goddard"):format(reppla:name(), repsys:name())} )
+      misn.osdCreate( _("Dvaered Escape"), {_("Escape to %s in %s. Thanks to your deal with the Empire, the squadron in Alteris won't prevent you from jumping to Goddard"):format(reppla:name(), repsys:name())} )
       misn.markerAdd( system.get("Alteris"), "plot" )
       misn.npcRm(impag)
       stage = 7

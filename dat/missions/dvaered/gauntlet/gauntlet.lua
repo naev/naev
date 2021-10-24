@@ -22,19 +22,14 @@ logidstr = "log_gauntlet"
 -- TODO replace portraits/images
 npc_portrait   = "minerva_terminal.png"
 npc_image      = "minerva_terminal.png"
-npc_name       = _("Crimson Gauntlet Terminal")
 npc_description= _("A terminal to access the Crimson Gauntlet Virtual Reality environment. This directly allows you to enter the different challenges and tournaments available.")
-
-misn_title  = _("Crimson Gauntlet Challenge")
-misn_desc   = _("Annihilate all enemies in the Crimson Gauntlet.")
-misn_reward = _("Great riches!")
 
 gauntletsys = system.get("Crimson Gauntlet")
 
 sfx_clear = audio.new( 'snd/sounds/jingles/victory.ogg' )
 
 function create ()
-   npc_gauntlet = misn.npcAdd( "approach_gauntlet", npc_name, npc_portrait, npc_description )
+   npc_gauntlet = misn.npcAdd( "approach_gauntlet", _("Crimson Gauntlet Terminal"), npc_portrait, npc_description )
 end
 
 -- Land is unified for all types of combat
@@ -77,9 +72,9 @@ function approach_gauntlet ()
    misn.accept()
 
    -- Set details
-   misn.setDesc( misn_desc )
-   misn.setReward( misn_reward )
-   misn.setTitle( misn_title )
+   misn.setDesc( _("Annihilate all enemies in the Crimson Gauntlet.") )
+   misn.setReward( _("Great riches!") )
+   misn.setTitle( _("Crimson Gauntlet Challenge") )
 
    -- Add to log
    shiplog.create( logidstr, _("Totoran Tournament"), _("Totoran Tournament") )

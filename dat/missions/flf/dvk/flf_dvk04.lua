@@ -26,31 +26,12 @@ local flf = require "missions.flf.flf_common"
 require "missions.flf.flf_diversion"
 
 -- localization stuff
-title = {}
-text = {}
-
-title[1] = _("This looks familiar...")
-text[1] = _([[Benito greets you as always. After a few pleasantries, she gets down to business. "I've been looking for you, %s!" she says. "I have another special diversion operation for you. This time, it's a diversion in the %s system, so we can get some important work done in the Haleb system. It's the same deal as the diversion from Raelid you did some time ago." Aha, preparation for destruction of another Dvaered base! "You'll be paid %s if you accept. Would you like to help with this one?"]])
-
-text[2] = _([[Benito grins. "I knew you would want to do it. As always, the team will be waiting for a chance to do their work and hail you when they finish. Good luck, not like a pilot as great as you needs it!" You grin, and Benito excuses herself. Time to cause some mayhem again!]])
-
-title[3] = _("Maybe Another Time")
-text[3] = _([["OK, then. Feel free to come back later if you change your mind."]])
 
 success_text = {}
 success_text[1] = _([[You receive a transmission from Benito. "Operation successful!" she says. "I've got your pay waiting for you back at home, so don't get yourself blown up on the way back!"]])
 
 pay_text = {}
 pay_text[1] = _([[When you return, Benito hands you the agreed-upon payment, after which you exchange some pleasantries before parting ways once again.]])
-
-misn_title = _("Diversion from Haleb")
-misn_desc = _("A covert operation is being conducted in Haleb. You are to create a diversion from this operation by wreaking havoc in the nearby %s system.")
-
-npc_name = _("Benito")
-npc_desc = _("Benito looks in your direction and waves you over. It seems your services are needed again.")
-
-log_text = _([[You diverted Dvaered forces away from Haleb so that other FLF agents could complete an important operation there, most likely planting a bomb on another Dvaered base.]])
-
 
 function create ()
    missys = system.get( "Theras" )
@@ -60,21 +41,21 @@ function create ()
    credits = 400e3
    reputation = 3
 
-   misn.setNPC( npc_name, "flf/unique/benito.webp", npc_desc )
+   misn.setNPC( _("Benito"), "flf/unique/benito.webp", _("Benito looks in your direction and waves you over. It seems your services are needed again.") )
 end
 
 
 function accept ()
-   if tk.yesno( title[1], text[1]:format(
+   if tk.yesno( _("This looks familiar..."), _([[Benito greets you as always. After a few pleasantries, she gets down to business. "I've been looking for you, %s!" she says. "I have another special diversion operation for you. This time, it's a diversion in the %s system, so we can get some important work done in the Haleb system. It's the same deal as the diversion from Raelid you did some time ago." Aha, preparation for destruction of another Dvaered base! "You'll be paid %s if you accept. Would you like to help with this one?"]]):format(
          player.name(), missys:name(), fmt.credits( credits ) ) ) then
-      tk.msg( title[1], text[2] )
+      tk.msg( _("This looks familiar..."), _([[Benito grins. "I knew you would want to do it. As always, the team will be waiting for a chance to do their work and hail you when they finish. Good luck, not like a pilot as great as you needs it!" You grin, and Benito excuses herself. Time to cause some mayhem again!]]) )
 
       misn.accept()
 
       osd_desc[1] = osd_desc[1]:format( missys:name() )
-      misn.osdCreate( osd_title, osd_desc )
-      misn.setTitle( misn_title )
-      misn.setDesc( misn_desc:format( missys:name() ) )
+      misn.osdCreate( _("FLF Diversion"), osd_desc )
+      misn.setTitle( _("Diversion from Haleb") )
+      misn.setDesc( _("A covert operation is being conducted in Haleb. You are to create a diversion from this operation by wreaking havoc in the nearby %s system."):format( missys:name() ) )
       marker = misn.markerAdd( missys, "plot" )
       misn.setReward( fmt.credits( credits ) )
 
@@ -85,7 +66,7 @@ function accept ()
       hook.jumpout( "leave" )
       hook.land( "leave" )
    else
-      tk.msg( title[3], text[3] )
+      tk.msg( _("Maybe Another Time"), _([["OK, then. Feel free to come back later if you change your mind."]]) )
    end
 end
 
@@ -96,7 +77,7 @@ function land ()
       player.pay( credits )
       flf.setReputation( 75 )
       faction.get("FLF"):modPlayer( reputation )
-      flf.addLog( log_text )
+      flf.addLog( _([[You diverted Dvaered forces away from Haleb so that other FLF agents could complete an important operation there, most likely planting a bomb on another Dvaered base.]]) )
       misn.finish( true )
    end
 end

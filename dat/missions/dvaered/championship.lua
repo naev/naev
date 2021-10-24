@@ -32,47 +32,11 @@ local fmt = require "format"
 require "proximity"
 local portrait = require "portrait"
 
-title = {}
-text = {}
 osd_msg = {}
-npc_desc = {}
-
-title[1] = _("Do you want to take part to a challenge?")
-text[1] = _([["Hello, I'm a member of the staff of the Dvaered dogfight challenge. Here are the rules: you need to take off with a fighter-class ship and to join your starting mark. After that, you will try to disable your opponent. Don't kill them; the security staff won't forgive that. It is forbidden to use missiles, so you won't be allowed to have those equipped while taking off. It's also forbidden to board the opponent's ship and to attack him before the signal is given. You are not allowed to land on any planet or jump away during the championship.
-    We are looking for pilots. Are you in?"]])
-
-title[2] = _("Let's go")
-text[2] = _([[For this round, your opponent is %s. Remember: use a fighter with no launchers. You still have to defeat %s opponents to win.]])
-
-title[3] = _("You won this round")
-text[3] = _([["Congratulations," the staff says to you. "Come back when you are ready for the next round!"]])
-
-title[4] = _("You are the new champion")
-text[4] = _([[Congratulations! The staff pays you %s.]])
-
-title[5] = _("You are the vice-champion")
-text[5] = _([[Congratulations! The staff pays you %s.]])
-
-title[6] = _("Thanks for playing")
-text[6] = _([[The staff pays you %s.]])
 
 -- Mission details
-misn_title = _("The Dvaered Championship")
-misn_reward = _("From 50k to 1.6m credits, depending on your rank")
-misn_desc = _("You are taking part in a fight contest. Try to do your best!")
 
 -- NPC
-npc_desc[1] = _("An official")
-
-npc_desc[2] = _("Pilot")
-
-npc_desc[3] = _("Pilot")
-
-npc_desc[4] = _("Imperial pilot")
-
-npc_desc[5] = _("Dvaered pilot")
-
-npc_desc[6] = _("Strange pilot")
 
 npc_portrait = {}
 npc_portrait[2] = portrait.get()
@@ -83,13 +47,11 @@ npc_portrait[6] = portrait.get("Pirate")
 npc_portrait["__save"] = true
 
 -- OSD
-osd_title = _("The Dvaered Championship, round %n")
 osd_msg[1] = _("Go to the starting point")
 osd_msg[2] = _("Disable your opponent; DO NOT KILL")
 osd_msg[3] = _("Land on %s")
 
 --mark
-mark_name = _("START")
 
 function create ()
 
@@ -104,24 +66,24 @@ function create ()
    end
 
    officialFace = portrait.getMil( "Dvaered" )
-   official = misn.setNPC(npc_desc[1], officialFace, _("This person seems to be looking for suitable combat pilots."))
+   official = misn.setNPC(_("An official"), officialFace, _("This person seems to be looking for suitable combat pilots."))
 end
 
 function populate_bar() --add some random npcs
    if rnd.rnd() < 0.5 then
-      misn.npcAdd("competitor1", npc_desc[2], npc_portrait[2], _("This pilot looks very self-confident"))
+      misn.npcAdd("competitor1", _("Pilot"), npc_portrait[2], _("This pilot looks very self-confident"))
    end
    if rnd.rnd() < 0.5 then
-      misn.npcAdd("competitor2", npc_desc[3], npc_portrait[3], _("This pilot seems to work as a private combat pilot"))
+      misn.npcAdd("competitor2", _("Pilot"), npc_portrait[3], _("This pilot seems to work as a private combat pilot"))
    end
    if rnd.rnd() < 0.5 then
-      misn.npcAdd("competitor3", npc_desc[4], npc_portrait[4], _([[This pilot is is clearly from the Empire.]]))
+      misn.npcAdd("competitor3", _("Imperial pilot"), npc_portrait[4], _([[This pilot is is clearly from the Empire.]]))
    end
    if rnd.rnd() < 0.5 then
-      misn.npcAdd("competitor4", npc_desc[5], npc_portrait[5], _([[This pilot surely works as a Vendetta pilot.]]))
+      misn.npcAdd("competitor4", _("Dvaered pilot"), npc_portrait[5], _([[This pilot surely works as a Vendetta pilot.]]))
    end
    if rnd.rnd() < 0.5 then
-      misn.npcAdd("competitor5", npc_desc[6], npc_portrait[6], _([[This pilot looks like a pirate, but strangely enough, the authorities don't seem worried.]]))
+      misn.npcAdd("competitor5", _("Strange pilot"), npc_portrait[6], _([[This pilot looks like a pirate, but strangely enough, the authorities don't seem worried.]]))
    end
 end
 
@@ -151,16 +113,17 @@ function accept()
    level = 0
    reward = 50e3
 
-   if tk.yesno(title[1], text[1]) then
+   if tk.yesno(_("Do you want to take part to a challenge?"), _([["Hello, I'm a member of the staff of the Dvaered dogfight challenge. Here are the rules: you need to take off with a fighter-class ship and to join your starting mark. After that, you will try to disable your opponent. Don't kill them; the security staff won't forgive that. It is forbidden to use missiles, so you won't be allowed to have those equipped while taking off. It's also forbidden to board the opponent's ship and to attack him before the signal is given. You are not allowed to land on any planet or jump away during the championship.
+    We are looking for pilots. Are you in?"]])) then
 
       misn.accept()
 
       osd_msg[3] = osd_msg[3]:format(planame)
 
-      misn.setTitle(misn_title)
-      misn.setReward(misn_reward:format(fmt.number(reward)))
-      misn.setDesc(misn_desc)
-      misn.osdCreate(misn_title, osd_msg)
+      misn.setTitle(_("The Dvaered Championship"))
+      misn.setReward(_("From 50k to 1.6m credits, depending on your rank"):format(fmt.number(reward)))
+      misn.setDesc(_("You are taking part in a fight contest. Try to do your best!"))
+      misn.osdCreate(_("The Dvaered Championship"), osd_msg)
 
       usedNames = {}   --In order not to have two pilots with the same name
 
@@ -208,7 +171,7 @@ function beginbattle()
 
       usedNames[#usedNames+1] = opponame
 
-      tk.msg(title[2], text[2]:format(opponame,fmt.number(5-level)))
+      tk.msg(_("Let's go"), _([[For this round, your opponent is %s. Remember: use a fighter with no launchers. You still have to defeat %s opponents to win.]]):format(opponame,fmt.number(5-level)))
 
       enterhook = hook.enter("enter")
 
@@ -352,7 +315,7 @@ function enter()
 
       --Adding the starting mark
       start_pos = mispla:pos() + vec2.new( -1000, -1500)
-      mark = system.mrkAdd( start_pos, mark_name )
+      mark = system.mrkAdd( start_pos, _("START") )
       prox = hook.timer(0.5, "proximity", {location = start_pos, radius = 300, funcname = "assault"})
 
    elseif haslauncher == true then
@@ -399,19 +362,19 @@ function land()
 
    if stage == 2 and planet.cur() == mispla then  --player goes to next round
       --Manage the player's progress
-      tk.msg(title[3], text[3])
+      tk.msg(_("You won this round"), _([["Congratulations," the staff says to you. "Come back when you are ready for the next round!"]]))
 
       populate_bar()
-      official = misn.npcAdd("cleanNbegin", npc_desc[1], officialFace, _("This person seems to be looking for suitable combat pilots."))
+      official = misn.npcAdd("cleanNbegin", _("An official"), officialFace, _("This person seems to be looking for suitable combat pilots."))
 
       elseif stage == 3 and planet.cur() == mispla then  --player will be payed
 
       if level == 5 then  --you are the champion
-         tk.msg(title[4], text[4]:format(fmt.credits(reward * 2^level)))
+         tk.msg(_("You are the new champion"), _([[Congratulations! The staff pays you %s.]]):format(fmt.credits(reward * 2^level)))
       elseif level == 4 then
-         tk.msg(title[5], text[5]:format(fmt.credits(reward * 2^level)))
+         tk.msg(_("You are the vice-champion"), _([[Congratulations! The staff pays you %s.]]):format(fmt.credits(reward * 2^level)))
       else
-         tk.msg(title[6], text[6]:format(fmt.credits(reward * 2^level)))
+         tk.msg(_("Thanks for playing"), _([[The staff pays you %s.]]):format(fmt.credits(reward * 2^level)))
       end
 
       player.pay(reward * 2^level)

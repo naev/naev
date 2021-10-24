@@ -56,8 +56,6 @@ piracyrisk[4] = _("#nPiracy Risk:#0 High")
 
 --=Landing=--
 
-cargo_land_title = _("Successful Delivery")
-
 cargo_land = {}
 cargo_land[1] = _("The containers of %s are carried out of your ship by a sullen group of workers. The job takes inordinately long to complete, and the leader pays you without speaking a word.")
 cargo_land[2] = _("The containers of %s are rushed out of your vessel by a team shortly after you land. Before you can even collect your thoughts, one of them presses a credit chip in your hand and departs.")
@@ -67,8 +65,6 @@ cargo_land_slow = {}
 cargo_land_slow[1] = _("The containers of %s are carried out of your ship by a sullen group of workers. They are not happy that they have to work overtime because you were late. You are paid only %s of the %s you were promised.")
 cargo_land_slow[2] = _("The containers of %s are rushed out of your vessel by a team shortly after you land. Your late arrival is stretching quite a few schedules! Your pay is only %s instead of %s because of that.")
 cargo_land_slow[3] = _("The containers of %s are unloaded by an exhausted-looking bunch of dockworkers. You missed the deadline, so your reward is only %s instead of the %s you were hoping for.")
-
-osd_title = _("Rush cargo mission")
 
 -- Create the mission
 function create()
@@ -159,7 +155,7 @@ function accept()
    osd_msg[1] = _("Fly to %s in the %s system before %s\n(%s remaining)"):format(
       destplanet:name(), destsys:name(), timelimit:str(),
       (timelimit - time.get()):str() )
-   misn.osdCreate(osd_title, osd_msg)
+   misn.osdCreate(_("Rush cargo mission"), osd_msg)
    hook.land("land")
    hook.date(time.create(0, 0, 100), "tick") -- 100STU per tick
 end
@@ -170,11 +166,11 @@ function land()
       if intime then
       -- Semi-random message.
       lmisn.sfxMoney()
-      vntk.msg( cargo_land_title, cargo_land[rnd.rnd(1, #cargo_land)]:format(_(cargo)) )
+      vntk.msg( _("Successful Delivery"), cargo_land[rnd.rnd(1, #cargo_land)]:format(_(cargo)) )
    else
       -- Semi-random message for being late.
       lmisn.sfxMoney()
-      vntk.msg( cargo_land_title, cargo_land_slow[rnd.rnd(1, #cargo_land_slow)]:format(
+      vntk.msg( _("Successful Delivery"), cargo_land_slow[rnd.rnd(1, #cargo_land_slow)]:format(
          _(cargo), fmt.credits(reward / 2), fmt.credits(reward) ) )
       reward = reward / 2
    end
@@ -192,7 +188,7 @@ function tick()
       osd_msg[1] = _("Fly to %s in the %s system before %s\n(%s remaining)"):format(
          destplanet:name(), destsys:name(), timelimit:str(),
          (timelimit - time.get()):str() )
-      misn.osdCreate(osd_title, osd_msg)
+      misn.osdCreate(_("Rush cargo mission"), osd_msg)
    elseif timelimit2 <= time.get() then
       -- Case missed second deadline
       player.msg( _("The delivery to %s has been canceled! You were too late."):format( destsys:name() ) )
@@ -200,7 +196,7 @@ function tick()
    elseif intime then
       -- Case missed first deadline
       osd_msg[1] = _("Fly to %s in the %s system\n(deadline missed, but you can still make a late delivery if you hurry)"):format( destplanet:name(), destsys:name() )
-      misn.osdCreate(osd_title, osd_msg)
+      misn.osdCreate(_("Rush cargo mission"), osd_msg)
       intime = false
    end
 end

@@ -43,16 +43,12 @@ grumblings =   {_("Where's that Harja? He should be showing up any time now."),
 harjadesc = _("You've found Harja. He's sourly watching the galactic news, and hasn't noticed you yet.")
 
 osd_msg   = {}
-osd_title = _("Sirian Truce")
 osd_msg[1] = _("Look for Harja in Sirian bars")
 osd_msg[2] = _("Convince Harja to come with you")
 osd_msg[3] = _("Return to %s (%s)")
 osd_msg["__save"] = true
 
-misn_desc = _("Joanne has contacted you. She wants to meet you on %s (%s).")
 misn_reward = fmt.credits(1.5e6)
-
-log_text = _([[You were hired by Joanne to deliver an invitation to Harja to talk with her. He agreed on the condition that you first deal with associates of his that were coming after him. When Joanne and Harja met, they came to an agreement that neither of them were responsible for the hack of the High Academy main computer which was the source of their feud. Joanne said that she will probably call for you again when she's figured out how to proceed.]])
 
 local stages = {start=1, findHarja=2, killAssociates=3, fetchHarja=4, finish=5}
 
@@ -68,7 +64,7 @@ function create()
    -- This mission auto-accepts, but a choice will be offered to the player later. No OSD yet.
    misn.accept()
    misn.setReward(misn_reward)
-   misn.setDesc(misn_desc:format(startplanet:name(), startsys:name()))
+   misn.setDesc(_("Joanne has contacted you. She wants to meet you on %s (%s)."):format(startplanet:name(), startsys:name()))
    hook.land("land")
    hook.load("land")
    mark = misn.markerAdd( startsys, "low" )
@@ -101,7 +97,7 @@ function land()
     You take your leave, and head back to the spaceport. Though on the surface it might seem like you accomplished little, you get the feeling this was an important step toward the conclusion of the whole affair.]]):format(player.name()))
       player.pay(1.5e6)
       var.pop("achack04repeat")
-      srs.addAcHackLog( log_text )
+      srs.addAcHackLog( _([[You were hired by Joanne to deliver an invitation to Harja to talk with her. He agreed on the condition that you first deal with associates of his that were coming after him. When Joanne and Harja met, they came to an agreement that neither of them were responsible for the hack of the High Academy main computer which was the source of their feud. Joanne said that she will probably call for you again when she's figured out how to proceed.]]) )
       misn.finish(true)
    end
 end
@@ -123,7 +119,7 @@ function talkJoanne()
     When Joanne is gone, you take a moment to reflect that you're going to have to deal with Harja again. Joanne wanted no violence, but will Harja leave room for that? You'll find out when you catch him.]]):format(player.name()))
       osd_msg[3] = osd_msg[3]:format(startplanet:name(), startsys:name())
       misn.markerRm(mark)
-      misn.osdCreate(osd_title, osd_msg)
+      misn.osdCreate(_("Sirian Truce"), osd_msg)
       misn.setDesc(_("Joanne wants you to find Harja and convince him to meet her in person."))
       misn.npcRm(joanne_npc)
    end
@@ -147,7 +143,7 @@ function talkHarja()
       marker = misn.markerAdd(destsys, "high")
 
       osd_msg[2] = _("Go to %s and deal with Harja's associates"):format(destsys:name())
-      misn.osdCreate(osd_title, osd_msg)
+      misn.osdCreate(_("Sirian Truce"), osd_msg)
       misn.osdActive(2)
 
       stage = stage + 1
@@ -227,7 +223,7 @@ function death()
       misn.markerMove(marker, harjasys)
 
       osd_msg[2] = _("Convince Harja to come with you")
-      misn.osdCreate(osd_title, osd_msg)
+      misn.osdCreate(_("Sirian Truce"), osd_msg)
       misn.osdActive(2)
    end
 end

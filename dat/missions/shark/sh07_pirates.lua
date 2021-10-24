@@ -30,45 +30,16 @@ local fmt = require "format"
 local shark = require "common.shark"
 local lmisn = require "lmisn"
 
-title = {}
-text = {}
 osd_msg = {}
-npc_desc = {}
-
-title[1] = _("The mission")
-text[1] = _([["Hello again. As you know, I've agreed with the FLF on a contract that will extend our sales of ships to them substantially. Of course, this deal must remain a secret, which is why it is being done through a false black market dealer.
-    "However, we have reason to suspect that a few key influential pirates may have their eyes on the FLF as possible buyers of the Skull and Bones pirate ships. We don't think the FLF will have any interest in those ships, but the pirates' ambitions could give them motivation to attack our false dealer's trade posts, destroying our deal with the FLF anyway. We of course can't have that.
-    "So what we want you to do, quite simply, is to eliminate these pirates. It's not that many of them; there are four pirates we need eliminated, and thankfully, they're all spread out. That being said, some of them do have quite big ships, so you will have to make sure you can handle that. Are you willing to do this job for us?"]])
-
-title[2] = _("Very good")
-text[2] = _([["So, here are the details we have gathered about these pirates:
-    "%s should be in %s, flying a Gawain. He seems to be on a holiday, so he probably isn't able to fight back and will just run away.
-    "%s should be in %s, flying a Kestrel. We believe he has some escorts.
-    "%s should be in %s, also flying a Kestrel. He has escorts, too, according to our records.
-    "And finally, %s is in %s. He stole and beefed up a Goddard recently, so make sure you're prepared for that. He also has escorts, according to our records.
-    "And that's about it! Come back for your fee when you have finished."]])
-
-title[4] = _("Mission accomplished")
-text[4] = _("You have killed the four pirates. Now to return to %s and collect your payment...")
-
-title[5] = _("That was impressive")
-text[5] = _([[Smith awaits your arrival at the spaceport. When you exit your ship, he smiles and walks up to you. "Good job," he says. "Our deal is secure, thanks to you. Here is your pay and something extra for your hard work. Thank you for all your help!"
-    He hands you a credit chip and what appears to be a Nexus Shipyards commemorative sandwich holder.]])
 
 -- Mission details
-misn_title = _("The Last Detail")
-misn_desc = _("Nexus Shipyards has tasked you with killing four pirates.")
 
 -- NPC
-npc_desc[1] = _("Arnold Smith")
 
 -- OSD
 osd_title = _("The Last Detail")
 osd_msg[1] = _("Kill the four pirates")
 osd_msg[2] = _("Report back to %s in %s")
-
-log_text = _([[You eliminated some pirates that were about to get in the way of Nexus Shipyards' business.]])
-
 
 function create ()
 
@@ -101,7 +72,7 @@ function create ()
       misn.finish(false)
    end
 
-   misn.setNPC(npc_desc[1], "neutral/unique/arnoldsmith.webp", _([[Perhaps it would be worthwhile to see if he has another job for you.]]))
+   misn.setNPC(_("Arnold Smith"), "neutral/unique/arnoldsmith.webp", _([[Perhaps it would be worthwhile to see if he has another job for you.]]))
 end
 
 function accept()
@@ -121,15 +92,22 @@ function accept()
    kername2 = string.format( _("%s Jr." ), pilotname.pirate() )
    godname = string.format( _("%s II"), pilotname.pirate() )
 
-   if tk.yesno(title[1], text[1]) then
+   if tk.yesno(_("The mission"), _([["Hello again. As you know, I've agreed with the FLF on a contract that will extend our sales of ships to them substantially. Of course, this deal must remain a secret, which is why it is being done through a false black market dealer.
+    "However, we have reason to suspect that a few key influential pirates may have their eyes on the FLF as possible buyers of the Skull and Bones pirate ships. We don't think the FLF will have any interest in those ships, but the pirates' ambitions could give them motivation to attack our false dealer's trade posts, destroying our deal with the FLF anyway. We of course can't have that.
+    "So what we want you to do, quite simply, is to eliminate these pirates. It's not that many of them; there are four pirates we need eliminated, and thankfully, they're all spread out. That being said, some of them do have quite big ships, so you will have to make sure you can handle that. Are you willing to do this job for us?"]])) then
       misn.accept()
-      tk.msg(title[2], text[2]:format(gawname, gawsys:name(), kername1, kersys1:name(), kername2, kersys2:name(), godname, godsys:name()))
+      tk.msg(_("Very good"), _([["So, here are the details we have gathered about these pirates:
+    "%s should be in %s, flying a Gawain. He seems to be on a holiday, so he probably isn't able to fight back and will just run away.
+    "%s should be in %s, flying a Kestrel. We believe he has some escorts.
+    "%s should be in %s, also flying a Kestrel. He has escorts, too, according to our records.
+    "And finally, %s is in %s. He stole and beefed up a Goddard recently, so make sure you're prepared for that. He also has escorts, according to our records.
+    "And that's about it! Come back for your fee when you have finished."]]):format(gawname, gawsys:name(), kername1, kersys1:name(), kername2, kersys2:name(), godname, godsys:name()))
 
       osd_msg[2] = osd_msg[2]:format(pplname,psyname)
 
-      misn.setTitle(misn_title)
+      misn.setTitle(_("The Last Detail"))
       misn.setReward(fmt.credits(reward))
-      misn.setDesc(misn_desc)
+      misn.setDesc(_("Nexus Shipyards has tasked you with killing four pirates."))
       osd = misn.osdCreate(osd_title, osd_msg)
       misn.osdActive(1)
 
@@ -150,11 +128,12 @@ end
 function land ()
    --Job is done
    if stage == 1 and planet.cur() == planet.get("Darkshed") then
-      tk.msg(title[5], text[5])
+      tk.msg(_("That was impressive"), _([[Smith awaits your arrival at the spaceport. When you exit your ship, he smiles and walks up to you. "Good job," he says. "Our deal is secure, thanks to you. Here is your pay and something extra for your hard work. Thank you for all your help!"
+    He hands you a credit chip and what appears to be a Nexus Shipyards commemorative sandwich holder.]]))
       pir.reputationNormalMission(rnd.rnd(2,3))
       player.pay(reward)
       player.outfitAdd("Sandwich Holder")
-      shark.addLog( log_text )
+      shark.addLog( _([[You eliminated some pirates that were about to get in the way of Nexus Shipyards' business.]]) )
       misn.finish(true)
    end
 end
@@ -302,7 +281,7 @@ end
 function generic_dead()
    --Are there still other pirates to kill ?
    if gawdead == true and kerdead1 == true and kerdead2 == true and goddead == true then
-      tk.msg(title[4], text[4]:format(paysys:name()))
+      tk.msg(_("Mission accomplished"), _("You have killed the four pirates. Now to return to %s and collect your payment..."):format(paysys:name()))
       stage = 1
       misn.osdActive(2)
       marker2 = misn.markerAdd(paysys, "low")

@@ -32,16 +32,11 @@
 local fmt = require "format"
 local emp = require "common.empire"
 
-misn_title = _("Collective Espionage")
 misn_desc = {}
 misn_desc[1] = _("Scan the Collective systems for wireless communications")
 misn_desc[2] = _("Travel back to %s in %s")
 misn_desc["__save"] = true
 
-title = {}
-title[1] = _("Lt. Commander Dimitri")
-title[2] = _("Collective Espionage")
-title[3] = _("Mission Accomplished")
 text = {}
 text[1] = _([[You meet up with Lt. Commander Dimitri.
     "We managed to capture the drone after you located it. It didn't seem to be in good health. Our scientists are studying it as we speak, but we've found something strange in it. Some sort of weird wireless module. We'd like you to do a deep scan of the nearby Collective systems to see if you can pick up any strange wireless communications. This will be a dangerous mission, because you'll need to stay in the system long enough for the scan to complete. I recommend a fast ship to outrun the drones. Are you interested in doing this now?"]])
@@ -51,9 +46,6 @@ text[2] = _([["You need to jump to each of the systems indicated on your map, an
 text[3] = _([[After landing, Lt. Commander Dimitri greets you on the land pad.
     "I suppose all went well? Those drones can really give a beating. We'll have the researchers start looking at your logs right away. Meet me in the bar again in a while."]])
 
-log_text = _([[You helped gather intel on the Collective by scanning Collective systems. Lt. Commander Dimitri told you to meet him in the bar again on Omega Station.]])
-
-
 function create ()
    -- Note: this mission does not make any system claims.
    misn.setNPC( _("Dimitri"), "empire/unique/dimitri.webp", _("You notice Lt. Commander Dimitri motioning for you to come over to him.") )
@@ -62,7 +54,7 @@ end
 
 function accept ()
    -- Intro text
-   if not tk.yesno( title[1], text[1] ) then
+   if not tk.yesno( _("Lt. Commander Dimitri"), text[1] ) then
       misn.finish()
    end
 
@@ -79,14 +71,14 @@ function accept ()
 
    -- Mission details
    misn_desc[2] = misn_desc[2]:format(misn_base:name(), misn_base_sys:name())
-   misn.setTitle(misn_title)
+   misn.setTitle(_("Collective Espionage"))
    misn.setReward( fmt.credits( credits ) )
    misn.setDesc(misn_desc[1])
    misn_marker1 = misn.markerAdd(targsys1, "low")
    misn_marker2 = misn.markerAdd(targsys2, "low")
-   misn.osdCreate(misn_title, misn_desc)
+   misn.osdCreate(_("Collective Espionage"), misn_desc)
 
-   tk.msg( title[2], text[2] )
+   tk.msg( _("Collective Espionage"), text[2] )
    player.outfitAdd("Map: Collective Space")
 
    hook.enter("enter")
@@ -136,10 +128,10 @@ end
 
 function land()
    if planet.cur() == misn_base and sysdone1 and sysdone2 then
-      tk.msg( title[3], text[3] )
+      tk.msg( _("Mission Accomplished"), text[3] )
       player.pay(credits)
       faction.modPlayerSingle("Empire",5)
-      emp.addCollectiveLog( log_text )
+      emp.addCollectiveLog( _([[You helped gather intel on the Collective by scanning Collective systems. Lt. Commander Dimitri told you to meet him in the bar again on Omega Station.]]) )
       misn.finish(true)
    end
 end

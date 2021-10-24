@@ -36,10 +36,6 @@ require "proximity"
 local fmt = require "format"
 local emp = require "common.empire"
 
-misn_title = _("Collective Extraction")
-misn_desc = {}
-misn_desc[1] = _("Check for survivors on %s in %s")
-misn_desc[2] = _("Travel back to %s in %s")
 title = {}
 title[1] = _("Collective Extraction")
 title[2] = _("Planet %s")
@@ -61,9 +57,6 @@ osd_msg[2] = _("Land on %s")
 osd_msg[3] = _("Return to %s")
 osd_msg["__save"] = true
 
-log_text = _([[You attempted to rescue the commando team on Eiroik, but despite your best efforts, they were already dead by the time you got there. However, you managed to retrieve a datapad from the team's wrecked ship. Lt. Commander Dimitri has asked you to meet him in the bar again in a while.]])
-
-
 function create ()
    misn_target, misn_target_sys = planet.get("Eiroik")
 
@@ -83,14 +76,14 @@ function create ()
       misn_marker = misn.markerAdd( misn_target_sys, "low" )
 
       -- Mission details
-      misn.setTitle(misn_title)
+      misn.setTitle(_("Collective Extraction"))
       misn.setReward( fmt.credits( credits ) )
-      misn.setDesc( string.format(misn_desc[1], misn_target:name(), misn_target_sys:name() ))
+      misn.setDesc( string.format(_("Check for survivors on %s in %s"), misn_target:name(), misn_target_sys:name() ))
       tk.msg( title[1], string.format(text[2], misn_target_sys:name(), misn_target:name()) )
       osd_msg[1] = osd_msg[1]:format(misn_target_sys:name())
       osd_msg[2] = osd_msg[2]:format(misn_target:name())
       osd_msg[3] = osd_msg[3]:format(misn_base:name())
-      misn.osdCreate(misn_title, osd_msg)
+      misn.osdCreate(_("Collective Extraction"), osd_msg)
 
       hook.enter("enter")
       hook.land("land")
@@ -274,7 +267,7 @@ function land ()
       player.pay(credits)
       faction.modPlayerSingle("Empire",5)
 
-      emp.addCollectiveLog( log_text )
+      emp.addCollectiveLog( _([[You attempted to rescue the commando team on Eiroik, but despite your best efforts, they were already dead by the time you got there. However, you managed to retrieve a datapad from the team's wrecked ship. Lt. Commander Dimitri has asked you to meet him in the bar again in a while.]]) )
 
       misn.finish(true)
    end

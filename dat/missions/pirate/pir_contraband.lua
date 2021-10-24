@@ -23,11 +23,6 @@ local pir = require "common.pirate"
 local car = require "common.cargo"
 local fmt = require "format"
 
-
-misn_desc = _("Smuggling contraband goods to %s in the %s system.%s")
-
-osd_title = _("Smuggling %s")
-
 --[[
 --   Pirates shipping missions are always timed, but quite lax on the schedules
 --   and pays a lot more then the rush missions
@@ -158,9 +153,9 @@ function create()
    end
    misn.markerAdd(destplanet, "computer")
    if pir.factionIsPirate( planet.cur():faction() ) then
-      car.setDesc( misn_desc:format( destplanet:name(), destsys:name(), faction_text ), cargo, amount, destplanet, timelimit )
+      car.setDesc( _("Smuggling contraband goods to %s in the %s system.%s"):format( destplanet:name(), destsys:name(), faction_text ), cargo, amount, destplanet, timelimit )
    else
-      car.setDesc( misn_desc:format( destplanet:name(), destsys:name(), faction_text ) .. "\n\n" .. _("#rWARNING:#0 Contraband is illegal in most systems and you will face consequences if caught by patrols."), cargo, amount, destplanet, timelimit )
+      car.setDesc( _("Smuggling contraband goods to %s in the %s system.%s"):format( destplanet:name(), destsys:name(), faction_text ) .. "\n\n" .. _("#rWARNING:#0 Contraband is illegal in most systems and you will face consequences if caught by patrols."), cargo, amount, destplanet, timelimit )
    end
 
    misn.setReward( fmt.credits(reward) )
@@ -195,7 +190,7 @@ function accept()
    osd_msg[1] = _("Fly to %s in the %s system before %s\n(%s remaining)"):format(
       destplanet:name(), destsys:name(), timelimit:str(),
       (timelimit - time.get()):str() )
-   misn.osdCreate( string.format(osd_title,cargo), osd_msg)
+   misn.osdCreate( string.format(_("Smuggling %s"),cargo), osd_msg)
    hook.land( "land" ) -- only hook after accepting
    hook.date(time.create(0, 0, 100), "tick") -- 100STU per tick
 end
@@ -223,7 +218,7 @@ function tick()
       osd_msg[1] = _("Fly to %s in the %s system before %s\n(%s remaining)"):format(
          destplanet:name(), destsys:name(), timelimit:str(),
          ( timelimit - time.get() ):str() )
-      misn.osdCreate(string.format(osd_title,cargo), osd_msg)
+      misn.osdCreate(string.format(_("Smuggling %s"),cargo), osd_msg)
    elseif timelimit <= time.get() then
       -- Case missed deadline
       player.msg(_("MISSION FAILED: You have failed to deliver the goods on time!"))

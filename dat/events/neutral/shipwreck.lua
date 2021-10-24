@@ -29,19 +29,20 @@ function create ()
 
     -- The _("Shipwrecked %s") will be a random trader vessel.
     local r = rnd.rnd()
+    local dship
     if r > 0.95 then
-        ship = "Gawain"
+        dship = "Gawain"
     elseif r > 0.8 then
-        ship = "Mule"
+        dship = "Mule"
     elseif r > 0.5 then
-        ship = "Koala"
+        dship = "Koala"
     else
-        ship = "Llama"
+        dship = "Llama"
     end
 
     -- Create the derelict.
     local pos   = vec2.newP( rnd.rnd(2000,3000), rnd.rnd()*360 )
-    derelict    = pilot.add( ship, "Derelict", pos, nil, {ai="dummy"} )
+    derelict    = pilot.add( dship, "Derelict", pos, nil, {ai="dummy"} )
     derelict:disable()
     derelict:rename(_("Shipwrecked %s"):format(_("August")))
     -- Added extra visibility for big systems (A.)

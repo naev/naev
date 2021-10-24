@@ -40,15 +40,7 @@ local fmt = require "format"
 local emp = require "common.empire"
 
 -- Mission details
-misn_title = _("Empire VIP Rescue")
-misn_desc = {}
-misn_desc[1] = _("Rescue the VIP from a transport ship in the %s system")
-misn_desc[2] = _("Return to %s in the %s system with the VIP")
 -- Fancy text messages
-title = {}
-title[1] = _("Commander Soldner")
-title[2] = _("Disabled Ship")
-title[3] = _("Mission Success")
 text = {}
 text[1] = _([[You meet up once more with Commander Soldner at the bar.
     "Hello again, %s. Still interested in doing another mission? This one will be more dangerous."]])
@@ -85,7 +77,7 @@ end
 
 function accept ()
    -- Intro text
-   if not tk.yesno( title[1], string.format( text[1], player.name() ) ) then
+   if not tk.yesno( _("Commander Soldner"), string.format( text[1], player.name() ) ) then
       misn.finish()
    end
 
@@ -98,14 +90,14 @@ function accept ()
    -- Mission details
    misn_stage = 0
    reward = 750e3
-   misn.setTitle(misn_title)
+   misn.setTitle(_("Empire VIP Rescue"))
    misn.setReward( fmt.credits(reward) )
-   misn.setDesc( string.format( misn_desc[1], destsys:name() ) )
+   misn.setDesc( string.format( _("Rescue the VIP from a transport ship in the %s system"), destsys:name() ) )
 
    -- Flavour text and mini-briefing
-   tk.msg( title[1], string.format( text[2], destsys:name(), destsys:name() ) )
-   tk.msg( title[1], string.format( text[3], fmt.credits(reward) ) )
-   misn.osdCreate(misn_title, {misn_desc[1]:format(destsys:name())})
+   tk.msg( _("Commander Soldner"), string.format( text[2], destsys:name(), destsys:name() ) )
+   tk.msg( _("Commander Soldner"), string.format( text[3], fmt.credits(reward) ) )
+   misn.osdCreate(_("Empire VIP Rescue"), {_("Rescue the VIP from a transport ship in the %s system"):format(destsys:name())})
    -- Set hooks
    hook.land("land")
    hook.enter("enter")
@@ -134,7 +126,7 @@ function land ()
          diff.apply("heavy_combat_vessel_license")
 
          -- Flavour text
-         tk.msg( title[3], text[5] )
+         tk.msg( _("Mission Success"), text[5] )
 
          emp.addShippingLog( _([[You successfully rescued a VIP for the Empire and have been cleared for the Heavy Combat Vessel License; you can now buy one at the outfitter.]]) )
 
@@ -236,13 +228,13 @@ function board ()
    -- VIP boards
    local c = misn.cargoNew( N_("VIP"), N_("A Very Important Person.") )
    vip = misn.cargoAdd( c, 0 )
-   tk.msg( title[2], text[4] )
+   tk.msg( _("Disabled Ship"), text[4] )
 
    -- Update mission details
    misn_stage = 2
    misn.markerMove( misn_marker, retsys )
-   misn.setDesc( string.format(misn_desc[2], ret:name(), retsys:name() ))
-   misn.osdCreate(misn_title, {misn_desc[2]:format(ret:name(),retsys:name())})
+   misn.setDesc( string.format(_("Return to %s in the %s system with the VIP"), ret:name(), retsys:name() ))
+   misn.osdCreate(_("Empire VIP Rescue"), {_("Return to %s in the %s system with the VIP"):format(ret:name(),retsys:name())})
 
    -- Force unboard
    player.unboard()

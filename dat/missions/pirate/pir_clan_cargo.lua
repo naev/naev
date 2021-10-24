@@ -30,8 +30,6 @@
 local fmt = require "format"
 local portrait = require "portrait"
 
-misn_title = _("Clans trade")
-misn_desc = _("Deliver some boxes to the pirate clan of %s, in the %s system.")
 title = {}
 title[1] = _("Spaceport Bar")
 title[2] = title[1]
@@ -78,13 +76,13 @@ function accept ()
 
    -- Mission details
    reward = rnd.rnd(10,20) * 100e3 -- Hey, this mission is probably hell, after all.
-   misn.setTitle(misn_title)
+   misn.setTitle(_("Clans trade"))
    misn.setReward( fmt.credits(reward) )
-   misn.setDesc( string.format(misn_desc, dest:name(), sys:name()))
+   misn.setDesc( string.format(_("Deliver some boxes to the pirate clan of %s, in the %s system."), dest:name(), sys:name()))
 
    -- Flavour text and mini-briefing
    tk.msg( title[2], string.format( text[2], dest:name() ))
-   misn.osdCreate(title[2], {misn_desc:format(dest:name(), sys:name())})
+   misn.osdCreate(title[2], {_("Deliver some boxes to the pirate clan of %s, in the %s system."):format(dest:name(), sys:name())})
 
    -- Set up the goal
    local c = misn.cargoNew(_("Pirate Packages"), _("A bunch of pirate packages. You don't want to know what's inside."))

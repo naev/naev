@@ -23,24 +23,6 @@
 local fmt = require "format"
 
 
-text = {}
-title = {}
-
-title[1] = _("Another race")
-text[1] = _([["Hey there, great to see you back! You want to have another race?"]])
-
-title[5] = _("Choose difficulty")
-text[5] = _([["There are two races you can participate in: an easy one, which is like the first race we had, or a hard one, with smaller checkpoints and no afterburners allowed. The easy one has a prize of %s, and the hard one has a prize of %s. Which one do you want to do?"]])
-title[6] = _("Hard Mode")
-text[6] = _([["You want a challenge huh? Remember, no afterburners on your ship or you will not be allowed to race. Let's go have some fun!"]])
-
-title[2] = _("Easy Mode ")
-text[2] = _([["Let's go have some fun then!"]])
-
-title[3] = _("Checkpoint %s reached")
-text[3] = _("Proceed to Checkpoint %s")
-
-text[4] = _("Proceed to land at %s")
 
 OSD = {}
 OSD[1] = _("Board checkpoint 1")
@@ -73,19 +55,19 @@ end
 
 
 function accept ()
-   if tk.yesno(title[1], text[1]) then
+   if tk.yesno(_("Another race"), _([["Hey there, great to see you back! You want to have another race?"]])) then
       misn.accept()
       OSD[4] = string.format(OSD[4], curplanet:name())
       misn.setDesc(_("You're participating in another race!"))
       misn.osdCreate(_("Racing Skills 2"), OSD)
-      local s = text[5]:format(fmt.credits(credits_easy), fmt.credits(credits_hard))
-      choice, choicetext = tk.choice(title[5], s, _("Easy"), _("Hard"))
+      local s = _([["There are two races you can participate in: an easy one, which is like the first race we had, or a hard one, with smaller checkpoints and no afterburners allowed. The easy one has a prize of %s, and the hard one has a prize of %s. Which one do you want to do?"]]):format(fmt.credits(credits_easy), fmt.credits(credits_hard))
+      choice, choicetext = tk.choice(_("Choose difficulty"), s, _("Easy"), _("Hard"))
       if choice == 1 then
          credits = credits_easy
-         tk.msg(title[2], text[2])
+         tk.msg(_("Easy Mode "), _([["Let's go have some fun then!"]]))
       else
          credits = credits_hard
-         tk.msg(title[6], text[6])
+         tk.msg(_("Hard Mode"), _([["You want a challenge huh? Remember, no afterburners on your ship or you will not be allowed to race. Let's go have some fun!"]]))
       end
       misn.setReward(fmt.credits(credits))
       hook.takeoff("takeoff")
@@ -252,9 +234,9 @@ function board(ship)
          misn.osdActive(i+1)
          target[4] = target[4] + 1
          if target[4] == 4 then
-            tk.msg(string.format(title[3], i), string.format(text[4], curplanet:name()))
+            tk.msg(string.format(_("Checkpoint %s reached"), i), string.format(_("Proceed to land at %s"), curplanet:name()))
             else
-            tk.msg(string.format(title[3], i), string.format(text[3], i+1))
+            tk.msg(string.format(_("Checkpoint %s reached"), i), string.format(_("Proceed to Checkpoint %s"), i+1))
          end
          break
       end

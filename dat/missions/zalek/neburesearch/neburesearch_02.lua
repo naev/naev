@@ -28,17 +28,12 @@ local car = require "common.cargo"
 local fmt = require "format"
 local zlk = require "common.zalek"
 
-misn_reward = _("%s")
 request_text = _([["There's actually another thing I've almost forgotten. I also have to attend another conference very soon on behalf of professor Voges who obviously is very busy with some project he would not tell me about. But I don't want to go there - my research is far too important! So could you instead bring Robert there? You remember the student you helped out recently? I'm sure he will do the presentation just fine! I'll tell him to meet you in the bar as soon as possible!"
     With that being said Dr. Mensing leaves you immediately without waiting for your answer. It appears you should head to the bar to meet up with the student.]])
 
 -- Mission info stuff
 osd_msg   = {}
-osd_title = _("Emergency of Immediate Inspiration")
 osd_msg[1] = _("Fly to %s in the %s system.")
-
-log_text = _([[You brought Dr. Mensing back from a Empire scientific conference.]])
-
 
 function create()
     -- mission variables
@@ -69,13 +64,13 @@ function accept()
 
     -- Set up mission information
     misn.setTitle(_("Emergency of Immediate Inspiration"))
-    misn.setReward(misn_reward:format(fmt.credits(credits)))
+    misn.setReward(_("%s"):format(fmt.credits(credits)))
     misn.setDesc(_("Take Dr. Mensing to %s in the %s system as fast as possible!"):format(homeworld:name(), homeworld_sys:name()))
     misn_marker = misn.markerAdd(homeworld_sys, "low")
 
     misn.accept()
     osd_msg[1] = osd_msg[1]:format(homeworld:name(), homeworld_sys:name())
-    misn.osdCreate(osd_title, osd_msg)
+    misn.osdCreate(_("Emergency of Immediate Inspiration"), osd_msg)
 
     hook.land("land")
 end
@@ -93,7 +88,7 @@ function land()
             player.pay(credits)
         end
         misn.markerRm(misn_marker)
-        zlk.addNebuResearchLog(log_text)
+        zlk.addNebuResearchLog(_([[You brought Dr. Mensing back from a Empire scientific conference.]]))
         misn.finish(true)
     end
 end

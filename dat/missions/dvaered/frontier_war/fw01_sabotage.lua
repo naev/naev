@@ -42,16 +42,6 @@ local pir = require "common.pirate"
 -- common hooks
 message = fw.message
 
-npc_name = _("Captain Hamfresser")
-npc_desc = _("A tall and very large cyborg soldier sits against a wall, right next to the emergency exit. He loudly drinks an orange juice through a pink straw and suspiciously examines the other customers. By the power of his eyes he cleared a large area around him as people seem to prefer to move away instead of meeting his half-robotic gaze. Unfortunately, he matches the description of your contact, which means you will have to overcome your fear and talk to him.")
-
-osd_title = _("Dvaered Sabotage")
-
-misn_desc = _("You have to sabotage Lord Battleaddict's cruiser in order to ensure General Klank's victory at a duel.")
-misn_reward = _("Focus on the mission, pilot.")
-
-log_text = _("Major Tam's superior, General Klank, made a Goddard duel with Lord Battleaddict. You took part in an operation to sabotage Battleaddict's cruiser. Lord Battleaddict sabotaged Klank's cruiser as well, but at the end of the day, General Klank won the duel.")
-
 bombMass = 100
 
 
@@ -83,18 +73,18 @@ function accept()
    "Hey, citizen! But I have good news! We won't fall to the Barbarian hordes! Because I myself, Major Archibald Tam, I have a plan. We will make sure that Lord Battleaddict loses his duel. Please note however that if the very existence of House Dvaered was not threatened, we would never allow ourselves to interfere in a honorable duel between two respectable gentlemen. Go to %s in %s and meet Captain Hamfresser. (His portrait is attached in the data I will give you.) He will explain the details. It is very important that you use a civilian ship that can transport at least %s of cargo."]]):format(hampla:name(), hamsys:name(), fmt.tonnes(bombMass)))
 
    misn.accept()
-   misn.setDesc(misn_desc)
-   misn.setReward(misn_reward)
+   misn.setDesc(_("You have to sabotage Lord Battleaddict's cruiser in order to ensure General Klank's victory at a duel."))
+   misn.setReward(_("Focus on the mission, pilot."))
 
    stage = 0
    hook.land("land")
-   misn.osdCreate( osd_title, {_("Pick up Hamfresser in %s in %s. Use a civilian ship with at least %s of free cargo"):format(hampla:name(), hamsys:name(), fmt.tonnes(bombMass)), _("Meet Battleaddict around %s in %s"):format(sabotpla:name(), sabotsys:name()), _("Deposit Hamfresser on %s in %s"):format(duelpla:name(), duelsys:name())} )
+   misn.osdCreate( _("Dvaered Sabotage"), {_("Pick up Hamfresser in %s in %s. Use a civilian ship with at least %s of free cargo"):format(hampla:name(), hamsys:name(), fmt.tonnes(bombMass)), _("Meet Battleaddict around %s in %s"):format(sabotpla:name(), sabotsys:name()), _("Deposit Hamfresser on %s in %s"):format(duelpla:name(), duelsys:name())} )
    mark = misn.markerAdd(hamsys, "low")
 end
 
 function land()
    if stage == 0 and planet.cur() == hampla then -- Meet Captain Hamfresser
-      captain = misn.npcAdd("hamfresser", npc_name, fw.portrait_hamfresser, npc_desc)
+      captain = misn.npcAdd("hamfresser", _("Captain Hamfresser"), fw.portrait_hamfresser, _("A tall and very large cyborg soldier sits against a wall, right next to the emergency exit. He loudly drinks an orange juice through a pink straw and suspiciously examines the other customers. By the power of his eyes he cleared a large area around him as people seem to prefer to move away instead of meeting his half-robotic gaze. Unfortunately, he matches the description of your contact, which means you will have to overcome your fear and talk to him."))
 
    elseif stage == 2 then -- The player landed somewhere on Battleaddict's system
       tk.msg( _("What are you doing here?"), _("This planet belongs to Lord Battleaddict. You will be captured if you land here. The mission failed.") )
@@ -175,7 +165,7 @@ function enter()
       hook.timer(2.0, "enter2_message")
       stage = 3
       misn.osdDestroy()
-      misn.osdCreate( osd_title, {_("Go to %s, approach %s and wait for the Phalanx"):format(intsys:name(), intpla:name()), _("Disable and board the Phalanx"), _("Report back on %s in %s"):format(duelpla:name(), duelsys:name())} )
+      misn.osdCreate( _("Dvaered Sabotage"), {_("Go to %s, approach %s and wait for the Phalanx"):format(intsys:name(), intpla:name()), _("Disable and board the Phalanx"), _("Report back on %s in %s"):format(duelpla:name(), duelsys:name())} )
       mark = misn.markerAdd(intsys, "low")
 
    elseif stage == 3 and system.cur() == intsys then
@@ -292,7 +282,7 @@ function killing()
    stage = 2
 
    misn.osdDestroy()
-   misn.osdCreate( osd_title, {_("Jump out. Do NOT land in this system")} )
+   misn.osdCreate( _("Dvaered Sabotage"), {_("Jump out. Do NOT land in this system")} )
    misn.markerRm(mark)
 end
 
@@ -395,7 +385,7 @@ function majorTam()
    stage = 6
 
    misn.osdDestroy()
-   misn.osdCreate( osd_title, {_("Attend to the duel"), _("Land on %s"):format(duelpla:name())} )
+   misn.osdCreate( _("Dvaered Sabotage"), {_("Attend to the duel"), _("Land on %s"):format(duelpla:name())} )
    misn.markerRm(mark)
 end
 
@@ -521,7 +511,7 @@ function endMisn()
    Major Tam then speaks to you: "Apparently, Battleaddict had got a commando unit to dress like electricians and to hide an EMP bomb in the General's Goddard, that exploded during the fight, just like our own bomb. And now, both ships have their systems ruined. Well, anyway, thank you for your help, here are %s for you!"]]):format(fmt.credits(fw.credits_01)) )
    player.pay(fw.credits_01)
    shiplog.create( "dvaered_military", _("Dvaered Military Coordination"), _("Dvaered") )
-   shiplog.append( "dvaered_military", log_text )
+   shiplog.append( "dvaered_military", _("Major Tam's superior, General Klank, made a Goddard duel with Lord Battleaddict. You took part in an operation to sabotage Battleaddict's cruiser. Lord Battleaddict sabotaged Klank's cruiser as well, but at the end of the day, General Klank won the duel.") )
    var.push( "loyal2klank", false ) -- This ensures the next mission will be available only once the traitor event is done
    misn.finish(true)
 end

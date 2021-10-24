@@ -38,18 +38,7 @@ local lmisn = require "lmisn"
 local fmt = require "format"
 local pir = require "common.pirate"
 
-npc_name = _("Major Tam")
-npc_desc = _("Major Tam is a very friendly man. At least by Dvaered military standards.")
-
 meet_text1 = _([[After Tam boards the Goddard, you wait for about half a period until his ship undocks from the warlord's cruiser. You then receive a message from him "Everything is right, we will now land on %s in order to refuel and rest for some time."]])
-
-log_text = _("The Major Tam, from the Space Force Headquarters of Dvaered High Command (DHC) has employed you in the framework of the military coordination. One of the Warlords he was trying to pay a visit to, Lord Battleaddict, has tried to kill him twice, with help of his second in command, Colonel Hamelsen. It looks like trying to coordinate Dvaered warlords is a really dangerous job.")
-
-osd_title = _("Dvaered Escort")
-
-misn_desc = _("You agreed to escort a senior officer of the Dvaered High Command who is visiting three warlords.")
-misn_reward = _("Dvaered never talk about money.")
-
 
 function create()
    -- The mission should not appear just after the FLF destruction
@@ -85,9 +74,9 @@ function accept()
    tk.msg(_("Instructions"), _([[Tam seems satisfied with your answer. "I am going to pay a visit to three warlords, for military coordination reasons. They will be waiting for me in their respective Goddards in the systems %s, %s and %s. I need you to stick to my Vendetta and engage any hostile who could try to intercept me."]]):format(destsys1:name(), destsys2:name(), destsys3:name()))
 
    misn.accept()
-   misn.osdCreate( osd_title, {_("Escort Major Tam"), _("Land on %s"):format(destpla1:name())} )
-   misn.setDesc(misn_desc)
-   misn.setReward(misn_reward)
+   misn.osdCreate( _("Dvaered Escort"), {_("Escort Major Tam"), _("Land on %s"):format(destpla1:name())} )
+   misn.setDesc(_("You agreed to escort a senior officer of the Dvaered High Command who is visiting three warlords."))
+   misn.setReward(_("Dvaered never talk about money."))
    mark1 = misn.markerAdd(destsys1, "low")
 
    stage = 0
@@ -139,7 +128,7 @@ function enter()
       majorTam:land(fleepla)
       stage = 4
       misn.osdDestroy()
-      misn.osdCreate( osd_title, {_("Escort Major Tam"), _("Land on %s"):format(fleepla:name())} )
+      misn.osdCreate( _("Dvaered Escort"), {_("Escort Major Tam"), _("Land on %s"):format(fleepla:name())} )
       misn.osdActive(2)
 
    elseif stage == 5 then  -- Travel to third rendezvous
@@ -251,18 +240,18 @@ function land() -- The player is only allowed to land on special occasions
    if stage == 1 then
       stage = 2
       misn.osdDestroy()
-      misn.osdCreate( osd_title, {_("Escort Major Tam"), _("Land on %s"):format(destpla2:name())} )
+      misn.osdCreate( _("Dvaered Escort"), {_("Escort Major Tam"), _("Land on %s"):format(destpla2:name())} )
       misn.markerRm(mark1)
       mark2 = misn.markerAdd(destsys2, "low")
    elseif stage == 4 then
       stage = 5
       misn.osdDestroy()
-      misn.osdCreate( osd_title, {_("Escort Major Tam"), _("Land on %s"):format(destpla3:name())} )
+      misn.osdCreate( _("Dvaered Escort"), {_("Escort Major Tam"), _("Land on %s"):format(destpla3:name())} )
       misn.markerRm(mark2)
       mark3 = misn.markerAdd(destsys3, "low")
    elseif stage == 8 then
       shiplog.create( "dvaered_military", _("Dvaered Military Coordination"), _("Dvaered") )
-      shiplog.append( "dvaered_military", log_text )
+      shiplog.append( "dvaered_military", _("The Major Tam, from the Space Force Headquarters of Dvaered High Command (DHC) has employed you in the framework of the military coordination. One of the Warlords he was trying to pay a visit to, Lord Battleaddict, has tried to kill him twice, with help of his second in command, Colonel Hamelsen. It looks like trying to coordinate Dvaered warlords is a really dangerous job.") )
       tk.msg(_("Thank you, citizen"), _([[As you land, Major Tam greets you at the spaceport. "After the losses they got today, I doubt those mercenaries will come back at me anytime soon. I need to report back at the Dvaer High Command station in Dvaer, and I don't need any more escorting. Oh, and, err... about the payment, I am afraid there is a little setback..." You start getting afraid he would try to stiff pay you, but he continues: "I don't know why, but the High Command has not credited the payment account yet... Well do you know what we are going to do? I will give you a set of Gauss Guns worth %s! One always needs Gauss Guns, no?"]]):format(fmt.credits(fw.credits_00)))
 
       -- Major Tam gives Gauss Guns instead of credits, because Major Tam is a freak.
@@ -277,11 +266,11 @@ function land() -- The player is only allowed to land on special occasions
    --hook.rm(jumpingTam)
    tamJumped = true
    previous = planet.cur()
-   boozingTam = misn.npcAdd("discussWithTam", npc_name, fw.portrait_tam, npc_desc)
+   boozingTam = misn.npcAdd("discussWithTam", _("Major Tam"), fw.portrait_tam, _("Major Tam is a very friendly man. At least by Dvaered military standards."))
 end
 
 function loading()
-   boozingTam = misn.npcAdd("discussWithTam", npc_name, fw.portrait_tam, npc_desc)
+   boozingTam = misn.npcAdd("discussWithTam", _("Major Tam"), fw.portrait_tam, _("Major Tam is a very friendly man. At least by Dvaered military standards."))
 end
 
 function meeting_timer() -- Delay the triggering of the meeting
@@ -320,7 +309,7 @@ function meeting()
       hook.timer( 2.0, "attackMe" ) -- A small delay to give the player a chance in case an enemy is too close
 
       misn.osdDestroy()
-      misn.osdCreate( osd_title, {_("Ensure Major Tam safely jumps to %s and follow him"):format(fleesys:name())} )
+      misn.osdCreate( _("Dvaered Escort"), {_("Ensure Major Tam safely jumps to %s and follow him"):format(fleesys:name())} )
 
    elseif stage == 5 then
       tk.msg(_("Everything is right"), meet_text1:format(destpla3:name()))

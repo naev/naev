@@ -29,12 +29,7 @@
 local fmt = require "format"
 local zlk = require "common.zalek"
 
-misn_reward = _("%s")
-
 osd_msg   = {}
-osd_title = _("Shielding Prototype Funding")
-
-log_text = _([[You helped Dr. Mensing to acquire funding for a shielding prototype that will enable to explore the Sol nebula.]])
 
 function create()
     -- mission variables
@@ -57,14 +52,14 @@ function accept()
 
     -- Set up mission information
     misn.setTitle(_("Shielding Prototype Funding"))
-    misn.setReward(misn_reward:format(fmt.credits(credits)))
+    misn.setReward(_("%s"):format(fmt.credits(credits)))
     misn.setDesc(_("Help Dr. Mensing to get funding for constructing a shielding prototype."):format(dest_planet:name(), dest_sys:name()))
     misn_marker = misn.markerAdd(dest_sys, "low")
 
     misn.accept()
     osd_msg[1] = _("Land on %s in the %s system."):format(dest_planet:name(), dest_sys:name())
     osd_msg[2] = _("Return to %s in the %s system."):format(homeworld:name(), homeworld_sys:name())
-    misn.osdCreate(osd_title, osd_msg)
+    misn.osdCreate(_("Shielding Prototype Funding"), osd_msg)
 
     hook.land("land")
     hook.jumpin("jumpin")
@@ -83,7 +78,7 @@ function land()
             misn.markerMove(misn_marker, dest_sys)
             osd_msg[1] = _("Land on %s in the %s system."):format(dest_planet:name(), dest_sys:name())
             osd_msg[2] = _("Return to %s in the %s system."):format(homeworld:name(), homeworld_sys:name())
-            misn.osdCreate(osd_title, osd_msg)
+            misn.osdCreate(_("Shielding Prototype Funding"), osd_msg)
         elseif stage == 2 then
             local planet_name = dest_planet:name()
             stage = 3
@@ -93,7 +88,7 @@ function land()
             misn.markerMove(misn_marker, dest_sys)
             osd_msg[1] = _("Land on %s in the %s system."):format(dest_planet:name(), dest_sys:name())
             osd_msg[2] = _("Return to %s in the %s system."):format(homeworld:name(), homeworld_sys:name())
-            misn.osdCreate(osd_title, osd_msg)
+            misn.osdCreate(_("Shielding Prototype Funding"), osd_msg)
         elseif stage == 4 then
             stage = 5
             dest_planet, dest_sys = planet.get("Excelcior")
@@ -101,7 +96,7 @@ function land()
             misn.markerMove(misn_marker, dest_sys)
             osd_msg[1] = _("Land on %s in the %s system."):format(dest_planet:name(), dest_sys:name())
             osd_msg[2] = _("Return to %s in the %s system."):format(homeworld:name(), homeworld_sys:name())
-            misn.osdCreate(osd_title, osd_msg)
+            misn.osdCreate(_("Shielding Prototype Funding"), osd_msg)
         elseif stage == 5 or stage == 6 then
             stage = 7
             dest_planet = homeworld
@@ -120,7 +115,7 @@ function land()
     She gives you a credit chip worth %s and leaves.]]):format(fmt.credits(credits)))
             player.pay(credits)
             misn.markerRm(misn_marker)
-            zlk.addNebuResearchLog(log_text)
+            zlk.addNebuResearchLog(_([[You helped Dr. Mensing to acquire funding for a shielding prototype that will enable to explore the Sol nebula.]]))
             misn.finish(true)
         end
     end
@@ -187,5 +182,5 @@ function cannotLand()
     After a heated discussion Dr. Mensing gives up. "Right, they won't allow anyone to land on %s. That's so frustrating. Let's land on %s instead."]]):format(planet_name, planet_name, dest_planet:name()))
     osd_msg[1] = _("Land on %s in the %s system."):format(dest_planet:name(), dest_sys:name())
     osd_msg[2] = _("Return to %s in the %s system."):format(homeworld:name(), homeworld_sys:name())
-    misn.osdCreate(osd_title, osd_msg)
+    misn.osdCreate(_("Shielding Prototype Funding"), osd_msg)
 end

@@ -9,12 +9,6 @@
 local fmt   = require "format"
 local vntk  = require 'vntk'
 
-misn_title = _("%s Rehabilitation")
-misn_desc = _([[You may pay a fine for a chance to redeem yourself in the eyes of a faction you have offended. You may interact with this faction as if your reputation were neutral, but your reputation will not actually improve until you've regained their trust. ANY hostile action against this faction will immediately void this agreement.
-Faction: %s
-Cost: %s]])
-misn_reward = _("None")
-
 function create()
     -- Note: this mission does not make any system claims.
 
@@ -33,9 +27,11 @@ function create()
 
     setFine(rep)
 
-    misn.setTitle(misn_title:format(fac:name()))
-    misn.setDesc(misn_desc:format(fac:name(), fmt.credits(fine)))
-    misn.setReward(misn_reward)
+    misn.setTitle(_("%s Rehabilitation"):format(fac:name()))
+    misn.setDesc(_([[You may pay a fine for a chance to redeem yourself in the eyes of a faction you have offended. You may interact with this faction as if your reputation were neutral, but your reputation will not actually improve until you've regained their trust. ANY hostile action against this faction will immediately void this agreement.
+Faction: %s
+Cost: %s]]):format(fac:name(), fmt.credits(fine)))
+    misn.setReward(_("None"))
 end
 
 function accept()
@@ -45,7 +41,7 @@ function accept()
     end
 
     player.pay(-fine)
-    vntk.msg(misn_title:format(fac:name()), _([[Your application has been processed. The %s security forces will no longer attack you on sight. You may conduct your business in %s space again, but remember that you still have a criminal record! If you attack any traders, civilians or %s ships, or commit any other felony against this faction, you will immediately become their enemy again.
+    vntk.msg(_("%s Rehabilitation"):format(fac:name()), _([[Your application has been processed. The %s security forces will no longer attack you on sight. You may conduct your business in %s space again, but remember that you still have a criminal record! If you attack any traders, civilians or %s ships, or commit any other felony against this faction, you will immediately become their enemy again.
 While this agreement is active your reputation will not change, but if you continue to behave properly and perform beneficial services, your past offenses will eventually be stricken from the record.]]):format(fac:name(), fac:name(), fac:name()))
 
     fac:modPlayerRaw(-rep)
@@ -56,7 +52,7 @@ While this agreement is active your reputation will not change, but if you conti
        "You need to gain %d more reputation",
        -rep
     ):format(-rep) }
-    misn.osdCreate(misn_title:format(fac:name()), osd_msg)
+    misn.osdCreate(_("%s Rehabilitation"):format(fac:name()), osd_msg)
 
     standhook = hook.standing("standing")
 
@@ -88,7 +84,7 @@ function standing(hookfac, delta)
                "You need to gain %d more reputation",
                -rep
             ):format(-rep) }
-            misn.osdCreate(misn_title:format(fac:name()), osd_msg)
+            misn.osdCreate(_("%s Rehabilitation"):format(fac:name()), osd_msg)
         else
             excess = excess + delta
             if excess < 0 or fac:playerStanding() < 0 then

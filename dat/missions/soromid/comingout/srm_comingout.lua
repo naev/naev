@@ -23,19 +23,6 @@
 local fmt = require "format"
 local srm = require "common.soromid"
 
-title = {}
-text = {}
-
-title[1] = _("Just Some Transportation")
-text[1] = _([[The stranger seems rather nervous as you approach, but speaks up. The stranger's voice is deeper than you expected from their appearance, but you pay it no mind.
-    "H-hi! N-nice to meet you. I'm... um, you know what, you can just call me 'C' for now. I'm not sure about the name yet. They/them pronouns if that's okay." You agree to the request, introduce yourself, and chat with them a bit. They seem like a nice person.
-    After a while, C crosses their arms in thought. "So... um, you're a pilot, you say, right? Thing is, I'm in need of some transportation, but I don't really have much money on me so no one's willing to take me. It's a bit far and there's a lot of pirates in the area, so I get why no one wants to do it, but you know... I just... I need to see my parents. Just something I need to tell them. I'm not picky about how long it takes, and I promise I won't cause any trouble.... Could you do this for me?"]])
-
-text[2] = _([[C seems relieved at your answer. "Thank you so much," they say. "I really appreciate it. I'll make it up to you somehow. My parents live in %s in the %s system. Like I said, no rush. Just as long as I get there, that's what matters."]])
-
-text[3] = _([["Okay. I understand. Thanks anyway."]])
-
-text[4] = _([["Oh, hi again. I'm still having trouble finding someone. Can you help me? It would mean so much if you could."]])
 
 chatter = {}
 
@@ -62,19 +49,8 @@ reminders[7] = _("You start to forget for a while that you have a passenger unti
 reminders[8] = _("You talk to Chelsea a little about some interesting experiences you've had as a pilot.")
 reminders[9] = _("You have a brief conversation with Chelsea about interesting sights you both have seen in your travels.")
 
-
-misn_title = _("Coming Out")
-misn_desc = _("Your new friend needs you to take them to their parents in %s.")
-misn_reward = _("The satisfaction of helping out a new friend")
-
-npc_name = _("Quiet stranger")
-npc_desc = _("A stranger is sitting quietly at a table, alone, glancing around the bar. In need of a suitable pilot, perhaps?")
-
 osd_desc    = {}
 osd_desc[1] = _("Go to the %s system and land on the planet %s.")
-
-log_text = _([[You have made a new friend, Chelsea. You helped escort her to her parents and helped her feel secure coming out as transgender to her parents. Chelsea has asked you to return to Durea to visit once in a while.]])
-
 
 function create ()
    misplanet, missys = planet.get( "Durea" )
@@ -87,26 +63,28 @@ function create ()
    started = false
    chatter_index = 0
 
-   misn.setNPC( npc_name, "soromid/unique/chelsea.webp", npc_desc )
+   misn.setNPC( _("Quiet stranger"), "soromid/unique/chelsea.webp", _("A stranger is sitting quietly at a table, alone, glancing around the bar. In need of a suitable pilot, perhaps?") )
 end
 
 
 function accept ()
-   local txt = started and text[4] or text[1]
+   local txt = started and _([["Oh, hi again. I'm still having trouble finding someone. Can you help me? It would mean so much if you could."]]) or _([[The stranger seems rather nervous as you approach, but speaks up. The stranger's voice is deeper than you expected from their appearance, but you pay it no mind.
+    "H-hi! N-nice to meet you. I'm... um, you know what, you can just call me 'C' for now. I'm not sure about the name yet. They/them pronouns if that's okay." You agree to the request, introduce yourself, and chat with them a bit. They seem like a nice person.
+    After a while, C crosses their arms in thought. "So... um, you're a pilot, you say, right? Thing is, I'm in need of some transportation, but I don't really have much money on me so no one's willing to take me. It's a bit far and there's a lot of pirates in the area, so I get why no one wants to do it, but you know... I just... I need to see my parents. Just something I need to tell them. I'm not picky about how long it takes, and I promise I won't cause any trouble.... Could you do this for me?"]])
    started = true
 
-   if tk.yesno( title[1], txt ) then
-      tk.msg( title[1], text[2]:format( misplanet:name(), missys:name() ) )
+   if tk.yesno( _("Just Some Transportation"), txt ) then
+      tk.msg( _("Just Some Transportation"), _([[C seems relieved at your answer. "Thank you so much," they say. "I really appreciate it. I'll make it up to you somehow. My parents live in %s in the %s system. Like I said, no rush. Just as long as I get there, that's what matters."]]):format( misplanet:name(), missys:name() ) )
 
       misn.accept()
 
-      misn.setTitle( misn_title )
-      misn.setDesc( misn_desc:format( missys:name() ) )
-      misn.setReward( misn_reward )
+      misn.setTitle( _("Coming Out") )
+      misn.setDesc( _("Your new friend needs you to take them to their parents in %s."):format( missys:name() ) )
+      misn.setReward( _("The satisfaction of helping out a new friend") )
       marker = misn.markerAdd( missys, "low" )
 
       osd_desc[1] = osd_desc[1]:format( missys:name(), misplanet:name() )
-      misn.osdCreate( misn_title, osd_desc )
+      misn.osdCreate( _("Coming Out"), osd_desc )
 
       hook.land( "land" )
 
@@ -115,7 +93,7 @@ function accept ()
       reminder_freq = time.create( 0, 20, 0 )
       date_hook = hook.date( chatter_freq, "init_chatter" )
    else
-      tk.msg( title[1], text[3] )
+      tk.msg( _("Just Some Transportation"), _([["Okay. I understand. Thanks anyway."]]) )
       misn.finish()
    end
 end
@@ -170,7 +148,7 @@ function land ()
       local t = time.get():tonumber()
       var.push( "comingout_time", t )
 
-      srm.addComingOutLog( log_text )
+      srm.addComingOutLog( _([[You have made a new friend, Chelsea. You helped escort her to her parents and helped her feel secure coming out as transgender to her parents. Chelsea has asked you to return to Durea to visit once in a while.]]) )
 
       misn.finish(true)
    end

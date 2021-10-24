@@ -33,7 +33,6 @@ local fmt = require "format"
 local vntk = require "vntk"
 local lmisn = require "lmisn"
 
-pay_title = _("Mission Completed")
 pay_text    = {}
 pay_text[1] = _("The passengers disembark with a new appreciation for the wonders of the universe.")
 pay_text[2] = _("Going off-world has renewed your passengers sense of adventure.")
@@ -52,8 +51,6 @@ pay_s_nolux_text[2] = _("While your passengers enjoyed the trip, they are not ha
 pay_s_nolux_text[3] = _("Most of the passengers enjoyed your tour, but one particularly loud passenger complains that you tricked them into paying full price even though you did not take them on a Luxury Yacht. To calm this passenger down, you offer to reduce everyone's fare. Some passengers refuse the offer, but you still end up being paid much less than you otherwise would have been.")
 
 -- Mission details
-misn_title  = _("Sightseeing in the %s System")
-misn_desc   = _("Several passengers wish to go off-world and go on a sightseeing tour. Navigate to specified attractions in the %s system.")
 
 -- Messages
 msg    = {}
@@ -69,15 +66,11 @@ ssmsg[5] = _("A collective gasp of wonder travels through the cabin.")
 ssmsg[6] = _("A sense of terror and mystery engulfs the passengers as they contemplate their existence above the skies.")
 ssmsg[7] = _("Truly a sight to behold for the passengers.")
 
-osd_title  = _("Sightseeing")
 osd_msg    = {}
 osd_msg[1] = _("Fly to the %s system")
 osd_msg[2]  = _("Go to all indicated points")
 osd_msg[3] = _("Return to %s in the %s system and collect your pay")
 osd_msg["__save"] = true
-
-mark_name = _("Attraction")
-
 
 function create ()
    paying_faction = planet.cur():faction()
@@ -129,8 +122,8 @@ function create ()
    nolux_known = false
 
    -- Set mission details
-   misn.setTitle( misn_title:format( missys:name() ) )
-   misn.setDesc( misn_desc:format( missys:name() ) )
+   misn.setTitle( _("Sightseeing in the %s System"):format( missys:name() ) )
+   misn.setDesc( _("Several passengers wish to go off-world and go on a sightseeing tour. Navigate to specified attractions in the %s system."):format( missys:name() ) )
    misn.setReward( fmt.credits( credits ) )
    marker = misn.markerAdd( missys, "computer" )
 end
@@ -150,7 +143,7 @@ function accept ()
 
    osd_msg[1] = osd_msg[1]:format( missys:name() )
    osd_msg[3] = osd_msg[3]:format( startingplanet:name(), startingsystem:name() )
-   misn.osdCreate( osd_title, osd_msg )
+   misn.osdCreate( _("Sightseeing"), osd_msg )
    local c = misn.cargoNew( N_("Sightseers"), N_("A bunch of sightseeing civilians.") )
    civs = misn.cargoAdd( c, 0 )
    job_done = false
@@ -193,7 +186,7 @@ function land ()
    if job_done and planet.cur() == startingplanet then
       misn.cargoRm( civs )
 
-      local ttl = pay_title
+      local ttl = _("Mission Completed")
       local txt = pay_text[ rnd.rnd( 1, #pay_text ) ]
       if nolux ~= nolux_known then
          if nolux then
@@ -276,6 +269,6 @@ function set_marks ()
    -- Add new marks
    marks = {}
    for i, p in ipairs(points) do
-      marks[i] = system.mrkAdd( p:pos(), mark_name )
+      marks[i] = system.mrkAdd( p:pos(), _("Attraction") )
    end
 end

@@ -25,30 +25,8 @@
 local fmt = require "format"
 local srm = require "common.soromid"
 
-title = {}
-text = {}
-
-title[1] = _("Getting My Feet Wet")
-text[1] = _([[Chelsea smiles and waves as she sees you approaching. "Hi, %s! It's been a while!" You sit down and start a friendly conversation with her. She mentions that her parents seem to be supportive of her decision to transition and her mother in particular apparently has been very helpful.
-    Chelsea perks up a little. "So, remember I said I had ambitions of a pilot? Well, I have my piloting license already, but I'm kind of poor so I couldn't afford my first ship. So I've been asking around and I've managed to find a great deal for a used ship at %s in the %s system! I just need someone to take me there. Again, no rush. Would you be able to do that for me?"]])
-
-text[2] = _([["Thank you so much! I really appreciate it, %s. I can't pay you much, but I can give you %s when we get there. I can't wait to start!"]])
-
-text[3] = _([["Oh, okay. Let me know later on if you're able to."]])
-
-text[4] = _([["Oh, %s! Are you able to help me out now?"]])
-
-misn_title = _("Coming of Age")
-misn_desc = _("Chelsea needs you to take her to %s so she can buy her first ship and kick off her piloting career.")
-
-npc_name = _("Chelsea")
-npc_desc = _("She seems to just be sitting by idly. It's been a while; maybe you should say hi?")
-
 osd_desc    = {}
 osd_desc[1] = _("Go to the %s system and land on the planet %s.")
-
-log_text = _([[You helped transport Chelsea to Crow, where she was able to buy her first ship, a Llama which is in very bad condition, but working. As she went on to start her career as a freelance pilot, she asked you to catch up with her again sometime. She expects that she'll be sticking to Soromid space for the time being.]])
-
 
 function create ()
    misplanet, missys = planet.get( "Crow" )
@@ -57,35 +35,36 @@ function create ()
    credits = 50e3
    started = false
 
-   misn.setNPC( npc_name, "soromid/unique/chelsea.webp", npc_desc )
+   misn.setNPC( _("Chelsea"), "soromid/unique/chelsea.webp", _("She seems to just be sitting by idly. It's been a while; maybe you should say hi?") )
 end
 
 
 function accept ()
    local txt
    if started then
-      txt = text[4]:format( player.name() )
+      txt = _([["Oh, %s! Are you able to help me out now?"]]):format( player.name() )
    else
-      txt = text[1]:format( player.name(), misplanet:name(), missys:name() )
+      txt = _([[Chelsea smiles and waves as she sees you approaching. "Hi, %s! It's been a while!" You sit down and start a friendly conversation with her. She mentions that her parents seem to be supportive of her decision to transition and her mother in particular apparently has been very helpful.
+    Chelsea perks up a little. "So, remember I said I had ambitions of a pilot? Well, I have my piloting license already, but I'm kind of poor so I couldn't afford my first ship. So I've been asking around and I've managed to find a great deal for a used ship at %s in the %s system! I just need someone to take me there. Again, no rush. Would you be able to do that for me?"]]):format( player.name(), misplanet:name(), missys:name() )
    end
    started = true
 
-   if tk.yesno( title[1], txt ) then
-      tk.msg( title[1], text[2]:format( player.name(), fmt.credits( credits ) ) )
+   if tk.yesno( _("Getting My Feet Wet"), txt ) then
+      tk.msg( _("Getting My Feet Wet"), _([["Thank you so much! I really appreciate it, %s. I can't pay you much, but I can give you %s when we get there. I can't wait to start!"]]):format( player.name(), fmt.credits( credits ) ) )
 
       misn.accept()
 
-      misn.setTitle( misn_title )
-      misn.setDesc( misn_desc:format( misplanet:name() ) )
+      misn.setTitle( _("Coming of Age") )
+      misn.setDesc( _("Chelsea needs you to take her to %s so she can buy her first ship and kick off her piloting career."):format( misplanet:name() ) )
       misn.setReward( fmt.credits( credits ) )
       marker = misn.markerAdd( missys, "low" )
 
       osd_desc[1] = osd_desc[1]:format( missys:name(), misplanet:name() )
-      misn.osdCreate( misn_title, osd_desc )
+      misn.osdCreate( _("Coming of Age"), osd_desc )
 
       hook.land( "land" )
    else
-      tk.msg( title[1], text[3] )
+      tk.msg( _("Getting My Feet Wet"), _([["Oh, okay. Let me know later on if you're able to."]]) )
       misn.finish()
    end
 end
@@ -99,7 +78,7 @@ function land ()
       local t = time.get():tonumber()
       var.push( "comingout_time", t )
 
-      srm.addComingOutLog( log_text )
+      srm.addComingOutLog( _([[You helped transport Chelsea to Crow, where she was able to buy her first ship, a Llama which is in very bad condition, but working. As she went on to start her career as a freelance pilot, she asked you to catch up with her again sometime. She expects that she'll be sticking to Soromid space for the time being.]]) )
 
       misn.finish(true)
    end

@@ -33,7 +33,6 @@ local pilotname = require "pilotname"
 local vntk = require "vntk"
 local lmisn = require "lmisn"
 
-subdue_title   = _("Captured Alive")
 subdue_text    = {}
 subdue_text[1] = _("You and your crew infiltrate the ship's pathetic security and subdue %s. You transport the pirate to your ship.")
 subdue_text[2] = _("Your crew has a difficult time getting past the ship's security, but eventually succeeds and subdues %s.")
@@ -41,14 +40,11 @@ subdue_text[3] = _("The pirate's security system turns out to be no match for yo
 subdue_text[4] = _("Your crew infiltrates the pirate's ship and captures %s.")
 subdue_text[5] = _("Getting past this ship's security was surprisingly easy. Didn't they know that %s was wanted?")
 
-subdue_fail_title   = _("Capture Failed")
 subdue_fail_text    = {}
 subdue_fail_text[1] = _("Try as you might, you cannot get past the pirate's security system. Defeated, you and your crew return to the ship.")
 subdue_fail_text[2] = _("The ship's security system locks you out.")
 subdue_fail_text[3] = _("Your crew comes close to getting past the pirate's security system, but ultimately fails.")
 subdue_fail_text[4] = _("It seems your crew is no match for this ship's security system. You return to your ship.")
-
-pay_title   = _("Mission Completed")
 
 pay_kill_text    = {}
 pay_kill_text[1] = _("After verifying that you killed %s, an officer hands you your pay.")
@@ -65,7 +61,6 @@ pay_capture_text[3] = _("The officer you deal with seems to especially dislike %
 pay_capture_text[4] = _("A fearful-looking officer rushes %s into a secure hold, pays you the appropriate bounty, and then hurries off.")
 pay_capture_text[5] = _("The officer you greet gives you a puzzled look when you say that you captured %s alive. Nonetheless, they politely take the pirate off of your hands and hand you your pay.")
 
-share_title   = _("A Smaller Reward")
 share_text    = {}
 share_text[1] = _([["Greetings. I can see that you were trying to collect a bounty on %s. Well, as you can see, I earned the bounty, but I don't think I would have succeeded without your help, so I've transferred a portion of the bounty into your account."]])
 share_text[2] = _([["Sorry about getting in the way of your bounty. I don't really care too much about the money, but I just wanted to make sure the galaxy would be rid of that scum; I've seen the villainy of %s first-hand, you see. So as an apology, I would like to offer you the portion of the bounty you clearly earned. The money will be in your account shortly."]])
@@ -207,7 +202,7 @@ function land ()
       else
          pay_text = pay_capture_text[ rnd.rnd( 1, #pay_capture_text ) ]
       end
-      vntk.msg( pay_title, pay_text:format( name ) )
+      vntk.msg( _("Mission Completed"), pay_text:format( name ) )
       player.pay( credits )
       paying_faction:modPlayerSingle( reputation )
       pir.reputationNormalMission( reputation )
@@ -229,7 +224,7 @@ function pilot_board ()
    player.unboard()
    if can_capture then
       local t = subdue_text[ rnd.rnd( 1, #subdue_text ) ]:format( name )
-      vntk.msg( subdue_title, t )
+      vntk.msg( _("Captured Alive"), t )
       succeed()
       target_killed = false
       target_ship:changeAI( "dummy" )
@@ -238,7 +233,7 @@ function pilot_board ()
       if death_hook ~= nil then hook.rm( death_hook ) end
    else
       local t = subdue_fail_text[ rnd.rnd( 1, #subdue_fail_text ) ]:format( name )
-      vntk.msg( subdue_fail_title, t )
+      vntk.msg( _("Capture Failed"), t )
       board_fail()
    end
 end
@@ -323,7 +318,7 @@ function hunter_hail( _arg )
    player.commClose()
 
    local text = share_text[ rnd.rnd( 1, #share_text ) ]
-   vntk.msg( share_title, text:format( name ) )
+   vntk.msg( _("A Smaller Reward"), text:format( name ) )
 
    player.pay( credits )
    misn.finish( true )

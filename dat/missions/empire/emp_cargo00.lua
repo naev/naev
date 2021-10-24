@@ -28,12 +28,6 @@ local fmt = require "format"
 local emp = require "common.empire"
 local lmisn = require "lmisn"
 
-misn_title = _("Empire Recruitment")
-misn_desc = _("Deliver some parcels for the Empire to %s in %s.")
-title = {}
-title[1] = _("Spaceport Bar")
-title[2] = _("Empire Recruitment")
-title[3] = _("Mission Accomplished")
 text = {}
 text[1] = _([[You approach the Empire Lieutenant.
     "Hello, I'm Lieutenant Czesc from the Empire Armada Shipping Division. We're having another recruitment operation and would be interested in having another pilot among us. Would you be interested in working for the Empire?"]])
@@ -41,9 +35,6 @@ text[2] = _([["Welcome aboard," says Czesc before giving you a firm handshake. "
     He hits a couple buttons on his wrist computer, which springs into action. "It looks like we already have a simple task for you. Deliver these parcels to %s. The best pilots started delivering papers and ended up flying into combat against gigantic warships with the Interception Division."]])
 text[3] = _([[You deliver the parcels to the Empire Shipping station at the %s spaceport. Afterwards, they make you do some paperwork to formalise your participation with the Empire. They tell you to keep an eye out for missions labeled ES, which stands for Empire Shipping, in the mission computer, to which you now have access.
     You aren't too sure of what to make of your encounter with the Empire. Only time will tell...]])
-
-log_text = _([[You were recruited into the Empire's shipping division and can now do missions labeled ES, which stands for Empire Shipping. You aren't too sure of what to make of your encounter with the Empire. Only time will tell...]])
-
 
 function create ()
    -- Note: this mission does not make any system claims.
@@ -70,7 +61,7 @@ end
 
 function accept ()
    -- Intro text
-   if not tk.yesno( title[1], text[1] ) then
+   if not tk.yesno( _("Spaceport Bar"), text[1] ) then
       misn.finish()
    end
 
@@ -81,13 +72,13 @@ function accept ()
 
    -- Mission details
    reward = 30e3
-   misn.setTitle(misn_title)
+   misn.setTitle(_("Empire Recruitment"))
    misn.setReward( fmt.credits(reward) )
-   misn.setDesc( string.format(misn_desc, dest:name(), sys:name()))
+   misn.setDesc( string.format(_("Deliver some parcels for the Empire to %s in %s."), dest:name(), sys:name()))
 
    -- Flavour text and mini-briefing
-   tk.msg( title[2], string.format( text[2], dest:name() ))
-   misn.osdCreate(title[2], {misn_desc:format(dest:name(), sys:name())})
+   tk.msg( _("Empire Recruitment"), string.format( text[2], dest:name() ))
+   misn.osdCreate(_("Empire Recruitment"), {_("Deliver some parcels for the Empire to %s in %s."):format(dest:name(), sys:name())})
 
    -- Set up the goal
    local c = misn.cargoNew( N_("Parcels"), N_("A bunch of boring Empire parcels.") )
@@ -102,10 +93,10 @@ function land()
       if misn.cargoRm(parcels) then
          player.pay(reward)
          -- More flavour text
-         tk.msg(title[3], string.format( text[3], dest:name() ))
+         tk.msg(_("Mission Accomplished"), string.format( text[3], dest:name() ))
          var.push("es_cargo", true)
          faction.modPlayerSingle("Empire",3);
-         emp.addShippingLog( log_text )
+         emp.addShippingLog( _([[You were recruited into the Empire's shipping division and can now do missions labeled ES, which stands for Empire Shipping. You aren't too sure of what to make of your encounter with the Empire. Only time will tell...]]) )
          pir.reputationNormalMission(3)
          misn.finish(true)
       end
