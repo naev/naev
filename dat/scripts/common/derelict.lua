@@ -15,4 +15,9 @@ derelict.sfx = setmetatable( {}, {
    end
 } )
 
+function der.addMiscLog( text )
+   shiplog.create( "derelict", _("Derelict"), _("Neutral") )
+   shiplog.append( "derelict", text )
+end
+
 return derelict

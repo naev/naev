@@ -98,6 +98,8 @@ You have received #g{credits}#0.
    vn.sfxVictory()
    vn.run()
 
+   der.addMiscLog(_("You rescued the crew of a derelict ship."))
+
    misn.finish( true )
 end
 
