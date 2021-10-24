@@ -47,13 +47,6 @@ misn_title[4] = _("#rPIRACY:#0: Big Assassination Job in %s%s")
 misn_title[5] = _("#rPIRACY:#0: Dangerous Assassination Job in %s%s")
 misn_title[6] = _("#rPIRACY:#0: Highly Dangerous Assassination Job in %s%s")
 
--- Messages
-msg    = {}
-msg[1] = _("MISSION FAILURE! Target got away.")
-msg[2] = _("MISSION FAILURE! Another pilot eliminated your target.")
-msg[3] = _("MISSION FAILURE! You have left the %s system.")
-msg[4] = _("MISSION SUCCESS! Pay has been transferred into your account.")
-
 hunters = {}
 hunter_hits = {}
 
@@ -181,7 +174,7 @@ function jumpout ()
    jumps_permitted = jumps_permitted - 1
    last_sys = system.cur()
    if not job_done and last_sys == missys then
-      fail( msg[3]:format( last_sys:name() ) )
+      fail( _("MISSION FAILURE! You have left the %s system."):format( last_sys:name() ) )
    end
 end
 
@@ -236,14 +229,14 @@ function pilot_death( _p, attacker )
       elseif player_hits >= top_hits / 2 and rnd.rnd() < 0.5 then
          succeed()
       else
-         fail( msg[2] )
+         fail( _("MISSION FAILURE! Another pilot eliminated your target.") )
       end
    end
 end
 
 
 function pilot_jump ()
-   fail( msg[1] )
+   fail( _("MISSION FAILURE! Target got away.") )
 end
 
 
@@ -550,7 +543,7 @@ function spawn_pirate( param )
          hook.pilot( target_ship, "jump", "pilot_jump" )
          hook.pilot( target_ship, "land", "pilot_jump" )
       else
-         fail( msg[1] )
+         fail( _("MISSION FAILURE! Target got away.") )
       end
    end
 end
@@ -558,7 +551,7 @@ end
 
 -- Succeed the mission
 function succeed ()
-   player.msg( "#g" .. msg[4] .. "#0" )
+   player.msg( "#g" .. _("MISSION SUCCESS! Pay has been transferred into your account.") .. "#0" )
    player.pay( credits )
 
    -- Pirate rep cap increase
