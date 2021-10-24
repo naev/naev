@@ -20,14 +20,6 @@
 local fmt = require "format"
 local zlk = require "common.zalek"
 
--- Bar Description
-
--- Mission Details
-
--- OSD
-OSDdesc = {}
-OSDdesc[1] = _("Go pick up some equipment at %s in the %s system")
-OSDdesc[2] = _("Drop off the equipment at %s in the %s system")
 
 payment = 800e3
 
@@ -64,15 +56,15 @@ function accept ()
       misn.setReward( _("A handsome payment.") )
       misn.setDesc( _("You agreed to help a Za'lek scientist pick up some cargo way out in the sticks. Hopefully this'll be worth it."):format(pickupWorld:name(), pickupSys:name(), delivWorld:name(), delivSys:name() ) )
 
-      -- OSD
-      OSDdesc[1] =  OSDdesc[1]:format(pickupWorld:name(), pickupSys:name())
-      OSDdesc[2] =  OSDdesc[2]:format(delivWorld:name(), delivSys:name())
-
       pickedup = false
       droppedoff = false
 
       marker = misn.markerAdd( pickupSys, "low" )  -- pickup
-      misn.osdCreate( _("Za'lek Cargo Monkey"), OSDdesc )  -- OSD
+      -- OSD
+      misn.osdCreate( _("Za'lek Cargo Monkey"), {
+         _("Go pick up some equipment at %s in the %s system"):format(pickupWorld:name(), pickupSys:name()),
+         _("Drop off the equipment at %s in the %s system"):format(delivWorld:name(), delivSys:name()),
+      } )
 
       tk.msg( _("A long haul through tough territory"), _([[You say that he is looking at one right now. Rather surprisingly, he laughs slightly, looking relieved. "Thank you, captain! I was hoping that you could help me. My name is Dr. Andrej Logan. The job will be a bit dangerous, but I will pay you handsomely for your services.
     "I need a load of equipment that is stuck at %s in the %s system. Unfortunately, that requires going through the pirate-infested fringe space between the Empire, Za'lek and Dvaered. Seeing as no one can agree whose responsibility it is to clean the vermin out, the pirates have made that route dangerous to traverse. I have had a devil of a time finding someone willing to take the mission on. Once you get the equipment, please deliver it to %s in the %s system. I will meet you there."]]):format( pickupWorld:name(), pickupSys:name(), delivWorld:name(), delivSys:name() ) )

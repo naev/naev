@@ -25,16 +25,6 @@
 local fmt = require "format"
 local neu = require "common.neutral"
 
-
--- Bar Description
-
--- Mission Details
-
--- OSD
-OSDdesc = {}
-OSDdesc[1] = _("Go pickup some goods at %s in the %s system")
-OSDdesc[2] = _("Drop off the goods at %s in the %s system")
-
 payment = 500e3
 
 
@@ -70,15 +60,15 @@ function accept ()
       misn.setReward( _("More than it's worth!") )
       misn.setDesc( _("You've decided to help some drunkard at the bar by picking up some goods for some countess. Though you're not sure why you accepted."):format(pickupWorld:name(), pickupSys:name(), delivWorld:name(), delivSys:name() ) )
 
-      -- OSD
-      OSDdesc[1] =  OSDdesc[1]:format(pickupWorld:name(), pickupSys:name())
-      OSDdesc[2] =  OSDdesc[2]:format(delivWorld:name(), delivSys:name())
-
       pickedup = false
       droppedoff = false
 
       marker = misn.markerAdd( pickupSys, "low" )  -- pickup
-      misn.osdCreate( _("Help the Drunkard"), OSDdesc )  -- OSD
+      -- OSD
+      misn.osdCreate( _("Help the Drunkard"), {
+         _("Go pickup some goods at %s in the %s system"):format(pickupWorld:name(), pickupSys:name()),
+         _("Drop off the goods at %s in the %s system"):format(delivWorld:name(), delivSys:name()),
+      } )
 
       tk.msg( _("Pick Up the Countess's Goods"), _([["Oh, thank the ancestors! I knew you would help me!" The man relaxes considerably and puts his arm around you. "Have a drink while I explain it to you.", he motions to the bartender to bring two drinks over. "You see, I know this countess, she's like...whoa...you know what I mean?", he nudges you. "But she's rich, like personal escort fleet rich, golden shuttles, diamond laser turrets rich.
     Well, occasionally she needs some things shipped that she can't just ask her driver to go get for her. So, she asks me to go get this package. I don't know what it is; I don't ask; she doesn't tell me; that's the way she likes it. I had just got off this 72 hour run through pirate infested space though, and I was all hopped up on grasshoppers without a hatch to jump. So I decided to get a drink or two and hit the hay. Turned out those drinks er two got a little procreation goin' on and turned into three or twelve. Maybe twenty. I don't know, but they didn't seem too liking to my gamblin', as next thing I knew, I was wakin' up with water splashed on my face, bein' tellered I gots in the hock, and they gots me ship, ye know? But hey, all yous gotta do is go pick up whatever it is she wants at %s in the %s system. I doubt it's anything too hot, but I also doubt it's kittens and rainbows. All I ask is 25 percent. So just go get it, deliver it to %s in the %s system, and don't ask any questions. And if she's there when you drop it off, just tell her I sent you. And don't you be lookin' at her too untoforward, or um, uh, you know what I mean." You figure you better take off before the drinks he's had take any more hold on him, and the bottle sucks you in.]]):format( pickupWorld:name(), pickupSys:name(), delivWorld:name(), delivSys:name() ) )

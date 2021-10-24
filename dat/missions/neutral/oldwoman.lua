@@ -40,9 +40,6 @@ complaints[5] = _([["You don't know how good you have it these days. When I was 
 complaints[6] = _([["Time passes by so quickly. I remember when this was all space."]])
 complaints[7] = _([["All this automation is making people lax, I tell you. My uncle ran a tight ship. If he caught you cutting corners, you'd be defragmenting the sub-ion matrix filters for a week!"]])
 
-OSD = {}
-OSD[1] = _("Take the old woman to %s (%s system)")
-
 function create ()
     cursys = system.cur()
 
@@ -79,8 +76,7 @@ function accept ()
         misn.accept()
         misn.setDesc(_("An aging lady has asked you to ferry her to %s in the %s system."):format(destplanet:name(), destsys:name()))
         misn.setReward(_("Fair monetary compensation"))
-        OSD[1] = OSD[1]:format(destplanet:name(), destsys:name())
-        misn.osdCreate(_("The old woman"), OSD)
+        misn.osdCreate(_("The old woman"), {_("Take the old woman to %s (%s system)"):format(destplanet:name(), destsys:name())})
         misn.markerAdd(destplanet, "high")
 
         dist_total = car.calculateDistance(system.cur(), planet.cur():pos(), destsys, destplanet)
