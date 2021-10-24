@@ -97,10 +97,10 @@ function generate_npc ()
    end
 
    if planet.cur() == planet.get("Minerva Station") then
-      npc_kex = misn.npcAdd( "approach_kex", minerva.kex.name, minerva.kex.portrait, minerva.kex.description )
+      misn.npcAdd( "approach_kex", minerva.kex.name, minerva.kex.portrait, minerva.kex.description )
 
    elseif misn_state==0 and planet.cur() == planet.get(targetplanet) then
-      npc_jie = misn.npcAdd( "approach_jie", _("Jie de Luca"), jie_portrait, _("You see an individual matching the description of Jie de Luca.") )
+      misn.npcAdd( "approach_jie", _("Jie de Luca"), jie_portrait, _("You see an individual matching the description of Jie de Luca.") )
 
    end
 end

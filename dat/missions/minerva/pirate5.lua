@@ -80,9 +80,8 @@ function accept ()
 end
 
 function generate_npc ()
-   npc_zuri = nil
    if planet.cur() == planet.get("Minerva Station") then
-      npc_zuri = misn.npcAdd( "approach_zuri", minerva.zuri.name, minerva.zuri.portrait, minerva.zuri.description )
+      misn.npcAdd( "approach_zuri", minerva.zuri.name, minerva.zuri.portrait, minerva.zuri.description )
    end
 end
 

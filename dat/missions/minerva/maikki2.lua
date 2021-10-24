@@ -298,19 +298,19 @@ end
 
 function generate_npc ()
    if planet.cur() == planet.get("Minerva Station") then
-      npc_maikki = misn.npcAdd( "approach_maikki", minerva.maikki.name, minerva.maikki.portrait, minerva.maikki.description )
+      misn.npcAdd( "approach_maikki", minerva.maikki.name, minerva.maikki.portrait, minerva.maikki.description )
 
    elseif planet.cur() == planet.get( hintpnt[1] ) then
-      npc_hint1 = misn.npcAdd( "approach_hint1", hint1_name, hint1_portrait, _("You see a person in a fancy lab coat. It seems like they are enjoying their time off.") )
+      misn.npcAdd( "approach_hint1", hint1_name, hint1_portrait, _("You see a person in a fancy lab coat. It seems like they are enjoying their time off.") )
 
    elseif planet.cur() == planet.get( hintpnt[2] ) then
-      npc_hint2 = misn.npcAdd( "approach_hint2", hint2_name, hint2_portrait, _("You see a person in a fancy lab coat. It seems like they are enjoying their time off.") )
+      misn.npcAdd( "approach_hint2", hint2_name, hint2_portrait, _("You see a person in a fancy lab coat. It seems like they are enjoying their time off.") )
 
    elseif planet.cur() == planet.get( hintpnt[3] ) then
-      npc_hint3 = misn.npcAdd( "approach_hint3", hint3_name, hint3_portrait, _("You see a person in a fancy lab coat. It seems like they are enjoying their time off.") )
+      misn.npcAdd( "approach_hint3", hint3_name, hint3_portrait, _("You see a person in a fancy lab coat. It seems like they are enjoying their time off.") )
 
    elseif misn_state >= 1 and  planet.cur() == planet.get( hintpnt[4] ) then
-      npc_hint4 = misn.npcAdd( "approach_hint4", hint4_name, hint4_portrait, _("You see a young fellow intently reading a book. There seems to be a shrimp in a floating aquarium bowl floating around him.") )
+      misn.npcAdd( "approach_hint4", hint4_name, hint4_portrait, _("You see a young fellow intently reading a book. There seems to be a shrimp in a floating aquarium bowl floating around him.") )
 
    elseif diff.isApplied(eccdiff) and planet.cur() == planet.get(eccpnt) and misn_state < 6 then
       npc_ecc = misn.npcAdd( "approach_eccentric", _("Hologram Projector"), ecc_portrait, _("An old decrepit hologram projector sits in the corner. It looks like you could use this to communicate with the owner of the station.") )

@@ -80,7 +80,7 @@ end
 
 function generate_npc ()
    if planet.cur() == planet.get("Minerva Station") then
-      npc_kex = misn.npcAdd( "approach_kex", minerva.kex.name, minerva.kex.portrait, minerva.kex.description )
+      misn.npcAdd( "approach_kex", minerva.kex.name, minerva.kex.portrait, minerva.kex.description )
 
    elseif planet.cur() == planet.get(targetplanet) and misn_state==0 then
 

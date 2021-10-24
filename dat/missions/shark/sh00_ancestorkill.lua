@@ -106,7 +106,7 @@ function land()
 
    -- Did the player reach Ulios ?
    if planet.cur() == mispla and stage == 0 then
-      smith = misn.npcAdd("beginbattle", _("Arnold Smith"), "neutral/unique/arnoldsmith.webp", _([[The Nexus employee who recruited you for a very special demo of the "Shark" fighter.]]))
+      misn.npcAdd("beginbattle", _("Arnold Smith"), "neutral/unique/arnoldsmith.webp", _([[The Nexus employee who recruited you for a very special demo of the "Shark" fighter.]]))
    end
 
    -- Did the player land again on Ulios after having killed the pirate

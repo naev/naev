@@ -29,7 +29,7 @@ gauntletsys = system.get("Crimson Gauntlet")
 sfx_clear = audio.new( 'snd/sounds/jingles/victory.ogg' )
 
 function create ()
-   npc_gauntlet = misn.npcAdd( "approach_gauntlet", _("Crimson Gauntlet Terminal"), npc_portrait, npc_description )
+   misn.npcAdd( "approach_gauntlet", _("Crimson Gauntlet Terminal"), npc_portrait, npc_description )
 end
 
 -- Land is unified for all types of combat

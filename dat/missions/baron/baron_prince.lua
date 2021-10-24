@@ -133,9 +133,9 @@ function land()
       sellnpc = misn.npcAdd("seller", _("Artifact seller"), portrait.get("Pirate"), sellerdesc, 4)
    elseif planet.cur() == flintplanet then
       if flintleyfirst then
-         flintnpc = misn.npcAdd("flintley", _("A reedy-looking man"), "neutral/unique/flintley.webp", _("You spot a thin, nervous looking individual. He does not seem to want to be here. This could be that Flintley fellow the Baron told you about."), 4)
+         misn.npcAdd("flintley", _("A reedy-looking man"), "neutral/unique/flintley.webp", _("You spot a thin, nervous looking individual. He does not seem to want to be here. This could be that Flintley fellow the Baron told you about."), 4)
       else
-         flintnpc = misn.npcAdd("flintley", _("Flintley"), "neutral/unique/flintley.webp", _("Flintley is here. He nervously sips from his drink, clearly uncomfortable in this environment."), 4)
+         misn.npcAdd("flintley", _("Flintley"), "neutral/unique/flintley.webp", _("Flintley is here. He nervously sips from his drink, clearly uncomfortable in this environment."), 4)
       end
    end
 end

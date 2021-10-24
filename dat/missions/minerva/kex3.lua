@@ -91,7 +91,7 @@ end
 
 function generate_npc ()
    if planet.cur() == planet.get("Minerva Station") then
-      npc_kex = misn.npcAdd( "approach_kex", minerva.kex.name, minerva.kex.portrait, minerva.kex.description )
+      misn.npcAdd( "approach_kex", minerva.kex.name, minerva.kex.portrait, minerva.kex.description )
 
    elseif misn_state==0 and planet.cur() == planet.get(targetplanet) then
       vn.clear()
@@ -111,7 +111,7 @@ function generate_npc ()
 
    elseif (misn_state==2 or misn_state==3) and planet.cur() == planet.get(lastplanet) then
       misn_state = 3
-      npc_malik = misn.npcAdd( "approach_malik", _("Major Malik"), malik_portrait, _("You see Major Malik who is fairly similar to the image shown to you by Kex.") )
+      misn.npcAdd( "approach_malik", _("Major Malik"), malik_portrait, _("You see Major Malik who is fairly similar to the image shown to you by Kex.") )
 
    elseif misn_state==4 and planet.cur() == planet.get(lastplanet) then
       vn.clear()
