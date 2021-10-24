@@ -55,10 +55,6 @@ share_text[3] = _([["Hey, thanks for the help back there. I don't know if I woul
 share_text[4] = _([["Heh, thanks! I think I would have been able to take out the target by myself, but still, I appreciate your assistance. Here, I'll transfer some of the bounty to you, as a token of my appreciation."]])
 share_text[5] = _([["Ha ha ha, looks like I beat you to it this time, eh? Well, I don't do this often, but here, have some of the bounty. I think you deserve it."]])
 
-
--- Mission details
-misn_desc   = _("A political dissident was recently seen in the %s system. %s authorities want this dissident dead or alive.")
-
 -- Messages
 msg    = {}
 msg[1] = _("MISSION FAILURE! Your target got away.")
@@ -106,9 +102,7 @@ function create ()
 
    -- Set mission details
    misn.setTitle( _("PD: Dead or Alive Bounty in %s"):format( missys:name() ) )
-   misn.setDesc( misn_desc:format( missys:name(), paying_faction:name() ) )
-   --TODO: redo as
-   --misn.setDesc( fmt.f( misn_desc, {sysname=missys:name(), fctname=paying_faction:name()} ) )
+   misn.setDesc( fmt.f( _("A political dissident was recently seen in the {sysname} system. {fctname} authorities want this dissident dead or alive."), {sysname=missys:name(), fctname=paying_faction:name()} ) )
    misn.setReward( fmt.credits( credits ) )
    marker = misn.markerAdd( missys, "computer" )
 end
