@@ -611,7 +611,7 @@ double system_getClosest( const StarSystem *sys, int *pnt, int *jp, int *ast, in
    for (int i=0; i<array_size(sys->jumps); i++) {
       double td;
       JumpPoint *j  = &sys->jumps[i];
-      if (!jp_isKnown(j))
+      if (!jp_isUsable(j))
          continue;
       td = pow2(x-j->pos.x) + pow2(y-j->pos.y);
       if (td < d) {
@@ -707,7 +707,7 @@ int space_sysReachable( const StarSystem *sys )
    /* check to see if it is adjacent to known */
    for (int i=0; i<array_size(sys->jumps); i++) {
       JumpPoint *jp = sys->jumps[i].returnJump;
-      if (jp && jp_isKnown( jp ))
+      if (jp && jp_isUsable( jp ))
          return 1;
    }
 
@@ -744,7 +744,7 @@ int space_sysReachableFromSys( const StarSystem *target, const StarSystem *sys )
    JumpPoint *jp = jump_getTarget( target, sys );
    if (jp == NULL)
       return 0;
-   else if (jp_isKnown( jp ))
+   else if (jp_isUsable( jp ))
       return 1;
    return 0;
 }
@@ -1333,21 +1333,27 @@ void space_update( const double dt )
 
       /* Jump point updates */
       for (int i=0; i<array_size(cur_system->jumps); i++) {
-         if ((!jp_isKnown( &cur_system->jumps[i] )) && ( pilot_inRangeJump( player.p, i ))) {
-            HookParam hparam[3];
+         HookParam hparam[3];
+         JumpPoint *jp = &cur_system->jumps[i];
 
-            jp_setFlag( &cur_system->jumps[i], JP_KNOWN );
-            player_message( _("You discovered a Jump Point.") );
-            hparam[0].type  = HOOK_PARAM_STRING;
-            hparam[0].u.str = "jump";
-            hparam[1].type  = HOOK_PARAM_JUMP;
-            hparam[1].u.lj.srcid = cur_system->id;
-            hparam[1].u.lj.destid = cur_system->jumps[i].target->id;
-            hparam[2].type  = HOOK_PARAM_SENTINEL;
-            hooks_runParam( "discover", hparam );
-            found_something = 1;
-            cur_system->jumps[i].map_alpha = 0.;
-         }
+         if (jp_isKnown(jp))
+            continue;
+         if (jp_isFlag(jp,JP_EXITONLY))
+            continue;
+         if (!(pilot_inRangeJump( player.p, i )))
+            continue;
+
+         jp_setFlag( jp, JP_KNOWN );
+         player_message( _("You discovered a Jump Point.") );
+         hparam[0].type  = HOOK_PARAM_STRING;
+         hparam[0].u.str = "jump";
+         hparam[1].type  = HOOK_PARAM_JUMP;
+         hparam[1].u.lj.srcid = cur_system->id;
+         hparam[1].u.lj.destid = jp->target->id;
+         hparam[2].type  = HOOK_PARAM_SENTINEL;
+         hooks_runParam( "discover", hparam );
+         found_something = 1;
+         jp->map_alpha = 0.;
       }
 
       if (found_something)

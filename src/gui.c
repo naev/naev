@@ -150,6 +150,20 @@ static glTexture *gui_ico_hail      = NULL; /**< Hailing icon. */
 static glTexture *gui_target_planet = NULL; /**< Planet targeting icon. */
 static glTexture *gui_target_pilot  = NULL; /**< Pilot targeting icon. */
 
+/* Lua Stuff. */
+static int gui_lua_create           = LUA_NOREF;
+static int gui_lua_render           = LUA_NOREF;
+static int gui_lua_render_cooldown  = LUA_NOREF;
+static int gui_lua_end_cooldown     = LUA_NOREF;
+static int gui_lua_mouse_move       = LUA_NOREF;
+static int gui_lua_mouse_click      = LUA_NOREF;
+static int gui_lua_update_cargo     = LUA_NOREF;
+static int gui_lua_update_nav       = LUA_NOREF;
+static int gui_lua_update_target    = LUA_NOREF;
+static int gui_lua_update_ship      = LUA_NOREF;
+static int gui_lua_update_system    = LUA_NOREF;
+static int gui_lua_update_faction   = LUA_NOREF;
+
 /*
  * prototypes
  */
@@ -175,9 +189,9 @@ static void gui_blink( double cx, double cy, double vr, const glColour *col, dou
 static const glColour* gui_getPilotColour( const Pilot* p );
 static void gui_calcBorders (void);
 /* Lua GUI. */
-static int gui_doFunc( const char* func );
-static int gui_prepFunc( const char* func );
-static int gui_runFunc( const char* func, int nargs, int nret );
+static int gui_doFunc( int func_ref, const char *func_name );
+static int gui_prepFunc( int func_ref, const char *func_name );
+static int gui_runFunc( const char *func, int nargs, int nret );
 
 /**
  * Sets the GUI to defaults.
@@ -562,7 +576,7 @@ static void gui_renderBorder( double dt )
       JumpPoint *jp = &cur_system->jumps[i];
 
       /* Skip if unknown or exit-only. */
-      if (!jp_isKnown( jp ) || jp_isFlag( jp, JP_EXITONLY ))
+      if (!jp_isUsable( jp ))
          continue;
 
       /* Check if out of range. */
@@ -743,13 +757,13 @@ void gui_render( double dt )
 
    /* Run Lua. */
    if (gui_env != LUA_NOREF) {
-      if (gui_prepFunc( "render" )==0) {
+      if (gui_prepFunc( gui_lua_render, "render" )==0) {
          lua_pushnumber( naevL, dt );
          lua_pushnumber( naevL, dt_mod );
          gui_runFunc( "render", 2, 0 );
       }
       if (pilot_isFlag(player.p, PILOT_COOLDOWN)) {
-         if (gui_prepFunc( "render_cooldown" )==0) {
+         if (gui_prepFunc( gui_lua_render_cooldown, "render_cooldown" )==0) {
             lua_pushnumber( naevL, player.p->ctimer / player.p->cdelay  );
             lua_pushnumber( naevL, player.p->ctimer );
             gui_runFunc( "render_cooldown", 2, 0 );
@@ -834,8 +848,7 @@ void gui_render( double dt )
  */
 void gui_cooldownEnd (void)
 {
-   if (gui_env != LUA_NOREF)
-      gui_doFunc( "end_cooldown" );
+   gui_doFunc( gui_lua_end_cooldown, "end_cooldown" );
 }
 
 /**
@@ -1337,7 +1350,7 @@ void gui_renderPlanet( int ind, RadarShape shape, double w, double h, double res
    char buf[STRMAX_SHORT];
 
    /* Make sure is known. */
-   if ( !planet_isKnown( cur_system->planets[ind] ))
+   if (!planet_isKnown( cur_system->planets[ind] ))
       return;
 
    /* Default values. */
@@ -1433,7 +1446,7 @@ void gui_renderJumpPoint( int ind, RadarShape shape, double w, double h, double 
    JumpPoint *jp = &cur_system->jumps[ind];
 
    /* Check if known */
-   if (!jp_isKnown(jp))
+   if (!jp_isUsable(jp))
       return;
 
    /* Default values. */
@@ -1640,34 +1653,43 @@ int gui_init (void)
 /**
  * @brief Runs a GUI Lua function.
  *
- *    @param func Name of the function to run.
+ *    @param func_ref Reference of the functionn to run.
+ *    @param func_name Name of the function to run.
  *    @return 0 on success.
  */
-static int gui_doFunc( const char* func )
+static int gui_doFunc( int func_ref, const char *func_name )
 {
-   int ret = gui_prepFunc( func );
+   int ret;
+   if (gui_env == LUA_NOREF)
+      return -1;
+
+   ret = gui_prepFunc( func_ref, func_name );
    if (ret)
       return ret;
-   return gui_runFunc( func, 0, 0 );
+   return gui_runFunc( func_name, 0, 0 );
 }
 
 /**
  * @brief Prepares to run a function.
+ *
+ *    @param func_ref Reference of the functionn to prepare.
+ *    @param func_name Name of the function to prepare.
+ *    @return 0 on success.
  */
-static int gui_prepFunc( const char* func )
+static int gui_prepFunc( int func_ref, const char *func_name )
 {
 #if DEBUGGING
    if (gui_env == LUA_NOREF) {
-      WARN( _("GUI '%s': Trying to run GUI func '%s' but no GUI is loaded!"), gui_name, func );
+      WARN( _("GUI '%s': Trying to run GUI func '%s' but no GUI is loaded!"), gui_name, func_name );
       return -1;
    }
 #endif /* DEBUGGING */
 
    /* Set up function. */
-   nlua_getenv( gui_env, func );
+   lua_rawgeti( naevL, LUA_REGISTRYINDEX, func_ref );
 #if DEBUGGING
    if (lua_isnil( naevL, -1 )) {
-      WARN(_("GUI '%s': no function '%s' defined!"), gui_name, func );
+      WARN(_("GUI '%s': no function '%s' defined!"), gui_name, func_name );
       lua_pop(naevL,1);
       return -1;
    }
@@ -1684,13 +1706,10 @@ static int gui_prepFunc( const char* func )
  */
 static int gui_runFunc( const char* func, int nargs, int nret )
 {
-   int ret;
-   const char* err;
-
    /* Run the function. */
-   ret = nlua_pcall( gui_env, nargs, nret );
+   int ret = nlua_pcall( gui_env, nargs, nret );
    if (ret != 0) { /* error has occurred */
-      err = (lua_isstring(naevL,-1)) ? lua_tostring(naevL,-1) : NULL;
+      const char *err = (lua_isstring(naevL,-1)) ? lua_tostring(naevL,-1) : NULL;
       WARN(_("GUI '%s' Lua -> '%s': %s"), gui_name,
             func, (err) ? err : _("unknown error"));
       lua_pop(naevL,1);
@@ -1716,8 +1735,7 @@ void gui_reload (void)
  */
 void gui_setCargo (void)
 {
-   if (gui_env != LUA_NOREF)
-      gui_doFunc( "update_cargo" );
+   gui_doFunc( gui_lua_update_cargo, "update_cargo" );
 }
 
 /**
@@ -1725,8 +1743,7 @@ void gui_setCargo (void)
  */
 void gui_setNav (void)
 {
-   if (gui_env != LUA_NOREF)
-      gui_doFunc( "update_nav" );
+   gui_doFunc( gui_lua_update_nav, "update_nav" );
 }
 
 /**
@@ -1734,8 +1751,7 @@ void gui_setNav (void)
  */
 void gui_setTarget (void)
 {
-   if (gui_env != LUA_NOREF)
-      gui_doFunc( "update_target" );
+   gui_doFunc( gui_lua_update_target, "update_target" );
 }
 
 /**
@@ -1743,8 +1759,7 @@ void gui_setTarget (void)
  */
 void gui_setShip (void)
 {
-   if (gui_env != LUA_NOREF)
-      gui_doFunc( "update_ship" );
+   gui_doFunc( gui_lua_update_ship, "update_ship" );
 }
 
 /**
@@ -1752,8 +1767,7 @@ void gui_setShip (void)
  */
 void gui_setSystem (void)
 {
-   if (gui_env != LUA_NOREF)
-      gui_doFunc( "update_system" );
+   gui_doFunc( gui_lua_update_system, "update_system" );
 }
 
 /**
@@ -1761,8 +1775,8 @@ void gui_setSystem (void)
  */
 void gui_updateFaction (void)
 {
-   if (gui_env != LUA_NOREF && player.p->nav_planet != -1)
-      gui_doFunc( "update_faction" );
+   if (player.p != NULL && player.p->nav_planet != -1)
+      gui_doFunc( gui_lua_update_faction, "update_faction" );
 }
 
 /**
@@ -1854,8 +1868,24 @@ int gui_load( const char* name )
    nlua_loadGUI( gui_env );
    nlua_loadTk( gui_env );
 
+   /* Load references. */
+#define LUA_FUNC(funcname) gui_lua_##funcname = nlua_refenvtype( gui_env, #funcname, LUA_TFUNCTION );
+   LUA_FUNC( create );
+   LUA_FUNC( render );
+   LUA_FUNC( render_cooldown );
+   LUA_FUNC( end_cooldown );
+   LUA_FUNC( mouse_move );
+   LUA_FUNC( mouse_click );
+   LUA_FUNC( update_cargo );
+   LUA_FUNC( update_nav );
+   LUA_FUNC( update_target );
+   LUA_FUNC( update_ship );
+   LUA_FUNC( update_system );
+   LUA_FUNC( update_faction );
+#undef LUA_FUNC
+
    /* Run create function. */
-   if (gui_doFunc( "create" )) {
+   if (gui_doFunc( gui_lua_create, "create" )) {
       nlua_freeEnv( gui_env );
       gui_env = LUA_NOREF;
    }
@@ -1903,6 +1933,22 @@ void gui_cleanup (void)
 
    /* Clear timers. */
    animation_dt = 0.;
+
+   /* Lua stuff. */
+#define LUA_CLEANUP( varname ) if (varname!=LUA_NOREF) luaL_unref(naevL, LUA_REGISTRYINDEX, varname ); varname = LUA_NOREF
+   LUA_CLEANUP( gui_lua_create );
+   LUA_CLEANUP( gui_lua_render );
+   LUA_CLEANUP( gui_lua_render_cooldown );
+   LUA_CLEANUP( gui_lua_end_cooldown );
+   LUA_CLEANUP( gui_lua_mouse_move );
+   LUA_CLEANUP( gui_lua_mouse_click );
+   LUA_CLEANUP( gui_lua_update_cargo );
+   LUA_CLEANUP( gui_lua_update_nav );
+   LUA_CLEANUP( gui_lua_update_target );
+   LUA_CLEANUP( gui_lua_update_ship );
+   LUA_CLEANUP( gui_lua_update_system );
+   LUA_CLEANUP( gui_lua_update_faction );
+#undef LUA_CLEANUP
 }
 
 /**
@@ -1951,7 +1997,7 @@ void gui_setRadarRel( int mod )
 {
    gui_radar.res += mod * RADAR_RES_INTERVAL;
    gui_setRadarResolution( gui_radar.res );
-   player_message( _("#oRadar set to %dx."), (int)gui_radar.res );
+   player_message( _("#oRadar set to %.0fx.#0"), round(gui_radar.res) );
 }
 
 /**
@@ -2050,7 +2096,7 @@ int gui_handleEvent( SDL_Event *evt )
       case SDL_MOUSEMOTION:
          if (!gui_L_mmove)
             break;
-         gui_prepFunc( "mouse_move" );
+         gui_prepFunc( gui_lua_mouse_move, "mouse_move" );
          gui_eventToScreenPos( &x, &y, evt->motion.x, evt->motion.y );
          lua_pushnumber( naevL, x );
          lua_pushnumber( naevL, y );
@@ -2062,7 +2108,7 @@ int gui_handleEvent( SDL_Event *evt )
       case SDL_MOUSEBUTTONUP:
          if (!gui_L_mclick)
             break;
-         gui_prepFunc( "mouse_click" );
+         gui_prepFunc( gui_lua_mouse_click, "mouse_click" );
          lua_pushnumber( naevL, evt->button.button+1 );
          gui_eventToScreenPos( &x, &y, evt->button.x, evt->button.y );
          lua_pushnumber( naevL, x );
