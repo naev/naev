@@ -30,7 +30,6 @@ misn_title[4] = _("FLF: Large Empire patrol in %s")
 misn_title[5] = _("FLF: Dangerous Empire patrol in %s")
 misn_title[6] = _("FLF: Highly Dangerous Empire patrol in %s")
 
-osd_title   = _("FLF Patrol")
 osd_desc    = {}
 osd_desc[1] = _("Fly to the %s system")
 osd_desc[2] = _("Eliminate the Empire patrol")
@@ -80,7 +79,7 @@ function enter ()
 
          if flfships > 0 then
             if not late_arrival then
-               patrol_spawnFLF( flfships, last_system, flfcomm[1] )
+               patrol_spawnFLF( flfships, last_system, _("Alright, let's have at them!") )
             else
                hook.timer( late_arrival_delay, "timer_lateFLF" )
             end

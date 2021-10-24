@@ -33,68 +33,36 @@ local flf = require "missions.flf.flf_common"
 require "missions.flf.flf_patrol"
 local dv = require "common.dvaered"
 
-title = {}
-text = {}
 osd_desc = {}
 refuelmsg = {}
 
-title[1] = _("A chance to prove yourself")
-text[1] = _([[The FLF officer doesn't seem at all surprised that you approached her. On the contrary, she looks like she expected you to do so all along.
-    "Greetings," she says, nodding at you in curt greeting. "I am Corporal Benito. And you must be %s, the one who got Lt. Fletcher back here in one piece." Benito's expression becomes a little more severe. "I'm not here to exchange pleasantries, however. You probably noticed, but people here are a little uneasy about your presence. They don't know what to make of you, see. You helped us once, it is true, but that doesn't tell us much. We don't know you."]])
-
-text[2] = _([[Indeed, you are constantly aware of the furtive glances the other people in this bar are giving you. They don't seem outright hostile, but you can tell that if you don't watch your step and choose your words carefully, things might quickly take a turn for the worse.
-    Benito waves her hand to indicate you needn't pay them any heed. "That said, the upper ranks have decided that if you are truly sympathetic to our cause, you will be given an opportunity to prove yourself. Of course, if you'd rather not get involved in our struggle, that's understandable. But if you're in for greater things, if you stand for justice... Perhaps you'll consider joining with us?"]])
-
-title[3] = _("Patrol-B-gone")
-text[3] = _([["I'm happy to hear that. It's good to know we still have the support from the common pilot. Anyway, let me fill you in on what it is we want you to do. As you may be aware, the Dvaered have committed a lot of resources to finding us and flushing us out lately. And while our base is well hidden, those constant patrols are certainly not doing anything to make us feel more secure! I think you can see where this is going. You will go out there and eliminate one of those patrols in the %s system."
-    You object, asking the Corporal if all recruits have to undertake dangerous missions like this to be accepted into the FLF ranks. Benito chuckles and makes a pacifying gesture.
-    "Calm down, it's not as bad as it sounds. You only have to take out one small patrol; I don't think you will have to fight more than 3 ships, 4 if you're really unlucky. If you think that's too much for you, you can abort the mission for now and come to me again later. Otherwise, good luck!"]])
-
-title[4] = _("Breaking the ice")
-text[4] = _([[When you left Sindbad Station, it was a cold, lonely place for you. The FLF soldiers on the station avoided you whenever they could, and basic services were harder to get than they should have been.
-    But now that you have returned victorious over the Dvaered, the place has become considerably more hospitable. There are more smiles on people's faces, and some even tell you you did a fine job. Among them is Corporal Benito. She walks up to you and offers you her hand.]])
-
-text[5] = _([["Welcome back, %s, and congratulations. I didn't expect the Dvaered to send reinforcements, much less a Vigilance. I certainly wouldn't have sent you alone if I did, and I might not have sent you at all. But then, you're still in one piece, so maybe I shouldn't worry so much, eh?"]])
-
-text[6] = _([[Benito takes you to the station's bar and buys you what for lack of a better word must be called a drink.
-    "We will of course reward you for your service," she says once you are seated. "Though you must understand the FLF doesn't have that big a budget. Financial support is tricky, and the Frontier doesn't have that much to spare themselves to begin with. Nevertheless, we are willing to pay for good work, and your work is nothing but. What's more, you've ingratiated yourself with many of us, as you've undoubtedly noticed. Our top brass are among those you've impressed, so from today on, you can call yourself one of us! How about that, huh?"]])
-
-text[7] = _([["Of course, our work is only just beginning. No rest for the weary; we must continue the fight against the oppressors. I'm sure the road is still long, but I'm encouraged by the fact that we gained another valuable ally today. Check the mission computer for more tasks you can help us with. Please take this Pentagram of Valor as a token of appreciation. I'm sure you'll play an important role in our eventual victory over the Dvaered!"
-    That last part earns a cheer from the assembled FLF soldiers. You decide to raise your glass with them, making a toast to the fortune of battle in the upcoming campaign - and the sweet victory that lies beyond.]])
-
-flfcomm = {}
-flfcomm[1] = _("We have your back, %s!")
-flfcomm[2] = _("%s is selling us out! Eliminate the traitor!")
-flfcomm[3] = _("Let's get out of here, %s! We'll meet you back at the base.")
-
-misn_desc = _("To prove yourself to the FLF, you must take out one of the Dvaered security patrols.")
-osd_title   = _("Dvaered Patrol")
 osd_desc[1] = _("Fly to the %s system")
 osd_desc[2] = _("Eliminate the Dvaered patrol")
 osd_desc[3] = _("Return to the FLF base")
 osd_desc["__save"] = true
 
-npc_name = _("FLF petty officer")
-npc_desc = _("There is a low-ranking officer of the Frontier Liberation Front sitting at one of the tables. She seems somewhat more receptive than most people in the bar.")
-
 function create ()
    missys = system.get( "Arcanis" )
    if not misn.claim( missys ) then misn.finish( false ) end
 
-   misn.setNPC( npc_name, "flf/unique/benito.webp", npc_desc )
+   misn.setNPC( _("FLF petty officer"), "flf/unique/benito.webp", _("There is a low-ranking officer of the Frontier Liberation Front sitting at one of the tables. She seems somewhat more receptive than most people in the bar.") )
 end
 
 
 function accept ()
-   tk.msg( title[1], text[1]:format( player.name() ) )
-   if tk.yesno( title[1], text[2] ) then
-      tk.msg( title[3], text[3]:format( missys:name() ) )
+   tk.msg( _("A chance to prove yourself"), _([[The FLF officer doesn't seem at all surprised that you approached her. On the contrary, she looks like she expected you to do so all along.
+    "Greetings," she says, nodding at you in curt greeting. "I am Corporal Benito. And you must be %s, the one who got Lt. Fletcher back here in one piece." Benito's expression becomes a little more severe. "I'm not here to exchange pleasantries, however. You probably noticed, but people here are a little uneasy about your presence. They don't know what to make of you, see. You helped us once, it is true, but that doesn't tell us much. We don't know you."]]):format( player.name() ) )
+   if tk.yesno( _("A chance to prove yourself"), _([[Indeed, you are constantly aware of the furtive glances the other people in this bar are giving you. They don't seem outright hostile, but you can tell that if you don't watch your step and choose your words carefully, things might quickly take a turn for the worse.
+    Benito waves her hand to indicate you needn't pay them any heed. "That said, the upper ranks have decided that if you are truly sympathetic to our cause, you will be given an opportunity to prove yourself. Of course, if you'd rather not get involved in our struggle, that's understandable. But if you're in for greater things, if you stand for justice... Perhaps you'll consider joining with us?"]]) ) then
+      tk.msg( _("Patrol-B-gone"), _([["I'm happy to hear that. It's good to know we still have the support from the common pilot. Anyway, let me fill you in on what it is we want you to do. As you may be aware, the Dvaered have committed a lot of resources to finding us and flushing us out lately. And while our base is well hidden, those constant patrols are certainly not doing anything to make us feel more secure! I think you can see where this is going. You will go out there and eliminate one of those patrols in the %s system."
+    You object, asking the Corporal if all recruits have to undertake dangerous missions like this to be accepted into the FLF ranks. Benito chuckles and makes a pacifying gesture.
+    "Calm down, it's not as bad as it sounds. You only have to take out one small patrol; I don't think you will have to fight more than 3 ships, 4 if you're really unlucky. If you think that's too much for you, you can abort the mission for now and come to me again later. Otherwise, good luck!"]]):format( missys:name() ) )
 
       osd_desc[1] = osd_desc[1]:format( missys:name() )
 
       misn.accept()
-      misn.osdCreate( osd_title, osd_desc )
-      misn.setDesc( misn_desc )
+      misn.osdCreate( _("Dvaered Patrol"), osd_desc )
+      misn.setDesc( _("To prove yourself to the FLF, you must take out one of the Dvaered security patrols.") )
       misn.setTitle( _("FLF: Small Dvaered Patrol in %s"):format( missys:name() ) )
       marker = misn.markerAdd( missys, "low" )
       misn.setReward( _("A chance to make friends with the FLF.") )
@@ -220,7 +188,7 @@ function hail ()
       osd_desc[1] = _("Fly to the %s system and land on %s"):format( DVsys:name(), DVplanet:name() )
       osd_desc[2] = nil
       misn.osdActive( 1 )
-      misn.osdCreate( osd_title, osd_desc )
+      misn.osdCreate( _("Dvaered Patrol"), osd_desc )
       misn.markerRm( marker )
       marker = misn.markerAdd( DVsys, "high" )
 
@@ -261,7 +229,7 @@ function timer_spawnFLF ()
          j:setVisplayer( true )
       end
 
-      fleetFLF[1]:broadcast( flfcomm[1]:format( player.name() ) )
+      fleetFLF[1]:broadcast( _("We have your back, %s!"):format( player.name() ) )
    end
 end
 
@@ -276,7 +244,7 @@ function timer_spawnHostileFLF ()
    end
 
    hook.pilot( pp, "death", "returnFLFControl" )
-   fleetFLF[1]:broadcast( flfcomm[2]:format( player.name() ) )
+   fleetFLF[1]:broadcast( _("%s is selling us out! Eliminate the traitor!"):format( player.name() ) )
 end
 
 
@@ -314,7 +282,7 @@ function pilot_death_dv ()
                j:hyperspace()
                if not hailed then
                   hailed = true
-                  j:comm( player.pilot(), flfcomm[3]:format( player.name() ) )
+                  j:comm( player.pilot(), _("Let's get out of here, %s! We'll meet you back at the base."):format( player.name() ) )
                end
             end
          end
@@ -328,10 +296,13 @@ end
 function land_flf ()
    leave()
    if planet.cur():faction() == faction.get("FLF") then
-      tk.msg( title[4], text[4] )
-      tk.msg( title[4], text[5]:format( player.name() ) )
-      tk.msg( title[4], text[6] )
-      tk.msg( title[4], text[7] )
+      tk.msg( _("Breaking the ice"), _([[When you left Sindbad Station, it was a cold, lonely place for you. The FLF soldiers on the station avoided you whenever they could, and basic services were harder to get than they should have been.
+    But now that you have returned victorious over the Dvaered, the place has become considerably more hospitable. There are more smiles on people's faces, and some even tell you you did a fine job. Among them is Corporal Benito. She walks up to you and offers you her hand.]]) )
+      tk.msg( _("Breaking the ice"), _([["Welcome back, %s, and congratulations. I didn't expect the Dvaered to send reinforcements, much less a Vigilance. I certainly wouldn't have sent you alone if I did, and I might not have sent you at all. But then, you're still in one piece, so maybe I shouldn't worry so much, eh?"]]):format( player.name() ) )
+      tk.msg( _("Breaking the ice"), _([[Benito takes you to the station's bar and buys you what for lack of a better word must be called a drink.
+    "We will of course reward you for your service," she says once you are seated. "Though you must understand the FLF doesn't have that big a budget. Financial support is tricky, and the Frontier doesn't have that much to spare themselves to begin with. Nevertheless, we are willing to pay for good work, and your work is nothing but. What's more, you've ingratiated yourself with many of us, as you've undoubtedly noticed. Our top brass are among those you've impressed, so from today on, you can call yourself one of us! How about that, huh?"]]) )
+      tk.msg( _("Breaking the ice"), _([["Of course, our work is only just beginning. No rest for the weary; we must continue the fight against the oppressors. I'm sure the road is still long, but I'm encouraged by the fact that we gained another valuable ally today. Check the mission computer for more tasks you can help us with. Please take this Pentagram of Valor as a token of appreciation. I'm sure you'll play an important role in our eventual victory over the Dvaered!"
+    That last part earns a cheer from the assembled FLF soldiers. You decide to raise your glass with them, making a toast to the fortune of battle in the upcoming campaign - and the sweet victory that lies beyond.]]) )
       player.pay( 100e3 )
       player.outfitAdd('Pentagram of Valor')
       flf.setReputation( 10 )

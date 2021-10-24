@@ -35,11 +35,6 @@ text[1] = _("After you are handed your pay, an FLF soldier congratulates you for
 text[2] = _("As you get your pay from the officer, FLF soldiers congratulate you for your victory.")
 text[3] = _("You collect your pay from the officer, who then congratulates you for your victory.")
 
-flfcomm = {}
-flfcomm[1] = _("Alright, let's have at them!")
-flfcomm[2] = _("Sorry we're late! Did we miss anything?")
-
-osd_title   = _("FLF Patrol")
 osd_desc    = {}
 osd_desc[1] = _("Fly to the %s system")
 osd_desc[2] = _("Eliminate the Dvaered patrol")
@@ -135,7 +130,7 @@ function accept ()
    misn.accept()
 
    osd_desc[1] = osd_desc[1]:format( missys:name() )
-   misn.osdCreate( osd_title, osd_desc )
+   misn.osdCreate( _("FLF Patrol"), osd_desc )
 
    dv_ships_left = 0
    job_done = false
@@ -161,7 +156,7 @@ function enter ()
 
          if flfships > 0 then
             if not late_arrival then
-               patrol_spawnFLF( flfships, last_system, flfcomm[1] )
+               patrol_spawnFLF( flfships, last_system, _("Alright, let's have at them!") )
             else
                hook.timer( late_arrival_delay, "timer_lateFLF" )
             end
@@ -183,7 +178,7 @@ end
 function timer_lateFLF ()
    local systems = system.cur():adjacentSystems()
    local source = systems[ rnd.rnd( 1, #systems ) ]
-   patrol_spawnFLF( flfships, source, flfcomm[2] )
+   patrol_spawnFLF( flfships, source, _("Sorry we're late! Did we miss anything?") )
 end
 
 
