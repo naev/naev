@@ -1,8 +1,6 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
-
 #include "render.h"
 
 #include "array.h"
@@ -21,7 +19,6 @@
 #include "weapon.h"
 
 #include "nlua_shader.h"
-
 
 /**
  * @brief Post-Processing Shader.
@@ -46,14 +43,11 @@ typedef struct PPShader_s {
    LuaTexture_t *tex;
 } PPShader;
 
-
 static unsigned int pp_shaders_id = 0;
 static PPShader *pp_shaders_list[PP_LAYER_MAX]; /**< Post-processing shaders for game layer. */
 
-
 static LuaShader_t gamma_correction_shader;
 static int pp_gamma_correction = 0; /**< Gamma correction shader. */
-
 
 /**
  * @brief Renders an FBO.
@@ -113,19 +107,18 @@ static void render_fbo( double dt, GLuint fbo, GLuint tex, PPShader *shader )
    glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
 }
 
-
 /**
  * @brief Renders a list of FBOs.
  */
 static void render_fbo_list( double dt, PPShader *list, int *current, int done )
 {
-   PPShader *pp;
+   PPShader *pplast;
    int i, cur, next;
    cur = *current;
 
    /* Render all except the last post-process shader. */
    for (i=0; i<array_size(list)-1; i++) {
-      pp = &list[i];
+      PPShader *pp = &list[i];
       next = 1-cur;
       /* Render cur to next. */
       render_fbo( dt, gl_screen.fbo[next], gl_screen.fbo_tex[cur], pp );
@@ -133,11 +126,11 @@ static void render_fbo_list( double dt, PPShader *list, int *current, int done )
    }
 
    /* Final render is to the screen. */
-   pp = &list[i];
+   pplast = &list[i];
    if (done) {
       gl_screen.current_fbo = 0;
       /* Do the render. */
-      render_fbo( dt, gl_screen.current_fbo, gl_screen.fbo_tex[cur], pp );
+      render_fbo( dt, gl_screen.current_fbo, gl_screen.fbo_tex[cur], pplast );
       glBindFramebuffer(GL_FRAMEBUFFER, gl_screen.current_fbo);
       return;
 
@@ -145,7 +138,7 @@ static void render_fbo_list( double dt, PPShader *list, int *current, int done )
 
    /* Draw the last shader. */
    next = 1-cur;
-   render_fbo( dt, gl_screen.fbo[next], gl_screen.fbo_tex[cur], pp );
+   render_fbo( dt, gl_screen.fbo[next], gl_screen.fbo_tex[cur], pplast );
    cur = next;
 
    /* Set the framebuffer again. */
@@ -155,7 +148,6 @@ static void render_fbo_list( double dt, PPShader *list, int *current, int done )
    /* Set the new current framebuffer. */
    *current = cur;
 }
-
 
 /**
  * @brief Renders the game itself (player flying around and friends).
@@ -250,7 +242,6 @@ void render_all( double game_dt, double real_dt )
    gl_checkErr();
 }
 
-
 /**
  * @brief Sorts shaders by priority.
  */
@@ -265,7 +256,6 @@ static int ppshader_compare( const void *a, const void *b )
       return -1;
    return 0;
 }
-
 
 /**
  * @brief Adds a new post-processing shader.
@@ -314,7 +304,6 @@ unsigned int render_postprocessAdd( LuaShader_t *shader, int layer, int priority
    return id;
 }
 
-
 /**
  * @brief Removes a post-process shader by ID.
  *
@@ -323,14 +312,12 @@ unsigned int render_postprocessAdd( LuaShader_t *shader, int layer, int priority
  */
 int render_postprocessRm( unsigned int id )
 {
-   int i, j, found;
-   PPShader *pp, *pp_shaders;
-
-   found = -1;
+   int j;
+   int found = -1;
    for (j=0; j<PP_LAYER_MAX; j++) {
-      pp_shaders = pp_shaders_list[j];
-      for (i=0; i<array_size(pp_shaders); i++) {
-         pp = &pp_shaders[i];
+      PPShader *pp_shaders = pp_shaders_list[j];
+      for (int i=0; i<array_size(pp_shaders); i++) {
+         PPShader *pp = &pp_shaders[i];
          if (pp->id != id)
             continue;
          found = i;
@@ -349,14 +336,12 @@ int render_postprocessRm( unsigned int id )
    return 0;
 }
 
-
 /**
  * @brief Sets up the post-processing stuff.
  */
 void render_init (void)
 {
-   LuaShader_t *s;
-   s = &gamma_correction_shader;
+   LuaShader_t *s = &gamma_correction_shader;
    memset( s, 0, sizeof(LuaShader_t) );
    s->program            = shaders.gamma_correction.program;
    s->VertexPosition     = shaders.gamma_correction.VertexPosition;
@@ -367,19 +352,16 @@ void render_init (void)
    render_setGamma( conf.gamma_correction );
 }
 
-
 /**
  * @brief Cleans up the post-processing stuff.
  */
 void render_exit (void)
 {
-   int i;
-   for (i=0; i<PP_LAYER_MAX; i++) {
+   for (int i=0; i<PP_LAYER_MAX; i++) {
       array_free( pp_shaders_list[i] );
       pp_shaders_list[i] = NULL;
    }
 }
-
 
 /**
  * @brief Sets the gamma.

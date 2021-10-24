@@ -787,9 +787,9 @@ void ovr_render( double dt )
       col.b = 0.;
       for (int i=0; i<array_size(pstk); i++) {
          double r;
-         if (areAllies( player.p->faction, pstk[i]->faction ) || pilot_isFriendly(pstk[i]))
-            continue;
          if (pilot_isDisabled(pstk[i]))
+            continue;
+         if (areAllies( player.p->faction, pstk[i]->faction ) || pilot_isFriendly(pstk[i]))
             continue;
          /* Only show pilots the player can see. */
          if (!pilot_validTarget( player.p, pstk[i] ))
@@ -799,9 +799,9 @@ void ovr_render( double dt )
          glUseProgram( shaders.stealthaura.program );
          gl_renderShader( x, y, r, r, 0., &shaders.stealthaura, &col, 1 );
       }
+
       glBlendEquation( GL_FUNC_ADD );
       glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
-
       glBindFramebuffer(GL_FRAMEBUFFER, gl_screen.current_fbo);
       glClearColor( 0., 0., 0., 1. );
 
