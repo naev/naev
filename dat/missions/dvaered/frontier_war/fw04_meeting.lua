@@ -356,7 +356,7 @@ end
 
 -- Broadcast a stupid taunt upon arriving
 function warlordTaunt( self )
-   ind = rnd.rnd( 1, #lords_chatter )
+   local ind = rnd.rnd( 1, #lords_chatter )
    self:broadcast( lords_chatter[ind] )
 end
 
@@ -381,8 +381,8 @@ end
 
 -- Some patrol pilot is idle.
 function imDoingNothing( self )
-   rad = rnd.rnd() * 1000 + 1000
-   ang = rnd.rnd() * 2 * math.pi
+   local rad = rnd.rnd() * 1000 + 1000
+   local ang = rnd.rnd() * 2 * math.pi
    self:moveto( targpos + vec2.new(math.cos(ang) * rad, math.sin(ang) * rad) )
 end
 
@@ -633,7 +633,7 @@ function spawnKillers()
    misn.osdDestroy()
    misn.osdCreate( _("The Meeting"), {_("Eliminate the hostile fighters")} )
 
-   killers = {}
+   local killers = {}
    killers[1] = pilot.add( "Hyena", "Warlords", haltpla, _("Curiatius"), {ai="baddie_norun"} )
    killers[2] = pilot.add( "Shark", "Warlords", haltpla, _("Curiatius"), {ai="baddie_norun"} )
    killers[3] = pilot.add( "Lancelot", "Warlords", haltpla, _("Curiatius"), {ai="baddie_norun"} )
