@@ -40,11 +40,6 @@ t_pla[2], t_sys[2] = planet.get("Waterhole's Moon")
 --t_pla[3], t_sys[3] = planet.get("Gastan")
 pho_mny = 50e3
 reward = 1e6
-osd_msg = {}
-osd_msg[1] = _("Go to the %s system and talk to the trader on %s")
-osd_msg[2] = _("Go to the %s system and talk to the contact person on %s")
-osd_msg[3] = _("Return to the %s system to the trader on %s")
-osd_msg[4] = _("Return to the %s system and deliver to Dr. Geller on %s")
 
 function create ()
    -- Variable set up and clean up
@@ -62,7 +57,9 @@ function accept()
    end
    tk.msg( _([[In the bar]]), _([["Excellent! Here is the list." He hands you a memory chip and turns away even before you can say anything and without giving you any cash to actually do his shopping. Once you check the list you find that it contains not only a list of materials he needs, but also information where to retrieve these and a list of contact traders.]]) )
    misn.accept()
-   misn.osdCreate(_("The one with the Shopping"), {osd_msg[1]:format(t_sys[1]:name(), t_pla[1]:name())})
+   misn.osdCreate(_("The one with the Shopping"), {
+      _("Go to the %s system and talk to the trader on %s"):format(t_sys[1]:name(), t_pla[1]:name()),
+   })
    misn.setDesc(_("You've been hired by Dr. Geller to collect some materials he urgently needs for his research."))
    misn.setTitle(_("The one with the Shopping"))
    misn.setReward(_("The gratitude of science and a bit of compensation"))
@@ -97,9 +94,9 @@ function first_trd()
      talked = true
   end
 
-
-  osd_msg[2] = osd_msg[2]:format(t_sys[2]:name(), t_pla[2]:name())
-  misn.osdCreate(_("The one with the Shopping"), {osd_msg[2]})
+  misn.osdCreate(_("The one with the Shopping"), {
+     _("Go to the %s system and talk to the contact person on %s"):format(t_sys[2]:name(), t_pla[2]:name()),
+  })
 
   misn.markerMove(misn_mark, t_sys[2])
 
@@ -122,8 +119,9 @@ function second_trd()
   local c = misn.cargoNew(N_("Phosphine"), N_("A colourless, flammable, poisonous gas."))
   carg_id = misn.cargoAdd(c, 3)
   tk.msg(_([[In the bar]]), _([["Pleasure to do business with you."]]))
-  osd_msg[3] = osd_msg[3]:format(t_sys[1]:name(), t_pla[1]:name())
-  misn.osdCreate(_("The one with the Shopping"), {osd_msg[3]})
+  misn.osdCreate(_("The one with the Shopping"), {
+     _("Return to the %s system to the trader on %s"):format(t_sys[1]:name(), t_pla[1]:name()),
+  })
  -- create hook that player will be hailed by authorities bc of toxic materials
   misn.markerMove(misn_mark, t_sys[1])
   hook.rm(lhook2)
@@ -138,8 +136,9 @@ function third_trd()
   misn.npcRm(bar1pir1)
   misn.cargoRm(carg_id)
   player.msg(t_sys[3]:name())
-  osd_msg[4] = osd_msg[4]:format(t_sys[3]:name(), t_pla[3]:name())
-  misn.osdCreate(_("The one with the Shopping"), {osd_msg[4]})
+  misn.osdCreate(_("The one with the Shopping"), {
+     _("Return to the %s system and deliver to Dr. Geller on %s"):format(t_sys[3]:name(), t_pla[3]:name()),
+  })
 
   misn.markerMove(misn_mark, t_sys[3])
 

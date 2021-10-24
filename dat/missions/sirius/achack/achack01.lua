@@ -22,13 +22,6 @@
 local srs = require "common.sirius"
 local fmt = require "format"
 
--- Mission info stuff
-
-osd_msg   = {}
-osd_msg[1] = _("Fly to %s")
-osd_msg[2] = _("Find your target on %s and kill her")
-osd_msg["__save"] = true
-
 misn_reward = fmt.credits(400e3)
 
 function create()
@@ -50,10 +43,11 @@ function accept()
     destplanet, destsys = planet.get("Racheka")
     tk.msg(_("A Sirian with a grudge"), _([["Great! I was about to give up hope that I would find anyone with enough guts to do this for me. Okay, so, let me tell you about your target. She's a member of the Serra echelon, and she's got long, brown hair and blue eyes. She can usually be found in Sirius space, I believe she'll be on %s in the %s system right now. Come back to me when she's dead, and I'll give you your reward!"
     Harja leaves the spacedock bar, satisfied that he's finally found someone to take his request. You can't help but wonder why he would try to hire a mercenary in a place like the Wringer, though. If the target is such a dangerous criminal, then wouldn't he be better off posting a bounty mission on the public board? Oh well, it's none of your business. You accepted the job, now all that's left is to complete it.]]):format(destplanet:name(), destsys:name()))
-    osd_msg[1] = osd_msg[1]:format(destsys:name())
-    osd_msg[2] = osd_msg[2]:format(destplanet:name())
     misn.accept()
-    misn.osdCreate(_("Sirian Bounty"), osd_msg)
+    misn.osdCreate(_("Sirian Bounty"), {
+       _("Fly to %s"):format(destsys:name()),
+       _("Find your target on %s and kill her"):format(destplanet:name()),
+    })
     misn.setDesc(_([[A Sirian man named Harja has hired you to dispatch a "dangerous criminal" who supposedly committed some kind of crime against him.]]))
     misn.setReward(misn_reward)
     misn.markerAdd(destsys, "high")

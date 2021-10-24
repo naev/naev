@@ -60,12 +60,6 @@ ssmsg[5] = _("A collective gasp of wonder travels through the cabin.")
 ssmsg[6] = _("A sense of terror and mystery engulfs the passengers as they contemplate their existence above the skies.")
 ssmsg[7] = _("Truly a sight to behold for the passengers.")
 
-osd_msg    = {}
-osd_msg[1] = _("Fly to the %s system")
-osd_msg[2]  = _("Go to all indicated points")
-osd_msg[3] = _("Return to %s in the %s system and collect your pay")
-osd_msg["__save"] = true
-
 function create ()
    paying_faction = planet.cur():faction()
    startingplanet = planet.cur()
@@ -135,9 +129,11 @@ function accept ()
 
    misn.accept()
 
-   osd_msg[1] = osd_msg[1]:format( missys:name() )
-   osd_msg[3] = osd_msg[3]:format( startingplanet:name(), startingsystem:name() )
-   misn.osdCreate( _("Sightseeing"), osd_msg )
+   misn.osdCreate( _("Sightseeing"), {
+      _("Fly to the %s system"):format( missys:name() ),
+      _("Go to all indicated points"),
+      _("Return to %s in the %s system and collect your pay"):format( startingplanet:name(), startingsystem:name() ),
+   } )
    local c = misn.cargoNew( N_("Sightseers"), N_("A bunch of sightseeing civilians.") )
    civs = misn.cargoAdd( c, 0 )
    job_done = false

@@ -28,18 +28,8 @@ local pir = require "common.pirate"
 local fmt = require "format"
 local shark = require "common.shark"
 
-osd_msg = {}
-
--- Mission details
-
--- NPC
-
--- OSD
-osd_msg[1] = _("Go to %s, find and hail the Air Force One")
-osd_msg[2] = _("Report back to %s in the %s system")
 
 function create ()
-
    --Change here to change the planets and the systems
    mispla,missys = planet.getLandable(faction.get("Frontier"))  -- mispla will be useful to locate the Hawking
    pplname = "Darkshed"
@@ -66,13 +56,13 @@ function accept()
       misn.accept()
       tk.msg(_("Time to go"), _([["Fantastic! I am known as Donald Ulnish to the Council member. Good luck."]]))
 
-      osd_msg[1] = osd_msg[1]:format(missys:name())
-      osd_msg[2] = osd_msg[2]:format(pplname, psyname)
-
       misn.setTitle(_("Invitation"))
       misn.setReward(fmt.credits(reward))
       misn.setDesc(_("Nexus Shipyards asks you to help initiate a secret meeting"))
-      osd = misn.osdCreate(_("Invitation"), osd_msg)
+      osd = misn.osdCreate(_("Invitation"), {
+         _("Go to %s, find and hail the Air Force One"):format(missys:name()),
+         _("Report back to %s in the %s system"):format(pplname, psyname),
+      })
       misn.osdActive(1)
 
       marker = misn.markerAdd(missys, "low")

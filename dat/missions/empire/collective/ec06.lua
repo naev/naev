@@ -31,13 +31,6 @@
 require "proximity"
 local emp = require "common.empire"
 
-
-osd_msg = {}
-osd_msg[1] = _("Fly to %s via %s and meet up with the Imperial fleet")
-osd_msg[2] = _("Defeat the Starfire")
-osd_msg[3] = _("Report back")
-osd_msg["__save"] = true
-
 function create ()
     missys = {system.get("C-59"), system.get("C-28"), system.get("C-00")}
     if not misn.claim(missys) then
@@ -73,10 +66,14 @@ function accept ()
    misn.setTitle(_("Operation Cold Metal"))
    misn.setReward( _("Fame and Glory") )
    misn.setDesc( string.format(_("Neutralize enemy forces in %s"), misn_target_sys1:name() ))
-   osd_msg[1] = osd_msg[1]:format(misn_final_sys:name(), misn_target_sys2:name())
-    if var.peek("trinity") then
-        osd_msg[2] = _("Defeat the Starfire and the Trinity")
-    end
+   local osd_msg = {
+      _("Fly to %s via %s and meet up with the Imperial fleet"):format(misn_final_sys:name(), misn_target_sys2:name()),
+      _("Defeat the Starfire"),
+      _("Report back"),
+   }
+   if var.peek("trinity") then
+      osd_msg[2] = _("Defeat the Starfire and the Trinity")
+   end
    misn.osdCreate(_("Operation Cold Metal"), osd_msg)
 
    tk.msg( _("Operation Cold Metal"), string.format( _([["The Operation has been dubbed 'Cold Metal'. We're going to mount an all-out offensive in C-00. The systems up to %s are already secure and under our control, all we need to do now is to take the final stronghold. Should we encounter the Starfire at any stage our goal will be to destroy it and head back. The Imperial fleet will join you when you get there. See you in combat, pilot."]]),

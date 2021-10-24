@@ -34,15 +34,6 @@ text4 = _([[You go through the now familiar routine of waiting for Joanne. She s
 
 stoptext = _("You dock with %s, and the spacedock personnel immediately begins to refuel your ship. You spend a few hectoseconds going through checklists and routine maintenance operations. Then you get a ping on your comms from Joanne. She tells you that she has finished her business on this station, and that she's taking off again. You follow suit.")
 
--- Mission info stuff
-
-osd_msg   = {}
-osd_msg[1] = _("Follow Joanne's ship")
-osd_msg[2] = _("Defeat Joanne's attackers")
-osd_msg["__save"] = true
-osd_final = {_("Land on Sroolu to get your reward")}
-osd_final["__save"] = true
-
 misn_reward = fmt.credits(750e3)
 
 function create()
@@ -98,7 +89,10 @@ function accept()
    misn.accept()
    misn.setDesc(_("Joanne needs you to escort her ship and fight off mercenaries sent to kill her."))
    misn.setReward(misn_reward)
-   misn.osdCreate(_("Harja's Vengeance"), osd_msg)
+   misn.osdCreate(_("Harja's Vengeance"), {
+      _("Follow Joanne's ship"),
+      _("Defeat Joanne's attackers"),
+   })
 
    hook.land("land")
    hook.enter("enter")
@@ -119,12 +113,11 @@ function land()
    elseif planet.cur() == destplanet and joannelanded and stage == 4 then
       tk.msg(_("Mission accomplished"), text4:format(player.name()))
       stage = stage + 1
-      misn.osdCreate(_("Harja's Vengeance"), osd_final)
       origin = planet.cur()
       destplanet, destsys = planet.get(route[stage])
       misn.markerMove( mark, destsys )
       joannejumped = true -- She "jumped" into the current system by taking off.
-      misn.osdCreate(_("Harja's Vengeance"), osd_final)
+      misn.osdCreate(_("Harja's Vengeance"), {_("Land on Sroolu to get your reward")})
       player.takeoff()
    elseif stage < 4 then
       tk.msg(_("You didn't follow Joanne!"), _("You landed on a planet Joanne didn't land on. Your mission is a failure!"))

@@ -36,12 +36,6 @@ require "proximity"
 local fmt = require "format"
 local emp = require "common.empire"
 
-osd_msg = {}
-osd_msg[1] = _("Fly to %s")
-osd_msg[2] = _("Land on %s")
-osd_msg[3] = _("Return to %s")
-osd_msg["__save"] = true
-
 function create ()
    misn_target, misn_target_sys = planet.get("Eiroik")
 
@@ -66,10 +60,11 @@ function create ()
       misn.setReward( fmt.credits( credits ) )
       misn.setDesc( string.format(_("Check for survivors on %s in %s"), misn_target:name(), misn_target_sys:name() ))
       tk.msg( _("Collective Extraction"), string.format(_([["We'll send extra forces to %s to try to give you a chance to break through the blockade. You'll have to land on %s and extract our team. Be very careful. This is going to be no walk in the park."]]), misn_target_sys:name(), misn_target:name()) )
-      osd_msg[1] = osd_msg[1]:format(misn_target_sys:name())
-      osd_msg[2] = osd_msg[2]:format(misn_target:name())
-      osd_msg[3] = osd_msg[3]:format(misn_base:name())
-      misn.osdCreate(_("Collective Extraction"), osd_msg)
+      misn.osdCreate(_("Collective Extraction"), {
+         _("Fly to %s"):format(misn_target_sys:name()),
+         _("Land on %s"):format(misn_target:name()),
+         _("Return to %s"):format(misn_base:name()),
+      })
 
       hook.enter("enter")
       hook.land("land")

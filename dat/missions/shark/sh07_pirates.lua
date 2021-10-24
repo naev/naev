@@ -30,19 +30,9 @@ local fmt = require "format"
 local shark = require "common.shark"
 local lmisn = require "lmisn"
 
-osd_msg = {}
-
--- Mission details
-
--- NPC
-
--- OSD
 osd_title = _("The Last Detail")
-osd_msg[1] = _("Kill the four pirates")
-osd_msg[2] = _("Report back to %s in %s")
 
 function create ()
-
    --Will now pick systems between min and max jumps in distance
    local min = 3
    local max = 7
@@ -103,12 +93,13 @@ function accept()
     "And finally, %s is in %s. He stole and beefed up a Goddard recently, so make sure you're prepared for that. He also has escorts, according to our records.
     "And that's about it! Come back for your fee when you have finished."]]):format(gawname, gawsys:name(), kername1, kersys1:name(), kername2, kersys2:name(), godname, godsys:name()))
 
-      osd_msg[2] = osd_msg[2]:format(pplname,psyname)
-
       misn.setTitle(_("The Last Detail"))
       misn.setReward(fmt.credits(reward))
       misn.setDesc(_("Nexus Shipyards has tasked you with killing four pirates."))
-      osd = misn.osdCreate(osd_title, osd_msg)
+      osd = misn.osdCreate(osd_title, {
+         _("Kill the four pirates"),
+         _("Report back to %s in %s"):format(pplname,psyname),
+      })
       misn.osdActive(1)
 
       gawmarker = misn.markerAdd(gawsys, "low")

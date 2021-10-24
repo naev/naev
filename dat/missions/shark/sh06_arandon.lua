@@ -28,18 +28,8 @@ local pir = require "common.pirate"
 local fmt = require "format"
 local shark = require "common.shark"
 
-osd_msg = {}
-
--- Mission details
-
--- NPC
-
--- OSD
-osd_msg[1] = _("Go to %s and wait for the FLF ship, then hail and board it.")
-osd_msg[2] = _("Go back to %s in %s")
 
 function create ()
-
    --Change here to change the planets and the systems
    missys = system.get("Arandon")
    pplname = "Darkshed"
@@ -63,13 +53,13 @@ function accept()
       misn.accept()
       tk.msg(_("Go"), _([[Smith once again steps in your ship in order to go to a meeting.]]))
 
-      osd_msg[1] = osd_msg[1]:format(missys:name())
-      osd_msg[2] = osd_msg[2]:format(paypla:name(), paysys:name())
-
       misn.setTitle(_("A Journey To %s"):format(missys:name()))
       misn.setReward(fmt.credits(reward))
       misn.setDesc(_("You are to transport Arnold Smith to %s so that he can talk about a deal."):format(missys:name()))
-      osd = misn.osdCreate(_("A Journey To %s"):format(missys:name()), osd_msg)
+      osd = misn.osdCreate(_("A Journey To %s"):format(missys:name()), {
+         _("Go to %s and wait for the FLF ship, then hail and board it."):format(missys:name()),
+         _("Go back to %s in %s"):format(paypla:name(), paysys:name()),
+      })
       misn.osdActive(1)
 
       marker = misn.markerAdd(missys, "low")

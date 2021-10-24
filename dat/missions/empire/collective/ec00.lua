@@ -43,12 +43,6 @@ text[3] = _([["Collective activity has increased heavily the last few decaperiod
 text[4] = _([[After landing, you head to the Empire military headquarters and find Lt. Commander Dimitri there.
     "Well it seems like the drone has some strange fixation on %s. We aren't quite sure what to make of it, but intelligence is working on it. Report back to the bar in a bit and we'll see what we can do about the Collective."]])
 
-osd_msg = {}
-osd_msg[1] = _("Fly to the %s system")
-osd_msg[2] = _("Locate the Collective drone, but do not engage.")
-osd_msg[3] = _("Report back to %s in the %s system")
-osd_msg["__save"] = true
-
 function create ()
    misn_nearby = system.get("Acheron")
    misn_target = system.get("Merisi")
@@ -87,9 +81,11 @@ function accept ()
    tk.msg( _("Briefing"), string.format( text[3], misn_nearby:name(),
          misn_target:name(), misn_base:name(), misn_base_sys:name() ))
 
-   osd_msg[1] = osd_msg[1]:format(misn_target:name())
-   osd_msg[3] = osd_msg[3]:format(misn_base:name(), misn_base_sys:name())
-   misn.osdCreate(_("Collective Scout"), osd_msg)
+   misn.osdCreate(_("Collective Scout"), {
+      _("Fly to the %s system"):format(misn_target:name()),
+      _("Locate the Collective drone, but do not engage."),
+      _("Report back to %s in the %s system"):format(misn_base:name(), misn_base_sys:name()),
+   })
    hook.enter("enter")
    hook.jumpout("jumpout")
    hook.land("land")

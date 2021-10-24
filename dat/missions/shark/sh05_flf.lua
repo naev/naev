@@ -36,24 +36,11 @@ local pir = require "common.pirate"
 local fmt = require "format"
 local shark = require "common.shark"
 
-osd_msg = {}
-
--- Mission details
-
--- NPC
-
--- OSD
-osd_msg[1] = _("Hail any FLF ship, or disable and board one if necessary")
-osd_msg[2] = _("Go back to %s in %s")
 
 function create ()
-
    --Change here to change the planets and the systems
    paypla, paysys = planet.get("Darkshed")
    nextsys = system.get("Arandon") -- This should be the same as the system used in sh06!
-
-   osd_msg[2] = osd_msg[2]:format(paypla:name(), paysys:name())
-
    misn.setNPC(_("Arnold Smith"), "neutral/unique/arnoldsmith.webp", _([[It looks like he has yet another job for you.]]))
 end
 
@@ -71,7 +58,10 @@ function accept()
       misn.setTitle(_("The FLF Contact"))
       misn.setReward(fmt.credits(reward))
       misn.setDesc(_("Nexus Shipyards is looking to strike a better deal with the FLF."))
-      osd = misn.osdCreate(_("The FLF Contact"), osd_msg)
+      osd = misn.osdCreate(_("The FLF Contact"), {
+         _("Hail any FLF ship, or disable and board one if necessary"),
+         _("Go back to %s in %s"):format(paypla:name(), paysys:name()),
+      })
       misn.osdActive(1)
 
       hook.land( "land" )

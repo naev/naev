@@ -37,16 +37,6 @@ local fmt = require "format"
 local shark = require "common.shark"
 
 
-osd_msg = {}
-
--- Mission details
-
--- NPC
-
--- OSD
-osd_msg[1] = _("Land on %s in %s and meet the Nexus agent")
-osd_msg[2] = _("Bring the recording back to %s in the %s system")
-
 function create ()
    mispla, missys = planet.getLandable(faction.get("Sirius"))
 
@@ -76,13 +66,13 @@ function accept()
       misn.accept()
       tk.msg(_("The job"), _([["I'm glad to hear it. Go meet our agent on %s in the %s system. Oh, yes, and I suppose I should mention that I'm known as 'James Neptune' to the agent. Good luck!"]]):format(mispla:name(), missys:name()))
 
-      osd_msg[1] = osd_msg[1]:format(mispla:name(), missys:name())
-      osd_msg[2] = osd_msg[2]:format(pplname, psyname)
-
       misn.setTitle(_("Unfair Competition"))
       misn.setReward(fmt.credits(reward))
       misn.setDesc(_("Nexus Shipyards is in competition with House Sirius."))
-      osd = misn.osdCreate(_("Unfair Competition"), osd_msg)
+      osd = misn.osdCreate(_("Unfair Competition"), {
+         _("Land on %s in %s and meet the Nexus agent"):format(mispla:name(), missys:name()),
+         _("Bring the recording back to %s in the %s system"):format(pplname, psyname),
+      })
       misn.osdActive(1)
 
       marker = misn.markerAdd(missys, "low")

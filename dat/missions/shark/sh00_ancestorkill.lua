@@ -40,18 +40,6 @@ local pilotname = require "pilotname"
 local fmt = require "format"
 local shark = require "common.shark"
 
-
-osd_msg = {}
-
--- Mission details
-
--- NPC
-
--- OSD
-osd_msg[1] = _("Buy a Shark (but not a Pirate Shark), then fly to the %s system and land on %s")
-osd_msg[2] = _("Go to %s and kill the pirate with your Shark")
-osd_msg[3] = _("Land on %s and collect your fee")
-
 function create ()
 
    --Change here to change the planet and the system
@@ -80,14 +68,14 @@ function accept()
       piratename = pilotname.pirate() --for now, we only need his name
       tk.msg(_("Wonderful"), _([["Great! I knew I could trust you. I'll meet you on %s in the %s system. I'll be with my boss and our customer, Baron Sauterfeldt."]]):format(missys:name(),mispla:name()))
 
-      osd_msg[1] = osd_msg[1]:format(missys:name(), mispla:name())
-      osd_msg[2] = osd_msg[2]:format(battlesys:name())
-      osd_msg[3] = osd_msg[3]:format(mispla:name())
-
       misn.setTitle(_("A Shark Bites"))
       misn.setReward(fmt.credits(reward))
       misn.setDesc(_("Nexus Shipyards needs you to demonstrate to Baron Sauterfeldt the capabilities of Nexus designs."))
-      osd = misn.osdCreate(_("A Shark Bites"), osd_msg)
+      osd = misn.osdCreate(_("A Shark Bites"), {
+         _("Buy a Shark (but not a Pirate Shark), then fly to the %s system and land on %s"):format(missys:name(), mispla:name()),
+         _("Go to %s and kill the pirate with your Shark"):format(battlesys:name()),
+         _("Land on %s and collect your fee"):format(mispla:name()),
+      })
       misn.osdActive(1)
 
       markeri = misn.markerAdd(missys, "low")

@@ -32,16 +32,6 @@ local fleet = require "fleet"
 local shark = require "common.shark"
 
 
-osd_msg = {}
-
--- Mission details
-
--- NPC
-
--- OSD
-osd_msg[1] = _("Go to the %s system and land on %s")
-osd_msg[2] = _("Bring Smith back to %s in the %s system")
-
 function create ()
    --Change here to change the planets and the systems
    mispla, missys = planet.get("Curie")
@@ -67,13 +57,13 @@ function accept()
       misn.accept()
       tk.msg(_("Time to go"), _([["Let's go, then."]]))
 
-      osd_msg[1] = osd_msg[1]:format(missys:name(), mispla:name())
-      osd_msg[2] = osd_msg[2]:format(paypla:name(), paysys:name())
-
       misn.setTitle(_("The Meeting"))
       misn.setReward(fmt.credits(reward))
       misn.setDesc(_("Nexus Shipyards asks you to take part in a secret meeting"))
-      osd = misn.osdCreate(_("The Meeting"), osd_msg)
+      osd = misn.osdCreate(_("The Meeting"), {
+         _("Go to the %s system and land on %s"):format(missys:name(), mispla:name()),
+         _("Bring Smith back to %s in the %s system"):format(paypla:name(), paysys:name()),
+      })
       misn.osdActive(1)
 
       marker = misn.markerAdd(missys, "low")
