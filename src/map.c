@@ -33,23 +33,28 @@
 #include "toolkit.h"
 #include "utf8.h"
 
+/**
+ * @brief Faction presence container to be used for the map information stuff.
+ */
 typedef struct FactionPresence_ {
-   const char *name;
-   double value;
-   int known;
+   const char *name; /**< Name of the faction with presence. */
+   double value;     /**< Value of the presence. */
+   int known;        /**< Whether or not the faction is known. */
 } FactionPresence;
 
+/**
+ * @brief Different map modes available to the player.
+ */
 typedef enum MapMode_ {
-   MAPMODE_TRAVEL,
-   MAPMODE_DISCOVER,
-   MAPMODE_TRADE,
+   MAPMODE_TRAVEL,   /**< Standard mode with lots of shiny stuff. */
+   MAPMODE_DISCOVER, /**< Indicates whether or not systems are fully discovered. */
+   MAPMODE_TRADE,    /**< Shows price values and the likes. */
 } MapMode;
 
 #define BUTTON_WIDTH    100 /**< Map button width. */
 #define BUTTON_HEIGHT   30 /**< Map button height. */
 
-#define MAP_LOOP_PROT   1000 /**< Number of iterations max in pathfinding before
-                                 aborting. */
+#define MAP_LOOP_PROT   1000 /**< Number of iterations max in pathfinding before aborting. */
 
 #define MAP_TEXT_INDENT   45 /**< Indentation of the text below the titles. */
 
@@ -63,12 +68,12 @@ static double map_xpos        = 0.; /**< Map X position. */
 static double map_ypos        = 0.; /**< Map Y position. */
 static int map_drag           = 0; /**< Is the user dragging the map? */
 static int map_selected       = -1; /**< What system is selected on the map. */
-double map_alpha_decorators   = 1.;
-double map_alpha_faction      = 1.;
-double map_alpha_env          = 1.;
-double map_alpha_path         = 1.;
-double map_alpha_names        = 1.;
-double map_alpha_markers      = 1.;
+double map_alpha_decorators   = 1.; /**< Alpha for decorators. */
+double map_alpha_faction      = 1.; /**< Alpha for factions. */
+double map_alpha_env          = 1.; /**< Alpha for environmental stuff. */
+double map_alpha_path         = 1.; /**< Alpha for path stuff. */
+double map_alpha_names        = 1.; /**< Alpha for system names. */
+double map_alpha_markers      = 1.; /**< Alpha for system markers. */
 static MapMode map_mode       = MAPMODE_TRAVEL; /**< Default map mode. */
 static StarSystem **map_path  = NULL; /**< Array (array.h): The path to current selected system. */
 static int cur_commod         = -1; /**< Current commodity selected. */
@@ -460,7 +465,6 @@ static void map_update( unsigned int wid )
    /*
     * Right Text
     */
-
    x = -70; /* Side bar X offset. */
    w = ABS(x) + 60; /* Width of the side bar. */
    y = -20 - 20 - 64 - gl_defFont.h; /* Initialized to position for txtSFaction. */
@@ -616,15 +620,18 @@ static void map_update( unsigned int wid )
    services = 0;
    services_h = 0;
    services_u = 0;
-   for (int i=0; i<array_size(sys->planets); i++)
-      if (planet_isKnown(sys->planets[i])) {
-         if (sys->planets[i]->can_land)
-            services |= sys->planets[i]->services;
-         else if (areEnemies(sys->planets[i]->presence.faction,FACTION_PLAYER))
-            services_h |= sys->planets[i]->services;
-         else
-            services_u |= sys->planets[i]->services;
-      }
+   for (int i=0; i<array_size(sys->planets); i++) {
+      Planet *pnt = sys->planets[i];
+      if (!planet_isKnown(pnt))
+         continue;
+
+      if (pnt->can_land)
+         services |= pnt->services;
+      else if (areEnemies(pnt->presence.faction,FACTION_PLAYER))
+         services_h |= pnt->services;
+      else
+         services_u |= pnt->services;
+   }
    buf[0] = '\0';
    p = 0;
    /*snprintf(buf, sizeof(buf), "%f\n", sys->prices[0]);*/ /*Hack to control prices. */
@@ -749,10 +756,9 @@ int map_isOpen (void)
 static void map_drawMarker( double x, double y, double r, double a,
       int num, int cur, int type )
 {
-   static const glColour* colours[] = {
+   const glColour* colours[] = {
       &cMarkerNew, &cMarkerPlot, &cMarkerHigh, &cMarkerLow, &cMarkerComputer
    };
-
    double alpha;
    glColour col;
 
@@ -917,33 +923,27 @@ void map_renderParams( double bx, double by, double xpos, double ypos,
 
 /**
  * @brief Renders the map background decorators.
+ *
+ * TODO visibility check should be cached and computed when opening only.
  */
 void map_renderDecorators( double x, double y, int editor, double alpha )
 {
-   int i,j;
-   int sw, sh;
-   double tx, ty;
-   int visible;
-   MapDecorator *decorator;
-   StarSystem *sys;
-   glColour ccol = { .r=1.00, .g=1.00, .b=1.00, .a=2./3. }; /**< White */
+   glColour ccol = { .r=1., .g=1., .b=1., .a=2./3. }; /**< White */
 
    /* Fade in the decorators to allow toggling between commodity and nothing */
    ccol.a *= alpha;
-
-   for (i=0; i<array_size(decorator_stack); i++) {
-
-      decorator = &decorator_stack[i];
+   for (int i=0; i<array_size(decorator_stack); i++) {
+      int visible;
+      MapDecorator *decorator = &decorator_stack[i];
 
       /* only if pict couldn't be loaded */
       if (decorator->image == NULL)
          continue;
 
-      visible=0;
-
+      visible = 0;
       if (!editor) {
-         for (j=0; j<array_size(systems_stack) && visible==0; j++) {
-            sys = system_getIndex( j );
+         for (int j=0; j<array_size(systems_stack) && visible==0; j++) {
+            StarSystem *sys = system_getIndex( j );
 
             if (sys_isFlag(sys, SYSTEM_HIDDEN))
                continue;
@@ -955,21 +955,19 @@ void map_renderDecorators( double x, double y, int editor, double alpha )
                   (decorator->x > sys->pos.x - decorator->detection_radius) &&
                   (decorator->y < sys->pos.y + decorator->detection_radius) &&
                   (decorator->y > sys->pos.y - decorator->detection_radius)) {
-               visible=1;
+               visible = 1;
             }
          }
       }
 
       if (editor || visible==1) {
+         double tx = x + decorator->x*map_zoom;
+         double ty = y + decorator->y*map_zoom;
 
-         tx = x + decorator->x*map_zoom;
-         ty = y + decorator->y*map_zoom;
+         int sw = decorator->image->sw*map_zoom;
+         int sh = decorator->image->sh*map_zoom;
 
-         sw = decorator->image->sw*map_zoom;
-         sh = decorator->image->sh*map_zoom;
-
-         gl_renderScale(
-               decorator->image,
+         gl_renderScale( decorator->image,
                tx - sw/2, ty - sh/2, sw, sh, &ccol );
       }
    }
@@ -981,9 +979,8 @@ void map_renderDecorators( double x, double y, int editor, double alpha )
 void map_renderFactionDisks( double x, double y, double r, int editor, double alpha )
 {
    for (int i=0; i<array_size(systems_stack); i++) {
-      const glColour *col;
       glColour c;
-      double tx, ty, sr, presence;
+      double tx, ty;
       StarSystem *sys = system_getIndex( i );
 
       if (sys_isFlag(sys,SYSTEM_HIDDEN))
@@ -997,10 +994,11 @@ void map_renderFactionDisks( double x, double y, double r, int editor, double al
 
       /* System has faction and is known or we are in editor. */
       if (sys->faction != -1) {
-         presence = sqrt(sys->ownerpresence);
+         const glColour *col;
+         double presence = sqrt(sys->ownerpresence);
 
          /* draws the disk representing the faction */
-         sr = (40. + presence * 3.) * map_zoom * 0.5;
+         double sr = (40. + presence * 3.) * map_zoom * 0.5;
 
          col = faction_colour(sys->faction);
          c.r = col->r;
@@ -1020,7 +1018,6 @@ void map_renderFactionDisks( double x, double y, double r, int editor, double al
  */
 void map_renderSystemEnvironment( double x, double y, int editor, double alpha )
 {
-
    for (int i=0; i<array_size(systems_stack); i++) {
       int sw, sh;
       double tx, ty;
@@ -1077,7 +1074,6 @@ void map_renderSystemEnvironment( double x, double y, int editor, double alpha )
  */
 void map_renderJumps( double x, double y, double radius, int editor )
 {
-
    for (int i=0; i<array_size(systems_stack); i++) {
       double x1,y1;
       StarSystem *sys = system_getIndex( i );
@@ -1147,7 +1143,6 @@ void map_renderJumps( double x, double y, double radius, int editor )
 void map_renderSystems( double bx, double by, double x, double y,
       double w, double h, double r, int editor)
 {
-
    for (int i=0; i<array_size(systems_stack); i++) {
       const glColour *col;
       double tx, ty;
@@ -1448,9 +1443,9 @@ void map_renderCommod( double bx, double by, double x, double y,
          if ((sys_isKnown(sys)) && (system_hasPlanet(sys))) {
             minPrice=0;
             maxPrice=0;
-            for ( j=0 ; j<array_size(sys->planets); j++) {
+            for (j=0 ; j<array_size(sys->planets); j++) {
                p=sys->planets[j];
-               for ( k=0; k<array_size(p->commodities); k++) {
+               for (k=0; k<array_size(p->commodities); k++) {
                   if ( p->commodities[k] == c ) {
                      if ( p->commodityPrice[k].cnt > 0 ) {/*commodity is known about*/
                         thisPrice = p->commodityPrice[k].sum / p->commodityPrice[k].cnt;
@@ -1827,7 +1822,7 @@ static void map_genModeList(void)
    int totGot = 0;
    const char *odd_template, *even_template;
 
-   if ( commod_known == NULL )
+   if (commod_known == NULL)
       commod_known = malloc(sizeof(Commodity*) * commodity_getN());
    memset(commod_known,0,sizeof(Commodity*)*commodity_getN());
    for (int i=0; i<array_size(systems_stack); i++) {
@@ -1845,7 +1840,6 @@ static void map_genModeList(void)
                   commod_known[totGot] = p->commodities[k];
                   totGot++;
                }
-
             }
          }
       }
@@ -1876,9 +1870,10 @@ static void map_modeUpdate( unsigned int wid, const char* str )
 {
    (void) str;
    int listpos = listpos=toolkit_getListPos( wid, "lstMapMode" );
-   if ( listMapModeVisible==2) {
+   if (listMapModeVisible==2) {
       listMapModeVisible=1;
-   } else if ( listMapModeVisible == 1 ) {
+   }
+   else if (listMapModeVisible == 1) {
       /* TODO: make this more robust. */
       if (listpos == 0) {
          map_mode = MAPMODE_TRAVEL;
@@ -1995,8 +1990,8 @@ static void map_window_close( unsigned int wid, const char *str )
    free( commod_known );
    commod_known = NULL;
    for (int i=0; i<array_size(map_modes); i++)
-      free ( map_modes[i] );
-   array_free ( map_modes );
+      free( map_modes[i] );
+   array_free( map_modes );
    map_modes = NULL;
    map_reset();
    window_close(wid,str);
@@ -2088,8 +2083,6 @@ StarSystem* map_getDestination( int *jumps )
  */
 void map_jump (void)
 {
-   int j;
-
    /* set selected system to self */
    map_selectCur();
 
@@ -2102,6 +2095,7 @@ void map_jump (void)
       if (array_size(map_path) == 0)
          player_targetHyperspaceSet( -1 );
       else { /* get rid of bottom of the path */
+         int j;
          /* set the next jump to be to the next in path */
          for (j=0; j<array_size(cur_system->jumps); j++) {
             if (map_path[0] == cur_system->jumps[j].target) {
@@ -2221,9 +2215,7 @@ static int map_decorator_parse( MapDecorator *temp, xmlNodePtr parent );
 /** @brief Creates a new node link to star system. */
 static SysNode* A_newNode( StarSystem* sys )
 {
-   SysNode* n;
-
-   n        = malloc(sizeof(SysNode));
+   SysNode *n = malloc(sizeof(SysNode));
 
    n->next  = NULL;
    n->sys   = sys;
