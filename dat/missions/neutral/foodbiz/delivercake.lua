@@ -23,16 +23,7 @@ Plot: on Zhiru you meet the same girl who received the love letters,her name is 
 local fmt = require "format"
 local neu = require "common.neutral"
 
--- Dialogue
-
--- Mission Computer text
-
--- Mission Ending
 finish = _([[As Michal takes the recipes and cake off your hands, you can't help but wonder how quickly his business will fail with food as bad as the cake you tried. When he remarks how delicious he apparently thinks the cake is, that confirms in your mind that he doesn't have a clue what he's doing. You bite your tongue, however, wishing him good luck as you take your pay.]])
-
-osd_desc = {}
-osd_desc[1] = _("Fly to %s in the %s system.")
-osd_desc["__save"] = true
 
 
 function create () --No system shall be claimed by mission
@@ -67,8 +58,9 @@ function accept()
    misn.setReward( fmt.credits( reward ) )
    misn.setDesc( _([[Deliver the recipes to Michal on %s in the %s system.]]):format( targetworld:name(), targetworld_sys:name() ) )
 
-   osd_desc[1] = osd_desc[1]:format( targetworld:name(), targetworld_sys:name() )
-   misn.osdCreate( _("A Tasty Job"), osd_desc )
+   misn.osdCreate( _("A Tasty Job"), {
+      _("Fly to %s in the %s system."):format( targetworld:name(), targetworld_sys:name() ),
+   } )
    misn.markerAdd( targetworld, "low" )
 
    --set up hooks
