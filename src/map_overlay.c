@@ -215,7 +215,7 @@ void ovr_refresh (void)
       JumpPoint *jp = &cur_system->jumps[i];
       max_x = MAX( max_x, ABS(jp->pos.x) );
       max_y = MAX( max_y, ABS(jp->pos.y) );
-      if (!jp_isUsable(jp) || !jp_isKnown(jp))
+      if (!jp_isUsable(jp))
          continue;
       /* Initialize the map overlay stuff. */
       snprintf( buf, sizeof(buf), "%s%s", jump_getSymbol(jp), sys_isKnown(jp->target) ? _(jp->target->name) : _("Unknown") );
@@ -516,7 +516,7 @@ void ovr_initAlpha (void)
    SafeLane *safelanes;
    for (int i=0; i<array_size(cur_system->jumps); i++) {
       JumpPoint *jp = &cur_system->jumps[i];
-      if (!jp_isUsable(jp) || !jp_isKnown(jp))
+      if (!jp_isUsable(jp))
          jp->map_alpha = 0.;
       else
          jp->map_alpha = 1.;
@@ -773,7 +773,7 @@ void ovr_render( double dt )
       for (int i=0; i<array_size(cur_system->jumps); i++) {
          double r;
          JumpPoint *jp = &cur_system->jumps[i];
-         if (!jp_isUsable(jp) || !jp_isKnown(jp))
+         if (!jp_isUsable(jp))
             continue;
          map_overlayToScreenPos( &x, &y, jp->pos.x, jp->pos.y );
          r = EW_JUMP_BONUS_RANGE / res;

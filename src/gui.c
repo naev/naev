@@ -576,7 +576,7 @@ static void gui_renderBorder( double dt )
       JumpPoint *jp = &cur_system->jumps[i];
 
       /* Skip if unknown or exit-only. */
-      if (!jp_isKnown( jp ) || jp_isFlag( jp, JP_EXITONLY ))
+      if (!jp_isUsable( jp ))
          continue;
 
       /* Check if out of range. */
@@ -1350,7 +1350,7 @@ void gui_renderPlanet( int ind, RadarShape shape, double w, double h, double res
    char buf[STRMAX_SHORT];
 
    /* Make sure is known. */
-   if ( !planet_isKnown( cur_system->planets[ind] ))
+   if (!planet_isKnown( cur_system->planets[ind] ))
       return;
 
    /* Default values. */
@@ -1446,7 +1446,7 @@ void gui_renderJumpPoint( int ind, RadarShape shape, double w, double h, double 
    JumpPoint *jp = &cur_system->jumps[ind];
 
    /* Check if known */
-   if (!jp_isKnown(jp))
+   if (!jp_isUsable(jp))
       return;
 
    /* Default values. */
