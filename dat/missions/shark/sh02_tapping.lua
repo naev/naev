@@ -69,7 +69,7 @@ function accept()
       misn.setTitle(_("Unfair Competition"))
       misn.setReward(fmt.credits(reward))
       misn.setDesc(_("Nexus Shipyards is in competition with House Sirius."))
-      osd = misn.osdCreate(_("Unfair Competition"), {
+      misn.osdCreate(_("Unfair Competition"), {
          _("Land on %s in %s and meet the Nexus agent"):format(mispla:name(), missys:name()),
          _("Bring the recording back to %s in the %s system"):format(pplname, psyname),
       })
@@ -97,7 +97,7 @@ function land()
          tk.msg(_("Good job"), _([[The Nexus employee greets you as you reach the ground. "Excellent! I will just need to spend a few hectoseconds analyzing these recordings. See if you can find me in the bar soon; I might have another job for you."]]))
          pir.reputationNormalMission(rnd.rnd(2,3))
          player.pay(reward)
-         misn.osdDestroy(osd)
+         misn.osdDestroy()
          hook.rm(enterhook)
          hook.rm(landhook)
          shark.addLog( _([[You helped Nexus Shipyards gather information in an attempt to sabotage competition from House Sirius. Arnold Smith said to meet him in the bar soon; he may have another job for you.]]) )

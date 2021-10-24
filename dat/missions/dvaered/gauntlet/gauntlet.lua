@@ -80,7 +80,7 @@ function approach_gauntlet ()
    shiplog.create( logidstr, _("Totoran Tournament"), _("Totoran Tournament") )
 
    -- Create the OSD
-   osd = misn.osdCreate( _("Crimson Gauntlet"),
+   misn.osdCreate( _("Crimson Gauntlet"),
          { _("Defeat all the other adversaries!") } )
 
    hook.load( "loaded" )

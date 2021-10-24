@@ -61,7 +61,7 @@ function accept ()
    end
 
    misn.accept()
-   osd = misn.osdCreate( _("Minerva Mole"), {
+   misn.osdCreate( _("Minerva Mole"), {
       _("Find out who the mole is"),
    } )
 
@@ -168,7 +168,7 @@ They make a cutting gesture from their belly up to their neck.
 
    -- On to next state
    misn_state = 1
-   osd = misn.osdCreate( _("Minerva Mole"), {
+   misn.osdCreate( _("Minerva Mole"), {
       string.format(_("Take the mole to the interrogation facility at %s"), mainsys),
    } )
    misn.markerMove( misnmarker, system.get(mainsys) )

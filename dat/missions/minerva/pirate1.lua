@@ -90,7 +90,7 @@ They beam a smile at you.]]),_(runawaysys)))
    minerva.log.pirate(_("You accepted a job from a shady individual to harass Dvaered thugs in the Limbo system and make it seem like the Za'lek were involved.") )
 
    misn.accept()
-   osd = misn.osdCreate( _("Thug Decoy"),
+   misn.osdCreate( _("Thug Decoy"),
          {_("Get the drone to follow you"),
           _("Harass the thugs"),
           string.format(_("Jump to %s"),_(runawaysys)),

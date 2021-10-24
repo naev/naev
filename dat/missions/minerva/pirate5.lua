@@ -62,7 +62,7 @@ function accept ()
    end
 
    misn.accept()
-   osd = misn.osdCreate( _("Za'lek Hacking Center"), {
+   misn.osdCreate( _("Za'lek Hacking Center"), {
       string.format( _("Go to the %s system"), mainsys ),
       _("Destroy the hacking center"),
       _("Return to Minerva Station"),

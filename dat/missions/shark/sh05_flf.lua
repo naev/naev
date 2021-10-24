@@ -58,7 +58,7 @@ function accept()
       misn.setTitle(_("The FLF Contact"))
       misn.setReward(fmt.credits(reward))
       misn.setDesc(_("Nexus Shipyards is looking to strike a better deal with the FLF."))
-      osd = misn.osdCreate(_("The FLF Contact"), {
+      misn.osdCreate(_("The FLF Contact"), {
          _("Hail any FLF ship, or disable and board one if necessary"),
          _("Go back to %s in %s"):format(paypla:name(), paysys:name()),
       })

@@ -60,7 +60,7 @@ function accept()
       misn.setTitle(_("The Meeting"))
       misn.setReward(fmt.credits(reward))
       misn.setDesc(_("Nexus Shipyards asks you to take part in a secret meeting"))
-      osd = misn.osdCreate(_("The Meeting"), {
+      misn.osdCreate(_("The Meeting"), {
          _("Go to the %s system and land on %s"):format(missys:name(), mispla:name()),
          _("Bring Smith back to %s in the %s system"):format(paypla:name(), paysys:name()),
       })
@@ -96,7 +96,7 @@ function land()
          tk.msg(_("End of mission"), _([[Smith gets out of your ship and looks at you, smiling. "You know, it's like that in our kind of job. Sometimes it works and sometimes it fails. It's not our fault. Anyway, here is your pay."]]))
          player.pay(reward)
          pir.reputationNormalMission(rnd.rnd(2,3))
-         misn.osdDestroy(osd)
+         misn.osdDestroy()
          hook.rm(enterhook)
          hook.rm(landhook)
          shark.addLog( _([[You transported Arnold Smith to a secret meeting for Nexus Shipyards. The meeting supposedly did not go as well as he hoped, but was a partial success.]]) )

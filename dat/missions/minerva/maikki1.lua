@@ -218,7 +218,7 @@ She starts eating the parfait, which seems to be larger than her head.]]))
    vn.func( function ()
       if misn_state < 0 then
          misn_state = 0
-         misn_osd = misn.osdCreate( _("Finding Maikki's Father"),
+         misn.osdCreate( _("Finding Maikki's Father"),
             { string.format(_("Look around the %s system"), _(searchsys)) } )
          misn_marker = misn.markerAdd( system.get(searchsys), "low" )
          minerva.log.maikki(_("You were told her father colud be near Doeston.") )
@@ -401,7 +401,7 @@ He pats his biceps in a fairly uninspiring way.]]))
       vn.na(_("They cheer, down their drinks, and order another round. Perhaps the wreck in Zerantix is related to Kex somehow."))
       vn.func( function ()
          if misn_state==3 then
-            misn_osd = misn.osdCreate( _("Finding Maikki's Father"),
+            misn.osdCreate( _("Finding Maikki's Father"),
                { string.format(_("Follow the scavengers in the %s system"), _(stealthsys)) } )
             misn.markerMove( misn_marker, system.get(stealthsys) )
             misn_state=4
@@ -922,7 +922,7 @@ function board_wreck ()
    minerva.log.maikki(_("You boarded the wreck which seems to be Kex's ship. You found a picture of his family and signs that this was not an accident with possible Za'lek involvement.") )
 
    -- Move target back to origin
-   misn_osd = misn.osdCreate( _("Finding Maikki's Father"),
+   misn.osdCreate( _("Finding Maikki's Father"),
          { string.format(_("Return to %s in the %s system"), minerva.maikki.name, _(mainsys)) } )
    misn.markerMove( misn_marker, planet.get("Minerva Station") )
    misn_state=5

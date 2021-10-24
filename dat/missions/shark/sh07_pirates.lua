@@ -96,7 +96,7 @@ function accept()
       misn.setTitle(_("The Last Detail"))
       misn.setReward(fmt.credits(reward))
       misn.setDesc(_("Nexus Shipyards has tasked you with killing four pirates."))
-      osd = misn.osdCreate(osd_title, {
+      misn.osdCreate(osd_title, {
          _("Kill the four pirates"),
          _("Report back to %s in %s"):format(pplname,psyname),
       })

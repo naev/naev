@@ -75,7 +75,7 @@ function accept ()
    var.pop("harper_ticket")
 
    misn.accept()
-   osd = misn.osdCreate( _("Minerva Moles"),
+   misn.osdCreate( _("Minerva Moles"),
          {_("Plant a listening device in a VIP room.") } )
 
    misn.markerAdd( planet.get("Minerva Station") )
@@ -230,7 +230,7 @@ They start frantically typing into their portable holo-deck. It makes weird beep
    pir(_([["OK, so we aren't so bad off. It seems like the winner was doing some space tourism around the system. Not like there is anything to see here."]]))
    pir(_([["So change of plans, I need you to go pay this guy a visit. See if you can 'encourage' them to give the ticket to you. Everyone has a price at Minerva Station."]]))
    vn.func( function ()
-      osd = misn.osdCreate( _("Minerva Moles"),
+      misn.osdCreate( _("Minerva Moles"),
          {_("Get Harper Bowdoin's ticket in Limbo.")},
          {_("Plant a listening device in a VIP room.") } )
       misn_state = 3
@@ -245,7 +245,7 @@ She beams you a smile.
 "Now go enjoy yourself at the spa and don't forget to plant the listening device!"]]))
    vn.func( function ()
       misn_state = 4
-      osd = misn.osdCreate( _("Minerva Moles"),
+      misn.osdCreate( _("Minerva Moles"),
          {_("Plant a listening device in the Spa.") } )
       npc_spa = misn.npcAdd( "approach_spa", _("Minerva Station Spa"), spa_portrait, spa_description )
       minerva.log.pirate(_("You obtained the winning ticket to enter the Minerva Spa.") )

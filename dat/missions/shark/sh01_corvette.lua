@@ -70,7 +70,7 @@ function accept()
       misn.setTitle(_("Sharkman is back"))
       misn.setReward(fmt.credits(reward/2))
       misn.setDesc(_("Nexus Shipyards wants you to fake a loss against a Lancelot while piloting a Destroyer class ship."))
-      osd = misn.osdCreate(_("Sharkman Is Back"), {
+      misn.osdCreate(_("Sharkman Is Back"), {
          _("Jump in %s with a destroyer class ship and let the Lancelot disable you"):format(battlesys:name()),
          _("Go to %s in %s to collect your pay"):format(paypla:name(), paysys:name()),
       })
@@ -103,7 +103,7 @@ function land()
       tk.msg(_("Reward"), _([[As you land, you see Arnold Smith waiting for you. He explains that the Baron was so impressed by the battle that he signed an updated contract with Nexus Shipyards, solidifying Nexus as the primary supplier of ships for his fleet. As a reward, they give you twice the sum of credits they promised to you.]]))
       pir.reputationNormalMission(rnd.rnd(2,3))
       player.pay(reward)
-      misn.osdDestroy(osd)
+      misn.osdDestroy()
       hook.rm(enterhook)
       hook.rm(landhook)
       hook.rm(jumpouthook)

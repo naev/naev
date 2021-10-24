@@ -56,7 +56,7 @@ function accept()
       misn.setTitle(_("A Journey To %s"):format(missys:name()))
       misn.setReward(fmt.credits(reward))
       misn.setDesc(_("You are to transport Arnold Smith to %s so that he can talk about a deal."):format(missys:name()))
-      osd = misn.osdCreate(_("A Journey To %s"):format(missys:name()), {
+      misn.osdCreate(_("A Journey To %s"):format(missys:name()), {
          _("Go to %s and wait for the FLF ship, then hail and board it."):format(missys:name()),
          _("Go back to %s in %s"):format(paypla:name(), paysys:name()),
       })
@@ -82,7 +82,7 @@ function land()
          tk.msg(_("Well done!"), _([[Smith thanks you for the job well done. "Here is your pay," he says. "I will be in the bar if I have another task for you."]]))
          pir.reputationNormalMission(rnd.rnd(2,3))
          player.pay(reward)
-         misn.osdDestroy(osd)
+         misn.osdDestroy()
          hook.rm(enterhook)
          hook.rm(landhook)
          shark.addLog( _([[You transported Arnold Smith to a meeting with someone from the FLF. He said that he had good results.]]) )

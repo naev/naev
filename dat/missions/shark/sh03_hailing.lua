@@ -59,7 +59,7 @@ function accept()
       misn.setTitle(_("Invitation"))
       misn.setReward(fmt.credits(reward))
       misn.setDesc(_("Nexus Shipyards asks you to help initiate a secret meeting"))
-      osd = misn.osdCreate(_("Invitation"), {
+      misn.osdCreate(_("Invitation"), {
          _("Go to %s, find and hail the Air Force One"):format(missys:name()),
          _("Report back to %s in the %s system"):format(pplname, psyname),
       })
@@ -82,7 +82,7 @@ function land()
    tk.msg(_("Good job"), _([[Smith seems to relax as you tell him that everything went according to plan. "Fantastic! I have another mission for you; meet me in the bar when you are ready to bring me to %s in the %s system."]]):format(nextpla:name(), nextsys:name()))
       player.pay(reward)
       pir.reputationNormalMission(rnd.rnd(2,3))
-      misn.osdDestroy(osd)
+      misn.osdDestroy()
       hook.rm(enterhook)
       hook.rm(landhook)
       shark.addLog( _([[You helped Nexus Shipyards initiate a secret meeting with a member of the Frontier Council. Arnold Smith said that he has another mission for you and to meet him in the bar on Darkshed when you are ready to transport him to Curie.]]) )

@@ -71,7 +71,7 @@ function accept()
       misn.setTitle(_("A Shark Bites"))
       misn.setReward(fmt.credits(reward))
       misn.setDesc(_("Nexus Shipyards needs you to demonstrate to Baron Sauterfeldt the capabilities of Nexus designs."))
-      osd = misn.osdCreate(_("A Shark Bites"), {
+      misn.osdCreate(_("A Shark Bites"), {
          _("Buy a Shark (but not a Pirate Shark), then fly to the %s system and land on %s"):format(missys:name(), mispla:name()),
          _("Go to %s and kill the pirate with your Shark"):format(battlesys:name()),
          _("Land on %s and collect your fee"):format(mispla:name()),
@@ -101,7 +101,7 @@ function land()
    if planet.cur() == mispla and stage == 4 then
       tk.msg(_("Congratulations!"), _([[As you step on the ground, Arnold Smith greets you. "That was a great demonstration! Thank you. I haven't been able to speak to the Baron about the results yet, but I am confident he will be impressed." He hands you your pay. "I may have another mission for you later. Be sure to check back!"]]))
       player.pay(reward)
-      misn.osdDestroy(osd)
+      misn.osdDestroy()
       hook.rm(enterhook)
       hook.rm(landhook)
       hook.rm(jumpouthook)
