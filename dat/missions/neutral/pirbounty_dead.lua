@@ -75,7 +75,7 @@ misn_title[2] = _("Small Dead or Alive Bounty in %s")
 misn_title[3] = _("Moderate Dead or Alive Bounty in %s")
 misn_title[4] = _("High Dead or Alive Bounty in %s")
 misn_title[5] = _("Dangerous Dead or Alive Bounty in %s")
-misn_desc   = _("The pirate known as {pirname} was recently seen in the {sysname} system. {fctname} authorities want this pirate dead or alive. {pirname} is believed to be flying a {shipclass}-class ship.")
+misn_desc   = _("The pirate known as {pirname} was recently seen in the {sys} system. {fctname} authorities want this pirate dead or alive. {pirname} is believed to be flying a {shipclass}-class ship.")
 
 -- Messages
 msg    = {}
@@ -139,7 +139,7 @@ function create ()
 
    -- Set mission details
    misn.setTitle( misn_title[level]:format( missys:name() ) )
-   misn.setDesc( fmt.f( misn_desc, {pirname=name, sysname=missys:name(), fctname=paying_faction:name(), shipclass=_(ship.get(pship):classDisplay()) } ) )
+   misn.setDesc( fmt.f( misn_desc, {pirname=name, sys=missys, fctname=paying_faction, shipclass=_(ship.get(pship):classDisplay()) } ) )
    misn.setReward( fmt.credits( credits ) )
    marker = misn.markerAdd( missys, "computer" )
 end

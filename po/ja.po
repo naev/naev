@@ -31469,53 +31469,53 @@ msgstr ""
 
 #. Jump point messages.
 #. For giving the location of a jump point in the current system to the player for free.
-#. All messages must contain '{jmpname}', this is the name of the target system.
+#. All messages must contain '{jmp}', this is the name of the target system.
 #. ALL NPCs have a chance to say one of these lines instead of a lore message.
 #. So, make sure the tips are always faction neutral.
 #: dat/events/neutral/npc.lua:263
 msgid ""
 "\"Hi there, traveler. Is your system map up to date? Just in case you didn't "
 "know already, let me give you the location of the jump from here to "
-"{jmpname}. I hope that helps.\""
+"{jmp}. I hope that helps.\""
 msgstr ""
 "｢やあ、旅人。星系の地図は最新版？　ねんのためだけど、まだ知らないんなら、ここ"
-"から{jmpname}へジャンプする場所を教えられるよ。役に立てばいいんだけど｣"
+"から{jmp}へジャンプする場所を教えられるよ。役に立てばいいんだけど｣"
 
 #: dat/events/neutral/npc.lua:264
 msgid ""
 "\"Quite a lot of people who come in here complain that they don't know how "
-"to get to {jmpname}. I travel there often, so I know exactly where the jump "
+"to get to {jmp}. I travel there often, so I know exactly where the jump "
 "point is. Here, let me show you.\""
 msgstr ""
-"｢ここへ来たかなり多くの人たちが、{jmpname}へ行く方法がわからないと文句をいっ"
+"｢ここへ来たかなり多くの人たちが、{jmp}へ行く方法がわからないと文句をいっ"
 "てた。そっちにはよく行くから、ジャンプポイントの場所は正確に知ってる。ほら、"
 "見せてあげるよ｣"
 
 #: dat/events/neutral/npc.lua:265
 msgid ""
 "\"So you're still getting to know about this area, huh? Tell you what, I'll "
-"give you the coordinates of the jump to {jmpname}. Check your map next time "
+"give you the coordinates of the jump to {jmp}. Check your map next time "
 "you take off!\""
 msgstr ""
-"｢そうすると、この領域のことをまだ知ろうとしているんだね？　ほら、{jmpname}へ"
+"｢そうすると、この領域のことをまだ知ろうとしているんだね？　ほら、{jmp}へ"
 "のジャンプの座標を教えてやれるよ。次回離陸したら地図を確認してほしいね｣"
 
 #: dat/events/neutral/npc.lua:266
 msgid ""
-"\"True fact, there's a direct jump from here to {jmpname}. Want to know "
+"\"True fact, there's a direct jump from here to {jmp}. Want to know "
 "where it is? It'll cost you! Ha ha, just kidding. Here you go, I've added it "
 "to your map.\""
 msgstr ""
-"｢じっさい、{jmpname}へ直接行くジャンプがあるよ。どこにあるか知りたい？　かね"
+"｢じっさい、{jmp}へ直接行くジャンプがあるよ。どこにあるか知りたい？　かね"
 "がかかるよ！　ハハ、ただの冗談だって。ほら、地図に加えておいたから｣"
 
 #: dat/events/neutral/npc.lua:267
 msgid ""
-"\"There's a system just one jump away by the name of {jmpname}. I can tell "
+"\"There's a system just one jump away by the name of {jmp}. I can tell "
 "you where the jump point is. There, I've updated your map. Don't mention it."
 "\""
 msgstr ""
-"｢たったひとつジャンプで離れた星系に、{jmpname}という名前のがある。ジャンプポ"
+"｢たったひとつジャンプで離れた星系に、{jmp}という名前のがある。ジャンプポ"
 "イントがどこにあるのか教えてやれるよ。ほら、地図を更新しておいたから。どうい"
 "たしまして｣"
 
@@ -33431,11 +33431,11 @@ msgstr ""
 msgid ""
 "As you jump the system you notice a small alarm lights up in the control "
 "panel:\n"
-"#rWARNING - Volatile nebula detected in {sysname}! Taking {nebvol:.1f} MW "
+"#rWARNING - Volatile nebula detected in {sys}! Taking {nebvol:.1f} MW "
 "damage!#0"
 msgstr ""
 "星系にジャンプすると、制御卓に小さな警告灯がついたのに気がついた。\n"
-"#r警告 — {sysname}内に激変性の星雲を検出しました！　{nebvol:.1f} MWのダメージ"
+"#r警告 — {sys}内に激変性の星雲を検出しました！　{nebvol:.1f} MWのダメージ"
 "をうけています！#0"
 
 #: dat/events/tutorial/tut_enter.lua:40
@@ -57223,11 +57223,11 @@ msgstr "%sでの危険な生け捕り賞金"
 
 #: dat/missions/neutral/pirbounty_alive.lua:64
 msgid ""
-"The pirate known as {pirname} was recently seen in the {sysname} system. "
+"The pirate known as {pirname} was recently seen in the {sys} system. "
 "{fctname} authorities want this pirate alive. {pirname} is believed to be "
 "flying a {shipclass}-class ship."
 msgstr ""
-"{pirname}という名で知られる海賊が最近{sysname}星系で見られた。{fctname}当局が"
+"{pirname}という名で知られる海賊が最近{sys}星系で見られた。{fctname}当局が"
 "この海賊を生け捕りにするか死んでほしがっている。{pirname}は{shipclass}級の船"
 "で飛んでいると信じられている。"
 
@@ -57516,11 +57516,11 @@ msgstr "%sでの危険な生死を問わない賞金"
 
 #: dat/missions/neutral/pirbounty_dead.lua:78
 msgid ""
-"The pirate known as {pirname} was recently seen in the {sysname} system. "
+"The pirate known as {pirname} was recently seen in the {sys} system. "
 "{fctname} authorities want this pirate dead or alive. {pirname} is believed "
 "to be flying a {shipclass}-class ship."
 msgstr ""
-"{pirname}という名で知られる海賊が最近{sysname}星系で見られた。{fctname}当局が"
+"{pirname}という名で知られる海賊が最近{sys}星系で見られた。{fctname}当局が"
 "この海賊を生け捕りにするか死んでほしがっている。{pirname}は{shipclass}という"
 "種類の船で飛んでいると信じられている。"
 
@@ -61869,10 +61869,10 @@ msgstr ""
 
 #: dat/missions/proteron/dissbounty_dead.lua:105
 msgid ""
-"A political dissident was recently seen in the {sysname} system. {fctname} "
+"A political dissident was recently seen in the {sys} system. {fctname} "
 "authorities want this dissident dead or alive."
 msgstr ""
-"政治体制に反対する者が最近{sysname}星系で見られた。{fctname}当局がこの反対者"
+"政治体制に反対する者が最近{sys}星系で見られた。{fctname}当局がこの反対者"
 "を生け捕りにするか死んでほしがっている。"
 
 #: dat/missions/proteron/dissbounty_dead.lua:113
@@ -68864,8 +68864,8 @@ msgstr ""
 #.
 #. --
 #: dat/missions/tutorial/tutorial.lua:32
-msgid "Warning: 'Tutorial' mission was unable to claim system {sysname}!"
-msgstr "警告 : ｢入門｣ 任務は{sysname}星系を必要としたが不可能だった！"
+msgid "Warning: 'Tutorial' mission was unable to claim system {sys}!"
+msgstr "警告 : ｢入門｣ 任務は{sys}星系を必要としたが不可能だった！"
 
 #. We mark as clear anyway, but this is not good
 #. Mark os completed
@@ -69022,23 +69022,23 @@ msgstr ""
 "リーンを見ればわかりますよね？　真横にある惑星です｣"
 
 #: dat/missions/tutorial/tutorial.lua:137
-msgid "Fly to {startpnt} in the {sysname} system with the movement keys"
-msgstr "移動キーを使って{sysname}星系の{startpnt}へ飛べ。"
+msgid "Fly to {startpnt} in the {sys} system with the movement keys"
+msgstr "移動キーを使って{sys}星系の{startpnt}へ飛べ。"
 
 #: dat/missions/tutorial/tutorial.lua:138
-msgid "Land on {startpnt} in the {sysname} system by double-clicking on it"
-msgstr "{sysname}星系の{startpnt}をダブルクリックして着陸せよ。"
+msgid "Land on {startpnt} in the {sys} system by double-clicking on it"
+msgstr "{sys}星系の{startpnt}をダブルクリックして着陸せよ。"
 
 #: dat/missions/tutorial/tutorial.lua:139
 msgid ""
-"Go to {destpnt} in the {sysname} system by right-clicking it on the overview "
+"Go to {destpnt} in the {sys} system by right-clicking it on the overview "
 "map"
 msgstr ""
-"オーバーレイマップ上で{sysname}星系の{destpnt}を右クリックして、そこへ行け。"
+"オーバーレイマップ上で{sys}星系の{destpnt}を右クリックして、そこへ行け。"
 
 #: dat/missions/tutorial/tutorial.lua:140
-msgid "Destroy the practice drone near {destpnt} in the {sysname} system"
-msgstr "{sysname}星系の{destpnt}近くにいる練習用のドローンを破壊せよ。"
+msgid "Destroy the practice drone near {destpnt} in the {sys} system"
+msgstr "{sys}星系の{destpnt}近くにいる練習用のドローンを破壊せよ。"
 
 #: dat/missions/tutorial/tutorial.lua:141
 msgid "Jump to a nearby system by using your starmap"
@@ -69076,24 +69076,24 @@ msgid ""
 "planets, hailing ships, boarding disabled ships, and jumping to other "
 "systems can be accomplished by #bdouble-clicking#0 on an applicable target, "
 "or alternatively by pressing certain buttons on your control console. How "
-"about you try landing on {pntname}?\""
+"about you try landing on {pnt}?\""
 msgstr ""
 "｢それでは、着陸を見てみましょう。たとえば惑星への着陸とか、船に呼びかけると"
 "か、無力化された船に乗りこむとか、ほかの星系へジャンプするとか、そういった多"
 "数の行動は適切な目標を#bダブルクリック#0することで実行できます。あるいは代わ"
-"りに、制御コンソールでそれ用のボタンを押してもいいです。{pntname}への着陸を試"
+"りに、制御コンソールでそれ用のボタンを押してもいいです。{pnt}への着陸を試"
 "してみましょうか？｣"
 
 #: dat/missions/tutorial/tutorial.lua:178
 msgid ""
-"\"To land on {pntname}, you need to slow down your ship on top of the "
+"\"To land on {pnt}, you need to slow down your ship on top of the "
 "planet, and engage the landing system. You can do this manually with the "
 "movement keys and engage your landing gears with {landkey}, or this can all "
 "be done automatically by targeting the planet with either #bclicking#0 on "
 "it, or with {targetplanetkey}, and then using the {landkey}. You can also "
 "#bdouble click#0 on the planet to engage the same behaviour. Give it a try!\""
 msgstr ""
-"｢{pntname}へ着陸するには、惑星の上で船を減速させる必要があります。それから着"
+"｢{pnt}へ着陸するには、惑星の上で船を減速させる必要があります。それから着"
 "陸システムを作動させてください。これは移動キーを使って手動で減速してから "
 "{landkey} で着陸装置を作動させることもできますし、目標の惑星を#bクリック#0す"
 "るか {targetplanetkey} キーで選んでから {landkey} を使えば自動でできます。ま"
@@ -69149,7 +69149,7 @@ msgstr ""
 
 #: dat/missions/tutorial/tutorial.lua:193
 msgid ""
-"\"I will launch a combat practice drone off of {pntname} now for you to "
+"\"I will launch a combat practice drone off of {pnt} now for you to "
 "fight. Don't worry; our drone does not have any weapons and will not harm "
 "you. Target the drone by clicking on it or by pressing {targethostilekey}, "
 "then use your weapons, controlled with {primarykey} and {secondarykey}, to "
@@ -69159,7 +69159,7 @@ msgid ""
 "remedy that by pressing {cooldownkey} or double tapping {reversekey} to "
 "engage active cooling.\""
 msgstr ""
-"｢今{pntname}から戦闘訓練用のドローンを発進させて飛ばします。心配無用ですよ。"
+"｢今{pnt}から戦闘訓練用のドローンを発進させて飛ばします。心配無用ですよ。"
 "このドローンはなんの武器も積んでいないので、傷つくことはありません。ドローン"
 "をクリックするか、{targethostilekey} を押して選択してください。それから武器を"
 "使います。{primarykey} と {secondarykey} で思うとおりに撃って、ドローンを破壊"
@@ -69453,11 +69453,11 @@ msgstr ""
 
 #: dat/missions/tutorial/tutorial.lua:325
 msgid ""
-"\"Why don't you try using Autonav to fly over to {pntname}? You should be "
+"\"Why don't you try using Autonav to fly over to {pnt}? You should be "
 "able to see it highlighted on your overlay map which you can activate with "
 "{overlaykey}.\""
 msgstr ""
-"｢自動操縦を使って{pntname}の上を飛んでみましょうか？　オーバーレイマップで目"
+"｢自動操縦を使って{pnt}の上を飛んでみましょうか？　オーバーレイマップで目"
 "立つようになっているのが見えるはずです。オーバーレイマップは {overlaykey} で"
 "起動できます｣"
 
@@ -69597,13 +69597,13 @@ msgstr ""
 
 #: dat/missions/tutorial/tutorial.lua:369
 msgid ""
-"\"Why don't you give it a try and jump to the nearby {sysname} system? You "
+"\"Why don't you give it a try and jump to the nearby {sys} system? You "
 "should see an indicator blip on your map; missions often use these blips to "
 "show you where to go next. You will have to make two jumps and may have to "
 "do some exploration to find the second jump point. Let's see what you've "
 "learned!\""
 msgstr ""
-"｢近くの{sysname}星系へのジャンプを試してみましょうか？　地図の上で標識が点滅"
+"｢近くの{sys}星系へのジャンプを試してみましょうか？　地図の上で標識が点滅"
 "しているのが見えるはずです。任務では次に行く場所を示すのに、よくこの点滅を使"
 "うんです。ジャンプを二回しなければならなくて、いくらか探索して二つめのジャン"
 "プポイントを見つける必要が出てくることもおそらくあるでしょう。では、学んだこ"
@@ -69731,8 +69731,8 @@ msgid "… Right after I finish eating this bucket of fried chicken!"
 msgstr "……このフライドチキンバケットを食べおわったらすぐにだ！"
 
 #: dat/missions/tutorial/tutorial.lua:430
-msgid "{pntname} Fried Chicken. Eat only the best."
-msgstr "{pntname}フライドチキン。最高のものだけを食べよう。"
+msgid "{pnt} Fried Chicken. Eat only the best."
+msgstr "{pnt}フライドチキン。最高のものだけを食べよう。"
 
 #: dat/missions/tutorial/tutorial.lua:431
 msgid "This is your last chance to surrender!"

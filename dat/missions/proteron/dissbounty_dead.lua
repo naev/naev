@@ -102,7 +102,7 @@ function create ()
 
    -- Set mission details
    misn.setTitle( _("PD: Dead or Alive Bounty in %s"):format( missys:name() ) )
-   misn.setDesc( fmt.f( _("A political dissident was recently seen in the {sysname} system. {fctname} authorities want this dissident dead or alive."), {sysname=missys:name(), fctname=paying_faction:name()} ) )
+   misn.setDesc( fmt.f( _("A political dissident was recently seen in the {sys} system. {fctname} authorities want this dissident dead or alive."), {sys=missys, fctname=paying_faction} ) )
    misn.setReward( fmt.credits( credits ) )
    marker = misn.markerAdd( missys, "computer" )
 end

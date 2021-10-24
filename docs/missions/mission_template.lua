@@ -69,7 +69,7 @@ are portions that will be filled in later by the mission via the
 `fmt.f()` function.
 --]]
 ask_text = _([[As you approach the guy, he looks up in curiosity. You sit down and ask him how his day is. "Why, fine," he answers. "How are you?" You answer that you are fine as well and compliment him on his suit, which seems to make his eyes light up. "Why, thanks! It's my favorite suit! I had it custom tailored, you know.
-    "Actually, that reminds me! There was a special suit on {pntname} in the {sysname} system, the last one I need to complete my collection, but I don't have a ship. You do have a ship, don't you? So I'll tell you what, give me a ride and I'll pay you {reward} for it! What do you say?"]])
+    "Actually, that reminds me! There was a special suit on {pnt} in the {sys} system, the last one I need to complete my collection, but I don't have a ship. You do have a ship, don't you? So I'll tell you what, give me a ride and I'll pay you {reward} for it! What do you say?"]])
 
 
 --[[ 
@@ -122,7 +122,9 @@ function accept ()
       -- We use `fmt.f()` here to fill in the destination and
       -- reward text. (You may also see Lua's standard library used for similar purposes:
       -- `s1:format(arg1, ...)` or equivalently string.format(s1, arg1, ...)`.)
-      text = fmt.f(_([["Ah, it's you again! Have you changed your mind? Like I said, I just need transport to {pntname} in the {sysname} system, and I'll pay you {reward} when we get there. How's that sound?"]]), {pntname=misplanet:name(), sysname=missys:name(), reward=reward_text})
+      -- You can tell `fmt.f()` to put a planet/system/commodity object into the text, and
+      -- (via the `tostring` built-in) know to write its name in the player's native language.
+      text = fmt.f(_([["Ah, it's you again! Have you changed your mind? Like I said, I just need transport to {pnt} in the {sys} system, and I'll pay you {reward} when we get there. How's that sound?"]]), {pnt=misplanet, sys=missys, reward=reward_text})
    else
       text = ask_text
       talked = true
@@ -143,7 +145,7 @@ function accept ()
       -- mission.
       misn.setTitle( _("Suits Me Fine") )
       misn.setReward( reward_text )
-      misn.setDesc( fmt.f(_("A well-dressed man wants you to take him to {pntname} in the {sysname} system so he get some sort of special suit."), {pntname=misplanet:name(), sysname=missys:name()}) )
+      misn.setDesc( fmt.f(_("A well-dressed man wants you to take him to {pnt} in the {sys} system so he get some sort of special suit."), {pnt=misplanet, sys=missys}) )
 
       -- Markers indicate a target system on the map, it may not be
       -- needed depending on the type of mission you're writing.
@@ -151,7 +153,7 @@ function accept ()
 
       -- The OSD shows your objectives.
       local osd_desc = {}
-      osd_desc[1] = fmt.f(_("Fly to {pntname} in the {sysname} system"), {pntname=misplanet:name(), sysname=missys:name()} )
+      osd_desc[1] = fmt.f(_("Fly to {pnt} in the {sys} system"), {pnt=misplanet, sys=missys} )
       misn.osdCreate( _("Suits Me Fine"), osd_desc )
 
       -- This is where we would define any other variables we need, but
@@ -177,7 +179,7 @@ function land ()
       -- Mission accomplished! Now we do an outro dialog and reward the
       -- player. Rewards are usually credits, as shown here, but
       -- other rewards can also be given depending on the circumstances.
-      tk.msg( fmt.f(_([[As you arrive on {pntname}, your passenger reacts with glee. "I must sincerely thank you, kind stranger! Now I can finally complete my suit collection, and it's all thanks to you. Here is {reward}, as we agreed. I hope you have safe travels!"]]), {pntname=misplanet:name(), reward=reward_text}) )
+      tk.msg( fmt.f(_([[As you arrive on {pnt}, your passenger reacts with glee. "I must sincerely thank you, kind stranger! Now I can finally complete my suit collection, and it's all thanks to you. Here is {reward}, as we agreed. I hope you have safe travels!"]]), {pnt=misplanet, reward=reward_text}) )
 
       -- Reward the player. Rewards are usually credits, as shown here,
       -- but other rewards can also be given depending on the
@@ -185,7 +187,7 @@ function land ()
       player.pay( credits )
 
       -- Add a log entry. This should only be done for unique missions.
-      neu.addMiscLog( fmt.f(_([[You helped transport a well-dressed man to {pntname} so that he could buy some kind of special suit to complete his collection.]]), {pntname=misplanet:name()} ) )
+      neu.addMiscLog( fmt.f(_([[You helped transport a well-dressed man to {pnt} so that he could buy some kind of special suit to complete his collection.]]), {pnt=misplanet} ) )
       
       -- Finish the mission. Passing the `true` argument marks the
       -- mission as complete.

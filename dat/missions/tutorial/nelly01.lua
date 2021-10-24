@@ -118,8 +118,8 @@ function accept ()
    vn.transition( tutnel.nelly.transition )
 
    nel(fmt.f(_([[The lone individual lightens up when you near.
-"Say, you look like a pilot with a working ship. I'm in a bit of a mess. You see, I was supposed to deliver some {cargoname} to {pntname} in the {sysname} system, but my ship broke down and I don't think I'll be able to deliver it any time soon. Would you be willing to help me take the cargo there and come back? I'll pay you your fair share."]]),
-      {cargoname=cargo_type, pntname=destpnt:name(), sysname=destsys:name()}))
+"Say, you look like a pilot with a working ship. I'm in a bit of a mess. You see, I was supposed to deliver some {cargo} to {pnt} in the {sys} system, but my ship broke down and I don't think I'll be able to deliver it any time soon. Would you be willing to help me take the cargo there and come back? I'll pay you your fair share."]]),
+      {cargo=cargo_type, pnt=destpnt, sys=destsys}))
 
    vn.menu{
       {_("Help them out"), "accept"},
@@ -154,7 +154,7 @@ They cock their head a bit at you.
 
    vn.label("novice_yes")
    nel(fmt.f(_([["I knew it! You seem to have a nice fresh aura around you. Reminds me of back in the day when I was starting out. Starting out can be a bit tricky, so I hope you don't mind if I give you some advice on the road."
-"For starters, if you haven't already, you should buy a #oLocal Map#0 that will help you get the directions to {sysname}. You can buy it at the main landing window or the outfiting window."]]), {sysname=destsys:name()}))
+"For starters, if you haven't already, you should buy a #oLocal Map#0 that will help you get the directions to {sys}. You can buy it at the main landing window or the outfiting window."]]), {sys=destsys}))
    vn.done( tutnel.nelly.transition )
 
    vn.label("novice_no")
@@ -175,8 +175,8 @@ They cock their head a bit at you.
    misn_marker = misn.markerAdd( destpnt )
 
    misn.osdCreate( _("Helping Nelly Out"), {
-      fmt.f(_("Deliver cargo to {pntname} in {sysname}"), {sysname=destsys:name(), pntname=destpnt:name()} ),
-      fmt.f(_("Return to {pntname} in {sysname}"), {sysname=retsys:name(), pntname=retpnt:name()} ),
+      fmt.f(_("Deliver cargo to {pnt} in {sys}"), {sys=destsys, pnt=destpnt} ),
+      fmt.f(_("Return to {pnt} in {sys}"), {sys=retsys, pnt=retpnt} ),
    } )
 
    hook.enter("enter")
@@ -198,7 +198,7 @@ function land ()
       vn.scene()
       local nel = vn.newCharacter( tutnel.vn_nelly() )
       vn.transition( tutnel.nelly.transition )
-      vn.na(fmt.f(_([[You land on {pntname} and the dockworkers offload your cargo. This delivery stuff is quite easy.]]),{pntname=destpnt:name()}))
+      vn.na(fmt.f(_([[You land on {pnt} and the dockworkers offload your cargo. This delivery stuff is quite easy.]]),{pnt=destpnt}))
       nel(fmt.f(_([["Say, I heard this place sells #oIon Cannons#0. If you want to be able to take down ships non-lethally, #oion damage#0 is your best bet. Here, I'll forward you {credits}. Do you need help buying and equipping the outfit?"]]),{credits=fmt.credits(outfit_tobuy:price())}))
       vn.func( function ()
          player.pay( outfit_tobuy:price() )
@@ -209,7 +209,7 @@ function land ()
       }
 
       vn.label("help_no")
-      nel(fmt.f(_([["OK! Taking the initiative I see. Go buy the {outfit} at the #oOutfits Tab#0 and make sure to equip it at the #oEquipment Tab#0 before taking off. Once you get that done, let's head back to {pntname} in {sysname}."]]),{outfit=outfit_tobuy:name(), pntname=retpnt:name(), sysname=retsys:name()}))
+      nel(fmt.f(_([["OK! Taking the initiative I see. Go buy the {outfit} at the #oOutfits Tab#0 and make sure to equip it at the #oEquipment Tab#0 before taking off. Once you get that done, let's head back to {pnt} in {sys}."]]),{outfit=outfit_tobuy:name(), pnt=retpnt, sys=retsys}))
       vn.func( function ()
          wanthelp = false
       end )
@@ -289,7 +289,7 @@ function enter ()
       vn.scene()
       local nel = vn.newCharacter( tutnel.vn_nelly() )
       vn.transition( tutnel.nelly.transition )
-      vn.na(fmt.f(_("After the dock workers load the cargo on your ship, you take off with Nelly aboard. On to {sysname}!"), {sysname=destsys:name()}))
+      vn.na(fmt.f(_("After the dock workers load the cargo on your ship, you take off with Nelly aboard. On to {sys}!"), {sys=destsys}))
       nel(_([[Just after taking off Nelly pipes up.
 "Say, are you familiar with the information window? It shows all the important things about your ship and current missions."]]))
       vn.menu{
@@ -347,7 +347,7 @@ function board ()
    local nel = tutnel.vn_nelly()
    vn.na(_([[You enter the derelict ship which is eerily silent. A large hole in the engine room indicates that likely the core engine blew out, forcing the ship crew to abandon ship. Although you don't find anything of significant value, there is still lots of ore cargo available on the ship. You quickly load as much as you can onto your ship before you depart.]]))
    vn.appear( nel )
-   nel(fmt.f(_([["Looks like your scored a lot of ore there. That should bring you a pretty penny at a planet with commodity exchange. Boarding derelicts is not always as easy as this and sometimes bad things can happen. We should head to {pntname} that should be nearby now."]]), {pntname=retpnt:name()}))
+   nel(fmt.f(_([["Looks like your scored a lot of ore there. That should bring you a pretty penny at a planet with commodity exchange. Boarding derelicts is not always as easy as this and sometimes bad things can happen. We should head to {pnt} that should be nearby now."]]), {pnt=retpnt}))
    vn.done( tutnel.nelly.transition )
    vn.run()
 
@@ -519,7 +519,7 @@ function equip ()
       return
    end
 
-   info_msg( fmt.f(_([["Great! Now you have the #o{outfit}#0 equipped. If your ship is set to automatically weapons, it should be assigned to a primary weapon. If not, you will have to assign the #o{outfit}#0 to a weapon set so you can use that. You can check by opening the #oInfo Window#0 with {infokey}. Check to make sure that is set up and let us go back to {pntname} in {sysname}."]]), {outfit=outfit_tobuy:name(), infokey=tut.getKey("info"), pntname=retpnt:name(), sysname=retsys:name()} ))
+   info_msg( fmt.f(_([["Great! Now you have the #o{outfit}#0 equipped. If your ship is set to automatically weapons, it should be assigned to a primary weapon. If not, you will have to assign the #o{outfit}#0 to a weapon set so you can use that. You can check by opening the #oInfo Window#0 with {infokey}. Check to make sure that is set up and let us go back to {pnt} in {sys}."]]), {outfit=outfit_tobuy:name(), infokey=tut.getKey("info"), pnt=retpnt, sys=retsys} ))
 
    hook.rm( hk_equip )
    hk_equip = nil

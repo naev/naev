@@ -175,9 +175,9 @@ function accept ()
    misn.accept()
 
    misn.osdCreate(_("Pirate Raid"), {
-      fmt.f(_("Go to the {sysname} system"),{sysname=targetsys:name()}),
-      fmt.f(_("Plunder {cargoname} from the convoy"),{cargoname=cargo[1]}),
-      fmt.f(_("Deliver the loot to {pntname} in the {sysname} system"),{pntname=returnpnt:name(), sysname=returnsys:name()}),
+      fmt.f(_("Go to the {sys} system"),{sys=targetsys}),
+      fmt.f(_("Plunder {cargo} from the convoy"),{cargo=cargo[1]}),
+      fmt.f(_("Deliver the loot to {pnt} in the {sys} system"),{pnt=returnpnt, sys=returnsys}),
    } )
 
    hook.enter("enter")
@@ -187,7 +187,7 @@ end
 function enter ()
    local q = player.pilot():cargoHas( misn_cargo )
    if convoy_spawned and q <= 0 then
-      player.msg(fmt.f(_("#rMISSION FAILED: You did not recover any {cargoname} from the convoy!"), {cargoname=cargo[1]}))
+      player.msg(fmt.f(_("#rMISSION FAILED: You did not recover any {cargo} from the convoy!"), {cargo=cargo[1]}))
       misn.finish(false)
    end
    if convoy_spawned and q > 0 then
@@ -209,7 +209,7 @@ function land ()
       q = pp:cargoRm( misn_cargo, q ) -- Remove it
       local reward = reward_base + q * reward_cargo
       lmisn.sfxVictory()
-      vntk.msg( _("Mission Success"), fmt.f(_("The workers unload your {cargoname} and take it away to somewhere you can't see. As you wonder about your payment, you suddenly receive a message that #g{reward}#0 was transferred to your account."), {cargoname=cargo[1], reward=fmt.credits(reward)}) )
+      vntk.msg( _("Mission Success"), fmt.f(_("The workers unload your {cargo} and take it away to somewhere you can't see. As you wonder about your payment, you suddenly receive a message that #g{reward}#0 was transferred to your account."), {cargo=cargo[1], reward=fmt.credits(reward)}) )
       player.pay( reward )
 
       -- Faction hit
@@ -219,7 +219,7 @@ function land ()
       local done = var.peek( "pir_convoy_raid" ) or 0
       var.push( "pir_convoy_raid", done+1 )
 
-      pir.addMiscLog(fmt.f(_("You raided a {adjective} {name} convoy in the {sysname} system and stole {tonnes} of {cargoname}."), {adjective=adjective, name=enemyfaction:name(), sysname=targetsys:name(), tonnes=fmt.tonnes(q), cargoname=cargo[1]}))
+      pir.addMiscLog(fmt.f(_("You raided a {adjective} {name} convoy in the {sys} system and stole {tonnes} of {cargo}."), {adjective=adjective, name=enemyfaction, sys=targetsys, tonnes=fmt.tonnes(q), cargo=cargo[1]}))
       misn.finish(true)
    end
 end
@@ -229,7 +229,7 @@ function enter_delay ()
    mrkexit = system.mrkAdd( convoy_exit:pos(), _("Convoy Exit Point") )
 
    player.autonavReset( 5 )
-   player.msg(fmt.f(_("The convoy will be coming in from {sysname} shortly!"), {sysname=convoy_enter:dest():name()}))
+   player.msg(fmt.f(_("The convoy will be coming in from {sys} shortly!"), {sys=convoy_enter:dest()}))
    hook.timer( 5+10*rnd.rnd(), "spawn_convoy" )
 end
 

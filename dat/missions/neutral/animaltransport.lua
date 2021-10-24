@@ -57,7 +57,7 @@ end
 
 
 function accept ()
-   if tk.yesno(_("Animal transport"), fmt.f(_([["Good day to you, captain. I'm looking for someone with a ship who can take this crate here to planet {pntname} in the {sysname} system. The crate contains a colony of rodents I've bred myself, and my in-law has a pet shop on {pntname} where I hope to sell them. Upon delivery, you will be paid {credits}. Are you interested in the job?"]]), {credits=fmt.credits(money_reward), pntname=destplanet:name(), sysname=destsys:name()})) then
+   if tk.yesno(_("Animal transport"), fmt.f(_([["Good day to you, captain. I'm looking for someone with a ship who can take this crate here to planet {pnt} in the {sys} system. The crate contains a colony of rodents I've bred myself, and my in-law has a pet shop on {pnt} where I hope to sell them. Upon delivery, you will be paid {credits}. Are you interested in the job?"]]), {credits=fmt.credits(money_reward), pnt=destplanet, sys=destsys})) then
       misn.accept()
       misn.setDesc(fmt.f(_("You've been hired to transport a crate of specially engineered rodents to {pnt} ({sys} system)."), {pnt=destplanet, sys=destsys}))
       misn.setReward(fmt.f(_("You will be paid {credits} on arrival."),{credits=fmt.credits(money_reward)}))
