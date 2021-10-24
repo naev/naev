@@ -45,12 +45,6 @@ text[6] = _([[As you dock, you can't help but notice the foul smell of garbage a
 misn_title = _("Waste Collector")
 misn_desc = _("Chelsea needs an escort to %s so they can get rid of the garbage now filling their ship.")
 
-npc_name = _("Chelsea")
-npc_desc = _("Chelsea seems like they're stressed. Maybe you should see how they're doing?")
-
-log_text = _([[You helped Chelsea get rid of a load of garbage they naively agreed to take to The Stinker as a mission, defending them from thugs along the way.]])
-
-
 function create ()
    misplanet, missys = planet.get( "The Stinker" )
    if misplanet == nil or missys == nil or system.cur():jumpDist(missys) > 4 then
@@ -60,7 +54,7 @@ function create ()
    credits = 500e3
    started = false
 
-   misn.setNPC( npc_name, "soromid/unique/chelsea.webp", npc_desc )
+   misn.setNPC( _("Chelsea"), "soromid/unique/chelsea.webp", _("Chelsea seems like they're stressed. Maybe you should see how they're doing?") )
 end
 
 
@@ -169,7 +163,7 @@ function land ()
       local t = time.get():tonumber()
       var.push( "comingout_time", t )
 
-      srm.addComingOutLog( log_text )
+      srm.addComingOutLog( _([[You helped Chelsea get rid of a load of garbage they naively agreed to take to The Stinker as a mission, defending them from thugs along the way.]]) )
 
       misn.finish( true )
    else
