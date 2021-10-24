@@ -33,7 +33,6 @@ text[1] = _("You are thanked for eliminating the traitorous scum and handed a cr
 text[2] = _("The official who hands you your pay mumbles something about traitors and then summarily dismisses you.")
 text[3] = _("While it takes an inordinate amount of time, you are eventually handed the agreed-upon payment for dispatching the traitor.")
 
-osd_title   = _("Rogue FLF")
 osd_desc    = {}
 osd_desc[1] = _("Fly to the %s system")
 osd_desc[2] = _("Eliminate the rogue FLF patrol")
@@ -99,7 +98,7 @@ function accept ()
    misn.accept()
 
    osd_desc[1] = osd_desc[1]:format( missys:name() )
-   misn.osdCreate( osd_title, osd_desc )
+   misn.osdCreate( _("Rogue FLF"), osd_desc )
 
    rogue_ships_left = 0
    job_done = false
