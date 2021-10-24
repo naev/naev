@@ -33,8 +33,6 @@ function create ()
       abort()
    end
 
-   sysname = "Pas"
-
    -- Create a Vendetta who hails the player after a bit
    hail_time = nil
    vendetta = pilot.add( "Vendetta", "Four Winds", nil, _("Four Winds Vendetta"), {ai="trader"} )
@@ -59,6 +57,7 @@ end
 function hail( _p )
    hook.rm(hailhook)
 
+   local sysname = system.get("Pas"):name()
    tk.msg(_("An open invitation"), _([["Greetings, %s," the pilot of the Vendetta says to you as soon as you answer his hail. "I have been looking for you on behalf of an acquaintance of yours. She wishes to meet with you at a place of her choosing, and a time of yours. It involves a proposition that you might find interesting - if you don't mind sticking your neck out."
     You frown at that, but you ask the pilot where this acquaintance wishes you to go anyway.
     "Fly to the %s system," he replies. "She will meet you there. There's no rush, but I suggest you go see her at the earliest opportunity."
