@@ -50,12 +50,6 @@ pay_s_nolux_text[1] = _("Several passengers are furious that you did not take th
 pay_s_nolux_text[2] = _("While your passengers enjoyed the trip, they are not happy that you didn't take them on your Luxury Yacht class ship the entire way. They refuse to pay the full fare.")
 pay_s_nolux_text[3] = _("Most of the passengers enjoyed your tour, but one particularly loud passenger complains that you tricked them into paying full price even though you did not take them on a Luxury Yacht. To calm this passenger down, you offer to reduce everyone's fare. Some passengers refuse the offer, but you still end up being paid much less than you otherwise would have been.")
 
--- Mission details
-
--- Messages
-msg    = {}
-msg[1] = _("All attractions visited. Return to %s and collect your pay.")
-
 --Sightseeing Messages
 ssmsg = {}
 ssmsg[1] = _("The passengers are loving it.")
@@ -108,8 +102,8 @@ function create ()
       misn.finish( false )
    end
 
-   friend = missys:presence("friendly")
-   foe = missys:presence("hostile")
+   local friend = missys:presence("friendly")
+   local foe = missys:presence("hostile")
    if friend < foe then
       misn.finish( false )
    end
@@ -245,7 +239,7 @@ function timer ()
    -- Another check since the previous block could change the result
    if #points <= 0 then
       job_done = true
-      player.msg( msg[1]:format( startingplanet:name() ) )
+      player.msg( _("All attractions visited. Return to %s and collect your pay."):format( startingplanet:name() ) )
       misn.osdActive( 3 )
       misn.markerMove( marker, startingsystem )
    end

@@ -1,6 +1,5 @@
 local vn
 local lg = require 'love.graphics'
-local fmt = require "format"
 
 local comm = {}
 

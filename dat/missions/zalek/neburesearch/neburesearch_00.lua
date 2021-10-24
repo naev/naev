@@ -152,7 +152,7 @@ end
 
 function drainShields()
     ps = player.pilot()
-    armour, shield, stress, dis = ps:health()
+    local armour = ps:health()
     ps:setHealth(armour, 0)
     ps:setEnergy(0)
     phook = hook.timer(0.1, "drainShields")

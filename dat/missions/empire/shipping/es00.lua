@@ -30,19 +30,6 @@ local fleet = require "fleet"
 local fmt = require "format"
 local emp = require "common.empire"
 
-text = {}
-text[1] = _([[You approach the Empire Commander.
-    "Hello, you must be %s. I've heard about you. I'm Commander Soldner. We've got some harder missions for someone like you in the Empire Shipping division. There would be some real danger involved in these missions, unlike the ones you've recently completed for the division. Would you be up for the challenge?"]])
-text[2] = _([["We've got a prisoner exchange set up with the FLF to take place on %s in the %s system. They want a more neutral pilot to do the exchange. You would have to go to %s with some FLF prisoners aboard your ship and exchange them for some of our own. You won't have visible escorts but we will have your movements watched by ships in nearby sectors.
-    "Once you get the men they captured back, bring them over to %s in %s for debriefing. You'll be compensated for your troubles. Good luck."]])
-text[3] = _([[The Prisoners are loaded onto your ship along with a few marines to ensure nothing untoward happens.]])
-text[4] = _([[As you land, you notice the starport has been emptied. You also notice explosives rigged on some of the columns. This doesn't look good. The marines tell you to sit still while they go out to try to complete the prisoner exchange.
-    From the cockpit you see how the marines lead the prisoners in front of them with guns to their backs. You see figures step out of the shadows with weapons too; most likely the FLF.]])
-text[5] = _([[All of a sudden a siren blares and you hear shooting break out. You quickly start your engines and prepare for take off. Shots ring out all over the landing bay and you can see a couple of corpses as you leave the starport. You remember the explosives just as loud explosions go off behind you. This doesn't look good at all.
-    You start your climb out of the atmosphere and notice how you're picking up many FLF and Dvaered ships. Looks like you're going to have quite a run to get the hell out of here. It didn't go as you expected.]])
-text[6] = _([[After you leave your ship in the starport, you meet up with Commander Soldner. From the look on his face, it seems like he already knows what happened.
-    "It was all the Dvaered's fault. They just came in out of nowhere and started shooting. What a horrible mess. We're already working on sorting out the blame."
-    He sighs. "We had good men there. And we certainly didn't want you to start with a mess like this, but if you're interested in another, meet me up in the bar in a while. We get no rest around here. The payment has already been transferred to your bank account."]])
 
 function create ()
    -- Target destination
@@ -59,7 +46,8 @@ end
 
 function accept ()
    -- Intro text
-   if not tk.yesno( _("Spaceport Bar"), string.format( text[1], player.name() ) ) then
+   if not tk.yesno( _("Spaceport Bar"), string.format( _([[You approach the Empire Commander.
+    "Hello, you must be %s. I've heard about you. I'm Commander Soldner. We've got some harder missions for someone like you in the Empire Shipping division. There would be some real danger involved in these missions, unlike the ones you've recently completed for the division. Would you be up for the challenge?"]]), player.name() ) ) then
       misn.finish()
    end
 
@@ -77,13 +65,14 @@ function accept ()
    misn.setDesc( string.format(_("Go to %s in the %s system to exchange prisoners with the FLF"), dest:name(), destsys:name()))
 
    -- Flavour text and mini-briefing
-   tk.msg( _("Prisoner Exchange"), string.format( text[2], dest:name(), destsys:name(),
+   tk.msg( _("Prisoner Exchange"), string.format( _([["We've got a prisoner exchange set up with the FLF to take place on %s in the %s system. They want a more neutral pilot to do the exchange. You would have to go to %s with some FLF prisoners aboard your ship and exchange them for some of our own. You won't have visible escorts but we will have your movements watched by ships in nearby sectors.
+    "Once you get the men they captured back, bring them over to %s in %s for debriefing. You'll be compensated for your troubles. Good luck."]]), dest:name(), destsys:name(),
          dest:name(), ret:name(), retsys:name() ))
    misn.osdCreate(_("Prisoner Exchange"), {_("Go to %s in the %s system to exchange prisoners with the FLF"):format(dest:name(),destsys:name())})
    -- Set up the goal
    local c = misn.cargoNew( N_("Prisoners"), N_("FLF prisoners.") )
    prisoners = misn.cargoAdd( c, 0 )
-   tk.msg( _("Prisoner Exchange"), text[3] )
+   tk.msg( _("Prisoner Exchange"), _([[The Prisoners are loaded onto your ship along with a few marines to ensure nothing untoward happens.]]) )
 
    -- Set hooks
    hook.land("land")
@@ -100,8 +89,10 @@ function land ()
          misn_stage = 1
 
          -- Some text
-         tk.msg(_("Prisoner Exchange"), text[4] )
-         tk.msg(_("Prisoner Exchange"), text[5] )
+         tk.msg(_("Prisoner Exchange"), _([[As you land, you notice the starport has been emptied. You also notice explosives rigged on some of the columns. This doesn't look good. The marines tell you to sit still while they go out to try to complete the prisoner exchange.
+    From the cockpit you see how the marines lead the prisoners in front of them with guns to their backs. You see figures step out of the shadows with weapons too; most likely the FLF.]]) )
+         tk.msg(_("Prisoner Exchange"), _([[All of a sudden a siren blares and you hear shooting break out. You quickly start your engines and prepare for take off. Shots ring out all over the landing bay and you can see a couple of corpses as you leave the starport. You remember the explosives just as loud explosions go off behind you. This doesn't look good at all.
+    You start your climb out of the atmosphere and notice how you're picking up many FLF and Dvaered ships. Looks like you're going to have quite a run to get the hell out of here. It didn't go as you expected.]]) )
          misn.markerMove( misn_marker, retsys )
          misn.setDesc( string.format(_("Return to %s in the %s system to report what happened"), ret:name(), retsys:name()))
          misn.osdCreate(_("Prisoner Exchange"), {_("Return to %s in the %s system to report what happened"):format(ret:name(),retsys:name())})
@@ -122,7 +113,9 @@ function land ()
       faction.modPlayerSingle("Empire",5);
 
       -- Flavour text
-      tk.msg(_("Mission Report"), text[6] )
+      tk.msg(_("Mission Report"), _([[After you leave your ship in the starport, you meet up with Commander Soldner. From the look on his face, it seems like he already knows what happened.
+    "It was all the Dvaered's fault. They just came in out of nowhere and started shooting. What a horrible mess. We're already working on sorting out the blame."
+    He sighs. "We had good men there. And we certainly didn't want you to start with a mess like this, but if you're interested in another, meet me up in the bar in a while. We get no rest around here. The payment has already been transferred to your bank account."]]) )
 
       emp.addShippingLog( _([[You took part in a prisoner exchange with the FLF on behalf of the Empire. Unfortunately, the prisoner exchange failed. "It was all the Dvaered's fault. They just came in out of nowhere and started shooting." Commander Soldner has asked you to meet him in the bar on Halir if you're interested in another mission.]]) )
 

@@ -65,6 +65,7 @@ stds._Tk = {read_globals={"tk"}}
 stds.Transform = {read_globals={"transform"}}
 stds.Var = {read_globals={"var"}}
 stds.Vector = {read_globals={"vec2"}}
+stds.__love_impl = {globals={"love"}}
 
 PILOT = "+_Pilot+Ship"
 STANDARD = "+Naev+Var+Planet+System+Jump+Time+Player" .. PILOT .. "+Rnd+Diff+Faction+Vector+Outfit+Commodity+News+Shiplog+File+Data+Debug+LinOpt+Safelanes"
@@ -174,6 +175,7 @@ files["landing.lua"].std = STANDARD .. "+API_land"
 files["missions/**/*.lua"].std = STANDARD .. "+Misn+Hook+Camera+Tex+Background+Music+Audio" .. TK
 files["outfits/**/*.lua"].std = STANDARD .. GFX .. "+PilotOutfit"
 files["rescue.lua"].std = STANDARD .. TK .. "+API_rescue"
+files["scripts/love.lua"].std = STANDARD .. "+__love_impl"
 files["shipai.lua"].std = STANDARD .. "+API_shipai"
 files["snd/music.lua"].std = STANDARD .. "+Music"
 

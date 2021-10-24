@@ -472,7 +472,7 @@ function taunt ()
       return
    end
 
-   local armour, shield = captainTP:health()
+   local _armour, shield = captainTP:health()
    local taunts
    if shield >= 40 then
       taunts = tp_taunt_healthy

@@ -29,17 +29,6 @@ local fmt = require "format"
 local emp = require "common.empire"
 
 -- Mission details
--- Fancy text messages
-text = {}
-text[1] = _([[You approach Commander Soldner, who seems to be waiting for you.
-"Hello, ready for your next mission?"]])
-text[2] = _([[Commander Soldner begins, "We have an important package that we must take from %s in the %s system to %s in the %s system. We have reason to believe that it is also wanted by external forces.
-    "The plan is to send an advance convoy with guards to make the run in an attempt to confuse possible enemies. You will then go in and do the actual delivery by yourself. This way we shouldn't arouse suspicion. You are to report here when you finish delivery and you'll be paid %s."]])
-text[3] = _([["Avoid hostility at all costs. The package must arrive at its destination. Since you are undercover, Empire ships won't assist you if you come under fire, so stay sharp. Good luck."]])
-text[4] = _([[The packages labelled "Food" are loaded discreetly onto your ship. Now to deliver them to %s in the %s system.]])
-text[5] = _([[Workers quickly unload the package as mysteriously as it was loaded. You notice that one of them gives you a note. Looks like you'll have to go to %s in the %s system to report to Commander Soldner.]])
-text[6] = _([[You arrive at %s and report to Commander Soldner. He greets you and starts talking. "I heard you encountered resistance. At least you managed to deliver the package. Great work there. I've managed to get you cleared for the Heavy Weapon License. You'll still have to pay the fee for getting it, though.
-    "If you're interested in more work, meet me in the bar in a bit. I've got some paperwork I need to finish first."]])
 -- Errors
 
 function create ()
@@ -60,7 +49,8 @@ end
 function accept ()
 
    -- See if accept mission
-   if not tk.yesno( _("Commander Soldner"), text[1] ) then
+   if not tk.yesno( _("Commander Soldner"), _([[You approach Commander Soldner, who seems to be waiting for you.
+"Hello, ready for your next mission?"]]) ) then
       misn.finish()
    end
 
@@ -77,12 +67,13 @@ function accept ()
    misn.setDesc( string.format(_("Pick up a package at %s in the %s system"), pickup:name(), pickupsys:name()))
 
    -- Flavour text and mini-briefing
-   tk.msg( _("Commander Soldner"), string.format( text[2], pickup:name(), pickupsys:name(),
+   tk.msg( _("Commander Soldner"), string.format( _([[Commander Soldner begins, "We have an important package that we must take from %s in the %s system to %s in the %s system. We have reason to believe that it is also wanted by external forces.
+    "The plan is to send an advance convoy with guards to make the run in an attempt to confuse possible enemies. You will then go in and do the actual delivery by yourself. This way we shouldn't arouse suspicion. You are to report here when you finish delivery and you'll be paid %s."]]), pickup:name(), pickupsys:name(),
          dest:name(), destsys:name(), fmt.credits(reward) ) )
    misn.osdCreate(_("Empire Shipping Delivery"), {_("Pick up a package at %s in the %s system"):format(pickup:name(), pickupsys:name())})
 
    -- Set up the goal
-   tk.msg( _("Commander Soldner"), text[3] )
+   tk.msg( _("Commander Soldner"), _([["Avoid hostility at all costs. The package must arrive at its destination. Since you are undercover, Empire ships won't assist you if you come under fire, so stay sharp. Good luck."]]) )
 
    -- Set hooks
    hook.land("land")
@@ -115,7 +106,7 @@ function land ()
       misn.osdCreate(_("Empire Shipping Delivery"), {_("Deliver the package to %s in the %s system"):format(dest:name(), destsys:name())})
 
       -- Load message
-      tk.msg( _("Loading Cargo"), string.format( text[4], dest:name(), destsys:name()) )
+      tk.msg( _("Loading Cargo"), string.format( _([[The packages labelled "Food" are loaded discreetly onto your ship. Now to deliver them to %s in the %s system.]]), dest:name(), destsys:name()) )
 
    elseif landed == dest and misn_stage == 1 then
       if misn.cargoRm(packages) then
@@ -126,7 +117,7 @@ function land ()
          misn.osdCreate(_("Empire Shipping Delivery"), {_("Return to %s in the %s system"):format(ret:name(),retsys:name())})
 
          -- Some text
-         tk.msg( _("Cargo Delivery"), string.format(text[5], ret:name(), retsys:name()) )
+         tk.msg( _("Cargo Delivery"), string.format(_([[Workers quickly unload the package as mysteriously as it was loaded. You notice that one of them gives you a note. Looks like you'll have to go to %s in the %s system to report to Commander Soldner.]]), ret:name(), retsys:name()) )
       end
    elseif landed == ret and misn_stage == 2 then
 
@@ -135,7 +126,8 @@ function land ()
       faction.modPlayerSingle("Empire",5);
 
       -- Flavour text
-      tk.msg(_("Mission Success"), string.format(text[6], ret:name()) )
+      tk.msg(_("Mission Success"), string.format(_([[You arrive at %s and report to Commander Soldner. He greets you and starts talking. "I heard you encountered resistance. At least you managed to deliver the package. Great work there. I've managed to get you cleared for the Heavy Weapon License. You'll still have to pay the fee for getting it, though.
+    "If you're interested in more work, meet me in the bar in a bit. I've got some paperwork I need to finish first."]]), ret:name()) )
 
       -- The goods
       diff.apply("heavy_weapons_license")

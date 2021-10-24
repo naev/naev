@@ -42,12 +42,12 @@ local portrait = require "portrait"
 -- common hooks
 message = fw.message
 
-mace_fail = _("Your only weapons should be Mace rockets: land and speak again with Major Tam.")
+local radius = 4000
 
--- Pointless chatter
+local mace_fail = _("Your only weapons should be Mace rockets: land and speak again with Major Tam.")
 
 -- Joy cries (for the Mace throw)
-joy = { _("Wohoo!"),
+local joy = { _("Wohoo!"),
         _("One less!"),
         _("Baoum!"),
         _("I'm in such a good shape!"),
@@ -105,8 +105,6 @@ function create()
                          _("Lieutenant Guo"),
                          player.name(), }
    competitors_names["__save"] = true
-
-   radius = 4000
 end
 
 -- Entering (Dvaer)
@@ -161,9 +159,22 @@ function land()
    spawnNpcs() -- This handles people on the bar
 end
 
+-- Sorting functions
+local function sortTotal(i,j)
+   return score_total[i] < score_total[j]
+end
+local function sortThrow(i,j)
+   return score_throw[i] < score_throw[j]
+end
+local function sortStadion(i,j)
+   return score_stadion[i] < score_stadion[j]
+end
+local function sortPankration(i,j)
+   return score_pankration[i] < score_pankration[j]
+end
+
 function spawnNpcs()
    if (planet.cur() == destpla) then
-
       -- First, compute the people's scores
       local iter = {1,2,3,4,5,6,7,8,9,10}
       table.sort( iter, sortTotal )
@@ -179,7 +190,7 @@ function spawnNpcs()
          populate_bar()
 
          if stage == 1 or stage == 3 or stage == 5 then
-            tam = misn.npcAdd("tamCommon", _("Major Tam"), fw.portrait_tam, _("Major Tam is ready to explain the next stage of the ceremony to you."))
+            misn.npcAdd("tamCommon", _("Major Tam"), fw.portrait_tam, _("Major Tam is ready to explain the next stage of the ceremony to you."))
          elseif stage == 7 then
             tk.msg( totalTitle, totalString ) -- Ex-aequo always profit the player.
             tk.msg("",_([[While landing, you see the other participants of the ceremony gathered on the dock. Strafer's father, being the master of ceremony, announces:
@@ -264,14 +275,14 @@ end
 
 -- Add the random people
 function populate_bar()
-   lbl = misn.npcAdd("discussLbl", _("Captain Leblanc"), fw.portrait_leblanc, _("Leblanc is surrounded by her pilots, who somehow exchange jokes about their respective collections of chopped heads. The ambiance feels surprisingly relaxed."))
-   klk = misn.npcAdd("discussKlk", _("General Klank"), fw.portrait_klank, _("The general is talking to Major Tam."))
-   nkv = misn.npcAdd("discussNkv", _("Sergeant Nikolov"), fw.portrait_nikolov, _("Nikolov is arm-wrestling half a dozen of soldiers. The cyborg sergeant seems to be very cautious in order not to harm them."))
-   ham = misn.npcAdd("discussHam", _("Captain Hamfresser"), fw.portrait_hamfresser, _("Hamfresser stays behind a group of army technicians. He bows towards them, probably attempting to take part to the conversation, but no one seems to give him any attention. His face seems to reflect not only boredom, but also shame not to be able to fit among the group. He swings his unused cybernetic arms around his hips."))
-   wdw = misn.npcAdd("discussWdw", _("Well-dressed woman"), portrait_wdw, _("One of the rare civilians around, this woman seems however to fit in the place. You think that she must be used to hang out with soldiers."))
-   dad = misn.npcAdd("discussDad", _("Retired soldier"), portrait_dad, _("An old captain who seems to have ironed his pageantry uniform for the occasion is talking to some civilians. His shoulders carry the weight of years spent fighting in space while his face is bent over by days of anguish for comrades he loved and lost fighting up there."))
-   sst = misn.npcAdd("discussSst", _("Sergeant"), portrait_sst, _("This pilot is not a member of Leblanc's squadron, however, she discusses with them."))
-   pvt = misn.npcAdd("discussPvt", _("Technician"), portrait_pvt, _("A military technician encourages his comrades who are arm-wrestling with Nikolov."))
+   misn.npcAdd("discussLbl", _("Captain Leblanc"), fw.portrait_leblanc, _("Leblanc is surrounded by her pilots, who somehow exchange jokes about their respective collections of chopped heads. The ambiance feels surprisingly relaxed."))
+   misn.npcAdd("discussKlk", _("General Klank"), fw.portrait_klank, _("The general is talking to Major Tam."))
+   misn.npcAdd("discussNkv", _("Sergeant Nikolov"), fw.portrait_nikolov, _("Nikolov is arm-wrestling half a dozen of soldiers. The cyborg sergeant seems to be very cautious in order not to harm them."))
+   misn.npcAdd("discussHam", _("Captain Hamfresser"), fw.portrait_hamfresser, _("Hamfresser stays behind a group of army technicians. He bows towards them, probably attempting to take part to the conversation, but no one seems to give him any attention. His face seems to reflect not only boredom, but also shame not to be able to fit among the group. He swings his unused cybernetic arms around his hips."))
+   misn.npcAdd("discussWdw", _("Well-dressed woman"), portrait_wdw, _("One of the rare civilians around, this woman seems however to fit in the place. You think that she must be used to hang out with soldiers."))
+   misn.npcAdd("discussDad", _("Retired soldier"), portrait_dad, _("An old captain who seems to have ironed his pageantry uniform for the occasion is talking to some civilians. His shoulders carry the weight of years spent fighting in space while his face is bent over by days of anguish for comrades he loved and lost fighting up there."))
+   misn.npcAdd("discussSst", _("Sergeant"), portrait_sst, _("This pilot is not a member of Leblanc's squadron, however, she discusses with them."))
+   misn.npcAdd("discussPvt", _("Technician"), portrait_pvt, _("A military technician encourages his comrades who are arm-wrestling with Nikolov."))
 end
 
 -- Discussions
@@ -566,7 +577,7 @@ end
 
 -- Hack for the ships not to be hostile anymore once shot (Mace Throw)
 function dehostilify()
-   mypilots = pilot.get( { faction.get("Independent") } )
+   local mypilots = pilot.get( { faction.get("Independent") } )
    for i, p in ipairs(mypilots) do
       p:setHostile(false)
    end
@@ -575,7 +586,7 @@ end
 
 -- Spawn Competitors
 function spawnCompetitors( )
-   competitors = {tam, leblanc, klank, strafer, caros, micoult, johnson, ernst, guo}
+   competitors = {} -- tam, leblanc, klank, strafer, caros, micoult, johnson, ernst, guo
    for i = 1, 9 do
       local pos = center + vec2.newP( radius, i*360/10 - 90 )
       competitors[i] = pilot.add( "Dvaered Vendetta", "DHC", pos, competitors_names[i])
@@ -606,7 +617,7 @@ function targetHit( victim, attacker )
       score_throw[10] = score_throw[10] + 1
       score_total[10] = score_total[10] + 1
    else
-      ind = attacker:memory().Cindex
+      local ind = attacker:memory().Cindex
       score_throw[ind] = score_throw[ind] + 1
       score_total[ind] = score_total[ind] + 1
    end
@@ -637,8 +648,8 @@ function endThrow()
    -- Sort and print top scores
    local iter = {1,2,3,4,5,6,7,8,9,10}
    table.sort( iter, sortThrow )
-   throwTitle = _("Scores for the Mace Throw")
-   throwString = ""
+   local throwTitle = _("Scores for the Mace Throw")
+   local throwString = ""
    for i = 10, 1, -1 do
       throwString = (throwString..competitors_names[iter[i]]..": "..score_throw[iter[i]].."\n")
    end
@@ -696,8 +707,8 @@ function endStadion()
 
    local iter = {1,2,3,4,5,6,7,8,9,10}
    table.sort( iter, sortStadion )
-   stadionTitle = _("Scores for the Mace Stadion")
-   stadionString = ""
+   local stadionTitle = _("Scores for the Mace Stadion")
+   local stadionString = ""
    for i = 10, 1, -1 do
       stadionString = (stadionString..competitors_names[iter[i]]..": "..score_stadion[iter[i]].."\n")
    end
@@ -728,7 +739,7 @@ function playerHit()
 end
 function compHit( victim )
    if victim:health() < 100 then -- Identify who has lost
-      ind = victim:memory().Cindex
+      local ind = victim:memory().Cindex
       if ind == 5 then -- Player won
          hook.rm(playerHitHook)
          hook.rm(compHitHook[5])
@@ -785,24 +796,10 @@ function endPankrationT()
 
    local iter = {1,2,3,4,5,6,7,8,9,10}
    table.sort( iter, sortPankration )
-   pankrationTitle = _("Scores for the Mace Pankration")
-   pankrationString = ""
+   local pankrationTitle = _("Scores for the Mace Pankration")
+   local pankrationString = ""
    for i = 10, 1, -1 do
       pankrationString = (pankrationString..competitors_names[iter[i]]..": "..score_pankration[iter[i]].."\n")
    end
    tk.msg( pankrationTitle, pankrationString )
-end
-
--- Sorting functions
-function sortTotal(i,j)
-   return score_total[i] < score_total[j]
-end
-function sortThrow(i,j)
-   return score_throw[i] < score_throw[j]
-end
-function sortStadion(i,j)
-   return score_stadion[i] < score_stadion[j]
-end
-function sortPankration(i,j)
-   return score_pankration[i] < score_pankration[j]
 end

@@ -27,9 +27,6 @@
 local sciwrong = require "common.sciencegonewrong"
 
 
--- set text variables
-text = {}
-osd_msg = {}
 -- system with the drone and the return to start
 t_sys = { __save=true }
 t_pla = { __save=true }
@@ -42,32 +39,6 @@ t_sys[1] = system.get("Xavier")
 t_pla[1] = t_sys[1]:planets()[1]
 --t_pla[2], t_sys[2] = planet.get("Gastan")
 
-text[1]  = _([["Hey there again! I need your help. I was finishing up my prototype, you see. It's ingenious. But you see, there was a minor hiccup. It's nothing major, it is just, well, that I lost it. But I would not be Dr. Geller if I had not put a tracking mechanism into it! So I want you to catch it and bring it back, OK? You can do that, right?"]])
-text[2] = _([["Excellent! I will join you this time. Let's go."]])
-text[3] = _([["There! The tracker shows it must be here! It is right next to %s! If you hail it I might be able to patch the software. That should give me control again. But you have to be close so the data transfer is as stable as possible."]])
-text[4] = _([["Huh, I don't understand. This should not be happening. Hold on. I can't get access."]])
-text[5] = _([["Um, there seems to be a glitch. Well, sort of. Um, if I deciphered this correctly, the drone just hijacked the unused drones on %s and ordered them to attack us. I never should have tampered with that weird chip those pirates sold me!"]])
-text[6] = _([["If you can disable the prototype, do it, but I'd prefer not to die at any rate!"]])
-text[7] = _([["Excellent work! Now load it up and let's get out of here!"]])
-text[8] = _([["Interesting, the other drones are running away..."]])
--- is that the way to go? get person to jump and try again? that sounds a bit annoying maybe to play through
-text[9] = _([["The drone has disappeared from my radar! It must have jumped to the %s system. Let's find it!"]])
-text[10] = _([["The scanner shows me that the drone has slowed down. It must have lost power. Go! Go! It should now be much easier to catch it!"]])
-
-text[11] = _([["It seems the drone has found a way to shield itself from the EM pulses. I think I can adjust to that, give me a second."]])
-text[12] = _([["There you go! Get it!"]])
-text[13] = _([["This is strange, the engines are starting to heat up... oh, shit, if they continue like this the drone will explode in about 20 seconds! You'd better hurry!"]])
-text[14] = _([["NOOOOOOOOO! My drone! You imbecile! You failed me!"]])
--- final message when returning to Gastan
-text[15] = _([["The things I do for science! Now let me go back to my lab and analyze the drone. I need to figure out exactly what happened and what went wrong. Once I know more I might need you again. Oh, and here, for your service!" A small bag containing a credit chip and a tiny toy drone is tossed your way.]])
-
--- text if the mission is failed
--- osd_msg
-osd_msg[1] = _("Go to the %s system and hail the prototype")
-osd_msg[2] = _("Disable the prototype")
-osd_msg[3] = _("Return the prototype to %s in the %s system")
--- refuestext
-
 function create ()
    -- Have to be at center of operations.
    t_pla[2], t_sys[2] = sciwrong.getCenterOperations()
@@ -78,15 +49,16 @@ function create ()
    -- Spaceport bar stuff
    misn.setNPC( _("Dr. Geller"),  "zalek/unique/geller.webp", _("You see Dr. Geller going from one person to the next, seemingly asking for something.") )
 end
+
 function accept()
    -- Mission details:
-   if not tk.yesno( _([[In the bar]]), text[1] ) then
+   if not tk.yesno( _([[In the bar]]), _([["Hey there again! I need your help. I was finishing up my prototype, you see. It's ingenious. But you see, there was a minor hiccup. It's nothing major, it is just, well, that I lost it. But I would not be Dr. Geller if I had not put a tracking mechanism into it! So I want you to catch it and bring it back, OK? You can do that, right?"]]) ) then
       tk.msg(_("No Science Today"), _("Don't you care about science?..."))
       misn.finish()
    end
-   tk.msg( _([[In the bar]]), text[2] )
+   tk.msg( _([[In the bar]]), _([["Excellent! I will join you this time. Let's go."]]) )
    misn.accept()
-   misn.osdCreate(_("The one with the Runaway"), {osd_msg[1]:format(t_sys[1]:name()),osd_msg[2],osd_msg[3]:format(t_pla[2]:name(),t_sys[2]:name())})
+   misn.osdCreate(_("The one with the Runaway"), {_("Go to the %s system and hail the prototype"):format(t_sys[1]:name()),_("Disable the prototype"),_("Return the prototype to %s in the %s system"):format(t_pla[2]:name(),t_sys[2]:name())})
    misn.setDesc(_("You've been hired by Dr. Geller to retrieve his prototype that ran away."))
    misn.setTitle(_("The one with the Runaway"))
    misn.setReward(_("A peek at the new prototype and some compensation for your efforts"))
@@ -109,11 +81,10 @@ function sys_enter ()
          hook.timer( 2.0, "chase_of_drones" )
       end
    end
-
 end
 
 function game_of_drones ()
-   tk.msg(_([[On the intercom]]), text[3]:format(t_pla[1]:name()))
+   tk.msg(_([[On the intercom]]), _([["There! The tracker shows it must be here! It is right next to %s! If you hail it I might be able to patch the software. That should give me control again. But you have to be close so the data transfer is as stable as possible."]]):format(t_pla[1]:name()))
    -- spawn drones
 
    t_drone = pilot.add( "Za'lek Scout Drone", "Za'lek", t_pla[1], nil, {ai="trader"} ) -- prototype is a scout drone
@@ -145,9 +116,9 @@ function got_hailed()
    end
    hook.rm(hailhook)
    hook.rm(idlehook)
-   tk.msg(_([[On your ship]]), text[4])
-   tk.msg(_([[On your ship]]), text[5]:format(t_pla[1]:name()))
-   tk.msg(_([[On your ship]]), text[6])
+   tk.msg(_([[On your ship]]), _([["Huh, I don't understand. This should not be happening. Hold on. I can't get access."]]))
+   tk.msg(_([[On your ship]]), _([["Um, there seems to be a glitch. Well, sort of. Um, if I deciphered this correctly, the drone just hijacked the unused drones on %s and ordered them to attack us. I never should have tampered with that weird chip those pirates sold me!"]]):format(t_pla[1]:name()))
+   tk.msg(_([[On your ship]]), _([["If you can disable the prototype, do it, but I'd prefer not to die at any rate!"]]))
    t_drone:setInvincible(false)
    t_drone:setHostile(true)
    t_drone:setHilight(true)
@@ -183,7 +154,7 @@ end
 
 function targetBoard()
    player.unboard()
-   tk.msg(_([[On your ship]]), text[7])
+   tk.msg(_([[On your ship]]), _([["Excellent work! Now load it up and let's get out of here!"]]))
    t_drone:setHilight(false)
    t_drone:setVisplayer(false)
    captured = true
@@ -201,7 +172,7 @@ end
 
 function drone_jumped ()
    --begin the chase:
-   tk.msg(_([[On your ship]]), text[9]:format(t_sys[3]:name()))
+   tk.msg(_([[On your ship]]), _([["The drone has disappeared from my radar! It must have jumped to the %s system. Let's find it!"]]):format(t_sys[3]:name()))
    misn.markerRm(mmarker)
    if (jumps==0) then
       mmarker = misn.markerAdd(t_sys[3],"high")
@@ -211,12 +182,12 @@ function drone_jumped ()
          hook.rm(bghook[i])
       end
       if not fled then
-         tk.msg(_([[On your ship]]),text[8])
+         tk.msg(_([[On your ship]]),_([["Interesting, the other drones are running away..."]]))
       end
       fled = false
    elseif jumps == 2 then
       t_drone:setHealth(0,0)
-      tk.msg(_([[On your ship]]),text[14])
+      tk.msg(_([[On your ship]]),_([["NOOOOOOOOO! My drone! You imbecile! You failed me!"]]))
       misn.finish(false)
    else
       mmarker = misn.markerAdd(t_sys[3],"high")
@@ -226,7 +197,7 @@ end
 
 -- the drone behaves differently depending on through how many systems it has been chased so far
 function chase_of_drones ()
-   tk.msg(_([[On your ship]]),text[10])
+   tk.msg(_([[On your ship]]),_([["The scanner shows me that the drone has slowed down. It must have lost power. Go! Go! It should now be much easier to catch it!"]]))
    t_drone = pilot.add( "Za'lek Scout Drone", "Za'lek", vec2.newP(rnd.rnd(0,system.cur():radius()/5),rnd.rnd(0,359)), nil, {ai="dummy"} ) -- prototype is a scout drone
    t_drone:outfitAdd("Tricon Zephyr II Engine")
    -- add something so it is not insta-disabled with one shot?
@@ -257,7 +228,7 @@ end
 
 function drone_attacked()
    hook.rm(dr_a_hook)
-   tk.msg(_([[On your ship]]),text[11])
+   tk.msg(_([[On your ship]]),_([["It seems the drone has found a way to shield itself from the EM pulses. I think I can adjust to that, give me a second."]]))
    t_drone:setHostile(true)
    t_drone:setHilight(true)
    t_drone:setVisplayer(true)
@@ -271,22 +242,22 @@ end
 function drone_selfdestruct()
    hook.rm(dr_d_hook)
    t_drone:setHealth(0,0)
-   tk.msg(_([[On your ship]]),text[14])
+   tk.msg(_([[On your ship]]),_([["NOOOOOOOOO! My drone! You imbecile! You failed me!"]]))
    misn.finish(false)
 end
 
 function drone_disableable()
-   tk.msg(_([[On your ship]]),text[12])
+   tk.msg(_([[On your ship]]),_([["There you go! Get it!"]]))
    t_drone:setNoDisable(false)
    if jumps == 2 then
-      tk.msg(_([[On your ship]]),text[13])
+      tk.msg(_([[On your ship]]),_([["This is strange, the engines are starting to heat up... oh, shit, if they continue like this the drone will explode in about 20 seconds! You'd better hurry!"]]))
       hook.timer(18.0+rnd.uniform(0.001, 4.0), "drone_selfdestruct")
    end
 end
 -- last hook
 function land_home()
    if planet.cur() == t_pla[2] then
-      tk.msg(_([[Back on %s]]):format(t_pla[2]:name()),text[15])
+      tk.msg(_([[Back on %s]]):format(t_pla[2]:name()),_([["The things I do for science! Now let me go back to my lab and analyze the drone. I need to figure out exactly what happened and what went wrong. Once I know more I might need you again. Oh, and here, for your service!" A small bag containing a credit chip and a tiny toy drone is tossed your way.]]))
       player.pay(reward)
       player.outfitAdd("Toy Drone")
       sciwrong.addLog( _([[You helped Dr. Geller retrieve his lost prototype drone.]]) )
@@ -296,7 +267,7 @@ end
 
 -- tell drones to spread and flee
 function drones_flee ()
-   tk.msg(_([[On your ship]]),text[8])
+   tk.msg(_([[On your ship]]),_([["Interesting, the other drones are running away..."]]))
    fled = true
    for i=1,#badguys do
       pilot.taskClear(badguys[i])
@@ -336,7 +307,7 @@ function dead_drone ()
       badguys[1]:hyperspace(jpt2:dest())
       t_drone:hyperspace(jpt:dest())
       badguys[2]:hyperspace()
-      tk.msg(_([[On your ship]]),text[8])
+      tk.msg(_([[On your ship]]),_([["Interesting, the other drones are running away..."]]))
       fled = true
       for i=1,#bghook do
          hook.rm(bghook[i])

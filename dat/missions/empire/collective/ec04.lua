@@ -40,16 +40,6 @@ title = {}
 title[1] = _("Collective Extraction")
 title[2] = _("Planet %s")
 title[3] = _("Mission Accomplished")
-text = {}
-text[1] = _([[As soon as you exit the landing pad you see Lt. Commander Dimitri waiting for you. He seems a bit more nervous then usual.
-    "The commando team has sent us an SOS. They were discovered by the Collective, and now they're under heavy fire. We need you to go and get them out of there. Would you be willing to embark on another dangerous mission?"]])
-text[2] = _([["We'll send extra forces to %s to try to give you a chance to break through the blockade. You'll have to land on %s and extract our team. Be very careful. This is going to be no walk in the park."]])
-text[3] = _([[The atmosphere once again starts giving your shields a workout as you land. You spend a while flying low until your sensors pick up a reading of possible life forms. The silhouette of the transport ship is barely visible. As you fly closer, it becomes apparent that you arrived too late. Everyone is already dead. You see if you can salvage the readings from their equipment, but it seems like it's completely toasted.]])
-text[4] = _([[You notice you won't have enough fuel to get back so you salvage some from the wrecked transport ship. Stealing from the dead isn't pleasant business, but if it gets you out alive, you figure it's good enough.]])
-text[5] = _([[You spend a while searching until you find a datapad on one of the corpses. Ignoring the stench of burnt flesh you grab it, just as you hear the sirens go off in your ship. Enemy reinforcements! Time to hit the afterburner.
-   You've got one, right?]])
-text[6] = _([[Lt. Commander Dimitri's face cannot hide his sadness as he sees you approach with no commando members.
-    "No survivors, eh? I had that gut feeling. At least you were able to salvage something? Good, at least it'll mean they didn't die in vain. Meet me in the bar in a while. We're going to try to process this datapad. It'll hopefully have the final results."]])
 
 osd_msg = {}
 osd_msg[1] = _("Fly to %s")
@@ -66,7 +56,8 @@ function create ()
    end
 
    -- Intro text
-   if tk.yesno( title[1], string.format(text[1], misn_target:name()) ) then
+   if tk.yesno( title[1], string.format(_([[As soon as you exit the landing pad you see Lt. Commander Dimitri waiting for you. He seems a bit more nervous then usual.
+    "The commando team has sent us an SOS. They were discovered by the Collective, and now they're under heavy fire. We need you to go and get them out of there. Would you be willing to embark on another dangerous mission?"]]), misn_target:name()) ) then
       misn.accept()
 
       credits = 1e6
@@ -79,7 +70,7 @@ function create ()
       misn.setTitle(_("Collective Extraction"))
       misn.setReward( fmt.credits( credits ) )
       misn.setDesc( string.format(_("Check for survivors on %s in %s"), misn_target:name(), misn_target_sys:name() ))
-      tk.msg( title[1], string.format(text[2], misn_target_sys:name(), misn_target:name()) )
+      tk.msg( title[1], string.format(_([["We'll send extra forces to %s to try to give you a chance to break through the blockade. You'll have to land on %s and extract our team. Be very careful. This is going to be no walk in the park."]]), misn_target_sys:name(), misn_target:name()) )
       osd_msg[1] = osd_msg[1]:format(misn_target_sys:name())
       osd_msg[2] = osd_msg[2]:format(misn_target:name())
       osd_msg[3] = osd_msg[3]:format(misn_base:name())
@@ -241,16 +232,17 @@ function land ()
 
       -- Some flavour text
       title[2] = title[2]:format(misn_target:name())
-      tk.msg( title[2], text[3] )
+      tk.msg( title[2], _([[The atmosphere once again starts giving your shields a workout as you land. You spend a while flying low until your sensors pick up a reading of possible life forms. The silhouette of the transport ship is barely visible. As you fly closer, it becomes apparent that you arrived too late. Everyone is already dead. You see if you can salvage the readings from their equipment, but it seems like it's completely toasted.]]) )
 
       -- Add fuel if needed
       if player.jumps() < 2 then
          local _fuel, consumption = player.fuel()
          player.refuel(2 * consumption)
-         tk.msg( title[2], text[4] )
+         tk.msg( title[2], _([[You notice you won't have enough fuel to get back so you salvage some from the wrecked transport ship. Stealing from the dead isn't pleasant business, but if it gets you out alive, you figure it's good enough.]]) )
       end
 
-      tk.msg( title[2], text[5] )
+      tk.msg( title[2], _([[You spend a while searching until you find a datapad on one of the corpses. Ignoring the stench of burnt flesh you grab it, just as you hear the sirens go off in your ship. Enemy reinforcements! Time to hit the afterburner.
+   You've got one, right?]]) )
 
       -- Add goods
       local c = misn.cargoNew( N_("Datapad"), N_("A dead soldier's datapad.") )
@@ -259,7 +251,8 @@ function land ()
 
    elseif misn_stage == 3 and planet.cur() == misn_base then
 
-      tk.msg( title[3], text[6] )
+      tk.msg( title[3], _([[Lt. Commander Dimitri's face cannot hide his sadness as he sees you approach with no commando members.
+    "No survivors, eh? I had that gut feeling. At least you were able to salvage something? Good, at least it'll mean they didn't die in vain. Meet me in the bar in a while. We're going to try to process this datapad. It'll hopefully have the final results."]]) )
       misn.cargoRm( misn_cargo )
       var.pop("emp_commando")
 

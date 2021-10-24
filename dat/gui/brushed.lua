@@ -653,9 +653,9 @@ function render( _dt )
    local wset = {}
    local aset = pp:actives( true )
    table.sort( aset, function(a,b)
-      local aset = a.weapset or 99
-      local bset = b.weapset or 99
-      return aset < bset
+      local awset = a.weapset or 99
+      local bwset = b.weapset or 99
+      return awset < bwset
    end )
 
    for k, v in ipairs( pwset ) do

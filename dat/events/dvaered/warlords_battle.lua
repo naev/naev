@@ -97,6 +97,33 @@ function hailagain()
    player.pay(reward)
 end
 
+--Arranges a list of pilot with their mass
+local function arrangeList(list)
+   local newlist = {}
+
+   for i, j in ipairs(list) do
+      local rank = 1
+      for k, l in ipairs(list) do
+         if j:stats().mass < l:stats().mass then
+            rank = rank + 1
+         end
+      end
+
+      --Processing of the equality case
+      local again = true
+      while again do
+         if not newlist[rank] then
+            newlist[rank] = j
+            again = false
+            else
+            rank = rank + 1
+         end
+      end
+   end
+
+   return newlist
+end
+
 function attack ()
    attAttHook = {}
    local n = rnd.rnd(3,6)
@@ -331,33 +358,6 @@ function chooseInList(list)
          return p
       end
    end
-end
-
---Arranges a list of pilot with their mass
-function arrangeList(list)
-   newlist = {}
-
-   for i, j in ipairs(list) do
-      local rank = 1
-      for k, l in ipairs(list) do
-         if j:stats().mass < l:stats().mass then
-            rank = rank + 1
-         end
-      end
-
-      --Processing of the equality case
-      local again = true
-      while again do
-         if not newlist[rank] then
-            newlist[rank] = j
-            again = false
-            else
-            rank = rank + 1
-         end
-      end
-   end
-
-   return newlist
 end
 
 function leave ()

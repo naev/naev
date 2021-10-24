@@ -31,15 +31,6 @@
 require "proximity"
 local emp = require "common.empire"
 
-text = {}
-text[1] = _([[You join Commodore Keer at her table.
-    She begins, "We're going to finally attack the Collective. We've gotten the Emperor himself to bless the mission and send some of his better pilots. Would you be interested in joining the destruction of the Collective?"]])
-text[2] = _([["The Operation has been dubbed 'Cold Metal'. We're going to mount an all-out offensive in C-00. The systems up to %s are already secure and under our control, all we need to do now is to take the final stronghold. Should we encounter the Starfire at any stage our goal will be to destroy it and head back. The Imperial fleet will join you when you get there. See you in combat, pilot."]])
-text[3] = _([[As you do your approach to land on %s you notice big banners placed on the exterior of the station. They seem to be in celebration of the final defeat of the Collective. When you do land you are saluted by the welcoming committee in charge of saluting all the returning pilots.
-    You notice Commodore Keer. Upon greeting her, she says, "You did a good job out there. No need to worry about the Collective anymore. Without Welsh, the Collective won't stand a chance, since they aren't truly autonomous. Right now we have some ships cleaning up the last of the Collective; shouldn't take too long to be back to normal."]])
-text[4] = _([[She continues. "As a symbol of appreciation, you should find a deposit of 5,000,000 credits in your account. There will be a celebration later today in the officer's room if you want to join in."
-    And so ends the Collective threat...
-    You don't remember much of the after party, but you wake up groggily in your ship clutching an Empire officer's boot.]])
 
 osd_msg = {}
 osd_msg[1] = _("Fly to %s via %s and meet up with the Imperial fleet")
@@ -61,7 +52,8 @@ end
 function accept ()
 
    -- Intro text
-   if not tk.yesno( _("Bar"), text[1] ) then
+   if not tk.yesno( _("Bar"), _([[You join Commodore Keer at her table.
+    She begins, "We're going to finally attack the Collective. We've gotten the Emperor himself to bless the mission and send some of his better pilots. Would you be interested in joining the destruction of the Collective?"]]) ) then
       misn.finish()
    end
 
@@ -87,7 +79,7 @@ function accept ()
     end
    misn.osdCreate(_("Operation Cold Metal"), osd_msg)
 
-   tk.msg( _("Operation Cold Metal"), string.format( text[2],
+   tk.msg( _("Operation Cold Metal"), string.format( _([["The Operation has been dubbed 'Cold Metal'. We're going to mount an all-out offensive in C-00. The systems up to %s are already secure and under our control, all we need to do now is to take the final stronghold. Should we encounter the Starfire at any stage our goal will be to destroy it and head back. The Imperial fleet will join you when you get there. See you in combat, pilot."]]),
          misn_target_sys1:name(), misn_final_sys:name() ) )
 
    hook.jumpout("jumpout")
@@ -247,7 +239,8 @@ function land ()
    -- Final landing stage
    if misn_stage == 4 and planet.cur() == misn_base then
 
-      tk.msg( _("Mission Success"), string.format(text[3], misn_base:name()) )
+      tk.msg( _("Mission Success"), string.format(_([[As you do your approach to land on %s you notice big banners placed on the exterior of the station. They seem to be in celebration of the final defeat of the Collective. When you do land you are saluted by the welcoming committee in charge of saluting all the returning pilots.
+    You notice Commodore Keer. Upon greeting her, she says, "You did a good job out there. No need to worry about the Collective anymore. Without Welsh, the Collective won't stand a chance, since they aren't truly autonomous. Right now we have some ships cleaning up the last of the Collective; shouldn't take too long to be back to normal."]]), misn_base:name()) )
 
       -- Rewards
       -- This was the last mission in the minor campaign, so bump the reputation cap.
@@ -255,7 +248,9 @@ function land ()
       faction.modPlayerSingle("Empire",5)
       player.pay( 5e6 )
 
-      tk.msg( _("Mission Success"), text[4] )
+      tk.msg( _("Mission Success"), _([[She continues. "As a symbol of appreciation, you should find a deposit of 5,000,000 credits in your account. There will be a celebration later today in the officer's room if you want to join in."
+    And so ends the Collective threat...
+    You don't remember much of the after party, but you wake up groggily in your ship clutching an Empire officer's boot.]]) )
       player.outfitAdd("Left Boot")
 
       emp.addCollectiveLog( _([[You helped the Empire to finally destroy the Collective once and for all. The Collective is now no more.]]) )

@@ -42,22 +42,17 @@ local pir = require "common.pirate"
 -- common hooks
 escort_hailed = fw.escort_hailed
 
-question = {}
 lore_text = {}
 
-question[1] = _("Ask who are the assassins")
 lore_text[1] = _([["Good question, citizen! It is very likely that some people among the intelligence services of the other nations know that General Klank and myself are implicated in the invasion project. They probably just don't know how imminent it is. So they could have hired henchmen to stop or annoy us. We have identified some of the henchmen actually, and they are the kind of independent mercenaries we find on any kind of shady operations... A bit like you in fact."]])
 
-question[2] = _("Ask about Battleaddict's soldiers")
 lore_text[2] = _([["Aha! You're worrying about the soldiers of the Warlord we killed last time? Don't worry too much for them, most of them did not stay unemployed for long. When a warlord dies, his surviving followers are sent to the Dvaered Military Reserve, and they apply for positions in other warlords' armies, or in the DHC. The only one I'm worrying about is the Colonel Hamelsen: it will be very difficult for her to find a position with a warlord as they prefer to have people they know at higher ranks, and the DHC only rarely recruits new colonels.
    "That's a pity actually because this woman is probably the most talented officer of her generation. Do you know that she was the first one since the independence war who managed to become an ace before the end of her training?"]])
 
-question[3] = _("Ask about his deeds as fighter pilot")
 lore_text[3] = _([[You ask Major Tam to continue his story about when he used to be a fighter pilot at the DHC base on Rhaana. A small smile appears on his face and he turns his eyes to the roof.
    "Do you want me to tell you how I became an ace? Oh yes, you do. So. To become a Dvaered ace, one has to score four attested fighter victories. An attested victory is recorded when you destroy alone any kind of enemy warship. As we tend to work in squads, we pretty often destroy ships without scoring any victory. My first one was a pirate hyena. The pilot was probably drunk or so and they headed right towards my Vendetta, broadcasting stupid taunts in the radio. My sergeant has been nice and did let the hyena to me. My second victory was against a freak... I mean a local warlord's pilot who claimed she could kill any DHC pilot in fair fight. Apparently, it was not true.
    "But the two others... Actually it is a much longer story. I'll tell you another time maybe."]])
 
-question[4] = _("Ask news from Hamfresser")
 lore_text[4] = _([["Oh, the captain is doing well. He spent a few periods at the hospital, but it was not so serious. About the other ones, I'm not too sure. I don't know them very well actually, they are more like statistics to me. I know it's bad, but hey, I have so many things to think about right now.
    "Oh, and we went to the funerals of the one who died, the private Amadeus Tronk, officially killed in training, of course. It was nice. Leblanc's squadron has made an aerial meeting with a mace rocket concerto for the occasion, and we organized a fight to death between a convicted criminal and a gladiator in General Klank's private arena. The role of it is to honour the memory of the dead warrior, and also to have some fun."]])
 
@@ -125,12 +120,12 @@ function accept()
    alive["__save"] = true
 
    toldya = {false,false,false,false}
-   boozingTam = misn.npcAdd("discussWithTam", _("Major Tam"), fw.portrait_tam, _("The major seems to be waiting for you."))
+   misn.npcAdd("discussWithTam", _("Major Tam"), fw.portrait_tam, _("The major seems to be waiting for you."))
 end
 
 -- Discussions with Major Tam at the bar
 function discussWithTam()
-   local c = tk.choice( _("Ask your questions to Major Tam"), _("What do you want to ask to Major Tam?"), question[1], question[2], question[3], question[4], _("Goodbye, we meet in space.") )
+   local c = tk.choice( _("Ask your questions to Major Tam"), _("What do you want to ask to Major Tam?"), _("Ask who are the assassins"), _("Ask about Battleaddict's soldiers"), _("Ask about his deeds as fighter pilot"), _("Ask news from Hamfresser"), _("Goodbye, we meet in space.") )
    if c <= 4 then
       if toldya[c] then
          tk.msg( _("Ask your questions to Major Tam"), _("Hey, do you think I'm some kind of amnesic? You literally asked this question 10 seconds ago!") )

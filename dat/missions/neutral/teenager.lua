@@ -57,9 +57,7 @@ end
 
 function enter()
     if system.cur() == cursys and targetlive then
-        dist = rnd.rnd() * system.cur():radius()
-        angle = rnd.rnd() * 2 * math.pi
-        location = vec2.new(dist * math.cos(angle), dist * math.sin(angle)) -- Randomly spawn the Gawain in the system
+        local location = vec2.newP(rnd.rnd() * system.cur():radius(), rnd.rnd() * 360)
         target = pilot.add( "Gawain", "Independent", location )
         target:control()
         target:rename(_("Credence"))
@@ -79,10 +77,8 @@ function targetIdle()
         hook.rm(hidle)
         return
     end
-    location = target:pos()
-    dist = 750
-    angle = rnd.rnd() * 2 * math.pi
-    newlocation = vec2.new(dist * math.cos(angle), dist * math.sin(angle)) -- New location is 750px away in a random direction
+    local location = target:pos()
+    local newlocation = vec2.newP(750, rnd.rnd() * 360)
     target:taskClear()
     target:moveto(location + newlocation, false, false)
     hook.timer(5.0, "targetIdle")
@@ -93,7 +89,7 @@ function targetExploded()
 end
 
 function targetDeath()
-    fine = math.max(-20e3, -player.credits())
+    local fine = math.max(-20e3, -player.credits())
     tk.msg(_("Whoops!"), _([[You have destroyed the Gawain! The family presses charges, and you are sentenced to a %s fine in absence of attendance.]]):format(fmt.credits(-fine)))
     player.pay(fine) -- I love this statement.
     misn.finish(true)

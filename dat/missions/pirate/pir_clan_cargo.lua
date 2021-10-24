@@ -30,17 +30,6 @@
 local fmt = require "format"
 local portrait = require "portrait"
 
-title = {}
-title[1] = _("Spaceport Bar")
-title[2] = title[1]
-title[3] = _("Mission Accomplished")
-text = {}
-text[1]  = _([[It seems like this planet's clan is looking for a pilot to transport a package to another pirate world. Obviously, quite a few mercenaries or even fellow pirates would try to stop anyone transporting that package, and there is probably no need to say the only ways to the other pirate worlds are through hostile territory.
-
-Will you accept the mission?]])
-text[2] = _([[You roll up your sleeve and head off to your ship.]])
-text[3]   = _("Your mission was a complete success! The clan you just gave the packages have already paid you.")
-
 
 function create ()
    -- Note: this mission does not make any system claims.
@@ -67,7 +56,9 @@ function accept ()
    misn.markerAdd( sys, "low" )
 
    -- Intro text
-   if not tk.yesno( title[1], text[1] ) then
+   if not tk.yesno( _("Spaceport Bar"), _([[It seems like this planet's clan is looking for a pilot to transport a package to another pirate world. Obviously, quite a few mercenaries or even fellow pirates would try to stop anyone transporting that package, and there is probably no need to say the only ways to the other pirate worlds are through hostile territory.
+
+Will you accept the mission?]]) ) then
       misn.finish()
    end
 
@@ -81,8 +72,8 @@ function accept ()
    misn.setDesc( string.format(_("Deliver some boxes to the pirate clan of %s, in the %s system."), dest:name(), sys:name()))
 
    -- Flavour text and mini-briefing
-   tk.msg( title[2], string.format( text[2], dest:name() ))
-   misn.osdCreate(title[2], {_("Deliver some boxes to the pirate clan of %s, in the %s system."):format(dest:name(), sys:name())})
+   tk.msg( _("Spaceport Bar"), string.format( _([[You roll up your sleeve and head off to your ship.]]), dest:name() ))
+   misn.osdCreate(_("Spaceport Bar"), {_("Deliver some boxes to the pirate clan of %s, in the %s system."):format(dest:name(), sys:name())})
 
    -- Set up the goal
    local c = misn.cargoNew(_("Pirate Packages"), _("A bunch of pirate packages. You don't want to know what's inside."))
@@ -96,7 +87,7 @@ function land()
    local landed = planet.cur()
    if landed == dest then
       if misn.cargoRm(packages) then
-         tk.msg( title[3], text[3] )
+         tk.msg( _("Mission Accomplished"), _("Your mission was a complete success! The clan you just gave the packages have already paid you.") )
 
          player.pay(reward)
          faction.modPlayerSingle("Pirate",5);
@@ -178,7 +169,7 @@ function invoke_enemies()
       -- Add pilots
       local p = pilot.add( v, "Pirate", enter_vect, nil, {ai="mercenary"} )
       -- Set hostile
-      for k,v in ipairs(p) do
+      for k2,v2 in ipairs(p) do
          v:setHostile()
       end
    end

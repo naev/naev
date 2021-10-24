@@ -266,11 +266,11 @@ function land() -- The player is only allowed to land on special occasions
    --hook.rm(jumpingTam)
    tamJumped = true
    previous = planet.cur()
-   boozingTam = misn.npcAdd("discussWithTam", _("Major Tam"), fw.portrait_tam, _("Major Tam is a very friendly man. At least by Dvaered military standards."))
+   misn.npcAdd("discussWithTam", _("Major Tam"), fw.portrait_tam, _("Major Tam is a very friendly man. At least by Dvaered military standards."))
 end
 
 function loading()
-   boozingTam = misn.npcAdd("discussWithTam", _("Major Tam"), fw.portrait_tam, _("Major Tam is a very friendly man. At least by Dvaered military standards."))
+   misn.npcAdd("discussWithTam", _("Major Tam"), fw.portrait_tam, _("Major Tam is a very friendly man. At least by Dvaered military standards."))
 end
 
 function meeting_timer() -- Delay the triggering of the meeting
@@ -333,6 +333,7 @@ end
 
 -- Battleaddict's bros
 function moreBadGuys()
+   local buff
    for i = 1, 3 do
       buff = pilot.add( "Dvaered Ancestor", "Dvaered", destpla2 )
       buff:setFaction("Warlords")
@@ -348,8 +349,7 @@ end
 
 -- Spawn colonel Hamelsen and her mates
 function hamelsenAmbush()
-
-   jp     = jump.get(system.cur(), previous)
+   local jp     = jump.get(system.cur(), previous)
    ambush = {}
    for i = 1, 3 do
       x = 1000 * rnd.rnd() + 1000
