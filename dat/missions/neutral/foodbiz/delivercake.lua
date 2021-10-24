@@ -34,8 +34,6 @@ osd_desc = {}
 osd_desc[1] = _("Fly to %s in the %s system.")
 osd_desc["__save"] = true
 
-cakes = "Food"
-
 
 function create () --No system shall be claimed by mission
    startworld, startworld_sys = planet.cur()
@@ -56,7 +54,7 @@ function accept()
 
    amount = player.pilot():cargoFree()
    if amount > 0 then
-      misn.cargoAdd( cakes, amount )
+      misn.cargoAdd( "Food", amount )
       reward = reward + ( 1e3 * amount )
       tk.msg( _("A Tasty Job"), _([["Great!" Paddy says with a smile. She hands you what appear to be recipes. "I just need you to deliver these recipes to him. Oh, and some of my homemade cake! I've packed that cake into your ship. Feel free to give it a taste! It's delicious! Anyway, Michal will pay you %s when you get there. Thank you so much!"
     When you arrive at your ship, you find your cargo hold packed to the brim with cake. You decide to try some, but the second it enters your mouth, you can't help but to spit it out in disgust. This is easily the most disgusting cake you've ever tasted. Well, as long as you get paid....]]):format( fmt.credits( reward ) ) )

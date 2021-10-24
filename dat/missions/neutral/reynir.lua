@@ -42,9 +42,6 @@ local fmt = require "format"
 local neu = require "common.neutral"
 
 
-cargoname = "Food"
-
-
 function create ()
    -- Note: this mission does not make any system claims.
    misn.setNPC( _("Reynir"), "neutral/unique/reynir.webp", _("You see an old man with a cap on, on which the letters R-E-Y-N-I-R are imprinted.") )
@@ -100,7 +97,7 @@ function landed()
          log_text = _([[You took an old man named Reynir on a ride in outer space. He was happy and paid you in the form of %s of hot dogs.]])
       end
       tk.msg( _("Reynir"), string.format(reward_text, fmt.tonnes(reward)) )
-      player.pilot():cargoAdd( cargoname, reward )
+      player.pilot():cargoAdd( "Food", reward )
       neu.addMiscLog( log_text:format( fmt.tonnes(reward) ) )
       misn.finish(true)
    -- If we're in misn_base_sys but not on misn_base then...
