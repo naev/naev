@@ -302,35 +302,113 @@ msg_edone = {
    {"Naev Needs You!", _([["What do you mean, the world ended and then the creator of the universe came and fixed it? What kind of illegal substance are you on?"]])},
 }
 
-
-function create()
-   -- Logic to decide what to spawn, if anything.
-   local cur = planet.cur()
-
-   -- Do not spawn any NPCs on restricted assets or that don't want NPC
-   local t = cur:tags()
-   if t.restricted or t.nonpc then
-      evt.finish(false)
+-- Returns a lore message for the given faction.
+local function getLoreMessage(fac)
+   -- Select the faction messages for this NPC's faction, if it exists.
+   local facmsg = msg_lore[fac]
+   if facmsg == nil or #facmsg == 0 then
+      facmsg = msg_lore["general"]
+      if facmsg == nil or #facmsg == 0 then
+         evt.finish(false)
+      end
    end
 
-   -- Chance of a jump point message showing up. As this gradually goes
-   -- down, it is replaced by lore messages. See spawnNPC function below.
-   jm_chance_min = 0
-   jm_chance_max = 0.25
-   jm_chance = var.peek( "npc_jm_chance" ) or jm_chance_max
+   -- Select a string, then remove it from the list of valid strings. This ensures all NPCs have something different to say.
+   local r = rnd.rnd(1, #facmsg)
+   local pick = facmsg[r]
+   table.remove(facmsg, r)
+   return pick
+end
 
-   local num_npc = rnd.rnd(1, 5)
-   npcs = {}
-   for i = 0, num_npc do
-      spawnNPC()
+-- Returns a jump point message and updates jump point known status accordingly. If all jumps are known by the player, defaults to a lore message.
+local function getJmpMessage(fac)
+   -- Collect a table of jump points in the system the player does NOT know.
+   local mytargets = {}
+   seltargets = seltargets or {} -- We need to keep track of jump points NPCs will tell the player about so there are no duplicates.
+   for _, j in ipairs(system.cur():jumps(true)) do
+      if not j:known() and not j:hidden() and not seltargets[j] then
+         table.insert(mytargets, j)
+      end
    end
 
-   -- End event on takeoff.
-   hook.takeoff( "leave" )
+   if #mytargets == 0 then -- The player already knows all jumps in this system.
+      return getLoreMessage(fac), nil
+   end
+
+   -- All jump messages are valid always.
+   if #msg_jmp == 0 then
+      return getLoreMessage(fac), nil
+   end
+   local retmsg =  msg_jmp[rnd.rnd(1, #msg_jmp)]
+   local sel = rnd.rnd(1, #mytargets)
+   local myfunc = function()
+                     mytargets[sel]:setKnown(true)
+                     mytargets[sel]:dest():setKnown(true, false)
+                  end
+
+   -- Don't need to remove messages from tables here, but add whatever jump point we selected to the "selected" table.
+   seltargets[mytargets[sel]] = true
+   return fmt.f( retmsg, {jmpname=mytargets[sel]:dest():name()} ), myfunc
+end
+
+-- Returns a tip message.
+local function getTipMessage(fac)
+   -- All tip messages are valid always.
+   if #msg_tip == 0 then
+      return getLoreMessage(fac)
+   end
+   local sel = rnd.rnd(1, #msg_tip)
+   local pick = msg_tip[sel]
+   table.remove(msg_tip, sel)
+   return pick
+end
+
+-- Returns a mission hint message, a mission after-care message, OR a lore message if no missionlikes are left.
+local function getMissionLikeMessage(fac)
+   if not msg_combined then
+      msg_combined = {}
+
+      -- Hints.
+      -- Hint messages are only valid if the relevant mission has not been completed and is not currently active.
+      for i, j in pairs(msg_mhint) do
+         if not (player.misnDone(j[1]) or player.misnActive(j[1])) then
+            msg_combined[#msg_combined + 1] = j[2]
+         end
+      end
+      for i, j in pairs(msg_ehint) do
+         if not(player.evtDone(j[1]) or player.evtActive(j[1])) then
+            msg_combined[#msg_combined + 1] = j[2]
+         end
+      end
+
+      -- After-care.
+      -- After-care messages are only valid if the relevant mission has been completed.
+      for i, j in pairs(msg_mdone) do
+         if player.misnDone(j[1]) then
+            msg_combined[#msg_combined + 1] = j[2]
+         end
+      end
+      for i, j in pairs(msg_edone) do
+         if player.evtDone(j[1]) then
+            msg_combined[#msg_combined + 1] = j[2]
+         end
+      end
+   end
+
+   if #msg_combined == 0 then
+      return getLoreMessage(fac)
+   else
+      -- Select a string, then remove it from the list of valid strings. This ensures all NPCs have something different to say.
+      local sel = rnd.rnd(1, #msg_combined)
+      local pick
+      pick = msg_combined[sel]
+      table.remove(msg_combined, sel)
+      return pick
+   end
 end
 
 -- Spawns an NPC.
-function spawnNPC()
+local function spawnNPC()
    -- Select a faction for the NPC. NPCs may not have a specific faction.
    local npcname = _("Civilian")
    local factions = {}
@@ -399,109 +477,31 @@ function spawnNPC()
    npcs[id] = npcdata
 end
 
--- Returns a lore message for the given faction.
-function getLoreMessage(fac)
-   -- Select the faction messages for this NPC's faction, if it exists.
-   local facmsg = msg_lore[fac]
-   if facmsg == nil or #facmsg == 0 then
-      facmsg = msg_lore["general"]
-      if facmsg == nil or #facmsg == 0 then
-         evt.finish(false)
-      end
+
+function create()
+   -- Logic to decide what to spawn, if anything.
+   local cur = planet.cur()
+
+   -- Do not spawn any NPCs on restricted assets or that don't want NPC
+   local t = cur:tags()
+   if t.restricted or t.nonpc then
+      evt.finish(false)
    end
 
-   -- Select a string, then remove it from the list of valid strings. This ensures all NPCs have something different to say.
-   local r = rnd.rnd(1, #facmsg)
-   local pick = facmsg[r]
-   table.remove(facmsg, r)
-   return pick
-end
+   -- Chance of a jump point message showing up. As this gradually goes
+   -- down, it is replaced by lore messages. See spawnNPC function.
+   jm_chance_min = 0
+   jm_chance_max = 0.25
+   jm_chance = var.peek( "npc_jm_chance" ) or jm_chance_max
 
--- Returns a jump point message and updates jump point known status accordingly. If all jumps are known by the player, defaults to a lore message.
-function getJmpMessage(fac)
-   -- Collect a table of jump points in the system the player does NOT know.
-   local mytargets = {}
-   seltargets = seltargets or {} -- We need to keep track of jump points NPCs will tell the player about so there are no duplicates.
-   for _, j in ipairs(system.cur():jumps(true)) do
-      if not j:known() and not j:hidden() and not seltargets[j] then
-         table.insert(mytargets, j)
-      end
+   local num_npc = rnd.rnd(1, 5)
+   npcs = {}
+   for i = 0, num_npc do
+      spawnNPC()
    end
 
-   if #mytargets == 0 then -- The player already knows all jumps in this system.
-      return getLoreMessage(fac), nil
-   end
-
-   -- All jump messages are valid always.
-   if #msg_jmp == 0 then
-      return getLoreMessage(fac), nil
-   end
-   local retmsg =  msg_jmp[rnd.rnd(1, #msg_jmp)]
-   local sel = rnd.rnd(1, #mytargets)
-   local myfunc = function()
-                     mytargets[sel]:setKnown(true)
-                     mytargets[sel]:dest():setKnown(true, false)
-                  end
-
-   -- Don't need to remove messages from tables here, but add whatever jump point we selected to the "selected" table.
-   seltargets[mytargets[sel]] = true
-   return fmt.f( retmsg, {jmpname=mytargets[sel]:dest():name()} ), myfunc
-end
-
--- Returns a tip message.
-function getTipMessage(fac)
-   -- All tip messages are valid always.
-   if #msg_tip == 0 then
-      return getLoreMessage(fac)
-   end
-   local sel = rnd.rnd(1, #msg_tip)
-   local pick = msg_tip[sel]
-   table.remove(msg_tip, sel)
-   return pick
-end
-
--- Returns a mission hint message, a mission after-care message, OR a lore message if no missionlikes are left.
-function getMissionLikeMessage(fac)
-   if not msg_combined then
-      msg_combined = {}
-
-      -- Hints.
-      -- Hint messages are only valid if the relevant mission has not been completed and is not currently active.
-      for i, j in pairs(msg_mhint) do
-         if not (player.misnDone(j[1]) or player.misnActive(j[1])) then
-            msg_combined[#msg_combined + 1] = j[2]
-         end
-      end
-      for i, j in pairs(msg_ehint) do
-         if not(player.evtDone(j[1]) or player.evtActive(j[1])) then
-            msg_combined[#msg_combined + 1] = j[2]
-         end
-      end
-
-      -- After-care.
-      -- After-care messages are only valid if the relevant mission has been completed.
-      for i, j in pairs(msg_mdone) do
-         if player.misnDone(j[1]) then
-            msg_combined[#msg_combined + 1] = j[2]
-         end
-      end
-      for i, j in pairs(msg_edone) do
-         if player.evtDone(j[1]) then
-            msg_combined[#msg_combined + 1] = j[2]
-         end
-      end
-   end
-
-   if #msg_combined == 0 then
-      return getLoreMessage(fac)
-   else
-      -- Select a string, then remove it from the list of valid strings. This ensures all NPCs have something different to say.
-      local sel = rnd.rnd(1, #msg_combined)
-      local pick
-      pick = msg_combined[sel]
-      table.remove(msg_combined, sel)
-      return pick
-   end
+   -- End event on takeoff.
+   hook.takeoff( "leave" )
 end
 
 function talkNPC(id)

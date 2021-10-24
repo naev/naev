@@ -27,10 +27,6 @@
 local fmt = require "format"
 local emp = require "common.empire"
 
-text = {}
-text[1] = _([[Lieutenant Czesc approaches as you enter the bar. "If it isn't my favorite Empire Armada employee. We're on track to establish a deal with House Sirius. This should be the last contract to be negotiated. Ready to go?"]])
-text[2] = _([["You know how this goes by now." says Lieutenant Czesc, "Drop the bureaucrat off at Madria in the Esker system. Sirius space is quite a distance, so be prepared for anything. Afterwards, come find me one more time and we'll finalize the paperwork to get you all set up for these missions."]])
-text[3] = _([[You drop the diplomat off on Madria, and she hands you a credit chip. Lieutenant Czesc said to look for him in an Empire bar for some paperwork. Bureaucracy at its finest.]])
 
 function create ()
  -- Note: this mission does not make any system claims.
@@ -50,11 +46,11 @@ function accept ()
    -- Set marker to a system, visible in any mission computer and the onboard computer.
    misn.markerAdd( targetworld_sys, "low")
    ---Intro Text
-   if not tk.yesno( _("Spaceport Bar"), text[1] ) then
+   if not tk.yesno( _("Spaceport Bar"), _([[Lieutenant Czesc approaches as you enter the bar. "If it isn't my favorite Empire Armada employee. We're on track to establish a deal with House Sirius. This should be the last contract to be negotiated. Ready to go?"]]) ) then
       misn.finish()
    end
    -- Flavour text and mini-briefing
-   tk.msg( _("Sirius Long Distance Recruitment"), text[2] )
+   tk.msg( _("Sirius Long Distance Recruitment"), _([["You know how this goes by now." says Lieutenant Czesc, "Drop the bureaucrat off at Madria in the Esker system. Sirius space is quite a distance, so be prepared for anything. Afterwards, come find me one more time and we'll finalize the paperwork to get you all set up for these missions."]]) )
    ---Accept the mission
    misn.accept()
 
@@ -77,7 +73,7 @@ function land()
          misn.cargoRm( person )
          player.pay( reward )
          -- More flavour text
-         tk.msg( _("Mission Accomplished"), text[3] )
+         tk.msg( _("Mission Accomplished"), _([[You drop the diplomat off on Madria, and she hands you a credit chip. Lieutenant Czesc said to look for him in an Empire bar for some paperwork. Bureaucracy at its finest.]]) )
          faction.modPlayerSingle( "Empire",3 )
          emp.addShippingLog( _([[You delivered a shipping bureaucrat to Madria for the Empire. Lieutenant Czesc said to look for him in an Empire bar for some paperwork. Bureaucracy at its finest.]]) )
          misn.finish(true)

@@ -34,17 +34,6 @@ local emp = require "common.empire"
 local fmt = require "format"
 
 misn_reward = fmt.credits(700e3)
-text = {}
-text[1] = _([[You head over to Lt. Commander Dimitri to see what the results are.
-    "Hello there again, %s. Bad news on your latest run, you got nothing other than the usual robotic chatter. We'll have to send you out again, but this time we'll follow a different approach. Interested in giving it another shot?"]])
-text[2] = _([["On your last run, you were monitoring while out in the open. While you do get better signals, upon noticing your presence, the drones will go into combat mode, and yield only combat transmissions. This mission will consist of hiding and monitoring from a safer spot, hopefully catching them more relaxed.
-    "When the Collective struck, they quickly took many systems; one of the bigger hits was %s, an important gas giant rich in methane. They destroyed the gas refineries and slaughtered the humans. There was nothing we could do. The turbulence and dense atmosphere there should be able to hide your ship."]])
-text[3] = _([["The plan is to have you infiltrate Collective space alone to not arouse too much suspicion. Once inside, you should head to %s in the %s system. Stay low and monitor all frequencies in the system. If anything is suspicious, we'll surely catch it then. Don't forget to make sure you have the four jumps of fuel to be able to get there and back in one piece.
-    "Good luck, I'll be waiting for you on your return."]])
-text[4] = _([[You quickly land on %s and hide in its deep dense methane atmosphere. Your monitoring gear flickers into action, hopefully catching something of some use. With some luck there won't be too many Collective drones when you take off.]])
-text[5] = _([[That should be enough. Time to report your findings.]])
-text[6] = _([[As your ship touches ground, you see Lt. Commander Dimitri come out to greet you.
-    "How was the weather?" he asks jokingly. "Glad to see you're still in one piece. We'll get right on analyzing the data acquired. Those robots have to be up to something. Meet me in the bar later. Meanwhile give yourself a treat; you've earned it. We've made a 700K credit deposit into your bank account. Enjoy it."]])
 
 osd_msg = {}
 osd_msg[1] = _("Fly to %s and land on %s")
@@ -66,7 +55,8 @@ end
 
 function accept ()
    -- Intro text
-   if not tk.yesno( _("Collective Espionage"), string.format(text[1], player.name()) ) then
+   if not tk.yesno( _("Collective Espionage"), string.format(_([[You head over to Lt. Commander Dimitri to see what the results are.
+    "Hello there again, %s. Bad news on your latest run, you got nothing other than the usual robotic chatter. We'll have to send you out again, but this time we'll follow a different approach. Interested in giving it another shot?"]]), player.name()) ) then
       misn.finish()
    end
 
@@ -84,8 +74,10 @@ function accept ()
    osd_msg[2] = osd_msg[2]:format(misn_base:name())
    misn.osdCreate(_("Collective Espionage"), osd_msg)
 
-   tk.msg( _("Collective Espionage"), string.format(text[2], misn_target:name()) )
-   tk.msg( _("Collective Espionage"), string.format(text[3], misn_target:name(), misn_target_sys:name()) )
+   tk.msg( _("Collective Espionage"), string.format(_([["On your last run, you were monitoring while out in the open. While you do get better signals, upon noticing your presence, the drones will go into combat mode, and yield only combat transmissions. This mission will consist of hiding and monitoring from a safer spot, hopefully catching them more relaxed.
+    "When the Collective struck, they quickly took many systems; one of the bigger hits was %s, an important gas giant rich in methane. They destroyed the gas refineries and slaughtered the humans. There was nothing we could do. The turbulence and dense atmosphere there should be able to hide your ship."]]), misn_target:name()) )
+   tk.msg( _("Collective Espionage"), string.format(_([["The plan is to have you infiltrate Collective space alone to not arouse too much suspicion. Once inside, you should head to %s in the %s system. Stay low and monitor all frequencies in the system. If anything is suspicious, we'll surely catch it then. Don't forget to make sure you have the four jumps of fuel to be able to get there and back in one piece.
+    "Good luck, I'll be waiting for you on your return."]]), misn_target:name(), misn_target_sys:name()) )
 
    hook.land("land")
 end
@@ -98,7 +90,8 @@ function land()
       player.takeoff()
    -- Return bit
    elseif misn_stage == 1 and planet.cur() == misn_base then
-      tk.msg( _("Mission Accomplished"), text[6] )
+      tk.msg( _("Mission Accomplished"), _([[As your ship touches ground, you see Lt. Commander Dimitri come out to greet you.
+    "How was the weather?" he asks jokingly. "Glad to see you're still in one piece. We'll get right on analyzing the data acquired. Those robots have to be up to something. Meet me in the bar later. Meanwhile give yourself a treat; you've earned it. We've made a 700K credit deposit into your bank account. Enjoy it."]]) )
 
       -- Rewards
       faction.modPlayerSingle("Empire",5)
@@ -116,7 +109,7 @@ function takeoff()
     music.play()
 
     -- Some text
-    tk.msg( _("Collective Espionage"), string.format(text[4], misn_target:name()) )
+    tk.msg( _("Collective Espionage"), string.format(_([[You quickly land on %s and hide in its deep dense methane atmosphere. Your monitoring gear flickers into action, hopefully catching something of some use. With some luck there won't be too many Collective drones when you take off.]]), misn_target:name()) )
     misn.setDesc( string.format(_("Travel back to %s in %s"), misn_base:name(), misn_base_sys:name() ))
 
     local sml_swarm = { "Drone", "Drone", "Drone", "Heavy Drone" }
@@ -177,7 +170,7 @@ function endCutscene()
     removeSwarm(swarm1)
     removeSwarm(swarm2)
     removeSwarm(swarm3)
-    tk.msg(_("Collective Espionage"), text[5])
+    tk.msg(_("Collective Espionage"), _([[That should be enough. Time to report your findings.]]))
     misn_stage = 1
     misn.markerMove( misn_marker, misn_base_sys )
     player.pilot():setHide(false)

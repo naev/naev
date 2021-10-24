@@ -34,16 +34,6 @@
 local fmt = require "format"
 local emp = require "common.empire"
 
-text = {}
-text[1] = _([[As you approach Lt. Commander Dimitri you notice he seems somewhat excited.
-    "It looks like you got something. It's not very clear because of %s's atmosphere creating a lot of noise, but it does seem to be similar to Empire transmissions. We've got another plan to try for a cleaner signal. It'll be uglier then the last one. You in?"]])
-text[2] = _([["Here's the plan: we want to drop a commando team on %s to set up more sophisticated surveillance. We've already got a team assembled. Your job will be to provide a distraction.
-    "The idea would be to have you fly deep into Collective territory and kick up some trouble. A few dead drones should draw their attention. This is no suicide mission, so you'll have to fly back when things start getting ugly. Meanwhile we'll send a fast convoy with the commandos to %s, to start monitoring."]])
-text[3] = _([["If all goes well, the commandos will return here with the results after 10 periods. Then we'll have a definitive answer on the communications issues. We aren't anticipating problems on the return, but we'll have some ships ready just in case they're pursued.
-    "Good luck and be careful out there," he adds, before saluting you off onto your mission.]])
-text[4] = _([[Your ship touches ground and you once again see the face of Lt. Commander Dimitri.
-    "How was the trip? I trust you didn't have too many issues evading the Collective. We won't hear from the commandos until 10 periods from now when they get back, but I believe everything went well.
-    "Stay alert. We'll probably need your assistance when they get back. Take the free time as a vacation. I heard the weather on Caladan is pretty nice this time of year, maybe you should visit them. We'll keep in touch."]])
 
 osd_msg = {}
 osd_msg[1] = _("Fly to the %s system")
@@ -77,7 +67,8 @@ function accept ()
    credits = 1e6
 
    -- Intro text
-   if tk.yesno( _("Collective Espionage"), string.format(text[1], commando_planet) )
+   if tk.yesno( _("Collective Espionage"), string.format(_([[As you approach Lt. Commander Dimitri you notice he seems somewhat excited.
+    "It looks like you got something. It's not very clear because of %s's atmosphere creating a lot of noise, but it does seem to be similar to Empire transmissions. We've got another plan to try for a cleaner signal. It'll be uglier then the last one. You in?"]]), commando_planet) )
       then
       misn.accept()
 
@@ -93,8 +84,10 @@ function accept ()
       misn.setReward( fmt.credits( credits ) )
       misn.setDesc( string.format(_("Go to draw the Collective's attention in the %s system"), misn_target_sys:name() ))
 
-      tk.msg( _("Collective Espionage"), string.format(text[2], commando_planet, commando_planet ) )
-      tk.msg( _("Collective Espionage"), text[3] )
+      tk.msg( _("Collective Espionage"), string.format(_([["Here's the plan: we want to drop a commando team on %s to set up more sophisticated surveillance. We've already got a team assembled. Your job will be to provide a distraction.
+    "The idea would be to have you fly deep into Collective territory and kick up some trouble. A few dead drones should draw their attention. This is no suicide mission, so you'll have to fly back when things start getting ugly. Meanwhile we'll send a fast convoy with the commandos to %s, to start monitoring."]]), commando_planet, commando_planet ) )
+      tk.msg( _("Collective Espionage"), _([["If all goes well, the commandos will return here with the results after 10 periods. Then we'll have a definitive answer on the communications issues. We aren't anticipating problems on the return, but we'll have some ships ready just in case they're pursued.
+    "Good luck and be careful out there," he adds, before saluting you off onto your mission.]]) )
       osd_msg[1] = osd_msg[1]:format(misn_target_sys:name())
       setOSD(dronequota, droneleft)
       osd_msg[3] = osd_msg[3]:format(misn_base:name())
@@ -132,7 +125,9 @@ end
 -- Handles arrival back to base
 function land()
    if misn_stage == 1 and planet.cur() == misn_base then
-      tk.msg(_("Mission Accomplished"), text[4])
+      tk.msg(_("Mission Accomplished"), _([[Your ship touches ground and you once again see the face of Lt. Commander Dimitri.
+    "How was the trip? I trust you didn't have too many issues evading the Collective. We won't hear from the commandos until 10 periods from now when they get back, but I believe everything went well.
+    "Stay alert. We'll probably need your assistance when they get back. Take the free time as a vacation. I heard the weather on Caladan is pretty nice this time of year, maybe you should visit them. We'll keep in touch."]]))
 
       -- Store time commando theoretically landed
       var.push( "emp_commando", time.tonumber(time.get() + time.create( 0, 10, 0 )) )

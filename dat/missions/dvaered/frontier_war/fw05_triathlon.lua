@@ -575,7 +575,7 @@ end
 
 -- Spawn Competitors
 function spawnCompetitors( )
-   competitors = {tam, leblanc, klank, strafer, caros, micoult, johnson, ernst, guo}
+   competitors = {} -- tam, leblanc, klank, strafer, caros, micoult, johnson, ernst, guo
    for i = 1, 9 do
       local pos = center + vec2.newP( radius, i*360/10 - 90 )
       competitors[i] = pilot.add( "Dvaered Vendetta", "DHC", pos, competitors_names[i])

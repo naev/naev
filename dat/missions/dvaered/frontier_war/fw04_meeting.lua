@@ -41,23 +41,18 @@ message = fw.message
 
 -- TODO: hooks to penalize attacking people
 
-question = {}
 lore_text = {}
 
-question[1] = _("Ask for a briefing")
 lore_text[1] = _([["Both squadrons of the DHC station's space security force will be deployed with full range ships from Vendettas to Goddards. Those squadrons are the 'Beta-Storks' and the 'Beta-Hammer' and their missions will be to control medium and heavy ships and to provide anti-heavy firepower in case of need. Our squadron, named 'Alpha-NightClaws', is in charge of fast ships (Yachts and Fighters). We will be flying Hyenas.
    "The procedure is the following: any ship approaching the station will be assigned to a squad by the fleet leader, and then to a pilot by the squad leader (Captain Leblanc). When a ship is attributed to you, you will have to approach the ship within 1000 m. Their security clearance code will be automatically requested and processed by the system we install right now on your core unit. Afterwards, the ship will be allowed to land, or ordered to fly away. The same thing happens for ships that leave the station.
    "Finally, in case something unexpected happens, you will of course have to obey to orders. Watch your messages closely. A few pilots will be kept in reserve close to the station.
    "Oh, and there is another point I must warn you about: it's the warlord's humour. When they see a small ship close to their Goddard, they may get the idea to shoot a small railgun-volley in your direction. Some of them tend to enjoy seeing pilots dodge for their lives. Dvaered laws authorize warlords to do so provided they can assure the High Command that there was no hostile intention. That can be a bit annoying, sometimes."]])
 
-question[2] = _("Ask about Colonel Hamelsen")
 lore_text[2] = _([[When you mention the colonel Hamelsen, Strafer cuts you: "Ex-colonel Hamelsen! She is a traitor and has lost all her commendations. Now, she is nothing to the Dvaered, and things are better like that." You ask him if things may have turned differently for her and he answers:
    "Watch out, citizen: this kind of question leads to compassion. Compassion leads to weakness and weakness leads to death. Death for yourself and for those who trusted you. Death for your leaders and for your subordinates. Death for people you love and people you respect. Remember: if you want to be strong, don't listen to compassion. Don't even give compassion any chance to reach your heart."]])
 
-question[3] = _("Ask why you were hired for this mission")
 lore_text[3] = _([[You ask Strafer why Major Tam requested you to be part of the mission. "Actually, we did not need a private pilot. I just managed to convince Captain Leblanc to hire you." As you wonder why he did that, Strafer thinks a bit and smiles: "Well, I get the feeling we are doing good job, together. Aren't we?"]])
 
-question[4] = _("Ask how one becomes a warlord")
 lore_text[4] = _([["You wish to become one of them?" Before you have a chance to deny, he continues: "Anybody can become a warlord. One just has to have received the '9th grade commendation', and to conquer a planet (or a station). In the army, every rank gives you a commendation grade, for example, I have the 3rd grade. Civilians also obtain commendation for their high deeds; you obtained the first grade commendation for your involvement in the FLF destruction, if I am right. The 9th grade commendation, that is associated to the rank of first class General in the army, gives the right to own a military base, and by extension, to be granted the regal power over a region.
    "In the Dvaered army, everybody starts as a raw soldier, no matter if you're an infantryman, a pilot, a medic or even a General's child. And only Valor decides how quick you rise in the hierarchy. Warlord is the ultimate rank for the military (and private combat pilots, like yourself)"]])
 
@@ -219,7 +214,7 @@ end
 
 -- Player discusses with Lieutenant Strafer
 function discussStr()
-   local c = tk.choice( _("Lieutenant Strafer"), _("What do you want to ask to the lieutenant before taking off?"), question[1], question[2], question[3], question[4], _("I am ready for action!") )
+   local c = tk.choice( _("Lieutenant Strafer"), _("What do you want to ask to the lieutenant before taking off?"), _("Ask for a briefing"), _("Ask about Colonel Hamelsen"), _("Ask why you were hired for this mission"), _("Ask how one becomes a warlord"), _("I am ready for action!") )
    if c <= 4 then
       if toldya[c] >= 3 then -- Strafer gets annoyed if one asks several times the same question
          tk.msg( _("Lieutenant Strafer"), _("Is it a kind of joke?") )
@@ -239,7 +234,7 @@ end
 
 -- Spawn the Beta squadrons
 function spawnBeta()
-   beta = {}
+   local beta = {}
    beta[1] = pilot.add( "Dvaered Vendetta", "Dvaered", targpla )
    beta[1]:rename(_("B-Storks-4"))
    beta[2] = pilot.add( "Dvaered Vendetta", "Dvaered", targpla )

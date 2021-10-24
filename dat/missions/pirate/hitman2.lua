@@ -24,21 +24,6 @@
 --]]
 local pir = require "common.pirate"
 
-
--- Bar information
-
--- Mission details
-
--- Text
-text     = {}
-text[1]  = _([[As you approach, the man turns to face you and his anxiousness seems to abate somewhat. As you take a seat he greets you, "Ah, so we meet again. My, shall we say... problem, has recurred." Leaning closer, he continues, "This will be somewhat bloodier than last time, but I'll pay you more for your trouble. Are you up for it?"]])
-text[2] = _([[He nods approvingly. "It seems that the traders are rather stubborn, they didn't get the message last time and their presence is increasing." He lets out a brief sigh before continuing, "This simply won't do, it's bad for business. Perhaps if a few of their ships disappear, they'll take the hint." With the arrangement in place, he gets up. "I look forward to seeing you soon. Hopefully this will be the end of my problems."]])
-text[3] = _([[You glance around, looking for your acquaintance, but he has noticed you first, motioning for you to join him. As you approach the table, he smirks. "I hope the Empire didn't give you too much trouble." After a short pause, he continues, "The payment has been transferred. Much as I enjoy working with you, hopefully this is the last time I'll require your services."]])
-
--- Messages
-msg      = {}
-msg[1]   = _("MISSION SUCCESS! Return for payment.")
-
 function create ()
    -- Note: this mission does not make any system claims.
    targetsystem = system.get("Delta Pavonis") -- Find target system
@@ -53,7 +38,7 @@ Mission entry point.
 --]]
 function accept ()
    -- Mission details:
-   if not tk.yesno( _("Spaceport Bar"), string.format( text[1],
+   if not tk.yesno( _("Spaceport Bar"), string.format( _([[As you approach, the man turns to face you and his anxiousness seems to abate somewhat. As you take a seat he greets you, "Ah, so we meet again. My, shall we say... problem, has recurred." Leaning closer, he continues, "This will be somewhat bloodier than last time, but I'll pay you more for your trouble. Are you up for it?"]]),
           targetsystem:name() ) ) then
       misn.finish()
    end
@@ -76,7 +61,7 @@ function accept ()
    osd_desc[2] = _("Return to %s in the %s system for payment"):format( misn_base:name(), misn_base_sys:name() )
    misn.osdCreate( _("Assassin"), osd_desc )
    -- Some flavour text
-   tk.msg( _("Spaceport Bar"), string.format( text[2], targetsystem:name()) )
+   tk.msg( _("Spaceport Bar"), string.format( _([[He nods approvingly. "It seems that the traders are rather stubborn, they didn't get the message last time and their presence is increasing." He lets out a brief sigh before continuing, "This simply won't do, it's bad for business. Perhaps if a few of their ships disappear, they'll take the hint." With the arrangement in place, he gets up. "I look forward to seeing you soon. Hopefully this will be the end of my problems."]]), targetsystem:name()) )
 
    -- Set hooks
    hook.enter("sys_enter")
@@ -112,7 +97,7 @@ function attack_finished()
       return
    end
    misn_done = true
-   player.msg( msg[1] )
+   player.msg( _("MISSION SUCCESS! Return for payment.") )
    misn.markerRm( misn_marker )
    misn_marker = misn.markerAdd( misn_base_sys, "low" )
    misn.osdActive(2)
@@ -122,7 +107,7 @@ end
 -- landed
 function landed()
    if planet.cur() == misn_base then
-      tk.msg(_("Mission Complete"), text[3])
+      tk.msg(_("Mission Complete"), _([[You glance around, looking for your acquaintance, but he has noticed you first, motioning for you to join him. As you approach the table, he smirks. "I hope the Empire didn't give you too much trouble." After a short pause, he continues, "The payment has been transferred. Much as I enjoy working with you, hopefully this is the last time I'll require your services."]]))
       player.pay(500e3)
       pir.modDecayFloor(3)
       pir.modReputation(3)

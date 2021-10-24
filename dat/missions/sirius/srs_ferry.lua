@@ -54,14 +54,6 @@ ferrytime[0] = _("Economy") -- Note: indexed from 0, to match mission tiers.
 ferrytime[1] = _("Priority")
 ferrytime[2] = _("Express")
 
--- Note: please leave the trailing space on the line below! Needed to make the newline show up.
-
-slow = {}
-slow[1] = _("Too slow")
-slow[2] = _([[The passenger requests arrival within %s, but it will take at least %s for your ship to reach %s, missing the deadline.
-
-Accept the mission anyway?]])
-
 --=Politics=--
 
 no_clearance_p1 = _("The passenger looks at your credentials and remarks, \"Someone of your standing will not be allowed to set foot on the holy ground. ")
@@ -224,7 +216,9 @@ end
 function accept()
     local playerbest = car.getTransit( numjumps, traveldist )
     if timelimit < playerbest then
-        if not tk.yesno( slow[1], slow[2]:format( (timelimit - time.get()):str(), (playerbest - time.get()):str(), destplanet:name()) ) then
+        if not tk.yesno( _("Too slow"), _([[The passenger requests arrival within %s, but it will take at least %s for your ship to reach %s, missing the deadline.
+
+Accept the mission anyway?]]):format( (timelimit - time.get()):str(), (playerbest - time.get()):str(), destplanet:name()) ) then
             misn.finish()
         end
     end

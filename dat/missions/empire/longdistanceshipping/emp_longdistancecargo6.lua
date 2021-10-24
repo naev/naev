@@ -27,10 +27,6 @@
 local fmt = require "format"
 local emp = require "common.empire"
 
-text = {}
-text[1] = _([[Lieutenant Czesc slaps you on the back as you take a seat next to him at the bar. "We've done it! We have set up Empire Armada Shipping outposts across quite a bit of the galaxy. I just have one more favor to ask. I need transport back to Halir in the Gamma Polaris system. Once there I can authorize you to help out with the long-distance shipping missions. Can I count on you?"]])
-text[2] = _([[Internally you groan from the idea of having to do another haul across the galaxy for more paperwork, but at least you'll have access to new missions. Lieutenant Czesc excitedly gets up from the bar. "Let's get going as soon as possible. There's no place like home!"]])
-text[3] = _([[Lieutenant Czesc exits your ship and takes a deep breath of air. "I love the smell of bureaucracy in the morning." He shakes your hand. "Thanks for all your help, Captain! Follow me to headquarters and we can do some paperwork to get you all set up. After that you should start to receive long-distance shipping missions. They pay better than our regular shipping missions, but often require traveling longer distances and into territory controlled by other factions. You'll probably be more likely to see them on the edges of Empire space where cargo is ready to head out to other factions. Again, I can't thank you enough! The Empire does not quickly forget such dedication."]])
 
 function create ()
  -- Note: this mission does not make any system claims.
@@ -53,11 +49,11 @@ function accept ()
    -- Set marker to a system, visible in any mission computer and the onboard computer.
    misn.markerAdd( targetworld_sys, "low")
    ---Intro Text
-   if not tk.yesno( _("Spaceport Bar"), text[1] ) then
+   if not tk.yesno( _("Spaceport Bar"), _([[Lieutenant Czesc slaps you on the back as you take a seat next to him at the bar. "We've done it! We have set up Empire Armada Shipping outposts across quite a bit of the galaxy. I just have one more favor to ask. I need transport back to Halir in the Gamma Polaris system. Once there I can authorize you to help out with the long-distance shipping missions. Can I count on you?"]]) ) then
       misn.finish()
    end
    -- Flavour text and mini-briefing
-   tk.msg( _("Empire Long Distance Recruitment"), text[2] )
+   tk.msg( _("Empire Long Distance Recruitment"), _([[Internally you groan from the idea of having to do another haul across the galaxy for more paperwork, but at least you'll have access to new missions. Lieutenant Czesc excitedly gets up from the bar. "Let's get going as soon as possible. There's no place like home!"]]) )
    ---Accept the mission
    misn.accept()
 
@@ -80,7 +76,7 @@ function land()
          misn.cargoRm( person )
          player.pay( reward )
          -- More flavour text
-         tk.msg( _("Mission Accomplished"), text[3] )
+         tk.msg( _("Mission Accomplished"), _([[Lieutenant Czesc exits your ship and takes a deep breath of air. "I love the smell of bureaucracy in the morning." He shakes your hand. "Thanks for all your help, Captain! Follow me to headquarters and we can do some paperwork to get you all set up. After that you should start to receive long-distance shipping missions. They pay better than our regular shipping missions, but often require traveling longer distances and into territory controlled by other factions. You'll probably be more likely to see them on the edges of Empire space where cargo is ready to head out to other factions. Again, I can't thank you enough! The Empire does not quickly forget such dedication."]]) )
          faction.modPlayerSingle( "Empire",3 )
          emp.addShippingLog( _([[You transported Lieutenant Czesc to Halir for some paperwork. You can now do long-distance cargo missions for the Empire. They pay better than regular Empire shipping missions, but often require traveling longer distances and into territory controlled by other factions. You'll probably be more likely to see them on the edges of Empire space where cargo is ready to head out to other factions.]]) )
          misn.finish(true)

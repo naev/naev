@@ -42,29 +42,6 @@ local fleet = require "fleet"
 local fmt = require "format"
 local pir = require "common.pirate"
 
-text = {}
-text[1] = _([[The bar rests in the dull clink of glasses and the scattered murmur of conversation when the door bursts open. An older couple stumbles in, faces gaping, eyes staring. They take a few steps before the woman sinks to her knees and bursts into tears.
-    "Our son... his ship was supposed to land a hectosecond ago," her partner says mechanically. "But pirates, suddenly everywhere-" he swallows. "-they didn't make it."  His wife throws her head back and wails.
-    Two young men rise abruptly from a table in the back of the room and come stiffly forward. One goes to the grieving couple while the other turns address the room.
-    "These raiders must be stopped. We are cadets at the Imperial Flight School. If you feel the injustice of this family's loss, will you fly with us to avenge their son's death?"]])
-text[11] = _([["These terrorists cannot sustain many losses," one of the young men explains as you and a group of other volunteers prepare for takeoff, "and they have no organization. We can destroy them if you team up and focus your fire on one ship at a time."]])
-
-text[2] = _([[Night is falling by the time you land back on %s. Looking solemn in front of a gathering crowd and news recorders, a large man with a fleshy face comes forward to greet the survivors of the fight. A flock of men and women follow him.
-    When he shakes your hand, the Governor looks keenly at you at smiles, "Very well done."
-    After meeting each surviving pilot, the tall man stands still for aide to attach an amplifier to his lapel. Then he turns his face to the news-casters and the crowd.]])
-
-text[3] = _([[
-"Even here on %s, even in the protective embrace of civilization, we face many dangers. The ties that bind us through space to other worlds are fragile. When criminals attack these precious connections, they trouble the very foundations of our peace. How glad we are now for the security of the Empire whose young navy cadets led a team of independent pilots to defend us today."  The Governor turns to the pair of officers-in-training. "In the name of the Emperor, I have the privilege of decorating these two young heroes with the %s Silver Heart. I hope they and their volunteers will not be too proud to also accept a generous purse, along with the gratitude of all our people. Please join me in applauding their bravery."
-    The public ceremony lasts only a few hectoseconds. Afterwards, as interviewers draw the young navy officers aside and the crowd disperses, you catch sight of the elderly couple from the bar holding each other and looking up into the darkening sky.]])
-
-text[4] = _([[A freighter hails you as you jump into the system.
-    "Thank you for responding, %s. Are you coming in from %s?  I have a delivery I need to get to %s and I can't wait much longer. Is the system safe now?"
-    You relate the outcome of the space battle.
-    "Oh, that's good news! You know, these raids are getting worse all the time. I wish the Empire would do something about it. Anyway, thank you for the information. Safe travels."]])
-text[5] = _([[You stand by the grieving couple as the two cadets lead a group of pilots out of the bar toward the padfield.
-    "Oh no!" the woman cries suddenly, looking up into her partner's face. "They're going off to fight. Those young men, they... there'll be more killing because of us."
-    He nods grimly. "That's the way of things."
-    For long time, the two of them sit on the floor of the bar holding each other.]])
 
 -- Create the mission on the current planet, and present the first Bar text.
 function create()
@@ -85,9 +62,12 @@ function create()
 
    planet_name = this_planet:name()
    system_name = this_system:name()
-   if tk.yesno( _("In the bar"), text[1] ) then
+   if tk.yesno( _("In the bar"), _([[The bar rests in the dull clink of glasses and the scattered murmur of conversation when the door bursts open. An older couple stumbles in, faces gaping, eyes staring. They take a few steps before the woman sinks to her knees and bursts into tears.
+    "Our son... his ship was supposed to land a hectosecond ago," her partner says mechanically. "But pirates, suddenly everywhere-" he swallows. "-they didn't make it."  His wife throws her head back and wails.
+    Two young men rise abruptly from a table in the back of the room and come stiffly forward. One goes to the grieving couple while the other turns address the room.
+    "These raiders must be stopped. We are cadets at the Imperial Flight School. If you feel the injustice of this family's loss, will you fly with us to avenge their son's death?"]]) ) then
       misn.accept()
-      tk.msg( _("Volunteers"), text[11])
+      tk.msg( _("Volunteers"), _([["These terrorists cannot sustain many losses," one of the young men explains as you and a group of other volunteers prepare for takeoff, "and they have no organization. We can destroy them if you team up and focus your fire on one ship at a time."]]))
       reward = 40e3
       misn.setReward( string.format( _("%s and the pleasure of serving the Empire."), fmt.credits(reward)) )
       misn.setDesc( _("Defend the system against a pirate fleet."))
@@ -105,7 +85,10 @@ function create()
   -- If player didn't accept the mission, the battle's still on, but player has no stake.
       misn.accept()
       var.push( "dts_firstSystem", "planet_name")
-      tk.msg( _("Not fighting"), text[5])
+      tk.msg( _("Not fighting"), _([[You stand by the grieving couple as the two cadets lead a group of pilots out of the bar toward the padfield.
+    "Oh no!" the woman cries suddenly, looking up into her partner's face. "They're going off to fight. Those young men, they... there'll be more killing because of us."
+    He nods grimly. "That's the way of things."
+    For long time, the two of them sit on the floor of the bar holding each other.]]))
       misn.setReward( _("No reward for you."))
       misn.setDesc( _("Watch others defend the system."))
       misn.setTitle( _("Observe the action."))
@@ -266,10 +249,14 @@ end
 function celebrate_victory()
 
       if victory == true then
-         tk.msg( _("A public occasion"), string.format( text[2], planet_name) )
+         tk.msg( _("A public occasion"), string.format( _([[Night is falling by the time you land back on %s. Looking solemn in front of a gathering crowd and news recorders, a large man with a fleshy face comes forward to greet the survivors of the fight. A flock of men and women follow him.
+    When he shakes your hand, the Governor looks keenly at you at smiles, "Very well done."
+    After meeting each surviving pilot, the tall man stands still for aide to attach an amplifier to his lapel. Then he turns his face to the news-casters and the crowd.]]), planet_name) )
          player.pay( reward)
          faction.modPlayerSingle( "Empire", 3)
-         tk.msg( _("The Governor's speech"), string.format( text[3], planet_name, planet_name) )
+         tk.msg( _("The Governor's speech"), string.format( _([[
+"Even here on %s, even in the protective embrace of civilization, we face many dangers. The ties that bind us through space to other worlds are fragile. When criminals attack these precious connections, they trouble the very foundations of our peace. How glad we are now for the security of the Empire whose young navy cadets led a team of independent pilots to defend us today."  The Governor turns to the pair of officers-in-training. "In the name of the Emperor, I have the privilege of decorating these two young heroes with the %s Silver Heart. I hope they and their volunteers will not be too proud to also accept a generous purse, along with the gratitude of all our people. Please join me in applauding their bravery."
+    The public ceremony lasts only a few hectoseconds. Afterwards, as interviewers draw the young navy officers aside and the crowd disperses, you catch sight of the elderly couple from the bar holding each other and looking up into the darkening sky.]]), planet_name, planet_name) )
          misn.finish( true)
       else
          tk.msg( _("Not done yet."), _("The system isn't safe yet. Get back out there!"))   -- If any pirates still alive, send player back out.
@@ -285,7 +272,10 @@ function ship_enters()
       hook.timer(1.0, "congratulations")
 end
 function congratulations()
-      tk.msg( _("Good job!"), string.format( text[4], player.ship(), system_name, planet_name))
+      tk.msg( _("Good job!"), string.format( _([[A freighter hails you as you jump into the system.
+    "Thank you for responding, %s. Are you coming in from %s?  I have a delivery I need to get to %s and I can't wait much longer. Is the system safe now?"
+    You relate the outcome of the space battle.
+    "Oh, that's good news! You know, these raids are getting worse all the time. I wish the Empire would do something about it. Anyway, thank you for the information. Safe travels."]]), player.ship(), system_name, planet_name))
       misn.finish( true)
 
 end

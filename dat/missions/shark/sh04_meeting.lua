@@ -32,19 +32,7 @@ local fleet = require "fleet"
 local shark = require "common.shark"
 
 
-text = {}
 osd_msg = {}
-
-text[1] = _([["OK, are you ready for the travel to %s in the %s system?"]])
-
-text[2] = _([["Let's go, then."]])
-
-text[3] = _([[Smith gets out of your ship and looks at you, smiling. "You know, it's like that in our kind of job. Sometimes it works and sometimes it fails. It's not our fault. Anyway, here is your pay."]])
-
-text[4] = _([[As you land, you see a group of people that were waiting for your ship. Smith hails them and tells you to wait in the ship while he goes to a private part of the bar.
-    A few periods later, he comes back and explains that he wasn't able to improve Nexus sales in the Frontier, but he was able to stop House Sirius from entering the picture, at least.]])
-
-text[5] = _([[Suddenly, a Za'lek drone starts attacking you! As you wonder what to do, you hear a broadcast from a remote Za'lek ship. "Attention please, it seems some of our drones have gone haywire. If a drone attacks you and you aren't wanted by the authorities, you are hereby granted authorization to destroy it."]])
 
 -- Mission details
 
@@ -75,9 +63,9 @@ function accept()
    proba = 0.3  --the probability of ambushes will change
    firstambush = true  --In the first ambush, there will be a little surprise text
 
-   if tk.yesno(_("Travel"), text[1]:format(mispla:name(), missys:name())) then
+   if tk.yesno(_("Travel"), _([["OK, are you ready for the travel to %s in the %s system?"]]):format(mispla:name(), missys:name())) then
       misn.accept()
-      tk.msg(_("Time to go"), text[2])
+      tk.msg(_("Time to go"), _([["Let's go, then."]]))
 
       osd_msg[1] = osd_msg[1]:format(missys:name(), mispla:name())
       osd_msg[2] = osd_msg[2]:format(paypla:name(), paysys:name())
@@ -104,7 +92,8 @@ end
 function land()
    --The player is landing on the mission planet
    if stage == 0 and planet.cur() == mispla then
-      tk.msg(_("The meeting"), text[4]:format(paysys:name()))
+      tk.msg(_("The meeting"), _([[As you land, you see a group of people that were waiting for your ship. Smith hails them and tells you to wait in the ship while he goes to a private part of the bar.
+    A few periods later, he comes back and explains that he wasn't able to improve Nexus sales in the Frontier, but he was able to stop House Sirius from entering the picture, at least.]]):format(paysys:name()))
       stage = 1
       misn.osdActive(2)
       misn.markerRm(marker)
@@ -114,7 +103,7 @@ function land()
    --Job is done
    if stage == 1 and planet.cur() == paypla then
       if misn.cargoRm(smith) then
-         tk.msg(_("End of mission"), text[3])
+         tk.msg(_("End of mission"), _([[Smith gets out of your ship and looks at you, smiling. "You know, it's like that in our kind of job. Sometimes it works and sometimes it fails. It's not our fault. Anyway, here is your pay."]]))
          player.pay(reward)
          pir.reputationNormalMission(rnd.rnd(2,3))
          misn.osdDestroy(osd)
@@ -174,7 +163,7 @@ function reveal()  --transforms the spawn drones into baddies
       end
       if firstambush == true then
          --Surprise message
-         tk.msg(_("What is going on?"), text[5])
+         tk.msg(_("What is going on?"), _([[Suddenly, a Za'lek drone starts attacking you! As you wonder what to do, you hear a broadcast from a remote Za'lek ship. "Attention please, it seems some of our drones have gone haywire. If a drone attacks you and you aren't wanted by the authorities, you are hereby granted authorization to destroy it."]]))
          firstambush = false
       end
       proba = proba - 0.1 * #badguy --processing the probability change

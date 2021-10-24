@@ -41,22 +41,6 @@ local fleet = require "fleet"
 local fmt = require "format"
 local pir = require "common.pirate"
 
-text = {}
-text[1] = _([[The barman has just asked you for your order when the portmaster bursts though the door, out of breath. "Pirates, all over the system!  The navy's on maneuvers. Quickly, we need to organize a defense."
-    All the pilots in the room scramble to their feet. "How many are there?" someone asks. "How long have they been in system?" another calls out.
-    Into the confusion steps a steely-haired, upright, uniformed figure. Her stripes mark her as a navy Commodore.
-    "I'm with the navy and I will organize the defense," her voice cuts through the commotion. "Who here is a pilot?  We must strike back quickly. I will arrange a reward for everyone who volunteers. We'll need as many pilots as possible. Follow me."]])
-text[11] = _([["Take as many out of the fight early as you can," advises the Commodore before you board your ships. "If you can't chase them off, you might at least improve the odds. Good luck."]])
-
-text[2] = _([[As you taxi in to land, you can make out the tiny figure of the Commodore saluting a small group of individuals to the side of the landing pads. After you and your fellow volunteers alight, she greets you with the portmaster by her side.]])
-
-text[3] = _([["That was good flying," the Commodore says with a tight smile. "Thank you all for your help. This gentleman has arranged a transfer of forty thousand credits to each of you. You can be proud of what you've done today."]])
-
-text[4] = _([[The debris from the battle disappears behind you in a blur of light. A moment after you emerge from hyperspace, a Imperial ship jumps in behind you and hails you.
-    "Please hold course and confirm your identity, %s."  You send your license code and wait for a moment. "OK, that's fine. We're just making sure no pirates escaped. You were part of the battle, weren't you?  Surprised you didn't return for the bounty, pilot. Listen, I appreciate what you did back there. I have family on %s. When I'm not flying overhead, it's good to know there are good Samaritans like you who will step up. Thanks."
-]])
-text[5] = _([[The Commodore turns and walks off. Eight men and women follow her, but you stay put.
-    A man in a jumpsuit at the next table nods at you. "What, they expect me to do their dirty work for them?" he shakes his head. "It's going to be a hot ride out of the system though, with all that going on upstairs."]])
 
 -- Create the mission on the current planet, and present the first Bar text.
 function create()
@@ -75,10 +59,13 @@ function create()
 
    planet_name = this_planet:name()
    system_name = this_system:name()
-   if tk.yesno( _("In the bar"), text[1] ) then
+   if tk.yesno( _("In the bar"), _([[The barman has just asked you for your order when the portmaster bursts though the door, out of breath. "Pirates, all over the system!  The navy's on maneuvers. Quickly, we need to organize a defense."
+    All the pilots in the room scramble to their feet. "How many are there?" someone asks. "How long have they been in system?" another calls out.
+    Into the confusion steps a steely-haired, upright, uniformed figure. Her stripes mark her as a navy Commodore.
+    "I'm with the navy and I will organize the defense," her voice cuts through the commotion. "Who here is a pilot?  We must strike back quickly. I will arrange a reward for everyone who volunteers. We'll need as many pilots as possible. Follow me."]]) ) then
       misn.accept()
       var.push( "dts_firstSystem", "planet_name")
-      tk.msg( _("Volunteers"), text[11])
+      tk.msg( _("Volunteers"), _([["Take as many out of the fight early as you can," advises the Commodore before you board your ships. "If you can't chase them off, you might at least improve the odds. Good luck."]]))
       reward = 40e3
       misn.setReward( string.format( _("%s and the pleasure of serving the Empire."), fmt.credits(reward)) )
       misn.setDesc( _("Defend the system against a pirate fleet."))
@@ -95,7 +82,8 @@ function create()
       -- If player didn't accept the mission, the battle's still on, but player has no stake.
       misn.accept()
       var.push( "dts_firstSystem", "planet_name")
-      tk.msg( _("Left behind"), text[5])
+      tk.msg( _("Left behind"), _([[The Commodore turns and walks off. Eight men and women follow her, but you stay put.
+    A man in a jumpsuit at the next table nods at you. "What, they expect me to do their dirty work for them?" he shakes his head. "It's going to be a hot ride out of the system though, with all that going on upstairs."]]))
       misn.setReward( _("No reward for you."))
       misn.setDesc( _("Watch others defend the system."))
       misn.setTitle( _("Observe the action."))
@@ -210,10 +198,10 @@ end
 function celebrate_victory()
 
       if victory == true then
-         tk.msg( _("On the way in"), text[2] )
+         tk.msg( _("On the way in"), _([[As you taxi in to land, you can make out the tiny figure of the Commodore saluting a small group of individuals to the side of the landing pads. After you and your fellow volunteers alight, she greets you with the portmaster by her side.]]) )
          player.pay( reward)
          faction.modPlayerSingle( "Empire", 3)
-         tk.msg( _("Thank you"), text[3] )
+         tk.msg( _("Thank you"), _([["That was good flying," the Commodore says with a tight smile. "Thank you all for your help. This gentleman has arranged a transfer of forty thousand credits to each of you. You can be proud of what you've done today."]]) )
          misn.finish( true)
       else
          tk.msg( _("Not done yet."), _("The system isn't safe yet. Get back out there!"))   -- If any pirates still alive, send player back out.
@@ -229,7 +217,9 @@ function ship_enters()
       hook.timer(1.0, "congratulations")
 end
 function congratulations()
-      tk.msg( _("Good job!"), string.format( text[4], player.ship(), planet_name))
+      tk.msg( _("Good job!"), string.format( _([[The debris from the battle disappears behind you in a blur of light. A moment after you emerge from hyperspace, a Imperial ship jumps in behind you and hails you.
+    "Please hold course and confirm your identity, %s."  You send your license code and wait for a moment. "OK, that's fine. We're just making sure no pirates escaped. You were part of the battle, weren't you?  Surprised you didn't return for the bounty, pilot. Listen, I appreciate what you did back there. I have family on %s. When I'm not flying overhead, it's good to know there are good Samaritans like you who will step up. Thanks."
+]]), player.ship(), planet_name))
       misn.finish( true)
 
 end

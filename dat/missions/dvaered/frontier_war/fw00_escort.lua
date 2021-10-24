@@ -333,6 +333,7 @@ end
 
 -- Battleaddict's bros
 function moreBadGuys()
+   local buff
    for i = 1, 3 do
       buff = pilot.add( "Dvaered Ancestor", "Dvaered", destpla2 )
       buff:setFaction("Warlords")

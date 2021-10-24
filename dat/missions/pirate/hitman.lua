@@ -26,19 +26,6 @@
 --]]
 local pir = require "common.pirate"
 
-
--- Bar information
-
--- Mission details
-
--- Text
-text     = {}
-text[1]  = _([[The man motions for you to take a seat next to him. Voice barely above a whisper, he asks, "How'd you like to earn some easy money? If you're comfortable with getting your hands dirty, that is."]])
-text[2] = _([[Apparently relieved that you've accepted his offer, he continues, "There're some new merchants edging in on my trade routes in %s. I want you to make sure they know they're not welcome." Pausing for a moment, he notes, "You don't have to kill anyone, just rough them up a bit."]])
-text[3] = _([[As you inform your acquaintance that you successfully scared off the traders, he grins and transfers a sum of credits to your account. "That should teach them to stay out of my space."]])
-
--- Messages
-
 function create ()
    -- Note: this mission does not make any system claims.
    targetsystem = system.get("Delta Pavonis") -- Find target system
@@ -53,7 +40,7 @@ Mission entry point.
 --]]
 function accept ()
    -- Mission details:
-   if not tk.yesno( _("Spaceport Bar"), string.format( text[1],
+   if not tk.yesno( _("Spaceport Bar"), string.format( _([[The man motions for you to take a seat next to him. Voice barely above a whisper, he asks, "How'd you like to earn some easy money? If you're comfortable with getting your hands dirty, that is."]]),
           targetsystem:name() ) ) then
       misn.finish()
    end
@@ -74,7 +61,7 @@ function accept ()
    osd_desc[2] = _("Return to %s in the %s system for payment"):format( misn_base:name(), misn_base_sys:name() )
    misn.osdCreate( _("Thug"), osd_desc )
    -- Some flavour text
-   tk.msg( _("Spaceport Bar"), string.format( text[2], targetsystem:name()) )
+   tk.msg( _("Spaceport Bar"), string.format( _([[Apparently relieved that you've accepted his offer, he continues, "There're some new merchants edging in on my trade routes in %s. I want you to make sure they know they're not welcome." Pausing for a moment, he notes, "You don't have to kill anyone, just rough them up a bit."]]), targetsystem:name()) )
 
    -- Set hooks
    hook.enter("sys_enter")
@@ -133,7 +120,7 @@ end
 -- landed
 function landed()
    if planet.cur() == misn_base then
-      tk.msg(_("Mission Complete"), text[3])
+      tk.msg(_("Mission Complete"), _([[As you inform your acquaintance that you successfully scared off the traders, he grins and transfers a sum of credits to your account. "That should teach them to stay out of my space."]]))
       player.pay(150e3)
       pir.modDecayFloor(2)
       pir.modReputation(2)

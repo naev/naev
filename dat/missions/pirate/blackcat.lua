@@ -265,7 +265,7 @@ end
 function owner_board ()
    vn.clear()
    vn.scene()
-   local cat = vn.Character.new(_("Black Cat"), {image=cat_image, color=cat_colour})
+   local _cat = vn.Character.new(_("Black Cat"), {image=cat_image, color=cat_colour})
    vn.sfx( der.sfx.board )
    vn.transition()
    vn.na(fmt.f(_("Your ship locks its boarding clamps on the {shipname}, and the airlock opens up revealing some strangely musty air and pitch black darkness. How odd."),{shipname=owner:name()}))
