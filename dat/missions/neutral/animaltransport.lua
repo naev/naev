@@ -30,14 +30,6 @@ local fmt = require "format"
 
 money_reward = 200e3
 
-text = {}
-
-text[1] = fmt.f(_([["Good day to you, captain. I'm looking for someone with a ship who can take this crate here to planet %s in the %s system. The crate contains a colony of rodents I've bred myself, and my in-law has a pet shop on %s where I hope to sell them. Upon delivery, you will be paid {credits}. Are you interested in the job?"]]),{credits=fmt.credits(money_reward)})
-
-text[2] = _([["Excellent! My in-law will send someone to meet you at the spaceport to take the crate off your hands, and you'll be paid immediately on delivery. Thanks again!"]])
-
-text[3] = fmt.f(_([[As promised, there's someone at the spaceport who accepts the crate. In return, you receive a number of credit chips worth {credits}, as per the arrangement. You go back into your ship to put the chips away before heading off to check in with the local authorities. But did you just hear something squeak…?]]),{credits=fmt.credits(money_reward)})
-
 misndesc = _("You've been hired to transport a crate of specially engineered rodents to %s (%s system).")
 
 OSD = {}
@@ -72,12 +64,12 @@ end
 
 
 function accept ()
-   if tk.yesno(_("Animal transport"), text[1]:format(destplanet:name(), destsys:name(), destplanet:name())) then
+   if tk.yesno(_("Animal transport"), fmt.f(_([["Good day to you, captain. I'm looking for someone with a ship who can take this crate here to planet {pntname} in the {sysname} system. The crate contains a colony of rodents I've bred myself, and my in-law has a pet shop on {pntname} where I hope to sell them. Upon delivery, you will be paid {credits}. Are you interested in the job?"]]), {credits=fmt.credits(money_reward), pntname=destplanet:name(), sysname=destsys:name()})) then
       misn.accept()
       misn.setDesc(misndesc)
       misn.setReward(fmt.f(_("You will be paid {credits} on arrival."),{credits=fmt.credits(money_reward)}))
       misn.osdCreate(_("Animal transport"), OSD)
-      tk.msg(_("Animal transport"), text[2])
+      tk.msg(_("Animal transport"), _([["Excellent! My in-law will send someone to meet you at the spaceport to take the crate off your hands, and you'll be paid immediately on delivery. Thanks again!"]]))
       misn.markerAdd( destplanet, "high" )
       hook.land("land")
    else
@@ -87,7 +79,7 @@ end
 
 function land()
    if planet.cur() == destplanet then
-      tk.msg(_("Animal transport"), text[3])
+      tk.msg(_("Animal transport"), fmt.f(_([[As promised, there's someone at the spaceport who accepts the crate. In return, you receive a number of credit chips worth {credits}, as per the arrangement. You go back into your ship to put the chips away before heading off to check in with the local authorities. But did you just hear something squeak…?]]),{credits=fmt.credits(money_reward)}))
       player.pay(money_reward)
       var.push("shipinfested", true)
       neu.addMiscLog( _([[You successfully transported a crate of rodents for a Fyrra civilian. You could have swore you heard something squeak.]]) )
