@@ -113,6 +113,7 @@ typedef enum ShipStatsType_ {
    /* Misc. */
    SS_TYPE_A_CPU_MAX,         /**< Maximum CPU modifier. */
    SS_TYPE_A_ENGINE_LIMIT,    /**< Engine's mass limit. */
+   SS_TYPE_A_FUEL_REGEN,      /**< Fuel regeneration. */
 
    /*
     * P: Absolute percent type datas. Should be continuous.
@@ -284,6 +285,7 @@ typedef struct ShipStats_ {
    int misc_asteroid_scan;   /**< Able to scan asteroids. */
    int misc_hidden_jump_detect; /**< Degree of hidden jump detection. */
    int fuel;                  /**< Maximum fuel modifier. */
+   double fuel_regen;         /**< Absolute fuel regeneration. */
    int cargo;                 /**< Maximum cargo modifier. */
    double loot_mod;           /**< Boarding loot reward bonus. */
    double time_mod;           /**< Time dilation modifier. */

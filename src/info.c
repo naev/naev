@@ -246,7 +246,7 @@ static void info_openMain( unsigned int wid )
          "\n"
          "%s\n"
          "%s\n"
-         "%d (%d %s)\n"
+         "%.0f (%d %s)\n"
          "\n"
          "%.1f hours\n"
          "%s\n"
@@ -534,7 +534,7 @@ static void ship_update( unsigned int wid )
          "%.0f / %.0f MJ (%.1f MW)\n" /* Armour */
          "%.0f / %.0f MJ (%.1f MW)\n" /* Energy */
          "%d / %d %s\n"
-         "%d / %d %s (%d %s)\n"
+         "%.0f / %.0f %s (%d %s)\n"
          "\n"),
          /* Generic */
          player.p->name,

@@ -160,6 +160,7 @@ static const ShipStatsLookup ss_lookup[] = {
 
    A__ELEM( SS_TYPE_A_CPU_MAX,            cpu_max,             N_("CPU Capacity") ),
    A__ELEM( SS_TYPE_A_ENGINE_LIMIT,       engine_limit,        N_("Engine Mass Limit") ),
+   A__ELEM( SS_TYPE_A_FUEL_REGEN,         fuel_regen,          N_("Fuel Regeneration") ),
 
    P__ELEM( SS_TYPE_P_ABSORB,             absorb,              N_("Damage Absorption") ),
 
