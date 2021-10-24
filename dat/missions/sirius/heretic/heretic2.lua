@@ -36,12 +36,7 @@ osd = {}
 osd[1] = _("Destroy the Sirius patrol")
 osd[2] = _("Land on %s")
 --random odds and ends
-misn_title = _("The Patrol")
-npc_name = _("An Imposing Man")
 misn_desc = _("You have been hired once again by Nasin, this time to destroy a Sirius patrol that has entered %s.")
-
-log_text = _([[You eliminated a Sirian patrol for Draga, high commander of Nasin's operations. He said that Nasin will have another mission for you if you meet him in the bar on The Wringer again.]])
-
 
 function create()
    --this mission does make one system claim, in Suna.
@@ -60,9 +55,9 @@ function create()
    draga_convo = 0
    deathcount = 0
    --set the mission stuff
-   misn.setTitle(misn_title)
+   misn.setTitle(_("The Patrol"))
    misn.setReward(fmt.credits(reward))
-   misn.setNPC(npc_name, "sirius/unique/draga.webp", _("This man leans against the bar while looking right at you."))
+   misn.setNPC(_("An Imposing Man"), "sirius/unique/draga.webp", _("This man leans against the bar while looking right at you."))
 
    -- Format OSD
    osd[2] = osd[2]:format( homeasset:name() )
@@ -71,21 +66,21 @@ function create()
 end
 
 function accept()
-   if tk.yesno( misn_title, _([[You walk up to the intimidating man. He's dressed smartly in cool, dark black business attire, with a large smile spread across his face.
+   if tk.yesno( _("The Patrol"), _([[You walk up to the intimidating man. He's dressed smartly in cool, dark black business attire, with a large smile spread across his face.
     "Ahh, so you're %s! Everyone has been talking about you," he says. "Allow me to introduce myself. My name is Draga, high commander of Nasin's operations. You remember us, right? People in our organization have started to take notice of your actions. Maybe it is the will of Sirichana that you come to us! If that is the case, then I have an offer you can't refuse. A chance to really prove yourself as more than a glorified courier. You see... we are expecting a Sirian patrol any hectosecond now, and we want you to... take care of it. What do you say? We could really use your help."]]):format( player.name() ) ) then
       misn.accept()
-      tk.msg( misn_title, _([["Marvelous! I knew I could count on you! Don't you worry; you'll be fighting alongside some of our finest pilots. I know you can drive those Sirii off!
+      tk.msg( _("The Patrol"), _([["Marvelous! I knew I could count on you! Don't you worry; you'll be fighting alongside some of our finest pilots. I know you can drive those Sirii off!
     "Oh, and one last thing: don't even think of bailing out on us at the last second. If you jump out or land before your mission is completed, consider yourself fired."]]) )
 
       misn.setDesc(misn_desc)
       misn.markerAdd(homesys,"high")
-      misn.osdCreate(misn_title,osd)
+      misn.osdCreate(_("The Patrol"),osd)
       misn.osdActive(1)
       hook.takeoff("takeoff")
       hook.jumpin("out_sys_failure")
       hook.land("land")
    else
-      tk.msg( misn_title, _([["Gah! I should have known you would be so spineless! Get out of my sight!"]]) )
+      tk.msg( _("The Patrol"), _([["Gah! I should have known you would be so spineless! Get out of my sight!"]]) )
       misn.finish( false )
    end
 end
@@ -126,23 +121,23 @@ end
 
 function land()
    if finished ~= 1 then
-      tk.msg(misn_title,_([[Draga's face goes red with fury when he sees you. For a moment you start to worry he might beat you into a pulp for abandoning your mission, but he moves along, fuming. You breathe a sigh of release; you may have angered Nasin, but at least you're still alive.]])) --landing pre-emptively is a bad thing.
+      tk.msg(_("The Patrol"),_([[Draga's face goes red with fury when he sees you. For a moment you start to worry he might beat you into a pulp for abandoning your mission, but he moves along, fuming. You breathe a sigh of release; you may have angered Nasin, but at least you're still alive.]])) --landing pre-emptively is a bad thing.
       faction.modPlayerSingle("Nasin",-20)
       misn.finish(false)
    elseif planet.cur() == homeasset and finished == 1 then
-      tk.msg(misn_title,_([[You land, having defeated the small recon force, and find Draga with a smile on his face. "Great job!" he says. "I see you really are what you're made out to be and not just some overblown merchant!" He hands you a credit chip. "Thank you for your services. Meet us in the bar again sometime. We will certainly have another mission for you."]]))
+      tk.msg(_("The Patrol"),_([[You land, having defeated the small recon force, and find Draga with a smile on his face. "Great job!" he says. "I see you really are what you're made out to be and not just some overblown merchant!" He hands you a credit chip. "Thank you for your services. Meet us in the bar again sometime. We will certainly have another mission for you."]]))
       player.pay(reward)
       misn_tracker = misn_tracker + 1
       faction.modPlayer("Nasin",7)
       var.push("heretic_misn_tracker",misn_tracker)
-      srs.addHereticLog( log_text )
+      srs.addHereticLog( _([[You eliminated a Sirian patrol for Draga, high commander of Nasin's operations. He said that Nasin will have another mission for you if you meet him in the bar on The Wringer again.]]) )
       misn.finish(true)
    end
 end
 
 function out_sys_failure() --jumping pre-emptively is a bad thing.
    if system.cur() ~= homesys then
-      tk.msg(misn_title, _([[As you abandon your mission, you receive a message from Draga saying that Nasin has no need for deserters. You hope you made the right decision.]]):format( player.name() ))
+      tk.msg(_("The Patrol"), _([[As you abandon your mission, you receive a message from Draga saying that Nasin has no need for deserters. You hope you made the right decision.]]):format( player.name() ))
       faction.modPlayerSingle("Nasin",-20)
       misn.finish(false)
    end

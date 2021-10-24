@@ -24,10 +24,6 @@
 local fmt = require "format"
 local neu = require "common.neutral"
 
-
-npc_name = _("Old Man")
-title = _("The Search for Cynthia")
-misn_desc = _("Search for Cynthia.")
 cargoname = N_("Cynthia")
 cargodesc = N_("A young teenager.")
 
@@ -50,29 +46,29 @@ function create ()
    releasereward = 25e3
    reward = 100e3
 
-   misn.setNPC( npc_name, "neutral/unique/cynthia_father.webp", _("An old man sits at a table with some missing person papers.") )
+   misn.setNPC( _("Old Man"), "neutral/unique/cynthia_father.webp", _("An old man sits at a table with some missing person papers.") )
 end
 
 function accept ()
    --This mission does not make any system claims
-   if not tk.yesno( title, string.format( _([[Approaching him, he hands you a paper. It offers a 100,000 credit reward for the finding of a "Cynthia" person.
+   if not tk.yesno( _("The Search for Cynthia"), string.format( _([[Approaching him, he hands you a paper. It offers a 100,000 credit reward for the finding of a "Cynthia" person.
     "That's my girl. She disappeared quite a few decaperiods ago. We managed to track her down to here, but where she went afterwards remains a mystery. We know she was kidnapped, but if you know anything..." The man begins to cry. "Have you seen any trace of her?"]]), reward, targetworld:name() ) ) then
       misn.finish()
    end
 
    --Set up the OSD
    if misn.accept() then
-      misn.osdCreate(title,osd_text)
+      misn.osdCreate(_("The Search for Cynthia"),osd_text)
       misn.osdActive(1)
    end
 
-   misn.setTitle( title )
+   misn.setTitle( _("The Search for Cynthia") )
    misn.setReward( string.format( _("%s on delivery."), fmt.credits(reward) ) )
 
-   misn.setDesc( string.format( misn_desc, targetworld:name(), targetworld_sys:name() ) )
+   misn.setDesc( string.format( _("Search for Cynthia."), targetworld:name(), targetworld_sys:name() ) )
    runawayMarker = misn.markerAdd( targetworld, "low" )
 
-   tk.msg( title, _([[Looking at the picture, you see that the locket matches the one that Cynthia wore, so you hand it to her father. "I believe that this was hers." Stunned, the man hands you a list of planets that they wanted to look for her on.]]) )
+   tk.msg( _("The Search for Cynthia"), _([[Looking at the picture, you see that the locket matches the one that Cynthia wore, so you hand it to her father. "I believe that this was hers." Stunned, the man hands you a list of planets that they wanted to look for her on.]]) )
 
    hook.land("land")
 end
@@ -86,14 +82,14 @@ function land ()
    --If we land on Niflheim, display message, reset target and carry on.
    if planet.cur() == planet.get("Niflheim") then
       targetworld = planet.get("Nova Shakar")
-      tk.msg(title, _("After thoroughly searching the spaceport, you decide that she wasn't there."))
+      tk.msg(_("The Search for Cynthia"), _("After thoroughly searching the spaceport, you decide that she wasn't there."))
       misn.osdActive(2)
       misn.markerMove(runawayMarker, targetworld)
 
    --If we land on Nova Shakar, display message, reset target and carry on.
    elseif planet.cur() == planet.get("Nova Shakar") then
       targetworld = planet.get("Torloth")
-      tk.msg(title, _("At last! You find her, but she ducks into a tour bus when she sees you. The schedule says it's destined for Torloth. You begin to wonder if she'll want to be found."))
+      tk.msg(_("The Search for Cynthia"), _("At last! You find her, but she ducks into a tour bus when she sees you. The schedule says it's destined for Torloth. You begin to wonder if she'll want to be found."))
 
       --Add in the *secret* OSD text
       osd_text[3] = _("Catch Cynthia on Torloth in Cygnus")
@@ -101,7 +97,7 @@ function land ()
 
       --Update the OSD
       misn.osdDestroy()
-      misn.osdCreate(title,osd_text)
+      misn.osdCreate(_("The Search for Cynthia"),osd_text)
       misn.osdActive(3)
 
       misn.markerMove(runawayMarker, targetworld)
@@ -111,18 +107,18 @@ function land ()
       targetworld = planet.get("Zhiru")
 
       --If you decide to release her, speak appropriately, otherwise carry on
-      if not tk.yesno(title, _([[After chasing Cynthia through most of the station, you find her curled up at the end of a hall, crying. As you approach, she screams, "Why can't you leave me alone? I don't want to go back to my terrible parents!" Will you take her anyway?]])) then
+      if not tk.yesno(_("The Search for Cynthia"), _([[After chasing Cynthia through most of the station, you find her curled up at the end of a hall, crying. As you approach, she screams, "Why can't you leave me alone? I don't want to go back to my terrible parents!" Will you take her anyway?]])) then
          osd_text[4] = _("Go to Zhiru in Goddard to lie to Cynthia's father")
-         tk.msg(title, _([["Please, please, please don't ever come looking for me again, I beg of you!"]]))
+         tk.msg(_("The Search for Cynthia"), _([["Please, please, please don't ever come looking for me again, I beg of you!"]]))
       else
-         tk.msg(title, misn_capture)
+         tk.msg(_("The Search for Cynthia"), misn_capture)
          local c = misn.cargoNew( cargoname, cargodesc )
          cargoID = misn.cargoAdd( c, 0 )
       end
 
       --Update the OSD
       misn.osdDestroy()
-      misn.osdCreate(title,osd_text)
+      misn.osdCreate(_("The Search for Cynthia"),osd_text)
       misn.osdActive(4)
 
       misn.markerMove(runawayMarker, targetworld)
@@ -132,12 +128,12 @@ function land ()
 
       --Talk to the father and get the reward
       if misn.osdGetActive() == _("Return Cynthia to her father on Zhiru in the Goddard system") then
-         tk.msg(title, _("As Cynthia sees her father, she begins her crying anew. You overhear the father talking about how her abusive mother died. Cynthia becomes visibly happier, so you pick up your payment and depart."))
+         tk.msg(_("The Search for Cynthia"), _("As Cynthia sees her father, she begins her crying anew. You overhear the father talking about how her abusive mother died. Cynthia becomes visibly happier, so you pick up your payment and depart."))
          player.pay(reward)
          misn.cargoRm(cargoID)
          neu.addMiscLog( _([[The father of Cynthia, who you had given a lift before, asked you to find her and bring her back to him, thinking that she was kidnapped. Cynthia protested, telling you that she did not want to go back to her parents, but you took her anyway. When she saw her father, she started crying, but seemed to become visibly happier when her father told her that her abusive mother had died.]]) )
       else
-         tk.msg(title, _([[You tell the father that you checked every place on the list, and then some, but his daughter was nowhere to be found. You buy the old man a drink, then go back to the spaceport. Before you leave, he hands you a few credits. "For your troubles."]]))
+         tk.msg(_("The Search for Cynthia"), _([[You tell the father that you checked every place on the list, and then some, but his daughter was nowhere to be found. You buy the old man a drink, then go back to the spaceport. Before you leave, he hands you a few credits. "For your troubles."]]))
          player.pay(releasereward)
          neu.addMiscLog( _([[The father of Cynthia, who you had given a lift before, asked you to find her and bring her back to him, thinking that she was kidnapped. Cynthia protested, telling you that she did not want to go back to her parents. Respecting her wishes, you let her be and lied to her father, saying that you couldn't find her no matter how hard you tried.]]) )
       end

@@ -42,9 +42,6 @@ local pir = require "common.pirate"
 -- common hooks
 escort_hailed = fw.escort_hailed
 
-npc_name = _("Major Tam")
-npc_desc = _("The major seems to be waiting for you.")
-
 question = {}
 lore_text = {}
 
@@ -72,15 +69,6 @@ execution_text1 = _([[You land and walk around the spacedock, in search of your 
    When looking closer at the ship, you see ancient and recent marks on the hull, caused by all kinds of weapons during the lifetime of the ship, that have been repaired on spaceports. Among the ship's scars,you see a twisted welding around the ship's nose, filled with bubbles and think: "Damn! They've got to deal with the same old deficient welding android that fixed my airlock on Alteris last time!"
    Suddenly, you realize someone is whispering behind you "Hey, %s, you're wrecking my firing line!" You turn around and see nothing but a deformed crate that continues to speak: "It's me, Sergeant Nikolov. In the box. Hide yourself better or you will ruin our mission." You then remember that she is a member of the space infantry commandos, and Hamfresser's second in command. Tam probably sent her to execute the enemy pilot.]])
 
-pay_title = _("Mission accomplished")
-pay_text = _("Your mission is a success, except for the escape of the enemy leader, Colonel Hamelsen. You can now collect your %s reward.")
-
-misn_desc = _("You take part of an operation whose goal is to trap and destroy a group of well armed henchmen who are after Major Tam.")
-misn_reward = _("It depends how many of your wingmen come back.")
-log_text = _("A group of killers, who were after Major Tam have been trapped and killed. For now, we don't know who has paid them, but they were led by Colonel Hamelsen, who has managed to escape.")
-
-osd_title = _("Dvaered Diplomacy")
-
 function create()
    destpla, destsys = planet.get("Mannannan")
    startsys = system.cur()
@@ -99,7 +87,7 @@ function create()
       misn.finish(false)
    end
 
-   misn.setNPC(npc_name, fw.portrait_tam, npc_desc)
+   misn.setNPC(_("Major Tam"), fw.portrait_tam, _("The major seems to be waiting for you."))
 end
 
 function accept()
@@ -114,9 +102,9 @@ function accept()
    "If you have any additional questions, I'll stay at the bar until we take off."]]):format(destpla:name(), destsys:name()))
 
    misn.accept()
-   misn.osdCreate( osd_title, {_("Go to next system"), _("Wait until Strafer has scanned the system"), _("Wait for Tam and destroy the highlighted hostile ships"), _("Land anywhere to collect your pay") } )
-   misn.setDesc(misn_desc)
-   misn.setReward(misn_reward)
+   misn.osdCreate( _("Dvaered Diplomacy"), {_("Go to next system"), _("Wait until Strafer has scanned the system"), _("Wait for Tam and destroy the highlighted hostile ships"), _("Land anywhere to collect your pay") } )
+   misn.setDesc(_("You take part of an operation whose goal is to trap and destroy a group of well armed henchmen who are after Major Tam."))
+   misn.setReward(_("It depends how many of your wingmen come back."))
 
    -- Markers
    marklist = {}
@@ -137,7 +125,7 @@ function accept()
    alive["__save"] = true
 
    toldya = {false,false,false,false}
-   boozingTam = misn.npcAdd("discussWithTam", npc_name, fw.portrait_tam, npc_desc)
+   boozingTam = misn.npcAdd("discussWithTam", _("Major Tam"), fw.portrait_tam, _("The major seems to be waiting for you."))
 end
 
 -- Discussions with Major Tam at the bar
@@ -242,7 +230,7 @@ function land()
    -- Land for reward
    elseif stage == 2 then
       compute_reward()
-      tk.msg( pay_title, pay_text:format(fmt.credits(effective_credits)) )
+      tk.msg( _("Mission accomplished"), _("Your mission is a success, except for the escape of the enemy leader, Colonel Hamelsen. You can now collect your %s reward."):format(fmt.credits(effective_credits)) )
       payNfinish()
 
    -- More illegitimate landings
@@ -484,7 +472,7 @@ function baddie_jump( pilot, jump )
          tk.msg(_("This is not good"), _([[While your sensors lose the signal of the target you were supposed to kill, you expect to receive a mission failure message, but instead, you hear Tam's ship communication: "One of them escaped. Continue destroying the others. Afterwards, %s, you will jump to %s and destroy that ship."]]):format(player.name(), nextt:name())) -- TODO: ensure the cleaning doesn't take too long
          stage = 3
          misn.osdDestroy()
-         misn.osdCreate( osd_title, {_("Clean the current system"), _("Jump to %s to follow your target"):format(nextt:name())} )
+         misn.osdCreate( _("Dvaered Diplomacy"), {_("Clean the current system"), _("Jump to %s to follow your target"):format(nextt:name())} )
          misn.markerAdd( nextt, "high" )
       else -- You won't follow several enemies
          tk.msg(_("This is not good"), tflee_text)
@@ -504,7 +492,7 @@ function baddie_land( pilot, planet )
 
          shi = pilot:ship()
          misn.osdDestroy()
-         misn.osdCreate( osd_title, {_("Clean the current system"), _("Land on %s to follow your target"):format(nextt:name())} )
+         misn.osdCreate( _("Dvaered Diplomacy"), {_("Clean the current system"), _("Land on %s to follow your target"):format(nextt:name())} )
       else -- You won't follow several enemies
          tk.msg(_("This is not good"), tflee_text)
          misn.finish(false)
@@ -615,7 +603,7 @@ end
 function payNfinish()
    player.pay(effective_credits)
    shiplog.create( "frontier_war", _("Frontier War"), _("Dvaered") )
-   shiplog.append( "frontier_war", log_text )
+   shiplog.append( "frontier_war", _("A group of killers, who were after Major Tam have been trapped and killed. For now, we don't know who has paid them, but they were led by Colonel Hamelsen, who has managed to escape.") )
    misn.finish(true)
 end
 

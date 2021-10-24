@@ -29,17 +29,7 @@ local fmt = require "format"
 local emp = require "common.empire"
 
 -- Mission details
-misn_title = _("Empire Shipping Delivery")
-misn_desc = {}
-misn_desc[1] = _("Pick up a package at %s in the %s system")
-misn_desc[2] = _("Deliver the package to %s in the %s system")
-misn_desc[3] = _("Return to %s in the %s system")
 -- Fancy text messages
-title = {}
-title[1] = _("Commander Soldner")
-title[2] = _("Loading Cargo")
-title[3] = _("Cargo Delivery")
-title[4] = _("Mission Success")
 text = {}
 text[1] = _([[You approach Commander Soldner, who seems to be waiting for you.
 "Hello, ready for your next mission?"]])
@@ -51,9 +41,6 @@ text[5] = _([[Workers quickly unload the package as mysteriously as it was loade
 text[6] = _([[You arrive at %s and report to Commander Soldner. He greets you and starts talking. "I heard you encountered resistance. At least you managed to deliver the package. Great work there. I've managed to get you cleared for the Heavy Weapon License. You'll still have to pay the fee for getting it, though.
     "If you're interested in more work, meet me in the bar in a bit. I've got some paperwork I need to finish first."]])
 -- Errors
-
-log_text = _([[You successfully completed a package delivery for the Empire. As a result, you have been cleared for the Heavy Weapon License and can now buy it at an outfitter. Commander Soldner said that you can meet him in the bar at Halir if you're interested in more work.]])
-
 
 function create ()
    -- Note: this mission does not make any system claims.
@@ -73,7 +60,7 @@ end
 function accept ()
 
    -- See if accept mission
-   if not tk.yesno( title[1], text[1] ) then
+   if not tk.yesno( _("Commander Soldner"), text[1] ) then
       misn.finish()
    end
 
@@ -85,17 +72,17 @@ function accept ()
    -- Mission details
    misn_stage = 0
    reward = 500e3
-   misn.setTitle(misn_title)
+   misn.setTitle(_("Empire Shipping Delivery"))
    misn.setReward( fmt.credits(reward) )
-   misn.setDesc( string.format(misn_desc[1], pickup:name(), pickupsys:name()))
+   misn.setDesc( string.format(_("Pick up a package at %s in the %s system"), pickup:name(), pickupsys:name()))
 
    -- Flavour text and mini-briefing
-   tk.msg( title[1], string.format( text[2], pickup:name(), pickupsys:name(),
+   tk.msg( _("Commander Soldner"), string.format( text[2], pickup:name(), pickupsys:name(),
          dest:name(), destsys:name(), fmt.credits(reward) ) )
-   misn.osdCreate(misn_title, {misn_desc[1]:format(pickup:name(), pickupsys:name())})
+   misn.osdCreate(_("Empire Shipping Delivery"), {_("Pick up a package at %s in the %s system"):format(pickup:name(), pickupsys:name())})
 
    -- Set up the goal
-   tk.msg( title[1], text[3] )
+   tk.msg( _("Commander Soldner"), text[3] )
 
    -- Set hooks
    hook.land("land")
@@ -123,23 +110,23 @@ function land ()
       packages = misn.cargoAdd(c, 3)
       misn_stage = 1
       jumped = 0
-      misn.setDesc( string.format(misn_desc[2], dest:name(), destsys:name()))
+      misn.setDesc( string.format(_("Deliver the package to %s in the %s system"), dest:name(), destsys:name()))
       misn.markerMove( misn_marker, destsys )
-      misn.osdCreate(misn_title, {misn_desc[2]:format(dest:name(), destsys:name())})
+      misn.osdCreate(_("Empire Shipping Delivery"), {_("Deliver the package to %s in the %s system"):format(dest:name(), destsys:name())})
 
       -- Load message
-      tk.msg( title[2], string.format( text[4], dest:name(), destsys:name()) )
+      tk.msg( _("Loading Cargo"), string.format( text[4], dest:name(), destsys:name()) )
 
    elseif landed == dest and misn_stage == 1 then
       if misn.cargoRm(packages) then
          -- Update mission
          misn_stage = 2
-         misn.setDesc( string.format(misn_desc[3], ret:name(), retsys:name()))
+         misn.setDesc( string.format(_("Return to %s in the %s system"), ret:name(), retsys:name()))
          misn.markerMove( misn_marker, retsys )
-         misn.osdCreate(misn_title, {misn_desc[3]:format(ret:name(),retsys:name())})
+         misn.osdCreate(_("Empire Shipping Delivery"), {_("Return to %s in the %s system"):format(ret:name(),retsys:name())})
 
          -- Some text
-         tk.msg( title[3], string.format(text[5], ret:name(), retsys:name()) )
+         tk.msg( _("Cargo Delivery"), string.format(text[5], ret:name(), retsys:name()) )
       end
    elseif landed == ret and misn_stage == 2 then
 
@@ -148,12 +135,12 @@ function land ()
       faction.modPlayerSingle("Empire",5);
 
       -- Flavour text
-      tk.msg(title[4], string.format(text[6], ret:name()) )
+      tk.msg(_("Mission Success"), string.format(text[6], ret:name()) )
 
       -- The goods
       diff.apply("heavy_weapons_license")
 
-      emp.addShippingLog( log_text )
+      emp.addShippingLog( _([[You successfully completed a package delivery for the Empire. As a result, you have been cleared for the Heavy Weapon License and can now buy it at an outfitter. Commander Soldner said that you can meet him in the bar at Halir if you're interested in more work.]]) )
 
       misn.finish(true)
    end

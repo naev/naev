@@ -23,16 +23,11 @@
 local car = require "common.cargo"
 local fmt = require "format"
 
-
-misn_desc  = _("Official Empire long distance cargo transport to %s in the %s system.")
-
 piracyrisk = {}
 piracyrisk[1] = _("#nPiracy Risk:#0 None")
 piracyrisk[2] = _("#nPiracy Risk:#0 Low")
 piracyrisk[3] = _("#nPiracy Risk:#0 Medium")
 piracyrisk[4] = _("#nPiracy Risk:#0 High")
-
-osd_title = _("Long Distance Empire Shipping")
 
 --[[
    -- Empire shipping missions are always timed, but quite lax on the schedules
@@ -93,7 +88,7 @@ function create()
       _("ES: Long distance cargo transport (%s of %s)"), fmt.tonnes(amount),
       _(cargo) ) )
    misn.markerAdd(destsys, "computer")
-   car.setDesc( misn_desc:format( destplanet:name(), destsys:name() ), cargo, amount, destplanet, timelimit, piracyrisk )
+   car.setDesc( _("Official Empire long distance cargo transport to %s in the %s system."):format( destplanet:name(), destsys:name() ), cargo, amount, destplanet, timelimit, piracyrisk )
    misn.setReward( fmt.credits(reward) )
 end
 
@@ -126,7 +121,7 @@ function accept()
    osd_msg[1] = _("Fly to %s in the %s system before %s\n(%s remaining)"):format(
       destplanet:name(), destsys:name(), timelimit:str(),
       ( timelimit - time.get() ):str() )
-   misn.osdCreate(osd_title, osd_msg)
+   misn.osdCreate(_("Long Distance Empire Shipping"), osd_msg)
    hook.land( "land" ) -- only hook after accepting
    hook.date(time.create(0, 0, 100), "tick") -- 100STU per tick
 end
@@ -158,7 +153,7 @@ function tick()
       osd_msg[1] = _("Fly to %s in the %s system before %s\n(%s remaining)"):format(
          destplanet:name(), destsys:name(), timelimit:str(),
          ( timelimit - time.get() ):str() )
-      misn.osdCreate(osd_title, osd_msg)
+      misn.osdCreate(_("Long Distance Empire Shipping"), osd_msg)
    elseif timelimit <= time.get() then
       -- Case missed deadline
       player.msg(_("MISSION FAILED: You have failed to deliver the goods to the Empire on time!"))

@@ -50,16 +50,6 @@ local fleet = require "fleet"
 local fmt = require "format"
 local emp = require "common.empire"
 
-misn_title = _("Operation Black Trinity")
-misn_desc = {}
-misn_desc[1] = _("Arrest the ESS Trinity in %s")
-misn_desc[2] = _("Return to base at %s in %s")
-title = {}
-title[1] = _("Bar")
-title[2] = _("Interrogation Room")
-title[3] = _("Operation Black Trinity")
-title[4] = _("Mission Accomplished")
-title[5] = _("Mission Failure")
 text = {}
 text[1] = _([[You enter the bar, but you can't seem to find Lt. Commander Dimitri. As you look around for him, you feel a heavy hand fall on your shoulder. It seems like two armed soldiers are here to escort you somewhere, and from the looks of their weapons, they mean business. You have no choice other then to comply.
     They start leading you away from the bar through some hallways you've never been through before. Must be all those 'Authorised Personnel Only' signs and the armed guards that didn't make them too appealing.
@@ -98,10 +88,10 @@ end
 -- Creates the mission
 function accept ()
 
-   tk.msg( title[1], text[1] )
+   tk.msg( _("Bar"), text[1] )
 
    -- Intro text
-   if not tk.yesno( title[2], text[2] ) then
+   if not tk.yesno( _("Interrogation Room"), text[2] ) then
       misn.finish()
    end
 
@@ -116,17 +106,17 @@ function accept ()
    misn_marker = misn.markerAdd( misn_target_sys, "high" )
 
    -- Mission details
-   misn.setTitle(misn_title)
+   misn.setTitle(_("Operation Black Trinity"))
    misn.setReward( fmt.credits( credits ) )
-   misn.setDesc( string.format(misn_desc[1], misn_target_sys:name() ))
+   misn.setDesc( string.format(_("Arrest the ESS Trinity in %s"), misn_target_sys:name() ))
    osd_msg[1] = osd_msg[1]:format(misn_target_sys:name())
    osd_msg[3] = osd_msg[3]:format(misn_base:name())
-   misn.osdCreate(misn_title, osd_msg)
+   misn.osdCreate(_("Operation Black Trinity"), osd_msg)
 
-   tk.msg( title[2], string.format(text[3], misn_base:name() ) )
-   tk.msg( title[3], string.format(text[4], _("Eiroik")))
+   tk.msg( _("Interrogation Room"), string.format(text[3], misn_base:name() ) )
+   tk.msg( _("Operation Black Trinity"), string.format(text[4], _("Eiroik")))
    emp.addCollectiveLog( _([[Commodore Keer has taken over the Collective issue and explained more about the Collective. "The Collective was actually a project for the Empire. They were supposed to be the ultimate weapon in flexibility and offense. Commodore Welsh was in charge of the secret science facility on Eiroik. Shortly after the Incident, we stopped hearing from them. We sent a recon and were met with hostile Collective drones. It seems like the project had been a success, but the traitor Welsh went rogue. Under normal circumstances we would have easily crushed the Collective, but after the Incident these are hardly normal circumstances."]]) )
-   tk.msg( title[4], string.format(text[5], misn_target_sys:name(), misn_target_sys:name() ) )
+   tk.msg( _("Mission Accomplished"), string.format(text[5], misn_target_sys:name(), misn_target_sys:name() ) )
 
    -- Escorts
    escorts = {}
@@ -193,7 +183,7 @@ function enter ( from_sys )
 
       misn_stage = 3
       player.msg( _("Mission Failure: Return to base.") )
-      misn.setDesc( string.format(misn_desc[2],
+      misn.setDesc( string.format(_("Return to base at %s in %s"),
             misn_base:name(), misn_base_sys:name() ))
       misn.markerMove( misn_marker, misn_base_sys )
    end
@@ -349,13 +339,13 @@ function land ()
 
       if trinity_alive or misn_stage == 3 then
          -- Failure to kill
-         tk.msg( title[5], text[7] )
+         tk.msg( _("Mission Failure"), text[7] )
          var.push("trinity", true)
          credits = credits / 2
          emp.addCollectiveLog( _([[You failed to destroy the ESS Trinity, putting a wedge in the Empire's plans. You should meet back with Commodore Keer at the bar on Omega Station; she said that they would notify you if they have something more that you can do.]]) )
       else
          -- Successfully killed
-         tk.msg( title[4], string.format(text[6], player.name()) )
+         tk.msg( _("Mission Accomplished"), string.format(text[6], player.name()) )
          var.push("trinity", false)
          emp.addCollectiveLog( _([[You successfully killed Zakred (a Collective spy) and destroyed the ESS Trinity. Commodore Keer told you to meet her again at the bar on Omega Station for an all-out attack on Collective territory.]]) )
       end
@@ -375,7 +365,7 @@ function trinity_kill () -- Got killed
    misn_stage = 2
    misn.osdActive(3)
    trinity_alive = false
-   misn.setDesc( string.format(misn_desc[2], misn_base:name(), misn_base_sys:name() ))
+   misn.setDesc( string.format(_("Return to base at %s in %s"), misn_base:name(), misn_base_sys:name() ))
    misn.markerMove( misn_marker, misn_base_sys )
 end
 
@@ -385,6 +375,6 @@ function trinity_jump () -- Got away
    misn_stage = 2
    misn.osdActive(3)
    trinity_alive = true
-   misn.setDesc( string.format(misn_desc[2], misn_base:name(), misn_base_sys:name() ))
+   misn.setDesc( string.format(_("Return to base at %s in %s"), misn_base:name(), misn_base_sys:name() ))
    misn.markerMove( misn_marker, misn_base_sys )
 end

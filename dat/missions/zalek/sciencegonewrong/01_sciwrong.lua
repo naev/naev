@@ -35,36 +35,13 @@ t_pla = { __save=true }
 t_sys[2] = system.get("Shikima")
 reward = 1e6
 -- Mission details
-title = {}
-text = {}
-osd_msg = {}
-misn_title = _("The one with the Visit")
-misn_reward = _("The gratitude of science and a bit of compensation")
-misn_desc = _("You've been hired by Dr. Geller to retrieve technology he urgently needs to build his prototype.")
 
-title[1] = _([[In the bar]])
-text[1]  = _([["Ah, there you are! I've got a job for you. Specifically, some... acquisition... of technology from the Soromid, who haven't been very cooperative. Are you up for it?" It sounds like he wants you to do something that would get you in trouble with Soromid authorities. Do you accept the job?]])
-text[2] = _([["Excellent. From what I have been told it looks like this." He gestures with his hands to no merit. "You will recognize it; it should be in a box that's kept separately from the remaining stuff and labeled "Top Secret". Oh, and you might need this." He hands you a handheld device. "The ship is called the %s."
-    So he wants you to steal something top secret from the Soromid. Quirky people, those Za'leks. With the coordinates, the signature of the target ship and the handheld, which you hope helps you detect the box, you set off on your way.]])
 -- msgs by Soromid forces
-title[3] = _([[In the ship]])
-text[4] = _([[You make your way through the living ship after taking care of its crew. You note the feeling that the ship is personally angry at you which, given the rumors that Soromid ships are alive, gives you the creeps. In any case, you begin to search through the ship and the handheld in your pocket starts beeping.
-    You manage to locate a box on a table in the crew's chambers. Apparently nobody expected anyone to be foolish enough to try to do what you are doing. You grab the box and head back to your ship. You should make sure to avoid any Soromid patrols on the way back. You don't think they will be too happy with you if they manage to scan your ship.]])
 
-text[5] = _([["How'd it go?" asks Dr. Geller. You show him the box. "Ah, marvelous! Do you know what this is? This is a quantum sharpener. It's like a quantum eraser, but it does not erase but sharpen. This is exactly what I needed. I think with this I should be able to finish my prototype." He tosses you a credit chip before walking off, smiling.]])
 -- if the player kills the ship before getting the tech
-title[4] = _([[What have you done?]])
-text[6] = _([[The ship explodes before your eyes and you realize that you will never be able to get the secret tech now.]])
-osd_msg = {}
-osd_msg[1] = _("Go to the %s system and find the %s")
-osd_msg[2] = _("Board the %s and retrieve the secret technology")
-osd_msg[3] = _("Return to %s in the %s system")
 
 -- refusetext
 refusetext = _("But I really thought you were into science...")
-
-log_text = _([[You stole something called a "quantum sharpener" from a Soromid ship for Dr. Geller.]])
-
 
 function create ()
    -- Have to be at center of operations.
@@ -78,16 +55,17 @@ function create ()
 end
 function accept()
    -- Mission details:
-   if not tk.yesno( title[1], text[1] ) then
+   if not tk.yesno( _([[In the bar]]), _([["Ah, there you are! I've got a job for you. Specifically, some... acquisition... of technology from the Soromid, who haven't been very cooperative. Are you up for it?" It sounds like he wants you to do something that would get you in trouble with Soromid authorities. Do you accept the job?]]) ) then
       tk.msg(_("No Science Today"), refusetext)
       misn.finish()
    end
-   tk.msg( title[1], text[2]:format(_("Tokera")) )
+   tk.msg( _([[In the bar]]), _([["Excellent. From what I have been told it looks like this." He gestures with his hands to no merit. "You will recognize it; it should be in a box that's kept separately from the remaining stuff and labeled "Top Secret". Oh, and you might need this." He hands you a handheld device. "The ship is called the %s."
+    So he wants you to steal something top secret from the Soromid. Quirky people, those Za'leks. With the coordinates, the signature of the target ship and the handheld, which you hope helps you detect the box, you set off on your way.]]):format(_("Tokera")) )
    misn.accept()
-   misn.osdCreate(misn_title, {osd_msg[1]:format(t_sys[2]:name(), _("Tokera")), osd_msg[2]:format(_("Tokera")), osd_msg[3]:format(t_pla[1]:name(), t_sys[1]:name())})
-   misn.setDesc(misn_desc)
-   misn.setTitle(misn_title)
-   misn.setReward(misn_reward)
+   misn.osdCreate(_("The one with the Visit"), {_("Go to the %s system and find the %s"):format(t_sys[2]:name(), _("Tokera")), _("Board the %s and retrieve the secret technology"):format(_("Tokera")), _("Return to %s in the %s system"):format(t_pla[1]:name(), t_sys[1]:name())})
+   misn.setDesc(_("You've been hired by Dr. Geller to retrieve technology he urgently needs to build his prototype."))
+   misn.setTitle(_("The one with the Visit"))
+   misn.setReward(_("The gratitude of science and a bit of compensation"))
    misn.osdActive(1)
    misn_mark = misn.markerAdd( t_sys[2], "high" )
    targetalive = true
@@ -144,14 +122,15 @@ function targetDeath()
       sor.modPlayer(-5)
       return
    end
-   tk.msg(title[4],text[6])
+   tk.msg(_([[What have you done?]]),_([[The ship explodes before your eyes and you realize that you will never be able to get the secret tech now.]]))
    sor.modPlayer(-5)
    misn.finish(false)
 end
 
 function targetBoard()
    player.unboard()
-   tk.msg(title[3], text[4])
+   tk.msg(_([[In the ship]]), _([[You make your way through the living ship after taking care of its crew. You note the feeling that the ship is personally angry at you which, given the rumors that Soromid ships are alive, gives you the creeps. In any case, you begin to search through the ship and the handheld in your pocket starts beeping.
+    You manage to locate a box on a table in the crew's chambers. Apparently nobody expected anyone to be foolish enough to try to do what you are doing. You grab the box and head back to your ship. You should make sure to avoid any Soromid patrols on the way back. You don't think they will be too happy with you if they manage to scan your ship.]]))
    target:setHilight(false)
    target:setVisplayer(false)
    local c = misn.cargoNew(N_("Secret Technology"), N_("A mysterious box of stolen Soromid technology."))
@@ -167,11 +146,11 @@ end
 
 function land()
    if planet.cur() == t_pla[1] then
-      tk.msg(title[1], text[5])
+      tk.msg(_([[In the bar]]), _([["How'd it go?" asks Dr. Geller. You show him the box. "Ah, marvelous! Do you know what this is? This is a quantum sharpener. It's like a quantum eraser, but it does not erase but sharpen. This is exactly what I needed. I think with this I should be able to finish my prototype." He tosses you a credit chip before walking off, smiling.]]))
       hook.rm(hland)
       misn.markerRm(misn_mark)
       player.pay(reward)
-      sciwrong.addLog( log_text )
+      sciwrong.addLog( _([[You stole something called a "quantum sharpener" from a Soromid ship for Dr. Geller.]]) )
       misn.finish(true)
    end
 end

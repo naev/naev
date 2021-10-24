@@ -23,9 +23,6 @@ local zlk = require "common.zalek"
 -- Bar Description
 
 -- Mission Details
-misn_title = _("Za'lek Shipping Delivery")
-misn_reward = _("A handsome payment.")
-misn_desc = _("You agreed to help a Za'lek scientist pick up some cargo way out in the sticks. Hopefully this'll be worth it.")
 
 -- OSD
 OSDdesc = {}
@@ -66,9 +63,6 @@ text[8] = _([[You check your account balance as he closes the comm channel to fi
 title[9] = _("No Room")
 text[9] = _([[You don't have enough cargo space to accept this mission.]])
 
-log_text = _([[You helped a Za'lek scientist deliver some equipment and were paid generously for the job.]])
-
-
 function create ()
    -- Note: this mission does not make any system claims.
 
@@ -97,9 +91,9 @@ function accept ()
       misn.accept()
 
       -- mission details
-      misn.setTitle( misn_title )
-      misn.setReward( misn_reward )
-      misn.setDesc( misn_desc:format(pickupWorld:name(), pickupSys:name(), delivWorld:name(), delivSys:name() ) )
+      misn.setTitle( _("Za'lek Shipping Delivery") )
+      misn.setReward( _("A handsome payment.") )
+      misn.setDesc( _("You agreed to help a Za'lek scientist pick up some cargo way out in the sticks. Hopefully this'll be worth it."):format(pickupWorld:name(), pickupSys:name(), delivWorld:name(), delivSys:name() ) )
 
       -- OSD
       OSDdesc[1] =  OSDdesc[1]:format(pickupWorld:name(), pickupSys:name())
@@ -183,7 +177,7 @@ function closehail()
    logan:setInvincible(false)
    logan:hyperspace()
    faction.modPlayerSingle("Za'lek", 5)
-   zlk.addMiscLog( log_text )
+   zlk.addMiscLog( _([[You helped a Za'lek scientist deliver some equipment and were paid generously for the job.]]) )
    misn.finish(true)
 end
 

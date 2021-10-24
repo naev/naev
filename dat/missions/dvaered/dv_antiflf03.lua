@@ -32,17 +32,13 @@ local portrait = require "portrait"
 local dv = require "common.dvaered"
 
 
-title = {}
 text = {}
 osd_desc = {}
-
-title[1] = _("One swift stroke")
 
 text[1] = _([[The liaison's expression then turns wooden, and his voice becomes level. Clearly, he has been briefing people for a long time in his career, so he can probably do this in his sleep. It occurs to you that perhaps he DOES nap while doing this.
     "In the near future, the Dvaered fleet will move against enemies of the state in the %s system. The objective is to seek out and destroy all hostiles. This operation will be headed by the HDSF Obstinate, and all units in this battle will defer to its commanding officer, regardless of class and rank. The Obstinate and its battle group will concentrate on performing bombing runs on the primary target. Your task as an auxiliary unit will be to secure the flanks and engage any hostiles that threaten the success of the mission. Note that once you enter the combat theater, you are considered committed, and your leaving the system will be seen as an act of cowardice and treachery."
     The liaison blinks awake. "These are the parameters and conditions of the mission. Will you be accepting this assignment?"]])
 
-title[2] = _("The battlefield awaits")
 text[2] = _([["Excellent. Please report to the local military command center at 0400 today. You will be briefed there."
     The liaison hands you a small access card. It bears the emblem of the Dvaered military. It seems you've been granted a level of clearance that goes beyond that of a civilian volunteer.
     The liaison stands up, offers a curt greeting and walks out of the bar. You remain for a while, since you're not due for your briefing for some time yet. You reflect on your recent achievements. Your actions have drastically dipped the balance of power between the Dvaered and the FLF insurgents, and soon you will be able to see the results of your decisions with your own two eyes. You feel a sense of accomplishment to know you're making a difference in this galaxy.
@@ -62,7 +58,6 @@ text[4] = _([[The schematic updates again, this time showing several small clust
     "That will be all. You have your orders. Report to your stations as per your timetables. I will see you all in %s. Good luck."
     Some time later, you are back in the Dvaered spaceport bar. You've seen action before in your career, but you still feel tense about what is to come. You decide to have another drink, just for luck.]])
 
-title[3] = _("FLF base? What FLF base?")
 text[5] = _([[When you step out of your ship, a Dvaered military delegation is waiting for you. Normally this wouldn't be a good thing, as the Dvaered military typically see civilians as mobile patches of air, unless they've done something wrong. But this case is an exception. The soldiers politely escort you to the office of Colonel Urnus, the man who got you involved in this operation in the first place.
     "Well met, citizen %s," Urnus tells you. "Cigar? Oh. Well, suit yourself. Anyway, I wanted to personally thank you for your role in the recent victory against the FLF. If it hadn't been for the information you provided we might have never smoked out their nest! In addition, your efforts on the battlefield have helped to secure our victory. House Dvaered recognizes accomplishments like that, citizen."
     The Colonel walks to a cabinet in his office and takes out a small box. From the box, he produces a couple of credit chips as well as a small metal pin in the shape of a star.
@@ -72,19 +67,10 @@ text[6] = _([[Colonel Urnus returns to his seat.
     "Let me tell you one thing, though. I doubt we've quite seen the last of the FLF. We may have dealt them a mortal blow by taking out their hidden base, but as long as rebel sentiment runs high among the Frontier worlds, they will rear their ugly heads again. That means my job isn't over, and maybe it means yours isn't either. Perhaps in the future we'll work together again - but this time it won't be just about removing a threat on our doorstep." Urnus smiles grimly. "It will be about rooting out the source of the problem once and for all."
     As you walk the corridor that leads out of the military complex, the Star of Valor glinting on your lapel, you find yourself thinking about what your decisions might ultimately lead to. Colonel Urnus hinted at war on the Frontier, and he also indicated that you would be involved. While the Dvaered have been treating you as well as can be expected from a military regime, perhaps you might want to reconsider your allegiance when the time comes...]])
 
-npc_desc = _("This must be the Dvaered liaison you heard about. Allegedly, he may have a job for you that involves fighting the Frontier Liberation Front.")
-
-misn_title = _("Destroy the FLF base!")
 osd_desc[1] = _("Fly to the %s system")
 osd_desc[2] = _("Defend the HDSF Obstinate and its escorts")
 osd_desc[3] = _("Destroy the FLF base")
 osd_desc[4] = _("Return to %s in the %s system")
-
-misn_desc = _("The Dvaered are poised to launch an all-out attack on the secret FLF base. You have chosen to join this battle for wealth and glory.")
-misn_reward = _("Wealth and glory")
-
-log_text = _([[You aided the Dvaered in the destruction of the secret FLF base, Sindbad. The terrorists are not entirely eliminated, but they have been substantially reduced in number. Colonel Urnus suggested you may be able to help the Dvaered again in a future campaign aimed at "rooting out the source of the problem once and for all".]])
-
 
 function create()
     missys = {system.get(var.peek("flfbase_sysname"))}
@@ -92,7 +78,7 @@ function create()
         abort()
     end
 
-    misn.setNPC("Dvaered liaison", portrait.getMaleMil("Dvaered"), npc_desc)
+    misn.setNPC("Dvaered liaison", portrait.getMaleMil("Dvaered"), _("This must be the Dvaered liaison you heard about. Allegedly, he may have a job for you that involves fighting the Frontier Liberation Front."))
 end
 
 function accept()
@@ -109,18 +95,18 @@ function accept()
     ]]), player.name()) .. string.format(text[1], destsysname)
     end
 
-    if tk.yesno(title[1], txt) then
-        tk.msg(title[2], string.format(text[2], destsysname))
-        tk.msg(title[2], string.format(text[3], destsysname, player.name()))
-        tk.msg(title[2], string.format(text[4], destsysname))
+    if tk.yesno(_("One swift stroke"), txt) then
+        tk.msg(_("The battlefield awaits"), string.format(text[2], destsysname))
+        tk.msg(_("The battlefield awaits"), string.format(text[3], destsysname, player.name()))
+        tk.msg(_("The battlefield awaits"), string.format(text[4], destsysname))
 
         misn.accept()
         osd_desc[1] = string.format(osd_desc[1], destsysname)
         osd_desc[4] = string.format(osd_desc[4], DVplanet:name(), DVsys:name())
-        misn.osdCreate(misn_title, osd_desc)
-        misn.setDesc(misn_desc)
-        misn.setReward(misn_reward)
-        misn.setTitle(misn_title)
+        misn.osdCreate(_("Destroy the FLF base!"), osd_desc)
+        misn.setDesc(_("The Dvaered are poised to launch an all-out attack on the secret FLF base. You have chosen to join this battle for wealth and glory."))
+        misn.setReward(_("Wealth and glory"))
+        misn.setTitle(_("Destroy the FLF base!"))
         mission_marker = misn.markerAdd( system.get(destsysname), "high" )
 
         missionstarted = false
@@ -191,8 +177,8 @@ end
 
 function land()
     if victorious and planet.cur() == DVplanet then
-        tk.msg(title[3], string.format(text[5], player.name()))
-        tk.msg(title[3], text[6])
+        tk.msg(_("FLF base? What FLF base?"), string.format(text[5], player.name()))
+        tk.msg(_("FLF base? What FLF base?"), text[6])
         dv.modReputation( 5 )
         faction.get("Dvaered"):modPlayerSingle(10)
         player.pay(1e6)
@@ -200,7 +186,7 @@ function land()
         var.pop("flfbase_intro")
         var.pop("flfbase_sysname")
         diff.apply("flf_dead")
-        dv.addAntiFLFLog( log_text )
+        dv.addAntiFLFLog( _([[You aided the Dvaered in the destruction of the secret FLF base, Sindbad. The terrorists are not entirely eliminated, but they have been substantially reduced in number. Colonel Urnus suggested you may be able to help the Dvaered again in a future campaign aimed at "rooting out the source of the problem once and for all".]]) )
         local t = time.get():tonumber()
         var.push( "invasion_time", t ) -- Timer for the frontier's invasion
         misn.finish(true)

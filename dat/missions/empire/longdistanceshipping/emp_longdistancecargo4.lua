@@ -27,19 +27,11 @@
 local fmt = require "format"
 local emp = require "common.empire"
 
-misn_title = _("Frontier Long Distance Recruitment")
 misn_desc = _("Deliver a shipping diplomat for the Empire to The Frontier Council in Gilligan's Light system")
-title = {}
-title[1] = _("Spaceport Bar")
-title[2] = _("Frontier Alliance Long Distance Recruitment")
-title[3] = _("Mission Accomplished")
 text = {}
 text[1] = _([["We have to stop running into each other like this." Lieutenant Czesc laughs at his joke. "Just kidding, you know I owe you for helping set up these contracts. So far, everything has been moving smoothly on our end. We're hoping to extend our relations to the Frontier Alliance. You know the drill by this point. Ready to help?"]])
 text[2] = _([["I applaud your commitment," Lieutenant Czesc says, "and I know these aren't the most exciting missions, but they're most useful. The frontier can be a bit dangerous, so make sure you're prepared. You need to drop the bureaucrat off at The Frontier Council in Gilligan's Light system. After this, there should only be one more faction to bring into the fold. I expect to see you again soon."]])
 text[3] = _([[You deliver the diplomat to The Frontier Council, and she hands you a credit chip. Thankfully, Lieutenant Czesc mentioned only needing your assistance again for one more mission. This last bureaucrat refused to stay in her quarters, preferring to hang out on the bridge and give you the ins and outs of Empire bureaucracy. Only your loyalty to the Empire stopped you from sending her out into the vacuum of space.]])
-
-log_text = _([[You delivered a shipping bureaucrat to The Frontier Council for the Empire. Thankfully, Lieutenant Czesc mentioned only needing your assistance again for one more mission. This last bureaucrat refused to stay in her quarters, preferring to hang out on the bridge and give you the ins and outs of Empire bureaucracy. Only your loyalty to the Empire stopped you from sending her out into the vacuum of space.]])
-
 
 function create ()
  -- Note: this mission does not make any system claims.
@@ -59,20 +51,20 @@ function accept ()
    -- Set marker to a system, visible in any mission computer and the onboard computer.
    misn.markerAdd( targetworld_sys, "low")
    ---Intro Text
-   if not tk.yesno( title[1], text[1] ) then
+   if not tk.yesno( _("Spaceport Bar"), text[1] ) then
       misn.finish()
    end
    -- Flavour text and mini-briefing
-   tk.msg( title[2], text[2] )
+   tk.msg( _("Frontier Alliance Long Distance Recruitment"), text[2] )
    ---Accept the mission
    misn.accept()
 
    -- Description is visible in OSD and the onboard computer, it shouldn't be too long either.
    reward = 500e3
-   misn.setTitle(misn_title)
+   misn.setTitle(_("Frontier Long Distance Recruitment"))
    misn.setReward(fmt.credits(reward))
    misn.setDesc( string.format( misn_desc, targetworld:name(), targetworld_sys:name() ) )
-   misn.osdCreate(title[2], {misn_desc})
+   misn.osdCreate(_("Frontier Alliance Long Distance Recruitment"), {misn_desc})
    -- Set up the goal
    hook.land("land")
    local c = misn.cargoNew( N_("Diplomat"), N_("An Imperial trade representative.") )
@@ -86,9 +78,9 @@ function land()
          misn.cargoRm( person )
          player.pay( reward )
          -- More flavour text
-         tk.msg( title[3], text[3] )
+         tk.msg( _("Mission Accomplished"), text[3] )
          faction.modPlayerSingle( "Empire",3 )
-         emp.addShippingLog( log_text )
+         emp.addShippingLog( _([[You delivered a shipping bureaucrat to The Frontier Council for the Empire. Thankfully, Lieutenant Czesc mentioned only needing your assistance again for one more mission. This last bureaucrat refused to stay in her quarters, preferring to hang out on the bridge and give you the ins and outs of Empire bureaucracy. Only your loyalty to the Empire stopped you from sending her out into the vacuum of space.]]) )
          misn.finish(true)
    end
 end

@@ -58,10 +58,6 @@ scavengerb_portrait = scavengera_portrait
 scavengera_colour = nil
 scavengerb_colour = nil
 
-misn_title = _("Finding Maikki's Father")
-misn_reward = _("???")
-misn_desc = _("Maikki wants you to help her find her father.")
-
 mainsys = "Limbo"
 searchsys = "Doeston"
 cutscenesys = "Arandon"
@@ -83,9 +79,9 @@ function create ()
       misn.finish( false )
    end
    misn.setNPC( _("Distraught Young Woman"), maikki_portrait, _("You see a small young woman sitting by herself. She has a worried expression on her face.") )
-   misn.setReward( misn_reward )
-   misn.setTitle( misn_title )
-   misn.setDesc( misn_desc )
+   misn.setReward( _("???") )
+   misn.setTitle( _("Finding Maikki's Father") )
+   misn.setDesc( _("Maikki wants you to help her find her father.") )
 end
 
 
@@ -222,7 +218,7 @@ She starts eating the parfait, which seems to be larger than her head.]]))
    vn.func( function ()
       if misn_state < 0 then
          misn_state = 0
-         misn_osd = misn.osdCreate( misn_title,
+         misn_osd = misn.osdCreate( _("Finding Maikki's Father"),
             { string.format(_("Look around the %s system"), _(searchsys)) } )
          misn_marker = misn.markerAdd( system.get(searchsys), "low" )
          minerva.log.maikki(_("You were told her father colud be near Doeston.") )
@@ -405,7 +401,7 @@ He pats his biceps in a fairly uninspiring way.]]))
       vn.na(_("They cheer, down their drinks, and order another round. Perhaps the wreck in Zerantix is related to Kex somehow."))
       vn.func( function ()
          if misn_state==3 then
-            misn_osd = misn.osdCreate( misn_title,
+            misn_osd = misn.osdCreate( _("Finding Maikki's Father"),
                { string.format(_("Follow the scavengers in the %s system"), _(stealthsys)) } )
             misn.markerMove( misn_marker, system.get(stealthsys) )
             misn_state=4
@@ -926,7 +922,7 @@ function board_wreck ()
    minerva.log.maikki(_("You boarded the wreck which seems to be Kex's ship. You found a picture of his family and signs that this was not an accident with possible Za'lek involvement.") )
 
    -- Move target back to origin
-   misn_osd = misn.osdCreate( misn_title,
+   misn_osd = misn.osdCreate( _("Finding Maikki's Father"),
          { string.format(_("Return to %s in the %s system"), minerva.maikki.name, _(mainsys)) } )
    misn.markerMove( misn_marker, planet.get("Minerva Station") )
    misn_state=5

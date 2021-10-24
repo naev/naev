@@ -37,8 +37,6 @@ misn_state = nil
 targetplanet = "Niflheim"
 targetsys = planet.get(targetplanet):system():nameRaw()
 
-misn_reward = _("A step closer to Kex's freedom")
-misn_title = _("Freeing Kex")
 misn_desc = string.format(_("You have been entrusted with stealing information from Baroness Eve at %s in the %s system."), _(targetplanet), _(targetsys))
 
 money_reward = 200e3
@@ -47,8 +45,8 @@ function create ()
    if not misn.claim( system.get(targetsys) ) then
       misn.finish( false )
    end
-   misn.setReward( misn_reward )
-   misn.setTitle( misn_title )
+   misn.setReward( _("A step closer to Kex's freedom") )
+   misn.setTitle( _("Freeing Kex") )
    misn.setDesc( misn_desc )
 
    misn.setNPC( minerva.kex.name, minerva.kex.portrait, minerva.kex.description )
@@ -66,7 +64,7 @@ function accept ()
 
    minerva.log.kex(_("You have agreed to help Kex steal information from Baroness Eve.") )
 
-   misn.osdCreate( misn_title,
+   misn.osdCreate( _("Freeing Kex"),
       { string.format(_("Go to %s in the %s system and hack the main database"), _(targetplanet), _(targetsys) ),
       _("Return to Kex at Minerva Station") } )
 

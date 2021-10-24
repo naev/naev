@@ -38,13 +38,8 @@ local fmt = require "format"
 local portrait = require "portrait"
 
 --- Missions details
-misn_title = _("Anxious Merchant")
 
 -- OSD
-osd_title = _("Help the Merchant")
-osd_desc = {}
-osd_desc[1] = _("Drop off the goods at %s in the %s system (You have %s remaining)")
-osd_desc[2] = _("Drop off the goods at %s in the %s system (You are late)")
 
 title = {}  --stage titles
 text = {}   --mission text
@@ -52,8 +47,6 @@ title[1] = _("Spaceport Bar")
 title[2] = _("Happy Day")
 title[3] = _("Deliver the Goods")
 title[4] = _("Deliver the Goods... late")
-
-misn_desc = _("You decided to help a fraught merchant by delivering some goods to %s.")
 
 text[1] = _([[As you sit down the merchant looks up at you with a panicked expression, "Ahh! What do you want? Can't you see I've enough on my plate as it is?" You tell the merchant to calm down and offer a drink. "Jeez, that's nice of you... ha, maybe I can cut a break today!"
     You grab a couple of drinks and hand one to the slightly more relaxed looking merchant as they start to talk. "So, I work for the Traders Guild. I transport stuff for them, they pay me. Only problem is I kinda strained my engines running from pirates on the way to the pick-up and now I'm realising that my engines just don't have the speed to get me back to beat the deadline. And to top it all off, I'm late on my bills as is; I can't afford new engines now! it's like I'm in the Sol nebula without a shield generator."
@@ -115,15 +108,15 @@ function accept()
    misn.accept()
 
    -- mission details
-   misn.setTitle(misn_title)
+   misn.setTitle(_("Anxious Merchant"))
    misn.setReward(fmt.credits(payment))
-   misn.setDesc(misn_desc:format(dest_planet:name()))
+   misn.setDesc(_("You decided to help a fraught merchant by delivering some goods to %s."):format(dest_planet:name()))
    marker = misn.markerAdd(dest_planet, "low") -- destination
    cargo_ID = misn.cargoAdd(cargo, cargo_size) -- adds cargo
 
    -- OSD
-   osd_msg = {osd_desc[1]:format(dest_planet:name(), dest_sys:name(), (time_limit - time.get()):str())}
-   osd = misn.osdCreate(osd_title, osd_msg)
+   osd_msg = {_("Drop off the goods at %s in the %s system (You have %s remaining)"):format(dest_planet:name(), dest_sys:name(), (time_limit - time.get()):str())}
+   osd = misn.osdCreate(_("Help the Merchant"), osd_msg)
 
    tk.msg(title[2], text[2]:format(dest_planet:name(), fmt.credits(payment)))
 
@@ -148,11 +141,11 @@ end
 
 function tick()
     if time_limit >= time.get() then -- still in time
-        osd_msg = {osd_desc[1]:format(dest_planet:name(), dest_sys:name(), (time_limit - time.get()):str())}
+        osd_msg = {_("Drop off the goods at %s in the %s system (You have %s remaining)"):format(dest_planet:name(), dest_sys:name(), (time_limit - time.get()):str())}
     else -- missed deadline
-        osd_msg = {osd_desc[2]:format(dest_planet:name(), dest_sys:name())}
+        osd_msg = {_("Drop off the goods at %s in the %s system (You are late)"):format(dest_planet:name(), dest_sys:name())}
         intime = false
         hook.rm(date_hook)
     end
-    misn.osdCreate(osd_title, osd_msg)
+    misn.osdCreate(_("Help the Merchant"), osd_msg)
 end

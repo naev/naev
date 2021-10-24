@@ -25,16 +25,11 @@ local fmt = require "format"
 -- Mission info stuff
 
 osd_msg   = {}
-osd_title = _("Sirian Bounty")
 osd_msg[1] = _("Fly to %s")
 osd_msg[2] = _("Find your target on %s and kill her")
 osd_msg["__save"] = true
 
-misn_desc = _([[A Sirian man named Harja has hired you to dispatch a "dangerous criminal" who supposedly committed some kind of crime against him.]])
 misn_reward = fmt.credits(400e3)
-
-log_text = _([[A Sirian man named Harja hired you to kill a Sirius military officer, claiming that she was a "dangerous criminal". Rather than carrying out the mission, you told her about the plot, and she rewarded you by paying half what Harja would have paid for her death.]])
-
 
 function create()
     -- This mission ONLY spawns if the system it's in is not claimed by another mission. Special hack to mutex with Dark Shadow.
@@ -58,8 +53,8 @@ function accept()
     osd_msg[1] = osd_msg[1]:format(destsys:name())
     osd_msg[2] = osd_msg[2]:format(destplanet:name())
     misn.accept()
-    misn.osdCreate(osd_title, osd_msg)
-    misn.setDesc(misn_desc)
+    misn.osdCreate(_("Sirian Bounty"), osd_msg)
+    misn.setDesc(_([[A Sirian man named Harja has hired you to dispatch a "dangerous criminal" who supposedly committed some kind of crime against him.]]))
     misn.setReward(misn_reward)
     misn.markerAdd(destsys, "high")
 
@@ -89,7 +84,7 @@ function talkJoanne()
     "I appreciate that you used your better judgment instead of recklessly trying to attack me, which would have ended badly for at least one of us. You said Harja offered you 400,000 credits for my death, yes? I will arrange for half that again to be deposited into your account. Consider it a token of gratitude. Now, it seems I may have a situation to take care of..."
     The officer excuses herself from the table and heads to the local military station. You are satisfied for now that you got paid without having to get your hands dirty. You just hope this won't come back to bite you in the butt one day.]]))
     player.pay(200e3)
-    srs.addAcHackLog( log_text )
+    srs.addAcHackLog( _([[A Sirian man named Harja hired you to kill a Sirius military officer, claiming that she was a "dangerous criminal". Rather than carrying out the mission, you told her about the plot, and she rewarded you by paying half what Harja would have paid for her death.]]) )
     misn.finish(true)
 end
 

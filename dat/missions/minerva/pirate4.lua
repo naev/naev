@@ -26,9 +26,6 @@ local vn = require 'vn'
 local love_shaders = require "love_shaders"
 local fmt = require "format"
 
-misn_title = _("Minerva Mole")
-misn_reward = _("Cold hard credits")
-misn_desc = _("Someone wants you to deal with a Dvaered spy that appears to be located at Minerva Station.")
 reward_amount = 350e3
 
 mainsys     = "Fried"
@@ -47,9 +44,9 @@ function create ()
       misn.finish( false )
    end
    misn.setNPC( minerva.pirate.name, minerva.pirate.portrait, minerva.pirate.description )
-   misn.setDesc( misn_desc )
-   misn.setReward( misn_reward )
-   misn.setTitle( misn_title )
+   misn.setDesc( _("Someone wants you to deal with a Dvaered spy that appears to be located at Minerva Station.") )
+   misn.setReward( _("Cold hard credits") )
+   misn.setTitle( _("Minerva Mole") )
    -- In the case the player failed/crashed the mission ,we want to clear the
    -- change so they can repeat it without modifying their save
    var.pop("minerva_chuckaluck_change")
@@ -64,7 +61,7 @@ function accept ()
    end
 
    misn.accept()
-   osd = misn.osdCreate( misn_title, {
+   osd = misn.osdCreate( _("Minerva Mole"), {
       _("Find out who the mole is"),
    } )
 
@@ -171,7 +168,7 @@ They make a cutting gesture from their belly up to their neck.
 
    -- On to next state
    misn_state = 1
-   osd = misn.osdCreate( misn_title, {
+   osd = misn.osdCreate( _("Minerva Mole"), {
       string.format(_("Take the mole to the interrogation facility at %s"), mainsys),
    } )
    misn.markerMove( misnmarker, system.get(mainsys) )
@@ -323,7 +320,7 @@ function pir_reinforcements ()
 
    -- Message stuff
    mainship:comm(_("Support incoming! Hurrah!"), true)
-   misn.osdCreate( misn_title, {
+   misn.osdCreate( _("Minerva Mole"), {
       _("Clean up the Dvaered patrols"),
    } )
 

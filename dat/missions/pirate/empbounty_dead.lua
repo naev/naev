@@ -46,7 +46,6 @@ misn_title[3] = _("#rPIRACY:#0: Moderate Assassination Job in %s%s")
 misn_title[4] = _("#rPIRACY:#0: Big Assassination Job in %s%s")
 misn_title[5] = _("#rPIRACY:#0: Dangerous Assassination Job in %s%s")
 misn_title[6] = _("#rPIRACY:#0: Highly Dangerous Assassination Job in %s%s")
-misn_desc   = _("A meddlesome {fctname} pilot known as {pltname} was recently seen in the {sysname} system. Local crime lords want this pilot dead. {pltname} is known to be flying a {shipclass}-class ship.{fcttext}")
 
 -- Messages
 msg    = {}
@@ -55,7 +54,6 @@ msg[2] = _("MISSION FAILURE! Another pilot eliminated your target.")
 msg[3] = _("MISSION FAILURE! You have left the %s system.")
 msg[4] = _("MISSION SUCCESS! Pay has been transferred into your account.")
 
-osd_title = _("Assassination")
 osd_msg    = {}
 osd_msg[1] = _("Fly to the %s system")
 osd_msg[2] = _("Kill %s")
@@ -140,7 +138,7 @@ function create ()
       misn.setTitle( misn_title[level]:format( missys:name(), "" ) )
    end
 
-   local mdesc = fmt.f( misn_desc, {fctname=target_faction, pltname=name, sysname=missys:name(), shipclass=ship.get(pship):classDisplay(), fcttext=faction_text } )
+   local mdesc = fmt.f( _("A meddlesome {fctname} pilot known as {pltname} was recently seen in the {sysname} system. Local crime lords want this pilot dead. {pltname} is known to be flying a {shipclass}-class ship.{fcttext}"), {fctname=target_faction, pltname=name, sysname=missys:name(), shipclass=ship.get(pship):classDisplay(), fcttext=faction_text } )
    if not pir.factionIsPirate( planet.cur():faction() ) then
       -- We're not on a pirate stronghold, so include a warning that the
       -- mission is in fact illegal (for new players).
@@ -158,7 +156,7 @@ function accept ()
 
    osd_msg[1] = osd_msg[1]:format( missys:name() )
    osd_msg[2] = osd_msg[2]:format( name )
-   misn.osdCreate( osd_title, osd_msg )
+   misn.osdCreate( _("Assassination"), osd_msg )
 
    last_sys = system.cur()
 

@@ -22,14 +22,8 @@
 local pir = require 'common.pirate'
 local fmt = require "format"
 
-misn_title = _("DV: Assault on Unicorn")
-misn_reward = _("Variable")
 misn_desc = _("It is time to put a dent in the pirates' forces. We have detected a strong pirate presence in the system of Unicorn. We are offering a small sum for each pirate killed. The maximum we will pay you is %s.")
 
-title = {}
-text = {}
-title[2] = _("Mission accomplished")
-text[2] = _("As you land, you see a Dvaered military official approaching. Thanking you for your hard and diligent work, he hands you the bounty you've earned, a number of chips worth %s.")
 
 osd_msg = {}
 osd_msg[1] = _("Fly to the Unicorn system.")
@@ -41,8 +35,8 @@ function create ()
    -- Round the payment to the nearest thousand.
    max_payment = rep * 50e3
    misn_desc = misn_desc:format( fmt.credits(max_payment) )
-   misn.setTitle(misn_title)
-   misn.setReward(misn_reward)
+   misn.setTitle(_("DV: Assault on Unicorn"))
+   misn.setReward(_("Variable"))
    misn.setDesc(misn_desc)
 
    misn_target_sys = system.get("Unicorn")
@@ -65,7 +59,7 @@ function accept ()
       misn_target_sys = system.get("Unicorn")
 
       osd_msg[2] = osd_msg2:format(pirates_killed, fmt.credits(bounty_earned), planet_start_name)
-      misn.osdCreate(misn_title,osd_msg)
+      misn.osdCreate(_("DV: Assault on Unicorn"),osd_msg)
       misn.osdActive(1)
 
       hook.enter("jumpin")
@@ -104,7 +98,7 @@ function death(pilot,killer)
       else
          osd_msg[2] = osd_msg2:format(pirates_killed, fmt.credits( bounty_earned ), planet_start_name)
       end
-      misn.osdCreate(misn_title, osd_msg)
+      misn.osdCreate(_("DV: Assault on Unicorn"), osd_msg)
       misn.osdActive(2)
    end
 end
@@ -113,7 +107,7 @@ function land()
    if planet.cur() == planet_start and pirates_killed > 0 then
       var.pop( "assault_on_unicorn_check" )
 
-      tk.msg(title[2], text[2]:format( fmt.credits( bounty_earned )))
+      tk.msg(_("Mission accomplished"), _("As you land, you see a Dvaered military official approaching. Thanking you for your hard and diligent work, he hands you the bounty you've earned, a number of chips worth %s."):format( fmt.credits( bounty_earned )))
       player.pay(bounty_earned)
       faction.modPlayerSingle( "Dvaered", math.pow( bounty_earned, 0.5 ) / 100 )
       misn.finish(true)

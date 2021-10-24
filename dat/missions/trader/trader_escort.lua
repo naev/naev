@@ -38,16 +38,11 @@ misn_title[3] = _("Escort a medium convoy to %s in %s")
 misn_title[4] = _("Escort a large convoy to %s in %s")
 misn_title[5] = _("Escort a huge convoy to %s in %s")
 
-misn_desc = _("A convoy of traders needs protection while they go to %s in %s. You must stick with the convoy at all times, waiting to jump or land until the entire convoy has done so.")
-
 piracyrisk = {}
 piracyrisk[1] = _("#nPiracy Risk:#0 None")
 piracyrisk[2] = _("#nPiracy Risk:#0 Low")
 piracyrisk[3] = _("#nPiracy Risk:#0 Medium")
 piracyrisk[4] = _("#nPiracy Risk:#0 High")
-
-osd_title = _("Convey Escort")
-osd_msg = _("Escort a convoy of traders to %s in the %s system")
 
 function create()
    --This mission does not make any system claims
@@ -95,7 +90,7 @@ function create()
 
    misn.setTitle( misn_title[convoysize]:format(
       destplanet:name(), destsys:name() ) )
-   car.setDesc( misn_desc:format( destplanet:name(), destsys:name() ), cargo, nil, destplanet, nil, piracyrisk )
+   car.setDesc( _("A convoy of traders needs protection while they go to %s in %s. You must stick with the convoy at all times, waiting to jump or land until the entire convoy has done so."):format( destplanet:name(), destsys:name() ), cargo, nil, destplanet, nil, piracyrisk )
    misn.markerAdd(destplanet, "computer")
    misn.setReward( fmt.credits(reward) )
 end
@@ -138,7 +133,7 @@ function accept()
    unsafe = false
 
    misn.accept()
-   misn.osdCreate(osd_title, {osd_msg:format(destplanet:name(), destsys:name())})
+   misn.osdCreate(_("Convey Escort"), {_("Escort a convoy of traders to %s in the %s system"):format(destplanet:name(), destsys:name())})
 
    hook.takeoff("takeoff")
    hook.jumpin("jumpin")

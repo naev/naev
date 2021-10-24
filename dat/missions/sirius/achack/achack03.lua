@@ -28,17 +28,12 @@ local fmt = require "format"
 -- Mission info stuff
 
 osd_msg   = {}
-osd_title = _("Joanne's Doubt")
 osd_msg[1] = _("Find Harja in Sirius space")
 osd_msg[2] = _("Talk to Harja")
 osd_msg[3] = _("Return to Joanne on %s (%s)")
 osd_msg["__save"] = true
 
-misn_desc = _("Joanne wants you to find Harja and interrogate him about his motives.")
 misn_reward = fmt.credits(1e6)
-
-log_text = _([[Joanne hired you to interrogate Harja about his motives for trying to assassinate her. He was unwilling to talk to you, but when you backed him into a corner, Harja claimed that it was Joanne who hacked the High Acadamy's main computer to change her scores in an attempt to frame him. He swore "on Sirichana" that he wasn't responsible for the hack. Joanne took this oath seriously, saying that he wouldn't "abuse his Sirian beliefs". She said that she may need your help again soon.]])
-
 
 function create()
    -- Note: this mission does not make any system claims.
@@ -70,9 +65,9 @@ function accept()
    osd_msg[3] = osd_msg[3]:format(destplanet:name(), destsys:name())
 
    misn.accept()
-   misn.setDesc(misn_desc)
+   misn.setDesc(_("Joanne wants you to find Harja and interrogate him about his motives."))
    misn.setReward(misn_reward)
-   misn.osdCreate(osd_title, osd_msg)
+   misn.osdCreate(_("Joanne's Doubt"), osd_msg)
 
    enterhook = hook.enter("enter")
    enterhook = hook.jumpout("jumpout")
@@ -203,7 +198,7 @@ function land()
     Joanne pays you the agreed upon sum. Then she walks out of the spaceport bar, a thoughtful expression on her face. It seems your role in the conflict between Joanne and Harja is growing. Who knows where it'll end.]]):format(player.name()))
       player.pay(1e6)
       var.pop("achack03repeat")
-      srs.addAcHackLog( log_text )
+      srs.addAcHackLog( _([[Joanne hired you to interrogate Harja about his motives for trying to assassinate her. He was unwilling to talk to you, but when you backed him into a corner, Harja claimed that it was Joanne who hacked the High Acadamy's main computer to change her scores in an attempt to frame him. He swore "on Sirichana" that he wasn't responsible for the hack. Joanne took this oath seriously, saying that he wouldn't "abuse his Sirian beliefs". She said that she may need your help again soon.]]) )
       misn.finish(true)
    end
 end

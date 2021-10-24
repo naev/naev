@@ -26,10 +26,6 @@ local car = require "common.cargo"
 local fmt = require "format"
 local lmisn = require "lmisn"
 
-misn_title = _("ZT test of %s")
-misn_desc = _("A Za'lek research team needs you to travel to %s in %s using an engine in order to test it.")
-
-
 engines = {_("engine with phase-change material cooling"),
            _("engine controlled with Zermatt-Henry theory"),   --Some random scientists names
            _("engine using a new electron propelling system"),
@@ -56,7 +52,6 @@ znpcs[2] = _([[A very old Za'lek researcher needs you to fly with an instrumente
 znpcs[3] = _([[A Za'lek student says: "Hello, I am preparing a Ph.D in system reliability. I need to make precise measurements on this engine in order to validate a stochastic failure model I developed."]])
 znpcs[4] = _([[A Za'lek researcher needs you to test the new propelling system they have implemented in this engine.]])
 
-osd_title = _("Za'lek Test")
 osd_msg = {_("Fly to %s in the %s system")}
 
 function create()
@@ -87,9 +82,9 @@ function create()
 
    local typeOfEng = engines[rnd.rnd(1, #engines)]
 
-   misn.setTitle( misn_title:format( typeOfEng ))
+   misn.setTitle( _("ZT test of %s"):format( typeOfEng ))
    misn.markerAdd(destplanet, "computer")
-   car.setDesc( misn_desc:format( destplanet:name(), destsys:name() ), nil, nil, destplanet )
+   car.setDesc( _("A Za'lek research team needs you to travel to %s in %s using an engine in order to test it."):format( destplanet:name(), destsys:name() ), nil, nil, destplanet )
    misn.setReward(fmt.credits(reward))
 end
 
@@ -107,7 +102,7 @@ function accept()
       tk.msg( _("Mission Accepted"), string.format( _("Za'lek technicians give you the engine. You will have to travel to %s in %s with this engine. The system will automatically take measures during the flight. Don't forget to equip the engine."), destplanet:name(), destsys:name() ))
 
       osd_msg[1] = string.format( osd_msg[1], destplanet:name(), destsys:name() )
-      misn.osdCreate(osd_title, osd_msg)
+      misn.osdCreate(_("Za'lek Test"), osd_msg)
       takehook = hook.takeoff( "takeoff" )
       enterhook = hook.enter("enter")
    else

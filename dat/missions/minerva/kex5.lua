@@ -44,8 +44,6 @@ misn_state = nil
 targetplanet = "Strangelove Lab"
 targetsys = "Westhaven" --planet.get(targetplanet):system():nameRaw()
 
-misn_reward = _("A step closer to Kex's freedom")
-misn_title = _("Freeing Kex")
 misn_desc = string.format(_("Kex wants you to kill Dr. Strangelove at %s in the %s system."), _(targetplanet), _(targetsys))
 
 eccdiff = "strangelove"
@@ -56,8 +54,8 @@ function create ()
    if not misn.claim( system.get(targetsys) ) then
       misn.finish( false )
    end
-   misn.setReward( misn_reward )
-   misn.setTitle( misn_title )
+   misn.setReward( _("A step closer to Kex's freedom") )
+   misn.setTitle( _("Freeing Kex") )
    misn.setDesc( misn_desc )
 
    misn.setNPC( minerva.kex.name, minerva.kex.portrait, minerva.kex.description )
@@ -109,7 +107,7 @@ function accept ()
 
    minerva.log.kex(_("You have agreed to help Kex deal with Dr. Strangelove.") )
 
-   misn.osdCreate( misn_title,
+   misn.osdCreate( _("Freeing Kex"),
       { string.format(_("Go find Dr. Strangelove in the %s system"), _(targetsys) ),
       _("Return to Kex at Minerva Station") } )
    misn_marker = misn.markerAdd( system.get(targetsys) )

@@ -32,9 +32,6 @@ local vn = require 'vn'
 local equipopt = require 'equipopt'
 local fmt = require "format"
 
-misn_title = _("Za'lek Hacking Center")
-misn_reward = _("Cold hard credits")
-misn_desc = _("Zuri wants you to disable a Za'lek hacking center located near Minerva Station.")
 reward_amount = 500e3
 
 mainsys = "Gammacron"
@@ -51,9 +48,9 @@ function create ()
       misn.finish( false )
    end
    misn.setNPC( minerva.zuri.name, minerva.zuri.portrait, minerva.zuri.description )
-   misn.setDesc( misn_desc )
-   misn.setReward( misn_reward )
-   misn.setTitle( misn_title )
+   misn.setDesc( _("Zuri wants you to disable a Za'lek hacking center located near Minerva Station.") )
+   misn.setReward( _("Cold hard credits") )
+   misn.setTitle( _("Za'lek Hacking Center") )
 end
 
 function accept ()
@@ -65,7 +62,7 @@ function accept ()
    end
 
    misn.accept()
-   osd = misn.osdCreate( misn_title, {
+   osd = misn.osdCreate( _("Za'lek Hacking Center"), {
       string.format( _("Go to the %s system"), mainsys ),
       _("Destroy the hacking center"),
       _("Return to Minerva Station"),

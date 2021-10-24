@@ -29,9 +29,6 @@ local neu = require "common.neutral"
 -- Bar Description
 
 -- Mission Details
-misn_title = _("Drunkard")
-misn_reward = _("More than it's worth!")
-misn_desc = _("You've decided to help some drunkard at the bar by picking up some goods for some countess. Though you're not sure why you accepted.")
 
 -- OSD
 OSDdesc = {}
@@ -72,9 +69,6 @@ text[8] = _([[You check your account balance as he closes the comm channel to fi
 title[9] = _("No Room")
 text[9] = _([[You don't have enough cargo space to accept this mission.]])
 
-log_text = _([[You helped some drunkard deliver goods for some countess. You thought you might get killed along the way, but you survived and got a generous payment.]])
-
-
 function create ()
    -- Note: this mission does not make any system claims.
 
@@ -103,9 +97,9 @@ function accept ()
       misn.accept()
 
       -- mission details
-      misn.setTitle( misn_title )
-      misn.setReward( misn_reward )
-      misn.setDesc( misn_desc:format(pickupWorld:name(), pickupSys:name(), delivWorld:name(), delivSys:name() ) )
+      misn.setTitle( _("Drunkard") )
+      misn.setReward( _("More than it's worth!") )
+      misn.setDesc( _("You've decided to help some drunkard at the bar by picking up some goods for some countess. Though you're not sure why you accepted."):format(pickupWorld:name(), pickupSys:name(), delivWorld:name(), delivSys:name() ) )
 
       -- OSD
       OSDdesc[1] =  OSDdesc[1]:format(pickupWorld:name(), pickupSys:name())
@@ -188,7 +182,7 @@ function closehail()
    willie:setHilight(false)
    willie:setInvincible(false)
    willie:hyperspace()
-   neu.addMiscLog( log_text )
+   neu.addMiscLog( _([[You helped some drunkard deliver goods for some countess. You thought you might get killed along the way, but you survived and got a generous payment.]]) )
    misn.finish(true)
 end
 

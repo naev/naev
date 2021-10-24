@@ -32,23 +32,10 @@ destsysname = "Torg"
 destplanetname = "Jorcan"
 destjumpname = "Doranthex"
 
-title = {}
-text = {}
 failtext = {}
 osd_desc = {}
 comm_msg = {}
 chatter = {}
-
-title[1] = _("The job offer")
-text[1] = _([[You walk up to the Dvaered official at his table. He mentions that he is looking for a pilot like yourself.
-"I am looking for a skilled pilot to do a simple job for me, interested?"]])
-
-title[2] = _("A small distraction")
-text[2] = _([["My General has just retired from the High Command and is now looking to become the Warlord of a planetary system. Unfortunately, our loyal forces seem insufficient to take on any existing planetary defense forces head on.
-      "However, it looks like there may be an opportunity for us in %s. Warlord Khan of %s has been building his newest flagship, the Hawk, and will be onboard the Hawk as it tests its hyperspace capabilities. Since its engines and weapons have not been fully installed yet, it will be substantially slower than normal and unable to defend itself.
-"To protect himself and the Hawk, Khan will have deployed a substantial escort fighter fleet to defend against any surprise attack."]])
-text[3] = _([["That is where you come in. You will jump into %s and find the Hawk and its escorts. Before the Hawk is able to reach hyperspace, you will fire on it, and cause the fighters to engage with you. At this point, you should run away from the Hawk and the jump point, so that the fighters will give chase. Then we will jump into the system and destroy the Hawk before the fighters can return."]])
-text[4] = _([["We will jump in approximately 80 hectoseconds after you jump into %s, so the fighters must be far enough away by then not to come back and attack us."]])
 
 failtext[1] = _("You have left the system without first completing your mission. The operation ended in failure.")
 
@@ -57,13 +44,8 @@ failtext[2] = _("The Hawk jumped out of the system. You have failed your mission
 failtext[3] = _("The Hawk landed back on %s. You have failed your mission.")
 failtext[4] = _("The Hawk was able to fend off the attackers and destroy their flagship. You have failed your mission.")
 
-npc_desc = _("A high ranking Dvaered officer. It looks like he might have a job offer for you.")
-
-misn_title = _("A Small Distraction")
 osd_desc[1] = _("Fly to the %s system")
 osd_desc[2] = _("Fire on the Hawk and flee from the fighter escorts until the Dvaered fleet jumps in and destroys the Hawk")
-misn_desc = _("You have been recruited to distract the Dvaered fighter escorts and lead them away from the jump gate and the capital ship Hawk. The Dvaered task force will jump in and attempt to destroy the Hawk before the escort ships can return. The mission will fail if the Hawk survives or the Dvaered task force is eliminated.")
-misn_reward = _("Some good money, hopefully")
 
 chatter[0] = _("Alright folks, this will be Hawk's maiden jump. Continue on course to the %s jump gate.")
 chatter[1] = _("How dare they attack me! Get them!")
@@ -86,20 +68,23 @@ function create()
       abort()
    end
 
-   misn.setNPC("Dvaered liaison", portrait.getMaleMil("Dvaered"), npc_desc)
+   misn.setNPC("Dvaered liaison", portrait.getMaleMil("Dvaered"), _("A high ranking Dvaered officer. It looks like he might have a job offer for you."))
 end
 
 function accept()
-   if tk.yesno(title[1], text[1]) then
-      tk.msg(title[2], string.format(text[2], destsysname, destplanetname))
-      tk.msg(title[2], string.format(text[3], destsysname))
-      tk.msg(title[2], string.format(text[4], destsysname))
+   if tk.yesno(_("The job offer"), _([[You walk up to the Dvaered official at his table. He mentions that he is looking for a pilot like yourself.
+"I am looking for a skilled pilot to do a simple job for me, interested?"]])) then
+      tk.msg(_("A small distraction"), string.format(_([["My General has just retired from the High Command and is now looking to become the Warlord of a planetary system. Unfortunately, our loyal forces seem insufficient to take on any existing planetary defense forces head on.
+      "However, it looks like there may be an opportunity for us in %s. Warlord Khan of %s has been building his newest flagship, the Hawk, and will be onboard the Hawk as it tests its hyperspace capabilities. Since its engines and weapons have not been fully installed yet, it will be substantially slower than normal and unable to defend itself.
+"To protect himself and the Hawk, Khan will have deployed a substantial escort fighter fleet to defend against any surprise attack."]]), destsysname, destplanetname))
+      tk.msg(_("A small distraction"), string.format(_([["That is where you come in. You will jump into %s and find the Hawk and its escorts. Before the Hawk is able to reach hyperspace, you will fire on it, and cause the fighters to engage with you. At this point, you should run away from the Hawk and the jump point, so that the fighters will give chase. Then we will jump into the system and destroy the Hawk before the fighters can return."]]), destsysname))
+      tk.msg(_("A small distraction"), string.format(_([["We will jump in approximately 80 hectoseconds after you jump into %s, so the fighters must be far enough away by then not to come back and attack us."]]), destsysname))
 
       misn.accept()
       osd_desc[1] = string.format(osd_desc[1], destsysname)
-      misn.osdCreate(misn_title, osd_desc)
-      misn.setDesc(misn_desc)
-      misn.setTitle(misn_title)
+      misn.osdCreate(_("A Small Distraction"), osd_desc)
+      misn.setDesc(_("You have been recruited to distract the Dvaered fighter escorts and lead them away from the jump gate and the capital ship Hawk. The Dvaered task force will jump in and attempt to destroy the Hawk before the escort ships can return. The mission will fail if the Hawk survives or the Dvaered task force is eliminated."))
+      misn.setTitle(_("A Small Distraction"))
       marker = misn.markerAdd( system.get(destsysname), "low" )
 
       missionstarted = false

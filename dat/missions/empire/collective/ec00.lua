@@ -33,14 +33,6 @@ require "proximity"
 local fmt = require "format"
 local emp = require "common.empire"
 
-misn_title = _("Collective Scout")
-misn_desc = {}
-misn_desc[1] = _("Find a scout last seen in the %s system")
-misn_desc[2] = _("Travel back to %s in %s")
-title = {}
-title[1] = _("Empire Officer")
-title[2] = _("Briefing")
-title[3] = _("Mission Accomplished")
 text = {}
 text[1] = _([[You approach the Lt. Commander.
    "Hello %s, we have a reconnaissance mission you might be interested in. Commander Soldner said you'd make a good candidate for the mission. You up for the challenge?"]])
@@ -73,7 +65,7 @@ end
 
 function accept ()
    -- Intro text
-   if not tk.yesno( title[1], string.format(text[1], player.name()) ) then
+   if not tk.yesno( _("Empire Officer"), string.format(text[1], player.name()) ) then
       misn.finish()
    end
 
@@ -85,19 +77,19 @@ function accept ()
    credits = 500e3
 
    -- Mission details
-   misn.setTitle(misn_title)
+   misn.setTitle(_("Collective Scout"))
    misn.setReward( fmt.credits( credits ) )
-   misn.setDesc( string.format(misn_desc[1], misn_nearby:name()))
+   misn.setDesc( string.format(_("Find a scout last seen in the %s system"), misn_nearby:name()))
 
    -- Flavour text and mini-briefing
-   tk.msg( title[2], string.format( text[2], misn_base_sys:name() ) )
+   tk.msg( _("Briefing"), string.format( text[2], misn_base_sys:name() ) )
    emp.addCollectiveLog( text[2]:format( misn_base_sys:name() ) )
-   tk.msg( title[2], string.format( text[3], misn_nearby:name(),
+   tk.msg( _("Briefing"), string.format( text[3], misn_nearby:name(),
          misn_target:name(), misn_base:name(), misn_base_sys:name() ))
 
    osd_msg[1] = osd_msg[1]:format(misn_target:name())
    osd_msg[3] = osd_msg[3]:format(misn_base:name(), misn_base_sys:name())
-   misn.osdCreate(misn_title, osd_msg)
+   misn.osdCreate(_("Collective Scout"), osd_msg)
    hook.enter("enter")
    hook.jumpout("jumpout")
    hook.land("land")
@@ -142,7 +134,7 @@ function spotdrone()
    -- update mission
    misn.osdActive(3)
    player.msg(_("Drone spotted!"))
-   misn.setDesc( string.format(misn_desc[2], misn_base:name(), misn_base_sys:name()) )
+   misn.setDesc( string.format(_("Travel back to %s in %s"), misn_base:name(), misn_base_sys:name()) )
    misn_stage = 1
    misn.markerMove( misn_marker, misn_base_sys )
 end
@@ -151,7 +143,7 @@ function land()
    pnt = planet.cur()
 
    if misn_stage == 1 and  pnt == misn_base then
-      tk.msg( title[3], string.format(text[4], misn_target:name()) )
+      tk.msg( _("Mission Accomplished"), string.format(text[4], misn_target:name()) )
       faction.modPlayerSingle("Empire",5)
       player.pay(credits)
       emp.addCollectiveLog( _([[You scouted out a Collective drone on behalf of the Empire. Lt. Commander Dimitri told you to report back to the bar on Omega Station for your next mission.]]) )

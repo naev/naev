@@ -44,11 +44,6 @@ abort_text[1] = _("Sick and tired of smelling garbage, you illegally jettison th
 abort_text[2] = _("You decide that the nearest waste dump location is too far away for you to bother to go to and simply jettison the containers of waste. You hope you don't get caught.")
 abort_text[3] = _("You dump the waste containers into space illegally, noting that you should make sure not to get caught by authorities.")
 
-misn_title = _("Waste Dump")
-misn_reward = _("%s per tonne")
-misn_desc = _("Take as many waste containers off of here as your ship can hold and drop them off at any authorized garbage collection facility. You will be paid immediately, but any attempt to illegally jettison the waste into space will be severely punished if you are caught.")
-
-osd_title = _("Waste Dump")
 osd_msg = {}
 osd_msg[1] = _("Land on any garbage collection facility (indicated on your map) to drop off the Waste Containers")
 
@@ -79,9 +74,9 @@ function create ()
    end
 
    -- Set mission details
-   misn.setTitle( misn_title )
-   misn.setDesc( misn_desc )
-   misn.setReward( misn_reward:format( fmt.credits( credits_factor ) ) )
+   misn.setTitle( _("Waste Dump") )
+   misn.setDesc( _("Take as many waste containers off of here as your ship can hold and drop them off at any authorized garbage collection facility. You will be paid immediately, but any attempt to illegally jettison the waste into space will be severely punished if you are caught.") )
+   misn.setReward( _("%s per tonne"):format( fmt.credits( credits_factor ) ) )
 end
 
 
@@ -98,7 +93,7 @@ function accept ()
    cid = misn.cargoAdd( c, q )
    player.pay( credits )
 
-   misn.osdCreate( osd_title, osd_msg )
+   misn.osdCreate( _("Waste Dump"), osd_msg )
 
    hook.takeoff( "takeoff" )
    hook.land( "land" )

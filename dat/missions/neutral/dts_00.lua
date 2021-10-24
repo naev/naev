@@ -44,36 +44,23 @@ local fleet = require "fleet"
 local fmt = require "format"
 local pir = require "common.pirate"
 
-
-misn_title = _("Defend the System")
-misn_reward = _("%s and the pleasure of serving the Empire.")
-misn_desc = _("Defend the system against a pirate fleet.")
-
-title = {}
 text = {}
-title[1] = _("In the bar")
 text[1] = _([[The bar is buzzing when you walk in. All the pilots are talking at once. Every screen in sight carries the same news feed: live footage of a space battle in orbit around %s.
     "A big fleet of pirates have just invaded the system," a woman wearing Nexus insignia explains. "They swarm any ship that tries to take off. Shipping is at a standstill. It's a disaster."
     There's a shout and you turn to see the portmaster standing at the door. "Listen up," he bellows. "The thugs out there have caught us without a defense fleet in system and somehow they've jammed our link with the rest of the Empire. So, I'm here looking for volunteers. Everyone who steps forward will get forty thousand credits when they get back - and of course the thanks of a grateful planet and the pride of serving the Empire.
     "Are you brave enough?"]])
-title[11] = _("Volunteers")
 text[11] = _([[You step forward and eight other pilots join you. Together, all of you march off to the your ships and take off to face the pirate horde.]])
 
-
-title[2] = _("Welcome back")
 text[2] = _([[The portmaster greets the crowd of volunteers on the spaceport causeway.
     "Well done. You got those pirates on the run!" he exclaims. "Maybe they'll think twice now before bothering our peace. I hope you all feel proud. You've spared this planet millions in shipping, and saved countless lives. And you've earned a reward. Before you take off today, the port authority will give you each forty thousand credits. Congratulations!"
     Your comrades raise a cheer, and everyone shakes the portmaster's hand. One of them kisses the master on both cheeks in the Goddard style, then the whole crowd moves toward the bar.]])
 
-title[3] = _("Over drinks")
 text[3] = _([[Many periods later, the celebration has wound down. You find yourself drinking with a small group of 'veterans of the Battle of %s,' as some of them are calling it. A older pilot sits across the table and stares pensively into his drink.
     "It's strange, though," he mutters. "I've never seen pirates swarm like that before."]])
 
-title[4] = _("Good job!")
 text[4] = _([[You jump out of %s with the sweat still running down your face. The fight to clear the system was brief but intense. After a moment, another ship enters on the same vector. The blast marks on the sides of his craft show that it too comes from combat with the pirates. Your comm beeps.
     "Good flying, mate. We got those pirates on the run!" the pilot exclaims. "You didn't want to go back for the cash either, eh? I don't blame you. I hate pirates, but I don't want the Empire's money!" He smiles grimly. "It's strange, though. I've never seen pirates swarm that way before."
 ]])
-title[5] = _("Left behind")
 text[5] = _([[Eight pilots step forward. The rest of you stand and watch as they file out the door. The portmaster spares a withering glance for those left behind.
     "Don't get your petticoats caught in the crossfire on your way out of atmo," he sneers. Then he turns to follow his volunteers.]])
 
@@ -93,14 +80,14 @@ function create ()
 
    planet_name = this_planet:name()
    system_name = this_system:name()
-   if tk.yesno( title[1], string.format( text[1], planet_name ) ) then
+   if tk.yesno( _("In the bar"), string.format( text[1], planet_name ) ) then
       misn.accept()
       var.push( "dts_firstSystem", "planet_name")
-      tk.msg( title[11], text[11])
+      tk.msg( _("Volunteers"), text[11])
       reward = 40e3
-      misn.setReward( string.format( misn_reward, fmt.credits(reward)) )
-      misn.setDesc( misn_desc)
-      misn.setTitle( misn_title)
+      misn.setReward( string.format( _("%s and the pleasure of serving the Empire."), fmt.credits(reward)) )
+      misn.setDesc( _("Defend the system against a pirate fleet."))
+      misn.setTitle( _("Defend the System"))
       misn.markerAdd( this_system, "low" )
       defender = true
 
@@ -113,7 +100,7 @@ function create ()
       -- If player didn't accept the mission, the battle's still on, but player has no stake.
       misn.accept()
       var.push( "dts_firstSystem", "planet_name")
-      tk.msg( title[5], text[5])
+      tk.msg( _("Left behind"), text[5])
       misn.setReward( _("No reward for you."))
       misn.setDesc( _("Watch others defend the system."))
       misn.setTitle( _("Watch the action."))
@@ -217,10 +204,10 @@ end
 -- The player lands to a warm welcome (if the job is done).
 function celebrate_victory()
    if victory == true then
-      tk.msg( title[2], string.format( text[2], planet_name ) )
+      tk.msg( _("Welcome back"), string.format( text[2], planet_name ) )
       player.pay( reward)
       faction.modPlayerSingle( "Empire", 3)
-      tk.msg( title[3], string.format( text[3], system_name ) )
+      tk.msg( _("Over drinks"), string.format( text[3], system_name ) )
       misn.finish( true)
    else
       tk.msg( _("Not done yet."), _("The system isn't safe yet. Get back out there!"))   -- If any pirates still alive, send player back out.
@@ -235,7 +222,7 @@ function ship_enters()
    hook.timer(1.0, "congratulations")
 end
 function congratulations()
-   tk.msg( title[4], string.format( text[4], _( system_name) ))
+   tk.msg( _("Good job!"), string.format( text[4], _( system_name) ))
    misn.finish( true)
 end
 

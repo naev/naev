@@ -31,9 +31,7 @@ local fmt = require "format"
 money_reward = 200e3
 
 text = {}
-title = {}
 
-title[1] = _("Animal transport")
 text[1] = fmt.f(_([["Good day to you, captain. I'm looking for someone with a ship who can take this crate here to planet %s in the %s system. The crate contains a colony of rodents I've bred myself, and my in-law has a pet shop on %s where I hope to sell them. Upon delivery, you will be paid {credits}. Are you interested in the job?"]]),{credits=fmt.credits(money_reward)})
 
 text[2] = _([["Excellent! My in-law will send someone to meet you at the spaceport to take the crate off your hands, and you'll be paid immediately on delivery. Thanks again!"]])
@@ -44,8 +42,6 @@ misndesc = _("You've been hired to transport a crate of specially engineered rod
 
 OSD = {}
 OSD[1] = _("Fly to the %s system and land on planet %s")
-
-log_text = _([[You successfully transported a crate of rodents for a Fyrra civilian. You could have swore you heard something squeak.]])
 
 function create ()
     -- Get an M-class Sirius planet at least 2 and at most 4 jumps away. If not found, don't spawn the mission.
@@ -76,12 +72,12 @@ end
 
 
 function accept ()
-   if tk.yesno(title[1], text[1]:format(destplanet:name(), destsys:name(), destplanet:name())) then
+   if tk.yesno(_("Animal transport"), text[1]:format(destplanet:name(), destsys:name(), destplanet:name())) then
       misn.accept()
       misn.setDesc(misndesc)
       misn.setReward(fmt.f(_("You will be paid {credits} on arrival."),{credits=fmt.credits(money_reward)}))
       misn.osdCreate(_("Animal transport"), OSD)
-      tk.msg(title[1], text[2])
+      tk.msg(_("Animal transport"), text[2])
       misn.markerAdd( destplanet, "high" )
       hook.land("land")
    else
@@ -91,10 +87,10 @@ end
 
 function land()
    if planet.cur() == destplanet then
-      tk.msg(title[1], text[3])
+      tk.msg(_("Animal transport"), text[3])
       player.pay(money_reward)
       var.push("shipinfested", true)
-      neu.addMiscLog( log_text )
+      neu.addMiscLog( _([[You successfully transported a crate of rodents for a Fyrra civilian. You could have swore you heard something squeak.]]) )
       misn.finish(true)
    end
 end

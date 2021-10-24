@@ -25,9 +25,6 @@ local minerva = require "common.minerva"
 local vn = require 'vn'
 local fmt = require "format"
 
-misn_title = _("Dvaered Thugs")
-misn_reward = _("Cold hard credits")
-misn_desc = _("Someone wants you to mess around with Dvaered thugs.")
 time_needed = 15 -- in seconds
 reward_amount = 300e3 -- 300k
 
@@ -48,9 +45,9 @@ function create ()
       misn.finish( false )
    end
    misn.setNPC( minerva.pirate.name, minerva.pirate.portrait, minerva.pirate.description )
-   misn.setDesc( misn_desc )
-   misn.setReward( misn_reward )
-   misn.setTitle( misn_title )
+   misn.setDesc( _("Someone wants you to mess around with Dvaered thugs.") )
+   misn.setReward( _("Cold hard credits") )
+   misn.setTitle( _("Dvaered Thugs") )
 end
 
 

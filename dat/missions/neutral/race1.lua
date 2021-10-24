@@ -22,19 +22,6 @@
 local fmt = require "format"
 
 
-text = {}
-title = {}
-
-title[1] = _("Looking for a 4th")
-text[1] = _([["Hiya there! We're having a race around this system system soon and need a 4th person to participate. You have to bring a Yacht class ship, and there's a prize of %s if you win. Interested?"]])
-
-title[2] = _("Awesome")
-text[2] = _([["That's great! Here's how it works: We will all be in a Yacht class ship. Once we take off from %s, there will be a countdown, and then we will proceed to the various checkpoints in order, boarding them before going to the next checkpoint. After the last checkpoint has been boarded, head back to %s and land. Let's have some fun!"]])
-
-title[3] = _("Checkpoint %s reached")
-text[3] = _("Proceed to Checkpoint %s")
-
-text[4] = _("Land on %s")
 
 OSD = {}
 OSD[1] = _("Board checkpoint 1")
@@ -65,13 +52,13 @@ end
 
 
 function accept ()
-   if tk.yesno(title[1], text[1]:format(fmt.credits(credits))) then
+   if tk.yesno(_("Looking for a 4th"), _([["Hiya there! We're having a race around this system system soon and need a 4th person to participate. You have to bring a Yacht class ship, and there's a prize of %s if you win. Interested?"]]):format(fmt.credits(credits))) then
       misn.accept()
       OSD[4] = string.format(OSD[4], curplanet:name())
       misn.setDesc(_("You're participating in a race!"))
       misn.setReward(fmt.credits(credits))
       misn.osdCreate(_("Racing Skills 1"), OSD)
-      tk.msg(title[2], string.format(text[2], curplanet:name(), curplanet:name()))
+      tk.msg(_("Awesome"), string.format(_([["That's great! Here's how it works: We will all be in a Yacht class ship. Once we take off from %s, there will be a countdown, and then we will proceed to the various checkpoints in order, boarding them before going to the next checkpoint. After the last checkpoint has been boarded, head back to %s and land. Let's have some fun!"]]), curplanet:name(), curplanet:name()))
       hook.takeoff("takeoff")
    else
       tk.msg(_("Refusal"), _([["I guess we'll need to find another pilot."]]))
@@ -225,9 +212,9 @@ function board(ship)
          misn.osdActive(i+1)
          target[4] = target[4] + 1
          if target[4] == 4 then
-            tk.msg(string.format(title[3], i), string.format(text[4], curplanet:name()))
+            tk.msg(string.format(_("Checkpoint %s reached"), i), string.format(_("Land on %s"), curplanet:name()))
          else
-            tk.msg(string.format(title[3], i), string.format(text[3], i+1))
+            tk.msg(string.format(_("Checkpoint %s reached"), i), string.format(_("Proceed to Checkpoint %s"), i+1))
          end
          break
       end

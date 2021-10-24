@@ -47,16 +47,11 @@ piracyrisk[3] = _("#nPiracy Risk:#0 Medium")
 piracyrisk[4] = _("#nPiracy Risk:#0 High")
 --=Landing=--
 
-cargo_land_title = _("Delivery success!")
-
 cargo_land = {}
 cargo_land[1] = _("The containers of %s are carried out of your ship by a sullen group of workers. The job takes inordinately long to complete, and the leader pays you without speaking a word.")
 cargo_land[2] = _("The containers of %s are rushed out of your vessel by a team shortly after you land. Before you can even collect your thoughts, one of them presses a credit chip in your hand and departs.")
 cargo_land[3] = _("The containers of %s are unloaded by an exhausted-looking bunch of dockworkers. Still, they make fairly good time, delivering your pay upon completion of the job.")
 cargo_land[4] = _("The containers of %s are unloaded by a team of robotic drones supervised by a human overseer, who hands you your pay when they finish.")
-
-osd_title = _("Cargo mission")
-osd_msg = _("Fly to %s in the %s system")
 
 -- Create the mission
 function create()
@@ -110,7 +105,7 @@ function accept ()
    end
    misn.accept()
    misn.cargoAdd(cargo, amount)
-   misn.osdCreate(osd_title, {osd_msg:format(destplanet:name(), destsys:name())})
+   misn.osdCreate(_("Cargo mission"), {_("Fly to %s in the %s system"):format(destplanet:name(), destsys:name())})
    hook.land("land")
 end
 
@@ -119,7 +114,7 @@ function land()
    if planet.cur() == destplanet then
       -- Semi-random message.
       lmisn.sfxMoney()
-      vntk.msg( cargo_land_title, cargo_land[rnd.rnd(1, #cargo_land)]:format(_(cargo)) )
+      vntk.msg( _("Delivery success!"), cargo_land[rnd.rnd(1, #cargo_land)]:format(_(cargo)) )
       player.pay(reward)
       pir.reputationNormalMission(rnd.rnd(2,3))
       misn.finish(true)

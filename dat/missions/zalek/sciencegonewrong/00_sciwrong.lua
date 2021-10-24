@@ -40,17 +40,12 @@ t_pla[2], t_sys[2] = planet.get("Waterhole's Moon")
 --t_pla[3], t_sys[3] = planet.get("Gastan")
 pho_mny = 50e3
 reward = 1e6
-title = {}
 text = {}
 osd_msg = {}
 -- set text variables
 -- Mission details
-misn_title = _("The one with the Shopping")
-misn_reward = _("The gratitude of science and a bit of compensation")
-misn_desc = _("You've been hired by Dr. Geller to collect some materials he urgently needs for his research.")
 trd1_desc = _("A scientist conspicuously sits in the corner. Perhaps he might be the person you're supposed to get this stuff for.")
 
-title[1] = _([[In the bar]])
 text[1]  = _([["Oh, hello! You look like you're a pilot; is that right? I've got a job for you. Allow me to introduce myself; my name is Dr. Geller, and I am on the brink of revolutionizing science! I've basically already done it; there's just some minor fiddling to do. Would you like to help me out? I just need you to find some samples that I can study."]])
 text[2] = _([["Excellent! Here is the list." He hands you a memory chip and turns away even before you can say anything and without giving you any cash to actually do his shopping. Once you check the list you find that it contains not only a list of materials he needs, but also information where to retrieve these and a list of contact traders.]])
 text[3] = _([["With what can I help you, my friend?" says the shifty figure. You hand him the memory chip the scientist handed you.]])
@@ -64,10 +59,8 @@ text[8] = _([["You approach the dealer and explain what you are looking for. He 
 text[9] = _([["Pleasure to do business with you."]])
 text[10] = _([["Then we have nothing to to discuss."]])
 -- call of the police
-title[2] = _([[On the intercom]])
 text[11] = _([["We have reason to believe you are carrying controlled substances without a proper license. Please stop your ship and prepare to be boarded."]])
 text[12] = _([["Stand down for inspection."]])
-title[3] = _([[On your ship]])
 text[13] = _([["You are accused of violating regulation on the transport of toxic materials. Your ship will be searched now. If there are no contraband substances, we will be out of your hair in just a moment."]])
 text[14] = _([[The inspectors search through your ship and cargo hold. It doesn't take long for them to find the phosphine; they confiscate it and fine you %s.]])
 text[15] = _([[Dr. Geller looks up at you as you approach. "Do you have what I was looking for?" You present the ghost ship piece and his face begins to glow. "Yes, that's it! Now I can continue my research. I've been looking everywhere for a sample!" You ask him about the so-called ghost ships. He seems amused by the question. "Some people believe in ridiculous nonsense related to this. There is no scientific explanation for the origin of these so-called ghost ships yet, but I think it has to do with some technology involved in the Incident. Hard to say exactly what, but hey, that's why we do research!"]])
@@ -80,9 +73,6 @@ osd_msg[4] = _("Return to the %s system and deliver to Dr. Geller on %s")
 -- refusetext
 refusetext = _("I guess you don't care for science...")
 
-log_text = _([[You helped Dr. Geller at {pntname} in the {sysname} system toobtain a "ghost ship piece" for his research. When you asked about these so-called ghost ships, he seemed amused. "Some people believe in ridiculous nonsense related to this. There is no scientific explanation for the origin of these so-called ghost ships yet, but I think it has to do with some technology involved in the Incident. Hard to say exactly what, but hey, that's why we do research!"]])
-
-
 function create ()
    -- Variable set up and clean up
    var.push( sciwrong.center_operations, planet.cur():nameRaw() )
@@ -93,16 +83,16 @@ function create ()
 end
 function accept()
    -- Mission details:
-   if not tk.yesno( title[1], text[1] ) then
+   if not tk.yesno( _([[In the bar]]), text[1] ) then
       tk.msg(_("No Science Today"), refusetext)
       misn.finish()
    end
-   tk.msg( title[1], text[2] )
+   tk.msg( _([[In the bar]]), text[2] )
    misn.accept()
-   misn.osdCreate(misn_title, {osd_msg[1]:format(t_sys[1]:name(), t_pla[1]:name())})
-   misn.setDesc(misn_desc)
-   misn.setTitle(misn_title)
-   misn.setReward(misn_reward)
+   misn.osdCreate(_("The one with the Shopping"), {osd_msg[1]:format(t_sys[1]:name(), t_pla[1]:name())})
+   misn.setDesc(_("You've been hired by Dr. Geller to collect some materials he urgently needs for his research."))
+   misn.setTitle(_("The one with the Shopping"))
+   misn.setReward(_("The gratitude of science and a bit of compensation"))
    misn_mark = misn.markerAdd( t_sys[1], "high" )
    talked = false
    lhook1 =  hook.land("land1", "land")
@@ -125,17 +115,17 @@ end
 -- first trade: send player 2 2nd system, if he goes back here, tell them to get going...
 function first_trd()
   if talked then
-     tk.msg(title[1], text[7])
+     tk.msg(_([[In the bar]]), text[7])
      return
   else
-     tk.msg(title[1], text[3])
-     tk.msg(title[1], text[4]:format(t_pla[2]:name(), t_sys[2]:name()))
+     tk.msg(_([[In the bar]]), text[3])
+     tk.msg(_([[In the bar]]), text[4]:format(t_pla[2]:name(), t_sys[2]:name()))
      talked = true
   end
 
 
   osd_msg[2] = osd_msg[2]:format(t_sys[2]:name(), t_pla[2]:name())
-  misn.osdCreate(misn_title, {osd_msg[2]})
+  misn.osdCreate(_("The one with the Shopping"), {osd_msg[2]})
 
   misn.markerMove(misn_mark, t_sys[2])
 
@@ -145,8 +135,8 @@ end
 -- 2nd trade: Get player the stuff and make them pay, let them be hunted by the police squad
 function second_trd()
   misn.npcRm(bar2pir1)
-  if not tk.yesno( title[1], text[8]:format(fmt.credits(pho_mny)) ) then
-     tk.msg(title[1], text[10])
+  if not tk.yesno( _([[In the bar]]), text[8]:format(fmt.credits(pho_mny)) ) then
+     tk.msg(_([[In the bar]]), text[10])
      return
   end
   -- take money from player, if player does not have the money, refuse
@@ -157,9 +147,9 @@ function second_trd()
   player.pay(-pho_mny)
   local c = misn.cargoNew(N_("Phosphine"), N_("A colourless, flammable, poisonous gas."))
   carg_id = misn.cargoAdd(c, 3)
-  tk.msg(title[1], text[9])
+  tk.msg(_([[In the bar]]), text[9])
   osd_msg[3] = osd_msg[3]:format(t_sys[1]:name(), t_pla[1]:name())
-  misn.osdCreate(misn_title, {osd_msg[3]})
+  misn.osdCreate(_("The one with the Shopping"), {osd_msg[3]})
  -- create hook that player will be hailed by authorities bc of toxic materials
   misn.markerMove(misn_mark, t_sys[1])
   hook.rm(lhook2)
@@ -169,13 +159,13 @@ end
 
 -- 3rd trade: Get the stuff the scientist wants
 function third_trd()
-  tk.msg(title[1], text[6])
+  tk.msg(_([[In the bar]]), text[6])
 
   misn.npcRm(bar1pir1)
   misn.cargoRm(carg_id)
   player.msg(t_sys[3]:name())
   osd_msg[4] = osd_msg[4]:format(t_sys[3]:name(), t_pla[3]:name())
-  misn.osdCreate(misn_title, {osd_msg[4]})
+  misn.osdCreate(_("The one with the Shopping"), {osd_msg[4]})
 
   misn.markerMove(misn_mark, t_sys[3])
 
@@ -188,10 +178,10 @@ end
 -- final land: let the player land and collect the reward
 function fnl_ld ()
    if planet.cur() == t_pla[3] and traded2 then
-      tk.msg(title[1],text[15])
-      tk.msg(title[1],text[16])
+      tk.msg(_([[In the bar]]),text[15])
+      tk.msg(_([[In the bar]]),text[16])
       player.pay(reward)
-      sciwrong.addLog( fmt.f( log_text, {pntname=t_pla[3]:name(), sysname=t_sys[3]:name() } ) )
+      sciwrong.addLog( fmt.f( _([[You helped Dr. Geller at {pntname} in the {sysname} system toobtain a "ghost ship piece" for his research. When you asked about these so-called ghost ships, he seemed amused. "Some people believe in ridiculous nonsense related to this. There is no scientific explanation for the origin of these so-called ghost ships yet, but I think it has to do with some technology involved in the Incident. Hard to say exactly what, but hey, that's why we do research!"]]), {pntname=t_pla[3]:name(), sysname=t_sys[3]:name() } ) )
       misn.finish(true)
    end
 end
@@ -203,8 +193,8 @@ function sys_enter ()
 end
 function call_the_police ()
    spwn_police()
-   tk.msg(title[2],text[11])
-   tk.msg(title[2],text[12])
+   tk.msg(_([[On the intercom]]),text[11])
+   tk.msg(_([[On the intercom]]),text[12])
    if boardh == nil then
       boardh = hook.pilot(player.pilot(), "disable", "go_board")
    end
@@ -257,8 +247,8 @@ end
 -- display msgs and have the ships disappear and fail the mission...
 function fine_vanish ()
    fine = 100e3
-   tk.msg(title[3],text[13])
-   tk.msg(title[3],text[14]:format(fmt.credits(fine)))
+   tk.msg(_([[On your ship]]),text[13])
+   tk.msg(_([[On your ship]]),text[14]:format(fmt.credits(fine)))
    if player.credits() > fine then
       player.pay(-fine)
    else
