@@ -161,13 +161,13 @@ function create ()
    local faction_text = pir.reputationMessage( reward_faction )
    local faction_title = ""
    if pir.factionIsClan( reward_faction ) then
-      faction_title = fmt.f(_(" ({clanname})"), {clanname=reward_faction:name()})
+      faction_title = fmt.f(_(" ({clanname})"), {clanname=reward_faction})
    end
 
-   misn.setTitle(fmt.f(_("#rPIRACY#0: Raid a {adjective} {name} convoy in the {sys} system{fct}"), {adjective=adjective, name=enemyfaction:name(), sys=targetsys:name(), fct=faction_title} ))
+   misn.setTitle(fmt.f(_("#rPIRACY#0: Raid a {adjective} {name} convoy in the {sys} system{fct}"), {adjective=adjective, name=enemyfaction, sys=targetsys, fct=faction_title} ))
    misn.setDesc(fmt.f(_("A convoy carrying {cargo} will be passing through the {sys} system on the way from {entersys} to {exitsys}. A local Pirate Lord wants you to assault the convoy and bring back as many tonnes of {cargo} as possible. You will be paid based on how much you are able to bring back.{reputation}"),
-         {cargo=cargo[1], sys=targetsys:name(), entersys=convoy_enter:dest():name(), exitsys=convoy_exit:dest():name(), reputation=faction_text}))
-   misn.setReward(fmt.f(_("{rbase} and {rcargo} per ton of {cargo} recovered"), {rbase=fmt.credits(reward_base),rcargo=fmt.credits(reward_cargo),cargo=cargo[1]}))
+         {cargo=misn_cargo, sys=targetsys, entersys=convoy_enter:dest(), exitsys=convoy_exit:dest(), reputation=faction_text}))
+   misn.setReward(fmt.f(_("{rbase} and {rcargo} per ton of {cargo} recovered"), {rbase=fmt.credits(reward_base),rcargo=fmt.credits(reward_cargo),cargo=misn_cargo}))
    misn.markerAdd( targetsys )
 end
 
@@ -176,7 +176,7 @@ function accept ()
 
    misn.osdCreate(_("Pirate Raid"), {
       fmt.f(_("Go to the {sys} system"),{sys=targetsys}),
-      fmt.f(_("Plunder {cargo} from the convoy"),{cargo=cargo[1]}),
+      fmt.f(_("Plunder {cargo} from the convoy"),{cargo=misn_cargo}),
       fmt.f(_("Deliver the loot to {pnt} in the {sys} system"),{pnt=returnpnt, sys=returnsys}),
    } )
 
@@ -187,7 +187,7 @@ end
 function enter ()
    local q = player.pilot():cargoHas( misn_cargo )
    if convoy_spawned and q <= 0 then
-      player.msg(fmt.f(_("#rMISSION FAILED: You did not recover any {cargo} from the convoy!"), {cargo=cargo[1]}))
+      player.msg(fmt.f(_("#rMISSION FAILED: You did not recover any {cargo} from the convoy!"), {cargo=misn_cargo}))
       misn.finish(false)
    end
    if convoy_spawned and q > 0 then
@@ -209,7 +209,7 @@ function land ()
       q = pp:cargoRm( misn_cargo, q ) -- Remove it
       local reward = reward_base + q * reward_cargo
       lmisn.sfxVictory()
-      vntk.msg( _("Mission Success"), fmt.f(_("The workers unload your {cargo} and take it away to somewhere you can't see. As you wonder about your payment, you suddenly receive a message that #g{reward}#0 was transferred to your account."), {cargo=cargo[1], reward=fmt.credits(reward)}) )
+      vntk.msg( _("Mission Success"), fmt.f(_("The workers unload your {cargo} and take it away to somewhere you can't see. As you wonder about your payment, you suddenly receive a message that #g{reward}#0 was transferred to your account."), {cargo=misn_cargo, reward=fmt.credits(reward)}) )
       player.pay( reward )
 
       -- Faction hit
@@ -219,7 +219,7 @@ function land ()
       local done = var.peek( "pir_convoy_raid" ) or 0
       var.push( "pir_convoy_raid", done+1 )
 
-      pir.addMiscLog(fmt.f(_("You raided a {adjective} {name} convoy in the {sys} system and stole {tonnes} of {cargo}."), {adjective=adjective, name=enemyfaction, sys=targetsys, tonnes=fmt.tonnes(q), cargo=cargo[1]}))
+      pir.addMiscLog(fmt.f(_("You raided a {adjective} {name} convoy in the {sys} system and stole {tonnes} of {cargo}."), {adjective=adjective, name=enemyfaction, sys=targetsys, tonnes=fmt.tonnes(q), cargo=misn_cargo}))
       misn.finish(true)
    end
 end
