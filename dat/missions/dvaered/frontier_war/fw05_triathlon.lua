@@ -59,7 +59,7 @@ local joy = { _("Wohoo!"),
         _("Got you!"),}
 
 function create()
-   destpla, destsys = planet.get("Dvaer Prime")
+   destpla, destsys = planet.getS("Dvaer Prime")
 
    if not misn.claim(destsys) then
       misn.finish(false)

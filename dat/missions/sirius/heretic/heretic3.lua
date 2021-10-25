@@ -27,18 +27,6 @@ local fleet = require "fleet"
 local fmt = require "format"
 local srs = require "common.sirius"
 
-
---beginning messages
-
---ending messages
-
---mission OSD
-osd = {}
-osd[1] = _("Defend %s against the Sirius assault")
-osd[2] = _("Return to %s")
---random odds and ends
-misn_desc = _([[A Sirius assault fleet has just jumped into %s. You are to assist Nasin in destroying this fleet.]])
-
 function create()
    --this mission makes one mission claim, in Suna.
    --initialize your variables
@@ -55,11 +43,6 @@ function create()
    misn.setReward( fmt.credits( reward ) )
    misn.setTitle( _("The Assault") )
    misn.setNPC(_("Draga"), "sirius/unique/draga.webp", _("The familiar form of Draga is at a table with some officers. They look busy."))
-
-   osd[1] = osd[1]:format(homeasset:name())
-   osd[2] = osd[2]:format(homeasset:name())
-
-   misn_desc = misn_desc:format(homesys:name())
 end
 
 function accept()
@@ -69,9 +52,12 @@ function accept()
       tk.msg( _("The Assault"), _([["Excellent! See, folks? I told you this one was a keeper! Our forces will meet you out there. Ah, and while I'm sure you would never do this, as before, desertion will not be tolerated. Do not land or leave the system until your mission is completed."]]) )
 
       misn.accept()
-      misn.setDesc(misn_desc)
+      misn.setDesc(_([[A Sirius assault fleet has just jumped into %s. You are to assist Nasin in destroying this fleet.]]):format(homesys:name()))
       misn.markerAdd(homesys,"high")
-      misn.osdCreate(_("The Assault"),osd)
+      misn.osdCreate(_("The Assault"), {
+         _("Defend %s against the Sirius assault"):format(homeasset:name()),
+         _("Return to %s"):format(homeasset:name()),
+      })
       misn.osdActive(1)
 
       --hook time.

@@ -49,11 +49,8 @@ reminders[7] = _("You start to forget for a while that you have a passenger unti
 reminders[8] = _("You talk to Chelsea a little about some interesting experiences you've had as a pilot.")
 reminders[9] = _("You have a brief conversation with Chelsea about interesting sights you both have seen in your travels.")
 
-osd_desc    = {}
-osd_desc[1] = _("Go to the %s system and land on the planet %s.")
-
 function create ()
-   misplanet, missys = planet.get( "Durea" )
+   misplanet, missys = planet.getS( "Durea" )
    -- Note: This mission does not make system claims
    if system.cur():jumpDist( missys, true ) < #chatter * 3 / 2 then
       misn.finish( false )
@@ -83,8 +80,9 @@ function accept ()
       misn.setReward( _("The satisfaction of helping out a new friend") )
       marker = misn.markerAdd( missys, "low" )
 
-      osd_desc[1] = osd_desc[1]:format( missys:name(), misplanet:name() )
-      misn.osdCreate( _("Coming Out"), osd_desc )
+      misn.osdCreate( _("Coming Out"), {
+         _("Go to the %s system and land on the planet %s."):format( missys:name(), misplanet:name() ),
+      } )
 
       hook.land( "land" )
 

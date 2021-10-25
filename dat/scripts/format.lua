@@ -151,8 +151,9 @@ end
 String interpolation, inspired by <a href="https://github.com/hishamhm/f-strings">f-strings</a> without debug stuff.
 
    Prefer this over string.format because it allows translations to change the word order.
+   It also lets you use objects in the formatting (if they support tostring()), whereas string.format can only do this under LuaJIT.
 
-   @usage fmt.f(_("Deliver the loot to {pntname} in the {sysname} system"),{pntname=returnpnt:name(), sysname=returnsys:name()})
+   @usage fmt.f(_("Deliver the loot to {pnt} in the {sys} system"),{pnt=returnpnt, sys=returnsys})
 
    @tparam string str Format string which may include placeholders of the form "{var}" "{var:6.3f}"
                       (where the expression after the colon is any directive string.format understands).

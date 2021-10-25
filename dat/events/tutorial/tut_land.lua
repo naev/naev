@@ -141,7 +141,7 @@ function ship_buy( shipname )
       sai(_([["You also don't have to worry about your ship AI changing, I am automatically transferred between your ships. You can't get away from me, ha ha."]]))
       vn.done( tut.shipai.transition )
       vn.run()
-      var.push( "tut_buyship" )
+      var.push( "tut_buyship", true )
    end
 
    if s:time_mod() > 1 and not var.peek( "tut_timedil" ) then

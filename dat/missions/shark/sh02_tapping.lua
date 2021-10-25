@@ -37,16 +37,6 @@ local fmt = require "format"
 local shark = require "common.shark"
 
 
-osd_msg = {}
-
--- Mission details
-
--- NPC
-
--- OSD
-osd_msg[1] = _("Land on %s in %s and meet the Nexus agent")
-osd_msg[2] = _("Bring the recording back to %s in the %s system")
-
 function create ()
    mispla, missys = planet.getLandable(faction.get("Sirius"))
 
@@ -57,7 +47,7 @@ function create ()
    pplname = "Darkshed"
    psyname = "Alteris"
    paysys = system.get(psyname)
-   paypla = planet.get(pplname)
+   paypla = planet.getS(pplname)
 
    misn.setNPC(_("Arnold Smith"), "neutral/unique/arnoldsmith.webp", _([[Arnold Smith is here. Perhaps he might have another job for you.]]))
 end
@@ -76,13 +66,13 @@ function accept()
       misn.accept()
       tk.msg(_("The job"), _([["I'm glad to hear it. Go meet our agent on %s in the %s system. Oh, yes, and I suppose I should mention that I'm known as 'James Neptune' to the agent. Good luck!"]]):format(mispla:name(), missys:name()))
 
-      osd_msg[1] = osd_msg[1]:format(mispla:name(), missys:name())
-      osd_msg[2] = osd_msg[2]:format(pplname, psyname)
-
       misn.setTitle(_("Unfair Competition"))
       misn.setReward(fmt.credits(reward))
       misn.setDesc(_("Nexus Shipyards is in competition with House Sirius."))
-      osd = misn.osdCreate(_("Unfair Competition"), osd_msg)
+      misn.osdCreate(_("Unfair Competition"), {
+         _("Land on %s in %s and meet the Nexus agent"):format(mispla:name(), missys:name()),
+         _("Bring the recording back to %s in the %s system"):format(pplname, psyname),
+      })
       misn.osdActive(1)
 
       marker = misn.markerAdd(missys, "low")
@@ -107,7 +97,7 @@ function land()
          tk.msg(_("Good job"), _([[The Nexus employee greets you as you reach the ground. "Excellent! I will just need to spend a few hectoseconds analyzing these recordings. See if you can find me in the bar soon; I might have another job for you."]]))
          pir.reputationNormalMission(rnd.rnd(2,3))
          player.pay(reward)
-         misn.osdDestroy(osd)
+         misn.osdDestroy()
          hook.rm(enterhook)
          hook.rm(landhook)
          shark.addLog( _([[You helped Nexus Shipyards gather information in an attempt to sabotage competition from House Sirius. Arnold Smith said to meet him in the bar soon; he may have another job for you.]]) )

@@ -34,8 +34,8 @@ osd_msg   = {}
 function create()
     -- mission variables
     credits = 500e3
-    homeworld, homeworld_sys = planet.get("Jorla")
-    dest_planet, dest_sys = planet.get("Jurai")
+    homeworld, homeworld_sys = planet.getS("Jorla")
+    dest_planet, dest_sys = planet.getS("Jurai")
 
     -- Spaceport bar stuff
     misn.setNPC(_("Dr. Mensing"), "zalek/unique/mensing.webp", _("She probably has a new poorly paid job for you. Maybe she won't notice you if you leave now."))
@@ -72,7 +72,7 @@ function land()
         if stage == 0 then
             local planet_name = dest_planet:name()
             stage = 1
-            dest_planet, dest_sys = planet.get("Neo Pomerania")
+            dest_planet, dest_sys = planet.getS("Neo Pomerania")
             tk.msg(_("No luck"), _([[After landing on %s Dr. Mensing tells you to wait until she returns. "Not more than a couple of periods." she said; in fact you had to wait for only two periods until she returned. She comes back looking defeated.
     "This is the first time that one of my applications was rejected. That's weird, I got positive feedback at first. It makes no sense that my application was rejected at the last minute. I guess things like this happen. Let's just go to %s in the %s system next and try again."]]):format(planet_name, dest_planet:name(), dest_sys:name()))
             misn.markerMove(misn_marker, dest_sys)
@@ -82,7 +82,7 @@ function land()
         elseif stage == 2 then
             local planet_name = dest_planet:name()
             stage = 3
-            dest_planet, dest_sys = planet.get("Ruadan Prime")
+            dest_planet, dest_sys = planet.getS("Ruadan Prime")
             tk.msg(_("No luck"), _([["Alright, I'm sure it will work out this time!", Dr. Mensing said on arriving on %s. This time you have to wait even longer for her to return. The result is the same as her first try.
     "I don't get it. My presentation is flawless and my proposal is exciting. Why wouldn't they grant me additional funds? I tell you, something is wrong here! Hmm... Time to change tactics. I have to speak with Professor Voges himself but he is currently on %s in the %s system and just ignores us. I guess we have to go there to speak with him face-to-face."]]):format(planet_name, dest_planet:name(), dest_sys:name()))
             misn.markerMove(misn_marker, dest_sys)
@@ -91,7 +91,7 @@ function land()
             misn.osdCreate(_("Shielding Prototype Funding"), osd_msg)
         elseif stage == 4 then
             stage = 5
-            dest_planet, dest_sys = planet.get("Excelcior")
+            dest_planet, dest_sys = planet.getS("Excelcior")
             tk.msg("", _([["Good news! I asked around and found a clue how to contact Professor Voges. He promised one of his colleagues to show up to his party. Something about his wife, like they have gotten married or she died or something. Anyway, I managed to get invited there as well. So let's go to %s in the %s system!"]]):format(dest_planet:name(), dest_sys:name()))
             misn.markerMove(misn_marker, dest_sys)
             osd_msg[1] = _("Land on %s in the %s system."):format(dest_planet:name(), dest_sys:name())
@@ -177,7 +177,7 @@ end
 function cannotLand()
     local planet_name = dest_planet:name()
     stage = 4
-    dest_planet, dest_sys = planet.get("Ruadan Station")
+    dest_planet, dest_sys = planet.getS("Ruadan Station")
     tk.msg(_("No clearance to land"), _([[Apparently you are not allowed to land on %s and explaining the situation was futile. Dr. Mensing enters the cockpit asking why you aren't landing. "We're not allowed to? Let me try to talk with them."
     After a heated discussion Dr. Mensing gives up. "Right, they won't allow anyone to land on %s. That's so frustrating. Let's land on %s instead."]]):format(planet_name, planet_name, dest_planet:name()))
     osd_msg[1] = _("Land on %s in the %s system."):format(dest_planet:name(), dest_sys:name())

@@ -38,8 +38,8 @@ log_text = _([[You gave a scientific talk in %s. Did anyone noticed you're not a
 
 function create()
     -- mission variables
-    homeworld, homeworld_sys = planet.get("Jorla")
-    dest_planet, dest_sys = planet.get("Neo Pomerania")
+    homeworld, homeworld_sys = planet.getS("Jorla")
+    dest_planet, dest_sys = planet.getS("Neo Pomerania")
     lab_coat_price = 25e3
     glasses_price = 40e3
     local numjumps = homeworld_sys:jumpDist(dest_sys, false)

@@ -50,7 +50,7 @@ msg[5] = _("MISSION FAILURE! You showed up too late.")
 msg[6] = _("MISSION FAILURE! You have left the %s system.")
 
 osd_msg    = {}
-osd_msg[1] = _("Fly to the %s system")
+osd_msg[1] = _("Fly to the {sys} system")
 osd_msg[2] = "(null)"
 osd_msg[3] = _("Eliminate outsiders")
 osd_msg[4] = _("Land in %s territory to collect your pay")

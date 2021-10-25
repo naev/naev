@@ -36,7 +36,7 @@ local emp = require "common.empire"
 
 
 osd_msg = {}
-osd_msg[1] = _("Fly to the %s system")
+osd_msg[1] = _("Fly to the {sys} system")
 osd_msg[2] = ""
 osd_msg[3] = _("Return to %s")
 osd_msg["__save"] = true
@@ -75,7 +75,7 @@ function accept ()
       misn_stage = 0
       dronequota = 5 -- The amount of drones the player must whack to win
       droneleft = dronequota
-      misn_base, misn_base_sys = planet.get("Omega Station")
+      misn_base, misn_base_sys = planet.getS("Omega Station")
       misn_target_sys = system.get("C-59")
       misn_marker = misn.markerAdd( misn_target_sys, "low" )
 
@@ -88,7 +88,7 @@ function accept ()
     "The idea would be to have you fly deep into Collective territory and kick up some trouble. A few dead drones should draw their attention. This is no suicide mission, so you'll have to fly back when things start getting ugly. Meanwhile we'll send a fast convoy with the commandos to %s, to start monitoring."]]), commando_planet, commando_planet ) )
       tk.msg( _("Collective Espionage"), _([["If all goes well, the commandos will return here with the results after 10 periods. Then we'll have a definitive answer on the communications issues. We aren't anticipating problems on the return, but we'll have some ships ready just in case they're pursued.
     "Good luck and be careful out there," he adds, before saluting you off onto your mission.]]) )
-      osd_msg[1] = osd_msg[1]:format(misn_target_sys:name())
+      osd_msg[1] = fmt.f(osd_msg[1], {sys=misn_target_sys})
       setOSD(dronequota, droneleft)
       osd_msg[3] = osd_msg[3]:format(misn_base:name())
       misn.osdCreate(_("Collective Distraction"), osd_msg)

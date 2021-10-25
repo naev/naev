@@ -16,7 +16,7 @@
 
 --Create Mom and Dad in their spaceship, and have them come from the planet Brooks in Arcturus system, following the player.
 function create ()
-    local pnt = planet.get("Brooks")
+    local pnt = planet.getS("Brooks")
     panma = pilot.add( "Llama", "Independent", pnt )
     panma:control()
     panma:follow(player.pilot())

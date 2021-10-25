@@ -25,14 +25,6 @@ require "proximity"
 local srs = require "common.sirius"
 local fmt = require "format"
 
--- Mission info stuff
-
-osd_msg   = {}
-osd_msg[1] = _("Find Harja in Sirius space")
-osd_msg[2] = _("Talk to Harja")
-osd_msg[3] = _("Return to Joanne on %s (%s)")
-osd_msg["__save"] = true
-
 misn_reward = fmt.credits(1e6)
 
 function create()
@@ -62,12 +54,14 @@ function accept()
    destplanet, destsys = planet.cur() -- Keeps track of where the mission was accepted.
    origin = planet.cur() -- Keeps track of where the player enters the system from.
 
-   osd_msg[3] = osd_msg[3]:format(destplanet:name(), destsys:name())
-
    misn.accept()
    misn.setDesc(_("Joanne wants you to find Harja and interrogate him about his motives."))
    misn.setReward(misn_reward)
-   misn.osdCreate(_("Joanne's Doubt"), osd_msg)
+   misn.osdCreate(_("Joanne's Doubt"), {
+      _("Find Harja in Sirius space"),
+      _("Talk to Harja"),
+      _("Return to Joanne on %s (%s)"):format(destplanet:name(), destsys:name()),
+   })
 
    enterhook = hook.enter("enter")
    enterhook = hook.jumpout("jumpout")

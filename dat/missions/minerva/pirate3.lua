@@ -31,12 +31,12 @@ local fmt = require "format"
 reward_amount = 200e3 -- 200k
 
 harper_image = portrait.getFullPath( portrait.get() ) -- TODO replace?
-harper_bribe_big = 1e6
-harper_bribe_sml = 1e5
-harper_bribe_tkn = 1000
+local harper_bribe_big = 1e6
+local harper_bribe_sml = 1e5
+local harper_bribe_tkn = 1000
 
-spa_portrait = minerva.terminal.portrait
-spa_description = _("Present your winning ticket at the terminal to enter the Minerva Station Spa.")
+local spa_portrait = minerva.terminal.portrait
+local spa_description = _("Present your winning ticket at the terminal to enter the Minerva Station Spa.")
 
 mainsys = "Limbo"
 -- Mission states:
@@ -60,6 +60,9 @@ function create ()
    misn.setDesc( _("Someone wants you to find a Dvaered spy that appears to be located at Minerva Station.") )
    misn.setReward( _("Cold hard credits") )
    misn.setTitle( _("Finding the Dvaered Spy") )
+
+   -- Clear variable just in case
+   var.pop("harper_ticket")
 end
 
 
@@ -71,29 +74,15 @@ function accept ()
       return
    end
 
-   -- Clear variable just in case
-   var.pop("harper_ticket")
-
-   misn.accept()
-   osd = misn.osdCreate( _("Minerva Moles"),
-         {_("Plant a listening device in a VIP room.") } )
-
-   misn.markerAdd( planet.get("Minerva Station") )
-
-   minerva.log.pirate(_("You accepted another job from the shady individual to uncover moles at Minerva Station.") )
-
    hook.enter("enter")
    hook.load("generate_npc")
    hook.land("generate_npc")
    generate_npc()
 end
 
-
 function generate_npc ()
-   npc_pir = nil
-   npc_spa = nil
-   if planet.cur() == planet.get("Minerva Station") then
-      npc_pir = misn.npcAdd( "approach_pir", minerva.pirate.name, minerva.pirate.portrait, minerva.pirate.description )
+   if planet.cur() == planet.getS("Minerva Station") then
+      misn.npcAdd( "approach_pir", minerva.pirate.name, minerva.pirate.portrait, minerva.pirate.description )
       if misn_state == 4 then
          npc_spa = misn.npcAdd( "approach_spa", _("Minerva Station Spa"), spa_portrait, spa_description )
       end
@@ -137,7 +126,18 @@ function approach_pir ()
       vn.done()
 
       vn.label("accept")
-      vn.func( function () misn_state=0 end )
+      vn.func( function ()
+         misn_state=0
+
+         misn.accept()
+         misn.osdCreate( _("Minerva Moles"),
+               {_("Plant a listening device in a VIP room.") } )
+
+         local minsta = planet.getS("Minerva Station")
+         misn.markerAdd( minsta )
+
+         minerva.log.pirate(_("You accepted another job from the shady individual to uncover moles at Minerva Station.") )
+      end )
       pir(_([["Glad to have you onboard again. From the few intercepted Dvaered and Za'lek communications we were able to decode, it seems like we might have some moles at Minerva Station. They are probably really deep so it won't be an easy task to drive them out."]]))
       pir(_([["That's where this comes in to place."
 They take out a metallic object from their pocket and show it to you. You don't know what to make of it.
@@ -232,7 +232,7 @@ They start frantically typing into their portable holo-deck. It makes weird beep
    pir(_([["OK, so we aren't so bad off. It seems like the winner was doing some space tourism around the system. Not like there is anything to see here."]]))
    pir(_([["So change of plans, I need you to go pay this guy a visit. See if you can 'encourage' them to give the ticket to you. Everyone has a price at Minerva Station."]]))
    vn.func( function ()
-      osd = misn.osdCreate( _("Minerva Moles"),
+      misn.osdCreate( _("Minerva Moles"),
          {_("Get Harper Bowdoin's ticket in Limbo.")},
          {_("Plant a listening device in a VIP room.") } )
       misn_state = 3
@@ -247,7 +247,7 @@ She beams you a smile.
 "Now go enjoy yourself at the spa and don't forget to plant the listening device!"]]))
    vn.func( function ()
       misn_state = 4
-      osd = misn.osdCreate( _("Minerva Moles"),
+      misn.osdCreate( _("Minerva Moles"),
          {_("Plant a listening device in the Spa.") } )
       npc_spa = misn.npcAdd( "approach_spa", _("Minerva Station Spa"), spa_portrait, spa_description )
       minerva.log.pirate(_("You obtained the winning ticket to enter the Minerva Spa.") )
@@ -269,7 +269,7 @@ function enter ()
       -- Don't stop spawns, but claimed in case something else stops spawns
       -- TODO maybe add Minerva patrols that aggro ta make it a bit harder?
       -- Spawn Harper Bowdoin and stuff
-      local pos = planet.get("Minerva Station"):pos() + vec2.newP( 5000, rnd.rnd(360) )
+      local pos = planet.getS("Minerva Station"):pos() + vec2.newP( 5000, rnd.rnd(360) )
 
       local fharper = faction.dynAdd( nil, "Harper Bowdoin" )
       harper = pilot.add( "Quicksilver", fharper, pos, "Harper", {ai="civilian"} )
@@ -344,7 +344,7 @@ function harper_gotattacked( _plt, attacker )
          -- Run to land at the station
          harper:setNoLand(false)
          harper:control()
-         harper:land( planet.get("Minerva Station") )
+         harper:land( planet.getS("Minerva Station") )
          harper_attacked = true
       end
 
@@ -377,7 +377,7 @@ function harper_hail ()
       -- He goes land now
       harper:setNoLand(false)
       harper:control()
-      harper:land( planet.get("Minerva Station") )
+      harper:land( planet.getS("Minerva Station") )
    end
 
    if harper_almostdied then

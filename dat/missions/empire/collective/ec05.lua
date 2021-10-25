@@ -51,12 +51,6 @@ local fmt = require "format"
 local emp = require "common.empire"
 
 
-osd_msg = {}
-osd_msg[1] = _("Fly to the %s system")
-osd_msg[2] = _("Apprehend or kill Zakred")
-osd_msg[3] = _("Report back to %s")
-osd_msg["__save"] = true
-
 function create ()
    missys = {system.get("Rockbed")}
    if not misn.claim(missys) then
@@ -86,7 +80,7 @@ function accept ()
 
    -- Mission data
    misn_stage = 0
-   misn_base, misn_base_sys = planet.get("Omega Station")
+   misn_base, misn_base_sys = planet.getS("Omega Station")
    misn_target_sys = system.get("Rockbed")
    misn_flee_sys = system.get("Capricorn")
    misn_marker = misn.markerAdd( misn_target_sys, "high" )
@@ -95,9 +89,11 @@ function accept ()
    misn.setTitle(_("Operation Black Trinity"))
    misn.setReward( fmt.credits( credits ) )
    misn.setDesc( string.format(_("Arrest the ESS Trinity in %s"), misn_target_sys:name() ))
-   osd_msg[1] = osd_msg[1]:format(misn_target_sys:name())
-   osd_msg[3] = osd_msg[3]:format(misn_base:name())
-   misn.osdCreate(_("Operation Black Trinity"), osd_msg)
+   misn.osdCreate(_("Operation Black Trinity"), {
+      fmt.f(_("Fly to the {sys} system"), {sys=misn_target_sys}),
+      _("Apprehend or kill Zakred"),
+      _("Report back to %s"):format(misn_base:name()),
+   })
 
    tk.msg( _("Interrogation Room"), string.format(_([[You accept and she dismisses both of the soldiers, who proceed to wait outside.
     "We've been following Lt. Commander Dimitri's progress since he started at %s. The datapad you brought back has confirmed what we have suspected. We have an undercover Collective agent somewhere in the military who's been feeding ex-Commodore Welsh data. You don't understand, right? Let me explain."]]), misn_base:name() ) )

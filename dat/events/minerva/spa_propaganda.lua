@@ -17,7 +17,6 @@
 --[[
 -- Triggered from station.lua
 --]]
-
 local minerva = require 'common.minerva'
 local vn = require 'vn'
 

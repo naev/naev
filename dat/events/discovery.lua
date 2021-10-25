@@ -38,7 +38,7 @@ system_events = {
    },
    ["Gamma Polaris"] = {
       type = "distance",
-      dist = 5000,
+      dist = 5e3,
       pos  = planet.get("Emperor's Wrath"):pos(),
       name = "disc_emperorswrath",
       title = _("Emperor's Wrath"),
@@ -46,7 +46,7 @@ system_events = {
    },
    ["Za'lek"] = {
       type = "distance",
-      dist = 5000,
+      dist = 5e3,
       pos  = planet.get("House Za'lek Central Station"):pos(),
       name = "disc_zalekcentral",
       title = _("House Za'lek Central Station"),
@@ -54,7 +54,7 @@ system_events = {
    },
    Ruadan = {
       type = "distance",
-      dist = 5000,
+      dist = 5e3,
       pos  = planet.get("Ruadan Prime"):pos(),
       name = "disc_zalekruadan",
       title = _("Ruadan Prime"),
@@ -62,7 +62,7 @@ system_events = {
    },
    Dvaer = {
       type = "distance",
-      dist = 5000,
+      dist = 5e3,
       pos  = planet.get("Dvaered High Command"):pos(),
       name = "disc_dvaeredhigh",
       title = _("Dvaered High Command"),
@@ -76,7 +76,7 @@ system_events = {
    },
    Aesir = {
       type = "distance",
-      dist = 5000,
+      dist = 5e3,
       pos  = planet.get("Mutris"):pos(),
       name = "disc_mutris",
       title = _("Crater City"),
@@ -93,7 +93,7 @@ system_events = {
       --type = "discover",
       --asset = planet.get("Minerva Station"),
       type = "distance",
-      dist = 5000,
+      dist = 5e3,
       pos  = planet.get("Minerva Station"):pos(),
       name = "disc_minerva",
       title = _("Minerva Station"),
@@ -101,7 +101,7 @@ system_events = {
    },
    Beeklo = {
       type = "distance",
-      dist = 5000,
+      dist = 5e3,
       pos  = planet.get("Totoran"):pos(),
       name = "disc_totoran",
       title = _("Totoran"),
@@ -118,7 +118,7 @@ system_events = {
    -- ]]
    ["New Haven"] = {
       type = "distance",
-      dist = 5000,
+      dist = 5e3,
       pos  = planet.get("New Haven"):pos(),
       name = "disc_newhaven",
       title = _("New Haven"),

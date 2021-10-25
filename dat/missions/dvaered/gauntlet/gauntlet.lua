@@ -29,7 +29,7 @@ gauntletsys = system.get("Crimson Gauntlet")
 sfx_clear = audio.new( 'snd/sounds/jingles/victory.ogg' )
 
 function create ()
-   npc_gauntlet = misn.npcAdd( "approach_gauntlet", _("Crimson Gauntlet Terminal"), npc_portrait, npc_description )
+   misn.npcAdd( "approach_gauntlet", _("Crimson Gauntlet Terminal"), npc_portrait, npc_description )
 end
 
 -- Land is unified for all types of combat
@@ -80,7 +80,7 @@ function approach_gauntlet ()
    shiplog.create( logidstr, _("Totoran Tournament"), _("Totoran Tournament") )
 
    -- Create the OSD
-   osd = misn.osdCreate( _("Crimson Gauntlet"),
+   misn.osdCreate( _("Crimson Gauntlet"),
          { _("Defeat all the other adversaries!") } )
 
    hook.load( "loaded" )
@@ -153,7 +153,7 @@ function leave_the_ring ()
    pp:setInvincible( false )
    pp:setInvisible( false )
    player.cinematics( false )
-   player.land( planet.get("Totoran") )
+   player.land( planet.getS("Totoran") )
 end
 
 --[[

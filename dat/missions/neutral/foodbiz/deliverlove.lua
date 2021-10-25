@@ -27,17 +27,13 @@ local neu = require "common.neutral"
 
 bargain = _([[The man grabs your arm as you begin to get up. "Alright, how about %s? Look, I wouldn't want The Empire reading these. The Emperor himself would blush." You sigh and give the man a long pause before answering.]])
 
-osd_desc = {}
-osd_desc[1] = _("Fly to %s in the %s system.")
-osd_desc["__save"] = true
-
 cargoname = N_("Love Letters")
 cargodesc = N_("A cargo of feelings inked onto pulped, dried cellulose fibres.")
 
 
 function create () --No system shall be claimed by mission
    startworld, startworld_sys = planet.cur()
-   targetworld, targetworld_sys = planet.get( "Zhiru" )
+   targetworld, targetworld_sys = planet.getS( "Zhiru" )
 
    reward = 20e3
    started = false
@@ -79,8 +75,9 @@ function accept ()
    misn.setReward( fmt.credits( reward ) )
    misn.setDesc( _([[Deliver the love letters to %s in the %s system.]]):format( targetworld:name(), targetworld_sys:name() ) )
 
-   osd_desc[1] = osd_desc[1]:format( targetworld:name(), targetworld_sys:name() )
-   misn.osdCreate( _([[Deliver Love]]), osd_desc )
+   misn.osdCreate( _([[Deliver Love]]), {
+      _("Fly to %s in the %s system."):format( targetworld:name(), targetworld_sys:name() ),
+   } )
    misn.markerAdd( targetworld, "low" )
 
    -- set up hooks

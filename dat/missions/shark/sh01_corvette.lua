@@ -37,18 +37,7 @@ local fmt = require "format"
 local shark = require "common.shark"
 
 
-osd_msg = {}
-
--- Mission details
-
--- NPC
-
--- OSD
-osd_msg[1] = _("Jump in %s with a destroyer class ship and let the Lancelot disable you")
-osd_msg[2] = _("Go to %s in %s to collect your pay")
-
 function create ()
-
    --Change here to change the planet and the system
    bsyname = "Toaxis"
    psyname = "Alteris"
@@ -57,7 +46,7 @@ function create ()
    esyname = "Ingot"
    battlesys = system.get(bsyname)
    paysys = system.get(psyname)
-   paypla = planet.get(pplname)
+   paypla = planet.getS(pplname)
    escapesys = system.get(esyname)
 
    if not misn.claim(battlesys) then
@@ -78,13 +67,13 @@ function accept()
       misn.accept()
       tk.msg(_("Wonderful"), _([["Great! Go and meet our pilot in %s. After the job is done, meet me on %s in the %s system."]]):format(battlesys:name(), paypla:name(), paysys:name()))
 
-      osd_msg[1] = osd_msg[1]:format(battlesys:name())
-      osd_msg[2] = osd_msg[2]:format(paypla:name(), paysys:name())
-
       misn.setTitle(_("Sharkman is back"))
       misn.setReward(fmt.credits(reward/2))
       misn.setDesc(_("Nexus Shipyards wants you to fake a loss against a Lancelot while piloting a Destroyer class ship."))
-      osd = misn.osdCreate(_("Sharkman Is Back"), osd_msg)
+      misn.osdCreate(_("Sharkman Is Back"), {
+         _("Jump in %s with a destroyer class ship and let the Lancelot disable you"):format(battlesys:name()),
+         _("Go to %s in %s to collect your pay"):format(paypla:name(), paysys:name()),
+      })
       misn.osdActive(1)
 
       marker = misn.markerAdd(battlesys, "low")
@@ -114,7 +103,7 @@ function land()
       tk.msg(_("Reward"), _([[As you land, you see Arnold Smith waiting for you. He explains that the Baron was so impressed by the battle that he signed an updated contract with Nexus Shipyards, solidifying Nexus as the primary supplier of ships for his fleet. As a reward, they give you twice the sum of credits they promised to you.]]))
       pir.reputationNormalMission(rnd.rnd(2,3))
       player.pay(reward)
-      misn.osdDestroy(osd)
+      misn.osdDestroy()
       hook.rm(enterhook)
       hook.rm(landhook)
       hook.rm(jumpouthook)

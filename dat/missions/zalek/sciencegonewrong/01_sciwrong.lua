@@ -31,7 +31,7 @@ local sciwrong = require "common.sciencegonewrong"
 -- mission variables
 t_sys = { __save=true }
 t_pla = { __save=true }
---t_pla[1], t_sys[1] = planet.get("Gastan")
+--t_pla[1], t_sys[1] = planet.getS("Gastan")
 t_sys[2] = system.get("Shikima")
 reward = 1e6
 

@@ -27,6 +27,7 @@
 --]]
 
 local fleet = require "fleet"
+local fmt = require "format"
 require "proximity"
 local portrait = require "portrait"
 local dv = require "common.dvaered"
@@ -67,7 +68,7 @@ text[6] = _([[Colonel Urnus returns to his seat.
     "Let me tell you one thing, though. I doubt we've quite seen the last of the FLF. We may have dealt them a mortal blow by taking out their hidden base, but as long as rebel sentiment runs high among the Frontier worlds, they will rear their ugly heads again. That means my job isn't over, and maybe it means yours isn't either. Perhaps in the future we'll work together again - but this time it won't be just about removing a threat on our doorstep." Urnus smiles grimly. "It will be about rooting out the source of the problem once and for all."
     As you walk the corridor that leads out of the military complex, the Star of Valor glinting on your lapel, you find yourself thinking about what your decisions might ultimately lead to. Colonel Urnus hinted at war on the Frontier, and he also indicated that you would be involved. While the Dvaered have been treating you as well as can be expected from a military regime, perhaps you might want to reconsider your allegiance when the time comes...]])
 
-osd_desc[1] = _("Fly to the %s system")
+osd_desc[1] = _("Fly to the {sys} system")
 osd_desc[2] = _("Defend the HDSF Obstinate and its escorts")
 osd_desc[3] = _("Destroy the FLF base")
 osd_desc[4] = _("Return to %s in the %s system")
@@ -82,32 +83,32 @@ function create()
 end
 
 function accept()
-    destsysname = var.peek("flfbase_sysname")
-    DVplanet, DVsys = planet.get("Stalwart Station")
+    destsys = system.get(var.peek("flfbase_sysname"))
+    DVplanet, DVsys = planet.getS("Stalwart Station")
 
     if first then
         txt = string.format(_([[The Dvaered liaison spots you, and stands up to shake your hand.
     "Well met, citizen %s. I have heard about your recent achievements in the fight against the FLF threat. Like many Dvaered, I am pleased that things are going so well, and in no small way thanks to your efforts! High Command apparently feels the same way, because they have given you the military clearance for the upcoming operation, and that doesn't happen to just anybody."
-    ]]), player.name()) .. string.format(text[1], destsysname)
+    ]]), player.name()) .. string.format(text[1], destsys:name())
     else
         txt = string.format(_([[The Dvaered liaison greets you.
     "I knew you'd be back, citizen %s. The operation hasn't started yet and we can still use your help, so maybe I should explain to you again what this is all about."
-    ]]), player.name()) .. string.format(text[1], destsysname)
+    ]]), player.name()) .. string.format(text[1], destsys:name())
     end
 
     if tk.yesno(_("One swift stroke"), txt) then
-        tk.msg(_("The battlefield awaits"), string.format(text[2], destsysname))
-        tk.msg(_("The battlefield awaits"), string.format(text[3], destsysname, player.name()))
-        tk.msg(_("The battlefield awaits"), string.format(text[4], destsysname))
+        tk.msg(_("The battlefield awaits"), string.format(text[2], destsys:name()))
+        tk.msg(_("The battlefield awaits"), string.format(text[3], destsys:name(), player.name()))
+        tk.msg(_("The battlefield awaits"), string.format(text[4], destsys:name()))
 
         misn.accept()
-        osd_desc[1] = string.format(osd_desc[1], destsysname)
+        osd_desc[1] = fmt.f(osd_desc[1], {sys=destsys})
         osd_desc[4] = string.format(osd_desc[4], DVplanet:name(), DVsys:name())
         misn.osdCreate(_("Destroy the FLF base!"), osd_desc)
         misn.setDesc(_("The Dvaered are poised to launch an all-out attack on the secret FLF base. You have chosen to join this battle for wealth and glory."))
         misn.setReward(_("Wealth and glory"))
         misn.setTitle(_("Destroy the FLF base!"))
-        mission_marker = misn.markerAdd( system.get(destsysname), "high" )
+        mission_marker = misn.markerAdd( destsys, "high" )
 
         missionstarted = false
         victorious = false
@@ -121,7 +122,7 @@ function accept()
 end
 
 function enter()
-    if system.cur() == system.get(destsysname) and not victorious then
+    if system.cur() == destsys and not victorious then
         pilot.clear()
         pilot.toggleSpawn(false)
 

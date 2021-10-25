@@ -34,17 +34,12 @@ local sciwrong = require "common.sciencegonewrong"
 -- set mission variables
 t_sys = { __save=true }
 t_pla = { __save=true }
-t_pla[1], t_sys[1] = planet.get("Vilati Vilata")
-t_pla[2], t_sys[2] = planet.get("Waterhole's Moon")
+t_pla[1], t_sys[1] = planet.getS("Vilati Vilata")
+t_pla[2], t_sys[2] = planet.getS("Waterhole's Moon")
 -- t_x[3] is empty bc it depends on where the mission will start finally. (To be set in mission.xml and then adjusted in the following campaign missions)
---t_pla[3], t_sys[3] = planet.get("Gastan")
+--t_pla[3], t_sys[3] = planet.getS("Gastan")
 pho_mny = 50e3
 reward = 1e6
-osd_msg = {}
-osd_msg[1] = _("Go to the %s system and talk to the trader on %s")
-osd_msg[2] = _("Go to the %s system and talk to the contact person on %s")
-osd_msg[3] = _("Return to the %s system to the trader on %s")
-osd_msg[4] = _("Return to the %s system and deliver to Dr. Geller on %s")
 
 function create ()
    -- Variable set up and clean up
@@ -62,7 +57,9 @@ function accept()
    end
    tk.msg( _([[In the bar]]), _([["Excellent! Here is the list." He hands you a memory chip and turns away even before you can say anything and without giving you any cash to actually do his shopping. Once you check the list you find that it contains not only a list of materials he needs, but also information where to retrieve these and a list of contact traders.]]) )
    misn.accept()
-   misn.osdCreate(_("The one with the Shopping"), {osd_msg[1]:format(t_sys[1]:name(), t_pla[1]:name())})
+   misn.osdCreate(_("The one with the Shopping"), {
+      _("Go to the %s system and talk to the trader on %s"):format(t_sys[1]:name(), t_pla[1]:name()),
+   })
    misn.setDesc(_("You've been hired by Dr. Geller to collect some materials he urgently needs for his research."))
    misn.setTitle(_("The one with the Shopping"))
    misn.setReward(_("The gratitude of science and a bit of compensation"))
@@ -97,9 +94,9 @@ function first_trd()
      talked = true
   end
 
-
-  osd_msg[2] = osd_msg[2]:format(t_sys[2]:name(), t_pla[2]:name())
-  misn.osdCreate(_("The one with the Shopping"), {osd_msg[2]})
+  misn.osdCreate(_("The one with the Shopping"), {
+     _("Go to the %s system and talk to the contact person on %s"):format(t_sys[2]:name(), t_pla[2]:name()),
+  })
 
   misn.markerMove(misn_mark, t_sys[2])
 
@@ -122,8 +119,9 @@ function second_trd()
   local c = misn.cargoNew(N_("Phosphine"), N_("A colourless, flammable, poisonous gas."))
   carg_id = misn.cargoAdd(c, 3)
   tk.msg(_([[In the bar]]), _([["Pleasure to do business with you."]]))
-  osd_msg[3] = osd_msg[3]:format(t_sys[1]:name(), t_pla[1]:name())
-  misn.osdCreate(_("The one with the Shopping"), {osd_msg[3]})
+  misn.osdCreate(_("The one with the Shopping"), {
+     _("Return to the %s system to the trader on %s"):format(t_sys[1]:name(), t_pla[1]:name()),
+  })
  -- create hook that player will be hailed by authorities bc of toxic materials
   misn.markerMove(misn_mark, t_sys[1])
   hook.rm(lhook2)
@@ -138,8 +136,9 @@ function third_trd()
   misn.npcRm(bar1pir1)
   misn.cargoRm(carg_id)
   player.msg(t_sys[3]:name())
-  osd_msg[4] = osd_msg[4]:format(t_sys[3]:name(), t_pla[3]:name())
-  misn.osdCreate(_("The one with the Shopping"), {osd_msg[4]})
+  misn.osdCreate(_("The one with the Shopping"), {
+     _("Return to the %s system and deliver to Dr. Geller on %s"):format(t_sys[3]:name(), t_pla[3]:name()),
+  })
 
   misn.markerMove(misn_mark, t_sys[3])
 
@@ -155,7 +154,7 @@ function fnl_ld ()
       tk.msg(_([[In the bar]]),_([[Dr. Geller looks up at you as you approach. "Do you have what I was looking for?" You present the ghost ship piece and his face begins to glow. "Yes, that's it! Now I can continue my research. I've been looking everywhere for a sample!" You ask him about the so-called ghost ships. He seems amused by the question. "Some people believe in ridiculous nonsense related to this. There is no scientific explanation for the origin of these so-called ghost ships yet, but I think it has to do with some technology involved in the Incident. Hard to say exactly what, but hey, that's why we do research!"]]))
       tk.msg(_([[In the bar]]),_([[As he turns away, you audibly clear your throat, prompting him to turn back to you. "Oh, yes, of course you want some payment for your service. My apologies for forgetting." He hands you a credit chip with your payment. "I might need your services again in the future, so do stay in touch!"]]))
       player.pay(reward)
-      sciwrong.addLog( fmt.f( _([[You helped Dr. Geller at {pntname} in the {sysname} system toobtain a "ghost ship piece" for his research. When you asked about these so-called ghost ships, he seemed amused. "Some people believe in ridiculous nonsense related to this. There is no scientific explanation for the origin of these so-called ghost ships yet, but I think it has to do with some technology involved in the Incident. Hard to say exactly what, but hey, that's why we do research!"]]), {pntname=t_pla[3]:name(), sysname=t_sys[3]:name() } ) )
+      sciwrong.addLog( fmt.f( _([[You helped Dr. Geller at {pnt} in the {sys} system toobtain a "ghost ship piece" for his research. When you asked about these so-called ghost ships, he seemed amused. "Some people believe in ridiculous nonsense related to this. There is no scientific explanation for the origin of these so-called ghost ships yet, but I think it has to do with some technology involved in the Incident. Hard to say exactly what, but hey, that's why we do research!"]]), {pnt=t_pla[3], sys=t_sys[3] } ) )
       misn.finish(true)
    end
 end

@@ -22,9 +22,6 @@
 local pir = require 'common.pirate'
 local fmt = require "format"
 
-misn_desc = _("It is time to put a dent in the pirates' forces. We have detected a strong pirate presence in the system of Unicorn. We are offering a small sum for each pirate killed. The maximum we will pay you is %s.")
-
-
 osd_msg = {}
 osd_msg[1] = _("Fly to the Unicorn system.")
 osd_msg[2] = ""
@@ -34,10 +31,9 @@ function create ()
    rep = faction.playerStanding("Dvaered")
    -- Round the payment to the nearest thousand.
    max_payment = rep * 50e3
-   misn_desc = misn_desc:format( fmt.credits(max_payment) )
    misn.setTitle(_("DV: Assault on Unicorn"))
    misn.setReward(_("Variable"))
-   misn.setDesc(misn_desc)
+   misn.setDesc(_("It is time to put a dent in the pirates' forces. We have detected a strong pirate presence in the system of Unicorn. We are offering a small sum for each pirate killed. The maximum we will pay you is %s."):format( fmt.credits(max_payment) ))
 
    misn_target_sys = system.get("Unicorn")
    misn_return_sys = system.get("Amaroq")

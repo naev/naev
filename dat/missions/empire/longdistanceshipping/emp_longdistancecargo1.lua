@@ -37,7 +37,7 @@ function create ()
 
    -- Set our target system and planet.
    targetworld_sys = system.get("Oberon")
-   targetworld = planet.get("Soromid Customs Central")
+   targetworld = planet.getS("Soromid Customs Central")
 
    misn.setNPC( _("Lieutenant"), "empire/unique/czesc.webp", _("Lieutenant Czesc from the Empire Armada Shipping Division is sitting at the bar.") )
 end

@@ -39,7 +39,7 @@ comm_boss_insults[4] = _("Keep hailing all you want, but I don't listen to weakl
 comm_boss_insults[5] = _("We'll have your ship plundered in no time at all!")
 
 osd_desc    = {}
-osd_desc[1] = _("Fly to the %s system")
+osd_desc[1] = _("Fly to the {sys} system")
 osd_desc[2] = _("Find pirates and try to talk to (hail) them")
 osd_desc["__save"] = true
 
@@ -67,7 +67,7 @@ function accept ()
 
       misn.accept()
 
-      osd_desc[1] = osd_desc[1]:format( missys:name() )
+      osd_desc[1] = fmt.f( osd_desc[1], {sys=missys} )
       misn.osdCreate( _("Pirate Alliance"), osd_desc )
       misn.setTitle( _("Pirate Alliance") )
       misn.setDesc( _("You are to seek out pirates in the %s system and try to convince them to become trading partners with the FLF."):format( missys:name() ) )

@@ -25,31 +25,18 @@
 local fmt = require "format"
 local srs = require "common.sirius"
 
-
---all the messages before the mission starts
-
---all the messages after the player lands on the target asset
-
---random odds and ends
-misn_desc = _("Shaman of Nasin has hired you to deliver the message to %s in the %s system.")
-osd = {}
-osd[1] = _("Fly to %s in the %s system and deliver the message")
-
 function create()
    --this mission makes no system claims
    --create some mission variables
    nasin_rep = faction.playerStanding("Nasin")
    misn_tracker = var.peek("heretic_misn_tracker") --we use this at the end.
    reward = math.floor((100e3+(math.random(5,8)*2e3)*(nasin_rep^1.315))*.01+.5)/.01 --using the actual reward algorithm now.
-   targetasset, targetsystem = planet.get("The Wringer")
+   targetasset, targetsystem = planet.getS("The Wringer")
    --set the mission stuff
    misn.setTitle(_("The Return"))
    misn.setReward(fmt.credits(reward))
    misn.setNPC(_("A Tall Man"), "sirius/unique/shaman.webp", _("A tall man sitting at a table littered with papers."))
    misn.setDesc(_("A tall man sitting at a table littered with papers."))
-
-   osd[1] = osd[1]:format(targetasset:name(),targetsystem:name())
-   misn_desc = misn_desc:format(targetasset:name(),targetsystem:name())
 end
 
 function accept()
@@ -69,9 +56,11 @@ function accept()
 
    tk.msg(_("The Return"), _([["Fantastic!" He hands you the message. "They will take care of your payment there. Thank you for aiding the true followers of Sirichana."]]))
    misn.accept()
-   misn.setDesc(misn_desc)
+   misn.setDesc(_("Shaman of Nasin has hired you to deliver the message to %s in the %s system."):format(targetasset:name(),targetsystem:name()))
    misn.markerAdd(targetsystem,"high")
-   misn.osdCreate(_("The Return"),osd)
+   misn.osdCreate(_("The Return"), {
+      _("Fly to %s in the %s system and deliver the message"):format(targetasset:name(),targetsystem:name()),
+   })
    misn.osdActive(1)
    local c = misn.cargoNew( N_("Message"), N_("A message of seemingly high importance.") )
    message = misn.cargoAdd(c,0)

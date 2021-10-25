@@ -47,11 +47,11 @@ function create()
       misn.finish(false)
    end
 
-   destpla1, destsys1 = planet.get("Ginni")
-   destpla2, destsys2 = planet.get(fw.wlrd_planet)
-   destpla3, destsys3 = planet.get("Laarss")
+   destpla1, destsys1 = planet.getS("Ginni")
+   destpla2, destsys2 = planet.getS(fw.wlrd_planet)
+   destpla3, destsys3 = planet.getS("Laarss")
 
-   fleepla, fleesys = planet.get("Odonga m1")
+   fleepla, fleesys = planet.getS("Odonga m1")
 
    if system.cur() == destsys1 then -- We need the first target to be at least 1 jump ahead
       misn.finish(false)

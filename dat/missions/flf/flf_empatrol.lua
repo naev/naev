@@ -31,7 +31,7 @@ misn_title[5] = _("FLF: Dangerous Empire patrol in %s")
 misn_title[6] = _("FLF: Highly Dangerous Empire patrol in %s")
 
 osd_desc    = {}
-osd_desc[1] = _("Fly to the %s system")
+osd_desc[1] = _("Fly to the {sys} system")
 osd_desc[2] = _("Eliminate the Empire patrol")
 osd_desc[3] = _("Return to FLF base")
 osd_desc["__save"] = true

@@ -62,7 +62,7 @@ function accept ()
    end
 
    misn.accept()
-   osd = misn.osdCreate( _("Za'lek Hacking Center"), {
+   misn.osdCreate( _("Za'lek Hacking Center"), {
       string.format( _("Go to the %s system"), mainsys ),
       _("Destroy the hacking center"),
       _("Return to Minerva Station"),
@@ -80,9 +80,8 @@ function accept ()
 end
 
 function generate_npc ()
-   npc_zuri = nil
-   if planet.cur() == planet.get("Minerva Station") then
-      npc_zuri = misn.npcAdd( "approach_zuri", minerva.zuri.name, minerva.zuri.portrait, minerva.zuri.description )
+   if planet.cur() == planet.getS("Minerva Station") then
+      misn.npcAdd( "approach_zuri", minerva.zuri.name, minerva.zuri.portrait, minerva.zuri.description )
    end
 end
 
@@ -452,7 +451,7 @@ function drone_control_update ()
    end
 end
 function hacking_center_dead ()
-   misn.markerMove( mrk_mainsys, planet.get("Minerva Station") )
+   misn.markerMove( mrk_mainsys, planet.getS("Minerva Station") )
    misn.osdActive(3)
    misn_state = 3
    player.msg("#gThe hacking center has been destroyed!#0")

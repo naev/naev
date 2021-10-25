@@ -51,18 +51,17 @@ function create()
     flfdead = false -- Flag to check if the player destroyed the FLF sentinels
     basefound = false -- Flag to keep track if the player has seen the base
 
-    destsysname = var.peek("flfbase_sysname")
-    destsys = system.get(destsysname)
+    destsys = system.get(var.peek("flfbase_sysname"))
 
     tk.msg(title[1], _([[A haggard-looking man emerges from the airlock. He says, "Thank goodness you're here. My name is Gregar, I'm with the Frontier Liberation Front. I mean you no harm." He licks his lips in hesitation before continuing. "I have come under attack from a Dvaered patrol. I wasn't violating any laws, and we're not even in Dvaered territory! Anyway, my ship is unable to fly."
     You help Gregar to your cockpit and install him in a vacant seat. He is obviously very tired, but he forces himself to speak. "Listen, I was on my way back from a mission when those Dvaered bastards jumped me. I know this is a lot to ask, but I have little choice seeing how my ship is a lost cause. Can you take me the rest of the way? It's not far. We have a secret base in the %s system. Fly there and contact my comrades. They will take you the rest of the way."
-    Gregar nods off, leaving you to decide what to do next. Gregar wants you to find his friends, but harboring a known terrorist, let alone helping him, might not be looked kindly upon by the authorities...]]):format(destsysname))
+    Gregar nods off, leaving you to decide what to do next. Gregar wants you to find his friends, but harboring a known terrorist, let alone helping him, might not be looked kindly upon by the authorities...]]):format(destsys:name()))
 
-    misn.osdCreate(_("Deal with the FLF agent"), {_("Take Gregar, the FLF agent, to the %s system and make contact with the FLF"):format(destsysname), _("Alternatively, turn Gregar in to the nearest Dvaered base")})
+    misn.osdCreate(_("Deal with the FLF agent"), {_("Take Gregar, the FLF agent, to the %s system and make contact with the FLF"):format(destsys:name()), _("Alternatively, turn Gregar in to the nearest Dvaered base")})
     misn.setDesc(_("You have taken onboard a member of the FLF. You must either take him where he wants to go, or turn him in to the Dvaered."))
     misn.setTitle(_("Deal with the FLF agent"))
     misn.setReward(_("A chance to learn more about the FLF"))
-    misn.markerAdd(system.get(destsysname), "low")
+    misn.markerAdd(destsys, "low")
 
     local c = misn.cargoNew( N_("Gregar"), N_("A rescued FLF pilot.") )
     gregar = misn.cargoAdd( c, 0 )
@@ -117,7 +116,7 @@ end
 -- There are two cases we need to check here: landing on the FLF base and landing on a Dvaered world.
 function land()
     -- Case FLF base
-    if diff.isApplied("FLF_base") and planet.cur() == planet.get("Sindbad") then
+    if diff.isApplied("FLF_base") and planet.cur() == planet.getS("Sindbad") then
         tk.msg(title[4], _([[You and Gregar step out of your airlock and onto Sindbad. You are greeted by a group of five or six FLF soldiers. They seem relieved to see Gregar, but they clearly regard you with mistrust. You are taken to meet with a senior officer of the base. Gregar doesn't come with you, as he seems to have urgent matters to attend to - away from prying ears like your own.
     "Alright, %s," the officer begins. "I don't know who you are or what you think you're doing here, but you shouldn't kid yourself. The only reason you are in my office and not in a holding cell is because one of my trusted colleagues is vouching for you." The officer leans a little closer to you and pins you with a level stare. "I don't think you're a Dvaered spy. The Dvaered don't have the wit to pull off decent espionage. But you shouldn't get any ideas of running to the Dvaered and blabbing about our presence here. They're neither a trusting nor a grateful sort, so they'd probably just arrest you and torture you for what you know. So, I trust you understand that your discretion is in both our interests."]]):format(player.name()))
         tk.msg(title[4], _([[The moment of tension passes, and the officer leans back in his chair.
@@ -175,7 +174,7 @@ function wakeUpGregarYouLazyBugger()
     "Copy that Lt. Fletcher." Alpha then addresses you. "Please follow us. We will guide you to our base. Stay close. Sensor range is lousy in these parts, and if you get separated from us, we won't be able to find you again, and you won't be able to find us or our base."
     With that, Alpha breaks the connection. It seems you have little choice but to do as he says if you ever want to take Gregar to his destination.]]))
         faction.get("FLF"):setPlayerStanding( 5 ) -- Small buffer to ensure it doesn't go negative again right away.
-        misn.osdCreate(_("Deal with the FLF agent"), {_("Take Gregar, the FLF agent, to the %s system and make contact with the FLF"):format(destsysname), _("Follow the FLF ships to their secret base. Do not lose them!"), _("Alternatively, turn Gregar in to the nearest Dvaered base")})
+        misn.osdCreate(_("Deal with the FLF agent"), {_("Take Gregar, the FLF agent, to the %s system and make contact with the FLF"):format(destsys:name()), _("Follow the FLF ships to their secret base. Do not lose them!"), _("Alternatively, turn Gregar in to the nearest Dvaered base")})
         misn.osdActive(2)
         hook.timer(0.5, "inRange")
     end
@@ -232,7 +231,7 @@ function spawnbase()
         diff.apply("FLF_base")
 
         -- Safety measure to ensure the player can land.
-        base = planet.get("Sindbad")
+        base = planet.getS("Sindbad")
         base:landOverride()
 
         basefound = true

@@ -30,19 +30,9 @@ local fmt = require "format"
 local shark = require "common.shark"
 local lmisn = require "lmisn"
 
-osd_msg = {}
-
--- Mission details
-
--- NPC
-
--- OSD
 osd_title = _("The Last Detail")
-osd_msg[1] = _("Kill the four pirates")
-osd_msg[2] = _("Report back to %s in %s")
 
 function create ()
-
    --Will now pick systems between min and max jumps in distance
    local min = 3
    local max = 7
@@ -66,7 +56,7 @@ function create ()
    pplname = "Darkshed"
    psyname = "Alteris"
    paysys = system.get(psyname)
-   paypla = planet.get(pplname)
+   paypla = planet.getS(pplname)
 
    if not misn.claim({gawsys, kersys1, kersys2, godsys}) then
       misn.finish(false)
@@ -103,12 +93,13 @@ function accept()
     "And finally, %s is in %s. He stole and beefed up a Goddard recently, so make sure you're prepared for that. He also has escorts, according to our records.
     "And that's about it! Come back for your fee when you have finished."]]):format(gawname, gawsys:name(), kername1, kersys1:name(), kername2, kersys2:name(), godname, godsys:name()))
 
-      osd_msg[2] = osd_msg[2]:format(pplname,psyname)
-
       misn.setTitle(_("The Last Detail"))
       misn.setReward(fmt.credits(reward))
       misn.setDesc(_("Nexus Shipyards has tasked you with killing four pirates."))
-      osd = misn.osdCreate(osd_title, osd_msg)
+      misn.osdCreate(osd_title, {
+         _("Kill the four pirates"),
+         _("Report back to %s in %s"):format(pplname,psyname),
+      })
       misn.osdActive(1)
 
       gawmarker = misn.markerAdd(gawsys, "low")
@@ -127,7 +118,7 @@ end
 
 function land ()
    --Job is done
-   if stage == 1 and planet.cur() == planet.get("Darkshed") then
+   if stage == 1 and planet.cur() == planet.getS("Darkshed") then
       tk.msg(_("That was impressive"), _([[Smith awaits your arrival at the spaceport. When you exit your ship, he smiles and walks up to you. "Good job," he says. "Our deal is secure, thanks to you. Here is your pay and something extra for your hard work. Thank you for all your help!"
     He hands you a credit chip and what appears to be a Nexus Shipyards commemorative sandwich holder.]]))
       pir.reputationNormalMission(rnd.rnd(2,3))

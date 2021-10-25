@@ -29,7 +29,7 @@ local dest_planet_r = 200
 
 function create ()
    if not misn.claim( missys ) then
-      print(fmt.f(_( "Warning: 'Tutorial' mission was unable to claim system {sysname}!"), {sysname=missys:name()} ) )
+      print(fmt.f(_( "Warning: 'Tutorial' mission was unable to claim system {sys}!"), {sys=missys} ) )
       misn.finish( true ) -- We mark as clear anyway, but this is not good
    end
 
@@ -132,12 +132,12 @@ They stare at you for a few seconds.
    end
    misn.accept()
 
-   local posd = { startpnt=start_planet:name(), destpnt=dest_planet:name(), sysname=missys:name() }
+   local posd = { startpnt=start_planet, destpnt=dest_planet, sys=missys }
    misn.osdCreate( _("Tutorial"), {
-      fmt.f(_("Fly to {startpnt} in the {sysname} system with the movement keys"),posd),
-      fmt.f(_("Land on {startpnt} in the {sysname} system by double-clicking on it"),posd),
-      fmt.f(_("Go to {destpnt} in the {sysname} system by right-clicking it on the overview map"),posd),
-      fmt.f(_("Destroy the practice drone near {destpnt} in the {sysname} system"),posd),
+      fmt.f(_("Fly to {startpnt} in the {sys} system with the movement keys"),posd),
+      fmt.f(_("Land on {startpnt} in the {sys} system by double-clicking on it"),posd),
+      fmt.f(_("Go to {destpnt} in the {sys} system by right-clicking it on the overview map"),posd),
+      fmt.f(_("Destroy the practice drone near {destpnt} in the {sys} system"),posd),
       _("Jump to a nearby system by using your starmap"),
    } )
 
@@ -174,8 +174,8 @@ function timer ()
       vn.transition( tut.shipai.transition )
       sai(fmt.f(_([["Perfect! That was easy enough, right? I recommend this manner of flight, known as 'keyboard flight'. However, there is one other way you can fly if you so choose: press {mouseflykey} on your console and your ship will follow your #bmouse pointer#0 automatically. It's up to you which method you prefer to use."]]),{mouseflykey=tut.getKey("mousefly")}))
       sai(_([["You may also have noticed the mission on-screen display on your monitor. As you can see, you completed your first objective of the Tutorial mission, so the next objective is now being focused."]]))
-      sai(fmt.f(_([["On that note, let's go over landing. All kinds of actions, like landing on planets, hailing ships, boarding disabled ships, and jumping to other systems can be accomplished by #bdouble-clicking#0 on an applicable target, or alternatively by pressing certain buttons on your control console. How about you try landing on {pntname}?"]]),{pntname=start_planet:name()}))
-      sai(fmt.f(_([["To land on {pntname}, you need to slow down your ship on top of the planet, and engage the landing system. You can do this manually with the movement keys and engage your landing gears with {landkey}, or this can all be done automatically by targeting the planet with either #bclicking#0 on it, or with {targetplanetkey}, and then using the {landkey}. You can also #bdouble click#0 on the planet to engage the same behaviour. Give it a try!"]]),{pntname=start_planet:name(), targetplanetkey=tut.getKey("target_planet"), landkey=tut.getKey("land")}))
+      sai(fmt.f(_([["On that note, let's go over landing. All kinds of actions, like landing on planets, hailing ships, boarding disabled ships, and jumping to other systems can be accomplished by #bdouble-clicking#0 on an applicable target, or alternatively by pressing certain buttons on your control console. How about you try landing on {pnt}?"]]),{pnt=start_planet}))
+      sai(fmt.f(_([["To land on {pnt}, you need to slow down your ship on top of the planet, and engage the landing system. You can do this manually with the movement keys and engage your landing gears with {landkey}, or this can all be done automatically by targeting the planet with either #bclicking#0 on it, or with {targetplanetkey}, and then using the {landkey}. You can also #bdouble click#0 on the planet to engage the same behaviour. Give it a try!"]]),{pnt=start_planet, targetplanetkey=tut.getKey("target_planet"), landkey=tut.getKey("land")}))
       vn.done( tut.shipai.transition )
       vn.run()
 
@@ -190,8 +190,8 @@ function timer ()
       sai(_([["Great job! As you can see, by using your ship's Autonav features, the perceived duration of your trip was cut substantially. You will grow to appreciate this feature in your ship in time, especially as you travel from system to system delivering goods and such, given the vastness of space."]]))
       sai(_([["I hope you noticed some of the features of the overview map when you had it activated. Not only are objects such as planets, ships, and asteroids visible on the overview map, but faction #opatrol routes#0 are also shown with thick lines. These routes denote areas that are commonly patrolled and used by ships. Sticking to these routes is generally the best way to travel around, but they don't guarantee your safety. When starting out it is probably best to not stray too far."]]))
       sai(_([["Let's now practice combat. You won't need this if you stick to the safe systems in the Empire core, but sadly, we are likely to encounter hostile ships if you venture further out, so you need to know how to defend yourself. Fortunately, your ship comes pre-equipped with a state-of-the-art laser cannon for just that reason! If all goes well you won't end up like ship ornament like my late previous owner after encountering… Anyway, on to the drone."]]))
-      sai(fmt.f(_([["I will launch a combat practice drone off of {pntname} now for you to fight. Don't worry; our drone does not have any weapons and will not harm you. Target the drone by clicking on it or by pressing {targethostilekey}, then use your weapons, controlled with {primarykey} and {secondarykey}, to take out the drone!"
-"Ah, yes, one more tip before I launch the drone: if your weapons start losing their accuracy, it's because they're becoming overheated. You can remedy that by pressing {cooldownkey} or double tapping {reversekey} to engage active cooling."]]),{pntname=dest_planet:name(), targethostilekey=tut.getKey("target_hostile"), primarykey=tut.getKey("primary"), secondarykey=tut.getKey("secondary"), cooldownkey=tut.getKey("cooldown"), reversekey=tut.getKey("reverse")}))
+      sai(fmt.f(_([["I will launch a combat practice drone off of {pnt} now for you to fight. Don't worry; our drone does not have any weapons and will not harm you. Target the drone by clicking on it or by pressing {targethostilekey}, then use your weapons, controlled with {primarykey} and {secondarykey}, to take out the drone!"
+"Ah, yes, one more tip before I launch the drone: if your weapons start losing their accuracy, it's because they're becoming overheated. You can remedy that by pressing {cooldownkey} or double tapping {reversekey} to engage active cooling."]]),{pnt=dest_planet, targethostilekey=tut.getKey("target_hostile"), primarykey=tut.getKey("primary"), secondarykey=tut.getKey("secondary"), cooldownkey=tut.getKey("cooldown"), reversekey=tut.getKey("reverse")}))
       sai(_([["The Drone's AI has been said to be a bit odd, but don't pay attention to it. Being an artificial intelligence it is unable to compute feelings you know? Not like me, ha ha. HUMOUR PROCEDURE TERMINATED"]]))
       vn.done( tut.shipai.transition )
       vn.run()
@@ -322,7 +322,7 @@ function enter_timer ()
       vn.transition( tut.shipai.transition )
       sai(fmt.f(_([["Welcome back to space, {playername}! Let's continue discussing moving around in space. As mentioned before, you can move around space manually, no problem. However, you will often want to travel large distances, and navigating everywhere manually could be a bit tedious. A good option is to delegate the travelling to me, your ship AI, using the Autonav functionality available on all ships. You can trust me as I've only under 4 fatal accidents."]]),{playername=player.name()}))
       sai(fmt.f(_([["Autonav is simple and elegant. Simply press {overlaykey} to open your ship's overlay map, then simply #bright-click#0 on any location, planet, ship, or jump point to instantly take your ship right to it! The trip will take just as long, but time compression allows you to step away from your controls, making it seem as though time is passing at a faster rate. And don't worry; if any hostile pilots are detected, the Autonav system automatically alerts you so that you can observe the situation and respond in whatever fashion is deemed necessary. This can be configured from your ship's #oOptions#0 menu, which you can access by pressing {menukey}.]]),{overlaykey=tut.getKey("overlay"), menukey=tut.getKey("menu")}))
-      sai(fmt.f(_([["Why don't you try using Autonav to fly over to {pntname}? You should be able to see it highlighted on your overlay map which you can activate with {overlaykey}."]]),{pntname=dest_planet:name(), overlaykey=tut.getKey("overlay")}))
+      sai(fmt.f(_([["Why don't you try using Autonav to fly over to {pnt}? You should be able to see it highlighted on your overlay map which you can activate with {overlaykey}."]]),{pnt=dest_planet, overlaykey=tut.getKey("overlay")}))
       vn.done( tut.shipai.transition )
       vn.run()
 
@@ -366,7 +366,7 @@ function pilot_death_timer ()
    sai(fmt.f(_([["It is also worth noting that you can configure the way your weapons shoot from the #oInfo#0 screen, which can be accessed by pressing {infokey} or through the button on the top of your screen. The #oInfo#0 screen also lets you view information about your ship, cargo, current missions, and reputation with the various factions. You will likely be referencing it a lot as we explore the galaxy."]]),{infokey=tut.getKey("info")}))
    sai(fmt.f(_([["I think we should try venturing outside of this system. There are many systems in the universe; this one is but a tiny sliver of what can be found out there! Traveling through systems is accomplished through jump points. Like planets, you usually need to find these by exploring the area, talking to the locals, or buying maps. Once you have found a jump point, you can use it by #bright-click#0ing on it or using the {jumpkey}."]]),{jumpkey=tut.getKey("jump")}))
    sai(fmt.f(_([["But there is yet a better way to navigate across systems! By pressing {starmapkey}, you can open your #oStarmap#0. The #oStarmap#0 shows you all of the systems you currently know about. Through your #oStarmap#0, you can click on a system and click on the '#bAutonav#0' button to be automatically transported to the system! Of course, this only works if you know a valid route to get there, but you will find that this method of travel greatly simplifies things."]]),{starmapkey=tut.getKey("starmap")}))
-   sai(fmt.f(_([["Why don't you give it a try and jump to the nearby {sysname} system? You should see an indicator blip on your map; missions often use these blips to show you where to go next. You will have to make two jumps and may have to do some exploration to find the second jump point. Let's see what you've learned!"]]),{sysname=destsys:name()}))
+   sai(fmt.f(_([["Why don't you give it a try and jump to the nearby {sys} system? You should see an indicator blip on your map; missions often use these blips to show you where to go next. You will have to make two jumps and may have to do some exploration to find the second jump point. Let's see what you've learned!"]]),{sys=destsys}))
    vn.done( tut.shipai.transition )
    vn.run()
 end
@@ -427,7 +427,7 @@ local tp_taunt_healthy = {
    _("You'd be dead if I'd remembered to pack my weapons!"),
    _("I'll end you!"),
    _("… Right after I finish eating this bucket of fried chicken!"),
-   fmt.f(_("{pntname} Fried Chicken. Eat only the best."), {pntname=dest_planet:name()}),
+   fmt.f(_("{pnt} Fried Chicken. Eat only the best."), {pnt=dest_planet}),
    _("This is your last chance to surrender!"),
    _("Don't do school, stay in milk."),
    _("I'm going to report you to the NPC Rights watchdog."),

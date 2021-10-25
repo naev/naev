@@ -256,15 +256,15 @@ msg_tip = {
 
 -- Jump point messages.
 -- For giving the location of a jump point in the current system to the player for free.
--- All messages must contain '{jmpname}', this is the name of the target system.
+-- All messages must contain '{jmp}', this is the name of the target system.
 -- ALL NPCs have a chance to say one of these lines instead of a lore message.
 -- So, make sure the tips are always faction neutral.
 msg_jmp = {
-   _([["Hi there, traveler. Is your system map up to date? Just in case you didn't know already, let me give you the location of the jump from here to {jmpname}. I hope that helps."]]),
-   _([["Quite a lot of people who come in here complain that they don't know how to get to {jmpname}. I travel there often, so I know exactly where the jump point is. Here, let me show you."]]),
-   _([["So you're still getting to know about this area, huh? Tell you what, I'll give you the coordinates of the jump to {jmpname}. Check your map next time you take off!"]]),
-   _([["True fact, there's a direct jump from here to {jmpname}. Want to know where it is? It'll cost you! Ha ha, just kidding. Here you go, I've added it to your map."]]),
-   _([["There's a system just one jump away by the name of {jmpname}. I can tell you where the jump point is. There, I've updated your map. Don't mention it."]]),
+   _([["Hi there, traveler. Is your system map up to date? Just in case you didn't know already, let me give you the location of the jump from here to {jmp}. I hope that helps."]]),
+   _([["Quite a lot of people who come in here complain that they don't know how to get to {jmp}. I travel there often, so I know exactly where the jump point is. Here, let me show you."]]),
+   _([["So you're still getting to know about this area, huh? Tell you what, I'll give you the coordinates of the jump to {jmp}. Check your map next time you take off!"]]),
+   _([["True fact, there's a direct jump from here to {jmp}. Want to know where it is? It'll cost you! Ha ha, just kidding. Here you go, I've added it to your map."]]),
+   _([["There's a system just one jump away by the name of {jmp}. I can tell you where the jump point is. There, I've updated your map. Don't mention it."]]),
 }
 
 -- Mission hint messages. Each element should be a table containing the mission name and the corresponding hint.
@@ -348,7 +348,7 @@ local function getJmpMessage(fac)
 
    -- Don't need to remove messages from tables here, but add whatever jump point we selected to the "selected" table.
    seltargets[mytargets[sel]] = true
-   return fmt.f( retmsg, {jmpname=mytargets[sel]:dest():name()} ), myfunc
+   return fmt.f( retmsg, {jmp=mytargets[sel]:dest()} ), myfunc
 end
 
 -- Returns a tip message.

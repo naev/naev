@@ -130,7 +130,7 @@ function accept ()
 
    vn.label("accept")
    vn.func( function () doaccept = true end )
-   nel(fmt.f(_([["Thanks for the help again. So while I was preparing to take off on my ship, I heard a weird noise outside, and when I went to check out, the autonav locked me out and my ship took off without anyone in it! Now it's flying around in circles outside of {pntname}!"]]),{pntname=retpnt:name()}))
+   nel(fmt.f(_([["Thanks for the help again. So while I was preparing to take off on my ship, I heard a weird noise outside, and when I went to check out, the autonav locked me out and my ship took off without anyone in it! Now it's flying around in circles outside of {pnt}!"]]),{pnt=retpnt}))
 
    local pp = player.pilot()
    local has_dis = false
@@ -197,7 +197,7 @@ function accept ()
       table.insert( osdtxt, _("Buy and equip a weapon with disable damage") )
       misn_state = -2
    end
-   table.insert( osdtxt, fmt.f(_("Disable and board Nelly's ship in {sysname}"), {sysname=destsys:name()}) )
+   table.insert( osdtxt, fmt.f(_("Disable and board Nelly's ship in {sys}"), {sys=destsys}) )
    misn.osdCreate( _("Helping Nelly Out"), osdtxt )
 
    if misn_state < 0 then
@@ -297,13 +297,13 @@ function board ()
    local nel = vn.newCharacter( tutnel.vn_nelly() )
    vn.transition( tutnel.nelly.transition )
    vn.na(_("You board Nelly's ship and quickly go to the control panel to turn off the autonav."))
-   nel(fmt.f(_([["I hate when this happens. Err, I mean, this is the first time something like this has happened to me! Let me bring the ship back to {pntname} and meet me at the spaceport bar for your reward."]]),{pntname=retpnt:name()}))
+   nel(fmt.f(_([["I hate when this happens. Err, I mean, this is the first time something like this has happened to me! Let me bring the ship back to {pnt} and meet me at the spaceport bar for your reward."]]),{pnt=retpnt}))
    vn.done( tutnel.nelly.transition )
    vn.run()
 
    -- Update objectives
    misn.osdCreate( _("Helping Nelly Out"), {
-      fmt.f(_("Return to {pntname}"),{pntname=retpnt:name()})
+      fmt.f(_("Return to {pnt}"),{pnt=retpnt})
    } )
 
    misn_state = 1
@@ -338,7 +338,7 @@ function land ()
       local nel = vn.newCharacter( tutnel.vn_nelly() )
       vn.transition( tutnel.nelly.transition )
       vn.na(_("You land and quickly Nelly goes over to the outfitter and seems to get into some sort of argument with the person in charge. After a bit you see they exchange something and she comes back with a grin on her face."))
-      nel(fmt.f(_([["Got the parts! Cheaper than I expected to. Hopefully this will bring an end to my ship troubles. Let's go back to #o{pntname}#0 in #o{sysname}#0!"]]), {pntname=retpnt:name(), sysname=retsys:name()}))
+      nel(fmt.f(_([["Got the parts! Cheaper than I expected to. Hopefully this will bring an end to my ship troubles. Let's go back to #o{pnt}#0 in #o{sys}#0!"]]), {pnt=retpnt, sys=retsys}))
       vn.done( tutnel.nelly.transition )
       vn.run()
 
@@ -385,8 +385,8 @@ function approach_nelly ()
    vn.run()
 
    misn.osdCreate( _("Helping Nelly Out"), {
-      fmt.f(_("Go to {pntname} in {sysname}"),{pntname=destpnt:name(), sysname=destsys:name()}),
-      fmt.f(_("Return to {pntname} in {sysname}"),{pntname=retpnt:name(), sysname=retsys:name()}),
+      fmt.f(_("Go to {pnt} in {sys}"),{pnt=destpnt, sys=destsys}),
+      fmt.f(_("Return to {pnt} in {sys}"),{pnt=retpnt, sys=retsys}),
    } )
    misn.markerMove( misn_marker, destpnt )
 
@@ -484,8 +484,8 @@ end
 
 function reset_osd ()
    misn.osdCreate( _("Helping Nelly Out"), {
-      fmt.f(_("Go to {pntname} in {sysname}"),{pntname=destpnt:name(), sysname=destsys:name()}),
-      fmt.f(_("Return to {pntname} in {sysname}"),{pntname=retpnt:name(), sysname=retsys:name()}),
+      fmt.f(_("Go to {pnt} in {sys}"),{pnt=destpnt, sys=destsys}),
+      fmt.f(_("Return to {pnt} in {sys}"),{pnt=retpnt, sys=retsys}),
    } )
    if misn_state >= 4 then
       misn.osdActive(2)
@@ -551,7 +551,7 @@ She frowns.
    }
 
    vn.label("neverlearn")
-   nel(fmt.f(_([["Great! Avoid getting scanned by them and let's head off to {pntname} in {sysname}!"]]),{pntname=destpnt:name(),sysname=destsys:name()}))
+   nel(fmt.f(_([["Great! Avoid getting scanned by them and let's head off to {pnt} in {sys}!"]]),{pnt=destpnt,sys=destsys}))
 
    vn.done( tutnel.nelly.transition )
    vn.run()

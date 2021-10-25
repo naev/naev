@@ -47,18 +47,6 @@ misn_title[4] = _("#rPIRACY:#0: Big Assassination Job in %s%s")
 misn_title[5] = _("#rPIRACY:#0: Dangerous Assassination Job in %s%s")
 misn_title[6] = _("#rPIRACY:#0: Highly Dangerous Assassination Job in %s%s")
 
--- Messages
-msg    = {}
-msg[1] = _("MISSION FAILURE! Target got away.")
-msg[2] = _("MISSION FAILURE! Another pilot eliminated your target.")
-msg[3] = _("MISSION FAILURE! You have left the %s system.")
-msg[4] = _("MISSION SUCCESS! Pay has been transferred into your account.")
-
-osd_msg    = {}
-osd_msg[1] = _("Fly to the %s system")
-osd_msg[2] = _("Kill %s")
-osd_msg["__save"] = true
-
 hunters = {}
 hunter_hits = {}
 
@@ -138,7 +126,7 @@ function create ()
       misn.setTitle( misn_title[level]:format( missys:name(), "" ) )
    end
 
-   local mdesc = fmt.f( _("A meddlesome {fctname} pilot known as {pltname} was recently seen in the {sysname} system. Local crime lords want this pilot dead. {pltname} is known to be flying a {shipclass}-class ship.{fcttext}"), {fctname=target_faction, pltname=name, sysname=missys:name(), shipclass=ship.get(pship):classDisplay(), fcttext=faction_text } )
+   local mdesc = fmt.f( _("A meddlesome {fctname} pilot known as {pltname} was recently seen in the {sys} system. Local crime lords want this pilot dead. {pltname} is known to be flying a {shipclass}-class ship.{fcttext}"), {fctname=target_faction, pltname=name, sys=missys, shipclass=ship.get(pship):classDisplay(), fcttext=faction_text } )
    if not pir.factionIsPirate( planet.cur():faction() ) then
       -- We're not on a pirate stronghold, so include a warning that the
       -- mission is in fact illegal (for new players).
@@ -154,9 +142,10 @@ end
 function accept ()
    misn.accept()
 
-   osd_msg[1] = osd_msg[1]:format( missys:name() )
-   osd_msg[2] = osd_msg[2]:format( name )
-   misn.osdCreate( _("Assassination"), osd_msg )
+   misn.osdCreate( _("Assassination"), {
+      fmt.f( _("Fly to the {sys} system"), {sys=missys} ),
+      fmt.f( _("Kill {pltname}"), {pltname=name} ),
+   } )
 
    last_sys = system.cur()
 
@@ -185,7 +174,7 @@ function jumpout ()
    jumps_permitted = jumps_permitted - 1
    last_sys = system.cur()
    if not job_done and last_sys == missys then
-      fail( msg[3]:format( last_sys:name() ) )
+      fail( _("MISSION FAILURE! You have left the %s system."):format( last_sys:name() ) )
    end
 end
 
@@ -240,14 +229,14 @@ function pilot_death( _p, attacker )
       elseif player_hits >= top_hits / 2 and rnd.rnd() < 0.5 then
          succeed()
       else
-         fail( msg[2] )
+         fail( _("MISSION FAILURE! Another pilot eliminated your target.") )
       end
    end
 end
 
 
 function pilot_jump ()
-   fail( msg[1] )
+   fail( _("MISSION FAILURE! Target got away.") )
 end
 
 
@@ -554,7 +543,7 @@ function spawn_pirate( param )
          hook.pilot( target_ship, "jump", "pilot_jump" )
          hook.pilot( target_ship, "land", "pilot_jump" )
       else
-         fail( msg[1] )
+         fail( _("MISSION FAILURE! Target got away.") )
       end
    end
 end
@@ -562,7 +551,7 @@ end
 
 -- Succeed the mission
 function succeed ()
-   player.msg( "#g" .. msg[4] .. "#0" )
+   player.msg( "#g" .. _("MISSION SUCCESS! Pay has been transferred into your account.") .. "#0" )
    player.pay( credits )
 
    -- Pirate rep cap increase

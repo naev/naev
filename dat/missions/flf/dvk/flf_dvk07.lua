@@ -22,6 +22,7 @@
    The FLF Split
 
 --]]
+local fmt = require "format"
 local flf = require "missions.flf.flf_common"
 require "missions.flf.flf_rogue"
 
@@ -54,7 +55,7 @@ function accept ()
       misn.setReward( _("Getting rid of treacherous scum") )
       marker = misn.markerAdd( missys, "high" )
 
-      osd_desc[1] = osd_desc[1]:format( missys:name() )
+      osd_desc[1] = fmt.f( osd_desc[1], {sys=missys} )
       misn.osdCreate( _("Rogue FLF"), osd_desc )
 
       rogue_ships_left = 0

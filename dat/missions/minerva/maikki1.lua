@@ -106,13 +106,13 @@ end
 
 
 function generate_npc ()
-   if planet.cur() == planet.get("Cerberus") then
-      npc_oldman = misn.npcAdd( "approach_oldman", _("Old Man"), oldman_portrait, _("You see a nonchalant old man sipping on his drink with a carefree aura.") )
+   if planet.cur() == planet.getS("Cerberus") then
+      misn.npcAdd( "approach_oldman", _("Old Man"), oldman_portrait, _("You see a nonchalant old man sipping on his drink with a carefree aura.") )
       if misn_state==3 or misn_state==4 or bribed_scavengers==true then
-         npc_scavenger = misn.npcAdd( "approach_scavengers", _("Scavengers"), scav_portrait, _("You see a pair of dirty looking fellows talking loudly among themselves.") )
+         misn.npcAdd( "approach_scavengers", _("Scavengers"), scav_portrait, _("You see a pair of dirty looking fellows talking loudly among themselves.") )
       end
-   elseif planet.cur() == planet.get("Minerva Station") then
-      npc_maikki = misn.npcAdd( "approach_maikki", minerva.maikki.name, minerva.maikki.portrait, minerva.maikki.description )
+   elseif planet.cur() == planet.getS("Minerva Station") then
+      misn.npcAdd( "approach_maikki", minerva.maikki.name, minerva.maikki.portrait, minerva.maikki.description )
    end
 end
 
@@ -218,7 +218,7 @@ She starts eating the parfait, which seems to be larger than her head.]]))
    vn.func( function ()
       if misn_state < 0 then
          misn_state = 0
-         misn_osd = misn.osdCreate( _("Finding Maikki's Father"),
+         misn.osdCreate( _("Finding Maikki's Father"),
             { string.format(_("Look around the %s system"), _(searchsys)) } )
          misn_marker = misn.markerAdd( system.get(searchsys), "low" )
          minerva.log.maikki(_("You were told her father colud be near Doeston.") )
@@ -336,7 +336,7 @@ He downs his drink and orders another.]]))
    vn.func( function ()
       if misn_state==2 then
          misn_state=3
-         npc_scavenger = misn.npcAdd( "approach_scavengers", _("Scavengers"), scav_portrait, _("You see a pair of dirty looking fellows talking loudly among themselves.") )
+         misn.npcAdd( "approach_scavengers", _("Scavengers"), scav_portrait, _("You see a pair of dirty looking fellows talking loudly among themselves.") )
       end
    end )
    vn.jump( "menu_msg" )
@@ -401,7 +401,7 @@ He pats his biceps in a fairly uninspiring way.]]))
       vn.na(_("They cheer, down their drinks, and order another round. Perhaps the wreck in Zerantix is related to Kex somehow."))
       vn.func( function ()
          if misn_state==3 then
-            misn_osd = misn.osdCreate( _("Finding Maikki's Father"),
+            misn.osdCreate( _("Finding Maikki's Father"),
                { string.format(_("Follow the scavengers in the %s system"), _(stealthsys)) } )
             misn.markerMove( misn_marker, system.get(stealthsys) )
             misn_state=4
@@ -922,9 +922,9 @@ function board_wreck ()
    minerva.log.maikki(_("You boarded the wreck which seems to be Kex's ship. You found a picture of his family and signs that this was not an accident with possible Za'lek involvement.") )
 
    -- Move target back to origin
-   misn_osd = misn.osdCreate( _("Finding Maikki's Father"),
+   misn.osdCreate( _("Finding Maikki's Father"),
          { string.format(_("Return to %s in the %s system"), minerva.maikki.name, _(mainsys)) } )
-   misn.markerMove( misn_marker, planet.get("Minerva Station") )
+   misn.markerMove( misn_marker, planet.getS("Minerva Station") )
    misn_state=5
 
    -- Clear scavengers if exist

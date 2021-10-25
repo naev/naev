@@ -100,7 +100,7 @@ function accept()
 
    -- OSD
    osd_msg = {_("Drop off the goods at %s in the %s system (You have %s remaining)"):format(dest_planet:name(), dest_sys:name(), (time_limit - time.get()):str())}
-   osd = misn.osdCreate(_("Help the Merchant"), osd_msg)
+   misn.osdCreate(_("Help the Merchant"), osd_msg)
 
    tk.msg(_("Happy Day"), _([[The merchant sighs in relief. "Thank you so much for this. Just bring the cargo to the cargo guy at %s. They should pay you %s when you get there. Don't be late, OK?"]]):format(dest_planet:name(), fmt.credits(payment)))
 

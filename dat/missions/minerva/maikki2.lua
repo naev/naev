@@ -70,7 +70,7 @@ hintpnt = {
 }
 hintsys = {}
 for k,v in ipairs(hintpnt) do
-   hintsys[k] = planet.get(v):system():nameRaw()
+   hintsys[k] = planet.getS(v):system():nameRaw()
 end
 eccpnt = "Strangelove Lab"
 eccdiff = "strangelove"
@@ -109,9 +109,9 @@ function accept ()
    end
 
    -- Set up mission stuff
-   markerhint1 = misn.markerAdd( planet.get(hintpnt[1]), "low")
-   markerhint2 = misn.markerAdd( planet.get(hintpnt[2]), "low")
-   markerhint3 = misn.markerAdd( planet.get(hintpnt[3]), "low")
+   markerhint1 = misn.markerAdd( planet.getS(hintpnt[1]), "low")
+   markerhint2 = misn.markerAdd( planet.getS(hintpnt[2]), "low")
+   markerhint3 = misn.markerAdd( planet.getS(hintpnt[3]), "low")
    hintosd()
    hook.land("generate_npc")
    hook.load("generate_npc")
@@ -297,22 +297,22 @@ end
 
 
 function generate_npc ()
-   if planet.cur() == planet.get("Minerva Station") then
-      npc_maikki = misn.npcAdd( "approach_maikki", minerva.maikki.name, minerva.maikki.portrait, minerva.maikki.description )
+   if planet.cur() == planet.getS("Minerva Station") then
+      misn.npcAdd( "approach_maikki", minerva.maikki.name, minerva.maikki.portrait, minerva.maikki.description )
 
-   elseif planet.cur() == planet.get( hintpnt[1] ) then
-      npc_hint1 = misn.npcAdd( "approach_hint1", hint1_name, hint1_portrait, _("You see a person in a fancy lab coat. It seems like they are enjoying their time off.") )
+   elseif planet.cur() == planet.getS( hintpnt[1] ) then
+      misn.npcAdd( "approach_hint1", hint1_name, hint1_portrait, _("You see a person in a fancy lab coat. It seems like they are enjoying their time off.") )
 
-   elseif planet.cur() == planet.get( hintpnt[2] ) then
-      npc_hint2 = misn.npcAdd( "approach_hint2", hint2_name, hint2_portrait, _("You see a person in a fancy lab coat. It seems like they are enjoying their time off.") )
+   elseif planet.cur() == planet.getS( hintpnt[2] ) then
+      misn.npcAdd( "approach_hint2", hint2_name, hint2_portrait, _("You see a person in a fancy lab coat. It seems like they are enjoying their time off.") )
 
-   elseif planet.cur() == planet.get( hintpnt[3] ) then
-      npc_hint3 = misn.npcAdd( "approach_hint3", hint3_name, hint3_portrait, _("You see a person in a fancy lab coat. It seems like they are enjoying their time off.") )
+   elseif planet.cur() == planet.getS( hintpnt[3] ) then
+      misn.npcAdd( "approach_hint3", hint3_name, hint3_portrait, _("You see a person in a fancy lab coat. It seems like they are enjoying their time off.") )
 
-   elseif misn_state >= 1 and  planet.cur() == planet.get( hintpnt[4] ) then
-      npc_hint4 = misn.npcAdd( "approach_hint4", hint4_name, hint4_portrait, _("You see a young fellow intently reading a book. There seems to be a shrimp in a floating aquarium bowl floating around him.") )
+   elseif misn_state >= 1 and  planet.cur() == planet.getS( hintpnt[4] ) then
+      misn.npcAdd( "approach_hint4", hint4_name, hint4_portrait, _("You see a young fellow intently reading a book. There seems to be a shrimp in a floating aquarium bowl floating around him.") )
 
-   elseif diff.isApplied(eccdiff) and planet.cur() == planet.get(eccpnt) and misn_state < 6 then
+   elseif diff.isApplied(eccdiff) and planet.cur() == planet.getS(eccpnt) and misn_state < 6 then
       npc_ecc = misn.npcAdd( "approach_eccentric", _("Hologram Projector"), ecc_portrait, _("An old decrepit hologram projector sits in the corner. It looks like you could use this to communicate with the owner of the station.") )
    end
 end
@@ -336,7 +336,7 @@ end
 function visited ()
    if misn_state==0 and visitedhints()==3 then
       misn_state = 1
-      markerhint4 = misn.markerAdd( planet.get(hintpnt[4]), "low" )
+      markerhint4 = misn.markerAdd( planet.getS(hintpnt[4]), "low" )
       minerva.log.maikki(_("You met the three researchers that Maikki told you about and found out a lead about another researcher.") )
    end
    hintosd()
@@ -862,7 +862,7 @@ His voice gets softer and softer as he keeps on mumbling.]]))
       misn_state = 6
       misn.npcRm( npc_ecc )
       misn.osdCreate( _("Finding Maikki's Father"), {_("Report back to Maikki in the Limbo system")} )
-      misn.markerAdd( planet.get("Minerva Station"), "low")
+      misn.markerAdd( planet.getS("Minerva Station"), "low")
       misn.markerRm( marker_ecc )
       minerva.log.maikki(_("You learned that Dr. Strangelove saved what appears to be Kex and another individual from a wreck in the nebula. Kex appears to have run away and is likely held by thugs at Minerva station." ) )
    end )

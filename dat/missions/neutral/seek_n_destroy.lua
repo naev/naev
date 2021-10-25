@@ -115,11 +115,7 @@ quotes.pay    = {}
 quotes.pay[1] = _("An officer hands you your pay.")
 quotes.pay[2] = _("No one will miss this outlaw pilot! The bounty has been deposited into your account.")
 
-osd_msg    = {}
-osd_msg[1] = " "
-osd_msg[2] = _("Kill %s")
-osd_msg[3] = _("Land on any %s planet and collect your bounty")
-osd_msg["__save"] = true
+osd_msg    = {__save=true}  -- 3-part OSD: Search a system, do the deed, get paid.
 
 function create ()
    paying_faction = planet.cur():faction()
@@ -223,8 +219,8 @@ function accept ()
    landhook = hook.land( "land" )
 
    osd_msg[1] = _("Fly to the %s system and search for clues"):format( mysys[1]:name() )
-   osd_msg[2] = osd_msg[2]:format( name )
-   osd_msg[3] = osd_msg[3]:format( paying_faction:name() )
+   osd_msg[2] = fmt.f( _("Kill {pltname}"), {pltname=name} )
+   osd_msg[3] = _("Land on any %s planet and collect your bounty"):format( paying_faction:name() )
    misn.osdCreate( _("Seek and Destroy"), osd_msg )
 end
 

@@ -61,9 +61,9 @@ misn_title[2] = _("Small Alive Bounty in %s")
 misn_title[3] = _("Moderate Alive Bounty in %s")
 misn_title[4] = _("High Alive Bounty in %s")
 misn_title[5] = _("Dangerous Alive Bounty in %s")
-misn_desc   = _("The pirate known as {pirname} was recently seen in the {sysname} system. {fctname} authorities want this pirate alive. {pirname} is believed to be flying a {shipclass}-class ship.")
+misn_desc   = _("The pirate known as {pirname} was recently seen in the {sys} system. {fctname} authorities want this pirate alive. {pirname} is believed to be flying a {shipclass}-class ship.")
 
-osd_msg[2] = _("Capture %s")
+osd_msg[2] = _("Capture {pltname}")
 
 function pilot_death ()
    if board_failed then
@@ -116,7 +116,7 @@ function board_fail ()
       local t = kill_instead_text[ rnd.rnd( 1, #kill_instead_text ) ]:format(
          name, fmt.credits( credits ) )
       vntk.msg( _("Better Dead than Free"), t )
-      osd_msg[2] = _("Kill %s"):format( name )
+      osd_msg[2] = fmt.f( _("Kill {pltname}"), {pltname=name} )
       misn.osdCreate( osd_title, osd_msg )
       misn.osdActive( 2 )
    end

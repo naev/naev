@@ -35,14 +35,9 @@ local fmt = require "format"
 
 misn_reward = fmt.credits(700e3)
 
-osd_msg = {}
-osd_msg[1] = _("Fly to %s and land on %s")
-osd_msg[2] = _("Return to %s with your findings")
-osd_msg["__save"] = true
-
 function create ()
-   misn_base, misn_base_sys = planet.get("Omega Station")
-   misn_target, misn_target_sys = planet.get("Eiroik")
+   misn_base, misn_base_sys = planet.getS("Omega Station")
+   misn_target, misn_target_sys = planet.getS("Eiroik")
 
     local missys = {misn_target}
     if not misn.claim(missys) then
@@ -70,9 +65,10 @@ function accept ()
    misn.setTitle(_("Collective Espionage"))
    misn.setReward( misn_reward )
    misn.setDesc( string.format(_("Land on %s in the %s system to monitor Collective communications"), misn_target:name(), misn_target_sys:name() ))
-   osd_msg[1] = osd_msg[1]:format(misn_target_sys:name(), misn_target:name())
-   osd_msg[2] = osd_msg[2]:format(misn_base:name())
-   misn.osdCreate(_("Collective Espionage"), osd_msg)
+   misn.osdCreate(_("Collective Espionage"), {
+      _("Fly to %s and land on %s"):format(misn_target_sys:name(), misn_target:name()),
+      _("Return to %s with your findings"):format(misn_base:name()),
+   })
 
    tk.msg( _("Collective Espionage"), string.format(_([["On your last run, you were monitoring while out in the open. While you do get better signals, upon noticing your presence, the drones will go into combat mode, and yield only combat transmissions. This mission will consist of hiding and monitoring from a safer spot, hopefully catching them more relaxed.
     "When the Collective struck, they quickly took many systems; one of the bigger hits was %s, an important gas giant rich in methane. They destroyed the gas refineries and slaughtered the humans. There was nothing we could do. The turbulence and dense atmosphere there should be able to hide your ship."]]), misn_target:name()) )

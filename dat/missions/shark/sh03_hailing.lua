@@ -28,25 +28,15 @@ local pir = require "common.pirate"
 local fmt = require "format"
 local shark = require "common.shark"
 
-osd_msg = {}
-
--- Mission details
-
--- NPC
-
--- OSD
-osd_msg[1] = _("Go to %s, find and hail the Air Force One")
-osd_msg[2] = _("Report back to %s in the %s system")
 
 function create ()
-
    --Change here to change the planets and the systems
    mispla,missys = planet.getLandable(faction.get("Frontier"))  -- mispla will be useful to locate the Hawking
    pplname = "Darkshed"
    psyname = "Alteris"
    paysys = system.get(psyname)
-   paypla = planet.get(pplname)
-   nextpla, nextsys = planet.get("Curie") -- This should be the same as the planet used in sh04_meeting!
+   paypla = planet.getS(pplname)
+   nextpla, nextsys = planet.getS("Curie") -- This should be the same as the planet used in sh04_meeting!
 
    if not misn.claim(missys) then
       misn.finish(false)
@@ -66,13 +56,13 @@ function accept()
       misn.accept()
       tk.msg(_("Time to go"), _([["Fantastic! I am known as Donald Ulnish to the Council member. Good luck."]]))
 
-      osd_msg[1] = osd_msg[1]:format(missys:name())
-      osd_msg[2] = osd_msg[2]:format(pplname, psyname)
-
       misn.setTitle(_("Invitation"))
       misn.setReward(fmt.credits(reward))
       misn.setDesc(_("Nexus Shipyards asks you to help initiate a secret meeting"))
-      osd = misn.osdCreate(_("Invitation"), osd_msg)
+      misn.osdCreate(_("Invitation"), {
+         _("Go to %s, find and hail the Air Force One"):format(missys:name()),
+         _("Report back to %s in the %s system"):format(pplname, psyname),
+      })
       misn.osdActive(1)
 
       marker = misn.markerAdd(missys, "low")
@@ -92,7 +82,7 @@ function land()
    tk.msg(_("Good job"), _([[Smith seems to relax as you tell him that everything went according to plan. "Fantastic! I have another mission for you; meet me in the bar when you are ready to bring me to %s in the %s system."]]):format(nextpla:name(), nextsys:name()))
       player.pay(reward)
       pir.reputationNormalMission(rnd.rnd(2,3))
-      misn.osdDestroy(osd)
+      misn.osdDestroy()
       hook.rm(enterhook)
       hook.rm(landhook)
       shark.addLog( _([[You helped Nexus Shipyards initiate a secret meeting with a member of the Frontier Council. Arnold Smith said that he has another mission for you and to meet him in the bar on Darkshed when you are ready to transport him to Curie.]]) )

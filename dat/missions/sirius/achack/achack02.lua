@@ -6,7 +6,7 @@
  </flags>
  <avail>
   <priority>3</priority>
-  <cond>planet.get("Violin Station"):system():jumpDist() &lt; 4</cond>
+  <cond>planet.getS("Violin Station"):system():jumpDist() &lt; 4</cond>
   <done>Sirian Bounty</done>
   <chance>10</chance>
   <location>Bar</location>
@@ -33,15 +33,6 @@ text4 = _([[You go through the now familiar routine of waiting for Joanne. She s
     The comm switches off. You prepare to take off and set a course for Sroolu.]])
 
 stoptext = _("You dock with %s, and the spacedock personnel immediately begins to refuel your ship. You spend a few hectoseconds going through checklists and routine maintenance operations. Then you get a ping on your comms from Joanne. She tells you that she has finished her business on this station, and that she's taking off again. You follow suit.")
-
--- Mission info stuff
-
-osd_msg   = {}
-osd_msg[1] = _("Follow Joanne's ship")
-osd_msg[2] = _("Defeat Joanne's attackers")
-osd_msg["__save"] = true
-osd_final = {_("Land on Sroolu to get your reward")}
-osd_final["__save"] = true
 
 misn_reward = fmt.credits(750e3)
 
@@ -88,7 +79,7 @@ function accept()
    route["__save"] = true
    stage = 1
 
-   destplanet, destsys = planet.get(route[stage])
+   destplanet, destsys = planet.getS(route[stage])
    nextsys = system.cur() -- This variable holds the system the player is supposed to jump to NEXT. This is the current system when taking off.
    origin = planet.cur() -- Determines where Joanne spawns from. Can be a planet or system.
    joannejumped = true -- Determines if Joanne has jumped. Needs to be set when landed.
@@ -98,7 +89,10 @@ function accept()
    misn.accept()
    misn.setDesc(_("Joanne needs you to escort her ship and fight off mercenaries sent to kill her."))
    misn.setReward(misn_reward)
-   misn.osdCreate(_("Harja's Vengeance"), osd_msg)
+   misn.osdCreate(_("Harja's Vengeance"), {
+      _("Follow Joanne's ship"),
+      _("Defeat Joanne's attackers"),
+   })
 
    hook.land("land")
    hook.enter("enter")
@@ -109,7 +103,7 @@ end
 function land()
    if planet.cur() == destplanet and joannelanded and stage < 4 then
       stage = stage + 1
-      destplanet, destsys = planet.get(route[stage])
+      destplanet, destsys = planet.getS(route[stage])
       misn.markerMove( mark, destsys )
       origin = planet.cur()
       player.refuel(200)
@@ -119,17 +113,16 @@ function land()
    elseif planet.cur() == destplanet and joannelanded and stage == 4 then
       tk.msg(_("Mission accomplished"), text4:format(player.name()))
       stage = stage + 1
-      misn.osdCreate(_("Harja's Vengeance"), osd_final)
       origin = planet.cur()
-      destplanet, destsys = planet.get(route[stage])
+      destplanet, destsys = planet.getS(route[stage])
       misn.markerMove( mark, destsys )
       joannejumped = true -- She "jumped" into the current system by taking off.
-      misn.osdCreate(_("Harja's Vengeance"), osd_final)
+      misn.osdCreate(_("Harja's Vengeance"), {_("Land on Sroolu to get your reward")})
       player.takeoff()
    elseif stage < 4 then
       tk.msg(_("You didn't follow Joanne!"), _("You landed on a planet Joanne didn't land on. Your mission is a failure!"))
       misn.finish(false)
-   elseif stage == 5 and planet.cur() == planet.get("Sroolu") then
+   elseif stage == 5 and planet.cur() == planet.getS("Sroolu") then
       misn.markerRm(mark)
       tk.msg(_("One damsel, safe and sound"), _([[After you both land your ships, you meet Joanne in the spaceport bar.
     "Whew! That was definitely the most exciting round I've done to date! Thank you %s, I probably owe you my life. You more than deserved your payment, I've already arranged for the transfer." Joanne hesitates, but then apparently makes up her mind. "In fact, would you sit down for a while? I think you deserve to know what this whole business with Harja is all about. And to be honest, I kind of want to talk to someone about this, and seeing how you're involved already anyway..."

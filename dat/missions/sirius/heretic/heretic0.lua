@@ -19,29 +19,18 @@
 --[[misn name - the gauntlet]]--
 --[[cargo smuggle into sirius territory to assist a
     sabotage mission being carried out by the Nasin.
-    Credits to KAHR-Alpha for the work "lackadaisically",
+    Credits to KAHR-Alpha for the word "lackadaisically",
     and to BTAxis for the word "discombobulate"]]
 
 local fmt = require "format"
 local srs = require "common.sirius"
-
-
---the intro messages
-
---ending messages
-
---Mission OSD stuff
-osd = {}
-osd[1] = _("Deliver the shipment to %s in the %s system")
---random odds and ends
-misn_desc = _("You are to deliver a shipment to %s in the %s system for a strange man you met at a bar, avoiding Sirius ships.")
 
 function create()
    --this mission makes no mission claims
    --set the variables
    reward = 200e3 --reward algorithm after this mission = 100e3 + (rnd.rnd(5,8)*2e3 * (nasin_rep^1.51). flat rate for first mission.
    startworld = planet.cur()
-   targetasset = planet.get("Margot")
+   targetasset = planet.getS("Margot")
    targetsystem = system.get("Brendon")
    if system.cur() == targetsystem then --I didn't want the player to start the mission in the same system as it was supposed to end
       misn.finish(false)
@@ -50,8 +39,6 @@ function create()
    misn.setReward(fmt.credits(reward))
    misn.setTitle(_("The Gauntlet"))
    misn.setNPC(_("A Scrappy Man"), "sirius/unique/strangeman.webp", _("You see a rougher looking man sitting at the bar and guzzling a brownish ale."))
-   osd[1] = osd[1]:format(targetasset:name(),targetsystem:name())
-   misn_desc = misn_desc:format(targetasset:name(),targetsystem:name())
 end
 
 function accept()
@@ -65,10 +52,12 @@ function accept()
    end
    tk.msg(_("The Gauntlet"), _([[You feel a very large hand slap you on the back. "I knew you would do it! A great choice!" he says. "I'll have my boys load up the cargo. Remember, all you gotta do is fly to %s, and avoid the Sirius military. You know, don't let them scan you. I'll let my contacts know to expect you. They'll pay you when you land."
     You shake his sticky hand and walk off, content that you've made an easy buck.]]):format(aname))
-   misn.setDesc(misn_desc)
+   misn.setDesc(_("You are to deliver a shipment to %s in the %s system for a strange man you met at a bar, avoiding Sirius ships."):format(targetasset:name(),targetsystem:name()))
    misn.accept()
    misn.markerAdd(targetsystem,"high")
-   misn.osdCreate(_("The Gauntlet"),osd)
+   misn.osdCreate(_("The Gauntlet"), {
+      _("Deliver the shipment to %s in the %s system"):format(targetasset:name(),targetsystem:name()),
+   })
    misn.osdActive(1)
    freecargo = player.pilot():cargoFree() --checks to make sure the player has 5 tons available
    if freecargo < 5 then

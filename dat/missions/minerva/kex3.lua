@@ -39,10 +39,10 @@ local fmt = require "format"
 misn_state = nil
 
 targetplanet = "Trincea"
-targetsys = planet.get(targetplanet):system():nameRaw()
+targetsys = planet.getS(targetplanet):system():nameRaw()
 
 lastplanet = "Totoran"
-lastsys = planet.get(lastplanet):system():nameRaw()
+lastsys = planet.getS(lastplanet):system():nameRaw()
 
 gauntletsys = system.get("Crimson Gauntlet")
 
@@ -90,10 +90,10 @@ end
 
 
 function generate_npc ()
-   if planet.cur() == planet.get("Minerva Station") then
-      npc_kex = misn.npcAdd( "approach_kex", minerva.kex.name, minerva.kex.portrait, minerva.kex.description )
+   if planet.cur() == planet.getS("Minerva Station") then
+      misn.npcAdd( "approach_kex", minerva.kex.name, minerva.kex.portrait, minerva.kex.description )
 
-   elseif misn_state==0 and planet.cur() == planet.get(targetplanet) then
+   elseif misn_state==0 and planet.cur() == planet.getS(targetplanet) then
       vn.clear()
       vn.scene()
       vn.transition()
@@ -104,16 +104,16 @@ function generate_npc ()
 
       -- Advance the state
       misn_state = 1
-      misn.markerMove( misn_marker, planet.get(lastplanet) )
+      misn.markerMove( misn_marker, planet.getS(lastplanet) )
       misn.osdCreate( _("Freeing Kex"),
          { string.format(_("Look for Major Malik at %s in the %s system"), _(lastplanet), _(lastsys) ),
          _("Return to Kex at Minerva Station") } )
 
-   elseif (misn_state==2 or misn_state==3) and planet.cur() == planet.get(lastplanet) then
+   elseif (misn_state==2 or misn_state==3) and planet.cur() == planet.getS(lastplanet) then
       misn_state = 3
-      npc_malik = misn.npcAdd( "approach_malik", _("Major Malik"), malik_portrait, _("You see Major Malik who is fairly similar to the image shown to you by Kex.") )
+      misn.npcAdd( "approach_malik", _("Major Malik"), malik_portrait, _("You see Major Malik who is fairly similar to the image shown to you by Kex.") )
 
-   elseif misn_state==4 and planet.cur() == planet.get(lastplanet) then
+   elseif misn_state==4 and planet.cur() == planet.getS(lastplanet) then
       vn.clear()
       vn.scene()
       vn.transition()
@@ -128,7 +128,7 @@ function generate_npc ()
 
       misn_state = 5 -- We're done here, go back to kex:)
       misn.osdActive(2)
-      misn.markerMove( misn_marker, planet.get("Minerva Station") )
+      misn.markerMove( misn_marker, planet.getS("Minerva Station") )
    end
 end
 
@@ -279,7 +279,7 @@ function enter ()
       hook.timer( 5, "thug_heartbeat" )
    elseif misn_state==2 and system.cur() == system.get(lastsys) then
       -- Spawn thugs from Totoran
-      spawn_thugs(planet.get(lastplanet):pos(), false )
+      spawn_thugs(planet.getS(lastplanet):pos(), false )
       -- Timer
       hook.timer( 5, "thug_heartbeat" )
    end
@@ -421,7 +421,7 @@ function leave_the_ring ()
    for k,s in ipairs(system.getAll()) do
       s:setHidden(false)
    end
-   player.land( planet.get("Totoran") )
+   player.land( planet.getS("Totoran") )
 end
 
 --[[

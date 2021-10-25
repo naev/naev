@@ -23,23 +23,12 @@ Plot: on Zhiru you meet the same girl who received the love letters,her name is 
 local fmt = require "format"
 local neu = require "common.neutral"
 
--- Dialogue
-
--- Mission Computer text
-
--- Mission Ending
 finish = _([[As Michal takes the recipes and cake off your hands, you can't help but wonder how quickly his business will fail with food as bad as the cake you tried. When he remarks how delicious he apparently thinks the cake is, that confirms in your mind that he doesn't have a clue what he's doing. You bite your tongue, however, wishing him good luck as you take your pay.]])
-
-osd_desc = {}
-osd_desc[1] = _("Fly to %s in the %s system.")
-osd_desc["__save"] = true
-
-cakes = "Food"
 
 
 function create () --No system shall be claimed by mission
    startworld, startworld_sys = planet.cur()
-   targetworld, targetworld_sys = planet.get( "Zeo" )
+   targetworld, targetworld_sys = planet.getS( "Zeo" )
 
    reward = 10e3
 
@@ -56,7 +45,7 @@ function accept()
 
    amount = player.pilot():cargoFree()
    if amount > 0 then
-      misn.cargoAdd( cakes, amount )
+      misn.cargoAdd( "Food", amount )
       reward = reward + ( 1e3 * amount )
       tk.msg( _("A Tasty Job"), _([["Great!" Paddy says with a smile. She hands you what appear to be recipes. "I just need you to deliver these recipes to him. Oh, and some of my homemade cake! I've packed that cake into your ship. Feel free to give it a taste! It's delicious! Anyway, Michal will pay you %s when you get there. Thank you so much!"
     When you arrive at your ship, you find your cargo hold packed to the brim with cake. You decide to try some, but the second it enters your mouth, you can't help but to spit it out in disgust. This is easily the most disgusting cake you've ever tasted. Well, as long as you get paid....]]):format( fmt.credits( reward ) ) )
@@ -69,8 +58,9 @@ function accept()
    misn.setReward( fmt.credits( reward ) )
    misn.setDesc( _([[Deliver the recipes to Michal on %s in the %s system.]]):format( targetworld:name(), targetworld_sys:name() ) )
 
-   osd_desc[1] = osd_desc[1]:format( targetworld:name(), targetworld_sys:name() )
-   misn.osdCreate( _("A Tasty Job"), osd_desc )
+   misn.osdCreate( _("A Tasty Job"), {
+      _("Fly to %s in the %s system."):format( targetworld:name(), targetworld_sys:name() ),
+   } )
    misn.markerAdd( targetworld, "low" )
 
    --set up hooks

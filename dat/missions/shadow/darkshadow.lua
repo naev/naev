@@ -25,17 +25,14 @@ require "proximity"
 
 -- Mission info stuff
 osd_msg   = {}
-osd2_msg  = {}
 osd_msg[0] = _("Look for Jorek on %s in the %s system") -- Note: indexing at 0 because it's a template. Shouldn't actually appear in-game.
-osd2_msg[1] = _("Fetch the Four Winds informant from his ship")
-osd2_msg[2] = _("Return Jorek and the informant to the Seiryuu in the %s system")
 
 function create()
    var.push("darkshadow_active", true)
 
-   seirplanet, seirsys = planet.get("Edergast")
-   jorekplanet1, joreksys1 = planet.get("Manis")
-   jorekplanet2, joreksys2 = planet.get("The Wringer")
+   seirplanet, seirsys = planet.getS("Edergast")
+   jorekplanet1, joreksys1 = planet.getS("Manis")
+   jorekplanet2, joreksys2 = planet.getS("The Wringer")
    ambushsys = system.get("Herakin")
    safesys = system.get("Eiderdown")
 
@@ -433,8 +430,10 @@ function jorek()
    local c = misn.cargoNew(_("Jorek"), _("An unpleasant man."))
    misn.cargoAdd(c, 0)
 
-   osd2_msg[2] = osd2_msg[2]:format(seirsys:name())
-   misn.osdCreate(_("Dark Shadow"), osd2_msg)
+   misn.osdCreate(_("Dark Shadow"), {
+      _("Fetch the Four Winds informant from his ship"),
+      _("Return Jorek and the informant to the Seiryuu in the %s system"):format(seirsys:name()),
+   })
 
    stage = 4
 end

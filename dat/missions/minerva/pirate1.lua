@@ -90,7 +90,7 @@ They beam a smile at you.]]),_(runawaysys)))
    minerva.log.pirate(_("You accepted a job from a shady individual to harass Dvaered thugs in the Limbo system and make it seem like the Za'lek were involved.") )
 
    misn.accept()
-   osd = misn.osdCreate( _("Thug Decoy"),
+   misn.osdCreate( _("Thug Decoy"),
          {_("Get the drone to follow you"),
           _("Harass the thugs"),
           string.format(_("Jump to %s"),_(runawaysys)),
@@ -139,7 +139,7 @@ function enter ()
       if system.cur()==system.get(runawaysys) then
          misn_state=4
          misn.osdActive(4)
-         misn.markerMove( misnmarker, planet.get("Minerva Station") )
+         misn.markerMove( misnmarker, planet.getS("Minerva Station") )
       else
          player.msg(string.format(_("#rMISSION FAILED! You were supposed to jump to the %s system!"),_(runawaysys)))
          misn.finish(false)

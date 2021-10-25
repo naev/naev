@@ -39,7 +39,7 @@ function create ()
    vn.music( der.sfx.ambient )
    vn.sfx( der.sfx.board )
    vn.transition()
-   vn.na(fmt.f(_("You enter and begin to scour the ship for anything of value. As you make through the hallways you hear a noise. After investigating, you end up finding the entire crew of the ship locked up in a dormitory room. They offer you {credits} to take them to safety to {planetname} in the {sysname} system."), {planetname=destpnt:name(), sysname=destsys:name(), credits=fmt.credits(reward_amount)}))
+   vn.na(fmt.f(_("You enter and begin to scour the ship for anything of value. As you make through the hallways you hear a noise. After investigating, you end up finding the entire crew of the ship locked up in a dormitory room. They offer you {credits} to take them to safety to {pnt} in the {sys} system."), {pnt=destpnt:name(), sys=destsys, credits=fmt.credits(reward_amount)}))
    vn.menu{
       { _("Help them out"), "help" },
       { _("Refuse to help"), "refuse" },
@@ -68,14 +68,14 @@ function create ()
    misn.accept()
 
    misn.setTitle(_("Derelict Rescue"))
-   misn.setDesc(fmt.f(_("You have agreed to take some crew you rescued from a derelict ship to {planetname} in the {sysname} system."), {planetname=destpnt:name(), sysname=destsys:name()}))
+   misn.setDesc(fmt.f(_("You have agreed to take some crew you rescued from a derelict ship to {pnt} in the {sys} system."), {pnt=destpnt, sys=destsys}))
    misn.setReward(fmt.credits(reward_amount))
 
    local c = misn.cargoNew( N_("Rescued Crew"), N_("Some crew you rescued from a derelict ship.") )
    civs = misn.cargoAdd( c, 0 )
 
    misn.osdCreate( _("Derelict Rescue"), {
-      fmt.f(_("Take the rescued crew to {planetname} in {sysname}"), {planetname=destpnt:name(), sysname=destsys:name()})
+      fmt.f(_("Take the rescued crew to {pnt} in {sys}"), {pnt=destpnt, sys=destsys})
    } )
    misn.markerAdd( destpnt, "low" )
 
@@ -97,6 +97,8 @@ You have received #g{credits}#0.
    end )
    vn.sfxVictory()
    vn.run()
+
+   der.addMiscLog(_("You rescued the crew of a derelict ship."))
 
    misn.finish( true )
 end

@@ -27,16 +27,9 @@
 local fmt = require "format"
 
 
-
-OSD = {}
-OSD[1] = _("Disable Gawain Credence")
-OSD[2] = _("Bring the teenagers back to planet %s")
-
-
 function create ()
     cursys = system.cur()
     curplanet = planet.cur()
-    OSD[2] = OSD[2]:format(planet.cur():name())
     misn.setNPC(_("A middle-aged man"), "neutral/unique/middleaged.webp", _("You see a middle-aged man, who appears to be one of the locals, looking around the bar, apparently in search of a suitable pilot."))
 end
 
@@ -46,7 +39,10 @@ function accept ()
         misn.accept()
         misn.setDesc(_("A disgruntled parent has asked you to fetch his son and his son's girlfriend, who have taken a yacht and are joyriding it in the %s system."):format(cursys:name()))
         misn.setReward(_("You will be compensated for your efforts."))
-        misn.osdCreate(_("The macho teenager"), OSD)
+        misn.osdCreate(_("The macho teenager"), {
+           _("Disable Gawain Credence"),
+           _("Bring the teenagers back to planet %s"):format(curplanet:name()),
+        })
         tk.msg(_("It's a lousy job, but..."), _([["Thank you! The yacht doesn't have a working hyperdrive, so they won't have left the system. It's a Gawain named Credence. Just disable it and board it, then transport my disobedient son and his girlfriend back here. Don't worry about the yacht, I'll have it recovered later. Oh, and one more thing, though it should go without saying: whatever you do, don't destroy the yacht! I don't want to lose my son over this. Well then, I hope to see you again soon."]]))
         hook.enter("enter")
         targetlive = true

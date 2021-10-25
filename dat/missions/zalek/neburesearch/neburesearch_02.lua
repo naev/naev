@@ -28,17 +28,13 @@ local car = require "common.cargo"
 local fmt = require "format"
 local zlk = require "common.zalek"
 
-request_text = _([["There's actually another thing I've almost forgotten. I also have to attend another conference very soon on behalf of professor Voges who obviously is very busy with some project he would not tell me about. But I don't want to go there - my research is far too important! So could you instead bring Robert there? You remember the student you helped out recently? I'm sure he will do the presentation just fine! I'll tell him to meet you in the bar as soon as possible!"
+local request_text = _([["There's actually another thing I've almost forgotten. I also have to attend another conference very soon on behalf of professor Voges who obviously is very busy with some project he would not tell me about. But I don't want to go there - my research is far too important! So could you instead bring Robert there? You remember the student you helped out recently? I'm sure he will do the presentation just fine! I'll tell him to meet you in the bar as soon as possible!"
     With that being said Dr. Mensing leaves you immediately without waiting for your answer. It appears you should head to the bar to meet up with the student.]])
-
--- Mission info stuff
-osd_msg   = {}
-osd_msg[1] = _("Fly to %s in the %s system.")
 
 function create()
     -- mission variables
     credits = 400e3
-    homeworld, homeworld_sys = planet.get("Jorla")
+    homeworld, homeworld_sys = planet.getS("Jorla")
     origin = planet.cur()
     origin_sys = system.cur()
 
@@ -69,8 +65,9 @@ function accept()
     misn_marker = misn.markerAdd(homeworld_sys, "low")
 
     misn.accept()
-    osd_msg[1] = osd_msg[1]:format(homeworld:name(), homeworld_sys:name())
-    misn.osdCreate(_("Emergency of Immediate Inspiration"), osd_msg)
+    misn.osdCreate(_("Emergency of Immediate Inspiration"), {
+       _("Fly to %s in the %s system."):format(homeworld:name(), homeworld_sys:name()),
+    })
 
     hook.land("land")
 end

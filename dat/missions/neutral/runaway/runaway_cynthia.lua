@@ -31,7 +31,7 @@ osd_text[1] = _("Deliver Cynthia to Zhiru in the Goddard system")
 function create ()
    startworld, startworld_sys = planet.cur()
    targetworld_sys = system.get("Goddard")
-   targetworld = planet.get("Zhiru")
+   targetworld = planet.getS("Zhiru")
    reward = 500e3
 
    misn.setNPC( _("Young Teenager"), "neutral/unique/cynthia.webp", _("A pretty teenager sits alone at a table.") )

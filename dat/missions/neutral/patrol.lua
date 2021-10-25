@@ -59,7 +59,7 @@ msg[5] = _("MISSION FAILURE! You showed up too late.")
 msg[6] = _("MISSION FAILURE! You have left the %s system.")
 
 osd_msg    = {}
-osd_msg[1] = _("Fly to the %s system")
+osd_msg[1] = _("Fly to the {sys} system")
 osd_msg[2] = "(null)"
 osd_msg[3] = _("Eliminate hostiles")
 osd_msg[4] = _("Land in %s territory to collect your pay")
@@ -145,7 +145,7 @@ end
 function accept ()
    misn.accept()
 
-   osd_msg[1] = osd_msg[1]:format( missys:name() )
+   osd_msg[1] = fmt.f( osd_msg[1], {sys=missys} )
    osd_msg[2] = gettext.ngettext(
       "Go to indicated point (%d remaining)",
       "Go to indicated point (%d remaining)",

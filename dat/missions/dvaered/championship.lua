@@ -32,12 +32,7 @@ local fmt = require "format"
 require "proximity"
 local portrait = require "portrait"
 
-osd_msg = {}
-
--- Mission details
-
 -- NPC
-
 npc_portrait = {}
 npc_portrait[2] = portrait.get()
 npc_portrait[3] = portrait.get()
@@ -46,20 +41,13 @@ npc_portrait[5] = portrait.get("Dvaered")
 npc_portrait[6] = portrait.get("Pirate")
 npc_portrait["__save"] = true
 
--- OSD
-osd_msg[1] = _("Go to the starting point")
-osd_msg[2] = _("Disable your opponent; DO NOT KILL")
-osd_msg[3] = _("Land on %s")
-
---mark
-
 function create ()
 
    --Change here to change the planet and the system
    sysname = "Dvaer"
    planame = "Dvaer Prime"
    missys = system.get(sysname)
-   mispla = planet.get(planame)
+   mispla = planet.getS(planame)
 
    if not misn.claim ( missys ) then
       misn.finish(false)
@@ -118,12 +106,14 @@ function accept()
 
       misn.accept()
 
-      osd_msg[3] = osd_msg[3]:format(planame)
-
       misn.setTitle(_("The Dvaered Championship"))
       misn.setReward(_("From 50k to 1.6m credits, depending on your rank"):format(fmt.number(reward)))
       misn.setDesc(_("You are taking part in a fight contest. Try to do your best!"))
-      misn.osdCreate(_("The Dvaered Championship"), osd_msg)
+      misn.osdCreate(_("The Dvaered Championship"), {
+         _("Go to the starting point"),
+         _("Disable your opponent; DO NOT KILL"),
+         _("Land on %s"):format(planame),
+      })
 
       usedNames = {}   --In order not to have two pilots with the same name
 

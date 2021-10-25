@@ -24,14 +24,10 @@
 local fmt = require "format"
 local srm = require "common.soromid"
 
-osd_desc = {}
-osd_desc[1] = _("Fly to %s in the %s system.")
-osd_desc[2] = _("Fly to %s in the %s system.")
-osd_desc["__save"] = true
 
 function create ()
-   misplanet, missys = planet.get( "Durea" )
-   misplanet2, missys2 = planet.get( "Crow" )
+   misplanet, missys = planet.getS( "Durea" )
+   misplanet2, missys2 = planet.getS( "Crow" )
    if not misn.claim( missys ) then misn.finish( false ) end
 
    started = false
@@ -60,9 +56,10 @@ function accept ()
       misn.setReward( _("None") )
       marker = misn.markerAdd( missys, "low" )
 
-      osd_desc[1] = osd_desc[1]:format( misplanet:name(), missys:name() )
-      osd_desc[2] = osd_desc[2]:format( misplanet2:name(), missys2:name() )
-      misn.osdCreate( _("Visiting Family"), osd_desc )
+      misn.osdCreate( _("Visiting Family"), {
+         _("Fly to %s in the %s system."):format( misplanet:name(), missys:name() ),
+         _("Fly to %s in the %s system."):format( misplanet2:name(), missys2:name() ),
+      } )
 
       stage = 1
 
