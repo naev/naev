@@ -31,7 +31,7 @@ spectator_messages = {
    _([["The realism of virtual reality here is impressive! It almost feels like it's real!"]]),
    function () return string.format(
       _([["I came all the way from %s to be here! We don't have anything like this back at home."]]),
-      planet.getS( {faction.get("Za'lek"), faction.get("Empire"), faction.get("Soromid")} ):name() -- No Dvaered
+      planet.get( {faction.get("Za'lek"), faction.get("Empire"), faction.get("Soromid")} ):name() -- No Dvaered
    ) end,
    _([["The Dvaered sure know how to put on a good show. I love seeing it rain Mace Rockets!"]]),
    _([["It's a shame that they require you to own the ship you want to use to enter the virtual reality competitions. I would love to try fly one of those majestic Dvaered Goddards."]]),

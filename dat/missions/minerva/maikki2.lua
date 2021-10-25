@@ -70,7 +70,7 @@ hintpnt = {
 }
 hintsys = {}
 for k,v in ipairs(hintpnt) do
-   hintsys[k] = planet.getS(v):system():nameRaw()
+   hintsys[k] = planet.get(v):system():nameRaw()
 end
 eccpnt = "Strangelove Lab"
 eccdiff = "strangelove"

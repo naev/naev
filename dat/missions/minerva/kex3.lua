@@ -279,7 +279,7 @@ function enter ()
       hook.timer( 5, "thug_heartbeat" )
    elseif misn_state==2 and system.cur() == system.get(lastsys) then
       -- Spawn thugs from Totoran
-      spawn_thugs(planet.getS(lastplanet):pos(), false )
+      spawn_thugs(planet.get(lastplanet):pos(), false )
       -- Timer
       hook.timer( 5, "thug_heartbeat" )
    end

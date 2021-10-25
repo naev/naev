@@ -315,10 +315,10 @@ function enter ()
    end
 
    thug_chance = thug_chance or 0.2
-   if misn_state==0 and system.cur() == system.get(targetsys) and player.pos():dist( planet.getS(targetplanet):pos() ) > 1000 then
+   if misn_state==0 and system.cur() == system.get(targetsys) and player.pos():dist( planet.get(targetplanet):pos() ) > 1000 then
       thug_chance = thug_chance / 0.8
       -- Spawn thugs around planet
-      spawn_thugs( planet.getS(targetplanet):pos(), false )
+      spawn_thugs( planet.get(targetplanet):pos(), false )
       hook.timer( 5, "thug_heartbeat" )
 
    elseif misn_state~=1 and rnd.rnd() < thug_chance then

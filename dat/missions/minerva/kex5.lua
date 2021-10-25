@@ -42,7 +42,7 @@ local fmt = require "format"
 misn_state = nil
 
 targetplanet = "Strangelove Lab"
-targetsys = "Westhaven" --planet.getS(targetplanet):system():nameRaw()
+targetsys = "Westhaven" --planet.get(targetplanet):system():nameRaw()
 
 misn_desc = string.format(_("Kex wants you to kill Dr. Strangelove at %s in the %s system."), _(targetplanet), _(targetsys))
 
