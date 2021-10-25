@@ -150,7 +150,7 @@
  <faction>
   <name>Black Lotus</name>
   <ai>pirate</ai>
-  <logo>pirate</logo>
+  <logo>blacklotus</logo>
   <longname>Black Lotus Pirate Clan</longname>
   <player>-20</player>
   <colour>red</colour>
@@ -158,7 +158,7 @@
   <standing>pirate_black_lotus</standing>
   <equip>pirate</equip>
   <useshiddenjumps/>
-  <description>The Black Lotus Pirate Clan is a fiercely organized pirate clan located between the Za'lek and Sirius space.</description>
+  <description>The Black Lotus Pirate Clan is a fiercely organized pirate clan located between the Za'lek and Sirius space. Organized crime at its finest.</description>
   <generator weight="0.65">Pirate</generator>
   <generator weight="0.35">Marauder</generator>
   <allies>
@@ -193,7 +193,7 @@
   <standing>pirate_dreamer_clan</standing>
   <equip>pirate</equip>
   <useshiddenjumps/>
-  <description>The Dreamer Pirate Clan consists largely of disgruntled pirates from the Frontier, fed up with both the FLF terrorism and Empire tyranny.</description>
+  <description>The Dreamer Pirate Clan consists largely of disgruntled pirates from the Frontier, fed up with both the FLF and Dvaered terrorism, and Empire tyranny.</description>
   <generator weight="0.4">Pirate</generator>
   <generator weight="0.4">Marauder</generator>
   <allies>
@@ -264,7 +264,7 @@
   <standing>marauder</standing>
   <equip>pirate</equip>
   <useshiddenjumps/>
-  <description>Pirate Marauders are the lowest and most vile of pirates. They are extremely aggressive and will attack most vessels unprovoked.</description>
+  <description>Pirate Marauders are the lowest and most vile of pirates. They are extremely aggressive and will attack most vessels unprovoked. Even the pirate clans have difficulty in dealing with them.</description>
   <allies>
   </allies>
   <enemies>
