@@ -19,7 +19,7 @@
   <population>4500</population>
   <hide>1.000000</hide>
   <services>
-   <land/>
+   <land>pir_clanworld</land>
    <refuel/>
    <bar/>
    <missions/>
