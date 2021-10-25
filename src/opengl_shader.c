@@ -1,7 +1,6 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
 /** @cond */
 #include "naev.h"
 /** @endcond */
@@ -12,10 +11,8 @@
 #include "nstring.h"
 #include "opengl.h"
 
-
 #define GLSL_VERSION    "#version 140\n\n" /**< Version to use for all shaders. */
 #define GLSL_SUBROUTINE "#define HAS_GL_ARB_shader_subroutine 1\n" /**< Has subroutines. */
-
 
 /*
  * Prototypes.
@@ -27,7 +24,6 @@ static GLuint gl_shader_compile( GLuint type, const char *buf,
       GLint length, const char *filename);
 static int gl_program_link( GLuint program );
 static GLuint gl_program_make( GLuint vertex_shader, GLuint fragment_shader );
-
 
 /**
  * @brief Loads a GLSL file with some simple preprocessing like adding #version and handling #include.
@@ -55,7 +51,6 @@ static char* gl_shader_loadfile( const char *filename, size_t *size, const char 
    free( fbuf );
    return buf;
 }
-
 
 /**
  * @brief Preprocesses a GLSL string with some simple preprocessing like adding #version and handling #include.
@@ -146,12 +141,10 @@ static char* gl_shader_preprocess( size_t *size, const char *fbuf, size_t fbufsi
    return buf;
 }
 
-
 static void print_with_line_numbers( const char *str )
 {
-   int i, counter;
-   counter = 0;
-   for (i=0; str[i] != '\0'; i++) {
+   int counter = 0;
+   for (int i=0; str[i] != '\0'; i++) {
       if ((i==0) || (str[i]=='\n'))
          logprintf( stdout, 0, "\n%03d: ", ++counter );
       if (str[i]!='\n')
@@ -160,14 +153,12 @@ static void print_with_line_numbers( const char *str )
    logprintf( stdout, 0, "\n" );
 }
 
-
 /**
  * @brief Open and compile GLSL shader from ndata.
  */
 static GLuint gl_shader_compile( GLuint type, const char *buf,
       GLint length, const char *filename)
 {
-   char *log;
    GLuint shader;
    GLint compile_status, log_length;
 
@@ -181,7 +172,7 @@ static GLuint gl_shader_compile( GLuint type, const char *buf,
    glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &log_length);
    //if (GL_COMPILE_STATUS == GL_FALSE) {
    if (log_length > 0) {
-      log = malloc(log_length + 1);
+      char *log = malloc(log_length + 1);
       glGetShaderInfoLog(shader, log_length, &log_length, log);
       print_with_line_numbers( buf );
       WARN("%s\n%s\n", filename, log);
@@ -192,7 +183,6 @@ static GLuint gl_shader_compile( GLuint type, const char *buf,
    return shader;
 }
 
-
 /**
  * @brief Link a GLSL program and check for link error.
  *
@@ -202,7 +192,6 @@ static GLuint gl_shader_compile( GLuint type, const char *buf,
 static int gl_program_link( GLuint program )
 {
    GLint link_status, log_length;
-   char *log;
 
    glLinkProgram(program);
 
@@ -211,6 +200,7 @@ static int gl_program_link( GLuint program )
    glGetProgramiv(program, GL_INFO_LOG_LENGTH, &log_length);
    //if (link_status == GL_FALSE) {
    if (log_length > 0) {
+      char *log;
       glGetProgramiv(program, GL_INFO_LOG_LENGTH, &log_length);
       log = malloc(log_length + 1);
       glGetProgramInfoLog(program, log_length, &log_length, log);
@@ -221,7 +211,6 @@ static int gl_program_link( GLuint program )
 
    return 0;
 }
-
 
 /**
  * @brief Loads a vertex and fragment shader from files.
@@ -256,7 +245,6 @@ GLuint gl_program_vert_frag( const char *vertfile, const char *fragfile )
    return program;
 }
 
-
 /**
  * @brief Loads a vertex and fragment shader from strings.
  *
@@ -287,7 +275,6 @@ GLuint gl_program_vert_frag_string( const char *vert, size_t vert_size, const ch
    return gl_program_make( vertex_shader, fragment_shader );
 }
 
-
 /**
  * @brief Makes a shader program from a vertex and fragment shader.
  *
@@ -316,10 +303,12 @@ static GLuint gl_program_make( GLuint vertex_shader, GLuint fragment_shader )
    return program;
 }
 
-void gl_uniformColor(GLint location, const glColour *c) {
+void gl_uniformColor(GLint location, const glColour *c)
+{
    glUniform4f(location, c->r, c->g, c->b, c->a);
 }
 
-void gl_uniformAColor(GLint location, const glColour *c, GLfloat a) {
+void gl_uniformAColor(GLint location, const glColour *c, GLfloat a)
+{
    glUniform4f(location, c->r, c->g, c->b, a);
 }

@@ -1,7 +1,6 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
 /**
  * @file ntime.c
  *
@@ -31,7 +30,6 @@
  *       (about 579 Earth days).
  */
 
-
 /** @cond */
 #include <stdio.h>
 #include <stdlib.h>
@@ -45,13 +43,11 @@
 #include "hook.h"
 #include "nstring.h"
 
-
 #define NT_SECONDS_DIV   (1000)      /* Divider for extracting seconds. */
 #define NT_SECONDS_DT    (30)        /* Update rate, how many seconds are in a real second. */
 #define NT_CYCLE_SECONDS   ((ntime_t)NT_CYCLE_PERIODS*(ntime_t)NT_PERIOD_SECONDS) /* Seconds in a cycle */
 #define NT_PERIODS_DIV   ((ntime_t)NT_PERIOD_SECONDS*(ntime_t)NT_SECONDS_DIV) /* Divider for extracting periods. */
 #define NT_CYCLES_DIV   ((ntime_t)NT_CYCLE_SECONDS*(ntime_t)NT_SECONDS_DIV) /* Divider for extracting cycles. */
-
 
 /**
  * @brief Used for storing time increments to not trigger hooks during Lua
@@ -63,11 +59,9 @@ typedef struct NTimeUpdate_s {
 } NTimeUpdate_t;
 static NTimeUpdate_t *ntime_inclist = NULL; /**< Time increment list. */
 
-
 static ntime_t naev_time = 0; /**< Contains the current time in milliseconds. */
 static double naev_remainder = 0.; /**< Remainder when updating, to try to keep in perfect sync. */
 static int ntime_enable = 1; /** Allow updates? */
-
 
 /**
  * @brief Updatse the time based on realtime.
@@ -94,7 +88,6 @@ void ntime_update( double dt )
    hooks_updateDate( inc );
 }
 
-
 /**
  * @brief Creates a time structure.
  */
@@ -107,7 +100,6 @@ ntime_t ntime_create( int scu, int stp, int stu )
    return tscu*NT_CYCLES_DIV + tstp*NT_PERIODS_DIV + tstu*NT_SECONDS_DIV;
 }
 
-
 /**
  * @brief Gets the current time.
  *
@@ -117,7 +109,6 @@ ntime_t ntime_get (void)
 {
    return naev_time;
 }
-
 
 /**
  * @brief Gets the current time broken into individual components.
@@ -130,7 +121,6 @@ void ntime_getR( int *cycles, int *periods, int *seconds, double *rem )
    *rem = ntime_getRemainder( naev_time ) + naev_remainder;
 }
 
-
 /**
  * @brief Gets the cycles of a time.
  */
@@ -138,7 +128,6 @@ int ntime_getCycles( ntime_t t )
 {
    return (t / NT_CYCLES_DIV);
 }
-
 
 /**
  * @brief Gets the periods of a time.
@@ -148,7 +137,6 @@ int ntime_getPeriods( ntime_t t )
    return (t / NT_PERIODS_DIV) % NT_CYCLE_PERIODS;
 }
 
-
 /**
  * @brief Gets the seconds of a time.
  */
@@ -156,7 +144,6 @@ int ntime_getSeconds( ntime_t t )
 {
    return (t / NT_SECONDS_DIV) % NT_PERIOD_SECONDS;
 }
-
 
 /**
  * @brief Converts the time to seconds.
@@ -168,7 +155,6 @@ double ntime_convertSeconds( ntime_t t )
    return ((double)t / (double)NT_SECONDS_DIV);
 }
 
-
 /**
  * @brief Gets the remainder.
  */
@@ -176,7 +162,6 @@ double ntime_getRemainder( ntime_t t )
 {
    return (double)(t % NT_SECONDS_DIV);
 }
-
 
 /**
  * @brief Gets the time in a pretty human readable format.
@@ -191,7 +176,6 @@ char* ntime_pretty( ntime_t t, int d )
    ntime_prettyBuf( str, sizeof(str), t, d );
    return strdup(str);
 }
-
 
 /**
  * @brief Gets the time in a pretty human readable format filling a preset buffer.
@@ -224,7 +208,6 @@ void ntime_prettyBuf( char *str, int max, ntime_t t, int d )
       snprintf( str, max, _("UST %d:%.*f"), cycles, d, periods + 0.0001 * seconds );
 }
 
-
 /**
  * @brief Sets the time absolutely, does NOT generate an event, used at init.
  *
@@ -236,7 +219,6 @@ void ntime_set( ntime_t t )
    naev_remainder = 0.;
 }
 
-
 /**
  * @brief Loads time including remainder.
  */
@@ -246,7 +228,6 @@ void ntime_setR( int cycles, int periods, int seconds, double rem )
    naev_time  += floor(rem);
    naev_remainder = fmod( rem, 1. );
 }
-
 
 /**
  * @brief Sets the time relatively.
@@ -263,7 +244,6 @@ void ntime_inc( ntime_t t )
       hooks_updateDate( t );
 }
 
-
 /**
  * @brief Allows the time to update when the game is updating.
  *
@@ -273,7 +253,6 @@ void ntime_allowUpdate( int enable )
 {
    ntime_enable = enable;
 }
-
 
 /**
  * @brief Sets the time relatively.
@@ -304,7 +283,6 @@ void ntime_incLagged( ntime_t t )
    }
 }
 
-
 /**
  * @brief Checks to see if ntime has any hooks pending to run.
  */
@@ -328,4 +306,3 @@ void ntime_refresh (void)
       free(ntu);
    }
 }
-

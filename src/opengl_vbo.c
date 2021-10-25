@@ -1,14 +1,11 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
 /**
  * @file opengl_vbo.c
  *
  * @brief Handles OpenGL vbos.
  */
-
-
 /** @cond */
 #include "naev.h"
 /** @endcond */
@@ -16,9 +13,7 @@
 #include "log.h"
 #include "opengl.h"
 
-
 #define BUFFER_OFFSET(i) ((char *)(sizeof(char) * (i))) /**< Taken from OpengL spec. */
-
 
 /**
  * @brief VBO types.
@@ -30,7 +25,6 @@ typedef enum gl_vboType_e {
    NGL_VBO_STATIC /**< VBO static type. */
 } gl_vboType;
 
-
 /**
  * @brief Contains the VBO.
  */
@@ -41,12 +35,10 @@ struct gl_vbo_s {
    char* data; /**< VBO data. */
 };
 
-
 /**
  * Prototypes.
  */
 static gl_vbo* gl_vboCreate( GLenum target, GLsizei size, const void* data, GLenum usage );
-
 
 /**
  * @brief Initializes the OpenGL VBO subsystem.
@@ -58,14 +50,12 @@ int gl_initVBO (void)
    return 0;
 }
 
-
 /**
  * @brief Exits the OpenGL VBO subsystem.
  */
 void gl_exitVBO (void)
 {
 }
-
 
 /**
  * @brief Creates a VBO.
@@ -100,7 +90,6 @@ static gl_vbo* gl_vboCreate( GLenum target, GLsizei size, const void* data, GLen
    return vbo;
 }
 
-
 /**
  * @brief Reloads new data or grows the size of the vbo.
  *
@@ -132,7 +121,6 @@ void gl_vboData( gl_vbo *vbo, GLsizei size, const void* data )
    gl_checkErr();
 }
 
-
 /**
  * @brief Loads some data into the VBO.
  *
@@ -149,7 +137,6 @@ void gl_vboSubData( gl_vbo *vbo, GLint offset, GLsizei size, const void* data )
    /* Check for errors. */
    gl_checkErr();
 }
-
 
 /**
  * @brief Creates a stream vbo.
@@ -189,7 +176,6 @@ gl_vbo* gl_vboCreateDynamic( GLsizei size, const void* data )
    return vbo;
 }
 
-
 /**
  * @brief Creates a stream vbo.
  *
@@ -198,9 +184,7 @@ gl_vbo* gl_vboCreateDynamic( GLsizei size, const void* data )
  */
 gl_vbo* gl_vboCreateStatic( GLsizei size, const void* data )
 {
-   gl_vbo *vbo;
-
-   vbo = gl_vboCreate( GL_ARRAY_BUFFER, size, data, GL_STATIC_DRAW );
+   gl_vbo *vbo = gl_vboCreate( GL_ARRAY_BUFFER, size, data, GL_STATIC_DRAW );
    vbo->type = NGL_VBO_STATIC;
 
    /* Check for errors. */
@@ -208,7 +192,6 @@ gl_vbo* gl_vboCreateStatic( GLsizei size, const void* data )
 
    return vbo;
 }
-
 
 /**
  * @brief Maps a buffer.
@@ -221,7 +204,6 @@ void* gl_vboMap( gl_vbo *vbo )
    glBindBuffer( GL_ARRAY_BUFFER, vbo->id );
    return glMapBuffer( GL_ARRAY_BUFFER, GL_WRITE_ONLY );
 }
-
 
 /**
  * @brief Unmaps a buffer.
@@ -236,7 +218,6 @@ void gl_vboUnmap( gl_vbo *vbo )
    /* Check for errors. */
    gl_checkErr();
 }
-
 
 /**
  * @brief Activates a VBO's offset.
@@ -262,7 +243,6 @@ void gl_vboActivateAttribOffset( gl_vbo *vbo, GLuint index, GLuint offset,
    /* Check for errors. */
    gl_checkErr();
 }
-
 
 /**
  * @brief Destroys a VBO.
