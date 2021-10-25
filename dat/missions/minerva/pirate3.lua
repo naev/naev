@@ -78,7 +78,8 @@ function accept ()
    misn.osdCreate( _("Minerva Moles"),
          {_("Plant a listening device in a VIP room.") } )
 
-   misn.markerAdd( planet.get("Minerva Station") )
+   local minsta = planet.get("Minerva Station")
+   misn.markerAdd( minsta )
 
    minerva.log.pirate(_("You accepted another job from the shady individual to uncover moles at Minerva Station.") )
 
@@ -87,7 +88,6 @@ function accept ()
    hook.land("generate_npc")
    generate_npc()
 end
-
 
 function generate_npc ()
    if planet.cur() == planet.get("Minerva Station") then
