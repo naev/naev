@@ -284,7 +284,7 @@ function jumpin()
            for i, j in ipairs(escorts) do
                if not alive[i] then j:rm() end -- Dead escorts stay dead.
                if j:exists() then
-                  j:land(planet.getS("Nova Shakar"))
+                  j:land(planet.get("Nova Shakar"))
                end
            end
         elseif system.cur() == misssys[3] then -- case join up with diplomat

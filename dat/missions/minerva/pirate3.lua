@@ -344,7 +344,7 @@ function harper_gotattacked( _plt, attacker )
          -- Run to land at the station
          harper:setNoLand(false)
          harper:control()
-         harper:land( planet.getS("Minerva Station") )
+         harper:land( planet.get("Minerva Station") )
          harper_attacked = true
       end
 
@@ -377,7 +377,7 @@ function harper_hail ()
       -- He goes land now
       harper:setNoLand(false)
       harper:control()
-      harper:land( planet.getS("Minerva Station") )
+      harper:land( planet.get("Minerva Station") )
    end
 
    if harper_almostdied then
