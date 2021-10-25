@@ -83,32 +83,32 @@ function create()
 end
 
 function accept()
-    destsysname = var.peek("flfbase_sysname")
+    destsys = system.get(var.peek("flfbase_sysname"))
     DVplanet, DVsys = planet.get("Stalwart Station")
 
     if first then
         txt = string.format(_([[The Dvaered liaison spots you, and stands up to shake your hand.
     "Well met, citizen %s. I have heard about your recent achievements in the fight against the FLF threat. Like many Dvaered, I am pleased that things are going so well, and in no small way thanks to your efforts! High Command apparently feels the same way, because they have given you the military clearance for the upcoming operation, and that doesn't happen to just anybody."
-    ]]), player.name()) .. string.format(text[1], destsysname)
+    ]]), player.name()) .. string.format(text[1], destsys:name())
     else
         txt = string.format(_([[The Dvaered liaison greets you.
     "I knew you'd be back, citizen %s. The operation hasn't started yet and we can still use your help, so maybe I should explain to you again what this is all about."
-    ]]), player.name()) .. string.format(text[1], destsysname)
+    ]]), player.name()) .. string.format(text[1], destsys:name())
     end
 
     if tk.yesno(_("One swift stroke"), txt) then
-        tk.msg(_("The battlefield awaits"), string.format(text[2], destsysname))
-        tk.msg(_("The battlefield awaits"), string.format(text[3], destsysname, player.name()))
-        tk.msg(_("The battlefield awaits"), string.format(text[4], destsysname))
+        tk.msg(_("The battlefield awaits"), string.format(text[2], destsys:name()))
+        tk.msg(_("The battlefield awaits"), string.format(text[3], destsys:name(), player.name()))
+        tk.msg(_("The battlefield awaits"), string.format(text[4], destsys:name()))
 
         misn.accept()
-        osd_desc[1] = fmt.f(osd_desc[1], {sys=destsysname})
+        osd_desc[1] = fmt.f(osd_desc[1], {sys=destsys})
         osd_desc[4] = string.format(osd_desc[4], DVplanet:name(), DVsys:name())
         misn.osdCreate(_("Destroy the FLF base!"), osd_desc)
         misn.setDesc(_("The Dvaered are poised to launch an all-out attack on the secret FLF base. You have chosen to join this battle for wealth and glory."))
         misn.setReward(_("Wealth and glory"))
         misn.setTitle(_("Destroy the FLF base!"))
-        mission_marker = misn.markerAdd( system.get(destsysname), "high" )
+        mission_marker = misn.markerAdd( destsys, "high" )
 
         missionstarted = false
         victorious = false
@@ -122,7 +122,7 @@ function accept()
 end
 
 function enter()
-    if system.cur() == system.get(destsysname) and not victorious then
+    if system.cur() == destsys and not victorious then
         pilot.clear()
         pilot.toggleSpawn(false)
 

@@ -52,7 +52,7 @@ end
 function accept()
     if tk.yesno(_("House Dvaered needs YOU"), _([[You join the Dvaered official at his table. He greets you in a cordial fashion, at least by Dvaered standards. You explain to him that you wish to know more about the anti-FLF operation that House Dvaered is supposedly working on.
     "Ah! It's good to see such righteous enthusiasm among our citizenry. Indeed, our forces have been preparing to deal a significant blow to the FLF terrorists. I can't disclose the details, of course - this is a military operation. However, if you have a combat-capable ship and enough sense of duty to assist us, there is an opportunity to serve alongside the real Dvaered warriors. How about it? Can we count on your support?"]])) then
-        destsysname = var.peek("flfbase_sysname")
+        destsys = system.get(var.peek("flfbase_sysname"))
         tk.msg(_("A clever ruse"), _([["Splendid. You have the right mindset, citizen. If only all were like you! But that is neither here nor there. Come, I will take you to the local command bunker. The details of this operation will be explained to you there."
     True to his word, the Dvaered liaison escorts you out of the spaceport bar, and within the hour you find yourself deep inside a highly secured Dvaered military complex. You are ushered into a room, in which you find a large table and several important-looking military men. At the head of the table sits a man whose name tag identifies him as Colonel Urnus. Evidently he's the man in charge.
     A Dvaered soldier instructs you to take a seat.]]))
@@ -61,7 +61,7 @@ function accept()
     "Of course, we have conducted patrols in this system, but so far without result. Our sensors are severely impaired by the nebula in this system, so the chances of us finding the terrorist hive by our own devices are slim. Fortunately, our top strategists have come up with a ruse, one that will make the FLF come to us."
     "We will use a civilian ship - your ship, naturally - as a decoy," Urnus continues. The image on the wall zooms up to the %s system, and a white blip representing your ship appears near the jump point. "Your ship will be equipped with an IFF transponder in use by the FLF, so to anyone who isn't looking too closely you will appear as an FLF ship. Of course, this alone is not enough. The FLF will assume you know where their base is, since you look like one of them. It is important to note that the transponder will work best in the Nebula, which we believe is where the base should be located."
     The image on the wall updates again, this time showing several House Dvaered crests near your ship.
-    "Some time after you enter the system, several of our military assets will jump in and open fire. To the FLF, it will look like one of their own has come under attack! Since their base is nearby, they will undoubtedly send reinforcements to help their 'comrade' out of a tight situation."]]), destsysname, destsysname, destsysname))
+    "Some time after you enter the system, several of our military assets will jump in and open fire. To the FLF, it will look like one of their own has come under attack! Since their base is nearby, they will undoubtedly send reinforcements to help their 'comrade' out of a tight situation."]]), destsys:name(), destsys:name(), destsys:name()))
         tk.msg(_("A clever ruse"), _([["As soon as the FLF ships join the battle, you and the Dvaered ships will disengage and target the FLF instead. Your mission is to render at least one of their ships incapable of fighting, and board it. You can then access the ship's computer and download the flight log, which should contain the location of the FLF base. Take this information to a Dvaered base, and your mission will be complete."
     The image on the wall updates one last time, simulating the battle as described by Colonel Urnus. Several FLF logos appear, which are promptly surrounded by the Dvaered ones. Then the logos turn gray, indicating that they've been disabled.
     "Let me make one thing clear, citizen. You are allowed, even expected to fire on the Dvaered ships that are firing on you. However, you must make it look you're on the losing side, or the FLF will not come to your aid! So, do NOT disable or destroy any Dvaered ships, and make sure your own armor takes a bit of a beating. This is vital to the success of the mission. Do not fail."
@@ -69,12 +69,12 @@ function accept()
     "Well," the Colonel muses, "That will mean our intel was probably wrong. But don't worry, citizen, we'll get those terrorists eventually! Now, time is of the essence, so get to your ship and follow your orders. Dismissed!"]]))
 
         misn.accept()
-        osd_desc[1] = fmt.f(osd_desc[1], {sys=destsysname})
+        osd_desc[1] = fmt.f(osd_desc[1], {sys=destsys})
         misn.osdCreate(_("Lure out the FLF"), osd_desc)
         misn.setDesc(_("You have been recruited to act as a red herring in a military operation of Dvaered design. Your chief purpose is to goad the FLF into showing themselves, then disable and board one of their ships. You will fail this mission if you disable or destroy any Dvaered ship, or if you leave the system before the operation is complete."))
         misn.setTitle(_("Lure out the FLF"))
         misn.setReward(_("Serving alongside real Dvaered warlords"))
-        marker = misn.markerAdd( system.get(destsysname), "low" )
+        marker = misn.markerAdd( destsys, "low" )
 
         missionstarted = false
         DVdisablefail = true
@@ -98,7 +98,7 @@ function jumpout()
 end
 
 function enter()
-    if system.cur() == system.get(destsysname) and not logsfound then
+    if system.cur() == destsys and not logsfound then
         pilot.clear()
         pilot.toggleSpawn(false)
         misn.osdActive(2)
