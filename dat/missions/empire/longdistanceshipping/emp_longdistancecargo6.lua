@@ -36,7 +36,7 @@ function create ()
 
    -- Set our target system and planet.
    targetworld_sys = system.get("Gamma Polaris")
-   targetworld = planet.getS("Halir")
+   targetworld = planet.get("Halir")
 
    misn.setNPC( _("Lieutenant"), "empire/unique/czesc.webp", _("Lieutenant Czesc from the Empire Armada Shipping Division is sitting at the bar.") )
    if targetworld == startworld then --makes sure pilot is not currently on Gamma Polaris

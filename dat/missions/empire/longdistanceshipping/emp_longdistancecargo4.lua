@@ -37,7 +37,7 @@ function create ()
 
    -- Set our target system and planet.
    targetworld_sys = system.get("Gilligan's Light")
-   targetworld = planet.getS("The Frontier Council")
+   targetworld = planet.get("The Frontier Council")
 
    misn.setNPC( _("Lieutenant"), "empire/unique/czesc.webp", _("Lieutenant Czesc from the Empire Armada Shipping Division is sitting at the bar.") )
 end

@@ -30,7 +30,7 @@ function create()
    --set the variables
    reward = 200e3 --reward algorithm after this mission = 100e3 + (rnd.rnd(5,8)*2e3 * (nasin_rep^1.51). flat rate for first mission.
    startworld = planet.cur()
-   targetasset = planet.getS("Margot")
+   targetasset = planet.get("Margot")
    targetsystem = system.get("Brendon")
    if system.cur() == targetsystem then --I didn't want the player to start the mission in the same system as it was supposed to end
       misn.finish(false)

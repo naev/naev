@@ -39,10 +39,10 @@ local fmt = require "format"
 misn_state = nil
 
 targetplanet = "Trincea"
-targetsys = planet.getS(targetplanet):system():nameRaw()
+targetsys = planet.get(targetplanet):system():nameRaw()
 
 lastplanet = "Totoran"
-lastsys = planet.getS(lastplanet):system():nameRaw()
+lastsys = planet.get(lastplanet):system():nameRaw()
 
 gauntletsys = system.get("Crimson Gauntlet")
 
@@ -90,10 +90,10 @@ end
 
 
 function generate_npc ()
-   if planet.cur() == planet.getS("Minerva Station") then
+   if planet.cur() == planet.get("Minerva Station") then
       misn.npcAdd( "approach_kex", minerva.kex.name, minerva.kex.portrait, minerva.kex.description )
 
-   elseif misn_state==0 and planet.cur() == planet.getS(targetplanet) then
+   elseif misn_state==0 and planet.cur() == planet.get(targetplanet) then
       vn.clear()
       vn.scene()
       vn.transition()
@@ -109,11 +109,11 @@ function generate_npc ()
          { string.format(_("Look for Major Malik at %s in the %s system"), _(lastplanet), _(lastsys) ),
          _("Return to Kex at Minerva Station") } )
 
-   elseif (misn_state==2 or misn_state==3) and planet.cur() == planet.getS(lastplanet) then
+   elseif (misn_state==2 or misn_state==3) and planet.cur() == planet.get(lastplanet) then
       misn_state = 3
       misn.npcAdd( "approach_malik", _("Major Malik"), malik_portrait, _("You see Major Malik who is fairly similar to the image shown to you by Kex.") )
 
-   elseif misn_state==4 and planet.cur() == planet.getS(lastplanet) then
+   elseif misn_state==4 and planet.cur() == planet.get(lastplanet) then
       vn.clear()
       vn.scene()
       vn.transition()

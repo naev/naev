@@ -47,7 +47,7 @@ function create ()
    local planame = "Ulios"
    local bsyname = "Toaxis"
    missys = system.get(sysname)
-   mispla = planet.getS(planame)
+   mispla = planet.get(planame)
    battlesys = system.get(bsyname)
 
    if not misn.claim(battlesys) then

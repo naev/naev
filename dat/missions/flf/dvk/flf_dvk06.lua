@@ -90,7 +90,7 @@ function enter ()
          pilot.clear()
          pilot.toggleSpawn( false )
 
-         local ro = planet.getS( "Raglan Outpost" )
+         local ro = planet.get( "Raglan Outpost" )
 
          -- Spawn Raglan Outpost ship
          dv_base = pilot.add( "Raglan Outpost", "Dvaered", ro:pos() , nil, {ai="dvaered_norun"} )

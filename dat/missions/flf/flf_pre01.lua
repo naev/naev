@@ -116,7 +116,7 @@ end
 -- There are two cases we need to check here: landing on the FLF base and landing on a Dvaered world.
 function land()
     -- Case FLF base
-    if diff.isApplied("FLF_base") and planet.cur() == planet.getS("Sindbad") then
+    if diff.isApplied("FLF_base") and planet.cur() == planet.get("Sindbad") then
         tk.msg(title[4], _([[You and Gregar step out of your airlock and onto Sindbad. You are greeted by a group of five or six FLF soldiers. They seem relieved to see Gregar, but they clearly regard you with mistrust. You are taken to meet with a senior officer of the base. Gregar doesn't come with you, as he seems to have urgent matters to attend to - away from prying ears like your own.
     "Alright, %s," the officer begins. "I don't know who you are or what you think you're doing here, but you shouldn't kid yourself. The only reason you are in my office and not in a holding cell is because one of my trusted colleagues is vouching for you." The officer leans a little closer to you and pins you with a level stare. "I don't think you're a Dvaered spy. The Dvaered don't have the wit to pull off decent espionage. But you shouldn't get any ideas of running to the Dvaered and blabbing about our presence here. They're neither a trusting nor a grateful sort, so they'd probably just arrest you and torture you for what you know. So, I trust you understand that your discretion is in both our interests."]]):format(player.name()))
         tk.msg(title[4], _([[The moment of tension passes, and the officer leans back in his chair.
@@ -231,7 +231,7 @@ function spawnbase()
         diff.apply("FLF_base")
 
         -- Safety measure to ensure the player can land.
-        base = planet.getS("Sindbad")
+        base = planet.get("Sindbad")
         base:landOverride()
 
         basefound = true

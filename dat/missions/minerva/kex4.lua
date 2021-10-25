@@ -39,7 +39,7 @@ local fmt = require "format"
 misn_state = nil
 
 targetplanet = "Jorlan"
-targetsys = planet.getS(targetplanet):system():nameRaw()
+targetsys = planet.get(targetplanet):system():nameRaw()
 
 misn_desc = string.format(_("You have been assigned with obtaining information from Jie de Luca at %s in the %s system."), _(targetplanet), _(targetsys))
 
@@ -96,10 +96,10 @@ function generate_npc ()
       misn.finish(false)
    end
 
-   if planet.cur() == planet.getS("Minerva Station") then
+   if planet.cur() == planet.get("Minerva Station") then
       misn.npcAdd( "approach_kex", minerva.kex.name, minerva.kex.portrait, minerva.kex.description )
 
-   elseif misn_state==0 and planet.cur() == planet.getS(targetplanet) then
+   elseif misn_state==0 and planet.cur() == planet.get(targetplanet) then
       misn.npcAdd( "approach_jie", _("Jie de Luca"), jie_portrait, _("You see an individual matching the description of Jie de Luca.") )
 
    end
@@ -335,7 +335,7 @@ function enter ()
       pilot.clear()
       pilot.toggleSpawn(false)
 
-      local pos = planet.getS(targetplanet):pos() + vec2.new( 3000, rnd.rnd()*360 )
+      local pos = planet.get(targetplanet):pos() + vec2.new( 3000, rnd.rnd()*360 )
       jie = pilot.add("Kestrel", "Independent", pos, _("Jie de Luca"), {naked=true, ai="baddie_norun"})
       equipopt.generic( jie, nil, "elite" )
       jie:setHostile(true)

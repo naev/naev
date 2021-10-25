@@ -26,7 +26,7 @@ local portrait = require "portrait"
 local fleet = require "fleet"
 local shadow = require "common.shadow"
 
-local pnt = planet.getS("Durea") -- The planet where SHITMAN lives
+local pnt = planet.get("Durea") -- The planet where SHITMAN lives
 local sys = system.get("Capricorn") -- The system the planet is part of
 local sys2 = system.get("Uhriabi") -- The system where the ship is
 local shipname = _("Seiryuu")

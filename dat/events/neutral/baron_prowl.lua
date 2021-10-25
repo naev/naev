@@ -18,19 +18,19 @@
 function create()
     -- TODO: Change this to the Krieger once the Baron has it. Needs "King" mission first.
     shipname = "Pinnacle"
-    baronship = pilot.add( "Proteron Kahan", "Proteron", planet.getS("Ulios"):pos() + vec2.new(-400,-400), nil, {ai="trader"} )
+    baronship = pilot.add( "Proteron Kahan", "Proteron", planet.get("Ulios"):pos() + vec2.new(-400,-400), nil, {ai="trader"} )
     baronship:setFaction("Independent")
     baronship:rename(shipname)
     baronship:setInvincible(true)
     baronship:setFriendly()
     baronship:control()
-    baronship:moveto(planet.getS("Ulios"):pos() + vec2.new( 500, -500), false, false)
+    baronship:moveto(planet.get("Ulios"):pos() + vec2.new( 500, -500), false, false)
     hook.pilot(baronship, "idle", "idle")
 end
 
 function idle()
-    baronship:moveto(planet.getS("Ulios"):pos() + vec2.new( 500,  500), false, false)
-    baronship:moveto(planet.getS("Ulios"):pos() + vec2.new(-500,  500), false, false)
-    baronship:moveto(planet.getS("Ulios"):pos() + vec2.new(-500, -500), false, false)
-    baronship:moveto(planet.getS("Ulios"):pos() + vec2.new( 500, -500), false, false)
+    baronship:moveto(planet.get("Ulios"):pos() + vec2.new( 500,  500), false, false)
+    baronship:moveto(planet.get("Ulios"):pos() + vec2.new(-500,  500), false, false)
+    baronship:moveto(planet.get("Ulios"):pos() + vec2.new(-500, -500), false, false)
+    baronship:moveto(planet.get("Ulios"):pos() + vec2.new( 500, -500), false, false)
 end

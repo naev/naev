@@ -81,7 +81,7 @@ function accept ()
 end
 
 function generate_npc ()
-   if planet.cur() == planet.getS("Minerva Station") then
+   if planet.cur() == planet.get("Minerva Station") then
       misn.npcAdd( "approach_pir", minerva.pirate.name, minerva.pirate.portrait, minerva.pirate.description )
       if misn_state == 4 then
          npc_spa = misn.npcAdd( "approach_spa", _("Minerva Station Spa"), spa_portrait, spa_description )
@@ -133,7 +133,7 @@ function approach_pir ()
          misn.osdCreate( _("Minerva Moles"),
                {_("Plant a listening device in a VIP room.") } )
 
-         local minsta = planet.getS("Minerva Station")
+         local minsta = planet.get("Minerva Station")
          misn.markerAdd( minsta )
 
          minerva.log.pirate(_("You accepted another job from the shady individual to uncover moles at Minerva Station.") )
@@ -269,7 +269,7 @@ function enter ()
       -- Don't stop spawns, but claimed in case something else stops spawns
       -- TODO maybe add Minerva patrols that aggro ta make it a bit harder?
       -- Spawn Harper Bowdoin and stuff
-      local pos = planet.getS("Minerva Station"):pos() + vec2.newP( 5000, rnd.rnd(360) )
+      local pos = planet.get("Minerva Station"):pos() + vec2.newP( 5000, rnd.rnd(360) )
 
       local fharper = faction.dynAdd( nil, "Harper Bowdoin" )
       harper = pilot.add( "Quicksilver", fharper, pos, "Harper", {ai="civilian"} )

@@ -260,7 +260,7 @@ function enter ()
       if misn_state == 0 then
          -- TODO better handling, maybe more fighting with drones and a close-up cinematic?
          thug_chance = thug_chance / 0.8
-         local pos = planet.getS(targetplanet):pos()
+         local pos = planet.get(targetplanet):pos()
          spawn_thugs( pos, false )
          hook.timer( 5, "thug_heartbeat" )
          player.allowLand( false, _("#rYou are unable to land while the bounty hunters are still active.#0") )
@@ -287,7 +287,7 @@ function enter ()
          -- Should be taking off from the Lab
 
          -- Spawn
-         local pos = planet.getS(targetplanet):pos() + vec2.new(2000, 5000)
+         local pos = planet.get(targetplanet):pos() + vec2.new(2000, 5000)
          local p = pilot.add("Za'lek Sting", "Za'lek", pos, minerva.strangelove.name )
          p:setInvincible(true)
          p:setActiveBoard(true)

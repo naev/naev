@@ -30,7 +30,7 @@ local portrait = require "portrait"
 
 
 local destsys = system.get("Torg")
-local destplanet = planet.getS("Jorcan")
+local destplanet = planet.get("Jorcan")
 local destjump = system.get("Doranthex")
 
 failtext = {}

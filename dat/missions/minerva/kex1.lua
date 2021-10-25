@@ -55,7 +55,7 @@ end
 
 
 function generate_npc ()
-   if planet.cur() == planet.getS("Minerva Station") then
+   if planet.cur() == planet.get("Minerva Station") then
       misn.npcAdd( "approach_kex", minerva.kex.name, minerva.kex.portrait, minerva.kex.description )
       if var.peek("kex_talk_ceo") then
          npc_ceo = misn.npcAdd( "approach_ceo", minerva.ceo.name, minerva.ceo.portrait, minerva.ceo.description )

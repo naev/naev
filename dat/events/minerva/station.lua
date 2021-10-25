@@ -3,7 +3,7 @@
 <event name="Minerva Station Gambling">
  <trigger>land</trigger>
  <chance>100</chance>
- <cond>planet.cur()==planet.getS("Minerva Station")</cond>
+ <cond>planet.cur()==planet.get("Minerva Station")</cond>
  <notes>
   <campaign>Minerva</campaign>
   <provides name="Minerva Station" />

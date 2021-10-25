@@ -68,7 +68,7 @@ function takeoff ()
    local fzl = faction.dynAdd( "Za'lek", "zl_thug", _("Za'lek Thug") )
    faction.dynEnemy( fdv, fzl )
    -- Create the ships
-   local pos = planet.getS("Minerva Station"):pos()
+   local pos = planet.get("Minerva Station"):pos()
    local dvpos = pos + vec2.newP( 700, 120 )
    local zlpos = pos + vec2.newP( 500, 300 )
    local _dvdist, dvface = (zlpos-dvpos):polar()

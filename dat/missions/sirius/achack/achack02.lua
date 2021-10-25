@@ -122,7 +122,7 @@ function land()
    elseif stage < 4 then
       tk.msg(_("You didn't follow Joanne!"), _("You landed on a planet Joanne didn't land on. Your mission is a failure!"))
       misn.finish(false)
-   elseif stage == 5 and planet.cur() == planet.getS("Sroolu") then
+   elseif stage == 5 and planet.cur() == planet.get("Sroolu") then
       misn.markerRm(mark)
       tk.msg(_("One damsel, safe and sound"), _([[After you both land your ships, you meet Joanne in the spaceport bar.
     "Whew! That was definitely the most exciting round I've done to date! Thank you %s, I probably owe you my life. You more than deserved your payment, I've already arranged for the transfer." Joanne hesitates, but then apparently makes up her mind. "In fact, would you sit down for a while? I think you deserve to know what this whole business with Harja is all about. And to be honest, I kind of want to talk to someone about this, and seeing how you're involved already anyway..."

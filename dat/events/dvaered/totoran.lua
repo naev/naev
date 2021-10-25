@@ -3,7 +3,7 @@
 <event name="Totoran Station Events">
  <trigger>land</trigger>
  <chance>100</chance>
- <cond>planet.cur()==planet.getS("Totoran")</cond>
+ <cond>planet.cur()==planet.get("Totoran")</cond>
 </event>
 --]]
 

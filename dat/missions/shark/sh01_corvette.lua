@@ -46,7 +46,7 @@ function create ()
    esyname = "Ingot"
    battlesys = system.get(bsyname)
    paysys = system.get(psyname)
-   paypla = planet.getS(pplname)
+   paypla = planet.get(pplname)
    escapesys = system.get(esyname)
 
    if not misn.claim(battlesys) then
