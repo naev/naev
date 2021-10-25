@@ -60,6 +60,9 @@ function create ()
    misn.setDesc( _("Someone wants you to find a Dvaered spy that appears to be located at Minerva Station.") )
    misn.setReward( _("Cold hard credits") )
    misn.setTitle( _("Finding the Dvaered Spy") )
+
+   -- Clear variable just in case
+   var.pop("harper_ticket")
 end
 
 
@@ -70,18 +73,6 @@ function accept ()
    if misn_state==nil then
       return
    end
-
-   -- Clear variable just in case
-   var.pop("harper_ticket")
-
-   misn.accept()
-   misn.osdCreate( _("Minerva Moles"),
-         {_("Plant a listening device in a VIP room.") } )
-
-   local minsta = planet.get("Minerva Station")
-   misn.markerAdd( minsta )
-
-   minerva.log.pirate(_("You accepted another job from the shady individual to uncover moles at Minerva Station.") )
 
    hook.enter("enter")
    hook.load("generate_npc")
@@ -135,7 +126,18 @@ function approach_pir ()
       vn.done()
 
       vn.label("accept")
-      vn.func( function () misn_state=0 end )
+      vn.func( function ()
+         misn_state=0
+
+         misn.accept()
+         misn.osdCreate( _("Minerva Moles"),
+               {_("Plant a listening device in a VIP room.") } )
+
+         local minsta = planet.get("Minerva Station")
+         misn.markerAdd( minsta )
+
+         minerva.log.pirate(_("You accepted another job from the shady individual to uncover moles at Minerva Station.") )
+      end )
       pir(_([["Glad to have you onboard again. From the few intercepted Dvaered and Za'lek communications we were able to decode, it seems like we might have some moles at Minerva Station. They are probably really deep so it won't be an easy task to drive them out."]]))
       pir(_([["That's where this comes in to place."
 They take out a metallic object from their pocket and show it to you. You don't know what to make of it.
