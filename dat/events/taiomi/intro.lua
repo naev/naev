@@ -83,7 +83,7 @@ function drones_create( n )
 end
 
 function land ()
-   if planet.cur() ~= planet.getS("One-Wing Goddard") then
+   if planet.cur() ~= planet.get("One-Wing Goddard") then
       return
    end
 

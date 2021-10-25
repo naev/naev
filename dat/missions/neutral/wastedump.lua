@@ -109,7 +109,7 @@ function land ()
    landed = true
 
    for i, j in ipairs( dest_planets ) do
-      if planet.getS(j) == planet.cur() then
+      if planet.get(j) == planet.cur() then
          local txt = finish_text[ rnd.rnd( 1, #finish_text ) ]
          vntk.msg( "", txt )
          pir.reputationNormalMission(rnd.rnd(2,3))

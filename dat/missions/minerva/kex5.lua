@@ -122,7 +122,7 @@ function landed ()
    if misn_state==1 and planet.cur():nameRaw() == targetplanet then
       landed_lab()
 
-   elseif misn_state==3 and planet.getS("Minerva Station")==planet.cur() then
+   elseif misn_state==3 and planet.get("Minerva Station")==planet.cur() then
       misn.npcAdd( "approach_kex", minerva.kex.name, minerva.kex.portrait, minerva.kex.description )
    end
 end
