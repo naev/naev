@@ -1,7 +1,6 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
 /**
  * @file opengl_render.c
  *
@@ -25,7 +24,6 @@
  *  (+SCREEN_W/2.,+SCREEN_H/2.) is top right.
  */
 
-
 /** @cond */
 #include "naev.h"
 /** @endcond */
@@ -40,9 +38,7 @@
 #include "nstring.h"
 #include "opengl.h"
 
-
 #define OPENGL_RENDER_VBO_SIZE      256 /**< Size of VBO. */
-
 
 static gl_vbo *gl_renderVBO = 0; /**< VBO for rendering stuff. */
 gl_vbo *gl_squareVBO = 0;
@@ -72,7 +68,6 @@ void gl_endSolidProgram (void)
    gl_checkErr();
 }
 
-
 void gl_beginSmoothProgram(gl_Matrix4 projection)
 {
    glUseProgram(shaders.smooth.program);
@@ -88,7 +83,6 @@ void gl_endSmoothProgram() {
    gl_checkErr();
 }
 
-
 /**
  * @brief Renders a rectangle.
  *
@@ -100,16 +94,13 @@ void gl_endSmoothProgram() {
  */
 void gl_renderRect( double x, double y, double w, double h, const glColour *c )
 {
-   gl_Matrix4 projection;
-
    /* Set the vertex. */
-   projection = gl_view_matrix;
+   gl_Matrix4 projection = gl_view_matrix;
    projection = gl_Matrix4_Translate(projection, x, y, 0);
    projection = gl_Matrix4_Scale(projection, w, h, 1);
 
    gl_renderRectH( &projection, c, 1 );
 }
-
 
 /**
  * @brief Renders a rectangle.
@@ -122,15 +113,12 @@ void gl_renderRect( double x, double y, double w, double h, const glColour *c )
  */
 void gl_renderRectEmpty( double x, double y, double w, double h, const glColour *c )
 {
-   gl_Matrix4 projection;
-
-   projection = gl_view_matrix;
+   gl_Matrix4 projection = gl_view_matrix;
    projection = gl_Matrix4_Translate(projection, x, y, 0);
    projection = gl_Matrix4_Scale(projection, w, h, 1);
 
    gl_renderRectH( &projection, c, 0 );
 }
-
 
 /**
  * @brief Renders a rectangle.
@@ -153,7 +141,6 @@ void gl_renderRectH( const gl_Matrix4 *H, const glColour *c, int filled )
    gl_endSolidProgram();
 }
 
-
 /**
  * @brief Renders a cross at a given position.
  *
@@ -169,7 +156,6 @@ void gl_renderCross( double x, double y, double r, const glColour *c )
    gl_renderShader( x, y, r, r, 0., &shaders.crosshairs, c, 1 );
 }
 
-
 /**
  * @brief Renders a triangle at a given position.
  *
@@ -182,9 +168,7 @@ void gl_renderCross( double x, double y, double r, const glColour *c )
  */
 void gl_renderTriangleEmpty( double x, double y, double a, double s, double length, const glColour *c )
 {
-   gl_Matrix4 projection;
-
-   projection = gl_Matrix4_Translate(gl_view_matrix, x, y, 0);
+   gl_Matrix4 projection = gl_Matrix4_Translate(gl_view_matrix, x, y, 0);
    if (a != 0.)
       projection = gl_Matrix4_Rotate2d(projection, a);
    projection = gl_Matrix4_Scale(projection, s*length, s, 1.);
@@ -194,7 +178,6 @@ void gl_renderTriangleEmpty( double x, double y, double a, double s, double leng
    glDrawArrays( GL_LINE_STRIP, 0, 4 );
    gl_endSolidProgram();
 }
-
 
 /**
  * @brief Texture blitting backend.
@@ -269,7 +252,6 @@ void gl_renderTexture(  const glTexture* texture,
 
    glUseProgram(0);
 }
-
 
 /**
  * @brief Texture blitting backend for interpolated texture.
@@ -359,7 +341,6 @@ void gl_renderTextureInterpolate(  const glTexture* ta,
    glUseProgram(0);
 }
 
-
 /**
  * @brief Converts in-game coordinates to screen coordinates.
  *
@@ -381,7 +362,6 @@ void gl_gameToScreenCoords( double *nx, double *ny, double bx, double by )
    *nx = (bx - cx) * z + gx + SCREEN_W/2.;
    *ny = (by - cy) * z + gy + SCREEN_H/2.;
 }
-
 
 /**
  * @brief Return a transformation which converts in-game coordinates to screen coordinates.
@@ -406,7 +386,6 @@ gl_Matrix4 gl_gameToScreenMatrix( gl_Matrix4 lhs )
          -cx, -cy, 0.);
 }
 
-
 /**
  * @brief Converts screen coordinates to in-game coordinates.
  *
@@ -428,7 +407,6 @@ void gl_screenToGameCoords( double *nx, double *ny, int bx, int by )
    *nx = (bx - SCREEN_W/2. - gx) / z + cx;
    *ny = (by - SCREEN_H/2. - gy) / z + cy;
 }
-
 
 /**
  * @brief Blits a sprite, position is relative to the player.
@@ -469,7 +447,6 @@ void gl_renderSprite( const glTexture* sprite, const double bx, const double by,
          tx, ty, sprite->srw, sprite->srh, c, 0. );
 }
 
-
 /**
  * @brief Blits a sprite interpolating, position is relative to the player.
  *
@@ -493,7 +470,6 @@ void gl_renderSpriteInterpolate( const glTexture* sa, const glTexture *sb,
 {
    gl_renderSpriteInterpolateScale( sa, sb, inter, bx, by, 1., 1., sx, sy, c );
 }
-
 
 /**
  * @brief Blits a sprite interpolating, position is relative to the player.
@@ -542,7 +518,6 @@ void gl_renderSpriteInterpolateScale( const glTexture* sa, const glTexture *sb,
          tx, ty, sa->srw, sa->srh, c );
 }
 
-
 /**
  * @brief Blits a sprite, position is in absolute screen coordinates.
  *
@@ -569,7 +544,6 @@ void gl_renderStaticSprite( const glTexture* sprite, const double bx, const doub
    gl_renderTexture( sprite, x, y, sprite->sw, sprite->sh,
          tx, ty, sprite->srw, sprite->srh, c, 0. );
 }
-
 
 /**
  * @brief Blits a scaled sprite, position is in absolute screen coordinates.
@@ -602,7 +576,6 @@ void gl_renderScaleSprite( const glTexture* sprite,
          tx, ty, sprite->srw, sprite->srh, c, 0. );
 }
 
-
 /**
  * @brief Blits a texture scaling it.
  *
@@ -617,8 +590,7 @@ void gl_renderScale( const glTexture* texture,
       const double bx, const double by,
       const double bw, const double bh, const glColour* c )
 {
-   double x,y;
-   double tx,ty;
+   double x,y, tx, ty;
 
    /* here we use absolute coords */
    x = bx;
@@ -631,7 +603,6 @@ void gl_renderScale( const glTexture* texture,
    gl_renderTexture( texture, x, y, bw, bh,
          tx, ty, texture->srw, texture->srh, c, 0. );
 }
-
 
 /**
  * @brief Blits a texture scaling it to fit a rectangle, but conserves aspect
@@ -662,7 +633,6 @@ void gl_renderScaleAspect( const glTexture* texture,
    gl_renderScale( texture, bx, by, nw, nh, c );
 }
 
-
 /**
  * @brief Blits a texture to a position
  *
@@ -684,7 +654,6 @@ void gl_renderStatic( const glTexture* texture,
    gl_renderTexture( texture, x, y, texture->sw, texture->sh,
          0., 0., texture->srw, texture->srh, c, 0. );
 }
-
 
 /**
  * @brief Renders a simple shader.
@@ -708,7 +677,6 @@ void gl_renderShader( double x, double y, double w, double h, double r, const Si
    glUniform2f( shd->dimensions, w, h );
    gl_renderShaderH( shd, &projection, c, center );
 }
-
 
 /**
  * @brief Renders a simple shader with a transformation.
@@ -735,7 +703,6 @@ void gl_renderShaderH( const SimpleShader *shd, const gl_Matrix4 *H, const glCol
    gl_checkErr();
 }
 
-
 /**
  * @brief Draws a circle.
  *
@@ -748,17 +715,14 @@ void gl_renderShaderH( const SimpleShader *shd, const gl_Matrix4 *H, const glCol
 void gl_renderCircle( const double cx, const double cy,
       const double r, const glColour *c, int filled )
 {
-   gl_Matrix4 projection;
-
    /* Set the vertex. */
-   projection = gl_view_matrix;
+   gl_Matrix4 projection = gl_view_matrix;
    projection = gl_Matrix4_Translate(projection, cx, cy, 0);
    projection = gl_Matrix4_Scale(projection, r, r, 1);
 
    /* Draw! */
    gl_renderCircleH( &projection, c, filled );
 }
-
 
 /**
  * @brief Draws a circle.
@@ -778,7 +742,6 @@ void gl_renderCircleH( const gl_Matrix4 *H, const glColour *c, int filled )
    gl_renderShaderH( &shaders.circle, H, c, 1 );
 }
 
-
 /**
  * @brief Draws a line.
  *
@@ -791,16 +754,13 @@ void gl_renderCircleH( const gl_Matrix4 *H, const glColour *c, int filled )
 void gl_renderLine( const double x1, const double y1,
       const double x2, const double y2, const glColour *c )
 {
-   double a, s;
-
-   a = atan2( y2-y1, x2-x1 );
-   s = hypotf( x2-x1, y2-y1 );
+   double a = atan2( y2-y1, x2-x1 );
+   double s = hypotf( x2-x1, y2-y1 );
 
    glUseProgram(shaders.sdfsolid.program);
    glUniform1f(shaders.sdfsolid.paramf, 1.); /* No outline. */
    gl_renderShader( (x1+x2)/2., (y1+y2)/2., s/2.+0.5, 1.0, a, &shaders.sdfsolid, c, 1 );
 }
-
 
 /**
  * @brief Sets up 2d clipping planes around a rectangle.
@@ -821,7 +781,6 @@ void gl_clipRect( int x, int y, int w, int h )
    glEnable( GL_SCISSOR_TEST );
 }
 
-
 /**
  * @brief Clears the 2d clipping planes.
  */
@@ -830,7 +789,6 @@ void gl_unclipRect (void)
    glDisable( GL_SCISSOR_TEST );
    glScissor( 0, 0, gl_screen.rw, gl_screen.rh );
 }
-
 
 /**
  * @brief Initializes the OpenGL rendering routines.
@@ -899,7 +857,6 @@ int gl_initRender (void)
 
    return 0;
 }
-
 
 /**
  * @brief Cleans up the OpenGL rendering routines.
