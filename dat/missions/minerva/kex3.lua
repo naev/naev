@@ -421,7 +421,7 @@ function leave_the_ring ()
    for k,s in ipairs(system.getAll()) do
       s:setHidden(false)
    end
-   player.land( planet.getS("Totoran") )
+   player.land( planet.get("Totoran") )
 end
 
 --[[
