@@ -37,10 +37,9 @@ function create ()
 
    -- target destination
    local planets = {}
-   for _, p in pairs({"Vorca", "New Haven","Sanchez"}) do
+   for _, p in pairs({"Vorca", "New Haven", "Sanchez"}) do
       if p ~= landed then
          planets[#planets+1] = { planet.getS(p) }
-         planets[#planets][2] = planets[#planets][1]:system()
       end
    end
 
