@@ -796,8 +796,10 @@ void ovr_render( double dt )
             continue;
          map_overlayToScreenPos( &x, &y, pstk[i]->solid->pos.x, pstk[i]->solid->pos.y );
          r = detect * pstk[i]->stats.ew_detect; /* Already divided by res */
-         glUseProgram( shaders.stealthaura.program );
-         gl_renderShader( x, y, r, r, 0., &shaders.stealthaura, &col, 1 );
+         if (r > 0.) {
+            glUseProgram( shaders.stealthaura.program );
+            gl_renderShader( x, y, r, r, 0., &shaders.stealthaura, &col, 1 );
+         }
       }
 
       glBlendEquation( GL_FUNC_ADD );
