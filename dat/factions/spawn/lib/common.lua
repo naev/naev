@@ -189,13 +189,19 @@ function scom.spawn( pilots )
          params.postprocess( p )
       end
       -- Make sure they survive the nebula
-      local dmg = nebu_vol * (1-p:shipstat("nebu_absorb",true))
-      if p:stats().shield_regen <= dmg then
-         if leader==p then
-            leader = nil
+      if nebu_vol > 0 then
+         local dmg = nebu_vol * (1-p:shipstat("nebu_absorb",true))
+         if p:stats().shield_regen <= dmg then
+            if leader==p then
+               leader = nil
+            end
+            p:rm()
+            p = nil
          end
-         p:rm()
-      else
+      end
+
+      -- Add pilot as spawned
+      if p ~= nil then
          table.insert( spawned, { pilot=p, presence=presence } )
       end
    end
