@@ -31,12 +31,12 @@ local fmt = require "format"
 reward_amount = 200e3 -- 200k
 
 harper_image = portrait.getFullPath( portrait.get() ) -- TODO replace?
-harper_bribe_big = 1e6
-harper_bribe_sml = 1e5
-harper_bribe_tkn = 1000
+local harper_bribe_big = 1e6
+local harper_bribe_sml = 1e5
+local harper_bribe_tkn = 1000
 
-spa_portrait = minerva.terminal.portrait
-spa_description = _("Present your winning ticket at the terminal to enter the Minerva Station Spa.")
+local spa_portrait = minerva.terminal.portrait
+local spa_description = _("Present your winning ticket at the terminal to enter the Minerva Station Spa.")
 
 mainsys = "Limbo"
 -- Mission states:
