@@ -52,7 +52,7 @@ function accept()
    end
    tk.msg(_("The Gauntlet"), _([[You feel a very large hand slap you on the back. "I knew you would do it! A great choice!" he says. "I'll have my boys load up the cargo. Remember, all you gotta do is fly to %s, and avoid the Sirius military. You know, don't let them scan you. I'll let my contacts know to expect you. They'll pay you when you land."
     You shake his sticky hand and walk off, content that you've made an easy buck.]]):format(aname))
-   misn.setDesc(misn_desc:format(targetasset:name(),targetsystem:name()))
+   misn.setDesc(_("You are to deliver a shipment to %s in the %s system for a strange man you met at a bar, avoiding Sirius ships."):format(targetasset:name(),targetsystem:name()))
    misn.accept()
    misn.markerAdd(targetsystem,"high")
    misn.osdCreate(_("The Gauntlet"), {
