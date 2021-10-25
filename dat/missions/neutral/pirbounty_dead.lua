@@ -86,7 +86,7 @@ msg[3] = _("MISSION FAILURE! You have left the %s system.")
 osd_title = _("Bounty Hunt")
 osd_msg    = {}
 osd_msg[1] = _("Fly to the {sys} system")
-osd_msg[2] = _("Kill or capture %s")
+osd_msg[2] = _("Kill or capture {pltname}")
 osd_msg[3] = _("Land in %s territory to collect your bounty")
 osd_msg["__save"] = true
 
@@ -149,7 +149,7 @@ function accept ()
    misn.accept()
 
    osd_msg[1] = fmt.f( osd_msg[1], {sys=missys} )
-   osd_msg[2] = osd_msg[2]:format( name )
+   osd_msg[2] = fmt.f( osd_msg[2], {pltname=name} )
    osd_msg[3] = osd_msg[3]:format( paying_faction:name() )
    misn.osdCreate( osd_title, osd_msg )
 

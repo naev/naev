@@ -144,7 +144,7 @@ function accept ()
 
    misn.osdCreate( _("Assassination"), {
       fmt.f( _("Fly to the {sys} system"), {sys=missys} ),
-      _("Kill %s"):format( name ),
+      fmt.f( _("Kill {pltname}"), {pltname=name} ),
    } )
 
    last_sys = system.cur()

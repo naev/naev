@@ -57066,8 +57066,8 @@ msgstr ""
 
 #: dat/missions/neutral/pirbounty_alive.lua:66
 #, lua-format
-msgid "Capture %s"
-msgstr "%sを捕まえろ。"
+msgid "Capture {pltname}"
+msgstr "{pltname}を捕まえろ。"
 
 #: dat/missions/neutral/pirbounty_alive.lua:73
 #, lua-format
@@ -57083,8 +57083,8 @@ msgstr "自由なままより死んでたほうがまし"
 #: dat/missions/neutral/seek_n_destroy.lua:222
 #: dat/missions/pirate/empbounty_dead.lua:147
 #, lua-format
-msgid "Kill %s"
-msgstr "%sを殺せ。"
+msgid "Kill {pltname}"
+msgstr "{pltname}を殺せ。"
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -57375,8 +57375,8 @@ msgstr "賞金稼ぎ"
 
 #: dat/missions/neutral/pirbounty_dead.lua:89
 #, lua-format
-msgid "Kill or capture %s"
-msgstr "%sを殺すか捕まえろ。"
+msgid "Kill or capture {pltname}"
+msgstr "{pltname}を殺すか捕まえろ。"
 
 #: dat/missions/neutral/pirbounty_dead.lua:90
 #: dat/missions/proteron/dissbounty_dead.lua:68
