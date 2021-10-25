@@ -525,15 +525,15 @@ static void map_system_render( double bx, double by, double w, double h, void *d
         int infocnt = 0;
         /* show some additional information */
         infocnt = scnprintf( infobuf, sizeof(infobuf), "%s\n"
-                         "%s\n%s\n%s\n%s\n%s\n%s\n%s",
-                          planet_hasService( p, PLANET_SERVICE_LAND) ? _("This system is landable") : _("This system is not landable"),
-                          planet_hasService( p, PLANET_SERVICE_INHABITED) ? _("This system is inhabited") : _("This system is not inhabited"),
-                          planet_hasService( p, PLANET_SERVICE_REFUEL) ? _("You can refuel here") : _("You cannot refuel here"),
-                          planet_hasService( p, PLANET_SERVICE_BAR) ? _("This system has a bar") : _("This system does not have a bar"),
-                          planet_hasService( p,PLANET_SERVICE_MISSIONS) ? _("This system offers missions") : _("This system does not offer missions"),
-                          planet_hasService( p, PLANET_SERVICE_COMMODITY) ? _("This system has a trade outlet") : _("This system does not have a trade outlet"),
-                          planet_hasService( p, PLANET_SERVICE_OUTFITS) ? _("This system sells ship equipment") : _("This system does not sell ship equipment"),
-                          planet_hasService( p, PLANET_SERVICE_SHIPYARD) ? _("This system sells ships") : _("This system does not sell ships"));
+              "%s\n%s\n%s\n%s\n%s\n%s\n%s",
+              planet_hasService( p, PLANET_SERVICE_LAND) ? _("This system is landable") : _("This system is not landable"),
+              planet_hasService( p, PLANET_SERVICE_INHABITED) ? _("This system is inhabited") : _("This system is not inhabited"),
+              planet_hasService( p, PLANET_SERVICE_REFUEL) ? _("You can refuel here") : _("You cannot refuel here"),
+              planet_hasService( p, PLANET_SERVICE_BAR) ? _("This system has a bar") : _("This system does not have a bar"),
+              planet_hasService( p,PLANET_SERVICE_MISSIONS) ? _("This system offers missions") : _("This system does not offer missions"),
+              planet_hasService( p, PLANET_SERVICE_COMMODITY) ? _("This system has a trade outlet") : _("This system does not have a trade outlet"),
+              planet_hasService( p, PLANET_SERVICE_OUTFITS) ? _("This system sells ship equipment") : _("This system does not sell ship equipment"),
+              planet_hasService( p, PLANET_SERVICE_SHIPYARD) ? _("This system sells ships") : _("This system does not sell ships"));
         if ( p->bar_description && planet_hasService( p, PLANET_SERVICE_BAR ) ) {
            infocnt+=scnprintf( &infobuf[infocnt], sizeof(infobuf)-infocnt, "\n\n%s", _(p->bar_description) );
         }
@@ -584,7 +584,8 @@ static int map_system_mouse( unsigned int wid, SDL_Event* event, double mx, doub
    return 0;
 }
 
-static void map_system_array_update( unsigned int wid, const char* str ) {
+static void map_system_array_update( unsigned int wid, const char* str )
+{
    int i;
    Outfit *outfit;
    Ship *ship;
@@ -735,7 +736,6 @@ static void map_system_array_update( unsigned int wid, const char* str ) {
 
 void map_system_updateSelected( unsigned int wid )
 {
-   int i;
    StarSystem *sys=cur_sys_sel;
    Planet *last=NULL;
    int planetObjChanged = 0;
@@ -748,7 +748,7 @@ void map_system_updateSelected( unsigned int wid )
    float g,o,s;
    nameWidth = 0; /* get the widest planet/star name */
    nshow=1;/* start at 1 for the sun*/
-   for ( i=0; i<array_size(sys->planets); i++) {
+   for (int i=0; i<array_size(sys->planets); i++) {
       p = sys->planets[i];
       if (planet_isKnown( p )) {
          textw = gl_printWidthRaw( &gl_smallFont, _(p->name) );
