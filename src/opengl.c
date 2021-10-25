@@ -1,7 +1,6 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
 /**
  * @file opengl.c
  *
@@ -28,8 +27,6 @@
  *  screen.  (-SCREEN_W/2.,-SCREEN_H/2.) is bottom left and
  *  (+SCREEN_W/2.,+SCREEN_H/2.) is top right.
  */
-
-
 /** @cond */
 #include "physfsrwops.h"
 #include "SDL.h"
@@ -45,19 +42,15 @@
 #include "log.h"
 #include "render.h"
 
-
 /*
  * Requirements
  */
 #define OPENGL_REQ_MULTITEX         2 /**< 2 is minimum OpenGL 1.2 must have */
 
-
 glInfo gl_screen; /**< Gives data of current opengl settings. */
 static int gl_activated = 0; /**< Whether or not a window is activated. */
 
-
 static unsigned int colorblind_pp = 0; /**< Colorblind post-process shader id. */
-
 
 /*
  * Viewport offsets
@@ -67,7 +60,6 @@ static int gl_view_y = 0; /* Y viewport offset. */
 static int gl_view_w = 0; /* Viewport width. */
 static int gl_view_h = 0; /* Viewport height. */
 gl_Matrix4 gl_view_matrix = {{{0}}};
-
 
 /*
  * prototypes
@@ -79,7 +71,6 @@ static int gl_getFullscreenMode (void);
 static int gl_getGLInfo (void);
 static int gl_defState (void);
 static int gl_setupScaling (void);
-
 
 /*
  *
@@ -96,7 +87,7 @@ void gl_screenshot( const char *filename )
    GLubyte *screenbuf;
    SDL_RWops *rw;
    SDL_Surface *surface;
-   int i, w, h;
+   int w, h;
 
    /* Allocate data. */
    w           = gl_screen.rw;
@@ -109,7 +100,7 @@ void gl_screenshot( const char *filename )
    glReadPixels( 0, 0, w, h, GL_RGB, GL_UNSIGNED_BYTE, screenbuf );
 
    /* Convert data. */
-   for (i=0; i<h; i++)
+   for (int i=0; i<h; i++)
       memcpy( (GLubyte*)surface->pixels + i * (3*w), &screenbuf[ (h - i - 1) * (3*w) ], 3*w );
    free( screenbuf );
 
@@ -125,7 +116,6 @@ void gl_screenshot( const char *filename )
    /* Free memory. */
    SDL_FreeSurface( surface );
 }
-
 
 /*
  *
@@ -145,7 +135,6 @@ GLboolean gl_hasVersion( int major, int minor )
       return GL_TRUE;
    return GL_FALSE;
 }
-
 
 #ifdef DEBUGGING
 /**
@@ -187,7 +176,6 @@ void gl_checkHandleError( const char *func, int line )
 }
 #endif /* DEBUGGING */
 
-
 /**
  * @brief Tries to set up the OpenGL attributes for the OpenGL context.
  *
@@ -207,7 +195,6 @@ static int gl_setupAttributes( int fallback )
 
    return 0;
 }
-
 
 /**
  * @brief Tries to apply the configured display mode to the window.
@@ -245,7 +232,6 @@ int gl_setupFullscreen (void)
    SDL_GL_SwapWindow(gl_screen.window);
    return ok;
 }
-
 
 /**
  * @brief Returns the fullscreen configuration as SDL2 flags.
@@ -311,7 +297,6 @@ static int gl_createWindow( unsigned int flags )
    return 0;
 }
 
-
 /**
  * @brief Gets some information about the OpenGL window.
  *
@@ -359,7 +344,6 @@ static int gl_getGLInfo (void)
    return 0;
 }
 
-
 /**
  * @brief Sets the opengl state to it's default parameters.
  *
@@ -377,7 +361,6 @@ static int gl_defState (void)
 
    return 0;
 }
-
 
 /**
  * @brief Sets up dimensions in gl_screen, including scaling as needed.
@@ -425,7 +408,6 @@ static int gl_setupScaling (void)
 
    return 0;
 }
-
 
 /**
  * @brief Initializes SDL/OpenGL and the works.
@@ -555,7 +537,6 @@ void gl_viewport( int x, int y, int w, int h )
    gl_view_matrix = proj;
 }
 
-
 /**
  * @brief Sets the default viewport.
  */
@@ -567,7 +548,6 @@ void gl_setDefViewport( int x, int y, int w, int h )
    gl_view_h  = h;
 }
 
-
 /**
  * @brief Resets viewport to default
  */
@@ -575,7 +555,6 @@ void gl_defViewport (void)
 {
    gl_viewport( gl_view_x, gl_view_y, gl_view_w, gl_view_h );
 }
-
 
 /**
  * @brief Translates the window position to screen position.
@@ -589,7 +568,6 @@ void gl_windowToScreenPos( int *sx, int *sy, int wx, int wy )
    *sy = gl_screen.myscale * (double)(gl_screen.rh - wy) - (double)gl_screen.y;
 }
 
-
 /**
  * @brief Translates the screen position to windos position.
  */
@@ -601,7 +579,6 @@ void gl_screenToWindowPos( int *wx, int *wy, int sx, int sy )
    *wx *= gl_screen.dwscale;
    *wy *= gl_screen.dhscale;
 }
-
 
 /**
  * @brief Gets the associated min/mag filter from a string.
@@ -617,7 +594,6 @@ GLint gl_stringToFilter( const char *s )
       return GL_NEAREST;
    return 0;
 }
-
 
 /**
  * @brief Gets the associated min/mag filter from a string.
@@ -635,7 +611,6 @@ GLint gl_stringToClamp( const char *s )
       return GL_MIRRORED_REPEAT;
    return 0;
 }
-
 
 /**
  * @brief Enables or disables the colorblind shader.
@@ -661,14 +636,12 @@ void gl_colorblind( int enable )
    }
 }
 
-
 /**
  * @brief Cleans up OpenGL, the works.
  */
 void gl_exit (void)
 {
-   int i;
-   for (i=0; i<OPENGL_NUM_FBOS; i++) {
+   for (int i=0; i<OPENGL_NUM_FBOS; i++) {
       if (gl_screen.fbo[i] != GL_INVALID_VALUE) {
          glDeleteFramebuffers( 1, &gl_screen.fbo[i] );
          glDeleteTextures( 1, &gl_screen.fbo_tex[i] );

@@ -1,13 +1,11 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
 /**
  * @file nstring.c
  *
  * @brief Some string routines for naev.
  */
-
 /** @cond */
 #include "naev.h"
 /** @endcond */
@@ -15,7 +13,6 @@
 #include "nstring.h"
 
 #include "log.h"
-
 
 /**
  * @brief A bounded version of strstr. Conforms to BSD semantics.
@@ -29,7 +26,7 @@
 char *strnstr( const char *haystack, const char *needle, size_t size )
 {
    size_t needlesize;
-   const char *i, *j, *k, *end, *giveup;
+   const char *end, *giveup;
 
    needlesize = strlen(needle);
    /* We can give up if needle is empty, or haystack can never contain it */
@@ -41,7 +38,8 @@ char *strnstr( const char *haystack, const char *needle, size_t size )
    giveup = end - needlesize + 1;
 
    /* i is used to iterate over haystack */
-   for (i = haystack; i != giveup; i++) {
+   for (const char *i = haystack; i != giveup; i++) {
+      const char *j, *k;
       /* j is used to iterate over part of haystack during comparison */
       /* k is used to iterate over needle during comparison */
       for (j = i, k = needle; j != end && *k != '\0'; j++, k++) {
@@ -59,7 +57,6 @@ char *strnstr( const char *haystack, const char *needle, size_t size )
 }
 #endif /* !HAVE_STRNSTR */
 
-
 /**
  * @brief Finds a string inside another string case insensitively.
  *
@@ -70,11 +67,9 @@ char *strnstr( const char *haystack, const char *needle, size_t size )
 #if !HAVE_STRCASESTR
 char *strcasestr( const char *haystack, const char *needle )
 {
-   size_t hay_len, needle_len;
-
    /* Get lengths. */
-   hay_len     = strlen(haystack);
-   needle_len  = strlen(needle);
+   size_t hay_len     = strlen(haystack);
+   size_t needle_len  = strlen(needle);
 
    /* Slow search. */
    while (hay_len >= needle_len) {
@@ -88,7 +83,6 @@ char *strcasestr( const char *haystack, const char *needle )
    return NULL;
 }
 #endif /* !HAVE_STRCASESTR */
-
 
 /**
  * @brief Return a pointer to a new string, which is a duplicate of the string \p s
@@ -108,7 +102,6 @@ char* strndup( const char *s, size_t n )
 }
 #endif /* !HAVE_STRNDUP */
 
-
 /**
  * @brief Sort function for sorting strings with qsort().
  */
@@ -116,7 +109,6 @@ int strsort( const void *p1, const void *p2 )
 {
    return strcmp(*(const char **) p1, *(const char **) p2);
 }
-
 
 /**
  * @brief Like vsprintf(), but it allocates a large-enough string and returns the pointer in the first argument.
@@ -148,7 +140,6 @@ int vasprintf( char** strp, const char* fmt, va_list ap )
 }
 #endif /* !HAVE_VASPRINTF */
 
-
 /**
  * @brief Like sprintf(), but it allocates a large-enough string and returns the pointer in the first argument.
  *        Conforms to GNU and BSD libc semantics.
@@ -171,7 +162,6 @@ int asprintf( char** strp, const char* fmt, ... )
 }
 #endif /* !HAVE_ASPRINTF */
 
-
 /**
  * @brief Like snprintf(), but returns the number of characters \em ACTUALLY "printed" into the buffer.
  *        This makes it possible to chain these calls to concatenate into a buffer without introducing a potential bug every time.
@@ -190,7 +180,6 @@ int scnprintf( char* text, size_t maxlen, const char* fmt, ... )
    va_end( ap );
    return MIN( maxlen-1, (size_t)n );
 }
-
 
 /**
  * @brief Converts an electronic warfare value to a string.
@@ -236,4 +225,3 @@ const char* num2strU( double n, int decimals )
    num2str( num2strU_buf, n, decimals );
    return num2strU_buf;
 }
-

@@ -1,14 +1,11 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
 /**
  * @file nxml.c
  *
  * Handles some complex xml parsing.
  */
-
-
 /** @cond */
 #include "naev.h"
 /** @endcond */
@@ -17,7 +14,6 @@
 
 #include "ndata.h"
 #include "nstring.h"
-
 
 /**
  * @brief Parses a texture handling the sx and sy elements.
@@ -59,7 +55,6 @@ glTexture* xml_parseTexture( xmlNodePtr node,
    return tex;
 }
 
-
 /**
  * @brief Sets up the standard xml write parameters.
  */
@@ -68,7 +63,6 @@ void xmlw_setParams( xmlTextWriterPtr writer )
    xmlTextWriterSetIndentString(writer, (const xmlChar*)" ");
    xmlTextWriterSetIndent(writer, 1);
 }
-
 
 /**
  * @brief Analogous to xmlParseMemory/xmlParseFile.
@@ -100,7 +94,6 @@ int xmlw_saveTime( xmlTextWriterPtr writer, const char *name, time_t t )
    xmlw_elem( writer, name, "%lu", t );
    return 0;
 }
-
 
 int xml_parseTime( xmlNodePtr node, time_t *t )
 {
