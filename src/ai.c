@@ -2257,13 +2257,17 @@ static int aiL_getlandplanet( lua_State *L )
 
    /* Copy friendly planet.s */
    for (int i=0; i<array_size(cur_system->planets); i++) {
-      if (!planet_hasService(cur_system->planets[i],PLANET_SERVICE_INHABITED))
+      Planet *pnt = cur_system->planets[i];
+
+      if (!planet_hasService(pnt, PLANET_SERVICE_LAND))
+         continue;
+      if (!planet_hasService(pnt, PLANET_SERVICE_INHABITED))
          continue;
 
       /* Check conditions. */
-      if (only_friend && !areAllies( cur_pilot->faction, cur_system->planets[i]->presence.faction ))
+      if (only_friend && !areAllies( cur_pilot->faction, pnt->presence.faction ))
          continue;
-      if (areEnemies(cur_pilot->faction,cur_system->planets[i]->presence.faction))
+      if (areEnemies( cur_pilot->faction, pnt->presence.faction ))
          continue;
 
       /* Add it. */
@@ -2281,7 +2285,7 @@ static int aiL_getlandplanet( lua_State *L )
    p = cur_system->planets[ ind[ id ] ];
    planet = p->id;
    lua_pushplanet( L, planet );
-   cur_pilot->nav_planet   = ind[ id ];
+   cur_pilot->nav_planet = ind[ id ];
    array_free(ind);
 
    return 1;
