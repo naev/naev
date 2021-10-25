@@ -22,6 +22,7 @@
    Diversion from Haleb
 
 --]]
+local fmt = require "format"
 local flf = require "missions.flf.flf_common"
 require "missions.flf.flf_diversion"
 
@@ -52,7 +53,7 @@ function accept ()
 
       misn.accept()
 
-      osd_desc[1] = osd_desc[1]:format( missys:name() )
+      osd_desc[1] = fmt.f( osd_desc[1], {sys=missys} )
       misn.osdCreate( _("FLF Diversion"), osd_desc )
       misn.setTitle( _("Diversion from Haleb") )
       misn.setDesc( _("A covert operation is being conducted in Haleb. You are to create a diversion from this operation by wreaking havoc in the nearby %s system."):format( missys:name() ) )

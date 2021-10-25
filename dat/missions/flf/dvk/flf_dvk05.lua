@@ -56,7 +56,7 @@ function accept ()
     Fighting pirates, huh? This sounds like it'll be almost like old times, before you joined the FLF. Interesting. Well, it's about time to get going, then.]]):format( missys:name() ) )
 
       misn.accept()
-      osd_desc[1] = osd_desc[1]:format( missys:name() )
+      osd_desc[1] = fmt.f( osd_desc[1], {sys=missys} )
       misn.osdCreate( _("Pirate Disturbance"), osd_desc )
 
       local desc = setDescription()

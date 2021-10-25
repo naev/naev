@@ -37011,8 +37011,8 @@ msgstr ""
 #: dat/missions/zalek/neburesearch/neburesearch_00.lua:89
 #: dat/missions/zalek/neburesearch/neburesearch_00.lua:90
 #, lua-format
-msgid "Fly to the %s system"
-msgstr "%s星系へ飛べ。"
+msgid "Fly to the {sys} system"
+msgstr "{sys}星系へ飛べ。"
 
 #: dat/missions/dvaered/dv_antiflf02.lua:37
 msgid "Wait for the Dvaered military to jump in and attack you"

@@ -82,7 +82,7 @@ function accept ()
          misn_target:name(), misn_base:name(), misn_base_sys:name() ))
 
    misn.osdCreate(_("Collective Scout"), {
-      _("Fly to the %s system"):format(misn_target:name()),
+      fmt.f(_("Fly to the {sys} system"), {sys=misn_target}),
       _("Locate the Collective drone, but do not engage."),
       _("Report back to %s in the %s system"):format(misn_base:name(), misn_base_sys:name()),
    })

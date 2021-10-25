@@ -86,8 +86,8 @@ function accept()
     misn.accept()
     local osd_title = _("Novice Nebula Research")
     local osd_msg = {}
-    osd_msg[1] = string.format( _("Fly to the %s system"), t_sys[1]:name() )
-    osd_msg[2] = string.format( _("Fly to the %s system"), t_sys[2]:name() )
+    osd_msg[1] = fmt.f( _("Fly to the {sys} system"), {sys=t_sys[1]} )
+    osd_msg[2] = fmt.f( _("Fly to the {sys} system"), {sys=t_sys[2]} )
     osd_msg[3] = string.format(
         _("Return to %s in the %s system"), homeworld:name(),
         homeworld_sys:name() )

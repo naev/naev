@@ -31,7 +31,7 @@ pay_text[1] = _("The FLF officer in charge of the primary operation thanks you f
 pay_text[2] = _("You greet the FLF officer in charge of the primary operation, who seems happy that the mission was a success. You congratulate each other, and the officer hands you your pay.")
 
 osd_desc    = {}
-osd_desc[1] = _("Fly to the %s system")
+osd_desc[1] = _("Fly to the {sys} system")
 osd_desc[2] = _("Engage and destroy Dvaered ships to get their attention")
 osd_desc[3] = _("Return to FLF base")
 osd_desc["__save"] = true
@@ -64,7 +64,7 @@ end
 function accept ()
    misn.accept()
 
-   osd_desc[1] = osd_desc[1]:format( missys:name() )
+   osd_desc[1] = fmt.f( osd_desc[1], {sys=missys} )
    misn.osdCreate( _("FLF Diversion"), osd_desc )
 
    dv_attention = 0

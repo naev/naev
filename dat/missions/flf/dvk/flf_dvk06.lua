@@ -29,7 +29,7 @@ local flf = require "missions.flf.flf_common"
 -- Localization stuff
 
 osd_desc    = {}
-osd_desc[1] = _("Fly to the %s system and meet with the group of FLF ships")
+osd_desc[1] = _("Fly to the {sys} system and meet with the group of FLF ships")
 osd_desc[2] = _("Wait until the coast is clear, then hail one of your wingmates")
 osd_desc[3] = _("Attack Raglan Outpost until it is destroyed")
 osd_desc[4] = _("Return to FLF base")
@@ -52,7 +52,7 @@ function accept ()
 
       misn.accept()
 
-      osd_desc[1] = osd_desc[1]:format( missys:name() )
+      osd_desc[1] = fmt.f( osd_desc[1], {sys=missys} )
       misn.osdCreate( _("Assault on Haleb"), osd_desc )
       misn.setTitle( _("Assault on Haleb") )
       misn.setDesc( _("Join with the other FLF pilots for the assault on Raglan Outpost."):format( missys:name() ) )

@@ -29,6 +29,7 @@
 
 --]]
 local fleet = require "fleet"
+local fmt = require "format"
 local flf = require "missions.flf.flf_common"
 require "missions.flf.flf_patrol"
 local dv = require "common.dvaered"
@@ -36,7 +37,7 @@ local dv = require "common.dvaered"
 osd_desc = {}
 refuelmsg = {}
 
-osd_desc[1] = _("Fly to the %s system")
+osd_desc[1] = _("Fly to the {sys} system")
 osd_desc[2] = _("Eliminate the Dvaered patrol")
 osd_desc[3] = _("Return to the FLF base")
 osd_desc["__save"] = true
@@ -58,7 +59,7 @@ function accept ()
     You object, asking the Corporal if all recruits have to undertake dangerous missions like this to be accepted into the FLF ranks. Benito chuckles and makes a pacifying gesture.
     "Calm down, it's not as bad as it sounds. You only have to take out one small patrol; I don't think you will have to fight more than 3 ships, 4 if you're really unlucky. If you think that's too much for you, you can abort the mission for now and come to me again later. Otherwise, good luck!"]]):format( missys:name() ) )
 
-      osd_desc[1] = osd_desc[1]:format( missys:name() )
+      osd_desc[1] = fmt.f( osd_desc[1], {sys=missys} )
 
       misn.accept()
       misn.osdCreate( _("Dvaered Patrol"), osd_desc )

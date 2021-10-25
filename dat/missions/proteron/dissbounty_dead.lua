@@ -63,7 +63,7 @@ msg[3] = _("MISSION FAILURE! You have left the %s system.")
 
 osd_title = _("Bounty Hunt")
 osd_msg    = {}
-osd_msg[1] = _("Fly to the %s system")
+osd_msg[1] = _("Fly to the {sys} system")
 osd_msg[2] = _("Kill or capture your target")
 osd_msg[3] = _("Land in %s territory to collect your bounty")
 osd_msg["__save"] = true

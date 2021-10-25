@@ -143,7 +143,7 @@ function accept ()
    misn.accept()
 
    misn.osdCreate( _("Assassination"), {
-      _("Fly to the %s system"):format( missys:name() ),
+      fmt.f( _("Fly to the {sys} system"), {sys=missys} ),
       _("Kill %s"):format( name ),
    } )
 

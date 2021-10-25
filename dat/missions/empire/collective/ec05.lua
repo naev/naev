@@ -90,7 +90,7 @@ function accept ()
    misn.setReward( fmt.credits( credits ) )
    misn.setDesc( string.format(_("Arrest the ESS Trinity in %s"), misn_target_sys:name() ))
    misn.osdCreate(_("Operation Black Trinity"), {
-      _("Fly to the %s system"):format(misn_target_sys:name()),
+      fmt.f(_("Fly to the {sys} system"), {sys=misn_target_sys}),
       _("Apprehend or kill Zakred"),
       _("Report back to %s"):format(misn_base:name()),
    })

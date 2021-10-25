@@ -28,12 +28,13 @@
 --]]
 
 local fleet = require "fleet"
+local fmt = require "format"
 local portrait = require "portrait"
 local dv = require "common.dvaered"
 
 osd_desc = {}
 
-osd_desc[1] = _("Fly to the %s system")
+osd_desc[1] = _("Fly to the {sys} system")
 osd_desc[2] = _("Wait for the Dvaered military to jump in and attack you")
 osd_desc[3] = _("Fight the Dvaered until the FLF step in")
 osd_desc[4] = _("Disable and board at least one FLF ship")
@@ -68,7 +69,7 @@ function accept()
     "Well," the Colonel muses, "That will mean our intel was probably wrong. But don't worry, citizen, we'll get those terrorists eventually! Now, time is of the essence, so get to your ship and follow your orders. Dismissed!"]]))
 
         misn.accept()
-        osd_desc[1] = string.format(osd_desc[1], destsysname)
+        osd_desc[1] = fmt.f(osd_desc[1], {sys=destsysname})
         misn.osdCreate(_("Lure out the FLF"), osd_desc)
         misn.setDesc(_("You have been recruited to act as a red herring in a military operation of Dvaered design. Your chief purpose is to goad the FLF into showing themselves, then disable and board one of their ships. You will fail this mission if you disable or destroy any Dvaered ship, or if you leave the system before the operation is complete."))
         misn.setTitle(_("Lure out the FLF"))

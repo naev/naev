@@ -130,7 +130,7 @@ function accept ()
    misn.accept()
 
    misn.osdCreate( _("Sightseeing"), {
-      _("Fly to the %s system"):format( missys:name() ),
+      fmt.f( _("Fly to the {sys} system"), {sys=missys} ),
       _("Go to all indicated points"),
       _("Return to %s in the %s system and collect your pay"):format( startingplanet:name(), startingsystem:name() ),
    } )

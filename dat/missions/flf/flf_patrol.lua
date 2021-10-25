@@ -36,7 +36,7 @@ text[2] = _("As you get your pay from the officer, FLF soldiers congratulate you
 text[3] = _("You collect your pay from the officer, who then congratulates you for your victory.")
 
 osd_desc    = {}
-osd_desc[1] = _("Fly to the %s system")
+osd_desc[1] = _("Fly to the {sys} system")
 osd_desc[2] = _("Eliminate the Dvaered patrol")
 osd_desc[3] = _("Return to FLF base")
 osd_desc["__save"] = true
@@ -129,7 +129,7 @@ end
 function accept ()
    misn.accept()
 
-   osd_desc[1] = osd_desc[1]:format( missys:name() )
+   osd_desc[1] = fmt.f( osd_desc[1], {sys=missys} )
    misn.osdCreate( _("FLF Patrol"), osd_desc )
 
    dv_ships_left = 0
