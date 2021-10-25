@@ -2263,7 +2263,7 @@ static int aiL_getlandplanet( lua_State *L )
       /* Check conditions. */
       if (only_friend && !areAllies( cur_pilot->faction, cur_system->planets[i]->presence.faction ))
          continue;
-      else if (!only_friend && areEnemies(cur_pilot->faction,cur_system->planets[i]->presence.faction))
+      if (areEnemies(cur_pilot->faction,cur_system->planets[i]->presence.faction))
          continue;
 
       /* Add it. */
