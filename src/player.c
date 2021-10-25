@@ -965,8 +965,10 @@ static void player_renderStealthUnderlay( double dt )
 
       gl_gameToScreenCoords( &x, &y, t->solid->pos.x, t->solid->pos.y );
       r = detectz * t->stats.ew_detect;
-      glUseProgram( shaders.stealthaura.program );
-      gl_renderShader( x, y, r, r, 0., &shaders.stealthaura, &col, 1 );
+      if (r > 0.) {
+         glUseProgram( shaders.stealthaura.program );
+         gl_renderShader( x, y, r, r, 0., &shaders.stealthaura, &col, 1 );
+      }
    }
 }
 
