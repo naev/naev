@@ -206,7 +206,7 @@ function drone_death ()
       misn_state = 1
       misn.osdActive(2)
       pilot.toggleSpawn(true)
-      misn.markerMove( misnmarker, planet.getS("Minerva Station") )
+      misn.markerMove( misnmarker, planet.get("Minerva Station") )
    end
 end
 function drone_attacked( p )

@@ -698,7 +698,7 @@ He seems to be looking at something in the distance.]]))
    -- Advance mission
    misn_state = 3
    misn.osdActive(2)
-   misn.markerMove( misn_marker, planet.getS("Minerva Station") )
+   misn.markerMove( misn_marker, planet.get("Minerva Station") )
    player.unboard()
    local strangelove_death = var.peek("strangelove_death")
    if strangelove_death=="shot" then

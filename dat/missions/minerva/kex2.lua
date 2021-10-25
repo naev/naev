@@ -98,7 +98,7 @@ function generate_npc ()
       vn.run()
 
       -- Advance mission and get out of there
-      misn.markerMove( misn_marker, planet.getS("Minerva Station") )
+      misn.markerMove( misn_marker, planet.get("Minerva Station") )
       misn_state = 1
       misn.osdActive(2)
       player.takeoff()

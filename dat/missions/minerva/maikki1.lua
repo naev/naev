@@ -924,7 +924,7 @@ function board_wreck ()
    -- Move target back to origin
    misn.osdCreate( _("Finding Maikki's Father"),
          { string.format(_("Return to %s in the %s system"), minerva.maikki.name, _(mainsys)) } )
-   misn.markerMove( misn_marker, planet.getS("Minerva Station") )
+   misn.markerMove( misn_marker, planet.get("Minerva Station") )
    misn_state=5
 
    -- Clear scavengers if exist
