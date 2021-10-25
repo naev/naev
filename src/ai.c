@@ -2216,14 +2216,16 @@ static int aiL_getrndplanet( lua_State *L )
    LuaPlanet planet;
    int p;
 
-   if (array_size(cur_system->planets) == 0) return 0; /* no planets */
+   /* No planets. */
+   if (array_size(cur_system->planets) == 0)
+      return 0;
 
    /* get a random planet */
    p = RNG(0, array_size(cur_system->planets)-1);
 
    /* Copy the data into a vector */
    planet = cur_system->planets[p]->id;
-   lua_pushplanet(L, planet);
+   lua_pushplanet(L, cur_system->planets[p]->id);
 
    return 1;
 }
@@ -2231,14 +2233,14 @@ static int aiL_getrndplanet( lua_State *L )
 /**
  * @brief Get a random friendly planet.
  *
- *    @luatparam boolean only_friend Only check for ally planets.
+ *    @luatparam[opt=false] boolean only_friend Only check for ally planets.
  *    @luatreturn Planet|nil
  * @luafunc landplanet
  */
 static int aiL_getlandplanet( lua_State *L )
 {
    int *ind;
-   int i;
+   int id;
    LuaPlanet planet;
    Planet *p;
    int only_friend;
@@ -2254,7 +2256,7 @@ static int aiL_getlandplanet( lua_State *L )
    ind = array_create_size( int, array_size(cur_system->planets) );
 
    /* Copy friendly planet.s */
-   for (i=0; i<array_size(cur_system->planets); i++) {
+   for (int i=0; i<array_size(cur_system->planets); i++) {
       if (!planet_hasService(cur_system->planets[i],PLANET_SERVICE_INHABITED))
          continue;
 
@@ -2275,11 +2277,11 @@ static int aiL_getlandplanet( lua_State *L )
    }
 
    /* we can actually get a random planet now */
-   i = RNG(0,array_size(ind)-1);
-   p = cur_system->planets[ ind[i] ];
+   id = RNG(0,array_size(ind)-1);
+   p = cur_system->planets[ ind[ id ] ];
    planet = p->id;
    lua_pushplanet( L, planet );
-   cur_pilot->nav_planet   = ind[ i ];
+   cur_pilot->nav_planet   = ind[ id ];
    array_free(ind);
 
    return 1;
@@ -2294,13 +2296,12 @@ static int aiL_getlandplanet( lua_State *L )
  */
 static int aiL_land( lua_State *L )
 {
-   int ret, i;
+   int ret;
    Planet *planet;
-   HookParam hparam;
-   Planet *pnt;
 
    if (!lua_isnoneornil(L,1)) {
-      pnt = luaL_validplanet( L, 1 );
+      int i;
+      Planet *pnt = luaL_validplanet( L, 1 );
 
       /* Find the planet. */
       for (i=0; i < array_size(cur_system->planets); i++) {
@@ -2344,6 +2345,8 @@ static int aiL_land( lua_State *L )
       ret++;
 
    if (!ret) {
+      HookParam hparam;
+
       cur_pilot->landing_delay = PILOT_LANDING_DELAY * cur_pilot->ship->dt_default;
       cur_pilot->ptimer = cur_pilot->landing_delay;
       pilot_setFlag( cur_pilot, PILOT_LANDING );
@@ -2403,7 +2406,7 @@ static int aiL_sethyptarget( lua_State *L )
    lj = luaL_checkjump( L, 1 );
    jp = luaL_validjump( L, 1 );
 
-   if ( lj->srcid != cur_system->id )
+   if (lj->srcid != cur_system->id)
       NLUA_ERROR(L, _("Jump point must be in current system."));
 
    /* Copy vector. */
