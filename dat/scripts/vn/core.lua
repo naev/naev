@@ -788,6 +788,8 @@ function vn.StateWait:_keypressed( key )
       "enter",
       "space",
       "right",
+      "down",
+      "pagedown",
       "escape",
    }
    local found = false
