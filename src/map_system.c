@@ -676,7 +676,7 @@ static void map_system_array_update( unsigned int wid, const char* str )
          ship->mass, n_( "tonne", "tonnes", ship->mass ),
          ship->thrust,
          ship->speed,
-         ship->turn*180/M_PI,
+         ship->turn*180./M_PI,
          ship->dt_default*100.,
          /* Misc */
          ship->dmg_absorb*100.,
@@ -851,11 +851,10 @@ static void map_system_genOutfitsList( unsigned int wid, float goodsSpace, float
 
    window_dimWindow( wid, &w, &h );
    if (planetDone == cur_planetObj_sel) {
-      if ( widget_exists( wid, MAPSYS_OUTFITS ) ) {
+      if (widget_exists( wid, MAPSYS_OUTFITS ))
          return;
-      }
    } else {
-      if ( widget_exists( wid, MAPSYS_OUTFITS ) ) {
+      if (widget_exists( wid, MAPSYS_OUTFITS )) {
          window_destroyWidget( wid, MAPSYS_OUTFITS );
          array_free( cur_planet_sel_outfits );
          cur_planet_sel_outfits = NULL;
@@ -865,29 +864,33 @@ static void map_system_genOutfitsList( unsigned int wid, float goodsSpace, float
    planetDone = cur_planetObj_sel;
 
    /* set up the outfits to buy/sell */
-   if ( cur_planetObj_sel == NULL )
+   if (cur_planetObj_sel == NULL)
+      return;
+  
+   /* No outfitter. */
+   if (!planet_hasService( cur_planetObj_sel, PLANET_SERVICE_OUTFITS ))
       return;
 
    cur_planet_sel_outfits = tech_getOutfit( cur_planetObj_sel->tech );
    noutfits = array_size( cur_planet_sel_outfits );
 
-   if (noutfits > 0) {
-      coutfits = outfits_imageArrayCells( (const Outfit**)cur_planet_sel_outfits, &noutfits );
+   if (noutfits <= 0)
+      return;
+   coutfits = outfits_imageArrayCells( (const Outfit**)cur_planet_sel_outfits, &noutfits );
 
-      xw = ( w - nameWidth - pitch - 60 ) / 2;
-      xpos = 35 + pitch + nameWidth + xw;
-      i = (goodsSpace!=0) + (outfitSpace!=0) + (shipSpace!=0);
-      yh = (h - 100 - (i+1)*5 ) * outfitSpace;
-      ypos = 65 + 5*(shipSpace!=0) + (h - 100 - (i+1)*5)*shipSpace;
+   xw = ( w - nameWidth - pitch - 60 ) / 2;
+   xpos = 35 + pitch + nameWidth + xw;
+   i = (goodsSpace!=0) + (outfitSpace!=0) + (shipSpace!=0);
+   yh = (h - 100 - (i+1)*5 ) * outfitSpace;
+   ypos = 65 + 5*(shipSpace!=0) + (h - 100 - (i+1)*5)*shipSpace;
 
-      iconsize = 64;
-      if (toolkit_simImageArrayVisibleElements( xw, yh, iconsize, iconsize ) < noutfits)
-         iconsize = 48;
-      window_addImageArray( wid, xpos, ypos,
-            xw, yh, MAPSYS_OUTFITS, iconsize, iconsize,
-            coutfits, noutfits, map_system_array_update, NULL, NULL );
-      toolkit_unsetSelection( wid, MAPSYS_OUTFITS );
-   }
+   iconsize = 64;
+   if (toolkit_simImageArrayVisibleElements( xw, yh, iconsize, iconsize ) < noutfits)
+      iconsize = 48;
+   window_addImageArray( wid, xpos, ypos,
+         xw, yh, MAPSYS_OUTFITS, iconsize, iconsize,
+         coutfits, noutfits, map_system_array_update, NULL, NULL );
+   toolkit_unsetSelection( wid, MAPSYS_OUTFITS );
 }
 
 static void map_system_genShipsList( unsigned int wid, float goodsSpace, float outfitSpace, float shipSpace )
@@ -900,13 +903,12 @@ static void map_system_genShipsList( unsigned int wid, float goodsSpace, float o
    window_dimWindow( wid, &w, &h );
 
    /* set up the ships that can be bought here */
-   if ( planetDone == cur_planetObj_sel ) {
-      if ( widget_exists( wid, MAPSYS_SHIPS ) ) {
+   if (planetDone == cur_planetObj_sel) {
+      if (widget_exists( wid, MAPSYS_SHIPS ))
          return;
-      }
    }
    else {
-      if ( widget_exists( wid, MAPSYS_SHIPS ) ) {
+      if (widget_exists( wid, MAPSYS_SHIPS )) {
          window_destroyWidget( wid, MAPSYS_SHIPS );
          array_free( cur_planet_sel_ships );
          cur_planet_sel_ships = NULL;
@@ -919,29 +921,34 @@ static void map_system_genShipsList( unsigned int wid, float goodsSpace, float o
    if (cur_planetObj_sel == NULL)
       return;
 
+   /* No shipyard. */
+   if (!planet_hasService( cur_planetObj_sel, PLANET_SERVICE_SHIPYARD ))
+      return;
+
    cur_planet_sel_ships = tech_getShip( cur_planetObj_sel->tech );
    nships = array_size( cur_planet_sel_ships );
 
-   if (nships > 0) {
-      cships = calloc( nships, sizeof(ImageArrayCell) );
-      for ( i=0; i<nships; i++ ) {
-         cships[i].image = gl_dupTexture( cur_planet_sel_ships[i]->gfx_store );
-         cships[i].caption = strdup( _(cur_planet_sel_ships[i]->name) );
-      }
-      xw = (w - nameWidth - pitch - 60)/2;
-      xpos = 35 + pitch + nameWidth + xw;
-      i = (goodsSpace!=0) + (outfitSpace!=0) + (shipSpace!=0);
-      yh = (h - 100 - (i+1)*5 ) * shipSpace;
-      ypos = 65;
+   if (nships <= 0)
+      return;
 
-      iconsize = 48;
-      if (toolkit_simImageArrayVisibleElements( xw, yh, iconsize, iconsize ) < nships )
-         iconsize = 48;
-      window_addImageArray( wid, xpos, ypos,
-         xw, yh, MAPSYS_SHIPS, iconsize, iconsize,
-         cships, nships, map_system_array_update, NULL, NULL );
-      toolkit_unsetSelection( wid, MAPSYS_SHIPS );
+   cships = calloc( nships, sizeof(ImageArrayCell) );
+   for ( i=0; i<nships; i++ ) {
+      cships[i].image = gl_dupTexture( cur_planet_sel_ships[i]->gfx_store );
+      cships[i].caption = strdup( _(cur_planet_sel_ships[i]->name) );
    }
+   xw = (w - nameWidth - pitch - 60)/2;
+   xpos = 35 + pitch + nameWidth + xw;
+   i = (goodsSpace!=0) + (outfitSpace!=0) + (shipSpace!=0);
+   yh = (h - 100 - (i+1)*5 ) * shipSpace;
+   ypos = 65;
+
+   iconsize = 48;
+   if (toolkit_simImageArrayVisibleElements( xw, yh, iconsize, iconsize ) < nships )
+      iconsize = 48;
+   window_addImageArray( wid, xpos, ypos,
+      xw, yh, MAPSYS_SHIPS, iconsize, iconsize,
+      cships, nships, map_system_array_update, NULL, NULL );
+   toolkit_unsetSelection( wid, MAPSYS_SHIPS );
 }
 
 static void map_system_genTradeList( unsigned int wid, float goodsSpace, float outfitSpace, float shipSpace )
@@ -962,35 +969,42 @@ static void map_system_genTradeList( unsigned int wid, float goodsSpace, float o
          window_destroyWidget( wid, MAPSYS_TRADE );
       }
    }
-   planetDone = cur_planetObj_sel;
+   
    /* goods list */
-   if ( cur_planetObj_sel == NULL ) {
-      ngoods = 0;
-   } else {
-      ngoods = array_size( cur_planetObj_sel->commodities );
-   }
-   if ( ngoods > 0 ) {
-      cgoods = calloc( ngoods, sizeof(ImageArrayCell) );
-      for ( i=0; i<ngoods; i++ ) {
-         cgoods[i].image = gl_dupTexture( cur_planetObj_sel->commodities[i]->gfx_store );
-         cgoods[i].caption = strdup( _(cur_planetObj_sel->commodities[i]->name) );
-      }
-      /* set up the goods to buy/sell */
-      xw = (w - nameWidth - pitch - 60)/2;
-      xpos = 35 + pitch + nameWidth + xw;
-      i = (goodsSpace!=0) + (outfitSpace!=0) + (shipSpace!=0);
-      yh = (h - 100 - (i+1)*5 ) * goodsSpace;
-      ypos = 60 + 5*i + (h-100 - (i+1)*5 )*(outfitSpace + shipSpace);
+   if (cur_planetObj_sel == NULL)
+      return;
 
-      iconsize = 48;
-      if (toolkit_simImageArrayVisibleElements( xw, yh, iconsize, iconsize ) < ngoods )
-         iconsize = 48;
-      window_addImageArray( wid, xpos, ypos,
-         xw, yh, MAPSYS_TRADE, iconsize, iconsize,
-         cgoods, ngoods, map_system_array_update, NULL, NULL );
-      toolkit_unsetSelection( wid, MAPSYS_TRADE );
+   /* No shipyard. */
+   if (!planet_hasService( cur_planetObj_sel, PLANET_SERVICE_COMMODITY ))
+      return;
+
+   planetDone = cur_planetObj_sel;
+   
+   ngoods = array_size( cur_planetObj_sel->commodities );
+   
+   if (ngoods <= 0)
+      return;
+   cgoods = calloc( ngoods, sizeof(ImageArrayCell) );
+   for ( i=0; i<ngoods; i++ ) {
+      cgoods[i].image = gl_dupTexture( cur_planetObj_sel->commodities[i]->gfx_store );
+      cgoods[i].caption = strdup( _(cur_planetObj_sel->commodities[i]->name) );
    }
+   /* set up the goods to buy/sell */
+   xw = (w - nameWidth - pitch - 60)/2;
+   xpos = 35 + pitch + nameWidth + xw;
+   i = (goodsSpace!=0) + (outfitSpace!=0) + (shipSpace!=0);
+   yh = (h - 100 - (i+1)*5 ) * goodsSpace;
+   ypos = 60 + 5*i + (h-100 - (i+1)*5 )*(outfitSpace + shipSpace);
+
+   iconsize = 48;
+   if (toolkit_simImageArrayVisibleElements( xw, yh, iconsize, iconsize ) < ngoods )
+      iconsize = 48;
+   window_addImageArray( wid, xpos, ypos,
+      xw, yh, MAPSYS_TRADE, iconsize, iconsize,
+      cgoods, ngoods, map_system_array_update, NULL, NULL );
+   toolkit_unsetSelection( wid, MAPSYS_TRADE );
 }
+
 /**
  * @brief Handles the button to buy commodity prices
  */
@@ -998,7 +1012,7 @@ void map_system_buyCommodPrice( unsigned int wid, const char *str )
 {
    (void) wid;
    (void) str;
-   int njumps=0;
+   int njumps = 0;
    StarSystem **syslist;
    int cost;
    char coststr[ECON_CRED_STRLEN];
@@ -1022,7 +1036,7 @@ void map_system_buyCommodPrice( unsigned int wid, const char *str )
    }
 
    /* get the time at which this purchase will be made (2 periods per jump ago)*/
-   t-= ( njumps * 2 + 0.2 ) * NT_PERIOD_SECONDS * 1000;
+   t -= ( njumps * 2 + 0.2 ) * NT_PERIOD_SECONDS * 1000;
    credits2str( coststr, cost, -1 );
    if (!player_hasCredits( cost ))
       dialogue_msg( _("Insufficient Credits"), _("You need %s to purchase this information."), coststr );
