@@ -117,7 +117,7 @@ function create()
 
    -- If scavengers are not dead, they sometimes appear
    if var.peek("maikki_scavengers_alive") and rnd.rnd() < 0.05 then
-      evt.npcAdd( "approach_scavengers", _("Scavengers"), scav_portrait, _("You see a pair of dirty looking fellows talking loudly among themselves.") )
+      evt.npcAdd( "approach_scavengers", _("Scavengers"), "scavenger1.png", _("You see a pair of dirty looking fellows talking loudly among themselves.") )
    end
 
    -- If they player never had tokens, it is probably their first time
