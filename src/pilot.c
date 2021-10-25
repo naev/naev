@@ -276,7 +276,7 @@ int pilot_validEnemyDist( const Pilot* p, const Pilot* target, double *dist )
    /* Shouldn't be landing or taking off. */
    if (pilot_isFlag( target, PILOT_LANDING) ||
          pilot_isFlag( target, PILOT_TAKEOFF ) ||
-         pilot_isFlag( target, PILOT_TAKEOFF_SAFE ))
+         pilot_isFlag( target, PILOT_NONTARGETABLE))
       return 0;
 
    /* Must be a valid target. */
@@ -2057,8 +2057,8 @@ void pilot_update( Pilot* pilot, double dt )
       if (pilot->ptimer < 0.) {
          pilot_rmFlag(pilot,PILOT_TAKEOFF);
          if (pilot_isFlag(pilot, PILOT_PLAYER)) {
-            pilot_setFlag(pilot, PILOT_TAKEOFF_SAFE);
-            pilot->ptimer = PILOT_TAKEOFF_PLAYER_SAFE_DELAY;
+            pilot_setFlag(pilot, PILOT_NONTARGETABLE);
+            pilot->itimer = PILOT_PLAYER_NONTARGETABLE_TAKEOFF_DELAY;
          }
          return;
       }
@@ -2143,9 +2143,10 @@ void pilot_update( Pilot* pilot, double dt )
          return;
       }
    }
-   else if (pilot_isFlag(pilot, PILOT_TAKEOFF_SAFE)) {
-      if (pilot->ptimer < 0.)
-         pilot_rmFlag(pilot, PILOT_TAKEOFF_SAFE);
+   else if (pilot_isFlag(pilot, PILOT_NONTARGETABLE)) {
+      pilot->itimer -= dt;
+      if (pilot->itimer < 0.)
+         pilot_rmFlag(pilot, PILOT_NONTARGETABLE);
    }
    else if (pilot->armour <= 0.) { /* PWNED */
       if (pilot_isFlag( pilot, PILOT_NODEATH ))

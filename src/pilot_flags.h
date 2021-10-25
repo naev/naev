@@ -53,10 +53,10 @@ enum {
    PILOT_COMBAT,        /**< Pilot is engaged in combat. */
    PILOT_BRIBED,        /**< Pilot has been bribed already. */
    PILOT_DISTRESSED,    /**< Pilot has distressed once already. */
+   PILOT_NONTARGETABLE, /**< Safe time for when the player is taking off or jumping in. */
    /* Landing stuff. */
    PILOT_LANDING,       /**< Pilot is landing. */
    PILOT_TAKEOFF,       /**< Pilot is taking off. */
-   PILOT_TAKEOFF_SAFE,  /**< Safe time for when the player is taking off. */
    /* Visibility stuff. */
    PILOT_STEALTH,       /**< Pilot is in stealth mode. */
    PILOT_NORENDER,      /**< Pilot does not get rendered. */

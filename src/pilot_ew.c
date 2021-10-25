@@ -483,6 +483,9 @@ void pilot_ewUpdateStealth( Pilot *p, double dt )
 
    /* Get nearby pilots. */
    if (pilot_isPlayer(p)) {
+      if (pilot_isFlag(p, PILOT_NONTARGETABLE))
+         return;
+
       n = pilot_ewStealthGetNearby( p, &mod, &close, &isplayer );
 
       /* Stop autonav if pilots are nearby. */

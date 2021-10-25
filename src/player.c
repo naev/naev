@@ -1879,6 +1879,10 @@ void player_brokeHyperspace (void)
    /* Set the ptimer. */
    player.p->ptimer = HYPERSPACE_FADEIN;
 
+   /* GIve some non-targetable time. */
+   player.p->itimer = PILOT_PLAYER_NONTARGETABLE_JUMPIN_DELAY;
+   pilot_setFlag( player.p, PILOT_NONTARGETABLE );
+
    /* Update the map */
    map_jump();
 

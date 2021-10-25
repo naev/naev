@@ -33,7 +33,6 @@
 /* Land/takeoff. */
 #define PILOT_LANDING_DELAY      2. /**< Delay for land animation. */
 #define PILOT_TAKEOFF_DELAY      2. /**< Delay for takeoff animation. */
-#define PILOT_TAKEOFF_PLAYER_SAFE_DELAY 5. /**< Time the player is safe (from being targetted) after takeoff. */
 /* Refueling. */
 #define PILOT_REFUEL_TIME        3. /**< Time to complete refueling. */
 #define PILOT_REFUEL_QUANTITY    100 /**< Amount transferred per refuel. */
@@ -42,6 +41,8 @@
 #define PILOT_WEAPON_SETS        10    /**< Number of weapon sets the pilot has. */
 #define PILOT_WEAPSET_MAX_LEVELS 2     /**< Maximum amount of weapon levels. */
 #define PILOT_REVERSE_THRUST     0.4   /**< Ratio of normal thrust to apply when reversing. */
+#define PILOT_PLAYER_NONTARGETABLE_TAKEOFF_DELAY 5. /**< Time the player is safe (from being targetted) after takeoff. */
+#define PILOT_PLAYER_NONTARGETABLE_JUMPIN_DELAY 5. /**< Time the player is safe (from being targetted) after jumping in. */
 
 /* hooks */
 enum {
@@ -349,6 +350,7 @@ typedef struct Pilot_ {
    double landing_delay; /**< This pilot's current landing delay. */
    double pdata;     /**< generic data for internal pilot use */
    double ptimer;    /**< generic timer for internal pilot use */
+   double itimer;    /**< Timer for player invulnerability. */
    double htimer;    /**< Hail animation timer. */
    double stimer;    /**< Shield regeneration timer. */
    double sbonus;    /**< Shield regeneration bonus. */
