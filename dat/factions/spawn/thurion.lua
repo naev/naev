@@ -101,28 +101,6 @@ function spawn ( presence, max )
    -- Actually spawn the pilots
    local pilots = scom.spawn()
 
-   -- Make sure they don't die because of nebula
-   local _nebu_dens, nebu_vol = system.cur():nebula()
-   if nebu_vol > 0 then
-      local new_pilots = {}
-      for i, s in ipairs(pilots) do
-         local dmg = nebu_vol * (1-s.pilot:shipstat("nebu_absorb",true))
-         if s.pilot:stats().shield_regen > dmg then
-            table.insert( new_pilots, s )
-         else
-            s.pilot:rm()
-         end
-      end
-      pilots = new_pilots
-   end
-
-   -- Unknown until known
-   if not faction.get("Thurion"):known() then
-      for i, s in ipairs( pilots ) do
-         s.pilot:rename(_("Unknown"))
-      end
-   end
-
    -- Calculate spawn data
    scom.choose()
 

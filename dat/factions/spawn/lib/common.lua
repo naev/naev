@@ -82,7 +82,7 @@ function scom.createSpawnTable( weights )
    local max = 0
    for k,v in pairs(weights) do
       max = max + v
-      spawn_table[ #spawn_table+1 ] = { chance = max, func = k }
+      table.insert( spawn_table, { chance = max, func = k } )
    end
 
    -- Safety check
@@ -124,6 +124,9 @@ function scom.spawn( pilots )
    if pilots == nil then
       return nil
    end
+
+   -- Useful later
+   local _nebu_dens, nebu_vol = system.cur():nebula()
 
    -- When simulating we try to find good points
    local leader
@@ -170,7 +173,7 @@ function scom.spawn( pilots )
       mem.natural = true -- mark that it was spawned naturally and not as part of a mission
       local presence = v.presence
       if not pilots.__nofleet then
-         if leader == nil then
+         if leader ~= nil then
             leader = p
          else
             p:setLeader(leader)
@@ -179,11 +182,24 @@ function scom.spawn( pilots )
       if pilots.__doscans then
          mem.doscans = true
       end
+      if not pfact:known() then
+         p:rename(_("Unknown"))
+      end
       if params.postprocess then
          params.postprocess( p )
       end
-      spawned[ #spawned+1 ] = { pilot=p, presence=presence }
+      -- Make sure they survive the nebula
+      local dmg = nebu_vol * (1-p:shipstat("nebu_absorb",true))
+      if p:stats().shield_regen <= dmg then
+         if leader==p then
+            leader = nil
+         end
+         p:rm()
+      else
+         table.insert( spawned, { pilot=p, presence=presence } )
+      end
    end
+
    return spawned
 end
 
@@ -191,7 +207,7 @@ end
 -- @brief adds a pilot to the table
 function scom.addPilot( pilots, s, params )
    local presence = s:points()
-   pilots[ #pilots+1 ] = { ship=s, presence=presence, params=params }
+   table.insert(pilots, { ship=s, presence=presence, params=params })
    pilots.__presence = (pilots.__presence or 0) + presence
 end
 
