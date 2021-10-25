@@ -12,7 +12,7 @@
  </avail>
  <notes>
   <campaign>Minerva</campaign>
-  <evt_done name="Chicken Rendezvous" />
+  <done_evt name="Chicken Rendezvous" />
  </notes>
 </mission>
 --]]
