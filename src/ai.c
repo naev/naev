@@ -2109,8 +2109,7 @@ static int aiL_idir( lua_State *L )
  */
 static int aiL_drift_facing( lua_State *L )
 {
-    double drift;
-    drift = angle_diff(VANGLE(cur_pilot->solid->vel), cur_pilot->solid->dir);
+    double drift = angle_diff(VANGLE(cur_pilot->solid->vel), cur_pilot->solid->dir);
     lua_pushnumber(L, drift*180./M_PI);
     return 1;
 }
@@ -2302,6 +2301,7 @@ static int aiL_land( lua_State *L )
 {
    int ret;
    Planet *planet;
+   HookParam hparam;
 
    if (!lua_isnoneornil(L,1)) {
       int i;
@@ -2321,47 +2321,50 @@ static int aiL_land( lua_State *L )
       cur_pilot->nav_planet = i;
    }
 
-   ret = 0;
-
    if (cur_pilot->nav_planet < 0) {
       NLUA_ERROR( L, _("Pilot '%s' (ai '%s') has no land target"), cur_pilot->name, cur_pilot->ai->name );
       return 0;
    }
 
    /* Get planet. */
+   ret = 0;
    planet = cur_system->planets[ cur_pilot->nav_planet ];
 
    /* Check landability. */
-   if (!planet_hasService(planet,PLANET_SERVICE_INHABITED))
-      ret++;
+   if (!planet_hasService(planet,PLANET_SERVICE_LAND) ||
+         !planet_hasService(planet,PLANET_SERVICE_INHABITED)) {
+      lua_pushboolean(L,0);
+      return 1;
+   }
+
+   /* Check landing functionality. */
+   if (pilot_isFlag(cur_pilot, PILOT_NOLAND)) {
+      lua_pushboolean(L,0);
+      return 1;
+   }
 
    /* Check distance. */
-   if (vect_dist2(&cur_pilot->solid->pos,&planet->pos) > pow2(planet->radius))
-      ret++;
+   if (vect_dist2(&cur_pilot->solid->pos,&planet->pos) > pow2(planet->radius)) {
+      lua_pushboolean(L,0);
+      return 1;
+   }
 
    /* Check velocity. */
    if ((pow2(VX(cur_pilot->solid->vel)) + pow2(VY(cur_pilot->solid->vel))) >
-         (double)pow2(MAX_HYPERSPACE_VEL))
-      ret++;
-
-   /* Check landing functionality. */
-   if (pilot_isFlag(cur_pilot, PILOT_NOLAND))
-      ret++;
-
-   if (!ret) {
-      HookParam hparam;
-
-      cur_pilot->landing_delay = PILOT_LANDING_DELAY * cur_pilot->ship->dt_default;
-      cur_pilot->ptimer = cur_pilot->landing_delay;
-      pilot_setFlag( cur_pilot, PILOT_LANDING );
-
-      hparam.type    = HOOK_PARAM_ASSET;
-      hparam.u.la    = planet->id;
-
-      pilot_runHookParam( cur_pilot, PILOT_HOOK_LAND, &hparam, 1 );
+         (double)pow2(MAX_HYPERSPACE_VEL)) {
+      lua_pushboolean(L,0);
+      return 1;
    }
 
-   lua_pushboolean(L,!ret);
+   cur_pilot->landing_delay = PILOT_LANDING_DELAY * cur_pilot->ship->dt_default;
+   cur_pilot->ptimer = cur_pilot->landing_delay;
+   pilot_setFlag( cur_pilot, PILOT_LANDING );
+
+   hparam.type    = HOOK_PARAM_ASSET;
+   hparam.u.la    = planet->id;
+
+   pilot_runHookParam( cur_pilot, PILOT_HOOK_LAND, &hparam, 1 );
+   lua_pushboolean(L,1);
    return 1;
 }
 
@@ -2526,11 +2529,9 @@ static int aiL_rndhyptarget( lua_State *L )
 static int aiL_relvel( lua_State *L )
 {
    double dot, mod;
-   Pilot *p;
    Vector2d vv, pv;
    int absolute;
-
-   p = luaL_validpilot(L,1);
+   Pilot *p = luaL_validpilot(L,1);
 
    if (lua_gettop(L) > 1)
       absolute = lua_toboolean(L,2);
