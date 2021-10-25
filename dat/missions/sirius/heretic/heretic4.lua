@@ -130,7 +130,7 @@ function attacked() --several systems where the Sirius have 'strategically place
 end
 
 function misn_over() --aren't you glad thats over?
-   if planet.cur() == planet.getS("Ulios") then
+   if planet.cur() == planet.get("Ulios") then
       --introing one of the characters in the next chapter.
       tk.msg(_("The Egress"),_([[You land on %s and open the bay doors. You are still amazed at how many people Draga had helped get into the cargo hold. As you help everyone out of your ship, a man walks up to you. "Hello, my name is Jimmy. Thank you for helping all of these people. I am grateful. I've heard about you from Draga, and I will be forever in your debt. Here, please, take this." He presses a credit chip in your hand just as you finish helping everyone out of your ship. It seems it was a job well done.]]):format( targetasset:name() ))
       player.pay(reward)

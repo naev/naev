@@ -65,8 +65,7 @@ function accept ()
       _("Find out who the mole is"),
    } )
 
-   local minpnt = planet.getS("Minerva Station")
-   sysmarker = misn.markerAdd( minpnt )
+   sysmarker = misn.markerAdd( planet.get("Minerva Station") )
 
    minerva.log.pirate(_("You accepted another job from the shady individual deal with a mole at Minerva Station.") )
 

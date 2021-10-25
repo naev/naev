@@ -22,9 +22,9 @@ local vntk = require "vntk"
 
 local missys = system.get( "Delta Polaris" )
 local destsys = system.get( "Jade" )
-local start_planet = planet.getS( "Bolero" )
+local start_planet = planet.get( "Bolero" )
 local start_planet_r = 200
-local dest_planet = planet.getS( "Benteen" )
+local dest_planet = planet.get( "Benteen" )
 local dest_planet_r = 200
 
 function create ()

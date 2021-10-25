@@ -74,8 +74,7 @@ function accept ()
    misn.osdCreate( _("Freeing Kex"),
       { string.format(_("Go to %s in the %s system to find Jie de Luca"), _(targetplanet), _(targetsys) ),
       _("Return to Kex at Minerva Station") } )
-   local tpnt = planet.getS(targetplanet)
-   misn_marker = misn.markerAdd( tpnt )
+   misn_marker = misn.markerAdd( planet.get(targetplanet) )
 
    hook.land("generate_npc")
    hook.load("load_game")
