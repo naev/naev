@@ -194,6 +194,21 @@ void map_open (void)
       StarSystem *sys = &systems_stack[i];
       sys_rmFlag( sys, SYSTEM_DISCOVERED );
 
+      /* Check to see if system has landable assets. */
+      sys_rmFlag( sys, SYSTEM_HAS_LANDABLE );
+      for (int j=0; j<array_size(sys->planets); j++) {
+         Planet *p = sys->planets[j];
+         if (!planet_isKnown(p))
+            continue;
+         if (!planet_hasService(p, PLANET_SERVICE_LAND) || !planet_hasService(p, PLANET_SERVICE_INHABITED))
+            continue;
+         planet_updateLand( p );
+         if (p->can_land) {
+            sys_setFlag( sys, SYSTEM_HAS_LANDABLE );
+            break;
+         }
+      }
+
       int known = 1;
       for (int j=0; j<array_size(sys->jumps); j++) {
          JumpPoint *jp = &sys->jumps[j];
@@ -1160,7 +1175,7 @@ void map_renderSystems( double bx, double by, double x, double y,
       ty = y + sys->pos.y*map_zoom;
 
       /* Skip if out of bounds. */
-      if (!rectOverlap(tx - r, ty - r, r, r, bx, by, w, h))
+      if (!rectOverlap(tx-r, ty-r, 2.*r, 2.*r, bx, by, w, h))
          continue;
 
       /* Draw an outer ring. */
@@ -1181,8 +1196,14 @@ void map_renderSystems( double bx, double by, double x, double y,
             col = &cInert;
          else if (editor)
             col = &cNeutral;
+         else if (areEnemies(FACTION_PLAYER,sys->faction))
+            col = &cHostile;
+         else if (!sys_isFlag(sys, SYSTEM_HAS_LANDABLE))
+            col = &cRestricted;
+         else if (areAllies(FACTION_PLAYER,sys->faction))
+            col = &cFriend;
          else
-            col = faction_getColour( sys->faction );
+            col = &cNeutral;
 
          if (editor) {
             /* Radius slightly shorter. */
