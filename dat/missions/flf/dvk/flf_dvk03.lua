@@ -95,8 +95,8 @@ function enter ()
 
          local ro, ms, s, nf
 
-         ro, s = planet.get( "Raelid Outpost" )
-         ms, s = planet.get( "Marius Station" )
+         ro, s = planet.getS( "Raelid Outpost" )
+         ms, s = planet.getS( "Marius Station" )
 
          -- Spawn Raelid Outpost ship
          dv_base = pilot.add( "Raelid Outpost", "Dvaered", ro:pos() , nil, {ai="dvaered_norun"} )

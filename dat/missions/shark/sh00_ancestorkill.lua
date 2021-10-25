@@ -6,7 +6,7 @@
  </flags>
  <avail>
   <priority>3</priority>
-  <cond>planet.cur() ~= planet.get("Ulios") and player.numOutfit("Mercenary License") &gt; 0</cond>
+  <cond>planet.cur() ~= planet.getS("Ulios") and player.numOutfit("Mercenary License") &gt; 0</cond>
   <chance>5</chance>
   <location>Bar</location>
   <faction>Dvaered</faction>
@@ -47,7 +47,7 @@ function create ()
    local planame = "Ulios"
    local bsyname = "Toaxis"
    missys = system.get(sysname)
-   mispla = planet.get(planame)
+   mispla = planet.getS(planame)
    battlesys = system.get(bsyname)
 
    if not misn.claim(battlesys) then

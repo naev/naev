@@ -61,10 +61,10 @@ local commMass = 4
 local fzlk = faction.get("Za'lek")
 
 function create()
-   hampla, hamsys = planet.get("Vilati Vilata")
-   reppla, repsys = planet.get("Dvaer Prime")
-   pripla, prisys = planet.get("Jorla")
-   zlkpla, zlksys = planet.get("House Za'lek Central Station")
+   hampla, hamsys = planet.getS("Vilati Vilata")
+   reppla, repsys = planet.getS("Dvaer Prime")
+   pripla, prisys = planet.getS("Jorla")
+   zlkpla, zlksys = planet.getS("House Za'lek Central Station")
 
    intsys = system.get("Poltergeist")
 

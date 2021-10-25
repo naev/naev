@@ -40,7 +40,7 @@
 local car = require "common.cargo"
 local fmt = require "format"
 
-local dest_planet = planet.get("Mutris")
+local dest_planet = planet.getS("Mutris")
 local dest_sys = system.get("Aesir")
 
 -- passenger rank

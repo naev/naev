@@ -83,9 +83,9 @@ occupations = { _("caterer"),
                 _("torturer"), }
 
 function create()
-   destpla, destsys = planet.get("Dvaer Prime")
-   targpla = planet.get("Dvaered High Command")
-   haltpla = planet.get("Laarss")
+   destpla, destsys = planet.getS("Dvaer Prime")
+   targpla = planet.getS("Dvaered High Command")
+   haltpla = planet.getS("Laarss")
 
    if planet.cur() == destpla then
       misn.finish(false)

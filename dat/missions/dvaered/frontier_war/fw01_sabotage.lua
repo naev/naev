@@ -46,10 +46,10 @@ local bombMass = 100
 
 
 function create()
-   hampla, hamsys     = planet.get("Stutee") --Morgan Station
-   sabotpla, sabotsys = planet.get(fw.wlrd_planet)
-   duelpla, duelsys   = planet.get("Dvaer Prime")
-   intpla, intsys     = planet.get("Timu")
+   hampla, hamsys     = planet.getS("Stutee") --Morgan Station
+   sabotpla, sabotsys = planet.getS(fw.wlrd_planet)
+   duelpla, duelsys   = planet.getS("Dvaer Prime")
+   intpla, intsys     = planet.getS("Timu")
 
    if planet.cur() == hampla then
       misn.finish(false)

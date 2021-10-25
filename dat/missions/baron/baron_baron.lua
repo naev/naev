@@ -26,7 +26,7 @@ local neu = require "common.neutral"
 
 local sys1 = system.get("Darkstone")
 local sys2 = system.get("Ingot")
-local pnt = planet.get("Varia")
+local pnt = planet.getS("Varia")
 
 credits = 40e3
 
@@ -93,23 +93,23 @@ end
 
 function jumpin()
    if talked and system.cur() == sys2 then
-      pinnacle = pilot.add( "Proteron Kahan", "Proteron", planet.get("Ulios"):pos() + vec2.new(-400,-400), nil, {ai="trader"} )
+      pinnacle = pilot.add( "Proteron Kahan", "Proteron", planet.getS("Ulios"):pos() + vec2.new(-400,-400), nil, {ai="trader"} )
       pinnacle:setFaction("Independent")
       pinnacle:rename(_("Pinnacle"))
       pinnacle:setInvincible(true)
       pinnacle:control()
       pinnacle:setHilight(true)
-      pinnacle:moveto(planet.get("Ulios"):pos() + vec2.new( 400, -400), false)
+      pinnacle:moveto(planet.getS("Ulios"):pos() + vec2.new( 400, -400), false)
       idlehook = hook.pilot(pinnacle, "idle", "idle")
       hook.pilot(pinnacle, "hail", "hail")
    end
 end
 
 function idle()
-   pinnacle:moveto(planet.get("Ulios"):pos() + vec2.new( 400,  400), false)
-   pinnacle:moveto(planet.get("Ulios"):pos() + vec2.new(-400,  400), false)
-   pinnacle:moveto(planet.get("Ulios"):pos() + vec2.new(-400, -400), false)
-   pinnacle:moveto(planet.get("Ulios"):pos() + vec2.new( 400, -400), false)
+   pinnacle:moveto(planet.getS("Ulios"):pos() + vec2.new( 400,  400), false)
+   pinnacle:moveto(planet.getS("Ulios"):pos() + vec2.new(-400,  400), false)
+   pinnacle:moveto(planet.getS("Ulios"):pos() + vec2.new(-400, -400), false)
+   pinnacle:moveto(planet.getS("Ulios"):pos() + vec2.new( 400, -400), false)
 end
 
 function hail()

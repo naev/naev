@@ -68,11 +68,11 @@ function accept()
     t_sys[7] = system.get("Daravon")
     t_sys[8] = system.get("Pultatis")
     t_planet = {}
-    t_planet[1] = planet.get("Qoman")
-    t_planet[5] = planet.get(station)
+    t_planet[1] = planet.getS("Qoman")
+    t_planet[5] = planet.getS(station)
     t_planet[6] = t_planet[1]
-    t_planet[7] = planet.get("Vilati Vilata")
-    t_planet[8] = planet.get(homeworld)
+    t_planet[7] = planet.getS("Vilati Vilata")
+    t_planet[8] = planet.getS(homeworld)
 
     tk.msg(_("Bar"), string.format(_([["While the data recorded by Robert is of good quality he seems to have completely forgotten that we need reference data of similarly dense nebulae. We have already installed his sensors on a transport ship. The nearby PSO nebula should be a good candidate but there are the pirate systems in between. Also the target systems are controled by the Dvaered. Hard to say whether the Dvaered or the pirates are more dangerous. So this is why we need an escort.
     We will travel through %s, %s, and %s. Just passing through the systems should be sufficient. Also, I want to visit the %s station before returning back to %s. You have to make sure no one shoots us down during our expedition."]]), t_sys[2]:name(), t_sys[3]:name(), t_sys[4]:name(), _(station), _(homeworld)))
@@ -161,12 +161,12 @@ function land()
     if not exited then
         tk.msg(_("You abandoned your mission!"), _("You have landed, abandoning your mission to escort the transport ship. You failed science miserably!"))
         misn.finish(false)
-    elseif planet.cur() == planet.get(station) and not station_visited then
+    elseif planet.cur() == planet.getS(station) and not station_visited then
         tk.msg(_("A short break"), string.format(_([[Once you are done with the refuel operations, you meet Dr. Mensing on her way back to the transport ship.
     "I just met up with another 'scientist' working on this station. The purpose of this station is to collect data about the PSO nebula, but their scans are absolute garbage. Apparently the station is being run by an independent university. They couldn't possible keep up with the Za'lek standards in terms of proper scientific methods."
     She is visibly upset about the apparent lack of dedication to science. "Let's head back to %s. Our own measurements are completed by now."]]), _(homeworld)))
         station_visited = true
-    elseif planet.cur() == planet.get(homeworld) then
+    elseif planet.cur() == planet.getS(homeworld) then
         tk.msg(_("Mission accomplished"), string.format(_([[After leaving the ship you meet up with Dr. Mensing who hands you over a chip worth %s and thanks you for your help.
     "We'll be able to return to Jorla safely from here on. You did science a great favor today. I'm sure the data we collected will help us to understand the cause for the Sol nebula's volatility."]]), fmt.credits(credits)))
         player.pay(credits)
@@ -187,11 +187,11 @@ function continueToDest(pilot)
     t_sys[7] = system.get("Daravon")
     t_sys[8] = system.get("Pultatis")
     t_planet = {}
-    t_planet[1] = planet.get("Qoman")
-    t_planet[5] = planet.get(station)
+    t_planet[1] = planet.getS("Qoman")
+    t_planet[5] = planet.getS(station)
     t_planet[6] = t_planet[1]
-    t_planet[7] = planet.get("Vilati Vilata")
-    t_planet[8] = planet.get(homeworld)
+    t_planet[7] = planet.getS("Vilati Vilata")
+    t_planet[8] = planet.getS(homeworld)
     if pilot ~= nil and pilot:exists() then
         pilot:control(true)
         pilot:setNoJump(false)

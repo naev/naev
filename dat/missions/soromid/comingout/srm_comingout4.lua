@@ -26,8 +26,8 @@ local srm = require "common.soromid"
 
 
 function create ()
-   misplanet, missys = planet.get( "Durea" )
-   misplanet2, missys2 = planet.get( "Crow" )
+   misplanet, missys = planet.getS( "Durea" )
+   misplanet2, missys2 = planet.getS( "Crow" )
    if not misn.claim( missys ) then misn.finish( false ) end
 
    started = false

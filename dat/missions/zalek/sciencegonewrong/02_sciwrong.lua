@@ -37,7 +37,7 @@ fled = false
 jumps = 0
 t_sys[1] = system.get("Xavier")
 t_pla[1] = t_sys[1]:planets()[1]
---t_pla[2], t_sys[2] = planet.get("Gastan")
+--t_pla[2], t_sys[2] = planet.getS("Gastan")
 
 function create ()
    -- Have to be at center of operations.

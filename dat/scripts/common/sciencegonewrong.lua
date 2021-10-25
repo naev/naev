@@ -11,9 +11,9 @@ function sciwrong.getCenterOperations()
    local pnt = var.peek( sciwrong.center_operations )
    if not pnt then
       -- Probably old save, just set to Gastan like before
-      return planet.get("Gastan")
+      return planet.getS("Gastan")
    end
-   return planet.get( pnt )
+   return planet.getS( pnt )
 end
 
 return sciwrong

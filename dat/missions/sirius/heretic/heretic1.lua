@@ -31,7 +31,7 @@ function create()
    nasin_rep = faction.playerStanding("Nasin")
    misn_tracker = var.peek("heretic_misn_tracker") --we use this at the end.
    reward = math.floor((100e3+(math.random(5,8)*2e3)*(nasin_rep^1.315))*.01+.5)/.01 --using the actual reward algorithm now.
-   targetasset, targetsystem = planet.get("The Wringer")
+   targetasset, targetsystem = planet.getS("The Wringer")
    --set the mission stuff
    misn.setTitle(_("The Return"))
    misn.setReward(fmt.credits(reward))

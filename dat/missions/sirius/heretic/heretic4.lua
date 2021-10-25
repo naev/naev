@@ -39,7 +39,7 @@ function create()
    misn_tracker = var.peek("heretic_misn_tracker")
    reward = math.floor((100e3+(math.random(5,8)*2e3)*(nasin_rep^1.315))*.01+.5)/.01
    homeasset = planet.cur()
-   targetasset, targetsys = planet.get("Ulios") --this will be the new HQ for the Nasin in the next part.
+   targetasset, targetsys = planet.getS("Ulios") --this will be the new HQ for the Nasin in the next part.
    --set some mission stuff
    misn.setNPC(_("Draga"), "sirius/unique/draga.webp", _("Draga is running around, helping the few Nasin in the bar to get stuff together and get out."))
 end
@@ -130,7 +130,7 @@ function attacked() --several systems where the Sirius have 'strategically place
 end
 
 function misn_over() --aren't you glad thats over?
-   if planet.cur() == planet.get("Ulios") then
+   if planet.cur() == planet.getS("Ulios") then
       --introing one of the characters in the next chapter.
       tk.msg(_("The Egress"),_([[You land on %s and open the bay doors. You are still amazed at how many people Draga had helped get into the cargo hold. As you help everyone out of your ship, a man walks up to you. "Hello, my name is Jimmy. Thank you for helping all of these people. I am grateful. I've heard about you from Draga, and I will be forever in your debt. Here, please, take this." He presses a credit chip in your hand just as you finish helping everyone out of your ship. It seems it was a job well done.]]):format( targetasset:name() ))
       player.pay(reward)

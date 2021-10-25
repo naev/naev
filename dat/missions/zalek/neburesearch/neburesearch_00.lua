@@ -39,7 +39,7 @@ t_sys[2] = system.get("Iris")
 function create()
     -- mission variables
     misn_stage = 0
-    homeworld, homeworld_sys = planet.get("Jorla")
+    homeworld, homeworld_sys = planet.getS("Jorla")
     credits = 300e3
 
     -- Spaceport bar stuff

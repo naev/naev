@@ -30,9 +30,9 @@ osd_msg[0] = _("Look for Jorek on %s in the %s system") -- Note: indexing at 0 b
 function create()
    var.push("darkshadow_active", true)
 
-   seirplanet, seirsys = planet.get("Edergast")
-   jorekplanet1, joreksys1 = planet.get("Manis")
-   jorekplanet2, joreksys2 = planet.get("The Wringer")
+   seirplanet, seirsys = planet.getS("Edergast")
+   jorekplanet1, joreksys1 = planet.getS("Manis")
+   jorekplanet2, joreksys2 = planet.getS("The Wringer")
    ambushsys = system.get("Herakin")
    safesys = system.get("Eiderdown")
 

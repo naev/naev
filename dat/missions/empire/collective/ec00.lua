@@ -46,7 +46,7 @@ text[4] = _([[After landing, you head to the Empire military headquarters and fi
 function create ()
    misn_nearby = system.get("Acheron")
    misn_target = system.get("Merisi")
-   misn_base,misn_base_sys = planet.get("Omega Station")
+   misn_base,misn_base_sys = planet.getS("Omega Station")
 
     missys = {misn_target}
     if not misn.claim(missys) then

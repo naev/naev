@@ -35,8 +35,8 @@ function create ()
    pplname = "Darkshed"
    psyname = "Alteris"
    paysys = system.get(psyname)
-   paypla = planet.get(pplname)
-   nextpla, nextsys = planet.get("Curie") -- This should be the same as the planet used in sh04_meeting!
+   paypla = planet.getS(pplname)
+   nextpla, nextsys = planet.getS("Curie") -- This should be the same as the planet used in sh04_meeting!
 
    if not misn.claim(missys) then
       misn.finish(false)

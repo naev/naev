@@ -39,7 +39,7 @@ local shark = require "common.shark"
 
 function create ()
    --Change here to change the planets and the systems
-   paypla, paysys = planet.get("Darkshed")
+   paypla, paysys = planet.getS("Darkshed")
    nextsys = system.get("Arandon") -- This should be the same as the system used in sh06!
    misn.setNPC(_("Arnold Smith"), "neutral/unique/arnoldsmith.webp", _([[It looks like he has yet another job for you.]]))
 end

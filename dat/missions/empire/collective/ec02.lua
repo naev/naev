@@ -36,8 +36,8 @@ local fmt = require "format"
 misn_reward = fmt.credits(700e3)
 
 function create ()
-   misn_base, misn_base_sys = planet.get("Omega Station")
-   misn_target, misn_target_sys = planet.get("Eiroik")
+   misn_base, misn_base_sys = planet.getS("Omega Station")
+   misn_target, misn_target_sys = planet.getS("Eiroik")
 
     local missys = {misn_target}
     if not misn.claim(missys) then

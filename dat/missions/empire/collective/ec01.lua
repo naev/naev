@@ -53,7 +53,7 @@ function accept ()
 
    misn_stage = 0
    systems_visited = 0 -- Number of Collective systems visited
-   misn_base,misn_base_sys = planet.get("Omega Station")
+   misn_base,misn_base_sys = planet.getS("Omega Station")
    targsys1 = system.get("C-43")
    targsys2 = system.get("C-59")
 

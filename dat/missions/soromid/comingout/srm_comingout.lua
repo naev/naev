@@ -50,7 +50,7 @@ reminders[8] = _("You talk to Chelsea a little about some interesting experience
 reminders[9] = _("You have a brief conversation with Chelsea about interesting sights you both have seen in your travels.")
 
 function create ()
-   misplanet, missys = planet.get( "Durea" )
+   misplanet, missys = planet.getS( "Durea" )
    -- Note: This mission does not make system claims
    if system.cur():jumpDist( missys, true ) < #chatter * 3 / 2 then
       misn.finish( false )

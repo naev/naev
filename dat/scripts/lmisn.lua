@@ -193,7 +193,7 @@ function lmisn.getRandomPlanetAtDistance( sys, min, max, fct, samefct, filter, d
    if #candidates == 0 then
       return nil, nil
    end
-   return planet.get( candidates[ rnd.rnd(1,#candidates) ] )
+   return planet.getS( candidates[ rnd.rnd(1,#candidates) ] )
 end
 
 --[[

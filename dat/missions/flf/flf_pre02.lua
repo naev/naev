@@ -68,7 +68,7 @@ function accept ()
       marker = misn.markerAdd( missys, "low" )
       misn.setReward( _("A chance to make friends with the FLF.") )
 
-      DVplanet, DVsys = planet.get("Raelid Outpost")
+      DVplanet, DVsys = planet.getS("Raelid Outpost")
 
       reinforcements_arrived = false
       dv_ships_left = 0

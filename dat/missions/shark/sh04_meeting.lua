@@ -34,11 +34,11 @@ local shark = require "common.shark"
 
 function create ()
    --Change here to change the planets and the systems
-   mispla, missys = planet.get("Curie")
+   mispla, missys = planet.getS("Curie")
    pplname = "Darkshed"
    psyname = "Alteris"
    paysys = system.get(psyname)
-   paypla = planet.get(pplname)
+   paypla = planet.getS(pplname)
 
    if not misn.claim(missys) then
       misn.finish(false)

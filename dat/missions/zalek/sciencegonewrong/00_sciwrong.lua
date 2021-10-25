@@ -34,10 +34,10 @@ local sciwrong = require "common.sciencegonewrong"
 -- set mission variables
 t_sys = { __save=true }
 t_pla = { __save=true }
-t_pla[1], t_sys[1] = planet.get("Vilati Vilata")
-t_pla[2], t_sys[2] = planet.get("Waterhole's Moon")
+t_pla[1], t_sys[1] = planet.getS("Vilati Vilata")
+t_pla[2], t_sys[2] = planet.getS("Waterhole's Moon")
 -- t_x[3] is empty bc it depends on where the mission will start finally. (To be set in mission.xml and then adjusted in the following campaign missions)
---t_pla[3], t_sys[3] = planet.get("Gastan")
+--t_pla[3], t_sys[3] = planet.getS("Gastan")
 pho_mny = 50e3
 reward = 1e6
 

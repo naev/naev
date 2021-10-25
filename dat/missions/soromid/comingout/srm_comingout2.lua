@@ -27,7 +27,7 @@ local srm = require "common.soromid"
 
 
 function create ()
-   misplanet, missys = planet.get( "Crow" )
+   misplanet, missys = planet.getS( "Crow" )
    -- Note: This mission does not make system claims
 
    credits = 50e3

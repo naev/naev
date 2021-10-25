@@ -54,7 +54,7 @@ function create ()
    local dist = nil
    local p, sys
    for i, j in ipairs( dest_planets ) do
-      p, sys = planet.get( j )
+      p, sys = planet.getS( j )
       if dist == nil or system.cur():jumpDist(sys) < dist then
          dist = system.cur():jumpDist(sys)
       end
@@ -69,7 +69,7 @@ function create ()
 
    for i, j in ipairs( dest_planets ) do
       local p, sys
-      p, sys = planet.get( j )
+      p, sys = planet.getS( j )
       misn.markerAdd( p, "computer" )
    end
 
@@ -109,7 +109,7 @@ function land ()
    landed = true
 
    for i, j in ipairs( dest_planets ) do
-      if planet.get(j) == planet.cur() then
+      if planet.getS(j) == planet.cur() then
          local txt = finish_text[ rnd.rnd( 1, #finish_text ) ]
          vntk.msg( "", txt )
          pir.reputationNormalMission(rnd.rnd(2,3))

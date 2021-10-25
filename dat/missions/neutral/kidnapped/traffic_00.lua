@@ -30,9 +30,9 @@ local sys1 = system.get("Arcturus")
 local sys2 = system.get("Goddard")
 local sys3 = system.get("Ogat")
 local sys4 = system.get("Delta Pavonis")
-local pnt1 = planet.get("Praxis")
-local pnt2 = planet.get("Seanich")
-local pnthome = planet.get("Brooks")
+local pnt1 = planet.getS("Praxis")
+local pnt2 = planet.getS("Seanich")
+local pnthome = planet.getS("Brooks")
 
 --NPCs
 local pir1_disc = _([[The two pirates seem to be talking rather quietly, but loud enough for you to overhear if you are careful.]])
@@ -134,7 +134,7 @@ function enter()
    local fkidnappers = faction.dynAdd( "Pirate", "Kidnappers", _("Kidnappers"), { clear_allies=true, clear_enemies=true, ai="trader" } )
 
   if eavesdropped1 and eavesdropped2 and system.cur() == sys2 and (not rescued) then
-    kidnappers = pilot.add( "Koala", fkidnappers, planet.get("Zhiru"):pos() + vec2.new(-800,-800), _("Trader Koala") )
+    kidnappers = pilot.add( "Koala", fkidnappers, planet.getS("Zhiru"):pos() + vec2.new(-800,-800), _("Trader Koala") )
     kidnappers:rename(_("Progeny"))
     kidnappers:setHilight(true)
     kidnappers:setVisible(true)
@@ -150,10 +150,10 @@ function enter()
 end
 
 function idle()
-  kidnappers:moveto(planet.get("Zhiru"):pos() + vec2.new( 800,  800), false)
-  kidnappers:moveto(planet.get("Zhiru"):pos() + vec2.new(-800,  800), false)
-  kidnappers:moveto(planet.get("Zhiru"):pos() + vec2.new(-800, -800), false)
-  kidnappers:moveto(planet.get("Zhiru"):pos() + vec2.new( 800, -800), false)
+  kidnappers:moveto(planet.getS("Zhiru"):pos() + vec2.new( 800,  800), false)
+  kidnappers:moveto(planet.getS("Zhiru"):pos() + vec2.new(-800,  800), false)
+  kidnappers:moveto(planet.getS("Zhiru"):pos() + vec2.new(-800, -800), false)
+  kidnappers:moveto(planet.getS("Zhiru"):pos() + vec2.new( 800, -800), false)
 end
 
 function attackedkidnappers()

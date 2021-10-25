@@ -6,7 +6,7 @@
  </flags>
  <avail>
   <priority>3</priority>
-  <cond>planet.get("Violin Station"):system():jumpDist() &lt; 4</cond>
+  <cond>planet.getS("Violin Station"):system():jumpDist() &lt; 4</cond>
   <done>Sirian Bounty</done>
   <chance>10</chance>
   <location>Bar</location>
@@ -79,7 +79,7 @@ function accept()
    route["__save"] = true
    stage = 1
 
-   destplanet, destsys = planet.get(route[stage])
+   destplanet, destsys = planet.getS(route[stage])
    nextsys = system.cur() -- This variable holds the system the player is supposed to jump to NEXT. This is the current system when taking off.
    origin = planet.cur() -- Determines where Joanne spawns from. Can be a planet or system.
    joannejumped = true -- Determines if Joanne has jumped. Needs to be set when landed.
@@ -103,7 +103,7 @@ end
 function land()
    if planet.cur() == destplanet and joannelanded and stage < 4 then
       stage = stage + 1
-      destplanet, destsys = planet.get(route[stage])
+      destplanet, destsys = planet.getS(route[stage])
       misn.markerMove( mark, destsys )
       origin = planet.cur()
       player.refuel(200)
@@ -114,7 +114,7 @@ function land()
       tk.msg(_("Mission accomplished"), text4:format(player.name()))
       stage = stage + 1
       origin = planet.cur()
-      destplanet, destsys = planet.get(route[stage])
+      destplanet, destsys = planet.getS(route[stage])
       misn.markerMove( mark, destsys )
       joannejumped = true -- She "jumped" into the current system by taking off.
       misn.osdCreate(_("Harja's Vengeance"), {_("Land on Sroolu to get your reward")})
@@ -122,7 +122,7 @@ function land()
    elseif stage < 4 then
       tk.msg(_("You didn't follow Joanne!"), _("You landed on a planet Joanne didn't land on. Your mission is a failure!"))
       misn.finish(false)
-   elseif stage == 5 and planet.cur() == planet.get("Sroolu") then
+   elseif stage == 5 and planet.cur() == planet.getS("Sroolu") then
       misn.markerRm(mark)
       tk.msg(_("One damsel, safe and sound"), _([[After you both land your ships, you meet Joanne in the spaceport bar.
     "Whew! That was definitely the most exciting round I've done to date! Thank you %s, I probably owe you my life. You more than deserved your payment, I've already arranged for the transfer." Joanne hesitates, but then apparently makes up her mind. "In fact, would you sit down for a while? I think you deserve to know what this whole business with Harja is all about. And to be honest, I kind of want to talk to someone about this, and seeing how you're involved already anyway..."

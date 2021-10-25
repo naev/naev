@@ -47,7 +47,7 @@ function create ()
    sysname = "Dvaer"
    planame = "Dvaer Prime"
    missys = system.get(sysname)
-   mispla = planet.get(planame)
+   mispla = planet.getS(planame)
 
    if not misn.claim ( missys ) then
       misn.finish(false)

@@ -47,7 +47,7 @@ function create ()
    pplname = "Darkshed"
    psyname = "Alteris"
    paysys = system.get(psyname)
-   paypla = planet.get(pplname)
+   paypla = planet.getS(pplname)
 
    misn.setNPC(_("Arnold Smith"), "neutral/unique/arnoldsmith.webp", _([[Arnold Smith is here. Perhaps he might have another job for you.]]))
 end

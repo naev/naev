@@ -106,12 +106,12 @@ end
 
 
 function generate_npc ()
-   if planet.cur() == planet.get("Cerberus") then
+   if planet.cur() == planet.getS("Cerberus") then
       misn.npcAdd( "approach_oldman", _("Old Man"), oldman_portrait, _("You see a nonchalant old man sipping on his drink with a carefree aura.") )
       if misn_state==3 or misn_state==4 or bribed_scavengers==true then
          misn.npcAdd( "approach_scavengers", _("Scavengers"), scav_portrait, _("You see a pair of dirty looking fellows talking loudly among themselves.") )
       end
-   elseif planet.cur() == planet.get("Minerva Station") then
+   elseif planet.cur() == planet.getS("Minerva Station") then
       misn.npcAdd( "approach_maikki", minerva.maikki.name, minerva.maikki.portrait, minerva.maikki.description )
    end
 end
@@ -924,7 +924,7 @@ function board_wreck ()
    -- Move target back to origin
    misn.osdCreate( _("Finding Maikki's Father"),
          { string.format(_("Return to %s in the %s system"), minerva.maikki.name, _(mainsys)) } )
-   misn.markerMove( misn_marker, planet.get("Minerva Station") )
+   misn.markerMove( misn_marker, planet.getS("Minerva Station") )
    misn_state=5
 
    -- Clear scavengers if exist

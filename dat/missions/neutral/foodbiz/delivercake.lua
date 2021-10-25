@@ -28,7 +28,7 @@ finish = _([[As Michal takes the recipes and cake off your hands, you can't help
 
 function create () --No system shall be claimed by mission
    startworld, startworld_sys = planet.cur()
-   targetworld, targetworld_sys = planet.get( "Zeo" )
+   targetworld, targetworld_sys = planet.getS( "Zeo" )
 
    reward = 10e3
 

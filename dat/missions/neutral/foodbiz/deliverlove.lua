@@ -33,7 +33,7 @@ cargodesc = N_("A cargo of feelings inked onto pulped, dried cellulose fibres.")
 
 function create () --No system shall be claimed by mission
    startworld, startworld_sys = planet.cur()
-   targetworld, targetworld_sys = planet.get( "Zhiru" )
+   targetworld, targetworld_sys = planet.getS( "Zhiru" )
 
    reward = 20e3
    started = false

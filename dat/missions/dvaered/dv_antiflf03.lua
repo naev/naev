@@ -84,7 +84,7 @@ end
 
 function accept()
     destsys = system.get(var.peek("flfbase_sysname"))
-    DVplanet, DVsys = planet.get("Stalwart Station")
+    DVplanet, DVsys = planet.getS("Stalwart Station")
 
     if first then
         txt = string.format(_([[The Dvaered liaison spots you, and stands up to shake your hand.

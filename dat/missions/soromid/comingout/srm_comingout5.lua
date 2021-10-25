@@ -46,7 +46,7 @@ misn_title = _("Waste Collector")
 misn_desc = _("Chelsea needs an escort to %s so they can get rid of the garbage now filling their ship.")
 
 function create ()
-   misplanet, missys = planet.get( "The Stinker" )
+   misplanet, missys = planet.getS( "The Stinker" )
    if misplanet == nil or missys == nil or system.cur():jumpDist(missys) > 4 then
       misn.finish( false )
    end

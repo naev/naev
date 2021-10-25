@@ -56,7 +56,7 @@ function create ()
    pplname = "Darkshed"
    psyname = "Alteris"
    paysys = system.get(psyname)
-   paypla = planet.get(pplname)
+   paypla = planet.getS(pplname)
 
    if not misn.claim({gawsys, kersys1, kersys2, godsys}) then
       misn.finish(false)
@@ -118,7 +118,7 @@ end
 
 function land ()
    --Job is done
-   if stage == 1 and planet.cur() == planet.get("Darkshed") then
+   if stage == 1 and planet.cur() == planet.getS("Darkshed") then
       tk.msg(_("That was impressive"), _([[Smith awaits your arrival at the spaceport. When you exit your ship, he smiles and walks up to you. "Good job," he says. "Our deal is secure, thanks to you. Here is your pay and something extra for your hard work. Thank you for all your help!"
     He hands you a credit chip and what appears to be a Nexus Shipyards commemorative sandwich holder.]]))
       pir.reputationNormalMission(rnd.rnd(2,3))

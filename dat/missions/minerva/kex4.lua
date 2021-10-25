@@ -39,7 +39,7 @@ local fmt = require "format"
 misn_state = nil
 
 targetplanet = "Jorlan"
-targetsys = planet.get(targetplanet):system():nameRaw()
+targetsys = planet.getS(targetplanet):system():nameRaw()
 
 misn_desc = string.format(_("You have been assigned with obtaining information from Jie de Luca at %s in the %s system."), _(targetplanet), _(targetsys))
 
@@ -74,7 +74,7 @@ function accept ()
    misn.osdCreate( _("Freeing Kex"),
       { string.format(_("Go to %s in the %s system to find Jie de Luca"), _(targetplanet), _(targetsys) ),
       _("Return to Kex at Minerva Station") } )
-   local tpnt = planet.get(targetplanet)
+   local tpnt = planet.getS(targetplanet)
    misn_marker = misn.markerAdd( tpnt )
 
    hook.land("generate_npc")
@@ -97,10 +97,10 @@ function generate_npc ()
       misn.finish(false)
    end
 
-   if planet.cur() == planet.get("Minerva Station") then
+   if planet.cur() == planet.getS("Minerva Station") then
       misn.npcAdd( "approach_kex", minerva.kex.name, minerva.kex.portrait, minerva.kex.description )
 
-   elseif misn_state==0 and planet.cur() == planet.get(targetplanet) then
+   elseif misn_state==0 and planet.cur() == planet.getS(targetplanet) then
       misn.npcAdd( "approach_jie", _("Jie de Luca"), jie_portrait, _("You see an individual matching the description of Jie de Luca.") )
 
    end
@@ -316,10 +316,10 @@ function enter ()
    end
 
    thug_chance = thug_chance or 0.2
-   if misn_state==0 and system.cur() == system.get(targetsys) and player.pos():dist( planet.get(targetplanet):pos() ) > 1000 then
+   if misn_state==0 and system.cur() == system.get(targetsys) and player.pos():dist( planet.getS(targetplanet):pos() ) > 1000 then
       thug_chance = thug_chance / 0.8
       -- Spawn thugs around planet
-      spawn_thugs( planet.get(targetplanet):pos(), false )
+      spawn_thugs( planet.getS(targetplanet):pos(), false )
       hook.timer( 5, "thug_heartbeat" )
 
    elseif misn_state~=1 and rnd.rnd() < thug_chance then
@@ -336,7 +336,7 @@ function enter ()
       pilot.clear()
       pilot.toggleSpawn(false)
 
-      local pos = planet.get(targetplanet):pos() + vec2.new( 3000, rnd.rnd()*360 )
+      local pos = planet.getS(targetplanet):pos() + vec2.new( 3000, rnd.rnd()*360 )
       jie = pilot.add("Kestrel", "Independent", pos, _("Jie de Luca"), {naked=true, ai="baddie_norun"})
       equipopt.generic( jie, nil, "elite" )
       jie:setHostile(true)

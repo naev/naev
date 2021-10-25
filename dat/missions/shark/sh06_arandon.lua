@@ -35,7 +35,7 @@ function create ()
    pplname = "Darkshed"
    psyname = "Alteris"
    paysys = system.get(psyname)
-   paypla = planet.get(pplname)
+   paypla = planet.getS(pplname)
 
    if not misn.claim(missys) then
       misn.finish(false)

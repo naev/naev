@@ -95,7 +95,7 @@ end
 
 
 function land ()
-   if misn_state==1 and planet.cur() == planet.get("Minerva Station") then
+   if misn_state==1 and planet.cur() == planet.getS("Minerva Station") then
       vn.clear()
       vn.scene()
       local pir = vn.newCharacter( minerva.vn_pirate() )
@@ -206,7 +206,7 @@ function drone_death ()
       misn_state = 1
       misn.osdActive(2)
       pilot.toggleSpawn(true)
-      misn.markerMove( misnmarker, planet.get("Minerva Station") )
+      misn.markerMove( misnmarker, planet.getS("Minerva Station") )
    end
 end
 function drone_attacked( p )

@@ -79,7 +79,7 @@ function takeoff ()
    pilot.toggleSpawn( false )
    pilot.clear()
 
-   local ss, _s = planet.get( "Sindbad" )
+   local ss, _s = planet.getS( "Sindbad" )
 
    flf_base = pilot.add( "Sindbad", "FLF", ss:pos(), nil, {ai="flf_norun"} )
    flf_base:outfitRm( "all" )

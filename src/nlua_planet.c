@@ -36,6 +36,7 @@
 /* Planet metatable methods */
 static int planetL_cur( lua_State *L );
 static int planetL_get( lua_State *L );
+static int planetL_getS( lua_State *L );
 static int planetL_getLandable( lua_State *L );
 static int planetL_getAll( lua_State *L );
 static int planetL_system( lua_State *L );
@@ -67,6 +68,7 @@ static int planetL_tags( lua_State *L );
 static const luaL_Reg planet_methods[] = {
    { "cur", planetL_cur },
    { "get", planetL_get },
+   { "getS", planetL_getS },
    { "getLandable", planetL_getLandable },
    { "getAll", planetL_getAll },
    { "system", planetL_system },
@@ -240,7 +242,7 @@ static int planetL_cur( lua_State *L )
    return 2;
 }
 
-static int planetL_getBackend( lua_State *L, int landable )
+static int planetL_getBackend( lua_State *L, int system, int landable )
 {
    int *factions;
    char **planets;
@@ -364,12 +366,38 @@ static int planetL_getBackend( lua_State *L, int landable )
    }
    lua_pushplanet(L,planet_index( pnt ));
    luasys = system_index( sys );
-   lua_pushsystem(L,luasys);
-   return 2;
+   if (system) {
+      lua_pushsystem(L,luasys);
+      return 2;
+   }
+   return 1;
 }
 
 /**
  * @brief Gets a planet.
+ *
+ * Possible values of param: <br/>
+ *    - bool : Gets a random planet. <br/>
+ *    - faction : Gets random planet belonging to faction matching the number. <br/>
+ *    - string : Gets the planet by raw (untranslated) name. <br/>
+ *    - table : Gets random planet belonging to any of the factions in the
+ *               table. <br/>
+ *
+ * @usage p = planet.get( "Anecu" ) -- Gets planet by name
+ * @usage p = planet.get( faction.get( "Empire" ) ) -- Gets random Empire planet
+ * @usage p = planet.get(true) -- Gets completely random planet
+ * @usage p = planet.get( { faction.get("Empire"), faction.get("Dvaered") } ) -- Random planet belonging to Empire or Dvaered
+ *    @luatparam boolean|Faction|string|table param See description.
+ *    @luatreturn Planet The matching planet.
+ * @luafunc get
+ */
+static int planetL_get( lua_State *L )
+{
+   return planetL_getBackend( L, 0, 0 );
+}
+
+/**
+ * @brief Gets a planet and its corresponding system.
  *
  * Possible values of param: <br/>
  *    - bool : Gets a random planet. <br/>
@@ -385,11 +413,11 @@ static int planetL_getBackend( lua_State *L, int landable )
  *    @luatparam boolean|Faction|string|table param See description.
  *    @luatreturn Planet The matching planet.
  *    @luatreturn System The system it is in.
- * @luafunc get
+ * @luafunc getS
  */
-static int planetL_get( lua_State *L )
+static int planetL_getS( lua_State *L )
 {
-   return planetL_getBackend( L, 0 );
+   return planetL_getBackend( L, 1, 0 );
 }
 
 /**
@@ -405,7 +433,7 @@ static int planetL_get( lua_State *L )
  */
 static int planetL_getLandable( lua_State *L )
 {
-   return planetL_getBackend( L, 1 );
+   return planetL_getBackend( L, 1, 1 );
 }
 
 /**

@@ -36,10 +36,10 @@ end
 function accept()
    baronsys = system.get("Ingot")
 
-   artifactplanetA, artifactsysA = planet.get("Varaati")
-   artifactplanetB, artifactsysB = planet.get("Sinclair")
-   artifactplanetC, artifactsysC = planet.get("Hurada")
-   flintplanet, flintsys = planet.get("Tau Station")
+   artifactplanetA, artifactsysA = planet.getS("Varaati")
+   artifactplanetB, artifactsysB = planet.getS("Sinclair")
+   artifactplanetC, artifactsysC = planet.getS("Hurada")
+   flintplanet, flintsys = planet.getS("Tau Station")
 
    stage = 1
 
@@ -246,12 +246,12 @@ end
 
 function enter()
    if system.cur() == baronsys then
-      pinnacle = pilot.add("Proteron Kahan", "Independent", planet.get("Ulios"):pos() + vec2.new(-400,-400), _("Pinnacle"), {ai="trader"} )
+      pinnacle = pilot.add("Proteron Kahan", "Independent", planet.getS("Ulios"):pos() + vec2.new(-400,-400), _("Pinnacle"), {ai="trader"} )
       pinnacle:setInvincible(true)
       pinnacle:setFriendly()
       pinnacle:control()
       pinnacle:setHilight(true)
-      pinnacle:moveto(planet.get("Ulios"):pos() + vec2.new( 500, -500), false, false)
+      pinnacle:moveto(planet.getS("Ulios"):pos() + vec2.new( 500, -500), false, false)
       idlehook = hook.pilot(pinnacle, "idle", "idle")
       hhail = hook.pilot(pinnacle, "hail", "hail")
    elseif artifactA ~= nil or artifactB ~= nil or artifactC ~= nil or artifactReal ~= nil then
@@ -279,10 +279,10 @@ function enter()
 end
 
 function idle()
-   pinnacle:moveto(planet.get("Ulios"):pos() + vec2.new( 500,  500), false)
-   pinnacle:moveto(planet.get("Ulios"):pos() + vec2.new(-500,  500), false)
-   pinnacle:moveto(planet.get("Ulios"):pos() + vec2.new(-500, -500), false)
-   pinnacle:moveto(planet.get("Ulios"):pos() + vec2.new( 500, -500), false)
+   pinnacle:moveto(planet.getS("Ulios"):pos() + vec2.new( 500,  500), false)
+   pinnacle:moveto(planet.getS("Ulios"):pos() + vec2.new(-500,  500), false)
+   pinnacle:moveto(planet.getS("Ulios"):pos() + vec2.new(-500, -500), false)
+   pinnacle:moveto(planet.getS("Ulios"):pos() + vec2.new( 500, -500), false)
 end
 
 function hail()

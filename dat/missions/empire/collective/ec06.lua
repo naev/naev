@@ -55,7 +55,7 @@ function accept ()
 
    -- Mission data
    misn_stage = 0
-   misn_base, misn_base_sys = planet.get("Omega Station")
+   misn_base, misn_base_sys = planet.getS("Omega Station")
    misn_target_sys1 = system.get("C-59")
    misn_target_sys2 = system.get("C-28")
    misn_final_sys = system.get("C-00")

@@ -75,7 +75,7 @@ function accept ()
       misn_stage = 0
       dronequota = 5 -- The amount of drones the player must whack to win
       droneleft = dronequota
-      misn_base, misn_base_sys = planet.get("Omega Station")
+      misn_base, misn_base_sys = planet.getS("Omega Station")
       misn_target_sys = system.get("C-59")
       misn_marker = misn.markerAdd( misn_target_sys, "low" )
 

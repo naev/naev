@@ -35,7 +35,7 @@ local fmt = require "format"
 misn_state = nil
 
 targetplanet = "Niflheim"
-targetsys = planet.get(targetplanet):system():nameRaw()
+targetsys = planet.getS(targetplanet):system():nameRaw()
 
 misn_desc = string.format(_("You have been entrusted with stealing information from Baroness Eve at %s in the %s system."), _(targetplanet), _(targetsys))
 
@@ -79,10 +79,10 @@ end
 
 
 function generate_npc ()
-   if planet.cur() == planet.get("Minerva Station") then
+   if planet.cur() == planet.getS("Minerva Station") then
       misn.npcAdd( "approach_kex", minerva.kex.name, minerva.kex.portrait, minerva.kex.description )
 
-   elseif planet.cur() == planet.get(targetplanet) and misn_state==0 then
+   elseif planet.cur() == planet.getS(targetplanet) and misn_state==0 then
 
       -- Don't save in case the player gets stuck with a shitty ship and gets massacred over and over
       player.allowSave(false)
@@ -98,7 +98,7 @@ function generate_npc ()
       vn.run()
 
       -- Advance mission and get out of there
-      misn.markerMove( misn_marker, planet.get("Minerva Station") )
+      misn.markerMove( misn_marker, planet.getS("Minerva Station") )
       misn_state = 1
       misn.osdActive(2)
       player.takeoff()
@@ -268,7 +268,7 @@ end
 
 -- Spawn enemies that will eventually bog down the player
 function spawn_enemies ()
-   local pnt = planet.get(targetplanet)
+   local pnt = planet.getS(targetplanet)
    local function addenemy( shipname )
       local p = pilot.add( shipname, fbaroness, pnt )
       p:setHostile(true)

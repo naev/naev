@@ -65,7 +65,7 @@ execution_text1 = _([[You land and walk around the spacedock, in search of your 
    Suddenly, you realize someone is whispering behind you "Hey, %s, you're wrecking my firing line!" You turn around and see nothing but a deformed crate that continues to speak: "It's me, Sergeant Nikolov. In the box. Hide yourself better or you will ruin our mission." You then remember that she is a member of the space infantry commandos, and Hamfresser's second in command. Tam probably sent her to execute the enemy pilot.]])
 
 function create()
-   destpla, destsys = planet.get("Mannannan")
+   destpla, destsys = planet.getS("Mannannan")
    startsys = system.cur()
    d = startsys:jumpDist( destsys )
 

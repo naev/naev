@@ -37,7 +37,7 @@ local fmt = require "format"
 local emp = require "common.empire"
 
 function create ()
-   misn_target, misn_target_sys = planet.get("Eiroik")
+   misn_target, misn_target_sys = planet.getS("Eiroik")
 
    local missys = {misn_target}
    if not misn.claim(missys) then
@@ -52,7 +52,7 @@ function create ()
       credits = 1e6
 
       misn_stage = 0
-      misn_base, misn_base_sys = planet.get("Omega Station")
+      misn_base, misn_base_sys = planet.getS("Omega Station")
       misn_marker = misn.markerAdd( misn_target_sys, "low" )
 
       -- Mission details

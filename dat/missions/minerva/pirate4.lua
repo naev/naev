@@ -65,7 +65,7 @@ function accept ()
       _("Find out who the mole is"),
    } )
 
-   local minpnt = planet.get("Minerva Station")
+   local minpnt = planet.getS("Minerva Station")
    sysmarker = misn.markerAdd( minpnt )
 
    minerva.log.pirate(_("You accepted another job from the shady individual deal with a mole at Minerva Station.") )
@@ -80,7 +80,7 @@ end
 
 function generate_npc ()
    npc_pir = nil
-   if planet.cur() == planet.get("Minerva Station") and misn_state < 1 then
+   if planet.cur() == planet.getS("Minerva Station") and misn_state < 1 then
       npc_pir = misn.npcAdd( "approach_pir", minerva.pirate.name, minerva.pirate.portrait, minerva.pirate.description )
    end
 end

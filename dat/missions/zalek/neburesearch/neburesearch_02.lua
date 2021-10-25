@@ -34,7 +34,7 @@ local request_text = _([["There's actually another thing I've almost forgotten. 
 function create()
     -- mission variables
     credits = 400e3
-    homeworld, homeworld_sys = planet.get("Jorla")
+    homeworld, homeworld_sys = planet.getS("Jorla")
     origin = planet.cur()
     origin_sys = system.cur()
 

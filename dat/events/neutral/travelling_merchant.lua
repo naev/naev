@@ -36,7 +36,7 @@ function create ()
    if not evt.claim( system.cur(), true ) then evt.finish() end
 
    -- Find planet
-   local planets = planet.getAll()
+   local planets = planet.getSAll()
    if planets == nil then
       local rad = system.cur():radius()
       spawn_pos = vec2.newP( rnd.rnd(0,rad*0.5), rnd.rnd(0,360) )
