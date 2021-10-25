@@ -118,7 +118,7 @@ function accept ()
 end
 
 function landed ()
-   -- Can't use planet.getS() here for when the diff is removed
+   -- Can't use planet.get() here for when the diff is removed
    if misn_state==1 and planet.cur():nameRaw() == targetplanet then
       landed_lab()
 
