@@ -16,7 +16,7 @@ mem.atk_kill      = false
 mem.careful       = true
 
 local function join_tables( a, b )
-   for k,v in ipairs(b) do
+   for _k,v in ipairs(b) do
       table.insert( a, v )
    end
    return a
@@ -175,7 +175,7 @@ function hail ()
          fmt.credits(mem.refuel))
 
    -- Deal with bribeability
-   mem.bribe         = mem.bribe_base
+   mem.bribe = mem.bribe_base
    if mem.allowbribe or (mem.natural and mem.bribe_rng < 0.95) then
       mem.bribe_prompt = string.format(bribe_prompt_list[ rnd.rnd(1,#bribe_prompt_list) ], fmt.credits(mem.bribe))
       mem.bribe_prompt_nearby = bribe_prompt_nearby_list[ rnd.rnd(1,#bribe_prompt_nearby_list) ]

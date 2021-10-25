@@ -2,7 +2,7 @@ local lanes = require 'ai.core.misc.lanes'
 require 'ai.core.idle.generic'
 
 -- Keep generic as backup
-idle_generic = idle
+local idle_generic = idle
 
 -- Fuses t2 into t1 avoiding duplicates
 local function __join_tables( t1, t2 )
