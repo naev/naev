@@ -225,17 +225,10 @@ local function _draw( tocanvas )
    _draw_bg( x, y, w, h, vn.textbox_bg, nil, vn.textbox_bg_alpha )
    -- Draw text
    vn.setColor( vn._bufcol, vn.textbox_text_alpha )
-   if not vn._postshader then
-      -- TODO fix this not working during with postshaders. This is caused by
-      -- the fact that if scaling is enabled, the canvas is running at a lower
-      -- resolution (true pixels instead of scaled pixels )
-      graphics.setScissor( x, y+bh, vn.textbox_w, vn.textbox_h-2*bh )
-   end
+   graphics.setScissor( x, y+bh, vn.textbox_w, vn.textbox_h-2*bh )
    y = y + vn._buffer_y
    graphics.printf( vn._buffer, font, x+bw, y+bh, vn.textbox_w-2*bw )
-   if not vn._postshader then
-      graphics.setScissor()
-   end
+   graphics.setScissor()
 
    -- Namebox
    if vn._title ~= nil and utf8.len(vn._title)>0 then
