@@ -145,7 +145,7 @@ function lmisn.getSysAtDistance( sys, min, max, filter, data, hidden )
          local adjsys = s:adjacentSystems( hidden ) -- Get them all
          for k,a in ipairs(adjsys) do
             -- Must not have been explored previously
-            if close[ a:nameRaw() ] == nil then
+            if not a:tags().restricted and close[ a:nameRaw() ] == nil then
                nopen[ #nopen+1 ] = a
                close[ a:nameRaw() ] = a
                dist[  a:nameRaw() ] = i
