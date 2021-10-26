@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2021-10-24 21:37-0400\n"
+"POT-Creation-Date: 2021-10-25 22:34-0400\n"
 "PO-Revision-Date: 2021-08-30 16:38+0000\n"
 "Last-Translator: Anthony Gregory Souza dos Santos "
 "<antonigregorysouza123@gmail.com>\n"
@@ -8855,8 +8855,8 @@ msgstr ""
 #: src/land_outfits.c:409 src/land_outfits.c:626 src/land_shipyard.c:168
 #: src/land_shipyard.c:280 src/land_trade.c:81 src/land_trade.c:83
 #: src/land_trade.c:117 src/load.c:355 src/load.c:402 src/load.c:447
-#: src/map.c:606 src/map.c:646 src/map.c:1690 src/map_find.c:732
-#: src/map_system.c:605 src/map_system.c:639
+#: src/map.c:621 src/map.c:661 src/map.c:1711 src/map_find.c:732
+#: src/map_system.c:606 src/map_system.c:640
 #, c-format
 msgid "None"
 msgstr ""
@@ -13190,7 +13190,7 @@ msgstr ""
 #: dat/faction.xml:161
 msgid ""
 "The Black Lotus Pirate Clan is a fiercely organized pirate clan located "
-"between the Za'lek and Sirius space."
+"between the Za'lek and Sirius space. Organized crime at its finest."
 msgstr ""
 
 #: dat/faction.xml:186
@@ -13204,7 +13204,7 @@ msgstr ""
 #: dat/faction.xml:196
 msgid ""
 "The Dreamer Pirate Clan consists largely of disgruntled pirates from the "
-"Frontier, fed up with both the FLF terrorism and Empire tyranny."
+"Frontier, fed up with both the FLF and Dvaered terrorism, and Empire tyranny."
 msgstr ""
 
 #. hook.pilot( rampant, "idle", "idle" )
@@ -13239,7 +13239,8 @@ msgstr ""
 #: dat/faction.xml:267
 msgid ""
 "Pirate Marauders are the lowest and most vile of pirates. They are extremely "
-"aggressive and will attack most vessels unprovoked."
+"aggressive and will attack most vessels unprovoked. Even the pirate clans "
+"have difficulty in dealing with them."
 msgstr ""
 
 #: dat/faction.xml:289 dat/scripts/common/empire.lua:18
@@ -17151,7 +17152,7 @@ msgid ""
 "the target in a single swipe."
 msgstr ""
 
-#: dat/outfits/utility/asteroid_scanner.xml:2 src/shipstats.c:175
+#: dat/outfits/utility/asteroid_scanner.xml:2 src/shipstats.c:176
 msgid "Asteroid Scanner"
 msgstr ""
 
@@ -18836,7 +18837,7 @@ msgstr ""
 
 #: dat/ships/raelid_outpost.xml:12 dat/ships/raglan_outpost.xml:12
 #: dat/ships/sindbad.xml:12 src/dev_uniedit.c:242 src/dev_uniedit.c:248
-#: src/dev_uniedit.c:1226 src/dev_uniedit.c:1227 src/map.c:542 src/map.c:543
+#: src/dev_uniedit.c:1226 src/dev_uniedit.c:1227 src/map.c:557 src/map.c:558
 #: src/outfit.c:289 src/outfit.c:308
 msgid "N/A"
 msgstr ""
@@ -23660,7 +23661,7 @@ msgstr ""
 #: src/dev_sysedit.c:2027 src/dev_uniedit.c:400 src/dev_uniedit.c:1359
 #: src/dev_uniedit.c:1558 src/dev_uniedit.c:1798 src/info.c:275 src/info.c:354
 #: src/info.c:471 src/info.c:616 src/info.c:808 src/info.c:1027 src/info.c:1122
-#: src/info.c:1466 src/land_outfits.c:168 src/map.c:314 src/map_find.c:1041
+#: src/info.c:1466 src/land_outfits.c:168 src/map.c:329 src/map_find.c:1041
 #: src/map_system.c:202
 msgid "Close"
 msgstr ""
@@ -24025,7 +24026,7 @@ msgid "You found #o%s - %s!"
 msgstr ""
 
 #. Log and message
-#: dat/events/discovery.lua:365 src/map.c:1852
+#: dat/events/discovery.lua:365 src/map.c:1873
 msgid "Discovery"
 msgstr ""
 
@@ -24699,7 +24700,7 @@ msgstr ""
 #: dat/missions/minerva/maikki1.lua:284 dat/missions/minerva/maikki1.lua:526
 #: dat/missions/minerva/maikki1.lua:894 dat/missions/minerva/maikki2.lua:231
 #: dat/missions/minerva/maikki2.lua:495 dat/missions/minerva/maikki2.lua:762
-#: dat/missions/minerva/pirate3.lua:173 dat/missions/minerva/pirate4.lua:128
+#: dat/missions/minerva/pirate3.lua:175 dat/missions/minerva/pirate4.lua:128
 #: dat/missions/minerva/pirate5.lua:146 src/board.c:174
 msgid "Leave"
 msgstr ""
@@ -24888,7 +24889,7 @@ msgstr ""
 #: dat/missions/minerva/kex1.lua:225 dat/missions/minerva/kex2.lua:199
 #: dat/missions/minerva/kex3.lua:232 dat/missions/minerva/kex4.lua:228
 #: dat/missions/minerva/maikki1.lua:359 dat/missions/minerva/maikki2.lua:568
-#: dat/missions/minerva/pirate3.lua:259 dat/missions/minerva/pirate4.lua:136
+#: dat/missions/minerva/pirate3.lua:261 dat/missions/minerva/pirate4.lua:136
 #: dat/missions/minerva/pirate5.lua:176
 msgid "You take your leave."
 msgstr ""
@@ -24927,13 +24928,12 @@ msgid "A battle is about to begin"
 msgstr ""
 
 #: dat/events/dvaered/warlords_battle.lua:85
-#, lua-format
 msgid ""
 "\"Hey, you,\" the captain of the ship says. \"You seem not to know what is "
-"going to happen here: a mighty warlord from %s is going to attack %s. You "
-"shouldn't stay there, unless you are a mercenary. Do you know how it works? "
-"If you attack a warlord's ship, and he loses the battle, the other warlord "
-"will reward you. But if he wins, you will be hunted down.\""
+"going to happen here: a mighty warlord from {sys} is going to attack {pnt}. "
+"You shouldn't stay there, unless you are a mercenary. Do you know how it "
+"works? If you attack a warlord's ship, and he loses the battle, the other "
+"warlord will reward you. But if he wins, you will be hunted down.\""
 msgstr ""
 
 #: dat/events/dvaered/warlords_battle.lua:96
@@ -24941,10 +24941,9 @@ msgid "Here comes your reward"
 msgstr ""
 
 #: dat/events/dvaered/warlords_battle.lua:96
-#, lua-format
 msgid ""
 "\"Hello captain,\" a Dvaered officer says, \"You helped us in this battle. I "
-"am authorized to give you %s as a reward.\""
+"am authorized to give you {credits} as a reward.\""
 msgstr ""
 
 #. mass of the player's victims
@@ -26148,13 +26147,13 @@ msgstr ""
 #.
 #. -- Triggered from station.lua
 #. --
-#: dat/events/minerva/spa_propaganda.lua:32
+#: dat/events/minerva/spa_propaganda.lua:31
 msgid ""
 "You are minding your own business when suddenly a big fanfare plays while "
 "the lights begin strobing."
 msgstr ""
 
-#: dat/events/minerva/spa_propaganda.lua:33
+#: dat/events/minerva/spa_propaganda.lua:32
 msgid ""
 "The terminals all turn on in union and start blasting out their "
 "loudspeakers.\n"
@@ -26162,7 +26161,7 @@ msgid ""
 "Some of the patrons cheer at the terminals."
 msgstr ""
 
-#: dat/events/minerva/spa_propaganda.lua:36
+#: dat/events/minerva/spa_propaganda.lua:35
 msgid ""
 "\"MINERVA STATION IS PROUD TO ANNOUNCE A VERY SPECIAL OPPORTUNITY FOR "
 "EVERYONE. TO CELEBRATE THE FIRST CYCLE SINCE THE INAUGURATION OF THE "
@@ -26171,14 +26170,14 @@ msgid ""
 "EXTENDING PROPERTIES OF THE NEBULA-DUST INFUSED MINERAL WATER.\""
 msgstr ""
 
-#: dat/events/minerva/spa_propaganda.lua:37
+#: dat/events/minerva/spa_propaganda.lua:36
 msgid ""
 "\"IN TRADITIONAL MINERVA FASHION, WE WILL DO A LOTTERY WHERE EVERYONE WHO "
 "BUYS A TICKET WILL BE ENTERED TO SPEND AN UNFORGETTABLE NIGHT AT THE SPA, "
 "THE FAVOURITE OF THE EMPEROR'S THIRD PET IGUANA'S CARETAKER.\""
 msgstr ""
 
-#: dat/events/minerva/spa_propaganda.lua:38
+#: dat/events/minerva/spa_propaganda.lua:37
 msgid ""
 "\"AND IF YOU THINK THAT IS ALREADY EXCITING ENOUGH, PREPARE TO DROP YOUR JAW "
 "IN DISBELIEF! NOT ONLY WILL YOU BE ABLE TO ENJOY THE SPA, WE HAVE A VERY "
@@ -26186,7 +26185,7 @@ msgid ""
 "The terminal pauses for effect."
 msgstr ""
 
-#: dat/events/minerva/spa_propaganda.lua:40
+#: dat/events/minerva/spa_propaganda.lua:39
 msgid ""
 "\"YOU WILL BE ABLE TO SPEND YOUR TIME AT THE SPA WITH OUR ONE AND ONLY "
 "CYBORG CHICKEN, THE BELOVED MASCOT OF MINERVA STATION, AND 3 TIME BACK-TO-"
@@ -26194,28 +26193,28 @@ msgid ""
 "CAST SHOW.\""
 msgstr ""
 
-#: dat/events/minerva/spa_propaganda.lua:41
+#: dat/events/minerva/spa_propaganda.lua:40
 msgid ""
 "\"EVEN IF YOU HAVE BEEN TO THE SPA BEFORE, THIS IS A ONCE IN A LIFETIME "
 "OPPORTUNITY THAT MANY WOULD DIE FOR. I KNOW I WOULD.\""
 msgstr ""
 
-#: dat/events/minerva/spa_propaganda.lua:42
+#: dat/events/minerva/spa_propaganda.lua:41
 msgid ""
 "\"TO PARTICIPATE, ALL YOU HAVE TO DO IS BUY A TICKET AT ANY MINERVA STATION "
 "TERMINAL. PARTICIPATION COST IS #p100 MINERVA TOKENS#0. ONLY ONE TICKET PER "
 "PARTICIPANT. SOME TERMS AND CONDITIONS MAY APPLY.\""
 msgstr ""
 
-#: dat/events/minerva/spa_propaganda.lua:43
+#: dat/events/minerva/spa_propaganda.lua:42
 msgid "\"AND REMEMBER, LIFE IS SHORT, SPEND IT AT MINERVA STATION.\""
 msgstr ""
 
-#: dat/events/minerva/spa_propaganda.lua:44
+#: dat/events/minerva/spa_propaganda.lua:43
 msgid "As if nothing happened, Minerva Station returns to normality."
 msgstr ""
 
-#: dat/events/minerva/spa_propaganda.lua:47
+#: dat/events/minerva/spa_propaganda.lua:46
 msgid ""
 "Minerva station terminals announced an event where you can buy a ticket to "
 "enter a raffle. The winner can go to the spa with cyborg chicken."
@@ -29792,7 +29791,7 @@ msgstr ""
 #: dat/events/neutral/shiplover.lua:292 dat/events/neutral/shiplover.lua:301
 #: dat/events/neutral/shiplover.lua:310 dat/events/neutral/shiplover.lua:318
 #: dat/missions/minerva/pirate1.lua:119 dat/missions/minerva/pirate2.lua:109
-#: dat/missions/minerva/pirate3.lua:155 dat/missions/minerva/pirate4.lua:431
+#: dat/missions/minerva/pirate3.lua:157 dat/missions/minerva/pirate4.lua:431
 #: dat/missions/minerva/pirate5.lua:107
 #, lua-format
 msgid "You have received #g%s#0."
@@ -31879,12 +31878,87 @@ msgstr ""
 
 #. @brief Actually spawns the pilots
 #. Case no pilots
+#. Useful later
 #. When simulating we try to find good points
 #. Stealth should avoid pirates
 #. margin
 #. Spawn near patrol points in the system
 #. Find a suitable spawn point
 #. mark that it was spawned naturally and not as part of a mission
+#. Bar/Icon x, Bar y, Sheen x, Sheen y, light x, light y
+#. Lock
+#. Background
+#. Bar
+#. Heat bar (only if heat is specified)
+#. Heat bar
+#. top bit
+#. Stress (disable) bar (only if stress is specified)
+#. Stress bar
+#. top bit
+#. lighter area
+#. Icon
+#. Frame
+#. Warning light
+#. Frame
+#. third last is y of icon_weapon1, last two are the centers of the two weapon icons
+#. Background
+#. Heat bar, mandatory
+#. top bit
+#. Ammo bar, only if applicable
+#. top bit
+#. Lock-on indicator
+#. Cooldown indicator
+#. Icon
+#. Icon
+#. Cooldown indicator
+#. Weapon-specific Icon
+#. Frame with light
+#. Active light
+#. Frame
+#. Frame
+#. Sheen x and y, Icon x
+#. gfx.renderTex( field_frame, x, y ) --Frame
+#. Values
+#. Top Bar
+#. Main window right
+#. Draw a popup of (theoretically) arbitrary size.
+#. Messages
+#. Main window left
+#. gfx.renderTex( icon_autonav, 246 + mod_x, 52 + mod_y )
+#. bars = { "shield", "armour", "energy", "fuel" }, remember?
+#. Weapon set indicator
+#. Speed Lights
+#. Popup left
+#. Frame
+#. Target Image
+#. Renders the pilot target
+#. Target must exist
+#. Must be detected
+#. Get colour
+#. Render target graphic
+#. Display name
+#. Pilot name
+#. Bar Texts
+#. Warning light
+#. Cargo light
+#. Pilot name
+#. The player automatically accepts this mission.
+#. This is the initial phase of the mission, when it still only shows up in the mission list. No OSD, reward or markers yet.
+#. Initialize the map overlay stuff.
+#: dat/factions/spawn/lib/common.lua:186 dat/gui/brushed.lua:374
+#: dat/gui/brushed.lua:808 dat/gui/brushed.lua:847 dat/gui/legacy.lua:210
+#: dat/gui/legacy.lua:301 dat/gui/legacy.lua:315 dat/gui/slim.lua:374
+#: dat/gui/slim.lua:961 dat/missions/pirate/blackcat.lua:93
+#: dat/missions/shadow/darkshadow.lua:52 dat/missions/shadow/shadowvigil.lua:97
+#: src/gui.c:1523 src/map.c:494 src/map.c:500 src/map.c:506 src/map.c:512
+#: src/map.c:518 src/map.c:524 src/map.c:1672 src/map_overlay.c:221
+#: src/outfit.c:297 src/outfit.c:316 src/outfit.c:918 src/player_autonav.c:95
+#: src/player_autonav.c:222 src/ship.c:205
+msgid "Unknown"
+msgstr ""
+
+#. Make sure they survive the nebula
+#. Add pilot as spawned
 #. @brief adds a pilot to the table
 #. @brief Gets the presence value of a group of pilots
 #. @brief Creation hook.
@@ -31997,80 +32071,6 @@ msgstr ""
 #. @brief Spawning hook
 #. Over limit
 #. Actually spawn the pilots
-#. Make sure they don't die because of nebula
-#. Unknown until known
-#. Bar/Icon x, Bar y, Sheen x, Sheen y, light x, light y
-#. Lock
-#. Background
-#. Bar
-#. Heat bar (only if heat is specified)
-#. Heat bar
-#. top bit
-#. Stress (disable) bar (only if stress is specified)
-#. Stress bar
-#. top bit
-#. lighter area
-#. Icon
-#. Frame
-#. Warning light
-#. Frame
-#. third last is y of icon_weapon1, last two are the centers of the two weapon icons
-#. Background
-#. Heat bar, mandatory
-#. top bit
-#. Ammo bar, only if applicable
-#. top bit
-#. Lock-on indicator
-#. Cooldown indicator
-#. Icon
-#. Icon
-#. Cooldown indicator
-#. Weapon-specific Icon
-#. Frame with light
-#. Active light
-#. Frame
-#. Frame
-#. Sheen x and y, Icon x
-#. gfx.renderTex( field_frame, x, y ) --Frame
-#. Values
-#. Top Bar
-#. Main window right
-#. Draw a popup of (theoretically) arbitrary size.
-#. Messages
-#. Main window left
-#. gfx.renderTex( icon_autonav, 246 + mod_x, 52 + mod_y )
-#. bars = { "shield", "armour", "energy", "fuel" }, remember?
-#. Weapon set indicator
-#. Speed Lights
-#. Popup left
-#. Frame
-#. Target Image
-#. Renders the pilot target
-#. Target must exist
-#. Must be detected
-#. Get colour
-#. Render target graphic
-#. Display name
-#. Pilot name
-#. Bar Texts
-#. Warning light
-#. Cargo light
-#. Pilot name
-#. The player automatically accepts this mission.
-#. This is the initial phase of the mission, when it still only shows up in the mission list. No OSD, reward or markers yet.
-#. Initialize the map overlay stuff.
-#: dat/factions/spawn/thurion.lua:122 dat/gui/brushed.lua:374
-#: dat/gui/brushed.lua:808 dat/gui/brushed.lua:847 dat/gui/legacy.lua:210
-#: dat/gui/legacy.lua:301 dat/gui/legacy.lua:315 dat/gui/slim.lua:374
-#: dat/gui/slim.lua:961 dat/missions/pirate/blackcat.lua:93
-#: dat/missions/shadow/darkshadow.lua:52 dat/missions/shadow/shadowvigil.lua:97
-#: src/gui.c:1523 src/map.c:479 src/map.c:485 src/map.c:491 src/map.c:497
-#: src/map.c:503 src/map.c:509 src/map.c:1651 src/map_overlay.c:221
-#: src/outfit.c:297 src/outfit.c:316 src/outfit.c:918 src/player_autonav.c:95
-#: src/player_autonav.c:222 src/ship.c:205
-msgid "Unknown"
-msgstr ""
-
 #. Calculate spawn data
 #. Case no ship was actually spawned, just create an arbitrary delay
 #: dat/factions/spawn/trader.lua:11 dat/missions/flf/dvk/flf_dvk03.lua:186
@@ -33180,7 +33180,7 @@ msgstr ""
 #. skip back to message if already accepted job
 #: dat/missions/baron/baron_baron.lua:45 dat/missions/minerva/maikki2.lua:789
 #: dat/missions/minerva/pirate1.lua:65 dat/missions/minerva/pirate2.lua:61
-#: dat/missions/minerva/pirate3.lua:129 dat/missions/minerva/pirate4.lua:100
+#: dat/missions/minerva/pirate3.lua:120 dat/missions/minerva/pirate4.lua:100
 #: dat/missions/minerva/pirate5.lua:118
 msgid "Accept the job"
 msgstr ""
@@ -34655,7 +34655,7 @@ msgstr ""
 #: dat/missions/neutral/pirbounty_dead.lua:88
 #: dat/missions/neutral/sightseeing.lua:133
 #: dat/missions/pirate/empbounty_dead.lua:146 dat/missions/pirate/patrol.lua:53
-#: dat/missions/proteron/dissbounty_dead.lua:66
+#: dat/missions/proteron/dissbounty_dead.lua:67
 #: dat/missions/zalek/neburesearch/neburesearch_00.lua:89
 #: dat/missions/zalek/neburesearch/neburesearch_00.lua:90
 msgid "Fly to the {sys} system"
@@ -39885,7 +39885,7 @@ msgstr ""
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo5.lua:76
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo6.lua:79
 #: dat/missions/neutral/crimelord.lua:156
-#: dat/missions/pirate/pir_clan_cargo.lua:90
+#: dat/missions/pirate/pir_clan_cargo.lua:89
 msgid "Mission Accomplished"
 msgstr ""
 
@@ -41094,9 +41094,9 @@ msgstr ""
 #: dat/missions/neutral/drunkard.lua:48 dat/missions/neutral/reynir.lua:66
 #: dat/missions/pirate/hitman.lua:43 dat/missions/pirate/hitman.lua:64
 #: dat/missions/pirate/hitman2.lua:41 dat/missions/pirate/hitman2.lua:64
-#: dat/missions/pirate/pir_clan_cargo.lua:59
+#: dat/missions/pirate/pir_clan_cargo.lua:58
+#: dat/missions/pirate/pir_clan_cargo.lua:74
 #: dat/missions/pirate/pir_clan_cargo.lua:75
-#: dat/missions/pirate/pir_clan_cargo.lua:76
 #: dat/missions/trader/anxiousmerchant.lua:74
 #: dat/missions/zalek/zlk_cargorun.lua:44 src/land.c:959
 msgid "Spaceport Bar"
@@ -41282,7 +41282,7 @@ msgstr ""
 #: dat/missions/empire/longdistanceshipping/es_longdistancecargo.lua:99
 #: dat/missions/neutral/cargo_rush.lua:137
 #: dat/missions/pirate/pir_contraband.lua:168
-#: dat/missions/sirius/srs_ferry.lua:200
+#: dat/missions/sirius/srs_ferry.lua:199
 #: dat/missions/trader/anxiousmerchant.lua:87
 msgid "Too slow"
 msgstr ""
@@ -43818,7 +43818,7 @@ msgstr ""
 #. The player chose to accept this mission by boarding the FLF ship
 #. Flag to check if the player destroyed the FLF sentinels
 #. Flag to keep track if the player has seen the base
-#: dat/missions/flf/flf_pre01.lua:57
+#: dat/missions/flf/flf_pre01.lua:56
 #, lua-format
 msgid ""
 "A haggard-looking man emerges from the airlock. He says, \"Thank goodness "
@@ -43840,36 +43840,36 @@ msgid ""
 msgstr ""
 
 #. Small buffer to ensure it doesn't go negative again right away.
-#: dat/missions/flf/flf_pre01.lua:61 dat/missions/flf/flf_pre01.lua:63
-#: dat/missions/flf/flf_pre01.lua:178
+#: dat/missions/flf/flf_pre01.lua:60 dat/missions/flf/flf_pre01.lua:62
+#: dat/missions/flf/flf_pre01.lua:177
 msgid "Deal with the FLF agent"
 msgstr ""
 
-#: dat/missions/flf/flf_pre01.lua:61 dat/missions/flf/flf_pre01.lua:178
+#: dat/missions/flf/flf_pre01.lua:60 dat/missions/flf/flf_pre01.lua:177
 #, lua-format
 msgid ""
 "Take Gregar, the FLF agent, to the %s system and make contact with the FLF"
 msgstr ""
 
-#: dat/missions/flf/flf_pre01.lua:61 dat/missions/flf/flf_pre01.lua:178
+#: dat/missions/flf/flf_pre01.lua:60 dat/missions/flf/flf_pre01.lua:177
 msgid "Alternatively, turn Gregar in to the nearest Dvaered base"
 msgstr ""
 
-#: dat/missions/flf/flf_pre01.lua:62
+#: dat/missions/flf/flf_pre01.lua:61
 msgid ""
 "You have taken onboard a member of the FLF. You must either take him where "
 "he wants to go, or turn him in to the Dvaered."
 msgstr ""
 
-#: dat/missions/flf/flf_pre01.lua:64
+#: dat/missions/flf/flf_pre01.lua:63
 msgid "A chance to learn more about the FLF"
 msgstr ""
 
-#: dat/missions/flf/flf_pre01.lua:67
+#: dat/missions/flf/flf_pre01.lua:66
 msgid "Gregar"
 msgstr ""
 
-#: dat/missions/flf/flf_pre01.lua:67
+#: dat/missions/flf/flf_pre01.lua:66
 msgid "A rescued FLF pilot."
 msgstr ""
 
@@ -43890,7 +43890,7 @@ msgstr ""
 #. Add FLF ships that are to guide the player to the FLF base (but only after a battle!)
 #. There are two cases we need to check here: landing on the FLF base and landing on a Dvaered world.
 #. Case FLF base
-#: dat/missions/flf/flf_pre01.lua:121
+#: dat/missions/flf/flf_pre01.lua:120
 #, lua-format
 msgid ""
 "You and Gregar step out of your airlock and onto Sindbad. You are greeted by "
@@ -43910,7 +43910,7 @@ msgid ""
 "understand that your discretion is in both our interests.\""
 msgstr ""
 
-#: dat/missions/flf/flf_pre01.lua:123
+#: dat/missions/flf/flf_pre01.lua:122
 msgid ""
 "The moment of tension passes, and the officer leans back in his chair.\n"
 "    \"That threat delivered, I should at least extend my gratitude for "
@@ -43925,7 +43925,7 @@ msgid ""
 "of House Dvaered, perhaps this would be a good place to start..."
 msgstr ""
 
-#: dat/missions/flf/flf_pre01.lua:128
+#: dat/missions/flf/flf_pre01.lua:127
 msgid ""
 "You helped escort FLF Lt. Gregar Fletcher to the secret FLF base, Sindbad. "
 "This has earned you a small level of trust from the FLF and enabled you to "
@@ -43933,11 +43933,11 @@ msgid ""
 msgstr ""
 
 #. Case Dvaered planet
-#: dat/missions/flf/flf_pre01.lua:132
+#: dat/missions/flf/flf_pre01.lua:131
 msgid "An opportunity to uphold the law"
 msgstr ""
 
-#: dat/missions/flf/flf_pre01.lua:132
+#: dat/missions/flf/flf_pre01.lua:131
 msgid ""
 "You have arrived at a Dvaered controlled world, and you are harboring a FLF "
 "fugitive on your ship. Fortunately, Gregar is still asleep. You could choose "
@@ -43945,11 +43945,11 @@ msgid ""
 "    Would you like to do so?"
 msgstr ""
 
-#: dat/missions/flf/flf_pre01.lua:134
+#: dat/missions/flf/flf_pre01.lua:133
 msgid "Another criminal caught"
 msgstr ""
 
-#: dat/missions/flf/flf_pre01.lua:134
+#: dat/missions/flf/flf_pre01.lua:133
 msgid ""
 "It doesn't take Dvaered security long to arrive at your landing bay. They "
 "board your ship, seize Gregar and take him away before he even comprehends "
@@ -43964,7 +43964,7 @@ msgid ""
 "liaison, in hopes of at least getting something out of this whole situation."
 msgstr ""
 
-#: dat/missions/flf/flf_pre01.lua:140
+#: dat/missions/flf/flf_pre01.lua:139
 msgid ""
 "You turned in FLF Lt. Gregar Fletcher to Dvaered authorities. The Dvaered "
 "captain who took him off your hands said that you could join in on a "
@@ -43972,7 +43972,7 @@ msgid ""
 "public liaison. You may want to scout out this liaison."
 msgstr ""
 
-#: dat/missions/flf/flf_pre01.lua:147
+#: dat/missions/flf/flf_pre01.lua:146
 msgid ""
 "Nothing personal, mate, but we're expecting someone and you ain't him. No "
 "witnesses!"
@@ -43981,7 +43981,7 @@ msgstr ""
 #. Gregar wakes up and calls off the FLF attackers. They agree to guide you to their hidden base.
 #. If the player has destroyed the FLF ships, nothing happens and a flag is set. In this case, the player can only do the Dvaered side of the mini-campaign.
 #. Prevents failure if ALL the ships are dead.
-#: dat/missions/flf/flf_pre01.lua:167
+#: dat/missions/flf/flf_pre01.lua:166
 msgid ""
 "\"Wha- hey! What's going on!\"\n"
 "    You were too busy dodging incoming fire, rebalancing your shields and "
@@ -44001,7 +44001,7 @@ msgid ""
 "misunderstanding, they're not your enemies.\""
 msgstr ""
 
-#: dat/missions/flf/flf_pre01.lua:172
+#: dat/missions/flf/flf_pre01.lua:171
 msgid ""
 "You are skeptical at first, but a few seconds later it becomes apparent that "
 "the FLF fighters have indeed ceased firing. Then, there is an incoming comm "
@@ -44021,7 +44021,7 @@ msgid ""
 "but to do as he says if you ever want to take Gregar to his destination."
 msgstr ""
 
-#: dat/missions/flf/flf_pre01.lua:178
+#: dat/missions/flf/flf_pre01.lua:177
 msgid "Follow the FLF ships to their secret base. Do not lose them!"
 msgstr ""
 
@@ -44033,11 +44033,11 @@ msgstr ""
 #. Safety measure to ensure the player can land.
 #. Check if the player is still with his escorts
 #. definitely OOR.
-#: dat/missions/flf/flf_pre01.lua:256
+#: dat/missions/flf/flf_pre01.lua:255
 msgid "You have lost contact with your escorts!"
 msgstr ""
 
-#: dat/missions/flf/flf_pre01.lua:256
+#: dat/missions/flf/flf_pre01.lua:255
 msgid ""
 "Your escorts have disappeared from your sensor grid. Unfortunately, it seems "
 "you have no way of knowing where they went.\n"
@@ -44437,7 +44437,7 @@ msgstr ""
 #. </avail>
 #. <notes>
 #. <campaign>Minerva</campaign>
-#. <evt_done name="Chicken Rendezvous" />
+#. <done_evt name="Chicken Rendezvous" />
 #. </notes>
 #. </mission>
 #. --
@@ -44607,7 +44607,7 @@ msgstr ""
 
 #: dat/missions/minerva/kex1.lua:134 dat/missions/minerva/kex2.lua:151
 #: dat/missions/minerva/kex3.lua:195 dat/missions/minerva/kex4.lua:191
-#: dat/missions/minerva/pirate3.lua:171 dat/missions/minerva/pirate4.lua:126
+#: dat/missions/minerva/pirate3.lua:173 dat/missions/minerva/pirate4.lua:126
 #: dat/missions/minerva/pirate5.lua:144
 msgid "Ask about the job"
 msgstr ""
@@ -46024,7 +46024,7 @@ msgid ""
 "They speak calmly, without so much as a tinge of urgency."
 msgstr ""
 
-#: dat/missions/minerva/kex4.lua:244 dat/missions/minerva/pirate3.lua:172
+#: dat/missions/minerva/kex4.lua:244 dat/missions/minerva/pirate3.lua:174
 msgid "Ask about Minerva Station"
 msgstr ""
 
@@ -49568,13 +49568,13 @@ msgid ""
 msgstr ""
 
 #: dat/missions/minerva/pirate1.lua:66 dat/missions/minerva/pirate2.lua:62
-#: dat/missions/minerva/pirate3.lua:130 dat/missions/minerva/pirate4.lua:101
+#: dat/missions/minerva/pirate3.lua:121 dat/missions/minerva/pirate4.lua:101
 #: dat/missions/minerva/pirate5.lua:119
 msgid "Kindly decline"
 msgstr ""
 
 #: dat/missions/minerva/pirate1.lua:70 dat/missions/minerva/pirate2.lua:66
-#: dat/missions/minerva/pirate3.lua:134 dat/missions/minerva/pirate4.lua:105
+#: dat/missions/minerva/pirate3.lua:125 dat/missions/minerva/pirate4.lua:105
 #: dat/missions/minerva/pirate5.lua:123
 msgid "You decline their offer and take your leave."
 msgstr ""
@@ -49843,8 +49843,8 @@ msgstr ""
 msgid "#oNon-Dvaered equipped weapons detected: %s"
 msgstr ""
 
-#: dat/missions/minerva/pirate2.lua:173 src/map.c:671 src/map.c:678
-#: src/map.c:702 src/map.c:717
+#: dat/missions/minerva/pirate2.lua:173 src/map.c:686 src/map.c:693
+#: src/map.c:717 src/map.c:732
 msgid ", "
 msgstr ""
 
@@ -49921,35 +49921,20 @@ msgstr ""
 msgid "Finding the Dvaered Spy"
 msgstr ""
 
-#. If not accepted, misn_state will still be nil
 #. Clear variable just in case
-#: dat/missions/minerva/pirate3.lua:78 dat/missions/minerva/pirate3.lua:233
-#: dat/missions/minerva/pirate3.lua:248
-msgid "Minerva Moles"
-msgstr ""
-
-#: dat/missions/minerva/pirate3.lua:79 dat/missions/minerva/pirate3.lua:235
-msgid "Plant a listening device in a VIP room."
-msgstr ""
-
-#: dat/missions/minerva/pirate3.lua:83
-msgid ""
-"You accepted another job from the shady individual to uncover moles at "
-"Minerva Station."
-msgstr ""
-
-#: dat/missions/minerva/pirate3.lua:96 dat/missions/minerva/pirate3.lua:250
+#. If not accepted, misn_state will still be nil
+#: dat/missions/minerva/pirate3.lua:87 dat/missions/minerva/pirate3.lua:252
 msgid "Minerva Station Spa"
 msgstr ""
 
 #. Not accepted
-#: dat/missions/minerva/pirate3.lua:126
+#: dat/missions/minerva/pirate3.lua:117
 msgid ""
 "You approach the sketch individual who seems to be calling your attention "
 "yet once again."
 msgstr ""
 
-#: dat/missions/minerva/pirate3.lua:127
+#: dat/missions/minerva/pirate3.lua:118
 msgid ""
 "\"Hello again, we have another job for you. Our previous actions has led us "
 "to believe that there are several Dvaered and Za'lek spies deeply "
@@ -49957,7 +49942,22 @@ msgid ""
 "challenge of helping us get rid of them?\""
 msgstr ""
 
+#: dat/missions/minerva/pirate3.lua:133 dat/missions/minerva/pirate3.lua:235
+#: dat/missions/minerva/pirate3.lua:250
+msgid "Minerva Moles"
+msgstr ""
+
+#: dat/missions/minerva/pirate3.lua:134 dat/missions/minerva/pirate3.lua:237
+msgid "Plant a listening device in a VIP room."
+msgstr ""
+
 #: dat/missions/minerva/pirate3.lua:139
+msgid ""
+"You accepted another job from the shady individual to uncover moles at "
+"Minerva Station."
+msgstr ""
+
+#: dat/missions/minerva/pirate3.lua:141
 msgid ""
 "\"Glad to have you onboard again. From the few intercepted Dvaered and "
 "Za'lek communications we were able to decode, it seems like we might have "
@@ -49965,7 +49965,7 @@ msgid ""
 "an easy task to drive them out.\""
 msgstr ""
 
-#: dat/missions/minerva/pirate3.lua:140
+#: dat/missions/minerva/pirate3.lua:142
 msgid ""
 "\"That's where this comes in to place.\"\n"
 "They take out a metallic object from their pocket and show it to you. You "
@@ -49973,7 +49973,7 @@ msgid ""
 "\"Ain't she a beauty?\""
 msgstr ""
 
-#: dat/missions/minerva/pirate3.lua:143
+#: dat/missions/minerva/pirate3.lua:145
 msgid ""
 "\"This is some high-tech shit that we got from some geeks. It's a latest gen "
 "signal capturing device, and should be able to bypass most jammers. However, "
@@ -49981,14 +49981,14 @@ msgid ""
 "might catch the mole.\""
 msgstr ""
 
-#: dat/missions/minerva/pirate3.lua:144 dat/missions/minerva/pirate3.lua:193
+#: dat/missions/minerva/pirate3.lua:146 dat/missions/minerva/pirate3.lua:195
 msgid ""
 "\"The main issue we have right now is that VIP rooms and such are not of "
 "easy access, so we're going to have to keep our eyes open and see if we can "
 "spot an opportunity to plant the device.\""
 msgstr ""
 
-#: dat/missions/minerva/pirate3.lua:145
+#: dat/missions/minerva/pirate3.lua:147
 msgid ""
 "They hand you the signal capturing device and explain briefly how it works.\n"
 "\"Take the device and see if you can find a chance to place it. I'll be at "
@@ -49996,17 +49996,17 @@ msgid ""
 msgstr ""
 
 #. Accepted.
-#: dat/missions/minerva/pirate3.lua:149 dat/missions/minerva/pirate4.lua:120
+#: dat/missions/minerva/pirate3.lua:151 dat/missions/minerva/pirate4.lua:120
 msgid "You approach the shady character you have become familiarized with."
 msgstr ""
 
-#: dat/missions/minerva/pirate3.lua:153
+#: dat/missions/minerva/pirate3.lua:155
 msgid ""
 "You explain to them that you were able to successfully plant the device in "
 "the Minerva Spa."
 msgstr ""
 
-#: dat/missions/minerva/pirate3.lua:154
+#: dat/missions/minerva/pirate3.lua:156
 msgid ""
 "\"Great job! I knew you had it in you. Catching the mole now should be just "
 "a matter of time. After we collect some data and process them, we can see "
@@ -50014,44 +50014,44 @@ msgid ""
 "feeling we will catch them soon.\""
 msgstr ""
 
-#: dat/missions/minerva/pirate3.lua:158
+#: dat/missions/minerva/pirate3.lua:160
 msgid ""
 "You planted a listening device in the Minerva Spa to catch a mole and were "
 "rewarded for your actions."
 msgstr ""
 
-#: dat/missions/minerva/pirate3.lua:168 dat/missions/minerva/pirate4.lua:124
+#: dat/missions/minerva/pirate3.lua:170 dat/missions/minerva/pirate4.lua:124
 #: dat/missions/minerva/pirate5.lua:141
 msgid "\"Is there anything you would like to know?\""
 msgstr ""
 
-#: dat/missions/minerva/pirate3.lua:177
+#: dat/missions/minerva/pirate3.lua:179
 msgid "Ask them about the spa"
 msgstr ""
 
-#: dat/missions/minerva/pirate3.lua:179
+#: dat/missions/minerva/pirate3.lua:181
 msgid "Show them the spa ticket"
 msgstr ""
 
-#: dat/missions/minerva/pirate3.lua:184
+#: dat/missions/minerva/pirate3.lua:186
 msgid "Show them the winning ticket"
 msgstr ""
 
-#: dat/missions/minerva/pirate3.lua:190
+#: dat/missions/minerva/pirate3.lua:192
 msgid ""
 "\"From the few intercepted Dvaered and Za'lek communications we were able to "
 "decode, it seems like we might have some moles at Minerva Station. They are "
 "probably really deep so it won't be an easy task to drive them out.\""
 msgstr ""
 
-#: dat/missions/minerva/pirate3.lua:191
+#: dat/missions/minerva/pirate3.lua:193
 msgid ""
 "\"The high-tech latest gen signal capturing device I gave should be able to "
 "bypass moste jammers. However, you're going to have to plant it in a VIP "
 "room or in some place where we might be able to catch the mole.\""
 msgstr ""
 
-#: dat/missions/minerva/pirate3.lua:195
+#: dat/missions/minerva/pirate3.lua:197
 msgid ""
 "\"The spa sounds like a perfect place to set up the signal capturing device. "
 "Nobody will suspect a thing! You should buy a ticket to the Spa and see if "
@@ -50059,25 +50059,25 @@ msgid ""
 "success.\""
 msgstr ""
 
-#: dat/missions/minerva/pirate3.lua:198
+#: dat/missions/minerva/pirate3.lua:200
 msgid ""
 "\"I can't believe we didn't win a ticket to the Spa. However, it seems like "
 "this guy called Harper Bowdown managed to get it instead.\""
 msgstr ""
 
-#: dat/missions/minerva/pirate3.lua:199
+#: dat/missions/minerva/pirate3.lua:201
 msgid ""
 "\"I need you to go pay this guy a visit. See if you can 'encourage' them to "
 "give the ticket to you. Everyone has a price at Minerva Station.\""
 msgstr ""
 
-#: dat/missions/minerva/pirate3.lua:204
+#: dat/missions/minerva/pirate3.lua:206
 msgid ""
 "\"You got the ticket to the Minerva spa, so all you have to do now is go in, "
 "plant the listening device, and enjoy the thermal waters.\""
 msgstr ""
 
-#: dat/missions/minerva/pirate3.lua:209
+#: dat/missions/minerva/pirate3.lua:211
 msgid ""
 "\"Isn't this place great? They managed to set up an incredibly successful "
 "business model here. The way the Empire basically turns an eye to everything "
@@ -50085,7 +50085,7 @@ msgid ""
 "success you no?\""
 msgstr ""
 
-#: dat/missions/minerva/pirate3.lua:210
+#: dat/missions/minerva/pirate3.lua:212
 msgid ""
 "\"The issue is that even though the set-up is great, all the Dvaered and "
 "Za'lek bickering is just messing it all up. It would be a real shame if "
@@ -50093,13 +50093,13 @@ msgid ""
 "this wonderful place.\""
 msgstr ""
 
-#: dat/missions/minerva/pirate3.lua:211
+#: dat/missions/minerva/pirate3.lua:213
 msgid ""
 "\"So me and my investors thought to ourselves, what could we do to ensure "
 "the success of such a wonderful place? This led to that and here we are.\""
 msgstr ""
 
-#: dat/missions/minerva/pirate3.lua:215
+#: dat/missions/minerva/pirate3.lua:217
 msgid ""
 "\"Ah, so you heard the news too? The spa sounds like a perfect place to set "
 "up the signal capturing device. Nobody will suspect a thing! You should buy "
@@ -50108,11 +50108,11 @@ msgid ""
 "They wink at you."
 msgstr ""
 
-#: dat/missions/minerva/pirate3.lua:220
+#: dat/missions/minerva/pirate3.lua:222
 msgid "Our chances of getting into the Spa can't be that bad, can they?"
 msgstr ""
 
-#: dat/missions/minerva/pirate3.lua:223
+#: dat/missions/minerva/pirate3.lua:225
 msgid ""
 "Suddenly, the terminals around you blast a fanfare and begin to talk on the "
 "loudspeakers.\n"
@@ -50121,47 +50121,47 @@ msgid ""
 "The terminal pauses for emphasis."
 msgstr ""
 
-#: dat/missions/minerva/pirate3.lua:226
+#: dat/missions/minerva/pirate3.lua:228
 msgid ""
 "\"THE WINNER IS HARPER BOWDOIN! PLEASE COME TO YOUR NEAREST TERMINAL TO "
 "COLLECT YOUR PRIZE.\""
 msgstr ""
 
-#: dat/missions/minerva/pirate3.lua:228
+#: dat/missions/minerva/pirate3.lua:230
 msgid ""
 "\"Shit! I thought we had that rigged. Damn it. Give me one second.\"\n"
 "They start frantically typing into their portable holo-deck. It makes weird "
 "beeps and noises."
 msgstr ""
 
-#: dat/missions/minerva/pirate3.lua:230
+#: dat/missions/minerva/pirate3.lua:232
 msgid ""
 "\"OK, so we aren't so bad off. It seems like the winner was doing some space "
 "tourism around the system. Not like there is anything to see here.\""
 msgstr ""
 
-#: dat/missions/minerva/pirate3.lua:231
+#: dat/missions/minerva/pirate3.lua:233
 msgid ""
 "\"So change of plans, I need you to go pay this guy a visit. See if you can "
 "'encourage' them to give the ticket to you. Everyone has a price at Minerva "
 "Station.\""
 msgstr ""
 
-#: dat/missions/minerva/pirate3.lua:234
+#: dat/missions/minerva/pirate3.lua:236
 msgid "Get Harper Bowdoin's ticket in Limbo."
 msgstr ""
 
-#: dat/missions/minerva/pirate3.lua:237
+#: dat/missions/minerva/pirate3.lua:239
 msgid ""
 "You did not obtain the winning ticket of the Minerva Spa event and were "
 "tasked with obtaining it from a so called Harper Bowdoin."
 msgstr ""
 
-#: dat/missions/minerva/pirate3.lua:242
+#: dat/missions/minerva/pirate3.lua:244
 msgid "You show them the winning ticket you took from Harper Bowdoin."
 msgstr ""
 
-#: dat/missions/minerva/pirate3.lua:243
+#: dat/missions/minerva/pirate3.lua:245
 msgid ""
 "\"Great job out there. It's like taking candy from a baby.\"\n"
 "She beams you a smile.\n"
@@ -50169,15 +50169,15 @@ msgid ""
 "device!\""
 msgstr ""
 
-#: dat/missions/minerva/pirate3.lua:249
+#: dat/missions/minerva/pirate3.lua:251
 msgid "Plant a listening device in the Spa."
 msgstr ""
 
-#: dat/missions/minerva/pirate3.lua:251
+#: dat/missions/minerva/pirate3.lua:253
 msgid "You obtained the winning ticket to enter the Minerva Spa."
 msgstr ""
 
-#: dat/missions/minerva/pirate3.lua:257
+#: dat/missions/minerva/pirate3.lua:259
 msgid ""
 "You take your leave and ponder where you should start looking. The casino "
 "seems to be your best bet."
@@ -50189,39 +50189,39 @@ msgstr ""
 #. Should make them loiter forever
 #. Don't distress or everyone aggros
 #. Clear variables to be kind to the player
-#: dat/missions/minerva/pirate3.lua:297
+#: dat/missions/minerva/pirate3.lua:299
 msgid ""
 "#rMISSION FAILED! You were supposed to get the ticket, but you blew up "
 "Harper's ship!"
 msgstr ""
 
 #. Case harper lands with the ticket, i.e., ran away
-#: dat/missions/minerva/pirate3.lua:306
+#: dat/missions/minerva/pirate3.lua:308
 msgid ""
 "#rMISSION FAILED! You were supposed to get the ticket but they got away!"
 msgstr ""
 
-#: dat/missions/minerva/pirate3.lua:321
+#: dat/missions/minerva/pirate3.lua:323
 msgid ""
 "You violently enter Harper's ship and plunder the ticket which you were "
 "after, while Harper spends his time cowering in the corner of the cockpit."
 msgstr ""
 
 #. Run to land at the station
-#: dat/missions/minerva/pirate3.lua:351
+#: dat/missions/minerva/pirate3.lua:353
 msgid "Stop shooting! Maybe we can reach an agreement!"
 msgstr ""
 
-#: dat/missions/minerva/pirate3.lua:361
+#: dat/missions/minerva/pirate3.lua:363
 msgid "Harper"
 msgstr ""
 
 #. He goes land now
-#: dat/missions/minerva/pirate3.lua:386
+#: dat/missions/minerva/pirate3.lua:388
 msgid "You see Harper's hologram appear into view paler than usual."
 msgstr ""
 
-#: dat/missions/minerva/pirate3.lua:387
+#: dat/missions/minerva/pirate3.lua:389
 #, lua-format
 msgid ""
 "\"I have had a change of mind.\"\n"
@@ -50229,17 +50229,17 @@ msgid ""
 "\"How about I give you the ticket for a mere %s?"
 msgstr ""
 
-#: dat/missions/minerva/pirate3.lua:391 dat/missions/minerva/pirate3.lua:417
-#: dat/missions/minerva/pirate3.lua:425
+#: dat/missions/minerva/pirate3.lua:393 dat/missions/minerva/pirate3.lua:419
+#: dat/missions/minerva/pirate3.lua:427
 #, lua-format
 msgid "Pay him %s%s"
 msgstr ""
 
-#: dat/missions/minerva/pirate3.lua:392
+#: dat/missions/minerva/pirate3.lua:394
 msgid "Threaten him"
 msgstr ""
 
-#: dat/missions/minerva/pirate3.lua:401
+#: dat/missions/minerva/pirate3.lua:403
 msgid ""
 "\"Actually, swimming in a chicken sounds like a bit of a drag. I think I "
 "might be allergic them anyway.\"\n"
@@ -50247,47 +50247,47 @@ msgid ""
 msgstr ""
 
 #. Player can theoretically board to loot it back
-#: dat/missions/minerva/pirate3.lua:410 dat/missions/minerva/pirate3.lua:542
+#: dat/missions/minerva/pirate3.lua:412 dat/missions/minerva/pirate3.lua:544
 msgid ""
 "You wire him the money and he gives you the digital code that represents the "
 "ticket. Looks like you are set."
 msgstr ""
 
-#: dat/missions/minerva/pirate3.lua:414
+#: dat/missions/minerva/pirate3.lua:416
 msgid ""
 "He laughs nervously.\n"
 "\"You have to be killing right? You wouldn't kill me in cold blood would "
 "you? I have a family waiting for me back home."
 msgstr ""
 
-#: dat/missions/minerva/pirate3.lua:418
+#: dat/missions/minerva/pirate3.lua:420
 msgid "Aim your weapons at him"
 msgstr ""
 
-#: dat/missions/minerva/pirate3.lua:422
+#: dat/missions/minerva/pirate3.lua:424
 msgid ""
 "\"I have a daughter! She is turning 5 soon. You wouldn't be so cold-hearted "
 "to leave her an orphan would you?\"\n"
 "He is sweating profusely."
 msgstr ""
 
-#: dat/missions/minerva/pirate3.lua:426
+#: dat/missions/minerva/pirate3.lua:428
 msgid "Prime your weapon systems"
 msgstr ""
 
-#: dat/missions/minerva/pirate3.lua:430
+#: dat/missions/minerva/pirate3.lua:432
 msgid ""
 "\"Ah, damn this! I've still got things worth living for. Here, just take the "
 "damn thing.\""
 msgstr ""
 
-#: dat/missions/minerva/pirate3.lua:431 dat/missions/minerva/pirate3.lua:442
+#: dat/missions/minerva/pirate3.lua:433 dat/missions/minerva/pirate3.lua:444
 msgid ""
 "He gives you the digital code that represents the ticket. Looks like you are "
 "set."
 msgstr ""
 
-#: dat/missions/minerva/pirate3.lua:439
+#: dat/missions/minerva/pirate3.lua:441
 msgid ""
 "\"Wait do you mean you don't have the money?\"\n"
 "He looks around nervously.\n"
@@ -50295,39 +50295,39 @@ msgid ""
 "damn thing.\""
 msgstr ""
 
-#: dat/missions/minerva/pirate3.lua:455
+#: dat/missions/minerva/pirate3.lua:457
 msgid "Get away from me!"
 msgstr ""
 
-#: dat/missions/minerva/pirate3.lua:465
+#: dat/missions/minerva/pirate3.lua:467
 msgid "An impatient man appears into view."
 msgstr ""
 
-#: dat/missions/minerva/pirate3.lua:466
+#: dat/missions/minerva/pirate3.lua:468
 msgid "\"You again? I don't have time to deal with you.\""
 msgstr ""
 
-#: dat/missions/minerva/pirate3.lua:467
+#: dat/missions/minerva/pirate3.lua:469
 msgid "The comm goes silent…"
 msgstr ""
 
-#: dat/missions/minerva/pirate3.lua:479
+#: dat/missions/minerva/pirate3.lua:481
 msgid "You hail Harper's vessel and you see him appear into view."
 msgstr ""
 
-#: dat/missions/minerva/pirate3.lua:480
+#: dat/missions/minerva/pirate3.lua:482
 msgid "\"What do you want? Can't you see I'm celebrating my luck?\""
 msgstr ""
 
-#: dat/missions/minerva/pirate3.lua:482
+#: dat/missions/minerva/pirate3.lua:484
 msgid "\"Luck?\""
 msgstr ""
 
-#: dat/missions/minerva/pirate3.lua:483
+#: dat/missions/minerva/pirate3.lua:485
 msgid "\"Celebrating?\""
 msgstr ""
 
-#: dat/missions/minerva/pirate3.lua:486
+#: dat/missions/minerva/pirate3.lua:488
 msgid ""
 "\"Yeah, you may have heard the news, but I'm the big winner of the Minerva "
 "hot spring event! On my first time to Minerva Station too! Maybe this will "
@@ -50336,75 +50336,75 @@ msgid ""
 "He looks triumphant as he boasts."
 msgstr ""
 
-#: dat/missions/minerva/pirate3.lua:489
+#: dat/missions/minerva/pirate3.lua:491
 msgid "\"About the ticket…\""
 msgstr ""
 
-#: dat/missions/minerva/pirate3.lua:490 dat/missions/minerva/pirate3.lua:497
-#: dat/missions/minerva/pirate3.lua:516 dat/missions/minerva/pirate3.lua:565
+#: dat/missions/minerva/pirate3.lua:492 dat/missions/minerva/pirate3.lua:499
+#: dat/missions/minerva/pirate3.lua:518 dat/missions/minerva/pirate3.lua:567
 msgid "End transmission"
 msgstr ""
 
-#: dat/missions/minerva/pirate3.lua:493
+#: dat/missions/minerva/pirate3.lua:495
 msgid "\"What about it?\""
 msgstr ""
 
-#: dat/missions/minerva/pirate3.lua:495
+#: dat/missions/minerva/pirate3.lua:497
 msgid "\"Give it to me. Now.\""
 msgstr ""
 
-#: dat/missions/minerva/pirate3.lua:496
+#: dat/missions/minerva/pirate3.lua:498
 msgid "\"I would like to take it off your hands.\""
 msgstr ""
 
-#: dat/missions/minerva/pirate3.lua:501
+#: dat/missions/minerva/pirate3.lua:503
 msgid ""
 "\"What are you going to do? Shoot me?\"\n"
 "He scoffs at you and closes the transmission."
 msgstr ""
 
-#: dat/missions/minerva/pirate3.lua:509
+#: dat/missions/minerva/pirate3.lua:511
 msgid ""
 "\"I don't know. This is very valuable you know? What would you trade for it?"
 "\""
 msgstr ""
 
-#: dat/missions/minerva/pirate3.lua:512 dat/missions/minerva/pirate3.lua:514
-#: dat/missions/minerva/pirate3.lua:563
+#: dat/missions/minerva/pirate3.lua:514 dat/missions/minerva/pirate3.lua:516
+#: dat/missions/minerva/pirate3.lua:565
 #, lua-format
 msgid "Offer %s%s"
 msgstr ""
 
-#: dat/missions/minerva/pirate3.lua:520
+#: dat/missions/minerva/pirate3.lua:522
 #, lua-format
 msgid "Offer %s (have %s)"
 msgstr ""
 
-#: dat/missions/minerva/pirate3.lua:534 dat/missions/minerva/pirate3.lua:546
+#: dat/missions/minerva/pirate3.lua:536 dat/missions/minerva/pirate3.lua:548
 msgid ""
 "\"Actually, swimming in a chicken sounds like a bit of a drag. I think I "
 "might be allergic them anyway.\""
 msgstr ""
 
-#: dat/missions/minerva/pirate3.lua:553
+#: dat/missions/minerva/pirate3.lua:555
 msgid ""
 "You wire him the tokens and he gives you the digital code that represents "
 "the ticket. Looks like you are set."
 msgstr ""
 
-#: dat/missions/minerva/pirate3.lua:561
+#: dat/missions/minerva/pirate3.lua:563
 #, lua-format
 msgid "\"%s only? I spent more than that gambling just to get this ticket.\""
 msgstr ""
 
-#: dat/missions/minerva/pirate3.lua:569
+#: dat/missions/minerva/pirate3.lua:571
 msgid ""
 "\"You trying to pull my leg or something? You don't have enough credits. "
 "Anyway, I'm busy now.\"\n"
 "He cuts the transmission."
 msgstr ""
 
-#: dat/missions/minerva/pirate3.lua:574
+#: dat/missions/minerva/pirate3.lua:576
 msgid "You close the transmission channel."
 msgstr ""
 
@@ -52174,7 +52174,7 @@ msgstr ""
 #: dat/missions/neutral/diy-nerds.lua:92 dat/missions/neutral/diy-nerds.lua:143
 #: dat/missions/neutral/diy-nerds.lua:222 dat/missions/shadow/shadowrun.lua:90
 #: dat/missions/shadow/shadowrun.lua:155 dat/missions/shadow/shadowrun.lua:161
-#: dat/missions/sirius/srs_ferry.lua:353
+#: dat/missions/sirius/srs_ferry.lua:352
 #, lua-format
 msgid "You have %s remaining"
 msgstr ""
@@ -54374,14 +54374,12 @@ msgstr ""
 
 #. Mission details
 #: dat/missions/neutral/patrol.lua:49
-#, lua-format
-msgid "Patrol of the %s System"
+msgid "Patrol of the {sys} System"
 msgstr ""
 
 #: dat/missions/neutral/patrol.lua:50
-#, lua-format
 msgid ""
-"Patrol specified points in the %s system, eliminating any hostiles you "
+"Patrol specified points in the {sys} system, eliminating any hostiles you "
 "encounter."
 msgstr ""
 
@@ -54406,9 +54404,8 @@ msgstr ""
 #: dat/missions/neutral/patrol.lua:59
 #: dat/missions/neutral/pirbounty_dead.lua:84
 #: dat/missions/pirate/empbounty_dead.lua:177 dat/missions/pirate/patrol.lua:50
-#: dat/missions/proteron/dissbounty_dead.lua:62
-#, lua-format
-msgid "MISSION FAILURE! You have left the %s system."
+#: dat/missions/proteron/dissbounty_dead.lua:63
+msgid "MISSION FAILURE! You have left the {sys} system."
 msgstr ""
 
 #: dat/missions/neutral/patrol.lua:64
@@ -54416,8 +54413,7 @@ msgid "Eliminate hostiles"
 msgstr ""
 
 #: dat/missions/neutral/patrol.lua:65 dat/missions/pirate/patrol.lua:56
-#, lua-format
-msgid "Land in %s territory to collect your pay"
+msgid "Land in {fctname} territory to collect your pay"
 msgstr ""
 
 #. Get the number of enemies in a particular system
@@ -54484,160 +54480,141 @@ msgstr ""
 #. --
 #. Localization
 #: dat/missions/neutral/pirbounty_alive.lua:36
-#, lua-format
 msgid ""
 "As you return to your ship, you are contacted by an officer. \"I see you "
-"were unable to capture %s,\" the officer says. \"Disappointing. However, we "
-"would rather this pirate be dead than roaming free, so you will be paid %s "
-"if you finish them off right now.\""
+"were unable to capture {pltname},\" the officer says. \"Disappointing. "
+"However, we would rather this pirate be dead than roaming free, so you will "
+"be paid {credits} if you finish them off right now.\""
 msgstr ""
 
 #: dat/missions/neutral/pirbounty_alive.lua:37
-#, lua-format
 msgid ""
 "On your way back to your ship, you receive a message from an officer. It "
-"reads, \"Your failure to capture %s is disappointing. We really wanted to "
-"capture this pirate alive. However, we would rather he be dead than roaming "
-"free, so if you kill the pirate now, you will be paid the lesser sum of %s.\""
+"reads, \"Your failure to capture {pltname} is disappointing. We really "
+"wanted to capture this pirate alive. However, we would rather he be dead "
+"than roaming free, so if you kill the pirate now, you will be paid the "
+"lesser sum of {credits}.\""
 msgstr ""
 
 #: dat/missions/neutral/pirbounty_alive.lua:38
-#, lua-format
 msgid ""
 "When you return to your cockpit, you are contacted by an officer. "
 "\"Pathetic! If I were in charge, I'd say you get no bounty! Can't fight off "
 "a couple low-life pirates?!\" He sighs. \"But lucky for you, I'm not in "
-"charge, and my higher-ups would rather %s be dead than free. So if you "
-"finish that scum off, you'll get %s. Just be snappy about it!\" Having "
-"finished delivering the message, the officer then ceases communication."
+"charge, and my higher-ups would rather {pltname} be dead than free. So if "
+"you finish that scum off, you'll get {credits}. Just be snappy about it!\" "
+"Having finished delivering the message, the officer then ceases "
+"communication."
 msgstr ""
 
 #: dat/missions/neutral/pirbounty_alive.lua:39
-#, lua-format
 msgid ""
 "When you get back to the ship, you see a message giving you a new mission to "
-"kill %s; the reward is %s. Well, that's pitiful compared to what you were "
-"planning on collecting, but it's better than nothing."
+"kill {pltname}; the reward is {credits}. Well, that's pitiful compared to "
+"what you were planning on collecting, but it's better than nothing."
 msgstr ""
 
 #: dat/missions/neutral/pirbounty_alive.lua:42
 #: dat/missions/neutral/pirbounty_dead.lua:58
-#, lua-format
-msgid "An officer takes %s into custody and hands you your pay."
+msgid "An officer takes {pltname} into custody and hands you your pay."
 msgstr ""
 
 #: dat/missions/neutral/pirbounty_alive.lua:43
-#, lua-format
 msgid ""
-"The officer seems to think your acceptance of the alive bounty for %s was "
-"foolish. They carefully take the pirate off your hands, taking precautions "
-"you think are completely unnecessary, and then hand you your pay."
+"The officer seems to think your acceptance of the alive bounty for {pltname} "
+"was foolish. They carefully take the pirate off your hands, taking "
+"precautions you think are completely unnecessary, and then hand you your pay."
 msgstr ""
 
 #: dat/missions/neutral/pirbounty_alive.lua:44
-#, lua-format
 msgid ""
-"The officer you deal with seems to especially dislike %s. They take the "
-"pirate off your hands and hand you your pay without speaking a word."
+"The officer you deal with seems to especially dislike {pltname}. They take "
+"the pirate off your hands and hand you your pay without speaking a word."
 msgstr ""
 
 #: dat/missions/neutral/pirbounty_alive.lua:45
 #: dat/missions/neutral/pirbounty_dead.lua:61
-#, lua-format
 msgid ""
-"A fearful-looking officer rushes %s into a secure hold, pays you the "
+"A fearful-looking officer rushes {pltname} into a secure hold, pays you the "
 "appropriate bounty, and then hurries off."
 msgstr ""
 
 #: dat/missions/neutral/pirbounty_alive.lua:46
-#, lua-format
 msgid ""
-"The officer you deal with thanks you profusely for capturing %s alive, pays "
-"you, and sends you off."
+"The officer you deal with thanks you profusely for capturing {pltname} "
+"alive, pays you, and sends you off."
 msgstr ""
 
 #: dat/missions/neutral/pirbounty_alive.lua:47
-#, lua-format
 msgid ""
-"Upon learning that you managed to capture %s alive, the officer who "
+"Upon learning that you managed to capture {pltname} alive, the officer who "
 "previously sported a defeated look suddenly brightens up. The pirate is "
 "swiftly taken into custody as you are handed your pay."
 msgstr ""
 
 #: dat/missions/neutral/pirbounty_alive.lua:48
-#, lua-format
 msgid ""
-"When you ask the officer for your bounty on %s, they sigh, take the pirate "
-"into custody, go through some paperwork, and hand you your pay, mumbling "
-"something about how useless capturing pirates alive is."
+"When you ask the officer for your bounty on {pltname}, they sigh, take the "
+"pirate into custody, go through some paperwork, and hand you your pay, "
+"mumbling something about how useless capturing pirates alive is."
 msgstr ""
 
 #: dat/missions/neutral/pirbounty_alive.lua:51
 #: dat/missions/neutral/pirbounty_dead.lua:50
-#, lua-format
-msgid "After verifying that you killed %s, an officer hands you your pay."
+msgid ""
+"After verifying that you killed {pltname}, an officer hands you your pay."
 msgstr ""
 
 #: dat/missions/neutral/pirbounty_alive.lua:52
-#, lua-format
 msgid ""
-"After verifying that %s is indeed dead, the officer sighs and hands you your "
-"pay."
+"After verifying that {pltname} is indeed dead, the officer sighs and hands "
+"you your pay."
 msgstr ""
 
 #: dat/missions/neutral/pirbounty_alive.lua:53
-#, lua-format
 msgid ""
-"This officer is clearly annoyed that %s is dead. They mumble something about "
-"incompetent bounty hunters the entire time as they takes care of the "
-"paperwork and hand you your bounty."
+"This officer is clearly annoyed that {pltname} is dead. They mumble "
+"something about incompetent bounty hunters the entire time as they takes "
+"care of the paperwork and hand you your bounty."
 msgstr ""
 
 #: dat/missions/neutral/pirbounty_alive.lua:54
-#, lua-format
 msgid ""
 "The officer seems disappointed, yet unsurprised that you failed to capture "
-"%s alive. You are handed your lesser bounty without a word."
+"{pltname} alive. You are handed your lesser bounty without a word."
 msgstr ""
 
 #: dat/missions/neutral/pirbounty_alive.lua:55
-#, lua-format
 msgid ""
-"When you ask the officer for your bounty on %s, they sigh, lead you into an "
-"office, go through some paperwork, and hand you your pay, mumbling something "
-"about how useless bounty hunters are."
+"When you ask the officer for your bounty on {pltname}, they sigh, lead you "
+"into an office, go through some paperwork, and hand you your pay, mumbling "
+"something about how useless bounty hunters are."
 msgstr ""
 
 #: dat/missions/neutral/pirbounty_alive.lua:56
-#, lua-format
 msgid ""
-"The officer verifies the death of %s, goes through the necessary paperwork, "
-"and hands you your pay, looking annoyed the entire time."
+"The officer verifies the death of {pltname}, goes through the necessary "
+"paperwork, and hands you your pay, looking annoyed the entire time."
 msgstr ""
 
 #: dat/missions/neutral/pirbounty_alive.lua:59
-#, lua-format
-msgid "Tiny Alive Bounty in %s"
+msgid "Tiny Alive Bounty in {sys}"
 msgstr ""
 
 #: dat/missions/neutral/pirbounty_alive.lua:60
-#, lua-format
-msgid "Small Alive Bounty in %s"
+msgid "Small Alive Bounty in {sys}"
 msgstr ""
 
 #: dat/missions/neutral/pirbounty_alive.lua:61
-#, lua-format
-msgid "Moderate Alive Bounty in %s"
+msgid "Moderate Alive Bounty in {sys}"
 msgstr ""
 
 #: dat/missions/neutral/pirbounty_alive.lua:62
-#, lua-format
-msgid "High Alive Bounty in %s"
+msgid "High Alive Bounty in {sys}"
 msgstr ""
 
 #: dat/missions/neutral/pirbounty_alive.lua:63
-#, lua-format
-msgid "Dangerous Alive Bounty in %s"
+msgid "Dangerous Alive Bounty in {sys}"
 msgstr ""
 
 #: dat/missions/neutral/pirbounty_alive.lua:64
@@ -54648,13 +54625,11 @@ msgid ""
 msgstr ""
 
 #: dat/missions/neutral/pirbounty_alive.lua:66
-#, lua-format
-msgid "Capture %s"
+msgid "Capture {pltname}"
 msgstr ""
 
 #: dat/missions/neutral/pirbounty_alive.lua:73
-#, lua-format
-msgid "MISSION FAILURE! %s has been killed."
+msgid "MISSION FAILURE! {pltname} has been killed."
 msgstr ""
 
 #. Set up the ship, credits, and reputation based on the level.
@@ -54665,8 +54640,7 @@ msgstr ""
 #: dat/missions/neutral/pirbounty_alive.lua:119
 #: dat/missions/neutral/seek_n_destroy.lua:222
 #: dat/missions/pirate/empbounty_dead.lua:147
-#, lua-format
-msgid "Kill %s"
+msgid "Kill {pltname}"
 msgstr ""
 
 #.
@@ -54699,36 +54673,31 @@ msgstr ""
 #.
 #. --
 #: dat/missions/neutral/pirbounty_dead.lua:37
-#, lua-format
 msgid ""
-"You and your crew infiltrate the ship's pathetic security and subdue %s. You "
-"transport the pirate to your ship."
+"You and your crew infiltrate the ship's pathetic security and subdue "
+"{pltname}. You transport the pirate to your ship."
 msgstr ""
 
 #: dat/missions/neutral/pirbounty_dead.lua:38
-#, lua-format
 msgid ""
 "Your crew has a difficult time getting past the ship's security, but "
-"eventually succeeds and subdues %s."
+"eventually succeeds and subdues {pltname}."
 msgstr ""
 
 #: dat/missions/neutral/pirbounty_dead.lua:39
-#, lua-format
 msgid ""
 "The pirate's security system turns out to be no match for your crew. You "
-"infiltrate the ship and capture %s."
+"infiltrate the ship and capture {pltname}."
 msgstr ""
 
 #: dat/missions/neutral/pirbounty_dead.lua:40
-#, lua-format
-msgid "Your crew infiltrates the pirate's ship and captures %s."
+msgid "Your crew infiltrates the pirate's ship and captures {pltname}."
 msgstr ""
 
 #: dat/missions/neutral/pirbounty_dead.lua:41
-#, lua-format
 msgid ""
 "Getting past this ship's security was surprisingly easy. Didn't they know "
-"that %s was wanted?"
+"that {pltname} was wanted?"
 msgstr ""
 
 #: dat/missions/neutral/pirbounty_dead.lua:44
@@ -54738,7 +54707,7 @@ msgid ""
 msgstr ""
 
 #: dat/missions/neutral/pirbounty_dead.lua:45
-#: dat/missions/proteron/dissbounty_dead.lua:33
+#: dat/missions/proteron/dissbounty_dead.lua:34
 msgid "The ship's security system locks you out."
 msgstr ""
 
@@ -54749,109 +54718,98 @@ msgid ""
 msgstr ""
 
 #: dat/missions/neutral/pirbounty_dead.lua:47
-#: dat/missions/proteron/dissbounty_dead.lua:35
+#: dat/missions/proteron/dissbounty_dead.lua:36
 msgid ""
 "It seems your crew is no match for this ship's security system. You return "
 "to your ship."
 msgstr ""
 
 #: dat/missions/neutral/pirbounty_dead.lua:51
-#, lua-format
 msgid ""
-"After verifying that %s is indeed dead, the tired-looking officer smiles and "
-"hands you your pay."
+"After verifying that {pltname} is indeed dead, the tired-looking officer "
+"smiles and hands you your pay."
 msgstr ""
 
 #: dat/missions/neutral/pirbounty_dead.lua:52
-#, lua-format
 msgid ""
-"The officer seems pleased that %s is finally dead. They thank you and "
+"The officer seems pleased that {pltname} is finally dead. They thank you and "
 "promptly hand you your pay."
 msgstr ""
 
 #: dat/missions/neutral/pirbounty_dead.lua:53
-#, lua-format
 msgid ""
 "The paranoid-looking officer takes you into a locked room, where the death "
-"of %s is quietly verified. The officer then pays you and sends you off."
+"of {pltname} is quietly verified. The officer then pays you and sends you "
+"off."
 msgstr ""
 
 #: dat/missions/neutral/pirbounty_dead.lua:54
-#, lua-format
 msgid ""
-"When you ask the officer for your bounty on %s, they sigh, lead you into an "
-"office, go through some paperwork, and hand you your pay, mumbling something "
-"about how useless the bounty system is."
+"When you ask the officer for your bounty on {pltname}, they sigh, lead you "
+"into an office, go through some paperwork, and hand you your pay, mumbling "
+"something about how useless the bounty system is."
 msgstr ""
 
 #: dat/missions/neutral/pirbounty_dead.lua:55
-#, lua-format
 msgid ""
-"The officer verifies the death of %s, goes through the necessary paperwork, "
-"and hands you your pay, looking bored the entire time."
+"The officer verifies the death of {pltname}, goes through the necessary "
+"paperwork, and hands you your pay, looking bored the entire time."
 msgstr ""
 
 #: dat/missions/neutral/pirbounty_dead.lua:59
-#, lua-format
 msgid ""
-"The officer seems to think your decision to capture %s alive was foolish. "
-"They carefully take the pirate off your hands, taking precautions you think "
-"are completely unnecessary, and then hand you your pay"
+"The officer seems to think your decision to capture {pltname} alive was "
+"foolish. They carefully take the pirate off your hands, taking precautions "
+"you think are completely unnecessary, and then hand you your pay"
 msgstr ""
 
 #: dat/missions/neutral/pirbounty_dead.lua:60
-#, lua-format
 msgid ""
-"The officer you deal with seems to especially dislike %s. The pirate is "
-"taken off your hands and you are handed your pay without a word."
+"The officer you deal with seems to especially dislike {pltname}. The pirate "
+"is taken off your hands and you are handed your pay without a word."
 msgstr ""
 
 #: dat/missions/neutral/pirbounty_dead.lua:62
-#, lua-format
 msgid ""
 "The officer you greet gives you a puzzled look when you say that you "
-"captured %s alive. Nonetheless, they politely take the pirate off of your "
-"hands and hand you your pay."
+"captured {pltname} alive. Nonetheless, they politely take the pirate off of "
+"your hands and hand you your pay."
 msgstr ""
 
 #: dat/missions/neutral/pirbounty_dead.lua:65
-#, lua-format
 msgid ""
-"\"Greetings. I can see that you were trying to collect a bounty on %s. Well, "
-"as you can see, I earned the bounty, but I don't think I would have "
-"succeeded without your help, so I've transferred a portion of the bounty "
-"into your account.\""
+"\"Greetings. I can see that you were trying to collect a bounty on "
+"{pltname}. Well, as you can see, I earned the bounty, but I don't think I "
+"would have succeeded without your help, so I've transferred a portion of the "
+"bounty into your account.\""
 msgstr ""
 
 #: dat/missions/neutral/pirbounty_dead.lua:66
-#, lua-format
 msgid ""
 "\"Sorry about getting in the way of your bounty. I don't really care too "
 "much about the money, but I just wanted to make sure the galaxy would be rid "
-"of that scum; I've seen the villainy of %s first-hand, you see. So as an "
-"apology, I would like to offer you the portion of the bounty you clearly "
+"of that scum; I've seen the villainy of {pltname} first-hand, you see. So as "
+"an apology, I would like to offer you the portion of the bounty you clearly "
 "earned. The money will be in your account shortly.\""
 msgstr ""
 
 #: dat/missions/neutral/pirbounty_dead.lua:67
-#, lua-format
 msgid ""
 "\"Hey, thanks for the help back there. I don't know if I would have been "
-"able to handle %s alone! Anyway, since you were such a big help, I have "
-"transferred what I think is your fair share of the bounty to your bank "
+"able to handle {pltname} alone! Anyway, since you were such a big help, I "
+"have transferred what I think is your fair share of the bounty to your bank "
 "account.\""
 msgstr ""
 
 #: dat/missions/neutral/pirbounty_dead.lua:68
-#, lua-format
 msgid ""
-"\"Heh, thanks! I think I would have been able to take out %s by myself, but "
-"still, I appreciate your assistance. Here, I'll transfer some of the bounty "
-"to you, as a token of my appreciation.\""
+"\"Heh, thanks! I think I would have been able to take out {pltname} by "
+"myself, but still, I appreciate your assistance. Here, I'll transfer some of "
+"the bounty to you, as a token of my appreciation.\""
 msgstr ""
 
 #: dat/missions/neutral/pirbounty_dead.lua:69
-#: dat/missions/proteron/dissbounty_dead.lua:56
+#: dat/missions/proteron/dissbounty_dead.lua:57
 msgid ""
 "\"Ha ha ha, looks like I beat you to it this time, eh? Well, I don't do this "
 "often, but here, have some of the bounty. I think you deserve it.\""
@@ -54859,28 +54817,23 @@ msgstr ""
 
 #. Mission details
 #: dat/missions/neutral/pirbounty_dead.lua:73
-#, lua-format
-msgid "Tiny Dead or Alive Bounty in %s"
+msgid "Tiny Dead or Alive Bounty in {sys}"
 msgstr ""
 
 #: dat/missions/neutral/pirbounty_dead.lua:74
-#, lua-format
-msgid "Small Dead or Alive Bounty in %s"
+msgid "Small Dead or Alive Bounty in {sys}"
 msgstr ""
 
 #: dat/missions/neutral/pirbounty_dead.lua:75
-#, lua-format
-msgid "Moderate Dead or Alive Bounty in %s"
+msgid "Moderate Dead or Alive Bounty in {sys}"
 msgstr ""
 
 #: dat/missions/neutral/pirbounty_dead.lua:76
-#, lua-format
-msgid "High Dead or Alive Bounty in %s"
+msgid "High Dead or Alive Bounty in {sys}"
 msgstr ""
 
 #: dat/missions/neutral/pirbounty_dead.lua:77
-#, lua-format
-msgid "Dangerous Dead or Alive Bounty in %s"
+msgid "Dangerous Dead or Alive Bounty in {sys}"
 msgstr ""
 
 #: dat/missions/neutral/pirbounty_dead.lua:78
@@ -54892,29 +54845,26 @@ msgstr ""
 
 #. Messages
 #: dat/missions/neutral/pirbounty_dead.lua:82
-#, lua-format
-msgid "MISSION FAILURE! %s got away."
+msgid "MISSION FAILURE! {pltname} got away."
 msgstr ""
 
 #: dat/missions/neutral/pirbounty_dead.lua:83
-#, lua-format
-msgid "MISSION FAILURE! Another pilot eliminated %s."
+msgid "MISSION FAILURE! Another pilot eliminated {pltname}."
 msgstr ""
 
 #: dat/missions/neutral/pirbounty_dead.lua:86
-#: dat/missions/proteron/dissbounty_dead.lua:64
+#: dat/missions/proteron/dissbounty_dead.lua:65
 msgid "Bounty Hunt"
 msgstr ""
 
 #: dat/missions/neutral/pirbounty_dead.lua:89
-#, lua-format
-msgid "Kill or capture %s"
+msgid "Kill or capture {pltname}"
 msgstr ""
 
 #: dat/missions/neutral/pirbounty_dead.lua:90
-#: dat/missions/proteron/dissbounty_dead.lua:68
-#, lua-format
-msgid "Land in %s territory to collect your bounty"
+#: dat/missions/neutral/seek_n_destroy.lua:223
+#: dat/missions/proteron/dissbounty_dead.lua:69
+msgid "Land in {fctname} territory to collect your bounty"
 msgstr ""
 
 #: dat/missions/neutral/pirbounty_dead.lua:227
@@ -56057,11 +56007,6 @@ msgstr ""
 #: dat/missions/neutral/seek_n_destroy.lua:570
 #, lua-format
 msgid "Fly to the %s system and search for clues"
-msgstr ""
-
-#: dat/missions/neutral/seek_n_destroy.lua:223
-#, lua-format
-msgid "Land on any %s planet and collect your bounty"
 msgstr ""
 
 #: dat/missions/neutral/seek_n_destroy.lua:224
@@ -57310,7 +57255,7 @@ msgstr ""
 #. No enemy presence nearby
 #. Should not happen, but putting this here just in case.
 #. Set mission details
-#: dat/missions/pirate/empbounty_dead.lua:124 dat/missions/pirate/patrol.lua:65
+#: dat/missions/pirate/empbounty_dead.lua:124
 #, lua-format
 msgid " (%s)"
 msgstr ""
@@ -57335,7 +57280,7 @@ msgid "Assassination"
 msgstr ""
 
 #: dat/missions/pirate/empbounty_dead.lua:232
-#: dat/missions/proteron/dissbounty_dead.lua:61
+#: dat/missions/proteron/dissbounty_dead.lua:62
 msgid "MISSION FAILURE! Another pilot eliminated your target."
 msgstr ""
 
@@ -57689,8 +57634,7 @@ msgstr ""
 
 #. Mission details
 #: dat/missions/pirate/patrol.lua:40
-#, lua-format
-msgid "#rPIRACY:#0 Patrol of the %s System"
+msgid "#rPIRACY:#0 Patrol of the {sys} System ({fctname})"
 msgstr ""
 
 #: dat/missions/pirate/patrol.lua:41
@@ -57745,17 +57689,17 @@ msgstr ""
 #.
 #. Note: this mission does not make any system claims.
 #. target destination
-#: dat/missions/pirate/pir_clan_cargo.lua:51
+#: dat/missions/pirate/pir_clan_cargo.lua:50
 msgid "Pirate Lord"
 msgstr ""
 
-#: dat/missions/pirate/pir_clan_cargo.lua:51
+#: dat/missions/pirate/pir_clan_cargo.lua:50
 msgid ""
 "You see a pirate lord raving about something. A significant crowd has "
 "gathered around."
 msgstr ""
 
-#: dat/missions/pirate/pir_clan_cargo.lua:59
+#: dat/missions/pirate/pir_clan_cargo.lua:58
 msgid ""
 "It seems like this planet's clan is looking for a pilot to transport a "
 "package to another pirate world. Obviously, quite a few mercenaries or even "
@@ -57769,31 +57713,31 @@ msgstr ""
 #. Accept the mission
 #. Mission details
 #. Hey, this mission is probably hell, after all.
-#: dat/missions/pirate/pir_clan_cargo.lua:70
+#: dat/missions/pirate/pir_clan_cargo.lua:69
 msgid "Clans trade"
 msgstr ""
 
-#: dat/missions/pirate/pir_clan_cargo.lua:72
-#: dat/missions/pirate/pir_clan_cargo.lua:76
+#: dat/missions/pirate/pir_clan_cargo.lua:71
+#: dat/missions/pirate/pir_clan_cargo.lua:75
 #, lua-format
 msgid "Deliver some boxes to the pirate clan of %s, in the %s system."
 msgstr ""
 
-#: dat/missions/pirate/pir_clan_cargo.lua:75
+#: dat/missions/pirate/pir_clan_cargo.lua:74
 #, lua-format
 msgid "You roll up your sleeve and head off to your ship."
 msgstr ""
 
 #. Set up the goal
-#: dat/missions/pirate/pir_clan_cargo.lua:79
+#: dat/missions/pirate/pir_clan_cargo.lua:78
 msgid "Pirate Packages"
 msgstr ""
 
-#: dat/missions/pirate/pir_clan_cargo.lua:79
+#: dat/missions/pirate/pir_clan_cargo.lua:78
 msgid "A bunch of pirate packages. You don't want to know what's inside."
 msgstr ""
 
-#: dat/missions/pirate/pir_clan_cargo.lua:90
+#: dat/missions/pirate/pir_clan_cargo.lua:89
 msgid ""
 "Your mission was a complete success! The clan you just gave the packages "
 "have already paid you."
@@ -59051,104 +58995,104 @@ msgstr ""
 #. Dead or Alive Proteron Dissident Bounty
 #.
 #. --
-#: dat/missions/proteron/dissbounty_dead.lua:25
+#: dat/missions/proteron/dissbounty_dead.lua:26
 msgid ""
 "You and your crew infiltrate the ship's pathetic security and subdue the "
 "dissident. You transport them to your ship."
 msgstr ""
 
-#: dat/missions/proteron/dissbounty_dead.lua:26
+#: dat/missions/proteron/dissbounty_dead.lua:27
 msgid ""
 "Your crew has a difficult time getting past the ship's security, but "
 "eventually succeeds and subdues the dissident."
 msgstr ""
 
-#: dat/missions/proteron/dissbounty_dead.lua:27
+#: dat/missions/proteron/dissbounty_dead.lua:28
 msgid ""
 "The ship's security system turns out to be no match for your crew. You "
 "infiltrate the ship and capture the dissident."
 msgstr ""
 
-#: dat/missions/proteron/dissbounty_dead.lua:28
+#: dat/missions/proteron/dissbounty_dead.lua:29
 msgid "Your crew infiltrates the ship and captures the dissident."
 msgstr ""
 
-#: dat/missions/proteron/dissbounty_dead.lua:29
+#: dat/missions/proteron/dissbounty_dead.lua:30
 msgid ""
 "Getting past this ship's security was surprisingly easy. Didn't this "
 "dissident know that they were wanted?"
 msgstr ""
 
-#: dat/missions/proteron/dissbounty_dead.lua:32
+#: dat/missions/proteron/dissbounty_dead.lua:33
 msgid ""
 "Try as you might, you cannot get past the dissident's security system. "
 "Defeated, you and your crew return to the ship."
 msgstr ""
 
-#: dat/missions/proteron/dissbounty_dead.lua:34
+#: dat/missions/proteron/dissbounty_dead.lua:35
 msgid ""
 "Your crew comes close to getting past the dissident's security system, but "
 "ultimately fails."
 msgstr ""
 
-#: dat/missions/proteron/dissbounty_dead.lua:38
+#: dat/missions/proteron/dissbounty_dead.lua:39
 msgid ""
 "After verifying that you killed your target, an officer hands you your pay."
 msgstr ""
 
-#: dat/missions/proteron/dissbounty_dead.lua:39
+#: dat/missions/proteron/dissbounty_dead.lua:40
 msgid ""
 "After verifying that the target is indeed dead, the tired-looking officer "
 "smiles and hands you your pay."
 msgstr ""
 
-#: dat/missions/proteron/dissbounty_dead.lua:40
+#: dat/missions/proteron/dissbounty_dead.lua:41
 msgid "The officer thanks you and promptly hands you your pay."
 msgstr ""
 
-#: dat/missions/proteron/dissbounty_dead.lua:41
+#: dat/missions/proteron/dissbounty_dead.lua:42
 msgid ""
 "The officer takes you into a locked room, where the death of your target is "
 "quietly verified. The officer then pays you and sends you off."
 msgstr ""
 
-#: dat/missions/proteron/dissbounty_dead.lua:42
+#: dat/missions/proteron/dissbounty_dead.lua:43
 msgid ""
 "The officer verifies the death of your target, goes through the necessary "
 "paperwork, and hands you your pay, looking bored the entire time."
 msgstr ""
 
-#: dat/missions/proteron/dissbounty_dead.lua:45
+#: dat/missions/proteron/dissbounty_dead.lua:46
 msgid "An officer takes the dissident into custody and hands you your pay."
 msgstr ""
 
-#: dat/missions/proteron/dissbounty_dead.lua:46
+#: dat/missions/proteron/dissbounty_dead.lua:47
 msgid ""
 "The dissident puts up a fight as you take them to the officer, who then "
 "hands you your pay."
 msgstr ""
 
-#: dat/missions/proteron/dissbounty_dead.lua:47
+#: dat/missions/proteron/dissbounty_dead.lua:48
 msgid ""
 "The officer you deal with seems to especially dislike dissidents. The one "
 "you captured is taken off your hands and you are handed your pay without a "
 "word."
 msgstr ""
 
-#: dat/missions/proteron/dissbounty_dead.lua:48
+#: dat/missions/proteron/dissbounty_dead.lua:49
 msgid ""
 "An officer rushes the fearful-looking dissident into a secure hold, pays you "
 "the appropriate bounty, and takes the dissident into custody."
 msgstr ""
 
-#: dat/missions/proteron/dissbounty_dead.lua:49
+#: dat/missions/proteron/dissbounty_dead.lua:50
 msgid ""
 "The officer you greet gives you a puzzled look when you say that you "
 "captured your target alive. Nonetheless, they politely take the dissident "
 "off of your hands and hand you your pay."
 msgstr ""
 
-#: dat/missions/proteron/dissbounty_dead.lua:52
+#: dat/missions/proteron/dissbounty_dead.lua:53
 msgid ""
 "\"Greetings. I can see that you were trying to collect a bounty. Well, as "
 "you can see, I earned the bounty, but I don't think I would have succeeded "
@@ -59156,7 +59100,7 @@ msgid ""
 "account.\""
 msgstr ""
 
-#: dat/missions/proteron/dissbounty_dead.lua:53
+#: dat/missions/proteron/dissbounty_dead.lua:54
 msgid ""
 "\"Sorry about getting in the way of your bounty. I don't really care too "
 "much about the money, but I just wanted to make sure the galaxy would be rid "
@@ -59164,7 +59108,7 @@ msgid ""
 "bounty you clearly earned. The money will be in your account shortly.\""
 msgstr ""
 
-#: dat/missions/proteron/dissbounty_dead.lua:54
+#: dat/missions/proteron/dissbounty_dead.lua:55
 msgid ""
 "\"Hey, thanks for the help back there. I don't know if I would have been "
 "able to handle that dissident alone! Anyway, since you were such a big help, "
@@ -59172,7 +59116,7 @@ msgid ""
 "bank account.\""
 msgstr ""
 
-#: dat/missions/proteron/dissbounty_dead.lua:55
+#: dat/missions/proteron/dissbounty_dead.lua:56
 msgid ""
 "\"Heh, thanks! I think I would have been able to take out the target by "
 "myself, but still, I appreciate your assistance. Here, I'll transfer some of "
@@ -59180,32 +59124,31 @@ msgid ""
 msgstr ""
 
 #. Messages
-#: dat/missions/proteron/dissbounty_dead.lua:60
+#: dat/missions/proteron/dissbounty_dead.lua:61
 msgid "MISSION FAILURE! Your target got away."
 msgstr ""
 
-#: dat/missions/proteron/dissbounty_dead.lua:67
+#: dat/missions/proteron/dissbounty_dead.lua:68
 msgid "Kill or capture your target"
 msgstr ""
 
 #. No dissidents nearby
-#: dat/missions/proteron/dissbounty_dead.lua:96
+#: dat/missions/proteron/dissbounty_dead.lua:97
 msgid "Target Dissident"
 msgstr ""
 
 #. Set mission details
-#: dat/missions/proteron/dissbounty_dead.lua:104
-#, lua-format
-msgid "PD: Dead or Alive Bounty in %s"
+#: dat/missions/proteron/dissbounty_dead.lua:105
+msgid "PD: Dead or Alive Bounty in {sys}"
 msgstr ""
 
-#: dat/missions/proteron/dissbounty_dead.lua:105
+#: dat/missions/proteron/dissbounty_dead.lua:106
 msgid ""
 "A political dissident was recently seen in the {sys} system. {fctname} "
 "authorities want this dissident dead or alive."
 msgstr ""
 
-#: dat/missions/proteron/dissbounty_dead.lua:113
+#: dat/missions/proteron/dissbounty_dead.lua:114
 msgid "Proteron Dissident"
 msgstr ""
 
@@ -63706,45 +63649,45 @@ msgstr ""
 #. --
 #. --
 #. passenger rank
-#: dat/missions/sirius/srs_ferry.lua:48
+#: dat/missions/sirius/srs_ferry.lua:47
 msgid "Shaira"
 msgstr ""
 
-#: dat/missions/sirius/srs_ferry.lua:49
+#: dat/missions/sirius/srs_ferry.lua:48
 msgid "Fyrra"
 msgstr ""
 
-#: dat/missions/sirius/srs_ferry.lua:50
+#: dat/missions/sirius/srs_ferry.lua:49
 msgid "Serra"
 msgstr ""
 
-#: dat/missions/sirius/srs_ferry.lua:53
+#: dat/missions/sirius/srs_ferry.lua:52
 msgid "Economy"
 msgstr ""
 
 #. Note: indexed from 0, to match mission tiers.
-#: dat/missions/sirius/srs_ferry.lua:54
+#: dat/missions/sirius/srs_ferry.lua:53
 msgid "Priority"
 msgstr ""
 
-#: dat/missions/sirius/srs_ferry.lua:55
+#: dat/missions/sirius/srs_ferry.lua:54
 msgid "Express"
 msgstr ""
 
 #. =Politics=--
-#: dat/missions/sirius/srs_ferry.lua:59
+#: dat/missions/sirius/srs_ferry.lua:58
 msgid ""
 "The passenger looks at your credentials and remarks, \"Someone of your "
 "standing will not be allowed to set foot on the holy ground. "
 msgstr ""
 
-#: dat/missions/sirius/srs_ferry.lua:61
+#: dat/missions/sirius/srs_ferry.lua:60
 #, lua-format
 msgid ""
 "However, if you can take me as far as %s, I will be satisfied with that.\""
 msgstr ""
 
-#: dat/missions/sirius/srs_ferry.lua:62
+#: dat/missions/sirius/srs_ferry.lua:61
 #, lua-format
 msgid ""
 "However, I suppose if you can take me to %s, I can find another pilot for "
@@ -63752,14 +63695,14 @@ msgid ""
 "more than %s.\""
 msgstr ""
 
-#: dat/missions/sirius/srs_ferry.lua:63
+#: dat/missions/sirius/srs_ferry.lua:62
 #, lua-format
 msgid ""
 "However, if you're on the way to Aesir, I could be willing to pay %s for "
 "transportation to %s.\""
 msgstr ""
 
-#: dat/missions/sirius/srs_ferry.lua:64
+#: dat/missions/sirius/srs_ferry.lua:63
 msgid ""
 "Apparently you are not fit to be the pilot for my pilgrimage. It is the will "
 "of Sirichana to teach me patience...\""
@@ -63768,7 +63711,7 @@ msgstr ""
 #. Outcomes for each of the 4 options above:
 #. We pick random number (1-4), then use this as our index into nc_probs[rank]
 #. If you change ships mid-journey
-#: dat/missions/sirius/srs_ferry.lua:75
+#: dat/missions/sirius/srs_ferry.lua:74
 #, lua-format
 msgid ""
 "On landing, the passenger gives you a brief glare. \"I had paid for "
@@ -63777,59 +63720,59 @@ msgid ""
 "you were expecting."
 msgstr ""
 
-#: dat/missions/sirius/srs_ferry.lua:76
+#: dat/missions/sirius/srs_ferry.lua:75
 msgid ""
 "Since you were unexpectedly able to procure a Sirian ship for the journey, "
 "you find a few extra credits tucked in with the fare!"
 msgstr ""
 
 #. =Landing=--
-#: dat/missions/sirius/srs_ferry.lua:81
+#: dat/missions/sirius/srs_ferry.lua:80
 msgid "The Sirian Shaira"
 msgstr ""
 
-#: dat/missions/sirius/srs_ferry.lua:82
+#: dat/missions/sirius/srs_ferry.lua:81
 msgid "The Sirian Fyrra"
 msgstr ""
 
-#: dat/missions/sirius/srs_ferry.lua:83
+#: dat/missions/sirius/srs_ferry.lua:82
 msgid "The Sirian Serra"
 msgstr ""
 
-#: dat/missions/sirius/srs_ferry.lua:86
+#: dat/missions/sirius/srs_ferry.lua:85
 #, lua-format
 msgid ""
 "%s thanks you profusely for your generosity, and carefully counts out your "
 "fare."
 msgstr ""
 
-#: dat/missions/sirius/srs_ferry.lua:87
+#: dat/missions/sirius/srs_ferry.lua:86
 #, lua-format
 msgid ""
 "%s bows briefly in gratitude, and silently places the agreed-upon fare in "
 "your hand."
 msgstr ""
 
-#: dat/missions/sirius/srs_ferry.lua:88
+#: dat/missions/sirius/srs_ferry.lua:87
 #, lua-format
 msgid "%s crisply counts out your credits, and nods a momentary farewell."
 msgstr ""
 
-#: dat/missions/sirius/srs_ferry.lua:91
+#: dat/missions/sirius/srs_ferry.lua:90
 #, lua-format
 msgid ""
 "%s, on seeing the time, looks at you with veiled hurt and disappointment, "
 "but carefully counts out their full fare of %s."
 msgstr ""
 
-#: dat/missions/sirius/srs_ferry.lua:92
+#: dat/missions/sirius/srs_ferry.lua:91
 #, lua-format
 msgid ""
 "%s counts out %s with pursed lips, and walks off before you have time to say "
 "anything."
 msgstr ""
 
-#: dat/missions/sirius/srs_ferry.lua:93
+#: dat/missions/sirius/srs_ferry.lua:92
 #, lua-format
 msgid ""
 "%s tersely expresses their displeasure with the late arrival, and snaps %s "
@@ -63861,17 +63804,17 @@ msgstr ""
 #. Set some mission constants.
 #. This is the maximum distance for reputation bonus calculations. Distances beyond this don't add to the bonus.
 #. This is the minimum distance needed to get a reputation bonus. Distances less than this don't incur a bonus.
-#: dat/missions/sirius/srs_ferry.lua:173
+#: dat/missions/sirius/srs_ferry.lua:172
 #, lua-format
 msgid "SR: %s pilgrimage transport for %s-class citizen"
 msgstr ""
 
-#: dat/missions/sirius/srs_ferry.lua:174 dat/missions/sirius/srs_ferry.lua:255
+#: dat/missions/sirius/srs_ferry.lua:173 dat/missions/sirius/srs_ferry.lua:254
 #, lua-format
 msgid "%s space transport to %s for %s-class citizen"
 msgstr ""
 
-#: dat/missions/sirius/srs_ferry.lua:200
+#: dat/missions/sirius/srs_ferry.lua:199
 #, lua-format
 msgid ""
 "The passenger requests arrival within %s, but it will take at least %s for "
@@ -63885,7 +63828,7 @@ msgstr ""
 #. Decide if the passenger will be OK with being dropped off at Urail or Gayathi, and if reward is reduced
 #. Then ask player if they're OK with that
 #. Something has changed with the system map, and this mission is no longer valid
-#: dat/missions/sirius/srs_ferry.lua:224
+#: dat/missions/sirius/srs_ferry.lua:223
 msgid ""
 "Error: no landable planets in the Aesir system. This mission is broken.\n"
 msgstr ""
@@ -63895,8 +63838,8 @@ msgstr ""
 #. Rank 1 will accept an alternate destination, but cut your fare
 #. OK with alternate destination, with smaller fare cut
 #. Rank 0 will take whatever they can get
-#: dat/missions/sirius/srs_ferry.lua:236 dat/missions/sirius/srs_ferry.lua:240
-#: dat/missions/sirius/srs_ferry.lua:244 dat/missions/sirius/srs_ferry.lua:247
+#: dat/missions/sirius/srs_ferry.lua:235 dat/missions/sirius/srs_ferry.lua:239
+#: dat/missions/sirius/srs_ferry.lua:243 dat/missions/sirius/srs_ferry.lua:246
 msgid "Deficient clearance"
 msgstr ""
 
@@ -63907,12 +63850,12 @@ msgstr ""
 #. Demands to be delivered in a Sirian ship
 #. Could be persuaded, for a discount
 #. discount is ok
-#: dat/missions/sirius/srs_ferry.lua:267 dat/missions/sirius/srs_ferry.lua:272
-#: dat/missions/sirius/srs_ferry.lua:282
+#: dat/missions/sirius/srs_ferry.lua:266 dat/missions/sirius/srs_ferry.lua:271
+#: dat/missions/sirius/srs_ferry.lua:281
 msgid "Transportation details"
 msgstr ""
 
-#: dat/missions/sirius/srs_ferry.lua:267
+#: dat/missions/sirius/srs_ferry.lua:266
 #, lua-format
 msgid ""
 "%s and remarks, \"What? This is to be the ship for my pilgrimage? This is "
@@ -63921,12 +63864,12 @@ msgid ""
 "vessel.\""
 msgstr ""
 
-#: dat/missions/sirius/srs_ferry.lua:267 dat/missions/sirius/srs_ferry.lua:272
-#: dat/missions/sirius/srs_ferry.lua:282
+#: dat/missions/sirius/srs_ferry.lua:266 dat/missions/sirius/srs_ferry.lua:271
+#: dat/missions/sirius/srs_ferry.lua:281
 msgid "As you arrive at the hangar, the Sirian looks at your ship"
 msgstr ""
 
-#: dat/missions/sirius/srs_ferry.lua:272
+#: dat/missions/sirius/srs_ferry.lua:271
 #, lua-format
 msgid ""
 "%s and remarks, \"Oh, you didn't tell me your ship is not from our native "
@@ -63938,25 +63881,25 @@ msgid ""
 msgstr ""
 
 #. Player won't offer a discount
-#: dat/missions/sirius/srs_ferry.lua:276
+#: dat/missions/sirius/srs_ferry.lua:275
 msgid "Offer denied"
 msgstr ""
 
-#: dat/missions/sirius/srs_ferry.lua:276
+#: dat/missions/sirius/srs_ferry.lua:275
 msgid "\"I'm sorry. Your price is reasonable, but piety is of greater value.\""
 msgstr ""
 
 #. Would not be persuaded by a discount
-#: dat/missions/sirius/srs_ferry.lua:279
+#: dat/missions/sirius/srs_ferry.lua:278
 msgid "Offer accepted"
 msgstr ""
 
-#: dat/missions/sirius/srs_ferry.lua:279
+#: dat/missions/sirius/srs_ferry.lua:278
 msgid ""
 "\"Very well. For a price that reasonable, I will adjust my expectations.\""
 msgstr ""
 
-#: dat/missions/sirius/srs_ferry.lua:282
+#: dat/missions/sirius/srs_ferry.lua:281
 #, lua-format
 msgid ""
 "%s, and you catch a hint of disappointment on their face, before they notice "
@@ -63966,11 +63909,11 @@ msgstr ""
 #. ok with the arrangements
 #. Will not expect to arrive in a Sirian ship
 #. Will expect to arrive in a Sirian ship
-#: dat/missions/sirius/srs_ferry.lua:293
+#: dat/missions/sirius/srs_ferry.lua:292
 msgid "Pilgrims"
 msgstr ""
 
-#: dat/missions/sirius/srs_ferry.lua:293
+#: dat/missions/sirius/srs_ferry.lua:292
 msgid "A bunch of giddy Sirian pilgrims."
 msgstr ""
 
@@ -63980,72 +63923,72 @@ msgstr ""
 #. Check if we're still flying a Sirian ship
 #. Bad: they wanted a Sirian ship and you switched on them
 #. A little bonus for doing something nice
-#: dat/missions/sirius/srs_ferry.lua:311 dat/missions/sirius/srs_ferry.lua:334
+#: dat/missions/sirius/srs_ferry.lua:310 dat/missions/sirius/srs_ferry.lua:333
 msgid "Altering the deal"
 msgstr ""
 
 #. Good: they weren't expecting a Sirian ship, but they got one anyway
 #. ranges from 0 (<distbonus_minjumps jumps) to 4 (>=distbonus_maxjumps jumps)
-#: dat/missions/sirius/srs_ferry.lua:322
+#: dat/missions/sirius/srs_ferry.lua:321
 msgid "Successful arrival!"
 msgstr ""
 
 #. Pay them a bonus for using a Sirian ship
 #. if we missed the second deadline, drop the person off at the planet.
-#: dat/missions/sirius/srs_ferry.lua:324 dat/missions/sirius/srs_ferry.lua:342
+#: dat/missions/sirius/srs_ferry.lua:323 dat/missions/sirius/srs_ferry.lua:341
 msgid "Passenger transport failure"
 msgstr ""
 
-#: dat/missions/sirius/srs_ferry.lua:324
+#: dat/missions/sirius/srs_ferry.lua:323
 msgid ""
 "Well, you arrived, but with this late of an arrival, you can't hope for any "
 "payment."
 msgstr ""
 
 #. You were late
-#: dat/missions/sirius/srs_ferry.lua:329
+#: dat/missions/sirius/srs_ferry.lua:328
 msgid "Late arrival"
 msgstr ""
 
-#: dat/missions/sirius/srs_ferry.lua:342
+#: dat/missions/sirius/srs_ferry.lua:341
 msgid "You drop the upset pilgrim off at the nearest spaceport."
 msgstr ""
 
 #. Date hook
-#: dat/missions/sirius/srs_ferry.lua:350
+#: dat/missions/sirius/srs_ferry.lua:349
 #, lua-format
 msgid "Fly to %s in the %s system before %s"
 msgstr ""
 
-#: dat/missions/sirius/srs_ferry.lua:354 dat/missions/sirius/srs_ferry.lua:365
+#: dat/missions/sirius/srs_ferry.lua:353 dat/missions/sirius/srs_ferry.lua:364
 msgid "Pilgrimage transport"
 msgstr ""
 
 #. Case missed second deadline
-#: dat/missions/sirius/srs_ferry.lua:357
+#: dat/missions/sirius/srs_ferry.lua:356
 msgid ""
 "You're far too late ... best to drop your passengers off on the nearest "
 "planet before tempers run any higher."
 msgstr ""
 
-#: dat/missions/sirius/srs_ferry.lua:358
+#: dat/missions/sirius/srs_ferry.lua:357
 msgid "Pilgrim drop-off"
 msgstr ""
 
-#: dat/missions/sirius/srs_ferry.lua:359
+#: dat/missions/sirius/srs_ferry.lua:358
 msgid "Drop off the pilgrims at the nearest planet"
 msgstr ""
 
 #. Case missed first deadline
-#: dat/missions/sirius/srs_ferry.lua:363 dat/missions/sirius/srs_ferry.lua:364
+#: dat/missions/sirius/srs_ferry.lua:362 dat/missions/sirius/srs_ferry.lua:363
 msgid "You've missed the scheduled arrival time! But better late than never..."
 msgstr ""
 
-#: dat/missions/sirius/srs_ferry.lua:371
+#: dat/missions/sirius/srs_ferry.lua:370
 msgid "Passenger transport aborted"
 msgstr ""
 
-#: dat/missions/sirius/srs_ferry.lua:371
+#: dat/missions/sirius/srs_ferry.lua:370
 #, lua-format
 msgid ""
 "Informing the pilgrim that their flight to %s has been canceled, you promise "
@@ -67275,7 +67218,7 @@ msgstr ""
 #. --
 #. set mission variables
 #. t_x[3] is empty bc it depends on where the mission will start finally. (To be set in mission.xml and then adjusted in the following campaign missions)
-#. t_pla[3], t_sys[3] = planet.get("Gastan")
+#. t_pla[3], t_sys[3] = planet.getS("Gastan")
 #. Variable set up and clean up
 #. Spaceport bar stuff
 #: dat/missions/zalek/neburesearch/neburesearch_01.lua:48
@@ -68430,7 +68373,7 @@ msgstr ""
 #. -- Author: fart but based on Mission Ideas in wiki: wiki.naev.org/wiki/Mission_Ideas
 #. --
 #. mission variables
-#. t_pla[1], t_sys[1] = planet.get("Gastan")
+#. t_pla[1], t_sys[1] = planet.getS("Gastan")
 #. Have to be at center of operations.
 #. Spaceport bar stuff
 #.
@@ -68462,7 +68405,7 @@ msgstr ""
 #. system with the drone and the return to start
 #. Mission details
 #. amount of jumps the drone did to escape. Each jump reduces it's speed
-#. t_pla[2], t_sys[2] = planet.get("Gastan")
+#. t_pla[2], t_sys[2] = planet.getS("Gastan")
 #. Have to be at center of operations.
 #. Spaceport bar stuff
 #: dat/missions/zalek/sciencegonewrong/01_sciwrong.lua:46
@@ -73839,9 +73782,6 @@ msgstr ""
 #. Textbox
 #. Draw background
 #. Draw text
-#. TODO fix this not working during with postshaders. This is caused by
-#. the fact that if scaling is enabled, the canvas is running at a lower
-#. resolution (true pixels instead of scaled pixels )
 #. Namebox
 #. Draw text
 #. Options
@@ -73907,7 +73847,7 @@ msgstr ""
 #.
 #. -- Character
 #. --
-#: dat/scripts/vn/core.lua:597
+#: dat/scripts/vn/core.lua:590
 msgid "character not found to remove!"
 msgstr ""
 
@@ -73931,7 +73871,7 @@ msgstr ""
 #. -- Menu
 #. --
 #. Check to see if function
-#: dat/scripts/vn/core.lua:833
+#: dat/scripts/vn/core.lua:828
 msgid "[VN]: menu has no options!"
 msgstr ""
 
@@ -73942,7 +73882,7 @@ msgstr ""
 #. Get longest line
 #. Make all boxes max width
 #. Mouse over
-#: dat/scripts/vn/core.lua:929
+#: dat/scripts/vn/core.lua:924
 msgid "[CHOICE]"
 msgstr ""
 
@@ -73984,7 +73924,7 @@ msgstr ""
 #. @tparam tab params Parameter table.
 #. @treturn Character New character.
 #. --
-#: dat/scripts/vn/core.lua:1135
+#: dat/scripts/vn/core.lua:1130
 #, lua-format
 msgid "vn: character image '%s' not found!"
 msgstr ""
@@ -74149,12 +74089,12 @@ msgstr ""
 #.
 #. @tparam func updatefunc Update function to run every frame.
 #. --
-#: dat/scripts/vn/core.lua:1589
+#: dat/scripts/vn/core.lua:1584
 #, lua-format
 msgid "vn: unable to find label '%s'"
 msgstr ""
 
-#: dat/scripts/vn/core.lua:1599
+#: dat/scripts/vn/core.lua:1594
 #, lua-format
 msgid "vn: character '%s' not found!"
 msgstr ""
@@ -74170,7 +74110,7 @@ msgstr ""
 #. <em>Note</em> You have to set up the states first.
 #. <em>Note</em> This function doesn't return until the VN is done running.
 #. --
-#: dat/scripts/vn/core.lua:1633
+#: dat/scripts/vn/core.lua:1628
 msgid "vn: run without any states"
 msgstr ""
 
@@ -74555,21 +74495,21 @@ msgstr ""
 msgid "Trying to pop subtask when there are no subtasks for the task '%s'."
 msgstr ""
 
-#: src/ai.c:2312 src/nlua_pilot.c:4356
+#: src/ai.c:2317 src/nlua_pilot.c:4356
 #, c-format
 msgid "Planet '%s' not found in system '%s'"
 msgstr ""
 
-#: src/ai.c:2322
+#: src/ai.c:2325
 #, c-format
 msgid "Pilot '%s' (ai '%s') has no land target"
 msgstr ""
 
-#: src/ai.c:2407
+#: src/ai.c:2417
 msgid "Jump point must be in current system."
 msgstr ""
 
-#: src/ai.c:2945
+#: src/ai.c:2953
 msgid "Invalid Bounds"
 msgstr ""
 
@@ -74923,14 +74863,14 @@ msgstr ""
 msgid "Malformed %s file: missing root element '%s'"
 msgstr ""
 
-#: src/commodity.c:695 src/faction.c:1511 src/map.c:2653 src/outfit.c:1144
+#: src/commodity.c:695 src/faction.c:1511 src/map.c:2674 src/outfit.c:1144
 #: src/ship.c:525 src/ship.c:987 src/space.c:1764 src/space.c:1822
 #: src/space.c:3375 src/tech.c:112
 #, c-format
 msgid "Malformed %s file: does not contain elements"
 msgstr ""
 
-#: src/commodity.c:714 src/map.c:2665 src/slots.c:75 src/start.c:121
+#: src/commodity.c:714 src/map.c:2686 src/slots.c:75 src/start.c:121
 #: src/tech.c:126
 #, c-format
 msgid "'%s' has unknown node '%s'."
@@ -75604,7 +75544,7 @@ msgstr ""
 msgid "Invalid vertex type."
 msgstr ""
 
-#: src/dev_sysedit.c:725 src/map.c:729
+#: src/dev_sysedit.c:725 src/map.c:744
 msgid "Asteroid Field"
 msgstr ""
 
@@ -75785,7 +75725,7 @@ msgstr ""
 msgid "Open"
 msgstr ""
 
-#: src/dev_uniedit.c:231 src/map.c:319 src/map_find.c:1039
+#: src/dev_uniedit.c:231 src/map.c:334 src/map_find.c:1039
 msgid "Find"
 msgstr ""
 
@@ -75793,7 +75733,7 @@ msgstr ""
 msgid "Nebula:"
 msgstr ""
 
-#: src/dev_uniedit.c:246 src/map.c:294
+#: src/dev_uniedit.c:246 src/map.c:309
 msgid "Presence:"
 msgstr ""
 
@@ -76028,7 +75968,7 @@ msgid "Unable to create economy G Matrix."
 msgstr ""
 
 #: src/economy.c:506 src/gui.c:1606 src/ndata.c:199 src/news.c:103
-#: src/nfile.c:492 src/opengl_tex.c:141 src/opengl_tex.c:386 src/perlin.c:399
+#: src/nfile.c:492 src/opengl_tex.c:133 src/opengl_tex.c:370 src/perlin.c:399
 #: src/perlin.c:460 src/physics.c:456
 msgid "Out of Memory"
 msgstr ""
@@ -76209,15 +76149,15 @@ msgstr ""
 
 #. Movement.
 #: src/equipment.c:1729 src/equipment.c:1748 src/info.c:545 src/info.c:556
-#: src/land_shipyard.c:317 src/land_shipyard.c:327 src/map_system.c:675
-#: src/map_system.c:685
+#: src/land_shipyard.c:317 src/land_shipyard.c:327 src/map_system.c:676
+#: src/map_system.c:686
 msgid "tonne"
 msgid_plural "tonnes"
 msgstr[0] ""
 msgstr[1] ""
 
 #: src/equipment.c:1749 src/info.c:557 src/land_shipyard.c:328
-#: src/land_shipyard.c:329 src/map_system.c:686 src/map_system.c:687
+#: src/land_shipyard.c:329 src/map_system.c:687 src/map_system.c:688
 msgid "unit"
 msgid_plural "units"
 msgstr[0] ""
@@ -76430,7 +76370,7 @@ msgid_plural "Loaded %d Events"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/event.c:522 src/faction.c:1321 src/mission.c:1015 src/nxml.c:88
+#: src/event.c:522 src/faction.c:1321 src/mission.c:1015 src/nxml.c:82
 #, c-format
 msgid "Unable to read data from '%s'"
 msgstr ""
@@ -76867,7 +76807,7 @@ msgid ""
 "\n"
 "%s\n"
 "%s\n"
-"%d (%d %s)\n"
+"%.0f (%d %s)\n"
 "\n"
 "%.1f hours\n"
 "%s\n"
@@ -76967,7 +76907,7 @@ msgid ""
 "%.0f / %.0f MJ (%.1f MW)\n"
 "%.0f / %.0f MJ (%.1f MW)\n"
 "%d / %d %s\n"
-"%d / %d %s (%d %s)\n"
+"%.0f / %.0f %s (%d %s)\n"
 "\n"
 msgstr ""
 
@@ -77439,7 +77379,7 @@ msgid "Cycles through jump points."
 msgstr ""
 
 #. create the window.
-#: src/input.c:100 src/map.c:237 src/outfit.c:884
+#: src/input.c:100 src/map.c:252 src/outfit.c:884
 msgid "Star Map"
 msgstr ""
 
@@ -77736,7 +77676,7 @@ msgstr ""
 msgid "Any"
 msgstr ""
 
-#: src/input.c:546 src/opengl_tex.c:672
+#: src/input.c:546 src/opengl_tex.c:644
 msgid "unknown"
 msgstr ""
 
@@ -78146,7 +78086,7 @@ msgid ""
 msgstr ""
 
 #. Weapons & Manoeuvrability
-#: src/land_shipyard.c:316 src/map_system.c:674
+#: src/land_shipyard.c:316 src/map_system.c:675
 msgid "teraflop"
 msgid_plural "teraflops"
 msgstr[0] ""
@@ -78380,32 +78320,32 @@ msgstr ""
 msgid "ERROR %s:%d [%s]: "
 msgstr ""
 
-#: src/map.c:280
+#: src/map.c:295
 msgid "Faction:"
 msgstr ""
 
-#: src/map.c:287
+#: src/map.c:302
 msgid "Standing:"
 msgstr ""
 
-#: src/map.c:301
+#: src/map.c:316
 msgid "Planets:"
 msgstr ""
 
-#: src/map.c:308
+#: src/map.c:323
 msgid "Services:"
 msgstr ""
 
 #. Commodity button
-#: src/map.c:316
+#: src/map.c:331
 msgid "Mode"
 msgstr ""
 
-#: src/map.c:322
+#: src/map.c:337
 msgid "Autonav"
 msgstr ""
 
-#: src/map.c:453
+#: src/map.c:468
 #, c-format
 msgid ""
 "%s prices trading from %s shown: Positive/blue values mean a profit\n"
@@ -78413,118 +78353,118 @@ msgid ""
 "system."
 msgstr ""
 
-#: src/map.c:458
+#: src/map.c:473
 #, c-format
 msgid "Known %s prices shown. Galaxy-wide average: %.2f"
 msgstr ""
 
-#: src/map.c:535
+#: src/map.c:550
 #, c-format
 msgid "Multiple"
 msgstr ""
 
-#: src/map.c:672
+#: src/map.c:687
 msgid "#gTrade Lane#0"
 msgstr ""
 
-#: src/map.c:682
+#: src/map.c:697
 msgid "Dense "
 msgstr ""
 
-#: src/map.c:684
+#: src/map.c:699
 msgid "Light "
-msgstr ""
-
-#: src/map.c:691
-#, c-format
-msgid "#rVolatile %sNebula (%.1f MW)#0"
-msgstr ""
-
-#: src/map.c:693
-#, c-format
-msgid "#oDangerous %sNebula (%.1f MW)#0"
-msgstr ""
-
-#: src/map.c:695
-#, c-format
-msgid "#yUnstable %sNebula (%.1f MW)#0"
-msgstr ""
-
-#: src/map.c:697
-#, c-format
-msgid "%sNebula"
 msgstr ""
 
 #: src/map.c:706
 #, c-format
-msgid "#rDense Interference (%.0f%%)#0"
+msgid "#rVolatile %sNebula (%.1f MW)#0"
 msgstr ""
 
 #: src/map.c:708
 #, c-format
-msgid "#oLight Interference (%.0f%%)#0"
+msgid "#oDangerous %sNebula (%.1f MW)#0"
 msgstr ""
 
 #: src/map.c:710
 #, c-format
-msgid "#yInterference (%.0f%%)#0"
+msgid "#yUnstable %sNebula (%.1f MW)#0"
+msgstr ""
+
+#: src/map.c:712
+#, c-format
+msgid "%sNebula"
+msgstr ""
+
+#: src/map.c:721
+#, c-format
+msgid "#rDense Interference (%.0f%%)#0"
+msgstr ""
+
+#: src/map.c:723
+#, c-format
+msgid "#oLight Interference (%.0f%%)#0"
 msgstr ""
 
 #: src/map.c:725
+#, c-format
+msgid "#yInterference (%.0f%%)#0"
+msgstr ""
+
+#: src/map.c:740
 msgid "#oDense Asteroid Field#0"
 msgstr ""
 
-#: src/map.c:727
+#: src/map.c:742
 msgid "#yLight Asteroid Field"
 msgstr ""
 
-#: src/map.c:1603
+#: src/map.c:1624
 #, c-format
 msgid ""
 "No price info for\n"
 "%s here"
 msgstr ""
 
-#: src/map.c:1851
+#: src/map.c:1872
 msgid "Travel (Default)"
 msgstr ""
 
-#: src/map.c:1854
+#: src/map.c:1875
 #, c-format
 msgid "%s: Cost"
 msgstr ""
 
-#: src/map.c:1855
+#: src/map.c:1876
 #, c-format
 msgid "%s: Trade"
 msgstr ""
 
-#: src/map.c:1910
+#: src/map.c:1931
 msgid "Normal View"
 msgstr ""
 
-#: src/map.c:1910
+#: src/map.c:1931
 msgid "Minimal View"
 msgstr ""
 
-#: src/map.c:2647
+#: src/map.c:2668
 #, c-format
 msgid "Malformed %s file: missing root element 'map'"
 msgstr ""
 
-#: src/map.c:2670
+#: src/map.c:2691
 #, c-format
 msgid "Loaded %d map decorator"
 msgid_plural "Loaded %d map decorators"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/map.c:2697
+#: src/map.c:2718
 #, c-format
 msgid "Could not load map decorator texture '%s'."
 msgstr ""
 
-#: src/map.c:2702
+#: src/map.c:2723
 #, c-format
 msgid "Map decorator has unknown node '%s'."
 msgstr ""
@@ -78838,7 +78778,7 @@ msgstr ""
 msgid "This system does not sell ships"
 msgstr ""
 
-#: src/map_system.c:618
+#: src/map_system.c:619
 #, c-format
 msgid ""
 "%s\n"
@@ -78852,7 +78792,7 @@ msgid ""
 "#nLicense:#0 %s"
 msgstr ""
 
-#: src/map_system.c:647
+#: src/map_system.c:648
 #, c-format
 msgid ""
 "#nModel:#0 %s    #nClass:#0 %s\n"
@@ -78872,71 +78812,71 @@ msgid ""
 "%s"
 msgstr ""
 
-#: src/map_system.c:717
+#: src/map_system.c:718
 #, c-format
 msgid "#nYou have:#0 %d tonne, purchased at %s/t\n"
 msgid_plural "#nYou have:#0 %d tonnes, purchased at %s/t\n"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/map_system.c:723
+#: src/map_system.c:724
 #, c-format
 msgid "#nYou have:#0 %d tonne\n"
 msgid_plural "#nYou have:#0 %d tonnes\n"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/map_system.c:728
+#: src/map_system.c:729
 #, c-format
 msgid ""
 "#nAverage price seen here:#0 %s/t ± %s/t\n"
 "#nAverage price seen everywhere:#0 %s/t ± %s/t\n"
 msgstr ""
 
-#: src/map_system.c:733
+#: src/map_system.c:734
 msgid "Unexpected call to map_system_array_update\n"
 msgstr ""
 
 #. no route
-#: src/map_system.c:1016
+#: src/map_system.c:1030
 msgid "Unavailable"
 msgstr ""
 
-#: src/map_system.c:1016
+#: src/map_system.c:1030
 #, c-format
 msgid "Commodity prices for %s are not available here at the moment."
 msgstr ""
 
-#: src/map_system.c:1028
+#: src/map_system.c:1042
 msgid "Insufficient Credits"
 msgstr ""
 
-#: src/map_system.c:1028
+#: src/map_system.c:1042
 #, c-format
 msgid "You need %s to purchase this information."
 msgstr ""
 
-#: src/map_system.c:1030
+#: src/map_system.c:1044
 msgid "No commodities sold here"
 msgstr ""
 
-#: src/map_system.c:1030
+#: src/map_system.c:1044
 msgid "There are no commodities sold here."
 msgstr ""
 
-#: src/map_system.c:1032
+#: src/map_system.c:1046
 msgid "Already Up-to-date"
 msgstr ""
 
-#: src/map_system.c:1032
+#: src/map_system.c:1046
 msgid "You have newer information that what is available."
 msgstr ""
 
-#: src/map_system.c:1034
+#: src/map_system.c:1048
 msgid "Purchase commodity prices?"
 msgstr ""
 
-#: src/map_system.c:1034
+#: src/map_system.c:1048
 #, c-format
 msgid "Purchase %g period old pricing information for %s for %s?"
 msgstr ""
@@ -79234,7 +79174,7 @@ msgstr ""
 msgid "Unable to initialize SDL: %s"
 msgstr ""
 
-#: src/naev.c:218 src/opengl.c:446
+#: src/naev.c:218 src/opengl.c:428
 #, c-format
 msgid "Unable to initialize SDL Video: %s"
 msgstr ""
@@ -79620,7 +79560,7 @@ msgstr ""
 msgid "Unknown audio effect '%s'!"
 msgstr ""
 
-#: src/nlua_canvas.c:218 src/opengl_tex.c:238
+#: src/nlua_canvas.c:218 src/opengl_tex.c:227
 msgid "Error setting up framebuffer!"
 msgstr ""
 
@@ -79965,25 +79905,25 @@ msgstr ""
 msgid "Unknown PilotOutfit state '%s'!"
 msgstr ""
 
-#: src/nlua_planet.c:178 src/nlua_safelanes.c:120
+#: src/nlua_planet.c:180 src/nlua_safelanes.c:120
 msgid "Planet is invalid"
 msgstr ""
 
-#: src/nlua_planet.c:234
+#: src/nlua_planet.c:236
 msgid "Attempting to get landed planet when player not landed."
 msgstr ""
 
-#: src/nlua_planet.c:280 src/nlua_planet.c:352
+#: src/nlua_planet.c:282 src/nlua_planet.c:354
 #, c-format
 msgid "Planet '%s' not found in stack"
 msgstr ""
 
-#: src/nlua_planet.c:357
+#: src/nlua_planet.c:359
 #, c-format
 msgid "Planet '%s' is not placed in a system"
 msgstr ""
 
-#: src/nlua_planet.c:362
+#: src/nlua_planet.c:364
 #, c-format
 msgid "Planet '%s' can't find system '%s'"
 msgstr ""
@@ -80212,39 +80152,39 @@ msgstr ""
 msgid "Unknown NPC type!"
 msgstr ""
 
-#: src/nstring.c:208
+#: src/nstring.c:197
 #, c-format
 msgid "%.0f,%.0f,%.0f,%03.*f"
 msgstr ""
 
-#: src/nstring.c:215
+#: src/nstring.c:204
 #, c-format
 msgid "%.0f,%.0f,%03.*f"
 msgstr ""
 
-#: src/nstring.c:221
+#: src/nstring.c:210
 #, c-format
 msgid "%.0f,%03.*f"
 msgstr ""
 
 #. only seconds
-#: src/ntime.c:220
+#: src/ntime.c:204
 #, c-format
 msgid "%04d s"
 msgstr ""
 
-#: src/ntime.c:222
+#: src/ntime.c:206
 #, c-format
 msgid "%.*f p"
 msgstr ""
 
 #. UST format
-#: src/ntime.c:224
+#: src/ntime.c:208
 #, c-format
 msgid "UST %d:%.*f"
 msgstr ""
 
-#: src/nxml.c:93
+#: src/nxml.c:87
 #, c-format
 msgid "Unable to parse document '%s'"
 msgstr ""
@@ -80338,108 +80278,108 @@ msgstr ""
 msgid "No such material %s"
 msgstr ""
 
-#: src/opengl.c:118 src/player.c:2141
+#: src/opengl.c:109 src/player.c:2147
 msgid "Aborting screenshot"
 msgstr ""
 
-#: src/opengl.c:167
+#: src/opengl.c:156
 msgid "GL invalid enum"
 msgstr ""
 
-#: src/opengl.c:170
+#: src/opengl.c:159
 msgid "GL invalid value"
 msgstr ""
 
-#: src/opengl.c:173
+#: src/opengl.c:162
 msgid "GL invalid operation"
 msgstr ""
 
-#: src/opengl.c:176
+#: src/opengl.c:165
 msgid "GL invalid framebuffer operation"
 msgstr ""
 
-#: src/opengl.c:179
+#: src/opengl.c:168
 msgid "GL out of memory"
 msgstr ""
 
-#: src/opengl.c:183
+#: src/opengl.c:172
 msgid "GL unknown error"
 msgstr ""
 
-#: src/opengl.c:186
+#: src/opengl.c:175
 #, c-format
 msgid "OpenGL error [%s:%d]: %s"
 msgstr ""
 
-#: src/opengl.c:277
+#: src/opengl.c:263
 #, c-format
 msgid "Unable to create window! %s"
 msgstr ""
 
-#: src/opengl.c:291
+#: src/opengl.c:277
 #, c-format
 msgid "Unable to create OpenGL context! %s"
 msgstr ""
 
 #. Debug happiness
-#: src/opengl.c:342
+#: src/opengl.c:327
 #, c-format
 msgid "OpenGL Drawable Created: %dx%d@%dbpp"
 msgstr ""
 
-#: src/opengl.c:343
+#: src/opengl.c:328
 #, c-format
 msgid "r: %d, g: %d, b: %d, a: %d, db: %s, fsaa: %d, tex: %d"
 msgstr ""
 
-#: src/opengl.c:345 src/opengl.c:347
+#: src/opengl.c:330 src/opengl.c:332
 msgid "yes"
 msgstr ""
 
-#: src/opengl.c:345 src/opengl.c:347
+#: src/opengl.c:330 src/opengl.c:332
 msgid "no"
 msgstr ""
 
-#: src/opengl.c:347
+#: src/opengl.c:332
 #, c-format
 msgid "vsync: %s"
 msgstr ""
 
-#: src/opengl.c:348 src/sound_openal.c:350
+#: src/opengl.c:333 src/sound_openal.c:350
 #, c-format
 msgid "Renderer: %s"
 msgstr ""
 
-#: src/opengl.c:349
+#: src/opengl.c:334
 #, c-format
 msgid "Version: %s"
 msgstr ""
 
-#: src/opengl.c:353
+#: src/opengl.c:338
 #, c-format
 msgid "Missing texture units (%d required, %d found)"
 msgstr ""
 
-#: src/opengl.c:356
+#: src/opengl.c:341
 #, c-format
 msgid "Unable to get requested FSAA level (%d requested, got %d)"
 msgstr ""
 
-#: src/opengl.c:409
+#: src/opengl.c:392
 msgid "Screen size too small, upscaling..."
 msgstr ""
 
-#: src/opengl_shader.c:51
+#: src/opengl_shader.c:47
 #, c-format
 msgid "Shader '%s' not found."
 msgstr ""
 
-#: src/opengl_shader.c:101 src/opengl_shader.c:110
+#: src/opengl_shader.c:96 src/opengl_shader.c:105
 #, c-format
 msgid "Invalid #include syntax in '%s%s'!"
 msgstr ""
 
-#: src/opengl_shader.c:254
+#: src/opengl_shader.c:243
 #, c-format
 msgid "Failed to link vertex shader '%s' and fragment shader '%s'!"
 msgstr ""
@@ -80447,53 +80387,53 @@ msgstr ""
 #. We could hash raw pixel data here, but that's slower than just
 #. * generating the map from scratch.
 #.
-#: src/opengl_tex.c:421
+#: src/opengl_tex.c:405
 #, c-format
 msgid "Texture '%s' has no RWops"
 msgstr ""
 
-#: src/opengl_tex.c:639
+#: src/opengl_tex.c:612
 msgid "Trying to load image from NULL path."
 msgstr ""
 
-#: src/opengl_tex.c:646
+#: src/opengl_tex.c:619
 #, c-format
 msgid "Failed to load surface '%s' from ndata."
 msgstr ""
 
-#: src/opengl_tex.c:677
+#: src/opengl_tex.c:649
 #, c-format
 msgid "Unable to load image '%s'."
 msgstr ""
 
-#: src/opengl_tex.c:682
+#: src/opengl_tex.c:654
 #, c-format
 msgid "'%s' could not be opened"
 msgstr ""
 
 #. Not found
 #. Surfaces will have NULL names
-#: src/opengl_tex.c:814
+#: src/opengl_tex.c:783
 #, c-format
 msgid "Attempting to free texture '%s' not found in stack!"
 msgstr ""
 
 #. Invalid texture.
-#: src/opengl_tex.c:851
+#: src/opengl_tex.c:819
 #, c-format
 msgid "Unable to duplicate texture '%s'."
 msgstr ""
 
-#: src/opengl_tex.c:893
+#: src/opengl_tex.c:857
 #, c-format
 msgid "Angle not between 0 and 2.*M_PI [%f]."
 msgstr ""
 
-#: src/opengl_tex.c:959
+#: src/opengl_tex.c:917
 msgid "Texture leak detected!"
 msgstr ""
 
-#: src/opengl_tex.c:961
+#: src/opengl_tex.c:919
 #, c-format
 msgid "   '%s' opened %d time"
 msgid_plural "   '%s' opened %d times"
@@ -81472,61 +81412,61 @@ msgstr ""
 msgid "Solid initialization did not specify correct update function!"
 msgstr ""
 
-#: src/pilot.c:943
+#: src/pilot.c:944
 msgid "#oActive cooldown engaged."
 msgstr ""
 
-#: src/pilot.c:1000
+#: src/pilot.c:1001
 msgid "#oActive cooldown completed."
 msgstr ""
 
-#: src/pilot.c:1003
+#: src/pilot.c:1004
 #, c-format
 msgid "#rActive cooldown aborted: %s!"
 msgstr ""
 
-#: src/pilot.c:1005
+#: src/pilot.c:1006
 msgid "#rActive cooldown aborted!"
 msgstr ""
 
-#: src/pilot.c:1166
+#: src/pilot.c:1167
 #, c-format
 msgid "#%cComm %s>#0 \"%s\""
 msgstr ""
 
-#: src/pilot.c:1193
+#: src/pilot.c:1194
 #, c-format
 msgid "#%cBroadcast %s>#0 \"%s\""
 msgstr ""
 
-#: src/pilot.c:2489 src/pilot.c:2516
+#: src/pilot.c:2502 src/pilot.c:2529
 msgid "#rStrayed too far from jump point: jump aborted."
 msgstr ""
 
-#: src/pilot.c:2496
+#: src/pilot.c:2509
 msgid "#rAfterburner active: jump aborted."
 msgstr ""
 
-#: src/pilot.c:2536
+#: src/pilot.c:2549
 #, c-format
 msgid "Pilot '%s' trying to jump through exit-only jump from '%s' to '%s'"
 msgstr ""
 
-#: src/pilot.c:2836
+#: src/pilot.c:2849
 #, c-format
 msgid "Pilot '%s' failed safety check: %s"
 msgstr ""
 
-#: src/pilot.c:2839
+#: src/pilot.c:2852
 #, c-format
 msgid "   [%d] %s"
 msgstr ""
 
-#: src/pilot.c:2928 src/pilot.c:2963
+#: src/pilot.c:2941 src/pilot.c:2976
 msgid "Unable to allocate memory"
 msgstr ""
 
-#: src/pilot.c:3043
+#: src/pilot.c:3056
 msgid "Creating pilot in system with no jumps nor planets to take off from!"
 msgstr ""
 
@@ -81535,11 +81475,11 @@ msgstr ""
 msgid "Unable to copy cargo over from pilot '%s' to '%s'. Leaving cargo as is."
 msgstr ""
 
-#: src/pilot_ew.c:507
+#: src/pilot_ew.c:510
 msgid "You have been uncovered!"
 msgstr ""
 
-#: src/pilot_ew.c:509
+#: src/pilot_ew.c:512
 #, c-format
 msgid "You have uncovered '#%c%s#0'!"
 msgstr ""
@@ -82055,101 +81995,101 @@ msgstr ""
 msgid "Unable to find price for player's ship '%s': ship does not exist!"
 msgstr ""
 
-#: src/player.c:1358
+#: src/player.c:1360
 #, c-format
 msgid "Trying to set player's planet target to invalid ID '%d'"
 msgstr ""
 
-#: src/player.c:1403
+#: src/player.c:1405
 msgid "Asteroid targeted, composition: "
 msgstr ""
 
-#: src/player.c:1406
+#: src/player.c:1408
 #, c-format
 msgid "%s, quantity: %i"
 msgstr ""
 
-#: src/player.c:1411
+#: src/player.c:1413
 msgid "Asteroid targeted"
 msgstr ""
 
-#: src/player.c:1479
+#: src/player.c:1481
 msgid "#rThere are no planets to land on."
 msgstr ""
 
-#: src/player.c:1516
+#: src/player.c:1518
 msgid "#rDocking stabilizers malfunctioning, cannot land."
 msgstr ""
 
-#: src/player.c:1523
+#: src/player.c:1525
 msgid "#rYou can't land here."
 msgstr ""
 
 #. No shoes, no shirt, no lifeforms, no service.
-#: src/player.c:1541
+#: src/player.c:1543
 #, c-format
 msgid "#oReady to land on %s."
 msgstr ""
 
-#: src/player.c:1551
+#: src/player.c:1553
 #, c-format
 msgid "#rYou are too far away to land on %s."
 msgstr ""
 
-#: src/player.c:1557
+#: src/player.c:1559
 #, c-format
 msgid "#rYou are going too fast to land on %s."
 msgstr ""
 
-#: src/player.c:1599
+#: src/player.c:1601
 msgid "Player has landing permission, but no valid planet targeted."
 msgstr ""
 
-#: src/player.c:1610
+#: src/player.c:1612
 #, c-format
 msgid "#%c%s>#0 Landing permission revoked."
 msgstr ""
 
-#: src/player.c:1635
+#: src/player.c:1637
 msgid "You are not allowed to land at this moment."
 msgstr ""
 
-#: src/player.c:1648
+#: src/player.c:1650
 #, c-format
 msgid "Trying to set player's hyperspace target to invalid ID '%d'"
 msgstr ""
 
-#: src/player.c:1746
+#: src/player.c:1748
 #, c-format
 msgid "#rReceiving hail! Press #b%s#0 to respond."
 msgstr ""
 
-#: src/player.c:1799
+#: src/player.c:1801
 msgid "#rAborting hyperspace sequence."
 msgstr ""
 
-#: src/player.c:1806
+#: src/player.c:1808
 msgid "#rYou are too far from a jump point to initiate hyperspace."
 msgstr ""
 
-#: src/player.c:1808 src/player_autonav.c:87
+#: src/player.c:1810 src/player_autonav.c:87
 msgid "#rHyperspace drive is offline."
 msgstr ""
 
-#: src/player.c:1810
+#: src/player.c:1812
 msgid "#rYou do not have enough fuel to hyperspace jump."
 msgstr ""
 
-#: src/player.c:1812
+#: src/player.c:1814
 msgid "#oPreparing for hyperspace."
 msgstr ""
 
-#: src/player.c:1899
+#: src/player.c:1905
 #, c-format
 msgid "#oAutonav arrived at the %s system."
 msgstr ""
 
-#: src/player.c:1905
+#: src/player.c:1911
 #, c-format
 msgid "#oAutonav continuing until %s (%d jump left)."
 msgid_plural "#oAutonav continuing until %s (%d jumps left)."
@@ -82157,221 +82097,221 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. in case the crap system breaks :)
-#: src/player.c:2153
+#: src/player.c:2159
 msgid "You have reached the maximum amount of screenshots [999]"
 msgstr ""
 
 #. now proceed to take the screenshot
-#: src/player.c:2158
+#: src/player.c:2164
 #, c-format
 msgid "Taking screenshot [%03d]..."
 msgstr ""
 
-#: src/player.c:2187
+#: src/player.c:2193
 #, c-format
 msgid "#r%s is out of comm range, unable to contact."
 msgstr ""
 
-#: src/player.c:2210 src/player.c:2232
+#: src/player.c:2216 src/player.c:2238
 msgid "#rNo target selected to hail."
 msgstr ""
 
-#: src/player.c:2265
+#: src/player.c:2271
 msgid "#rYou haven't been hailed by any pilots."
 msgstr ""
 
-#: src/player.c:2278
+#: src/player.c:2284
 msgid "#oMouse flying enabled."
 msgstr ""
 
-#: src/player.c:2284
+#: src/player.c:2290
 msgid "#rMouse flying disabled."
 msgstr ""
 
-#: src/player.c:2500 src/player.c:2519
+#: src/player.c:2506 src/player.c:2525
 #, c-format
 msgid "Player ship '%s' not found in stack"
 msgstr ""
 
-#: src/player.c:2905
+#: src/player.c:2911
 msgid "Escort is undeployed"
 msgstr ""
 
-#: src/player.c:3122
+#: src/player.c:3128
 msgid "Found mission cargo without associated mission."
 msgstr ""
 
-#: src/player.c:3123
+#: src/player.c:3129
 msgid "Please reload save game to remove the dead cargo."
 msgstr ""
 
-#: src/player.c:3325
+#: src/player.c:3331
 msgid "Malformed time in save game!"
-msgstr ""
-
-#: src/player.c:3360
-#, c-format
-msgid "Outfit '%s' was saved but does not exist!"
 msgstr ""
 
 #: src/player.c:3366
 #, c-format
+msgid "Outfit '%s' was saved but does not exist!"
+msgstr ""
+
+#: src/player.c:3372
+#, c-format
 msgid "Outfit '%s' was saved without quantity!"
 msgstr ""
 
-#: src/player.c:3386
+#: src/player.c:3392
 msgid "Player ship does not exist!"
 msgstr ""
 
-#: src/player.c:3389
+#: src/player.c:3395
 msgid "Player has no other ships, giving starting ship."
 msgstr ""
 
-#: src/player.c:3400
+#: src/player.c:3406
 #, c-format
 msgid "Giving player ship '%s'."
 msgstr ""
 
-#: src/player.c:3406
+#: src/player.c:3412
 msgid "Something went horribly wrong, player does not exist after load..."
 msgstr ""
 
-#: src/player.c:3416
+#: src/player.c:3422
 msgid "Save has no time information, setting to start information."
 msgstr ""
 
-#: src/player.c:3425
+#: src/player.c:3431
 #, c-format
 msgid ""
 "Player starts out in non-existent or invalid planet '%s',trying to find a "
 "suitable one instead."
 msgstr ""
 
-#: src/player.c:3455
+#: src/player.c:3461
 #, c-format
 msgid "Could not find a planet satisfying criteria %d."
 msgstr ""
 
-#: src/player.c:3459
+#: src/player.c:3465
 msgid "Could not find a suitable planet. Choosing a random planet."
 msgstr ""
 
-#: src/player.c:3505
+#: src/player.c:3511
 #, c-format
 msgid "Mission '%s' doesn't seem to exist anymore, removing from save."
 msgstr ""
 
-#: src/player.c:3527
+#: src/player.c:3533
 #, c-format
 msgid "Event '%s' doesn't seem to exist anymore, removing from save."
 msgstr ""
 
-#: src/player.c:3549
+#: src/player.c:3555
 msgid "License node is missing name attribute."
 msgstr ""
 
-#: src/player.c:3576
+#: src/player.c:3582
 #, c-format
 msgid "Escort has invalid type '%s'."
 msgstr ""
 
-#: src/player.c:3637
+#: src/player.c:3643
 #, c-format
 msgid "Unknown ship class '%s' when parsing 'ships_destroyed' node!"
 msgstr ""
 
-#: src/player.c:3656
+#: src/player.c:3662
 #, c-format
 msgid ""
 "Outfit '%s' does not fit designated slot on player's pilot '%s', adding to "
 "stock."
 msgstr ""
 
-#: src/player.c:3664
+#: src/player.c:3670
 #, c-format
 msgid "Outfit '%s' does not fit on player's pilot '%s', adding to stock."
 msgstr ""
 
-#: src/player.c:3685
+#: src/player.c:3691
 msgid "Empty ship slot node found, skipping."
 msgstr ""
 
-#: src/player.c:3751
+#: src/player.c:3757
 #, c-format
 msgid "Player ship '%s' not found!"
 msgstr ""
 
-#: src/player.c:3800
+#: src/player.c:3806
 msgid "Outfit slot out of range, not adding to ship."
 msgstr ""
 
-#: src/player.c:3813 src/player.c:3826
+#: src/player.c:3819 src/player.c:3832
 msgid "Outfit slot out of range, not adding."
 msgstr ""
 
-#: src/player.c:3845
+#: src/player.c:3851
 #, c-format
 msgid "Unknown commodity '%s' detected, removing."
 msgstr ""
 
-#: src/player.c:3869
+#: src/player.c:3875
 #, c-format
 msgid ""
 "Player ship '%s' failed slot validity check , removing all outfits and "
 "adding to stock."
 msgstr ""
 
-#: src/player.c:3919
+#: src/player.c:3925
 #, c-format
 msgid ""
 "Player ship '%s' has unknown node '%s' in 'weaponsets' (expected "
 "'weaponset')."
 msgstr ""
 
-#: src/player.c:3927
+#: src/player.c:3933
 #, c-format
 msgid "Player ship '%s' missing 'id' tag for weapon set."
 msgstr ""
 
-#: src/player.c:3931
+#: src/player.c:3937
 #, c-format
 msgid "Player ship '%s' has invalid weapon set id '%d' [max %d]."
 msgstr ""
 
-#: src/player.c:3947
+#: src/player.c:3953
 #, c-format
 msgid "Player ship '%s' missing 'type' tag for weapon set."
 msgstr ""
 
-#: src/player.c:3960
+#: src/player.c:3966
 #, c-format
 msgid ""
 "Player ship '%s' has unknown 'weaponset' child node '%s' (expected 'weapon')."
 msgstr ""
 
-#: src/player.c:3968
+#: src/player.c:3974
 #, c-format
 msgid "Player ship '%s' missing 'level' tag for weapon set weapon."
 msgstr ""
 
-#: src/player.c:3973
+#: src/player.c:3979
 #, c-format
 msgid "Player ship '%s' has invalid weapon id %d [max %d]."
 msgstr ""
 
-#: src/player.c:4012
+#: src/player.c:4018
 msgid "You have destealthed."
 msgstr ""
 
-#: src/player.c:4018
+#: src/player.c:4024
 msgid "#gYou have entered stealth mode."
 msgstr ""
 
-#: src/player.c:4023
+#: src/player.c:4029
 msgid "#rUnable to stealth: missiles locked on!"
 msgstr ""
 
-#: src/player.c:4025
+#: src/player.c:4031
 msgid "#rUnable to stealth: other pilots nearby!"
 msgstr ""
 
@@ -82937,49 +82877,53 @@ msgstr ""
 msgid "MW Armour Damage"
 msgstr ""
 
-#: src/shipstats.c:164
+#: src/shipstats.c:163
+msgid "Fuel Regeneration"
+msgstr ""
+
+#: src/shipstats.c:165
 msgid "Damage Absorption"
 msgstr ""
 
-#: src/shipstats.c:166
+#: src/shipstats.c:167
 msgid "Nebula Resistance"
 msgstr ""
 
-#: src/shipstats.c:167
+#: src/shipstats.c:168
 msgid "Missile jamming chance"
 msgstr ""
 
-#: src/shipstats.c:169
+#: src/shipstats.c:170
 msgid "Hidden Jump Detection"
 msgstr ""
 
-#: src/shipstats.c:170
+#: src/shipstats.c:171
 msgid "units Fuel"
 msgstr ""
 
-#: src/shipstats.c:171
+#: src/shipstats.c:172
 msgid "tonnes Cargo Space"
 msgstr ""
 
-#: src/shipstats.c:173
+#: src/shipstats.c:174
 msgid "Instant Jump"
 msgstr ""
 
-#: src/shipstats.c:174
+#: src/shipstats.c:175
 msgid "Reverse Thrusters"
 msgstr ""
 
-#: src/shipstats.c:247
+#: src/shipstats.c:248
 #, c-format
 msgid "ss_lookup: %s should have id %d but has %d"
 msgstr ""
 
-#: src/shipstats.c:451
+#: src/shipstats.c:452
 #, c-format
 msgid "ss_typeFromName: No ship stat matching '%s'"
 msgstr ""
 
-#: src/shipstats.c:678 src/shipstats.c:805 src/shipstats.c:824
+#: src/shipstats.c:679 src/shipstats.c:806 src/shipstats.c:825
 #, c-format
 msgid "Unknown ship stat type '%s'!"
 msgstr ""
