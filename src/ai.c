@@ -2224,7 +2224,7 @@ static int aiL_getrndplanet( lua_State *L )
 
    /* Copy the data into a vector */
    planet = cur_system->planets[p]->id;
-   lua_pushplanet(L, cur_system->planets[p]->id);
+   lua_pushplanet(L, planet);
 
    return 1;
 }
@@ -2299,7 +2299,6 @@ static int aiL_getlandplanet( lua_State *L )
  */
 static int aiL_land( lua_State *L )
 {
-   int ret;
    Planet *planet;
    HookParam hparam;
 
@@ -2327,7 +2326,6 @@ static int aiL_land( lua_State *L )
    }
 
    /* Get planet. */
-   ret = 0;
    planet = cur_system->planets[ cur_pilot->nav_planet ];
 
    /* Check landability. */
