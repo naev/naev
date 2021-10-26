@@ -177,15 +177,12 @@ void safelanes_destroy (void)
  */
 SafeLane* safelanes_get( int faction, int standing, const StarSystem* system )
 {
-   int i, j;
-   SafeLane *out, *l;
-   const Vertex *v[2];
-   int lf, fe, fa, skip;
+   SafeLane *out = array_create( SafeLane );
 
-   out = array_create( SafeLane );
-
-   for (i=sys_to_first_edge[system->id]; i<sys_to_first_edge[1+system->id]; i++) {
-      lf = lane_faction[i];
+   for (int i=sys_to_first_edge[system->id]; i<sys_to_first_edge[1+system->id]; i++) {
+      SafeLane *l;
+      const Vertex *v[2];
+      int lf = lane_faction[i];
 
       /* No lane on edge. */
       if (lf <= 0)
@@ -200,9 +197,9 @@ SafeLane* safelanes_get( int faction, int standing, const StarSystem* system )
          }
          else {
             /* Try to do more advanced matching. */
-            fe = areEnemies(faction,lf);
-            fa = areAllies(faction,lf);
-            skip = 1;
+            int fe = areEnemies(faction,lf);
+            int fa = areAllies(faction,lf);
+            int skip = 1;
             if ((standing & SAFELANES_FRIENDLY) && fa)
                skip = 0;
             if ((standing & SAFELANES_NEUTRAL) && !fe)
@@ -214,12 +211,12 @@ SafeLane* safelanes_get( int faction, int standing, const StarSystem* system )
          }
       }
 
-      for (j=0; j<2; j++)
+      for (int j=0; j<2; j++)
          v[j] = &vertex_stack[edge_stack[i][j]];
 
       l = &array_grow( &out );
       l->faction = lane_faction[i];
-      for (j=0; j<2; j++) {
+      for (int j=0; j<2; j++) {
          switch (v[j]->type) {
             case VERTEX_PLANET:
                l->point_type[j]   = SAFELANE_LOC_PLANET;
@@ -327,21 +324,16 @@ static void safelanes_initStacks (void)
  */
 static void safelanes_initStacks_vertex (void)
 {
-   const StarSystem *systems_stack;
-   const Planet *p;
-   const JumpPoint *jp;
-   int system, i, j;
-
-   systems_stack = system_getAll();
+   const StarSystem *systems_stack = system_getAll();
 
    vertex_stack = array_create( Vertex );
    sys_to_first_vertex = array_create( int );
    array_push_back( &sys_to_first_vertex, 0 );
    tmp_planet_indices = array_create( int );
    tmp_jump_edges = array_create( Edge );
-   for (system=0; system<array_size(systems_stack); system++) {
-      for (i=0; i<array_size(systems_stack[system].planets); i++) {
-         p = systems_stack[system].planets[i];
+   for (int system=0; system<array_size(systems_stack); system++) {
+      for (int i=0; i<array_size(systems_stack[system].planets); i++) {
+         const Planet *p = systems_stack[system].planets[i];
          if (p->presence.base!=0. || p->presence.bonus!=0.) {
             Vertex v = {.system = system, .type = VERTEX_PLANET, .index = i};
             array_push_back( &tmp_planet_indices, array_size(vertex_stack) );
@@ -349,13 +341,13 @@ static void safelanes_initStacks_vertex (void)
          }
       }
 
-      for (i=0; i<array_size(systems_stack[system].jumps); i++) {
-         jp = &systems_stack[system].jumps[i];
+      for (int i=0; i<array_size(systems_stack[system].jumps); i++) {
+         const JumpPoint *jp = &systems_stack[system].jumps[i];
          if (!jp_isFlag( jp, JP_HIDDEN | JP_EXITONLY )) {
             Vertex v = {.system = system, .type = VERTEX_JUMP, .index = i};
             array_push_back( &vertex_stack, v );
             if (jp->targetid < system && jp->returnJump != NULL)
-               for (j = sys_to_first_vertex[jp->targetid]; j < sys_to_first_vertex[1+jp->targetid]; j++)
+               for (int j=sys_to_first_vertex[jp->targetid]; j < sys_to_first_vertex[1+jp->targetid]; j++)
                   if (vertex_stack[j].type == VERTEX_JUMP && jp->returnJump == &jp->target->jumps[vertex_stack[j].index]) {
                      array_push_back_edge( &tmp_jump_edges, array_size(vertex_stack)-1, j );
                      break;
@@ -465,7 +457,6 @@ static void safelanes_initStacks_anchor (void)
  */
 static void safelanes_destroyStacks (void)
 {
-   int i;
    safelanes_destroyTmp();
    array_free( vertex_stack );
    vertex_stack = NULL;
@@ -475,7 +466,7 @@ static void safelanes_destroyStacks (void)
    edge_stack = NULL;
    array_free( sys_to_first_edge );
    sys_to_first_edge = NULL;
-   for (i=0; i<array_size(presence_budget); i++)
+   for (int i=0; i<array_size(presence_budget); i++)
       array_free( presence_budget[i] );
    array_free( presence_budget );
    presence_budget = NULL;
@@ -508,7 +499,7 @@ static void safelanes_destroyTmp (void)
  */
 static void safelanes_initStiff (void)
 {
-   int nnz, v, i;
+   int nnz, v;
    double max_conductivity;
 
    cholmod_free_triplet( &stiff, &C );
@@ -516,22 +507,22 @@ static void safelanes_initStiff (void)
    nnz = 3*(array_size(edge_stack)+array_size(tmp_jump_edges)) + array_size(tmp_anchor_vertices);
    stiff = cholmod_allocate_triplet( v, v, nnz, STORAGE_MODE_UPPER_TRIANGULAR_PART, CHOLMOD_REAL, &C );
    /* Populate triplets: internal edges (ii ij jj), implicit jump connections (ditto), anchor conditions. */
-   for (i=0; i<array_size(edge_stack); i++) {
+   for (int i=0; i<array_size(edge_stack); i++) {
       triplet_entry( stiff, edge_stack[i][0], edge_stack[i][0], +tmp_edge_conduct[i] );
       triplet_entry( stiff, edge_stack[i][0], edge_stack[i][1], -tmp_edge_conduct[i] );
       triplet_entry( stiff, edge_stack[i][1], edge_stack[i][1], +tmp_edge_conduct[i] );
    }
-   for (i=0; i<array_size(tmp_jump_edges); i++) {
+   for (int i=0; i<array_size(tmp_jump_edges); i++) {
       triplet_entry( stiff, tmp_jump_edges[i][0], tmp_jump_edges[i][0], +JUMP_CONDUCTIVITY );
       triplet_entry( stiff, tmp_jump_edges[i][0], tmp_jump_edges[i][1], -JUMP_CONDUCTIVITY );
       triplet_entry( stiff, tmp_jump_edges[i][1], tmp_jump_edges[i][1], +JUMP_CONDUCTIVITY );
    }
    /* Add a Robin boundary condition, using the max conductivity (after activation) for spectral reasons. */
    max_conductivity = JUMP_CONDUCTIVITY/(1+ALPHA);
-   for (i=0; i<array_size(edge_stack); i++)
+   for (int i=0; i<array_size(edge_stack); i++)
       max_conductivity = MAX( max_conductivity, tmp_edge_conduct[i] );
    max_conductivity = MAX( JUMP_CONDUCTIVITY, (1+ALPHA)*max_conductivity ); /* Activation scales entries by 1+ALPHA later. */
-   for (i=0; i<array_size(tmp_anchor_vertices); i++)
+   for (int i=0; i<array_size(tmp_anchor_vertices); i++)
       triplet_entry( stiff, tmp_anchor_vertices[i], tmp_anchor_vertices[i], max_conductivity );
 #if DEBUGGING
    assert( stiff->nnz == stiff->nzmax );
@@ -567,14 +558,13 @@ static void safelanes_updateConductivity ( int ei_activated )
 static void safelanes_initQtQ (void)
 {
    cholmod_sparse *Q;
-   int i;
 
    cholmod_free_sparse( &QtQ, &C );
    /* Form Q, the edge-vertex projection where (Dirac notation) Q |edge> = |edge[0]> - |edge[1]>. It has a +1 and -1 per column. */
    Q = cholmod_allocate_sparse( array_size(vertex_stack), array_size(edge_stack), 2*array_size(edge_stack),
          SORTED, PACKED, STORAGE_MODE_UNSYMMETRIC, CHOLMOD_REAL, &C );
    ((int*)Q->p)[0] = 0;
-   for (i=0; i<array_size(edge_stack); i++) {
+   for (int i=0; i<array_size(edge_stack); i++) {
       ((int*)Q->p)[i+1] = 2*(i+1);
       ((int*)Q->i)[2*i+0] = edge_stack[i][0];
       ((int*)Q->i)[2*i+1] = edge_stack[i][1];
@@ -606,47 +596,45 @@ static void safelanes_initFTilde (void)
  */
 static void safelanes_initPPl (void)
 {
-   double d, pres, *Di;
-   int np, i, j, sys, fi, *component;
-   Planet *pnt;
+   int *component;
+   int np = array_size(tmp_planet_indices);
 
-   np = array_size(tmp_planet_indices);
-
-   for (fi=0; fi<array_size(PPl); fi++)
+   for (int fi=0; fi<array_size(PPl); fi++)
       cholmod_free_dense( &PPl[fi], &C );
    array_free( PPl );
    PPl = array_create_size( cholmod_dense*, array_size(faction_stack) );
-   for (fi=0; fi<array_size(faction_stack); fi++)
+   for (int fi=0; fi<array_size(faction_stack); fi++)
       array_push_back( &PPl, cholmod_zeros( np, np, CHOLMOD_REAL, &C ) );
 
    /* Form P, the pair-vertex projection where (Dirac notation) P |pair(i,j)> = |i> - |j>. It has a +1 and -1 per column. */
    /* At least, pretend we did. We want (PD)(PD)*, where D is a diagonal matrix whose pair(i,j) are these presence sums: */
 
    component = calloc( np, sizeof(int) );
-   for (i=0; i<np; i++)
+   for (int i=0; i<np; i++)
       component[i] = unionfind_find( &tmp_sys_uf, vertex_stack[tmp_planet_indices[i]].system );
 
-   for (i=0; i<np; i++) {
-      sys = vertex_stack[tmp_planet_indices[i]].system;
-      pnt = system_getIndex( sys )->planets[vertex_stack[tmp_planet_indices[i]].index];
-      pres = pnt->presence.base + pnt->presence.bonus; /* TODO distinguish between base and bonus? */
-      fi = FACTION_ID_TO_INDEX( pnt->presence.faction );
+   for (int i=0; i<np; i++) {
+      double *Di;
+      int sys = vertex_stack[tmp_planet_indices[i]].system;
+      Planet *pnt = system_getIndex( sys )->planets[vertex_stack[tmp_planet_indices[i]].index];
+      double pres = pnt->presence.base + pnt->presence.bonus; /* TODO distinguish between base and bonus? */
+      int fi = FACTION_ID_TO_INDEX( pnt->presence.faction );
       if (fi < 0)
          continue;
       Di = PPl[fi]->x;
-      for (j=0; j<i; j++)
+      for (int j=0; j<i; j++)
          if (component[i] == component[j])
             Di[np*i+j] += pres;
-      for (j=i+1; j<np; j++)
+      for (int j=i+1; j<np; j++)
          if (component[i] == component[j])
             Di[np*j+i] += pres;
    }
 
    /* At this point, PPl[fi]->x[np*i+j] holds the pair(i,j) entry of D. */
-   for (fi=0; fi<array_size(faction_stack); fi++)
-      for (i=0; i<np; i++)
-         for (j=0; j<i; j++) {
-            d = ((double*)PPl[fi]->x)[np*i+j];
+   for (int fi=0; fi<array_size(faction_stack); fi++)
+      for (int i=0; i<np; i++)
+         for (int j=0; j<i; j++) {
+            double d = ((double*)PPl[fi]->x)[np*i+j];
             d *= d;
             ((double*)PPl[fi]->x)[np*i+j] = -d;
             ((double*)PPl[fi]->x)[np*j+i] = -d;
@@ -664,7 +652,7 @@ static void safelanes_initPPl (void)
 static int safelanes_activateByGradient( cholmod_dense* Lambda_tilde )
 {
    int *facind_opts, *edgeind_opts, turns_next_time;
-   double *facind_vals, score_best, Linv, cost, cost_best, cost_cheapest_other;
+   double *facind_vals, Linv;
    cholmod_dense **lal; /**< Per faction index, the Lambda_tilde[myDofs,:] @ PPl[fi] matrices. Calloced and lazily populated. */
    size_t *lal_bases, lal_base; /**< System si's U and Lambda rows start at sys_base; its lal rows start at lal_base. */
 
@@ -689,6 +677,7 @@ static int safelanes_activateByGradient( cholmod_dense* Lambda_tilde )
 
       for (int fii=0; fii<array_size(faction_stack); fii++) {
          int ei_best;
+         double cost_best, cost_cheapest_other;
          int fi = facind_opts[fii];
          size_t sys_base = sys_to_first_vertex[si];
 
@@ -722,12 +711,13 @@ static int safelanes_activateByGradient( cholmod_dense* Lambda_tilde )
          cost_cheapest_other = +HUGE_VAL;
          if (array_size(edgeind_opts) > 1) {
             /* There's an actual choice. Search for the best option. Lower is better. */
-            score_best = +HUGE_VAL;
+            double score_best = +HUGE_VAL;
             for (int eii=0; eii<array_size(edgeind_opts); eii++) {
                int ei = edgeind_opts[eii];
                int sis = edge_stack[ei][0];
                int sjs = edge_stack[ei][1];
                double score = 0.;
+               double cost;
 
                if (lal[fi] == NULL) { /* Is it time to evaluate the lazily-calculated matrix? */
                   cholmod_dense *lamt = safelanes_sliceByPresence( Lambda_tilde, presence_budget[fi] );
@@ -880,7 +870,7 @@ static inline void triplet_entry( cholmod_triplet* m, int i, int j, double x )
  */
 static cholmod_dense* safelanes_sliceByPresence( cholmod_dense* m, double* sysPresence )
 {
-   size_t nr, nc, c, in_r, out_r, sz;
+   size_t nr, nc, in_r, out_r;
    cholmod_dense *out;
 
    nr = 0;
@@ -893,9 +883,9 @@ static cholmod_dense* safelanes_sliceByPresence( cholmod_dense* m, double* sysPr
 
    in_r = out_r = 0;
    for (int si=0; si < array_size(sys_to_first_vertex) - 1; si++) {
-      sz = sys_to_first_vertex[1+si] - sys_to_first_vertex[si];
+      int sz = sys_to_first_vertex[1+si] - sys_to_first_vertex[si];
       if (sysPresence[si] > 0) {
-         for (c = 0; c < nc; c++)
+         for (size_t c = 0; c < nc; c++)
             memcpy( &((double*)out->x)[c*out->d + out_r], &((double*)m->x)[c*m->d + in_r], sz * sizeof(double) );
          out_r += sz;
       }
@@ -911,7 +901,7 @@ static cholmod_dense* ncholmod_ddmult( cholmod_dense* A, int transA, cholmod_den
    blasint M = transA ? A->ncol : A->nrow, K = transA ? A->nrow : A->ncol, N = B->ncol, lda = A->d, ldb = B->d, ldc = M;
    assert( K == (blasint) B->nrow );
    cholmod_dense *out = cholmod_allocate_dense( M, N, M, CHOLMOD_REAL, &C );
-   double alpha = 1, beta = 0;
+   double alpha = 1., beta = 0.;
    BLASFUNC(dgemm)( transA ? "T" : "N", "N", &M, &N, &K, &alpha, A->x, &lda, B->x, &ldb, &beta, out->x, &ldc);
 #else /* I_LOVE_FORTRAN */
    size_t M = transA ? A->ncol : A->nrow, K = transA ? A->nrow : A->ncol, N = B->ncol;
