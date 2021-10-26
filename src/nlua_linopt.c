@@ -415,6 +415,25 @@ static int linoptL_loadmatrix( lua_State *L )
    return 0;
 }
 
+static const char* linopt_status( int retval )
+{
+   switch (retval) {
+      case GLP_OPT:
+         return "solution is optimal";
+      case GLP_FEAS:
+         return "solution is feasible";
+      case GLP_INFEAS:
+         return "solution is infeasible";
+      case GLP_NOFEAS:
+         return "problem has no feasible solution";
+      case GLP_UNBND:
+         return "problem has unbounded solution";
+      case GLP_UNDEF:
+         return "solution is undefined";
+      default:
+         return "unknown GLPK status";
+   }
+}
 static const char* linopt_error( int retval )
 {
    switch (retval) {
@@ -629,11 +648,25 @@ static int linoptL_solve( lua_State *L )
       lua_pushstring(L, linopt_error(ret));
       return 2;
    }
+   /* Check for optimality of continuous problem. */
+   ret = glp_get_status(lp->prob);
+   if (ret != GLP_OPT) {
+      lua_pushnil(L);
+      lua_pushstring(L, linopt_status(ret));
+      return 2;
+   }
    if (ismip) {
       ret = glp_intopt( lp->prob, &parm_iocp );
       if (ret != 0) {
          lua_pushnil(L);
          lua_pushstring(L, linopt_error(ret));
+         return 2;
+      }
+      /* Check for optimality of discrete problem. */
+      ret = glp_get_status(lp->prob);
+      if (ret != GLP_OPT) {
+         lua_pushnil(L);
+         lua_pushstring(L, linopt_status(ret));
          return 2;
       }
    }
