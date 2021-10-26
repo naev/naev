@@ -32,13 +32,19 @@ broadcastmsg = {
 -- TODO boarding VN stuff should allow talking to Misi and such.
 
 function create ()
+   local scur = system.cur()
    -- Make sure system isn't claimed, but we don't claim it
-   if not evt.claim( system.cur(), true ) then evt.finish() end
+   if not evt.claim( scur, true ) then evt.finish() end
 
-   -- Find planet
-   local planets = planet.getSAll()
-   if planets == nil then
-      local rad = system.cur():radius()
+   -- Find uninhabited planet
+   local planets = {}
+   for _k,p in ipairs(scur:planets()) do
+      if not p:services().inhabited then
+         table.insert( planets, p )
+      end
+   end
+   if planets == nil or #planets==0 then
+      local rad = scur:radius()
       spawn_pos = vec2.newP( rnd.rnd(0,rad*0.5), rnd.rnd(0,360) )
    else
       spawn_pos = planets[rnd.rnd(1,#planets)]:pos()
