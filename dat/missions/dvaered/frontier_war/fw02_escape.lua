@@ -53,7 +53,7 @@ escort_hailed = fw.escort_hailed
 hamfr_desc = _("Hamfresser and his team are together at a table. The captain drinks with his favorite pink straw while incessantly scanning the room.")
 hamfr_des2 = _("The captain sits alone at a remote table. He nervously chews his pink straw, while waiting for your signal to infiltrate the hospital.")
 nikol_desc = _("The second in command of Hamfresser's squad seems to be as laid back as a Totoran gladiator on cocaine. Clearly, open spaces like this bar with many people around are not suited to commandos, who are used to seeing strangers as a potentially hostile.")
-tronk_desc = _("The young cyborg sits to the left of his captain, and looks suspiciously at his sparkling water glass.")
+tronk_desc = _("The young cyborg sits to the right of his captain, and looks suspiciously at his sparkling water glass.")
 theru_desc = _("This soldier is the team's medic. As such, she seems to be slightly less combat-suited than the others, but her large cybernetically-enhanced arms still make her look like she could crush a bull.")
 straf_desc = _("The pilot is the only one in the group who looks like the other people with whom you are used to working. His presence along with the others makes the group even stranger.")
 
@@ -97,12 +97,13 @@ function accept()
    stage = 0
    hook.land("land")
    hook.enter("enter")
+   barLandHook = hook.land("landBar","bar")
+   loadhook    = hook.load("loading")
    misn.osdCreate( _("Dvaered Escape"), {_("Meet the rest of the team in %s in %s"):format(hampla:name(), hamsys:name()), _("Intercept the convoy in %s. Your Vendetta escort must survive"):format(intsys:name()), _("Report back on %s in %s"):format(reppla:name(), repsys:name())} )
    mark = misn.markerAdd(hamsys, "low")
 end
 
-function land()
-   lastPlanet = planet.cur()
+function landBar()
 
    -- You land at the commando's planet
    if stage == 0 and planet.cur() == hampla then
@@ -115,13 +116,24 @@ function land()
       local c = misn.cargoNew( N_("Commando"), N_("A commando unit.") )
       commando = misn.cargoAdd( c, commMass ) -- TODO: see if it gets auto-removed at the end of mission
 
+      tk.msg(_("Hello again"), _([[When you enter the bar, you feel an unusual atmosphere in the air. Most customers seem to be annoyed to be there, not lifting their eyes from their drinks. Even the mercenary pilots, who are usually easily distinguishable by their arrogant posture and their loud speaking, do not manifest. Moving forward in the room, you soon discover the reason of that: Captain Hamfresser, from the space infantry commandos. And this time, he is not alone.
+   The group of cyborgs sits in an empty part of the room, staring periodically at each customer and at the walls. For the first time, you make yourself the observation that they can probably see through most walls with their implants and try to remember if you had anything illegal hidden in your ship last time you had them on board. Between two cyborgs, you finally remark Lientenant Strafer, the pilot, who seems to be the only normal person who manages to look serene in presence of the space infantry cyborgs. Well... Normal person is maybe a bit exaggerated as he is a Dvaered soldier after all.
+   When you look at Hamfresser's face, you notice a large smile on it. The implants on his face do not look like they have been designed to deal with the possibility of a spacemarine trying to smile, and his skin twists horribly. You finally approach and he tells you the team is ready to leave as soon as you decide it.]]) )
+
       stage = 1
       misn.osdActive(2)
       misn.markerRm(mark)
       mark = misn.markerAdd(intsys, "high")
 
+      hook.rm(barLandHook)
+   end
+end
+
+function land()
+   lastPlanet = planet.cur()
+
    -- You land to steal a medical machine
-   elseif stage == 3 then
+   if stage == 3 then
       misn.npcAdd("fireSteal", _("Captain Hamfresser"), fw.portrait_hamfresser, hamfr_des2)
 
    -- Land at an Imperial planet and meet the agents
@@ -177,7 +189,7 @@ function land()
 end
 
 -- Put the npcs back at loading
-function load()
+function loading()
    if stage == 1 and planet.cur() == hampla then
       misn.npcAdd("discussHam", _("Captain Hamfresser"), fw.portrait_hamfresser, hamfr_desc)
       misn.npcAdd("discussNik", _("Sergeant Nikolov"), fw.portrait_nikolov, nikol_desc)
