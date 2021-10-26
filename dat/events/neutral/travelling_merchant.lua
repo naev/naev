@@ -43,12 +43,13 @@ function create ()
          table.insert( planets, p )
       end
    end
+   local spawn_pos
    if planets == nil or #planets==0 then
       local rad = scur:radius()
       spawn_pos = vec2.newP( rnd.rnd(0,rad*0.5), rnd.rnd(0,360) )
    else
-      spawn_pos = planets[rnd.rnd(1,#planets)]:pos()
-      spawn_pos = spawn_pos + vec2.newP( rnd.rnd(50, 150), rnd.rnd(0,360) )
+      local p = planets[rnd.rnd(1,#planets)]
+      spawn_pos = p:pos() + vec2.newP( p:radius()+100*rnd.rnd(), rnd.rnd(0,360) )
    end
 
    -- Create pilot
