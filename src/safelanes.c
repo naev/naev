@@ -1,14 +1,12 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
 /**
  * @file safelanes.c
  *
  * @brief Handles factions' safe lanes through systems.
  * This implements the algorithm described in utils/lanes-generator (whitepaper and much clearer Python version).
  */
-
 /** @cond */
 #include <math.h>
 
@@ -41,7 +39,6 @@
 #include "array.h"
 #include "log.h"
 #include "union_find.h"
-
 
 /*
  * Global parameters.
@@ -84,7 +81,6 @@ typedef struct Faction_ {
 
 /** @brief A set of lane-building factions, represented as a bitfield. */
 typedef uint32_t FactionMask;
-
 
 /*
  * Global state.
@@ -162,7 +158,6 @@ void safelanes_init (void)
    safelanes_recalculate();
 }
 
-
 /**
  * @brief Shuts down the safelanes system.
  */
@@ -172,7 +167,6 @@ void safelanes_destroy (void)
    safelanes_destroyStacks();
    cholmod_finish( &C );
 }
-
 
 /**
  * @brief Gets a set of safelanes for a faction and system.
@@ -243,15 +237,12 @@ SafeLane* safelanes_get( int faction, int standing, const StarSystem* system )
    return out;
 }
 
-
 /**
  * @brief Update the safe lane locations in response to the universe changing (e.g., diff applied).
  */
 void safelanes_recalculate (void)
 {
-   Uint32 time;
-
-   time = SDL_GetTicks();
+   Uint32 time = SDL_GetTicks();
    safelanes_initStacks();
    safelanes_initOptimizer();
    while (safelanes_buildOneTurn() > 0)
@@ -261,7 +252,6 @@ void safelanes_recalculate (void)
    time = SDL_GetTicks() - time;
    DEBUG( _("Charted safe lanes for %d objects in %.3f s."), array_size(vertex_stack), time/1000. );
 }
-
 
 /**
  * @brief Initializes resources used by lane optimization.
@@ -274,7 +264,6 @@ static void safelanes_initOptimizer (void)
    safelanes_initPPl();
    safelanes_destroyTmp();
 }
-
 
 /**
  * @brief Frees resources used by lane optimization.
@@ -290,7 +279,6 @@ static void safelanes_destroyOptimizer (void)
    cholmod_free_sparse( &QtQ, &C );
    cholmod_free_triplet( &stiff, &C );
 }
-
 
 /**
  * @brief Run a round of optimization. Return how many builds (upper bound) have to happen next turn.
@@ -322,7 +310,6 @@ static int safelanes_buildOneTurn (void)
    return turns_next_time;
 }
 
-
 /**
  * @brief Sets up the local faction/object stacks.
  */
@@ -334,7 +321,6 @@ static void safelanes_initStacks (void)
    safelanes_initStacks_edge();
    safelanes_initStacks_anchor();
 }
-
 
 /**
  * @brief Sets up the local stacks with entry per vertex (or per jump).
@@ -382,30 +368,26 @@ static void safelanes_initStacks_vertex (void)
    array_shrink( &sys_to_first_vertex );
 }
 
-
 /**
  * @brief Sets up the local stacks with entry per edge. Faction stack must be set up.
  */
 static void safelanes_initStacks_edge (void)
 {
-   const StarSystem *systems_stack;
-   int system, i, j, k;
-
-   systems_stack = system_getAll();
+   const StarSystem *systems_stack = system_getAll();
 
    edge_stack = array_create( Edge );
    sys_to_first_edge = array_create( int );
    array_push_back( &sys_to_first_edge, 0 );
    lane_fmask = array_create( FactionMask );
    tmp_edge_conduct = array_create( double );
-   for (system=0; system<array_size(systems_stack); system++) {
-      for (i = sys_to_first_vertex[system]; i < sys_to_first_vertex[1+system]; i++) {
+   for (int system=0; system<array_size(systems_stack); system++) {
+      for (int i=sys_to_first_vertex[system]; i < sys_to_first_vertex[1+system]; i++) {
          const Vector2d *pi = vertex_pos( i );
-         for (j = sys_to_first_vertex[system]; j < i; j++) {
+         for (int j=sys_to_first_vertex[system]; j < i; j++) {
             const Vector2d *pj = vertex_pos( j );
             double lij = vect_dist( pi, pj );
             int has_approx_midpoint = 0;
-            for (k = sys_to_first_vertex[system]; k < sys_to_first_vertex[1+system]; k++)
+            for (int k=sys_to_first_vertex[system]; k < sys_to_first_vertex[1+system]; k++)
                if (k!=i && k!=j && safelanes_triangleTooFlat( pi, pj, vertex_pos( k ), lij )) {
                   has_approx_midpoint = 1;
                   break;
@@ -427,19 +409,18 @@ static void safelanes_initStacks_edge (void)
    memset( lane_faction, 0, array_size(lane_faction)*sizeof(lane_faction[0]) );
 }
 
-
 /**
  * @brief Sets up the local stacks with entry per faction.
  */
 static void safelanes_initStacks_faction (void)
 {
-   int fi, f, s, *faction_all;
+   int *faction_all;
    const StarSystem *systems_stack;
 
    faction_stack = array_create( Faction );
    faction_all = faction_getAllVisible();
-   for (fi=0; fi<array_size(faction_all); fi++) {
-      f = faction_all[fi];
+   for (int fi=0; fi<array_size(faction_all); fi++) {
+      int f = faction_all[fi];
       Faction rec = {.id = f, .lane_length_per_presence = faction_lane_length_per_presence(f)};
       if (rec.lane_length_per_presence > 0.)
          array_push_back( &faction_stack, rec );
@@ -450,13 +431,12 @@ static void safelanes_initStacks_faction (void)
 
    presence_budget = array_create_size( double*, array_size(faction_stack) );
    systems_stack = system_getAll();
-   for (fi=0; fi<array_size(faction_stack); fi++) {
+   for (int fi=0; fi<array_size(faction_stack); fi++) {
       array_push_back( &presence_budget, array_create_size( double, array_size(systems_stack) ) );
-      for (s=0; s<array_size(systems_stack); s++)
+      for (int s=0; s<array_size(systems_stack); s++)
          array_push_back( &presence_budget[fi], system_getPresence( &systems_stack[s], faction_stack[fi].id ) );
    }
 }
-
 
 /**
  * @brief Identifies anchor points:
@@ -465,22 +445,20 @@ static void safelanes_initStacks_faction (void)
  */
 static void safelanes_initStacks_anchor (void)
 {
-   int i, nsys, *anchor_systems;
-
-   nsys = array_size(sys_to_first_vertex) - 1;
+   int *anchor_systems;
+   int nsys = array_size(sys_to_first_vertex) - 1;
    unionfind_init( &tmp_sys_uf, nsys );
-   for (i=0; i<array_size(tmp_jump_edges); i++)
+   for (int i=0; i<array_size(tmp_jump_edges); i++)
       unionfind_union( &tmp_sys_uf, vertex_stack[tmp_jump_edges[i][0]].system, vertex_stack[tmp_jump_edges[i][1]].system );
    anchor_systems = unionfind_findall( &tmp_sys_uf );
    tmp_anchor_vertices = array_create_size( int, array_size(anchor_systems) );
 
    /* Add an anchor vertex per system, but only if there actually is a vertex in the system. */
-   for (i=0; i<array_size(anchor_systems); i++)
+   for (int i=0; i<array_size(anchor_systems); i++)
       if (sys_to_first_vertex[anchor_systems[i]] < sys_to_first_vertex[1+anchor_systems[i]])
          array_push_back( &tmp_anchor_vertices, sys_to_first_vertex[anchor_systems[i]] );
    array_free( anchor_systems );
 }
-
 
 /**
  * @brief Tears down the local faction/object stacks.
@@ -509,7 +487,6 @@ static void safelanes_destroyStacks (void)
    lane_fmask = NULL;
 }
 
-
 /**
  * @brief Tears down the local faction/object stacks.
  */
@@ -525,7 +502,6 @@ static void safelanes_destroyTmp (void)
    array_free( tmp_anchor_vertices );
    tmp_anchor_vertices = NULL;
 }
-
 
 /**
  * @brief Sets up the stiffness matrix.
@@ -563,7 +539,6 @@ static void safelanes_initStiff (void)
 #endif /* DEBUGGING */
 }
 
-
 /**
  * @brief Returns the initial conductivity value (1/length) for edge ei.
  * The live value is stored in the stiffness matrix; \see safelanes_initStiff above.
@@ -575,7 +550,6 @@ static double safelanes_initialConductivity ( int ei )
    return lane_faction[ei] ? sv[3*ei]/(1+ALPHA) : sv[3*ei];
 }
 
-
 /**
  * @brief Updates the stiffness matrix to account for the given edge being activated.
  * \see safelanes_initStiff.
@@ -586,7 +560,6 @@ static void safelanes_updateConductivity ( int ei_activated )
    for (int i=3*ei_activated; i<3*(ei_activated+1); i++)
       sv[i] *= 1+ALPHA;
 }
-
 
 /**
  * @brief Sets up the (Q*)Q matrix.
@@ -615,7 +588,6 @@ static void safelanes_initQtQ (void)
    cholmod_free_sparse( &Q, &C );
 }
 
-
 /**
  * @brief Sets up the fluxes matrix f~.
  */
@@ -628,7 +600,6 @@ static void safelanes_initFTilde (void)
    cholmod_free_sparse( &sp, &C );
    cholmod_free_sparse( &eye, &C );
 }
-
 
 /**
  * @brief Sets up the PPl matrices appearing in the gradient formula.
@@ -686,42 +657,40 @@ static void safelanes_initPPl (void)
    free( component );
 }
 
-
 /**
  * @brief Per-system, per-faction, activates the affordable lane with best (grad phi)/L
  * @return How many builds (upper bound) have to happen next turn.
  */
 static int safelanes_activateByGradient( cholmod_dense* Lambda_tilde )
 {
-   int ei, eii, ei_best, fi, fii, *facind_opts, *edgeind_opts, si, sis, sjs, turns_next_time;
-   double *facind_vals, score, score_best, Linv, cost, cost_best, cost_cheapest_other;
-   StarSystem *sys;
+   int *facind_opts, *edgeind_opts, turns_next_time;
+   double *facind_vals, score_best, Linv, cost, cost_best, cost_cheapest_other;
    cholmod_dense **lal; /**< Per faction index, the Lambda_tilde[myDofs,:] @ PPl[fi] matrices. Calloced and lazily populated. */
-   size_t *lal_bases, lal_base, sys_base; /**< System si's U and Lambda rows start at sys_base; its lal rows start at lal_base. */
+   size_t *lal_bases, lal_base; /**< System si's U and Lambda rows start at sys_base; its lal rows start at lal_base. */
 
    lal = calloc( array_size(faction_stack), sizeof(cholmod_dense*) );
    lal_bases = calloc( array_size(faction_stack), sizeof(size_t) );
    edgeind_opts = array_create( int );
    facind_opts = array_create_size( int, array_size(faction_stack) );
    facind_vals = array_create_size( double, array_size(faction_stack) );
-   for (fi=0; fi<array_size(faction_stack); fi++) {
+   for (int fi=0; fi<array_size(faction_stack); fi++) {
       array_push_back( &facind_opts, fi );
       array_push_back( &facind_vals, 0 );
    }
    turns_next_time = 0;
 
-   for (si=0; si<array_size(sys_to_first_vertex)-1; si++)
-   {
+   for (int si=0; si<array_size(sys_to_first_vertex)-1; si++) {
       /* Factions with most presence here choose first. */
-      sys = system_getIndex( si );
-      for (fi=0; fi<array_size(faction_stack); fi++)
+      StarSystem *sys = system_getIndex( si );
+      for (int fi=0; fi<array_size(faction_stack); fi++)
          facind_vals[fi] = -system_getPresence( sys, faction_stack[fi].id ); /* FIXME: Is this better, or presence_budget? */
       cmp_key_ref = facind_vals;
       qsort( facind_opts, array_size(faction_stack), sizeof(int), cmp_key );
 
-      for (fii=0; fii<array_size(faction_stack); fii++) {
-         fi = facind_opts[fii];
-         sys_base = sys_to_first_vertex[si];
+      for (int fii=0; fii<array_size(faction_stack); fii++) {
+         int ei_best;
+         int fi = facind_opts[fii];
+         size_t sys_base = sys_to_first_vertex[si];
 
          /* Get the base index to use for this system. Save the value we expect to be the next iteration's base index.
           * The current system's rows are in the lal[fi] matrix if there's presence at the time we slice it.
@@ -735,7 +704,7 @@ static int safelanes_activateByGradient( cholmod_dense* Lambda_tilde )
          lal_bases[fi] += sys_to_first_vertex[1+si] - sys_to_first_vertex[si];
 
          array_resize( &edgeind_opts, 0 );
-         for (ei=sys_to_first_edge[si]; ei<sys_to_first_edge[1+si]; ei++)
+         for (int ei=sys_to_first_edge[si]; ei<sys_to_first_edge[1+si]; ei++)
             if (!lane_faction[ei]
                 && presence_budget[fi][si] >= 1 / safelanes_initialConductivity(ei) / faction_stack[fi].lane_length_per_presence
                 && (lane_fmask[ei] & (1<<fi)))
@@ -754,10 +723,11 @@ static int safelanes_activateByGradient( cholmod_dense* Lambda_tilde )
          if (array_size(edgeind_opts) > 1) {
             /* There's an actual choice. Search for the best option. Lower is better. */
             score_best = +HUGE_VAL;
-            for (eii=0; eii<array_size(edgeind_opts); eii++) {
-               ei = edgeind_opts[eii];
-               sis = edge_stack[ei][0];
-               sjs = edge_stack[ei][1];
+            for (int eii=0; eii<array_size(edgeind_opts); eii++) {
+               int ei = edgeind_opts[eii];
+               int sis = edge_stack[ei][0];
+               int sjs = edge_stack[ei][1];
+               double score = 0.;
 
                if (lal[fi] == NULL) { /* Is it time to evaluate the lazily-calculated matrix? */
                   cholmod_dense *lamt = safelanes_sliceByPresence( Lambda_tilde, presence_budget[fi] );
@@ -765,7 +735,6 @@ static int safelanes_activateByGradient( cholmod_dense* Lambda_tilde )
                   cholmod_free_dense( &lamt, &C );
                }
 
-               score = 0;
                /* Evaluate (LUTll[0,0] + LUTll[1,1] - LUTll[0,1] - LUTll[1,0]), */
                /* where    LUTll = np.dot( lal[[sis,sjs],:] , utilde[[sis,sjs],:].T ) */
                score += safelanes_row_dot_row( utilde, lal[fi], sis, sis - sys_base + lal_base );
@@ -775,7 +744,7 @@ static int safelanes_activateByGradient( cholmod_dense* Lambda_tilde )
                Linv = safelanes_initialConductivity(ei);
                score *= ALPHA * Linv * Linv;
 
-               cost = 1 / safelanes_initialConductivity(ei) / faction_stack[fi].lane_length_per_presence;
+               cost = 1. / safelanes_initialConductivity(ei) / faction_stack[fi].lane_length_per_presence;
                if (score < score_best) {
                   ei_best = ei;
                   score_best = score;
@@ -801,12 +770,12 @@ static int safelanes_activateByGradient( cholmod_dense* Lambda_tilde )
    }
 
 #if DEBUGGING
-   for (fi=0; fi<array_size(faction_stack); fi++)
-      if ( lal[fi] != NULL)
+   for (int fi=0; fi<array_size(faction_stack); fi++)
+      if (lal[fi] != NULL)
          assert( "Correctly tracked row offsets between the 'lal' and 'utilde' matrices" && lal[fi]->nrow == lal_bases[fi] );
 #endif /* DEBUGGING */
 
-   for (fi=0; fi<array_size(faction_stack); fi++)
+   for (int fi=0; fi<array_size(faction_stack); fi++)
       cholmod_free_dense( &lal[fi], &C );
    free( lal );
    free( lal_bases );
@@ -817,14 +786,12 @@ static int safelanes_activateByGradient( cholmod_dense* Lambda_tilde )
    return turns_next_time;
 }
 
-
 /** @brief It's a qsort comparator. Set the cmp_key_ref pointer prior to use, or else. */
 static int cmp_key( const void* p1, const void* p2 )
 {
    double d = cmp_key_ref[*(int*)p1] - cmp_key_ref[*(int*)p2];
    return SIGN( d );
 }
-
 
 /**
  * @brief Return true if this triangle is so flat that lanes from point m to point n aren't allowed.
@@ -838,7 +805,6 @@ static int safelanes_triangleTooFlat( const Vector2d* m, const Vector2d* n, cons
    double dpm = ((m->x-n->x)*(m->x-p->x) + (m->y-n->y)*(m->y-p->y)) / ( lmn * lmp );
    return (dpn > MAX_COSINE && lnp < lmn) || (dpm > MAX_COSINE && lmp < lmn);
 }
-
 
 /**
  * @brief Return the vertex's owning faction (ID, not faction_stack index), or -1 if not applicable.
@@ -856,7 +822,6 @@ static int vertex_faction( int vi )
    }
 }
 
-
 /**
  * @brief Return the vertex's coordinates within its system (by reference since our vec2's are fat).
  */
@@ -873,7 +838,6 @@ static const Vector2d* vertex_pos( int vi )
    }
 }
 
-
 /** @brief Return the faction_stack index corresponding to a faction ID, or -1. */
 static inline int FACTION_ID_TO_INDEX( int id )
 {
@@ -883,21 +847,18 @@ static inline int FACTION_ID_TO_INDEX( int id )
    return -1;
 }
 
-
 /** @brief Return a mask matching any faction. */
 static inline FactionMask MASK_ANY_FACTION()
 {
    return ~(FactionMask)0;
 }
 
-
 /** @brief A mask giving this faction (NOT faction_stack index) exclusive rights to build, if it's a lane-building faction. */
 static inline FactionMask MASK_ONE_FACTION( int id )
 {
-   int i = FACTION_ID_TO_INDEX( id );
-   return i>0 ? ((FactionMask)1)<<i : MASK_ANY_FACTION();
+   int ind = FACTION_ID_TO_INDEX( id );
+   return ind>0 ? ((FactionMask)1)<<ind : MASK_ANY_FACTION();
 }
-
 
 /** @brief A mask with appropriate lane-building rights given one faction ID owning each endpoint. */
 static inline FactionMask MASK_COMPROMISE( int id1, int id2 )
@@ -905,7 +866,6 @@ static inline FactionMask MASK_COMPROMISE( int id1, int id2 )
    FactionMask m1 = MASK_ONE_FACTION(id1), m2 = MASK_ONE_FACTION(id2);
    return (m1 & m2) ? (m1 & m2) : (m1 | m2);  /* Any/Any -> any, Any/f -> just f, f1/f2 -> either. */
 }
-
 
 static inline void triplet_entry( cholmod_triplet* m, int i, int j, double x )
 {
@@ -915,26 +875,24 @@ static inline void triplet_entry( cholmod_triplet* m, int i, int j, double x )
    m->nnz++;
 }
 
-
 /**
  * @brief Construct the matrix-slice of m, selecting those rows where the corresponding presence value is positive.
  */
 static cholmod_dense* safelanes_sliceByPresence( cholmod_dense* m, double* sysPresence )
 {
-   int si;
    size_t nr, nc, c, in_r, out_r, sz;
    cholmod_dense *out;
 
    nr = 0;
    nc = m->ncol;
-   for (si = 0; si < array_size(sys_to_first_vertex) - 1; si++)
+   for (int si=0; si < array_size(sys_to_first_vertex) - 1; si++)
       if (sysPresence[si] > 0)
          nr += sys_to_first_vertex[1+si] - sys_to_first_vertex[si];
 
    out = cholmod_allocate_dense( nr, nc, nr, CHOLMOD_REAL, &C );
 
    in_r = out_r = 0;
-   for (si = 0; si < array_size(sys_to_first_vertex) - 1; si++) {
+   for (int si=0; si < array_size(sys_to_first_vertex) - 1; si++) {
       sz = sys_to_first_vertex[1+si] - sys_to_first_vertex[si];
       if (sysPresence[si] > 0) {
          for (c = 0; c < nc; c++)
@@ -945,7 +903,6 @@ static cholmod_dense* safelanes_sliceByPresence( cholmod_dense* m, double* sysPr
    }
    return out;
 }
-
 
 /** @brief Dense times dense matrix. Return A*B, or A'*B if transA is true. */
 static cholmod_dense* ncholmod_ddmult( cholmod_dense* A, int transA, cholmod_dense* B )
@@ -964,7 +921,6 @@ static cholmod_dense* ncholmod_ddmult( cholmod_dense* A, int transA, cholmod_den
 #endif /* I_LOVE_FORTRAN */
    return out;
 }
-
 
 /** @brief Return the i,j entry of A*B', or equivalently the dot product of row i of A with row j of B. */
 static double safelanes_row_dot_row( cholmod_dense* A, cholmod_dense* B, int i, int j )
