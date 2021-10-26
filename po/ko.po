@@ -25658,13 +25658,13 @@ msgstr "전투가 시작되려고 한다"
 #, lua-format
 msgid ""
 "\"Hey, you,\" the captain of the ship says. \"You seem not to know what is "
-"going to happen here: a mighty warlord from %s is going to attack %s. You "
+"going to happen here: a mighty warlord from {sys} is going to attack {pnt}. You "
 "shouldn't stay there, unless you are a mercenary. Do you know how it works? "
 "If you attack a warlord's ship, and he loses the battle, the other warlord "
 "will reward you. But if he wins, you will be hunted down.\""
 msgstr ""
 "\"이봐, 너, \" 배의 선장이 말했다. \"넌 여기서 무슨 일이 일어날 지 모르는 것 "
-"같구나. %s의 강력한 장군이 %s를 공격 할 것이다. 용병이 아니라면 넌 이곳에 머"
+"같구나. {sys}의 강력한 장군이 {pnt}를 공격 할 것이다. 용병이 아니라면 넌 이곳에 머"
 "물러서는 안된다. 어떻게 되는 지 알고있나? 너가 장군의 함선을 공격하고 그가 전"
 "투에서 지면 다른 장군이 당신에게 보상을 줄 것이다. 그러나 만약 그가 이긴다"
 "면, 넌 쫓겨날 것이다.\""
@@ -25677,10 +25677,10 @@ msgstr "보상이 온다"
 #, fuzzy, lua-format
 msgid ""
 "\"Hello captain,\" a Dvaered officer says, \"You helped us in this battle. I "
-"am authorized to give you %s as a reward.\""
+"am authorized to give you {credits} as a reward.\""
 msgstr ""
 "\"안녕하세요 선장님.\" Dvaered 장교가 말하길, \"당신이 전투에서 우리를 도왔습"
-"니다. 저는 보상으로 %s 크레딧을 줄 권한이 있습니다.\""
+"니다. 저는 보상으로 {credits} 크레딧을 줄 권한이 있습니다.\""
 
 #. mass of the player's victims
 #. Both fleets are close enough: start the epic battle

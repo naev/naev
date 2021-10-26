@@ -25323,13 +25323,13 @@ msgstr "Une bataille se prépare"
 #, lua-format
 msgid ""
 "\"Hey, you,\" the captain of the ship says. \"You seem not to know what is "
-"going to happen here: a mighty warlord from %s is going to attack %s. You "
+"going to happen here: a mighty warlord from {sys} is going to attack {pnt}. You "
 "shouldn't stay there, unless you are a mercenary. Do you know how it works? "
 "If you attack a warlord's ship, and he loses the battle, the other warlord "
 "will reward you. But if he wins, you will be hunted down.\""
 msgstr ""
 "\"Hé, vous,\" lance le capitaine du vaisseau. \"Vous n'avez pas l'air de "
-"savoir ce qui se passe ici : le glorieux %s va attaquer %s. Vous ne devriez "
+"savoir ce qui se passe ici : le glorieux {sys} va attaquer {pnt}. Vous ne devriez "
 "pas rester là, à moins que vous ne soyez un mercenaire. Vous savez comment "
 "ça marche, si vous attaquez un seigneur de guerre et qu'il perd, son "
 "adversaire vous recompensera. S'il gagne en revanche, votre tête sera mise à "
@@ -25343,10 +25343,10 @@ msgstr "Voilà votre récompense"
 #, lua-format
 msgid ""
 "\"Hello captain,\" a Dvaered officer says, \"You helped us in this battle. I "
-"am authorized to give you %s as a reward.\""
+"am authorized to give you {credits} as a reward.\""
 msgstr ""
 "Un officier Dvaered vous interpelle : \"Salutations capitaine, vous nous "
-"avez aidé dans cette bataille. Une récompense de %s a été autorisée.\""
+"avez aidé dans cette bataille. Une récompense de {credits} a été autorisée.\""
 
 #. mass of the player's victims
 #. Both fleets are close enough: start the epic battle

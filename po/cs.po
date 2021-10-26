@@ -25588,13 +25588,13 @@ msgstr "Bitva brzy začne"
 #, lua-format
 msgid ""
 "\"Hey, you,\" the captain of the ship says. \"You seem not to know what is "
-"going to happen here: a mighty warlord from %s is going to attack %s. You "
+"going to happen here: a mighty warlord from {sys} is going to attack {pnt}. You "
 "shouldn't stay there, unless you are a mercenary. Do you know how it works? "
 "If you attack a warlord's ship, and he loses the battle, the other warlord "
 "will reward you. But if he wins, you will be hunted down.\""
 msgstr ""
 "„Hej, ty,“ říká kapitán lodi. „Zdá se, že nevíš, co se tady stane: mocný "
-"válečník z %s zaútočí na %s. Neměl bys tu zůstat, pokud nejsi žoldák. Víš, "
+"válečník z {sys} zaútočí na {pnt}. Neměl bys tu zůstat, pokud nejsi žoldák. Víš, "
 "jak to funguje? Pokud zaútočíš na válečníkovu loď a on prohraje bitvu, druhý "
 "válečník tě odmění. Ale pokud vyhraje, budeš pronásledován. “"
 
@@ -25606,10 +25606,10 @@ msgstr "Zde je tvá odměna"
 #, lua-format
 msgid ""
 "\"Hello captain,\" a Dvaered officer says, \"You helped us in this battle. I "
-"am authorized to give you %s as a reward.\""
+"am authorized to give you {credits} as a reward.\""
 msgstr ""
 "„Ahoj kapitáne,“ říká Dvaeredský důstojník, „pomohl jsi nám v této bitvě. "
-"Jsem oprávněn ti dát %s jako odměnu.“"
+"Jsem oprávněn ti dát {credits} jako odměnu.“"
 
 #. mass of the player's victims
 #. Both fleets are close enough: start the epic battle
