@@ -46,8 +46,8 @@ abandon_text[1] = _("You are sent a message informing you that landing in the mi
 
 
 -- Mission details
-misn_title  = _("Patrol of the %s System")
-misn_desc   = _("Patrol specified points in the %s system, eliminating any hostiles you encounter.")
+misn_title  = _("Patrol of the {sys} System")
+misn_desc   = _("Patrol specified points in the {sys} system, eliminating any hostiles you encounter.")
 
 -- Messages
 msg    = {}
@@ -56,13 +56,13 @@ msg[2] = _("Hostiles detected. Engage hostiles.")
 msg[3] = _("Hostiles eliminated.")
 msg[4] = _("Patrol complete. You can now collect your pay.")
 msg[5] = _("MISSION FAILURE! You showed up too late.")
-msg[6] = _("MISSION FAILURE! You have left the %s system.")
+msg[6] = _("MISSION FAILURE! You have left the {sys} system.")
 
 osd_msg    = {}
 osd_msg[1] = _("Fly to the {sys} system")
 osd_msg[2] = "(null)"
 osd_msg[3] = _("Eliminate hostiles")
-osd_msg[4] = _("Land in %s territory to collect your pay")
+osd_msg[4] = _("Land in {fctname} territory to collect your pay")
 osd_msg["__save"] = true
 
 use_hidden_jumps = false
@@ -135,8 +135,8 @@ function create ()
    reputation = math.floor( n_enemies / 75 )
 
    -- Set mission details
-   misn.setTitle( misn_title:format( missys:name() ) )
-   misn.setDesc( misn_desc:format( missys:name() ) )
+   misn.setTitle( fmt.f( misn_title, {sys=missys, fctname=paying_faction} ) )
+   misn.setDesc( fmt.f( misn_desc, {sys=missys} ) )
    misn.setReward( fmt.credits( credits ) )
    marker = misn.markerAdd( missys, "computer" )
 end
@@ -151,7 +151,7 @@ function accept ()
       "Go to indicated point (%d remaining)",
       #points
    ):format( #points )
-   osd_msg[4] = osd_msg[4]:format( paying_faction:name() )
+   osd_msg[4] = fmt.f( osd_msg[4], {fctname=paying_faction} )
    misn.osdCreate( _("Patrol"), osd_msg )
 
    job_done = false
@@ -179,7 +179,7 @@ function jumpout ()
    local last_sys = system.cur()
    if not job_done then
       if last_sys == missys then
-         fail( msg[6]:format( last_sys:name() ) )
+         fail( fmt.f( msg[6], {sys=last_sys} ) )
       elseif jumps_permitted < 0 then
          fail( msg[5] )
       end

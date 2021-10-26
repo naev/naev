@@ -34,11 +34,11 @@ local vntk = require "vntk"
 local lmisn = require "lmisn"
 
 subdue_text    = {}
-subdue_text[1] = _("You and your crew infiltrate the ship's pathetic security and subdue %s. You transport the pirate to your ship.")
-subdue_text[2] = _("Your crew has a difficult time getting past the ship's security, but eventually succeeds and subdues %s.")
-subdue_text[3] = _("The pirate's security system turns out to be no match for your crew. You infiltrate the ship and capture %s.")
-subdue_text[4] = _("Your crew infiltrates the pirate's ship and captures %s.")
-subdue_text[5] = _("Getting past this ship's security was surprisingly easy. Didn't they know that %s was wanted?")
+subdue_text[1] = _("You and your crew infiltrate the ship's pathetic security and subdue {pltname}. You transport the pirate to your ship.")
+subdue_text[2] = _("Your crew has a difficult time getting past the ship's security, but eventually succeeds and subdues {pltname}.")
+subdue_text[3] = _("The pirate's security system turns out to be no match for your crew. You infiltrate the ship and capture {pltname}.")
+subdue_text[4] = _("Your crew infiltrates the pirate's ship and captures {pltname}.")
+subdue_text[5] = _("Getting past this ship's security was surprisingly easy. Didn't they know that {pltname} was wanted?")
 
 subdue_fail_text    = {}
 subdue_fail_text[1] = _("Try as you might, you cannot get past the pirate's security system. Defeated, you and your crew return to the ship.")
@@ -47,47 +47,47 @@ subdue_fail_text[3] = _("Your crew comes close to getting past the pirate's secu
 subdue_fail_text[4] = _("It seems your crew is no match for this ship's security system. You return to your ship.")
 
 pay_kill_text    = {}
-pay_kill_text[1] = _("After verifying that you killed %s, an officer hands you your pay.")
-pay_kill_text[2] = _("After verifying that %s is indeed dead, the tired-looking officer smiles and hands you your pay.")
-pay_kill_text[3] = _("The officer seems pleased that %s is finally dead. They thank you and promptly hand you your pay.")
-pay_kill_text[4] = _("The paranoid-looking officer takes you into a locked room, where the death of %s is quietly verified. The officer then pays you and sends you off.")
-pay_kill_text[5] = _("When you ask the officer for your bounty on %s, they sigh, lead you into an office, go through some paperwork, and hand you your pay, mumbling something about how useless the bounty system is.")
-pay_kill_text[6] = _("The officer verifies the death of %s, goes through the necessary paperwork, and hands you your pay, looking bored the entire time.")
+pay_kill_text[1] = _("After verifying that you killed {pltname}, an officer hands you your pay.")
+pay_kill_text[2] = _("After verifying that {pltname} is indeed dead, the tired-looking officer smiles and hands you your pay.")
+pay_kill_text[3] = _("The officer seems pleased that {pltname} is finally dead. They thank you and promptly hand you your pay.")
+pay_kill_text[4] = _("The paranoid-looking officer takes you into a locked room, where the death of {pltname} is quietly verified. The officer then pays you and sends you off.")
+pay_kill_text[5] = _("When you ask the officer for your bounty on {pltname}, they sigh, lead you into an office, go through some paperwork, and hand you your pay, mumbling something about how useless the bounty system is.")
+pay_kill_text[6] = _("The officer verifies the death of {pltname}, goes through the necessary paperwork, and hands you your pay, looking bored the entire time.")
 
 pay_capture_text    = {}
-pay_capture_text[1] = _("An officer takes %s into custody and hands you your pay.")
-pay_capture_text[2] = _("The officer seems to think your decision to capture %s alive was foolish. They carefully take the pirate off your hands, taking precautions you think are completely unnecessary, and then hand you your pay")
-pay_capture_text[3] = _("The officer you deal with seems to especially dislike %s. The pirate is taken off your hands and you are handed your pay without a word.")
-pay_capture_text[4] = _("A fearful-looking officer rushes %s into a secure hold, pays you the appropriate bounty, and then hurries off.")
-pay_capture_text[5] = _("The officer you greet gives you a puzzled look when you say that you captured %s alive. Nonetheless, they politely take the pirate off of your hands and hand you your pay.")
+pay_capture_text[1] = _("An officer takes {pltname} into custody and hands you your pay.")
+pay_capture_text[2] = _("The officer seems to think your decision to capture {pltname} alive was foolish. They carefully take the pirate off your hands, taking precautions you think are completely unnecessary, and then hand you your pay")
+pay_capture_text[3] = _("The officer you deal with seems to especially dislike {pltname}. The pirate is taken off your hands and you are handed your pay without a word.")
+pay_capture_text[4] = _("A fearful-looking officer rushes {pltname} into a secure hold, pays you the appropriate bounty, and then hurries off.")
+pay_capture_text[5] = _("The officer you greet gives you a puzzled look when you say that you captured {pltname} alive. Nonetheless, they politely take the pirate off of your hands and hand you your pay.")
 
 share_text    = {}
-share_text[1] = _([["Greetings. I can see that you were trying to collect a bounty on %s. Well, as you can see, I earned the bounty, but I don't think I would have succeeded without your help, so I've transferred a portion of the bounty into your account."]])
-share_text[2] = _([["Sorry about getting in the way of your bounty. I don't really care too much about the money, but I just wanted to make sure the galaxy would be rid of that scum; I've seen the villainy of %s first-hand, you see. So as an apology, I would like to offer you the portion of the bounty you clearly earned. The money will be in your account shortly."]])
-share_text[3] = _([["Hey, thanks for the help back there. I don't know if I would have been able to handle %s alone! Anyway, since you were such a big help, I have transferred what I think is your fair share of the bounty to your bank account."]])
-share_text[4] = _([["Heh, thanks! I think I would have been able to take out %s by myself, but still, I appreciate your assistance. Here, I'll transfer some of the bounty to you, as a token of my appreciation."]])
+share_text[1] = _([["Greetings. I can see that you were trying to collect a bounty on {pltname}. Well, as you can see, I earned the bounty, but I don't think I would have succeeded without your help, so I've transferred a portion of the bounty into your account."]])
+share_text[2] = _([["Sorry about getting in the way of your bounty. I don't really care too much about the money, but I just wanted to make sure the galaxy would be rid of that scum; I've seen the villainy of {pltname} first-hand, you see. So as an apology, I would like to offer you the portion of the bounty you clearly earned. The money will be in your account shortly."]])
+share_text[3] = _([["Hey, thanks for the help back there. I don't know if I would have been able to handle {pltname} alone! Anyway, since you were such a big help, I have transferred what I think is your fair share of the bounty to your bank account."]])
+share_text[4] = _([["Heh, thanks! I think I would have been able to take out {pltname} by myself, but still, I appreciate your assistance. Here, I'll transfer some of the bounty to you, as a token of my appreciation."]])
 share_text[5] = _([["Ha ha ha, looks like I beat you to it this time, eh? Well, I don't do this often, but here, have some of the bounty. I think you deserve it."]])
 
 -- Mission details
 misn_title = {}
-misn_title[1] = _("Tiny Dead or Alive Bounty in %s")
-misn_title[2] = _("Small Dead or Alive Bounty in %s")
-misn_title[3] = _("Moderate Dead or Alive Bounty in %s")
-misn_title[4] = _("High Dead or Alive Bounty in %s")
-misn_title[5] = _("Dangerous Dead or Alive Bounty in %s")
+misn_title[1] = _("Tiny Dead or Alive Bounty in {sys}")
+misn_title[2] = _("Small Dead or Alive Bounty in {sys}")
+misn_title[3] = _("Moderate Dead or Alive Bounty in {sys}")
+misn_title[4] = _("High Dead or Alive Bounty in {sys}")
+misn_title[5] = _("Dangerous Dead or Alive Bounty in {sys}")
 misn_desc   = _("The pirate known as {pirname} was recently seen in the {sys} system. {fctname} authorities want this pirate dead or alive. {pirname} is believed to be flying a {shipclass}-class ship.")
 
 -- Messages
 msg    = {}
-msg[1] = _("MISSION FAILURE! %s got away.")
-msg[2] = _("MISSION FAILURE! Another pilot eliminated %s.")
-msg[3] = _("MISSION FAILURE! You have left the %s system.")
+msg[1] = _("MISSION FAILURE! {pltname} got away.")
+msg[2] = _("MISSION FAILURE! Another pilot eliminated {pltname}.")
+msg[3] = _("MISSION FAILURE! You have left the {sys} system.")
 
 osd_title = _("Bounty Hunt")
 osd_msg    = {}
 osd_msg[1] = _("Fly to the {sys} system")
 osd_msg[2] = _("Kill or capture {pltname}")
-osd_msg[3] = _("Land in %s territory to collect your bounty")
+osd_msg[3] = _("Land in {fctname} territory to collect your bounty")
 osd_msg["__save"] = true
 
 
@@ -138,7 +138,7 @@ function create ()
    bounty_setup()
 
    -- Set mission details
-   misn.setTitle( misn_title[level]:format( missys:name() ) )
+   misn.setTitle( fmt.f( misn_title[level], {sys=missys} ) )
    misn.setDesc( fmt.f( misn_desc, {pirname=name, sys=missys, fctname=paying_faction, shipclass=_(ship.get(pship):classDisplay()) } ) )
    misn.setReward( fmt.credits( credits ) )
    marker = misn.markerAdd( missys, "computer" )
@@ -150,7 +150,7 @@ function accept ()
 
    osd_msg[1] = fmt.f( osd_msg[1], {sys=missys} )
    osd_msg[2] = fmt.f( osd_msg[2], {pltname=name} )
-   osd_msg[3] = osd_msg[3]:format( paying_faction:name() )
+   osd_msg[3] = fmt.f( osd_msg[3], {fctname=paying_faction} )
    misn.osdCreate( osd_title, osd_msg )
 
    last_sys = system.cur()
@@ -183,7 +183,7 @@ function jumpout ()
    jumps_permitted = jumps_permitted - 1
    last_sys = system.cur()
    if not job_done and last_sys == missys then
-      fail( msg[3]:format( last_sys:name() ) )
+      fail( fmt.f( msg[3], {sys=last_sys} ) )
    end
 end
 
@@ -202,7 +202,7 @@ function land ()
       else
          pay_text = pay_capture_text[ rnd.rnd( 1, #pay_capture_text ) ]
       end
-      vntk.msg( _("Mission Completed"), pay_text:format( name ) )
+      vntk.msg( _("Mission Completed"), fmt.f( pay_text, {pltname=name} ) )
       player.pay( credits )
       paying_faction:modPlayerSingle( reputation )
       pir.reputationNormalMission( reputation )
@@ -223,7 +223,7 @@ end
 function pilot_board ()
    player.unboard()
    if can_capture then
-      local t = subdue_text[ rnd.rnd( 1, #subdue_text ) ]:format( name )
+      local t = fmt.f( subdue_text[ rnd.rnd( 1, #subdue_text ) ], {pltname=name} )
       vntk.msg( _("Captured Alive"), t )
       succeed()
       target_killed = false
@@ -232,7 +232,7 @@ function pilot_board ()
       target_ship:disable() -- Stop it from coming back
       if death_hook ~= nil then hook.rm( death_hook ) end
    else
-      local t = subdue_fail_text[ rnd.rnd( 1, #subdue_fail_text ) ]:format( name )
+      local t = fmt.f( subdue_fail_text[ rnd.rnd( 1, #subdue_fail_text ) ], {pltname=name} )
       vntk.msg( _("Capture Failed"), t )
       board_fail()
    end
@@ -290,18 +290,18 @@ function pilot_death( _p, attacker )
          hook.pilot( top_hunter, "land", "hunter_leave" )
          hook.jumpout( "hunter_leave" )
          hook.land( "hunter_leave" )
-         player.msg( "#r" .. msg[2]:format( name ) .. "#0" )
+         player.msg( "#r" .. fmt.f( msg[2], {pltname=name} ) .. "#0" )
          hook.timer( 3.0, "timer_hail", top_hunter )
          misn.osdDestroy()
       else
-         fail( msg[2]:format( name ) )
+         fail( fmt.f( msg[2], {pltname=name} ) )
       end
    end
 end
 
 
 function pilot_jump ()
-   fail( msg[1]:format( name ) )
+   fail( fmt.f( msg[1], {pltname=name} ) )
 end
 
 
@@ -318,7 +318,7 @@ function hunter_hail( _arg )
    player.commClose()
 
    local text = share_text[ rnd.rnd( 1, #share_text ) ]
-   vntk.msg( _("A Smaller Reward"), text:format( name ) )
+   vntk.msg( _("A Smaller Reward"), fmt.f( text, {pltname=name} ) )
 
    player.pay( credits )
    misn.finish( true )
@@ -396,7 +396,7 @@ function spawn_pirate( param )
          -- TODO potentially do a small capturing minigame here
          can_capture = true
       else
-         fail( msg[1]:format( name ) )
+         fail( fmt.f( msg[1], {pltname=name} ) )
       end
    end
 end

@@ -19,6 +19,7 @@
 
 --]]
 
+local fmt = require "format"
 require "missions.neutral.pirbounty_dead"
 
 subdue_text    = {}
@@ -59,13 +60,13 @@ share_text[5] = _([["Ha ha ha, looks like I beat you to it this time, eh? Well, 
 msg    = {}
 msg[1] = _("MISSION FAILURE! Your target got away.")
 msg[2] = _("MISSION FAILURE! Another pilot eliminated your target.")
-msg[3] = _("MISSION FAILURE! You have left the %s system.")
+msg[3] = _("MISSION FAILURE! You have left the {sys} system.")
 
 osd_title = _("Bounty Hunt")
 osd_msg    = {}
 osd_msg[1] = _("Fly to the {sys} system")
 osd_msg[2] = _("Kill or capture your target")
-osd_msg[3] = _("Land in %s territory to collect your bounty")
+osd_msg[3] = _("Land in {fctname} territory to collect your bounty")
 osd_msg["__save"] = true
 
 
@@ -101,7 +102,7 @@ function create ()
    bounty_setup()
 
    -- Set mission details
-   misn.setTitle( _("PD: Dead or Alive Bounty in %s"):format( missys:name() ) )
+   misn.setTitle( fmt.f( _("PD: Dead or Alive Bounty in {sys}"), {missys} ) )
    misn.setDesc( fmt.f( _("A political dissident was recently seen in the {sys} system. {fctname} authorities want this dissident dead or alive."), {sys=missys, fctname=paying_faction} ) )
    misn.setReward( fmt.credits( credits ) )
    marker = misn.markerAdd( missys, "computer" )

@@ -56745,15 +56745,15 @@ msgstr ""
 #. Mission details
 #: dat/missions/neutral/patrol.lua:49
 #, lua-format
-msgid "Patrol of the %s System"
-msgstr "%s星系の巡視"
+msgid "Patrol of the {sys} System"
+msgstr "{sys}星系の巡視"
 
 #: dat/missions/neutral/patrol.lua:50
 #, lua-format
 msgid ""
-"Patrol specified points in the %s system, eliminating any hostiles you "
+"Patrol specified points in the {sys} system, eliminating any hostiles you "
 "encounter."
-msgstr "%s星系の指定された場所を巡視して、遭遇した敵をすべて除去せよ。"
+msgstr "{sys}星系の指定された場所を巡視して、遭遇した敵をすべて除去せよ。"
 
 #. Messages
 #: dat/missions/neutral/patrol.lua:54 dat/missions/pirate/patrol.lua:45
@@ -56778,8 +56778,8 @@ msgstr "任務に失敗！　来るのが遅すぎた。"
 #: dat/missions/pirate/empbounty_dead.lua:177 dat/missions/pirate/patrol.lua:50
 #: dat/missions/proteron/dissbounty_dead.lua:62
 #, lua-format
-msgid "MISSION FAILURE! You have left the %s system."
-msgstr "任務に失敗！　%s星系を離れた。"
+msgid "MISSION FAILURE! You have left the {sys} system."
+msgstr "任務に失敗！　{sys}星系を離れた。"
 
 #: dat/missions/neutral/patrol.lua:64
 msgid "Eliminate hostiles"
@@ -56787,8 +56787,8 @@ msgstr "敵を除去せよ。"
 
 #: dat/missions/neutral/patrol.lua:65 dat/missions/pirate/patrol.lua:56
 #, lua-format
-msgid "Land in %s territory to collect your pay"
-msgstr "%sの領土に着陸すると、報酬を受けとれる。"
+msgid "Land in {fctname} territory to collect your pay"
+msgstr "{fctname}の領土に着陸すると、報酬を受けとれる。"
 
 #. Get the number of enemies in a particular system
 #. Set mission details
@@ -56856,27 +56856,27 @@ msgstr "巡視場所"
 #, lua-format
 msgid ""
 "As you return to your ship, you are contacted by an officer. \"I see you "
-"were unable to capture %s,\" the officer says. \"Disappointing. However, we "
-"would rather this pirate be dead than roaming free, so you will be paid %s "
+"were unable to capture {pltname},\" the officer says. \"Disappointing. However, we "
+"would rather this pirate be dead than roaming free, so you will be paid {credits} "
 "if you finish them off right now.\""
 msgstr ""
-"船に戻ると、役人から連絡があった。｢%sを捕まえられなかったのはわかっています｣ "
+"船に戻ると、役人から連絡があった。｢{pltname}を捕まえられなかったのはわかっています｣ "
 "と、役人がいう。｢失望しています。とはいえ、自由にぶらつかれるよりは死んでいて"
-"くれたほうがいいでしょう。だから今おしまいにしてくれれば、%s 支払います｣"
+"くれたほうがいいでしょう。だから今おしまいにしてくれれば、{credits} 支払います｣"
 
 #: dat/missions/neutral/pirbounty_alive.lua:37
 #, lua-format
 msgid ""
 "On your way back to your ship, you receive a message from an officer. It "
-"reads, \"Your failure to capture %s is disappointing. We really wanted to "
+"reads, \"Your failure to capture {pltname} is disappointing. We really wanted to "
 "capture this pirate alive. However, we would rather he be dead than roaming "
-"free, so if you kill the pirate now, you will be paid the lesser sum of %s.\""
+"free, so if you kill the pirate now, you will be paid the lesser sum of {credits}.\""
 msgstr ""
 "自分の船に戻る途中で、役人からメッセージを受けとった。それにはこう書いてあっ"
-"た。｢あなたが%sを逮捕できなかったのには失望しています。われわれは、ほんとうに"
+"た。｢あなたが{pltname}を逮捕できなかったのには失望しています。われわれは、ほんとうに"
 "この海賊を生きたまま逮捕したかったのです。とはいえ、自由にぶらつかれるよりは"
 "死んでいてくれたほうがいいでしょう。だから今殺してくれるなら、減額した金額で"
-"ある %s を支払います｣"
+"ある {credits} を支払います｣"
 
 #: dat/missions/neutral/pirbounty_alive.lua:38
 #, lua-format
@@ -56884,42 +56884,42 @@ msgid ""
 "When you return to your cockpit, you are contacted by an officer. "
 "\"Pathetic! If I were in charge, I'd say you get no bounty! Can't fight off "
 "a couple low-life pirates?!\" He sighs. \"But lucky for you, I'm not in "
-"charge, and my higher-ups would rather %s be dead than free. So if you "
-"finish that scum off, you'll get %s. Just be snappy about it!\" Having "
+"charge, and my higher-ups would rather {pltname} be dead than free. So if you "
+"finish that scum off, you'll get {credits}. Just be snappy about it!\" Having "
 "finished delivering the message, the officer then ceases communication."
 msgstr ""
 "あなたが操縦席に戻ってくると、役人から連絡があった。｢へたくそ！　自分が担当"
 "だったら、賞金はなかったね！　下層民の海賊二人を撃退できなかったって ?!｣。役"
 "人がため息をつく。｢しかしあなたは運がよかった。わたしは担当ではないし、上司"
-"は%sを野放しにするより死んでもらいたがっています。だからそのくずを始末してく"
-"れるなら、あなたは %s 受けとれます。とにかくぱっぱとやってくれ！｣。いいたいこ"
+"は{pltname}を野放しにするより死んでもらいたがっています。だからそのくずを始末してく"
+"れるなら、あなたは {credits} 受けとれます。とにかくぱっぱとやってくれ！｣。いいたいこ"
 "とを伝えおわると、役人は交信を終了した。"
 
 #: dat/missions/neutral/pirbounty_alive.lua:39
 #, lua-format
 msgid ""
 "When you get back to the ship, you see a message giving you a new mission to "
-"kill %s; the reward is %s. Well, that's pitiful compared to what you were "
+"kill {pltname}; the reward is {credits}. Well, that's pitiful compared to what you were "
 "planning on collecting, but it's better than nothing."
 msgstr ""
-"あなたが船に戻ると、%sを殺すという新しい任務を与えるというメッセージがあっ"
-"た。報酬は %s だ。えー、もらう予定だったものと比べるとみじめなものだよ。でも"
+"あなたが船に戻ると、{pltname}を殺すという新しい任務を与えるというメッセージがあっ"
+"た。報酬は {credits} だ。えー、もらう予定だったものと比べるとみじめなものだよ。でも"
 "なにもないよりはいい。"
 
 #: dat/missions/neutral/pirbounty_alive.lua:42
 #: dat/missions/neutral/pirbounty_dead.lua:58
 #, lua-format
-msgid "An officer takes %s into custody and hands you your pay."
-msgstr "役人が%sを勾留して、あなたに報酬を手渡した。"
+msgid "An officer takes {pltname} into custody and hands you your pay."
+msgstr "役人が{pltname}を勾留して、あなたに報酬を手渡した。"
 
 #: dat/missions/neutral/pirbounty_alive.lua:43
 #, lua-format
 msgid ""
-"The officer seems to think your acceptance of the alive bounty for %s was "
+"The officer seems to think your acceptance of the alive bounty for {pltname} was "
 "foolish. They carefully take the pirate off your hands, taking precautions "
 "you think are completely unnecessary, and then hand you your pay."
 msgstr ""
-"役人は、あなたが%sの生け捕り賞金稼ぎを引き受けたのは愚かだったと考えているよ"
+"役人は、あなたが{pltname}の生け捕り賞金稼ぎを引き受けたのは愚かだったと考えているよ"
 "うだ。役人は注意深くあなたの手から海賊を引き取った。あなたからすれば完全に不"
 "必要だと思える用心をしながらだ。それが終わると、役人はあなたに報酬を手渡し"
 "た。"
@@ -56927,132 +56927,132 @@ msgstr ""
 #: dat/missions/neutral/pirbounty_alive.lua:44
 #, lua-format
 msgid ""
-"The officer you deal with seems to especially dislike %s. They take the "
+"The officer you deal with seems to especially dislike {pltname}. They take the "
 "pirate off your hands and hand you your pay without speaking a word."
 msgstr ""
-"対応した役人は、%sがとくべつ嫌いなようだった。あなたの手から海賊を引き取る"
+"対応した役人は、{pltname}がとくべつ嫌いなようだった。あなたの手から海賊を引き取る"
 "と、ひとことも話さずあなたに報酬を手渡した。"
 
 #: dat/missions/neutral/pirbounty_alive.lua:45
 #: dat/missions/neutral/pirbounty_dead.lua:61
 #, lua-format
 msgid ""
-"A fearful-looking officer rushes %s into a secure hold, pays you the "
+"A fearful-looking officer rushes {pltname} into a secure hold, pays you the "
 "appropriate bounty, and then hurries off."
 msgstr ""
-"恐ろしい表情をした役人が%sをしっかりと確保した。あなたにふさわしい賞金を支"
+"恐ろしい表情をした役人が{pltname}をしっかりと確保した。あなたにふさわしい賞金を支"
 "払ってから、役人は急いで去っていった。"
 
 #: dat/missions/neutral/pirbounty_alive.lua:46
 #, lua-format
 msgid ""
-"The officer you deal with thanks you profusely for capturing %s alive, pays "
+"The officer you deal with thanks you profusely for capturing {pltname} alive, pays "
 "you, and sends you off."
 msgstr ""
-"対応した役人は、%sを生きたまま捕らえたことにやたらと礼を言い、あなたに報酬を"
+"対応した役人は、{pltname}を生きたまま捕らえたことにやたらと礼を言い、あなたに報酬を"
 "支払った。それからあなたは送りだされた。"
 
 #: dat/missions/neutral/pirbounty_alive.lua:47
 #, lua-format
 msgid ""
-"Upon learning that you managed to capture %s alive, the officer who "
+"Upon learning that you managed to capture {pltname} alive, the officer who "
 "previously sported a defeated look suddenly brightens up. The pirate is "
 "swiftly taken into custody as you are handed your pay."
 msgstr ""
-"あなたがどうにか%sを生きたまま捕らえたことを知ると、それまで挫折感をただよわ"
+"あなたがどうにか{pltname}を生きたまま捕らえたことを知ると、それまで挫折感をただよわ"
 "せた表情をしていた役人がとつぜん顔を輝かした。海賊はじんそくに勾留されて、あ"
 "なたは報酬を手渡された。"
 
 #: dat/missions/neutral/pirbounty_alive.lua:48
 #, lua-format
 msgid ""
-"When you ask the officer for your bounty on %s, they sigh, take the pirate "
+"When you ask the officer for your bounty on {pltname}, they sigh, take the pirate "
 "into custody, go through some paperwork, and hand you your pay, mumbling "
 "something about how useless capturing pirates alive is."
 msgstr ""
-"あなたが役人に%sの賞金を求めると、役人はため息をつき、海賊を勾留し、いくつか"
+"あなたが役人に{pltname}の賞金を求めると、役人はため息をつき、海賊を勾留し、いくつか"
 "の書類仕事をやってから、あなたに報酬を手渡した。海賊を生きたまま捕らえること"
 "がどれだけ無意味かといったことをぶつぶついいながらだ。"
 
 #: dat/missions/neutral/pirbounty_alive.lua:51
 #: dat/missions/neutral/pirbounty_dead.lua:50
 #, lua-format
-msgid "After verifying that you killed %s, an officer hands you your pay."
-msgstr "あなたが%sを殺したことを確かめてから、役人はあなたに報酬を手渡した。"
+msgid "After verifying that you killed {pltname}, an officer hands you your pay."
+msgstr "あなたが{pltname}を殺したことを確かめてから、役人はあなたに報酬を手渡した。"
 
 #: dat/missions/neutral/pirbounty_alive.lua:52
 #, lua-format
 msgid ""
-"After verifying that %s is indeed dead, the officer sighs and hands you your "
+"After verifying that {pltname} is indeed dead, the officer sighs and hands you your "
 "pay."
 msgstr ""
-"%sがほんとうに死んだことを確かめてから、役人はため息をついてあなたに報酬を手"
+"{pltname}がほんとうに死んだことを確かめてから、役人はため息をついてあなたに報酬を手"
 "渡した。"
 
 #: dat/missions/neutral/pirbounty_alive.lua:53
 #, lua-format
 msgid ""
-"This officer is clearly annoyed that %s is dead. They mumble something about "
+"This officer is clearly annoyed that {pltname} is dead. They mumble something about "
 "incompetent bounty hunters the entire time as they takes care of the "
 "paperwork and hand you your bounty."
 msgstr ""
-"この役人は、あきらかに%sが死んだことに困っていた。無能な賞金稼ぎについてずっ"
+"この役人は、あきらかに{pltname}が死んだことに困っていた。無能な賞金稼ぎについてずっ"
 "とぶつぶついいながら、書類仕事を処理してからあなたに賞金を支払った。"
 
 #: dat/missions/neutral/pirbounty_alive.lua:54
 #, lua-format
 msgid ""
 "The officer seems disappointed, yet unsurprised that you failed to capture "
-"%s alive. You are handed your lesser bounty without a word."
+"{pltname} alive. You are handed your lesser bounty without a word."
 msgstr ""
-"役人は失望しているように見えた。それでもあなたが%sを生きたまま捕らえそこなっ"
+"役人は失望しているように見えた。それでもあなたが{pltname}を生きたまま捕らえそこなっ"
 "たことには驚きを見せなかった。ひとことの会話もなくあなたは減額した賞金を手渡"
 "された。"
 
 #: dat/missions/neutral/pirbounty_alive.lua:55
 #, lua-format
 msgid ""
-"When you ask the officer for your bounty on %s, they sigh, lead you into an "
+"When you ask the officer for your bounty on {pltname}, they sigh, lead you into an "
 "office, go through some paperwork, and hand you your pay, mumbling something "
 "about how useless bounty hunters are."
 msgstr ""
-"あなたが役人に%sの賞金を求めると、役人はため息をつき、あなたを事務所に案内し"
+"あなたが役人に{pltname}の賞金を求めると、役人はため息をつき、あなたを事務所に案内し"
 "て、いくつかの書類仕事をやってから、あなたに報酬を手渡した。賞金稼ぎがどれだ"
 "け役立たずかといったことをぶつぶついいながらだ。"
 
 #: dat/missions/neutral/pirbounty_alive.lua:56
 #, lua-format
 msgid ""
-"The officer verifies the death of %s, goes through the necessary paperwork, "
+"The officer verifies the death of {pltname}, goes through the necessary paperwork, "
 "and hands you your pay, looking annoyed the entire time."
 msgstr ""
-"役人は%sが死んだことを確かめて、必要な書類仕事をやると、あなたに報酬を手渡し"
+"役人は{pltname}が死んだことを確かめて、必要な書類仕事をやると、あなたに報酬を手渡し"
 "た。そのあいだ役人はずっといらいらした表情だった。"
 
 #: dat/missions/neutral/pirbounty_alive.lua:59
 #, lua-format
-msgid "Tiny Alive Bounty in %s"
-msgstr "%sでの極小規模の生け捕り賞金"
+msgid "Tiny Alive Bounty in {sys}"
+msgstr "{sys}での極小規模の生け捕り賞金"
 
 #: dat/missions/neutral/pirbounty_alive.lua:60
 #, lua-format
-msgid "Small Alive Bounty in %s"
-msgstr "%sでの小規模の生け捕り賞金"
+msgid "Small Alive Bounty in {sys}"
+msgstr "{sys}での小規模の生け捕り賞金"
 
 #: dat/missions/neutral/pirbounty_alive.lua:61
 #, lua-format
-msgid "Moderate Alive Bounty in %s"
-msgstr "%sでの中程度な生け捕り賞金"
+msgid "Moderate Alive Bounty in {sys}"
+msgstr "{sys}での中程度な生け捕り賞金"
 
 #: dat/missions/neutral/pirbounty_alive.lua:62
 #, lua-format
-msgid "High Alive Bounty in %s"
-msgstr "%sでの高度な生け捕り賞金"
+msgid "High Alive Bounty in {sys}"
+msgstr "{sys}での高度な生け捕り賞金"
 
 #: dat/missions/neutral/pirbounty_alive.lua:63
 #, lua-format
-msgid "Dangerous Alive Bounty in %s"
-msgstr "%sでの危険な生け捕り賞金"
+msgid "Dangerous Alive Bounty in {sys}"
+msgstr "{sys}での危険な生け捕り賞金"
 
 #: dat/missions/neutral/pirbounty_alive.lua:64
 msgid ""
@@ -57071,8 +57071,8 @@ msgstr "{pltname}を捕まえろ。"
 
 #: dat/missions/neutral/pirbounty_alive.lua:73
 #, lua-format
-msgid "MISSION FAILURE! %s has been killed."
-msgstr "任務に失敗！　%sを殺してしまった。"
+msgid "MISSION FAILURE! {pltname} has been killed."
+msgstr "任務に失敗！　{pltname}を殺してしまった。"
 
 #. Set up the ship, credits, and reputation based on the level.
 #: dat/missions/neutral/pirbounty_alive.lua:118
@@ -57118,42 +57118,42 @@ msgstr "{pltname}を殺せ。"
 #: dat/missions/neutral/pirbounty_dead.lua:37
 #, lua-format
 msgid ""
-"You and your crew infiltrate the ship's pathetic security and subdue %s. You "
+"You and your crew infiltrate the ship's pathetic security and subdue {pltname}. You "
 "transport the pirate to your ship."
 msgstr ""
-"あなたと乗員たちは、哀れな警備態勢をしいた船に侵入し、%sを鎮圧した。あなたは"
+"あなたと乗員たちは、哀れな警備態勢をしいた船に侵入し、{pltname}を鎮圧した。あなたは"
 "海賊を自分の船に移送した。"
 
 #: dat/missions/neutral/pirbounty_dead.lua:38
 #, lua-format
 msgid ""
 "Your crew has a difficult time getting past the ship's security, but "
-"eventually succeeds and subdues %s."
+"eventually succeeds and subdues {pltname}."
 msgstr ""
 "あなたの乗員たちは、この船の保安処置を突破するのに苦戦した。しかしけっきょく"
-"成功し、%sを鎮圧した。"
+"成功し、{pltname}を鎮圧した。"
 
 #: dat/missions/neutral/pirbounty_dead.lua:39
 #, lua-format
 msgid ""
 "The pirate's security system turns out to be no match for your crew. You "
-"infiltrate the ship and capture %s."
+"infiltrate the ship and capture {pltname}."
 msgstr ""
 "海賊の保安システムはあなたの乗員たちの相手としては不足だったことがわかった。"
-"あなたたちは船に侵入し、%sを捕まえた。"
+"あなたたちは船に侵入し、{pltname}を捕まえた。"
 
 #: dat/missions/neutral/pirbounty_dead.lua:40
 #, lua-format
-msgid "Your crew infiltrates the pirate's ship and captures %s."
-msgstr "あなたの乗員たちが海賊船に侵入し、%sを捕まえた。"
+msgid "Your crew infiltrates the pirate's ship and captures {pltname}."
+msgstr "あなたの乗員たちが海賊船に侵入し、{pltname}を捕まえた。"
 
 #: dat/missions/neutral/pirbounty_dead.lua:41
 #, lua-format
 msgid ""
 "Getting past this ship's security was surprisingly easy. Didn't they know "
-"that %s was wanted?"
+"that {pltname} was wanted?"
 msgstr ""
-"この船の保安態勢を突破するのは驚くほど簡単だった。%sが手配されていることを知"
+"この船の保安態勢を突破するのは驚くほど簡単だった。{pltname}が手配されていることを知"
 "らなかったのだろうか？"
 
 #: dat/missions/neutral/pirbounty_dead.lua:44
@@ -57188,90 +57188,90 @@ msgstr ""
 #: dat/missions/neutral/pirbounty_dead.lua:51
 #, lua-format
 msgid ""
-"After verifying that %s is indeed dead, the tired-looking officer smiles and "
+"After verifying that {pltname} is indeed dead, the tired-looking officer smiles and "
 "hands you your pay."
 msgstr ""
-"%sがほんとうに死んだことを確かめてから、疲れた顔をした役人がほほえんだ。そし"
+"{pltname}がほんとうに死んだことを確かめてから、疲れた顔をした役人がほほえんだ。そし"
 "てあなたに報酬を手渡した。"
 
 #: dat/missions/neutral/pirbounty_dead.lua:52
 #, lua-format
 msgid ""
-"The officer seems pleased that %s is finally dead. They thank you and "
+"The officer seems pleased that {pltname} is finally dead. They thank you and "
 "promptly hand you your pay."
 msgstr ""
-"役人は%sがついに死んだことを喜んでいるようだ。あなたに礼をいうと、すぐに報酬"
+"役人は{pltname}がついに死んだことを喜んでいるようだ。あなたに礼をいうと、すぐに報酬"
 "を手渡した。"
 
 #: dat/missions/neutral/pirbounty_dead.lua:53
 #, lua-format
 msgid ""
 "The paranoid-looking officer takes you into a locked room, where the death "
-"of %s is quietly verified. The officer then pays you and sends you off."
+"of {pltname} is quietly verified. The officer then pays you and sends you off."
 msgstr ""
 "ひどく疑い深そうな顔つきの役人が、あなたを鍵のかかった部屋に連れていった。そ"
-"こで%sが死んだことは静かに確認された。それから役人があなたに報酬を支払って、"
+"こで{pltname}が死んだことは静かに確認された。それから役人があなたに報酬を支払って、"
 "あなたは送りだされた。"
 
 #: dat/missions/neutral/pirbounty_dead.lua:54
 #, lua-format
 msgid ""
-"When you ask the officer for your bounty on %s, they sigh, lead you into an "
+"When you ask the officer for your bounty on {pltname}, they sigh, lead you into an "
 "office, go through some paperwork, and hand you your pay, mumbling something "
 "about how useless the bounty system is."
 msgstr ""
-"あなたが役人に%sの賞金を求めると、役人はため息をつき、あなたを事務所に案内し"
+"あなたが役人に{pltname}の賞金を求めると、役人はため息をつき、あなたを事務所に案内し"
 "て、いくつかの書類仕事をやってから、あなたに報酬を手渡した。賞金制度がどれだ"
 "け無益かといったことをぶつぶついいながらだ。"
 
 #: dat/missions/neutral/pirbounty_dead.lua:55
 #, lua-format
 msgid ""
-"The officer verifies the death of %s, goes through the necessary paperwork, "
+"The officer verifies the death of {pltname}, goes through the necessary paperwork, "
 "and hands you your pay, looking bored the entire time."
 msgstr ""
-"役人は%sが死んだことを確かめて、必要な書類仕事をやると、あなたに報酬を手渡し"
+"役人は{pltname}が死んだことを確かめて、必要な書類仕事をやると、あなたに報酬を手渡し"
 "た。そのあいだ役人はずっとうんざりした表情だった。"
 
 #: dat/missions/neutral/pirbounty_dead.lua:59
 #, lua-format
 msgid ""
-"The officer seems to think your decision to capture %s alive was foolish. "
+"The officer seems to think your decision to capture {pltname} alive was foolish. "
 "They carefully take the pirate off your hands, taking precautions you think "
 "are completely unnecessary, and then hand you your pay"
 msgstr ""
-"役人は、あなたが%sを生け捕りにしようと決めたのは愚かだったと考えているよう"
+"役人は、あなたが{pltname}を生け捕りにしようと決めたのは愚かだったと考えているよう"
 "だ。役人は注意深くあなたの手から海賊を引き取った。あなたからすれば完全に不必"
 "要だと思える用心をしながらだ。それが終わると、役人はあなたに報酬を手渡した。"
 
 #: dat/missions/neutral/pirbounty_dead.lua:60
 #, lua-format
 msgid ""
-"The officer you deal with seems to especially dislike %s. The pirate is "
+"The officer you deal with seems to especially dislike {pltname}. The pirate is "
 "taken off your hands and you are handed your pay without a word."
 msgstr ""
-"対応した役人は、%sがとくべつ嫌いなようだった。あなたの手から海賊を引き取る"
+"対応した役人は、{pltname}がとくべつ嫌いなようだった。あなたの手から海賊を引き取る"
 "と、ひとこともなくあなたに報酬を手渡した。"
 
 #: dat/missions/neutral/pirbounty_dead.lua:62
 #, lua-format
 msgid ""
 "The officer you greet gives you a puzzled look when you say that you "
-"captured %s alive. Nonetheless, they politely take the pirate off of your "
+"captured {pltname} alive. Nonetheless, they politely take the pirate off of your "
 "hands and hand you your pay."
 msgstr ""
-"あなたを出迎えた役人は、%sを生け捕りにしたと言うと当惑した表情を見せた。それ"
+"あなたを出迎えた役人は、{pltname}を生け捕りにしたと言うと当惑した表情を見せた。それ"
 "でも礼儀正しくあなたの手から海賊を引き取ると、あなたに報酬を手渡した。"
 
 #: dat/missions/neutral/pirbounty_dead.lua:65
 #, lua-format
 msgid ""
-"\"Greetings. I can see that you were trying to collect a bounty on %s. Well, "
+"\"Greetings. I can see that you were trying to collect a bounty on {pltname}. Well, "
 "as you can see, I earned the bounty, but I don't think I would have "
 "succeeded without your help, so I've transferred a portion of the bounty "
 "into your account.\""
 msgstr ""
-"｢ごきげんよう。あなたが%sの賞金を取ろうとしていたのはわかっています。えー、"
+"｢ごきげんよう。あなたが{pltname}の賞金を取ろうとしていたのはわかっています。えー、"
 "知ってのとおり、わたしがその賞金を稼ぎました。でもあなたの助力がなければ成功"
 "したとは思っていません。だから賞金の一部をあなたの口座に振りこみますよ｣"
 
@@ -57280,13 +57280,13 @@ msgstr ""
 msgid ""
 "\"Sorry about getting in the way of your bounty. I don't really care too "
 "much about the money, but I just wanted to make sure the galaxy would be rid "
-"of that scum; I've seen the villainy of %s first-hand, you see. So as an "
+"of that scum; I've seen the villainy of {pltname} first-hand, you see. So as an "
 "apology, I would like to offer you the portion of the bounty you clearly "
 "earned. The money will be in your account shortly.\""
 msgstr ""
 "｢あなたの賞金稼ぎをじゃまして申しわけない。じつのところ、かねのことはあまり気"
 "にしていなくて、銀河からくずを追い払っておきたいと思っただけなんです。ほら、"
-"わたしは%sの悪行を直接知っていたんですよ。だからおわびとして、あなたが疑いも"
+"わたしは{pltname}の悪行を直接知っていたんですよ。だからおわびとして、あなたが疑いも"
 "なく稼いでいたはずの賞金の一部を提供させてください。まもなくあなたの口座に入"
 "りますよ｣"
 
@@ -57294,22 +57294,22 @@ msgstr ""
 #, lua-format
 msgid ""
 "\"Hey, thanks for the help back there. I don't know if I would have been "
-"able to handle %s alone! Anyway, since you were such a big help, I have "
+"able to handle {pltname} alone! Anyway, since you were such a big help, I have "
 "transferred what I think is your fair share of the bounty to your bank "
 "account.\""
 msgstr ""
-"｢やあ、さっきはあそこで助けてくれてありがとう。%sにひとりで対処できたかわから"
+"｢やあ、さっきはあそこで助けてくれてありがとう。{pltname}にひとりで対処できたかわから"
 "ないよ！　とにかく、あなたはあれだけ大きな助力をしたんだから、賞金の正当な取"
 "り分だと思うものをあなたの銀行口座に振りこみます｣"
 
 #: dat/missions/neutral/pirbounty_dead.lua:68
 #, lua-format
 msgid ""
-"\"Heh, thanks! I think I would have been able to take out %s by myself, but "
+"\"Heh, thanks! I think I would have been able to take out {pltname} by myself, but "
 "still, I appreciate your assistance. Here, I'll transfer some of the bounty "
 "to you, as a token of my appreciation.\""
 msgstr ""
-"｢ええと、ありがとう！　自分で%sを破壊できたと思うけど、やっぱり援助には感謝し"
+"｢ええと、ありがとう！　自分で{pltname}を破壊できたと思うけど、やっぱり援助には感謝し"
 "ますよ。さて、賞金の一部をあなたに振りこみます。感謝のしるしですよ｣"
 
 #: dat/missions/neutral/pirbounty_dead.lua:69
@@ -57324,28 +57324,28 @@ msgstr ""
 #. Mission details
 #: dat/missions/neutral/pirbounty_dead.lua:73
 #, lua-format
-msgid "Tiny Dead or Alive Bounty in %s"
-msgstr "%sでの極小規模の生死を問わない賞金"
+msgid "Tiny Dead or Alive Bounty in {sys}"
+msgstr "{sys}での極小規模の生死を問わない賞金"
 
 #: dat/missions/neutral/pirbounty_dead.lua:74
 #, lua-format
-msgid "Small Dead or Alive Bounty in %s"
-msgstr "%sでの小規模の生死を問わない賞金"
+msgid "Small Dead or Alive Bounty in {sys}"
+msgstr "{sys}での小規模の生死を問わない賞金"
 
 #: dat/missions/neutral/pirbounty_dead.lua:75
 #, lua-format
-msgid "Moderate Dead or Alive Bounty in %s"
-msgstr "%sでの中規模の生死を問わない賞金"
+msgid "Moderate Dead or Alive Bounty in {sys}"
+msgstr "{sys}での中規模の生死を問わない賞金"
 
 #: dat/missions/neutral/pirbounty_dead.lua:76
 #, lua-format
-msgid "High Dead or Alive Bounty in %s"
-msgstr "%sでの高度な生死を問わない賞金"
+msgid "High Dead or Alive Bounty in {sys}"
+msgstr "{sys}での高度な生死を問わない賞金"
 
 #: dat/missions/neutral/pirbounty_dead.lua:77
 #, lua-format
-msgid "Dangerous Dead or Alive Bounty in %s"
-msgstr "%sでの危険な生死を問わない賞金"
+msgid "Dangerous Dead or Alive Bounty in {sys}"
+msgstr "{sys}での危険な生死を問わない賞金"
 
 #: dat/missions/neutral/pirbounty_dead.lua:78
 msgid ""
@@ -57360,13 +57360,13 @@ msgstr ""
 #. Messages
 #: dat/missions/neutral/pirbounty_dead.lua:82
 #, lua-format
-msgid "MISSION FAILURE! %s got away."
-msgstr "任務に失敗！　%sが逃げた。"
+msgid "MISSION FAILURE! {pltname} got away."
+msgstr "任務に失敗！　{pltname}が逃げた。"
 
 #: dat/missions/neutral/pirbounty_dead.lua:83
 #, lua-format
-msgid "MISSION FAILURE! Another pilot eliminated %s."
-msgstr "任務に失敗！　ほかのパイロットが%sを除去した。"
+msgid "MISSION FAILURE! Another pilot eliminated {pltname}."
+msgstr "任務に失敗！　ほかのパイロットが{pltname}を除去した。"
 
 #: dat/missions/neutral/pirbounty_dead.lua:86
 #: dat/missions/proteron/dissbounty_dead.lua:64
@@ -57381,8 +57381,8 @@ msgstr "{pltname}を殺すか捕まえろ。"
 #: dat/missions/neutral/pirbounty_dead.lua:90
 #: dat/missions/proteron/dissbounty_dead.lua:68
 #, lua-format
-msgid "Land in %s territory to collect your bounty"
-msgstr "%sの領土に着陸すると、賞金を受けとれる。"
+msgid "Land in {fctname} territory to collect your bounty"
+msgstr "{fctname}の領土に着陸すると、賞金を受けとれる。"
 
 #: dat/missions/neutral/pirbounty_dead.lua:227
 msgid "Captured Alive"
