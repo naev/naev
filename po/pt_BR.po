@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2021-10-25 22:34-0400\n"
+"POT-Creation-Date: 2021-10-26 01:19-0400\n"
 "PO-Revision-Date: 2021-09-02 06:35+0000\n"
 "Last-Translator: Anthony Gregory Souza dos Santos "
 "<antonigregorysouza123@gmail.com>\n"
@@ -27919,16 +27919,15 @@ msgid "Former Pirate Writes Target Management Self-Help Book"
 msgstr ""
 
 #: dat/events/neutral/news.lua:173
-#, lua-format
 msgid ""
 "A former pirate shares her story on how she steered herself away from "
 "piracy, which she wrote about in an award-winning self-help book. \"I used "
-"to spend my whole life pressing %s to target enemies, but my life changed "
-"when I had a dream about a cat munching on some grass. 'Are you using the %s "
-"key?' it asked. 'I find that it is very useful.' I have been doing as the "
-"strange cat in my dream said ever since, and I no longer have to lose money "
-"or alienate friends. If the universe followed this simple advice, I suspect "
-"we would live in a much safer society.\""
+"to spend my whole life pressing {target_nearest} to target enemies, but my "
+"life changed when I had a dream about a cat munching on some grass. 'Are you "
+"using the {target_hostile} key?' it asked. 'I find that it is very useful.' "
+"I have been doing as the strange cat in my dream said ever since, and I no "
+"longer have to lose money or alienate friends. If the universe followed this "
+"simple advice, I suspect we would live in a much safer society.\""
 msgstr ""
 
 #.
@@ -28396,223 +28395,146 @@ msgstr ""
 #.
 #. Human interest.
 #. --
-#. Return an economy article based on the given commodity name, planet
-#. name, and number of credits. Wrapper for gettext.ngettext.
-#: dat/events/neutral/news.lua:423
+#. Return an economy article based on the given commodity, planet object, and number of credits.
+#: dat/events/neutral/news.lua:422
 msgid "Unfortunate Merchant Goes Bankrupt"
 msgstr ""
 
-#: dat/events/neutral/news.lua:425
-#, lua-format
+#: dat/events/neutral/news.lua:423
 msgid ""
-"A merchant was forced into bankruptcy due to a badly timed trade of %s on "
-"%s. \"I thought %s credit per tonne was a good deal, but it turns out I "
-"should have waited,\" the merchant said."
-msgid_plural ""
-"A merchant was forced into bankruptcy due to a badly timed trade of %s on "
-"%s. \"I thought %s credits per tonne was a good deal, but it turns out I "
-"should have waited,\" the merchant said."
-msgstr[0] ""
-msgstr[1] ""
+"A merchant was forced into bankruptcy due to a badly timed trade of {cargo} "
+"on {pnt}. \"I thought {credits} per tonne was a good deal, but it turns out "
+"I should have waited,\" the merchant said."
+msgstr ""
 
-#: dat/events/neutral/news.lua:430
+#: dat/events/neutral/news.lua:426
 msgid "Shipping Company Goes Out of Business"
 msgstr ""
 
-#: dat/events/neutral/news.lua:432
-#, lua-format
+#: dat/events/neutral/news.lua:427
 msgid ""
 "A small shipping business failed just this decaperiod. While it was already "
-"failing, what finally put the company under was a poorly-timed trade of %s "
-"on %s for %s credit per tonne. \"It was poor executive decision,\" one "
-"analyst asserts. \"Patience is key when trading, and it's clear that the "
-"owner of this company didn't have enough of that.\""
-msgid_plural ""
-"A small shipping business failed just this decaperiod. While it was already "
-"failing, what finally put the company under was a poorly-timed trade of %s "
-"on %s for %s credits per tonne. \"It was poor executive decision,\" one "
-"analyst asserts. \"Patience is key when trading, and it's clear that the "
-"owner of this company didn't have enough of that.\""
-msgstr[0] ""
-msgstr[1] ""
+"failing, what finally put the company under was a poorly-timed trade of "
+"{cargo} on {pnt} for {credits} per tonne. \"It was poor executive decision,"
+"\" one analyst asserts. \"Patience is key when trading, and it's clear that "
+"the owner of this company didn't have enough of that.\""
+msgstr ""
 
-#: dat/events/neutral/news.lua:437
+#: dat/events/neutral/news.lua:430
 msgid "Interview with an Economist"
 msgstr ""
 
-#: dat/events/neutral/news.lua:439
-#, lua-format
+#: dat/events/neutral/news.lua:431
 msgid ""
 "One of the galaxy's foremost experts on economics gives an interview "
 "explaining our modern economy. \"We actually have a pretty good "
 "understanding of how the economy works. For example, we were able to predict "
-"what the price of %s on %s would reach very accurately; the actual price "
-"reached was %s credit per tonne, which we were only off by about 15%%. Over "
-"time, we hope to lower that margin of error to as little as 2%%.\""
-msgid_plural ""
-"One of the galaxy's foremost experts on economics gives an interview "
-"explaining our modern economy. \"We actually have a pretty good "
-"understanding of how the economy works. For example, we were able to predict "
-"what the price of %s on %s would reach very accurately; the actual price "
-"reached was %s credits per tonne, which we were only off by about 15%%. Over "
-"time, we hope to lower that margin of error to as little as 2%%.\""
-msgstr[0] ""
-msgstr[1] ""
+"what the price of {cargo} on {pnt} would reach very accurately; the actual "
+"price reached was {credits} per tonne, which we were only off by about 15%. "
+"Over time, we hope to lower that margin of error to as little as 2%.\""
+msgstr ""
 
-#: dat/events/neutral/news.lua:444
+#: dat/events/neutral/news.lua:434
 msgid "Economist Describes Sinusoidal Economic Theory"
 msgstr ""
 
-#: dat/events/neutral/news.lua:446
-#, lua-format
+#: dat/events/neutral/news.lua:435
 msgid ""
 "A little-known economist discusses a controversial economic theory. \"When "
 "you look at the trends, it resembles a sine wave. For instance, the price of "
-"%s on %s is now %s credit per tonne, and it seems to return to that price "
-"with some regularity. We are working on developing a model to predict these "
-"curves more accurately.\" Other economists disagree, however, attributing "
-"these economists' results to chance."
-msgid_plural ""
-"A little-known economist discusses a controversial economic theory. \"When "
-"you look at the trends, it resembles a sine wave. For instance, the price of "
-"%s on %s is now %s credits per tonne, and it seems to return to that price "
-"with some regularity. We are working on developing a model to predict these "
-"curves more accurately.\" Other economists disagree, however, attributing "
-"these economists' results to chance."
-msgstr[0] ""
-msgstr[1] ""
+"{cargo} on {pnt} is now {credits} per tonne, and it seems to return to that "
+"price with some regularity. We are working on developing a model to predict "
+"these curves more accurately.\" Other economists disagree, however, "
+"attributing these economists' results to chance."
+msgstr ""
 
-#: dat/events/neutral/news.lua:451
+#: dat/events/neutral/news.lua:438
 msgid "Young Pilot Buys Their First Commodity"
 msgstr ""
 
-#: dat/events/neutral/news.lua:453
-#, lua-format
+#: dat/events/neutral/news.lua:439
 msgid ""
-"A young pilot has bought some %s as a way of breaking into the freelance "
-"piloting business. Born and raised on %s, where they bought their first "
-"commodity, they spoke with enthusiasm for the new career. \"You know, it's "
-"real exciting! Even on my home planet the price of %s credit per tonne isn't "
-"static, but when you look all around, there's so much price variation, so "
-"much potential for profit! I'm excited to finally get started.\""
-msgid_plural ""
-"A young pilot has bought some %s as a way of breaking into the freelance "
-"piloting business. Born and raised on %s, where they bought their first "
-"commodity, they spoke with enthusiasm for the new career. \"You know, it's "
-"real exciting! Even on my home planet the price of %s credits per tonne "
-"isn't static, but when you look all around, there's so much price variation, "
-"so much potential for profit! I'm excited to finally get started.\""
-msgstr[0] ""
-msgstr[1] ""
+"A young pilot has bought some {cargo} as a way of breaking into the "
+"freelance piloting business. Born and raised on {pnt}, where they bought "
+"their first commodity, they spoke with enthusiasm for the new career. \"You "
+"know, it's real exciting! Even on my home planet the price of {credits} per "
+"tonne isn't static, but when you look all around, there's so much price "
+"variation, so much potential for profit! I'm excited to finally get started."
+"\""
+msgstr ""
 
-#: dat/events/neutral/news.lua:458
+#: dat/events/neutral/news.lua:442
 msgid "Corporate Scandal Rips Through the Galaxy"
 msgstr ""
 
-#: dat/events/neutral/news.lua:460
-#, lua-format
+#: dat/events/neutral/news.lua:443
 msgid ""
-"Economists are attributing the price of %s on %s to a scandal involving "
-"WarpTron Industries. Debates have ensued regarding whether or not the price, "
-"seen to be %s credit per tonne, will go up, down, or remain the same this "
-"time."
-msgid_plural ""
-"Economists are attributing the price of %s on %s to a scandal involving "
-"WarpTron Industries. Debates have ensued regarding whether or not the price, "
-"seen to be %s credits per tonne, will go up, down, or remain the same this "
-"time."
-msgstr[0] ""
-msgstr[1] ""
+"Economists are attributing the price of {cargo} on {pnt} to a scandal "
+"involving WarpTron Industries. Debates have ensued regarding whether or not "
+"the price, seen to be {credits} per tonne, will go up, down, or remain the "
+"same this time."
+msgstr ""
 
-#: dat/events/neutral/news.lua:465
+#: dat/events/neutral/news.lua:446
 msgid "Commodity Trading Likened to Gambling"
 msgstr ""
 
-#: dat/events/neutral/news.lua:467
-#, lua-format
+#: dat/events/neutral/news.lua:447
 msgid ""
 "In a controversial statement, one activist has likened commodity trading to "
 "gambling. \"It's legalized gambling, plain and simple! Right now the price "
-"of %s on %s is %s credit per tonne, for example, but everyone knows the "
-"price fluctuates. Tomorrow it could be lower, or it could be higher. Who "
+"of {cargo} on {pnt} is {credits} per tonne, for example, but everyone knows "
+"the price fluctuates. Tomorrow it could be lower, or it could be higher. Who "
 "knows? Frankly, it is my firm opinion that this 'commodity trading' is self-"
 "destructive and needs to stop.\""
-msgid_plural ""
-"In a controversial statement, one activist has likened commodity trading to "
-"gambling. \"It's legalized gambling, plain and simple! Right now the price "
-"of %s on %s is %s credits per tonne, for example, but everyone knows the "
-"price fluctuates. Tomorrow it could be lower, or it could be higher. Who "
-"knows? Frankly, it is my firm opinion that this 'commodity trading' is self-"
-"destructive and needs to stop.\""
-msgstr[0] ""
-msgstr[1] ""
+msgstr ""
 
-#: dat/events/neutral/news.lua:472
+#: dat/events/neutral/news.lua:450
 msgid "Leadership Decision Disrupts Prices"
 msgstr ""
 
-#: dat/events/neutral/news.lua:474
-#, lua-format
+#: dat/events/neutral/news.lua:451
 msgid ""
-"The price of %s was jeopardized on %s today when the local government passed "
-"a controversial law, bringing it to %s credit per tonne. Protests have "
-"erupted demanding a repeal of the law so that the economy can stabilize."
-msgid_plural ""
-"The price of %s was jeopardized on %s today when the local government passed "
-"a controversial law, bringing it to %s credits per tonne. Protests have "
-"erupted demanding a repeal of the law so that the economy can stabilize."
-msgstr[0] ""
-msgstr[1] ""
+"The price of {cargo} was jeopardized on {pnt} today when the local "
+"government passed a controversial law, bringing it to {credits} per tonne. "
+"Protests have erupted demanding a repeal of the law so that the economy can "
+"stabilize."
+msgstr ""
 
-#: dat/events/neutral/news.lua:479
+#: dat/events/neutral/news.lua:454
 msgid "Five Cycle Old Child Starts Commodity Trading"
 msgstr ""
 
-#: dat/events/neutral/news.lua:481
-#, lua-format
+#: dat/events/neutral/news.lua:455
 msgid ""
 "A child no more than five cycles old has started commodity trading early, "
-"buying 1 tonne of %s. A native of %s, she explained that she has a keen "
-"interest in the economy and wishes to be a space trader some day. \"I bought "
-"it for %s credit, but it goes up and down, so if you time it right, you can "
-"make more money! My mom is a trader too and I want to be just like her.\""
-msgid_plural ""
-"A child no more than five cycles old has started commodity trading early, "
-"buying 1 tonne of %s. A native of %s, she explained that she has a keen "
-"interest in the economy and wishes to be a space trader some day. \"I bought "
-"it for %s credits, but it goes up and down, so if you time it right, you can "
-"make more money! My mom is a trader too and I want to be just like her.\""
-msgstr[0] ""
-msgstr[1] ""
+"buying 1 tonne of {cargo}. A native of {pnt}, she explained that she has a "
+"keen interest in the economy and wishes to be a space trader some day. \"I "
+"bought it for {credits}, but it goes up and down, so if you time it right, "
+"you can make more money! My mom is a trader too and I want to be just like "
+"her.\""
+msgstr ""
 
 #. create news
 #. Needs to be inhabited and have a bar for there to be news
 #. Needs a faction for there to be news
 #. Remove old headers (we only want one at a time)
-#: dat/events/neutral/news.lua:527
-#, lua-format
-msgid "News: Faction '%s' does not have entry in faction table!"
+#: dat/events/neutral/news.lua:499
+msgid "News: Faction '{facname}' does not have entry in faction table!"
 msgstr ""
 
 #. Remove old econ articles (we only want one at a time)
-#: dat/events/neutral/news.lua:618
-#, lua-format
-msgid ""
-"\n"
-"\n"
-"%s in %s"
+#: dat/events/neutral/news.lua:590
+msgid "{pnt} in {sys}"
 msgstr ""
 
-#: dat/events/neutral/news.lua:620
-#, lua-format
-msgid ""
-"\n"
-"%s: %s"
+#: dat/events/neutral/news.lua:592
+msgid "{cargo}: {price}"
 msgstr ""
 
 #. Create news, expires immediately when time advances (i.e.
 #. when you take off from the planet).
-#: dat/events/neutral/news.lua:630
+#: dat/events/neutral/news.lua:602
 msgid "Current Market Prices"
 msgstr ""
 
@@ -32145,8 +32067,8 @@ msgstr ""
 #. Initialize the map overlay stuff.
 #: dat/factions/spawn/lib/common.lua:186 dat/gui/brushed.lua:374
 #: dat/gui/brushed.lua:808 dat/gui/brushed.lua:847 dat/gui/legacy.lua:210
-#: dat/gui/legacy.lua:301 dat/gui/legacy.lua:315 dat/gui/slim.lua:374
-#: dat/gui/slim.lua:961 dat/missions/pirate/blackcat.lua:93
+#: dat/gui/legacy.lua:301 dat/gui/legacy.lua:315 dat/gui/slim.lua:376
+#: dat/gui/slim.lua:963 dat/missions/pirate/blackcat.lua:93
 #: dat/missions/shadow/darkshadow.lua:52 dat/missions/shadow/shadowvigil.lua:97
 #: src/gui.c:1523 src/map.c:494 src/map.c:500 src/map.c:506 src/map.c:512
 #: src/map.c:518 src/map.c:524 src/map.c:1672 src/map_overlay.c:221
@@ -32655,9 +32577,9 @@ msgstr ""
 #. Set OSD
 #. Space out the text.
 #. Bottom bar
-#: dat/gui/brushed.lua:264 dat/gui/brushed.lua:380 dat/gui/slim.lua:380
-#: dat/gui/slim.lua:1038 dat/gui/slim.lua:1056 dat/gui/slim.lua:1095
-#: dat/gui/slim.lua:1096
+#: dat/gui/brushed.lua:264 dat/gui/brushed.lua:380 dat/gui/slim.lua:382
+#: dat/gui/slim.lua:1040 dat/gui/slim.lua:1058 dat/gui/slim.lua:1097
+#: dat/gui/slim.lua:1098
 msgid "none"
 msgstr ""
 
@@ -32665,7 +32587,7 @@ msgstr ""
 #. Refire indicator
 #. Handling missile lock-on.
 #. Handling turret tracking.
-#: dat/gui/brushed.lua:293 dat/gui/slim.lua:612
+#: dat/gui/brushed.lua:293 dat/gui/slim.lua:614
 msgid "Too big!"
 msgstr ""
 
@@ -32702,7 +32624,7 @@ msgstr ""
 #. Timer stuff
 #. Table for convenience.
 #. "Spaceport" is nicer than "Land"
-#: dat/gui/brushed.lua:363 dat/gui/slim.lua:360
+#: dat/gui/brushed.lua:363 dat/gui/slim.lua:362
 msgid "Spaceport"
 msgstr ""
 
@@ -32735,7 +32657,7 @@ msgstr ""
 #. Extend the pane depending on the services available.
 #. Render background images.
 #. Render planet image.
-#: dat/gui/brushed.lua:897 dat/gui/slim.lua:879 dat/gui/slim.lua:1008
+#: dat/gui/brushed.lua:897 dat/gui/slim.lua:881 dat/gui/slim.lua:1010
 msgid "TARGETED"
 msgstr ""
 
@@ -32751,7 +32673,7 @@ msgstr ""
 
 #. Space out the text.
 #. Render dir sprite.
-#: dat/gui/brushed.lua:913 dat/gui/slim.lua:1027
+#: dat/gui/brushed.lua:913 dat/gui/slim.lua:1029
 msgid "SERVICES:"
 msgstr ""
 
@@ -32774,7 +32696,7 @@ msgstr ""
 #. Weapon bars
 #. Truncate names for readability.
 #. Formation selection button
-#: dat/gui/brushed.lua:931 dat/gui/slim.lua:769
+#: dat/gui/brushed.lua:931 dat/gui/slim.lua:771
 msgid "Set formation"
 msgstr ""
 
@@ -32878,7 +32800,7 @@ msgstr ""
 #. Faction Logo
 #. Cargo light cargo_light_off
 #. Status information
-#: dat/gui/legacy.lua:332 dat/gui/slim.lua:930
+#: dat/gui/legacy.lua:332 dat/gui/slim.lua:932
 msgid "Disabled"
 msgstr ""
 
@@ -32949,7 +32871,7 @@ msgid "Warning - Missile Lock-on Detected"
 msgstr ""
 
 #. Colour the planet name based on friendliness.
-#: dat/gui/slim.lua:392
+#: dat/gui/slim.lua:394
 #, lua-format
 msgid " (%s free)"
 msgstr ""
@@ -32990,70 +32912,70 @@ msgstr ""
 #. update_system()
 #. update_nav()
 #. update_faction()
-#: dat/gui/slim.lua:444 dat/gui/slimv2.lua:239
+#: dat/gui/slim.lua:446 dat/gui/slimv2.lua:239
 msgid "Cooling down..."
 msgstr ""
 
-#: dat/gui/slim.lua:487 dat/gui/slim.lua:532
+#: dat/gui/slim.lua:489 dat/gui/slim.lua:534
 msgid "UNAVAILABLE"
 msgstr ""
 
-#: dat/gui/slim.lua:932
+#: dat/gui/slim.lua:934
 msgid "Boardable"
 msgstr ""
 
-#: dat/gui/slim.lua:934
+#: dat/gui/slim.lua:936
 msgid "Cooling Down"
 msgstr ""
 
 #. Render bars.
 #. Dist
-#: dat/gui/slim.lua:971
+#: dat/gui/slim.lua:973
 msgid "DIST"
 msgstr ""
 
 #. Dir
-#: dat/gui/slim.lua:978
+#: dat/gui/slim.lua:980
 msgid "DIR"
 msgstr ""
 
-#: dat/gui/slim.lua:1009
+#: dat/gui/slim.lua:1011
 msgid "DISTANCE:"
 msgstr ""
 
-#: dat/gui/slim.lua:1010
+#: dat/gui/slim.lua:1012
 msgid "CLASS:"
 msgstr ""
 
-#: dat/gui/slim.lua:1059
+#: dat/gui/slim.lua:1061
 msgid "Pilot: "
 msgstr ""
 
-#: dat/gui/slim.lua:1059
+#: dat/gui/slim.lua:1061
 msgid "System: "
 msgstr ""
 
-#: dat/gui/slim.lua:1059
+#: dat/gui/slim.lua:1061
 msgid "Time: "
 msgstr ""
 
-#: dat/gui/slim.lua:1059
+#: dat/gui/slim.lua:1061
 msgid "Credits: "
 msgstr ""
 
-#: dat/gui/slim.lua:1060
+#: dat/gui/slim.lua:1062
 msgid "Nav: "
 msgstr ""
 
-#: dat/gui/slim.lua:1060
+#: dat/gui/slim.lua:1062
 msgid "Fuel: "
 msgstr ""
 
-#: dat/gui/slim.lua:1061
+#: dat/gui/slim.lua:1063
 msgid "WSet: "
 msgstr ""
 
-#: dat/gui/slim.lua:1061
+#: dat/gui/slim.lua:1063
 msgid "Cargo: "
 msgstr ""
 
@@ -74697,21 +74619,21 @@ msgstr ""
 msgid "Trying to pop subtask when there are no subtasks for the task '%s'."
 msgstr ""
 
-#: src/ai.c:2317 src/nlua_pilot.c:4356
+#: src/ai.c:2316 src/nlua_pilot.c:4356
 #, c-format
 msgid "Planet '%s' not found in system '%s'"
 msgstr ""
 
-#: src/ai.c:2325
+#: src/ai.c:2324
 #, c-format
 msgid "Pilot '%s' (ai '%s') has no land target"
 msgstr ""
 
-#: src/ai.c:2417
+#: src/ai.c:2415
 msgid "Jump point must be in current system."
 msgstr ""
 
-#: src/ai.c:2953
+#: src/ai.c:2951
 msgid "Invalid Bounds"
 msgstr ""
 
