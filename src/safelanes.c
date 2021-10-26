@@ -247,7 +247,7 @@ void safelanes_recalculate (void)
    safelanes_destroyOptimizer();
    /* Stacks remain available for queries. */
    time = SDL_GetTicks() - time;
-   DEBUG( _("Charted safe lanes for %d objects in %.3f s."), array_size(vertex_stack), time/1000. );
+   DEBUG( n_("Charted safe lanes for %d object in %.3f s.", "Charted safe lanes for %d objects in %.3f s.", array_size(vertex_stack)), array_size(vertex_stack), time/1000. );
 }
 
 /**
