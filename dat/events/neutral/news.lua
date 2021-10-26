@@ -169,9 +169,9 @@ articles["Generic"] = {
    },
    {
       tag = N_("Former Pirate Writes Target Management Self-Help Book"),
-      desc = string.format(
-         _("A former pirate shares her story on how she steered herself away from piracy, which she wrote about in an award-winning self-help book. \"I used to spend my whole life pressing %s to target enemies, but my life changed when I had a dream about a cat munching on some grass. 'Are you using the %s key?' it asked. 'I find that it is very useful.' I have been doing as the strange cat in my dream said ever since, and I no longer have to lose money or alienate friends. If the universe followed this simple advice, I suspect we would live in a much safer society.\""),
-         naev.keyGet("target_nearest"), naev.keyGet("target_hostile") )
+      desc = fmt.f(
+         _("A former pirate shares her story on how she steered herself away from piracy, which she wrote about in an award-winning self-help book. \"I used to spend my whole life pressing {target_nearest} to target enemies, but my life changed when I had a dream about a cat munching on some grass. 'Are you using the {target_hostile} key?' it asked. 'I find that it is very useful.' I have been doing as the strange cat in my dream said ever since, and I no longer have to lose money or alienate friends. If the universe followed this simple advice, I suspect we would live in a much safer society.\""),
+	 {target_nearest=naev.keyGet("target_nearest"), target_hostile=naev.keyGet("target_hostile")} )
    },
 }
 
@@ -415,79 +415,78 @@ articles["Proteron"] = {}
 articles["Za'lek"] = {}
 articles["Thurion"] = {}
 
--- Return an economy article based on the given commodity name, planet
--- name, and number of credits. Wrapper for gettext.ngettext.
-function get_econ_article( commod_name, plnt_name, credits )
+-- Return an economy article based on the given commodity, planet object, and number of credits. Wrapper for n_.
+function get_econ_article( cargo, pnt, credits )
    local econ_articles = {
       {
          title = _("Unfortunate Merchant Goes Bankrupt"),
-         desc = gettext.ngettext(
-            "A merchant was forced into bankruptcy due to a badly timed trade of %s on %s. \"I thought %s credit per tonne was a good deal, but it turns out I should have waited,\" the merchant said.",
-            "A merchant was forced into bankruptcy due to a badly timed trade of %s on %s. \"I thought %s credits per tonne was a good deal, but it turns out I should have waited,\" the merchant said.",
+         desc = n_(
+            "A merchant was forced into bankruptcy due to a badly timed trade of {cargo} on {pnt}. \"I thought {credits} credit per tonne was a good deal, but it turns out I should have waited,\" the merchant said.",
+            "A merchant was forced into bankruptcy due to a badly timed trade of {cargo} on {pnt}. \"I thought {credits} credits per tonne was a good deal, but it turns out I should have waited,\" the merchant said.",
             credits )
       },
       {
          title = _("Shipping Company Goes Out of Business"),
-         desc = gettext.ngettext(
-            "A small shipping business failed just this decaperiod. While it was already failing, what finally put the company under was a poorly-timed trade of %s on %s for %s credit per tonne. \"It was poor executive decision,\" one analyst asserts. \"Patience is key when trading, and it's clear that the owner of this company didn't have enough of that.\"",
-            "A small shipping business failed just this decaperiod. While it was already failing, what finally put the company under was a poorly-timed trade of %s on %s for %s credits per tonne. \"It was poor executive decision,\" one analyst asserts. \"Patience is key when trading, and it's clear that the owner of this company didn't have enough of that.\"",
+         desc = n_(
+            "A small shipping business failed just this decaperiod. While it was already failing, what finally put the company under was a poorly-timed trade of {cargo} on {pnt} for {credits} credit per tonne. \"It was poor executive decision,\" one analyst asserts. \"Patience is key when trading, and it's clear that the owner of this company didn't have enough of that.\"",
+            "A small shipping business failed just this decaperiod. While it was already failing, what finally put the company under was a poorly-timed trade of {cargo} on {pnt} for {credits} credits per tonne. \"It was poor executive decision,\" one analyst asserts. \"Patience is key when trading, and it's clear that the owner of this company didn't have enough of that.\"",
             credits )
       },
       {
          title = _("Interview with an Economist"),
-         desc = gettext.ngettext(
-            "One of the galaxy's foremost experts on economics gives an interview explaining our modern economy. \"We actually have a pretty good understanding of how the economy works. For example, we were able to predict what the price of %s on %s would reach very accurately; the actual price reached was %s credit per tonne, which we were only off by about 15%%. Over time, we hope to lower that margin of error to as little as 2%%.\"",
-            "One of the galaxy's foremost experts on economics gives an interview explaining our modern economy. \"We actually have a pretty good understanding of how the economy works. For example, we were able to predict what the price of %s on %s would reach very accurately; the actual price reached was %s credits per tonne, which we were only off by about 15%%. Over time, we hope to lower that margin of error to as little as 2%%.\"",
+         desc = n_(
+            "One of the galaxy's foremost experts on economics gives an interview explaining our modern economy. \"We actually have a pretty good understanding of how the economy works. For example, we were able to predict what the price of {cargo} on {pnt} would reach very accurately; the actual price reached was {credits} credit per tonne, which we were only off by about 15%. Over time, we hope to lower that margin of error to as little as 2%.\"",
+            "One of the galaxy's foremost experts on economics gives an interview explaining our modern economy. \"We actually have a pretty good understanding of how the economy works. For example, we were able to predict what the price of {cargo} on {pnt} would reach very accurately; the actual price reached was {credits} credits per tonne, which we were only off by about 15%. Over time, we hope to lower that margin of error to as little as 2%.\"",
             credits )
       },
       {
          title = _("Economist Describes Sinusoidal Economic Theory"),
-         desc = gettext.ngettext(
-            "A little-known economist discusses a controversial economic theory. \"When you look at the trends, it resembles a sine wave. For instance, the price of %s on %s is now %s credit per tonne, and it seems to return to that price with some regularity. We are working on developing a model to predict these curves more accurately.\" Other economists disagree, however, attributing these economists' results to chance.",
-            "A little-known economist discusses a controversial economic theory. \"When you look at the trends, it resembles a sine wave. For instance, the price of %s on %s is now %s credits per tonne, and it seems to return to that price with some regularity. We are working on developing a model to predict these curves more accurately.\" Other economists disagree, however, attributing these economists' results to chance.",
+         desc = n_(
+            "A little-known economist discusses a controversial economic theory. \"When you look at the trends, it resembles a sine wave. For instance, the price of {cargo} on {pnt} is now {credits} credit per tonne, and it seems to return to that price with some regularity. We are working on developing a model to predict these curves more accurately.\" Other economists disagree, however, attributing these economists' results to chance.",
+            "A little-known economist discusses a controversial economic theory. \"When you look at the trends, it resembles a sine wave. For instance, the price of {cargo} on {pnt} is now {credits} credits per tonne, and it seems to return to that price with some regularity. We are working on developing a model to predict these curves more accurately.\" Other economists disagree, however, attributing these economists' results to chance.",
             credits )
       },
       {
          title = _("Young Pilot Buys Their First Commodity"),
-         desc = gettext.ngettext(
-            "A young pilot has bought some %s as a way of breaking into the freelance piloting business. Born and raised on %s, where they bought their first commodity, they spoke with enthusiasm for the new career. \"You know, it's real exciting! Even on my home planet the price of %s credit per tonne isn't static, but when you look all around, there's so much price variation, so much potential for profit! I'm excited to finally get started.\"",
-            "A young pilot has bought some %s as a way of breaking into the freelance piloting business. Born and raised on %s, where they bought their first commodity, they spoke with enthusiasm for the new career. \"You know, it's real exciting! Even on my home planet the price of %s credits per tonne isn't static, but when you look all around, there's so much price variation, so much potential for profit! I'm excited to finally get started.\"",
+         desc = n_(
+            "A young pilot has bought some {cargo} as a way of breaking into the freelance piloting business. Born and raised on {pnt}, where they bought their first commodity, they spoke with enthusiasm for the new career. \"You know, it's real exciting! Even on my home planet the price of {credits} credit per tonne isn't static, but when you look all around, there's so much price variation, so much potential for profit! I'm excited to finally get started.\"",
+            "A young pilot has bought some {cargo} as a way of breaking into the freelance piloting business. Born and raised on {pnt}, where they bought their first commodity, they spoke with enthusiasm for the new career. \"You know, it's real exciting! Even on my home planet the price of {credits} credits per tonne isn't static, but when you look all around, there's so much price variation, so much potential for profit! I'm excited to finally get started.\"",
             credits )
       },
       {
          title = _("Corporate Scandal Rips Through the Galaxy"),
-         desc = gettext.ngettext(
-            "Economists are attributing the price of %s on %s to a scandal involving WarpTron Industries. Debates have ensued regarding whether or not the price, seen to be %s credit per tonne, will go up, down, or remain the same this time.",
-            "Economists are attributing the price of %s on %s to a scandal involving WarpTron Industries. Debates have ensued regarding whether or not the price, seen to be %s credits per tonne, will go up, down, or remain the same this time.",
+         desc = n_(
+            "Economists are attributing the price of {cargo} on {pnt} to a scandal involving WarpTron Industries. Debates have ensued regarding whether or not the price, seen to be {credits} credit per tonne, will go up, down, or remain the same this time.",
+            "Economists are attributing the price of {cargo} on {pnt} to a scandal involving WarpTron Industries. Debates have ensued regarding whether or not the price, seen to be {credits} credits per tonne, will go up, down, or remain the same this time.",
             credits )
       },
       {
          title = _("Commodity Trading Likened to Gambling"),
-         desc = gettext.ngettext(
-            "In a controversial statement, one activist has likened commodity trading to gambling. \"It's legalized gambling, plain and simple! Right now the price of %s on %s is %s credit per tonne, for example, but everyone knows the price fluctuates. Tomorrow it could be lower, or it could be higher. Who knows? Frankly, it is my firm opinion that this 'commodity trading' is self-destructive and needs to stop.\"",
-            "In a controversial statement, one activist has likened commodity trading to gambling. \"It's legalized gambling, plain and simple! Right now the price of %s on %s is %s credits per tonne, for example, but everyone knows the price fluctuates. Tomorrow it could be lower, or it could be higher. Who knows? Frankly, it is my firm opinion that this 'commodity trading' is self-destructive and needs to stop.\"",
+         desc = n_(
+            "In a controversial statement, one activist has likened commodity trading to gambling. \"It's legalized gambling, plain and simple! Right now the price of {cargo} on {pnt} is {credits} credit per tonne, for example, but everyone knows the price fluctuates. Tomorrow it could be lower, or it could be higher. Who knows? Frankly, it is my firm opinion that this 'commodity trading' is self-destructive and needs to stop.\"",
+            "In a controversial statement, one activist has likened commodity trading to gambling. \"It's legalized gambling, plain and simple! Right now the price of {cargo} on {pnt} is {credits} credits per tonne, for example, but everyone knows the price fluctuates. Tomorrow it could be lower, or it could be higher. Who knows? Frankly, it is my firm opinion that this 'commodity trading' is self-destructive and needs to stop.\"",
             credits )
       },
       {
          title = _("Leadership Decision Disrupts Prices"),
-         desc = gettext.ngettext(
-            "The price of %s was jeopardized on %s today when the local government passed a controversial law, bringing it to %s credit per tonne. Protests have erupted demanding a repeal of the law so that the economy can stabilize.",
-            "The price of %s was jeopardized on %s today when the local government passed a controversial law, bringing it to %s credits per tonne. Protests have erupted demanding a repeal of the law so that the economy can stabilize.",
+         desc = n_(
+            "The price of {cargo} was jeopardized on {pnt} today when the local government passed a controversial law, bringing it to {credits} credit per tonne. Protests have erupted demanding a repeal of the law so that the economy can stabilize.",
+            "The price of {cargo} was jeopardized on {pnt} today when the local government passed a controversial law, bringing it to {credits} credits per tonne. Protests have erupted demanding a repeal of the law so that the economy can stabilize.",
             credits )
       },
       {
          title = _("Five Cycle Old Child Starts Commodity Trading"),
-         desc = gettext.ngettext(
-            "A child no more than five cycles old has started commodity trading early, buying 1 tonne of %s. A native of %s, she explained that she has a keen interest in the economy and wishes to be a space trader some day. \"I bought it for %s credit, but it goes up and down, so if you time it right, you can make more money! My mom is a trader too and I want to be just like her.\"",
-            "A child no more than five cycles old has started commodity trading early, buying 1 tonne of %s. A native of %s, she explained that she has a keen interest in the economy and wishes to be a space trader some day. \"I bought it for %s credits, but it goes up and down, so if you time it right, you can make more money! My mom is a trader too and I want to be just like her.\"",
+         desc = n_(
+            "A child no more than five cycles old has started commodity trading early, buying 1 tonne of {cargo}. A native of {pnt}, she explained that she has a keen interest in the economy and wishes to be a space trader some day. \"I bought it for {credits} credit, but it goes up and down, so if you time it right, you can make more money! My mom is a trader too and I want to be just like her.\"",
+            "A child no more than five cycles old has started commodity trading early, buying 1 tonne of {cargo}. A native of {pnt}, she explained that she has a keen interest in the economy and wishes to be a space trader some day. \"I bought it for {credits} credits, but it goes up and down, so if you time it right, you can make more money! My mom is a trader too and I want to be just like her.\"",
             credits )
       },
    }
 
    local i = rnd.rnd( 1, #econ_articles )
    local title = econ_articles[i]["title"]
-   local desc = econ_articles[i]["desc"]:format(
-      commod_name, plnt_name, fmt.number(credits) )
+   local desc = fmt.f( econ_articles[i]["desc"],
+      {cargo=cargo, pnt=pnt, credits=fmt.number(credits)} )
 
    return title, desc
 end
@@ -523,8 +522,8 @@ function add_header( my_faction )
    end
 
    if header_table[my_faction] == nil then
-      warn( string.format(
-            _('News: Faction \'%s\' does not have entry in faction table!'),
+      warn( fmt.f(
+            _('News: Faction \'{facname}\' does not have entry in faction table!'),
             my_faction) )
       my_faction = 'Generic'
    end
@@ -597,7 +596,7 @@ function add_econ_article ()
          local commchoices = p:commoditiesSold()
          local commod = commchoices[ rnd.rnd( 1, #commchoices ) ]
          local price = commod:priceAtTime( p, pd )
-         local title, desc = get_econ_article( commod:name(), p:name(), price )
+         local title, desc = get_econ_article( commod, p, price )
          news.add( "Generic", title, desc, exp, pd )
          p:recordCommodityPriceAtTime( pd )
          var.push( "news_last_econ_article", time.get():tonumber() )
@@ -615,10 +614,10 @@ function add_econ_article ()
       for j, plnt in ipairs( sys:planets() ) do
          local commodities = plnt:commoditiesSold()
          if #commodities > 0 then
-            body = body .. _("\n\n%s in %s"):format( plnt:name(), sys:name() )
+            body = body .. "\n\n" .. fmt.f( _("{pnt} in {sys}"), {pnt=plnt, sys=sys} )
             for k, comm in ipairs( commodities ) do
-               body = body .. _("\n%s: %s"):format( comm:name(),
-                     fmt.number( comm:priceAtTime( plnt, cur_t ) ) )
+               body = body .. "\n" .. fmt.f( _("{cargo}: {price}"), {cargo=comm,
+                     price=fmt.number(comm:priceAtTime(plnt, cur_t))} )
             end
             plnt:recordCommodityPriceAtTime( cur_t )
          end
