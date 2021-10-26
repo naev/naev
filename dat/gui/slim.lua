@@ -317,6 +317,8 @@ function update_target()
 
       if ptargetfact ~= nil and ptargetfact:known() then
          ptarget_faction_gfx = ptargetfact:logo()
+      else
+         ptarget_faction_gfx = nil
       end
    end
 end
