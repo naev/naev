@@ -43,9 +43,9 @@
 /*
  * Global parameters.
  */
-static const double ALPHA                  = 9;         /**< Lane efficiency parameter. */
+static const double ALPHA                  = 9.;        /**< Lane efficiency parameter. */
 static const double JUMP_CONDUCTIVITY      = 0.001;     /**< Conductivity value for inter-system jump-point connections. */
-static const double MIN_ANGLE              = M_PI/18;   /**< Path triangles can't be more acute. */
+static const double MIN_ANGLE              = M_PI/18.;  /**< Path triangles can't be more acute. */
 enum {
    STORAGE_MODE_LOWER_TRIANGULAR_PART = -1,             /**< A CHOLMOD "stype" value: matrix is interpreted as symmetric. */
    STORAGE_MODE_UNSYMMETRIC           = 0,              /**< A CHOLMOD "stype" value: matrix holds whatever we put in it. */
@@ -81,6 +81,7 @@ typedef struct Faction_ {
 
 /** @brief A set of lane-building factions, represented as a bitfield. */
 typedef uint32_t FactionMask;
+static const FactionMask MASK_0 = 0, MASK_1 = 1;
 
 /*
  * Global state.
@@ -687,7 +688,7 @@ static int safelanes_activateByGradient( cholmod_dense* Lambda_tilde )
           * deplete this presence before constructing lal[fi]. This is tricky, so there are assertions below,
           * which can warn us if we fuck this up. */
          lal_base = lal_bases[fi];
-         if (presence_budget[fi][si] <= 0)
+         if (presence_budget[fi][si] <= 0.)
             continue;
          /* We "should" find these DoF's interesting if/when we slice, and will unless we deplete this presence first. */
          lal_bases[fi] += sys_to_first_vertex[1+si] - sys_to_first_vertex[si];
@@ -695,19 +696,19 @@ static int safelanes_activateByGradient( cholmod_dense* Lambda_tilde )
          array_resize( &edgeind_opts, 0 );
          for (int ei=sys_to_first_edge[si]; ei<sys_to_first_edge[1+si]; ei++)
             if (!lane_faction[ei]
-                && presence_budget[fi][si] >= 1 / safelanes_initialConductivity(ei) / faction_stack[fi].lane_length_per_presence
-                && (lane_fmask[ei] & (1<<fi)))
+                && presence_budget[fi][si] >= 1. / safelanes_initialConductivity(ei) / faction_stack[fi].lane_length_per_presence
+                && (lane_fmask[ei] & (MASK_1<<fi)))
                array_push_back( &edgeind_opts, ei );
 
          if (array_size(edgeind_opts) == 0) {
-            presence_budget[fi][si] = 0;  /* Nothing to build here! Tell ourselves to stop trying. */
+            presence_budget[fi][si] = 0.;  /* Nothing to build here! Tell ourselves to stop trying. */
             if (lal[fi] == NULL)
                lal_bases[fi] -= sys_to_first_vertex[1+si] - sys_to_first_vertex[si];
             continue;
          }
 
          ei_best = edgeind_opts[0];
-         cost_best = 1 / safelanes_initialConductivity(ei_best) / faction_stack[fi].lane_length_per_presence;
+         cost_best = 1. / safelanes_initialConductivity(ei_best) / faction_stack[fi].lane_length_per_presence;
          cost_cheapest_other = +HUGE_VAL;
          if (array_size(edgeind_opts) > 1) {
             /* There's an actual choice. Search for the best option. Lower is better. */
@@ -746,11 +747,12 @@ static int safelanes_activateByGradient( cholmod_dense* Lambda_tilde )
             }
          }
 
+         /* Add the lane. */
          presence_budget[fi][si] -= cost_best;
          if (presence_budget[fi][si] >= cost_cheapest_other)
             turns_next_time++;
          else {
-            presence_budget[fi][si] = 0; /* Nothing more to do here; tell ourselves. */
+            presence_budget[fi][si] = 0.; /* Nothing more to do here; tell ourselves. */
             if (lal[fi] == NULL)
                lal_bases[fi] -= sys_to_first_vertex[1+si] - sys_to_first_vertex[si];
          }
@@ -840,14 +842,14 @@ static inline int FACTION_ID_TO_INDEX( int id )
 /** @brief Return a mask matching any faction. */
 static inline FactionMask MASK_ANY_FACTION()
 {
-   return ~(FactionMask)0;
+   return ~MASK_0;
 }
 
 /** @brief A mask giving this faction (NOT faction_stack index) exclusive rights to build, if it's a lane-building faction. */
 static inline FactionMask MASK_ONE_FACTION( int id )
 {
    int ind = FACTION_ID_TO_INDEX( id );
-   return ind>0 ? ((FactionMask)1)<<ind : MASK_ANY_FACTION();
+   return ind>0 ? (MASK_1)<<ind : MASK_ANY_FACTION();
 }
 
 /** @brief A mask with appropriate lane-building rights given one faction ID owning each endpoint. */
