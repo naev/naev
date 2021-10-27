@@ -667,7 +667,7 @@ void ovr_render( double dt )
          col = cHostile;
       else
          col = cNeutral;
-      col.a = 0.1 * safelanes[i].map_alpha;
+      col.a = 0.15 * safelanes[i].map_alpha;
 
       /* Get positions and stuff. */
       map_overlayToScreenPos( &x,  &y,  posns[0]->x, posns[0]->y );

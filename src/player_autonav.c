@@ -415,7 +415,7 @@ static void player_autonav (void)
             if (player_land(0) == PLAYER_LAND_DENIED)
                player_autonavAbort(NULL);
             else
-               player.autonav = AUTONAV_PNT_APPROACH;
+               player.autonav = AUTONAV_PNT_LAND_APPROACH;
          }
 
          /* See if should ramp down. */
@@ -548,11 +548,10 @@ static void player_autonavFollow( const Vector2d *pos, const Vector2d *vel, cons
 static int player_autonavBrake (void)
 {
    int ret;
-   JumpPoint *jp;
    Vector2d pos;
 
    if ((player.autonav == AUTONAV_JUMP_BRAKE) && (player.p->nav_hyperspace != -1)) {
-      jp  = &cur_system->jumps[ player.p->nav_hyperspace ];
+      JumpPoint *jp  = &cur_system->jumps[ player.p->nav_hyperspace ];
 
       pilot_brakeDist( player.p, &pos );
       if (vect_dist2( &pos, &jp->pos ) > pow2(jp->radius))

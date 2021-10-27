@@ -82,7 +82,7 @@ end
 
 function hail()
    hook.rm(hailhook)
-   tk.msg(_("A battle is about to begin"), _([["Hey, you," the captain of the ship says. "You seem not to know what is going to happen here: a mighty warlord from %s is going to attack %s. You shouldn't stay there, unless you are a mercenary. Do you know how it works? If you attack a warlord's ship, and he loses the battle, the other warlord will reward you. But if he wins, you will be hunted down."]]):format(source_system:name(), source_planet:name()))
+   tk.msg(_("A battle is about to begin"), fmt.f(_([["Hey, you," the captain of the ship says. "You seem not to know what is going to happen here: a mighty warlord from {sys} is going to attack {pnt}. You shouldn't stay there, unless you are a mercenary. Do you know how it works? If you attack a warlord's ship, and he loses the battle, the other warlord will reward you. But if he wins, you will be hunted down."]]), {sys=source_system, pnt=source_planet}))
    player.commClose()
 end
 
@@ -93,7 +93,7 @@ end
 
 function hailagain()
    hook.rm(hailhook)
-   tk.msg(_("Here comes your reward"), _([["Hello captain," a Dvaered officer says, "You helped us in this battle. I am authorized to give you %s as a reward."]]):format(fmt.credits(reward)))
+   tk.msg(_("Here comes your reward"), fmt.f( _([["Hello captain," a Dvaered officer says, "You helped us in this battle. I am authorized to give you {credits} as a reward."]]), {credits=fmt.credits(reward)}) )
    player.pay(reward)
 end
 

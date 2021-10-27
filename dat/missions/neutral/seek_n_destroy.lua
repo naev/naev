@@ -220,7 +220,7 @@ function accept ()
 
    osd_msg[1] = _("Fly to the %s system and search for clues"):format( mysys[1]:name() )
    osd_msg[2] = fmt.f( _("Kill {pltname}"), {pltname=name} )
-   osd_msg[3] = _("Land on any %s planet and collect your bounty"):format( paying_faction:name() )
+   osd_msg[3] = fmt.f( _("Land in {fctname} territory to collect your bounty"), {paying_faction} )
    misn.osdCreate( _("Seek and Destroy"), osd_msg )
 end
 

@@ -35,6 +35,7 @@
    7) Mace Pankration performed
 --]]
 
+local fmt = require "format"
 local fw = require "common.frontier_war"
 require "proximity"
 local portrait = require "portrait"
@@ -74,7 +75,7 @@ function create()
 
    misn.accept()
 
-   misn.osdCreate( _("Dvaered Ballet"), {_("Fly to %s"):format(destpla:name())} )
+   misn.osdCreate( _("Dvaered Ballet"), {fmt.f(_("Fly to {pnt}"), {pnt=destpla})} )
    misn.setDesc(_("You are invited to a Mace Rocket Ballet in memory of Lieutenant Strafer."))
    misn.setReward(_("Say goodbye to Lieutenant Strafer"))
    misn.markerAdd(destsys, "low")
@@ -193,8 +194,8 @@ function spawnNpcs()
             misn.npcAdd("tamCommon", _("Major Tam"), fw.portrait_tam, _("Major Tam is ready to explain the next stage of the ceremony to you."))
          elseif stage == 7 then
             tk.msg( totalTitle, totalString ) -- Ex-aequo always profit the player.
-            tk.msg("",_([[While landing, you see the other participants of the ceremony gathered on the dock. Strafer's father, being the master of ceremony, announces:
-   "Congratulations to %s, who is the great winner of the Mace Ballet! All participants will be rewarded depending to their rank."]]):format(competitors_names[10]))
+            tk.msg("", fmt.f(_([[While landing, you see the other participants of the ceremony gathered on the dock. Strafer's father, being the master of ceremonies, announces:
+   "Congratulations to {name}, who is the great winner of the Mace Ballet! All participants will be rewarded depending to their rank."]]), {name=competitors_names[10]}))
 
             player.outfitAdd("Handbook for Dvaered Good Manners") -- TODO: add lore about this Handbook
 
@@ -202,36 +203,36 @@ function spawnNpcs()
             local playerRank = fw.elt_inlist( 10, iter )
 
             if playerRank == 10 then
-               tk.msg("",_("You recieve a %s as a reward."):format(_("Dvaered Vendetta")))
+               tk.msg("",fmt.f(_("You receive a {1} as a reward."), {_("Dvaered Vendetta")}))
                player.addShip("Dvaered Vendetta")
             elseif playerRank == 9 then
-               tk.msg("",_("You recieve a %s as a reward."):format(_("Vendetta")))
+               tk.msg("",fmt.f(_("You receive a {1} as a reward."), {_("Vendetta")}))
                player.addShip("Vendetta")
             elseif playerRank == 8 then
-               tk.msg("",_("You recieve a %s and a %s as a reward."):format(_("Tricon Zephyr II Engine"),_("Emergency Shield Booster")))
+               tk.msg("",fmt.f(_("You recieve a {1} and a {2} as a reward."), {_("Tricon Zephyr II Engine"),_("Emergency Shield Booster")}))
                player.outfitAdd("Tricon Zephyr II Engine")
                player.outfitAdd("Emergency Shield Booster")
             elseif playerRank == 7 then
-               tk.msg("",_("You recieve a %s and a %s as a reward."):format(_("Milspec Orion 3701 Core System"),_("Shield Capacitor I")))
+               tk.msg("",fmt.f(_("You recieve a {1} and a {2} as a reward."), {_("Milspec Orion 3701 Core System"),_("Shield Capacitor I")}))
                player.outfitAdd("Milspec Orion 3701 Core System")
                player.outfitAdd("Shield Capacitor I")
             elseif playerRank == 6 then
-               tk.msg("",_("You recieve a %s as a reward."):format(_("S&K Light Combat Plating")))
+               tk.msg("",fmt.f(_("You receive a {1} as a reward."), {_("S&K Light Combat Plating")}))
                player.outfitAdd("S&K Light Combat Plating")
             elseif playerRank == 5 then
                tk.msg("",_("You recieve three Shredders as a reward."))
                player.outfitAdd("Shredder",3)
             elseif playerRank == 4 then
-               tk.msg("",_("You recieve a %s as a reward."):format(_("Hellburner")))
+               tk.msg("",fmt.f(_("You receive a {1} as a reward."), {_("Hellburner")}))
                player.outfitAdd("Hellburner")
             elseif playerRank == 3 then
-               tk.msg("",_("You recieve a %s as a reward."):format(_("Reactor Class I")))
+               tk.msg("",fmt.f(_("You receive a {1} as a reward."), {_("Reactor Class I")}))
                player.outfitAdd("Reactor Class I")
             elseif playerRank == 2 then
-               tk.msg("",_("You recieve a %s as a reward."):format(_("Small Shield Booster")))
+               tk.msg("",fmt.f(_("You receive a {1} as a reward."), {_("Small Shield Booster")}))
                player.outfitAdd("Small Shield Booster")
             else
-               tk.msg("",_("You recieve a %s as a reward."):format(_("Shield Capacitor I")))
+               tk.msg("",fmt.f(_("You receive a {1} as a reward."), {_("Shield Capacitor I")}))
                player.outfitAdd("Shield Capacitor I")
             end
             tk.msg(_("Major Tam warns you, and gives you a new task."),_([[After the results have been announced, Major Tam gets close to you. He seems to have something important to say: "It was your first ballet, right? You performed very well out there, citizen.
@@ -265,9 +266,9 @@ end
 
 -- Approaching the group of soldiers
 function approach()
-   tk.msg("",_([[You approach the group, and get close to Major Tam. "Good day, citizen %s. I hope you are ready for the mace ballet!" You answer that you have no idea what this ballet is about, but you are always ready when it comes to mace rockets.
+   tk.msg("",fmt.f(_([[You approach the group, and get close to Major Tam. "Good day, citizen {player}. I hope you are ready for the mace ballet!" You answer that you have no idea what this ballet is about, but you are always ready when it comes to mace rockets.
    "The mace ballet, also known as mace triathlon, is a series of three events where pilots must honour the memory of their fallen comrade and show their skills. The members of the Nightclaws squadron will take part to the event, along with both of us, General Klank, a few members of Strafer's family, and some of his former comrades before he joined the squadron. From the outcome of the competition will depend how Strafer's personnal outfits will be distributed. This includes two Vendettas, nice core outfits, weapons and utilities.
-   "Come at me when you're ready to take off.]]):format(player.name()) )
+   "Come at me when you're ready to take off.]]), {player=player.name()}) )
    misn.npcRm(npc)
    stage = 1
    spawnNpcs()
@@ -296,7 +297,7 @@ function discussNkv()
    tk.msg( "", _([[Yeah, he was for sure a good guy. Of course, he was an "educated" man, like the others here, always calling everyone "citizen", and annoying people with "righteousness", "valor" and stuff. But he was one of the few who did not despise us spacemarines, and we could count on him. He certainly will be missed.]]) )
 end
 function discussHam()
-   tk.msg( "", _([[Hey, %s! Long time no see, huh? How do you do? I've been stuck at the hospital lately because of all the damage taken during last mission. I got a brand new right arm, you see? With the latest bio and cyber enhancements. Targeting abilities have been increased by 0.23 percent, pulling force by 0.26 percent and pushing by 0.22 percent. But its best feature is that I can now scratch my nose without putting oil marks on it. Everyone is jealous at the barracks.]]):format(player.name()) )
+   tk.msg( "", fmt.f(_([[Hey, {player}! Long time no see, huh? How do you do? I've been stuck at the hospital lately because of all the damage taken during last mission. I got a brand new right arm, you see? With the latest bio and cyber enhancements. Targeting abilities have been increased by 0.23 percent, pulling force by 0.26 percent and pushing by 0.22 percent. But its best feature is that I can now scratch my nose without putting oil marks on it. Everyone is jealous at the barracks.]]), {player=player.name()}) )
 end
 function discussWdw()
    tk.msg( "", _([[It feels so strange. I knew this day could come sooner or later, but yet... I can't really figure out how I and the children will live without my husband from now on. It makes me so sad. Do you think that creating the next generation of Dvaered warriors is the sole purpose of wedding?]]) )
@@ -308,8 +309,8 @@ function discussSst()
    tk.msg( "", _([[You will take part to the mace ballet too? Ah! I can't wait to fight the friends of my big brother!]]) )
 end
 function discussPvt()
-   tk.msg( "", _([["Hello, citizen %s, how do you do?" You ask the soldier how he knows your name and he answers: "Well, I am part of the Nightclaws squadron, and everyone knows you in the squadron. You private pilots aren't used to speaking with technicians, right? This is normal: at each stop, you have different ones, this is not suitable to making friends. But in our army, the situation is different, and we hang out much more together, united by hard work and by our faith in the Nation.
-   "You know what they say? Joining the Dvaered army is the best way to find your place in the society."]]):format(player.name()) )
+   tk.msg( "", fmt.f(_([["Hello, citizen {player}, how do you do?" You ask the soldier how he knows your name and he answers: "Well, I am part of the Nightclaws squadron, and everyone knows you in the squadron. You private pilots aren't used to speaking with technicians, right? This is normal: at each stop, you have different ones, this is not suitable to making friends. But in our army, the situation is different, and we hang out much more together, united by hard work and by our faith in the Nation.
+   "You know what they say? Joining the Dvaered army is the best way to find your place in the society."]]), {player=player.name()}) )
 end
 
 -- Instructions
@@ -332,11 +333,11 @@ function tamStage1()
    stage = 2
 end
 function tamStage2()
-   tk.msg( "", _([[The second event consists in the "Mace Stadion". Crowns of flowers have been dropped out there, and some junior pilots from the academy camp in the gather zone with their mace launchers. They will aim at the competitors, and if your shield is disabled, you are eliminated. There are %d tons of flowers in total. The pilot who has gathered the most flowers before being eliminated, or when time runs out, wins. It is forbidden to shoot at other competitors. Are you ready? Have you checked you have enough free cargo space?]]):format(60) )
+   tk.msg( "", fmt.f(_([[The second event consists in the "Mace Stadion". Crowns of flowers have been dropped out there, and some junior pilots from the academy camp in the gather zone with their mace launchers. They will aim at the competitors, and if your shield is disabled, you are eliminated. There are {tonnes} of flowers in total. The pilot who has gathered the most flowers before being eliminated, or when time runs out, wins. It is forbidden to shoot at other competitors. Are you ready? Have you checked you have enough free cargo space?]]), {tonnes=fmt.tonnes(60)}) )
    stage = 4
 end
 function tamStage3()
-   tk.msg( "", _([[The third and last event consists of the "Mace Pankration". Each competitor must fight against an other competitor, and disable their shield. Winners recieve 7 points, and your adversary is %s. Killing is of course not allowed. Are you ready? Have you checked you are only equipped with Unicorp Mace Launchers?]]):format(competitors_names[5]) )
+   tk.msg( "", fmt.f(_([[The third and last event consists of the "Mace Pankration". Each competitor must fight against an other competitor, and disable their shield. Winners recieve 7 points, and your adversary is {name}. Killing is of course not allowed. Are you ready? Have you checked you are only equipped with Unicorp Mace Launchers?]]), {name=competitors_names[5]}) )
    stage = 6
 end
 
@@ -349,7 +350,11 @@ function takeoff()
       -- Check the player only has mace rockets
       if checkMace() then
          misn.osdDestroy()
-         misn.osdCreate( _("Dvaered Ballet"), {_("Wait for the signal"),_("Hit the most targets before your opponents"),_("Land on %s"):format(destpla:name())} )
+         misn.osdCreate( _("Dvaered Ballet"), {
+            _("Wait for the signal"),
+            _("Hit the most targets before your opponents"),
+            _("Land on %s"):format(destpla:name()),
+         } )
 
          score_throw = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }
          pilot.toggleSpawn(false)
@@ -393,7 +398,11 @@ function takeoff()
    elseif stage == 4 then -- Mace Stadion: spawn flowers, competitors and annoyers
       -- No need to check the player only has mace rockets
       misn.osdDestroy()
-      misn.osdCreate( _("Dvaered Ballet"), {_("Wait for the signal"),_("Catch the most flowers possible"),_("Land on %s"):format(destpla:name())} )
+      misn.osdCreate( _("Dvaered Ballet"), {
+         _("Wait for the signal"),
+         _("Catch the most flowers possible"),
+         _("Land on %s"):format(destpla:name()),
+      } )
 
       score_stadion = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }
       pilot.toggleSpawn(false)
@@ -436,7 +445,11 @@ function takeoff()
       -- Check the player only has mace rockets
       if checkMace() then
          misn.osdDestroy()
-         misn.osdCreate( _("Dvaered Ballet"), {_("Wait for the signal"),_("Defeat your opponent %s (nullify their shield)"):format(competitors_names[5]),_("Land on %s"):format(destpla:name())} )
+         misn.osdCreate( _("Dvaered Ballet"), {
+            _("Wait for the signal"),
+            fmt.f(_("Defeat your opponent {name} (nullify their shield)"), {name=competitors_names[5]}),
+            _("Land on %s"):format(destpla:name()),
+         } )
 
          score_pankration = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }
          pilot.toggleSpawn(false)
@@ -457,7 +470,7 @@ function takeoff()
          -- Timer and messages
          hook.timer( 3.0, "message", {pilot = competitors[6], msg = _("Hey, Tamtam, take your protein pills and put your helmet on, because I'M COMING FOR YOU!")} )
          hook.timer( 6.0, "message", {pilot = competitors[4], msg = _("I will win for my brother!")} )
-         hook.timer( 9.0, "message", {pilot = competitors[5], msg = _("%s, are you ready for the punishment?"):format(player.name())} )
+         hook.timer( 9.0, "message", {pilot = competitors[5], msg = fmt.f(_("{player}, are you ready for the punishment?"), {player=player.name()})} )
          hook.timer( 10.0, "startPankration" )
          countdown = 10
          hook.timer( 1.0, "timerIncrement")
@@ -733,7 +746,7 @@ function playerHit()
       competitors[5].land(destpla)
       competitors[5]:setHostile(false)
       competitors[5]:setInvincible()
-      player.msg(_("%s won against %s!"):format(competitors_names[5],competitors_names[10]))
+      player.msg(fmt.f(_("{1} won against {2}!"), {competitors_names[5],competitors_names[10]}))
       endPankration()
    end
 end
@@ -750,7 +763,7 @@ function compHit( victim )
          competitors[5]:land(destpla)
          competitors[5]:setHostile(false)
          competitors[5]:setInvincible()
-         player.msg(_("%s won against %s!"):format(competitors_names[10],competitors_names[5]))
+         player.msg(fmt.f(_("{1} won against {2}!"), {competitors_names[10],competitors_names[5]}))
          endPankration()
       elseif ind < 5 then
          hook.rm(compHitHook[ind+5])
@@ -764,7 +777,7 @@ function compHit( victim )
          competitors[ind+5]:land(destpla)
          competitors[ind+5]:setInvincible()
          competitors[ind]:setInvincible()
-         player.msg(_("%s won against %s!"):format(competitors_names[ind+5],competitors_names[ind]))
+         player.msg(fmt.f(_("{1} won against {2}!"), {competitors_names[ind+5],competitors_names[ind]}))
          endPankration()
       else
          hook.rm(compHitHook[ind-5])
@@ -778,7 +791,7 @@ function compHit( victim )
          competitors[ind-5]:land(destpla)
          competitors[ind]:setInvincible()
          competitors[ind-5]:setInvincible()
-         player.msg(_("%s won against %s!"):format(competitors_names[ind-5],competitors_names[ind]))
+         player.msg(fmt.f(_("{1} won against {2}!"), {competitors_names[ind-5],competitors_names[ind]}))
          endPankration()
       end
    end

@@ -38,7 +38,7 @@ local lmisn = require "lmisn"
 local fmt = require "format"
 local pir = require "common.pirate"
 
-meet_text1 = _([[After Tam boards the Goddard, you wait for about half a period until his ship undocks from the warlord's cruiser. You then receive a message from him "Everything is right, we will now land on %s in order to refuel and rest for some time."]])
+local meet_text1 = _([[After Tam boards the Goddard, you wait for about half a period until his ship undocks from the warlord's cruiser. You then receive a message from him "Everything is right, we will now land on {pnt} in order to refuel and rest for some time."]])
 
 function create()
    -- The mission should not appear just after the FLF destruction
@@ -67,11 +67,11 @@ function create()
 end
 
 function accept()
-   if not tk.yesno( _("In need of a pilot"), _([[As you approach the officer, he hails you. "Hello, citizen %s. I was looking for you. Of course I know your name, you're one of the pilots who destroyed that damn FLF base in Surano. Let me introduce myself: I am Major Tam, from Dvaered High Command, and more precisely from the Space Force Headquarters. I feel that you are a reliable pilot and the High Command could make more often use of your services. That is why I propose you for now a simple escort mission. All that you need is a fast combat ship, that can keep up with my Vendetta. What do you say?"]]):format(player.name()) ) then
+   if not tk.yesno( _("In need of a pilot"), fmt.f(_([[As you approach the officer, he hails you. "Hello, citizen {player}. I was looking for you. Of course I know your name, you're one of the pilots who destroyed that damn FLF base in Surano. Let me introduce myself: I am Major Tam, from Dvaered High Command, and more precisely from the Space Force Headquarters. I feel that you are a reliable pilot and the High Command could make more often use of your services. That is why I propose you for now a simple escort mission. All that you need is a fast combat ship, that can keep up with my Vendetta. What do you say?"]]), {player=player.name()}) ) then
       tk.msg(_("Too bad"), _([[Tam seems disappointed by your answer. "Mwell, then, maybe we will meet again later, who knows?"]]))
       misn.finish(false)
    end
-   tk.msg(_("Instructions"), _([[Tam seems satisfied with your answer. "I am going to pay a visit to three warlords, for military coordination reasons. They will be waiting for me in their respective Goddards in the systems %s, %s and %s. I need you to stick to my Vendetta and engage any hostile who could try to intercept me."]]):format(destsys1:name(), destsys2:name(), destsys3:name()))
+   tk.msg(_("Instructions"), fmt.f(_([[Tam seems satisfied with your answer. "I am going to pay a visit to three warlords, for military coordination reasons. They will be waiting for me in their respective Goddards in the systems {sys1}, {sys2} and {sys3}. I need you to stick to my Vendetta and engage any hostile who could try to intercept me."]]), {sys1=destsys1, sys2=destsys2, sys3=destsys3}))
 
    misn.accept()
    misn.osdCreate( _("Dvaered Escort"), {_("Escort Major Tam"), _("Land on %s"):format(destpla1:name())} )
@@ -157,19 +157,19 @@ function testPlayerSpeed()
 end
 
 function explain_battle()
-   tk.msg(_("That was really close!"), _([[You send a message to Major Tam to ask if you are safe now. "I think so" he answers, "Lord Battleaddict's troops won't follow us if we head to %s at once, as the planet belongs to his deadliest enemy, Lady Pointblank." As you ask to him what happened, he answers: "You know, don't let Lord Battleaddict's reaction mislead you. He is not a bad person, he is just... hem... a bit old school. He disagrees with the ideas of the new generation of generals at Dvaered High Command, and wanted to make his point clear."
-   You ask Tam why the Dvaered patrol ships did not help you and he answers: "Don't expect the regular police or army to help you when you're in trouble with a warlord. Dvaered know that it is better not to be involved in warlord's affairs."]]):format(fleepla:name()))
+   tk.msg(_("That was really close!"), fmt.f(_([[You send a message to Major Tam to ask if you are safe now. "I think so" he answers, "Lord Battleaddict's troops won't follow us if we head to {pnt} at once, as the planet belongs to his deadliest enemy, Lady Pointblank." As you ask to him what happened, he answers: "You know, don't let Lord Battleaddict's reaction mislead you. He is not a bad person, he is just... hem... a bit old school. He disagrees with the ideas of the new generation of generals at Dvaered High Command, and wanted to make his point clear."
+   You ask Tam why the Dvaered patrol ships did not help you and he answers: "Don't expect the regular police or army to help you when you're in trouble with a warlord. Dvaered know that it is better not to be involved in warlord's affairs."]]), {pnt=fleepla}))
 end
 
 -- Messages when encountering warlords
 function meeting_msg1()
-   majorTam:comm( _("%s should be waiting for us in orbit around %s."):format("Lady Bitterfly", destpla1:name()) )
+   majorTam:comm( fmt.f(_("{pltname} should be waiting for us in orbit around {pnt}."), {pltname=_("Lady Bitterfly"), pnt=destpla1}) )
 end
 function meeting_msg2()
-   majorTam:comm( _("%s should be waiting for us in orbit around %s."):format("Lord Battleaddict", destpla2:name()) )
+   majorTam:comm( fmt.f(_("{pltname} should be waiting for us in orbit around {pnt}."), {pltname=_("Lord Battleaddict"), pnt=destpla2}) )
 end
 function meeting_msg3()
-   majorTam:comm( _("%s should be waiting for us in orbit around %s."):format("Lord Jim", destpla3:name()) )
+   majorTam:comm( fmt.f(_("{pltname} should be waiting for us in orbit around {pnt}."), {pltname=_("Lord Jim"), pnt=destpla3}) )
 end
 
 function spawnTam( origin )
@@ -225,7 +225,7 @@ end
 
 function tamJump()
    tamJumped = true
-   player.msg(_("Major Tam has jumped for the %s system."):format(nextsys:name()))
+   player.msg(fmt.f(_("Major Tam has jumped for the {sys} system."), {sys=nextsys}))
 end
 
 function tamDied()
@@ -252,7 +252,7 @@ function land() -- The player is only allowed to land on special occasions
    elseif stage == 8 then
       shiplog.create( "dvaered_military", _("Dvaered Military Coordination"), _("Dvaered") )
       shiplog.append( "dvaered_military", _("The Major Tam, from the Space Force Headquarters of Dvaered High Command (DHC) has employed you in the framework of the military coordination. One of the Warlords he was trying to pay a visit to, Lord Battleaddict, has tried to kill him twice, with help of his second in command, Colonel Hamelsen. It looks like trying to coordinate Dvaered warlords is a really dangerous job.") )
-      tk.msg(_("Thank you, citizen"), _([[As you land, Major Tam greets you at the spaceport. "After the losses they got today, I doubt those mercenaries will come back at me anytime soon. I need to report back at the Dvaer High Command station in Dvaer, and I don't need any more escorting. Oh, and, err... about the payment, I am afraid there is a little setback..." You start getting afraid he would try to stiff pay you, but he continues: "I don't know why, but the High Command has not credited the payment account yet... Well do you know what we are going to do? I will give you a set of Gauss Guns worth %s! One always needs Gauss Guns, no?"]]):format(fmt.credits(fw.credits_00)))
+      tk.msg(_("Thank you, citizen"), fmt.f(_([[As you land, Major Tam greets you at the spaceport. "After the losses they got today, I doubt those mercenaries will come back at me anytime soon. I need to report back at the Dvaer High Command station in Dvaer, and I don't need any more escorting. Oh, and, err... about the payment, I am afraid there is a little setback..." You start getting afraid he would try to stiff pay you, but he continues: "I don't know why, but the High Command has not credited the payment account yet... Well do you know what we are going to do? I will give you a set of Gauss Guns worth {credits}! One always needs Gauss Guns, no?"]]), {credits=fmt.credits(fw.credits_00)}))
 
       -- Major Tam gives Gauss Guns instead of credits, because Major Tam is a freak.
       GGprice = outfit.get("Gauss Gun"):price()
@@ -287,7 +287,7 @@ function meeting()
    player.pilot():control(false) -- Free the player
 
    if stage == 0 then
-      tk.msg(_("Everything is right"), meet_text1:format(destpla1:name()))
+      tk.msg(_("Everything is right"), fmt.f(meet_text1, {pnt=destpla1}))
       stage = 1
       majorTam:taskClear()
       majorTam:land(destpla1)
@@ -296,7 +296,7 @@ function meeting()
    elseif stage == 2 then
 
       nextsys = fleesys
-      tk.msg(_("They're after me!"), _([[Tam boards the Goddard. A few seconds later, he undocks in a hurry, while nearby fighters start to shoot at him. You receive a message "That old fool tried to kill me! quick, we must head to %s! Let me jump first!"]]):format(nextsys:name()))
+      tk.msg(_("They're after me!"), fmt.f(_([[Tam boards the Goddard. A few seconds later, he undocks in a hurry, while nearby fighters start to shoot at him. You receive a message "That old fool tried to kill me! quick, we must head to {sys}! Let me jump first!"]]), {sys=nextsys}))
       stage = 3
       quickie = pilot.add( "Dvaered Vendetta", "Dvaered", destpla2 )
       quickie:cargoRm( "all" )
@@ -309,10 +309,10 @@ function meeting()
       hook.timer( 2.0, "attackMe" ) -- A small delay to give the player a chance in case an enemy is too close
 
       misn.osdDestroy()
-      misn.osdCreate( _("Dvaered Escort"), {_("Ensure Major Tam safely jumps to %s and follow him"):format(fleesys:name())} )
+      misn.osdCreate( _("Dvaered Escort"), {fmt.f(_("Ensure Major Tam safely jumps to {sys} and follow him"), {sys=fleesys})} )
 
    elseif stage == 5 then
-      tk.msg(_("Everything is right"), meet_text1:format(destpla3:name()))
+      tk.msg(_("Everything is right"), fmt.f(meet_text1, {pnt=destpla3}))
       stage = 8
       majorTam:taskClear()
       majorTam:land(destpla3)
@@ -442,8 +442,8 @@ end
 
 -- The end of the Ambush: a message that explains what happened
 function ambush_end()
-   tk.msg(_("Hostiles eliminated"), _([[As the remaining attackers run away, you remark that a Dvaered patrol helped you, contrary to what Tam had explained before. Then you receive the messages exchanged between Major Tam and the leader of the Dvaered squadron: "This time, I really owe you one, Captain", Tam says. "No problem, sir. " the other answers "But the most dangerous one escaped. The Shark, you know, it was Hamelsen, Battleaddict's second in command. After we heard of what the old monkey had done to you, we put him under surveillance and we spotted Hamelsen pursuing you with her Shark, so we followed her, pretending we're just a police squadron. You know the rest."
-   Tam responds: "By the way, %s, let me introduce you the Captain Leblanc, she belongs to the Special Operations Force (SOF), part of Dvaered High Command (DHC). I didn't tell you, but her pilots always keep an eye on me from a distance when I have to meet warlords. %s is the private pilot I spoke to you, Captain." Leblanc responds: "Hello, citizen. I'm glad there are civilians like you who do their duty and serve the Dvaered Nation."]]):format(player.name(), player.name()))
+   tk.msg(_("Hostiles eliminated"), fmt.f(_([[As the remaining attackers run away, you remark that a Dvaered patrol helped you, contrary to what Tam had explained before. Then you receive the messages exchanged between Major Tam and the leader of the Dvaered squadron: "This time, I really owe you one, Captain", Tam says. "No problem, sir. " the other answers "But the most dangerous one escaped. The Shark, you know, it was Hamelsen, Battleaddict's second in command. After we heard of what the old monkey had done to you, we put him under surveillance and we spotted Hamelsen pursuing you with her Shark, so we followed her, pretending we're just a police squadron. You know the rest."
+   Tam responds: "By the way, {player}, let me introduce you the Captain Leblanc, she belongs to the Special Operations Force (SOF), part of Dvaered High Command (DHC). I didn't tell you, but her pilots always keep an eye on me from a distance when I have to meet warlords. {player} is the private pilot I spoke to you, Captain." Leblanc responds: "Hello, citizen. I'm glad there are civilians like you who do their duty and serve the Dvaered Nation."]]), {player=player.name()}))
    tk.msg(_("Two attacks are one too many"), _([["Anyway," says Tam, "I am afraid this ambush is not acceptable." Leblanc responds: "True, sir. Attacking someone in one's system is a standard way of expression for a warlord, but setting an ambush here denotes a true lack of respect."
    "He will have to answer for this, trust me." answers Tam, "I will refer this matter to the chief. Meanwhile, I still have an appointment with Lord Jim. I just hope he will not try to make us dance as well..."]]))
 end

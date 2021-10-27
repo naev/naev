@@ -37,7 +37,7 @@ abandon_text[1] = _("You are sent a message informing you that landing in the mi
 
 
 -- Mission details
-misn_title  = _("#rPIRACY:#0 Patrol of the %s System")
+misn_title  = _("#rPIRACY:#0 Patrol of the {sys} System ({fctname})")
 misn_desc   = _("A local crime boss has offered a job to patrol the %s system in an effort to keep outsiders from discovering this Pirate stronghold. You will be tasked with checking various points and eliminating any outsiders along the way.")
 
 -- Messages
@@ -47,13 +47,13 @@ msg[2] = _("Outsiders detected. Eliminate all outsiders.")
 msg[3] = _("Outsiders eliminated.")
 msg[4] = _("Patrol complete. You can now collect your pay.")
 msg[5] = _("MISSION FAILURE! You showed up too late.")
-msg[6] = _("MISSION FAILURE! You have left the %s system.")
+msg[6] = _("MISSION FAILURE! You have left the {sys} system.")
 
 osd_msg    = {}
 osd_msg[1] = _("Fly to the {sys} system")
 osd_msg[2] = "(null)"
 osd_msg[3] = _("Eliminate outsiders")
-osd_msg[4] = _("Land in %s territory to collect your pay")
+osd_msg[4] = _("Land in {fctname} territory to collect your pay")
 osd_msg["__save"] = true
 
 use_hidden_jumps = true
@@ -62,7 +62,6 @@ local create_original = create
 function create ()
    paying_faction = pir.systemClanP()
    if pir.factionIsClan( paying_faction ) then
-      misn_title = misn_title..string.format(_(" (%s)"), paying_faction:name() )
       misn_desc = misn_desc..pir.reputationMessage( paying_faction )
    end
 

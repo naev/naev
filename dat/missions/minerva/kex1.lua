@@ -69,7 +69,7 @@ function approach_kex ()
    vn.scene()
    vn.music( minerva.loops.kex )
    local kex = vn.newCharacter( minerva.vn_kex() )
-   vn.transition("transition")
+   vn.transition("hexagon")
    vn.na(_("You find Kex taking a break at his favourite spot at Minerva station."))
 
    if misn_state==2 then
