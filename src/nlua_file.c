@@ -18,6 +18,7 @@
 
 #include "log.h"
 #include "nluadef.h"
+#include "physfs.h"
 
 /* File metatable methods. */
 static int fileL_gc( lua_State *L );
@@ -34,6 +35,7 @@ static int fileL_size( lua_State *L );
 static int fileL_isopen( lua_State *L );
 static int fileL_filetype( lua_State *L );
 static int fileL_mkdir( lua_State *L );
+static int fileL_enumerate( lua_State *L );
 static const luaL_Reg fileL_methods[] = {
    { "__gc", fileL_gc },
    { "__eq", fileL_eq },
@@ -49,6 +51,7 @@ static const luaL_Reg fileL_methods[] = {
    { "isOpen", fileL_isopen },
    { "filetype", fileL_filetype },
    { "mkdir", fileL_mkdir },
+   { "enumerate", fileL_enumerate },
    {0,0}
 }; /**< File metatable methods. */
 
@@ -419,5 +422,30 @@ static int fileL_mkdir( lua_State *L )
    const char *path = luaL_checkstring(L,1);
    int ret = PHYSFS_mkdir( path );
    lua_pushboolean(L,ret==0);
+   return 1;
+}
+
+/**
+ * @brief Returns a list of files and subdirectories of a directory.
+ *
+ *    @luatparam string dir Name of the directory to check.
+ *    @luatreturn table Table containing all the names (strings) of the subdirectories and files in the directory.
+ * @luafunc enumerate
+ */
+static int fileL_enumerate( lua_State *L )
+{
+   char **items;
+   const char *path = luaL_checkstring(L,1);
+
+   lua_newtable(L);
+   items = PHYSFS_enumerateFiles( path );
+   if (items==NULL)
+      NLUA_ERROR(L,_("Directory '%s' enumerate error: %s"), path,
+            PHYSFS_getErrorByCode( PHYSFS_getLastErrorCode() ));
+   for (int i=0; items[i]!=NULL; i++) {
+      lua_pushstring(L,items[i]);
+      lua_rawseti(L,-2,i+1);
+   }
+   PHYSFS_freeList( items );
    return 1;
 }
