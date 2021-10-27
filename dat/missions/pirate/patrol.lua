@@ -38,7 +38,7 @@ abandon_text[1] = _("You are sent a message informing you that landing in the mi
 
 -- Mission details
 misn_title  = _("#rPIRACY:#0 Patrol of the {sys} System ({fctname})")
-misn_desc   = _("A local crime boss has offered a job to patrol the %s system in an effort to keep outsiders from discovering this Pirate stronghold. You will be tasked with checking various points and eliminating any outsiders along the way.")
+misn_desc   = _("A local crime boss has offered a job to patrol the {sys} system in an effort to keep outsiders from discovering this Pirate stronghold. You will be tasked with checking various points and eliminating any outsiders along the way.")
 
 -- Messages
 msg    = {}
@@ -62,6 +62,7 @@ local create_original = create
 function create ()
    paying_faction = pir.systemClanP()
    if pir.factionIsClan( paying_faction ) then
+      -- misn_desc gets fmt.f'd in the main script
       misn_desc = misn_desc..pir.reputationMessage( paying_faction )
    end
 
