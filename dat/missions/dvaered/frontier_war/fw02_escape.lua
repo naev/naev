@@ -321,18 +321,16 @@ function enter()
    end
 
    if stage >= 4 then
-      curname = system.cur():nameRaw()
-
       -- Zlk Blocus:
       -- Pultatis -> Provectus Nova
       --          -> Limbo
       -- Stone Table -> Sollav
       -- Xavier -> Sheffield
       -- Straight Row -> Nunavut
-      zlk_list = { "Pultatis", "Stone Table", "Xavier", "Straight Row" }
-      zlk_lisj = { {"Provectus Nova", "Limbo"}, {"Sollav"}, {"Sheffield"}, {"Nunavut"} }
+      zlk_list = { system.get("Pultatis"), system.get("Stone Table"), system.get("Xavier"), system.get("Straight Row") }
+      local zlk_lisj = { {"Provectus Nova", "Limbo"}, {"Sollav"}, {"Sheffield"}, {"Nunavut"} }
 
-      index = fw.elt_inlist( curname, zlk_list )
+      index = fw.elt_inlist( system.cur(), zlk_list )
       if index > 0 then -- /!\ We did not claim this system /!\
          pilot.toggleSpawn("Za'lek")
          pilot.clearSelect("Za'lek")
@@ -362,10 +360,11 @@ function enter()
    -- Fortitude -> Pontus
    --           -> Acheron
    -- Merisi -> Acheron
-      emp_list = { "Overture", "Eneguoz", "Mural", "Arcturus", "Delta Pavonis", "Fortitude", "Merisi" }
-      emp_lisj = { {"Pas", "Waterhole"}, {"Hakoi"}, {"Salvador"}, {"Goddard"}, {"Goddard"}, {"Pontus", "Acheron"}, {"Acheron"} }
+      local emp_list = { system.get("Overture"), system.get("Eneguoz"), system.get("Mural"), system.get("Arcturus"),
+                         system.get("Delta Pavonis"), system.get("Fortitude"), system.get("Merisi") }
+      local emp_lisj = { {"Pas", "Waterhole"}, {"Hakoi"}, {"Salvador"}, {"Goddard"}, {"Goddard"}, {"Pontus", "Acheron"}, {"Acheron"} }
 
-      index = fw.elt_inlist( curname, emp_list )
+      index = fw.elt_inlist( system.cur(), emp_list )
       if index > 0 then -- /!\ We did not claim this system /!\
          pilot.toggleSpawn("Za'lek")
          pilot.clearSelect("Za'lek")

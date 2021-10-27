@@ -163,13 +163,13 @@ end
 
 -- Messages when encountering warlords
 function meeting_msg1()
-   majorTam:comm( fmt.f(_("{pltname} should be waiting for us in orbit around {pnt}."), {pltname="Lady Bitterfly", pnt=destpla1}) )
+   majorTam:comm( fmt.f(_("{pltname} should be waiting for us in orbit around {pnt}."), {pltname=_("Lady Bitterfly"), pnt=destpla1}) )
 end
 function meeting_msg2()
-   majorTam:comm( fmt.f(_("{pltname} should be waiting for us in orbit around {pnt}."), {pltname="Lord Battleaddict", pnt=destpla2}) )
+   majorTam:comm( fmt.f(_("{pltname} should be waiting for us in orbit around {pnt}."), {pltname=_("Lord Battleaddict"), pnt=destpla2}) )
 end
 function meeting_msg3()
-   majorTam:comm( fmt.f(_("{pltname} should be waiting for us in orbit around {pnt}."), {pltname="Lord Jim", pnt=destpla3}) )
+   majorTam:comm( fmt.f(_("{pltname} should be waiting for us in orbit around {pnt}."), {pltname=_("Lord Jim"), pnt=destpla3}) )
 end
 
 function spawnTam( origin )
