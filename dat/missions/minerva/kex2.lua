@@ -68,7 +68,7 @@ function accept ()
       { string.format(_("Go to %s in the %s system and hack the main database"), _(targetplanet), _(targetsys) ),
       _("Return to Kex at Minerva Station") } )
 
-   misn_marker = misn.markerAdd( system.get(targetplanet) )
+   misn_marker = misn.markerAdd( planet.get(targetplanet) )
 
    hook.land("generate_npc")
    hook.load("generate_npc")
