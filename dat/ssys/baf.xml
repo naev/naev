@@ -17,6 +17,7 @@
   <asset>Baf IV</asset>
   <asset>Dumas Station</asset>
   <asset>MGG-1294</asset>
+  <asset_virtual>Independent All Unpresence</asset_virtual>
  </assets>
  <jumps>
   <jump target="Beeklo">
