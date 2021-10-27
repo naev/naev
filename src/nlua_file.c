@@ -1,13 +1,11 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
 /**
  * @file nlua_file.c
  *
  * @brief Handles files.
  */
-
 /** @cond */
 #include <lauxlib.h>
 
@@ -20,7 +18,6 @@
 
 #include "log.h"
 #include "nluadef.h"
-
 
 /* File metatable methods. */
 static int fileL_gc( lua_State *L );
@@ -55,9 +52,6 @@ static const luaL_Reg fileL_methods[] = {
    {0,0}
 }; /**< File metatable methods. */
 
-
-
-
 /**
  * @brief Loads the file library.
  *
@@ -69,7 +63,6 @@ int nlua_loadFile( nlua_env env )
    nlua_register(env, FILE_METATABLE, fileL_methods, 1);
    return 0;
 }
-
 
 /**
  * @brief Lua bindings to interact with files.
@@ -142,7 +135,6 @@ int lua_isfile( lua_State *L, int ind )
    return ret;
 }
 
-
 /**
  * @brief Frees a file.
  *
@@ -158,7 +150,6 @@ static int fileL_gc( lua_State *L )
    }
    return 0;
 }
-
 
 /**
  * @brief Compares two files to see if they are the same.
@@ -177,7 +168,6 @@ static int fileL_eq( lua_State *L )
    return 1;
 }
 
-
 /**
  * @brief Opens a new file.
  *
@@ -188,8 +178,7 @@ static int fileL_eq( lua_State *L )
 static int fileL_new( lua_State *L )
 {
    LuaFile_t lf;
-   const char *str;
-   str = luaL_checkstring(L,1);
+   const char *str = luaL_checkstring(L,1);
    strncpy( lf.path, str, PATH_MAX-1 );
 
    lf.mode = 'c';
@@ -197,7 +186,6 @@ static int fileL_new( lua_State *L )
    lua_pushfile( L, lf );
    return 1;
 }
-
 
 /**
  * @brief Opens a File object.
@@ -209,11 +197,8 @@ static int fileL_new( lua_State *L )
  */
 static int fileL_open( lua_State *L )
 {
-   LuaFile_t *lf;
-   const char *mode;
-
-   lf = luaL_checkfile(L,1);
-   mode = luaL_checkstring(L,2);
+   LuaFile_t *lf = luaL_checkfile(L,1);
+   const char *mode = luaL_checkstring(L,2);
 
    /* TODO handle mode. */
    if (strcmp(mode,"w")==0)
@@ -231,7 +216,6 @@ static int fileL_open( lua_State *L )
    lua_pushboolean(L,1);
    return 1;
 }
-
 
 /**
  * @brief Closes a file.
@@ -251,7 +235,6 @@ static int fileL_close( lua_State *L )
    lua_pushboolean(L,1);
    return 1;
 }
-
 
 /**
  * @brief Reads from an open file.
@@ -283,7 +266,6 @@ static int fileL_read( lua_State *L )
    free( buf );
    return 2;
 }
-
 
 /**
  * @brief Reads from an open file.
@@ -318,7 +300,6 @@ static int fileL_write( lua_State *L )
    return 1;
 }
 
-
 /**
  * @brief Seeks in an open file.
  *
@@ -344,7 +325,6 @@ static int fileL_seek( lua_State *L )
    return 1;
 }
 
-
 /**
  * @brief Gets the name of a file object.
  *
@@ -358,7 +338,6 @@ static int fileL_name( lua_State *L )
    lua_pushstring(L, lf->path);
    return 1;
 }
-
 
 /**
  * @brief Gets the mode a file is currently in.
@@ -374,7 +353,6 @@ static int fileL_mode( lua_State *L )
    return 1;
 }
 
-
 /**
  * @brief Gets the size of a file (must be open).
  *
@@ -389,7 +367,6 @@ static int fileL_size( lua_State *L )
    return 1;
 }
 
-
 /**
  * @brief Checks to see if a file is open.
  *
@@ -403,7 +380,6 @@ static int fileL_isopen( lua_State *L )
    lua_pushboolean(L, lf->rw!=NULL);
    return 1;
 }
-
 
 /**
  * @brief Checks to see the filetype of a path.
@@ -431,7 +407,6 @@ static int fileL_filetype( lua_State *L )
    return 1;
 }
 
-
 /**
  * @brief Makes a directory.
  *
@@ -446,4 +421,3 @@ static int fileL_mkdir( lua_State *L )
    lua_pushboolean(L,ret==0);
    return 1;
 }
-
