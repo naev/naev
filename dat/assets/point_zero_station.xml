@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <asset name="Point Zero Station">
  <pos>
-  <x>2610.831152</x>
-  <y>1623.876319</y>
+  <x>2859.481738</x>
+  <y>1778.531207</y>
  </pos>
  <GFX>
   <space>station-sphere.webp</space>
@@ -10,8 +10,8 @@
  </GFX>
  <presence>
   <faction>Soromid</faction>
-  <base>66.666667</base>
-  <bonus>33.333333</bonus>
+  <base>66.666700</base>
+  <bonus>33.333300</bonus>
   <range>2</range>
  </presence>
  <general>

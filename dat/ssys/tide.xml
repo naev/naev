@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ssys name="Tide">
  <general>
-  <radius>10000.000000</radius>
+  <radius>13000.000000</radius>
   <stars>400</stars>
   <interference>42.857100</interference>
   <nebula volatility="75.800000" hue="320.000000">800.000000</nebula>

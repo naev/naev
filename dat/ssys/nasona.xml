@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ssys name="Nasona">
  <general>
-  <radius>10000.000000</radius>
+  <radius>12000.000000</radius>
   <stars>400</stars>
   <interference>42.857100</interference>
   <nebula volatility="51.400000" hue="290.000000">700.000000</nebula>

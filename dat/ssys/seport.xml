@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ssys name="Seport">
  <general>
-  <radius>10000.000000</radius>
+  <radius>13000.000000</radius>
   <stars>400</stars>
   <interference>20.000000</interference>
   <nebula volatility="16.200000" hue="280.000000">600.000000</nebula>
