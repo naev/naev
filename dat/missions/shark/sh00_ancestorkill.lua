@@ -66,15 +66,15 @@ function accept()
     "Pretty simple, really: we want someone to show how great Nexus ship designs are by destroying a Pirate Ancestor with our lowest-grade ship, the Shark. Of course, the pilot of the Ancestor has a bounty on his head, so it won't be illegal. The sum of the bounty will be paid to you and Nexus will add a little extra. Would you be interested?"]])) then
       misn.accept()
       piratename = pilotname.pirate() --for now, we only need his name
-      tk.msg(_("Wonderful"), _([["Great! I knew I could trust you. I'll meet you on %s in the %s system. I'll be with my boss and our customer, Baron Sauterfeldt."]]):format(missys:name(),mispla:name()))
+      tk.msg(_("Wonderful"), fmt.f(_([["Great! I knew I could trust you. I'll meet you on {pnt} in the {sys} system. I'll be with my boss and our customer, Baron Sauterfeldt."]]), {sys=missys, pnt=mispla}))
 
       misn.setTitle(_("A Shark Bites"))
       misn.setReward(fmt.credits(reward))
       misn.setDesc(_("Nexus Shipyards needs you to demonstrate to Baron Sauterfeldt the capabilities of Nexus designs."))
       misn.osdCreate(_("A Shark Bites"), {
-         _("Buy a Shark (but not a Pirate Shark), then fly to the %s system and land on %s"):format(missys:name(), mispla:name()),
-         _("Go to %s and kill the pirate with your Shark"):format(battlesys:name()),
-         _("Land on %s and collect your fee"):format(mispla:name()),
+         fmt.f(_("Buy a Shark (but not a Pirate Shark), then fly to the {sys} system and land on {pnt}"), {sys=missys, pnt=mispla}),
+         fmt.f(_("Go to {sys} and kill the pirate with your Shark"), {sys=battlesys}),
+         fmt.f(_("Land on {pnt} and collect your fee"), {pnt=mispla}),
       })
       misn.osdActive(1)
 
@@ -153,9 +153,9 @@ function beginbattle()
 
    misn.markerRm(markeri)
 
-   tk.msg(_("Ready for action"), _([["Nice to see you again," he says with a smile. "I hope you are ready to kick that pirate's ass! Please follow me. I will introduce you to my boss, the sales manager of Nexus Shipyards. Oh, and the Baron, too."
+   tk.msg(_("Ready for action"), fmt.f(_([["Nice to see you again," he says with a smile. "I hope you are ready to kick that pirate's ass! Please follow me. I will introduce you to my boss, the sales manager of Nexus Shipyards. Oh, and the Baron, too."
     Arnold Smith guides you to some kind of control room where you see some important-looking people. After introducing you to some of them, he goes over the mission, rather over-emphasizing the threat involved; it's just a Pirate Ancestor, after all. Nonetheless, the Baron is intrigued.
-    Arnold Smith gets a call. After answering, he turns to you. "Perfect timing! The pirate has just arrived at %s. Now go show them what your ship can do!" Time to head back to the ship, then.]]):format(battlesys:name()))
+    Arnold Smith gets a call. After answering, he turns to you. "Perfect timing! The pirate has just arrived at {sys}. Now go show them what your ship can do!" Time to head back to the ship, then.]]), {sys=battlesys}))
    misn.osdActive(2)
    stage = 1
 

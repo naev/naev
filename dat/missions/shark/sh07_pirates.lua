@@ -53,10 +53,7 @@ function create ()
    kersys2 = systems[3] or systems[ rnd.rnd(1,#systems) ]
    godsys = systems[4] or systems[ rnd.rnd(1,#systems) ]
 
-   pplname = "Darkshed"
-   psyname = "Alteris"
-   paysys = system.get(psyname)
-   paypla = planet.get(pplname)
+   paypla, paysys = planet.getS("Darkshed")
 
    if not misn.claim({gawsys, kersys1, kersys2, godsys}) then
       misn.finish(false)
@@ -78,27 +75,27 @@ function accept()
 
    --set the names of the pirates (and make sure they aren't duplicates)
    gawname = pilotname.pirate()
-   kername1 = string.format( _("%s III"), pilotname.pirate() )
-   kername2 = string.format( _("%s Jr." ), pilotname.pirate() )
-   godname = string.format( _("%s II"), pilotname.pirate() )
+   kername1 = fmt.f( _("{name} III"), {name=pilotname.pirate()} )
+   kername2 = fmt.f( _("{name} Jr." ), {name=pilotname.pirate()} )
+   godname = fmt.f( _("{name} II"), {name=pilotname.pirate()} )
 
    if tk.yesno(_("The mission"), _([["Hello again. As you know, I've agreed with the FLF on a contract that will extend our sales of ships to them substantially. Of course, this deal must remain a secret, which is why it is being done through a false black market dealer.
     "However, we have reason to suspect that a few key influential pirates may have their eyes on the FLF as possible buyers of the Skull and Bones pirate ships. We don't think the FLF will have any interest in those ships, but the pirates' ambitions could give them motivation to attack our false dealer's trade posts, destroying our deal with the FLF anyway. We of course can't have that.
     "So what we want you to do, quite simply, is to eliminate these pirates. It's not that many of them; there are four pirates we need eliminated, and thankfully, they're all spread out. That being said, some of them do have quite big ships, so you will have to make sure you can handle that. Are you willing to do this job for us?"]])) then
       misn.accept()
-      tk.msg(_("Very good"), _([["So, here are the details we have gathered about these pirates:
-    "%s should be in %s, flying a Gawain. He seems to be on a holiday, so he probably isn't able to fight back and will just run away.
-    "%s should be in %s, flying a Kestrel. We believe he has some escorts.
-    "%s should be in %s, also flying a Kestrel. He has escorts, too, according to our records.
-    "And finally, %s is in %s. He stole and beefed up a Goddard recently, so make sure you're prepared for that. He also has escorts, according to our records.
-    "And that's about it! Come back for your fee when you have finished."]]):format(gawname, gawsys:name(), kername1, kersys1:name(), kername2, kersys2:name(), godname, godsys:name()))
+      tk.msg(_("Very good"), fmt.f(_([["So, here are the details we have gathered about these pirates:
+    "{gawname} should be in {gawsys}, flying a Gawain. He seems to be on a holiday, so he probably isn't able to fight back and will just run away.
+    "{kername1} should be in {kersys1}, flying a Kestrel. We believe he has some escorts.
+    "{kername2} should be in {kersys2}, also flying a Kestrel. He has escorts, too, according to our records.
+    "And finally, {godname} is in {godsys}. He stole and beefed up a Goddard recently, so make sure you're prepared for that. He also has escorts, according to our records.
+    "And that's about it! Come back for your fee when you have finished."]]), {gawname=gawname, gawsys=gawsys, kername1=kername1, kersys1=kersys1, kername2=kername2, kersys2=kersys2, godname=godname, godsys=godsys}))
 
       misn.setTitle(_("The Last Detail"))
       misn.setReward(fmt.credits(reward))
       misn.setDesc(_("Nexus Shipyards has tasked you with killing four pirates."))
       misn.osdCreate(osd_title, {
          _("Kill the four pirates"),
-         _("Report back to %s in %s"):format(pplname,psyname),
+         fmt.f(_("Report back to {pnt} in {sys}"), {pnt=paypla, sys=paysys}),
       })
       misn.osdActive(1)
 
@@ -272,7 +269,7 @@ end
 function generic_dead()
    --Are there still other pirates to kill ?
    if gawdead == true and kerdead1 == true and kerdead2 == true and goddead == true then
-      tk.msg(_("Mission accomplished"), _("You have killed the four pirates. Now to return to %s and collect your payment..."):format(paysys:name()))
+      tk.msg(_("Mission accomplished"), fmt.f(_("You have killed the four pirates. Now to return to {sys} and collect your payment..."), {sys=paysys}))
       stage = 1
       misn.osdActive(2)
       marker2 = misn.markerAdd(paysys, "low")

@@ -53,7 +53,7 @@ function accept()
    proba = 0.3  --the probability of ambushes will change
    firstambush = true  --In the first ambush, there will be a little surprise text
 
-   if tk.yesno(_("Travel"), _([["OK, are you ready for the travel to %s in the %s system?"]]):format(mispla:name(), missys:name())) then
+   if tk.yesno(_("Travel"), fmt.f(_([["OK, are you ready for the travel to {pnt} in the {sys} system?"]]), {pnt=mispla, sys=missys})) then
       misn.accept()
       tk.msg(_("Time to go"), _([["Let's go, then."]]))
 
@@ -61,8 +61,8 @@ function accept()
       misn.setReward(fmt.credits(reward))
       misn.setDesc(_("Nexus Shipyards asks you to take part in a secret meeting"))
       misn.osdCreate(_("The Meeting"), {
-         _("Go to the %s system and land on %s"):format(missys:name(), mispla:name()),
-         _("Bring Smith back to %s in the %s system"):format(paypla:name(), paysys:name()),
+         fmt.f(_("Go to the {sys} system and land on {pnt}"), {sys=missys, pnt=mispla}),
+         fmt.f(_("Bring Smith back to {pnt} in the {sys} system"), {pnt=paypla, sys=paysys}),
       })
       misn.osdActive(1)
 

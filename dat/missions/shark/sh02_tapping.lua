@@ -44,10 +44,7 @@ function create ()
       misn.finish(false)
    end
 
-   pplname = "Darkshed"
-   psyname = "Alteris"
-   paysys = system.get(psyname)
-   paypla = planet.get(pplname)
+   paypla, paysys = planet.getS("Darkshed")
 
    misn.setNPC(_("Arnold Smith"), "neutral/unique/arnoldsmith.webp", _([[Arnold Smith is here. Perhaps he might have another job for you.]]))
 end
@@ -58,20 +55,20 @@ function accept()
    reward = 750e3
    proba = 0.4  --the chances you have to get an ambush
 
-   if tk.yesno(_("Nexus Shipyards needs you (again)"), _([[You sit at Smith's table and ask him if he has a job for you. "Of course," he answers. "But this time, it's... well...
+   if tk.yesno(_("Nexus Shipyards needs you (again)"), fmt.f(_([[You sit at Smith's table and ask him if he has a job for you. "Of course," he answers. "But this time, it's... well...
     "Listen, I need to explain some background. As you know, Nexus designs are used far and wide in smaller militaries. The Empire is definitely our biggest customer, but the Frontier also notably makes heavy use of our Lancelot design, as do many independent systems. Still, competition is stiff; House Dvaered's Vendetta design, for instance, is quite popular with the FLF, ironically enough.
     "But matters just got a little worse for us: it seems that House Sirius is looking to get in on the shipbuilding business as well, and the Frontier are prime targets. If they succeed, the Lancelot design could be completely pushed out of Frontier space, and we would be crushed in that market between House Dvaered and House Sirius. Sure, the FLF would still be using a few Pacifiers, but it would be a token business at best, and not to mention the authorities would start associating us with terrorism.
-    "So we've conducted a bit of espionage. We have an agent who has recorded some hopefully revealing conversations between a House Sirius sales manager and representatives of the Frontier. All we need you to do is meet with the agent, get the recordings, and bring them back to me on %s in the %s system." You raise an eyebrow.
-    "It's not exactly legal. That being said, you're just doing the delivery, so you almost certainly won't be implicated. What do you say? Is this something you can do?"]]):format(pplname, psyname)) then
+    "So we've conducted a bit of espionage. We have an agent who has recorded some hopefully revealing conversations between a House Sirius sales manager and representatives of the Frontier. All we need you to do is meet with the agent, get the recordings, and bring them back to me on {pnt} in the {sys} system." You raise an eyebrow.
+    "It's not exactly legal. That being said, you're just doing the delivery, so you almost certainly won't be implicated. What do you say? Is this something you can do?"]]), {pnt=paypla, sys=paysys})) then
       misn.accept()
-      tk.msg(_("The job"), _([["I'm glad to hear it. Go meet our agent on %s in the %s system. Oh, yes, and I suppose I should mention that I'm known as 'James Neptune' to the agent. Good luck!"]]):format(mispla:name(), missys:name()))
+      tk.msg(_("The job"), fmt.f(_([["I'm glad to hear it. Go meet our agent on {pnt} in the {sys} system. Oh, yes, and I suppose I should mention that I'm known as 'James Neptune' to the agent. Good luck!"]]), {pnt=mispla, sys=missys}))
 
       misn.setTitle(_("Unfair Competition"))
       misn.setReward(fmt.credits(reward))
       misn.setDesc(_("Nexus Shipyards is in competition with House Sirius."))
       misn.osdCreate(_("Unfair Competition"), {
-         _("Land on %s in %s and meet the Nexus agent"):format(mispla:name(), missys:name()),
-         _("Bring the recording back to %s in the %s system"):format(pplname, psyname),
+         fmt.f(_("Land on {pnt} in {sys} and meet the Nexus agent"), {pnt=mispla, sys=missys}),
+         fmt.f(_("Bring the recording back to {pnt} in the {sys} system"), {pnt=paypla, sys=paysys}),
       })
       misn.osdActive(1)
 

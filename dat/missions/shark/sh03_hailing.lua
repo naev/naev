@@ -32,10 +32,7 @@ local shark = require "common.shark"
 function create ()
    --Change here to change the planets and the systems
    mispla,missys = planet.getLandable(faction.get("Frontier"))  -- mispla will be useful to locate the Hawking
-   pplname = "Darkshed"
-   psyname = "Alteris"
-   paysys = system.get(psyname)
-   paypla = planet.get(pplname)
+   paypla, paysys = planet.getS("Darkshed")
    nextpla, nextsys = planet.getS("Curie") -- This should be the same as the planet used in sh04_meeting!
 
    if not misn.claim(missys) then
@@ -50,9 +47,9 @@ function accept()
    stage = 0
    reward = 750e3
 
-   if tk.yesno(_("A new job"), _([["Hello there, nice to meet you again! According to the information that you brought us, the negotiations between the Frontier officials and House Sirius are proceeding very quickly. We have to act now. There is a member of the Frontier Council who, for political reasons, could help us.
-    "I can't send him a message without being spotted by the Sirii, so I need you to contact him. He's probably piloting his Hawking in the %s system. Go there, hail him, and let him know that I have to see him on %s in the %s system. He will understand.
-    "Can I count on you to do this for me?"]]):format(missys:name(), nextpla:name(), nextsys:name())) then
+   if tk.yesno(_("A new job"), fmt.f(_([["Hello there, nice to meet you again! According to the information that you brought us, the negotiations between the Frontier officials and House Sirius are proceeding very quickly. We have to act now. There is a member of the Frontier Council who, for political reasons, could help us.
+    "I can't send him a message without being spotted by the Sirii, so I need you to contact him. He's probably piloting his Hawking in the {sys} system. Go there, hail him, and let him know that I have to see him on {next_pnt} in the {next_sys} system. He will understand.
+    "Can I count on you to do this for me?"]]), {sys=missys, next_pnt=nextpla, next_sys=nextsys})) then
       misn.accept()
       tk.msg(_("Time to go"), _([["Fantastic! I am known as Donald Ulnish to the Council member. Good luck."]]))
 
@@ -60,8 +57,8 @@ function accept()
       misn.setReward(fmt.credits(reward))
       misn.setDesc(_("Nexus Shipyards asks you to help initiate a secret meeting"))
       misn.osdCreate(_("Invitation"), {
-         _("Go to %s, find and hail the Air Force One"):format(missys:name()),
-         _("Report back to %s in the %s system"):format(pplname, psyname),
+         fmt.f(_("Go to {sys}, find and hail the Air Force One"), {sys=missys}),
+         fmt.f(_("Report back to {pnt} in the {sys} system"), {pnt=paypla, sys=paysys}),
       })
       misn.osdActive(1)
 
@@ -79,7 +76,7 @@ function land()
 
    --Job is done
    if stage == 1 and planet.cur() == paypla then
-   tk.msg(_("Good job"), _([[Smith seems to relax as you tell him that everything went according to plan. "Fantastic! I have another mission for you; meet me in the bar when you are ready to bring me to %s in the %s system."]]):format(nextpla:name(), nextsys:name()))
+   tk.msg(_("Good job"), fmt.f(_([[Smith seems to relax as you tell him that everything went according to plan. "Fantastic! I have another mission for you; meet me in the bar when you are ready to bring me to {pnt} in the {sys} system."]]), {pnt=nextpla, sys=nextsys}))
       player.pay(reward)
       pir.reputationNormalMission(rnd.rnd(2,3))
       misn.osdDestroy()
@@ -102,7 +99,7 @@ end
 function hail()
    --The player takes contact with the Hawking
    if stage == 0 then
-      tk.msg(_("Time to go back to %s"):format(paypla:name()), _([[The captain of the Hawking answers you. When you say that you have a message from Donald Ulnish, he redirects you to one of his officers who takes the message. Now, back to %s.]]):format(paypla:name()))
+      tk.msg(fmt.f(_("Time to go back to {pnt}"), {pnt=paypla}), fmt.f(_([[The captain of the Hawking answers you. When you say that you have a message from Donald Ulnish, he redirects you to one of his officers who takes the message. Now, back to {pnt}.]]), {pnt=paypla}))
       stage = 1
       misn.osdActive(2)
       misn.markerRm(marker)

@@ -49,18 +49,18 @@ function accept()
    stage = 0
    reward = 1e6
 
-   if tk.yesno(_("Nice to see you again!"), _([["Hello, %s! Are you ready to take part in another sales mission?
-    "As you know, the FLF is a heavy user of our ships, but they're also heavy users of Dvaered ships, chiefly the Vendetta design. Since House Dvaered is an enemy of the FLF, we see this as an opportunity to expand our sales: we want to convince the FLF leaders to buy more Nexus ships and fewer Dvaered ships. This will be through a false contraband company so that word doesn't get out that we're supporting terrorists by selling them ships. What do you say? Can you help us once again?"]]):format(player.name())) then
+   if tk.yesno(_("Nice to see you again!"), fmt.f(_([["Hello, {player}! Are you ready to take part in another sales mission?
+    "As you know, the FLF is a heavy user of our ships, but they're also heavy users of Dvaered ships, chiefly the Vendetta design. Since House Dvaered is an enemy of the FLF, we see this as an opportunity to expand our sales: we want to convince the FLF leaders to buy more Nexus ships and fewer Dvaered ships. This will be through a false contraband company so that word doesn't get out that we're supporting terrorists by selling them ships. What do you say? Can you help us once again?"]]), {player=player.name()})) then
       misn.accept()
-      tk.msg(_("Good luck"), _([["Perfect! So, this mission is pretty simple: I want you to pass on this proposal to them." He hands you a data chip. "It's a request to meet with the FLF leaders on %s. If all goes well, I'll be asking you to take me there next.
-    "Any FLF ship should do the job. Try hailing them and see if you get a response. If they won't talk, disable and board them so you can force them to listen. Pretty simple, really. Good luck!"]]):format(nextsys:name()))
+      tk.msg(_("Good luck"), fmt.f(_([["Perfect! So, this mission is pretty simple: I want you to pass on this proposal to them." He hands you a data chip. "It's a request to meet with the FLF leaders on {sys}. If all goes well, I'll be asking you to take me there next.
+    "Any FLF ship should do the job. Try hailing them and see if you get a response. If they won't talk, disable and board them so you can force them to listen. Pretty simple, really. Good luck!"]]), {sys=nextsys}))
 
       misn.setTitle(_("The FLF Contact"))
       misn.setReward(fmt.credits(reward))
       misn.setDesc(_("Nexus Shipyards is looking to strike a better deal with the FLF."))
       misn.osdCreate(_("The FLF Contact"), {
          _("Hail any FLF ship, or disable and board one if necessary"),
-         _("Go back to %s in %s"):format(paypla:name(), paysys:name()),
+         fmt.f(_("Go back to {pnt} in {sys}"), {pnt=paypla, sys=paysys}),
       })
       misn.osdActive(1)
 
@@ -76,7 +76,7 @@ end
 function land()
    --Job is done
    if stage == 1 and planet.cur() == paypla then
-      tk.msg(_("Good news"), _([[Smith is clearly pleased with the results. "I have received word that the FLF leaders are indeed interested. Meet me at the bar whenever you're ready to take me to %s. And here's your payment."]]):format(nextsys:name()))
+      tk.msg(_("Good news"), fmt.f(_([[Smith is clearly pleased with the results. "I have received word that the FLF leaders are indeed interested. Meet me at the bar whenever you're ready to take me to {sys}. And here's your payment."]]), {sys=nextsys}))
       pir.reputationNormalMission(rnd.rnd(2,3))
       player.pay(reward)
       shark.addLog( _([[You helped Arnold Smith establish a contact with the FLF. He said to meet you at the bar on Alteris when you're ready to take him to Arandon.]]) )
