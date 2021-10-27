@@ -15,6 +15,7 @@
   <asset>Suna I</asset>
   <asset>Suna II</asset>
   <asset>The Wringer</asset>
+  <asset_virtual>Pirate Small</asset_virtual>
  </assets>
  <jumps>
   <jump target="Herakin">
