@@ -43,5 +43,8 @@ function filesystem.read( name, size )
    f:close()
    return buf, len
 end
+function filesystem.enumerate( dir )
+   return naev.file.enumerate( dir )
+end
 
 return filesystem
