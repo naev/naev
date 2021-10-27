@@ -88,6 +88,7 @@ static const FactionMask MASK_0 = 0, MASK_1 = 1;
  */
 static cholmod_common C;        /**< Parameter settings, statistics, and workspace used internally by CHOLMOD. */
 static Vertex *vertex_stack;    /**< Array (array.h): Everything eligible to be a lane endpoint. */
+static FactionMask *vertex_fmask;      /**< Malloced: Per vertex, the set of factions that have built on it. */
 static int *sys_to_first_vertex;/**< Array (array.h): For each system index, the id of its first vertex, + sentinel. */
 static Edge *edge_stack;        /**< Array (array.h): Everything eligible to be a lane. */
 static int *sys_to_first_edge;  /**< Array (array.h): For each system index, the id of its first edge, + sentinel. */
@@ -110,8 +111,8 @@ static double* cmp_key_ref;     /**< To qsort() a list of indices by table value
 /*
  * Prototypes.
  */
-static int safelanes_buildOneTurn (void);
-static int safelanes_activateByGradient( cholmod_dense* Lambda_tilde );
+static int safelanes_buildOneTurn( int iters_done );
+static int safelanes_activateByGradient( cholmod_dense* Lambda_tilde, int iters_done );
 static void safelanes_initStacks (void);
 static void safelanes_initStacks_edge (void);
 static void safelanes_initStacks_faction (void);
@@ -243,7 +244,7 @@ void safelanes_recalculate (void)
    Uint32 time = SDL_GetTicks();
    safelanes_initStacks();
    safelanes_initOptimizer();
-   while (safelanes_buildOneTurn() > 0)
+   for (int iters_done=0; safelanes_buildOneTurn(iters_done) > 0; iters_done++)
       ;
    safelanes_destroyOptimizer();
    /* Stacks remain available for queries. */
@@ -281,7 +282,7 @@ static void safelanes_destroyOptimizer (void)
 /**
  * @brief Run a round of optimization. Return how many builds (upper bound) have to happen next turn.
  */
-static int safelanes_buildOneTurn (void)
+static int safelanes_buildOneTurn( int iters_done )
 {
    cholmod_sparse *stiff_s;
    cholmod_factor *stiff_f;
@@ -302,7 +303,7 @@ static int safelanes_buildOneTurn (void)
    cholmod_free_dense( &E_workspace, &C );
    cholmod_free_factor( &stiff_f, &C );
    cholmod_free_sparse( &stiff_s, &C );
-   turns_next_time = safelanes_activateByGradient( Lambda_tilde );
+   turns_next_time = safelanes_activateByGradient( Lambda_tilde, iters_done );
    cholmod_free_dense( &Lambda_tilde, &C );
 
    return turns_next_time;
@@ -314,7 +315,8 @@ static int safelanes_buildOneTurn (void)
 static void safelanes_initStacks (void)
 {
    safelanes_destroyStacks();
-   safelanes_initStacks_vertex();
+   safelanes_initStacks_faction(); /* Dependency for vertex. */
+   safelanes_initStacks_vertex(); /* Dependency for edge. */
    safelanes_initStacks_faction();
    safelanes_initStacks_edge();
    safelanes_initStacks_anchor();
@@ -359,6 +361,8 @@ static void safelanes_initStacks_vertex (void)
    }
    array_shrink( &vertex_stack );
    array_shrink( &sys_to_first_vertex );
+
+   vertex_fmask = calloc( array_size(vertex_stack), sizeof(FactionMask) );
 }
 
 /**
@@ -461,6 +465,8 @@ static void safelanes_destroyStacks (void)
    safelanes_destroyTmp();
    array_free( vertex_stack );
    vertex_stack = NULL;
+   free( vertex_fmask );
+   vertex_fmask = NULL;
    array_free( sys_to_first_vertex );
    sys_to_first_vertex = NULL;
    array_free( edge_stack );
@@ -650,7 +656,7 @@ static void safelanes_initPPl (void)
  * @brief Per-system, per-faction, activates the affordable lane with best (grad phi)/L
  * @return How many builds (upper bound) have to happen next turn.
  */
-static int safelanes_activateByGradient( cholmod_dense* Lambda_tilde )
+static int safelanes_activateByGradient( cholmod_dense* Lambda_tilde, int iters_done )
 {
    int *facind_opts, *edgeind_opts, turns_next_time;
    double *facind_vals, Linv;
@@ -694,11 +700,16 @@ static int safelanes_activateByGradient( cholmod_dense* Lambda_tilde )
          lal_bases[fi] += sys_to_first_vertex[1+si] - sys_to_first_vertex[si];
 
          array_resize( &edgeind_opts, 0 );
-         for (int ei=sys_to_first_edge[si]; ei<sys_to_first_edge[1+si]; ei++)
+         for (int ei=sys_to_first_edge[si]; ei<sys_to_first_edge[1+si]; ei++) {
+            int sis = edge_stack[ei][0];
+            int sjs = edge_stack[ei][1];
+            int disconnecting = iters_done && !(vertex_fmask[sis] & (MASK_1<<fi)) && !(vertex_fmask[sjs] & (MASK_1<<fi));
             if (!lane_faction[ei]
+                && !disconnecting
                 && presence_budget[fi][si] >= 1. / safelanes_initialConductivity(ei) / faction_stack[fi].lane_length_per_presence
                 && (lane_fmask[ei] & (MASK_1<<fi)))
                array_push_back( &edgeind_opts, ei );
+         }
 
          if (array_size(edgeind_opts) == 0) {
             presence_budget[fi][si] = 0.;  /* Nothing to build here! Tell ourselves to stop trying. */
@@ -757,6 +768,8 @@ static int safelanes_activateByGradient( cholmod_dense* Lambda_tilde )
                lal_bases[fi] -= sys_to_first_vertex[1+si] - sys_to_first_vertex[si];
          }
          safelanes_updateConductivity( ei_best );
+         vertex_fmask[edge_stack[ei_best][0]] |= (MASK_1<<fi);
+         vertex_fmask[edge_stack[ei_best][1]] |= (MASK_1<<fi);
          lane_faction[ ei_best ] = faction_stack[fi].id;
       }
    }

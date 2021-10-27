@@ -134,6 +134,7 @@ class SafeLaneProblem:
         # Get the stiffness inside systems
         self.default_lanes = (si0,sj0,sv0)
         self.internal_lanes = inSysStiff( systems.nodess, systems.factass, systems.g2ass, systems.loc2globs )
+        self.vertex_factions = [[] for _ in systems.g2ass] # Factions that have visited each vertex (in the global enumeration)
 
 
 def buildStiffness( problem, activated, systems ):
@@ -238,23 +239,22 @@ def compute_PPts_QtQ( problem, utilde, systems ):
 
 
 @timed
-def getGradient( problem, u, lamt, PPl, pres_0, activated, systems ):
+def getGradient( problem, u, lamt, PPl, pres_0, activated, systems, iters_done ):
     '''Get the gradient from state and adjoint state.
        Luckily, this does not depend on the stiffness itself (by linearity wrt. stiffness).'''
     si, sj, sv = problem.internal_lanes[:3]
     sr = problem.internal_lanes[6] # Tells who has right to build on each lane
     sy = problem.internal_lanes[7] # Tells the system
+    vf = problem.vertex_factions
     
     sz = len(si)
 
     nfact = len(PPl)
     gl = []
     for k in range(nfact): # .2
-        
         # Build the list of all interesting dofs
         myDofs = []
         for i in range(len(systems.loc2globs)):
-            
             if pres_0[i][k] <= 0: # Does this faction have presence here ?
                 continue
             
@@ -275,12 +275,12 @@ def getGradient( problem, u, lamt, PPl, pres_0, activated, systems ):
             if pres_0[sy[i]][k] <= 0: # Does this faction have presence here ?
                 continue
             
-            faction_may_build = (k in sr[i]) or (sr[i] == (-1, -1))
-            if not faction_may_build:
-                continue
-            
             sis = si[i]
             sjs = sj[i]
+
+            faction_may_build = ((k in sr[i]) or (sr[i] == (-1, -1))) and ((k in vf[sis] or k in vf[sjs]) or not iters_done)
+            if not faction_may_build:
+                continue
             
             LUTll = np.dot( lal[[sis,sjs],:] , u[[sis,sjs],:].T )
             glk[i] = ALPHA*sv[i] * ( LUTll[0,0] + LUTll[1,1] - LUTll[0,1] - LUTll[1,0] )
@@ -289,10 +289,12 @@ def getGradient( problem, u, lamt, PPl, pres_0, activated, systems ):
     return gl
         
 
-def activateBestFact( problem, gl, activated, Lfaction, pres_c, pres_0 ):
+def activateBestFact( problem, gl, activated, Lfaction, pres_c, pres_0, iters_done ):
     '''Activates the best lane in each system for each faction. Returns the number activated. '''
     # Find lanes to keep in each system
-    sv, sil, sjl, lanesLoc2globs, sr  = problem.internal_lanes[2:7]
+    si, sj, sv = problem.internal_lanes[:3]
+    lanesLoc2globs, sr = problem.internal_lanes[5:7]
+    vf = problem.vertex_factions
     nsys = len(lanesLoc2globs)
     nactivated = 0
     nfact = len(pres_c[0])
@@ -324,9 +326,12 @@ def activateBestFact( problem, gl, activated, Lfaction, pres_c, pres_0 ):
                 # Find a lane to activate
                 prev_nactivated = nactivated
                 for k in ind:
-                    faction_may_build = (f in sr[k]) or (sr[k] == (-1, -1))
+                    faction_may_build = ((f in sr[k]) or (sr[k] == (-1, -1))) and ((f in vf[si[k]] or f in vf[sj[k]]) or not iters_done)
                     if (not activated[k]) and (pres_c[i][f] >= 1/sv[k] / systems.dist_per_presence[f]) and faction_may_build:
                         pres_c[i][f] -= 1/sv[k] / systems.dist_per_presence[f]
+                        for vi in si[k], sj[k]:
+                            if f not in vf[vi]:
+                                vf[vi].append(f)
                         activated[k] = True
                         Lfaction[k] = f
                         nactivated += 1
@@ -368,9 +373,9 @@ def optimizeLanes( systems, problem ):
         lamt = stiff_c.solve_A( rhs ) #.010 s
         
         # Compute the gradient and activate. Runtime depends on how many degrees of freedom remain.
-        gl = getGradient( problem, utilde, lamt, PPl, pres_c, activated, systems )
+        gl = getGradient( problem, utilde, lamt, PPl, pres_c, activated, systems, i )
 
-        if not activateBestFact( problem, gl, activated, Lfaction, pres_c, systems.presences ):
+        if not activateBestFact( problem, gl, activated, Lfaction, pres_c, systems.presences, i ):
             break
 
     print('Converged in', i+1, 'iterations.')
