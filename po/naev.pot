@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2021-10-26 21:42-0400\n"
+"POT-Creation-Date: 2021-10-26 23:24-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -13445,14 +13445,14 @@ msgstr ""
 #: dat/missions/neutral/kidnapped/traffic_01.lua:204
 #: dat/missions/neutral/kidnapped/traffic_01.lua:222
 #: dat/missions/neutral/kidnapped/traffic_01.lua:242
-#: dat/missions/shark/sh02_tapping.lua:187
-#: dat/missions/shark/sh02_tapping.lua:212
-#: dat/missions/shark/sh02_tapping.lua:239
-#: dat/missions/shark/sh02_tapping.lua:268
-#: dat/missions/shark/sh02_tapping.lua:292
-#: dat/missions/shark/sh02_tapping.lua:308
-#: dat/missions/shark/sh02_tapping.lua:330
-#: dat/missions/shark/sh02_tapping.lua:335
+#: dat/missions/shark/sh02_tapping.lua:184
+#: dat/missions/shark/sh02_tapping.lua:209
+#: dat/missions/shark/sh02_tapping.lua:236
+#: dat/missions/shark/sh02_tapping.lua:265
+#: dat/missions/shark/sh02_tapping.lua:289
+#: dat/missions/shark/sh02_tapping.lua:305
+#: dat/missions/shark/sh02_tapping.lua:327
+#: dat/missions/shark/sh02_tapping.lua:332
 #: dat/missions/soromid/comingout/srm_comingout3.lua:87
 #: dat/missions/soromid/comingout/srm_comingout5.lua:98
 #: dat/missions/soromid/comingout/srm_comingout6.lua:106
@@ -31852,9 +31852,9 @@ msgstr ""
 #: dat/missions/neutral/kidnapped/traffic_00.lua:168
 #: dat/missions/neutral/seek_n_destroy.lua:183
 #: dat/missions/shadow/shadowrun.lua:190 dat/missions/shadow/shadowrun.lua:194
-#: dat/missions/shark/sh07_pirates.lua:177
-#: dat/missions/shark/sh07_pirates.lua:198
-#: dat/missions/shark/sh07_pirates.lua:220
+#: dat/missions/shark/sh07_pirates.lua:174
+#: dat/missions/shark/sh07_pirates.lua:195
+#: dat/missions/shark/sh07_pirates.lua:217
 #: dat/missions/tutorial/nelly02.lua:404
 msgid "Pirate Hyena"
 msgstr ""
@@ -33877,7 +33877,7 @@ msgstr ""
 #. She "jumped" into the current system by taking off.
 #: dat/missions/dvaered/assault_on_unicorn.lua:106
 #: dat/missions/dvaered/frontier_war/fw03_sirius.lua:224
-#: dat/missions/shark/sh07_pirates.lua:275
+#: dat/missions/shark/sh07_pirates.lua:272
 #: dat/missions/sirius/achack/achack02.lua:114
 #: dat/missions/sirius/achack/achack02.lua:251
 #: dat/missions/zalek/neburesearch/neburesearch_01.lua:170
@@ -34113,10 +34113,10 @@ msgstr ""
 #: dat/missions/dvaered/championship.lua:121
 #: dat/missions/shark/sh00_ancestorkill.lua:87
 #: dat/missions/shark/sh01_corvette.lua:85
-#: dat/missions/shark/sh02_tapping.lua:83
-#: dat/missions/shark/sh03_hailing.lua:73
+#: dat/missions/shark/sh02_tapping.lua:80
+#: dat/missions/shark/sh03_hailing.lua:70
 #: dat/missions/shark/sh04_meeting.lua:77 dat/missions/shark/sh05_flf.lua:71
-#: dat/missions/shark/sh07_pirates.lua:114
+#: dat/missions/shark/sh07_pirates.lua:111
 msgid "Sorry, not interested"
 msgstr ""
 
@@ -39642,9 +39642,8 @@ msgid "Locate the Collective drone, but do not engage."
 msgstr ""
 
 #: dat/missions/empire/collective/ec00.lua:87
-#: dat/missions/shark/sh03_hailing.lua:64
-#, lua-format
-msgid "Report back to %s in the %s system"
+#: dat/missions/shark/sh03_hailing.lua:61
+msgid "Report back to {pnt} in the {sys} system"
 msgstr ""
 
 #. Force Collective music (note: must clear these later on).
@@ -60586,10 +60585,9 @@ msgid "Wonderful"
 msgstr ""
 
 #: dat/missions/shark/sh00_ancestorkill.lua:69
-#, lua-format
 msgid ""
-"\"Great! I knew I could trust you. I'll meet you on %s in the %s system. "
-"I'll be with my boss and our customer, Baron Sauterfeldt.\""
+"\"Great! I knew I could trust you. I'll meet you on {pnt} in the {sys} "
+"system. I'll be with my boss and our customer, Baron Sauterfeldt.\""
 msgstr ""
 
 #: dat/missions/shark/sh00_ancestorkill.lua:71
@@ -60604,20 +60602,17 @@ msgid ""
 msgstr ""
 
 #: dat/missions/shark/sh00_ancestorkill.lua:75
-#, lua-format
 msgid ""
-"Buy a Shark (but not a Pirate Shark), then fly to the %s system and land on "
-"%s"
+"Buy a Shark (but not a Pirate Shark), then fly to the {sys} system and land "
+"on {pnt}"
 msgstr ""
 
 #: dat/missions/shark/sh00_ancestorkill.lua:76
-#, lua-format
-msgid "Go to %s and kill the pirate with your Shark"
+msgid "Go to {sys} and kill the pirate with your Shark"
 msgstr ""
 
 #: dat/missions/shark/sh00_ancestorkill.lua:77
-#, lua-format
-msgid "Land on %s and collect your fee"
+msgid "Land on {pnt} and collect your fee"
 msgstr ""
 
 #: dat/missions/shark/sh00_ancestorkill.lua:87
@@ -60827,11 +60822,11 @@ msgstr ""
 #. Avoid picking same system
 #: dat/missions/shark/sh00_ancestorkill.lua:97
 #: dat/missions/shark/sh01_corvette.lua:56
-#: dat/missions/shark/sh02_tapping.lua:52
-#: dat/missions/shark/sh03_hailing.lua:45
+#: dat/missions/shark/sh02_tapping.lua:49
+#: dat/missions/shark/sh03_hailing.lua:42
 #: dat/missions/shark/sh04_meeting.lua:47 dat/missions/shark/sh05_flf.lua:44
 #: dat/missions/shark/sh06_arandon.lua:44
-#: dat/missions/shark/sh07_pirates.lua:65
+#: dat/missions/shark/sh07_pirates.lua:62
 msgid "Arnold Smith"
 msgstr ""
 
@@ -60881,7 +60876,6 @@ msgid "Ready for action"
 msgstr ""
 
 #: dat/missions/shark/sh00_ancestorkill.lua:156
-#, lua-format
 msgid ""
 "\"Nice to see you again,\" he says with a smile. \"I hope you are ready to "
 "kick that pirate's ass! Please follow me. I will introduce you to my boss, "
@@ -60891,8 +60885,8 @@ msgid ""
 "over the mission, rather over-emphasizing the threat involved; it's just a "
 "Pirate Ancestor, after all. Nonetheless, the Baron is intrigued.\n"
 "    Arnold Smith gets a call. After answering, he turns to you. \"Perfect "
-"timing! The pirate has just arrived at %s. Now go show them what your ship "
-"can do!\" Time to head back to the ship, then."
+"timing! The pirate has just arrived at {sys}. Now go show them what your "
+"ship can do!\" Time to head back to the ship, then."
 msgstr ""
 
 #. he went away
@@ -60922,10 +60916,9 @@ msgid ""
 msgstr ""
 
 #: dat/missions/shark/sh01_corvette.lua:68
-#, lua-format
 msgid ""
-"\"Great! Go and meet our pilot in %s. After the job is done, meet me on %s "
-"in the %s system.\""
+"\"Great! Go and meet our pilot in {battlesys}. After the job is done, meet "
+"me on {pnt} in the {sys} system.\""
 msgstr ""
 
 #: dat/missions/shark/sh01_corvette.lua:70
@@ -60943,13 +60936,12 @@ msgid "Sharkman Is Back"
 msgstr ""
 
 #: dat/missions/shark/sh01_corvette.lua:74
-#, lua-format
-msgid "Jump in %s with a destroyer class ship and let the Lancelot disable you"
+msgid ""
+"Jump in {sys} with a destroyer class ship and let the Lancelot disable you"
 msgstr ""
 
 #: dat/missions/shark/sh01_corvette.lua:75
-#, lua-format
-msgid "Go to %s in %s to collect your pay"
+msgid "Go to {pnt} in {sys} to collect your pay"
 msgstr ""
 
 #: dat/missions/shark/sh01_corvette.lua:85
@@ -60989,17 +60981,16 @@ msgstr ""
 msgid "MISSION FAILED: You destroyed the Lancelot."
 msgstr ""
 
-#: dat/missions/shark/sh02_tapping.lua:52
+#: dat/missions/shark/sh02_tapping.lua:49
 msgid "Arnold Smith is here. Perhaps he might have another job for you."
 msgstr ""
 
 #. the chances you have to get an ambush
-#: dat/missions/shark/sh02_tapping.lua:61
+#: dat/missions/shark/sh02_tapping.lua:58
 msgid "Nexus Shipyards needs you (again)"
 msgstr ""
 
-#: dat/missions/shark/sh02_tapping.lua:61
-#, lua-format
+#: dat/missions/shark/sh02_tapping.lua:58
 msgid ""
 "You sit at Smith's table and ask him if he has a job for you. \"Of course,\" "
 "he answers. \"But this time, it's... well...\n"
@@ -61019,71 +61010,68 @@ msgid ""
 "    \"So we've conducted a bit of espionage. We have an agent who has "
 "recorded some hopefully revealing conversations between a House Sirius sales "
 "manager and representatives of the Frontier. All we need you to do is meet "
-"with the agent, get the recordings, and bring them back to me on %s in the "
-"%s system.\" You raise an eyebrow.\n"
+"with the agent, get the recordings, and bring them back to me on {pnt} in "
+"the {sys} system.\" You raise an eyebrow.\n"
 "    \"It's not exactly legal. That being said, you're just doing the "
 "delivery, so you almost certainly won't be implicated. What do you say? Is "
 "this something you can do?\""
 msgstr ""
 
-#: dat/missions/shark/sh02_tapping.lua:67
+#: dat/missions/shark/sh02_tapping.lua:64
 msgid "The job"
 msgstr ""
 
-#: dat/missions/shark/sh02_tapping.lua:67
-#, lua-format
+#: dat/missions/shark/sh02_tapping.lua:64
 msgid ""
-"\"I'm glad to hear it. Go meet our agent on %s in the %s system. Oh, yes, "
-"and I suppose I should mention that I'm known as 'James Neptune' to the "
+"\"I'm glad to hear it. Go meet our agent on {pnt} in the {sys} system. Oh, "
+"yes, and I suppose I should mention that I'm known as 'James Neptune' to the "
 "agent. Good luck!\""
 msgstr ""
 
+#: dat/missions/shark/sh02_tapping.lua:66
 #: dat/missions/shark/sh02_tapping.lua:69
-#: dat/missions/shark/sh02_tapping.lua:72
 msgid "Unfair Competition"
 msgstr ""
 
-#: dat/missions/shark/sh02_tapping.lua:71
+#: dat/missions/shark/sh02_tapping.lua:68
 msgid "Nexus Shipyards is in competition with House Sirius."
 msgstr ""
 
-#: dat/missions/shark/sh02_tapping.lua:73
-#, lua-format
-msgid "Land on %s in %s and meet the Nexus agent"
+#: dat/missions/shark/sh02_tapping.lua:70
+msgid "Land on {pnt} in {sys} and meet the Nexus agent"
 msgstr ""
 
-#: dat/missions/shark/sh02_tapping.lua:74
-#, lua-format
-msgid "Bring the recording back to %s in the %s system"
+#: dat/missions/shark/sh02_tapping.lua:71
+msgid "Bring the recording back to {pnt} in the {sys} system"
 msgstr ""
 
-#: dat/missions/shark/sh02_tapping.lua:83
+#: dat/missions/shark/sh02_tapping.lua:80
 msgid "\"OK, sorry to bother you.\""
 msgstr ""
 
 #. The player is landing on the mission planet to get the box
-#: dat/missions/shark/sh02_tapping.lua:91
+#: dat/missions/shark/sh02_tapping.lua:88
 msgid "Nexus's agent"
 msgstr ""
 
-#: dat/missions/shark/sh02_tapping.lua:91
+#: dat/missions/shark/sh02_tapping.lua:88
 msgid "This guy seems to be the agent Arnold Smith was talking about."
 msgstr ""
 
 #. Job is done
-#: dat/missions/shark/sh02_tapping.lua:97
-#: dat/missions/shark/sh03_hailing.lua:82
+#: dat/missions/shark/sh02_tapping.lua:94
+#: dat/missions/shark/sh03_hailing.lua:79
 msgid "Good job"
 msgstr ""
 
-#: dat/missions/shark/sh02_tapping.lua:97
+#: dat/missions/shark/sh02_tapping.lua:94
 msgid ""
 "The Nexus employee greets you as you reach the ground. \"Excellent! I will "
 "just need to spend a few hectoseconds analyzing these recordings. See if you "
 "can find me in the bar soon; I might have another job for you.\""
 msgstr ""
 
-#: dat/missions/shark/sh02_tapping.lua:103
+#: dat/missions/shark/sh02_tapping.lua:100
 msgid ""
 "You helped Nexus Shipyards gather information in an attempt to sabotage "
 "competition from House Sirius. Arnold Smith said to meet him in the bar "
@@ -61092,89 +61080,86 @@ msgstr ""
 
 #. Ambush !
 #. the probability of an ambush goes up when you cross a system without meeting any ennemy
-#: dat/missions/shark/sh02_tapping.lua:121
+#: dat/missions/shark/sh02_tapping.lua:118
 msgid "Time to go back to Alteris"
 msgstr ""
 
-#: dat/missions/shark/sh02_tapping.lua:121
+#: dat/missions/shark/sh02_tapping.lua:118
 msgid ""
 "You approach the agent and obtain the package without issue. Before you "
 "leave, he suggests that you stay vigilant. \"They might come after you,\" he "
 "says."
 msgstr ""
 
-#: dat/missions/shark/sh02_tapping.lua:122
+#: dat/missions/shark/sh02_tapping.lua:119
 msgid "Recorder"
 msgstr ""
 
-#: dat/missions/shark/sh02_tapping.lua:122
+#: dat/missions/shark/sh02_tapping.lua:119
 msgid "A holophone recorder."
 msgstr ""
 
 #. adding an useless Llama
-#: dat/missions/shark/sh02_tapping.lua:346
+#: dat/missions/shark/sh02_tapping.lua:343
 msgid "Amateur Mercenary"
 msgstr ""
 
-#: dat/missions/shark/sh03_hailing.lua:45
+#: dat/missions/shark/sh03_hailing.lua:42
 msgid "This guy is looking more and more shifty."
 msgstr ""
 
-#: dat/missions/shark/sh03_hailing.lua:53
+#: dat/missions/shark/sh03_hailing.lua:50
 msgid "A new job"
 msgstr ""
 
-#: dat/missions/shark/sh03_hailing.lua:53
-#, lua-format
+#: dat/missions/shark/sh03_hailing.lua:50
 msgid ""
 "\"Hello there, nice to meet you again! According to the information that you "
 "brought us, the negotiations between the Frontier officials and House Sirius "
 "are proceeding very quickly. We have to act now. There is a member of the "
 "Frontier Council who, for political reasons, could help us.\n"
 "    \"I can't send him a message without being spotted by the Sirii, so I "
-"need you to contact him. He's probably piloting his Hawking in the %s "
-"system. Go there, hail him, and let him know that I have to see him on %s in "
-"the %s system. He will understand.\n"
+"need you to contact him. He's probably piloting his Hawking in the {sys} "
+"system. Go there, hail him, and let him know that I have to see him on "
+"{next_pnt} in the {next_sys} system. He will understand.\n"
 "    \"Can I count on you to do this for me?\""
 msgstr ""
 
-#: dat/missions/shark/sh03_hailing.lua:57
+#: dat/missions/shark/sh03_hailing.lua:54
 #: dat/missions/shark/sh04_meeting.lua:58
 msgid "Time to go"
 msgstr ""
 
-#: dat/missions/shark/sh03_hailing.lua:57
+#: dat/missions/shark/sh03_hailing.lua:54
 msgid ""
 "\"Fantastic! I am known as Donald Ulnish to the Council member. Good luck.\""
 msgstr ""
 
+#: dat/missions/shark/sh03_hailing.lua:56
 #: dat/missions/shark/sh03_hailing.lua:59
-#: dat/missions/shark/sh03_hailing.lua:62
 msgid "Invitation"
 msgstr ""
 
-#: dat/missions/shark/sh03_hailing.lua:61
+#: dat/missions/shark/sh03_hailing.lua:58
 msgid "Nexus Shipyards asks you to help initiate a secret meeting"
 msgstr ""
 
-#: dat/missions/shark/sh03_hailing.lua:63
-#, lua-format
-msgid "Go to %s, find and hail the Air Force One"
+#: dat/missions/shark/sh03_hailing.lua:60
+msgid "Go to {sys}, find and hail the Air Force One"
 msgstr ""
 
-#: dat/missions/shark/sh03_hailing.lua:73
+#: dat/missions/shark/sh03_hailing.lua:70
 msgid "\"OK, come back when you are interested.\""
 msgstr ""
 
-#: dat/missions/shark/sh03_hailing.lua:82
-#, lua-format
+#: dat/missions/shark/sh03_hailing.lua:79
 msgid ""
 "Smith seems to relax as you tell him that everything went according to plan. "
 "\"Fantastic! I have another mission for you; meet me in the bar when you are "
-"ready to bring me to %s in the %s system.\""
+"ready to bring me to {pnt} in the {sys} system.\""
 msgstr ""
 
-#: dat/missions/shark/sh03_hailing.lua:88
+#: dat/missions/shark/sh03_hailing.lua:85
 msgid ""
 "You helped Nexus Shipyards initiate a secret meeting with a member of the "
 "Frontier Council. Arnold Smith said that he has another mission for you and "
@@ -61183,22 +61168,20 @@ msgid ""
 msgstr ""
 
 #. the system where the player must look for the Hawking
-#: dat/missions/shark/sh03_hailing.lua:96
+#: dat/missions/shark/sh03_hailing.lua:93
 msgid "Air Force One"
 msgstr ""
 
 #. The player takes contact with the Hawking
-#: dat/missions/shark/sh03_hailing.lua:105
-#, lua-format
-msgid "Time to go back to %s"
+#: dat/missions/shark/sh03_hailing.lua:102
+msgid "Time to go back to {pnt}"
 msgstr ""
 
-#: dat/missions/shark/sh03_hailing.lua:105
-#, lua-format
+#: dat/missions/shark/sh03_hailing.lua:102
 msgid ""
 "The captain of the Hawking answers you. When you say that you have a message "
 "from Donald Ulnish, he redirects you to one of his officers who takes the "
-"message. Now, back to %s."
+"message. Now, back to {pnt}."
 msgstr ""
 
 #: dat/missions/shark/sh04_meeting.lua:47
@@ -61206,8 +61189,7 @@ msgid "He is waiting for you."
 msgstr ""
 
 #: dat/missions/shark/sh04_meeting.lua:56
-#, lua-format
-msgid "\"OK, are you ready for the travel to %s in the %s system?\""
+msgid "\"OK, are you ready for the travel to {pnt} in the {sys} system?\""
 msgstr ""
 
 #: dat/missions/shark/sh04_meeting.lua:58
@@ -61219,13 +61201,11 @@ msgid "Nexus Shipyards asks you to take part in a secret meeting"
 msgstr ""
 
 #: dat/missions/shark/sh04_meeting.lua:64
-#, lua-format
-msgid "Go to the %s system and land on %s"
+msgid "Go to the {sys} system and land on {pnt}"
 msgstr ""
 
 #: dat/missions/shark/sh04_meeting.lua:65
-#, lua-format
-msgid "Bring Smith back to %s in the %s system"
+msgid "Bring Smith back to {pnt} in the {sys} system"
 msgstr ""
 
 #: dat/missions/shark/sh04_meeting.lua:71
@@ -61312,9 +61292,8 @@ msgid "Nice to see you again!"
 msgstr ""
 
 #: dat/missions/shark/sh05_flf.lua:52
-#, lua-format
 msgid ""
-"\"Hello, %s! Are you ready to take part in another sales mission?\n"
+"\"Hello, {player}! Are you ready to take part in another sales mission?\n"
 "    \"As you know, the FLF is a heavy user of our ships, but they're also "
 "heavy users of Dvaered ships, chiefly the Vendetta design. Since House "
 "Dvaered is an enemy of the FLF, we see this as an opportunity to expand our "
@@ -61325,12 +61304,11 @@ msgid ""
 msgstr ""
 
 #: dat/missions/shark/sh05_flf.lua:55
-#, lua-format
 msgid ""
 "\"Perfect! So, this mission is pretty simple: I want you to pass on this "
 "proposal to them.\" He hands you a data chip. \"It's a request to meet with "
-"the FLF leaders on %s. If all goes well, I'll be asking you to take me there "
-"next.\n"
+"the FLF leaders on {sys}. If all goes well, I'll be asking you to take me "
+"there next.\n"
 "    \"Any FLF ship should do the job. Try hailing them and see if you get a "
 "response. If they won't talk, disable and board them so you can force them "
 "to listen. Pretty simple, really. Good luck!\""
@@ -61349,8 +61327,7 @@ msgid "Hail any FLF ship, or disable and board one if necessary"
 msgstr ""
 
 #: dat/missions/shark/sh05_flf.lua:63 dat/missions/shark/sh06_arandon.lua:61
-#, lua-format
-msgid "Go back to %s in %s"
+msgid "Go back to {pnt} in {sys}"
 msgstr ""
 
 #: dat/missions/shark/sh05_flf.lua:71
@@ -61363,11 +61340,10 @@ msgid "Good news"
 msgstr ""
 
 #: dat/missions/shark/sh05_flf.lua:79
-#, lua-format
 msgid ""
 "Smith is clearly pleased with the results. \"I have received word that the "
 "FLF leaders are indeed interested. Meet me at the bar whenever you're ready "
-"to take me to %s. And here's your payment.\""
+"to take me to {sys}. And here's your payment.\""
 msgstr ""
 
 #: dat/missions/shark/sh05_flf.lua:82
@@ -61416,19 +61392,16 @@ msgstr ""
 
 #: dat/missions/shark/sh06_arandon.lua:56
 #: dat/missions/shark/sh06_arandon.lua:59
-#, lua-format
-msgid "A Journey To %s"
+msgid "A Journey To {sys}"
 msgstr ""
 
 #: dat/missions/shark/sh06_arandon.lua:58
-#, lua-format
 msgid ""
-"You are to transport Arnold Smith to %s so that he can talk about a deal."
+"You are to transport Arnold Smith to {sys} so that he can talk about a deal."
 msgstr ""
 
 #: dat/missions/shark/sh06_arandon.lua:60
-#, lua-format
-msgid "Go to %s and wait for the FLF ship, then hail and board it."
+msgid "Go to {sys} and wait for the FLF ship, then hail and board it."
 msgstr ""
 
 #: dat/missions/shark/sh06_arandon.lua:73
@@ -61481,12 +61454,11 @@ msgid ""
 msgstr ""
 
 #: dat/missions/shark/sh06_arandon.lua:137
-#, lua-format
 msgid ""
 "As you board, Arnold Smith insists on entering the FLF's ship alone. A few "
 "periods later, he comes back looking satisfied. It seems this time luck is "
 "on his side. He mentions that he had good results with a smile on his face "
-"before directing you to take him back to %s."
+"before directing you to take him back to {sys}."
 msgstr ""
 
 #. Actually, I don't know how it could happened...
@@ -61517,7 +61489,7 @@ msgstr ""
 #. 1) Way to Alteris
 #. --
 #: dat/missions/shark/sh07_pirates.lua:33
-#: dat/missions/shark/sh07_pirates.lua:96
+#: dat/missions/shark/sh07_pirates.lua:93
 msgid "The Last Detail"
 msgstr ""
 
@@ -61526,32 +61498,29 @@ msgstr ""
 msgid "Houston, we have a problem!"
 msgstr ""
 
-#: dat/missions/shark/sh07_pirates.lua:65
+#: dat/missions/shark/sh07_pirates.lua:62
 msgid "Perhaps it would be worthwhile to see if he has another job for you."
 msgstr ""
 
 #. Initialization of dead pirate memory
 #. set the names of the pirates (and make sure they aren't duplicates)
-#: dat/missions/shark/sh07_pirates.lua:81
-#, lua-format
-msgid "%s III"
+#: dat/missions/shark/sh07_pirates.lua:78
+msgid "{name} III"
+msgstr ""
+
+#: dat/missions/shark/sh07_pirates.lua:79
+msgid "{name} Jr."
+msgstr ""
+
+#: dat/missions/shark/sh07_pirates.lua:80
+msgid "{name} II"
 msgstr ""
 
 #: dat/missions/shark/sh07_pirates.lua:82
-#, lua-format
-msgid "%s Jr."
-msgstr ""
-
-#: dat/missions/shark/sh07_pirates.lua:83
-#, lua-format
-msgid "%s II"
-msgstr ""
-
-#: dat/missions/shark/sh07_pirates.lua:85
 msgid "The mission"
 msgstr ""
 
-#: dat/missions/shark/sh07_pirates.lua:85
+#: dat/missions/shark/sh07_pirates.lua:82
 msgid ""
 "\"Hello again. As you know, I've agreed with the FLF on a contract that will "
 "extend our sales of ships to them substantially. Of course, this deal must "
@@ -61570,50 +61539,49 @@ msgid ""
 "that. Are you willing to do this job for us?\""
 msgstr ""
 
-#: dat/missions/shark/sh07_pirates.lua:89
+#: dat/missions/shark/sh07_pirates.lua:86
 msgid "Very good"
 msgstr ""
 
-#: dat/missions/shark/sh07_pirates.lua:89
-#, lua-format
+#: dat/missions/shark/sh07_pirates.lua:86
 msgid ""
 "\"So, here are the details we have gathered about these pirates:\n"
-"    \"%s should be in %s, flying a Gawain. He seems to be on a holiday, so "
-"he probably isn't able to fight back and will just run away.\n"
-"    \"%s should be in %s, flying a Kestrel. We believe he has some escorts.\n"
-"    \"%s should be in %s, also flying a Kestrel. He has escorts, too, "
-"according to our records.\n"
-"    \"And finally, %s is in %s. He stole and beefed up a Goddard recently, "
-"so make sure you're prepared for that. He also has escorts, according to our "
-"records.\n"
+"    \"{gawname} should be in {gawsys}, flying a Gawain. He seems to be on a "
+"holiday, so he probably isn't able to fight back and will just run away.\n"
+"    \"{kername1} should be in {kersys1}, flying a Kestrel. We believe he has "
+"some escorts.\n"
+"    \"{kername2} should be in {kersys2}, also flying a Kestrel. He has "
+"escorts, too, according to our records.\n"
+"    \"And finally, {godname} is in {godsys}. He stole and beefed up a "
+"Goddard recently, so make sure you're prepared for that. He also has "
+"escorts, according to our records.\n"
 "    \"And that's about it! Come back for your fee when you have finished.\""
 msgstr ""
 
-#: dat/missions/shark/sh07_pirates.lua:98
+#: dat/missions/shark/sh07_pirates.lua:95
 msgid "Nexus Shipyards has tasked you with killing four pirates."
 msgstr ""
 
-#: dat/missions/shark/sh07_pirates.lua:100
+#: dat/missions/shark/sh07_pirates.lua:97
 msgid "Kill the four pirates"
 msgstr ""
 
-#: dat/missions/shark/sh07_pirates.lua:101
-#, lua-format
-msgid "Report back to %s in %s"
+#: dat/missions/shark/sh07_pirates.lua:98
+msgid "Report back to {pnt} in {sys}"
 msgstr ""
 
-#: dat/missions/shark/sh07_pirates.lua:114
+#: dat/missions/shark/sh07_pirates.lua:111
 msgid ""
 "\"I'm sorry to hear that. Don't hesitate to come back if you change your "
 "mind.\""
 msgstr ""
 
 #. Job is done
-#: dat/missions/shark/sh07_pirates.lua:122
+#: dat/missions/shark/sh07_pirates.lua:119
 msgid "That was impressive"
 msgstr ""
 
-#: dat/missions/shark/sh07_pirates.lua:122
+#: dat/missions/shark/sh07_pirates.lua:119
 msgid ""
 "Smith awaits your arrival at the spaceport. When you exit your ship, he "
 "smiles and walks up to you. \"Good job,\" he says. \"Our deal is secure, "
@@ -61623,16 +61591,15 @@ msgid ""
 "commemorative sandwich holder."
 msgstr ""
 
-#: dat/missions/shark/sh07_pirates.lua:127
+#: dat/missions/shark/sh07_pirates.lua:124
 msgid ""
 "You eliminated some pirates that were about to get in the way of Nexus "
 "Shipyards' business."
 msgstr ""
 
-#: dat/missions/shark/sh07_pirates.lua:275
-#, lua-format
+#: dat/missions/shark/sh07_pirates.lua:272
 msgid ""
-"You have killed the four pirates. Now to return to %s and collect your "
+"You have killed the four pirates. Now to return to {sys} and collect your "
 "payment..."
 msgstr ""
 
@@ -79799,8 +79766,8 @@ msgstr ""
 msgid "Unknown standing type '%s'!"
 msgstr ""
 
-#: src/nlua_safelanes.c:136 src/safelanes.c:231 src/safelanes.c:813
-#: src/safelanes.c:829
+#: src/nlua_safelanes.c:136 src/safelanes.c:232 src/safelanes.c:826
+#: src/safelanes.c:842
 msgid "Safe-lane vertex type is invalid."
 msgstr ""
 
@@ -82215,7 +82182,7 @@ msgstr ""
 msgid "Trying to remove non-existant post-processing shader with id '%d'!"
 msgstr ""
 
-#: src/safelanes.c:251
+#: src/safelanes.c:252
 #, c-format
 msgid "Charted safe lanes for %d object in %.3f s."
 msgid_plural "Charted safe lanes for %d objects in %.3f s."
