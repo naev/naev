@@ -44,8 +44,7 @@ npc_portrait["__save"] = true
 function create ()
 
    --Change here to change the planet and the system
-   missys = system.get("Dvaer")
-   mispla = planet.get("Dvaer Prime")
+   mispla, missys = planet.get("Dvaer Prime")
 
    if not misn.claim ( missys ) then
       misn.finish(false)
