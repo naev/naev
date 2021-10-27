@@ -36494,8 +36494,8 @@ msgstr ""
 #: dat/missions/neutral/race1.lua:215
 #: dat/missions/sirius/heretic/heretic2.lua:63
 #, lua-format
-msgid "Land on %s"
-msgstr "%sへ着陸せよ。"
+msgid "Land on {pnt}"
+msgstr "{pnt}へ着陸せよ。"
 
 #. In order not to have two pilots with the same name
 #: dat/missions/dvaered/championship.lua:123

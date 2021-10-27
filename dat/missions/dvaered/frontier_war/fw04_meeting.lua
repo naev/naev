@@ -107,7 +107,7 @@ function accept()
    "This is why Major Tam wants our squadron from the Special Operations Forces to support the regular units of the station. Fly to Dvaer Prime and meet me in the bar there."]]))
 
    misn.accept()
-   misn.osdCreate( _("The Meeting"), {_("Land on %s"):format(destpla:name())} )
+   misn.osdCreate( _("The Meeting"), {fmt.f(_("Land on {pnt}"), {pnt=destpla})} )
    misn.setDesc(_("You are part of the space security service for an extraordinary meeting of the high council of Warlords, where the invasion plan of the frontier will be discussed."))
    misn.setReward(_("The greatness of House Dvaered."))
    misn.markerAdd(destsys, "low")
@@ -523,7 +523,7 @@ function hamelsenLanded()
    After this very encouraging speech, Hamelsen cuts off the communication channel and lands.]]), {player=player.name()}) )
       tk.msg( _("Follow her!"), fmt.f(_([[A new message comes from Captain Leblanc. "This is obviously a diversion! Everyone, back to your positions! {player}, go and investigate on {pnt}. Bring me the head of the ex-colonel Hamelsen!"]]), {player=player.name(), pnt=haltpla} ) )
       misn.osdDestroy()
-      misn.osdCreate( _("The Meeting"), {_("Land on %s"):format(haltpla:name()) } )
+      misn.osdCreate( _("The Meeting"), {fmt.f(_("Land on {pnt}"), {pnt=haltpla}) } )
    end
 end
 
@@ -666,6 +666,6 @@ function killerDied()
       stage = 4
       tk.msg( _("Rid of them!"), _("As the last enemy ship explodes, you watch to your sensorscreen, and notice that the alpha squadron has left the system. The fleet leader orders you to land on Dvaer Prime.") )
       misn.osdDestroy()
-      misn.osdCreate( _("The Meeting"), {_("Land on %s"):format(destpla:name())} )
+      misn.osdCreate( _("The Meeting"), {fmt.f(_("Land on {pnt}"), {pnt=destpla})} )
    end
 end

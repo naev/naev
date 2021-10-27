@@ -60,7 +60,7 @@ function accept()
       misn.markerAdd(homesys,"high")
       misn.osdCreate(_("The Patrol"), {
          _("Destroy the Sirius patrol"),
-         _("Land on %s"):format( homeasset:name() ),
+         fmt.f(_("Land on {pnt}"), {pnt=homeasset} ),
       })
       misn.osdActive(1)
       hook.takeoff("takeoff")

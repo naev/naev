@@ -61,8 +61,8 @@ function create ()
       misn.setDesc( string.format(_("Check for survivors on %s in %s"), misn_target:name(), misn_target_sys:name() ))
       tk.msg( _("Collective Extraction"), string.format(_([["We'll send extra forces to %s to try to give you a chance to break through the blockade. You'll have to land on %s and extract our team. Be very careful. This is going to be no walk in the park."]]), misn_target_sys:name(), misn_target:name()) )
       misn.osdCreate(_("Collective Extraction"), {
-         _("Fly to %s"):format(misn_target_sys:name()),
-         _("Land on %s"):format(misn_target:name()),
+         fmt.f(_("Fly to {sys}"), {sys=misn_target_sys}),
+         fmt.f(_("Land on {pnt}"), {pnt=misn_target}),
          _("Return to %s"):format(misn_base:name()),
       })
 

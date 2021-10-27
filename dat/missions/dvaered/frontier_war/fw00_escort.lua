@@ -74,7 +74,7 @@ function accept()
    tk.msg(_("Instructions"), fmt.f(_([[Tam seems satisfied with your answer. "I am going to pay a visit to three warlords, for military coordination reasons. They will be waiting for me in their respective Goddards in the systems {sys1}, {sys2} and {sys3}. I need you to stick to my Vendetta and engage any hostile who could try to intercept me."]]), {sys1=destsys1, sys2=destsys2, sys3=destsys3}))
 
    misn.accept()
-   misn.osdCreate( _("Dvaered Escort"), {_("Escort Major Tam"), _("Land on %s"):format(destpla1:name())} )
+   misn.osdCreate( _("Dvaered Escort"), {_("Escort Major Tam"), fmt.f(_("Land on {pnt}"), {pnt=destpla1})} )
    misn.setDesc(_("You agreed to escort a senior officer of the Dvaered High Command who is visiting three warlords."))
    misn.setReward(_("Dvaered never talk about money."))
    mark1 = misn.markerAdd(destsys1, "low")
@@ -128,7 +128,7 @@ function enter()
       majorTam:land(fleepla)
       stage = 4
       misn.osdDestroy()
-      misn.osdCreate( _("Dvaered Escort"), {_("Escort Major Tam"), _("Land on %s"):format(fleepla:name())} )
+      misn.osdCreate( _("Dvaered Escort"), {_("Escort Major Tam"), fmt.f(_("Land on {pnt}"), {pnt=fleepla})} )
       misn.osdActive(2)
 
    elseif stage == 5 then  -- Travel to third rendezvous
@@ -240,13 +240,13 @@ function land() -- The player is only allowed to land on special occasions
    if stage == 1 then
       stage = 2
       misn.osdDestroy()
-      misn.osdCreate( _("Dvaered Escort"), {_("Escort Major Tam"), _("Land on %s"):format(destpla2:name())} )
+      misn.osdCreate( _("Dvaered Escort"), {_("Escort Major Tam"), fmt.f(_("Land on {pnt}"), {pnt=destpla2})} )
       misn.markerRm(mark1)
       mark2 = misn.markerAdd(destsys2, "low")
    elseif stage == 4 then
       stage = 5
       misn.osdDestroy()
-      misn.osdCreate( _("Dvaered Escort"), {_("Escort Major Tam"), _("Land on %s"):format(destpla3:name())} )
+      misn.osdCreate( _("Dvaered Escort"), {_("Escort Major Tam"), fmt.f(_("Land on {pnt}"), {pnt=destpla3})} )
       misn.markerRm(mark2)
       mark3 = misn.markerAdd(destsys3, "low")
    elseif stage == 8 then
