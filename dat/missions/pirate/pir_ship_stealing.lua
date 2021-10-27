@@ -18,8 +18,7 @@
 </mission>
 --]]
 --[[
-
--- The player pays a fellow pirate to know where to steal a random ship.
+   The player pays a fellow pirate to know where to steal a random ship.
 
    The player pays to get the position of a ship on a random planet of a random
    faction. When he gets there, the planet is guarded (which means he may have
@@ -131,13 +130,12 @@ ships = {
 }
 
 classes = {}
-
 for k,v in pairs(ships) do
-classes[k] = {}
+   classes[k] = {}
 
-for k2,v2 in pairs(v) do
-classes[k][#classes[k]+1] = k2
-end
+   for k2,v2 in pairs(v) do
+      classes[k][#classes[k]+1] = k2
+   end
 end
 
 function price(class)
