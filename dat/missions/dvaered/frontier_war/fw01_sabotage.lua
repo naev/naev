@@ -63,14 +63,14 @@ function create()
 end
 
 function accept()
-   if not tk.yesno( _("Ready for another mission?"), _([[You sit at Tam's table and wait for him to speak. "Hello, citizen %s. You remember Lord Battleaddict, the old warlord who tried to kill us twice? I have good news: with a few other members of the Space Force, we found a way to make him regret what he did, and we need a civilian pilot, like you. Are you in?"]]):format(player.name()) ) then
+   if not tk.yesno( _("Ready for another mission?"), fmt.f(_([[You sit at Tam's table and wait for him to speak. "Hello, citizen {player}. You remember Lord Battleaddict, the old warlord who tried to kill us twice? I have good news: with a few other members of the Space Force, we found a way to make him regret what he did, and we need a civilian pilot, like you. Are you in?"]]), {player=player.name()}) ) then
       tk.msg(_("Refusal"), _([["Alight, citizen, see you later, then."]]))
       misn.finish(false)
    end
    tk.msg(_("The plan"), _([["I knew you would accept!" Says Major Tam. "Here is the situation:
    "The general I am working for, General Klank, is in charge of... hem... in charge of a crucial operation the High Command wants to carry out. This operation will involve troops of the High Command, but also Warlords, including Battleaddict. The problem is that General Klank and Lord Battleaddict disagree on everything about this plan. As a consequence, they are going to have a Goddard duel, which is usually what happens when two important Dvaered generals have deep disagreements."]]))
-   tk.msg(_("The plan"), _([["The problem is that Battleaddict's plan is far too stupid. It would weaken the Dvaered Nation in the long run and leave us at the mercy of all the other nations around us, that are waiting for us to show a sign of weakness in order to attack us and impose their iniquitous and obsolete political system on our citizenry." Tam takes a deep breath and looks at you in the eyes. "You don't know, citizen, all the dreadful enemies who are waiting in the shadows, their hearts filled with hatred against House Dvaered. Sometimes I look at the constellated sky and I wonder. I wonder why the Dvaered Nation has to be the only threatened islet of justice and compassion in this... in this Sea of Darkness.
-   "Hey, citizen! But I have good news! We won't fall to the Barbarian hordes! Because I myself, Major Archibald Tam, I have a plan. We will make sure that Lord Battleaddict loses his duel. Please note however that if the very existence of House Dvaered was not threatened, we would never allow ourselves to interfere in a honorable duel between two respectable gentlemen. Go to %s in %s and meet Captain Hamfresser. (His portrait is attached in the data I will give you.) He will explain the details. It is very important that you use a civilian ship that can transport at least %s of cargo."]]):format(hampla:name(), hamsys:name(), fmt.tonnes(bombMass)))
+   tk.msg(_("The plan"), fmt.f(_([["The problem is that Battleaddict's plan is far too stupid. It would weaken the Dvaered Nation in the long run and leave us at the mercy of all the other nations around us, that are waiting for us to show a sign of weakness in order to attack us and impose their iniquitous and obsolete political system on our citizenry." Tam takes a deep breath and looks at you in the eyes. "You don't know, citizen, all the dreadful enemies who are waiting in the shadows, their hearts filled with hatred against House Dvaered. Sometimes I look at the constellated sky and I wonder. I wonder why the Dvaered Nation has to be the only threatened islet of justice and compassion in this... in this Sea of Darkness.
+   "Hey, citizen! But I have good news! We won't fall to the Barbarian hordes! Because I myself, Major Archibald Tam, I have a plan. We will make sure that Lord Battleaddict loses his duel. Please note however that if the very existence of House Dvaered was not threatened, we would never allow ourselves to interfere in a honorable duel between two respectable gentlemen. Go to {pnt} in {sys} and meet Captain Hamfresser. (His portrait is attached in the data I will give you.) He will explain the details. It is very important that you use a civilian ship that can transport at least {tonnes} of cargo."]]), {pnt=hampla, sys=hamsys, tonnes=fmt.tonnes(bombMass)}))
 
    misn.accept()
    misn.setDesc(_("You have to sabotage Lord Battleaddict's cruiser in order to ensure General Klank's victory at a duel."))
@@ -78,7 +78,11 @@ function accept()
 
    stage = 0
    hook.land("land")
-   misn.osdCreate( _("Dvaered Sabotage"), {_("Pick up Hamfresser in %s in %s. Use a civilian ship with at least %s of free cargo"):format(hampla:name(), hamsys:name(), fmt.tonnes(bombMass)), _("Meet Battleaddict around %s in %s"):format(sabotpla:name(), sabotsys:name()), _("Deposit Hamfresser on %s in %s"):format(duelpla:name(), duelsys:name())} )
+   misn.osdCreate( _("Dvaered Sabotage"), {
+      fmt.f(_("Pick up Hamfresser in {pnt} in {sys}. Use a civilian ship with at least {tonnes} of free cargo"), {pnt=hampla, sys=hamsys, tonnes=fmt.tonnes(bombMass)}),
+      fmt.f(_("Meet Battleaddict around {pnt} in {sys}"), {pnt=sabotpla, sys=sabotsys}),
+      fmt.f(_("Deposit Hamfresser on {pnt} in {sys}"), {pnt=duelpla, sys=duelsys}),
+   } )
    mark = misn.markerAdd(hamsys, "low")
 end
 
@@ -103,12 +107,12 @@ end
 
 function hamfresser()
    if (player.pilot():cargoFree() >= bombMass) then
-      tk.msg( _("New passengers"), _([["H... hi", you say, waving timidly. "Are you Captain Hamfresser?". The soldier answers "Of course, as it is written on my name tag." Showing a small label on his chest, where stay the letters "Hamfresser", beside his Captain's insignia and the logo of the Dvaered Space Infantry (a mace of arms with wings). Hamfresser looks at you from top to bottom "You're the private pilot, right? Tell me your ship's dock number, and I'll meet you there. Oh, and please make room for %s of cargo."
-   The captain then gets up, delicately puts his empty glass on the counter, and goes away. While his hair scratches the ceiling, you wonder if %s are enough for him. When you arrive at the dock, you see Hamfresser, with five other soldiers and two androids that load a huge and strange machine into your ship. "Hey" you say "What are you doing with your... your death machine?" Hamfresser approaches and answers at low voice "But, mate, this is not a death machine, It's just a bomb. Or even a bomblet."]]):format(fmt.tonnes(bombMass), fmt.tonnes(bombMass)) )
+      tk.msg( _("New passengers"), fmt.f(_([["H... hi", you say, waving timidly. "Are you Captain Hamfresser?". The soldier answers "Of course, as it is written on my name tag." Showing a small label on his chest, where stay the letters "Hamfresser", beside his Captain's insignia and the logo of the Dvaered Space Infantry (a mace of arms with wings). Hamfresser looks at you from top to bottom "You're the private pilot, right? Tell me your ship's dock number, and I'll meet you there. Oh, and please make room for {tonnes} of cargo."
+   The captain then gets up, delicately puts his empty glass on the counter, and goes away. While his hair scratches the ceiling, you wonder if {tonnes} are enough for him. When you arrive at the dock, you see Hamfresser, with five other soldiers and two androids that load a huge and strange machine into your ship. "Hey" you say "What are you doing with your... your death machine?" Hamfresser approaches and answers at low voice "But, mate, this is not a death machine, It's just a bomb. Or even a bomblet."]]), {tonnes=fmt.tonnes(bombMass)}) )
       tk.msg( _("New passengers"), _([["Very well" you acquiesce. "Do what you have to do". Once the cargo is loaded and the team has taken their places in the cabin, you start to talk with the captain. "And I suppose this bomblet is destined for Battleaddict's Goddard. How are we supposed to put it there? Are we going to pretend it's a gift from the High Command to his granddaughter?". Hamfresser looks at you surprised. "No... that's not what the Major... do you think it could work?" You realize it would take too long to explain that it was a sarcastic comment (assuming that this guy knew what sarcasm is) and simply ask him to explain the major's plan.
    "Last period, we intercepted a message from Battleaddict to a plumber. His cruiser has issues with sewage disposal and he requested an intervention. So we abducted the plumber and we disguised an EMP bomb as a sewage emptier. We will dock with his ship, plant the bomb, repair the breakdown (so he won't suspect us) and go away. Private Ling here is a Goddard-plumber, so she will lead us." A young and smiling soldier raises her hand, saying "Hi".]]) )
-      tk.msg( _("New passengers"), _([[While you wonder whether the plan is awesomely brilliant or dead stupid, Hamfresser begins the introductions. "This is Sergeant Nikolov, she is my second in command, this is Private Tronk, from my squad, and Corporal Therus, our medical support. Oh, and the guy in his corner over there is Lieutenant Strafer. He is a pilot from the Special Operations. He is here in case we need to switch to plan B." As you ask what plan B is, Hamfresser simply answers, "you don't want to switch to plan B.
-   "As usual, Lord Battleaddict's cruiser should be in orbit around %s in %s".]]):format(sabotpla:name(), sabotsys:name()) )
+      tk.msg( _("New passengers"), fmt.f(_([[While you wonder whether the plan is awesomely brilliant or dead stupid, Hamfresser begins the introductions. "This is Sergeant Nikolov, she is my second in command, this is Private Tronk, from my squad, and Corporal Therus, our medical support. Oh, and the guy in his corner over there is Lieutenant Strafer. He is a pilot from the Special Operations. He is here in case we need to switch to plan B." As you ask what plan B is, Hamfresser simply answers, "you don't want to switch to plan B.
+   "As usual, Lord Battleaddict's cruiser should be in orbit around {pnt} in {sys}".]]), {pnt=sabotpla, sys=sabotsys}) )
       stage = 1
       hook.enter("enter")
       local c = misn.cargoNew( N_("Bomb"), N_("A gift from the High Command to Lord Battleaddict.") )
@@ -119,7 +123,7 @@ function hamfresser()
       mark = misn.markerAdd(sabotsys, "low")
       player.takeoff()
    else
-      tk.msg(_("Not enough free space"), _("Your ship does not have enough free space. Come back with %s free."):format(fmt.tonnes(bombMass)))
+      tk.msg(_("Not enough free space"), fmt.f(_("Your ship does not have enough free space. Come back with {tonnes} free."), {tonnes=fmt.tonnes(bombMass)}))
    end
 end
 
@@ -165,7 +169,10 @@ function enter()
       hook.timer(2.0, "enter2_message")
       stage = 3
       misn.osdDestroy()
-      misn.osdCreate( _("Dvaered Sabotage"), {_("Go to %s, approach %s and wait for the Phalanx"):format(intsys:name(), intpla:name()), _("Disable and board the Phalanx"), _("Report back on %s in %s"):format(duelpla:name(), duelsys:name())} )
+      misn.osdCreate( _("Dvaered Sabotage"), {
+         fmt.f(_("Go to {sys}, approach {pnt} and wait for the Phalanx"), {sys=intsys, pnt=intpla}),
+         _("Disable and board the Phalanx"),
+         fmt.f(_("Report back on {pnt} in {sys}"), {pnt=duelpla, sys=duelsys})} )
       mark = misn.markerAdd(intsys, "low")
 
    elseif stage == 3 and system.cur() == intsys then
@@ -252,13 +259,13 @@ function equipGoddard( pilot, repeating )
 end
 
 function enter1_message()
-   tk.msg(_("Not far from the goal"), _([[As you finish your jump, Lieutenant Strafer approaches to your radar screen "Battleaddict's Goddard should be around %s. I guess he should be at adding nanobond plating and repeating railguns everywhere possible by now. There should be a few patrol ships around him that will control our security clearance." Hamfresser gives instructions to the team: "Everyone put your plumber suit on, Nikolov, switch the decoder on, so that we will monitor the transmissions of the escort ships. It could tell us if we're detected."]]):format(sabotpla:name()))
+   tk.msg(_("Not far from the goal"), fmt.f(_([[As you finish your jump, Lieutenant Strafer approaches to your radar screen "Battleaddict's Goddard should be around {pnt}. I guess he should be at adding nanobond plating and repeating railguns everywhere possible by now. There should be a few patrol ships around him that will control our security clearance." Hamfresser gives instructions to the team: "Everyone put your plumber suit on, Nikolov, switch the decoder on, so that we will monitor the transmissions of the escort ships. It could tell us if we're detected."]]), {pnt=sabotpla}))
 end
 
 function enter2_message()
-   tk.msg(_("We're safe now"), _([[Once the ship recovers its normal speed after jumping, Hamfresser says: "Strange, I wouldn't have believed we'd survive this one. Would you, Strafer?" The lieutenant answers "I agree, captain. I guess we've got a good pilot." As you ask them why they were not scared then, Hamfresser answers: "Of course we were scared, who would not be? But we are trained not to show our fear, it tends to distract the pilots."
-   A few seconds later, you receive an encoded inter-system message from Major Tam: "The plan A has leaked. Please do switch to plan C. Do not jump in %s by any means. For information, the leak is under control and the source has been dealt with." The voice makes a pause and continues: "I really hope this messages catches you before you enter %s. Otherwise, may Dvaerius, the patron saint of mace rockets, have mercy on your souls..." "Good old Tamtam," Hamfresser says smiling, "he always worries too much for us."]]):format(sabotsys:name(), sabotsys:name()))
-   tk.msg(_("Plan C"), _([["All right, everyone, we're now heading to %s in %s. According to our intelligence, there should be a Phalanx from Battleaddict's fleet that will take off from there soon. Its name is 'Gorgon'. They are on their way back in a transport mission. According to the analysts, there should be enough free space in this ship for our bomb. We will disable the ship, neutralize the pilot and load our material. After that, %s will report back to the Major on %s and the rest of the team will execute the rest of the plan. I or Sergeant Nikolov will brief you once in the Phalanx."]]):format(intpla:name(), intsys:name(), player.name(), duelpla:name()))
+   tk.msg(_("We're safe now"), fmt.f(_([[Once the ship recovers its normal speed after jumping, Hamfresser says: "Strange, I wouldn't have believed we'd survive this one. Would you, Strafer?" The lieutenant answers "I agree, captain. I guess we've got a good pilot." As you ask them why they were not scared then, Hamfresser answers: "Of course we were scared, who would not be? But we are trained not to show our fear, it tends to distract the pilots."
+   A few seconds later, you receive an encoded inter-system message from Major Tam: "The plan A has leaked. Please do switch to plan C. Do not jump in {sys} by any means. For information, the leak is under control and the source has been dealt with." The voice makes a pause and continues: "I really hope this messages catches you before you enter {sys}. Otherwise, may Dvaerius, the patron saint of mace rockets, have mercy on your souls..." "Good old Tamtam," Hamfresser says smiling, "he always worries too much for us."]]), {sys=sabotsys}))
+   tk.msg(_("Plan C"), fmt.f(_([["All right, everyone, we're now heading to {pnt} in {sys}. According to our intelligence, there should be a Phalanx from Battleaddict's fleet that will take off from there soon. Its name is 'Gorgon'. They are on their way back in a transport mission. According to the analysts, there should be enough free space in this ship for our bomb. We will disable the ship, neutralize the pilot and load our material. After that, {player} will report back to the Major on {duel_pnt} and the rest of the team will execute the rest of the plan. I or Sergeant Nikolov will brief you once in the Phalanx."]]), {pnt=intpla, sys=intsys, player=player.name(), duel_pnt=duelpla}))
 end
 
 -- Battleaddict agrees for the player to approach
@@ -275,9 +282,9 @@ end
 
 -- Battleaddict sees that the player is not a plumber
 function killing()
-   tk.msg(_("That could have worked"), _([[While approaching, you start to distinguish better the surface of the cruiser. You see a dozen of shuttles that transport material and tools form the planet to the ship, and when getting closer, you remark that the cruiser looks like an huge construction site with workers in spacesuits who are welding nanobond reinforcement plates on the hull. You hear behind you the chatter of the escort ships, that Hamfresser and his team are anxiously listening to: "Hey, Zog, I'm getting concerned about my daughter, her teacher told me she was non-violent with her classmates, do you think I should see a specialist?" "Meh, I don't know, honestly. The new holomovies are to blame, there is always less violence and more love in there. The government should take measures."
+   tk.msg(_("That could have worked"), fmt.f(_([[While approaching, you start to distinguish better the surface of the cruiser. You see a dozen of shuttles that transport material and tools form the planet to the ship, and when getting closer, you remark that the cruiser looks like an huge construction site with workers in spacesuits who are welding nanobond reinforcement plates on the hull. You hear behind you the chatter of the escort ships, that Hamfresser and his team are anxiously listening to: "Hey, Zog, I'm getting concerned about my daughter, her teacher told me she was non-violent with her classmates, do you think I should see a specialist?" "Meh, I don't know, honestly. The new holomovies are to blame, there is always less violence and more love in there. The government should take measures."
    Suddenly, a message makes everyone come to a halt: "So, Colonel, when do we blow those fake plumbers out? I look forward to using my shredders a bit!" "Shut up, Corporal!" "Oah, come on, I'm on the encoded channel. Plumbers are unable to break our code." "But they're NOT plumbers, stupid!"
-   Hamfresser looks at you, and simply declares "We abort the mission. Get us out of that system, %s!" Strangely enough, none of the soldiers seem to show any signs of panic.]]):format(player.name()))
+   Hamfresser looks at you, and simply declares "We abort the mission. Get us out of that system, {player}!" Strangely enough, none of the soldiers seem to show any signs of panic.]]), {player=player.name()}))
    release_baddies()
    stage = 2
 
@@ -351,8 +358,8 @@ end
 
 function phalanx_boarded()
    hook.rm(pboarded)
-   tk.msg( _("Boarding"), _([[All the members of the commando have put on their battle suits. Hamfresser gives the last orders. "Nikolov, Tronk and I will enter first and clean the area. Remember that we don't have our usual Dudley combat androids, we're stuck with the two useless plumber bots and the few security droids of %s's ship. As much to say, we'll have to work by hand. I recall for everyone that corvettes are typically protected by a few 629 Spitfires and an occasional 711 Grillmeister. That's not very much, but still enough to send the inattentive soldier ad patres."
-   When the corvette's airlock falls under Nikolov's circular saw, the captain waves and the small team enters the ship. You then hear shots and explosions coming from further and further in the enemy ship. Finally, you hear a laconic message coming from the disabled corvette: "Strafer here, everything went well. We transfer now the cargo into the Phalanx... All right, the maneuver is finished, you may leave." Happy to have survived the operation so far, you start your engines and respond "Good luck, folks!". The lieutenant answers "Thanks, citizen, I'm glad I've met you."]]):format(player.name()) )
+   tk.msg( _("Boarding"), fmt.f(_([[All the members of the commando have put on their battle suits. Hamfresser gives the last orders. "Nikolov, Tronk and I will enter first and clean the area. Remember that we don't have our usual Dudley combat androids, we're stuck with the two useless plumber bots and the few security droids of {player}'s ship. As much to say, we'll have to work by hand. I recall for everyone that corvettes are typically protected by a few 629 Spitfires and an occasional 711 Grillmeister. That's not very much, but still enough to send the inattentive soldier ad patres."
+   When the corvette's airlock falls under Nikolov's circular saw, the captain waves and the small team enters the ship. You then hear shots and explosions coming from further and further in the enemy ship. Finally, you hear a laconic message coming from the disabled corvette: "Strafer here, everything went well. We transfer now the cargo into the Phalanx... All right, the maneuver is finished, you may leave." Happy to have survived the operation so far, you start your engines and respond "Good luck, folks!". The lieutenant answers "Thanks, citizen, I'm glad I've met you."]]), {player=player.name()}) )
    stage = 5
    misn.cargoRm(bomblet)
 
@@ -380,8 +387,8 @@ function phalanx_safe()
 end
 
 function majorTam()
-   tk.msg( _("Ready to attend to the show?"), _([[As you sit at the table, Tam starts to speak: "I got a message from Captain Hamfresser. Apparently, everything went according to the plan this time. They should have docked with the Goddard, allegedly to add their mission log to the central database. Then they planted the bomb in the plumbing, close to the central unit, and they faked an accident while landing on %s. I guess they should be hiking somewhere on the planet's surface by now, looking for the opportunity to steal an unfortunate civilian's Llama in order to make their trip back.
-   "Our boss, the General Klank, is ready for the duel. The Captain and I are his duel witnesses, so we should be joining our pageantry ships by now. Oh, and the duel commissioner is someone you already know, the Colonel Urnus. In about a period, Lord Battleaddict should arrive, so if you take off soon, you will see the duel."]]):format(sabotpla:name()) )
+   tk.msg( _("Ready to attend to the show?"), fmt.f(_([[As you sit at the table, Tam starts to speak: "I got a message from Captain Hamfresser. Apparently, everything went according to the plan this time. They should have docked with the Goddard, allegedly to add their mission log to the central database. Then they planted the bomb in the plumbing, close to the central unit, and they faked an accident while landing on {pnt}. I guess they should be hiking somewhere on the planet's surface by now, looking for the opportunity to steal an unfortunate civilian's Llama in order to make their trip back.
+   "Our boss, the General Klank, is ready for the duel. The Captain and I are his duel witnesses, so we should be joining our pageantry ships by now. Oh, and the duel commissioner is someone you already know, the Colonel Urnus. In about a period, Lord Battleaddict should arrive, so if you take off soon, you will see the duel."]]), {pnt=sabotpla}) )
    stage = 6
 
    misn.osdDestroy()
@@ -507,8 +514,8 @@ end
 
 -- Epilogue
 function endMisn()
-   tk.msg( _("A good thing done"), _([[As you approach, the major tells the General Klank that you are the private pilot they had hired recently. "I see," says the general "so you are part of the people I have to thank for still being alive now." You answer that he apparently would not have needed help if Battleaddict had not cheated as well, and he responds: "Damn fake electricians; I should have suspected something. Anyway, citizen, rest assured that we will need your services again." A group of generals then approaches and congratulate Klank. He stands up and goes away with them, loudly exchanging dubious pleasantries with them.
-   Major Tam then speaks to you: "Apparently, Battleaddict had got a commando unit to dress like electricians and to hide an EMP bomb in the General's Goddard, that exploded during the fight, just like our own bomb. And now, both ships have their systems ruined. Well, anyway, thank you for your help, here are %s for you!"]]):format(fmt.credits(fw.credits_01)) )
+   tk.msg( _("A good thing done"), fmt.f(_([[As you approach, the major tells the General Klank that you are the private pilot they had hired recently. "I see," says the general "so you are part of the people I have to thank for still being alive now." You answer that he apparently would not have needed help if Battleaddict had not cheated as well, and he responds: "Damn fake electricians; I should have suspected something. Anyway, citizen, rest assured that we will need your services again." A group of generals then approaches and congratulate Klank. He stands up and goes away with them, loudly exchanging dubious pleasantries with them.
+   Major Tam then speaks to you: "Apparently, Battleaddict had got a commando unit to dress like electricians and to hide an EMP bomb in the General's Goddard, that exploded during the fight, just like our own bomb. And now, both ships have their systems ruined. Well, anyway, thank you for your help, here are {credits} for you!"]]), {credits=fmt.credits(fw.credits_01)}) )
    player.pay(fw.credits_01)
    shiplog.create( "dvaered_military", _("Dvaered Military Coordination"), _("Dvaered") )
    shiplog.append( "dvaered_military", _("Major Tam's superior, General Klank, made a Goddard duel with Lord Battleaddict. You took part in an operation to sabotage Battleaddict's cruiser. Lord Battleaddict sabotaged Klank's cruiser as well, but at the end of the day, General Klank won the duel.") )

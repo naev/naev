@@ -66,8 +66,6 @@ lords_chatter = { _("Ahoy, suckers! Here comes the master!"),
                   _("Make way for the supplier of Hell!"),
                   _("Death is the destination of everyone's trip. Pissing me off means taking a shortcut."), }
 
-order_control = _("A-NightClaws Leader to %s: intercept %s and control their security clearance code")
-
 -- This might be hard to translate, but that is not a problem IMHO as it is actually supposed to be an automatically generated message.
 
 occupations = { _("caterer"),
@@ -132,7 +130,10 @@ function land()
       takhook = hook.takeoff("takeoff")
       stage = 1
       misn.osdDestroy()
-      misn.osdCreate( _("The Meeting"), {_("Stay close to %s and wait for orders"):format(targpla:name()), _("Intercept suspect ship for visual identification") } )
+      misn.osdCreate( _("The Meeting"), {
+         fmt.f(_("Stay close to {pnt} and wait for orders"), {pnt=targpla}),
+         _("Intercept suspect ship for visual identification"),
+      } )
 
    -- Player is running away
    elseif (stage == 1 or stage == 3 or (stage == 2 and (not planet.cur() == haltpla) )) then
@@ -148,9 +149,9 @@ function land()
       tk.msg( _("Time for a gorgeous reward?"), _([[At the very moment you step out of your ship, you see an officer, alone on the dock, obviously waiting for you. After having moved forward, you recognize the Major Tam. The cold wind unfolds the lapels of his coat, and make it whip his sad face.
    "We had better days, isn't it, citizen? A spy managed to run away with what seems to be a copy of our invasion plan, they killed one of my best pilots and Hamelsen escaped... Once more." Tam looks at the sky that starts to rain "... and it's winter on the spacedock of Dvaer Prime. Shall we enter the building? I was told that the chemical plant works twice more in winter, and the rain often turns acid."
    You enter and head to the military bar. Tam looks at you: "I've grown up on Nanek in Allous. For 13 years, the only part of the universe I used to know was my village on Nanek, and the only people I used to know were its inhabitants. And now, I've seen hundreds of planets, and thousands of people all around the galaxy. But most of them have been killed at some point, and they corpses are drifting here and there in space, along with the pitiful remains of their defeated ships. The night sky is constellated with the souls of dead pilots. Our control of space gave us access to experiences our forefathers could not even dream of, but you know what? No matter how cold the graves of my ancestors on Nanek are, they are warmer than the emptiness of infinite space."]]), ("portraits/" .. fw.portrait_tam) )
-      tk.msg( _("Time for a gorgeous reward?"), _([[You start wondering if the major will remember to pay you, but his voice suddenly changes: "We definitely had better days, but you know, the true valor of a warrior reveals itself in times of adversity. The dark clouds that drift above the horizon, pushed by the cruel wings of despair, are here to challenge the strength of our Dvaered souls. And it is up to us to accept this challenge.
+      tk.msg( _("Time for a gorgeous reward?"), fmt.f(_([[You start wondering if the major will remember to pay you, but his voice suddenly changes: "We definitely had better days, but you know, the true valor of a warrior reveals itself in times of adversity. The dark clouds that drift above the horizon, pushed by the cruel wings of despair, are here to challenge the strength of our Dvaered souls. And it is up to us to accept this challenge.
    "I did not anticipate that the traitor Hamelsen could reconstruct her group of mercenaries so fast, but you already killed some of them, and Leblanc's squadron will kill even more in the near future. We will then hunt the ex-colonel Hamelsen down, and finally we will carry this invasion on.
-   "Anyway, for now, we will transfer %s to your account, as a reward for this mission, and be certain that we will need you again soon!"]]):format(fmt.credits(reward)), ("portraits/" .. fw.portrait_tam) )
+   "Anyway, for now, we will transfer {credits} to your account, as a reward for this mission, and be certain that we will need you again soon!"]]), {credits=fmt.credits(reward)}), ("portraits/" .. fw.portrait_tam) )
       player.pay(reward)
 
       local t = time.get():tonumber()
@@ -202,7 +203,10 @@ function takeoff()
       hook.timer( 4.0, "deathOfStrafer" )
 
       misn.osdDestroy()
-      misn.osdCreate( _("The Meeting"), {_("Stay close to %s and wait for orders"):format(targpla:name()), _("Intercept suspect ship for visual identification") } )
+      misn.osdCreate( _("The Meeting"), {
+         fmt.f(_("Stay close to {pnt} and wait for orders"), {pnt=targpla}),
+         _("Intercept suspect ship for visual identification"),
+      } )
    end
 end
 
@@ -412,7 +416,7 @@ end
 -- A ship approaches from DHC: assign it to player
 function incomingControl( self )
    audio.soundPlay( "jump" )
-   alpha[1]:comm( order_control:format( player.name(), self:name() ) )
+   alpha[1]:comm( fmt.f(_("A-NightClaws Leader to {player}: intercept {pltname} and control their security clearance code"), {player=player.name(), pltname=self:name()} ) )
    self:setHilight()
    self:setVisible()
    n2control = n2control + 1
@@ -442,7 +446,7 @@ end
 -- Player checks security clearance of a ship
 function checkClearance( self )
    myjob = occupations[ rnd.rnd(1,#occupations) ]
-   tk.msg( _("Controlling incoming ship"), _([[As you approach the ship, your targeting array focuses on it, and its clearance code gets processed. You can soon read on your control pad: "This citizen is an honorable %s whose presence is required for the meeting: let the ship land on the station."]]):format(myjob) )
+   tk.msg( _("Controlling incoming ship"), fmt.f(_([[As you approach the ship, your targeting array focuses on it, and its clearance code gets processed. You can soon read on your control pad: "This citizen is an honorable {job} whose presence is required for the meeting: let the ship land on the station."]]), {job=myjob}) )
    self:setHilight( false )
 
    -- Change osd if needed
@@ -512,12 +516,12 @@ function hamelsenLanded()
       tk.msg( _("An unidentified ship landed on the station"), _("A ship managed to land on the station, and you failed to control it. Unidentified and potentially hostile individuals have entered the Dvaered High Command station: The mission is a failure.") )
       misn.finish(false)
    else -- Landing on Laarss: indicate the player he has to follow her
-      tk.msg( _("Hi there!"), _([[The fleeing ship suddenly hails you. You answer and the face of the Colonel Hamelsen emerges from your holoscreen. "No, you won't best me, %s. Not this time. Not anymore." Aware that she is now too far away for you to hope to catch her, you ask her what interest she finds in constantly harassing Major Tam. "This is all that I have left," she answers.
+      tk.msg( _("Hi there!"), fmt.f(_([[The fleeing ship suddenly hails you. You answer and the face of the Colonel Hamelsen emerges from your holoscreen. "No, you won't best me, {player}. Not this time. Not anymore." Aware that she is now too far away for you to hope to catch her, you ask her what interest she finds in constantly harassing Major Tam. "This is all that I have left," she answers.
    "My hate for Tam and Klank is all that remains now that my Lord is dead. I dedicated my entire life to the greatness of House Dvaered, I practiced and sharpened all my skills to serve the Army at best. When I got recruited by Lord Battleaddict, I became faithful to him because he was giving me the opportunity to serve House Dvaered through him. And then...
    "Since the day when Klank assassinated my Lord, I have been rejected by the High Command. Rejected by the Warlords. Rejected by that nation that claims to reward Valor and Righteousness. Tell me when I have given up Valor! Tell me when I have given up Righteousness! Never! The Dvaered social contract is broken as far as I am concerned.
    "All that remains of me is a vassal without suzerain, a colonel without regiment, a corpse without grave. I will haunt you until your demise. I will be in the way of any of your wishes, big ones as well as small ones. There will be no forgiveness, no remission, no relief, neither for you nor for me."
-   After this very encouraging speech, Hamelsen cuts off the communication channel and lands.]]):format( player.name() ) )
-      tk.msg( _("Follow her!"), _([[A new message comes from Captain Leblanc. "This is obviously a diversion! Everyone, back to your positions! %s, go and investigate on %s. Bring me the head of the ex-colonel Hamelsen!"]]):format( player.name(), haltpla:name() ) )
+   After this very encouraging speech, Hamelsen cuts off the communication channel and lands.]]), {player=player.name()}) )
+      tk.msg( _("Follow her!"), fmt.f(_([[A new message comes from Captain Leblanc. "This is obviously a diversion! Everyone, back to your positions! {player}, go and investigate on {pnt}. Bring me the head of the ex-colonel Hamelsen!"]]), {player=player.name(), pnt=haltpla} ) )
       misn.osdDestroy()
       misn.osdCreate( _("The Meeting"), {_("Land on %s"):format(haltpla:name()) } )
    end
@@ -526,7 +530,7 @@ end
 -- Hamelsen is in range: do as usual
 function incomingHamelsen()
    audio.soundPlay( "jump" )
-   alpha[1]:comm( order_control:format( player.name(), hamelsen:name() ) )
+   alpha[1]:comm( fmt.f(_("A-NightClaws Leader to {player}: intercept {pltname} and control their security clearance code"), {player=player.name(), pltname=hamelsen:name()} ) )
    hamelsen:setHilight()
    hamelsen:setVisible()
    hook.timer(0.5, "proximity", {anchor = hamelsen, radius = 1000, funcname = ("checkHamelsen")})
@@ -535,7 +539,7 @@ end
 
 -- Player checks security clearance of Hamelsen: let the fun begin
 function checkHamelsen()
-   tk.msg( _("Incoming ship refuses control"), _([[When getting in range, you receive an alarm. This ship does not have an invitation. Suddenly, you see it accelerating as if the pilot wanted to force the blockade around the station. You hear an order from Captain Leblanc: "A-NightClaws Leader to %s: intercept and destroy %s".]]):format( player.name(), hamelsen:name() ) )
+   tk.msg( _("Incoming ship refuses control"), fmt.f(_([[When getting in range, you receive an alarm. This ship does not have an invitation. Suddenly, you see it accelerating as if the pilot wanted to force the blockade around the station. You hear an order from Captain Leblanc: "A-NightClaws Leader to {player}: intercept and destroy {pltname}".]]), {player=player.name(), pltname=hamelsen:name()} ) )
    hamelsen:setHostile()
    --hamelsen:rename( _("Suspect Hyena") )
 
@@ -551,7 +555,7 @@ function checkHamelsen()
 
    stage = 2
    misn.osdDestroy()
-   misn.osdCreate( _("The Meeting"), {_("Engage %s"):format(hamelsen:name()) } )
+   misn.osdCreate( _("The Meeting"), {fmt.f(_("Engage {pltname}"), {pltname=hamelsen:name()}) } )
 end
 
 -- Discuss with an officer on Laarss
@@ -643,9 +647,9 @@ function spawnKillers()
       hook.pilot( killers[i], "exploded", "killerDied" )
    end
 
-   tk.msg( _("Now, it's your turn"), _([[Your sensors suddenly pick up three hostile signals coming from Laars, just when Captain Leblanc sends her message: "To all A-NightClaw pilots: follow and intercept the hostiles." You report about the three hostiles coming at you and she answers: "%s, take care of those three. Don't let any of them escape."]]):format(player.name()) )
+   tk.msg( _("Now, it's your turn"), fmt.f(_([[Your sensors suddenly pick up three hostile signals coming from Laars, just when Captain Leblanc sends her message: "To all A-NightClaw pilots: follow and intercept the hostiles." You report about the three hostiles coming at you and she answers: "{player}, take care of those three. Don't let any of them escape."]]), {player=player.name()}) )
 
-   hook.timer( 1.0, "message", {pilot = killers[1], msg = _("You fell in our trap, %s!"):format(player.name())} )
+   hook.timer( 1.0, "message", {pilot = killers[1], msg = fmt.f(_("You fell in our trap, {player}!"), {player=player.name()})} )
    hook.timer( 3.0, "message", {pilot = killers[2], msg = _("You're so dead!")} )
    hook.timer( 5.0, "message", {pilot = killers[1], msg = _("Without any support!")} )
    hook.timer( 7.0, "message", {pilot = killers[3], msg = _("Folks, please do less chatting and more killing.")} )
