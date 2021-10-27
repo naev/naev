@@ -392,7 +392,7 @@ function majorTam()
    stage = 6
 
    misn.osdDestroy()
-   misn.osdCreate( _("Dvaered Sabotage"), {_("Attend to the duel"), _("Land on %s"):format(duelpla:name())} )
+   misn.osdCreate( _("Dvaered Sabotage"), {_("Attend to the duel"), fmt.f(_("Land on {pnt}"), {pnt=duelpla})} )
    misn.markerRm(mark)
 end
 

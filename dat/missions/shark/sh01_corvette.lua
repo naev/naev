@@ -65,14 +65,14 @@ function accept()
     "Now, one small problem we face is that pirates almost never use destroyer class ships; they tend to stick to fighters, corvettes, and cruisers. More importantly, actually sending a fighter after a Destroyer is exceedingly dangerous, even if we could find a pirate piloting one. So we have another plan: we want someone to pilot a destroyer class ship and just let another pilot disable them with ion cannons.
     "What do you say? Are you interested?"]]):format(battlesys:name(), fmt.number(reward/2))) then
       misn.accept()
-      tk.msg(_("Wonderful"), _([["Great! Go and meet our pilot in %s. After the job is done, meet me on %s in the %s system."]]):format(battlesys:name(), paypla:name(), paysys:name()))
+      tk.msg(_("Wonderful"), fmt.f(_([["Great! Go and meet our pilot in {battlesys}. After the job is done, meet me on {pnt} in the {sys} system."]]), {battlesys=battlesys, pnt=paypla, sys=paysys}))
 
       misn.setTitle(_("Sharkman is back"))
       misn.setReward(fmt.credits(reward/2))
       misn.setDesc(_("Nexus Shipyards wants you to fake a loss against a Lancelot while piloting a Destroyer class ship."))
       misn.osdCreate(_("Sharkman Is Back"), {
-         _("Jump in %s with a destroyer class ship and let the Lancelot disable you"):format(battlesys:name()),
-         _("Go to %s in %s to collect your pay"):format(paypla:name(), paysys:name()),
+         fmt.f(_("Jump in {sys} with a destroyer class ship and let the Lancelot disable you"), {sys=battlesys}),
+         fmt.f(_("Go to {pnt} in {sys} to collect your pay"), {pnt=paypla, sys=paysys}),
       })
       misn.osdActive(1)
 

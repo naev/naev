@@ -53,12 +53,12 @@ function accept()
       misn.accept()
       tk.msg(_("Go"), _([[Smith once again steps in your ship in order to go to a meeting.]]))
 
-      misn.setTitle(_("A Journey To %s"):format(missys:name()))
+      misn.setTitle(fmt.f(_("A Journey To {sys}"), {sys=missys}))
       misn.setReward(fmt.credits(reward))
-      misn.setDesc(_("You are to transport Arnold Smith to %s so that he can talk about a deal."):format(missys:name()))
-      misn.osdCreate(_("A Journey To %s"):format(missys:name()), {
-         _("Go to %s and wait for the FLF ship, then hail and board it."):format(missys:name()),
-         _("Go back to %s in %s"):format(paypla:name(), paysys:name()),
+      misn.setDesc(fmt.f(_("You are to transport Arnold Smith to {sys} so that he can talk about a deal."), {sys=missys}))
+      misn.osdCreate(fmt.f(_("A Journey To {sys}"), {sys=missys}), {
+         fmt.f(_("Go to {sys} and wait for the FLF ship, then hail and board it."), {sys=missys}),
+         fmt.f(_("Go back to {pnt} in {sys}"), {pnt=paypla, sys=paysys}),
       })
       misn.osdActive(1)
 
@@ -134,7 +134,7 @@ end
 
 function board()
    --boarding the pacifier
-   tk.msg(_("The Meeting"), _([[As you board, Arnold Smith insists on entering the FLF's ship alone. A few periods later, he comes back looking satisfied. It seems this time luck is on his side. He mentions that he had good results with a smile on his face before directing you to take him back to %s.]]):format(paysys:name()))
+   tk.msg(_("The Meeting"), fmt.f(_([[As you board, Arnold Smith insists on entering the FLF's ship alone. A few periods later, he comes back looking satisfied. It seems this time luck is on his side. He mentions that he had good results with a smile on his face before directing you to take him back to {sys}.]]), {sys=paysys}))
    player.unboard()
    pacifier:control(false)
    pacifier:setActiveBoard(false)

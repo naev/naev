@@ -84,7 +84,7 @@ function accept ()
    misn.osdCreate(_("Collective Scout"), {
       fmt.f(_("Fly to the {sys} system"), {sys=misn_target}),
       _("Locate the Collective drone, but do not engage."),
-      _("Report back to %s in the %s system"):format(misn_base:name(), misn_base_sys:name()),
+      fmt.f(_("Report back to {pnt} in the {sys} system"), {pnt=misn_base, sys=misn_base_sys}),
    })
    hook.enter("enter")
    hook.jumpout("jumpout")

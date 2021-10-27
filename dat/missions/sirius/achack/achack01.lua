@@ -45,7 +45,7 @@ function accept()
     Harja leaves the spacedock bar, satisfied that he's finally found someone to take his request. You can't help but wonder why he would try to hire a mercenary in a place like the Wringer, though. If the target is such a dangerous criminal, then wouldn't he be better off posting a bounty mission on the public board? Oh well, it's none of your business. You accepted the job, now all that's left is to complete it.]]):format(destplanet:name(), destsys:name()))
     misn.accept()
     misn.osdCreate(_("Sirian Bounty"), {
-       _("Fly to %s"):format(destsys:name()),
+       fmt.f(_("Fly to {sys}"), {sys=destsys}),
        _("Find your target on %s and kill her"):format(destplanet:name()),
     })
     misn.setDesc(_([[A Sirian man named Harja has hired you to dispatch a "dangerous criminal" who supposedly committed some kind of crime against him.]]))

@@ -212,7 +212,7 @@ function board(ship)
          misn.osdActive(i+1)
          target[4] = target[4] + 1
          if target[4] == 4 then
-            tk.msg(string.format(_("Checkpoint %s reached"), i), string.format(_("Land on %s"), curplanet:name()))
+            tk.msg(string.format(_("Checkpoint %s reached"), i), fmt.f(_("Land on {pnt}"), {pnt=curplanet}))
          else
             tk.msg(string.format(_("Checkpoint %s reached"), i), string.format(_("Proceed to Checkpoint %s"), i+1))
          end

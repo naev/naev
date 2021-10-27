@@ -44,10 +44,7 @@ npc_portrait["__save"] = true
 function create ()
 
    --Change here to change the planet and the system
-   sysname = "Dvaer"
-   planame = "Dvaer Prime"
-   missys = system.get(sysname)
-   mispla = planet.get(planame)
+   mispla, missys = planet.get("Dvaer Prime")
 
    if not misn.claim ( missys ) then
       misn.finish(false)
@@ -112,7 +109,7 @@ function accept()
       misn.osdCreate(_("The Dvaered Championship"), {
          _("Go to the starting point"),
          _("Disable your opponent; DO NOT KILL"),
-         _("Land on %s"):format(planame),
+         fmt.f(_("Land on {pnt}"), {pnt=mispla}),
       })
 
       usedNames = {}   --In order not to have two pilots with the same name

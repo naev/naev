@@ -353,7 +353,7 @@ function takeoff()
          misn.osdCreate( _("Dvaered Ballet"), {
             _("Wait for the signal"),
             _("Hit the most targets before your opponents"),
-            _("Land on %s"):format(destpla:name()),
+            fmt.f(_("Land on {pnt}"), {pnt=destpla}),
          } )
 
          score_throw = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }
@@ -390,7 +390,7 @@ function takeoff()
 
       else -- Need to land and continue at previous stage
          misn.osdDestroy()
-         misn.osdCreate( _("Dvaered Ballet"), {_("Land on %s"):format(destpla:name())} )
+         misn.osdCreate( _("Dvaered Ballet"), {fmt.f(_("Land on {pnt}"), {pnt=destpla})} )
          tk.msg("", mace_fail)
          stage = 1
       end
@@ -401,7 +401,7 @@ function takeoff()
       misn.osdCreate( _("Dvaered Ballet"), {
          _("Wait for the signal"),
          _("Catch the most flowers possible"),
-         _("Land on %s"):format(destpla:name()),
+         fmt.f(_("Land on {pnt}"), {pnt=destpla}),
       } )
 
       score_stadion = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }
@@ -448,7 +448,7 @@ function takeoff()
          misn.osdCreate( _("Dvaered Ballet"), {
             _("Wait for the signal"),
             fmt.f(_("Defeat your opponent {name} (nullify their shield)"), {name=competitors_names[5]}),
-            _("Land on %s"):format(destpla:name()),
+            fmt.f(_("Land on {pnt}"), {pnt=destpla}),
          } )
 
          score_pankration = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }
@@ -478,7 +478,7 @@ function takeoff()
 
       else
          misn.osdDestroy()
-         misn.osdCreate( _("Dvaered Ballet"), {_("Land on %s"):format(destpla:name())} )
+         misn.osdCreate( _("Dvaered Ballet"), {fmt.f(_("Land on {pnt}"), {pnt=destpla})} )
          tk.msg("", mace_fail)
          stage = 5
       end
