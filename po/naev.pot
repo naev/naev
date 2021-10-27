@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2021-10-26 01:19-0400\n"
+"POT-Creation-Date: 2021-10-26 21:21-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -13295,11 +13295,11 @@ msgstr ""
 #: dat/faction.xml:462 dat/events/dvaered/fwA_treason.lua:114
 #: dat/events/dvaered/fwA_treason.lua:135 dat/events/dvaered/fwB_repay.lua:41
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:253
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:513
-#: dat/missions/dvaered/frontier_war/fw02_escape.lua:143
-#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:600
-#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:159
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:250
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:520
+#: dat/missions/dvaered/frontier_war/fw02_escape.lua:159
+#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:603
+#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:160
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:251
 #: dat/missions/minerva/kex3.lua:394 dat/scripts/common/dvaered.lua:12
 msgid "Dvaered"
 msgstr ""
@@ -15122,7 +15122,7 @@ msgid ""
 msgstr ""
 
 #: dat/outfits/core_engine/small/tricon_zephyr_ii_engine.xml:2
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:211
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:212
 msgid "Tricon Zephyr II Engine"
 msgstr ""
 
@@ -15342,7 +15342,7 @@ msgid "Patchwork Light Plating"
 msgstr ""
 
 #: dat/outfits/core_hull/small/sk_light_combat_plating.xml:2
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:219
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:220
 msgid "S&K Light Combat Plating"
 msgstr ""
 
@@ -15601,7 +15601,7 @@ msgid ""
 msgstr ""
 
 #: dat/outfits/core_system/small/milspec_orion_3701_core_system.xml:2
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:215
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:216
 msgid "Milspec Orion 3701 Core System"
 msgstr ""
 
@@ -16942,7 +16942,7 @@ msgid ""
 msgstr ""
 
 #: dat/outfits/structure/reactor_class_i.xml:2
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:228
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:229
 msgid "Reactor Class I"
 msgstr ""
 
@@ -16984,8 +16984,8 @@ msgid ""
 msgstr ""
 
 #: dat/outfits/structure/shield_capacitor_i.xml:2
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:215
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:234
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:216
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:235
 msgid "Shield Capacitor I"
 msgstr ""
 
@@ -17033,7 +17033,7 @@ msgid "Small Fuel Pod"
 msgstr ""
 
 #: dat/outfits/structure/small_shield_booster.xml:2
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:231
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:232
 msgid "Small Shield Booster"
 msgstr ""
 
@@ -17341,7 +17341,7 @@ msgid "Can only restore armour when below 50%."
 msgstr ""
 
 #: dat/outfits/utility/emergency_shield_booster.xml:2
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:211
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:212
 msgid "Emergency Shield Booster"
 msgstr ""
 
@@ -17383,7 +17383,7 @@ msgid "Triggered on armour damage. Lasts 3 seconds with 8 seconds cooldown."
 msgstr ""
 
 #: dat/outfits/utility/hellburner.xml:2
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:225
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:226
 msgid "Hellburner"
 msgstr ""
 
@@ -18357,7 +18357,7 @@ msgid ""
 msgstr ""
 
 #: dat/ships/dvaered_vendetta.xml:2
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:205
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:206
 msgid "Dvaered Vendetta"
 msgstr ""
 
@@ -19071,7 +19071,7 @@ msgid ""
 msgstr ""
 
 #: dat/ships/vendetta.xml:2
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:208
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:209
 msgid "Vendetta"
 msgstr ""
 
@@ -19727,6 +19727,10 @@ msgstr ""
 
 #: dat/ssys/feye.xml:2 dat/events/discovery.lua:74
 msgid "Feye"
+msgstr ""
+
+#: dat/ssys/feye.xml:4
+msgid "#pSoromid Homeworld#0"
 msgstr ""
 
 #: dat/ssys/fidelis.xml:2
@@ -23631,7 +23635,7 @@ msgid "Pay"
 msgstr ""
 
 #: dat/comm.lua:217 dat/comm.lua:280 dat/comm.lua:326 dat/comm.lua:428
-#: dat/missions/dvaered/frontier_war/fw02_escape.lua:633
+#: dat/missions/dvaered/frontier_war/fw02_escape.lua:657
 #: dat/missions/neutral/aristodrink.lua:79
 msgid "Refuse"
 msgstr ""
@@ -24058,7 +24062,7 @@ msgstr ""
 #: dat/events/dvaered/fwA_treason.lua:91
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:71
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:84
-#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:105
+#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:103
 msgid "Too bad"
 msgstr ""
 
@@ -24088,7 +24092,7 @@ msgstr ""
 
 #: dat/events/dvaered/fwA_treason.lua:114
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:253
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:513
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:520
 msgid "Dvaered Military Coordination"
 msgstr ""
 
@@ -24177,10 +24181,10 @@ msgstr ""
 #. Pay and finish the mission
 #. Timer for the next mission
 #: dat/events/dvaered/fwA_treason.lua:135 dat/events/dvaered/fwB_repay.lua:41
-#: dat/missions/dvaered/frontier_war/fw02_escape.lua:143
-#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:600
-#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:159
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:250
+#: dat/missions/dvaered/frontier_war/fw02_escape.lua:159
+#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:603
+#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:160
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:251
 msgid "Frontier War"
 msgstr ""
 
@@ -24254,11 +24258,11 @@ msgstr ""
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:269
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:273
 #: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:62
-#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:85
-#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:123
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:97
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:125
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:193
+#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:81
+#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:119
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:98
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:126
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:194
 msgid "Major Tam"
 msgstr ""
 
@@ -24270,10 +24274,10 @@ msgstr ""
 #: dat/events/dvaered/fwB_repay.lua:21
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:400
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:79
-#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:275
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:98
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:126
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:278
+#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:279
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:99
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:127
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:279
 msgid "Captain Leblanc"
 msgstr ""
 
@@ -24290,20 +24294,20 @@ msgstr ""
 #. Compute the line on which to place the spy and Strafer
 #. First, teleport Strafer far away from any backup
 #: dat/events/dvaered/fwB_repay.lua:21
-#: dat/missions/dvaered/frontier_war/fw02_escape.lua:113
-#: dat/missions/dvaered/frontier_war/fw02_escape.lua:186
-#: dat/missions/dvaered/frontier_war/fw02_escape.lua:211
-#: dat/missions/dvaered/frontier_war/fw02_escape.lua:280
-#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:266
-#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:98
-#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:168
-#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:217
-#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:220
-#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:223
-#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:226
-#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:229
-#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:276
-#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:575
+#: dat/missions/dvaered/frontier_war/fw02_escape.lua:118
+#: dat/missions/dvaered/frontier_war/fw02_escape.lua:202
+#: dat/missions/dvaered/frontier_war/fw02_escape.lua:227
+#: dat/missions/dvaered/frontier_war/fw02_escape.lua:298
+#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:263
+#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:96
+#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:169
+#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:221
+#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:224
+#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:227
+#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:230
+#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:233
+#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:280
+#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:579
 msgid "Lieutenant Strafer"
 msgstr ""
 
@@ -29938,13 +29942,13 @@ msgstr ""
 
 #. TODO boarding VN stuff should allow talking to Misi and such.
 #. Make sure system isn't claimed, but we don't claim it
-#. Find planet
+#. Find uninhabited planet
 #. Create pilot
 #. Set up hooks
 #. event ends on player leaving the system or landing
 #. End the event if for any reason the trader stops existing
 #. Cycle through broadcasts
-#: dat/events/neutral/travelling_merchant.lua:102
+#: dat/events/neutral/travelling_merchant.lua:109
 msgid ""
 "\"Howdy Human! Er, I mean, Greetings! If you want to take a look at my "
 "wonderful, exquisite, propitious, meretricious, effulgent, ... wait, what "
@@ -29952,7 +29956,7 @@ msgid ""
 "welcome to board anytime!\""
 msgstr ""
 
-#: dat/events/neutral/travelling_merchant.lua:115
+#: dat/events/neutral/travelling_merchant.lua:122
 msgid ""
 "You open the airlock and are immediately greeted by an intense humidity and "
 "heat, almost like a jungle. As you advance through the dimly lit ship you "
@@ -33518,15 +33522,15 @@ msgstr ""
 #: dat/missions/baron/baron_prince.lua:100
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:93
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:263
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:90
-#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:189
-#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:192
-#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:195
-#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:211
-#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:222
-#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:233
-#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:236
-#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:255
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:94
+#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:185
+#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:188
+#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:191
+#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:207
+#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:218
+#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:229
+#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:232
+#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:252
 msgid "What are you doing here?"
 msgstr ""
 
@@ -33870,7 +33874,7 @@ msgstr ""
 #. Are there still other pirates to kill ?
 #. She "jumped" into the current system by taking off.
 #: dat/missions/dvaered/assault_on_unicorn.lua:106
-#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:228
+#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:224
 #: dat/missions/shark/sh07_pirates.lua:275
 #: dat/missions/sirius/achack/achack02.lua:114
 #: dat/missions/sirius/achack/achack02.lua:251
@@ -34088,15 +34092,15 @@ msgstr ""
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:131
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:243
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:249
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:388
-#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:112
-#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:522
-#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:665
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:352
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:388
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:396
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:439
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:468
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:395
+#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:110
+#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:526
+#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:669
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:356
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:393
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:404
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:451
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:481
 #: dat/missions/empire/collective/ec04.lua:65
 #: dat/missions/neutral/race1.lua:215
 #: dat/missions/sirius/heretic/heretic2.lua:63
@@ -35407,11 +35411,10 @@ msgstr ""
 #. 8) Land at last system
 #. --
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:41
-#, lua-format
 msgid ""
 "After Tam boards the Goddard, you wait for about half a period until his "
 "ship undocks from the warlord's cruiser. You then receive a message from him "
-"\"Everything is right, we will now land on %s in order to refuel and rest "
+"\"Everything is right, we will now land on {pnt} in order to refuel and rest "
 "for some time.\""
 msgstr ""
 
@@ -35432,9 +35435,8 @@ msgid "In need of a pilot"
 msgstr ""
 
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:70
-#, lua-format
 msgid ""
-"As you approach the officer, he hails you. \"Hello, citizen %s. I was "
+"As you approach the officer, he hails you. \"Hello, citizen {player}. I was "
 "looking for you. Of course I know your name, you're one of the pilots who "
 "destroyed that damn FLF base in Surano. Let me introduce myself: I am Major "
 "Tam, from Dvaered High Command, and more precisely from the Space Force "
@@ -35455,12 +35457,12 @@ msgid "Instructions"
 msgstr ""
 
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:74
-#, lua-format
 msgid ""
 "Tam seems satisfied with your answer. \"I am going to pay a visit to three "
 "warlords, for military coordination reasons. They will be waiting for me in "
-"their respective Goddards in the systems %s, %s and %s. I need you to stick "
-"to my Vendetta and engage any hostile who could try to intercept me.\""
+"their respective Goddards in the systems {sys1}, {sys2} and {sys3}. I need "
+"you to stick to my Vendetta and engage any hostile who could try to "
+"intercept me.\""
 msgstr ""
 
 #. Fleeing to flee planet
@@ -35518,11 +35520,10 @@ msgid "That was really close!"
 msgstr ""
 
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:160
-#, lua-format
 msgid ""
 "You send a message to Major Tam to ask if you are safe now. \"I think so\" "
-"he answers, \"Lord Battleaddict's troops won't follow us if we head to %s at "
-"once, as the planet belongs to his deadliest enemy, Lady Pointblank.\" As "
+"he answers, \"Lord Battleaddict's troops won't follow us if we head to {pnt} "
+"at once, as the planet belongs to his deadliest enemy, Lady Pointblank.\" As "
 "you ask to him what happened, he answers: \"You know, don't let Lord "
 "Battleaddict's reaction mislead you. He is not a bad person, he is just... "
 "hem... a bit old school. He disagrees with the ideas of the new generation "
@@ -35537,15 +35538,13 @@ msgstr ""
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:166
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:169
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:172
-#, lua-format
-msgid "%s should be waiting for us in orbit around %s."
+msgid "{pltname} should be waiting for us in orbit around {pnt}."
 msgstr ""
 
 #. majorTam:outfitAdd("Solar Panel")
 #. Make sure Pirates don't get on the way
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:228
-#, lua-format
-msgid "Major Tam has jumped for the %s system."
+msgid "Major Tam has jumped for the {sys} system."
 msgstr ""
 
 #. Because she is immortal and could kill the player
@@ -35579,7 +35578,6 @@ msgid "Thank you, citizen"
 msgstr ""
 
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:255
-#, lua-format
 msgid ""
 "As you land, Major Tam greets you at the spaceport. \"After the losses they "
 "got today, I doubt those mercenaries will come back at me anytime soon. I "
@@ -35588,8 +35586,8 @@ msgid ""
 "there is a little setback...\" You start getting afraid he would try to "
 "stiff pay you, but he continues: \"I don't know why, but the High Command "
 "has not credited the payment account yet... Well do you know what we are "
-"going to do? I will give you a set of Gauss Guns worth %s! One always needs "
-"Gauss Guns, no?\""
+"going to do? I will give you a set of Gauss Guns worth {credits}! One always "
+"needs Gauss Guns, no?\""
 msgstr ""
 
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:269
@@ -35611,16 +35609,14 @@ msgid "They're after me!"
 msgstr ""
 
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:299
-#, lua-format
 msgid ""
 "Tam boards the Goddard. A few seconds later, he undocks in a hurry, while "
 "nearby fighters start to shoot at him. You receive a message \"That old fool "
-"tried to kill me! quick, we must head to %s! Let me jump first!\""
+"tried to kill me! quick, we must head to {sys}! Let me jump first!\""
 msgstr ""
 
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:312
-#, lua-format
-msgid "Ensure Major Tam safely jumps to %s and follow him"
+msgid "Ensure Major Tam safely jumps to {sys} and follow him"
 msgstr ""
 
 #. Makes Battleaddict's team actually attack the player
@@ -35631,7 +35627,7 @@ msgstr ""
 #. Spawn Hamelsen and make her escape
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:343
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:369
-#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:590
+#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:593
 msgid "Colonel Hamelsen"
 msgstr ""
 
@@ -35663,7 +35659,6 @@ msgid "Hostiles eliminated"
 msgstr ""
 
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:445
-#, lua-format
 msgid ""
 "As the remaining attackers run away, you remark that a Dvaered patrol helped "
 "you, contrary to what Tam had explained before. Then you receive the "
@@ -35674,12 +35669,13 @@ msgid ""
 "what the old monkey had done to you, we put him under surveillance and we "
 "spotted Hamelsen pursuing you with her Shark, so we followed her, pretending "
 "we're just a police squadron. You know the rest.\"\n"
-"   Tam responds: \"By the way, %s, let me introduce you the Captain Leblanc, "
-"she belongs to the Special Operations Force (SOF), part of Dvaered High "
-"Command (DHC). I didn't tell you, but her pilots always keep an eye on me "
-"from a distance when I have to meet warlords. %s is the private pilot I "
-"spoke to you, Captain.\" Leblanc responds: \"Hello, citizen. I'm glad there "
-"are civilians like you who do their duty and serve the Dvaered Nation.\""
+"   Tam responds: \"By the way, {player}, let me introduce you the Captain "
+"Leblanc, she belongs to the Special Operations Force (SOF), part of Dvaered "
+"High Command (DHC). I didn't tell you, but her pilots always keep an eye on "
+"me from a distance when I have to meet warlords. {player} is the private "
+"pilot I spoke to you, Captain.\" Leblanc responds: \"Hello, citizen. I'm "
+"glad there are civilians like you who do their duty and serve the Dvaered "
+"Nation.\""
 msgstr ""
 
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:447
@@ -35753,13 +35749,12 @@ msgid "Ready for another mission?"
 msgstr ""
 
 #: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:66
-#, lua-format
 msgid ""
-"You sit at Tam's table and wait for him to speak. \"Hello, citizen %s. You "
-"remember Lord Battleaddict, the old warlord who tried to kill us twice? I "
-"have good news: with a few other members of the Space Force, we found a way "
-"to make him regret what he did, and we need a civilian pilot, like you. Are "
-"you in?\""
+"You sit at Tam's table and wait for him to speak. \"Hello, citizen {player}. "
+"You remember Lord Battleaddict, the old warlord who tried to kill us twice? "
+"I have good news: with a few other members of the Space Force, we found a "
+"way to make him regret what he did, and we need a civilian pilot, like you. "
+"Are you in?\""
 msgstr ""
 
 #: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:67
@@ -35784,7 +35779,6 @@ msgid ""
 msgstr ""
 
 #: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:72
-#, lua-format
 msgid ""
 "\"The problem is that Battleaddict's plan is far too stupid. It would weaken "
 "the Dvaered Nation in the long run and leave us at the mercy of all the "
@@ -35801,10 +35795,10 @@ msgid ""
 "sure that Lord Battleaddict loses his duel. Please note however that if the "
 "very existence of House Dvaered was not threatened, we would never allow "
 "ourselves to interfere in a honorable duel between two respectable "
-"gentlemen. Go to %s in %s and meet Captain Hamfresser. (His portrait is "
-"attached in the data I will give you.) He will explain the details. It is "
-"very important that you use a civilian ship that can transport at least %s "
-"of cargo.\""
+"gentlemen. Go to {pnt} in {sys} and meet Captain Hamfresser. (His portrait "
+"is attached in the data I will give you.) He will explain the details. It is "
+"very important that you use a civilian ship that can transport at least "
+"{tonnes} of cargo.\""
 msgstr ""
 
 #: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:76
@@ -35821,32 +35815,28 @@ msgstr ""
 #. TODO : It's only for testing. It can be removed once FLF is dead
 #.
 #: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:81
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:168
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:285
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:388
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:172
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:292
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:395
 msgid "Dvaered Sabotage"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:81
-#, lua-format
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:82
 msgid ""
-"Pick up Hamfresser in %s in %s. Use a civilian ship with at least %s of free "
-"cargo"
+"Pick up Hamfresser in {pnt} in {sys}. Use a civilian ship with at least "
+"{tonnes} of free cargo"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:81
-#, lua-format
-msgid "Meet Battleaddict around %s in %s"
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:83
+msgid "Meet Battleaddict around {pnt} in {sys}"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:81
-#, lua-format
-msgid "Deposit Hamfresser on %s in %s"
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:84
+msgid "Deposit Hamfresser on {pnt} in {sys}"
 msgstr ""
 
 #. Meet Captain Hamfresser
 #. You land at the commando's planet
-#. TODO: see if it gets auto-removed at the end of mission
 #. You land to steal a medical machine
 #. Reset the zlk standing.
 #. We don't need this one anymore
@@ -35854,17 +35844,17 @@ msgstr ""
 #. elseif stage == 4 then -- TODO: decide if we do that
 #. player.takeoff()
 #. Optional discussions with the team
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:87
-#: dat/missions/dvaered/frontier_war/fw02_escape.lua:109
-#: dat/missions/dvaered/frontier_war/fw02_escape.lua:125
-#: dat/missions/dvaered/frontier_war/fw02_escape.lua:182
-#: dat/missions/dvaered/frontier_war/fw02_escape.lua:188
-#: dat/missions/dvaered/frontier_war/fw02_escape.lua:196
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:281
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:91
+#: dat/missions/dvaered/frontier_war/fw02_escape.lua:114
+#: dat/missions/dvaered/frontier_war/fw02_escape.lua:141
+#: dat/missions/dvaered/frontier_war/fw02_escape.lua:198
+#: dat/missions/dvaered/frontier_war/fw02_escape.lua:204
+#: dat/missions/dvaered/frontier_war/fw02_escape.lua:212
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:282
 msgid "Captain Hamfresser"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:87
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:91
 msgid ""
 "A tall and very large cyborg soldier sits against a wall, right next to the "
 "emergency exit. He loudly drinks an orange juice through a pink straw and "
@@ -35875,44 +35865,43 @@ msgid ""
 "and talk to him."
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:90
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:94
 msgid ""
 "This planet belongs to Lord Battleaddict. You will be captured if you land "
 "here. The mission failed."
 msgstr ""
 
 #. Report back
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:94
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:95
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:98
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:99
 msgid "Major Tam and Captain Leblanc"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:94
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:95
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:98
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:99
 msgid "Major Tam and Captain Leblanc seem to be waiting for you."
 msgstr ""
 
 #. Epilogue
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:98
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:99
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:100
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:102
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:103
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:104
 msgid "Your employers"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:98
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:99
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:100
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:102
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:103
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:104
 msgid "Tam and Leblanc are congratulating their general."
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:106
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:108
 #: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:110
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:112
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:114
 msgid "New passengers"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:106
-#, lua-format
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:110
 msgid ""
 "\"H... hi\", you say, waving timidly. \"Are you Captain Hamfresser?\". The "
 "soldier answers \"Of course, as it is written on my name tag.\" Showing a "
@@ -35920,17 +35909,17 @@ msgid ""
 "Captain's insignia and the logo of the Dvaered Space Infantry (a mace of "
 "arms with wings). Hamfresser looks at you from top to bottom \"You're the "
 "private pilot, right? Tell me your ship's dock number, and I'll meet you "
-"there. Oh, and please make room for %s of cargo.\"\n"
+"there. Oh, and please make room for {tonnes} of cargo.\"\n"
 "   The captain then gets up, delicately puts his empty glass on the counter, "
-"and goes away. While his hair scratches the ceiling, you wonder if %s are "
-"enough for him. When you arrive at the dock, you see Hamfresser, with five "
-"other soldiers and two androids that load a huge and strange machine into "
-"your ship. \"Hey\" you say \"What are you doing with your... your death "
+"and goes away. While his hair scratches the ceiling, you wonder if {tonnes} "
+"are enough for him. When you arrive at the dock, you see Hamfresser, with "
+"five other soldiers and two androids that load a huge and strange machine "
+"into your ship. \"Hey\" you say \"What are you doing with your... your death "
 "machine?\" Hamfresser approaches and answers at low voice \"But, mate, this "
 "is not a death machine, It's just a bomb. Or even a bomblet.\""
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:108
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:112
 msgid ""
 "\"Very well\" you acquiesce. \"Do what you have to do\". Once the cargo is "
 "loaded and the team has taken their places in the cabin, you start to talk "
@@ -35950,8 +35939,7 @@ msgid ""
 "her hand, saying \"Hi\"."
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:110
-#, lua-format
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:114
 msgid ""
 "While you wonder whether the plan is awesomely brilliant or dead stupid, "
 "Hamfresser begins the introductions. \"This is Sergeant Nikolov, she is my "
@@ -35960,67 +35948,63 @@ msgid ""
 "Lieutenant Strafer. He is a pilot from the Special Operations. He is here in "
 "case we need to switch to plan B.\" As you ask what plan B is, Hamfresser "
 "simply answers, \"you don't want to switch to plan B.\n"
-"   \"As usual, Lord Battleaddict's cruiser should be in orbit around %s in %s"
-"\"."
+"   \"As usual, Lord Battleaddict's cruiser should be in orbit around {pnt} "
+"in {sys}\"."
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:114
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:118
 msgid "Bomb"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:114
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:118
 msgid "A gift from the High Command to Lord Battleaddict."
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:122
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:126
 msgid "Not enough free space"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:122
-#, lua-format
-msgid "Your ship does not have enough free space. Come back with %s free."
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:126
+msgid ""
+"Your ship does not have enough free space. Come back with {tonnes} free."
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:168
-#, lua-format
-msgid "Go to %s, approach %s and wait for the Phalanx"
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:173
+msgid "Go to {sys}, approach {pnt} and wait for the Phalanx"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:168
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:174
 msgid "Disable and board the Phalanx"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:168
-#: dat/missions/dvaered/frontier_war/fw02_escape.lua:100
-#, lua-format
-msgid "Report back on %s in %s"
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:175
+#: dat/missions/dvaered/frontier_war/fw02_escape.lua:105
+msgid "Report back on {pnt} in {sys}"
 msgstr ""
 
 #. Klank's superior equipment should ensure victory
 #. To avoid being in the range
 #. Equips a Goddard for a duel, with or without repeating railguns
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:255
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:262
 msgid "Not far from the goal"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:255
-#, lua-format
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:262
 msgid ""
 "As you finish your jump, Lieutenant Strafer approaches to your radar screen "
-"\"Battleaddict's Goddard should be around %s. I guess he should be at adding "
-"nanobond plating and repeating railguns everywhere possible by now. There "
-"should be a few patrol ships around him that will control our security "
+"\"Battleaddict's Goddard should be around {pnt}. I guess he should be at "
+"adding nanobond plating and repeating railguns everywhere possible by now. "
+"There should be a few patrol ships around him that will control our security "
 "clearance.\" Hamfresser gives instructions to the team: \"Everyone put your "
 "plumber suit on, Nikolov, switch the decoder on, so that we will monitor the "
 "transmissions of the escort ships. It could tell us if we're detected.\""
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:259
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:266
 msgid "We're safe now"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:259
-#, lua-format
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:266
 msgid ""
 "Once the ship recovers its normal speed after jumping, Hamfresser says: "
 "\"Strange, I wouldn't have believed we'd survive this one. Would you, "
@@ -36030,37 +36014,36 @@ msgid ""
 "not to show our fear, it tends to distract the pilots.\"\n"
 "   A few seconds later, you receive an encoded inter-system message from "
 "Major Tam: \"The plan A has leaked. Please do switch to plan C. Do not jump "
-"in %s by any means. For information, the leak is under control and the "
+"in {sys} by any means. For information, the leak is under control and the "
 "source has been dealt with.\" The voice makes a pause and continues: \"I "
-"really hope this messages catches you before you enter %s. Otherwise, may "
+"really hope this messages catches you before you enter {sys}. Otherwise, may "
 "Dvaerius, the patron saint of mace rockets, have mercy on your souls...\" "
 "\"Good old Tamtam,\" Hamfresser says smiling, \"he always worries too much "
 "for us.\""
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:261
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:268
 msgid "Plan C"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:261
-#, lua-format
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:268
 msgid ""
-"\"All right, everyone, we're now heading to %s in %s. According to our "
+"\"All right, everyone, we're now heading to {pnt} in {sys}. According to our "
 "intelligence, there should be a Phalanx from Battleaddict's fleet that will "
 "take off from there soon. Its name is 'Gorgon'. They are on their way back "
 "in a transport mission. According to the analysts, there should be enough "
 "free space in this ship for our bomb. We will disable the ship, neutralize "
-"the pilot and load our material. After that, %s will report back to the "
-"Major on %s and the rest of the team will execute the rest of the plan. I or "
-"Sergeant Nikolov will brief you once in the Phalanx.\""
+"the pilot and load our material. After that, {player} will report back to "
+"the Major on {duel_pnt} and the rest of the team will execute the rest of "
+"the plan. I or Sergeant Nikolov will brief you once in the Phalanx.\""
 msgstr ""
 
 #. Battleaddict agrees for the player to approach
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:267
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:274
 msgid "You're controlled"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:267
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:274
 msgid ""
 "As you approach to the lighter ships that protect the cruiser, a Vendetta "
 "hails you. Hamfresser answers \"We're Johnson and Jhonson, associate "
@@ -36075,11 +36058,11 @@ msgid ""
 "just in case.\""
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:270
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:277
 msgid "We told you not to use a combat ship!"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:270
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:277
 msgid ""
 "As you approach, the Lieutenant Strafer looks at your radar screen. \"We are "
 "in a combat ship. We told you not to use a combat ship. Now, they are going "
@@ -36088,12 +36071,11 @@ msgid ""
 msgstr ""
 
 #. Battleaddict sees that the player is not a plumber
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:278
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:285
 msgid "That could have worked"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:278
-#, lua-format
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:285
 msgid ""
 "While approaching, you start to distinguish better the surface of the "
 "cruiser. You see a dozen of shuttles that transport material and tools form "
@@ -36112,11 +36094,11 @@ msgid ""
 "Plumbers are unable to break our code.\" \"But they're NOT plumbers, stupid!"
 "\"\n"
 "   Hamfresser looks at you, and simply declares \"We abort the mission. Get "
-"us out of that system, %s!\" Strangely enough, none of the soldiers seem to "
-"show any signs of panic."
+"us out of that system, {player}!\" Strangely enough, none of the soldiers "
+"seem to show any signs of panic."
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:285
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:292
 msgid "Jump out. Do NOT land in this system"
 msgstr ""
 
@@ -36131,34 +36113,33 @@ msgstr ""
 #. Hooks for the interception target
 #. Hack so that Strafer attacks them and not the Sting
 #. Decide between fight or runaway
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:344
-#: dat/missions/dvaered/frontier_war/fw02_escape.lua:421
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:351
+#: dat/missions/dvaered/frontier_war/fw02_escape.lua:439
 msgid "Just try to catch me, you pirate!"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:348
-#: dat/missions/dvaered/frontier_war/fw02_escape.lua:425
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:355
+#: dat/missions/dvaered/frontier_war/fw02_escape.lua:443
 msgid "You made a very big mistake!"
 msgstr ""
 
 #.
 #. * create the boarding window
 #.
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:354 src/board.c:153
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:361 src/board.c:153
 msgid "Boarding"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:354
-#, lua-format
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:361
 msgid ""
 "All the members of the commando have put on their battle suits. Hamfresser "
 "gives the last orders. \"Nikolov, Tronk and I will enter first and clean the "
 "area. Remember that we don't have our usual Dudley combat androids, we're "
-"stuck with the two useless plumber bots and the few security droids of %s's "
-"ship. As much to say, we'll have to work by hand. I recall for everyone that "
-"corvettes are typically protected by a few 629 Spitfires and an occasional "
-"711 Grillmeister. That's not very much, but still enough to send the "
-"inattentive soldier ad patres.\"\n"
+"stuck with the two useless plumber bots and the few security droids of "
+"{player}'s ship. As much to say, we'll have to work by hand. I recall for "
+"everyone that corvettes are typically protected by a few 629 Spitfires and "
+"an occasional 711 Grillmeister. That's not very much, but still enough to "
+"send the inattentive soldier ad patres.\"\n"
 "   When the corvette's airlock falls under Nikolov's circular saw, the "
 "captain waves and the small team enters the ship. You then hear shots and "
 "explosions coming from further and further in the enemy ship. Finally, you "
@@ -36172,44 +36153,43 @@ msgstr ""
 #. Prevent the player form actually boarding the ship
 #. Mission failed: phalanx died
 #. Reset the zlk standing
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:372
-#: dat/missions/dvaered/frontier_war/fw02_escape.lua:443
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:379
+#: dat/missions/dvaered/frontier_war/fw02_escape.lua:461
 msgid "Mission Failed: target destroyed"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:372
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:379
 msgid ""
 "You were supposed to disable that ship, not to destroy it. How are you "
 "supposed to transport the bomb now?"
 msgstr ""
 
 #. Mission failed: phalanx escaped
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:378
-#: dat/missions/dvaered/frontier_war/fw02_escape.lua:447
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:385
+#: dat/missions/dvaered/frontier_war/fw02_escape.lua:465
 msgid "Mission Failed: target escaped"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:378
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:385
 msgid ""
 "You were supposed to disable that ship, not to let it escape. How are you "
 "supposed to transport the bomb now?"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:383
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:390
 msgid "Ready to attend to the show?"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:383
-#, lua-format
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:390
 msgid ""
 "As you sit at the table, Tam starts to speak: \"I got a message from Captain "
 "Hamfresser. Apparently, everything went according to the plan this time. "
 "They should have docked with the Goddard, allegedly to add their mission log "
 "to the central database. Then they planted the bomb in the plumbing, close "
-"to the central unit, and they faked an accident while landing on %s. I guess "
-"they should be hiking somewhere on the planet's surface by now, looking for "
-"the opportunity to steal an unfortunate civilian's Llama in order to make "
-"their trip back.\n"
+"to the central unit, and they faked an accident while landing on {pnt}. I "
+"guess they should be hiking somewhere on the planet's surface by now, "
+"looking for the opportunity to steal an unfortunate civilian's Llama in "
+"order to make their trip back.\n"
 "   \"Our boss, the General Klank, is ready for the duel. The Captain and I "
 "are his duel witnesses, so we should be joining our pageantry ships by now. "
 "Oh, and the duel commissioner is someone you already know, the Colonel "
@@ -36217,16 +36197,16 @@ msgid ""
 "off soon, you will see the duel.\""
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:388
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:395
 msgid "Attend to the duel"
 msgstr ""
 
 #. Starts the duel
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:394
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:401
 msgid "Here we go"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:394
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:401
 msgid ""
 "Colonel Urnus's ship broadcasts the message: \"I, Colonel Urnus, have been "
 "requested by both parts of this duel to be today's commissioner. I hereby "
@@ -36246,91 +36226,91 @@ msgid ""
 msgstr ""
 
 #. Actually it should not be necessary, but...
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:402
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:409
 msgid "Let the fight begin!"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:403
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:461
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:410
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:468
 msgid "Come on, boss!"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:404
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:462
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:411
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:469
 msgid "DESTROY HIM!"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:405
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:463
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:412
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:470
 msgid "You're the best, boss!"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:406
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:464
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:413
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:471
 msgid "Yeah!"
 msgstr ""
 
 #. Disables the ships
 #. Explosion and such
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:422
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:429
 msgid "Damn!"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:423
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:486
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:430
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:493
 msgid "Oooooo..."
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:424
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:431
 msgid "What the?"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:425
-#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:200
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:432
+#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:201
 msgid "Come on!"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:427
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:434
 msgid "Hey, they have put a bomb in the general's ship as well!"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:428
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:435
 msgid ""
 "The electricians! We've called electricians recently! They did put the bomb!"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:429
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:436
 msgid "Cheaters!"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:430
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:437
 msgid "Cheaters yourselves!"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:432
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:439
 msgid "Hey, Battleaddict, it seems we are both down..."
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:433
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:440
 msgid "I still want to kill you!"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:434
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:436
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:441
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:443
 msgid "So do I."
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:435
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:442
 msgid "Luckily enough, I've my Vendetta in the fighter bay."
 msgstr ""
 
 #. Fighter duel
 #. Klank's superior equipment should ensure victory once more
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:459
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:466
 msgid "Shall we continue?"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:460
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:467
 msgid "Of course, we shall!"
 msgstr ""
 
@@ -36339,29 +36319,28 @@ msgstr ""
 #. atk_drone
 #. Prevent them from staying on the top of their ships
 #. camera.set(klank2)
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:484
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:491
 msgid "Aha! In your freaking monkey face!"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:485
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:492
 msgid "You're the best, general!"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:487
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:494
 msgid "Nooooo!"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:488
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:495
 msgid "The General Klank won the duel!"
 msgstr ""
 
 #. Epilogue
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:510
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:517
 msgid "A good thing done"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:510
-#, lua-format
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:517
 msgid ""
 "As you approach, the major tells the General Klank that you are the private "
 "pilot they had hired recently. \"I see,\" says the general \"so you are part "
@@ -36376,10 +36355,10 @@ msgid ""
 "commando unit to dress like electricians and to hide an EMP bomb in the "
 "General's Goddard, that exploded during the fight, just like our own bomb. "
 "And now, both ships have their systems ruined. Well, anyway, thank you for "
-"your help, here are %s for you!\""
+"your help, here are {credits} for you!\""
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:514
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:521
 msgid ""
 "Major Tam's superior, General Klank, made a Goddard duel with Lord "
 "Battleaddict. You took part in an operation to sabotage Battleaddict's "
@@ -36452,7 +36431,7 @@ msgstr ""
 
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:56
 msgid ""
-"The young cyborg sits to the left of his captain, and looks suspiciously at "
+"The young cyborg sits to the right of his captain, and looks suspiciously at "
 "his sparkling water glass."
 msgstr ""
 
@@ -36524,21 +36503,21 @@ msgid ""
 msgstr ""
 
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:89
-#, lua-format
 msgid ""
-"\"The target is currently imprisoned on %s in %s, in Za'lek's VIP carceral "
-"center on this planet. He will be transferred to %s in %s for a preliminary "
-"interview with the judge. The Za'lek don't expect anybody to try to free him "
-"by violence, so they don't take too many precautions.\n"
+"\"The target is currently imprisoned on {pripla} in {prisys}, in Za'lek's "
+"VIP carceral center on this planet. He will be transferred to {zklpla} in "
+"{zlksys} for a preliminary interview with the judge. The Za'lek don't expect "
+"anybody to try to free him by violence, so they don't take too many "
+"precautions.\n"
 "   \"Major Tam has prepared the operation. First, you will pick up "
-"Hamfresser and his team on %s in %s. I'll be there too and then we will fly "
-"in formation to %s and set up the ambush. It would be preferable if you "
-"would make sure that your ship doesn't outrun my Vendetta. There should be a "
-"few drones and a corvette. We will destroy the drones and disable the "
-"corvette, in order to let the commando unit enter the ship and recover the "
-"target. Tam has insisted that he doesn't want us to kill anybody as it could "
-"irritate the Za'lek a bit too much. After that, we will have to jump out of "
-"the system and to return to %s separately.\n"
+"Hamfresser and his team on {hampla} in {hamsys}. I'll be there too and then "
+"we will fly in formation to {intsys} and set up the ambush. It would be "
+"preferable if you would make sure that your ship doesn't outrun my Vendetta. "
+"There should be a few drones and a corvette. We will destroy the drones and "
+"disable the corvette, in order to let the commando unit enter the ship and "
+"recover the target. Tam has insisted that he doesn't want us to kill anybody "
+"as it could irritate the Za'lek a bit too much. After that, we will have to "
+"jump out of the system and to return to {reppla} separately.\n"
 "  \"A fake transponder will be implemented on both our ships. This will "
 "ensure that, provided we don't do anything stupid on our way back, we will "
 "not be recognized as hostile by the Za'lek patrols and ground control "
@@ -36554,62 +36533,87 @@ msgstr ""
 msgid "Hopefully something better than Gauss Guns..."
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw02_escape.lua:100
-#: dat/missions/dvaered/frontier_war/fw02_escape.lua:220
-#: dat/missions/dvaered/frontier_war/fw02_escape.lua:458
-#: dat/missions/dvaered/frontier_war/fw02_escape.lua:464
-#: dat/missions/dvaered/frontier_war/fw02_escape.lua:639
-#: dat/missions/dvaered/frontier_war/fw02_escape.lua:648
-#: dat/missions/dvaered/frontier_war/fw02_escape.lua:661
+#: dat/missions/dvaered/frontier_war/fw02_escape.lua:102
+#: dat/missions/dvaered/frontier_war/fw02_escape.lua:236
+#: dat/missions/dvaered/frontier_war/fw02_escape.lua:476
+#: dat/missions/dvaered/frontier_war/fw02_escape.lua:484
+#: dat/missions/dvaered/frontier_war/fw02_escape.lua:663
+#: dat/missions/dvaered/frontier_war/fw02_escape.lua:674
+#: dat/missions/dvaered/frontier_war/fw02_escape.lua:689
 msgid "Dvaered Escape"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw02_escape.lua:100
-#, lua-format
-msgid "Meet the rest of the team in %s in %s"
+#: dat/missions/dvaered/frontier_war/fw02_escape.lua:103
+msgid "Meet the rest of the team in {pnt} in {sys}"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw02_escape.lua:100
-#, lua-format
-msgid "Intercept the convoy in %s. Your Vendetta escort must survive"
+#: dat/missions/dvaered/frontier_war/fw02_escape.lua:104
+msgid "Intercept the convoy in {sys}. Your Vendetta escort must survive"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw02_escape.lua:110
-#: dat/missions/dvaered/frontier_war/fw02_escape.lua:183
+#: dat/missions/dvaered/frontier_war/fw02_escape.lua:115
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:199
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:280
+#: dat/missions/dvaered/frontier_war/fw02_escape.lua:215
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:281
 msgid "Sergeant Nikolov"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw02_escape.lua:111
-#: dat/missions/dvaered/frontier_war/fw02_escape.lua:184
-#: dat/missions/dvaered/frontier_war/fw02_escape.lua:202
+#: dat/missions/dvaered/frontier_war/fw02_escape.lua:116
+#: dat/missions/dvaered/frontier_war/fw02_escape.lua:200
+#: dat/missions/dvaered/frontier_war/fw02_escape.lua:218
 msgid "Private Tronk"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw02_escape.lua:112
-#: dat/missions/dvaered/frontier_war/fw02_escape.lua:185
-#: dat/missions/dvaered/frontier_war/fw02_escape.lua:206
+#: dat/missions/dvaered/frontier_war/fw02_escape.lua:117
+#: dat/missions/dvaered/frontier_war/fw02_escape.lua:201
+#: dat/missions/dvaered/frontier_war/fw02_escape.lua:222
 msgid "Corporal Therus"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw02_escape.lua:115
+#: dat/missions/dvaered/frontier_war/fw02_escape.lua:120
 msgid "Commando"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw02_escape.lua:115
+#: dat/missions/dvaered/frontier_war/fw02_escape.lua:120
 msgid "A commando unit."
+msgstr ""
+
+#. TODO: see if it gets auto-removed at the end of mission
+#: dat/missions/dvaered/frontier_war/fw02_escape.lua:123
+msgid "Hello again"
+msgstr ""
+
+#: dat/missions/dvaered/frontier_war/fw02_escape.lua:123
+msgid ""
+"When you enter the bar, you feel an unusual atmosphere in the air. Most "
+"customers seem to be annoyed to be there, not lifting their eyes from their "
+"drinks. Even the mercenary pilots, normally easily distinguishable by their "
+"arrogant posture and their loud voices, do not manifest. Moving forward in "
+"the room, you soon discover the reason for that: Captain Hamfresser, from "
+"the space infantry commandos. And this time, he is not alone.\n"
+"   The group of cyborgs sits in an empty part of the room, staring "
+"periodically at each customer and at the walls. For the first time, you "
+"think to yourself that they can probably see through most walls with their "
+"implants and try to remember if you had contraband in your ship last time "
+"they were aboard. Finally, between two cyborgs, you spot Lientenant Strafer, "
+"the pilot, apparently the only normal person who can look serene around "
+"space infantry cyborgs. Well, \"normal\" might be a stretch; he is a Dvaered "
+"soldier, after all.\n"
+"   When you look at Hamfresser's face, you notice a large smile on it. The "
+"implants on his face do not look like they have been designed to deal with "
+"the possibility of a spacemarine trying to smile, and his skin twists "
+"horribly. You finally approach and he tells you the team is ready to leave "
+"on a moment's notice."
 msgstr ""
 
 #. Land at an Imperial planet and meet the agents
 #. Discuss with the Pirate or Imperial agent
-#: dat/missions/dvaered/frontier_war/fw02_escape.lua:129
-#: dat/missions/dvaered/frontier_war/fw02_escape.lua:633
+#: dat/missions/dvaered/frontier_war/fw02_escape.lua:145
+#: dat/missions/dvaered/frontier_war/fw02_escape.lua:655
 msgid "Other help offer"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw02_escape.lua:129
-#, lua-format
+#: dat/missions/dvaered/frontier_war/fw02_escape.lua:145
 msgid ""
 "As you land, someone seems to be waiting for you on the spaceport. \"Hello, "
 "colleague! Someone is in trouble with the authorities, out there. You seem "
@@ -36623,54 +36627,53 @@ msgid ""
 "   This person is for sure a pirate who wants to take the opportunity to get "
 "a few credits. The idea is not bad as the imperial ships would not look for "
 "a ship with a Skulls and Bones fake transponder. So you ask him how many "
-"credits he wants. \"%s\" is the answer. \"That sounds a great many, doesn't "
-"it? But maybe it's a suitable amount of money for your life and the success "
-"of whatever unscrupulous mission you're trying to carry out. Of course, you "
-"may not have such an amount right here, so I'll accept if you give your word "
-"to pay me at some point. Your word and your DNA signature as well, so that I "
-"can find you if you try to trick me.\"\n"
+"credits he wants. \"{number}\" is the answer. \"That sounds a great many, "
+"doesn't it? But maybe it's a suitable amount of money for your life and the "
+"success of whatever unscrupulous mission you're trying to carry out. Of "
+"course, you may not have such an amount right here, so I'll accept if you "
+"give your word to pay me at some point. Your word and your DNA signature as "
+"well, so that I can find you if you try to trick me.\"\n"
 "   You know that if you agree, you will have to pay whatever happens, "
 "otherwise you will be harassed by hit men until the end of your life. But "
-"actually, paying %s could allow you to skirt the messy and compromising deal "
-"you will otherwise have to do with the Imperial secret services. Meet the "
-"fake transponder dealer at the bar if interested."
+"actually, paying {credits} could allow you to skirt the messy and "
+"compromising deal you will otherwise have to do with the Imperial secret "
+"services. Meet the fake transponder dealer at the bar if interested."
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw02_escape.lua:132
+#: dat/missions/dvaered/frontier_war/fw02_escape.lua:148
 msgid "Fake transponder dealer"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw02_escape.lua:132
+#: dat/missions/dvaered/frontier_war/fw02_escape.lua:148
 msgid ""
 "This shifty person is for sure one of the pirates that want to sell their "
 "fake transponder to you."
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw02_escape.lua:133
+#: dat/missions/dvaered/frontier_war/fw02_escape.lua:149
 msgid "Feather-hat agent"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw02_escape.lua:133
+#: dat/missions/dvaered/frontier_war/fw02_escape.lua:149
 msgid ""
 "The imperial agent looks like a nondescript trader, as there are so many in "
 "imperial space."
 msgstr ""
 
 #. Land to end the mission
-#: dat/missions/dvaered/frontier_war/fw02_escape.lua:138
+#: dat/missions/dvaered/frontier_war/fw02_escape.lua:154
 msgid "Finally back"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw02_escape.lua:138
-#, lua-format
+#: dat/missions/dvaered/frontier_war/fw02_escape.lua:154
 msgid ""
 "Upon landing, Hamfresser, the VIP and you go to the spaceport's military "
 "office, where the Major Tam is waiting for you along with a few other "
 "soldiers. He warmly greets the executive and addresses to Hamfresser: \"Do "
 "you know that you scared us, people? We learned by the diplomatic channel "
 "that you destroyed an hospital's pharmacy quasi-entirely, along with two "
-"police tanks and half a dozen battle androids on %s. Apparently, you did not "
-"kill anyone at least, but the Za'lek were really upset\".\n"
+"police tanks and half a dozen battle androids on {pnt}. Apparently, you did "
+"not kill anyone at least, but the Za'lek were really upset\".\n"
 "   The captain explains: \"Sir, we needed a machine to heal the VIP, that "
 "had been injured during the interception, but once in the hospital, we'd "
 "been apparently spotted by a traffic cop. Things then got gradually worse "
@@ -36678,16 +36681,15 @@ msgid ""
 "this operation.\" Tam answers: \"Well, you will make a detailed report "
 "later. And don't worry about the soldier, I will make sure he is replaced "
 "immediately.\n"
-"   \"And you, %s, anything to report?\""
+"   \"And you, {player}, anything to report?\""
 msgstr ""
 
 #. Empire solution
-#: dat/missions/dvaered/frontier_war/fw02_escape.lua:145
+#: dat/missions/dvaered/frontier_war/fw02_escape.lua:161
 msgid "A problem with the Empire"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw02_escape.lua:145
-#, lua-format
+#: dat/missions/dvaered/frontier_war/fw02_escape.lua:161
 msgid ""
 "You explain to the major what problems you encountered. You talk about the "
 "strange deal the Empire has forced you to make with them and the major's "
@@ -36702,10 +36704,10 @@ msgid ""
 "don't blame you personally for what happened. They should accept you in "
 "their space now.\"\n"
 "   The major starts to go away, but then comes back \"Oh, I almost forgot to "
-"pay you. Hehe. Here are %s.\""
+"pay you. Hehe. Here are {credits}.\""
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw02_escape.lua:149
+#: dat/missions/dvaered/frontier_war/fw02_escape.lua:165
 msgid ""
 "You helped the Dvaered High Command to liberate Mr. Danftang, public "
 "relations executive at Goddard, who was imprisoned by the Za'lek for obscure "
@@ -36715,12 +36717,11 @@ msgid ""
 msgstr ""
 
 #. Pirate debt
-#: dat/missions/dvaered/frontier_war/fw02_escape.lua:151
+#: dat/missions/dvaered/frontier_war/fw02_escape.lua:167
 msgid "Everything is almost alright"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw02_escape.lua:151
-#, lua-format
+#: dat/missions/dvaered/frontier_war/fw02_escape.lua:167
 msgid ""
 "You explain to the major what problems you encountered. You talk about the "
 "strange deal the Empire has tried to make with you. \"Yes, the Imperial "
@@ -36728,18 +36729,18 @@ msgid ""
 "intentions from them. It was right for you not to accept their offer. So you "
 "bought a pirate fake transponder, right? I hope it was not too expensive!\"\n"
 "  When you tell him the sum you had to promise to pay, Major Tam squeaks. "
-"\"Whawhawhat? %s for a fake transponder! This is not trade, it is theft!\" "
-"\"Well, technically...\" You answer \"those folks are pirates, so it's their "
-"job to rob people.\" The major calms down \"Alright. I'll take care of the "
-"payment, so that they don't kill you, but you'll have to refund us, don't "
-"forget that! Oh, and by the way, I made sure with the Za'lek that they don't "
-"blame you personally for what happened. They should accept you in their "
-"space now.\"\n"
+"\"Whawhawhat? {price} for a fake transponder! This is not trade, it is theft!"
+"\" \"Well, technically...\" You answer \"those folks are pirates, so it's "
+"their job to rob people.\" The major calms down \"Alright. I'll take care of "
+"the payment, so that they don't kill you, but you'll have to refund us, "
+"don't forget that! Oh, and by the way, I made sure with the Za'lek that they "
+"don't blame you personally for what happened. They should accept you in "
+"their space now.\"\n"
 "   The major starts to go away, but then comes back \"Oh, I almost forgot to "
-"pay you. Hehe. Here are %s.\""
+"pay you. Hehe. Here are {credits}.\""
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw02_escape.lua:155
+#: dat/missions/dvaered/frontier_war/fw02_escape.lua:171
 msgid ""
 "You helped the Dvaered High Command to liberate Mr. Danftang, public "
 "relations executive at Goddard, who was imprisoned by the Za'lek for obscure "
@@ -36751,13 +36752,12 @@ msgstr ""
 
 #. Pirate cash
 #. Normally, the player should not achieve that (maybe with a trick I did not foresee, but it should be Xtremely hard)
-#: dat/missions/dvaered/frontier_war/fw02_escape.lua:157
-#: dat/missions/dvaered/frontier_war/fw02_escape.lua:163
+#: dat/missions/dvaered/frontier_war/fw02_escape.lua:173
+#: dat/missions/dvaered/frontier_war/fw02_escape.lua:179
 msgid "No major problem to report"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw02_escape.lua:157
-#, lua-format
+#: dat/missions/dvaered/frontier_war/fw02_escape.lua:173
 msgid ""
 "You explain to the major what problems you encountered. You talk about the "
 "strange deal the Empire has tried to make with you. \"Yes, the Imperial "
@@ -36771,10 +36771,10 @@ msgid ""
 "Za'lek that they don't blame you personally for what happened. They should "
 "accept you in their space now.\"\n"
 "   The major starts to go away, but then comes back \"Oh, I almost forgot to "
-"pay you. Hehe. Here are %s.\""
+"pay you. Hehe. Here are {credits}.\""
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw02_escape.lua:161
+#: dat/missions/dvaered/frontier_war/fw02_escape.lua:177
 msgid ""
 "You helped the Dvaered High Command to liberate Mr. Danftang, public "
 "relations executive at Goddard, who was imprisoned by the Za'lek for obscure "
@@ -36783,8 +36783,7 @@ msgid ""
 "forced you to buy a fake transponder at an outrageous price."
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw02_escape.lua:163
-#, lua-format
+#: dat/missions/dvaered/frontier_war/fw02_escape.lua:179
 msgid ""
 "You explain to the major what problems you encountered. You talk about the "
 "strange deal the Empire has tried to make with you. \"Yes, the Imperial "
@@ -36795,10 +36794,10 @@ msgid ""
 "don't blame you personally for what happened. They should accept you in "
 "their space now.\"\n"
 "  The major starts to go away, but then comes back \"Oh, I almost forgot to "
-"pay you. Hehe. Here are %s.\""
+"pay you. Hehe. Here are {credits}.\""
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw02_escape.lua:165
+#: dat/missions/dvaered/frontier_war/fw02_escape.lua:181
 msgid ""
 "You helped the Dvaered High Command to liberate Mr. Danftang, public "
 "relations executive at Goddard, who was imprisoned by the Za'lek for obscure "
@@ -36807,18 +36806,17 @@ msgid ""
 "you managed to survive somehow."
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw02_escape.lua:196
-#, lua-format
+#: dat/missions/dvaered/frontier_war/fw02_escape.lua:212
 msgid ""
-"\"Hello, %s! You remember us?\" Asks the captain, apparently unaware of the "
-"fact that his appearance is hard to forget. \"We are ready to embark "
-"whenever you want, pilot! You'll just have to make space for %s of cargo (we "
-"have some equipment). Oh yes, and there is apparently a small change in the "
-"plan regarding the Captain Leblanc. She won't be able to join us. Talk to "
-"the Lieutenant, he will explain it better.\""
+"\"Hello, {player}! You remember us?\" Asks the captain, apparently unaware "
+"of the fact that his appearance is hard to forget. \"We are ready to embark "
+"whenever you want, pilot! You'll just have to make space for {tonnes} of "
+"cargo (we have some equipment). Oh yes, and there is apparently a small "
+"change in the plan regarding the Captain Leblanc. She won't be able to join "
+"us. Talk to the Lieutenant, he will explain it better.\""
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw02_escape.lua:199
+#: dat/missions/dvaered/frontier_war/fw02_escape.lua:215
 msgid ""
 "\"Hello, citizen. I guess you would want to speak with the officers to have "
 "details about the plan. But tell me while you are here: there are many "
@@ -36830,7 +36828,7 @@ msgid ""
 "all around and nobody feels unsafe. There should be something else...\""
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw02_escape.lua:202
+#: dat/missions/dvaered/frontier_war/fw02_escape.lua:218
 msgid ""
 "\"I have ordered water and the waiter gave me that glass, with lots of "
 "bubbles. It does not look safe. Do you know what it is? I hope it's not "
@@ -36850,8 +36848,7 @@ msgid ""
 "did not fully recover from her decapitation during her last fight.\""
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw02_escape.lua:206
-#, lua-format
+#: dat/missions/dvaered/frontier_war/fw02_escape.lua:222
 msgid ""
 "\"Hi, citizen. Are you ready to transport us once more? Have you spoken to "
 "the Captain? And to the pilot? I don't really know the details of the "
@@ -36867,11 +36864,11 @@ msgid ""
 "   Strafer then arrives: \"Yep, I've been to the museum of Theras one day, "
 "and this riddle was written on a book from before the space age. The name of "
 "the author was: 'Senior High School Philosophy Class' that's a strange name "
-"actually. I remembered that riddle while we were hiking on %s not so long "
+"actually. I remembered that riddle while we were hiking on {pnt} not so long "
 "ago, and we saw a turtle.\""
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw02_escape.lua:211
+#: dat/missions/dvaered/frontier_war/fw02_escape.lua:227
 msgid ""
 "You look at the lieutenant, surprised not to see the captain Leblanc, as "
 "expected. \"Unplanned things have happened. The general has been attacked in "
@@ -36888,21 +36885,21 @@ msgid ""
 "when you decide.\""
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw02_escape.lua:216
+#: dat/missions/dvaered/frontier_war/fw02_escape.lua:232
 msgid "Ready for action?"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw02_escape.lua:216
+#: dat/missions/dvaered/frontier_war/fw02_escape.lua:232
 msgid ""
 "Are you ready to start \"Operation Drugstore Thunder\"? (Hamfresser named "
 "it.)"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw02_escape.lua:217
+#: dat/missions/dvaered/frontier_war/fw02_escape.lua:233
 msgid "At the hospital"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw02_escape.lua:217
+#: dat/missions/dvaered/frontier_war/fw02_escape.lua:233
 msgid ""
 "After giving the signal to Hamfresser, you join the cockpit of your ship and "
 "start the motors in anticipation of an escape. A heavy explosion coming from "
@@ -36914,31 +36911,30 @@ msgid ""
 "machine!\""
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw02_escape.lua:220
-#, lua-format
+#: dat/missions/dvaered/frontier_war/fw02_escape.lua:237
 msgid ""
-"Escape to %s in %s. Do NOT destroy any Za'lek inhabited ship (only drones "
-"are allowed)"
+"Escape to {pnt} in {sys}. Do NOT destroy any Za'lek inhabited ship (only "
+"drones are allowed)"
 msgstr ""
 
 #. Test to see if the player killed a zlk inhabited ship
-#: dat/missions/dvaered/frontier_war/fw02_escape.lua:238
-#: dat/missions/dvaered/frontier_war/fw02_escape.lua:466
+#: dat/missions/dvaered/frontier_war/fw02_escape.lua:256
+#: dat/missions/dvaered/frontier_war/fw02_escape.lua:488
 msgid "The mission failed"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw02_escape.lua:238
+#: dat/missions/dvaered/frontier_war/fw02_escape.lua:256
 msgid "The rule was not to kill anybody, did you remember?"
 msgstr ""
 
 #. Intercept the ship
 #. To reset it after the fight
 #. At first jump, it gets announced that you've got to land
-#: dat/missions/dvaered/frontier_war/fw02_escape.lua:262
+#: dat/missions/dvaered/frontier_war/fw02_escape.lua:280
 msgid "Journey to the other side"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw02_escape.lua:262
+#: dat/missions/dvaered/frontier_war/fw02_escape.lua:280
 msgid ""
 "After having outrun your enemies, you start inquiring about how the "
 "operation went at the hospital. A quick look at your living quarters gives "
@@ -36991,19 +36987,19 @@ msgstr ""
 #. /!\ We did not claim this system /!\
 #. Special case: JP from Arcturus to Goddard
 #. Functions for the escort
-#: dat/missions/dvaered/frontier_war/fw02_escape.lua:375
+#: dat/missions/dvaered/frontier_war/fw02_escape.lua:393
 msgid "Mission Failed: escort destroyed"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw02_escape.lua:375
+#: dat/missions/dvaered/frontier_war/fw02_escape.lua:393
 msgid "Your escort died. You have to abort the mission"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw02_escape.lua:429
+#: dat/missions/dvaered/frontier_war/fw02_escape.lua:447
 msgid "A new passenger"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw02_escape.lua:429
+#: dat/missions/dvaered/frontier_war/fw02_escape.lua:447
 msgid ""
 "The commandos gather near the airlock. This time, four combat androids are "
 "in the front. Hamfresser gives his orders and the first android smashes the "
@@ -37016,24 +37012,24 @@ msgid ""
 "received heavy damage. You jump at the cockpit and start the engines."
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw02_escape.lua:443
+#: dat/missions/dvaered/frontier_war/fw02_escape.lua:461
 msgid ""
 "You were supposed to disable that ship, not destroy it. How are you supposed "
 "to free anyone now?"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw02_escape.lua:447
+#: dat/missions/dvaered/frontier_war/fw02_escape.lua:465
 msgid ""
 "You were supposed to disable that ship, not let it escape. How are you "
 "supposed to free anyone now?"
 msgstr ""
 
 #. Hamfresser explains that we need to land at an hospital
-#: dat/missions/dvaered/frontier_war/fw02_escape.lua:454
+#: dat/missions/dvaered/frontier_war/fw02_escape.lua:472
 msgid "We are in trouble"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw02_escape.lua:454
+#: dat/missions/dvaered/frontier_war/fw02_escape.lua:472
 msgid ""
 "While you finally jump out, Hamfresser reports: \"We've got an unexpected "
 "situation in there. After we destroyed the androids, and got to the "
@@ -37058,16 +37054,14 @@ msgid ""
 "need to escape quickly.\""
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw02_escape.lua:458
-#: dat/missions/dvaered/frontier_war/fw02_escape.lua:464
-#, lua-format
-msgid "Land anywhere to let Hamfresser steal a machine. Time left: %s"
+#: dat/missions/dvaered/frontier_war/fw02_escape.lua:477
+#: dat/missions/dvaered/frontier_war/fw02_escape.lua:485
+msgid "Land anywhere to let Hamfresser steal a machine. Time left: {time}"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw02_escape.lua:466
-#, lua-format
+#: dat/missions/dvaered/frontier_war/fw02_escape.lua:488
 msgid ""
-"Hamfresser rushes to the bridge. \"All is lost, %s! The guy died. Our "
+"Hamfresser rushes to the bridge. \"All is lost, {player}! The guy died. Our "
 "mission failed!\""
 msgstr ""
 
@@ -37080,11 +37074,11 @@ msgstr ""
 #. 0 disables the stuff so it's unusable
 #. The player sees the blocus fleet
 #. avoid having that happening twice in systems where there are 2 blocus
-#: dat/missions/dvaered/frontier_war/fw02_escape.lua:551
+#: dat/missions/dvaered/frontier_war/fw02_escape.lua:573
 msgid "Troubles straight ahead!"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw02_escape.lua:551
+#: dat/missions/dvaered/frontier_war/fw02_escape.lua:573
 msgid ""
 "When approaching the jump point, your sensors pick up a squadron of military "
 "ships, that stationnate close to the jump point in a tight formation. No "
@@ -37097,24 +37091,23 @@ msgstr ""
 #. Strafer enters the system
 #. Force FLF combat music (note: must clear this later on).
 #. Put the VIP a ways off of the player but near the jump.
-#: dat/missions/dvaered/frontier_war/fw02_escape.lua:566
+#: dat/missions/dvaered/frontier_war/fw02_escape.lua:588
 #: dat/missions/empire/shipping/es02.lua:140
 msgid "Trader Gawain"
 msgstr ""
 
 #. The player discuss with Strafer
-#: dat/missions/dvaered/frontier_war/fw02_escape.lua:582
+#: dat/missions/dvaered/frontier_war/fw02_escape.lua:604
 msgid "A friend in the dark"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw02_escape.lua:582
-#, lua-format
+#: dat/missions/dvaered/frontier_war/fw02_escape.lua:604
 msgid ""
 "The Gawain hails you. When you respond, you hear a familiar voice. \"Strafer "
 "here. I was wondering why you were so long. It looks like you had troubles "
-"with the Za'lek after all. There are blockades in %s, %s, %s and %s. They "
-"scan all ships, you have no chance to cross these systems alive. What have "
-"you done to them to upset them like that? Anyway, I did not come empty-"
+"with the Za'lek after all. There are blockades in {1}, {2}, {3} and {4}. "
+"They scan all ships, you have no chance to cross these systems alive. What "
+"have you done to them to upset them like that? Anyway, I did not come empty-"
 "handed. I've got as much fuel as you want. Unfortunately, I can't board you "
 "as they would chase me as well, so I have jettison a few tanks at "
 "coordinates I will give to you. Just go there and scoop them. Good luck!\""
@@ -37122,41 +37115,40 @@ msgstr ""
 
 #. Strafer stops following the player
 #. Add some fuel, far away so that no npc gathers it
-#: dat/missions/dvaered/frontier_war/fw02_escape.lua:588
+#: dat/missions/dvaered/frontier_war/fw02_escape.lua:610
 msgid "FUEL"
 msgstr ""
 
 #. Player gathers fuel
-#: dat/missions/dvaered/frontier_war/fw02_escape.lua:597
+#: dat/missions/dvaered/frontier_war/fw02_escape.lua:619
 msgid "You filled your fuel tanks"
 msgstr ""
 
 #. Remove scan hooks
 #. Spawns the odd imperial pilot
-#: dat/missions/dvaered/frontier_war/fw02_escape.lua:617
+#: dat/missions/dvaered/frontier_war/fw02_escape.lua:639
 msgid "Strange Pilot"
 msgstr ""
 
 #. Don't wreck my Captain HewHew
-#: dat/missions/dvaered/frontier_war/fw02_escape.lua:625
+#: dat/missions/dvaered/frontier_war/fw02_escape.lua:647
 msgid "Help offer"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw02_escape.lua:625
-#, lua-format
+#: dat/missions/dvaered/frontier_war/fw02_escape.lua:647
 msgid ""
 "The pilot of the ship starts to talk with a strange and disturbing "
 "familiarity: \"Doing good, folks? Ya just walked into those Za'lek's freaks' "
 "space, wrecked a squadron, helped a prisoner escape and desolated an "
-"hospital. You're worse than the incident, mates!\" You wonder how this pilot "
+"hospital. You're worse than the Incident, mates!\" You wonder how this pilot "
 "could know so much about your operation, but the spiel continues: "
 "\"Hewhewhew! People usually think I'm some useless pirates scum. I know you "
-"thought about that! Neh, don't lie to me!\"\n"
+"thought that! Neh, don't lie to me!\"\n"
 "   The pilot's voice suddenly becomes harsh: \"In reality, I am a faithful "
-"subject of his Imperial Majesty, as you should be yourself, %s from Hakoi! "
-"But you denied your own nation, and for that you should be severely "
-"punished. Don't forget, %s: The Empire is watching you. Anywhere. Anytime. "
-"Anyhow.\n"
+"subject of his Imperial Majesty, as you should be yourself, {player} from "
+"Hakoi! But you denied your own nation, and for that you should be severely "
+"punished. Don't forget, {player}: The Empire is watching you. Anywhere. "
+"Anytime. Anyhow.\n"
 "   \"Hewhewhew! And what was the other one already? Oh yeah: The Emperor "
 "sees all! So old-fashioned! Hey! But ya're all lucky, 'cause the Empire "
 "feels in a merciful mood today. So at your next stop, you will kindly go and "
@@ -37164,86 +37156,83 @@ msgid ""
 "for us not to kill you!\""
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw02_escape.lua:633
-#, lua-format
+#: dat/missions/dvaered/frontier_war/fw02_escape.lua:656
 msgid ""
-"Do you accept the deal with the pirates? It costs %s, and you'll be able to "
-"skirt any imperial blocus."
+"Do you accept the deal with the pirates? It costs {price}, and you'll be "
+"able to skirt any imperial blocus."
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw02_escape.lua:633
+#: dat/missions/dvaered/frontier_war/fw02_escape.lua:657
 msgid "Accept, immediate payment"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw02_escape.lua:633
+#: dat/missions/dvaered/frontier_war/fw02_escape.lua:657
 msgid "Accept, deferred payment"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw02_escape.lua:637
+#: dat/missions/dvaered/frontier_war/fw02_escape.lua:661
 msgid "Immediate payment"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw02_escape.lua:637
+#: dat/missions/dvaered/frontier_war/fw02_escape.lua:661
 msgid ""
 "When you give the credit chip, the pirate looks surprised: \"Whow, mate, I "
 "didn't know I was talking to a millionaire. Well then thanks, here is your "
 "transponder.\""
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw02_escape.lua:639
-#: dat/missions/dvaered/frontier_war/fw02_escape.lua:648
-#, lua-format
+#: dat/missions/dvaered/frontier_war/fw02_escape.lua:664
+#: dat/missions/dvaered/frontier_war/fw02_escape.lua:675
 msgid ""
-"Escape to %s in %s. Thanks to your new fake transponder, the squadrons "
+"Escape to {pnt} in {sys}. Thanks to your new fake transponder, the squadrons "
 "should not stop you anymore"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw02_escape.lua:643
+#: dat/missions/dvaered/frontier_war/fw02_escape.lua:669
 #: dat/missions/neutral/seek_n_destroy.lua:463
 #: dat/missions/neutral/seek_n_destroy.lua:553
 msgid "Not enough money"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw02_escape.lua:643
+#: dat/missions/dvaered/frontier_war/fw02_escape.lua:669
 msgid ""
 "\"Don't try to trick me, crook! I can see from here that you don't have "
 "enough money!\""
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw02_escape.lua:646
+#: dat/missions/dvaered/frontier_war/fw02_escape.lua:672
 msgid "Pirate debt"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw02_escape.lua:646
+#: dat/missions/dvaered/frontier_war/fw02_escape.lua:672
 msgid ""
 "\"Here is your transponder,\" the pirate says. \"Don't forget to pay once "
 "you can, otherwise...\""
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw02_escape.lua:652
+#: dat/missions/dvaered/frontier_war/fw02_escape.lua:680
 msgid "You're way too expensive"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw02_escape.lua:652
+#: dat/missions/dvaered/frontier_war/fw02_escape.lua:680
 msgid ""
 "\"As you wish,\" says the pirate. \"Just come back when you've understood "
 "that I'm your only chance!\""
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw02_escape.lua:656
+#: dat/missions/dvaered/frontier_war/fw02_escape.lua:684
 msgid "Deal with the Empire"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw02_escape.lua:656
-#, lua-format
+#: dat/missions/dvaered/frontier_war/fw02_escape.lua:684
 msgid ""
 "As you approach, the agent seems to recognize you at first sight. \"Hello, "
-"%s. I guess they told you that I may have the solution to your little... "
-"problem.\" You look suspiciously at the agent and ask: \"What do you want in "
-"exchange?\" The other one smiles: \"Simple. I want to speak with the Dvaered "
-"captain. Give me 10 hecotseconds on the spacedock alone with him, not more, "
-"and the commander of the fleet in Alteris will forget to scan your ship when "
-"you'll jump to Goddard.\"\n"
+"{player}. I guess they told you that I may have the solution to your "
+"little... problem.\" You look suspiciously at the agent and ask: \"What do "
+"you want in exchange?\" The other one smiles: \"Simple. I want to speak with "
+"the Dvaered captain. Give me 10 hecotseconds on the spacedock alone with "
+"him, not more, and the commander of the fleet in Alteris will forget to scan "
+"your ship when you'll jump to Goddard.\"\n"
 "   That is for sure an uncommon request. You think at all the state secrets "
 "a wounded Hamfresser is able to give to the Empire in 10 hectoseconds. You "
 "then remember that, after all, Hamfresser is a professional, trained not to "
@@ -37252,11 +37241,11 @@ msgid ""
 "other hand, the pirate proposition still holds. So you answer:"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw02_escape.lua:658
+#: dat/missions/dvaered/frontier_war/fw02_escape.lua:686
 msgid "You made the only good choice"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw02_escape.lua:658
+#: dat/missions/dvaered/frontier_war/fw02_escape.lua:686
 msgid ""
 "After accepting, you invite the agent to follow you to the dock. You then "
 "enter your ship, where the commandos are waiting for you and inform "
@@ -37272,29 +37261,28 @@ msgid ""
 "the questions, but well. You never know.\""
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw02_escape.lua:661
-#, lua-format
+#: dat/missions/dvaered/frontier_war/fw02_escape.lua:690
 msgid ""
-"Escape to %s in %s. Thanks to your deal with the Empire, the squadron in "
-"Alteris won't prevent you from jumping to Goddard"
+"Escape to {pnt} in {sys}. Thanks to your deal with the Empire, the squadron "
+"in Alteris won't prevent you from jumping to Goddard"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw02_escape.lua:666
+#: dat/missions/dvaered/frontier_war/fw02_escape.lua:696
 msgid "That was the wrong answer"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw02_escape.lua:666
+#: dat/missions/dvaered/frontier_war/fw02_escape.lua:696
 msgid ""
 "\"Mwell.\" Says the agent. \"I guess you want to see for yourself that this "
 "is the only solution. If you're still alive when you're done, come back, we "
 "will be waiting for you.\""
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw02_escape.lua:671
+#: dat/missions/dvaered/frontier_war/fw02_escape.lua:701
 msgid "Shock of two worlds"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw02_escape.lua:671
+#: dat/missions/dvaered/frontier_war/fw02_escape.lua:701
 msgid ""
 "You hear an unusual and edgy voice coming from the living quarters. When you "
 "go there, you see that the VIP is back on his feet. \"To sum up, a Dvaered "
@@ -37429,43 +37417,20 @@ msgid ""
 "manageable, but now, the mission has failed."
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:63
-#, lua-format
-msgid ""
-"You land and walk around the spacedock, in search of your target's ship. You "
-"finally see it. A mighty %s, covered by the stigmas of the battle that just "
-"occurred. You decide to hide yourself behind crates close to the ship and "
-"wait for the pilot to come back and take off in order to finish your job in "
-"space.\n"
-"   When looking closer at the ship, you see ancient and recent marks on the "
-"hull, caused by all kinds of weapons during the lifetime of the ship, that "
-"have been repaired on spaceports. Among the ship's scars,you see a twisted "
-"welding around the ship's nose, filled with bubbles and think: \"Damn! "
-"They've got to deal with the same old deficient welding android that fixed "
-"my airlock on Alteris last time!\"\n"
-"   Suddenly, you realize someone is whispering behind you \"Hey, %s, you're "
-"wrecking my firing line!\" You turn around and see nothing but a deformed "
-"crate that continues to speak: \"It's me, Sergeant Nikolov. In the box. Hide "
-"yourself better or you will ruin our mission.\" You then remember that she "
-"is a member of the space infantry commandos, and Hamfresser's second in "
-"command. Tam probably sent her to execute the enemy pilot."
-msgstr ""
-
-#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:85
-#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:123
+#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:81
+#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:119
 msgid "The major seems to be waiting for you."
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:89
+#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:85
 msgid "Ready for some diplomacy?"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:89
-#, lua-format
+#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:85
 msgid ""
-"Major Tam seems to be in a very good mood: \"Hello, citizen %s! Have you got "
-"plans for tonight?\" You fear he may invite you to a brawl-party, or any "
-"other kind of event Dvaered usually organize when they want to have good "
+"Major Tam seems to be in a very good mood: \"Hello, citizen {player}! Have "
+"you got plans for tonight?\" You fear he may invite you to a brawl-party, or "
+"any other kind of event Dvaered usually organize when they want to have good "
 "time, but he continues: \"Because I've got a very important mission for "
 "you.\n"
 "   \"Let me explain the context to you: I am currently in the middle of a "
@@ -37479,23 +37444,22 @@ msgid ""
 "diplomatic meetings. Are you in?\""
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:92
+#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:88
 msgid "Another time maybe"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:92
+#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:88
 msgid "Major Tam really seems disappointed. \"As you wish, citizen...\""
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:95
+#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:91
 msgid "This is how we deal with our problems"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:95
-#, lua-format
+#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:91
 msgid ""
 "\"You won't regret that!\" Tam says... \"Unless you're killed in the process "
-"I guess... Anyway, I will go to %s in %s in my Vigilance. No doubt the "
+"I guess... Anyway, I will go to {pnt} in {sys} in my Vigilance. No doubt the "
 "assassins will set up an ambush somewhere on the way. You and a few pilots "
 "from the Special Operations Force (SOF) will locate them and wait for me to "
 "jump in. During the ambush, the assassins will be caught in the crossfire, "
@@ -37514,112 +37478,128 @@ msgid ""
 msgstr ""
 
 #. TODO: ensure the cleaning doesn't take too long
-#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:100
-#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:470
+#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:96
+#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:467
 #: dat/missions/dvaered/frontier_war/fw03_sirius.lua:490
 msgid "Dvaered Diplomacy"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:100
+#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:96
 msgid "Go to next system"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:100
+#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:96
 msgid "Wait until Strafer has scanned the system"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:100
+#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:96
 msgid "Wait for Tam and destroy the highlighted hostile ships"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:100
+#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:96
 msgid "Land anywhere to collect your pay"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:101
+#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:97
 msgid ""
 "You take part of an operation whose goal is to trap and destroy a group of "
 "well armed henchmen who are after Major Tam."
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:102
+#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:98
 msgid "It depends how many of your wingmen come back."
 msgstr ""
 
 #. Discussions with Major Tam at the bar
-#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:128
-#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:131
-#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:133
+#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:124
+#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:127
+#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:129
 msgid "Ask your questions to Major Tam"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:128
+#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:124
 msgid "What do you want to ask to Major Tam?"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:128
+#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:124
 msgid "Ask who are the assassins"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:128
+#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:124
 msgid "Ask about Battleaddict's soldiers"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:128
+#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:124
 msgid "Ask about his deeds as fighter pilot"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:128
+#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:124
 msgid "Ask news from Hamfresser"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:128
+#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:124
 msgid "Goodbye, we meet in space."
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:131
+#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:127
 msgid ""
 "Hey, do you think I'm some kind of amnesic? You literally asked this "
 "question 10 seconds ago!"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:192
-#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:233
+#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:188
+#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:229
 msgid "You were supposed to clean the system before pursuing the fleeing ship."
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:195
-#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:255
-#, lua-format
-msgid "You were supposed to land on %s."
+#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:191
+#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:252
+msgid "You were supposed to land on {pnt}."
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:211
-#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:236
-#, lua-format
-msgid "You were supposed to jump to %s."
+#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:207
+#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:232
+msgid "You were supposed to jump to {sys}."
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:228
-#, lua-format
+#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:224
 msgid ""
 "Your mission is a success, except for the escape of the enemy leader, "
-"Colonel Hamelsen. You can now collect your %s reward."
+"Colonel Hamelsen. You can now collect your {credits} reward."
 msgstr ""
 
 #. Landing after an enemy (victory as well)
 #. it's Hamelsen and she escapes
 #. No pity for non-Hamelsen henchmen
-#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:244
-#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:245
+#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:239
+#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:243
+#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:246
 #: dat/missions/dvaered/frontier_war/fw03_sirius.lua:248
-#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:249
-#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:251
 msgid "End of the hunt"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:245
-#, lua-format
+#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:239
+msgid ""
+"You land and walk around the spacedock, in search of your target's ship. You "
+"finally see it. A mighty {ship}, covered by the stigmas of the battle that "
+"just occurred. You decide to hide yourself behind crates close to the ship "
+"and wait for the pilot to come back and take off in order to finish your job "
+"in space.\n"
+"   When looking closer at the ship, you see ancient and recent marks on the "
+"hull, caused by all kinds of weapons during the lifetime of the ship, that "
+"have been repaired on spaceports. Among the ship's scars, you see a twisted "
+"welding around the ship's nose, filled with bubbles and think: \"Damn! "
+"They've got to deal with the same old deficient welding android that fixed "
+"my airlock on Alteris last time!\"\n"
+"   Suddenly, you realize someone is whispering behind you \"Hey, {player}, "
+"you're wrecking my firing line!\" You turn around and see nothing but a "
+"deformed crate that continues to speak: \"It's me, Sergeant Nikolov. In the "
+"box. Hide yourself better or you will ruin our mission.\" You then remember "
+"that she is a member of the space infantry commandos, and Hamfresser's "
+"second in command. Tam probably sent her to execute the enemy pilot."
+msgstr ""
+
+#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:243
 msgid ""
 "A few times later, you hear a message from Nikolov's radio: \"Tam here. The "
 "target escaped and won't come back to the ship. Clear the spacedock.\" The "
@@ -37631,10 +37611,10 @@ msgid ""
 "   \"Poor woman. It's hard to get a new post when you're the second in "
 "command of a dead warlord, you know. So I guess someone has managed to hire "
 "her to assassinate the major. Anyway, I guess you should have received your "
-"payment of %s by now.\""
+"payment of {credits} by now.\""
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:249
+#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:246
 msgid ""
 "A bit later, you see a woman coming from the empty corridor, anxiously "
 "looking behind her and pulling a key out of her pocket. While still "
@@ -37653,14 +37633,13 @@ msgid ""
 "space is definitely much better for morale.\""
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:251
-#, lua-format
+#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:248
 msgid ""
 "When you finally go to the bar to think about something else, you get "
-"notified on your holowatch that %s have been transferred to your account. "
-"The leader of the ambushers has been identified: it's Colonel Hamelsen, who "
-"used to work for Battleaddict before his death. Unfortunately, the Colonel "
-"has escaped."
+"notified on your holowatch that {credits} have been transferred to your "
+"account. The leader of the ambushers has been identified: it's Colonel "
+"Hamelsen, who used to work for Battleaddict before his death. Unfortunately, "
+"the Colonel has escaped."
 msgstr ""
 
 #. Give him nice outfits
@@ -37672,26 +37651,26 @@ msgstr ""
 #. This variable ensure the enemies only runaway once
 #. Spawn Tam and his crew
 #. Strafer sees the bountyhunters
-#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:372
+#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:369
 msgid "Hostiles spotted!"
 msgstr ""
 
 #. Remove all the markers.
 #. Strafer doesn't see anybody and returns
-#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:389
+#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:386
 msgid "No hostiles here. We can proceed to next system."
 msgstr ""
 
 #. Baddies are in position: start the battle after a small delay
-#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:400
+#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:397
 msgid "All right, let's wait for Tam"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:405
+#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:402
 msgid "There will be roasted Tam for lunch today!"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:409
+#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:406
 msgid "Tam is in place, folks! don't miss him, this time!"
 msgstr ""
 
@@ -37703,23 +37682,23 @@ msgstr ""
 #. Actually, after checking, this is very unlikely to happen...
 #. It's the first one who escapes
 #. You won't follow several enemies
-#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:416
-#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:426
-#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:467
+#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:413
+#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:423
+#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:464
 #: dat/missions/dvaered/frontier_war/fw03_sirius.lua:473
 #: dat/missions/dvaered/frontier_war/fw03_sirius.lua:485
-#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:492
+#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:495
 msgid "This is not good"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:416
+#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:413
 msgid ""
 "You suddenly realize that your radar doesn't receive Strafer's sensors data. "
 "This means that the Lieutenant got killed. As a result, the fleet is flying "
 "blind and the mission is failed."
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:426
+#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:423
 msgid ""
 "The blinking cross marked \"Major Tam\" on your radar screen suddenly turns "
 "off. You first believe this is an output bug and hit the screen with your "
@@ -37729,91 +37708,87 @@ msgid ""
 msgstr ""
 
 #. Start the battle
-#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:435
+#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:432
 msgid "What about I cook you to death?"
 msgstr ""
 
 #. Baddie death
 #. See if it's one of the 3 targets
-#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:446
+#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:443
 msgid "One of the targets was destroyed!"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:448
+#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:445
 msgid "All targets eliminated"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:448
+#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:445
 msgid ""
 "All three primary targets have been eliminated. The remaining ones are not "
 "dangerous anymore now. You can land to get your reward."
 msgstr ""
 
 #. Killed the last enemy after the pursuit
-#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:449
-#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:549
+#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:446
+#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:552
 msgid "The last target was destroyed! You can now land."
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:467
-#, lua-format
+#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:464
 msgid ""
 "While your sensors lose the signal of the target you were supposed to kill, "
 "you expect to receive a mission failure message, but instead, you hear Tam's "
 "ship communication: \"One of them escaped. Continue destroying the others. "
-"Afterwards, %s, you will jump to %s and destroy that ship.\""
+"Afterwards, {player}, you will jump to {sys} and destroy that ship.\""
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:470
-#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:490
+#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:468
+#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:491
 msgid "Clean the current system"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:470
-#, lua-format
-msgid "Jump to %s to follow your target"
+#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:469
+msgid "Jump to {sys} to follow your target"
 msgstr ""
 
 #: dat/missions/dvaered/frontier_war/fw03_sirius.lua:485
-#, lua-format
 msgid ""
 "While your sensors lose the signal of the target you were supposed to kill, "
 "you expect to receive a mission failure message, but instead, you hear Tam's "
 "ship communication: \"One of them escaped. Continue destroying the others. "
-"Afterwards, %s, you will land on %s to keep track on the pilot.\""
+"Afterwards, {player}, you will land on {pnt} to keep track on the pilot.\""
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:490
-#, lua-format
-msgid "Land on %s to follow your target"
+#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:492
+msgid "Land on {pnt} to follow your target"
 msgstr ""
 
 #. That's not very elegant...
 #. escort[1]:setNoDisable()
 #. Strafer is attacked: he runs away around the system
 #. time for stampede
-#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:525
+#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:528
 msgid "Hostiles are running away. Don't let them escape!"
 msgstr ""
 
 #. System cleaned
-#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:535
+#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:538
 #: dat/missions/neutral/patrol.lua:56
 msgid "Hostiles eliminated."
 msgstr ""
 
 #. Pursued enemy jumped out (this is actually kind of unlikely, but...)
 #. Pursued enemy landed (this is actually kind of unlikely, but...)
-#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:559
-#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:569
+#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:562
+#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:572
 msgid "The target ran away again: continue the pursuit."
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:592
+#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:595
 msgid "You won't catch me alive! Never!"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:601
+#: dat/missions/dvaered/frontier_war/fw03_sirius.lua:604
 msgid ""
 "A group of killers, who were after Major Tam have been trapped and killed. "
 "For now, we don't know who has paid them, but they were led by Colonel "
@@ -37961,69 +37936,62 @@ msgid ""
 "shortcut."
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:69
-#, lua-format
-msgid ""
-"A-NightClaws Leader to %s: intercept %s and control their security clearance "
-"code"
-msgstr ""
-
 #. This might be hard to translate, but that is not a problem IMHO as it is actually supposed to be an automatically generated message.
-#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:73
+#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:71
 msgid "caterer"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:74
+#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:72
 msgid "butcher"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:75
+#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:73
 msgid "brewer"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:76
+#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:74
 msgid "waiter"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:77
+#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:75
 msgid "vigil"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:78
+#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:76
 msgid "gladiator"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:79
+#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:77
 msgid "rat exterminator"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:80
+#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:78
 msgid "emergency doctor"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:81
+#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:79
 msgid "weapons dealer"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:82
+#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:80
 msgid "drug dealer"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:83
+#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:81
 msgid "torturer"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:98
+#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:96
 msgid ""
 "Judging by how he looks at you, Strafer needs you for another mission along "
 "with the Dvaered Space Force."
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:102
+#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:100
 msgid "We need you once more"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:102
+#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:100
 msgid ""
 "As you sit at his table, the clearly anxious Dvaered pilot stops biting his "
 "nails and explains why he is here.\n"
@@ -38037,17 +38005,17 @@ msgid ""
 "   \"Do you want to help us against that threat?\""
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:105
+#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:103
 msgid ""
 "Mm. I see. you probably have many much more interesting things to do that "
 "being loyal to the Dvaered Nation..."
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:108
+#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:106
 msgid "Here is the situation"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:108
+#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:106
 msgid ""
 "\"General Klank has summoned the Warlords in order to present them the "
 "Frontier invasion plan. When a meeting of the high council of warlords "
@@ -38069,60 +38037,59 @@ msgstr ""
 #. Strafer just died: now, there will be action for the player
 #. Killers go after the player around Laarss
 #. boarding the pacifier
-#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:112
-#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:135
-#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:205
-#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:522
-#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:554
-#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:634
-#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:665
+#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:110
+#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:133
+#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:206
+#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:526
+#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:558
+#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:638
+#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:669
 #: dat/missions/shark/sh04_meeting.lua:60
 #: dat/missions/shark/sh04_meeting.lua:63
 #: dat/missions/shark/sh06_arandon.lua:137
 msgid "The Meeting"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:113
+#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:111
 msgid ""
 "You are part of the space security service for an extraordinary meeting of "
 "the high council of Warlords, where the invasion plan of the frontier will "
 "be discussed."
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:114
+#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:112
 msgid "The greatness of House Dvaered."
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:135
-#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:205
-#, lua-format
-msgid "Stay close to %s and wait for orders"
+#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:134
+#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:207
+msgid "Stay close to {pnt} and wait for orders"
 msgstr ""
 
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:135
-#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:205
+#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:208
 msgid "Intercept suspect ship for visual identification"
 msgstr ""
 
 #. Player is running away
 #. Landing on Laars after Hamelsen
-#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:143
+#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:144
 msgid "Officer"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:143
+#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:144
 msgid ""
 "This Dvaered officer is probably waiting for you and might have information "
 "about the ex-colonel Hamelsen's escape."
 msgstr ""
 
 #. Player killed attackers, and can finally land for reward
-#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:148
-#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:151
+#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:149
+#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:152
 msgid "Time for a gorgeous reward?"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:148
+#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:149
 msgid ""
 "At the very moment you step out of your ship, you see an officer, alone on "
 "the dock, obviously waiting for you. After having moved forward, you "
@@ -38147,8 +38114,7 @@ msgid ""
 "of infinite space.\""
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:151
-#, lua-format
+#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:152
 msgid ""
 "You start wondering if the major will remember to pay you, but his voice "
 "suddenly changes: \"We definitely had better days, but you know, the true "
@@ -38160,11 +38126,11 @@ msgid ""
 "group of mercenaries so fast, but you already killed some of them, and "
 "Leblanc's squadron will kill even more in the near future. We will then hunt "
 "the ex-colonel Hamelsen down, and finally we will carry this invasion on.\n"
-"   \"Anyway, for now, we will transfer %s to your account, as a reward for "
-"this mission, and be certain that we will need you again soon!\""
+"   \"Anyway, for now, we will transfer {credits} to your account, as a "
+"reward for this mission, and be certain that we will need you again soon!\""
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:160
+#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:161
 msgid ""
 "You have taken part to the security of a meeting of Dvaered warlords which "
 "goal was to set the invasion plan of the Frontier. Unfortunately, the ex-"
@@ -38173,7 +38139,7 @@ msgid ""
 "incident."
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:168
+#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:169
 msgid ""
 "Harsh voice, frank gaze and easy trigger. The lieutenant Strafer is a "
 "Dvaered pilot."
@@ -38183,124 +38149,124 @@ msgstr ""
 #. hook.rm(takhook)
 #. Taking off from Laars for the death of Strafer and the attack from henchmen
 #. Chatter
-#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:196
+#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:197
 msgid ""
 "A-NightClaws Leader to all pilots: Engage and destroy this Schroedinger at "
 "all costs!"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:197
+#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:198
 msgid "A-NightClaws Second to Leader: I'm on it!"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:198
+#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:199
 msgid "Bye, suckers!"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:199
+#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:200
 msgid "Just wait for my shredders to..."
 msgstr ""
 
 #. Player flees from the system
-#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:211
+#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:215
 msgid "Look who is running away!"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:211
+#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:215
 msgid "You were supposed to secure a meeting, not to run away like that!"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:217
+#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:221
 msgid "What do you want to ask to the lieutenant before taking off?"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:217
+#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:221
 msgid "Ask for a briefing"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:217
+#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:221
 msgid "Ask about Colonel Hamelsen"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:217
+#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:221
 msgid "Ask why you were hired for this mission"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:217
+#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:221
 msgid "Ask how one becomes a warlord"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:217
+#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:221
 msgid "I am ready for action!"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:220
+#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:224
 msgid "Is it a kind of joke?"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:223
+#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:227
 msgid "You are obsessed with this question. Just move on, please."
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:226
+#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:230
 msgid "Hem... You asked the exact same question just before."
 msgstr ""
 
 #. Spawn the Beta squadrons
-#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:239
+#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:243
 msgid "B-Storks-4"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:241
+#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:245
 msgid "B-Storks-3"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:243
+#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:247
 msgid "B-Storks-2"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:245
+#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:249
 msgid "B-Storks-Lead"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:247
+#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:251
 msgid "B-Storks-7"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:249
+#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:253
 msgid "B-Storks-6"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:251
+#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:255
 msgid "B-Storks-5"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:253
-#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:255
+#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:257
+#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:259
 msgid "B-Hammer-4"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:257
+#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:261
 msgid "B-Hammer-3"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:259
+#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:263
 msgid "B-Hammer-2"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:261
+#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:265
 msgid "B-Hammer-Lead"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:277
+#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:281
 msgid "A-NightClaws-3"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:278
+#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:282
 msgid "A-NightClaws-4"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:279
+#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:283
 msgid "A-NightClaws-5"
 msgstr ""
 
@@ -38312,33 +38278,33 @@ msgstr ""
 #. This stores the number of ships the play has to control
 #. Hamelsen comes in
 #. Briefing by Leblanc.
-#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:318
+#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:322
 msgid "Read your messages"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:318
+#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:322
 msgid ""
 "Don't forget to read the messages Captain Leblanc will send to you. It "
 "contains valuable information."
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:319
+#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:323
 msgid "I hope everyone is listening carefully."
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:320
+#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:324
 msgid "Every incoming pilot must be visually controlled by one of us."
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:321
+#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:325
 msgid "I will notify each of you when you have a pilot to control."
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:322
+#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:326
 msgid "And you will hear the following audio signal."
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:324
+#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:328
 msgid ""
 "Last thing: I remind you to beware the Warlords: some of them may want to "
 "shoot at you because they love to watch lighter ships dodge for their lives."
@@ -38355,11 +38321,11 @@ msgstr ""
 #. Some patrol pilot is idle.
 #. A controlled ship is too close from station
 #. Player failed to control a ship: penalty
-#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:392
+#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:396
 msgid "An unidentified ship came close to the station"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:392
+#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:396
 msgid ""
 "A ship managed to approach the station, and you failed to control it. "
 "Fortunately, it was identified by the station's sensors and is not hostile. "
@@ -38368,19 +38334,26 @@ msgid ""
 msgstr ""
 
 #. A ship approaches from DHC: assign it to player
+#. Hamelsen is in range: do as usual
+#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:419
+#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:533
+msgid ""
+"A-NightClaws Leader to {player}: intercept {pltname} and control their "
+"security clearance code"
+msgstr ""
+
 #. Just because I cannot pass an argument to proximity hooks :(
 #. Player checks security clearance of a ship
-#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:445
+#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:449
 msgid "Controlling incoming ship"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:445
-#, lua-format
+#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:449
 msgid ""
 "As you approach the ship, your targeting array focuses on it, and its "
 "clearance code gets processed. You can soon read on your control pad: \"This "
-"citizen is an honorable %s whose presence is required for the meeting: let "
-"the ship land on the station.\""
+"citizen is an honorable {job} whose presence is required for the meeting: "
+"let the ship land on the station.\""
 msgstr ""
 
 #. Change osd if needed
@@ -38390,11 +38363,11 @@ msgstr ""
 #. Equips a quick and strong Hyena
 #. Remove all cargo (to make them lighter)
 #. Hamelsen managed to land. That is badbadbad.
-#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:512
+#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:516
 msgid "An unidentified ship landed on the station"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:512
+#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:516
 msgid ""
 "A ship managed to land on the station, and you failed to control it. "
 "Unidentified and potentially hostile individuals have entered the Dvaered "
@@ -38402,18 +38375,17 @@ msgid ""
 msgstr ""
 
 #. Landing on Laarss: indicate the player he has to follow her
-#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:515
+#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:519
 msgid "Hi there!"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:515
-#, lua-format
+#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:519
 msgid ""
 "The fleeing ship suddenly hails you. You answer and the face of the Colonel "
-"Hamelsen emerges from your holoscreen. \"No, you won't best me, %s. Not this "
-"time. Not anymore.\" Aware that she is now too far away for you to hope to "
-"catch her, you ask her what interest she finds in constantly harassing Major "
-"Tam. \"This is all that I have left,\" she answers.\n"
+"Hamelsen emerges from your holoscreen. \"No, you won't best me, {player}. "
+"Not this time. Not anymore.\" Aware that she is now too far away for you to "
+"hope to catch her, you ask her what interest she finds in constantly "
+"harassing Major Tam. \"This is all that I have left,\" she answers.\n"
 "   \"My hate for Tam and Klank is all that remains now that my Lord is dead. "
 "I dedicated my entire life to the greatness of House Dvaered, I practiced "
 "and sharpened all my skills to serve the Army at best. When I got recruited "
@@ -38433,44 +38405,41 @@ msgid ""
 "channel and lands."
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:520
+#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:524
 msgid "Follow her!"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:520
-#, lua-format
+#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:524
 msgid ""
 "A new message comes from Captain Leblanc. \"This is obviously a diversion! "
-"Everyone, back to your positions! %s, go and investigate on %s. Bring me the "
-"head of the ex-colonel Hamelsen!\""
+"Everyone, back to your positions! {player}, go and investigate on {pnt}. "
+"Bring me the head of the ex-colonel Hamelsen!\""
 msgstr ""
 
-#. Hamelsen is in range: do as usual
 #. Player checks security clearance of Hamelsen: let the fun begin
-#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:538
+#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:542
 msgid "Incoming ship refuses control"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:538
-#, lua-format
+#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:542
 msgid ""
 "When getting in range, you receive an alarm. This ship does not have an "
 "invitation. Suddenly, you see it accelerating as if the pilot wanted to "
 "force the blockade around the station. You hear an order from Captain "
-"Leblanc: \"A-NightClaws Leader to %s: intercept and destroy %s\"."
+"Leblanc: \"A-NightClaws Leader to {player}: intercept and destroy "
+"{pltname}\"."
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:554
-#, lua-format
-msgid "Engage %s"
+#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:558
+msgid "Engage {pltname}"
 msgstr ""
 
 #. Discuss with an officer on Laarss
-#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:559
+#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:563
 msgid "No trace of Hamelsen"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:559
+#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:563
 msgid ""
 "You approach the soldier, who seems to recognize you. Probably your portrait "
 "has been transmitted by Captain Leblanc. \"After we received the message "
@@ -38483,11 +38452,11 @@ msgstr ""
 #. Then put the fleeing spy
 #. Remove all cargo (to control their speed)
 #. Many enemies jump and kill Strafer
-#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:600
+#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:604
 msgid "Something is happening at the station"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:600
+#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:604
 msgid ""
 "You start heading to the station, but you hear many messages coming from the "
 "NightClaws squadron. A Schroedinger has managed to take off unnoticed from "
@@ -38496,70 +38465,68 @@ msgid ""
 "Strafer is catching up."
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:634
+#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:638
 msgid "Eliminate the hostile fighters"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:637
-#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:638
-#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:639
+#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:641
+#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:642
+#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:643
 msgid "Curiatius"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:646
+#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:650
 msgid "Now, it's your turn"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:646
-#, lua-format
+#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:650
 msgid ""
 "Your sensors suddenly pick up three hostile signals coming from Laars, just "
 "when Captain Leblanc sends her message: \"To all A-NightClaw pilots: follow "
 "and intercept the hostiles.\" You report about the three hostiles coming at "
-"you and she answers: \"%s, take care of those three. Don't let any of them "
-"escape.\""
-msgstr ""
-
-#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:648
-#, lua-format
-msgid "You fell in our trap, %s!"
-msgstr ""
-
-#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:649
-msgid "You're so dead!"
-msgstr ""
-
-#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:650
-msgid "Without any support!"
-msgstr ""
-
-#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:651
-msgid "Folks, please do less chatting and more killing."
+"you and she answers: \"{player}, take care of those three. Don't let any of "
+"them escape.\""
 msgstr ""
 
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:652
-msgid "Aye-aye, boss!"
+msgid "You fell in our trap, {player}!"
 msgstr ""
 
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:653
-msgid "Copy that!"
+msgid "You're so dead!"
 msgstr ""
 
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:654
-msgid "I'm as silent as a carp."
+msgid "Without any support!"
 msgstr ""
 
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:655
+msgid "Folks, please do less chatting and more killing."
+msgstr ""
+
+#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:656
+msgid "Aye-aye, boss!"
+msgstr ""
+
+#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:657
+msgid "Copy that!"
+msgstr ""
+
+#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:658
+msgid "I'm as silent as a carp."
+msgstr ""
+
+#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:659
 msgid "Same for me!"
 msgstr ""
 
 #. A killer died
 #. Watch out that 3 matches #killers
-#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:663
+#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:667
 msgid "Rid of them!"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:663
+#: dat/missions/dvaered/frontier_war/fw04_meeting.lua:667
 msgid ""
 "As the last enemy ship explodes, you watch to your sensorscreen, and notice "
 "that the alpha squadron has left the system. The fleet leader orders you to "
@@ -38603,60 +38570,60 @@ msgstr ""
 #. 7) Mace Pankration performed
 #. --
 #. common hooks
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:47
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:48
 msgid ""
 "Your only weapons should be Mace rockets: land and speak again with Major "
 "Tam."
 msgstr ""
 
 #. Joy cries (for the Mace throw)
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:50
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:51
 msgid "Wohoo!"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:51
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:52
 msgid "One less!"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:52
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:53
 msgid "Baoum!"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:53
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:54
 msgid "I'm in such a good shape!"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:54
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:55
 msgid "Top score, I'm coming!"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:55
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:56
 msgid "Eat that, you Llama freak!"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:56
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:57
 msgid "I am so a-Mace-ing!"
 msgstr ""
 
 #. Yep, I remember the puns I read on discord
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:57
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:58
 msgid "Dodge that!"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:58
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:59
 msgid "I got one right in the a... Hem. The engine..."
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:59
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:60
 msgid "Got you!"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:68
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:70
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:69
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:71
 msgid "An invitation"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:68
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:69
 msgid ""
 "Your communication channel informs you that your ship has recieved an "
 "holographic message through the Dvaered Army Long-Distance Messaging System. "
@@ -38675,7 +38642,7 @@ msgid ""
 "you remain right, loyal and strong for the rest of your own lifetime.\""
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:70
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:71
 msgid ""
 "You browse the attached folder and find out that the ceremony will take "
 "place around Dvaer Prime. As a pilot, you are invited to take part to a Mace "
@@ -38692,74 +38659,71 @@ msgstr ""
 #. No need to check the player only has mace rockets
 #. Mace Pankration: competitors and make teams
 #. Check the player only has mace rockets
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:77
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:352
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:388
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:396
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:439
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:468
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:78
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:353
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:393
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:401
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:448
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:481
 msgid "Dvaered Ballet"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:77
-#: dat/missions/empire/collective/ec04.lua:64
-#: dat/missions/sirius/achack/achack01.lua:48
-#, lua-format
-msgid "Fly to %s"
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:78
+msgid "Fly to {pnt}"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:78
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:79
 msgid ""
 "You are invited to a Mace Rocket Ballet in memory of Lieutenant Strafer."
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:79
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:80
 msgid "Say goodbye to Lieutenant Strafer"
 msgstr ""
 
 #. Entering (Dvaer)
 #. Flowers
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:99
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:119
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:279
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:100
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:120
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:280
 msgid "General Klank"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:100
-msgid "Sergeant Strafer"
-msgstr ""
-
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:101
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:128
-msgid "Private Micoult"
+msgid "Sergeant Strafer"
 msgstr ""
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:102
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:129
-msgid "Sergeant Garcia"
+msgid "Private Micoult"
 msgstr ""
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:103
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:130
-msgid "Corporal Johnson"
+msgid "Sergeant Garcia"
 msgstr ""
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:104
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:131
-msgid "Private Ernst"
+msgid "Corporal Johnson"
 msgstr ""
 
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:105
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:127
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:132
+msgid "Private Ernst"
+msgstr ""
+
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:106
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:128
 msgid "Lieutenant Guo"
 msgstr ""
 
 #. Introduction scene (with flowers everywhere)
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:141
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:142
 msgid "The Mace Ballet"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:141
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:142
 msgid ""
 "Your sensors detect a group of warships doing maneuvers around Dvaer Prime. "
 "When you approach, a Vigilance hails you and you recognize the voice of "
@@ -38783,15 +38747,15 @@ msgstr ""
 #. This handles people on the bar
 #. Sorting functions
 #. First, compute the people's scores
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:181
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:182
 msgid "Total Scores"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:188
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:189
 msgid "Dvaered People"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:188
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:189
 msgid ""
 "A rather large group is gathered around a few reserved tables. You recognize "
 "many faces, among which General Klank, Major Tam and the members of their "
@@ -38800,48 +38764,45 @@ msgid ""
 "black armbands and the slow military music broadcasted by the speakers."
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:193
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:194
 msgid "Major Tam is ready to explain the next stage of the ceremony to you."
 msgstr ""
 
 #. Ex-aequo always profit the player.
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:196
-#, lua-format
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:197
 msgid ""
 "While landing, you see the other participants of the ceremony gathered on "
-"the dock. Strafer's father, being the master of ceremony, announces:\n"
-"   \"Congratulations to %s, who is the great winner of the Mace Ballet! All "
-"participants will be rewarded depending to their rank.\""
+"the dock. Strafer's father, being the master of ceremonies, announces:\n"
+"   \"Congratulations to {name}, who is the great winner of the Mace Ballet! "
+"All participants will be rewarded depending to their rank.\""
 msgstr ""
 
 #. TODO: add lore about this Handbook
 #. Give a reward depending on the rank (10 is highest and 1 lowest)
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:205
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:208
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:219
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:225
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:228
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:231
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:234
-#, lua-format
-msgid "You recieve a %s as a reward."
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:206
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:209
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:220
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:226
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:229
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:232
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:235
+msgid "You receive a {1} as a reward."
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:211
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:215
-#, lua-format
-msgid "You recieve a %s and a %s as a reward."
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:212
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:216
+msgid "You recieve a {1} and a {2} as a reward."
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:222
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:223
 msgid "You recieve three Shredders as a reward."
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:237
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:238
 msgid "Major Tam warns you, and gives you a new task."
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:237
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:238
 msgid ""
 "After the results have been announced, Major Tam gets close to you. He seems "
 "to have something important to say: \"It was your first ballet, right? You "
@@ -38861,13 +38822,13 @@ msgid ""
 "me.\""
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:240
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:243
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:246
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:241
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:244
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:247
 msgid "Goodbye, Lieutenant Strafer"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:240
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:241
 msgid ""
 "Once participants have collected their rewards, you are invited to follow "
 "everyone in a shuttle that heads towards an arena that has been reserved for "
@@ -38882,7 +38843,7 @@ msgid ""
 "   \"For an answer I already have. And it is all but pleasant.\""
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:243
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:244
 msgid ""
 "\"Space, planets and stars. The reason why they stay untouched by human "
 "horror is simple and cruel: they do not care. The universe did not require "
@@ -38900,7 +38861,7 @@ msgid ""
 "   \"And Helmut Strafer's big plan is named Great House Dvaered.\""
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:246
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:247
 msgid ""
 "\"Great House Dvaered turns scarlet when its citizen spill their blood for "
 "it, Great House Dvaered loses a bit of its majesty anytime one of its ships "
@@ -38919,7 +38880,7 @@ msgid ""
 "Nation!\""
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:251
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:252
 msgid ""
 "You took part to a Mace Rocket Ballet in memory of Lieutenant Strafer, and "
 "won an atonishing prize. Major Tam warned you that hitmen are on your tracks "
@@ -38927,23 +38888,22 @@ msgid ""
 msgstr ""
 
 #. All the cases where the player is not authorized to land nor jump
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:261
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:262
 msgid "You left the system."
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:261
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:262
 msgid ""
 "You were supposed to take part in the competition, not leave the system."
 msgstr ""
 
 #. Approaching the group of soldiers
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:268
-#, lua-format
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:269
 msgid ""
-"You approach the group, and get close to Major Tam. \"Good day, citizen %s. "
-"I hope you are ready for the mace ballet!\" You answer that you have no idea "
-"what this ballet is about, but you are always ready when it comes to mace "
-"rockets.\n"
+"You approach the group, and get close to Major Tam. \"Good day, citizen "
+"{player}. I hope you are ready for the mace ballet!\" You answer that you "
+"have no idea what this ballet is about, but you are always ready when it "
+"comes to mace rockets.\n"
 "   \"The mace ballet, also known as mace triathlon, is a series of three "
 "events where pilots must honour the memory of their fallen comrade and show "
 "their skills. The members of the Nightclaws squadron will take part to the "
@@ -38955,24 +38915,24 @@ msgid ""
 "   \"Come at me when you're ready to take off."
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:278
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:279
 msgid ""
 "Leblanc is surrounded by her pilots, who somehow exchange jokes about their "
 "respective collections of chopped heads. The ambiance feels surprisingly "
 "relaxed."
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:279
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:280
 msgid "The general is talking to Major Tam."
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:280
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:281
 msgid ""
 "Nikolov is arm-wrestling half a dozen of soldiers. The cyborg sergeant seems "
 "to be very cautious in order not to harm them."
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:281
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:282
 msgid ""
 "Hamfresser stays behind a group of army technicians. He bows towards them, "
 "probably attempting to take part to the conversation, but no one seems to "
@@ -38981,21 +38941,21 @@ msgid ""
 "arms around his hips."
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:282
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:283
 msgid "Well-dressed woman"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:282
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:283
 msgid ""
 "One of the rare civilians around, this woman seems however to fit in the "
 "place. You think that she must be used to hang out with soldiers."
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:283
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:284
 msgid "Retired soldier"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:283
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:284
 msgid ""
 "An old captain who seems to have ironed his pageantry uniform for the "
 "occasion is talking to some civilians. His shoulders carry the weight of "
@@ -39003,28 +38963,28 @@ msgid ""
 "for comrades he loved and lost fighting up there."
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:284
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:285
 msgid "Sergeant"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:284
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:285
 msgid ""
 "This pilot is not a member of Leblanc's squadron, however, she discusses "
 "with them."
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:285
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:286
 msgid "Technician"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:285
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:286
 msgid ""
 "A military technician encourages his comrades who are arm-wrestling with "
 "Nikolov."
 msgstr ""
 
 #. Discussions
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:290
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:291
 msgid ""
 "Hello, citizen. I am glad to see you have been invited as well. you deserve "
 "it. It always annoys me to lose a good pilot like Strafer, but you know, "
@@ -39036,14 +38996,14 @@ msgid ""
 "recruiting pilots with such a high loss rate."
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:293
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:294
 msgid ""
 "Good day, citizen. You are the private pilot helping us in our task, right? "
 "I have heard that you are doing fairly good job. Continue and you will get "
 "rewared for your merit, be sure of that!"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:296
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:297
 msgid ""
 "Yeah, he was for sure a good guy. Of course, he was an \"educated\" man, "
 "like the others here, always calling everyone \"citizen\", and annoying "
@@ -39052,10 +39012,9 @@ msgid ""
 "certainly will be missed."
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:299
-#, lua-format
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:300
 msgid ""
-"Hey, %s! Long time no see, huh? How do you do? I've been stuck at the "
+"Hey, {player}! Long time no see, huh? How do you do? I've been stuck at the "
 "hospital lately because of all the damage taken during last mission. I got a "
 "brand new right arm, you see? With the latest bio and cyber enhancements. "
 "Targeting abilities have been increased by 0.23 percent, pulling force by "
@@ -39064,7 +39023,7 @@ msgid ""
 "the barracks."
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:302
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:303
 msgid ""
 "It feels so strange. I knew this day could come sooner or later, but yet... "
 "I can't really figure out how I and the children will live without my "
@@ -39072,7 +39031,7 @@ msgid ""
 "generation of Dvaered warriors is the sole purpose of wedding?"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:305
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:306
 msgid ""
 "The dark sea took so many of my ancestors, my own father, then my wife, and "
 "now my elder child. Fate did not make me die in my time, so I guess I am "
@@ -39080,17 +39039,16 @@ msgid ""
 "one after the other."
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:308
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:309
 msgid ""
 "You will take part to the mace ballet too? Ah! I can't wait to fight the "
 "friends of my big brother!"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:311
-#, lua-format
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:312
 msgid ""
-"\"Hello, citizen %s, how do you do?\" You ask the soldier how he knows your "
-"name and he answers: \"Well, I am part of the Nightclaws squadron, and "
+"\"Hello, citizen {player}, how do you do?\" You ask the soldier how he knows "
+"your name and he answers: \"Well, I am part of the Nightclaws squadron, and "
 "everyone knows you in the squadron. You private pilots aren't used to "
 "speaking with technicians, right? This is normal: at each stop, you have "
 "different ones, this is not suitable to making friends. But in our army, the "
@@ -39101,21 +39059,21 @@ msgid ""
 msgstr ""
 
 #. Instructions
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:317
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:318
 msgid "What do you want to ask Major Tam?"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:317
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:318
 msgid "Explain next stage"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:317
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:318
 msgid "Display the scores"
 msgstr ""
 
 #. if stage == 5 then
 #. Display the scores
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:331
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:332
 msgid ""
 "The first event consists in the \"Mace Throw\". There is a series of targets "
 "(old Llamas) and you have to hit them in the shortest time. The quickest "
@@ -39123,113 +39081,109 @@ msgid ""
 "Unicorp Mace Launchers?"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:335
-#, lua-format
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:336
 msgid ""
 "The second event consists in the \"Mace Stadion\". Crowns of flowers have "
 "been dropped out there, and some junior pilots from the academy camp in the "
 "gather zone with their mace launchers. They will aim at the competitors, and "
-"if your shield is disabled, you are eliminated. There are %d tons of flowers "
-"in total. The pilot who has gathered the most flowers before being "
+"if your shield is disabled, you are eliminated. There are {tonnes} of "
+"flowers in total. The pilot who has gathered the most flowers before being "
 "eliminated, or when time runs out, wins. It is forbidden to shoot at other "
 "competitors. Are you ready? Have you checked you have enough free cargo "
 "space?"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:339
-#, lua-format
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:340
 msgid ""
 "The third and last event consists of the \"Mace Pankration\". Each "
 "competitor must fight against an other competitor, and disable their shield. "
-"Winners recieve 7 points, and your adversary is %s. Killing is of course not "
-"allowed. Are you ready? Have you checked you are only equipped with Unicorp "
-"Mace Launchers?"
+"Winners recieve 7 points, and your adversary is {name}. Killing is of course "
+"not allowed. Are you ready? Have you checked you are only equipped with "
+"Unicorp Mace Launchers?"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:352
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:396
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:439
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:354
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:402
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:449
 msgid "Wait for the signal"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:352
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:355
 msgid "Hit the most targets before your opponents"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:364
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:369
 msgid "Target "
 msgstr ""
 
 #. Just in case
 #. Remember which joy cries have been used  /!\ this should have the same length as joy /!\
 #. Timer and messages
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:378
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:383
 msgid "The stars look very different today"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:379
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:384
 msgid "My rockets can't wait to fly for Strafer"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:380
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:385
 msgid "Poor small Llamas!"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:396
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:403
 msgid "Catch the most flowers possible"
 msgstr ""
 
 #. Bouuuh! they r cheating!
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:413
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:422
 msgid "Shooter"
 msgstr ""
 
 #. If player has zero shield: eliminated
 #. Timer and messages
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:427
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:436
 msgid "Time to pick up flowers"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:428
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:437
 msgid "You may as well give up now, I'm invincible!"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:429
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:438
 msgid "Flower Power, I'm coming!"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:439
-#, lua-format
-msgid "Defeat your opponent %s (nullify their shield)"
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:450
+msgid "Defeat your opponent {name} (nullify their shield)"
 msgstr ""
 
 #. Mark this one as player's opponent
 #. Timer and messages
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:458
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:471
 msgid ""
 "Hey, Tamtam, take your protein pills and put your helmet on, because I'M "
 "COMING FOR YOU!"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:459
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:472
 msgid "I will win for my brother!"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:460
-#, lua-format
-msgid "%s, are you ready for the punishment?"
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:473
+msgid "{player}, are you ready for the punishment?"
 msgstr ""
 
 #. Test wether the player only has mace rockets
 #. Increment the printing timer
 #. seconds
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:490
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:503
 #: dat/missions/neutral/race1.lua:129 dat/missions/neutral/race2.lua:164
 msgid "Go!"
 msgstr ""
 
 #. Increment the time over timer
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:501
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:514
 msgid "Time Over!"
 msgstr ""
 
@@ -39242,11 +39196,11 @@ msgstr ""
 #. A very agressive AI
 #. One of the competitors is killed
 #. This was a bad idea
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:567
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:580
 msgid "That was not very smart."
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:567
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:580
 msgid ""
 "While contemplating the hull of your opponent's ship being dislocated under "
 "the impact of your rockets, you suddently remember with horror that this is "
@@ -39263,17 +39217,17 @@ msgstr ""
 #. One of the targets is hit (Mace Throw)
 #. pick a joy cry
 #. Sort and print top scores
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:651
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:664
 msgid "Scores for the Mace Throw"
 msgstr ""
 
 #. One of the competitors is Idle (Mace Stadion)
 #. A competitor is hit during Stadion (problematic if the player is the agressor)
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:667
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:680
 msgid "This is not allowed!"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:667
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:680
 msgid ""
 "You are not supposed to shoot at the other competitors durnig the Mace "
 "Stadion. The Stadion has to be interrupted and you recieve 5 points of "
@@ -39283,7 +39237,7 @@ msgstr ""
 #. Back to previous stage
 #. Player is hit during Stadion
 #. Player has lost
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:684
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:697
 msgid ""
 "You have been eliminated. You won't be allowed to move any more until the "
 "time runs out. Your score will be equal to the number of flowers you already "
@@ -39291,15 +39245,15 @@ msgid ""
 msgstr ""
 
 #. End of the Mace Stadion
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:710
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:723
 msgid "Scores for the Mace Stadion"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:715
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:728
 msgid "Time Over"
 msgstr ""
 
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:715
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:728
 msgid "Land on Dvaer Prime."
 msgstr ""
 
@@ -39308,16 +39262,15 @@ msgstr ""
 #. Player has lost
 #. Identify who has lost
 #. Player won
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:736
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:753
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:767
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:781
-#, lua-format
-msgid "%s won against %s!"
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:749
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:766
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:780
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:794
+msgid "{1} won against {2}!"
 msgstr ""
 
 #. See if all duels are over
-#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:799
+#: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:812
 msgid "Scores for the Mace Pankration"
 msgstr ""
 
@@ -40179,6 +40132,12 @@ msgid ""
 "\"We'll send extra forces to %s to try to give you a chance to break through "
 "the blockade. You'll have to land on %s and extract our team. Be very "
 "careful. This is going to be no walk in the park.\""
+msgstr ""
+
+#: dat/missions/empire/collective/ec04.lua:64
+#: dat/missions/sirius/achack/achack01.lua:48
+#, lua-format
+msgid "Fly to %s"
 msgstr ""
 
 #. Handles the Collective encounters.
@@ -66297,7 +66256,7 @@ msgid ""
 "the galaxy more easily can also be purchased here, as well as licenses "
 "required for higher-end weaponry and starships. For example, you will "
 "require a Large Civilian Vessel License to purchase a Melendez Corporation "
-"Mule Bulk Cargo Starhip. As my previous owner found out, they don't do too "
+"Mule Bulk Cargo Starship. As my previous owner found out, they don't do too "
 "well in combat, however.\""
 msgstr ""
 
@@ -79839,8 +79798,8 @@ msgstr ""
 msgid "Unknown standing type '%s'!"
 msgstr ""
 
-#: src/nlua_safelanes.c:136 src/safelanes.c:239 src/safelanes.c:855
-#: src/safelanes.c:872
+#: src/nlua_safelanes.c:136 src/safelanes.c:231 src/safelanes.c:813
+#: src/safelanes.c:829
 msgid "Safe-lane vertex type is invalid."
 msgstr ""
 
@@ -82232,11 +82191,11 @@ msgstr ""
 msgid "#oAutonav: following target  %s has been lost."
 msgstr ""
 
-#: src/player_autonav.c:647
+#: src/player_autonav.c:646
 msgid "Target changed to current system"
 msgstr ""
 
-#: src/player_autonav.c:651
+#: src/player_autonav.c:650
 msgid "Not enough fuel for autonav to continue"
 msgstr ""
 
@@ -82255,10 +82214,12 @@ msgstr ""
 msgid "Trying to remove non-existant post-processing shader with id '%d'!"
 msgstr ""
 
-#: src/safelanes.c:262
+#: src/safelanes.c:251
 #, c-format
-msgid "Charted safe lanes for %d objects in %.3f s."
-msgstr ""
+msgid "Charted safe lanes for %d object in %.3f s."
+msgid_plural "Charted safe lanes for %d objects in %.3f s."
+msgstr[0] ""
+msgstr[1] ""
 
 #: src/save.c:127
 msgid "Trying to save game data"
