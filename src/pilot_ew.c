@@ -97,7 +97,7 @@ static void pilot_ewUpdate( Pilot *p )
  */
 void pilot_ewUpdateStatic( Pilot *p )
 {
-   p->ew_mass     = pilot_ewMass( p->solid->mass );
+   p->ew_mass = pilot_ewMass( p->solid->mass );
    pilot_ewUpdate( p );
 }
 
@@ -166,8 +166,8 @@ static double pilot_ewMass( double mass )
  */
 static double pilot_ewAsteroid( const Pilot *p )
 {
-   int i = space_isInField(&p->solid->pos);
-   if (i>=0)
+   int infield = space_isInField(&p->solid->pos);
+   if (infield>=0)
       return 1. / (1. + 0.4*cur_system->asteroids[i].density);
    else
       return 1.;

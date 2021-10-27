@@ -44,7 +44,7 @@ static ndata_start_t start_data; /**< The actual starting data. */
  */
 int start_load (void)
 {
-   xmlNodePtr node, cur, tmp;
+   xmlNodePtr node;
    xmlDocPtr doc;
    int cycles, periods, seconds;
 
@@ -75,7 +75,7 @@ int start_load (void)
       xmlr_strd( node, "name", start_data.name );
 
       if (xml_isNode(node, "player")) { /* we are interested in the player */
-         cur = node->children;
+         xmlNodePtr cur = node->children;
          do {
             xml_onlyNodes(cur);
 
@@ -88,7 +88,7 @@ int start_load (void)
                xmlr_strd( cur, "ship",    start_data.ship );
             }
             else if (xml_isNode(cur, "system")) {
-               tmp = cur->children;
+               xmlNodePtr tmp = cur->children;
                do {
                   xml_onlyNodes(tmp);
                   /** system name, @todo percent chance */
@@ -106,7 +106,7 @@ int start_load (void)
       }
 
       if (xml_isNode(node, "date")) {
-         cur = node->children;
+         xmlNodePtr cur = node->children;
          do {
             xml_onlyNodes(cur);
 
