@@ -417,7 +417,7 @@ function thug_heartbeat ()
 end
 
 function jie_death ()
-   misn.markerMove( misn_marker, system.get("Minerva Station") )
+   misn.markerMove( misn_marker, planet.get("Minerva Station") )
    misn.osdActive(2)
    misn_state = 2
 
