@@ -10,5 +10,6 @@ lua_source = files(
    'proximity.lua',
    'swapship.lua',
    'vn.lua',
+   'vntk.lua',
 )
 

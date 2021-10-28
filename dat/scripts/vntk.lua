@@ -1,9 +1,18 @@
---[[
-   Small wrapper around vn to do toolkit type stuff.
+--[[--
+Small wrapper around vn to do toolkit type stuff. Is similar to the builtin tk module but with much more functionality.
+
+@module vntk
 --]]
 local vn = require "vn"
 local vntk = {}
 
+--[[--
+Creates a series of message boxes to be displayed.
+
+   @tparam[opt] string title Title of the message boxes.
+   @tparam string|table text String or table of strings for the text of each consecutive text box.
+   @tparam table params Table of parameters
+--]]
 function vntk.msg( title, text, params )
    params = params or {}
    local transition = params.transition or {"blur",0.2}
@@ -29,6 +38,14 @@ function vntk.msg( title, text, params )
    vn.run()
 end
 
+--[[--
+Creates a series of message boxes with a yes or no prompt to be displayed.
+
+   @tparam[opt] string title Title of the message boxes.
+   @tparam string|table text String or table of strings for the text of each consecutive text box.
+   @tparam table params Table of parameters
+   @treturn boolean true if yes was pressed or false otherwise.
+--]]
 function vntk.yesno( title, text, params )
    params = params or {}
    local transition = params.transition or {"blur",0.2}
