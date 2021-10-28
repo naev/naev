@@ -585,7 +585,7 @@ static int factionL_dynAdd( lua_State *L )
    /* Parse parameters. */
    if (lua_istable(L,4)) {
       lua_getfield(L,4,"ai");
-      ai    = luaL_optstring(L,-1,NULL);
+      ai = luaL_optstring(L,-1,NULL);
       lua_pop(L,1);
 
       lua_getfield(L,4,"clear_allies");

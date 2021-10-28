@@ -510,6 +510,7 @@ void faction_clearEnemy( int f )
       return;
    }
    array_erase( &ff->enemies, array_begin(ff->enemies), array_end(ff->enemies) );
+   faction_computeGrid();
 }
 
 /**
