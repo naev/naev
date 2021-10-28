@@ -44,9 +44,8 @@ static int sp_check( unsigned int spid );
  */
 int sp_load (void)
 {
-   xmlNodePtr node, cur;
+   xmlNodePtr node;
    xmlDocPtr doc;
-   SlotProperty_t *sp;
 
    /* Load and read the data. */
    doc = xml_parsePhysFS( SP_DATA_PATH );
@@ -70,6 +69,9 @@ int sp_load (void)
    /* First pass, loads up ammunition. */
    sp_array = array_create( SlotProperty_t );
    do {
+      SlotProperty_t *sp;
+      xmlNodePtr cur;
+
       xml_onlyNodes(node);
       if (!xml_isNode(node,SP_XML_TAG)) {
          WARN(_("'%s' has unknown node '%s'."), SP_DATA_PATH, node->name);
@@ -159,7 +161,6 @@ const char *sp_display( unsigned int spid )
       return NULL;
    return sp_array[ spid-1 ].display;
 }
-
 
 /**
  * @brief Gets the description of a slot property (in English).

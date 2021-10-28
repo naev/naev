@@ -1,24 +1,23 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Proteron Dissident Dead Or Alive Bounty">
-  <avail>
-   <priority>4</priority>
-   <cond>player.numOutfit("Mercenary License") &gt; 0</cond>
-   <chance>360</chance>
-   <location>Computer</location>
-   <faction>Proteron</faction>
-  </avail>
-  <notes>
-   <tier>3</tier>
-  </notes>
- </mission>
- --]]
+ <avail>
+  <priority>4</priority>
+  <cond>player.numOutfit("Mercenary License") &gt; 0</cond>
+  <chance>360</chance>
+  <location>Computer</location>
+  <faction>Proteron</faction>
+ </avail>
+ <notes>
+  <tier>3</tier>
+ </notes>
+</mission>
+--]]
 --[[
 
    Dead or Alive Proteron Dissident Bounty
 
 --]]
-
 local fmt = require "format"
 require "missions.neutral.pirbounty_dead"
 
@@ -72,7 +71,6 @@ osd_msg["__save"] = true
 
 function create ()
    paying_faction = planet.cur():faction()
-   target_faction = faction.get( "Proteron Dissident" )
 
    local systems = lmisn.getSysAtDistance( system.cur(), 1, 3,
       function(s)
@@ -99,7 +97,7 @@ function create ()
    credits = 50e3
    reputation = 0
    board_failed = false
-   bounty_setup()
+   pship, credits, reputation = bounty_setup()
 
    -- Set mission details
    misn.setTitle( fmt.f( _("PD: Dead or Alive Bounty in {sys}"), {missys} ) )
@@ -109,19 +107,21 @@ function create ()
 end
 
 
+local _target_faction
 function set_faction( p )
    if not _target_faction then
       _target_faction = faction.dynAdd( "Independent", "Proteron Dissident", _("Proteron Dissident") )
-      _target_faction:dynEnemy( "Proteron" )
+      --_target_faction:dynEnemy( "Proteron" ) -- Avoid letting the proteron kill them
    end
-   p:setFaction( _target_faction )
+   return _target_faction
 end
 
 
 -- Set up the ship, credits, and reputation.
 function bounty_setup ()
    local choices = { "Schroedinger", "Hyena", "Llama", "Gawain" }
-   pship = choices[ rnd.rnd( 1, #choices ) ]
-   credits = 150e3 + rnd.sigma() * 15e3
-   reputation = rnd.rnd( 1, 2 )
+   local pship = choices[ rnd.rnd( 1, #choices ) ]
+   local credits = 150e3 + rnd.sigma() * 15e3
+   local reputation = rnd.rnd( 1, 2 )
+   return pship, credits, reputation
 end
