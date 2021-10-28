@@ -339,7 +339,7 @@ function bounty_setup ()
    elseif level == 2 then
       pship = "Pirate Shark"
       credits = 150e3 + rnd.sigma() * 50e3
-      reputation = 0
+      reputation = 0.5
    elseif level == 3 then
       if rnd.rnd() < 0.5 then
          pship = "Pirate Vendetta"
@@ -359,7 +359,7 @@ function bounty_setup ()
    elseif level == 5 then
       pship = "Pirate Kestrel"
       credits = 1.2e6 + rnd.sigma() * 200e3
-      reputation = 4
+      reputation = 3.5
    end
 end
 
