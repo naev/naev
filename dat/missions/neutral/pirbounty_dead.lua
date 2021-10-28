@@ -130,12 +130,13 @@ function create ()
       level = rnd.rnd( 4, #misn_title )
    end
 
+   -- Pirate details
    name = pilotname.pirate()
    pship = "Hyena"
    credits = 50e3
    reputation = 0
    board_failed = false
-   bounty_setup()
+   pship, credits, reputation = bounty_setup()
 
    -- Set mission details
    misn.setTitle( fmt.f( misn_title[level], {sys=missys} ) )
@@ -212,11 +213,6 @@ end
 
 
 function pilot_disable ()
-   if rnd.rnd() < 0.7 then
-      for i, j in ipairs( pilot.get() ) do
-         j:taskClear()
-      end
-   end
 end
 
 
@@ -332,6 +328,7 @@ end
 
 -- Set up the ship, credits, and reputation based on the level.
 function bounty_setup ()
+   local pship, credits, reputation
    if level == 1 then
       pship = "Hyena"
       credits = 50e3 + rnd.sigma() * 15e3
@@ -361,47 +358,55 @@ function bounty_setup ()
       credits = 1.2e6 + rnd.sigma() * 200e3
       reputation = 3.5
    end
+   return pship, credits, reputation
 end
 
 
 -- Spawn the ship at the location param.
 function spawn_pirate( param )
-   if not job_done and system.cur() == missys then
-      if jumps_permitted >= 0 then
-         misn.osdActive( 2 )
-         target_ship = pilot.add( pship, target_faction or "Pirate", param )
-         local mem = target_ship:memory()
-         mem.loiter = math.huge -- Should make them loiter forever
-         set_faction( target_ship )
-         target_ship:rename( name )
-         target_ship:setHilight( true )
-         hook.pilot( target_ship, "disable", "pilot_disable" )
-         hook.pilot( target_ship, "board", "pilot_board" )
-         hook.pilot( target_ship, "attacked", "pilot_attacked" )
-         death_hook = hook.pilot( target_ship, "death", "pilot_death" )
-         pir_jump_hook = hook.pilot( target_ship, "jump", "pilot_jump" )
-         pir_land_hook = hook.pilot( target_ship, "land", "pilot_jump" )
-
-
-         --[[
-         local pir_crew = target_ship:stats().crew
-         local pl_crew = player.pilot():stats().crew
-         if rnd.rnd() > (0.5 * (10 + pir_crew) / (10 + pl_crew)) then
-            can_capture = true
-         else
-            can_capture = false
-         end
-         --]]
-         -- Disabling and boarding is hard enough as is to randomly fail
-         -- TODO potentially do a small capturing minigame here
-         can_capture = true
-      else
-         fail( fmt.f( msg[1], {pltname=name} ) )
-      end
+   -- Not the time to spawn
+   if job_done or system.cur() ~= missys then
+      return
    end
+
+   -- Can't jump anymore
+   if jumps_permitted < 0 then
+      fail( fmt.f( msg[1], {pltname=name} ) )
+      return
+   end
+
+   misn.osdActive( 2 )
+   target_ship = pilot.add( pship, target_faction or "Pirate", param )
+   local mem = target_ship:memory()
+   mem.loiter = math.huge -- Should make them loiter forever
+   set_faction( target_ship )
+   target_ship:rename( name )
+   target_ship:setHilight( true )
+   hook.pilot( target_ship, "disable", "pilot_disable" )
+   hook.pilot( target_ship, "board", "pilot_board" )
+   hook.pilot( target_ship, "attacked", "pilot_attacked" )
+   death_hook = hook.pilot( target_ship, "death", "pilot_death" )
+   pir_jump_hook = hook.pilot( target_ship, "jump", "pilot_jump" )
+   pir_land_hook = hook.pilot( target_ship, "land", "pilot_jump" )
+
+   --[[
+   local pir_crew = target_ship:stats().crew
+   local pl_crew = player.pilot():stats().crew
+   if rnd.rnd() > (0.5 * (10 + pir_crew) / (10 + pl_crew)) then
+      can_capture = true
+   else
+      can_capture = false
+   end
+   --]]
+   -- Disabling and boarding is hard enough as is to randomly fail
+   -- TODO potentially do a small capturing minigame here
+   can_capture = true
+
+   return target_ship
 end
 
 
+local _target_faction
 -- Adjust pirate faction (used for "alive" bounties)
 function set_faction( p )
    if not _target_faction then

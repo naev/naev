@@ -37,7 +37,6 @@ local fmt = require "format"
 local pilotname = require "pilotname"
 local lmisn = require "lmisn"
 
-
 -- Mission details
 misn_title = {}
 misn_title[1] = _("#rPIRACY:#0: Quick Assassination Job in %s%s")
@@ -116,8 +115,8 @@ function create ()
    end
 
    name = pilotname.generic()
-   level_setup()
-   bounty_setup()
+   level = level_setup()
+   pship, credits, reputation = bounty_setup()
 
    -- Set mission details
    if pir.factionIsClan( paying_faction ) then
@@ -243,7 +242,7 @@ end
 -- Set up the level of the mission
 function level_setup ()
    local num_pirates = missys:presences()[target_faction]
-
+   local level
    if target_faction == "Independent" then
       level = 1
    elseif target_faction == "Trader" or target_faction == "Traders Guild" then
@@ -309,14 +308,15 @@ function level_setup ()
          level = rnd.rnd( 3, #misn_title )
       end
    end
+   return level
 end
 
 
 -- Set up the ship, credits, and reputation based on the level.
 function bounty_setup ()
-   pship = "Schroedinger"
-   credits = 50e3
-   reputation = 0
+   local pship = "Schroedinger"
+   local credits = 50e3
+   local reputation = 0
 
    if target_faction == "Empire" then
       if level == 1 then
@@ -527,25 +527,30 @@ function bounty_setup ()
       credits = 50e3 + rnd.sigma() * 5e3
       reputation = 0
    end
+   return pship, credits, reputation
 end
 
 
 -- Spawn the ship at the location param.
 function spawn_pirate( param )
-   if not job_done and system.cur() == missys then
-      if jumps_permitted >= 0 then
-         misn.osdActive( 2 )
-         target_ship = pilot.add( pship, target_faction, param )
-         target_ship:rename( name )
-         target_ship:setHilight( true )
-         hook.pilot( target_ship, "attacked", "pilot_attacked" )
-         hook.pilot( target_ship, "death", "pilot_death" )
-         hook.pilot( target_ship, "jump", "pilot_jump" )
-         hook.pilot( target_ship, "land", "pilot_jump" )
-      else
-         fail( _("MISSION FAILURE! Target got away.") )
-      end
+   if job_done or system.cur() ~= missys then
+      return
    end
+
+   if jumps_permitted < 0 then
+      fail( _("MISSION FAILURE! Target got away.") )
+      return
+   end
+
+   misn.osdActive( 2 )
+   target_ship = pilot.add( pship, target_faction, param )
+   target_ship:rename( name )
+   target_ship:setHilight( true )
+   hook.pilot( target_ship, "attacked", "pilot_attacked" )
+   hook.pilot( target_ship, "death", "pilot_death" )
+   hook.pilot( target_ship, "jump", "pilot_jump" )
+   hook.pilot( target_ship, "land", "pilot_jump" )
+   return target_ship
 end
 
 
