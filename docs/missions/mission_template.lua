@@ -98,6 +98,9 @@ function create ()
    -- something like the following commented out statement. However,
    -- this mission won't be doing anything fancy with the system, so we
    -- won't make a system claim for it.
+   -- Only one mission or event can claim a system at a time. Using claims
+   -- helps avoid mission and event collisions. Use claims for all systems
+   -- you intend to significantly mess with the behaviour of.
    --if not misn.claim(missys) then misn.finish(false) end
 
    -- Give the name of the NPC and the portrait used. You can see all
@@ -147,9 +150,9 @@ function accept ()
       misn.setReward( reward_text )
       misn.setDesc( fmt.f(_("A well-dressed man wants you to take him to {pnt} in the {sys} system so he get some sort of special suit."), {pnt=misplanet, sys=missys}) )
 
-      -- Markers indicate a target system on the map, it may not be
+      -- Markers indicate a target planet (or system) on the map, it may not be
       -- needed depending on the type of mission you're writing.
-      misn.markerAdd( missys, "low" )
+      misn.markerAdd( misplanet, "low" )
 
       -- The OSD shows your objectives.
       local osd_desc = {}
