@@ -113,6 +113,7 @@ They stare at you for a few seconds.
       {_("Disable all hints"), "offtut_yes"},
       {_("Nevermind"), "mainmenu"},
    }
+   vn.label("offtut_yes")
    vn.func( function ()
       var.push( "tut_disable", true )
    end )
