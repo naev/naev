@@ -97,7 +97,6 @@ hunter_hits = {}
 
 function create ()
    paying_faction = planet.cur():faction()
-   target_faction = faction.get( "Pirate" )
 
    local systems = lmisn.getSysAtDistance( system.cur(), 1, 3,
       function(s)
@@ -376,10 +375,9 @@ function spawn_pirate( param )
    end
 
    misn.osdActive( 2 )
-   target_ship = pilot.add( pship, target_faction or "Pirate", param )
+   target_ship = pilot.add( pship, get_faction(), param )
    local mem = target_ship:memory()
    mem.loiter = math.huge -- Should make them loiter forever
-   set_faction( target_ship )
    target_ship:rename( name )
    target_ship:setHilight( true )
    hook.pilot( target_ship, "disable", "pilot_disable" )
@@ -408,11 +406,11 @@ end
 
 local _target_faction
 -- Adjust pirate faction (used for "alive" bounties)
-function set_faction( p )
+function get_faction( p )
    if not _target_faction then
       _target_faction = faction.dynAdd( "Pirate", "Wanted Pirate", _("Wanted Pirate"), {clear_enemies=true, clear_allies=true} )
    end
-   p:setFaction( _target_faction )
+   return _target_faction
 end
 
 

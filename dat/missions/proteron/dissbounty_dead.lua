@@ -71,7 +71,6 @@ osd_msg["__save"] = true
 
 function create ()
    paying_faction = planet.cur():faction()
-   target_faction = faction.get( "Proteron Dissident" )
 
    local systems = lmisn.getSysAtDistance( system.cur(), 1, 3,
       function(s)
@@ -112,9 +111,9 @@ local _target_faction
 function set_faction( p )
    if not _target_faction then
       _target_faction = faction.dynAdd( "Independent", "Proteron Dissident", _("Proteron Dissident") )
-      _target_faction:dynEnemy( "Proteron" )
+      --_target_faction:dynEnemy( "Proteron" ) -- Avoid letting the proteron kill them
    end
-   p:setFaction( _target_faction )
+   return _target_faction
 end
 
 
