@@ -339,6 +339,7 @@ function enter ()
       jie = pilot.add("Kestrel", "Independent", pos, _("Jie de Luca"), {naked=true, ai="baddie_norun"})
       equipopt.generic( jie, nil, "elite" )
       jie:setHostile(true)
+      jie:setHilight(true)
 
       hook.pilot( jie, "death", "jie_death" )
       hook.pilot( jie, "board", "jie_board" )
