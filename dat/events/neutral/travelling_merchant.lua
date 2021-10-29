@@ -37,7 +37,7 @@ function create ()
    if not evt.claim( scur, true ) then evt.finish() end
 
    -- Must not be restricted
-   if csys:tags().restricted then evt.finish() end
+   if scur:tags().restricted then evt.finish() end
 
    -- Find uninhabited planet
    local planets = {}
