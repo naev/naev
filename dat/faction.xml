@@ -309,7 +309,8 @@
    <enemy>Raven Clan</enemy>
    <enemy>Black Lotus</enemy>
   </enemies>
-  <lane_length_per_presence>170</lane_length_per_presence>
+  <lane_length_per_presence>300</lane_length_per_presence>
+  <lane_base_cost>50</lane_base_cost>
  </faction>
  <faction>
   <name>Proteron</name>
@@ -332,7 +333,8 @@
    <enemy>Raven Clan</enemy>
    <enemy>Black Lotus</enemy>
   </enemies>
-  <lane_length_per_presence>143</lane_length_per_presence>
+  <lane_length_per_presence>250</lane_length_per_presence>
+  <lane_base_cost>50</lane_base_cost>
  </faction>
  <faction>
   <name>Frontier</name>
@@ -357,7 +359,8 @@
    <enemy>Raven Clan</enemy>
    <enemy>Black Lotus</enemy>
   </enemies>
-  <lane_length_per_presence>200</lane_length_per_presence>
+  <lane_length_per_presence>400</lane_length_per_presence>
+  <lane_base_cost>50</lane_base_cost>
  </faction>
  <faction>
   <name>Traders Guild</name>
@@ -402,7 +405,8 @@
    <enemy>Raven Clan</enemy>
    <enemy>Black Lotus</enemy>
   </enemies>
-  <lane_length_per_presence>143</lane_length_per_presence>
+  <lane_length_per_presence>250</lane_length_per_presence>
+  <lane_base_cost>40</lane_base_cost>
  </faction>
  <faction>
   <name>Thurion</name>
@@ -483,7 +487,8 @@
    <enemy>Raven Clan</enemy>
    <enemy>Black Lotus</enemy>
   </enemies>
-  <lane_length_per_presence>143</lane_length_per_presence>
+  <lane_length_per_presence>250</lane_length_per_presence>
+  <lane_base_cost>40</lane_base_cost>
  </faction>
  <faction>
   <name>Za'lek</name>
@@ -509,7 +514,8 @@
    <enemy>Raven Clan</enemy>
    <enemy>Black Lotus</enemy>
   </enemies>
-  <lane_length_per_presence>143</lane_length_per_presence>
+  <lane_length_per_presence>250</lane_length_per_presence>
+  <lane_base_cost>40</lane_base_cost>
  </faction>
  <faction>
   <name>Sirius</name>
@@ -536,7 +542,8 @@
    <enemy>Raven Clan</enemy>
    <enemy>Black Lotus</enemy>
   </enemies>
-  <lane_length_per_presence>143</lane_length_per_presence>
+  <lane_length_per_presence>200</lane_length_per_presence>
+  <lane_base_cost>35</lane_base_cost>
  </faction>
  <faction>
   <name>Goddard</name>
@@ -563,6 +570,7 @@
    <enemy>Black Lotus</enemy>
   </enemies>
   <lane_length_per_presence>143</lane_length_per_presence>
+  <lane_base_cost>0</lane_base_cost>
  </faction>
  <faction>
   <name>Mercenary</name>
