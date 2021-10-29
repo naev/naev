@@ -747,7 +747,6 @@ static int safelanes_activateByGradient( cholmod_dense* Lambda_tilde, int iters_
                Linv = safelanes_initialConductivity(ei);
                score *= ALPHA * Linv * Linv;
                score += LAMBDA;
-               DEBUG("score=%.3e",score);
 
                cost = 1. / safelanes_initialConductivity(ei) / faction_stack[fi].lane_length_per_presence;
                if (score < score_best) {
