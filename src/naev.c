@@ -915,7 +915,7 @@ void display_fps( const double dt )
    x = fps_x;
    y = fps_y;
    if (conf.fps_show) {
-      gl_print( NULL, x, y, NULL, "%3.2f", fps );
+      gl_print( NULL, x, y, &cFontWhite, "%3.2f", fps );
       y -= gl_defFont.h + 5.;
    }
 
@@ -924,14 +924,14 @@ void display_fps( const double dt )
       dt_mod_base = player_dt_default();
    }
    if (dt_mod != dt_mod_base)
-      gl_print( NULL, x, y, NULL, "%3.1fx", dt_mod / dt_mod_base);
+      gl_print( NULL, x, y, &cFontWhite, "%3.1fx", dt_mod / dt_mod_base);
 
    if (!paused || !player_paused || !conf.pause_show)
       return;
 
    y = SCREEN_H / 3. - gl_defFontMono.h / 2.;
    gl_printMidRaw( &gl_defFontMono, SCREEN_W, 0., y,
-         NULL, -1., _("PAUSED") );
+         &cFontWhite, -1., _("PAUSED") );
 }
 
 

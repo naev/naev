@@ -37,8 +37,6 @@ misn_state = nil
 targetplanet = "Niflheim"
 targetsys = planet.get(targetplanet):system():nameRaw()
 
-misn_desc = string.format(_("You have been entrusted with stealing information from Baroness Eve at %s in the %s system."), _(targetplanet), _(targetsys))
-
 money_reward = 200e3
 
 function create ()
@@ -47,7 +45,7 @@ function create ()
    end
    misn.setReward( _("A step closer to Kex's freedom") )
    misn.setTitle( _("Freeing Kex") )
-   misn.setDesc( misn_desc )
+   misn.setDesc( string.format(_("You have been entrusted with stealing information from Baroness Eve at %s in the %s system."), _(targetplanet), _(targetsys)) )
 
    misn.setNPC( minerva.kex.name, minerva.kex.portrait, minerva.kex.description )
 end
@@ -71,9 +69,18 @@ function accept ()
    misn_marker = misn.markerAdd( planet.get(targetplanet) )
 
    hook.land("generate_npc")
-   hook.load("generate_npc")
+   hook.load("loadfunc")
    hook.enter("enter")
 
+   generate_npc()
+end
+
+
+function loadfunc ()
+   -- Reset state on load if player got killed when trying to flee
+   if misn_state == 1 then
+      misn_state = 0
+   end
    generate_npc()
 end
 
@@ -81,28 +88,28 @@ end
 function generate_npc ()
    if planet.cur() == planet.get("Minerva Station") then
       misn.npcAdd( "approach_kex", minerva.kex.name, minerva.kex.portrait, minerva.kex.description )
-
    elseif planet.cur() == planet.get(targetplanet) and misn_state==0 then
-
-      -- Don't save in case the player gets stuck with a shitty ship and gets massacred over and over
-      player.allowSave(false)
-
-      vn.clear()
-      vn.scene()
-      vn.transition()
-      vn.na(string.format(_("You land on %s and proceed to discretely approach one of the terminals and connect the program that Kex gave you."), _(targetplanet)))
-      vn.na(_("The terminal lights up dimly and begins to compute whatever was on the program. After a while it seems to begin downloading large amounts of data while you impatiently wait."))
-      vn.music( "snd/sounds/loops/alarm.ogg" ) -- blaring alarm
-      vn.na(_("Suddenly, an alarm begins to blare. Before the security screen shuts down in the terminal you are able to grab the program as you make a run for your ship. In the background, you hear people yelling and running around. It seems like you have to get out of here as soon as possible."))
-      vn.na(_("This is probably what Kex meant with things going sour. It seems like you have a head start on your pursuers, but you may not be able to count on it for long."))
-      vn.run()
-
-      -- Advance mission and get out of there
-      misn.markerMove( misn_marker, planet.get("Minerva Station") )
-      misn_state = 1
-      misn.osdActive(2)
-      player.takeoff()
+      misn.npcAdd( "approach_terminal", _("Terminal"), minerva.terminal.portrait, _("A discrete terminal in the corner of the landing bay, you should be able to connect the program Kex gave you to it.") )
    end
+end
+
+
+function approach_terminal ()
+   vn.clear()
+   vn.scene()
+   vn.transition()
+   vn.na(string.format(_("You land on %s and proceed to discretely approach one of the terminals and connect the program that Kex gave you."), _(targetplanet)))
+   vn.na(_("The terminal lights up dimly and begins to compute whatever was on the program. After a while it seems to begin downloading large amounts of data while you impatiently wait."))
+   vn.music( "snd/sounds/loops/alarm.ogg" ) -- blaring alarm
+   vn.na(_("Suddenly, an alarm begins to blare. Before the security screen shuts down in the terminal you are able to grab the program as you make a run for your ship. In the background, you hear people yelling and running around. It seems like you have to get out of here as soon as possible."))
+   vn.na(_("This is probably what Kex meant with things going sour. It seems like you have a head start on your pursuers, but you may not be able to count on it for long."))
+   vn.run()
+
+   -- Advance mission and get out of there
+   misn.markerMove( misn_marker, planet.get("Minerva Station") )
+   misn_state = 1
+   misn.osdActive(2)
+   player.takeoff()
 end
 
 function approach_kex ()

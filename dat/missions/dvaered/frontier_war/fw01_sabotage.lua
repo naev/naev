@@ -470,6 +470,10 @@ function fighterDuel()
    hook.timer( 2.5, "message", {pilot = hamelsen, msg = _("You're the best, boss!")} )
    hook.timer( 3.0, "message", {pilot = randguy, msg = _("Yeah!")} )
 
+   -- Prevent both Goddards from colliding with Vendetta's ammo.
+   battleaddict:setFaction("Dvaered")
+   klank:setFaction("Dvaered")
+
    klank2:setNoDeath() -- Actually it should not be necessary, but...
    klank2:setNoDisable()
 

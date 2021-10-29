@@ -41,6 +41,7 @@
 -- unique missions.
 local fmt = require "format"
 local neu = require "common.neutral"
+local vntk = require "vntk"
 
 --[[
 Multi-paragraph dialog strings should go here, each with an identifiable
@@ -98,6 +99,9 @@ function create ()
    -- something like the following commented out statement. However,
    -- this mission won't be doing anything fancy with the system, so we
    -- won't make a system claim for it.
+   -- Only one mission or event can claim a system at a time. Using claims
+   -- helps avoid mission and event collisions. Use claims for all systems
+   -- you intend to significantly mess with the behaviour of.
    --if not misn.claim(missys) then misn.finish(false) end
 
    -- Give the name of the NPC and the portrait used. You can see all
@@ -132,10 +136,10 @@ function accept ()
 
    -- This will create the typical "Yes/No" dialogue. It returns true if
    -- yes was selected. 
-   if tk.yesno( _("My Suit Collection"),
+   if vntk.yesno( _("My Suit Collection"),
          fmt.f(ask_text, {reward=reward_text}) ) then
       -- Followup text.
-      tk.msg( _("My Suit Collection"), _([["Fantastic! I knew you would do it! Like I said, I'll pay you as soon as we get there. No rush! Just bring me there when you're ready.]]) )
+      vntk.msg( _("My Suit Collection"), _([["Fantastic! I knew you would do it! Like I said, I'll pay you as soon as we get there. No rush! Just bring me there when you're ready.]]) )
 
       -- Accept the mission
       misn.accept()
@@ -147,9 +151,9 @@ function accept ()
       misn.setReward( reward_text )
       misn.setDesc( fmt.f(_("A well-dressed man wants you to take him to {pnt} in the {sys} system so he get some sort of special suit."), {pnt=misplanet, sys=missys}) )
 
-      -- Markers indicate a target system on the map, it may not be
+      -- Markers indicate a target planet (or system) on the map, it may not be
       -- needed depending on the type of mission you're writing.
-      misn.markerAdd( missys, "low" )
+      misn.markerAdd( misplanet, "low" )
 
       -- The OSD shows your objectives.
       local osd_desc = {}
@@ -179,7 +183,7 @@ function land ()
       -- Mission accomplished! Now we do an outro dialog and reward the
       -- player. Rewards are usually credits, as shown here, but
       -- other rewards can also be given depending on the circumstances.
-      tk.msg( fmt.f(_([[As you arrive on {pnt}, your passenger reacts with glee. "I must sincerely thank you, kind stranger! Now I can finally complete my suit collection, and it's all thanks to you. Here is {reward}, as we agreed. I hope you have safe travels!"]]), {pnt=misplanet, reward=reward_text}) )
+      vntk.msg( fmt.f(_([[As you arrive on {pnt}, your passenger reacts with glee. "I must sincerely thank you, kind stranger! Now I can finally complete my suit collection, and it's all thanks to you. Here is {reward}, as we agreed. I hope you have safe travels!"]]), {pnt=misplanet, reward=reward_text}) )
 
       -- Reward the player. Rewards are usually credits, as shown here,
       -- but other rewards can also be given depending on the

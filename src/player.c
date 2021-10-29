@@ -1455,11 +1455,8 @@ void player_targetPlanet (void)
  */
 int player_land( int loud )
 {
-   int tp, silent;
-   double td;
    Planet *planet;
-
-   silent = 0; /* Whether to suppress the land ack noise. */
+   int silent = 0; /* Whether to suppress the land ack noise. */
 
    if (landed) { /* player is already landed */
       takeoff(1);
@@ -1483,8 +1480,8 @@ int player_land( int loud )
    }
 
    if (player.p->nav_planet == -1) { /* get nearest planet target */
-      td = -1; /* temporary distance */
-      tp = -1; /* temporary planet */
+      double td = -1.; /* temporary distance */
+      int tp = -1; /* temporary planet */
       for (int i=0; i<array_size(cur_system->planets); i++) {
          planet = cur_system->planets[i];
          double d = vect_dist(&player.p->solid->pos,&planet->pos);

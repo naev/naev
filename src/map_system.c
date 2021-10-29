@@ -304,8 +304,9 @@ static void map_system_render( double bx, double by, double w, double h, void *d
    offset = h - pitch*nshow;
    for ( i=0; i<array_size(sys->planets); i++ ) {
       p=sys->planets[i];
-      if (planet_isKnown( p ))
-         vis_index++;
+      if (!planet_isKnown( p ))
+         continue;
+      vis_index++;
       if ( p->gfx_space == NULL) {
          WARN( _("No gfx for %s...\n"),p->name );
       } else {

@@ -57,10 +57,10 @@ function create ()
 end
 
 function accept()
-   tk.msg(_("A risky retrieval"), _([["Oh, that's great! Okay, here's what Baron Sauterfeldt needs you to do. You should fly to the Dvaered world %s. There's an art museum dedicated to one of the greatest Warlords in recent Dvaered history. I forget his name. Drovan or something? Durvan? Uh, anyway. This museum has a holopainting of the Warlord and his military entourage. His Lordship really wants this piece of art, but the museum has refused to sell it to him. So, we've sent agents to... appropriate... the holopainting."]]):format(pnt:name()))
-   tk.msg(_("A risky retrieval"), _([[You raise an eyebrow, but the pilot on the other end seems to be oblivious to the gesture. "So, right, you're going to %s to meet with our agents. You should find them in the spaceport bar. They'll get the item onto your ship, and you'll transport it out of Dvaered space. All quiet-like of course. No need for the authorities to know until you're long gone. Don't worry, our people are pros. It'll go off without a hitch, trust me."]]):format(pnt:name()))
+   tk.msg(_("A risky retrieval"), fmt.f(_([["Oh, that's great! Okay, here's what Baron Sauterfeldt needs you to do. You should fly to the Dvaered world {pnt}. There's an art museum dedicated to one of the greatest Warlords in recent Dvaered history. I forget his name. Drovan or something? Durvan? Uh, anyway. This museum has a holopainting of the Warlord and his military entourage. His Lordship really wants this piece of art, but the museum has refused to sell it to him. So, we've sent agents to... appropriate... the holopainting."]]), {pnt=pnt}))
+   tk.msg(_("A risky retrieval"), fmt.f(_([[You raise an eyebrow, but the pilot on the other end seems to be oblivious to the gesture. "So, right, you're going to {pnt} to meet with our agents. You should find them in the spaceport bar. They'll get the item onto your ship, and you'll transport it out of Dvaered space. All quiet-like of course. No need for the authorities to know until you're long gone. Don't worry, our people are pros. It'll go off without a hitch, trust me."]]), {pnt=pnt}))
    tk.msg(_("A risky retrieval"), _([[You smirk at that. You know from experience that things seldom 'go off without a hitch', and this particular plan doesn't seem to be all that well thought out. Still, it doesn't seem like you'll be in a lot of danger. If things go south, they'll go south well before you are even in the picture. And even if the authorities somehow get on your case, you'll only have to deal with the planetary police, not the entirety of House Dvaered.]]))
-   tk.msg(_("A risky retrieval"), _([[You ask the Baron's messenger where this holopainting needs to be delivered. "His Lordship will be taking your delivery in the %s system, aboard his ship the Pinnacle," he replies. "Once you arrive with the holopainting onboard your ship, hail the Pinnacle and ask for docking permission. They'll know who you are, so you should be allowed to dock. You'll be paid on delivery. Any questions?" You indicate that you know what to do, then cut the connection. Next stop: planet %s.]]):format(sys2:name(), pnt:name()))
+   tk.msg(_("A risky retrieval"), fmt.f(_([[You ask the Baron's messenger where this holopainting needs to be delivered. "His Lordship will be taking your delivery in the {sys} system, aboard his ship the Pinnacle," he replies. "Once you arrive with the holopainting onboard your ship, hail the Pinnacle and ask for docking permission. They'll know who you are, so you should be allowed to dock. You'll be paid on delivery. Any questions?" You indicate that you know what to do, then cut the connection. Next stop: planet {pnt}.]]), {sys=sys2, pnt=pnt}))
 
    misn.accept()
 
@@ -176,7 +176,7 @@ function takeoff_delay ()
       v:rename(_("Dvaered Police Vendetta"))
       v:setHostile(true)
    end
-   vendetta1:broadcast(_("All troops, engage %s %s! It has broken %s law!"):format(player.pilot():ship():baseType(), player.ship(), pnt:name()), true)
+   vendetta1:broadcast(fmt.f(_("All troops, engage {ship_type} {ship_name}! It has broken {pnt} law!"), {ship_type=player.pilot():ship():baseType(), ship_name=player.ship(), pnt=pnt}), true)
 end
 
 function abort()

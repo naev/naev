@@ -35,6 +35,7 @@ const char* faction_mapname( int f );
 const char* faction_description( int f );
 const char* faction_default_ai( int f );
 double faction_lane_length_per_presence( int f );
+double faction_lane_base_cost( int f );
 void faction_clearEnemy( int f );
 void faction_addEnemy( int f, int o );
 void faction_rmEnemy( int f, int o );

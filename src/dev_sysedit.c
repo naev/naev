@@ -581,12 +581,7 @@ static void sysedit_btnGrid( unsigned int wid_unused, const char *unused )
 static void sysedit_render( double bx, double by, double w, double h, void *data )
 {
    (void) data;
-   int i, j;
    StarSystem *sys;
-   Planet *p, *pnt;
-   JumpPoint *jp, *njp;
-   AsteroidAnchor *ast;
-   AsteroidExclusion *aexcl;
    double x,y, z;
    const glColour *c;
    glColour col;
@@ -605,14 +600,14 @@ static void sysedit_render( double bx, double by, double w, double h, void *data
    sysedit_renderBG( bx, by, w, h, x, y );
 
    /* Render planets. */
-   for (i=0; i<array_size(sys->planets); i++) {
-      p              = sys->planets[i];
+   for (int i=0; i<array_size(sys->planets); i++) {
+      Planet *p      = sys->planets[i];
 
       /* Check if selected. */
       sel.type       = SELECT_PLANET;
       sel.u.planet   = i;
       selected       = 0;
-      for (j=0; j<sysedit_nselect; j++) {
+      for (int j=0; j<sysedit_nselect; j++) {
          if (sysedit_selectCmp( &sel, &sysedit_select[j] )) {
             selected = 1;
             break;
@@ -624,8 +619,8 @@ static void sysedit_render( double bx, double by, double w, double h, void *data
    }
 
    /* Render jump points. */
-   for (i=0; i<array_size(sys->jumps); i++) {
-      jp    = &sys->jumps[i];
+   for (int i=0; i<array_size(sys->jumps); i++) {
+      JumpPoint *jp = &sys->jumps[i];
 
       /* Choose colour. */
       if (jp->flags & JP_AUTOPOS)
@@ -637,7 +632,7 @@ static void sysedit_render( double bx, double by, double w, double h, void *data
       sel.type       = SELECT_JUMPPOINT;
       sel.u.planet   = i;
       selected       = 0;
-      for (j=0; j<sysedit_nselect; j++) {
+      for (int j=0; j<sysedit_nselect; j++) {
          if (sysedit_selectCmp( &sel, &sysedit_select[j] )) {
             selected = 1;
             break;
@@ -650,26 +645,28 @@ static void sysedit_render( double bx, double by, double w, double h, void *data
    }
 
    /* Render asteroids */
-   for (i=0; i<array_size(sys->asteroids); i++) {
-      ast = &sys->asteroids[i];
+   for (int i=0; i<array_size(sys->asteroids); i++) {
+      AsteroidAnchor *ast = &sys->asteroids[i];
       selected = 0;
       sysedit_renderAsteroidsField( x, y, ast, selected );
    }
 
    /* Render asteroid exclusions */
-   for (i=0; i<array_size(sys->astexclude); i++) {
-      aexcl = &sys->astexclude[i];
+   for (int i=0; i<array_size(sys->astexclude); i++) {
+      AsteroidExclusion *aexcl = &sys->astexclude[i];
       selected = 0;
       sysedit_renderAsteroidExclusion( x, y, aexcl, selected );
    }
 
    /* Render safe lanes. */
    SafeLane* safelanes = safelanes_get( -1, 0, sys );
-   for (i=0; i<array_size(safelanes); i++) {
-      SafeLane *sf = &safelanes[i];
+   for (int i=0; i<array_size(safelanes); i++) {
       Vector2d *posns[2];
+      Planet *pnt;
+      JumpPoint *njp;
+      SafeLane *sf = &safelanes[i];
 
-      for (j=0; j<2; j++) {
+      for (int j=0; j<2; j++) {
          switch(sf->point_type[j]) {
             case SAFELANE_LOC_PLANET:
                pnt = planet_getIndex( sf->point_id[j] );
@@ -685,7 +682,7 @@ static void sysedit_render( double bx, double by, double w, double h, void *data
       }
 
       col = *faction_colour( sf->faction );
-      col.a = 0.1;
+      col.a = 0.3;
 
       /* Get positions and stuff. */
       double x1, y1, x2, y2, ry, rx, r, rw, rh;

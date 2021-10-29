@@ -339,6 +339,7 @@ function enter ()
       jie = pilot.add("Kestrel", "Independent", pos, _("Jie de Luca"), {naked=true, ai="baddie_norun"})
       equipopt.generic( jie, nil, "elite" )
       jie:setHostile(true)
+      jie:setHilight(true)
 
       hook.pilot( jie, "death", "jie_death" )
       hook.pilot( jie, "board", "jie_board" )
@@ -417,7 +418,7 @@ function thug_heartbeat ()
 end
 
 function jie_death ()
-   misn.markerMove( misn_marker, system.get("Minerva Station") )
+   misn.markerMove( misn_marker, planet.get("Minerva Station") )
    misn.osdActive(2)
    misn_state = 2
 

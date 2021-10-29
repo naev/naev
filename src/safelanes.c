@@ -43,16 +43,17 @@
 /*
  * Global parameters.
  */
-static const double ALPHA                  = 9.;        /**< Lane efficiency parameter. */
-static const double JUMP_CONDUCTIVITY      = 0.001;     /**< Conductivity value for inter-system jump-point connections. */
-static const double MIN_ANGLE              = M_PI/18.;  /**< Path triangles can't be more acute. */
+static const double ALPHA                  = 9.;       /**< Lane efficiency parameter. */
+static const double LAMBDA                 = 2e10;     /**< Regularization term for score. */
+static const double JUMP_CONDUCTIVITY      = 0.001;    /**< Conductivity value for inter-system jump-point connections. */
+static const double MIN_ANGLE              = M_PI/18.; /**< Path triangles can't be more acute. */
 enum {
-   STORAGE_MODE_LOWER_TRIANGULAR_PART = -1,             /**< A CHOLMOD "stype" value: matrix is interpreted as symmetric. */
-   STORAGE_MODE_UNSYMMETRIC           = 0,              /**< A CHOLMOD "stype" value: matrix holds whatever we put in it. */
-   STORAGE_MODE_UPPER_TRIANGULAR_PART = +1,             /**< A CHOLMOD "stype" value: matrix is interpreted as symmetric. */
-   SORTED                             = 1,              /**< a named bool */
-   PACKED                             = 1,              /**< a named bool */
-   MODE_NUMERICAL                     = 1,              /**< yet another CHOLMOD magic number! */
+   STORAGE_MODE_LOWER_TRIANGULAR_PART = -1,            /**< A CHOLMOD "stype" value: matrix is interpreted as symmetric. */
+   STORAGE_MODE_UNSYMMETRIC           = 0,             /**< A CHOLMOD "stype" value: matrix holds whatever we put in it. */
+   STORAGE_MODE_UPPER_TRIANGULAR_PART = +1,            /**< A CHOLMOD "stype" value: matrix is interpreted as symmetric. */
+   SORTED                             = 1,             /**< a named bool */
+   PACKED                             = 1,             /**< a named bool */
+   MODE_NUMERICAL                     = 1,             /**< yet another CHOLMOD magic number! */
 };
 
 /*
@@ -65,9 +66,9 @@ typedef enum VertexType_ {VERTEX_PLANET, VERTEX_JUMP} VertexType;
 
 /** @brief Reference to a planet or jump point. */
 typedef struct Vertex_ {
-   int system;                  /**< ID of the system containing the object. */
-   VertexType type;             /**< Which of Naev's list contains it? */
-   int index;                   /**< Index in the system's planets or jumps array. */
+   int system;      /**< ID of the system containing the object. */
+   VertexType type; /**< Which of Naev's list contains it? */
+   int index;       /**< Index in the system's planets or jumps array. */
 } Vertex;
 
 /** @brief An edge is a pair of vertex indices. */
@@ -75,8 +76,9 @@ typedef int Edge[2];
 
 /** @brief Description of a lane-building faction. */
 typedef struct Faction_ {
-   int id;                              /**< Faction ID. */
-   double lane_length_per_presence;     /**< Weight determining their ability to claim lanes. */
+   int id;                          /**< Faction ID. */
+   double lane_length_per_presence; /**< Weight determining their ability to claim lanes. */
+   double lane_base_cost;           /**< Base cost of a lane. */
 } Faction;
 
 /** @brief A set of lane-building factions, represented as a bitfield. */
@@ -88,7 +90,7 @@ static const FactionMask MASK_0 = 0, MASK_1 = 1;
  */
 static cholmod_common C;        /**< Parameter settings, statistics, and workspace used internally by CHOLMOD. */
 static Vertex *vertex_stack;    /**< Array (array.h): Everything eligible to be a lane endpoint. */
-static FactionMask *vertex_fmask;      /**< Malloced: Per vertex, the set of factions that have built on it. */
+static FactionMask *vertex_fmask;/**< Malloced: Per vertex, the set of factions that have built on it. */
 static int *sys_to_first_vertex;/**< Array (array.h): For each system index, the id of its first vertex, + sentinel. */
 static Edge *edge_stack;        /**< Array (array.h): Everything eligible to be a lane. */
 static int *sys_to_first_edge;  /**< Array (array.h): For each system index, the id of its first edge, + sentinel. */
@@ -418,7 +420,7 @@ static void safelanes_initStacks_faction (void)
    faction_all = faction_getAllVisible();
    for (int fi=0; fi<array_size(faction_all); fi++) {
       int f = faction_all[fi];
-      Faction rec = {.id = f, .lane_length_per_presence = faction_lane_length_per_presence(f)};
+      Faction rec = {.id = f, .lane_length_per_presence = faction_lane_length_per_presence(f), .lane_base_cost = faction_lane_base_cost(f)};
       if (rec.lane_length_per_presence > 0.)
          array_push_back( &faction_stack, rec );
    }
@@ -687,6 +689,7 @@ static int safelanes_activateByGradient( cholmod_dense* Lambda_tilde, int iters_
          double cost_best, cost_cheapest_other;
          int fi = facind_opts[fii];
          size_t sys_base = sys_to_first_vertex[si];
+         double score_best = 0.; /* Negative scores get ignored. */
 
          /* Get the base index to use for this system. Save the value we expect to be the next iteration's base index.
           * The current system's rows are in the lal[fi] matrix if there's presence at the time we slice it.
@@ -704,9 +707,10 @@ static int safelanes_activateByGradient( cholmod_dense* Lambda_tilde, int iters_
             int sis = edge_stack[ei][0];
             int sjs = edge_stack[ei][1];
             int disconnecting = iters_done && !(vertex_fmask[sis] & (MASK_1<<fi)) && !(vertex_fmask[sjs] & (MASK_1<<fi));
+            double cost = 1. / safelanes_initialConductivity(ei) / faction_stack[fi].lane_length_per_presence + faction_stack[fi].lane_base_cost;
             if (!lane_faction[ei]
                 && !disconnecting
-                && presence_budget[fi][si] >= 1. / safelanes_initialConductivity(ei) / faction_stack[fi].lane_length_per_presence
+                && presence_budget[fi][si] >= cost
                 && (lane_fmask[ei] & (MASK_1<<fi)))
                array_push_back( &edgeind_opts, ei );
          }
@@ -719,11 +723,10 @@ static int safelanes_activateByGradient( cholmod_dense* Lambda_tilde, int iters_
          }
 
          ei_best = edgeind_opts[0];
-         cost_best = 1. / safelanes_initialConductivity(ei_best) / faction_stack[fi].lane_length_per_presence;
+         cost_best = 1. / safelanes_initialConductivity(ei_best) / faction_stack[fi].lane_length_per_presence + faction_stack[fi].lane_base_cost;
          cost_cheapest_other = +HUGE_VAL;
-         if (array_size(edgeind_opts) > 1) {
+         if (array_size(edgeind_opts) > 0) {
             /* There's an actual choice. Search for the best option. Lower is better. */
-            double score_best = +HUGE_VAL;
             for (int eii=0; eii<array_size(edgeind_opts); eii++) {
                int ei = edgeind_opts[eii];
                int sis = edge_stack[ei][0];
@@ -745,8 +748,9 @@ static int safelanes_activateByGradient( cholmod_dense* Lambda_tilde, int iters_
                score -= safelanes_row_dot_row( utilde, lal[fi], sis, sjs - sys_base + lal_base );
                Linv = safelanes_initialConductivity(ei);
                score *= ALPHA * Linv * Linv;
+               score += LAMBDA;
 
-               cost = 1. / safelanes_initialConductivity(ei) / faction_stack[fi].lane_length_per_presence;
+               cost = 1. / safelanes_initialConductivity(ei) / faction_stack[fi].lane_length_per_presence + faction_stack[fi].lane_base_cost;
                if (score < score_best) {
                   ei_best = ei;
                   score_best = score;
@@ -757,6 +761,10 @@ static int safelanes_activateByGradient( cholmod_dense* Lambda_tilde, int iters_
                   cost_cheapest_other = MIN( cost_cheapest_other, cost );
             }
          }
+
+         /* Ignore positive scores. */
+         if (score_best >= 0.)
+            continue;
 
          /* Add the lane. */
          presence_budget[fi][si] -= cost_best;
