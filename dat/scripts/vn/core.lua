@@ -55,6 +55,7 @@ local function _setdefaults()
    vn._default.textbox_font = graphics.newFont(16)
    vn._default.textbox_font:setOutline( 0.5 )
    vn._default.textbox_w = 800
+   vn._default.textbox_tw = vn._default.textbox_w-60
    local fonth = vn._default.textbox_font:getLineHeight()
    vn._default.textbox_h = math.floor(200 / fonth) * fonth + 20*2
    vn._default.textbox_x = ox + (mw-vn._default.textbox_w)/2
@@ -635,7 +636,7 @@ function vn.StateSay:_init()
    -- Parse for line breaks and insert newlines
    local font = vn.textbox_font
    local bw = 20
-   local _maxw, wrappedtext = font:getWrap( self._textbuf, vn.textbox_w-2*bw )
+   local _maxw, wrappedtext = font:getWrap( self._textbuf, vn.textbox_tw )
    self._textbuf = table.concat( wrappedtext, "\n" )
    -- Set up initial buffer
    self._timer = vn.speed
@@ -683,7 +684,7 @@ function vn.StateSay:_update( dt )
       local bw = 20
       local bh = 20
       local font = vn.textbox_font
-      local _maxw, wrappedtext = font:getWrap( self._text, vn.textbox_w-2*bw )
+      local _maxw, wrappedtext = font:getWrap( self._text, vn.textbox_tw )
       local lh = font:getLineHeight()
       if (lh * #wrappedtext + bh + vn._buffer_y > vn.textbox_h) then
          vn._buffer_y = vn._buffer_y - lh
@@ -778,6 +779,7 @@ function vn.StateWait:_keypressed( key )
       return true
    elseif key=="end" then
       vn._buffer_y = (vn.textbox_h - 40) - vn.textbox_font:getLineHeight() * (#self._lines)
+      wait_scrollorfinish( self )
       return true
    end
 
