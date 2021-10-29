@@ -44,7 +44,7 @@
  * Global parameters.
  */
 static const double ALPHA                  = 9.;       /**< Lane efficiency parameter. */
-static const double LAMBDA                 = 2e10;     /**< Regularization term. */
+static const double LAMBDA                 = 2e10;     /**< Regularization term for score. */
 static const double JUMP_CONDUCTIVITY      = 0.001;    /**< Conductivity value for inter-system jump-point connections. */
 static const double MIN_ANGLE              = M_PI/18.; /**< Path triangles can't be more acute. */
 enum {
@@ -76,8 +76,9 @@ typedef int Edge[2];
 
 /** @brief Description of a lane-building faction. */
 typedef struct Faction_ {
-   int id;                           /**< Faction ID. */
-   double lane_length_per_presence;  /**< Weight determining their ability to claim lanes. */
+   int id;                          /**< Faction ID. */
+   double lane_length_per_presence; /**< Weight determining their ability to claim lanes. */
+   double lane_base_cost;           /**< Base cost of a lane. */
 } Faction;
 
 /** @brief A set of lane-building factions, represented as a bitfield. */
@@ -419,7 +420,7 @@ static void safelanes_initStacks_faction (void)
    faction_all = faction_getAllVisible();
    for (int fi=0; fi<array_size(faction_all); fi++) {
       int f = faction_all[fi];
-      Faction rec = {.id = f, .lane_length_per_presence = faction_lane_length_per_presence(f)};
+      Faction rec = {.id = f, .lane_length_per_presence = faction_lane_length_per_presence(f), .lane_base_cost = faction_lane_base_cost(f)};
       if (rec.lane_length_per_presence > 0.)
          array_push_back( &faction_stack, rec );
    }
@@ -706,9 +707,10 @@ static int safelanes_activateByGradient( cholmod_dense* Lambda_tilde, int iters_
             int sis = edge_stack[ei][0];
             int sjs = edge_stack[ei][1];
             int disconnecting = iters_done && !(vertex_fmask[sis] & (MASK_1<<fi)) && !(vertex_fmask[sjs] & (MASK_1<<fi));
+            double cost = 1. / safelanes_initialConductivity(ei) / faction_stack[fi].lane_length_per_presence + faction_stack[fi].lane_base_cost;
             if (!lane_faction[ei]
                 && !disconnecting
-                && presence_budget[fi][si] >= 1. / safelanes_initialConductivity(ei) / faction_stack[fi].lane_length_per_presence
+                && presence_budget[fi][si] >= cost
                 && (lane_fmask[ei] & (MASK_1<<fi)))
                array_push_back( &edgeind_opts, ei );
          }
@@ -721,7 +723,7 @@ static int safelanes_activateByGradient( cholmod_dense* Lambda_tilde, int iters_
          }
 
          ei_best = edgeind_opts[0];
-         cost_best = 1. / safelanes_initialConductivity(ei_best) / faction_stack[fi].lane_length_per_presence;
+         cost_best = 1. / safelanes_initialConductivity(ei_best) / faction_stack[fi].lane_length_per_presence + faction_stack[fi].lane_base_cost;
          cost_cheapest_other = +HUGE_VAL;
          if (array_size(edgeind_opts) > 0) {
             /* There's an actual choice. Search for the best option. Lower is better. */
@@ -748,7 +750,7 @@ static int safelanes_activateByGradient( cholmod_dense* Lambda_tilde, int iters_
                score *= ALPHA * Linv * Linv;
                score += LAMBDA;
 
-               cost = 1. / safelanes_initialConductivity(ei) / faction_stack[fi].lane_length_per_presence;
+               cost = 1. / safelanes_initialConductivity(ei) / faction_stack[fi].lane_length_per_presence + faction_stack[fi].lane_base_cost;
                if (score < score_best) {
                   ei_best = ei;
                   score_best = score;
