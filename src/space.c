@@ -2063,7 +2063,7 @@ static int asset_parsePresence( xmlNodePtr node, AssetPresence *ap )
 static int planet_parse( Planet *planet, const xmlNodePtr parent, Commodity **stdList )
 {
    char str[PATH_MAX], *tmp;
-   xmlNodePtr node, cur, ccur;
+   xmlNodePtr node;
    unsigned int flags;
    Commodity **comms;
 
@@ -2077,38 +2077,45 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent, Commodity **st
 
    node = parent->xmlChildrenNode;
    do {
-
       /* Only handle nodes. */
       xml_onlyNodes(node);
 
       if (xml_isNode(node,"GFX")) {
-         cur = node->children;
+         xmlNodePtr cur = node->children;
          do {
+            xml_onlyNodes(cur);
             if (xml_isNode(cur,"space")) { /* load space gfx */
                snprintf( str, sizeof(str), PLANET_GFX_SPACE_PATH"%s", xml_get(cur));
                planet->gfx_spaceName = strdup(str);
                planet->gfx_spacePath = xml_getStrd(cur);
                planet->radius = -1.;
+               continue;
             }
-            else if (xml_isNode(cur,"exterior")) { /* load land gfx */
+            if (xml_isNode(cur,"exterior")) { /* load land gfx */
                snprintf( str, sizeof(str), PLANET_GFX_EXTERIOR_PATH"%s", xml_get(cur));
                planet->gfx_exterior = strdup(str);
                planet->gfx_exteriorPath = xml_getStrd(cur);
+               continue;
             }
+            WARN(_("Unknown node '%s' in planet '%s'"),node->name,planet->name);
          } while (xml_nextNode(cur));
          continue;
       }
       else if (xml_isNode(node,"pos")) {
-         cur          = node->children;
+         xmlNodePtr cur = node->children;
          do {
+            xml_onlyNodes(cur);
             if (xml_isNode(cur,"x")) {
                flags |= FLAG_XSET;
                planet->pos.x = xml_getFloat(cur);
+               continue;
             }
-            else if (xml_isNode(cur,"y")) {
+            if (xml_isNode(cur,"y")) {
                flags |= FLAG_YSET;
                planet->pos.y = xml_getFloat(cur);
+               continue;
             }
+            WARN(_("Unknown node '%s' in planet '%s'"),node->name,planet->name);
          } while (xml_nextNode(cur));
          continue;
       }
@@ -2119,7 +2126,7 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent, Commodity **st
          continue;
       }
       else if (xml_isNode(node,"general")) {
-         cur = node->children;
+         xmlNodePtr cur = node->children;
          do {
             xml_onlyNodes(cur);
             /* Direct reads. */
@@ -2130,8 +2137,8 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent, Commodity **st
             xmlr_float(cur, "hide", planet->hide );
 
             if (xml_isNode(cur, "services")) {
+               xmlNodePtr ccur = cur->children;
                flags |= FLAG_SERVICESSET;
-               ccur = cur->children;
                planet->services = 0;
                do {
                   xml_onlyNodes(ccur);
@@ -2172,13 +2179,11 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent, Commodity **st
                      planet->services |= PLANET_SERVICE_BLACKMARKET;
                   else
                      WARN(_("Planet '%s' has unknown services tag '%s'"), planet->name, ccur->name);
-
                } while (xml_nextNode(ccur));
             }
 
             else if (xml_isNode(cur, "commodities")) {
-               ccur = cur->children;
-
+               xmlNodePtr ccur = cur->children;
                do {
                   if (xml_isNode(ccur,"commodity")) {
                      /* If the commodity is standard, don't re-add it. */
@@ -2190,9 +2195,9 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent, Commodity **st
                   }
                } while (xml_nextNode(ccur));
             }
-
             else if (xml_isNode(cur, "blackmarket")) {
                planet_addService(planet, PLANET_SERVICE_BLACKMARKET);
+               continue;
             }
          } while (xml_nextNode(cur));
          continue;
@@ -2202,8 +2207,8 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent, Commodity **st
          continue;
       }
       else if (xml_isNode(node, "tags")) {
+         xmlNodePtr cur = node->children;
          planet->tags = array_create( char* );
-         cur = node->children;
          do {
             xml_onlyNodes(cur);
             if (xml_isNode(cur, "tag")) {
@@ -2214,7 +2219,6 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent, Commodity **st
          } while (xml_nextNode(cur));
          continue;
       }
-
       WARN(_("Unknown node '%s' in planet '%s'"),node->name,planet->name);
    } while (xml_nextNode(node));
 
