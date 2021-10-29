@@ -227,7 +227,7 @@ local function _draw( tocanvas )
    vn.setColor( vn._bufcol, vn.textbox_text_alpha )
    graphics.setScissor( x, y, w, h )
    y = y + vn._buffer_y
-   graphics.printf( vn._buffer, font, x+bw, y+bh, w-2*bw )
+   graphics.printf( vn._buffer, font, x+bw, y+bh, w-3*bw )
    graphics.setScissor()
 
    -- Namebox
