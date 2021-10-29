@@ -1,14 +1,11 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
 /**
  * @file input.c
  *
  * @brief Handles all the keybindings and input.
  */
-
-
 /** @cond */
 #include "naev.h"
 /** @endcond */
@@ -36,9 +33,7 @@
 #include "toolkit.h"
 #include "weapon.h"
 
-
 #define MOUSE_HIDE   (3.) /**< Time in seconds to wait before hiding mouse again. */
-
 
 /* keybinding structure */
 /**
@@ -51,7 +46,6 @@ typedef struct Keybind_ {
    SDL_Keycode key; /**< key/axis/button event number */
    SDL_Keymod mod; /**< Key modifiers (where applicable). */
 } Keybind;
-
 
 /* name of each keybinding */
 const char *keybind_info[][3] = {
@@ -134,7 +128,6 @@ const char *keybind_info[][3] = {
 static Keybind *input_keybinds; /**< contains the players keybindings */
 const int input_numbinds = ( sizeof( keybind_info ) / sizeof( keybind_info[ 0 ] ) ) - 1; /**< Number of keybindings. */
 
-
 /*
  * accel hacks
  */
@@ -142,14 +135,12 @@ static unsigned int input_accelLast = 0; /**< Used to see if double tap accel. *
 static unsigned int input_revLast   = 0; /**< Used to see if double tap reverse. */
 static int input_accelButton        = 0; /**< Used to show whether accel is pressed. */
 
-
 /*
  * Key repeat hack.
  */
 static int repeat_key                  = -1; /**< Key to repeat. */
 static unsigned int repeat_keyTimer    = 0;  /**< Repeat timer. */
 static unsigned int repeat_keyCounter  = 0;  /**< Counter for key repeats. */
-
 
 /*
  * Mouse.
@@ -159,13 +150,11 @@ static int input_mouseCounter          = 1; /**< Counter for mouse display/hidin
 static unsigned int input_mouseClickLast = 0; /**< Time of last click (in ms) */
 static void *input_lastClicked         = NULL; /**< Pointer to the last-clicked item. */
 
-
 /*
  * from player.c
  */
 extern double player_left;  /**< player.c */
 extern double player_right; /**< player.c */
-
 
 /*
  * Prototypes.
@@ -174,7 +163,6 @@ static void input_key( int keynum, double value, double kabs, int repeat );
 static void input_clickZoom( double modifier );
 static void input_clickevent( SDL_Event* event );
 static void input_mouseMove( SDL_Event* event );
-
 
 /**
  * @brief Sets the default input keys.
@@ -284,7 +272,6 @@ void input_setDefault ( int wasd )
    input_setKeybind( "switchtab0", KEYBIND_KEYBOARD, SDLK_0, NMOD_ALT );
 }
 
-
 /**
  * @brief Initializes the input subsystem (does not set keys).
  */
@@ -333,7 +320,6 @@ void input_init (void)
    }
 }
 
-
 /**
  * @brief Exits the input subsystem.
  */
@@ -341,7 +327,6 @@ void input_exit (void)
 {
    free(input_keybinds);
 }
-
 
 /**
  * @brief Enables all the keybinds.
@@ -352,7 +337,6 @@ void input_enableAll (void)
       input_keybinds[i].disabled = 0;
 }
 
-
 /**
  * @brief Disables all the keybinds.
  */
@@ -361,7 +345,6 @@ void input_disableAll (void)
    for (int i=0; keybind_info[i][0] != NULL; i++)
       input_keybinds[i].disabled = 1;
 }
-
 
 /**
  * @brief Enables or disables a keybind.
@@ -376,7 +359,6 @@ void input_toggleEnable( const char *key, int enable )
    }
 }
 
-
 /**
  * @brief Shows the mouse.
  */
@@ -385,7 +367,6 @@ void input_mouseShow (void)
    SDL_ShowCursor( SDL_ENABLE );
    input_mouseCounter++;
 }
-
 
 /**
  * @brief Hides the mouse.
@@ -398,7 +379,6 @@ void input_mouseHide (void)
       input_mouseCounter = 0;
    }
 }
-
 
 /**
  * @brief Gets the key id from its name.
@@ -414,7 +394,6 @@ SDL_Keycode input_keyConv( const char *name )
 
    return k;
 }
-
 
 /**
  * @brief Binds key of type type to action keybind.
@@ -438,7 +417,6 @@ void input_setKeybind( const char *keybind, KeybindType type, SDL_Keycode key, S
    WARN(_("Unable to set keybinding '%s', that command doesn't exist"), keybind);
 }
 
-
 /**
  * @brief Gets the value of a keybind.
  *
@@ -461,7 +439,6 @@ SDL_Keycode input_getKeybind( const char *keybind, KeybindType *type, SDL_Keymod
    WARN(_("Unable to get keybinding '%s', that command doesn't exist"), keybind);
    return (SDL_Keycode)-1;
 }
-
 
 /**
  * @brief Gets the display name (translated and human-readable) of a keybind
@@ -527,7 +504,6 @@ void input_getKeybindDisplay( const char *keybind, char *buf, int len )
    }
 }
 
-
 /**
  * @brief Gets the human readable version of mod.
  *
@@ -546,7 +522,6 @@ const char* input_modToText( SDL_Keymod mod )
       default:          return _("unknown");
    }
 }
-
 
 /**
  * @brief Checks to see if a key is already bound.
@@ -595,7 +570,6 @@ const char *input_keyAlreadyBound( KeybindType type, SDL_Keycode key, SDL_Keymod
    return NULL;
 }
 
-
 /**
  * @brief Gets the description of the keybinding.
  *
@@ -610,7 +584,6 @@ const char* input_getKeybindDescription( const char *keybind )
    WARN(_("Unable to get keybinding description '%s', that command doesn't exist"), keybind);
    return NULL;
 }
-
 
 /**
  * @brief Translates SDL modifier to Naev modifier.
@@ -631,7 +604,6 @@ SDL_Keymod input_translateMod( SDL_Keymod mod )
       mod_filtered |= NMOD_META;
    return mod_filtered;
 }
-
 
 /**
  * @brief Handles key repeating.
@@ -666,7 +638,6 @@ void input_update( double dt )
       input_key( repeat_key, KEY_PRESS, 0., 1 );
    }
 }
-
 
 #define KEY(s)    (strcmp(input_keybinds[keynum].name,s)==0) /**< Shortcut for ease. */
 #define INGAME()  (!toolkit_isOpen()) /**< Makes sure player is in game. */
@@ -818,7 +789,6 @@ static void input_key( int keynum, double value, double kabs, int repeat )
       else if ((value==KEY_RELEASE) && player_isFlag(PLAYER_FACE))
          player_rmFlag(PLAYER_FACE);
 
-
    /*
     * combat
     */
@@ -852,7 +822,6 @@ static void input_key( int keynum, double value, double kabs, int repeat )
          player_board();
       }
 
-
    /*
     * Escorts.
     */
@@ -868,7 +837,6 @@ static void input_key( int keynum, double value, double kabs, int repeat )
       if (value==KEY_PRESS) escorts_return(player.p);
    } else if (INGAME() && NODEAD() && KEY("e_clear") && !repeat) {
       if (value==KEY_PRESS) escorts_clear(player.p);
-
 
    /*
     * secondary weapons
@@ -1033,7 +1001,6 @@ static void input_key( int keynum, double value, double kabs, int repeat )
 }
 #undef KEY
 
-
 /*
  * events
  */
@@ -1121,7 +1088,6 @@ static void input_joyhatevent( const Uint8 value, const Uint8 hat )
    }
 }
 
-
 /*
  * keyboard
  */
@@ -1149,7 +1115,6 @@ static void input_keyevent( const int event, SDL_Keycode key, const SDL_Keymod m
       }
    }
 }
-
 
 /**
  * @brief Handles zoom.
@@ -1262,7 +1227,6 @@ static void input_clickevent( SDL_Event* event )
    return;
 }
 
-
 /**
  * @brief Handles a click at a position in the current system
  *
@@ -1360,7 +1324,6 @@ int input_clickPos( SDL_Event *event, double x, double y, double zoom, double mi
 
    return 0;
 }
-
 
 /**
  * @brief Performs an appropriate action when a jump point is clicked.
@@ -1489,7 +1452,6 @@ int input_clickedPilot( unsigned int pilot, int autonav )
    return 1;
 }
 
-
 /**
  * @brief Sets the last-clicked item, for double-click detection.
  *    @param clicked Pointer to the clicked item.
@@ -1502,7 +1464,6 @@ void input_clicked( void *clicked )
    input_lastClicked = clicked;
    input_mouseClickLast = SDL_GetTicks();
 }
-
 
 /**
  * @brief Checks whether a clicked item is the same as the last-clicked.
@@ -1523,7 +1484,6 @@ int input_isDoubleClick( void *clicked )
 
    return 0;
 }
-
 
 /**
  * @brief Handles global input.
@@ -1593,7 +1553,6 @@ void input_handle( SDL_Event* event )
          input_keyevent(KEY_RELEASE, event->key.keysym.sym, event->key.keysym.mod, 0);
          break;
 
-
       /* Mouse stuff. */
       case SDL_MOUSEBUTTONDOWN:
          input_clickevent( event );
@@ -1614,4 +1573,3 @@ void input_handle( SDL_Event* event )
          break;
    }
 }
-
