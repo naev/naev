@@ -503,25 +503,6 @@ vec4 sdf_selectposition( vec4 colour, vec2 uv )
    return colour;
 }
 
-#if 0
-vec4 sdf_vnarrow( vec4 colour, vec2 uv )
-{
-   float m = 1.0 / dimensions.x;
-   uv = vec2(uv.y,-uv.x);
-
-   uv.y = fract(uv.y*1.5 + 0.5);
-
-   float d = sdTriangleIsosceles( uv+vec2(0.0,-0.1), vec2(0.9,0.8) );
-   d = max(d, -sdTriangleIsosceles( uv+vec2(0.0,-0.75), vec2(3.0,0.35) ) );
-
-   d = abs(d)-0.01;
-
-   colour.a *= smoothstep( -m, 0.0, -d );
-   colour.a += pow( 1.0-d, 10.0 );
-   return colour;
-}
-#endif
-
 vec4 sdf_vnarrow( vec4 colour, vec2 uv )
 {
    float m = 1.0 / dimensions.x;
@@ -536,6 +517,41 @@ vec4 sdf_vnarrow( vec4 colour, vec2 uv )
 
    d = abs(d)-0.01;
 
+   colour.a *= smoothstep( -m, 0.0, -d );
+   colour.a += pow( 1.0-d, 20.0 );
+   return colour;
+}
+
+vec4 sdf_vncont( vec4 colour, vec2 uv )
+{
+   float m = 1.0 / dimensions.x;
+   //uv = vec2(uv.y,-uv.x);
+
+   vec2 auv = vec2(uv.x, abs(uv.y));
+   float d = sdSegment( auv, vec2(0.0,0.8), vec2(0.8,0.0) );
+
+   float ds = sdCircle( uv+vec2(-0.15,0.0), 0.2 );
+   ds = min( ds, sdCircle( uv+vec2(0.35,0.0), 0.15 ) );
+   ds = min( ds, sdCircle( uv+vec2(0.75,0.0), 0.1 ) );
+
+   d = min( d, ds );
+
+   d = abs(d)-0.01;
+   colour.a *= smoothstep( -m, 0.0, -d );
+   colour.a += pow( 1.0-d, 20.0 );
+   return colour;
+}
+
+vec4 sdf_vndone( vec4 colour, vec2 uv )
+{
+   float m = 1.0 / dimensions.x;
+   //uv = vec2(uv.y,-uv.x);
+
+   float d = sdBox( uv, vec2(0.7) );
+   d = max( d, -sdBox( uv, vec2(0.2,1.0) ) );
+   d = max( d, -sdBox( uv, vec2(1.0,0.2) ) );
+
+   d = abs(d)-0.01;
    colour.a *= smoothstep( -m, 0.0, -d );
    colour.a += pow( 1.0-d, 20.0 );
    return colour;
@@ -575,7 +591,9 @@ vec4 effect( vec4 colour, Image tex, vec2 uv, vec2 px )
    //col_out = sdf_sysmarker( colour, uv_rel );
    //col_out = sdf_missilelockon( colour, uv_rel );
    //col_out = sdf_selectposition( colour, uv_rel );
-   col_out = sdf_vnarrow( colour, uv_rel );
+   //col_out = sdf_vnarrow( colour, uv_rel );
+   //col_out = sdf_vncont( colour, uv_rel );
+   col_out = sdf_vndone( colour, uv_rel );
 
    return mix( bg(uv), col_out, col_out.a );
 }

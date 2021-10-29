@@ -726,9 +726,8 @@ function vn.StateWait:_init()
    local x, y, w, h = vn.textbox_x, vn.textbox_y, vn.textbox_w, vn.textbox_h
    local font = vn.namebox_font
    self._font = font
-   self._text = ">"
-   self._w = font:getWidth( self._text )
-   self._h = font:getHeight()
+   self._w = 25
+   self._h = 25
    self._x = x+w-10-self._w
    self._y = y+h-10-self._h
 
@@ -741,15 +740,20 @@ function vn.StateWait:_init()
    self._scrolled = _check_scroll( self._lines )
 end
 function vn.StateWait:_draw()
-   vn.setColor( vn._bufcol )
+   --vn.setColor( vn._bufcol )
+   vn.setColor( {0,1,1,1} )
    if vn._buffer_y < 0 then
-      graphics.print( "↑", self._font, self._x-5, vn.textbox_y+10 )
+      graphics.setShader( sdf.arrow )
+      graphics.draw( sdf.img, self._x-10, vn.textbox_y+30, -math.pi/2, 45, 15  )
    end
    if _check_scroll( self._lines ) then
-      graphics.print( "↓", self._font, self._x-5, self._y-5 )
+      graphics.setShader( sdf.arrow )
+      graphics.draw( sdf.img, self._x-10, vn.textbox_y+vn.textbox_h-40, math.pi/2, 45, 15 )
    elseif not self._scrolled then
-      graphics.print( self._text, self._font, self._x, self._y )
+      graphics.setShader( sdf.cont )
+      graphics.draw( sdf.img, self._x, self._y, 0, self._w, self._h )
    end
+   graphics.setShader()
 end
 local function wait_scrollorfinish( self )
    if _check_scroll( self._lines ) then

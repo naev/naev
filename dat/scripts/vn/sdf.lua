@@ -3,6 +3,44 @@ local graphics = require 'love.graphics'
 
 local sdf = {}
 
+sdf.cont = graphics.newShader( [[
+#include "lib/sdf.glsl"
+vec4 effect( vec4 colour, Image tex, vec2 pos, vec2 px )
+{
+   vec2 uv = pos*2.0-1.0;
+
+   vec2 auv = vec2(uv.x, abs(uv.y));
+   float d = sdSegment( auv, vec2(0.0,0.8), vec2(0.8,0.0) );
+
+   float ds = sdCircle( uv+vec2(-0.15,0.0), 0.2 );
+   ds = min( ds, sdCircle( uv+vec2(0.35,0.0), 0.15 ) );
+   ds = min( ds, sdCircle( uv+vec2(0.75,0.0), 0.1 ) );
+
+   d = min( d, ds );
+   d = abs(d)-0.01;
+
+   colour.a *= step( 0.0, -d ) + pow( 1.0-d, 20.0 );
+   return colour;
+}
+]], love_shaders.vertexcode)
+
+sdf.done = graphics.newShader( [[
+#include "lib/sdf.glsl"
+vec4 effect( vec4 colour, Image tex, vec2 pos, vec2 px )
+{
+   vec2 uv = pos*2.0-1.0;
+
+   float d = sdBox( uv, vec2(0.7) );
+   d = max( d, -sdBox( uv, vec2(0.2,1.0) ) );
+   d = max( d, -sdBox( uv, vec2(1.0,0.2) ) );
+
+   d = abs(d)-0.01;
+
+   colour.a *= step( 0.0, -d ) + pow( 1.0-d, 20.0 );
+   return colour;
+}
+]], love_shaders.vertexcode)
+
 sdf.arrow = graphics.newShader( [[
 #include "lib/sdf.glsl"
 vec4 effect( vec4 colour, Image tex, vec2 pos, vec2 px )
