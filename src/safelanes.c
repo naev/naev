@@ -43,16 +43,16 @@
 /*
  * Global parameters.
  */
-static const double ALPHA                  = 9.;        /**< Lane efficiency parameter. */
-static const double JUMP_CONDUCTIVITY      = 0.001;     /**< Conductivity value for inter-system jump-point connections. */
-static const double MIN_ANGLE              = M_PI/18.;  /**< Path triangles can't be more acute. */
+static const double ALPHA                  = 9.;       /**< Lane efficiency parameter. */
+static const double JUMP_CONDUCTIVITY      = 0.001;    /**< Conductivity value for inter-system jump-point connections. */
+static const double MIN_ANGLE              = M_PI/18.; /**< Path triangles can't be more acute. */
 enum {
-   STORAGE_MODE_LOWER_TRIANGULAR_PART = -1,             /**< A CHOLMOD "stype" value: matrix is interpreted as symmetric. */
-   STORAGE_MODE_UNSYMMETRIC           = 0,              /**< A CHOLMOD "stype" value: matrix holds whatever we put in it. */
-   STORAGE_MODE_UPPER_TRIANGULAR_PART = +1,             /**< A CHOLMOD "stype" value: matrix is interpreted as symmetric. */
-   SORTED                             = 1,              /**< a named bool */
-   PACKED                             = 1,              /**< a named bool */
-   MODE_NUMERICAL                     = 1,              /**< yet another CHOLMOD magic number! */
+   STORAGE_MODE_LOWER_TRIANGULAR_PART = -1,            /**< A CHOLMOD "stype" value: matrix is interpreted as symmetric. */
+   STORAGE_MODE_UNSYMMETRIC           = 0,             /**< A CHOLMOD "stype" value: matrix holds whatever we put in it. */
+   STORAGE_MODE_UPPER_TRIANGULAR_PART = +1,            /**< A CHOLMOD "stype" value: matrix is interpreted as symmetric. */
+   SORTED                             = 1,             /**< a named bool */
+   PACKED                             = 1,             /**< a named bool */
+   MODE_NUMERICAL                     = 1,             /**< yet another CHOLMOD magic number! */
 };
 
 /*
@@ -65,9 +65,9 @@ typedef enum VertexType_ {VERTEX_PLANET, VERTEX_JUMP} VertexType;
 
 /** @brief Reference to a planet or jump point. */
 typedef struct Vertex_ {
-   int system;                  /**< ID of the system containing the object. */
-   VertexType type;             /**< Which of Naev's list contains it? */
-   int index;                   /**< Index in the system's planets or jumps array. */
+   int system;      /**< ID of the system containing the object. */
+   VertexType type; /**< Which of Naev's list contains it? */
+   int index;       /**< Index in the system's planets or jumps array. */
 } Vertex;
 
 /** @brief An edge is a pair of vertex indices. */
@@ -75,8 +75,8 @@ typedef int Edge[2];
 
 /** @brief Description of a lane-building faction. */
 typedef struct Faction_ {
-   int id;                              /**< Faction ID. */
-   double lane_length_per_presence;     /**< Weight determining their ability to claim lanes. */
+   int id;                           /**< Faction ID. */
+   double lane_length_per_presence;  /**< Weight determining their ability to claim lanes. */
 } Faction;
 
 /** @brief A set of lane-building factions, represented as a bitfield. */
@@ -88,7 +88,7 @@ static const FactionMask MASK_0 = 0, MASK_1 = 1;
  */
 static cholmod_common C;        /**< Parameter settings, statistics, and workspace used internally by CHOLMOD. */
 static Vertex *vertex_stack;    /**< Array (array.h): Everything eligible to be a lane endpoint. */
-static FactionMask *vertex_fmask;      /**< Malloced: Per vertex, the set of factions that have built on it. */
+static FactionMask *vertex_fmask;/**< Malloced: Per vertex, the set of factions that have built on it. */
 static int *sys_to_first_vertex;/**< Array (array.h): For each system index, the id of its first vertex, + sentinel. */
 static Edge *edge_stack;        /**< Array (array.h): Everything eligible to be a lane. */
 static int *sys_to_first_edge;  /**< Array (array.h): For each system index, the id of its first edge, + sentinel. */
