@@ -40,33 +40,33 @@ local quotes = {}
 local comms = {}
 
 quotes.clue    = {}
-quotes.clue[1] = _("You ask for information about %s and the pilot tells you that this outlaw is supposed to have business in %s soon.")
-quotes.clue[2] = _([["%s? Yes, I know that scum. I've heard they like to hang around in %s. Good luck!"]])
-quotes.clue[3] = _([["%s has owed me 500K credits for dozens of cycles and never paid me back! You can probably catch that thief in %s."]])
-quotes.clue[4] = _([["If you're looking for %s, I would suggest going to %s and taking a look there; that's where that outlaw was last time I heard."]])
-quotes.clue[5] = _([["If I was looking for %s, I would look in the %s system. That's probably a good bet."]])
+quotes.clue[1] = _("You ask for information about {pltname} and the pilot tells you that this outlaw is supposed to have business in {sys} soon.")
+quotes.clue[2] = _([["{pltname}? Yes, I know that scum. I've heard they like to hang around in {sys}. Good luck!"]])
+quotes.clue[3] = _([["{pltname} has owed me 500K credits for dozens of cycles and never paid me back! You can probably catch that thief in {sys}."]])
+quotes.clue[4] = _([["If you're looking for {pltname}, I would suggest going to {sys} and taking a look there; that's where that outlaw was last time I heard."]])
+quotes.clue[5] = _([["If I was looking for {pltname}, I would look in the {sys} system. That's probably a good bet."]])
 
 quotes.dono    = {}
-quotes.dono[1] = _("This person has never heard of %s. It seems you will have to ask someone else.")
-quotes.dono[2] = _("This person is also looking for %s, but doesn't seem to know anything you don't.")
-quotes.dono[3] = _([["%s? Nope, I haven't seen that person in many cycles at this point."]])
-quotes.dono[4] = _([["Sorry, I have no idea where %s is."]])
-quotes.dono[5] = _([["Oh, hell no, I stay as far away from %s as I possibly can."]])
-quotes.dono[6] = _([["I haven't a clue where %s is."]])
-quotes.dono[7] = _([["I don't give a damn about %s. Go away."]])
-quotes.dono[8] = _([["%s? Don't know, don't care."]])
-quotes.dono[9] = _("When you ask about %s, you are promptly told to get lost.")
-quotes.dono[10] = _([["I'd love to get back at %s for last cycle, but I haven't seen them in quite some time now."]])
-quotes.dono[11] = _([["I've not seen %s, but good luck in your search!"]])
-quotes.dono[12] = _([["Wouldn't revenge be nice? Unfortunately I haven't a clue where %s is, though. Sorry!"]])
-quotes.dono[13] = _([["I used to work with %s. We haven't seen each other since they stole my favorite ship, though."]])
+quotes.dono[1] = _("This person has never heard of {pltname}. It seems you will have to ask someone else.")
+quotes.dono[2] = _("This person is also looking for {pltname}, but doesn't seem to know anything you don't.")
+quotes.dono[3] = _([["{pltname}? Nope, I haven't seen that person in many cycles at this point."]])
+quotes.dono[4] = _([["Sorry, I have no idea where {pltname} is."]])
+quotes.dono[5] = _([["Oh, hell no, I stay as far away from {pltname} as I possibly can."]])
+quotes.dono[6] = _([["I haven't a clue where {pltname} is."]])
+quotes.dono[7] = _([["I don't give a damn about {pltname}. Go away."]])
+quotes.dono[8] = _([["{pltname}? Don't know, don't care."]])
+quotes.dono[9] = _("When you ask about {pltname}, you are promptly told to get lost.")
+quotes.dono[10] = _([["I'd love to get back at {pltname} for last cycle, but I haven't seen them in quite some time now."]])
+quotes.dono[11] = _([["I've not seen {pltname}, but good luck in your search!"]])
+quotes.dono[12] = _([["Wouldn't revenge be nice? Unfortunately I haven't a clue where {pltname} is, though. Sorry!"]])
+quotes.dono[13] = _([["I used to work with {pltname}. We haven't seen each other since they stole my favorite ship, though."]])
 
 quotes.money    = {}
-quotes.money[1] = _([["%s, you say? Well, I don't offer my services for free. Pay me %s and I'll tell you where to look; how does that sound?"]])
-quotes.money[2] = _([["Ah, yes, I know where probably %s is. I'll tell you for just %s. What do you say?"]])
-quotes.money[3] = _([["%s? Of course, I know this pilot. I can tell you where they were last heading, but it'll cost you. %s. Deal?"]])
-quotes.money[4] = _([["Ha ha ha! Yes, I've seen %s around! Will I tell you where? Heck no! Not unless you pay me, of course... %s should be sufficient."]])
-quotes.money[5] = _([["You're looking for %s? I tell you what: give me %s and I'll tell you. Otherwise, get lost!"]])
+quotes.money[1] = _([["{pltname}, you say? Well, I don't offer my services for free. Pay me {credits} and I'll tell you where to look; how does that sound?"]])
+quotes.money[2] = _([["Ah, yes, I know where probably {pltname} is. I'll tell you for just {credits}. What do you say?"]])
+quotes.money[3] = _([["{pltname}? Of course, I know this pilot. I can tell you where they were last heading, but it'll cost you. {credits}. Deal?"]])
+quotes.money[4] = _([["Ha ha ha! Yes, I've seen {pltname} around! Will I tell you where? Heck no! Not unless you pay me, of course... {credits} should be sufficient."]])
+quotes.money[5] = _([["You're looking for {pltname}? I tell you what: give me {credits} and I'll tell you. Otherwise, get lost!"]])
 
 quotes.not_scared    = {}
 quotes.not_scared[1] = _([["As if the likes of you would ever try to fight me!"]])
@@ -74,11 +74,11 @@ quotes.not_scared[2] = _("The pilot simply sighs and cuts the connection.")
 quotes.not_scared[3] = _([["What a lousy attempt to scare me."]])
 
 quotes.scared    = {}
-quotes.scared[1] = _("As it becomes clear that you have no problem with blasting a ship to smithereens, the pilot tells you that %s is supposed to have business in %s soon.")
-quotes.scared[2] = _([["OK, OK, I'll tell you! You can find %s in the %s system! Leave me alone!"]])
+quotes.scared[1] = _("As it becomes clear that you have no problem with blasting a ship to smithereens, the pilot tells you that {pltname} is supposed to have business in {sys} soon.")
+quotes.scared[2] = _([["OK, OK, I'll tell you! You can find {pltname} in the {sys} system! Leave me alone!"]])
 
 quotes.cold    = {}
-quotes.cold[1] = _("When you ask for information about %s, they tell you that this outlaw has already been killed by someone else.")
+quotes.cold[1] = _("When you ask for information about {pltname}, they tell you that this outlaw has already been killed by someone else.")
 quotes.cold[2] = _([["Didn't you hear? That outlaw's dead. Got blown up in an asteroid field is what I heard."]])
 quotes.cold[3] = _([["Ha ha, you're still looking for that outlaw? You're wasting your time; they've already been taken care of."]])
 quotes.cold[4] = _([["Ah, sorry, that target's already dead. Blown to smithereens by a mercenary. I saw the scene, though! It was glorious."]])
@@ -103,13 +103,13 @@ comms.not_scared[3] = _("Just come at me if you dare!")
 comms.not_scared[4] = _("You're so pitiful!")
 
 comms.ambush    = {}
-comms.ambush[1] = _("You want to meet %s? Well he doesn't want to meet you!")
-comms.ambush[2] = _("Stop asking questions about %s!")
-comms.ambush[3] = _("Why are you following %s?")
-comms.ambush[4] = _("Quit following %s!")
-comms.ambush[5] = _("Your quest for %s ends here!")
-comms.ambush[6] = _("You ask too many questions about %s!")
-comms.ambush[7] = _("You were not supposed to get on the trail of %s!")
+comms.ambush[1] = _("You want to meet {pltname}? Well he doesn't want to meet you!")
+comms.ambush[2] = _("Stop asking questions about {pltname}!")
+comms.ambush[3] = _("Why are you following {pltname}?")
+comms.ambush[4] = _("Quit following {pltname}!")
+comms.ambush[5] = _("Your quest for {pltname} ends here!")
+comms.ambush[6] = _("You ask too many questions about {pltname}!")
+comms.ambush[7] = _("You were not supposed to get on the trail of {pltname}!")
 
 quotes.pay    = {}
 quotes.pay[1] = _("An officer hands you your pay.")
@@ -188,8 +188,9 @@ function create ()
    cursys = 1
 
    -- Set mission details
-   misn.setTitle( _("Seek And Destroy Mission, starting in %s"):format( mysys[1]:name() ) )
-   misn.setDesc( _("The %s pilot known as %s is wanted dead or alive by %s authorities. He was last seen in the %s system."):format( target_faction:name(), name, paying_faction:name(), mysys[1]:name() ) )
+   misn.setTitle( fmt.f( _("Seek And Destroy Mission, starting in {sys}"), {sys=mysys[1]} ) )
+   misn.setDesc( fmt.f( _("The {target_faction} pilot known as {pltname} is wanted dead or alive by {paying_faction} authorities. He was last seen in the {sys} system."),
+         {target_faction=target_faction, pltname=name, paying_faction=paying_faction, sys=mysys[1]} ) )
    misn.setReward( fmt.credits( credits ) )
    marker = misn.markerAdd( mysys[1], "computer" )
 
@@ -213,14 +214,14 @@ function accept ()
    stage = 0
    increment = false
    last_sys = system.cur()
-   tk.msg( _("Find and Kill a pilot"), _("%s is a notorious %s pilot who is wanted by the authorities, dead or alive. Any citizen who can find and neutralize %s by any means necessary will be given %s as a reward. %s authorities have lost track of this pilot in the %s system. It is very likely that the target is no longer there, but this system may be a good place to start an investigation."):format( name, target_faction:name(), name, fmt.credits(credits), paying_faction:name(), mysys[1]:name() ) )
+   tk.msg( _("Find and Kill a pilot"), fmt.f( _("{pltname} is a notorious {target_faction} pilot who is wanted by the authorities, dead or alive. Any citizen who can find and neutralize {pltname} by any means necessary will be given {credits} as a reward. {paying_faction} authorities have lost track of this pilot in the {sys} system. It is very likely that the target is no longer there, but this system may be a good place to start an investigation."), {pltname=name, target_faction=target_faction, credits=fmt.credits(credits), paying_faction=paying_faction, sys=mysys[1]} ) )
    jumphook = hook.enter( "enter" )
    hailhook = hook.hail( "hail" )
    landhook = hook.land( "land" )
 
-   osd_msg[1] = _("Fly to the %s system and search for clues"):format( mysys[1]:name() )
+   osd_msg[1] = fmt.f( _("Fly to the {sys} system and search for clues"), {sys=mysys[1]} )
    osd_msg[2] = fmt.f( _("Kill {pltname}"), {pltname=name} )
-   osd_msg[3] = fmt.f( _("Land in {fctname} territory to collect your bounty"), {paying_faction} )
+   osd_msg[3] = fmt.f( _("Land in {paying_faction} territory to collect your bounty"), {paying_faction=paying_faction} )
    misn.osdCreate( _("Seek and Destroy"), osd_msg )
 end
 
@@ -322,9 +323,9 @@ end
 
 -- Enemies explain that they are ambushing the player
 function ambust_msg()
-   ambush[1]:comm(comms.ambush[rnd.rnd(1,#comms.ambush)]:format(name))
-   ambush[2]:comm(comms.ambush[rnd.rnd(1,#comms.ambush)]:format(name))
-   ambush[3]:comm(comms.ambush[rnd.rnd(1,#comms.ambush)]:format(name))
+   for i = 1, 3 do
+      ambush[i]:comm( fmt.f( comms.ambush[rnd.rnd(1,#comms.ambush)], {pltname=name} ) )
+   end
 end
 
 function spawn_advisor ()
@@ -359,11 +360,10 @@ function hail( p )
    end
 
    if system.cur() == mysys[cursys] and stage == 0 and not elt_inlist( target, hailed ) then
-
       hailed[#hailed+1] = target -- A pilot can be hailed only once
 
       if cursys+1 >= nbsys then -- No more claimed system : need to finish the mission
-         tk.msg( _("Your track is cold"), quotes.cold[rnd.rnd(1,#quotes.cold)]:format( name ) )
+         tk.msg( _("Your track is cold"), fmt.f( quotes.cold[rnd.rnd(1,#quotes.cold)], {pltname=name} ) )
          misn.finish(false)
       else
 
@@ -382,9 +382,9 @@ function hail( p )
          end
 
          if not know then -- NPC does not know the target
-            tk.msg( _("No clue"), quotes.dono[rnd.rnd(1,#quotes.dono)]:format( name ) )
+            tk.msg( _("No clue"), fmt.f( quotes.dono[rnd.rnd(1,#quotes.dono)], {pltname=name} ) )
          elseif tells then
-            tk.msg( _("I know the pilot you're looking for"), quotes.clue[rnd.rnd(1,#quotes.clue)]:format( name, mysys[cursys+1]:name() ) )
+            tk.msg( _("I know the pilot you're looking for"), fmt.f( quotes.clue[rnd.rnd(1,#quotes.clue)], {pltname=name, sys=mysys[cursys+1]} ) )
             next_sys()
             target:setHostile( false )
          else
@@ -430,13 +430,13 @@ function space_clue ()
       if choice == 1 then
          -- End of function
       else -- Threaten the pilot
-         if isScared (target) and rnd.rnd() < .5 then
-            tk.msg( _("You're intimidating!"), quotes.scared[rnd.rnd(1,#quotes.scared)]:format( name, mysys[cursys+1]:name() ) )
+         if isScared( target ) and rnd.rnd() < .5 then
+            tk.msg( _("You're intimidating!"), fmt.f( quotes.scared[rnd.rnd(1,#quotes.scared)], {pltname=name, sys=mysys[cursys+1]} ) )
             next_sys()
             target:control()
             target:runaway(player.pilot())
          else
-            tk.msg( _("Not impressed"), quotes.not_scared[rnd.rnd(1,#quotes.not_scared)]:format( name, mysys[cursys+1]:name() ) )
+            tk.msg( _("Not impressed"), fmt.f( quotes.not_scared[rnd.rnd(1,#quotes.not_scared)], {pltname=name, sys=mysys[cursys+1]} ) )
             target:comm(comms.not_scared[rnd.rnd(1,#comms.not_scared)])
 
             -- Clean the previous hook if it exists
@@ -450,12 +450,16 @@ function space_clue ()
    else -- Pilot wants payment
 
       price = (5 + 5*rnd.rnd()) * 1e3
-      choice = tk.choice(_("How much money do you have?"), quotes.money[rnd.rnd(1,#quotes.money)]:format(name,fmt.credits(price)), _("Pay the sum"), _("Give up"), _("Threaten the pilot"))
+      choice = tk.choice(
+         _("How much money do you have?"),
+         fmt.f( quotes.money[rnd.rnd(1,#quotes.money)], {pltname=name, credits=fmt.credits(price)} ),
+         _("Pay the sum"), _("Give up"), _("Threaten the pilot")
+      )
 
       if choice == 1 then
          if player.credits() >= price then
             player.pay(-price)
-            tk.msg( _("I know the pilot you're looking for"), quotes.clue[rnd.rnd(1,#quotes.clue)]:format( name, mysys[cursys+1]:name() ) )
+            tk.msg( _("I know the pilot you're looking for"), fmt.f( quotes.clue[rnd.rnd(1,#quotes.clue)], {pltname=name, sys=mysys[cursys+1]} ) )
             next_sys()
             target:setHostile( false )
             target:comm(comms.thank[rnd.rnd(1,#comms.thank)])
@@ -472,12 +476,12 @@ function space_clue ()
          end
 
          if isScared (target) then
-            tk.msg( _("You're intimidating!"), quotes.scared[rnd.rnd(1,#quotes.scared)]:format( name, mysys[cursys+1]:name() ) )
+            tk.msg( _("You're intimidating!"), fmt.f( quotes.scared[rnd.rnd(1,#quotes.scared)], {pltname=name, sys=mysys[cursys+1]} ) )
             next_sys()
             target:control()
             target:runaway(player.pilot())
          else
-            tk.msg( _("Not impressed"), quotes.not_scared[rnd.rnd(1,#quotes.not_scared)]:format( name, mysys[cursys+1]:name() ) )
+            tk.msg( _("Not impressed"), fmt.f( quotes.not_scared[rnd.rnd(1,#quotes.not_scared)], {pltname=name, sys=mysys[cursys+1]} ) )
             target:comm(comms.not_scared[rnd.rnd(1,#comms.not_scared)])
 
             -- Clean the previous hook if it exists
@@ -498,14 +502,14 @@ function clue_attacked( p, attacker )
          and p:health() < 100 then
       p:control()
       p:runaway(player.pilot())
-      tk.msg( _("You're intimidating!"), quotes.scared[rnd.rnd(1,#quotes.scared)]:format( name, mysys[cursys+1]:name() ) )
+      tk.msg( _("You're intimidating!"), fmt.f( quotes.scared[rnd.rnd(1,#quotes.scared)], {pltname=name, sys=mysys[cursys+1]} ) )
       next_sys()
       hook.rm(attack)
    end
 end
 
 -- Spawn NPCs at bar, that give info
-function land ()
+function land()
    -- Player flees from combat
    if stage == 2 then
       player_flee()
@@ -535,19 +539,22 @@ end
 -- The player ask for clues in the bar
 function clue_bar()
    if cursys+1 >= nbsys then -- No more claimed system : need to finish the mission
-      tk.msg( _("Your track is cold"), quotes.cold[rnd.rnd(1,#quotes.cold)]:format( name ) )
+      tk.msg( _("Your track is cold"), fmt.f( quotes.cold[rnd.rnd(1,#quotes.cold)], {pltname=name} ) )
       misn.finish(false)
    else
-
       if know == 0 then -- NPC does not know the target
-         tk.msg( _("No clue"), quotes.dono[rnd.rnd(1,#quotes.dono)]:format( name ) )
+         tk.msg( _("No clue"), fmt.f( quotes.dono[rnd.rnd(1,#quotes.dono)], {pltname=name} ) )
       elseif know == 1 then -- NPC wants money
-         choice = tk.choice(_("How much money do you have?"), quotes.money[rnd.rnd(1,#quotes.money)]:format(name,fmt.credits(price)), _("Pay the sum"), _("Give up"))
+         choice = tk.choice(
+            _("How much money do you have?"),
+            fmt.f( quotes.money[rnd.rnd(1,#quotes.money)], {pltname=name, credits=fmt.credits(price)} ),
+            _("Pay the sum"), _("Give up")
+         )
 
          if choice == 1 then
             if player.credits() >= price then
                player.pay(-price)
-               tk.msg( _("I know the pilot you're looking for"), quotes.clue[rnd.rnd(1,#quotes.clue)]:format( name, mysys[cursys+1]:name() ) )
+               tk.msg( _("I know the pilot you're looking for"), fmt.f( quotes.clue[rnd.rnd(1,#quotes.clue)], {pltname=name, sys=mysys[cursys+1]} ) )
                next_sys()
             else
                tk.msg( _("Not enough money"), _("You don't have enough money.") )
@@ -557,7 +564,7 @@ function clue_bar()
          end
 
       else -- NPC tells the clue
-         tk.msg( _("I know the pilot you're looking for"), quotes.clue[rnd.rnd(1,#quotes.clue)]:format( name, mysys[cursys+1]:name() ) )
+         tk.msg( _("I know the pilot you're looking for"), fmt.f( quotes.clue[rnd.rnd(1,#quotes.clue)], {pltname=name, sys=mysys[cursys+1]} ) )
          next_sys()
       end
 
@@ -567,13 +574,13 @@ end
 
 function next_sys ()
    misn.markerMove (marker, mysys[cursys+1])
-   osd_msg[1] = _("Fly to the %s system and search for clues"):format( mysys[cursys+1]:name() )
+   osd_msg[1] = fmt.f( _("Fly to the {sys} system and search for clues"), {sys=mysys[cursys+1]} )
    misn.osdCreate( _("Seek and Destroy"), osd_msg )
    increment = true
 end
 
 function player_flee ()
-   tk.msg( _("You're not going to kill anybody like that"), _("You had a chance to neutralize %s, and you wasted it! Now you have to start all over. Maybe some other pilots in %s know where your target is going."):format( name, system.cur():name() ) )
+   tk.msg( _("You're not going to kill anybody like that"), fmt.f( _("You had a chance to neutralize {pltname}, and you wasted it! Now you have to start all over. Maybe some other pilots in {sys} know where your target is going."), {pltname=name, sys=system.cur()} ) )
    stage = 0
    misn.osdActive( 1 )
 
@@ -586,7 +593,7 @@ end
 function target_flee ()
    -- Target ran away. Unfortunately, we cannot continue the mission
    -- on the other side because the system has not been claimed...
-   tk.msg( _("Target ran away"), _("That was close, but unfortunately, %s ran away. Maybe some other pilots in this system know where your target is heading."):format( name ) )
+   tk.msg( _("Target ran away"), fmt.f( _("That was close, but unfortunately, {pltname} ran away. Maybe some other pilots in this system know where your target is heading."), {pltname=name} ) )
    pilot.toggleSpawn(true)
    stage = 0
    misn.osdActive( 1 )
