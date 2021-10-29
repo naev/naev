@@ -45,6 +45,11 @@ function create ()
       evt.finish()
    end
 
+   -- Don't spawn in restricted space
+   if cursys:tags().restricted then
+      evt.finish()
+   end
+
    -- Don't spawn in Thurion space
    if cursys:faction()==faction.get("Thurion") then
       evt.finish()
