@@ -44,6 +44,7 @@
  * Global parameters.
  */
 static const double ALPHA                  = 9.;       /**< Lane efficiency parameter. */
+static const double LAMBDA                 = 2e10;     /**< Regularization term. */
 static const double JUMP_CONDUCTIVITY      = 0.001;    /**< Conductivity value for inter-system jump-point connections. */
 static const double MIN_ANGLE              = M_PI/18.; /**< Path triangles can't be more acute. */
 enum {
@@ -687,6 +688,7 @@ static int safelanes_activateByGradient( cholmod_dense* Lambda_tilde, int iters_
          double cost_best, cost_cheapest_other;
          int fi = facind_opts[fii];
          size_t sys_base = sys_to_first_vertex[si];
+         double score_best = 0.; /* Negative scores get ignored. */
 
          /* Get the base index to use for this system. Save the value we expect to be the next iteration's base index.
           * The current system's rows are in the lal[fi] matrix if there's presence at the time we slice it.
@@ -721,9 +723,8 @@ static int safelanes_activateByGradient( cholmod_dense* Lambda_tilde, int iters_
          ei_best = edgeind_opts[0];
          cost_best = 1. / safelanes_initialConductivity(ei_best) / faction_stack[fi].lane_length_per_presence;
          cost_cheapest_other = +HUGE_VAL;
-         if (array_size(edgeind_opts) > 1) {
+         if (array_size(edgeind_opts) > 0) {
             /* There's an actual choice. Search for the best option. Lower is better. */
-            double score_best = +HUGE_VAL;
             for (int eii=0; eii<array_size(edgeind_opts); eii++) {
                int ei = edgeind_opts[eii];
                int sis = edge_stack[ei][0];
@@ -745,6 +746,8 @@ static int safelanes_activateByGradient( cholmod_dense* Lambda_tilde, int iters_
                score -= safelanes_row_dot_row( utilde, lal[fi], sis, sjs - sys_base + lal_base );
                Linv = safelanes_initialConductivity(ei);
                score *= ALPHA * Linv * Linv;
+               score += LAMBDA;
+               DEBUG("score=%.3e",score);
 
                cost = 1. / safelanes_initialConductivity(ei) / faction_stack[fi].lane_length_per_presence;
                if (score < score_best) {
@@ -757,6 +760,10 @@ static int safelanes_activateByGradient( cholmod_dense* Lambda_tilde, int iters_
                   cost_cheapest_other = MIN( cost_cheapest_other, cost );
             }
          }
+
+         /* Ignore positive scores. */
+         if (score_best >= 0.)
+            continue;
 
          /* Add the lane. */
          presence_budget[fi][si] -= cost_best;
