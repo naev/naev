@@ -1,13 +1,11 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
 /**
  * @file nlua_pilotoutfit.c
  *
  * @brief Handles the Lua pilot outfit (equipped) bindings.
  */
-
 /** @cond */
 #include <lauxlib.h>
 
@@ -22,9 +20,7 @@
 #include "rng.h"
 #include "slots.h"
 
-
 int pilotoutfit_modified = 0;
-
 
 /* Pilot outfit metatable methods. */
 static int poL_outfit( lua_State *L );
@@ -41,8 +37,6 @@ static const luaL_Reg poL_methods[] = {
    {0,0}
 }; /**< Pilot outfit metatable methods. */
 
-
-
 /**
  * @brief Loads the pilot outfit library.
  *
@@ -54,7 +48,6 @@ int nlua_loadPilotOutfit( nlua_env env )
    nlua_register(env, PILOTOUTFIT_METATABLE, poL_methods, 1);
    return 0;
 }
-
 
 /**
  * @brief Lua bindings to interact with pilot outfits.
@@ -148,7 +141,6 @@ int lua_ispilotoutfit( lua_State *L, int ind )
    return ret;
 }
 
-
 /**
  * @brief Gets the outfit of the PilotOutfit.
  *
@@ -158,11 +150,10 @@ int lua_ispilotoutfit( lua_State *L, int ind )
  */
 static int poL_outfit( lua_State *L )
 {
-   PilotOutfitSlot *po  = luaL_validpilotoutfit(L,1);
+   PilotOutfitSlot *po = luaL_validpilotoutfit(L,1);
    lua_pushoutfit(L, po->outfit );
    return 1;
 }
-
 
 /**
  * @brief Sets the state of the PilotOutfit.
@@ -173,7 +164,7 @@ static int poL_outfit( lua_State *L )
  */
 static int poL_state( lua_State *L )
 {
-   PilotOutfitSlot *po  = luaL_validpilotoutfit(L,1);
+   PilotOutfitSlot *po = luaL_validpilotoutfit(L,1);
    const char *state = luaL_optstring(L,2,NULL);
    PilotOutfitState pos = po->state;
 
@@ -195,7 +186,6 @@ static int poL_state( lua_State *L )
    return 0;
 }
 
-
 /**
  * @brief Sets the state progress of the PilotOutfit.
  *
@@ -205,11 +195,10 @@ static int poL_state( lua_State *L )
  */
 static int poL_progress( lua_State *L )
 {
-   PilotOutfitSlot *po  = luaL_validpilotoutfit(L,1);
+   PilotOutfitSlot *po = luaL_validpilotoutfit(L,1);
    po->progress = CLAMP( 0., 1., luaL_checknumber(L,2) );
    return 0;
 }
-
 
 /**
  * @brief Sets a temporary ship stat modifier of the pilot outfit.
@@ -221,14 +210,13 @@ static int poL_progress( lua_State *L )
  */
 static int poL_set( lua_State *L )
 {
-   PilotOutfitSlot *po  = luaL_validpilotoutfit(L,1);
+   PilotOutfitSlot *po = luaL_validpilotoutfit(L,1);
    const char *name = luaL_checkstring(L,2);
    double value = luaL_checknumber(L,3);
    ss_statsSet( &po->lua_stats, name, value, 1 );
    pilotoutfit_modified = 1;
    return 0;
 }
-
 
 /**
  * @brief Clears all the temporary ship stat modifiers of the pilot outfit.
@@ -238,9 +226,8 @@ static int poL_set( lua_State *L )
  */
 static int poL_clear( lua_State *L )
 {
-   PilotOutfitSlot *po  = luaL_validpilotoutfit(L,1);
+   PilotOutfitSlot *po = luaL_validpilotoutfit(L,1);
    ss_statsInit( &po->lua_stats );
    pilotoutfit_modified = 1;
    return 0;
 }
-

@@ -1,13 +1,11 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
 /**
  * @file nlua_news.c
  *
  * @brief Lua news module.
  */
-
 /** @cond */
 #include <lauxlib.h>
 
@@ -22,10 +20,8 @@
 #include "nstring.h"
 #include "ntime.h"
 
-
 extern news_t *news_list; /**< Linked list containing all articles */
 extern int land_loaded;
-
 
 int newsL_add( lua_State *L );
 int newsL_rm( lua_State *L );
@@ -52,7 +48,6 @@ static const luaL_Reg news_methods[] = {
    {0, 0}
 }; /**< News metatable methods. */
 
-
 /**
  * @brief Loads the news library.
  *
@@ -65,7 +60,6 @@ int nlua_loadNews( nlua_env env )
    return 0; /* No error */
 }
 
-
 /**
  * @brief Pushes an article on the stack.
  *
@@ -75,14 +69,12 @@ int nlua_loadNews( nlua_env env )
  */
 LuaArticle* lua_pusharticle( lua_State *L, LuaArticle article )
 {
-   LuaArticle *o;
-   o = (LuaArticle *)lua_newuserdata(L, sizeof(LuaArticle));
+   LuaArticle *o = (LuaArticle *)lua_newuserdata(L, sizeof(LuaArticle));
    *o = article;
    luaL_getmetatable(L, ARTICLE_METATABLE);
    lua_setmetatable(L, -2);
    return o;
 }
-
 
 /**
  * @brief Makes sure the article is valid or raises a Lua error.
@@ -93,10 +85,8 @@ LuaArticle* lua_pusharticle( lua_State *L, LuaArticle article )
  */
 LuaArticle* luaL_validarticle( lua_State *L, int ind )
 {
-   LuaArticle *Larticle;
-
    if (lua_isarticle(L, ind)) {
-      Larticle = (LuaArticle *)lua_touserdata(L, ind);
+      LuaArticle *Larticle = (LuaArticle *)lua_touserdata(L, ind);
       if (news_get(*Larticle))
          return Larticle;
       else
@@ -111,7 +101,6 @@ LuaArticle* luaL_validarticle( lua_State *L, int ind )
 
    return NULL;
 }
-
 
 /**
  * @brief Checks to see if ind is an article.
@@ -135,7 +124,6 @@ int lua_isarticle( lua_State *L, int ind )
    lua_pop(L, 2); /* remove both metatables */
    return ret;
 }
-
 
 /**
  * @brief Lua bindings to interact with the news.
@@ -283,7 +271,6 @@ int newsL_add( lua_State *L )
    return 1;
 }
 
-
 /**
  * @brief Frees an article or a table of articles.
  *    @luatparam Article article article to free
@@ -291,23 +278,18 @@ int newsL_add( lua_State *L )
  */
 int newsL_rm( lua_State *L )
 {
-   LuaArticle *Larticle;
-
    NLUA_CHECKRW(L);
 
    if (lua_istable(L, 1)) {
       lua_pushnil(L);
       while (lua_next(L, -2)) {
-         Larticle = luaL_validarticle(L, -1);
-
+         LuaArticle *Larticle = luaL_validarticle(L, -1);
          free_article(*Larticle);
-
          lua_pop(L, 1);
       }
    }
    else {
-      Larticle = luaL_validarticle(L, 1);
-
+      LuaArticle *Larticle = luaL_validarticle(L, 1);
       free_article(*Larticle);
    }
 
@@ -321,7 +303,6 @@ int newsL_rm( lua_State *L )
 
    return 1;
 }
-
 
 /**
  * @brief Gets all matching articles in a table.
@@ -368,9 +349,8 @@ int newsL_get( lua_State *L )
    lua_newtable(L);
    k = 1;
    do {
-
-      if ( (article_ptr->title == NULL) || (article_ptr->desc == NULL)
-            || (article_ptr->faction == NULL) )
+      if ((article_ptr->title == NULL) || (article_ptr->desc == NULL)
+            || (article_ptr->faction == NULL))
          continue;
 
       if ( print_all || date == article_ptr->date
@@ -390,7 +370,6 @@ int newsL_get( lua_State *L )
 
    return 1;
 }
-
 
 /**
  * @brief Check articles for equality.
@@ -415,7 +394,6 @@ int newsL_eq( lua_State *L )
    return 1;
 }
 
-
 /**
  * @brief Gets the article title.
  *    @luatparam Article a article to get the title of
@@ -437,7 +415,6 @@ int newsL_title( lua_State *L )
    lua_pushstring(L, article_ptr->title);
    return 1;
 }
-
 
 /**
  * @brief Gets the article description.
@@ -461,7 +438,6 @@ int newsL_desc( lua_State *L )
    return 1;
 }
 
-
 /**
  * @brief Gets the article faction.
  *    @luatparam Article a article to get the faction of
@@ -484,7 +460,6 @@ int newsL_faction( lua_State *L )
    return 1;
 }
 
-
 /**
  * @brief Gets the article date.
  *    @luatparam Article a article to get the date of
@@ -506,7 +481,6 @@ int newsL_date( lua_State *L )
    lua_pushinteger(L, (lua_Integer)article_ptr->date);
    return 1;
 }
-
 
 /**
  * @brief Tags an article or a table of articles with a string.
@@ -532,9 +506,7 @@ int newsL_bind( lua_State *L )
       }
 
       tag = strdup(lua_tostring(L, 2));
-
       lua_pop(L, 1);
-
       lua_pushnil(L);
 
       /* traverse table */
@@ -576,6 +548,5 @@ int newsL_bind( lua_State *L )
 
       article_ptr->tag = tag;
    }
-
    return 1;
 }

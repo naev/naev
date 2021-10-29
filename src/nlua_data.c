@@ -1,13 +1,11 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
 /**
  * @file nlua_data.c
  *
  * @brief Handles datas.
  */
-
 /** @cond */
 #include <lauxlib.h>
 
@@ -19,10 +17,8 @@
 #include "log.h"
 #include "nluadef.h"
 
-
 /* Helper functions. */
 static size_t dataL_checkpos( lua_State *L, LuaData_t *ld, long pos );
-
 
 /* Data metatable methods. */
 static int dataL_gc( lua_State *L );
@@ -49,9 +45,6 @@ static const luaL_Reg dataL_methods[] = {
    {0,0}
 }; /**< Data metatable methods. */
 
-
-
-
 /**
  * @brief Loads the data library.
  *
@@ -63,7 +56,6 @@ int nlua_loadData( nlua_env env )
    nlua_register(env, DATA_METATABLE, dataL_methods, 1);
    return 0;
 }
-
 
 /**
  * @brief Lua bindings to interact with datas.
@@ -134,7 +126,6 @@ int lua_isdata( lua_State *L, int ind )
    return ret;
 }
 
-
 /**
  * @brief Frees a data.
  *
@@ -147,7 +138,6 @@ static int dataL_gc( lua_State *L )
    free(ld->data);
    return 0;
 }
-
 
 /**
  * @brief Compares two datas to see if they are the same.
@@ -169,7 +159,6 @@ static int dataL_eq( lua_State *L )
    lua_pushboolean( L, (memcmp( d1->data, d2->data, d1->size)==0) );
    return 1;
 }
-
 
 /**
  * @brief Opens a new data.
@@ -197,8 +186,6 @@ static int dataL_new( lua_State *L )
    return 1;
 }
 
-
-
 static size_t dataL_checkpos( lua_State *L, LuaData_t *ld, long pos )
 {
    size_t mpos;
@@ -209,8 +196,6 @@ static size_t dataL_checkpos( lua_State *L, LuaData_t *ld, long pos )
       NLUA_ERROR(L, _("position argument out of bounds: %d of %d elements"), pos, ld->size/ld->elem);
    return mpos;
 }
-
-
 
 /**
  * @brief Gets the value of an element.
@@ -229,7 +214,6 @@ static int dataL_get( lua_State *L )
    }
    return 1;
 }
-
 
 /**
  * @brief Sets the value of an element.
@@ -251,7 +235,6 @@ static int dataL_set( lua_State *L )
    return 0;
 }
 
-
 /**
  * @luafunc getSize
  */
@@ -262,7 +245,6 @@ static int dataL_getSize( lua_State *L )
    return 1;
 }
 
-
 /**
  * @luafunc getString
  */
@@ -272,7 +254,6 @@ static int dataL_getString( lua_State *L )
    lua_pushlstring(L, ld->data, ld->size);
    return 1;
 }
-
 
 /**
  * @luafunc paste
@@ -298,7 +279,6 @@ static int dataL_paste( lua_State *L )
    lua_pushvalue(L,1);
    return 1;
 }
-
 
 /**
  * @luafunc addWeighted
@@ -338,7 +318,6 @@ static int dataL_addWeighted( lua_State *L )
    lua_pushdata(L,out);
    return 1;
 }
-
 
 /**
  * @luafunc convolve2d
@@ -415,6 +394,3 @@ static int dataL_convolve2d( lua_State *L )
    lua_pushinteger(L,oh);
    return 3;
 }
-
-
-

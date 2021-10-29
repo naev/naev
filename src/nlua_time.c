@@ -1,13 +1,11 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
 /**
  * @file nlua_time.c
  *
  * @brief Time manipulation Lua bindings.
  */
-
 /** @cond */
 #include <lauxlib.h>
 #include <stdlib.h>
@@ -20,7 +18,6 @@
 #include "log.h"
 #include "nluadef.h"
 #include "ntime.h"
-
 
 /* Time methods. */
 static int timeL_create( lua_State *L );
@@ -54,7 +51,6 @@ static const luaL_Reg time_methods[] = {
    {0,0}
 }; /**< Time Lua methods. */
 
-
 /**
  * @brief Loads the Time Lua library.
  *
@@ -66,7 +62,6 @@ int nlua_loadTime( nlua_env env )
    nlua_register(env, TIME_METATABLE, time_methods, 1);
    return 0; /* No error */
 }
-
 
 /**
  * @brief Bindings for interacting with the time.
@@ -159,7 +154,6 @@ int lua_istime( lua_State *L, int ind )
    return ret;
 }
 
-
 /**
  * @brief Creates a time. This can be absolute or relative.
  *
@@ -208,7 +202,6 @@ static int timeL_add( lua_State *L )
    return 1;
 }
 
-
 /*
  * Method version of time_add that modifies the first time.
  */
@@ -225,7 +218,6 @@ static int timeL_add__( lua_State *L )
    lua_pushtime( L, *t1 );
    return 1;
 }
-
 
 /**
  * @brief Subtracts two time metatables.
@@ -251,7 +243,6 @@ static int timeL_sub( lua_State *L )
    return 1;
 }
 
-
 /*
  * Method version of time_sub that modifies the first time.
  */
@@ -268,7 +259,6 @@ static int timeL_sub__( lua_State *L )
    lua_pushtime( L, *t1 );
    return 1;
 }
-
 
 /**
  * @brief Checks to see if two time are equal.
@@ -371,7 +361,6 @@ static int timeL_str( lua_State *L )
    return 1;
 }
 
-
 /**
  * @brief Increases or decreases the time.
  *
@@ -386,7 +375,6 @@ static int timeL_inc( lua_State *L )
    ntime_inc( luaL_validtime(L,1) );
    return 0;
 }
-
 
 /**
  * @brief Gets a number representing this time.
@@ -406,7 +394,6 @@ static int timeL_tonumber( lua_State *L )
    return 1;
 }
 
-
 /**
  * @brief Creates a time from a number representing it.
  *
@@ -420,11 +407,7 @@ static int timeL_tonumber( lua_State *L )
  */
 static int timeL_fromnumber( lua_State *L )
 {
-   ntime_t t;
-   t = (ntime_t) luaL_checknumber(L,1);
+   ntime_t t = (ntime_t) luaL_checknumber(L,1);
    lua_pushtime( L, t );
    return 1;
 }
-
-
-

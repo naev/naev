@@ -1,14 +1,11 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
 /**
  * @file nlua_music.c
  *
  * @brief Lua music playing module.
  */
-
-
 /** @cond */
 #include "SDL.h"
 
@@ -21,7 +18,6 @@
 #include "music.h"
 #include "ndata.h"
 #include "nluadef.h"
-
 
 /* Music methods. */
 static int musicL_delay( lua_State* L );
@@ -46,7 +42,6 @@ static const luaL_Reg music_methods[] = {
    {0,0}
 }; /**< Music specific methods. */
 
-
 /**
  * @brief Music Lua module.
  *
@@ -58,8 +53,6 @@ static const luaL_Reg music_methods[] = {
  *
  * @luamod music
  */
-
-
 /**
  * @brief Loads the music functions into a lua_State.
  *
@@ -71,7 +64,6 @@ int nlua_loadMusic( nlua_env env )
    nlua_register(env, "music", music_methods, 0);
    return 0;
 }
-
 
 /**
  * @brief Delays a rechoose.
@@ -96,7 +88,6 @@ static int musicL_delay( lua_State* L )
    return 0;
 }
 
-
 /**
  * @brief Loads a song.
  *
@@ -107,10 +98,8 @@ static int musicL_delay( lua_State* L )
  */
 static int musicL_load( lua_State *L )
 {
-   const char* str;
-
    /* check parameters */
-   str = luaL_checkstring(L,1);
+   const char *str = luaL_checkstring(L,1);
    if (music_load( str )) {
       NLUA_ERROR(L,_("Music '%s' invalid or failed to load."), str );
       return 0;
@@ -119,7 +108,6 @@ static int musicL_load( lua_State *L )
 
    return 0;
 }
-
 
 /**
  * @brief Plays the loaded song.
@@ -130,34 +118,31 @@ static int musicL_load( lua_State *L )
  */
 static int musicL_play( lua_State *L )
 {
-   (void)L;
+   (void) L;
    music_tempDisable( 0 );
    music_play();
    return 0;
 }
-
 
 /**
  * @brief Pauses the music engine.
  */
 static int musicL_pause( lua_State* L )
 {
-   (void)L;
+   (void) L;
    music_pause();
    return 0;
 }
-
 
 /**
  * @brief Resumes the music engine.
  */
 static int musicL_resume( lua_State* L )
 {
-   (void)L;
+   (void) L;
    music_resume();
    return 0;
 }
-
 
 /**
  * @brief Stops playing the current song.
@@ -173,7 +158,6 @@ static int musicL_stop( lua_State *L )
    return 0;
 }
 
-
 /**
  * @brief Checks to see if something is playing.
  *
@@ -186,7 +170,6 @@ static int musicL_isPlaying( lua_State* L )
    return 1;
 }
 
-
 /**
  * @brief Gets the name of the current playing song.
  *
@@ -198,16 +181,11 @@ static int musicL_isPlaying( lua_State* L )
  */
 static int musicL_current( lua_State* L )
 {
-   const char *music_name;
-
-   music_name = music_playingName();
-
+   const char *music_name = music_playingName();
    lua_pushstring(L, (music_name != NULL) ? music_name : "none" );
    lua_pushnumber(L, music_playingTime() );
-
    return 2;
 }
-
 
 /**
  * @brief Makes the music repeat. This gets turned of when a new music is chosen, e.g., take-off or landing.

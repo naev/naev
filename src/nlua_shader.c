@@ -1,13 +1,11 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
 /**
  * @file nlua_shader.c
  *
  * @brief Handles shaders.
  */
-
 /** @cond */
 #include <lauxlib.h>
 
@@ -22,7 +20,6 @@
 #include "array.h"
 #include "nlua_tex.h"
 #include "render.h"
-
 
 /* Shader metatable methods. */
 static int shaderL_gc( lua_State *L );
@@ -45,13 +42,11 @@ static const luaL_Reg shaderL_methods[] = {
    {0,0}
 }; /**< Shader metatable methods. */
 
-
 /* Useful stuff. */
 int shader_compareUniform( const void *a, const void *b);
 int shader_searchUniform( const void *id, const void *u );
 LuaUniform_t *shader_getUniform( LuaShader_t *ls, const char *name );
 static int shaderL_sendHelper( lua_State *L, int ignore_missing );
-
 
 /**
  * @brief Loads the shader library.
@@ -64,7 +59,6 @@ int nlua_loadShader( nlua_env env )
    nlua_register(env, SHADER_METATABLE, shaderL_methods, 1);
    return 0;
 }
-
 
 /**
  * @brief Lua bindings to interact with shaders.
@@ -135,7 +129,6 @@ int lua_isshader( lua_State *L, int ind )
    return ret;
 }
 
-
 /**
  * @brief Frees a shader.
  *
@@ -151,7 +144,6 @@ static int shaderL_gc( lua_State *L )
    free(shader->uniforms);
    return 0;
 }
-
 
 /**
  * @brief Compares two shaders to see if they are the same.
@@ -170,7 +162,6 @@ static int shaderL_eq( lua_State *L )
    return 1;
 }
 
-
 /*
  * For qsort.
  */
@@ -187,12 +178,10 @@ int shader_searchUniform( const void *id, const void *u )
    return strcmp( (const char*)id, ((LuaUniform_t*)u)->name );
 }
 
-
 LuaUniform_t *shader_getUniform( LuaShader_t *ls, const char *name )
 {
    return bsearch( name, ls->uniforms, ls->nuniforms, sizeof(LuaUniform_t), shader_searchUniform );
 }
-
 
 /**
  * @brief Creates a new shader.
@@ -272,16 +261,13 @@ static int shaderL_new( lua_State *L )
    return 1;
 }
 
-
 /**
  * @brief Helper to parse up float vector (or arguments).
  */
 void shader_parseUniformArgsFloat( GLfloat values[4], lua_State *L, int idx, int n )
 {
-   int j;
-
    if (lua_istable(L,idx)) {
-      for (j=0; j<n; j++) {
+      for (int j=0; j<n; j++) {
          lua_pushnumber(L,j+1);
          lua_gettable(L,idx);
          values[j] = luaL_checknumber(L,-1);
@@ -289,21 +275,18 @@ void shader_parseUniformArgsFloat( GLfloat values[4], lua_State *L, int idx, int
       lua_pop(L,n);
    }
    else {
-      for (j=0; j<n; j++)
+      for (int j=0; j<n; j++)
          values[j] = luaL_checknumber(L,idx+j);
    }
 }
-
 
 /**
  * @brief Helper to parse up integer vector (or arguments).
  */
 void shader_parseUniformArgsInt( GLint values[4], lua_State *L, int idx, int n )
 {
-   int j;
-
    if (lua_istable(L,idx)) {
-      for (j=0; j<n; j++) {
+      for (int j=0; j<n; j++) {
          lua_pushnumber(L,j+1);
          lua_gettable(L,idx);
          values[j] = luaL_checkint(L,-1);
@@ -311,11 +294,10 @@ void shader_parseUniformArgsInt( GLint values[4], lua_State *L, int idx, int n )
       lua_pop(L,n);
    }
    else {
-      for (j=0; j<n; j++)
+      for (int j=0; j<n; j++)
          values[j] = luaL_checkint(L,idx+j);
    }
 }
-
 
 /**
  * @brief Allows setting values of uniforms for a shader. Errors out if the uniform is unknown or unused (as in optimized out by the compiler).
@@ -329,7 +311,6 @@ static int shaderL_send( lua_State *L )
    return shaderL_sendHelper( L, 0 );
 }
 
-
 /**
  * @brief Allows setting values of uniforms for a shader, while ignoring unknown (or unused) uniforms.
  *
@@ -341,7 +322,6 @@ static int shaderL_sendRaw( lua_State *L )
 {
    return shaderL_sendHelper( L, 1 );
 }
-
 
 /**
  * @brief Helper to set the uniform while handling unknown/inactive uniforms.
@@ -420,7 +400,6 @@ static int shaderL_sendHelper( lua_State *L, int ignore_missing )
    return 0;
 }
 
-
 /**
  * @brief Checks to see if a shader has a uniform.
  *
@@ -431,18 +410,14 @@ static int shaderL_sendHelper( lua_State *L, int ignore_missing )
  */
 static int shaderL_hasUniform( lua_State *L )
 {
-   LuaShader_t *ls;
-   const char *name;
-
    /* Parameters. */
-   ls = luaL_checkshader(L,1);
-   name = luaL_checkstring(L,2);
+   LuaShader_t *ls = luaL_checkshader(L,1);
+   const char *name = luaL_checkstring(L,2);
 
    /* Search. */
    lua_pushboolean(L, shader_getUniform(ls,name)!=NULL);
    return 1;
 }
-
 
 /**
  * @brief Sets a shader as a post-processing shader.
@@ -475,7 +450,6 @@ static int shaderL_addPostProcess( lua_State *L )
    return 1;
 }
 
-
 /**
  * @brief Removes a shader as a post-processing shader.
  *
@@ -490,4 +464,3 @@ static int shaderL_rmPostProcess( lua_State *L )
    ls->pp_id = 0;
    return 1;
 }
-

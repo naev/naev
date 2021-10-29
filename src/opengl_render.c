@@ -23,7 +23,6 @@
  *  screen.  (-SCREEN_W/2.,-SCREEN_H/2.) is bottom left and
  *  (+SCREEN_W/2.,+SCREEN_H/2.) is top right.
  */
-
 /** @cond */
 #include "naev.h"
 /** @endcond */

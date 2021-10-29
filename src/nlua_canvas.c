@@ -1,13 +1,11 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
 /**
  * @canvas nlua_canvas.c
  *
  * @brief Handles canvass.
  */
-
 /** @cond */
 #include <lauxlib.h>
 
@@ -21,11 +19,9 @@
 #include "nlua_tex.h"
 #include "nlua_col.h"
 
-
 static int nlua_canvas_counter = 0;
 static GLuint previous_fbo = 0;
 static int previous_fbo_set = 0;
-
 
 /* Canvas metatable methods. */
 static int canvasL_gc( lua_State *L );
@@ -44,7 +40,6 @@ static const luaL_Reg canvasL_methods[] = {
    {0,0}
 }; /**< Canvas metatable methods. */
 
-
 /**
  * @brief Loads the canvas library.
  *
@@ -56,7 +51,6 @@ int nlua_loadCanvas( nlua_env env )
    nlua_register(env, CANVAS_METATABLE, canvasL_methods, 1);
    return 0;
 }
-
 
 /**
  * @brief Lua bindings to interact with canvass.
@@ -129,7 +123,6 @@ int lua_iscanvas( lua_State *L, int ind )
    return ret;
 }
 
-
 /**
  * @brief Frees a canvas.
  *
@@ -144,7 +137,6 @@ static int canvasL_gc( lua_State *L )
    gl_checkErr();
    return 0;
 }
-
 
 /**
  * @brief Compares two canvass to see if they are the same.
@@ -162,7 +154,6 @@ static int canvasL_eq( lua_State *L )
    lua_pushboolean( L, (memcmp( c1, c2, sizeof(LuaCanvas_t) )==0) );
    return 1;
 }
-
 
 int canvas_new( LuaCanvas_t *lc, int w, int h )
 {
@@ -196,7 +187,6 @@ int canvas_new( LuaCanvas_t *lc, int w, int h )
    return 0;
 }
 
-
 /**
  * @brief Opens a new canvas.
  *
@@ -208,10 +198,9 @@ int canvas_new( LuaCanvas_t *lc, int w, int h )
 static int canvasL_new( lua_State *L )
 {
    LuaCanvas_t lc;
-   int w, h;
 
-   w = luaL_checkint(L,1);
-   h = luaL_checkint(L,2);
+   int w = luaL_checkint(L,1);
+   int h = luaL_checkint(L,2);
 
    memset( &lc, 0, sizeof(LuaCanvas_t) );
    if (canvas_new( &lc, w, h ))
@@ -219,7 +208,6 @@ static int canvasL_new( lua_State *L )
    lua_pushcanvas( L, lc );
    return 1;
 }
-
 
 /**
  * @brief Sets the active canvas.
@@ -256,7 +244,6 @@ static int canvasL_set( lua_State *L )
    return 0;
 }
 
-
 /**
  * @brief Gets the texture associated with the canvas.
  *
@@ -270,7 +257,6 @@ static int canvasL_getTex( lua_State *L )
    lua_pushtex( L, gl_dupTexture(lc->tex) );
    return 1;
 }
-
 
 /**
  * @brief Clears a canvas.

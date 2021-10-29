@@ -1,13 +1,11 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
 /**
  * @file nlua_bkg.c
  *
  * @brief Bindings for modifying the space background.
  */
-
 /** @cond */
 #include <lauxlib.h>
 
@@ -22,7 +20,6 @@
 #include "nlua_tex.h"
 #include "nluadef.h"
 
-
 /* Background methods. */
 static int bkgL_clear( lua_State *L );
 static int bkgL_image( lua_State *L );
@@ -31,9 +28,6 @@ static const luaL_Reg bkgL_methods[] = {
    { "image", bkgL_image },
    {0,0}
 }; /**< Background methods. */
-
-
-
 
 /**
  * @brief Loads the graphics library.
@@ -47,7 +41,6 @@ int nlua_loadBackground( nlua_env env )
    return 0;
 }
 
-
 /**
  * @brief Lua bindings to interact with the background.
  *
@@ -57,9 +50,6 @@ int nlua_loadBackground( nlua_env env )
  *`
  * @luamod bkg
  */
-
-
-
 /**
  * @brief Clears any backgrounds that may currently be displaying.
  *
@@ -71,7 +61,6 @@ static int bkgL_clear( lua_State *L )
    background_clear();
    return 0;
 }
-
 
 /**
  * @brief Adds a background image.
@@ -118,6 +107,3 @@ static int bkgL_image( lua_State *L )
    lua_pushnumber(L,id);
    return 1;
 }
-
-
-
