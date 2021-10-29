@@ -2651,7 +2651,6 @@ static StarSystem* system_parse( StarSystem *sys, const xmlNodePtr parent )
 
    node  = parent->xmlChildrenNode;
    do { /* load all the data */
-
       /* Only handle nodes. */
       xml_onlyNodes(node);
 
@@ -2672,6 +2671,7 @@ static StarSystem* system_parse( StarSystem *sys, const xmlNodePtr parent )
       else if (xml_isNode(node,"general")) {
          cur = node->children;
          do {
+            xml_onlyNodes(cur);
             xmlr_strd( cur, "background", sys->background );
             xmlr_strd( cur, "features", sys->features );
             xmlr_int( cur, "stars", sys->stars );
@@ -2679,12 +2679,19 @@ static StarSystem* system_parse( StarSystem *sys, const xmlNodePtr parent )
             if (xml_isNode(cur,"interference")) {
                flags |= FLAG_INTERFERENCESET;
                sys->interference = xml_getFloat(cur);
+               continue;
             }
-            else if (xml_isNode(cur,"nebula")) {
+            if (xml_isNode(cur,"nebula")) {
                xmlr_attr_float( cur, "volatility", sys->nebu_volatility );
                xmlr_attr_float_def( cur, "hue", sys->nebu_hue, NEBULA_DEFAULT_HUE );
                sys->nebu_density = xml_getFloat(cur);
+               continue;
             }
+            if (xml_isNode(cur,"nolanes")) {
+               sys_setFlag( sys, SYSTEM_NOLANES );
+               continue;
+            }
+            DEBUG(_("Unknown node '%s' in star system '%s'"),node->name,sys->name);
          } while (xml_nextNode(cur));
          continue;
       }
@@ -2692,10 +2699,16 @@ static StarSystem* system_parse( StarSystem *sys, const xmlNodePtr parent )
       else if (xml_isNode(node,"assets")) {
          cur = node->children;
          do {
-            if (xml_isNode(cur,"asset"))
+            xml_onlyNodes(cur);
+            if (xml_isNode(cur,"asset")) {
                system_addPlanet( sys, xml_get(cur) );
-            else if (xml_isNode(cur,"asset_virtual"))
+               continue;
+            }
+            if (xml_isNode(cur,"asset_virtual")) {
                system_addVirtualAsset( sys, xml_get(cur) );
+               continue;
+            }
+            DEBUG(_("Unknown node '%s' in star system '%s'"),node->name,sys->name);
          } while (xml_nextNode(cur));
          continue;
       }
