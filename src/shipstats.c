@@ -192,10 +192,10 @@ static double ss_statsGetInternal( const ShipStats *s, ShipStatsType type );
 static int ss_statsGetLuaInternal( lua_State *L, const ShipStats *s, ShipStatsType type, int internal );
 
 /**
- * @brief Creatse a shipstat list element from an xml node.
+ * @brief Creates a shipstat list element from an xml node.
  *
  *    @param node Node to create element from.
- *    @return Liste lement created from node.
+ *    @return List element created from node.
  */
 ShipStatList* ss_listFromXML( xmlNodePtr node )
 {
@@ -236,6 +236,36 @@ ShipStatList* ss_listFromXML( xmlNodePtr node )
    }
 
    return ll;
+}
+
+/**
+ * @brief Creatse a shipstat list element from an xml node.
+ *
+ *    @param writer Writer to use to write the XML data.
+ *    @param ll ShipStats to save.
+ *    @return 0 on success.
+ */
+int ss_listToXML( xmlTextWriterPtr writer, const ShipStatList *ll )
+{
+   for ( ; ll!=NULL; ll=ll->next) {
+      const ShipStatsLookup *sl = &ss_lookup[ ll->type ];
+      switch (sl->data) {
+         case SS_DATA_TYPE_DOUBLE:
+         case SS_DATA_TYPE_DOUBLE_ABSOLUTE_PERCENT:
+            xmlw_elem( writer, sl->name, "%f", ll->d.d * 100 );
+            break;
+
+         case SS_DATA_TYPE_DOUBLE_ABSOLUTE:
+            xmlw_elem( writer, sl->name, "%f", ll->d.d );
+            break;
+
+         case SS_DATA_TYPE_BOOLEAN:
+         case SS_DATA_TYPE_INTEGER:
+            xmlw_elem( writer, sl->name, "%d", ll->d.i );
+            break;
+      }
+   }
+   return 0;
 }
 
 /**
@@ -468,6 +498,7 @@ static const char* ss_printD_colour( double d, const ShipStatsLookup *sl )
       return "g";
    return "r";
 }
+
 /**
  * @brief Some colour coding for ship stats integers.
  */

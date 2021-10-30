@@ -2722,6 +2722,21 @@ static StarSystem* system_parse( StarSystem *sys, const xmlNodePtr parent )
          continue;
       }
 
+      if (xml_isNode(node, "stats")) {
+         cur = node->children;
+         do {
+            xml_onlyNodes(cur);
+            ShipStatList *ll = ss_listFromXML( cur );
+            if (ll != NULL) {
+               ll->next   = sys->stats;
+               sys->stats = ll;
+               continue;
+            }
+            WARN(_("System '%s' has unknown stat '%s'."), sys->name, cur->name);
+         } while (xml_nextNode(cur));
+         continue;
+      }
+
       if (xml_isNode(node, "tags")) {
          sys->tags = array_create( char* );
          cur = node->children;

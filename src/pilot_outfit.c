@@ -898,6 +898,8 @@ void pilot_calcStats( Pilot* pilot )
    s = &pilot->stats;
    tm = s->time_mod;
    *s = pilot->ship->stats_array;
+   if (cur_system->stats != NULL)
+      ss_statsModFromList( s, cur_system->stats );
 
    /*
     * Now add outfit changes

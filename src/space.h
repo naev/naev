@@ -14,6 +14,7 @@ typedef struct JumpPoint_ JumpPoint;
 #include "mission_markers.h"
 #include "opengl.h"
 #include "pilot.h"
+#include "shipstats.h"
 #include "tech.h"
 
 #define SYSTEM_SIMULATE_TIME_PRE   25. /**< Time to simulate system before player is added, during this time special effect creation is disabled. */
@@ -329,6 +330,7 @@ struct StarSystem_ {
    /* Misc. */
    char **tags;         /**< Star system tags. */
    unsigned int flags;  /**< flags for system properties */
+   ShipStatList *stats; /**< System stats. */
 };
 
 /* Some useful externs. */

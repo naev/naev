@@ -237,6 +237,12 @@ int dsys_saveSystem( StarSystem *sys )
       xmlw_endElem( writer ); /* "asteroids" */
    }
 
+   if (sys->stats != NULL) {
+      xmlw_startElem( writer, "stats" );
+      ss_listToXML( writer, sys->stats );
+      xmlw_endElem( writer ); /* "stats" */
+   }
+
    if (array_size(sys->tags)>0) {
       xmlw_startElem( writer, "tags" );
       for (int i=0; i<array_size(sys->tags); i++)
