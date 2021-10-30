@@ -376,4 +376,38 @@ function luatk.Fader:set( val )
    self.handler( self, self.val )
 end
 
+--[[
+   High Level dialogue stuff
+--]]
+function luatk.msg( title, msg )
+   local font = luatk._deffont
+   local titlelen = font:getWidth( title )
+   local msglen = font:getWidth( msg )
+   local wi = 10
+   for i=0,11 do
+      if msglen < (260 + i*50) * (2+i) then
+         wi = i
+         break
+      end
+   end
+   local w = math.max( 300 + wi * 50, titlelen+40 )
+   local _w, tw = font:getWrap( msg, w-40 )
+   local h = #tw * font:getLineHeight()
+   local d =  (w/h) * (3/4)
+   if math.abs(d) > 0.3 then
+      if h > w then
+         w = h
+      end
+      _w, tw = font:getWrap( msg, w-40 )
+      h = #tw * font:getLineHeight()
+   end
+
+   local wdw = luatk.newWindow( nil, nil, w, 110 + h )
+   luatk.newText( wdw, 0, 10, w, 20, title, nil, "center" )
+   luatk.newText( wdw, 20, 40, w-40, h, msg )
+   luatk.newButton( wdw, (w-50)/2, h+110-20-30, 50, 30, _("OK"), function( wgt )
+      wgt.parent:destroy()
+   end )
+end
+
 return luatk
