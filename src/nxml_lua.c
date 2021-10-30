@@ -33,7 +33,7 @@
  */
 static int nxml_persistDataNode( lua_State *L, xmlTextWriterPtr writer, int intable );
 static int nxml_unpersistDataNode( lua_State *L, xmlNodePtr parent );
-static int   nxml_canWriteString( const char *buf, size_t len );
+static int nxml_canWriteString( const char *buf, size_t len );
 
 /**
  * @brief Persists the key of a key/value pair.
@@ -45,7 +45,7 @@ static int   nxml_canWriteString( const char *buf, size_t len );
  */
 static int nxml_saveNameAttribute( xmlTextWriterPtr writer, const char *name, size_t name_len )
 {
-   if ( nxml_canWriteString( name, name_len ) )
+   if (nxml_canWriteString( name, name_len ))
       xmlw_attr( writer, "name", "%s", name );
    else {
       char *encoded = base64_encode_to_cstr( name, name_len );
@@ -120,13 +120,12 @@ static Commodity* nxml_loadCommodity( xmlNodePtr node )
 {
    Commodity *c;
    int istemp;
-   xmlNodePtr cur;
 
    xmlr_attr_int_def( node, "temp", istemp, 0);
    if (!istemp)
       c = commodity_get( xml_get( node ) );
    else {
-      cur = node->xmlChildrenNode;
+      xmlNodePtr cur = node->xmlChildrenNode;
       c = NULL;
       do {
          xml_onlyNodes(cur);
@@ -536,7 +535,7 @@ int nxml_unpersistLua( nlua_env env, xmlNodePtr parent )
  */
 static int nxml_canWriteString( const char *buf, size_t len )
 {
-   for ( size_t i = 0; i < len; i++ ) {
+   for (size_t i = 0; i < len; i++) {
       if ( buf[ i ] == '\0'
            || ( buf[ i ] < 0x20 && buf[ i ] != '\t' && buf[ i ] != '\n' && buf[ i ] != '\r' ) )
          return 0;
