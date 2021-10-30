@@ -77,19 +77,19 @@ function accept ()
    -- Set up mission information
    misn.setTitle( _("Nebula Satellite") )
    misn.setReward( fmt.credits(credits) )
-   misn.setDesc( string.format( _("Go to the %s system to launch the probe."), satellite_sys:name() ) )
+   misn.setDesc( fmt.f( _("Go to the {sys} system to launch the probe."), {sys=satellite_sys} ) )
    misn_marker = misn.markerAdd( satellite_sys, "low" )
 
    -- Add mission
    misn.accept()
 
    -- More flavour text
-   tk.msg( _("Scientific Exploration"), string.format(_([["We had a trip scheduled with a space trader ship, but they backed out at the last minute. So we were stuck here until you came. We've got a research probe that we have to release into the %s system to monitor the Nebula's growth rate. The probe launch procedure is pretty straightforward and shouldn't have any complications."
-    He takes a deep breath, "We hope to be able to find out more secrets of the Sol Nebula so mankind can once again regain its lost patrimony. So far the radiation and volatility of the deeper areas haven't been very kind to our instruments. That's why we designed this satellite we're going to launch."]]), satellite_sys:name()) )
-   tk.msg( _("Scientific Exploration"), string.format(_([["The plan is for you to take us to %s so we can launch the probe, and then return us to our home at %s in the %s system. The probe will automatically send us the data we need if all goes well. You'll be paid %s when we arrive."]]), satellite_sys:name(),
-         homeworld:name(), homeworld_sys:name(), fmt.credits(credits) ) )
+   tk.msg( _("Scientific Exploration"), fmt.f(_([["We had a trip scheduled with a space trader ship, but they backed out at the last minute. So we were stuck here until you came. We've got a research probe that we have to release into the {sys} system to monitor the Nebula's growth rate. The probe launch procedure is pretty straightforward and shouldn't have any complications."
+    He takes a deep breath, "We hope to be able to find out more secrets of the Sol Nebula so mankind can once again regain its lost patrimony. So far the radiation and volatility of the deeper areas haven't been very kind to our instruments. That's why we designed this satellite we're going to launch."]]), {sys=satellite_sys}) )
+   tk.msg( _("Scientific Exploration"), fmt.f(_([["The plan is for you to take us to {sys} so we can launch the probe, and then return us to our home at {home_pnt} in the {home_sys} system. The probe will automatically send us the data we need if all goes well. You'll be paid {credits} when we arrive."]]), {sys=satellite_sys,
+         home_pnt=homeworld, home_sys=homeworld_sys, credits=fmt.credits(credits)} ) )
 
-   misn.osdCreate(_("Nebula Satellite"), {_("Go to the %s system to launch the probe."):format(satellite_sys:name())})
+   misn.osdCreate(_("Nebula Satellite"), {fmt.f(_("Go to the {sys} system to launch the probe."), {sys=satellite_sys})})
    -- Set up hooks
    hook.land("land")
    hook.enter("jumpin")
@@ -147,7 +147,7 @@ function launchSatellite ()
    misn_stage = 1
    player.msg( _("Satellite launch successful!") )
    misn.cargoJet( cargo )
-   misn.setDesc( string.format( _("Drop off the scientists at %s in the %s system."), homeworld:name(), homeworld_sys:name() ) )
-   misn.osdCreate(_("Nebula Satellite"), {_("Drop off the scientists at %s in the %s system."):format(homeworld:name(), homeworld_sys:name())})
+   misn.setDesc( fmt.f( _("Drop off the scientists at {pnt} in the {sys} system."), {pnt=homeworld, sys=homeworld_sys} ) )
+   misn.osdCreate(_("Nebula Satellite"), {fmt.f(_("Drop off the scientists at {pnt} in the {sys} system."), {pnt=homeworld, sys=homeworld_sys})})
    misn.markerMove( misn_marker, homeworld )
 end
