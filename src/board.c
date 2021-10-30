@@ -150,6 +150,7 @@ void player_board (void)
              "%s\n"
              "Most likely Lua file has improper syntax, please check"),
                BOARD_PATH, lua_tostring(naevL,-1));
+         board_boarded = 0;
          free(buf);
          return;
       }
@@ -163,6 +164,7 @@ void player_board (void)
       WARN( _("Board: '%s'"), lua_tostring(naevL,-1));
       lua_pop(naevL,1);
    }
+   board_boarded = 0;
 }
 
 /**
