@@ -66,8 +66,8 @@ function create()
       misn.finish(false)
    end
 
-   tk.msg( _("An invitation"), _([[Your communication channel informs you that your ship has recieved an holographic message through the Dvaered Army Long-Distance Messaging System. As you press the "Enter" button, the face of a teenage version of Lieutenant Strafer emerges from your holoprojector:
-   "I am Private Helmut Strafer and this is my death announcement." A strange smile appears on his face as he continues: "Yep, this is happening. It is my ultmost privilege to have been killed in service to the Dvaered Nation, Great House of the Glorious Galactic Empire. You recieve this recording because you are on the list of people I considered to be my friends, and that are invited to my funeral ceremony, which I sincerely hope you will enjoy. As I obviously don't know yet either the circumstances of my death, or the details about the ceremony, all I can do is to invite you to find more informations in the attached data. Now that I have merged with the void, I would be honoured if my memory would be part of the things that help you remain right, loyal and strong for the rest of your own lifetime."]]), ("portraits/" .. fw.portrait_strafer) )
+   tk.msg( _("An invitation"), _([[Your communication channel informs you that your ship has received an holographic message through the Dvaered Army Long-Distance Messaging System. As you press the "Enter" button, the face of a teenage version of Lieutenant Strafer emerges from your holoprojector:
+   "I am Private Helmut Strafer and this is my death announcement." A strange smile appears on his face as he continues: "Yep, this is happening. It is my ultmost privilege to have been killed in service to the Dvaered Nation, Great House of the Glorious Galactic Empire. You receive this recording because you are on the list of people I considered to be my friends, and that are invited to my funeral ceremony, which I sincerely hope you will enjoy. As I obviously don't know yet either the circumstances of my death, or the details about the ceremony, all I can do is to invite you to find more informations in the attached data. Now that I have merged with the void, I would be honoured if my memory would be part of the things that help you remain right, loyal and strong for the rest of your own lifetime."]]), ("portraits/" .. fw.portrait_strafer) )
    if not tk.yesno( _("An invitation"), _([[You browse the attached folder and find out that the ceremony will take place around Dvaer Prime. As a pilot, you are invited to take part to a Mace Rocket ballet in memory of Lieutenant Strafer, and are strongly advised to show up with a fighter and mace launchers.
    Are you going to go there?]]) ) then
       misn.finish(false)
@@ -209,18 +209,18 @@ function spawnNpcs()
                tk.msg("",fmt.f(_("You receive a {1} as a reward."), {_("Vendetta")}))
                player.addShip("Vendetta")
             elseif playerRank == 8 then
-               tk.msg("",fmt.f(_("You recieve a {1} and a {2} as a reward."), {_("Tricon Zephyr II Engine"),_("Emergency Shield Booster")}))
+               tk.msg("",fmt.f(_("You receive a {1} and a {2} as a reward."), {_("Tricon Zephyr II Engine"),_("Emergency Shield Booster")}))
                player.outfitAdd("Tricon Zephyr II Engine")
                player.outfitAdd("Emergency Shield Booster")
             elseif playerRank == 7 then
-               tk.msg("",fmt.f(_("You recieve a {1} and a {2} as a reward."), {_("Milspec Orion 3701 Core System"),_("Shield Capacitor I")}))
+               tk.msg("",fmt.f(_("You receive a {1} and a {2} as a reward."), {_("Milspec Orion 3701 Core System"),_("Shield Capacitor I")}))
                player.outfitAdd("Milspec Orion 3701 Core System")
                player.outfitAdd("Shield Capacitor I")
             elseif playerRank == 6 then
                tk.msg("",fmt.f(_("You receive a {1} as a reward."), {_("S&K Light Combat Plating")}))
                player.outfitAdd("S&K Light Combat Plating")
             elseif playerRank == 5 then
-               tk.msg("",_("You recieve three Shredders as a reward."))
+               tk.msg("",_("You receive three Shredders as a reward."))
                player.outfitAdd("Shredder",3)
             elseif playerRank == 4 then
                tk.msg("",fmt.f(_("You receive a {1} as a reward."), {_("Hellburner")}))
@@ -237,7 +237,7 @@ function spawnNpcs()
             end
             tk.msg(_("Major Tam warns you, and gives you a new task."),_([[After the results have been announced, Major Tam gets close to you. He seems to have something important to say: "It was your first ballet, right? You performed very well out there, citizen.
    "Anyway, there is a matter I need to discuss with you: one of my informants told me that the ex-colonel Hamelsen has put a price on your head. Yes. This kind of thing just happens, you know. It looks scary, doesn't it? Actually, many people here already have a price on their head, including me, General Klank and Captain Leblanc. And one can live very well with it. The only thing is to be a bit more careful than usual.
-   "As Hamelsen has gotten so many mercenaries killed under her command, it is in fact rather unlikely that unrelated pilots jump in and try to kill you. I am pretty sure that the ones that will attack you are motivated by more than money. And I want to know what makes them continue to attack us after having recieved so many losses. So your mission will be the following: if some bounty hunter tries to kill you, catch them alive and bring them to me."]]))
+   "As Hamelsen has gotten so many mercenaries killed under her command, it is in fact rather unlikely that unrelated pilots jump in and try to kill you. I am pretty sure that the ones that will attack you are motivated by more than money. And I want to know what makes them continue to attack us after having received so many losses. So your mission will be the following: if some bounty hunter tries to kill you, catch them alive and bring them to me."]]))
             tk.msg(_("Goodbye, Lieutenant Strafer"),_([[Once participants have collected their rewards, you are invited to follow everyone in a shuttle that heads towards an arena that has been reserved for the occasion. While cyborg-gladiators slaughter convicted criminals in the fighting zone, Captain Leblanc, as the direct superior to Strafer, gives a speech:
    "How can space be so dark with all the bright blood we have shed up there? How can planets be so majestic with all the ships that have crashed on their faces? How can stars be so quiet with all the horrors they have witnessed? If one of you has a pleasant answer, please tell me! Please interrupt me! Please reassure me!
    "For an answer I already have. And it is all but pleasant."]]))
@@ -337,7 +337,7 @@ function tamStage2()
    stage = 4
 end
 function tamStage3()
-   tk.msg( "", fmt.f(_([[The third and last event consists of the "Mace Pankration". Each competitor must fight against an other competitor, and disable their shield. Winners recieve 7 points, and your adversary is {name}. Killing is of course not allowed. Are you ready? Have you checked you are only equipped with Unicorp Mace Launchers?]]), {name=competitors_names[5]}) )
+   tk.msg( "", fmt.f(_([[The third and last event consists of the "Mace Pankration". Each competitor must fight against an other competitor, and disable their shield. Winners receive 7 points, and your adversary is {name}. Killing is of course not allowed. Are you ready? Have you checked you are only equipped with Unicorp Mace Launchers?]]), {name=competitors_names[5]}) )
    stage = 6
 end
 
@@ -677,7 +677,7 @@ end
 -- A competitor is hit during Stadion (problematic if the player is the agressor)
 function compHitS( _victim, attacker )
    if attacker == player.pilot() then
-      tk.msg( _("This is not allowed!"), _("You are not supposed to shoot at the other competitors durnig the Mace Stadion. The Stadion has to be interrupted and you recieve 5 points of penalty. Land and speak again with Major Tam.") )
+      tk.msg( _("This is not allowed!"), _("You are not supposed to shoot at the other competitors durnig the Mace Stadion. The Stadion has to be interrupted and you receive 5 points of penalty. Land and speak again with Major Tam.") )
       for i, p in ipairs(competitors) do
          p:taskClear()
          p:land( destpla )

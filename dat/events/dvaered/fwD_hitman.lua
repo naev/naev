@@ -114,7 +114,7 @@ end
 
 -- Ambusher was boarded: start the Dvaered Base mission
 function baddieBoard()
-   tk.msg(_("Boarding aborted"),_([[After you have docked with the hostile ship, your crew combat androids start attacking its airlock with their torches. You recieve a message from your attacker:
+   tk.msg(_("Boarding aborted"),_([[After you have docked with the hostile ship, your crew combat androids start attacking its airlock with their torches. You receive a message from your attacker:
    "Get away from there! There is a detonator on the airlock! You'll get both of us killed!" At this very moment, a huge explosion illuminates your cockpit. The shock disconnects both ships and dispatches your androids. Your enemy's vessel swerves with a force that breaks its hull apart. You think the pilot is dead, but soon you hear his message:
    "Damn. I thought being transpierced by a spar would hurt more. I guess you're not in a better shape than me. Too bad, none of us will see the Division Marius destroy the Dvaered fleet! Wait, is that my intestine drifting away? Oho! Come back. Hey! You belong to me. Come back into the inside of me, my intestine."]]))
    -- TODO: unboard and destroy the ship

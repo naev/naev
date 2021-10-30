@@ -17,7 +17,7 @@
 </event>
 --]]
 --[[
--- Player recieve an invitation for Strafer's ceremony
+-- Player receive an invitation for Strafer's ceremony
 --]]
 
 function create ()
@@ -31,7 +31,7 @@ function create ()
    jumpouthook= hook.jumpout("finish")
 end
 
--- Player recieves the message
+-- Player receives the message
 function msgme()
    naev.missionStart("Dvaered Ballet")
    evt.finish()

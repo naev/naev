@@ -71,9 +71,9 @@ function create()
 end
 
 function accept()
-   if not tk.yesno(_("Spaceport Bar"), _([[As you sit down the merchant looks up at you with a panicked expression, "Ahh! What do you want? Can't you see I've enough on my plate as it is?" You tell the merchant to calm down and offer a drink. "Jeez, that's nice of you... ha, maybe I can cut a break today!"
+   if not tk.yesno(_("Spaceport Bar"), fmt.f(_([[As you sit down the merchant looks up at you with a panicked expression, "Ahh! What do you want? Can't you see I've enough on my plate as it is?" You tell the merchant to calm down and offer a drink. "Jeez, that's nice of you... ha, maybe I can cut a break today!"
     You grab a couple of drinks and hand one to the slightly more relaxed looking merchant as they start to talk. "So, I work for the Traders Guild. I transport stuff for them, they pay me. Only problem is I kinda strained my engines running from pirates on the way to the pick-up and now I'm realising that my engines just don't have the speed to get me back to beat the deadline. And to top it all off, I'm late on my bills as is; I can't afford new engines now! it's like I'm in the Sol nebula without a shield generator."
-    You attempt to reassure the merchant by telling them that surely the company will cut some slack. "Like hell they will! I've already been scolded by management for this exact same thing before! If I don't get this shipment of %s of %s to %s... I really need this job, you know? I don't know what to do...." The merchant pauses. "Unless... say, you wouldn't be able to help me out here, would you? I'd just need you to take the cargo to %s in the %s system. Could you? I'll give you the payment for the mission if you do it; it means a lot!"]]):format(fmt.tonnes(cargo_size), _(cargo), dest_planet:name(), dest_planet:name(), dest_sys:name())) then
+    You attempt to reassure the merchant by telling them that surely the company will cut some slack. "Like hell they will! I've already been scolded by management for this exact same thing before! If I don't get this shipment of {tonnes} of {cargo} to {pnt}... I really need this job, you know? I don't know what to do...." The merchant pauses. "Unless... say, you wouldn't be able to help me out here, would you? I'd just need you to take the cargo to {pnt} in the {sys} system. Could you? I'll give you the payment for the mission if you do it; it means a lot!"]]), {tonnes=fmt.tonnes(cargo_size), cargo=_(cargo), pnt=dest_planet, sys=dest_sys})) then
       misn.finish()
    end
    if player.pilot():cargoFree() < cargo_size then
@@ -84,7 +84,7 @@ function accept()
    local player_best = car.getTransit(num_jumps, travel_dist)
    player.pilot():cargoRm(cargo, cargo_size)
    if time_limit < player_best then
-      if not tk.yesno(_("Too slow"), _([[The goods have to arrive in %s but it will take %s for your ship to reach %s. Accept the mission anyway?]]):format((time_limit - time.get()):str(), (player_best - time.get()):str(), dest_planet:name())) then
+      if not tk.yesno(_("Too slow"), fmt.f(_([[The goods have to arrive in {time_limit} but it will take {time} for your ship to reach {pnt}. Accept the mission anyway?]]) {time_limit=(time_limit - time.get()):str(), time=(player_best - time.get()):str(), pnt=dest_planet})) then
          misn.finish()
       end
    end
@@ -94,19 +94,17 @@ function accept()
    -- mission details
    misn.setTitle(_("Anxious Merchant"))
    misn.setReward(fmt.credits(payment))
-   misn.setDesc(_("You decided to help a fraught merchant by delivering some goods to %s."):format(dest_planet:name()))
+   misn.setDesc(fmt.f(_("You decided to help a fraught merchant by delivering some goods to {pnt}."), {pnt=dest_planet}))
    marker = misn.markerAdd(dest_planet, "low") -- destination
    cargo_ID = misn.cargoAdd(cargo, cargo_size) -- adds cargo
-
-   -- OSD
-   osd_msg = {_("Drop off the goods at %s in the %s system (You have %s remaining)"):format(dest_planet:name(), dest_sys:name(), (time_limit - time.get()):str())}
-   misn.osdCreate(_("Help the Merchant"), osd_msg)
-
-   tk.msg(_("Happy Day"), _([[The merchant sighs in relief. "Thank you so much for this. Just bring the cargo to the cargo guy at %s. They should pay you %s when you get there. Don't be late, OK?"]]):format(dest_planet:name(), fmt.credits(payment)))
 
    intime = true
    land_hook = hook.land("land")
    date_hook = hook.date(time.create(0, 0, 42), "tick") -- 42STU per tick
+
+   -- OSD
+   tick()
+   tk.msg(_("Happy Day"), fmt.f(_([[The merchant sighs in relief. "Thank you so much for this. Just bring the cargo to the cargo guy at {pnt}. They should pay you {credits} when you get there. Don't be late, OK?"]]), {pnt=dest_planet, credits=fmt.credits(payment)}))
 end
 
 function land()
@@ -125,10 +123,11 @@ function land()
 end
 
 function tick()
+    local osd_msg
     if time_limit >= time.get() then -- still in time
-        osd_msg = {_("Drop off the goods at %s in the %s system (You have %s remaining)"):format(dest_planet:name(), dest_sys:name(), (time_limit - time.get()):str())}
+        osd_msg = {fmt.f(_("Drop off the goods at {pnt} in the {sys} system (You have {time} remaining)"), {pnt=dest_planet, sys=dest_sys, time=(time_limit - time.get()):str()})}
     else -- missed deadline
-        osd_msg = {_("Drop off the goods at %s in the %s system (You are late)"):format(dest_planet:name(), dest_sys:name())}
+        osd_msg = {fmt.f(_("Drop off the goods at {pnt} in the {sys} system (You are late)"), {pnt=dest_planet, sys=dest_sys})}
         intime = false
         hook.rm(date_hook)
     end

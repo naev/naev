@@ -34,7 +34,6 @@ local destplanet = planet.get("Jorcan")
 local destjump = system.get("Doranthex")
 
 failtext = {}
-osd_desc = {}
 comm_msg = {}
 chatter = {}
 
@@ -44,9 +43,6 @@ failtext[2] = _("The Hawk jumped out of the system. You have failed your mission
 
 failtext[3] = _("The Hawk landed back on %s. You have failed your mission.")
 failtext[4] = _("The Hawk was able to fend off the attackers and destroy their flagship. You have failed your mission.")
-
-osd_desc[1] = _("Fly to the {sys} system")
-osd_desc[2] = _("Fire on the Hawk and flee from the fighter escorts until the Dvaered fleet jumps in and destroys the Hawk")
 
 chatter[0] = _("Alright folks, this will be Hawk's maiden jump. Continue on course to the %s jump gate.")
 chatter[1] = _("How dare they attack me! Get them!")
@@ -82,8 +78,10 @@ function accept()
       tk.msg(_("A small distraction"), string.format(_([["We will jump in approximately 80 hectoseconds after you jump into %s, so the fighters must be far enough away by then not to come back and attack us."]]), destsys:name()))
 
       misn.accept()
-      osd_desc[1] = fmt.f(osd_desc[1], {sys=destsys})
-      misn.osdCreate(_("A Small Distraction"), osd_desc)
+      misn.osdCreate(_("A Small Distraction"), {
+         fmt.f(_("Fly to the {sys} system"), {sys=destsys}),
+         _("Fire on the Hawk and flee from the fighter escorts until the Dvaered fleet jumps in and destroys the Hawk"),
+      })
       misn.setDesc(_("You have been recruited to distract the Dvaered fighter escorts and lead them away from the jump gate and the capital ship Hawk. The Dvaered task force will jump in and attempt to destroy the Hawk before the escort ships can return. The mission will fail if the Hawk survives or the Dvaered task force is eliminated."))
       misn.setTitle(_("A Small Distraction"))
       marker = misn.markerAdd( destsys, "low" )

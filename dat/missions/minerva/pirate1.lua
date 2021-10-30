@@ -78,8 +78,8 @@ function accept ()
    pir(_([["I know what you're thinking, that's a great idea right? So it's very simple. Some Dvaered thugs are stationed around the system, they are not the cleverest of folks, so I want you to provoke them. You know, just rough them up a little and get out of there."]]))
    pir(_([["Sounds naïve, yes? Might be so, I've managed to get a Za'lek drone shell, all it has is the engine and some basic following software, but no weapons nor gear. If you were to drag it along while harassing the thugs, they probably would think that there is some kind  of Za'lek involvement. They're not the smartest fellows in the world if you catch my drift."]]))
    pir(_([["To make sure they are all riled up, I want you to spend 15 seconds harassing them near their original location. Make sure to harass them, but don't kill them! We want them to tell the other Dvaereds about this. Once the time is up, get the hell away from there, in one piece if possible."]]))
-   pir(string.format(_([["I've sent you the coordinates of both the Za'lek drone and the Dvaered thugs. I'll pay you well if you manage to pull this off. Oh and one thing, when getting away, make sure to jump to the %s system to make it look even more like the Za'lek did it,"
-They beam a smile at you.]]),_(runawaysys)))
+   pir(fmt.f(_([["I've sent you the coordinates of both the Za'lek drone and the Dvaered thugs. I'll pay you well if you manage to pull this off. Oh and one thing, when getting away, make sure to jump to the {sys} system to make it look even more like the Za'lek did it,"
+They beam a smile at you.]]), {sys=_(runawaysys)}))
    vn.run()
 
    -- If not accepted, misn_state will still be nil
@@ -93,7 +93,7 @@ They beam a smile at you.]]),_(runawaysys)))
    misn.osdCreate( _("Thug Decoy"),
          {_("Get the drone to follow you"),
           _("Harass the thugs"),
-          string.format(_("Jump to %s"),_(runawaysys)),
+          fmt.f(_("Jump to {sys}"), {sys=_(runawaysys)}),
           _("Go back to Minerva Station") } )
    misn.osdActive(1)
 
@@ -116,7 +116,7 @@ function land ()
       pir(_([["I hear it went rather well. This should cause more tension between the Za'lek and the Dvaered so we can get them off this station. However, this is only the beginning."]]))
       pir(_([["If you are interested, I may have another job for you which I believe you are more than capable of handling. Meet me up at the bar if you want more information. I have also transferred a sum of credits to your account as a reward for your services."
 She winks at you and walks way.]]))
-      vn.na(string.format(_("You have received #g%s#0."), fmt.credits(reward_amount)))
+      vn.na(fmt.reward(reward_amount))
       vn.func( function ()
          player.pay( reward_amount )
       end )
@@ -141,7 +141,7 @@ function enter ()
          misn.osdActive(4)
          misn.markerMove( misnmarker, planet.get("Minerva Station") )
       else
-         player.msg(string.format(_("#rMISSION FAILED! You were supposed to jump to the %s system!"),_(runawaysys)))
+         player.msg(fmt.f(_("#rMISSION FAILED! You were supposed to jump to the {sys} system!"), {sys=_(runawaysys)}))
          misn.finish(false)
       end
    end

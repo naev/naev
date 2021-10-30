@@ -42,8 +42,6 @@ text[5] = _([[
     "Incidentally, citizen. The Dvaered authorities are preparing a campaign against the FLF terrorists. You seem to be an able pilot, and we need a civilian ship as part of our strategy. If you are interested, seek out the official Dvaered liaison."
     When he is gone, you find yourself wondering what this campaign he mentioned is all about. There is one way to find out - if you are up to it...]])
 
-osd_desc = {_("Take the Dvaered crew on board your ship to any Dvaered controlled world or station")}
-
 function create()
    faction.get("FLF"):setKnown(true)
 
@@ -52,7 +50,9 @@ function create()
 
    tk.msg(_("A Dvaered crew in need is a Dvaered crew indeed"), text[1])
 
-   misn.osdCreate(_("Take the Dvaered crew home"), osd_desc)
+   misn.osdCreate(_("Take the Dvaered crew home"), {
+      _("Take the Dvaered crew on board your ship to any Dvaered controlled world or station"),
+   })
    misn.setDesc(_("Take the Dvaered crew on board your ship to any Dvaered controlled world or station."))
    misn.setTitle(_("Take the Dvaered crew home"))
    misn.setReward(_("A chance to aid in the effort against the FLF"))

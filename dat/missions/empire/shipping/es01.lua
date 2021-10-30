@@ -112,9 +112,9 @@ function land ()
       if misn.cargoRm(packages) then
          -- Update mission
          misn_stage = 2
-         misn.setDesc( string.format(_("Return to %s in the %s system"), ret:name(), retsys:name()))
+         misn.setDesc( fmt.f(_("Return to {pnt} in the {sys} system"), {pnt=ret, sys=retsys}) )
          misn.markerMove( misn_marker, retsys )
-         misn.osdCreate(_("Empire Shipping Delivery"), {_("Return to %s in the %s system"):format(ret:name(),retsys:name())})
+         misn.osdCreate(_("Empire Shipping Delivery"), {fmt.f(_("Return to {pnt} in the {sys} system"), {pnt=ret, sys=retsys})})
 
          -- Some text
          tk.msg( _("Cargo Delivery"), string.format(_([[Workers quickly unload the package as mysteriously as it was loaded. You notice that one of them gives you a note. Looks like you'll have to go to %s in the %s system to report to Commander Soldner.]]), ret:name(), retsys:name()) )

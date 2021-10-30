@@ -88,10 +88,9 @@ function land ()
 
    vn.clear()
    vn.scene()
-   vn.na(fmt.f(_([[Soon after you land the crew you rescued from the derelict burst out of the ship in joy. After a while the captain comes over you and gives you the credits you were promised.
-
-You have received #g{credits}#0.
-]]), {credits=fmt.credits(reward_amount)}))
+   vn.na(_([[Soon after you land the crew you rescued from the derelict burst out of the ship in joy. After a while the captain comes over you and gives you the credits you were promised.]])
+      .. "\n\n"
+      .. fmt.reward(reward_amount))
    vn.func( function ()
       player.pay( reward_amount )
    end )

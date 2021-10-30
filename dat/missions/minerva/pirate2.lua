@@ -106,7 +106,7 @@ function land ()
       pir(_([["This should bring suspicions to a new high between Dvaered and Za'lek. There have already been 20 casualties from fighting this period! At this rate they will basically solve themselves. However, that might be a bit slow, so let us try to accelerate the process a bit more."
 They wink at you.]]))
       pir(_([["I've wired you some credits for your efforts. Meet me up at the bar for a new potential job."]]))
-      vn.na(string.format(_("You have received #g%s#0."), fmt.credits(reward_amount)))
+      vn.na(fmt.reward(reward_amount))
       vn.func( function ()
          player.pay( reward_amount )
       end )
@@ -170,7 +170,8 @@ function enter ()
    if misn_state==0 and system.cur()==system.get(mainsys) then
       weap_ok, badweaps = dvaered_weapons( player.pilot() )
       if not weap_ok then
-         player.msg(string.format(_("#oNon-Dvaered equipped weapons detected: %s"), table.concat(badweaps,_(", "))))
+         -- TODO: use fmt.list()? Does this work outside LuaJIT? Does it translate?
+         player.msg(fmt.f(_("#oNon-Dvaered equipped weapons detected: {list}"), {list=table.concat(badweaps,_(", "))}))
       end
 
       pilot.clear()

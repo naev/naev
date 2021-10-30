@@ -160,7 +160,7 @@ She gives out a heavy sigh.]]))
       maikki:rename( minerva.maikki.name )
       maikki(_([["My name is Maisie, but you can call me Maikki."]]))
       vn.menu( {
-         { string.format(_("Offer her a drink (%s)"), minerva.tokens_str(10)), "drink" },
+         { fmt.f(_("Offer her a drink ({tokens})"), {tokens=minerva.tokens_str(10)}), "drink" },
          { _("Ask her who she is looking for"), "nodrink" },
       } )
       vn.label( "drink" )
@@ -219,7 +219,7 @@ She starts eating the parfait, which seems to be larger than her head.]]))
       if misn_state < 0 then
          misn_state = 0
          misn.osdCreate( _("Finding Maikki's Father"),
-            { string.format(_("Look around the %s system"), _(searchsys)) } )
+            { fmt.f(_("Look around the {sys} system"), {sys=_(searchsys)}) } )
          misn_marker = misn.markerAdd( system.get(searchsys), "low" )
          minerva.log.maikki(_("You were told her father colud be near Doeston.") )
       end
@@ -287,7 +287,7 @@ function approach_oldman ()
       table.insert( opts, 1, {_("Ask about scavengers you saw"), "scavengers"} )
    end
    if misn_state >=4 then
-      table.insert( opts, 1, {string.format(_("Ask about %s"),_(stealthsys)), "stealthmisn"} )
+      table.insert( opts, 1, {fmt.f(_("Ask about {sys}"), {sys=_(stealthsys)}), "stealthmisn"} )
    end
    if misn_state >=5 then
       table.insert( opts, 1, {_("Show him the picture"), "showloot"} )
@@ -342,7 +342,7 @@ He downs his drink and orders another.]]))
    vn.jump( "menu_msg" )
 
    vn.label( "stealthmisn" )
-   om(string.format(_([["%s? That should be just past %s. Do you think the scavengers could have found something there?"]]), _(stealthsys), _(cutscenesys)))
+   om(fmt.f(_([["{stealthsys}? That should be just past {cutscenesys}. Do you think the scavengers could have found something there?"]]), {stealthsys=_(stealthsys), cutscenesys=_(cutscenesys)}))
    om(_([["If you plan to go, you should bring your best sensors. It's very hard to see anything due to the density of the nebula there."]]))
    vn.jump( "menu_msg" )
 
@@ -402,7 +402,7 @@ He pats his biceps in a fairly uninspiring way.]]))
       vn.func( function ()
          if misn_state==3 then
             misn.osdCreate( _("Finding Maikki's Father"),
-               { string.format(_("Follow the scavengers in the %s system"), _(stealthsys)) } )
+               { fmt.f(_("Follow the scavengers in the {sys} system"), {sys=_(stealthsys)}) } )
             misn.markerMove( misn_marker, system.get(stealthsys) )
             misn_state=4
             minerva.log.maikki(_("You overheard some scavengers talking about a wreck in Zerantix.") )
@@ -520,7 +520,7 @@ function cutscene_hail ()
    vn.transition("electric")
    vn.na(_("The comm flickers as a scavenger appears into view. He looks a bit pale."))
    scavB(_([["Thank you. I thought I was a goner. My sensors failed me at the worst time and it's impossible to see shit in this nebula."]]))
-   scavB(string.format(_([["Could you tell me the way to %s? I have to get out of here as soon as possible."]]), _(searchsys)))
+   scavB(fmt.f(_([["Could you tell me the way to {sys}? I have to get out of here as soon as possible."]]), {sys=_(searchsys)}))
    vn.menu( {
       { _("Give him directions"), "help" },
       { _("Leave"), "leave" },
@@ -803,7 +803,7 @@ He points at the wreck nearby.]]))
 He seems to be clutching his head. A headache perhaps?]]))
    vn.menu( {
       { _([["Look I just want to talk"]]), "trytalk" },
-      { string.format(_([[Try to bribe them (#r%s#0)]]), fmt.credits(bribeamount)), "trybribe" },
+      { fmt.f(_([[Try to bribe them (#r{credits}#0)]]), {credits=fmt.credits(bribeamount)}), "trybribe" },
    })
 
    -- TODO possibly add a pacifist option here too
@@ -827,7 +827,7 @@ He seems to be clutching his head. A headache perhaps?]]))
       end
    end )
    vn.sfxMoney()
-   vn.na(string.format(_("You wire them %s."), fmt.credits(bribeamount)))
+   vn.na(fmt.f(_("You wire them {credits}."), {credits=fmt.credits(bribeamount)}))
    scavB(_([["I guess this isn't worth our trouble. We already got enough stuff for the Za'leks already."]]))
    scavA(_([["C'mon, let's get out of here. This place gives me the creeps. Feel like a ghost is going to pop out any minute."]]))
    scavB(_([["Next round in Doeston is on me."]]))
@@ -923,7 +923,7 @@ function board_wreck ()
 
    -- Move target back to origin
    misn.osdCreate( _("Finding Maikki's Father"),
-         { string.format(_("Return to %s in the %s system"), minerva.maikki.name, _(mainsys)) } )
+         { fmt.f(_("Return to {name} in the {sys} system"), {name=minerva.maikki.name, sys=_(mainsys)}) } )
    misn.markerMove( misn_marker, planet.get("Minerva Station") )
    misn_state=5
 

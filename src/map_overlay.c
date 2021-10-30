@@ -367,7 +367,7 @@ static void ovr_optimizeLayout( int items, const Vector2d** pos, MapOverlayPos**
 
    /* Initialize the matrix that stores the dual variables (forces applied between objects).
     * matrix is column-major, this means it is interesting to store in each column the forces
-    * recieved by a given object. Then these forces are summed to obtain the total force on the object.
+    * received by a given object. Then these forces are summed to obtain the total force on the object.
     * Odd lines are forces from objects and Even lines from other texts. */
 
    forces_xa = calloc( 2*items*items, sizeof(float) );
