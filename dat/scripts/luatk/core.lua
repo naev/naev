@@ -55,7 +55,7 @@ end
 local function _checkbounds( b, mx, my )
    return not (mx < b.x or mx > b.x+b.w or my < b.y or my > b.y+b.h)
 end
-function luatk.mousepressed( mx, my, _button )
+function luatk.mousepressed( mx, my, button )
    local wdw = luatk._windows[ #luatk._windows ]
    if not wdw or not _checkbounds(wdw,mx,my) then return false end
    local x, y = mx-wdw.x, my-wdw.y
@@ -63,7 +63,7 @@ function luatk.mousepressed( mx, my, _button )
    for _k,wgt in ipairs(wdw._widgets) do
       if wgt.clicked and _checkbounds(wgt,x,y) then
          wgt.pressed = true
-         if wgt:clicked( x-wgt.x, y-wgt.y ) then
+         if wgt:clicked( x-wgt.x, y-wgt.y, button ) then
             return true
          end
       end
