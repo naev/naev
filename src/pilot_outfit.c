@@ -898,8 +898,6 @@ void pilot_calcStats( Pilot* pilot )
    s = &pilot->stats;
    tm = s->time_mod;
    *s = pilot->ship->stats_array;
-   if (cur_system->stats != NULL)
-      ss_statsModFromList( s, cur_system->stats );
 
    /*
     * Now add outfit changes
@@ -964,6 +962,10 @@ void pilot_calcStats( Pilot* pilot )
 
    /* Merge stats. */
    ss_statsMerge( &pilot->stats, &pilot->intrinsic_stats );
+
+   /* Apply system effects. */
+   if (cur_system->stats != NULL)
+      ss_statsModFromList( &pilot->stats, cur_system->stats );
 
    /* Apply stealth malus. */
    if (pilot_isFlag(pilot, PILOT_STEALTH)) {

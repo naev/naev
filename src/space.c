@@ -1474,6 +1474,7 @@ void space_init( const char* sysname )
    char *nt;
    int n, s;
    const double fps_min_simulation = fps_min * 2.;
+   StarSystem *oldsys = cur_system;
 
    /* cleanup some stuff */
    player_clear(); /* clears targets */
@@ -1516,6 +1517,13 @@ void space_init( const char* sysname )
          /* Set up sound. */
          sound_env( SOUND_ENV_NORMAL, 0. );
       }
+   }
+
+   /* Update after setting cur_system. */
+   if ((oldsys != NULL && oldsys->stats != NULL) || cur_system->stats != NULL) {
+      Pilot *const* pilot_stack = pilot_getAll();
+      for (int i=0; i<array_size(pilot_stack); i++)
+         pilot_calcStats( pilot_stack[i] );
    }
 
    /* Set up planets. */
