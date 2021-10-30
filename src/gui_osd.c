@@ -1,8 +1,6 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
-
 /** @cond */
 #include <stdlib.h>
 
@@ -16,7 +14,6 @@
 #include "log.h"
 #include "nstring.h"
 #include "opengl.h"
-
 
 /**
  * @brief On Screen Display element.
@@ -32,13 +29,11 @@ typedef struct OSD_s {
    unsigned int active; /**< Active item. */
 } OSD_t;
 
-
 /*
  * OSD array.
  */
 static unsigned int osd_idgen = 0; /**< ID generator for OSD. */
 static OSD_t *osd_list        = NULL; /**< Array (array.h) for OSD. */
-
 
 /*
  * Dimensions.
@@ -52,7 +47,6 @@ static int osd_rh = 0;
 static int osd_tabLen = 0;
 static int osd_hyphenLen = 0;
 
-
 /*
  * Prototypes.
  */
@@ -63,7 +57,6 @@ static void osd_calcDimensions (void);
 static int osd_sortCompare( const void * arg1, const void * arg2 );
 static void osd_sort (void);
 static void osd_wordwrap( OSD_t* osd );
-
 
 static int osd_sortCompare( const void *arg1, const void *arg2 )
 {
@@ -106,7 +99,6 @@ static int osd_sortCompare( const void *arg1, const void *arg2 )
    return 0;
 }
 
-
 /**
  * @brief Sorts the OSD list.
  */
@@ -114,7 +106,6 @@ static void osd_sort (void)
 {
    qsort( osd_list, array_size(osd_list), sizeof(OSD_t), osd_sortCompare );
 }
-
 
 /**
  * @brief Creates an on-screen display.
@@ -154,19 +145,18 @@ unsigned int osd_create( const char *title, int nitems, const char **items, int 
    return id;
 }
 
-
 /**
  * @brief Calculates the word-wrapped osd->items from osd->msg.
  */
 void osd_wordwrap( OSD_t* osd )
 {
-   int i, l, msg_len, w, has_tab, chunk_len;
+   int msg_len, w, has_tab, chunk_len;
    char *chunk;
    const char *chunk_fmt;
    glPrintLineIterator iter;
 
-   for (i=0; i<array_size(osd->items); i++) {
-      for (l=0; l<array_size(osd->items[i]); l++)
+   for (int i=0; i<array_size(osd->items); i++) {
+      for (int l=0; l<array_size(osd->items[i]); l++)
          free(osd->items[i][l]);
       array_resize( &osd->items[i], 0 );
 
@@ -192,7 +182,6 @@ void osd_wordwrap( OSD_t* osd )
    }
 }
 
-
 /**
  * @brief Gets an OSD by ID.
  *
@@ -209,19 +198,15 @@ static OSD_t *osd_get( unsigned int osd )
    return NULL;
 }
 
-
 /**
  * @brief Frees an OSD struct.
  */
 static int osd_free( OSD_t *osd )
 {
-   int i, j;
-
    free(osd->title);
-
-   for (i=0; i<array_size(osd->items); i++) {
+   for (int i=0; i<array_size(osd->items); i++) {
       free( osd->msg[i] );
-      for (j=0; j<array_size(osd->items[i]); j++)
+      for (int j=0; j<array_size(osd->items[i]); j++)
          free(osd->items[i][j]);
       array_free(osd->items[i]);
    }
@@ -231,7 +216,6 @@ static int osd_free( OSD_t *osd )
    return 0;
 }
 
-
 /**
  * @brief Destroys an OSD.
  *
@@ -239,11 +223,8 @@ static int osd_free( OSD_t *osd )
  */
 int osd_destroy( unsigned int osd )
 {
-   int i;
-   OSD_t *ll;
-
-   for (i=0; i<array_size( osd_list ); i++) {
-      ll = &osd_list[i];
+   for (int i=0; i<array_size( osd_list ); i++) {
+      OSD_t *ll = &osd_list[i];
       if (ll->id != osd)
          continue;
 
@@ -268,7 +249,6 @@ int osd_destroy( unsigned int osd )
    return 0;
 }
 
-
 /**
  * @brief Makes an OSD message active.
  *
@@ -278,9 +258,7 @@ int osd_destroy( unsigned int osd )
  */
 int osd_active( unsigned int osd, int msg )
 {
-   OSD_t *o;
-
-   o = osd_get(osd);
+   OSD_t *o = osd_get(osd);
    if (o == NULL)
       return -1;
 
@@ -294,7 +272,6 @@ int osd_active( unsigned int osd, int msg )
    return 0;
 }
 
-
 /**
  * @brief Gets the active OSD MESSAGE>
  *
@@ -303,15 +280,12 @@ int osd_active( unsigned int osd, int msg )
  */
 int osd_getActive( unsigned int osd )
 {
-   OSD_t *o;
-
-   o = osd_get(osd);
+   OSD_t *o = osd_get(osd);
    if (o == NULL)
       return -1;
 
    return o->active;
 }
-
 
 /**
  * @brief Sets up the OSD window.
@@ -323,9 +297,8 @@ int osd_getActive( unsigned int osd )
  */
 int osd_setup( int x, int y, int w, int h )
 {
-   int i, must_rewrap;
    /* Set offsets. */
-   must_rewrap = (osd_w != w) && (osd_list != NULL);
+   int must_rewrap = (osd_w != w) && (osd_list != NULL);
    osd_x = x;
    osd_y = y;
    osd_w = w;
@@ -337,31 +310,26 @@ int osd_setup( int x, int y, int w, int h )
    osd_hyphenLen = gl_printWidthRaw( &gl_smallFont, "- " );
 
    if (must_rewrap)
-      for (i=0; i<array_size(osd_list); i++)
+      for (int i=0; i<array_size(osd_list); i++)
          osd_wordwrap( &osd_list[i] );
    osd_calcDimensions();
 
    return 0;
 }
 
-
 /**
  * @brief Destroys all the OSD.
  */
 void osd_exit (void)
 {
-   int i;
-   OSD_t *ll;
-
-   for (i=0; i<array_size(osd_list); i++) {
-      ll = &osd_list[i];
+   for (int i=0; i<array_size(osd_list); i++) {
+      OSD_t *ll = &osd_list[i];
       osd_free( ll );
    }
 
    array_free( osd_list );
    osd_list = NULL;
 }
-
 
 /**
  * @brief Renders all the OSD.
@@ -466,7 +434,6 @@ void osd_render (void)
    free(ignore);
 }
 
-
 /**
  * @brief Calculates and sets the length of the OSD.
  */
@@ -534,7 +501,6 @@ static void osd_calcDimensions (void)
    free(ignore);
 }
 
-
 /**
  * @brief Gets the title of an OSD.
  *
@@ -543,15 +509,12 @@ static void osd_calcDimensions (void)
  */
 char *osd_getTitle( unsigned int osd )
 {
-   OSD_t *o;
-
-   o = osd_get(osd);
+   OSD_t *o = osd_get(osd);
    if (o == NULL)
       return NULL;
 
    return o->title;
 }
-
 
 /**
  * @brief Gets the items of an OSD.
@@ -561,12 +524,8 @@ char *osd_getTitle( unsigned int osd )
  */
 char **osd_getItems( unsigned int osd )
 {
-   OSD_t *o;
-
-   o = osd_get(osd);
+   OSD_t *o = osd_get(osd);
    if (o == NULL)
       return NULL;
    return o->msg;
 }
-
-
