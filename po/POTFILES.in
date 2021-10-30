@@ -2246,6 +2246,7 @@ dat/events/neutral/shipwreck.lua
 dat/events/neutral/travelling_merchant.lua
 dat/events/pirate/shipcheck.lua
 dat/events/proteron/blockade.lua
+dat/events/restricted.lua
 dat/events/shiplog.lua
 dat/events/sirius/achack04.lua
 dat/events/sirius/preach.lua
@@ -2563,6 +2564,9 @@ dat/scripts/luaspfx.lua
 dat/scripts/luaspfx/core.lua
 dat/scripts/luaspfx/effects.lua
 dat/scripts/luatk.lua
+dat/scripts/luatk/conf.lua
+dat/scripts/luatk/core.lua
+dat/scripts/luatk/main.lua
 dat/scripts/merge_tables.lua
 dat/scripts/minigames/blackjack.lua
 dat/scripts/minigames/cardio.lua
