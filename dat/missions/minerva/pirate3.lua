@@ -364,19 +364,20 @@ function harper_hail ()
             { image=harper_image, shader=love_shaders.hologram() } )
    end
 
-   local function enoughcreds( amount )
-      if player.credits() < amount then
-         return " (#rnot enough!#0)"
-      end
-      return ""
-   end
-
    local function payhim( amount )
-      return string.format(_("Pay him %s%s"),fmt.credits(amount),enoughcreds(amount))
+      if player.credits() < amount then
+         return fmt.f(_("Pay him {credits} (#rnot enough!#0)"), {credits=fmt.credits(amount)})
+      else
+         return fmt.f(_("Pay him {credits}"), {credits=fmt.credits(amount)})
+      end
    end
 
    local function offer( amount )
-      return string.format(_([[Offer %s%s]]), fmt.credits(amount), enoughcreds(amount))
+      if player.credits() < amount then
+         return fmt.f(_([[Offer {credits} (#rnot enough!#0)]]), {credits=fmt.credits(amount)})
+      else
+         return fmt.f(_([[Offer {credits}]]), {credits=fmt.credits(amount)})
+      end
    end
 
    local function _harper_done ()
