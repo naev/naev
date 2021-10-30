@@ -5,6 +5,8 @@ local luatk = require 'luatk'
 local lg = require 'love.graphics'
 local fmt = require 'format'
 
+local loot_mod
+
 local function outfit_loot( o )
    return {
       image = lg.newImage( o:icon() ),
@@ -23,7 +25,7 @@ local function cargo_loot( c, q )
    return {
       image = (icon and lg.newImage(icon)) or cargo_image_generic,
       text = c:name(),
-      q = q,
+      q = math.floor( 0.5 + q*loot_mod ),
       type = "cargo",
       bg = nil,
       alt = c:description(),
@@ -41,7 +43,7 @@ function compute_lootables ( plt )
       table.insert( lootables, {
          image = nil,
          text = _("Credits"),
-         q = creds,
+         q = math.floor( 0.5 + creds*loot_mod ),
          type = "credits",
          bg = nil,
          alt = nil,
@@ -55,7 +57,7 @@ function compute_lootables ( plt )
       table.insert( lootables, {
          image = nil,
          text = _("Fuel"),
-         q = fuel,
+         q = math.floor( 0.5 + fuel*loot_mod ),
          type = "fuel",
          bg = nil,
          alt = nil,
@@ -135,6 +137,7 @@ local board_plt
 local board_freespace
 function board( plt )
    board_plt = plt
+   loot_mod = player.pilot():shipstat("loot_mod", true)
    loot = compute_lootables( plt )
 
    -- Destroy if exists
@@ -188,6 +191,7 @@ function board_lootOne( wgt, nomsg )
    if not l then return end
    -- Moolah
    if l.type=="credits" then
+      board_plt:credits( -l.q ) -- Will go negative with loot_mod
       player.pay( l.q )
       looted = true
       clear = true
@@ -216,8 +220,10 @@ function board_lootOne( wgt, nomsg )
       end
    elseif l.type=="outfit" then
       local o = l.data
+      if board_plt:outfitRm( o ) ~= 1 then
+         warn(fmt.f(_("Board script failed to remove '{outfit}' from boarded pilot '{plt}'!"),{outfit=o:name(), plt=boarded_plt:name()}))
+      end
       player.outfitAdd( o )
-      -- TODO remove from pilot
       looted = true
       clear = true
       player.msg(fmt.f(_("You looted a {outfit} from {plt}."),{outfit=o:name(), plt=board_plt:name()}))
@@ -233,7 +239,7 @@ function board_lootOne( wgt, nomsg )
          end
          return false
       end
-      q = board_plt:cargoRm( c, q )
+      local qr = board_plt:cargoRm( c, q ) -- Might be a misaligned here with loot_mod, but we sort of ignore it :/
       pp:cargoAdd( c, q )
       player.msg(fmt.f(_("You looted {amount} of {cargo} from {plt}."),{amount=fmt.tonnes(q), cargo=c:name(), plt=board_plt:name()}))
       board_updateFreespace()
