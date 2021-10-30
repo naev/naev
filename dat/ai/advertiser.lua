@@ -58,7 +58,7 @@ local ads_sirius = {
 -- Special ads that can be multi-faction
 local ads_cyber = {
    _("Nexus Augmentation: trust the galactic leader in cyber-organs rental!"),
-   _("You love your children? Get them Nexus Augmentation's new NCB-567K cyber-brain and they will never fail an exam!"),
+   _("Love your children? Get them the new Nexus Augmentation NCB-567K cyber-brain and they will never fail an exam!"),
    _("Rent arrears for your cyber-organs? Take out a credit at Nexus Bank and save your vital organs from being removed!"),
 }
 
