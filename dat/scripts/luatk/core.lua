@@ -269,7 +269,7 @@ function luatk.newText( parent, x, y, w, h, text, col, align, font )
    local wgt   = luatk.newWidget( parent, x, y, w, h )
    setmetatable( wgt, luatk.Text_mt )
    wgt.text    = text
-   wgt.col     = col or {1,1,1}
+   wgt.col     = col or luatk.colour.text
    wgt.align   = align or "left"
    wgt.font    = font or luatk._deffont or lg.newFont( 16 )
    return wgt
