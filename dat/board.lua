@@ -24,12 +24,13 @@ end
 local cargo_image_generic = nil
 local function cargo_loot( c, q, m )
    local icon = c:icon()
+   local ispecial = m or c:price()==0
    return {
       image = (icon and lg.newImage(icon)) or cargo_image_generic,
       text = c:name(),
       q = math.floor( 0.5 + q*loot_mod ),
       type = "cargo",
-      bg = (m and special_col) or nil,
+      bg = (ispecial and special_col) or nil,
       alt = c:description(),
       data = c,
    }
@@ -67,12 +68,34 @@ function compute_lootables ( plt )
       } )
    end
 
-   -- Go over cargo
-   for _k,c in ipairs(plt:cargoList()) do
-      table.insert( lootables, cargo_loot( commodity.get(c.name), c.q, c.m ) )
-   end
-
+   -- TODO add outfits as necessary here!
    --table.insert( lootables, outfit_loot(outfit.get("Laser Cannon MK1")) )
+
+   -- Go over cargo
+   local clist = plt:cargoList()
+   for _k,c in ipairs(clist) do
+      c.c = commodity.get(c.name)
+   end
+   table.sort( plt:cargoList(), function( a, b )
+      -- Handle mission cargoes first
+      if a.m and not b.m then
+         return true
+      elseif not a.m and b.m then
+         return false
+      end
+      local ap = a.c:price()
+      local bp = b.c:price()
+      -- Look at special case of price being 0
+      if ap==0 and bp~=0 then
+         return true
+      elseif ap~=0 and bp==0 then
+         return true
+      end
+      return ap < bp
+   end )
+   for _k,c in ipairs(clist) do
+      table.insert( lootables, cargo_loot( c.c, c.q, c.m ) )
+   end
 
    return lootables
 end
