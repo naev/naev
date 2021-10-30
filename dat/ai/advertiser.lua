@@ -17,6 +17,7 @@ local ads_generic = {
    _("Unicorp: low price and high quality!"),
    _("Life is short, spend it at Minerva Station in the Limbo System!"),
    _("Insuperable Sleekness. Introducing the Krain Industries Starbridge."),
+   _("Take care of the ones you do love. Let your Enygma System Turreted Launchers deal with the ones you don't!"),
 }
 local ads_empire = {
    _("Do you love your Emperor as much as he loves you?"),
@@ -32,6 +33,7 @@ local ads_dvaered = {
    _("Bet on Totoran and win incredible sums thanks to the Crimson Gauntlet!"),
    _("Mace rockets lacking shine? Try Lady Killington's premium rocket polish!"),
    _("Other warlords not letting you enjoy bloodshed? Join Lord Easytrigger's battalion today!"),
+   _("A Dvaered Success Story: Buy the outstanding autobiography by Lady Bitterfly. "),
 }
 local ads_soromid = {
    _("Remember Sorom."),
@@ -51,6 +53,13 @@ local ads_zalek = {
 }
 local ads_sirius = {
    _("Want a new look? Try Verrill's Ceremonial Robes at Burnan!"),
+}
+
+-- Special ads that can be multi-faction
+local ads_cyber = {
+   _("Nexus Augmentation: trust the galactic leader in cyber-organs rental!"),
+   _("You love your children? Get them Nexus Augmentation's new NCB-567K cyber-brain and they will never fail an exam!"),
+   _("Rent arrears for your cyber-organs? Take out a credit at Nexus Bank and save your vital organs from being removed!"),
 }
 
 function create ()
@@ -81,6 +90,7 @@ function create ()
    local fem = fpres["Empire"] or 0
    if fem > 1 then
       msg = mt.merge_tables( msg, ads_empire )
+      msg = mt.merge_tables( msg, ads_cyber )
    end
 
    -- Dvaered messages
@@ -135,6 +145,7 @@ function create ()
    local fzl = fpres["Za'lek"] or 0
    if fzl > 1 then
       msg = mt.merge_tables( msg, ads_zalek )
+      msg = mt.merge_tables( msg, ads_cyber )
       -- Note that when running in the main menu background, player.name() might not exist (==nil), so
       -- we need to add a check for that.
       local pn = player.name()
