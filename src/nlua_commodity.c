@@ -1,13 +1,11 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
 /**
  * @file nlua_commodity.c
  *
  * @brief Handles the Lua commodity bindings.
  */
-
 /** @cond */
 #include <lauxlib.h>
 
@@ -23,7 +21,6 @@
 #include "nlua_time.h"
 #include "nluadef.h"
 #include "rng.h"
-
 
 /* Commodity metatable methods. */
 static int commodityL_eq( lua_State *L );
@@ -51,8 +48,6 @@ static const luaL_Reg commodityL_methods[] = {
    {0,0}
 }; /**< Commodity metatable methods. */
 
-
-
 /**
  * @brief Loads the commodity library.
  *
@@ -64,7 +59,6 @@ int nlua_loadCommodity( nlua_env env )
    nlua_register(env, COMMODITY_METATABLE, commodityL_methods, 1);
    return 0;
 }
-
 
 /**
  * @brief Lua bindings to interact with commodities.
@@ -170,7 +164,6 @@ int lua_iscommodity( lua_State *L, int ind )
    return ret;
 }
 
-
 /**
  * @brief Checks to see if two commodities are the same.
  *
@@ -192,7 +185,6 @@ static int commodityL_eq( lua_State *L )
       lua_pushboolean(L,0);
    return 1;
 }
-
 
 /**
  * @brief Gets a commodity.
@@ -223,7 +215,6 @@ static int commodityL_get( lua_State *L )
    return 1;
 }
 
-
 /**
  * @brief Gets the list of standard commodities.
  *
@@ -232,23 +223,17 @@ static int commodityL_get( lua_State *L )
  */
 static int commodityL_getStandard( lua_State *L )
 {
-   int i;
-   Commodity **standard;
-
    /* Get commodity. */
-   standard = standard_commodities();
-
+   Commodity **standard = standard_commodities();
    /* Push. */
    lua_newtable( L );
-   for (i=0; i<array_size(standard); i++) {
+   for (int i=0; i<array_size(standard); i++) {
       lua_pushcommodity( L, standard[i] );
       lua_rawseti( L, -2, i+1 );
    }
-
    array_free( standard );
    return 1;
 }
-
 
 /**
  * @brief Gets the translated name of the commodity.
@@ -265,11 +250,10 @@ static int commodityL_getStandard( lua_State *L )
  */
 static int commodityL_name( lua_State *L )
 {
-   Commodity *c  = luaL_validcommodity(L,1);
+   Commodity *c = luaL_validcommodity(L,1);
    lua_pushstring(L, _(c->name));
    return 1;
 }
-
 
 /**
  * @brief Gets the raw (untranslated) name of the commodity.
@@ -287,11 +271,10 @@ static int commodityL_name( lua_State *L )
  */
 static int commodityL_nameRaw( lua_State *L )
 {
-   Commodity *c  = luaL_validcommodity(L,1);
+   Commodity *c = luaL_validcommodity(L,1);
    lua_pushstring(L, c->name);
    return 1;
 }
-
 
 /**
  * @brief Gets the base price of an commodity.
@@ -308,7 +291,6 @@ static int commodityL_price( lua_State *L )
    lua_pushnumber(L, c->price);
    return 1;
 }
-
 
 /**
  * @brief Gets the base price of an commodity on a certain planet.
@@ -380,7 +362,6 @@ static int commodityL_priceAtTime( lua_State *L )
    return 1;
 }
 
-
 /**
  * @brief Makes a temporary commodity illegal to a faction.
  *
@@ -405,7 +386,6 @@ static int commodityL_illegalto( lua_State *L )
    }
    return 0;
 }
-
 
 /**
  * @brief Gets the factions to which the commodity is illegal to.
