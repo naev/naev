@@ -18,6 +18,8 @@
 #include "hook.h"
 #include "log.h"
 #include "nstring.h"
+#include "ndata.h"
+#include "nlua.h"
 #include "pilot.h"
 #include "player.h"
 #include "rng.h"
@@ -32,6 +34,7 @@
 
 static int board_stopboard = 0; /**< Whether or not to unboard. */
 static int board_boarded   = 0;
+static nlua_env board_env  = LUA_NOREF;
 
 /*
  * prototypes
@@ -60,7 +63,6 @@ int player_isBoarded (void)
 void player_board (void)
 {
    Pilot *p;
-   unsigned int wdw;
    char c;
    HookParam hparam[2];
 
@@ -147,33 +149,31 @@ void player_board (void)
       return;
    }
 
-   /*
-    * create the boarding window
-    */
-   wdw = window_create( "wdwBoarding", _("Boarding"), -1, -1, BOARDING_WIDTH, BOARDING_HEIGHT );
+   /* Set up environment first time. */
+   if (board_env == LUA_NOREF) {
+      board_env = nlua_newEnv(1);
+      nlua_loadStandard( board_env );
 
-   window_addText( wdw, 20, -30, 120, 60,
-         0, "txtCargo", &gl_smallFont, NULL,
-         _("Credits:\n"
-         "Cargo:\n"
-         "Fuel:\n"
-         "Ammo:\n")
-         );
-   window_addText( wdw, 80, -30, 120, 60,
-         0, "txtData", &gl_smallFont, NULL, NULL );
+      size_t bufsize;
+      char *buf = ndata_read( BOARD_PATH, &bufsize );
+      if (nlua_dobufenv(board_env, buf, bufsize, BOARD_PATH) != 0) {
+         WARN( _("Error loading file: %s\n"
+             "%s\n"
+             "Most likely Lua file has improper syntax, please check"),
+               BOARD_PATH, lua_tostring(naevL,-1));
+         free(buf);
+         return;
+      }
+      free(buf);
+   }
 
-   window_addButton( wdw, 20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnStealCredits", _("Credits"), board_stealCreds);
-   window_addButton( wdw, 20+BUTTON_WIDTH+20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnStealCargo", _("Cargo"), board_stealCargo);
-   window_addButton( wdw, 20+2*(BUTTON_WIDTH+20), 20, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnStealFuel", _("Fuel"), board_stealFuel);
-   window_addButton( wdw, 20+3*(BUTTON_WIDTH+20), 20, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnStealAmmo", _("Ammo"), board_stealAmmo);
-   window_addButton( wdw, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnBoardingClose", _("Leave"), board_exit );
-
-   board_update(wdw);
+   /* Run Lua. */
+   nlua_getenv(board_env,"board");
+   lua_pushpilot(naevL, p->id);
+   if (nlua_pcall(board_env, 1, 0)) { /* error has occurred */
+      WARN( _("Board: '%s'"), lua_tostring(naevL,-1));
+      lua_pop(naevL,1);
+   }
 }
 
 /**
