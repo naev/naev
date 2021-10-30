@@ -27,11 +27,6 @@ local car = require "common.cargo"
 local fmt = require "format"
 local zlk = require "common.zalek"
 
-lab_coat_text = _([[You enter a shop that sells only lab coats. The assortment of lab coats is impressive: lab coats of all colors, different materials, and cuts. There are distinct sections for casual and working lab coats. Whatever the difference is, it is too subtle for you to grasp. You settle on a "business" lab coat because something formal is probably suitable for your talk. The price tag reads %s. %s]])
-electronics_text = _([[While walking through a store selling electronics you notice a pair of glasses with integrated displays. You could use them to display the text you are supposed to recite. They are rather expensive though, %s. %s]])
-
-log_text = _([[You gave a scientific talk in %s. Did anyone noticed you're not a scientist?]])
-
 
 function create()
     -- mission variables
@@ -52,11 +47,11 @@ function create()
 end
 
 function accept()
-    tk.msg("", _([[You join the student and explain him that Dr. Mensing actually hasn't told you what you are supposed to do.
-    "Ah, right. There is a conference on %s in the %s system soon. Actually she is supposed to be the substitution for professor Voges. He is absent for weeks by now. No one knows what he is doing on Ruadan. Anyway, back to topic. You have to bring me there as ersatz-substitution for Dr. Mensing as she got seriously ill. But you already know that as you brought her here."
+    tk.msg("", fmt.f(_([[You join the student and explain him that Dr. Mensing actually hasn't told you what you are supposed to do.
+    "Ah, right. There is a conference on {pnt} in the {sys} system soon. Actually she is supposed to be the substitution for professor Voges. He is absent for weeks by now. No one knows what he is doing on Ruadan. Anyway, back to topic. You have to bring me there as ersatz-substitution for Dr. Mensing as she got seriously ill. But you already know that as you brought her here."
     You tell him that she looked perfectly fine and said she wants to conduct her research instead of going to the conference.
     "WHAT?? It was MY idea, initially! She just wants to kick me out! I bet she thinks she could just pull it off entirely without me to be the only author! No way she could ever achieve that!"
-    "%s, you have to go to the conference instead! What do you mean you don't know anything about science? How about this, I just give you my presentation and while you're on the way I type the exact text I'd recite during my talk and send it to you. Just recite it on my behalf and it's going to be fine!"]]):format(dest_planet:name(), dest_sys:name(), player:name()))
+    "{player}, you have to go to the conference instead! What do you mean you don't know anything about science? How about this, I just give you my presentation and while you're on the way I type the exact text I'd recite during my talk and send it to you. Just recite it on my behalf and it's going to be fine!"]]), {pnt=dest_planet, sys=dest_sys, player=player:name()}))
     tk.msg("", _([["No time for discussions, sorry. While we're talking Dr. Mensing is trying to get an advantage! I have no time to lose!"
     He stands up and searches his pockets for something. "Here, the presentation," he says and hands you a small data chip. He further adds, "And don't be too late!" before rushing out of the bar in a hurry. Wait a minute, you haven't agreed to accept the mission!]]))
     learned_text = false
@@ -67,7 +62,7 @@ function accept()
     -- Set up mission information
     misn.setTitle(_("The Substitute Speaker"))
     misn.setReward(_("a reputation as scientist (?)"))
-    misn.setDesc(_("Fly to %s in the %s system before %s and give a scientific talk."):format(dest_planet:name(), dest_sys:name(), timelimit:str()))
+    misn.setDesc(fmt.f(_("Fly to {pnt} in the {sys} system before {time} and give a scientific talk."), {pnt=dest_planet, sys=dest_sys, time=timelimit:str()}))
     misn_marker = misn.markerAdd(dest_sys, "high")
 
     misn.accept()
@@ -80,8 +75,11 @@ end
 function land()
     landed = planet.cur()
     if landed == dest_planet then
-        tk.msg(_("Arriving on %s"):format(dest_planet:name()), _([[You arrived on %s on time. There is even some time left to prepare your talk. During the flight you threw a glance at the presentation on the data chip but you haven't managed to figure out the meaning of it. How is this supposed to work out??
-    Your thoughts are interrupted by an incoming message from the student. "As promised I'm sending you the text you have to recite. I hope you appreciate the time I wasted on typing that down. I hadn't considered that you'll have to answer questions after the talk, though. Do what every good scientist does and just talk about some random stuff that sounds like it may be related to the question. I'm sure you'll do it just fine. Good luck!" This message is followed by what you assume is the text you have to recite.]]):format(dest_planet:name()))
+        tk.msg(
+            fmt.f(_("Arriving on {pnt}"), {pnt=dest_planet}),
+            fmt.f(_([[You arrived on {pnt} on time. There is even some time left to prepare your talk. During the flight you threw a glance at the presentation on the data chip but you haven't managed to figure out the meaning of it. How is this supposed to work out??
+    Your thoughts are interrupted by an incoming message from the student. "As promised I'm sending you the text you have to recite. I hope you appreciate the time I wasted on typing that down. I hadn't considered that you'll have to answer questions after the talk, though. Do what every good scientist does and just talk about some random stuff that sounds like it may be related to the question. I'm sure you'll do it just fine. Good luck!" This message is followed by what you assume is the text you have to recite.]]), {pnt=dest_planet})
+        )
         enter_ship()
     end
 end
@@ -144,19 +142,21 @@ function enter_spaceport()
         start_talk()
         return
     elseif not has_lab_coat and c == 3 then
+        local lab_coat_text = fmt.f(_([[You enter a shop that sells only lab coats. The assortment of lab coats is impressive: lab coats of all colors, different materials, and cuts. There are distinct sections for casual and working lab coats. Whatever the difference is, it is too subtle for you to grasp. You settle on a "business" lab coat because something formal is probably suitable for your talk. The price tag reads {credits}.]]), {credits=fmt.credits(lab_coat_price)})
         if player.credits() < lab_coat_price then
-            tk.msg(_("Lab Coat Shop"), lab_coat_text:format(fmt.credits(lab_coat_price), _("Apparently this is too expensive for you. Looks like you have to give your talk without a lab coat.")))
+            tk.msg(_("Lab Coat Shop"), lab_coat_text .. "\n\n" .. _("Apparently this is too expensive for you. Looks like you have to give your talk without a lab coat."))
         else
-            if tk.choice(_("Lab Coat Shop"), lab_coat_text:format(fmt.credits(lab_coat_price), _("Will you buy the lab coat?")), _("Yes"), _("No")) == 1 then
+            if tk.choice(_("Lab Coat Shop"), lab_coat_text .. "\n\n" .. _("Will you buy the lab coat?"), _("Yes"), _("No")) == 1 then
                 player.pay(-lab_coat_price)
                 has_lab_coat = true
             end
         end
     elseif (has_lab_coat and c == 3) or (not has_lab_coat and c == 4) then
+        local electronics_text = fmt.f(_([[While walking through a store selling electronics you notice a pair of glasses with integrated displays. You could use them to display the text you are supposed to recite. They are rather expensive though, {credits}.]]), {credits=fmt.credits(glasses_price)})
         if player.credits() < glasses_price then
-            tk.msg("", electronics_text:format(fmt.credits(glasses_price), _("Apparently this is too expensive for you.")))
+            tk.msg("", electronics_text .. "\n\n" .. _("Apparently this is too expensive for you."))
         else
-            if tk.choice("", electronics_text:format(fmt.credits(glasses_price), _("Will you buy the glasses?")), _("Yes"), _("No")) == 1 then
+            if tk.choice("", electronics_text .. "\n\n" .. _("Will you buy the glasses?"), _("Yes"), _("No")) == 1 then
                 player.pay(-lab_coat_price)
                 has_glasses = true
             end
@@ -175,30 +175,25 @@ function start_talk()
     end
     tk.msg(_("Scientific Talk"), _([[You make your way to the institute where you are supposed to give the talk, following the signs. On arriving you ask around where you should head to for your talk. Apparently you were already awaited. You are lead to a rather small seminar room. Finally you are ready to give your talk and a few scientist take seat. Actually you expected more than 17 listener. Maybe this talk is not such a big deal as you expected. They wouldn't just send you to an important presentation, right?]]))
     if learned_text then
-        tk.msg(_("Scientific Talk"), _([[%s
-    You start reciting the text you got from the student. It turned out learning your text was the right choice. Some of the occurring terms are difficult to pronounce correctly.]]):format(text1))
+        tk.msg(_("Scientific Talk"), text1 .. "\n\n" .. _([[You start reciting the text you got from the student. It turned out learning your text was the right choice. Some of the occurring terms are difficult to pronounce correctly.]]))
         faction.modPlayerSingle("Za'lek", 1)
     elseif has_glasses then
-        tk.msg(_("Scientific Talk"), _([[%s
-    You start reciting the text you got from the student. With the text being displayed on your glasses you don't have to look down on a paper to read the text, but some of the occurring terms are difficult to pronounce correctly.]]):format(text1))
+        tk.msg(_("Scientific Talk"), text1 .. "\n\n" .. _([[You start reciting the text you got from the student. With the text being displayed on your glasses you don't have to look down on a paper to read the text, but some of the occurring terms are difficult to pronounce correctly.]]))
         faction.modPlayerSingle("Za'lek", 1)
     else
-        tk.msg(_("Scientific Talk"), _([[%s
-    You start reciting the text you got from the student. You realize that you should have learned the text as some of the occurring terms are difficult to pronounce correctly.]]):format(text1))
+        tk.msg(_("Scientific Talk"), text1 .. "\n\n" .. _([[You start reciting the text you got from the student. You realize that you should have learned the text as some of the occurring terms are difficult to pronounce correctly.]]))
     end
     tk.msg(_("Scientific Talk"), _([[Finally you are finished with your text and sigh in relief. After a brief applause someone raises his hand. Apparently he wants to ask a question. What should you do?]]))
     local c = tk.choice(_("Scientific Talk"), _([[You haven't understood the question, not even a single word.]]), _("This is a good question."), _("It's an open question."), _("Run!"))
 
     if c == 3 then
         tk.msg(_("Tactical Retreat"), _([[You decide to run towards the closest door and leave the building as fast as possible. You continue running until you reach the spaceport and enter your ship. You can't be the first one running from a talk, right?]]))
-        zlk.addNebuResearchLog(log_text:format(dest_planet:name()))
-        misn.finish(true)
-        return
+        zlk.addNebuResearchLog(fmt.f(log_text, {pnt=dest_planet}))
+    else
+        tk.msg(_("Scientific Talk"), _([[You try to avoid the question. The scientist seems to be upset. There are no further questions. Apparently there is another talk that starts very soon so people hurry off. You manage to leave without gaining much attention and return to your ship. Enough science for today!]]))
+        faction.modPlayerSingle("Za'lek", 1)
     end
-
-    tk.msg(_("Scientific Talk"), _([[You try to avoid the question. The scientist seems to be upset. There are no further questions. Apparently there is another talk that starts very soon so people hurry off. You manage to leave without gaining much attention and return to your ship. Enough science for today!]]))
-    zlk.addNebuResearchLog(log_text:format(dest_planet:name()))
-    faction.modPlayerSingle("Za'lek", 1)
+    zlk.addNebuResearchLog(fmt.f(_([[You gave a scientific talk on {pnt}. Did anyone notice you're not a scientist?]]), {pnt=dest_planet}))
     misn.finish(true)
 end
 

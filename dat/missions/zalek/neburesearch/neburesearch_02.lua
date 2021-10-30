@@ -51,22 +51,22 @@ function create()
 end
 
 function accept()
-    if not tk.yesno(_("Bar"), _([["Well met, %s! In fact, it's a lucky coincidence that we meet. You see, I'm in dire need of your service. I'm here on a... conference of sorts, not a real one. We are obligated to present the newest results of our research to scientists of the Empire once per period - even though these jokers lack the skills to understand our works! It's just a pointless ritual anyway. But I just got an ingenious idea on how to prevent the volatile Sol nebula from disrupting ship shields! I will spare you with the details - to ensure my idea is not going to be stolen, nothing personal. You can never be sure who is listening."
-    "Anyway, you have to take me back to my lab on %s in the %s system immediately! I'd also pay %s if necessary."]]):format(player:name(), homeworld:name(), homeworld_sys:name(), fmt.credits(credits))) then
+    if not tk.yesno(_("Bar"), fmt.f(_([["Well met, {player}! In fact, it's a lucky coincidence that we meet. You see, I'm in dire need of your service. I'm here on a... conference of sorts, not a real one. We are obligated to present the newest results of our research to scientists of the Empire once per period - even though these jokers lack the skills to understand our works! It's just a pointless ritual anyway. But I just got an ingenious idea on how to prevent the volatile Sol nebula from disrupting ship shields! I will spare you with the details - to ensure my idea is not going to be stolen, nothing personal. You can never be sure who is listening."
+    "Anyway, you have to take me back to my lab on {pnt} in the {sys} system immediately! I'd also pay {credits} if necessary."]]), {player=player:name(), pnt=homeworld, sys=homeworld_sys, credits=fmt.credits(credits)})) then
         misn.finish()
     end
-    tk.msg(_("Bar"), _([["Splendid! I'd like to start with my work as soon as possible, so please hurry! Off to %s we go!"
-    With that being said she drags you out of the bar. When realizing that she actually does not know on which landing pad your ship is parked she lets you loose and orders you to lead the way.]]):format(homeworld:name()))
+    tk.msg(_("Bar"), fmt.f(_([["Splendid! I'd like to start with my work as soon as possible, so please hurry! Off to {pnt} we go!"
+    With that being said she drags you out of the bar. When realizing that she actually does not know on which landing pad your ship is parked she lets you loose and orders you to lead the way.]]), {pnt=homeworld}))
 
     -- Set up mission information
     misn.setTitle(_("Emergency of Immediate Inspiration"))
-    misn.setReward(_("%s"):format(fmt.credits(credits)))
-    misn.setDesc(_("Take Dr. Mensing to %s in the %s system as fast as possible!"):format(homeworld:name(), homeworld_sys:name()))
+    misn.setReward(fmt.credits(credits))
+    misn.setDesc(fmt.f(_("Take Dr. Mensing to {pnt} in the {sys} system as fast as possible!"), {pnt=homeworld, sys=homeworld_sys}))
     misn_marker = misn.markerAdd(homeworld_sys, "low")
 
     misn.accept()
     misn.osdCreate(_("Emergency of Immediate Inspiration"), {
-       _("Fly to %s in the %s system."):format(homeworld:name(), homeworld_sys:name()),
+       fmt.f(_("Fly to {pnt} in the {sys} system."), {pnt=homeworld, sys=homeworld_sys}),
     })
 
     hook.land("land")
@@ -76,12 +76,10 @@ function land()
     landed = planet.cur()
     if landed == homeworld then
         if timelimit < time.get() then
-            tk.msg(_("Mission accomplished"), _([["That took long enough! I can't await getting started. I doubt you deserve full payment. I'll rather give you a reduced payment of %s for educational reasons." She hands you over a credit chip.
-    %s]]):format(fmt.credits(credits / 2), request_text))
+            tk.msg(_("Mission accomplished"), fmt.f(_([["That took long enough! I can't await getting started. I doubt you deserve full payment. I'll rather give you a reduced payment of {credits} for educational reasons." She hands you over a credit chip.]]), {credits=fmt.credits(credits / 2)} .. "\n\n" .. request_text))
             player.pay(credits / 2)
         else
-            tk.msg(_("Mission accomplished"), _([["Finally! I can't await getting started. Before I forget -" She hands you over a credit chip worth %s.
-    %s]]):format(fmt.credits(credits), request_text))
+            tk.msg(_("Mission accomplished"), _([["Finally! I can't await getting started. Before I forget -" She hands you over a credit chip worth {credits}.]]):format(fmt.credits(credits)) .. "\n\n" .. request_text)
             player.pay(credits)
         end
         misn.markerRm(misn_marker)

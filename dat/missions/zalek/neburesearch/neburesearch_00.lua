@@ -55,8 +55,8 @@ function accept()
         misn.finish()
     end
 
-    if not tk.yesno(bar_title, string.format(_([["Hello there! You are a pilot, right? For my project I require a ship that can go to the Nebula. Certainly you must be interested in the proposal of researching the phenomenon that cut us off from mankind's patrimony.
-    "As this is the point where any other pilots I asked backed out, I should start by mentioning that due to some unfortunate circumstances the payment for this mission will be only %s. But rest assured, you will be mentioned in the acknowledgment section of my next paper!"]]), fmt.credits(50e3))) then
+    if not tk.yesno(bar_title, fmt.f(_([["Hello there! You are a pilot, right? For my project I require a ship that can go to the Nebula. Certainly you must be interested in the proposal of researching the phenomenon that cut us off from mankind's patrimony.
+    "As this is the point where any other pilots I asked backed out, I should start by mentioning that due to some unfortunate circumstances the payment for this mission will be only {credits}. But rest assured, you will be mentioned in the acknowledgment section of my next paper!"]]), {credits=fmt.credits(50e3)})) then
         if not tk.yesno(bar_title, _([["Hold up! Look, the problem is that my grant was not permitted to the extent that I asked for. Those assholes cut my funds because they just don't understand the relevance of my research. Just because I'm still a student they completely underestimate my abilities!
     "Now I've spent all my credits on this sensor suit without the ability to use it. You must know how this feels. I mean, your ship obviously could use some work. So why don't you just help me out here?"]]) ) then
             misn.finish()
@@ -77,8 +77,8 @@ function accept()
 
     -- Set up mission information
     misn.setTitle( _("Novice Nebula Research") )
-    misn.setReward( string.format(
-        _("%s and the gratitude of a student"), fmt.credits(50e3) ) )
+    misn.setReward( fmt.f(
+        _("{credits} and the gratitude of a student"), {credits=fmt.credits(50e3)} ) )
     misn.setDesc( _("You have been asked by a Za'lek student to fly into the Nebula for some kind of research.") )
     misn_marker = misn.markerAdd(t_sys[1], "low")
 
@@ -99,10 +99,10 @@ end
 function land()
     landed = planet.cur()
     if misn_stage == 3 and landed == homeworld then
-        tk.msg( "", _([[The student has already removed all the cables and sensors inside your ship during the flight back to %s. Everything is packed into a couple of crates by the time you land.
+        tk.msg( "", fmt.f(_([[The student has already removed all the cables and sensors inside your ship during the flight back to {pnt}. Everything is packed into a couple of crates by the time you land.
     "Once again, thank you for your help. I still have to analyze the data but it looks promising so far. With these results no one is going to question my theories anymore! Also, I decided to increase your reward to compensate for the trouble I caused."
-    He gives you a credit chip worth %s and heads off. The money is nice, but not worth as much as the insight that working for the Za'lek will be dangerous and tiresome.]]):format(
-            homeworld:name(), fmt.credits(credits) ) )
+    He gives you a credit chip worth {credits} and heads off. The money is nice, but not worth as much as the insight that working for the Za'lek will be dangerous and tiresome.]]),
+            {pnt=homeworld, credits=fmt.credits(credits)} ) )
         misn.cargoRm(cargo)
         player.pay(credits)
         misn.markerRm(misn_marker)
@@ -114,9 +114,9 @@ end
 
 function takeoff()
     local title = _("A Mess On Your Ship")
-    tk.msg(title, string.format(_([[As you enter your ship you notice dozens of cables of various colors stretched across your ship's corridors. It is a complete mess. You follow the direction most of the cables seem to lead to and find the culprit.
-    "Oh, hello again, Captain! I'm done with my work here, so we can take off whenever you're ready. I have to calibrate the sensors during the flight so there is no need to rush. Our first destination is %s." You try to maintain composure as you ask him what he has done to your ship. "Oh, I just installed the sensors. It should have no unwanted side effects on your ship.
-    "A mess, you say? Haven't you noticed the color coding? Don't worry, I know exactly what I'm doing!" His last words are supposed to be reassuring but instead you start to think that accepting this mission was not the best idea.]]), t_sys[1]:name()))
+    tk.msg(title, fmt.f(_([[As you enter your ship you notice dozens of cables of various colors stretched across your ship's corridors. It is a complete mess. You follow the direction most of the cables seem to lead to and find the culprit.
+    "Oh, hello again, Captain! I'm done with my work here, so we can take off whenever you're ready. I have to calibrate the sensors during the flight so there is no need to rush. Our first destination is {sys}." You try to maintain composure as you ask him what he has done to your ship. "Oh, I just installed the sensors. It should have no unwanted side effects on your ship.
+    "A mess, you say? Haven't you noticed the color coding? Don't worry, I know exactly what I'm doing!" His last words are supposed to be reassuring but instead you start to think that accepting this mission was not the best idea.]]), {sys=t_sys[1]}))
     hook.rm(thook)
 end
 
@@ -131,8 +131,8 @@ function jumpin()
 end
 
 function beginFirstScan()
-    tk.msg("", string.format(_([[The student enters your cockpit as you arrive in the %s system. "Greetings, Captain! I realize I forgot to introduce myself. My name is Robert Hofer, student of Professor Voges himself! I'm sure you must have heard of him?" You tell him that the name doesn't sound familiar to you. "How can that be? Well, you would understand if you were a Za'lek.
-    "Anyway, I will now start with the measurements. The density of the nebula is lower in this sector, so it's not particularly volatile. For the real measurements we have to enter %s. I will let you know when we're done here."]]), t_sys[1]:name(), t_sys[2]:name()))
+    tk.msg("", fmt.f(_([[The student enters your cockpit as you arrive in the {sys1} system. "Greetings, Captain! I realize I forgot to introduce myself. My name is Robert Hofer, student of Professor Voges himself! I'm sure you must have heard of him?" You tell him that the name doesn't sound familiar to you. "How can that be? Well, you would understand if you were a Za'lek.
+    "Anyway, I will now start with the measurements. The density of the nebula is lower in this sector, so it's not particularly volatile. For the real measurements we have to enter {sys2}. I will let you know when we're done here."]]), {sys1=t_sys[1], sys2=t_sys[2]}))
     shook = hook.timer(30.0, "startProblems")
 end
 
@@ -164,11 +164,11 @@ function stopProblems()
     ps:control(false)
     ps:setEnergy(100)
     if zlk.hasZalekShip() then
-      tk.msg("", string.format(_([[You breathe a sigh of relief. It seems you're still alive. You try not to glare at Robert Hofer, but apparently aren't particularly successful considering his response. "Sorry for causing trouble. I seem to have underestimated the polarity feedback loop granularity. If it weren't for your Za'lek ship the problem would have been much worse!"
-    "I should investigate the damage it caused to the armor once we land. But first we must go to the %s system. Don't worry, the blackout will not occur again!"]]), t_sys[2]:name()))
+      tk.msg("", fmt.f(_([[You breathe a sigh of relief. It seems you're still alive. You try not to glare at Robert Hofer, but apparently aren't particularly successful considering his response. "Sorry for causing trouble. I seem to have underestimated the polarity feedback loop granularity. If it weren't for your Za'lek ship the problem would have been much worse!"
+    "I should investigate the damage it caused to the armor once we land. But first we must go to the {sys} system. Don't worry, the blackout will not occur again!"]]), {sys=t_sys[2]}))
     else
-      tk.msg("", string.format(_([[You breathe a sigh of relief. It seems you're still alive. You try not to glare at Robert Hofer, but apparently aren't particularly successful considering his response. "Sorry for causing trouble. I'm not quite familiar with the electronics of this ship type. You really should fly a Za'lek ship instead. Those are so much better!"
-    "I should investigate the damage it caused to the armor once we land. But first we must go to the %s system. Don't worry, the blackout will not occur again!"]]), t_sys[2]:name()))
+      tk.msg("", fmt.f(_([[You breathe a sigh of relief. It seems you're still alive. You try not to glare at Robert Hofer, but apparently aren't particularly successful considering his response. "Sorry for causing trouble. I'm not quite familiar with the electronics of this ship type. You really should fly a Za'lek ship instead. Those are so much better!"
+    "I should investigate the damage it caused to the armor once we land. But first we must go to the {sys} system. Don't worry, the blackout will not occur again!"]]), {sys=t_sys[2]}))
     end
     misn_stage = 1
     misn.markerMove(misn_marker, t_sys[2])
@@ -178,16 +178,16 @@ function stopProblems()
 end
 
 function beginSecondScan()
-    tk.msg( "", string.format(
-        _("You arrive in the %s system and Robert Hofer tells you that he will let you know when his scan is complete. This had better not cause another blackout..."),
-        t_sys[2]:name() ) )
+    tk.msg( "", fmt.f(
+        _("You arrive in the {sys} system and Robert Hofer tells you that he will let you know when his scan is complete. This had better not cause another blackout..."),
+	{sys=t_sys[2]} ) )
     hook.timer(30.0, "endSecondScan")
 end
 
 function endSecondScan()
-    tk.msg( "", string.format(
-        _([["OK, my measurements are complete! Let's go back to %s."]]),
-        homeworld:name() ) )
+    tk.msg( "", fmt.f(
+        _([["OK, my measurements are complete! Let's go back to {pnt}."]]),
+	{pnt=homeworld} ) )
     misn_stage = 3
     misn.markerMove(misn_marker, homeworld_sys)
     misn.osdActive(3)
