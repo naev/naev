@@ -685,6 +685,9 @@ void ovr_render( double dt )
    array_free( ovr_render_safelanes );
    ovr_render_safelanes = safelanes;
 
+   /* Render markers. */
+   ovr_mrkRenderAll( res );
+
    /* Check if player has goto target. */
    if (player_isFlag(PLAYER_AUTONAV) && (player.autonav == AUTONAV_POS_APPROACH)) {
       glColour col = cRadar_hilight;
@@ -717,7 +720,7 @@ void ovr_render( double dt )
    if (player.p->nav_hyperspace > -1)
       gui_renderJumpPoint( player.p->nav_hyperspace, RADAR_RECT, w, h, res, cur_system->jumps[player.p->nav_hyperspace].map_alpha, 1 );
 
-   /* render the asteroids */
+   /* Render the asteroids */
    for (int i=0; i<array_size(cur_system->asteroids); i++) {
       AsteroidAnchor *ast = &cur_system->asteroids[i];
       for (int j=0; j<ast->nb; j++)
@@ -832,9 +835,6 @@ void ovr_render( double dt )
 
    /* Render the player. */
    gui_renderPlayer( res, 1 );
-
-   /* Render markers. */
-   ovr_mrkRenderAll( res );
 }
 
 /**
