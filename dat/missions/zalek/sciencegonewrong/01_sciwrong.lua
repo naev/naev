@@ -25,6 +25,7 @@
 --
 -- Author: fart but based on Mission Ideas in wiki: wiki.naev.org/wiki/Mission_Ideas
 --]]
+local fmt = require "format"
 local sciwrong = require "common.sciencegonewrong"
 
 
@@ -54,7 +55,11 @@ function accept()
    tk.msg( _([[In the bar]]), _([["Excellent. From what I have been told it looks like this." He gestures with his hands to no merit. "You will recognize it; it should be in a box that's kept separately from the remaining stuff and labeled "Top Secret". Oh, and you might need this." He hands you a handheld device. "The ship is called the %s."
     So he wants you to steal something top secret from the Soromid. Quirky people, those Za'leks. With the coordinates, the signature of the target ship and the handheld, which you hope helps you detect the box, you set off on your way.]]):format(_("Tokera")) )
    misn.accept()
-   misn.osdCreate(_("The one with the Visit"), {_("Go to the %s system and find the %s"):format(t_sys[2]:name(), _("Tokera")), _("Board the %s and retrieve the secret technology"):format(_("Tokera")), _("Return to %s in the %s system"):format(t_pla[1]:name(), t_sys[1]:name())})
+   misn.osdCreate(_("The one with the Visit"), {
+      _("Go to the %s system and find the %s"):format(t_sys[2]:name(), _("Tokera")),
+      _("Board the %s and retrieve the secret technology"):format(_("Tokera")),
+      fmt.f(_("Return to {pnt} in the {sys} system"), {pnt=t_pla[1], sys=t_sys[1]}),
+   })
    misn.setDesc(_("You've been hired by Dr. Geller to retrieve technology he urgently needs to build his prototype."))
    misn.setTitle(_("The one with the Visit"))
    misn.setReward(_("The gratitude of science and a bit of compensation"))

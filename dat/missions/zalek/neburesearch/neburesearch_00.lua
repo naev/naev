@@ -88,9 +88,7 @@ function accept()
     local osd_msg = {}
     osd_msg[1] = fmt.f( _("Fly to the {sys} system"), {sys=t_sys[1]} )
     osd_msg[2] = fmt.f( _("Fly to the {sys} system"), {sys=t_sys[2]} )
-    osd_msg[3] = string.format(
-        _("Return to %s in the %s system"), homeworld:name(),
-        homeworld_sys:name() )
+    osd_msg[3] = fmt.f( _("Return to {pnt} in the {sys} system"), {pnt=homeworld, sys=homeworld_sys} )
     misn.osdCreate(osd_title, osd_msg)
 
     thook = hook.takeoff("takeoff")

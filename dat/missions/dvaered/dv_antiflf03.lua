@@ -71,7 +71,7 @@ text[6] = _([[Colonel Urnus returns to his seat.
 osd_desc[1] = _("Fly to the {sys} system")
 osd_desc[2] = _("Defend the HDSF Obstinate and its escorts")
 osd_desc[3] = _("Destroy the FLF base")
-osd_desc[4] = _("Return to %s in the %s system")
+osd_desc[4] = _("Return to {pnt} in the {sys} system")
 
 function create()
     missys = {system.get(var.peek("flfbase_sysname"))}
@@ -103,7 +103,7 @@ function accept()
 
         misn.accept()
         osd_desc[1] = fmt.f(osd_desc[1], {sys=destsys})
-        osd_desc[4] = string.format(osd_desc[4], DVplanet:name(), DVsys:name())
+        osd_desc[4] = fmt.f(osd_desc[4], {pnt=DVplanet, sys=DVsys})
         misn.osdCreate(_("Destroy the FLF base!"), osd_desc)
         misn.setDesc(_("The Dvaered are poised to launch an all-out attack on the secret FLF base. You have chosen to join this battle for wealth and glory."))
         misn.setReward(_("Wealth and glory"))
