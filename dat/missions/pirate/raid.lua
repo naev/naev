@@ -205,7 +205,7 @@ end
 function land ()
    local pp = player.pilot()
    local q = pp:cargoHas( misn_cargo )
-   if convoy_spawned and q > 0 then
+   if convoy_spawned and q > 0 and planet.cur()==returnpnt then
       q = pp:cargoRm( misn_cargo, q ) -- Remove it
       local reward = reward_base + q * reward_cargo
       lmisn.sfxVictory()
