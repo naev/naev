@@ -104,7 +104,7 @@ They grin at you.
          minerva.log.pirate(_("You took down an advanced Za'lek hacking center and got rewarded for your efforts.") )
          faction.modPlayerSingle("Wild Ones", 5)
       end )
-      vn.na(string.format(_("You have received #g%s#0."), fmt.credits(reward_amount)))
+      vn.na(fmt.reward(reward_amount))
       vn.run()
       misn.finish(true)
    elseif  misn_state==nil then

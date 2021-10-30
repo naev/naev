@@ -31815,8 +31815,8 @@ msgstr ""
 #: dat/missions/minerva/pirate3.lua:157 dat/missions/minerva/pirate4.lua:431
 #: dat/missions/minerva/pirate5.lua:107
 #, lua-format
-msgid "You have received #g%s#0."
-msgstr "あなたは #g%s#0 を受けとった。"
+msgid "You have received #g{reward}#0."
+msgstr "あなたは #g{reward}#0 を受けとった。"
 
 #: dat/events/neutral/shiplover.lua:297
 #, lua-format

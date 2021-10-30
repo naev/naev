@@ -356,7 +356,7 @@ function land ()
       vn.transition( tutnel.nelly.transition )
       nel(_([["We finally made it. Nothing ever comes really easy does it? Ah, before I forget, let me reward you for your troubles."]]))
       vn.sfxVictory()
-      vn.na(fmt.f(_("You have received #g{credits}#0."), {credits=fmt.credits(reward_amount)}))
+      vn.na(fmt.reward(reward_amount))
       vn.func( function () -- Rewards
          player.pay( reward_amount )
       end )

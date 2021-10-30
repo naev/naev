@@ -154,7 +154,7 @@ They take out a metallic object from their pocket and show it to you. You don't 
    if misn_state == 5 then
       vn.na(_("You explain to them that you were able to successfully plant the device in the Minerva Spa."))
       pir(_([["Great job! I knew you had it in you. Catching the mole now should be just a matter of time. After we collect some data and process them, we can see how to catch the asshole. Meet me again at the bar in a bit, I have a feeling we will catch them soon."]]))
-      vn.na(string.format(_("You have received #g%s#0."), fmt.credits(reward_amount)))
+      vn.na(fmt.reward(reward_amount))
       vn.func( function ()
          player.pay( reward_amount )
          minerva.log.pirate(_("You planted a listening device in the Minerva Spa to catch a mole and were rewarded for your actions.") )

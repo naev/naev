@@ -191,7 +191,7 @@ He looks as glum as ever.
    local sfxparams = { pitch=pitchlow, effect="reverb_drugged" }
    vn.sfxMoney( sfxparams )
    vn.func( function () player.pay( money_reward ) end )
-   vn.na(string.format(_("You received #g%s#0."), fmt.credits( money_reward )))
+   vn.na(fmt.reward( money_reward ))
    vn.sfxVictory( sfxparams )
 
    vn.na(_([[Without saying another word, Kex slowly disappears into the shadows. It doesn't seem like he'll recover soon. Maybe there is another way to help him without getting him directly involved?]]))

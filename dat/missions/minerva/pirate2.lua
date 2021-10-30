@@ -106,7 +106,7 @@ function land ()
       pir(_([["This should bring suspicions to a new high between Dvaered and Za'lek. There have already been 20 casualties from fighting this period! At this rate they will basically solve themselves. However, that might be a bit slow, so let us try to accelerate the process a bit more."
 They wink at you.]]))
       pir(_([["I've wired you some credits for your efforts. Meet me up at the bar for a new potential job."]]))
-      vn.na(string.format(_("You have received #g%s#0."), fmt.credits(reward_amount)))
+      vn.na(fmt.reward(reward_amount))
       vn.func( function ()
          player.pay( reward_amount )
       end )

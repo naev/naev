@@ -132,7 +132,7 @@ He plugs in the program directly into a port under his wing and his eyes go blan
       kex(_([["In the meantime, it looks like we were also able to take some credits. I'll wire you up with a reward for your efforts."]]))
       vn.sfxMoney()
       vn.func( function () player.pay( money_reward ) end )
-      vn.na(string.format(_("You received #g%s#0."), fmt.credits( money_reward )))
+      vn.na(fmt.reward( money_reward ))
       kex(_([["I'm going to go process this data. It's going to take me a while, but come back here in a period or so and I should hopefully have some more results."]]))
       vn.sfxVictory()
       vn.run()

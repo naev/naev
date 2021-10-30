@@ -47,6 +47,21 @@ end
 
 
 --[[--
+Converts an item object or number of credits to reward string ("You have received _").
+
+   @usage vn.na(fmt.reward(money_reward))
+
+      @param reward Thing or number of credits the player is receiving.
+                    Avoid passing strings (English or translated) for clarity's sake.
+      @return A string taking the form of "You have received X." -- translated and colorized.
+--]]
+function format.reward( reward )
+   local reward_text = (type(reward) == "number") and format.credits(reward) or reward
+   return format.f(_("You have received #g{reward}#0."), {reward=reward_text})
+end
+
+
+--[[--
 Converts a number of tonnes to a string, using ngettext.
 
    This adds "tonnes" to the output of fmt.number in a translatable way.

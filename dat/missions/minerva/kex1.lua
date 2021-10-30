@@ -104,7 +104,7 @@ It is signed "Baroness Eve".]]))
       kex(_([["Oh, I almost forgot. There's quite a few credits in the crate too, I think it's only fair to give you most of them as a reward for your help."]]))
       vn.sfxMoney()
       vn.func( function () player.pay( money_reward ) end )
-      vn.na(string.format(_("You received #g%s#0."), fmt.credits( money_reward )))
+      vn.na(fmt.reward( money_reward ))
       kex(_([["Meet me up here again in a bit, I'm going to go get some information."
 Kex runs off and disappears into the station.]]))
       vn.sfxVictory()
