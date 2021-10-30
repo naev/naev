@@ -1,14 +1,11 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
 /**
  * @file button.c
  *
  * @brief Button widget.
  */
-
-
 /** @cond */
 #include <stdlib.h>
 /** @endcond */
@@ -16,14 +13,12 @@
 #include "nstring.h"
 #include "tk/toolkit_priv.h"
 
-
 static int btn_mclick( Widget* btn, int button, int x, int y );
 static int btn_key( Widget* btn, SDL_Keycode key, SDL_Keymod mod );
 static void btn_render( Widget* btn, double bx, double by );
 static void btn_cleanup( Widget* btn );
 static Widget* btn_get( unsigned int wid, const char* name );
 static void btn_updateHotkey( Widget *btn );
-
 
 /**
  * @brief Adds a button widget to a window, with a hotkey that enables the button to be activated with that key.
@@ -85,7 +80,6 @@ void window_addButtonKey( unsigned int wid,
       toolkit_nextFocus( wdw );
 }
 
-
 /**
  * @brief Adds a button widget to a window.
  *
@@ -111,7 +105,6 @@ void window_addButton( unsigned int wid,
    window_addButtonKey( wid, x, y, w, h, name, display, call, 0 );
 }
 
-
 /**
  * @brief Gets a button widget.
  */
@@ -129,7 +122,6 @@ static Widget* btn_get( unsigned int wid, const char* name )
 
    return wgt;
 }
-
 
 /**
  * @brief Disables a button.
@@ -155,7 +147,6 @@ void window_disableButton( unsigned int wid, const char* name )
    toolkit_focusSanitize(wdw);
 }
 
-
 /**
  * @brief Disables a button, while still running the button's function.
  *
@@ -172,7 +163,6 @@ void window_disableButtonSoft( unsigned int wid, const char *name )
    window_disableButton( wid, name );
 }
 
-
 /**
  * @brief Enables a button.
  *
@@ -181,10 +171,7 @@ void window_disableButtonSoft( unsigned int wid, const char *name )
  */
 void window_enableButton( unsigned int wid, const char *name )
 {
-   Widget *wgt;
-
-   /* Get the widget. */
-   wgt = btn_get( wid, name );
+   Widget *wgt = btn_get( wid, name );
    if (wgt == NULL)
       return;
 
@@ -192,7 +179,6 @@ void window_enableButton( unsigned int wid, const char *name )
    wgt->dat.btn.disabled = 0;
    wgt_setFlag(wgt, WGT_FLAG_CANFOCUS);
 }
-
 
 /**
  * @brief Changes the button caption.
@@ -214,7 +200,6 @@ void window_buttonCaption( unsigned int wid, const char *name, const char *displ
       btn_updateHotkey(wgt);
 }
 
-
 /**
  * @brief Checks a button's hotkey against its label and highlights the hotkey, if present.
  */
@@ -222,7 +207,6 @@ static void btn_updateHotkey( Widget *btn )
 {
    char buf[PATH_MAX], *display, target;
    const char *keyname;
-   size_t i;
    int match;
 
    if (btn->dat.btn.display==NULL)
@@ -240,7 +224,7 @@ static void btn_updateHotkey( Widget *btn )
    /* Find first occurence in string. */
    display  = btn->dat.btn.display;
    match    = -1;
-   for (i=0; i<strlen(display); i++) {
+   for (size_t i=0; i<strlen(display); i++) {
       if (tolower(display[i])==target) {
          match = i;
          break;
@@ -257,7 +241,6 @@ static void btn_updateHotkey( Widget *btn )
    free(btn->dat.btn.display);
    btn->dat.btn.display = strdup(buf);
 }
-
 
 /**
  * @brief Handles input for an button widget.
@@ -282,7 +265,6 @@ static int btn_key( Widget* btn, SDL_Keycode key, SDL_Keymod mod )
       }
    return 0;
 }
-
 
 /**
  * @brief Renders a button widget.
@@ -340,7 +322,6 @@ static void btn_render( Widget* btn, double bx, double by )
             fc, -1., btn->dat.btn.display );
 }
 
-
 /**
  * @brief Clean up function for the button widget.
  *
@@ -350,7 +331,6 @@ static void btn_cleanup( Widget *btn )
 {
    free(btn->dat.btn.display);
 }
-
 
 /**
  * @brief Basically traps click events.
