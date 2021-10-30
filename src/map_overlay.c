@@ -856,7 +856,7 @@ static void ovr_mrkRenderAll( double res, int fg )
       if (!fg) {
          glUseProgram( shaders.hilight.program );
          glUniform1f( shaders.hilight.dt, ovr_dt );
-         gl_renderShader( x, y, 9., 9., 0., &shaders.hilight, &cRadar_hilight, 1 );
+         gl_renderShader( x, y, 13., 13., 0., &shaders.hilight, &cRadar_hilight, 1 );
       }
 
       if (fg && mrk->text != NULL)
