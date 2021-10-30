@@ -44,8 +44,6 @@ misn_state = nil
 targetplanet = "Strangelove Lab"
 targetsys = "Westhaven" --planet.get(targetplanet):system():nameRaw()
 
-misn_desc = string.format(_("Kex wants you to kill Dr. Strangelove at %s in the %s system."), _(targetplanet), _(targetsys))
-
 eccdiff = "strangelove"
 
 money_reward = 700e3
@@ -56,7 +54,7 @@ function create ()
    end
    misn.setReward( _("A step closer to Kex's freedom") )
    misn.setTitle( _("Freeing Kex") )
-   misn.setDesc( misn_desc )
+   misn.setDesc( fmt.f(_("Kex wants you to kill Dr. Strangelove at {pnt} in the {sys} system."), {pnt=_(targetplanet), sys=_(targetsys)}) )
 
    misn.setNPC( minerva.kex.name, minerva.kex.portrait, minerva.kex.description )
 end
@@ -92,7 +90,7 @@ function accept ()
    kex(_([["Wait, you know where he is? How you know is not important now, all I need you to do is go over there and end his rotten life once and for all."]]))
    kex(_([["The universe will be a much better place with scum like him gone, and I'll finally get my vengeance."]]))
    vn.disappear(kex)
-   vn.na(string.format(_([[Without saying anything else, Kex walks off stumbling into the darkness of the station. You feel like it is best to leave him alone right now and decide to go see Strangelove. He should be in the %s system.]]),_(targetsys)))
+   vn.na(fmt.f(_([[Without saying anything else, Kex walks off stumbling into the darkness of the station. You feel like it is best to leave him alone right now and decide to go see Strangelove. He should be in the {sys} system.]]), {sys=_(targetsys)}))
 
    vn.func( function ()
       misn_state = 0
@@ -108,7 +106,7 @@ function accept ()
    minerva.log.kex(_("You have agreed to help Kex deal with Dr. Strangelove.") )
 
    misn.osdCreate( _("Freeing Kex"),
-      { string.format(_("Go find Dr. Strangelove in the %s system"), _(targetsys) ),
+      { fmt.f(_("Go find Dr. Strangelove in the {sys} system"), {sys=_(targetsys)} ),
       _("Return to Kex at Minerva Station") } )
    misn_marker = misn.markerAdd( system.get(targetsys) )
 

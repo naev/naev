@@ -153,7 +153,7 @@ They make a cutting gesture from their belly up to their neck.
    vn.scene()
    local pir = vn.newCharacter( minerva.vn_pirate() )
    vn.transition()
-   pir(string.format(_([["Great job! It seems like you found our mole. However, our job is not done here. We have to get all the information we can out of him. This is not something we can do here at Minerva Station. Here, take him on your ship and bring him to the %s system. There should be a ship waiting for him in the middle of the asteroid field, it might be a bit hard to spot at first."]]), mainsys))
+   pir(fmt.f(_([["Great job! It seems like you found our mole. However, our job is not done here. We have to get all the information we can out of him. This is not something we can do here at Minerva Station. Here, take him on your ship and bring him to the {sys} system. There should be a ship waiting for him in the middle of the asteroid field, it might be a bit hard to spot at first."]]), {sys=_(mainsys)}))
    pir(_([["I'll be waiting on the ship with my crew. Make sure to bring him over, however, watch out for any Dvaered patrols. We don't want them to know we have taken him. We're not expecting much trouble, but bring a strong ship just in case."]]))
    vn.run()
 
@@ -169,7 +169,7 @@ They make a cutting gesture from their belly up to their neck.
    -- On to next state
    misn_state = 1
    misn.osdCreate( _("Minerva Mole"), {
-      string.format(_("Take the mole to the interrogation facility at %s"), mainsys),
+      fmt.f(_("Take the mole to the interrogation facility at {sys}"), {sys=_(mainsys)}),
    } )
    misn.markerMove( misnmarker, system.get(mainsys) )
    misn.npcRm( npc_pir )
@@ -253,7 +253,7 @@ They rush off into the depths of the ship.]]))
    -- Dvaered jump in hooks
    spawned_dvaereds = {}
    spawned_pirates = {}
-   player.msg(string.format(_("Sensors detecting Dvaered patrol incoming from %s!"), dvaeredsys))
+   player.msg(fmt.f(_("Sensors detecting Dvaered patrol incoming from {sys}!"), {sys=_(dvaeredsys)}))
    hook.timer(  5.0, "msg1" )
    hook.timer( 10.0, "dv_reinforcement1" )
    hook.timer( 100.0, "dv_reinforcement1" )

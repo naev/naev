@@ -170,7 +170,8 @@ function enter ()
    if misn_state==0 and system.cur()==system.get(mainsys) then
       weap_ok, badweaps = dvaered_weapons( player.pilot() )
       if not weap_ok then
-         player.msg(string.format(_("#oNon-Dvaered equipped weapons detected: %s"), table.concat(badweaps,_(", "))))
+         -- TODO: use fmt.list()? Does this work outside LuaJIT? Does it translate?
+         player.msg(fmt.f(_("#oNon-Dvaered equipped weapons detected: {list}"), {list=table.concat(badweaps,_(", "))}))
       end
 
       pilot.clear()

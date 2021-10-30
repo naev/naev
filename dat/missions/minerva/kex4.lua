@@ -41,8 +41,6 @@ misn_state = nil
 targetplanet = "Jorlan"
 targetsys = planet.get(targetplanet):system():nameRaw()
 
-misn_desc = string.format(_("You have been assigned with obtaining information from Jie de Luca at %s in the %s system."), _(targetplanet), _(targetsys))
-
 -- TODO custom graphic?
 jie_portrait = portrait.get()
 jie_image = portrait.getFullPath(jie_portrait)
@@ -55,7 +53,7 @@ function create ()
    end
    misn.setReward( _("A step closer to Kex's freedom") )
    misn.setTitle( _("Freeing Kex") )
-   misn.setDesc( misn_desc )
+   misn.setDesc( fmt.f(_("You have been assigned with obtaining information from Jie de Luca at {pnt} in the {sys} system."), {pnt=_(targetplanet), sys=_(targetsys)}) )
 
    misn.setNPC( minerva.kex.name, minerva.kex.portrait, minerva.kex.description )
 end
@@ -72,7 +70,7 @@ function accept ()
    minerva.log.kex(_("You have agreed to help Kex obtain information from Jie de Luca.") )
 
    misn.osdCreate( _("Freeing Kex"),
-      { string.format(_("Go to %s in the %s system to find Jie de Luca"), _(targetplanet), _(targetsys) ),
+      { fmt.f(_("Go to {pnt} in the {sys} system to find Jie de Luca"), {pnt=_(targetplanet), sys=_(targetsys)} ),
       _("Return to Kex at Minerva Station") } )
    misn_marker = misn.markerAdd( planet.get(targetplanet) )
 
@@ -175,7 +173,7 @@ His eyes don't seem to have changed.]]))
       vn.done()
 
       vn.label("accept")
-      kex(string.format(_([["Thanks. Jie de Luca should be located at %s in the %s system. I don't really know the relationship they have with the CEO, but unlike Baroness Eve or Major Malik, Jie isn't that important of a figure so you probably shouldn't have much of an issue dealing with them."]]), _(targetplanet), _(targetsys)))
+      kex(fmt.f(_([["Thanks. Jie de Luca should be located at {pnt} in the {sys} system. I don't really know the relationship they have with the CEO, but unlike Baroness Eve or Major Malik, Jie isn't that important of a figure so you probably shouldn't have much of an issue dealing with them."]]), {pnt=_(targetplanet), sys=_(targetsys)}))
       kex(_([["There shouldn't be much trouble, but I do think that we may have caused too much of a commotion, and I wouldn't be surprised if the CEO was starting to have suspicions. Make sure to be careful out there."]]))
       vn.func( function ()
          misn_state = 0
@@ -196,7 +194,7 @@ His eyes don't seem to have changed.]]))
    end )
 
    vn.label("job")
-   kex(string.format(_([["Jie de Luca should be located at %s in the %s system. I don't really know the relationship they have with the CEO, but unlike Baroness Eve or Major Malik, Jie isn't that important of a figure so you probably shouldn't have much of an issue dealing with them."]]), _(targetplanet), _(targetsys)))
+   kex(fmt.f(_([["Jie de Luca should be located at {pnt} in the {sys} system. I don't really know the relationship they have with the CEO, but unlike Baroness Eve or Major Malik, Jie isn't that important of a figure so you probably shouldn't have much of an issue dealing with them."]]), {pnt=_(targetplanet), sys=_(targetsys)}))
    kex(_([["There shouldn't be much trouble, but I do think that we may have caused too much of a commotion, and I wouldn't be surprised if the CEO was starting to have suspicions. Make sure to be careful out there."]]))
    vn.jump("menu_msg")
 

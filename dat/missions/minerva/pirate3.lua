@@ -386,9 +386,9 @@ function harper_hail ()
       local h = harper_hologram()
       vn.transition("electric")
       vn.na(_("You see Harper's hologram appear into view paler than usual."))
-      h(string.format(_([["I have had a change of mind."
+      h(fmt.f(_([["I have had a change of mind."
 He gulps.
-"How about I give you the ticket for a mere %s?]]), fmt.credits(harper_bribe_sml)))
+"How about I give you the ticket for a mere {credits}?]]), {credits=fmt.credits(harper_bribe_sml)}))
       vn.menu( {
          { string.format(_("Pay him %s%s"),fmt.credits(harper_bribe_sml),enoughcreds(harper_bribe_sml)), "pay" },
          { _("Threaten him"), "threaten" },
@@ -519,9 +519,9 @@ He scoffs at you and closes the transmission.]]))
       }
       if minerva.tokens_get() > harper_bribe_tkn then
          table.insert( opts, 1,
-            { string.format(_([[Offer %s (have %s)]]),
-               minerva.tokens_str( harper_bribe_tkn ),
-               minerva.tokens_str( minerva.tokens_get() ) ),
+            { fmt.f(_([[Offer {bribe} (have {tokens})]]), {
+               brkbe = minerva.tokens_str( harper_bribe_tkn ),
+               tokens = minerva.tokens_str( minerva.tokens_get() ) }),
             "money_tkn" } )
       end
       return opts
@@ -560,7 +560,7 @@ He scoffs at you and closes the transmission.]]))
          vn.jump("broke")
       end
    end )
-   h(string.format(_([["%s only? I spent more than that gambling just to get this ticket."]]), fmt.credits(harper_bribe_sml)))
+   h(fmt.f(_([["{credits} only? I spent more than that gambling just to get this ticket."]]), {credits=fmt.credits(harper_bribe_sml)}))
    vn.menu( {
       { string.format(_([[Offer %s%s]]), fmt.credits(harper_bribe_big),
          enoughcreds(harper_bribe_big)), "money_big" },

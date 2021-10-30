@@ -46,8 +46,6 @@ lastsys = planet.get(lastplanet):system():nameRaw()
 
 gauntletsys = system.get("Crimson Gauntlet")
 
-misn_desc = string.format(_("You have been assigned with obtaining information from Major Malik at %s in the %s system."), _(targetplanet), _(targetsys))
-
 malik_portrait = "major_malik.webp"
 malik_image = "major_malik.webp"
 
@@ -59,7 +57,7 @@ function create ()
    end
    misn.setReward( _("A step closer to Kex's freedom") )
    misn.setTitle( _("Freeing Kex") )
-   misn.setDesc( misn_desc )
+   misn.setDesc( fmt.f(_("You have been assigned with obtaining information from Major Malik at {pnt} in the {sys} system."), {pnt=_(targetplanet), sys=_(targetsys)}))
 
    misn.setNPC( minerva.kex.name, minerva.kex.portrait, minerva.kex.description )
 end
@@ -77,7 +75,7 @@ function accept ()
    minerva.log.kex(_("You have agreed to help Kex obtain information from Major Malik.") )
 
    misn.osdCreate( _("Freeing Kex"),
-      { string.format(_("Go to %s in the %s system to find Major Malik"), _(targetplanet), _(targetsys) ),
+      { fmt.f(_("Go to {pnt} in the {sys} system to find Major Malik"), {pnt=_(targetplanet), sys=_(targetsys)} ),
       _("Return to Kex at Minerva Station") } )
    misn_marker = misn.markerAdd( planet.get(targetplanet) )
 
@@ -99,14 +97,14 @@ function generate_npc ()
       vn.transition()
       vn.na(_("You land and promptly proceed to try to find Major Malik and get the job over with. After glossing over the map of the installations, you are able to quickly locate their office and head down there."))
       vn.sfxBingo()
-      vn.na(string.format(_("You arrive and inquire about Major Malik, but are told he is apparently enjoying some leisure time at %s in the %s system. Looks like you have no choice but to try to look for them there."), _(lastplanet), _(lastsys)))
+      vn.na(fmt.f(_("You arrive and inquire about Major Malik, but are told he is apparently enjoying some leisure time at {pnt} in the {sys} system. Looks like you have no choice but to try to look for them there."), {pnt=_(lastplanet), sys=_(lastsys)}))
       vn.run()
 
       -- Advance the state
       misn_state = 1
       misn.markerMove( misn_marker, planet.get(lastplanet) )
       misn.osdCreate( _("Freeing Kex"),
-         { string.format(_("Look for Major Malik at %s in the %s system"), _(lastplanet), _(lastsys) ),
+         { fmt.f(_("Look for Major Malik at {pnt} in the {sys} system"), {pnt=_(lastplanet), sys=_(lastsys)} ),
          _("Return to Kex at Minerva Station") } )
 
    elseif (misn_state==2 or misn_state==3) and planet.cur() == planet.get(lastplanet) then
@@ -178,7 +176,7 @@ He seems satisfied at his pun.]]))
       vn.done()
 
       vn.label("accept")
-      kex(string.format(_([["This time I'm hoping it's a cinch. Major Malik should be at %s in the %s system. They should be fairly old, so it should be enough to just outright confront him and get him to talk. I'll give you a note that if you show him should be easy enough to convince him. I'll also send you a picture of him so you can easily recognize him when you see him."]]), _(targetplanet), _(targetsys)))
+      kex(fmt.f(_([["This time I'm hoping it's a cinch. Major Malik should be at {pnt} in the {sys} system. They should be fairly old, so it should be enough to just outright confront him and get him to talk. I'll give you a note that if you show him should be easy enough to convince him. I'll also send you a picture of him so you can easily recognize him when you see him."]]), {pnt=_(targetplanet), sys=_(targetsys)}))
       kex(_([["The note? It's just your run-of-the-mill blackmail. We don't really care about Major Malik himself, what we want is dirt on the CEO. Hopefully they'll be sensible and give us what we want. However, I trust you will do what it takes in case they don't."
 He winks his cyborg eye at you.]]))
       vn.func( function ()
@@ -202,9 +200,9 @@ He winks his cyborg eye at you.]]))
    vn.label("job")
    if not misn_state or misn_state < 1 then
       kex(_([["The job is pretty straightforward. We need Major Malik to talk about his dealings with the Minerva CEO. If you hand him the letter I gave you it should be enough to convince him."]]))
-      kex(string.format(_([["You should be able to find him at %s in the %s system. I don't think he should give much trouble."]]), _(targetplanet), _(targetsys)))
+      kex(fmt.f(_([["You should be able to find him at {pnt} in the {sys} system. I don't think he should give much trouble."]]), {pnt=_(targetplanet), sys=_(targetsys)}))
    else
-      kex(string.format(_([["Oh, so Major Malik wasn't at %s? That is really weird. Let's hope you can find him at %s in the %s system."]]), _(targetplanet), _(lastplanet), _(lastsys)))
+      kex(fmt.f(_([["Oh, so Major Malik wasn't at {targetplanet}? That is really weird. Let's hope you can find him at {pnt} in the {sys} system."]]), {targetplanet=_(targetplanet), pnt=_(lastplanet), sys=_(lastsys)}))
    end
    vn.jump("menu_msg")
 

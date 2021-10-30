@@ -127,7 +127,7 @@ function hintosd ()
       _("Investigate the Za'lek"),
    }
    local function addhint( id )
-      table.insert( osd, string.format(_("\tGo to %s in %s"), _(hintpnt[id]), _(hintsys[id])) )
+      table.insert( osd, fmt.f(_("\tGo to {pnt} in {sys}"), {pnt=_(hintpnt[id]), sys=_(hintsys[id])}) )
    end
 
    if misn_state==0 then
@@ -157,14 +157,14 @@ function approach_maikki ()
    local maikki = vn.newCharacter( minerva.vn_maikki() )
    vn.music( minerva.loops.maikki )
    local function seekoutmsg ()
-      maikki(string.format(_([["The three Za'lek researchers you should seek out are:
-%s in the %s system,
-%s in the %s system,
-and %s in the %s system."]]),
-         hint1_name, _(hintsys[1]),
-         hint2_name, _(hintsys[2]),
-         hint3_name, _(hintsys[3])
-      ))
+      maikki(fmt.f(_([["The three Za'lek researchers you should seek out are:
+{name1} in the {sys1} system,
+{name2} in the {sys2} system,
+and {name3} in the {sys3} system."]]), {
+         name1=hint1_name, sys1=_(hintsys[1]),
+         name2=hint2_name, sys2=_(hintsys[2]),
+         name3=hint3_name, sys3=_(hintsys[3])
+      }))
    end
    vn.transition("hexagon")
 
@@ -275,7 +275,7 @@ Her eyes sparkle with determination.]]))
       minerva.tokens_pay( 500 ) -- roughly 1M if you consider winning rates
       minerva.log.maikki(_("You reported to Maikki what Dr. Strangelove told you about her father. She doesn't have any leads at the moment, but it does seem like he is at Minerva Station." ) )
    end )
-   vn.na(string.format(_("You receive %s."), minerva.tokens_str(500)))
+   vn.na(fmt.reward(minerva.tokens_str(500)))
    maikki(_([["I'll be around here if you find anything."]]))
    vn.na(_("You take your leave. Without any leads, it might prove hard to find where Kex is. You wonder what your next steps should be…"))
    vn.done("hexagon")
@@ -346,7 +346,7 @@ end
 function lasthint( prof )
    if visitedhints() > 2 then
       vn.sfxBingo()
-      prof(string.format(_([["Oh, I suddenly remembered. There was also a post doctoral research working on the project by the name of Cayne. I think he was last working at %s in the %s system."]]), _(hintpnt[4]), _(hintsys[4])))
+      prof(fmt.f(_([["Oh, I suddenly remembered. There was also a post doctoral research working on the project by the name of Cayne. I think he was last working at {pnt} in the {sys} system."]]), {pnt=_(hintpnt[4]), sys=_(hintsys[4])}))
       -- The mission state will be updated afterwards
    end
 end
@@ -505,7 +505,7 @@ function approach_hint4 ()
       return opts end )
 
    vn.label("drshrimp")
-   drshrimp(string.format(_([["After the nebula project, like most other researchers on the team, I got the hell away from nebula research. One day while visiting %s I found about fresh-water shrimp breeding and became enthralled. One thing led to another, and now I'm doing shrimp research."]]), _(hintpnt[4])))
+   drshrimp(fmt.f(_([["After the nebula project, like most other researchers on the team, I got the hell away from nebula research. One day while visiting {pnt} I found about fresh-water shrimp breeding and became enthralled. One thing led to another, and now I'm doing shrimp research."]]), {pnt=_(hintpnt[4])}))
    drshrimp(_([["You see, these shrimps are fascinating creatures. They have a really fast reproduction cycle, and reproduce in large numbers, allowing for simple genetic manipulation. While most are bred for colors and physical traits, some have also been trained for mental traits. Calliope here is an example of an extremely mentally capable shrimp."
 He taps the tank of the floating shrimp next to him.]]))
    drshrimp(_([["The capability of these shrimp are endless, and they are helping us understand much more genetic modification than the brute-force approaches of the Soromid, although our technology is still lacking behind."]]))
@@ -546,13 +546,13 @@ He activates her feeding system and a food pellet drops out.]]))
    drshrimp(_([["Now I remember! There was a another post doctoral researcher who worked with me. He was a bit weird and kept obsessing with the nebula artifacts. Quite a few went missing during the project and I think it was probably him who was taking them."]]))
    drshrimp(_([["He was really upset when the project got cancelled, threw a big tantrum and all. He was locked in his office for days until they managed to coax him out. Nobody really did much as we were all busy dealing with all the paperwork of the project cancellation."]]))
    vn.sfxEerie()
-   drshrimp(string.format(_([["Eventually he did get out and sort of disappeared. Last I heard, he said he was going to %s, which is a bit strange, because not only is there not a research center there, but there isn't even an inhabited planet nor station!"]]), _(eccsys)))
+   drshrimp(fmt.f(_([["Eventually he did get out and sort of disappeared. Last I heard, he said he was going to {sys}, which is a bit strange, because not only is there not a research center there, but there isn't even an inhabited planet nor station!"]]), {sys=_(eccsys)}))
    drshrimp(_([["It's really weird but if you are really interested, I suppose you could try to take a look around there. The whole thing does give me the me the creeps though."]]))
    vn.func( function ()
       asked_strangelove = true
       if misn_state==1 then
          misn_state = 2
-         misn.osdCreate( _("Finding Maikki's Father"), {string.format(_("\tGo to %s"), _(eccsys))} )
+         misn.osdCreate( _("Finding Maikki's Father"), {fmt.f(_("\tGo to {sys}"), {sys=_(eccsys)})} )
          misn.markerRm( markerhint4 )
          marker_ecc = misn.markerAdd( system.get(eccsys), "low" )
          minerva.log.maikki(_("You found about a strange researcher who appears to be in Westhaven and is related to the nebula research.") )
@@ -799,7 +799,9 @@ He coughs, wracking his body.]]))
 He glares at you.]]))
    dr(_([["While the drones themselves are dispensable, I need you to recover the nebula artifacts used in their upgrading. They should be roaming around the asteroid field and should be fairly easy to find. Make sure to recover the parts in one piece!"]]))
    vn.func( function ()
-      misn.osdCreate( _("Finding Maikki's Father"), {string.format(_("Recover nebula artifacts from the %s asteroid field"),_(eccsys))} )
+      misn.osdCreate( _("Finding Maikki's Father"), {
+         fmt.f(_("Recover nebula artifacts from the {sys} asteroid field"), {sys=_(eccsys)}),
+      } )
       misn_state = 4
       minerva.log.maikki(_("You accepted Dr. Strangelove's request to recover nebula artifacts from feral drones in Westhaven." ) )
    end )
