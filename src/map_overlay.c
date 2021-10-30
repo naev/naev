@@ -285,7 +285,7 @@ static void ovr_optimizeLayout( int items, const Vector2d** pos, MapOverlayPos**
             array_push_back( &fits, cur );
       }
    while (array_size( fits ) > 0) {
-      float shrink_factor = 0;
+      float shrink_factor = 0.;
       memset( must_shrink, 0, items );
       for (int i=0; i < array_size( fits ); i++) {
          r = fits[i].dist / (mo[fits[i].i]->radius + mo[fits[i].j]->radius);
@@ -305,7 +305,7 @@ static void ovr_optimizeLayout( int items, const Vector2d** pos, MapOverlayPos**
 
    /* Limit shrinkage. */
    for (int i=0; i<items; i++)
-      mo[i]->radius = MAX( mo[i]->radius, 4 );
+      mo[i]->radius = MAX( mo[i]->radius, 4. );
 
    /* Initialization offset list. */
    off_0x = calloc( items, sizeof(float) );
@@ -319,11 +319,11 @@ static void ovr_optimizeLayout( int items, const Vector2d** pos, MapOverlayPos**
 
       x = pos[i]->x/ovr_res - ovr_text_pixbuf;
       y = pos[i]->y/ovr_res - ovr_text_pixbuf;
-      w = mo[i]->text_width + 2*ovr_text_pixbuf;
-      h = gl_smallFont.h + 2*ovr_text_pixbuf;
+      w = mo[i]->text_width + 2.*ovr_text_pixbuf;
+      h = gl_smallFont.h + 2.*ovr_text_pixbuf;
 
-      const float tx[4] = { mo[i]->radius+ovr_text_pixbuf+.1, -mo[i]->radius-.1-w, -mo[i]->text_width/2. , -mo[i]->text_width/2. };
-      const float ty[4] = { -gl_smallFont.h/2.,  -gl_smallFont.h/2., mo[i]->radius+ovr_text_pixbuf+.1, -mo[i]->radius-.1-h };
+      const float tx[4] = { mo[i]->radius+ovr_text_pixbuf+0.1, -mo[i]->radius-0.1-w, -mo[i]->text_width/2. , -mo[i]->text_width/2. };
+      const float ty[4] = { -gl_smallFont.h/2.,  -gl_smallFont.h/2., mo[i]->radius+ovr_text_pixbuf+0.1, -mo[i]->radius-0.1-h };
 
       /* Check all combinations. */
       bx = 0.;
@@ -381,7 +381,7 @@ static void ovr_optimizeLayout( int items, const Vector2d** pos, MapOverlayPos**
 
    /* Main Uzawa Loop. */
    for (int iter=0; iter<max_iters; iter++) {
-      double val = 0; /* This stores the stagnation indicator. */
+      double val = 0.; /* This stores the stagnation indicator. */
       for (int i=0; i<items; i++) {
          cx = pos[i]->x / ovr_res;
          cy = pos[i]->y / ovr_res;
@@ -449,10 +449,10 @@ static void force_collision( float *ox, float *oy,
 {
    /* No contact because of y offset (+tolerance). */
    if ((y+h < my+ovr_text_pixbuf) || (y+ovr_text_pixbuf > my+mh))
-      *ox = 0;
+      *ox = 0.;
    else {
       /* Case A is left of B. */
-      if (x+.5*w < mx+.5*mw) {
+      if (x+0.5*w < mx+0.5*mw) {
          *ox += mx-(x+w);
          *ox = MIN(0., *ox);
       }
@@ -465,10 +465,10 @@ static void force_collision( float *ox, float *oy,
 
    /* No contact because of x offset (+tolerance). */
    if ((x+w < mx+ovr_text_pixbuf) || (x+ovr_text_pixbuf > mx+mw))
-      *oy = 0;
+      *oy = 0.;
    else {
       /* Case A is below B. */
-      if (y+.5*h < my+.5*mh) {
+      if (y+0.5*h < my+0.5*mh) {
          *oy += my-(y+h);
          *oy = MIN(0., *oy);
       }

@@ -254,6 +254,7 @@ extern glTexture **asteroid_gfx; /**< Asteroid graphics list. */
  * @brief Represents an asteroid field anchor.
  */
 typedef struct AsteroidAnchor_ {
+   char *label; /**< Label used for unidiffs. */
    int id; /**< ID of the anchor, for targeting. */
    Vector2d pos; /**< Position in the system (from center). */
    double density; /**< Density of the field. */

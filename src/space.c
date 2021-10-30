@@ -1721,10 +1721,7 @@ Planet *planet_new (void)
 static int planets_load (void)
 {
    size_t bufsize;
-   char *buf, **planet_files, *file;
-   xmlNodePtr node;
-   xmlDocPtr doc;
-   Planet *p;
+   char *buf, **planet_files;
    Commodity **stdList;
 
    /* Load landing stuff. */
@@ -1749,6 +1746,10 @@ static int planets_load (void)
    /* Load XML stuff. */
    planet_files = PHYSFS_enumerateFiles( PLANET_DATA_PATH );
    for (size_t i=0; planet_files[i]!=NULL; i++) {
+      xmlNodePtr node;
+      xmlDocPtr doc;
+      char *file;
+
       if (!ndata_matchExt( planet_files[i], "xml" ))
          continue;
 
@@ -1768,7 +1769,7 @@ static int planets_load (void)
       }
 
       if (xml_isNode(node,XML_ASSET_TAG)) {
-         p = planet_new();
+         Planet *p = planet_new();
          planet_parse( p, node, stdList );
       }
 
@@ -1794,11 +1795,7 @@ static int planets_load (void)
  */
 static int virtualassets_load (void)
 {
-   char **asset_files, *file;
-   xmlNodePtr node, cur;
-   xmlDocPtr doc;
-   VirtualAsset va;
-   AssetPresence ap;
+   char **asset_files;
 
    /* Initialize stack if needed. */
    if (vasset_stack == NULL)
@@ -1807,6 +1804,10 @@ static int virtualassets_load (void)
    /* Load XML stuff. */
    asset_files = PHYSFS_enumerateFiles( VIRTUALASSET_DATA_PATH );
    for (size_t i=0; asset_files[i]!=NULL; i++) {
+      xmlDocPtr doc;
+      xmlNodePtr node;
+      char *file;
+
       if (!ndata_matchExt( asset_files[i], "xml" ))
          continue;
 
@@ -1826,6 +1827,8 @@ static int virtualassets_load (void)
       }
 
       if (xml_isNode(node,XML_ASSET_TAG)) {
+         xmlNodePtr cur;
+         VirtualAsset va;
          memset( &va, 0, sizeof(va) );
          xmlr_attr_strd( node, "name", va.name );
          va.presences = array_create( AssetPresence );
@@ -1834,6 +1837,7 @@ static int virtualassets_load (void)
          do {
             xml_onlyNodes(cur);
             if (xml_isNode(cur,"presence")) {
+               AssetPresence ap;
                asset_parsePresence( cur, &ap );
                array_push_back( &va.presences, ap );
                continue;
@@ -2062,7 +2066,6 @@ static int asset_parsePresence( xmlNodePtr node, AssetPresence *ap )
  */
 static int planet_parse( Planet *planet, const xmlNodePtr parent, Commodity **stdList )
 {
-   char str[PATH_MAX], *tmp;
    xmlNodePtr node;
    unsigned int flags;
    Commodity **comms;
@@ -2085,6 +2088,7 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent, Commodity **st
          do {
             xml_onlyNodes(cur);
             if (xml_isNode(cur,"space")) { /* load space gfx */
+               char str[PATH_MAX];
                snprintf( str, sizeof(str), PLANET_GFX_SPACE_PATH"%s", xml_get(cur));
                planet->gfx_spaceName = strdup(str);
                planet->gfx_spacePath = xml_getStrd(cur);
@@ -2092,6 +2096,7 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent, Commodity **st
                continue;
             }
             if (xml_isNode(cur,"exterior")) { /* load land gfx */
+               char str[PATH_MAX];
                snprintf( str, sizeof(str), PLANET_GFX_EXTERIOR_PATH"%s", xml_get(cur));
                planet->gfx_exterior = strdup(str);
                planet->gfx_exteriorPath = xml_getStrd(cur);
@@ -2144,8 +2149,8 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent, Commodity **st
                   xml_onlyNodes(ccur);
 
                   if (xml_isNode(ccur, "land")) {
+                     char *tmp = xml_get(ccur);
                      planet->services |= PLANET_SERVICE_LAND;
-                     tmp = xml_get(ccur);
                      if (tmp != NULL) {
                         planet->land_func = strdup(tmp);
 #ifdef DEBUGGING
@@ -2212,7 +2217,7 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent, Commodity **st
          do {
             xml_onlyNodes(cur);
             if (xml_isNode(cur, "tag")) {
-               tmp = xml_get(cur);
+               char *tmp = xml_get(cur);
                if (tmp != NULL)
                   array_push_back( &planet->tags, strdup(tmp) );
             }
@@ -3038,6 +3043,9 @@ static int system_parseAsteroidField( const xmlNodePtr node, StarSystem *sys )
    a->radius   = 0.;
    vect_cset( &a->pos, 0., 0. );
 
+   /* Parse label if available. */
+   xmlr_attr_strd( node, "label", a->label );
+
    /* Parse data. */
    cur = node->xmlChildrenNode;
    do {
@@ -3724,6 +3732,7 @@ void space_exit (void)
       /* Free the asteroids. */
       for (int j=0; j < array_size(sys->asteroids); j++) {
          AsteroidAnchor *ast = &sys->asteroids[j];
+         free(ast->label);
          free(ast->asteroids);
          free(ast->debris);
          free(ast->type);
