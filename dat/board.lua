@@ -253,7 +253,7 @@ function board_lootOne( wgt, nomsg )
    end
 
    -- Clean up
-   if looted then
+   if clear then
       wgt.selected = false
       wgt.loot = nil
    end
