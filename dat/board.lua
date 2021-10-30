@@ -121,7 +121,7 @@ function wgtBoard:draw( bx, by )
       img:draw( x, y, 0, w / iw, h / ih )
    end
    local txt = l.text
-   if txt and self.mouseover then
+   if txt and (self.mouseover or not img) then
       lg.setColor( luatk.colour.text )
       local font = luatk._deffont
       local maxw, wrap = font:getWrap( txt, w )
