@@ -10,7 +10,6 @@
  *  jump routes are resistances and production is modelled as node intensity.
  *  This is then solved with linear algebra after each time increment.
  */
-
 /** @cond */
 #include <stdio.h>
 #include <stdint.h>
@@ -136,7 +135,6 @@ Commodity* commodity_get( const char* name )
    return NULL;
 }
 
-
 /**
  * @brief Gets a commodity by name without warning.
  *
@@ -173,13 +171,12 @@ int commodity_getN (void)
  */
 Commodity* commodity_getByIndex( const int indx )
 {
-   if ( indx < 0 || indx >= array_size(econ_comm) ) {
+   if (indx < 0 || indx >= array_size(econ_comm)) {
       WARN(_("Commodity with index %d not found"),indx);
       return NULL;
    }
    return &commodity_stack[econ_comm[indx]];
 }
-
 
 /**
  * @brief Frees a commodity.
@@ -214,7 +211,6 @@ static void commodity_freeOne( Commodity* com )
    memset(com, 0, sizeof(Commodity));
 }
 
-
 /**
  * @brief Function meant for use with C89, C99 algorithm qsort().
  *
@@ -239,7 +235,6 @@ int commodity_compareTech( const void *commodity1, const void *commodity2 )
    /* It turns out they're the same. */
    return strcmp( c1->name, c2->name );
 }
-
 
 /**
  * @brief Return an array (array.h) of standard commodities. Free with array_free. (Don't free contents.)
@@ -342,8 +337,6 @@ static int commodity_parse( Commodity *temp, xmlNodePtr parent )
          temp->gfx_space = gl_newImage( COMMODITY_GFX_PATH"space/_default.webp", 0 );
    }
 
-
-
 #if 0 /* shouldn't be needed atm */
 #define MELEMENT(o,s)   if (o) WARN( _("Commodity '%s' missing '"s"' element"), temp->name)
    MELEMENT(temp->description==NULL,"description");
@@ -356,7 +349,6 @@ static int commodity_parse( Commodity *temp, xmlNodePtr parent )
    return 0;
 }
 
-
 /**
  * @brief Throws cargo out in space graphically.
  *
@@ -367,10 +359,9 @@ static int commodity_parse( Commodity *temp, xmlNodePtr parent )
 void commodity_Jettison( int pilot, const Commodity* com, int quantity )
 {
    (void)com;
-   int i;
    Pilot* p;
-   int n, effect;
-   double px,py, bvx, bvy, r,a, vx,vy;
+   int n;
+   double px,py, bvx, bvy;
 
    p   = pilot_get( pilot );
 
@@ -379,20 +370,19 @@ void commodity_Jettison( int pilot, const Commodity* com, int quantity )
    py  = p->solid->pos.y;
    bvx = p->solid->vel.x;
    bvy = p->solid->vel.y;
-   for (i=0; i<n; i++) {
-      effect = spfx_get("cargo");
+   for (int i=0; i<n; i++) {
+      int effect = spfx_get("cargo");
 
       /* Radial distribution gives much nicer results */
-      r  = RNGF()*25 - 12.5;
-      a  = 2. * M_PI * RNGF();
-      vx = bvx + r*cos(a);
-      vy = bvy + r*sin(a);
+      double r  = RNGF()*25. - 12.5;
+      double a  = 2. * M_PI * RNGF();
+      double vx = bvx + r*cos(a);
+      double vy = bvy + r*sin(a);
 
       /* Add the cargo effect */
       spfx_add( effect, px, py, vx, vy, SPFX_LAYER_BACK );
    }
 }
-
 
 /**
  * @brief Initializes a gatherable object
@@ -419,7 +409,6 @@ int gatherable_init( const Commodity* com, Vector2d pos, Vector2d vel, double li
    return g-gatherable_stack;
 }
 
-
 /**
  * @brief Updates all gatherable objects
  *
@@ -427,14 +416,11 @@ int gatherable_init( const Commodity* com, Vector2d pos, Vector2d vel, double li
  */
 void gatherable_update( double dt )
 {
-   int i;
-   Gatherable *g;
-
    /* Update the timer for "full cargo" message. */
    noscoop_timer += dt;
 
-   for (i=0; i < array_size(gatherable_stack); i++) {
-      g = &gatherable_stack[i];
+   for (int i=0; i < array_size(gatherable_stack); i++) {
+      Gatherable *g = &gatherable_stack[i];
       g->timer += dt;
       g->pos.x += dt*gatherable_stack[i].vel.x;
       g->pos.y += dt*gatherable_stack[i].vel.y;
@@ -447,7 +433,6 @@ void gatherable_update( double dt )
    }
 }
 
-
 /**
  * @brief Frees all the gatherables
  */
@@ -456,21 +441,16 @@ void gatherable_free( void )
    array_erase( &gatherable_stack, array_begin(gatherable_stack), array_end(gatherable_stack) );
 }
 
-
 /**
  * @brief Renders all the gatherables
  */
 void gatherable_render( void )
 {
-   int i;
-   Gatherable *gat;
-
-   for (i=0; i < array_size(gatherable_stack); i++) {
-      gat = &gatherable_stack[i];
+   for (int i=0; i < array_size(gatherable_stack); i++) {
+      Gatherable *gat = &gatherable_stack[i];
       gl_renderSprite( gat->type->gfx_space, gat->pos.x, gat->pos.y, 0, 0, NULL );
    }
 }
-
 
 /**
  * @brief Gets the closest gatherable from a given position, within a given radius
@@ -481,16 +461,15 @@ void gatherable_render( void )
  */
 int gatherable_getClosest( Vector2d pos, double rad )
 {
-   int i, curg;
-   Gatherable *gat;
-   double mindist, curdist;
+   int curg;
+   double mindist;
 
    curg = -1;
    mindist = INFINITY;
 
-   for (i=0; i < array_size(gatherable_stack); i++) {
-      gat = &gatherable_stack[i];
-      curdist = vect_dist(&pos, &gat->pos);
+   for (int i=0; i < array_size(gatherable_stack); i++) {
+      Gatherable *gat = &gatherable_stack[i];
+      double curdist = vect_dist(&pos, &gat->pos);
       if ( (curdist<mindist) && (curdist<rad) ) {
          curg = i;
          mindist = curdist;
@@ -498,7 +477,6 @@ int gatherable_getClosest( Vector2d pos, double rad )
    }
    return curg;
 }
-
 
 /**
  * @brief Returns the position and velocity of a gatherable
@@ -524,7 +502,6 @@ int gatherable_getPos( Vector2d* pos, Vector2d* vel, int id )
 
    return 1;
 }
-
 
 /**
  * @brief See if the pilot can gather anything
@@ -575,7 +552,6 @@ void gatherable_gather( int pilot )
    }
 }
 
-
 /**
  * @brief Checks to see if a commodity is illegal to a faction.
  *
@@ -591,7 +567,6 @@ int commodity_checkIllegal( const Commodity *com, int faction )
    }
    return 0;
 }
-
 
 /**
  * @brief Checks to see if a commodity is temporary.
@@ -611,7 +586,6 @@ int commodity_isTemp( const char* name )
    WARN(_("Commodity '%s' not found in stack"), name);
    return 0;
 }
-
 
 /**
  * @brief Creates a new temporary commodity.
@@ -633,7 +607,6 @@ Commodity* commodity_newTemp( const char* name, const char* desc )
    (*c)->description = strdup(desc);
    return *c;
 }
-
 
 /**
  * @brief Makes a temporary commodity illegal to something.
@@ -661,7 +634,6 @@ int commodity_tempIllegalto( Commodity *com, int faction )
 
    return 0;
 }
-
 
 /**
  * @brief Loads all the commodity data.
@@ -719,23 +691,19 @@ int commodity_load (void)
    DEBUG( n_( "Loaded %d Commodity", "Loaded %d Commodities", array_size(commodity_stack) ), array_size(commodity_stack) );
 
    return 0;
-
-
 }
-
 
 /**
  * @brief Frees all the loaded commodities.
  */
 void commodity_free (void)
 {
-   int i;
-   for (i=0; i<array_size(commodity_stack); i++)
+   for (int i=0; i<array_size(commodity_stack); i++)
       commodity_freeOne( &commodity_stack[i] );
    array_free( commodity_stack );
    commodity_stack = NULL;
 
-   for (i=0; i<array_size(commodity_temp); i++) {
+   for (int i=0; i<array_size(commodity_temp); i++) {
       commodity_freeOne( commodity_temp[i] );
       free( commodity_temp[i] );
    }
@@ -749,4 +717,3 @@ void commodity_free (void)
    array_free( gatherable_stack );
    gatherable_stack = NULL;
 }
-
