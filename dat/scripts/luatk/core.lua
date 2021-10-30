@@ -43,12 +43,12 @@ end
 -- Important functions
 --]]
 function luatk.draw()
-   for k,wdw in ipairs(luatk._windows) do
+   for _k,wdw in ipairs(luatk._windows) do
       wdw:draw()
    end
 end
 function luatk.update(dt)
-   for k,wdw in ipairs(luatk._windows) do
+   for _k,wdw in ipairs(luatk._windows) do
       wdw:update(dt)
    end
 end
@@ -60,7 +60,7 @@ function luatk.mousepressed( mx, my, _button )
    if not wdw or not _checkbounds(wdw,mx,my) then return false end
    local x, y = mx-wdw.x, my-wdw.y
 
-   for k,wgt in ipairs(wdw._widgets) do
+   for _k,wgt in ipairs(wdw._widgets) do
       if wgt.clicked and _checkbounds(wgt,x,y) then
          wgt.pressed = true
          if wgt:clicked( x-wgt.x, y-wgt.y ) then
@@ -75,7 +75,7 @@ function luatk.mousereleased( mx, my, button )
    local wdw = luatk._windows[ #luatk._windows ]
    local x, y = mx-wdw.x, my-wdw.y
 
-   for k,wgt in ipairs(wdw._widgets) do
+   for _k,wgt in ipairs(wdw._widgets) do
       wgt.pressed = false
       if wgt.released then
          wgt:released()
@@ -92,7 +92,7 @@ function luatk.mousemoved( mx, my )
    if not wdw or not _checkbounds(wdw,mx,my) then return false end
    local x, y = mx-wdw.x, my-wdw.y
 
-   for k,wgt in ipairs(wdw._widgets) do
+   for _k,wgt in ipairs(wdw._widgets) do
       local inbounds = _checkbounds( wgt, x, y )
       if not wgt.pressed then
          wgt.mouseover = inbounds
@@ -139,7 +139,7 @@ function luatk.Window:draw()
    lg.setScissor( x, y, w, h )
 
    -- Draw widgets ontop
-   for k,wgt in ipairs(self._widgets) do
+   for _k,wgt in ipairs(self._widgets) do
       wgt:draw( x, y )
    end
 
@@ -147,9 +147,17 @@ function luatk.Window:draw()
    lg.setScissor( scs )
 end
 function luatk.Window:update(dt)
-   for k,wgt in ipairs(self._widgets) do
+   for _k,wgt in ipairs(self._widgets) do
       if wgt.update then
          wgt:update(dt)
+      end
+   end
+end
+function luatk.Window:destroy()
+   for k,w in ipairs(luatk._windows) do
+      if w==self then
+         table.remove(luatk._windows,k)
+         return
       end
    end
 end
