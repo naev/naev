@@ -19,6 +19,7 @@
 #include "nlua_faction.h"
 #include "nlua_planet.h"
 #include "nlua_time.h"
+#include "nlua_tex.h"
 #include "nluadef.h"
 #include "rng.h"
 
@@ -31,6 +32,8 @@ static int commodityL_nameRaw( lua_State *L );
 static int commodityL_price( lua_State *L );
 static int commodityL_priceAt( lua_State *L );
 static int commodityL_priceAtTime( lua_State *L );
+static int commodityL_icon( lua_State *L );
+static int commodityL_description( lua_State *L );
 static int commodityL_illegalto( lua_State *L );
 static int commodityL_illegality( lua_State *L );
 static const luaL_Reg commodityL_methods[] = {
@@ -43,6 +46,8 @@ static const luaL_Reg commodityL_methods[] = {
    { "price", commodityL_price },
    { "priceAt", commodityL_priceAt },
    { "priceAtTime", commodityL_priceAtTime },
+   { "icon", commodityL_icon },
+   { "description", commodityL_description },
    { "illegalto", commodityL_illegalto },
    { "illegality", commodityL_illegality },
    {0,0}
@@ -359,6 +364,38 @@ static int commodityL_priceAtTime( lua_State *L )
    }
 
    lua_pushnumber( L, planet_commodityPriceAtTime( p, c, t ) );
+   return 1;
+}
+
+/**
+ * @brief Gets the store icon of a commodity if it exists.
+ *
+ *    @luatparam Commodity c Commodity to get icon of.
+ *    @luatreturn Texture|nil Texture of the store icon if exists, otherwise nil.
+ * @luafunc icon
+ */
+static int commodityL_icon( lua_State *L )
+{
+   Commodity *c = luaL_validcommodity(L,1);
+   if (c->gfx_store==NULL)
+      return 0;
+   lua_pushtex(L,gl_dupTexture(c->gfx_store));
+   return 1;
+}
+
+/**
+ * @brief Gets the description of a commodity if it exists.
+ *
+ *    @luatparam Commodity c Commodity to get decription of
+ *    @luatreturn string|nil Description of the commodity if exists, otherwise nil.
+ * @luafunc description
+ */
+static int commodityL_description( lua_State *L )
+{
+   Commodity *c = luaL_validcommodity(L,1);
+   if (c->description==NULL)
+      return 0;
+   lua_pushstring(L,c->description);
    return 1;
 }
 
