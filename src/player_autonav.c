@@ -1,14 +1,11 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
 /**
  * @file player_autonav.c
  *
  * @brief Contains all the player autonav related stuff.
  */
-
-
 /** @cond */
 #include <time.h>
 
@@ -28,7 +25,6 @@
 #include "space.h"
 #include "toolkit.h"
 
-
 extern double player_acc; /**< Player acceleration. */
 
 static double tc_mod    = 1.; /**< Time compression modifier. */
@@ -47,7 +43,6 @@ static int player_autonavApproach( const Vector2d *pos, double *dist2, int count
 static void player_autonavFollow( const Vector2d *pos, const Vector2d *vel, const int follow, double *dist2 );
 static int player_autonavBrake (void);
 
-
 /**
  * @brief Resets the game speed.
  */
@@ -57,7 +52,6 @@ void player_autonavResetSpeed (void)
    tc_rampdown = 0;
    player_resetSpeed();
 }
-
 
 /**
  * @brief Starts autonav.
@@ -95,7 +89,6 @@ void player_autonavStart (void)
    player_message(_("#oAutonav: travelling to %s."), (sys_isKnown(dest) ? _(dest->name) : _("Unknown")) );
    player.autonav = AUTONAV_JUMP_APPROACH;
 }
-
 
 /**
  * @brief Prepares the player to enter autonav.
@@ -144,7 +137,6 @@ static int player_autonavSetup (void)
    return 0;
 }
 
-
 /**
  * @brief Ends the autonav.
  */
@@ -156,7 +148,6 @@ void player_autonavEnd (void)
    player.autonavmsg = NULL;
 }
 
-
 /**
  * @brief Starts autonav and closes the window.
  */
@@ -166,7 +157,6 @@ void player_autonavStartWindow( unsigned int wid, const char *str)
    player_autonavStart();
    window_destroy( wid );
 }
-
 
 /**
  * @brief Starts autonav with a local position destination.
@@ -182,7 +172,6 @@ void player_autonavPos( double x, double y )
    player.autonavcol = '0';
    vect_cset( &player.autonav_pos, x, y );
 }
-
 
 /**
  * @brief Starts autonav with a planet destination.
@@ -208,7 +197,6 @@ void player_autonavPnt( const char *name, int tryland )
    }
 }
 
-
 /**
  * @brief Starts autonav with a pilot to follow.
  */
@@ -224,7 +212,6 @@ void player_autonavPil( unsigned int p )
    player.autonavmsg = strdup( pilot->name );
    player.autonavcol = '0';
 }
-
 
 /**
  * @brief Handles common time accel ramp-down for autonav to positions and planets.
@@ -242,7 +229,6 @@ static void player_autonavRampdown( double d )
       tc_down     = (tc_mod-tc_base) / 3.;
    }
 }
-
 
 /**
  * @brief Aborts regular interstellar autonav, but not in-system autonav.
@@ -262,7 +248,6 @@ void player_autonavAbortJump( const char *reason )
    /* It's definitely not in-system autonav. */
    player_autonavAbort(reason);
 }
-
 
 /**
  * @brief Aborts autonav.
@@ -300,7 +285,6 @@ void player_autonavAbort( const char *reason )
       player_autonavEnd();
    }
 }
-
 
 /**
  * @brief Handles the autonavigation process for the player.
@@ -446,7 +430,6 @@ static void player_autonav (void)
    }
 }
 
-
 /**
  * @brief Handles approaching a position with autonav.
  *
@@ -495,7 +478,6 @@ static int player_autonavApproach( const Vector2d *pos, double *dist2, int count
    return 0;
 }
 
-
 /**
  * @brief Handles following a moving point with autonav (PD controller).
  *
@@ -538,7 +520,6 @@ static void player_autonavFollow( const Vector2d *pos, const Vector2d *vel, cons
    if (!follow)
       *dist2 = vect_dist( pos, &player.p->solid->pos );
 }
-
 
 /**
  * @brief Handles the autonav braking.
@@ -626,7 +607,6 @@ int player_autonavShouldResetSpeed (void)
    return 0;
 }
 
-
 /**
  * @brief Handles autonav thinking.
  *
@@ -657,7 +637,6 @@ void player_thinkAutonav( Pilot *pplayer, double dt )
    else
       player_autonav();
 }
-
 
 /**
  * @brief Updates the player's autonav.
@@ -728,5 +707,3 @@ void player_updateAutonav( double dt )
    pause_setSpeed( tc_mod );
    sound_setSpeed( tc_mod / player_dt_default() );
 }
-
-
