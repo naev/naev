@@ -113,12 +113,12 @@ function luatk.keypressed( key )
    if not wdw then return false end
 
    if key=="return" then
-      if wdw.accept then
-         return wdw:accept()
+      if wdw.accept and wdw:accept() then
+         return true
       end
    elseif key=="escape" then
-      if wdw.cancel then
-         return wdw:cancel()
+      if wdw.cancel and wdw:cancel() then
+         return true
       end
    end
 
