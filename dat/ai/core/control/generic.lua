@@ -497,6 +497,7 @@ function control_funcs.loiter ()
    end
    return false
 end
+control_funcs.loiter_last = control_funcs.loiter
 control_funcs.inspect_moveto = function ()
    local p = ai.pilot()
    local target = ai.taskdata()

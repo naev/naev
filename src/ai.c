@@ -1482,7 +1482,6 @@ static int aiL_getflybydistance( lua_State *L )
  *
  * I hate this function and it'll probably need to get changed in the future
  *
- *
  *    @luatreturn number Minimum braking distance.
  *    @luafunc minbrakedist
  */
