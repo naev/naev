@@ -190,6 +190,9 @@ function board( plt )
       end
    end
 
+   wdw:setAccept( board_lootAll )
+   wdw:setCancel( board_close )
+
    luatk.run()
 end
 
