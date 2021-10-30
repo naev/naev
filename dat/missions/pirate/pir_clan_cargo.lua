@@ -68,11 +68,13 @@ Will you accept the mission?]]) ) then
    reward = rnd.rnd(10,20) * 100e3 -- Hey, this mission is probably hell, after all.
    misn.setTitle(_("Clans trade"))
    misn.setReward( fmt.credits(reward) )
-   misn.setDesc( string.format(_("Deliver some boxes to the pirate clan of %s, in the %s system."), dest:name(), sys:name()))
+   misn.setDesc( fmt.f(_("Deliver some boxes to the pirate clan of {pnt}, in the {sys} system."), {pnt=dest, sys=sys}) )
 
    -- Flavour text and mini-briefing
-   tk.msg( _("Spaceport Bar"), string.format( _([[You roll up your sleeve and head off to your ship.]]), dest:name() ))
-   misn.osdCreate(_("Spaceport Bar"), {_("Deliver some boxes to the pirate clan of %s, in the %s system."):format(dest:name(), sys:name())})
+   tk.msg( _("Spaceport Bar"), _([[You roll up your sleeve and head off to your ship.]]) )
+   misn.osdCreate(_("Spaceport Bar"), {
+      fmt.f(_("Deliver some boxes to the pirate clan of {pnt}, in the {sys} system."), {pnt=dest, sys=sys}),
+   })
 
    -- Set up the goal
    local c = misn.cargoNew(_("Pirate Packages"), _("A bunch of pirate packages. You don't want to know what's inside."))

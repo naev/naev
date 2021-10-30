@@ -31,14 +31,14 @@ local car = require "common.cargo"
 local fmt = require "format"
 
 
-misn_title = {}
-misn_title[1] = _("Escort a tiny convoy to %s in %s")
-misn_title[2] = _("Escort a small convoy to %s in %s")
-misn_title[3] = _("Escort a medium convoy to %s in %s")
-misn_title[4] = _("Escort a large convoy to %s in %s")
-misn_title[5] = _("Escort a huge convoy to %s in %s")
+local misn_title = {}
+misn_title[1] = _("Escort a tiny convoy to {pnt} in {sys}")
+misn_title[2] = _("Escort a small convoy to {pnt} in {sys}")
+misn_title[3] = _("Escort a medium convoy to {pnt} in {sys}")
+misn_title[4] = _("Escort a large convoy to {pnt} in {sys}")
+misn_title[5] = _("Escort a huge convoy to {pnt} in {sys}")
 
-piracyrisk = {}
+local piracyrisk = {}
 piracyrisk[1] = _("#nPiracy Risk:#0 None")
 piracyrisk[2] = _("#nPiracy Risk:#0 Low")
 piracyrisk[3] = _("#nPiracy Risk:#0 Medium")
@@ -88,9 +88,8 @@ function create()
    end
    reward = 2.0 * (avgrisk * numjumps * jumpreward + traveldist * distreward) * (1. + 0.05*rnd.twosigma())
 
-   misn.setTitle( misn_title[convoysize]:format(
-      destplanet:name(), destsys:name() ) )
-   car.setDesc( _("A convoy of traders needs protection while they go to %s in %s. You must stick with the convoy at all times, waiting to jump or land until the entire convoy has done so."):format( destplanet:name(), destsys:name() ), cargo, nil, destplanet, nil, piracyrisk )
+   misn.setTitle( fmt.f( misn_title[convoysize], {pnt=destplanet, sys=destsys} ) )
+   car.setDesc( fmt.f(_("A convoy of traders needs protection while they go to {pnt} in {sys}. You must stick with the convoy at all times, waiting to jump or land until the entire convoy has done so."), {pnt=destplanet, sys=destsys} ), cargo, nil, destplanet, nil, piracyrisk )
    misn.markerAdd(destplanet, "computer")
    misn.setReward( fmt.credits(reward) )
 end
@@ -117,8 +116,7 @@ function accept()
    end
 
    if player.jumps() < numjumps then
-      if not tk.yesno( _("Not enough fuel"), _([[The destination is %s away, but you only have enough fuel for %s. You cannot stop to refuel. Accept the mission anyway?]]):format(
-            fmt.jumps(numjumps), fmt.jumps( player.jumps() ) ) ) then
+      if not tk.yesno( _("Not enough fuel"), fmt.f( _([[The destination is {1} away, but you only have enough fuel for {2}. You cannot stop to refuel. Accept the mission anyway?]]), {fmt.jumps(numjumps), fmt.jumps(player.jumps())} ) ) then
          misn.finish()
       end
    end
@@ -133,7 +131,9 @@ function accept()
    unsafe = false
 
    misn.accept()
-   misn.osdCreate(_("Convey Escort"), {_("Escort a convoy of traders to %s in the %s system"):format(destplanet:name(), destsys:name())})
+   misn.osdCreate(_("Convey Escort"), {
+      fmt.f(_("Escort a convoy of traders to {pnt} in the {sys} system"), {pnt=destplanet, sys=destsys}),
+   })
 
    hook.takeoff("takeoff")
    hook.jumpin("jumpin")
@@ -202,8 +202,7 @@ function traderJump( p, j )
    if j:dest() == lmisn.getNextSystem( system.cur(), destsys ) then
       exited = exited + 1
       if p:exists() then
-         player.msg( string.format(
-            _("%s has jumped to %s."), p:name(), j:dest():name() ) )
+         player.msg( fmt.f(_("{pltname} has jumped to {sys}."), {pltname=p:name(), sys=j:dest()} ) )
       end
    else
       traderDeath()
@@ -215,8 +214,7 @@ function traderLand( p, plnt )
    if plnt == destplanet then
       exited = exited + 1
       if p:exists() then
-         player.msg( string.format(
-            "%s has landed on %s.", p:name(), plnt:name() ) )
+         player.msg( fmt.f(_("{pltname} has landed on {pnt}."), {pltname=p:name(), pnt=plnt} ) )
       end
    else
       traderDeath()

@@ -62,12 +62,12 @@ function accept ()
       marker = misn.markerAdd( pickupSys, "low" )  -- pickup
       -- OSD
       misn.osdCreate( _("Za'lek Cargo Monkey"), {
-         _("Go pick up some equipment at %s in the %s system"):format(pickupWorld:name(), pickupSys:name()),
-         _("Drop off the equipment at %s in the %s system"):format(delivWorld:name(), delivSys:name()),
+         fmt.f(_("Go pick up some equipment at {pnt} in the {sys} system"), {pnt=pickupWorld, sys=pickupSys}),
+         fmt.f(_("Drop off the equipment at {pnt} in the {sys} system"), {pnt=delivWorld, sys=delivSys}),
       } )
 
-      tk.msg( _("A long haul through tough territory"), _([[You say that he is looking at one right now. Rather surprisingly, he laughs slightly, looking relieved. "Thank you, captain! I was hoping that you could help me. My name is Dr. Andrej Logan. The job will be a bit dangerous, but I will pay you handsomely for your services.
-    "I need a load of equipment that is stuck at %s in the %s system. Unfortunately, that requires going through the pirate-infested fringe space between the Empire, Za'lek and Dvaered. Seeing as no one can agree whose responsibility it is to clean the vermin out, the pirates have made that route dangerous to traverse. I have had a devil of a time finding someone willing to take the mission on. Once you get the equipment, please deliver it to %s in the %s system. I will meet you there."]]):format( pickupWorld:name(), pickupSys:name(), delivWorld:name(), delivSys:name() ) )
+      tk.msg( _("A long haul through tough territory"), fmt.f(_([[You say that he is looking at one right now. Rather surprisingly, he laughs slightly, looking relieved. "Thank you, captain! I was hoping that you could help me. My name is Dr. Andrej Logan. The job will be a bit dangerous, but I will pay you handsomely for your services.
+    "I need a load of equipment that is stuck at {pickup_pnt} in the {pickup_sys} system. Unfortunately, that requires going through the pirate-infested fringe space between the Empire, Za'lek and Dvaered. Seeing as no one can agree whose responsibility it is to clean the vermin out, the pirates have made that route dangerous to traverse. I have had a devil of a time finding someone willing to take the mission on. Once you get the equipment, please deliver it to {dropoff_pnt} in the {dropoff_sys} system. I will meet you there."]]), {pickup_pnt=pickupWorld, pickup_sys=pickupSys, dropoff_pnt=delivWorld, dropoff_sys=delivSys} ) )
 
       landhook = hook.land ("land")
       flyhook = hook.takeoff ("takeoff")
@@ -125,7 +125,7 @@ function hail()
    tk.msg( _("A Small Delay"), _([["Hello again. It's Dr. Logan. I am terribly sorry for the delay. As agreed, you will be paid your fee. I am pleased by your help, captain; I hope we meet again."]]) )
 
 --   eventually I'll implement a bonus
---   tk.msg( _("Bonus"), _([["For your trouble, I will add a bonus of %s to your fee. I am pleased by your help, captain; I hope we meet again."]]):format( fmt.credits(bonus) ) )
+--   tk.msg( _("Bonus"), fmt.f(_([["For your trouble, I will add a bonus of {credits} to your fee. I am pleased by your help, captain; I hope we meet again."]]), {credits=fmt.credits(bonus)} ) )
 
    hook.update("closehail")
    player.commClose()
@@ -134,7 +134,7 @@ end
 function closehail()
    bonus = 0
    player.pay( payment )
-   tk.msg( _("Check Account"), _([[You check your account balance as he closes the comm channel to find yourself %s richer. A good compensation indeed. You feel better already.]]):format( fmt.credits(payment) ) )
+   tk.msg( _("Check Account"), fmt.f(_([[You check your account balance as he closes the comm channel to find yourself {credits} richer. A good compensation indeed. You feel better already.]]), {credits=fmt.credits(payment)} ) )
    logan:setVisplayer(false)
    logan:setHilight(false)
    logan:setInvincible(false)

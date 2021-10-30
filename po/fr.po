@@ -69700,10 +69700,10 @@ msgstr ""
 #: dat/missions/zalek/zlk_test.lua:87
 #, lua-format
 msgid ""
-"A Za'lek research team needs you to travel to %s in %s using an engine in "
+"A Za'lek research team needs you to travel to {pnt} in {sys} using an engine in "
 "order to test it."
 msgstr ""
-"L'équipe de chercheurs Za'lek vous demande de voyager jusqu'à %s en %s en "
+"L'équipe de chercheurs Za'lek vous demande de voyager jusqu'à {pnt} en {sys} en "
 "utilisant leur moteur afin de le tester."
 
 #: dat/missions/zalek/zlk_test.lua:94

@@ -165,18 +165,16 @@ end
 function accept()
    local playerbest = car.getTransit( numjumps, traveldist )
    if timelimit < playerbest then
-      if not tk.yesno( _("Too slow"), string.format(
-            _("This shipment must arrive within %s, but it will take at least %s for your ship to reach %s, missing the deadline. Accept the mission anyway?"),
-            (timelimit - time.get()):str(), (playerbest - time.get()):str(),
-            destplanet:name() ) ) then
+      if not tk.yesno( _("Too slow"), fmt.f(
+            _("This shipment must arrive within {time_limit}, but it will take at least {time} for your ship to reach {pnt}, missing the deadline. Accept the mission anyway?"),
+	    {time_limit=(timelimit - time.get()):str(), time=(playerbest - time.get()):str(), pnt=destplanet} ) ) then
          misn.finish()
       end
    end
    if player.pilot():cargoFree() < amount then
-      tk.msg( _("No room in ship"), string.format(
-         _("You don't have enough cargo space to accept this mission. It requires %s of free space (%s more than you have)."),
-         fmt.tonnes(amount),
-         fmt.tonnes( amount - player.pilot():cargoFree() ) ) )
+      tk.msg( _("No room in ship"), fmt.f(
+         _("You don't have enough cargo space to accept this mission. It requires {tonnes_free} of free space ({tonnes_short}more than you have)."),
+         { tonnes_free = fmt.tonnes(amount), tonnes_short = fmt.tonnes( amount - player.pilot():cargoFree() ) } ) )
       misn.finish()
    end
 
@@ -186,20 +184,16 @@ function accept()
    tk.msg( _("Mission Accepted"), string.format(
       _("%s of %s are loaded onto your ship."), fmt.tonnes(amount),
       _(cargo) ) )
-   local osd_msg = {}
-   osd_msg[1] = _("Fly to %s in the %s system before %s\n(%s remaining)"):format(
-      destplanet:name(), destsys:name(), timelimit:str(),
-      (timelimit - time.get()):str() )
-   misn.osdCreate( string.format(_("Smuggling %s"),cargo), osd_msg)
    hook.land( "land" ) -- only hook after accepting
    hook.date(time.create(0, 0, 100), "tick") -- 100STU per tick
+   tick() -- set OSD
 end
 
 -- Land hook
 function land()
    if planet.cur() == destplanet then
-         tk.msg( _("Successful Delivery"), string.format(
-            _("The containers of %s are unloaded at the docks."), _(cargo) ) )
+         tk.msg( _("Successful Delivery"), fmt.f(
+            _("The containers of {cargo} are unloaded at the docks."), {cargo=_(cargo)} ) )
       player.pay(reward)
       n = var.peek("ps_misn") or 0
       var.push("ps_misn", n+1)
@@ -215,9 +209,8 @@ function tick()
    if timelimit >= time.get() then
       -- Case still in time
       local osd_msg = {}
-      osd_msg[1] = _("Fly to %s in the %s system before %s\n(%s remaining)"):format(
-         destplanet:name(), destsys:name(), timelimit:str(),
-         ( timelimit - time.get() ):str() )
+      osd_msg[1] = fmt.f(_("Fly to {pnt} in the {sys} system before {time_limit}\n({time} remaining)"),
+         {pnt=destplanet, sys=destsys, time_limit=timelimit:str(), time=(timelimit - time.get()):str()})
       misn.osdCreate(string.format(_("Smuggling %s"),cargo), osd_msg)
    elseif timelimit <= time.get() then
       -- Case missed deadline

@@ -52,8 +52,6 @@ znpcs[2] = _([[A very old Za'lek researcher needs you to fly with an instrumente
 znpcs[3] = _([[A Za'lek student says: "Hello, I am preparing a Ph.D in system reliability. I need to make precise measurements on this engine in order to validate a stochastic failure model I developed."]])
 znpcs[4] = _([[A Za'lek researcher needs you to test the new propelling system they have implemented in this engine.]])
 
-osd_msg = {_("Fly to %s in the %s system")}
-
 function create()
    origin_p, origin_s = planet.cur()
 
@@ -82,9 +80,9 @@ function create()
 
    local typeOfEng = engines[rnd.rnd(1, #engines)]
 
-   misn.setTitle( _("ZT test of %s"):format( typeOfEng ))
+   misn.setTitle( fmt.f(_("ZT test of {engine}"), {engine=typeOfEng} ))
    misn.markerAdd(destplanet, "computer")
-   car.setDesc( _("A Za'lek research team needs you to travel to %s in %s using an engine in order to test it."):format( destplanet:name(), destsys:name() ), nil, nil, destplanet )
+   car.setDesc( fmt.f(_("A Za'lek research team needs you to travel to {pnt} in {sys} using an engine in order to test it."), {pnt=destplanet, sys=destsys} ), nil, nil, destplanet )
    misn.setReward(fmt.credits(reward))
 end
 
@@ -99,10 +97,9 @@ function accept()
       stage = 0
       player.outfitAdd("Za'lek Test Engine")
       tk.msg( _("Mission Accepted"), znpcs[ rnd.rnd(1, #znpcs) ] )
-      tk.msg( _("Mission Accepted"), string.format( _("Za'lek technicians give you the engine. You will have to travel to %s in %s with this engine. The system will automatically take measures during the flight. Don't forget to equip the engine."), destplanet:name(), destsys:name() ))
+      tk.msg( _("Mission Accepted"), fmt.f( _("Za'lek technicians give you the engine. You will have to travel to {pnt} in {sys} with this engine. The system will automatically take measures during the flight. Don't forget to equip the engine."), {pnt=destplanet, sys=destsys} ))
 
-      osd_msg[1] = string.format( osd_msg[1], destplanet:name(), destsys:name() )
-      misn.osdCreate(_("Za'lek Test"), osd_msg)
+      misn.osdCreate(_("Za'lek Test"), {fmt.f(_("Fly to {pnt} in the {sys} system"), {pnt=destplanet, sys=destsys})})
       takehook = hook.takeoff( "takeoff" )
       enterhook = hook.enter("enter")
    else
@@ -188,7 +185,7 @@ function teleportation()
    local newsyslist = lmisn.getSysAtDistance(system.cur(), 1, 3)
    local newsys = newsyslist[rnd.rnd(1, #newsyslist)]
    player.teleport(newsys)
-   tk.msg(_("What the hell is happening?"), _("You suddenly feel a huge acceleration, as if your ship was going into hyperspace, then a sudden shock causes you to pass out. As you wake up, you find that your ship is damaged and you have ended up somewhere in the %s system!"):format(newsys:name()))
+   tk.msg(_("What the hell is happening?"), fmt.f(_("You suddenly feel a huge acceleration, as if your ship was going into hyperspace, then a sudden shock causes you to pass out. As you wake up, you find that your ship is damaged and you have ended up somewhere in the {sys} system!"), {sys=newsys}))
    player.pilot():setHealth(50, 0)
    player.pilot():setEnergy(0)
 end

@@ -32,26 +32,26 @@ local vntk = require "vntk"
 local car = require "common.cargo"
 local lmisn = require "lmisn"
 
-misn_desc = {}
+local misn_desc = {}
 -- Note: indexed from 0 to match mission tiers.
-misn_desc[0] = _("Small shipment to %s in the %s system.")
-misn_desc[1] = _("Medium shipment to %s in the %s system.")
-misn_desc[2] = _("Sizable cargo delivery to %s in the %s system.")
-misn_desc[3] = _("Large cargo delivery to %s in the %s system.")
-misn_desc[4] = _("Bulk freight delivery to %s in the %s system.")
+misn_desc[0] = _("Small shipment to {pnt} in the {sys} system.")
+misn_desc[1] = _("Medium shipment to {pnt} in the {sys} system.")
+misn_desc[2] = _("Sizable cargo delivery to {pnt} in the {sys} system.")
+misn_desc[3] = _("Large cargo delivery to {pnt} in the {sys} system.")
+misn_desc[4] = _("Bulk freight delivery to {pnt} in the {sys} system.")
 
-piracyrisk = {}
+local piracyrisk = {}
 piracyrisk[1] = _("#nPiracy Risk:#0 None")
 piracyrisk[2] = _("#nPiracy Risk:#0 Low")
 piracyrisk[3] = _("#nPiracy Risk:#0 Medium")
 piracyrisk[4] = _("#nPiracy Risk:#0 High")
 --=Landing=--
 
-cargo_land = {}
-cargo_land[1] = _("The containers of %s are carried out of your ship by a sullen group of workers. The job takes inordinately long to complete, and the leader pays you without speaking a word.")
-cargo_land[2] = _("The containers of %s are rushed out of your vessel by a team shortly after you land. Before you can even collect your thoughts, one of them presses a credit chip in your hand and departs.")
-cargo_land[3] = _("The containers of %s are unloaded by an exhausted-looking bunch of dockworkers. Still, they make fairly good time, delivering your pay upon completion of the job.")
-cargo_land[4] = _("The containers of %s are unloaded by a team of robotic drones supervised by a human overseer, who hands you your pay when they finish.")
+local cargo_land = {}
+cargo_land[1] = _("The containers of {cargo} are carried out of your ship by a sullen group of workers. The job takes inordinately long to complete, and the leader pays you without speaking a word.")
+cargo_land[2] = _("The containers of {cargo} are rushed out of your vessel by a team shortly after you land. Before you can even collect your thoughts, one of them presses a credit chip in your hand and departs.")
+cargo_land[3] = _("The containers of {cargo} are unloaded by an exhausted-looking bunch of dockworkers. Still, they make fairly good time, delivering your pay upon completion of the job.")
+cargo_land[4] = _("The containers of {cargo} are unloaded by a team of robotic drones supervised by a human overseer, who hands you your pay when they finish.")
 
 -- Create the mission
 function create()
@@ -86,10 +86,10 @@ function create()
    distreward = math.log(100*commodity.price(cargo))/100
    reward = 1.5^tier * (avgrisk*riskreward + numjumps * jumpreward + traveldist * distreward) * finished_mod * (1 + 0.05*rnd.twosigma())
 
-   misn.setTitle( _("Shipment to %s in %s (%s)"):format(
-         destplanet:name(), destsys:name(), fmt.tonnes(amount) ) )
+   misn.setTitle( fmt.f(_("Shipment to {pnt} in {sys} ({tonnes})"),
+         {pnt=destplanet, sys=destsys, tonnes=fmt.tonnes(amount)} ) )
    misn.markerAdd(destplanet, "computer")
-   car.setDesc( misn_desc[tier]:format( destplanet:name(), destsys:name() ), cargo, amount, destplanet, nil, piracyrisk )
+   car.setDesc( fmt.f( misn_desc[tier], {pnt=destplanet, sys=destsys} ), cargo, amount, destplanet, nil, piracyrisk )
    misn.setReward( fmt.credits(reward) )
 end
 
@@ -97,15 +97,14 @@ end
 function accept ()
    local freecargo = player.pilot():cargoFree()
    if freecargo < amount then
-      vntk.msg( _("No room in ship"), string.format(
-         _("You don't have enough cargo space to accept this mission. It requires %s of free space (%s more than you have)."),
-         fmt.tonnes(amount),
-         fmt.tonnes( amount - freecargo ) ) )
+      vntk.msg( _("No room in ship"), fmt.f(
+         _("You don't have enough cargo space to accept this mission. It requires {tonnes_free} of free space ({tonnes_short}more than you have)."),
+         { tonnes_free = fmt.tonnes(amount), tonnes_short = fmt.tonnes( amount - freecargo ) } ) )
       misn.finish()
    end
    misn.accept()
    misn.cargoAdd(cargo, amount)
-   misn.osdCreate(_("Cargo mission"), {_("Fly to %s in the %s system"):format(destplanet:name(), destsys:name())})
+   misn.osdCreate(_("Cargo mission"), {fmt.f(_("Fly to {pnt} in the {sys} system"), {pnt=destplanet, sys=destsys})})
    hook.land("land")
 end
 
@@ -114,7 +113,7 @@ function land()
    if planet.cur() == destplanet then
       -- Semi-random message.
       lmisn.sfxMoney()
-      vntk.msg( _("Delivery success!"), cargo_land[rnd.rnd(1, #cargo_land)]:format(_(cargo)) )
+      vntk.msg( _("Delivery success!"), fmt.f(cargo_land[rnd.rnd(1, #cargo_land)], {cargo=_(cargo)}) )
       player.pay(reward)
       pir.reputationNormalMission(rnd.rnd(2,3))
       misn.finish(true)

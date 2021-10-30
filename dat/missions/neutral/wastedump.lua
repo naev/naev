@@ -28,24 +28,21 @@ local fmt = require "format"
 local pir = require "common.pirate"
 local vntk = require "vntk"
 
-text = {}
-text[1] = _("The waste containers are loaded onto your ship and you are paid %s. You begin to wonder if accepting this job was really a good idea.")
-text[2] = _("Workers pack your cargo hold full of as much garbage as it can hold, then hastily hand you a credit chip containing %s. Smelling the garbage, you immediately regret taking the job.")
-text[3] = _("Your hold is crammed full with garbage and you are summarily paid %s. By the time the overpowering stench emanating from your cargo hold is apparent to you, it's too late to back down; you're stuck with this garbage until you can find some place to get rid of it.")
+local text = {}
+text[1] = _("The waste containers are loaded onto your ship and you are paid {credits}. You begin to wonder if accepting this job was really a good idea.")
+text[2] = _("Workers pack your cargo hold full of as much garbage as it can hold, then hastily hand you a credit chip containing {credits}. Smelling the garbage, you immediately regret taking the job.")
+text[3] = _("Your hold is crammed full with garbage and you are summarily paid {credits}. By the time the overpowering stench emanating from your cargo hold is apparent to you, it's too late to back down; you're stuck with this garbage until you can find some place to get rid of it.")
 
-finish_text = {}
+local finish_text = {}
 finish_text[1] = _("You drop the garbage off, relieved to have it out of your ship.")
 finish_text[2] = _("You finally drop off the garbage and proceed to disinfect yourself and your cargo hold to the best of your ability.")
 finish_text[3] = _("Finally, the garbage leaves your ship and you breathe a sigh of relief.")
 finish_text[4] = _("Wrinkling your nose in disgust, you finally rid yourself of the waste containers you have been charged with disposing of.")
 
-abort_text = {}
+local abort_text = {}
 abort_text[1] = _("Sick and tired of smelling garbage, you illegally jettison the waste containers into space, hoping that no one notices.")
 abort_text[2] = _("You decide that the nearest waste dump location is too far away for you to bother to go to and simply jettison the containers of waste. You hope you don't get caught.")
 abort_text[3] = _("You dump the waste containers into space illegally, noting that you should make sure not to get caught by authorities.")
-
-osd_msg = {}
-osd_msg[1] = _("Land on any garbage collection facility (indicated on your map) to drop off the Waste Containers")
 
 -- List of possible waste dump planets.
 dest_planets = { "The Stinker", "Eiroik" }
@@ -76,7 +73,7 @@ function create ()
    -- Set mission details
    misn.setTitle( _("Waste Dump") )
    misn.setDesc( _("Take as many waste containers off of here as your ship can hold and drop them off at any authorized garbage collection facility. You will be paid immediately, but any attempt to illegally jettison the waste into space will be severely punished if you are caught.") )
-   misn.setReward( _("%s per tonne"):format( fmt.credits( credits_factor ) ) )
+   misn.setReward( fmt.f(_("{credits} per tonne"), {credits=fmt.credits(credits_factor)} ) )
 end
 
 
@@ -87,13 +84,13 @@ function accept ()
    credits = credits_factor * q + credits_mod
 
    local txt = text[ rnd.rnd( 1, #text ) ]
-   vntk.msg( "", txt:format( fmt.credits( credits ) ) )
+   vntk.msg( "", fmt.f( txt, {credits = fmt.credits( credits ) } ) )
 
    local c = misn.cargoNew( N_("Waste Containers"), N_("A bunch of waste containers leaking all sorts of indescribable liquids.") )
    cid = misn.cargoAdd( c, q )
    player.pay( credits )
 
-   misn.osdCreate( _("Waste Dump"), osd_msg )
+   misn.osdCreate( _("Waste Dump"), {_("Land on any garbage collection facility (indicated on your map) to drop off the Waste Containers")} )
 
    hook.takeoff( "takeoff" )
    hook.land( "land" )
@@ -123,7 +120,7 @@ function abort ()
    if landed then
       misn.cargoRm( cid )
       local fine = 2 * credits
-      vntk.msg( "", _("In your desperation to rid yourself of the garbage, you clumsily eject it from your cargo pod while you are still landed. Garbage spills all over the hangar and local officials immediately take notice. After you apologize profusely and explain the situation away as an accident, the officials let you off with a fine of %s."):format( fmt.credits( fine ) ) )
+      vntk.msg( "", fmt.f(_("In your desperation to rid yourself of the garbage, you clumsily eject it from your cargo pod while you are still landed. Garbage spills all over the hangar and local officials immediately take notice. After you apologize profusely and explain the situation away as an accident, the officials let you off with a fine of {credits}."), {credits=fmt.credits(fine)} ) )
       player.pay( -fine )
       misn.finish( false )
    else

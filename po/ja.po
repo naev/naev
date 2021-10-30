@@ -43400,7 +43400,7 @@ msgid ""
 "ever had in the armada.\"\n"
 "    He hits a couple buttons on his wrist computer, which springs into "
 "action. \"It looks like we already have a simple task for you. Deliver these "
-"parcels to %s. The best pilots started delivering papers and ended up flying "
+"parcels to {pnt}. The best pilots started delivering papers and ended up flying "
 "into combat against gigantic warships with the Interception Division.\""
 msgstr ""
 "｢船にようこそ｣ と、チェシチはいって、あなたと固い握手をかわした。｢最初は、貨"
@@ -43410,7 +43410,7 @@ msgstr ""
 "われの艦隊に今までいたなかでも最高のパイロットですよ｣\n"
 "    チェシチが手首にあるコンピューターのボタンを二つたたくと、コンピューター"
 "はとつじょ活動を開始した。｢あなたのための簡単な仕事はもうあるようです。この小"
-"包を%sへ配達してください。屈指のパイロットたちは書類の配達から始めて、最後は"
+"包を{pnt}へ配達してください。屈指のパイロットたちは書類の配達から始めて、最後は"
 "迎撃局に所属して戦いのなかを巨大な戦闘艦にむかって飛ぶことになるんです｣"
 
 #. Set up the goal
@@ -43425,7 +43425,7 @@ msgstr "うんざりする帝国の小包の山。"
 #: dat/missions/empire/emp_cargo00.lua:91
 #, lua-format
 msgid ""
-"You deliver the parcels to the Empire Shipping station at the %s spaceport. "
+"You deliver the parcels to the Empire Shipping station at the {pnt} spaceport. "
 "Afterwards, they make you do some paperwork to formalise your participation "
 "with the Empire. They tell you to keep an eye out for missions labeled ES, "
 "which stands for Empire Shipping, in the mission computer, to which you now "
@@ -43433,7 +43433,7 @@ msgid ""
 "    You aren't too sure of what to make of your encounter with the Empire. "
 "Only time will tell..."
 msgstr ""
-"あなたは%sの宇宙港にある帝国輸送所に小包を届けた。そのあと担当者はあなたにい"
+"あなたは{pnt}の宇宙港にある帝国輸送所に小包を届けた。そのあと担当者はあなたにい"
 "くつか書類を書かせて、帝国へのあなたの関与を法的に有効なものとした。それから"
 "あなたは、帝国輸送を表す ES と目印をつけられた任務に目を光らせておくようにと"
 "いわれる。もうあなたはその任務をミッションコンピューターから入手できるの"
@@ -43606,11 +43606,11 @@ msgstr "船に空きがない"
 #: dat/missions/pirate/pir_contraband.lua:177
 #, lua-format
 msgid ""
-"You don't have enough cargo space to accept this mission. It requires %s of "
-"free space (%s more than you have)."
+"You don't have enough cargo space to accept this mission. It requires {tonnes_free} of "
+"free space ({tonnes_short} more than you have)."
 msgstr ""
-"この任務を引き受けられるだけの船倉の空きがありません。空き容量が%s必要です。"
-"(船倉の空きより%s多い)"
+"この任務を引き受けられるだけの船倉の空きがありません。空き容量が{tonnes_free}必要です。"
+"(船倉の空きより{tonnes_short}多い)"
 
 #. able to accept the mission
 #: dat/missions/empire/es_cargo.lua:112
@@ -43623,8 +43623,8 @@ msgstr "任務を受諾"
 #: dat/missions/empire/es_cargo.lua:113
 #: dat/missions/empire/longdistanceshipping/es_longdistancecargo.lua:118
 #, lua-format
-msgid "The Empire workers load the %s of %s onto your ship."
-msgstr "帝国の労働者たちがあなたの船に %sトンの%sを積みこんだ。"
+msgid "The Empire workers load the {tonnes} of {cargo} onto your ship."
+msgstr "帝国の労働者たちがあなたの船に {tonnes}トンの{cargo}を積みこんだ。"
 
 #. increase faction
 #. Date hook
@@ -43679,8 +43679,8 @@ msgstr "配達に成功"
 #: dat/missions/empire/es_cargo.lua:128
 #: dat/missions/empire/longdistanceshipping/es_longdistancecargo.lua:133
 #, lua-format
-msgid "The Empire workers unload the %s at the docks."
-msgstr "帝国の労働者たちが着岸所に%sを降ろした。"
+msgid "The Empire workers unload the {cargo} at the docks."
+msgstr "帝国の労働者たちが着岸所に{cargo}を降ろした。"
 
 #. Case missed deadline
 #: dat/missions/empire/es_cargo.lua:156
@@ -53778,41 +53778,41 @@ msgstr ""
 #: dat/missions/neutral/cargo.lua:51 dat/missions/neutral/cargo_rush.lua:60
 #, lua-format
 msgid ""
-"The containers of %s are carried out of your ship by a sullen group of "
+"The containers of {cargo} are carried out of your ship by a sullen group of "
 "workers. The job takes inordinately long to complete, and the leader pays "
 "you without speaking a word."
 msgstr ""
-"不機嫌な労働者の一団が、あなたの船から%sのコンテナを運びだした。その仕事は異"
+"不機嫌な労働者の一団が、あなたの船から{cargo}のコンテナを運びだした。その仕事は異"
 "常に長くかかって終わり、リーダーはひと言もしゃべらずあなたに支払った。"
 
 #: dat/missions/neutral/cargo.lua:52 dat/missions/neutral/cargo_rush.lua:61
 #, lua-format
 msgid ""
-"The containers of %s are rushed out of your vessel by a team shortly after "
+"The containers of {cargo} are rushed out of your vessel by a team shortly after "
 "you land. Before you can even collect your thoughts, one of them presses a "
 "credit chip in your hand and departs."
 msgstr ""
-"あなたが着陸したすぐあとに、チームがあなたの船から%sのコンテナをいそいで運び"
+"あなたが着陸したすぐあとに、チームがあなたの船から{cargo}のコンテナをいそいで運び"
 "だした。かねを受けとろうと思う間もなく、なかのひとりがあなたの手にクレジット"
 "チップを押しつけてから出ていった。"
 
 #: dat/missions/neutral/cargo.lua:53 dat/missions/neutral/cargo_rush.lua:62
 #, lua-format
 msgid ""
-"The containers of %s are unloaded by an exhausted-looking bunch of "
+"The containers of {cargo} are unloaded by an exhausted-looking bunch of "
 "dockworkers. Still, they make fairly good time, delivering your pay upon "
 "completion of the job."
 msgstr ""
-"疲れきった港湾労働者の群れが%sのコンテナを荷降ろしした。それでもあまり時間を"
+"疲れきった港湾労働者の群れが{cargo}のコンテナを荷降ろしした。それでもあまり時間を"
 "かけることなく、仕事を終えるとあなたに支払いを持ってきた。"
 
 #: dat/missions/neutral/cargo.lua:54
 #, lua-format
 msgid ""
-"The containers of %s are unloaded by a team of robotic drones supervised by "
+"The containers of {cargo} are unloaded by a team of robotic drones supervised by "
 "a human overseer, who hands you your pay when they finish."
 msgstr ""
-"人間の監督ひとりに管理されたロボットドローンの群れが%sのコンテナを荷降ろしし"
+"人間の監督ひとりに管理されたロボットドローンの群れが{cargo}のコンテナを荷降ろしし"
 "た。それが終わると、監督があなたに報酬を渡した。"
 
 #. Create the mission
@@ -53954,12 +53954,12 @@ msgstr "未知の航路"
 #: dat/missions/neutral/cargo_rush.lua:146
 #, lua-format
 msgid ""
-"The fastest route to %s is not currently known to you. Landing to buy maps, "
-"spending time searching for unknown jumps, or taking a route longer than %s "
+"The fastest route to {pnt} is not currently known to you. Landing to buy maps, "
+"spending time searching for unknown jumps, or taking a route longer than {jumps} "
 "may cause you to miss the deadline. Accept the mission anyway?"
 msgstr ""
-"%sへの最速の航路をあなたは現在知りません。着陸して地図を買うか、時間をかけて"
-"未知のジャンプをさがすか、%sより長い航路を使うと、期限を逃すことになります。"
+"{pnt}への最速の航路をあなたは現在知りません。着陸して地図を買うか、時間をかけて"
+"未知のジャンプをさがすか、{jumps}より長い航路を使うと、期限を逃すことになります。"
 "それでもこの任務をうけますか？"
 
 #: dat/missions/neutral/cargo_rush.lua:158
@@ -53971,8 +53971,8 @@ msgstr "速達貨物任務"
 #. Case missed second deadline
 #: dat/missions/neutral/cargo_rush.lua:194
 #, lua-format
-msgid "The delivery to %s has been canceled! You were too late."
-msgstr "%sへの配達は取り消された！　あなたは遅すぎたのだ。"
+msgid "The delivery to {sys} has been canceled! You were too late."
+msgstr "{sys}への配達は取り消された！　あなたは遅すぎたのだ。"
 
 #. Case missed first deadline
 #: dat/missions/neutral/cargo_rush.lua:198
@@ -54025,57 +54025,57 @@ msgstr ""
 #. Mission Details
 #: dat/missions/neutral/commodity_run.lua:46
 #, lua-format
-msgid "%s Delivery"
-msgstr "%sの配達"
+msgid "{cargo} Delivery"
+msgstr "{cargo}の配達"
 
 #: dat/missions/neutral/commodity_run.lua:47
 #, lua-format
 msgid ""
-"%s has an insufficient supply of %s to satisfy the current demand. Go to any "
+"{pnt} has an insufficient supply of {cargo} to satisfy the current demand. Go to any "
 "planet which sells this commodity and bring as much of it back as possible."
 msgstr ""
-"%sでは%sの供給がたりないので、現在の需要が満たせていない。この商品を売ってい"
+"{pnt}では{cargo}の供給がたりないので、現在の需要が満たせていない。この商品を売ってい"
 "るほかの惑星に行き、できるだけ多く持ちかえれ。"
 
 #: dat/missions/neutral/commodity_run.lua:50
 #, lua-format
 msgid ""
-"The containers of %s are carried out of your ship and tallied. After several "
+"The containers of {cargo} are carried out of your ship and tallied. After several "
 "different men double-check the register to confirm the amount, you are paid "
-"%s and summarily dismissed."
+"{credits} and summarily dismissed."
 msgstr ""
-"あなたの船から%sのコンテナが運びだされ、量を記録された。数人の別々の人たちが"
-"量を確認した記録簿を重ねて点検してから、あなたは %sの支払いをうけて、ただちに"
+"あなたの船から{cargo}のコンテナが運びだされ、量を記録された。数人の別々の人たちが"
+"量を確認した記録簿を重ねて点検してから、あなたは {credits}の支払いをうけて、ただちに"
 "解放された。"
 
 #: dat/missions/neutral/commodity_run.lua:51
 #, lua-format
 msgid ""
-"The containers of %s are quickly and efficiently unloaded, labeled, and "
+"The containers of {cargo} are quickly and efficiently unloaded, labeled, and "
 "readied for distribution. The delivery manager thanks you with a credit chip "
-"worth %s."
+"worth {credits}."
 msgstr ""
-"%sのコンテナはすばやく効率的に荷降ろしされ、荷札がつけられ、流通の用意がされ"
-"た。出荷管理者が %sの価値のあるクレジットチップをあなたに渡して礼をいった。"
+"{cargo}のコンテナはすばやく効率的に荷降ろしされ、荷札がつけられ、流通の用意がされ"
+"た。出荷管理者が {credits}の価値のあるクレジットチップをあなたに渡して礼をいった。"
 
 #: dat/missions/neutral/commodity_run.lua:52
 #, lua-format
 msgid ""
-"The containers of %s are unloaded from your vessel by a team of dockworkers "
-"who are in no rush to finish, eventually delivering %s after the number of "
+"The containers of {cargo} are unloaded from your vessel by a team of dockworkers "
+"who are in no rush to finish, eventually delivering {credits} after the number of "
 "tonnes is determined."
 msgstr ""
-"港湾労働者のチームが%sのコンテナをあなたの船から荷降ろしした。チームは急いで"
-"終えようとはしていない。トン数が確定すると、やっと %sが渡された。"
+"港湾労働者のチームが{cargo}のコンテナをあなたの船から荷降ろしした。チームは急いで"
+"終えようとはしていない。トン数が確定すると、やっと {credits}が渡された。"
 
 #: dat/missions/neutral/commodity_run.lua:53
 #, lua-format
 msgid ""
-"The containers of %s are unloaded by robotic drones that scan and tally the "
-"contents. The human overseer hands you %s when they finish."
+"The containers of {cargo} are unloaded by robotic drones that scan and tally the "
+"contents. The human overseer hands you {credits} when they finish."
 msgstr ""
-"ロボットドローンが%sのコンテナを荷降ろしし、ざっと調べて量を記録した。それが"
-"終わると、人間の監督があなたに %sを手渡した。"
+"ロボットドローンが{cargo}のコンテナを荷降ろしし、ざっと調べて量を記録した。それが"
+"終わると、人間の監督があなたに {credits}を手渡した。"
 
 #: dat/missions/neutral/commodity_run.lua:55
 msgid "Commodity Delivery"
@@ -54091,13 +54091,13 @@ msgstr "商品の配達"
 #: dat/missions/neutral/commodity_run.lua:112
 #: dat/missions/neutral/wastedump.lua:79
 #, lua-format
-msgid "%s per tonne"
-msgstr "トンあたり %s"
+msgid "{credits} per tonne"
+msgstr "トンあたり {credits}"
 
 #: dat/missions/neutral/commodity_run.lua:123
 #, lua-format
-msgid "Buy as much %s as possible"
-msgstr "できるだけ%sを買え。"
+msgid "Buy as much {cargo} as possible"
+msgstr "できるだけ{cargo}を買え。"
 
 #: dat/missions/neutral/commodity_run.lua:124
 #, lua-format

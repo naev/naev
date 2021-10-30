@@ -43,14 +43,14 @@ local fmt = require "format"
 local vntk = require "vntk"
 
 --Mission Details
-misn_title = _("%s Delivery")
-misn_desc = _("%s has an insufficient supply of %s to satisfy the current demand. Go to any planet which sells this commodity and bring as much of it back as possible.")
+misn_title = _("{cargo} Delivery")
+misn_desc = _("{pnt} has an insufficient supply of {cargo} to satisfy the current demand. Go to any planet which sells this commodity and bring as much of it back as possible.")
 
 cargo_land = {}
-cargo_land[1] = _("The containers of %s are carried out of your ship and tallied. After several different men double-check the register to confirm the amount, you are paid %s and summarily dismissed.")
-cargo_land[2] = _("The containers of %s are quickly and efficiently unloaded, labeled, and readied for distribution. The delivery manager thanks you with a credit chip worth %s.")
-cargo_land[3] = _("The containers of %s are unloaded from your vessel by a team of dockworkers who are in no rush to finish, eventually delivering %s after the number of tonnes is determined.")
-cargo_land[4] = _("The containers of %s are unloaded by robotic drones that scan and tally the contents. The human overseer hands you %s when they finish.")
+cargo_land[1] = _("The containers of {cargo} are carried out of your ship and tallied. After several different men double-check the register to confirm the amount, you are paid {credits} and summarily dismissed.")
+cargo_land[2] = _("The containers of {cargo} are quickly and efficiently unloaded, labeled, and readied for distribution. The delivery manager thanks you with a credit chip worth {credits}.")
+cargo_land[3] = _("The containers of {cargo} are unloaded from your vessel by a team of dockworkers who are in no rush to finish, eventually delivering {credits} after the number of tonnes is determined.")
+cargo_land[4] = _("The containers of {cargo} are unloaded by robotic drones that scan and tally the contents. The human overseer hands you {credits} when they finish.")
 
 osd_title = _("Commodity Delivery")
 paying_faction = faction.get("Independent")
@@ -106,10 +106,10 @@ function create ()
    end
 
    -- Set Mission Details
-   misn.setTitle( misn_title:format( comm:name() ) )
+   misn.setTitle( fmt.f( misn_title, {cargo=comm} ) )
    misn.markerAdd( system.cur(), "computer" )
-   misn.setDesc( misn_desc:format( misplanet:name(), comm:name() ) )
-   misn.setReward( _("%s per tonne"):format( fmt.credits( price ) ) )
+   misn.setDesc( fmt.f( misn_desc, {pnt=misplanet, cargo=comm} ) )
+   misn.setReward( fmt.f(_("{credits} per tonne"), {credits=fmt.credits(price)} ) )
 end
 
 
@@ -120,8 +120,8 @@ function accept ()
    update_active_runs( 1 )
 
    misn.osdCreate(osd_title, {
-      _("Buy as much %s as possible"):format( comm:name() ),
-      _("Take the %s to %s in the %s system"):format( comm:name(), misplanet:name(), missys:name() ),
+      fmt.f(_("Buy as much {cargo} as possible"), {cargo=comm} ),
+      fmt.f(_("Take the {cargo} to {pnt} in the {sys} system"), {cargo=comm, pnt=misplanet, sys=missys} ),
    })
 
    hook.enter("enter")
@@ -143,8 +143,8 @@ function land ()
    local reward = amount * price
 
    if planet.cur() == misplanet and amount > 0 then
-      local txt = cargo_land[rnd.rnd(1, #cargo_land)]:format(
-            _(chosen_comm), fmt.credits(reward) )
+      local txt = fmt.f(cargo_land[rnd.rnd(1, #cargo_land)],
+            {cargo=_(chosen_comm), credits=fmt.credits(reward)} )
       vntk.msg(_("Delivery success!"), txt)
       pilot.cargoRm(player.pilot(), chosen_comm, amount)
       player.pay(reward)
