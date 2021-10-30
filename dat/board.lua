@@ -83,20 +83,31 @@ function wgtBoard.new( parent, x, y, w, h, loot )
    setmetatable( wgt, wgtBoard_mt )
    wgt.loot = loot
    wgt.selected = false
+   wgt.selalpha = 0
    return wgt
+end
+function wgtBoard:update( dt )
+   dt = dt * 5
+   if self.selected then
+      self.selalpha = math.min( 1, self.selalpha + dt )
+   else
+      self.selalpha = math.max( 0, self.selalpha - dt )
+   end
 end
 function wgtBoard:draw( bx, by )
    local x, y, w, h = bx+self.x, by+self.y, self.w, self.h
    local l = self.loot
-   if self.selected then
-      lg.setColor( {0,1,1} )
-      lg.rectangle( "fill", x-3, y-3, w+6, h+6 )
-      lg.setColor( {0,0.5,0.5} )
-      lg.rectangle( "fill", x, y, w, h )
-   else
+   local a = self.selalpha
+   if a < 1 then
       lg.setColor( luatk.colour.outline )
       lg.rectangle( "fill", x-1, y-1, w+2, h+2 )
       lg.setColor( {0,0,0} )
+      lg.rectangle( "fill", x, y, w, h )
+   end
+   if a > 0 then
+      lg.setColor( {0,1,1,a} )
+      lg.rectangle( "fill", x-3, y-3, w+6, h+6 )
+      lg.setColor( {0,0.5*a,0.5*a} )
       lg.rectangle( "fill", x, y, w, h )
    end
    -- Ignore anything that isn't loot from now on
