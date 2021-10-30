@@ -1,14 +1,11 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
 /**
  * @file menu.h
  *
  * @brief Handles the important game menus.
  */
-
-
 /** @cond */
 #include "physfs.h"
 #include "SDL.h"
@@ -49,12 +46,10 @@
 #include "tk/toolkit_priv.h" /* Needed for menu_main_resize */
 #include "toolkit.h"
 
-
 #define MAIN_WIDTH      200 /**< Main menu width. */
 
 #define MENU_WIDTH      200 /**< Escape menu width. */
 #define MENU_HEIGHT     250 /**< Escape menu height. */
-
 
 #define DEATH_WIDTH     200 /**< Death menu width. */
 #define DEATH_HEIGHT    200 /**< Death menu height. */
@@ -68,9 +63,7 @@
 #define menu_Close(f)   (menu_open &= ~(f)) /**< Marks a menu as closed. */
 int menu_open = 0; /**< Stores the opened/closed menus. */
 
-
 static glTexture *main_naevLogo = NULL; /**< Naev Logo texture. */
-
 
 /*
  * prototypes
@@ -101,7 +94,6 @@ static void menu_editors_open( unsigned int wid_unused, const char *unused );
 static void menu_editors_close( unsigned int wid, const char *str );
 /* options button. */
 static void menu_options_button( unsigned int wid, const char *str );
-
 
 /*
  * Background system for the menu.
@@ -159,7 +151,6 @@ static int menu_main_bkg_system (void)
 
    return 0;
 }
-
 
 /**
  * @brief Opens the main menu (titlescreen).
@@ -260,7 +251,6 @@ void menu_main (void)
    menu_Open(MENU_MAIN);
 }
 
-
 /**
  * @brief Resizes the main menu and its background.
  *
@@ -311,7 +301,6 @@ void menu_main_resize (void)
    window_move( menu_id, -1, offset_wdw );
 }
 
-
 /**
  * @brief Main menu closing prompt.
  */
@@ -321,7 +310,6 @@ static void main_menu_promptClose( unsigned int wid, const char *unused )
    (void) unused;
    exit_game();
 }
-
 
 /**
  * @brief Closes the main menu.
@@ -400,7 +388,6 @@ static void menu_main_cleanBG( unsigned int wid, const char *str )
    main_naevLogo = NULL;
 }
 
-
 /*
  *
  * in-game menu
@@ -442,7 +429,6 @@ void menu_small (void)
    menu_Open(MENU_SMALL);
 }
 
-
 /**
  * @brief Closes the small in-game menu.
  *    @param str Unused.
@@ -453,7 +439,6 @@ static void menu_small_close( unsigned int wid, const char *str )
    window_destroy( wid );
    menu_Close(MENU_SMALL);
 }
-
 
 /**
  * @brief Opens the info window.
@@ -475,7 +460,7 @@ static void menu_small_info( unsigned int wid, const char *str )
 static void menu_small_exit( unsigned int wid, const char *str )
 {
    (void) str;
-   unsigned int info_wid, board_wid;
+   unsigned int info_wid;
 
    /* if landed we must save anyways */
    if (landed) {
@@ -490,12 +475,6 @@ static void menu_small_exit( unsigned int wid, const char *str )
       menu_Close(MENU_INFO);
    }
 
-   /* Force unboard. */
-   if (player_isBoarded()) {
-      board_wid = window_get("wdwBoarding");
-      board_exit(board_wid, NULL);
-   }
-
    /* Stop player sounds because sometimes they hang. */
    player_restoreControl( 0, _("Exited game.") );
    player_soundStop();
@@ -505,7 +484,6 @@ static void menu_small_exit( unsigned int wid, const char *str )
    menu_Close(MENU_SMALL);
    menu_main();
 }
-
 
 /**
  * @brief Exits the game.
@@ -521,7 +499,6 @@ static void exit_game (void)
    quit.type = SDL_QUIT;
    SDL_PushEvent(&quit);
 }
-
 
 /**
  * @brief Reload the current saved game, when player want to continue after death
@@ -604,7 +581,6 @@ static void menu_death_close( unsigned int wid, const char *str )
    pause_game(); /* Repause the game. */
 }
 
-
 /**
  * @brief Opens the menu options from a button.
  */
@@ -614,7 +590,6 @@ static void menu_options_button( unsigned int wid, const char *str )
    (void) str;
    opt_menu();
 }
-
 
 /**
  * @brief Menu to ask if player really wants to quit.
@@ -687,7 +662,7 @@ static void menu_editors_open( unsigned int wid, const char *unused )
  */
 static void menu_editors_close( unsigned int wid, const char *str )
 {
-   (void)str;
+   (void) str;
 
    /* Close the Editors Menu and mark it as closed */
    window_destroy( wid );
