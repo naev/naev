@@ -64,13 +64,14 @@ function accept ()
    reward = 500e3
    misn.setTitle(_("Empire Shipping Delivery"))
    misn.setReward( fmt.credits(reward) )
-   misn.setDesc( string.format(_("Pick up a package at %s in the %s system"), pickup:name(), pickupsys:name()))
+   misn.setDesc( fmt.f(_("Pick up a package at {pnt} in the {sys} system"), {pnt=pickup, sys=pickupsys}) )
 
    -- Flavour text and mini-briefing
-   tk.msg( _("Commander Soldner"), string.format( _([[Commander Soldner begins, "We have an important package that we must take from %s in the %s system to %s in the %s system. We have reason to believe that it is also wanted by external forces.
-    "The plan is to send an advance convoy with guards to make the run in an attempt to confuse possible enemies. You will then go in and do the actual delivery by yourself. This way we shouldn't arouse suspicion. You are to report here when you finish delivery and you'll be paid %s."]]), pickup:name(), pickupsys:name(),
-         dest:name(), destsys:name(), fmt.credits(reward) ) )
-   misn.osdCreate(_("Empire Shipping Delivery"), {_("Pick up a package at %s in the %s system"):format(pickup:name(), pickupsys:name())})
+   tk.msg( _("Commander Soldner"), fmt.f( _([[Commander Soldner begins, "We have an important package that we must take from {pickup_pnt} in the {pickup_sys} system to {dropoff_pnt} in the {dropoff_sys} system. We have reason to believe that it is also wanted by external forces.
+    "The plan is to send an advance convoy with guards to make the run in an attempt to confuse possible enemies. You will then go in and do the actual delivery by yourself. This way we shouldn't arouse suspicion. You are to report here when you finish delivery and you'll be paid {credits}."]]), {pickup_pnt=pickup, pickup_sys=pickupsys, dropoff_pnt=dest, dropoff_sys=destsys, credits=fmt.credits(reward)} ) )
+   misn.osdCreate(_("Empire Shipping Delivery"), {
+      fmt.f(_("Pick up a package at {pnt} in the {sys} system"), {pnt=pickup, sys=pickupsys}),
+   })
 
    -- Set up the goal
    tk.msg( _("Commander Soldner"), _([["Avoid hostility at all costs. The package must arrive at its destination. Since you are undercover, Empire ships won't assist you if you come under fire, so stay sharp. Good luck."]]) )
@@ -89,7 +90,7 @@ function land ()
       -- Make sure player has room.
       if player.pilot():cargoFree() < 3 then
          local needed = 3 - player.pilot():cargoFree()
-         tk.msg( _("Need More Space"), string.format( gettext.ngettext(
+         tk.msg( _("Need More Space"), string.format( n_(
             "You do not have enough space to load the packages. You need to make room for %d more tonne.",
             "You do not have enough space to load the packages. You need to make room for %d more tonnes.",
             needed), needed ) )
@@ -101,12 +102,14 @@ function land ()
       packages = misn.cargoAdd(c, 3)
       misn_stage = 1
       jumped = 0
-      misn.setDesc( string.format(_("Deliver the package to %s in the %s system"), dest:name(), destsys:name()))
+      misn.setDesc( fmt.f(_("Deliver the package to {pnt} in the {sys} system"), {pnt=dest, sys=destsys}) )
       misn.markerMove( misn_marker, destsys )
-      misn.osdCreate(_("Empire Shipping Delivery"), {_("Deliver the package to %s in the %s system"):format(dest:name(), destsys:name())})
+      misn.osdCreate(_("Empire Shipping Delivery"), {
+         fmt.f(_("Deliver the package to {pnt} in the {sys} system"), {pnt=dest, sys=destsys}),
+      })
 
       -- Load message
-      tk.msg( _("Loading Cargo"), string.format( _([[The packages labelled "Food" are loaded discreetly onto your ship. Now to deliver them to %s in the %s system.]]), dest:name(), destsys:name()) )
+      tk.msg( _("Loading Cargo"), fmt.f( _([[The packages labelled "Food" are loaded discreetly onto your ship. Now to deliver them to {pnt} in the {sys} system.]]), {pnt=dest, sys=destsys}) )
 
    elseif landed == dest and misn_stage == 1 then
       if misn.cargoRm(packages) then
@@ -117,7 +120,7 @@ function land ()
          misn.osdCreate(_("Empire Shipping Delivery"), {fmt.f(_("Return to {pnt} in the {sys} system"), {pnt=ret, sys=retsys})})
 
          -- Some text
-         tk.msg( _("Cargo Delivery"), string.format(_([[Workers quickly unload the package as mysteriously as it was loaded. You notice that one of them gives you a note. Looks like you'll have to go to %s in the %s system to report to Commander Soldner.]]), ret:name(), retsys:name()) )
+         tk.msg( _("Cargo Delivery"), fmt.f(_([[Workers quickly unload the package as mysteriously as it was loaded. You notice that one of them gives you a note. Looks like you'll have to go to {pnt} in the {sys} system to report to Commander Soldner.]]), {pnt=ret, sys=retsys}) )
       end
    elseif landed == ret and misn_stage == 2 then
 
@@ -126,8 +129,8 @@ function land ()
       faction.modPlayerSingle("Empire",5);
 
       -- Flavour text
-      tk.msg(_("Mission Success"), string.format(_([[You arrive at %s and report to Commander Soldner. He greets you and starts talking. "I heard you encountered resistance. At least you managed to deliver the package. Great work there. I've managed to get you cleared for the Heavy Weapon License. You'll still have to pay the fee for getting it, though.
-    "If you're interested in more work, meet me in the bar in a bit. I've got some paperwork I need to finish first."]]), ret:name()) )
+      tk.msg(_("Mission Success"), fmt.f(_([[You arrive at {pnt} and report to Commander Soldner. He greets you and starts talking. "I heard you encountered resistance. At least you managed to deliver the package. Great work there. I've managed to get you cleared for the Heavy Weapon License. You'll still have to pay the fee for getting it, though.
+    "If you're interested in more work, meet me in the bar in a bit. I've got some paperwork I need to finish first."]]), {pnt=ret}) )
 
       -- The goods
       diff.apply("heavy_weapons_license")

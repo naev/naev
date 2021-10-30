@@ -64,8 +64,8 @@ end
 
 function accept ()
    -- Intro text
-   if not tk.yesno( _("Commander Soldner"), string.format( _([[You meet up once more with Commander Soldner at the bar.
-    "Hello again, %s. Still interested in doing another mission? This one will be more dangerous."]]), player.name() ) ) then
+   if not tk.yesno( _("Commander Soldner"), fmt.f( _([[You meet up once more with Commander Soldner at the bar.
+    "Hello again, {player}. Still interested in doing another mission? This one will be more dangerous."]]), {player=player.name()} ) ) then
       misn.finish()
    end
 
@@ -80,13 +80,15 @@ function accept ()
    reward = 750e3
    misn.setTitle(_("Empire VIP Rescue"))
    misn.setReward( fmt.credits(reward) )
-   misn.setDesc( string.format( _("Rescue the VIP from a transport ship in the %s system"), destsys:name() ) )
+   misn.setDesc( fmt.f( _("Rescue the VIP from a transport ship in the {sys} system"), {sys=destsys} ) )
 
    -- Flavour text and mini-briefing
-   tk.msg( _("Commander Soldner"), string.format( _([[Commander Soldner nods and continues, "We've had reports that a transport vessel came under attack while transporting a VIP. They managed to escape, but the engine ended up giving out in the %s system. The ship is now disabled and we need someone to board the ship and rescue the VIP. There have been many FLF ships detected near the sector, but we've managed to organise a Dvaered escort for you.
-    "You're going to have to fly to the %s system, find and board the transport ship to rescue the VIP, and then fly back. The sector is most likely going to be hot. That's where your Dvaered escorts will come in. Their mission will be to distract and neutralise all possible hostiles. You must not allow the transport ship to be destroyed before you rescue the VIP. His survival is vital."]]), destsys:name(), destsys:name() ) )
-   tk.msg( _("Commander Soldner"), string.format( _([["Be careful with the Dvaered; they can be a bit blunt, and might accidentally destroy the transport ship. If all goes well, you'll be paid %s when you return with the VIP. Good luck, pilot."]]), fmt.credits(reward) ) )
-   misn.osdCreate(_("Empire VIP Rescue"), {_("Rescue the VIP from a transport ship in the %s system"):format(destsys:name())})
+   tk.msg( _("Commander Soldner"), fmt.f( _([[Commander Soldner nods and continues, "We've had reports that a transport vessel came under attack while transporting a VIP. They managed to escape, but the engine ended up giving out in the {sys} system. The ship is now disabled and we need someone to board the ship and rescue the VIP. There have been many FLF ships detected near the sector, but we've managed to organise a Dvaered escort for you.
+    "You're going to have to fly to the {sys} system, find and board the transport ship to rescue the VIP, and then fly back. The sector is most likely going to be hot. That's where your Dvaered escorts will come in. Their mission will be to distract and neutralise all possible hostiles. You must not allow the transport ship to be destroyed before you rescue the VIP. His survival is vital."]]), {sys=destsys} ) )
+   tk.msg( _("Commander Soldner"), fmt.f( _([["Be careful with the Dvaered; they can be a bit blunt, and might accidentally destroy the transport ship. If all goes well, you'll be paid {credits} when you return with the VIP. Good luck, pilot."]]), {credits=fmt.credits(reward)} ) )
+   misn.osdCreate(_("Empire VIP Rescue"), {
+      fmt.f(_("Rescue the VIP from a transport ship in the {sys} system"), {sys=destsys}),
+   })
    -- Set hooks
    hook.land("land")
    hook.enter("enter")
@@ -223,8 +225,10 @@ function board ()
    -- Update mission details
    misn_stage = 2
    misn.markerMove( misn_marker, retsys )
-   misn.setDesc( string.format(_("Return to %s in the %s system with the VIP"), ret:name(), retsys:name() ))
-   misn.osdCreate(_("Empire VIP Rescue"), {_("Return to %s in the %s system with the VIP"):format(ret:name(),retsys:name())})
+   misn.setDesc( fmt.f(_("Return to {pnt} in the {sys} system with the VIP"), {pnt=ret, sys=retsys} ))
+   misn.osdCreate(_("Empire VIP Rescue"), {
+      fmt.f(_("Return to {pnt} in the {sys} system with the VIP"), {pnt=ret, sys=retsys}),
+   })
 
    -- Force unboard
    player.unboard()

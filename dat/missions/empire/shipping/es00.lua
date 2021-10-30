@@ -46,8 +46,8 @@ end
 
 function accept ()
    -- Intro text
-   if not tk.yesno( _("Spaceport Bar"), string.format( _([[You approach the Empire Commander.
-    "Hello, you must be %s. I've heard about you. I'm Commander Soldner. We've got some harder missions for someone like you in the Empire Shipping division. There would be some real danger involved in these missions, unlike the ones you've recently completed for the division. Would you be up for the challenge?"]]), player.name() ) ) then
+   if not tk.yesno( _("Spaceport Bar"), fmt.f( _([[You approach the Empire Commander.
+    "Hello, you must be {player}. I've heard about you. I'm Commander Soldner. We've got some harder missions for someone like you in the Empire Shipping division. There would be some real danger involved in these missions, unlike the ones you've recently completed for the division. Would you be up for the challenge?"]]), {player=player.name()} ) ) then
       misn.finish()
    end
 
@@ -62,13 +62,14 @@ function accept ()
    reward = 500e3
    misn.setTitle(_("Prisoner Exchange"))
    misn.setReward( fmt.credits(reward) )
-   misn.setDesc( string.format(_("Go to %s in the %s system to exchange prisoners with the FLF"), dest:name(), destsys:name()))
+   misn.setDesc( fmt.f(_("Go to {pnt} in the {sys} system to exchange prisoners with the FLF"), {pnt=dest, sys=destsys}) )
 
    -- Flavour text and mini-briefing
-   tk.msg( _("Prisoner Exchange"), string.format( _([["We've got a prisoner exchange set up with the FLF to take place on %s in the %s system. They want a more neutral pilot to do the exchange. You would have to go to %s with some FLF prisoners aboard your ship and exchange them for some of our own. You won't have visible escorts but we will have your movements watched by ships in nearby sectors.
-    "Once you get the men they captured back, bring them over to %s in %s for debriefing. You'll be compensated for your troubles. Good luck."]]), dest:name(), destsys:name(),
-         dest:name(), ret:name(), retsys:name() ))
-   misn.osdCreate(_("Prisoner Exchange"), {_("Go to %s in the %s system to exchange prisoners with the FLF"):format(dest:name(),destsys:name())})
+   tk.msg( _("Prisoner Exchange"), fmt.f( _([["We've got a prisoner exchange set up with the FLF to take place on {dest_pnt} in the {dest_sys} system. They want a more neutral pilot to do the exchange. You would have to go to {dest_pnt} with some FLF prisoners aboard your ship and exchange them for some of our own. You won't have visible escorts but we will have your movements watched by ships in nearby sectors.
+    "Once you get the men they captured back, bring them over to {ret_pnt} in {ret_sys} for debriefing. You'll be compensated for your troubles. Good luck."]]), {dest_pnt=dest, dest_sys=destsys, ret_pnt=ret, ret_sys=retsys} ))
+   misn.osdCreate(_("Prisoner Exchange"), {
+      fmt.f(_("Go to {pnt} in the {sys} system to exchange prisoners with the FLF"), {pnt=dest, sys=destsys}),
+   })
    -- Set up the goal
    local c = misn.cargoNew( N_("Prisoners"), N_("FLF prisoners.") )
    prisoners = misn.cargoAdd( c, 0 )
@@ -94,8 +95,10 @@ function land ()
          tk.msg(_("Prisoner Exchange"), _([[All of a sudden a siren blares and you hear shooting break out. You quickly start your engines and prepare for take off. Shots ring out all over the landing bay and you can see a couple of corpses as you leave the starport. You remember the explosives just as loud explosions go off behind you. This doesn't look good at all.
     You start your climb out of the atmosphere and notice how you're picking up many FLF and Dvaered ships. Looks like you're going to have quite a run to get the hell out of here. It didn't go as you expected.]]) )
          misn.markerMove( misn_marker, retsys )
-         misn.setDesc( string.format(_("Return to %s in the %s system to report what happened"), ret:name(), retsys:name()))
-         misn.osdCreate(_("Prisoner Exchange"), {_("Return to %s in the %s system to report what happened"):format(ret:name(),retsys:name())})
+         misn.setDesc( fmt.f(_("Return to {pnt} in the {sys} system to report what happened"), {pnt=ret, sys=retsys}) )
+         misn.osdCreate(_("Prisoner Exchange"), {
+            fmt.f(_("Return to {pnt} in the {sys} system to report what happened"), {pnt=ret, sys=retsys}),
+         })
 
          -- Prevent players from saving on the destination planet
          player.allowSave(false)
