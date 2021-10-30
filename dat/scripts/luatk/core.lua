@@ -104,7 +104,20 @@ function luatk.mousemoved( mx, my )
 
    return false
 end
-function luatk.keypressed( _key )
+function luatk.keypressed( key )
+   local wdw = luatk._windows[ #luatk._windows ]
+   if not wdw then return false end
+
+   if key=="enter" then
+      if wdw.accept then
+         return wdw:accept()
+      end
+   elseif key=="escape" then
+      if wdw.cancel then
+         return wdw:cancel()
+      end
+   end
+
    return false
 end
 
@@ -166,6 +179,12 @@ function luatk.close ()
    if luatk._love then
       le.quit()
    end
+end
+function luatk.Window:setAccept( func )
+   self.accept = func
+end
+function luatk.Window:setCancel( func )
+   self.cancel = func
 end
 
 --[[
@@ -403,6 +422,12 @@ function luatk.msg( title, msg )
    end
 
    local wdw = luatk.newWindow( nil, nil, w, 110 + h )
+   local function wdw_done( wdw )
+      wdw:destroy()
+      return true
+   end
+   wdw:setAccept( wdw_done )
+   wdw:setCancel( wdw_done )
    luatk.newText( wdw, 0, 10, w, 20, title, nil, "center" )
    luatk.newText( wdw, 20, 40, w-40, h, msg )
    luatk.newButton( wdw, (w-50)/2, h+110-20-30, 50, 30, _("OK"), function( wgt )
