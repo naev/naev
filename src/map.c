@@ -113,6 +113,7 @@ static void map_drawMarker( double x, double y, double r, double a,
 static int map_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
       double w, double h, double rx, double ry, void *data );
 /* Misc. */
+static void map_setup (void);
 static void map_reset (void);
 static int map_keyHandler( unsigned int wid, SDL_Keycode key, SDL_Keymod mod );
 static void map_buttonZoom( unsigned int wid, const char* str );
@@ -162,33 +163,8 @@ static int map_keyHandler( unsigned int wid, SDL_Keycode key, SDL_Keymod mod )
    return 0;
 }
 
-/**
- * @brief Opens the map window.
- */
-void map_open (void)
+static void map_setup (void)
 {
-   unsigned int wid;
-   StarSystem *cur;
-   int w, h, x, y, rw;
-   const int indent = MAP_TEXT_INDENT;
-
-   /* Not displaying commodities */
-   map_minimal_mode = player.map_minimal;
-   map_reset();
-   listMapModeVisible = 0;
-
-   /* Not under manual control. */
-   if (pilot_isFlag( player.p, PILOT_MANUAL_CONTROL ))
-      return;
-
-   /* Destroy window if exists. */
-   wid = window_get(MAP_WDWNAME);
-   if (wid > 0) {
-      if (window_isTop(wid))
-         window_destroy( wid );
-      return;
-   }
-
    /* Mark systems as discovered as necessary. */
    for (int i=0; i<array_size(systems_stack); i++) {
       StarSystem *sys = &systems_stack[i];
@@ -234,12 +210,43 @@ void map_open (void)
          sys_setFlag( sys, SYSTEM_DISCOVERED );
    }
 
+   /* mark systems as needed */
+   mission_sysMark();
+}
+
+/**
+ * @brief Opens the map window.
+ */
+void map_open (void)
+{
+   unsigned int wid;
+   StarSystem *cur;
+   int w, h, x, y, rw;
+   const int indent = MAP_TEXT_INDENT;
+
+   /* Not displaying commodities */
+   map_minimal_mode = player.map_minimal;
+   map_reset();
+   listMapModeVisible = 0;
+
+   /* Not under manual control. */
+   if (pilot_isFlag( player.p, PILOT_MANUAL_CONTROL ))
+      return;
+
+   /* Destroy window if exists. */
+   wid = window_get(MAP_WDWNAME);
+   if (wid > 0) {
+      if (window_isTop(wid))
+         window_destroy( wid );
+      return;
+   }
+
+   /* Set up stuff. */
+   map_setup();
+
    /* set position to focus on current system */
    map_xpos = cur_system->pos.x;
    map_ypos = cur_system->pos.y;
-
-   /* mark systems as needed */
-   mission_sysMark();
 
    /* Attempt to select current map if none is selected */
    if (map_selected == -1)
@@ -2606,8 +2613,8 @@ void map_show( int wid, int x, int y, int w, int h, double zoom )
 {
    StarSystem *sys;
 
-   /* mark systems as needed */
-   mission_sysMark();
+   /* Set up stuff. */
+   map_setup();
 
    /* Set position to focus on current system. */
    map_xpos = cur_system->pos.x * zoom;
