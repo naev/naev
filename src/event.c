@@ -1,7 +1,6 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
 /**
  * @file event.c
  *
@@ -11,8 +10,6 @@
  *  or how they happen.  They can simple do something simple or actually lead up
  *  to and open an entire set of events.
  */
-
-
 /** @cond */
 #include "nstring.h"
 #include <stdint.h>
@@ -44,13 +41,10 @@
 #include "player.h"
 #include "rng.h"
 
-
 #define XML_EVENT_ID          "Events" /**< XML document identifier */
 #define XML_EVENT_TAG         "event" /**< XML event tag. */
 
-
 #define EVENT_FLAG_UNIQUE     (1<<0) /**< Unique event. */
-
 
 /**
  * @brief Event data structure.
@@ -67,19 +61,16 @@ typedef struct EventData_ {
    int priority; /**< Event priority: 0 = main plot, 5 = default, 10 = insignificant. */
 } EventData;
 
-
 /*
  * Event data.
  */
 static EventData *event_data   = NULL; /**< Allocated event data. */
-
 
 /*
  * Active events.
  */
 static unsigned int event_genid  = 0; /**< Event ID generator. */
 static Event_t *event_active     = NULL; /**< Active events. */
-
 
 /*
  * Prototypes.
@@ -94,25 +85,20 @@ int events_saveActive( xmlTextWriterPtr writer );
 int events_loadActive( xmlNodePtr parent );
 static int events_parseActive( xmlNodePtr parent );
 
-
 /**
  * @brief Gets an event.
  */
 Event_t *event_get( unsigned int eventid )
 {
-   int i;
-   Event_t *ev;
-
    /* Iterate. */
-   for (i=0; i<array_size(event_active); i++) {
-      ev = &event_active[i];
+   for (int i=0; i<array_size(event_active); i++) {
+      Event_t *ev = &event_active[i];
       if (ev->id == eventid)
          return ev;
    }
 
    return NULL;
 }
-
 
 /**
  * @brief Starts an event.
@@ -137,7 +123,6 @@ int event_start( const char *name, unsigned int *id )
    return ret;
 }
 
-
 /**
  * @brief Gets the name of the event data.
  *
@@ -152,7 +137,6 @@ const char *event_getData( unsigned int eventid )
 
    return event_data[ ev->data ].name;
 }
-
 
 /**
  * @brief Checks to see if an event is unique.
@@ -169,7 +153,6 @@ int event_isUnique( unsigned int eventid )
    return !!(event_data[ ev->data ].flags & EVENT_FLAG_UNIQUE);
 }
 
-
 /**
  * @brief Generates a new event ID.
  */
@@ -181,7 +164,6 @@ static unsigned int event_genID (void)
    } while (event_get(id) != NULL);
    return id;
 }
-
 
 /**
  * @brief Creates an event.
@@ -240,7 +222,6 @@ static int event_create( int dataid, unsigned int *id )
    return 0;
 }
 
-
 /**
  * @brief Cleans up an event.
  *
@@ -262,7 +243,6 @@ static void event_cleanup( Event_t *ev )
       claim_destroy( ev->claims );
 }
 
-
 /**
  * @brief Removes an event by ID.
  *
@@ -270,12 +250,9 @@ static void event_cleanup( Event_t *ev )
  */
 void event_remove( unsigned int eventid )
 {
-   int i;
-   Event_t *ev;
-
    /* Find the event. */
-   for (i=0; i<array_size(event_active); i++) {
-      ev = &event_active[i];
+   for (int i=0; i<array_size(event_active); i++) {
+      Event_t *ev = &event_active[i];
       if (ev->id == eventid) {
          /* Clean up event. */
          event_cleanup(ev);
@@ -289,7 +266,6 @@ void event_remove( unsigned int eventid )
    WARN(_("Event ID '%u' not valid."), eventid);
 }
 
-
 /**
  * @brief Checks to see if an event should be saved.
  */
@@ -301,7 +277,6 @@ int event_save( unsigned int eventid )
    return ev->save;
 }
 
-
 /**
  * @brief Check to see if an event is already running.
  *
@@ -309,19 +284,15 @@ int event_save( unsigned int eventid )
  */
 int event_alreadyRunning( int data )
 {
-   int i;
-   Event_t *ev;
-
    /* Find events. */
-   for (i=0; i<array_size(event_active); i++) {
-      ev = &event_active[i];
+   for (int i=0; i<array_size(event_active); i++) {
+      Event_t *ev = &event_active[i];
       if (ev->data == data)
          return 1;
    }
 
    return 0;
 }
-
 
 /**
  * @brief Runs all the events matching a trigger.
@@ -369,7 +340,6 @@ void events_trigger( EventTrigger_t trigger )
       claim_activateAll();
 }
 
-
 /**
  * @brief Loads up an event from an XML node.
  *
@@ -379,8 +349,7 @@ void events_trigger( EventTrigger_t trigger )
  */
 static int event_parseXML( EventData *temp, const xmlNodePtr parent )
 {
-   xmlNodePtr node, cur;
-   char *buf;
+   xmlNodePtr node;
 
    memset( temp, 0, sizeof(EventData) );
 
@@ -398,7 +367,7 @@ static int event_parseXML( EventData *temp, const xmlNodePtr parent )
 
       /* Trigger. */
       if (xml_isNode(node,"trigger")) {
-         buf = xml_get(node);
+         char *buf = xml_get(node);
          if (buf == NULL)
             WARN(_("Event '%s': Null trigger type."), temp->name);
          else if (strcmp(buf,"enter")==0)
@@ -417,7 +386,7 @@ static int event_parseXML( EventData *temp, const xmlNodePtr parent )
 
       /* Flags. */
       else if (xml_isNode(node,"flags")) { /* set the various flags */
-         cur = node->children;
+         xmlNodePtr cur = node->children;
          do {
             xml_onlyNodes(cur);
             if (xml_isNode(cur,"unique")) {
@@ -430,7 +399,8 @@ static int event_parseXML( EventData *temp, const xmlNodePtr parent )
       }
 
       /* Notes for the python mission mapping script. */
-      else if (xml_isNode(node,"notes")) continue;
+      else if (xml_isNode(node,"notes"))
+         continue;
 
       /* Condition. */
       xmlr_strd(node,"cond",temp->cond);
@@ -456,7 +426,6 @@ static int event_parseXML( EventData *temp, const xmlNodePtr parent )
    return 0;
 }
 
-
 static int event_cmp( const void* a, const void* b )
 {
    const EventData *ea, *eb;
@@ -469,7 +438,6 @@ static int event_cmp( const void* a, const void* b )
    return strcmp( ea->name, eb->name );
 }
 
-
 /**
  * @brief Loads all the events.
  *
@@ -477,13 +445,10 @@ static int event_cmp( const void* a, const void* b )
  */
 int events_load (void)
 {
-   int    i;
-   char **event_files;
-
    /* Run over events. */
-   event_files = ndata_listRecursive( EVENT_DATA_PATH );
-   event_data  = array_create_size( EventData, array_size( event_files ) );
-   for ( i = 0; i < array_size( event_files ); i++ ) {
+   char **event_files = ndata_listRecursive( EVENT_DATA_PATH );
+   event_data = array_create_size( EventData, array_size( event_files ) );
+   for (int i=0; i < array_size( event_files ); i++) {
       event_parseFile( event_files[ i ] );
       free( event_files[ i ] );
    }
@@ -497,7 +462,6 @@ int events_load (void)
 
    return 0;
 }
-
 
 /**
  * @brief Parses an event file.
@@ -578,7 +542,6 @@ static int event_parseFile( const char* file )
    return 0;
 }
 
-
 /**
  * @brief Frees an EventData structure.
  *
@@ -595,38 +558,31 @@ static void event_freeData( EventData *event )
 #endif /* DEBUGGING */
 }
 
-
 /**
  * @brief Cleans up and removes active events.
  */
 void events_cleanup (void)
 {
-   int i;
-
    /* Free active events. */
-   for (i=0; i<array_size(event_active); i++)
+   for (int i=0; i<array_size(event_active); i++)
       event_cleanup( &event_active[i] );
    array_free(event_active);
    event_active = NULL;
 }
-
 
 /**
  * @brief Exits the event subsystem.
  */
 void events_exit (void)
 {
-   int i;
-
    events_cleanup();
 
    /* Free data. */
-   for (i=0; i<array_size(event_data); i++)
+   for (int i=0; i<array_size(event_data); i++)
       event_freeData( &event_data[i] );
    array_free(event_data);
    event_data  = NULL;
 }
-
 
 /**
  * @brief Gets the event data id from name.
@@ -636,15 +592,12 @@ void events_exit (void)
  */
 int event_dataID( const char *evdata )
 {
-   int i;
-
-   for (i=0; i<array_size(event_data); i++)
+   for (int i=0; i<array_size(event_data); i++)
       if (strcmp(event_data[i].name, evdata)==0)
          return i;
    WARN(_("No event data found matching name '%s'."), evdata);
    return -1;
 }
-
 
 /**
  * @brief Gets the event data name from id.
@@ -657,20 +610,16 @@ const char *event_dataName( int dataid )
    return event_data[dataid].name;
 }
 
-
 /**
  * @brief Activates all the active event claims.
  */
 void event_activateClaims (void)
 {
-   int i;
-
    /* Free active events. */
-   for (i=0; i<array_size(event_active); i++)
+   for (int i=0; i<array_size(event_active); i++)
       if (event_active[i].claims != NULL)
          claim_activate( event_active[i].claims );
 }
-
 
 /**
  * @brief Tests to see if an event has claimed a system.
@@ -685,18 +634,14 @@ int event_testClaims( unsigned int eventid, int sys )
    return claim_testSys( ev->claims, sys );
 }
 
-
 /**
  * @brief Checks the event validity and cleans up after them.
  */
 void event_checkValidity (void)
 {
-   int i;
-   Event_t *ev;
-
    /* Iterate. */
-   for (i=0; i<array_size(event_active); i++) {
-      ev = &event_active[i];
+   for (int i=0; i<array_size(event_active); i++) {
+      Event_t *ev = &event_active[i];
 
       /* Check if has children. */
       if (hook_hasEventParent( ev->id ) > 0)
@@ -710,7 +655,6 @@ void event_checkValidity (void)
    }
 }
 
-
 /**
  * @brief Saves the player's active events.
  *
@@ -719,13 +663,10 @@ void event_checkValidity (void)
  */
 int events_saveActive( xmlTextWriterPtr writer )
 {
-   int i;
-   Event_t *ev;
-
    xmlw_startElem(writer,"events");
 
-   for (i=0; i<array_size(event_active); i++) {
-      ev = &event_active[i];
+   for (int i=0; i<array_size(event_active); i++) {
+      Event_t *ev = &event_active[i];
       if (!ev->save) /* Only save events that want to be saved. */
          continue;
 
@@ -752,7 +693,6 @@ int events_saveActive( xmlTextWriterPtr writer )
    return 0;
 }
 
-
 /**
  * @brief Loads the player's active events from a save.
  *
@@ -774,7 +714,6 @@ int events_loadActive( xmlNodePtr parent )
 
    return 0;
 }
-
 
 /**
  * @brief Parses the actual individual event nodes.
@@ -836,5 +775,3 @@ static int events_parseActive( xmlNodePtr parent )
 
    return 0;
 }
-
-
