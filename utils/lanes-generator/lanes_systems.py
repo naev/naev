@@ -8,7 +8,7 @@ import xml.etree.ElementTree as ET
 
 
 Asset = namedtuple('Asset', 'x y presences')
-Faction = namedtuple('Faction', 'generators invisible lane_length_per_presence useshiddenjumps')
+Faction = namedtuple('Faction', 'generators invisible lane_base_cost lane_length_per_presence useshiddenjumps')
 FactionPresence = namedtuple('FactionPresence', 'facname presence')
 Generator = namedtuple('Generator', 'faction weight')
 
@@ -43,6 +43,7 @@ def readFactions(path):
         full[elem.findtext('name')] = Faction(
             [Generator(gen.text, float(gen.attrib['weight'])) for gen in elem.findall('generator')],
             bool(elem.find('invisible')),
+            float(elem.findtext('lane_base_cost', 0)),
             float(elem.findtext('lane_length_per_presence', 0)),
             bool(elem.find('useshiddenjumps')),
         )
@@ -90,6 +91,7 @@ class Systems:
         facinfo = readFactions( '../../dat/faction.xml' )
 
         self.facnames = list(facinfo)
+        self.lane_base_cost    = {i: facinfo[facname].lane_base_cost           for i, facname in enumerate(self.facnames)}
         self.dist_per_presence = {i: facinfo[facname].lane_length_per_presence for i, facname in enumerate(self.facnames)}
         factions = {name: i for (i, name) in enumerate(self.facnames)}
 

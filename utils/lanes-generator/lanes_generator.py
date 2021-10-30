@@ -22,6 +22,7 @@ FACTIONS_LANES_BUILT_PER_ITERATION = 1
 MAX_ITERATIONS = 20
 MIN_ANGLE = 10*math.pi/180 # Path triangles can't be more acute.
 ALPHA = 9  # Lane efficiency parameter.
+LAMBDA = 2e10 # Regularization term.
 
 def inSysStiff( nodess, factass, g2ass, loc2globNs ):
     '''Compute insystem paths. TODO maybe : use Delauney triangulation instead?'''
@@ -327,7 +328,9 @@ def activateBestFact( problem, gl, activated, Lfaction, pres_c, pres_0, iters_do
                 prev_nactivated = nactivated
                 for k in ind:
                     faction_may_build = ((f in sr[k]) or (sr[k] == (-1, -1))) and ((f in vf[si[k]] or f in vf[sj[k]]) or not iters_done)
-                    if (not activated[k]) and (pres_c[i][f] >= 1/sv[k] / systems.dist_per_presence[f]) and faction_may_build:
+                    cost = 1/sv[k] / systems.dist_per_presence[f] + systems.lane_base_cost[f]
+                    score = g1l[f][k, 0] + LAMBDA
+                    if (not activated[k]) and pres_c[i][f] >= cost and faction_may_build and score < 0:
                         pres_c[i][f] -= 1/sv[k] / systems.dist_per_presence[f]
                         for vi in si[k], sj[k]:
                             if f not in vf[vi]:
