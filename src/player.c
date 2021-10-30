@@ -3308,7 +3308,6 @@ static Planet* player_parse( xmlNodePtr parent )
       xmlr_strd(node, "gui", player.gui);
       xmlr_int(node, "guiOverride", player.guiOverride);
       xmlr_int(node, "mapOverlay", map_overlay_enabled);
-      ovr_setOpen(map_overlay_enabled);
       xmlr_float(node, "radar_res", player.radar_res);
       xmlr_int(node, "eq_outfitMode", player.eq_outfitMode);
       xmlr_int(node, "map_minimal", player.map_minimal);
@@ -3474,6 +3473,7 @@ static Planet* player_parse( xmlNodePtr parent )
    /* initialize the system */
    space_init( sys->name );
    map_clear(); /* sets the map up */
+   ovr_setOpen(map_overlay_enabled);
 
    /* initialize the sound */
    player_initSound();
