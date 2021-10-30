@@ -7,7 +7,7 @@ local fmt = require 'format'
 local der = require "common.derelict"
 
 local loot_mod
-local special_col = {0.83,0.69,0.22}
+local special_col = {0.7, 0.45, 0.22} -- Dark Gold
 
 local function outfit_loot( o )
    return {
@@ -76,7 +76,7 @@ function compute_lootables ( plt )
    for _k,c in ipairs(clist) do
       c.c = commodity.get(c.name)
    end
-   table.sort( plt:cargoList(), function( a, b )
+   table.sort( clist, function( a, b )
       -- Handle mission cargoes first
       if a.m and not b.m then
          return true
@@ -91,7 +91,7 @@ function compute_lootables ( plt )
       elseif ap~=0 and bp==0 then
          return true
       end
-      return ap < bp
+      return ap > bp
    end )
    for _k,c in ipairs(clist) do
       table.insert( lootables, cargo_loot( c.c, c.q, c.m ) )
@@ -126,7 +126,7 @@ function wgtBoard:draw( bx, by )
    if a < 1 then
       lg.setColor( luatk.colour.outline )
       lg.rectangle( "fill", x-1, y-1, w+2, h+2 )
-      lg.setColor( {0,0,0} )
+      lg.setColor( (l and l.bg) or {0,0,0} )
       lg.rectangle( "fill", x, y, w, h )
    end
    if a > 0 then
