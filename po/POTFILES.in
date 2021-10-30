@@ -2246,6 +2246,7 @@ dat/events/neutral/shipwreck.lua
 dat/events/neutral/travelling_merchant.lua
 dat/events/pirate/shipcheck.lua
 dat/events/proteron/blockade.lua
+dat/events/restricted.lua
 dat/events/shiplog.lua
 dat/events/sirius/achack04.lua
 dat/events/sirius/preach.lua
