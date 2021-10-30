@@ -87,7 +87,7 @@ static void ovr_refresh_uzawa_overlap( float *forces_x, float *forces_y,
 static int ovr_safelaneKnown( SafeLane *sf, Vector2d *posns[2] );
 static void map_overlayToScreenPos( double *ox, double *oy, double x, double y );
 /* Markers. */
-static void ovr_mrkRenderAll( double res );
+static void ovr_mrkRenderAll( double res, int fg );
 static void ovr_mrkCleanup(  ovr_marker_t *mrk );
 static ovr_marker_t *ovr_mrkNew (void);
 
@@ -685,8 +685,8 @@ void ovr_render( double dt )
    array_free( ovr_render_safelanes );
    ovr_render_safelanes = safelanes;
 
-   /* Render markers. */
-   ovr_mrkRenderAll( res );
+   /* Render markers background. */
+   ovr_mrkRenderAll( res, 0 );
 
    /* Check if player has goto target. */
    if (player_isFlag(PLAYER_AUTONAV) && (player.autonav == AUTONAV_POS_APPROACH)) {
@@ -829,6 +829,9 @@ void ovr_render( double dt )
       glDisableVertexAttribArray( shaders.texture.vertex );
    }
 
+   /* Render markers foreground. */
+   ovr_mrkRenderAll( res, 1 );
+
    /* Render the targeted pilot */
    if (t!=0)
       gui_renderPilot( pstk[t], RADAR_RECT, w, h, res, 1 );
@@ -842,19 +845,21 @@ void ovr_render( double dt )
  *
  *    @param res Resolution to render at.
  */
-static void ovr_mrkRenderAll( double res )
+static void ovr_mrkRenderAll( double res, int fg )
 {
    (void) res;
    for (int i=0; i<array_size(ovr_markers); i++) {
       double x, y;
       ovr_marker_t *mrk = &ovr_markers[i];
-
       map_overlayToScreenPos( &x, &y, mrk->u.pt.x, mrk->u.pt.y );
-      glUseProgram( shaders.hilight.program );
-      glUniform1f( shaders.hilight.dt, ovr_dt );
-      gl_renderShader( x, y, 9., 9., 0., &shaders.hilight, &cRadar_hilight, 1 );
 
-      if (mrk->text != NULL)
+      if (!fg) {
+         glUseProgram( shaders.hilight.program );
+         glUniform1f( shaders.hilight.dt, ovr_dt );
+         gl_renderShader( x, y, 9., 9., 0., &shaders.hilight, &cRadar_hilight, 1 );
+      }
+
+      if (fg && mrk->text != NULL)
          gl_printMarkerRaw( &gl_smallFont, x+10., y-gl_smallFont.h/2., &cRadar_hilight, mrk->text );
    }
 }
