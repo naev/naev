@@ -87,6 +87,7 @@ stds.AI.globals = {
    "mem",
    "refuel",
 }
+stds.API_board = {globals={"board"}}    -- C function: player_board()
 stds.API_comm = {globals={"comm"}}      -- C function: comm_openPilot()
 stds.API_autoequip = {globals={"autoequip"}}            -- C function: equipment_autoequipShip()
 stds.API_equip = {globals={"equip", "equip_generic"}}   -- C function: ai_create
@@ -165,6 +166,7 @@ table.insert(stds.PilotOutfit.globals, "mem")
 files["ai/**/*.lua"].std = STANDARD .. "+AI"
 files["autoequip.lua"].std = STANDARD .. TK .. "+API_autoequip"
 files["bkg/*.lua"].std = STANDARD .. "+Tex+Col+Background+Camera"
+files["board.lua"].std = STANDARD .. "+API_board"
 files["comm.lua"].std = STANDARD .. "+API_comm"
 files["events/**/*.lua"].std = STANDARD .. "+Evt+Hook+Camera+Tex+Background+Music+Audio" .. TK
 files["factions/equip/*.lua"].std = STANDARD .. "+API_equip"
