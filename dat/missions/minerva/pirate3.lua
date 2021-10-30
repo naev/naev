@@ -371,6 +371,14 @@ function harper_hail ()
       return ""
    end
 
+   local function payhim( amount )
+      return string.format(_("Pay him %s%s"),fmt.credits(amount),enoughcreds(amount))
+   end
+
+   local function offer( amount )
+      return string.format(_([[Offer %s%s]]), fmt.credits(amount), enoughcreds(amount))
+   end
+
    local function _harper_done ()
       harper_gotticket = true
       harper_nospawn = true
@@ -390,7 +398,7 @@ function harper_hail ()
 He gulps.
 "How about I give you the ticket for a mere {credits}?]]), {credits=fmt.credits(harper_bribe_sml)}))
       vn.menu( {
-         { string.format(_("Pay him %s%s"),fmt.credits(harper_bribe_sml),enoughcreds(harper_bribe_sml)), "pay" },
+         { payhim(harper_bribe_sml), "pay" },
          { _("Threaten him"), "threaten" },
       } )
 
@@ -416,7 +424,7 @@ He coughs nervously.]]))
       h(_([[He laughs nervously.
 "You have to be killing right? You wouldn't kill me in cold blood would you? I have a family waiting for me back home.]]))
       vn.menu( {
-         { string.format(_("Pay him %s%s"),fmt.credits(harper_bribe_sml),enoughcreds(harper_bribe_sml)), "pay" },
+         { payhim(harper_bribe_sml), "pay" },
          { _("Aim your weapons at him"), "threaten2" },
       } )
 
@@ -424,7 +432,7 @@ He coughs nervously.]]))
       h(_([["I have a daughter! She is turning 5 soon. You wouldn't be so cold-hearted to leave her an orphan would you?"
 He is sweating profusely.]]))
       vn.menu( {
-         { string.format(_("Pay him %s%s"),fmt.credits(harper_bribe_sml),enoughcreds(harper_bribe_sml)), "pay" },
+         { payhim(harper_bribe_sml), "pay" },
          { _("Prime your weapon systems"), "threaten3" },
       } )
 
@@ -511,10 +519,8 @@ He scoffs at you and closes the transmission.]]))
    h(_([["I don't know. This is very valuable you know? What would you trade for it?"]]))
    vn.menu( function ()
       local opts = {
-         { string.format(_([[Offer %s%s]]), fmt.credits(harper_bribe_big),
-            enoughcreds(harper_bribe_big)), "money_big" },
-         { string.format(_([[Offer %s%s]]), fmt.credits(harper_bribe_sml),
-            enoughcreds(harper_bribe_sml)), "money_sml" },
+         { offer(harper_bribe_big), "money_big" },
+         { offer(harper_bribe_sml), "money_sml" },
          {_("End transmission"), "leave" },
       }
       if minerva.tokens_get() > harper_bribe_tkn then
@@ -562,8 +568,7 @@ He scoffs at you and closes the transmission.]]))
    end )
    h(fmt.f(_([["{credits} only? I spent more than that gambling just to get this ticket."]]), {credits=fmt.credits(harper_bribe_sml)}))
    vn.menu( {
-      { string.format(_([[Offer %s%s]]), fmt.credits(harper_bribe_big),
-         enoughcreds(harper_bribe_big)), "money_big" },
+      { offer(harper_bribe_big), "money_big" },
       {_("End transmission"), "leave" },
    } )
 
