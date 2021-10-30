@@ -1049,9 +1049,22 @@ end
 -- Just loitering around.
 --]]
 function loiter( target )
-   local dir      = ai.face( target, nil, true )
-   local dist     = ai.dist( target )
+   local dir   = ai.face( target, nil, true )
+   local dist  = ai.dist( target )
    if dist < 200 then
+      ai.poptask()
+      return
+   end
+   if dir < 10 then
+      ai.accel()
+   end
+end
+-- Last vertex, so poptask when at brakedistance
+function loiter_last( target )
+   local dir   = ai.face( target, nil, true )
+   local dist  = ai.dist( target )
+   local bdist = ai.minbrakedist()
+   if dist < bdist then
       ai.poptask()
       return
    end
