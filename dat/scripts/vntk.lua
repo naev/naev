@@ -68,7 +68,7 @@ function vntk.yesno( title, text, params )
    for k,t in ipairs(text) do
       c( t )
       if k==menu then
-         vn.menu{ 
+         vn.menu{
             {_("Yes"), "yes"},
             {_("No"), "no"},
          }

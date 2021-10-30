@@ -135,7 +135,7 @@ function wgtBoard:draw( bx, by )
 end
 function wgtBoard:clicked( _mx, _my, btn )
    if not self.loot then return end
-   
+
    if btn==1 then
       self.selected = not self.selected
    elseif btn==2 then
@@ -162,7 +162,7 @@ function board( plt )
    font:setOutline(1)
    luatk.setDefaultFont( font )
 
-   local w, h = 480,310 
+   local w, h = 480,310
    local wdw = luatk.newWindow( nil, nil, w, h )
    board_wdw = wdw
 

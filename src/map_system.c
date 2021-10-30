@@ -502,7 +502,7 @@ static void map_system_render( double bx, double by, double w, double h, void *d
         logo = faction_logo( p->presence.faction );
         if (logo != NULL)
            gl_renderScale( logo, bx + pitch + nameWidth + 200, by + h - 21, 20, 20, &cWhite );
-        
+
         snprintf( factionBuf, 64, "%s", faction_shortname( p->presence.faction ) );
         gl_printTextRaw( &gl_smallFont, (w - nameWidth-pitch - 60) / 2, 20,
             bx+pitch+nameWidth + 230, by + h - 31, 0, &cFontWhite, -1., factionBuf );
@@ -867,7 +867,7 @@ static void map_system_genOutfitsList( unsigned int wid, float goodsSpace, float
    /* set up the outfits to buy/sell */
    if (cur_planetObj_sel == NULL)
       return;
-  
+
    /* No outfitter. */
    if (!planet_hasService( cur_planetObj_sel, PLANET_SERVICE_OUTFITS ))
       return;
@@ -970,7 +970,7 @@ static void map_system_genTradeList( unsigned int wid, float goodsSpace, float o
          window_destroyWidget( wid, MAPSYS_TRADE );
       }
    }
-   
+
    /* goods list */
    if (cur_planetObj_sel == NULL)
       return;
@@ -980,9 +980,9 @@ static void map_system_genTradeList( unsigned int wid, float goodsSpace, float o
       return;
 
    planetDone = cur_planetObj_sel;
-   
+
    ngoods = array_size( cur_planetObj_sel->commodities );
-   
+
    if (ngoods <= 0)
       return;
    cgoods = calloc( ngoods, sizeof(ImageArrayCell) );
