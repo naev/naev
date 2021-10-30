@@ -25,7 +25,9 @@ function opt.update( dt )
 end
 
 function opt.open ()
-   luatk.setDefaultFont( graphics.newFont(naev.conf().font_size_def) )
+   local font = lg.newFont(naev.conf().font_size_def)
+   font:setOutline(1)
+   luatk.setDefaultFont( font )
 
    local w = 400
    local h = 200
