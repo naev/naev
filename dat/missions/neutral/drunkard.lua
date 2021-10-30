@@ -58,7 +58,7 @@ function accept ()
       -- mission details
       misn.setTitle( _("Drunkard") )
       misn.setReward( _("More than it's worth!") )
-      misn.setDesc( _("You've decided to help some drunkard at the bar by picking up some goods for some countess. Though you're not sure why you accepted."):format(pickupWorld:name(), pickupSys:name(), delivWorld:name(), delivSys:name() ) )
+      misn.setDesc( _("You've decided to help some drunkard at the bar by picking up some goods for some countess. Though you're not sure why you accepted.") )
 
       pickedup = false
       droppedoff = false
@@ -66,12 +66,12 @@ function accept ()
       marker = misn.markerAdd( pickupSys, "low" )  -- pickup
       -- OSD
       misn.osdCreate( _("Help the Drunkard"), {
-         _("Go pickup some goods at %s in the %s system"):format(pickupWorld:name(), pickupSys:name()),
-         _("Drop off the goods at %s in the %s system"):format(delivWorld:name(), delivSys:name()),
+         fmt.f(_("Go pick up some goods at {pnt} in the {sys} system"), {pnt=pickupWorld, sys=pickupSys}),
+         fmt.f(_("Drop off the goods at {pnt} in the {sys} system"), {pnt=delivWorld, sys=delivSys}),
       } )
 
-      tk.msg( _("Pick Up the Countess's Goods"), _([["Oh, thank the ancestors! I knew you would help me!" The man relaxes considerably and puts his arm around you. "Have a drink while I explain it to you.", he motions to the bartender to bring two drinks over. "You see, I know this countess, she's like...whoa...you know what I mean?", he nudges you. "But she's rich, like personal escort fleet rich, golden shuttles, diamond laser turrets rich.
-    Well, occasionally she needs some things shipped that she can't just ask her driver to go get for her. So, she asks me to go get this package. I don't know what it is; I don't ask; she doesn't tell me; that's the way she likes it. I had just got off this 72 hour run through pirate infested space though, and I was all hopped up on grasshoppers without a hatch to jump. So I decided to get a drink or two and hit the hay. Turned out those drinks er two got a little procreation goin' on and turned into three or twelve. Maybe twenty. I don't know, but they didn't seem too liking to my gamblin', as next thing I knew, I was wakin' up with water splashed on my face, bein' tellered I gots in the hock, and they gots me ship, ye know? But hey, all yous gotta do is go pick up whatever it is she wants at %s in the %s system. I doubt it's anything too hot, but I also doubt it's kittens and rainbows. All I ask is 25 percent. So just go get it, deliver it to %s in the %s system, and don't ask any questions. And if she's there when you drop it off, just tell her I sent you. And don't you be lookin' at her too untoforward, or um, uh, you know what I mean." You figure you better take off before the drinks he's had take any more hold on him, and the bottle sucks you in.]]):format( pickupWorld:name(), pickupSys:name(), delivWorld:name(), delivSys:name() ) )
+      tk.msg( _("Pick Up the Countess's Goods"), fmt.f(_([["Oh, thank the ancestors! I knew you would help me!" The man relaxes considerably and puts his arm around you. "Have a drink while I explain it to you.", he motions to the bartender to bring two drinks over. "You see, I know this countess, she's like...whoa...you know what I mean?", he nudges you. "But she's rich, like personal escort fleet rich, golden shuttles, diamond laser turrets rich.
+    Well, occasionally she needs some things shipped that she can't just ask her driver to go get for her. So, she asks me to go get this package. I don't know what it is; I don't ask; she doesn't tell me; that's the way she likes it. I had just got off this 72 hour run through pirate infested space though, and I was all hopped up on grasshoppers without a hatch to jump. So I decided to get a drink or two and hit the hay. Turned out those drinks er two got a little procreation goin' on and turned into three or twelve. Maybe twenty. I don't know, but they didn't seem too liking to my gamblin', as next thing I knew, I was wakin' up with water splashed on my face, bein' tellered I gots in the hock, and they gots me ship, ye know? But hey, all yous gotta do is go pick up whatever it is she wants at {pickup_pnt} in the {pickup_sys} system. I doubt it's anything too hot, but I also doubt it's kittens and rainbows. All I ask is 25 percent. So just go get it, deliver it to {dropoff_pnt} in the {dropoff_sys} system, and don't ask any questions. And if she's there when you drop it off, just tell her I sent you. And don't you be lookin' at her too untoforward, or um, uh, you know what I mean." You figure you better take off before the drinks he's had take any more hold on him, and the bottle sucks you in.]]), {pickup_pnt=pickupWorld, pickup_sys=pickupSys, dropoff_pnt=delivWorld, dropoff_sys=delivSys} ) )
 
       landhook = hook.land ("land")
       flyhook = hook.takeoff ("takeoff")
@@ -129,7 +129,7 @@ function hail()
    tk.msg( _("Drunkard's Call"), _([["Hello again. It's Willie. I'm just here to inform you that the countess has taken care of your payment and transferred it to your account. And don't worry about me, the countess has covered my portion just fine. I'm just glad to have Ol' Bessy here back."]]) )
 
 --   eventually I'll implement a bonus
---   tk.msg( _("Bonus"), _([["Oh, and she put in a nice bonus for you of %s for such a speedy delivery."]]):format( fmt.credits(bonus) ) )
+--   tk.msg( _("Bonus"), fmt.f(_([["Oh, and she put in a nice bonus for you of {credits} for such a speedy delivery."]]), {credits=fmt.credits(bonus)} ) )
 
    hook.update("closehail")
    player.commClose()
@@ -138,7 +138,7 @@ end
 function closehail()
    bonus = 0
    player.pay( payment )
-   tk.msg( _("Check Account"), _([[You check your account balance as he closes the comm channel to find yourself %s richer. Just being alive felt good, but this feels better. You can't help but think that she might have given him more than just the 25 percent he was asking for, judging by his sunny disposition. At least you have your life though.]]):format( fmt.credits(payment) ) )
+   tk.msg( _("Check Account"), fmt.f(_([[You check your account balance as he closes the comm channel to find yourself {credits} richer. Just being alive felt good, but this feels better. You can't help but think that she might have given him more than just the 25 percent he was asking for, judging by his sunny disposition. At least you have your life though.]]), {credits=fmt.credits(payment)} ) )
    willie:setVisplayer(false)
    willie:setHilight(false)
    willie:setInvincible(false)
