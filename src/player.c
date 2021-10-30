@@ -1886,13 +1886,14 @@ void player_brokeHyperspace (void)
    /* Add persisted pilots */
    pilot_stack = pilot_getAll();
    for (int i=0; i<array_size(pilot_stack); i++) {
-      if (pilot_isFlag(pilot_stack[i], PILOT_PERSIST) || pilot_isFlag(pilot_stack[i], PILOT_PLAYER)) {
-         pilot_clearHooks(pilot_stack[i]);
-         ai_cleartasks(pilot_stack[i]);
-         if (pilot_stack[i] != player.p)
-            space_calcJumpInPos( cur_system, sys, &pilot_stack[i]->solid->pos, &pilot_stack[i]->solid->vel, &pilot_stack[i]->solid->dir, player.p );
+      Pilot *p = pilot_stack[i];
+      if (pilot_isFlag(p, PILOT_PERSIST) || pilot_isFlag(p, PILOT_PLAYER)) {
+         pilot_clearHooks(p);
+         ai_cleartasks(p);
+         if (p != player.p)
+            space_calcJumpInPos( cur_system, sys, &p->solid->pos, &p->solid->vel, &p->solid->dir, player.p );
          /* Run Lua stuff for all persistant pilots. */
-         pilot_outfitLInitAll( pilot_stack[i] );
+         pilot_outfitLInitAll( p );
       }
    }
 
