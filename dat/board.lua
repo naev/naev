@@ -4,6 +4,7 @@
 local luatk = require 'luatk'
 local lg = require 'love.graphics'
 local fmt = require 'format'
+local der = require "common.derelict"
 
 local loot_mod
 
@@ -147,6 +148,7 @@ local board_wgt
 local board_plt
 local board_freespace
 function board( plt )
+   der.sfx.board:play()
    board_plt = plt
    loot_mod = player.pilot():shipstat("loot_mod", true)
    loot = compute_lootables( plt )
@@ -292,4 +294,5 @@ end
 function board_close ()
    luatk.close()
    board_wdw = nil
+   der.sfx.unboard:play()
 end
