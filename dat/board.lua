@@ -34,12 +34,14 @@ end
 local lootables
 function compute_lootables ( plt )
    lootables = {}
+
+   -- Credits
    local creds = plt:credits()
    if creds > 0 then
       table.insert( lootables, {
          image = nil,
-         text = "Credits",
-         q = plt:credits(),
+         text = _("Credits"),
+         q = creds,
          type = "credits",
          bg = nil,
          alt = nil,
@@ -47,16 +49,26 @@ function compute_lootables ( plt )
       } )
    end
 
+   -- Fuel
+   local fuel = plt:stats().fuel
+   if fuel > 0 then
+      table.insert( lootables, {
+         image = nil,
+         text = _("Fuel"),
+         q = fuel,
+         type = "fuel",
+         bg = nil,
+         alt = nil,
+         data = nil,
+      } )
+   end
+
+   -- Go over cargo
    for _k,c in ipairs(plt:cargoList()) do
       table.insert( lootables, cargo_loot( commodity.get(c.name), c.q ) )
    end
 
-   table.insert( lootables, outfit_loot(outfit.get("Laser Cannon MK1")) )
-
-   -- Set IDs
-   for k,v in ipairs(lootables) do
-      v.id = k
-   end
+   --table.insert( lootables, outfit_loot(outfit.get("Laser Cannon MK1")) )
 
    return lootables
 end
@@ -180,6 +192,28 @@ function board_lootOne( wgt, nomsg )
       looted = true
       clear = true
       player.msg(fmt.f(_("You looted {creds} from {plt}."),{creds=fmt.credits(l.q), plt=board_plt:name()}))
+   elseif l.type=="fuel" then
+      local pp = player.pilot()
+      local ps = pp:stats()
+      local pf = ps.fuel_max - ps.fuel
+      local q = math.min( l.q, pf )
+      -- Unable to loot anything
+      if q <= 0 then
+         if not nomsg then
+            luatk.msg(_("Fuel Tank Full"), _("Your fuel tanks are already full!"))
+         end
+         return false
+      end
+      board_plt:setFuel( board_plt:stats().fuel - q )
+      pp:setFuel( ps.fuel + q )
+      player.msg(fmt.f(_("You looted {amount} fuel from {plt}."),{amount=q, plt=board_plt:name()}))
+      looted = true
+
+      -- Looted all the fuel
+      l.q = l.q - q
+      if l.q <= 0 then
+         clear = true
+      end
    elseif l.type=="outfit" then
       local o = l.data
       player.outfitAdd( o )
@@ -191,7 +225,7 @@ function board_lootOne( wgt, nomsg )
       local c = l.data
       local pp = player.pilot()
       local cf = pp:cargoFree()
-      local q = math.min(l.q, cf)
+      local q = math.min( l.q, cf )
       -- Unable to loot anything
       if q <= 0 then
          if not nomsg then
