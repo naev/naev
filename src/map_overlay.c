@@ -854,9 +854,11 @@ static void ovr_mrkRenderAll( double res, int fg )
       map_overlayToScreenPos( &x, &y, mrk->u.pt.x, mrk->u.pt.y );
 
       if (!fg) {
+         glColour highlighted = cRadar_hilight;
+         highlighted.a = 0.3;
          glUseProgram( shaders.hilight.program );
          glUniform1f( shaders.hilight.dt, ovr_dt );
-         gl_renderShader( x, y, 13., 13., 0., &shaders.hilight, &cRadar_hilight, 1 );
+         gl_renderShader( x, y, 13., 13., 0., &shaders.hilight, &highlighted, 1 );
       }
 
       if (fg && mrk->text != NULL)
