@@ -34,7 +34,6 @@ local dv = require "common.dvaered"
 
 
 text = {}
-osd_desc = {}
 
 text[1] = _([[The liaison's expression then turns wooden, and his voice becomes level. Clearly, he has been briefing people for a long time in his career, so he can probably do this in his sleep. It occurs to you that perhaps he DOES nap while doing this.
     "In the near future, the Dvaered fleet will move against enemies of the state in the %s system. The objective is to seek out and destroy all hostiles. This operation will be headed by the HDSF Obstinate, and all units in this battle will defer to its commanding officer, regardless of class and rank. The Obstinate and its battle group will concentrate on performing bombing runs on the primary target. Your task as an auxiliary unit will be to secure the flanks and engage any hostiles that threaten the success of the mission. Note that once you enter the combat theater, you are considered committed, and your leaving the system will be seen as an act of cowardice and treachery."
@@ -68,11 +67,6 @@ text[6] = _([[Colonel Urnus returns to his seat.
     "Let me tell you one thing, though. I doubt we've quite seen the last of the FLF. We may have dealt them a mortal blow by taking out their hidden base, but as long as rebel sentiment runs high among the Frontier worlds, they will rear their ugly heads again. That means my job isn't over, and maybe it means yours isn't either. Perhaps in the future we'll work together again - but this time it won't be just about removing a threat on our doorstep." Urnus smiles grimly. "It will be about rooting out the source of the problem once and for all."
     As you walk the corridor that leads out of the military complex, the Star of Valor glinting on your lapel, you find yourself thinking about what your decisions might ultimately lead to. Colonel Urnus hinted at war on the Frontier, and he also indicated that you would be involved. While the Dvaered have been treating you as well as can be expected from a military regime, perhaps you might want to reconsider your allegiance when the time comes...]])
 
-osd_desc[1] = _("Fly to the {sys} system")
-osd_desc[2] = _("Defend the HDSF Obstinate and its escorts")
-osd_desc[3] = _("Destroy the FLF base")
-osd_desc[4] = _("Return to {pnt} in the {sys} system")
-
 function create()
     missys = {system.get(var.peek("flfbase_sysname"))}
     if not misn.claim(missys) then
@@ -102,9 +96,12 @@ function accept()
         tk.msg(_("The battlefield awaits"), string.format(text[4], destsys:name()))
 
         misn.accept()
-        osd_desc[1] = fmt.f(osd_desc[1], {sys=destsys})
-        osd_desc[4] = fmt.f(osd_desc[4], {pnt=DVplanet, sys=DVsys})
-        misn.osdCreate(_("Destroy the FLF base!"), osd_desc)
+        misn.osdCreate(_("Destroy the FLF base!"), {
+            fmt.f(_("Fly to the {sys} system"), {sys=destsys}),
+            _("Defend the HDSF Obstinate and its escorts"),
+            _("Destroy the FLF base"),
+            fmt.f(_("Return to {pnt} in the {sys} system"), {pnt=DVplanet, sys=DVsys}),
+        })
         misn.setDesc(_("The Dvaered are poised to launch an all-out attack on the secret FLF base. You have chosen to join this battle for wealth and glory."))
         misn.setReward(_("Wealth and glory"))
         misn.setTitle(_("Destroy the FLF base!"))
