@@ -7,6 +7,7 @@ local fmt = require 'format'
 local der = require "common.derelict"
 
 local loot_mod
+local special_col = {0.83,0.69,0.22}
 
 local function outfit_loot( o )
    return {
@@ -14,21 +15,21 @@ local function outfit_loot( o )
       text = o:name(),
       q = nil,
       type = "outfit",
-      bg = nil,
+      bg = special_col,
       alt = o:description(),
       data = o,
    }
 end
 
 local cargo_image_generic = nil
-local function cargo_loot( c, q )
+local function cargo_loot( c, q, m )
    local icon = c:icon()
    return {
       image = (icon and lg.newImage(icon)) or cargo_image_generic,
       text = c:name(),
       q = math.floor( 0.5 + q*loot_mod ),
       type = "cargo",
-      bg = nil,
+      bg = (m and special_col) or nil,
       alt = c:description(),
       data = c,
    }
@@ -68,7 +69,7 @@ function compute_lootables ( plt )
 
    -- Go over cargo
    for _k,c in ipairs(plt:cargoList()) do
-      table.insert( lootables, cargo_loot( commodity.get(c.name), c.q ) )
+      table.insert( lootables, cargo_loot( commodity.get(c.name), c.q, c.m ) )
    end
 
    --table.insert( lootables, outfit_loot(outfit.get("Laser Cannon MK1")) )
@@ -108,7 +109,7 @@ function wgtBoard:draw( bx, by )
    if a > 0 then
       lg.setColor( {0,1,1,a} )
       lg.rectangle( "fill", x-3, y-3, w+6, h+6 )
-      lg.setColor( {0,0.5*a,0.5*a} )
+      lg.setColor( {0,0.5,0.5,a} )
       lg.rectangle( "fill", x, y, w, h )
    end
    -- Ignore anything that isn't loot from now on
