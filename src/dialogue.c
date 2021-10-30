@@ -281,7 +281,7 @@ void dialogue_msgRaw( const char* caption, const char *msg )
    /* create the window */
    msg_wid = window_create( "dlgMsg", caption, -1, -1, w, 110 + h );
    window_setData( msg_wid, &done );
-   window_addText( msg_wid, 20, -40, w-40, h,  0, "txtMsg",
+   window_addText( msg_wid, 20, -40, w-40, h, 0, "txtMsg",
          font, NULL, msg );
    window_addButton( msg_wid, (w-50)/2, 20, 50, 30, "btnOK", _("OK"),
          dialogue_close );
