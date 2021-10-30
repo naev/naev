@@ -29,15 +29,6 @@ npctext[1] = _([["Hi there! I'm looking to get some piloting experience. Here ar
 npctext[2] = _([["Hello! I'm looking to join someone's fleet. Here's my credentials. What do you say, would you like me on board?"]])
 npctext[3] = _([["Hi! You look like you could use a pilot! I'm available and charge some of the best rates in the galaxy, and I promise you I'm perfect for the job! Here's my info. Well, what do you think? Would you like to add me to your fleet?"]])
 
-local credentials = _([[
-Pilot name: {name}
-Ship: {ship}
-Deposit: {deposit}
-Royalty: {royalty:.1f}% of mission earnings
-
-Money: {credits}
-Current total royalties: {total:.1f}% of mission earnings]])
-
 function create ()
    lastplanet = nil
    lastsys = system.cur()
@@ -53,7 +44,7 @@ function create ()
 end
 
 
-function createPilotNPCs ()
+local function createPilotNPCs ()
    local ship_choices = {
       --{ ship = "Llama",       royalty = 0.05 },
       { ship = "Hyena",       royalty = 0.1 },
@@ -114,21 +105,23 @@ function createPilotNPCs ()
 
       deposit = math.floor((deposit + 0.1*deposit*rnd.sigma()) / 4)
       if deposit <= player.credits() then
-         newpilot.ship = shipchoice.ship
+         newpilot.ship = ship.get(shipchoice.ship)
          newpilot.deposit = deposit
+         newpilot.deposit_text = fmt.credits(newpilot.deposit)
          newpilot.royalty = (
                shipchoice.royalty + 0.05*shipchoice.royalty*rnd.sigma() )
+         newpilot.royalty_percent = newpilot.royalty * 100
          newpilot.name = name_func()
          newpilot.portrait = portrait.get(portrait_arg)
-         newpilot.faction  = fac:nameRaw()
+         newpilot.faction  = fac
          newpilot.approachtext = npctext[rnd.rnd(1, #npctext)]
          local id = evt.npcAdd(
             "approachPilot", _("Pilot for Hire"), newpilot.portrait,
-            string.format(_([[This pilot seems to be looking for work.
+            fmt.f(_([[This pilot seems to be looking for work.
 
-Ship: %s
-Deposit: %s
-Royalty: %.1f%% of mission earnings]]), newpilot.ship, fmt.credits(newpilot.deposit), newpilot.royalty * 100), 9 )
+Ship: {ship}
+Deposit: {deposit_text}
+Royalty: {royalty_percent:.1f}% of mission earnings]]), newpilot), 9 )
 
          npcs[id] = newpilot
       end
@@ -144,6 +137,22 @@ local function getTotalRoyalties ()
       end
    end
    return royalties
+end
+
+
+local function getOfferText( approachtext, edata )
+   local _credits, scredits = player.credits(2)
+   local credentials = _([[
+Pilot name: {name}
+Ship: {ship}
+Deposit: {deposit_text}
+Royalty: {royalty_percent:.1f}% of mission earnings]])
+
+   local finances = _([[
+Money: {credits}
+Current total royalties: {total:.1f}% of mission earnings]])
+   return (approachtext .. "\n\n" .. fmt.f( credentials, edata ) .. "\n\n" ..
+	   fmt.f( finances, {credits=scredits, total=getTotalRoyalties()*100} ))
 end
 
 
@@ -205,6 +214,20 @@ function jumpout ()
       else
          edata.alive = false
       end
+   end
+end
+
+
+-- Pilot is no longer employed by the player
+local function pilot_disbanded( edata )
+   edata.alive = false
+   local p = edata.pilot
+   if p and p:exists() then
+      p:setLeader(nil)
+      p:setVisplayer(false)
+      p:setNoClear(false)
+      p:setFriendly(false)
+      p:hookClear()
    end
 end
 
@@ -279,7 +302,7 @@ function enter ()
             hook.pilot(edata.pilot, "attacked", "pilot_attacked", i)
             hook.pilot(edata.pilot, "hail", "pilot_hail", i)
          else
-            shiplog.append( logidstr, string.format(_("'%s' (%s) has left your employment."), edata.name, edata.ship) )
+            shiplog.append( logidstr, fmt.f(_("'{name}' ({ship}) has left your employment."), edata) )
             pilot_disbanded( edata )
          end
       end
@@ -312,46 +335,30 @@ function standing ()
             and edata.pilot:exists() then
          local f = faction.get(edata.faction)
          if f ~= nil and f:playerStanding() < 0 then
-            shiplog.append( logidstr, string.format(_("'%s' (%s) has left your employment."), edata.name, edata.ship) )
+            shiplog.append( logidstr, fmt.f(_("'{name}' ({ship}) has left your employment."), edata) )
             pilot_disbanded( edata )
          end
       end
    end
 end
 
--- Pilot is no longer employed by the player
-function pilot_disbanded( edata )
-   edata.alive = false
-   local p = edata.pilot
-   if p and p:exists() then
-      p:setLeader(nil)
-      p:setVisplayer(false)
-      p:setNoClear(false)
-      p:setFriendly(false)
-      p:hookClear()
-   end
-end
-
 -- Asks the player whether or not they want to fire the pilot
-function pilot_askFire( edata, npc_id )
+local function pilot_askFire( edata, npc_id )
    local _credits, scredits = player.credits(2)
-   local approachtext = (
-         _([[Would you like to do something with this pilot?
+   local approachtext = _([[Would you like to do something with this pilot?
 
-Pilot credentials:]]) .. "\n\n" .. fmt.f( credentials, {
-            name=edata.name, ship=edata.ship, deposit=fmt.credits(edata.deposit),
-            royalty=edata.royalty*100, credits=scredits, total=getTotalRoyalties()*100 } ) )
+Pilot credentials:]])
 
-   local n, _s = tk.choice( "", approachtext, _("Fire pilot"), _("Do nothing") )
+   local n, _s = tk.choice( "", getOfferText(approachtext, edata), _("Fire pilot"), _("Do nothing") )
    if n == 1 and tk.yesno(
-         "", string.format(
-            _("Are you sure you want to fire %s? This cannot be undone."),
-            edata.name ) ) then
+         "", fmt.f(
+            _("Are you sure you want to fire {name}? This cannot be undone."),
+	    edata ) ) then
       if npc_id then
          evt.npcRm(npc_id)
          npcs[npc_id] = nil
       end
-      shiplog.append( logidstr, string.format(_("You fired '%s' (%s)."), edata.name, edata.ship) )
+      shiplog.append( logidstr, fmt.f(_("You fired '{name}' ({ship})."), edata) )
       pilot_disbanded( edata )
    end
 end
@@ -378,7 +385,7 @@ function pilot_attacked( p, attacker, _dmg, _arg )
          -- just have them all disband at once and attack.
          for i, edata in ipairs(escorts) do
             if edata.pilot and edata.pilot:exists() then
-               shiplog.append( logidstr, string.format(_("You turned on your hired escort '%s' (%s)."), edata.name, edata.ship) )
+               shiplog.append( logidstr, fmt.f(_("You turned on your hired escort '{name}' ({ship})."), edata) )
                pilot_disbanded( edata )
                edata.pilot:setHostile()
             end
@@ -390,7 +397,7 @@ end
 -- Escort got killed
 function pilot_death( _p, _attacker, arg )
    local edata = escorts[arg]
-   shiplog.append( logidstr, string.format(_("'%s' (%s) was killed in combat."), edata.name, edata.ship) )
+   shiplog.append( logidstr, fmt.f(_("'{name}' ({ship}) was killed in combat."), edata) )
    pilot_disbanded( edata )
 end
 
@@ -413,16 +420,11 @@ function approachPilot( npc_id )
       return
    end
 
-   local credits, scredits = player.credits(2)
-   local cstr = fmt.f( credentials, {
-         name=pdata.name, ship=pdata.ship, deposit=fmt.credits(pdata.deposit),
-         royalty=pdata.royalty*100, credits=scredits, total=getTotalRoyalties()*100 } )
-
-   if not tk.yesno("", pdata.approachtext .. "\n\n" .. cstr) then
+   if not tk.yesno("", getOfferText(pdata.approachtext, pdata)) then
       return -- Player rejected offer
    end
 
-   if pdata.deposit and pdata.deposit > credits then
+   if pdata.deposit and pdata.deposit > player.credits() then
       tk.msg("", _("You don't have enough credits to pay for this pilot's deposit."))
       return
    end
@@ -449,6 +451,6 @@ function approachPilot( npc_id )
 
    local edata = escorts[i]
    shiplog.create( logidstr, _("Hired Escorts"), _("Hired Escorts") )
-   shiplog.append( logidstr, string.format(_("You hired a %s ship named '%s' for %s and %.1f%% of mission earnings."), edata.ship, edata.name, fmt.credits(edata.deposit), edata.royalty * 100 ) )
+   shiplog.append( logidstr, fmt.f(_("You hired a {ship} ship named '{name}' for {deposit_text} and {royalty_percent:.1f}% of mission earnings."), edata ) )
 end
 

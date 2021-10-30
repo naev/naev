@@ -26662,17 +26662,19 @@ msgstr ""
 msgid ""
 "Pilot name: {name}\n"
 "Ship: {ship}\n"
-"Deposit: {deposit}\n"
-"Royalty: {royalty:.1f}% of mission earnings\n"
-"\n"
-"Money: {credits}\n"
-"Current total royalties: {total:.1f}% of mission earnings"
+"Deposit: {deposit_text}\n"
+"Royalty: {royalty_percent:.1f}% of mission earnings"
 msgstr ""
 "船の名前 : {name}\n"
 "船 : {ship}\n"
-"頭金 : {deposit}\n"
-"料金 : 任務売上の {royalty:.1f}%\n"
-"\n"
+"頭金 : {deposit_text}\n"
+"料金 : 任務売上の {royalty_percent:.1f}%"
+
+#: dat/events/hired_escorts.lua:33
+msgid ""
+"Money: {credits}\n"
+"Current total royalties: {total:.1f}% of mission earnings"
+msgstr ""
 "あなたの所持金 : {credits}\n"
 "現在の合計料金 : 任務売上の {total:.1f}%"
 
@@ -26686,15 +26688,15 @@ msgstr "雇われパイロット"
 msgid ""
 "This pilot seems to be looking for work.\n"
 "\n"
-"Ship: %s\n"
-"Deposit: %s\n"
-"Royalty: %.1f%% of mission earnings"
+"Ship: {ship}\n"
+"Deposit: {deposit_text}\n"
+"Royalty: {royalty_percent:.1f}% of mission earnings"
 msgstr ""
 "このパイロットは仕事をさがしているようだ。\n"
 "\n"
-"船 : %s\n"
-"頭金 : %s\n"
-"料金 : 任務売上の %.1f%%"
+"船 : {ship}\n"
+"頭金 : {deposit_text}\n"
+"料金 : 任務売上の {royalty_percent:.1f}%"
 
 #. Clean up dead escorts so it doesn't build up, and create NPCs for
 #. existing escorts.
@@ -26711,8 +26713,8 @@ msgstr "この人は現在あなたの飛行隊にいるパイロットだ。"
 #. Whitelist control of reasons
 #: dat/events/hired_escorts.lua:282 dat/events/hired_escorts.lua:315
 #, lua-format
-msgid "'%s' (%s) has left your employment."
-msgstr "｢%s｣ (%s) があなたの雇用のもとから外れました。"
+msgid "'{name}' ({ship}) has left your employment."
+msgstr "｢{name}｣ ({ship}) があなたの雇用のもとから外れました。"
 
 #. Pilot is no longer employed by the player
 #. Asks the player whether or not they want to fire the pilot
@@ -26736,13 +26738,13 @@ msgstr "なにもしない"
 
 #: dat/events/hired_escorts.lua:348
 #, lua-format
-msgid "Are you sure you want to fire %s? This cannot be undone."
-msgstr "ほんとうに%sを解雇したいですか？　これはもとに戻せません。"
+msgid "Are you sure you want to fire {name}? This cannot be undone."
+msgstr "ほんとうに{name}を解雇したいですか？　これはもとに戻せません。"
 
 #: dat/events/hired_escorts.lua:354
 #, lua-format
-msgid "You fired '%s' (%s)."
-msgstr "あなたは ｢%s｣ (%s) を解雇しました。"
+msgid "You fired '{name}' ({ship})."
+msgstr "あなたは ｢{name}｣ ({ship}) を解雇しました。"
 
 #. Pilot was hailed by the player
 #. Check if player attacked his own escort
@@ -26752,14 +26754,14 @@ msgstr "あなたは ｢%s｣ (%s) を解雇しました。"
 #. just have them all disband at once and attack.
 #: dat/events/hired_escorts.lua:381
 #, lua-format
-msgid "You turned on your hired escort '%s' (%s)."
-msgstr "雇った護衛 ｢%s｣ (%s) が敵になりました。"
+msgid "You turned on your hired escort '{name}' ({ship})."
+msgstr "雇った護衛 ｢{name}｣ ({ship}) が敵になりました。"
 
 #. Escort got killed
 #: dat/events/hired_escorts.lua:393
 #, lua-format
-msgid "'%s' (%s) was killed in combat."
-msgstr "｢%s｣ (%s) が戦闘で亡くなりました。"
+msgid "'{name}' ({ship}) was killed in combat."
+msgstr "｢{name}｣ ({ship}) が戦闘で亡くなりました。"
 
 #. Approaching hired pilot at the bar
 #. Approaching unhired pilot at the bar
