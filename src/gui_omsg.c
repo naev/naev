@@ -1,8 +1,6 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
-
 /** @cond */
 #include <stdlib.h>
 
@@ -18,7 +16,6 @@
 #include "nstring.h"
 #include "opengl.h"
 
-
 /**
  * @brief Fonts.
  */
@@ -27,7 +24,6 @@ typedef struct omsg_font_s {
    glFont font;   /**< Font itself. */
 } omsg_font_t;
 static omsg_font_t *omsg_font_array = NULL; /**< Array of fonts. */
-
 
 /**
  * @brief Message struct.
@@ -46,7 +42,6 @@ static double omsg_center_x         = 0.;    /**< X center of the overlay messag
 static double omsg_center_y         = 0.;    /**< Y center of the overlay messages. */
 static double omsg_center_w         = 100.;    /**< Width of the overlay messages. */
 
-
 /*
  * Prototypes.
  */
@@ -56,33 +51,27 @@ static void omsg_setMsg( omsg_t *omsg, const char *msg );
 static int omsg_getFontID( int size );
 static glFont* omsg_getFont( int font );
 
-
 /**
  * @brief Gets an overlay message from id.
  */
 static omsg_t* omsg_get( unsigned int id )
 {
-   int i;
-   for (i=0; i<array_size(omsg_array); i++)
+   for (int i=0; i<array_size(omsg_array); i++)
       if (omsg_array[i].id == id)
          return &omsg_array[i];
    return NULL;
 }
-
 
 /**
  * @brief Frees all internal stuff of a msg.
  */
 static void omsg_free( omsg_t *omsg )
 {
-   int i;
-
-   for (i=0; i<array_size(omsg->msg); i++)
+   for (int i=0; i<array_size(omsg->msg); i++)
       free( omsg->msg[i] );
    array_free( omsg->msg );
    omsg->msg = NULL;
 }
-
 
 /**
  * @brief Sets the message for an omsg.
@@ -104,13 +93,11 @@ static void omsg_setMsg( omsg_t *omsg, const char *msg )
       array_push_back( &omsg->msg, strndup( &iter.text[iter.l_begin], iter.l_end - iter.l_begin ) );
 }
 
-
 /**
  * @brief Gets a font by size.
  */
 static int omsg_getFontID( int size )
 {
-   int i;
    omsg_font_t *font;
 
    /* Create array if not done so yet. */
@@ -118,7 +105,7 @@ static int omsg_getFontID( int size )
       omsg_font_array = array_create( omsg_font_t );
 
    /* Try to match. */
-   for (i=0; i<array_size( omsg_font_array ); i++)
+   for (int i=0; i<array_size( omsg_font_array ); i++)
       if (size == omsg_font_array[i].size)
          return i;
 
@@ -129,7 +116,6 @@ static int omsg_getFontID( int size )
    return array_size(omsg_font_array) - 1;
 }
 
-
 /**
  * @brief Gets a font by id.
  */
@@ -137,7 +123,6 @@ static glFont* omsg_getFont( int font )
 {
    return &omsg_font_array[ font ].font;
 }
-
 
 /**
  * @brief Positions the overlay messages.
@@ -158,32 +143,25 @@ void omsg_position( double center_x, double center_y, double width )
  */
 void omsg_cleanup (void)
 {
-   int i;
-
    /* Free fonts. */
-   for (i=0; i<array_size( omsg_font_array ); i++)
+   for (int i=0; i<array_size( omsg_font_array ); i++)
       gl_freeFont( &omsg_font_array[i].font );
    array_free( omsg_font_array );
    omsg_font_array = NULL;
 
    /* Destroy messages. */
-   for (i=0; i<array_size(omsg_array); i++)
+   for (int i=0; i<array_size(omsg_array); i++)
       omsg_free( &omsg_array[i] );
    array_free( omsg_array );
    omsg_array = NULL;
 }
-
 
 /**
  * @brief Renders the overlays.
  */
 void omsg_render( double dt )
 {
-   int i, j;
    double x, y;
-   omsg_t *omsg;
-   glFont *font;
-   glColour col;
 
    /* Case nothing to do. */
    if (omsg_array == NULL)
@@ -194,16 +172,16 @@ void omsg_render( double dt )
    y  = omsg_center_y;
 
    /* Render. */
-   for (i=0; i<array_size(omsg_array); i++) {
-      omsg  = &omsg_array[i];
+   for (int i=0; i<array_size(omsg_array); i++) {
+      omsg_t *omsg = &omsg_array[i];
 
       /* Render. */
-      font = omsg_getFont( omsg->font );
-      col = omsg->col;
+      glFont *font = omsg_getFont( omsg->font );
+      glColour col = omsg->col;
       if (omsg->duration < 1.)
          col.a = omsg->duration;
       gl_printRestoreClear();
-      for (j=0; j<array_size(omsg->msg); j++) {
+      for (int j=0; j<array_size(omsg->msg); j++) {
          y -= font->h * 1.5;
          gl_printRestoreLast();
          gl_printMidRaw( font, omsg_center_w, x, y, &col, -1., omsg->msg[j] );
@@ -219,7 +197,6 @@ void omsg_render( double dt )
       }
    }
 }
-
 
 /**
  * @brief Adds a message to the overlay.
@@ -254,7 +231,6 @@ unsigned int omsg_add( const char *msg, double duration, int fontsize, const glC
    return omsg->id;
 }
 
-
 /**
  * @brief Changes an overlay message.
  *
@@ -265,9 +241,7 @@ unsigned int omsg_add( const char *msg, double duration, int fontsize, const glC
  */
 int omsg_change( unsigned int id, const char *msg, double duration )
 {
-   omsg_t *omsg;
-
-   omsg = omsg_get(id);
+   omsg_t *omsg = omsg_get(id);
    if (omsg == NULL)
       return -1;
 
@@ -275,7 +249,6 @@ int omsg_change( unsigned int id, const char *msg, double duration )
    omsg->duration = duration;
    return 0;
 }
-
 
 /**
  * @brief Checks to see if an overlay message exists.
@@ -288,7 +261,6 @@ int omsg_exists( unsigned int id )
    return (omsg_get(id) != NULL);
 }
 
-
 /**
  * @brief Removes an overlay message.
  *
@@ -296,9 +268,7 @@ int omsg_exists( unsigned int id )
  */
 void omsg_rm( unsigned int id )
 {
-   omsg_t *omsg;
-
-   omsg = omsg_get(id);
+   omsg_t *omsg = omsg_get(id);
    if (omsg == NULL)
       return;
 
@@ -306,7 +276,3 @@ void omsg_rm( unsigned int id )
    omsg_free( omsg );
    array_erase( &omsg_array, &omsg[0], &omsg[1] );
 }
-
-
-
-
