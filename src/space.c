@@ -3038,6 +3038,9 @@ static int system_parseAsteroidField( const xmlNodePtr node, StarSystem *sys )
    a->radius   = 0.;
    vect_cset( &a->pos, 0., 0. );
 
+   /* Parse label if available. */
+   xmlr_attr_strd( node, "label", a->label );
+
    /* Parse data. */
    cur = node->xmlChildrenNode;
    do {
@@ -3724,6 +3727,7 @@ void space_exit (void)
       /* Free the asteroids. */
       for (int j=0; j < array_size(sys->asteroids); j++) {
          AsteroidAnchor *ast = &sys->asteroids[j];
+         free(ast->label);
          free(ast->asteroids);
          free(ast->debris);
          free(ast->type);
