@@ -62,8 +62,8 @@ function luatk.mousepressed( mx, my, button )
 
    for _k,wgt in ipairs(wdw._widgets) do
       if wgt.clicked and _checkbounds(wgt,x,y) then
-         wgt.pressed = true
-         if wgt:clicked( x-wgt.x, y-wgt.y, button ) then
+         wgt._pressed = true
+         if wgt.pressed and wgt:pressed( x-wgt.x, y-wgt.y, button ) then
             return true
          end
       end
@@ -76,11 +76,15 @@ function luatk.mousereleased( mx, my, button )
    local x, y = mx-wdw.x, my-wdw.y
 
    for _k,wgt in ipairs(wdw._widgets) do
-      wgt.pressed = false
+      local inbounds = _checkbounds(wgt,x,y)
+      if wgt._pressed and inbounds and wgt.clicked then
+         wgt:clicked( x-wgt.x, y-wgt.y, button )
+      end
+      wgt._pressed = false
       if wgt.released then
          wgt:released()
       end
-      if _checkbounds(wgt,x,y) then
+      if inbounds then
          wgt.mouseover = true
       end
    end
@@ -94,7 +98,7 @@ function luatk.mousemoved( mx, my )
 
    for _k,wgt in ipairs(wdw._widgets) do
       local inbounds = _checkbounds( wgt, x, y )
-      if not wgt.pressed then
+      if not wgt._pressed then
          wgt.mouseover = inbounds
       end
       if inbounds and wgt.mmoved then
@@ -108,7 +112,7 @@ function luatk.keypressed( key )
    local wdw = luatk._windows[ #luatk._windows ]
    if not wdw then return false end
 
-   if key=="enter" then
+   if key=="return" then
       if wdw.accept then
          return wdw:accept()
       end
@@ -242,7 +246,9 @@ function luatk.Button:draw( bx, by )
       c  = { 0.15, 0.15, 0.15 }
    else
       fc = { 0.7, 0.7, 0.7 } -- cFontGrey
-      if self.mouseover then
+      if self._pressed then
+         c = { 0.35,  0.35,  0.35  }
+      elseif self.mouseover then
          c = { 0.3,  0.3,  0.3  }
       else
          c = { 0.25, 0.25, 0.25 }
@@ -379,12 +385,12 @@ function luatk.Fader:draw( bx, by )
    lg.setColor( luatk.colour.outline )
    lg.rectangle( "fill", cx-7, y, 15, h )
 end
-function luatk.Fader:clicked( mx, _my )
+function luatk.Fader:pressed( mx, _my )
    self:set( self.min + (mx / self.w) * self.max )
 end
 function luatk.Fader:mmoved( mx, my )
-   if self.pressed then
-      self:clicked( mx, my )
+   if self._pressed then
+      self:pressed( mx, my )
    end
 end
 function luatk.Fader:get()
