@@ -3,19 +3,39 @@
 <event name="FLF/DV Derelicts">
  <trigger>enter</trigger>
  <chance>60</chance>
- <cond>faction.get("Dvaered"):playerStanding() &gt;= 0 and system.cur() == system.get("Surano") and not (player.misnDone("Take the Dvaered crew home") or player.misnDone("Deal with the FLF agent")) and not (player.misnActive("Deal with the FLF agent") or player.misnActive("Take the Dvaered crew home")) </cond>
+ <cond>faction.get("Dvaered"):playerStanding() &gt;= 0 and not (player.misnDone("Take the Dvaered crew home") or player.misnDone("Deal with the FLF agent")) and not (player.misnActive("Deal with the FLF agent") or player.misnActive("Take the Dvaered crew home")) </cond>
 </event>
 --]]
 --[[
    Derelict Event, spawning either the FLF prelude mission string or the Dvaered anti-FLF string.
 --]]
 
--- Text
-text = {}
-title = {}
-
 function create()
-   if not evt.claim(system.cur()) then
+   local csys = system.cur()
+   local cp = csys:presences()
+
+   -- TODO make this a chapter 1 or later mission
+
+   -- Must have both Dvaered and FLF presence
+   if (cp["Dvaered"] or 0) <= 0 or (cp["FLF"] or 0) <= 0 then
+      evt.finish(false)
+   end
+
+   -- Must not have inhabited planets
+   for _k,p in ipairs(csys:planets()) do
+      local ps = p:services()
+      if ps.inhabited then
+         evt.finish(false)
+      end
+   end
+
+   -- Should be somewhere near Raelid
+   if csys:jumpDist( system.get("Raelid") ) > 2 then
+      evt.finish(false)
+   end
+
+   -- Try to claim
+   if not evt.claim(csys) then
       evt.finish(false)
    end
 
@@ -23,8 +43,8 @@ function create()
    pilot.toggleSpawn(false)
    pilot.clear()
 
-   posDV = vec2.new(7400, 3000)
-   posFLF = vec2.new(-10500, -8500)
+   local posDV = vec2.new(7400, 3000)
+   local posFLF = vec2.new(-10500, -8500)
 
    shipDV = pilot.add( "Dvaered Vendetta", "Dvaered", posDV, nil, {ai="dummy"} )
    shipFLF = pilot.add( "Vendetta", "FLF", posFLF, nil, {ai="dummy"} )
