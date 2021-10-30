@@ -34,8 +34,8 @@ function get_route( sys )
    if #adj < 2 then return end
    local jumpenter, jumpexit
    local dist = 0
-   for i,j1 in ipairs(adj) do
-      for j,j2 in ipairs(adj) do
+   for _i,j1 in ipairs(adj) do
+      for _j,j2 in ipairs(adj) do
          if j1 ~= j2 then
             local d = j1:pos():dist2(j2:pos())
             if d > dist then
@@ -205,7 +205,7 @@ end
 function land ()
    local pp = player.pilot()
    local q = pp:cargoHas( misn_cargo )
-   if convoy_spawned and q > 0 then
+   if convoy_spawned and q > 0 and planet.cur()==returnpnt then
       q = pp:cargoRm( misn_cargo, q ) -- Remove it
       local reward = reward_base + q * reward_cargo
       lmisn.sfxVictory()
@@ -260,7 +260,7 @@ function spawn_convoy ()
       else
          eships = {"Admonisher", "Admonisher"}
       end
-      for i=1,rnd.rnd(3.4) do
+      for _i=1,rnd.rnd(3.4) do
          table.insert( eships, (rnd.rnd() < 0.7 and "Shark") or "Lancelot" )
       end
 
@@ -275,7 +275,7 @@ function spawn_convoy ()
       else
          eships = { "Vendetta" }
       end
-      for i=1,3 do
+      for _i=1,3 do
          table.insert( eships, "Shark" )
       end
 
@@ -291,14 +291,14 @@ function spawn_convoy ()
    local fconvoy = faction.dynAdd( enemyfaction, "convoy_faction", enemyfaction:name(), {clear_enemies=true, clear_allies=true} )
 
    sconvoy = flt.add( 1, tships, fconvoy, convoy_enter, _("Convoy") )
-   for k,p in ipairs(sconvoy) do
+   for _k,p in ipairs(sconvoy) do
       p:cargoRm("all")
       p:cargoAdd( misn_cargo, math.floor((0.8+0.2*rnd.rnd())*p:cargoFree()) )
       hook.pilot( p, "board", "convoy_board" )
       hook.pilot( p, "attacked", "convoy_attacked" )
    end
    sescorts = flt.add( 1, eships, fconvoy, convoy_enter, nil, {ai="mercenary"} )
-   for k,p in ipairs(sescorts) do
+   for _k,p in ipairs(sescorts) do
       p:setLeader( sconvoy[1] )
       hook.pilot( p, "attacked", "convoy_attacked" )
    end
@@ -313,12 +313,12 @@ function spawn_convoy ()
 end
 
 function convoy_attacked ()
-   for k,p in ipairs(sconvoy) do
+   for _k,p in ipairs(sconvoy) do
       if p:exists() then
          p:setHostile(true)
       end
    end
-   for k,p in ipairs(sescorts) do
+   for _k,p in ipairs(sescorts) do
       if p:exists() then
          p:setHostile(true)
       end
