@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2021-10-30 18:57-0400\n"
+"POT-Creation-Date: 2021-10-30 23:13-0400\n"
 "PO-Revision-Date: 2021-04-04 21:26+0000\n"
 "Last-Translator: Hahaha Nope <ruzneregistrace@email.cz>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/naev/naev/cs/>\n"
@@ -34932,7 +34932,7 @@ msgstr ""
 #: dat/missions/sirius/achack/achack02.lua:251
 #: dat/missions/zalek/neburesearch/neburesearch_01.lua:170
 #: dat/missions/zalek/neburesearch/neburesearch_02.lua:79
-#: dat/missions/zalek/neburesearch/neburesearch_02.lua:83
+#: dat/missions/zalek/neburesearch/neburesearch_02.lua:82
 msgid "Mission accomplished"
 msgstr ""
 
@@ -42254,7 +42254,7 @@ msgstr ""
 #: dat/missions/empire/longdistanceshipping/es_longdistancecargo.lua:146
 #: dat/missions/neutral/cargo_rush.lua:181
 #: dat/missions/pirate/pir_contraband.lua:212
-#: dat/missions/zalek/neburesearch/neburesearch_03.lua:213
+#: dat/missions/zalek/neburesearch/neburesearch_03.lua:208
 msgid ""
 "Fly to {pnt} in the {sys} system before {time_limit}\n"
 "({time} remaining)"
@@ -48759,7 +48759,7 @@ msgid "That's what you said last time too!"
 msgstr ""
 
 #: dat/missions/minerva/maikki1.lua:653
-#: dat/missions/zalek/neburesearch/neburesearch_03.lua:190
+#: dat/missions/zalek/neburesearch/neburesearch_03.lua:187
 msgid "Run!"
 msgstr ""
 
@@ -54183,13 +54183,12 @@ msgid "A Tasty Job"
 msgstr ""
 
 #: dat/missions/neutral/foodbiz/delivercake.lua:39
-#, lua-format
 msgid ""
 "The woman smiles. \"Aren't you the pilot that delivered those sweet love "
 "letters to me? I think you are! My name is Paddy, sorry I didn't introduce "
 "myself before. I was caught up in the moment; Michal's letters are always "
 "very exciting.\" She blushes. \"Anyway, Michal is trying to start a "
-"restaurant on %s. Would you be interested in giving him a hand?\""
+"restaurant on {pnt}. Would you be interested in giving him a hand?\""
 msgstr ""
 
 #: dat/missions/neutral/foodbiz/delivercake.lua:40
@@ -54197,13 +54196,12 @@ msgid "\"Oh, that's too bad. I thought it was such a good idea, too....\""
 msgstr ""
 
 #: dat/missions/neutral/foodbiz/delivercake.lua:50
-#, lua-format
 msgid ""
 "\"Great!\" Paddy says with a smile. She hands you what appear to be recipes. "
 "\"I just need you to deliver these recipes to him. Oh, and some of my "
 "homemade cake! I've packed that cake into your ship. Feel free to give it a "
-"taste! It's delicious! Anyway, Michal will pay you %s when you get there. "
-"Thank you so much!\"\n"
+"taste! It's delicious! Anyway, Michal will pay you {credits} when you get "
+"there. Thank you so much!\"\n"
 "    When you arrive at your ship, you find your cargo hold packed to the "
 "brim with cake. You decide to try some, but the second it enters your mouth, "
 "you can't help but to spit it out in disgust. This is easily the most "
@@ -54211,28 +54209,29 @@ msgid ""
 msgstr ""
 
 #: dat/missions/neutral/foodbiz/delivercake.lua:53
-#, lua-format
 msgid ""
 "\"Great!\" Paddy says with a smile. She hands you what appear to be recipes. "
 "\"I just need you to deliver these recipes to him. I was hoping to deliver "
 "some cake to him too, but it seems your ship doesn't have enough space for "
-"it, so that's unfortunate. In any case, Michal will pay you %s when you "
-"arrive. Thank you so much!\""
+"it, so that's unfortunate. In any case, Michal will pay you {credits} when "
+"you arrive. Thank you so much!\""
 msgstr ""
 
 #: dat/missions/neutral/foodbiz/delivercake.lua:59
-#, lua-format
-msgid "Deliver the recipes to Michal on %s in the %s system."
-msgstr ""
+#, fuzzy
+#| msgid "Cantina Station"
+msgid "Deliver the recipes to Michal on {pnt} in the {sys} system."
+msgstr "Stanice Cantina"
 
 #: dat/missions/neutral/foodbiz/delivercake.lua:62
-#: dat/missions/neutral/foodbiz/deliverlove.lua:79
+#: dat/missions/neutral/foodbiz/deliverlove.lua:77
 #: dat/missions/soromid/comingout/srm_comingout4.lua:60
 #: dat/missions/soromid/comingout/srm_comingout4.lua:61
 #: dat/missions/zalek/neburesearch/neburesearch_02.lua:69
-#, lua-format
-msgid "Fly to %s in the %s system."
-msgstr ""
+#, fuzzy
+#| msgid "Cantina Station"
+msgid "Fly to {pnt} in the {sys} system."
+msgstr "Stanice Cantina"
 
 #. set up hooks
 #: dat/missions/neutral/foodbiz/delivercake.lua:74
@@ -54280,63 +54279,61 @@ msgstr ""
 #. Plot: Talk to man on Zeo, bargain, load some cargo, deliver it to Zhiru in Goddard, get $
 #. --
 #: dat/missions/neutral/foodbiz/deliverlove.lua:28
-#, lua-format
-msgid ""
-"The man grabs your arm as you begin to get up. \"Alright, how about %s? "
-"Look, I wouldn't want The Empire reading these. The Emperor himself would "
-"blush.\" You sigh and give the man a long pause before answering."
-msgstr ""
-
-#: dat/missions/neutral/foodbiz/deliverlove.lua:30
 msgid "Love Letters"
 msgstr ""
 
-#: dat/missions/neutral/foodbiz/deliverlove.lua:31
+#: dat/missions/neutral/foodbiz/deliverlove.lua:29
 msgid "A cargo of feelings inked onto pulped, dried cellulose fibres."
 msgstr ""
 
 #. No system shall be claimed by mission
-#: dat/missions/neutral/foodbiz/deliverlove.lua:41
+#: dat/missions/neutral/foodbiz/deliverlove.lua:39
 msgid "Old-Fashioned Man"
 msgstr ""
 
-#: dat/missions/neutral/foodbiz/deliverlove.lua:41
+#: dat/missions/neutral/foodbiz/deliverlove.lua:39
 msgid "A man sits in the corner of the bar, writing a letter."
 msgstr ""
 
 #. Introductions and a bit of bargaining
 #. look at you go, double the reward
-#: dat/missions/neutral/foodbiz/deliverlove.lua:48
+#: dat/missions/neutral/foodbiz/deliverlove.lua:46
+#: dat/missions/neutral/foodbiz/deliverlove.lua:50
 #: dat/missions/neutral/foodbiz/deliverlove.lua:52
-#: dat/missions/neutral/foodbiz/deliverlove.lua:54
-#: dat/missions/neutral/foodbiz/deliverlove.lua:59
-#: dat/missions/neutral/foodbiz/deliverlove.lua:63
+#: dat/missions/neutral/foodbiz/deliverlove.lua:57
+#: dat/missions/neutral/foodbiz/deliverlove.lua:61
 msgid "Absence Makes The Heart Grow Fonder"
 msgstr ""
 
-#: dat/missions/neutral/foodbiz/deliverlove.lua:48
-#, lua-format
+#: dat/missions/neutral/foodbiz/deliverlove.lua:46
 msgid ""
 "You can't help but wonder why the man in the corner is writing on paper "
 "instead of a datapad. As you approach the table he motions you to sit. \"You "
 "must be wondering why I am using such an old fashioned way of recording "
 "information,\" he remarks with a grin. You take a sip of your drink as he "
-"continues. \"I am writing a poem to my beloved. She lives on %s.\" You "
+"continues. \"I am writing a poem to my beloved. She lives on {pnt}.\" You "
 "glance at the flowing hand writing, back at the man, and back at the paper. "
-"\"You wouldn't happen to be heading to %s would you?\" he asks."
+"\"You wouldn't happen to be heading to {pnt} would you?\" he asks."
 msgstr ""
 
-#: dat/missions/neutral/foodbiz/deliverlove.lua:52
-#, lua-format
+#: dat/missions/neutral/foodbiz/deliverlove.lua:50
 msgid ""
 "\"It is a nice place I hear!\" he exclaims visibly excited. \"Say, I have "
 "written a ton of these letters at this point. You wouldn't be able to drop "
 "them off, would you?\" You raise your eyebrow. \"There would be a few "
-"credits in it for you... say, %s?\" The man adds quickly with a hopeful "
-"expression. It seems like a low reward for a long journey..."
+"credits in it for you... say, {credits}?\" The man adds quickly with a "
+"hopeful expression. It seems like a low reward for a long journey..."
 msgstr ""
 
-#: dat/missions/neutral/foodbiz/deliverlove.lua:59
+#: dat/missions/neutral/foodbiz/deliverlove.lua:52
+msgid ""
+"The man grabs your arm as you begin to get up. \"Alright, how about "
+"{credits}? Look, I wouldn't want The Empire reading these. The Emperor "
+"himself would blush.\" You sigh and give the man a long pause before "
+"answering."
+msgstr ""
+
+#: dat/missions/neutral/foodbiz/deliverlove.lua:57
 msgid ""
 "You run a check of your cargo hold and notice it is packed to the brim. "
 "\"Did I not mention I wrote a tonne of these letters? You don't have enough "
@@ -54344,33 +54341,33 @@ msgid ""
 "some space up.\" You didn't expect him to have a LITERAL tonne of letters..."
 msgstr ""
 
-#: dat/missions/neutral/foodbiz/deliverlove.lua:63
+#: dat/missions/neutral/foodbiz/deliverlove.lua:61
 msgid "\"Ah, are you able to deliver my ton of letters for me now?\""
 msgstr ""
 
 #. Add Mission Cargo and set up the computer
-#: dat/missions/neutral/foodbiz/deliverlove.lua:74
-#: dat/missions/neutral/foodbiz/deliverlove.lua:78
+#: dat/missions/neutral/foodbiz/deliverlove.lua:72
+#: dat/missions/neutral/foodbiz/deliverlove.lua:76
 msgid "Deliver Love"
 msgstr ""
 
-#: dat/missions/neutral/foodbiz/deliverlove.lua:76
-#, lua-format
-msgid "Deliver the love letters to %s in the %s system."
-msgstr ""
+#: dat/missions/neutral/foodbiz/deliverlove.lua:74
+#, fuzzy
+#| msgid "Cantina Station"
+msgid "Deliver the love letters to {pnt} in the {sys} system."
+msgstr "Stanice Cantina"
 
 #. set up hooks
-#: dat/missions/neutral/foodbiz/deliverlove.lua:91
-#, lua-format
+#: dat/missions/neutral/foodbiz/deliverlove.lua:89
 msgid ""
 "You deliver the letters to a young woman who excitedly takes them and thanks "
 "you profusely. It seems you really made her day. When you check your "
-"balance, you see that %s have been transferred into your account. It also "
-"seems like you forgot a letter in the ship, but there were enough that you "
-"don't think it will be missed."
+"balance, you see that {credits} have been transferred into your account. It "
+"also seems like you forgot a letter in the ship, but there were enough that "
+"you don't think it will be missed."
 msgstr ""
 
-#: dat/missions/neutral/foodbiz/deliverlove.lua:93
+#: dat/missions/neutral/foodbiz/deliverlove.lua:91
 msgid ""
 "You delivered a literal tonne of letters for a love-struck, old-fashioned "
 "man."
@@ -67793,15 +67790,14 @@ msgid "\"Sorry, I need a ship with more cargo space than you have.\""
 msgstr ""
 
 #: dat/missions/zalek/neburesearch/neburesearch_00.lua:58
-#, lua-format
 msgid ""
 "\"Hello there! You are a pilot, right? For my project I require a ship that "
 "can go to the Nebula. Certainly you must be interested in the proposal of "
 "researching the phenomenon that cut us off from mankind's patrimony.\n"
 "    \"As this is the point where any other pilots I asked backed out, I "
 "should start by mentioning that due to some unfortunate circumstances the "
-"payment for this mission will be only %s. But rest assured, you will be "
-"mentioned in the acknowledgment section of my next paper!\""
+"payment for this mission will be only {credits}. But rest assured, you will "
+"be mentioned in the acknowledgment section of my next paper!\""
 msgstr ""
 
 #: dat/missions/zalek/neburesearch/neburesearch_00.lua:60
@@ -67846,8 +67842,7 @@ msgid "Novice Nebula Research"
 msgstr ""
 
 #: dat/missions/zalek/neburesearch/neburesearch_00.lua:81
-#, lua-format
-msgid "%s and the gratitude of a student"
+msgid "{credits} and the gratitude of a student"
 msgstr ""
 
 #: dat/missions/zalek/neburesearch/neburesearch_00.lua:82
@@ -67857,18 +67852,17 @@ msgid ""
 msgstr ""
 
 #: dat/missions/zalek/neburesearch/neburesearch_00.lua:102
-#, lua-format
 msgid ""
 "The student has already removed all the cables and sensors inside your ship "
-"during the flight back to %s. Everything is packed into a couple of crates "
-"by the time you land.\n"
+"during the flight back to {pnt}. Everything is packed into a couple of "
+"crates by the time you land.\n"
 "    \"Once again, thank you for your help. I still have to analyze the data "
 "but it looks promising so far. With these results no one is going to "
 "question my theories anymore! Also, I decided to increase your reward to "
 "compensate for the trouble I caused.\"\n"
-"    He gives you a credit chip worth %s and heads off. The money is nice, "
-"but not worth as much as the insight that working for the Za'lek will be "
-"dangerous and tiresome."
+"    He gives you a credit chip worth {credits} and heads off. The money is "
+"nice, but not worth as much as the insight that working for the Za'lek will "
+"be dangerous and tiresome."
 msgstr ""
 
 #: dat/missions/zalek/neburesearch/neburesearch_00.lua:110
@@ -67880,14 +67874,13 @@ msgid "A Mess On Your Ship"
 msgstr ""
 
 #: dat/missions/zalek/neburesearch/neburesearch_00.lua:117
-#, lua-format
 msgid ""
 "As you enter your ship you notice dozens of cables of various colors "
 "stretched across your ship's corridors. It is a complete mess. You follow "
 "the direction most of the cables seem to lead to and find the culprit.\n"
 "    \"Oh, hello again, Captain! I'm done with my work here, so we can take "
 "off whenever you're ready. I have to calibrate the sensors during the flight "
-"so there is no need to rush. Our first destination is %s.\" You try to "
+"so there is no need to rush. Our first destination is {sys}.\" You try to "
 "maintain composure as you ask him what he has done to your ship. \"Oh, I "
 "just installed the sensors. It should have no unwanted side effects on your "
 "ship.\n"
@@ -67898,17 +67891,16 @@ msgid ""
 msgstr ""
 
 #: dat/missions/zalek/neburesearch/neburesearch_00.lua:134
-#, lua-format
 msgid ""
-"The student enters your cockpit as you arrive in the %s system. \"Greetings, "
-"Captain! I realize I forgot to introduce myself. My name is Robert Hofer, "
-"student of Professor Voges himself! I'm sure you must have heard of him?\" "
-"You tell him that the name doesn't sound familiar to you. \"How can that be? "
-"Well, you would understand if you were a Za'lek.\n"
+"The student enters your cockpit as you arrive in the {sys1} system. "
+"\"Greetings, Captain! I realize I forgot to introduce myself. My name is "
+"Robert Hofer, student of Professor Voges himself! I'm sure you must have "
+"heard of him?\" You tell him that the name doesn't sound familiar to you. "
+"\"How can that be? Well, you would understand if you were a Za'lek.\n"
 "    \"Anyway, I will now start with the measurements. The density of the "
 "nebula is lower in this sector, so it's not particularly volatile. For the "
-"real measurements we have to enter %s. I will let you know when we're done "
-"here.\""
+"real measurements we have to enter {sys2}. I will let you know when we're "
+"done here.\""
 msgstr ""
 
 #. Cancel autonav.
@@ -67923,7 +67915,6 @@ msgid ""
 msgstr ""
 
 #: dat/missions/zalek/neburesearch/neburesearch_00.lua:167
-#, lua-format
 msgid ""
 "You breathe a sigh of relief. It seems you're still alive. You try not to "
 "glare at Robert Hofer, but apparently aren't particularly successful "
@@ -67931,12 +67922,11 @@ msgid ""
 "underestimated the polarity feedback loop granularity. If it weren't for "
 "your Za'lek ship the problem would have been much worse!\"\n"
 "    \"I should investigate the damage it caused to the armor once we land. "
-"But first we must go to the %s system. Don't worry, the blackout will not "
+"But first we must go to the {sys} system. Don't worry, the blackout will not "
 "occur again!\""
 msgstr ""
 
 #: dat/missions/zalek/neburesearch/neburesearch_00.lua:170
-#, lua-format
 msgid ""
 "You breathe a sigh of relief. It seems you're still alive. You try not to "
 "glare at Robert Hofer, but apparently aren't particularly successful "
@@ -67944,20 +67934,19 @@ msgid ""
 "familiar with the electronics of this ship type. You really should fly a "
 "Za'lek ship instead. Those are so much better!\"\n"
 "    \"I should investigate the damage it caused to the armor once we land. "
-"But first we must go to the %s system. Don't worry, the blackout will not "
+"But first we must go to the {sys} system. Don't worry, the blackout will not "
 "occur again!\""
 msgstr ""
 
 #: dat/missions/zalek/neburesearch/neburesearch_00.lua:182
-#, lua-format
 msgid ""
-"You arrive in the %s system and Robert Hofer tells you that he will let you "
-"know when his scan is complete. This had better not cause another blackout..."
+"You arrive in the {sys} system and Robert Hofer tells you that he will let "
+"you know when his scan is complete. This had better not cause another "
+"blackout..."
 msgstr ""
 
 #: dat/missions/zalek/neburesearch/neburesearch_00.lua:189
-#, lua-format
-msgid "\"OK, my measurements are complete! Let's go back to %s.\""
+msgid "\"OK, my measurements are complete! Let's go back to {pnt}.\""
 msgstr ""
 
 #.
@@ -67990,24 +67979,24 @@ msgstr ""
 #.
 #. Mission info stuff
 #: dat/missions/zalek/neburesearch/neburesearch_01.lua:36
-#, lua-format
-msgid "Escort the transport ship to %s in the %s system."
-msgstr ""
+#, fuzzy
+#| msgid "Cantina Station"
+msgid "Escort the transport ship to {pnt} in the {sys} system."
+msgstr "Stanice Cantina"
 
 #: dat/missions/zalek/neburesearch/neburesearch_01.lua:37
-#: dat/missions/zalek/neburesearch/neburesearch_04.lua:60
-#: dat/missions/zalek/neburesearch/neburesearch_04.lua:79
-#: dat/missions/zalek/neburesearch/neburesearch_04.lua:89
-#: dat/missions/zalek/neburesearch/neburesearch_04.lua:97
-#: dat/missions/zalek/neburesearch/neburesearch_04.lua:183
-#, lua-format
-msgid "Land on %s in the %s system."
-msgstr ""
+#: dat/missions/zalek/neburesearch/neburesearch_04.lua:59
+#: dat/missions/zalek/neburesearch/neburesearch_04.lua:71
+#, fuzzy
+#| msgid "Cantina Station"
+msgid "Land on {pnt} in the {sys} system."
+msgstr "Stanice Cantina"
 
 #: dat/missions/zalek/neburesearch/neburesearch_01.lua:38
-#, lua-format
-msgid "Fly back to %s in the %s system."
-msgstr ""
+#, fuzzy
+#| msgid "Cantina Station"
+msgid "Fly back to {pnt} in the {sys} system."
+msgstr "Stanice Cantina"
 
 #. Spaceport bar stuff
 #.
@@ -68052,11 +68041,10 @@ msgid "You see a scientist who is apparently looking for someone."
 msgstr ""
 
 #: dat/missions/zalek/neburesearch/neburesearch_01.lua:52
-#, lua-format
 msgid ""
-"\"Captain %s if I'm not mistaken? Well met. I heard you recently helped one "
-"of our students. My name is Dr. Mensing and I am working for professor Voges "
-"as well.\n"
+"\"Captain {player} if I'm not mistaken? Well met. I heard you recently "
+"helped one of our students. My name is Dr. Mensing and I am working for "
+"professor Voges as well.\n"
 "    Your timing is just perfect. You see, we planed an expedition but the "
 "captain we hired to escort our transport ship backed out in the last minute. "
 "It's quite bothersome being stranded right in Dvaered space. Would you be "
@@ -68064,7 +68052,6 @@ msgid ""
 msgstr ""
 
 #: dat/missions/zalek/neburesearch/neburesearch_01.lua:77
-#, lua-format
 msgid ""
 "\"While the data recorded by Robert is of good quality he seems to have "
 "completely forgotten that we need reference data of similarly dense nebulae. "
@@ -68073,10 +68060,10 @@ msgid ""
 "between. Also the target systems are controled by the Dvaered. Hard to say "
 "whether the Dvaered or the pirates are more dangerous. So this is why we "
 "need an escort.\n"
-"    We will travel through %s, %s, and %s. Just passing through the systems "
-"should be sufficient. Also, I want to visit the %s station before returning "
-"back to %s. You have to make sure no one shoots us down during our "
-"expedition.\""
+"    We will travel through {sys2}, {sys3}, and {sys4}. Just passing through "
+"the systems should be sufficient. Also, I want to visit the {station} "
+"station before returning back to {pnt}. You have to make sure no one shoots "
+"us down during our expedition.\""
 msgstr ""
 
 #. Set up mission information
@@ -68086,26 +68073,17 @@ msgstr ""
 msgid "Advanced Nebula Research"
 msgstr ""
 
-#: dat/missions/zalek/neburesearch/neburesearch_01.lua:83
-#: dat/missions/zalek/neburesearch/neburesearch_02.lua:63
-#: dat/missions/zalek/neburesearch/neburesearch_04.lua:55
-#, lua-format
-msgid "%s"
-msgstr ""
-
 #: dat/missions/zalek/neburesearch/neburesearch_01.lua:84
-#, lua-format
 msgid ""
-"Escort the transport ship to the %s in the %s system. Make sure to stay "
-"close to the transport ship and wait until they jumped out of the system "
-"safely."
+"Escort the transport ship to the {station} in the {sys} system. Make sure to "
+"stay close to the transport ship and wait until they jumped out of the "
+"system safely."
 msgstr ""
 
 #: dat/missions/zalek/neburesearch/neburesearch_01.lua:116
-#, lua-format
 msgid ""
-"\"Please follow us, %s. Make sure to jump to the next system after we jumped "
-"out. We'll have to land on some planets on our way to refuel.\""
+"\"Please follow us, {player}. Make sure to jump to the next system after we "
+"jumped out. We'll have to land on some planets on our way to refuel.\""
 msgstr ""
 
 #: dat/missions/zalek/neburesearch/neburesearch_01.lua:126
@@ -68130,7 +68108,6 @@ msgid "A short break"
 msgstr ""
 
 #: dat/missions/zalek/neburesearch/neburesearch_01.lua:165
-#, lua-format
 msgid ""
 "Once you are done with the refuel operations, you meet Dr. Mensing on her "
 "way back to the transport ship.\n"
@@ -68140,14 +68117,13 @@ msgid ""
 "independent university. They couldn't possible keep up with the Za'lek "
 "standards in terms of proper scientific methods.\"\n"
 "    She is visibly upset about the apparent lack of dedication to science. "
-"\"Let's head back to %s. Our own measurements are completed by now.\""
+"\"Let's head back to {pnt}. Our own measurements are completed by now.\""
 msgstr ""
 
 #: dat/missions/zalek/neburesearch/neburesearch_01.lua:170
-#, lua-format
 msgid ""
 "After leaving the ship you meet up with Dr. Mensing who hands you over a "
-"chip worth %s and thanks you for your help.\n"
+"chip worth {credits} and thanks you for your help.\n"
 "    \"We'll be able to return to Jorla safely from here on. You did science "
 "a great favor today. I'm sure the data we collected will help us to "
 "understand the cause for the Sol nebula's volatility.\""
@@ -68201,14 +68177,13 @@ msgid ""
 msgstr ""
 
 #: dat/missions/zalek/neburesearch/neburesearch_01.lua:294
-#, lua-format
 msgid ""
 "\"The situation would have escalated anyway.\" argues Dr. Mensing, this time "
 "directly speaking towards you.\n"
 "    \"I must admit, it is suspicious for a refitted transport ship with such "
 "advanced sensor suits to show up in Dvaered space. I hadn't considered this "
 "point.\n"
-"    I'm counting on you, %s. Please help us.\""
+"    I'm counting on you, {player}. Please help us.\""
 msgstr ""
 
 #. Handle the destruction of the transporter. Abort the mission.
@@ -68296,7 +68271,7 @@ msgstr ""
 #. mission variables
 #. Spaceport bar stuff
 #: dat/missions/zalek/neburesearch/neburesearch_02.lua:50
-#: dat/missions/zalek/neburesearch/neburesearch_04.lua:41
+#: dat/missions/zalek/neburesearch/neburesearch_04.lua:39
 msgid "Dr. Mensing"
 msgstr ""
 
@@ -68305,26 +68280,24 @@ msgid "It appears she wants to talk with you."
 msgstr ""
 
 #: dat/missions/zalek/neburesearch/neburesearch_02.lua:54
-#, lua-format
 msgid ""
-"\"Well met, %s! In fact, it's a lucky coincidence that we meet. You see, I'm "
-"in dire need of your service. I'm here on a... conference of sorts, not a "
-"real one. We are obligated to present the newest results of our research to "
-"scientists of the Empire once per period - even though these jokers lack the "
-"skills to understand our works! It's just a pointless ritual anyway. But I "
-"just got an ingenious idea on how to prevent the volatile Sol nebula from "
-"disrupting ship shields! I will spare you with the details - to ensure my "
-"idea is not going to be stolen, nothing personal. You can never be sure who "
-"is listening.\"\n"
-"    \"Anyway, you have to take me back to my lab on %s in the %s system "
-"immediately! I'd also pay %s if necessary.\""
+"\"Well met, {player}! In fact, it's a lucky coincidence that we meet. You "
+"see, I'm in dire need of your service. I'm here on a... conference of sorts, "
+"not a real one. We are obligated to present the newest results of our "
+"research to scientists of the Empire once per period - even though these "
+"jokers lack the skills to understand our works! It's just a pointless ritual "
+"anyway. But I just got an ingenious idea on how to prevent the volatile Sol "
+"nebula from disrupting ship shields! I will spare you with the details - to "
+"ensure my idea is not going to be stolen, nothing personal. You can never be "
+"sure who is listening.\"\n"
+"    \"Anyway, you have to take me back to my lab on {pnt} in the {sys} "
+"system immediately! I'd also pay {credits} if necessary.\""
 msgstr ""
 
 #: dat/missions/zalek/neburesearch/neburesearch_02.lua:58
-#, lua-format
 msgid ""
 "\"Splendid! I'd like to start with my work as soon as possible, so please "
-"hurry! Off to %s we go!\"\n"
+"hurry! Off to {pnt} we go!\"\n"
 "    With that being said she drags you out of the bar. When realizing that "
 "she actually does not know on which landing pad your ship is parked she lets "
 "you loose and orders you to lead the way."
@@ -68337,28 +68310,25 @@ msgid "Emergency of Immediate Inspiration"
 msgstr ""
 
 #: dat/missions/zalek/neburesearch/neburesearch_02.lua:64
-#, lua-format
-msgid "Take Dr. Mensing to %s in the %s system as fast as possible!"
-msgstr ""
+#, fuzzy
+#| msgid "Cantina Station"
+msgid "Take Dr. Mensing to {pnt} in the {sys} system as fast as possible!"
+msgstr "Stanice Cantina"
 
 #: dat/missions/zalek/neburesearch/neburesearch_02.lua:79
-#, lua-format
 msgid ""
 "\"That took long enough! I can't await getting started. I doubt you deserve "
-"full payment. I'll rather give you a reduced payment of %s for educational "
-"reasons.\" She hands you over a credit chip.\n"
-"    %s"
+"full payment. I'll rather give you a reduced payment of {credits} for "
+"educational reasons.\" She hands you over a credit chip."
 msgstr ""
 
-#: dat/missions/zalek/neburesearch/neburesearch_02.lua:83
-#, lua-format
+#: dat/missions/zalek/neburesearch/neburesearch_02.lua:82
 msgid ""
 "\"Finally! I can't await getting started. Before I forget -\" She hands you "
-"over a credit chip worth %s.\n"
-"    %s"
+"over a credit chip worth {credits}."
 msgstr ""
 
-#: dat/missions/zalek/neburesearch/neburesearch_02.lua:88
+#: dat/missions/zalek/neburesearch/neburesearch_02.lua:86
 msgid "You brought Dr. Mensing back from a Empire scientific conference."
 msgstr ""
 
@@ -68386,64 +68356,39 @@ msgstr ""
 #. Difficulty: Easy
 #.
 #. --
-#: dat/missions/zalek/neburesearch/neburesearch_03.lua:30
-#, lua-format
-msgid ""
-"You enter a shop that sells only lab coats. The assortment of lab coats is "
-"impressive: lab coats of all colors, different materials, and cuts. There "
-"are distinct sections for casual and working lab coats. Whatever the "
-"difference is, it is too subtle for you to grasp. You settle on a \"business"
-"\" lab coat because something formal is probably suitable for your talk. The "
-"price tag reads %s. %s"
-msgstr ""
-
-#: dat/missions/zalek/neburesearch/neburesearch_03.lua:31
-#, lua-format
-msgid ""
-"While walking through a store selling electronics you notice a pair of "
-"glasses with integrated displays. You could use them to display the text you "
-"are supposed to recite. They are rather expensive though, %s. %s"
-msgstr ""
-
-#: dat/missions/zalek/neburesearch/neburesearch_03.lua:33
-#, lua-format
-msgid ""
-"You gave a scientific talk in %s. Did anyone noticed you're not a scientist?"
-msgstr ""
-
 #. mission variables
 #. Spaceport bar stuff
-#: dat/missions/zalek/neburesearch/neburesearch_03.lua:51
+#: dat/missions/zalek/neburesearch/neburesearch_03.lua:46
 msgid "Robert"
 msgstr ""
 
-#: dat/missions/zalek/neburesearch/neburesearch_03.lua:51
+#: dat/missions/zalek/neburesearch/neburesearch_03.lua:46
 msgid "The student is already awaiting you."
 msgstr ""
 
-#: dat/missions/zalek/neburesearch/neburesearch_03.lua:55
-#, lua-format
+#: dat/missions/zalek/neburesearch/neburesearch_03.lua:50
 msgid ""
 "You join the student and explain him that Dr. Mensing actually hasn't told "
 "you what you are supposed to do.\n"
-"    \"Ah, right. There is a conference on %s in the %s system soon. Actually "
-"she is supposed to be the substitution for professor Voges. He is absent for "
-"weeks by now. No one knows what he is doing on Ruadan. Anyway, back to "
-"topic. You have to bring me there as ersatz-substitution for Dr. Mensing as "
-"she got seriously ill. But you already know that as you brought her here.\"\n"
+"    \"Ah, right. There is a conference on {pnt} in the {sys} system soon. "
+"Actually she is supposed to be the substitution for professor Voges. He is "
+"absent for weeks by now. No one knows what he is doing on Ruadan. Anyway, "
+"back to topic. You have to bring me there as ersatz-substitution for Dr. "
+"Mensing as she got seriously ill. But you already know that as you brought "
+"her here.\"\n"
 "    You tell him that she looked perfectly fine and said she wants to "
 "conduct her research instead of going to the conference.\n"
 "    \"WHAT?? It was MY idea, initially! She just wants to kick me out! I bet "
 "she thinks she could just pull it off entirely without me to be the only "
 "author! No way she could ever achieve that!\"\n"
-"    \"%s, you have to go to the conference instead! What do you mean you "
-"don't know anything about science? How about this, I just give you my "
+"    \"{player}, you have to go to the conference instead! What do you mean "
+"you don't know anything about science? How about this, I just give you my "
 "presentation and while you're on the way I type the exact text I'd recite "
 "during my talk and send it to you. Just recite it on my behalf and it's "
 "going to be fine!\""
 msgstr ""
 
-#: dat/missions/zalek/neburesearch/neburesearch_03.lua:60
+#: dat/missions/zalek/neburesearch/neburesearch_03.lua:55
 msgid ""
 "\"No time for discussions, sorry. While we're talking Dr. Mensing is trying "
 "to get an advantage! I have no time to lose!\"\n"
@@ -68454,31 +68399,33 @@ msgid ""
 msgstr ""
 
 #. Set up mission information
-#: dat/missions/zalek/neburesearch/neburesearch_03.lua:68
-#: dat/missions/zalek/neburesearch/neburesearch_03.lua:215
+#: dat/missions/zalek/neburesearch/neburesearch_03.lua:63
+#: dat/missions/zalek/neburesearch/neburesearch_03.lua:210
 msgid "The Substitute Speaker"
 msgstr ""
 
-#: dat/missions/zalek/neburesearch/neburesearch_03.lua:69
+#: dat/missions/zalek/neburesearch/neburesearch_03.lua:64
 msgid "a reputation as scientist (?)"
 msgstr ""
 
-#: dat/missions/zalek/neburesearch/neburesearch_03.lua:70
-#, lua-format
-msgid "Fly to %s in the %s system before %s and give a scientific talk."
-msgstr ""
+#: dat/missions/zalek/neburesearch/neburesearch_03.lua:65
+#, fuzzy
+#| msgid "Cantina Station"
+msgid ""
+"Fly to {pnt} in the {sys} system before {time} and give a scientific talk."
+msgstr "Stanice Cantina"
 
 #. 100STU per tick
 #. set OSD
-#: dat/missions/zalek/neburesearch/neburesearch_03.lua:83
-#, lua-format
-msgid "Arriving on %s"
-msgstr ""
+#: dat/missions/zalek/neburesearch/neburesearch_03.lua:79
+#, fuzzy
+#| msgid "Cantina Station"
+msgid "Arriving on {pnt}"
+msgstr "Stanice Cantina"
 
-#: dat/missions/zalek/neburesearch/neburesearch_03.lua:83
-#, lua-format
+#: dat/missions/zalek/neburesearch/neburesearch_03.lua:80
 msgid ""
-"You arrived on %s on time. There is even some time left to prepare your "
+"You arrived on {pnt} on time. There is even some time left to prepare your "
 "talk. During the flight you threw a glance at the presentation on the data "
 "chip but you haven't managed to figure out the meaning of it. How is this "
 "supposed to work out??\n"
@@ -68491,103 +68438,113 @@ msgid ""
 "This message is followed by what you assume is the text you have to recite."
 msgstr ""
 
-#: dat/missions/zalek/neburesearch/neburesearch_03.lua:93
-#: dat/missions/zalek/neburesearch/neburesearch_03.lua:122
+#: dat/missions/zalek/neburesearch/neburesearch_03.lua:91
+#: dat/missions/zalek/neburesearch/neburesearch_03.lua:120
 msgid "Time to visit the institute"
 msgstr ""
 
-#: dat/missions/zalek/neburesearch/neburesearch_03.lua:93
-#: dat/missions/zalek/neburesearch/neburesearch_03.lua:122
+#: dat/missions/zalek/neburesearch/neburesearch_03.lua:91
+#: dat/missions/zalek/neburesearch/neburesearch_03.lua:120
 msgid "It's time to go to the institute."
 msgstr ""
 
+#: dat/missions/zalek/neburesearch/neburesearch_03.lua:96
 #: dat/missions/zalek/neburesearch/neburesearch_03.lua:98
-#: dat/missions/zalek/neburesearch/neburesearch_03.lua:100
+#: dat/missions/zalek/neburesearch/neburesearch_03.lua:126
 #: dat/missions/zalek/neburesearch/neburesearch_03.lua:128
-#: dat/missions/zalek/neburesearch/neburesearch_03.lua:130
+#: dat/missions/zalek/neburesearch/neburesearch_03.lua:132
 #: dat/missions/zalek/neburesearch/neburesearch_03.lua:134
-#: dat/missions/zalek/neburesearch/neburesearch_03.lua:136
 msgid "You wonder what to do..."
 msgstr ""
 
+#: dat/missions/zalek/neburesearch/neburesearch_03.lua:96
 #: dat/missions/zalek/neburesearch/neburesearch_03.lua:98
-#: dat/missions/zalek/neburesearch/neburesearch_03.lua:100
 msgid "Explore the space port"
 msgstr ""
 
+#: dat/missions/zalek/neburesearch/neburesearch_03.lua:96
 #: dat/missions/zalek/neburesearch/neburesearch_03.lua:98
-#: dat/missions/zalek/neburesearch/neburesearch_03.lua:100
 msgid "Take off immediately"
 msgstr ""
 
-#: dat/missions/zalek/neburesearch/neburesearch_03.lua:100
+#: dat/missions/zalek/neburesearch/neburesearch_03.lua:98
 msgid "Start learning your text"
 msgstr ""
 
-#: dat/missions/zalek/neburesearch/neburesearch_03.lua:103
+#: dat/missions/zalek/neburesearch/neburesearch_03.lua:101
 msgid ""
 "You decide to explore the spaceport. There are a couple of shops here which "
 "may sell something useful for your mission."
 msgstr ""
 
-#: dat/missions/zalek/neburesearch/neburesearch_03.lua:107
-#: dat/missions/zalek/neburesearch/neburesearch_03.lua:193
+#: dat/missions/zalek/neburesearch/neburesearch_03.lua:105
+#: dat/missions/zalek/neburesearch/neburesearch_03.lua:190
 msgid "Tactical Retreat"
 msgstr ""
 
-#: dat/missions/zalek/neburesearch/neburesearch_03.lua:107
+#: dat/missions/zalek/neburesearch/neburesearch_03.lua:105
 msgid ""
 "This is too much! You better leave before doing anything embarrassing or "
 "humiliating."
 msgstr ""
 
-#: dat/missions/zalek/neburesearch/neburesearch_03.lua:112
+#: dat/missions/zalek/neburesearch/neburesearch_03.lua:110
 msgid ""
 "You decide to learn your text rather than simply reciting the text. It "
 "turned out to be the right decision because you haven't ever seen most of "
 "those words."
 msgstr ""
 
+#: dat/missions/zalek/neburesearch/neburesearch_03.lua:126
 #: dat/missions/zalek/neburesearch/neburesearch_03.lua:128
-#: dat/missions/zalek/neburesearch/neburesearch_03.lua:130
+#: dat/missions/zalek/neburesearch/neburesearch_03.lua:132
 #: dat/missions/zalek/neburesearch/neburesearch_03.lua:134
-#: dat/missions/zalek/neburesearch/neburesearch_03.lua:136
 msgid "Return to your ship"
 msgstr ""
 
+#: dat/missions/zalek/neburesearch/neburesearch_03.lua:126
 #: dat/missions/zalek/neburesearch/neburesearch_03.lua:128
-#: dat/missions/zalek/neburesearch/neburesearch_03.lua:130
+#: dat/missions/zalek/neburesearch/neburesearch_03.lua:132
 #: dat/missions/zalek/neburesearch/neburesearch_03.lua:134
-#: dat/missions/zalek/neburesearch/neburesearch_03.lua:136
 msgid "Go to the institute"
 msgstr ""
 
-#: dat/missions/zalek/neburesearch/neburesearch_03.lua:130
-#: dat/missions/zalek/neburesearch/neburesearch_03.lua:136
+#: dat/missions/zalek/neburesearch/neburesearch_03.lua:128
+#: dat/missions/zalek/neburesearch/neburesearch_03.lua:134
 msgid "Visit the electronics store"
 msgstr ""
 
+#: dat/missions/zalek/neburesearch/neburesearch_03.lua:132
 #: dat/missions/zalek/neburesearch/neburesearch_03.lua:134
-#: dat/missions/zalek/neburesearch/neburesearch_03.lua:136
 msgid "Buy a lab coat"
 msgstr ""
 
-#: dat/missions/zalek/neburesearch/neburesearch_03.lua:140
+#: dat/missions/zalek/neburesearch/neburesearch_03.lua:138
 msgid "You return to your ship."
 msgstr ""
 
-#: dat/missions/zalek/neburesearch/neburesearch_03.lua:148
-#: dat/missions/zalek/neburesearch/neburesearch_03.lua:150
+#: dat/missions/zalek/neburesearch/neburesearch_03.lua:145
+msgid ""
+"You enter a shop that sells only lab coats. The assortment of lab coats is "
+"impressive: lab coats of all colors, different materials, and cuts. There "
+"are distinct sections for casual and working lab coats. Whatever the "
+"difference is, it is too subtle for you to grasp. You settle on a \"business"
+"\" lab coat because something formal is probably suitable for your talk. The "
+"price tag reads {credits}."
+msgstr ""
+
+#: dat/missions/zalek/neburesearch/neburesearch_03.lua:147
+#: dat/missions/zalek/neburesearch/neburesearch_03.lua:149
 msgid "Lab Coat Shop"
 msgstr ""
 
-#: dat/missions/zalek/neburesearch/neburesearch_03.lua:148
+#: dat/missions/zalek/neburesearch/neburesearch_03.lua:147
 msgid ""
 "Apparently this is too expensive for you. Looks like you have to give your "
 "talk without a lab coat."
 msgstr ""
 
-#: dat/missions/zalek/neburesearch/neburesearch_03.lua:150
+#: dat/missions/zalek/neburesearch/neburesearch_03.lua:149
 msgid "Will you buy the lab coat?"
 msgstr ""
 
@@ -68612,16 +68569,23 @@ msgstr ""
 #. @treturn boolean true if yes was pressed or false otherwise.
 #. --
 #. buttons
-#: dat/missions/zalek/neburesearch/neburesearch_03.lua:150
+#: dat/missions/zalek/neburesearch/neburesearch_03.lua:149
 #: dat/missions/zalek/neburesearch/neburesearch_03.lua:159
 #: dat/scripts/vntk.lua:72 src/dialogue.c:396
 msgid "Yes"
 msgstr ""
 
-#: dat/missions/zalek/neburesearch/neburesearch_03.lua:150
+#: dat/missions/zalek/neburesearch/neburesearch_03.lua:149
 #: dat/missions/zalek/neburesearch/neburesearch_03.lua:159
 #: dat/scripts/vntk.lua:73 src/dialogue.c:398
 msgid "No"
+msgstr ""
+
+#: dat/missions/zalek/neburesearch/neburesearch_03.lua:155
+msgid ""
+"While walking through a store selling electronics you notice a pair of "
+"glasses with integrated displays. You could use them to display the text you "
+"are supposed to recite. They are rather expensive though, {credits}."
 msgstr ""
 
 #: dat/missions/zalek/neburesearch/neburesearch_03.lua:157
@@ -68644,11 +68608,11 @@ msgstr ""
 
 #: dat/missions/zalek/neburesearch/neburesearch_03.lua:176
 #: dat/missions/zalek/neburesearch/neburesearch_03.lua:178
-#: dat/missions/zalek/neburesearch/neburesearch_03.lua:182
+#: dat/missions/zalek/neburesearch/neburesearch_03.lua:181
+#: dat/missions/zalek/neburesearch/neburesearch_03.lua:184
 #: dat/missions/zalek/neburesearch/neburesearch_03.lua:186
-#: dat/missions/zalek/neburesearch/neburesearch_03.lua:189
-#: dat/missions/zalek/neburesearch/neburesearch_03.lua:190
-#: dat/missions/zalek/neburesearch/neburesearch_03.lua:199
+#: dat/missions/zalek/neburesearch/neburesearch_03.lua:187
+#: dat/missions/zalek/neburesearch/neburesearch_03.lua:193
 msgid "Scientific Talk"
 msgstr ""
 
@@ -68664,60 +68628,53 @@ msgid ""
 msgstr ""
 
 #: dat/missions/zalek/neburesearch/neburesearch_03.lua:178
-#, lua-format
 msgid ""
-"%s\n"
-"    You start reciting the text you got from the student. It turned out "
-"learning your text was the right choice. Some of the occurring terms are "
-"difficult to pronounce correctly."
+"You start reciting the text you got from the student. It turned out learning "
+"your text was the right choice. Some of the occurring terms are difficult to "
+"pronounce correctly."
 msgstr ""
 
-#: dat/missions/zalek/neburesearch/neburesearch_03.lua:182
-#, lua-format
+#: dat/missions/zalek/neburesearch/neburesearch_03.lua:181
 msgid ""
-"%s\n"
-"    You start reciting the text you got from the student. With the text "
-"being displayed on your glasses you don't have to look down on a paper to "
-"read the text, but some of the occurring terms are difficult to pronounce "
-"correctly."
+"You start reciting the text you got from the student. With the text being "
+"displayed on your glasses you don't have to look down on a paper to read the "
+"text, but some of the occurring terms are difficult to pronounce correctly."
+msgstr ""
+
+#: dat/missions/zalek/neburesearch/neburesearch_03.lua:184
+msgid ""
+"You start reciting the text you got from the student. You realize that you "
+"should have learned the text as some of the occurring terms are difficult to "
+"pronounce correctly."
 msgstr ""
 
 #: dat/missions/zalek/neburesearch/neburesearch_03.lua:186
-#, lua-format
-msgid ""
-"%s\n"
-"    You start reciting the text you got from the student. You realize that "
-"you should have learned the text as some of the occurring terms are "
-"difficult to pronounce correctly."
-msgstr ""
-
-#: dat/missions/zalek/neburesearch/neburesearch_03.lua:189
 msgid ""
 "Finally you are finished with your text and sigh in relief. After a brief "
 "applause someone raises his hand. Apparently he wants to ask a question. "
 "What should you do?"
 msgstr ""
 
-#: dat/missions/zalek/neburesearch/neburesearch_03.lua:190
+#: dat/missions/zalek/neburesearch/neburesearch_03.lua:187
 msgid "You haven't understood the question, not even a single word."
 msgstr ""
 
-#: dat/missions/zalek/neburesearch/neburesearch_03.lua:190
+#: dat/missions/zalek/neburesearch/neburesearch_03.lua:187
 msgid "This is a good question."
 msgstr ""
 
-#: dat/missions/zalek/neburesearch/neburesearch_03.lua:190
+#: dat/missions/zalek/neburesearch/neburesearch_03.lua:187
 msgid "It's an open question."
 msgstr ""
 
-#: dat/missions/zalek/neburesearch/neburesearch_03.lua:193
+#: dat/missions/zalek/neburesearch/neburesearch_03.lua:190
 msgid ""
 "You decide to run towards the closest door and leave the building as fast as "
 "possible. You continue running until you reach the spaceport and enter your "
 "ship. You can't be the first one running from a talk, right?"
 msgstr ""
 
-#: dat/missions/zalek/neburesearch/neburesearch_03.lua:199
+#: dat/missions/zalek/neburesearch/neburesearch_03.lua:193
 msgid ""
 "You try to avoid the question. The scientist seems to be upset. There are no "
 "further questions. Apparently there is another talk that starts very soon so "
@@ -68725,23 +68682,28 @@ msgid ""
 "return to your ship. Enough science for today!"
 msgstr ""
 
+#: dat/missions/zalek/neburesearch/neburesearch_03.lua:196
+msgid ""
+"You gave a scientific talk on {pnt}. Did anyone notice you're not a "
+"scientist?"
+msgstr ""
+
 #. Date hook
 #. Case missed second deadline
-#: dat/missions/zalek/neburesearch/neburesearch_03.lua:210
+#: dat/missions/zalek/neburesearch/neburesearch_03.lua:205
 msgid "You were too late. You're never going to be a great scientist!"
 msgstr ""
 
-#: dat/missions/zalek/neburesearch/neburesearch_04.lua:41
+#: dat/missions/zalek/neburesearch/neburesearch_04.lua:39
 msgid ""
 "She probably has a new poorly paid job for you. Maybe she won't notice you "
 "if you leave now."
 msgstr ""
 
-#: dat/missions/zalek/neburesearch/neburesearch_04.lua:45
-#, lua-format
+#: dat/missions/zalek/neburesearch/neburesearch_04.lua:43
 msgid ""
-"\"It appears we keep running into each other %s. You may be happy to hear "
-"that I finished my theoretical work on the nebula resistant shielding "
+"\"It appears we keep running into each other {player}. You may be happy to "
+"hear that I finished my theoretical work on the nebula resistant shielding "
 "technique. Of course I can't provide you a shielding system; we scientists "
 "usually don't bother with engineering. However in this case, I'd actually "
 "like to build a prototype shielding device. The prospect of exploring the "
@@ -68752,88 +68714,87 @@ msgid ""
 "Apparently it is sometimes required to show up in person. So annoying...\""
 msgstr ""
 
-#: dat/missions/zalek/neburesearch/neburesearch_04.lua:47
+#: dat/missions/zalek/neburesearch/neburesearch_04.lua:45
 msgid "No science for today"
 msgstr ""
 
-#: dat/missions/zalek/neburesearch/neburesearch_04.lua:47
+#: dat/missions/zalek/neburesearch/neburesearch_04.lua:45
 msgid "\"Too bad. Maybe you will change your mind.\""
 msgstr ""
 
-#: dat/missions/zalek/neburesearch/neburesearch_04.lua:50
-#, lua-format
-msgid "\"Great! Our first destination is %s in the %s system.\""
-msgstr ""
+#: dat/missions/zalek/neburesearch/neburesearch_04.lua:48
+#, fuzzy
+#| msgid "Cantina Station"
+msgid "\"Great! Our first destination is {pnt} in the {sys} system.\""
+msgstr "Stanice Cantina"
 
 #. Set up mission information
-#: dat/missions/zalek/neburesearch/neburesearch_04.lua:54
-#: dat/missions/zalek/neburesearch/neburesearch_04.lua:62
-#: dat/missions/zalek/neburesearch/neburesearch_04.lua:81
-#: dat/missions/zalek/neburesearch/neburesearch_04.lua:91
-#: dat/missions/zalek/neburesearch/neburesearch_04.lua:99
-#: dat/missions/zalek/neburesearch/neburesearch_04.lua:185
+#: dat/missions/zalek/neburesearch/neburesearch_04.lua:52
+#: dat/missions/zalek/neburesearch/neburesearch_04.lua:58
+#: dat/missions/zalek/neburesearch/neburesearch_04.lua:70
 msgid "Shielding Prototype Funding"
 msgstr ""
 
-#: dat/missions/zalek/neburesearch/neburesearch_04.lua:56
+#: dat/missions/zalek/neburesearch/neburesearch_04.lua:54
 msgid "Help Dr. Mensing to get funding for constructing a shielding prototype."
 msgstr ""
 
-#: dat/missions/zalek/neburesearch/neburesearch_04.lua:61
-#: dat/missions/zalek/neburesearch/neburesearch_04.lua:80
-#: dat/missions/zalek/neburesearch/neburesearch_04.lua:90
-#: dat/missions/zalek/neburesearch/neburesearch_04.lua:98
-#: dat/missions/zalek/neburesearch/neburesearch_04.lua:184
-#, lua-format
-msgid "Return to %s in the %s system."
-msgstr ""
+#: dat/missions/zalek/neburesearch/neburesearch_04.lua:60
+#, fuzzy
+#| msgid "Cantina Station"
+msgid "Return to {pnt} in the {pnt} system."
+msgstr "Stanice Cantina"
 
-#: dat/missions/zalek/neburesearch/neburesearch_04.lua:76
-#: dat/missions/zalek/neburesearch/neburesearch_04.lua:86
+#: dat/missions/zalek/neburesearch/neburesearch_04.lua:72
+#, fuzzy
+#| msgid "Cantina Station"
+msgid "Return to {pnt} in the {sys} system."
+msgstr "Stanice Cantina"
+
+#: dat/missions/zalek/neburesearch/neburesearch_04.lua:82
+#: dat/missions/zalek/neburesearch/neburesearch_04.lua:88
 msgid "No luck"
 msgstr ""
 
-#: dat/missions/zalek/neburesearch/neburesearch_04.lua:76
-#, lua-format
+#: dat/missions/zalek/neburesearch/neburesearch_04.lua:82
 msgid ""
-"After landing on %s Dr. Mensing tells you to wait until she returns. \"Not "
-"more than a couple of periods.\" she said; in fact you had to wait for only "
-"two periods until she returned. She comes back looking defeated.\n"
+"After landing on {cur_pnt} Dr. Mensing tells you to wait until she returns. "
+"\"Not more than a couple of periods.\" she said; in fact you had to wait for "
+"only two periods until she returned. She comes back looking defeated.\n"
 "    \"This is the first time that one of my applications was rejected. "
 "That's weird, I got positive feedback at first. It makes no sense that my "
 "application was rejected at the last minute. I guess things like this "
-"happen. Let's just go to %s in the %s system next and try again.\""
+"happen. Let's just go to {pnt} in the {sys} system next and try again.\""
 msgstr ""
 
-#: dat/missions/zalek/neburesearch/neburesearch_04.lua:86
-#, lua-format
+#: dat/missions/zalek/neburesearch/neburesearch_04.lua:88
 msgid ""
 "\"Alright, I'm sure it will work out this time!\", Dr. Mensing said on "
-"arriving on %s. This time you have to wait even longer for her to return. "
-"The result is the same as her first try.\n"
+"arriving on {cur_pnt}. This time you have to wait even longer for her to "
+"return. The result is the same as her first try.\n"
 "    \"I don't get it. My presentation is flawless and my proposal is "
 "exciting. Why wouldn't they grant me additional funds? I tell you, something "
 "is wrong here! Hmm... Time to change tactics. I have to speak with Professor "
-"Voges himself but he is currently on %s in the %s system and just ignores "
-"us. I guess we have to go there to speak with him face-to-face.\""
+"Voges himself but he is currently on {pnt} in the {sys} system and just "
+"ignores us. I guess we have to go there to speak with him face-to-face.\""
 msgstr ""
 
-#: dat/missions/zalek/neburesearch/neburesearch_04.lua:95
-#, lua-format
+#: dat/missions/zalek/neburesearch/neburesearch_04.lua:94
 msgid ""
 "\"Good news! I asked around and found a clue how to contact Professor Voges. "
 "He promised one of his colleagues to show up to his party. Something about "
 "his wife, like they have gotten married or she died or something. Anyway, I "
-"managed to get invited there as well. So let's go to %s in the %s system!\""
+"managed to get invited there as well. So let's go to {pnt} in the {sys} "
+"system!\""
 msgstr ""
 
-#: dat/missions/zalek/neburesearch/neburesearch_04.lua:104
+#: dat/missions/zalek/neburesearch/neburesearch_04.lua:100
+#: dat/missions/zalek/neburesearch/neburesearch_04.lua:102
 #: dat/missions/zalek/neburesearch/neburesearch_04.lua:106
-#: dat/missions/zalek/neburesearch/neburesearch_04.lua:110
 msgid "Crashing a party"
 msgstr ""
 
-#: dat/missions/zalek/neburesearch/neburesearch_04.lua:104
+#: dat/missions/zalek/neburesearch/neburesearch_04.lua:100
 msgid ""
 "The two of you arrive at the party site. \"Listen, this is probably your "
 "first party so let me briefly explain to you how it works. Your goal usually "
@@ -68847,7 +68808,7 @@ msgid ""
 "see you from inside the house if you climb over the fence.\""
 msgstr ""
 
-#: dat/missions/zalek/neburesearch/neburesearch_04.lua:106
+#: dat/missions/zalek/neburesearch/neburesearch_04.lua:102
 msgid ""
 "You wonder if anything of that was meant serious. Before you can ask, Dr. "
 "Mensing runs off engaging an older looking man, probably Professor Voges. "
@@ -68871,23 +68832,21 @@ msgid ""
 "are indeed trying to escape the party."
 msgstr ""
 
-#: dat/missions/zalek/neburesearch/neburesearch_04.lua:110
-#, lua-format
+#: dat/missions/zalek/neburesearch/neburesearch_04.lua:106
 msgid ""
 "\"At least the ice cream is great!\" you think as you take another bite. "
-"Suddenly someone grabs your arm. \"We're done here. Bring me back to %s!\" "
-"Dr. Mensing quietly tells you. For a moment you wonder what she is doing as "
-"she drags you towards the bathroom; finally you remember what she said about "
-"her 'escape strategy'. She mentioned that you are supposed to leave the "
-"building through the window of the bathroom."
+"Suddenly someone grabs your arm. \"We're done here. Bring me back to {pnt}!"
+"\" Dr. Mensing quietly tells you. For a moment you wonder what she is doing "
+"as she drags you towards the bathroom; finally you remember what she said "
+"about her 'escape strategy'. She mentioned that you are supposed to leave "
+"the building through the window of the bathroom."
 msgstr ""
 
-#: dat/missions/zalek/neburesearch/neburesearch_04.lua:114
+#: dat/missions/zalek/neburesearch/neburesearch_04.lua:110
 msgid "Finally back home"
 msgstr ""
 
-#: dat/missions/zalek/neburesearch/neburesearch_04.lua:114
-#, lua-format
+#: dat/missions/zalek/neburesearch/neburesearch_04.lua:110
 msgid ""
 "\"That took long enough! I'm glad Professor Voges promised to take care of "
 "the funding. The problem was that my recent research is related to a secret "
@@ -68895,52 +68854,49 @@ msgid ""
 "conspiracy; can you believe it! Actually I'm not supposed to tell you "
 "anything as you could possibly get into a lot of trouble.. forget I said "
 "anything! I have much work to do!\"\n"
-"    She gives you a credit chip worth %s and leaves."
+"    She gives you a credit chip worth {credits} and leaves."
 msgstr ""
 
-#: dat/missions/zalek/neburesearch/neburesearch_04.lua:118
+#: dat/missions/zalek/neburesearch/neburesearch_04.lua:114
 msgid ""
 "You helped Dr. Mensing to acquire funding for a shielding prototype that "
 "will enable to explore the Sol nebula."
 msgstr ""
 
-#: dat/missions/zalek/neburesearch/neburesearch_04.lua:151
-#: dat/missions/zalek/neburesearch/neburesearch_04.lua:156
+#: dat/missions/zalek/neburesearch/neburesearch_04.lua:147
+#: dat/missions/zalek/neburesearch/neburesearch_04.lua:152
 msgid "Caution!"
 msgstr ""
 
-#: dat/missions/zalek/neburesearch/neburesearch_04.lua:151
-#, lua-format
+#: dat/missions/zalek/neburesearch/neburesearch_04.lua:147
 msgid ""
 "You receive a system wide broadcast. It appears to be a warning. \"Caution! "
-"A drone squadron in the %s system went haywire! Proceed with care.\"\n"
+"A drone squadron in the {sys} system went haywire! Proceed with care.\"\n"
 "    Why is this happening so frequently in Za'lek space? On a second glance "
 "you see on your radar that a drone squadron is flying right towards your "
 "ship."
 msgstr ""
 
-#: dat/missions/zalek/neburesearch/neburesearch_04.lua:156
-#, lua-format
+#: dat/missions/zalek/neburesearch/neburesearch_04.lua:152
 msgid ""
 "The now familiar warning appears once again on your ship's screen. "
-"\"Caution! A drone squadron in the %s system went haywire! Proceed with care."
-"\"\n"
+"\"Caution! A drone squadron in the {sys} system went haywire! Proceed with "
+"care.\"\n"
 "    Just how often is this going to happen?"
 msgstr ""
 
-#: dat/missions/zalek/neburesearch/neburesearch_04.lua:181
+#: dat/missions/zalek/neburesearch/neburesearch_04.lua:177
 msgid "No clearance to land"
 msgstr ""
 
-#: dat/missions/zalek/neburesearch/neburesearch_04.lua:181
-#, lua-format
+#: dat/missions/zalek/neburesearch/neburesearch_04.lua:177
 msgid ""
-"Apparently you are not allowed to land on %s and explaining the situation "
-"was futile. Dr. Mensing enters the cockpit asking why you aren't landing. "
-"\"We're not allowed to? Let me try to talk with them.\"\n"
+"Apparently you are not allowed to land on {cur_pnt} and explaining the "
+"situation was futile. Dr. Mensing enters the cockpit asking why you aren't "
+"landing. \"We're not allowed to? Let me try to talk with them.\"\n"
 "    After a heated discussion Dr. Mensing gives up. \"Right, they won't "
-"allow anyone to land on %s. That's so frustrating. Let's land on %s instead."
-"\""
+"allow anyone to land on {cur_pnt}. That's so frustrating. Let's land on "
+"{pnt} instead.\""
 msgstr ""
 
 #: dat/missions/zalek/sciencegonewrong/00_sciwrong.lua:50
