@@ -58,12 +58,12 @@ function create ()
       -- Mission details
       misn.setTitle(_("Collective Extraction"))
       misn.setReward( fmt.credits( credits ) )
-      misn.setDesc( string.format(_("Check for survivors on %s in %s"), misn_target:name(), misn_target_sys:name() ))
-      tk.msg( _("Collective Extraction"), string.format(_([["We'll send extra forces to %s to try to give you a chance to break through the blockade. You'll have to land on %s and extract our team. Be very careful. This is going to be no walk in the park."]]), misn_target_sys:name(), misn_target:name()) )
+      misn.setDesc( fmt.f(_("Check for survivors on {pnt} in {sys}"), {pnt=misn_target, sys=misn_target_sys} ))
+      tk.msg( _("Collective Extraction"), fmt.f(_([["We'll send extra forces to {sys} to try to give you a chance to break through the blockade. You'll have to land on {pnt} and extract our team. Be very careful. This is going to be no walk in the park."]]), {sys=misn_target_sys, pnt=misn_target}) )
       misn.osdCreate(_("Collective Extraction"), {
          fmt.f(_("Fly to {sys}"), {sys=misn_target_sys}),
          fmt.f(_("Land on {pnt}"), {pnt=misn_target}),
-         _("Return to %s"):format(misn_base:name()),
+         fmt.f(_("Return to {pnt}"), {pnt=misn_base}),
       })
 
       hook.enter("enter")
@@ -94,7 +94,7 @@ function enter()
         empireAttack(fleet1)
         empireAttack(fleet2)
 
-        fleet1[1]:comm(_("Okay, %s, we'll flank the Collective force around the planet and try to draw their fire. You punch right through and land on that planet!"):format(player.name()))
+        fleet1[1]:comm(fmt.f(_("Okay, {player}, we'll flank the Collective force around the planet and try to draw their fire. You punch right through and land on that planet!"), {player=player.name()}))
         fleet1[1]:taskClear()
         fleet1[1]:moveto(waypoint1, false, false)
         fleet1[1]:moveto(waypoint12, false, false)
@@ -221,7 +221,7 @@ function land ()
       player.takeoff()
 
       -- Some flavour text
-      local title = _("Planet %s"):format(misn_target:name())
+      local title = fmt.f(_("Planet {pnt}"), {pnt=misn_target})
       tk.msg( title, _([[The atmosphere once again starts giving your shields a workout as you land. You spend a while flying low until your sensors pick up a reading of possible life forms. The silhouette of the transport ship is barely visible. As you fly closer, it becomes apparent that you arrived too late. Everyone is already dead. You see if you can salvage the readings from their equipment, but it seems like it's completely toasted.]]) )
 
       -- Add fuel if needed

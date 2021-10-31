@@ -88,20 +88,20 @@ function accept ()
    -- Mission details
    misn.setTitle(_("Operation Black Trinity"))
    misn.setReward( fmt.credits( credits ) )
-   misn.setDesc( string.format(_("Arrest the ESS Trinity in %s"), misn_target_sys:name() ))
+   misn.setDesc( fmt.f(_("Arrest the ESS Trinity in {sys}"), {sys=misn_target_sys} ))
    misn.osdCreate(_("Operation Black Trinity"), {
       fmt.f(_("Fly to the {sys} system"), {sys=misn_target_sys}),
       _("Apprehend or kill Zakred"),
-      _("Report back to %s"):format(misn_base:name()),
+      fmt.f(_("Report back to {pnt}"), {pnt=misn_base}),
    })
 
-   tk.msg( _("Interrogation Room"), string.format(_([[You accept and she dismisses both of the soldiers, who proceed to wait outside.
-    "We've been following Lt. Commander Dimitri's progress since he started at %s. The datapad you brought back has confirmed what we have suspected. We have an undercover Collective agent somewhere in the military who's been feeding ex-Commodore Welsh data. You don't understand, right? Let me explain."]]), misn_base:name() ) )
-   tk.msg( _("Operation Black Trinity"), string.format(_([["The Collective was actually a project for the Empire. They were supposed to be the ultimate weapon in flexibility and offense. Commodore Welsh was in charge of the secret science facility on %s. Shortly after the Incident, we stopped hearing from them. We sent a recon and were met with hostile Collective drones. It seems like the project had been a success, but the traitor Welsh went rogue. Under normal circumstances we would have easily crushed the Collective, but after the Incident these are hardly normal circumstances."
-    She goes on. "Things have gotten out of hand. We have had chances to crush Welsh, but he always seems to evade us and strike where we were weakest. We always knew there must have been another traitor in our midst, but with the datapad information we now know who he is."]]), _("Eiroik")))
+   tk.msg( _("Interrogation Room"), fmt.f(_([[You accept and she dismisses both of the soldiers, who proceed to wait outside.
+    "We've been following Lt. Commander Dimitri's progress since he started at {pnt}. The datapad you brought back has confirmed what we have suspected. We have an undercover Collective agent somewhere in the military who's been feeding ex-Commodore Welsh data. You don't understand, right? Let me explain."]]), {pnt=misn_base} ) )
+   tk.msg( _("Operation Black Trinity"), fmt.f(_([["The Collective was actually a project for the Empire. They were supposed to be the ultimate weapon in flexibility and offense. Commodore Welsh was in charge of the secret science facility on {pnt}. Shortly after the Incident, we stopped hearing from them. We sent a recon and were met with hostile Collective drones. It seems like the project had been a success, but the traitor Welsh went rogue. Under normal circumstances we would have easily crushed the Collective, but after the Incident these are hardly normal circumstances."
+    She goes on. "Things have gotten out of hand. We have had chances to crush Welsh, but he always seems to evade us and strike where we were weakest. We always knew there must have been another traitor in our midst, but with the datapad information we now know who he is."]]), {pnt=_("Eiroik")}))
    emp.addCollectiveLog( _([[Commodore Keer has taken over the Collective issue and explained more about the Collective. "The Collective was actually a project for the Empire. They were supposed to be the ultimate weapon in flexibility and offense. Commodore Welsh was in charge of the secret science facility on Eiroik. Shortly after the Incident, we stopped hearing from them. We sent a recon and were met with hostile Collective drones. It seems like the project had been a success, but the traitor Welsh went rogue. Under normal circumstances we would have easily crushed the Collective, but after the Incident these are hardly normal circumstances."]]) )
-   tk.msg( _("Mission Accomplished"), string.format(_([[She now clears her throat. "This operation has been dubbed 'Operation Black Trinity'. We have reason to believe that the ESS Trinity has been operating with the traitor Welsh. The ESS Trinity is commanded by Captain Zakred. You will form part of an assault team with the primary objective of arresting Zakred. If all goes to worse, you are ordered to kill Zakred. He must not escape.
-    "We'll be sending you with a small force. You just stick around and if any trouble arises, take the ESS Trinity down. Zakred is currently on manoeuvre exercises in %s. You will have to find him there. The other ships will follow your lead to %s. Good luck."]]), misn_target_sys:name(), misn_target_sys:name() ) )
+   tk.msg( _("Mission Accomplished"), fmt.f(_([[She now clears her throat. "This operation has been dubbed 'Operation Black Trinity'. We have reason to believe that the ESS Trinity has been operating with the traitor Welsh. The ESS Trinity is commanded by Captain Zakred. You will form part of an assault team with the primary objective of arresting Zakred. If all goes to worse, you are ordered to kill Zakred. He must not escape.
+    "We'll be sending you with a small force. You just stick around and if any trouble arises, take the ESS Trinity down. Zakred is currently on manoeuvre exercises in {sys}. You will have to find him there. The other ships will follow your lead to {sys}. Good luck."]]), {sys=misn_target_sys} ) )
 
    -- Escorts
    escorts = {}
@@ -168,8 +168,8 @@ function enter ( from_sys )
 
       misn_stage = 3
       player.msg( _("Mission Failure: Return to base.") )
-      misn.setDesc( string.format(_("Return to base at %s in %s"),
-            misn_base:name(), misn_base_sys:name() ))
+      misn.setDesc( fmt.f(_("Return to base at {pnt} in {sys}"),
+            {pnt=misn_base, sys=misn_base_sys} ))
       misn.markerMove( misn_marker, misn_base_sys )
    end
 end
@@ -331,8 +331,8 @@ function land ()
          emp.addCollectiveLog( _([[You failed to destroy the ESS Trinity, putting a wedge in the Empire's plans. You should meet back with Commodore Keer at the bar on Omega Station; she said that they would notify you if they have something more that you can do.]]) )
       else
          -- Successfully killed
-         tk.msg( _("Mission Accomplished"), string.format(_([[You see Commodore Keer with a dozen soldiers waiting for you outside the landing pad.
-    "Congratulations on the success, %s. We never really expected to take Zakred alive. Good riddance. The next step is to begin an all-out attack on Collective territory. Meet up in the bar when you're ready. We'll need all available pilots."]]), player.name()) )
+         tk.msg( _("Mission Accomplished"), fmt.f(_([[You see Commodore Keer with a dozen soldiers waiting for you outside the landing pad.
+    "Congratulations on the success, {player}. We never really expected to take Zakred alive. Good riddance. The next step is to begin an all-out attack on Collective territory. Meet up in the bar when you're ready. We'll need all available pilots."]]), {player=player.name()}) )
          var.push("trinity", false)
          emp.addCollectiveLog( _([[You successfully killed Zakred (a Collective spy) and destroyed the ESS Trinity. Commodore Keer told you to meet her again at the bar on Omega Station for an all-out attack on Collective territory.]]) )
       end
@@ -352,7 +352,7 @@ function trinity_kill () -- Got killed
    misn_stage = 2
    misn.osdActive(3)
    trinity_alive = false
-   misn.setDesc( string.format(_("Return to base at %s in %s"), misn_base:name(), misn_base_sys:name() ))
+   misn.setDesc( fmt.f(_("Return to base at {pnt} in {sys}"), {pnt=misn_base, sys=misn_base_sys} ))
    misn.markerMove( misn_marker, misn_base_sys )
 end
 
@@ -362,6 +362,6 @@ function trinity_jump () -- Got away
    misn_stage = 2
    misn.osdActive(3)
    trinity_alive = true
-   misn.setDesc( string.format(_("Return to base at %s in %s"), misn_base:name(), misn_base_sys:name() ))
+   misn.setDesc( fmt.f(_("Return to base at {pnt} in {sys}"), {pnt=misn_base, sys=misn_base_sys} ))
    misn.markerMove( misn_marker, misn_base_sys )
 end

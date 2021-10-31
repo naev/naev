@@ -42487,8 +42487,8 @@ msgstr ""
 #: dat/missions/empire/collective/ec01.lua:91
 #: dat/missions/empire/collective/ec01.lua:117
 #, lua-format
-msgid "Scanning... %ss remaining."
-msgstr "スキャン中... 残り %s 秒。"
+msgid "Scanning... {seconds}s remaining."
+msgstr "スキャン中... 残り {seconds} 秒。"
 
 #: dat/missions/empire/collective/ec01.lua:123
 msgid ""

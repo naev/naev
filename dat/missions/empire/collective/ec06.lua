@@ -30,6 +30,7 @@
 ]]--
 require "proximity"
 local emp = require "common.empire"
+local fmt = require "format"
 
 function create ()
     missys = {system.get("C-59"), system.get("C-28"), system.get("C-00")}
@@ -65,9 +66,9 @@ function accept ()
    -- Mission details
    misn.setTitle(_("Operation Cold Metal"))
    misn.setReward( _("Fame and Glory") )
-   misn.setDesc( string.format(_("Neutralize enemy forces in %s"), misn_target_sys1:name() ))
+   misn.setDesc( fmt.f(_("Neutralize enemy forces in {sys}"), {sys=misn_target_sys1} ))
    local osd_msg = {
-      _("Fly to %s via %s and meet up with the Imperial fleet"):format(misn_final_sys:name(), misn_target_sys2:name()),
+      fmt.f(_("Fly to {final_sys} via {sys} and meet up with the Imperial fleet"), {final_sys=misn_final_sys, sys=misn_target_sys2}),
       _("Defeat the Starfire"),
       _("Report back"),
    }
@@ -76,8 +77,8 @@ function accept ()
    end
    misn.osdCreate(_("Operation Cold Metal"), osd_msg)
 
-   tk.msg( _("Operation Cold Metal"), string.format( _([["The Operation has been dubbed 'Cold Metal'. We're going to mount an all-out offensive in C-00. The systems up to %s are already secure and under our control, all we need to do now is to take the final stronghold. Should we encounter the Starfire at any stage our goal will be to destroy it and head back. The Imperial fleet will join you when you get there. See you in combat, pilot."]]),
-         misn_target_sys1:name(), misn_final_sys:name() ) )
+   tk.msg( _("Operation Cold Metal"), fmt.f( _([["The Operation has been dubbed 'Cold Metal'. We're going to mount an all-out offensive in C-00. The systems up to {sys} are already secure and under our control, all we need to do now is to take the final stronghold. Should we encounter the Starfire at any stage our goal will be to destroy it and head back. The Imperial fleet will join you when you get there. See you in combat, pilot."]]),
+   {sys=misn_target_sys1} ) )
 
    hook.jumpout("jumpout")
    hook.enter("jumpin")
@@ -236,8 +237,8 @@ function land ()
    -- Final landing stage
    if misn_stage == 4 and planet.cur() == misn_base then
 
-      tk.msg( _("Mission Success"), string.format(_([[As you do your approach to land on %s you notice big banners placed on the exterior of the station. They seem to be in celebration of the final defeat of the Collective. When you do land you are saluted by the welcoming committee in charge of saluting all the returning pilots.
-    You notice Commodore Keer. Upon greeting her, she says, "You did a good job out there. No need to worry about the Collective anymore. Without Welsh, the Collective won't stand a chance, since they aren't truly autonomous. Right now we have some ships cleaning up the last of the Collective; shouldn't take too long to be back to normal."]]), misn_base:name()) )
+      tk.msg( _("Mission Success"), fmt.f(_([[As you do your approach to land on {pnt} you notice big banners placed on the exterior of the station. They seem to be in celebration of the final defeat of the Collective. When you do land you are saluted by the welcoming committee in charge of saluting all the returning pilots.
+    You notice Commodore Keer. Upon greeting her, she says, "You did a good job out there. No need to worry about the Collective anymore. Without Welsh, the Collective won't stand a chance, since they aren't truly autonomous. Right now we have some ships cleaning up the last of the Collective; shouldn't take too long to be back to normal."]]), {pnt=misn_base}) )
 
       -- Rewards
       -- This was the last mission in the minor campaign, so bump the reputation cap.

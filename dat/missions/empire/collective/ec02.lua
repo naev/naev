@@ -50,8 +50,8 @@ end
 
 function accept ()
    -- Intro text
-   if not tk.yesno( _("Collective Espionage"), string.format(_([[You head over to Lt. Commander Dimitri to see what the results are.
-    "Hello there again, %s. Bad news on your latest run, you got nothing other than the usual robotic chatter. We'll have to send you out again, but this time we'll follow a different approach. Interested in giving it another shot?"]]), player.name()) ) then
+   if not tk.yesno( _("Collective Espionage"), fmt.f(_([[You head over to Lt. Commander Dimitri to see what the results are.
+    "Hello there again, {player}. Bad news on your latest run, you got nothing other than the usual robotic chatter. We'll have to send you out again, but this time we'll follow a different approach. Interested in giving it another shot?"]]), {player=player.name()}) ) then
       misn.finish()
    end
 
@@ -64,16 +64,16 @@ function accept ()
    -- Mission details
    misn.setTitle(_("Collective Espionage"))
    misn.setReward( misn_reward )
-   misn.setDesc( string.format(_("Land on %s in the %s system to monitor Collective communications"), misn_target:name(), misn_target_sys:name() ))
+   misn.setDesc( fmt.f(_("Land on {pnt} in the {sys} system to monitor Collective communications"), {pnt=misn_target, sys=misn_target_sys} ))
    misn.osdCreate(_("Collective Espionage"), {
-      _("Fly to %s and land on %s"):format(misn_target_sys:name(), misn_target:name()),
-      _("Return to %s with your findings"):format(misn_base:name()),
+      fmt.f(_("Fly to {sys} and land on {pnt}"), {sys=misn_target_sys, pnt=misn_target}),
+      fmt.f(_("Return to {pnt} with your findings"), {pnt=misn_base}),
    })
 
-   tk.msg( _("Collective Espionage"), string.format(_([["On your last run, you were monitoring while out in the open. While you do get better signals, upon noticing your presence, the drones will go into combat mode, and yield only combat transmissions. This mission will consist of hiding and monitoring from a safer spot, hopefully catching them more relaxed.
-    "When the Collective struck, they quickly took many systems; one of the bigger hits was %s, an important gas giant rich in methane. They destroyed the gas refineries and slaughtered the humans. There was nothing we could do. The turbulence and dense atmosphere there should be able to hide your ship."]]), misn_target:name()) )
-   tk.msg( _("Collective Espionage"), string.format(_([["The plan is to have you infiltrate Collective space alone to not arouse too much suspicion. Once inside, you should head to %s in the %s system. Stay low and monitor all frequencies in the system. If anything is suspicious, we'll surely catch it then. Don't forget to make sure you have the four jumps of fuel to be able to get there and back in one piece.
-    "Good luck, I'll be waiting for you on your return."]]), misn_target:name(), misn_target_sys:name()) )
+   tk.msg( _("Collective Espionage"), fmt.f(_([["On your last run, you were monitoring while out in the open. While you do get better signals, upon noticing your presence, the drones will go into combat mode, and yield only combat transmissions. This mission will consist of hiding and monitoring from a safer spot, hopefully catching them more relaxed.
+    "When the Collective struck, they quickly took many systems; one of the bigger hits was {pnt}, an important gas giant rich in methane. They destroyed the gas refineries and slaughtered the humans. There was nothing we could do. The turbulence and dense atmosphere there should be able to hide your ship."]]), {pnt=misn_target}) )
+   tk.msg( _("Collective Espionage"), fmt.f(_([["The plan is to have you infiltrate Collective space alone to not arouse too much suspicion. Once inside, you should head to {pnt} in the {sys} system. Stay low and monitor all frequencies in the system. If anything is suspicious, we'll surely catch it then. Don't forget to make sure you have the four jumps of fuel to be able to get there and back in one piece.
+    "Good luck, I'll be waiting for you on your return."]]), {pnt=misn_target, sys=misn_target_sys}) )
 
    hook.land("land")
 end
@@ -105,8 +105,8 @@ function takeoff()
     music.play()
 
     -- Some text
-    tk.msg( _("Collective Espionage"), string.format(_([[You quickly land on %s and hide in its deep dense methane atmosphere. Your monitoring gear flickers into action, hopefully catching something of some use. With some luck there won't be too many Collective drones when you take off.]]), misn_target:name()) )
-    misn.setDesc( string.format(_("Travel back to %s in %s"), misn_base:name(), misn_base_sys:name() ))
+    tk.msg( _("Collective Espionage"), fmt.f(_([[You quickly land on {pnt} and hide in its deep dense methane atmosphere. Your monitoring gear flickers into action, hopefully catching something of some use. With some luck there won't be too many Collective drones when you take off.]]), {pnt=misn_target}) )
+    misn.setDesc( fmt.f(_("Travel back to {pnt} in {sys}"), {pnt=misn_base, sys=misn_base_sys} ))
 
     local sml_swarm = { "Drone", "Drone", "Drone", "Heavy Drone" }
 

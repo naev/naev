@@ -65,7 +65,7 @@ function accept ()
    misn_marker2 = misn.markerAdd(targsys2, "low")
    misn.osdCreate(_("Collective Espionage"), {
       _("Scan the Collective systems for wireless communications"),
-      _("Travel back to %s in %s"):format(misn_base:name(), misn_base_sys:name()),
+      fmt.f(_("Travel back to {pnt} in {sys}"), {pnt=misn_base, sys=misn_base_sys}),
    })
 
    tk.msg( _("Collective Espionage"), _([["You need to jump to each of the systems indicated on your map, and stay in the system until the scan finishes. If you jump out prematurely, you'll have to restart the scan from scratch when you return.
@@ -88,7 +88,7 @@ function enter()
 
     if (system.cur() == targsys1 and not sysdone1) or (system.cur() == targsys2 and not sysdone2) then
         scantime = 90 -- seconds
-        omsg = player.omsgAdd(_("Scanning... %ss remaining."):format(scantime), 0)
+        omsg = player.omsgAdd(fmt.f(_("Scanning... {seconds}s remaining."), {seconds=scantime}), 0)
         timerhook = hook.timer(1.0, "scantimer")
         scanning = true
     end
@@ -114,7 +114,7 @@ function scantimer()
 
         return
     end
-    player.omsgChange(omsg, _("Scanning... %ss remaining."):format(scantime), 0)
+    player.omsgChange(omsg, fmt.f(_("Scanning... {seconds}s remaining."), {seconds=scantime}), 0)
     timerhook = hook.timer(1.0, "scantimer")
 end
 

@@ -35,11 +35,7 @@ local fmt = require "format"
 local emp = require "common.empire"
 
 
-osd_msg = {}
-osd_msg[1] = _("Fly to the {sys} system")
-osd_msg[2] = ""
-osd_msg[3] = _("Return to %s")
-osd_msg["__save"] = true
+osd_msg = {__save=true}
 
 function setOSD (dronequota, droneleft)
    local destroy_text, remaining_text
@@ -62,13 +58,12 @@ end
 
 
 function accept ()
-
-   commando_planet = "Eiroik"
+   commando_planet = planet.get("Eiroik")
    credits = 1e6
 
    -- Intro text
-   if tk.yesno( _("Collective Espionage"), string.format(_([[As you approach Lt. Commander Dimitri you notice he seems somewhat excited.
-    "It looks like you got something. It's not very clear because of %s's atmosphere creating a lot of noise, but it does seem to be similar to Empire transmissions. We've got another plan to try for a cleaner signal. It'll be uglier then the last one. You in?"]]), commando_planet) )
+   if tk.yesno( _("Collective Espionage"), fmt.f(_([[As you approach Lt. Commander Dimitri you notice he seems somewhat excited.
+    "It looks like you got something. It's not very clear because of {pnt}'s atmosphere creating a lot of noise, but it does seem to be similar to Empire transmissions. We've got another plan to try for a cleaner signal. It'll be uglier then the last one. You in?"]]), {pnt=commando_planet}) )
       then
       misn.accept()
 
@@ -82,15 +77,15 @@ function accept ()
       -- Mission details
       misn.setTitle(_("Collective Distraction"))
       misn.setReward( fmt.credits( credits ) )
-      misn.setDesc( string.format(_("Go to draw the Collective's attention in the %s system"), misn_target_sys:name() ))
+      misn.setDesc( fmt.f(_("Go to draw the Collective's attention in the {sys} system"), {sys=misn_target_sys} ))
 
-      tk.msg( _("Collective Espionage"), string.format(_([["Here's the plan: we want to drop a commando team on %s to set up more sophisticated surveillance. We've already got a team assembled. Your job will be to provide a distraction.
-    "The idea would be to have you fly deep into Collective territory and kick up some trouble. A few dead drones should draw their attention. This is no suicide mission, so you'll have to fly back when things start getting ugly. Meanwhile we'll send a fast convoy with the commandos to %s, to start monitoring."]]), commando_planet, commando_planet ) )
+      tk.msg( _("Collective Espionage"), fmt.f(_([["Here's the plan: we want to drop a commando team on {pnt} to set up more sophisticated surveillance. We've already got a team assembled. Your job will be to provide a distraction.
+    "The idea would be to have you fly deep into Collective territory and kick up some trouble. A few dead drones should draw their attention. This is no suicide mission, so you'll have to fly back when things start getting ugly. Meanwhile we'll send a fast convoy with the commandos to {pnt}, to start monitoring."]]), {pnt=commando_planet} ) )
       tk.msg( _("Collective Espionage"), _([["If all goes well, the commandos will return here with the results after 10 periods. Then we'll have a definitive answer on the communications issues. We aren't anticipating problems on the return, but we'll have some ships ready just in case they're pursued.
     "Good luck and be careful out there," he adds, before saluting you off onto your mission.]]) )
-      osd_msg[1] = fmt.f(osd_msg[1], {sys=misn_target_sys})
+      osd_msg[1] = fmt.f(_("Fly to the {sys} system"), {sys=misn_target_sys})
       setOSD(dronequota, droneleft)
-      osd_msg[3] = osd_msg[3]:format(misn_base:name())
+      osd_msg[3] = fmt.f(_("Return to {pnt}"), {pnt=misn_base})
       misn.osdCreate(_("Collective Distraction"), osd_msg)
 
       hook.enter("jumpin")

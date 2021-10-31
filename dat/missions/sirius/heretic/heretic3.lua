@@ -56,7 +56,7 @@ function accept()
       misn.markerAdd(homesys,"high")
       misn.osdCreate(_("The Assault"), {
          _("Defend %s against the Sirius assault"):format(homeasset:name()),
-         _("Return to %s"):format(homeasset:name()),
+         fmt.f(_("Return to {pnt}"), {pnt=homeasset}),
       })
       misn.osdActive(1)
 
