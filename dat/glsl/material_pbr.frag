@@ -85,6 +85,38 @@ float Fd_Burley( float roughness, float NoV, float NoL, float LoH )
 	return lightScatter * viewScatter * (1.0 / M_PI);
 }
 
+struct Material {
+   vec3 albedo;
+   float roughness;
+};
+
+vec3 shade( Material mat, vec3 v, vec3 n, vec3 l, float NoL )
+{
+   vec3 h   = normalize(l+v); /* Halfway vector. */
+
+   /* Compute helpers. */
+   float NoV = max(0.0,dot(n,v));
+   float NoH = max(0.0,dot(n,h));
+   float LoH = max(0.0,dot(l,h));
+   float VoH = max(0.0,dot(v,h));
+
+   /* Specular Lobe. */
+   float D = D_GGX( mat.roughness, NoH, h );
+   float V = V_SmithGGXCorrelated( mat.roughness, NoV, NoL );
+   vec3  F = F_Schlick( vec3(0.2), VoH );
+   vec3 Fr = (D*V)*F;
+
+   /* Diffuse Lobe. */
+   vec3 Fd = mat.albedo * Fd_Burley( mat.roughness, NoV, NoL, LoH );
+   //vec3 Fd = Td * Fd_Lambert();
+
+	/* The energy compensation term is used to counteract the darkening effect
+	 * at high roughness */
+	//vec3 colour = Fd + Fr * pixel.energyCompensation;
+
+   return Fd + Fr;
+}
+
 void main(void) {
    /* Compute normal taking into account the bump map. */
    vec3 n = normal;
@@ -99,14 +131,7 @@ void main(void) {
    const vec3 v   = normalize( vec3(0.0, 1.0, 1.0) );
    vec3 p   = pos;
    vec3 l   = normalize(lp-p);
-   vec3 h   = normalize(l+v); /* Halfway vector. */
-
-   /* Compute helpers. */
-   float NoV = max(0.0,dot(n,v));
    float NoL = max(0.0,dot(n,l));
-   float NoH = max(0.0,dot(n,h));
-   float LoH = max(0.0,dot(l,h));
-   float VoH = max(0.0,dot(v,h));
 
    /* Material values. */
    float roughness =  0.1;
@@ -116,21 +141,11 @@ void main(void) {
    vec3 Ts = texture(map_Ks, tex_coord).rgb;
    vec3 Te = texture(map_Ke, tex_coord).rgb;
 
-   /* Specular Lobe. */
-   float D = D_GGX( roughness, NoH, h );
-   float V = V_SmithGGXCorrelated( roughness, NoV, NoL );
-   vec3  F = F_Schlick( vec3(0.2), VoH );
-   vec3 Fr = (D*V)*F;
+   Material mat;
+   mat.roughness  = 0.1;
+   mat.albedo     = Td;
 
-   /* Diffuse Lobe. */
-   vec3 Fd = Td * Fd_Burley( roughness, NoV, NoL, LoH );
-   //vec3 Fd = Td * Fd_Lambert();
-
-	/* The energy compensation term is used to counteract the darkening effect
-	 * at high roughness */
-	//vec3 colour = Fd + Fr * pixel.energyCompensation;
-
-   vec3 colour = Fd + Fr;
+   vec3 colour = shade( mat, v, n, l, NoL );
 
    color_out = vec4(colour * NoL, 1.0);
 }
