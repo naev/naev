@@ -304,7 +304,7 @@ function board_lootOne( wgt, nomsg )
          return false
       end
       local qr = board_plt:cargoRm( c, q ) -- Might be a misaligned here with loot_mod, but we sort of ignore it :/
-      pp:cargoAdd( c, q )
+      pp:cargoAdd( c, qr )
       player.msg(fmt.f(_("You looted {amount} of {cargo} from {plt}."),{amount=fmt.tonnes(q), cargo=c:name(), plt=board_plt:name()}))
       board_updateFreespace()
       looted = true
