@@ -9,14 +9,50 @@ local der = require "common.derelict"
 local loot_mod
 local special_col = {0.7, 0.45, 0.22} -- Dark Gold
 
+local function slotTypeColour( stype )
+   local c
+   if stype=="Weapon" then
+      c = "p"
+   elseif stype=="Utility" then
+      c = "g"
+   elseif stype=="Structure" then
+      c = "n"
+   else
+      c = "0"
+   end
+   return "#"..c..stype
+end
+
+local function slotSizeColour( size )
+   local c
+   if size=="Large" then
+      c = "r"
+   elseif size=="Medium" then
+      c = "b"
+   elseif size=="Small" then
+      c = "y"
+   else
+      c = "0"
+   end
+   return "#"..c..size
+end
+
 local function outfit_loot( o )
+   local name, size, prop, req, exc = o:slot()
+   local sexc = (exc and _("\n[exclusive")) or ""
+   local desc = fmt.f(_("{name}\n{slotsize} {slottype}#0 slot{exclusive}\n{desc}"),
+         { name=o:name(),
+           desc=o:description(),
+           slottype=slotTypeColour(name),
+           slotsize=slotSizeColour(size),
+           exclusive=sexc})
    return {
       image = lg.newImage( o:icon() ),
       text = o:name(),
       q = nil,
       type = "outfit",
       bg = special_col,
-      alt = o:description(),
+      alt = desc,
       data = o,
    }
 end
@@ -25,7 +61,7 @@ local cargo_image_generic = nil
 local function cargo_loot( c, q, m )
    local icon = c:icon()
    local ispecial = m or c:price()==0
-   local desc = c:description()
+   local desc = fmt.f(_("{name}\n{desc}"), {name=c:name(),desc=c:description()})
    local illegalto = c:illegality()
    if #illegalto > 0 then
       desc = desc.._("\n#rIllegalized by the following factions:\n")
@@ -42,7 +78,7 @@ local function cargo_loot( c, q, m )
       q = math.floor( 0.5 + q*loot_mod ),
       type = "cargo",
       bg = (ispecial and special_col) or nil,
-      alt = c:description(),
+      alt = desc,
       data = c,
    }
 end
