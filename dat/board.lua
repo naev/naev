@@ -6,6 +6,7 @@ local lg = require 'love.graphics'
 local fmt = require 'format'
 local der = require "common.derelict"
 
+local board_lootOne -- forward-declared function, defined at bottom of file
 local loot_mod
 local special_col = {0.7, 0.45, 0.22} -- Dark Gold
 
@@ -38,8 +39,8 @@ local function slotSizeColour( size )
 end
 
 local function outfit_loot( o, price )
-   local name, size, prop, req, exc = o:slot()
-   local sprop = (sprop and "\n#o"..sprop.."#0") or ""
+   local name, size, prop = o:slot()
+   local sprop = (prop and "\n#o"..prop.."#0") or ""
    local stype = o:type()
    local sprice = ""
    if price and price > 0 then
@@ -98,11 +99,10 @@ local function cargo_loot( c, q, m )
    }
 end
 
-local lootables
 local function compute_lootables ( plt )
    local ps = plt:stats()
    local pps = player.pilot():stats()
-   lootables = {}
+   local lootables = {}
 
    -- Credits
    local creds = plt:credits()
@@ -145,7 +145,7 @@ local function compute_lootables ( plt )
 
       local ocand = {}
       for _k,o in ipairs(plt:outfits()) do
-         local name, size, prop, req, exc = o:slot()
+         local _name, _size, _prop, req = o:slot()
          -- Don't allow looting required outfits
          if not req and (not oloot or o~=oloot) then
             table.insert( ocand, o )
@@ -246,7 +246,7 @@ function wgtBoard:draw( bx, by )
    end
 end
 function wgtBoard:drawover( bx, by )
-   local x, y, w, h = bx+self.x, by+self.y, self.w, self.h
+   local x, y, w = bx+self.x, by+self.y, self.w
    local l = self.loot
    if not l then return end
    local alt = l.alt
@@ -302,7 +302,7 @@ function board( plt )
    der.sfx.board:play()
    board_plt = plt
    loot_mod = player.pilot():shipstat("loot_mod", true)
-   loot = compute_lootables( plt )
+   local lootables = compute_lootables( plt )
 
    -- Destroy if exists
    if board_wdw then
@@ -404,7 +404,8 @@ function board_lootOne( wgt, nomsg )
          return false
       end
       if board_plt:outfitRm( o ) ~= 1 then
-         --warn(fmt.f(_("Board script failed to remove '{outfit}' from boarded pilot '{plt}'!"),{outfit=o:name(), plt=board_plt:name()}))
+         -- Soft warning
+	 print(fmt.f(_("Board script failed to remove '{outfit}' from boarded pilot '{plt}'!"),{outfit=o:name(), plt=board_plt:name()}))
       end
       player.outfitAdd( o )
       looted = true
