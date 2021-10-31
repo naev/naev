@@ -819,7 +819,7 @@ static void input_key( int keynum, double value, double kabs, int repeat )
    } else if (KEY("board") && INGAME() && NOHYP() && NODEAD() && !repeat) {
       if (value==KEY_PRESS) {
          player_restoreControl( 0, NULL );
-         if (player_tryBoard(1) ==  PLAYER_BOARD_RETRY)
+         if (player_tryBoard(0) ==  PLAYER_BOARD_RETRY)
             player_board();
       }
 
@@ -1442,7 +1442,7 @@ int input_clickedPilot( unsigned int pilot, int autonav )
    p = pilot_get(pilot);
    if (pilot == player.p->target && input_isDoubleClick( (void*)p )) {
       if (pilot_isDisabled(p) || pilot_isFlag(p, PILOT_BOARDABLE)) {
-         if (player_tryBoard(1)==PLAYER_BOARD_RETRY)
+         if (player_tryBoard(0)==PLAYER_BOARD_RETRY)
             player_board();
       }
       else
