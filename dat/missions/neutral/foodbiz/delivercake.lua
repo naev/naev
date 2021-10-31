@@ -59,7 +59,7 @@ function accept()
    misn.setDesc( _([[Deliver the recipes to Michal on %s in the %s system.]]):format( targetworld:name(), targetworld_sys:name() ) )
 
    misn.osdCreate( _("A Tasty Job"), {
-      _("Fly to %s in the %s system."):format( targetworld:name(), targetworld_sys:name() ),
+      fmt.f(_("Fly to {pnt} in the {sys} system."), {pnt=targetworld, sys=targetworld_sys} ),
    } )
    misn.markerAdd( targetworld, "low" )
 

@@ -57,8 +57,8 @@ function accept ()
       marker = misn.markerAdd( missys, "low" )
 
       misn.osdCreate( _("Visiting Family"), {
-         _("Fly to %s in the %s system."):format( misplanet:name(), missys:name() ),
-         _("Fly to %s in the %s system."):format( misplanet2:name(), missys2:name() ),
+         fmt.f(_("Fly to {pnt} in the {sys} system."), {pnt=misplanet, sys=missys} ),
+         fmt.f(_("Fly to {pnt} in the {sys} system."), {pnt=misplanet2, sys=missys2} ),
       } )
 
       stage = 1
