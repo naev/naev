@@ -44,7 +44,7 @@
 #define PILOT_PLAYER_NONTARGETABLE_TAKEOFF_DELAY 5. /**< Time the player is safe (from being targetted) after takeoff. */
 #define PILOT_PLAYER_NONTARGETABLE_JUMPIN_DELAY 5. /**< Time the player is safe (from being targetted) after jumping in. */
 
-/* hooks */
+/* Pilot-related hooks. */
 enum {
    PILOT_HOOK_NONE,      /**< No hook. */
    PILOT_HOOK_DEATH,     /**< Pilot died. */
@@ -65,11 +65,11 @@ enum {
    PILOT_HOOK_STEALTH,   /**< Pilot either stealthed or destealthed. */
 };
 
-/* damage */
+/* Damage */
 #define PILOT_HOSTILE_THRESHOLD  0.09 /**< Point at which pilot becomes hostile. */
 #define PILOT_HOSTILE_DECAY      0.005 /**< Rate at which hostility decays. */
 
-/* makes life easier */
+/* Makes life easier */
 #define pilot_isPlayer(p)   pilot_isFlag(p,PILOT_PLAYER) /**< Checks if pilot is a player. */
 #define pilot_isDisabled(p) pilot_isFlag(p,PILOT_DISABLED) /**< Checks if pilot is disabled. */
 #define pilot_isStopped(p)  (VMOD(p->solid->vel) <= MIN_VEL_ERR)
@@ -114,7 +114,7 @@ typedef struct PilotOutfitSlot_ {
    double heat_T;    /**< Slot temperature. [K] */
    double heat_C;    /**< Slot heat capacity. [W/K] */
    double heat_area; /**< Slot area of contact with ship hull. [m^2] */
-   double heat_start; /**< Slot heat at the beginning of a cooldown period. */
+   double heat_start;/**< Slot heat at the beginning of a cooldown period. */
 
    /* Current state. */
    PilotOutfitState state; /**< State of the outfit. */
@@ -128,8 +128,8 @@ typedef struct PilotOutfitSlot_ {
 
    /* Type-specific data. */
    union {
-      unsigned int beamid;    /**< ID of the beam used in this outfit, only used for beams. */
-      PilotOutfitAmmo ammo;   /**< Ammo for launchers. */
+      unsigned int beamid; /**< ID of the beam used in this outfit, only used for beams. */
+      PilotOutfitAmmo ammo;/**< Ammo for launchers. */
    } u; /**< Stores type specific data. */
 
    /* In the case of Lua stuff. */
@@ -166,7 +166,7 @@ typedef struct PilotWeaponSet_ {
  * @brief Stores a pilot commodity.
  */
 typedef struct PilotCommodity_ {
-   const Commodity* commodity;   /**< Associated commodity. */
+   const Commodity* commodity;/**< Associated commodity. */
    int quantity;           /**< Amount player has. */
    unsigned int id;        /**< Special mission id for cargo, 0 means none. */
 } PilotCommodity;
@@ -215,24 +215,24 @@ typedef struct Pilot_ {
    const Ship* ship; /**< ship pilot is flying */
    Solid* solid;     /**< associated solid (physics) */
    double base_mass; /**< Ship mass plus core outfit mass. */
-   double mass_cargo; /**< Amount of cargo mass added. */
-   double mass_outfit; /**< Amount of outfit mass added. */
+   double mass_cargo;/**< Amount of cargo mass added. */
+   double mass_outfit;/**< Amount of outfit mass added. */
    int tsx;          /**< current sprite x position, calculated on update. */
    int tsy;          /**< current sprite y position, calculated on update. */
-   Trail_spfx** trail;  /**< Array of pointers to pilot's trails. */
+   Trail_spfx** trail;/**< Array of pointers to pilot's trails. */
 
    /* Properties. */
    int cpu;       /**< Amount of CPU the pilot has left. */
    int cpu_max;   /**< Maximum amount of CPU the pilot has. */
-   double crew;      /**< Crew amount the player has (display it as (int)floor(), but it's analogue. */
-   double cap_cargo; /**< Pilot's cargo capacity. */
+   double crew;   /**< Crew amount the player has (display it as (int)floor(), but it's analogue. */
+   double cap_cargo;/**< Pilot's cargo capacity. */
 
    /* Movement */
    double thrust;    /**< Pilot's thrust in px/s^2. */
-   double thrust_base; /**< Pilot's base thrust in px/s^2 (not modulated by mass). */
+   double thrust_base;/**< Pilot's base thrust in px/s^2 (not modulated by mass). */
    double speed;     /**< Pilot's speed in px/s. */
-   double speed_base; /**< Pilot's base speed in px/s (not modulated by mass). */
-   double speed_limit; /**< Pilot's maximum speed in px/s if limited by lua call. */
+   double speed_base;/**< Pilot's base speed in px/s (not modulated by mass). */
+   double speed_limit;/**< Pilot's maximum speed in px/s if limited by lua call. */
    double turn;      /**< Pilot's turn in rad/s. */
    double turn_base; /**< Pilot's base turn in rad/s (not modulated by mass). */
 
@@ -240,13 +240,13 @@ typedef struct Pilot_ {
    double armour;    /**< Current armour. */
    double stress;    /**< Current disable damage level. */
    double shield;    /**< Current shield. */
-   double armour_max; /**< Maximum armour. */
-   double shield_max; /**< Maximum shield. */
-   double armour_regen; /**< Armour regeneration rate (per second). */
-   double shield_regen; /**< Shield regeneration rate (per second). */
-   double dmg_absorb; /**< Ship damage absorption [0:1] with 1 being 100%. */
-   double fuel_max;   /**< Maximum fuel. */
-   double fuel;       /**< Current fuel. */
+   double armour_max;/**< Maximum armour. */
+   double shield_max;/**< Maximum shield. */
+   double armour_regen;/**< Armour regeneration rate (per second). */
+   double shield_regen;/**< Shield regeneration rate (per second). */
+   double dmg_absorb;/**< Ship damage absorption [0:1] with 1 being 100%. */
+   double fuel_max;  /**< Maximum fuel. */
+   double fuel;      /**< Current fuel. */
    double fuel_consumption; /**< Fuel consumed per jump. */
 
    /* Energy is handled a bit differently. */
@@ -279,7 +279,7 @@ typedef struct Pilot_ {
 
    /* Ship statistics. */
    ShipStats intrinsic_stats; /**< Intrinsic statistics to the ship create on the fly. */
-   ShipStats stats;  /**< Pilot's copy of ship statistics. */
+   ShipStats stats;  /**< Pilot's copy of ship statistics, used for comparisons.. */
 
    /* Associated functions */
    void (*think)(struct Pilot_*, const double); /**< AI thinking for the pilot */
@@ -289,9 +289,9 @@ typedef struct Pilot_ {
 
    /* Outfit management */
    PilotOutfitSlot **outfits;        /**< Array (array.h): Pointers to all outfits. */
-   PilotOutfitSlot * outfit_structure; /**< Array (array.h): The structure slots. */
-   PilotOutfitSlot * outfit_utility;   /**< Array (array.h): The utility slots. */
-   PilotOutfitSlot * outfit_weapon; /**< Array (array.h): The weapon slots. */
+   PilotOutfitSlot *outfit_structure;/**< Array (array.h): The structure slots. */
+   PilotOutfitSlot *outfit_utility;  /**< Array (array.h): The utility slots. */
+   PilotOutfitSlot *outfit_weapon;   /**< Array (array.h): The weapon slots. */
 
    /* Primarily for AI usage. */
    int ncannons;      /**< Number of cannons equipped. */
@@ -320,8 +320,8 @@ typedef struct Pilot_ {
 
    /* Escort stuff. */
    unsigned int parent; /**< Pilot's parent. */
-   Escort_t *escorts; /**< Array (array.h): Pilot's escorts. */
-   unsigned int dockpilot; /**< Pilot's dock pilot (the pilot it originates from). This is
+   Escort_t *escorts;   /**< Array (array.h): Pilot's escorts. */
+   unsigned int dockpilot;/**< Pilot's dock pilot (the pilot it originates from). This is
                           separate from parent because it needs to be set in sync with
                           dockslot (below). Used to unset dockslot when the dock pilot
                           is destroyed. */
@@ -347,7 +347,7 @@ typedef struct Pilot_ {
    double comm_msgWidth; /**< Width of the message. */
    char *comm_msg;   /**< Comm message to display overhead. */
    PilotFlags flags; /**< used for AI and others */
-   double landing_delay; /**< This pilot's current landing delay. */
+   double landing_delay;/**< This pilot's current landing delay. */
    double pdata;     /**< generic data for internal pilot use */
    double ptimer;    /**< generic timer for internal pilot use */
    double itimer;    /**< Timer for player invulnerability. */
@@ -360,12 +360,12 @@ typedef struct Pilot_ {
    double scantimer; /**< Electronic warfare scanning timer. */
    int hail_pos;     /**< Hail animation position. */
    int lockons;      /**< Stores how many seeking weapons are targeting pilot */
-   int projectiles;      /**< Stores how many weapons are after the pilot */
+   int projectiles;  /**< Stores how many weapons are after the pilot */
    int *mounted;     /**< Number of mounted outfits on the mount. */
-   double player_damage; /**< Accumulates damage done by player for hostileness.
-                              In per one of max shield + armour. */
-   double engine_glow; /**< Amount of engine glow to display. */
-   int messages;       /**< Queued messages (Lua ref). */
+   double player_damage;/**< Accumulates damage done by player for hostileness.
+                             In per one of max shield + armour. */
+   double engine_glow;/**< Amount of engine glow to display. */
+   int messages;     /**< Queued messages (Lua ref). */
 } Pilot;
 
 /* These depend on Pilot being defined first. */
@@ -377,7 +377,7 @@ typedef struct Pilot_ {
 #include "pilot_ew.h"
 
 /*
- * getting pilot stuff
+ * Getting pilot stuff.
  */
 Pilot*const* pilot_getAll (void);
 Pilot* pilot_get( unsigned int id );
@@ -443,7 +443,7 @@ void pilot_untargetAsteroid( int anchor, int asteroid );
 PilotOutfitSlot* pilot_getDockSlot( Pilot* p );
 
 /*
- * Creation
+ * Creation.
  */
 unsigned int pilot_create( const Ship* ship, const char* name, int faction, const char *ai,
       const double dir, const Vector2d* pos, const Vector2d* vel,
@@ -455,9 +455,9 @@ void pilot_choosePoint( Vector2d *vp, Planet **planet, JumpPoint **jump, int lf,
 void pilot_delete( Pilot *p );
 
 /*
- * Init and cleanup
+ * Init and cleanup.
  */
-void pilot_destroy(Pilot* p);
+void pilot_destroy( Pilot* p );
 void pilots_init (void);
 void pilots_free (void);
 void pilots_clean (int persist);

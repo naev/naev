@@ -1638,9 +1638,6 @@ void player_nolandMsg( const char *str )
  */
 void player_board (void)
 {
-   Pilot *p;
-   char c;
-
    /* Not under manual control or disabled. */
    if (pilot_isFlag( player.p, PILOT_MANUAL_CONTROL ) ||
          pilot_isDisabled(player.p))
@@ -1648,6 +1645,7 @@ void player_board (void)
 
    /* Try to grab target if not available. */
    if (player.p->target==PLAYER_ID) {
+      Pilot *p;
       /* We don't try to find far away targets, only nearest and see if it matches.
        * However, perhaps looking for first boardable target within a certain range
        * could be more interesting. */
