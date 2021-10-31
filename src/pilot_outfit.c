@@ -1010,7 +1010,7 @@ void pilot_calcStats( Pilot* pilot )
    pilot->cpu_max       = (int)floor((float)(pilot->ship->cpu + s->cpu_max)*s->cpu_mod);
    pilot->cpu          += pilot->cpu_max; /* CPU is negative, this just sets it so it's based off of cpu_max. */
    /* Misc. */
-   pilot->crew         *= s->crew_mod;
+   pilot->crew         *= s->crew_mod + s->crew;
    pilot->cap_cargo    *= s->cargo_mod;
    s->engine_limit     *= s->engine_limit_rel;
 
