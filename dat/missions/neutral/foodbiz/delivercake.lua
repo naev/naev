@@ -36,7 +36,7 @@ function create () --No system shall be claimed by mission
 end
 
 function accept()
-   if not tk.yesno( _("A Tasty Job"), _([[The woman smiles. "Aren't you the pilot that delivered those sweet love letters to me? I think you are! My name is Paddy, sorry I didn't introduce myself before. I was caught up in the moment; Michal's letters are always very exciting." She blushes. "Anyway, Michal is trying to start a restaurant on %s. Would you be interested in giving him a hand?"]]):format( targetworld:name() ) ) then
+   if not tk.yesno( _("A Tasty Job"), fmt.f(_([[The woman smiles. "Aren't you the pilot that delivered those sweet love letters to me? I think you are! My name is Paddy, sorry I didn't introduce myself before. I was caught up in the moment; Michal's letters are always very exciting." She blushes. "Anyway, Michal is trying to start a restaurant on {pnt}. Would you be interested in giving him a hand?"]]), {pnt=targetworld} ) ) then
       tk.msg( _("A Tasty Job"), _([["Oh, that's too bad. I thought it was such a good idea, too...."]]) )
       misn.finish()
    end
@@ -47,16 +47,16 @@ function accept()
    if amount > 0 then
       misn.cargoAdd( "Food", amount )
       reward = reward + ( 1e3 * amount )
-      tk.msg( _("A Tasty Job"), _([["Great!" Paddy says with a smile. She hands you what appear to be recipes. "I just need you to deliver these recipes to him. Oh, and some of my homemade cake! I've packed that cake into your ship. Feel free to give it a taste! It's delicious! Anyway, Michal will pay you %s when you get there. Thank you so much!"
-    When you arrive at your ship, you find your cargo hold packed to the brim with cake. You decide to try some, but the second it enters your mouth, you can't help but to spit it out in disgust. This is easily the most disgusting cake you've ever tasted. Well, as long as you get paid....]]):format( fmt.credits( reward ) ) )
+      tk.msg( _("A Tasty Job"), fmt.f(_([["Great!" Paddy says with a smile. She hands you what appear to be recipes. "I just need you to deliver these recipes to him. Oh, and some of my homemade cake! I've packed that cake into your ship. Feel free to give it a taste! It's delicious! Anyway, Michal will pay you {credits} when you get there. Thank you so much!"
+    When you arrive at your ship, you find your cargo hold packed to the brim with cake. You decide to try some, but the second it enters your mouth, you can't help but to spit it out in disgust. This is easily the most disgusting cake you've ever tasted. Well, as long as you get paid....]]), {credits=fmt.credits(reward)} ) )
    else
-      tk.msg( _("A Tasty Job"), _([["Great!" Paddy says with a smile. She hands you what appear to be recipes. "I just need you to deliver these recipes to him. I was hoping to deliver some cake to him too, but it seems your ship doesn't have enough space for it, so that's unfortunate. In any case, Michal will pay you %s when you arrive. Thank you so much!"]]):format( fmt.credits( reward ) ) )
+      tk.msg( _("A Tasty Job"), fmt.f(_([["Great!" Paddy says with a smile. She hands you what appear to be recipes. "I just need you to deliver these recipes to him. I was hoping to deliver some cake to him too, but it seems your ship doesn't have enough space for it, so that's unfortunate. In any case, Michal will pay you {credits} when you arrive. Thank you so much!"]]), {credits=fmt.credits(reward)} ) )
    end
 
    -- set up mission computer
    misn.setTitle( _("A Tasty Job") )
    misn.setReward( fmt.credits( reward ) )
-   misn.setDesc( _([[Deliver the recipes to Michal on %s in the %s system.]]):format( targetworld:name(), targetworld_sys:name() ) )
+   misn.setDesc( fmt.f(_([[Deliver the recipes to Michal on {pnt} in the {sys} system.]]), {pnt=targetworld, sys=targetworld_sys} ) )
 
    misn.osdCreate( _("A Tasty Job"), {
       fmt.f(_("Fly to {pnt} in the {sys} system."), {pnt=targetworld, sys=targetworld_sys} ),
