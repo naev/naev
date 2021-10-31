@@ -275,7 +275,7 @@ function luatk.Button:draw( bx, by )
    if self.text then
       lg.printf( self.text, font, x, y+(h-self.th)/2, w, 'center' )
    else
-      wgt.render( x, y, w, h )
+      self.render( x, y, w, h )
    end
 end
 function luatk.Button:clicked()
