@@ -53,11 +53,6 @@ ferrytime[0] = _("Economy") -- Note: indexed from 0, to match mission tiers.
 ferrytime[1] = _("Priority")
 ferrytime[2] = _("Express")
 
-no_clearance_p2 = {}
-no_clearance_p2[0] = _("However, if you can take me as far as %s, I will be satisfied with that.\"")
-no_clearance_p2[1] = _("However, I suppose if you can take me to %s, I can find another pilot for the remainder of the flight. But if that is the case, I wouldn't want to pay more than %s.\"")
-no_clearance_p2[2] = _("However, if you're on the way to Aesir, I could be willing to pay %s for transportation to %s.\"")
-no_clearance_p2[3] = _("Apparently you are not fit to be the pilot for my pilgrimage. It is the will of Sirichana to teach me patience...\"")
 
 -- Outcomes for each of the 4 options above:
 -- We pick random number (1-4), then use this as our index into nc_probs[rank]
@@ -66,9 +61,6 @@ nc_probs[0] = {0, 0, 0, 1}
 nc_probs[1] = {0, 1, 1, 2}
 nc_probs[2] = {2, 3, 3, 3}
 
-change_ship = {}
-change_ship[1] = _("On landing, the passenger gives you a brief glare. \"I had paid for transportation in a Sirian ship,\" they remark. \"This alternate arrangement is quite disappointing.\" They hand you %s, but it's definitely less than you were expecting.")
-change_ship[2] = _("Since you were unexpectedly able to procure a Sirian ship for the journey, you find a few extra credits tucked in with the fare!")
 
 --=Landing=--
 
@@ -231,18 +223,18 @@ Accept the mission anyway?]]):format( (timelimit - time.get()):str(), (playerbes
         if outcome == 3 then
             -- Rank 2 will demand to be delivered to Sirius
 	    can_downgrade = false
-            no_clearance_text = no_clearance_p2[3]
+            no_clearance_text = _("Apparently you are not fit to be the pilot for my pilgrimage. It is the will of Sirichana to teach me patience...\"")
         elseif outcome == 2 then
             -- Rank 1 will accept an alternate destination, but cut your fare
             reward = reward / 2
-            no_clearance_text = no_clearance_p2[2]:format(fmt.credits(reward), altplanets[altdest]:name())
+            no_clearance_text = _("However, if you're on the way to Aesir, I could be willing to pay %s for transportation to %s.\""):format(fmt.credits(reward), altplanets[altdest]:name())
         elseif outcome == 1 then
             -- OK with alternate destination, with smaller fare cut
             reward = reward * 0.6666
-            no_clearance_text = no_clearance_p2[1]:format(altplanets[altdest]:name(), fmt.credits(reward))
+            no_clearance_text = _("However, I suppose if you can take me to %s, I can find another pilot for the remainder of the flight. But if that is the case, I wouldn't want to pay more than %s.\""):format(altplanets[altdest]:name(), fmt.credits(reward))
         else
             -- Rank 0 will take whatever they can get
-            no_clearance_text = no_clearance_p2[0]:format(altplanets[altdest]:name())
+            no_clearance_text = _("However, if you can take me as far as %s, I will be satisfied with that.\""):format(altplanets[altdest]:name())
         end
 
         local no_clearance_p1 = _("The passenger looks at your credentials and remarks, \"Someone of your standing will not be allowed to set foot on the holy ground. ")
@@ -312,7 +304,7 @@ function land()
         if wants_sirian and not has_sirian_ship then
             change = 1  -- Bad: they wanted a Sirian ship and you switched on them
             reward = reward / (rank+1.5)
-            tk.msg( _("Altering the deal"), change_ship[1]:format( fmt.credits(reward) ) )
+            tk.msg( _("Altering the deal"), _("On landing, the passenger gives you a brief glare. \"I had paid for transportation in a Sirian ship,\" they remark. \"This alternate arrangement is quite disappointing.\" They hand you %s, but it's definitely less than you were expecting."):format( fmt.credits(reward) ) )
             player.pay(reward)
             misn.finish(true)
         elseif not wants_sirian and has_sirian_ship then
@@ -336,7 +328,7 @@ function land()
         if change == 2 then
             -- A little bonus for doing something nice
             faction.modPlayerSingle("Sirius", 1)
-            tk.msg(_("Altering the deal"), change_ship[2])
+            tk.msg(_("Altering the deal"), _("Since you were unexpectedly able to procure a Sirian ship for the journey, you find a few extra credits tucked in with the fare!"))
             reward = reward * 1.25
         end
 
