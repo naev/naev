@@ -40,7 +40,7 @@ require "factions.equip.generic"
 
 base_price = 100e3
 
-ships = {
+local ships = {
    Dvaered = {
       fighter   = { "Dvaered Vendetta" },
       bomber    = { "Dvaered Ancestor" },
@@ -100,7 +100,7 @@ ships = {
    },
 }
 
-classes = {}
+local classes = {}
 for k,v in pairs(ships) do
    classes[k] = {}
 
@@ -109,7 +109,7 @@ for k,v in pairs(ships) do
    end
 end
 
-function price(class)
+local function price(class)
    local modifier = 1
    if class == "interceptor" then
    modifier = 0.3
@@ -128,7 +128,7 @@ function price(class)
    return modifier * base_price
 end
 
-function random_class(faction)
+local function random_class(faction)
    local m = #classes[faction]
 
    if m == 0 then
@@ -140,7 +140,7 @@ function random_class(faction)
    return classes[faction][r]
 end
 
-function random_ship(faction, class)
+local function random_ship(faction, class)
    local m = #ships[faction][class]
 
    if m == 0 then
@@ -152,7 +152,7 @@ function random_ship(faction, class)
    return ships[faction][class][r]
 end
 
-function random_planet()
+local function random_planet()
    local planets = {}
    local maximum_distance = 6
    local minimum_distance = 0
@@ -178,7 +178,7 @@ function random_planet()
    end
 end
 
-function improve_standing(class, faction_name)
+local function improve_standing(class, faction_name)
    local enemies = faction.get(faction_name):enemies()
    local standing = 0
 
@@ -203,7 +203,7 @@ function improve_standing(class, faction_name)
    end
 end
 
-function damage_standing(class, faction_name)
+local function damage_standing(class, faction_name)
    local modifier = 1
 
    -- “Oh dude, that guy is capable! He managed to steal one of our own ships!”
