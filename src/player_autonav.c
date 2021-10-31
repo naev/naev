@@ -467,10 +467,13 @@ static void player_autonav (void)
 
          /* Try to land. */
          if (ret) {
-            if (player_tryBoard())
-               player_autonavAbort(NULL);
-            else
+            ret = player_tryBoard();
+            if (ret == PLAYER_BOARD_OK)
+               player_autonavEnd();
+            else if (ret == PLAYER_BOARD_RETRY)
                player.autonav = AUTONAV_PLT_BOARD_APPROACH;
+            else
+               player_autonavAbort(NULL);
          }
 
          /* See if should ramp down. */
