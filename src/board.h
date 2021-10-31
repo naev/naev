@@ -13,7 +13,7 @@ enum {
 };
 
 int player_isBoarded (void);
-int player_tryBoard (void);
+int player_tryBoard( int noisy );
 void board_unboard (void);
 int pilot_board( Pilot *p );
 void pilot_boardComplete( Pilot *p );

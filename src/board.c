@@ -49,7 +49,7 @@ int player_isBoarded (void)
  *
  * Creates the window on success.
  */
-int player_tryBoard (void)
+int player_tryBoard( int noisy )
 {
    Pilot *p;
    char c;
@@ -91,13 +91,15 @@ int player_tryBoard (void)
    }
    else if (vect_dist(&player.p->solid->pos,&p->solid->pos) >
          p->ship->gfx_space->sw * PILOT_SIZE_APPROX) {
-      player_message(_("#rYou are too far away to board your target."));
+      if (noisy)
+         player_message(_("#rYou are too far away to board your target."));
       return PLAYER_BOARD_RETRY;
    }
    else if ((pow2(VX(player.p->solid->vel)-VX(p->solid->vel)) +
             pow2(VY(player.p->solid->vel)-VY(p->solid->vel))) >
          (double)pow2(MAX_HYPERSPACE_VEL)) {
-      player_message(_("#rYou are going too fast to board the ship."));
+      if (noisy)
+         player_message(_("#rYou are going too fast to board the ship."));
       return PLAYER_BOARD_RETRY;
    }
 

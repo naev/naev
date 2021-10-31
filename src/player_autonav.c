@@ -467,7 +467,7 @@ static void player_autonav (void)
 
          /* Try to land. */
          if (ret) {
-            ret = player_tryBoard();
+            ret = player_tryBoard(0);
             if (ret == PLAYER_BOARD_OK)
                player_autonavEnd();
             else if (ret == PLAYER_BOARD_RETRY)
