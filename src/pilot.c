@@ -1420,7 +1420,7 @@ double pilot_hit( Pilot* p, const Solid* w, unsigned int shooter,
     * single Laser Cannon shot should not reset a Peacemaker's timer.
     */
    if (!pilot_isFlag(p, PILOT_DEAD) && (p->dtimer_accum > 0.))
-      p->dtimer_accum -= MIN( pow(disable, .8), p->dtimer_accum );
+      p->dtimer_accum -= MIN( pow(disable, 0.8), p->dtimer_accum );
 
    /* Ships that can not be disabled take raw armour damage instead of getting disabled. */
    if (pilot_isFlag( p, PILOT_NODISABLE )) {
@@ -1452,7 +1452,7 @@ double pilot_hit( Pilot* p, const Solid* w, unsigned int shooter,
        * low-damage, high-ROF weapons, while using the ending percentage
        * biases towards high-damage, low-ROF weapons.
        */
-      p->stress += disable * (.5 + (.5 - ((start+p->shield) / p->shield_max) / 4.));
+      p->stress += disable * (0.5 + (0.5 - ((start+p->shield) / p->shield_max) / 4.));
 
       /* True damage. */
       tdshield = damage_shield;
@@ -1468,7 +1468,7 @@ double pilot_hit( Pilot* p, const Solid* w, unsigned int shooter,
       p->shield   = 0.;
 
       /* Leak some disabling damage through the remaining bit of shields. */
-      p->stress += disable * (1. - dmod) * (.5 + (.5 - (start / p->shield_max / 4.)));
+      p->stress += disable * (1. - dmod) * (0.5 + (0.5 - (start / p->shield_max / 4.)));
 
       /* Reduce stress as armour is eaten away. */
       p->stress  *= (p->armour - dmod * damage_armour) / p->armour;
@@ -1514,7 +1514,11 @@ double pilot_hit( Pilot* p, const Solid* w, unsigned int shooter,
       p->stress = 1.;
    }
 
-   /* Disabled always run before dead to ensure combat rating boost. */
+   /* Can't undisable permanently disabled pilots through shooting. */
+   if (pilot_isFlag( p, PILOT_DISABLED_PERM ))
+      p->stress = p->armour;
+
+   /* Run disabled before death. */
    pilot_updateDisable(p, shooter);
 
    /* Officially dead. */
@@ -1530,7 +1534,7 @@ double pilot_hit( Pilot* p, const Solid* w, unsigned int shooter,
          if ((pshooter != NULL) && pilot_isWithPlayer(pshooter)) {
 
             /* About 6 for a llama, 52 for hawking. */
-            mod = 2 * (pow(p->base_mass, 0.4) - 1.);
+            mod = 2. * (pow(p->base_mass, 0.4) - 1.);
 
             /* Modify faction for him and friends. */
             faction_modPlayer( p->faction, -mod, "kill" );
