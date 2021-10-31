@@ -37,12 +37,17 @@ local function slotSizeColour( size )
    return "#"..c..size
 end
 
-local function outfit_loot( o )
+local function outfit_loot( o, price )
    local name, size, prop, req, exc = o:slot()
    local sprop = (sprop and "\n#o"..sprop.."#0") or ""
    local stype = o:type()
-   local desc = fmt.f(_("{name}\n{slotsize} {slottype}#0 slot{sprop}\n{stype}\n{desc}"),
+   local sprice = ""
+   if price and price > 0 then
+      sprice = fmt.f(_("\n#rCosts {credits} to extract!#0"), {credits=fmt.credits(price)})
+   end
+   local desc = fmt.f(_("{name}{sprice}\n{slotsize} {slottype}#0 slot{sprop}\n{stype}\n{desc}"),
          { name=o:name(),
+           sprice=sprice,
            desc=o:description(),
            slottype=slotTypeColour(name),
            slotsize=slotSizeColour(size),
@@ -56,6 +61,7 @@ local function outfit_loot( o )
       bg = special_col,
       alt = desc,
       data = o,
+      price = price,
    }
 end
 
@@ -87,6 +93,8 @@ end
 
 local lootables
 local function compute_lootables ( plt )
+   local ps = plt:stats()
+   local pps = player.pilot():stats()
    lootables = {}
 
    -- Credits
@@ -104,7 +112,7 @@ local function compute_lootables ( plt )
    end
 
    -- Fuel
-   local fuel = plt:stats().fuel
+   local fuel = ps.fuel
    if fuel > 0 then
       table.insert( lootables, {
          image = nil,
@@ -118,7 +126,7 @@ local function compute_lootables ( plt )
    end
 
    -- Steal outfits before cargo, since they are always considered "special"
-   local canstealoutfits = false
+   local canstealoutfits = true
    if canstealoutfits then
       local ocand = {}
       for _k,o in ipairs(plt:outfits()) do
@@ -131,7 +139,9 @@ local function compute_lootables ( plt )
       -- Get random candidate
       -- TODO better criteria
       local o = ocand[ rnd.rnd(1,#ocand) ]
-      table.insert( lootables, outfit_loot( o ) )
+      local price = o:price() * ps.crew / pps.crew
+      local lo = outfit_loot( o, price )
+      table.insert( lootables, lo )
    end
 
    -- Go over cargo
@@ -261,7 +271,9 @@ end
 
 local function board_lootAll ()
    for _k,w in ipairs(board_wgt) do
-      board_lootOne( w, true )
+      if not w.loot or not w.loot.price or w.loot.price <= 0 then
+         board_lootOne( w, true )
+      end
    end
 end
 
@@ -356,6 +368,26 @@ function board_lootOne( wgt, nomsg )
       end
    elseif l.type=="outfit" then
       local o = l.data
+      if l.price > 0 then
+         luatk.yesno(fmt.f(_("Extract {outfit}?"),{outfit=o:name()}),
+               fmt.f(_("It will cost #r{credits}#0 in repairs to successfully extract the {outfit}. You have {playercreds}. Extract the {outfit}?"),
+                  {credits=fmt.credits(l.price), playercreds=fmt.credits(player.credits()), outfit=o:name()}), function ()
+            local pc = player.credits()
+            if pc < l.price then
+               luatk.msg(_("Insufficient Credits"), fmt.f(_("You lack #r{diff}#0 to be able to extract the {outfit}."),
+                     {diff=fmt.credits(l.price-pc), outfit=o:name()}))
+               return
+            end
+            if board_plt:outfitRm( o ) ~= 1 then
+               warn(fmt.f(_("Board script failed to remove '{outfit}' from boarded pilot '{plt}'!"),{outfit=o:name(), plt=board_plt:name()}))
+            end
+            player.outfitAdd( o )
+            player.msg(fmt.f(_("You looted a {outfit} from {plt}."),{outfit=o:name(), plt=board_plt:name()}))
+            wgt.selected = false
+            wgt.loot = nil
+         end )
+         return false
+      end
       if board_plt:outfitRm( o ) ~= 1 then
          warn(fmt.f(_("Board script failed to remove '{outfit}' from boarded pilot '{plt}'!"),{outfit=o:name(), plt=board_plt:name()}))
       end
