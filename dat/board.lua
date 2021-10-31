@@ -37,7 +37,7 @@ local function cargo_loot( c, q, m )
 end
 
 local lootables
-function compute_lootables ( plt )
+local function compute_lootables ( plt )
    lootables = {}
 
    -- Credits
@@ -148,7 +148,7 @@ function wgtBoard:draw( bx, by )
    if txt and (self.mouseover or not img) then
       lg.setColor( luatk.colour.text )
       local font = luatk._deffont
-      local maxw, wrap = font:getWrap( txt, w )
+      local _maxw, wrap = font:getWrap( txt, w )
       local th = #wrap * font:getLineHeight()
       lg.printf( txt, luatk._deffont, x, y+(h-th)/2, w, 'center' )
    end
@@ -171,6 +171,34 @@ local board_wdw
 local board_wgt
 local board_plt
 local board_freespace
+local function board_updateFreespace ()
+   board_freespace:set( fmt.f(_("You have {freespace} of free space."),{freespace=fmt.tonnes(player.pilot():cargoFree())}) )
+end
+
+local function board_lootSel ()
+   local sel = {}
+   for _k,w in ipairs(board_wgt) do
+      if w.selected then
+         table.insert( sel, w )
+      end
+   end
+   for _k,w in ipairs(sel) do
+      board_lootOne( w, #sel>1 )
+   end
+end
+
+local function board_lootAll ()
+   for _k,w in ipairs(board_wgt) do
+      board_lootOne( w, true )
+   end
+end
+
+local function board_close ()
+   luatk.close()
+   board_wdw = nil
+   der.sfx.unboard:play()
+end
+
 function board( plt )
    der.sfx.board:play()
    board_plt = plt
@@ -218,10 +246,6 @@ function board( plt )
    wdw:setCancel( board_close )
 
    luatk.run()
-end
-
-function board_updateFreespace ()
-   board_freespace:set( fmt.f(_("You have {freespace} of free space."),{freespace=fmt.tonnes(player.pilot():cargoFree())}) )
 end
 
 function board_lootOne( wgt, nomsg )
@@ -298,28 +322,4 @@ function board_lootOne( wgt, nomsg )
       wgt.loot = nil
    end
    return looted
-end
-
-function board_lootSel ()
-   local sel = {}
-   for _k,w in ipairs(board_wgt) do
-      if w.selected then
-         table.insert( sel, w )
-      end
-   end
-   for _k,w in ipairs(sel) do
-      board_lootOne( w, #sel>1 )
-   end
-end
-
-function board_lootAll ()
-   for _k,w in ipairs(board_wgt) do
-      board_lootOne( w, true )
-   end
-end
-
-function board_close ()
-   luatk.close()
-   board_wdw = nil
-   der.sfx.unboard:play()
 end
