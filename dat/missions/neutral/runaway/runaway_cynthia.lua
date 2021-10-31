@@ -40,10 +40,10 @@ end
 
 function accept ()
    --This mission does not make any system claims
-   if not tk.yesno( _("The Runaway"), string.format( _([[She looks out of place in the bar. As you approach, she seems to stiffen.
+   if not tk.yesno( _("The Runaway"), fmt.f( _([[She looks out of place in the bar. As you approach, she seems to stiffen.
     "H..H..Hi", she stutters. "My name is Cynthia. Could you give me a lift? I really need to get out of here.
-    I can't pay you much, just what I have on me, %s." You wonder who she must be to have this many credits on her person. "I need you to take me to Zhiru."
-    You wonder who she is, but you dare not ask. Do you accept?]]), fmt.credits(reward), targetworld:name() ) ) then
+    I can't pay you much, just what I have on me, {credits}." You wonder who she must be to have this many credits on her person. "I need you to take me to {pnt}."
+    You wonder who she is, but you dare not ask. Do you accept?]]), {credits=fmt.credits(reward), pnt=targetworld} ) ) then
       misn.finish()
    end
 
@@ -64,9 +64,9 @@ function accept ()
 
    misn.setTitle( _("The Runaway") )
 
-   misn.setReward( string.format( _("%s on delivery."), fmt.credits(reward) ) )
+   misn.setReward( fmt.f( _("{credits} on delivery."), {credits=fmt.credits(reward)} ) )
 
-   misn.setDesc( string.format( _("Deliver Cynthia safely to %s in the %s system."), targetworld:name(), targetworld_sys:name() ) )
+   misn.setDesc( fmt.f( _("Deliver Cynthia safely to {pnt} in the {sys} system."), {pnt=targetworld, sys=targetworld_sys} ) )
    misn.markerAdd( targetworld, "high")
 
    tk.msg( _("The Runaway"), _([["Thank you. But we must leave now, before anyone sees me."]]) )

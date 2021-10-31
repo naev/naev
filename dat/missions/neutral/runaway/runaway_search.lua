@@ -61,7 +61,7 @@ function accept ()
    end
 
    misn.setTitle( _("The Search for Cynthia") )
-   misn.setReward( string.format( _("%s on delivery."), fmt.credits(reward) ) )
+   misn.setReward( fmt.f( _("{credits} on delivery."), {credits=fmt.credits(reward)} ) )
 
    misn.setDesc( string.format( _("Search for Cynthia."), targetworld:name(), targetworld_sys:name() ) )
    runawayMarker = misn.markerAdd( targetworld, "low" )
