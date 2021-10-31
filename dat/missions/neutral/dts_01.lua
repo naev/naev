@@ -57,8 +57,6 @@ function create()
       misn.finish(false)
    end
 
-   planet_name = this_planet:name()
-   system_name = this_system:name()
    if tk.yesno( _("In the bar"), _([[The barman has just asked you for your order when the portmaster bursts though the door, out of breath. "Pirates, all over the system!  The navy's on maneuvers. Quickly, we need to organize a defense."
     All the pilots in the room scramble to their feet. "How many are there?" someone asks. "How long have they been in system?" another calls out.
     Into the confusion steps a steely-haired, upright, uniformed figure. Her stripes mark her as a navy Commodore.
@@ -66,7 +64,7 @@ function create()
       misn.accept()
       tk.msg( _("Volunteers"), _([["Take as many out of the fight early as you can," advises the Commodore before you board your ships. "If you can't chase them off, you might at least improve the odds. Good luck."]]))
       reward = 40e3
-      misn.setReward( string.format( _("%s and the pleasure of serving the Empire."), fmt.credits(reward)) )
+      misn.setReward( fmt.f( _("{credits} and the pleasure of serving the Empire."), {credits=fmt.credits(reward)}) )
       misn.setDesc( _("Defend the system against a pirate fleet."))
       misn.setTitle( _("Defend the System"))
       misn.markerAdd( this_system, "low" )
@@ -215,21 +213,20 @@ function ship_enters()
       hook.timer(1.0, "congratulations")
 end
 function congratulations()
-      tk.msg( _("Good job!"), string.format( _([[The debris from the battle disappears behind you in a blur of light. A moment after you emerge from hyperspace, a Imperial ship jumps in behind you and hails you.
-    "Please hold course and confirm your identity, %s."  You send your license code and wait for a moment. "OK, that's fine. We're just making sure no pirates escaped. You were part of the battle, weren't you?  Surprised you didn't return for the bounty, pilot. Listen, I appreciate what you did back there. I have family on %s. When I'm not flying overhead, it's good to know there are good Samaritans like you who will step up. Thanks."
-]]), player.ship(), planet_name))
+      tk.msg( _("Good job!"), fmt.f( _([[The debris from the battle disappears behind you in a blur of light. A moment after you emerge from hyperspace, a Imperial ship jumps in behind you and hails you.
+    "Please hold course and confirm your identity, {ship}."  You send your license code and wait for a moment. "OK, that's fine. We're just making sure no pirates escaped. You were part of the battle, weren't you?  Surprised you didn't return for the bounty, pilot. Listen, I appreciate what you did back there. I have family on {pnt}. When I'm not flying overhead, it's good to know there are good Samaritans like you who will step up. Thanks."
+]]), {ship=player.ship(), pnt=this_planet}))
       misn.finish( true)
 
 end
 
 function abort()
-
       if victory ~= true then
          faction.modPlayerSingle( "Empire", -10)
          faction.modPlayerSingle( "Trader", -10)
-         player.msg( string.format( _("Comm Trader>You're a coward, %s. You better hope I never see you again."), player.name() ) )
+         player.msg( fmt.f( _("Comm Trader>You're a coward, {player}. You better hope I never see you again."), {player=player.name()} ) )
       else
-         player.msg( string.format( _("Comm Trader>You're running away now, %s? The fight's finished, you know..."), player.name() ) )
+         player.msg( fmt.f( _("Comm Trader>You're running away now, {player}? The fight's finished, you know..."), {player=player.name()} ) )
       end
 
 end
