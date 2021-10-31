@@ -18,19 +18,18 @@
 --]]
 
 require "proximity"
+local fmt = require "format"
 local shadow = require "common.shadow"
 
-
--- localization stuff, translators would work here
 
 function create ()
    -- Make sure system isn't claimed, but we don't claim it
    if not evt.claim( system.cur(), true ) then evt.finish() end
 
     -- Claim: test the claims in the mission.
-   misssys = {system.get("Qex"), system.get("Shakar"), system.get("Borla"), system.get("Doranthex")}
+   local misssys = {system.get("Qex"), system.get("Shakar"), system.get("Borla"), system.get("Doranthex")}
    if not evt.claim( misssys, true ) then
-      abort()
+      evt.finish()
    end
 
    -- Create a Vendetta who hails the player after a bit
@@ -57,17 +56,17 @@ end
 function hail( _p )
    hook.rm(hailhook)
 
-   local sysname = system.get("Pas"):name()
-   tk.msg(_("An open invitation"), _([["Greetings, %s," the pilot of the Vendetta says to you as soon as you answer his hail. "I have been looking for you on behalf of an acquaintance of yours. She wishes to meet with you at a place of her choosing, and a time of yours. It involves a proposition that you might find interesting - if you don't mind sticking your neck out."
+   local sys = system.get("Pas")
+   tk.msg(_("An open invitation"), fmt.f(_([["Greetings, {player}," the pilot of the Vendetta says to you as soon as you answer his hail. "I have been looking for you on behalf of an acquaintance of yours. She wishes to meet with you at a place of her choosing, and a time of yours. It involves a proposition that you might find interesting - if you don't mind sticking your neck out."
     You frown at that, but you ask the pilot where this acquaintance wishes you to go anyway.
-    "Fly to the %s system," he replies. "She will meet you there. There's no rush, but I suggest you go see her at the earliest opportunity."
-    The screen blinks out and the Vendetta goes about its business, paying you no more attention. It seems there's someone out there who wants to see you, and there's only one way to find out what about. Perhaps you should make a note of the place you're supposed to meet her: the %s system.]]):format(player.name(), sysname, sysname))
+    "Fly to the {sys} system," he replies. "She will meet you there. There's no rush, but I suggest you go see her at the earliest opportunity."
+    The screen blinks out and the Vendetta goes about its business, paying you no more attention. It seems there's someone out there who wants to see you, and there's only one way to find out what about. Perhaps you should make a note of the place you're supposed to meet her: the %s system.]]), {player=player.name(), sys=sys}))
    player.commClose()
    vendetta:control()
    vendetta:hyperspace()
 
    if tk.yesno( "", _("Do you intend to respond to the invitation?") ) then
-      shadow.addLog( _([[Someone has invited you to meet with her in the Pas system, supposedly an acquaintance of yours. The pilot who told you this said that there's no rush, "but I suggest you go see her at the earliest opportunity".]]) )
+      shadow.addLog( fmt.f(_([[Someone has invited you to meet with her in the {sys} system, supposedly an acquaintance of yours. The pilot who told you this said that there's no rush, "but I suggest you go see her at the earliest opportunity".]]), {sys=sys}) )
       naev.missionStart("Shadow Vigil")
       evt.finish()
    end
