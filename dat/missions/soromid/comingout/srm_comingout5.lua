@@ -28,7 +28,7 @@ local srm = require "common.soromid"
 
 
 misn_title = _("Waste Collector")
-misn_desc = _("Chelsea needs an escort to %s so they can get rid of the garbage now filling their ship.")
+misn_desc = _("Chelsea needs an escort to {pnt} so they can get rid of the garbage now filling their ship.")
 
 function create ()
    misplanet, missys = planet.getS( "The Stinker" )
@@ -48,8 +48,8 @@ function accept ()
    if started then
       txt = _([["I'm not having any luck coming up with a plan to get rid of all of this garbage without getting jumped by those thugs. Is there any chance you could reconsider being my escort? It would be a big help."]])
    else
-      txt = _([[You walk over to Chelsea to greet them when you notice an unpleasant odor coming off of them. Chelsea notices you. "Ah! %s! Uh, sorry about the smell. I don't know why the hell I did this, but I took a job from some guy here and now I'm stuck with it." You ask what kind of job it is. "Erm, I kind of agreed to take their trash from them." You grimace. "Yeah," Chelsea says, "it's gross. And what's worse, I'm in over my head. I've already taken the garbage and my new ship is packed to the brim with the stuff, but there's thugs outside that seem to be waiting for me." A look of rage appears on their face as they turn to the side. "You can probably guess who's responsible for that." The thought had crossed your mind as well.
-    Chelsea turns back to you. "I know I ask a lot of you, but could you help me once again? I just need an escort to %s so I can drop off this garbage there. I'll give you %s for the trouble. What do you say?"]]):format( player.name(), misplanet:name(), fmt.credits( credits ) )
+      txt = fmt.f( _([[You walk over to Chelsea to greet them when you notice an unpleasant odor coming off of them. Chelsea notices you. "Ah! {player}! Uh, sorry about the smell. I don't know why the hell I did this, but I took a job from some guy here and now I'm stuck with it." You ask what kind of job it is. "Erm, I kind of agreed to take their trash from them." You grimace. "Yeah," Chelsea says, "it's gross. And what's worse, I'm in over my head. I've already taken the garbage and my new ship is packed to the brim with the stuff, but there's thugs outside that seem to be waiting for me." A look of rage appears on their face as they turn to the side. "You can probably guess who's responsible for that." The thought had crossed your mind as well.
+    Chelsea turns back to you. "I know I ask a lot of you, but could you help me once again? I just need an escort to {pnt} so I can drop off this garbage there. I'll give you {credits} for the trouble. What do you say?"]]), {player=player.name(), pnt=misplanet, credits=fmt.credits(credits)} )
    end
    started = true
 
@@ -64,7 +64,7 @@ function accept ()
       marker = misn.markerAdd( missys, "low" )
 
       misn.osdCreate( misn_title, {
-         _("Escort Chelsea to %s in the %s system."):format( misplanet:name(), missys:name() ),
+         fmt.f( _("Escort Chelsea to {pnt} in the {sys} system."), {pnt=misplanet, sys=missys} ),
       } )
 
       startplanet = planet.cur()
@@ -124,7 +124,7 @@ function spawnThug( param )
 
    local shiptypes = { "Hyena", "Hyena", "Shark", "Lancelot", "Admonisher" }
    local shiptype = shiptypes[ rnd.rnd( 1, #shiptypes ) ]
-   thug = pilot.add( shiptype, fthug, param, _("Thug %s"):format( _(shiptype), {ai="baddie"} ) )
+   thug = pilot.add( shiptype, fthug, param, fmt.f( _("Thug {ship}"), {ship=_(shiptype)} ), {ai="baddie"} )
 
    thug:setHostile()
 
