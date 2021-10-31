@@ -285,7 +285,7 @@ function board_lootOne( wgt, nomsg )
    elseif l.type=="outfit" then
       local o = l.data
       if board_plt:outfitRm( o ) ~= 1 then
-         warn(fmt.f(_("Board script failed to remove '{outfit}' from boarded pilot '{plt}'!"),{outfit=o:name(), plt=boarded_plt:name()}))
+         warn(fmt.f(_("Board script failed to remove '{outfit}' from boarded pilot '{plt}'!"),{outfit=o:name(), plt=board_plt:name()}))
       end
       player.outfitAdd( o )
       looted = true
@@ -304,7 +304,7 @@ function board_lootOne( wgt, nomsg )
          return false
       end
       local qr = board_plt:cargoRm( c, q ) -- Might be a misaligned here with loot_mod, but we sort of ignore it :/
-      pp:cargoAdd( c, q )
+      pp:cargoAdd( c, qr )
       player.msg(fmt.f(_("You looted {amount} of {cargo} from {plt}."),{amount=fmt.tonnes(q), cargo=c:name(), plt=board_plt:name()}))
       board_updateFreespace()
       looted = true

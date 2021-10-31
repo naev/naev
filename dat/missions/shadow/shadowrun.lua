@@ -24,24 +24,13 @@
 --]]
 local portrait = require "portrait"
 local fleet = require "fleet"
+local fmt = require "format"
 local shadow = require "common.shadow"
 
-local pnt = planet.get("Durea") -- The planet where SHITMAN lives
-local sys = system.get("Capricorn") -- The system the planet is part of
+local pnt, sys = planet.getS("Durea") -- Where SHITMAN lives
 local sys2 = system.get("Uhriabi") -- The system where the ship is
 local shipname = _("Seiryuu")
 
-off_title = { _("You were ignored") }
-off_text = { _("You try to strike a conversation with the officer, but he doesn't seem interested what you have to say, so you give up.") }
-sol1_title = { _("You were shooed away") }
-sol1_text = { _("Leave me alone. Can't you see I'm busy?") }
-sol2_npc = {}
-sol2_npc["name"] = _("Card-playing soldier")
-sol2_npc["desc"] = _("Two soldiers are sharing a table near the exit, playing cards. Neither of them seems very into the game.")
-sol2_title = { _("They didn't need a third player") }
-sol2_text = { _("They don't seem to appreciate your company. You decide to leave them to their game.") }
-
--- OSD stuff
 
 function create ()
    if not misn.claim( {sys, sys2} ) then
@@ -68,16 +57,16 @@ function accept()
     You explain that taking risks comes with being an independent pilot and that you took the captain's chair with appropriate resolve, but Rebina pins you with a piercing gaze. "These are no ordinary pirate raids we're talking about," she admonishes you. "If you take this assignment, you will be a painted target. I want you to be well aware of this." There is another pause, but then she continues in a milder tone of voice. "That being said, I can assure you that the reward is well worth the risk. Pull this off, and you'll walk away considerably richer than you were."
     Rebina leans back, levelly meeting your gaze. "That's all I can tell you at this point. You'll get more details only once you accept this job. If you accept this job. What say you?"]])) then
       misn.accept()
-      tk.msg(_("Rebina's explanation"), string.format(_([["Wonderful!" Rebina gives you a warm, sincere smile. "I don't mind admitting that it isn't easy finding pilots who measure up to my expectations, and finding ones willing to take a risk is more difficult still. I am pleased indeed."
-    Then Rebina's expression changes to that of a businesswoman about to ply her trade. "Now, listen up. Contrary to what you may have thought, this assignment isn't about me. It's about a man who goes by the name of Jorek McArthy. The current state of affairs is that Jorek is staying on %s in the %s system, and this is not where me and my associates want him to be. Unfortunately, Jorek has attracted some unwanted attention, and we don't want him to focus that attention to us."
-    Rebina takes a moment to sip from her drink. "I think you can see where this is going. You are to rendezvous with Jorek, take him aboard your ship, lose whoever's tailing him, then bring him to the %s system. There you will dock with one of our ships, the %s, which will take Jorek to his final destination. You will receive your reward from her captain once Jorek is aboard."
-    "It's a simple objective, but accomplishing it might require considerable skill." She leans back and smiles. "Still, I have utmost confidence that you can do it. I seldom misjudge those I choose to trust."]]), pnt:name(), sys:name(), sys2:name(), shipname))
+      tk.msg(_("Rebina's explanation"), fmt.f(_([["Wonderful!" Rebina gives you a warm, sincere smile. "I don't mind admitting that it isn't easy finding pilots who measure up to my expectations, and finding ones willing to take a risk is more difficult still. I am pleased indeed."
+    Then Rebina's expression changes to that of a businesswoman about to ply her trade. "Now, listen up. Contrary to what you may have thought, this assignment isn't about me. It's about a man who goes by the name of Jorek McArthy. The current state of affairs is that Jorek is staying on {pnt} in the {sys} system, and this is not where me and my associates want him to be. Unfortunately, Jorek has attracted some unwanted attention, and we don't want him to focus that attention to us."
+    Rebina takes a moment to sip from her drink. "I think you can see where this is going. You are to rendezvous with Jorek, take him aboard your ship, lose whoever's tailing him, then bring him to the {sys2} system. There you will dock with one of our ships, the {pltname}, which will take Jorek to his final destination. You will receive your reward from her captain once Jorek is aboard."
+    "It's a simple objective, but accomplishing it might require considerable skill." She leans back and smiles. "Still, I have utmost confidence that you can do it. I seldom misjudge those I choose to trust."]]), {pnt=pnt, sys=sys, sys2=sys2, pltname=shipname}))
 
       -- Translator note: If the plural forms are a problem, assume the numbers here are 20 and 50.
-      tk.msg(_("Rebina's explanation"), string.format(_([["You know what to do," Rebina tells you. "You will find Jorek in the spaceport bar on %s. When you see him, tell him you've come to 'see to his special needs'. Oh, and please be discreet. Don't talk about things you don't need to; the walls have ears in that place. In particular, don't mention any names."
-    "You will be on a time schedule. You must meet Jorek within %d periods, or he will assume you are not coming and go back into hiding. You must also be at the meeting point %d periods from now. If you fail to meet with Jorek within the time limit or if you are prevented from taking him offworld for any other reason, make your way to the %s and report what happened. We'll take it from there. If you fail to show up at the designated time, we will assume you have failed, and the %s will leave."
+      tk.msg(_("Rebina's explanation"), fmt.f(_([["You know what to do," Rebina tells you. "You will find Jorek in the spaceport bar on {pnt}. When you see him, tell him you've come to 'see to his special needs'. Oh, and please be discreet. Don't talk about things you don't need to; the walls have ears in that place. In particular, don't mention any names."
+    "You will be on a time schedule. You must meet Jorek within {t1} periods, or he will assume you are not coming and go back into hiding. You must also be at the meeting point {t2} periods from now. If you fail to meet with Jorek within the time limit or if you are prevented from taking him offworld for any other reason, make your way to the {pltname} and report what happened. We'll take it from there. If you fail to show up at the designated time, we will assume you have failed, and the {pltname} will leave."
     Rebina empties her glass and places it on the bar before rising to her feet. "That will be all. Good luck, and keep your wits about you."
-    Then Rebina takes her leave from you and gracefully departs the spaceport bar. You order yourself another drink. You've got the feeling you're going to need it.]]), pnt:name(), timelimit1, timelimit2, shipname, shipname))
+    Then Rebina takes her leave from you and gracefully departs the spaceport bar. You order yourself another drink. You've got the feeling you're going to need it.]]), {pnt=pnt, t1=timelimit1, t2=timelimit2, pltname=shipname}))
 
       -- Set deadlines
       deadline1 = time.get() + time.create(0, timelimit1, 0)
@@ -85,10 +74,11 @@ function accept()
 
       misn.setTitle(_("Shadowrun"))
       misn.setReward(_("You were promised riches..."))
-      misn.setDesc(string.format(_("Fly to planet %s in the %s system and talk to Jorek. Once Jorek has boarded your ship, proceed to system %s and board the %s."), pnt:name(), sys:name(), sys2:name(), shipname))
-      misn.osdCreate(_("Shadowrun"), { string.format(_("Fly to planet %s in the %s system and pick up Jorek"), pnt:name(), sys:name()),
-                                  string.format(_("You have %s remaining"), time.str(deadline1 - time.get()))
-                                })
+      misn.setDesc(fmt.f(_("Fly to planet {pnt} in the {sys} system and talk to Jorek. Once Jorek has boarded your ship, proceed to system {sys2} and board the {pltname}."), {pnt=pnt, sys=sys, sys2=sys2, pltname=shipname}))
+      misn.osdCreate(_("Shadowrun"), {
+         fmt.f(_("Fly to planet {pnt} in the {sys} system and pick up Jorek"), {pnt=pnt, sys=sys}),
+         fmt.f(_("You have {time} remaining"), {time=(deadline1 - time.get()):str()}),
+      })
       misn_marker = misn.markerAdd( sys, "low" )
       shadowrun = 2
 
@@ -110,8 +100,9 @@ function land()
       misn.npcAdd( "jorek", _("An unpleasant man."), "neutral/unique/jorek.webp", _("A middle-aged, cranky looking man is sitting at a table by himself. You are fairly certain that this is the fellow you're looking for.") )
       misn.npcAdd( "officer", _("Officer at the bar"), portrait.getMaleMil("Empire"), _("You see a military officer with a drink at the bar. He doesn't seem to be very interested in it, though...") )
       misn.npcAdd( "soldier1", _("Soldier at the news kiosk"), portrait.getMaleMil("Empire"), _("You see a soldier at a news kiosk. For some reason, he keeps reading the same articles over and over again.") )
-      misn.npcAdd( "soldier2", sol2_npc["name"], portrait.getMil("Empire"), sol2_npc["desc"] )
-      misn.npcAdd( "soldier2", sol2_npc["name"], portrait.getMil("Empire"), sol2_npc["desc"] )
+      for soldier = 1, 2 do
+         misn.npcAdd( "soldier2", _("Card-playing soldier"), portrait.getMil("Empire"), _("Two soldiers are sharing a table near the exit, playing cards. Neither of them seems very into the game.") )
+      end
    end
 end
 
@@ -138,28 +129,30 @@ function jorek()
 end
 
 function officer()
-   tk.msg( off_title[1], off_text[1] )
+   tk.msg( _("You were ignored"), _("You try to strike a conversation with the officer, but he doesn't seem interested what you have to say, so you give up.") )
 end
 function soldier1()
-   tk.msg( sol1_title[1], sol1_text[1] )
+   tk.msg( _("You were shooed away"), _("Leave me alone. Can't you see I'm busy?") )
 end
 function soldier2()
-   tk.msg( sol2_title[1], sol2_text[1] )
+   tk.msg( _("They didn't need a third player"), _("They don't seem to appreciate your company. You decide to leave them to their game.") )
 end
 
 function date()
    -- Deadline stuff
    if deadline1 >= time.get() and shadowrun == 2 then
       dateresolution(deadline1)
-      misn.osdCreate(_("Shadowrun"), { string.format(_("Fly to planet %s in the %s system and pick up Jorek"), pnt:name(), sys:name()),
-                                  string.format(_("You have %s remaining"), time.str(deadline1 - time.get())),
-                                })
+      misn.osdCreate(_("Shadowrun"), {
+         fmt.f(_("Fly to planet {pnt} in the {sys} system and pick up Jorek"), {pnt=pnt, sys=sys}),
+         fmt.f(_("You have {time} remaining"), {time=(deadline1 - time.get()):str()}),
+      })
    elseif deadline2 >= time.get() and shadowrun == 3 then
       dateresolution(deadline2)
-      misn.osdCreate(_("Shadowrun"), { _("You could not persuade Jorek to come with you"),
-                                  string.format(_("Fly to the %s system and dock with (board) %s to report your result"), sys2:name(), shipname),
-                                  string.format(_("You have %s remaining"), time.str(deadline2 - time.get()))
-                                })
+      misn.osdCreate(_("Shadowrun"), {
+         _("You could not persuade Jorek to come with you"),
+         fmt.f(_("Fly to the {sys} system and dock with (board) {pltname} to report your result"), {sys=sys2, pltname=shipname}),
+         fmt.f(_("You have {time} remaining"), {time=(deadline2 - time.get()):str()})
+      })
       misn.osdActive(2)
    else
       abort()
@@ -230,19 +223,19 @@ end
 function board()
    if shadowrun == 2 then
       -- player reports in without SHITMAN
-      tk.msg(_("Empty-handed"), string.format(_([[You complete docking operations with the %s, well aware that your ship isn't carrying the man they were expecting. At the airlock, you are greeted by a pair of crewmen in grey uniforms. You explain to them that you were unable to bring Jorek to them, and they receive your report in a dry, businesslike manner. The meeting is short. The crewmen disappear back into their ship, closing the airlock behind them, and you return to your bridge.
-    You prepare to undock from the %s, but before you complete the procedures there is a sudden power spike in your primary systems. All panels go black. In the darkness, the only thing that disturbs the silence is the sound of the %s dislodging itself from your docking clamp.
-    Seconds later, the computer core reboots itself and your controls come back online, but you find to your dismay that your OS has been reset to factory defaults. All custom content has been lost - including your logs of meeting the %s...]]), shipname, shipname, shipname, shipname))
+      tk.msg(_("Empty-handed"), fmt.f(_([[You complete docking operations with the {pltname}, well aware that your ship isn't carrying the man they were expecting. At the airlock, you are greeted by a pair of crewmen in grey uniforms. You explain to them that you were unable to bring Jorek to them, and they receive your report in a dry, businesslike manner. The meeting is short. The crewmen disappear back into their ship, closing the airlock behind them, and you return to your bridge.
+    You prepare to undock from the {pltname}, but before you complete the procedures there is a sudden power spike in your primary systems. All panels go black. In the darkness, the only thing that disturbs the silence is the sound of the {pltname} dislodging itself from your docking clamp.
+    Seconds later, the computer core reboots itself and your controls come back online, but you find to your dismay that your OS has been reset to factory defaults. All custom content has been lost - including your logs of meeting the {pltname}...]]), {pltname=shipname}))
       var.push("shadowrun_failed", true)
    else
       -- player reports in with SHITMAN
-      tk.msg(_("An unexpected reunion"), string.format(_([[You complete docking operations with the %s, well aware that your ship isn't carrying the man they were expecting. When the airlock opens, you find yourself face to face with a woman and two crewmen, all wearing grey, featureless uniforms. It takes you a few moments to realize that the woman is in fact Rebina. But this is not the elegant, feminine figure you met in the spaceport bar not too long ago. This woman emits an aura of authority, and you immediately understand that Rebina is in fact captain of the %s.
-    "Well met, %s," she greets you. At the same time, the two crewmen that accompanied her push their way past you and disappear in the direction of your cargo hold. You open your mouth to protest, but Rebina raises a hand to forestall you. "There is no cause for concern," she says. "My men are only retrieving that which we sent you to fetch. I assure you that your ship and its cargo will be left undisturbed."
-    You explain to Rebina that although you met Jorek, he didn't accompany you on your way here. Rebina gives you a grim smile in return. "Oh, I know that. I never expected you to bring him to us in the first place. You see, it's not Jorek we wanted you to get. It was... that."]]), shipname, shipname, player.name()))
-      tk.msg(_("An unexpected reunion"), string.format(_([[You follow her gaze, and spot the crewmen making their way back to the airlock, carrying between them a small but apparently rather heavy crate. You are absolutely certain you've never seen it before.
-    "That is what Jorek was keeping for us on %s, and that is what we need," Rebina explains. "Jorek is nothing but a decoy to draw the Empire's attention away from our real operations. While you were talking to him, his subordinates secured our cargo aboard your ship. We chose not to inform you about this because, well... It's best you didn't know what was in that crate. I'm sure we understand each other."
+      tk.msg(_("An unexpected reunion"), fmt.f(_([[You complete docking operations with the {pltname}, well aware that your ship isn't carrying the man they were expecting. When the airlock opens, you find yourself face to face with a woman and two crewmen, all wearing grey, featureless uniforms. It takes you a few moments to realize that the woman is in fact Rebina. But this is not the elegant, feminine figure you met in the spaceport bar not too long ago. This woman emits an aura of authority, and you immediately understand that Rebina is in fact captain of the {pltname}.
+    "Well met, {player}," she greets you. At the same time, the two crewmen that accompanied her push their way past you and disappear in the direction of your cargo hold. You open your mouth to protest, but Rebina raises a hand to forestall you. "There is no cause for concern," she says. "My men are only retrieving that which we sent you to fetch. I assure you that your ship and its cargo will be left undisturbed."
+    You explain to Rebina that although you met Jorek, he didn't accompany you on your way here. Rebina gives you a grim smile in return. "Oh, I know that. I never expected you to bring him to us in the first place. You see, it's not Jorek we wanted you to get. It was... that."]]), {pltname=shipname, player=player.name()}))
+      tk.msg(_("An unexpected reunion"), fmt.f(_([[You follow her gaze, and spot the crewmen making their way back to the airlock, carrying between them a small but apparently rather heavy crate. You are absolutely certain you've never seen it before.
+    "That is what Jorek was keeping for us on {pnt}, and that is what we need," Rebina explains. "Jorek is nothing but a decoy to draw the Empire's attention away from our real operations. While you were talking to him, his subordinates secured our cargo aboard your ship. We chose not to inform you about this because, well... It's best you didn't know what was in that crate. I'm sure we understand each other."
     Rebina turns to follow her men back into the ship, but before she closes the airlock hatch she looks back at you over her shoulder, shooting you a casual glance that nevertheless seems to see right through you. "I'm glad to see my trust in you was not misplaced," she remarks. "Perhaps we'll see each other again someday, and when we do perhaps we can do some more business."
-    Then she is gone. You stare at the airlock hatch, then down at the credit chip in your hand, first marveling at the wealth it represents and then astonished to realize you can't remember how it got there.]]), pnt:name()))
+    Then she is gone. You stare at the airlock hatch, then down at the credit chip in your hand, first marveling at the wealth it represents and then astonished to realize you can't remember how it got there.]]), {pnt=pnt}))
       player.pay(credits)
    end
 
