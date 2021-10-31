@@ -58,7 +58,7 @@ local function outfit_loot( o, price )
       text = o:name(),
       q = nil,
       type = "outfit",
-      bg = special_col,
+      bg = nil, -- special_col, -- TODO new special condition
       alt = desc,
       data = o,
       price = price,
