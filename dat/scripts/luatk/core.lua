@@ -162,6 +162,13 @@ function luatk.Window:draw()
 
    -- Restore scissors
    lg.setScissor( scs )
+
+   -- Draw overlay
+   for _k,wgt in ipairs(self._widgets) do
+      if wgt.drawover then
+         wgt:drawover( x, y )
+      end
+   end
 end
 function luatk.Window:update(dt)
    for _k,wgt in ipairs(self._widgets) do
@@ -439,6 +446,30 @@ function luatk.msg( title, msg )
    luatk.newButton( wdw, (w-50)/2, h+110-20-30, 50, 30, _("OK"), function( wgt )
       wgt.parent:destroy()
    end )
+end
+
+function luatk.drawAltText( bx, by, alt, w )
+   local font = luatk._deffont
+   w = w or 250
+   local _w, tw = font:getWrap( alt, w-20 )
+   local h = #tw * font:getLineHeight() + 20
+   local lw, lh = lg.getDimensions()
+
+   local x = bx + 10
+   local y = by + 10 --- h - font:getLineHeight() - 10
+   if y < 10 then
+      y = 10
+   end
+   if x+w+10 > lw then
+      x = x - w
+   end
+
+   lg.setColor( {0.0, 0.0, 0.0, 0.9} )
+   lg.rectangle( "fill", x, y, w, h )
+   lg.setColor( {0.5, 0.5, 0.5, 0.9} )
+   lg.rectangle( "line", x, y, w, h )
+   lg.setColor( luatk.colour.text )
+   lg.printf( alt, font, x+10, y+10, w-20 )
 end
 
 return luatk

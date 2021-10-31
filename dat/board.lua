@@ -25,6 +25,17 @@ local cargo_image_generic = nil
 local function cargo_loot( c, q, m )
    local icon = c:icon()
    local ispecial = m or c:price()==0
+   local desc = c:description()
+   local illegalto = c:illegality()
+   if #illegalto > 0 then
+      desc = desc.._("\n#rIllegalized by the following factions:\n")
+      for _k,f in ipairs(illegalto) do
+         if f:known() then
+            desc = desc..fmt.f(_("\n   - {fctname}"),{fctname=f:name()})
+         end
+      end
+      desc = desc.."#0"
+   end
    return {
       image = (icon and lg.newImage(icon)) or cargo_image_generic,
       text = c:name(),
@@ -68,6 +79,7 @@ local function compute_lootables ( plt )
       } )
    end
 
+   -- Steal outfits before cargo, since they are always considered "special"
    local canstealoutfits = false
    if canstealoutfits then
       local ocand = {}
@@ -168,6 +180,15 @@ function wgtBoard:draw( bx, by )
    if l.q then
       lg.setColor( luatk.colour.text )
       lg.printf( string.format("%d",l.q), luatk._deffont, x+5, y+5, w-10, 'right' )
+   end
+end
+function wgtBoard:drawover( bx, by )
+   local x, y, w, h = bx+self.x, by+self.y, self.w, self.h
+   local l = self.loot
+   if not l then return end
+   local alt = l.alt
+   if alt and self.mouseover then
+      luatk.drawAltText( x+w, y-10, alt )
    end
 end
 function wgtBoard:clicked( _mx, _my, btn )
