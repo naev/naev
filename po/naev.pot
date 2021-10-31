@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2021-10-31 13:58-0400\n"
+"POT-Creation-Date: 2021-10-31 17:45-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1693,8 +1693,31 @@ msgstr ""
 msgid "Atryssa IV"
 msgstr ""
 
-#: dat/assets/august.xml:2 dat/events/neutral/shipwreck.lua:47
-#: dat/events/neutral/shipwreck.lua:66 dat/missions/neutral/spacefamily.lua:62
+#. Finish event (removes npc)
+#.
+#. <?xml version='1.0' encoding='utf8'?>
+#. <event name="Shipwreck">
+#. <trigger>enter</trigger>
+#. <chance>3</chance>
+#. <cond>require("common.pirate").systemPresence() &gt; 0</cond>
+#. <flags>
+#. <unique />
+#. </flags>
+#. <notes>
+#. <tier>1</tier>
+#. </notes>
+#. </event>
+#. --
+#.
+#. -- Shipwreck Event
+#. --
+#. -- Creates a wrecked ship that asks for help. If the player boards it, the event switches to the Space Family mission.
+#. -- See dat/missions/neutral/spacefamily
+#. --
+#. -- 12/02/2010 - Added visibility/highlight options for use in big systems (Anatolis)
+#. --
+#: dat/assets/august.xml:2 dat/events/neutral/shipwreck.lua:26
+#: dat/missions/neutral/spacefamily.lua:62
 msgid "August"
 msgstr ""
 
@@ -13443,9 +13466,9 @@ msgstr ""
 #. Spawn pirate
 #: dat/faction.xml:576 dat/events/dvaered/fwD_hitman.lua:52
 #: dat/events/dvaered/fwD_hitman.lua:54 dat/events/dvaered/fwD_hitman.lua:56
-#: dat/missions/neutral/kidnapped/traffic_01.lua:204
-#: dat/missions/neutral/kidnapped/traffic_01.lua:222
-#: dat/missions/neutral/kidnapped/traffic_01.lua:242
+#: dat/missions/neutral/kidnapped/traffic_01.lua:213
+#: dat/missions/neutral/kidnapped/traffic_01.lua:231
+#: dat/missions/neutral/kidnapped/traffic_01.lua:251
 #: dat/missions/shark/sh02_tapping.lua:184
 #: dat/missions/shark/sh02_tapping.lua:209
 #: dat/missions/shark/sh02_tapping.lua:236
@@ -19554,7 +19577,7 @@ msgid "Corvus"
 msgstr ""
 
 #. Create the OSD
-#: dat/ssys/crimson_gauntlet.xml:2 dat/events/dvaered/totoran.lua:127
+#: dat/ssys/crimson_gauntlet.xml:2 dat/events/dvaered/totoran.lua:128
 #: dat/missions/dvaered/gauntlet/gauntlet.lua:80
 msgid "Crimson Gauntlet"
 msgstr ""
@@ -24104,7 +24127,7 @@ msgstr ""
 
 #. the probability of ambushes will change
 #. In the first ambush, there will be a little surprise text
-#: dat/events/discovery.lua:365 dat/events/shiplog.lua:21
+#: dat/events/discovery.lua:365 dat/events/shiplog.lua:23
 #: dat/missions/shark/sh04_meeting.lua:56
 msgid "Travel"
 msgstr ""
@@ -24473,8 +24496,7 @@ msgid "Do you want to repay DHC?"
 msgstr ""
 
 #: dat/events/dvaered/fwB_repay.lua:38
-#, lua-format
-msgid "You still owe %s credits to the High Command. Do you want to repay now?"
+msgid "You still owe {credits} to the High Command. Do you want to repay now?"
 msgstr ""
 
 #: dat/events/dvaered/fwB_repay.lua:42
@@ -24583,159 +24605,158 @@ msgstr ""
 #.
 #. -- Event handling NPCs and such at Totoran
 #. --
-#: dat/events/dvaered/totoran.lua:19
+#: dat/events/dvaered/totoran.lua:20
 msgid "Spectator"
 msgstr ""
 
-#: dat/events/dvaered/totoran.lua:20
+#: dat/events/dvaered/totoran.lua:21
 msgid "Aficionado"
 msgstr ""
 
-#: dat/events/dvaered/totoran.lua:21
+#: dat/events/dvaered/totoran.lua:22
 msgid "Gauntlet Fan"
 msgstr ""
 
-#: dat/events/dvaered/totoran.lua:24
+#: dat/events/dvaered/totoran.lua:25
 msgid "A person enjoying their time at the station."
 msgstr ""
 
-#: dat/events/dvaered/totoran.lua:25
+#: dat/events/dvaered/totoran.lua:26
 msgid "An individual taking a break from viewing the action."
 msgstr ""
 
-#: dat/events/dvaered/totoran.lua:26
+#: dat/events/dvaered/totoran.lua:27
 msgid "A spectator that looks strangely out of place."
 msgstr ""
 
-#: dat/events/dvaered/totoran.lua:27
+#: dat/events/dvaered/totoran.lua:28
 msgid "A person enjoying some drinks."
 msgstr ""
 
-#: dat/events/dvaered/totoran.lua:30
+#: dat/events/dvaered/totoran.lua:31
 msgid ""
 "\"Sometimes when watching some of the competitions, I forget it is all just "
 "virtual reality.\""
 msgstr ""
 
-#: dat/events/dvaered/totoran.lua:31
+#: dat/events/dvaered/totoran.lua:32
 msgid ""
 "\"The realism of virtual reality here is impressive! It almost feels like "
 "it's real!\""
 msgstr ""
 
-#: dat/events/dvaered/totoran.lua:33 dat/events/minerva/station.lua:68
-#, lua-format
+#: dat/events/dvaered/totoran.lua:34 dat/events/minerva/station.lua:68
 msgid ""
-"\"I came all the way from %s to be here! We don't have anything like this "
+"\"I came all the way from {pnt} to be here! We don't have anything like this "
 "back at home.\""
 msgstr ""
 
 #. No Dvaered
-#: dat/events/dvaered/totoran.lua:36
+#: dat/events/dvaered/totoran.lua:37
 msgid ""
 "\"The Dvaered sure know how to put on a good show. I love seeing it rain "
 "Mace Rockets!\""
 msgstr ""
 
-#: dat/events/dvaered/totoran.lua:37
+#: dat/events/dvaered/totoran.lua:38
 msgid ""
 "\"It's a shame that they require you to own the ship you want to use to "
 "enter the virtual reality competitions. I would love to try fly one of those "
 "majestic Dvaered Goddards.\""
 msgstr ""
 
-#: dat/events/dvaered/totoran.lua:38
+#: dat/events/dvaered/totoran.lua:39
 msgid ""
 "\"I like watching the competitions between fighters, it's incredible all the "
 "moves they can pull off.\""
 msgstr ""
 
-#: dat/events/dvaered/totoran.lua:39
+#: dat/events/dvaered/totoran.lua:40
 msgid ""
 "\"I tried to compete in my Llama, but it doesn't stand a chance against even "
 "a single Hyena.\""
 msgstr ""
 
-#: dat/events/dvaered/totoran.lua:40
+#: dat/events/dvaered/totoran.lua:41
 msgid ""
 "\"I was always told that Dvaered technology was primitive, but the virtual "
 "reality of the Crimson Gauntlet is incredible!\""
 msgstr ""
 
-#: dat/events/dvaered/totoran.lua:41
+#: dat/events/dvaered/totoran.lua:42
 msgid ""
 "\"There's nothing quite like seeing two capital ships duke it out. I love "
 "watching railguns blasting away.\""
 msgstr ""
 
-#: dat/events/dvaered/totoran.lua:42
+#: dat/events/dvaered/totoran.lua:43
 msgid ""
 "\"I used to think the Za'lek virtual games were great, but this is so much "
 "better!\""
 msgstr ""
 
-#: dat/events/dvaered/totoran.lua:45
+#: dat/events/dvaered/totoran.lua:46
 msgid "Gauntlet Pilot"
 msgstr ""
 
-#: dat/events/dvaered/totoran.lua:46
+#: dat/events/dvaered/totoran.lua:47
 msgid "Resting Pilot"
 msgstr ""
 
-#: dat/events/dvaered/totoran.lua:47
+#: dat/events/dvaered/totoran.lua:48
 msgid "Tired Pilot"
 msgstr ""
 
-#: dat/events/dvaered/totoran.lua:50
+#: dat/events/dvaered/totoran.lua:51
 msgid "A pilot enjoying some downtime between competitions."
 msgstr ""
 
-#: dat/events/dvaered/totoran.lua:51
+#: dat/events/dvaered/totoran.lua:52
 msgid "A tired pilot taking a break."
 msgstr ""
 
-#: dat/events/dvaered/totoran.lua:52
+#: dat/events/dvaered/totoran.lua:53
 msgid "A pilot lounging around."
 msgstr ""
 
-#: dat/events/dvaered/totoran.lua:55
+#: dat/events/dvaered/totoran.lua:56
 msgid ""
 "\"Some people say that the Crimson gauntlet encourages and promotes "
 "violence, but I've been destroying ships long before I started participating "
 "in the Crimson Gauntlet!\""
 msgstr ""
 
-#: dat/events/dvaered/totoran.lua:57
-#, lua-format
+#: dat/events/dvaered/totoran.lua:58
 msgid ""
-"\"Hey, didn't I see you flying a %s in the Crimson Gauntlet? Nice flying.\""
+"\"Hey, didn't I see you flying a {ship} in the Crimson Gauntlet? Nice flying."
+"\""
 msgstr ""
 
-#: dat/events/dvaered/totoran.lua:60
+#: dat/events/dvaered/totoran.lua:61
 msgid ""
 "\"I was doing so well in my Hyena, but it just lacks the firepower to take "
 "on larger ships. Maybe I should upgrade to a Vendetta.\""
 msgstr ""
 
-#: dat/events/dvaered/totoran.lua:61
+#: dat/events/dvaered/totoran.lua:62
 msgid ""
 "\"The Crimson Gauntlet has really taught me to appreciate the small things "
 "in life, you know, blowing up your enemies with mace rockets and such.\""
 msgstr ""
 
-#: dat/events/dvaered/totoran.lua:62
+#: dat/events/dvaered/totoran.lua:63
 msgid ""
 "\"I used to be a pretty sloppy pilot before participating in the Crimson "
 "Gauntlet. I still am, but I used to be too.\""
 msgstr ""
 
-#: dat/events/dvaered/totoran.lua:63
+#: dat/events/dvaered/totoran.lua:64
 msgid ""
 "\"Sometimes I get motion sickness from the virtual reality. What's more "
 "troublesome is it also happens when I fly my real ship!\""
 msgstr ""
 
-#: dat/events/dvaered/totoran.lua:64
+#: dat/events/dvaered/totoran.lua:65
 msgid ""
 "\"Sometimes when I get blown up in Crimson Gauntlet, it takes me a while to "
 "realize I haven't actually been blown up to smithereens.\""
@@ -24744,27 +24765,26 @@ msgstr ""
 #. Create random noise NPCs while avoiding duplicate messages
 #. Custom NPCs
 #. Just do random noise
-#: dat/events/dvaered/totoran.lua:114
+#: dat/events/dvaered/totoran.lua:115
 msgid "You approach the Crimson Gauntlet guide."
 msgstr ""
 
-#: dat/events/dvaered/totoran.lua:116
-#, lua-format
+#: dat/events/dvaered/totoran.lua:117
 msgid ""
-"\"Hello and welcome to the Crimson Gauntlet! You have %s. What would you "
-"like to do?\""
+"\"Hello and welcome to the Crimson Gauntlet! You have {emblems}. What would "
+"you like to do?\""
 msgstr ""
 
-#: dat/events/dvaered/totoran.lua:118 dat/events/minerva/station.lua:213
+#: dat/events/dvaered/totoran.lua:119 dat/events/minerva/station.lua:213
 msgid "Information"
 msgstr ""
 
-#: dat/events/dvaered/totoran.lua:119
+#: dat/events/dvaered/totoran.lua:120
 msgid "Trade Emblems"
 msgstr ""
 
 #. TODO add some other more info text
-#: dat/events/dvaered/totoran.lua:120 dat/events/minerva/station.lua:215
+#: dat/events/dvaered/totoran.lua:121 dat/events/minerva/station.lua:215
 #: dat/events/minerva/station.lua:407 dat/events/minerva/station.lua:483
 #: dat/events/minerva/station.lua:596 dat/missions/minerva/kex1.lua:128
 #: dat/missions/minerva/kex2.lua:152 dat/missions/minerva/kex3.lua:195
@@ -24777,27 +24797,27 @@ msgstr ""
 msgid "Leave"
 msgstr ""
 
-#: dat/events/dvaered/totoran.lua:124
+#: dat/events/dvaered/totoran.lua:125
 msgid "What would you like to know about?"
 msgstr ""
 
-#: dat/events/dvaered/totoran.lua:128
+#: dat/events/dvaered/totoran.lua:129
 msgid "Gauntlet History"
 msgstr ""
 
-#: dat/events/dvaered/totoran.lua:129
+#: dat/events/dvaered/totoran.lua:130
 msgid "Crimson Challenge"
 msgstr ""
 
-#: dat/events/dvaered/totoran.lua:130
+#: dat/events/dvaered/totoran.lua:131
 msgid "Totoran Emblems"
 msgstr ""
 
-#: dat/events/dvaered/totoran.lua:131
+#: dat/events/dvaered/totoran.lua:132
 msgid "Nothing."
 msgstr ""
 
-#: dat/events/dvaered/totoran.lua:135
+#: dat/events/dvaered/totoran.lua:136
 msgid ""
 "The Crimson Gauntlet is allows you to experience combat with your ships in "
 "virtual reality, without having to worry about any real damage. All you do "
@@ -24806,7 +24826,7 @@ msgid ""
 msgstr ""
 
 #. incident is 593:3726.4663
-#: dat/events/dvaered/totoran.lua:140
+#: dat/events/dvaered/totoran.lua:141
 msgid ""
 "The Crimson Gauntlet was founded originally in mid-UST 568, as a program for "
 "training Dvaered Military. Of course, back then they did not have such good "
@@ -24816,7 +24836,7 @@ msgid ""
 "full immersion virtual reality experiences in the Universe."
 msgstr ""
 
-#: dat/events/dvaered/totoran.lua:141
+#: dat/events/dvaered/totoran.lua:142
 msgid ""
 "Eventually, to encourage the warrior spirit among the general population, in "
 "UST 588, 20 cycles after its creation, the Crimson Gauntlet was open to the "
@@ -24826,14 +24846,14 @@ msgid ""
 "of the virtual reality environment."
 msgstr ""
 
-#: dat/events/dvaered/totoran.lua:142
+#: dat/events/dvaered/totoran.lua:143
 msgid ""
 "Many famous pilots have had their formation here, and it is also frequented "
 "by scouting agencies from across the Universe to find good pilots. Not to "
 "mention all the prizes that can be won from competing in the tournaments."
 msgstr ""
 
-#: dat/events/dvaered/totoran.lua:146
+#: dat/events/dvaered/totoran.lua:147
 msgid ""
 "The Crimson Gauntlet Challenge is a set of challenges split into three "
 "types: skirmisher, for small ships like fighters and bombers; warrior, for "
@@ -24842,7 +24862,7 @@ msgid ""
 "waves of increasingly hard opponents which you must defeat."
 msgstr ""
 
-#: dat/events/dvaered/totoran.lua:147
+#: dat/events/dvaered/totoran.lua:148
 msgid ""
 "You get bonus points depending on your ship class with respect to the "
 "category. Using smaller ships will give you a bonus in general. You also get "
@@ -24852,51 +24872,50 @@ msgid ""
 "ships!"
 msgstr ""
 
-#: dat/events/dvaered/totoran.lua:155
+#: dat/events/dvaered/totoran.lua:156
 msgid "Is there anything else you would like to know about?"
 msgstr ""
 
-#: dat/events/dvaered/totoran.lua:159
-#, lua-format
-msgid "\"You have %s. What would you like to trade for?\""
-msgstr ""
-
-#: dat/events/dvaered/totoran.lua:161
-msgid "Unlock Warrior Challenge"
+#: dat/events/dvaered/totoran.lua:160
+msgid "\"You have {emblems}. What would you like to trade for?\""
 msgstr ""
 
 #: dat/events/dvaered/totoran.lua:162
+msgid "Unlock Warrior Challenge"
+msgstr ""
+
+#: dat/events/dvaered/totoran.lua:163
 msgid ""
 "Unlocks participation in the difficult Warrior Challenge meant for Corvette "
 "and Destroyer-class ships."
 msgstr ""
 
-#: dat/events/dvaered/totoran.lua:163
+#: dat/events/dvaered/totoran.lua:164
 msgid "Unlock Warlord Challenge"
 msgstr ""
 
-#: dat/events/dvaered/totoran.lua:164
+#: dat/events/dvaered/totoran.lua:165
 msgid ""
 "Unlocks participation in the most difficult Warlord Challenge meant for "
 "Cruiser, Carrier, and Battleship-class ships."
 msgstr ""
 
-#: dat/events/dvaered/totoran.lua:166
+#: dat/events/dvaered/totoran.lua:167
 msgid "Unlock Double Damage Enemies Perk"
 msgstr ""
 
-#: dat/events/dvaered/totoran.lua:167
+#: dat/events/dvaered/totoran.lua:168
 msgid ""
 "Unlocks the Double Damage Enemies Perk, which causes all enemies to double "
 "the amount of damage. While this increases the challenge difficulty, it also "
 "immensely increases the rewards."
 msgstr ""
 
-#: dat/events/dvaered/totoran.lua:168
+#: dat/events/dvaered/totoran.lua:169
 msgid "Unlock No Healing Perk"
 msgstr ""
 
-#: dat/events/dvaered/totoran.lua:169
+#: dat/events/dvaered/totoran.lua:170
 msgid ""
 "Unlocks the No Healing Perk, which makes it so you don't get healed between "
 "waves. While this increases the challenge difficulty, it also increases the "
@@ -24909,43 +24928,42 @@ msgstr ""
 #. Special case
 #. Not enough money.
 #. Not enough money.
-#: dat/events/dvaered/totoran.lua:191 dat/events/dvaered/totoran.lua:241
+#: dat/events/dvaered/totoran.lua:192 dat/events/dvaered/totoran.lua:242
 #: dat/events/minerva/station.lua:308 dat/events/minerva/station.lua:352
 msgid "unknown tradein type"
 msgstr ""
 
-#: dat/events/dvaered/totoran.lua:207 dat/events/minerva/station.lua:321
+#: dat/events/dvaered/totoran.lua:208 dat/events/minerva/station.lua:321
 #: dat/missions/empire/collective/ec03.lua:54 src/map_find.c:427
 #, c-format, lua-format
 msgid "%s (%s)"
 msgstr ""
 
-#: dat/events/dvaered/totoran.lua:210 dat/events/minerva/station.lua:228
+#: dat/events/dvaered/totoran.lua:211 dat/events/minerva/station.lua:228
 #: dat/events/minerva/station.lua:328 src/load.c:369
 msgid "Back"
 msgstr ""
 
-#: dat/events/dvaered/totoran.lua:215
-#, lua-format
+#: dat/events/dvaered/totoran.lua:216
 msgid ""
-"\"You only have %s, you would need %s more to purchase the '%s'.\n"
+"\"You only have {emblems}, you would need {emblems_more} more to purchase "
+"the '{item}'.\n"
 "Is there anything else you would like to purchase?\""
 msgstr ""
 
-#: dat/events/dvaered/totoran.lua:225
-#, lua-format
+#: dat/events/dvaered/totoran.lua:226
 msgid ""
-"\"Are you sure you want to trade in for the '#w%s#0'? The description is as "
-"follows:\"\n"
-"#w%s#0\""
+"\"Are you sure you want to trade in for the '#w{name}#0'? The description is "
+"as follows:\"\n"
+"#w{description}#0\""
 msgstr ""
 
-#: dat/events/dvaered/totoran.lua:230 dat/events/minerva/station.lua:340
+#: dat/events/dvaered/totoran.lua:231 dat/events/minerva/station.lua:340
 #: dat/events/minerva/station.lua:367
 msgid "Trade"
 msgstr ""
 
-#: dat/events/dvaered/totoran.lua:231 dat/events/minerva/station.lua:341
+#: dat/events/dvaered/totoran.lua:232 dat/events/minerva/station.lua:341
 #: dat/events/minerva/station.lua:368 dat/missions/dvaered/gauntlet/gui.lua:201
 #: dat/rescue.lua:304 dat/rescue.lua:315 src/dialogue.c:738 src/escort.c:303
 #: src/map_find.c:240 src/options.c:256 src/options.c:775 src/options.c:879
@@ -24953,11 +24971,11 @@ msgstr ""
 msgid "Cancel"
 msgstr ""
 
-#: dat/events/dvaered/totoran.lua:245
+#: dat/events/dvaered/totoran.lua:246
 msgid "\"Hope you enjoy your purchase!\""
 msgstr ""
 
-#: dat/events/dvaered/totoran.lua:249 dat/events/minerva/station.lua:630
+#: dat/events/dvaered/totoran.lua:250 dat/events/minerva/station.lua:630
 #: dat/missions/minerva/kex1.lua:225 dat/missions/minerva/kex2.lua:206
 #: dat/missions/minerva/kex3.lua:230 dat/missions/minerva/kex4.lua:226
 #: dat/missions/minerva/maikki1.lua:359 dat/missions/minerva/maikki2.lua:568
@@ -25048,27 +25066,26 @@ msgstr ""
 #. Should be somewhere near Raelid
 #. Try to claim
 #. Create the derelicts One Dvaered, one FLF.
-#: dat/events/flf/derelict.lua:61 dat/events/flf/derelict.lua:82
+#: dat/events/flf/derelict.lua:63 dat/events/flf/derelict.lua:84
 #: dat/missions/flf/flf_pre02.lua:65 dat/missions/flf/flf_pre02.lua:192
 msgid "Dvaered Patrol"
 msgstr ""
 
-#: dat/events/flf/derelict.lua:62 dat/events/flf/derelict.lua:88
+#: dat/events/flf/derelict.lua:64 dat/events/flf/derelict.lua:90
 msgid "Frontier Patrol"
 msgstr ""
 
 #. Set a bunch of vars, for no real reason
 #. Caution: if you change this, change the location for base Sindbad in unidiff.xml as well!
 #. Ship broadcasts an SOS every 10 seconds, until boarded or destroyed.
-#: dat/events/flf/derelict.lua:82
-#, lua-format
-msgid "SOS. This is %s. Primary systems down. Requesting assistance."
+#: dat/events/flf/derelict.lua:84
+msgid "SOS. This is {plt}. Primary systems down. Requesting assistance."
 msgstr ""
 
 #. Ship broadcasts an SOS every 10 seconds, until boarded or destroyed.
-#: dat/events/flf/derelict.lua:88
-#, lua-format
-msgid "Calling all ships. This is %s. Engines down, ship damaged. Please help."
+#: dat/events/flf/derelict.lua:90
+msgid ""
+"Calling all ships. This is {plt}. Engines down, ship damaged. Please help."
 msgstr ""
 
 #.
@@ -25102,25 +25119,23 @@ msgid ""
 msgstr ""
 
 #: dat/events/flf/flf_catastrophe.lua:57
-#, lua-format
 msgid ""
-"\"%s, it's horrible,\" she says with a look of dread in her eyes. \"They "
-"found us. The damn Empire found us! I'm going to be frank, I don't even know "
-"if we can survive this.\" You stammer for a moment. No, it can't be true! It "
-"has to be some mistake! How can the FLF be defeated like this? Now the "
-"commotion makes perfect sense.\n"
+"\"{player}, it's horrible,\" she says with a look of dread in her eyes. "
+"\"They found us. The damn Empire found us! I'm going to be frank, I don't "
+"even know if we can survive this.\" You stammer for a moment. No, it can't "
+"be true! It has to be some mistake! How can the FLF be defeated like this? "
+"Now the commotion makes perfect sense.\n"
 "    \"It's those damn traitors!\" Benito continues. \"One of them went off "
 "and told the Empire where our base is, and they even told them where our "
 "hidden jumps are! This is terrible!\""
 msgstr ""
 
 #: dat/events/flf/flf_catastrophe.lua:59
-#, lua-format
 msgid ""
 "\"Listen, we don't have much longer. A combined Empire and Dvaered fleet is "
-"just about to enter from %s. They have Peacemakers, Hawkings, Goddards, "
-"Pacifiers, you name it. They're ready to wipe us off the map. %s, I don't "
-"know how to say this, but...\" Benito digs in her pockets a bit before "
+"just about to enter from {sys}. They have Peacemakers, Hawkings, Goddards, "
+"Pacifiers, you name it. They're ready to wipe us off the map. {player}, I "
+"don't know how to say this, but...\" Benito digs in her pockets a bit before "
 "pulling out a small data chip. \"Here, take this,\" she says as she presses "
 "it into your hand. \"That's plan B. I hope it doesn't come to that, but... "
 "keep it safe, just in case.\"\n"
@@ -25173,7 +25188,6 @@ msgid ""
 msgstr ""
 
 #: dat/events/flf/flf_catastrophe.lua:235
-#, lua-format
 msgid ""
 "\"Well, this is it, soldier. My last transmission to you. I can't say I "
 "wanted it to go this way, but...\n"
@@ -25182,13 +25196,12 @@ msgid ""
 "Go straight there, right now. Escape the Empire, find what lies beyond, and "
 "live on. Perhaps, in your future travels, you'll find a way to destroy the "
 "Dvaereds, and the Empire, once and for all.\" Benito smiles as more and more "
-"of the station detonates around her. \"Goodbye, %s. Stay vigilant.\" The "
-"transmission then cuts as you are forced to watch Sindbad finally erupt in a "
-"fiery explosion."
+"of the station detonates around her. \"Goodbye, {player}. Stay vigilant.\" "
+"The transmission then cuts as you are forced to watch Sindbad finally erupt "
+"in a fiery explosion."
 msgstr ""
 
 #: dat/events/flf/flf_catastrophe.lua:239
-#, lua-format
 msgid ""
 "The Empire discovered Sindbad. Try as you might, you and your comrades could "
 "not stop the combined onslaught of the Empire and the Dvaereds, and Sindbad "
@@ -25197,7 +25210,7 @@ msgid ""
 "leading into the unknown reaches of the inner nebula and told you to use the "
 "map to find what lies within in the hopes that one day, you can help the FLF "
 "rise again and defeat the Dvaereds once and for all. Her last words were "
-"short, but memorable: \"Goodbye, %s. Stay vigilant.\""
+"short, but memorable: \"Goodbye, {player}. Stay vigilant.\""
 msgstr ""
 
 #: dat/events/flf/flf_catastrophe.lua:274
@@ -25299,7 +25312,6 @@ msgid ""
 msgstr ""
 
 #: dat/events/flf/flf_catastrophe.lua:291
-#, lua-format
 msgid ""
 "Fascinated, you finally speak up, prompting a smile from the uploaded "
 "Thurion and a fairly long, friendly discussion about her experiences as an "
@@ -25308,7 +25320,7 @@ msgid ""
 "Thurion guards enters the room. They ask Alicia how it went, and she says "
 "that you've been properly introduced to Thurion culture and can be trusted "
 "to roam free. The two guards then smile and shake your hand. \"Welcome to "
-"the nebula, %s,\" one of them says. \"You now have permission to roam "
+"the nebula, {player},\" one of them says. \"You now have permission to roam "
 "Thurion space freely and conduct your business. Of course, I trust you won't "
 "reveal our secret location to anyone. That would be just as bad for you as "
 "it would be for us.\"\n"
@@ -26656,38 +26668,35 @@ msgid ""
 msgstr ""
 
 #: dat/events/minerva/station.lua:245
-#, lua-format
 msgid ""
 "\"SORRY, YOU DO NOT HAVE ENOUGH MINERVA TOKENS TO TRADE-IN FOR YOUR "
-"REQUESTED ITEM. WOULD YOU LIKE TO TRADE-IN FOR SOMETHING ELSE? YOU HAVE #p%s "
-"MINERVA TOKEN#0.\""
+"REQUESTED ITEM. WOULD YOU LIKE TO TRADE-IN FOR SOMETHING ELSE? YOU HAVE "
+"#p{n} MINERVA TOKEN#0.\""
 msgid_plural ""
 "\"SORRY, YOU DO NOT HAVE ENOUGH MINERVA TOKENS TO TRADE-IN FOR YOUR "
-"REQUESTED ITEM. WOULD YOU LIKE TO TRADE-IN FOR SOMETHING ELSE? YOU HAVE #p%s "
-"MINERVA TOKENS#0.\""
+"REQUESTED ITEM. WOULD YOU LIKE TO TRADE-IN FOR SOMETHING ELSE? YOU HAVE "
+"#p{n} MINERVA TOKENS#0.\""
 msgstr[0] ""
 msgstr[1] ""
 
 #: dat/events/minerva/station.lua:251
-#, lua-format
 msgid ""
 "\"I AM SORRY TO INFORM YOU THAT THE ITEM THAT YOU DESIRE IS CURRENTLY SOLD "
-"OUT. WOULD YOU LIKE TO TRADE-IN FOR SOMETHING ELSE? YOU HAVE #p%s MINERVA "
+"OUT. WOULD YOU LIKE TO TRADE-IN FOR SOMETHING ELSE? YOU HAVE #p{n} MINERVA "
 "TOKEN#0.\""
 msgid_plural ""
 "\"I AM SORRY TO INFORM YOU THAT THE ITEM THAT YOU DESIRE IS CURRENTLY SOLD "
-"OUT. WOULD YOU LIKE TO TRADE-IN FOR SOMETHING ELSE? YOU HAVE #p%s MINERVA "
+"OUT. WOULD YOU LIKE TO TRADE-IN FOR SOMETHING ELSE? YOU HAVE #p{n} MINERVA "
 "TOKENS#0.\""
 msgstr[0] ""
 msgstr[1] ""
 
 #: dat/events/minerva/station.lua:257
-#, lua-format
 msgid ""
-"\"YOU CAN TRADE IN YOUR PRECIOUS #p%s MINERVA TOKEN#0 FOR THE FOLLOWING "
+"\"YOU CAN TRADE IN YOUR PRECIOUS #p{n} MINERVA TOKEN#0 FOR THE FOLLOWING "
 "GOODS.\""
 msgid_plural ""
-"\"YOU CAN TRADE IN YOUR PRECIOUS #p%s MINERVA TOKENS#0 FOR THE FOLLOWING "
+"\"YOU CAN TRADE IN YOUR PRECIOUS #p{n} MINERVA TOKENS#0 FOR THE FOLLOWING "
 "GOODS.\""
 msgstr[0] ""
 msgstr[1] ""
@@ -26699,26 +26708,19 @@ msgstr ""
 
 #. Add special ticket
 #: dat/events/minerva/station.lua:326
-#, lua-format
-msgid "Special Spa Ticket (%s)"
+msgid "Special Spa Ticket ({tokens})"
 msgstr ""
 
 #. Buying stuff
 #: dat/events/minerva/station.lua:336
-#, lua-format
 msgid ""
-"\"ARE YOU SURE YOU WANT TO TRADE IN FOR THE '#w%s#0'? THE DESCRIPTION IS AS "
-"FOLLOWS:\"\n"
-"#w%s#0"
+"\"ARE YOU SURE YOU WANT TO TRADE IN FOR THE '#w{item}#0'? THE DESCRIPTION IS "
+"AS FOLLOWS:\"\n"
+"#w{description}#0"
 msgstr ""
 
 #: dat/events/minerva/station.lua:348
 msgid "Gambling Bounty"
-msgstr ""
-
-#: dat/events/minerva/station.lua:348
-#, lua-format
-msgid "Obtained: %s"
 msgstr ""
 
 #: dat/events/minerva/station.lua:359
@@ -26904,10 +26906,8 @@ msgstr ""
 #.
 #.
 #.
-#. localization stuff, translators would work here
-#. This section stores the strings (text) for the event.
 #. Stage one: something goes wrong in fabric of reality.
-#: dat/events/naev_needs_YOU.lua:28
+#: dat/events/naev_needs_YOU.lua:24
 msgid ""
 "As you step out of your ship, the sunlight suddenly flickers. The local star "
 "in the sky turns blue, then a deep purple, and then goes dark. The whole "
@@ -26927,7 +26927,7 @@ msgstr ""
 
 #. yes/no choice
 #. If yes, the voice of the creator speaks to you:
-#: dat/events/naev_needs_YOU.lua:36
+#: dat/events/naev_needs_YOU.lua:32
 msgid ""
 "\"Good. Sorry for the inconvenience. Please don't worry, I'll have reality "
 "reloaded again in just a sec.\"\n"
@@ -26945,7 +26945,7 @@ msgid ""
 msgstr ""
 
 #. If no, the voice of the creator speaks to you:
-#: dat/events/naev_needs_YOU.lua:43
+#: dat/events/naev_needs_YOU.lua:39
 msgid ""
 "\"Oh sorry about that. We're working hard on improving life, the universe, "
 "and all that, but the team is a bit short handed. Don't worry, I'll have "
@@ -26965,14 +26965,14 @@ msgstr ""
 #. Create an eerie atmosphere by cutting off the background music and substituting something spooky
 #. disabled until difficulties with the music API are sorted out
 #. The big programmer in the sky looks in to ask the player a question
-#: dat/events/naev_needs_YOU.lua:67
+#: dat/events/naev_needs_YOU.lua:62
 msgid "Naev received SIGSEGV (address not mapped to object)!"
 msgstr ""
 
 #. if the answer is 'yes'
 #. Mission ends with a little comment after blasting off.
 #. hook.takeoff( "enter_system")
-#: dat/events/naev_needs_YOU.lua:68 dat/events/naev_needs_YOU.lua:74
+#: dat/events/naev_needs_YOU.lua:63 dat/events/naev_needs_YOU.lua:69
 msgid "The voice of the creator"
 msgstr ""
 
@@ -26984,8 +26984,8 @@ msgstr ""
 #. -- A grace note.  Not sure the player will make the connection of the message with the event.
 #. function enter_system()
 #.
-#. player.msg( "Well, that was weird")
-#. evt.finish( true)
+#. player.msg( _("Well, that was weird") )
+#. evt.finish( true )
 #.
 #. end
 #.
@@ -27101,11 +27101,10 @@ msgid "Flintley"
 msgstr ""
 
 #: dat/events/neutral/baron_flintley.lua:24
-#, lua-format
 msgid ""
-"    Flintley greets you, relieved to see a friendly face. \"Hello again, %s. "
-"What brings you here today? As you can see, I'm here on business again. "
-"Nothing too interesting, I'm afraid, just everyday stuff.\"\n"
+"    Flintley greets you, relieved to see a friendly face. \"Hello again, "
+"{player}. What brings you here today? As you can see, I'm here on business "
+"again. Nothing too interesting, I'm afraid, just everyday stuff.\"\n"
 "    You spend some time chatting with Flintley, then you get back to work."
 msgstr ""
 
@@ -29609,8 +29608,7 @@ msgstr ""
 #. Choose faction, overriding if necessary
 #. Append the faction to the civilian name, unless there is no faction.
 #: dat/events/neutral/npc.lua:445
-#, lua-format
-msgid "%s Civilian"
+msgid "{fct} Civilian"
 msgstr ""
 
 #. Select a portrait
@@ -29674,7 +29672,6 @@ msgid "An open invitation"
 msgstr ""
 
 #: dat/events/neutral/shadow_comm.lua:60
-#, lua-format
 msgid ""
 "\"Greetings, {player},\" the pilot of the Vendetta says to you as soon as "
 "you answer his hail. \"I have been looking for you on behalf of an "
@@ -29689,7 +29686,7 @@ msgid ""
 "    The screen blinks out and the Vendetta goes about its business, paying "
 "you no more attention. It seems there's someone out there who wants to see "
 "you, and there's only one way to find out what about. Perhaps you should "
-"make a note of the place you're supposed to meet her: the %s system."
+"make a note of the place you're supposed to meet her: the {sys} system."
 msgstr ""
 
 #: dat/events/neutral/shadow_comm.lua:68
@@ -29738,8 +29735,7 @@ msgstr ""
 #. --
 #. Create question
 #: dat/events/neutral/shiplover.lua:154
-#, lua-format
-msgid "\"What class is the #o%s#0 ship?\""
+msgid "\"What class is the #o{ship}#0 ship?\""
 msgstr ""
 
 #. Create question
@@ -29773,8 +29769,8 @@ msgstr ""
 
 #. Determine reward
 #: dat/events/neutral/shiplover.lua:288
-#, lua-format
-msgid "You obtained a %s from the Ship Enthusiast for getting 5 quizzes right."
+msgid ""
+"You obtained 1 {outfit} from the Ship Enthusiast for getting 5 quizzes right."
 msgstr ""
 
 #: dat/events/neutral/shiplover.lua:291
@@ -29785,9 +29781,9 @@ msgid ""
 msgstr ""
 
 #: dat/events/neutral/shiplover.lua:297
-#, lua-format
 msgid ""
-"You obtained a %s from the Ship Enthusiast for getting 10 quizzes right."
+"You obtained 1 {outfit} from the Ship Enthusiast for getting 10 quizzes "
+"right."
 msgstr ""
 
 #: dat/events/neutral/shiplover.lua:300
@@ -29799,9 +29795,9 @@ msgid ""
 msgstr ""
 
 #: dat/events/neutral/shiplover.lua:306
-#, lua-format
 msgid ""
-"You obtained a %s from the Ship Enthusiast for getting 25 quizzes right."
+"You obtained a {outfit} from the Ship Enthusiast for getting 25 quizzes "
+"right."
 msgstr ""
 
 #: dat/events/neutral/shiplover.lua:309
@@ -29814,15 +29810,14 @@ msgid ""
 msgstr ""
 
 #: dat/events/neutral/shiplover.lua:314
-#, lua-format
-msgid "You obtained a %s from the Ship Enthusiast for getting a quiz right."
+msgid ""
+"You obtained {credits} from the Ship Enthusiast for getting a quiz right."
 msgstr ""
 
 #. Don't trigger hooks
 #: dat/events/neutral/shiplover.lua:317
-#, lua-format
 msgid ""
-"\"That's right! Damn, I thought you wouldn't know this one. This is the %d "
+"\"That's right! Damn, I thought you wouldn't know this one. This is the {n} "
 "time you got my quiz right! Here, take this as a reward for your performance."
 "\""
 msgstr ""
@@ -29938,79 +29933,48 @@ msgid "\"Oh well, your loss!\""
 msgstr ""
 
 #: dat/events/neutral/shiplover.lua:405
-#, lua-format
 msgid ""
 "\"Great! So here it goes. Listen carefully.\"\n"
 "\n"
-"%s"
 msgstr ""
 
-#: dat/events/neutral/shiplover.lua:423
-#, lua-format
+#: dat/events/neutral/shiplover.lua:421
 msgid ""
 "\"Great! So take a look at this ship and listen carefully.\"\n"
 "\n"
-"%s"
 msgstr ""
 
 #. Show choices
 #. Give reward
-#: dat/events/neutral/shiplover.lua:465
+#: dat/events/neutral/shiplover.lua:461
 msgid "You got the Ship Enthusiast's quiz wrong."
 msgstr ""
 
 #. TODO wrong sound
-#: dat/events/neutral/shiplover.lua:469
-#, lua-format
+#: dat/events/neutral/shiplover.lua:465
 msgid ""
 "They look smug as they exclaim \"Wrong!\".\n"
-"\"The correct answer was #g%s#0! Better luck next time.\"\n"
+"\"The correct answer was #g{answer}#0! Better luck next time.\"\n"
 "They take their leave."
 msgstr ""
 
-#. Finish event (removes npc)
-#.
-#. <?xml version='1.0' encoding='utf8'?>
-#. <event name="Shipwreck">
-#. <trigger>enter</trigger>
-#. <chance>3</chance>
-#. <cond>require("common.pirate").systemPresence() &gt; 0</cond>
-#. <flags>
-#. <unique />
-#. </flags>
-#. <notes>
-#. <tier>1</tier>
-#. </notes>
-#. </event>
-#. --
-#.
-#. -- Shipwreck Event
-#. --
-#. -- Creates a wrecked ship that asks for help. If the player boards it, the event switches to the Space Family mission.
-#. -- See dat/missions/neutral/spacefamily
-#. --
-#. -- 12/02/2010 - Added visibility/highlight options for use in big systems (Anatolis)
-#. --
-#. Text
 #. Make sure system isn't claimed, but we don't claim it
-#. The _("Shipwrecked %s") will be a random trader vessel.
+#. The _("Shipwrecked {plt}") will be a random trader vessel.
 #. Create the derelict.
-#: dat/events/neutral/shipwreck.lua:47
-#, lua-format
-msgid "Shipwrecked %s"
+#: dat/events/neutral/shipwreck.lua:49
+msgid "Shipwrecked {plt}"
 msgstr ""
 
 #. Added extra visibility for big systems (A.)
 #. Set hooks
 #. Ship broadcasts an SOS every 10 seconds, until boarded or destroyed.
-#: dat/events/neutral/shipwreck.lua:66
-#, lua-format
+#: dat/events/neutral/shipwreck.lua:68
 msgid ""
-"SOS. This is %s. We are shipwrecked. Please #bboard#0 us by positioning your "
-"ship over ours and then #bdouble-clicking#0 on our ship."
+"SOS. This is {plt}. We are shipwrecked. Please #bboard#0 us by positioning "
+"your ship over ours and then #bdouble-clicking#0 on our ship."
 msgstr ""
 
-#. Player boards the _("Shipwrecked %s") and rescues the crew, this spawns a new mission.
+#. Player boards the _("Shipwrecked {plt}") and rescues the crew, this spawns a new mission.
 #.
 #. <?xml version='1.0' encoding='utf8'?>
 #. <event name="Travelling Merchant">
@@ -30202,23 +30166,20 @@ msgstr ""
 #. to a certain number of entries so it doesn't overwhelm the save file.
 #.
 #. --
-#: dat/events/shiplog.lua:21
+#: dat/events/shiplog.lua:23
 msgid "Travel Log"
 msgstr ""
 
-#: dat/events/shiplog.lua:34
-#, lua-format
-msgid "Hostility met in the %s system"
+#: dat/events/shiplog.lua:36
+msgid "Hostility met in the {sys} system"
 msgstr ""
 
-#: dat/events/shiplog.lua:42
-#, lua-format
-msgid "Jumped from the %s system to the %s system"
+#: dat/events/shiplog.lua:44
+msgid "Jumped from the {1} system to the {2} system"
 msgstr ""
 
-#: dat/events/shiplog.lua:51
-#, lua-format
-msgid "Landed on %s in the %s system"
+#: dat/events/shiplog.lua:53
+msgid "Landed on {pnt} in the {sys} system"
 msgstr ""
 
 #.
@@ -30254,231 +30215,209 @@ msgstr ""
 #. --
 #. Preliminary draft of a new event where the player meets one of the Touched, who tries to convert him
 #. Sudarshan S <ssoxygen@users.sf.net>
-#: dat/events/sirius/preach.lua:20
-msgid "The preaching begins..."
+#: dat/events/sirius/preach.lua:22
+msgid ""
+"{player}, although you are an enemy of House Sirius, I shall not attack "
+"unless provoked, for I abhor violence!"
 msgstr ""
 
-#: dat/events/sirius/preach.lua:21
+#: dat/events/sirius/preach.lua:23
 msgid ""
-"A Sirian appears on your viewscreen. He seems different than most Sirii "
-"you've met. He regards you with a neutral yet intense gaze.\n"
-"    \"Man is cruel and deceptive,\" he says. \"You deserve more than you "
-"shall ever get from humanity. Your only hope is to follow the Holy One, "
-"Sirichana. He shall guide you to peace and wisdom. He is the sole refuge for "
-"humans like you and me. You MUST follow him!\"\n"
-"    You feel a brief but overpowering urge to follow him, but it passes and "
-"your head clears. The Sirian ship makes no further attempt to communicate "
-"with you."
+"{player}, although you are an enemy of House Sirius, I shall not attack "
+"unless provoked, for I believe mercy is a great Truth!"
 msgstr ""
 
-#: dat/events/sirius/preach.lua:26
-#, lua-format
+#: dat/events/sirius/preach.lua:24
 msgid ""
-"%s, although you are an enemy of House Sirius, I shall not attack unless "
-"provoked, for I abhor violence!"
-msgstr ""
-
-#: dat/events/sirius/preach.lua:27
-#, lua-format
-msgid ""
-"%s, although you are an enemy of House Sirius, I shall not attack unless "
-"provoked, for I believe mercy is a great Truth!"
+"{player}, although you are an enemy of House Sirius, I shall not attack "
+"unless provoked, for you too are Sirichana's child!"
 msgstr ""
 
 #: dat/events/sirius/preach.lua:28
-#, lua-format
 msgid ""
-"%s, although you are an enemy of House Sirius, I shall not attack unless "
-"provoked, for you too are Sirichana's child!"
+"{player}, I foresee in you a great Sirian citizen, and I look forward to "
+"your friendship!"
 msgstr ""
 
-#: dat/events/sirius/preach.lua:32
-#, lua-format
+#: dat/events/sirius/preach.lua:29
 msgid ""
-"%s, I foresee in you a great Sirian citizen, and I look forward to your "
-"friendship!"
+"{player}, I foresee a bright future for you, illuminated by Sirichana's "
+"light!"
 msgstr ""
 
-#: dat/events/sirius/preach.lua:33
-#, lua-format
-msgid ""
-"%s, I foresee a bright future for you, illuminated by Sirichana's light!"
+#: dat/events/sirius/preach.lua:30
+msgid "{player}, may Sirichana's light illuminate your path!"
 msgstr ""
 
 #: dat/events/sirius/preach.lua:34
-#, lua-format
-msgid "%s, may Sirichana's light illuminate your path!"
-msgstr ""
-
-#: dat/events/sirius/preach.lua:38
 msgid "You shall all follow Sirichana henceforth!"
 msgstr ""
 
-#: dat/events/sirius/preach.lua:39
+#: dat/events/sirius/preach.lua:35
 msgid "Sirichana shall lead you to peace and wisdom!"
 msgstr ""
 
-#: dat/events/sirius/preach.lua:40
+#: dat/events/sirius/preach.lua:36
 msgid "Sirichana is the Father of you all!"
 msgstr ""
 
-#: dat/events/sirius/preach.lua:41
+#: dat/events/sirius/preach.lua:37
 msgid "Sirichana's grace shall liberate you!"
 msgstr ""
 
-#: dat/events/sirius/preach.lua:42
+#: dat/events/sirius/preach.lua:38
 msgid "May Sirichana's light shine on you henceforth!"
 msgstr ""
 
-#: dat/events/sirius/preach.lua:46
+#: dat/events/sirius/preach.lua:42
 msgid "We shall all follow Sirichana now!"
 msgstr ""
 
-#: dat/events/sirius/preach.lua:47
+#: dat/events/sirius/preach.lua:43
 msgid "We have been liberated from our evil ways!"
 msgstr ""
 
-#: dat/events/sirius/preach.lua:48
+#: dat/events/sirius/preach.lua:44
 msgid "No more shall we tread the path of evil!"
 msgstr ""
 
-#: dat/events/sirius/preach.lua:49
+#: dat/events/sirius/preach.lua:45
 msgid "We see the True path now!"
 msgstr ""
 
-#: dat/events/sirius/preach.lua:50
+#: dat/events/sirius/preach.lua:46
 msgid "No more shall we commit sins!"
 msgstr ""
 
-#: dat/events/sirius/preach.lua:54
+#: dat/events/sirius/preach.lua:50
 msgid "Serves you right for attacking a Touched!"
 msgstr ""
 
-#: dat/events/sirius/preach.lua:55
+#: dat/events/sirius/preach.lua:51
 msgid "Fry in hell, demon!"
 msgstr ""
 
-#: dat/events/sirius/preach.lua:56
+#: dat/events/sirius/preach.lua:52
 msgid "May you suffer eternal torment!"
 msgstr ""
 
-#: dat/events/sirius/preach.lua:57
+#: dat/events/sirius/preach.lua:53
 msgid "Your doom is Sirichana's curse!"
 msgstr ""
 
-#: dat/events/sirius/preach.lua:61
+#: dat/events/sirius/preach.lua:57
 msgid "All the attackers are dead!"
 msgstr ""
 
-#: dat/events/sirius/preach.lua:62
+#: dat/events/sirius/preach.lua:58
 msgid "We can resume our Quest now!"
 msgstr ""
 
-#: dat/events/sirius/preach.lua:63
+#: dat/events/sirius/preach.lua:59
 msgid "The glory of Sirichana remains unblemished!"
 msgstr ""
 
-#: dat/events/sirius/preach.lua:64
+#: dat/events/sirius/preach.lua:60
 msgid "All heretics have been destroyed!"
 msgstr ""
 
-#: dat/events/sirius/preach.lua:68
+#: dat/events/sirius/preach.lua:64
 msgid "Do you think everyone can be brainwashed?"
 msgstr ""
 
-#: dat/events/sirius/preach.lua:69
+#: dat/events/sirius/preach.lua:65
 msgid "You shall convert no more of us!"
 msgstr ""
 
-#: dat/events/sirius/preach.lua:70
+#: dat/events/sirius/preach.lua:66
 msgid "Some of us shall not be converted, fool!"
 msgstr ""
 
-#: dat/events/sirius/preach.lua:71
+#: dat/events/sirius/preach.lua:67
 msgid "You'll never convert me!"
 msgstr ""
 
-#: dat/events/sirius/preach.lua:72
+#: dat/events/sirius/preach.lua:68
 msgid "I shall never be converted!"
 msgstr ""
 
-#: dat/events/sirius/preach.lua:76
+#: dat/events/sirius/preach.lua:72
 msgid "You feel an overwhelming presence nearby!"
 msgstr ""
 
-#: dat/events/sirius/preach.lua:77
+#: dat/events/sirius/preach.lua:73
 msgid "Something compels you to stop"
 msgstr ""
 
-#: dat/events/sirius/preach.lua:78
+#: dat/events/sirius/preach.lua:74
 msgid "You are jerked awake by a mysterious but compelling urge"
 msgstr ""
 
-#: dat/events/sirius/preach.lua:79
+#: dat/events/sirius/preach.lua:75
 msgid "You feel... Touched... by a magical power"
 msgstr ""
 
-#: dat/events/sirius/preach.lua:83
+#: dat/events/sirius/preach.lua:79
 msgid "Die, heretics!"
 msgstr ""
 
-#: dat/events/sirius/preach.lua:84
+#: dat/events/sirius/preach.lua:80
 msgid "Those who insult the Sirichana shall die!"
 msgstr ""
 
-#: dat/events/sirius/preach.lua:85
+#: dat/events/sirius/preach.lua:81
 msgid "You've committed an unpardonable sin!"
 msgstr ""
 
-#: dat/events/sirius/preach.lua:86
+#: dat/events/sirius/preach.lua:82
 msgid "Hell awaits, fools!"
 msgstr ""
 
-#: dat/events/sirius/preach.lua:90
+#: dat/events/sirius/preach.lua:86
 msgid "Oh no! The Touched One is dead!"
 msgstr ""
 
-#: dat/events/sirius/preach.lua:91
+#: dat/events/sirius/preach.lua:87
 msgid "Sirichana save our souls!"
 msgstr ""
 
-#: dat/events/sirius/preach.lua:92
+#: dat/events/sirius/preach.lua:88
 msgid "We shall never forget You, O Touched One!"
 msgstr ""
 
-#: dat/events/sirius/preach.lua:93
+#: dat/events/sirius/preach.lua:89
 msgid "We swear eternal revenge!"
 msgstr ""
 
-#: dat/events/sirius/preach.lua:97
+#: dat/events/sirius/preach.lua:93
 msgid "You feel an overwhelming urge to hear him out!"
 msgstr ""
 
-#: dat/events/sirius/preach.lua:98
+#: dat/events/sirius/preach.lua:94
 msgid "A mysterious force forces you to listen!"
 msgstr ""
 
-#: dat/events/sirius/preach.lua:99
+#: dat/events/sirius/preach.lua:95
 msgid "You feel compelled to listen!"
 msgstr ""
 
-#: dat/events/sirius/preach.lua:103
+#: dat/events/sirius/preach.lua:99
 msgid "With my dying breath, I curse you!"
 msgstr ""
 
-#: dat/events/sirius/preach.lua:104
+#: dat/events/sirius/preach.lua:100
 msgid "Sirichana speed you to hell!"
 msgstr ""
 
-#: dat/events/sirius/preach.lua:105
+#: dat/events/sirius/preach.lua:101
 msgid "Sirichana, I did my best!"
 msgstr ""
 
-#: dat/events/sirius/preach.lua:109
+#: dat/events/sirius/preach.lua:105
 msgid "The Reverence is dead!"
 msgstr ""
 
-#: dat/events/sirius/preach.lua:110
+#: dat/events/sirius/preach.lua:106
 msgid "Someone killed the preacher!"
 msgstr ""
 
@@ -30502,9 +30441,8 @@ msgstr ""
 #. This is the total number of converted follower ships.
 #. Pick a follower ship at random.
 #. The table now contains pilots, not ship names.
-#: dat/events/sirius/preach.lua:179
-#, lua-format
-msgid "Converted %s"
+#: dat/events/sirius/preach.lua:175
+msgid "Converted {pltname}"
 msgstr ""
 
 #. pick a random converted pirate and have him praise the Sirichana
@@ -30543,6 +30481,23 @@ msgstr ""
 #. releases the player after the cutscene
 #. if the attacks have already started, we shouldn't set a target yet
 #. when hailed back, show the message
+#: dat/events/sirius/preach.lua:366
+msgid "The preaching begins..."
+msgstr ""
+
+#: dat/events/sirius/preach.lua:366
+msgid ""
+"A Sirian appears on your viewscreen. He seems different than most Sirii "
+"you've met. He regards you with a neutral yet intense gaze.\n"
+"    \"Man is cruel and deceptive,\" he says. \"You deserve more than you "
+"shall ever get from humanity. Your only hope is to follow the Holy One, "
+"Sirichana. He shall guide you to peace and wisdom. He is the sole refuge for "
+"humans like you and me. You MUST follow him!\"\n"
+"    You feel a brief but overpowering urge to follow him, but it passes and "
+"your head clears. The Sirian ship makes no further attempt to communicate "
+"with you."
+msgstr ""
+
 #. no more hailing
 #. everything is done
 #. oops, it seems the preacher died. End gracefully
@@ -32012,7 +31967,7 @@ msgstr ""
 #: dat/missions/flf/dvk/flf_dvk02.lua:213
 #: dat/missions/flf/dvk/flf_dvk03.lua:211
 #: dat/missions/flf/dvk/flf_dvk06.lua:193 dat/missions/flf/flf_pirates.lua:236
-#: dat/missions/neutral/dts_02.lua:212
+#: dat/missions/neutral/dts_02.lua:209
 #: dat/missions/neutral/kidnapped/traffic_00.lua:166
 #: dat/missions/neutral/kidnapped/traffic_00.lua:167
 #: dat/missions/neutral/kidnapped/traffic_00.lua:168
@@ -32106,7 +32061,7 @@ msgstr ""
 #. hook an abstract deciding function to player entering a system when not part of defense
 #. Decides what to do when player either takes off starting planet or jumps into another system
 #: dat/factions/spawn/trader.lua:14 dat/missions/flf/dvk/flf_dvk03.lua:186
-#: dat/missions/flf/dvk/flf_dvk06.lua:168 dat/missions/neutral/dts_02.lua:108
+#: dat/missions/flf/dvk/flf_dvk06.lua:168 dat/missions/neutral/dts_02.lua:105
 #: dat/missions/neutral/kidnapped/traffic_00.lua:137
 msgid "Trader Koala"
 msgstr ""
@@ -32121,7 +32076,7 @@ msgstr ""
 #: dat/factions/spawn/trader.lua:20 dat/missions/empire/collective/ec06.lua:194
 #: dat/missions/flf/dvk/flf_dvk03.lua:186
 #: dat/missions/flf/dvk/flf_dvk06.lua:168 dat/missions/neutral/drunkard.lua:113
-#: dat/missions/neutral/dts_00.lua:209
+#: dat/missions/neutral/dts_00.lua:205
 msgid "Trader Mule"
 msgstr ""
 
@@ -34247,7 +34202,7 @@ msgstr ""
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:451
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:481
 #: dat/missions/empire/collective/ec04.lua:65
-#: dat/missions/neutral/race1.lua:215
+#: dat/missions/neutral/race1.lua:208
 #: dat/missions/sirius/heretic/heretic2.lua:63
 msgid "Land on {pnt}"
 msgstr ""
@@ -35190,7 +35145,7 @@ msgstr ""
 
 #: dat/missions/dvaered/dv_antiflf03.lua:116
 #: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:67
-#: dat/missions/neutral/race1.lua:64 dat/missions/neutral/race2.lua:75
+#: dat/missions/neutral/race1.lua:57 dat/missions/neutral/race2.lua:67
 msgid "Refusal"
 msgstr ""
 
@@ -39319,7 +39274,7 @@ msgstr ""
 #. Increment the printing timer
 #. seconds
 #: dat/missions/dvaered/frontier_war/fw05_triathlon.lua:503
-#: dat/missions/neutral/race1.lua:129 dat/missions/neutral/race2.lua:164
+#: dat/missions/neutral/race1.lua:122 dat/missions/neutral/race2.lua:156
 msgid "Go!"
 msgstr ""
 
@@ -52653,8 +52608,8 @@ msgstr ""
 #. 3rd trade: Get the stuff the scientist wants
 #. final land: let the player land and collect the reward
 #. Mission details:
-#: dat/missions/neutral/dts_00.lua:64 dat/missions/neutral/dts_01.lua:62
-#: dat/missions/neutral/dts_02.lua:65
+#: dat/missions/neutral/dts_00.lua:62 dat/missions/neutral/dts_01.lua:60
+#: dat/missions/neutral/dts_02.lua:63
 #: dat/missions/zalek/sciencegonewrong/00_sciwrong.lua:54
 #: dat/missions/zalek/sciencegonewrong/00_sciwrong.lua:58
 #: dat/missions/zalek/sciencegonewrong/00_sciwrong.lua:89
@@ -52675,12 +52630,11 @@ msgstr ""
 msgid "In the bar"
 msgstr ""
 
-#: dat/missions/neutral/dts_00.lua:64
-#, lua-format
+#: dat/missions/neutral/dts_00.lua:62
 msgid ""
 "The bar is buzzing when you walk in. All the pilots are talking at once. "
 "Every screen in sight carries the same news feed: live footage of a space "
-"battle in orbit around %s.\n"
+"battle in orbit around {pnt}.\n"
 "    \"A big fleet of pirates have just invaded the system,\" a woman wearing "
 "Nexus insignia explains. \"They swarm any ship that tries to take off. "
 "Shipping is at a standstill. It's a disaster.\"\n"
@@ -52693,41 +52647,40 @@ msgid ""
 "    \"Are you brave enough?\""
 msgstr ""
 
-#: dat/missions/neutral/dts_00.lua:70 dat/missions/neutral/dts_01.lua:68
-#: dat/missions/neutral/dts_02.lua:70
+#: dat/missions/neutral/dts_00.lua:67 dat/missions/neutral/dts_01.lua:65
+#: dat/missions/neutral/dts_02.lua:68
 msgid "Volunteers"
 msgstr ""
 
-#: dat/missions/neutral/dts_00.lua:70
+#: dat/missions/neutral/dts_00.lua:67
 msgid ""
 "You step forward and eight other pilots join you. Together, all of you march "
 "off to the your ships and take off to face the pirate horde."
 msgstr ""
 
-#: dat/missions/neutral/dts_00.lua:72 dat/missions/neutral/dts_01.lua:70
-#: dat/missions/neutral/dts_02.lua:72
-#, lua-format
-msgid "%s and the pleasure of serving the Empire."
+#: dat/missions/neutral/dts_00.lua:69 dat/missions/neutral/dts_01.lua:67
+#: dat/missions/neutral/dts_02.lua:70
+msgid "{credits} and the pleasure of serving the Empire."
 msgstr ""
 
-#: dat/missions/neutral/dts_00.lua:73 dat/missions/neutral/dts_01.lua:71
-#: dat/missions/neutral/dts_02.lua:73
+#: dat/missions/neutral/dts_00.lua:70 dat/missions/neutral/dts_01.lua:68
+#: dat/missions/neutral/dts_02.lua:71
 msgid "Defend the system against a pirate fleet."
 msgstr ""
 
-#: dat/missions/neutral/dts_00.lua:74 dat/missions/neutral/dts_01.lua:72
-#: dat/missions/neutral/dts_02.lua:74
+#: dat/missions/neutral/dts_00.lua:71 dat/missions/neutral/dts_01.lua:69
+#: dat/missions/neutral/dts_02.lua:72
 msgid "Defend the System"
 msgstr ""
 
 #. hook an abstract deciding function to player entering a system
 #. hook warm reception to player landing
 #. If player didn't accept the mission, the battle's still on, but player has no stake.
-#: dat/missions/neutral/dts_00.lua:87 dat/missions/neutral/dts_01.lua:85
+#: dat/missions/neutral/dts_00.lua:83 dat/missions/neutral/dts_01.lua:81
 msgid "Left behind"
 msgstr ""
 
-#: dat/missions/neutral/dts_00.lua:87
+#: dat/missions/neutral/dts_00.lua:83
 msgid ""
 "Eight pilots step forward. The rest of you stand and watch as they file out "
 "the door. The portmaster spares a withering glance for those left behind.\n"
@@ -52735,66 +52688,66 @@ msgid ""
 "atmo,\" he sneers. Then he turns to follow his volunteers."
 msgstr ""
 
-#: dat/missions/neutral/dts_00.lua:89 dat/missions/neutral/dts_01.lua:87
-#: dat/missions/neutral/dts_02.lua:92
+#: dat/missions/neutral/dts_00.lua:85 dat/missions/neutral/dts_01.lua:83
+#: dat/missions/neutral/dts_02.lua:89
 msgid "No reward for you."
 msgstr ""
 
-#: dat/missions/neutral/dts_00.lua:90 dat/missions/neutral/dts_01.lua:88
-#: dat/missions/neutral/dts_02.lua:93
+#: dat/missions/neutral/dts_00.lua:86 dat/missions/neutral/dts_01.lua:84
+#: dat/missions/neutral/dts_02.lua:90
 msgid "Watch others defend the system."
 msgstr ""
 
-#: dat/missions/neutral/dts_00.lua:91
+#: dat/missions/neutral/dts_00.lua:87
 msgid "Watch the action."
 msgstr ""
 
 #. hook an abstract deciding function to player entering a system when not part of defense
 #. Decides what to do when player either takes off starting planet or jumps into another system
-#: dat/missions/neutral/dts_00.lua:107 dat/missions/neutral/dts_01.lua:105
-#: dat/missions/neutral/dts_02.lua:111
+#: dat/missions/neutral/dts_00.lua:103 dat/missions/neutral/dts_01.lua:101
+#: dat/missions/neutral/dts_02.lua:108
 msgid "You fled from the battle. The Empire won't forget."
 msgstr ""
 
 #. There's a battle to defend the system
-#: dat/missions/neutral/dts_00.lua:120 dat/missions/neutral/dts_01.lua:118
-#: dat/missions/neutral/dts_02.lua:124
+#: dat/missions/neutral/dts_00.lua:116 dat/missions/neutral/dts_01.lua:114
+#: dat/missions/neutral/dts_02.lua:121
 msgid "Raider"
 msgstr ""
 
 #. Makes the system empty except for the two fleets. No help coming.
 #. Set up distances
 #. Create a fleet of raiding pirates
-#: dat/missions/neutral/dts_00.lua:137 dat/missions/neutral/dts_01.lua:135
-#: dat/missions/neutral/dts_02.lua:141
+#: dat/missions/neutral/dts_00.lua:133 dat/missions/neutral/dts_01.lua:131
+#: dat/missions/neutral/dts_02.lua:138
 msgid "Raider Hyena"
 msgstr ""
 
 #. And a fleet of defending independents
-#: dat/missions/neutral/dts_00.lua:144 dat/missions/neutral/dts_01.lua:142
-#: dat/missions/neutral/dts_02.lua:148
+#: dat/missions/neutral/dts_00.lua:140 dat/missions/neutral/dts_01.lua:138
+#: dat/missions/neutral/dts_02.lua:145
 msgid "Defender"
 msgstr ""
 
 #. How the Battle ends:
 #. hook fleet departure to disabling or killing ships
 #. Call ships back to base
-#: dat/missions/neutral/dts_00.lua:162 dat/missions/neutral/dts_00.lua:186
+#: dat/missions/neutral/dts_00.lua:158 dat/missions/neutral/dts_00.lua:182
 msgid "Good job, everyone. Let's get back planetside and get our reward."
 msgstr ""
 
 #. Record each raider death and make the raiders flee after too many casualties
 #. A few seconds after the raiders start to flee declare victory
-#: dat/missions/neutral/dts_00.lua:178
+#: dat/missions/neutral/dts_00.lua:174
 msgid "That's right, run away you cowards."
 msgstr ""
 
 #. The player lands to a warm welcome (if the job is done).
-#: dat/missions/neutral/dts_00.lua:192
+#: dat/missions/neutral/dts_00.lua:188
 msgid "Welcome back"
 msgstr ""
 
-#: dat/missions/neutral/dts_00.lua:192
+#: dat/missions/neutral/dts_00.lua:188
 #, lua-format
 msgid ""
 "The portmaster greets the crowd of volunteers on the spaceport causeway.\n"
@@ -52808,45 +52761,43 @@ msgid ""
 "whole crowd moves toward the bar."
 msgstr ""
 
-#: dat/missions/neutral/dts_00.lua:197
+#: dat/missions/neutral/dts_00.lua:193
 msgid "Over drinks"
 msgstr ""
 
-#: dat/missions/neutral/dts_00.lua:197
-#, lua-format
+#: dat/missions/neutral/dts_00.lua:193
 msgid ""
 "Many periods later, the celebration has wound down. You find yourself "
-"drinking with a small group of 'veterans of the Battle of %s,' as some of "
+"drinking with a small group of 'veterans of the Battle of {sys},' as some of "
 "them are calling it. A older pilot sits across the table and stares "
 "pensively into his drink.\n"
 "    \"It's strange, though,\" he mutters. \"I've never seen pirates swarm "
 "like that before.\""
 msgstr ""
 
-#: dat/missions/neutral/dts_00.lua:201 dat/missions/neutral/dts_01.lua:207
-#: dat/missions/neutral/dts_02.lua:262
+#: dat/missions/neutral/dts_00.lua:197 dat/missions/neutral/dts_01.lua:203
+#: dat/missions/neutral/dts_02.lua:259
 msgid "Not done yet."
 msgstr ""
 
-#: dat/missions/neutral/dts_00.lua:201 dat/missions/neutral/dts_01.lua:207
-#: dat/missions/neutral/dts_02.lua:262
+#: dat/missions/neutral/dts_00.lua:197 dat/missions/neutral/dts_01.lua:203
+#: dat/missions/neutral/dts_02.lua:259
 msgid "The system isn't safe yet. Get back out there!"
 msgstr ""
 
 #. If any pirates still alive, send player back out.
 #. A fellow warrior says hello in passing if player jumps out of the system without landing
-#: dat/missions/neutral/dts_00.lua:213 dat/missions/neutral/dts_01.lua:220
-#: dat/missions/neutral/dts_02.lua:275
+#: dat/missions/neutral/dts_00.lua:209 dat/missions/neutral/dts_01.lua:216
+#: dat/missions/neutral/dts_02.lua:272
 msgid "Good job!"
 msgstr ""
 
-#: dat/missions/neutral/dts_00.lua:213
-#, lua-format
+#: dat/missions/neutral/dts_00.lua:209
 msgid ""
-"You jump out of %s with the sweat still running down your face. The fight to "
-"clear the system was brief but intense. After a moment, another ship enters "
-"on the same vector. The blast marks on the sides of his craft show that it "
-"too comes from combat with the pirates. Your comm beeps.\n"
+"You jump out of {sys} with the sweat still running down your face. The fight "
+"to clear the system was brief but intense. After a moment, another ship "
+"enters on the same vector. The blast marks on the sides of his craft show "
+"that it too comes from combat with the pirates. Your comm beeps.\n"
 "    \"Good flying, mate. We got those pirates on the run!\" the pilot "
 "exclaims. \"You didn't want to go back for the cash either, eh? I don't "
 "blame you. I hate pirates, but I don't want the Empire's money!\" He smiles "
@@ -52854,18 +52805,18 @@ msgid ""
 "before.\"\n"
 msgstr ""
 
-#: dat/missions/neutral/dts_00.lua:223 dat/missions/neutral/dts_01.lua:232
-#, lua-format
-msgid "Comm Trader>You're a coward, %s. You better hope I never see you again."
-msgstr ""
-
-#: dat/missions/neutral/dts_00.lua:225 dat/missions/neutral/dts_01.lua:234
-#, lua-format
+#: dat/missions/neutral/dts_00.lua:219 dat/missions/neutral/dts_01.lua:227
 msgid ""
-"Comm Trader>You're running away now, %s? The fight's finished, you know..."
+"Comm Trader>You're a coward, {player}. You better hope I never see you again."
 msgstr ""
 
-#: dat/missions/neutral/dts_01.lua:62
+#: dat/missions/neutral/dts_00.lua:221 dat/missions/neutral/dts_01.lua:229
+msgid ""
+"Comm Trader>You're running away now, {player}? The fight's finished, you "
+"know..."
+msgstr ""
+
+#: dat/missions/neutral/dts_01.lua:60
 msgid ""
 "The barman has just asked you for your order when the portmaster bursts "
 "though the door, out of breath. \"Pirates, all over the system!  The navy's "
@@ -52880,14 +52831,14 @@ msgid ""
 "pilots as possible. Follow me.\""
 msgstr ""
 
-#: dat/missions/neutral/dts_01.lua:68
+#: dat/missions/neutral/dts_01.lua:65
 msgid ""
 "\"Take as many out of the fight early as you can,\" advises the Commodore "
 "before you board your ships. \"If you can't chase them off, you might at "
 "least improve the odds. Good luck.\""
 msgstr ""
 
-#: dat/missions/neutral/dts_01.lua:85
+#: dat/missions/neutral/dts_01.lua:81
 msgid ""
 "The Commodore turns and walks off. Eight men and women follow her, but you "
 "stay put.\n"
@@ -52896,7 +52847,7 @@ msgid ""
 "a hot ride out of the system though, with all that going on upstairs.\""
 msgstr ""
 
-#: dat/missions/neutral/dts_01.lua:89 dat/missions/neutral/dts_02.lua:94
+#: dat/missions/neutral/dts_01.lua:85 dat/missions/neutral/dts_02.lua:91
 msgid "Observe the action."
 msgstr ""
 
@@ -52910,24 +52861,24 @@ msgstr ""
 #. Record each raider death and make the raiders flee after too many casualties
 #. Send in the second wave
 #. Separate mission for a mid-mission interjection <-- bad organization
-#: dat/missions/neutral/dts_01.lua:173 dat/missions/neutral/dts_02.lua:201
-#: dat/missions/neutral/dts_02.lua:227 dat/missions/neutral/dts_02.lua:229
+#: dat/missions/neutral/dts_01.lua:169 dat/missions/neutral/dts_02.lua:198
+#: dat/missions/neutral/dts_02.lua:224 dat/missions/neutral/dts_02.lua:226
 msgid "We've got them on the run!"
 msgstr ""
 
 #. When the raiders are on the run then the Empire takes over
 #. Call ships to base
-#: dat/missions/neutral/dts_01.lua:184
+#: dat/missions/neutral/dts_01.lua:180
 msgid "Well done, pilots. Return to port."
 msgstr ""
 
 #. Get a position near the player for late Empire re-enforcements
 #. The player lands to a warm welcome (if the job is done).
-#: dat/missions/neutral/dts_01.lua:201
+#: dat/missions/neutral/dts_01.lua:197
 msgid "On the way in"
 msgstr ""
 
-#: dat/missions/neutral/dts_01.lua:201
+#: dat/missions/neutral/dts_01.lua:197
 msgid ""
 "As you taxi in to land, you can make out the tiny figure of the Commodore "
 "saluting a small group of individuals to the side of the landing pads. After "
@@ -52935,32 +52886,32 @@ msgid ""
 "her side."
 msgstr ""
 
-#: dat/missions/neutral/dts_01.lua:204
+#: dat/missions/neutral/dts_01.lua:200
 msgid "Thank you"
 msgstr ""
 
-#: dat/missions/neutral/dts_01.lua:204
+#: dat/missions/neutral/dts_01.lua:200
 msgid ""
 "\"That was good flying,\" the Commodore says with a tight smile. \"Thank you "
 "all for your help. This gentleman has arranged a transfer of forty thousand "
 "credits to each of you. You can be proud of what you've done today.\""
 msgstr ""
 
-#: dat/missions/neutral/dts_01.lua:220
-#, lua-format
+#: dat/missions/neutral/dts_01.lua:216
 msgid ""
 "The debris from the battle disappears behind you in a blur of light. A "
 "moment after you emerge from hyperspace, a Imperial ship jumps in behind you "
 "and hails you.\n"
-"    \"Please hold course and confirm your identity, %s.\"  You send your "
+"    \"Please hold course and confirm your identity, {ship}.\"  You send your "
 "license code and wait for a moment. \"OK, that's fine. We're just making "
 "sure no pirates escaped. You were part of the battle, weren't you?  "
 "Surprised you didn't return for the bounty, pilot. Listen, I appreciate what "
-"you did back there. I have family on %s. When I'm not flying overhead, it's "
-"good to know there are good Samaritans like you who will step up. Thanks.\"\n"
+"you did back there. I have family on {pnt}. When I'm not flying overhead, "
+"it's good to know there are good Samaritans like you who will step up. "
+"Thanks.\"\n"
 msgstr ""
 
-#: dat/missions/neutral/dts_02.lua:65
+#: dat/missions/neutral/dts_02.lua:63
 msgid ""
 "The bar rests in the dull clink of glasses and the scattered murmur of "
 "conversation when the door bursts open. An older couple stumbles in, faces "
@@ -52978,7 +52929,7 @@ msgid ""
 "us to avenge their son's death?\""
 msgstr ""
 
-#: dat/missions/neutral/dts_02.lua:70
+#: dat/missions/neutral/dts_02.lua:68
 msgid ""
 "\"These terrorists cannot sustain many losses,\" one of the young men "
 "explains as you and a group of other volunteers prepare for takeoff, \"and "
@@ -52989,11 +52940,11 @@ msgstr ""
 #. hook an abstract deciding function to player entering a system
 #. hook warm reception to player landing
 #. If player didn't accept the mission, the battle's still on, but player has no stake.
-#: dat/missions/neutral/dts_02.lua:88
+#: dat/missions/neutral/dts_02.lua:85
 msgid "Not fighting"
 msgstr ""
 
-#: dat/missions/neutral/dts_02.lua:88
+#: dat/missions/neutral/dts_02.lua:85
 msgid ""
 "You stand by the grieving couple as the two cadets lead a group of pilots "
 "out of the bar toward the padfield.\n"
@@ -53005,35 +52956,32 @@ msgid ""
 "other."
 msgstr ""
 
-#: dat/missions/neutral/dts_02.lua:230
-#, lua-format
-msgid "Broadcast %s> The raiders are retreating!"
+#: dat/missions/neutral/dts_02.lua:227
+msgid "Broadcast {pnt}> The raiders are retreating!"
 msgstr ""
 
 #. When the raiders are on the run then the Empire takes over
-#: dat/missions/neutral/dts_02.lua:240 dat/missions/neutral/dts_02.lua:242
+#: dat/missions/neutral/dts_02.lua:237 dat/missions/neutral/dts_02.lua:239
 msgid "Good flying, volunteers. The governor is waiting for us back in port."
 msgstr ""
 
-#: dat/missions/neutral/dts_02.lua:243
-#, lua-format
+#: dat/missions/neutral/dts_02.lua:240
 msgid ""
-"Comm %s> Good flying, volunteers. The governor is waiting for you back in "
+"Comm {pnt}> Good flying, volunteers. The governor is waiting for you back in "
 "port."
 msgstr ""
 
 #. The player lands to a warm welcome (if the job is done).
-#: dat/missions/neutral/dts_02.lua:252
+#: dat/missions/neutral/dts_02.lua:249
 msgid "A public occasion"
 msgstr ""
 
-#: dat/missions/neutral/dts_02.lua:252
-#, lua-format
+#: dat/missions/neutral/dts_02.lua:249
 msgid ""
-"Night is falling by the time you land back on %s. Looking solemn in front of "
-"a gathering crowd and news recorders, a large man with a fleshy face comes "
-"forward to greet the survivors of the fight. A flock of men and women follow "
-"him.\n"
+"Night is falling by the time you land back on {pnt}. Looking solemn in front "
+"of a gathering crowd and news recorders, a large man with a fleshy face "
+"comes forward to greet the survivors of the fight. A flock of men and women "
+"follow him.\n"
 "    When he shakes your hand, the Governor looks keenly at you at smiles, "
 "\"Very well done.\"\n"
 "    After meeting each surviving pilot, the tall man stands still for aide "
@@ -53041,36 +52989,34 @@ msgid ""
 "casters and the crowd."
 msgstr ""
 
-#: dat/missions/neutral/dts_02.lua:257
+#: dat/missions/neutral/dts_02.lua:254
 msgid "The Governor's speech"
 msgstr ""
 
-#: dat/missions/neutral/dts_02.lua:257
-#, lua-format
+#: dat/missions/neutral/dts_02.lua:254
 msgid ""
-"\"Even here on %s, even in the protective embrace of civilization, we face "
-"many dangers. The ties that bind us through space to other worlds are "
+"\"Even here on {pnt}, even in the protective embrace of civilization, we "
+"face many dangers. The ties that bind us through space to other worlds are "
 "fragile. When criminals attack these precious connections, they trouble the "
 "very foundations of our peace. How glad we are now for the security of the "
 "Empire whose young navy cadets led a team of independent pilots to defend us "
 "today.\"  The Governor turns to the pair of officers-in-training. \"In the "
 "name of the Emperor, I have the privilege of decorating these two young "
-"heroes with the %s Silver Heart. I hope they and their volunteers will not "
-"be too proud to also accept a generous purse, along with the gratitude of "
-"all our people. Please join me in applauding their bravery.\"\n"
+"heroes with the {pnt} Silver Heart. I hope they and their volunteers will "
+"not be too proud to also accept a generous purse, along with the gratitude "
+"of all our people. Please join me in applauding their bravery.\"\n"
 "    The public ceremony lasts only a few hectoseconds. Afterwards, as "
 "interviewers draw the young navy officers aside and the crowd disperses, you "
 "catch sight of the elderly couple from the bar holding each other and "
 "looking up into the darkening sky."
 msgstr ""
 
-#: dat/missions/neutral/dts_02.lua:275
-#, lua-format
+#: dat/missions/neutral/dts_02.lua:272
 msgid ""
 "A freighter hails you as you jump into the system.\n"
-"    \"Thank you for responding, %s. Are you coming in from %s?  I have a "
-"delivery I need to get to %s and I can't wait much longer. Is the system "
-"safe now?\"\n"
+"    \"Thank you for responding, {ship}. Are you coming in from {sys}?  I "
+"have a delivery I need to get to {pnt} and I can't wait much longer. Is the "
+"system safe now?\"\n"
 "    You relate the outcome of the space battle.\n"
 "    \"Oh, that's good news! You know, these raids are getting worse all the "
 "time. I wish the Empire would do something about it. Anyway, thank you for "
@@ -53078,16 +53024,16 @@ msgid ""
 msgstr ""
 
 #. If the player aborts the mission, the Empire and Traders react
-#: dat/missions/neutral/dts_02.lua:289
-#, lua-format
+#: dat/missions/neutral/dts_02.lua:286
 msgid ""
-"Comm Lancelot> You're a coward, %s. You better hope I never see you again."
+"Comm Lancelot> You're a coward, {player}. You better hope I never see you "
+"again."
 msgstr ""
 
-#: dat/missions/neutral/dts_02.lua:291
-#, lua-format
+#: dat/missions/neutral/dts_02.lua:288
 msgid ""
-"Comm Lancelot> You're running away now, %s? The fight's finished, you know..."
+"Comm Lancelot> You're running away now, {player}? The fight's finished, you "
+"know..."
 msgstr ""
 
 #.
@@ -53641,11 +53587,11 @@ msgstr ""
 #. --
 #. randomly select spawn system and planet where brother will be
 #. Spaceport bar stuff
-#: dat/missions/neutral/kidnapped/traffic_01.lua:54
+#: dat/missions/neutral/kidnapped/traffic_01.lua:55
 msgid "Ordinary Woman"
 msgstr ""
 
-#: dat/missions/neutral/kidnapped/traffic_01.lua:54
+#: dat/missions/neutral/kidnapped/traffic_01.lua:55
 msgid "The woman waves at you a bit desperately."
 msgstr ""
 
@@ -53654,66 +53600,49 @@ msgstr ""
 #. --
 #. Mission details:
 #. Some flavour text
-#: dat/missions/neutral/kidnapped/traffic_01.lua:63
-#: dat/missions/neutral/kidnapped/traffic_01.lua:84
+#: dat/missions/neutral/kidnapped/traffic_01.lua:64
+#: dat/missions/neutral/kidnapped/traffic_01.lua:89
 msgid "In the Bar"
 msgstr ""
 
-#: dat/missions/neutral/kidnapped/traffic_01.lua:63
+#: dat/missions/neutral/kidnapped/traffic_01.lua:64
 msgid ""
 "\"I must find my dear brother! Please help me. I think he is in danger! I "
 "don't have a ship and he is the only family I have left. Could you please "
 "help me?\""
 msgstr ""
 
-#: dat/missions/neutral/kidnapped/traffic_01.lua:64
+#: dat/missions/neutral/kidnapped/traffic_01.lua:65
 msgid "Sorry, I can't"
 msgstr ""
 
-#: dat/missions/neutral/kidnapped/traffic_01.lua:64
+#: dat/missions/neutral/kidnapped/traffic_01.lua:65
 msgid ""
 "\"How can you be such a heartless person? What has this universe become?...\""
 msgstr ""
 
 #. Some variables for keeping track of the mission
 #. Set mission details
-#. Set hooks
-#. Entering a system
-#. checking if it is right system, updating OSD, if right system: create ship and wait for hail
-#. Check to see if reaching target system
-#. we can break, we found what we were looking for
-#. if we visited a system without the brother: update OSD
-#: dat/missions/neutral/kidnapped/traffic_01.lua:77
-#: dat/missions/neutral/kidnapped/traffic_01.lua:80
-#: dat/missions/neutral/kidnapped/traffic_01.lua:113
-#: dat/missions/neutral/kidnapped/traffic_01.lua:116
+#: dat/missions/neutral/kidnapped/traffic_01.lua:78
+#: dat/missions/neutral/kidnapped/traffic_01.lua:82
+#: dat/missions/neutral/kidnapped/traffic_01.lua:123
 msgid "The Lost Brother"
 msgstr ""
 
-#: dat/missions/neutral/kidnapped/traffic_01.lua:78
-#, lua-format
+#: dat/missions/neutral/kidnapped/traffic_01.lua:79
 msgid "Some money and a happy sister."
 msgstr ""
 
-#: dat/missions/neutral/kidnapped/traffic_01.lua:79
-#: dat/missions/neutral/kidnapped/traffic_01.lua:116
-#: dat/missions/neutral/kidnapped/traffic_01.lua:117
-#, lua-format
-msgid "Locate the brother in the %s system"
-msgstr ""
-
 #: dat/missions/neutral/kidnapped/traffic_01.lua:80
-#, lua-format
-msgid "Locate the brother in the %s system, the %s system, or the %s system"
-msgstr ""
-
-#: dat/missions/neutral/kidnapped/traffic_01.lua:80
-#: dat/missions/neutral/kidnapped/traffic_01.lua:113
-#: dat/missions/neutral/kidnapped/traffic_01.lua:116
-msgid "Hail the Poppy Seed and board it to reunite the siblings"
+msgid "Locate the brother in the {0} system, the {1} system, or the {2} system"
 msgstr ""
 
 #: dat/missions/neutral/kidnapped/traffic_01.lua:84
+#: dat/missions/neutral/kidnapped/traffic_01.lua:125
+msgid "Hail the Poppy Seed and board it to reunite the siblings"
+msgstr ""
+
+#: dat/missions/neutral/kidnapped/traffic_01.lua:89
 msgid ""
 "The woman calms down as you signal your willingness to help. \"Oh, thank "
 "goodness! I was told where he usually hangs around. Please take me there and "
@@ -53722,14 +53651,22 @@ msgid ""
 "to give, but whatever I have saved, you can have.\""
 msgstr ""
 
-#: dat/missions/neutral/kidnapped/traffic_01.lua:113
-#: dat/missions/neutral/kidnapped/traffic_01.lua:114
-#, lua-format
-msgid "Locate the brother in the %s system or the %s system"
+#. Set hooks
+#. Entering a system
+#. checking if it is right system, updating OSD, if right system: create ship and wait for hail
+#. Check to see if reaching target system
+#. we can break, we found what we were looking for
+#. if we visited a system without the brother: update OSD
+#: dat/missions/neutral/kidnapped/traffic_01.lua:119
+msgid "Locate the brother in the {1} system or the {2} system"
+msgstr ""
+
+#: dat/missions/neutral/kidnapped/traffic_01.lua:121
+msgid "Locate the brother in the {1} system"
 msgstr ""
 
 #. update OSD
-#: dat/missions/neutral/kidnapped/traffic_01.lua:124
+#: dat/missions/neutral/kidnapped/traffic_01.lua:133
 msgid "Poppy Seed"
 msgstr ""
 
@@ -53738,11 +53675,11 @@ msgstr ""
 #. get point between jumpgate and broship to spawn mercenaries disencouraging him from following
 #. set spawn point between the broship and jumppoint
 #. if hailed: stop vessel let it be boarded
-#: dat/missions/neutral/kidnapped/traffic_01.lua:157
+#: dat/missions/neutral/kidnapped/traffic_01.lua:166
 msgid "Comm Channel"
 msgstr ""
 
-#: dat/missions/neutral/kidnapped/traffic_01.lua:157
+#: dat/missions/neutral/kidnapped/traffic_01.lua:166
 msgid ""
 "You radio the ship with a message saying you have his sister on board and "
 "that she has a message for him.\n"
@@ -53751,11 +53688,11 @@ msgstr ""
 
 #. send ship to nearest jumppoint to escape, spawn baddies that might frighten you of from chasing
 #. get nearest jumppoints and let ship escape in this direction
-#: dat/missions/neutral/kidnapped/traffic_01.lua:174
+#: dat/missions/neutral/kidnapped/traffic_01.lua:183
 msgid "The Deception"
 msgstr ""
 
-#: dat/missions/neutral/kidnapped/traffic_01.lua:174
+#: dat/missions/neutral/kidnapped/traffic_01.lua:183
 msgid ""
 "The woman stands next to you while the airlock opens. You see the grin on "
 "the man's face change to a baffled expression, then hear the sound of a "
@@ -53766,7 +53703,7 @@ msgid ""
 msgstr ""
 
 #. turn mercs hostile
-#: dat/missions/neutral/kidnapped/traffic_01.lua:182
+#: dat/missions/neutral/kidnapped/traffic_01.lua:191
 msgid ""
 "You were tricked into aiding an assassination. A woman claimed she needed "
 "help finding her brother, but when you brought her to her \"brother\", she "
@@ -53776,21 +53713,21 @@ msgstr ""
 
 #. idle
 #. delay for msgs because if no delay they will pop in mid transit from system to system. A wait function would be awesome...
-#: dat/missions/neutral/kidnapped/traffic_01.lua:194
+#: dat/missions/neutral/kidnapped/traffic_01.lua:203
 msgid "Wrong system"
 msgstr ""
 
-#: dat/missions/neutral/kidnapped/traffic_01.lua:194
+#: dat/missions/neutral/kidnapped/traffic_01.lua:203
 msgid ""
 "\"I don't think he is here. He must be in one of the other systems. Please "
 "hurry!\""
 msgstr ""
 
-#: dat/missions/neutral/kidnapped/traffic_01.lua:197
+#: dat/missions/neutral/kidnapped/traffic_01.lua:206
 msgid "Right system"
 msgstr ""
 
-#: dat/missions/neutral/kidnapped/traffic_01.lua:197
+#: dat/missions/neutral/kidnapped/traffic_01.lua:206
 msgid "\"I think this is it! We found him!\""
 msgstr ""
 
@@ -54769,167 +54706,157 @@ msgstr ""
 #. -- DESCRIPTION: A person asks you to join a race, where you fly to various checkpoints and board them before landing back at the starting planet
 #. --
 #. --
-#: dat/missions/neutral/race1.lua:27 dat/missions/neutral/race2.lua:28
-msgid "Board checkpoint 1"
-msgstr ""
-
-#: dat/missions/neutral/race1.lua:28 dat/missions/neutral/race2.lua:29
-msgid "Board checkpoint 2"
-msgstr ""
-
-#: dat/missions/neutral/race1.lua:29 dat/missions/neutral/race2.lua:30
-msgid "Board checkpoint 3"
-msgstr ""
-
-#: dat/missions/neutral/race1.lua:30 dat/missions/neutral/race2.lua:31
-#, lua-format
-msgid "Land at %s"
-msgstr ""
-
-#: dat/missions/neutral/race1.lua:33 dat/missions/neutral/race2.lua:34
+#: dat/missions/neutral/race1.lua:25 dat/missions/neutral/race2.lua:26
 msgid "Let's do this!"
 msgstr ""
 
-#: dat/missions/neutral/race1.lua:34 dat/missions/neutral/race2.lua:35
+#: dat/missions/neutral/race1.lua:26 dat/missions/neutral/race2.lua:27
 msgid "Wooo!"
 msgstr ""
 
-#: dat/missions/neutral/race1.lua:35 dat/missions/neutral/race2.lua:36
+#: dat/missions/neutral/race1.lua:27 dat/missions/neutral/race2.lua:28
 msgid "Time to Shake 'n Bake"
 msgstr ""
 
-#: dat/missions/neutral/race1.lua:36 dat/missions/neutral/race2.lua:37
-#, lua-format
-msgid "Checkpoint %s baby!"
-msgstr ""
-
-#: dat/missions/neutral/race1.lua:37 dat/missions/neutral/race2.lua:38
-msgid "Hooyah"
-msgstr ""
-
 #: dat/missions/neutral/race1.lua:38 dat/missions/neutral/race2.lua:39
-msgid "Next!"
-msgstr ""
-
-#: dat/missions/neutral/race1.lua:49 dat/missions/neutral/race2.lua:51
 msgid "A laid back person"
 msgstr ""
 
-#: dat/missions/neutral/race1.lua:49
+#: dat/missions/neutral/race1.lua:38
 msgid ""
 "You see a laid back person, who appears to be one of the locals, looking "
 "around the bar."
 msgstr ""
 
-#: dat/missions/neutral/race1.lua:55
+#: dat/missions/neutral/race1.lua:44
 msgid "Looking for a 4th"
 msgstr ""
 
-#: dat/missions/neutral/race1.lua:55
-#, lua-format
+#: dat/missions/neutral/race1.lua:44
 msgid ""
 "\"Hiya there! We're having a race around this system system soon and need a "
 "4th person to participate. You have to bring a Yacht class ship, and there's "
-"a prize of %s if you win. Interested?\""
+"a prize of {credits} if you win. Interested?\""
 msgstr ""
 
-#: dat/missions/neutral/race1.lua:58
+#: dat/missions/neutral/race1.lua:46
 msgid "You're participating in a race!"
 msgstr ""
 
-#: dat/missions/neutral/race1.lua:60
+#: dat/missions/neutral/race1.lua:48
 msgid "Racing Skills 1"
 msgstr ""
 
-#: dat/missions/neutral/race1.lua:61
+#: dat/missions/neutral/race1.lua:49 dat/missions/neutral/race2.lua:50
+msgid "Board checkpoint 1"
+msgstr ""
+
+#: dat/missions/neutral/race1.lua:50 dat/missions/neutral/race2.lua:51
+msgid "Board checkpoint 2"
+msgstr ""
+
+#: dat/missions/neutral/race1.lua:51 dat/missions/neutral/race2.lua:52
+msgid "Board checkpoint 3"
+msgstr ""
+
+#: dat/missions/neutral/race1.lua:52 dat/missions/neutral/race2.lua:53
+msgid "Land at {pnt}"
+msgstr ""
+
+#: dat/missions/neutral/race1.lua:54
 msgid "Awesome"
 msgstr ""
 
-#: dat/missions/neutral/race1.lua:61
-#, lua-format
+#: dat/missions/neutral/race1.lua:54
 msgid ""
 "\"That's great! Here's how it works: We will all be in a Yacht class ship. "
-"Once we take off from %s, there will be a countdown, and then we will "
+"Once we take off from {pnt}, there will be a countdown, and then we will "
 "proceed to the various checkpoints in order, boarding them before going to "
 "the next checkpoint. After the last checkpoint has been boarded, head back "
-"to %s and land. Let's have some fun!\""
+"to {pnt} and land. Let's have some fun!\""
 msgstr ""
 
-#: dat/missions/neutral/race1.lua:64 dat/missions/neutral/race2.lua:75
+#: dat/missions/neutral/race1.lua:57 dat/missions/neutral/race2.lua:67
 msgid "\"I guess we'll need to find another pilot.\""
 msgstr ""
 
-#: dat/missions/neutral/race1.lua:71 dat/missions/neutral/race2.lua:81
-#: dat/missions/neutral/race2.lua:87
+#: dat/missions/neutral/race1.lua:64 dat/missions/neutral/race2.lua:73
+#: dat/missions/neutral/race2.lua:79
 msgid "Illegal ship!"
 msgstr ""
 
-#: dat/missions/neutral/race1.lua:71 dat/missions/neutral/race2.lua:81
+#: dat/missions/neutral/race1.lua:64 dat/missions/neutral/race2.lua:73
 msgid ""
 "\"You have switched to a ship that's not allowed in this race. Mission "
 "failed.\""
 msgstr ""
 
-#: dat/missions/neutral/race1.lua:93 dat/missions/neutral/race2.lua:116
-#, lua-format
-msgid "Checkpoint %s"
+#: dat/missions/neutral/race1.lua:86 dat/missions/neutral/race2.lua:108
+msgid "Checkpoint {n}"
 msgstr ""
 
-#: dat/missions/neutral/race1.lua:106 dat/missions/neutral/race2.lua:142
-#, lua-format
-msgid "Racer %s"
+#: dat/missions/neutral/race1.lua:99 dat/missions/neutral/race2.lua:134
+msgid "Racer {n}"
 msgstr ""
 
-#: dat/missions/neutral/race1.lua:150 dat/missions/neutral/race1.lua:168
-#: dat/missions/neutral/race1.lua:186 dat/missions/neutral/race1.lua:211
-#: dat/missions/neutral/race2.lua:185 dat/missions/neutral/race2.lua:200
-#: dat/missions/neutral/race2.lua:214 dat/missions/neutral/race2.lua:233
-#, lua-format
-msgid "%s just reached checkpoint %s"
+#: dat/missions/neutral/race1.lua:143 dat/missions/neutral/race1.lua:161
+#: dat/missions/neutral/race1.lua:179 dat/missions/neutral/race1.lua:204
+#: dat/missions/neutral/race2.lua:177 dat/missions/neutral/race2.lua:192
+#: dat/missions/neutral/race2.lua:206 dat/missions/neutral/race2.lua:225
+msgid "{pltname} just reached checkpoint {n}"
 msgstr ""
 
-#: dat/missions/neutral/race1.lua:215 dat/missions/neutral/race1.lua:217
-#: dat/missions/neutral/race2.lua:237 dat/missions/neutral/race2.lua:239
-#, lua-format
-msgid "Checkpoint %s reached"
+#: dat/missions/neutral/race1.lua:144 dat/missions/neutral/race2.lua:178
+msgid "Checkpoint {n} baby!"
 msgstr ""
 
-#: dat/missions/neutral/race1.lua:217 dat/missions/neutral/race2.lua:239
-#, lua-format
-msgid "Proceed to Checkpoint %s"
+#: dat/missions/neutral/race1.lua:162 dat/missions/neutral/race2.lua:193
+msgid "Hooyah"
 msgstr ""
 
-#: dat/missions/neutral/race1.lua:227 dat/missions/neutral/race1.lua:251
-#: dat/missions/neutral/race2.lua:248 dat/missions/neutral/race2.lua:273
+#: dat/missions/neutral/race1.lua:180 dat/missions/neutral/race2.lua:207
+msgid "Next!"
+msgstr ""
+
+#: dat/missions/neutral/race1.lua:208 dat/missions/neutral/race1.lua:210
+#: dat/missions/neutral/race2.lua:229 dat/missions/neutral/race2.lua:231
+msgid "Checkpoint {n} reached"
+msgstr ""
+
+#: dat/missions/neutral/race1.lua:210 dat/missions/neutral/race2.lua:231
+msgid "Proceed to Checkpoint {n}"
+msgstr ""
+
+#: dat/missions/neutral/race1.lua:220 dat/missions/neutral/race1.lua:244
+#: dat/missions/neutral/race2.lua:240 dat/missions/neutral/race2.lua:265
 msgid "You left the race!"
 msgstr ""
 
-#: dat/missions/neutral/race1.lua:227 dat/missions/neutral/race1.lua:251
-#: dat/missions/neutral/race2.lua:248 dat/missions/neutral/race2.lua:273
+#: dat/missions/neutral/race1.lua:220 dat/missions/neutral/race1.lua:244
+#: dat/missions/neutral/race2.lua:240 dat/missions/neutral/race2.lua:265
 msgid "\"Because you left the race, you have been disqualified.\""
 msgstr ""
 
-#: dat/missions/neutral/race1.lua:233 dat/missions/neutral/race2.lua:253
-#, lua-format
-msgid "%s just landed at %s and finished the race"
+#: dat/missions/neutral/race1.lua:226 dat/missions/neutral/race2.lua:245
+msgid "{pltname} just landed at {pnt} and finished the race"
 msgstr ""
 
-#: dat/missions/neutral/race1.lua:240 dat/missions/neutral/race2.lua:260
-#: dat/missions/neutral/race2.lua:263
+#: dat/missions/neutral/race1.lua:233 dat/missions/neutral/race2.lua:252
+#: dat/missions/neutral/race2.lua:255
 msgid "You Won!"
 msgstr ""
 
-#: dat/missions/neutral/race1.lua:240
+#: dat/missions/neutral/race1.lua:233
 msgid ""
 "The laid back person comes up to you and hands you a credit chip.\n"
 "   \"Nice racing! Here's your prize money. Let's race again sometime soon!\""
 msgstr ""
 
-#: dat/missions/neutral/race1.lua:245 dat/missions/neutral/race2.lua:268
+#: dat/missions/neutral/race1.lua:238 dat/missions/neutral/race2.lua:260
 msgid "You failed to win the race."
 msgstr ""
 
-#: dat/missions/neutral/race1.lua:245 dat/missions/neutral/race2.lua:268
+#: dat/missions/neutral/race1.lua:238 dat/missions/neutral/race2.lua:260
 msgid ""
 "As you congratulate the winner on a great race, the laid back person comes "
 "up to you.\n"
@@ -54937,105 +54864,101 @@ msgid ""
 "you'll win next time!\""
 msgstr ""
 
-#: dat/missions/neutral/race2.lua:51
+#: dat/missions/neutral/race2.lua:39
 msgid ""
 "You see a laid back person, who appears to be one of the locals, looking "
 "around the bar, apparently in search of a suitable pilot."
 msgstr ""
 
-#: dat/missions/neutral/race2.lua:58
+#: dat/missions/neutral/race2.lua:46
 msgid "Another race"
 msgstr ""
 
-#: dat/missions/neutral/race2.lua:58
+#: dat/missions/neutral/race2.lua:46
 msgid "\"Hey there, great to see you back! You want to have another race?\""
 msgstr ""
 
-#: dat/missions/neutral/race2.lua:61
+#: dat/missions/neutral/race2.lua:48
 msgid "You're participating in another race!"
 msgstr ""
 
-#: dat/missions/neutral/race2.lua:62
+#: dat/missions/neutral/race2.lua:49
 msgid "Racing Skills 2"
 msgstr ""
 
-#: dat/missions/neutral/race2.lua:63
-#, lua-format
+#: dat/missions/neutral/race2.lua:55
 msgid ""
 "\"There are two races you can participate in: an easy one, which is like the "
 "first race we had, or a hard one, with smaller checkpoints and no "
-"afterburners allowed. The easy one has a prize of %s, and the hard one has a "
-"prize of %s. Which one do you want to do?\""
+"afterburners allowed. The easy one has a prize of {credits1}, and the hard "
+"one has a prize of {credits2}. Which one do you want to do?\""
 msgstr ""
 
-#: dat/missions/neutral/race2.lua:64
+#: dat/missions/neutral/race2.lua:56
 msgid "Choose difficulty"
 msgstr ""
 
-#: dat/missions/neutral/race2.lua:64
+#: dat/missions/neutral/race2.lua:56
 msgid "Easy"
 msgstr ""
 
-#: dat/missions/neutral/race2.lua:64
+#: dat/missions/neutral/race2.lua:56
 msgid "Hard"
 msgstr ""
 
-#: dat/missions/neutral/race2.lua:67
+#: dat/missions/neutral/race2.lua:59
 msgid "Easy Mode "
 msgstr ""
 
-#: dat/missions/neutral/race2.lua:67
+#: dat/missions/neutral/race2.lua:59
 msgid "\"Let's go have some fun then!\""
 msgstr ""
 
-#: dat/missions/neutral/race2.lua:70
+#: dat/missions/neutral/race2.lua:62
 msgid "Hard Mode"
 msgstr ""
 
-#: dat/missions/neutral/race2.lua:70
+#: dat/missions/neutral/race2.lua:62
 msgid ""
 "\"You want a challenge huh? Remember, no afterburners on your ship or you "
 "will not be allowed to race. Let's go have some fun!\""
 msgstr ""
 
-#: dat/missions/neutral/race2.lua:87
+#: dat/missions/neutral/race2.lua:79
 msgid ""
 "\"You have outfits on your ship which is not allowed in this race in hard "
 "mode. Mission failed.\""
 msgstr ""
 
-#: dat/missions/neutral/race2.lua:177
+#: dat/missions/neutral/race2.lua:169
 msgid ""
 "This race is sponsored by Melendez Corporation. Problem-free ships for "
 "problem-free voyages!"
 msgstr ""
 
-#: dat/missions/neutral/race2.lua:237
-#, lua-format
-msgid "Proceed to land at %s"
+#: dat/missions/neutral/race2.lua:229
+msgid "Proceed to land at {pnt}"
 msgstr ""
 
-#: dat/missions/neutral/race2.lua:260
-#, lua-format
+#: dat/missions/neutral/race2.lua:252
 msgid ""
 "A man in a suit and tie takes you up onto a stage. A large name tag on his "
 "jacket says 'Melendez Corporation'. \"Congratulations on your win,\" he "
 "says, shaking your hand, \"that was a great race. On behalf of Melendez "
 "Corporation, I would like to present to you your trophy and prize money of "
-"%s!\" He hands you one of those fake oversized cheques for the audience, and "
-"then a credit chip with the actual prize money on it. At least the trophy "
-"looks cool."
+"{credits}!\" He hands you one of those fake oversized cheques for the "
+"audience, and then a credit chip with the actual prize money on it. At least "
+"the trophy looks cool."
 msgstr ""
 
-#: dat/missions/neutral/race2.lua:263
-#, lua-format
+#: dat/missions/neutral/race2.lua:255
 msgid ""
 "A man in a suit and tie takes you up onto a stage. A large name tag on his "
 "jacket says 'Melendez Corporation'. \"Congratulations on your win,\" he "
 "says, shaking your hand, \"that was a great race. On behalf of Melendez "
-"Corporation, I would like to present to you your prize money of %s!\" He "
-"hands you one of those fake oversized cheques for the audience, and then a "
-"credit chip with the actual prize money on it."
+"Corporation, I would like to present to you your prize money of {credits}!\" "
+"He hands you one of those fake oversized cheques for the audience, and then "
+"a credit chip with the actual prize money on it."
 msgstr ""
 
 #.
@@ -55081,8 +55004,8 @@ msgstr ""
 #. If we're in misn_base_sys but not on misn_base then...
 #. If we're in another system then make Reynir bleed out his ears ;)
 #: dat/missions/neutral/reynir.lua:47 dat/missions/neutral/reynir.lua:76
-#: dat/missions/neutral/reynir.lua:78 dat/missions/neutral/reynir.lua:99
-#: dat/missions/neutral/reynir.lua:105 dat/missions/neutral/reynir.lua:109
+#: dat/missions/neutral/reynir.lua:78 dat/missions/neutral/reynir.lua:100
+#: dat/missions/neutral/reynir.lua:106 dat/missions/neutral/reynir.lua:110
 msgid "Reynir"
 msgstr ""
 
@@ -55108,7 +55031,7 @@ msgstr ""
 
 #. For missions from the Bar only.
 #: dat/missions/neutral/reynir.lua:71 dat/missions/neutral/reynir.lua:77
-#: dat/missions/neutral/reynir.lua:106 dat/missions/neutral/reynir.lua:110
+#: dat/missions/neutral/reynir.lua:107 dat/missions/neutral/reynir.lua:111
 msgid "Rich reward from space!"
 msgstr ""
 
@@ -55121,14 +55044,13 @@ msgid "Reynir wants to travel to space and will reward you richly."
 msgstr ""
 
 #: dat/missions/neutral/reynir.lua:76
-#, lua-format
 msgid ""
-"\"Thank you so much! Just fly me around in the system, preferably near %s.\""
+"\"Thank you so much! Just fly me around in the system, preferably near {pnt}."
+"\""
 msgstr ""
 
 #: dat/missions/neutral/reynir.lua:77
-#, lua-format
-msgid "Fly around in the system, preferably near %s"
+msgid "Fly around in the system, preferably near {pnt}"
 msgstr ""
 
 #: dat/missions/neutral/reynir.lua:78
@@ -55136,54 +55058,47 @@ msgid "A old man who wants to see space."
 msgstr ""
 
 #. If landed on misn_base then give reward
-#: dat/missions/neutral/reynir.lua:91
-#, lua-format
+#: dat/missions/neutral/reynir.lua:92
 msgid ""
 "Reynir doesn't look happy when you meet him outside the ship.\n"
 "    \"I lost my hearing out there! Damn you!! I made a promise, though, so "
-"I'd better keep it. Here's your reward, %s of hot dogs...\""
+"I'd better keep it. Here's your reward, {tonnes} of hot dogs...\""
 msgstr ""
 
-#: dat/missions/neutral/reynir.lua:93
-#, lua-format
+#: dat/missions/neutral/reynir.lua:94
 msgid ""
 "You took an old man named Reynir on a ride in outer space, but he was made "
 "very angry because the distance you traveled led to him getting injured and "
-"losing his hearing. Still, he begrudgingly paid you in the form of %s of hot "
-"dogs."
-msgstr ""
-
-#: dat/missions/neutral/reynir.lua:96
-#, lua-format
-msgid ""
-"\"Thank you so much! Here's %s of hot dogs. They're worth more than their "
-"weight in gold, aren't they?\""
+"losing his hearing. Still, he begrudgingly paid you in the form of {tonnes} "
+"of hot dogs."
 msgstr ""
 
 #: dat/missions/neutral/reynir.lua:97
-#, lua-format
+msgid ""
+"\"Thank you so much! Here's {tonnes} of hot dogs. They're worth more than "
+"their weight in gold, aren't they?\""
+msgstr ""
+
+#: dat/missions/neutral/reynir.lua:98
 msgid ""
 "You took an old man named Reynir on a ride in outer space. He was happy and "
-"paid you in the form of %s of hot dogs."
+"paid you in the form of {tonnes} of hot dogs."
 msgstr ""
 
-#: dat/missions/neutral/reynir.lua:105
-#, lua-format
+#: dat/missions/neutral/reynir.lua:106
 msgid ""
-"Reynir walks out of the ship, amazed by the view. \"So this is how %s looks "
-"like! I've always wondered... I want to go back to %s now, please.\""
+"Reynir walks out of the ship, amazed by the view. \"So this is how {pnt_cur} "
+"looks like! I've always wondered... I want to go back to {pnt} now, please.\""
 msgstr ""
 
-#: dat/missions/neutral/reynir.lua:106 dat/missions/neutral/reynir.lua:110
-#, lua-format
-msgid "Take Reynir home to %s"
+#: dat/missions/neutral/reynir.lua:107 dat/missions/neutral/reynir.lua:111
+msgid "Take Reynir home to {pnt}"
 msgstr ""
 
-#: dat/missions/neutral/reynir.lua:109
-#, lua-format
+#: dat/missions/neutral/reynir.lua:110
 msgid ""
 "Reynir walks out of the ship. You notice that he's bleeding out of both "
-"ears. \"Where have you taken me?! Get me back to %s right now!!\""
+"ears. \"Where have you taken me?! Get me back to {pnt} right now!!\""
 msgstr ""
 
 #. TODO: There should probably be more here
@@ -55267,14 +55182,13 @@ msgid "The Runaway"
 msgstr ""
 
 #: dat/missions/neutral/runaway/runaway_cynthia.lua:43
-#, lua-format
 msgid ""
 "She looks out of place in the bar. As you approach, she seems to stiffen.\n"
 "    \"H..H..Hi\", she stutters. \"My name is Cynthia. Could you give me a "
 "lift? I really need to get out of here.\n"
-"    I can't pay you much, just what I have on me, %s.\" You wonder who she "
-"must be to have this many credits on her person. \"I need you to take me to "
-"Zhiru.\"\n"
+"    I can't pay you much, just what I have on me, {credits}.\" You wonder "
+"who she must be to have this many credits on her person. \"I need you to "
+"take me to {pnt}.\"\n"
 "    You wonder who she is, but you dare not ask. Do you accept?"
 msgstr ""
 
@@ -55284,13 +55198,11 @@ msgstr ""
 
 #: dat/missions/neutral/runaway/runaway_cynthia.lua:67
 #: dat/missions/neutral/runaway/runaway_search.lua:64
-#, lua-format
-msgid "%s on delivery."
+msgid "{credits} on delivery."
 msgstr ""
 
 #: dat/missions/neutral/runaway/runaway_cynthia.lua:69
-#, lua-format
-msgid "Deliver Cynthia safely to %s in the %s system."
+msgid "Deliver Cynthia safely to {pnt} in the {sys} system."
 msgstr ""
 
 #: dat/missions/neutral/runaway/runaway_cynthia.lua:72
