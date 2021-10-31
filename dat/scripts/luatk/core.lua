@@ -61,7 +61,7 @@ function luatk.mousepressed( mx, my, button )
    local x, y = mx-wdw.x, my-wdw.y
 
    for _k,wgt in ipairs(wdw._widgets) do
-      if wgt.clicked and _checkbounds(wgt,x,y) then
+      if _checkbounds(wgt,x,y) then
          wgt._pressed = true
          if wgt.pressed and wgt:pressed( x-wgt.x, y-wgt.y, button ) then
             return true
