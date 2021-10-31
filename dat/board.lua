@@ -98,7 +98,7 @@ local function compute_lootables ( plt )
          q = math.floor( 0.5 + creds*loot_mod ),
          type = "credits",
          bg = nil,
-         alt = nil,
+         alt = _("Credits\nUsed as the main form of currency throughout the galaxy."),
          data = nil,
       } )
    end
@@ -112,7 +112,7 @@ local function compute_lootables ( plt )
          q = math.floor( 0.5 + fuel*loot_mod ),
          type = "fuel",
          bg = nil,
-         alt = nil,
+         alt = _("Fuel\nNecessary for the activation of jump drives that allow inter-system travel."),
          data = nil,
       } )
    end
