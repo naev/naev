@@ -39,20 +39,20 @@ end
 function accept ()
    local txt
    if started then
-      txt = _([["Oh, %s! Have you changed your mind? Can you take me to %s?"]]):format( player.name(), misplanet:name() )
+      txt = fmt.f( _([["Oh, {player}! Have you changed your mind? Can you take me to {pnt}?"]]), {player=player.name(), pnt=misplanet} )
    else
-      txt = _([[Chelsea greets you as before. "Hi, %s! It's so nice to see you again!" The two of you talk about your travels once again. "So, I've got a bit of a request. Could you use they/them pronouns with me again?" You agree to the request. "Thank you," they say. "I've done some more soul-searching lately and I've found that I identify more as nonbinary than as a woman. I really appreciate it!
-    "Actually, come to think of it, this would be a great excuse to go see my parents again! It's been so long since I've seen them. Say, could you take me to them in %s?"]]):format( player.name(), misplanet:name() )
+      txt = fmt.f( _([[Chelsea greets you as before. "Hi, {player}! It's so nice to see you again!" The two of you talk about your travels once again. "So, I've got a bit of a request. Could you use they/them pronouns with me again?" You agree to the request. "Thank you," they say. "I've done some more soul-searching lately and I've found that I identify more as nonbinary than as a woman. I really appreciate it!
+    "Actually, come to think of it, this would be a great excuse to go see my parents again! It's been so long since I've seen them. Say, could you take me to them in {pnt}?"]]), {player=player.name(), pnt=misplanet} )
    end
    started = true
 
    if tk.yesno( _("Visiting Family"), txt ) then
-      tk.msg( _("Visiting Family"), _([["Awesome! Thank you so much! So just take me to %s in the %s system, and then take me to %s in the %s system. As usual, no rush. Just as long as I get to see my parents, I'm happy!"]]):format( misplanet:name(), missys:name(), misplanet2:name(), missys2:name() ) )
+      tk.msg( _("Visiting Family"), fmt.f( _([["Awesome! Thank you so much! So just take me to {pnt} in the {sys} system, and then take me to {pnt2} in the {sys2} system. As usual, no rush. Just as long as I get to see my parents, I'm happy!"]]), {pnt=misplanet, sys=missys, pnt2=misplanet2, sys2=missys2} ) )
 
       misn.accept()
 
       misn.setTitle( _("Visiting Family") )
-      misn.setDesc( _("Chelsea wants to revisit their family in %s."):format( misplanet:name() ) )
+      misn.setDesc( fmt.f( _("Chelsea wants to revisit their family in {pnt}."), {pnt=misplanet} ) )
       misn.setReward( _("None") )
       marker = misn.markerAdd( missys, "low" )
 
@@ -85,13 +85,13 @@ function land ()
    if stage == 1 and planet.cur() == misplanet then
       player.allowSave( false )
 
-      tk.msg( "", _([[You land and dock on %s, then meet up with both of Chelsea's parents. They welcome Chelsea and their mother gives them a warm hug, then releases them. Chelsea's father slightly waves, and the three of them start chatting.
-    Eventually, the topic of Chelsea's gender comes up. Chelsea explains that they are nonbinary and prefer they/them pronouns similarly to when they explained it to you. Their mother says that she is proud of them and hugs them.]]):format( misplanet:name() ) )
+      tk.msg( "", fmt.f( _([[You land and dock on {pnt}, then meet up with both of Chelsea's parents. They welcome Chelsea and their mother gives them a warm hug, then releases them. Chelsea's father slightly waves, and the three of them start chatting.
+    Eventually, the topic of Chelsea's gender comes up. Chelsea explains that they are nonbinary and prefer they/them pronouns similarly to when they explained it to you. Their mother says that she is proud of them and hugs them.]]), {pnt=misplanet} ) )
       tk.msg( "", _([[Chelsea's father shakes his head. "Look, bud, you will always be my son no matter what." You and Chelsea's mother both frown slightly. Chelsea's dad continues. "But don't you think enough is enough? You are a man. It's about time you stop pretending and start-"
     Chelsea's mother cuts him off. "That's enough of that garbage from you! Chelsea is our child, and I love them as they are, not as some fantasy of what you think they should be!"
     "He's our son!" Chelsea's father snaps back. "You're feeding into his wild imagination! He's already admitted that he's not a woman. But now he's just moving on to another fantasy! What's next? Identifying as a Soromid? Good lord!"]]) )
-      tk.msg( "", _([[Everything goes silent for what must be mere seconds, but seems to last a period. Finally, Chelsea speaks up. "Dad... I've made good friends with some Soromid in my travels." Their father's face seems to turn red with fury, but Chelsea continues. "The Soromid are not these horrible people you've made them out to be all my life. And dad, I am not your son. I never really was your son. I will never be your son. I am a transfemme enby. End of discussion.
-    "%s here has really taught me a lot about asserting myself and not letting others dictate who I am, probably without realizing it. So I'm no longer going to allow your bigoted ideas about gender define me." Chelsea pauses. "And with the help of the Soromid, I'll be getting some procedures done to help affirm who I am."]]):format( player.name() ) )
+      tk.msg( "", fmt.f( _([[Everything goes silent for what must be mere seconds, but seems to last a period. Finally, Chelsea speaks up. "Dad... I've made good friends with some Soromid in my travels." Their father's face seems to turn red with fury, but Chelsea continues. "The Soromid are not these horrible people you've made them out to be all my life. And dad, I am not your son. I never really was your son. I will never be your son. I am a transfemme enby. End of discussion.
+    "{player} here has really taught me a lot about asserting myself and not letting others dictate who I am, probably without realizing it. So I'm no longer going to allow your bigoted ideas about gender define me." Chelsea pauses. "And with the help of the Soromid, I'll be getting some procedures done to help affirm who I am."]]), {player=player.name()} ) )
       tk.msg( "", _([[Chelsea's mother smiles. "I'm proud of you, sweetie," she says. "No matter what happens, always be true to yourself. You are my child, and I will always love you."
     Chelsea's father frowns. "Is this really how you want it to be?" Chelsea nods. Their father continues. "Very well, then. You're right. You are not my son." He reaches into his pocket as Chelsea's mother looks in his direction.
     Suddenly, Chelsea's mother yells out. "NO!" she shouts as she tackles her husband. That's when you see what he was reaching for: a laser gun. The two start to wrestle for control as Chelsea's mother shouts. "Run! Both of you! Get out of here!" Not needing to be told twice, you grab Chelsea's arm and run as fast as you can. Just as you make it out of view, you hear the laser gun fire.]]) )
@@ -119,7 +119,7 @@ function ambush_timer ()
    }
    local leaderthug
    for i, shiptype in ipairs( thugships ) do
-      local p = pilot.add( shiptype, "Comingout_thugs", misplanet, _("Thug %s"):format( _(shiptype) ) )
+      local p = pilot.add( shiptype, "Comingout_thugs", misplanet, fmt.f( _("Thug {ship}"), {ship=_(shiptype)} ) )
       p:setHostile()
       p:setLeader( leaderthug )
 

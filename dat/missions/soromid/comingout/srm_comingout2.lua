@@ -40,25 +40,25 @@ end
 function accept ()
    local txt
    if started then
-      txt = _([["Oh, %s! Are you able to help me out now?"]]):format( player.name() )
+      txt = fmt.f( _([["Oh, {player}! Are you able to help me out now?"]]), {player=player.name()} )
    else
-      txt = _([[Chelsea smiles and waves as she sees you approaching. "Hi, %s! It's been a while!" You sit down and start a friendly conversation with her. She mentions that her parents seem to be supportive of her decision to transition and her mother in particular apparently has been very helpful.
-    Chelsea perks up a little. "So, remember I said I had ambitions of a pilot? Well, I have my piloting license already, but I'm kind of poor so I couldn't afford my first ship. So I've been asking around and I've managed to find a great deal for a used ship at %s in the %s system! I just need someone to take me there. Again, no rush. Would you be able to do that for me?"]]):format( player.name(), misplanet:name(), missys:name() )
+      txt = fmt.f( _([[Chelsea smiles and waves as she sees you approaching. "Hi, {player}! It's been a while!" You sit down and start a friendly conversation with her. She mentions that her parents seem to be supportive of her decision to transition and her mother in particular apparently has been very helpful.
+    Chelsea perks up a little. "So, remember I said I had ambitions of a pilot? Well, I have my piloting license already, but I'm kind of poor so I couldn't afford my first ship. So I've been asking around and I've managed to find a great deal for a used ship at {pnt} in the {sys} system! I just need someone to take me there. Again, no rush. Would you be able to do that for me?"]]), {player=player.name(), pnt=misplanet, sys=missys} )
    end
    started = true
 
    if tk.yesno( _("Getting My Feet Wet"), txt ) then
-      tk.msg( _("Getting My Feet Wet"), _([["Thank you so much! I really appreciate it, %s. I can't pay you much, but I can give you %s when we get there. I can't wait to start!"]]):format( player.name(), fmt.credits( credits ) ) )
+      tk.msg( _("Getting My Feet Wet"), fmt.f(_([["Thank you so much! I really appreciate it, {player}. I can't pay you much, but I can give you {credits} when we get there. I can't wait to start!"]]), {player=player.name(), credits=fmt.credits(credits)} ) )
 
       misn.accept()
 
       misn.setTitle( _("Coming of Age") )
-      misn.setDesc( _("Chelsea needs you to take her to %s so she can buy her first ship and kick off her piloting career."):format( misplanet:name() ) )
+      misn.setDesc( fmt.f( _("Chelsea needs you to take her to {pnt} so she can buy her first ship and kick off her piloting career."), {pnt=misplanet} ) )
       misn.setReward( fmt.credits( credits ) )
       marker = misn.markerAdd( missys, "low" )
 
       misn.osdCreate( _("Coming of Age"), {
-         _("Go to the %s system and land on the planet %s."):format( missys:name(), misplanet:name() ),
+         fmt.f( _("Go to the {sys} system and land on the planet {pnt}."), {sys=missys, pnt=misplanet} ),
       } )
 
       hook.land( "land" )

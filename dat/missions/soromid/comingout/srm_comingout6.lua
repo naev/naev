@@ -54,20 +54,20 @@ end
 function accept ()
    local txt
    if started then
-      txt = _([["Hey, %s! Any chance you could reconsider? I could use your help."]]):format( player.name() )
+      txt = fmt.f( _([["Hey, {player}! Any chance you could reconsider? I could use your help."]]), {player=player.name()} )
    else
-      txt = _([[You greet Chelsea as usual and have a friendly chat with them. You learn that they had a close call recently with another thug, but they managed to shake the thug off with their new ship.
-    "It's a lot better than before. The work is tough though. I've been picking off small pirates with bounties on their heads, doing relatively safe system patrols, that sort of thing. I'm supposed to be getting a better ship soon, but it's going to be difficult." You ask them why that is. "Well, I came across someone who's offering me a bargain on a new ship! Well, not new exactly. It's used, but in much better condition than that rust bucket I got before. Supposedly this guy used to be a Dvaered warlord and is offering me his old Vigilance if I just take care of this one pirate known as %s. Trouble is they're piloting a ship that's stronger than my own...."
-    Chelsea pauses in contemplation for a moment. "Say, do you think you could help me out on this one? I just need you to help me kill the pirate in %s. I'll give you %s for the trouble. How about it?"]]):format( pirname, missys:name(), fmt.credits( credits ) )
+      txt = fmt.f(_([[You greet Chelsea as usual and have a friendly chat with them. You learn that they had a close call recently with another thug, but they managed to shake the thug off with their new ship.
+    "It's a lot better than before. The work is tough though. I've been picking off small pirates with bounties on their heads, doing relatively safe system patrols, that sort of thing. I'm supposed to be getting a better ship soon, but it's going to be difficult." You ask them why that is. "Well, I came across someone who's offering me a bargain on a new ship! Well, not new exactly. It's used, but in much better condition than that rust bucket I got before. Supposedly this guy used to be a Dvaered warlord and is offering me his old Vigilance if I just take care of this one pirate known as {pltname}. Trouble is they're piloting a ship that's stronger than my own...."
+    Chelsea pauses in contemplation for a moment. "Say, do you think you could help me out on this one? I just need you to help me kill the pirate in {sys}. I'll give you {credits} for the trouble. How about it?"]]), {pltname=pirname, sys=missys, credits=fmt.credits(credits)} )
    end
    started = true
 
    if tk.yesno( _("A Great Opportunity"), txt ) then
-      tk.msg( _("A Great Opportunity"), _([["Fantastic! Thank you for the help! I'll meet you in %s and we can take the pirate out. Let's do this!"]]):format( missys:name() ) )
+      tk.msg( _("A Great Opportunity"), fmt.f( _([["Fantastic! Thank you for the help! I'll meet you in {sys} and we can take the pirate out. Let's do this!"]]), {sys=missys} ) )
       misn.accept()
 
       misn.setTitle( _("Moving Up") )
-      misn.setDesc( _("Chelsea needs you help them kill a wanted pirate in %s."):format( missys:name() ) )
+      misn.setDesc( fmt.f( _("Chelsea needs you help them kill a wanted pirate in {sys}."), {sys=missys} ) )
       misn.setReward( fmt.credits( credits ) )
       marker = misn.markerAdd( missys, "high" )
 
@@ -150,7 +150,7 @@ end
 
 
 function win_timer ()
-   tk.msg( _("Death Of A Pirate"), _([[Chelsea pops up on your viewscreen and grins. "We did it!" they say. "Thanks for all the help, %s. I've transferred the money into your account. See you next time with my new ship!" You say your goodbyes and go back to your own adventures.]]):format( player.name() ) )
+   tk.msg( _("Death Of A Pirate"), fmt.f( _([[Chelsea pops up on your viewscreen and grins. "We did it!" they say. "Thanks for all the help, {player}. I've transferred the money into your account. See you next time with my new ship!" You say your goodbyes and go back to your own adventures.]]), {player=player.name()} ) )
    player.pay( credits )
 
    local t = time.get():tonumber()

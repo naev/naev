@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2021-10-31 01:57-0400\n"
+"POT-Creation-Date: 2021-10-31 11:08-0400\n"
 "PO-Revision-Date: 2021-04-04 21:26+0000\n"
 "Last-Translator: Hahaha Nope <ruzneregistrace@email.cz>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/naev/naev/cs/>\n"
@@ -13598,7 +13598,7 @@ msgid "All sorts of high quality luxury goods."
 msgstr ""
 
 #. Fuel
-#: dat/commodity.xml:184 dat/board.lua:62
+#: dat/commodity.xml:184 dat/board.lua:126
 msgid "Fuel"
 msgstr ""
 
@@ -14000,7 +14000,7 @@ msgstr ""
 #: dat/missions/shark/sh02_tapping.lua:327
 #: dat/missions/shark/sh02_tapping.lua:332
 #: dat/missions/soromid/comingout/srm_comingout3.lua:87
-#: dat/missions/soromid/comingout/srm_comingout5.lua:98
+#: dat/missions/soromid/comingout/srm_comingout5.lua:84
 #: dat/missions/soromid/comingout/srm_comingout6.lua:106
 msgid "Mercenary"
 msgstr ""
@@ -14082,7 +14082,7 @@ msgstr ""
 
 #: dat/faction.xml:668 dat/faction.xml:697
 #: dat/missions/soromid/comingout/srm_comingout3.lua:121
-#: dat/missions/soromid/comingout/srm_comingout5.lua:136
+#: dat/missions/soromid/comingout/srm_comingout5.lua:122
 msgid "Thugs"
 msgstr ""
 
@@ -17628,7 +17628,7 @@ msgid ""
 "the target in a single swipe."
 msgstr ""
 
-#: dat/outfits/utility/asteroid_scanner.xml:2 src/shipstats.c:176
+#: dat/outfits/utility/asteroid_scanner.xml:2 src/shipstats.c:177
 msgid "Asteroid Scanner"
 msgstr ""
 
@@ -19316,7 +19316,7 @@ msgstr ""
 #: dat/ships/raelid_outpost.xml:12 dat/ships/raglan_outpost.xml:12
 #: dat/ships/sindbad.xml:12 src/dev_uniedit.c:242 src/dev_uniedit.c:248
 #: src/dev_uniedit.c:1226 src/dev_uniedit.c:1227 src/map.c:564 src/map.c:565
-#: src/outfit.c:289 src/outfit.c:308
+#: src/outfit.c:277 src/outfit.c:296
 msgid "N/A"
 msgstr ""
 
@@ -24189,24 +24189,72 @@ msgstr ""
 #.
 #. Boarding script, now in Lua!
 #. --
+#. forward-declared function, defined at bottom of file
 #. Dark Gold
+#: dat/board.lua:54
+msgid ""
+"\n"
+"#rCosts {credits} ({sbonus}%#r from crew strength) to extract!#0"
+msgstr ""
+
+#: dat/board.lua:56
+msgid ""
+"{name}{sprice}\n"
+"{slotsize} {slottype}#0 slot{sprop}\n"
+"{stype}\n"
+"{desc}"
+msgstr ""
+
+#. special_col, -- TODO new special condition
+#: dat/board.lua:80
+msgid ""
+"{name}\n"
+"{desc}"
+msgstr ""
+
+#: dat/board.lua:83
+msgid ""
+"\n"
+"#rIllegalized by the following factions:\n"
+msgstr ""
+
+#: dat/board.lua:86
+msgid ""
+"\n"
+"   - {fctname}"
+msgstr ""
+
 #. Credits
-#: dat/board.lua:48
+#: dat/board.lua:112
 msgid "Credits"
 msgstr ""
 
-#. TODO add outfits as necessary here!
-#. table.insert( lootables, outfit_loot(outfit.get("Laser Cannon MK1")) )
+#: dat/board.lua:116
+msgid ""
+"Credits\n"
+"Used as the main form of currency throughout the galaxy."
+msgstr ""
+
+#: dat/board.lua:130
+msgid ""
+"Fuel\n"
+"Necessary for the activation of jump drives that allow inter-system travel."
+msgstr ""
+
+#. Steal outfits before cargo, since they are always considered "special"
+#. Don't allow looting required outfits
+#. Get random candidate
+#. TODO better criteria
 #. Go over cargo
 #. Handle mission cargoes first
 #. Look at special case of price being 0
 #. Ignore anything that isn't loot from now on
-#: dat/board.lua:175
+#: dat/board.lua:272
 msgid "You have {freespace} of free space."
 msgstr ""
 
 #. Destroy if exists
-#: dat/board.lua:221 dat/comm.lua:167 dat/shipai.lua:26 dat/shipai.lua:39
+#: dat/board.lua:320 dat/comm.lua:167 dat/shipai.lua:26 dat/shipai.lua:39
 #: src/comm.c:340 src/console.c:649 src/dev_sysedit.c:1375
 #: src/dev_sysedit.c:1487 src/dev_sysedit.c:1550 src/dev_sysedit.c:1745
 #: src/dev_sysedit.c:1936 src/dev_sysedit.c:2024 src/dev_uniedit.c:400
@@ -24217,57 +24265,76 @@ msgstr ""
 msgid "Close"
 msgstr ""
 
-#: dat/board.lua:222
+#: dat/board.lua:321
 msgid "Loot"
 msgstr ""
 
-#: dat/board.lua:223
+#: dat/board.lua:322
 msgid "Loot All"
 msgstr ""
 
-#: dat/board.lua:225
+#: dat/board.lua:324
 msgid "Boarding {shipname}"
 msgstr ""
 
 #. Moolah
 #. Will go negative with loot_mod
-#: dat/board.lua:262
+#: dat/board.lua:361
 msgid "You looted {creds} from {plt}."
 msgstr ""
 
 #. Unable to loot anything
-#: dat/board.lua:271
+#: dat/board.lua:370
 msgid "Fuel Tank Full"
 msgstr ""
 
-#: dat/board.lua:271
+#: dat/board.lua:370
 msgid "Your fuel tanks are already full!"
 msgstr ""
 
-#: dat/board.lua:277
+#: dat/board.lua:376
 msgid "You looted {amount} fuel from {plt}."
 msgstr ""
 
 #. Looted all the fuel
-#: dat/board.lua:288
+#: dat/board.lua:387
+msgid "Extract {outfit}?"
+msgstr ""
+
+#: dat/board.lua:388
+msgid ""
+"It will cost #r{credits}#0 in repairs to successfully extract the {outfit}. "
+"You have {playercreds}. Extract the {outfit}?"
+msgstr ""
+
+#: dat/board.lua:392 src/map_system.c:1043
+msgid "Insufficient Credits"
+msgstr ""
+
+#: dat/board.lua:392
+msgid "You lack #r{diff}#0 to be able to extract the {outfit}."
+msgstr ""
+
+#. Soft warning
+#: dat/board.lua:397 dat/board.lua:408
 msgid "Board script failed to remove '{outfit}' from boarded pilot '{plt}'!"
 msgstr ""
 
-#: dat/board.lua:293
+#: dat/board.lua:400 dat/board.lua:413
 msgid "You looted a {outfit} from {plt}."
 msgstr ""
 
 #. Unable to loot anything
-#: dat/board.lua:302
+#: dat/board.lua:422
 msgid "No Space"
 msgstr ""
 
-#: dat/board.lua:302
+#: dat/board.lua:422
 msgid "You have no free cargo space!"
 msgstr ""
 
 #. Might be a misaligned here with loot_mod, but we sort of ignore it :/
-#: dat/board.lua:308
+#: dat/board.lua:428
 msgid "You looted {amount} of {cargo} from {plt}."
 msgstr ""
 
@@ -32884,8 +32951,8 @@ msgstr ""
 #: dat/missions/shadow/darkshadow.lua:56 dat/missions/shadow/shadowvigil.lua:51
 #: src/gui.c:1523 src/map.c:501 src/map.c:507 src/map.c:513 src/map.c:519
 #: src/map.c:525 src/map.c:531 src/map.c:1679 src/map_overlay.c:221
-#: src/outfit.c:297 src/outfit.c:316 src/outfit.c:918 src/player_autonav.c:89
-#: src/player_autonav.c:210 src/ship.c:205
+#: src/outfit.c:285 src/outfit.c:304 src/outfit.c:902 src/player_autonav.c:90
+#: src/player_autonav.c:211 src/ship.c:205
 msgid "Unknown"
 msgstr ""
 
@@ -57688,12 +57755,12 @@ msgid ""
 msgstr ""
 
 #: dat/missions/neutral/wastedump.lua:89
-#: dat/missions/soromid/comingout/srm_comingout5.lua:118
+#: dat/missions/soromid/comingout/srm_comingout5.lua:104
 msgid "Waste Containers"
 msgstr ""
 
 #: dat/missions/neutral/wastedump.lua:89
-#: dat/missions/soromid/comingout/srm_comingout5.lua:118
+#: dat/missions/soromid/comingout/srm_comingout5.lua:104
 msgid "A bunch of waste containers leaking all sorts of indescribable liquids."
 msgstr ""
 
@@ -59999,37 +60066,33 @@ msgstr ""
 #. Don't spawn this mission if the player is buddies with this faction's enemies.
 #: dat/missions/rehab_common.lua:30 dat/missions/rehab_common.lua:44
 #: dat/missions/rehab_common.lua:55 dat/missions/rehab_common.lua:87
-#, lua-format
-msgid "%s Rehabilitation"
+msgid "{fctname} Rehabilitation"
 msgstr ""
 
 #: dat/missions/rehab_common.lua:31
-#, lua-format
 msgid ""
 "You may pay a fine for a chance to redeem yourself in the eyes of a faction "
 "you have offended. You may interact with this faction as if your reputation "
 "were neutral, but your reputation will not actually improve until you've "
 "regained their trust. ANY hostile action against this faction will "
 "immediately void this agreement.\n"
-"Faction: %s\n"
-"Cost: %s"
+"Faction: {fctname}\n"
+"Cost: {credits}"
 msgstr ""
 
 #: dat/missions/rehab_common.lua:39
-#, lua-format
 msgid ""
-"You don't have enough money. You need at least %s to buy a cessation of "
-"hostilities with this faction."
+"You don't have enough money. You need at least {credits} to buy a cessation "
+"of hostilities with this faction."
 msgstr ""
 
 #: dat/missions/rehab_common.lua:44
-#, lua-format
 msgid ""
-"Your application has been processed. The %s security forces will no longer "
-"attack you on sight. You may conduct your business in %s space again, but "
-"remember that you still have a criminal record! If you attack any traders, "
-"civilians or %s ships, or commit any other felony against this faction, you "
-"will immediately become their enemy again.\n"
+"Your application has been processed. The {fctname} security forces will no "
+"longer attack you on sight. You may conduct your business in {fctname} space "
+"again, but remember that you still have a criminal record! If you attack any "
+"traders, civilians or {fctname} ships, or commit any other felony against "
+"this faction, you will immediately become their enemy again.\n"
 "While this agreement is active your reputation will not change, but if you "
 "continue to behave properly and perform beneficial services, your past "
 "offenses will eventually be stricken from the record."
@@ -60049,8 +60112,7 @@ msgstr[2] ""
 #. Standing hook. Manages faction reputation, keeping it at 0 until it goes positive.
 #. The player has successfully erased his criminal record.
 #: dat/missions/rehab_common.lua:76
-#, lua-format
-msgid "%s Rehabilitation Successful"
+msgid "{fctname} Rehabilitation Successful"
 msgstr ""
 
 #: dat/missions/rehab_common.lua:76
@@ -60063,8 +60125,7 @@ msgstr ""
 #. Remove the standing hook prior to modifying reputation.
 #. Reapply the original negative reputation.
 #: dat/missions/rehab_common.lua:105
-#, lua-format
-msgid "%s Rehabilitation Canceled"
+msgid "{fctname} Rehabilitation Canceled"
 msgstr ""
 
 #: dat/missions/rehab_common.lua:105
@@ -64952,12 +65013,11 @@ msgid "Just Some Transportation"
 msgstr ""
 
 #: dat/missions/soromid/comingout/srm_comingout.lua:74
-#, lua-format
 msgid ""
 "C seems relieved at your answer. \"Thank you so much,\" they say. \"I really "
-"appreciate it. I'll make it up to you somehow. My parents live in %s in the "
-"%s system. Like I said, no rush. Just as long as I get there, that's what "
-"matters.\""
+"appreciate it. I'll make it up to you somehow. My parents live in {pnt} in "
+"the {sys} system. Like I said, no rush. Just as long as I get there, that's "
+"what matters.\""
 msgstr ""
 
 #.
@@ -64972,8 +65032,7 @@ msgid "Coming Out"
 msgstr ""
 
 #: dat/missions/soromid/comingout/srm_comingout.lua:79
-#, lua-format
-msgid "Your new friend needs you to take them to their parents in %s."
+msgid "Your new friend needs you to take them to their parents in {sys}."
 msgstr ""
 
 #: dat/missions/soromid/comingout/srm_comingout.lua:80
@@ -64982,8 +65041,7 @@ msgstr ""
 
 #: dat/missions/soromid/comingout/srm_comingout.lua:84
 #: dat/missions/soromid/comingout/srm_comingout2.lua:61
-#, lua-format
-msgid "Go to the %s system and land on the planet %s."
+msgid "Go to the {sys} system and land on the planet {pnt}."
 msgstr ""
 
 #: dat/missions/soromid/comingout/srm_comingout.lua:94
@@ -65026,7 +65084,6 @@ msgid ""
 msgstr ""
 
 #: dat/missions/soromid/comingout/srm_comingout.lua:142
-#, lua-format
 msgid ""
 "After Chelsea's mother releases her, she wipes a few tears from her eyes and "
 "gives you a friendly hug. \"Thank you,\" she says. \"You've been a great "
@@ -65036,7 +65093,7 @@ msgid ""
 "see you again!\"\n"
 "    Taking your cue, you say goodbye for now, excuse yourself from the "
 "table, and make your way back to your ship. As you enter your cockpit you "
-"find a credit chip worth %s! It's not much, but it's something."
+"find a credit chip worth {credits}! It's not much, but it's something."
 msgstr ""
 
 #: dat/missions/soromid/comingout/srm_comingout.lua:149
@@ -65127,7 +65184,7 @@ msgstr ""
 #: dat/missions/soromid/comingout/srm_comingout3.lua:44
 #: dat/missions/soromid/comingout/srm_comingout3.lua:89
 #: dat/missions/soromid/comingout/srm_comingout4.lua:35
-#: dat/missions/soromid/comingout/srm_comingout5.lua:57
+#: dat/missions/soromid/comingout/srm_comingout5.lua:42
 #: dat/missions/soromid/comingout/srm_comingout6.lua:50
 #: dat/missions/soromid/comingout/srm_comingout6.lua:108
 msgid "Chelsea"
@@ -65140,23 +65197,21 @@ msgid ""
 msgstr ""
 
 #: dat/missions/soromid/comingout/srm_comingout2.lua:43
-#, lua-format
-msgid "\"Oh, %s! Are you able to help me out now?\""
+msgid "\"Oh, {player}! Are you able to help me out now?\""
 msgstr ""
 
 #: dat/missions/soromid/comingout/srm_comingout2.lua:45
-#, lua-format
 msgid ""
-"Chelsea smiles and waves as she sees you approaching. \"Hi, %s! It's been a "
-"while!\" You sit down and start a friendly conversation with her. She "
+"Chelsea smiles and waves as she sees you approaching. \"Hi, {player}! It's "
+"been a while!\" You sit down and start a friendly conversation with her. She "
 "mentions that her parents seem to be supportive of her decision to "
 "transition and her mother in particular apparently has been very helpful.\n"
 "    Chelsea perks up a little. \"So, remember I said I had ambitions of a "
 "pilot? Well, I have my piloting license already, but I'm kind of poor so I "
 "couldn't afford my first ship. So I've been asking around and I've managed "
-"to find a great deal for a used ship at %s in the %s system! I just need "
-"someone to take me there. Again, no rush. Would you be able to do that for "
-"me?\""
+"to find a great deal for a used ship at {pnt} in the {sys} system! I just "
+"need someone to take me there. Again, no rush. Would you be able to do that "
+"for me?\""
 msgstr ""
 
 #: dat/missions/soromid/comingout/srm_comingout2.lua:50
@@ -65166,10 +65221,9 @@ msgid "Getting My Feet Wet"
 msgstr ""
 
 #: dat/missions/soromid/comingout/srm_comingout2.lua:51
-#, lua-format
 msgid ""
-"\"Thank you so much! I really appreciate it, %s. I can't pay you much, but I "
-"can give you %s when we get there. I can't wait to start!\""
+"\"Thank you so much! I really appreciate it, {player}. I can't pay you much, "
+"but I can give you {credits} when we get there. I can't wait to start!\""
 msgstr ""
 
 #: dat/missions/soromid/comingout/srm_comingout2.lua:55
@@ -65178,10 +65232,9 @@ msgid "Coming of Age"
 msgstr ""
 
 #: dat/missions/soromid/comingout/srm_comingout2.lua:56
-#, lua-format
 msgid ""
-"Chelsea needs you to take her to %s so she can buy her first ship and kick "
-"off her piloting career."
+"Chelsea needs you to take her to {pnt} so she can buy her first ship and "
+"kick off her piloting career."
 msgstr ""
 
 #: dat/missions/soromid/comingout/srm_comingout2.lua:66
@@ -65244,8 +65297,7 @@ msgid "A Friend's Aid"
 msgstr ""
 
 #: dat/missions/soromid/comingout/srm_comingout3.lua:33
-#, lua-format
-msgid "Chelsea needs you to escort her to %s."
+msgid "Chelsea needs you to escort her to {pnt}."
 msgstr ""
 
 #: dat/missions/soromid/comingout/srm_comingout3.lua:44
@@ -65258,27 +65310,25 @@ msgid ""
 msgstr ""
 
 #: dat/missions/soromid/comingout/srm_comingout3.lua:53
-#, lua-format
 msgid ""
 "Chelsea gleefully waves you over. \"It's nice to see you again!\" she says. "
 "The two of you chat a bit about her venture into the piloting business; all "
 "is well from the sound of it. \"Say,\" she says, \"someone offered me a "
 "really interesting mission recently, but I had to decline because my ship "
 "isn't really up to task. If you could just escort my ship through that "
-"mission I could share the pay with you! Your half would be %s. How about it?"
-"\""
+"mission I could share the pay with you! Your half would be {credits}. How "
+"about it?\""
 msgstr ""
 
 #: dat/missions/soromid/comingout/srm_comingout3.lua:58
-#, lua-format
 msgid ""
 "\"Awesome! I really appreciate it!\n"
 "    \"So the mission is in theory a pretty simple one: I need to deliver "
-"some cargo to %s in the %s system. Trouble is apparently I'll be getting in "
-"the middle of some sort of trade dispute with a shady Soromid company that's "
-"bribed the local Soromid pilots. Needless to say we can expect to be "
-"attacked by some thugs and the Soromid military isn't likely to be of much "
-"help.\n"
+"some cargo to {pnt} in the {sys} system. Trouble is apparently I'll be "
+"getting in the middle of some sort of trade dispute with a shady Soromid "
+"company that's bribed the local Soromid pilots. Needless to say we can "
+"expect to be attacked by some thugs and the Soromid military isn't likely to "
+"be of much help.\n"
 "    \"That's where you come in. I just need you to follow me along, make "
 "sure I finish jumping or landing before you do, and if we encounter any "
 "hostilities, help me shoot them down. Shouldn't be too too hard as long as "
@@ -65286,10 +65336,10 @@ msgid ""
 msgstr ""
 
 #: dat/missions/soromid/comingout/srm_comingout3.lua:70
-#: dat/missions/soromid/comingout/srm_comingout5.lua:81
-#, lua-format
-msgid "Escort Chelsea to %s in the %s system."
-msgstr ""
+#, fuzzy
+#| msgid "Cantina Station"
+msgid "Escort Chelsea to {pnt} in the {sys} system."
+msgstr "Stanice Cantina"
 
 #: dat/missions/soromid/comingout/srm_comingout3.lua:80
 msgid "\"Ah, OK. Let me know if you change your mind.\""
@@ -65297,10 +65347,9 @@ msgstr ""
 
 #: dat/missions/soromid/comingout/srm_comingout3.lua:126
 #: dat/missions/soromid/comingout/srm_comingout4.lua:122
-#: dat/missions/soromid/comingout/srm_comingout5.lua:141
-#, fuzzy, lua-format
+#, fuzzy
 #| msgid "Thug"
-msgid "Thug %s"
+msgid "Thug {ship}"
 msgstr "Rváč"
 
 #: dat/missions/soromid/comingout/srm_comingout3.lua:167
@@ -65313,13 +65362,12 @@ msgid "Another Happy Landing"
 msgstr ""
 
 #: dat/missions/soromid/comingout/srm_comingout3.lua:174
-#, lua-format
 msgid ""
 "You successfully land and dock alongside Chelsea and she approaches the "
 "worker for the cargo delivery. The worker gives her a weird look, but "
 "collects the cargo with the help of some robotic drones and hands her a "
 "credit chip. When you get back to your ships, Chelsea transfers the sum of "
-"%s to your account, and you idly chat with her for a while.\n"
+"{credits} to your account, and you idly chat with her for a while.\n"
 "    \"Anyway, I should probably get going now,\" she says. \"But I really "
 "appreciated the help there! Get in touch with me again sometime. We make a "
 "great team!\" You agree, and you both go your separate ways once again."
@@ -65333,10 +65381,12 @@ msgid ""
 msgstr ""
 
 #: dat/missions/soromid/comingout/srm_comingout3.lua:180
+#: dat/missions/soromid/comingout/srm_comingout5.lua:157
 msgid "Mission Failed"
 msgstr ""
 
 #: dat/missions/soromid/comingout/srm_comingout3.lua:180
+#: dat/missions/soromid/comingout/srm_comingout5.lua:157
 msgid "You have lost contact with Chelsea and therefore failed the mission."
 msgstr ""
 
@@ -65348,8 +65398,7 @@ msgid ""
 msgstr ""
 
 #: dat/missions/soromid/comingout/srm_comingout3.lua:201
-#, lua-format
-msgid "Chelsea has jumped to %s."
+msgid "Chelsea has jumped to {sys}."
 msgstr ""
 
 #: dat/missions/soromid/comingout/srm_comingout3.lua:204
@@ -65359,8 +65408,7 @@ msgid "MISSION FAILED: Chelsea has abandoned the mission."
 msgstr ""
 
 #: dat/missions/soromid/comingout/srm_comingout3.lua:211
-#, lua-format
-msgid "Chelsea has landed on %s."
+msgid "Chelsea has landed on {pnt}."
 msgstr ""
 
 #: dat/missions/soromid/comingout/srm_comingout4.lua:35
@@ -65368,22 +65416,20 @@ msgid "You see Chelsea in the bar and feel an urge to say hello."
 msgstr ""
 
 #: dat/missions/soromid/comingout/srm_comingout4.lua:42
-#, lua-format
-msgid "\"Oh, %s! Have you changed your mind? Can you take me to %s?\""
+msgid "\"Oh, {player}! Have you changed your mind? Can you take me to {pnt}?\""
 msgstr ""
 
 #: dat/missions/soromid/comingout/srm_comingout4.lua:44
-#, lua-format
 msgid ""
-"Chelsea greets you as before. \"Hi, %s! It's so nice to see you again!\" The "
-"two of you talk about your travels once again. \"So, I've got a bit of a "
-"request. Could you use they/them pronouns with me again?\" You agree to the "
-"request. \"Thank you,\" they say. \"I've done some more soul-searching "
+"Chelsea greets you as before. \"Hi, {player}! It's so nice to see you again!"
+"\" The two of you talk about your travels once again. \"So, I've got a bit "
+"of a request. Could you use they/them pronouns with me again?\" You agree to "
+"the request. \"Thank you,\" they say. \"I've done some more soul-searching "
 "lately and I've found that I identify more as nonbinary than as a woman. I "
 "really appreciate it!\n"
 "    \"Actually, come to think of it, this would be a great excuse to go see "
 "my parents again! It's been so long since I've seen them. Say, could you "
-"take me to them in %s?\""
+"take me to them in {pnt}?\""
 msgstr ""
 
 #: dat/missions/soromid/comingout/srm_comingout4.lua:49
@@ -65395,16 +65441,14 @@ msgid "Visiting Family"
 msgstr ""
 
 #: dat/missions/soromid/comingout/srm_comingout4.lua:50
-#, lua-format
 msgid ""
-"\"Awesome! Thank you so much! So just take me to %s in the %s system, and "
-"then take me to %s in the %s system. As usual, no rush. Just as long as I "
-"get to see my parents, I'm happy!\""
+"\"Awesome! Thank you so much! So just take me to {pnt} in the {sys} system, "
+"and then take me to {pnt2} in the {sys2} system. As usual, no rush. Just as "
+"long as I get to see my parents, I'm happy!\""
 msgstr ""
 
 #: dat/missions/soromid/comingout/srm_comingout4.lua:55
-#, lua-format
-msgid "Chelsea wants to revisit their family in %s."
+msgid "Chelsea wants to revisit their family in {pnt}."
 msgstr ""
 
 #: dat/missions/soromid/comingout/srm_comingout4.lua:69
@@ -65416,11 +65460,11 @@ msgid "It's too dangerous to land here right now."
 msgstr ""
 
 #: dat/missions/soromid/comingout/srm_comingout4.lua:88
-#, lua-format
 msgid ""
-"You land and dock on %s, then meet up with both of Chelsea's parents. They "
-"welcome Chelsea and their mother gives them a warm hug, then releases them. "
-"Chelsea's father slightly waves, and the three of them start chatting.\n"
+"You land and dock on {pnt}, then meet up with both of Chelsea's parents. "
+"They welcome Chelsea and their mother gives them a warm hug, then releases "
+"them. Chelsea's father slightly waves, and the three of them start "
+"chatting.\n"
 "    Eventually, the topic of Chelsea's gender comes up. Chelsea explains "
 "that they are nonbinary and prefer they/them pronouns similarly to when they "
 "explained it to you. Their mother says that she is proud of them and hugs "
@@ -65443,7 +65487,6 @@ msgid ""
 msgstr ""
 
 #: dat/missions/soromid/comingout/srm_comingout4.lua:93
-#, lua-format
 msgid ""
 "Everything goes silent for what must be mere seconds, but seems to last a "
 "period. Finally, Chelsea speaks up. \"Dad... I've made good friends with "
@@ -65452,11 +65495,11 @@ msgid ""
 "you've made them out to be all my life. And dad, I am not your son. I never "
 "really was your son. I will never be your son. I am a transfemme enby. End "
 "of discussion.\n"
-"    \"%s here has really taught me a lot about asserting myself and not "
-"letting others dictate who I am, probably without realizing it. So I'm no "
-"longer going to allow your bigoted ideas about gender define me.\" Chelsea "
-"pauses. \"And with the help of the Soromid, I'll be getting some procedures "
-"done to help affirm who I am.\""
+"    \"{player} here has really taught me a lot about asserting myself and "
+"not letting others dictate who I am, probably without realizing it. So I'm "
+"no longer going to allow your bigoted ideas about gender define me.\" "
+"Chelsea pauses. \"And with the help of the Soromid, I'll be getting some "
+"procedures done to help affirm who I am.\""
 msgstr ""
 
 #: dat/missions/soromid/comingout/srm_comingout4.lua:95
@@ -65542,11 +65585,30 @@ msgstr ""
 #. Waste Collector
 #.
 #. --
-#: dat/missions/soromid/comingout/srm_comingout5.lua:32
-msgid "The Dirty Job"
+#: dat/missions/soromid/comingout/srm_comingout5.lua:30
+msgid "Waste Collector"
 msgstr ""
 
-#: dat/missions/soromid/comingout/srm_comingout5.lua:33
+#: dat/missions/soromid/comingout/srm_comingout5.lua:31
+#, lua-format
+msgid ""
+"Chelsea needs an escort to %s so they can get rid of the garbage now filling "
+"their ship."
+msgstr ""
+
+#: dat/missions/soromid/comingout/srm_comingout5.lua:42
+msgid ""
+"Chelsea seems like they're stressed. Maybe you should see how they're doing?"
+msgstr ""
+
+#: dat/missions/soromid/comingout/srm_comingout5.lua:49
+msgid ""
+"\"I'm not having any luck coming up with a plan to get rid of all of this "
+"garbage without getting jumped by those thugs. Is there any chance you could "
+"reconsider being my escort? It would be a big help.\""
+msgstr ""
+
+#: dat/missions/soromid/comingout/srm_comingout5.lua:51
 #, lua-format
 msgid ""
 "You walk over to Chelsea to greet them when you notice an unpleasant odor "
@@ -65565,31 +65627,41 @@ msgid ""
 "garbage there. I'll give you %s for the trouble. What do you say?\""
 msgstr ""
 
-#: dat/missions/soromid/comingout/srm_comingout5.lua:36
+#: dat/missions/soromid/comingout/srm_comingout5.lua:56
+#: dat/missions/soromid/comingout/srm_comingout5.lua:57
+#: dat/missions/soromid/comingout/srm_comingout5.lua:77
+msgid "The Dirty Job"
+msgstr ""
+
+#: dat/missions/soromid/comingout/srm_comingout5.lua:57
 msgid ""
 "\"I appreciate it very much. I'll wait at the hangar until you're ready to "
 "take off. Get ready for a fight when we get out of the atmosphere; it's "
 "going to be a bumpy ride.\""
 msgstr ""
 
-#: dat/missions/soromid/comingout/srm_comingout5.lua:38
+#: dat/missions/soromid/comingout/srm_comingout5.lua:67
+#, lua-format
+msgid "Escort Chelsea to %s in the %s system."
+msgstr ""
+
+#: dat/missions/soromid/comingout/srm_comingout5.lua:77
 msgid ""
 "\"OK, I understand. I guess I'll have to find some other way to get rid of "
 "all this garbage...\""
 msgstr ""
 
-#: dat/missions/soromid/comingout/srm_comingout5.lua:40
-msgid ""
-"\"I'm not having any luck coming up with a plan to get rid of all of this "
-"garbage without getting jumped by those thugs. Is there any chance you could "
-"reconsider being my escort? It would be a big help.\""
-msgstr ""
+#: dat/missions/soromid/comingout/srm_comingout5.lua:127
+#, fuzzy, lua-format
+#| msgid "Thug"
+msgid "Thug %s"
+msgstr "Rváč"
 
-#: dat/missions/soromid/comingout/srm_comingout5.lua:42
+#: dat/missions/soromid/comingout/srm_comingout5.lua:147
 msgid "The Unbearable Smell Now Ends"
 msgstr ""
 
-#: dat/missions/soromid/comingout/srm_comingout5.lua:43
+#: dat/missions/soromid/comingout/srm_comingout5.lua:147
 msgid ""
 "As you dock, you can't help but notice the foul smell of garbage all around "
 "you. The planet really does fit the name. You grimace as you watch workers "
@@ -65600,23 +65672,7 @@ msgid ""
 "hold of their ship clean."
 msgstr ""
 
-#: dat/missions/soromid/comingout/srm_comingout5.lua:45
-msgid "Waste Collector"
-msgstr ""
-
-#: dat/missions/soromid/comingout/srm_comingout5.lua:46
-#, lua-format
-msgid ""
-"Chelsea needs an escort to %s so they can get rid of the garbage now filling "
-"their ship."
-msgstr ""
-
-#: dat/missions/soromid/comingout/srm_comingout5.lua:57
-msgid ""
-"Chelsea seems like they're stressed. Maybe you should see how they're doing?"
-msgstr ""
-
-#: dat/missions/soromid/comingout/srm_comingout5.lua:167
+#: dat/missions/soromid/comingout/srm_comingout5.lua:153
 msgid ""
 "You helped Chelsea get rid of a load of garbage they naively agreed to take "
 "to The Stinker as a mission, defending them from thugs along the way."
@@ -65627,12 +65683,11 @@ msgid "Oh, it's Chelsea! You feel an urge to say hello."
 msgstr ""
 
 #: dat/missions/soromid/comingout/srm_comingout6.lua:57
-#, lua-format
-msgid "\"Hey, %s! Any chance you could reconsider? I could use your help.\""
+msgid ""
+"\"Hey, {player}! Any chance you could reconsider? I could use your help.\""
 msgstr ""
 
 #: dat/missions/soromid/comingout/srm_comingout6.lua:59
-#, lua-format
 msgid ""
 "You greet Chelsea as usual and have a friendly chat with them. You learn "
 "that they had a close call recently with another thug, but they managed to "
@@ -65645,11 +65700,11 @@ msgid ""
 "Well, not new exactly. It's used, but in much better condition than that "
 "rust bucket I got before. Supposedly this guy used to be a Dvaered warlord "
 "and is offering me his old Vigilance if I just take care of this one pirate "
-"known as %s. Trouble is they're piloting a ship that's stronger than my "
-"own....\"\n"
+"known as {pltname}. Trouble is they're piloting a ship that's stronger than "
+"my own....\"\n"
 "    Chelsea pauses in contemplation for a moment. \"Say, do you think you "
 "could help me out on this one? I just need you to help me kill the pirate in "
-"%s. I'll give you %s for the trouble. How about it?\""
+"{sys}. I'll give you {credits} for the trouble. How about it?\""
 msgstr ""
 
 #: dat/missions/soromid/comingout/srm_comingout6.lua:65
@@ -65659,10 +65714,9 @@ msgid "A Great Opportunity"
 msgstr ""
 
 #: dat/missions/soromid/comingout/srm_comingout6.lua:66
-#, lua-format
 msgid ""
-"\"Fantastic! Thank you for the help! I'll meet you in %s and we can take the "
-"pirate out. Let's do this!\""
+"\"Fantastic! Thank you for the help! I'll meet you in {sys} and we can take "
+"the pirate out. Let's do this!\""
 msgstr ""
 
 #: dat/missions/soromid/comingout/srm_comingout6.lua:69
@@ -65670,8 +65724,7 @@ msgid "Moving Up"
 msgstr ""
 
 #: dat/missions/soromid/comingout/srm_comingout6.lua:70
-#, lua-format
-msgid "Chelsea needs you help them kill a wanted pirate in %s."
+msgid "Chelsea needs you help them kill a wanted pirate in {sys}."
 msgstr ""
 
 #: dat/missions/soromid/comingout/srm_comingout6.lua:78
@@ -65684,12 +65737,11 @@ msgid "Death Of A Pirate"
 msgstr ""
 
 #: dat/missions/soromid/comingout/srm_comingout6.lua:153
-#, lua-format
 msgid ""
 "Chelsea pops up on your viewscreen and grins. \"We did it!\" they say. "
-"\"Thanks for all the help, %s. I've transferred the money into your account. "
-"See you next time with my new ship!\" You say your goodbyes and go back to "
-"your own adventures."
+"\"Thanks for all the help, {player}. I've transferred the money into your "
+"account. See you next time with my new ship!\" You say your goodbyes and go "
+"back to your own adventures."
 msgstr ""
 
 #: dat/missions/soromid/comingout/srm_comingout6.lua:159
@@ -66313,10 +66365,10 @@ msgstr ""
 #: dat/missions/tutorial/nelly01.lua:338
 msgid ""
 "\"Oooh, look at that. A Koala derelict is nearby. There might be something "
-"interesting on it! We should go board it. Try to bring the ship to a stop on "
-"top of them and either #odouble-click#0 or select them and board them with "
-"{boardkey}. You can toggle the overlay to see exactly where the ship is with "
-"{overlay}.\""
+"interesting on it! We should go board it. Try #odouble-click#0ing or "
+"selecting the derelict and pressing {boardkey}. It should enable your "
+"autonav system to board the ship. You can toggle the overlay to see exactly "
+"where the ship is with {overlay}.\""
 msgstr ""
 
 #. TODO maybe explain better boarding window when done
@@ -68538,13 +68590,13 @@ msgstr ""
 #. buttons
 #: dat/missions/zalek/neburesearch/neburesearch_03.lua:149
 #: dat/missions/zalek/neburesearch/neburesearch_03.lua:159
-#: dat/scripts/vntk.lua:72 src/dialogue.c:396
+#: dat/scripts/luatk/core.lua:460 dat/scripts/vntk.lua:72 src/dialogue.c:396
 msgid "Yes"
 msgstr ""
 
 #: dat/missions/zalek/neburesearch/neburesearch_03.lua:149
 #: dat/missions/zalek/neburesearch/neburesearch_03.lua:159
-#: dat/scripts/vntk.lua:73 src/dialogue.c:398
+#: dat/scripts/luatk/core.lua:466 dat/scripts/vntk.lua:73 src/dialogue.c:398
 msgid "No"
 msgstr ""
 
@@ -71913,6 +71965,7 @@ msgstr ""
 #. Set scissors
 #. Draw widgets ontop
 #. Restore scissors
+#. Draw overlay
 #.
 #. -- Widget class
 #. --
@@ -71938,7 +71991,7 @@ msgstr ""
 #. High Level dialogue stuff
 #. --
 #. Add the OK button
-#: dat/scripts/luatk/core.lua:439 src/dialogue.c:160 src/dialogue.c:286
+#: dat/scripts/luatk/core.lua:450 src/dialogue.c:160 src/dialogue.c:286
 #: src/dialogue.c:343 src/dialogue.c:736 src/options.c:253 src/options.c:573
 #: src/options.c:876 src/options.c:1179
 msgid "OK"
@@ -75224,7 +75277,7 @@ msgstr[0] ""
 msgstr[1] ""
 msgstr[2] ""
 
-#: src/ai.c:590 src/board.c:149 src/comm.c:168 src/info.c:385 src/land.c:1450
+#: src/ai.c:590 src/board.c:151 src/comm.c:168 src/info.c:385 src/land.c:1450
 #, c-format
 msgid ""
 "Error loading file: %s\n"
@@ -75369,7 +75422,7 @@ msgstr ""
 msgid "unknown error"
 msgstr ""
 
-#: src/board.c:71
+#: src/board.c:71 src/player.c:1657
 msgid "#rYou need a target to board first!"
 msgstr ""
 
@@ -75385,35 +75438,35 @@ msgstr ""
 msgid "#rYou cannot board a ship that isn't disabled!"
 msgstr ""
 
-#: src/board.c:94
+#: src/board.c:95
 msgid "#rYou are too far away to board your target."
 msgstr ""
 
-#: src/board.c:100
+#: src/board.c:102
 msgid "#rYou are going too fast to board the ship."
 msgstr ""
 
-#: src/board.c:107
+#: src/board.c:109
 msgid "Unable to recover fighter."
 msgstr ""
 
-#: src/board.c:110
+#: src/board.c:112
 #, c-format
 msgid "#oYou recover your %s fighter."
 msgstr ""
 
-#: src/board.c:120
+#: src/board.c:122
 #, c-format
 msgid "#oBoarding ship #%c%s#0."
 msgstr ""
 
 #. error has occurred
-#: src/board.c:164
+#: src/board.c:166
 #, c-format
 msgid "Board: '%s'"
 msgstr ""
 
-#: src/board.c:247
+#: src/board.c:250
 #, c-format
 msgid "#%c%s#0 has plundered %s from your ship!"
 msgstr ""
@@ -75574,7 +75627,7 @@ msgstr ""
 msgid "Malformed %s file: missing root element '%s'"
 msgstr ""
 
-#: src/commodity.c:667 src/faction.c:1526 src/map.c:2681 src/outfit.c:1144
+#: src/commodity.c:667 src/faction.c:1526 src/map.c:2681 src/outfit.c:1121
 #: src/ship.c:525 src/ship.c:987 src/space.c:1773 src/space.c:1831
 #: src/space.c:3423 src/tech.c:112
 #, c-format
@@ -76758,15 +76811,15 @@ msgstr ""
 msgid "Favourite"
 msgstr ""
 
-#: src/equipment.c:602 src/outfit.c:295
+#: src/equipment.c:602 src/outfit.c:283
 msgid "Weapon"
 msgstr ""
 
-#: src/equipment.c:610 src/outfit.c:293
+#: src/equipment.c:610 src/outfit.c:281
 msgid "Utility"
 msgstr ""
 
-#: src/equipment.c:618 src/outfit.c:291
+#: src/equipment.c:618 src/outfit.c:279
 msgid "Structure"
 msgstr ""
 
@@ -77351,7 +77404,7 @@ msgstr ""
 msgid "Adding translations from %s"
 msgstr ""
 
-#: src/gui.c:401 src/input.c:1279
+#: src/gui.c:401 src/input.c:1280
 msgid "Gfx index out of range"
 msgstr ""
 
@@ -78098,7 +78151,7 @@ msgid "Cycles through jump points."
 msgstr ""
 
 #. create the window.
-#: src/input.c:94 src/map.c:259 src/outfit.c:884
+#: src/input.c:94 src/map.c:259 src/outfit.c:869
 msgid "Star Map"
 msgstr ""
 
@@ -79585,10 +79638,6 @@ msgid "Commodity prices for %s are not available here at the moment."
 msgstr ""
 
 #: src/map_system.c:1043
-msgid "Insufficient Credits"
-msgstr ""
-
-#: src/map_system.c:1043
 #, c-format
 msgid "You need %s to purchase this information."
 msgstr ""
@@ -80566,7 +80615,7 @@ msgstr ""
 msgid "Outfit is invalid."
 msgstr ""
 
-#: src/nlua_outfit.c:527
+#: src/nlua_outfit.c:525
 msgid "Outfit has invalid damage type."
 msgstr ""
 
@@ -81024,7 +81073,7 @@ msgstr ""
 msgid "No such material %s"
 msgstr ""
 
-#: src/opengl.c:109 src/player.c:2145
+#: src/opengl.c:109 src/player.c:2173
 msgid "Aborting screenshot"
 msgstr ""
 
@@ -81521,147 +81570,147 @@ msgstr ""
 msgid "Map Overlay Opacity: %.0f%%"
 msgstr ""
 
-#: src/outfit.c:120
+#: src/outfit.c:112
 #, c-format
 msgid "Outfit '%s' not found in stack."
 msgstr ""
 
-#: src/outfit.c:310
+#: src/outfit.c:298
 msgid "Small"
 msgstr ""
 
-#: src/outfit.c:312
+#: src/outfit.c:300
 msgid "Medium"
 msgstr ""
 
-#: src/outfit.c:314
+#: src/outfit.c:302
 msgid "Large"
 msgstr ""
 
-#: src/outfit.c:402
+#: src/outfit.c:390
 #, c-format
 msgid "'%s' does not match any outfit slot sizes."
 msgstr ""
 
-#: src/outfit.c:417
+#: src/outfit.c:405
 #, c-format
 msgid "Outfit '%s' has implicit slot size, setting to '%s'."
 msgstr ""
 
-#: src/outfit.c:872
+#: src/outfit.c:857
 msgid "NULL"
 msgstr ""
 
-#: src/outfit.c:873
+#: src/outfit.c:858
 msgid "Bolt Cannon"
 msgstr ""
 
-#: src/outfit.c:874
+#: src/outfit.c:859
 msgid "Beam Cannon"
 msgstr ""
 
-#: src/outfit.c:875
+#: src/outfit.c:860
 msgid "Bolt Turret"
 msgstr ""
 
-#: src/outfit.c:876
+#: src/outfit.c:861
 msgid "Beam Turret"
 msgstr ""
 
-#: src/outfit.c:877 src/outfit.c:907
+#: src/outfit.c:862 src/outfit.c:891
 msgid "Launcher"
 msgstr ""
 
-#: src/outfit.c:878
+#: src/outfit.c:863
 msgid "Ammunition"
 msgstr ""
 
-#: src/outfit.c:879
+#: src/outfit.c:864
 msgid "Turret Launcher"
 msgstr ""
 
-#: src/outfit.c:880
+#: src/outfit.c:865
 msgid "Ship Modification"
 msgstr ""
 
-#: src/outfit.c:881 src/outfit.c:911
+#: src/outfit.c:866 src/outfit.c:895
 msgid "Afterburner"
 msgstr ""
 
-#: src/outfit.c:882 src/outfit.c:912
+#: src/outfit.c:867 src/outfit.c:896
 msgid "Fighter Bay"
 msgstr ""
 
-#: src/outfit.c:883 src/outfit.c:913 src/ship.c:190
+#: src/outfit.c:868 src/outfit.c:897 src/ship.c:190
 msgid "Fighter"
 msgstr ""
 
-#: src/outfit.c:885 src/outfit.c:915
+#: src/outfit.c:870 src/outfit.c:899
 msgid "Local Map"
 msgstr ""
 
-#: src/outfit.c:886 src/outfit.c:916
+#: src/outfit.c:871 src/outfit.c:900
 msgid "GUI"
 msgstr ""
 
-#: src/outfit.c:887 src/outfit.c:917
+#: src/outfit.c:872 src/outfit.c:901
 msgid "License"
 msgstr ""
 
-#: src/outfit.c:905
+#: src/outfit.c:889
 msgid "Bolt Weapon"
 msgstr ""
 
-#: src/outfit.c:906
+#: src/outfit.c:890
 msgid "Beam Weapon"
 msgstr ""
 
-#: src/outfit.c:908
+#: src/outfit.c:892
 msgid "Ammo"
 msgstr ""
 
 #. else if (outfit_isTurret(o))     return N_("Turret");
-#: src/outfit.c:910
+#: src/outfit.c:894
 msgid "Modification"
 msgstr ""
 
-#: src/outfit.c:914
+#: src/outfit.c:898
 msgid "Map"
 msgstr ""
 
-#: src/outfit.c:930
+#: src/outfit.c:913
 msgid "Unguided"
 msgstr ""
 
-#: src/outfit.c:931
+#: src/outfit.c:914
 msgid "Seek"
 msgstr ""
 
-#: src/outfit.c:932
+#: src/outfit.c:915
 msgid "Smart"
 msgstr ""
 
-#: src/outfit.c:936
+#: src/outfit.c:919
 #, c-format
 msgid "Outfit '%s' is not an ammo outfit"
 msgstr ""
 
-#: src/outfit.c:1051
+#: src/outfit.c:1030
 #, c-format
 msgid "Invalid outfit type: '%s'"
 msgstr ""
 
-#: src/outfit.c:1094
+#: src/outfit.c:1072
 #, c-format
 msgid "Unknown damage type '%s'"
 msgstr ""
 
-#: src/outfit.c:1097
+#: src/outfit.c:1075
 #, c-format
 msgid "Damage has unknown node '%s'"
 msgstr ""
 
-#: src/outfit.c:1126
+#: src/outfit.c:1103
 #, c-format
 msgid ""
 "%s xml collision polygon does not exist!\n"
@@ -81669,358 +81718,358 @@ msgid ""
 "found in Naev's artwork repo."
 msgstr ""
 
-#: src/outfit.c:1226 src/outfit.c:1602
+#: src/outfit.c:1202 src/outfit.c:1575
 #, c-format
 msgid "Outfit '%s' has invalid blowup property: '%s'"
 msgstr ""
 
-#: src/outfit.c:1252 src/outfit.c:1629
+#: src/outfit.c:1228 src/outfit.c:1602
 #, c-format
 msgid ""
 "Outfit '%s': the number of collision polygons is wrong.\n"
 "                     npolygon = %i and sx*sy = %i"
 msgstr ""
 
-#: src/outfit.c:1296 src/outfit.c:1454 src/outfit.c:1546 src/outfit.c:1677
-#: src/outfit.c:1766 src/outfit.c:1838 src/outfit.c:1905 src/outfit.c:1947
-#: src/outfit.c:2018 src/outfit.c:2041 src/outfit.c:2082 src/outfit.c:2119
-#: src/outfit.c:2152 src/outfit.c:2302 src/outfit.c:2383
+#: src/outfit.c:1272 src/outfit.c:1429 src/outfit.c:1520 src/outfit.c:1650
+#: src/outfit.c:1738 src/outfit.c:1809 src/outfit.c:1876 src/outfit.c:1918
+#: src/outfit.c:1989 src/outfit.c:2012 src/outfit.c:2051 src/outfit.c:2087
+#: src/outfit.c:2119 src/outfit.c:2267 src/outfit.c:2348
 #, c-format
 msgid "Outfit '%s' has unknown node '%s'"
 msgstr ""
 
-#: src/outfit.c:1325 src/outfit.c:2668
+#: src/outfit.c:1301 src/outfit.c:2630
 #, c-format
 msgid "%s [%s]"
 msgstr ""
 
-#: src/outfit.c:1327 src/outfit.c:1474 src/outfit.c:1846 src/outfit.c:1916
-#: src/outfit.c:2670
+#: src/outfit.c:1303 src/outfit.c:1449 src/outfit.c:1817 src/outfit.c:1887
+#: src/outfit.c:2632
 #, c-format
 msgid ""
 "\n"
 "%.0f CPU"
 msgstr ""
 
-#: src/outfit.c:1328 src/outfit.c:1475 src/outfit.c:2688
+#: src/outfit.c:1304 src/outfit.c:1450 src/outfit.c:2650
 #, c-format
 msgid ""
 "\n"
 "%.0f%% Penetration"
 msgstr ""
 
-#: src/outfit.c:1329 src/outfit.c:2689
+#: src/outfit.c:1305 src/outfit.c:2651
 #, c-format
 msgid ""
 "\n"
 "%.2f DPS [%.0f Damage]"
 msgstr ""
 
-#: src/outfit.c:1331
+#: src/outfit.c:1307
 #, c-format
 msgid ""
 "\n"
 "%.2f Disable/s [%.0f Disable]"
 msgstr ""
 
-#: src/outfit.c:1333 src/outfit.c:2693
+#: src/outfit.c:1309 src/outfit.c:2655
 #, c-format
 msgid ""
 "\n"
 "%.1f Shots Per Second"
 msgstr ""
 
-#: src/outfit.c:1334 src/outfit.c:2705
+#: src/outfit.c:1310 src/outfit.c:2667
 #, c-format
 msgid ""
 "\n"
 "%.1f EPS [%.0f Energy]"
 msgstr ""
 
-#: src/outfit.c:1336 src/outfit.c:1484
+#: src/outfit.c:1312 src/outfit.c:1459
 #, c-format
 msgid ""
 "\n"
 "%s Range"
 msgstr ""
 
-#: src/outfit.c:1337 src/outfit.c:2702
+#: src/outfit.c:1313 src/outfit.c:2664
 #, c-format
 msgid ""
 "\n"
 "%.0f Speed"
 msgstr ""
 
-#: src/outfit.c:1338 src/outfit.c:1485
+#: src/outfit.c:1314 src/outfit.c:1460
 #, c-format
 msgid ""
 "\n"
 "%.1f second heat up"
 msgstr ""
 
-#: src/outfit.c:1340 src/outfit.c:1487 src/outfit.c:2683
+#: src/outfit.c:1316 src/outfit.c:1462 src/outfit.c:2645
 #, c-format
 msgid ""
 "\n"
 "%.1f Degree Swivel"
 msgstr ""
 
-#: src/outfit.c:1341 src/outfit.c:2675 src/outfit.c:2681
+#: src/outfit.c:1317 src/outfit.c:2637 src/outfit.c:2643
 #, c-format
 msgid ""
 "\n"
 "%s Optimal Tracking"
 msgstr ""
 
-#: src/outfit.c:1342 src/outfit.c:2676 src/outfit.c:2682
+#: src/outfit.c:1318 src/outfit.c:2638 src/outfit.c:2644
 #, c-format
 msgid ""
 "\n"
 "%s Minimal Tracking"
 msgstr ""
 
-#: src/outfit.c:1345 src/outfit.c:1490 src/outfit.c:1691 src/outfit.c:1868
-#: src/outfit.c:1922 src/outfit.c:1957 src/outfit.c:2057 src/outfit.c:2095
-#: src/outfit.c:2128 src/outfit.c:2162 src/outfit.c:2387
+#: src/outfit.c:1321 src/outfit.c:1465 src/outfit.c:1664 src/outfit.c:1839
+#: src/outfit.c:1893 src/outfit.c:1928 src/outfit.c:2027 src/outfit.c:2064
+#: src/outfit.c:2096 src/outfit.c:2129 src/outfit.c:2352
 #, c-format
 msgid "Outfit '%s' missing/invalid '%s' element"
 msgstr ""
 
-#: src/outfit.c:1476
+#: src/outfit.c:1451
 #, c-format
 msgid ""
 "\n"
 "%.2f DPS [%s]"
 msgstr ""
 
-#: src/outfit.c:1479
+#: src/outfit.c:1454
 #, c-format
 msgid ""
 "\n"
 "%.0f Disable/s"
 msgstr ""
 
-#: src/outfit.c:1480 src/outfit.c:1851
+#: src/outfit.c:1455 src/outfit.c:1822
 #, c-format
 msgid ""
 "\n"
 "%.1f EPS"
 msgstr ""
 
-#: src/outfit.c:1481
+#: src/outfit.c:1456
 #, c-format
 msgid ""
 "\n"
 "%.1f Duration"
 msgstr ""
 
-#: src/outfit.c:1482
+#: src/outfit.c:1457
 #, c-format
 msgid " (%.1f minimum)"
 msgstr ""
 
-#: src/outfit.c:1483
+#: src/outfit.c:1458
 #, c-format
 msgid ""
 "\n"
 "%.1f Cooldown"
 msgstr ""
 
-#: src/outfit.c:1559
+#: src/outfit.c:1533
 #, c-format
 msgid "Outfit '%s' missing '%s' element"
 msgstr ""
 
-#: src/outfit.c:1673
+#: src/outfit.c:1646
 #, c-format
 msgid "Ammo '%s' has unknown ai type '%s'."
 msgstr ""
 
-#: src/outfit.c:1709
+#: src/outfit.c:1682
 #, c-format
 msgid "Outfit '%s' has no speed nor thrust set!"
 msgstr ""
 
-#: src/outfit.c:1778 src/outfit.c:1845
+#: src/outfit.c:1750 src/outfit.c:1816
 msgid ""
 "\n"
 "#rActivated Outfit#0"
 msgstr ""
 
-#: src/outfit.c:1780
+#: src/outfit.c:1752
 #, c-format
 msgid " #r(%.1f s Cooldown)#0"
 msgstr ""
 
-#: src/outfit.c:1781
+#: src/outfit.c:1753
 #, c-format
 msgid "%+.0f CPU"
 msgstr ""
 
-#: src/outfit.c:1847
+#: src/outfit.c:1818
 msgid ""
 "\n"
 "Only one can be equipped"
 msgstr ""
 
-#: src/outfit.c:1848
+#: src/outfit.c:1819
 #, c-format
 msgid ""
 "\n"
 "%.0f Maximum Effective Mass"
 msgstr ""
 
-#: src/outfit.c:1849
+#: src/outfit.c:1820
 #, c-format
 msgid ""
 "\n"
 "%.0f%% Thrust"
 msgstr ""
 
-#: src/outfit.c:1850
+#: src/outfit.c:1821
 #, c-format
 msgid ""
 "\n"
 "%.0f%% Maximum Speed"
 msgstr ""
 
-#: src/outfit.c:1852
+#: src/outfit.c:1823
 #, c-format
 msgid ""
 "\n"
 "%.1f Rumble"
 msgstr ""
 
-#: src/outfit.c:1917
+#: src/outfit.c:1888
 #, c-format
 msgid ""
 "\n"
 "%.1f Seconds Per Launch"
 msgstr ""
 
-#: src/outfit.c:1918 src/outfit.c:2687
+#: src/outfit.c:1889 src/outfit.c:2649
 #, c-format
 msgid ""
 "\n"
 "Holds %d %s"
 msgstr ""
 
-#: src/outfit.c:1919 src/outfit.c:2704
+#: src/outfit.c:1890 src/outfit.c:2666
 #, c-format
 msgid ""
 "\n"
 "%.1f Seconds to Reload"
 msgstr ""
 
-#: src/outfit.c:2007
+#: src/outfit.c:1978
 #, c-format
 msgid "Map '%s' has invalid asset '%s'"
 msgstr ""
 
-#: src/outfit.c:2015
+#: src/outfit.c:1986
 #, c-format
 msgid "Map '%s' has invalid jump point '%s'"
 msgstr ""
 
-#: src/outfit.c:2022
+#: src/outfit.c:1993
 #, c-format
 msgid "Map '%s' has invalid system '%s'"
 msgstr ""
 
-#: src/outfit.c:2125
+#: src/outfit.c:2093
 #, c-format
 msgid "GUI (Graphical User Interface)"
 msgstr ""
 
-#: src/outfit.c:2190 src/outfit.c:2612 src/slots.c:65 src/space.c:3323
+#: src/outfit.c:2156 src/outfit.c:2575 src/slots.c:65 src/space.c:3323
 #: src/spfx.c:1163 src/start.c:69
 #, c-format
 msgid "Malformed '%s' file: does not contain elements"
 msgstr ""
 
-#: src/outfit.c:2200
+#: src/outfit.c:2166
 #, c-format
 msgid "Outfit in %s has invalid or no name"
 msgstr ""
 
-#: src/outfit.c:2246
+#: src/outfit.c:2212
 #, c-format
 msgid "Outfit '%s' has an slot type invalid."
 msgstr ""
 
-#: src/outfit.c:2254
+#: src/outfit.c:2220
 #, c-format
 msgid "Outfit '%s' has unknown slot type '%s'."
 msgstr ""
 
-#: src/outfit.c:2275
+#: src/outfit.c:2241
 #, c-format
 msgid "Empty faction string for outfit '%s' legality!"
 msgstr ""
 
-#: src/outfit.c:2281
+#: src/outfit.c:2247
 #, c-format
 msgid "Outfit '%s' has no factions defined in <illegalto> block!"
 msgstr ""
 
-#: src/outfit.c:2284
+#: src/outfit.c:2250
 #, c-format
 msgid "Outfit '%s' has unknown general node '%s'"
 msgstr ""
 
-#: src/outfit.c:2312
+#: src/outfit.c:2277
 #, c-format
 msgid "Outfit '%s' element 'specific' missing property 'type'"
 msgstr ""
 
-#: src/outfit.c:2328
+#: src/outfit.c:2293
 #, c-format
 msgid "Outfit '%s' has group '%d', should be in the 1-%d range"
 msgstr ""
 
-#: src/outfit.c:2339
+#: src/outfit.c:2304
 #, c-format
 msgid "Outfit '%s' is of type NONE"
 msgstr ""
 
-#: src/outfit.c:2452
+#: src/outfit.c:2416
 #, c-format
 msgid "Outfit '%s' missing/invalid 'trackmin' element"
 msgstr ""
 
-#: src/outfit.c:2454
+#: src/outfit.c:2418
 #, c-format
 msgid "Outfit '%s' missing/invalid 'trackmax' element"
 msgstr ""
 
-#: src/outfit.c:2456
+#: src/outfit.c:2420
 #, c-format
 msgid "Outfit '%s' missing/invalid 'lockon' element"
 msgstr ""
 
-#: src/outfit.c:2458
+#: src/outfit.c:2422
 #, c-format
 msgid "Outfit '%s' missing/invalid 'arc' element"
 msgstr ""
 
-#: src/outfit.c:2462
+#: src/outfit.c:2426
 #, c-format
 msgid "Outfit '%s' has longer 'iflockon' than ammo 'duration'"
 msgstr ""
 
-#: src/outfit.c:2476
+#: src/outfit.c:2440
 #, c-format
 msgid "Outfit '%s' failed to read Lua '%s'!"
 msgstr ""
 
-#: src/outfit.c:2489
+#: src/outfit.c:2453
 #, c-format
 msgid ""
 "Outfit '%s' Lua error:\n"
 "%s"
 msgstr ""
 
-#: src/outfit.c:2531
+#: src/outfit.c:2495
 #, c-format
 msgid "Name collision! %d outfit is named '%s'"
 msgid_plural "Name collision! %d outfits are named '%s'"
@@ -82028,7 +82077,7 @@ msgstr[0] ""
 msgstr[1] ""
 msgstr[2] ""
 
-#: src/outfit.c:2538
+#: src/outfit.c:2502
 #, c-format
 msgid "Loaded %d Outfit"
 msgid_plural "Loaded %d Outfits"
@@ -82036,92 +82085,92 @@ msgstr[0] ""
 msgstr[1] ""
 msgstr[2] ""
 
-#: src/outfit.c:2565
+#: src/outfit.c:2529
 msgid ""
 "\n"
 "#rIllegal to:#0"
 msgstr ""
 
-#: src/outfit.c:2567
+#: src/outfit.c:2531
 #, c-format
 msgid ""
 "\n"
 "#r- %s#0"
 msgstr ""
 
-#: src/outfit.c:2577
+#: src/outfit.c:2541
 #, c-format
 msgid ""
 "Outfit '%s' lua load error -> 'load':\n"
 "%s"
 msgstr ""
 
-#: src/outfit.c:2605
+#: src/outfit.c:2568
 #, c-format
 msgid "%s file is invalid xml!"
 msgstr ""
 
-#: src/outfit.c:2660
+#: src/outfit.c:2622
 #, c-format
 msgid "Outfit '%s' already has a short description"
 msgstr ""
 
-#: src/outfit.c:2673
+#: src/outfit.c:2635
 #, c-format
 msgid ""
 "\n"
 "%.1f Second Lock-on"
 msgstr ""
 
-#: src/outfit.c:2674
+#: src/outfit.c:2636
 #, c-format
 msgid ""
 "\n"
 "%.1f Second In-Flight Calibration"
 msgstr ""
 
-#: src/outfit.c:2679
+#: src/outfit.c:2641
 msgid ""
 "\n"
 "No Seeking"
 msgstr ""
 
-#: src/outfit.c:2691
+#: src/outfit.c:2653
 #, c-format
 msgid ""
 "\n"
 "%.1f Disable/s [%.0f Disable]"
 msgstr ""
 
-#: src/outfit.c:2694
+#: src/outfit.c:2656
 #, c-format
 msgid ""
 "\n"
 "%s Range [%.1f duration]"
 msgstr ""
 
-#: src/outfit.c:2697
+#: src/outfit.c:2659
 #, c-format
 msgid ""
 "\n"
 "%.0f Initial Speed (%.0f Thrust)"
 msgstr ""
 
-#: src/outfit.c:2699
+#: src/outfit.c:2661
 #, c-format
 msgid ""
 "\n"
 "%.0f Thrust"
 msgstr ""
 
-#: src/outfit.c:2703
+#: src/outfit.c:2665
 #, c-format
 msgid ""
 "\n"
 "%.0f Maximum Speed"
 msgstr ""
 
-#: src/outfit.c:2706
+#: src/outfit.c:2668
 #, c-format
 msgid ""
 "\n"
@@ -82192,34 +82241,34 @@ msgstr ""
 msgid "#%cBroadcast %s>#0 \"%s\""
 msgstr ""
 
-#: src/pilot.c:2502 src/pilot.c:2529
+#: src/pilot.c:2506 src/pilot.c:2533
 msgid "#rStrayed too far from jump point: jump aborted."
 msgstr ""
 
-#: src/pilot.c:2509
+#: src/pilot.c:2513
 msgid "#rAfterburner active: jump aborted."
 msgstr ""
 
-#: src/pilot.c:2549
+#: src/pilot.c:2553
 #, c-format
 msgid "Pilot '%s' trying to jump through exit-only jump from '%s' to '%s'"
 msgstr ""
 
-#: src/pilot.c:2849
+#: src/pilot.c:2853
 #, c-format
 msgid "Pilot '%s' failed safety check: %s"
 msgstr ""
 
-#: src/pilot.c:2852
+#: src/pilot.c:2856
 #, c-format
 msgid "   [%d] %s"
 msgstr ""
 
-#: src/pilot.c:2941 src/pilot.c:2976
+#: src/pilot.c:2945 src/pilot.c:2980
 msgid "Unable to allocate memory"
 msgstr ""
 
-#: src/pilot.c:3056
+#: src/pilot.c:3060
 msgid "Creating pilot in system with no jumps nor planets to take off from!"
 msgstr ""
 
@@ -82807,42 +82856,42 @@ msgstr ""
 msgid "You are not allowed to land at this moment."
 msgstr ""
 
-#: src/player.c:1647
+#: src/player.c:1675
 #, c-format
 msgid "Trying to set player's hyperspace target to invalid ID '%d'"
 msgstr ""
 
-#: src/player.c:1745
+#: src/player.c:1773
 #, c-format
 msgid "#rReceiving hail! Press #b%s#0 to respond."
 msgstr ""
 
-#: src/player.c:1798
+#: src/player.c:1826
 msgid "#rAborting hyperspace sequence."
 msgstr ""
 
-#: src/player.c:1805
+#: src/player.c:1833
 msgid "#rYou are too far from a jump point to initiate hyperspace."
 msgstr ""
 
-#: src/player.c:1807 src/player_autonav.c:81
+#: src/player.c:1835 src/player_autonav.c:82
 msgid "#rHyperspace drive is offline."
 msgstr ""
 
-#: src/player.c:1809
+#: src/player.c:1837
 msgid "#rYou do not have enough fuel to hyperspace jump."
 msgstr ""
 
-#: src/player.c:1811
+#: src/player.c:1839
 msgid "#oPreparing for hyperspace."
 msgstr ""
 
-#: src/player.c:1903
+#: src/player.c:1931
 #, c-format
 msgid "#oAutonav arrived at the %s system."
 msgstr ""
 
-#: src/player.c:1909
+#: src/player.c:1937
 #, c-format
 msgid "#oAutonav continuing until %s (%d jump left)."
 msgid_plural "#oAutonav continuing until %s (%d jumps left)."
@@ -82851,289 +82900,294 @@ msgstr[1] ""
 msgstr[2] ""
 
 #. in case the crap system breaks :)
-#: src/player.c:2157
+#: src/player.c:2185
 msgid "You have reached the maximum amount of screenshots [999]"
 msgstr ""
 
 #. now proceed to take the screenshot
-#: src/player.c:2162
+#: src/player.c:2190
 #, c-format
 msgid "Taking screenshot [%03d]..."
 msgstr ""
 
-#: src/player.c:2191
+#: src/player.c:2219
 #, c-format
 msgid "#r%s is out of comm range, unable to contact."
 msgstr ""
 
-#: src/player.c:2214 src/player.c:2236
+#: src/player.c:2242 src/player.c:2264
 msgid "#rNo target selected to hail."
 msgstr ""
 
-#: src/player.c:2269
+#: src/player.c:2297
 msgid "#rYou haven't been hailed by any pilots."
 msgstr ""
 
-#: src/player.c:2282
+#: src/player.c:2310
 msgid "#oMouse flying enabled."
 msgstr ""
 
-#: src/player.c:2288
+#: src/player.c:2316
 msgid "#rMouse flying disabled."
 msgstr ""
 
-#: src/player.c:2504 src/player.c:2523
+#: src/player.c:2532 src/player.c:2551
 #, c-format
 msgid "Player ship '%s' not found in stack"
 msgstr ""
 
-#: src/player.c:2909
+#: src/player.c:2937
 msgid "Escort is undeployed"
 msgstr ""
 
-#: src/player.c:3126
+#: src/player.c:3154
 msgid "Found mission cargo without associated mission."
 msgstr ""
 
-#: src/player.c:3127
+#: src/player.c:3155
 msgid "Please reload save game to remove the dead cargo."
 msgstr ""
 
-#: src/player.c:3328
+#: src/player.c:3356
 msgid "Malformed time in save game!"
 msgstr ""
 
-#: src/player.c:3363
+#: src/player.c:3391
 #, c-format
 msgid "Outfit '%s' was saved but does not exist!"
 msgstr ""
 
-#: src/player.c:3369
+#: src/player.c:3397
 #, c-format
 msgid "Outfit '%s' was saved without quantity!"
 msgstr ""
 
-#: src/player.c:3389
+#: src/player.c:3417
 msgid "Player ship does not exist!"
 msgstr ""
 
-#: src/player.c:3392
+#: src/player.c:3420
 msgid "Player has no other ships, giving starting ship."
 msgstr ""
 
-#: src/player.c:3403
+#: src/player.c:3431
 #, c-format
 msgid "Giving player ship '%s'."
 msgstr ""
 
-#: src/player.c:3409
+#: src/player.c:3437
 msgid "Something went horribly wrong, player does not exist after load..."
 msgstr ""
 
-#: src/player.c:3419
+#: src/player.c:3447
 msgid "Save has no time information, setting to start information."
 msgstr ""
 
-#: src/player.c:3428
+#: src/player.c:3456
 #, c-format
 msgid ""
 "Player starts out in non-existent or invalid planet '%s',trying to find a "
 "suitable one instead."
 msgstr ""
 
-#: src/player.c:3458
+#: src/player.c:3486
 #, c-format
 msgid "Could not find a planet satisfying criteria %d."
 msgstr ""
 
-#: src/player.c:3462
+#: src/player.c:3490
 msgid "Could not find a suitable planet. Choosing a random planet."
 msgstr ""
 
-#: src/player.c:3509
+#: src/player.c:3537
 #, c-format
 msgid "Mission '%s' doesn't seem to exist anymore, removing from save."
 msgstr ""
 
-#: src/player.c:3531
+#: src/player.c:3559
 #, c-format
 msgid "Event '%s' doesn't seem to exist anymore, removing from save."
 msgstr ""
 
-#: src/player.c:3553
+#: src/player.c:3581
 msgid "License node is missing name attribute."
 msgstr ""
 
-#: src/player.c:3580
+#: src/player.c:3608
 #, c-format
 msgid "Escort has invalid type '%s'."
 msgstr ""
 
-#: src/player.c:3641
+#: src/player.c:3669
 #, c-format
 msgid "Unknown ship class '%s' when parsing 'ships_destroyed' node!"
 msgstr ""
 
-#: src/player.c:3660
+#: src/player.c:3688
 #, c-format
 msgid ""
 "Outfit '%s' does not fit designated slot on player's pilot '%s', adding to "
 "stock."
 msgstr ""
 
-#: src/player.c:3668
+#: src/player.c:3696
 #, c-format
 msgid "Outfit '%s' does not fit on player's pilot '%s', adding to stock."
 msgstr ""
 
-#: src/player.c:3689
+#: src/player.c:3717
 msgid "Empty ship slot node found, skipping."
 msgstr ""
 
-#: src/player.c:3755
+#: src/player.c:3783
 #, c-format
 msgid "Player ship '%s' not found!"
 msgstr ""
 
-#: src/player.c:3804
+#: src/player.c:3832
 msgid "Outfit slot out of range, not adding to ship."
 msgstr ""
 
-#: src/player.c:3817 src/player.c:3830
+#: src/player.c:3845 src/player.c:3858
 msgid "Outfit slot out of range, not adding."
 msgstr ""
 
-#: src/player.c:3849
+#: src/player.c:3877
 #, c-format
 msgid "Unknown commodity '%s' detected, removing."
 msgstr ""
 
-#: src/player.c:3873
+#: src/player.c:3901
 #, c-format
 msgid ""
 "Player ship '%s' failed slot validity check , removing all outfits and "
 "adding to stock."
 msgstr ""
 
-#: src/player.c:3923
+#: src/player.c:3951
 #, c-format
 msgid ""
 "Player ship '%s' has unknown node '%s' in 'weaponsets' (expected "
 "'weaponset')."
 msgstr ""
 
-#: src/player.c:3931
+#: src/player.c:3959
 #, c-format
 msgid "Player ship '%s' missing 'id' tag for weapon set."
 msgstr ""
 
-#: src/player.c:3935
+#: src/player.c:3963
 #, c-format
 msgid "Player ship '%s' has invalid weapon set id '%d' [max %d]."
 msgstr ""
 
-#: src/player.c:3951
+#: src/player.c:3979
 #, c-format
 msgid "Player ship '%s' missing 'type' tag for weapon set."
 msgstr ""
 
-#: src/player.c:3964
+#: src/player.c:3992
 #, c-format
 msgid ""
 "Player ship '%s' has unknown 'weaponset' child node '%s' (expected 'weapon')."
 msgstr ""
 
-#: src/player.c:3972
+#: src/player.c:4000
 #, c-format
 msgid "Player ship '%s' missing 'level' tag for weapon set weapon."
 msgstr ""
 
-#: src/player.c:3977
+#: src/player.c:4005
 #, c-format
 msgid "Player ship '%s' has invalid weapon id %d [max %d]."
 msgstr ""
 
-#: src/player.c:4016
+#: src/player.c:4044
 msgid "You have destealthed."
 msgstr ""
 
-#: src/player.c:4022
+#: src/player.c:4050
 msgid "#gYou have entered stealth mode."
 msgstr ""
 
-#: src/player.c:4027
+#: src/player.c:4055
 msgid "#rUnable to stealth: missiles locked on!"
 msgstr ""
 
-#: src/player.c:4029
+#: src/player.c:4057
 msgid "#rUnable to stealth: other pilots nearby!"
 msgstr ""
 
-#: src/player_autonav.c:76
+#: src/player_autonav.c:77
 msgid "#rNot enough fuel to jump for autonav."
 msgstr ""
 
-#: src/player_autonav.c:89
+#: src/player_autonav.c:90
 #, c-format
 msgid "#oAutonav: travelling to %s."
 msgstr ""
 
-#: src/player_autonav.c:169
+#: src/player_autonav.c:170
 msgid "#oAutonav: heading to target position."
 msgstr ""
 
-#: src/player_autonav.c:171
+#: src/player_autonav.c:172
 msgid "position"
 msgstr ""
 
-#: src/player_autonav.c:192
+#: src/player_autonav.c:193
 #, c-format
 msgid "#oAutonav: landing on #%c%s#0."
 msgstr ""
 
-#: src/player_autonav.c:196
+#: src/player_autonav.c:197
 #, c-format
 msgid "#oAutonav: approaching #%c%s#0."
 msgstr ""
 
-#: src/player_autonav.c:210
+#: src/player_autonav.c:211
 #, c-format
 msgid "#oAutonav: following %s."
 msgstr ""
 
-#: src/player_autonav.c:270
+#: src/player_autonav.c:233
+#, c-format
+msgid "#oAutonav: boarding %s."
+msgstr ""
+
+#: src/player_autonav.c:293
 #, c-format
 msgid "#rAutonav: aborted due to '%s'!"
 msgstr ""
 
-#: src/player_autonav.c:272
+#: src/player_autonav.c:295
 msgid "#rAutonav: aborted!"
 msgstr ""
 
-#: src/player_autonav.c:281
+#: src/player_autonav.c:304
 msgid "#oAutonav: aborting hyperspace sequence."
 msgstr ""
 
-#: src/player_autonav.c:367
+#: src/player_autonav.c:390
 msgid "#oAutonav: arrived at position."
 msgstr ""
 
-#: src/player_autonav.c:377
+#: src/player_autonav.c:400
 #, c-format
 msgid "#oAutonav: arrived at #%c%s#0."
 msgstr ""
 
 #. TODO : handle the different reasons: pilot is too far, jumped, landed or died.
-#: src/player_autonav.c:418
+#: src/player_autonav.c:441
 #, c-format
 msgid "#oAutonav: following target  %s has been lost."
 msgstr ""
 
-#: src/player_autonav.c:626
+#: src/player_autonav.c:681
 msgid "Target changed to current system"
 msgstr ""
 
-#: src/player_autonav.c:630
+#: src/player_autonav.c:685
 msgid "Not enough fuel for autonav to continue"
 msgstr ""
 
@@ -83652,36 +83706,40 @@ msgid "Missile jamming chance"
 msgstr ""
 
 #: src/shipstats.c:170
-msgid "Hidden Jump Detection"
-msgstr ""
-
-#: src/shipstats.c:171
 msgid "units Fuel"
 msgstr ""
 
-#: src/shipstats.c:172
+#: src/shipstats.c:171
 msgid "tonnes Cargo Space"
 msgstr ""
 
+#: src/shipstats.c:172
+msgid "crew"
+msgstr ""
+
 #: src/shipstats.c:174
-msgid "Instant Jump"
+msgid "Hidden Jump Detection"
 msgstr ""
 
 #: src/shipstats.c:175
+msgid "Instant Jump"
+msgstr ""
+
+#: src/shipstats.c:176
 msgid "Reverse Thrusters"
 msgstr ""
 
-#: src/shipstats.c:278
+#: src/shipstats.c:279
 #, c-format
 msgid "ss_lookup: %s should have id %d but has %d"
 msgstr ""
 
-#: src/shipstats.c:482
+#: src/shipstats.c:483
 #, c-format
 msgid "ss_typeFromName: No ship stat matching '%s'"
 msgstr ""
 
-#: src/shipstats.c:710 src/shipstats.c:837 src/shipstats.c:856
+#: src/shipstats.c:711 src/shipstats.c:838 src/shipstats.c:857
 #, c-format
 msgid "Unknown ship stat type '%s'!"
 msgstr ""
