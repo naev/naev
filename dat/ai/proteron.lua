@@ -67,12 +67,12 @@ function hail ()
       mem.refuel = mem.refuel * 0.6
    end
    -- Most likely no chance to refuel
-   mem.refuel_msg = string.format( _([["I can transfer some fuel for %s."]]), fmt.credits(mem.refuel) )
+   mem.refuel_msg = fmt.f( _([["I can transfer some fuel for {credits}."]]), {credits=fmt.credits(mem.refuel)} )
 
    -- See if can be bribed
    mem.bribe = mem.bribe_base
    if mem.allowbribe or (mem.natural and mem.bribe_rng > 0.6) then
-      mem.bribe_prompt = string.format(_([["The Proteron can always use some income. %s and you were never here."]]), fmt.credits(mem.bribe) )
+      mem.bribe_prompt = fmt.f(_([["The Proteron can always use some income. {credits} and you were never here."]]), {credits=fmt.credits(mem.bribe)} )
       mem.bribe_paid = _([["Get lost before I have to dispose of you."]])
    else
       mem.bribe_no = bribe_no_list[ rnd.rnd(1,#bribe_no_list) ]

@@ -68,7 +68,7 @@ function hail ()
    if mem.allowbribe or (mem.natural and (standing > -30 or
          (standing > -60 and mem.bribe_rng > 0.8) or
          (mem.bribe_rng > 0.4))) then
-      mem.bribe_prompt = string.format(_([["It'll cost you %s for me to ignore your dirty presence."]]), fmt.credits(mem.bribe))
+      mem.bribe_prompt = fmt.f(_([["It'll cost you {credits} for me to ignore your dirty presence."]]), {credits=fmt.credits(mem.bribe)})
       mem.bribe_paid = _([["Begone before I change my mind."]])
    else
       mem.bribe_no = _([["The only way to deal with scum like you is with cannons!"]])
@@ -79,7 +79,7 @@ function hail ()
          (standing > 30 and mem.refuel_rng > 0.8) or
          (standing > 0 and mem.refuel_rng > 0.5) then
       mem.refuel = mem.refuel_base
-      mem.refuel_msg = string.format(_([["I should be able to spare some fuel for %s."]]), fmt.credits(mem.refuel))
+      mem.refuel_msg = fmt.f(_([["I should be able to spare some fuel for {credits}."]]), {credits=fmt.credits(mem.refuel)})
    else
       mem.refuel_no = _([["I can't spare fuel for you."]])
    end

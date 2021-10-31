@@ -61,7 +61,7 @@ function hail ()
          (mem.refuel_rng > 0.3) then
       mem.refuel_no = _([["Mare magno turbantibus. That means that I don't care about your problems."]])
    else
-      mem.refuel_msg = string.format(_([["For you I could make an exception for %s."]]), fmt.credits(mem.refuel))
+      mem.refuel_msg = fmt.f(_([["For you I could make an exception for {credits}."]]), {credits=fmt.credits(mem.refuel)})
    end
 
    -- Handle bribing
@@ -70,7 +70,7 @@ function hail ()
          (standing > -20 and mem.bribe_rng > 0.8) or
          (standing > -50 and mem.bribe_rng > 0.5) or
          (mem.bribe_rng > 0.3))) then
-      mem.bribe_prompt = string.format(_([["For %s I'll let your grievances slide."]]), fmt.credits(mem.bribe) )
+      mem.bribe_prompt = fmt.f(_([["For {credits} I'll let your grievances slide."]]), {credits=fmt.credits(mem.bribe)} )
       mem.bribe_paid = _([["Now get out of my sight and don't cause any more trouble."]])
    else
       mem.bribe_no = bribe_no_list[ rnd.rnd(1,#bribe_no) ]

@@ -23067,8 +23067,8 @@ msgstr "지원을 요청한다. 공격 받고 있다!"
 
 #: dat/ai/core/misc/distress.lua:17
 #, lua-format
-msgid "%s vessel under attack! Requesting help!"
-msgstr "%s 의 함선이 공격 받고 있다! 지원을 요청한다!"
+msgid "{fct} vessel under attack! Requesting help!"
+msgstr "{fct} 의 함선이 공격 받고 있다! 지원을 요청한다!"
 
 #: dat/ai/core/misc/distress.lua:18 dat/ai/thurion.lua:15
 msgid "Help! Ship under fire!"
@@ -23088,8 +23088,8 @@ msgstr "메이데이! 함선이 파손을 입었다!"
 
 #: dat/ai/core/misc/distress.lua:22
 #, lua-format
-msgid "Mayday! %s %s being assaulted!"
-msgstr "메이데이! %s %s 가 공격받고 있다!"
+msgid "Mayday! {fct} {cls} being assaulted!"
+msgstr "메이데이! {fct} {cls} 가 공격받고 있다!"
 
 #. Default task to run when idle
 #. Get a random asteroid in the system

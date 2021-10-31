@@ -22444,8 +22444,8 @@ msgstr "｢どこかへ行ってしまえ！｣"
 #: dat/ai/mercenary.lua:66 dat/ai/miner.lua:33 dat/ai/proteron_dissident.lua:32
 #: dat/ai/thurion.lua:63 dat/ai/trader.lua:53
 #, lua-format
-msgid "\"I'll supply your ship with fuel for %s.\""
-msgstr "｢%s で燃料の補給をしてやろう｣"
+msgid "\"I'll supply your ship with fuel for {credits}.\""
+msgstr "｢{credits} で燃料の補給をしてやろう｣"
 
 #. Set up potential advertiser messages in msg variable
 #. Faction specific messages
@@ -22573,12 +22573,12 @@ msgstr ""
 #: dat/ai/advertiser.lua:153
 #, lua-format
 msgid ""
-"Dear Prof. %s, your recent work has left a deep impression on us. Due to the "
+"Dear Prof. {player}, your recent work has left a deep impression on us. Due to the "
 "advance, novelty, and possible wide application of your innovation, we "
 "invite you to contribute other unpublished papers of relevant fields to the "
 "Interstellar Pay-to-win Journal for Mathematics and Applications."
 msgstr ""
-"親愛なる%s教授。あなたの最近の研究は、われわれに深い印象を残しました。あなた"
+"親愛なる{player}教授。あなたの最近の研究は、われわれに深い印象を残しました。あなた"
 "の新規軸には新規性や斬新性があり、そのうえ広い応用も見こまれることから、関連"
 "する分野についてのほかの未公表の論文を寄稿していただくようにお願いいたしま"
 "す。惑星間応用数学課金者有利型研究誌"
@@ -23175,8 +23175,8 @@ msgstr "反応なし。"
 #. Bail out if no valid planet could be found.
 #: dat/ai/core/basic.lua:377
 #, lua-format
-msgid "Pilot '%s' tried to land with no landable assets!"
-msgstr "Pilot '%s' tried to land with no landable assets!"
+msgid "Pilot '{pltname}' tried to land with no landable assets!"
+msgstr "Pilot '{pltname}' tried to land with no landable assets!"
 
 #. Decide exact land point
 #. 2 methods depending on mem.careful
@@ -23415,8 +23415,8 @@ msgstr "協力に感謝する"
 #. --
 #: dat/ai/core/control/generic.lua:123
 #, lua-format
-msgid "Pilot '%s': formation '%s' not found!"
-msgstr "Pilot '%s': formation '%s' not found!"
+msgid "Pilot '{pltname}': formation '{formation}' not found!"
+msgstr "Pilot '{pltname}': formation '{formation}' not found!"
 
 #. Run instead of "control" when under manual control; use should be limited
 #. Skip message from nonexistent sender
@@ -23694,8 +23694,8 @@ msgstr "助力を求める！　われわれは攻撃をうけている！"
 
 #: dat/ai/core/misc/distress.lua:17
 #, lua-format
-msgid "%s vessel under attack! Requesting help!"
-msgstr "%sの船が攻撃をうけている！　助力を求める！"
+msgid "{fct} vessel under attack! Requesting help!"
+msgstr "{fct}の船が攻撃をうけている！　助力を求める！"
 
 #: dat/ai/core/misc/distress.lua:18 dat/ai/thurion.lua:15
 msgid "Help! Ship under fire!"
@@ -23715,8 +23715,8 @@ msgstr "メイデイ！　船に損害をうけた！"
 
 #: dat/ai/core/misc/distress.lua:22
 #, lua-format
-msgid "Mayday! %s %s being assaulted!"
-msgstr "メイデイ！　%sの%sが襲撃をうけた！"
+msgid "Mayday! {fct} {cls} being assaulted!"
+msgstr "メイデイ！　{fct}の{cls}が襲撃をうけた！"
 
 #. Default task to run when idle
 #. Get a random asteroid in the system
@@ -23787,8 +23787,8 @@ msgstr "｢気にかけるほどの価値がおまえにはない｣"
 
 #: dat/ai/dvaered.lua:63 dat/ai/frontier_police.lua:64
 #, lua-format
-msgid "\"For you I could make an exception for %s.\""
-msgstr "｢あなたのために、%s で例外とすることができる｣"
+msgid "\"For you I could make an exception for {credits}.\""
+msgstr "｢あなたのために、{credits} で例外とすることができる｣"
 
 #. Handle bribing
 #. Only 50% of actually taunting.
@@ -23908,16 +23908,16 @@ msgstr "｢燃料は帝国の財産だ｣"
 #: dat/ai/empire.lua:90
 #, lua-format
 msgid ""
-"\"I suppose I could spare some fuel for %s, but you'll have to do the "
+"\"I suppose I could spare some fuel for {credits}, but you'll have to do the "
 "paperwork.\""
 msgstr ""
-"｢%s でいくらか燃料を融通できると思う。しかし書類を書いてもらわなければ｣"
+"｢{credits} でいくらか燃料を融通できると思う。しかし書類を書いてもらわなければ｣"
 
 #. See if can be bribed
 #: dat/ai/empire.lua:98
 #, lua-format
-msgid "\"For some %s I could forget about seeing you.\""
-msgstr "｢%s でおまえを見たことは忘れられる｣"
+msgid "\"For some {credits} I could forget about seeing you.\""
+msgstr "｢{credits} でおまえを見たことは忘れられる｣"
 
 #: dat/ai/empire.lua:99
 msgid "\"Now scram before I change my mind.\""
@@ -23994,8 +23994,8 @@ msgstr "辺境の敵に死を！"
 #. Handle bribes.
 #: dat/ai/flf.lua:71
 #, lua-format
-msgid "\"It'll cost you %s for me to ignore your dirty presence.\""
-msgstr "｢おまえのような不潔な存在を見逃すのには、代償として %s が必要だ｣"
+msgid "\"It'll cost you {credits} for me to ignore your dirty presence.\""
+msgstr "｢おまえのような不潔な存在を見逃すのには、代償として {credits} が必要だ｣"
 
 #: dat/ai/flf.lua:72
 msgid "\"Begone before I change my mind.\""
@@ -24008,8 +24008,8 @@ msgstr "｢おまえのようなくずに対処する唯一の方法はキャノ
 #. Handle refueling.
 #: dat/ai/flf.lua:82
 #, lua-format
-msgid "\"I should be able to spare some fuel for %s.\""
-msgstr "｢%s でいくらか燃料を融通できる｣"
+msgid "\"I should be able to spare some fuel for {credits}.\""
+msgstr "｢{credits} でいくらか燃料を融通できる｣"
 
 #: dat/ai/flf.lua:84
 msgid "\"I can't spare fuel for you.\""
@@ -24045,8 +24045,8 @@ msgstr "｢Mare magno turbantibus. おまえの問題など気にならないと
 #. Handle bribing
 #: dat/ai/frontier_police.lua:73
 #, lua-format
-msgid "\"For %s I'll let your grievances slide.\""
-msgstr "｢%s で、不満を気にするのはやめてやろう｣"
+msgid "\"For {credits} I'll let your grievances slide.\""
+msgstr "｢{credits} で、不満を気にするのはやめてやろう｣"
 
 #: dat/ai/frontier_police.lua:74
 msgid "\"Now get out of my sight and don't cause any more trouble.\""
@@ -24073,8 +24073,8 @@ msgstr "寄生虫め！"
 #. Deal with refueling
 #: dat/ai/goddard.lua:59
 #, lua-format
-msgid "\"I could do you the favour of refueling for the price of %s.\""
-msgstr "｢%s の代価で、燃料補給という親切を示してやれる｣"
+msgid "\"I could do you the favour of refueling for the price of {credits}.\""
+msgstr "｢{credits} の代価で、燃料補給という親切を示してやれる｣"
 
 #: dat/ai/mercenary.lua:12
 msgid "\"I'm afraid you can't make it worth my while.\""
@@ -24107,8 +24107,8 @@ msgstr "これは契約とはちがうけどな！"
 #. Set up bribes
 #: dat/ai/mercenary.lua:72
 #, lua-format
-msgid "\"Your life is worth %s to me.\""
-msgstr "｢こちらからすると、おまえの命の価値は %s だ｣"
+msgid "\"Your life is worth {credits} to me.\""
+msgstr "｢こちらからすると、おまえの命の価値は {credits} だ｣"
 
 #: dat/ai/mercenary.lua:73
 msgid "\"Beat it.\""
@@ -24126,123 +24126,123 @@ msgstr "｢面倒ごとはいっさいお断りだ｣"
 #. Settings
 #: dat/ai/pirate.lua:26
 #, lua-format
-msgid "\"Pay up %s or it's the end of the line.\""
-msgstr "｢%s 払え。さもなきゃ通信は終わりだ｣"
+msgid "\"Pay up {credits} or it's the end of the line.\""
+msgstr "｢{credits} 払え。さもなきゃ通信は終わりだ｣"
 
 #: dat/ai/pirate.lua:27
 #, lua-format
-msgid "\"Your money or your life. %s and make the choice quickly.\""
-msgstr "｢かねか命か。%s。すぐに選べ｣"
+msgid "\"Your money or your life. {credits} and make the choice quickly.\""
+msgstr "｢かねか命か。{credits}。すぐに選べ｣"
 
 #: dat/ai/pirate.lua:28
 #, lua-format
-msgid "\"Money talks bub. %s up front or get off my channel.\""
+msgid "\"Money talks bub. {credits} up front or get off my channel.\""
 msgstr ""
-"｢かねがものを言うんだよ、若いの。前金で %s。さもなきゃこのチャンネルから出て"
+"｢かねがものを言うんだよ、若いの。前金で {credits}。さもなきゃこのチャンネルから出て"
 "け｣"
 
 #: dat/ai/pirate.lua:29
 #, lua-format
-msgid "\"You're either really desperate or really rich. %s or shut up.\""
+msgid "\"You're either really desperate or really rich. {credits} or shut up.\""
 msgstr ""
 "｢あんたはほんとうに死にものぐるいなのか、ほんとうに金持ちなのか、どっちかだ"
-"な。%s か黙るか｣"
+"な。{credits} か黙るか｣"
 
 #: dat/ai/pirate.lua:30
 #, lua-format
-msgid "\"This is a toll road, pay up %s or die.\""
-msgstr "｢ここは有料道路なんだ。%s 払うか死ぬかだな｣"
+msgid "\"This is a toll road, pay up {credits} or die.\""
+msgstr "｢ここは有料道路なんだ。{credits} 払うか死ぬかだな｣"
 
 #: dat/ai/pirate.lua:31
 #, lua-format
 msgid ""
 "\"So this is the part where you pay up or get shot up. Your choice. What'll "
-"be, %s or…\""
+"be, {credits} or…\""
 msgstr ""
 "｢まあ、ここはあんたが払うか撃たれるかってところだ。あんたが選びな。どうする"
-"か、%s か、それとも……｣"
+"か、{credits} か、それとも……｣"
 
 #: dat/ai/pirate.lua:34
 #, lua-format
-msgid "\"It'll cost you %s for me to ignore your pile of rubbish.\""
-msgstr "｢あんたのごみの山を無視する代償は %s だ｣"
+msgid "\"It'll cost you {credits} for me to ignore your pile of rubbish.\""
+msgstr "｢あんたのごみの山を無視する代償は {credits} だ｣"
 
 #: dat/ai/pirate.lua:35
 #, lua-format
-msgid "\"I'm in a good mood so I'll let you go for %s.\""
-msgstr "｢機嫌がいいから、%s で逃してやろう｣"
+msgid "\"I'm in a good mood so I'll let you go for {credits}.\""
+msgstr "｢機嫌がいいから、{credits} で逃してやろう｣"
 
 #: dat/ai/pirate.lua:36
 #, lua-format
-msgid "\"Send me %s or you're dead.\""
-msgstr "｢%s 送るか、あんたが死ぬか｣"
+msgid "\"Send me {credits} or you're dead.\""
+msgstr "｢{credits} 送るか、あんたが死ぬか｣"
 
 #: dat/ai/pirate.lua:37
 #, lua-format
-msgid "\"Shut up and give me your money! %s now.\""
-msgstr "｢黙ってかねをよこせ！　%s をすぐに｣"
+msgid "\"Shut up and give me your money! {credits} now.\""
+msgstr "｢黙ってかねをよこせ！　{credits} をすぐに｣"
 
 #: dat/ai/pirate.lua:38
 #, lua-format
-msgid "\"You give me %s and I'll act like I never saw you.\""
-msgstr "｢%s くれれば、見なかったふりをする｣"
+msgid "\"You give me {credits} and I'll act like I never saw you.\""
+msgstr "｢{credits} くれれば、見なかったふりをする｣"
 
 #: dat/ai/pirate.lua:39
 #, lua-format
-msgid "\"If you're willing to negotiate I'll gladly take %s to not kill you.\""
+msgid "\"If you're willing to negotiate I'll gladly take {credits} to not kill you.\""
 msgstr ""
-"｢交渉するつもりなんだったら、おれはこころよく %s を受けとってあんたを殺さない"
+"｢交渉するつもりなんだったら、おれはこころよく {credits} を受けとってあんたを殺さない"
 "でいてやる｣"
 
 #: dat/ai/pirate.lua:40
 #, lua-format
 msgid ""
-"\"Pay up or don't. %s now just means I'll wait till later to collect the "
+"\"Pay up or don't. {credits} now just means I'll wait till later to collect the "
 "rest.\""
 msgstr ""
-"｢払うのか払わないのか。今の %s は、あとで残りをもらうまで待ってやるっていう意"
+"｢払うのか払わないのか。今の {credits} は、あとで残りをもらうまで待ってやるっていう意"
 "味にすぎない｣"
 
 #: dat/ai/pirate.lua:43
 #, lua-format
-msgid "\"It'll cost you %s for us to ignore your pile of rubbish.\""
-msgstr "｢あんたのごみの山を無視する代償は %s だ｣"
+msgid "\"It'll cost you {credits} for us to ignore your pile of rubbish.\""
+msgstr "｢あんたのごみの山を無視する代償は {credits} だ｣"
 
 #: dat/ai/pirate.lua:44
 #, lua-format
-msgid "\"We're in a good mood so we'll let you go for %s.\""
-msgstr "｢機嫌がいいから、%s で逃してやろう｣"
+msgid "\"We're in a good mood so we'll let you go for {credits}.\""
+msgstr "｢機嫌がいいから、{credits} で逃してやろう｣"
 
 #: dat/ai/pirate.lua:45
 #, lua-format
-msgid "\"Send us %s or you're dead.\""
-msgstr "｢%s 送るか、あんたが死ぬか｣"
+msgid "\"Send us {credits} or you're dead.\""
+msgstr "｢{credits} 送るか、あんたが死ぬか｣"
 
 #: dat/ai/pirate.lua:46
 #, lua-format
-msgid "\"Shut up and give us your money! %s now.\""
-msgstr "｢黙ってかねをよこせ！　%s をすぐに｣"
+msgid "\"Shut up and give us your money! {credits} now.\""
+msgstr "｢黙ってかねをよこせ！　{credits} をすぐに｣"
 
 #: dat/ai/pirate.lua:47
 #, lua-format
-msgid "\"You give us %s and we'll act like we never saw you.\""
-msgstr "｢%s くれれば、見なかったふりをする｣"
+msgid "\"You give us {credits} and we'll act like we never saw you.\""
+msgstr "｢{credits} くれれば、見なかったふりをする｣"
 
 #: dat/ai/pirate.lua:48
 #, lua-format
 msgid ""
-"\"If you're willing to negotiate we'll gladly take %s to not kill you.\""
+"\"If you're willing to negotiate we'll gladly take {credits} to not kill you.\""
 msgstr ""
-"｢交渉するつもりなんだったら、おれたちはこころよく %s を受けとってあんたを殺さ"
+"｢交渉するつもりなんだったら、おれたちはこころよく {credits} を受けとってあんたを殺さ"
 "ないでいてやる｣"
 
 #: dat/ai/pirate.lua:49
 #, lua-format
 msgid ""
-"\"Pay up or don't. %s now just means we'll wait till later to collect the "
+"\"Pay up or don't. {credits} now just means we'll wait till later to collect the "
 "rest.\""
 msgstr ""
-"｢払うのか払わないのか。今の %s は、あとで残りをもらうまで待ってやるっていう意"
+"｢払うのか払わないのか。今の {credits} は、あとで残りをもらうまで待ってやるっていう意"
 "味にすぎない｣"
 
 #: dat/ai/pirate.lua:52
@@ -24498,8 +24498,8 @@ msgstr "あんたがこなごなになるまで連射したくなってきた！
 #. Deal with refueling
 #: dat/ai/pirate.lua:174
 #, lua-format
-msgid "\"For you, only %s for a jump of fuel.\""
-msgstr "｢あんたのためなら、1 ジャンプぶんの燃料はたった %s だ｣"
+msgid "\"For you, only {credits} for a jump of fuel.\""
+msgstr "｢あんたのためなら、1 ジャンプぶんの燃料はたった {credits} だ｣"
 
 #. Deal with bribeability
 #: dat/ai/pirate.lua:184
@@ -24531,16 +24531,16 @@ msgstr "｢申しわけないが、燃料は売り物ではない｣"
 #. Most likely no chance to refuel
 #: dat/ai/proteron.lua:70
 #, lua-format
-msgid "\"I can transfer some fuel for %s.\""
-msgstr "｢%s でいくらか燃料を融通できる｣"
+msgid "\"I can transfer some fuel for {credits}.\""
+msgstr "｢{credits} でいくらか燃料を融通できる｣"
 
 #. See if can be bribed
 #: dat/ai/proteron.lua:75
 #, lua-format
 msgid ""
-"\"The Proteron can always use some income. %s and you were never here.\""
+"\"The Proteron can always use some income. {credits} and you were never here.\""
 msgstr ""
-"｢プロテロンはいつでも収入を活用することができる。%s でここにいなかったことに"
+"｢プロテロンはいつでも収入を活用することができる。{credits} でここにいなかったことに"
 "なる｣"
 
 #: dat/ai/proteron.lua:76
@@ -24642,8 +24642,8 @@ msgstr "｢融通できる燃料はない｣"
 #. Most likely no chance to refuel
 #: dat/ai/sirius.lua:69
 #, lua-format
-msgid "\"I would be able to refuel your ship for %s.\""
-msgstr "｢%s で船に燃料補給をしてやれる｣"
+msgid "\"I would be able to refuel your ship for {credits}.\""
+msgstr "｢{credits} で船に燃料補給をしてやれる｣"
 
 #: dat/ai/soromid.lua:13
 msgid "\"Snivelling waste of carbon.\""
@@ -24710,14 +24710,14 @@ msgstr "｢ソロムの勇士たちは、おまえの個人的燃料補給業者
 #. Most likely no chance to refuel
 #: dat/ai/soromid.lua:83
 #, lua-format
-msgid "\"I suppose I could spare some fuel for %s.\""
-msgstr "｢%s でいくらか燃料を融通できると思う｣"
+msgid "\"I suppose I could spare some fuel for {credits}.\""
+msgstr "｢{credits} でいくらか燃料を融通できると思う｣"
 
 #. Handle bribing
 #: dat/ai/soromid.lua:92
 #, lua-format
-msgid "\"For %s I'll give you enough time to get out of my sight.\""
-msgstr "｢%s で、わたしの視界から消える時間を与えてやろう｣"
+msgid "\"For {credits} I'll give you enough time to get out of my sight.\""
+msgstr "｢{credits} で、わたしの視界から消える時間を与えてやろう｣"
 
 #: dat/ai/soromid.lua:93
 msgid "\"Now get out of my sight.\""
@@ -24828,14 +24828,14 @@ msgstr "｢アクセス拒絶｣"
 #. Most likely no chance to refuel
 #: dat/ai/zalek.lua:100
 #, lua-format
-msgid "\"I will agree to refuel your ship for %s.\""
-msgstr "｢%s で船に燃料補給に同意する｣"
+msgid "\"I will agree to refuel your ship for {credits}.\""
+msgstr "｢{credits} で船に燃料補給に同意する｣"
 
 #. See if can be bribed
 #: dat/ai/zalek.lua:108
 #, lua-format
-msgid "\"We will agree to end the battle for %s.\""
-msgstr "｢%s で船に戦闘の終了に同意する｣"
+msgid "\"We will agree to end the battle for {credits}.\""
+msgstr "｢{credits} で船に戦闘の終了に同意する｣"
 
 #: dat/ai/zalek.lua:109
 msgid "\"Temporarily stopping fire.\""
@@ -25135,69 +25135,69 @@ msgstr "{plt}から {amount}の{cargo}を奪った。"
 #. Respects fleets
 #: dat/comm.lua:105
 #, lua-format
-msgid "Pilot '%s' accepts bribes but doesn't give a price!"
-msgstr "Pilot '%s' accepts bribes but doesn't give a price!"
+msgid "Pilot '{pltname}' accepts bribes but doesn't give a price!"
+msgstr "Pilot '{pltname}' accepts bribes but doesn't give a price!"
 
 #. just ridiculous for now, players should report it
 #: dat/comm.lua:131
 #, lua-format
 msgid ""
-"\"We'll need at least %s to not leave you as a hunk of floating debris.\""
-msgstr "｢浮遊する破片のかたまりにしないでおくのに、すくなくとも %s は必要だ｣"
+"\"We'll need at least {credits} to not leave you as a hunk of floating debris.\""
+msgstr "｢浮遊する破片のかたまりにしないでおくのに、すくなくとも {credits} は必要だ｣"
 
 #: dat/comm.lua:134
 #, lua-format
 msgid ""
-"%s\n"
+"{msg}\n"
 "\n"
-"This action will bribe %d %s pilot.\n"
-"You have %s. Pay #r%s#0?"
+"This action will bribe {n} {fct_list} pilot.\n"
+"You have {credits}. Pay #r{price}#0?"
 msgid_plural ""
-"%s\n"
+"{msg}\n"
 "\n"
-"This action will bribe %d %s pilots.\n"
-"You have %s. Pay #r%s#0?"
+"This action will bribe {n} {fct_list} pilots.\n"
+"You have {credits}. Pay #r{price}#0?"
 msgstr[0] ""
-"%s\n"
+"{msg}\n"
 "\n"
-"この対応で、%d 人の%sのパイロットにわいろを贈ります。\n"
-"あなたは %s もっています。#r%s#0 支払いますか？"
+"この対応で、{n} 人の{fct_list}のパイロットにわいろを贈ります。\n"
+"あなたは {credits} もっています。#r{price}#0 支払いますか？"
 
 #: dat/comm.lua:143
 #, lua-format
 msgid ""
-"\"I'm gonna need at least %s to not leave you as a hunk of floating debris.\""
-msgstr "｢浮遊する破片のかたまりにしないでおくのに、すくなくとも %s は必要だ｣"
+"\"I'm gonna need at least {credits} to not leave you as a hunk of floating debris.\""
+msgstr "｢浮遊する破片のかたまりにしないでおくのに、すくなくとも {credits} は必要だ｣"
 
 #: dat/comm.lua:145 dat/comm.lua:424
 #, lua-format
 msgid ""
-"%s\n"
+"{msg}\n"
 "\n"
-"You have %s. Pay #r%s#0?"
+"You have {credits}. Pay #r{price}#0?"
 msgstr ""
-"%s\n"
+"{msg}\n"
 "\n"
-"あなたは %s もっています。#r%s#0 支払いますか？"
+"あなたは {credits} もっています。#r{price}#0 支払いますか？"
 
 #: dat/comm.lua:161
 #, lua-format
-msgid "You open a communication channel with %s."
-msgstr "%sとの通信回線を開いた。"
+msgid "You open a communication channel with {pltname}."
+msgstr "{pltname}との通信回線を開いた。"
 
 #. global
 #. global
 #: dat/comm.lua:179 dat/comm.lua:182
 #, lua-format
-msgid "Bribe %d nearby %s pilot"
-msgid_plural "Bribe %d nearby %s pilots"
-msgstr[0] "近くの %d 人の%sのパイロットを買収"
+msgid "Bribe {n} nearby {fct_list} pilot"
+msgid_plural "Bribe {n} nearby {fct_list} pilots"
+msgstr[0] "近くの {n} 人の{fct_list}のパイロットを買収"
 
 #: dat/comm.lua:186
 #, lua-format
-msgid "Bribe fleet (%d pilot)"
-msgid_plural "Bribe fleet (%d pilots)"
-msgstr[0] "船団を買収 (%d 人のパイロット)"
+msgid "Bribe fleet ({n} pilot)"
+msgid_plural "Bribe fleet ({n} pilots)"
+msgstr[0] "船団を買収 ({n} 人のパイロット)"
 
 #: dat/comm.lua:188
 msgid "Bribe this pilot"
@@ -25228,9 +25228,9 @@ msgstr "あなたは支払わないことに決めた。"
 
 #: dat/comm.lua:234 dat/comm.lua:287 dat/comm.lua:333
 #, lua-format
-msgid "You only have %s. You need #r%s#0 more to be able to afford the bribe!"
+msgid "You only have {credits}. You need #r{cdif}#0 more to be able to afford the bribe!"
 msgstr ""
-"あなたは %s しかもっていない。必要な #r%s#0 は、わいろとして渡せる金額をこえ"
+"あなたは {credits} しかもっていない。必要な #r{cdif}#0 は、わいろとして渡せる金額をこえ"
 "ている！"
 
 #: dat/comm.lua:249 dat/comm.lua:302 dat/comm.lua:348
@@ -25264,16 +25264,16 @@ msgstr "このパイロットはもうあなたに燃料補給しています。
 
 #: dat/comm.lua:422
 #, lua-format
-msgid "\"I should be able to refuel you for %s.\""
-msgstr "｢%s で燃料補給ができるはずだ｣"
+msgid "\"I should be able to refuel you for {credits}.\""
+msgstr "｢{credits} で燃料補給ができるはずだ｣"
 
 #: dat/comm.lua:435
 #, lua-format
 msgid ""
-"You only have %s credits. You need #r%s#0 more to be able to afford the "
+"You only have {credits} credits. You need #r{cdif}#0 more to be able to afford the "
 "refueling!"
 msgstr ""
-"あなたは %s しかもっていない。必要な #r%s#0 は、燃料補給のために使える金額を"
+"あなたは {credits} しかもっていない。必要な #r{cdif}#0 は、燃料補給のために使える金額を"
 "こえている！"
 
 #: dat/comm.lua:452

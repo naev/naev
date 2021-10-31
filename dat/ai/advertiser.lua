@@ -77,8 +77,8 @@ function create ()
 
    -- Refuel
    mem.refuel = rnd.rnd( 1000, 3000 )
-   mem.refuel_msg = string.format(_([["I'll supply your ship with fuel for %s."]]),
-         fmt.credits(mem.refuel))
+   mem.refuel_msg = fmt.f(_([["I'll supply your ship with fuel for {credits}."]]),
+         {credits=fmt.credits(mem.refuel)})
 
    -- Set up potential advertiser messages in msg variable
    local msg = mt.merge_tables( {}, ads_generic )
@@ -150,7 +150,7 @@ function create ()
       -- we need to add a check for that.
       local pn = player.name()
       if pn then
-         table.insert(msg, string.format(_("Dear Prof. %s, your recent work has left a deep impression on us. Due to the advance, novelty, and possible wide application of your innovation, we invite you to contribute other unpublished papers of relevant fields to the Interstellar Pay-to-win Journal for Mathematics and Applications."),pn))
+         table.insert(msg, fmt.f(_("Dear Prof. {player}, your recent work has left a deep impression on us. Due to the advance, novelty, and possible wide application of your innovation, we invite you to contribute other unpublished papers of relevant fields to the Interstellar Pay-to-win Journal for Mathematics and Applications."), {player=pn}))
       end
    end
 

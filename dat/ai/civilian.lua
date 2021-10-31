@@ -28,8 +28,8 @@ function hail ()
 
    -- Refueling
    mem.refuel = rnd.rnd( 1000, 3000 )
-   mem.refuel_msg = string.format(_([["I'll supply your ship with fuel for %s."]]),
-         fmt.credits(mem.refuel))
+   mem.refuel_msg = fmt.f(_([["I'll supply your ship with fuel for {credits}."]]),
+         {credits=fmt.credits(mem.refuel)})
 
    mem.setuphail = true
 end

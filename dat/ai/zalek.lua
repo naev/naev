@@ -97,7 +97,7 @@ function hail ()
       mem.refuel = mem.refuel * 0.6
    end
    -- Most likely no chance to refuel
-   mem.refuel_msg = string.format( _([["I will agree to refuel your ship for %s."]]), fmt.credits(mem.refuel) )
+   mem.refuel_msg = fmt.f( _([["I will agree to refuel your ship for {credits}."]]), {credits=fmt.credits(mem.refuel)} )
 
    -- See if can be bribed
    mem.bribe = mem.bribe_base
@@ -105,7 +105,7 @@ function hail ()
          (standing > -20 and mem.bribe_rng > 0.8) or
          (standing > -50 and mem.bribe_rng > 0.6) or
          (rnd.rnd() > 0.4))) then
-      mem.bribe_prompt = string.format(_([["We will agree to end the battle for %s."]]), fmt.credits(mem.bribe) )
+      mem.bribe_prompt = fmt.f(_([["We will agree to end the battle for {credits}."]]), {credits=fmt.credits(mem.bribe)} )
       mem.bribe_paid = _([["Temporarily stopping fire."]])
    else
       mem.bribe_no = bribe_no_list[ rnd.rnd(1,#bribe_no_list) ]

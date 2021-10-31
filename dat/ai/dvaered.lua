@@ -60,7 +60,7 @@ function hail ()
       mem.refuel_no = _([["You are not worthy of my attention."]])
    else
       mem.refuel = mem.refuel_base
-      mem.refuel_msg = string.format(_([["For you I could make an exception for %s."]]), fmt.credits(mem.refuel))
+      mem.refuel_msg = fmt.f(_([["For you I could make an exception for {credits}."]]), {credits=fmt.credits(mem.refuel)})
    end
 
    -- Handle bribing

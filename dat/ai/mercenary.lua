@@ -63,13 +63,13 @@ function hail ()
 
    -- Refuel
    mem.refuel = mem.refuel_base
-   mem.refuel_msg = string.format(_([["I'll supply your ship with fuel for %s."]]),
-         fmt.credits(mem.refuel))
+   mem.refuel_msg = fmt.f(_([["I'll supply your ship with fuel for {credits}."]]),
+         {credits=fmt.credits(mem.refuel)})
 
    -- Set up bribes
    mem.bribe = mem.bribe_base
    if mem.allowbribe or (mem.natural and mem.bribe_rng > 0.7) then
-      mem.bribe_prompt = string.format(_([["Your life is worth %s to me."]]), fmt.credits(mem.bribe) )
+      mem.bribe_prompt = fmt.f(_([["Your life is worth {credits} to me."]]), {credits=fmt.credits(mem.bribe)} )
       mem.bribe_paid = _([["Beat it."]])
    else
       mem.bribe_no = bribe_no_list[ rnd.rnd(1,#bribe_no_list) ]

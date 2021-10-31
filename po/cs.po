@@ -21651,8 +21651,8 @@ msgstr "\"Jdi ode mně pryč!\""
 #: dat/ai/mercenary.lua:66 dat/ai/miner.lua:33 dat/ai/proteron_dissident.lua:32
 #: dat/ai/thurion.lua:63 dat/ai/trader.lua:53
 #, lua-format
-msgid "\"I'll supply your ship with fuel for %s.\""
-msgstr "„Dodám tvé lodi palivo za %s.“"
+msgid "\"I'll supply your ship with fuel for {credits}.\""
+msgstr "„Dodám tvé lodi palivo za {credits}.“"
 
 #. Set up potential advertiser messages in msg variable
 #. Faction specific messages
@@ -22908,8 +22908,8 @@ msgstr "Žádost o pomoc. Jsme pod útokem!"
 
 #: dat/ai/core/misc/distress.lua:17
 #, lua-format
-msgid "%s vessel under attack! Requesting help!"
-msgstr "%s plavidlo napadeno! Žádám o pomoc!"
+msgid "{fct} vessel under attack! Requesting help!"
+msgstr "{fct} plavidlo napadeno! Žádám o pomoc!"
 
 #: dat/ai/core/misc/distress.lua:18 dat/ai/thurion.lua:15
 msgid "Help! Ship under fire!"
@@ -22929,8 +22929,8 @@ msgstr "Mayday! Poškození lodi!"
 
 #: dat/ai/core/misc/distress.lua:22
 #, lua-format
-msgid "Mayday! %s %s being assaulted!"
-msgstr "Mayday! %s %s byl napaden!"
+msgid "Mayday! {fct} {cls} being assaulted!"
+msgstr "Mayday! {fct} {cls} byl napaden!"
 
 #. Default task to run when idle
 #. Get a random asteroid in the system
@@ -23001,8 +23001,8 @@ msgstr "„Nejsi hoden mé pozornosti.“"
 
 #: dat/ai/dvaered.lua:63 dat/ai/frontier_police.lua:64
 #, lua-format
-msgid "\"For you I could make an exception for %s.\""
-msgstr "„Pro tebe bych mohl udělat výjimku za %s.“"
+msgid "\"For you I could make an exception for {credits}.\""
+msgstr "„Pro tebe bych mohl udělat výjimku za {credits}.“"
 
 #. Handle bribing
 #. Only 50% of actually taunting.
@@ -23130,8 +23130,8 @@ msgstr "„Předpokládám, že bych mohl postrádat nějaké palivo pro %s.“"
 #. See if can be bribed
 #: dat/ai/empire.lua:98
 #, lua-format
-msgid "\"For some %s I could forget about seeing you.\""
-msgstr "„Za pár %s bych mohl zapomenout na to, že jsem tě viděl.“"
+msgid "\"For some {credits} I could forget about seeing you.\""
+msgstr "„Za pár {credits} bych mohl zapomenout na to, že jsem tě viděl.“"
 
 #: dat/ai/empire.lua:99
 msgid "\"Now scram before I change my mind.\""
@@ -23208,8 +23208,8 @@ msgstr "Smrt nepřátelům Pohraničí!"
 #. Handle bribes.
 #: dat/ai/flf.lua:71
 #, lua-format
-msgid "\"It'll cost you %s for me to ignore your dirty presence.\""
-msgstr "„Bude to stát %s, abych ignoroval tvou špinavou přítomnost.“"
+msgid "\"It'll cost you {credits} for me to ignore your dirty presence.\""
+msgstr "„Bude to stát {credits}, abych ignoroval tvou špinavou přítomnost.“"
 
 #: dat/ai/flf.lua:72
 msgid "\"Begone before I change my mind.\""
@@ -23222,8 +23222,8 @@ msgstr "„Jediný způsob, jak se vypořádat s lůzou, jako jsi ty, jsou děla
 #. Handle refueling.
 #: dat/ai/flf.lua:82
 #, lua-format
-msgid "\"I should be able to spare some fuel for %s.\""
-msgstr "„Můžu postrádat nějaké palivo. Za %s.“"
+msgid "\"I should be able to spare some fuel for {credits}.\""
+msgstr "„Můžu postrádat nějaké palivo. Za {credits}.“"
 
 #: dat/ai/flf.lua:84
 msgid "\"I can't spare fuel for you.\""
@@ -23287,8 +23287,8 @@ msgstr "Jsi parazit!"
 #. Deal with refueling
 #: dat/ai/goddard.lua:59
 #, lua-format
-msgid "\"I could do you the favour of refueling for the price of %s.\""
-msgstr "„Mohl bych ti udělat laskavost a doplnit palivo za cenu%s.“"
+msgid "\"I could do you the favour of refueling for the price of {credits}.\""
+msgstr "„Mohl bych ti udělat laskavost a doplnit palivo za cenu{credits}.“"
 
 #: dat/ai/mercenary.lua:12
 msgid "\"I'm afraid you can't make it worth my while.\""
@@ -23321,8 +23321,8 @@ msgstr "To není to, k čemu jsem se upsal!"
 #. Set up bribes
 #: dat/ai/mercenary.lua:72
 #, lua-format
-msgid "\"Your life is worth %s to me.\""
-msgstr "„Tvůj život má pro mě hodnotu %s.“"
+msgid "\"Your life is worth {credits} to me.\""
+msgstr "„Tvůj život má pro mě hodnotu {credits}.“"
 
 #: dat/ai/mercenary.lua:73
 msgid "\"Beat it.\""
@@ -23342,128 +23342,128 @@ msgstr "„Nechci žádný problémy.“"
 #. Settings
 #: dat/ai/pirate.lua:26
 #, lua-format
-msgid "\"Pay up %s or it's the end of the line.\""
-msgstr "\"Zaplať %s, nebo je to tvůj konec.\""
+msgid "\"Pay up {credits} or it's the end of the line.\""
+msgstr "\"Zaplať {credits}, nebo je to tvůj konec.\""
 
 #: dat/ai/pirate.lua:27
 #, lua-format
-msgid "\"Your money or your life. %s and make the choice quickly.\""
-msgstr "„Peníze nebo život. %s a rozhodni se rychle.“"
+msgid "\"Your money or your life. {credits} and make the choice quickly.\""
+msgstr "„Peníze nebo život. {credits} a rozhodni se rychle.“"
 
 #: dat/ai/pirate.lua:28
 #, lua-format
-msgid "\"Money talks bub. %s up front or get off my channel.\""
-msgstr "„Peníze mluví kámo.%s předem nebo vypadni z mého kanálu.“"
+msgid "\"Money talks bub. {credits} up front or get off my channel.\""
+msgstr "„Peníze mluví kámo.{credits} předem nebo vypadni z mého kanálu.“"
 
 #: dat/ai/pirate.lua:29
 #, lua-format
-msgid "\"You're either really desperate or really rich. %s or shut up.\""
-msgstr "„Jsi buď vážně zoufalý nebo opravdu bohatý. %s nebo drž hubu.“"
+msgid "\"You're either really desperate or really rich. {credits} or shut up.\""
+msgstr "„Jsi buď vážně zoufalý nebo opravdu bohatý. {credits} nebo drž hubu.“"
 
 #: dat/ai/pirate.lua:30
 #, lua-format
-msgid "\"This is a toll road, pay up %s or die.\""
-msgstr "„Toto je zpoplatněná trasa, zaplať %s nebo zemři.“"
+msgid "\"This is a toll road, pay up {credits} or die.\""
+msgstr "„Toto je zpoplatněná trasa, zaplať {credits} nebo zemři.“"
 
 #: dat/ai/pirate.lua:31
 #, fuzzy, lua-format
 #| msgid ""
 #| "\"So this is the part where you pay up or get shot up. Your choice. "
-#| "What'll be, %s or...\""
+#| "What'll be, {credits} or...\""
 msgid ""
 "\"So this is the part where you pay up or get shot up. Your choice. What'll "
-"be, %s or…\""
+"be, {credits} or…\""
 msgstr ""
 "„Takže toto je chvíle, kdy zaplatíš nebo se necháš zastřelit. Tvoje volba. "
-"Bude to, %s nebo ...“"
+"Bude to, {credits} nebo ...“"
 
 #: dat/ai/pirate.lua:34
 #, lua-format
-msgid "\"It'll cost you %s for me to ignore your pile of rubbish.\""
-msgstr "„Stálo by tě %s, kdybych ignoroval tvou hromadu odpadků.“"
+msgid "\"It'll cost you {credits} for me to ignore your pile of rubbish.\""
+msgstr "„Stálo by tě {credits}, kdybych ignoroval tvou hromadu odpadků.“"
 
 #: dat/ai/pirate.lua:35
 #, lua-format
-msgid "\"I'm in a good mood so I'll let you go for %s.\""
-msgstr "„Mám dobrou náladu, takže tě nechám jít za %s.“"
+msgid "\"I'm in a good mood so I'll let you go for {credits}.\""
+msgstr "„Mám dobrou náladu, takže tě nechám jít za {credits}.“"
 
 #: dat/ai/pirate.lua:36
 #, lua-format
-msgid "\"Send me %s or you're dead.\""
-msgstr "„Pošli mi %s, nebo jsi mrtvý.“"
+msgid "\"Send me {credits} or you're dead.\""
+msgstr "„Pošli mi {credits}, nebo jsi mrtvý.“"
 
 #: dat/ai/pirate.lua:37
 #, lua-format
-msgid "\"Shut up and give me your money! %s now.\""
-msgstr "„Drž hubu a dej mi své peníze! %s teď.“"
+msgid "\"Shut up and give me your money! {credits} now.\""
+msgstr "„Drž hubu a dej mi své peníze! {credits} teď.“"
 
 #: dat/ai/pirate.lua:38
 #, lua-format
-msgid "\"You give me %s and I'll act like I never saw you.\""
-msgstr "„Dáš mi %s a budu se chovat, jako bych tě nikdy neviděl.“"
+msgid "\"You give me {credits} and I'll act like I never saw you.\""
+msgstr "„Dáš mi {credits} a budu se chovat, jako bych tě nikdy neviděl.“"
 
 #: dat/ai/pirate.lua:39
 #, lua-format
-msgid "\"If you're willing to negotiate I'll gladly take %s to not kill you.\""
-msgstr "„Pokud jsi ochoten vyjednávat, rád si vezmu %s, abych tě nezabil.“"
+msgid "\"If you're willing to negotiate I'll gladly take {credits} to not kill you.\""
+msgstr "„Pokud jsi ochoten vyjednávat, rád si vezmu {credits}, abych tě nezabil.“"
 
 #: dat/ai/pirate.lua:40
 #, lua-format
 msgid ""
-"\"Pay up or don't. %s now just means I'll wait till later to collect the "
+"\"Pay up or don't. {credits} now just means I'll wait till later to collect the "
 "rest.\""
 msgstr ""
-"„Zaplať nebo ne.%s teď jen znamená, že si počkám, až si později vyzvednu "
+"„Zaplať nebo ne.{credits} teď jen znamená, že si počkám, až si později vyzvednu "
 "zbytek.“"
 
 #: dat/ai/pirate.lua:43
 #, fuzzy, lua-format
-#| msgid "\"It'll cost you %s for me to ignore your pile of rubbish.\""
-msgid "\"It'll cost you %s for us to ignore your pile of rubbish.\""
-msgstr "„Stálo by tě %s, kdybych ignoroval tvou hromadu odpadků.“"
+#| msgid "\"It'll cost you {credits} for me to ignore your pile of rubbish.\""
+msgid "\"It'll cost you {credits} for us to ignore your pile of rubbish.\""
+msgstr "„Stálo by tě {credits}, kdybych ignoroval tvou hromadu odpadků.“"
 
 #: dat/ai/pirate.lua:44
 #, fuzzy, lua-format
-#| msgid "\"I'm in a good mood so I'll let you go for %s.\""
-msgid "\"We're in a good mood so we'll let you go for %s.\""
-msgstr "„Mám dobrou náladu, takže tě nechám jít za %s.“"
+#| msgid "\"I'm in a good mood so I'll let you go for {credits}.\""
+msgid "\"We're in a good mood so we'll let you go for {credits}.\""
+msgstr "„Mám dobrou náladu, takže tě nechám jít za {credits}.“"
 
 #: dat/ai/pirate.lua:45
 #, fuzzy, lua-format
-#| msgid "\"Send me %s or you're dead.\""
-msgid "\"Send us %s or you're dead.\""
-msgstr "„Pošli mi %s, nebo jsi mrtvý.“"
+#| msgid "\"Send me {credits} or you're dead.\""
+msgid "\"Send us {credits} or you're dead.\""
+msgstr "„Pošli mi {credits}, nebo jsi mrtvý.“"
 
 #: dat/ai/pirate.lua:46
 #, fuzzy, lua-format
-#| msgid "\"Shut up and give me your money! %s now.\""
-msgid "\"Shut up and give us your money! %s now.\""
-msgstr "„Drž hubu a dej mi své peníze! %s teď.“"
+#| msgid "\"Shut up and give me your money! {credits} now.\""
+msgid "\"Shut up and give us your money! {credits} now.\""
+msgstr "„Drž hubu a dej mi své peníze! {credits} teď.“"
 
 #: dat/ai/pirate.lua:47
 #, fuzzy, lua-format
-#| msgid "\"You give me %s and I'll act like I never saw you.\""
-msgid "\"You give us %s and we'll act like we never saw you.\""
-msgstr "„Dáš mi %s a budu se chovat, jako bych tě nikdy neviděl.“"
+#| msgid "\"You give me {credits} and I'll act like I never saw you.\""
+msgid "\"You give us {credits} and we'll act like we never saw you.\""
+msgstr "„Dáš mi {credits} a budu se chovat, jako bych tě nikdy neviděl.“"
 
 #: dat/ai/pirate.lua:48
 #, fuzzy, lua-format
 #| msgid ""
-#| "\"If you're willing to negotiate I'll gladly take %s to not kill you.\""
+#| "\"If you're willing to negotiate I'll gladly take {credits} to not kill you.\""
 msgid ""
-"\"If you're willing to negotiate we'll gladly take %s to not kill you.\""
-msgstr "„Pokud jsi ochoten vyjednávat, rád si vezmu %s, abych tě nezabil.“"
+"\"If you're willing to negotiate we'll gladly take {credits} to not kill you.\""
+msgstr "„Pokud jsi ochoten vyjednávat, rád si vezmu {credits}, abych tě nezabil.“"
 
 #: dat/ai/pirate.lua:49
 #, fuzzy, lua-format
 #| msgid ""
-#| "\"Pay up or don't. %s now just means I'll wait till later to collect the "
+#| "\"Pay up or don't. {credits} now just means I'll wait till later to collect the "
 #| "rest.\""
 msgid ""
-"\"Pay up or don't. %s now just means we'll wait till later to collect the "
+"\"Pay up or don't. {credits} now just means we'll wait till later to collect the "
 "rest.\""
 msgstr ""
-"„Zaplať nebo ne.%s teď jen znamená, že si počkám, až si později vyzvednu "
+"„Zaplať nebo ne.{credits} teď jen znamená, že si počkám, až si později vyzvednu "
 "zbytek.“"
 
 #: dat/ai/pirate.lua:52
@@ -23753,15 +23753,15 @@ msgstr "„Promiň, moje palivo není na prodej.“"
 #. Most likely no chance to refuel
 #: dat/ai/proteron.lua:70
 #, lua-format
-msgid "\"I can transfer some fuel for %s.\""
-msgstr "„Mohu přečerpat palivo za %s.“"
+msgid "\"I can transfer some fuel for {credits}.\""
+msgstr "„Mohu přečerpat palivo za {credits}.“"
 
 #. See if can be bribed
 #: dat/ai/proteron.lua:75
 #, lua-format
 msgid ""
-"\"The Proteron can always use some income. %s and you were never here.\""
-msgstr "„Proteron může vždy použít nějaký příjem.%s a nikdy jsi tu nebyl.“"
+"\"The Proteron can always use some income. {credits} and you were never here.\""
+msgstr "„Proteron může vždy použít nějaký příjem.{credits} a nikdy jsi tu nebyl.“"
 
 #: dat/ai/proteron.lua:76
 msgid "\"Get lost before I have to dispose of you.\""
@@ -23861,8 +23861,8 @@ msgstr "„Nemám palivo nazbyt.“"
 #. Most likely no chance to refuel
 #: dat/ai/sirius.lua:69
 #, lua-format
-msgid "\"I would be able to refuel your ship for %s.\""
-msgstr "„Byl bych schopen natankovat vaši loď za %s.“"
+msgid "\"I would be able to refuel your ship for {credits}.\""
+msgstr "„Byl bych schopen natankovat vaši loď za {credits}.“"
 
 #: dat/ai/soromid.lua:13
 msgid "\"Snivelling waste of carbon.\""
@@ -23929,8 +23929,8 @@ msgstr "„Soromidští válečníci nejsou tvým osobním tankerem.“"
 #. Most likely no chance to refuel
 #: dat/ai/soromid.lua:83
 #, lua-format
-msgid "\"I suppose I could spare some fuel for %s.\""
-msgstr "„Předpokládám, že bych mohl postrádat nějaké palivo pro %s.“"
+msgid "\"I suppose I could spare some fuel for {credits}.\""
+msgstr "„Předpokládám, že bych mohl postrádat nějaké palivo pro {credits}.“"
 
 #. Handle bribing
 #: dat/ai/soromid.lua:92
@@ -24049,14 +24049,14 @@ msgstr ""
 #. Most likely no chance to refuel
 #: dat/ai/zalek.lua:100
 #, lua-format
-msgid "\"I will agree to refuel your ship for %s.\""
-msgstr "„Souhlasím s natankováním vaší lodi za %s.“"
+msgid "\"I will agree to refuel your ship for {credits}.\""
+msgstr "„Souhlasím s natankováním vaší lodi za {credits}.“"
 
 #. See if can be bribed
 #: dat/ai/zalek.lua:108
 #, lua-format
-msgid "\"We will agree to end the battle for %s.\""
-msgstr "„Souhlasíme s ukončením bitvy za %s.“"
+msgid "\"We will agree to end the battle for {credits}.\""
+msgstr "„Souhlasíme s ukončením bitvy za {credits}.“"
 
 #: dat/ai/zalek.lua:109
 msgid "\"Temporarily stopping fire.\""

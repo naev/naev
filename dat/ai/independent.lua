@@ -37,8 +37,8 @@ function hail ()
    mem.bribe_no      = nil
 
    mem.refuel = mem.refuel_base
-   mem.refuel_msg = string.format(_([["I'll supply your ship with fuel for %s."]]),
-         fmt.credits(mem.refuel))
+   mem.refuel_msg = fmt.f(_([["I'll supply your ship with fuel for {credits}."]]),
+         {credits=fmt.credits(mem.refuel)})
 
    -- No bribe
    mem.bribe_no = bribe_msg_list[ rnd.rnd(1,#bribe_msg_list) ]

@@ -30,8 +30,8 @@ function hail ()
 
    -- Refuel
    mem.refuel = mem.refuel_base
-   mem.refuel_msg = string.format(_([["I'll supply your ship with fuel for %s."]]),
-         fmt.credits(mem.refuel))
+   mem.refuel_msg = fmt.f(_([["I'll supply your ship with fuel for {credits}."]]),
+         {credits=fmt.credits(mem.refuel)})
 
    -- Communication stuff
    mem.bribe_no = _([["I don't want any problems."]])

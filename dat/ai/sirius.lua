@@ -66,7 +66,7 @@ function hail ()
       mem.refuel = mem.refuel * 0.6
    end
    -- Most likely no chance to refuel
-   mem.refuel_msg = string.format( _([["I would be able to refuel your ship for %s."]]), fmt.credits(mem.refuel) )
+   mem.refuel_msg = fmt.f( _([["I would be able to refuel your ship for {credits}."]]), {credits=fmt.credits(mem.refuel)} )
 
    -- Can't be bribed
    mem.bribe_no = bribe_no_list[ rnd.rnd(1,#bribe_no_list) ]

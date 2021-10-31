@@ -23,30 +23,30 @@ local function join_tables( a, b )
 end
 
 local bribe_prompt_common = {
-   _([["Pay up %s or it's the end of the line."]]),
-   _([["Your money or your life. %s and make the choice quickly."]]),
-   _([["Money talks bub. %s up front or get off my channel."]]),
-   _([["You're either really desperate or really rich. %s or shut up."]]),
-   _([["This is a toll road, pay up %s or die."]]),
-   _([["So this is the part where you pay up or get shot up. Your choice. What'll be, %s or…"]]),
+   _([["Pay up {credits} or it's the end of the line."]]),
+   _([["Your money or your life. {credits} and make the choice quickly."]]),
+   _([["Money talks bub. {credits} up front or get off my channel."]]),
+   _([["You're either really desperate or really rich. {credits} or shut up."]]),
+   _([["This is a toll road, pay up {credits} or die."]]),
+   _([["So this is the part where you pay up or get shot up. Your choice. What'll be, {credits} or…"]]),
 }
 local bribe_prompt_list = join_tables( {
-   _([["It'll cost you %s for me to ignore your pile of rubbish."]]),
-   _([["I'm in a good mood so I'll let you go for %s."]]),
-   _([["Send me %s or you're dead."]]),
-   _([["Shut up and give me your money! %s now."]]),
-   _([["You give me %s and I'll act like I never saw you."]]),
-   _([["If you're willing to negotiate I'll gladly take %s to not kill you."]]),
-   _([["Pay up or don't. %s now just means I'll wait till later to collect the rest."]]),
+   _([["It'll cost you {credits} for me to ignore your pile of rubbish."]]),
+   _([["I'm in a good mood so I'll let you go for {credits}."]]),
+   _([["Send me {credits} or you're dead."]]),
+   _([["Shut up and give me your money! {credits} now."]]),
+   _([["You give me {credits} and I'll act like I never saw you."]]),
+   _([["If you're willing to negotiate I'll gladly take {credits} to not kill you."]]),
+   _([["Pay up or don't. {credits} now just means I'll wait till later to collect the rest."]]),
 }, bribe_prompt_common )
 local bribe_prompt_nearby_list = join_tables( {
-   _([["It'll cost you %s for us to ignore your pile of rubbish."]]),
-   _([["We're in a good mood so we'll let you go for %s."]]),
-   _([["Send us %s or you're dead."]]),
-   _([["Shut up and give us your money! %s now."]]),
-   _([["You give us %s and we'll act like we never saw you."]]),
-   _([["If you're willing to negotiate we'll gladly take %s to not kill you."]]),
-   _([["Pay up or don't. %s now just means we'll wait till later to collect the rest."]]),
+   _([["It'll cost you {credits} for us to ignore your pile of rubbish."]]),
+   _([["We're in a good mood so we'll let you go for {credits}."]]),
+   _([["Send us {credits} or you're dead."]]),
+   _([["Shut up and give us your money! {credits} now."]]),
+   _([["You give us {credits} and we'll act like we never saw you."]]),
+   _([["If you're willing to negotiate we'll gladly take {credits} to not kill you."]]),
+   _([["Pay up or don't. {credits} now just means we'll wait till later to collect the rest."]]),
 }, bribe_prompt_common )
 local bribe_paid_list = {
    _([["You're lucky I'm so kind."]]),
@@ -171,13 +171,12 @@ function hail ()
    if standing > 60 then
       mem.refuel = mem.refuel * 0.5
    end
-   mem.refuel_msg = string.format(_([["For you, only %s for a jump of fuel."]]),
-         fmt.credits(mem.refuel))
+   mem.refuel_msg = fmt.f(_([["For you, only {credits} for a jump of fuel."]]), {credits=fmt.credits(mem.refuel)})
 
    -- Deal with bribeability
    mem.bribe = mem.bribe_base
    if mem.allowbribe or (mem.natural and mem.bribe_rng < 0.95) then
-      mem.bribe_prompt = string.format(bribe_prompt_list[ rnd.rnd(1,#bribe_prompt_list) ], fmt.credits(mem.bribe))
+      mem.bribe_prompt = fmt.f(bribe_prompt_list[ rnd.rnd(1,#bribe_prompt_list) ], {credits=fmt.credits(mem.bribe)})
       mem.bribe_prompt_nearby = bribe_prompt_nearby_list[ rnd.rnd(1,#bribe_prompt_nearby_list) ]
       mem.bribe_paid = bribe_paid_list[ rnd.rnd(1,#bribe_paid_list) ]
    else

@@ -15,6 +15,8 @@ function __hoge( data ) -- internal use function
 -- Remark: the (sub)taskdata is passed as the (sub)task function argument
 --]]
 
+local fmt = require "format"
+
 --[[
 -- Helper function that checks to see if a value is in a table
 --]]
@@ -366,7 +368,7 @@ function __choose_land_target ( target )
       return
    end
 
-   -- Make sure tarfet is valid
+   -- Make sure target is valid
    if target == nil then
       local landplanet = ai.landplanet()
       if landplanet ~= nil then
@@ -374,8 +376,8 @@ function __choose_land_target ( target )
 
       -- Bail out if no valid planet could be found.
       else
-         warn(string.format(_("Pilot '%s' tried to land with no landable assets!"),
-               ai.pilot():name()))
+         warn(fmt.f(_("Pilot '{pltname}' tried to land with no landable assets!"),
+               {pltname=ai.pilot():name()}))
          ai.poptask()
          return
       end

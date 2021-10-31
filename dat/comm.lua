@@ -102,7 +102,7 @@ local function bribe_cost( plt )
 
    local mem = plt:memory()
    if not mem.bribe then
-      warn(string.format(_("Pilot '%s' accepts bribes but doesn't give a price!"), plt:name() ))
+      warn(fmt.f(_("Pilot '{pltname}' accepts bribes but doesn't give a price!"), {pltname=plt:name()} ))
       return 1e6 -- just ridiculous for now, players should report it
    end
    return mem.bribe
@@ -128,21 +128,21 @@ local function bribe_msg( plt, group )
       local cstr = fmt.credits(cost)
       local chave = fmt.credits(player.credits())
       if not str then
-         str = _([["We'll need at least %s to not leave you as a hunk of floating debris."]])
+         str = _([["We'll need at least {credits} to not leave you as a hunk of floating debris."]])
       end
-      str = string.format( str, cstr )
-      return string.format(n_("%s\n\nThis action will bribe %d %s pilot.\nYou have %s. Pay #r%s#0?",
-                              "%s\n\nThis action will bribe %d %s pilots.\nYou have %s. Pay #r%s#0?", #bribeable),
-            str, #bribeable, bribe_msgFactions(group), chave, cstr ), cost
+      str = fmt.f( str, {credits=cstr} )
+      return fmt.f(n_("{msg}\n\nThis action will bribe {n} {fct_list} pilot.\nYou have {credits}. Pay #r{price}#0?",
+                      "{msg}\n\nThis action will bribe {n} {fct_list} pilots.\nYou have {credits}. Pay #r{price}#0?", #bribeable),
+            {msg=str, n=#bribeable, fct_list=bribe_msgFactions(group), credits=chave, price=cstr} ), cost
    else
       local cost = bribe_cost( plt )
       local str = mem.bribe_prompt
       local cstr = fmt.credits(cost)
       local chave = fmt.credits(player.credits())
       if not str then
-         str = string.format(_([["I'm gonna need at least %s to not leave you as a hunk of floating debris."]]), cstr)
+         str = fmt.f(_([["I'm gonna need at least {credits} to not leave you as a hunk of floating debris."]]), {credits=cstr})
       end
-      return string.format(_("%s\n\nYou have %s. Pay #r%s#0?"), str, chave, cstr ), cost
+      return fmt.f(_("{msg}\n\nYou have {credits}. Pay #r{price}#0?"), {msg=str, credits=chave, price=cstr} ), cost
    end
 end
 
@@ -158,7 +158,7 @@ function comm( plt )
    if mem.comm_greet then
       p( mem.comm_greet )
    else
-      vn.na(string.format(_("You open a communication channel with %s."), plt:name()))
+      vn.na(fmt.f(_("You open a communication channel with {pltname}."), {pltname=plt:name()}))
    end
    vn.label("menu")
    vn.menu( function ()
@@ -176,14 +176,32 @@ function comm( plt )
             bribeable = nearby_bribeable( plt ) -- global
             bribeable_all = nearby_bribeable( plt, true ) -- global
             if #bribeable_all > 1 and not (#bribeable_all==#bribeable) then
-               table.insert( opts, 1, {string.format(n_("Bribe %d nearby %s pilot","Bribe %d nearby %s pilots",#bribeable_all), #bribeable_all, bribe_msgFactions(bribeable_all)), "bribe_all"} )
+               table.insert( opts, 1, {
+                  fmt.f(
+                     n_("Bribe {n} nearby {fct_list} pilot",
+                        "Bribe {n} nearby {fct_list} pilots", #bribeable_all),
+                        {n=#bribeable_all, fct_list=bribe_msgFactions(bribeable_all)}
+                  ), "bribe_all",
+               } )
             end
             if #bribeable > 1 and not (bribe_group and #bribe_group==#bribeable) then
-               table.insert( opts, 1, {string.format(n_("Bribe %d nearby %s pilot","Bribe %d nearby %s pilots",#bribeable), #bribeable, bribe_msgFactions(bribeable)), "bribe_nearby"} )
+               table.insert( opts, 1, {
+                  fmt.f(
+                     n_("Bribe {n} nearby {fct_list} pilot",
+                        "Bribe {n} nearby {fct_list} pilots", #bribeable),
+                     {n=#bribeable, fct_list=bribe_msgFactions(bribeable)}
+                  ), "bribe_nearby",
+               } )
             end
 
             if bribe_group then
-               table.insert( opts, 1, {string.format(n_("Bribe fleet (%d pilot)", "Bribe fleet (%d pilots)", #bribe_group), #bribe_group), "bribe"} )
+               table.insert( opts, 1, {
+                  fmt.f(
+                     n_("Bribe fleet ({n} pilot)",
+                        "Bribe fleet ({n} pilots)", #bribe_group),
+                     {n=#bribe_group}
+                  ), "bribe",
+               } )
             else
                table.insert( opts, 1, {_("Bribe this pilot"), "bribe"} )
             end
@@ -231,7 +249,7 @@ function comm( plt )
       end
       local cstr = fmt.credits( player.credits() )
       local cdif = fmt.credits( cost - player.credits() )
-      return string.format(_("You only have %s. You need #r%s#0 more to be able to afford the bribe!"), cstr, cdif )
+      return fmt.f(_("You only have {credits}. You need #r{cdif}#0 more to be able to afford the bribe!"), {credits=cstr, cdif=cdif} )
    end )
    vn.jump("menu")
 
@@ -284,7 +302,7 @@ function comm( plt )
    vn.na( function ()
       local cstr = fmt.credits( player.credits() )
       local cdif = fmt.credits( bribe_nearby_cost - player.credits() )
-      return string.format(_("You only have %s. You need #r%s#0 more to be able to afford the bribe!"), cstr, cdif )
+      return fmt.f(_("You only have {credits}. You need #r{cdif}#0 more to be able to afford the bribe!"), {credits=cstr, cdif=cdif} )
    end )
    vn.jump("menu")
 
@@ -330,7 +348,7 @@ function comm( plt )
    vn.na( function ()
       local cstr = fmt.credits( player.credits() )
       local cdif = fmt.credits( bribe_all_cost - player.credits() )
-      return string.format(_("You only have %s. You need #r%s#0 more to be able to afford the bribe!"), cstr, cdif )
+      return fmt.f(_("You only have {credits}. You need #r{cdif}#0 more to be able to afford the bribe!"), {credits=cstr, cdif=cdif} )
    end )
    vn.jump("menu")
 
@@ -419,9 +437,9 @@ function comm( plt )
       local cstr = fmt.credits(cost)
       local chave = fmt.credits(player.credits())
       if not str then
-         str = string.format(_([["I should be able to refuel you for %s."]]), cstr)
+         str = fmt.f(_([["I should be able to refuel you for {credits}."]]), {credits=cstr})
       end
-      return string.format(_("%s\n\nYou have %s. Pay #r%s#0?"), str, chave, cstr )
+      return fmt.f(_("{msg}\n\nYou have {credits}. Pay #r{price}#0?"), {msg=str, credits=chave, price=cstr} )
    end )
    vn.menu{
       {_("Pay"), "refuel_trypay"},
@@ -432,7 +450,7 @@ function comm( plt )
    vn.na( function ()
       local cstr = fmt.credits( player.credits() )
       local cdif = fmt.credits( mem.refuel - player.credits() )
-      return string.format(_("You only have %s credits. You need #r%s#0 more to be able to afford the refueling!"), cstr, cdif )
+      return fmt.f(_("You only have {credits} credits. You need #r{cdif}#0 more to be able to afford the refueling!"), {credits=cstr, cdif=cdif} )
    end )
    vn.jump("menu")
 

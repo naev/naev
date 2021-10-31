@@ -21513,8 +21513,8 @@ msgstr "\"Éloignez vous de moi !\""
 #: dat/ai/mercenary.lua:66 dat/ai/miner.lua:33 dat/ai/proteron_dissident.lua:32
 #: dat/ai/thurion.lua:63 dat/ai/trader.lua:53
 #, lua-format
-msgid "\"I'll supply your ship with fuel for %s.\""
-msgstr "\"Je peux vous faire le plein pour %s.\""
+msgid "\"I'll supply your ship with fuel for {credits}.\""
+msgstr "\"Je peux vous faire le plein pour {credits}.\""
 
 #. Set up potential advertiser messages in msg variable
 #. Faction specific messages
@@ -22979,8 +22979,8 @@ msgstr ""
 #. See if can be bribed
 #: dat/ai/empire.lua:98
 #, lua-format
-msgid "\"For some %s I could forget about seeing you.\""
-msgstr "\"%s, et je ne vous ai jamais vu.\""
+msgid "\"For some {credits} I could forget about seeing you.\""
+msgstr "\"{credits}, et je ne vous ai jamais vu.\""
 
 #: dat/ai/empire.lua:99
 msgid "\"Now scram before I change my mind.\""
@@ -23191,111 +23191,111 @@ msgstr ""
 #. Settings
 #: dat/ai/pirate.lua:26
 #, lua-format
-msgid "\"Pay up %s or it's the end of the line.\""
-msgstr "\"Déboursez %s ou je mets un terme à vos tribulations.\""
+msgid "\"Pay up {credits} or it's the end of the line.\""
+msgstr "\"Déboursez {credits} ou je mets un terme à vos tribulations.\""
 
 #: dat/ai/pirate.lua:27
 #, lua-format
-msgid "\"Your money or your life. %s and make the choice quickly.\""
+msgid "\"Your money or your life. {credits} and make the choice quickly.\""
 msgstr ""
-"\"La bourse ou la vie. Ça va te coûter %s, et j'ai pas toute la journée.\""
+"\"La bourse ou la vie. Ça va te coûter {credits}, et j'ai pas toute la journée.\""
 
 #: dat/ai/pirate.lua:28
 #, lua-format
-msgid "\"Money talks bub. %s up front or get off my channel.\""
-msgstr "\"L'argent est roi mon ami. %s d'avance ou on n'a rien à se dire.\""
+msgid "\"Money talks bub. {credits} up front or get off my channel.\""
+msgstr "\"L'argent est roi mon ami. {credits} d'avance ou on n'a rien à se dire.\""
 
 #: dat/ai/pirate.lua:29
 #, lua-format
-msgid "\"You're either really desperate or really rich. %s or shut up.\""
-msgstr "\"T'es vraiment au fond ou t'es vraiment très riche. %s.\""
+msgid "\"You're either really desperate or really rich. {credits} or shut up.\""
+msgstr "\"T'es vraiment au fond ou t'es vraiment très riche. {credits}.\""
 
 #: dat/ai/pirate.lua:30
 #, lua-format
-msgid "\"This is a toll road, pay up %s or die.\""
-msgstr "\"Péage. %s ou un accident malheureux.\""
+msgid "\"This is a toll road, pay up {credits} or die.\""
+msgstr "\"Péage. {credits} ou un accident malheureux.\""
 
 #: dat/ai/pirate.lua:31
 #, lua-format
 msgid ""
 "\"So this is the part where you pay up or get shot up. Your choice. What'll "
-"be, %s or…\""
+"be, {credits} or…\""
 msgstr ""
 
 #: dat/ai/pirate.lua:34
 #, lua-format
-msgid "\"It'll cost you %s for me to ignore your pile of rubbish.\""
-msgstr "\"Tu me files %s et je t'ignore toi et le déchet que tu pilotes.\""
+msgid "\"It'll cost you {credits} for me to ignore your pile of rubbish.\""
+msgstr "\"Tu me files {credits} et je t'ignore toi et le déchet que tu pilotes.\""
 
 #: dat/ai/pirate.lua:35
 #, lua-format
-msgid "\"I'm in a good mood so I'll let you go for %s.\""
+msgid "\"I'm in a good mood so I'll let you go for {credits}.\""
 msgstr ""
 
 #: dat/ai/pirate.lua:36
 #, lua-format
-msgid "\"Send me %s or you're dead.\""
-msgstr "\"Crache %s ou crève.\""
+msgid "\"Send me {credits} or you're dead.\""
+msgstr "\"Crache {credits} ou crève.\""
 
 #: dat/ai/pirate.lua:37
 #, lua-format
-msgid "\"Shut up and give me your money! %s now.\""
-msgstr "\"Ferme ta gueule et donne ton fric ! %s ! Maintenant !\""
+msgid "\"Shut up and give me your money! {credits} now.\""
+msgstr "\"Ferme ta gueule et donne ton fric ! {credits} ! Maintenant !\""
 
 #: dat/ai/pirate.lua:38
 #, lua-format
-msgid "\"You give me %s and I'll act like I never saw you.\""
+msgid "\"You give me {credits} and I'll act like I never saw you.\""
 msgstr ""
 
 #: dat/ai/pirate.lua:39
 #, lua-format
-msgid "\"If you're willing to negotiate I'll gladly take %s to not kill you.\""
+msgid "\"If you're willing to negotiate I'll gladly take {credits} to not kill you.\""
 msgstr ""
-"\"Je suis prêt à entrer en pourparlers. Pour %s je pourrais me persuader de "
+"\"Je suis prêt à entrer en pourparlers. Pour {credits} je pourrais me persuader de "
 "ne pas vous tuer.\""
 
 #: dat/ai/pirate.lua:40
 #, lua-format
 msgid ""
-"\"Pay up or don't. %s now just means I'll wait till later to collect the "
+"\"Pay up or don't. {credits} now just means I'll wait till later to collect the "
 "rest.\""
 msgstr ""
 
 #: dat/ai/pirate.lua:43
 #, lua-format
-msgid "\"It'll cost you %s for us to ignore your pile of rubbish.\""
+msgid "\"It'll cost you {credits} for us to ignore your pile of rubbish.\""
 msgstr ""
 
 #: dat/ai/pirate.lua:44
 #, lua-format
-msgid "\"We're in a good mood so we'll let you go for %s.\""
+msgid "\"We're in a good mood so we'll let you go for {credits}.\""
 msgstr ""
 
 #: dat/ai/pirate.lua:45
 #, lua-format
-msgid "\"Send us %s or you're dead.\""
+msgid "\"Send us {credits} or you're dead.\""
 msgstr ""
 
 #: dat/ai/pirate.lua:46
 #, lua-format
-msgid "\"Shut up and give us your money! %s now.\""
+msgid "\"Shut up and give us your money! {credits} now.\""
 msgstr ""
 
 #: dat/ai/pirate.lua:47
 #, lua-format
-msgid "\"You give us %s and we'll act like we never saw you.\""
+msgid "\"You give us {credits} and we'll act like we never saw you.\""
 msgstr ""
 
 #: dat/ai/pirate.lua:48
 #, lua-format
 msgid ""
-"\"If you're willing to negotiate we'll gladly take %s to not kill you.\""
+"\"If you're willing to negotiate we'll gladly take {credits} to not kill you.\""
 msgstr ""
 
 #: dat/ai/pirate.lua:49
 #, lua-format
 msgid ""
-"\"Pay up or don't. %s now just means we'll wait till later to collect the "
+"\"Pay up or don't. {credits} now just means we'll wait till later to collect the "
 "rest.\""
 msgstr ""
 
@@ -23588,8 +23588,8 @@ msgstr "\"Mes excuses, mon carburant n'est pas à vendre.\""
 #. Most likely no chance to refuel
 #: dat/ai/proteron.lua:70
 #, lua-format
-msgid "\"I can transfer some fuel for %s.\""
-msgstr "\"Je peux transférer du carburant pour %s.\""
+msgid "\"I can transfer some fuel for {credits}.\""
+msgstr "\"Je peux transférer du carburant pour {credits}.\""
 
 #. See if can be bribed
 #: dat/ai/proteron.lua:75
