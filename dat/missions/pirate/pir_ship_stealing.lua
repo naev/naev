@@ -38,35 +38,6 @@ local lmisn = require "lmisn"
 require "factions.equip.generic"
 
 
-title = _("Stealing a %s")
-description = _("Land on %s in the %s system and escape with your new %s")
-
--- localization stuff, translators would work here
-informer = {
-   description = _("A pirate informer is looking at you. Maybe they have some useful information to sell?"),
-   title = _("Ship to steal"),
-   message = _([["Hi, pilot. I have the location and security codes of an unattended %s %s. Maybe it interests you, who knows?
-    "However, I'm going to sell that information only. It'd cost you %s, but the ship is probably worth much more if you can get to it."
-    Do you want to pay to know where that ship is?]])
-}
-
-approval = {
-   title = _("Of course"),
-   message = _([[You pay the informer, who tells you the ship in currently on %s, in the %s system. He also gives you its security codes and warns you about patrols.
-    The pile of information he gives you also contains a way to land on the planet and to dissimulate your ship there.]])
-}
-
-success = {
-   title = _("Ship successfully stolen!"),
-   message = _([[It took you a while, but you finally make it into the ship and take control of it with the access codes you were given. Hopefully, you will be able to sell this %s, or maybe even to use it.
-    Enemy ships will probably be after you as soon as you leave the atmosphere, so you should get ready and use the time you have on this planet wisely.]])
-}
-
-unableto = {
-   title = _("Ship left alone!"),
-   message = _("Before you make it into the ship and take control of it, you realize you are not ready to deal with the logistics of moving your cargo over. You decide to leave the ship stealing business for later.")
-}
-
 base_price = 100e3
 
 ships = {
@@ -283,42 +254,34 @@ function create ()
 
    theship.system = theship.planet:system()
 
-   misn.setNPC( _("A Pirate informer"), portrait.get("Pirate"), informer.description )
+   misn.setNPC( _("A Pirate informer"), portrait.get("Pirate"), _("A pirate informer is looking at you. Maybe they have some useful information to sell?") )
 end
 
 function accept()
-   if tk.yesno( informer.title, informer.message:format(
-         _(theship.faction), _(theship.class), fmt.credits(theship.price) ) ) then
+   if tk.yesno( _("Ship to steal"), fmt.f(_([["Hi, pilot. I have the location and security codes of an unattended {fct} {class}. Maybe it interests you, who knows?
+    "However, I'm going to sell that information only. It'd cost you {credits}, but the ship is probably worth much more if you can get to it."
+    Do you want to pay to know where that ship is?]]), {
+         fct=_(theship.faction), class=_(theship.class), credits=fmt.credits(theship.price)} ) ) then
       if player.credits() >= theship.price then
-         tk.msg( approval.title, approval.message:format(
-            theship.planet:name(), theship.system:name() ) )
+         tk.msg( _("Of course"), fmt.f(_([[You pay the informer, who tells you the ship in currently on {pnt}, in the {sys} system. He also gives you its security codes and warns you about patrols.
+    The pile of information he gives you also contains a way to land on the planet and to dissimulate your ship there.]]), {
+            pnt=theship.planet, sys=theship.system} ) )
 
          player.pay( -theship.price )
          misn.accept()
 
-         -- Mission title, _("A brand new %s"), description
-         misn.setTitle( title:format( _(theship.class) ) )
-         misn.setReward( _("A brand new %s"):format( _(theship.class) ) )
-         misn.setDesc( description:format(
-            theship.planet:name(), theship.system:name(), _(theship.class) ) )
+	 local title = fmt.f(_("Stealing a {class}"), {class=_(theship.class)} )
+	 local description = fmt.f( _("Land on {pnt} in the {sys} system and escape with your new {class}"),
+                                    {pnt=theship.planet, sys=theship.system, class=_(theship.class)} )
+         misn.setTitle( title )
+         misn.setReward( fmt.f(_("A brand new {class}"), {class=_(theship.class)} ) )
+         misn.setDesc( description )
 
          -- Mission marker
          misn.markerAdd( theship.system, "low" )
 
          -- OSD
-         misn.osdCreate(
-            string.format(
-               title,
-               _(theship.class)
-            ), {
-               string.format(
-                  description,
-                  theship.planet:name(),
-                  theship.system:name(),
-                  _(theship.class)
-               )
-            }
-         )
+         misn.osdCreate( title, {description})
 
          hook.land("land")
          hook.enter("enter")
@@ -340,17 +303,18 @@ function land()
       equip_generic( tmp )
       if not swapship.swap( tmp ) then
          -- Failed to swap ship!
-         tk.msg( unableto.title, unableto.message )
+         tk.msg( _("Ship left alone!"), _("Before you make it into the ship and take control of it, you realize you are not ready to deal with the logistics of moving your cargo over. You decide to leave the ship stealing business for later.") )
          tmp:rm() -- Get rid of the temporary pilot
          return
       end
 
       -- Oh yeah, we stole the ship. \o/
       tk.msg(
-         success.title,
-         string.format(
-            success.message,
-            theship.exact_class
+         _("Ship successfully stolen!"),
+         fmt.f(
+            _([[It took you a while, but you finally make it into the ship and take control of it with the access codes you were given. Hopefully, you will be able to sell this {ship}, or maybe even to use it.
+    Enemy ships will probably be after you as soon as you leave the atmosphere, so you should get ready and use the time you have on this planet wisely.]]),
+            {ship=_(theship.exact_class)}
          )
       )
 
