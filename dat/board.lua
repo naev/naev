@@ -383,7 +383,7 @@ function board_lootOne( wgt, nomsg )
       end
    elseif l.type=="outfit" then
       local o = l.data
-      if l.price > 0 then
+      if l.price and l.price > 0 then
          luatk.yesno(fmt.f(_("Extract {outfit}?"),{outfit=o:name()}),
                fmt.f(_("It will cost #r{credits}#0 in repairs to successfully extract the {outfit}. You have {playercreds}. Extract the {outfit}?"),
                   {credits=fmt.credits(l.price), playercreds=fmt.credits(player.credits()), outfit=o:name()}), function ()
@@ -404,7 +404,7 @@ function board_lootOne( wgt, nomsg )
          return false
       end
       if board_plt:outfitRm( o ) ~= 1 then
-         warn(fmt.f(_("Board script failed to remove '{outfit}' from boarded pilot '{plt}'!"),{outfit=o:name(), plt=board_plt:name()}))
+         --warn(fmt.f(_("Board script failed to remove '{outfit}' from boarded pilot '{plt}'!"),{outfit=o:name(), plt=board_plt:name()}))
       end
       player.outfitAdd( o )
       looted = true
