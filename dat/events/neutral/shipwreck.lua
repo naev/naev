@@ -21,13 +21,15 @@
 -- 12/02/2010 - Added visibility/highlight options for use in big systems (Anatolis)
 --]]
 
--- Text
+local fmt = require "format"
+
+local shipname = _("August")
 
 function create ()
    -- Make sure system isn't claimed, but we don't claim it
    if not evt.claim( system.cur(), true ) then evt.finish() end
 
-    -- The _("Shipwrecked %s") will be a random trader vessel.
+    -- The _("Shipwrecked {plt}") will be a random trader vessel.
     local r = rnd.rnd()
     local dship
     if r > 0.95 then
@@ -44,7 +46,7 @@ function create ()
     local pos   = vec2.newP( rnd.rnd(2000,3000), rnd.rnd()*360 )
     derelict    = pilot.add( dship, "Derelict", pos, nil, {ai="dummy"} )
     derelict:disable()
-    derelict:rename(_("Shipwrecked %s"):format(_("August")))
+    derelict:rename(fmt.f(_("Shipwrecked {plt}"), {plt=shipname}))
     -- Added extra visibility for big systems (A.)
     derelict:setVisplayer( true )
     derelict:setHilight( true )
@@ -63,14 +65,14 @@ function broadcast ()
     if not derelict:exists() then
         return
     end
-    derelict:broadcast( string.format(_("SOS. This is %s. We are shipwrecked. Please #bboard#0 us by positioning your ship over ours and then #bdouble-clicking#0 on our ship."), _("August")), true )
+    derelict:broadcast( fmt.f(_("SOS. This is {plt}. We are shipwrecked. Please #bboard#0 us by positioning your ship over ours and then #bdouble-clicking#0 on our ship."), {plt=shipname}), true )
     timer_delay = timer_delay or 10
     timer_delay = timer_delay + 5
     bctimer = hook.timer(timer_delay, "broadcast")
 end
 
 function rescue ()
-    -- Player boards the _("Shipwrecked %s") and rescues the crew, this spawns a new mission.
+    -- Player boards the _("Shipwrecked {plt}") and rescues the crew, this spawns a new mission.
     hook.rm(bctimer)
     naev.missionStart("The Space Family")
     evt.finish(true)

@@ -31785,8 +31785,8 @@ msgstr "民間人"
 #. Append the faction to the civilian name, unless there is no faction.
 #: dat/events/neutral/npc.lua:445
 #, lua-format
-msgid "%s Civilian"
-msgstr "%s民間人"
+msgid "{fct} Civilian"
+msgstr "{fct}民間人"
 
 #. Select a portrait
 #. Select a description for the civilian.
@@ -31914,8 +31914,8 @@ msgstr ""
 #. Create question
 #: dat/events/neutral/shiplover.lua:154
 #, lua-format
-msgid "\"What class is the #o%s#0 ship?\""
-msgstr "｢#o%s#0は何級の船か？｣"
+msgid "\"What class is the #o{ship}#0 ship?\""
+msgstr "｢#o{ship}#0は何級の船か？｣"
 
 #. Create question
 #: dat/events/neutral/shiplover.lua:170
@@ -31949,8 +31949,8 @@ msgstr "中立"
 #. Determine reward
 #: dat/events/neutral/shiplover.lua:288
 #, lua-format
-msgid "You obtained a %s from the Ship Enthusiast for getting 5 quizzes right."
-msgstr "あなたは 5 問のクイズに正解したので、宇宙船マニアから%sを獲得した。"
+msgid "You obtained 1 {outfit} from the Ship Enthusiast for getting 5 quizzes right."
+msgstr "あなたは 5 問のクイズに正解したので、宇宙船マニアから{outfit}を獲得した。"
 
 #: dat/events/neutral/shiplover.lua:291
 msgid ""
@@ -31965,8 +31965,8 @@ msgstr ""
 #: dat/events/neutral/shiplover.lua:297
 #, lua-format
 msgid ""
-"You obtained a %s from the Ship Enthusiast for getting 10 quizzes right."
-msgstr "あなたは 10 問のクイズに正解したので、宇宙船マニアから%sを獲得した。"
+"You obtained 1 {outfit} from the Ship Enthusiast for getting 10 quizzes right."
+msgstr "あなたは 10 問のクイズに正解したので、宇宙船マニアから{outfit}を獲得した。"
 
 #: dat/events/neutral/shiplover.lua:300
 msgid ""
@@ -31982,8 +31982,8 @@ msgstr ""
 #: dat/events/neutral/shiplover.lua:306
 #, lua-format
 msgid ""
-"You obtained a %s from the Ship Enthusiast for getting 25 quizzes right."
-msgstr "あなたは 25 問のクイズに正解したので、宇宙船マニアから%sを獲得した。"
+"You obtained 1 {outfit} from the Ship Enthusiast for getting 25 quizzes right."
+msgstr "あなたは 25 問のクイズに正解したので、宇宙船マニアから{outfit}を獲得した。"
 
 #: dat/events/neutral/shiplover.lua:309
 msgid ""
@@ -32008,11 +32008,11 @@ msgstr "あなたはクイズに正解したので、宇宙船マニアから%s�
 #: dat/events/neutral/shiplover.lua:317
 #, lua-format
 msgid ""
-"\"That's right! Damn, I thought you wouldn't know this one. This is the %d "
+"\"That's right! Damn, I thought you wouldn't know this one. This is the {n} "
 "time you got my quiz right! Here, take this as a reward for your performance."
 "\""
 msgstr ""
-"｢正解！　ちくしょう、これは知らないと思ったんだけどな。%d 回クイズに正解した"
+"｢正解！　ちくしょう、これは知らないと思ったんだけどな。{n} 回クイズに正解した"
 "ね！　ほら、これはその成績にたいする賞だよ｣"
 
 #. Set up NPC and hooks
@@ -32148,24 +32148,16 @@ msgstr "｢しかたがないな。もったいなかったね！｣"
 #: dat/events/neutral/shiplover.lua:405
 #, lua-format
 msgid ""
-"\"Great! So here it goes. Listen carefully.\"\n"
-"\n"
-"%s"
+"\"Great! So here it goes. Listen carefully.\""
 msgstr ""
-"｢いいね！　じゃあやるよ。よく聞いててね｣\n"
-"\n"
-"%s"
+"｢いいね！　じゃあやるよ。よく聞いててね｣"
 
 #: dat/events/neutral/shiplover.lua:423
 #, lua-format
 msgid ""
-"\"Great! So take a look at this ship and listen carefully.\"\n"
-"\n"
-"%s"
+"\"Great! So take a look at this ship and listen carefully.\""
 msgstr ""
-"｢いいね！　じゃあこの船を見て、よく聞いててね｣\n"
-"\n"
-"%s"
+"｢いいね！　じゃあこの船を見て、よく聞いててね｣"
 
 #. Show choices
 #. Give reward
@@ -32178,11 +32170,11 @@ msgstr "あなたは宇宙船マニアのクイズで不正解になった。"
 #, lua-format
 msgid ""
 "They look smug as they exclaim \"Wrong!\".\n"
-"\"The correct answer was #g%s#0! Better luck next time.\"\n"
+"\"The correct answer was #g{answer}#0! Better luck next time.\"\n"
 "They take their leave."
 msgstr ""
 "気取って見せながら宇宙船マニアが叫ぶ。｢不正解！｣\n"
-"｢正解は#g%s#0！　次回をお楽しみに｣\n"
+"｢正解は#g{answer}#0！　次回をお楽しみに｣\n"
 "宇宙船マニアは立ち去った。"
 
 #. Finish event (removes npc)
@@ -32214,8 +32206,8 @@ msgstr ""
 #. Create the derelict.
 #: dat/events/neutral/shipwreck.lua:47
 #, lua-format
-msgid "Shipwrecked %s"
-msgstr "難破した ｢%s｣"
+msgid "Shipwrecked {plt}"
+msgstr "難破した ｢{plt}｣"
 
 #. Added extra visibility for big systems (A.)
 #. Set hooks
@@ -32223,10 +32215,10 @@ msgstr "難破した ｢%s｣"
 #: dat/events/neutral/shipwreck.lua:66
 #, lua-format
 msgid ""
-"SOS. This is %s. We are shipwrecked. Please #bboard#0 us by positioning your "
+"SOS. This is {plt}. We are shipwrecked. Please #bboard#0 us by positioning your "
 "ship over ours and then #bdouble-clicking#0 on our ship."
 msgstr ""
-"SOS。こちらは『%s』だ。われわれは難破した。そちらの船をわれわれの船の位置へつ"
+"SOS。こちらは『{plt}』だ。われわれは難破した。そちらの船をわれわれの船の位置へつ"
 "けてから、われわれの船を#bダブルクリック#0して#b移乗#0してください。"
 
 #. Player boards the _("Shipwrecked %s") and rescues the crew, this spawns a new mission.
@@ -32427,13 +32419,13 @@ msgstr "旅行日誌"
 
 #: dat/events/shiplog.lua:34
 #, lua-format
-msgid "Hostility met in the %s system"
-msgstr "敵意のあるものに%s星系で出会った。"
+msgid "Hostility met in the {sys} system"
+msgstr "敵意のあるものに{sys}星系で出会った。"
 
 #: dat/events/shiplog.lua:42
 #, lua-format
-msgid "Jumped from the %s system to the %s system"
-msgstr "%s星系から%s星系へジャンプした。"
+msgid "Jumped from the {1} system to the {2} system"
+msgstr "{1}星系から{2}星系へジャンプした。"
 
 #: dat/events/shiplog.lua:51
 #, lua-format

@@ -21,6 +21,6 @@ function create ()
 end
 
 function flintley()
-    tk.msg(_("Flintley"), fmt.f(_([[    Flintley greets you, relieved to see a friendly face. "Hello again, %s. What brings you here today? As you can see, I'm here on business again. Nothing too interesting, I'm afraid, just everyday stuff."
+    tk.msg(_("Flintley"), fmt.f(_([[    Flintley greets you, relieved to see a friendly face. "Hello again, {player}. What brings you here today? As you can see, I'm here on business again. Nothing too interesting, I'm afraid, just everyday stuff."
     You spend some time chatting with Flintley, then you get back to work.]]), {player=player.name()}))
 end

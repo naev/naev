@@ -10,6 +10,8 @@
    Derelict Event, spawning either the FLF prelude mission string or the Dvaered anti-FLF string.
 --]]
 
+local fmt = require "format"
+
 function create()
    local csys = system.cur()
    local cp = csys:presences()
@@ -79,13 +81,13 @@ end
 
 function broadcastDV()
    -- Ship broadcasts an SOS every 10 seconds, until boarded or destroyed.
-   shipDV:broadcast(string.format(_("SOS. This is %s. Primary systems down. Requesting assistance."), _("Dvaered Patrol")), true)
+   shipDV:broadcast(fmt.f(_("SOS. This is {plt}. Primary systems down. Requesting assistance."), {plt=_("Dvaered Patrol")}), true)
    timerDV = hook.timer(20.0, "broadcastDV")
 end
 
 function broadcastFLF()
    -- Ship broadcasts an SOS every 10 seconds, until boarded or destroyed.
-   shipFLF:broadcast(string.format(_("Calling all ships. This is %s. Engines down, ship damaged. Please help."), _("Frontier Patrol")), true)
+   shipFLF:broadcast(fmt.f(_("Calling all ships. This is {plt}. Engines down, ship damaged. Please help."), {plt=_("Frontier Patrol")}), true)
    timerFLF = hook.timer(20.0, "broadcastFLF")
 end
 

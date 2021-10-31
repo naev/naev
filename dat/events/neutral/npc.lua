@@ -442,7 +442,7 @@ local function spawnNPC()
 
    -- Append the faction to the civilian name, unless there is no faction.
    if fac ~= "general" then
-      npcname = string.format( _("%s Civilian"), _(fac) )
+      npcname = fmt.f( _("{fct} Civilian"), {fct=_(fac)} )
    end
 
    -- Select a portrait

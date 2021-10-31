@@ -60,7 +60,7 @@ function hail( _p )
    tk.msg(_("An open invitation"), fmt.f(_([["Greetings, {player}," the pilot of the Vendetta says to you as soon as you answer his hail. "I have been looking for you on behalf of an acquaintance of yours. She wishes to meet with you at a place of her choosing, and a time of yours. It involves a proposition that you might find interesting - if you don't mind sticking your neck out."
     You frown at that, but you ask the pilot where this acquaintance wishes you to go anyway.
     "Fly to the {sys} system," he replies. "She will meet you there. There's no rush, but I suggest you go see her at the earliest opportunity."
-    The screen blinks out and the Vendetta goes about its business, paying you no more attention. It seems there's someone out there who wants to see you, and there's only one way to find out what about. Perhaps you should make a note of the place you're supposed to meet her: the %s system.]]), {player=player.name(), sys=sys}))
+    The screen blinks out and the Vendetta goes about its business, paying you no more attention. It seems there's someone out there who wants to see you, and there's only one way to find out what about. Perhaps you should make a note of the place you're supposed to meet her: the {sys} system.]]), {player=player.name(), sys=sys}))
    player.commClose()
    vendetta:control()
    vendetta:hyperspace()

@@ -11,6 +11,7 @@
 -- Event handling NPCs and such at Totoran
 --]]
 
+local fmt = require "format"
 local vn = require 'vn'
 local portrait = require 'portrait'
 local gauntlet = require 'common.gauntlet'
@@ -29,9 +30,9 @@ spectator_descriptions = {
 spectator_messages = {
    _([["Sometimes when watching some of the competitions, I forget it is all just virtual reality."]]),
    _([["The realism of virtual reality here is impressive! It almost feels like it's real!"]]),
-   function () return string.format(
-      _([["I came all the way from %s to be here! We don't have anything like this back at home."]]),
-      planet.get( {faction.get("Za'lek"), faction.get("Empire"), faction.get("Soromid")} ):name() -- No Dvaered
+   function () return fmt.f(
+      _([["I came all the way from {pnt} to be here! We don't have anything like this back at home."]]),
+      {pnt=planet.get( {faction.get("Za'lek"), faction.get("Empire"), faction.get("Soromid")} )} -- No Dvaered
    ) end,
    _([["The Dvaered sure know how to put on a good show. I love seeing it rain Mace Rockets!"]]),
    _([["It's a shame that they require you to own the ship you want to use to enter the virtual reality competitions. I would love to try fly one of those majestic Dvaered Goddards."]]),
@@ -53,9 +54,9 @@ pilot_descriptions = {
 }
 pilot_messages = {
    _([["Some people say that the Crimson gauntlet encourages and promotes violence, but I've been destroying ships long before I started participating in the Crimson Gauntlet!"]]),
-   function () return string.format(
-      _([["Hey, didn't I see you flying a %s in the Crimson Gauntlet? Nice flying."]]),
-      player.pilot():ship():name()
+   function () return fmt.f(
+      _([["Hey, didn't I see you flying a {ship} in the Crimson Gauntlet? Nice flying."]]),
+      {ship=player.pilot():ship()}
    ) end,
    _([["I was doing so well in my Hyena, but it just lacks the firepower to take on larger ships. Maybe I should upgrade to a Vendetta."]]),
    _([["The Crimson Gauntlet has really taught me to appreciate the small things in life, you know, blowing up your enemies with mace rockets and such."]]),
@@ -113,7 +114,7 @@ function approach_guide ()
    vn.transition()
    vn.na(_("You approach the Crimson Gauntlet guide."))
    vn.label("menu_main")
-   guide( function () return string.format(_([["Hello and welcome to the Crimson Gauntlet! You have %s. What would you like to do?"]]), gauntlet.emblems_str( gauntlet.emblems_get())) end )
+   guide( function () return fmt.f(_([["Hello and welcome to the Crimson Gauntlet! You have {emblems}. What would you like to do?"]]), {emblems=gauntlet.emblems_str( gauntlet.emblems_get())}) end )
    vn.menu{
       {_("Information"), "information"},
       {_("Trade Emblems"), "trade_menu"},
@@ -156,7 +157,7 @@ function approach_guide ()
    vn.jump("menu_info_raw")
 
    vn.label("trade_menu")
-   guide( function () return string.format(_([["You have %s. What would you like to trade for?"]]), gauntlet.emblems_str( gauntlet.emblems_get())) end )
+   guide( function () return fmt.f(_([["You have {emblems}. What would you like to trade for?"]]), {emblems=gauntlet.emblems_str( gauntlet.emblems_get())}) end )
    local trades = {
       {name=_("Unlock Warrior Challenge"), cost=500, type="var", var="gauntlet_unlock_warrior",
          description=_("Unlocks participation in the difficult Warrior Challenge meant for Corvette and Destroyer-class ships.")},
@@ -212,19 +213,19 @@ function approach_guide ()
    end, handler )
 
    vn.label("trade_notenough")
-   guide( function() return string.format(_([["You only have %s, you would need %s more to purchase the '%s'.
-Is there anything else you would like to purchase?"]]),
-         gauntlet.emblems_str(gauntlet.emblems_get()),
-         gauntlet.emblems_str(tradein_item.cost - gauntlet.emblems_get()),
-         tradein_item.name)
+   guide( function() return fmt.f(_([["You only have {emblems}, you would need {emblems_more} more to purchase the '{item}'.
+Is there anything else you would like to purchase?"]]), {
+         emblems = gauntlet.emblems_str(gauntlet.emblems_get()),
+         emblems_more = gauntlet.emblems_str(tradein_item.cost - gauntlet.emblems_get()),
+         item = tradein_item.name })
    end )
    vn.jump("trade_menu_raw")
 
    vn.label("trade_confirm")
-   guide( function () return string.format(
-      _([["Are you sure you want to trade in for the '#w%s#0'? The description is as follows:"
-#w%s#0"]]),
-      tradein_item.name, tradein_item.description)
+   guide( function () return fmt.f(
+      _([["Are you sure you want to trade in for the '#w{name}#0'? The description is as follows:"
+#w{description}#0"]]),
+      tradein_item)
    end )
    vn.menu{
       {_("Trade"), "trade_consumate"},

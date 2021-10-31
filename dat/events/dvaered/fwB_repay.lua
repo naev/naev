@@ -35,7 +35,7 @@ function create()
 end
 
 function pay()
-   if tk.yesno(_("Do you want to repay DHC?"), _("You still owe %s credits to the High Command. Do you want to repay now?"):format(fmt.number(fw.pirate_price))) then
+   if tk.yesno(_("Do you want to repay DHC?"), fmt.f(_("You still owe {credits} to the High Command. Do you want to repay now?"), {credits=fmt.credits(fw.pirate_price)})) then
       if player.credits() >= fw.pirate_price then
          player.pay(-fw.pirate_price)
          shiplog.create( "frontier_war", _("Frontier War"), _("Dvaered") )

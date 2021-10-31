@@ -16,25 +16,21 @@
 --Sudarshan S <ssoxygen@users.sf.net>
 
 local fleet = require "fleet"
+local fmt = require "format"
 
-commtitle=_("The preaching begins...")
-commtext=_([[A Sirian appears on your viewscreen. He seems different than most Sirii you've met. He regards you with a neutral yet intense gaze.
-    "Man is cruel and deceptive," he says. "You deserve more than you shall ever get from humanity. Your only hope is to follow the Holy One, Sirichana. He shall guide you to peace and wisdom. He is the sole refuge for humans like you and me. You MUST follow him!"
-    You feel a brief but overpowering urge to follow him, but it passes and your head clears. The Sirian ship makes no further attempt to communicate with you.]])
-
-althoughEnemy={
-_("%s, although you are an enemy of House Sirius, I shall not attack unless provoked, for I abhor violence!"),
-_("%s, although you are an enemy of House Sirius, I shall not attack unless provoked, for I believe mercy is a great Truth!"),
-_("%s, although you are an enemy of House Sirius, I shall not attack unless provoked, for you too are Sirichana's child!")
+local althoughEnemy={
+_("{player}, although you are an enemy of House Sirius, I shall not attack unless provoked, for I abhor violence!"),
+_("{player}, although you are an enemy of House Sirius, I shall not attack unless provoked, for I believe mercy is a great Truth!"),
+_("{player}, although you are an enemy of House Sirius, I shall not attack unless provoked, for you too are Sirichana's child!")
 }
 
-friend={
-_("%s, I foresee in you a great Sirian citizen, and I look forward to your friendship!"),
-_("%s, I foresee a bright future for you, illuminated by Sirichana's light!"),
-_("%s, may Sirichana's light illuminate your path!")
+local friend={
+_("{player}, I foresee in you a great Sirian citizen, and I look forward to your friendship!"),
+_("{player}, I foresee a bright future for you, illuminated by Sirichana's light!"),
+_("{player}, may Sirichana's light illuminate your path!")
 }
 
-followSirichana={
+local followSirichana={
 _("You shall all follow Sirichana henceforth!"),
 _("Sirichana shall lead you to peace and wisdom!"),
 _("Sirichana is the Father of you all!"),
@@ -42,7 +38,7 @@ _("Sirichana's grace shall liberate you!"),
 _("May Sirichana's light shine on you henceforth!")
 }
 
-praiseSirichana={
+local praiseSirichana={
 _("We shall all follow Sirichana now!"),
 _("We have been liberated from our evil ways!"),
 _("No more shall we tread the path of evil!"),
@@ -50,21 +46,21 @@ _("We see the True path now!"),
 _("No more shall we commit sins!")
 }
 
-attackerPunished={
+local attackerPunished={
 _("Serves you right for attacking a Touched!"),
 _("Fry in hell, demon!"),
 _("May you suffer eternal torment!"),
 _("Your doom is Sirichana's curse!")
 }
 
-attackersDead={
+local attackersDead={
 _("All the attackers are dead!"),
 _("We can resume our Quest now!"),
 _("The glory of Sirichana remains unblemished!"),
 _("All heretics have been destroyed!")
 }
 
-whatHappened={
+local whatHappened={
 _("Do you think everyone can be brainwashed?"),
 _("You shall convert no more of us!"),
 _("Some of us shall not be converted, fool!"),
@@ -72,40 +68,40 @@ _("You'll never convert me!"),
 _("I shall never be converted!")
 }
 
-presence={
+local presence={
 _("You feel an overwhelming presence nearby!"),
 _("Something compels you to stop"),
 _("You are jerked awake by a mysterious but compelling urge"),
 _("You feel... Touched... by a magical power")
 }
 
-startCombat={
+local startCombat={
 _("Die, heretics!"),
 _("Those who insult the Sirichana shall die!"),
 _("You've committed an unpardonable sin!"),
 _("Hell awaits, fools!")
 }
 
-preacherDead={
+local preacherDead={
 _("Oh no! The Touched One is dead!"),
 _("Sirichana save our souls!"),
 _("We shall never forget You, O Touched One!"),
 _("We swear eternal revenge!")
 }
 
-urge={
+local urge={
 _("You feel an overwhelming urge to hear him out!"),
 _("A mysterious force forces you to listen!"),
 _("You feel compelled to listen!")
 }
 
-dyingMessage={
+local dyingMessage={
 _("With my dying breath, I curse you!"),
 _("Sirichana speed you to hell!"),
 _("Sirichana, I did my best!")
 }
 
-dead={
+local dead={
 _("The Reverence is dead!"),
 _("Someone killed the preacher!")
 }
@@ -176,7 +172,7 @@ function theFunBegins()
 
    followers = fleet.add(1, followers, "Sirius", curr, nil, {ai="sirius_norun"}) -- The table now contains pilots, not ship names.
    for k,j in ipairs(followers) do
-      j:rename( string.format( _("Converted %s"), j:name() ))
+      j:rename( fmt.f( _("Converted {pltname}"), {pltname=j:name()} ))
    end
 
    --pick a random converted pirate and have him praise the Sirichana
@@ -232,9 +228,9 @@ end
 function preacherSpeak()
    camera.set(preacher,true)
    if rep < 0 then
-      preacher:comm(string.format(althoughEnemy[rnd.rnd(1,#althoughEnemy)],player.name()), true)
+      preacher:comm(fmt.f(althoughEnemy[rnd.rnd(1,#althoughEnemy)], {player=player.name()}), true)
    else
-      preacher:comm(string.format(friend[rnd.rnd(1,#friend)],player.name()), true)
+      preacher:comm(fmt.f(friend[rnd.rnd(1,#friend)], {player=player.name()}), true)
    end
 end
 
@@ -321,7 +317,7 @@ function anotherdead(enemy, attacker)
 end
 
 --finds and set a new target for the preacher, when he is outta battle mode
-function getPreacherTarget()
+local function getPreacherTarget()
    local sirius=faction.get( "Sirius" )
 
    --look for nearby landable Sirian planet to land
@@ -367,7 +363,9 @@ end
 
 --when hailed back, show the message
 function hail()
-   tk.msg(commtitle,commtext)
+   tk.msg(_("The preaching begins..."), _([[A Sirian appears on your viewscreen. He seems different than most Sirii you've met. He regards you with a neutral yet intense gaze.
+    "Man is cruel and deceptive," he says. "You deserve more than you shall ever get from humanity. Your only hope is to follow the Holy One, Sirichana. He shall guide you to peace and wisdom. He is the sole refuge for humans like you and me. You MUST follow him!"
+    You feel a brief but overpowering urge to follow him, but it passes and your head clears. The Sirian ship makes no further attempt to communicate with you.]]))
    player.commClose()
    hook.rm(hailHook) --no more hailing
 end

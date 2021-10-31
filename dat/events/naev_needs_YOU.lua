@@ -19,12 +19,8 @@ DESCRIPTION:
 
 ]]--
 
--- localization stuff, translators would work here
-
--- This section stores the strings (text) for the event.
-
 -- Stage one: something goes wrong in fabric of reality.
-text = {}
+local text = {}
 text[1] = _([[As you step out of your ship, the sunlight suddenly flickers. The local star in the sky turns blue, then a deep purple, and then goes dark. The whole planet plunges into darkness.
     Then a voice speaks, louder than an earthquake. It seems to echo inside your bones and from the very center of the galaxy. "Oh crap..." it says.
     Another voice laughs musically, as if world itself were singing. "bobbens, did you just destroy the universe, again?"
@@ -48,7 +44,6 @@ text[3] = _([["Oh sorry about that. We're working hard on improving life, the un
 
 
 function create()
-
       -- Event should only occur if player has played a bit.
       if player.credits() < 237451 then
          evt.finish( false)
@@ -91,7 +86,7 @@ end
 -- A grace note.  Not sure the player will make the connection of the message with the event.
 function enter_system()
 
-      player.msg( "Well, that was weird")
-      evt.finish( true)
+      player.msg( _("Well, that was weird") )
+      evt.finish( true )
 
 end]]--

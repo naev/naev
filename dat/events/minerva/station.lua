@@ -64,9 +64,9 @@ patron_messages = {
       return string.format(_([["I really have my eyes on the Fuzzy Dice available at the terminal. I always wanted to own a piece of history!%s"]]), soldoutmsg ) end,
    _([["I played 20 hands of blackjack with that Cyborg Chicken. I may have lost them all, but that was worth every credit!"]]),
    _([["This place is great! I still have no idea how to play blackjack, but I just keep on playing again and again against that Cyborg Chicken."]]),
-   function () return string.format(
-      _([["I came all the way from %s to be here! We don't have anything like this back at home."]]),
-      planet.get( {faction.get("Dvaered"), faction.get("Za'lek"), faction.get("Empire"), faction.get("Soromid")} ):name()
+   function () return fmt.f(
+      _([["I came all the way from {pnt} to be here! We don't have anything like this back at home."]]),
+      {pnt=planet.get( {faction.get("Dvaered"), faction.get("Za'lek"), faction.get("Empire"), faction.get("Soromid")} )}
    ) end,
    _([["Critics of Minerva Station say that being able to acquire nice outfits here without needing licenses increases piracy. I think they are all lame!"]]),
    _([["I really want to go to the VIP hot springs they have, but I don't have the tokens. How does that even work in a space station?"]]),
@@ -241,22 +241,22 @@ WHAT DO YOU WISH TO DO TODAY?"]], minerva.tokens_get()),
    vn.jump( "more_info" )
 
    vn.label( "trade_notenough" )
-   t:say( function() return string.format(
-         n_([["SORRY, YOU DO NOT HAVE ENOUGH MINERVA TOKENS TO TRADE-IN FOR YOUR REQUESTED ITEM. WOULD YOU LIKE TO TRADE-IN FOR SOMETHING ELSE? YOU HAVE #p%s MINERVA TOKEN#0."]],
-            [["SORRY, YOU DO NOT HAVE ENOUGH MINERVA TOKENS TO TRADE-IN FOR YOUR REQUESTED ITEM. WOULD YOU LIKE TO TRADE-IN FOR SOMETHING ELSE? YOU HAVE #p%s MINERVA TOKENS#0."]], minerva.tokens_get()),
-         fmt.number(minerva.tokens_get()) ) end )
+   t:say( function() return fmt.f(
+         n_([["SORRY, YOU DO NOT HAVE ENOUGH MINERVA TOKENS TO TRADE-IN FOR YOUR REQUESTED ITEM. WOULD YOU LIKE TO TRADE-IN FOR SOMETHING ELSE? YOU HAVE #p{n} MINERVA TOKEN#0."]],
+            [["SORRY, YOU DO NOT HAVE ENOUGH MINERVA TOKENS TO TRADE-IN FOR YOUR REQUESTED ITEM. WOULD YOU LIKE TO TRADE-IN FOR SOMETHING ELSE? YOU HAVE #p{n} MINERVA TOKENS#0."]], minerva.tokens_get()),
+         {n=fmt.number(minerva.tokens_get())} ) end )
    vn.jump( "trade_menu" )
    vn.label( "trade_soldout" )
-   t:say( function() return string.format(
-         n_([["I AM SORRY TO INFORM YOU THAT THE ITEM THAT YOU DESIRE IS CURRENTLY SOLD OUT. WOULD YOU LIKE TO TRADE-IN FOR SOMETHING ELSE? YOU HAVE #p%s MINERVA TOKEN#0."]],
-            [["I AM SORRY TO INFORM YOU THAT THE ITEM THAT YOU DESIRE IS CURRENTLY SOLD OUT. WOULD YOU LIKE TO TRADE-IN FOR SOMETHING ELSE? YOU HAVE #p%s MINERVA TOKENS#0."]], minerva.tokens_get()),
-         fmt.number(minerva.tokens_get()) ) end )
+   t:say( function() return fmt.f(
+         n_([["I AM SORRY TO INFORM YOU THAT THE ITEM THAT YOU DESIRE IS CURRENTLY SOLD OUT. WOULD YOU LIKE TO TRADE-IN FOR SOMETHING ELSE? YOU HAVE #p{n} MINERVA TOKEN#0."]],
+            [["I AM SORRY TO INFORM YOU THAT THE ITEM THAT YOU DESIRE IS CURRENTLY SOLD OUT. WOULD YOU LIKE TO TRADE-IN FOR SOMETHING ELSE? YOU HAVE #p{n} MINERVA TOKENS#0."]], minerva.tokens_get()),
+	    {n=fmt.number(minerva.tokens_get())} ) end )
    vn.jump( "trade_menu" )
    vn.label( "trade" )
-   t:say( function() return string.format(
-         n_([["YOU CAN TRADE IN YOUR PRECIOUS #p%s MINERVA TOKEN#0 FOR THE FOLLOWING GOODS."]],
-            [["YOU CAN TRADE IN YOUR PRECIOUS #p%s MINERVA TOKENS#0 FOR THE FOLLOWING GOODS."]], minerva.tokens_get()),
-            fmt.number(minerva.tokens_get()) ) end )
+   t:say( function() return fmt.f(
+         n_([["YOU CAN TRADE IN YOUR PRECIOUS #p{n} MINERVA TOKEN#0 FOR THE FOLLOWING GOODS."]],
+            [["YOU CAN TRADE IN YOUR PRECIOUS #p{n} MINERVA TOKENS#0 FOR THE FOLLOWING GOODS."]], minerva.tokens_get()),
+	    {n=fmt.number(minerva.tokens_get())} ) end )
    local trades = {
       {"Ripper Cannon", {100, "outfit"}},
       {"TeraCom Fury Launcher", {500, "outfit"}},
@@ -323,7 +323,7 @@ WHAT DO YOU WISH TO DO TODAY?"]], minerva.tokens_get()),
       end
       -- Add special ticket
       if player.evtDone("Spa Propaganda") and var.peek("minerva_spa_ticket")==nil then
-         table.insert( opts, 1, {string.format(_("Special Spa Ticket (%s)"), minerva.tokens_str(spaticketcost)), "spaticket"} )
+         table.insert( opts, 1, {fmt.f(_("Special Spa Ticket ({tokens})"), {tokens=minerva.tokens_str(spaticketcost)}), "spaticket"} )
       end
       table.insert( opts, {_("Back"), "start"} )
       return opts
@@ -332,10 +332,10 @@ WHAT DO YOU WISH TO DO TODAY?"]], minerva.tokens_get()),
 
    -- Buying stuff
    vn.label( "trade_confirm" )
-   t:say( function () return string.format(
-         _([["ARE YOU SURE YOU WANT TO TRADE IN FOR THE '#w%s#0'? THE DESCRIPTION IS AS FOLLOWS:"
-#w%s#0]]),
-         _(tradein_item[1]), _(tradein_item.description) ) end )
+   t:say( function () return fmt.f(
+         _([["ARE YOU SURE YOU WANT TO TRADE IN FOR THE '#w{item}#0'? THE DESCRIPTION IS AS FOLLOWS:"
+#w{description}#0]]),
+         {item=_(tradein_item[1]), description=_(tradein_item.description)} ) end )
    vn.menu( {
       { _("Trade"), "trade_consumate" },
       { _("Cancel"), "trade" },
@@ -345,7 +345,7 @@ WHAT DO YOU WISH TO DO TODAY?"]], minerva.tokens_get()),
          minerva.tokens_pay( -t[2][1] )
          if t[2][2]=="outfit" then
             player.outfitAdd( t[1] )
-            player.msg( _("Gambling Bounty"), string.format(_("Obtained: %s"),t[1]))
+            player.msg( _("Gambling Bounty"), fmt.reward(t[1]))
          elseif t[2][2]=="ship" then
             player.addShip( t[1] )
          else
