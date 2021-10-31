@@ -135,11 +135,19 @@ local function compute_lootables ( plt )
    -- Steal outfits before cargo, since they are always considered "special"
    local canstealoutfits = true
    if canstealoutfits then
+      local mem = plt:memory()
+      local oloot = mem.lootable_outfit
+      if oloot then
+         local lo = outfit_loot( oloot )
+         lo.bg = special_col
+         table.insert( lootables, lo )
+      end
+
       local ocand = {}
       for _k,o in ipairs(plt:outfits()) do
          local name, size, prop, req, exc = o:slot()
          -- Don't allow looting required outfits
-         if not req then 
+         if not req and (not oloot or o~=oloot) then
             table.insert( ocand, o )
          end
       end
