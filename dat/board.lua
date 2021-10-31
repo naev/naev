@@ -285,7 +285,7 @@ function board_lootOne( wgt, nomsg )
    elseif l.type=="outfit" then
       local o = l.data
       if board_plt:outfitRm( o ) ~= 1 then
-         warn(fmt.f(_("Board script failed to remove '{outfit}' from boarded pilot '{plt}'!"),{outfit=o:name(), plt=boarded_plt:name()}))
+         warn(fmt.f(_("Board script failed to remove '{outfit}' from boarded pilot '{plt}'!"),{outfit=o:name(), plt=board_plt:name()}))
       end
       player.outfitAdd( o )
       looted = true
