@@ -1,6 +1,6 @@
 local luatk = require "luatk"
 local fmt = require "format"
-local graphics = require "love.graphics"
+local lg = require "love.graphics"
 
 local opt = {}
 
