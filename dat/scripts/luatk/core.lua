@@ -439,8 +439,8 @@ function luatk.msg( title, msg )
    local w, h = msgbox_size( title, msg )
 
    local wdw = luatk.newWindow( nil, nil, w, 110 + h )
-   local function wdw_done( wdw )
-      wdw:destroy()
+   local function wdw_done( dying_wdw )
+      dying_wdw:destroy()
       return true
    end
    wdw:setAccept( wdw_done )
