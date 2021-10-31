@@ -11,5 +11,6 @@
  </general>
  <specific type="modification">
   <loot_mod>100</loot_mod>
+  <crew>10</crew>
  </specific>
 </outfit>

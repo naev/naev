@@ -43,7 +43,14 @@ local function outfit_loot( o, price )
    local stype = o:type()
    local sprice = ""
    if price and price > 0 then
-      sprice = fmt.f(_("\n#rCosts {credits} to extract!#0"), {credits=fmt.credits(price)})
+      local bonus = price / o:price()
+      local sbonus
+      if bonus > 1 then
+         sbonus = string.format("#r%+d", bonus*100 - 100)
+      else
+         sbonus = string.format("#g%+d", bonus*100 - 100)
+      end
+      sprice = fmt.f(_("\n#rCosts {credits} ({sbonus}%#r from crew strength) to extract!#0"), {credits=fmt.credits(price), sbonus=sbonus})
    end
    local desc = fmt.f(_("{name}{sprice}\n{slotsize} {slottype}#0 slot{sprop}\n{stype}\n{desc}"),
          { name=o:name(),
@@ -139,7 +146,7 @@ local function compute_lootables ( plt )
       -- Get random candidate
       -- TODO better criteria
       local o = ocand[ rnd.rnd(1,#ocand) ]
-      local price = o:price() * ps.crew / pps.crew
+      local price = o:price() * (10+ps.crew) / (10+pps.crew)
       local lo = outfit_loot( o, price )
       table.insert( lootables, lo )
    end
