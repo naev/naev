@@ -5,6 +5,7 @@ in vec4 vertex;
 in vec3 vertex_normal;
 in vec2 vertex_tex;
 out vec2 tex_coord;
+out vec3 pos;
 out vec3 normal;
 
 /* Not including math.glsl here because a python script reads this also and
@@ -21,5 +22,6 @@ const mat4 view = mat4(
 void main(void) {
    tex_coord   = vec2(vertex_tex.x, -vertex_tex.y);
    normal      = mat3(model) * vertex_normal;
+   pos         = (view * model * vertex).xyz;
    gl_Position = projection * view * model * vertex;
 }
