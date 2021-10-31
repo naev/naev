@@ -71,17 +71,17 @@ function accept ()
    started = true
 
    if tk.yesno( _("Just Some Transportation"), txt ) then
-      tk.msg( _("Just Some Transportation"), _([[C seems relieved at your answer. "Thank you so much," they say. "I really appreciate it. I'll make it up to you somehow. My parents live in %s in the %s system. Like I said, no rush. Just as long as I get there, that's what matters."]]):format( misplanet:name(), missys:name() ) )
+      tk.msg( _("Just Some Transportation"), fmt.f(_([[C seems relieved at your answer. "Thank you so much," they say. "I really appreciate it. I'll make it up to you somehow. My parents live in {pnt} in the {sys} system. Like I said, no rush. Just as long as I get there, that's what matters."]]), {pnt=misplanet, sys=missys} ) )
 
       misn.accept()
 
       misn.setTitle( _("Coming Out") )
-      misn.setDesc( _("Your new friend needs you to take them to their parents in %s."):format( missys:name() ) )
+      misn.setDesc( fmt.f(_("Your new friend needs you to take them to their parents in {sys}."), {sys=missys} ) )
       misn.setReward( _("The satisfaction of helping out a new friend") )
       marker = misn.markerAdd( missys, "low" )
 
       misn.osdCreate( _("Coming Out"), {
-         _("Go to the %s system and land on the planet %s."):format( missys:name(), misplanet:name() ),
+         fmt.f(_("Go to the {sys} system and land on the planet {pnt}."), {sys=missys, pnt=misplanet} ),
       } )
 
       hook.land( "land" )
@@ -139,8 +139,8 @@ function land ()
     Chelsea laughs nervously. "There's something I have to tell you," she says. "I, um... I'm transgender. I would like for you to call me Chelsea and refer to me with she/her pronouns from now on... if that's okay."
     Chelsea's father responds immediately and briefly. "Sure," he says. "I don't have any problem with that. However you dress or whatever name you use, that's fine by me."
     Her mother is silent for a moment, then gets up out of her chair. Chelsea gets up as well, a look of fear in her eyes, then a look of surprise as her mother locks her in an embrace. She hugs her mother back and starts to sob. "I'm proud of you, Chelsea," her mother says. Out of Chelsea's view, her father shrugs and finishes his drink.]]) )
-      tk.msg( "", _([[After Chelsea's mother releases her, she wipes a few tears from her eyes and gives you a friendly hug. "Thank you," she says. "You've been a great friend and joining me here has been a great help." She lets go of you. "I'm sure you must be busy! But hey, do come back once in a while, OK? I'm going to stick around on this planet for the time being. It'll be nice to see you again!"
-    Taking your cue, you say goodbye for now, excuse yourself from the table, and make your way back to your ship. As you enter your cockpit you find a credit chip worth %s! It's not much, but it's something.]]):format( fmt.credits( credits ) ) )
+      tk.msg( "", fmt.f(_([[After Chelsea's mother releases her, she wipes a few tears from her eyes and gives you a friendly hug. "Thank you," she says. "You've been a great friend and joining me here has been a great help." She lets go of you. "I'm sure you must be busy! But hey, do come back once in a while, OK? I'm going to stick around on this planet for the time being. It'll be nice to see you again!"
+    Taking your cue, you say goodbye for now, excuse yourself from the table, and make your way back to your ship. As you enter your cockpit you find a credit chip worth {credits}! It's not much, but it's something.]]), {credits=fmt.credits(credits)} ) )
       player.pay(credits)
 
       local t = time.get():tonumber()
