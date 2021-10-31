@@ -64,7 +64,6 @@ function create()
     Into the confusion steps a steely-haired, upright, uniformed figure. Her stripes mark her as a navy Commodore.
     "I'm with the navy and I will organize the defense," her voice cuts through the commotion. "Who here is a pilot?  We must strike back quickly. I will arrange a reward for everyone who volunteers. We'll need as many pilots as possible. Follow me."]]) ) then
       misn.accept()
-      var.push( "dts_firstSystem", "planet_name")
       tk.msg( _("Volunteers"), _([["Take as many out of the fight early as you can," advises the Commodore before you board your ships. "If you can't chase them off, you might at least improve the odds. Good luck."]]))
       reward = 40e3
       misn.setReward( string.format( _("%s and the pleasure of serving the Empire."), fmt.credits(reward)) )
@@ -81,7 +80,6 @@ function create()
    else
       -- If player didn't accept the mission, the battle's still on, but player has no stake.
       misn.accept()
-      var.push( "dts_firstSystem", "planet_name")
       tk.msg( _("Left behind"), _([[The Commodore turns and walks off. Eight men and women follow her, but you stay put.
     A man in a jumpsuit at the next table nods at you. "What, they expect me to do their dirty work for them?" he shakes his head. "It's going to be a hot ride out of the system though, with all that going on upstairs."]]))
       misn.setReward( _("No reward for you."))

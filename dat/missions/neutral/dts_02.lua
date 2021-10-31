@@ -84,7 +84,6 @@ function create()
    else
   -- If player didn't accept the mission, the battle's still on, but player has no stake.
       misn.accept()
-      var.push( "dts_firstSystem", "planet_name")
       tk.msg( _("Not fighting"), _([[You stand by the grieving couple as the two cadets lead a group of pilots out of the bar toward the padfield.
     "Oh no!" the woman cries suddenly, looking up into her partner's face. "They're going off to fight. Those young men, they... there'll be more killing because of us."
     He nods grimly. "That's the way of things."

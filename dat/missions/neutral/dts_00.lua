@@ -66,7 +66,6 @@ function create ()
     There's a shout and you turn to see the portmaster standing at the door. "Listen up," he bellows. "The thugs out there have caught us without a defense fleet in system and somehow they've jammed our link with the rest of the Empire. So, I'm here looking for volunteers. Everyone who steps forward will get forty thousand credits when they get back - and of course the thanks of a grateful planet and the pride of serving the Empire.
     "Are you brave enough?"]]), planet_name ) ) then
       misn.accept()
-      var.push( "dts_firstSystem", "planet_name")
       tk.msg( _("Volunteers"), _([[You step forward and eight other pilots join you. Together, all of you march off to the your ships and take off to face the pirate horde.]]))
       reward = 40e3
       misn.setReward( string.format( _("%s and the pleasure of serving the Empire."), fmt.credits(reward)) )
@@ -83,7 +82,6 @@ function create ()
    else
       -- If player didn't accept the mission, the battle's still on, but player has no stake.
       misn.accept()
-      var.push( "dts_firstSystem", "planet_name")
       tk.msg( _("Left behind"), _([[Eight pilots step forward. The rest of you stand and watch as they file out the door. The portmaster spares a withering glance for those left behind.
     "Don't get your petticoats caught in the crossfire on your way out of atmo," he sneers. Then he turns to follow his volunteers.]]))
       misn.setReward( _("No reward for you."))
