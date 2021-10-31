@@ -21,21 +21,10 @@
 
 local fmt = require "format"
 
-
-
-OSD = {}
-OSD[1] = _("Board checkpoint 1")
-OSD[2] = _("Board checkpoint 2")
-OSD[3] = _("Board checkpoint 3")
-OSD[4] = _("Land at %s")
-
-chatter = {}
+local chatter = {}
 chatter[1] = _("Let's do this!")
 chatter[2] = _("Wooo!")
 chatter[3] = _("Time to Shake 'n Bake")
-chatter[4] = _("Checkpoint %s baby!")
-chatter[5] = _("Hooyah")
-chatter[6] = _("Next!")
 target = {1,1,1,1}
 
 function create ()
@@ -52,13 +41,17 @@ end
 
 
 function accept ()
-   if tk.yesno(_("Looking for a 4th"), _([["Hiya there! We're having a race around this system system soon and need a 4th person to participate. You have to bring a Yacht class ship, and there's a prize of %s if you win. Interested?"]]):format(fmt.credits(credits))) then
+   if tk.yesno(_("Looking for a 4th"), fmt.f(_([["Hiya there! We're having a race around this system system soon and need a 4th person to participate. You have to bring a Yacht class ship, and there's a prize of {credits} if you win. Interested?"]]), {credits=fmt.credits(credits)})) then
       misn.accept()
-      OSD[4] = string.format(OSD[4], curplanet:name())
       misn.setDesc(_("You're participating in a race!"))
       misn.setReward(fmt.credits(credits))
-      misn.osdCreate(_("Racing Skills 1"), OSD)
-      tk.msg(_("Awesome"), string.format(_([["That's great! Here's how it works: We will all be in a Yacht class ship. Once we take off from %s, there will be a countdown, and then we will proceed to the various checkpoints in order, boarding them before going to the next checkpoint. After the last checkpoint has been boarded, head back to %s and land. Let's have some fun!"]]), curplanet:name(), curplanet:name()))
+      misn.osdCreate(_("Racing Skills 1"), {
+         _("Board checkpoint 1"),
+         _("Board checkpoint 2"),
+         _("Board checkpoint 3"),
+         fmt.f(_("Land at {pnt}"), {pnt=curplanet}),
+      })
+      tk.msg(_("Awesome"), fmt.f(_([["That's great! Here's how it works: We will all be in a Yacht class ship. Once we take off from {pnt}, there will be a countdown, and then we will proceed to the various checkpoints in order, boarding them before going to the next checkpoint. After the last checkpoint has been boarded, head back to {pnt} and land. Let's have some fun!"]]), {pnt=curplanet}))
       hook.takeoff("takeoff")
    else
       tk.msg(_("Refusal"), _([["I guess we'll need to find another pilot."]]))
@@ -90,7 +83,7 @@ function takeoff()
    checkpoint[2] = pilot.add("Goddard", "Trader", location2, nil, {ai="stationary"})
    checkpoint[3] = pilot.add("Goddard", "Trader", location3, nil, {ai="stationary"})
    for i, j in ipairs(checkpoint) do
-      j:rename( string.format(_("Checkpoint %s"), i) )
+      j:rename(fmt.f(_("Checkpoint {n}"), {n=i}))
       j:setHilight(true)
       j:setInvincible(true)
       j:setActiveBoard(true)
@@ -103,7 +96,7 @@ function takeoff()
    racers[3] = pilot.add("Llama", "Independent", curplanet)
    racers[3]:outfitAdd("Improved Stabilizer")
    for i, j in ipairs(racers) do
-      j:rename(string.format(_("Racer %s"), i))
+      j:rename(fmt.f(_("Racer {n}"), {n=i}))
       j:setHilight(true)
       j:setInvincible(true)
       j:setVisible(true)
@@ -147,8 +140,8 @@ end
 
 
 function racer1idle(p)
-   player.msg( string.format( _("%s just reached checkpoint %s"), p:name(),target[1]) )
-   p:broadcast(string.format( chatter[4], target[1]))
+   player.msg( fmt.f( _("{pltname} just reached checkpoint {n}"), {pltname=p:name(), n=target[1]}) )
+   p:broadcast( fmt.f(_("Checkpoint {n} baby!"), {n=target[1]}) )
    target[1] = target[1] + 1
    hook.timer(2.0, "nexttarget1")
 end
@@ -165,8 +158,8 @@ end
 
 
 function racer2idle(p)
-   player.msg( string.format( _("%s just reached checkpoint %s"), p:name(),target[2]) )
-   p:broadcast(chatter[5])
+   player.msg( fmt.f( _("{pltname} just reached checkpoint {n}"), {pltname=p:name(), n=target[2]}) )
+   p:broadcast(_("Hooyah"))
    target[2] = target[2] + 1
    hook.timer(2.0, "nexttarget2")
 end
@@ -183,8 +176,8 @@ end
 
 
 function racer3idle(p)
-   player.msg( string.format( _("%s just reached checkpoint %s"), p:name(),target[3]) )
-   p:broadcast(chatter[6])
+   player.msg( fmt.f( _("{pltname} just reached checkpoint {n}"), {pltname=p:name(), n=target[3]}) )
+   p:broadcast(_("Next!"))
    target[3] = target[3] + 1
    hook.timer(2.0, "nexttarget3")
 end
@@ -208,13 +201,13 @@ end
 function board(ship)
    for i,j in ipairs(checkpoint) do
       if ship == j and target[4] == i then
-         player.msg( string.format( _("%s just reached checkpoint %s"), player.name(),target[4]) )
+         player.msg( fmt.f( _("{pltname} just reached checkpoint {n}"), {pltname=player.name(), n=target[4]}) )
          misn.osdActive(i+1)
          target[4] = target[4] + 1
          if target[4] == 4 then
-            tk.msg(string.format(_("Checkpoint %s reached"), i), fmt.f(_("Land on {pnt}"), {pnt=curplanet}))
+            tk.msg(fmt.f(_("Checkpoint {n} reached"), {n=i}), fmt.f(_("Land on {pnt}"), {pnt=curplanet}))
          else
-            tk.msg(string.format(_("Checkpoint %s reached"), i), string.format(_("Proceed to Checkpoint %s"), i+1))
+            tk.msg(fmt.f(_("Checkpoint {n} reached"), {n=i}), fmt.f(_("Proceed to Checkpoint {n}"), {n=i+1}))
          end
          break
       end
@@ -230,7 +223,7 @@ end
 
 
 function racerland(p)
-   player.msg( string.format(_("%s just landed at %s and finished the race"), p:name(), curplanet:name()))
+   player.msg(fmt.f(_("{pltname} just landed at {pnt} and finished the race"), {pltname=p:name(), pnt=curplanet}))
 end
 
 

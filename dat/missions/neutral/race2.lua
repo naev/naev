@@ -22,25 +22,13 @@
 
 local fmt = require "format"
 
-
-
-OSD = {}
-OSD[1] = _("Board checkpoint 1")
-OSD[2] = _("Board checkpoint 2")
-OSD[3] = _("Board checkpoint 3")
-OSD[4] = _("Land at %s")
-
-chatter = {}
+local chatter = {}
 chatter[1] = _("Let's do this!")
 chatter[2] = _("Wooo!")
 chatter[3] = _("Time to Shake 'n Bake")
-chatter[4] = _("Checkpoint %s baby!")
-chatter[5] = _("Hooyah")
-chatter[6] = _("Next!")
 target = {1,1,1,1}
 
 function create ()
-
    this_planet, this_system = planet.cur()
    missys = {this_system}
    if not misn.claim(missys) then
@@ -57,10 +45,14 @@ end
 function accept ()
    if tk.yesno(_("Another race"), _([["Hey there, great to see you back! You want to have another race?"]])) then
       misn.accept()
-      OSD[4] = string.format(OSD[4], curplanet:name())
       misn.setDesc(_("You're participating in another race!"))
-      misn.osdCreate(_("Racing Skills 2"), OSD)
-      local s = _([["There are two races you can participate in: an easy one, which is like the first race we had, or a hard one, with smaller checkpoints and no afterburners allowed. The easy one has a prize of %s, and the hard one has a prize of %s. Which one do you want to do?"]]):format(fmt.credits(credits_easy), fmt.credits(credits_hard))
+      misn.osdCreate(_("Racing Skills 2"), {
+         _("Board checkpoint 1"),
+         _("Board checkpoint 2"),
+         _("Board checkpoint 3"),
+         fmt.f(_("Land at {pnt}"), {pnt=curplanet}),
+      })
+      local s = fmt.f(_([["There are two races you can participate in: an easy one, which is like the first race we had, or a hard one, with smaller checkpoints and no afterburners allowed. The easy one has a prize of {credits1}, and the hard one has a prize of {credits2}. Which one do you want to do?"]]), {credits1=fmt.credits(credits_easy), credits2=fmt.credits(credits_hard)})
       choice, choicetext = tk.choice(_("Choose difficulty"), s, _("Easy"), _("Hard"))
       if choice == 1 then
          credits = credits_easy
@@ -113,7 +105,7 @@ function takeoff()
    checkpoint[2] = pilot.add(shiptype, "Trader", location2, nil, {ai="stationary"})
    checkpoint[3] = pilot.add(shiptype, "Trader", location3, nil, {ai="stationary"})
    for i, j in ipairs(checkpoint) do
-      j:rename(string.format(_("Checkpoint %s"), i))
+      j:rename(fmt.f(_("Checkpoint {n}"), {n=i}))
       j:setHilight(true)
       j:setInvincible(true)
       j:setActiveBoard(true)
@@ -139,7 +131,7 @@ function takeoff()
       end
    end
    for i, j in ipairs(racers) do
-      j:rename(string.format(_("Racer %s"), i))
+      j:rename(fmt.f(_("Racer {n}"), {n=i}))
       j:setHilight(true)
       j:setInvincible(true)
       j:setVisible(true)
@@ -182,8 +174,8 @@ function counter()
 end
 
 function racer1idle(p)
-   player.msg( string.format( _("%s just reached checkpoint %s"), p:name(),target[1]) )
-   p:broadcast(string.format( chatter[4], target[1]))
+   player.msg( fmt.f( _("{pltname} just reached checkpoint {n}"), {pltname=p:name(), n=target[1]}) )
+   p:broadcast( fmt.f(_("Checkpoint {n} baby!"), {n=target[1]}) )
    target[1] = target[1] + 1
    hook.timer(2.0, "nexttarget1")
 end
@@ -197,8 +189,8 @@ function nexttarget1()
 end
 
 function racer2idle(p)
-   player.msg( string.format( _("%s just reached checkpoint %s"), p:name(),target[2]) )
-   p:broadcast(chatter[5])
+   player.msg( fmt.f( _("{pltname} just reached checkpoint {n}"), {pltname=p:name(), n=target[2]}) )
+   p:broadcast(_("Hooyah"))
    target[2] = target[2] + 1
    hook.timer(2.0, "nexttarget2")
 end
@@ -211,8 +203,8 @@ function nexttarget2()
    end
 end
 function racer3idle(p)
-   player.msg( string.format( _("%s just reached checkpoint %s"), p:name(),target[3]) )
-   p:broadcast(chatter[6])
+   player.msg( fmt.f( _("{pltname} just reached checkpoint {n}"), {pltname=p:name(), n=target[3]}) )
+   p:broadcast(_("Next!"))
    target[3] = target[3] + 1
    hook.timer(2.0, "nexttarget3")
 end
@@ -230,13 +222,13 @@ end
 function board(ship)
    for i,j in ipairs(checkpoint) do
       if ship == j and target[4] == i then
-         player.msg( string.format( _("%s just reached checkpoint %s"), player.name(),target[4]) )
+         player.msg( fmt.f( _("{pltname} just reached checkpoint {n}"), {pltname=player.name(), n=target[4]}) )
          misn.osdActive(i+1)
          target[4] = target[4] + 1
          if target[4] == 4 then
-            tk.msg(string.format(_("Checkpoint %s reached"), i), string.format(_("Proceed to land at %s"), curplanet:name()))
+            tk.msg(fmt.f(_("Checkpoint {n} reached"), {n=i}), fmt.f(_("Proceed to land at {pnt}"), {pnt=curplanet}))
             else
-            tk.msg(string.format(_("Checkpoint %s reached"), i), string.format(_("Proceed to Checkpoint %s"), i+1))
+            tk.msg(fmt.f(_("Checkpoint {n} reached"), {n=i}), fmt.f(_("Proceed to Checkpoint {n}"), {n=i+1}))
          end
          break
       end
@@ -250,17 +242,17 @@ function jumpin()
 end
 
 function racerland(p)
-   player.msg( string.format(_("%s just landed at %s and finished the race"), p:name(), curplanet:name()))
+   player.msg(fmt.f(_("{pltname} just landed at {pnt} and finished the race"), {pltname=p:name(), pnt=curplanet}))
 end
 
 function land()
    if target[4] == 4 then
       if racers[1]:exists() and racers[2]:exists() and racers[3]:exists() then
          if choice==2 and player.numOutfit("Racing Trophy") <= 0 then
-            tk.msg(_("You Won!"), _([[A man in a suit and tie takes you up onto a stage. A large name tag on his jacket says 'Melendez Corporation'. "Congratulations on your win," he says, shaking your hand, "that was a great race. On behalf of Melendez Corporation, I would like to present to you your trophy and prize money of %s!" He hands you one of those fake oversized cheques for the audience, and then a credit chip with the actual prize money on it. At least the trophy looks cool.]]):format(fmt.credits(credits)))
+            tk.msg(_("You Won!"), fmt.f(_([[A man in a suit and tie takes you up onto a stage. A large name tag on his jacket says 'Melendez Corporation'. "Congratulations on your win," he says, shaking your hand, "that was a great race. On behalf of Melendez Corporation, I would like to present to you your trophy and prize money of {credits}!" He hands you one of those fake oversized cheques for the audience, and then a credit chip with the actual prize money on it. At least the trophy looks cool.]]), {credits=fmt.credits(credits)}))
             player.outfitAdd("Racing Trophy")
          else
-            tk.msg(_("You Won!"), _([[A man in a suit and tie takes you up onto a stage. A large name tag on his jacket says 'Melendez Corporation'. "Congratulations on your win," he says, shaking your hand, "that was a great race. On behalf of Melendez Corporation, I would like to present to you your prize money of %s!" He hands you one of those fake oversized cheques for the audience, and then a credit chip with the actual prize money on it.]]):format(fmt.credits(credits)))
+            tk.msg(_("You Won!"), fmt.f(_([[A man in a suit and tie takes you up onto a stage. A large name tag on his jacket says 'Melendez Corporation'. "Congratulations on your win," he says, shaking your hand, "that was a great race. On behalf of Melendez Corporation, I would like to present to you your prize money of {credits}!" He hands you one of those fake oversized cheques for the audience, and then a credit chip with the actual prize money on it.]]), {credits=fmt.credits(credits)}))
          end
          player.pay(credits)
          misn.finish(true)
