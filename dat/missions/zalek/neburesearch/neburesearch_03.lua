@@ -188,7 +188,6 @@ function start_talk()
 
     if c == 3 then
         tk.msg(_("Tactical Retreat"), _([[You decide to run towards the closest door and leave the building as fast as possible. You continue running until you reach the spaceport and enter your ship. You can't be the first one running from a talk, right?]]))
-        zlk.addNebuResearchLog(fmt.f(log_text, {pnt=dest_planet}))
     else
         tk.msg(_("Scientific Talk"), _([[You try to avoid the question. The scientist seems to be upset. There are no further questions. Apparently there is another talk that starts very soon so people hurry off. You manage to leave without gaining much attention and return to your ship. Enough science for today!]]))
         faction.modPlayerSingle("Za'lek", 1)
