@@ -35,28 +35,11 @@ local destjump = system.get("Doranthex")
 
 local broadcast_first, cleanup, update_fleet -- our local functions
 
-failtext = {}
 chatter = {}
-failtext[1] = _("You have left the system without first completing your mission. The operation ended in failure.")
-failtext[2] = _("The Hawk jumped out of the system. You have failed your mission.")
-failtext[3] = _("The Hawk landed back on %s. You have failed your mission.")
-failtext[4] = _("The Hawk was able to fend off the attackers and destroy their flagship. You have failed your mission.")
 
-xchatter = {}
-xchatter[0] = _("Alright folks, this will be Hawk's maiden jump. Continue on course to the %s jump gate.")
-xchatter[1] = _("How dare they attack me! Get them!")
-xchatter[2] = _("You heard Warlord Khan, blow them to pieces!")
-xchatter[3] = _("They're attacking us, blow them to pieces!")
-xchatter[4] = _("Arrgh!")
 chatter[5] = _("Khan is dead! Who will be our warlord now?")
 chatter[6] = _("Obviously the one who killed him!")
 chatter[7] = _("I will never serve a different warlord than Khan! Die, you traitors!")
-xchatter[8] = _("%s will be ours! Khan, prepare to die!")
-xchatter[9] = _("All units, defend Hawk, we are under attack!")
-xchatter[10] = _("All units, defend Hawk, we are under attack!")
-
-xchatter[12] = _("Pathetic, can't even take down an unarmed ship.")
-xchatter[13] = _("I declare myself the Warlord of %s!")
 
 function create()
    missys = {destsys}
@@ -103,7 +86,7 @@ end
 
 local function player_left_mission_theater()
    if missionstarted then -- The player has landed, which instantly ends the mission.
-      tk.msg(_("You ran away!"), failtext[1])
+      tk.msg(_("You ran away!"), _("You have left the system without first completing your mission. The operation ended in failure."))
       faction.get("Dvaered"):modPlayerSingle(-5)
       abort()
    end
@@ -135,7 +118,7 @@ function enter()
       hawk:cargoAdd("Food", 500)
       hawk:control()
       hawk:hyperspace(destjump)
-      hawk:broadcast(string.format(xchatter[0], destjump:name()))
+      hawk:broadcast(string.format(_("Alright folks, this will be Hawk's maiden jump. Continue on course to the %s jump gate."), destjump:name()))
       hawk:setFaction(hawkfaction)
       fleethooks = {}
       fleetdv = fleet.add( 14, "Dvaered Vendetta", "Dvaered", hawk:pos()-vec2.new(1000,1500), nil, {ai="dvaered_norun"} )
@@ -164,23 +147,23 @@ function land()
 end
 
 function hawk_jump () -- Got away
-   tk.msg(_("The Hawk got away!"), failtext[2])
+   tk.msg(_("The Hawk got away!"), _("The Hawk jumped out of the system. You have failed your mission."))
    faction.get("Dvaered"):modPlayerSingle(-5)
    hook.timer(10.0, "abort")
 end
 
 function hawk_land () -- Got away
-   tk.msg(_("The Hawk got away!"), failtext[3])
+   tk.msg(_("The Hawk got away!"), _("The Hawk landed back on %s. You have failed your mission."))
    faction.get("Dvaered"):modPlayerSingle(-5)
    hook.timer(10.0, "abort")
 end
 
 function hawk_attacked () -- chased
    if not jump_fleet_entered then
-      hawk:broadcast(xchatter[1])
+      hawk:broadcast(_("How dare they attack me! Get them!"))
       hawk:control()
       hawk:hyperspace(destjump)
-      broadcast_first(fleetdv, xchatter[2])
+      broadcast_first(fleetdv, _("You heard Warlord Khan, blow them to pieces!"))
    end
 
    update_fleet()
@@ -190,7 +173,7 @@ function fleetdv_attacked () -- chased
    if not jump_fleet_entered then
       hawk:control()
       hawk:hyperspace(destjump)
-      broadcast_first(fleetdv, xchatter[3])
+      broadcast_first(fleetdv, _("They're attacking us, blow them to pieces!"))
    end
 
    update_fleet()
@@ -209,7 +192,7 @@ function broadcast_first(fleet, msg) -- Find the first alive ship and broadcast 
 end
 
 function hawk_dead () -- mission accomplished
-   hawk:broadcast(xchatter[4])
+   hawk:broadcast(_("Arrgh!"))
 
    faction.dynEnemy( hawkfaction, attkfaction, true )
    faction.dynEnemy( attkfaction, hawkfaction, true )
@@ -275,7 +258,7 @@ function spawn_fleet() -- spawn warlord killing fleet
    jump_fleet_entered = true
    local dv_med_force = { "Dvaered Vendetta", "Dvaered Vendetta", "Dvaered Ancestor", "Dvaered Ancestor", "Dvaered Phalanx", "Dvaered Vigilance" }
    jump_fleet = fleet.add( 1, dv_med_force, "Dvaered", destjump, nil, {ai="dvaered_norun"} )
-   broadcast_first(jump_fleet, string.format(xchatter[8], destplanet:name()))
+   broadcast_first(jump_fleet, string.format(_("%s will be ours! Khan, prepare to die!"), destplanet:name()))
    for i, j in ipairs(jump_fleet) do
       j:changeAI("dvaered_norun")
       j:setFaction(attkfaction)
@@ -286,8 +269,8 @@ function spawn_fleet() -- spawn warlord killing fleet
    end
    hook.pilot( jump_fleet[6], "death", "jump_fleet_cap_dead")
    camera.set(hawk)
-   hawk:broadcast(xchatter[9])
-   broadcast_first(fleetdv, xchatter[10])
+   hawk:broadcast(_("All units, defend Hawk, we are under attack!"))
+   broadcast_first(fleetdv, _("All units, defend Hawk, we are under attack!"))
    hawk:control()
    hawk:land(destplanet)
 
@@ -313,11 +296,11 @@ function undo_invuln()
 end
 
 function jump_fleet_cap_dead () -- mission failed
-   jump_fleet[6]:broadcast(xchatter[4])
+   jump_fleet[6]:broadcast(_("Arrgh!"))
 
-   hawk:broadcast(xchatter[12])
+   hawk:broadcast(_("Pathetic, can't even take down an unarmed ship."))
    hawk:setNoDeath()
-   tk.msg(_("The Hawk is safe."), failtext[4])
+   tk.msg(_("The Hawk is safe."), _("The Hawk was able to fend off the attackers and destroy their flagship. You have failed your mission."))
    faction.get("Dvaered"):modPlayerSingle(-5)
    hawk:land(destplanet)
    for i, j in ipairs(fleetdv) do
@@ -368,7 +351,7 @@ function complete()
    tk.msg(_("The Dvaered official sent you a message."), _([["Thanks for the distraction. I've sent you a picture of all the medals I was awarded. Oh, and I also deposited 800,000 credits in your account."]]))
    camera.set(player.pilot())
    player.pay(800e3)
-   jump_fleet[6]:broadcast(string.format(xchatter[13], destplanet:name()))
+   jump_fleet[6]:broadcast(string.format(_("I declare myself the Warlord of %s!"), destplanet:name()))
    jump_fleet[6]:setNoDeath(false)
    misn.finish(true)
 end
