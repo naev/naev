@@ -21,53 +21,9 @@
 local lmisn = require "lmisn"
 require "proximity"
 local fleet = require "fleet"
+local fmt = require "format"
 local shadow = require "common.shadow"
 local pir = require "common.pirate"
-
-text = {}
-
-text[1] = _([[You dock with the Seiryuu and shut down your engines. At the airlock, you are welcomed by two nondescript crewmen in gray uniforms who tell you to follow them into the ship. They lead you through corridors and passages that seem to lead to the bridge. On the way, you can't help but look around you in wonder. The ship isn't anything you're used to seeing. While some parts can be identified as such common features as doors and viewports, a lot of the equipment in the compartments and niches seems strange, almost alien to you. Clearly the Seiryuu is not just any other Kestrel.
-    On the bridge, you immediately spot - who else - the Seiryuu's captain, Rebina, seated in the captain's chair. The chair, too, is designed in the strange fashion that you've been seeing all over the ship. It sports several controls that you can't place, despite the fact that you're an experienced pilot yourself. The rest of the bridge is no different. All the regular stations and consoles seem to be there, but there are some others whose purpose you can only guess.
-    Rebina swivels the chair around and smiles when she sees you. "Ah, %s," she says. "How good of you to come. I was hoping you'd get my invitation, since I was quite pleased with your performance last time. And I'm not the only one. As it turns out Jorek seems to have taken a liking to you as well. He may seem rough, but he's a good man at heart."]])
-
-text[2] = _([[You choose not to say anything, but Rebina seems to have no trouble reading what's on your mind. "Ah yes, the ship. It's understandable that you're surprised at how it looks. I can't divulge too much about this technology or how we came to possess it, but suffice to say that we don't buy from the regular outlets. We have need for... an edge in our line of business."
-    Grateful for the opening, you ask Rebina what exactly this line of business is. Rebina flashes you a quick smile and settles into the chair for the explanation.
-    "The organization I'm part of is known as the Four Winds, or rather," she gestures dismissively, "not known as the Four Winds. We keep a low profile. You won't have heard of us before, I'm sure. At this point I should add that many who do know us refer to us as the 'Shadows', but this is purely a colloquial name. It doesn't cover what we do, certainly. In any event, you can think of us as a private operation with highly specific objectives. At this point that is all I can tell you." She leans forward and fixes you with a level stare. "Speaking of specific objectives, I have one such objective for you."]])
-
-text[3] = _([["You may not know this, but there are tensions between the Imperial and Dvaered militaries. For some time now there have been incidents on the border, conflicts about customs, pilots disrespecting each other's flight trajectories, that sort of thing. It hasn't become a public affair yet, and the respective authorities don't want it to come to that. This is why they've arranged a secret diplomatic meeting to smooth things over and make arrangements to de-escalate the situation.
-    "This is where we come in. Without going into the details, suffice to say we have an interest in making sure that this meeting does not meet with any unfortunate accidents. However, for reasons I can't explain to you now, we can't become involved directly. That's why I want you to go on our behalf.
-    "You will essentially be flying an escort mission. You will rendezvous with a small wing of private fighters, who will take you to your charge, the Imperial representative. Once there, you will protect him from any threats you might encounter, and see him safely to Dvaered space. As soon as the Imperial representative has joined his Dvaered colleague, your mission will be complete and you will report back here.
-    "That will be all. I offer you a suitable monetary reward should you choose to accept. Can I count on you to undertake this task?"]])
-
-refusetext = _([[Captain Rebina sighs. "I see. I don't mind admitting that I hoped you would accept, but it's your decision. I won't force you to do anything you feel uncomfortable with. However, I still hold out the hope that you will change your mind. If you do, come back to see me. You know where to find the Seiryuu."
-    Mere hectoseconds later you find yourself back in your cockpit, and the Seiryuu is leaving. It doesn't really come as a surprise that you can't find any reference to your rendezvous with the Seiryuu in your flight logs...]])
-
-text[4] = _([[Captain Rebina angrily drums her fingers on her captain's chair as she watches the reconstruction made from your sensor logs. Her eyes narrow when both diplomatic ships explode under the onslaught of weapons the escorts should not have had onboard.
-    "This is bad, %s," she says when the replay shuts down. "Worse than I had even thought possible. The death of the Imperial and Dvaered diplomats is going to spark a political incident, with each faction accusing the other of treachery." She stands up and begins pacing up and down the Seiryuu's bridge. "But that's not the worst of it. You saw what happened. The diplomats were killed by their own escorts - by Four Winds operatives! This is an outrage!"
-    Captain Rebina brings herself back under control through an effort of will. "%s, this does not bode well. We have a problem, and I fear I'm going to need your help again before the end. But not yet. I have a lot to do. I have to get to the bottom of this, and I have to try to keep this situation from escalating into a disaster. I will contact you again when I know more. In the mean time, you will have the time to spend your reward - it's already in your account."
-    Following this, you are swiftly escorted off the Seiryuu. Back in your cockpit, you can't help feeling a little anxious about these Four Winds. Who are they, what do they want, and what is your role in all of it? Time will have to tell.]])
-
--- First meeting.
-
--- En-route chatter.
-
--- Diplomat jump-in.
-
--- En-route pirates.
-
--- Endgame
-
--- Refuel hint
-
--- Mission info stuff
-osd_msg   = {}
-osd_msg[1] = _("Fly to the %s system and join the other escorts")
-osd_msg[2] = _("Follow the group to Nova Shakar and land")
-osd_msg[3] = _("Follow the flight leader to the rendezvous location")
-osd_msg[4] = _("Escort the Imperial diplomat")
-osd_msg[5] = _("Report back to Rebina")
-
-osd_msg0 = _("Fly to the %s system.")
 
 -- Make a pilot say a line, if he is alive. Mainly useful in sequential chat messages.
 -- argument chat: A table containing:
@@ -85,16 +41,16 @@ end
 function create()
    misn.accept()
    stage = 0
-   local rsysname = "Pas"
-   rebinasys = system.get(rsysname)
+   rebinasys = system.get("Pas")
    hook.jumpin("jumpin")
    hook.timer(1.0, "delayedClaim")
 
-   misn.setDesc(_([[You are invited to a meeting in %s]]):format(rsysname))
+   misn.setDesc(fmt.f(_([[You are invited to a meeting in {sys}]]), {sys=rebinasys}))
    misn.setReward(_("???"))
    marker = misn.markerAdd(rebinasys, "low")
-   osd_msg0 = string.format(osd_msg0, rebinasys:name())
-   misn.osdCreate(_("Unknown"), {osd_msg0})
+   misn.osdCreate(_("Unknown"), {
+       fmt.f(_("Fly to the {sys} system."), {sys=rebinasys}),
+   })
 end
 
 -- Delayed claim to let time for the event's claim to disappear
@@ -112,23 +68,27 @@ function meeting()
     first = var.peek("shadowvigil_first") == nil -- nil acts as true in this case.
     if first then
         var.push("shadowvigil_first", false)
-        tk.msg(_("Reunion with Rebina"), string.format(text[1], player.name()))
-        tk.msg(_("Reunion with Rebina"), text[2])
-        if tk.yesno(_("Reunion with Rebina"), text[3]) then
-            accept_m()
-        else
-            tk.msg(_("Let sleeping shadows lie"), refusetext)
-            abort()
-        end
+        tk.msg(_("Reunion with Rebina"), fmt.f(_([[You dock with the Seiryuu and shut down your engines. At the airlock, you are welcomed by two nondescript crewmen in gray uniforms who tell you to follow them into the ship. They lead you through corridors and passages that seem to lead to the bridge. On the way, you can't help but look around you in wonder. The ship isn't anything you're used to seeing. While some parts can be identified as such common features as doors and viewports, a lot of the equipment in the compartments and niches seems strange, almost alien to you. Clearly the Seiryuu is not just any other Kestrel.
+    On the bridge, you immediately spot - who else - the Seiryuu's captain, Rebina, seated in the captain's chair. The chair, too, is designed in the strange fashion that you've been seeing all over the ship. It sports several controls that you can't place, despite the fact that you're an experienced pilot yourself. The rest of the bridge is no different. All the regular stations and consoles seem to be there, but there are some others whose purpose you can only guess.
+    Rebina swivels the chair around and smiles when she sees you. "Ah, {player}," she says. "How good of you to come. I was hoping you'd get my invitation, since I was quite pleased with your performance last time. And I'm not the only one. As it turns out Jorek seems to have taken a liking to you as well. He may seem rough, but he's a good man at heart."]]), {player=player.name()}))
+        tk.msg(_("Reunion with Rebina"), _([[You choose not to say anything, but Rebina seems to have no trouble reading what's on your mind. "Ah yes, the ship. It's understandable that you're surprised at how it looks. I can't divulge too much about this technology or how we came to possess it, but suffice to say that we don't buy from the regular outlets. We have need for... an edge in our line of business."
+    Grateful for the opening, you ask Rebina what exactly this line of business is. Rebina flashes you a quick smile and settles into the chair for the explanation.
+    "The organization I'm part of is known as the Four Winds, or rather," she gestures dismissively, "not known as the Four Winds. We keep a low profile. You won't have heard of us before, I'm sure. At this point I should add that many who do know us refer to us as the 'Shadows', but this is purely a colloquial name. It doesn't cover what we do, certainly. In any event, you can think of us as a private operation with highly specific objectives. At this point that is all I can tell you." She leans forward and fixes you with a level stare. "Speaking of specific objectives, I have one such objective for you."]]))
     else
-        tk.msg(_("Reunion with Rebina"), string.format(_([[Again, you set foot on the Seiryuu's decks, and again you find yourself surrounded by the unfamiliar technology on board. The ship's crewmen guide you to the bridge, where Rebina is waiting for you. She says, "Welcome back, %s. I hope you've come to reconsider my offer. Let me explain to you again what it is we need from you."]]), player.name()))
-        if tk.yesno(_("Reunion with Rebina"), text[3]) then
-            accept_m()
-        else
-            tk.msg(_("Let sleeping shadows lie"), refusetext)
-            abort()
-        end
+        tk.msg(_("Reunion with Rebina"), fmt.f(_([[Again, you set foot on the Seiryuu's decks, and again you find yourself surrounded by the unfamiliar technology on board. The ship's crewmen guide you to the bridge, where Rebina is waiting for you. She says, "Welcome back, {player}. I hope you've come to reconsider my offer. Let me explain to you again what it is we need from you."]]), {player=player.name()}))
     end
+
+    if tk.yesno(_("Reunion with Rebina"), _([["You may not know this, but there are tensions between the Imperial and Dvaered militaries. For some time now there have been incidents on the border, conflicts about customs, pilots disrespecting each other's flight trajectories, that sort of thing. It hasn't become a public affair yet, and the respective authorities don't want it to come to that. This is why they've arranged a secret diplomatic meeting to smooth things over and make arrangements to de-escalate the situation.
+    "This is where we come in. Without going into the details, suffice to say we have an interest in making sure that this meeting does not meet with any unfortunate accidents. However, for reasons I can't explain to you now, we can't become involved directly. That's why I want you to go on our behalf.
+    "You will essentially be flying an escort mission. You will rendezvous with a small wing of private fighters, who will take you to your charge, the Imperial representative. Once there, you will protect him from any threats you might encounter, and see him safely to Dvaered space. As soon as the Imperial representative has joined his Dvaered colleague, your mission will be complete and you will report back here.
+    "That will be all. I offer you a suitable monetary reward should you choose to accept. Can I count on you to undertake this task?"]])) then
+        accept_m()
+    else
+        tk.msg(_("Let sleeping shadows lie"), _([[Captain Rebina sighs. "I see. I don't mind admitting that I hoped you would accept, but it's your decision. I won't force you to do anything you feel uncomfortable with. However, I still hold out the hope that you will change your mind. If you do, come back to see me. You know where to find the Seiryuu."
+    Mere hectoseconds later you find yourself back in your cockpit, and the Seiryuu is leaving. It doesn't really come as a surprise that you can't find any reference to your rendezvous with the Seiryuu in your flight logs...]]))
+        abort()
+    end
+
     player.unboard()
 end
 
@@ -146,17 +106,22 @@ function accept_m()
     missend = false
     landfail = false
 
-    tk.msg(_("Shadow Vigil"), string.format(_([["Excellent, %s." Rebina smiles at you. "I've told my crew to provide your ship's computer with the necessary navigation data. Also, note that I've taken the liberty of installing a specialized IFF transponder onto your ship. Don't pay it any heed, it will only serve to identify you as one of the escorts. For various reasons, it is best that you refrain from communication with the other escorts as much as possible. I think you might have an inkling as to why."
-    Rebina straightens up. "That will be all for now, %s," she says in a more formal, captain-like manner. "You have your assignment; I suggest you go about it."
-    You are politely but efficiently escorted off the Seiryuu's bridge. Soon you settle back in your own cockpit chair, ready to do what was asked of you.]]), player.name(), player.name()))
+    tk.msg(_("Shadow Vigil"), fmt.f(_([["Excellent, {player}." Rebina smiles at you. "I've told my crew to provide your ship's computer with the necessary navigation data. Also, note that I've taken the liberty of installing a specialized IFF transponder onto your ship. Don't pay it any heed, it will only serve to identify you as one of the escorts. For various reasons, it is best that you refrain from communication with the other escorts as much as possible. I think you might have an inkling as to why."
+    Rebina straightens up. "That will be all for now, {player}," she says in a more formal, captain-like manner. "You have your assignment; I suggest you go about it."
+    You are politely but efficiently escorted off the Seiryuu's bridge. Soon you settle back in your own cockpit chair, ready to do what was asked of you.]]), {player=player.name()}))
     shadow.addLog( _([[Captain Rebina has revealed some information about the organization she works for. "The organization I'm part of is known as the Four Winds, or rather, not known as the Four Winds. We keep a low profile. You won't have heard of us before, I'm sure. At this point I should add that many who do know us refer to us as the 'Shadows', but this is purely a colloquial name. It doesn't cover what we do, certainly. In any event, you can think of us as a private operation with highly specific objectives. At this point that is all I can tell you."]]) )
 
     misn.setDesc(_([[Captain Rebina of the Four Winds has asked you to help Four Winds agents protect an Imperial diplomat.]]))
     misn.setReward(_("A sum of money."))
     marker = misn.markerAdd(misssys[1], "low")
 
-    osd_msg[1] = string.format(osd_msg[1], misssys[1]:name())
-    misn.osdCreate(_("Shadow Vigil"), osd_msg)
+    misn.osdCreate(_("Shadow Vigil"), {
+        fmt.f(_("Fly to the {sys} system and join the other escorts"), {sys=misssys[1]}),
+        _("Follow the group to Nova Shakar and land"),
+        _("Follow the flight leader to the rendezvous location"),
+        _("Escort the Imperial diplomat"),
+        _("Report back to Rebina"),
+    })
 
     hook.land("land")
     hook.enter("enter")
@@ -181,7 +146,7 @@ function land()
         tk.msg(_("You abandoned your charge!"), _("You have landed, but you were supposed to escort the diplomat. Your mission is a failure!"))
     elseif planet.cur() == planet.get("Nova Shakar") and stage == 2 then
         local dist = system.cur():jumpDist(misssys[4])
-        local refueltext = gettext.ngettext(
+        local refueltext = n_(
            "While you handle the post-land and refuel operations, you get a comm from the flight leader, audio only. He tells you that this will be the last place where you can refuel, and that you need to make sure to have at least %d jump worth of fuel on board for the next leg of the journey. You will be left behind if you can't keep up.",
            "While you handle the post-land and refuel operations, you get a comm from the flight leader, audio only. He tells you that this will be the last place where you can refuel, and that you need to make sure to have at least %d jumps worth of fuel on board for the next leg of the journey. You will be left behind if you can't keep up.", dist )
         tk.msg(_("Preparing for the job"), refueltext:format(dist))
@@ -477,7 +442,7 @@ function diplomatJump()
             j:hyperspace(lmisn.getNextSystem(system.cur(), misssys[stage])) -- Hyperspace toward the next destination system.
         end
     end
-    player.msg(string.format(_("Mission update: The diplomat has jumped to %s."), lmisn.getNextSystem(system.cur(), misssys[stage]):name()))
+    player.msg(fmt.f(_("Mission update: The diplomat has jumped to {sys}."), {sys=lmisn.getNextSystem(system.cur(), misssys[stage])}))
 end
 
 -- Handle the diplomat getting attacked.
@@ -601,7 +566,10 @@ function board()
        seiryuu:hyperspace()
        seiryuu:setActiveBoard(false)
        seiryuu:setHilight(false)
-       tk.msg(_("An unfortunate outcome"), string.format(text[4], player.name(), player.name()))
+       tk.msg(_("An unfortunate outcome"), fmt.f(_([[Captain Rebina angrily drums her fingers on her captain's chair as she watches the reconstruction made from your sensor logs. Her eyes narrow when both diplomatic ships explode under the onslaught of weapons the escorts should not have had onboard.
+    "This is bad, {player}," she says when the replay shuts down. "Worse than I had even thought possible. The death of the Imperial and Dvaered diplomats is going to spark a political incident, with each faction accusing the other of treachery." She stands up and begins pacing up and down the Seiryuu's bridge. "But that's not the worst of it. You saw what happened. The diplomats were killed by their own escorts - by Four Winds operatives! This is an outrage!"
+    Captain Rebina brings herself back under control through an effort of will. "{player}, this does not bode well. We have a problem, and I fear I'm going to need your help again before the end. But not yet. I have a lot to do. I have to get to the bottom of this, and I have to try to keep this situation from escalating into a disaster. I will contact you again when I know more. In the mean time, you will have the time to spend your reward - it's already in your account."
+    Following this, you are swiftly escorted off the Seiryuu. Back in your cockpit, you can't help feeling a little anxious about these Four Winds. Who are they, what do they want, and what is your role in all of it? Time will have to tell.]]), {player=player.name()}))
        player.pay(700e3)
        shadow.addLog( _([[Your attempt to escort a diplomat for the Four Winds was thwarted by traitors on the inside. Other Four Winds escorts opened fire on the diplomat, killing him. Captain Rebina has said that she may need your help again at a later date.]]) )
        misn.finish(true)

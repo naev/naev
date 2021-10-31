@@ -349,7 +349,7 @@ function tick()
     osd_msg[1] = _("Fly to %s in the %s system before %s"):format(destplanet:name(), destsys:name(), timelimit:str())
     if timelimit >= time.get() then
         -- Case still in time
-        osd_msg[2] = _("You have %s remaining"):format((timelimit - time.get()):str())
+        osd_msg[2] = fmt.f(_("You have {time} remaining"), {time=(timelimit - time.get()):str()})
         misn.osdCreate(_("Pilgrimage transport"), osd_msg)
     elseif timelimit2 <= time.get() and not overtime then
         -- Case missed second deadline

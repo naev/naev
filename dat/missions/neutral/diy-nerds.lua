@@ -89,7 +89,7 @@ function accept ()
 
       addNerdCargo()
       lhook = hook.land("nerds_land1", "land")
-      misn.osdCreate( _("DIY Nerds"), {string.format(_("Bring the nerds and their box to %s before %s"), destPlanet:name(), time.str(expiryDate, 1)), string.format(_("You have %s remaining"), time.str(expiryDate - time.get(), 1))})
+      misn.osdCreate( _("DIY Nerds"), {string.format(_("Bring the nerds and their box to %s before %s"), destPlanet:name(), time.str(expiryDate, 1)), fmt.f(_("You have {time} remaining"), {time=time.str(expiryDate - time.get(), 1)})})
       dhook = hook.date(time.create(0, 0, 100), "nerds_fly1")
    end
 end
@@ -140,7 +140,7 @@ end
 function nerds_fly1()
    intime = expiryDate >= time.get()
    if intime then
-      misn.osdCreate( _("DIY Nerds"), {string.format(_("Bring the nerds and their box to %s before %s"), destPlanet:name(), time.str(expiryDate, 2)), string.format(_("You have %s remaining"), time.str(expiryDate - time.get(), 1))})
+      misn.osdCreate( _("DIY Nerds"), {string.format(_("Bring the nerds and their box to %s before %s"), destPlanet:name(), time.str(expiryDate, 2)), fmt.f(_("You have {time} remaining"), {time=time.str(expiryDate - time.get(), 1)})})
    else
       misn.osdCreate( _("DIY Nerds"), {string.format(_("Bring the nerds and their box to %s before %s"), destPlanet:name(), time.str(expiryDate, 2)), _("You're late and the nerds are getting angry and abusive; land to get rid of the nerds and their box")})
       misn.osdActive(2)
@@ -219,7 +219,7 @@ function nerds_fly2()
          tk.msg(_("In-system communication"), string.format(_([[Your comm link comes up again. It is the nerds, whom you'd almost forgotten. You hear Mia's voice: "Hey, what are you waiting for? You'd better be here within one period, or we'll get another pilot and pay them, not you!"]]), srcPlanet:name()) )
          impatient = true
       end
-        misn.osdCreate( _("DIY Nerds"), {string.format(_("Pick up the nerds on %s for their return trip to %s"), destPlanet:name(), srcPlanet:name()), _("The nerds are getting impatient"), string.format(_("You have %s remaining"), time.str(expiryDate + time.create(0,3,0) - time.get(), 2)) })
+        misn.osdCreate( _("DIY Nerds"), {string.format(_("Pick up the nerds on %s for their return trip to %s"), destPlanet:name(), srcPlanet:name()), _("The nerds are getting impatient"), fmt.f(_("You have {time} remaining"), {time=time.str(expiryDate + time.create(0,3,0) - time.get(), 2)}) })
         misn.osdActive(2)
    end
 end
