@@ -9,6 +9,7 @@
       * Added escorts for hire
       * Some simple minigames have been added
       * Scramblers and jammers have fixed chance to mess up missiles depending on their resistance
+      * Restricted systems where dominant faction will attack on sight
    * Visual improvements
       * New fancy system rendering effects
       * Ships and rockets now have engine trails
@@ -33,7 +34,7 @@
       * Missiles have lock-on reduced and in-flight calibration added
       * Tutorial redone with Ship AI that is also accessible from the info menu
    * Quality of Life
-      * Added automatic landing as an overlay double-click action (and on repeat of the "Land" key)
+      * Autonav supports landing and boarding
       * Comm window reworked and you can bribe multiple pilots at once
       * Possible to change or unequip ships with deployed fighters
       * More fine-grained autonav reset control by setting enemy distance
@@ -43,6 +44,7 @@
       * More visible map markers
       * More in-game tutorial-ish explanations for new mechanics as you encounter them
       * You can now favourite your ships to help with sorting
+      * Redid boarding window to be more intuitive and easier to loot what you want
    * New locations
       * Added gambling resort "Minerva Station"
       * Added mysterious new system "Taiomi"
@@ -80,6 +82,7 @@
       * Faction presence computed with base and bonus values
       * Virtual assets have been redone and are more flexible than before
       * Point value system for ships to help with presence and other things
+      * Support for shipstats at a system level
       * Initial support for 3D models
       * Proper support for line breaks in most languages
 
