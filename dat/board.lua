@@ -68,8 +68,21 @@ local function compute_lootables ( plt )
       } )
    end
 
-   -- TODO add outfits as necessary here!
-   --table.insert( lootables, outfit_loot(outfit.get("Laser Cannon MK1")) )
+   local canstealoutfits = false
+   if canstealoutfits then
+      local ocand = {}
+      for _k,o in ipairs(plt:outfits()) do
+         local name, size, prop, req, exc = o:slot()
+         -- Don't allow looting required outfits
+         if not req then 
+            table.insert( ocand, o )
+         end
+      end
+      -- Get random candidate
+      -- TODO better criteria
+      local o = ocand[ rnd.rnd(1,#ocand) ]
+      table.insert( lootables, outfit_loot( o ) )
+   end
 
    -- Go over cargo
    local clist = plt:cargoList()
