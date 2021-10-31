@@ -31,7 +31,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2021-10-31 01:57-0400\n"
+"POT-Creation-Date: 2021-10-31 11:08-0400\n"
 "PO-Revision-Date: 2021-10-31 14:27+0000\n"
 "Last-Translator: OOTA, Masato <ooyooxei+gh@gmail.com>\n"
 "Language-Team: Japanese <https://hosted.weblate.org/projects/naev/naev/ja/>\n"
@@ -13153,7 +13153,7 @@ msgid "All sorts of high quality luxury goods."
 msgstr "あらゆる種の高品質ぜいたく品。"
 
 #. Fuel
-#: dat/commodity.xml:184 dat/board.lua:62
+#: dat/commodity.xml:184 dat/board.lua:126
 msgid "Fuel"
 msgstr "燃料"
 
@@ -13222,7 +13222,9 @@ msgstr "ブラックロータス海賊一味"
 msgid ""
 "The Black Lotus Pirate Clan is a fiercely organized pirate clan located "
 "between the Za'lek and Sirius space. Organized crime at its finest."
-msgstr "ブラックロータス海賊一味は厳重な組織の海賊団で、ザレクとシリウス宙域の間に位置を占めている。究極の組織犯罪。"
+msgstr ""
+"ブラックロータス海賊一味は厳重な組織の海賊団で、ザレクとシリウス宙域の間に位"
+"置を占めている。究極の組織犯罪。"
 
 #: dat/faction.xml:186
 msgid "Dreamer Clan"
@@ -13237,7 +13239,8 @@ msgid ""
 "The Dreamer Pirate Clan consists largely of disgruntled pirates from the "
 "Frontier, fed up with both the FLF and Dvaered terrorism, and Empire tyranny."
 msgstr ""
-"ドリーマー海賊一味は、おもに不満をもった辺境出身の海賊たちからなっていて、FLF とドベーレッドの両方のテロリズムと、帝国の圧政にうんざりしている。"
+"ドリーマー海賊一味は、おもに不満をもった辺境出身の海賊たちからなっていて、"
+"FLF とドベーレッドの両方のテロリズムと、帝国の圧政にうんざりしている。"
 
 #. hook.pilot( rampant, "idle", "idle" )
 #: dat/faction.xml:221 dat/faction.xml:256 dat/faction.xml:627
@@ -13277,7 +13280,8 @@ msgid ""
 "aggressive and will attack most vessels unprovoked. Even the pirate clans "
 "have difficulty in dealing with them."
 msgstr ""
-"海賊の略奪者は、もっとも粗野で下劣な海賊だ。きわめて押しが強く、ほとんどの船をいわれもなく攻撃する。海賊一味でさえ、この略奪者に対処するのは難しい。"
+"海賊の略奪者は、もっとも粗野で下劣な海賊だ。きわめて押しが強く、ほとんどの船"
+"をいわれもなく攻撃する。海賊一味でさえ、この略奪者に対処するのは難しい。"
 
 #: dat/faction.xml:289 dat/scripts/common/empire.lua:18
 #: dat/scripts/common/empire.lua:23
@@ -13581,7 +13585,7 @@ msgstr ""
 #: dat/missions/shark/sh02_tapping.lua:327
 #: dat/missions/shark/sh02_tapping.lua:332
 #: dat/missions/soromid/comingout/srm_comingout3.lua:87
-#: dat/missions/soromid/comingout/srm_comingout5.lua:98
+#: dat/missions/soromid/comingout/srm_comingout5.lua:84
 #: dat/missions/soromid/comingout/srm_comingout6.lua:106
 msgid "Mercenary"
 msgstr "傭兵"
@@ -13663,7 +13667,7 @@ msgstr "組合員"
 
 #: dat/faction.xml:668 dat/faction.xml:697
 #: dat/missions/soromid/comingout/srm_comingout3.lua:121
-#: dat/missions/soromid/comingout/srm_comingout5.lua:136
+#: dat/missions/soromid/comingout/srm_comingout5.lua:122
 msgid "Thugs"
 msgstr "乱暴者"
 
@@ -17726,7 +17730,8 @@ msgstr "シールドキャパシター III"
 #: dat/outfits/structure/shield_capacitor_iii.xml:9
 msgid ""
 "A heavy duty shield enhancer for ships that face combat on a regular basis."
-msgstr "酷使に耐えるシールド強化手段であり、くり返し戦いに直面する船のためにある。"
+msgstr ""
+"酷使に耐えるシールド強化手段であり、くり返し戦いに直面する船のためにある。"
 
 #: dat/outfits/structure/shield_capacitor_iv.xml:2
 msgid "Shield Capacitor IV"
@@ -17805,7 +17810,7 @@ msgstr ""
 "いほど威力があり、いちどの猛打で目標を破壊できなかったときには船を無防備な標"
 "的にしてしまう癖のあるビームである。"
 
-#: dat/outfits/utility/asteroid_scanner.xml:2 src/shipstats.c:176
+#: dat/outfits/utility/asteroid_scanner.xml:2 src/shipstats.c:177
 msgid "Asteroid Scanner"
 msgstr "小惑星スキャナー"
 
@@ -19950,7 +19955,7 @@ msgstr ""
 #: dat/ships/raelid_outpost.xml:12 dat/ships/raglan_outpost.xml:12
 #: dat/ships/sindbad.xml:12 src/dev_uniedit.c:242 src/dev_uniedit.c:248
 #: src/dev_uniedit.c:1226 src/dev_uniedit.c:1227 src/map.c:564 src/map.c:565
-#: src/outfit.c:289 src/outfit.c:308
+#: src/outfit.c:277 src/outfit.c:296
 msgid "N/A"
 msgstr "—"
 
@@ -22175,7 +22180,9 @@ msgstr ""
 msgid ""
 "Take care of the ones you do love. Let your Enygma System Turreted Launchers "
 "deal with the ones you don't!"
-msgstr "ほんとうに愛するものをだいじにしよう。そうでないものは、エニグマシステムの砲塔型発射機に対処させましょう！"
+msgstr ""
+"ほんとうに愛するものをだいじにしよう。そうでないものは、エニグマシステムの砲"
+"塔型発射機に対処させましょう！"
 
 #: dat/ai/advertiser.lua:23
 msgid "Do you love your Emperor as much as he loves you?"
@@ -22330,21 +22337,26 @@ msgstr ""
 #. Special ads that can be multi-faction
 #: dat/ai/advertiser.lua:60
 msgid "Nexus Augmentation: trust the galactic leader in cyber-organs rental!"
-msgstr "ネクサスオーグメンテイション : サイバー器官レンタルにおける銀河のリーダーに期待しよう！"
+msgstr ""
+"ネクサスオーグメンテイション : サイバー器官レンタルにおける銀河のリーダーに期"
+"待しよう！"
 
 #: dat/ai/advertiser.lua:61
 msgid ""
 "Love your children? Get them the new Nexus Augmentation NCB-567K cyber-brain "
 "and they will never fail an exam!"
 msgstr ""
-"子どもたちを愛していますか？　子どもたちのためにネクサスオーグメンテイション NCB-567K "
-"サイバーブレインを手に入れて、試験にはぜったい失敗させないようにしよう！"
+"子どもたちを愛していますか？　子どもたちのためにネクサスオーグメンテイション "
+"NCB-567K サイバーブレインを手に入れて、試験にはぜったい失敗させないようにしよ"
+"う！"
 
 #: dat/ai/advertiser.lua:62
 msgid ""
 "Rent arrears for your cyber-organs? Take out a credit at Nexus Bank and save "
 "your vital organs from being removed!"
-msgstr "あなたのサイバー器官の賃借延滞金は？　ネクサスバンクから信用を得て、生体器官の除去を防ごう！"
+msgstr ""
+"あなたのサイバー器官の賃借延滞金は？　ネクサスバンクから信用を得て、生体器官"
+"の除去を防ごう！"
 
 #. Credits.
 #. No bribe
@@ -24960,24 +24972,76 @@ msgstr ""
 #.
 #. Boarding script, now in Lua!
 #. --
+#. forward-declared function, defined at bottom of file
 #. Dark Gold
+#: dat/board.lua:54
+msgid ""
+"\n"
+"#rCosts {credits} ({sbonus}%#r from crew strength) to extract!#0"
+msgstr ""
+
+#: dat/board.lua:56
+msgid ""
+"{name}{sprice}\n"
+"{slotsize} {slottype}#0 slot{sprop}\n"
+"{stype}\n"
+"{desc}"
+msgstr ""
+
+#. special_col, -- TODO new special condition
+#: dat/board.lua:80
+#, fuzzy
+#| msgid "{name} {suffix}"
+msgid ""
+"{name}\n"
+"{desc}"
+msgstr "{name} {suffix}"
+
+#: dat/board.lua:83
+#, fuzzy
+#| msgid "Illegalized by the following factions:\n"
+msgid ""
+"\n"
+"#rIllegalized by the following factions:\n"
+msgstr "次の党派から違法とされています :\n"
+
+#: dat/board.lua:86
+msgid ""
+"\n"
+"   - {fctname}"
+msgstr ""
+
 #. Credits
-#: dat/board.lua:48
+#: dat/board.lua:112
 msgid "Credits"
 msgstr "クレジット"
 
-#. TODO add outfits as necessary here!
-#. table.insert( lootables, outfit_loot(outfit.get("Laser Cannon MK1")) )
+#: dat/board.lua:116
+msgid ""
+"Credits\n"
+"Used as the main form of currency throughout the galaxy."
+msgstr ""
+
+#: dat/board.lua:130
+msgid ""
+"Fuel\n"
+"Necessary for the activation of jump drives that allow inter-system travel."
+msgstr ""
+
+#. Steal outfits before cargo, since they are always considered "special"
+#. Don't allow looting required outfits
+#. Get random candidate
+#. TODO better criteria
 #. Go over cargo
 #. Handle mission cargoes first
 #. Look at special case of price being 0
 #. Ignore anything that isn't loot from now on
-#: dat/board.lua:175
+#: dat/board.lua:272
 msgid "You have {freespace} of free space."
 msgstr "あなたの船倉には {freespace}の空きがある。"
 
 #. Destroy if exists
-#: dat/board.lua:221 dat/comm.lua:167 dat/shipai.lua:26 dat/shipai.lua:39
+#: dat/board.lua:320 dat/comm.lua:167 dat/shipai.lua:26 dat/shipai.lua:39
 #: src/comm.c:340 src/console.c:649 src/dev_sysedit.c:1375
 #: src/dev_sysedit.c:1487 src/dev_sysedit.c:1550 src/dev_sysedit.c:1745
 #: src/dev_sysedit.c:1936 src/dev_sysedit.c:2024 src/dev_uniedit.c:400
@@ -24988,57 +25052,76 @@ msgstr "あなたの船倉には {freespace}の空きがある。"
 msgid "Close"
 msgstr "閉じる"
 
-#: dat/board.lua:222
+#: dat/board.lua:321
 msgid "Loot"
 msgstr "略奪"
 
-#: dat/board.lua:223
+#: dat/board.lua:322
 msgid "Loot All"
 msgstr "全部略奪"
 
-#: dat/board.lua:225
+#: dat/board.lua:324
 msgid "Boarding {shipname}"
 msgstr "{shipname}に乗りこむ"
 
 #. Moolah
 #. Will go negative with loot_mod
-#: dat/board.lua:262
+#: dat/board.lua:361
 msgid "You looted {creds} from {plt}."
 msgstr "{plt}から {creds} 奪った。"
 
 #. Unable to loot anything
-#: dat/board.lua:271
+#: dat/board.lua:370
 msgid "Fuel Tank Full"
 msgstr "燃料タンクがいっぱい"
 
-#: dat/board.lua:271
+#: dat/board.lua:370
 msgid "Your fuel tanks are already full!"
 msgstr "あなたの燃料タンクはすでにいっぱいだ！"
 
-#: dat/board.lua:277
+#: dat/board.lua:376
 msgid "You looted {amount} fuel from {plt}."
 msgstr "あなたは{plt}から燃料を {amount} 奪った。"
 
 #. Looted all the fuel
-#: dat/board.lua:288
+#: dat/board.lua:387
+msgid "Extract {outfit}?"
+msgstr ""
+
+#: dat/board.lua:388
+msgid ""
+"It will cost #r{credits}#0 in repairs to successfully extract the {outfit}. "
+"You have {playercreds}. Extract the {outfit}?"
+msgstr ""
+
+#: dat/board.lua:392 src/map_system.c:1043
+msgid "Insufficient Credits"
+msgstr "クレジットが不足"
+
+#: dat/board.lua:392
+msgid "You lack #r{diff}#0 to be able to extract the {outfit}."
+msgstr ""
+
+#. Soft warning
+#: dat/board.lua:397 dat/board.lua:408
 msgid "Board script failed to remove '{outfit}' from boarded pilot '{plt}'!"
 msgstr "Board script failed to remove '{outfit}' from boarded pilot '{plt}'!"
 
-#: dat/board.lua:293
+#: dat/board.lua:400 dat/board.lua:413
 msgid "You looted a {outfit} from {plt}."
 msgstr "{plt}から{outfit}を奪った。"
 
 #. Unable to loot anything
-#: dat/board.lua:302
+#: dat/board.lua:422
 msgid "No Space"
 msgstr "空きなし"
 
-#: dat/board.lua:302
+#: dat/board.lua:422
 msgid "You have no free cargo space!"
 msgstr "船倉が空いていない！"
 
 #. Might be a misaligned here with loot_mod, but we sort of ignore it :/
-#: dat/board.lua:308
+#: dat/board.lua:428
 msgid "You looted {amount} of {cargo} from {plt}."
 msgstr "{plt}から {amount}の{cargo}を奪った。"
 
@@ -26881,8 +26964,8 @@ msgid ""
 "You hired a {ship} ship named '{name}' for {deposit_text} and "
 "{royalty_percent:.1f}% of mission earnings."
 msgstr ""
-"あなたは ｢{name}｣ という名の{ship}を、{deposit_text} と任務の売上の {royalty_percent:.1f}% "
-"で雇った。"
+"あなたは ｢{name}｣ という名の{ship}を、{deposit_text} と任務の売上の "
+"{royalty_percent:.1f}% で雇った。"
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -29956,8 +30039,9 @@ msgid ""
 "on {pnt}. \"I thought {credits} per tonne was a good deal, but it turns out "
 "I should have waited,\" the merchant said."
 msgstr ""
-"時機悪く{pnt}で{cargo}を取引したことにより、ある貿易商が破産せざるをえなくなった。｢1トンあたり {credits} "
-"ならいい取引だって思ったんですが、待っているべきだったとわかりました｣ と、その貿易商はいった。"
+"時機悪く{pnt}で{cargo}を取引したことにより、ある貿易商が破産せざるをえなく"
+"なった。｢1トンあたり {credits} ならいい取引だって思ったんですが、待っているべ"
+"きだったとわかりました｣ と、その貿易商はいった。"
 
 #: dat/events/neutral/news.lua:426
 msgid "Shipping Company Goes Out of Business"
@@ -29971,9 +30055,11 @@ msgid ""
 "\" one analyst asserts. \"Patience is key when trading, and it's clear that "
 "the owner of this company didn't have enough of that.\""
 msgstr ""
-"小さな運送業がちょうどこの十時限に破綻した。すでに破綻しつつあったのだが、ついにこの会社が統制下におかれたのは、まずい時機に{pnt}で{cargo}を "
-"1トンあたり{credits}で取引したからだった。｢あれはまずい経営判断だった｣ "
-"と、あるアナリストは断言した。｢取引においては、忍耐が重要だ。そしてこの会社の所有者がそれをじゅうぶんにもっていなかったのはあきらかだ｣"
+"小さな運送業がちょうどこの十時限に破綻した。すでに破綻しつつあったのだが、つ"
+"いにこの会社が統制下におかれたのは、まずい時機に{pnt}で{cargo}を 1トンあたり"
+"{credits}で取引したからだった。｢あれはまずい経営判断だった｣ と、あるアナリス"
+"トは断言した。｢取引においては、忍耐が重要だ。そしてこの会社の所有者がそれを"
+"じゅうぶんにもっていなかったのはあきらかだ｣"
 
 #: dat/events/neutral/news.lua:430
 msgid "Interview with an Economist"
@@ -29988,9 +30074,11 @@ msgid ""
 "price reached was {credits} per tonne, which we were only off by about 15%. "
 "Over time, we hope to lower that margin of error to as little as 2%.\""
 msgstr ""
-"銀河でも一流の経済学の専門家が、取材におうじて現代の経済について解説した。｢われわれはほんとうに、経済がどう動いているのかかなりよく理解しています。たとえ"
-"ば、{pnt}の{cargo}の価格がどのくらいになるのかとても正確に予報できていました。じっさいになった価格は 1トンあたり {credits} です。"
-"われわれは約 15% しか外しませんでした。そのうちに、誤差は 2% くらいまで小さくなると期待しています｣"
+"銀河でも一流の経済学の専門家が、取材におうじて現代の経済について解説した。｢わ"
+"れわれはほんとうに、経済がどう動いているのかかなりよく理解しています。たとえ"
+"ば、{pnt}の{cargo}の価格がどのくらいになるのかとても正確に予報できていまし"
+"た。じっさいになった価格は 1トンあたり {credits} です。われわれは約 15% しか"
+"外しませんでした。そのうちに、誤差は 2% くらいまで小さくなると期待しています｣"
 
 #: dat/events/neutral/news.lua:434
 msgid "Economist Describes Sinusoidal Economic Theory"
@@ -30005,9 +30093,12 @@ msgid ""
 "these curves more accurately.\" Other economists disagree, however, "
 "attributing these economists' results to chance."
 msgstr ""
-"あまり知られていない経済学者が、物議をかもす経済理論を論じている。｢動向を注視していると、正弦波に似ているのです。たとえば、{pnt}の{cargo}"
-"の価格は今 1トンあたり {credits} です。そしていくらか規則正しくその価格に戻ってくるように見えます。われわれはこの曲線をもっと正確に予測するモ"
-"デルの開発に取り組んでいます｣。しかしほかの経済学者たちの意見は異なっていて、その経済学者たちの結果は偶然によるものだとしている。"
+"あまり知られていない経済学者が、物議をかもす経済理論を論じている。｢動向を注視"
+"していると、正弦波に似ているのです。たとえば、{pnt}の{cargo}の価格は今 1トン"
+"あたり {credits} です。そしていくらか規則正しくその価格に戻ってくるように見え"
+"ます。われわれはこの曲線をもっと正確に予測するモデルの開発に取り組んでいま"
+"す｣。しかしほかの経済学者たちの意見は異なっていて、その経済学者たちの結果は偶"
+"然によるものだとしている。"
 
 #: dat/events/neutral/news.lua:438
 msgid "Young Pilot Buys Their First Commodity"
@@ -30023,9 +30114,12 @@ msgid ""
 "variation, so much potential for profit! I'm excited to finally get started."
 "\""
 msgstr ""
-"若いパイロットが、自由契約のパイロットの仕事に食いこもうとして、{cargo}をいくつか買った。そのパイロットが最初の商品を買ったのは、生まれ育った{pn"
-"t}だ。パイロットは新しい仕事のことを感激して話す。｢ほら、これってほんとうに興奮するよ！　自分の故郷の惑星でもトンあたり {credits} "
-"で動かないわけじゃない。でもまわりじゅうを見まわせば、ずっと価格変動が大きいからね。だから利益を得る可能性もずっとあるんだよ！　やっと始められて興奮だね｣"
+"若いパイロットが、自由契約のパイロットの仕事に食いこもうとして、{cargo}をいく"
+"つか買った。そのパイロットが最初の商品を買ったのは、生まれ育った{pnt}だ。パイ"
+"ロットは新しい仕事のことを感激して話す。｢ほら、これってほんとうに興奮する"
+"よ！　自分の故郷の惑星でもトンあたり {credits} で動かないわけじゃない。でもま"
+"わりじゅうを見まわせば、ずっと価格変動が大きいからね。だから利益を得る可能性"
+"もずっとあるんだよ！　やっと始められて興奮だね｣"
 
 #: dat/events/neutral/news.lua:442
 msgid "Corporate Scandal Rips Through the Galaxy"
@@ -30038,8 +30132,10 @@ msgid ""
 "the price, seen to be {credits} per tonne, will go up, down, or remain the "
 "same this time."
 msgstr ""
-"経済学者たちが、{pnt}の{cargo}の価格はウォープトロンインダストリーズが関係する醜聞のせいだとしている。1トンあたり {credits} "
-"となった価格がこれから上がるのか下がるのか、あるいはこのままなのかということにかんして、ひきつづき議論がまきおこった。"
+"経済学者たちが、{pnt}の{cargo}の価格はウォープトロンインダストリーズが関係す"
+"る醜聞のせいだとしている。1トンあたり {credits} となった価格がこれから上がる"
+"のか下がるのか、あるいはこのままなのかということにかんして、ひきつづき議論が"
+"まきおこった。"
 
 #: dat/events/neutral/news.lua:446
 msgid "Commodity Trading Likened to Gambling"
@@ -30054,10 +30150,12 @@ msgid ""
 "knows? Frankly, it is my firm opinion that this 'commodity trading' is self-"
 "destructive and needs to stop.\""
 msgstr ""
-"ある活動家が商品取引を賭博になぞらえるという問題発言をおこなった。｢あれは合法的な賭博です。単純明快ですよ！　たとえば、今{pnt}の{cargo}"
-"の価格は 1トンあたり {credits} "
-"です。しかしみんな知っているとおり、その価格は変動します。明日は低くなっているかもしれないし、高くなっているかもしれない。だれにわかりますか？　"
-"率直にいって、わたしの断固とした意見はこの『商品取引』が自滅的でやめるべきものだということです｣"
+"ある活動家が商品取引を賭博になぞらえるという問題発言をおこなった。｢あれは合法"
+"的な賭博です。単純明快ですよ！　たとえば、今{pnt}の{cargo}の価格は 1トンあた"
+"り {credits} です。しかしみんな知っているとおり、その価格は変動します。明日は"
+"低くなっているかもしれないし、高くなっているかもしれない。だれにわかります"
+"か？　率直にいって、わたしの断固とした意見はこの『商品取引』が自滅的でやめる"
+"べきものだということです｣"
 
 #: dat/events/neutral/news.lua:450
 msgid "Leadership Decision Disrupts Prices"
@@ -30070,8 +30168,9 @@ msgid ""
 "Protests have erupted demanding a repeal of the law so that the economy can "
 "stabilize."
 msgstr ""
-"今日{pnt}で{cargo}の価格が危険にさらされることとなった。地元政府が物議をかもす法律を通したのだ。これでこの商品にはトンあたり "
-"{credits} がもたらされることになる。価格の安定を求めて、抗議者たちからこの法律の廃止の訴えが噴出した。"
+"今日{pnt}で{cargo}の価格が危険にさらされることとなった。地元政府が物議をかも"
+"す法律を通したのだ。これでこの商品にはトンあたり {credits} がもたらされること"
+"になる。価格の安定を求めて、抗議者たちからこの法律の廃止の訴えが噴出した。"
 
 #: dat/events/neutral/news.lua:454
 msgid "Five Cycle Old Child Starts Commodity Trading"
@@ -30086,9 +30185,11 @@ msgid ""
 "you can make more money! My mom is a trader too and I want to be just like "
 "her.\""
 msgstr ""
-"生まれて 5 周期にもならない子どもが、1トンの{cargo}を買って、早くも商品取引を始めた。{pnt}の生まれであるこの子は、経済に強い興味をもち、い"
-"つの日か宇宙で貿易商をしたいと説明した。｢{credits} で買ったんだけど、上がったり下がったりするから、いいときを選べば、たくさんお金が儲かるよ！　"
-"お母さんも貿易商だから、わたしもお母さんみたいになりたいだけなの｣"
+"生まれて 5 周期にもならない子どもが、1トンの{cargo}を買って、早くも商品取引を"
+"始めた。{pnt}の生まれであるこの子は、経済に強い興味をもち、いつの日か宇宙で貿"
+"易商をしたいと説明した。｢{credits} で買ったんだけど、上がったり下がったりする"
+"から、いいときを選べば、たくさんお金が儲かるよ！　お母さんも貿易商だから、わ"
+"たしもお母さんみたいになりたいだけなの｣"
 
 #. create news
 #. Needs to be inhabited and have a bar for there to be news
@@ -30615,8 +30716,10 @@ msgid ""
 "current iterate, the next one will lead to a greater value of your objective "
 "function. There are still too many people who don't know this!\""
 msgstr ""
-"｢たくさんの最適化アルゴリズムが、目的とする関数が凸であることを要求するのはなぜだか知ってる？　極小値の問題だけでなく、関数が現在のくり返し周辺で局所的に"
-"凹んでいると、次回は目的関数の値がさらに大きくなることにつながるからだよ。これを知らない人がまだあまりに多すぎるね！｣"
+"｢たくさんの最適化アルゴリズムが、目的とする関数が凸であることを要求するのはな"
+"ぜだか知ってる？　極小値の問題だけでなく、関数が現在のくり返し周辺で局所的に"
+"凹んでいると、次回は目的関数の値がさらに大きくなることにつながるからだよ。こ"
+"れを知らない人がまだあまりに多すぎるね！｣"
 
 #: dat/events/neutral/npc.lua:139
 msgid ""
@@ -31661,8 +31764,9 @@ msgid ""
 "of the thieves were caught, but the one who carried the holopainting "
 "offworld is still at large. No leads. Damn criminals...\""
 msgstr ""
-"｢泥棒たちがバリアの美術館に侵入して、ホロ絵画を盗んだんだよ！　"
-"ほとんどの泥棒は捕まったけど、ホロ絵画を外世界に運んだひとりはまだ捕まってない。手がかりなし。くそったれ犯罪者が……｣"
+"｢泥棒たちがバリアの美術館に侵入して、ホロ絵画を盗んだんだよ！　ほとんどの泥棒"
+"は捕まったけど、ホロ絵画を外世界に運んだひとりはまだ捕まってない。手がかりな"
+"し。くそったれ犯罪者が……｣"
 
 #: dat/events/neutral/npc.lua:294
 msgid ""
@@ -32058,7 +32162,9 @@ msgstr "｢じゃあ戻ってきたんだ。船のクイズをやるのも考え
 #: dat/events/neutral/shiplover.lua:391
 msgid ""
 "You once again approach the ship enthusiast. They seem to move about a lot."
-msgstr "あなたはまた、あの宇宙船マニアに近づいた。どうもかなりあちこちと移動しているらしい。"
+msgstr ""
+"あなたはまた、あの宇宙船マニアに近づいた。どうもかなりあちこちと移動している"
+"らしい。"
 
 #: dat/events/neutral/shiplover.lua:392
 msgid ""
@@ -34319,8 +34425,8 @@ msgstr "No spawn function found"
 #: dat/missions/shadow/darkshadow.lua:56 dat/missions/shadow/shadowvigil.lua:51
 #: src/gui.c:1523 src/map.c:501 src/map.c:507 src/map.c:513 src/map.c:519
 #: src/map.c:525 src/map.c:531 src/map.c:1679 src/map_overlay.c:221
-#: src/outfit.c:297 src/outfit.c:316 src/outfit.c:918 src/player_autonav.c:89
-#: src/player_autonav.c:210 src/ship.c:205
+#: src/outfit.c:285 src/outfit.c:304 src/outfit.c:902 src/player_autonav.c:90
+#: src/player_autonav.c:211 src/ship.c:205
 msgid "Unknown"
 msgstr "不明"
 
@@ -35512,8 +35618,9 @@ msgid ""
 "These must be the 'agents' hired by this Baron Sauterfeldt. They look "
 "shifty. Why must people involved in underhanded business always look shifty?"
 msgstr ""
-"あのザウターフェルト男爵によって雇われた ｢代理人｣ "
-"にちがいない。うさんくさそうに見える。こそこそした仕事に関係する人たちは、どうしていつもうさんくさそうに見せなければならないのか？"
+"あのザウターフェルト男爵によって雇われた ｢代理人｣ にちがいない。うさんくさそ"
+"うに見える。こそこそした仕事に関係する人たちは、どうしていつもうさんくさそう"
+"に見せなければならないのか？"
 
 #: dat/missions/baron/baron_baron.lua:42 dat/missions/baron/baron_baron.lua:43
 #: dat/missions/baron/baron_baron.lua:44 dat/missions/baron/baron_baron.lua:45
@@ -35525,8 +35632,9 @@ msgid ""
 "Your viewscreen flashes to life. You're greeted by a nondescript pilot who "
 "doesn't seem to be affiliated with anyone you know."
 msgstr ""
-"ビュースクリーンが光って元気になり、これといった特徴のないパイロットからあいさつをされた。そのパイロットはあなたが知っているだれとも親しくはしていないよう"
-"だ。"
+"ビュースクリーンが光って元気になり、これといった特徴のないパイロットからあい"
+"さつをされた。そのパイロットはあなたが知っているだれとも親しくはしていないよ"
+"うだ。"
 
 #: dat/missions/baron/baron_baron.lua:43
 msgid ""
@@ -35537,9 +35645,12 @@ msgid ""
 "looking for hired help, and you seem like the sort he needs, judging by your "
 "ship.\""
 msgstr ""
-"｢よお、こんちは！　おれはザウターフェルト男爵という名前でとおる男の代理だ。あんたも旅のあいだに聞いたことがあるかもしれないな？　ない？　まあ、なんでも知"
-"っているってことはないよな。おれの雇用主はまあまあ有力な人なんだよ、ほら。それで、えーと……。いや、いい。細かいことをいって退屈させるつもりはない。要点を"
-"いうと、ザウターフェルト卿は協力者を雇用したがっていて、あんたは必要とされる種類の人らしいんだ。その船から判断すると｣"
+"｢よお、こんちは！　おれはザウターフェルト男爵という名前でとおる男の代理だ。あ"
+"んたも旅のあいだに聞いたことがあるかもしれないな？　ない？　まあ、なんでも"
+"知っているってことはないよな。おれの雇用主はまあまあ有力な人なんだよ、ほら。"
+"それで、えーと……。いや、いい。細かいことをいって退屈させるつもりはない。要点"
+"をいうと、ザウターフェルト卿は協力者を雇用したがっていて、あんたは必要とされ"
+"る種類の人らしいんだ。その船から判断すると｣"
 
 #: dat/missions/baron/baron_baron.lua:44
 msgid ""
@@ -35549,9 +35660,11 @@ msgid ""
 "if you understand what I mean. So what do you think? Sounds like a suitable "
 "job for you? The pay is good, I can assure you that!\""
 msgstr ""
-"あなたはそのザウターフェルトさんが必要としているのは具体的にはなんなのかたずねた。｢ああ、あまりひどく無理やりにってものではないよ。保証する。現在閣下は密"
-"使を必要としてるってだけだ。あー、まあ、自分までさかのぼれない密使だけど。意味わかるよな。で、どうする？　あんたには向いた仕事じゃないか？　"
-"支払いはいいよ。それは保証できる！｣"
+"あなたはそのザウターフェルトさんが必要としているのは具体的にはなんなのかたず"
+"ねた。｢ああ、あまりひどく無理やりにってものではないよ。保証する。現在閣下は密"
+"使を必要としてるってだけだ。あー、まあ、自分までさかのぼれない密使だけど。意"
+"味わかるよな。で、どうする？　あんたには向いた仕事じゃないか？　支払いはいい"
+"よ。それは保証できる！｣"
 
 #: dat/missions/baron/baron_baron.lua:45
 msgid ""
@@ -35560,8 +35673,10 @@ msgid ""
 "it, but then again this job sounds like it could get you in trouble with the "
 "authorities. What will you do?"
 msgstr ""
-"この突然の申し出に返答するまえに、あなたはすこしためらった。あなたが仕事をさがすのではなく、だれかがあなたに仕事をもってくるのは毎日あることではない。しか"
-"し別の観点から見ると、この仕事は官憲と面倒なことになりかねないようにも聞こえる。どうするか？"
+"この突然の申し出に返答するまえに、あなたはすこしためらった。あなたが仕事をさ"
+"がすのではなく、だれかがあなたに仕事をもってくるのは毎日あることではない。し"
+"かし別の観点から見ると、この仕事は官憲と面倒なことになりかねないようにも聞こ"
+"える。どうするか？"
 
 #. skip back to message if already accepted job
 #: dat/missions/baron/baron_baron.lua:45 dat/missions/minerva/maikki2.lua:789
@@ -35588,7 +35703,8 @@ msgid ""
 "\"Oh. Oh well, too bad. I'll just try to find someone who will take the job, "
 "then. Sorry for taking up your time. See you around!\""
 msgstr ""
-"｢ああ。しかたがないか、残念だが。じゃあ、だれか仕事をうけてくれる人をさがしてみるだけだな。時間をとってもらってすまなかった。またどこかで会おう！｣"
+"｢ああ。しかたがないか、残念だが。じゃあ、だれか仕事をうけてくれる人をさがして"
+"みるだけだな。時間をとってもらってすまなかった。またどこかで会おう！｣"
 
 #: dat/missions/baron/baron_baron.lua:52
 msgid "Well, then..."
@@ -35600,7 +35716,8 @@ msgid ""
 "more open-minded. Get out of my sight and never show your face to me again! "
 "You are clearly useless to my employer.\""
 msgstr ""
-"あのパイロットは顔をしかめた。｢見そこなったとわかったよ。もっと柔軟な心をもってるのはたしかだと思ってたんだがな。視界から消えて、二度とおれに顔を見せるな"
+"あのパイロットは顔をしかめた。｢見そこなったとわかったよ。もっと柔軟な心をもっ"
+"てるのはたしかだと思ってたんだがな。視界から消えて、二度とおれに顔を見せるな"
 "よ！　どう考えてもあんたはおれの雇用主の役には立たないね｣"
 
 #: dat/missions/baron/baron_baron.lua:54
@@ -35609,8 +35726,9 @@ msgid ""
 "angrily refused to accept the job. It seems whoever the pilot worked for "
 "won't be contacting you again."
 msgstr ""
-"あなたはこれといった特徴のないパイロットから、隠し事のありそうな仕事を提供された。しかしあなたは怒って仕事をうけるのを拒絶した。そのパイロットがだれのため"
-"に働いているにせよ、二度とあなたに連絡してくることはなさそうだ。"
+"あなたはこれといった特徴のないパイロットから、隠し事のありそうな仕事を提供さ"
+"れた。しかしあなたは怒って仕事をうけるのを拒絶した。そのパイロットがだれのた"
+"めに働いているにせよ、二度とあなたに連絡してくることはなさそうだ。"
 
 #: dat/missions/baron/baron_baron.lua:60 dat/missions/baron/baron_baron.lua:61
 #: dat/missions/baron/baron_baron.lua:62 dat/missions/baron/baron_baron.lua:63
@@ -35627,10 +35745,13 @@ msgid ""
 "of art, but the museum has refused to sell it to him. So, we've sent agents "
 "to... appropriate... the holopainting.\""
 msgstr ""
-"｢ああ、それはよかった！　よし、ザウターフェルト男爵がしてほしがってるのはこういうことだ。あんたはドベーレッドの世界である{pnt}に飛ぶ。そこには近頃の"
-"ドベーレッドの歴史でも屈指の軍閥領袖にささげられた美術館がある。名前は忘れた。ドローバンかなにかだったかな？　デューバン？　まあ、それはとにかく、美術館に"
-"はその軍閥領袖と幕僚のホロ絵画があるんだ。閣下はほんとうにその芸術作品を欲しがってるんだが、美術館は売るのを断った。だからおれたちは代理人を送ってそのホロ"
-"絵画を……専有しようとしているんだ｣"
+"｢ああ、それはよかった！　よし、ザウターフェルト男爵がしてほしがってるのはこう"
+"いうことだ。あんたはドベーレッドの世界である{pnt}に飛ぶ。そこには近頃のドベー"
+"レッドの歴史でも屈指の軍閥領袖にささげられた美術館がある。名前は忘れた。ド"
+"ローバンかなにかだったかな？　デューバン？　まあ、それはとにかく、美術館には"
+"その軍閥領袖と幕僚のホロ絵画があるんだ。閣下はほんとうにその芸術作品を欲し"
+"がってるんだが、美術館は売るのを断った。だからおれたちは代理人を送ってそのホ"
+"ロ絵画を……専有しようとしているんだ｣"
 
 #: dat/missions/baron/baron_baron.lua:61
 msgid ""
@@ -35641,9 +35762,12 @@ msgid ""
 "course. No need for the authorities to know until you're long gone. Don't "
 "worry, our people are pros. It'll go off without a hitch, trust me.\""
 msgstr ""
-"あなたは眉を上げたが、向こうにいるパイロットはそのしぐさに気づかなかったようだ。｢で、すぐにあんたは{pnt}に行って、おれたちの代理人と会うことになる。"
-"宇宙港のバーで見つかるはずだ。代理人たちは品物を取ってきてあんたの船に載せる。それからあんたはそれを運んでドベーレッド宙域を出るんだ。すべてはもちろん静寂"
-"のなかで進む。あんたが遠くへ行くまで当局が知ることはない。心配するな。おれたちのほうのやつらはくろうとなんだ。とどこおりなく運ぶよ。信じろ｣"
+"あなたは眉を上げたが、向こうにいるパイロットはそのしぐさに気づかなかったよう"
+"だ。｢で、すぐにあんたは{pnt}に行って、おれたちの代理人と会うことになる。宇宙"
+"港のバーで見つかるはずだ。代理人たちは品物を取ってきてあんたの船に載せる。そ"
+"れからあんたはそれを運んでドベーレッド宙域を出るんだ。すべてはもちろん静寂の"
+"なかで進む。あんたが遠くへ行くまで当局が知ることはない。心配するな。おれたち"
+"のほうのやつらはくろうとなんだ。とどこおりなく運ぶよ。信じろ｣"
 
 #: dat/missions/baron/baron_baron.lua:62
 msgid ""
@@ -35654,10 +35778,13 @@ msgid ""
 "And even if the authorities somehow get on your case, you'll only have to "
 "deal with the planetary police, not the entirety of House Dvaered."
 msgstr ""
-"それにあなたはにやっとした。経験からあなたは物事が ｢とどこおりなく運ぶ｣ ことはめったにないと知っていた。そのうえ、ほかでもないこの計画は、そこまでよく"
-"考えつくされているようには見えない。それでもあなたが大きな危険にはまりこみそうにはなかった。もし事がうまく運ばなかったら、あなたが事情さえ知ることもないう"
-"ちに、その連中はうまく姿を消すだろう。それにたとえ当局がどうにかあなたに干渉してきたとしても、惑星の警察に対処しなければならないだけだ。ドベーレッド荘まる"
-"ごとではない。"
+"それにあなたはにやっとした。経験からあなたは物事が ｢とどこおりなく運ぶ｣ こと"
+"はめったにないと知っていた。そのうえ、ほかでもないこの計画は、そこまでよく考"
+"えつくされているようには見えない。それでもあなたが大きな危険にはまりこみそう"
+"にはなかった。もし事がうまく運ばなかったら、あなたが事情さえ知ることもないう"
+"ちに、その連中はうまく姿を消すだろう。それにたとえ当局がどうにかあなたに干渉"
+"してきたとしても、惑星の警察に対処しなければならないだけだ。ドベーレッド荘ま"
+"るごとではない。"
 
 #: dat/missions/baron/baron_baron.lua:63
 msgid ""
@@ -35669,9 +35796,12 @@ msgid ""
 "delivery. Any questions?\" You indicate that you know what to do, then cut "
 "the connection. Next stop: planet {pnt}."
 msgstr ""
-"あなたは男爵の使者に、そのホロ絵画はどこに運ぶ必要があるのかたずねた。｢閣下はあんたの配達を{sys}星系で受けとる。男爵の船であるピナクルに乗船してくれ"
-"｣ と、男はこたえた。｢ホロ絵画を載せて到着したら、ピナクルに呼びかけて接舷の許可を求めろ。あんたが何者かは知っているから、許可されるはずだ。そしてあんた"
-"は配達の報酬をもらう。なにか質問は？｣。あなたがなにをするかはわかったというと、通信は切れた。次に向かうのは、惑星{pnt}だ。"
+"あなたは男爵の使者に、そのホロ絵画はどこに運ぶ必要があるのかたずねた。｢閣下は"
+"あんたの配達を{sys}星系で受けとる。男爵の船であるピナクルに乗船してくれ｣ と、"
+"男はこたえた。｢ホロ絵画を載せて到着したら、ピナクルに呼びかけて接舷の許可を求"
+"めろ。あんたが何者かは知っているから、許可されるはずだ。そしてあんたは配達の"
+"報酬をもらう。なにか質問は？｣。あなたがなにをするかはわかったというと、通信は"
+"切れた。次に向かうのは、惑星{pnt}だ。"
 
 #. Rebuild tables, as we've added outfits.
 #. Taken from http://lua-users.org/wiki/InheritanceTutorial
@@ -35699,7 +35829,9 @@ msgstr "かなりのかね"
 msgid ""
 "You've been hired as a courier for one Baron Sauterfeldt. Your job is to "
 "transport a holopainting from a Dvaered world to the Baron's ship."
-msgstr "ザウターフェルト男爵の密使として雇われた。あなたの仕事は、ホロ絵画をドベーレッドの世界から男爵の船に輸送することだ。"
+msgstr ""
+"ザウターフェルト男爵の密使として雇われた。あなたの仕事は、ホロ絵画をドベー"
+"レッドの世界から男爵の船に輸送することだ。"
 
 #: dat/missions/baron/baron_baron.lua:72
 #: dat/missions/neutral/animaltransport.lua:64
@@ -35737,8 +35869,9 @@ msgid ""
 "checks on a console off the screen, then tells you you've been cleared for "
 "docking and that the Pinnacle will be brought to a halt."
 msgstr ""
-"あなたの通信に、ピナクルの艦橋にいる通信係がこたえた。あなたは男爵への配達があると伝える。通信係は視界の外にある制御卓で二、三確認をすると、接舷を許可する"
-"ことと、ピナクルを停止させることをあなたに知らせた。"
+"あなたの通信に、ピナクルの艦橋にいる通信係がこたえた。あなたは男爵への配達が"
+"あると伝える。通信係は視界の外にある制御卓で二、三確認をすると、接舷を許可す"
+"ることと、ピナクルを停止させることをあなたに知らせた。"
 
 #: dat/missions/baron/baron_baron.lua:128
 #: dat/missions/baron/baron_baron.lua:129
@@ -35753,8 +35886,10 @@ msgid ""
 "\"You'll be wanting your reward, eh? Come along\", one of them yells at you. "
 "They both chuckle and head off down the corridor."
 msgstr ""
-"あなたが船のエアロックのところへ来たときには、ドベーレッドのホロ絵画が入った箱は、もう二人の乗員によってピナクルへと運び去られていくところだった。｢報酬が"
-"ほしいんだろう、えっ？　ついて来い｣ と、ひとりがあなたにむかってどなる。二人は満足げに含み笑いをして、廊下のむこうへ向かっていった。"
+"あなたが船のエアロックのところへ来たときには、ドベーレッドのホロ絵画が入った"
+"箱は、もう二人の乗員によってピナクルへと運び去られていくところだった。｢報酬が"
+"ほしいんだろう、えっ？　ついて来い｣ と、ひとりがあなたにむかってどなる。二人"
+"は満足げに含み笑いをして、廊下のむこうへ向かっていった。"
 
 #: dat/missions/baron/baron_baron.lua:129
 msgid ""
@@ -35766,10 +35901,13 @@ msgid ""
 "monocle, and several rings on each finger. In a word, the Baron has a taste "
 "for the extravagant."
 msgstr ""
-"あなたが乗員たちについていくと、乗員たちは台車を押して船の中央通路を抜けていった。すぐにあなたは扉のところへ到着したが、そこは大きく豪華な客室につながって"
-"いる。あなたはひと目でわかった。これがザウターフェルト男爵の私室なのだ。そして男爵本人がそこにいた。男爵は大きな男で、仕立ての服を着ている。その服のおかげ"
-"で男爵は、もったいぶっているというより威厳があるように見せることに成功していた。そのうえに、片眼鏡をかけて指にはそれぞれいくつかの指輪をはめている。ひと言"
-"でいうと、男爵は浪費家だった。"
+"あなたが乗員たちについていくと、乗員たちは台車を押して船の中央通路を抜けて"
+"いった。すぐにあなたは扉のところへ到着したが、そこは大きく豪華な客室につな"
+"がっている。あなたはひと目でわかった。これがザウターフェルト男爵の私室なの"
+"だ。そして男爵本人がそこにいた。男爵は大きな男で、仕立ての服を着ている。その"
+"服のおかげで男爵は、もったいぶっているというより威厳があるように見せることに"
+"成功していた。そのうえに、片眼鏡をかけて指にはそれぞれいくつかの指輪をはめて"
+"いる。ひと言でいうと、男爵は浪費家だった。"
 
 #: dat/missions/baron/baron_baron.lua:130
 msgid ""
@@ -35778,8 +35916,10 @@ msgid ""
 "be aware of your presence at all. He continues to fuss over the holopainting "
 "even as his crewman strip away the chest and lift the frame up to the wall."
 msgstr ""
-"｢ああ、わたしのホロ絵画だね｣ と、箱が部屋に運びこまれるときに男爵は優しくささやいた。｢ついにだ。ずっと待ちつづけていた｣。男爵はあなたがいることにはま"
-"ったく気づいていないようだった。乗員が箱を取って額縁を壁に持ちあげているあいだも、男爵はホロ絵画のことでから騒ぎをつづけている。"
+"｢ああ、わたしのホロ絵画だね｣ と、箱が部屋に運びこまれるときに男爵は優しくささ"
+"やいた。｢ついにだ。ずっと待ちつづけていた｣。男爵はあなたがいることにはまった"
+"く気づいていないようだった。乗員が箱を取って額縁を壁に持ちあげているあいだ"
+"も、男爵はホロ絵画のことでから騒ぎをつづけている。"
 
 #: dat/missions/baron/baron_baron.lua:131
 #: dat/missions/baron/baron_baron.lua:132
@@ -35795,8 +35935,10 @@ msgid ""
 "it seems to be a precariously balanced ancient blade."
 msgstr ""
 "あなたは男爵の部屋を見まわした。あらゆる種類の異国ふうの刀やその他の ｢美術｣ "
-"作品が部屋を飾っている。そのほかにもつづれ織りやその他さまざまなホロ絵画もあった。あなたはビロードのじゅうたんの上のお椀があって、それに ｢フラフルズ｣ "
-"が入っているのに気がついた。その上方に吊るされているのは、危なっかしく釣りあいがとられた古代の刀のようだ。"
+"作品が部屋を飾っている。そのほかにもつづれ織りやその他さまざまなホロ絵画も"
+"あった。あなたはビロードのじゅうたんの上のお椀があって、それに ｢フラフルズ｣ "
+"が入っているのに気がついた。その上方に吊るされているのは、危なっかしく釣りあ"
+"いがとられた古代の刀のようだ。"
 
 #: dat/missions/baron/baron_baron.lua:132
 msgid ""
@@ -35805,8 +35947,10 @@ msgid ""
 "strategy with his staff. Unfortunately you don't seem to be able to "
 "appreciate Dvaered art, and you lose interest almost right away."
 msgstr ""
-"乗員たちがやっとホロ絵画の梱包をといた。あなたはドベーレッド軍閥領袖の三次元描写をいちべつする。その軍閥領袖は幕僚と戦略を議論しているように見えた。不幸な"
-"ことに、あなたにはドベーレッドの芸術の真価が認識できないようだったので、あなたはほぼ一瞬で興味を失った。"
+"乗員たちがやっとホロ絵画の梱包をといた。あなたはドベーレッド軍閥領袖の三次元"
+"描写をいちべつする。その軍閥領袖は幕僚と戦略を議論しているように見えた。不幸"
+"なことに、あなたにはドベーレッドの芸術の真価が認識できないようだったので、あ"
+"なたはほぼ一瞬で興味を失った。"
 
 #: dat/missions/baron/baron_baron.lua:133
 msgid ""
@@ -35817,16 +35961,21 @@ msgid ""
 "couple of credit chips, and then you are once again air to him. You are left "
 "with little choice but to return to your ship, undock, and be on your way."
 msgstr ""
-"あなたはせき払いをして男爵の注意をひこうとした。男爵は顔を上げたが、あきらかにじゃまされて腹を立てている。そしてあなたに初めて気がついた。｢ああ、そうだっ"
-"たな｣ と、男爵が不平がましくいう。｢尽力には支払いがあるべきだろうね。ほら、クレジットをやる。もうひとりにしてくれ。賞賛すべき美術品があるんだ｣。男爵は"
-"あなたにクレジットチップを二つ放る。そして男爵にとってあなたはまた空気になった。船に戻って離舷して、自分の道を行く以外にあなたに残された選択肢はほとんどな"
+"あなたはせき払いをして男爵の注意をひこうとした。男爵は顔を上げたが、あきらか"
+"にじゃまされて腹を立てている。そしてあなたに初めて気がついた。｢ああ、そうだっ"
+"たな｣ と、男爵が不平がましくいう。｢尽力には支払いがあるべきだろうね。ほら、ク"
+"レジットをやる。もうひとりにしてくれ。賞賛すべき美術品があるんだ｣。男爵はあな"
+"たにクレジットチップを二つ放る。そして男爵にとってあなたはまた空気になった。"
+"船に戻って離舷して、自分の道を行く以外にあなたに残された選択肢はほとんどな"
 "かった。"
 
 #: dat/missions/baron/baron_baron.lua:141
 msgid ""
 "You helped some selfish baron steal a Dvaered holopainting and were paid a "
 "measly sum of credits."
-msgstr "ある利己的な男爵がドベーレッドのホロ絵画を盗むのにあなたは手を貸し、わずかなクレジットの支払いをうけた。"
+msgstr ""
+"ある利己的な男爵がドベーレッドのホロ絵画を盗むのにあなたは手を貸し、わずかな"
+"クレジットの支払いをうけた。"
 
 #: dat/missions/baron/baron_baron.lua:146
 #: dat/missions/baron/baron_baron.lua:147
@@ -35846,10 +35995,14 @@ msgid ""
 "several hectoseconds later you are back at your ship, preparing it for "
 "takeoff while you wait for the agents to bring you your cargo."
 msgstr ""
-"あなたがテーブルに近づくと、うさんくさそうな 3 人の客があなたを不安そうにじっと見つめた。あきらかにこの 3 人は、どういう者が接触してくるのか知らない"
-"のだ。あなたは慎重にいくことに決めた。それでザウターフェルトという人のことを聞いたことがあるかどうかたずねてみる。これを聞いて、その 3 人は目に見えて緊"
-"張をといた。そしてあなたがいったその男のことはたしかに聞いたことがあって、その男のものを所持しているのだという。その時点から事はなめらかに進み、数百秒後に"
-"あなたは船に戻っていた。発進の準備をしつつ、あなたは代理人たちが積み荷を持ってくるのを待った。"
+"あなたがテーブルに近づくと、うさんくさそうな 3 人の客があなたを不安そうにじっ"
+"と見つめた。あきらかにこの 3 人は、どういう者が接触してくるのか知らないのだ。"
+"あなたは慎重にいくことに決めた。それでザウターフェルトという人のことを聞いた"
+"ことがあるかどうかたずねてみる。これを聞いて、その 3 人は目に見えて緊張をとい"
+"た。そしてあなたがいったその男のことはたしかに聞いたことがあって、その男のも"
+"のを所持しているのだという。その時点から事はなめらかに進み、数百秒後にあなた"
+"は船に戻っていた。発進の準備をしつつ、あなたは代理人たちが積み荷を持ってくる"
+"のを待った。"
 
 #: dat/missions/baron/baron_baron.lua:147
 msgid ""
@@ -35860,9 +36013,11 @@ msgid ""
 "viewport, you can't help but wonder how they managed to get something that "
 "big out of a Dvaered museum unnoticed."
 msgstr ""
-"あなたが飛行まえの安全確認を半分ほど終わらせたときに、あなたが着岸している格納庫にあの 3 人が現れた。台車を運んでいて、"
-"それには人間と同じくらいの高さで長さは 2 倍ある長方形の箱が載っている。例のホロ絵画がかなりな大きさなのはあきらかだ。船橋ののぞき窓から観察しながら、あ"
-"なたは驚かざるをえなかった。あんな大きなものをドベーレッドの美術館からどうやって気づかれずに持ちだせたのだろう？"
+"あなたが飛行まえの安全確認を半分ほど終わらせたときに、あなたが着岸している格"
+"納庫にあの 3 人が現れた。台車を運んでいて、それには人間と同じくらいの高さで長"
+"さは 2 倍ある長方形の箱が載っている。例のホロ絵画がかなりな大きさなのはあきら"
+"かだ。船橋ののぞき窓から観察しながら、あなたは驚かざるをえなかった。あんな大"
+"きなものをドベーレッドの美術館からどうやって気づかれずに持ちだせたのだろう？"
 
 #: dat/missions/baron/baron_baron.lua:148
 msgid ""
@@ -35874,10 +36029,13 @@ msgid ""
 "you have time to note that the Dvaered seem more interested in punishing the "
 "criminals than retrieving their possession intact."
 msgstr ""
-"けっきょくわかったことからすると、できていなかった。あの 3 "
-"人があなたの船につづく接舷橋までどうにか到着したばかりのときに、数人の武装したドベーレッドの治安部隊員が格納庫になだれこんできたのだ。隊員は 3 "
-"人の代理人を見わけて、即座に発砲しはじめた。 3 人のうちのひとりが倒れる。残りの二人があわててあなたの船につながる橋のむこうへと枠箱を押す。状況は根底か"
-"ら変わってしまったが、あなたにはドベーレッドは所有物を無傷で回収するより犯罪者を罰することに興味をもっているらしいと気がつくだけの時間があった。"
+"けっきょくわかったことからすると、できていなかった。あの 3 人があなたの船につ"
+"づく接舷橋までどうにか到着したばかりのときに、数人の武装したドベーレッドの治"
+"安部隊員が格納庫になだれこんできたのだ。隊員は 3 人の代理人を見わけて、即座に"
+"発砲しはじめた。 3 人のうちのひとりが倒れる。残りの二人があわててあなたの船に"
+"つながる橋のむこうへと枠箱を押す。状況は根底から変わってしまったが、あなたに"
+"はドベーレッドは所有物を無傷で回収するより犯罪者を罰することに興味をもってい"
+"るらしいと気がつくだけの時間があった。"
 
 #: dat/missions/baron/baron_baron.lua:149
 msgid ""
@@ -35887,9 +36045,11 @@ msgid ""
 "the Dvaered near your ship, you seal the airlock, fire up your engines and "
 "punch it out of the docking hangar."
 msgstr ""
-"二人めの代理人がドベーレッドの弾丸をくらい、接舷橋の外にむかって傾くと、下の奈落に吸いこまれた。3 人めはどうにか箱を積んだ台車をあなたの船のエアロックに"
-"入れることができた。が、これも胸に弾をくらった。ドベーレッドがあなたの船の近くに来ると同時に、あなたはエアロックを閉じ、エンジンを始動すると、格納庫に穴を"
-"あけて外に出た。"
+"二人めの代理人がドベーレッドの弾丸をくらい、接舷橋の外にむかって傾くと、下の"
+"奈落に吸いこまれた。3 人めはどうにか箱を積んだ台車をあなたの船のエアロックに"
+"入れることができた。が、これも胸に弾をくらった。ドベーレッドがあなたの船の近"
+"くに来ると同時に、あなたはエアロックを閉じ、エンジンを始動すると、格納庫に穴"
+"をあけて外に出た。"
 
 #: dat/missions/baron/baron_baron.lua:156
 msgid "The Baron's holopainting"
@@ -35905,7 +36065,9 @@ msgstr "ドベーレッド警察のベンデッタ"
 
 #: dat/missions/baron/baron_baron.lua:179
 msgid "All troops, engage {ship_type} {ship_name}! It has broken {pnt} law!"
-msgstr "全隊員に告ぐ。{ship_name}という名の{ship_type}を攻撃せよ！　そいつは{pnt}の法を破った！"
+msgstr ""
+"全隊員に告ぐ。{ship_name}という名の{ship_type}を攻撃せよ！　そいつは{pnt}の法"
+"を破った！"
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -43670,8 +43832,9 @@ msgid ""
 "{time} for your ship to reach {pnt}, missing the deadline. Accept the "
 "mission anyway?"
 msgstr ""
-"この積み荷は{time_limit}以内に到着しなければなりません。しかしあなたの船で{pnt}へ到着するには、最低でも{time}かかるので、納期を守れ"
-"ません。それでもこの任務をうけますか？"
+"この積み荷は{time_limit}以内に到着しなければなりません。しかしあなたの船で"
+"{pnt}へ到着するには、最低でも{time}かかるので、納期を守れません。それでもこの"
+"任務をうけますか？"
 
 #. Mission is accepted
 #. Create the mission
@@ -43700,8 +43863,8 @@ msgid ""
 "You don't have enough cargo space to accept this mission. It requires "
 "{tonnes_free} of free space ({tonnes_short}more than you have)."
 msgstr ""
-"この任務を引き受けられるだけの船倉の空きがありません。空き容量が {tonnes_free}必要です (船倉の空きより "
-"{tonnes_short}多い)。"
+"この任務を引き受けられるだけの船倉の空きがありません。空き容量が "
+"{tonnes_free}必要です (船倉の空きより {tonnes_short}多い)。"
 
 #. able to accept the mission
 #: dat/missions/empire/es_cargo.lua:110
@@ -53948,8 +54111,9 @@ msgid ""
 "workers. They are not happy that they have to work overtime because you were "
 "late. You are paid only {credits} of the {reward} you were promised."
 msgstr ""
-"不機嫌な労働者の一団が、あなたの船から{cargo}のコンテナを運びだした。あなたが遅れたせいで残業しなければならなくなったので、労働者たちはうれしく思っ"
-"ていなかった。あなたには約束の {reward} のうちの {credits} だけが支払われた。"
+"不機嫌な労働者の一団が、あなたの船から{cargo}のコンテナを運びだした。あなたが"
+"遅れたせいで残業しなければならなくなったので、労働者たちはうれしく思っていな"
+"かった。あなたには約束の {reward} のうちの {credits} だけが支払われた。"
 
 #: dat/missions/neutral/cargo_rush.lua:66
 msgid ""
@@ -53957,8 +54121,9 @@ msgid ""
 "after you land. Your late arrival is stretching quite a few schedules! Your "
 "pay is only {credits} instead of {reward} because of that."
 msgstr ""
-"あなたが着陸したすぐあとに、チームがあなたの船から{cargo}のコンテナをいそいで運びだした。あなたが遅れて到着したせいで、予定がかなり遅れているのだ！"
-"　あなたには約束の {reward} ではなく、{credits} だけが支払われた。"
+"あなたが着陸したすぐあとに、チームがあなたの船から{cargo}のコンテナをいそいで"
+"運びだした。あなたが遅れて到着したせいで、予定がかなり遅れているのだ！　あな"
+"たには約束の {reward} ではなく、{credits} だけが支払われた。"
 
 #: dat/missions/neutral/cargo_rush.lua:67
 msgid ""
@@ -53966,8 +54131,9 @@ msgid ""
 "dockworkers. You missed the deadline, so your reward is only {credits} "
 "instead of the {reward} you were hoping for."
 msgstr ""
-"疲れきった港湾労働者の群れが{cargo}のコンテナを荷降ろしした。あなたは納期を守らなかったので、報酬はあなたが望んでいた {reward} ではなく "
-"{credits} だけになった。"
+"疲れきった港湾労働者の群れが{cargo}のコンテナを荷降ろしした。あなたは納期を守"
+"らなかったので、報酬はあなたが望んでいた {reward} ではなく {credits} だけに"
+"なった。"
 
 #: dat/missions/neutral/cargo_rush.lua:142
 msgid "Unknown route"
@@ -53979,8 +54145,9 @@ msgid ""
 "maps, spending time searching for unknown jumps, or taking a route longer "
 "than {jumps} may cause you to miss the deadline. Accept the mission anyway?"
 msgstr ""
-"{pnt}への最速の航路を現在あなたは知りません。着陸して地図を買うか、時間をかけて未知のジャンプをさがすか、{jumps}より長い航路を使うと、期限を逃"
-"すことになります。それでもこの任務をうけますか？"
+"{pnt}への最速の航路を現在あなたは知りません。着陸して地図を買うか、時間をかけ"
+"て未知のジャンプをさがすか、{jumps}より長い航路を使うと、期限を逃すことになり"
+"ます。それでもこの任務をうけますか？"
 
 #: dat/missions/neutral/cargo_rush.lua:183
 #: dat/missions/neutral/cargo_rush.lua:191
@@ -54052,7 +54219,8 @@ msgid ""
 "Go to any planet which sells this commodity and bring as much of it back as "
 "possible."
 msgstr ""
-"{pnt}では{cargo}の供給量がたりないので、現在の需要が満たせていない。この商品を売っているほかの惑星に行き、できるだけ多く持ちかえれ。"
+"{pnt}では{cargo}の供給量がたりないので、現在の需要が満たせていない。この商品"
+"を売っているほかの惑星に行き、できるだけ多く持ちかえれ。"
 
 #: dat/missions/neutral/commodity_run.lua:50
 msgid ""
@@ -54060,8 +54228,9 @@ msgid ""
 "several different men double-check the register to confirm the amount, you "
 "are paid {credits} and summarily dismissed."
 msgstr ""
-"あなたの船から{cargo}のコンテナが運びだされ、量を記録された。数人の別々の人たちが量を確認した記録簿を重ねて点検してから、あなたは "
-"{credits} の支払いをうけて、ただちに解放された。"
+"あなたの船から{cargo}のコンテナが運びだされ、量を記録された。数人の別々の人た"
+"ちが量を確認した記録簿を重ねて点検してから、あなたは {credits} の支払いをうけ"
+"て、ただちに解放された。"
 
 #: dat/missions/neutral/commodity_run.lua:51
 msgid ""
@@ -54069,8 +54238,9 @@ msgid ""
 "readied for distribution. The delivery manager thanks you with a credit chip "
 "worth {credits}."
 msgstr ""
-"{cargo}のコンテナはすばやく効率的に荷降ろしされ、荷札がつけられ、流通の用意がされた。出荷管理者が {credits} "
-"の価値のあるクレジットチップをあなたに渡して礼をいった。"
+"{cargo}のコンテナはすばやく効率的に荷降ろしされ、荷札がつけられ、流通の用意が"
+"された。出荷管理者が {credits} の価値のあるクレジットチップをあなたに渡して礼"
+"をいった。"
 
 #: dat/missions/neutral/commodity_run.lua:52
 msgid ""
@@ -54078,15 +54248,17 @@ msgid ""
 "dockworkers who are in no rush to finish, eventually delivering {credits} "
 "after the number of tonnes is determined."
 msgstr ""
-"港湾労働者のチームが{cargo}のコンテナをあなたの船から荷降ろしした。チームはいそいで終えようとはしていない。トン数が確定すると、やっと "
-"{credits} が渡された。"
+"港湾労働者のチームが{cargo}のコンテナをあなたの船から荷降ろしした。チームはい"
+"そいで終えようとはしていない。トン数が確定すると、やっと {credits} が渡され"
+"た。"
 
 #: dat/missions/neutral/commodity_run.lua:53
 msgid ""
 "The containers of {cargo} are unloaded by robotic drones that scan and tally "
 "the contents. The human overseer hands you {credits} when they finish."
 msgstr ""
-"ロボットドローンが{cargo}のコンテナを荷降ろしし、ざっと調べて量を記録した。それが終わると、人間の監督があなたに {credits} を手渡した。"
+"ロボットドローンが{cargo}のコンテナを荷降ろしし、ざっと調べて量を記録した。そ"
+"れが終わると、人間の監督があなたに {credits} を手渡した。"
 
 #: dat/missions/neutral/commodity_run.lua:55
 msgid "Commodity Delivery"
@@ -56848,7 +57020,9 @@ msgstr ""
 msgid ""
 "A fearful-looking officer rushes {pltname} into a secure hold, pays you the "
 "appropriate bounty, and then hurries off."
-msgstr "恐ろしい表情をした役人が{pltname}をしっかりと確保した。あなたにふさわしい賞金を支払ってから、役人はいそいで去っていった。"
+msgstr ""
+"恐ろしい表情をした役人が{pltname}をしっかりと確保した。あなたにふさわしい賞金"
+"を支払ってから、役人はいそいで去っていった。"
 
 #: dat/missions/neutral/pirbounty_alive.lua:46
 msgid ""
@@ -57227,8 +57401,9 @@ msgid ""
 "{fctname} authorities want this pirate dead or alive. {pirname} is believed "
 "to be flying a {shipclass}-class ship."
 msgstr ""
-"{pirname}という名で知られる海賊が最近{sys}星系で見られた。{fctname}当局がこの海賊を生け捕りにするか死んでほしがっている。{pirn"
-"ame}は{shipclass}級の船で飛んでいると信じられている。"
+"{pirname}という名で知られる海賊が最近{sys}星系で見られた。{fctname}当局がこの"
+"海賊を生け捕りにするか死んでほしがっている。{pirname}は{shipclass}級の船で飛"
+"んでいると信じられている。"
 
 #. Messages
 #: dat/missions/neutral/pirbounty_dead.lua:82
@@ -59298,12 +59473,12 @@ msgid ""
 msgstr ""
 
 #: dat/missions/neutral/wastedump.lua:89
-#: dat/missions/soromid/comingout/srm_comingout5.lua:118
+#: dat/missions/soromid/comingout/srm_comingout5.lua:104
 msgid "Waste Containers"
 msgstr ""
 
 #: dat/missions/neutral/wastedump.lua:89
-#: dat/missions/soromid/comingout/srm_comingout5.lua:118
+#: dat/missions/soromid/comingout/srm_comingout5.lua:104
 msgid "A bunch of waste containers leaking all sorts of indescribable liquids."
 msgstr ""
 
@@ -61599,37 +61774,33 @@ msgstr ""
 #. Don't spawn this mission if the player is buddies with this faction's enemies.
 #: dat/missions/rehab_common.lua:30 dat/missions/rehab_common.lua:44
 #: dat/missions/rehab_common.lua:55 dat/missions/rehab_common.lua:87
-#, lua-format
-msgid "%s Rehabilitation"
+msgid "{fctname} Rehabilitation"
 msgstr ""
 
 #: dat/missions/rehab_common.lua:31
-#, lua-format
 msgid ""
 "You may pay a fine for a chance to redeem yourself in the eyes of a faction "
 "you have offended. You may interact with this faction as if your reputation "
 "were neutral, but your reputation will not actually improve until you've "
 "regained their trust. ANY hostile action against this faction will "
 "immediately void this agreement.\n"
-"Faction: %s\n"
-"Cost: %s"
+"Faction: {fctname}\n"
+"Cost: {credits}"
 msgstr ""
 
 #: dat/missions/rehab_common.lua:39
-#, lua-format
 msgid ""
-"You don't have enough money. You need at least %s to buy a cessation of "
-"hostilities with this faction."
+"You don't have enough money. You need at least {credits} to buy a cessation "
+"of hostilities with this faction."
 msgstr ""
 
 #: dat/missions/rehab_common.lua:44
-#, lua-format
 msgid ""
-"Your application has been processed. The %s security forces will no longer "
-"attack you on sight. You may conduct your business in %s space again, but "
-"remember that you still have a criminal record! If you attack any traders, "
-"civilians or %s ships, or commit any other felony against this faction, you "
-"will immediately become their enemy again.\n"
+"Your application has been processed. The {fctname} security forces will no "
+"longer attack you on sight. You may conduct your business in {fctname} space "
+"again, but remember that you still have a criminal record! If you attack any "
+"traders, civilians or {fctname} ships, or commit any other felony against "
+"this faction, you will immediately become their enemy again.\n"
 "While this agreement is active your reputation will not change, but if you "
 "continue to behave properly and perform beneficial services, your past "
 "offenses will eventually be stricken from the record."
@@ -61648,8 +61819,7 @@ msgstr[1] ""
 #. Standing hook. Manages faction reputation, keeping it at 0 until it goes positive.
 #. The player has successfully erased his criminal record.
 #: dat/missions/rehab_common.lua:76
-#, lua-format
-msgid "%s Rehabilitation Successful"
+msgid "{fctname} Rehabilitation Successful"
 msgstr ""
 
 #: dat/missions/rehab_common.lua:76
@@ -61662,8 +61832,7 @@ msgstr ""
 #. Remove the standing hook prior to modifying reputation.
 #. Reapply the original negative reputation.
 #: dat/missions/rehab_common.lua:105
-#, lua-format
-msgid "%s Rehabilitation Canceled"
+msgid "{fctname} Rehabilitation Canceled"
 msgstr ""
 
 #: dat/missions/rehab_common.lua:105
@@ -66540,12 +66709,11 @@ msgid "Just Some Transportation"
 msgstr ""
 
 #: dat/missions/soromid/comingout/srm_comingout.lua:74
-#, lua-format
 msgid ""
 "C seems relieved at your answer. \"Thank you so much,\" they say. \"I really "
-"appreciate it. I'll make it up to you somehow. My parents live in %s in the "
-"%s system. Like I said, no rush. Just as long as I get there, that's what "
-"matters.\""
+"appreciate it. I'll make it up to you somehow. My parents live in {pnt} in "
+"the {sys} system. Like I said, no rush. Just as long as I get there, that's "
+"what matters.\""
 msgstr ""
 
 #.
@@ -66560,8 +66728,7 @@ msgid "Coming Out"
 msgstr ""
 
 #: dat/missions/soromid/comingout/srm_comingout.lua:79
-#, lua-format
-msgid "Your new friend needs you to take them to their parents in %s."
+msgid "Your new friend needs you to take them to their parents in {sys}."
 msgstr ""
 
 #: dat/missions/soromid/comingout/srm_comingout.lua:80
@@ -66570,9 +66737,10 @@ msgstr ""
 
 #: dat/missions/soromid/comingout/srm_comingout.lua:84
 #: dat/missions/soromid/comingout/srm_comingout2.lua:61
-#, lua-format
-msgid "Go to the %s system and land on the planet %s."
-msgstr ""
+#, fuzzy
+#| msgid "Fly to the {sys} system and land on planet {pnt}"
+msgid "Go to the {sys} system and land on the planet {pnt}."
+msgstr "{sys}星系へ飛んで、惑星{pnt}に着陸せよ。"
 
 #: dat/missions/soromid/comingout/srm_comingout.lua:94
 msgid "\"Okay. I understand. Thanks anyway.\""
@@ -66614,7 +66782,6 @@ msgid ""
 msgstr ""
 
 #: dat/missions/soromid/comingout/srm_comingout.lua:142
-#, lua-format
 msgid ""
 "After Chelsea's mother releases her, she wipes a few tears from her eyes and "
 "gives you a friendly hug. \"Thank you,\" she says. \"You've been a great "
@@ -66624,7 +66791,7 @@ msgid ""
 "see you again!\"\n"
 "    Taking your cue, you say goodbye for now, excuse yourself from the "
 "table, and make your way back to your ship. As you enter your cockpit you "
-"find a credit chip worth %s! It's not much, but it's something."
+"find a credit chip worth {credits}! It's not much, but it's something."
 msgstr ""
 
 #: dat/missions/soromid/comingout/srm_comingout.lua:149
@@ -66715,7 +66882,7 @@ msgstr ""
 #: dat/missions/soromid/comingout/srm_comingout3.lua:44
 #: dat/missions/soromid/comingout/srm_comingout3.lua:89
 #: dat/missions/soromid/comingout/srm_comingout4.lua:35
-#: dat/missions/soromid/comingout/srm_comingout5.lua:57
+#: dat/missions/soromid/comingout/srm_comingout5.lua:42
 #: dat/missions/soromid/comingout/srm_comingout6.lua:50
 #: dat/missions/soromid/comingout/srm_comingout6.lua:108
 msgid "Chelsea"
@@ -66728,23 +66895,21 @@ msgid ""
 msgstr ""
 
 #: dat/missions/soromid/comingout/srm_comingout2.lua:43
-#, lua-format
-msgid "\"Oh, %s! Are you able to help me out now?\""
+msgid "\"Oh, {player}! Are you able to help me out now?\""
 msgstr ""
 
 #: dat/missions/soromid/comingout/srm_comingout2.lua:45
-#, lua-format
 msgid ""
-"Chelsea smiles and waves as she sees you approaching. \"Hi, %s! It's been a "
-"while!\" You sit down and start a friendly conversation with her. She "
+"Chelsea smiles and waves as she sees you approaching. \"Hi, {player}! It's "
+"been a while!\" You sit down and start a friendly conversation with her. She "
 "mentions that her parents seem to be supportive of her decision to "
 "transition and her mother in particular apparently has been very helpful.\n"
 "    Chelsea perks up a little. \"So, remember I said I had ambitions of a "
 "pilot? Well, I have my piloting license already, but I'm kind of poor so I "
 "couldn't afford my first ship. So I've been asking around and I've managed "
-"to find a great deal for a used ship at %s in the %s system! I just need "
-"someone to take me there. Again, no rush. Would you be able to do that for "
-"me?\""
+"to find a great deal for a used ship at {pnt} in the {sys} system! I just "
+"need someone to take me there. Again, no rush. Would you be able to do that "
+"for me?\""
 msgstr ""
 
 #: dat/missions/soromid/comingout/srm_comingout2.lua:50
@@ -66754,10 +66919,9 @@ msgid "Getting My Feet Wet"
 msgstr ""
 
 #: dat/missions/soromid/comingout/srm_comingout2.lua:51
-#, lua-format
 msgid ""
-"\"Thank you so much! I really appreciate it, %s. I can't pay you much, but I "
-"can give you %s when we get there. I can't wait to start!\""
+"\"Thank you so much! I really appreciate it, {player}. I can't pay you much, "
+"but I can give you {credits} when we get there. I can't wait to start!\""
 msgstr ""
 
 #: dat/missions/soromid/comingout/srm_comingout2.lua:55
@@ -66766,10 +66930,9 @@ msgid "Coming of Age"
 msgstr ""
 
 #: dat/missions/soromid/comingout/srm_comingout2.lua:56
-#, lua-format
 msgid ""
-"Chelsea needs you to take her to %s so she can buy her first ship and kick "
-"off her piloting career."
+"Chelsea needs you to take her to {pnt} so she can buy her first ship and "
+"kick off her piloting career."
 msgstr ""
 
 #: dat/missions/soromid/comingout/srm_comingout2.lua:66
@@ -66832,8 +66995,7 @@ msgid "A Friend's Aid"
 msgstr ""
 
 #: dat/missions/soromid/comingout/srm_comingout3.lua:33
-#, lua-format
-msgid "Chelsea needs you to escort her to %s."
+msgid "Chelsea needs you to escort her to {pnt}."
 msgstr ""
 
 #: dat/missions/soromid/comingout/srm_comingout3.lua:44
@@ -66846,27 +67008,25 @@ msgid ""
 msgstr ""
 
 #: dat/missions/soromid/comingout/srm_comingout3.lua:53
-#, lua-format
 msgid ""
 "Chelsea gleefully waves you over. \"It's nice to see you again!\" she says. "
 "The two of you chat a bit about her venture into the piloting business; all "
 "is well from the sound of it. \"Say,\" she says, \"someone offered me a "
 "really interesting mission recently, but I had to decline because my ship "
 "isn't really up to task. If you could just escort my ship through that "
-"mission I could share the pay with you! Your half would be %s. How about it?"
-"\""
+"mission I could share the pay with you! Your half would be {credits}. How "
+"about it?\""
 msgstr ""
 
 #: dat/missions/soromid/comingout/srm_comingout3.lua:58
-#, lua-format
 msgid ""
 "\"Awesome! I really appreciate it!\n"
 "    \"So the mission is in theory a pretty simple one: I need to deliver "
-"some cargo to %s in the %s system. Trouble is apparently I'll be getting in "
-"the middle of some sort of trade dispute with a shady Soromid company that's "
-"bribed the local Soromid pilots. Needless to say we can expect to be "
-"attacked by some thugs and the Soromid military isn't likely to be of much "
-"help.\n"
+"some cargo to {pnt} in the {sys} system. Trouble is apparently I'll be "
+"getting in the middle of some sort of trade dispute with a shady Soromid "
+"company that's bribed the local Soromid pilots. Needless to say we can "
+"expect to be attacked by some thugs and the Soromid military isn't likely to "
+"be of much help.\n"
 "    \"That's where you come in. I just need you to follow me along, make "
 "sure I finish jumping or landing before you do, and if we encounter any "
 "hostilities, help me shoot them down. Shouldn't be too too hard as long as "
@@ -66874,10 +67034,10 @@ msgid ""
 msgstr ""
 
 #: dat/missions/soromid/comingout/srm_comingout3.lua:70
-#: dat/missions/soromid/comingout/srm_comingout5.lua:81
-#, lua-format
-msgid "Escort Chelsea to %s in the %s system."
-msgstr ""
+#, fuzzy
+#| msgid "Fly to {pnt} in the {sys} system."
+msgid "Escort Chelsea to {pnt} in the {sys} system."
+msgstr "{sys}星系の{pnt}へ行け。"
 
 #: dat/missions/soromid/comingout/srm_comingout3.lua:80
 msgid "\"Ah, OK. Let me know if you change your mind.\""
@@ -66885,10 +67045,10 @@ msgstr ""
 
 #: dat/missions/soromid/comingout/srm_comingout3.lua:126
 #: dat/missions/soromid/comingout/srm_comingout4.lua:122
-#: dat/missions/soromid/comingout/srm_comingout5.lua:141
-#, lua-format
-msgid "Thug %s"
-msgstr ""
+#, fuzzy
+#| msgid "Thugs"
+msgid "Thug {ship}"
+msgstr "乱暴者"
 
 #: dat/missions/soromid/comingout/srm_comingout3.lua:167
 #: dat/missions/soromid/comingout/srm_comingout6.lua:130
@@ -66900,13 +67060,12 @@ msgid "Another Happy Landing"
 msgstr ""
 
 #: dat/missions/soromid/comingout/srm_comingout3.lua:174
-#, lua-format
 msgid ""
 "You successfully land and dock alongside Chelsea and she approaches the "
 "worker for the cargo delivery. The worker gives her a weird look, but "
 "collects the cargo with the help of some robotic drones and hands her a "
 "credit chip. When you get back to your ships, Chelsea transfers the sum of "
-"%s to your account, and you idly chat with her for a while.\n"
+"{credits} to your account, and you idly chat with her for a while.\n"
 "    \"Anyway, I should probably get going now,\" she says. \"But I really "
 "appreciated the help there! Get in touch with me again sometime. We make a "
 "great team!\" You agree, and you both go your separate ways once again."
@@ -66920,10 +67079,12 @@ msgid ""
 msgstr ""
 
 #: dat/missions/soromid/comingout/srm_comingout3.lua:180
+#: dat/missions/soromid/comingout/srm_comingout5.lua:157
 msgid "Mission Failed"
 msgstr ""
 
 #: dat/missions/soromid/comingout/srm_comingout3.lua:180
+#: dat/missions/soromid/comingout/srm_comingout5.lua:157
 msgid "You have lost contact with Chelsea and therefore failed the mission."
 msgstr ""
 
@@ -66935,8 +67096,7 @@ msgid ""
 msgstr ""
 
 #: dat/missions/soromid/comingout/srm_comingout3.lua:201
-#, lua-format
-msgid "Chelsea has jumped to %s."
+msgid "Chelsea has jumped to {sys}."
 msgstr ""
 
 #: dat/missions/soromid/comingout/srm_comingout3.lua:204
@@ -66946,8 +67106,7 @@ msgid "MISSION FAILED: Chelsea has abandoned the mission."
 msgstr ""
 
 #: dat/missions/soromid/comingout/srm_comingout3.lua:211
-#, lua-format
-msgid "Chelsea has landed on %s."
+msgid "Chelsea has landed on {pnt}."
 msgstr ""
 
 #: dat/missions/soromid/comingout/srm_comingout4.lua:35
@@ -66955,22 +67114,20 @@ msgid "You see Chelsea in the bar and feel an urge to say hello."
 msgstr ""
 
 #: dat/missions/soromid/comingout/srm_comingout4.lua:42
-#, lua-format
-msgid "\"Oh, %s! Have you changed your mind? Can you take me to %s?\""
+msgid "\"Oh, {player}! Have you changed your mind? Can you take me to {pnt}?\""
 msgstr ""
 
 #: dat/missions/soromid/comingout/srm_comingout4.lua:44
-#, lua-format
 msgid ""
-"Chelsea greets you as before. \"Hi, %s! It's so nice to see you again!\" The "
-"two of you talk about your travels once again. \"So, I've got a bit of a "
-"request. Could you use they/them pronouns with me again?\" You agree to the "
-"request. \"Thank you,\" they say. \"I've done some more soul-searching "
+"Chelsea greets you as before. \"Hi, {player}! It's so nice to see you again!"
+"\" The two of you talk about your travels once again. \"So, I've got a bit "
+"of a request. Could you use they/them pronouns with me again?\" You agree to "
+"the request. \"Thank you,\" they say. \"I've done some more soul-searching "
 "lately and I've found that I identify more as nonbinary than as a woman. I "
 "really appreciate it!\n"
 "    \"Actually, come to think of it, this would be a great excuse to go see "
 "my parents again! It's been so long since I've seen them. Say, could you "
-"take me to them in %s?\""
+"take me to them in {pnt}?\""
 msgstr ""
 
 #: dat/missions/soromid/comingout/srm_comingout4.lua:49
@@ -66982,16 +67139,14 @@ msgid "Visiting Family"
 msgstr ""
 
 #: dat/missions/soromid/comingout/srm_comingout4.lua:50
-#, lua-format
 msgid ""
-"\"Awesome! Thank you so much! So just take me to %s in the %s system, and "
-"then take me to %s in the %s system. As usual, no rush. Just as long as I "
-"get to see my parents, I'm happy!\""
+"\"Awesome! Thank you so much! So just take me to {pnt} in the {sys} system, "
+"and then take me to {pnt2} in the {sys2} system. As usual, no rush. Just as "
+"long as I get to see my parents, I'm happy!\""
 msgstr ""
 
 #: dat/missions/soromid/comingout/srm_comingout4.lua:55
-#, lua-format
-msgid "Chelsea wants to revisit their family in %s."
+msgid "Chelsea wants to revisit their family in {pnt}."
 msgstr ""
 
 #: dat/missions/soromid/comingout/srm_comingout4.lua:69
@@ -67003,11 +67158,11 @@ msgid "It's too dangerous to land here right now."
 msgstr ""
 
 #: dat/missions/soromid/comingout/srm_comingout4.lua:88
-#, lua-format
 msgid ""
-"You land and dock on %s, then meet up with both of Chelsea's parents. They "
-"welcome Chelsea and their mother gives them a warm hug, then releases them. "
-"Chelsea's father slightly waves, and the three of them start chatting.\n"
+"You land and dock on {pnt}, then meet up with both of Chelsea's parents. "
+"They welcome Chelsea and their mother gives them a warm hug, then releases "
+"them. Chelsea's father slightly waves, and the three of them start "
+"chatting.\n"
 "    Eventually, the topic of Chelsea's gender comes up. Chelsea explains "
 "that they are nonbinary and prefer they/them pronouns similarly to when they "
 "explained it to you. Their mother says that she is proud of them and hugs "
@@ -67030,7 +67185,6 @@ msgid ""
 msgstr ""
 
 #: dat/missions/soromid/comingout/srm_comingout4.lua:93
-#, lua-format
 msgid ""
 "Everything goes silent for what must be mere seconds, but seems to last a "
 "period. Finally, Chelsea speaks up. \"Dad... I've made good friends with "
@@ -67039,11 +67193,11 @@ msgid ""
 "you've made them out to be all my life. And dad, I am not your son. I never "
 "really was your son. I will never be your son. I am a transfemme enby. End "
 "of discussion.\n"
-"    \"%s here has really taught me a lot about asserting myself and not "
-"letting others dictate who I am, probably without realizing it. So I'm no "
-"longer going to allow your bigoted ideas about gender define me.\" Chelsea "
-"pauses. \"And with the help of the Soromid, I'll be getting some procedures "
-"done to help affirm who I am.\""
+"    \"{player} here has really taught me a lot about asserting myself and "
+"not letting others dictate who I am, probably without realizing it. So I'm "
+"no longer going to allow your bigoted ideas about gender define me.\" "
+"Chelsea pauses. \"And with the help of the Soromid, I'll be getting some "
+"procedures done to help affirm who I am.\""
 msgstr ""
 
 #: dat/missions/soromid/comingout/srm_comingout4.lua:95
@@ -67129,11 +67283,30 @@ msgstr ""
 #. Waste Collector
 #.
 #. --
-#: dat/missions/soromid/comingout/srm_comingout5.lua:32
-msgid "The Dirty Job"
+#: dat/missions/soromid/comingout/srm_comingout5.lua:30
+msgid "Waste Collector"
 msgstr ""
 
-#: dat/missions/soromid/comingout/srm_comingout5.lua:33
+#: dat/missions/soromid/comingout/srm_comingout5.lua:31
+#, lua-format
+msgid ""
+"Chelsea needs an escort to %s so they can get rid of the garbage now filling "
+"their ship."
+msgstr ""
+
+#: dat/missions/soromid/comingout/srm_comingout5.lua:42
+msgid ""
+"Chelsea seems like they're stressed. Maybe you should see how they're doing?"
+msgstr ""
+
+#: dat/missions/soromid/comingout/srm_comingout5.lua:49
+msgid ""
+"\"I'm not having any luck coming up with a plan to get rid of all of this "
+"garbage without getting jumped by those thugs. Is there any chance you could "
+"reconsider being my escort? It would be a big help.\""
+msgstr ""
+
+#: dat/missions/soromid/comingout/srm_comingout5.lua:51
 #, lua-format
 msgid ""
 "You walk over to Chelsea to greet them when you notice an unpleasant odor "
@@ -67152,31 +67325,40 @@ msgid ""
 "garbage there. I'll give you %s for the trouble. What do you say?\""
 msgstr ""
 
-#: dat/missions/soromid/comingout/srm_comingout5.lua:36
+#: dat/missions/soromid/comingout/srm_comingout5.lua:56
+#: dat/missions/soromid/comingout/srm_comingout5.lua:57
+#: dat/missions/soromid/comingout/srm_comingout5.lua:77
+msgid "The Dirty Job"
+msgstr ""
+
+#: dat/missions/soromid/comingout/srm_comingout5.lua:57
 msgid ""
 "\"I appreciate it very much. I'll wait at the hangar until you're ready to "
 "take off. Get ready for a fight when we get out of the atmosphere; it's "
 "going to be a bumpy ride.\""
 msgstr ""
 
-#: dat/missions/soromid/comingout/srm_comingout5.lua:38
+#: dat/missions/soromid/comingout/srm_comingout5.lua:67
+#, lua-format
+msgid "Escort Chelsea to %s in the %s system."
+msgstr ""
+
+#: dat/missions/soromid/comingout/srm_comingout5.lua:77
 msgid ""
 "\"OK, I understand. I guess I'll have to find some other way to get rid of "
 "all this garbage...\""
 msgstr ""
 
-#: dat/missions/soromid/comingout/srm_comingout5.lua:40
-msgid ""
-"\"I'm not having any luck coming up with a plan to get rid of all of this "
-"garbage without getting jumped by those thugs. Is there any chance you could "
-"reconsider being my escort? It would be a big help.\""
+#: dat/missions/soromid/comingout/srm_comingout5.lua:127
+#, lua-format
+msgid "Thug %s"
 msgstr ""
 
-#: dat/missions/soromid/comingout/srm_comingout5.lua:42
+#: dat/missions/soromid/comingout/srm_comingout5.lua:147
 msgid "The Unbearable Smell Now Ends"
 msgstr ""
 
-#: dat/missions/soromid/comingout/srm_comingout5.lua:43
+#: dat/missions/soromid/comingout/srm_comingout5.lua:147
 msgid ""
 "As you dock, you can't help but notice the foul smell of garbage all around "
 "you. The planet really does fit the name. You grimace as you watch workers "
@@ -67187,23 +67369,7 @@ msgid ""
 "hold of their ship clean."
 msgstr ""
 
-#: dat/missions/soromid/comingout/srm_comingout5.lua:45
-msgid "Waste Collector"
-msgstr ""
-
-#: dat/missions/soromid/comingout/srm_comingout5.lua:46
-#, lua-format
-msgid ""
-"Chelsea needs an escort to %s so they can get rid of the garbage now filling "
-"their ship."
-msgstr ""
-
-#: dat/missions/soromid/comingout/srm_comingout5.lua:57
-msgid ""
-"Chelsea seems like they're stressed. Maybe you should see how they're doing?"
-msgstr ""
-
-#: dat/missions/soromid/comingout/srm_comingout5.lua:167
+#: dat/missions/soromid/comingout/srm_comingout5.lua:153
 msgid ""
 "You helped Chelsea get rid of a load of garbage they naively agreed to take "
 "to The Stinker as a mission, defending them from thugs along the way."
@@ -67214,12 +67380,11 @@ msgid "Oh, it's Chelsea! You feel an urge to say hello."
 msgstr ""
 
 #: dat/missions/soromid/comingout/srm_comingout6.lua:57
-#, lua-format
-msgid "\"Hey, %s! Any chance you could reconsider? I could use your help.\""
+msgid ""
+"\"Hey, {player}! Any chance you could reconsider? I could use your help.\""
 msgstr ""
 
 #: dat/missions/soromid/comingout/srm_comingout6.lua:59
-#, lua-format
 msgid ""
 "You greet Chelsea as usual and have a friendly chat with them. You learn "
 "that they had a close call recently with another thug, but they managed to "
@@ -67232,11 +67397,11 @@ msgid ""
 "Well, not new exactly. It's used, but in much better condition than that "
 "rust bucket I got before. Supposedly this guy used to be a Dvaered warlord "
 "and is offering me his old Vigilance if I just take care of this one pirate "
-"known as %s. Trouble is they're piloting a ship that's stronger than my "
-"own....\"\n"
+"known as {pltname}. Trouble is they're piloting a ship that's stronger than "
+"my own....\"\n"
 "    Chelsea pauses in contemplation for a moment. \"Say, do you think you "
 "could help me out on this one? I just need you to help me kill the pirate in "
-"%s. I'll give you %s for the trouble. How about it?\""
+"{sys}. I'll give you {credits} for the trouble. How about it?\""
 msgstr ""
 
 #: dat/missions/soromid/comingout/srm_comingout6.lua:65
@@ -67246,10 +67411,9 @@ msgid "A Great Opportunity"
 msgstr ""
 
 #: dat/missions/soromid/comingout/srm_comingout6.lua:66
-#, lua-format
 msgid ""
-"\"Fantastic! Thank you for the help! I'll meet you in %s and we can take the "
-"pirate out. Let's do this!\""
+"\"Fantastic! Thank you for the help! I'll meet you in {sys} and we can take "
+"the pirate out. Let's do this!\""
 msgstr ""
 
 #: dat/missions/soromid/comingout/srm_comingout6.lua:69
@@ -67257,8 +67421,7 @@ msgid "Moving Up"
 msgstr ""
 
 #: dat/missions/soromid/comingout/srm_comingout6.lua:70
-#, lua-format
-msgid "Chelsea needs you help them kill a wanted pirate in %s."
+msgid "Chelsea needs you help them kill a wanted pirate in {sys}."
 msgstr ""
 
 #: dat/missions/soromid/comingout/srm_comingout6.lua:78
@@ -67271,12 +67434,11 @@ msgid "Death Of A Pirate"
 msgstr ""
 
 #: dat/missions/soromid/comingout/srm_comingout6.lua:153
-#, lua-format
 msgid ""
 "Chelsea pops up on your viewscreen and grins. \"We did it!\" they say. "
-"\"Thanks for all the help, %s. I've transferred the money into your account. "
-"See you next time with my new ship!\" You say your goodbyes and go back to "
-"your own adventures."
+"\"Thanks for all the help, {player}. I've transferred the money into your "
+"account. See you next time with my new ship!\" You say your goodbyes and go "
+"back to your own adventures."
 msgstr ""
 
 #: dat/missions/soromid/comingout/srm_comingout6.lua:159
@@ -67728,7 +67890,8 @@ msgstr "ネリーを助ける"
 #: dat/missions/tutorial/nelly01.lua:108
 msgid ""
 "Help Nelly deliver {tonnes} of {cargo} to {destpnt} in the {destsys} system."
-msgstr "{tonnes}の{cargo}を{destsys}星系の{destpnt}へ運ぼうとしているネリーを助けろ。"
+msgstr ""
+"{tonnes}の{cargo}を{destsys}星系の{destpnt}へ運ぼうとしているネリーを助けろ。"
 
 #: dat/missions/tutorial/nelly01.lua:120
 msgid ""
@@ -67740,9 +67903,11 @@ msgid ""
 "back? I'll pay you your fair share.\""
 msgstr ""
 "あなたが近づくと、ひとりでいた人物が顔を輝かせた。\n"
-"｢あのう、あなたは動かせる船をもってるパイロットみたいですね。わたしはちょっと面倒なことになってるんです。じつは、{sys}の{pnt}へ{cargo}を"
-"いくらか運ぶことになってたんですが、船が壊れてすぐに運べるようになるとは思えないんです。そこへ貨物を運んで戻ってくるのに手を貸してくれないでしょうか？　"
-"正当な取りぶんは支払うつもりです｣"
+"｢あのう、あなたは動かせる船をもってるパイロットみたいですね。わたしはちょっと"
+"面倒なことになってるんです。じつは、{sys}の{pnt}へ{cargo}をいくらか運ぶことに"
+"なってたんですが、船が壊れてすぐに運べるようになるとは思えないんです。そこへ"
+"貨物を運んで戻ってくるのに手を貸してくれないでしょうか？　正当な取りぶんは支"
+"払うつもりです｣"
 
 #: dat/missions/tutorial/nelly01.lua:130
 msgid ""
@@ -67759,8 +67924,9 @@ msgid ""
 "cargo, or getting rid of it from the info menu which you can open with "
 "{infokey}.\""
 msgstr ""
-"｢手を貸せるだけの空きがあなたにはないですね。{amount}の{cargo}を運ぶ必要があるんです。空きを作るために不要な貨物を売るか、{infokey"
-"} で開ける情報メニューを使って処分してもらえないでしょうか？｣"
+"｢手を貸せるだけの空きがあなたにはないですね。{amount}の{cargo}を運ぶ必要があ"
+"るんです。空きを作るために不要な貨物を売るか、{infokey} で開ける情報メニュー"
+"を使って処分してもらえないでしょうか？｣"
 
 #: dat/missions/tutorial/nelly01.lua:147
 msgid ""
@@ -67770,8 +67936,9 @@ msgid ""
 "They cock their head a bit at you.\n"
 "\"Say, you wouldn't happen to be a novice pilot?\""
 msgstr ""
-"｢やった！　"
-"わたしの名前はネリーです。知りあえてうれしいです。港湾労働者にいってあなたの船に積ませますよ。終わったら出発できます。この仕事は簡単なはずですよ｣\n"
+"｢やった！　わたしの名前はネリーです。知りあえてうれしいです。港湾労働者にいっ"
+"てあなたの船に積ませますよ。終わったら出発できます。この仕事は簡単なはずです"
+"よ｣\n"
 "ネリーはちょっと見あげてあなたを見た。\n"
 "｢ちょっと、あなたは新人パイロットだったりします？｣"
 
@@ -67788,15 +67955,19 @@ msgid ""
 "will help you get the directions to {sys}. You can buy it at the main "
 "landing window or the outfiting window.\""
 msgstr ""
-"｢そうだと思った！　あなたにはういういしく楽しそうな雰囲気があるようだったから。始めたころの日々を思いだしましたよ。最初のころはちょっとやりにくいことがあ"
-"るかもしれないから、道中でいくらか助言をしても気にしないでほしいです｣\n"
-"｢手始めに、まだしてないなら#o系内地図#0を買うべきです。それが{sys}の方向を知る助けになるからです。着陸メイン画面か艤装品画面で買えますよ｣"
+"｢そうだと思った！　あなたにはういういしく楽しそうな雰囲気があるようだったか"
+"ら。始めたころの日々を思いだしましたよ。最初のころはちょっとやりにくいことが"
+"あるかもしれないから、道中でいくらか助言をしても気にしないでほしいです｣\n"
+"｢手始めに、まだしてないなら#o系内地図#0を買うべきです。それが{sys}の方向を知"
+"る助けになるからです。着陸メイン画面か艤装品画面で買えますよ｣"
 
 #: dat/missions/tutorial/nelly01.lua:161
 msgid ""
 "\"Weird. I could have sworn you had some sort of new pilot aura around you. "
 "Must have been my imagination. Let's get going!\""
-msgstr "｢妙ですね。あなたには新人パイロットみたいな雰囲気があると誓えていましたよ。わたしの想像の産物にちがいないですね。じゃあ行きましょうか｣"
+msgstr ""
+"｢妙ですね。あなたには新人パイロットみたいな雰囲気があると誓えていましたよ。わ"
+"たしの想像の産物にちがいないですね。じゃあ行きましょうか｣"
 
 #: dat/missions/tutorial/nelly01.lua:178
 msgid "Deliver cargo to {pnt} in {sys}"
@@ -67812,7 +67983,9 @@ msgstr "{sys}星系の{pnt}に戻れ。"
 msgid ""
 "You land on {pnt} and the dockworkers offload your cargo. This delivery "
 "stuff is quite easy."
-msgstr "あなたが{pnt}に着陸すると、港湾労働者が積み荷を降ろした。この配達物はかなり簡単だ。"
+msgstr ""
+"あなたが{pnt}に着陸すると、港湾労働者が積み荷を降ろした。この配達物はかなり簡"
+"単だ。"
 
 #: dat/missions/tutorial/nelly01.lua:202
 msgid ""
@@ -67820,8 +67993,10 @@ msgid ""
 "take down ships non-lethally, #oion damage#0 is your best bet. Here, I'll "
 "forward you {credits}. Do you need help buying and equipping the outfit?\""
 msgstr ""
-"｢ちょっと、ここでは#oイオンキャノン#0が売られてるって聞いたんです。もしあなたが非致死的な方法で船を停止させられるようになりたいと思ってるなら、#oイ"
-"オンキャノン#0がいちばん確実ですよ。ここで {credits} 先払いします。艤装品を買って装備するのに手助けが必要ですか？｣"
+"｢ちょっと、ここでは#oイオンキャノン#0が売られてるって聞いたんです。もしあなた"
+"が非致死的な方法で船を停止させられるようになりたいと思ってるなら、#oイオン"
+"キャノン#0がいちばん確実ですよ。ここで {credits} 先払いします。艤装品を買って"
+"装備するのに手助けが必要ですか？｣"
 
 #: dat/missions/tutorial/nelly01.lua:207
 msgid "Get useful advice"
@@ -67837,14 +68012,17 @@ msgid ""
 "Tab#0 and make sure to equip it at the #oEquipment Tab#0 before taking off. "
 "Once you get that done, let's head back to {pnt} in {sys}.\""
 msgstr ""
-"｢わかりました！　率先してやるってことですね。{outfit}を買うには#o艤装品#0タブへ行って、装備するには#o装備#0タブへ行ってください。それから"
-"離陸です。それをやりおえたら{sys}星系の{pnt}へ向かいましょう｣"
+"｢わかりました！　率先してやるってことですね。{outfit}を買うには#o艤装品#0タブ"
+"へ行って、装備するには#o装備#0タブへ行ってください。それから離陸です。それを"
+"やりおえたら{sys}星系の{pnt}へ向かいましょう｣"
 
 #: dat/missions/tutorial/nelly01.lua:219
 msgid ""
 "\"OK! I'll guide you through it. For now, please go to the #oOutfits Tab#0 "
 "of the landing window.\""
-msgstr "｢わかりました！　案内しますよ。さしあたり、着陸ウィンドウの#o艤装品#0タブへ行ってください｣"
+msgstr ""
+"｢わかりました！　案内しますよ。さしあたり、着陸ウィンドウの#o艤装品#0タブへ"
+"行ってください｣"
 
 #. Get rid of cargo
 #. Hook the outfits
@@ -67865,17 +68043,21 @@ msgid ""
 "\"Anyway, see you around! Make sure to check the spaceport bar whenever you "
 "land for new missions!\""
 msgstr ""
-"｢もう自分の船に戻る潮時ですね。もう修理されてると思いますよ。もっと貨物輸送任務をして簡単にクレジットを作りたかったら、ミッションコンピューターを見てみる"
-"ことをお勧めします。ここのようにたいていの惑星で使えるはずですよ。ときどき宇宙港のバーで興味深い人たちと会うこともあるでしょう。その人たちはあなたにおもし"
-"ろい任務を提供してくれるはずです｣\n"
+"｢もう自分の船に戻る潮時ですね。もう修理されてると思いますよ。もっと貨物輸送任"
+"務をして簡単にクレジットを作りたかったら、ミッションコンピューターを見てみる"
+"ことをお勧めします。ここのようにたいていの惑星で使えるはずですよ。ときどき宇"
+"宙港のバーで興味深い人たちと会うこともあるでしょう。その人たちはあなたにおも"
+"しろい任務を提供してくれるはずです｣\n"
 "ネリーが歯を見せてにこっと笑った。\n"
-"｢それはともかく、またどこかで会いましょう！　新しい任務を得るために着陸したら、いつでもかならず宇宙港のバーを確認してください！｣"
+"｢それはともかく、またどこかで会いましょう！　新しい任務を得るために着陸した"
+"ら、いつでもかならず宇宙港のバーを確認してください！｣"
 
 #: dat/missions/tutorial/nelly01.lua:254
 msgid ""
 "\"Oh, and don't forget to sell the ore you got from the derelict at the "
 "commodity exchange!\""
-msgstr "｢おっと。それから遺棄船で手に入れた鉱石を商品取引所で売るのを忘れなように！｣"
+msgstr ""
+"｢おっと。それから遺棄船で手に入れた鉱石を商品取引所で売るのを忘れなように！｣"
 
 #: dat/missions/tutorial/nelly01.lua:259
 msgid "You helped Nelly complete a delivery mission."
@@ -67885,7 +68067,9 @@ msgstr "ネリーを助けて配達任務を完了させた。"
 msgid ""
 "After the dock workers load the cargo on your ship, you take off with Nelly "
 "aboard. On to {sys}!"
-msgstr "港湾労働者があなたの船に貨物を積みこむと、あなたは乗船したネリーを乗せて離陸した。いざ、{sys}へ！"
+msgstr ""
+"港湾労働者があなたの船に貨物を積みこむと、あなたは乗船したネリーを乗せて離陸"
+"した。いざ、{sys}へ！"
 
 #: dat/missions/tutorial/nelly01.lua:293
 msgid ""
@@ -67894,7 +68078,8 @@ msgid ""
 "important things about your ship and current missions.\""
 msgstr ""
 "離陸した直後にネリーがかん高い声で急にしゃべりはじめた。\n"
-"｢ちょっと、情報ウィンドウには慣れてないの？　船と現在の任務について重要なことは全部見せてくれるんだけど｣"
+"｢ちょっと、情報ウィンドウには慣れてないの？　船と現在の任務について重要なこと"
+"は全部見せてくれるんだけど｣"
 
 #: dat/missions/tutorial/nelly01.lua:296
 msgid "Hear about the Info window"
@@ -67914,8 +68099,9 @@ msgid ""
 "managing your ship and finding out where to go. Try opening the info menu "
 "with {infokey} and I will show you around it.\""
 msgstr ""
-"｢{infokey} で開ける情報ウィンドウは、船を管理して行く場所を見つけるのに重要なものです。{infokey} "
-"で情報メニューを開いてみてください。その中身を説明しますよ｣"
+"｢{infokey} で開ける情報ウィンドウは、船を管理して行く場所を見つけるのに重要な"
+"ものです。{infokey} で情報メニューを開いてみてください。その中身を説明します"
+"よ｣"
 
 #. Much more visible
 #: dat/missions/tutorial/nelly01.lua:336
@@ -67926,10 +68112,10 @@ msgstr "星系に入ると、ネリーがレーダー上のなにかをさし示
 #: dat/missions/tutorial/nelly01.lua:338
 msgid ""
 "\"Oooh, look at that. A Koala derelict is nearby. There might be something "
-"interesting on it! We should go board it. Try to bring the ship to a stop on "
-"top of them and either #odouble-click#0 or select them and board them with "
-"{boardkey}. You can toggle the overlay to see exactly where the ship is with "
-"{overlay}.\""
+"interesting on it! We should go board it. Try #odouble-click#0ing or "
+"selecting the derelict and pressing {boardkey}. It should enable your "
+"autonav system to board the ship. You can toggle the overlay to see exactly "
+"where the ship is with {overlay}.\""
 msgstr ""
 
 #. TODO maybe explain better boarding window when done
@@ -67941,9 +68127,11 @@ msgid ""
 "there is still lots of ore cargo available on the ship. You quickly load as "
 "much as you can onto your ship before you depart."
 msgstr ""
-"あなたは不気味に静まる遺棄船に乗りこんだ。エンジン室の大きな穴は、中核エンジンが吹き飛んだらしいことを示している。それで乗員たちは船を放棄せざるをえなくな"
-"ったのだ。かなりの価値があるものはなにも見つからなかったが、まだ船には使える鉱石の貨物がたくさんあった。あなたはいそいでできるだけたくさんの鉱石を自分の船"
-"に積みこむと、そこから出発した。"
+"あなたは不気味に静まる遺棄船に乗りこんだ。エンジン室の大きな穴は、中核エンジ"
+"ンが吹き飛んだらしいことを示している。それで乗員たちは船を放棄せざるをえなく"
+"なったのだ。かなりの価値があるものはなにも見つからなかったが、まだ船には使え"
+"る鉱石の貨物がたくさんあった。あなたはいそいでできるだけたくさんの鉱石を自分"
+"の船に積みこむと、そこから出発した。"
 
 #: dat/missions/tutorial/nelly01.lua:350
 msgid ""
@@ -67952,8 +68140,10 @@ msgid ""
 "as easy as this and sometimes bad things can happen. We should head to {pnt} "
 "that should be nearby now.\""
 msgstr ""
-"｢あそこでたくさんの鉱石を手に入れたようですね。惑星の商品取引所でかなりのお金になるはずです。遺棄船に乗りこむのは、いつも今回のように簡単なわけじゃありま"
-"せん。ときどき悪いことがおきる場合もあります。もう{pnt}へ向かうべきです。近くにあるはずですよ｣"
+"｢あそこでたくさんの鉱石を手に入れたようですね。惑星の商品取引所でかなりのお金"
+"になるはずです。遺棄船に乗りこむのは、いつも今回のように簡単なわけじゃありま"
+"せん。ときどき悪いことがおきる場合もあります。もう{pnt}へ向かうべきです。近く"
+"にあるはずですよ｣"
 
 #: dat/missions/tutorial/nelly01.lua:362
 msgid "Nelly: \"Try opening the info menu with {infokey}.\""
@@ -67966,15 +68156,18 @@ msgid ""
 "to the #oMissions#0 tab. Feel free to click the other tabs for more "
 "information.\""
 msgstr ""
-"｢ああ、壮麗なる情報メニュー。メインウィンドウの中では、あなたがプレイしたゲームの全体的な統計値とライセンス情報が見られます。#o任務#0タブに移動してみ"
-"てください。ほかのタブをクリックして、さらなる情報も見るのもご自由にどうぞ｣"
+"｢ああ、壮麗なる情報メニュー。メインウィンドウの中では、あなたがプレイしたゲー"
+"ムの全体的な統計値とライセンス情報が見られます。#o任務#0タブに移動してみてく"
+"ださい。ほかのタブをクリックして、さらなる情報も見るのもご自由にどうぞ｣"
 
 #. TODO not sure we need more message annoyances here
 #: dat/missions/tutorial/nelly01.lua:408
 msgid ""
 "\"The #oShip Info#0 tab contains information relevant to your ship including "
 "all active bonuses and equipped outfits.\""
-msgstr "｢#o船#0情報タブには、あなたの船に関係する情報が含まれます。たとえば、有効な割増値、装備している艤装品などです｣"
+msgstr ""
+"｢#o船#0情報タブには、あなたの船に関係する情報が含まれます。たとえば、有効な割"
+"増値、装備している艤装品などです｣"
 
 #: dat/missions/tutorial/nelly01.lua:415
 msgid ""
@@ -67989,12 +68182,15 @@ msgid ""
 "- #oAbilities - Toggled#0: toggles the state of the non-weapon outfits in "
 "the set.\""
 msgstr ""
-"｢#o武器#0情報では、現在の船の武器セットが変更できます。武器セットには 3 つの種類があります。\n"
+"｢#o武器#0情報では、現在の船の武器セットが変更できます。武器セットには 3 つの"
+"種類があります。\n"
 "- #o武器 - 設定#0 : 主要兵器キー {keyprimary} と副次兵器キー {keysecondary} "
 "で使うことになる武器の定義が有効な場合です。\n"
-"- #o武器 - 一瞬#0 : その武器セットのホットキーを押すと、設定されている武器が即座に発射されます。これは#o瞬間モードを有効にする#0チェックボ"
-"ックスをチェックした武器セットで有効になります。\n"
-"- #o能力 - 切替#0 : 武器以外の艤装品の状態を、その武器セットキーで切り替えます｣"
+"- #o武器 - 一瞬#0 : その武器セットのホットキーを押すと、設定されている武器が"
+"即座に発射されます。これは#o瞬間モードを有効にする#0チェックボックスをチェッ"
+"クした武器セットで有効になります。\n"
+"- #o能力 - 切替#0 : 武器以外の艤装品の状態を、その武器セットキーで切り替えま"
+"す｣"
 
 #: dat/missions/tutorial/nelly01.lua:425
 msgid ""
@@ -68003,8 +68199,10 @@ msgid ""
 "#ojettison#0 cargo you want to get rid of. Be careful though: jettisoning "
 "mission cargo will forfeit the mission.\""
 msgstr ""
-"｢この#o積み荷#0情報では、運んでいる積み荷を見ることができます。これには法律上の状態のような、重要な情報も含まれます。なお、処分したいときには積み荷を"
-"#o投棄#0することができます。もちろん注意はしてください。任務の積み荷を投棄すると、任務を取りあげられますので｣"
+"｢この#o積み荷#0情報では、運んでいる積み荷を見ることができます。これには法律上"
+"の状態のような、重要な情報も含まれます。なお、処分したいときには積み荷を#o投"
+"棄#0することができます。もちろん注意はしてください。任務の積み荷を投棄する"
+"と、任務を取りあげられますので｣"
 
 #: dat/missions/tutorial/nelly01.lua:432
 msgid ""
@@ -68014,9 +68212,10 @@ msgid ""
 "Make sure this mission is selected and try setting a route to {destsys} is "
 "marked on your map.\""
 msgstr ""
-"｢#o任務#0情報は、現在ひきうけているすべての任務の情報を見せてくれます。それぞれの任務を選択すると、任務の標識があればそれが中央に来るように地図が移動"
-"します。そこの星系をクリックすると、じかに航路を設定することもできます。この任務を選択して、{destsys}への航路の設定が地図に記録されるようにしてみ"
-"てください｣"
+"｢#o任務#0情報は、現在ひきうけているすべての任務の情報を見せてくれます。それぞ"
+"れの任務を選択すると、任務の標識があればそれが中央に来るように地図が移動しま"
+"す。そこの星系をクリックすると、じかに航路を設定することもできます。この任務"
+"を選択して、{destsys}への航路の設定が地図に記録されるようにしてみてください｣"
 
 #. Clear it right away if the player closes the window
 #. TODO map mouse gets "stuck" here because the toolkit eats the mouse click up event
@@ -68026,7 +68225,8 @@ msgid ""
 "other tabs in the Info window to get more explanations. When you are done, "
 "close the info window and let us head to our goal!\""
 msgstr ""
-"｢それでいいです！　もう目標の星系へ向かう準備がすべてできました。情報ウィンドウのほかのタブをクリックして、もっと説明をうけることもできます。終わりにする"
+"｢それでいいです！　もう目標の星系へ向かう準備がすべてできました。情報ウィンド"
+"ウのほかのタブをクリックして、もっと説明をうけることもできます。終わりにする"
 "なら、情報ウィンドウを閉じて、目的地へ向かいましょう！｣"
 
 #: dat/missions/tutorial/nelly01.lua:461
@@ -68035,8 +68235,9 @@ msgid ""
 "different known factions in the universe. Not everyone is as friendly as me "
 "out there!\""
 msgstr ""
-"｢#o立場#0情報は、宇宙にあるいろいろな既知の党派にたいする、あなたの現在の立場を通知するものです。宇宙はわたしみたいに好意的な人たちばかりではありませ"
-"んよ！｣"
+"｢#o立場#0情報は、宇宙にあるいろいろな既知の党派にたいする、あなたの現在の立場"
+"を通知するものです。宇宙はわたしみたいに好意的な人たちばかりではありません"
+"よ！｣"
 
 #: dat/missions/tutorial/nelly01.lua:468
 msgid ""
@@ -68045,8 +68246,10 @@ msgid ""
 "on and it comes really in handy. You can also keep a diary and add custom "
 "entries to keep track of what you have done or are doing.\""
 msgstr ""
-"｢#o航海日誌#0は完了した任務や仕事を見なおすのにいい方法です。わたしはときどき、自分が正確にはなにをしたのか、そしてだれに問いあわせるべきなのかを忘れ"
-"るんですが、これがほんとうに役に立つことになります。そのうえ日記を書いたり、独自の項目を追加して自分がしたことやしていることを記録しておくこともできます｣"
+"｢#o航海日誌#0は完了した任務や仕事を見なおすのにいい方法です。わたしはときど"
+"き、自分が正確にはなにをしたのか、そしてだれに問いあわせるべきなのかを忘れる"
+"んですが、これがほんとうに役に立つことになります。そのうえ日記を書いたり、独"
+"自の項目を追加して自分がしたことやしていることを記録しておくこともできます｣"
 
 #: dat/missions/tutorial/nelly01.lua:475
 msgid ""
@@ -68054,8 +68257,9 @@ msgid ""
 "for the #o{outfit}#0 and either #oright-click on it#0 or click on it and "
 "click the buy button to buy it.\""
 msgstr ""
-"｢ここでは、この惑星で売っているすべての艤装品を見ることができます。#o{outfit}#0をさがして、#oそこで右クリック#0するか、クリックしてから買"
-"うボタンをクリックして買ってください｣"
+"｢ここでは、この惑星で売っているすべての艤装品を見ることができます。#o{outfit}"
+"#0をさがして、#oそこで右クリック#0するか、クリックしてから買うボタンをクリッ"
+"クして買ってください｣"
 
 #: dat/missions/tutorial/nelly01.lua:490
 msgid ""
@@ -68063,8 +68267,9 @@ msgid ""
 "sell most outfits back for the price you bought them at. Please try to buy a "
 "#o{tobuy}#0. It should come in handy later.\""
 msgstr ""
-"｢#o{tobuy}#0の代わりに#o{bought}#0を買いましたね！　"
-"心配無用です。ほとんどの艤装品は買った値段で売ることができます。#o{tobuy}#0を買ってみてください。あとで役に立つときがくるはずです｣"
+"｢#o{tobuy}#0の代わりに#o{bought}#0を買いましたね！　心配無用です。ほとんどの"
+"艤装品は買った値段で売ることができます。#o{tobuy}#0を買ってみてください。あと"
+"で役に立つときがくるはずです｣"
 
 #: dat/missions/tutorial/nelly01.lua:494
 msgid ""
@@ -68072,8 +68277,8 @@ msgid ""
 "To be able to use it, please navigate to the #oEquipment Tab#0 of the "
 "landing window.\""
 msgstr ""
-"｢やった！　"
-"#o{bought}#0を買いました。艤装品はすぐには装備されません。使えるようにするために、着陸ウィンドウの#o装備#0タブへ行ってください｣"
+"｢やった！　#o{bought}#0を買いました。艤装品はすぐには装備されません。使えるよ"
+"うにするために、着陸ウィンドウの#o装備#0タブへ行ってください｣"
 
 #: dat/missions/tutorial/nelly01.lua:503
 msgid ""
@@ -68084,9 +68289,12 @@ msgid ""
 "also right click on an outfit to have it directly be assigned to the "
 "smallest free slot it fits into. Try to equip the #o{outfit}#0 now.\""
 msgstr ""
-"｢#o装備#0タブでは、船や機器を取り扱えます。船は 2 隻以上もつことができて、自由に乗り換えることができるんです。武器スロットに#o{outfit}#"
-"0を装備してみてください。最初に艤装品をクリックしてから、装備したい場所のスロットを右クリックします。もし空いているスロットがあるなら、艤装品を右クリック"
-"することで、それが収まる最小の空きスロットに直接割り当てることもできます。さあ、#o{outfit}#0を装備してみてください｣"
+"｢#o装備#0タブでは、船や機器を取り扱えます。船は 2 隻以上もつことができて、自"
+"由に乗り換えることができるんです。武器スロットに#o{outfit}#0を装備してみてく"
+"ださい。最初に艤装品をクリックしてから、装備したい場所のスロットを右クリック"
+"します。もし空いているスロットがあるなら、艤装品を右クリックすることで、それ"
+"が収まる最小の空きスロットに直接割り当てることもできます。さあ、#o{outfit}#0"
+"を装備してみてください｣"
 
 #: dat/missions/tutorial/nelly01.lua:522
 msgid ""
@@ -68096,9 +68304,11 @@ msgid ""
 "that. You can check by opening the #oInfo Window#0 with {infokey}. Check to "
 "make sure that is set up and let us go back to {pnt} in {sys}.\""
 msgstr ""
-"｢できました！　もう#o{outfit}#0は装備されました。もしあなたの船に武器が自動的に設定されているなら、主要兵器に割り当たっているはずです。もし設"
-"定されていないなら、#o{outfit}#0を武器セットに割り当てて、使えるようにしなければならないでしょう。{infokey} "
-"で#o情報#0ウィンドウを開けば確認できます。まちがいなく設定されていることを確認してください。できたら{sys}星系の{pnt}に戻りましょう｣"
+"｢できました！　もう#o{outfit}#0は装備されました。もしあなたの船に武器が自動的"
+"に設定されているなら、主要兵器に割り当たっているはずです。もし設定されていな"
+"いなら、#o{outfit}#0を武器セットに割り当てて、使えるようにしなければならない"
+"でしょう。{infokey} で#o情報#0ウィンドウを開けば確認できます。まちがいなく設"
+"定されていることを確認してください。できたら{sys}星系の{pnt}に戻りましょう｣"
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -68180,8 +68390,10 @@ msgid ""
 "me disable my ship and get it back?\""
 msgstr ""
 "あなたが近づくと、ネリーが顔を輝かせた。\n"
-"｢ねえ、船を受けとって飛ばせると思ってたんです。でも乗って試験運転ができるようになるまえに、なにかが故障して今は円を描いてぐるぐる回ってるんです！　"
-"あなたはイオンキャノンを持ってますよね？　わたしの船を無力化して取り戻すのを手伝ってもらえませんか？｣"
+"｢ねえ、船を受けとって飛ばせると思ってたんです。でも乗って試験運転ができるよう"
+"になるまえに、なにかが故障して今は円を描いてぐるぐる回ってるんです！　あなた"
+"はイオンキャノンを持ってますよね？　わたしの船を無力化して取り戻すのを手伝っ"
+"てもらえませんか？｣"
 
 #: dat/missions/tutorial/nelly02.lua:122
 msgid "Help them with their ship"
@@ -68202,8 +68414,10 @@ msgid ""
 "autonav locked me out and my ship took off without anyone in it! Now it's "
 "flying around in circles outside of {pnt}!\""
 msgstr ""
-"｢また助けてくれてありがとう。で、どういうことかというと、わたしが船を離陸させようと準備してたら、妙な音が外から聞こえてきたので確認しに出たら、自動操縦装"
-"置がわたしをしめだして、だれも乗せずに船を離陸させたんです！　いまでは{pnt}の外で円を描いて飛んでいますよ！｣"
+"｢また助けてくれてありがとう。で、どういうことかというと、わたしが船を離陸させ"
+"ようと準備してたら、妙な音が外から聞こえてきたので確認しに出たら、自動操縦装"
+"置がわたしをしめだして、だれも乗せずに船を離陸させたんです！　いまでは{pnt}の"
+"外で円を描いて飛んでいますよ！｣"
 
 #. Sells Outfits
 #. Sells a particular outfit
@@ -68214,7 +68428,8 @@ msgid ""
 "your active weapon set or as an instant fire weapon set and let's go get my "
 "ship back!\""
 msgstr ""
-"｢すでに無力化用の武器を装備しているようですね。情報ウィンドウで有効な武器セットか瞬間発砲武器セットの主要兵器か副次兵器として設定してください。できたらわ"
+"｢すでに無力化用の武器を装備しているようですね。情報ウィンドウで有効な武器セッ"
+"トか瞬間発砲武器セットの主要兵器か副次兵器として設定してください。できたらわ"
 "たしの船を取り戻しに行きましょう！｣"
 
 #: dat/missions/tutorial/nelly02.lua:172
@@ -68223,8 +68438,9 @@ msgid ""
 "Why don't you try to equip #o{outfitname} before we head out? We want to "
 "disable my ship, not destroy it!\""
 msgstr ""
-"｢無力化用の武器を所有しているようですが、装備してないですね。行くまえに#o{outfitname}#0を装備してくれませんか？　"
-"わたしの船は無力化してほしいんです。破壊じゃありません！｣"
+"｢無力化用の武器を所有しているようですが、装備してないですね。行くまえに"
+"#o{outfitname}#0を装備してくれませんか？　わたしの船は無力化してほしいんで"
+"す。破壊じゃありません！｣"
 
 #: dat/missions/tutorial/nelly02.lua:175
 msgid ""
@@ -68234,8 +68450,10 @@ msgid ""
 "such as #o{nearplanet}#0. You can check what services are available when you "
 "select the planet, or from the map.\""
 msgstr ""
-"｢この惑星には#o艤装所#0も#o造船所#0もないみたいなので、現在の装備を変えることはできません。#o艤装所#0や#o造船所#0がある近くの惑星に行って"
-"みましょう。#o{nearplanet}#0とかですね。どんな施設があるか確認するのは、惑星を選択するか、地図からできます｣"
+"｢この惑星には#o艤装所#0も#o造船所#0もないみたいなので、現在の装備を変えること"
+"はできません。#o艤装所#0や#o造船所#0がある近くの惑星に行ってみましょう。"
+"#o{nearplanet}#0とかですね。どんな施設があるか確認するのは、惑星を選択する"
+"か、地図からできます｣"
 
 #: dat/missions/tutorial/nelly02.lua:178
 msgid ""
@@ -68244,8 +68462,10 @@ msgid ""
 "should have #o{outfitname}#0 for sale. You should buy and equip one before "
 "trying to disable my ship!\""
 msgstr ""
-"｢無力化用の武器はもっていないようですね。覚えておいてください。わたしの船は無力化する必要があるんです。破壊じゃありません！　近くの#o{nearplan"
-"et}#0で#o{outfitname}#0が売っていたはずだと思います。ひとつ買って装備してからわたしの船の無力化を試すべきです！｣"
+"｢無力化用の武器はもっていないようですね。覚えておいてください。わたしの船は無"
+"力化する必要があるんです。破壊じゃありません！　近くの#o{nearplanet}#0で"
+"#o{outfitname}#0が売っていたはずだと思います。ひとつ買って装備してからわたし"
+"の船の無力化を試すべきです！｣"
 
 #. Check to see if truly accepted
 #: dat/missions/tutorial/nelly02.lua:194
@@ -68264,7 +68484,9 @@ msgstr "{sys}星系でネリーの船を無力化して移乗せよ。"
 msgid ""
 "\"You have equipped a #o{outfitname}#0 with disable damage. Looks like "
 "you'll be able to safely disable my rampant ship!\""
-msgstr "｢無力化できる#o{outfitname}#0を装備しました。見さかいのないわたしの船を無事に無力化できるようになったようですね！｣"
+msgstr ""
+"｢無力化できる#o{outfitname}#0を装備しました。見さかいのないわたしの船を無事に"
+"無力化できるようになったようですね！｣"
 
 #: dat/missions/tutorial/nelly02.lua:233
 msgid "Llaminator MK2"
@@ -68278,13 +68500,17 @@ msgstr "騒々しい調停者"
 msgid ""
 "Nelly: \"You disabled it! Now get on top of the ship and board it with "
 "{boardkey}!\""
-msgstr "ネリー : ｢無力化しました！　もう船に上につければ、{boardkey} で移乗できます！｣"
+msgstr ""
+"ネリー : ｢無力化しました！　もう船に上につければ、{boardkey} で移乗できま"
+"す！｣"
 
 #: dat/missions/tutorial/nelly02.lua:299
 msgid ""
 "You board Nelly's ship and quickly go to the control panel to turn off the "
 "autonav."
-msgstr "あなたたちはネリーの船に乗りこんで、いそいで制御卓のところへ行くと、自動操縦装置を止めた。"
+msgstr ""
+"あなたたちはネリーの船に乗りこんで、いそいで制御卓のところへ行くと、自動操縦"
+"装置を止めた。"
 
 #: dat/missions/tutorial/nelly02.lua:300
 msgid ""
@@ -68292,8 +68518,9 @@ msgid ""
 "like this has happened to me! Let me bring the ship back to {pnt} and meet "
 "me at the spaceport bar for your reward.\""
 msgstr ""
-"｢こんなことがおきるなんて、ほんとうに残念。あー、つまり、こんなことがわたしにおきたのは初めてなんです！　"
-"わたしは{pnt}に船を戻すので、宇宙港のバーで会って謝礼を払わせてください｣"
+"｢こんなことがおきるなんて、ほんとうに残念。あー、つまり、こんなことがわたしに"
+"おきたのは初めてなんです！　わたしは{pnt}に船を戻すので、宇宙港のバーで会って"
+"謝礼を払わせてください｣"
 
 #: dat/missions/tutorial/nelly02.lua:306
 msgid "Return to {pnt}"
@@ -68308,7 +68535,8 @@ msgid ""
 "beginning by finding Nelly at a spaceport bar to try again."
 msgstr ""
 "#r任務に失敗 : ネリーの船を破壊してしまった！#0\n"
-"この任務は失敗しましたが、まだ最初からやりなおすことができます。宇宙港のバーでネリーを見つけて再挑戦してください。"
+"この任務は失敗しましたが、まだ最初からやりなおすことができます。宇宙港のバー"
+"でネリーを見つけて再挑戦してください。"
 
 #: dat/missions/tutorial/nelly02.lua:333
 msgid "Nelly is motioning you to come join her at the table."
@@ -68320,16 +68548,17 @@ msgid ""
 "some sort of argument with the person in charge. After a bit you see they "
 "exchange something and she comes back with a grin on her face."
 msgstr ""
-"着陸すると、ネリーはいそいで艤装所へ行き、担当者と口論めいたことになってしまったようだった。しばらくすると、二人がなにかを交換しているのがあなたにもわかっ"
-"た。それからネリーはにっこりとした表情で戻ってきた。"
+"着陸すると、ネリーはいそいで艤装所へ行き、担当者と口論めいたことになってし"
+"まったようだった。しばらくすると、二人がなにかを交換しているのがあなたにもわ"
+"かった。それからネリーはにっこりとした表情で戻ってきた。"
 
 #: dat/missions/tutorial/nelly02.lua:341
 msgid ""
 "\"Got the parts! Cheaper than I expected to. Hopefully this will bring an "
 "end to my ship troubles. Let's go back to #o{pnt}#0 in #o{sys}#0!\""
 msgstr ""
-"｢部品を手に入れました！　"
-"思ったより安かったですね。うまくいけば、これでわたしの船の問題はなくなってくれます。#o{sys}#0星系の#o{pnt}#0に戻りましょう！｣"
+"｢部品を手に入れました！　思ったより安かったですね。うまくいけば、これでわたし"
+"の船の問題はなくなってくれます。#o{sys}#0星系の#o{pnt}#0に戻りましょう！｣"
 
 #: dat/missions/tutorial/nelly02.lua:345
 msgid "Jumpdrive Repair Parts"
@@ -68344,7 +68573,9 @@ msgstr "壊れたジャンプドライブを修理するのに使える交換用
 msgid ""
 "\"We finally made it. Nothing ever comes really easy does it? Ah, before I "
 "forget, let me reward you for your troubles.\""
-msgstr "｢やっと終わりました。　ほんとうに簡単なことなんてないよね？　ああ、忘れるまえに、面倒おかけしたことに謝礼を払わせてください｣"
+msgstr ""
+"｢やっと終わりました。　ほんとうに簡単なことなんてないよね？　ああ、忘れるまえ"
+"に、面倒おかけしたことに謝礼を払わせてください｣"
 
 #. Rewards
 #: dat/missions/tutorial/nelly02.lua:363
@@ -68353,8 +68584,10 @@ msgid ""
 "space. Have fun!\"\n"
 "She runs off to where here ship is stored with the repair parts in hand."
 msgstr ""
-"｢船を修理することにします。うまくいけば、次回会うときは宇宙でですね。楽しくすごしててください！｣\n"
-"ネリーは修理部品を手にして、いま船が保管してある場所へむかって走って出ていった。"
+"｢船を修理することにします。うまくいけば、次回会うときは宇宙でですね。楽しくす"
+"ごしててください！｣\n"
+"ネリーは修理部品を手にして、いま船が保管してある場所へむかって走って出ていっ"
+"た。"
 
 #: dat/missions/tutorial/nelly02.lua:368
 msgid "You helped Nelly repair her ship."
@@ -68372,9 +68605,11 @@ msgid ""
 "hectaperiod if I want it delivered. However, I was able to find that they "
 "seem to have replacements on #o{destpnt}#0 in #o{destsys}#0.\""
 msgstr ""
-"｢船をまた確認させたんです。そしたらたんなる自動操縦の故障じゃないみたいで、ジャンプドライブがこんがり焼けてたんです。交換部品が必要なんですけど、ここには"
-"どこにもないらしくて、配達してほしかったらすくなくとも百時限は待たなきゃならないだろうって言われました。でも#o{destsys}#0星系の#o{dest"
-"pnt}#0には交換部品があるらしいってことはわかってるんです｣"
+"｢船をまた確認させたんです。そしたらたんなる自動操縦の故障じゃないみたいで、"
+"ジャンプドライブがこんがり焼けてたんです。交換部品が必要なんですけど、ここに"
+"はどこにもないらしくて、配達してほしかったらすくなくとも百時限は待たなきゃな"
+"らないだろうって言われました。でも#o{destsys}#0星系の#o{destpnt}#0には交換部"
+"品があるらしいってことはわかってるんです｣"
 
 #: dat/missions/tutorial/nelly02.lua:381
 msgid ""
@@ -68383,8 +68618,10 @@ msgid ""
 "\"Come on, let's head to #o{destpnt}#0 to grab a spare part so I can finally "
 "get my ship off the ground.\""
 msgstr ""
-"答える間もないうちに、ネリーはあなたの腕をつかんで、着岸しているあなたの船の方に引っぱった。\n"
-"｢ほら、#o{destpnt}#0に行って、交換部品を手に入れましょう。そうすればやっと船を地上から解放させられます｣"
+"答える間もないうちに、ネリーはあなたの腕をつかんで、着岸しているあなたの船の"
+"方に引っぱった。\n"
+"｢ほら、#o{destpnt}#0に行って、交換部品を手に入れましょう。そうすればやっと船"
+"を地上から解放させられます｣"
 
 #: dat/missions/tutorial/nelly02.lua:383
 msgid ""
@@ -68406,7 +68643,8 @@ msgid ""
 "would say run, but I don't think we'll be able to outrun them. I think that "
 "bribing them may be the only way out.\""
 msgstr ""
-"｢海賊のハイエナ三人組に目をつけられたようですね。ふつうなら逃げろというところですが、逃れられるとは思えません。たぶん、わいろを渡すのが唯一の逃げ道だろう"
+"｢海賊のハイエナ三人組に目をつけられたようですね。ふつうなら逃げろというところ"
+"ですが、逃れられるとは思えません。たぶん、わいろを渡すのが唯一の逃げ道だろう"
 "と思います｣"
 
 #: dat/missions/tutorial/nelly02.lua:434
@@ -68416,16 +68654,18 @@ msgid ""
 "be expensive, it beats getting blown to bits. Try targetting the nearest "
 "enemy with {targetkey}, hailing them with {hailkey}, and bribing them!\""
 msgstr ""
-"｢海賊を目標に選んで、{hailkey} で呼びかけてください。目標が敵対的なら、目標とその仲間にわいろを渡す選択肢があるはずです。高いかもしれませんが、"
-"ばらばらに吹き飛ばされるよりはましですよ。{targetkey} でいちばん近い目標を選んで、{hailkey} "
-"で呼びかけてみてください。そしてわいろを渡すんです！｣"
+"｢海賊を目標に選んで、{hailkey} で呼びかけてください。目標が敵対的なら、目標と"
+"その仲間にわいろを渡す選択肢があるはずです。高いかもしれませんが、ばらばらに"
+"吹き飛ばされるよりはましですよ。{targetkey} でいちばん近い目標を選んで、"
+"{hailkey} で呼びかけてみてください。そしてわいろを渡すんです！｣"
 
 #: dat/missions/tutorial/nelly02.lua:436
 msgid ""
 "\"It looks like you won't have enough money to bribe them. Here, take "
 "#g{credits}#0, that should be enough hopefully.\""
 msgstr ""
-"｢あなたはわいろを渡せるほどのお金を持ってないみたいですね。はい、#g{credits}#0 あげますよ。うまくいけば、それでじゅうぶんでしょう｣"
+"｢あなたはわいろを渡せるほどのお金を持ってないみたいですね。はい、#g{credits}"
+"#0 あげますよ。うまくいけば、それでじゅうぶんでしょう｣"
 
 #: dat/missions/tutorial/nelly02.lua:443
 msgid "Hail and bribe the pirates"
@@ -68441,13 +68681,16 @@ msgstr "ネリー : ｢そういうやりかたもあるよね｣"
 
 #: dat/missions/tutorial/nelly02.lua:475
 msgid "Nelly: \"You only bribed some pilots, try to bribe them all!\""
-msgstr "ネリー : ｢一部のパイロットにしかわいろを渡さなかった。全員に渡すようにして！｣"
+msgstr ""
+"ネリー : ｢一部のパイロットにしかわいろを渡さなかった。全員に渡すようにして！｣"
 
 #: dat/missions/tutorial/nelly02.lua:477
 msgid ""
 "Nelly: \"Quickly! Target the hostile pirates with {targetkey} and bribe them "
 "by hailing them with {hailkey}!\""
-msgstr "ネリー : ｢いそいで！　{targetkey} で敵対している海賊を選択して、{hailkey} で呼びかけてわいろを渡すんです！｣"
+msgstr ""
+"ネリー : ｢いそいで！　{targetkey} で敵対している海賊を選択して、{hailkey} で"
+"呼びかけてわいろを渡すんです！｣"
 
 #: dat/missions/tutorial/nelly02.lua:502
 msgid "I know you're out there Nelly. Please come forward voluntarily."
@@ -68483,10 +68726,13 @@ msgid ""
 "\"Looks like we're going to have to avoid her for now. You know how "
 "electronic warfare works?\""
 msgstr ""
-"画面に現れたパシファイアーを見ると、ネリーはちょっとびくっとしたようだった。\n"
-"｢ちょっと、あれはロビンみたい。ちくしょう、わたしが借りを返さなかったとでもいうの？｣\n"
+"画面に現れたパシファイアーを見ると、ネリーはちょっとびくっとしたようだっ"
+"た。\n"
+"｢ちょっと、あれはロビンみたい。ちくしょう、わたしが借りを返さなかったとでもい"
+"うの？｣\n"
 "ネリーは顔をしかめた。\n"
-"｢さしあたり避けなきゃならないみたいね。電子戦がどうやって作用するのか知ってるでしょ？｣"
+"｢さしあたり避けなきゃならないみたいね。電子戦がどうやって作用するのか知ってる"
+"でしょ？｣"
 
 #: dat/missions/tutorial/nelly02.lua:530 dat/missions/tutorial/nelly02.lua:549
 msgid "Learn about Electronic Warfare"
@@ -68499,7 +68745,8 @@ msgid ""
 "detected. Smaller ships like yachts or interceptors are much harder to "
 "detect than carriers or battleship.\""
 msgstr ""
-"｢長くならないように努力するつもり。じゃあ説明すると、船のセンサーは重力異常を探知することで機能しています。だから船の質量は探知において決定的な役割を果た"
+"｢長くならないように努力するつもり。じゃあ説明すると、船のセンサーは重力異常を"
+"探知することで機能しています。だから船の質量は探知において決定的な役割を果た"
 "していて、ヨットや要撃機のような小型の船は、母艦や戦艦よりずっと探知が難しい｣"
 
 #: dat/missions/tutorial/nelly02.lua:536 dat/shipai.lua:113
@@ -68527,9 +68774,10 @@ msgid ""
 "ships. However, if a ship gets within the #ostealth#0 distance of your ship, "
 "it will slowly uncover you.\""
 msgstr ""
-"｢ほかの船からじゅうぶんに離れていれば、{stealthkey} "
-"でステルスモードを起動できます。ステルスモードになれば、あなたの船はすべての船から完全に見えなくなります。ですが、あなたの船の#oステルス#0距離以内に "
-"1 隻でも船が入ると、ゆっくりとあなたの存在があきらかになっていきます｣"
+"｢ほかの船からじゅうぶんに離れていれば、{stealthkey} でステルスモードを起動で"
+"きます。ステルスモードになれば、あなたの船はすべての船から完全に見えなくなり"
+"ます。ですが、あなたの船の#oステルス#0距離以内に 1 隻でも船が入ると、ゆっくり"
+"とあなたの存在があきらかになっていきます｣"
 
 #: dat/missions/tutorial/nelly02.lua:541
 msgid ""
@@ -68537,8 +68785,9 @@ msgid ""
 "your ship heavily to mask your gravitational presence. This also has the "
 "effect of letting you jump out from jumpoints further away.\""
 msgstr ""
-"｢船がほかの船から見えなくなるだけじゃなくて、#0ステルス#0で船はそうとう遅くなります。これは重力が存在するのを隠すためです。これにはジャンプポイントか"
-"らもっと離れたところでジャンプから出るという効果もあります｣"
+"｢船がほかの船から見えなくなるだけじゃなくて、#0ステルス#0で船はそうとう遅くな"
+"ります。これは重力が存在するのを隠すためです。これにはジャンプポイントから"
+"もっと離れたところでジャンプから出るという効果もあります｣"
 
 #: dat/missions/tutorial/nelly02.lua:542
 msgid ""
@@ -68547,8 +68796,10 @@ msgid ""
 "to scan depends on the mass of the ship. If you don't want to be scanned, I "
 "recommend you to rely on stealth as much as possible.\""
 msgstr ""
-"｢ステルスモードになっていないと、船はあなたの船を目標としてスキャンできます。これで知られたくない情報があきらかになることもあります。たとえば、違法な積み"
-"荷や艤装品とか。スキャンにかかる時間は船の質量に依存します。もしスキャンされたくなかったら、できるだけステルスに頼ることを勧めます｣"
+"｢ステルスモードになっていないと、船はあなたの船を目標としてスキャンできます。"
+"これで知られたくない情報があきらかになることもあります。たとえば、違法な積み"
+"荷や艤装品とか。スキャンにかかる時間は船の質量に依存します。もしスキャンされ"
+"たくなかったら、できるだけステルスに頼ることを勧めます｣"
 
 #: dat/missions/tutorial/nelly02.lua:543
 msgid ""
@@ -68559,9 +68810,12 @@ msgid ""
 "and get to the jump point. It shouldn't be hard, but be careful not to get "
 "close to them!\""
 msgstr ""
-"｢{shipname}に見つかるのを避けるために、まずは近くの船から離れて、{stealthkey} でステルスモードに入ってください。それから "
-"{overlaykey} で開けるオーバーレイマップを使って、ほかの船を避けるようにしてください。オーバーレイマップには探知半径が赤い円で表示されます。だ"
-"から{shipname}をうかいして、ジャンプポイントに行けるでしょう。難しくないはずですが、近寄られないように注意してください！｣"
+"｢{shipname}に見つかるのを避けるために、まずは近くの船から離れて、"
+"{stealthkey} でステルスモードに入ってください。それから {overlaykey} で開ける"
+"オーバーレイマップを使って、ほかの船を避けるようにしてください。オーバーレイ"
+"マップには探知半径が赤い円で表示されます。だから{shipname}をうかいして、ジャ"
+"ンプポイントに行けるでしょう。難しくないはずですが、近寄られないように注意し"
+"てください！｣"
 
 #: dat/missions/tutorial/nelly02.lua:547
 msgid "\"You sure you know how to avoid them? It can be a bit tricky.\""
@@ -68594,7 +68848,9 @@ msgstr "ネリー、今回は逃すつもりはない！"
 msgid ""
 "Nelly: \"They found us and are scanning us. Quickly try to stealth with "
 "{stealthkey}!\""
-msgstr "ネリー : ｢見つかってスキャンされてる。{stealthkey} を押して、いそいでステルスを試して！｣"
+msgstr ""
+"ネリー : ｢見つかってスキャンされてる。{stealthkey} を押して、いそいでステルス"
+"を試して！｣"
 
 #.
 #. <?xml version='1.0' encoding='utf8'?>
@@ -69025,10 +69281,13 @@ msgid ""
 "Mule Bulk Cargo Starship. As my previous owner found out, they don't do too "
 "well in combat, however.\""
 msgstr ""
-"｢ここは艤装所です。ここで艤装品を買って、星間船をずっとよくすることができるんです！　"
-"船に新しい武器や、余分な船倉、もっと強力な中核システム、などなどを備えつけられます！　もっと簡単に銀河を探検するのを助けてくれる、地方地図もここで購入でき"
-"ます。もちろん、もっと高級な武器類や星間船に必要となる免許もです。たとえば、大型民間船免許がメレンデズのミュールばら積み貨物星間船を買うのには必要になりま"
-"す。とはいえ、わたしのまえの所有者が気づいたとおり、ミュールは戦いがあまりうまくありません｣"
+"｢ここは艤装所です。ここで艤装品を買って、星間船をずっとよくすることができるん"
+"です！　船に新しい武器や、余分な船倉、もっと強力な中核システム、などなどを備"
+"えつけられます！　もっと簡単に銀河を探検するのを助けてくれる、地方地図もここ"
+"で購入できます。もちろん、もっと高級な武器類や星間船に必要となる免許もです。"
+"たとえば、大型民間船免許がメレンデズのミュールばら積み貨物星間船を買うのには"
+"必要になります。とはいえ、わたしのまえの所有者が気づいたとおり、ミュールは戦"
+"いがあまりうまくありません｣"
 
 #: dat/missions/tutorial/tutorial.lua:255
 msgid ""
@@ -70443,13 +70702,13 @@ msgstr ""
 #. buttons
 #: dat/missions/zalek/neburesearch/neburesearch_03.lua:149
 #: dat/missions/zalek/neburesearch/neburesearch_03.lua:159
-#: dat/scripts/vntk.lua:72 src/dialogue.c:396
+#: dat/scripts/luatk/core.lua:460 dat/scripts/vntk.lua:72 src/dialogue.c:396
 msgid "Yes"
 msgstr "はい"
 
 #: dat/missions/zalek/neburesearch/neburesearch_03.lua:149
 #: dat/missions/zalek/neburesearch/neburesearch_03.lua:159
-#: dat/scripts/vntk.lua:73 src/dialogue.c:398
+#: dat/scripts/luatk/core.lua:466 dat/scripts/vntk.lua:73 src/dialogue.c:398
 msgid "No"
 msgstr "いいえ"
 
@@ -73802,6 +74061,7 @@ msgstr "failed to set fallback font"
 #. Set scissors
 #. Draw widgets ontop
 #. Restore scissors
+#. Draw overlay
 #.
 #. -- Widget class
 #. --
@@ -73827,7 +74087,7 @@ msgstr "failed to set fallback font"
 #. High Level dialogue stuff
 #. --
 #. Add the OK button
-#: dat/scripts/luatk/core.lua:439 src/dialogue.c:160 src/dialogue.c:286
+#: dat/scripts/luatk/core.lua:450 src/dialogue.c:160 src/dialogue.c:286
 #: src/dialogue.c:343 src/dialogue.c:736 src/options.c:253 src/options.c:573
 #: src/options.c:876 src/options.c:1179
 msgid "OK"
@@ -77173,7 +77433,7 @@ msgid "Loaded %d AI Profile"
 msgid_plural "Loaded %d AI Profiles"
 msgstr[0] "Loaded %d AI Profile(s)"
 
-#: src/ai.c:590 src/board.c:149 src/comm.c:168 src/info.c:385 src/land.c:1450
+#: src/ai.c:590 src/board.c:151 src/comm.c:168 src/info.c:385 src/land.c:1450
 #, c-format
 msgid ""
 "Error loading file: %s\n"
@@ -77333,7 +77593,7 @@ msgstr "Background -> 'background' : %s"
 msgid "unknown error"
 msgstr "unknown error"
 
-#: src/board.c:71
+#: src/board.c:71 src/player.c:1657
 msgid "#rYou need a target to board first!"
 msgstr "#r移乗のための目標が最初に必要です！"
 
@@ -77349,35 +77609,35 @@ msgstr "#r目標にもういちど移乗することはできません。"
 msgid "#rYou cannot board a ship that isn't disabled!"
 msgstr "#r無力化されていない船に移乗はできません！"
 
-#: src/board.c:94
+#: src/board.c:95
 msgid "#rYou are too far away to board your target."
 msgstr "#r目標に移乗するには遠く離れすぎています。"
 
-#: src/board.c:100
+#: src/board.c:102
 msgid "#rYou are going too fast to board the ship."
 msgstr "#r船に移乗するには速度が速すぎます。"
 
-#: src/board.c:107
+#: src/board.c:109
 msgid "Unable to recover fighter."
 msgstr "Unable to recover fighter."
 
-#: src/board.c:110
+#: src/board.c:112
 #, c-format
 msgid "#oYou recover your %s fighter."
 msgstr "戦闘機%sを回収しました。"
 
-#: src/board.c:120
+#: src/board.c:122
 #, c-format
 msgid "#oBoarding ship #%c%s#0."
 msgstr "#o#%c%s#0に移乗しています。"
 
 #. error has occurred
-#: src/board.c:164
+#: src/board.c:166
 #, c-format
 msgid "Board: '%s'"
 msgstr "Board: '%s'"
 
-#: src/board.c:247
+#: src/board.c:250
 #, c-format
 msgid "#%c%s#0 has plundered %s from your ship!"
 msgstr "#%c%s#0があなたの船から %s強奪していきました！"
@@ -77534,7 +77794,7 @@ msgstr "Trying to modify temporary commodity '%s'!"
 msgid "Malformed %s file: missing root element '%s'"
 msgstr "Malformed %s file: missing root element '%s'"
 
-#: src/commodity.c:667 src/faction.c:1526 src/map.c:2681 src/outfit.c:1144
+#: src/commodity.c:667 src/faction.c:1526 src/map.c:2681 src/outfit.c:1121
 #: src/ship.c:525 src/ship.c:987 src/space.c:1773 src/space.c:1831
 #: src/space.c:3423 src/tech.c:112
 #, c-format
@@ -78761,15 +79021,15 @@ msgstr "使用可能な艤装品"
 msgid "Favourite"
 msgstr "お気に入り"
 
-#: src/equipment.c:602 src/outfit.c:295
+#: src/equipment.c:602 src/outfit.c:283
 msgid "Weapon"
 msgstr "武器"
 
-#: src/equipment.c:610 src/outfit.c:293
+#: src/equipment.c:610 src/outfit.c:281
 msgid "Utility"
 msgstr "実用品"
 
-#: src/equipment.c:618 src/outfit.c:291
+#: src/equipment.c:618 src/outfit.c:279
 msgid "Structure"
 msgstr "構造"
 
@@ -79394,7 +79654,7 @@ msgstr "FT_Select_Charmap failed to change character mapping."
 msgid "Adding translations from %s"
 msgstr "Adding translations from %s"
 
-#: src/gui.c:401 src/input.c:1279
+#: src/gui.c:401 src/input.c:1280
 msgid "Gfx index out of range"
 msgstr "Gfx index out of range"
 
@@ -80226,7 +80486,7 @@ msgid "Cycles through jump points."
 msgstr "ジャンプポイントを順にくり返して選択する。"
 
 #. create the window.
-#: src/input.c:94 src/map.c:259 src/outfit.c:884
+#: src/input.c:94 src/map.c:259 src/outfit.c:869
 msgid "Star Map"
 msgstr "星図"
 
@@ -81893,10 +82153,6 @@ msgid "Commodity prices for %s are not available here at the moment."
 msgstr "今ここで%sの商品価格は入手できない。"
 
 #: src/map_system.c:1043
-msgid "Insufficient Credits"
-msgstr "クレジットが不足"
-
-#: src/map_system.c:1043
 #, c-format
 msgid "You need %s to purchase this information."
 msgstr "この情報を買うには %s 必要だ。"
@@ -82924,7 +83180,7 @@ msgstr "Bad argument to news.date(), must be article or a table of articles"
 msgid "Outfit is invalid."
 msgstr "Outfit is invalid."
 
-#: src/nlua_outfit.c:527
+#: src/nlua_outfit.c:525
 msgid "Outfit has invalid damage type."
 msgstr "Outfit has invalid damage type."
 
@@ -83392,7 +83648,7 @@ msgstr "Loading object file %s"
 msgid "No such material %s"
 msgstr "No such material %s"
 
-#: src/opengl.c:109 src/player.c:2145
+#: src/opengl.c:109 src/player.c:2173
 msgid "Aborting screenshot"
 msgstr "Aborting screenshot"
 
@@ -83893,147 +84149,147 @@ msgstr "星雲の輝度 : %.0f%%"
 msgid "Map Overlay Opacity: %.0f%%"
 msgstr "オーバーレイマップの濃さ : %.0f%%"
 
-#: src/outfit.c:120
+#: src/outfit.c:112
 #, c-format
 msgid "Outfit '%s' not found in stack."
 msgstr "Outfit '%s' not found in stack."
 
-#: src/outfit.c:310
+#: src/outfit.c:298
 msgid "Small"
 msgstr "小型"
 
-#: src/outfit.c:312
+#: src/outfit.c:300
 msgid "Medium"
 msgstr "中型"
 
-#: src/outfit.c:314
+#: src/outfit.c:302
 msgid "Large"
 msgstr "大型"
 
-#: src/outfit.c:402
+#: src/outfit.c:390
 #, c-format
 msgid "'%s' does not match any outfit slot sizes."
 msgstr "'%s' does not match any outfit slot sizes."
 
-#: src/outfit.c:417
+#: src/outfit.c:405
 #, c-format
 msgid "Outfit '%s' has implicit slot size, setting to '%s'."
 msgstr "Outfit '%s' has implicit slot size, setting to '%s'."
 
-#: src/outfit.c:872
+#: src/outfit.c:857
 msgid "NULL"
 msgstr "空き"
 
-#: src/outfit.c:873
+#: src/outfit.c:858
 msgid "Bolt Cannon"
 msgstr "ボルトキャノン"
 
-#: src/outfit.c:874
+#: src/outfit.c:859
 msgid "Beam Cannon"
 msgstr "ビームキャノン"
 
-#: src/outfit.c:875
+#: src/outfit.c:860
 msgid "Bolt Turret"
 msgstr "ボルト砲塔"
 
-#: src/outfit.c:876
+#: src/outfit.c:861
 msgid "Beam Turret"
 msgstr "ビーム砲塔"
 
-#: src/outfit.c:877 src/outfit.c:907
+#: src/outfit.c:862 src/outfit.c:891
 msgid "Launcher"
 msgstr "発射機"
 
-#: src/outfit.c:878
+#: src/outfit.c:863
 msgid "Ammunition"
 msgstr "弾薬"
 
-#: src/outfit.c:879
+#: src/outfit.c:864
 msgid "Turret Launcher"
 msgstr "砲塔型発射機"
 
-#: src/outfit.c:880
+#: src/outfit.c:865
 msgid "Ship Modification"
 msgstr "船の改造"
 
-#: src/outfit.c:881 src/outfit.c:911
+#: src/outfit.c:866 src/outfit.c:895
 msgid "Afterburner"
 msgstr "アフターバーナー"
 
-#: src/outfit.c:882 src/outfit.c:912
+#: src/outfit.c:867 src/outfit.c:896
 msgid "Fighter Bay"
 msgstr "戦闘機格納庫"
 
-#: src/outfit.c:883 src/outfit.c:913 src/ship.c:190
+#: src/outfit.c:868 src/outfit.c:897 src/ship.c:190
 msgid "Fighter"
 msgstr "戦闘機"
 
-#: src/outfit.c:885 src/outfit.c:915
+#: src/outfit.c:870 src/outfit.c:899
 msgid "Local Map"
 msgstr "系内地図"
 
-#: src/outfit.c:886 src/outfit.c:916
+#: src/outfit.c:871 src/outfit.c:900
 msgid "GUI"
 msgstr "GUI"
 
-#: src/outfit.c:887 src/outfit.c:917
+#: src/outfit.c:872 src/outfit.c:901
 msgid "License"
 msgstr "免許"
 
-#: src/outfit.c:905
+#: src/outfit.c:889
 msgid "Bolt Weapon"
 msgstr "ボルト兵器"
 
-#: src/outfit.c:906
+#: src/outfit.c:890
 msgid "Beam Weapon"
 msgstr "ビーム兵器"
 
-#: src/outfit.c:908
+#: src/outfit.c:892
 msgid "Ammo"
 msgstr "弾薬"
 
 #. else if (outfit_isTurret(o))     return N_("Turret");
-#: src/outfit.c:910
+#: src/outfit.c:894
 msgid "Modification"
 msgstr "改造"
 
-#: src/outfit.c:914
+#: src/outfit.c:898
 msgid "Map"
 msgstr "地図"
 
-#: src/outfit.c:930
+#: src/outfit.c:913
 msgid "Unguided"
 msgstr "無誘導"
 
-#: src/outfit.c:931
+#: src/outfit.c:914
 msgid "Seek"
 msgstr "追跡"
 
-#: src/outfit.c:932
+#: src/outfit.c:915
 msgid "Smart"
 msgstr "巧妙"
 
-#: src/outfit.c:936
+#: src/outfit.c:919
 #, c-format
 msgid "Outfit '%s' is not an ammo outfit"
 msgstr "Outfit '%s' is not an ammo outfit"
 
-#: src/outfit.c:1051
+#: src/outfit.c:1030
 #, c-format
 msgid "Invalid outfit type: '%s'"
 msgstr "Invalid outfit type: '%s'"
 
-#: src/outfit.c:1094
+#: src/outfit.c:1072
 #, c-format
 msgid "Unknown damage type '%s'"
 msgstr "Unknown damage type '%s'"
 
-#: src/outfit.c:1097
+#: src/outfit.c:1075
 #, c-format
 msgid "Damage has unknown node '%s'"
 msgstr "Damage has unknown node '%s'"
 
-#: src/outfit.c:1126
+#: src/outfit.c:1103
 #, c-format
 msgid ""
 "%s xml collision polygon does not exist!\n"
@@ -84044,12 +84300,12 @@ msgstr ""
 "                Please use the script 'polygon_from_sprite.py' that can be "
 "found in Naev's artwork repo."
 
-#: src/outfit.c:1226 src/outfit.c:1602
+#: src/outfit.c:1202 src/outfit.c:1575
 #, c-format
 msgid "Outfit '%s' has invalid blowup property: '%s'"
 msgstr "Outfit '%s' has invalid blowup property: '%s'"
 
-#: src/outfit.c:1252 src/outfit.c:1629
+#: src/outfit.c:1228 src/outfit.c:1602
 #, c-format
 msgid ""
 "Outfit '%s': the number of collision polygons is wrong.\n"
@@ -84058,21 +84314,21 @@ msgstr ""
 "Outfit '%s': the number of collision polygons is wrong.\n"
 "                     npolygon = %i and sx*sy = %i"
 
-#: src/outfit.c:1296 src/outfit.c:1454 src/outfit.c:1546 src/outfit.c:1677
-#: src/outfit.c:1766 src/outfit.c:1838 src/outfit.c:1905 src/outfit.c:1947
-#: src/outfit.c:2018 src/outfit.c:2041 src/outfit.c:2082 src/outfit.c:2119
-#: src/outfit.c:2152 src/outfit.c:2302 src/outfit.c:2383
+#: src/outfit.c:1272 src/outfit.c:1429 src/outfit.c:1520 src/outfit.c:1650
+#: src/outfit.c:1738 src/outfit.c:1809 src/outfit.c:1876 src/outfit.c:1918
+#: src/outfit.c:1989 src/outfit.c:2012 src/outfit.c:2051 src/outfit.c:2087
+#: src/outfit.c:2119 src/outfit.c:2267 src/outfit.c:2348
 #, c-format
 msgid "Outfit '%s' has unknown node '%s'"
 msgstr "Outfit '%s' has unknown node '%s'"
 
-#: src/outfit.c:1325 src/outfit.c:2668
+#: src/outfit.c:1301 src/outfit.c:2630
 #, c-format
 msgid "%s [%s]"
 msgstr "%s [%s]"
 
-#: src/outfit.c:1327 src/outfit.c:1474 src/outfit.c:1846 src/outfit.c:1916
-#: src/outfit.c:2670
+#: src/outfit.c:1303 src/outfit.c:1449 src/outfit.c:1817 src/outfit.c:1887
+#: src/outfit.c:2632
 #, c-format
 msgid ""
 "\n"
@@ -84081,7 +84337,7 @@ msgstr ""
 "\n"
 "CPU: %.0f"
 
-#: src/outfit.c:1328 src/outfit.c:1475 src/outfit.c:2688
+#: src/outfit.c:1304 src/outfit.c:1450 src/outfit.c:2650
 #, c-format
 msgid ""
 "\n"
@@ -84090,7 +84346,7 @@ msgstr ""
 "\n"
 "貫通 : %.0f%%"
 
-#: src/outfit.c:1329 src/outfit.c:2689
+#: src/outfit.c:1305 src/outfit.c:2651
 #, c-format
 msgid ""
 "\n"
@@ -84099,7 +84355,7 @@ msgstr ""
 "\n"
 "ダメージ : %.2f/秒 [%.0f/発]"
 
-#: src/outfit.c:1331
+#: src/outfit.c:1307
 #, c-format
 msgid ""
 "\n"
@@ -84108,7 +84364,7 @@ msgstr ""
 "\n"
 "無力化 : %.2f/秒 [%.0f/発]"
 
-#: src/outfit.c:1333 src/outfit.c:2693
+#: src/outfit.c:1309 src/outfit.c:2655
 #, c-format
 msgid ""
 "\n"
@@ -84117,7 +84373,7 @@ msgstr ""
 "\n"
 "発射速度 : %.1f/秒"
 
-#: src/outfit.c:1334 src/outfit.c:2705
+#: src/outfit.c:1310 src/outfit.c:2667
 #, c-format
 msgid ""
 "\n"
@@ -84126,7 +84382,7 @@ msgstr ""
 "\n"
 "エネルギー : %.1f/秒 [%.0f/発]"
 
-#: src/outfit.c:1336 src/outfit.c:1484
+#: src/outfit.c:1312 src/outfit.c:1459
 #, c-format
 msgid ""
 "\n"
@@ -84135,7 +84391,7 @@ msgstr ""
 "\n"
 "射程 : %s"
 
-#: src/outfit.c:1337 src/outfit.c:2702
+#: src/outfit.c:1313 src/outfit.c:2664
 #, c-format
 msgid ""
 "\n"
@@ -84144,7 +84400,7 @@ msgstr ""
 "\n"
 "速度 : %.0f"
 
-#: src/outfit.c:1338 src/outfit.c:1485
+#: src/outfit.c:1314 src/outfit.c:1460
 #, c-format
 msgid ""
 "\n"
@@ -84153,7 +84409,7 @@ msgstr ""
 "\n"
 "発熱 : %.1f 秒"
 
-#: src/outfit.c:1340 src/outfit.c:1487 src/outfit.c:2683
+#: src/outfit.c:1316 src/outfit.c:1462 src/outfit.c:2645
 #, c-format
 msgid ""
 "\n"
@@ -84162,7 +84418,7 @@ msgstr ""
 "\n"
 "首振り角度 : %.1f 度"
 
-#: src/outfit.c:1341 src/outfit.c:2675 src/outfit.c:2681
+#: src/outfit.c:1317 src/outfit.c:2637 src/outfit.c:2643
 #, c-format
 msgid ""
 "\n"
@@ -84171,7 +84427,7 @@ msgstr ""
 "\n"
 "最適追跡 : %s"
 
-#: src/outfit.c:1342 src/outfit.c:2676 src/outfit.c:2682
+#: src/outfit.c:1318 src/outfit.c:2638 src/outfit.c:2644
 #, c-format
 msgid ""
 "\n"
@@ -84180,14 +84436,14 @@ msgstr ""
 "\n"
 "追跡限界 : %s"
 
-#: src/outfit.c:1345 src/outfit.c:1490 src/outfit.c:1691 src/outfit.c:1868
-#: src/outfit.c:1922 src/outfit.c:1957 src/outfit.c:2057 src/outfit.c:2095
-#: src/outfit.c:2128 src/outfit.c:2162 src/outfit.c:2387
+#: src/outfit.c:1321 src/outfit.c:1465 src/outfit.c:1664 src/outfit.c:1839
+#: src/outfit.c:1893 src/outfit.c:1928 src/outfit.c:2027 src/outfit.c:2064
+#: src/outfit.c:2096 src/outfit.c:2129 src/outfit.c:2352
 #, c-format
 msgid "Outfit '%s' missing/invalid '%s' element"
 msgstr "Outfit '%s' missing/invalid '%s' element"
 
-#: src/outfit.c:1476
+#: src/outfit.c:1451
 #, c-format
 msgid ""
 "\n"
@@ -84196,7 +84452,7 @@ msgstr ""
 "\n"
 "ダメージ : %.2f/秒 [%s]"
 
-#: src/outfit.c:1479
+#: src/outfit.c:1454
 #, c-format
 msgid ""
 "\n"
@@ -84205,7 +84461,7 @@ msgstr ""
 "\n"
 "無力化 : %.0f/秒"
 
-#: src/outfit.c:1480 src/outfit.c:1851
+#: src/outfit.c:1455 src/outfit.c:1822
 #, c-format
 msgid ""
 "\n"
@@ -84214,7 +84470,7 @@ msgstr ""
 "\n"
 "エネルギー : %.1f/秒"
 
-#: src/outfit.c:1481
+#: src/outfit.c:1456
 #, c-format
 msgid ""
 "\n"
@@ -84223,12 +84479,12 @@ msgstr ""
 "\n"
 "発砲間隔 : %.1f Duration"
 
-#: src/outfit.c:1482
+#: src/outfit.c:1457
 #, c-format
 msgid " (%.1f minimum)"
 msgstr " (最小 %.1f)"
 
-#: src/outfit.c:1483
+#: src/outfit.c:1458
 #, c-format
 msgid ""
 "\n"
@@ -84237,22 +84493,22 @@ msgstr ""
 "\n"
 "冷却期間 : %.1f"
 
-#: src/outfit.c:1559
+#: src/outfit.c:1533
 #, c-format
 msgid "Outfit '%s' missing '%s' element"
 msgstr "Outfit '%s' missing '%s' element"
 
-#: src/outfit.c:1673
+#: src/outfit.c:1646
 #, c-format
 msgid "Ammo '%s' has unknown ai type '%s'."
 msgstr "Ammo '%s' has unknown ai type '%s'."
 
-#: src/outfit.c:1709
+#: src/outfit.c:1682
 #, c-format
 msgid "Outfit '%s' has no speed nor thrust set!"
 msgstr "Outfit '%s' has no speed nor thrust set!"
 
-#: src/outfit.c:1778 src/outfit.c:1845
+#: src/outfit.c:1750 src/outfit.c:1816
 msgid ""
 "\n"
 "#rActivated Outfit#0"
@@ -84260,17 +84516,17 @@ msgstr ""
 "\n"
 "#r作動させるか選べる艤装品#0"
 
-#: src/outfit.c:1780
+#: src/outfit.c:1752
 #, c-format
 msgid " #r(%.1f s Cooldown)#0"
 msgstr " #r(冷却期間 %.1f 秒)#0"
 
-#: src/outfit.c:1781
+#: src/outfit.c:1753
 #, c-format
 msgid "%+.0f CPU"
 msgstr "%+.0f CPU"
 
-#: src/outfit.c:1847
+#: src/outfit.c:1818
 msgid ""
 "\n"
 "Only one can be equipped"
@@ -84278,7 +84534,7 @@ msgstr ""
 "\n"
 "ひとつだけ装備できます"
 
-#: src/outfit.c:1848
+#: src/outfit.c:1819
 #, c-format
 msgid ""
 "\n"
@@ -84287,7 +84543,7 @@ msgstr ""
 "\n"
 "最大有効質量 : %.0f"
 
-#: src/outfit.c:1849
+#: src/outfit.c:1820
 #, c-format
 msgid ""
 "\n"
@@ -84296,7 +84552,7 @@ msgstr ""
 "\n"
 "推力 : %.0f%%"
 
-#: src/outfit.c:1850
+#: src/outfit.c:1821
 #, c-format
 msgid ""
 "\n"
@@ -84305,7 +84561,7 @@ msgstr ""
 "\n"
 "最高速度 : %.0f%%"
 
-#: src/outfit.c:1852
+#: src/outfit.c:1823
 #, c-format
 msgid ""
 "\n"
@@ -84314,7 +84570,7 @@ msgstr ""
 "\n"
 "騒音 : %.1f"
 
-#: src/outfit.c:1917
+#: src/outfit.c:1888
 #, c-format
 msgid ""
 "\n"
@@ -84323,7 +84579,7 @@ msgstr ""
 "\n"
 "発射間隔 : %.1f 秒"
 
-#: src/outfit.c:1918 src/outfit.c:2687
+#: src/outfit.c:1889 src/outfit.c:2649
 #, c-format
 msgid ""
 "\n"
@@ -84332,7 +84588,7 @@ msgstr ""
 "\n"
 "格納数 : %d 発の%s :"
 
-#: src/outfit.c:1919 src/outfit.c:2704
+#: src/outfit.c:1890 src/outfit.c:2666
 #, c-format
 msgid ""
 "\n"
@@ -84341,108 +84597,108 @@ msgstr ""
 "\n"
 "再装填 : %.1f 秒"
 
-#: src/outfit.c:2007
+#: src/outfit.c:1978
 #, c-format
 msgid "Map '%s' has invalid asset '%s'"
 msgstr "Map '%s' has invalid asset '%s'"
 
-#: src/outfit.c:2015
+#: src/outfit.c:1986
 #, c-format
 msgid "Map '%s' has invalid jump point '%s'"
 msgstr "Map '%s' has invalid jump point '%s'"
 
-#: src/outfit.c:2022
+#: src/outfit.c:1993
 #, c-format
 msgid "Map '%s' has invalid system '%s'"
 msgstr "Map '%s' has invalid system '%s'"
 
-#: src/outfit.c:2125
+#: src/outfit.c:2093
 #, c-format
 msgid "GUI (Graphical User Interface)"
 msgstr "GUI (グラフィック・ユーザー・インターフェース)"
 
-#: src/outfit.c:2190 src/outfit.c:2612 src/slots.c:65 src/space.c:3323
+#: src/outfit.c:2156 src/outfit.c:2575 src/slots.c:65 src/space.c:3323
 #: src/spfx.c:1163 src/start.c:69
 #, c-format
 msgid "Malformed '%s' file: does not contain elements"
 msgstr "Malformed '%s' file: does not contain elements"
 
-#: src/outfit.c:2200
+#: src/outfit.c:2166
 #, c-format
 msgid "Outfit in %s has invalid or no name"
 msgstr "Outfit in %s has invalid or no name"
 
-#: src/outfit.c:2246
+#: src/outfit.c:2212
 #, c-format
 msgid "Outfit '%s' has an slot type invalid."
 msgstr "Outfit '%s' has an slot type invalid."
 
-#: src/outfit.c:2254
+#: src/outfit.c:2220
 #, c-format
 msgid "Outfit '%s' has unknown slot type '%s'."
 msgstr "Outfit '%s' has unknown slot type '%s'."
 
-#: src/outfit.c:2275
+#: src/outfit.c:2241
 #, c-format
 msgid "Empty faction string for outfit '%s' legality!"
 msgstr "Empty faction string for outfit '%s' legality!"
 
-#: src/outfit.c:2281
+#: src/outfit.c:2247
 #, c-format
 msgid "Outfit '%s' has no factions defined in <illegalto> block!"
 msgstr "Outfit '%s' has no factions defined in <illegalto> block!"
 
-#: src/outfit.c:2284
+#: src/outfit.c:2250
 #, c-format
 msgid "Outfit '%s' has unknown general node '%s'"
 msgstr "Outfit '%s' has unknown general node '%s'"
 
-#: src/outfit.c:2312
+#: src/outfit.c:2277
 #, c-format
 msgid "Outfit '%s' element 'specific' missing property 'type'"
 msgstr "Outfit '%s' element 'specific' missing property 'type'"
 
-#: src/outfit.c:2328
+#: src/outfit.c:2293
 #, c-format
 msgid "Outfit '%s' has group '%d', should be in the 1-%d range"
 msgstr "Outfit '%s' has group '%d', should be in the 1-%d range"
 
-#: src/outfit.c:2339
+#: src/outfit.c:2304
 #, c-format
 msgid "Outfit '%s' is of type NONE"
 msgstr "Outfit '%s' is of type NONE"
 
-#: src/outfit.c:2452
+#: src/outfit.c:2416
 #, c-format
 msgid "Outfit '%s' missing/invalid 'trackmin' element"
 msgstr "Outfit '%s' missing/invalid 'trackmin' element"
 
-#: src/outfit.c:2454
+#: src/outfit.c:2418
 #, c-format
 msgid "Outfit '%s' missing/invalid 'trackmax' element"
 msgstr "Outfit '%s' missing/invalid 'trackmax' element"
 
-#: src/outfit.c:2456
+#: src/outfit.c:2420
 #, c-format
 msgid "Outfit '%s' missing/invalid 'lockon' element"
 msgstr "Outfit '%s' missing/invalid 'lockon' element"
 
-#: src/outfit.c:2458
+#: src/outfit.c:2422
 #, c-format
 msgid "Outfit '%s' missing/invalid 'arc' element"
 msgstr "Outfit '%s' missing/invalid 'arc' element"
 
-#: src/outfit.c:2462
+#: src/outfit.c:2426
 #, c-format
 msgid "Outfit '%s' has longer 'iflockon' than ammo 'duration'"
 msgstr "Outfit '%s' has longer 'iflockon' than ammo 'duration'"
 
-#: src/outfit.c:2476
+#: src/outfit.c:2440
 #, c-format
 msgid "Outfit '%s' failed to read Lua '%s'!"
 msgstr "Outfit '%s' failed to read Lua '%s'!"
 
-#: src/outfit.c:2489
+#: src/outfit.c:2453
 #, c-format
 msgid ""
 "Outfit '%s' Lua error:\n"
@@ -84451,19 +84707,19 @@ msgstr ""
 "Outfit '%s' Lua error:\n"
 "%s"
 
-#: src/outfit.c:2531
+#: src/outfit.c:2495
 #, c-format
 msgid "Name collision! %d outfit is named '%s'"
 msgid_plural "Name collision! %d outfits are named '%s'"
 msgstr[0] "Name collision! %d outfit(s) is named '%s'"
 
-#: src/outfit.c:2538
+#: src/outfit.c:2502
 #, c-format
 msgid "Loaded %d Outfit"
 msgid_plural "Loaded %d Outfits"
 msgstr[0] "Loaded %d Outfit(s)"
 
-#: src/outfit.c:2565
+#: src/outfit.c:2529
 msgid ""
 "\n"
 "#rIllegal to:#0"
@@ -84471,7 +84727,7 @@ msgstr ""
 "\n"
 "#r違法とする党派 :#0"
 
-#: src/outfit.c:2567
+#: src/outfit.c:2531
 #, c-format
 msgid ""
 "\n"
@@ -84480,7 +84736,7 @@ msgstr ""
 "\n"
 "#r- %s#0"
 
-#: src/outfit.c:2577
+#: src/outfit.c:2541
 #, c-format
 msgid ""
 "Outfit '%s' lua load error -> 'load':\n"
@@ -84489,17 +84745,17 @@ msgstr ""
 "Outfit '%s' lua load error -> 'load':\n"
 "%s"
 
-#: src/outfit.c:2605
+#: src/outfit.c:2568
 #, c-format
 msgid "%s file is invalid xml!"
 msgstr "%s file is invalid xml!"
 
-#: src/outfit.c:2660
+#: src/outfit.c:2622
 #, c-format
 msgid "Outfit '%s' already has a short description"
 msgstr "Outfit '%s' already has a short description"
 
-#: src/outfit.c:2673
+#: src/outfit.c:2635
 #, c-format
 msgid ""
 "\n"
@@ -84508,7 +84764,7 @@ msgstr ""
 "\n"
 "捕捉速度: %.1f 秒"
 
-#: src/outfit.c:2674
+#: src/outfit.c:2636
 #, c-format
 msgid ""
 "\n"
@@ -84517,7 +84773,7 @@ msgstr ""
 "\n"
 "発射後捕捉時間 : %.1f 秒"
 
-#: src/outfit.c:2679
+#: src/outfit.c:2641
 msgid ""
 "\n"
 "No Seeking"
@@ -84525,7 +84781,7 @@ msgstr ""
 "\n"
 "追跡装置なし"
 
-#: src/outfit.c:2691
+#: src/outfit.c:2653
 #, c-format
 msgid ""
 "\n"
@@ -84534,7 +84790,7 @@ msgstr ""
 "\n"
 "無力化 : %.1f/秒 [%.0f/発]"
 
-#: src/outfit.c:2694
+#: src/outfit.c:2656
 #, c-format
 msgid ""
 "\n"
@@ -84543,7 +84799,7 @@ msgstr ""
 "\n"
 "射程 : %s [寿命 : %.1f 秒]"
 
-#: src/outfit.c:2697
+#: src/outfit.c:2659
 #, c-format
 msgid ""
 "\n"
@@ -84552,7 +84808,7 @@ msgstr ""
 "\n"
 "初速 : %.0f (推力 : %.0f)"
 
-#: src/outfit.c:2699
+#: src/outfit.c:2661
 #, c-format
 msgid ""
 "\n"
@@ -84561,7 +84817,7 @@ msgstr ""
 "\n"
 "推力 : %.0f"
 
-#: src/outfit.c:2703
+#: src/outfit.c:2665
 #, c-format
 msgid ""
 "\n"
@@ -84570,7 +84826,7 @@ msgstr ""
 "\n"
 "最高速度 : %.0f"
 
-#: src/outfit.c:2706
+#: src/outfit.c:2668
 #, c-format
 msgid ""
 "\n"
@@ -84643,35 +84899,35 @@ msgstr "#%c通信 %s>#0 ｢%s｣"
 msgid "#%cBroadcast %s>#0 \"%s\""
 msgstr "#%c一斉送信 %s>#0 ｢%s｣"
 
-#: src/pilot.c:2502 src/pilot.c:2529
+#: src/pilot.c:2506 src/pilot.c:2533
 msgid "#rStrayed too far from jump point: jump aborted."
 msgstr ""
 "#rジャンプポイントから遠くまで離れすぎています : ジャンプを中断します。"
 
-#: src/pilot.c:2509
+#: src/pilot.c:2513
 msgid "#rAfterburner active: jump aborted."
 msgstr "#rアフターバーナーが作動しています : ジャンプを中断します。"
 
-#: src/pilot.c:2549
+#: src/pilot.c:2553
 #, c-format
 msgid "Pilot '%s' trying to jump through exit-only jump from '%s' to '%s'"
 msgstr "Pilot '%s' trying to jump through exit-only jump from '%s' to '%s'"
 
-#: src/pilot.c:2849
+#: src/pilot.c:2853
 #, c-format
 msgid "Pilot '%s' failed safety check: %s"
 msgstr "Pilot '%s' failed safety check: %s"
 
-#: src/pilot.c:2852
+#: src/pilot.c:2856
 #, c-format
 msgid "   [%d] %s"
 msgstr "   [%d] %s"
 
-#: src/pilot.c:2941 src/pilot.c:2976
+#: src/pilot.c:2945 src/pilot.c:2980
 msgid "Unable to allocate memory"
 msgstr "Unable to allocate memory"
 
-#: src/pilot.c:3056
+#: src/pilot.c:3060
 msgid "Creating pilot in system with no jumps nor planets to take off from!"
 msgstr "Creating pilot in system with no jumps nor planets to take off from!"
 
@@ -85296,132 +85552,132 @@ msgstr "#%c%s>#0 着陸許可が取り消されました。"
 msgid "You are not allowed to land at this moment."
 msgstr "いま現在、あなたは着陸を許可されていません。"
 
-#: src/player.c:1647
+#: src/player.c:1675
 #, c-format
 msgid "Trying to set player's hyperspace target to invalid ID '%d'"
 msgstr "Trying to set player's hyperspace target to invalid ID '%d'"
 
-#: src/player.c:1745
+#: src/player.c:1773
 #, c-format
 msgid "#rReceiving hail! Press #b%s#0 to respond."
 msgstr "#r呼びかけられました！　#b%s#0 を押せば応答できます。"
 
-#: src/player.c:1798
+#: src/player.c:1826
 msgid "#rAborting hyperspace sequence."
 msgstr "#r超空間突入手順を中止しました。"
 
-#: src/player.c:1805
+#: src/player.c:1833
 msgid "#rYou are too far from a jump point to initiate hyperspace."
 msgstr "#rジャンプポイントが遠すぎて、超空間へは入れません。"
 
-#: src/player.c:1807 src/player_autonav.c:81
+#: src/player.c:1835 src/player_autonav.c:82
 msgid "#rHyperspace drive is offline."
 msgstr "#r超空間駆動が作動停止しています。"
 
-#: src/player.c:1809
+#: src/player.c:1837
 msgid "#rYou do not have enough fuel to hyperspace jump."
 msgstr "#r燃料が不足していて、超空間ジャンプができません。"
 
-#: src/player.c:1811
+#: src/player.c:1839
 msgid "#oPreparing for hyperspace."
 msgstr "#o超空間に入る準備をしています。"
 
-#: src/player.c:1903
+#: src/player.c:1931
 #, c-format
 msgid "#oAutonav arrived at the %s system."
 msgstr "#o自動操縦で%s星系に到着しました。"
 
-#: src/player.c:1909
+#: src/player.c:1937
 #, c-format
 msgid "#oAutonav continuing until %s (%d jump left)."
 msgid_plural "#oAutonav continuing until %s (%d jumps left)."
 msgstr[0] "#o自動操縦が%sまで継続します。(残りジャンプ %d 回)"
 
 #. in case the crap system breaks :)
-#: src/player.c:2157
+#: src/player.c:2185
 msgid "You have reached the maximum amount of screenshots [999]"
 msgstr "You have reached the maximum amount of screenshots [999]"
 
 #. now proceed to take the screenshot
-#: src/player.c:2162
+#: src/player.c:2190
 #, c-format
 msgid "Taking screenshot [%03d]..."
 msgstr "Taking screenshot [%03d]..."
 
-#: src/player.c:2191
+#: src/player.c:2219
 #, c-format
 msgid "#r%s is out of comm range, unable to contact."
 msgstr "#r%sは無線の到達範囲外です。 連絡できません。"
 
-#: src/player.c:2214 src/player.c:2236
+#: src/player.c:2242 src/player.c:2264
 msgid "#rNo target selected to hail."
 msgstr "#r呼びかける相手を選んでいません。"
 
-#: src/player.c:2269
+#: src/player.c:2297
 msgid "#rYou haven't been hailed by any pilots."
 msgstr "#rどのパイロットからも呼びかけられていません。"
 
-#: src/player.c:2282
+#: src/player.c:2310
 msgid "#oMouse flying enabled."
 msgstr "#oマウスによる飛行を有効にしました。"
 
-#: src/player.c:2288
+#: src/player.c:2316
 msgid "#rMouse flying disabled."
 msgstr "#oマウスによる飛行を無効にしました。"
 
-#: src/player.c:2504 src/player.c:2523
+#: src/player.c:2532 src/player.c:2551
 #, c-format
 msgid "Player ship '%s' not found in stack"
 msgstr "Player ship '%s' not found in stack"
 
-#: src/player.c:2909
+#: src/player.c:2937
 msgid "Escort is undeployed"
 msgstr "Escort is undeployed"
 
-#: src/player.c:3126
+#: src/player.c:3154
 msgid "Found mission cargo without associated mission."
 msgstr "Found mission cargo without associated mission."
 
-#: src/player.c:3127
+#: src/player.c:3155
 msgid "Please reload save game to remove the dead cargo."
 msgstr "Please reload save game to remove the dead cargo."
 
-#: src/player.c:3328
+#: src/player.c:3356
 msgid "Malformed time in save game!"
 msgstr "Malformed time in save game!"
 
-#: src/player.c:3363
+#: src/player.c:3391
 #, c-format
 msgid "Outfit '%s' was saved but does not exist!"
 msgstr "Outfit '%s' was saved but does not exist!"
 
-#: src/player.c:3369
+#: src/player.c:3397
 #, c-format
 msgid "Outfit '%s' was saved without quantity!"
 msgstr "Outfit '%s' was saved without quantity!"
 
-#: src/player.c:3389
+#: src/player.c:3417
 msgid "Player ship does not exist!"
 msgstr "Player ship does not exist!"
 
-#: src/player.c:3392
+#: src/player.c:3420
 msgid "Player has no other ships, giving starting ship."
 msgstr "Player has no other ships, giving starting ship."
 
-#: src/player.c:3403
+#: src/player.c:3431
 #, c-format
 msgid "Giving player ship '%s'."
 msgstr "Giving player ship '%s'."
 
-#: src/player.c:3409
+#: src/player.c:3437
 msgid "Something went horribly wrong, player does not exist after load..."
 msgstr "Something went horribly wrong, player does not exist after load..."
 
-#: src/player.c:3419
+#: src/player.c:3447
 msgid "Save has no time information, setting to start information."
 msgstr "Save has no time information, setting to start information."
 
-#: src/player.c:3428
+#: src/player.c:3456
 #, c-format
 msgid ""
 "Player starts out in non-existent or invalid planet '%s',trying to find a "
@@ -85430,40 +85686,40 @@ msgstr ""
 "Player starts out in non-existent or invalid planet '%s',trying to find a "
 "suitable one instead."
 
-#: src/player.c:3458
+#: src/player.c:3486
 #, c-format
 msgid "Could not find a planet satisfying criteria %d."
 msgstr "Could not find a planet satisfying criteria %d."
 
-#: src/player.c:3462
+#: src/player.c:3490
 msgid "Could not find a suitable planet. Choosing a random planet."
 msgstr "Could not find a suitable planet. Choosing a random planet."
 
-#: src/player.c:3509
+#: src/player.c:3537
 #, c-format
 msgid "Mission '%s' doesn't seem to exist anymore, removing from save."
 msgstr "Mission '%s' doesn't seem to exist anymore, removing from save."
 
-#: src/player.c:3531
+#: src/player.c:3559
 #, c-format
 msgid "Event '%s' doesn't seem to exist anymore, removing from save."
 msgstr "Event '%s' doesn't seem to exist anymore, removing from save."
 
-#: src/player.c:3553
+#: src/player.c:3581
 msgid "License node is missing name attribute."
 msgstr "License node is missing name attribute."
 
-#: src/player.c:3580
+#: src/player.c:3608
 #, c-format
 msgid "Escort has invalid type '%s'."
 msgstr "Escort has invalid type '%s'."
 
-#: src/player.c:3641
+#: src/player.c:3669
 #, c-format
 msgid "Unknown ship class '%s' when parsing 'ships_destroyed' node!"
 msgstr "Unknown ship class '%s' when parsing 'ships_destroyed' node!"
 
-#: src/player.c:3660
+#: src/player.c:3688
 #, c-format
 msgid ""
 "Outfit '%s' does not fit designated slot on player's pilot '%s', adding to "
@@ -85472,34 +85728,34 @@ msgstr ""
 "Outfit '%s' does not fit designated slot on player's pilot '%s', adding to "
 "stock."
 
-#: src/player.c:3668
+#: src/player.c:3696
 #, c-format
 msgid "Outfit '%s' does not fit on player's pilot '%s', adding to stock."
 msgstr "Outfit '%s' does not fit on player's pilot '%s', adding to stock."
 
-#: src/player.c:3689
+#: src/player.c:3717
 msgid "Empty ship slot node found, skipping."
 msgstr "Empty ship slot node found, skipping."
 
-#: src/player.c:3755
+#: src/player.c:3783
 #, c-format
 msgid "Player ship '%s' not found!"
 msgstr "Player ship '%s' not found!"
 
-#: src/player.c:3804
+#: src/player.c:3832
 msgid "Outfit slot out of range, not adding to ship."
 msgstr "Outfit slot out of range, not adding to ship."
 
-#: src/player.c:3817 src/player.c:3830
+#: src/player.c:3845 src/player.c:3858
 msgid "Outfit slot out of range, not adding."
 msgstr "Outfit slot out of range, not adding."
 
-#: src/player.c:3849
+#: src/player.c:3877
 #, c-format
 msgid "Unknown commodity '%s' detected, removing."
 msgstr "Unknown commodity '%s' detected, removing."
 
-#: src/player.c:3873
+#: src/player.c:3901
 #, c-format
 msgid ""
 "Player ship '%s' failed slot validity check , removing all outfits and "
@@ -85508,7 +85764,7 @@ msgstr ""
 "Player ship '%s' failed slot validity check , removing all outfits and "
 "adding to stock."
 
-#: src/player.c:3923
+#: src/player.c:3951
 #, c-format
 msgid ""
 "Player ship '%s' has unknown node '%s' in 'weaponsets' (expected "
@@ -85517,119 +85773,125 @@ msgstr ""
 "Player ship '%s' has unknown node '%s' in 'weaponsets' (expected "
 "'weaponset')."
 
-#: src/player.c:3931
+#: src/player.c:3959
 #, c-format
 msgid "Player ship '%s' missing 'id' tag for weapon set."
 msgstr "Player ship '%s' missing 'id' tag for weapon set."
 
-#: src/player.c:3935
+#: src/player.c:3963
 #, c-format
 msgid "Player ship '%s' has invalid weapon set id '%d' [max %d]."
 msgstr "Player ship '%s' has invalid weapon set id '%d' [max %d]."
 
-#: src/player.c:3951
+#: src/player.c:3979
 #, c-format
 msgid "Player ship '%s' missing 'type' tag for weapon set."
 msgstr "Player ship '%s' missing 'type' tag for weapon set."
 
-#: src/player.c:3964
+#: src/player.c:3992
 #, c-format
 msgid ""
 "Player ship '%s' has unknown 'weaponset' child node '%s' (expected 'weapon')."
 msgstr ""
 "Player ship '%s' has unknown 'weaponset' child node '%s' (expected 'weapon')."
 
-#: src/player.c:3972
+#: src/player.c:4000
 #, c-format
 msgid "Player ship '%s' missing 'level' tag for weapon set weapon."
 msgstr "Player ship '%s' missing 'level' tag for weapon set weapon."
 
-#: src/player.c:3977
+#: src/player.c:4005
 #, c-format
 msgid "Player ship '%s' has invalid weapon id %d [max %d]."
 msgstr "Player ship '%s' has invalid weapon id %d [max %d]."
 
-#: src/player.c:4016
+#: src/player.c:4044
 msgid "You have destealthed."
 msgstr "ステルスを解除しました。"
 
-#: src/player.c:4022
+#: src/player.c:4050
 msgid "#gYou have entered stealth mode."
 msgstr "#gステルスモードに入りました。"
 
-#: src/player.c:4027
+#: src/player.c:4055
 msgid "#rUnable to stealth: missiles locked on!"
 msgstr "#rステルスは不可能です。ミサイルに捕捉されています！"
 
-#: src/player.c:4029
+#: src/player.c:4057
 msgid "#rUnable to stealth: other pilots nearby!"
 msgstr "#rステルスは不可能です。ほかのパイロットが近くにいます！"
 
-#: src/player_autonav.c:76
+#: src/player_autonav.c:77
 msgid "#rNot enough fuel to jump for autonav."
 msgstr "#r燃料が足りないので、自動操縦によるジャンプはできません。"
 
-#: src/player_autonav.c:89
+#: src/player_autonav.c:90
 #, c-format
 msgid "#oAutonav: travelling to %s."
 msgstr "#o自動操縦装置 : %sへ移動します。"
 
-#: src/player_autonav.c:169
+#: src/player_autonav.c:170
 msgid "#oAutonav: heading to target position."
 msgstr "#o自動操縦装置 : 目標の位置へ向かいます。"
 
-#: src/player_autonav.c:171
+#: src/player_autonav.c:172
 msgid "position"
 msgstr "所定の位置"
 
-#: src/player_autonav.c:192
+#: src/player_autonav.c:193
 #, c-format
 msgid "#oAutonav: landing on #%c%s#0."
 msgstr "#o自動操縦装置 : #%c%s#0に着陸します。"
 
-#: src/player_autonav.c:196
+#: src/player_autonav.c:197
 #, c-format
 msgid "#oAutonav: approaching #%c%s#0."
 msgstr "#o自動操縦装置 : #%c%s#0に接近しています。"
 
-#: src/player_autonav.c:210
+#: src/player_autonav.c:211
 #, c-format
 msgid "#oAutonav: following %s."
 msgstr "#o自動操縦装置 : %sにつづきます。"
 
-#: src/player_autonav.c:270
+#: src/player_autonav.c:233
+#, fuzzy, c-format
+#| msgid "#oAutonav: following %s."
+msgid "#oAutonav: boarding %s."
+msgstr "#o自動操縦装置 : %sにつづきます。"
+
+#: src/player_autonav.c:293
 #, c-format
 msgid "#rAutonav: aborted due to '%s'!"
 msgstr "#r自動操縦装置 : %sので中止します！"
 
-#: src/player_autonav.c:272
+#: src/player_autonav.c:295
 msgid "#rAutonav: aborted!"
 msgstr "#r自動操縦装置 : 中止します！"
 
-#: src/player_autonav.c:281
+#: src/player_autonav.c:304
 msgid "#oAutonav: aborting hyperspace sequence."
 msgstr "#o自動操縦装置 : 超空間突入手順を中断しました。"
 
-#: src/player_autonav.c:367
+#: src/player_autonav.c:390
 msgid "#oAutonav: arrived at position."
 msgstr "#o自動操縦装置 : 所定の位置に到着しました。"
 
-#: src/player_autonav.c:377
+#: src/player_autonav.c:400
 #, c-format
 msgid "#oAutonav: arrived at #%c%s#0."
 msgstr "#o自動操縦装置 : #%c%s#0に到着しました。"
 
 #. TODO : handle the different reasons: pilot is too far, jumped, landed or died.
-#: src/player_autonav.c:418
+#: src/player_autonav.c:441
 #, c-format
 msgid "#oAutonav: following target  %s has been lost."
 msgstr "#o自動操縦装置 : 追跡していた%sを見失いました。"
 
-#: src/player_autonav.c:626
+#: src/player_autonav.c:681
 msgid "Target changed to current system"
 msgstr "現在の星系に目標が変わった"
 
-#: src/player_autonav.c:630
+#: src/player_autonav.c:685
 msgid "Not enough fuel for autonav to continue"
 msgstr "自動操縦をつづけるための燃料が不足している"
 
@@ -86153,36 +86415,40 @@ msgid "Missile jamming chance"
 msgstr "ミサイル妨害確率"
 
 #: src/shipstats.c:170
-msgid "Hidden Jump Detection"
-msgstr "隠れジャンプの探知"
-
-#: src/shipstats.c:171
 msgid "units Fuel"
 msgstr "ユニット 燃料"
 
-#: src/shipstats.c:172
+#: src/shipstats.c:171
 msgid "tonnes Cargo Space"
 msgstr "トン 船倉容量"
 
+#: src/shipstats.c:172
+msgid "crew"
+msgstr ""
+
 #: src/shipstats.c:174
+msgid "Hidden Jump Detection"
+msgstr "隠れジャンプの探知"
+
+#: src/shipstats.c:175
 msgid "Instant Jump"
 msgstr "瞬間ジャンプ"
 
-#: src/shipstats.c:175
+#: src/shipstats.c:176
 msgid "Reverse Thrusters"
 msgstr "逆推力"
 
-#: src/shipstats.c:278
+#: src/shipstats.c:279
 #, c-format
 msgid "ss_lookup: %s should have id %d but has %d"
 msgstr "ss_lookup: %s should have id %d but has %d"
 
-#: src/shipstats.c:482
+#: src/shipstats.c:483
 #, c-format
 msgid "ss_typeFromName: No ship stat matching '%s'"
 msgstr "ss_typeFromName: No ship stat matching '%s'"
 
-#: src/shipstats.c:710 src/shipstats.c:837 src/shipstats.c:856
+#: src/shipstats.c:711 src/shipstats.c:838 src/shipstats.c:857
 #, c-format
 msgid "Unknown ship stat type '%s'!"
 msgstr "Unknown ship stat type '%s'!"
