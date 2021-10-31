@@ -39,13 +39,15 @@ end
 
 local function outfit_loot( o )
    local name, size, prop, req, exc = o:slot()
-   local sexc = (exc and _("\n[exclusive")) or ""
-   local desc = fmt.f(_("{name}\n{slotsize} {slottype}#0 slot{exclusive}\n{desc}"),
+   local sprop = (sprop and "\n#o"..sprop.."#0") or ""
+   local stype = o:type()
+   local desc = fmt.f(_("{name}\n{slotsize} {slottype}#0 slot{sprop}\n{stype}\n{desc}"),
          { name=o:name(),
            desc=o:description(),
            slottype=slotTypeColour(name),
            slotsize=slotSizeColour(size),
-           exclusive=sexc})
+           sprop=sprop,
+           stype=stype})
    return {
       image = lg.newImage( o:icon() ),
       text = o:name(),
@@ -224,7 +226,7 @@ function wgtBoard:drawover( bx, by )
    if not l then return end
    local alt = l.alt
    if alt and self.mouseover then
-      luatk.drawAltText( x+w, y-10, alt )
+      luatk.drawAltText( x+w, y-10, alt, 400 )
    end
 end
 function wgtBoard:clicked( _mx, _my, btn )
