@@ -47,7 +47,7 @@ end
 function accept()
    --initial convo. Kept it a yes/no to help with the urgent feeling of the situation.
 
-   local msg = _([[You run up to Draga, who has a look of desperation on his face. "We need to go, now," he says. "The Sirii are overwhelming us, they're about to finish us off. Will you take me and as many Nasin as you can carry to %s in the %s system? This is our most desperate hour!"]]):format( targetasset:name(), targetsys:name() )
+   local msg = fmt.f(_([[You run up to Draga, who has a look of desperation on his face. "We need to go, now," he says. "The Sirii are overwhelming us, they're about to finish us off. Will you take me and as many Nasin as you can carry to {pnt} in the {sys} system? This is our most desperate hour!"]]), {pnt=targetasset, sys=targetsys} )
    if not tk.yesno(_("The Egress"), msg) then
       misn.finish ()
    end
@@ -61,9 +61,9 @@ function accept()
    people_carried =  (16 * free_cargo) + 7 --average weight per person is 62kg. one ton / 62 is 16. added the +7 for ships with 0 cargo.
    misn.setTitle(_("The Egress"))
    misn.setReward(fmt.credits(reward))
-   misn.setDesc(_("Assist the Nasin refugees by flying to %s in %s, and unloading them there."):format( targetasset:name(), targetsys:name()))
+   misn.setDesc(fmt.f(_("Assist the Nasin refugees by flying to {pnt} in {sys}, and unloading them there."), {pnt=targetasset, sys=targetsys}))
    misn.osdCreate(_("The Egress"), {
-      _("Fly the refugees to %s in the %s system."):format(targetasset:name(), targetsys:name()),
+      fmt.f(_("Fly the refugees to {pnt} in the {sys} system."), {pnt=targetasset, sys=targetsys}),
    })
    local c = misn.cargoNew( N_("Refugees"), N_("Nasin refugees.") )
    refugees = misn.cargoAdd(c,free_cargo)
@@ -132,7 +132,7 @@ end
 function misn_over() --aren't you glad thats over?
    if planet.cur() == planet.get("Ulios") then
       --introing one of the characters in the next chapter.
-      tk.msg(_("The Egress"),_([[You land on %s and open the bay doors. You are still amazed at how many people Draga had helped get into the cargo hold. As you help everyone out of your ship, a man walks up to you. "Hello, my name is Jimmy. Thank you for helping all of these people. I am grateful. I've heard about you from Draga, and I will be forever in your debt. Here, please, take this." He presses a credit chip in your hand just as you finish helping everyone out of your ship. It seems it was a job well done.]]):format( targetasset:name() ))
+      tk.msg(_("The Egress"), fmt.f(_([[You land on {pnt} and open the bay doors. You are still amazed at how many people Draga had helped get into the cargo hold. As you help everyone out of your ship, a man walks up to you. "Hello, my name is Jimmy. Thank you for helping all of these people. I am grateful. I've heard about you from Draga, and I will be forever in your debt. Here, please, take this." He presses a credit chip in your hand just as you finish helping everyone out of your ship. It seems it was a job well done.]]), {pnt=targetasset} ))
       player.pay(reward)
       misn.cargoRm(refugees)
       misn_tracker = misn_tracker + 1
@@ -146,7 +146,7 @@ function misn_over() --aren't you glad thats over?
 end
 
 function abort()
-   tk.msg(_("The Egress"),_([[You decide that this mission is just too much. You open up the cargo doors and jettison all %s people out into the cold emptiness of space. The Nasin will hate you forever, but you did what you had to do.]]):format(fmt.number(people_carried)))
+   tk.msg(_("The Egress"), fmt.f(_([[You decide that this mission is just too much. You open up the cargo doors and jettison all {n} people out into the cold emptiness of space. The Nasin will hate you forever, but you did what you had to do.]]), {n=fmt.number(people_carried)}))
    misn.cargoJet(refugees)
    faction.modPlayerSingle("Nasin",-200)
    player.allowSave(true)

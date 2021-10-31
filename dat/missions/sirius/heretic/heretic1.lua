@@ -48,18 +48,18 @@ function accept()
     Shaman seems to get caught up in the moment. "It was he! He who led us to join our hands! He who led us to work together! He who led us to fight back against the oppressors! It was he! The very, the only, the True Voice of Sirichana!"
     Shaman seems to realize just exactly where he is and what he is doing. All the patrons in the bar turn their heads to your table. A group of young fellows start clapping and then degrade into laughter.]]))
 
-   local msg = _([[Shaman coughs out an "excuse me" and looks at you, embarrassed. "It is wrong for me to get so caught up in such things. I suppose you'll want to know about the mission now.
-    "The mission is simple. Our main base operates on %s in the %s system. I need a message delivered there. Of course, we will pay you for this service. How does %s sound? Will you do it?"]]):format( targetasset:name(), targetsystem:name(), fmt.credits(reward) )
+   local msg = fmt.f(_([[Shaman coughs out an "excuse me" and looks at you, embarrassed. "It is wrong for me to get so caught up in such things. I suppose you'll want to know about the mission now.
+    "The mission is simple. Our main base operates on {pnt} in the {sys} system. I need a message delivered there. Of course, we will pay you for this service. How does {credits} sound? Will you do it?"]]), {pnt=targetasset, sys=targetsystem, credits=fmt.credits(reward)} )
    if not tk.yesno(_("The Return"), msg) then
       misn.finish()
    end
 
    tk.msg(_("The Return"), _([["Fantastic!" He hands you the message. "They will take care of your payment there. Thank you for aiding the true followers of Sirichana."]]))
    misn.accept()
-   misn.setDesc(_("Shaman of Nasin has hired you to deliver the message to %s in the %s system."):format(targetasset:name(),targetsystem:name()))
+   misn.setDesc(fmt.f(_("Shaman of Nasin has hired you to deliver the message to {pnt} in the {sys} system."), {pnt=targetasset, sys=targetsystem}))
    misn.markerAdd(targetsystem,"high")
    misn.osdCreate(_("The Return"), {
-      _("Fly to %s in the %s system and deliver the message"):format(targetasset:name(),targetsystem:name()),
+      fmt.f(_("Fly to {pnt} in the {sys} system and deliver the message"), {pnt=targetasset, sys=targetsystem}),
    })
    misn.osdActive(1)
    local c = misn.cargoNew( N_("Message"), N_("A message of seemingly high importance.") )
@@ -69,7 +69,7 @@ end
 
 function landing()
    if planet.cur() == targetasset then
-      tk.msg(_("The Return"), _([[As you land, you are once again surprised to not be greeted by anyone. After searching for a bit, you return to your ship to find that the message has been taken and a small envelope has replaced it. Inside the envelope is a note. "Our sincere apologies for missing you," it says. "As you can see, we have obtained the message, and you will also notice that a payment of %s has been deposited into your account. You have done great work for us and we appreciate your services. Please feel free to meet us at the bar sometime."]]):format( fmt.credits(reward) ))
+      tk.msg(_("The Return"), fmt.f(_([[As you land, you are once again surprised to not be greeted by anyone. After searching for a bit, you return to your ship to find that the message has been taken and a small envelope has replaced it. Inside the envelope is a note. "Our sincere apologies for missing you," it says. "As you can see, we have obtained the message, and you will also notice that a payment of {credits} has been deposited into your account. You have done great work for us and we appreciate your services. Please feel free to meet us at the bar sometime."]]), {credits=fmt.credits(reward)} ))
       player.pay(reward)
       misn.cargoRm(message)
       misn_tracker = misn_tracker + 1

@@ -46,16 +46,16 @@ function create()
 end
 
 function accept()
-   if tk.yesno(_("The Assault"), _([[Draga is sitting at a table with a couple other people who appear to be official military types. They look at you as you approach. Draga stands and greets you. "Hello, %s," he says. "We have a situation, and we need your help.
+   if tk.yesno(_("The Assault"), fmt.f(_([[Draga is sitting at a table with a couple other people who appear to be official military types. They look at you as you approach. Draga stands and greets you. "Hello, {player}," he says. "We have a situation, and we need your help.
     "The Sirii are starting to take us seriously as a threat. This isn't what we hoped for; we hoped we could go a little longer underground, but it seems we're being forced into battle. As such, we need you to help us defend our system. Our goal here isn't to completely wipe out the Sirius threat, but rather just to drive them off and show them that we mean business. We want them to feel it.
-    "You will be outnumbered, outgunned, and officially declared an enemy of the state. Will you help us?"]]):format(player.name())) then
+    "You will be outnumbered, outgunned, and officially declared an enemy of the state. Will you help us?"]]), {player=player.name()})) then
       tk.msg( _("The Assault"), _([["Excellent! See, folks? I told you this one was a keeper! Our forces will meet you out there. Ah, and while I'm sure you would never do this, as before, desertion will not be tolerated. Do not land or leave the system until your mission is completed."]]) )
 
       misn.accept()
-      misn.setDesc(_([[A Sirius assault fleet has just jumped into %s. You are to assist Nasin in destroying this fleet.]]):format(homesys:name()))
+      misn.setDesc(fmt.f(_([[A Sirius assault fleet has just jumped into {sys}. You are to assist Nasin in destroying this fleet.]]), {sys=homesys}))
       misn.markerAdd(homesys,"high")
       misn.osdCreate(_("The Assault"), {
-         _("Defend %s against the Sirius assault"):format(homeasset:name()),
+         fmt.f(_("Defend {pnt} against the Sirius assault"), {pnt=homeasset}),
          fmt.f(_("Return to {pnt}"), {pnt=homeasset}),
       })
       misn.osdActive(1)
@@ -115,7 +115,7 @@ end
 function flee()
    returnchecker = true --used to show that deathcounter has been reached, and that the player is landing 'just because'
    misn.osdActive(2)
-   tk.msg(_("The Assault"), _([[You receive a frantic message from Draga. "%s! This is worse than we ever thought. We need you back at the base! Stat!"]]):format( player.name() ))
+   tk.msg(_("The Assault"), fmt.f(_([[You receive a frantic message from Draga. "{player}! This is worse than we ever thought. We need you back at the base! Stat!"]]), {player=player.name()} ))
    -- Send any surviving Nasin ships home.
    for _, j in ipairs(de_fence) do
       if j:exists() then

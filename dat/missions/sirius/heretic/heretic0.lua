@@ -43,20 +43,18 @@ end
 
 function accept()
    --the obligatory opening messages
-   local aname = targetasset:name()
-
-   if not tk.yesno( _("The Gauntlet"), _([[You walk up to a scrappy little man leaning against the bar. You sit next to him, and he eyes you up and down. You return the stare coolly and he half-heartedly tries to strikes up a conversation. "Nice drinks they have here." You feign interest so as not to be impolite.
-    He continues impatiently. "You look like you're in need of a couple spare credits," he finally says. "I have, uh, a shipment that needs getting to %s. Are you interested? Just has to be kept under wraps if you know what I mean. Pay is good though. %s. That's all you need to know." He pauses for a moment. "How about it?"]]):format( aname, fmt.credits(reward) ) ) then
+   if not tk.yesno( _("The Gauntlet"), fmt.f( _([[You walk up to a scrappy little man leaning against the bar. You sit next to him, and he eyes you up and down. You return the stare coolly and he half-heartedly tries to strikes up a conversation. "Nice drinks they have here." You feign interest so as not to be impolite.
+    He continues impatiently. "You look like you're in need of a couple spare credits," he finally says. "I have, uh, a shipment that needs getting to {pnt}. Are you interested? Just has to be kept under wraps if you know what I mean. Pay is good though. {credits}. That's all you need to know." He pauses for a moment. "How about it?"]]), {pnt=targetasset, credits=fmt.credits(reward)} ) ) then
       tk.msg(_("The Gauntlet"),_([["Well, that's your choice. Be on your way now. I'm busy."]]))
       misn.finish(false)
    end
-   tk.msg(_("The Gauntlet"), _([[You feel a very large hand slap you on the back. "I knew you would do it! A great choice!" he says. "I'll have my boys load up the cargo. Remember, all you gotta do is fly to %s, and avoid the Sirius military. You know, don't let them scan you. I'll let my contacts know to expect you. They'll pay you when you land."
-    You shake his sticky hand and walk off, content that you've made an easy buck.]]):format(aname))
-   misn.setDesc(_("You are to deliver a shipment to %s in the %s system for a strange man you met at a bar, avoiding Sirius ships."):format(targetasset:name(),targetsystem:name()))
+   tk.msg(_("The Gauntlet"), fmt.f(_([[You feel a very large hand slap you on the back. "I knew you would do it! A great choice!" he says. "I'll have my boys load up the cargo. Remember, all you gotta do is fly to {pnt}, and avoid the Sirius military. You know, don't let them scan you. I'll let my contacts know to expect you. They'll pay you when you land."
+    You shake his sticky hand and walk off, content that you've made an easy buck.]]), {pnt=targetasset}))
+   misn.setDesc(fmt.f(_("You are to deliver a shipment to {pnt} in the {sys} system for a strange man you met at a bar, avoiding Sirius ships."), {pnt=targetasset, sys=targetsystem}))
    misn.accept()
    misn.markerAdd(targetsystem,"high")
    misn.osdCreate(_("The Gauntlet"), {
-      _("Deliver the shipment to %s in the %s system"):format(targetasset:name(),targetsystem:name()),
+      fmt.f(_("Deliver the shipment to {pnt} in the {sys} system"), {pnt=targetasset, sys=targetsystem}),
    })
    misn.osdActive(1)
    freecargo = player.pilot():cargoFree() --checks to make sure the player has 5 tons available
@@ -72,8 +70,8 @@ end
 
 function land ()
    if planet.cur() == targetasset then
-      tk.msg( _("The Gauntlet"), _([[As you descend onto the %s spaceport, you notice how deserted the place seems to be. Finally, after a search that seem to take cycles, you see a small group of gruff and wary men waiting for you. Once you find them, they quickly unload the goods and disappear before you can even react.
-    You then notice that one person, a large, unshaven man, remains from the group. You ask him for your payment. "Yes, yes, of course," he says as he hands you a credit chip. "Actually... if you're interested, we may have another mission for you. A message, as it were. The commander will be in the bar if you'd like to learn more about this opportunity." With that, he retreats along with the rest of the group. You wonder if you should pursue the offer or ignore it.]]):format( targetasset:name() ) )
+      tk.msg( _("The Gauntlet"), fmt.f(_([[As you descend onto the {pnt} spaceport, you notice how deserted the place seems to be. Finally, after a search that seem to take cycles, you see a small group of gruff and wary men waiting for you. Once you find them, they quickly unload the goods and disappear before you can even react.
+    You then notice that one person, a large, unshaven man, remains from the group. You ask him for your payment. "Yes, yes, of course," he says as he hands you a credit chip. "Actually... if you're interested, we may have another mission for you. A message, as it were. The commander will be in the bar if you'd like to learn more about this opportunity." With that, he retreats along with the rest of the group. You wonder if you should pursue the offer or ignore it.]]), {pnt=targetasset} ) )
       player.pay(reward)
       misn.cargoRm(small_arms) --this mission was an act against Sirius, and we want Sirius to not like us a little bit.
       faction.modPlayer("Nasin",3) --Nasin reputation is used in mission rewards, and I am trying to avoid having the pay skyrocket.
