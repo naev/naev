@@ -39,8 +39,8 @@ void main(void) {
    /* Compute lighting. */
    vec3 La        = vec3(1.0) * max(dot(norm, lightDir), 0.0) * 1.0;
    const vec3 Ld  = vec3(1.0) * 1.0;
-   const vec3 H   = normalize(lightDir + eye); /* Halfway vector. */
-   vec3 Ls        = vec3(1.0) * max(dot(norm, H), 0.0) * 1.0;
+   const vec3 h   = normalize(lightDir + eye); /* Halfway vector. */
+   vec3 Ls        = vec3(1.0) * max(dot(norm, h), 0.0) * 1.0;
 
    /* Set up textures. */
    vec3 Td = texture(map_Kd, tex_coord).rgb;
