@@ -53,9 +53,6 @@ ferrytime[0] = _("Economy") -- Note: indexed from 0, to match mission tiers.
 ferrytime[1] = _("Priority")
 ferrytime[2] = _("Express")
 
---=Politics=--
-
-no_clearance_p1 = _("The passenger looks at your credentials and remarks, \"Someone of your standing will not be allowed to set foot on the holy ground. ")
 no_clearance_p2 = {}
 no_clearance_p2[0] = _("However, if you can take me as far as %s, I will be satisfied with that.\"")
 no_clearance_p2[1] = _("However, I suppose if you can take me to %s, I can find another pilot for the remainder of the flight. But if that is the case, I wouldn't want to pay more than %s.\"")
@@ -69,24 +66,23 @@ nc_probs[0] = {0, 0, 0, 1}
 nc_probs[1] = {0, 1, 1, 2}
 nc_probs[2] = {2, 3, 3, 3}
 
--- If you change ships mid-journey
 change_ship = {}
 change_ship[1] = _("On landing, the passenger gives you a brief glare. \"I had paid for transportation in a Sirian ship,\" they remark. \"This alternate arrangement is quite disappointing.\" They hand you %s, but it's definitely less than you were expecting.")
 change_ship[2] = _("Since you were unexpectedly able to procure a Sirian ship for the journey, you find a few extra credits tucked in with the fare!")
 
 --=Landing=--
 
-ferry_land_p1 = {}
+local ferry_land_p1 = {}
 ferry_land_p1[0] = _("The Sirian Shaira")
 ferry_land_p1[1] = _("The Sirian Fyrra")
 ferry_land_p1[2] = _("The Sirian Serra")
 
-ferry_land_p2 = {}
+local ferry_land_p2 = {}
 ferry_land_p2[0] = _("%s thanks you profusely for your generosity, and carefully counts out your fare.")
 ferry_land_p2[1] = _("%s bows briefly in gratitude, and silently places the agreed-upon fare in your hand.")
 ferry_land_p2[2] = _("%s crisply counts out your credits, and nods a momentary farewell.")
 
-ferry_land_p3 = {}
+local ferry_land_p3 = {}
 ferry_land_p3[0] = _("%s, on seeing the time, looks at you with veiled hurt and disappointment, but carefully counts out their full fare of %s.")
 ferry_land_p3[1] = _("%s counts out %s with pursed lips, and walks off before you have time to say anything.")
 ferry_land_p3[2] = _("%s tersely expresses their displeasure with the late arrival, and snaps %s down on the seat, with a look suggesting they hardly think you deserve that much.")
@@ -227,25 +223,34 @@ Accept the mission anyway?]]):format( (timelimit - time.get()):str(), (playerbes
         altdest = rnd.rnd(1,counter)
 
         local ok = false
+	local can_downgrade = true
+	local no_clearance_text
         --local picky = rnd.rnd(1,4)  -- initialized in the create function
         local outcome = nc_probs[rank][destpicky]
 
         if outcome == 3 then
             -- Rank 2 will demand to be delivered to Sirius
-            tk.msg(_("Deficient clearance"), no_clearance_p1 .. no_clearance_p2[outcome])
+	    can_downgrade = false
+            no_clearance_text = no_clearance_p2[3]
         elseif outcome == 2 then
             -- Rank 1 will accept an alternate destination, but cut your fare
             reward = reward / 2
-            ok = tk.yesno(_("Deficient clearance"), no_clearance_p1 .. no_clearance_p2[outcome]:format(fmt.credits(reward), altplanets[altdest]:name()) )
+            no_clearance_text = no_clearance_p2[2]:format(fmt.credits(reward), altplanets[altdest]:name())
         elseif outcome == 1 then
             -- OK with alternate destination, with smaller fare cut
             reward = reward * 0.6666
-            ok = tk.yesno(_("Deficient clearance"), no_clearance_p1 .. no_clearance_p2[outcome]:format(altplanets[altdest]:name(), fmt.credits(reward)) )
+            no_clearance_text = no_clearance_p2[1]:format(altplanets[altdest]:name(), fmt.credits(reward))
         else
             -- Rank 0 will take whatever they can get
-            ok = tk.yesno(_("Deficient clearance"), no_clearance_p1 .. no_clearance_p2[outcome]:format(altplanets[altdest]:name()) )
+            no_clearance_text = no_clearance_p2[0]:format(altplanets[altdest]:name())
         end
 
+        local no_clearance_p1 = _("The passenger looks at your credentials and remarks, \"Someone of your standing will not be allowed to set foot on the holy ground. ")
+        if can_downgrade then
+            ok = tk.yesno(_("Deficient clearance"), no_clearance_p1 .. no_clearance_text)
+        else
+            tk.msg(_("Deficient clearance"), no_clearance_p1 .. no_clearance_text)
+        end
         if not ok then
             misn.finish()
         end
@@ -307,7 +312,7 @@ function land()
         if wants_sirian and not has_sirian_ship then
             change = 1  -- Bad: they wanted a Sirian ship and you switched on them
             reward = reward / (rank+1.5)
-            tk.msg( _("Altering the deal"), change_ship[change]:format( fmt.credits(reward) ) )
+            tk.msg( _("Altering the deal"), change_ship[1]:format( fmt.credits(reward) ) )
             player.pay(reward)
             misn.finish(true)
         elseif not wants_sirian and has_sirian_ship then
@@ -329,8 +334,9 @@ function land()
         end
 
         if change == 2 then
-            faction.modPlayerSingle("Sirius", 1)  -- A little bonus for doing something nice
-            tk.msg(_("Altering the deal"), change_ship[change])  -- Pay them a bonus for using a Sirian ship
+            -- A little bonus for doing something nice
+            faction.modPlayerSingle("Sirius", 1)
+            tk.msg(_("Altering the deal"), change_ship[2])
             reward = reward * 1.25
         end
 
