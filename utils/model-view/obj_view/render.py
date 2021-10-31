@@ -11,7 +11,7 @@ import math
 from .parse import base_path
 
 vert = '#version 150\n\n' + open(base_path() / 'dat/glsl/material.vert').read()
-frag = '#version 150\n\n' + open(base_path() / 'dat/glsl/material.frag').read()
+frag = '#version 150\n\n' + open(base_path() / 'dat/glsl/material_pbr.frag').read()
 
 class RenderObject:
     def __init__(self, program, obj):
@@ -79,32 +79,48 @@ class ObjProgram:
         glEnable(GL_DEPTH_TEST)
         glDepthFunc(GL_LESS)
 
-        glUniform1i( self.uniforms["map_Kd"], 0 )
-        glUniform1i( self.uniforms["map_Ks"], 1 )
-        glUniform1i( self.uniforms["map_Ke"], 2 )
-        glUniform1i( self.uniforms["map_Bump"], 3 )
+        if "map_Kd" in self.uniforms.keys():
+            glUniform1i( self.uniforms["map_Kd"], 0 )
+        if "map_Ks" in self.uniforms.keys():
+            glUniform1i( self.uniforms["map_Ks"], 1 )
+        if "map_Ke" in self.uniforms.keys():
+            glUniform1i( self.uniforms["map_Ke"], 2 )
+        if "map_Bump" in self.uniforms.keys():
+            glUniform1i( self.uniforms["map_Bump"], 3 )
 
         for (mtl, start, count) in obj.mtl_list:
-            glUniform1f(self.uniforms["Ns"], mtl.Ns)
-            glUniform3f(self.uniforms["Kd"], *mtl.Kd)
-            glUniform3f(self.uniforms["Ka"], *mtl.Ka)
-            glUniform3f(self.uniforms["Ks"], *mtl.Ks)
-            glUniform3f(self.uniforms["Ke"], *mtl.Ke)
-            #glUniform1f(self.uniforms["Ni"], mtl.Ni)
-            glUniform1f(self.uniforms["d"], mtl.d)
-            glUniform1f(self.uniforms["bm"], mtl.bm)
+            if "Ns" in self.uniforms.keys():
+                glUniform1f(self.uniforms["Ns"], mtl.Ns)
+            if "Kd" in self.uniforms.keys():
+                glUniform3f(self.uniforms["Kd"], *mtl.Kd)
+            if "Ka" in self.uniforms.keys():
+                glUniform3f(self.uniforms["Ka"], *mtl.Ka)
+            if "Ks" in self.uniforms.keys():
+                glUniform3f(self.uniforms["Ks"], *mtl.Ks)
+            if "Ke" in self.uniforms.keys():
+                glUniform3f(self.uniforms["Ke"], *mtl.Ke)
+            if "Ni" in self.uniforms.keys():
+                glUniform1f(self.uniforms["Ni"], mtl.Ni)
+            if "d" in self.uniforms.keys():
+                glUniform1f(self.uniforms["d"], mtl.d)
+            if "bm" in self.uniforms.keys():
+                glUniform1f(self.uniforms["bm"], mtl.bm)
 
-            glActiveTexture(GL_TEXTURE0)
-            glBindTexture(GL_TEXTURE_2D, mtl.map_Kd)
+            if "map_Kd" in self.uniforms.keys():
+                glActiveTexture(GL_TEXTURE0)
+                glBindTexture(GL_TEXTURE_2D, mtl.map_Kd)
 
-            glActiveTexture(GL_TEXTURE1)
-            glBindTexture(GL_TEXTURE_2D, mtl.map_Ks)
+            if "map_Ks" in self.uniforms.keys():
+                glActiveTexture(GL_TEXTURE1)
+                glBindTexture(GL_TEXTURE_2D, mtl.map_Ks)
 
-            glActiveTexture(GL_TEXTURE2)
-            glBindTexture(GL_TEXTURE_2D, mtl.map_Ke)
+            if "map_Ke" in self.uniforms.keys():
+                glActiveTexture(GL_TEXTURE2)
+                glBindTexture(GL_TEXTURE_2D, mtl.map_Ke)
 
-            glActiveTexture(GL_TEXTURE3)
-            glBindTexture(GL_TEXTURE_2D, mtl.map_Bump)
+            if "map_Bump" in self.uniforms.keys():
+                glActiveTexture(GL_TEXTURE3)
+                glBindTexture(GL_TEXTURE_2D, mtl.map_Bump)
 
             glDrawArrays(GL_TRIANGLES, start, count)
 
