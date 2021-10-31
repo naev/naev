@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2021-10-31 13:05-0400\n"
+"POT-Creation-Date: 2021-10-31 13:58-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -41226,7 +41226,7 @@ msgstr ""
 #: dat/missions/empire/longdistanceshipping/es_longdistancecargo.lua:98
 #: dat/missions/neutral/cargo_rush.lua:135
 #: dat/missions/pirate/pir_contraband.lua:168
-#: dat/missions/sirius/srs_ferry.lua:199
+#: dat/missions/sirius/srs_ferry.lua:187
 #: dat/missions/trader/anxiousmerchant.lua:87
 msgid "Too slow"
 msgstr ""
@@ -52008,7 +52008,7 @@ msgstr ""
 #: dat/missions/neutral/diy-nerds.lua:92 dat/missions/neutral/diy-nerds.lua:143
 #: dat/missions/neutral/diy-nerds.lua:222 dat/missions/shadow/shadowrun.lua:80
 #: dat/missions/shadow/shadowrun.lua:147 dat/missions/shadow/shadowrun.lua:154
-#: dat/missions/sirius/srs_ferry.lua:352
+#: dat/missions/sirius/srs_ferry.lua:350
 msgid "You have {time} remaining"
 msgstr ""
 
@@ -63367,110 +63367,55 @@ msgstr ""
 msgid "Express"
 msgstr ""
 
-#. =Politics=--
-#: dat/missions/sirius/srs_ferry.lua:58
-msgid ""
-"The passenger looks at your credentials and remarks, \"Someone of your "
-"standing will not be allowed to set foot on the holy ground. "
-msgstr ""
-
-#: dat/missions/sirius/srs_ferry.lua:60
-#, lua-format
-msgid ""
-"However, if you can take me as far as %s, I will be satisfied with that.\""
-msgstr ""
-
-#: dat/missions/sirius/srs_ferry.lua:61
-#, lua-format
-msgid ""
-"However, I suppose if you can take me to %s, I can find another pilot for "
-"the remainder of the flight. But if that is the case, I wouldn't want to pay "
-"more than %s.\""
-msgstr ""
-
-#: dat/missions/sirius/srs_ferry.lua:62
-#, lua-format
-msgid ""
-"However, if you're on the way to Aesir, I could be willing to pay %s for "
-"transportation to %s.\""
-msgstr ""
-
-#: dat/missions/sirius/srs_ferry.lua:63
-msgid ""
-"Apparently you are not fit to be the pilot for my pilgrimage. It is the will "
-"of Sirichana to teach me patience...\""
-msgstr ""
-
 #. Outcomes for each of the 4 options above:
 #. We pick random number (1-4), then use this as our index into nc_probs[rank]
-#. If you change ships mid-journey
-#: dat/missions/sirius/srs_ferry.lua:74
-#, lua-format
+#. =Landing=--
+#: dat/missions/sirius/srs_ferry.lua:68
+msgid "The Sirian Shaira"
+msgstr ""
+
+#: dat/missions/sirius/srs_ferry.lua:69
+msgid "The Sirian Fyrra"
+msgstr ""
+
+#: dat/missions/sirius/srs_ferry.lua:70
+msgid "The Sirian Serra"
+msgstr ""
+
+#: dat/missions/sirius/srs_ferry.lua:73
 msgid ""
-"On landing, the passenger gives you a brief glare. \"I had paid for "
-"transportation in a Sirian ship,\" they remark. \"This alternate arrangement "
-"is quite disappointing.\" They hand you %s, but it's definitely less than "
-"you were expecting."
+"{passenger} thanks you profusely for your generosity, and carefully counts "
+"out your fare."
+msgstr ""
+
+#: dat/missions/sirius/srs_ferry.lua:74
+msgid ""
+"{passenger} bows briefly in gratitude, and silently places the agreed-upon "
+"fare in your hand."
 msgstr ""
 
 #: dat/missions/sirius/srs_ferry.lua:75
 msgid ""
-"Since you were unexpectedly able to procure a Sirian ship for the journey, "
-"you find a few extra credits tucked in with the fare!"
+"{passenger} crisply counts out your credits, and nods a momentary farewell."
 msgstr ""
 
-#. =Landing=--
+#: dat/missions/sirius/srs_ferry.lua:78
+msgid ""
+"{passenger}, on seeing the time, looks at you with veiled hurt and "
+"disappointment, but carefully counts out their full fare of {credits}."
+msgstr ""
+
+#: dat/missions/sirius/srs_ferry.lua:79
+msgid ""
+"{passenger} counts out {credits} with pursed lips, and walks off before you "
+"have time to say anything."
+msgstr ""
+
 #: dat/missions/sirius/srs_ferry.lua:80
-msgid "The Sirian Shaira"
-msgstr ""
-
-#: dat/missions/sirius/srs_ferry.lua:81
-msgid "The Sirian Fyrra"
-msgstr ""
-
-#: dat/missions/sirius/srs_ferry.lua:82
-msgid "The Sirian Serra"
-msgstr ""
-
-#: dat/missions/sirius/srs_ferry.lua:85
-#, lua-format
 msgid ""
-"%s thanks you profusely for your generosity, and carefully counts out your "
-"fare."
-msgstr ""
-
-#: dat/missions/sirius/srs_ferry.lua:86
-#, lua-format
-msgid ""
-"%s bows briefly in gratitude, and silently places the agreed-upon fare in "
-"your hand."
-msgstr ""
-
-#: dat/missions/sirius/srs_ferry.lua:87
-#, lua-format
-msgid "%s crisply counts out your credits, and nods a momentary farewell."
-msgstr ""
-
-#: dat/missions/sirius/srs_ferry.lua:90
-#, lua-format
-msgid ""
-"%s, on seeing the time, looks at you with veiled hurt and disappointment, "
-"but carefully counts out their full fare of %s."
-msgstr ""
-
-#: dat/missions/sirius/srs_ferry.lua:91
-#, lua-format
-msgid ""
-"%s counts out %s with pursed lips, and walks off before you have time to say "
-"anything."
-msgstr ""
-
-#: dat/missions/sirius/srs_ferry.lua:92
-#, lua-format
-msgid ""
-"%s tersely expresses their displeasure with the late arrival, and snaps %s "
-"down on the seat, with a look suggesting they hardly think you deserve that "
-"much."
+"{passenger} tersely expresses their displeasure with the late arrival, and "
+"snaps {credits} down on the seat, with a look suggesting they hardly think "
+"you deserve that much."
 msgstr ""
 
 #. Customization of car.calculateRoute in common.cargo
@@ -63497,21 +63442,18 @@ msgstr ""
 #. Set some mission constants.
 #. This is the maximum distance for reputation bonus calculations. Distances beyond this don't add to the bonus.
 #. This is the minimum distance needed to get a reputation bonus. Distances less than this don't incur a bonus.
-#: dat/missions/sirius/srs_ferry.lua:172
-#, lua-format
-msgid "SR: %s pilgrimage transport for %s-class citizen"
+#: dat/missions/sirius/srs_ferry.lua:160
+msgid "SR: {tier} pilgrimage transport for {rank}-class citizen"
 msgstr ""
 
-#: dat/missions/sirius/srs_ferry.lua:173 dat/missions/sirius/srs_ferry.lua:254
-#, lua-format
-msgid "%s space transport to %s for %s-class citizen"
+#: dat/missions/sirius/srs_ferry.lua:161 dat/missions/sirius/srs_ferry.lua:251
+msgid "{tier} space transport to {pnt} for {rank}-class citizen"
 msgstr ""
 
-#: dat/missions/sirius/srs_ferry.lua:199
-#, lua-format
+#: dat/missions/sirius/srs_ferry.lua:187
 msgid ""
-"The passenger requests arrival within %s, but it will take at least %s for "
-"your ship to reach %s, missing the deadline.\n"
+"The passenger requests arrival within {time_limit}, but it will take at "
+"least {time} for your ship to reach {pnt}, missing the deadline.\n"
 "\n"
 "Accept the mission anyway?"
 msgstr ""
@@ -63521,18 +63463,47 @@ msgstr ""
 #. Decide if the passenger will be OK with being dropped off at Urail or Gayathi, and if reward is reduced
 #. Then ask player if they're OK with that
 #. Something has changed with the system map, and this mission is no longer valid
-#: dat/missions/sirius/srs_ferry.lua:223
+#: dat/missions/sirius/srs_ferry.lua:211
 msgid ""
 "Error: no landable planets in the Aesir system. This mission is broken.\n"
 msgstr ""
 
 #. local picky = rnd.rnd(1,4)  -- initialized in the create function
 #. Rank 2 will demand to be delivered to Sirius
+#: dat/missions/sirius/srs_ferry.lua:226
+msgid ""
+"Apparently you are not fit to be the pilot for my pilgrimage. It is the will "
+"of Sirichana to teach me patience...\""
+msgstr ""
+
 #. Rank 1 will accept an alternate destination, but cut your fare
+#: dat/missions/sirius/srs_ferry.lua:230
+msgid ""
+"However, if you're on the way to Aesir, I could be willing to pay {credits} "
+"for transportation to {pnt}.\""
+msgstr ""
+
 #. OK with alternate destination, with smaller fare cut
+#: dat/missions/sirius/srs_ferry.lua:234
+msgid ""
+"However, I suppose if you can take me to {pnt}, I can find another pilot for "
+"the remainder of the flight. But if that is the case, I wouldn't want to pay "
+"more than {credits}.\""
+msgstr ""
+
 #. Rank 0 will take whatever they can get
-#: dat/missions/sirius/srs_ferry.lua:235 dat/missions/sirius/srs_ferry.lua:239
-#: dat/missions/sirius/srs_ferry.lua:243 dat/missions/sirius/srs_ferry.lua:246
+#: dat/missions/sirius/srs_ferry.lua:237
+msgid ""
+"However, if you can take me as far as {pnt}, I will be satisfied with that.\""
+msgstr ""
+
+#: dat/missions/sirius/srs_ferry.lua:240
+msgid ""
+"The passenger looks at your credentials and remarks, \"Someone of your "
+"standing will not be allowed to set foot on the holy ground. "
+msgstr ""
+
+#: dat/missions/sirius/srs_ferry.lua:242 dat/missions/sirius/srs_ferry.lua:244
 msgid "Deficient clearance"
 msgstr ""
 
@@ -63543,70 +63514,67 @@ msgstr ""
 #. Demands to be delivered in a Sirian ship
 #. Could be persuaded, for a discount
 #. discount is ok
-#: dat/missions/sirius/srs_ferry.lua:266 dat/missions/sirius/srs_ferry.lua:271
-#: dat/missions/sirius/srs_ferry.lua:281
+#: dat/missions/sirius/srs_ferry.lua:263 dat/missions/sirius/srs_ferry.lua:268
+#: dat/missions/sirius/srs_ferry.lua:278
 msgid "Transportation details"
 msgstr ""
 
-#: dat/missions/sirius/srs_ferry.lua:266
-#, lua-format
+#: dat/missions/sirius/srs_ferry.lua:263
 msgid ""
-"%s and remarks, \"What? This is to be the ship for my pilgrimage? This is "
-"unacceptable - such a crude ship must not be allowed to touch the sacred "
-"soil of Mutris. I will wait for a pilot who can ferry me in a true Sirian "
-"vessel.\""
+"As you arrive at the hangar, the Sirian looks at your ship and remarks, "
+"\"What? This is to be the ship for my pilgrimage? This is unacceptable - "
+"such a crude ship must not be allowed to touch the sacred soil of Mutris. I "
+"will wait for a pilot who can ferry me in a true Sirian vessel.\""
 msgstr ""
 
-#: dat/missions/sirius/srs_ferry.lua:266 dat/missions/sirius/srs_ferry.lua:271
-#: dat/missions/sirius/srs_ferry.lua:281
+#: dat/missions/sirius/srs_ferry.lua:263
 msgid "As you arrive at the hangar, the Sirian looks at your ship"
 msgstr ""
 
-#: dat/missions/sirius/srs_ferry.lua:271
-#, lua-format
+#: dat/missions/sirius/srs_ferry.lua:268
 msgid ""
-"%s and remarks, \"Oh, you didn't tell me your ship is not from our native "
-"Sirian shipyards. Since that is the case, I would prefer to wait for another "
-"pilot. A pilgrimage is a sacred matter, and the vessel should be likewise."
-"\"\n"
+"As you arrive at the hangar, the Sirian looks at your ship and remarks, "
+"\"Oh, you didn't tell me your ship is not from our native Sirian shipyards. "
+"Since that is the case, I would prefer to wait for another pilot. A "
+"pilgrimage is a sacred matter, and the vessel should be likewise.\"\n"
 "The Sirian looks like they might be open to negotiating, however. Would you "
-"offer to fly the mission for %s?"
+"offer to fly the mission for {credits}?"
 msgstr ""
 
 #. Player won't offer a discount
-#: dat/missions/sirius/srs_ferry.lua:275
+#: dat/missions/sirius/srs_ferry.lua:272
 msgid "Offer denied"
 msgstr ""
 
-#: dat/missions/sirius/srs_ferry.lua:275
+#: dat/missions/sirius/srs_ferry.lua:272
 msgid "\"I'm sorry. Your price is reasonable, but piety is of greater value.\""
 msgstr ""
 
 #. Would not be persuaded by a discount
-#: dat/missions/sirius/srs_ferry.lua:278
+#: dat/missions/sirius/srs_ferry.lua:275
 msgid "Offer accepted"
 msgstr ""
 
-#: dat/missions/sirius/srs_ferry.lua:278
+#: dat/missions/sirius/srs_ferry.lua:275
 msgid ""
 "\"Very well. For a price that reasonable, I will adjust my expectations.\""
 msgstr ""
 
-#: dat/missions/sirius/srs_ferry.lua:281
-#, lua-format
+#: dat/missions/sirius/srs_ferry.lua:278
 msgid ""
-"%s, and you catch a hint of disappointment on their face, before they notice "
-"you and quickly hide it."
+"As you arrive at the hangar, the Sirian looks at your ship, and you catch a "
+"hint of disappointment on their face, before they notice you and quickly "
+"hide it."
 msgstr ""
 
 #. ok with the arrangements
 #. Will not expect to arrive in a Sirian ship
 #. Will expect to arrive in a Sirian ship
-#: dat/missions/sirius/srs_ferry.lua:292
+#: dat/missions/sirius/srs_ferry.lua:289
 msgid "Pilgrims"
 msgstr ""
 
-#: dat/missions/sirius/srs_ferry.lua:292
+#: dat/missions/sirius/srs_ferry.lua:289
 msgid "A bunch of giddy Sirian pilgrims."
 msgstr ""
 
@@ -63616,76 +63584,87 @@ msgstr ""
 #. Check if we're still flying a Sirian ship
 #. Bad: they wanted a Sirian ship and you switched on them
 #. A little bonus for doing something nice
-#: dat/missions/sirius/srs_ferry.lua:310 dat/missions/sirius/srs_ferry.lua:333
+#: dat/missions/sirius/srs_ferry.lua:307 dat/missions/sirius/srs_ferry.lua:331
 msgid "Altering the deal"
+msgstr ""
+
+#: dat/missions/sirius/srs_ferry.lua:307
+msgid ""
+"On landing, the passenger gives you a brief glare. \"I had paid for "
+"transportation in a Sirian ship,\" they remark. \"This alternate arrangement "
+"is quite disappointing.\" They hand you {credits}, but it's definitely less "
+"than you were expecting."
 msgstr ""
 
 #. Good: they weren't expecting a Sirian ship, but they got one anyway
 #. ranges from 0 (<distbonus_minjumps jumps) to 4 (>=distbonus_maxjumps jumps)
-#: dat/missions/sirius/srs_ferry.lua:321
+#: dat/missions/sirius/srs_ferry.lua:318
 msgid "Successful arrival!"
 msgstr ""
 
-#. Pay them a bonus for using a Sirian ship
 #. if we missed the second deadline, drop the person off at the planet.
-#: dat/missions/sirius/srs_ferry.lua:323 dat/missions/sirius/srs_ferry.lua:341
+#: dat/missions/sirius/srs_ferry.lua:320 dat/missions/sirius/srs_ferry.lua:339
 msgid "Passenger transport failure"
 msgstr ""
 
-#: dat/missions/sirius/srs_ferry.lua:323
+#: dat/missions/sirius/srs_ferry.lua:320
 msgid ""
 "Well, you arrived, but with this late of an arrival, you can't hope for any "
 "payment."
 msgstr ""
 
 #. You were late
-#: dat/missions/sirius/srs_ferry.lua:328
+#: dat/missions/sirius/srs_ferry.lua:325
 msgid "Late arrival"
 msgstr ""
 
-#: dat/missions/sirius/srs_ferry.lua:341
+#: dat/missions/sirius/srs_ferry.lua:331
+msgid ""
+"Since you were unexpectedly able to procure a Sirian ship for the journey, "
+"you find a few extra credits tucked in with the fare!"
+msgstr ""
+
+#: dat/missions/sirius/srs_ferry.lua:339
 msgid "You drop the upset pilgrim off at the nearest spaceport."
 msgstr ""
 
 #. Date hook
-#: dat/missions/sirius/srs_ferry.lua:349
-#, lua-format
-msgid "Fly to %s in the %s system before %s"
+#: dat/missions/sirius/srs_ferry.lua:347
+msgid "Fly to {pnt} in the {sys} system before {time}"
 msgstr ""
 
-#: dat/missions/sirius/srs_ferry.lua:353 dat/missions/sirius/srs_ferry.lua:364
+#: dat/missions/sirius/srs_ferry.lua:351 dat/missions/sirius/srs_ferry.lua:362
 msgid "Pilgrimage transport"
 msgstr ""
 
 #. Case missed second deadline
-#: dat/missions/sirius/srs_ferry.lua:356
+#: dat/missions/sirius/srs_ferry.lua:354
 msgid ""
 "You're far too late ... best to drop your passengers off on the nearest "
 "planet before tempers run any higher."
 msgstr ""
 
-#: dat/missions/sirius/srs_ferry.lua:357
+#: dat/missions/sirius/srs_ferry.lua:355
 msgid "Pilgrim drop-off"
 msgstr ""
 
-#: dat/missions/sirius/srs_ferry.lua:358
+#: dat/missions/sirius/srs_ferry.lua:356
 msgid "Drop off the pilgrims at the nearest planet"
 msgstr ""
 
 #. Case missed first deadline
-#: dat/missions/sirius/srs_ferry.lua:362 dat/missions/sirius/srs_ferry.lua:363
+#: dat/missions/sirius/srs_ferry.lua:360 dat/missions/sirius/srs_ferry.lua:361
 msgid "You've missed the scheduled arrival time! But better late than never..."
 msgstr ""
 
-#: dat/missions/sirius/srs_ferry.lua:370
+#: dat/missions/sirius/srs_ferry.lua:368
 msgid "Passenger transport aborted"
 msgstr ""
 
-#: dat/missions/sirius/srs_ferry.lua:370
-#, lua-format
+#: dat/missions/sirius/srs_ferry.lua:368
 msgid ""
-"Informing the pilgrim that their flight to %s has been canceled, you promise "
-"to drop them off at the nearest planet."
+"Informing the pilgrim that their flight to {pnt} has been canceled, you "
+"promise to drop them off at the nearest planet."
 msgstr ""
 
 #.
