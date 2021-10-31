@@ -1,7 +1,6 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
 /**
  * @file outfit.c
  *
@@ -10,8 +9,6 @@
  * These outfits allow you to modify ships or make them more powerful and are
  *  a fundamental part of the game.
  */
-
-
 /** @cond */
 #include <math.h>
 #include <stdlib.h>
@@ -43,19 +40,16 @@
 #include "spfx.h"
 #include "unistd.h"
 
-
 #define outfit_setProp(o,p)      ((o)->properties |= p) /**< Checks outfit property. */
 
 #define XML_OUTFIT_TAG     "outfit"    /**< XML section identifier. */
 
 #define OUTFIT_SHORTDESC_MAX  STRMAX_SHORT /**< Max length of the short description of the outfit. */
 
-
 /*
  * the stack
  */
 static Outfit* outfit_stack = NULL; /**< Stack of outfits. */
-
 
 /*
  * Helper stuff for setting up short descriptions for outfits.
@@ -97,7 +91,6 @@ static void outfit_parseSGUI( Outfit *temp, const xmlNodePtr parent );
 static void outfit_parseSLicense( Outfit *temp, const xmlNodePtr parent );
 static int outfit_loadPLG( Outfit *temp, const char *buf, unsigned int bolt );
 
-
 static int outfit_cmp( const void *p1, const void *p2 )
 {
    const Outfit *o1, *o2;
@@ -105,7 +98,6 @@ static int outfit_cmp( const void *p1, const void *p2 )
    o2 = (const Outfit*) p2;
    return strcmp( o1->name, o2->name );
 }
-
 
 /**
  * @brief Gets an outfit by name.
@@ -152,7 +144,6 @@ const char *outfit_existsCase( const char* name )
    return NULL;
 }
 
-
 /**
  * @brief Does a fuzzy search of all the outfits. Searches translated names but returns internal names.
  */
@@ -183,7 +174,6 @@ char **outfit_searchFuzzyCase( const char* name, int *n )
    *n = len;
    return names;
 }
-
 
 /**
  * @brief Function meant for use with C89, C99 algorithm qsort().
@@ -246,7 +236,6 @@ int outfit_compareTech( const void *outfit1, const void *outfit2 )
    return strcmp( o1->name, o2->name );
 }
 
-
 int outfit_filterWeapon( const Outfit *o )
 { return ((o->slot.type == OUTFIT_SLOT_WEAPON) && !sp_required( o->slot.spid )); }
 
@@ -264,7 +253,6 @@ int outfit_filterOther( const Outfit *o )
    return (!sp_required( o->slot.spid ) && ((o->slot.type == OUTFIT_SLOT_NULL)
          || (o->slot.type == OUTFIT_SLOT_NA)));
 }
-
 
 /**
  * @brief Gets the name of the slot type of an outfit.
@@ -582,7 +570,6 @@ int outfit_isGUI( const Outfit* o )
    return (o->type==OUTFIT_TYPE_GUI);
 }
 
-
 /**
  * @brief Checks if outfit has the secondary flag set.
  *    @param o Outfit to check.
@@ -592,7 +579,6 @@ int outfit_isSecondary( const Outfit* o )
 {
    return (o->properties & OUTFIT_PROP_WEAP_SECONDARY) != 0;
 }
-
 
 /**
  * @brief Gets the outfit's graphic effect.
@@ -859,7 +845,6 @@ double outfit_cooldown( const Outfit* o )
    return -1.;
 }
 
-
 /**
  * @brief Gets the outfit's specific type.
  *
@@ -893,7 +878,6 @@ const char* outfit_getType( const Outfit* o )
    return outfit_typename[o->type];
 }
 
-
 /**
  * @brief Gets the outfit's broad type.
  *
@@ -918,7 +902,6 @@ const char* outfit_getTypeBroad( const Outfit* o )
    else                             return N_("Unknown");
 }
 
-
 /**
  * @brief Gets a human-readable string describing an ammo outfit's AI.
  *    @param o Ammo outfit.
@@ -939,7 +922,6 @@ const char* outfit_getAmmoAI( const Outfit *o )
 
    return ai_type[o->u.amm.ai];
 }
-
 
 /**
  * @brief Checks to see if an outfit fits a slot.
@@ -985,7 +967,6 @@ int outfit_fitsSlot( const Outfit* o, const OutfitSlot* s )
    return 1;
 }
 
-
 /**
  * @brief Checks to see if an outfit fits a slot type (ignoring size).
  *
@@ -1010,7 +991,6 @@ int outfit_fitsSlotType( const Outfit* o, const OutfitSlot* s )
    return 1;
 }
 
-
 /**
  * @brief Frees an outfit slot.
  *
@@ -1020,7 +1000,6 @@ void outfit_freeSlot( OutfitSlot* s )
 {
    (void) s;
 }
-
 
 #define O_CMP(s,t) \
 if (strcasecmp(buf,(s))==0) return t /**< Define to help with outfit_strToOutfitType. */
@@ -1052,7 +1031,6 @@ static OutfitType outfit_strToOutfitType( char *buf )
    return  OUTFIT_TYPE_NULL;
 }
 #undef O_CMP
-
 
 /**
  * @brief Parses a damage node.
@@ -1103,7 +1081,6 @@ static int outfit_parseDamage( Damage *dmg, xmlNodePtr node )
 
    return 0;
 }
-
 
 /**
  * @brief Loads the collision polygon for a bolt outfit.
@@ -1180,7 +1157,6 @@ that can be found in Naev's artwork repo."), file);
    xmlFreeDoc(doc);
    return 0;
 }
-
 
 /**
  * @brief Parses the specific area for a bolt weapon and loads it into Outfit.
@@ -1361,7 +1337,6 @@ if (o) WARN(_("Outfit '%s' missing/invalid '%s' element"), temp->name, s) /**< D
 #undef MELEMENT
 }
 
-
 /**
  * @brief Parses the beam weapon specifics of an outfit.
  *
@@ -1506,7 +1481,6 @@ if (o) WARN( _("Outfit '%s' missing/invalid '%s' element"), temp->name, s) /**< 
 #undef MELEMENT
 }
 
-
 /**
  * @brief Parses the specific area for a launcher and loads it into Outfit.
  *
@@ -1564,7 +1538,6 @@ if (o) WARN(_("Outfit '%s' missing '%s' element"), temp->name, s) /**< Define to
    MELEMENT(temp->u.lau.reload_time==0.,"reload_time");
 #undef MELEMENT
 }
-
 
 /**
  * @brief Parses the specific area for a weapon and loads it into Outfit.
@@ -1709,7 +1682,6 @@ if (o) WARN(_("Outfit '%s' missing/invalid '%s' element"), temp->name, s) /**< D
       DEBUG(_("Outfit '%s' has no speed nor thrust set!"), temp->name);
 }
 
-
 /**
  * @brief Parses the modification tidbits of the outfit.
  *
@@ -1780,7 +1752,6 @@ static void outfit_parseSMod( Outfit* temp, const xmlNodePtr parent )
       SDESC_ADD( l, temp, _(" #r(%.1f s Cooldown)#0"), temp->u.mod.cooldown );
    SDESC_COND_COLOUR( l, temp, _("%+.0f CPU"), temp->cpu );
 }
-
 
 /**
  * @brief Parses the afterburner tidbits of the outfit.
@@ -2052,7 +2023,6 @@ static void outfit_parseSMap( Outfit *temp, const xmlNodePtr parent )
             "%s", _(outfit_getType(temp)) );
    }
 
-
 #define MELEMENT(o,s) \
 if (o) WARN(_("Outfit '%s' missing/invalid '%s' element"), temp->name, s)
 /**< Define to help check for data errors. */
@@ -2060,7 +2030,6 @@ if (o) WARN(_("Outfit '%s' missing/invalid '%s' element"), temp->name, s)
    MELEMENT(temp->cpu!=0.,"cpu");
 #undef MELEMENT
 }
-
 
 /**
  * @brief Parses the map tidbits of the outfit.
@@ -2099,7 +2068,6 @@ if (o) WARN(_("Outfit '%s' missing/invalid '%s' element"), temp->name, s)
 #undef MELEMENT
 }
 
-
 /**
  * @brief Parses the GUI tidbits of the outfit.
  *
@@ -2133,7 +2101,6 @@ if (o) WARN(_("Outfit '%s' missing/invalid '%s' element"), temp->name, s)
 #undef MELEMENT
 }
 
-
 /**
  * @brief Parses the license tidbits of the outfit.
  *
@@ -2166,7 +2133,6 @@ if (o) WARN(_("Outfit '%s' missing/invalid '%s' element"), temp->name, s)
 #undef MELEMENT
 }
 
-
 /**
  * @brief Parses and returns Outfit from parent node.
 
@@ -2176,7 +2142,7 @@ if (o) WARN(_("Outfit '%s' missing/invalid '%s' element"), temp->name, s)
  */
 static int outfit_parse( Outfit* temp, const char* file )
 {
-   xmlNodePtr cur, node, parent;
+   xmlNodePtr node, parent;
    char *prop, *desc_extra;
    const char *cprop;
    int group, l;
@@ -2207,7 +2173,7 @@ static int outfit_parse( Outfit* temp, const char* file )
       xml_onlyNodes(node);
 
       if (xml_isNode(node,"general")) {
-         cur = node->children;
+         xmlNodePtr cur = node->children;
          do {
             xml_onlyNodes(cur);
             xmlr_int(cur,"rarity",temp->rarity);
@@ -2287,10 +2253,9 @@ static int outfit_parse( Outfit* temp, const char* file )
       }
 
       if (xml_isNode(node,"stats")) {
-         ShipStatList *ll;
-
-         cur = node->children;
+         xmlNodePtr cur = node->children;
          do {
+            ShipStatList *ll;
             xml_onlyNodes(cur);
             /* Stats. */
             ll = ss_listFromXML( cur );
@@ -2399,7 +2364,6 @@ if (o) WARN( _("Outfit '%s' missing/invalid '%s' element"), temp->name, s) /**< 
 
    return 0;
 }
-
 
 /**
  * @brief Loads all the files in a directory.
@@ -2583,7 +2547,6 @@ int outfit_loadPost (void)
    return 0;
 }
 
-
 /**
  * @brief Parses all the maps.
  *
@@ -2645,7 +2608,6 @@ int outfit_mapParse (void)
    return 0;
 }
 
-
 /**
  * @brief Generates short descs for launchers, including ammo info.
  *
@@ -2706,7 +2668,6 @@ static void outfit_launcherDesc( Outfit* o )
    SDESC_COND( l, o, _("\n%.0f%% Jam Resistance"), a->u.amm.resist * 100. );
 }
 
-
 /**
  * Gets the texture associated to the rarity of an outfit/ship.
  */
@@ -2716,7 +2677,6 @@ glTexture* rarity_texture( int rarity )
    snprintf( s, sizeof(s), OVERLAY_GFX_PATH"rarity_%d.webp", rarity );
    return gl_newImage( s, OPENGL_TEX_MIPMAPS );
 }
-
 
 /**
  * @brief Checks illegality of an outfit to a faction.
@@ -2729,7 +2689,6 @@ int outfit_checkIllegal( const Outfit* o, int fct )
    }
    return 0;
 }
-
 
 /**
  * @brief Frees the outfit stack.
@@ -2805,4 +2764,3 @@ void outfit_free (void)
 
    array_free(outfit_stack);
 }
-

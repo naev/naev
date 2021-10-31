@@ -1825,7 +1825,7 @@ static int pilotL_outfits( lua_State *L )
    else
       ost = OUTFIT_SLOT_NULL;
 
-   j  = 1;
+   j = 1;
    lua_newtable( L );
    for (int i=0; i<array_size(p->outfits); i++) {
 
