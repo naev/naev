@@ -142,8 +142,8 @@ function handle_messages( si, dopush )
    local taskchange = false
    local p = ai.pilot()
    local l = p:leader()
-   for _, v in ipairs(ai.messages()) do
-      local sender, msgtype, data = table.unpack(v)
+   for _, msg in ipairs(ai.messages()) do
+      local sender, msgtype, data = table.unpack(msg)
 
       -- Skip message from nonexistent sender
       if sender:exists() then

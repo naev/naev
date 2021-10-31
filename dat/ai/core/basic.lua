@@ -10,7 +10,8 @@
 
 function foo( data ) -- normal task
 function _bar( data ) -- subtask
-function __hoge( data ) -- internal use function
+local function __hoge( data ) -- internal use function
+function __hoge( data ) -- internal in name only, or forward-declared local function ;)
 
 -- Remark: the (sub)taskdata is passed as the (sub)task function argument
 --]]
@@ -20,7 +21,7 @@ local fmt = require "format"
 --[[
 -- Helper function that checks to see if a value is in a table
 --]]
-function __intable( t, val )
+local function __intable( t, val )
    for k,v in ipairs(t) do
       if v==val then
          return true
@@ -107,7 +108,7 @@ function __zigzag ( dir, angle )
    end
    ai.accel()
 end
-function __zigzag_run_decide( self, target )
+local function __zigzag_run_decide( self, target )
    -- Some AI will not do fancy maneuvers
    if mem.simplecombat then return false end
    -- Try to figure it out
@@ -1153,7 +1154,7 @@ end
 --[[
 -- Check to see if a ship needs to be scanned.
 --]]
-function __needs_scan( target )
+local function __needs_scan( target )
    if not mem.scanned then
       return false
    end
@@ -1169,7 +1170,7 @@ end
 --[[
 -- Whether or not we want to scan, ignore players for now
 --]]
-function __wanttoscan( _p, target )
+local function __wanttoscan( _p, target )
    -- Don't care about stuff that doesn't need scan
    if not __needs_scan( target ) then
       return false
