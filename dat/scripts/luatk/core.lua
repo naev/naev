@@ -456,12 +456,12 @@ function luatk.drawAltText( bx, by, alt, w )
    local lw, lh = lg.getDimensions()
 
    local x = bx + 10
-   local y = by + 10 --- h - font:getLineHeight() - 10
-   if y < 10 then
-      y = 10
+   local y = by
+   if y+h+10 > lh then
+      y = lh-h-10
    end
    if x+w+10 > lw then
-      x = x - w
+      x = lw-w-10
    end
 
    lg.setColor( {0.0, 0.0, 0.0, 0.9} )

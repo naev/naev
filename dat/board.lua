@@ -226,7 +226,7 @@ function wgtBoard:drawover( bx, by )
    if not l then return end
    local alt = l.alt
    if alt and self.mouseover then
-      luatk.drawAltText( x+w, y-10, alt, 400 )
+      luatk.drawAltText( x+w, y, alt, 400 )
    end
 end
 function wgtBoard:clicked( _mx, _my, btn )
