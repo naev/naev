@@ -154,8 +154,7 @@ const Outfit* luaL_validoutfit( lua_State *L, int ind )
  */
 const Outfit** lua_pushoutfit( lua_State *L, const Outfit *outfit )
 {
-   const Outfit **o;
-   o = (const Outfit**) lua_newuserdata(L, sizeof(Outfit*));
+   const Outfit **o = (const Outfit**) lua_newuserdata(L, sizeof(Outfit*));
    *o = outfit;
    luaL_getmetatable(L, OUTFIT_METATABLE);
    lua_setmetatable(L, -2);
@@ -197,7 +196,6 @@ int lua_isoutfit( lua_State *L, int ind )
 static int outfitL_eq( lua_State *L )
 {
    const Outfit *a, *b;
-
    a = luaL_checkoutfit(L,1);
    b = luaL_checkoutfit(L,2);
    if (a == b)
