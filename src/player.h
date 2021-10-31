@@ -281,6 +281,7 @@ void player_targetEscort( int prev );
  */
 void player_weapSetPress( int id, double value, int repeat );
 int player_land( int loud );
+void player_board (void);
 int player_jump (void);
 void player_screenshot (void);
 void player_accel( double acc );

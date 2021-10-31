@@ -49,7 +49,7 @@ int player_isBoarded (void)
  *
  * Creates the window on success.
  */
-void player_board (void)
+int player_tryBoard (void)
 {
    Pilot *p;
    char c;
@@ -57,7 +57,7 @@ void player_board (void)
 
    /* Not disabled. */
    if (pilot_isDisabled(player.p))
-      return;
+      return -1;
 
    if (player.p->target==PLAYER_ID) {
       /* We don't try to find far away targets, only nearest and see if it matches.
@@ -69,7 +69,7 @@ void player_board (void)
             pilot_isFlag(p,PILOT_NOBOARD)) {
          player_targetClear();
          player_message( _("#rYou need a target to board first!") );
-         return;
+         return -1;
       }
    }
    else
@@ -79,36 +79,36 @@ void player_board (void)
    /* More checks. */
    if (pilot_isFlag(p,PILOT_NOBOARD)) {
       player_message( _("#rTarget ship can not be boarded.") );
-      return;
+      return -1;
    }
    else if (pilot_isFlag(p,PILOT_BOARDED)) {
       player_message( _("#rYour target cannot be boarded again.") );
-      return;
+      return -1;
    }
    else if (!pilot_isDisabled(p) && !pilot_isFlag(p,PILOT_BOARDABLE)) {
       player_message(_("#rYou cannot board a ship that isn't disabled!"));
-      return;
+      return -1;
    }
    else if (vect_dist(&player.p->solid->pos,&p->solid->pos) >
          p->ship->gfx_space->sw * PILOT_SIZE_APPROX) {
       player_message(_("#rYou are too far away to board your target."));
-      return;
+      return -1;
    }
    else if ((pow2(VX(player.p->solid->vel)-VX(p->solid->vel)) +
             pow2(VY(player.p->solid->vel)-VY(p->solid->vel))) >
          (double)pow2(MAX_HYPERSPACE_VEL)) {
       player_message(_("#rYou are going too fast to board the ship."));
-      return;
+      return -1;
    }
 
    /* Handle fighters. */
    if (pilot_isFlag(p, PILOT_CARRIED) && (p->dockpilot == PLAYER_ID)) {
       if (pilot_dock( p, player.p )) {
          WARN(_("Unable to recover fighter."));
-         return;
+         return -1;
       }
       player_message(_("#oYou recover your %s fighter."), p->name);
-      return;
+      return 0;
    }
 
    /* Is boarded. */
@@ -135,7 +135,7 @@ void player_board (void)
 
    if (board_stopboard) {
       board_boarded = 0;
-      return;
+      return 0;
    }
 
    /* Set up environment first time. */
@@ -152,7 +152,7 @@ void player_board (void)
                BOARD_PATH, lua_tostring(naevL,-1));
          board_boarded = 0;
          free(buf);
-         return;
+         return -1;
       }
       free(buf);
    }
@@ -165,6 +165,7 @@ void player_board (void)
       lua_pop(naevL,1);
    }
    board_boarded = 0;
+   return 0;
 }
 
 /**

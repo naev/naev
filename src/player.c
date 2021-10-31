@@ -1501,7 +1501,7 @@ int player_land( int loud )
 
       silent = 1; /* Suppress further targeting noises. */
    }
-   /*check if planet is in range*/
+   /* Check if planet is in range. */
    else if (!pilot_inRangePlanet( player.p, player.p->nav_planet )) {
       player_planetOutOfRangeMsg();
       return PLAYER_LAND_AGAIN;
@@ -1632,6 +1632,36 @@ void player_nolandMsg( const char *str )
       player_message_noland = strdup(str);
    else
       player_message_noland = strdup(_("You are not allowed to land at this moment."));
+}
+
+/**
+ */
+void player_board (void)
+{
+   Pilot *p;
+   char c;
+
+   /* Not under manual control or disabled. */
+   if (pilot_isFlag( player.p, PILOT_MANUAL_CONTROL ) ||
+         pilot_isDisabled(player.p))
+      return;
+
+   /* Try to grab target if not available. */
+   if (player.p->target==PLAYER_ID) {
+      /* We don't try to find far away targets, only nearest and see if it matches.
+       * However, perhaps looking for first boardable target within a certain range
+       * could be more interesting. */
+      player_targetNearest();
+      p = pilot_getTarget( player.p );
+      if ((!pilot_isDisabled(p) && !pilot_isFlag(p,PILOT_BOARDABLE)) ||
+            pilot_isFlag(p,PILOT_NOBOARD)) {
+         player_targetClear();
+         player_message( _("#rYou need a target to board first!") );
+         return;
+      }
+   }
+
+   player_autonavBoard( player.p->target );
 }
 
 /**

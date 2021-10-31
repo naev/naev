@@ -335,7 +335,7 @@ function talk_derelict ()
    vn.transition( tutnel.nelly.transition )
    vn.na(_([[After you enter the system, Nelly points something out on the radar.]]))
    -- TODO autoboard!
-   nel(fmt.f(_([["Oooh, look at that. A Koala derelict is nearby. There might be something interesting on it! We should go board it. Try to bring the ship to a stop on top of them and either #odouble-click#0 or select them and board them with {boardkey}. You can toggle the overlay to see exactly where the ship is with {overlay}."]]),{boardkey=tut.getKey("board"), overlaykey=tut.get("overlay")}))
+   nel(fmt.f(_([["Oooh, look at that. A Koala derelict is nearby. There might be something interesting on it! We should go board it. Try #odouble-click#0ing or selecting the derelict and pressing {boardkey}. It should enable your autonav system to board the ship. You can toggle the overlay to see exactly where the ship is with {overlay}."]]),{boardkey=tut.getKey("board"), overlaykey=tut.get("overlay")}))
    vn.done( tutnel.nelly.transition )
    vn.run()
 end

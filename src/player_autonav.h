@@ -12,6 +12,8 @@ enum {
    AUTONAV_PNT_LAND_APPROACH,/**< Player is going to land on a planet. */
    AUTONAV_PNT_LAND_BRAKE, /**< Player is braking to land at a planet. */
    AUTONAV_PLT_FOLLOW,     /**< Player is following a pilot. */
+   AUTONAV_PLT_BOARD_APPROACH,/**< Player is trying to board a pilot. */
+   AUTONAV_PLT_BOARD_BRAKE,/**< Player is going to brake to board. */
 };
 
 void player_thinkAutonav( Pilot *pplayer, double dt );
@@ -26,3 +28,4 @@ void player_autonavStartWindow( unsigned int wid, const char *str );
 void player_autonavPos( double x, double y );
 void player_autonavPnt( const char *name, int tryland );
 void player_autonavPil( unsigned int p );
+void player_autonavBoard( unsigned int p );

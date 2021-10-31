@@ -15,6 +15,7 @@
 #include "player.h"
 
 #include "array.h"
+#include "board.h"
 #include "conf.h"
 #include "map.h"
 #include "pause.h"
@@ -209,6 +210,28 @@ void player_autonavPil( unsigned int p )
 
    player_message(_("#oAutonav: following %s."), (inrange==1) ? pilot->name : _("Unknown") );
    player.autonav    = AUTONAV_PLT_FOLLOW;
+   player.autonavmsg = strdup( pilot->name );
+   player.autonavcol = '0';
+}
+
+/**
+ * @brief Starts autonav with a pilot to board.
+ */
+void player_autonavBoard( unsigned int p )
+{
+   Pilot *pilot = pilot_get( p );
+   int inrange  = pilot_inRangePilot( player.p, pilot, NULL );
+   if (player_autonavSetup() || !inrange)
+      return;
+
+   /* Detected fuzzy, can't board. */
+   if (inrange!=1) {
+      player_autonavPil( p );
+      return;
+   }
+
+   player_message(_("#oAutonav: boarding %s."), pilot->name );
+   player.autonav    = AUTONAV_PLT_BOARD_APPROACH;
    player.autonavmsg = strdup( pilot->name );
    player.autonavcol = '0';
 }
@@ -425,6 +448,35 @@ static void player_autonav (void)
             player_autonavFollow( &p->solid->pos, &p->solid->vel, !ret, &d );
             if (ret && (!tc_rampdown))
                player_autonavRampdown(d);
+         }
+         break;
+
+      case AUTONAV_PLT_BOARD_APPROACH:
+         p = pilot_getTarget( player.p );
+         if (p == NULL)
+            p = pilot_get( PLAYER_ID );
+         ret = player_autonavApproach( &p->solid->pos, &d, 1 );
+         if (ret)
+            player.autonav = AUTONAV_PLT_BOARD_BRAKE;
+         else if (!tc_rampdown)
+            player_autonavRampdown(d);
+         break;
+
+      case AUTONAV_PLT_BOARD_BRAKE:
+         ret = player_autonavBrake();
+
+         /* Try to land. */
+         if (ret) {
+            if (player_tryBoard())
+               player_autonavAbort(NULL);
+            else
+               player.autonav = AUTONAV_PLT_BOARD_APPROACH;
+         }
+
+         /* See if should ramp down. */
+         if (!tc_rampdown) {
+            tc_rampdown = 1;
+            tc_down     = (tc_mod-tc_base) / 3.;
          }
          break;
    }
