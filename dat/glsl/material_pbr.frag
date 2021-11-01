@@ -109,7 +109,7 @@ vec3 shade( Material mat, vec3 v, vec3 n, vec3 l, float NoL )
    vec3 h   = normalize(l+v); /* Halfway vector. */
 
    /* Compute helpers. */
-   float NoV = max(0.0,dot(n,v));
+   float NoV = max(1e-4,dot(n,v)); /* Neubelt and Pettineo 2013, "Crafting a Next-gen Material Pipeline for The Order: 1886" */
    float NoH = max(0.0,dot(n,h));
    float LoH = max(0.0,dot(l,h));
    float VoH = max(0.0,dot(v,h));
