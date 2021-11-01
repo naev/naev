@@ -31,7 +31,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2021-10-31 23:56-0400\n"
+"POT-Creation-Date: 2021-11-01 00:38-0400\n"
 "PO-Revision-Date: 2021-10-31 14:27+0000\n"
 "Last-Translator: OOTA, Masato <ooyooxei+gh@gmail.com>\n"
 "Language-Team: Japanese <https://hosted.weblate.org/projects/naev/naev/ja/>\n"
@@ -26343,7 +26343,7 @@ msgstr ""
 msgid "unknown tradein type"
 msgstr ""
 
-#: dat/events/dvaered/totoran.lua:208 dat/events/minerva/station.lua:321
+#: dat/events/dvaered/totoran.lua:208
 #: dat/missions/empire/collective/ec03.lua:50 src/map_find.c:427
 #, c-format, lua-format
 msgid "%s (%s)"
@@ -27815,10 +27815,9 @@ msgid " Wait, what? What do you mean they are sold out!?"
 msgstr ""
 
 #: dat/events/minerva/station.lua:64
-#, lua-format
 msgid ""
 "\"I really have my eyes on the Fuzzy Dice available at the terminal. I "
-"always wanted to own a piece of history!%s\""
+"always wanted to own a piece of history!{msg}\""
 msgstr ""
 
 #: dat/events/minerva/station.lua:65
@@ -28027,13 +28026,12 @@ msgid " LIFE IS SHORT, SPEND IT AT MINERVA STATION."
 msgstr ""
 
 #: dat/events/minerva/station.lua:205
-#, lua-format
 msgid ""
-"\"VALUED CUSTOMER, YOU HAVE #p%s MINERVA TOKEN#0.%s\n"
+"\"VALUED CUSTOMER, YOU HAVE #p{n} MINERVA TOKEN#0.{msg}\n"
 "\n"
 "WHAT DO YOU WISH TO DO TODAY?\""
 msgid_plural ""
-"\"VALUED CUSTOMER, YOU HAVE #p%s MINERVA TOKENS#0.%s\n"
+"\"VALUED CUSTOMER, YOU HAVE #p{n} MINERVA TOKENS#0.{msg}\n"
 "\n"
 "WHAT DO YOU WISH TO DO TODAY?\""
 msgstr[0] ""
@@ -28133,8 +28131,11 @@ msgid_plural ""
 msgstr[0] ""
 
 #: dat/events/minerva/station.lua:319
-#, lua-format
-msgid "%s (#rSOLD OUT#0)"
+msgid "{item} (#rSOLD OUT#0)"
+msgstr ""
+
+#: dat/events/minerva/station.lua:321
+msgid "{item} ({tokens})"
 msgstr ""
 
 #. Add special ticket
@@ -59618,43 +59619,43 @@ msgstr ""
 #. --
 #. Mission details
 #: dat/missions/pirate/empbounty_dead.lua:42
-#, lua-format
-msgid "#rPIRACY:#0: Quick Assassination Job in %s%s"
+msgid "#rPIRACY:#0: Quick Assassination Job in {sys}{msg}"
 msgstr ""
 
 #: dat/missions/pirate/empbounty_dead.lua:43
-#, lua-format
-msgid "#rPIRACY:#0: Small Assassination Job in %s%s"
+msgid "#rPIRACY:#0: Small Assassination Job in {sys}{msg}"
 msgstr ""
 
 #: dat/missions/pirate/empbounty_dead.lua:44
-#, lua-format
-msgid "#rPIRACY:#0: Moderate Assassination Job in %s%s"
+msgid "#rPIRACY:#0: Moderate Assassination Job in {sys}{msg}"
 msgstr ""
 
 #: dat/missions/pirate/empbounty_dead.lua:45
-#, lua-format
-msgid "#rPIRACY:#0: Big Assassination Job in %s%s"
+msgid "#rPIRACY:#0: Big Assassination Job in {sys}{msg}"
 msgstr ""
 
 #: dat/missions/pirate/empbounty_dead.lua:46
-#, lua-format
-msgid "#rPIRACY:#0: Dangerous Assassination Job in %s%s"
+msgid "#rPIRACY:#0: Dangerous Assassination Job in {sys}{msg}"
 msgstr ""
 
 #: dat/missions/pirate/empbounty_dead.lua:47
-#, lua-format
-msgid "#rPIRACY:#0: Highly Dangerous Assassination Job in %s%s"
-msgstr ""
+#, fuzzy
+#| msgid "Dangerous Alive Bounty in {sys}"
+msgid "#rPIRACY:#0: Highly Dangerous Assassination Job in {sys}{msg}"
+msgstr "{sys}での危険な生け捕り賞金"
 
 #. Lower probability on non-pirate places
 #. Determine paying faction probabilistic
 #. No enemy presence nearby
 #. Should not happen, but putting this here just in case.
 #. Set mission details
-#: dat/missions/pirate/empbounty_dead.lua:123
-#, lua-format
-msgid " (%s)"
+#. Finish mission details
+#. TODO make tiers based on how many times the player does them or something
+#. 0.95 for 1, 0.90 for 2 0.86 for 3, etc.
+#. Limit it so that 50% are large
+#. Set up rewards
+#: dat/missions/pirate/empbounty_dead.lua:123 dat/missions/pirate/raid.lua:164
+msgid " ({fct})"
 msgstr ""
 
 #: dat/missions/pirate/empbounty_dead.lua:128
@@ -60538,20 +60539,19 @@ msgstr ""
 #. Choose amount of cargo and mission reward. This depends on the mission tier.
 #. Modifier that should tend towards 1.0 as Naev is finished as a game
 #: dat/missions/pirate/pir_contraband.lua:147
-#, lua-format
-msgid "#rPIRACY:#0 Smuggle %s of %s (%s)"
+msgid "#rPIRACY:#0 Smuggle {tonnes} of {cargo} ({fct})"
 msgstr ""
 
 #: dat/missions/pirate/pir_contraband.lua:151
-#, lua-format
-msgid "#rPIRACY:#0 Smuggle %s of %s"
+msgid "#rPIRACY:#0 Smuggle {tonnes} of {cargo}"
 msgstr ""
 
 #: dat/missions/pirate/pir_contraband.lua:156
 #: dat/missions/pirate/pir_contraband.lua:158
-#, lua-format
-msgid "Smuggling contraband goods to %s in the %s system.%s"
-msgstr ""
+#, fuzzy
+#| msgid "Courier transport to {pnt} in the {sys} system."
+msgid "Smuggling contraband goods to {pnt} in the {sys} system.{msg}"
+msgstr "{sys}星系の{pnt}への速達輸送。"
 
 #: dat/missions/pirate/pir_contraband.lua:158
 msgid ""
@@ -61279,17 +61279,8 @@ msgid ""
 "minutes of playing with a cat."
 msgstr ""
 
-#. Finish mission details
-#. TODO make tiers based on how many times the player does them or something
-#. 0.95 for 1, 0.90 for 2 0.86 for 3, etc.
-#. Limit it so that 50% are large
-#. Set up rewards
-#: dat/missions/pirate/raid.lua:164
-msgid " ({clanname})"
-msgstr ""
-
 #: dat/missions/pirate/raid.lua:167
-msgid "#rPIRACY#0: Raid a {adjective} {name} convoy in the {sys} system{fct}"
+msgid "#rPIRACY#0: Raid a {adjective} {name} convoy in the {sys} system{msg}"
 msgstr ""
 
 #: dat/missions/pirate/raid.lua:168
@@ -73939,11 +73930,9 @@ msgid "#pBlackjack!#0 %s"
 msgstr ""
 
 #: dat/scripts/minigames/blackjack.lua:141
-#, lua-format
-msgid "#gYou won #p%d Minerva Token#g!#0"
-msgid_plural "#gYou won #p%d Minerva Tokens#g!#0"
+msgid "#gYou won #p{n} Minerva Token#g!#0"
+msgid_plural "#gYou won #p{n} Minerva Tokens#g!#0"
 msgstr[0] ""
-msgstr[1] ""
 
 #: dat/scripts/minigames/blackjack.lua:150
 msgid "Double Blackjack! Push!"
@@ -73977,23 +73966,29 @@ msgstr ""
 #. Buttons
 #: dat/scripts/minigames/blackjack.lua:324
 #: dat/scripts/minigames/chuckaluck.lua:180
-#, lua-format
-msgid "You have %s credits and #p%s Minerva Token#0."
-msgid_plural "You have %s credits and #p%s Minerva Tokens#0."
+#, fuzzy
+#| msgid ""
+#| "{msg}\n"
+#| "\n"
+#| "You have {credits}. Pay #r{price}#0?"
+msgid "You have {credits} and #p{n} Minerva Token#0."
+msgid_plural "You have {credits} and #p{n} Minerva Tokens#0."
 msgstr[0] ""
-msgstr[1] ""
+"{msg}\n"
+"\n"
+"あなたは {credits} もっています。#r{price}#0 支払いますか？"
 
 #: dat/scripts/minigames/blackjack.lua:331
 #: dat/scripts/minigames/chuckaluck.lua:187
-#, lua-format
-msgid "#rNot enough credits! You only have %s!#0"
+msgid "#rNot enough credits! You only have {credits}!#0"
 msgstr ""
 
 #: dat/scripts/minigames/blackjack.lua:335
 #: dat/scripts/minigames/chuckaluck.lua:191
-#, lua-format
-msgid "You bet %s."
-msgstr ""
+#, fuzzy
+#| msgid "You owe me 20 credits!"
+msgid "You bet {credits}."
+msgstr "おまえはおれに 20 クレジットの借りがある！"
 
 #. Start out betting
 #. Special secretcode being input chat
@@ -74041,11 +74036,9 @@ msgstr ""
 #: dat/scripts/minigames/chuckaluck.lua:222
 #: dat/scripts/minigames/chuckaluck.lua:225
 #: dat/scripts/minigames/chuckaluck.lua:228
-#, lua-format
-msgid "#gYou won #p%d Minerva Token#g (matched one)!#0"
-msgid_plural "#gYou won #p%d Minerva Tokens#g (matched one)!#0"
+msgid "#gYou won #p{n} Minerva Token#g (matched one)!#0"
+msgid_plural "#gYou won #p{n} Minerva Tokens#g (matched one)!#0"
 msgstr[0] ""
-msgstr[1] ""
 
 #.
 #. -- Playing dice game stuff
