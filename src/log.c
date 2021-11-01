@@ -63,10 +63,9 @@ int logprintf( FILE *stream, int newline, const char *fmt, ... )
    if (fmt == NULL)
       return 0;
    else { /* get the message */
-      /* Add header if necessary. */
       /* Print variable text. */
       va_start( ap, fmt );
-      n = vsnprintf( &buf[2], sizeof(buf)-3, fmt, ap )-1;
+      n = vsnprintf( &buf[2], sizeof(buf)-4, fmt, ap )-1;
       va_end( ap );
 
    }
@@ -83,7 +82,6 @@ int logprintf( FILE *stream, int newline, const char *fmt, ... )
 #endif /* NOLOGPRINTFCONSOLE */
 
    /* Finally add newline if necessary. */
-   n = MIN(STRMAX-2,n); /* We'll have to chop off some characters sometimes. */
    if (newline) {
       buf[2+n+1] = '\n';
       buf[2+n+2] = '\0';
