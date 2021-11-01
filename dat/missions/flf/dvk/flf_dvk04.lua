@@ -26,8 +26,6 @@ local fmt = require "format"
 local flf = require "missions.flf.flf_common"
 require "missions.flf.flf_diversion"
 
--- localization stuff
-
 success_text = {}
 success_text[1] = _([[You receive a transmission from Benito. "Operation successful!" she says. "I've got your pay waiting for you back at home, so don't get yourself blown up on the way back!"]])
 
@@ -47,8 +45,8 @@ end
 
 
 function accept ()
-   if tk.yesno( _("This looks familiar..."), _([[Benito greets you as always. After a few pleasantries, she gets down to business. "I've been looking for you, %s!" she says. "I have another special diversion operation for you. This time, it's a diversion in the %s system, so we can get some important work done in the Haleb system. It's the same deal as the diversion from Raelid you did some time ago." Aha, preparation for destruction of another Dvaered base! "You'll be paid %s if you accept. Would you like to help with this one?"]]):format(
-         player.name(), missys:name(), fmt.credits( credits ) ) ) then
+   if tk.yesno( _("This looks familiar..."), fmt.f( _([[Benito greets you as always. After a few pleasantries, she gets down to business. "I've been looking for you, {player}!" she says. "I have another special diversion operation for you. This time, it's a diversion in the {sys} system, so we can get some important work done in the Haleb system. It's the same deal as the diversion from Raelid you did some time ago." Aha, preparation for destruction of another Dvaered base! "You'll be paid {credits} if you accept. Would you like to help with this one?"]]),
+         {player=player.name(), sys=missys, credits=fmt.credits(credits)} ) ) then
       tk.msg( _("This looks familiar..."), _([[Benito grins. "I knew you would want to do it. As always, the team will be waiting for a chance to do their work and hail you when they finish. Good luck, not like a pilot as great as you needs it!" You grin, and Benito excuses herself. Time to cause some mayhem again!]]) )
 
       misn.accept()
@@ -56,7 +54,7 @@ function accept ()
       osd_desc[1] = fmt.f( osd_desc[1], {sys=missys} )
       misn.osdCreate( _("FLF Diversion"), osd_desc )
       misn.setTitle( _("Diversion from Haleb") )
-      misn.setDesc( _("A covert operation is being conducted in Haleb. You are to create a diversion from this operation by wreaking havoc in the nearby %s system."):format( missys:name() ) )
+      misn.setDesc( fmt.f( _("A covert operation is being conducted in Haleb. You are to create a diversion from this operation by wreaking havoc in the nearby {sys} system."), {sys=missys} ) )
       marker = misn.markerAdd( missys, "plot" )
       misn.setReward( fmt.credits( credits ) )
 

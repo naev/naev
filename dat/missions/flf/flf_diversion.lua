@@ -21,8 +21,6 @@ local fleet = require "fleet"
 local fmt = require "format"
 local flf = require "missions.flf.flf_common"
 
--- localization stuff
-
 success_text = {}
 success_text[1] = _("You receive a transmission from an FLF officer saying that the operation has completed, and you can now return to the base.")
 
