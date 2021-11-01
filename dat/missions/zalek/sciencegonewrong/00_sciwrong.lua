@@ -58,7 +58,7 @@ function accept()
    tk.msg( _([[In the bar]]), _([["Excellent! Here is the list." He hands you a memory chip and turns away even before you can say anything and without giving you any cash to actually do his shopping. Once you check the list you find that it contains not only a list of materials he needs, but also information where to retrieve these and a list of contact traders.]]) )
    misn.accept()
    misn.osdCreate(_("The one with the Shopping"), {
-      _("Go to the %s system and talk to the trader on %s"):format(t_sys[1]:name(), t_pla[1]:name()),
+      fmt.f(_("Go to the {sys} system and talk to the trader on {pnt}"), {sys=t_sys[1], pnt=t_pla[1]}),
    })
    misn.setDesc(_("You've been hired by Dr. Geller to collect some materials he urgently needs for his research."))
    misn.setTitle(_("The one with the Shopping"))
@@ -90,12 +90,12 @@ function first_trd()
      return
   else
      tk.msg(_([[In the bar]]), _([["With what can I help you, my friend?" says the shifty figure. You hand him the memory chip the scientist handed you.]]))
-     tk.msg(_([[In the bar]]), _([["Of course I have what you need. I'll trade it for some 3t phosphine. You can find it on %s in the %s system."]]):format(t_pla[2]:name(), t_sys[2]:name()))
+     tk.msg(_([[In the bar]]), fmt.f(_([["Of course I have what you need. I'll trade it for some 3t phosphine. You can find it on {pnt} in the {sys} system."]]), {pnt=t_pla[2], sys=t_sys[2]}))
      talked = true
   end
 
   misn.osdCreate(_("The one with the Shopping"), {
-     _("Go to the %s system and talk to the contact person on %s"):format(t_sys[2]:name(), t_pla[2]:name()),
+     fmt.f(_("Go to the {sys} system and talk to the contact person on {pnt}"), {sys=t_sys[2], pnt=t_pla[2]}),
   })
 
   misn.markerMove(misn_mark, t_sys[2])
@@ -106,7 +106,7 @@ end
 -- 2nd trade: Get player the stuff and make them pay, let them be hunted by the police squad
 function second_trd()
   misn.npcRm(bar2pir1)
-  if not tk.yesno( _([[In the bar]]), _([["You approach the dealer and explain what you are looking for. He raises his eyebrow. "It will be %s. But if you get caught by the authorities, you're on your own. Far as I'm concerned I never saw you. Deal?"]]):format(fmt.credits(pho_mny)) ) then
+  if not tk.yesno( _([[In the bar]]), fmt.f(_([["You approach the dealer and explain what you are looking for. He raises his eyebrow. "It will be {credits}. But if you get caught by the authorities, you're on your own. Far as I'm concerned I never saw you. Deal?"]]), {credits=fmt.credits(pho_mny)}) ) then
      tk.msg(_([[In the bar]]), _([["Then we have nothing to to discuss."]]))
      return
   end
@@ -120,7 +120,7 @@ function second_trd()
   carg_id = misn.cargoAdd(c, 3)
   tk.msg(_([[In the bar]]), _([["Pleasure to do business with you."]]))
   misn.osdCreate(_("The one with the Shopping"), {
-     _("Return to the %s system to the trader on %s"):format(t_sys[1]:name(), t_pla[1]:name()),
+     fmt.f(_("Return to the {sys} system to the trader on {pnt}"), {sys=t_sys[1], pnt=t_pla[1]}),
   })
  -- create hook that player will be hailed by authorities bc of toxic materials
   misn.markerMove(misn_mark, t_sys[1])
@@ -137,7 +137,7 @@ function third_trd()
   misn.cargoRm(carg_id)
   player.msg(t_sys[3]:name())
   misn.osdCreate(_("The one with the Shopping"), {
-     _("Return to the %s system and deliver to Dr. Geller on %s"):format(t_sys[3]:name(), t_pla[3]:name()),
+     fmt.f(_("Return to the {sys} system and deliver to Dr. Geller on {pnt}"), {sys=t_sys[3], pnt=t_pla[3]}),
   })
 
   misn.markerMove(misn_mark, t_sys[3])
@@ -221,7 +221,7 @@ end
 function fine_vanish ()
    fine = 100e3
    tk.msg(_([[On your ship]]),_([["You are accused of violating regulation on the transport of toxic materials. Your ship will be searched now. If there are no contraband substances, we will be out of your hair in just a moment."]]))
-   tk.msg(_([[On your ship]]),_([[The inspectors search through your ship and cargo hold. It doesn't take long for them to find the phosphine; they confiscate it and fine you %s.]]):format(fmt.credits(fine)))
+   tk.msg(_([[On your ship]]), fmt.f(_([[The inspectors search through your ship and cargo hold. It doesn't take long for them to find the phosphine; they confiscate it and fine you {credits}.]]), {credits=fmt.credits(fine)}))
    if player.credits() > fine then
       player.pay(-fine)
    else

@@ -58,7 +58,10 @@ function accept()
    end
    tk.msg( _([[In the bar]]), _([["Excellent! I will join you this time. Let's go."]]) )
    misn.accept()
-   misn.osdCreate(_("The one with the Runaway"), {_("Go to the %s system and hail the prototype"):format(t_sys[1]:name()),_("Disable the prototype"),_("Return the prototype to %s in the %s system"):format(t_pla[2]:name(),t_sys[2]:name())})
+   misn.osdCreate(_("The one with the Runaway"), {
+      fmt.f(_("Go to the {sys} system and hail the prototype"), {sys=t_sys[1]}),
+      _("Disable the prototype"),
+      fmt.f(_("Return the prototype to {pnt} in the {sys} system"), {pnt=t_pla[2], sys=t_sys[2]})})
    misn.setDesc(_("You've been hired by Dr. Geller to retrieve his prototype that ran away."))
    misn.setTitle(_("The one with the Runaway"))
    misn.setReward(_("A peek at the new prototype and some compensation for your efforts"))
@@ -84,7 +87,7 @@ function sys_enter ()
 end
 
 function game_of_drones ()
-   tk.msg(_([[On the intercom]]), _([["There! The tracker shows it must be here! It is right next to %s! If you hail it I might be able to patch the software. That should give me control again. But you have to be close so the data transfer is as stable as possible."]]):format(t_pla[1]:name()))
+   tk.msg(_([[On the intercom]]), fmt.f(_([["There! The tracker shows it must be here! It is right next to {pnt}! If you hail it I might be able to patch the software. That should give me control again. But you have to be close so the data transfer is as stable as possible."]]), {pnt=t_pla[1]}))
    -- spawn drones
 
    t_drone = pilot.add( "Za'lek Scout Drone", "Za'lek", t_pla[1], nil, {ai="trader"} ) -- prototype is a scout drone
@@ -117,7 +120,7 @@ function got_hailed()
    hook.rm(hailhook)
    hook.rm(idlehook)
    tk.msg(_([[On your ship]]), _([["Huh, I don't understand. This should not be happening. Hold on. I can't get access."]]))
-   tk.msg(_([[On your ship]]), _([["Um, there seems to be a glitch. Well, sort of. Um, if I deciphered this correctly, the drone just hijacked the unused drones on %s and ordered them to attack us. I never should have tampered with that weird chip those pirates sold me!"]]):format(t_pla[1]:name()))
+   tk.msg(_([[On your ship]]), fmt.f(_([["Um, there seems to be a glitch. Well, sort of. Um, if I deciphered this correctly, the drone just hijacked the unused drones on {pnt} and ordered them to attack us. I never should have tampered with that weird chip those pirates sold me!"]]), {pnt=t_pla[1]}))
    tk.msg(_([[On your ship]]), _([["If you can disable the prototype, do it, but I'd prefer not to die at any rate!"]]))
    t_drone:setInvincible(false)
    t_drone:setHostile(true)
@@ -172,7 +175,7 @@ end
 
 function drone_jumped ()
    --begin the chase:
-   tk.msg(_([[On your ship]]), _([["The drone has disappeared from my radar! It must have jumped to the %s system. Let's find it!"]]):format(t_sys[3]:name()))
+   tk.msg(_([[On your ship]]), fmt.f(_([["The drone has disappeared from my radar! It must have jumped to the {sys} system. Let's find it!"]]), {sys=t_sys[3]}))
    misn.markerRm(mmarker)
    if (jumps==0) then
       mmarker = misn.markerAdd(t_sys[3],"high")
@@ -257,7 +260,7 @@ end
 -- last hook
 function land_home()
    if planet.cur() == t_pla[2] then
-      tk.msg(_([[Back on %s]]):format(t_pla[2]:name()),_([["The things I do for science! Now let me go back to my lab and analyze the drone. I need to figure out exactly what happened and what went wrong. Once I know more I might need you again. Oh, and here, for your service!" A small bag containing a credit chip and a tiny toy drone is tossed your way.]]))
+      tk.msg(fmt.f(_([[Back on {pnt}]]), {pnt=t_pla[2]}), _([["The things I do for science! Now let me go back to my lab and analyze the drone. I need to figure out exactly what happened and what went wrong. Once I know more I might need you again. Oh, and here, for your service!" A small bag containing a credit chip and a tiny toy drone is tossed your way.]]))
       player.pay(reward)
       player.outfitAdd("Toy Drone")
       sciwrong.addLog( _([[You helped Dr. Geller retrieve his lost prototype drone.]]) )

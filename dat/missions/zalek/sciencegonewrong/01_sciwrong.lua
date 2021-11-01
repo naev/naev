@@ -34,7 +34,8 @@ t_sys = { __save=true }
 t_pla = { __save=true }
 --t_pla[1], t_sys[1] = planet.getS("Gastan")
 t_sys[2] = system.get("Shikima")
-reward = 1e6
+local reward = 1e6
+local shpnm = _("Tokera")
 
 function create ()
    -- Have to be at center of operations.
@@ -52,12 +53,12 @@ function accept()
       tk.msg(_("No Science Today"), _("But I really thought you were into science..."))
       misn.finish()
    end
-   tk.msg( _([[In the bar]]), _([["Excellent. From what I have been told it looks like this." He gestures with his hands to no merit. "You will recognize it; it should be in a box that's kept separately from the remaining stuff and labeled "Top Secret". Oh, and you might need this." He hands you a handheld device. "The ship is called the %s."
-    So he wants you to steal something top secret from the Soromid. Quirky people, those Za'leks. With the coordinates, the signature of the target ship and the handheld, which you hope helps you detect the box, you set off on your way.]]):format(_("Tokera")) )
+   tk.msg( _([[In the bar]]), fmt.f(_([["Excellent. From what I have been told it looks like this." He gestures with his hands to no merit. "You will recognize it; it should be in a box that's kept separately from the remaining stuff and labeled "Top Secret". Oh, and you might need this." He hands you a handheld device. "The ship is called the {plt}."
+    So he wants you to steal something top secret from the Soromid. Quirky people, those Za'leks. With the coordinates, the signature of the target ship and the handheld, which you hope helps you detect the box, you set off on your way.]]), {plt=shpnm} ) )
    misn.accept()
    misn.osdCreate(_("The one with the Visit"), {
-      _("Go to the %s system and find the %s"):format(t_sys[2]:name(), _("Tokera")),
-      _("Board the %s and retrieve the secret technology"):format(_("Tokera")),
+      fmt.f(_("Go to the {sys} system and find the {plt}"), {sys=t_sys[2], plt=shpnm}),
+      fmt.f(_("Board the {plt} and retrieve the secret technology"), {plt=shpnm}),
       fmt.f(_("Return to {pnt} in the {sys} system"), {pnt=t_pla[1], sys=t_sys[1]}),
    })
    misn.setDesc(_("You've been hired by Dr. Geller to retrieve technology he urgently needs to build his prototype."))
@@ -77,7 +78,7 @@ function sys_enter ()
       location = vec2.new(dist * math.cos(angle), dist * math.sin(angle)) -- Randomly spawn the Ship in the system
       target = pilot.add( "Soromid Odium", "Soromid", location )
       target:control()
-      target:rename(_("Tokera"))
+      target:rename(shpnm)
       target:setFaction("Soromid")
       target:memory().aggressive = true
       target:setHilight(true)
