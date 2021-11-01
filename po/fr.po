@@ -39087,8 +39087,8 @@ msgstr ""
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:419
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:533
 msgid ""
-"A-NightClaws Leader to {player}: intercept {plt} and control their "
-"security clearance code"
+"A-NightClaws Leader to {player}: intercept {plt} and control their security "
+"clearance code"
 msgstr ""
 
 #. Just because I cannot pass an argument to proximity hooks :(
@@ -39175,8 +39175,7 @@ msgid ""
 "When getting in range, you receive an alarm. This ship does not have an "
 "invitation. Suddenly, you see it accelerating as if the pilot wanted to "
 "force the blockade around the station. You hear an order from Captain "
-"Leblanc: \"A-NightClaws Leader to {player}: intercept and destroy "
-"{plt}\"."
+"Leblanc: \"A-NightClaws Leader to {player}: intercept and destroy {plt}\"."
 msgstr ""
 
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:558
@@ -55079,18 +55078,18 @@ msgstr ""
 #: dat/missions/neutral/pirbounty_alive.lua:35
 msgid ""
 "As you return to your ship, you are contacted by an officer. \"I see you "
-"were unable to capture {plt},\" the officer says. \"Disappointing. "
-"However, we would rather this pirate be dead than roaming free, so you will "
-"be paid {credits} if you finish them off right now.\""
+"were unable to capture {plt},\" the officer says. \"Disappointing. However, "
+"we would rather this pirate be dead than roaming free, so you will be paid "
+"{credits} if you finish them off right now.\""
 msgstr ""
 
 #: dat/missions/neutral/pirbounty_alive.lua:36
 msgid ""
 "On your way back to your ship, you receive a message from an officer. It "
-"reads, \"Your failure to capture {plt} is disappointing. We really "
-"wanted to capture this pirate alive. However, we would rather he be dead "
-"than roaming free, so if you kill the pirate now, you will be paid the "
-"lesser sum of {credits}.\""
+"reads, \"Your failure to capture {plt} is disappointing. We really wanted to "
+"capture this pirate alive. However, we would rather he be dead than roaming "
+"free, so if you kill the pirate now, you will be paid the lesser sum of "
+"{credits}.\""
 msgstr ""
 
 #: dat/missions/neutral/pirbounty_alive.lua:37
@@ -55098,8 +55097,8 @@ msgid ""
 "When you return to your cockpit, you are contacted by an officer. "
 "\"Pathetic! If I were in charge, I'd say you get no bounty! Can't fight off "
 "a couple low-life pirates?!\" He sighs. \"But lucky for you, I'm not in "
-"charge, and my higher-ups would rather {plt} be dead than free. So if "
-"you finish that scum off, you'll get {credits}. Just be snappy about it!\" "
+"charge, and my higher-ups would rather {plt} be dead than free. So if you "
+"finish that scum off, you'll get {credits}. Just be snappy about it!\" "
 "Having finished delivering the message, the officer then ceases "
 "communication."
 msgstr ""
@@ -55107,8 +55106,8 @@ msgstr ""
 #: dat/missions/neutral/pirbounty_alive.lua:38
 msgid ""
 "When you get back to the ship, you see a message giving you a new mission to "
-"kill {plt}; the reward is {credits}. Well, that's pitiful compared to "
-"what you were planning on collecting, but it's better than nothing."
+"kill {plt}; the reward is {credits}. Well, that's pitiful compared to what "
+"you were planning on collecting, but it's better than nothing."
 msgstr ""
 
 #: dat/missions/neutral/pirbounty_alive.lua:41
@@ -55118,15 +55117,15 @@ msgstr ""
 
 #: dat/missions/neutral/pirbounty_alive.lua:42
 msgid ""
-"The officer seems to think your acceptance of the alive bounty for {plt} "
-"was foolish. They carefully take the pirate off your hands, taking "
-"precautions you think are completely unnecessary, and then hand you your pay."
+"The officer seems to think your acceptance of the alive bounty for {plt} was "
+"foolish. They carefully take the pirate off your hands, taking precautions "
+"you think are completely unnecessary, and then hand you your pay."
 msgstr ""
 
 #: dat/missions/neutral/pirbounty_alive.lua:43
 msgid ""
-"The officer you deal with seems to especially dislike {plt}. They take "
-"the pirate off your hands and hand you your pay without speaking a word."
+"The officer you deal with seems to especially dislike {plt}. They take the "
+"pirate off your hands and hand you your pay without speaking a word."
 msgstr ""
 
 #: dat/missions/neutral/pirbounty_alive.lua:44
@@ -55138,8 +55137,8 @@ msgstr ""
 
 #: dat/missions/neutral/pirbounty_alive.lua:45
 msgid ""
-"The officer you deal with thanks you profusely for capturing {plt} "
-"alive, pays you, and sends you off."
+"The officer you deal with thanks you profusely for capturing {plt} alive, "
+"pays you, and sends you off."
 msgstr ""
 
 #: dat/missions/neutral/pirbounty_alive.lua:46
@@ -55158,21 +55157,20 @@ msgstr ""
 
 #: dat/missions/neutral/pirbounty_alive.lua:50
 #: dat/missions/neutral/pirbounty_dead.lua:50
-msgid ""
-"After verifying that you killed {plt}, an officer hands you your pay."
+msgid "After verifying that you killed {plt}, an officer hands you your pay."
 msgstr ""
 
 #: dat/missions/neutral/pirbounty_alive.lua:51
 msgid ""
-"After verifying that {plt} is indeed dead, the officer sighs and hands "
-"you your pay."
+"After verifying that {plt} is indeed dead, the officer sighs and hands you "
+"your pay."
 msgstr ""
 
 #: dat/missions/neutral/pirbounty_alive.lua:52
 msgid ""
-"This officer is clearly annoyed that {plt} is dead. They mumble "
-"something about incompetent bounty hunters the entire time as they takes "
-"care of the paperwork and hand you your bounty."
+"This officer is clearly annoyed that {plt} is dead. They mumble something "
+"about incompetent bounty hunters the entire time as they takes care of the "
+"paperwork and hand you your bounty."
 msgstr ""
 
 #: dat/missions/neutral/pirbounty_alive.lua:53
@@ -55183,8 +55181,8 @@ msgstr ""
 
 #: dat/missions/neutral/pirbounty_alive.lua:54
 msgid ""
-"When you ask the officer for your bounty on {plt}, they sigh, lead you "
-"into an office, go through some paperwork, and hand you your pay, mumbling "
+"When you ask the officer for your bounty on {plt}, they sigh, lead you into "
+"an office, go through some paperwork, and hand you your pay, mumbling "
 "something about how useless bounty hunters are."
 msgstr ""
 
@@ -55274,8 +55272,8 @@ msgstr ""
 #. --
 #: dat/missions/neutral/pirbounty_dead.lua:37
 msgid ""
-"You and your crew infiltrate the ship's pathetic security and subdue "
-"{plt}. You transport the pirate to your ship."
+"You and your crew infiltrate the ship's pathetic security and subdue {plt}. "
+"You transport the pirate to your ship."
 msgstr ""
 
 #: dat/missions/neutral/pirbounty_dead.lua:38
@@ -55326,8 +55324,8 @@ msgstr ""
 
 #: dat/missions/neutral/pirbounty_dead.lua:51
 msgid ""
-"After verifying that {plt} is indeed dead, the tired-looking officer "
-"smiles and hands you your pay."
+"After verifying that {plt} is indeed dead, the tired-looking officer smiles "
+"and hands you your pay."
 msgstr ""
 
 #: dat/missions/neutral/pirbounty_dead.lua:52
@@ -55339,14 +55337,13 @@ msgstr ""
 #: dat/missions/neutral/pirbounty_dead.lua:53
 msgid ""
 "The paranoid-looking officer takes you into a locked room, where the death "
-"of {plt} is quietly verified. The officer then pays you and sends you "
-"off."
+"of {plt} is quietly verified. The officer then pays you and sends you off."
 msgstr ""
 
 #: dat/missions/neutral/pirbounty_dead.lua:54
 msgid ""
-"When you ask the officer for your bounty on {plt}, they sigh, lead you "
-"into an office, go through some paperwork, and hand you your pay, mumbling "
+"When you ask the officer for your bounty on {plt}, they sigh, lead you into "
+"an office, go through some paperwork, and hand you your pay, mumbling "
 "something about how useless the bounty system is."
 msgstr ""
 
@@ -55358,54 +55355,54 @@ msgstr ""
 
 #: dat/missions/neutral/pirbounty_dead.lua:59
 msgid ""
-"The officer seems to think your decision to capture {plt} alive was "
-"foolish. They carefully take the pirate off your hands, taking precautions "
-"you think are completely unnecessary, and then hand you your pay"
+"The officer seems to think your decision to capture {plt} alive was foolish. "
+"They carefully take the pirate off your hands, taking precautions you think "
+"are completely unnecessary, and then hand you your pay"
 msgstr ""
 
 #: dat/missions/neutral/pirbounty_dead.lua:60
 msgid ""
-"The officer you deal with seems to especially dislike {plt}. The pirate "
-"is taken off your hands and you are handed your pay without a word."
+"The officer you deal with seems to especially dislike {plt}. The pirate is "
+"taken off your hands and you are handed your pay without a word."
 msgstr ""
 
 #: dat/missions/neutral/pirbounty_dead.lua:62
 msgid ""
 "The officer you greet gives you a puzzled look when you say that you "
-"captured {plt} alive. Nonetheless, they politely take the pirate off of "
-"your hands and hand you your pay."
+"captured {plt} alive. Nonetheless, they politely take the pirate off of your "
+"hands and hand you your pay."
 msgstr ""
 
 #: dat/missions/neutral/pirbounty_dead.lua:65
 msgid ""
-"\"Greetings. I can see that you were trying to collect a bounty on "
-"{plt}. Well, as you can see, I earned the bounty, but I don't think I "
-"would have succeeded without your help, so I've transferred a portion of the "
-"bounty into your account.\""
+"\"Greetings. I can see that you were trying to collect a bounty on {plt}. "
+"Well, as you can see, I earned the bounty, but I don't think I would have "
+"succeeded without your help, so I've transferred a portion of the bounty "
+"into your account.\""
 msgstr ""
 
 #: dat/missions/neutral/pirbounty_dead.lua:66
 msgid ""
 "\"Sorry about getting in the way of your bounty. I don't really care too "
 "much about the money, but I just wanted to make sure the galaxy would be rid "
-"of that scum; I've seen the villainy of {plt} first-hand, you see. So as "
-"an apology, I would like to offer you the portion of the bounty you clearly "
+"of that scum; I've seen the villainy of {plt} first-hand, you see. So as an "
+"apology, I would like to offer you the portion of the bounty you clearly "
 "earned. The money will be in your account shortly.\""
 msgstr ""
 
 #: dat/missions/neutral/pirbounty_dead.lua:67
 msgid ""
 "\"Hey, thanks for the help back there. I don't know if I would have been "
-"able to handle {plt} alone! Anyway, since you were such a big help, I "
-"have transferred what I think is your fair share of the bounty to your bank "
+"able to handle {plt} alone! Anyway, since you were such a big help, I have "
+"transferred what I think is your fair share of the bounty to your bank "
 "account.\""
 msgstr ""
 
 #: dat/missions/neutral/pirbounty_dead.lua:68
 msgid ""
-"\"Heh, thanks! I think I would have been able to take out {plt} by "
-"myself, but still, I appreciate your assistance. Here, I'll transfer some of "
-"the bounty to you, as a token of my appreciation.\""
+"\"Heh, thanks! I think I would have been able to take out {plt} by myself, "
+"but still, I appreciate your assistance. Here, I'll transfer some of the "
+"bounty to you, as a token of my appreciation.\""
 msgstr ""
 
 #: dat/missions/neutral/pirbounty_dead.lua:69
@@ -56265,8 +56262,8 @@ msgstr ""
 #. --
 #: dat/missions/neutral/seek_n_destroy.lua:43
 msgid ""
-"You ask for information about {plt} and the pilot tells you that this "
-"outlaw is supposed to have business in {sys} soon."
+"You ask for information about {plt} and the pilot tells you that this outlaw "
+"is supposed to have business in {sys} soon."
 msgstr ""
 
 #: dat/missions/neutral/seek_n_destroy.lua:44
@@ -56283,8 +56280,8 @@ msgstr ""
 
 #: dat/missions/neutral/seek_n_destroy.lua:46
 msgid ""
-"\"If you're looking for {plt}, I would suggest going to {sys} and taking "
-"a look there; that's where that outlaw was last time I heard.\""
+"\"If you're looking for {plt}, I would suggest going to {sys} and taking a "
+"look there; that's where that outlaw was last time I heard.\""
 msgstr ""
 
 #: dat/missions/neutral/seek_n_destroy.lua:47
@@ -56295,14 +56292,14 @@ msgstr ""
 
 #: dat/missions/neutral/seek_n_destroy.lua:50
 msgid ""
-"This person has never heard of {plt}. It seems you will have to ask "
-"someone else."
+"This person has never heard of {plt}. It seems you will have to ask someone "
+"else."
 msgstr ""
 
 #: dat/missions/neutral/seek_n_destroy.lua:51
 msgid ""
-"This person is also looking for {plt}, but doesn't seem to know anything "
-"you don't."
+"This person is also looking for {plt}, but doesn't seem to know anything you "
+"don't."
 msgstr ""
 
 #: dat/missions/neutral/seek_n_destroy.lua:52
@@ -56336,8 +56333,8 @@ msgstr ""
 
 #: dat/missions/neutral/seek_n_destroy.lua:59
 msgid ""
-"\"I'd love to get back at {plt} for last cycle, but I haven't seen them "
-"in quite some time now.\""
+"\"I'd love to get back at {plt} for last cycle, but I haven't seen them in "
+"quite some time now.\""
 msgstr ""
 
 #: dat/missions/neutral/seek_n_destroy.lua:60
@@ -56346,44 +56343,44 @@ msgstr ""
 
 #: dat/missions/neutral/seek_n_destroy.lua:61
 msgid ""
-"\"Wouldn't revenge be nice? Unfortunately I haven't a clue where {plt} "
-"is, though. Sorry!\""
+"\"Wouldn't revenge be nice? Unfortunately I haven't a clue where {plt} is, "
+"though. Sorry!\""
 msgstr ""
 
 #: dat/missions/neutral/seek_n_destroy.lua:62
 msgid ""
-"\"I used to work with {plt}. We haven't seen each other since they stole "
-"my favorite ship, though.\""
+"\"I used to work with {plt}. We haven't seen each other since they stole my "
+"favorite ship, though.\""
 msgstr ""
 
 #: dat/missions/neutral/seek_n_destroy.lua:65
 msgid ""
-"\"{plt}, you say? Well, I don't offer my services for free. Pay me "
-"{credits} and I'll tell you where to look; how does that sound?\""
+"\"{plt}, you say? Well, I don't offer my services for free. Pay me {credits} "
+"and I'll tell you where to look; how does that sound?\""
 msgstr ""
 
 #: dat/missions/neutral/seek_n_destroy.lua:66
 msgid ""
-"\"Ah, yes, I know where probably {plt} is. I'll tell you for just "
-"{credits}. What do you say?\""
+"\"Ah, yes, I know where probably {plt} is. I'll tell you for just {credits}. "
+"What do you say?\""
 msgstr ""
 
 #: dat/missions/neutral/seek_n_destroy.lua:67
 msgid ""
-"\"{plt}? Of course, I know this pilot. I can tell you where they were "
-"last heading, but it'll cost you. {credits}. Deal?\""
+"\"{plt}? Of course, I know this pilot. I can tell you where they were last "
+"heading, but it'll cost you. {credits}. Deal?\""
 msgstr ""
 
 #: dat/missions/neutral/seek_n_destroy.lua:68
 msgid ""
-"\"Ha ha ha! Yes, I've seen {plt} around! Will I tell you where? Heck no! "
-"Not unless you pay me, of course... {credits} should be sufficient.\""
+"\"Ha ha ha! Yes, I've seen {plt} around! Will I tell you where? Heck no! Not "
+"unless you pay me, of course... {credits} should be sufficient.\""
 msgstr ""
 
 #: dat/missions/neutral/seek_n_destroy.lua:69
 msgid ""
-"\"You're looking for {plt}? I tell you what: give me {credits} and I'll "
-"tell you. Otherwise, get lost!\""
+"\"You're looking for {plt}? I tell you what: give me {credits} and I'll tell "
+"you. Otherwise, get lost!\""
 msgstr ""
 
 #: dat/missions/neutral/seek_n_destroy.lua:72
@@ -56401,20 +56398,20 @@ msgstr ""
 #: dat/missions/neutral/seek_n_destroy.lua:77
 msgid ""
 "As it becomes clear that you have no problem with blasting a ship to "
-"smithereens, the pilot tells you that {plt} is supposed to have business "
-"in {sys} soon."
+"smithereens, the pilot tells you that {plt} is supposed to have business in "
+"{sys} soon."
 msgstr ""
 
 #: dat/missions/neutral/seek_n_destroy.lua:78
 msgid ""
-"\"OK, OK, I'll tell you! You can find {plt} in the {sys} system! Leave "
-"me alone!\""
+"\"OK, OK, I'll tell you! You can find {plt} in the {sys} system! Leave me "
+"alone!\""
 msgstr ""
 
 #: dat/missions/neutral/seek_n_destroy.lua:81
 msgid ""
-"When you ask for information about {plt}, they tell you that this outlaw "
-"has already been killed by someone else."
+"When you ask for information about {plt}, they tell you that this outlaw has "
+"already been killed by someone else."
 msgstr ""
 
 #: dat/missions/neutral/seek_n_destroy.lua:82
@@ -56547,11 +56544,11 @@ msgstr ""
 #: dat/missions/neutral/seek_n_destroy.lua:217
 msgid ""
 "{plt} is a notorious {target_faction} pilot who is wanted by the "
-"authorities, dead or alive. Any citizen who can find and neutralize "
-"{plt} by any means necessary will be given {credits} as a reward. "
-"{paying_faction} authorities have lost track of this pilot in the {sys} "
-"system. It is very likely that the target is no longer there, but this "
-"system may be a good place to start an investigation."
+"authorities, dead or alive. Any citizen who can find and neutralize {plt} by "
+"any means necessary will be given {credits} as a reward. {paying_faction} "
+"authorities have lost track of this pilot in the {sys} system. It is very "
+"likely that the target is no longer there, but this system may be a good "
+"place to start an investigation."
 msgstr ""
 
 #: dat/missions/neutral/seek_n_destroy.lua:222
@@ -56723,8 +56720,8 @@ msgstr ""
 
 #: dat/missions/neutral/seek_n_destroy.lua:596
 msgid ""
-"That was close, but unfortunately, {plt} ran away. Maybe some other "
-"pilots in this system know where your target is heading."
+"That was close, but unfortunately, {plt} ran away. Maybe some other pilots "
+"in this system know where your target is heading."
 msgstr ""
 
 #.
@@ -57808,8 +57805,8 @@ msgstr ""
 #: dat/missions/pirate/empbounty_dead.lua:128
 msgid ""
 "A meddlesome {fct} pilot known as {plt} was recently seen in the {sys} "
-"system. Local crime lords want this pilot dead. {plt} is known to be "
-"flying a {shipclass}-class ship.{msg}"
+"system. Local crime lords want this pilot dead. {plt} is known to be flying "
+"a {shipclass}-class ship.{msg}"
 msgstr ""
 
 #. We're not on a pirate stronghold, so include a warning that the
@@ -60419,10 +60416,9 @@ msgid ""
 "periods, or he will assume you are not coming and go back into hiding. You "
 "must also be at the meeting point {t2} periods from now. If you fail to meet "
 "with Jorek within the time limit or if you are prevented from taking him "
-"offworld for any other reason, make your way to the {plt} and report "
-"what happened. We'll take it from there. If you fail to show up at the "
-"designated time, we will assume you have failed, and the {plt} will "
-"leave.\"\n"
+"offworld for any other reason, make your way to the {plt} and report what "
+"happened. We'll take it from there. If you fail to show up at the designated "
+"time, we will assume you have failed, and the {plt} will leave.\"\n"
 "    Rebina empties her glass and places it on the bar before rising to her "
 "feet. \"That will be all. Good luck, and keep your wits about you.\"\n"
 "    Then Rebina takes her leave from you and gracefully departs the "
@@ -60626,10 +60622,10 @@ msgstr ""
 
 #: dat/missions/shadow/shadowrun.lua:226
 msgid ""
-"You complete docking operations with the {plt}, well aware that your "
-"ship isn't carrying the man they were expecting. At the airlock, you are "
-"greeted by a pair of crewmen in grey uniforms. You explain to them that you "
-"were unable to bring Jorek to them, and they receive your report in a dry, "
+"You complete docking operations with the {plt}, well aware that your ship "
+"isn't carrying the man they were expecting. At the airlock, you are greeted "
+"by a pair of crewmen in grey uniforms. You explain to them that you were "
+"unable to bring Jorek to them, and they receive your report in a dry, "
 "businesslike manner. The meeting is short. The crewmen disappear back into "
 "their ship, closing the airlock behind them, and you return to your bridge.\n"
 "    You prepare to undock from the {plt}, but before you complete the "
@@ -60652,14 +60648,13 @@ msgstr ""
 
 #: dat/missions/shadow/shadowrun.lua:232
 msgid ""
-"You complete docking operations with the {plt}, well aware that your "
-"ship isn't carrying the man they were expecting. When the airlock opens, you "
-"find yourself face to face with a woman and two crewmen, all wearing grey, "
+"You complete docking operations with the {plt}, well aware that your ship "
+"isn't carrying the man they were expecting. When the airlock opens, you find "
+"yourself face to face with a woman and two crewmen, all wearing grey, "
 "featureless uniforms. It takes you a few moments to realize that the woman "
 "is in fact Rebina. But this is not the elegant, feminine figure you met in "
 "the spaceport bar not too long ago. This woman emits an aura of authority, "
-"and you immediately understand that Rebina is in fact captain of the "
-"{plt}.\n"
+"and you immediately understand that Rebina is in fact captain of the {plt}.\n"
 "    \"Well met, {player},\" she greets you. At the same time, the two "
 "crewmen that accompanied her push their way past you and disappear in the "
 "direction of your cargo hold. You open your mouth to protest, but Rebina "
@@ -65300,8 +65295,8 @@ msgid ""
 "Well, not new exactly. It's used, but in much better condition than that "
 "rust bucket I got before. Supposedly this guy used to be a Dvaered warlord "
 "and is offering me his old Vigilance if I just take care of this one pirate "
-"known as {plt}. Trouble is they're piloting a ship that's stronger than "
-"my own....\"\n"
+"known as {plt}. Trouble is they're piloting a ship that's stronger than my "
+"own....\"\n"
 "    Chelsea pauses in contemplation for a moment. \"Say, do you think you "
 "could help me out on this one? I just need you to help me kill the pirate in "
 "{sys}. I'll give you {credits} for the trouble. How about it?\""
