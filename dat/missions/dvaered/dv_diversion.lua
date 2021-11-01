@@ -22,8 +22,6 @@
    -- Other editors, feel free to update dialog to make it more dvaered like.
 --]]
 
--- localization stuff, translators would work here
-
 local fleet = require "fleet"
 local fmt = require "format"
 local portrait = require "portrait"

@@ -31,7 +31,6 @@ local fmt = require "format"
 local vntk = require "vntk"
 require "missions.neutral.pirbounty_dead"
 
--- Localization
 kill_instead_text    = {}
 kill_instead_text[1] = _([[As you return to your ship, you are contacted by an officer. "I see you were unable to capture {pltname}," the officer says. "Disappointing. However, we would rather this pirate be dead than roaming free, so you will be paid {credits} if you finish them off right now."]])
 kill_instead_text[2] = _([[On your way back to your ship, you receive a message from an officer. It reads, "Your failure to capture {pltname} is disappointing. We really wanted to capture this pirate alive. However, we would rather he be dead than roaming free, so if you kill the pirate now, you will be paid the lesser sum of {credits}."]])
