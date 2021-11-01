@@ -44179,14 +44179,14 @@ msgstr ""
 
 #: dat/missions/flf/flf_empatrol.lua:43
 #, lua-format
-msgid "There is %d Empire ship patrolling the %s system. Eliminate this ship."
+msgid "There is {n} Empire ship patrolling the {sys} system. Eliminate this ship."
 msgid_plural ""
-"There is an Empire patrol with %d ships in the %s system. Eliminate this "
+"There is an Empire patrol with {n} ships in the {sys} system. Eliminate this "
 "patrol."
 msgstr[0] ""
-"There is %d Empire ship patrolling the %s system. Eliminate this ship."
+"There is {n} Empire ship patrolling the {sys} system. Eliminate this ship."
 msgstr[1] ""
-"There is an Empire patrol with %d ships in the %s system. Eliminate this "
+"There is an Empire patrol with {n} ships in the {sys} system. Eliminate this "
 "patrol."
 
 #: dat/missions/flf/flf_empatrol.lua:48
@@ -44200,11 +44200,11 @@ msgstr ""
 #: dat/missions/flf/flf_empatrol.lua:55 dat/missions/flf/flf_patrol.lua:60
 #: dat/missions/flf/flf_pirates.lua:61 dat/missions/flf/flf_rogue.lua:51
 #, lua-format
-msgid " You will be accompanied by %d other FLF pilot for this mission."
+msgid " You will be accompanied by {n} other FLF pilot for this mission."
 msgid_plural ""
-" You will be accompanied by %d other FLF pilots for this mission."
-msgstr[0] " You will be accompanied by %d other FLF pilot for this mission."
-msgstr[1] " You will be accompanied by %d other FLF pilots for this mission."
+" You will be accompanied by {n} other FLF pilots for this mission."
+msgstr[0] " You will be accompanied by {n} other FLF pilot for this mission."
+msgstr[1] " You will be accompanied by {n} other FLF pilots for this mission."
 
 #: dat/missions/flf/flf_empatrol.lua:82 dat/missions/flf/flf_patrol.lua:159
 #: dat/missions/flf/flf_pirates.lua:157
@@ -44286,14 +44286,14 @@ msgstr ""
 
 #: dat/missions/flf/flf_patrol.lua:48
 #, lua-format
-msgid "There is %d Dvaered ship patrolling the %s system. Eliminate this ship."
+msgid "There is {n} Dvaered ship patrolling the {sys} system. Eliminate this ship."
 msgid_plural ""
-"There is a Dvaered patrol with %d ships in the %s system. Eliminate this "
+"There is a Dvaered patrol with {n} ships in the {sys} system. Eliminate this "
 "patrol."
 msgstr[0] ""
-"There is %d Dvaered ship patrolling the %s system. Eliminate this ship."
+"There is {n} Dvaered ship patrolling the {sys} system. Eliminate this ship."
 msgstr[1] ""
-"There is a Dvaered patrol with %d ships in the %s system. Eliminate this "
+"There is a Dvaered patrol with {n} ships in the {sys} system. Eliminate this "
 "patrol."
 
 #: dat/missions/flf/flf_patrol.lua:53
@@ -44394,16 +44394,16 @@ msgstr ""
 #: dat/missions/flf/flf_pirates.lua:49
 #, lua-format
 msgid ""
-"There is %d pirate ship disturbing FLF operations in the %s system. "
+"There is {n} pirate ship disturbing FLF operations in the {sys} system. "
 "Eliminate this ship."
 msgid_plural ""
-"There is a pirate group with %d ships disturbing FLF operations in the %s "
+"There is a pirate group with {n} ships disturbing FLF operations in the {sys} "
 "system. Eliminate this group."
 msgstr[0] ""
-"There is %d pirate ship disturbing FLF operations in the %s system. "
+"There is {n} pirate ship disturbing FLF operations in the {sys} system. "
 "Eliminate this ship."
 msgstr[1] ""
-"There is a pirate group with %d ships disturbing FLF operations in the %s "
+"There is a pirate group with {n} ships disturbing FLF operations in the {sys} "
 "system. Eliminate this group."
 
 #: dat/missions/flf/flf_pirates.lua:54
@@ -45048,13 +45048,13 @@ msgstr ""
 
 #: dat/missions/flf/flf_rogue.lua:46
 #, lua-format
-msgid "There is %d rogue FLF ship in the %s system. Eliminate this ship."
+msgid "There is {n} rogue FLF ship in the {sys} system. Eliminate this ship."
 msgid_plural ""
-"There is a squadron of rogue FLF ships with %d ships in the %s system. "
+"There is a squadron of rogue FLF ships with {n} ships in the {sys} system. "
 "Eliminate this squadron."
-msgstr[0] "There is %d rogue FLF ship in the %s system. Eliminate this ship."
+msgstr[0] "There is {n} rogue FLF ship in the {sys} system. Eliminate this ship."
 msgstr[1] ""
-"There is a squadron of rogue FLF ships with %d ships in the %s system. "
+"There is a squadron of rogue FLF ships with {n} ships in the {sys} system. "
 "Eliminate this squadron."
 
 #. Spawn a rogue FLF squad with n ships.

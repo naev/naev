@@ -23,12 +23,12 @@ local fleet = require "fleet"
 local flf = require "missions.flf.flf_common"
 
 misn_title = {}
-misn_title[1] = _("FLF: Single Dvaered patrol in %s")
-misn_title[2] = _("FLF: Small Dvaered patrol in %s")
-misn_title[3] = _("FLF: Medium Dvaered patrol in %s")
-misn_title[4] = _("FLF: Large Dvaered patrol in %s")
-misn_title[5] = _("FLF: Dangerous Dvaered patrol in %s")
-misn_title[6] = _("FLF: Highly Dangerous Dvaered patrol in %s")
+misn_title[1] = _("FLF: Single Dvaered patrol in {sys}")
+misn_title[2] = _("FLF: Small Dvaered patrol in {sys}")
+misn_title[3] = _("FLF: Medium Dvaered patrol in {sys}")
+misn_title[4] = _("FLF: Large Dvaered patrol in {sys}")
+misn_title[5] = _("FLF: Dangerous Dvaered patrol in {sys}")
+misn_title[6] = _("FLF: Highly Dangerous Dvaered patrol in {sys}")
 
 text = {}
 text[1] = _("After you are handed your pay, an FLF soldier congratulates you for your victory and buys you a drink. You chat for a while before getting back to work.")
@@ -44,10 +44,10 @@ osd_desc["__save"] = true
 
 function setDescription ()
    local desc
-   desc = gettext.ngettext(
-         "There is %d Dvaered ship patrolling the %s system. Eliminate this ship.",
-         "There is a Dvaered patrol with %d ships in the %s system. Eliminate this patrol.",
-         ships ):format( ships, missys:name() )
+   desc = fmt.f( n_(
+         "There is {n} Dvaered ship patrolling the {sys} system. Eliminate this ship.",
+         "There is a Dvaered patrol with {n} ships in the {sys} system. Eliminate this patrol.",
+         ships ), {n=ships, sys=missys} )
 
    if has_vigilance then
       desc = desc .. _(" There is a Vigilance among them, so you must proceed with caution.")
@@ -56,10 +56,10 @@ function setDescription ()
       desc = desc .. _(" There is a Goddard among them, so you must be very careful.")
    end
    if flfships > 0 then
-      desc = desc .. gettext.ngettext(
-            " You will be accompanied by %d other FLF pilot for this mission.",
-            " You will be accompanied by %d other FLF pilots for this mission.",
-            flfships ):format( flfships )
+      desc = desc .. fmt.f( n_(
+            " You will be accompanied by {n} other FLF pilot for this mission.",
+            " You will be accompanied by {n} other FLF pilots for this mission.",
+            flfships ), {n=flfships} )
    end
    return desc
 end
@@ -119,7 +119,7 @@ function create ()
    late_arrival_delay = rnd.uniform( 10.0, 120.0 )
 
    -- Set mission details
-   misn.setTitle( misn_title[level]:format( missys:name() ) )
+   misn.setTitle( fmt.f( misn_title[level], {sys=missys} ) )
    misn.setDesc( desc )
    misn.setReward( fmt.credits( credits ) )
    marker = misn.markerAdd( missys, "computer" )

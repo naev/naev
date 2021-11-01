@@ -55,7 +55,7 @@ function accept ()
       misn.setReward( _("Getting rid of treacherous scum") )
       marker = misn.markerAdd( missys, "high" )
 
-      osd_desc[1] = fmt.f( osd_desc[1], {sys=missys} )
+      osd_desc[1] = fmt.f( _("Fly to the {sys} system"), {sys=missys} )
       misn.osdCreate( _("Rogue FLF"), osd_desc )
 
       rogue_ships_left = 0

@@ -62,7 +62,7 @@ function accept ()
       local desc = setDescription()
       misn.setDesc( desc )
 
-      misn.setTitle( misn_title[level]:format( missys:name() ) )
+      misn.setTitle( fmt.f( misn_title[level], {sys=missys} ) )
       marker = misn.markerAdd( missys, "high" )
       misn.setReward( fmt.credits( credits ) )
 
