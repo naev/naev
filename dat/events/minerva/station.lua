@@ -61,7 +61,7 @@ patron_messages = {
       if player.numOutfit("Fuzzy Dice") > 0 then
          soldoutmsg = _(" Wait, what? What do you mean they are sold out!?")
       end
-      return string.format(_([["I really have my eyes on the Fuzzy Dice available at the terminal. I always wanted to own a piece of history!%s"]]), soldoutmsg ) end,
+      return fmt.f(_([["I really have my eyes on the Fuzzy Dice available at the terminal. I always wanted to own a piece of history!{msg}"]]), {msg=soldoutmsg} ) end,
    _([["I played 20 hands of blackjack with that Cyborg Chicken. I may have lost them all, but that was worth every credit!"]]),
    _([["This place is great! I still have no idea how to play blackjack, but I just keep on playing again and again against that Cyborg Chicken."]]),
    function () return fmt.f(
@@ -201,14 +201,14 @@ function approach_terminal()
    local t = vn.newCharacter( minerva.vn_terminal() )
    vn.transition()
    vn.label( "start" )
-   t:say( function() return string.format(
-         n_([["VALUED CUSTOMER, YOU HAVE #p%s MINERVA TOKEN#0.%s
+   t:say( function() return fmt.f(
+         n_([["VALUED CUSTOMER, YOU HAVE #p{n} MINERVA TOKEN#0.{msg}
 
 WHAT DO YOU WISH TO DO TODAY?"]],
-            [["VALUED CUSTOMER, YOU HAVE #p%s MINERVA TOKENS#0.%s
+            [["VALUED CUSTOMER, YOU HAVE #p{n} MINERVA TOKENS#0.{msg}
 
 WHAT DO YOU WISH TO DO TODAY?"]], minerva.tokens_get()),
-               fmt.number(minerva.tokens_get()), msgs[rnd.rnd(1,#msgs)]) end )
+               {n=fmt.number(minerva.tokens_get()), msg=msgs[rnd.rnd(1,#msgs)]}) end )
    vn.menu( {
       {_("Information"), "info"},
       {_("Trade-in"), "trade"},
@@ -316,9 +316,9 @@ WHAT DO YOU WISH TO DO TODAY?"]], minerva.tokens_get()),
          local tokens = v[2][1]
          local soldout = (v[2][2]=="outfit" and outfit.unique(v[1]) and player.numOutfit(v[1])>0)
          if soldout then
-            opts[k] = { string.format(_("%s (#rSOLD OUT#0)"), _(v[1])), -1 }
+            opts[k] = { fmt.f(_("{item} (#rSOLD OUT#0)"), {item=_(v[1])}), -1 }
          else
-            opts[k] = { string.format(_("%s (%s)"), _(v[1]), minerva.tokens_str(tokens)), k }
+            opts[k] = { fmt.f(_("{item} ({tokens})"), {item=_(v[1]), tokens=minerva.tokens_str(tokens)}), k }
          end
       end
       -- Add special ticket

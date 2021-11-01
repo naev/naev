@@ -161,10 +161,10 @@ function create ()
    local faction_text = pir.reputationMessage( reward_faction )
    local faction_title = ""
    if pir.factionIsClan( reward_faction ) then
-      faction_title = fmt.f(_(" ({clanname})"), {clanname=reward_faction})
+      faction_title = fmt.f(_(" ({fct})"), {fct=reward_faction})
    end
 
-   misn.setTitle(fmt.f(_("#rPIRACY#0: Raid a {adjective} {name} convoy in the {sys} system{fct}"), {adjective=adjective, name=enemyfaction, sys=targetsys, fct=faction_title} ))
+   misn.setTitle(fmt.f(_("#rPIRACY#0: Raid a {adjective} {name} convoy in the {sys} system{msg}"), {adjective=adjective, name=enemyfaction, sys=targetsys, msg=faction_title} ))
    misn.setDesc(fmt.f(_("A convoy carrying {cargo} will be passing through the {sys} system on the way from {entersys} to {exitsys}. A local Pirate Lord wants you to assault the convoy and bring back as many tonnes of {cargo} as possible. You will be paid based on how much you are able to bring back.{reputation}"),
          {cargo=misn_cargo, sys=targetsys, entersys=convoy_enter:dest(), exitsys=convoy_exit:dest(), reputation=faction_text}))
    misn.setReward(fmt.f(_("{rbase} and {rcargo} per ton of {cargo} recovered"), {rbase=fmt.credits(reward_base),rcargo=fmt.credits(reward_cargo),cargo=misn_cargo}))

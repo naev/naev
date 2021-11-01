@@ -143,19 +143,19 @@ function create()
    reward    = 1.5^tier * (numjumps * jumpreward + traveldist * distreward) * finished_mod * (1. + 0.05*rnd.twosigma())
 
    if pir.factionIsClan( reward_faction ) then
-      misn.setTitle( string.format(
-         _("#rPIRACY:#0 Smuggle %s of %s (%s)"), fmt.tonnes(amount),
-         _(cargo), reward_faction:name() ) )
+      misn.setTitle( fmt.f(
+         _("#rPIRACY:#0 Smuggle {tonnes} of {cargo} ({fct})"), {tonnes=fmt.tonnes(amount),
+         cargo=_(cargo), fct=reward_faction} ) )
    else
-      misn.setTitle( string.format(
-         _("#rPIRACY:#0 Smuggle %s of %s"), fmt.tonnes(amount),
-         _(cargo) ) )
+      misn.setTitle( fmt.f(
+         _("#rPIRACY:#0 Smuggle {tonnes} of {cargo}"), {tonnes=fmt.tonnes(amount),
+         cargo=_(cargo)} ) )
    end
    misn.markerAdd(destplanet, "computer")
    if pir.factionIsPirate( planet.cur():faction() ) then
-      car.setDesc( _("Smuggling contraband goods to %s in the %s system.%s"):format( destplanet:name(), destsys:name(), faction_text ), cargo, amount, destplanet, timelimit )
+      car.setDesc( fmt.f( _("Smuggling contraband goods to {pnt} in the {sys} system.{msg}"), {pnt=destplanet, sys=destsys, msg=faction_text} ), cargo, amount, destplanet, timelimit )
    else
-      car.setDesc( _("Smuggling contraband goods to %s in the %s system.%s"):format( destplanet:name(), destsys:name(), faction_text ) .. "\n\n" .. _("#rWARNING:#0 Contraband is illegal in most systems and you will face consequences if caught by patrols."), cargo, amount, destplanet, timelimit )
+      car.setDesc( fmt.f( _("Smuggling contraband goods to {pnt} in the {sys} system.{msg}"), {pnt=destplanet, sys=destsys, msg=faction_text} ) .. "\n\n" .. _("#rWARNING:#0 Contraband is illegal in most systems and you will face consequences if caught by patrols."), cargo, amount, destplanet, timelimit )
    end
 
    misn.setReward( fmt.credits(reward) )
