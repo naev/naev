@@ -94,6 +94,7 @@ float Fd_Burley( float roughness, float NoV, float NoL, float LoH )
 struct Material {
    vec3 albedo;         /**< Surface albedo. */
    float roughness;     /**< Surface roughness. */
+   vec3 F0;             /**< Fresnel value at 0 degrees. */
    float roughness_cc;  /**< Clear coat roughness. */
    float clearCoat;     /**< Clear coat colour. */
 };
@@ -116,7 +117,7 @@ vec3 shade( Material mat, vec3 v, vec3 n, vec3 l, float NoL )
    /* Specular Lobe. */
    float D = D_GGX( mat.roughness, NoH, h );
    float V = V_SmithGGXCorrelated( mat.roughness, NoV, NoL );
-   vec3  F = F_Schlick( vec3(0.2), VoH );
+   vec3  F = F_Schlick( mat.F0, VoH );
    vec3 Fr = (D * V) * F;
 
    /* Diffuse Lobe. */
@@ -157,7 +158,8 @@ void main(void) {
 
    Material mat;
    mat.albedo        = Td;
-   mat.roughness     = 0.1;
+   mat.roughness     = 0.05;
+   mat.F0            = vec3(0.56); /* Iron. */
    mat.clearCoat     = 1.0;
    mat.roughness_cc  = 0.01;
 
