@@ -121,7 +121,7 @@ function lead_fleet( p )
 
       local form = formation[mem.formation]
       if form == nil then
-         warn(fmt.f(_("Pilot '{pltname}': formation '{formation}' not found!"), {pltname=p:name(), formation=mem.formation}))
+         warn(fmt.f(_("Pilot '{plt}': formation '{formation}' not found!"), {plt=p, formation=mem.formation}))
       else
          form(p)
       end

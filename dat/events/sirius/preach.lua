@@ -172,7 +172,7 @@ function theFunBegins()
 
    followers = fleet.add(1, followers, "Sirius", curr, nil, {ai="sirius_norun"}) -- The table now contains pilots, not ship names.
    for k,j in ipairs(followers) do
-      j:rename( fmt.f( _("Converted {pltname}"), {pltname=j:name()} ))
+      j:rename( fmt.f( _("Converted {plt}"), {plt=j} ))
    end
 
    --pick a random converted pirate and have him praise the Sirichana

@@ -102,7 +102,7 @@ local function bribe_cost( plt )
 
    local mem = plt:memory()
    if not mem.bribe then
-      warn(fmt.f(_("Pilot '{pltname}' accepts bribes but doesn't give a price!"), {pltname=plt:name()} ))
+      warn(fmt.f(_("Pilot '{plt}' accepts bribes but doesn't give a price!"), {plt=plt} ))
       return 1e6 -- just ridiculous for now, players should report it
    end
    return mem.bribe
@@ -158,7 +158,7 @@ function comm( plt )
    if mem.comm_greet then
       p( mem.comm_greet )
    else
-      vn.na(fmt.f(_("You open a communication channel with {pltname}."), {pltname=plt:name()}))
+      vn.na(fmt.f(_("You open a communication channel with {plt}."), {plt=plt}))
    end
    vn.label("menu")
    vn.menu( function ()

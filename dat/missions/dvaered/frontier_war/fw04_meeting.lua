@@ -416,7 +416,7 @@ end
 -- A ship approaches from DHC: assign it to player
 function incomingControl( self )
    audio.soundPlay( "jump" )
-   alpha[1]:comm( fmt.f(_("A-NightClaws Leader to {player}: intercept {pltname} and control their security clearance code"), {player=player.name(), pltname=self:name()} ) )
+   alpha[1]:comm( fmt.f(_("A-NightClaws Leader to {player}: intercept {plt} and control their security clearance code"), {player=player.name(), plt=self} ) )
    self:setHilight()
    self:setVisible()
    n2control = n2control + 1
@@ -530,7 +530,7 @@ end
 -- Hamelsen is in range: do as usual
 function incomingHamelsen()
    audio.soundPlay( "jump" )
-   alpha[1]:comm( fmt.f(_("A-NightClaws Leader to {player}: intercept {pltname} and control their security clearance code"), {player=player.name(), pltname=hamelsen:name()} ) )
+   alpha[1]:comm( fmt.f(_("A-NightClaws Leader to {player}: intercept {plt} and control their security clearance code"), {player=player.name(), plt=hamelsen} ) )
    hamelsen:setHilight()
    hamelsen:setVisible()
    hook.timer(0.5, "proximity", {anchor = hamelsen, radius = 1000, funcname = ("checkHamelsen")})
@@ -539,7 +539,7 @@ end
 
 -- Player checks security clearance of Hamelsen: let the fun begin
 function checkHamelsen()
-   tk.msg( _("Incoming ship refuses control"), fmt.f(_([[When getting in range, you receive an alarm. This ship does not have an invitation. Suddenly, you see it accelerating as if the pilot wanted to force the blockade around the station. You hear an order from Captain Leblanc: "A-NightClaws Leader to {player}: intercept and destroy {pltname}".]]), {player=player.name(), pltname=hamelsen:name()} ) )
+   tk.msg( _("Incoming ship refuses control"), fmt.f(_([[When getting in range, you receive an alarm. This ship does not have an invitation. Suddenly, you see it accelerating as if the pilot wanted to force the blockade around the station. You hear an order from Captain Leblanc: "A-NightClaws Leader to {player}: intercept and destroy {plt}".]]), {player=player.name(), plt=hamelsen} ) )
    hamelsen:setHostile()
    --hamelsen:rename( _("Suspect Hyena") )
 
@@ -555,7 +555,7 @@ function checkHamelsen()
 
    stage = 2
    misn.osdDestroy()
-   misn.osdCreate( _("The Meeting"), {fmt.f(_("Engage {pltname}"), {pltname=hamelsen:name()}) } )
+   misn.osdCreate( _("The Meeting"), {fmt.f(_("Engage {plt}"), {plt=hamelsen}) } )
 end
 
 -- Discuss with an officer on Laarss

@@ -202,7 +202,7 @@ function traderJump( p, j )
    if j:dest() == lmisn.getNextSystem( system.cur(), destsys ) then
       exited = exited + 1
       if p:exists() then
-         player.msg( fmt.f(_("{pltname} has jumped to {sys}."), {pltname=p:name(), sys=j:dest()} ) )
+         player.msg( fmt.f(_("{plt} has jumped to {sys}."), {plt=p, sys=j:dest()} ) )
       end
    else
       traderDeath()
@@ -214,7 +214,7 @@ function traderLand( p, plnt )
    if plnt == destplanet then
       exited = exited + 1
       if p:exists() then
-         player.msg( fmt.f(_("{pltname} has landed on {pnt}."), {pltname=p:name(), pnt=plnt} ) )
+         player.msg( fmt.f(_("{plt} has landed on {pnt}."), {plt=p, pnt=plnt} ) )
       end
    else
       traderDeath()

@@ -140,7 +140,7 @@ end
 
 
 function racer1idle(p)
-   player.msg( fmt.f( _("{pltname} just reached checkpoint {n}"), {pltname=p:name(), n=target[1]}) )
+   player.msg( fmt.f( _("{plt} just reached checkpoint {n}"), {plt=p, n=target[1]}) )
    p:broadcast( fmt.f(_("Checkpoint {n} baby!"), {n=target[1]}) )
    target[1] = target[1] + 1
    hook.timer(2.0, "nexttarget1")
@@ -158,7 +158,7 @@ end
 
 
 function racer2idle(p)
-   player.msg( fmt.f( _("{pltname} just reached checkpoint {n}"), {pltname=p:name(), n=target[2]}) )
+   player.msg( fmt.f( _("{plt} just reached checkpoint {n}"), {plt=p, n=target[2]}) )
    p:broadcast(_("Hooyah"))
    target[2] = target[2] + 1
    hook.timer(2.0, "nexttarget2")
@@ -176,7 +176,7 @@ end
 
 
 function racer3idle(p)
-   player.msg( fmt.f( _("{pltname} just reached checkpoint {n}"), {pltname=p:name(), n=target[3]}) )
+   player.msg( fmt.f( _("{plt} just reached checkpoint {n}"), {plt=p, n=target[3]}) )
    p:broadcast(_("Next!"))
    target[3] = target[3] + 1
    hook.timer(2.0, "nexttarget3")
@@ -201,7 +201,7 @@ end
 function board(ship)
    for i,j in ipairs(checkpoint) do
       if ship == j and target[4] == i then
-         player.msg( fmt.f( _("{pltname} just reached checkpoint {n}"), {pltname=player.name(), n=target[4]}) )
+         player.msg( fmt.f( _("{plt} just reached checkpoint {n}"), {plt=player.name(), n=target[4]}) )
          misn.osdActive(i+1)
          target[4] = target[4] + 1
          if target[4] == 4 then
@@ -223,7 +223,7 @@ end
 
 
 function racerland(p)
-   player.msg(fmt.f(_("{pltname} just landed at {pnt} and finished the race"), {pltname=p:name(), pnt=curplanet}))
+   player.msg(fmt.f(_("{plt} just landed at {pnt} and finished the race"), {plt=p, pnt=curplanet}))
 end
 
 
