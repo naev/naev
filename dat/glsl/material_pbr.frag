@@ -56,6 +56,12 @@ float V_SmithGGXCorrelated( float roughness, float NoV, float NoL )
 	return clamp(v,0.0,1.0);
 }
 
+float V_Kelemen( float LoH )
+{
+   /* Kelemen 2001, "A Microfacet Based Coupled Specular-Matte BRDF Model with Importance Sampling" */
+   return clamp(0.25 / (LoH * LoH), 0.0, 1.0);
+}
+
 vec3 F_Schlick( const vec3 f0, float f90, float VoH )
 {
 	/* Schlick 1994, "An Inexpensive BRDF Model for Physically-Based Rendering" */
@@ -63,7 +69,7 @@ vec3 F_Schlick( const vec3 f0, float f90, float VoH )
 }
 vec3 F_Schlick( const vec3 f0, float VoH )
 {
-	float f = pow(1.0 - VoH, 5.0);
+	float f = pow5(1.0 - VoH);
 	return f + f0 * (1.0 - f);
 }
 float F_Schlick( float f0, float f90, float VoH )
@@ -86,8 +92,15 @@ float Fd_Burley( float roughness, float NoV, float NoL, float LoH )
 }
 
 struct Material {
-   vec3 albedo;
-   float roughness;
+   vec3 albedo;         /**< Surface albedo. */
+   float roughness;     /**< Surface roughness. */
+   float roughness_cc;  /**< Clear coat roughness. */
+   float clearCoat;     /**< Clear coat colour. */
+};
+
+struct Light {
+   vec3 position;
+   vec3 colour;
 };
 
 vec3 shade( Material mat, vec3 v, vec3 n, vec3 l, float NoL )
@@ -104,7 +117,7 @@ vec3 shade( Material mat, vec3 v, vec3 n, vec3 l, float NoL )
    float D = D_GGX( mat.roughness, NoH, h );
    float V = V_SmithGGXCorrelated( mat.roughness, NoV, NoL );
    vec3  F = F_Schlick( vec3(0.2), VoH );
-   vec3 Fr = (D*V)*F;
+   vec3 Fr = (D * V) * F;
 
    /* Diffuse Lobe. */
    vec3 Fd = mat.albedo * Fd_Burley( mat.roughness, NoV, NoL, LoH );
@@ -113,8 +126,17 @@ vec3 shade( Material mat, vec3 v, vec3 n, vec3 l, float NoL )
 	/* The energy compensation term is used to counteract the darkening effect
 	 * at high roughness */
 	//vec3 colour = Fd + Fr * pixel.energyCompensation;
+   vec3 colour = Fd + Fr;
 
-   return Fd + Fr;
+   /* Clear coat Lobe. */
+   float Dcc = D_GGX( mat.roughness_cc, NoH, h );
+   float Vcc = V_Kelemen( LoH );
+   float Fcc = F_Schlick(0.04, 1.0, LoH) * mat.clearCoat; // fix IOR to 1.5
+   float Fc  = (Dcc * Vcc) * Fcc;
+   colour *= (1.0-Fc) * NoL;
+   colour += Fc * NoL;
+
+   return colour;
 }
 
 void main(void) {
@@ -125,14 +147,6 @@ void main(void) {
    //norm = mix( norm, normal, 0.999 );
    n = normalize(n);
 
-   /* Get the crew ready. */
-   /* Point light for now. */
-   const vec3 lp  = vec3(3.0, 3.0, 3.0);
-   const vec3 v   = normalize( vec3(0.0, 1.0, 1.0) );
-   vec3 p   = pos;
-   vec3 l   = normalize(lp-p);
-   float NoL = max(0.0,dot(n,l));
-
    /* Material values. */
    float roughness =  0.1;
    /* Set up textures. */
@@ -142,10 +156,20 @@ void main(void) {
    vec3 Te = texture(map_Ke, tex_coord).rgb;
 
    Material mat;
-   mat.roughness  = 0.1;
-   mat.albedo     = Td;
+   mat.albedo        = Td;
+   mat.roughness     = 0.1;
+   mat.clearCoat     = 1.0;
+   mat.roughness_cc  = 0.01;
+
+   /* Get the crew ready. */
+   /* Point light for now. */
+   const vec3 lp  = vec3(3.0, 3.0, 3.0);
+   const vec3 v   = normalize( vec3(0.0, 1.0, 1.0) );
+   vec3 p   = pos;
+   vec3 l   = normalize(lp-p);
+   float NoL = max(0.0,dot(n,l));
 
    vec3 colour = shade( mat, v, n, l, NoL );
 
-   color_out = vec4(colour * NoL, 1.0);
+   color_out = vec4(colour * NoL, 1.0) * 2.0;
 }
