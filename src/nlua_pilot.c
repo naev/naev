@@ -181,6 +181,7 @@ static const luaL_Reg pilotL_methods[] = {
    { "getHostiles", pilotL_getHostiles },
    { "getVisible", pilotL_getVisible },
    { "__eq", pilotL_eq },
+   { "__tostring", pilotL_name },
    /* Info. */
    { "name", pilotL_name },
    { "id", pilotL_id },
