@@ -21,8 +21,6 @@ local fleet = require "fleet"
 local fmt = require "format"
 local flf = require "missions.flf.flf_common"
 
--- localization stuff
-
 success_text = {}
 success_text[1] = _("You receive a transmission from an FLF officer saying that the operation has completed, and you can now return to the base.")
 
@@ -54,8 +52,8 @@ function create ()
    if credits < 10e3 then misn.finish( false ) end
 
    -- Set mission details
-   misn.setTitle( _("FLF: Diversion in %s"):format( missys:name() ) )
-   misn.setDesc( _("A fleet of FLF ships will be conducting an operation against the Dvaered forces. Create a diversion from this operation by wreaking havoc in the nearby %s system."):format( missys:name() ) )
+   misn.setTitle( fmt.f( _("FLF: Diversion in {sys}"), {sys=missys} ) )
+   misn.setDesc( fmt.f( _("A fleet of FLF ships will be conducting an operation against the Dvaered forces. Create a diversion from this operation by wreaking havoc in the nearby {sys} system."), {sys=missys} ) )
    misn.setReward( fmt.credits( credits ) )
    marker = misn.markerAdd( missys, "computer" )
 end
@@ -163,7 +161,7 @@ function timer_spawn_dv ()
          fleetname = _("Dvaered Big Patrol")
       end
 
-      player.msg( _("%s has warped in!"):format( _(fleetname) ) )
+      player.msg( fmt.f( _("{fleet} has warped in!"), {fleet=_(fleetname)} ) )
       for i, j in ipairs( fleet.add( 1,  ships, "Dvaered" ) ) do
          add_attention( j )
       end

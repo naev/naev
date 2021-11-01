@@ -39,12 +39,12 @@ local lmisn = require "lmisn"
 
 -- Mission details
 misn_title = {}
-misn_title[1] = _("#rPIRACY:#0: Quick Assassination Job in %s%s")
-misn_title[2] = _("#rPIRACY:#0: Small Assassination Job in %s%s")
-misn_title[3] = _("#rPIRACY:#0: Moderate Assassination Job in %s%s")
-misn_title[4] = _("#rPIRACY:#0: Big Assassination Job in %s%s")
-misn_title[5] = _("#rPIRACY:#0: Dangerous Assassination Job in %s%s")
-misn_title[6] = _("#rPIRACY:#0: Highly Dangerous Assassination Job in %s%s")
+misn_title[1] = _("#rPIRACY:#0: Quick Assassination Job in {sys}{msg}")
+misn_title[2] = _("#rPIRACY:#0: Small Assassination Job in {sys}{msg}")
+misn_title[3] = _("#rPIRACY:#0: Moderate Assassination Job in {sys}{msg}")
+misn_title[4] = _("#rPIRACY:#0: Big Assassination Job in {sys}{msg}")
+misn_title[5] = _("#rPIRACY:#0: Dangerous Assassination Job in {sys}{msg}")
+misn_title[6] = _("#rPIRACY:#0: Highly Dangerous Assassination Job in {sys}{msg}")
 
 hunters = {}
 hunter_hits = {}
@@ -120,9 +120,9 @@ function create ()
 
    -- Set mission details
    if pir.factionIsClan( paying_faction ) then
-      misn.setTitle( misn_title[level]:format( missys:name(), string.format(_(" (%s)"), paying_faction:name() ) ) )
+      misn.setTitle( fmt.f( misn_title[level], {sys=missys:name(), msg=fmt.f(_(" ({fct})"), {fct=paying_faction} )} ) )
    else
-      misn.setTitle( misn_title[level]:format( missys:name(), "" ) )
+      misn.setTitle( fmt.f( misn_title[level], {sys=missys, msg=""} ) )
    end
 
    local mdesc = fmt.f( _("A meddlesome {fctname} pilot known as {pltname} was recently seen in the {sys} system. Local crime lords want this pilot dead. {pltname} is known to be flying a {shipclass}-class ship.{fcttext}"), {fctname=target_faction, pltname=name, sys=missys, shipclass=ship.get(pship):classDisplay(), fcttext=faction_text } )

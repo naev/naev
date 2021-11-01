@@ -27,8 +27,6 @@ local fleet = require "fleet"
 local fmt = require "format"
 local flf = require "missions.flf.flf_common"
 
--- Localization stuff
-
 osd_desc    = {}
 osd_desc[1] = _("Fly to the {sys} system and meet with the group of FLF ships")
 osd_desc[2] = _("Wait until the coast is clear, then hail one of your wingmates")
@@ -47,10 +45,10 @@ end
 
 
 function accept ()
-   if tk.yesno( _("The Next Level"), _([["Hello there, %s! You're just in time. We were just discussing our next operation against the Dvaered oppressors! Do you want in?"]]):format( player.name() ) ) then
+   if tk.yesno( _("The Next Level"), fmt.f( _([["Hello there, {player}! You're just in time. We were just discussing our next operation against the Dvaered oppressors! Do you want in?"]]), {player=player.name()} ) ) then
       tk.msg( _("A Decisive Strike"), _([[You take a seat among the group. "Fantastic!" says Benito. "Let me get you caught up, then. Do you remember that mission in Raelid you helped with a while back?" You nod. You were wondering what you were actually creating a diversion from. "Yes, well, I never got around to telling you what we actually did there. See, we've been wanting to destroy Raelid Outpost for some time, mostly because it's often used as a front for trying to scout us out. So while you were getting the attention of those Dvaereds, we rigged a special bomb and covertly installed it onto the outpost!"]]) )
-      tk.msg( _("A Decisive Strike"), _([["Now, the bomb is not perfect. Given how hastily we had to install the thing, we could not make it so that it could be detonated remotely. Instead, it has to be detonated manually, by blasting the station repeatedly. Shooting it down, in other words.
-    "So here's the plan. We have hired a large group of pirates to help us out by creating a massive disturbance far away from our target. You are to wait until the coast is clear, then swarm in and attack the outpost with all you've got. You, %s, will lead the charge. You have to determine the optimal time, when the Dvaereds are far enough away for you to initiate the attack, but before the pirates are inevitably overwhelmed. Simply hail one of the others when it's time to attack, then make a beeline for Raelid Outpost and shoot at it with all you've got!"]]):format( player.name() ) )
+      tk.msg( _("A Decisive Strike"), fmt.f( _([["Now, the bomb is not perfect. Given how hastily we had to install the thing, we could not make it so that it could be detonated remotely. Instead, it has to be detonated manually, by blasting the station repeatedly. Shooting it down, in other words.
+    "So here's the plan. We have hired a large group of pirates to help us out by creating a massive disturbance far away from our target. You are to wait until the coast is clear, then swarm in and attack the outpost with all you've got. You, {player}, will lead the charge. You have to determine the optimal time, when the Dvaereds are far enough away for you to initiate the attack, but before the pirates are inevitably overwhelmed. Simply hail one of the others when it's time to attack, then make a beeline for Raelid Outpost and shoot at it with all you've got!"]]), {player=player.name()} ) )
       tk.msg( _("A Decisive Strike"), _([["You guys are some of our best pilots, so try not to get killed, eh? A moment of triumph is upon us! Down with the oppressors!" The last line earns Benito a cheer from the crowd. Well, time to get your ship ready for the battle.]]) )
 
       misn.accept()
@@ -172,7 +170,7 @@ function timer_start ()
 
    if proximity then
       started = true
-      flf_fleet[1]:comm( _("You're just in time, %s! The chaos is just about to unfold."):format( player.name() ) )
+      flf_fleet[1]:comm( fmt.f( _("You're just in time, {player}! The chaos is just about to unfold."), {player=player.name()} ) )
       timer_pirates_hook = hook.timer( 4.0, "timer_pirates" )
       misn.osdActive( 2 )
 

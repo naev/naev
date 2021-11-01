@@ -93,7 +93,7 @@ function accept()
    if timelimit < playerbest then
       if not tk.yesno( _("Too slow"), fmt.f(
             _("This shipment must arrive within {time_limit}, but it will take at least {time} for your ship to reach {pnt}, missing the deadline. Accept the mission anyway?"),
-	    {time_limit=(timelimit - time.get()):str(), time=(playerbest - time.get()):str(), pnt=destplanet} ) ) then
+	    {time_limit=(timelimit - time.get()), time=(playerbest - time.get()), pnt=destplanet} ) ) then
          misn.finish()
       end
    end
@@ -142,7 +142,7 @@ function tick()
       -- Case still in time
       local osd_msg = {}
       osd_msg[1] = fmt.f(_("Fly to {pnt} in the {sys} system before {time_limit}\n({time} remaining)"),
-         {pnt=destplanet, sys=destsys, time_limit=timelimit:str(), time=(timelimit - time.get()):str()})
+         {pnt=destplanet, sys=destsys, time_limit=timelimit, time=(timelimit - time.get())})
       misn.osdCreate(_("Empire Shipping"), osd_msg)
    elseif timelimit <= time.get() then
       -- Case missed deadline

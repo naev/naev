@@ -77,7 +77,7 @@ function accept()
       misn.setDesc(fmt.f(_("Fly to planet {pnt} in the {sys} system and talk to Jorek. Once Jorek has boarded your ship, proceed to system {sys2} and board the {pltname}."), {pnt=pnt, sys=sys, sys2=sys2, pltname=shipname}))
       misn.osdCreate(_("Shadowrun"), {
          fmt.f(_("Fly to planet {pnt} in the {sys} system and pick up Jorek"), {pnt=pnt, sys=sys}),
-         fmt.f(_("You have {time} remaining"), {time=(deadline1 - time.get()):str()}),
+         fmt.f(_("You have {time} remaining"), {time=(deadline1 - time.get())}),
       })
       misn_marker = misn.markerAdd( sys, "low" )
       shadowrun = 2
@@ -144,14 +144,14 @@ function date()
       dateresolution(deadline1)
       misn.osdCreate(_("Shadowrun"), {
          fmt.f(_("Fly to planet {pnt} in the {sys} system and pick up Jorek"), {pnt=pnt, sys=sys}),
-         fmt.f(_("You have {time} remaining"), {time=(deadline1 - time.get()):str()}),
+         fmt.f(_("You have {time} remaining"), {time=(deadline1 - time.get())}),
       })
    elseif deadline2 >= time.get() and shadowrun == 3 then
       dateresolution(deadline2)
       misn.osdCreate(_("Shadowrun"), {
          _("You could not persuade Jorek to come with you"),
          fmt.f(_("Fly to the {sys} system and dock with (board) {pltname} to report your result"), {sys=sys2, pltname=shipname}),
-         fmt.f(_("You have {time} remaining"), {time=(deadline2 - time.get()):str()})
+         fmt.f(_("You have {time} remaining"), {time=(deadline2 - time.get())})
       })
       misn.osdActive(2)
    else

@@ -22,35 +22,33 @@ local fmt = require "format"
 local fleet = require "fleet"
 local flf = require "missions.flf.flf_common"
 
-misn_title  = {}
-misn_title[1] = _("FLF: Rogue Pilot in %s")
-misn_title[2] = _("FLF: Rogue Squadron in %s")
-misn_title[3] = _("FLF: Rogue Squadron in %s")
-misn_title[4] = _("FLF: Rogue Fleet in %s")
+local misn_title  = {}
+misn_title[1] = _("FLF: Rogue Pilot in {sys}")
+misn_title[2] = _("FLF: Rogue Squadron in {sys}")
+misn_title[3] = _("FLF: Rogue Squadron in {sys}")
+misn_title[4] = _("FLF: Rogue Fleet in {sys}")
 
-text = {}
+local text = {}
 text[1] = _("You are thanked for eliminating the traitorous scum and handed a credit chip with the agreed-upon payment.")
 text[2] = _("The official who hands you your pay mumbles something about traitors and then summarily dismisses you.")
 text[3] = _("While it takes an inordinate amount of time, you are eventually handed the agreed-upon payment for dispatching the traitor.")
 
-osd_desc    = {}
-osd_desc[1] = _("Fly to the {sys} system")
+osd_desc    = {__save=true}
 osd_desc[2] = _("Eliminate the rogue FLF patrol")
 osd_desc[3] = _("Return to FLF base")
-osd_desc["__save"] = true
 
 
-function setDescription ()
+local function setDescription ()
    local desc
-   desc = gettext.ngettext(
-         "There is %d rogue FLF ship in the %s system. Eliminate this ship.",
-         "There is a squadron of rogue FLF ships with %d ships in the %s system. Eliminate this squadron.",
-         ships ):format( ships, missys:name() )
+   desc = fmt.f( n_(
+         "There is {n} rogue FLF ship in the {sys} system. Eliminate this ship.",
+         "There is a squadron of rogue FLF ships with {n} ships in the {sys} system. Eliminate this squadron.",
+         ships ), {n=ships, sys=missys} )
    if flfships > 0 then
-      desc = desc .. gettext.ngettext(
-            " You will be accompanied by %d other FLF pilot for this mission.",
-            " You will be accompanied by %d other FLF pilots for this mission.",
-            flfships ):format( flfships )
+      desc = desc .. fmt.f( n_(
+            " You will be accompanied by {n} other FLF pilot for this mission.",
+            " You will be accompanied by {n} other FLF pilots for this mission.",
+            flfships ), {n=flfships} )
    end
    return desc
 end
@@ -87,7 +85,7 @@ function create ()
    late_arrival_delay = rnd.uniform( 10.0, 120.0 )
 
    -- Set mission details
-   misn.setTitle( misn_title[level]:format( missys:name() ) )
+   misn.setTitle( fmt.f( misn_title[level], {sys=missys} ) )
    misn.setDesc( desc )
    misn.setReward( fmt.credits( credits ) )
    marker = misn.markerAdd( missys, "computer" )
@@ -97,7 +95,7 @@ end
 function accept ()
    misn.accept()
 
-   osd_desc[1] = fmt.f( osd_desc[1], {sys=missys} )
+   osd_desc[1] = fmt.f( _("Fly to the {sys} system"), {sys=missys} )
    misn.osdCreate( _("Rogue FLF"), osd_desc )
 
    rogue_ships_left = 0

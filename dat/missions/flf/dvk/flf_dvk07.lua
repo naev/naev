@@ -44,8 +44,8 @@ end
 
 
 function accept ()
-   if tk.yesno( _("The Split"), _([[As you approach, you notice that Benito has an unusually annoyed expression. But when she sees you, she calms down somewhat. "Ah, %s." She sighs. "No one is willing to take up this mission, and while I can understand it's a tough mission, it really has to be taken care of.
-    "See, for some reason, a group of FLF pilots has decided to turn traitor on us. They're hanging around outside of Sindbad and shooting us down. They need to be stopped, but no one wants to get their hands dirty killing fellow FLF pilots. But they're not FLF pilots anymore! They betrayed us! Can't anyone see that?" She takes a deep breath. "Will you do it, please? You'll be paid for the service, of course."]]):format( player.name() ) ) then
+   if tk.yesno( _("The Split"), fmt.f( _([[As you approach, you notice that Benito has an unusually annoyed expression. But when she sees you, she calms down somewhat. "Ah, {player}." She sighs. "No one is willing to take up this mission, and while I can understand it's a tough mission, it really has to be taken care of.
+    "See, for some reason, a group of FLF pilots has decided to turn traitor on us. They're hanging around outside of Sindbad and shooting us down. They need to be stopped, but no one wants to get their hands dirty killing fellow FLF pilots. But they're not FLF pilots anymore! They betrayed us! Can't anyone see that?" She takes a deep breath. "Will you do it, please? You'll be paid for the service, of course."]]), {player=player.name()} ) ) then
       tk.msg( _("The Split"), _([["Yes, finally!" It's as if a massive weight has been lifted off of Benito's chest. "Everyone trusts you a lot, so I'm sure this will convince them that, yes, killing traitors is the right thing to do. They're no better than Dvaereds, or those Empire scum who started shooting at us recently! Thank you for accepting the mission. Now I should at least be able to get a couple more pilots to join in and help you defend our interests against the traitors. Good luck!"]]):format( player.name() ) )
 
       misn.accept()
@@ -55,7 +55,7 @@ function accept ()
       misn.setReward( _("Getting rid of treacherous scum") )
       marker = misn.markerAdd( missys, "high" )
 
-      osd_desc[1] = fmt.f( osd_desc[1], {sys=missys} )
+      osd_desc[1] = fmt.f( _("Fly to the {sys} system"), {sys=missys} )
       misn.osdCreate( _("Rogue FLF"), osd_desc )
 
       rogue_ships_left = 0

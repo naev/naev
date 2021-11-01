@@ -138,7 +138,7 @@ local function _done( status )
    elseif d>21 or (p<=21 and d<p) then
       local won = bj.betamount / 1000
       minerva.tokens_pay( won )
-      msg = string.format(n_("#gYou won #p%d Minerva Token#g!#0","#gYou won #p%d Minerva Tokens#g!#0",won), won)
+      msg = fmt.f(n_("#gYou won #p{n} Minerva Token#g!#0","#gYou won #p{n} Minerva Tokens#g!#0",won), {n=won})
       if #bj.player == 2 and p==21 then
          msg = string.format(_("#pBlackjack!#0 %s"), msg)
          _chatter( "lost_blackjack" )
@@ -321,18 +321,18 @@ function bj.draw( bx, by, bw, _bh )
    end
    y = bj.bets_y + h+3*b
    local tokens = minerva.tokens_get()
-   local s = string.format(n_("You have %s credits and #p%s Minerva Token#0.", "You have %s credits and #p%s Minerva Tokens#0.", tokens), fmt.credits(player.credits()), fmt.number(tokens))
+   local s = fmt.f(n_("You have {credits} and #p{n} Minerva Token#0.", "You have {credits} and #p{n} Minerva Tokens#0.", tokens), {credits=fmt.credits(player.credits()), n=fmt.number(tokens)})
    w = bj.font:getWidth( s )
    lg.print( s, bj.font, bx+(bw-w)/2, y )
 end
 
 local function trybet( betamount )
    if player.credits() < betamount then
-      bj.msg = string.format(_("#rNot enough credits! You only have %s!#0"), fmt.credits(player.credits()))
+      bj.msg = fmt.f(_("#rNot enough credits! You only have {credits}!#0"), {credits=fmt.credits(player.credits())})
    else
       player.pay(-betamount)
       bj.betamount = betamount
-      bj.msg = string.format(_("You bet %s."),fmt.credits(betamount))
+      bj.msg = fmt.f(_("You bet {credits}."), {credits=fmt.credits(betamount)})
       bj.deal()
       bj.sound.chips[love_math.random(1,#bj.sound.chips)]:play()
    end

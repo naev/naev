@@ -26,8 +26,6 @@ local fmt = require "format"
 local fleet = require "fleet"
 local flf = require "missions.flf.flf_common"
 
--- Localization stuff
-
 osd_desc    = {}
 osd_desc[1] = _("Fly to the {sys} system and meet with the group of FLF ships")
 osd_desc[2] = _("Wait until the coast is clear, then hail one of your wingmates")
@@ -46,7 +44,7 @@ end
 
 
 function accept ()
-   if tk.yesno( _("Here we go again"), _([["%s, we were just saying you should join in on this one! It's another great victory against the Dvaered oppressors, and we'd like you to lead the way to victory once again! Are you in?"]]):format( player.name() ) ) then
+   if tk.yesno( _("Here we go again"), fmt.f( _([["{player}, we were just saying you should join in on this one! It's another great victory against the Dvaered oppressors, and we'd like you to lead the way to victory once again! Are you in?"]]), {player=player.name()} ) ) then
       tk.msg( _("Another Decisive Strike"), _([["Excellent!" You take a seat. "So once again, our mission today is the destruction of a loathed Dvaered base: Raglan Outpost! The plan is pretty much the same as before: we have tasked a group of pirates with creating a disturbance nearby, and we have planted a bomb within the outpost to aid in its destruction. You just need to decide when to strike and let your teammates know.
     The one thing that will be different, though, is that you're likely to find more Dvaered ships guarding Raglan Outpost compared to Raelid Outpost, and it might be a little harder to destroy. So be extra careful!" Time to get your ship ready for battle, then.]]) )
 
@@ -154,7 +152,7 @@ function timer_start ()
 
    if proximity then
       started = true
-      flf_fleet[1]:comm( _("You're just in time, %s! The chaos is just about to unfold."):format( player.name() ) )
+      flf_fleet[1]:comm( fmt.f( _("You're just in time, {player}! The chaos is just about to unfold."), {player=player.name()} ) )
       timer_pirates_hook = hook.timer( 4.0, "timer_pirates" )
       misn.osdActive( 2 )
 
@@ -300,8 +298,8 @@ end
 
 function land ()
    if planet.cur():faction() == faction.get("FLF") then
-      tk.msg( _("Another Day, Another Victory"), _([[If your comrades were happy about your victory at Raelid, they are ecstatic about your victory at Haleb. As you enter the station, you are met with cheers from what seems to be everyone. It takes you longer than usual to make it to Benito as a result. "Congratulations," she says. "That was an astounding victory, sure to set back the Dvaered oppressors substantially! This is the first time we've pushed them out of Frontier space, and for that, we all thank you. If you haven't noticed, you've made yourself into a bit of a hero!
-    "Here is your pay, %s. May we have another great victory later on! Down with the oppressors!" You exchange some more words with Benito, party with the others for a period or two, and then make your way back to your ship for some much-needed rest.]]):format( player.name() ) )
+      tk.msg( _("Another Day, Another Victory"), fmt.f( _([[If your comrades were happy about your victory at Raelid, they are ecstatic about your victory at Haleb. As you enter the station, you are met with cheers from what seems to be everyone. It takes you longer than usual to make it to Benito as a result. "Congratulations," she says. "That was an astounding victory, sure to set back the Dvaered oppressors substantially! This is the first time we've pushed them out of Frontier space, and for that, we all thank you. If you haven't noticed, you've made yourself into a bit of a hero!
+    "Here is your pay, {player}. May we have another great victory later on! Down with the oppressors!" You exchange some more words with Benito, party with the others for a period or two, and then make your way back to your ship for some much-needed rest.]]), {player=player.name()} ) )
       finish()
    end
 end

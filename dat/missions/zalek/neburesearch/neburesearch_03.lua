@@ -62,7 +62,7 @@ function accept()
     -- Set up mission information
     misn.setTitle(_("The Substitute Speaker"))
     misn.setReward(_("a reputation as scientist (?)"))
-    misn.setDesc(fmt.f(_("Fly to {pnt} in the {sys} system before {time} and give a scientific talk."), {pnt=dest_planet, sys=dest_sys, time=timelimit:str()}))
+    misn.setDesc(fmt.f(_("Fly to {pnt} in the {sys} system before {time} and give a scientific talk."), {pnt=dest_planet, sys=dest_sys, time=timelimit}))
     misn_marker = misn.markerAdd(dest_sys, "high")
 
     misn.accept()
@@ -205,7 +205,7 @@ function tick()
         misn.finish(false)
     else
         osd_msg[1] = fmt.f(_("Fly to {pnt} in the {sys} system before {time_limit}\n({time} remaining)"),
-	   {pnt=dest_planet, sys=dest_sys, time_limit=timelimit:str(), time=(timelimit - time.get()):str()})
+	   {pnt=dest_planet, sys=dest_sys, time_limit=timelimit, time=(timelimit - time.get())})
         misn.osdCreate(_("The Substitute Speaker"), osd_msg)
     end
 end

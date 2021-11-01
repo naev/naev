@@ -143,19 +143,19 @@ function create()
    reward    = 1.5^tier * (numjumps * jumpreward + traveldist * distreward) * finished_mod * (1. + 0.05*rnd.twosigma())
 
    if pir.factionIsClan( reward_faction ) then
-      misn.setTitle( string.format(
-         _("#rPIRACY:#0 Smuggle %s of %s (%s)"), fmt.tonnes(amount),
-         _(cargo), reward_faction:name() ) )
+      misn.setTitle( fmt.f(
+         _("#rPIRACY:#0 Smuggle {tonnes} of {cargo} ({fct})"), {tonnes=fmt.tonnes(amount),
+         cargo=_(cargo), fct=reward_faction} ) )
    else
-      misn.setTitle( string.format(
-         _("#rPIRACY:#0 Smuggle %s of %s"), fmt.tonnes(amount),
-         _(cargo) ) )
+      misn.setTitle( fmt.f(
+         _("#rPIRACY:#0 Smuggle {tonnes} of {cargo}"), {tonnes=fmt.tonnes(amount),
+         cargo=_(cargo)} ) )
    end
    misn.markerAdd(destplanet, "computer")
    if pir.factionIsPirate( planet.cur():faction() ) then
-      car.setDesc( _("Smuggling contraband goods to %s in the %s system.%s"):format( destplanet:name(), destsys:name(), faction_text ), cargo, amount, destplanet, timelimit )
+      car.setDesc( fmt.f( _("Smuggling contraband goods to {pnt} in the {sys} system.{msg}"), {pnt=destplanet, sys=destsys, msg=faction_text} ), cargo, amount, destplanet, timelimit )
    else
-      car.setDesc( _("Smuggling contraband goods to %s in the %s system.%s"):format( destplanet:name(), destsys:name(), faction_text ) .. "\n\n" .. _("#rWARNING:#0 Contraband is illegal in most systems and you will face consequences if caught by patrols."), cargo, amount, destplanet, timelimit )
+      car.setDesc( fmt.f( _("Smuggling contraband goods to {pnt} in the {sys} system.{msg}"), {pnt=destplanet, sys=destsys, msg=faction_text} ) .. "\n\n" .. _("#rWARNING:#0 Contraband is illegal in most systems and you will face consequences if caught by patrols."), cargo, amount, destplanet, timelimit )
    end
 
    misn.setReward( fmt.credits(reward) )
@@ -167,7 +167,7 @@ function accept()
    if timelimit < playerbest then
       if not tk.yesno( _("Too slow"), fmt.f(
             _("This shipment must arrive within {time_limit}, but it will take at least {time} for your ship to reach {pnt}, missing the deadline. Accept the mission anyway?"),
-	    {time_limit=(timelimit - time.get()):str(), time=(playerbest - time.get()):str(), pnt=destplanet} ) ) then
+	    {time_limit=(timelimit - time.get()), time=(playerbest - time.get()), pnt=destplanet} ) ) then
          misn.finish()
       end
    end
@@ -210,7 +210,7 @@ function tick()
       -- Case still in time
       misn.osdCreate(fmt.f(_("Smuggling {cargo}"), {cargo=_(cargo)}), {
          fmt.f(_("Fly to {pnt} in the {sys} system before {time_limit}\n({time} remaining)"),
-               {pnt=destplanet, sys=destsys, time_limit=timelimit:str(), time=(timelimit - time.get()):str()})
+               {pnt=destplanet, sys=destsys, time_limit=timelimit, time=(timelimit - time.get())})
       })
    elseif timelimit <= time.get() then
       -- Case missed deadline

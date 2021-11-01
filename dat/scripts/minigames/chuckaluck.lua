@@ -177,18 +177,18 @@ function cl.draw( bx, by, bw, _bh )
    end
    y = y + h+3*b
    local tokens = minerva.tokens_get()
-   local s = string.format(n_("You have %s credits and #p%s Minerva Token#0.", "You have %s credits and #p%s Minerva Tokens#0.", tokens), fmt.credits(player.credits()), fmt.number(tokens))
+   local s = fmt.f(n_("You have {credits} and #p{n} Minerva Token#0.", "You have {credits} and #p{n} Minerva Tokens#0.", tokens), {credits=fmt.credits(player.credits()), n=fmt.number(tokens)})
    local tw = cl.font:getWidth( s )
    lg.print( s, cl.font, bx+(bw-tw)/2, y )
 end
 
 local function trybet( betamount )
    if player.credits() < betamount then
-      cl.msg = string.format(_("#rNot enough credits! You only have %s!#0"), fmt.credits(player.credits()))
+      cl.msg = fmt.f(_("#rNot enough credits! You only have {credits}!#0"), {credits=fmt.credits(player.credits())})
    else
       player.pay(-betamount)
       cl.betamount = betamount
-      cl.msg = string.format(_("You bet %s."),fmt.credits(betamount))
+      cl.msg = fmt.f(_("You bet {credits}."), {credits=fmt.credits(betamount)})
       cl.sound.chips[love_math.random(1,#cl.sound.chips)]:play()
       cl.betting = false
    end
@@ -219,13 +219,13 @@ function cl.play( value )
       msg = _("#rYou lost!#0")
    elseif matches==1 then
       won = won*1
-      msg = string.format(n_("#gYou won #p%d Minerva Token#g (matched one)!#0", "#gYou won #p%d Minerva Tokens#g (matched one)!#0", won), won)
+      msg = fmt.f(n_("#gYou won #p{n} Minerva Token#g (matched one)!#0", "#gYou won #p{n} Minerva Tokens#g (matched one)!#0", won), {n=won})
    elseif matches==2 then
       won = won*2
-      msg = string.format(n_("#gYou won #p%d Minerva Token#g (matched one)!#0", "#gYou won #p%d Minerva Tokens#g (matched two)!#0", won), won)
+      msg = fmt.f(n_("#gYou won #p{n} Minerva Token#g (matched one)!#0", "#gYou won #p{n} Minerva Tokens#g (matched two)!#0", won), {n=won})
    elseif matches==3 then
       won = won*10
-      msg = string.format(n_("#gYou won #p%d Minerva Token#g (matched one)!#0", "#gYou won #p%d Minerva Tokens#g (matched three)!#0", won), won)
+      msg = fmt.f(n_("#gYou won #p{n} Minerva Token#g (matched one)!#0", "#gYou won #p{n} Minerva Tokens#g (matched three)!#0", won), {n=won})
    end
    if won > 0 then
       minerva.tokens_pay( won )
