@@ -83,6 +83,7 @@ int logprintf( FILE *stream, int newline, const char *fmt, ... )
 #endif /* NOLOGPRINTFCONSOLE */
 
    /* Finally add newline if necessary. */
+   n = MIN(STRMAX-2,n); /* We'll have to chop off some characters sometimes. */
    if (newline) {
       buf[2+n+1] = '\n';
       buf[2+n+2] = '\0';
@@ -94,13 +95,13 @@ int logprintf( FILE *stream, int newline, const char *fmt, ... )
    if (copying)
       log_append(stream, &buf[2]);
 
-   if ( stream == stdout && logout_file != NULL ) {
+   if (stream == stdout && logout_file != NULL) {
       PHYSFS_writeBytes( logout_file, &buf[2], newline ? n+2 : n+1 );
-      if ( newline )
+      if (newline)
          PHYSFS_flush( logout_file );
    }
 
-   if ( stream == stderr && logerr_file != NULL ) {
+   if (stream == stderr && logerr_file != NULL) {
       PHYSFS_writeBytes( logerr_file, &buf[2], newline ? n+2 : n+1 );
       if ( newline )
          PHYSFS_flush( logerr_file );
@@ -108,7 +109,7 @@ int logprintf( FILE *stream, int newline, const char *fmt, ... )
 
    /* Also print to the stream. */
    n = fprintf( stream, "%s", &buf[ 2 ] );
-   if ( newline )
+   if (newline)
       fflush( stream );
    return n;
 }
@@ -185,10 +186,10 @@ void log_copy( int enable )
       return;
    }
 
-   if ( noutcopy && logout_file != NULL )
+   if (noutcopy && logout_file != NULL)
       PHYSFS_writeBytes( logout_file, outcopy, strlen(outcopy) );
 
-   if ( nerrcopy && logerr_file != NULL )
+   if (nerrcopy && logerr_file != NULL)
       PHYSFS_writeBytes( logerr_file, errcopy, strlen(errcopy) );
 
    log_purge();
