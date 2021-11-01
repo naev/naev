@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2021-11-01 00:38-0400\n"
+"POT-Creation-Date: 2021-11-01 01:09-0400\n"
 "PO-Revision-Date: 2021-04-04 21:26+0000\n"
 "Last-Translator: Hahaha Nope <ruzneregistrace@email.cz>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/naev/naev/cs/>\n"
@@ -24225,7 +24225,7 @@ msgstr ""
 #: dat/board.lua:86
 msgid ""
 "\n"
-"   - {fctname}"
+"   - {fct}"
 msgstr ""
 
 #. Credits
@@ -28280,8 +28280,8 @@ msgid ""
 "This ship looks like any old piece of scrap at a glance, but it is actually "
 "an antique, one of the very first of its kind ever produced! Museums all "
 "over the galaxy would love to have a ship like this. You plant a beacon on "
-"the derelict to mark it for salvaging, and contact the {factname} "
-"authorities. Your reputation with them has slightly improved."
+"the derelict to mark it for salvaging, and contact the {fct} authorities. "
+"Your reputation with them has slightly improved."
 msgstr ""
 
 #. See if we should add maps
@@ -29345,22 +29345,22 @@ msgstr ""
 #. Needs to be inhabited and have a bar for there to be news
 #. Needs a faction for there to be news
 #. Remove old headers (we only want one at a time)
-#: dat/events/neutral/news.lua:499
-msgid "News: Faction '{facname}' does not have entry in faction table!"
+#: dat/events/neutral/news.lua:498
+msgid "News: Faction '{fct}' does not have entry in faction table!"
 msgstr ""
 
 #. Remove old econ articles (we only want one at a time)
-#: dat/events/neutral/news.lua:590
+#: dat/events/neutral/news.lua:588
 msgid "{pnt} in {sys}"
 msgstr ""
 
-#: dat/events/neutral/news.lua:592
+#: dat/events/neutral/news.lua:590
 msgid "{cargo}: {price}"
 msgstr ""
 
 #. Create news, expires immediately when time advances (i.e.
 #. when you take off from the planet).
-#: dat/events/neutral/news.lua:602
+#: dat/events/neutral/news.lua:600
 msgid "Current Market Prices"
 msgstr ""
 
@@ -31095,7 +31095,7 @@ msgstr ""
 
 #. Probably going to die but be nice and add reset autonav the first time
 #: dat/events/restricted.lua:51
-msgid "#{col}{fctname} Message Buoy>#0 \"{msg}\""
+msgid "#{col}{fct} Message Buoy>#0 \"{msg}\""
 msgstr ""
 
 #. Keep on repeating as the spawn
@@ -55146,7 +55146,7 @@ msgid "Eliminate hostiles"
 msgstr ""
 
 #: dat/missions/neutral/patrol.lua:65 dat/missions/pirate/patrol.lua:56
-msgid "Land in {fctname} territory to collect your pay"
+msgid "Land in {fct} territory to collect your pay"
 msgstr ""
 
 #. Get the number of enemies in a particular system
@@ -55353,9 +55353,9 @@ msgstr ""
 
 #: dat/missions/neutral/pirbounty_alive.lua:63
 msgid ""
-"The pirate known as {pirname} was recently seen in the {sys} system. "
-"{fctname} authorities want this pirate alive. {pirname} is believed to be "
-"flying a {shipclass}-class ship."
+"The pirate known as {pirname} was recently seen in the {sys} system. {fct} "
+"authorities want this pirate alive. {pirname} is believed to be flying a "
+"{shipclass}-class ship."
 msgstr ""
 
 #: dat/missions/neutral/pirbounty_alive.lua:65
@@ -55573,9 +55573,9 @@ msgstr ""
 
 #: dat/missions/neutral/pirbounty_dead.lua:78
 msgid ""
-"The pirate known as {pirname} was recently seen in the {sys} system. "
-"{fctname} authorities want this pirate dead or alive. {pirname} is believed "
-"to be flying a {shipclass}-class ship."
+"The pirate known as {pirname} was recently seen in the {sys} system. {fct} "
+"authorities want this pirate dead or alive. {pirname} is believed to be "
+"flying a {shipclass}-class ship."
 msgstr ""
 
 #. Messages
@@ -55598,7 +55598,7 @@ msgstr ""
 
 #: dat/missions/neutral/pirbounty_dead.lua:90
 #: dat/missions/proteron/dissbounty_dead.lua:68
-msgid "Land in {fctname} territory to collect your bounty"
+msgid "Land in {fct} territory to collect your bounty"
 msgstr ""
 
 #: dat/missions/neutral/pirbounty_dead.lua:222
@@ -57934,9 +57934,9 @@ msgstr ""
 
 #: dat/missions/pirate/empbounty_dead.lua:128
 msgid ""
-"A meddlesome {fctname} pilot known as {pltname} was recently seen in the "
-"{sys} system. Local crime lords want this pilot dead. {pltname} is known to "
-"be flying a {shipclass}-class ship.{fcttext}"
+"A meddlesome {fct} pilot known as {pltname} was recently seen in the {sys} "
+"system. Local crime lords want this pilot dead. {pltname} is known to be "
+"flying a {shipclass}-class ship.{msg}"
 msgstr ""
 
 #. We're not on a pirate stronghold, so include a warning that the
@@ -58300,7 +58300,7 @@ msgstr ""
 
 #. Mission details
 #: dat/missions/pirate/patrol.lua:40
-msgid "#rPIRACY:#0 Patrol of the {sys} System ({fctname})"
+msgid "#rPIRACY:#0 Patrol of the {sys} System ({fct})"
 msgstr ""
 
 #: dat/missions/pirate/patrol.lua:41
@@ -59786,7 +59786,7 @@ msgstr ""
 
 #: dat/missions/proteron/dissbounty_dead.lua:104
 msgid ""
-"A political dissident was recently seen in the {sys} system. {fctname} "
+"A political dissident was recently seen in the {sys} system. {fct} "
 "authorities want this dissident dead or alive."
 msgstr ""
 
@@ -59809,7 +59809,7 @@ msgstr ""
 #. Don't spawn this mission if the player is buddies with this faction's enemies.
 #: dat/missions/rehab_common.lua:30 dat/missions/rehab_common.lua:44
 #: dat/missions/rehab_common.lua:55 dat/missions/rehab_common.lua:87
-msgid "{fctname} Rehabilitation"
+msgid "{fct} Rehabilitation"
 msgstr ""
 
 #: dat/missions/rehab_common.lua:31
@@ -59819,7 +59819,7 @@ msgid ""
 "were neutral, but your reputation will not actually improve until you've "
 "regained their trust. ANY hostile action against this faction will "
 "immediately void this agreement.\n"
-"Faction: {fctname}\n"
+"Faction: {fct}\n"
 "Cost: {credits}"
 msgstr ""
 
@@ -59831,11 +59831,11 @@ msgstr ""
 
 #: dat/missions/rehab_common.lua:44
 msgid ""
-"Your application has been processed. The {fctname} security forces will no "
-"longer attack you on sight. You may conduct your business in {fctname} space "
+"Your application has been processed. The {fct} security forces will no "
+"longer attack you on sight. You may conduct your business in {fct} space "
 "again, but remember that you still have a criminal record! If you attack any "
-"traders, civilians or {fctname} ships, or commit any other felony against "
-"this faction, you will immediately become their enemy again.\n"
+"traders, civilians or {fct} ships, or commit any other felony against this "
+"faction, you will immediately become their enemy again.\n"
 "While this agreement is active your reputation will not change, but if you "
 "continue to behave properly and perform beneficial services, your past "
 "offenses will eventually be stricken from the record."
@@ -59855,7 +59855,7 @@ msgstr[2] ""
 #. Standing hook. Manages faction reputation, keeping it at 0 until it goes positive.
 #. The player has successfully erased his criminal record.
 #: dat/missions/rehab_common.lua:76
-msgid "{fctname} Rehabilitation Successful"
+msgid "{fct} Rehabilitation Successful"
 msgstr ""
 
 #: dat/missions/rehab_common.lua:76
@@ -59868,7 +59868,7 @@ msgstr ""
 #. Remove the standing hook prior to modifying reputation.
 #. Reapply the original negative reputation.
 #: dat/missions/rehab_common.lua:105
-msgid "{fctname} Rehabilitation Canceled"
+msgid "{fct} Rehabilitation Canceled"
 msgstr ""
 
 #: dat/missions/rehab_common.lua:105
@@ -70311,7 +70311,7 @@ msgstr[2] ""
 #. @brief Gets a simple reputation message telling the player how the mission will increase their standing.
 #. --
 #: dat/scripts/common/pirate.lua:154
-msgid "This mission will increase your reputation with {factname}."
+msgid "This mission will increase your reputation with {fct_longname}."
 msgstr ""
 
 #.

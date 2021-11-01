@@ -31,7 +31,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2021-11-01 00:38-0400\n"
+"POT-Creation-Date: 2021-11-01 01:09-0400\n"
 "PO-Revision-Date: 2021-10-31 14:27+0000\n"
 "Last-Translator: OOTA, Masato <ooyooxei+gh@gmail.com>\n"
 "Language-Team: Japanese <https://hosted.weblate.org/projects/naev/naev/ja/>\n"
@@ -24995,10 +24995,16 @@ msgid ""
 msgstr "次の党派から違法とされています :\n"
 
 #: dat/board.lua:86
+#, fuzzy
+#| msgid ""
+#| "\n"
+#| "   - %s"
 msgid ""
 "\n"
-"   - {fctname}"
+"   - {fct}"
 msgstr ""
+"\n"
+"   - %s"
 
 #. Credits
 #: dat/board.lua:112
@@ -28876,14 +28882,14 @@ msgid ""
 "This ship looks like any old piece of scrap at a glance, but it is actually "
 "an antique, one of the very first of its kind ever produced! Museums all "
 "over the galaxy would love to have a ship like this. You plant a beacon on "
-"the derelict to mark it for salvaging, and contact the {fct} "
-"authorities. Your reputation with them has slightly improved."
+"the derelict to mark it for salvaging, and contact the {fct} authorities. "
+"Your reputation with them has slightly improved."
 msgstr ""
 "この船は一見して古い廃物の破片のように見えた。しかしじっさいには骨董品だっ"
 "た。いままで生産されたその種のなかでは、ごく最初期のものなのだ！　銀河じゅう"
 "の博物館がこの船を所有したがることだろう。あなたは無線標識をこの遺棄船に据え"
-"つけて回収用のしるしとしてから、{fct}の役所に連絡をした。その党派でのあ"
-"なたの評判は、わずかに上昇した。"
+"つけて回収用のしるしとしてから、{fct}の役所に連絡をした。その党派でのあなたの"
+"評判は、わずかに上昇した。"
 
 #. See if we should add maps
 #: dat/events/neutral/derelict.lua:171
@@ -30152,22 +30158,22 @@ msgstr ""
 #. Needs to be inhabited and have a bar for there to be news
 #. Needs a faction for there to be news
 #. Remove old headers (we only want one at a time)
-#: dat/events/neutral/news.lua:499
+#: dat/events/neutral/news.lua:498
 msgid "News: Faction '{fct}' does not have entry in faction table!"
 msgstr "News: Faction '{fct}' does not have entry in faction table!"
 
 #. Remove old econ articles (we only want one at a time)
-#: dat/events/neutral/news.lua:590
+#: dat/events/neutral/news.lua:588
 msgid "{pnt} in {sys}"
 msgstr "{sys}星系の{pnt}"
 
-#: dat/events/neutral/news.lua:592
+#: dat/events/neutral/news.lua:590
 msgid "{cargo}: {price}"
 msgstr "{cargo} : {price}"
 
 #. Create news, expires immediately when time advances (i.e.
 #. when you take off from the planet).
-#: dat/events/neutral/news.lua:602
+#: dat/events/neutral/news.lua:600
 msgid "Current Market Prices"
 msgstr "現在の市場価格"
 
@@ -32367,7 +32373,7 @@ msgstr ""
 
 #. Probably going to die but be nice and add reset autonav the first time
 #: dat/events/restricted.lua:51
-msgid "#{col}{fctname} Message Buoy>#0 \"{msg}\""
+msgid "#{col}{fct} Message Buoy>#0 \"{msg}\""
 msgstr ""
 
 #. Keep on repeating as the spawn
@@ -56936,13 +56942,13 @@ msgstr "{sys}での危険な生け捕り賞金"
 
 #: dat/missions/neutral/pirbounty_alive.lua:63
 msgid ""
-"The pirate known as {pirname} was recently seen in the {sys} system. "
-"{fct} authorities want this pirate alive. {pirname} is believed to be "
-"flying a {shipclass}-class ship."
+"The pirate known as {pirname} was recently seen in the {sys} system. {fct} "
+"authorities want this pirate alive. {pirname} is believed to be flying a "
+"{shipclass}-class ship."
 msgstr ""
-"{pirname}という名で知られる海賊が最近{sys}星系で見られた。{fct}当局がこの"
-"海賊を生け捕りにするか死んでほしがっている。{pirname}は{shipclass}級の船で飛"
-"んでいると信じられている。"
+"{pirname}という名で知られる海賊が最近{sys}星系で見られた。{fct}当局がこの海賊"
+"を生け捕りにするか死んでほしがっている。{pirname}は{shipclass}級の船で飛んで"
+"いると信じられている。"
 
 #: dat/missions/neutral/pirbounty_alive.lua:65
 msgid "Capture {pltname}"
@@ -57208,13 +57214,13 @@ msgstr "{sys}での危険な生死を問わない賞金"
 
 #: dat/missions/neutral/pirbounty_dead.lua:78
 msgid ""
-"The pirate known as {pirname} was recently seen in the {sys} system. "
-"{fct} authorities want this pirate dead or alive. {pirname} is believed "
-"to be flying a {shipclass}-class ship."
+"The pirate known as {pirname} was recently seen in the {sys} system. {fct} "
+"authorities want this pirate dead or alive. {pirname} is believed to be "
+"flying a {shipclass}-class ship."
 msgstr ""
-"{pirname}という名で知られる海賊が最近{sys}星系で見られた。{fct}当局がこの"
-"海賊を生け捕りにするか死んでほしがっている。{pirname}は{shipclass}級の船で飛"
-"んでいると信じられている。"
+"{pirname}という名で知られる海賊が最近{sys}星系で見られた。{fct}当局がこの海賊"
+"を生け捕りにするか死んでほしがっている。{pirname}は{shipclass}級の船で飛んで"
+"いると信じられている。"
 
 #. Messages
 #: dat/missions/neutral/pirbounty_dead.lua:82
@@ -59659,11 +59665,19 @@ msgid " ({fct})"
 msgstr ""
 
 #: dat/missions/pirate/empbounty_dead.lua:128
+#, fuzzy
+#| msgid ""
+#| "The pirate known as {pirname} was recently seen in the {sys} system. "
+#| "{fct} authorities want this pirate alive. {pirname} is believed to be "
+#| "flying a {shipclass}-class ship."
 msgid ""
-"A meddlesome {fctname} pilot known as {pltname} was recently seen in the "
-"{sys} system. Local crime lords want this pilot dead. {pltname} is known to "
-"be flying a {shipclass}-class ship.{fcttext}"
+"A meddlesome {fct} pilot known as {pltname} was recently seen in the {sys} "
+"system. Local crime lords want this pilot dead. {pltname} is known to be "
+"flying a {shipclass}-class ship.{msg}"
 msgstr ""
+"{pirname}という名で知られる海賊が最近{sys}星系で見られた。{fct}当局がこの海賊"
+"を生け捕りにするか死んでほしがっている。{pirname}は{shipclass}級の船で飛んで"
+"いると信じられている。"
 
 #. We're not on a pirate stronghold, so include a warning that the
 #. mission is in fact illegal (for new players).
@@ -60028,8 +60042,10 @@ msgstr ""
 
 #. Mission details
 #: dat/missions/pirate/patrol.lua:40
-msgid "#rPIRACY:#0 Patrol of the {sys} System ({fctname})"
-msgstr ""
+#, fuzzy
+#| msgid "Patrol of the {sys} System"
+msgid "#rPIRACY:#0 Patrol of the {sys} System ({fct})"
+msgstr "{sys}星系の巡視"
 
 #: dat/missions/pirate/patrol.lua:41
 msgid ""
@@ -61511,8 +61527,8 @@ msgid ""
 "A political dissident was recently seen in the {sys} system. {fct} "
 "authorities want this dissident dead or alive."
 msgstr ""
-"政治体制に反対する者が最近{sys}星系で見られた。{fct}当局がこの反対者を生"
-"け捕りにするか死んでほしがっている。"
+"政治体制に反対する者が最近{sys}星系で見られた。{fct}当局がこの反対者を生け捕"
+"りにするか死んでほしがっている。"
 
 #: dat/missions/proteron/dissbounty_dead.lua:113
 msgid "Proteron Dissident"
@@ -61533,8 +61549,10 @@ msgstr ""
 #. Don't spawn this mission if the player is buddies with this faction's enemies.
 #: dat/missions/rehab_common.lua:30 dat/missions/rehab_common.lua:44
 #: dat/missions/rehab_common.lua:55 dat/missions/rehab_common.lua:87
-msgid "{fctname} Rehabilitation"
-msgstr ""
+#, fuzzy
+#| msgid "{fct} Civilian"
+msgid "{fct} Rehabilitation"
+msgstr "{fct}民間人"
 
 #: dat/missions/rehab_common.lua:31
 msgid ""
@@ -61543,7 +61561,7 @@ msgid ""
 "were neutral, but your reputation will not actually improve until you've "
 "regained their trust. ANY hostile action against this faction will "
 "immediately void this agreement.\n"
-"Faction: {fctname}\n"
+"Faction: {fct}\n"
 "Cost: {credits}"
 msgstr ""
 
@@ -61555,11 +61573,11 @@ msgstr ""
 
 #: dat/missions/rehab_common.lua:44
 msgid ""
-"Your application has been processed. The {fctname} security forces will no "
-"longer attack you on sight. You may conduct your business in {fctname} space "
+"Your application has been processed. The {fct} security forces will no "
+"longer attack you on sight. You may conduct your business in {fct} space "
 "again, but remember that you still have a criminal record! If you attack any "
-"traders, civilians or {fctname} ships, or commit any other felony against "
-"this faction, you will immediately become their enemy again.\n"
+"traders, civilians or {fct} ships, or commit any other felony against this "
+"faction, you will immediately become their enemy again.\n"
 "While this agreement is active your reputation will not change, but if you "
 "continue to behave properly and perform beneficial services, your past "
 "offenses will eventually be stricken from the record."
@@ -61578,7 +61596,7 @@ msgstr[1] ""
 #. Standing hook. Manages faction reputation, keeping it at 0 until it goes positive.
 #. The player has successfully erased his criminal record.
 #: dat/missions/rehab_common.lua:76
-msgid "{fctname} Rehabilitation Successful"
+msgid "{fct} Rehabilitation Successful"
 msgstr ""
 
 #: dat/missions/rehab_common.lua:76
@@ -61591,7 +61609,7 @@ msgstr ""
 #. Remove the standing hook prior to modifying reputation.
 #. Reapply the original negative reputation.
 #: dat/missions/rehab_common.lua:105
-msgid "{fctname} Rehabilitation Canceled"
+msgid "{fct} Rehabilitation Canceled"
 msgstr ""
 
 #: dat/missions/rehab_common.lua:105
@@ -72432,7 +72450,7 @@ msgstr[1] ""
 #. @brief Gets a simple reputation message telling the player how the mission will increase their standing.
 #. --
 #: dat/scripts/common/pirate.lua:154
-msgid "This mission will increase your reputation with {factname}."
+msgid "This mission will increase your reputation with {fct_longname}."
 msgstr ""
 
 #.
