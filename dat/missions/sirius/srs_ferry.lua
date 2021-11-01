@@ -186,7 +186,7 @@ function accept()
     if timelimit < playerbest then
         if not tk.yesno( _("Too slow"), fmt.f(_([[The passenger requests arrival within {time_limit}, but it will take at least {time} for your ship to reach {pnt}, missing the deadline.
 
-Accept the mission anyway?]]), {time_limit=(timelimit - time.get()):str(), time=(playerbest - time.get()):str(), pnt=destplanet}) ) then
+Accept the mission anyway?]]), {time_limit=(timelimit - time.get()), time=(playerbest - time.get()), pnt=destplanet}) ) then
             misn.finish()
         end
     end
@@ -344,10 +344,10 @@ end
 -- Date hook
 function tick()
     local osd_msg = {}
-    osd_msg[1] = fmt.f(_("Fly to {pnt} in the {sys} system before {time}"), {pnt=destplanet, sys=destsys, time=timelimit:str()})
+    osd_msg[1] = fmt.f(_("Fly to {pnt} in the {sys} system before {time}"), {pnt=destplanet, sys=destsys, time=timelimit})
     if timelimit >= time.get() then
         -- Case still in time
-        osd_msg[2] = fmt.f(_("You have {time} remaining"), {time=(timelimit - time.get()):str()})
+        osd_msg[2] = fmt.f(_("You have {time} remaining"), {time=(timelimit - time.get())})
         misn.osdCreate(_("Pilgrimage transport"), osd_msg)
     elseif timelimit2 <= time.get() and not overtime then
         -- Case missed second deadline

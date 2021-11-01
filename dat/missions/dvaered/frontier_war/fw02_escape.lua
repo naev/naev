@@ -473,7 +473,7 @@ function weNeed2land()
    "If I may, I'd advise you to land somewhere within 3 periods, otherwise the VIP is likely to die, and to choose a place with a shipyard and an outfitter so that you'll be able to prepare your ship at best in case we need to escape quickly."]]))
    timelimit = time.get() + time.create(0,3,0)
    misn.osdCreate(_("Dvaered Escape"), {
-      fmt.f(_("Land anywhere to let Hamfresser steal a machine. Time left: {time}"), {time=(timelimit - time.get()):str()}),
+      fmt.f(_("Land anywhere to let Hamfresser steal a machine. Time left: {time}"), {time=(timelimit - time.get())}),
    })
    datehook = hook.date(time.create(0, 0, 100), "tick")
 end
@@ -481,7 +481,7 @@ end
 function tick()
    if timelimit >= time.get() then
       misn.osdCreate(_("Dvaered Escape"), {
-         fmt.f(_("Land anywhere to let Hamfresser steal a machine. Time left: {time}"), {time=(timelimit - time.get()):str()}),
+         fmt.f(_("Land anywhere to let Hamfresser steal a machine. Time left: {time}"), {time=(timelimit - time.get())}),
       })
    else
       tk.msg(_("The mission failed"), fmt.f(_([[Hamfresser rushes to the bridge. "All is lost, {player}! The guy died. Our mission failed!"]]), {player=player.name()}))

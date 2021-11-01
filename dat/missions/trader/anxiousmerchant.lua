@@ -84,7 +84,7 @@ function accept()
    local player_best = car.getTransit(num_jumps, travel_dist)
    player.pilot():cargoRm(cargo, cargo_size)
    if time_limit < player_best then
-      if not tk.yesno(_("Too slow"), fmt.f(_([[The goods have to arrive in {time_limit} but it will take {time} for your ship to reach {pnt}. Accept the mission anyway?]]) {time_limit=(time_limit - time.get()):str(), time=(player_best - time.get()):str(), pnt=dest_planet})) then
+      if not tk.yesno(_("Too slow"), fmt.f(_([[The goods have to arrive in {time_limit} but it will take {time} for your ship to reach {pnt}. Accept the mission anyway?]]) {time_limit=(time_limit - time.get()), time=(player_best - time.get()), pnt=dest_planet})) then
          misn.finish()
       end
    end
@@ -125,7 +125,7 @@ end
 function tick()
     local osd_msg
     if time_limit >= time.get() then -- still in time
-        osd_msg = {fmt.f(_("Drop off the goods at {pnt} in the {sys} system (You have {time} remaining)"), {pnt=dest_planet, sys=dest_sys, time=(time_limit - time.get()):str()})}
+        osd_msg = {fmt.f(_("Drop off the goods at {pnt} in the {sys} system (You have {time} remaining)"), {pnt=dest_planet, sys=dest_sys, time=(time_limit - time.get())})}
     else -- missed deadline
         osd_msg = {fmt.f(_("Drop off the goods at {pnt} in the {sys} system (You are late)"), {pnt=dest_planet, sys=dest_sys})}
         intime = false
