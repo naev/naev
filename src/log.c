@@ -65,9 +65,9 @@ int logprintf( FILE *stream, int newline, const char *fmt, ... )
    else { /* get the message */
       /* Print variable text. */
       va_start( ap, fmt );
+      /* Offset to add error colour header as necessary. */
       n = vsnprintf( &buf[2], sizeof(buf)-4, fmt, ap )-1;
       va_end( ap );
-
    }
 
 #ifndef NOLOGPRINTFCONSOLE
