@@ -25,11 +25,11 @@
 local pir = require "common.pirate"
 local fmt = require "format"
 
--- Bar information, describes how the NPC appears in the bar
-
 -- Mission details.
 misn_reward = fmt.credits(20e3)
 
+-- helper functions, defined below
+local addNerdCargo, rmNerdCargo, nerds_return, system_hasAtLeast 
 
 -- the mission cargo
 misn_cargo1 = N_("Group of Nerds")
@@ -62,11 +62,11 @@ function accept ()
       misn.finish(false)
    end
 
-   if not tk.yesno( _("A group of excited nerds"), string.format(_([[As you approach the group, the babbling ceases and the papers are quickly and jealously stashed away. One of the girls comes forward and introduces herself.
+   if not tk.yesno( _("A group of excited nerds"), fmt.f(_([[As you approach the group, the babbling ceases and the papers are quickly and jealously stashed away. One of the girls comes forward and introduces herself.
     "Hi, I'm Mia. We need transportation, and you look as if you could need some dough. Interested?"
     You reply that for a deal to be worked out, they better provide some detail.
-    "Listen," she says, "there's this Homebrew Processing Box Masters on %s. Right over there, this system. I'm sure our box will get us the first prize. You take us there, you take us back, you get 20,000."
-    You just start wondering at the boldness of so young a lady as she already signals her impatience. "What now, you do it?"]]), destPlanet:name() )) then
+    "Listen," she says, "there's this Homebrew Processing Box Masters on {pnt}. Right over there, this system. I'm sure our box will get us the first prize. You take us there, you take us back, you get 20,000."
+    You just start wondering at the boldness of so young a lady as she already signals her impatience. "What now, you do it?"]]), {pnt=destPlanet} )) then
       misn.finish(false)
    else
       if player.pilot():cargoFree() < 4 then
@@ -80,16 +80,19 @@ function accept ()
       misn.setDesc( _("Cart some nerds to their contest, and back."))
       marker = misn.markerAdd( destPlanet, "low" )
 
-      tk.msg(_("We have a deal!"), string.format(_([[Upon accepting the task, you see the entire group relax visibly, and you can almost feel Mia's boldness fade away - to some extent, at least. It seems that the group is quite keen on the competition, but until now had no idea how to get there.
+      tk.msg(_("We have a deal!"), fmt.f(_([[Upon accepting the task, you see the entire group relax visibly, and you can almost feel Mia's boldness fade away - to some extent, at least. It seems that the group is quite keen on the competition, but until now had no idea how to get there.
     As the others scramble to get up from their cramped table and start to gather their belongings, it is again up to Mia to address you:
-    "Really? You'll do it? Um, great. Fantastic. I just knew that eventually, someone desperate would turn up. OK, we're set to go. We better take off immediately and go directly to %s, or we'll be late for the contest!"]]), destPlanet:name()))
+    "Really? You'll do it? Um, great. Fantastic. I just knew that eventually, someone desperate would turn up. OK, we're set to go. We better take off immediately and go directly to {pnt}, or we'll be late for the contest!"]]), {pnt=destPlanet}))
       local distance = vec2.dist( planet.pos(srcPlanet), planet.pos(destPlanet) )
       local stuperpx = 1 / player.pilot():stats().speed_max * 30 -- from common.cargo
       expiryDate = time.get() + time.create(0, 0, 10010 + distance * stuperpx + 3300 ) -- takeoff + min travel time + leeway
 
       addNerdCargo()
       lhook = hook.land("nerds_land1", "land")
-      misn.osdCreate( _("DIY Nerds"), {string.format(_("Bring the nerds and their box to %s before %s"), destPlanet:name(), time.str(expiryDate, 1)), fmt.f(_("You have {time} remaining"), {time=time.str(expiryDate - time.get(), 1)})})
+      misn.osdCreate( _("DIY Nerds"), {
+	      fmt.f(_("Bring the nerds and their box to {pnt} before {time}"), {pnt=destPlanet, time=time.str(expiryDate, 1)}),
+	      fmt.f(_("You have {time} remaining"), {time=time.str(expiryDate - time.get(), 1)}),
+      })
       dhook = hook.date(time.create(0, 0, 100), "nerds_fly1")
    end
 end
@@ -97,7 +100,7 @@ end
 
 -- invoked upon landing (stage 1: cart the nerds to destPlanet)
 function nerds_land1()
-    local cp = planet.cur()
+   local cp = planet.cur()
 
    if intime and cp ~= destPlanet then
       return
@@ -110,8 +113,8 @@ function nerds_land1()
    if cp == destPlanet then
       if intime then
       -- in time, right planet
-         tk.msg(_("Happy nerds"), string.format(_([["Good job, %s," Mia compliments you upon arrival. "We'll now go win the competition and celebrate a bit. You better stay in the system. We will hail you in about 4 or 5 periods, so you can pick us up an' bring us back to %s."
-    That said, the nerds shoulder the box and rushes towards a banner which reads "Admissions".]]), player.name(), srcPlanet:name() ))
+         tk.msg(_("Happy nerds"), fmt.f(_([["Good job, {player}," Mia compliments you upon arrival. "We'll now go win the competition and celebrate a bit. You better stay in the system. We will hail you in about 4 or 5 periods, so you can pick us up an' bring us back to {pnt}."
+    That said, the nerds shoulder the box and rushes towards a banner which reads "Admissions".]]), {player=player.name(), pnt=srcPlanet} ))
            misn.osdCreate( _("DIY Nerds"), {_("Wait several periods in this system until hailed by the nerds for their return trip")} )
          expiryDate = time.get() + time.create(0, 0, 36000+rnd.rnd(-7500,7500), 0)
          hailed = false
@@ -122,8 +125,8 @@ function nerds_land1()
 
       else
       -- late, right planet
-         tk.msg(_("Angry nerds"), string.format(_([[Mia fumes. "Great. Just great! We're late, you jerk." She points to a crumpled banner reading "Admissions". The area below it is deserted. "No contest for us, no payment for you. Understand? Go and take your sorry excuse for a ship into the corona of a suitable star. We will find someone else to take us back to %s. Someone reliable."
-    As her emphasis on the last words is still ringing in your ears, the gang of nerds stroll toward an archway, behind which, judging from the bustling atmosphere, the contest is already going on.]]), srcPlanet:name() ))
+         tk.msg(_("Angry nerds"), fmt.f(_([[Mia fumes. "Great. Just great! We're late, you jerk." She points to a crumpled banner reading "Admissions". The area below it is deserted. "No contest for us, no payment for you. Understand? Go and take your sorry excuse for a ship into the corona of a suitable star. We will find someone else to take us back to {pnt}. Someone reliable."
+    As her emphasis on the last words is still ringing in your ears, the gang of nerds stroll toward an archway, behind which, judging from the bustling atmosphere, the contest is already going on.]]), {pnt=srcPlanet} ))
          misn.finish(true)
       end
    else
@@ -140,17 +143,22 @@ end
 function nerds_fly1()
    intime = expiryDate >= time.get()
    if intime then
-      misn.osdCreate( _("DIY Nerds"), {string.format(_("Bring the nerds and their box to %s before %s"), destPlanet:name(), time.str(expiryDate, 2)), fmt.f(_("You have {time} remaining"), {time=time.str(expiryDate - time.get(), 1)})})
+      misn.osdCreate( _("DIY Nerds"), {
+         fmt.f(_("Bring the nerds and their box to {pnt} before {time}"), {pnt=destPlanet, time=time.str(expiryDate, 2)}),
+         fmt.f(_("You have {time} remaining"), {time=time.str(expiryDate - time.get(), 1)}),
+      })
    else
-      misn.osdCreate( _("DIY Nerds"), {string.format(_("Bring the nerds and their box to %s before %s"), destPlanet:name(), time.str(expiryDate, 2)), _("You're late and the nerds are getting angry and abusive; land to get rid of the nerds and their box")})
+      misn.osdCreate( _("DIY Nerds"), {
+         fmt.f(_("Bring the nerds and their box to {pnt} before {time}"), {pnt=destPlanet, time=time.str(expiryDate, 2)}),
+         _("You're late and the nerds are getting angry and abusive; land to get rid of the nerds and their box"),
+      })
       misn.osdActive(2)
    end
 end
 
 -- hooked to 'land' in the second stage (wait for the nerds to hail you for the return trip)
 function nerds_land2()
-
-   function cleanup()
+   local function cleanup()
       hook.rm(dhook)
       hook.rm(lhook)
       hook.rm(jhook)
@@ -164,11 +172,11 @@ function nerds_land2()
    -- you pickup the nerds in time
       nerdswon = rnd.rnd() >= 0.6
       if nerdswon then
-         tk.msg(_("Happy nerds"), string.format(_([[As soon as you get of your ship, you are surrounded by the group of nerds, who are enthusiastic. "We won!" one of the dudes shouts at you. Surprisingly, the group seems to not completely be dependent on Mia when it comes to communicating with outsiders. Maybe the booze the group is obviously intoxicated with did help a little. "Take us back to %s," one of them says, "we'll continue to celebrate on the way."]]), srcPlanet:name()))
+         tk.msg(_("Happy nerds"), fmt.f(_([[As soon as you get of your ship, you are surrounded by the group of nerds, who are enthusiastic. "We won!" one of the dudes shouts at you. Surprisingly, the group seems to not completely be dependent on Mia when it comes to communicating with outsiders. Maybe the booze the group is obviously intoxicated with did help a little. "Take us back to {pnt}," one of them says, "we'll continue to celebrate on the way."]]), {pnt=srcPlanet}))
       else
-         tk.msg(_("Sad nerds"), string.format(_([[As you get of your ship, you do not immediately see the nerds. You finally find them in a dark corner of the landing pad quietly sitting on their box, obviously not in a good mood. You greet them, but nobody speaks a word. You ask them what's wrong. The nerds warily glance at each other before Mia bursts out in frustration.
+         tk.msg(_("Sad nerds"), fmt.f(_([[As you get of your ship, you do not immediately see the nerds. You finally find them in a dark corner of the landing pad quietly sitting on their box, obviously not in a good mood. You greet them, but nobody speaks a word. You ask them what's wrong. The nerds warily glance at each other before Mia bursts out in frustration.
     "That aristocratic ass of a bored teenager! He snatched the prize from us! It wasn't even fair play. His box wasn't home built. It was a brand new ship's processing unit, on which he banged his hammer until it looked acceptable. And the corrupt assholes in the jury pretended not to notice!"
-    "So no, we didn't win" she adds after taking a few breaths to calm down. "Take us back to %s."]]), srcPlanet:name()))
+    "So no, we didn't win" she adds after taking a few breaths to calm down. "Take us back to {pnt}."]]), {pnt=srcPlanet}))
       end
       cleanup()
 
@@ -177,21 +185,21 @@ function nerds_land2()
          nerds_return()
       else
       -- player has not enough free cargo space, give him last chance to make room
-         tk.msg(_("Room for the box"), string.format(_([["Aw %s," Mia complains, "as if you didn't know that our box needs 4 tonnes of free cargo space. Make room now, and pick us up at the bar."]]), player.name()))
+         tk.msg(_("Room for the box"), fmt.f(_([["Aw {player}," Mia complains, "as if you didn't know that our box needs 4 tonnes of free cargo space. Make room now, and pick us up at the bar."]]), {player=player.name()}))
          lhook = hook.land("nerds_bar", "bar")
          jhook = hook.takeoff("nerds_takeoff")
       end
 
    elseif not intime and planet.cur() == destPlanet then
    -- you're late for the pickup
-      tk.msg(_("No more nerds"), string.format(_([[You look around, but the nerds are nowhere to be found. That is not much of a surprise, seeing that you are way too late.
-    Suddenly, a guy approaches you. "Hi, are you %s? The nerds wanted you to know that, basically, they got another transport home. One of the girls said some more, in a particularly rude language, but I don't remember the details".]]), player.name()))
+      tk.msg(_("No more nerds"), fmt.f(_([[You look around, but the nerds are nowhere to be found. That is not much of a surprise, seeing that you are way too late.
+    Suddenly, a guy approaches you. "Hi, are you {player}? The nerds wanted you to know that, basically, they got another transport home. One of the girls said some more, in a particularly rude language, but I don't remember the details".]]), {player=player.name()}))
       cleanup()
       misn.finish(true)
 
    elseif not intime then
    -- you're late and far from the nerds
-      tk.msg(_("You forgot the nerds"), string.format(_([[Seeing that it is already too late to pick up the nerds, and that you're quite far from %s, you decide it's better to forget about them completely.]]), srcPlanet:name()))
+      tk.msg(_("You forgot the nerds"), fmt.f(_([[Seeing that it is already too late to pick up the nerds, and that you're quite far from {pnt}, you decide it's better to forget about them completely.]]), {pnt=srcPlanet}))
       cleanup()
       misn.finish(true)
    end
@@ -200,8 +208,10 @@ end
 -- date hooked in stage 2 (waiting for the nerds hail you for their return trip)
 function nerds_fly2()
    if not hailed and time.get() > expiryDate then
-      tk.msg(_("In-system communication"), string.format(_([[A beep from your communications equipment tells you that someone wants to talk to you. You realize it is the nerds, and return the hail. "Yo! This is Mia," comes a familiar voice from the speaker. "We're done here. Time to come back and pick us up, we have things to do on %s."]]), srcPlanet:name()) )
-        misn.osdCreate( _("DIY Nerds"), {string.format(_("Pick up the nerds on %s for their return trip to %s"), destPlanet:name(), srcPlanet:name())})
+      tk.msg(_("In-system communication"), fmt.f(_([[A beep from your communications equipment tells you that someone wants to talk to you. You realize it is the nerds, and return the hail. "Yo! This is Mia," comes a familiar voice from the speaker. "We're done here. Time to come back and pick us up, we have things to do on {pnt}."]]), {pnt=srcPlanet}) )
+        misn.osdCreate( _("DIY Nerds"), {
+           fmt.f(_("Pick up the nerds on {pickup_pnt} for their return trip to {dropoff_pnt}"), {pickup_pnt=destPlanet, dropoff_pnt=srcPlanet}),
+        })
       hailed = true
    end
 
@@ -209,7 +219,10 @@ function nerds_fly2()
 
    -- no pickup since hail+2STP+1STP: mission failed (however, you must still land somewhere)
    if not intime then
-        misn.osdCreate( _("DIY Nerds"), {string.format(_("Pick up the nerds on %s for their return trip to %s"), destPlanet:name(), srcPlanet:name()), _("You didn't pick up the nerds in time") })
+        misn.osdCreate( _("DIY Nerds"), {
+           fmt.f(_("Pick up the nerds on {pickup_pnt} for their return trip to {dropoff_pnt}"), {pickup_pnt=destPlanet, dropoff_pnt=srcPlanet}),
+           _("You didn't pick up the nerds in time"),
+        })
         misn.osdActive(2)
    end
 
@@ -219,7 +232,11 @@ function nerds_fly2()
          tk.msg(_("In-system communication"), string.format(_([[Your comm link comes up again. It is the nerds, whom you'd almost forgotten. You hear Mia's voice: "Hey, what are you waiting for? You'd better be here within one period, or we'll get another pilot and pay them, not you!"]]), srcPlanet:name()) )
          impatient = true
       end
-        misn.osdCreate( _("DIY Nerds"), {string.format(_("Pick up the nerds on %s for their return trip to %s"), destPlanet:name(), srcPlanet:name()), _("The nerds are getting impatient"), fmt.f(_("You have {time} remaining"), {time=time.str(expiryDate + time.create(0,3,0) - time.get(), 2)}) })
+        misn.osdCreate( _("DIY Nerds"), {
+           fmt.f(_("Pick up the nerds on {pickup_pnt} for their return trip to {dropoff_pnt}"), {pickup_pnt=destPlanet, dropoff_pnt=srcPlanet}),
+           _("The nerds are getting impatient"),
+           fmt.f(_("You have {time} remaining"), {time=time.str(expiryDate + time.create(0,3,0) - time.get(), 2)}),
+        })
         misn.osdActive(2)
    end
 end
@@ -255,7 +272,7 @@ end
 -- common prep for the final stage
 function nerds_return()
    addNerdCargo()
-   misn.osdCreate(_("DIY Nerds"), { string.format(_("Return the nerds to %s"), srcPlanet:name() ) })
+   misn.osdCreate(_("DIY Nerds"), { fmt.f(_("Return the nerds to {pnt}"), {pnt=srcPlanet} ) })
    lhook = hook.land("nerds_land3", "land")
 end
 
@@ -264,7 +281,7 @@ function nerds_land3()
    local cp = planet.cur()
    if cp == srcPlanet then
       if nerdswon then
-         tk.msg(_("The End"), string.format(_([[The nerds, finally exhausted from all the partying, still smile as they pack up their prize-winning box and leave your ship. Mia beams as she turns to you. "Well done, %s. You see, since we got loads of prize money, we decided to give you a bonus. After all, we wouldn't have gotten there without your service. Here, have 30,000. Good day to you."]]), player.name()))
+         tk.msg(_("The End"), fmt.f(_([[The nerds, finally exhausted from all the partying, still smile as they pack up their prize-winning box and leave your ship. Mia beams as she turns to you. "Well done, {player}. You see, since we got loads of prize money, we decided to give you a bonus. After all, we wouldn't have gotten there without your service. Here, have 30,000. Good day to you."]]), {player=player.name()}))
          player.pay(30e3)
       else
          if not tk.yesno(_("Minor Complications"), _([[With sagging shoulders, the nerds unload their box. Mia turns to address you, not bold at all this time. "Um, we got a bit of a problem here. You know, we intended to pay the trip from our prize money. Now we don't have no prize money."
@@ -272,9 +289,9 @@ function nerds_land3()
     "OK, we have just solved our problem. See, that ass of a champion won the contest with a ship's processing unit. We can do it the other way round. We'll modify our box so that it can be used as a ship's core system, and you can have it as a compensation for your troubles. Interested?"]])) then
             tk.msg(_("So what?"), _([["Honestly, there is nothing you can do about it," Mia says impatiently, as if you were a small child complaining about the finiteness of an ice cream cone. "Just stand by while we rig the thing up."]]))
          end
-         tk.msg(_("The End"), _([["You can wait for it, won't take longer than half a period," Mia informs you. You stand by as the nerds start to mod their box. As they are going for it, you wonder if they're actually wrecking it and you'll maybe be left with a piece of worthless junk.
-    Finally, the modified box is set before you. "Here you are. Now you're the proud owner of the system's only home-made core system. It's gotten a bit bulkier than we thought, with all this rigging for energy and coolant supply, but it should work just fine, about equivalent to the %s. We need to go now and think about something more advanced for the next competition. Have a nice day."
-    With that, the nerds leave. Having gotten nothing else out of this, you think you should visit an outfitter to see if the homemade core system may actually be of any use, or if you can at least sell it.]]):format( _(reward_outfit) ))
+         tk.msg(_("The End"), fmt.f( _([["You can wait for it, won't take longer than half a period," Mia informs you. You stand by as the nerds start to mod their box. As they are going for it, you wonder if they're actually wrecking it and you'll maybe be left with a piece of worthless junk.
+    Finally, the modified box is set before you. "Here you are. Now you're the proud owner of the system's only home-made core system. It's gotten a bit bulkier than we thought, with all this rigging for energy and coolant supply, but it should work just fine, about equivalent to the {outfit}. We need to go now and think about something more advanced for the next competition. Have a nice day."
+    With that, the nerds leave. Having gotten nothing else out of this, you think you should visit an outfitter to see if the homemade core system may actually be of any use, or if you can at least sell it.]]), {outfit=_(reward_outfit)} ))
          time.inc(time.create(0,0,5000))
          player.outfitAdd(reward_outfit)
          if planet.services(cp)["outfits"] then

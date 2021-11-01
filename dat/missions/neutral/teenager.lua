@@ -37,11 +37,11 @@ end
 function accept ()
     if tk.yesno(_("Youngsters these days"), _([["Excuse me," the man says as you approach him. "I'm looking for a capable pilot to resolve a small matter for me. Perhaps you can help me? You see, it's my son. He's taken my yacht to space without my permission, taking along his girlfriend. That boy is such a handful. I'm sure he's trying to show off his piloting skills to impress her. I need you to get out there, disable the yacht and take them both back here. Can you do this for me? I'll make it worth your while."]])) then
         misn.accept()
-        misn.setDesc(_("A disgruntled parent has asked you to fetch his son and his son's girlfriend, who have taken a yacht and are joyriding it in the %s system."):format(cursys:name()))
+        misn.setDesc(fmt.f(_("A disgruntled parent has asked you to fetch his son and his son's girlfriend, who have taken a yacht and are joyriding it in the {sys} system."), {sys=cursys}))
         misn.setReward(_("You will be compensated for your efforts."))
         misn.osdCreate(_("The macho teenager"), {
            _("Disable Gawain Credence"),
-           _("Bring the teenagers back to planet %s"):format(curplanet:name()),
+           fmt.f(_("Bring the teenagers back to planet {pnt}"), {pnt=curplanet}),
         })
         tk.msg(_("It's a lousy job, but..."), _([["Thank you! The yacht doesn't have a working hyperdrive, so they won't have left the system. It's a Gawain named Credence. Just disable it and board it, then transport my disobedient son and his girlfriend back here. Don't worry about the yacht, I'll have it recovered later. Oh, and one more thing, though it should go without saying: whatever you do, don't destroy the yacht! I don't want to lose my son over this. Well then, I hope to see you again soon."]]))
         hook.enter("enter")
@@ -86,7 +86,7 @@ end
 
 function targetDeath()
     local fine = math.max(-20e3, -player.credits())
-    tk.msg(_("Whoops!"), _([[You have destroyed the Gawain! The family presses charges, and you are sentenced to a %s fine in absence of attendance.]]):format(fmt.credits(-fine)))
+    tk.msg(_("Whoops!"), fmt.f(_([[You have destroyed the Gawain! The family presses charges, and you are sentenced to a {credits} fine in absentia.]]), {credits=fmt.credits(-fine)}))
     player.pay(fine) -- I love this statement.
     misn.finish(true)
 end

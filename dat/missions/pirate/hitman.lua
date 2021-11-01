@@ -24,6 +24,7 @@
    Author: nloewen
 
 --]]
+local fmt = require "format"
 local pir = require "common.pirate"
 
 function create ()
@@ -40,8 +41,7 @@ Mission entry point.
 --]]
 function accept ()
    -- Mission details:
-   if not tk.yesno( _("Spaceport Bar"), string.format( _([[The man motions for you to take a seat next to him. Voice barely above a whisper, he asks, "How'd you like to earn some easy money? If you're comfortable with getting your hands dirty, that is."]]),
-          targetsystem:name() ) ) then
+   if not tk.yesno( _("Spaceport Bar"), _([[The man motions for you to take a seat next to him. Voice barely above a whisper, he asks, "How'd you like to earn some easy money? If you're comfortable with getting your hands dirty, that is."]]) ) then
       misn.finish()
    end
    misn.accept()
@@ -52,16 +52,16 @@ function accept ()
    misn_base, misn_base_sys = planet.cur()
 
    -- Set mission details
-   misn.setTitle( string.format( _("Thug"), targetsystem:name()) )
-   misn.setReward( string.format( _("Some easy money"), credits) )
-   misn.setDesc( string.format( _("A shifty businessman has tasked you with chasing away merchant competition in the %s system."), targetsystem:name() ) )
+   misn.setTitle( _("Thug") )
+   misn.setReward( _("Some easy money") )
+   misn.setDesc( fmt.f( _("A shifty businessman has tasked you with chasing away merchant competition in the {sys} system."), {sys=targetsystem} ) )
    misn_marker = misn.markerAdd( targetsystem, "low" )
-   local osd_desc = {}
-   osd_desc[1] = _("Attack, but do not kill, Trader pilots in the %s system so that they run away"):format( targetsystem:name() )
-   osd_desc[2] = _("Return to %s in the %s system for payment"):format( misn_base:name(), misn_base_sys:name() )
-   misn.osdCreate( _("Thug"), osd_desc )
+   misn.osdCreate( _("Thug"), {
+      fmt.f(_("Attack, but do not kill, Trader pilots in the {sys} system so that they run away"), {sys=targetsystem} ),
+      fmt.f(_("Return to {pnt} in the {sys} system for payment"), {pnt=misn_base, sys=misn_base_sys} ),
+   } )
    -- Some flavour text
-   tk.msg( _("Spaceport Bar"), string.format( _([[Apparently relieved that you've accepted his offer, he continues, "There're some new merchants edging in on my trade routes in %s. I want you to make sure they know they're not welcome." Pausing for a moment, he notes, "You don't have to kill anyone, just rough them up a bit."]]), targetsystem:name()) )
+   tk.msg( _("Spaceport Bar"), fmt.f( _([[Apparently relieved that you've accepted his offer, he continues, "There're some new merchants edging in on my trade routes in {sys}. I want you to make sure they know they're not welcome." Pausing for a moment, he notes, "You don't have to kill anyone, just rough them up a bit."]]), {sys=targetsystem}) )
 
    -- Set hooks
    hook.enter("sys_enter")

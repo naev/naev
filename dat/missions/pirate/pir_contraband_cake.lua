@@ -70,18 +70,18 @@ They clutch at their shirt as if trying to hold their heart in their ribcage.]])
    g(_([[They pant for a while and then try to recover somewhat their composure as they sit down once more. They seem sweatier than before.
 "Hey, say, you look like a pilot. You see, I was asked to deliver a package, but I'm not feeling so well…"
 They coughs to the side somewhat exaggeratedly while looking at you from the corner of the eye.]]))
-   g(string.format(_([[They lean closer to you and lower their voice.
+   g(fmt.f(_([[They lean closer to you and lower their voice.
 "I was asked to deliver a… a…"
 They furrow their brows for a second.
-"…a cake! To %s in the %s system."]]), destplanet:name(), destsys:name()))
+"…a cake! To {pnt} in the {sys} system."]]), {pnt=destplanet, sys=destsys}))
    g(_([["It's nothing out of the ordinary, I swear! Only that this cake you see, it's got some special… icing that is really sensitive. Like super sensitive. The slightest disturbance can melt it and lay it all to waste. In particular, any radiation can easily melt it even though it is shielded. Especially stuff like scanning radiation. You catch my drift?"]]))
-   g(string.format(_([["All you would have to do is take the cake and go to %s in the %s system, without getting any of that nasty scanning radiation on you."
+   g(fmt.f(_([["All you would have to do is take the cake and go to {pnt} in the {sys} system, without getting any of that nasty scanning radiation on you."
 They shiver with disgust to emphasize and you can see some of their sweat fly off onto the bar floor.
-"Once you deliver it I'll split the money half and half with you."]]), destplanet:name(), destsys:name()))
+"Once you deliver it I'll split the money half and half with you."]]), {pnt=destplanet, sys=destsys}))
    vn.na("You stare at them coldly.")
-   g(string.format(_([["Fine fine, take it all. It should be %s. Just remember no scanning means no problems."
+   g(fmt.f(_([["Fine fine, take it all. It should be {credits}. Just remember no scanning means no problems."
 They extend their sweaty hand towards you.
-"So, are you in?"]]), fmt.credits(reward)))
+"So, are you in?"]]), {credits=fmt.credits(reward)}))
    vn.menu{
       {_("Accept"), "accept"},
       {_("Decline"), "decline"},
@@ -107,15 +107,15 @@ They lean forward and get a bit more serious.
 
    vn.label("stealthtut")
    g(_([["Oh boy, you're not going to deliver this cake in one piece without stealth. It's very simple, all ships have three main statistics: range they are detected at, evasion range, and stealth range. Detection determines how far away ships can detect your presence, while evasion range controls how well they can target your ship and identify it. When within evasion range, ships can then scan you which does nasty things like melting cakes."]]))
-   g(string.format(_([["To avoid getting spotted and scanned, you can go into stealth with %s. When in stealth, you move much slower than normal, however, ships can only detect you when they are within your stealth range. No detection, no scanning, no problems. You can only stealth if there are no ships nearby, and it is easier to stealth in asteroids or systems with interference. And if you get detected while in stealth, your cover will be blown."]]),
-      string.format("#b%s#0",naev.keyGet("stealth"))))
-   g(string.format(_([["So as long as you stealth with %s and stay away from ships, you won't be scanned and the cake will be alright."]]),
-      string.format("#b%s#0",naev.keyGet("stealth"))))
+   g(fmt.f(_([["To avoid getting spotted and scanned, you can go into stealth with {key}. When in stealth, you move much slower than normal, however, ships can only detect you when they are within your stealth range. No detection, no scanning, no problems. You can only stealth if there are no ships nearby, and it is easier to stealth in asteroids or systems with interference. And if you get detected while in stealth, your cover will be blown."]]),
+      {key=string.format("#b%s#0",naev.keyGet("stealth"))}))
+   g(fmt.f(_([["So as long as you stealth with {key} and stay away from ships, you won't be scanned and the cake will be alright."]]),
+      {key=string.format("#b%s#0",naev.keyGet("stealth"))}))
 
    vn.label("notut")
-   g(string.format(_([["Great. One second, let me get the cake."
+   g(fmt.f(_([["Great. One second, let me get the cake."
 They go to the restroom and come back holding a nondescript brown box that seems to have 'Cake' hastily scribbled on it. They promptly hand it over to you while looking both ways.
-"OK, so that's it. Make sure to take this to %s in the %s system, and watch out for scanning!"]]), destplanet:name(), destsys:name()))
+"OK, so that's it. Make sure to take this to {pnt} in the {sys} system, and watch out for scanning!"]]), {pnt=destplanet, sys=destsys}))
    vn.na(_("As leave them behind you can hear them let out a big sigh of what you can only assume is relief."))
    vn.run()
 
@@ -129,11 +129,11 @@ They go to the restroom and come back holding a nondescript brown box that seems
    c:illegalto( {"Empire", "Dvaered", "Soromid", "Sirius", "Za'lek", "Frontier"} )
    carg_id = misn.cargoAdd( c, 0 )
 
-   misn.osdCreate( _("Deliver Cake"), { string.format(_("Fly to %s in the %s system without getting scanned"), destplanet:name(), destsys:name()) } )
+   misn.osdCreate( _("Deliver Cake"), { fmt.f(_("Fly to {pnt} in the {sys} system without getting scanned"), {pnt=destplanet, sys=destsys}) } )
 
    misn.setTitle(_("Deliver Cake"))
    misn.setReward( fmt.credits(reward) )
-   misn.setDesc( string.format(_("Deliver a cake to %s in the %s system. Apparently it has a special frosting and will be damaged if you are scanned. Use stealth to avoid getting scanned."), destplanet:name(), destsys:name() ) )
+   misn.setDesc( fmt.f(_("Deliver a cake to {pnt} in the {sys} system. Apparently it has a special frosting and will be damaged if you are scanned. Use stealth to avoid getting scanned."), {pnt=destplanet, sys=destsys} ) )
    misn.markerAdd(destplanet)
 
    hook.land( "land" ) -- only hook after accepting

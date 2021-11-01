@@ -22,6 +22,7 @@
    Author: nloewen
 
 --]]
+local fmt = require "format"
 local pir = require "common.pirate"
 
 function create ()
@@ -38,8 +39,7 @@ Mission entry point.
 --]]
 function accept ()
    -- Mission details:
-   if not tk.yesno( _("Spaceport Bar"), string.format( _([[As you approach, the man turns to face you and his anxiousness seems to abate somewhat. As you take a seat he greets you, "Ah, so we meet again. My, shall we say... problem, has recurred." Leaning closer, he continues, "This will be somewhat bloodier than last time, but I'll pay you more for your trouble. Are you up for it?"]]),
-          targetsystem:name() ) ) then
+   if not tk.yesno( _("Spaceport Bar"), _([[As you approach, the man turns to face you and his anxiousness seems to abate somewhat. As you take a seat he greets you, "Ah, so we meet again. My, shall we say... problem, has recurred." Leaning closer, he continues, "This will be somewhat bloodier than last time, but I'll pay you more for your trouble. Are you up for it?"]]) ) then
       misn.finish()
    end
    misn.accept()
@@ -52,16 +52,16 @@ function accept ()
    misn_base, misn_base_sys = planet.cur()
 
    -- Set mission details
-   misn.setTitle( string.format( _("Assassin"), targetsystem:name()) )
-   misn.setReward( string.format( _("Some easy money"), credits) )
-   misn.setDesc( string.format( _("A shifty businessman has tasked you with killing merchant competition in the %s system."), targetsystem:name() ) )
+   misn.setTitle( _("Assassin") )
+   misn.setReward( _("Some easy money") )
+   misn.setDesc( fmt.f( _("A shifty businessman has tasked you with killing merchant competition in the {sys} system."), {sys=targetsystem} ) )
    misn_marker = misn.markerAdd( targetsystem, "low" )
-   local osd_desc = {}
-   osd_desc[1] = _("Kill Trader pilots in the %s system"):format( targetsystem:name() )
-   osd_desc[2] = _("Return to %s in the %s system for payment"):format( misn_base:name(), misn_base_sys:name() )
-   misn.osdCreate( _("Assassin"), osd_desc )
+   misn.osdCreate( _("Assassin"), {
+      fmt.f(_("Kill Trader pilots in the {sys} system"), {sys=targetsystem} ),
+      fmt.f(_("Return to {pnt} in the {sys} system for payment"), {pnt=misn_base, sys=misn_base_sys} ),
+   } )
    -- Some flavour text
-   tk.msg( _("Spaceport Bar"), string.format( _([[He nods approvingly. "It seems that the traders are rather stubborn, they didn't get the message last time and their presence is increasing." He lets out a brief sigh before continuing, "This simply won't do, it's bad for business. Perhaps if a few of their ships disappear, they'll take the hint." With the arrangement in place, he gets up. "I look forward to seeing you soon. Hopefully this will be the end of my problems."]]), targetsystem:name()) )
+   tk.msg( _("Spaceport Bar"), _([[He nods approvingly. "It seems that the traders are rather stubborn, they didn't get the message last time and their presence is increasing." He lets out a brief sigh before continuing, "This simply won't do, it's bad for business. Perhaps if a few of their ships disappear, they'll take the hint." With the arrangement in place, he gets up. "I look forward to seeing you soon. Hopefully this will be the end of my problems."]]) )
 
    -- Set hooks
    hook.enter("sys_enter")

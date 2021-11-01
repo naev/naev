@@ -29,25 +29,19 @@ local fmt = require "format"
 local neu = require "common.neutral"
 local lmisn = require "lmisn"
 
--- Mission Details
-
--- OSD
-OSDdesc = _("Go to %s in the %s system and look for the special drink that the Aristocrat wants")
-OSDtable = {}
-
 -- defines Previous Planets table
 prevPlanets = {}
 prevPlanets.__save = true
 
-payment = 200e3
+local payment = 200e3
 
 
-moreinfotxt = {}
-moreinfotxt[1] = _([[You walk in and see someone behind the bar. When you approach and describe the drink, they tell you that the drink isn't the specialty of any one bar, but actually the specialty of a bartender who used to work here. "It's called a Swamp Bombing. I don't know where they work now, but they started working at the bar on %s in the %s system after they left here. Good luck!" With high hopes, you decide to head off to there.]])
-moreinfotxt[2] = _([[You walk in and see someone behind the bar. When you approach and describe the drink, they tell you that the drink isn't the specialty of any one bar, but actually the specialty of a bartender who used to work here. "It's called a Swamp Bombing. I don't know where he works now, but he started working at the bar on %s in the %s system after he left here. Good luck!" With high hopes, you decide to head off to there.]])
-moreinfotxt[3] = _([[You walk in and see someone behind the bar. When you approach and describe the drink, they tell you that the drink isn't the specialty of any one bar, but actually the specialty of a bartender who used to work here. "It's called a Swamp Bombing. I don't know where she works now, but she started working at the bar on %s in the %s system after she left here. Good luck!" With high hopes, you decide to head off to there.]])
+local moreinfotxt = {}
+moreinfotxt[1] = _([[You walk in and see someone behind the bar. When you approach and describe the drink, they tell you that the drink isn't the specialty of any one bar, but actually the specialty of a bartender who used to work here. "It's called a Swamp Bombing. I don't know where they work now, but they started working at the bar on {pnt} in the {sys} system after they left here. Good luck!" With high hopes, you decide to head off to there.]])
+moreinfotxt[2] = _([[You walk in and see someone behind the bar. When you approach and describe the drink, they tell you that the drink isn't the specialty of any one bar, but actually the specialty of a bartender who used to work here. "It's called a Swamp Bombing. I don't know where he works now, but he started working at the bar on {pnt} in the {sys} system after he left here. Good luck!" With high hopes, you decide to head off to there.]])
+moreinfotxt[3] = _([[You walk in and see someone behind the bar. When you approach and describe the drink, they tell you that the drink isn't the specialty of any one bar, but actually the specialty of a bartender who used to work here. "It's called a Swamp Bombing. I don't know where she works now, but she started working at the bar on {pnt} in the {sys} system after she left here. Good luck!" With high hopes, you decide to head off to there.]])
 
-worktxt = {}
+local worktxt = {}
 worktxt[1] = _([[You walk into the bar and know instantly that you are finally here! This is the place! You walk up to the bartender, who smiles. This has to be them. You start to describe the drink to them and they interrupt. "A Swamp Bombing. Of course, that's my specialty." You ask if they can make it to go, prompting a bit of a chuckle. "Sure, why not?"
     Just as they're about to start making it, though, you stop them and say you'll have one here after all. As long as you've come all this way, you might as well try it. You're amazed at how quickly and gracefully their trained hands move, flipping bottles and shaking various containers. Before you know it, they've set a drink before you and closed another container to take with you. You taste it expecting something incredible. It's alright, but you doubt it was worth all this trouble.]])
 worktxt[2] = _([[You walk into the bar and know instantly that you are finally here! This is the place! You walk up to the bartender, who smiles. This has to be him. You start to describe the drink to them and he interrupts. "A Swamp Bombing. Of course, that's my specialty." You ask if he can make it to go, prompting a bit of a chuckle. "Sure, why not?"
@@ -74,8 +68,8 @@ function create ()
 end
 
 function accept ()
-   if not tk.yesno( _("Drinking Aristocrat"), _([[You begin to approach the aristocrat. Next to him stands a well dressed and muscular man, perhaps his assistant, or maybe his bodyguard, you're not sure. When you get close to his table, he begins talking to you as if you work for him. "This simply will not do. When I ordered this 'drink', if you can call it that, it seemed interesting. It certainly doesn't taste interesting. It's just bland. The only parts of it that are in any way interesting are not at all pleasing. It just tastes so, common.
-    You know what I would really like? There was this drink at a bar on, what planet was that? Damien, do you remember? The green drink with the red fruit shavings." Damien looks down at him and seems to think for a second before shaking his head. "I believe it might have been %s in the %s system. The drink was something like an Atmospheric Re-Entry or Gaian Bombing or something. It's the bar's specialty. They'll know what you're talking about. You should go get me one. Can you leave right away?"]]):format( clueplanet:name(), cluesys:name() ) ) then
+   if not tk.yesno( _("Drinking Aristocrat"), fmt.f( _([[You begin to approach the aristocrat. Next to him stands a well dressed and muscular man, perhaps his assistant, or maybe his bodyguard, you're not sure. When you get close to his table, he begins talking to you as if you work for him. "This simply will not do. When I ordered this 'drink', if you can call it that, it seemed interesting. It certainly doesn't taste interesting. It's just bland. The only parts of it that are in any way interesting are not at all pleasing. It just tastes so, common.
+    You know what I would really like? There was this drink at a bar on, what planet was that? Damien, do you remember? The green drink with the red fruit shavings." Damien looks down at him and seems to think for a second before shaking his head. "I believe it might have been {pnt} in the {sys} system. The drink was something like an Atmospheric Re-Entry or Gaian Bombing or something. It's the bar's specialty. They'll know what you're talking about. You should go get me one. Can you leave right away?"]]), {pnt=clueplanet, sys=cluesys} ) ) then
       tk.msg( _("Refuse"), _([["What do you mean, you can't leave right away? Then why even bother? Remove yourself from my sight." The aristocrat makes a horrible face, and sips his drink, only to look even more disgusted. He puts his drink back on the table and motions to the bartender, ignoring you beyond now.]]) )
       misn.finish()
 
@@ -115,8 +109,8 @@ function land ()
          misn.markerMove( landmarker, clueplanet )
          prevPlanets[#prevPlanets+1] = clueplanet
 
-         tk.msg( _("Clue"), _([[You walk into the bar and approach the bartender. You describe the drink, but the bartender doesn't seem to know what you're talking about. There is another bartender that they think may be able to help you though, at %s in the %s system.]]):format(
-            clueplanet:name(), cluesys:name() ) )
+         tk.msg( _("Clue"), fmt.f( _([[You walk into the bar and approach the bartender. You describe the drink, but the bartender doesn't seem to know what you're talking about. There is another bartender that they think may be able to help you though, at {pnt} in the {sys} system.]]),
+            {pnt=clueplanet, sys=cluesys} ) )
 
       else
          if not foundexwork then   -- find out that it's a bartender's specialty
@@ -129,8 +123,8 @@ function land ()
             misn.markerMove( landmarker, clueplanet )
             prevPlanets[#prevPlanets+1] = clueplanet
 
-            tk.msg( _("A bit more info..."), moreinfotxt[fintendergen]:format(
-               clueplanet:name(), cluesys:name() ) )
+            tk.msg( _("A bit more info..."), fmt.f( moreinfotxt[fintendergen],
+               {pnt=clueplanet, sys=cluesys} ) )
 
          else   -- find another bar that the bartender used to work at
             if numexwork > 0 then
@@ -141,8 +135,8 @@ function land ()
                misn.markerMove( landmarker, clueplanet )
                prevPlanets[#prevPlanets+1] = clueplanet
 
-               tk.msg( _("Is this it?"), _([[You walk into the bar fully confident that this is the bar. You walk up to the bartender and ask for a Swamp Bombing. "A wha???" Guess this isn't the right bar. You get another possible clue, %s in the %s system, and head on your way.]]):format(
-                  clueplanet:name(), cluesys:name() ) )
+               tk.msg( _("Is this it?"), fmt.f( _([[You walk into the bar fully confident that this is the bar. You walk up to the bartender and ask for a Swamp Bombing. "A wha???" Guess this isn't the right bar. You get another possible clue, {pnt} in the {sys} system, and head on your way.]]),
+                  {pnt=clueplanet, sys=cluesys} ) )
 
             elseif not hasDrink then  -- get the drink
                hasDrink = true
@@ -155,9 +149,9 @@ function land ()
       end
    elseif hasDrink and planet.cur() == startplanet then
       lmisn.sfxVictory()
-      tk.msg( _("Delivery"), _([["Ahh! I was just thinking how much I wanted one of those drinks! I'm so glad that you managed to find it. You sure seemed to take your time though." You give him his drink and tell him that it wasn't easy, and how many systems you had to go through. "Hmm. That is quite a few systems. No reason for you to be this late though." He takes a sip from his drink. "Ahh! That is good though. I suppose you'll be wanting to get paid for your troubles. You did go through a lot of trouble. Then again, you did take quite a long time. I suppose %s should be appropriate."
+      tk.msg( _("Delivery"), fmt.f( _([["Ahh! I was just thinking how much I wanted one of those drinks! I'm so glad that you managed to find it. You sure seemed to take your time though." You give him his drink and tell him that it wasn't easy, and how many systems you had to go through. "Hmm. That is quite a few systems. No reason for you to be this late though." He takes a sip from his drink. "Ahh! That is good though. I suppose you'll be wanting to get paid for your troubles. You did go through a lot of trouble. Then again, you did take quite a long time. I suppose {credits} should be appropriate."
     Considering the amount of effort that you went through, you feel almost cheated. You don't feel like arguing with the snobby aristocrat though, so you just leave him to his drink without another word. It's probably the most that anyone's ever paid for a drink like that anyway.
-    When you get back to your ship you realize you have a drink left over. It might look good like an ornament?]]):format( fmt.credits(payment) ) )
+    When you get back to your ship you realize you have a drink left over. It might look good like an ornament?]]), {credits=fmt.credits(payment)} ) )
       player.outfitAdd( "Swamp Bombing" )
       player.pay( payment )
 
@@ -196,12 +190,13 @@ end
 
 function takeoff ()
    if hasDrink then
-      OSDdesc = _("Return the drink to the Aristocrat at %s in the %s system.")
-      OSDtable[1] = OSDdesc:format( startplanet:name(), startsys:name() )
-      misn.osdCreate( _("Find the Drink"), OSDtable )
+      misn.osdCreate( _("Find the Drink"), {
+         fmt.f( _("Return the drink to the Aristocrat at {pnt} in the {sys} system."), {pnt=startplanet, sys=startsys} )
+      } )
    else
-      OSDtable[1] = OSDdesc:format( clueplanet:name(), cluesys:name() )
-      misn.osdCreate( _("Find the Drink"), OSDtable )
+      misn.osdCreate( _("Find the Drink"), {
+         fmt.f( _("Go to {pnt} in the {sys} system and look for the special drink that the Aristocrat wants"), {pnt=clueplanet, sys=cluesys} )
+      } )
    end
 end
 

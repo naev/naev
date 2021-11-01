@@ -57,16 +57,16 @@ function create ()
    credits = 50e3 * nhated
 
    misn.setTitle( _("Fake ID") )
-   misn.setDesc( _([[This fake ID will allow you to conduct business with all major locations where you are currently wanted. It will be as if you were a new person. However, committing any crime will risk discovery of your identity by authorities, no gains in reputation under your fake ID will ever improve your real name's reputation under any circumstance, and gaining too much reputation with factions where you are wanted can lead to the discovery of your true identity as well. Note that fake ID does not work on pirates, for whom your reputation will be affected as normal (whether good or bad). Furthermore, being scanned by other ships will lead to your fake ID being detected and your cover being blown.
+   misn.setDesc( fmt.f( _([[This fake ID will allow you to conduct business with all major locations where you are currently wanted. It will be as if you were a new person. However, committing any crime will risk discovery of your identity by authorities, no gains in reputation under your fake ID will ever improve your real name's reputation under any circumstance, and gaining too much reputation with factions where you are wanted can lead to the discovery of your true identity as well. Note that fake ID does not work on pirates, for whom your reputation will be affected as normal (whether good or bad). Furthermore, being scanned by other ships will lead to your fake ID being detected and your cover being blown.
 
-Cost: %s]]):format( fmt.credits( credits ) ) )
+Cost: {credits}]]), {credits=fmt.credits(credits)} ) )
    misn.setReward( _("None") )
 end
 
 
 function accept ()
    if player.credits() < credits then
-      tk.msg( "", _("You don't have enough money to buy a fake ID. The price is %s."):format( fmt.credits( credits ) ) )
+      tk.msg( "", fmt.f(_("You don't have enough money to buy a fake ID. The price is {credits}."), {credits=fmt.credits(credits)} ) )
       misn.finish()
    end
 

@@ -110,8 +110,8 @@ function create ()
    nolux_known = false
 
    -- Set mission details
-   misn.setTitle( _("Sightseeing in the %s System"):format( missys:name() ) )
-   misn.setDesc( _("Several passengers wish to go off-world and go on a sightseeing tour. Navigate to specified attractions in the %s system."):format( missys:name() ) )
+   misn.setTitle( fmt.f( _("Sightseeing in the {sys} System"), {sys=missys} ) )
+   misn.setDesc( fmt.f(_("Several passengers wish to go off-world and go on a sightseeing tour. Navigate to specified attractions in the {sys} system."), {sys=missys} ) )
    misn.setReward( fmt.credits( credits ) )
    marker = misn.markerAdd( missys, "computer" )
 end
@@ -119,7 +119,7 @@ end
 
 function accept ()
    if player.pilot():ship():classDisplay() ~= "Luxury Yacht" then
-      if tk.yesno( _("Not Very Luxurious"), _("Since your ship is not a Luxury Yacht class ship, you will only be paid %s. Accept the mission anyway?"):format( fmt.credits(credits_nolux) ) ) then
+      if tk.yesno( _("Not Very Luxurious"), fmt.f( _("Since your ship is not a Luxury Yacht class ship, you will only be paid {credits}. Accept the mission anyway?"), {credits=fmt.credits(credits_nolux)} ) ) then
          nolux_known = true
          misn.setReward( fmt.credits( credits_nolux ) )
       else
@@ -132,7 +132,7 @@ function accept ()
    misn.osdCreate( _("Sightseeing"), {
       fmt.f( _("Fly to the {sys} system"), {sys=missys} ),
       _("Go to all indicated points"),
-      _("Return to %s in the %s system and collect your pay"):format( startingplanet:name(), startingsystem:name() ),
+      fmt.f(_("Return to {pnt} in the {sys} system and collect your pay"), {pnt=startingplanet, sys=startingsystem} ),
    } )
    local c = misn.cargoNew( N_("Sightseers"), N_("A bunch of sightseeing civilians.") )
    civs = misn.cargoAdd( c, 0 )
@@ -235,7 +235,7 @@ function timer ()
    -- Another check since the previous block could change the result
    if #points <= 0 then
       job_done = true
-      player.msg( _("All attractions visited. Return to %s and collect your pay."):format( startingplanet:name() ) )
+      player.msg( fmt.f(_("All attractions visited. Return to {pnt} and collect your pay."), {pnt=startingplanet} ) )
       misn.osdActive( 3 )
       misn.markerMove( marker, startingsystem )
    end

@@ -25,13 +25,12 @@
 --]]
 
 local car = require "common.cargo"
+local fmt = require "format"
 local neu = require "common.neutral"
 local lmisn = require "lmisn"
 
 
--- Localization, choosing a language if Naev is translated for non-english-speaking locales.
-
-complaints = {}
+local complaints = {}
 complaints[1] = _([["You youngsters and your newfangled triple redundancy plasma feedback shunts. In my day, we had to use simple monopole instaconductors to keep our hyperdrives running!"]])
 complaints[2] = _([["Tell me, youngster, why is everyone so preoccupied with Soromid enhancements these days? Cybernetic implants were good enough for us, why can't they be for you?"]])
 complaints[3] = _([["My mother was from Earth, you know. She even took me there once, when I was a little girl. I still remember it like it happened yesterday. They don't make planets like that anymore these days, oh no."]])
@@ -66,17 +65,19 @@ end
 
 
 function accept ()
-    if tk.yesno(_("An elderly lady"), _([[You decide to ask the old woman if there's something you can help her with.
-    "As a matter of fact, there is," she creaks. "I want to visit my cousin, she lives on %s, you know, in the %s system, it's a Sirian place. But I don't have a ship and those blasted passenger lines around here don't fly on Sirius space! I tell you, customer service really has gone down the gutter over the years. In my space faring days, there would always be some transport ready to take you anywhere! But now look at me, I'm forced to get to the spaceport bar to see if there's a captain willing to take me! It's a disgrace, that's what it is. What a galaxy we live in! But I ramble. You seem like you've got time on your hands. Fancy making a trip down to %s? I'll pay you a decent fare, of course."]]):format(destplanet:name(), destsys:name(), destplanet:name())) then
+    if tk.yesno(_("An elderly lady"), fmt.f(_([[You decide to ask the old woman if there's something you can help her with.
+    "As a matter of fact, there is," she creaks. "I want to visit my cousin, she lives on {pnt}, you know, in the {sys} system, it's a Sirian place. But I don't have a ship and those blasted passenger lines around here don't fly on Sirius space! I tell you, customer service really has gone down the gutter over the years. In my space faring days, there would always be some transport ready to take you anywhere! But now look at me, I'm forced to get to the spaceport bar to see if there's a captain willing to take me! It's a disgrace, that's what it is. What a galaxy we live in! But I ramble. You seem like you've got time on your hands. Fancy making a trip down to {pnt}? I'll pay you a decent fare, of course."]]), {pnt=destplanet, sys=destsys})) then
         tk.msg(_("An elderly lady"), _([["Oh, that's good of you." The old woman gives you a wrinkly smile. "I haven't seen my cousin in such a long time, it'll be great to see how she's doing, and we can talk about old times. Ah, old times. It was all so different then. The space ways were much safer, for one. And people were politer to each other too, oh yes!"
     You escort the old lady to your ship, trying not to listen to her rambling. Perhaps it would be a good idea to get her to her destination as quickly as you can.]]))
         local c = misn.cargoNew( N_("Old Woman"), N_("A grumbling old woman.") )
         oldwoman = misn.cargoAdd(c, 0)
 
         misn.accept()
-        misn.setDesc(_("An aging lady has asked you to ferry her to %s in the %s system."):format(destplanet:name(), destsys:name()))
+        misn.setDesc(fmt.f(_("An aging lady has asked you to ferry her to {pnt} in the {sys} system."), {pnt=destplanet, sys=destsys}))
         misn.setReward(_("Fair monetary compensation"))
-        misn.osdCreate(_("The old woman"), {_("Take the old woman to %s (%s system)"):format(destplanet:name(), destsys:name())})
+        misn.osdCreate(_("The old woman"), {
+            fmt.f(_("Take the old woman to {pnt} ({sys} system)"), {pnt=destplanet, sys=destsys}),
+        })
         misn.markerAdd(destplanet, "high")
 
         dist_total = car.calculateDistance(system.cur(), planet.cur():pos(), destsys, destplanet)

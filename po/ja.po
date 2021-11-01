@@ -58718,16 +58718,16 @@ msgstr "乗客たちは、いつわりなく目をみはっていた。"
 #. Set mission details
 #: dat/missions/neutral/sightseeing.lua:113
 #, lua-format
-msgid "Sightseeing in the %s System"
-msgstr "%s星系の観光"
+msgid "Sightseeing in the {sys} System"
+msgstr "{sys}星系の観光"
 
 #: dat/missions/neutral/sightseeing.lua:114
 #, lua-format
 msgid ""
 "Several passengers wish to go off-world and go on a sightseeing tour. "
-"Navigate to specified attractions in the %s system."
+"Navigate to specified attractions in the {sys} system."
 msgstr ""
-"数人の乗客が、外世界へ行って周遊旅行をしたいと思っている。%s星系の指定された"
+"数人の乗客が、外世界へ行って周遊旅行をしたいと思っている。{sys}星系の指定された"
 "観光名所に案内せよ。"
 
 #: dat/missions/neutral/sightseeing.lua:122
@@ -58737,10 +58737,10 @@ msgstr "たいして豪華ではない"
 #: dat/missions/neutral/sightseeing.lua:122
 #, lua-format
 msgid ""
-"Since your ship is not a Luxury Yacht class ship, you will only be paid %s. "
+"Since your ship is not a Luxury Yacht class ship, you will only be paid {credits}. "
 "Accept the mission anyway?"
 msgstr ""
-"あなたの船はぜいたくなヨット型の船ではないので、支払いは %s だけになります。"
+"あなたの船はぜいたくなヨット型の船ではないので、支払いは {credits} だけになります。"
 "それでもこの任務をうけますか？"
 
 #: dat/missions/neutral/sightseeing.lua:132
@@ -58775,8 +58775,8 @@ msgstr "意外な割増"
 #. Another check since the previous block could change the result
 #: dat/missions/neutral/sightseeing.lua:238
 #, lua-format
-msgid "All attractions visited. Return to %s and collect your pay."
-msgstr "すべての名所を訪問した。%sに戻って支払いを受けとれ。"
+msgid "All attractions visited. Return to {pnt} and collect your pay."
+msgstr "すべての名所を訪問した。{pnt}に戻って支払いを受けとれ。"
 
 #. Remove existing marks
 #. Add new marks
@@ -58930,7 +58930,7 @@ msgid ""
 "Harrus is about to launch into another anecdote about his existence as a "
 "trader, but you manage to forestall him. You soon learn that his family's "
 "lifestyle has come to an abrupt change at the hands of a minor gang of "
-"pirates. Though the %s had some weaponry and shielding systems, the "
+"pirates. Though the {plt} had some weaponry and shielding systems, the "
 "attackers were too much for a single cargo ship.\n"
 "    \"I never thought it would end like this,\" Harrus sighs. \"I mean, I "
 "knew space was dangerous, but I stayed clear of the unsafe areas. Stuck to "
@@ -58945,7 +58945,7 @@ msgid ""
 msgstr ""
 "ハラスは貿易商としての自分の人生についての次の逸話に乗りだそうとしていたが、"
 "あなたはどうにか先手を打つことができた。あなたはすぐに知った。この家族の生き"
-"かたは、小さな海賊団の手で、突然の変化をむかえることになったのだ。｢%s｣ にはい"
+"かたは、小さな海賊団の手で、突然の変化をむかえることになったのだ。｢{plt}｣ にはい"
 "くらかの武器類とシールドシステムがあったにせよ、その攻撃者たちはたった 1 隻の"
 "貨物船には多すぎた。\n"
 "    ｢このような終わりをむかえるとは思ったこともなかった｣ と、ハラスはため息を"

@@ -181,9 +181,9 @@ function accept()
    misn.accept()
 
    carg_id = misn.cargoAdd( cargo, amount )
-   tk.msg( _("Mission Accepted"), string.format(
-      _("%s of %s are loaded onto your ship."), fmt.tonnes(amount),
-      _(cargo) ) )
+   tk.msg( _("Mission Accepted"), fmt.f(
+      _("{tonnes} of {cargo} are loaded onto your ship."),
+      {tonnes=fmt.tonnes(amount), cargo=_(cargo)} ) )
    hook.land( "land" ) -- only hook after accepting
    hook.date(time.create(0, 0, 100), "tick") -- 100STU per tick
    tick() -- set OSD
@@ -208,10 +208,10 @@ end
 function tick()
    if timelimit >= time.get() then
       -- Case still in time
-      local osd_msg = {}
-      osd_msg[1] = fmt.f(_("Fly to {pnt} in the {sys} system before {time_limit}\n({time} remaining)"),
-         {pnt=destplanet, sys=destsys, time_limit=timelimit:str(), time=(timelimit - time.get()):str()})
-      misn.osdCreate(string.format(_("Smuggling %s"),cargo), osd_msg)
+      misn.osdCreate(fmt.f(_("Smuggling {cargo}"), {cargo=_(cargo)}), {
+         fmt.f(_("Fly to {pnt} in the {sys} system before {time_limit}\n({time} remaining)"),
+               {pnt=destplanet, sys=destsys, time_limit=timelimit:str(), time=(timelimit - time.get()):str()})
+      })
    elseif timelimit <= time.get() then
       -- Case missed deadline
       player.msg(_("MISSION FAILED: You have failed to deliver the goods on time!"))

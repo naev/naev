@@ -33,13 +33,13 @@ end
 
 function accept ()
    -- Note: this mission does not make any system claims.
-   if not tk.yesno( _("Crimelord"), string.format( _([[The private detective greets you and gets right down to business.
+   if not tk.yesno( _("Crimelord"), fmt.f( _([[The private detective greets you and gets right down to business.
    "I have tracked down and collected evidence against a local crime lord," he says. "The evidence is on this data disk. He would love nothing more than to get his hands on this.
-   I want you to bring this to my associates in the %s system. While the local authorities have proven corruptible, my associates will ensure that this man ends up in prison, where he belongs. I must warn you, however:
-   He is a man of considerable influence. He has many friends, and no doubt will send some of his mercenaries to stop you. You'll need a fast ship to shake them off. My associates will compensate you generously when you reach %s.
-   Regrettably, you are not the first pilot I've contacted regarding this matter. Your predecessor was intercepted when he landed en route to %s. The crime lord has many underlings lurking in nearby spaceports -- you must NOT land until you've delivered the data."
-   Given the dangers, you're not sure whether the reward will make this worth your while. Do you accept?]]), targetsystem:name(),
-         targetsystem:name(), targetsystem:name() ) ) then --if accepted
+   I want you to bring this to my associates in the {sys} system. While the local authorities have proven corruptible, my associates will ensure that this man ends up in prison, where he belongs. I must warn you, however:
+   He is a man of considerable influence. He has many friends, and no doubt will send some of his mercenaries to stop you. You'll need a fast ship to shake them off. My associates will compensate you generously when you reach {sys}.
+   Regrettably, you are not the first pilot I've contacted regarding this matter. Your predecessor was intercepted when he landed en route to {sys}. The crime lord has many underlings lurking in nearby spaceports -- you must NOT land until you've delivered the data."
+   Given the dangers, you're not sure whether the reward will make this worth your while. Do you accept?]]), {sys=targetsystem}
+          ) ) then --if accepted
       misn.finish()
    end
 
@@ -49,9 +49,9 @@ function accept ()
    "Be careful out there. I doubt you'll be able to get far without being noticed."]]) )
    misn.setTitle( _("Crimelord") )
    misn.setReward( _("A generous compensation") )
-   misn.setDesc( string.format( _("Evade the thugs and deliver the evidence to %s"), targetsystem:name() ) )
+   misn.setDesc( fmt.f( _("Evade the thugs and deliver the evidence to {sys}"), {sys=targetsystem} ) )
    misn.markerAdd( targetsystem, "low" )
-   misn.osdCreate(_("Crimelord"), {_("Evade the thugs and deliver the evidence to %s"):format(targetsystem:name())})
+   misn.osdCreate(_("Crimelord"), {fmt.f(_("Evade the thugs and deliver the evidence to {sys}"), {sys=targetsystem})})
 
    startsystem = system.cur() --needed to make thugs appear random in the first system
    last_system = system.cur() --ignore this one, it's just the initialization of the variable
@@ -153,7 +153,7 @@ function pilotKilled ()
 end
 
 function capHailed ()
-   tk.msg( _("Mission Accomplished"), string.format( _("\"Excellent work. This data will ensure an arrest and swift prosecution. You've certainly done your part towards cleaning up the region. As for your compensation, I've had %s transferred to you.\""), fmt.credits( reward ) ) )
+   tk.msg( _("Mission Accomplished"), fmt.f( _("\"Excellent work. This data will ensure an arrest and swift prosecution. You've certainly done your part towards cleaning up the region. As for your compensation, I've had {credits} transferred to you.\""), {credits=fmt.credits(reward)} ) )
    player.pay( reward )
    player.commClose()
    misn.finish(true)
