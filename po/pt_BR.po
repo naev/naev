@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2021-10-31 20:50-0400\n"
+"POT-Creation-Date: 2021-10-31 22:07-0400\n"
 "PO-Revision-Date: 2021-09-02 06:35+0000\n"
 "Last-Translator: Anthony Gregory Souza dos Santos "
 "<antonigregorysouza123@gmail.com>\n"
@@ -1985,7 +1985,7 @@ msgstr ""
 #. -- 12/02/2010 - Added visibility/highlight options for use in big systems (Anatolis)
 #. --
 #: dat/assets/august.xml:2 dat/events/neutral/shipwreck.lua:26
-#: dat/missions/neutral/spacefamily.lua:62
+#: dat/missions/neutral/spacefamily.lua:53
 msgid "August"
 msgstr ""
 
@@ -24064,7 +24064,7 @@ msgstr ""
 
 #: dat/comm.lua:235 dat/comm.lua:298 dat/comm.lua:344 dat/comm.lua:446
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:656
-#: dat/missions/neutral/aristodrink.lua:79
+#: dat/missions/neutral/aristodrink.lua:73
 msgid "Refuse"
 msgstr ""
 
@@ -25964,8 +25964,7 @@ msgstr ""
 #. Set mission details
 #: dat/events/minerva/altercation2.lua:30
 #: dat/missions/neutral/crimelord.lua:115 dat/missions/pirate/hitman.lua:55
-#: dat/missions/pirate/hitman.lua:62
-#, lua-format
+#: dat/missions/pirate/hitman.lua:59
 msgid "Thug"
 msgstr ""
 
@@ -41198,8 +41197,8 @@ msgstr ""
 #: dat/missions/empire/longdistanceshipping/emp_longdistancecargo6.lua:52
 #: dat/missions/empire/shipping/es00.lua:49
 #: dat/missions/neutral/drunkard.lua:48 dat/missions/neutral/reynir.lua:66
-#: dat/missions/pirate/hitman.lua:43 dat/missions/pirate/hitman.lua:64
-#: dat/missions/pirate/hitman2.lua:41 dat/missions/pirate/hitman2.lua:64
+#: dat/missions/pirate/hitman.lua:44 dat/missions/pirate/hitman.lua:64
+#: dat/missions/pirate/hitman2.lua:42 dat/missions/pirate/hitman2.lua:64
 #: dat/missions/pirate/pir_clan_cargo.lua:58
 #: dat/missions/pirate/pir_clan_cargo.lua:74
 #: dat/missions/pirate/pir_clan_cargo.lua:75
@@ -51246,50 +51245,38 @@ msgstr ""
 #.
 #.
 #.
-#. Mission Details
-#. OSD
-#: dat/missions/neutral/aristodrink.lua:35
-#, lua-format
-msgid ""
-"Go to %s in the %s system and look for the special drink that the Aristocrat "
-"wants"
-msgstr ""
-
 #. defines Previous Planets table
-#: dat/missions/neutral/aristodrink.lua:46
-#, lua-format
+#: dat/missions/neutral/aristodrink.lua:40
 msgid ""
 "You walk in and see someone behind the bar. When you approach and describe "
 "the drink, they tell you that the drink isn't the specialty of any one bar, "
 "but actually the specialty of a bartender who used to work here. \"It's "
 "called a Swamp Bombing. I don't know where they work now, but they started "
-"working at the bar on %s in the %s system after they left here. Good luck!\" "
-"With high hopes, you decide to head off to there."
+"working at the bar on {pnt} in the {sys} system after they left here. Good "
+"luck!\" With high hopes, you decide to head off to there."
 msgstr ""
 
-#: dat/missions/neutral/aristodrink.lua:47
-#, lua-format
+#: dat/missions/neutral/aristodrink.lua:41
 msgid ""
 "You walk in and see someone behind the bar. When you approach and describe "
 "the drink, they tell you that the drink isn't the specialty of any one bar, "
 "but actually the specialty of a bartender who used to work here. \"It's "
 "called a Swamp Bombing. I don't know where he works now, but he started "
-"working at the bar on %s in the %s system after he left here. Good luck!\" "
-"With high hopes, you decide to head off to there."
+"working at the bar on {pnt} in the {sys} system after he left here. Good "
+"luck!\" With high hopes, you decide to head off to there."
 msgstr ""
 
-#: dat/missions/neutral/aristodrink.lua:48
-#, lua-format
+#: dat/missions/neutral/aristodrink.lua:42
 msgid ""
 "You walk in and see someone behind the bar. When you approach and describe "
 "the drink, they tell you that the drink isn't the specialty of any one bar, "
 "but actually the specialty of a bartender who used to work here. \"It's "
 "called a Swamp Bombing. I don't know where she works now, but she started "
-"working at the bar on %s in the %s system after she left here. Good luck!\" "
-"With high hopes, you decide to head off to there."
+"working at the bar on {pnt} in the {sys} system after she left here. Good "
+"luck!\" With high hopes, you decide to head off to there."
 msgstr ""
 
-#: dat/missions/neutral/aristodrink.lua:51
+#: dat/missions/neutral/aristodrink.lua:45
 msgid ""
 "You walk into the bar and know instantly that you are finally here! This is "
 "the place! You walk up to the bartender, who smiles. This has to be them. "
@@ -51305,7 +51292,7 @@ msgid ""
 "but you doubt it was worth all this trouble."
 msgstr ""
 
-#: dat/missions/neutral/aristodrink.lua:53
+#: dat/missions/neutral/aristodrink.lua:47
 msgid ""
 "You walk into the bar and know instantly that you are finally here! This is "
 "the place! You walk up to the bartender, who smiles. This has to be him. You "
@@ -51321,7 +51308,7 @@ msgid ""
 "but you doubt it was worth all this trouble."
 msgstr ""
 
-#: dat/missions/neutral/aristodrink.lua:55
+#: dat/missions/neutral/aristodrink.lua:49
 msgid ""
 "You walk into the bar and know instantly that you are finally here! This is "
 "the place! You walk up to the bartender, who smiles. This has to be her. You "
@@ -51341,21 +51328,20 @@ msgstr ""
 #. creates the NPC at the bar to create the mission
 #. chooses the planet
 #. mission details
-#: dat/missions/neutral/aristodrink.lua:62
-#: dat/missions/neutral/aristodrink.lua:77
-#: dat/missions/neutral/aristodrink.lua:88
+#: dat/missions/neutral/aristodrink.lua:56
+#: dat/missions/neutral/aristodrink.lua:71
+#: dat/missions/neutral/aristodrink.lua:82
 msgid "Drinking Aristocrat"
 msgstr ""
 
-#: dat/missions/neutral/aristodrink.lua:62
+#: dat/missions/neutral/aristodrink.lua:56
 msgid ""
 "You see an aristocrat sitting at a table in the middle of the bar, drinking "
 "a swirling concoction in a martini glass with a disappointed look on his "
 "face every time he takes a sip."
 msgstr ""
 
-#: dat/missions/neutral/aristodrink.lua:77
-#, lua-format
+#: dat/missions/neutral/aristodrink.lua:71
 msgid ""
 "You begin to approach the aristocrat. Next to him stands a well dressed and "
 "muscular man, perhaps his assistant, or maybe his bodyguard, you're not "
@@ -51367,13 +51353,13 @@ msgid ""
 "    You know what I would really like? There was this drink at a bar on, "
 "what planet was that? Damien, do you remember? The green drink with the red "
 "fruit shavings.\" Damien looks down at him and seems to think for a second "
-"before shaking his head. \"I believe it might have been %s in the %s system. "
-"The drink was something like an Atmospheric Re-Entry or Gaian Bombing or "
-"something. It's the bar's specialty. They'll know what you're talking about. "
-"You should go get me one. Can you leave right away?\""
+"before shaking his head. \"I believe it might have been {pnt} in the {sys} "
+"system. The drink was something like an Atmospheric Re-Entry or Gaian "
+"Bombing or something. It's the bar's specialty. They'll know what you're "
+"talking about. You should go get me one. Can you leave right away?\""
 msgstr ""
 
-#: dat/missions/neutral/aristodrink.lua:79
+#: dat/missions/neutral/aristodrink.lua:73
 msgid ""
 "\"What do you mean, you can't leave right away? Then why even bother? Remove "
 "yourself from my sight.\" The aristocrat makes a horrible face, and sips his "
@@ -51381,19 +51367,19 @@ msgid ""
 "and motions to the bartender, ignoring you beyond now."
 msgstr ""
 
-#: dat/missions/neutral/aristodrink.lua:89
+#: dat/missions/neutral/aristodrink.lua:83
 msgid "He will pay handsomely."
 msgstr ""
 
-#: dat/missions/neutral/aristodrink.lua:90
+#: dat/missions/neutral/aristodrink.lua:84
 msgid "Go find a specific drink for an aristocrat."
 msgstr ""
 
-#: dat/missions/neutral/aristodrink.lua:92
+#: dat/missions/neutral/aristodrink.lua:86
 msgid "Leave Immediately"
 msgstr ""
 
-#: dat/missions/neutral/aristodrink.lua:92
+#: dat/missions/neutral/aristodrink.lua:86
 msgid ""
 "\"Oh good! Of course you will be paid handsomely for your efforts. I trust "
 "you can figure out how to get it here intact on your own.\" The aristocrat "
@@ -51406,51 +51392,48 @@ msgstr ""
 #. hooks
 #. first clue
 #. next planet
-#: dat/missions/neutral/aristodrink.lua:118
+#: dat/missions/neutral/aristodrink.lua:112
 msgid "Clue"
 msgstr ""
 
-#: dat/missions/neutral/aristodrink.lua:118
-#, lua-format
+#: dat/missions/neutral/aristodrink.lua:112
 msgid ""
 "You walk into the bar and approach the bartender. You describe the drink, "
 "but the bartender doesn't seem to know what you're talking about. There is "
-"another bartender that they think may be able to help you though, at %s in "
-"the %s system."
+"another bartender that they think may be able to help you though, at {pnt} "
+"in the {sys} system."
 msgstr ""
 
 #. find out that it's a bartender's specialty
 #. next planet
-#: dat/missions/neutral/aristodrink.lua:132
+#: dat/missions/neutral/aristodrink.lua:126
 msgid "A bit more info..."
 msgstr ""
 
 #. find another bar that the bartender used to work at
 #. next planet
-#: dat/missions/neutral/aristodrink.lua:144
+#: dat/missions/neutral/aristodrink.lua:138
 msgid "Is this it?"
 msgstr ""
 
-#: dat/missions/neutral/aristodrink.lua:144
-#, lua-format
+#: dat/missions/neutral/aristodrink.lua:138
 msgid ""
 "You walk into the bar fully confident that this is the bar. You walk up to "
 "the bartender and ask for a Swamp Bombing. \"A wha???\" Guess this isn't the "
-"right bar. You get another possible clue, %s in the %s system, and head on "
-"your way."
+"right bar. You get another possible clue, {pnt} in the {sys} system, and "
+"head on your way."
 msgstr ""
 
 #. get the drink
-#: dat/missions/neutral/aristodrink.lua:150
+#: dat/missions/neutral/aristodrink.lua:144
 msgid "This is it!"
 msgstr ""
 
-#: dat/missions/neutral/aristodrink.lua:158
+#: dat/missions/neutral/aristodrink.lua:152
 msgid "Delivery"
 msgstr ""
 
-#: dat/missions/neutral/aristodrink.lua:158
-#, lua-format
+#: dat/missions/neutral/aristodrink.lua:152
 msgid ""
 "\"Ahh! I was just thinking how much I wanted one of those drinks! I'm so "
 "glad that you managed to find it. You sure seemed to take your time though."
@@ -51459,7 +51442,7 @@ msgid ""
 "for you to be this late though.\" He takes a sip from his drink. \"Ahh! That "
 "is good though. I suppose you'll be wanting to get paid for your troubles. "
 "You did go through a lot of trouble. Then again, you did take quite a long "
-"time. I suppose %s should be appropriate.\"\n"
+"time. I suppose {credits} should be appropriate.\"\n"
 "    Considering the amount of effort that you went through, you feel almost "
 "cheated. You don't feel like arguing with the snobby aristocrat though, so "
 "you just leave him to his drink without another word. It's probably the most "
@@ -51468,18 +51451,23 @@ msgid ""
 "It might look good like an ornament?"
 msgstr ""
 
-#: dat/missions/neutral/aristodrink.lua:166
+#: dat/missions/neutral/aristodrink.lua:160
 msgid "You delivered a special drink called a Swamp Bombing to an aristocrat."
 msgstr ""
 
-#: dat/missions/neutral/aristodrink.lua:199
-#, lua-format
-msgid "Return the drink to the Aristocrat at %s in the %s system."
+#: dat/missions/neutral/aristodrink.lua:193
+#: dat/missions/neutral/aristodrink.lua:197
+msgid "Find the Drink"
 msgstr ""
 
-#: dat/missions/neutral/aristodrink.lua:201
-#: dat/missions/neutral/aristodrink.lua:204
-msgid "Find the Drink"
+#: dat/missions/neutral/aristodrink.lua:194
+msgid "Return the drink to the Aristocrat at {pnt} in the {sys} system."
+msgstr ""
+
+#: dat/missions/neutral/aristodrink.lua:198
+msgid ""
+"Go to {pnt} in the {sys} system and look for the special drink that the "
+"Aristocrat wants"
 msgstr ""
 
 #.
@@ -51846,23 +51834,22 @@ msgid "Crimelord"
 msgstr ""
 
 #: dat/missions/neutral/crimelord.lua:36
-#, lua-format
 msgid ""
 "The private detective greets you and gets right down to business.\n"
 "   \"I have tracked down and collected evidence against a local crime lord,"
 "\" he says. \"The evidence is on this data disk. He would love nothing more "
 "than to get his hands on this.\n"
-"   I want you to bring this to my associates in the %s system. While the "
+"   I want you to bring this to my associates in the {sys} system. While the "
 "local authorities have proven corruptible, my associates will ensure that "
 "this man ends up in prison, where he belongs. I must warn you, however:\n"
 "   He is a man of considerable influence. He has many friends, and no doubt "
 "will send some of his mercenaries to stop you. You'll need a fast ship to "
 "shake them off. My associates will compensate you generously when you reach "
-"%s.\n"
+"{sys}.\n"
 "   Regrettably, you are not the first pilot I've contacted regarding this "
-"matter. Your predecessor was intercepted when he landed en route to %s. The "
-"crime lord has many underlings lurking in nearby spaceports -- you must NOT "
-"land until you've delivered the data.\"\n"
+"matter. Your predecessor was intercepted when he landed en route to {sys}. "
+"The crime lord has many underlings lurking in nearby spaceports -- you must "
+"NOT land until you've delivered the data.\"\n"
 "   Given the dangers, you're not sure whether the reward will make this "
 "worth your while. Do you accept?"
 msgstr ""
@@ -51885,8 +51872,7 @@ msgid "A generous compensation"
 msgstr ""
 
 #: dat/missions/neutral/crimelord.lua:52 dat/missions/neutral/crimelord.lua:54
-#, lua-format
-msgid "Evade the thugs and deliver the evidence to %s"
+msgid "Evade the thugs and deliver the evidence to {sys}"
 msgstr ""
 
 #. needed to make thugs appear random in the first system
@@ -51934,11 +51920,10 @@ msgid "Get back here!"
 msgstr ""
 
 #: dat/missions/neutral/crimelord.lua:156
-#, lua-format
 msgid ""
 "\"Excellent work. This data will ensure an arrest and swift prosecution. "
 "You've certainly done your part towards cleaning up the region. As for your "
-"compensation, I've had %s transferred to you.\""
+"compensation, I've had {credits} transferred to you.\""
 msgstr ""
 
 #: dat/missions/neutral/crimelord.lua:163
@@ -52049,8 +52034,8 @@ msgstr ""
 #. their hardware. The player can fail in multiple ways.
 #. AUTHOR: thilo <thilo@thiloernst.de>
 #. --
-#. Bar information, describes how the NPC appears in the bar
 #. Mission details.
+#. helper functions, defined below
 #. the mission cargo
 #: dat/missions/neutral/diy-nerds.lua:35
 msgid "Group of Nerds"
@@ -52091,7 +52076,6 @@ msgid "A group of excited nerds"
 msgstr ""
 
 #: dat/missions/neutral/diy-nerds.lua:65
-#, lua-format
 msgid ""
 "As you approach the group, the babbling ceases and the papers are quickly "
 "and jealously stashed away. One of the girls comes forward and introduces "
@@ -52101,7 +52085,7 @@ msgid ""
 "    You reply that for a deal to be worked out, they better provide some "
 "detail.\n"
 "    \"Listen,\" she says, \"there's this Homebrew Processing Box Masters on "
-"%s. Right over there, this system. I'm sure our box will get us the first "
+"{pnt}. Right over there, this system. I'm sure our box will get us the first "
 "prize. You take us there, you take us back, you get 20,000.\"\n"
 "    You just start wondering at the boldness of so young a lady as she "
 "already signals her impatience. \"What now, you do it?\""
@@ -52123,13 +52107,13 @@ msgstr ""
 #. no pickup since hail+2STP+1STP: mission failed (however, you must still land somewhere)
 #. common prep for the final stage
 #: dat/missions/neutral/diy-nerds.lua:78 dat/missions/neutral/diy-nerds.lua:92
-#: dat/missions/neutral/diy-nerds.lua:115
-#: dat/missions/neutral/diy-nerds.lua:143
-#: dat/missions/neutral/diy-nerds.lua:145
-#: dat/missions/neutral/diy-nerds.lua:204
+#: dat/missions/neutral/diy-nerds.lua:118
+#: dat/missions/neutral/diy-nerds.lua:146
+#: dat/missions/neutral/diy-nerds.lua:151
 #: dat/missions/neutral/diy-nerds.lua:212
 #: dat/missions/neutral/diy-nerds.lua:222
-#: dat/missions/neutral/diy-nerds.lua:258
+#: dat/missions/neutral/diy-nerds.lua:235
+#: dat/missions/neutral/diy-nerds.lua:275
 msgid "DIY Nerds"
 msgstr ""
 
@@ -52142,7 +52126,6 @@ msgid "We have a deal!"
 msgstr ""
 
 #: dat/missions/neutral/diy-nerds.lua:83
-#, lua-format
 msgid ""
 "Upon accepting the task, you see the entire group relax visibly, and you can "
 "almost feel Mia's boldness fade away - to some extent, at least. It seems "
@@ -52152,19 +52135,18 @@ msgid ""
 "gather their belongings, it is again up to Mia to address you:\n"
 "    \"Really? You'll do it? Um, great. Fantastic. I just knew that "
 "eventually, someone desperate would turn up. OK, we're set to go. We better "
-"take off immediately and go directly to %s, or we'll be late for the contest!"
-"\""
+"take off immediately and go directly to {pnt}, or we'll be late for the "
+"contest!\""
 msgstr ""
 
-#: dat/missions/neutral/diy-nerds.lua:92 dat/missions/neutral/diy-nerds.lua:143
-#: dat/missions/neutral/diy-nerds.lua:145
-#, lua-format
-msgid "Bring the nerds and their box to %s before %s"
+#: dat/missions/neutral/diy-nerds.lua:93 dat/missions/neutral/diy-nerds.lua:147
+#: dat/missions/neutral/diy-nerds.lua:152
+msgid "Bring the nerds and their box to {pnt} before {time}"
 msgstr ""
 
 #. Case still in time
-#: dat/missions/neutral/diy-nerds.lua:92 dat/missions/neutral/diy-nerds.lua:143
-#: dat/missions/neutral/diy-nerds.lua:222 dat/missions/shadow/shadowrun.lua:80
+#: dat/missions/neutral/diy-nerds.lua:94 dat/missions/neutral/diy-nerds.lua:148
+#: dat/missions/neutral/diy-nerds.lua:238 dat/missions/shadow/shadowrun.lua:80
 #: dat/missions/shadow/shadowrun.lua:147 dat/missions/shadow/shadowrun.lua:154
 #: dat/missions/sirius/srs_ferry.lua:350
 msgid "You have {time} remaining"
@@ -52174,52 +52156,50 @@ msgstr ""
 #. in time, right planet
 #. hooked to 'land' in the second stage (wait for the nerds to hail you for the return trip)
 #. you pickup the nerds in time
-#: dat/missions/neutral/diy-nerds.lua:113
-#: dat/missions/neutral/diy-nerds.lua:167
+#: dat/missions/neutral/diy-nerds.lua:116
+#: dat/missions/neutral/diy-nerds.lua:175
 msgid "Happy nerds"
 msgstr ""
 
-#: dat/missions/neutral/diy-nerds.lua:113
-#, lua-format
+#: dat/missions/neutral/diy-nerds.lua:116
 msgid ""
-"\"Good job, %s,\" Mia compliments you upon arrival. \"We'll now go win the "
-"competition and celebrate a bit. You better stay in the system. We will hail "
-"you in about 4 or 5 periods, so you can pick us up an' bring us back to %s."
-"\"\n"
+"\"Good job, {player},\" Mia compliments you upon arrival. \"We'll now go win "
+"the competition and celebrate a bit. You better stay in the system. We will "
+"hail you in about 4 or 5 periods, so you can pick us up an' bring us back to "
+"{pnt}.\"\n"
 "    That said, the nerds shoulder the box and rushes towards a banner which "
 "reads \"Admissions\"."
 msgstr ""
 
-#: dat/missions/neutral/diy-nerds.lua:115
+#: dat/missions/neutral/diy-nerds.lua:118
 msgid ""
 "Wait several periods in this system until hailed by the nerds for their "
 "return trip"
 msgstr ""
 
 #. late, right planet
-#: dat/missions/neutral/diy-nerds.lua:125
+#: dat/missions/neutral/diy-nerds.lua:128
 msgid "Angry nerds"
 msgstr ""
 
-#: dat/missions/neutral/diy-nerds.lua:125
-#, lua-format
+#: dat/missions/neutral/diy-nerds.lua:128
 msgid ""
 "Mia fumes. \"Great. Just great! We're late, you jerk.\" She points to a "
 "crumpled banner reading \"Admissions\". The area below it is deserted. \"No "
 "contest for us, no payment for you. Understand? Go and take your sorry "
 "excuse for a ship into the corona of a suitable star. We will find someone "
-"else to take us back to %s. Someone reliable.\"\n"
+"else to take us back to {pnt}. Someone reliable.\"\n"
 "    As her emphasis on the last words is still ringing in your ears, the "
 "gang of nerds stroll toward an archway, behind which, judging from the "
 "bustling atmosphere, the contest is already going on."
 msgstr ""
 
 #. late, not even the right planet
-#: dat/missions/neutral/diy-nerds.lua:132
+#: dat/missions/neutral/diy-nerds.lua:135
 msgid "Furious nerds"
 msgstr ""
 
-#: dat/missions/neutral/diy-nerds.lua:132
+#: dat/missions/neutral/diy-nerds.lua:135
 msgid ""
 "The nerds quickly and quietly pack up their box and start to leave your "
 "ship. Finally, Mia turns to you. Her body language suggests that she's "
@@ -52233,29 +52213,27 @@ msgid ""
 "her group, and they are gone."
 msgstr ""
 
-#: dat/missions/neutral/diy-nerds.lua:145
+#: dat/missions/neutral/diy-nerds.lua:153
 msgid ""
 "You're late and the nerds are getting angry and abusive; land to get rid of "
 "the nerds and their box"
 msgstr ""
 
-#: dat/missions/neutral/diy-nerds.lua:167
-#, lua-format
+#: dat/missions/neutral/diy-nerds.lua:175
 msgid ""
 "As soon as you get of your ship, you are surrounded by the group of nerds, "
 "who are enthusiastic. \"We won!\" one of the dudes shouts at you. "
 "Surprisingly, the group seems to not completely be dependent on Mia when it "
 "comes to communicating with outsiders. Maybe the booze the group is "
-"obviously intoxicated with did help a little. \"Take us back to %s,\" one of "
-"them says, \"we'll continue to celebrate on the way.\""
+"obviously intoxicated with did help a little. \"Take us back to {pnt},\" one "
+"of them says, \"we'll continue to celebrate on the way.\""
 msgstr ""
 
-#: dat/missions/neutral/diy-nerds.lua:169
+#: dat/missions/neutral/diy-nerds.lua:177
 msgid "Sad nerds"
 msgstr ""
 
-#: dat/missions/neutral/diy-nerds.lua:169
-#, lua-format
+#: dat/missions/neutral/diy-nerds.lua:177
 msgid ""
 "As you get of your ship, you do not immediately see the nerds. You finally "
 "find them in a dark corner of the landing pad quietly sitting on their box, "
@@ -52267,78 +52245,74 @@ msgid ""
 "ship's processing unit, on which he banged his hammer until it looked "
 "acceptable. And the corrupt assholes in the jury pretended not to notice!\"\n"
 "    \"So no, we didn't win\" she adds after taking a few breaths to calm "
-"down. \"Take us back to %s.\""
+"down. \"Take us back to {pnt}.\""
 msgstr ""
 
 #. player has enough free cargo
 #. player has not enough free cargo space, give him last chance to make room
-#: dat/missions/neutral/diy-nerds.lua:180
+#: dat/missions/neutral/diy-nerds.lua:188
 msgid "Room for the box"
 msgstr ""
 
-#: dat/missions/neutral/diy-nerds.lua:180
-#, lua-format
+#: dat/missions/neutral/diy-nerds.lua:188
 msgid ""
-"\"Aw %s,\" Mia complains, \"as if you didn't know that our box needs 4 "
+"\"Aw {player},\" Mia complains, \"as if you didn't know that our box needs 4 "
 "tonnes of free cargo space. Make room now, and pick us up at the bar.\""
 msgstr ""
 
 #. you're late for the pickup
-#: dat/missions/neutral/diy-nerds.lua:187
+#: dat/missions/neutral/diy-nerds.lua:195
 msgid "No more nerds"
 msgstr ""
 
-#: dat/missions/neutral/diy-nerds.lua:187
-#, lua-format
+#: dat/missions/neutral/diy-nerds.lua:195
 msgid ""
 "You look around, but the nerds are nowhere to be found. That is not much of "
 "a surprise, seeing that you are way too late.\n"
-"    Suddenly, a guy approaches you. \"Hi, are you %s? The nerds wanted you "
-"to know that, basically, they got another transport home. One of the girls "
-"said some more, in a particularly rude language, but I don't remember the "
-"details\"."
+"    Suddenly, a guy approaches you. \"Hi, are you {player}? The nerds wanted "
+"you to know that, basically, they got another transport home. One of the "
+"girls said some more, in a particularly rude language, but I don't remember "
+"the details\"."
 msgstr ""
 
 #. you're late and far from the nerds
-#: dat/missions/neutral/diy-nerds.lua:194
+#: dat/missions/neutral/diy-nerds.lua:202
 msgid "You forgot the nerds"
 msgstr ""
 
-#: dat/missions/neutral/diy-nerds.lua:194
-#, lua-format
+#: dat/missions/neutral/diy-nerds.lua:202
 msgid ""
 "Seeing that it is already too late to pick up the nerds, and that you're "
-"quite far from %s, you decide it's better to forget about them completely."
+"quite far from {pnt}, you decide it's better to forget about them completely."
 msgstr ""
 
 #. date hooked in stage 2 (waiting for the nerds hail you for their return trip)
 #. no pickup since hail+2STP
-#: dat/missions/neutral/diy-nerds.lua:203
-#: dat/missions/neutral/diy-nerds.lua:219
+#: dat/missions/neutral/diy-nerds.lua:211
+#: dat/missions/neutral/diy-nerds.lua:232
 msgid "In-system communication"
 msgstr ""
 
-#: dat/missions/neutral/diy-nerds.lua:203
-#, lua-format
+#: dat/missions/neutral/diy-nerds.lua:211
 msgid ""
 "A beep from your communications equipment tells you that someone wants to "
 "talk to you. You realize it is the nerds, and return the hail. \"Yo! This is "
 "Mia,\" comes a familiar voice from the speaker. \"We're done here. Time to "
-"come back and pick us up, we have things to do on %s.\""
+"come back and pick us up, we have things to do on {pnt}.\""
 msgstr ""
 
-#: dat/missions/neutral/diy-nerds.lua:204
-#: dat/missions/neutral/diy-nerds.lua:212
-#: dat/missions/neutral/diy-nerds.lua:222
-#, lua-format
-msgid "Pick up the nerds on %s for their return trip to %s"
+#: dat/missions/neutral/diy-nerds.lua:213
+#: dat/missions/neutral/diy-nerds.lua:223
+#: dat/missions/neutral/diy-nerds.lua:236
+msgid ""
+"Pick up the nerds on {pickup_pnt} for their return trip to {dropoff_pnt}"
 msgstr ""
 
-#: dat/missions/neutral/diy-nerds.lua:212
+#: dat/missions/neutral/diy-nerds.lua:224
 msgid "You didn't pick up the nerds in time"
 msgstr ""
 
-#: dat/missions/neutral/diy-nerds.lua:219
+#: dat/missions/neutral/diy-nerds.lua:232
 #, lua-format
 msgid ""
 "Your comm link comes up again. It is the nerds, whom you'd almost forgotten. "
@@ -52346,27 +52320,27 @@ msgid ""
 "within one period, or we'll get another pilot and pay them, not you!\""
 msgstr ""
 
-#: dat/missions/neutral/diy-nerds.lua:222
+#: dat/missions/neutral/diy-nerds.lua:237
 msgid "The nerds are getting impatient"
 msgstr ""
 
 #. hooked to entering the bar in stage 2
-#: dat/missions/neutral/diy-nerds.lua:232
+#: dat/missions/neutral/diy-nerds.lua:249
 #: dat/missions/zalek/neburesearch/neburesearch_01.lua:116
 msgid "Departure"
 msgstr ""
 
-#: dat/missions/neutral/diy-nerds.lua:232
+#: dat/missions/neutral/diy-nerds.lua:249
 msgid ""
 "The nerds follow you to your ship and finally stow away their box. Now, "
 "you're all set to go."
 msgstr ""
 
-#: dat/missions/neutral/diy-nerds.lua:235
+#: dat/missions/neutral/diy-nerds.lua:252
 msgid "No room, no job"
 msgstr ""
 
-#: dat/missions/neutral/diy-nerds.lua:235
+#: dat/missions/neutral/diy-nerds.lua:252
 msgid ""
 "As you enter the bar, the nerds are immediately upon you. \"What is it with "
 "you?\" Mia asks. \"Is it so hard to make some room for our box? I am fed up "
@@ -52376,41 +52350,39 @@ msgid ""
 msgstr ""
 
 #. hooked to leaving the system in stage 2
-#: dat/missions/neutral/diy-nerds.lua:242
+#: dat/missions/neutral/diy-nerds.lua:259
 msgid "Have the nerds not told you to stay in the system? Mission failed!"
 msgstr ""
 
 #. hooked to inappropriately taking off in stage 2
-#: dat/missions/neutral/diy-nerds.lua:250
+#: dat/missions/neutral/diy-nerds.lua:267
 msgid "Have the nerds not told you to pick them up at the bar? Mission failed!"
 msgstr ""
 
-#: dat/missions/neutral/diy-nerds.lua:258
-#, lua-format
-msgid "Return the nerds to %s"
+#: dat/missions/neutral/diy-nerds.lua:275
+msgid "Return the nerds to {pnt}"
 msgstr ""
 
 #. hooked to 'land' in the final stage (returning the nerds)
-#: dat/missions/neutral/diy-nerds.lua:267
-#: dat/missions/neutral/diy-nerds.lua:275
+#: dat/missions/neutral/diy-nerds.lua:284
+#: dat/missions/neutral/diy-nerds.lua:292
 msgid "The End"
 msgstr ""
 
-#: dat/missions/neutral/diy-nerds.lua:267
-#, lua-format
+#: dat/missions/neutral/diy-nerds.lua:284
 msgid ""
 "The nerds, finally exhausted from all the partying, still smile as they pack "
 "up their prize-winning box and leave your ship. Mia beams as she turns to "
-"you. \"Well done, %s. You see, since we got loads of prize money, we decided "
-"to give you a bonus. After all, we wouldn't have gotten there without your "
-"service. Here, have 30,000. Good day to you.\""
+"you. \"Well done, {player}. You see, since we got loads of prize money, we "
+"decided to give you a bonus. After all, we wouldn't have gotten there "
+"without your service. Here, have 30,000. Good day to you.\""
 msgstr ""
 
-#: dat/missions/neutral/diy-nerds.lua:270
+#: dat/missions/neutral/diy-nerds.lua:287
 msgid "Minor Complications"
 msgstr ""
 
-#: dat/missions/neutral/diy-nerds.lua:270
+#: dat/missions/neutral/diy-nerds.lua:287
 msgid ""
 "With sagging shoulders, the nerds unload their box. Mia turns to address "
 "you, not bold at all this time. \"Um, we got a bit of a problem here. You "
@@ -52428,19 +52400,18 @@ msgid ""
 "can have it as a compensation for your troubles. Interested?\""
 msgstr ""
 
-#: dat/missions/neutral/diy-nerds.lua:273
+#: dat/missions/neutral/diy-nerds.lua:290
 msgid "So what?"
 msgstr ""
 
-#: dat/missions/neutral/diy-nerds.lua:273
+#: dat/missions/neutral/diy-nerds.lua:290
 msgid ""
 "\"Honestly, there is nothing you can do about it,\" Mia says impatiently, as "
 "if you were a small child complaining about the finiteness of an ice cream "
 "cone. \"Just stand by while we rig the thing up.\""
 msgstr ""
 
-#: dat/missions/neutral/diy-nerds.lua:275
-#, lua-format
+#: dat/missions/neutral/diy-nerds.lua:292
 msgid ""
 "\"You can wait for it, won't take longer than half a period,\" Mia informs "
 "you. You stand by as the nerds start to mod their box. As they are going for "
@@ -52449,9 +52420,9 @@ msgid ""
 "    Finally, the modified box is set before you. \"Here you are. Now you're "
 "the proud owner of the system's only home-made core system. It's gotten a "
 "bit bulkier than we thought, with all this rigging for energy and coolant "
-"supply, but it should work just fine, about equivalent to the %s. We need to "
-"go now and think about something more advanced for the next competition. "
-"Have a nice day.\"\n"
+"supply, but it should work just fine, about equivalent to the {outfit}. We "
+"need to go now and think about something more advanced for the next "
+"competition. Have a nice day.\"\n"
 "    With that, the nerds leave. Having gotten nothing else out of this, you "
 "think you should visit an outfitter to see if the homemade core system may "
 "actually be of any use, or if you can at least sell it."
@@ -54116,29 +54087,28 @@ msgstr ""
 #. -- The old woman keeps muttering about how the times have changed and how it used to be when she was young.
 #. --
 #. --
-#. Localization, choosing a language if Naev is translated for non-english-speaking locales.
-#: dat/missions/neutral/oldwoman.lua:35
+#: dat/missions/neutral/oldwoman.lua:34
 msgid ""
 "\"You youngsters and your newfangled triple redundancy plasma feedback "
 "shunts. In my day, we had to use simple monopole instaconductors to keep our "
 "hyperdrives running!\""
 msgstr ""
 
-#: dat/missions/neutral/oldwoman.lua:36
+#: dat/missions/neutral/oldwoman.lua:35
 msgid ""
 "\"Tell me, youngster, why is everyone so preoccupied with Soromid "
 "enhancements these days? Cybernetic implants were good enough for us, why "
 "can't they be for you?\""
 msgstr ""
 
-#: dat/missions/neutral/oldwoman.lua:37
+#: dat/missions/neutral/oldwoman.lua:36
 msgid ""
 "\"My mother was from Earth, you know. She even took me there once, when I "
 "was a little girl. I still remember it like it happened yesterday. They "
 "don't make planets like that anymore these days, oh no.\""
 msgstr ""
 
-#: dat/missions/neutral/oldwoman.lua:38
+#: dat/missions/neutral/oldwoman.lua:37
 msgid ""
 "\"What did you say this thing was? A microblink reinforced packet "
 "transmitter? No, no, don't try to explain how it works. I'm too old for "
@@ -54146,18 +54116,18 @@ msgid ""
 "my understanding.\""
 msgstr ""
 
-#: dat/missions/neutral/oldwoman.lua:39
+#: dat/missions/neutral/oldwoman.lua:38
 msgid ""
 "\"You don't know how good you have it these days. When I was young, we "
 "needed to reprogram our own electronic countermeasures to deal with custom "
 "pirate tracking systems.\""
 msgstr ""
 
-#: dat/missions/neutral/oldwoman.lua:40
+#: dat/missions/neutral/oldwoman.lua:39
 msgid "\"Time passes by so quickly. I remember when this was all space.\""
 msgstr ""
 
-#: dat/missions/neutral/oldwoman.lua:41
+#: dat/missions/neutral/oldwoman.lua:40
 msgid ""
 "\"All this automation is making people lax, I tell you. My uncle ran a tight "
 "ship. If he caught you cutting corners, you'd be defragmenting the sub-ion "
@@ -54165,37 +54135,36 @@ msgid ""
 msgstr ""
 
 #. In case no suitable planets are in range.
-#: dat/missions/neutral/oldwoman.lua:64
+#: dat/missions/neutral/oldwoman.lua:63
 msgid "An old woman"
 msgstr ""
 
-#: dat/missions/neutral/oldwoman.lua:64
+#: dat/missions/neutral/oldwoman.lua:63
 msgid ""
 "You see a wrinkled old lady, a somewhat unusual sight in a spaceport bar. "
 "She's purposefully looking around."
 msgstr ""
 
-#: dat/missions/neutral/oldwoman.lua:69 dat/missions/neutral/oldwoman.lua:71
+#: dat/missions/neutral/oldwoman.lua:68 dat/missions/neutral/oldwoman.lua:70
 msgid "An elderly lady"
 msgstr ""
 
-#: dat/missions/neutral/oldwoman.lua:69
-#, lua-format
+#: dat/missions/neutral/oldwoman.lua:68
 msgid ""
 "You decide to ask the old woman if there's something you can help her with.\n"
 "    \"As a matter of fact, there is,\" she creaks. \"I want to visit my "
-"cousin, she lives on %s, you know, in the %s system, it's a Sirian place. "
-"But I don't have a ship and those blasted passenger lines around here don't "
-"fly on Sirius space! I tell you, customer service really has gone down the "
-"gutter over the years. In my space faring days, there would always be some "
-"transport ready to take you anywhere! But now look at me, I'm forced to get "
-"to the spaceport bar to see if there's a captain willing to take me! It's a "
-"disgrace, that's what it is. What a galaxy we live in! But I ramble. You "
-"seem like you've got time on your hands. Fancy making a trip down to %s? "
-"I'll pay you a decent fare, of course.\""
+"cousin, she lives on {pnt}, you know, in the {sys} system, it's a Sirian "
+"place. But I don't have a ship and those blasted passenger lines around here "
+"don't fly on Sirius space! I tell you, customer service really has gone down "
+"the gutter over the years. In my space faring days, there would always be "
+"some transport ready to take you anywhere! But now look at me, I'm forced to "
+"get to the spaceport bar to see if there's a captain willing to take me! "
+"It's a disgrace, that's what it is. What a galaxy we live in! But I ramble. "
+"You seem like you've got time on your hands. Fancy making a trip down to "
+"{pnt}? I'll pay you a decent fare, of course.\""
 msgstr ""
 
-#: dat/missions/neutral/oldwoman.lua:71
+#: dat/missions/neutral/oldwoman.lua:70
 msgid ""
 "\"Oh, that's good of you.\" The old woman gives you a wrinkly smile. \"I "
 "haven't seen my cousin in such a long time, it'll be great to see how she's "
@@ -54207,44 +54176,42 @@ msgid ""
 "quickly as you can."
 msgstr ""
 
-#: dat/missions/neutral/oldwoman.lua:73
+#: dat/missions/neutral/oldwoman.lua:72
 msgid "Old Woman"
 msgstr ""
 
-#: dat/missions/neutral/oldwoman.lua:73
+#: dat/missions/neutral/oldwoman.lua:72
 msgid "A grumbling old woman."
 msgstr ""
 
-#: dat/missions/neutral/oldwoman.lua:77
-#, lua-format
-msgid "An aging lady has asked you to ferry her to %s in the %s system."
+#: dat/missions/neutral/oldwoman.lua:76
+msgid "An aging lady has asked you to ferry her to {pnt} in the {sys} system."
 msgstr ""
 
-#: dat/missions/neutral/oldwoman.lua:78
+#: dat/missions/neutral/oldwoman.lua:77
 msgid "Fair monetary compensation"
 msgstr ""
 
-#: dat/missions/neutral/oldwoman.lua:79
+#: dat/missions/neutral/oldwoman.lua:78
 msgid "The old woman"
 msgstr ""
 
 #: dat/missions/neutral/oldwoman.lua:79
-#, lua-format
-msgid "Take the old woman to %s (%s system)"
+msgid "Take the old woman to {pnt} ({sys} system)"
 msgstr ""
 
 #. Date hook.
-#: dat/missions/neutral/oldwoman.lua:98
+#: dat/missions/neutral/oldwoman.lua:99
 msgid "Grumblings from the old lady"
 msgstr ""
 
 #. Uh... yeah.
 #. Land hook.
-#: dat/missions/neutral/oldwoman.lua:106
+#: dat/missions/neutral/oldwoman.lua:107
 msgid "Delivery complete"
 msgstr ""
 
-#: dat/missions/neutral/oldwoman.lua:106
+#: dat/missions/neutral/oldwoman.lua:107
 msgid ""
 "You help the old lady to the spacedock elevator. She keeps grumbling about "
 "how spaceports these days are so inconvenient and how advertisement "
@@ -54258,7 +54225,7 @@ msgid ""
 "terminal. Well, that was quite a passenger!"
 msgstr ""
 
-#: dat/missions/neutral/oldwoman.lua:110
+#: dat/missions/neutral/oldwoman.lua:111
 msgid ""
 "You escorted an old woman to her cousin in Sirian space. She was nice, "
 "albeit somewhat overly chatty."
@@ -56205,15 +56172,13 @@ msgstr ""
 
 #. Set mission details
 #: dat/missions/neutral/sightseeing.lua:113
-#, lua-format
-msgid "Sightseeing in the %s System"
+msgid "Sightseeing in the {sys} System"
 msgstr ""
 
 #: dat/missions/neutral/sightseeing.lua:114
-#, lua-format
 msgid ""
 "Several passengers wish to go off-world and go on a sightseeing tour. "
-"Navigate to specified attractions in the %s system."
+"Navigate to specified attractions in the {sys} system."
 msgstr ""
 
 #: dat/missions/neutral/sightseeing.lua:122
@@ -56221,10 +56186,9 @@ msgid "Not Very Luxurious"
 msgstr ""
 
 #: dat/missions/neutral/sightseeing.lua:122
-#, lua-format
 msgid ""
-"Since your ship is not a Luxury Yacht class ship, you will only be paid %s. "
-"Accept the mission anyway?"
+"Since your ship is not a Luxury Yacht class ship, you will only be paid "
+"{credits}. Accept the mission anyway?"
 msgstr ""
 
 #: dat/missions/neutral/sightseeing.lua:132
@@ -56236,8 +56200,7 @@ msgid "Go to all indicated points"
 msgstr ""
 
 #: dat/missions/neutral/sightseeing.lua:135
-#, lua-format
-msgid "Return to %s in the %s system and collect your pay"
+msgid "Return to {pnt} in the {sys} system and collect your pay"
 msgstr ""
 
 #: dat/missions/neutral/sightseeing.lua:137
@@ -56258,8 +56221,7 @@ msgstr ""
 
 #. Another check since the previous block could change the result
 #: dat/missions/neutral/sightseeing.lua:238
-#, lua-format
-msgid "All attractions visited. Return to %s and collect your pay."
+msgid "All attractions visited. Return to {pnt} and collect your pay."
 msgstr ""
 
 #. Remove existing marks
@@ -56288,28 +56250,26 @@ msgstr ""
 #. This is the mission part of the shipwrecked Space Family mission, started from a random event.
 #. See dat/events/neutral/shipwreck
 #. --
-#: dat/missions/neutral/spacefamily.lua:25
-#, lua-format
+#: dat/missions/neutral/spacefamily.lua:26
 msgid ""
-"\"I know just the place,\" Harrus tells you. \"Take us to planet %s in the "
-"%s system. I'm sure a man of my calibre can find everything he needs there. "
-"Captain, please notify me when we arrive.\" With that, Harrus turns and "
-"rejoins his family. The kids seem in the process of redecorating (if not "
+"\"I know just the place,\" Harrus tells you. \"Take us to planet {pnt} in "
+"the {sys} system. I'm sure a man of my calibre can find everything he needs "
+"there. Captain, please notify me when we arrive.\" With that, Harrus turns "
+"and rejoins his family. The kids seem in the process of redecorating (if not "
 "wrecking) your quarters, and despite the apologetic glance the woman gives "
 "you you can't help but wonder if you did the right thing responding to that "
 "SOS."
 msgstr ""
 
-#: dat/missions/neutral/spacefamily.lua:26
-#, lua-format
+#: dat/missions/neutral/spacefamily.lua:27
 msgid ""
 "Harrus steps out of your ship and takes a look around the spaceport you "
 "docked at. \"No, no. This won't do at all,\" he says disapprovingly. \"This "
 "place is a mess! Look at the dust and grime!\" He rounds on you. \"How are "
 "we supposed to make a decent living in a dump like this? You've brought us "
 "to the wrong place altogether. I must say I'm disappointed. I demand you "
-"take us away from this abysmal hole this minute! Let's see... Yes, %s in %s "
-"will do. At least they're civilized there!\"\n"
+"take us away from this abysmal hole this minute! Let's see... Yes, {pnt} in "
+"{sys} will do. At least they're civilized there!\"\n"
 "    You attempt to remind Harrus that it was in fact he who asked you to "
 "take him to this system in the first place, and that the spaceport is hardly "
 "a representation of the entire world, but the man doesn't want to hear it. "
@@ -56320,8 +56280,7 @@ msgid ""
 "docking formalities out of the way."
 msgstr ""
 
-#: dat/missions/neutral/spacefamily.lua:29
-#, lua-format
+#: dat/missions/neutral/spacefamily.lua:30
 msgid ""
 "\"The sky! Have you LOOKED at it?\"\n"
 "    Harrus rounds on you with a furious expression. Your keen understanding "
@@ -56333,45 +56292,41 @@ msgid ""
 "children to grow up believing the sky is supposed to look like, like... like "
 "THAT?\" Harrus again looks up at the heavens that offend him so. \"No, "
 "captain, my patience is at an end. I expect you to take me and my family to "
-"%s in the %s system. We've got relatives there who will take us in. I will "
-"waste my time with this pointless endeavour no longer!\"\n"
+"{pnt} in the {sys} system. We've got relatives there who will take us in. I "
+"will waste my time with this pointless endeavour no longer!\"\n"
 "    Before you get a chance at making a snappy retort, Harrus storms back to "
 "his (your) quarters, leaving you to either vent your anger on his wife, who "
 "is hovering nearby, or keep it to yourself. Since the poor woman has done "
 "nothing wrong, you grimly return to the bridge."
 msgstr ""
 
-#. Mission details
-#. Aborted mission
-#. OSD stuff
-#: dat/missions/neutral/spacefamily.lua:41
-#: dat/missions/neutral/spacefamily.lua:49
+#. Note: this mission does not make any system claims.
+#. You boarded their ship, now you're stuck with them.
+#. NPC telling you where to go
+#: dat/missions/neutral/spacefamily.lua:38
+#: dat/missions/neutral/spacefamily.lua:66
+#: dat/missions/neutral/spacefamily.lua:116
+msgid "The Space Family"
+msgstr ""
+
+#: dat/missions/neutral/spacefamily.lua:39
+msgid "A clear conscience."
+msgstr ""
+
+#: dat/missions/neutral/spacefamily.lua:40
 msgid ""
 "A shipwrecked space family has enlisted your aid. Can you take them to "
 "safety?"
 msgstr ""
 
-#. Note: this mission does not make any system claims.
-#. You boarded their ship, now you're stuck with them.
-#. NPC telling you where to go
-#: dat/missions/neutral/spacefamily.lua:47
-#: dat/missions/neutral/spacefamily.lua:75
-#: dat/missions/neutral/spacefamily.lua:123
-msgid "The Space Family"
-msgstr ""
-
-#: dat/missions/neutral/spacefamily.lua:48
-msgid "A clear conscience."
-msgstr ""
-
 #. For lack of a test, we'll just have to keep track ourselves.
 #. Intro text, player meets family
-#: dat/missions/neutral/spacefamily.lua:55
-#: dat/missions/neutral/spacefamily.lua:59
+#: dat/missions/neutral/spacefamily.lua:46
+#: dat/missions/neutral/spacefamily.lua:50
 msgid "Shipwrecked space family"
 msgstr ""
 
-#: dat/missions/neutral/spacefamily.lua:55
+#: dat/missions/neutral/spacefamily.lua:46
 msgid ""
 "The airlock opens, and you are greeted by a nervous-looking man, a shy "
 "woman, and three neurotic children.\n"
@@ -56391,13 +56346,12 @@ msgid ""
 "them under control."
 msgstr ""
 
-#: dat/missions/neutral/spacefamily.lua:59
-#, lua-format
+#: dat/missions/neutral/spacefamily.lua:50
 msgid ""
 "Harrus is about to launch into another anecdote about his existence as a "
 "trader, but you manage to forestall him. You soon learn that his family's "
 "lifestyle has come to an abrupt change at the hands of a minor gang of "
-"pirates. Though the %s had some weaponry and shielding systems, the "
+"pirates. Though the {plt} had some weaponry and shielding systems, the "
 "attackers were too much for a single cargo ship.\n"
 "    \"I never thought it would end like this,\" Harrus sighs. \"I mean, I "
 "knew space was dangerous, but I stayed clear of the unsafe areas. Stuck to "
@@ -56411,11 +56365,11 @@ msgid ""
 "into your living quarters. They do not seem about to leave."
 msgstr ""
 
-#: dat/missions/neutral/spacefamily.lua:64
+#: dat/missions/neutral/spacefamily.lua:55
 msgid "Space Family"
 msgstr ""
 
-#: dat/missions/neutral/spacefamily.lua:64
+#: dat/missions/neutral/spacefamily.lua:55
 msgid "A family who you rescued in space."
 msgstr ""
 
@@ -56423,15 +56377,14 @@ msgstr ""
 #. Populate the array
 #. In case no systems were found.
 #. pick a landable planet in the destination system
-#: dat/missions/neutral/spacefamily.lua:74
-#: dat/missions/neutral/spacefamily.lua:122
+#: dat/missions/neutral/spacefamily.lua:65
+#: dat/missions/neutral/spacefamily.lua:115
 msgid "Next stop"
 msgstr ""
 
-#: dat/missions/neutral/spacefamily.lua:75
-#: dat/missions/neutral/spacefamily.lua:123
-#, lua-format
-msgid "Take the space family to %s in the %s system"
+#: dat/missions/neutral/spacefamily.lua:67
+#: dat/missions/neutral/spacefamily.lua:117
+msgid "Take the space family to {pnt} in the {sys} system"
 msgstr ""
 
 #. Force unboard
@@ -56439,12 +56392,11 @@ msgstr ""
 #. Given a system, return the first landable planet found, or nil if none are landable (shouldn't happen in this script)
 #. We've arrived!
 #. This is the last stop
-#: dat/missions/neutral/spacefamily.lua:108
+#: dat/missions/neutral/spacefamily.lua:101
 msgid "Rid of them at last"
 msgstr ""
 
-#: dat/missions/neutral/spacefamily.lua:108
-#, lua-format
+#: dat/missions/neutral/spacefamily.lua:101
 msgid ""
 "You land at your final stop in your quest to take the space family home, and "
 "not a moment too soon for both you and Harrus. Harrus stomps off your ship "
@@ -56461,7 +56413,7 @@ msgid ""
 msgstr ""
 
 #. Final message
-#: dat/missions/neutral/spacefamily.lua:113
+#: dat/missions/neutral/spacefamily.lua:106
 msgid ""
 "You rescued a bad-tempered man and his family who were stranded aboard their "
 "ship. After a lot of annoying complaints, the man and his family finally "
@@ -56469,11 +56421,11 @@ msgid ""
 msgstr ""
 
 #. Only gets landable systems
-#: dat/missions/neutral/spacefamily.lua:157
+#: dat/missions/neutral/spacefamily.lua:151
 msgid "Distractions on the bridge"
 msgstr ""
 
-#: dat/missions/neutral/spacefamily.lua:157
+#: dat/missions/neutral/spacefamily.lua:151
 msgid ""
 "You are going over a routine navigation check when Harrus enters your cabin "
 "unannounced. He seems to have recovered from his distressed state, and now "
@@ -56488,19 +56440,19 @@ msgid ""
 "again, you take a moment to subside before completing that check."
 msgstr ""
 
-#: dat/missions/neutral/spacefamily.lua:164
-#: dat/missions/neutral/spacefamily.lua:166
+#: dat/missions/neutral/spacefamily.lua:158
+#: dat/missions/neutral/spacefamily.lua:160
 msgid "A parting of ways"
 msgstr ""
 
-#: dat/missions/neutral/spacefamily.lua:164
+#: dat/missions/neutral/spacefamily.lua:158
 msgid ""
 "You unceremoniously shove your passengers out of the airlock and into the "
 "coldness of space. You're done playing taxi; it's time to get back to "
 "important things!"
 msgstr ""
 
-#: dat/missions/neutral/spacefamily.lua:166
+#: dat/missions/neutral/spacefamily.lua:160
 msgid ""
 "You unceremoniously shove your passengers out of the airlock, leaving them "
 "to their fate on this planet. You're done playing taxi; it's time to get "
@@ -56559,10 +56511,9 @@ msgid ""
 msgstr ""
 
 #: dat/missions/neutral/teenager.lua:40
-#, lua-format
 msgid ""
 "A disgruntled parent has asked you to fetch his son and his son's "
-"girlfriend, who have taken a yacht and are joyriding it in the %s system."
+"girlfriend, who have taken a yacht and are joyriding it in the {sys} system."
 msgstr ""
 
 #: dat/missions/neutral/teenager.lua:41
@@ -56578,8 +56529,7 @@ msgid "Disable Gawain Credence"
 msgstr ""
 
 #: dat/missions/neutral/teenager.lua:44
-#, lua-format
-msgid "Bring the teenagers back to planet %s"
+msgid "Bring the teenagers back to planet {pnt}"
 msgstr ""
 
 #: dat/missions/neutral/teenager.lua:46
@@ -56607,10 +56557,9 @@ msgid "Whoops!"
 msgstr ""
 
 #: dat/missions/neutral/teenager.lua:89
-#, lua-format
 msgid ""
 "You have destroyed the Gawain! The family presses charges, and you are "
-"sentenced to a %s fine in absence of attendance."
+"sentenced to a {credits} fine in absentia."
 msgstr ""
 
 #. I love this statement.
@@ -57228,7 +57177,6 @@ msgid "Fake ID"
 msgstr ""
 
 #: dat/missions/pirate/fake_id.lua:60
-#, lua-format
 msgid ""
 "This fake ID will allow you to conduct business with all major locations "
 "where you are currently wanted. It will be as if you were a new person. "
@@ -57241,12 +57189,11 @@ msgid ""
 "Furthermore, being scanned by other ships will lead to your fake ID being "
 "detected and your cover being blown.\n"
 "\n"
-"Cost: %s"
+"Cost: {credits}"
 msgstr ""
 
 #: dat/missions/pirate/fake_id.lua:69
-#, lua-format
-msgid "You don't have enough money to buy a fake ID. The price is %s."
+msgid "You don't have enough money to buy a fake ID. The price is {credits}."
 msgstr ""
 
 #. We delay choice of when you are discovered to prevent players
@@ -57328,19 +57275,18 @@ msgstr ""
 #. Note: this mission does not make any system claims.
 #. Find target system
 #. Spaceport bar stuff
-#: dat/missions/pirate/hitman.lua:34 dat/missions/pirate/hitman2.lua:32
+#: dat/missions/pirate/hitman.lua:35 dat/missions/pirate/hitman2.lua:33
 msgid "Shifty Trader"
 msgstr ""
 
-#: dat/missions/pirate/hitman.lua:34
+#: dat/missions/pirate/hitman.lua:35
 msgid ""
 "You see a shifty looking man sitting in a darkened corner of the bar. He is "
 "trying to discreetly motion you to join him, but is only managing to make "
 "himself look suspicious. Perhaps he's watched too many holovideos."
 msgstr ""
 
-#: dat/missions/pirate/hitman.lua:43
-#, lua-format
+#: dat/missions/pirate/hitman.lua:44
 msgid ""
 "The man motions for you to take a seat next to him. Voice barely above a "
 "whisper, he asks, \"How'd you like to earn some easy money? If you're "
@@ -57348,33 +57294,29 @@ msgid ""
 msgstr ""
 
 #: dat/missions/pirate/hitman.lua:56 dat/missions/pirate/hitman2.lua:56
-#, lua-format
 msgid "Some easy money"
 msgstr ""
 
 #: dat/missions/pirate/hitman.lua:57
-#, lua-format
 msgid ""
 "A shifty businessman has tasked you with chasing away merchant competition "
-"in the %s system."
+"in the {sys} system."
 msgstr ""
 
 #: dat/missions/pirate/hitman.lua:60
-#, lua-format
 msgid ""
-"Attack, but do not kill, Trader pilots in the %s system so that they run away"
+"Attack, but do not kill, Trader pilots in the {sys} system so that they run "
+"away"
 msgstr ""
 
 #: dat/missions/pirate/hitman.lua:61 dat/missions/pirate/hitman2.lua:61
-#, lua-format
-msgid "Return to %s in the %s system for payment"
+msgid "Return to {pnt} in the {sys} system for payment"
 msgstr ""
 
 #: dat/missions/pirate/hitman.lua:64
-#, lua-format
 msgid ""
 "Apparently relieved that you've accepted his offer, he continues, \"There're "
-"some new merchants edging in on my trade routes in %s. I want you to make "
+"some new merchants edging in on my trade routes in {sys}. I want you to make "
 "sure they know they're not welcome.\" Pausing for a moment, he notes, \"You "
 "don't have to kill anyone, just rough them up a bit.\""
 msgstr ""
@@ -57412,14 +57354,13 @@ msgid ""
 "credits by the shifty merchant for your services."
 msgstr ""
 
-#: dat/missions/pirate/hitman2.lua:32
+#: dat/missions/pirate/hitman2.lua:33
 msgid ""
 "You see the shifty merchant who hired you previously. He looks somewhat "
 "anxious, perhaps he has more business to discuss."
 msgstr ""
 
-#: dat/missions/pirate/hitman2.lua:41
-#, lua-format
+#: dat/missions/pirate/hitman2.lua:42
 msgid ""
 "As you approach, the man turns to face you and his anxiousness seems to "
 "abate somewhat. As you take a seat he greets you, \"Ah, so we meet again. "
@@ -57430,25 +57371,21 @@ msgstr ""
 
 #. Some variables for keeping track of the mission
 #. Set mission details
-#: dat/missions/pirate/hitman2.lua:55 dat/missions/pirate/hitman2.lua:62
-#, lua-format
+#: dat/missions/pirate/hitman2.lua:55 dat/missions/pirate/hitman2.lua:59
 msgid "Assassin"
 msgstr ""
 
 #: dat/missions/pirate/hitman2.lua:57
-#, lua-format
 msgid ""
 "A shifty businessman has tasked you with killing merchant competition in the "
-"%s system."
+"{sys} system."
 msgstr ""
 
 #: dat/missions/pirate/hitman2.lua:60
-#, lua-format
-msgid "Kill Trader pilots in the %s system"
+msgid "Kill Trader pilots in the {sys} system"
 msgstr ""
 
 #: dat/missions/pirate/hitman2.lua:64
-#, lua-format
 msgid ""
 "He nods approvingly. \"It seems that the traders are rather stubborn, they "
 "didn't get the message last time and their presence is increasing.\" He lets "
@@ -58065,17 +58002,18 @@ msgid ""
 msgstr ""
 
 #: dat/missions/pirate/pir_contraband.lua:185
-#, lua-format
-msgid "%s of %s are loaded onto your ship."
+msgid "{tonnes} of {cargo} are loaded onto your ship."
 msgstr ""
 
 #: dat/missions/pirate/pir_contraband.lua:196
 msgid "The containers of {cargo} are unloaded at the docks."
 msgstr ""
 
-#: dat/missions/pirate/pir_contraband.lua:214
-#, lua-format
-msgid "Smuggling %s"
+#. increase faction
+#. Date hook
+#. Case still in time
+#: dat/missions/pirate/pir_contraband.lua:211
+msgid "Smuggling {cargo}"
 msgstr ""
 
 #. Case missed deadline
@@ -58149,12 +58087,11 @@ msgid ""
 msgstr ""
 
 #: dat/missions/pirate/pir_contraband_cake.lua:73
-#, lua-format
 msgid ""
 "They lean closer to you and lower their voice.\n"
 "\"I was asked to deliver a… a…\"\n"
 "They furrow their brows for a second.\n"
-"\"…a cake! To %s in the %s system.\""
+"\"…a cake! To {pnt} in the {sys} system.\""
 msgstr ""
 
 #: dat/missions/pirate/pir_contraband_cake.lua:77
@@ -58167,20 +58104,18 @@ msgid ""
 msgstr ""
 
 #: dat/missions/pirate/pir_contraband_cake.lua:78
-#, lua-format
 msgid ""
-"\"All you would have to do is take the cake and go to %s in the %s system, "
-"without getting any of that nasty scanning radiation on you.\"\n"
+"\"All you would have to do is take the cake and go to {pnt} in the {sys} "
+"system, without getting any of that nasty scanning radiation on you.\"\n"
 "They shiver with disgust to emphasize and you can see some of their sweat "
 "fly off onto the bar floor.\n"
 "\"Once you deliver it I'll split the money half and half with you.\""
 msgstr ""
 
 #: dat/missions/pirate/pir_contraband_cake.lua:82
-#, lua-format
 msgid ""
-"\"Fine fine, take it all. It should be %s. Just remember no scanning means "
-"no problems.\"\n"
+"\"Fine fine, take it all. It should be {credits}. Just remember no scanning "
+"means no problems.\"\n"
 "They extend their sweaty hand towards you.\n"
 "\"So, are you in?\""
 msgstr ""
@@ -58232,9 +58167,8 @@ msgid ""
 msgstr ""
 
 #: dat/missions/pirate/pir_contraband_cake.lua:110
-#, lua-format
 msgid ""
-"\"To avoid getting spotted and scanned, you can go into stealth with %s. "
+"\"To avoid getting spotted and scanned, you can go into stealth with {key}. "
 "When in stealth, you move much slower than normal, however, ships can only "
 "detect you when they are within your stealth range. No detection, no "
 "scanning, no problems. You can only stealth if there are no ships nearby, "
@@ -58243,21 +58177,19 @@ msgid ""
 msgstr ""
 
 #: dat/missions/pirate/pir_contraband_cake.lua:112
-#, lua-format
 msgid ""
-"\"So as long as you stealth with %s and stay away from ships, you won't be "
-"scanned and the cake will be alright.\""
+"\"So as long as you stealth with {key} and stay away from ships, you won't "
+"be scanned and the cake will be alright.\""
 msgstr ""
 
 #: dat/missions/pirate/pir_contraband_cake.lua:116
-#, lua-format
 msgid ""
 "\"Great. One second, let me get the cake.\"\n"
 "They go to the restroom and come back holding a nondescript brown box that "
 "seems to have 'Cake' hastily scribbled on it. They promptly hand it over to "
 "you while looking both ways.\n"
-"\"OK, so that's it. Make sure to take this to %s in the %s system, and watch "
-"out for scanning!\""
+"\"OK, so that's it. Make sure to take this to {pnt} in the {sys} system, and "
+"watch out for scanning!\""
 msgstr ""
 
 #: dat/missions/pirate/pir_contraband_cake.lua:119
@@ -58282,15 +58214,14 @@ msgid "Deliver Cake"
 msgstr ""
 
 #: dat/missions/pirate/pir_contraband_cake.lua:132
-#, lua-format
-msgid "Fly to %s in the %s system without getting scanned"
+msgid "Fly to {pnt} in the {sys} system without getting scanned"
 msgstr ""
 
 #: dat/missions/pirate/pir_contraband_cake.lua:136
-#, lua-format
 msgid ""
-"Deliver a cake to %s in the %s system. Apparently it has a special frosting "
-"and will be damaged if you are scanned. Use stealth to avoid getting scanned."
+"Deliver a cake to {pnt} in the {sys} system. Apparently it has a special "
+"frosting and will be damaged if you are scanned. Use stealth to avoid "
+"getting scanned."
 msgstr ""
 
 #. only hook after accepting
