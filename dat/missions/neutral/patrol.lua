@@ -62,7 +62,7 @@ osd_msg    = {}
 osd_msg[1] = _("Fly to the {sys} system")
 osd_msg[2] = "(null)"
 osd_msg[3] = _("Eliminate hostiles")
-osd_msg[4] = _("Land in {fctname} territory to collect your pay")
+osd_msg[4] = _("Land in {fct} territory to collect your pay")
 osd_msg["__save"] = true
 
 use_hidden_jumps = false
@@ -135,7 +135,7 @@ function create ()
    reputation = math.floor( n_enemies / 75 )
 
    -- Set mission details
-   misn.setTitle( fmt.f( misn_title, {sys=missys, fctname=paying_faction} ) )
+   misn.setTitle( fmt.f( misn_title, {sys=missys, fct=paying_faction} ) )
    misn.setDesc( fmt.f( misn_desc, {sys=missys} ) )
    misn.setReward( fmt.credits( credits ) )
    marker = misn.markerAdd( missys, "computer" )
@@ -151,7 +151,7 @@ function accept ()
       "Go to indicated point (%d remaining)",
       #points
    ):format( #points )
-   osd_msg[4] = fmt.f( osd_msg[4], {fctname=paying_faction} )
+   osd_msg[4] = fmt.f( osd_msg[4], {fct=paying_faction} )
    misn.osdCreate( _("Patrol"), osd_msg )
 
    job_done = false

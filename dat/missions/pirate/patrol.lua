@@ -37,7 +37,7 @@ abandon_text[1] = _("You are sent a message informing you that landing in the mi
 
 
 -- Mission details
-misn_title  = _("#rPIRACY:#0 Patrol of the {sys} System ({fctname})")
+misn_title  = _("#rPIRACY:#0 Patrol of the {sys} System ({fct})")
 misn_desc   = _("A local crime boss has offered a job to patrol the {sys} system in an effort to keep outsiders from discovering this Pirate stronghold. You will be tasked with checking various points and eliminating any outsiders along the way.")
 
 -- Messages
@@ -53,7 +53,7 @@ osd_msg    = {}
 osd_msg[1] = _("Fly to the {sys} system")
 osd_msg[2] = "(null)"
 osd_msg[3] = _("Eliminate outsiders")
-osd_msg[4] = _("Land in {fctname} territory to collect your pay")
+osd_msg[4] = _("Land in {fct} territory to collect your pay")
 osd_msg["__save"] = true
 
 use_hidden_jumps = true

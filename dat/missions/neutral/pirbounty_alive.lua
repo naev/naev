@@ -60,7 +60,7 @@ misn_title[2] = _("Small Alive Bounty in {sys}")
 misn_title[3] = _("Moderate Alive Bounty in {sys}")
 misn_title[4] = _("High Alive Bounty in {sys}")
 misn_title[5] = _("Dangerous Alive Bounty in {sys}")
-misn_desc   = _("The pirate known as {pirname} was recently seen in the {sys} system. {fctname} authorities want this pirate alive. {pirname} is believed to be flying a {shipclass}-class ship.")
+misn_desc   = _("The pirate known as {pirname} was recently seen in the {sys} system. {fct} authorities want this pirate alive. {pirname} is believed to be flying a {shipclass}-class ship.")
 
 osd_msg[2] = _("Capture {pltname}")
 

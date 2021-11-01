@@ -495,9 +495,7 @@ function add_header( my_faction )
    end
 
    if header_table[my_faction] == nil then
-      warn( fmt.f(
-            _([[News: Faction '{facname}' does not have entry in faction table!]]),
-            my_faction) )
+      warn( fmt.f( _([[News: Faction '{fct}' does not have entry in faction table!]]), {fct=my_faction}) )
       my_faction = 'Generic'
    end
 

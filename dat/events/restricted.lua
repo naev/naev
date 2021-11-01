@@ -48,7 +48,7 @@ function msg_buoy ()
    else
       col = "N"
    end
-   player.msg(fmt.f(_([[#{col}{fctname} Message Buoy>#0 "{msg}"]]), {col=col, fctname=sysfct:name(), msg=msg} ))
+   player.msg(fmt.f(_([[#{col}{fct} Message Buoy>#0 "{msg}"]]), {col=col, fct=sysfct, msg=msg} ))
    msg_delay = (msg_delay or 8) * 2
    hook.timer( msg_delay, "msg_buoy" )
 end

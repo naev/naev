@@ -28876,13 +28876,13 @@ msgid ""
 "This ship looks like any old piece of scrap at a glance, but it is actually "
 "an antique, one of the very first of its kind ever produced! Museums all "
 "over the galaxy would love to have a ship like this. You plant a beacon on "
-"the derelict to mark it for salvaging, and contact the {factname} "
+"the derelict to mark it for salvaging, and contact the {fct} "
 "authorities. Your reputation with them has slightly improved."
 msgstr ""
 "この船は一見して古い廃物の破片のように見えた。しかしじっさいには骨董品だっ"
 "た。いままで生産されたその種のなかでは、ごく最初期のものなのだ！　銀河じゅう"
 "の博物館がこの船を所有したがることだろう。あなたは無線標識をこの遺棄船に据え"
-"つけて回収用のしるしとしてから、{factname}の役所に連絡をした。その党派でのあ"
+"つけて回収用のしるしとしてから、{fct}の役所に連絡をした。その党派でのあ"
 "なたの評判は、わずかに上昇した。"
 
 #. See if we should add maps
@@ -30153,8 +30153,8 @@ msgstr ""
 #. Needs a faction for there to be news
 #. Remove old headers (we only want one at a time)
 #: dat/events/neutral/news.lua:499
-msgid "News: Faction '{facname}' does not have entry in faction table!"
-msgstr "News: Faction '{facname}' does not have entry in faction table!"
+msgid "News: Faction '{fct}' does not have entry in faction table!"
+msgstr "News: Faction '{fct}' does not have entry in faction table!"
 
 #. Remove old econ articles (we only want one at a time)
 #: dat/events/neutral/news.lua:590
@@ -56684,8 +56684,8 @@ msgid "Eliminate hostiles"
 msgstr "敵を除去せよ。"
 
 #: dat/missions/neutral/patrol.lua:65 dat/missions/pirate/patrol.lua:56
-msgid "Land in {fctname} territory to collect your pay"
-msgstr "{fctname}の領土に着陸すると、報酬を受けとれる。"
+msgid "Land in {fct} territory to collect your pay"
+msgstr "{fct}の領土に着陸すると、報酬を受けとれる。"
 
 #. Get the number of enemies in a particular system
 #. Set mission details
@@ -56937,10 +56937,10 @@ msgstr "{sys}での危険な生け捕り賞金"
 #: dat/missions/neutral/pirbounty_alive.lua:63
 msgid ""
 "The pirate known as {pirname} was recently seen in the {sys} system. "
-"{fctname} authorities want this pirate alive. {pirname} is believed to be "
+"{fct} authorities want this pirate alive. {pirname} is believed to be "
 "flying a {shipclass}-class ship."
 msgstr ""
-"{pirname}という名で知られる海賊が最近{sys}星系で見られた。{fctname}当局がこの"
+"{pirname}という名で知られる海賊が最近{sys}星系で見られた。{fct}当局がこの"
 "海賊を生け捕りにするか死んでほしがっている。{pirname}は{shipclass}級の船で飛"
 "んでいると信じられている。"
 
@@ -57209,10 +57209,10 @@ msgstr "{sys}での危険な生死を問わない賞金"
 #: dat/missions/neutral/pirbounty_dead.lua:78
 msgid ""
 "The pirate known as {pirname} was recently seen in the {sys} system. "
-"{fctname} authorities want this pirate dead or alive. {pirname} is believed "
+"{fct} authorities want this pirate dead or alive. {pirname} is believed "
 "to be flying a {shipclass}-class ship."
 msgstr ""
-"{pirname}という名で知られる海賊が最近{sys}星系で見られた。{fctname}当局がこの"
+"{pirname}という名で知られる海賊が最近{sys}星系で見られた。{fct}当局がこの"
 "海賊を生け捕りにするか死んでほしがっている。{pirname}は{shipclass}級の船で飛"
 "んでいると信じられている。"
 
@@ -57236,8 +57236,8 @@ msgstr "{pltname}を殺すか捕まえろ。"
 
 #: dat/missions/neutral/pirbounty_dead.lua:90
 #: dat/missions/proteron/dissbounty_dead.lua:68
-msgid "Land in {fctname} territory to collect your bounty"
-msgstr "{fctname}の領土に着陸すると、賞金を受けとれる。"
+msgid "Land in {fct} territory to collect your bounty"
+msgstr "{fct}の領土に着陸すると、賞金を受けとれる。"
 
 #: dat/missions/neutral/pirbounty_dead.lua:222
 msgid "Captured Alive"
@@ -61508,10 +61508,10 @@ msgstr ""
 
 #: dat/missions/proteron/dissbounty_dead.lua:104
 msgid ""
-"A political dissident was recently seen in the {sys} system. {fctname} "
+"A political dissident was recently seen in the {sys} system. {fct} "
 "authorities want this dissident dead or alive."
 msgstr ""
-"政治体制に反対する者が最近{sys}星系で見られた。{fctname}当局がこの反対者を生"
+"政治体制に反対する者が最近{sys}星系で見られた。{fct}当局がこの反対者を生"
 "け捕りにするか死んでほしがっている。"
 
 #: dat/missions/proteron/dissbounty_dead.lua:113

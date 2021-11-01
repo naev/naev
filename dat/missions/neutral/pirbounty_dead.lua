@@ -75,7 +75,7 @@ misn_title[2] = _("Small Dead or Alive Bounty in {sys}")
 misn_title[3] = _("Moderate Dead or Alive Bounty in {sys}")
 misn_title[4] = _("High Dead or Alive Bounty in {sys}")
 misn_title[5] = _("Dangerous Dead or Alive Bounty in {sys}")
-misn_desc   = _("The pirate known as {pirname} was recently seen in the {sys} system. {fctname} authorities want this pirate dead or alive. {pirname} is believed to be flying a {shipclass}-class ship.")
+misn_desc   = _("The pirate known as {pirname} was recently seen in the {sys} system. {fct} authorities want this pirate dead or alive. {pirname} is believed to be flying a {shipclass}-class ship.")
 
 -- Messages
 msg    = {}
@@ -87,7 +87,7 @@ osd_title = _("Bounty Hunt")
 osd_msg    = {}
 osd_msg[1] = _("Fly to the {sys} system")
 osd_msg[2] = _("Kill or capture {pltname}")
-osd_msg[3] = _("Land in {fctname} territory to collect your bounty")
+osd_msg[3] = _("Land in {fct} territory to collect your bounty")
 osd_msg["__save"] = true
 
 
@@ -139,7 +139,7 @@ function create ()
 
    -- Set mission details
    misn.setTitle( fmt.f( misn_title[level], {sys=missys} ) )
-   misn.setDesc( fmt.f( misn_desc, {pirname=name, sys=missys, fctname=paying_faction, shipclass=_(ship.get(pship):classDisplay()) } ) )
+   misn.setDesc( fmt.f( misn_desc, {pirname=name, sys=missys, fct=paying_faction, shipclass=_(ship.get(pship):classDisplay()) } ) )
    misn.setReward( fmt.credits( credits ) )
    marker = misn.markerAdd( missys, "computer" )
 end
@@ -150,7 +150,7 @@ function accept ()
 
    osd_msg[1] = fmt.f( osd_msg[1], {sys=missys} )
    osd_msg[2] = fmt.f( osd_msg[2], {pltname=name} )
-   osd_msg[3] = fmt.f( osd_msg[3], {fctname=paying_faction} )
+   osd_msg[3] = fmt.f( osd_msg[3], {fct=paying_faction} )
    misn.osdCreate( osd_title, osd_msg )
 
    last_sys = system.cur()

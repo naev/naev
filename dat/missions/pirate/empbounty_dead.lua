@@ -125,7 +125,7 @@ function create ()
       misn.setTitle( fmt.f( misn_title[level], {sys=missys, msg=""} ) )
    end
 
-   local mdesc = fmt.f( _("A meddlesome {fctname} pilot known as {pltname} was recently seen in the {sys} system. Local crime lords want this pilot dead. {pltname} is known to be flying a {shipclass}-class ship.{fcttext}"), {fctname=target_faction, pltname=name, sys=missys, shipclass=ship.get(pship):classDisplay(), fcttext=faction_text } )
+   local mdesc = fmt.f( _("A meddlesome {fct} pilot known as {pltname} was recently seen in the {sys} system. Local crime lords want this pilot dead. {pltname} is known to be flying a {shipclass}-class ship.{msg}"), {fct=target_faction, pltname=name, sys=missys, shipclass=ship.get(pship):classDisplay(), msg=faction_text } )
    if not pir.factionIsPirate( planet.cur():faction() ) then
       -- We're not on a pirate stronghold, so include a warning that the
       -- mission is in fact illegal (for new players).

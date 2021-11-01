@@ -65,7 +65,7 @@ osd_title = _("Bounty Hunt")
 osd_msg    = {}
 osd_msg[1] = _("Fly to the {sys} system")
 osd_msg[2] = _("Kill or capture your target")
-osd_msg[3] = _("Land in {fctname} territory to collect your bounty")
+osd_msg[3] = _("Land in {fct} territory to collect your bounty")
 osd_msg["__save"] = true
 
 
@@ -101,7 +101,7 @@ function create ()
 
    -- Set mission details
    misn.setTitle( fmt.f( _("PD: Dead or Alive Bounty in {sys}"), {missys} ) )
-   misn.setDesc( fmt.f( _("A political dissident was recently seen in the {sys} system. {fctname} authorities want this dissident dead or alive."), {sys=missys, fctname=paying_faction} ) )
+   misn.setDesc( fmt.f( _("A political dissident was recently seen in the {sys} system. {fct} authorities want this dissident dead or alive."), {sys=missys, fct=paying_faction} ) )
    misn.setReward( fmt.credits( credits ) )
    marker = misn.markerAdd( missys, "computer" )
 end

@@ -151,7 +151,7 @@ end
    @brief Gets a simple reputation message telling the player how the mission will increase their standing.
 --]]
 function pir.reputationMessage( f )
-   return fmt.f(_("This mission will increase your reputation with {factname}."), {factname=f:longname()})
+   return fmt.f(_("This mission will increase your reputation with {fct_longname}."), {fct_longname=f:longname()})
 end
 
 --[[

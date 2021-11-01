@@ -83,7 +83,7 @@ local function cargo_loot( c, q, m )
       desc = desc.._("\n#rIllegalized by the following factions:\n")
       for _k,f in ipairs(illegalto) do
          if f:known() then
-            desc = desc..fmt.f(_("\n   - {fctname}"),{fctname=f:name()})
+            desc = desc..fmt.f(_("\n   - {fct}"), {fct=f})
          end
       end
       desc = desc.."#0"
