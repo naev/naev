@@ -42,7 +42,6 @@ npc_portrait[6] = portrait.get("Pirate")
 npc_portrait["__save"] = true
 
 function create ()
-
    --Change here to change the planet and the system
    mispla, missys = planet.getS("Dvaer Prime")
 
@@ -127,10 +126,10 @@ function abort () -- Everyone lands in case the player aborts
 end
 
 function beginbattle()
-
       stage = 0
       --Give a name to the competitor
-      names = { _("The Nice Killer"),
+      local names = {
+	        _("The Nice Killer"),
                 _("Longship Victory"),
                 _("The Victim"),
                 _("Old Fellow"),
@@ -140,7 +139,7 @@ function beginbattle()
                 _("The White Knight"),
                 _("Spirit of St Jean"),
                 _("Nec Mergitur") }
-      reTry = true
+      local reTry = true
 
       if usedNames == nil then  --This avoids bug in case usedName table is lost
          usedNames = {}
@@ -158,7 +157,7 @@ function beginbattle()
 
       usedNames[#usedNames+1] = opponame
 
-      tk.msg(_("Let's go"), _([[For this round, your opponent is %s. Remember: use a fighter with no launchers. You still have to defeat %s opponents to win.]]):format(opponame,fmt.number(5-level)))
+      tk.msg(_("Let's go"), fmt.f(_([[For this round, your opponent is {plt}. Remember: use a fighter with no launchers. You still have to defeat {n} opponents to win.]]), {plt=opponame, n=fmt.number(5-level)}))
 
       enterhook = hook.enter("enter")
 
@@ -357,11 +356,11 @@ function land()
       elseif stage == 3 and planet.cur() == mispla then  --player will be payed
 
       if level == 5 then  --you are the champion
-         tk.msg(_("You are the new champion"), _([[Congratulations! The staff pays you %s.]]):format(fmt.credits(reward * 2^level)))
+         tk.msg(_("You are the new champion"), fmt.f(_([[Congratulations! The staff pays you {credits}.]]), {credits=fmt.credits(reward * 2^level)}))
       elseif level == 4 then
-         tk.msg(_("You are the vice-champion"), _([[Congratulations! The staff pays you %s.]]):format(fmt.credits(reward * 2^level)))
+         tk.msg(_("You are the vice-champion"), fmt.f(_([[Congratulations! The staff pays you {credits}.]]), {credits=fmt.credits(reward * 2^level)}))
       else
-         tk.msg(_("Thanks for playing"), _([[The staff pays you %s.]]):format(fmt.credits(reward * 2^level)))
+         tk.msg(_("Thanks for playing"), fmt.f(_([[The staff pays you {credits}.]]), {credits=fmt.credits(reward * 2^level)}))
       end
 
       player.pay(reward * 2^level)

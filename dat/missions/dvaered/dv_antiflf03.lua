@@ -80,14 +80,15 @@ function accept()
     destsys = system.get(var.peek("flfbase_sysname"))
     DVplanet, DVsys = planet.getS("Stalwart Station")
 
+    local briefing = string.format(text[1], destsys:name())
     if first then
         txt = string.format(_([[The Dvaered liaison spots you, and stands up to shake your hand.
     "Well met, citizen %s. I have heard about your recent achievements in the fight against the FLF threat. Like many Dvaered, I am pleased that things are going so well, and in no small way thanks to your efforts! High Command apparently feels the same way, because they have given you the military clearance for the upcoming operation, and that doesn't happen to just anybody."
-    ]]), player.name()) .. string.format(text[1], destsys:name())
+    ]]), player.name()) .. briefing
     else
         txt = string.format(_([[The Dvaered liaison greets you.
     "I knew you'd be back, citizen %s. The operation hasn't started yet and we can still use your help, so maybe I should explain to you again what this is all about."
-    ]]), player.name()) .. string.format(text[1], destsys:name())
+    ]]), player.name()) .. briefing
     end
 
     if tk.yesno(_("One swift stroke"), txt) then
@@ -394,7 +395,7 @@ function nextStage()
         --player.msg("Starting stage 4.")
         local delay = 0
         delay = delay + 3.0
-        hook.timer(delay, "broadcast", {caster = obstinate, text = _("This is Obstinate. Launching bombers.")})
+        hook.timer(delay, "broadcast", {caster = obstinate, message = _("This is Obstinate. Launching bombers.")})
         hook.timer(delay, "spawnDVbomber")
         delay = delay + 38.0
         hook.timer(delay, "engageBase")
@@ -408,7 +409,7 @@ end
 
 -- Capsule function for pilot.broadcast, for timer use
 function broadcast(args)
-    args.caster:broadcast(args.text, true)
+    args.caster:broadcast(args.message, true)
 end
 
 -- Spawns the initial Dvaered bombers.
