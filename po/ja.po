@@ -35448,8 +35448,8 @@ msgstr "われわれプロテロンはわいろを好んでいはいない。"
 #. Thurion military assets.
 #: dat/landing.lua:160
 #, lua-format
-msgid "Welcome, friend %s. You may dock when ready."
-msgstr "ようこそ、わが友%s。用意ができたら着岸できる。"
+msgid "Welcome, friend {player}. You may dock when ready."
+msgstr "ようこそ、わが友{player}。用意ができたら着岸できる。"
 
 #: dat/landing.lua:161
 msgid "I'm sorry, we can't trust you to land here just yet."
@@ -35477,10 +35477,10 @@ msgstr "ここから出てけ！"
 #: dat/landing.lua:187
 #, lua-format
 msgid ""
-"\"Well, I think you're scum, but I'm willing to look the other way for %s. "
+"\"Well, I think you're scum, but I'm willing to look the other way for {credits}. "
 "Deal?\""
 msgstr ""
-"｢うーん、あんたはくずだと思うが、%s で別の方法を見つけてもいいな。出すか？｣"
+"｢うーん、あんたはくずだと思うが、{credits} で別の方法を見つけてもいいな。出すか？｣"
 
 #: dat/landing.lua:189
 msgid "Heh heh, thanks. Now get off the comm, I'm busy!"
@@ -35501,13 +35501,13 @@ msgstr "｢おまえのような危険な犯罪者と取引はしない！｣"
 #: dat/landing.lua:234
 #, lua-format
 msgid ""
-"\"I'll let you land for the modest price of %s.\"\n"
+"\"I'll let you land for the modest price of {credits}.\"\n"
 "\n"
-"Pay %s?"
+"Pay {credits}?"
 msgstr ""
-"｢着陸させるのに穏当な金額は %s だろう｣\n"
+"｢着陸させるのに穏当な金額は {credits} だろう｣\n"
 "\n"
-"%s 支払うか？"
+"{credits} 支払うか？"
 
 #: dat/landing.lua:236
 msgid "Make it quick."

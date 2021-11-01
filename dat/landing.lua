@@ -157,7 +157,7 @@ end
 -- Thurion military assets.
 function thr_mil_restricted( pnt )
    return land_military(pnt, 50,
-         _("Welcome, friend %s. You may dock when ready."):format(player.name()),
+         fmt.f(_("Welcome, friend {player}. You may dock when ready."), {player=player.name()}),
          _("I'm sorry, we can't trust you to land here just yet."),
          _("Landing request denied."),
          _("We have no need for your credits."))
@@ -183,9 +183,9 @@ function pir_clanworld( pnt )
    if not can_land and standing >= -50 then
       bribe_price = (20 - standing) * 500 + 1000 -- 36K max, at -50 rep. Pirates are supposed to be cheaper than regular factions.
       local str   = fmt.credits( bribe_price )
-      bribe_msg   = string.format(
-               _([["Well, I think you're scum, but I'm willing to look the other way for %s. Deal?"]]),
-            str )
+      bribe_msg   = fmt.f(
+               _([["Well, I think you're scum, but I'm willing to look the other way for {credits}. Deal?"]]),
+	       {credits=str} )
       bribe_ack_msg = _("Heh heh, thanks. Now get off the comm, I'm busy!")
    end
    return can_land, land_msg, bribe_price, bribe_msg, bribe_ack_msg
@@ -230,9 +230,9 @@ function land_civilian( pnt, land_floor, bribe_floor )
    local bribe_price = getcost(fct, land_floor, bribe_floor, 1000) -- TODO: different rates for different factions.
    if not can_land and type(bribe_price) == "number" then
        local str      = fmt.credits( bribe_price )
-       bribe_msg      = string.format(
-               _("\"I'll let you land for the modest price of %s.\"\n\nPay %s?"),
-            str, str )
+       bribe_msg      = fmt.f(
+               _("\"I'll let you land for the modest price of {credits}.\"\n\nPay {credits}?"),
+	       {credits=str} )
        bribe_ack_msg  = _("Make it quick.")
    end
    return can_land, land_msg, bribe_price, bribe_msg, bribe_ack_msg
