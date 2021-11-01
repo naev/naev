@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2021-10-31 19:06-0400\n"
+"POT-Creation-Date: 2021-10-31 20:36-0400\n"
 "PO-Revision-Date: 2021-09-02 06:35+0000\n"
 "Last-Translator: Anthony Gregory Souza dos Santos "
 "<antonigregorysouza123@gmail.com>\n"
@@ -33294,8 +33294,7 @@ msgstr ""
 
 #. Thurion military assets.
 #: dat/landing.lua:160
-#, lua-format
-msgid "Welcome, friend %s. You may dock when ready."
+msgid "Welcome, friend {player}. You may dock when ready."
 msgstr ""
 
 #: dat/landing.lua:161
@@ -33322,10 +33321,9 @@ msgstr ""
 #. Calculate bribe price. Custom for pirates.
 #. 36K max, at -50 rep. Pirates are supposed to be cheaper than regular factions.
 #: dat/landing.lua:187
-#, lua-format
 msgid ""
-"\"Well, I think you're scum, but I'm willing to look the other way for %s. "
-"Deal?\""
+"\"Well, I think you're scum, but I'm willing to look the other way for "
+"{credits}. Deal?\""
 msgstr ""
 
 #: dat/landing.lua:189
@@ -33345,11 +33343,10 @@ msgstr ""
 #. Calculate bribe price. Note: Assumes bribe floor < land_floor.
 #. TODO: different rates for different factions.
 #: dat/landing.lua:234
-#, lua-format
 msgid ""
-"\"I'll let you land for the modest price of %s.\"\n"
+"\"I'll let you land for the modest price of {credits}.\"\n"
 "\n"
-"Pay %s?"
+"Pay {credits}?"
 msgstr ""
 
 #: dat/landing.lua:236
@@ -34198,49 +34195,45 @@ msgstr ""
 #.    DESCRIPTION: Kill some pirates!
 #.
 #. --
-#: dat/missions/dvaered/assault_on_unicorn.lua:26
+#: dat/missions/dvaered/assault_on_unicorn.lua:27
 msgid "Fly to the Unicorn system."
 msgstr ""
 
-#: dat/missions/dvaered/assault_on_unicorn.lua:28
-#, lua-format
+#: dat/missions/dvaered/assault_on_unicorn.lua:29
+msgid "You have reached your maximum payment. Return to {pnt}."
+msgstr ""
+
+#: dat/missions/dvaered/assault_on_unicorn.lua:31
 msgid ""
-"Destroy some pirates! You have killed %d and have earned %s. If finished, "
-"return to %s."
+"Destroy some pirates! You have killed {n} and have earned {credits}. If "
+"finished, return to {pnt}."
 msgstr ""
 
 #. Round the payment to the nearest thousand.
-#. This mission makes no system claims.
-#. Makes sure only one copy of the mission can run.
 #: dat/missions/dvaered/assault_on_unicorn.lua:34
-#: dat/missions/dvaered/assault_on_unicorn.lua:58
-#: dat/missions/dvaered/assault_on_unicorn.lua:97
+#: dat/missions/dvaered/assault_on_unicorn.lua:41
 msgid "DV: Assault on Unicorn"
 msgstr ""
 
-#: dat/missions/dvaered/assault_on_unicorn.lua:35 src/space.c:254
+#: dat/missions/dvaered/assault_on_unicorn.lua:42 src/space.c:254
 msgid "Variable"
 msgstr ""
 
-#: dat/missions/dvaered/assault_on_unicorn.lua:36
-#, lua-format
+#: dat/missions/dvaered/assault_on_unicorn.lua:43
 msgid ""
 "It is time to put a dent in the pirates' forces. We have detected a strong "
 "pirate presence in the system of Unicorn. We are offering a small sum for "
-"each pirate killed. The maximum we will pay you is %s."
+"each pirate killed. The maximum we will pay you is {credits}."
 msgstr ""
 
-#: dat/missions/dvaered/assault_on_unicorn.lua:93
-#, lua-format
-msgid "You have reached your maximum payment. Return to %s."
-msgstr ""
-
+#. This mission makes no system claims.
+#. Makes sure only one copy of the mission can run.
 #. Land for reward
 #. the Gawain is flying around a random point
 #. the Gawain is going away
 #. Are there still other pirates to kill ?
 #. She "jumped" into the current system by taking off.
-#: dat/missions/dvaered/assault_on_unicorn.lua:106
+#: dat/missions/dvaered/assault_on_unicorn.lua:105
 #: dat/missions/dvaered/frontier_war/fw03_sirius.lua:224
 #: dat/missions/shark/sh07_pirates.lua:272
 #: dat/missions/sirius/achack/achack02.lua:114
@@ -34251,12 +34244,11 @@ msgstr ""
 msgid "Mission accomplished"
 msgstr ""
 
-#: dat/missions/dvaered/assault_on_unicorn.lua:106
-#, lua-format
+#: dat/missions/dvaered/assault_on_unicorn.lua:105
 msgid ""
 "As you land, you see a Dvaered military official approaching. Thanking you "
 "for your hard and diligent work, he hands you the bounty you've earned, a "
-"number of chips worth %s."
+"number of chips worth {credits}."
 msgstr ""
 
 #.
@@ -34290,62 +34282,62 @@ msgstr ""
 #. Needed scripts
 #. NPC
 #. Change here to change the planet and the system
-#: dat/missions/dvaered/championship.lua:54
-#: dat/missions/dvaered/championship.lua:355
+#: dat/missions/dvaered/championship.lua:53
+#: dat/missions/dvaered/championship.lua:354
 msgid "An official"
 msgstr ""
 
-#: dat/missions/dvaered/championship.lua:54
-#: dat/missions/dvaered/championship.lua:355
+#: dat/missions/dvaered/championship.lua:53
+#: dat/missions/dvaered/championship.lua:354
 msgid "This person seems to be looking for suitable combat pilots."
 msgstr ""
 
 #. add some random npcs
-#: dat/missions/dvaered/championship.lua:59
-#: dat/missions/dvaered/championship.lua:62
+#: dat/missions/dvaered/championship.lua:58
+#: dat/missions/dvaered/championship.lua:61
 msgid "Pilot"
 msgstr ""
 
-#: dat/missions/dvaered/championship.lua:59
+#: dat/missions/dvaered/championship.lua:58
 msgid "This pilot looks very self-confident"
 msgstr ""
 
-#: dat/missions/dvaered/championship.lua:62
+#: dat/missions/dvaered/championship.lua:61
 msgid "This pilot seems to work as a private combat pilot"
 msgstr ""
 
-#: dat/missions/dvaered/championship.lua:65
+#: dat/missions/dvaered/championship.lua:64
 msgid "Imperial pilot"
 msgstr ""
 
-#: dat/missions/dvaered/championship.lua:65
+#: dat/missions/dvaered/championship.lua:64
 msgid "This pilot is is clearly from the Empire."
 msgstr ""
 
-#: dat/missions/dvaered/championship.lua:68
+#: dat/missions/dvaered/championship.lua:67
 msgid "Dvaered pilot"
 msgstr ""
 
-#: dat/missions/dvaered/championship.lua:68
+#: dat/missions/dvaered/championship.lua:67
 msgid "This pilot surely works as a Vendetta pilot."
 msgstr ""
 
-#: dat/missions/dvaered/championship.lua:71
+#: dat/missions/dvaered/championship.lua:70
 msgid "Strange pilot"
 msgstr ""
 
-#: dat/missions/dvaered/championship.lua:71
+#: dat/missions/dvaered/championship.lua:70
 msgid ""
 "This pilot looks like a pirate, but strangely enough, the authorities don't "
 "seem worried."
 msgstr ""
 
-#: dat/missions/dvaered/championship.lua:77
-#: dat/missions/dvaered/championship.lua:80
+#: dat/missions/dvaered/championship.lua:76
+#: dat/missions/dvaered/championship.lua:79
 msgid "I am here to win the championship"
 msgstr ""
 
-#: dat/missions/dvaered/championship.lua:77
+#: dat/missions/dvaered/championship.lua:76
 msgid ""
 "\"I am here to claim my place as this cycle's champion! I've prepared myself "
 "since the first day I piloted a ship. Trust me, I'm nearly invincible and my "
@@ -34356,7 +34348,7 @@ msgid ""
 "time, but for now, I need to concentrate.\""
 msgstr ""
 
-#: dat/missions/dvaered/championship.lua:80
+#: dat/missions/dvaered/championship.lua:79
 msgid ""
 "\"Hello! I am here to claim my place as this cycle's champion! I've prepared "
 "myself since the first day I piloted a ship. Trust me, I'm nearly invincible "
@@ -34366,11 +34358,11 @@ msgid ""
 "\""
 msgstr ""
 
-#: dat/missions/dvaered/championship.lua:85
+#: dat/missions/dvaered/championship.lua:84
 msgid "Hello"
 msgstr ""
 
-#: dat/missions/dvaered/championship.lua:85
+#: dat/missions/dvaered/championship.lua:84
 msgid ""
 "\"Are you here for the Dvaered dogfight championship? I am a competitor. I "
 "fly a Shark, so I don't hope to win lots of rounds... But I still enjoy the "
@@ -34381,11 +34373,11 @@ msgid ""
 "understand basic dogfighting.\""
 msgstr ""
 
-#: dat/missions/dvaered/championship.lua:88
+#: dat/missions/dvaered/championship.lua:87
 msgid "Imperial Pilot"
 msgstr ""
 
-#: dat/missions/dvaered/championship.lua:88
+#: dat/missions/dvaered/championship.lua:87
 msgid ""
 "\"What a pity. I am the best in my squad. I trained cycles to be able to "
 "take down these pitiful Vendettas with my missiles before they even see my "
@@ -34393,11 +34385,11 @@ msgid ""
 "are useful.\""
 msgstr ""
 
-#: dat/missions/dvaered/championship.lua:91
+#: dat/missions/dvaered/championship.lua:90
 msgid "Dvaered Pilot"
 msgstr ""
 
-#: dat/missions/dvaered/championship.lua:91
+#: dat/missions/dvaered/championship.lua:90
 msgid ""
 "\"Nice to see you. I am a Vendetta pilot. I hope I win this time! For us, "
 "being the champion here means that you become member of the senior staff, "
@@ -34405,22 +34397,22 @@ msgid ""
 "will become a Warlord.\""
 msgstr ""
 
-#: dat/missions/dvaered/championship.lua:94
+#: dat/missions/dvaered/championship.lua:93
 msgid "Obvious Pirate"
 msgstr ""
 
-#: dat/missions/dvaered/championship.lua:94
+#: dat/missions/dvaered/championship.lua:93
 msgid ""
 "\"Hi, I'm... err... I'm an independent pilot. I'm here to take part in the "
 "challenge and see the best Dvaered Vendetta pilots in motion. It helps to "
 "know how they fly in my job.\""
 msgstr ""
 
-#: dat/missions/dvaered/championship.lua:101
+#: dat/missions/dvaered/championship.lua:100
 msgid "Do you want to take part to a challenge?"
 msgstr ""
 
-#: dat/missions/dvaered/championship.lua:101
+#: dat/missions/dvaered/championship.lua:100
 msgid ""
 "\"Hello, I'm a member of the staff of the Dvaered dogfight challenge. Here "
 "are the rules: you need to take off with a fighter-class ship and to join "
@@ -34433,28 +34425,28 @@ msgid ""
 "    We are looking for pilots. Are you in?\""
 msgstr ""
 
-#: dat/missions/dvaered/championship.lua:106
-#: dat/missions/dvaered/championship.lua:109
+#: dat/missions/dvaered/championship.lua:105
+#: dat/missions/dvaered/championship.lua:108
 msgid "The Dvaered Championship"
 msgstr ""
 
-#: dat/missions/dvaered/championship.lua:107
+#: dat/missions/dvaered/championship.lua:106
 msgid "From 50k to 1.6m credits, depending on your rank"
 msgstr ""
 
-#: dat/missions/dvaered/championship.lua:108
+#: dat/missions/dvaered/championship.lua:107
 msgid "You are taking part in a fight contest. Try to do your best!"
 msgstr ""
 
-#: dat/missions/dvaered/championship.lua:110
+#: dat/missions/dvaered/championship.lua:109
 msgid "Go to the starting point"
 msgstr ""
 
-#: dat/missions/dvaered/championship.lua:111
+#: dat/missions/dvaered/championship.lua:110
 msgid "Disable your opponent; DO NOT KILL"
 msgstr ""
 
-#: dat/missions/dvaered/championship.lua:112
+#: dat/missions/dvaered/championship.lua:111
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:77
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:131
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:243
@@ -34475,7 +34467,7 @@ msgid "Land on {pnt}"
 msgstr ""
 
 #. In order not to have two pilots with the same name
-#: dat/missions/dvaered/championship.lua:120
+#: dat/missions/dvaered/championship.lua:119
 #: dat/missions/shark/sh00_ancestorkill.lua:87
 #: dat/missions/shark/sh01_corvette.lua:85
 #: dat/missions/shark/sh02_tapping.lua:80
@@ -34485,64 +34477,63 @@ msgstr ""
 msgid "Sorry, not interested"
 msgstr ""
 
-#: dat/missions/dvaered/championship.lua:120
+#: dat/missions/dvaered/championship.lua:119
 msgid "\"That's your choice. Goodbye, then.\""
 msgstr ""
 
 #. Everyone lands in case the player aborts
 #. Give a name to the competitor
-#: dat/missions/dvaered/championship.lua:133
+#: dat/missions/dvaered/championship.lua:132
 msgid "The Nice Killer"
 msgstr ""
 
-#: dat/missions/dvaered/championship.lua:134
+#: dat/missions/dvaered/championship.lua:133
 msgid "Longship Victory"
 msgstr ""
 
-#: dat/missions/dvaered/championship.lua:135
+#: dat/missions/dvaered/championship.lua:134
 msgid "The Victim"
 msgstr ""
 
-#: dat/missions/dvaered/championship.lua:136
+#: dat/missions/dvaered/championship.lua:135
 msgid "Old Fellow"
 msgstr ""
 
-#: dat/missions/dvaered/championship.lua:137
+#: dat/missions/dvaered/championship.lua:136
 msgid "Angel of Grace"
 msgstr ""
 
-#: dat/missions/dvaered/championship.lua:138
+#: dat/missions/dvaered/championship.lua:137
 msgid "Easy Killer"
 msgstr ""
 
-#: dat/missions/dvaered/championship.lua:139
+#: dat/missions/dvaered/championship.lua:138
 msgid "The Unicorn"
 msgstr ""
 
-#: dat/missions/dvaered/championship.lua:140
+#: dat/missions/dvaered/championship.lua:139
 msgid "The White Knight"
 msgstr ""
 
-#: dat/missions/dvaered/championship.lua:141
+#: dat/missions/dvaered/championship.lua:140
 msgid "Spirit of St Jean"
 msgstr ""
 
-#: dat/missions/dvaered/championship.lua:142
+#: dat/missions/dvaered/championship.lua:141
 msgid "Nec Mergitur"
 msgstr ""
 
 #. This avoids bug in case usedName table is lost
 #. Re-pick a name while it is in the usedNames list
-#: dat/missions/dvaered/championship.lua:161
+#: dat/missions/dvaered/championship.lua:160
 #: dat/missions/shark/sh06_arandon.lua:52
 msgid "Let's go"
 msgstr ""
 
-#: dat/missions/dvaered/championship.lua:161
-#, lua-format
+#: dat/missions/dvaered/championship.lua:160
 msgid ""
-"For this round, your opponent is %s. Remember: use a fighter with no "
-"launchers. You still have to defeat %s opponents to win."
+"For this round, your opponent is {plt}. Remember: use a fighter with no "
+"launchers. You still have to defeat {n} opponents to win."
 msgstr ""
 
 #. Launchers are forbidden
@@ -34554,15 +34545,15 @@ msgstr ""
 #. Health
 #.
 #. The TV and the security
+#: dat/missions/dvaered/championship.lua:244
 #: dat/missions/dvaered/championship.lua:245
-#: dat/missions/dvaered/championship.lua:246
 msgid "Holovision"
 msgstr ""
 
+#: dat/missions/dvaered/championship.lua:246
 #: dat/missions/dvaered/championship.lua:247
 #: dat/missions/dvaered/championship.lua:248
 #: dat/missions/dvaered/championship.lua:249
-#: dat/missions/dvaered/championship.lua:250
 msgid "Security"
 msgstr ""
 
@@ -34571,44 +34562,44 @@ msgstr ""
 #. The escort follows the competitors
 #. Some hooks
 #. Adding the starting mark
-#: dat/missions/dvaered/championship.lua:305
+#: dat/missions/dvaered/championship.lua:304
 msgid "START"
 msgstr ""
 
 #. The player tries to cheat by attacking before the signal
 #. The player is never allowed to go away
-#: dat/missions/dvaered/championship.lua:309
-#: dat/missions/dvaered/championship.lua:312
-#: dat/missions/dvaered/championship.lua:328
-#: dat/missions/dvaered/championship.lua:335
-#: dat/missions/dvaered/championship.lua:371
+#: dat/missions/dvaered/championship.lua:308
+#: dat/missions/dvaered/championship.lua:311
+#: dat/missions/dvaered/championship.lua:327
+#: dat/missions/dvaered/championship.lua:334
+#: dat/missions/dvaered/championship.lua:370
 msgid "You are dismissed"
 msgstr ""
 
-#: dat/missions/dvaered/championship.lua:309
+#: dat/missions/dvaered/championship.lua:308
 msgid "You aren't allowed to use missiles"
 msgstr ""
 
-#: dat/missions/dvaered/championship.lua:312
+#: dat/missions/dvaered/championship.lua:311
 msgid "You had to use a fighter"
 msgstr ""
 
-#: dat/missions/dvaered/championship.lua:328
+#: dat/missions/dvaered/championship.lua:327
 msgid "You weren't supposed to attack before the signal."
 msgstr ""
 
-#: dat/missions/dvaered/championship.lua:335
-#: dat/missions/dvaered/championship.lua:371
+#: dat/missions/dvaered/championship.lua:334
+#: dat/missions/dvaered/championship.lua:370
 msgid "You weren't supposed to go away."
 msgstr ""
 
 #. player goes to next round
 #. Manage the player's progress
-#: dat/missions/dvaered/championship.lua:352
+#: dat/missions/dvaered/championship.lua:351
 msgid "You won this round"
 msgstr ""
 
-#: dat/missions/dvaered/championship.lua:352
+#: dat/missions/dvaered/championship.lua:351
 msgid ""
 "\"Congratulations,\" the staff says to you. \"Come back when you are ready "
 "for the next round!\""
@@ -34616,27 +34607,25 @@ msgstr ""
 
 #. player will be payed
 #. you are the champion
-#: dat/missions/dvaered/championship.lua:360
+#: dat/missions/dvaered/championship.lua:359
 msgid "You are the new champion"
 msgstr ""
 
-#: dat/missions/dvaered/championship.lua:360
-#: dat/missions/dvaered/championship.lua:362
-#, lua-format
-msgid "Congratulations! The staff pays you %s."
+#: dat/missions/dvaered/championship.lua:359
+#: dat/missions/dvaered/championship.lua:361
+msgid "Congratulations! The staff pays you {credits}."
 msgstr ""
 
-#: dat/missions/dvaered/championship.lua:362
+#: dat/missions/dvaered/championship.lua:361
 msgid "You are the vice-champion"
 msgstr ""
 
-#: dat/missions/dvaered/championship.lua:364
+#: dat/missions/dvaered/championship.lua:363
 msgid "Thanks for playing"
 msgstr ""
 
-#: dat/missions/dvaered/championship.lua:364
-#, lua-format
-msgid "The staff pays you %s."
+#: dat/missions/dvaered/championship.lua:363
+msgid "The staff pays you {credits}."
 msgstr ""
 
 #. Remove some hooks and begin a new battle
@@ -34801,8 +34790,36 @@ msgstr ""
 #. --      2 - The player has rescued the FLF agent. Conditional for flf_pre02
 #. --      3 - The player has found the FLF base for the Dvaered, or has betrayed the FLF after rescuing the agent. Conditional for dv_antiflf03
 #. --
+#. Make them jump out (if they're not dead!)
+#.
+#. <?xml version='1.0' encoding='utf8'?>
+#. <mission name="Destroy the FLF base!">
+#. <flags>
+#. <unique />
+#. </flags>
+#. <avail>
+#. <priority>2</priority>
+#. <chance>10</chance>
+#. <location>Bar</location>
+#. <cond>var.peek("flfbase_intro") == 3</cond>
+#. <faction>Dvaered</faction>
+#. </avail>
+#. <notes>
+#. <requires name="The Dvaered know where Sindbad is"/>
+#. <campaign>Doom the FLF</campaign>
+#. <provides name="The FLF is dead"/>
+#. </notes>
+#. </mission>
+#. --
+#.
+#. -- This is the third mission in the anti-FLF Dvaered campaign. The player joins the battle to destroy the FLF base.
+#. -- stack variable flfbase_intro:
+#. --      1 - The player has turned in the FLF agent or rescued the Dvaered crew. Conditional for dv_antiflf02
+#. --      2 - The player has rescued the FLF agent. Conditional for flf_pre02
+#. --      3 - The player has found the FLF base for the Dvaered, or has betrayed the FLF after rescuing the agent. Conditional for dv_antiflf03
+#. --
 #: dat/missions/dvaered/dv_antiflf02.lua:41
-#: dat/missions/dvaered/dv_antiflf03.lua:76
+#: dat/missions/dvaered/dv_antiflf03.lua:43
 msgid ""
 "This must be the Dvaered liaison you heard about. Allegedly, he may have a "
 "job for you that involves fighting the Frontier Liberation Front."
@@ -34848,15 +34865,15 @@ msgid ""
 msgstr ""
 
 #: dat/missions/dvaered/dv_antiflf02.lua:51
-#, lua-format
 msgid ""
 "As you take the last empty seat at the table, Colonel Urnus starts the "
 "meeting. \"Welcome, citizen. You know why you are here and you know what "
 "this meeting is about, so let me get right to the point. We have reason to "
 "believe the FLF terrorists are operating from a secret base of operations. "
 "We know this base is located somewhere in the nebula, and we have recently "
-"uncovered intel that indicates the base is likely to be in the %s system.\"\n"
-"    One of the walls lights up, showing part of the galaxy map. The %s "
+"uncovered intel that indicates the base is likely to be in the {sys} system."
+"\"\n"
+"    One of the walls lights up, showing part of the galaxy map. The {sys} "
 "system is colored red, and it's pulsating gently.\n"
 "    \"Of course, we have conducted patrols in this system, but so far "
 "without result. Our sensors are severely impaired by the nebula in this "
@@ -34864,7 +34881,7 @@ msgid ""
 "are slim. Fortunately, our top strategists have come up with a ruse, one "
 "that will make the FLF come to us.\"\n"
 "    \"We will use a civilian ship - your ship, naturally - as a decoy,\" "
-"Urnus continues. The image on the wall zooms up to the %s system, and a "
+"Urnus continues. The image on the wall zooms up to the {sys} system, and a "
 "white blip representing your ship appears near the jump point. \"Your ship "
 "will be equipped with an IFF transponder in use by the FLF, so to anyone who "
 "isn't looking too closely you will appear as an FLF ship. Of course, this "
@@ -34943,8 +34960,8 @@ msgstr ""
 #.
 #. --
 #: dat/missions/dvaered/dv_antiflf02.lua:65
-#: dat/missions/dvaered/dv_antiflf03.lua:100
-#: dat/missions/dvaered/dv_diversion.lua:82
+#: dat/missions/dvaered/dv_antiflf03.lua:83
+#: dat/missions/dvaered/dv_diversion.lua:63
 #: dat/missions/empire/collective/ec00.lua:78
 #: dat/missions/empire/collective/ec03.lua:86
 #: dat/missions/empire/collective/ec05.lua:93
@@ -35013,42 +35030,15 @@ msgstr ""
 #. Wait for the player to fly to the Obstinate before commencing the mission
 #. Make sure the player can finish the missions properly.
 #. The player has jumped away from the mission theater, which instantly ends the mission and with it, the mini-campaign.
-#. The player has jumped away from the mission theater, which instantly ends the mission.
 #. The player has landed, which instantly ends the mission.
 #: dat/missions/dvaered/dv_antiflf02.lua:104
-#: dat/missions/dvaered/dv_antiflf03.lua:153
-#: dat/missions/dvaered/dv_diversion.lua:151
-#: dat/missions/dvaered/dv_diversion.lua:159
+#: dat/missions/dvaered/dv_antiflf03.lua:136
+#: dat/missions/dvaered/dv_diversion.lua:88
 msgid "You ran away!"
 msgstr ""
 
-#. Make escorts fight back, then return to their positions
-#.
-#. <?xml version='1.0' encoding='utf8'?>
-#. <mission name="A Small Diversion">
-#. <flags>
-#. <unique />
-#. </flags>
-#. <avail>
-#. <priority>4</priority>
-#. <cond>faction.playerStanding("Dvaered") &gt; 5</cond>
-#. <chance>10</chance>
-#. <location>Bar</location>
-#. <planet>Doranthex Prime</planet>
-#. </avail>
-#. <notes>
-#. <tier>2</tier>
-#. </notes>
-#. </mission>
-#. --
-#.
-#. -- This is a one-off mission where you help a new Dvaered Warlord takeover a planet
-#. -- To Do: fix fighters being idle after mission ends
-#. -- Other editors, feel free to update dialog to make it more dvaered like.
-#. --
-#. localization stuff, translators would work here
 #: dat/missions/dvaered/dv_antiflf02.lua:104
-#: dat/missions/dvaered/dv_diversion.lua:40
+#: dat/missions/dvaered/dv_diversion.lua:88
 msgid ""
 "You have left the system without first completing your mission. The "
 "operation ended in failure."
@@ -35138,35 +35128,7 @@ msgid ""
 "the Dvaered want - you should take it to a Dvaered planet immediately."
 msgstr ""
 
-#. Make them jump out (if they're not dead!)
-#.
-#. <?xml version='1.0' encoding='utf8'?>
-#. <mission name="Destroy the FLF base!">
-#. <flags>
-#. <unique />
-#. </flags>
-#. <avail>
-#. <priority>2</priority>
-#. <chance>10</chance>
-#. <location>Bar</location>
-#. <cond>var.peek("flfbase_intro") == 3</cond>
-#. <faction>Dvaered</faction>
-#. </avail>
-#. <notes>
-#. <requires name="The Dvaered know where Sindbad is"/>
-#. <campaign>Doom the FLF</campaign>
-#. <provides name="The FLF is dead"/>
-#. </notes>
-#. </mission>
-#. --
-#.
-#. -- This is the third mission in the anti-FLF Dvaered campaign. The player joins the battle to destroy the FLF base.
-#. -- stack variable flfbase_intro:
-#. --      1 - The player has turned in the FLF agent or rescued the Dvaered crew. Conditional for dv_antiflf02
-#. --      2 - The player has rescued the FLF agent. Conditional for flf_pre02
-#. --      3 - The player has found the FLF base for the Dvaered, or has betrayed the FLF after rescuing the agent. Conditional for dv_antiflf03
-#. --
-#: dat/missions/dvaered/dv_antiflf03.lua:38
+#: dat/missions/dvaered/dv_antiflf03.lua:50
 #, lua-format
 msgid ""
 "The liaison's expression then turns wooden, and his voice becomes level. "
@@ -35187,7 +35149,41 @@ msgid ""
 "the mission. Will you be accepting this assignment?\""
 msgstr ""
 
-#: dat/missions/dvaered/dv_antiflf03.lua:42
+#: dat/missions/dvaered/dv_antiflf03.lua:54
+#, lua-format
+msgid ""
+"The Dvaered liaison spots you, and stands up to shake your hand.\n"
+"    \"Well met, citizen %s. I have heard about your recent achievements in "
+"the fight against the FLF threat. Like many Dvaered, I am pleased that "
+"things are going so well, and in no small way thanks to your efforts! High "
+"Command apparently feels the same way, because they have given you the "
+"military clearance for the upcoming operation, and that doesn't happen to "
+"just anybody.\"\n"
+"    "
+msgstr ""
+
+#: dat/missions/dvaered/dv_antiflf03.lua:58
+#, lua-format
+msgid ""
+"The Dvaered liaison greets you.\n"
+"    \"I knew you'd be back, citizen %s. The operation hasn't started yet and "
+"we can still use your help, so maybe I should explain to you again what this "
+"is all about.\"\n"
+"    "
+msgstr ""
+
+#: dat/missions/dvaered/dv_antiflf03.lua:63
+msgid "One swift stroke"
+msgstr ""
+
+#: dat/missions/dvaered/dv_antiflf03.lua:64
+#: dat/missions/dvaered/dv_antiflf03.lua:68
+#: dat/missions/dvaered/dv_antiflf03.lua:73
+msgid "The battlefield awaits"
+msgstr ""
+
+#: dat/missions/dvaered/dv_antiflf03.lua:64
+#, lua-format
 msgid ""
 "\"Excellent. Please report to the local military command center at 0400 "
 "today. You will be briefed there.\"\n"
@@ -35207,7 +35203,7 @@ msgid ""
 "battle as well."
 msgstr ""
 
-#: dat/missions/dvaered/dv_antiflf03.lua:47
+#: dat/missions/dvaered/dv_antiflf03.lua:68
 #, lua-format
 msgid ""
 "\"Everyone,\" a stern-looking but otherwise nondescript Dvaered officer "
@@ -35235,7 +35231,7 @@ msgid ""
 "fight.\""
 msgstr ""
 
-#: dat/missions/dvaered/dv_antiflf03.lua:53
+#: dat/missions/dvaered/dv_antiflf03.lua:73
 #, lua-format
 msgid ""
 "The schematic updates again, this time showing several small clusters of red "
@@ -35265,7 +35261,75 @@ msgid ""
 "come. You decide to have another drink, just for luck."
 msgstr ""
 
-#: dat/missions/dvaered/dv_antiflf03.lua:61
+#: dat/missions/dvaered/dv_antiflf03.lua:82
+#: dat/missions/dvaered/dv_antiflf03.lua:90
+msgid "Destroy the FLF base!"
+msgstr ""
+
+#: dat/missions/dvaered/dv_antiflf03.lua:84
+msgid "Defend the HDSF Obstinate and its escorts"
+msgstr ""
+
+#: dat/missions/dvaered/dv_antiflf03.lua:85
+msgid "Destroy the FLF base"
+msgstr ""
+
+#. Update mission
+#: dat/missions/dvaered/dv_antiflf03.lua:86
+#: dat/missions/empire/shipping/es01.lua:118
+#: dat/missions/empire/shipping/es01.lua:120
+#: dat/missions/zalek/neburesearch/neburesearch_00.lua:91
+#: dat/missions/zalek/sciencegonewrong/01_sciwrong.lua:62
+msgid "Return to {pnt} in the {sys} system"
+msgstr ""
+
+#: dat/missions/dvaered/dv_antiflf03.lua:88
+msgid ""
+"The Dvaered are poised to launch an all-out attack on the secret FLF base. "
+"You have chosen to join this battle for wealth and glory."
+msgstr ""
+
+#: dat/missions/dvaered/dv_antiflf03.lua:89
+msgid "Wealth and glory"
+msgstr ""
+
+#: dat/missions/dvaered/dv_antiflf03.lua:99
+#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:67
+#: dat/missions/neutral/race1.lua:57 dat/missions/neutral/race2.lua:67
+msgid "Refusal"
+msgstr ""
+
+#: dat/missions/dvaered/dv_antiflf03.lua:99
+msgid ""
+"\"Understood, citizen. Keep in mind, though, that as long as the operation "
+"isn't yet underway, you may still choose to participate. Simply come back to "
+"me if you change your mind.\""
+msgstr ""
+
+#. NOTE: Should be the same coordinates as in asset.xml!
+#. Amount of initial Dvaered bombers
+#. Amount of reinforcement Dvaered bombers
+#. The distance between the DV fleet and the base
+#. This is the distance from the base where DV ships will turn back
+#. The amount of points on the circle for the circular patrol
+#: dat/missions/dvaered/dv_antiflf03.lua:129
+msgid ""
+"All Dvaered vessels in position. Citizen, join the fleet and commence the "
+"attack!"
+msgstr ""
+
+#: dat/missions/dvaered/dv_antiflf03.lua:136
+msgid ""
+"You have left the system without first completing your mission. This "
+"treachery will not soon be forgotten by the Dvaered authorities!"
+msgstr ""
+
+#: dat/missions/dvaered/dv_antiflf03.lua:161
+#: dat/missions/dvaered/dv_antiflf03.lua:165
+msgid "FLF base? What FLF base?"
+msgstr ""
+
+#: dat/missions/dvaered/dv_antiflf03.lua:161
 #, lua-format
 msgid ""
 "When you step out of your ship, a Dvaered military delegation is waiting for "
@@ -35291,7 +35355,7 @@ msgid ""
 "you're in Dvaered space.\""
 msgstr ""
 
-#: dat/missions/dvaered/dv_antiflf03.lua:66
+#: dat/missions/dvaered/dv_antiflf03.lua:165
 msgid ""
 "Colonel Urnus returns to his seat.\n"
 "    \"Let me tell you one thing, though. I doubt we've quite seen the last "
@@ -35311,108 +35375,7 @@ msgid ""
 "comes..."
 msgstr ""
 
-#: dat/missions/dvaered/dv_antiflf03.lua:84
-#, lua-format
-msgid ""
-"The Dvaered liaison spots you, and stands up to shake your hand.\n"
-"    \"Well met, citizen %s. I have heard about your recent achievements in "
-"the fight against the FLF threat. Like many Dvaered, I am pleased that "
-"things are going so well, and in no small way thanks to your efforts! High "
-"Command apparently feels the same way, because they have given you the "
-"military clearance for the upcoming operation, and that doesn't happen to "
-"just anybody.\"\n"
-"    "
-msgstr ""
-
-#: dat/missions/dvaered/dv_antiflf03.lua:88
-#, lua-format
-msgid ""
-"The Dvaered liaison greets you.\n"
-"    \"I knew you'd be back, citizen %s. The operation hasn't started yet and "
-"we can still use your help, so maybe I should explain to you again what this "
-"is all about.\"\n"
-"    "
-msgstr ""
-
-#: dat/missions/dvaered/dv_antiflf03.lua:93
-msgid "One swift stroke"
-msgstr ""
-
-#: dat/missions/dvaered/dv_antiflf03.lua:94
-#: dat/missions/dvaered/dv_antiflf03.lua:95
-#: dat/missions/dvaered/dv_antiflf03.lua:96
-msgid "The battlefield awaits"
-msgstr ""
-
-#: dat/missions/dvaered/dv_antiflf03.lua:99
-#: dat/missions/dvaered/dv_antiflf03.lua:107
-msgid "Destroy the FLF base!"
-msgstr ""
-
-#: dat/missions/dvaered/dv_antiflf03.lua:101
-msgid "Defend the HDSF Obstinate and its escorts"
-msgstr ""
-
-#: dat/missions/dvaered/dv_antiflf03.lua:102
-msgid "Destroy the FLF base"
-msgstr ""
-
-#. Update mission
-#: dat/missions/dvaered/dv_antiflf03.lua:103
-#: dat/missions/empire/shipping/es01.lua:118
-#: dat/missions/empire/shipping/es01.lua:120
-#: dat/missions/zalek/neburesearch/neburesearch_00.lua:91
-#: dat/missions/zalek/sciencegonewrong/01_sciwrong.lua:61
-msgid "Return to {pnt} in the {sys} system"
-msgstr ""
-
-#: dat/missions/dvaered/dv_antiflf03.lua:105
-msgid ""
-"The Dvaered are poised to launch an all-out attack on the secret FLF base. "
-"You have chosen to join this battle for wealth and glory."
-msgstr ""
-
-#: dat/missions/dvaered/dv_antiflf03.lua:106
-msgid "Wealth and glory"
-msgstr ""
-
-#: dat/missions/dvaered/dv_antiflf03.lua:116
-#: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:67
-#: dat/missions/neutral/race1.lua:57 dat/missions/neutral/race2.lua:67
-msgid "Refusal"
-msgstr ""
-
-#: dat/missions/dvaered/dv_antiflf03.lua:116
-msgid ""
-"\"Understood, citizen. Keep in mind, though, that as long as the operation "
-"isn't yet underway, you may still choose to participate. Simply come back to "
-"me if you change your mind.\""
-msgstr ""
-
-#. NOTE: Should be the same coordinates as in asset.xml!
-#. Amount of initial Dvaered bombers
-#. Amount of reinforcement Dvaered bombers
-#. The distance between the DV fleet and the base
-#. This is the distance from the base where DV ships will turn back
-#. The amount of points on the circle for the circular patrol
-#: dat/missions/dvaered/dv_antiflf03.lua:146
-msgid ""
-"All Dvaered vessels in position. Citizen, join the fleet and commence the "
-"attack!"
-msgstr ""
-
-#: dat/missions/dvaered/dv_antiflf03.lua:153
-msgid ""
-"You have left the system without first completing your mission. This "
-"treachery will not soon be forgotten by the Dvaered authorities!"
-msgstr ""
-
-#: dat/missions/dvaered/dv_antiflf03.lua:178
-#: dat/missions/dvaered/dv_antiflf03.lua:179
-msgid "FLF base? What FLF base?"
-msgstr ""
-
-#: dat/missions/dvaered/dv_antiflf03.lua:187
+#: dat/missions/dvaered/dv_antiflf03.lua:175
 msgid ""
 "You aided the Dvaered in the destruction of the secret FLF base, Sindbad. "
 "The terrorists are not entirely eliminated, but they have been substantially "
@@ -35423,12 +35386,12 @@ msgstr ""
 
 #. Timer for the frontier's invasion
 #. Spawns the FLF base, ship version.
-#: dat/missions/dvaered/dv_antiflf03.lua:242
+#: dat/missions/dvaered/dv_antiflf03.lua:230
 msgid "Terrorist station eliminated! All units, return to base."
 msgstr ""
 
 #. Spawns the one-time-only Dvaered ships. Bombers are handled elsewhere.
-#: dat/missions/dvaered/dv_antiflf03.lua:262
+#: dat/missions/dvaered/dv_antiflf03.lua:250
 msgid "Obstinate"
 msgstr ""
 
@@ -35445,11 +35408,11 @@ msgstr ""
 #. player.msg("Starting stage 2.")
 #. player.msg("Starting stage 3.")
 #. player.msg("Starting stage 4.")
-#: dat/missions/dvaered/dv_antiflf03.lua:397
+#: dat/missions/dvaered/dv_antiflf03.lua:385
 msgid "This is Obstinate. Launching bombers."
 msgstr ""
 
-#: dat/missions/dvaered/dv_antiflf03.lua:405
+#: dat/missions/dvaered/dv_antiflf03.lua:393
 msgid ""
 "WARNING: dv_antiflf03: going to next stage, but next stage doesn't exist!"
 msgstr ""
@@ -35469,162 +35432,124 @@ msgstr ""
 #. Control the fleets
 #. Replaces lost bombers. The supply is limited, though.
 #. Handle mission failure.
-#: dat/missions/dvaered/dv_antiflf03.lua:546
+#: dat/missions/dvaered/dv_antiflf03.lua:534
 msgid "The flagship is dead!"
 msgstr ""
 
-#: dat/missions/dvaered/dv_antiflf03.lua:546
+#: dat/missions/dvaered/dv_antiflf03.lua:534
 msgid ""
 "The HDSF Obstinate has been destroyed by the FLF defending forces! This "
 "mission can no longer be completed."
 msgstr ""
 
-#: dat/missions/dvaered/dv_antiflf03.lua:569
+#: dat/missions/dvaered/dv_antiflf03.lua:557
 msgid "This is Obstinate, we're under fire!"
 msgstr ""
 
-#: dat/missions/dvaered/dv_diversion.lua:42
-msgid "The Hawk jumped out of the system. You have failed your mission."
-msgstr ""
-
-#: dat/missions/dvaered/dv_diversion.lua:44
-#, lua-format
-msgid "The Hawk landed back on %s. You have failed your mission."
-msgstr ""
-
-#: dat/missions/dvaered/dv_diversion.lua:45
-msgid ""
-"The Hawk was able to fend off the attackers and destroy their flagship. You "
-"have failed your mission."
-msgstr ""
-
-#: dat/missions/dvaered/dv_diversion.lua:47
-#, lua-format
-msgid ""
-"Alright folks, this will be Hawk's maiden jump. Continue on course to the %s "
-"jump gate."
-msgstr ""
-
-#: dat/missions/dvaered/dv_diversion.lua:48
-msgid "How dare they attack me! Get them!"
-msgstr ""
-
-#: dat/missions/dvaered/dv_diversion.lua:49
-msgid "You heard Warlord Khan, blow them to pieces!"
-msgstr ""
-
-#: dat/missions/dvaered/dv_diversion.lua:50
-msgid "They're attacking us, blow them to pieces!"
-msgstr ""
-
-#: dat/missions/dvaered/dv_diversion.lua:51
-msgid "Arrgh!"
-msgstr ""
-
-#: dat/missions/dvaered/dv_diversion.lua:52
+#. Make escorts fight back, then return to their positions
+#.
+#. <?xml version='1.0' encoding='utf8'?>
+#. <mission name="A Small Diversion">
+#. <flags>
+#. <unique />
+#. </flags>
+#. <avail>
+#. <priority>4</priority>
+#. <cond>faction.playerStanding("Dvaered") &gt; 5</cond>
+#. <chance>10</chance>
+#. <location>Bar</location>
+#. <planet>Doranthex Prime</planet>
+#. </avail>
+#. <notes>
+#. <tier>2</tier>
+#. </notes>
+#. </mission>
+#. --
+#.
+#. -- This is a one-off mission where you help a new Dvaered Warlord takeover a planet
+#. -- To Do: fix fighters being idle after mission ends
+#. -- Other editors, feel free to update dialog to make it more dvaered like.
+#. --
+#. localization stuff, translators would work here
+#. our local functions
+#: dat/missions/dvaered/dv_diversion.lua:39
 msgid "Khan is dead! Who will be our warlord now?"
 msgstr ""
 
-#: dat/missions/dvaered/dv_diversion.lua:53
+#: dat/missions/dvaered/dv_diversion.lua:40
 msgid "Obviously the one who killed him!"
 msgstr ""
 
-#: dat/missions/dvaered/dv_diversion.lua:54
+#: dat/missions/dvaered/dv_diversion.lua:41
 msgid "I will never serve a different warlord than Khan! Die, you traitors!"
 msgstr ""
 
-#: dat/missions/dvaered/dv_diversion.lua:55
-#, lua-format
-msgid "%s will be ours! Khan, prepare to die!"
-msgstr ""
-
-#: dat/missions/dvaered/dv_diversion.lua:56
-#: dat/missions/dvaered/dv_diversion.lua:57
-msgid "All units, defend Hawk, we are under attack!"
-msgstr ""
-
-#: dat/missions/dvaered/dv_diversion.lua:58
-msgid "Return to Hawk, Khan is in danger!"
-msgstr ""
-
-#: dat/missions/dvaered/dv_diversion.lua:59
-msgid "Pathetic, can't even take down an unarmed ship."
-msgstr ""
-
-#: dat/missions/dvaered/dv_diversion.lua:60
-#, lua-format
-msgid "I declare myself the Warlord of %s!"
-msgstr ""
-
-#: dat/missions/dvaered/dv_diversion.lua:68
+#: dat/missions/dvaered/dv_diversion.lua:49
 msgid ""
 "A high ranking Dvaered officer. It looks like he might have a job offer for "
 "you."
 msgstr ""
 
-#: dat/missions/dvaered/dv_diversion.lua:72
+#: dat/missions/dvaered/dv_diversion.lua:53
 msgid "The job offer"
 msgstr ""
 
-#: dat/missions/dvaered/dv_diversion.lua:72
+#: dat/missions/dvaered/dv_diversion.lua:53
 msgid ""
 "You walk up to the Dvaered official at his table. He mentions that he is "
 "looking for a pilot like yourself.\n"
 "\"I am looking for a skilled pilot to do a simple job for me, interested?\""
 msgstr ""
 
-#: dat/missions/dvaered/dv_diversion.lua:74
-#: dat/missions/dvaered/dv_diversion.lua:77
-#: dat/missions/dvaered/dv_diversion.lua:78
+#: dat/missions/dvaered/dv_diversion.lua:55
+#: dat/missions/dvaered/dv_diversion.lua:58
+#: dat/missions/dvaered/dv_diversion.lua:59
 msgid "A small distraction"
 msgstr ""
 
-#: dat/missions/dvaered/dv_diversion.lua:74
-#, lua-format
+#: dat/missions/dvaered/dv_diversion.lua:55
 msgid ""
 "\"My General has just retired from the High Command and is now looking to "
 "become the Warlord of a planetary system. Unfortunately, our loyal forces "
 "seem insufficient to take on any existing planetary defense forces head on.\n"
-"      \"However, it looks like there may be an opportunity for us in %s. "
-"Warlord Khan of %s has been building his newest flagship, the Hawk, and will "
-"be onboard the Hawk as it tests its hyperspace capabilities. Since its "
+"      \"However, it looks like there may be an opportunity for us in {sys}. "
+"Warlord Khan of {pnt} has been building his newest flagship, the Hawk, and "
+"will be onboard the Hawk as it tests its hyperspace capabilities. Since its "
 "engines and weapons have not been fully installed yet, it will be "
 "substantially slower than normal and unable to defend itself.\n"
 "\"To protect himself and the Hawk, Khan will have deployed a substantial "
 "escort fighter fleet to defend against any surprise attack.\""
 msgstr ""
 
-#: dat/missions/dvaered/dv_diversion.lua:77
-#, lua-format
+#: dat/missions/dvaered/dv_diversion.lua:58
 msgid ""
-"\"That is where you come in. You will jump into %s and find the Hawk and its "
-"escorts. Before the Hawk is able to reach hyperspace, you will fire on it, "
-"and cause the fighters to engage with you. At this point, you should run "
+"\"That is where you come in. You will jump into {sys} and find the Hawk and "
+"its escorts. Before the Hawk is able to reach hyperspace, you will fire on "
+"it, and cause the fighters to engage with you. At this point, you should run "
 "away from the Hawk and the jump point, so that the fighters will give chase. "
 "Then we will jump into the system and destroy the Hawk before the fighters "
 "can return.\""
 msgstr ""
 
-#: dat/missions/dvaered/dv_diversion.lua:78
-#, lua-format
+#: dat/missions/dvaered/dv_diversion.lua:59
 msgid ""
-"\"We will jump in approximately 80 hectoseconds after you jump into %s, so "
-"the fighters must be far enough away by then not to come back and attack us."
-"\""
+"\"We will jump in approximately 80 hectoseconds after you jump into {sys}, "
+"so the fighters must be far enough away by then not to come back and attack "
+"us.\""
 msgstr ""
 
-#: dat/missions/dvaered/dv_diversion.lua:81
-#: dat/missions/dvaered/dv_diversion.lua:86
+#: dat/missions/dvaered/dv_diversion.lua:62
+#: dat/missions/dvaered/dv_diversion.lua:67
 msgid "A Small Distraction"
 msgstr ""
 
-#: dat/missions/dvaered/dv_diversion.lua:83
+#: dat/missions/dvaered/dv_diversion.lua:64
 msgid ""
 "Fire on the Hawk and flee from the fighter escorts until the Dvaered fleet "
 "jumps in and destroys the Hawk"
 msgstr ""
 
-#: dat/missions/dvaered/dv_diversion.lua:85
+#: dat/missions/dvaered/dv_diversion.lua:66
 msgid ""
 "You have been recruited to distract the Dvaered fighter escorts and lead "
 "them away from the jump gate and the capital ship Hawk. The Dvaered task "
@@ -35633,11 +35558,11 @@ msgid ""
 "force is eliminated."
 msgstr ""
 
-#: dat/missions/dvaered/dv_diversion.lua:96
+#: dat/missions/dvaered/dv_diversion.lua:77
 msgid "Nuts"
 msgstr ""
 
-#: dat/missions/dvaered/dv_diversion.lua:96
+#: dat/missions/dvaered/dv_diversion.lua:77
 msgid ""
 "\"I see. In that case, I'm going to have to ask you to leave. My job is to "
 "recruit a civilian, but you're clearly not the one I'm looking for. You may "
@@ -35645,49 +35570,103 @@ msgid ""
 msgstr ""
 
 #. Create the custom factions
-#: dat/missions/dvaered/dv_diversion.lua:108
+#: dat/missions/dvaered/dv_diversion.lua:97
 msgid "The Hawk"
 msgstr ""
 
-#: dat/missions/dvaered/dv_diversion.lua:109
+#: dat/missions/dvaered/dv_diversion.lua:98
 msgid "Attackers"
 msgstr ""
 
 #. Spawn people
 #. Half finished installing weapons. :)
-#: dat/missions/dvaered/dv_diversion.lua:125
+#: dat/missions/dvaered/dv_diversion.lua:114
 #: dat/scripts/pilotname/generic.lua:41
 msgid "Hawk"
 msgstr ""
 
+#: dat/missions/dvaered/dv_diversion.lua:120
+msgid ""
+"Alright folks, this will be Hawk's maiden jump. Continue on course to the "
+"{sys} jump gate."
+msgstr ""
+
 #. Got away
-#: dat/missions/dvaered/dv_diversion.lua:166
-#: dat/missions/dvaered/dv_diversion.lua:172
+#: dat/missions/dvaered/dv_diversion.lua:149
+#: dat/missions/dvaered/dv_diversion.lua:155
 msgid "The Hawk got away!"
 msgstr ""
 
+#: dat/missions/dvaered/dv_diversion.lua:149
+msgid "The Hawk jumped out of the system. You have failed your mission."
+msgstr ""
+
+#: dat/missions/dvaered/dv_diversion.lua:155
+msgid "The Hawk landed back on {pnt}. You have failed your mission."
+msgstr ""
+
 #. chased
+#: dat/missions/dvaered/dv_diversion.lua:162
+msgid "How dare they attack me! Get them!"
+msgstr ""
+
+#: dat/missions/dvaered/dv_diversion.lua:165
+msgid "You heard Warlord Khan, blow them to pieces!"
+msgstr ""
+
 #. chased
+#: dat/missions/dvaered/dv_diversion.lua:175
+msgid "They're attacking us, blow them to pieces!"
+msgstr ""
+
 #. Find the first alive ship and broadcast a message
 #. mission accomplished
+#. Give the escorts a few seconds to get away from the player.
+#. mission failed
+#: dat/missions/dvaered/dv_diversion.lua:194
+#: dat/missions/dvaered/dv_diversion.lua:298
+msgid "Arrgh!"
+msgstr ""
+
 #. Wrangles the fleet defending the Hawk
 #. Nothing to do if we're already in the final phase of the mission
 #. spawn warlord killing fleet
 #. Cancel autonav.
-#. Give the escorts a few seconds to get away from the player.
-#. mission failed
-#: dat/missions/dvaered/dv_diversion.lua:319
+#: dat/missions/dvaered/dv_diversion.lua:260
+msgid "{pnt} will be ours! Khan, prepare to die!"
+msgstr ""
+
+#: dat/missions/dvaered/dv_diversion.lua:271
+#: dat/missions/dvaered/dv_diversion.lua:272
+msgid "All units, defend Hawk, we are under attack!"
+msgstr ""
+
+#: dat/missions/dvaered/dv_diversion.lua:300
+msgid "Pathetic, can't even take down an unarmed ship."
+msgstr ""
+
+#: dat/missions/dvaered/dv_diversion.lua:302
 msgid "The Hawk is safe."
 msgstr ""
 
-#: dat/missions/dvaered/dv_diversion.lua:367
+#: dat/missions/dvaered/dv_diversion.lua:302
+msgid ""
+"The Hawk was able to fend off the attackers and destroy their flagship. You "
+"have failed your mission."
+msgstr ""
+
+#: dat/missions/dvaered/dv_diversion.lua:350
 msgid "The Dvaered official sent you a message."
 msgstr ""
 
-#: dat/missions/dvaered/dv_diversion.lua:367
+#: dat/missions/dvaered/dv_diversion.lua:350
 msgid ""
 "\"Thanks for the distraction. I've sent you a picture of all the medals I "
 "was awarded. Oh, and I also deposited 800,000 credits in your account.\""
+msgstr ""
+
+#: dat/missions/dvaered/dv_diversion.lua:353
+msgid "I declare myself the Warlord of {pnt}!"
 msgstr ""
 
 #.
@@ -41501,7 +41480,7 @@ msgstr ""
 #: dat/missions/empire/longdistanceshipping/es_longdistancecargo.lua:146
 #: dat/missions/neutral/cargo_rush.lua:181
 #: dat/missions/pirate/pir_contraband.lua:212
-#: dat/missions/zalek/neburesearch/neburesearch_03.lua:208
+#: dat/missions/zalek/neburesearch/neburesearch_03.lua:207
 msgid ""
 "Fly to {pnt} in the {sys} system before {time_limit}\n"
 "({time} remaining)"
@@ -52853,9 +52832,9 @@ msgstr ""
 #: dat/missions/zalek/sciencegonewrong/00_sciwrong.lua:134
 #: dat/missions/zalek/sciencegonewrong/00_sciwrong.lua:154
 #: dat/missions/zalek/sciencegonewrong/00_sciwrong.lua:155
-#: dat/missions/zalek/sciencegonewrong/01_sciwrong.lua:51
-#: dat/missions/zalek/sciencegonewrong/01_sciwrong.lua:55
-#: dat/missions/zalek/sciencegonewrong/01_sciwrong.lua:146
+#: dat/missions/zalek/sciencegonewrong/01_sciwrong.lua:52
+#: dat/missions/zalek/sciencegonewrong/01_sciwrong.lua:56
+#: dat/missions/zalek/sciencegonewrong/01_sciwrong.lua:147
 #: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:55
 #: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:59
 msgid "In the bar"
@@ -58395,76 +58374,6 @@ msgstr ""
 #. Then, when the player wants to leave the planet, and that will eventually
 #. happen (at least, I hope…) he’ll be pursued by a few fighters.
 #. --
-#: dat/missions/pirate/pir_ship_stealing.lua:41
-#, lua-format
-msgid "Stealing a %s"
-msgstr ""
-
-#: dat/missions/pirate/pir_ship_stealing.lua:42
-#, lua-format
-msgid "Land on %s in the %s system and escape with your new %s"
-msgstr ""
-
-#. localization stuff, translators would work here
-#: dat/missions/pirate/pir_ship_stealing.lua:46
-msgid ""
-"A pirate informer is looking at you. Maybe they have some useful information "
-"to sell?"
-msgstr ""
-
-#: dat/missions/pirate/pir_ship_stealing.lua:47
-msgid "Ship to steal"
-msgstr ""
-
-#: dat/missions/pirate/pir_ship_stealing.lua:48
-#, lua-format
-msgid ""
-"\"Hi, pilot. I have the location and security codes of an unattended %s %s. "
-"Maybe it interests you, who knows?\n"
-"    \"However, I'm going to sell that information only. It'd cost you %s, "
-"but the ship is probably worth much more if you can get to it.\"\n"
-"    Do you want to pay to know where that ship is?"
-msgstr ""
-
-#: dat/missions/pirate/pir_ship_stealing.lua:54
-msgid "Of course"
-msgstr ""
-
-#: dat/missions/pirate/pir_ship_stealing.lua:55
-#, lua-format
-msgid ""
-"You pay the informer, who tells you the ship in currently on %s, in the %s "
-"system. He also gives you its security codes and warns you about patrols.\n"
-"    The pile of information he gives you also contains a way to land on the "
-"planet and to dissimulate your ship there."
-msgstr ""
-
-#: dat/missions/pirate/pir_ship_stealing.lua:60
-msgid "Ship successfully stolen!"
-msgstr ""
-
-#: dat/missions/pirate/pir_ship_stealing.lua:61
-#, lua-format
-msgid ""
-"It took you a while, but you finally make it into the ship and take control "
-"of it with the access codes you were given. Hopefully, you will be able to "
-"sell this %s, or maybe even to use it.\n"
-"    Enemy ships will probably be after you as soon as you leave the "
-"atmosphere, so you should get ready and use the time you have on this planet "
-"wisely."
-msgstr ""
-
-#: dat/missions/pirate/pir_ship_stealing.lua:66
-msgid "Ship left alone!"
-msgstr ""
-
-#: dat/missions/pirate/pir_ship_stealing.lua:67
-msgid ""
-"Before you make it into the ship and take control of it, you realize you are "
-"not ready to deal with the logistics of moving your cargo over. You decide "
-"to leave the ship stealing business for later."
-msgstr ""
-
 #. Never more than 5.
 #. “Oh dude, that guy is capable! He managed to steal one of our own ships!”
 #. Hey, who do you think you are to steal a carrier?
@@ -58472,27 +58381,90 @@ msgstr ""
 #. If we’re here, it means we couldn’t get a ship of the right faction
 #. and of the right class.
 #. We’re assuming ships[faction][class] is not empty, here…
-#: dat/missions/pirate/pir_ship_stealing.lua:286
+#: dat/missions/pirate/pir_ship_stealing.lua:257
 msgid "A Pirate informer"
 msgstr ""
 
-#. Mission title, _("A brand new %s"), description
-#: dat/missions/pirate/pir_ship_stealing.lua:301
-#, lua-format
-msgid "A brand new %s"
+#: dat/missions/pirate/pir_ship_stealing.lua:257
+msgid ""
+"A pirate informer is looking at you. Maybe they have some useful information "
+"to sell?"
+msgstr ""
+
+#: dat/missions/pirate/pir_ship_stealing.lua:261
+msgid "Ship to steal"
+msgstr ""
+
+#: dat/missions/pirate/pir_ship_stealing.lua:261
+msgid ""
+"\"Hi, pilot. I have the location and security codes of an unattended {fct} "
+"{class}. Maybe it interests you, who knows?\n"
+"    \"However, I'm going to sell that information only. It'd cost you "
+"{credits}, but the ship is probably worth much more if you can get to it.\"\n"
+"    Do you want to pay to know where that ship is?"
+msgstr ""
+
+#: dat/missions/pirate/pir_ship_stealing.lua:266
+msgid "Of course"
+msgstr ""
+
+#: dat/missions/pirate/pir_ship_stealing.lua:266
+msgid ""
+"You pay the informer, who tells you the ship in currently on {pnt}, in the "
+"{sys} system. He also gives you its security codes and warns you about "
+"patrols.\n"
+"    The pile of information he gives you also contains a way to land on the "
+"planet and to dissimulate your ship there."
+msgstr ""
+
+#: dat/missions/pirate/pir_ship_stealing.lua:273
+msgid "Stealing a {class}"
+msgstr ""
+
+#: dat/missions/pirate/pir_ship_stealing.lua:274
+msgid "Land on {pnt} in the {sys} system and escape with your new {class}"
+msgstr ""
+
+#: dat/missions/pirate/pir_ship_stealing.lua:277
+msgid "A brand new {class}"
 msgstr ""
 
 #. Mission marker
 #. OSD
-#: dat/missions/pirate/pir_ship_stealing.lua:326
+#: dat/missions/pirate/pir_ship_stealing.lua:289
 msgid "Not Enough Money"
 msgstr ""
 
 #. Why would we care?
 #. Try to swap ships
 #. Failed to swap ship!
+#: dat/missions/pirate/pir_ship_stealing.lua:306
+msgid "Ship left alone!"
+msgstr ""
+
+#: dat/missions/pirate/pir_ship_stealing.lua:306
+msgid ""
+"Before you make it into the ship and take control of it, you realize you are "
+"not ready to deal with the logistics of moving your cargo over. You decide "
+"to leave the ship stealing business for later."
+msgstr ""
+
 #. Get rid of the temporary pilot
 #. Oh yeah, we stole the ship. \o/
+#: dat/missions/pirate/pir_ship_stealing.lua:313
+msgid "Ship successfully stolen!"
+msgstr ""
+
+#: dat/missions/pirate/pir_ship_stealing.lua:315
+msgid ""
+"It took you a while, but you finally make it into the ship and take control "
+"of it with the access codes you were given. Hopefully, you will be able to "
+"sell this {ship}, or maybe even to use it.\n"
+"    Enemy ships will probably be after you as soon as you leave the "
+"atmosphere, so you should get ready and use the time you have on this planet "
+"wisely."
+msgstr ""
+
 #. Hey, stealing a ship isn’t anything! (if you survive, that is)
 #. Let’s keep a counter. Just in case we want to know how many you
 #. stole in the future.
@@ -67309,7 +67281,7 @@ msgstr ""
 
 #. Set up mission information
 #: dat/missions/zalek/neburesearch/neburesearch_03.lua:63
-#: dat/missions/zalek/neburesearch/neburesearch_03.lua:210
+#: dat/missions/zalek/neburesearch/neburesearch_03.lua:209
 msgid "The Substitute Speaker"
 msgstr ""
 
@@ -67517,7 +67489,7 @@ msgstr ""
 #: dat/missions/zalek/neburesearch/neburesearch_03.lua:184
 #: dat/missions/zalek/neburesearch/neburesearch_03.lua:186
 #: dat/missions/zalek/neburesearch/neburesearch_03.lua:187
-#: dat/missions/zalek/neburesearch/neburesearch_03.lua:193
+#: dat/missions/zalek/neburesearch/neburesearch_03.lua:192
 msgid "Scientific Talk"
 msgstr ""
 
@@ -67579,7 +67551,7 @@ msgid ""
 "ship. You can't be the first one running from a talk, right?"
 msgstr ""
 
-#: dat/missions/zalek/neburesearch/neburesearch_03.lua:193
+#: dat/missions/zalek/neburesearch/neburesearch_03.lua:192
 msgid ""
 "You try to avoid the question. The scientist seems to be upset. There are no "
 "further questions. Apparently there is another talk that starts very soon so "
@@ -67587,7 +67559,7 @@ msgid ""
 "return to your ship. Enough science for today!"
 msgstr ""
 
-#: dat/missions/zalek/neburesearch/neburesearch_03.lua:196
+#: dat/missions/zalek/neburesearch/neburesearch_03.lua:195
 msgid ""
 "You gave a scientific talk on {pnt}. Did anyone notice you're not a "
 "scientist?"
@@ -67595,7 +67567,7 @@ msgstr ""
 
 #. Date hook
 #. Case missed second deadline
-#: dat/missions/zalek/neburesearch/neburesearch_03.lua:205
+#: dat/missions/zalek/neburesearch/neburesearch_03.lua:204
 msgid "You were too late. You're never going to be a great scientist!"
 msgstr ""
 
@@ -67814,7 +67786,7 @@ msgid ""
 msgstr ""
 
 #: dat/missions/zalek/sciencegonewrong/00_sciwrong.lua:55
-#: dat/missions/zalek/sciencegonewrong/01_sciwrong.lua:52
+#: dat/missions/zalek/sciencegonewrong/01_sciwrong.lua:53
 #: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:56
 msgid "No Science Today"
 msgstr ""
@@ -67841,8 +67813,7 @@ msgid "The one with the Shopping"
 msgstr ""
 
 #: dat/missions/zalek/sciencegonewrong/00_sciwrong.lua:61
-#, lua-format
-msgid "Go to the %s system and talk to the trader on %s"
+msgid "Go to the {sys} system and talk to the trader on {pnt}"
 msgstr ""
 
 #: dat/missions/zalek/sciencegonewrong/00_sciwrong.lua:63
@@ -67852,7 +67823,7 @@ msgid ""
 msgstr ""
 
 #: dat/missions/zalek/sciencegonewrong/00_sciwrong.lua:65
-#: dat/missions/zalek/sciencegonewrong/01_sciwrong.lua:65
+#: dat/missions/zalek/sciencegonewrong/01_sciwrong.lua:66
 msgid "The gratitude of science and a bit of compensation"
 msgstr ""
 
@@ -67883,23 +67854,21 @@ msgid ""
 msgstr ""
 
 #: dat/missions/zalek/sciencegonewrong/00_sciwrong.lua:93
-#, lua-format
 msgid ""
 "\"Of course I have what you need. I'll trade it for some 3t phosphine. You "
-"can find it on %s in the %s system.\""
+"can find it on {pnt} in the {sys} system.\""
 msgstr ""
 
 #: dat/missions/zalek/sciencegonewrong/00_sciwrong.lua:98
-#, lua-format
-msgid "Go to the %s system and talk to the contact person on %s"
+msgid "Go to the {sys} system and talk to the contact person on {pnt}"
 msgstr ""
 
 #: dat/missions/zalek/sciencegonewrong/00_sciwrong.lua:109
-#, lua-format
 msgid ""
 "\"You approach the dealer and explain what you are looking for. He raises "
-"his eyebrow. \"It will be %s. But if you get caught by the authorities, "
-"you're on your own. Far as I'm concerned I never saw you. Deal?\""
+"his eyebrow. \"It will be {credits}. But if you get caught by the "
+"authorities, you're on your own. Far as I'm concerned I never saw you. Deal?"
+"\""
 msgstr ""
 
 #: dat/missions/zalek/sciencegonewrong/00_sciwrong.lua:110
@@ -67919,8 +67888,7 @@ msgid "A colourless, flammable, poisonous gas."
 msgstr ""
 
 #: dat/missions/zalek/sciencegonewrong/00_sciwrong.lua:123
-#, lua-format
-msgid "Return to the %s system to the trader on %s"
+msgid "Return to the {sys} system to the trader on {pnt}"
 msgstr ""
 
 #: dat/missions/zalek/sciencegonewrong/00_sciwrong.lua:134
@@ -67931,8 +67899,7 @@ msgid ""
 msgstr ""
 
 #: dat/missions/zalek/sciencegonewrong/00_sciwrong.lua:140
-#, lua-format
-msgid "Return to the %s system and deliver to Dr. Geller on %s"
+msgid "Return to the {sys} system and deliver to Dr. Geller on {pnt}"
 msgstr ""
 
 #: dat/missions/zalek/sciencegonewrong/00_sciwrong.lua:154
@@ -67973,8 +67940,8 @@ msgstr ""
 #. do something else
 #: dat/missions/zalek/sciencegonewrong/00_sciwrong.lua:169
 #: dat/missions/zalek/sciencegonewrong/00_sciwrong.lua:170
-#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:87
-#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:151
+#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:90
+#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:154
 msgid "On the intercom"
 msgstr ""
 
@@ -68002,20 +67969,20 @@ msgstr ""
 #. if it is the last attacking drone, make it run away from the player
 #: dat/missions/zalek/sciencegonewrong/00_sciwrong.lua:223
 #: dat/missions/zalek/sciencegonewrong/00_sciwrong.lua:224
-#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:119
-#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:120
-#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:121
-#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:157
-#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:175
-#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:185
-#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:190
-#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:200
-#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:231
-#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:245
-#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:250
+#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:122
+#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:123
+#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:124
+#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:160
+#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:178
+#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:188
+#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:193
+#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:203
+#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:234
+#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:248
 #: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:253
-#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:270
-#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:310
+#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:256
+#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:273
+#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:313
 msgid "On your ship"
 msgstr ""
 
@@ -68027,10 +67994,9 @@ msgid ""
 msgstr ""
 
 #: dat/missions/zalek/sciencegonewrong/00_sciwrong.lua:224
-#, lua-format
 msgid ""
 "The inspectors search through your ship and cargo hold. It doesn't take long "
-"for them to find the phosphine; they confiscate it and fine you %s."
+"for them to find the phosphine; they confiscate it and fine you {credits}."
 msgstr ""
 
 #: dat/missions/zalek/sciencegonewrong/00_sciwrong.lua:241
@@ -68066,6 +68032,10 @@ msgstr ""
 #. --
 #. mission variables
 #. t_pla[1], t_sys[1] = planet.getS("Gastan")
+#: dat/missions/zalek/sciencegonewrong/01_sciwrong.lua:38
+msgid "Tokera"
+msgstr ""
+
 #. Have to be at center of operations.
 #. Spaceport bar stuff
 #.
@@ -68100,17 +68070,17 @@ msgstr ""
 #. t_pla[2], t_sys[2] = planet.getS("Gastan")
 #. Have to be at center of operations.
 #. Spaceport bar stuff
-#: dat/missions/zalek/sciencegonewrong/01_sciwrong.lua:47
+#: dat/missions/zalek/sciencegonewrong/01_sciwrong.lua:48
 #: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:50
 msgid "Dr. Geller"
 msgstr ""
 
-#: dat/missions/zalek/sciencegonewrong/01_sciwrong.lua:47
+#: dat/missions/zalek/sciencegonewrong/01_sciwrong.lua:48
 msgid ""
 "You see Dr. Geller waving you over. Apparently he has another job for you."
 msgstr ""
 
-#: dat/missions/zalek/sciencegonewrong/01_sciwrong.lua:51
+#: dat/missions/zalek/sciencegonewrong/01_sciwrong.lua:52
 msgid ""
 "\"Ah, there you are! I've got a job for you. Specifically, some... "
 "acquisition... of technology from the Soromid, who haven't been very "
@@ -68119,70 +68089,60 @@ msgid ""
 "accept the job?"
 msgstr ""
 
-#: dat/missions/zalek/sciencegonewrong/01_sciwrong.lua:52
+#: dat/missions/zalek/sciencegonewrong/01_sciwrong.lua:53
 msgid "But I really thought you were into science..."
 msgstr ""
 
-#: dat/missions/zalek/sciencegonewrong/01_sciwrong.lua:55
-#, lua-format
+#: dat/missions/zalek/sciencegonewrong/01_sciwrong.lua:56
 msgid ""
 "\"Excellent. From what I have been told it looks like this.\" He gestures "
 "with his hands to no merit. \"You will recognize it; it should be in a box "
 "that's kept separately from the remaining stuff and labeled \"Top Secret\". "
 "Oh, and you might need this.\" He hands you a handheld device. \"The ship is "
-"called the %s.\"\n"
+"called the {plt}.\"\n"
 "    So he wants you to steal something top secret from the Soromid. Quirky "
 "people, those Za'leks. With the coordinates, the signature of the target "
 "ship and the handheld, which you hope helps you detect the box, you set off "
 "on your way."
 msgstr ""
 
-#. Randomly spawn the Ship in the system
-#: dat/missions/zalek/sciencegonewrong/01_sciwrong.lua:56
 #: dat/missions/zalek/sciencegonewrong/01_sciwrong.lua:59
-#: dat/missions/zalek/sciencegonewrong/01_sciwrong.lua:60
-#: dat/missions/zalek/sciencegonewrong/01_sciwrong.lua:80
-msgid "Tokera"
-msgstr ""
-
-#: dat/missions/zalek/sciencegonewrong/01_sciwrong.lua:58
-#: dat/missions/zalek/sciencegonewrong/01_sciwrong.lua:64
+#: dat/missions/zalek/sciencegonewrong/01_sciwrong.lua:65
 msgid "The one with the Visit"
 msgstr ""
 
-#: dat/missions/zalek/sciencegonewrong/01_sciwrong.lua:59
-#, lua-format
-msgid "Go to the %s system and find the %s"
-msgstr ""
-
 #: dat/missions/zalek/sciencegonewrong/01_sciwrong.lua:60
-#, lua-format
-msgid "Board the %s and retrieve the secret technology"
+msgid "Go to the {sys} system and find the {plt}"
 msgstr ""
 
-#: dat/missions/zalek/sciencegonewrong/01_sciwrong.lua:63
+#: dat/missions/zalek/sciencegonewrong/01_sciwrong.lua:61
+msgid "Board the {plt} and retrieve the secret technology"
+msgstr ""
+
+#: dat/missions/zalek/sciencegonewrong/01_sciwrong.lua:64
 msgid ""
 "You've been hired by Dr. Geller to retrieve technology he urgently needs to "
 "build his prototype."
 msgstr ""
 
+#. Randomly spawn the Ship in the system
 #. Tear down now-useless hooks.
 #. New location is 750px away in a random direction
-#: dat/missions/zalek/sciencegonewrong/01_sciwrong.lua:122
+#: dat/missions/zalek/sciencegonewrong/01_sciwrong.lua:123
 msgid "What have you done?"
 msgstr ""
 
-#: dat/missions/zalek/sciencegonewrong/01_sciwrong.lua:122
+#: dat/missions/zalek/sciencegonewrong/01_sciwrong.lua:123
 msgid ""
 "The ship explodes before your eyes and you realize that you will never be "
 "able to get the secret tech now."
 msgstr ""
 
-#: dat/missions/zalek/sciencegonewrong/01_sciwrong.lua:129
+#: dat/missions/zalek/sciencegonewrong/01_sciwrong.lua:130
 msgid "In the ship"
 msgstr ""
 
-#: dat/missions/zalek/sciencegonewrong/01_sciwrong.lua:129
+#: dat/missions/zalek/sciencegonewrong/01_sciwrong.lua:130
 msgid ""
 "You make your way through the living ship after taking care of its crew. You "
 "note the feeling that the ship is personally angry at you which, given the "
@@ -68196,15 +68156,15 @@ msgid ""
 "with you if they manage to scan your ship."
 msgstr ""
 
-#: dat/missions/zalek/sciencegonewrong/01_sciwrong.lua:133
+#: dat/missions/zalek/sciencegonewrong/01_sciwrong.lua:134
 msgid "Secret Technology"
 msgstr ""
 
-#: dat/missions/zalek/sciencegonewrong/01_sciwrong.lua:133
+#: dat/missions/zalek/sciencegonewrong/01_sciwrong.lua:134
 msgid "A mysterious box of stolen Soromid technology."
 msgstr ""
 
-#: dat/missions/zalek/sciencegonewrong/01_sciwrong.lua:146
+#: dat/missions/zalek/sciencegonewrong/01_sciwrong.lua:147
 msgid ""
 "\"How'd it go?\" asks Dr. Geller. You show him the box. \"Ah, marvelous! Do "
 "you know what this is? This is a quantum sharpener. It's like a quantum "
@@ -68213,7 +68173,7 @@ msgid ""
 "credit chip before walking off, smiling."
 msgstr ""
 
-#: dat/missions/zalek/sciencegonewrong/01_sciwrong.lua:150
+#: dat/missions/zalek/sciencegonewrong/01_sciwrong.lua:151
 msgid ""
 "You stole something called a \"quantum sharpener\" from a Soromid ship for "
 "Dr. Geller."
@@ -68243,47 +68203,44 @@ msgid "\"Excellent! I will join you this time. Let's go.\""
 msgstr ""
 
 #: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:61
-#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:63
+#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:66
 msgid "The one with the Runaway"
 msgstr ""
 
-#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:61
-#, lua-format
-msgid "Go to the %s system and hail the prototype"
+#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:62
+msgid "Go to the {sys} system and hail the prototype"
 msgstr ""
 
-#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:61
+#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:63
 msgid "Disable the prototype"
 msgstr ""
 
-#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:61
-#, lua-format
-msgid "Return the prototype to %s in the %s system"
+#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:64
+msgid "Return the prototype to {pnt} in the {sys} system"
 msgstr ""
 
-#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:62
+#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:65
 msgid ""
 "You've been hired by Dr. Geller to retrieve his prototype that ran away."
 msgstr ""
 
-#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:64
+#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:67
 msgid "A peek at the new prototype and some compensation for your efforts"
 msgstr ""
 
-#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:87
-#, lua-format
+#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:90
 msgid ""
-"\"There! The tracker shows it must be here! It is right next to %s! If you "
-"hail it I might be able to patch the software. That should give me control "
-"again. But you have to be close so the data transfer is as stable as "
+"\"There! The tracker shows it must be here! It is right next to {pnt}! If "
+"you hail it I might be able to patch the software. That should give me "
+"control again. But you have to be close so the data transfer is as stable as "
 "possible.\""
 msgstr ""
 
 #. spawn drones
 #. prototype is a scout drone
 #. add something so it is not insta-disabled with one shot?
-#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:94
-#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:205
+#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:97
+#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:208
 msgid "Prototype Drone"
 msgstr ""
 
@@ -68291,90 +68248,88 @@ msgstr ""
 #. wait for the drone to be hailed
 #. + vec2.new(dist*math.cos(math.pi*2*rnd.rnd()),dist*math.sin(2*math.pi*rnd.rnd()))
 #. pilot.toggleSpawn(true)
-#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:113
+#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:116
 msgid "Target out of range"
 msgstr ""
 
-#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:119
+#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:122
 msgid ""
 "\"Huh, I don't understand. This should not be happening. Hold on. I can't "
 "get access.\""
 msgstr ""
 
-#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:120
-#, lua-format
+#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:123
 msgid ""
 "\"Um, there seems to be a glitch. Well, sort of. Um, if I deciphered this "
-"correctly, the drone just hijacked the unused drones on %s and ordered them "
-"to attack us. I never should have tampered with that weird chip those "
+"correctly, the drone just hijacked the unused drones on {pnt} and ordered "
+"them to attack us. I never should have tampered with that weird chip those "
 "pirates sold me!\""
 msgstr ""
 
-#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:121
+#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:124
 msgid ""
 "\"If you can disable the prototype, do it, but I'd prefer not to die at any "
 "rate!\""
 msgstr ""
 
-#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:151
+#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:154
 msgid ""
 "\"NOOOOOO! What have you done!? My prototype! It's going to take me weeks to "
 "rebuild it! You incompetent nincompoop!\""
 msgstr ""
 
-#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:157
+#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:160
 msgid "\"Excellent work! Now load it up and let's get out of here!\""
 msgstr ""
 
-#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:162
+#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:165
 msgid "Prototype"
 msgstr ""
 
-#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:162
+#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:165
 msgid "A disabled prototype drone."
 msgstr ""
 
-#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:175
-#, lua-format
+#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:178
 msgid ""
-"\"The drone has disappeared from my radar! It must have jumped to the %s "
+"\"The drone has disappeared from my radar! It must have jumped to the {sys} "
 "system. Let's find it!\""
 msgstr ""
 
-#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:185
-#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:270
-#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:310
+#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:188
+#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:273
+#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:313
 msgid "\"Interesting, the other drones are running away...\""
 msgstr ""
 
-#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:190
-#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:245
+#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:193
+#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:248
 msgid "\"NOOOOOOOOO! My drone! You imbecile! You failed me!\""
 msgstr ""
 
-#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:200
+#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:203
 msgid ""
 "\"The scanner shows me that the drone has slowed down. It must have lost "
 "power. Go! Go! It should now be much easier to catch it!\""
 msgstr ""
 
-#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:222
+#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:225
 msgid ""
 "Something went terribly wrong here! If you see this message please reload "
 "and report a bug in this mission. Thank you!"
 msgstr ""
 
-#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:231
+#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:234
 msgid ""
 "\"It seems the drone has found a way to shield itself from the EM pulses. I "
 "think I can adjust to that, give me a second.\""
 msgstr ""
 
-#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:250
+#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:253
 msgid "\"There you go! Get it!\""
 msgstr ""
 
-#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:253
+#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:256
 msgid ""
 "\"This is strange, the engines are starting to heat up... oh, shit, if they "
 "continue like this the drone will explode in about 20 seconds! You'd better "
@@ -68382,12 +68337,11 @@ msgid ""
 msgstr ""
 
 #. last hook
-#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:260
-#, lua-format
-msgid "Back on %s"
+#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:263
+msgid "Back on {pnt}"
 msgstr ""
 
-#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:260
+#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:263
 msgid ""
 "\"The things I do for science! Now let me go back to my lab and analyze the "
 "drone. I need to figure out exactly what happened and what went wrong. Once "
@@ -68395,7 +68349,7 @@ msgid ""
 "small bag containing a credit chip and a tiny toy drone is tossed your way."
 msgstr ""
 
-#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:263
+#: dat/missions/zalek/sciencegonewrong/02_sciwrong.lua:266
 msgid "You helped Dr. Geller retrieve his lost prototype drone."
 msgstr ""
 
