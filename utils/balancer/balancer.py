@@ -29,7 +29,7 @@ class Balancer:
         # parse the xml files
         fields  = set()
         data    = {}
-        for filename in glob.glob( searchpath ):
+        for filename in glob.glob( searchpath, recursive=True ):
             print(filename)
             root = ET.parse( filename ).getroot()
 
