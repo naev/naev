@@ -1,7 +1,6 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
 /**
  * @file dialogue.c
  *
@@ -17,8 +16,6 @@
  *
  * @sa toolkit.c
  */
-
-
 /** @cond */
 #include <stdarg.h>
 #include <stdlib.h>
@@ -37,9 +34,7 @@
 #include "pause.h"
 #include "toolkit.h"
 
-
 static int dialogue_open; /**< Number of dialogues open. */
-
 
 /*
  * Custom widget scary stuff.
@@ -60,7 +55,6 @@ struct dialogue_custom_data_s {
    int last_h;
 };
 static int dialogue_custom_event( unsigned int wid, SDL_Event *event );
-
 
 /*
  * Prototypes.
@@ -104,7 +98,6 @@ int dialogue_isOpen (void)
    return !!dialogue_open;
 }
 
-
 /**
  * @brief Generic window close.
  */
@@ -117,7 +110,6 @@ static void dialogue_close( unsigned int wid, const char *str )
    *loop_done = 1;
 }
 
-
 /**
  * @brief Generic window cancel.
  */
@@ -129,7 +121,6 @@ static void dialogue_cancel( unsigned int wid, const char *str )
    window_destroy( wid );
    *loop_done = -1;
 }
-
 
 /**
  * @brief Displays an alert popup with only an ok button and a message.
@@ -162,7 +153,6 @@ void dialogue_alert( const char *fmt, ... )
 
    toolkit_loop( &done, NULL );
 }
-
 
 /**
  * @brief Gets the size needed for the dialogue.
@@ -217,7 +207,6 @@ static glFont* dialogue_getSize( const char* title,
    return font;
 }
 
-
 /**
  * @brief Opens a dialogue window with an ok button and a message.
  *
@@ -238,7 +227,6 @@ void dialogue_msg( const char* caption, const char *fmt, ... )
 
    dialogue_msgRaw( caption, msg );
 }
-
 
 /**
  * @brief Opens a dialogue window with an ok button, a message and an image.
@@ -261,7 +249,6 @@ void dialogue_msgImg( const char* caption, const char *img, const char *fmt, ...
 
    dialogue_msgImgRaw( caption, msg, img, -1, -1 );
 }
-
 
 /**
  * @brief Opens a dialogue window with an ok button and a fixed message.
@@ -288,7 +275,6 @@ void dialogue_msgRaw( const char* caption, const char *msg )
 
    toolkit_loop( &done, NULL );
 }
-
 
 /**
  * @brief Opens a dialogue window with an ok button, a fixed message and an image.
@@ -346,7 +332,6 @@ void dialogue_msgImgRaw( const char* caption, const char *msg, const char *img, 
    toolkit_loop( &done, NULL );
 }
 
-
 /**
  * @brief Runs a dialogue with both yes and no options.
  *
@@ -368,7 +353,6 @@ int dialogue_YesNo( const char* caption, const char *fmt, ... )
 
    return dialogue_YesNoRaw( caption, msg );
 }
-
 
 /**
  * @brief Runs a dialogue with both yes and no options.
@@ -432,7 +416,6 @@ static void dialogue_YesNoClose( unsigned int wid, const char *str )
    loop_done[0] = 1;
    loop_done[1] = result;
 }
-
 
 static InputDialogue input_dialogue; /**< Stores the input window id and callback. */
 /**
@@ -549,7 +532,6 @@ static void dialogue_inputClose( unsigned int wid, const char *str )
    loop_done = window_getData( wid );
    *loop_done = 1;
 }
-
 
 static int dialogue_listSelected = -1;
 static void dialogue_listCancel( unsigned int wid, const char *str )
@@ -837,7 +819,6 @@ static void dialogue_choiceClose( unsigned int wid, const char *str )
    window_destroy( wid );
 }
 
-
 static int dialogue_custom_event( unsigned int wid, SDL_Event *event )
 {
    int mx, my;
@@ -927,7 +908,6 @@ void dialogue_custom( const char* caption, int width, int height,
    toolkit_loop( &done, &du );
 }
 
-
 /**
  * @brief Converts a custom dialogue to fullscreen.
  *
@@ -970,7 +950,6 @@ int dialogue_customFullscreen( int enable )
    return 0;
 }
 
-
 /**
  * @brief Resizes a custom dialogue.
  *
@@ -992,7 +971,6 @@ int dialogue_customResize( int width, int height )
    return 0;
 }
 
-
 /**
  * @brief Creates a secondary loop until loop_done is set to 1 or the toolkit closes.
  *
@@ -1008,9 +986,6 @@ int dialogue_customResize( int width, int height )
  */
 static int toolkit_loop( int *loop_done, dialogue_update_t *du )
 {
-   SDL_Event event;
-   unsigned int t;
-   double dt, delay;
    unsigned int time_ms = SDL_GetTicks();
    const double fps_max = 1./30.;
    int quit_game = 0;
@@ -1023,6 +998,10 @@ static int toolkit_loop( int *loop_done, dialogue_update_t *du )
 
    *loop_done = 0;
    while (!(*loop_done) && toolkit_isOpen() && !naev_isQuit()) {
+      SDL_Event event;
+      unsigned int t;
+      double dt, delay;
+
       /* Loop first so exit condition is checked before next iteration. */
       main_loop( 0 );
 
@@ -1073,4 +1052,3 @@ static int toolkit_loop( int *loop_done, dialogue_update_t *du )
 
    return quit_game;
 }
-
