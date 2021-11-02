@@ -1,7 +1,6 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
 /**
  * @file nlua_faction.c
  *
@@ -9,7 +8,6 @@
  *
  * These bindings control the factions.
  */
-
 /** @cond */
 #include <lauxlib.h>
 
@@ -24,7 +22,6 @@
 #include "nlua_col.h"
 #include "nlua_tex.h"
 #include "nluadef.h"
-
 
 /* Faction metatable methods */
 static int factionL_get( lua_State *L );
@@ -76,7 +73,6 @@ static const luaL_Reg faction_methods[] = {
    {0,0}
 }; /**< Faction metatable methods. */
 
-
 /**
  * @brief Loads the faction library.
  *
@@ -88,7 +84,6 @@ int nlua_loadFaction( nlua_env env )
    nlua_register(env, FACTION_METATABLE, faction_methods, 1);
    return 0; /* No error */
 }
-
 
 /**
  * @brief Lua bindings to deal with factions.
@@ -119,7 +114,6 @@ static int factionL_get( lua_State *L )
    return 1;
 }
 
-
 /**
  * @brief Gets faction at index.
  *
@@ -131,7 +125,6 @@ LuaFaction lua_tofaction( lua_State *L, int ind )
 {
    return *((LuaFaction*) lua_touserdata(L,ind));
 }
-
 
 /**
  * @brief Gets faction (or faction name) at index, raising an error if type isn't a valid faction.
@@ -158,7 +151,6 @@ LuaFaction luaL_validfaction( lua_State *L, int ind )
 
    return id;
 }
-
 
 /**
  * @brief Pushes a faction on the stack.
@@ -441,15 +433,13 @@ static int factionL_playerstandingdefault( lua_State *L )
  */
 static int factionL_enemies( lua_State *L )
 {
-   int i, f;
    int *factions;
-
-   f = luaL_validfaction(L,1);
+   int f = luaL_validfaction(L,1);
 
    /* Push the enemies in a table. */
    lua_newtable(L);
    factions = faction_getEnemies( f );
-   for (i=0; i<array_size(factions); i++) {
+   for (int i=0; i<array_size(factions); i++) {
       lua_pushfaction(L, factions[i]); /* value */
       lua_rawseti(L,-2,i+1);
    }
@@ -468,22 +458,19 @@ static int factionL_enemies( lua_State *L )
  */
 static int factionL_allies( lua_State *L )
 {
-   int i, f;
    int *factions;
-
-   f = luaL_validfaction(L,1);
+   int f = luaL_validfaction(L,1);
 
    /* Push the enemies in a table. */
    lua_newtable(L);
    factions = faction_getAllies( f );
-   for (i=0; i<array_size(factions); i++) {
+   for (int i=0; i<array_size(factions); i++) {
       lua_pushfaction(L, factions[i]); /* value */
       lua_rawseti(L,-2,i+1);
    }
 
    return 1;
 }
-
 
 /**
  * @brief Gets the faction logo.
@@ -502,7 +489,6 @@ static int factionL_logo( lua_State *L )
    return 1;
 }
 
-
 /**
  * @brief Gets the faction colour.
  *
@@ -520,7 +506,6 @@ static int factionL_colour( lua_State *L )
    return 1;
 }
 
-
 /**
  * @brief Checks to see if a faction is known by the player.
  *
@@ -536,7 +521,6 @@ static int factionL_isknown( lua_State *L )
    lua_pushboolean(L, faction_isKnown(fac));
    return 1;
 }
-
 
 /**
  * @brief Sets a faction's known state.
@@ -554,7 +538,6 @@ static int factionL_setknown( lua_State *L )
    faction_setKnown( fac, b );
    return 0;
 }
-
 
 /**
  * @brief Adds a faction dynamically.
@@ -619,7 +602,6 @@ static int factionL_dynAdd( lua_State *L )
    return 1;
 }
 
-
 /**
  * @brief Adds or removes allies to a faction. Only works with dynamic factions.
  *
@@ -645,7 +627,6 @@ static int factionL_dynAlly( lua_State *L )
    return 0;
 }
 
-
 /**
  * @brief Adds or removes enemies to a faction. Only works with dynamic factions.
  *
@@ -670,6 +651,3 @@ static int factionL_dynEnemy( lua_State *L )
       faction_addEnemy(fac, enemy);
    return 0;
 }
-
-
-
