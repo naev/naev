@@ -67,6 +67,8 @@
 Player_t player; /**< Local player. */
 static const Ship* player_ship      = NULL; /**< Temporary ship to hold when naming it */
 static credits_t player_creds = 0; /**< Temporary hack for when creating. */
+static credits_t player_payback = 0; /**< Temporary hack for when creating. */
+static int player_ran_updater = 0; /**< Temporary hack for when creating. */
 static char *player_message_noland = NULL; /**< No landing message (when PLAYER_NOLAND is set). */
 
 /*
@@ -509,6 +511,7 @@ static Pilot* player_newShipMake( const char* name )
    /* money. */
    player.p->credits = player_creds;
    player_creds = 0;
+   player_payback = 0;
 
    return new_pilot;
 }
@@ -726,6 +729,7 @@ void player_cleanup (void)
 
    /* Reset some player stuff. */
    player_creds   = 0;
+   player_payback = 0;
    free( player.gui );
    player.gui = NULL;
 
@@ -3290,6 +3294,59 @@ Planet* player_load( xmlNodePtr parent )
 }
 
 /**
+ * @brief Tries to get an outfit for the player or looks for equivalents.
+ */
+static const Outfit* player_tryGetOutfit( const char *name, int q )
+{
+   credits_t price = -1;
+   const Outfit *o = outfit_getW( name );
+   static nlua_env player_updater_env = LUA_NOREF;
+
+   /* Outfit was found normally. */
+   if (o != NULL)
+      return o;
+   player_ran_updater = 1;
+
+   /* Load env if necessary. */
+   if (player_updater_env == LUA_NOREF) {
+      player_updater_env = nlua_newEnv(1);
+      size_t bufsize;
+      char *buf = ndata_read( SAVE_UPDATER_PATH, &bufsize );
+      if (nlua_dobufenv(player_updater_env, buf, bufsize, SAVE_UPDATER_PATH) != 0) {
+         WARN( _("Error loading file: %s\n"
+            "%s\n"
+            "Most likely Lua file has improper syntax, please check"),
+               SAVE_UPDATER_PATH, lua_tostring(naevL,-1));
+         free(buf);
+         return NULL;
+      }
+      free(buf);
+   }
+
+   /* Try to find out equivalent. */
+   nlua_getenv( player_updater_env, "outfit" );
+   lua_pushstring( naevL, name );
+   if (nlua_pcall(player_updater_env, 1, 1)) { /* error has occurred */
+      WARN( _("Board: '%s'"), lua_tostring(naevL,-1));
+      lua_pop(naevL,1);
+   }
+   if (lua_isstring(naevL,-1))
+      o = outfit_get( lua_tostring(naevL,-1) );
+   else if (lua_isnumber(naevL,-1))
+      price = round( lua_tonumber(naevL,-1) );
+   lua_pop(naevL,1);
+
+   /* No equivalent. */
+   if (o==NULL && price<0) {
+      WARN(_("Outfit '%s' was saved but does not exist!"), name);
+      return NULL;
+   }
+   if (o==NULL)
+      player_payback += price * q;
+   return o;
+}
+
+/**
  * @brief Parses the player node.
  *
  *    @param parent The player node.
@@ -3318,6 +3375,7 @@ static Planet* player_parse( xmlNodePtr parent )
    planet      = NULL;
    time_set    = 0;
    map_overlay_enabled = 0;
+   player_ran_updater = 0;
 
    player.dt_mod = 1.; /* For old saves. */
    player.radar_res = RADAR_RES_DEFAULT;
@@ -3386,17 +3444,17 @@ static Planet* player_parse( xmlNodePtr parent )
          do {
             if (xml_isNode(cur,"outfit")) {
                int q;
-               const Outfit *o = outfit_get( xml_get(cur) );
-               if (o == NULL) {
-                  WARN(_("Outfit '%s' was saved but does not exist!"), xml_get(cur));
+               const Outfit *o;
+               const char *oname = xml_get(cur);
+               xmlr_attr_float( cur, "quantity", q );
+               if (q == 0) {
+                  WARN(_("Outfit '%s' was saved without quantity!"), (oname!=NULL) ? oname : "NULL" );
                   continue;
                }
 
-               xmlr_attr_float( cur, "quantity", q );
-               if (q == 0) {
-                  WARN(_("Outfit '%s' was saved without quantity!"), o->name);
+               o = player_tryGetOutfit( oname, q );
+               if (o == NULL)
                   continue;
-               }
 
                player_addOutfit( o, q );
             }
@@ -3442,10 +3500,16 @@ static Planet* player_parse( xmlNodePtr parent )
    player.speed = 1.;
 
    /* set global thingies */
-   player.p->credits = player_creds;
+   player.p->credits = player_creds + player_payback;
    if (!time_set) {
       WARN(_("Save has no time information, setting to start information."));
       ntime_set( start_date() );
+   }
+
+   /* Updater message. */
+   if (player_ran_updater) {
+      DEBUG(_("Player save was updated!"));
+      dialogue_msg(_("Save Game Updated"),_("The loaded save games has had outfits and ships updated to the current Naev version. You will find that some outfits and ships you have had have been changed. In the case no equivalent outfit or ship was found, you have been refunded the cost in credits."));
    }
 
    /* set player in system */
@@ -3719,7 +3783,7 @@ static void player_parseShipSlot( xmlNodePtr node, Pilot *ship, PilotOutfitSlot 
    }
 
    /* Add the outfit. */
-   o = outfit_get( name );
+   o = player_tryGetOutfit( name, 1 );
    if (o==NULL)
       return;
    player_addOutfitToPilot( ship, o, slot );
@@ -3827,8 +3891,6 @@ static int player_parseShip( xmlNodePtr parent, int is_player )
             if (xml_isNode(cur,"outfit")) {
                xmlr_attr_int_def( cur, "slot", n, -1 );
                if ((n<0) || (n >= array_size(ship->outfit_structure))) {
-                  const Outfit *o = outfit_get( xml_get(cur) );
-                  player_addOutfit( o, 1 );
                   WARN(_("Outfit slot out of range, not adding to ship."));
                   continue;
                }
