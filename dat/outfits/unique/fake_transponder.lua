@@ -1,4 +1,4 @@
-local factions, isactive
+local factions
 
 function onload ()
    factions = outfit.get("Fake Transponder"):illegality()
@@ -32,18 +32,18 @@ local function reset( _p, po )
       f:setPlayerStanding( f:playerStandingDefault() )
    end
    po:state("on")
-   isactive = true
+   mem.isactive = true
 end
 
 local function disable( _p, po )
-   if not isactive then return end
+   if not mem.isactive then return end
    for k,f in ipairs(factions) do
       f:setPlayerStanding( fget( f ) )
       fclear( f )
    end
    po:state("off")
    player.msg(_("#rYour fake transponder has been discovered and is useless until you change systems, land, or cooldown!#0"))
-   isactive = false
+   mem.isactive = false
 end
 
 function onadd( p, po )
