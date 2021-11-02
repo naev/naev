@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Proteron Archimedes">
- <points>150</points>
+ <points>200</points>
  <base_type>Archimedes</base_type>
  <GFX size="130" sx="12" sy="12">archimedes</GFX>
  <rarity>3</rarity>

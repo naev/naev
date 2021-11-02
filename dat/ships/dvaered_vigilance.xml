@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Dvaered Vigilance">
- <points>67.5</points>
+ <points>90</points>
  <base_type>Vigilance</base_type>
  <GFX size="95" sx="10" sy="10">vigilance_dvaered</GFX>
  <rarity>2</rarity>

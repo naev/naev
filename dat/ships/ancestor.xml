@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Ancestor">
- <points>30</points>
+ <points>40</points>
  <base_type>Ancestor</base_type>
  <GFX size="65">ancestor</GFX>
  <GUI>brushed</GUI>

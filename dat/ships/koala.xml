@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Koala">
- <points>22.5</points>
+ <points>30</points>
  <base_type>Koala</base_type>
  <GFX size="46">koala</GFX>
  <GUI>brushed</GUI>

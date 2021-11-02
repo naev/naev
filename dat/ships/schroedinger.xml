@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Schroedinger">
- <points>15</points>
+ <points>20</points>
  <base_type>Schroedinger</base_type>
  <GFX size="47">schroedinger</GFX>
  <GUI>brushed</GUI>

@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Thurion Certitude">
- <points>150</points>
+ <points>200</points>
  <base_type>Certitude</base_type>
  <GFX size="120" sx="12" sy="12">certitude</GFX>
  <rarity>3</rarity>

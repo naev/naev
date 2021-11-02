@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Proteron Kahan">
- <points>67.5</points>
+ <points>90</points>
  <base_type>Kahan</base_type>
  <GFX size="100" sx="10" sy="10">kahan</GFX>
  <rarity>3</rarity>

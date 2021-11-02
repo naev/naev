@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Proteron Derivative">
- <points>30</points>
+ <points>40</points>
  <base_type>Derivative</base_type>
  <GFX size="45">derivative</GFX>
  <rarity>3</rarity>

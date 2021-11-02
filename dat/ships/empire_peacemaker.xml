@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Empire Peacemaker">
- <points>150</points>
+ <points>200</points>
  <base_type>Peacemaker</base_type>
  <GFX size="110" sx="12" sy="12">peacemaker</GFX>
  <rarity>2</rarity>

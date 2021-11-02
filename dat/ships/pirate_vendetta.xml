@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <ship name="Pirate Vendetta">
- <points>37.5</points>
+ <points>50</points>
  <base_type>Vendetta</base_type>
  <GFX size="49">vendetta_pirate</GFX>
  <rarity>2</rarity>
