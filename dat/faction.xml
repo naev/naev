@@ -257,7 +257,7 @@
   <longname>Pirate Marauders</longname>
   <ai>marauder</ai>
   <known />
-  <logo>pirate</logo>
+  <logo>marauder</logo>
   <player>-50</player>
   <colour>red</colour>
   <spawn>marauder</spawn>
