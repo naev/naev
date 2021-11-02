@@ -77,6 +77,13 @@ typedef struct Faction_ {
 
    /* Behaviour. */
    nlua_env env; /**< Faction specific environment. */
+   int lua_hit;        /**< "faction_hit" */
+   int lua_player_friend; /**< "faction_player_friend" */
+   int lua_player_enemy; /**< "faction_player_enemy" */
+   int lua_standing_text; /**< "faction_standing_text" */
+   int lua_standing_broad; /**< "faction_standing_broad" */
+
+   /* Safe lanes. */
    double lane_length_per_presence; /**< Influences the choice to build patrolled safe lanes in the way the name suggests. */
    double lane_base_cost; /**< Base cost of the lane. */
 
@@ -747,7 +754,7 @@ static void faction_modPlayerLua( int f, double mod, const char *source, int sec
 
       /* Set up the function:
        * faction_hit( current, amount, source, secondary ) */
-      nlua_getenv( faction->env, "faction_hit" );
+      lua_rawgeti( naevL, LUA_REGISTRYINDEX, faction->lua_hit );
       lua_pushnumber(  naevL, faction->player );
       lua_pushnumber(  naevL, mod );
       lua_pushstring(  naevL, source );
@@ -972,7 +979,7 @@ int faction_isPlayerFriend( int f )
 
       /* Set up the function:
        * faction_player_friend( standing ) */
-      nlua_getenv( faction->env, "faction_player_friend" );
+      lua_rawgeti( naevL, LUA_REGISTRYINDEX, faction->lua_player_friend );
       lua_pushnumber( naevL, faction->player );
 
       /* Call function. */
@@ -1012,7 +1019,7 @@ int faction_isPlayerEnemy( int f )
       int r;
       /* Set up the function:
        * faction_player_enemy( standing ) */
-      nlua_getenv( faction->env, "faction_player_enemy" );
+      lua_rawgeti( naevL, LUA_REGISTRYINDEX, faction->lua_player_enemy );
       lua_pushnumber( naevL, faction->player );
 
       /* Call function. */
@@ -1091,7 +1098,7 @@ const char *faction_getStandingText( int f )
       const char *r;
       /* Set up the function:
        * faction_standing_text( standing ) */
-      nlua_getenv( faction->env, "faction_standing_text" );
+      lua_rawgeti( naevL, LUA_REGISTRYINDEX, faction->lua_standing_text );
       lua_pushnumber( naevL, faction->player );
 
       /* Call function. */
@@ -1139,7 +1146,7 @@ const char *faction_getStandingBroad( int f, int bribed, int override )
       const char *r;
       /* Set up the function:
        * faction_standing_broad( standing, bribed, override ) */
-      nlua_getenv( faction->env, "faction_standing_broad" );
+      lua_rawgeti( naevL, LUA_REGISTRYINDEX, faction->lua_standing_broad );
       lua_pushnumber( naevL, faction->player );
       lua_pushboolean( naevL, bribed );
       lua_pushnumber( naevL, override );
@@ -1346,6 +1353,12 @@ static void faction_addStandingScript( Faction* temp, const char* scriptname )
 
    snprintf( buf, sizeof(buf), FACTIONS_PATH"standing/%s.lua", scriptname );
    temp->env = nlua_newEnv(1);
+   temp->lua_hit           = LUA_NOREF;
+   temp->lua_player_friend = LUA_NOREF;
+   temp->lua_player_enemy  = LUA_NOREF;
+   temp->lua_standing_text = LUA_NOREF;
+   temp->lua_standing_broad= LUA_NOREF;
+
    nlua_loadStandard( temp->env );
    dat = ndata_read( buf, &ndat );
    if (nlua_dobufenv(temp->env, dat, ndat, buf) != 0) {
@@ -1357,6 +1370,13 @@ static void faction_addStandingScript( Faction* temp, const char* scriptname )
       temp->env = LUA_NOREF;
    }
    free(dat);
+
+   /* Set up the references. */
+   temp->lua_hit           = nlua_refenvtype( temp->env, "faction_hit",           LUA_TFUNCTION );
+   temp->lua_player_friend = nlua_refenvtype( temp->env, "faction_player_friend", LUA_TFUNCTION );
+   temp->lua_player_enemy  = nlua_refenvtype( temp->env, "faction_player_enemy",  LUA_TFUNCTION );
+   temp->lua_standing_text = nlua_refenvtype( temp->env, "faction_standing_text", LUA_TFUNCTION );
+   temp->lua_standing_broad= nlua_refenvtype( temp->env, "faction_standing_broad",LUA_TFUNCTION );
 }
 
 /**
