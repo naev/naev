@@ -1141,7 +1141,7 @@ const char *faction_getStandingBroad( int f, int bribed, int override )
    faction = &faction_stack[f];
 
    if (faction->env == LUA_NOREF)
-      return "???";
+      return _("???");
    else {
       const char *r;
       /* Set up the function:
@@ -1246,7 +1246,6 @@ static int faction_parse( Faction* temp, xmlNodePtr parent )
 {
    xmlNodePtr node;
    int saw_player;
-   char buf[PATH_MAX], *ctmp;
 
    /* Clear memory. */
    memset( temp, 0, sizeof(Faction) );
@@ -1276,7 +1275,7 @@ static int faction_parse( Faction* temp, xmlNodePtr parent )
       xmlr_float(node,"lane_length_per_presence",temp->lane_length_per_presence);
       xmlr_float(node,"lane_base_cost",temp->lane_base_cost);
       if (xml_isNode(node, "colour")) {
-         ctmp = xml_get(node);
+         char *ctmp = xml_get(node);
          if (ctmp != NULL)
             temp->colour = *col_fromName(xml_raw(node));
          /* If no named colour is present, RGB attributes are used. */
@@ -1297,6 +1296,7 @@ static int faction_parse( Faction* temp, xmlNodePtr parent )
       }
 
       if (xml_isNode(node,"logo")) {
+         char buf[PATH_MAX];
          if (temp->logo != NULL)
             WARN(_("Faction '%s' has duplicate 'logo' tag."), temp->name);
          snprintf( buf, sizeof(buf), FACTION_LOGO_PATH"%s.webp", xml_get(node) );
@@ -1353,11 +1353,6 @@ static void faction_addStandingScript( Faction* temp, const char* scriptname )
 
    snprintf( buf, sizeof(buf), FACTIONS_PATH"standing/%s.lua", scriptname );
    temp->env = nlua_newEnv(1);
-   temp->lua_hit           = LUA_NOREF;
-   temp->lua_player_friend = LUA_NOREF;
-   temp->lua_player_enemy  = LUA_NOREF;
-   temp->lua_standing_text = LUA_NOREF;
-   temp->lua_standing_broad= LUA_NOREF;
 
    nlua_loadStandard( temp->env );
    dat = ndata_read( buf, &ndat );
@@ -1388,10 +1383,8 @@ static void faction_parseSocial( xmlNodePtr parent )
 {
    char buf[PATH_MAX], *dat;
    size_t ndat;
-   xmlNodePtr node, cur;
+   xmlNodePtr node;
    Faction *base;
-   int *tmp;
-   FactionGenerator *fg;
 
    /* Get name. */
    base = NULL;
@@ -1414,6 +1407,7 @@ static void faction_parseSocial( xmlNodePtr parent )
    node = parent->xmlChildrenNode;
    do {
       if (xml_isNode(node, "generator")) {
+         FactionGenerator *fg;
          if (base->generators==NULL)
             base->generators = array_create( FactionGenerator );
          fg = &array_grow( &base->generators );
@@ -1472,10 +1466,11 @@ static void faction_parseSocial( xmlNodePtr parent )
 
       /* Grab the allies */
       if (xml_isNode(node,"allies")) {
-         cur = node->xmlChildrenNode;
+         xmlNodePtr cur = node->xmlChildrenNode;
          do {
+            xml_onlyNodes(cur);
             if (xml_isNode(cur,"ally")) {
-               tmp = &array_grow( &base->allies );
+               int *tmp = &array_grow( &base->allies );
                *tmp = faction_get(xml_get(cur));
             }
          } while (xml_nextNode(cur));
@@ -1484,10 +1479,11 @@ static void faction_parseSocial( xmlNodePtr parent )
 
       /* Grab the enemies */
       if (xml_isNode(node,"enemies")) {
-         cur = node->xmlChildrenNode;
+         xmlNodePtr cur = node->xmlChildrenNode;
          do {
+            xml_onlyNodes(cur);
             if (xml_isNode(cur,"enemy")) {
-               tmp = &array_grow( &base->enemies );
+               int *tmp = &array_grow( &base->enemies );
                *tmp = faction_get(xml_get(cur));
             }
          } while (xml_nextNode(cur));
@@ -1697,22 +1693,20 @@ int pfaction_save( xmlTextWriterPtr writer )
  */
 int pfaction_load( xmlNodePtr parent )
 {
-   xmlNodePtr node, cur, sub;
-   char *str;
-   int faction;
-
-   node = parent->xmlChildrenNode;
+   xmlNodePtr node = parent->xmlChildrenNode;
 
    do {
       if (xml_isNode(node,"factions")) {
-         cur = node->xmlChildrenNode;
+         xmlNodePtr cur = node->xmlChildrenNode;
          do {
             if (xml_isNode(cur,"faction")) {
+               int faction;
+               char *str;
                xmlr_attr_strd(cur, "name", str);
                faction = faction_get(str);
 
                if (faction != -1) { /* Faction is valid. */
-                  sub = cur->xmlChildrenNode;
+                  xmlNodePtr sub = cur->xmlChildrenNode;
                   do {
                      if (xml_isNode(sub,"standing")) {
 
