@@ -320,6 +320,7 @@ int conf_loadConfig ( const char* file )
       conf_loadFloat( lEnv, "nebu_scale", conf.nebu_scale );
       conf_loadBool( lEnv, "fullscreen", conf.fullscreen );
       conf_loadBool( lEnv, "modesetting", conf.modesetting );
+      conf_loadBool( lEnv, "borderless", conf.borderless );
       conf_loadBool( lEnv, "minimize", conf.minimize );
       conf_loadBool( lEnv, "colorblind", conf.colorblind );
       conf_loadFloat( lEnv, "bg_brightness", conf.bg_brightness );
@@ -836,6 +837,10 @@ int conf_saveConfig ( const char* file )
 
    conf_saveComment(_("Use video modesetting when fullscreen is enabled"));
    conf_saveBool("modesetting",conf.modesetting);
+   conf_saveEmptyLine();
+
+   conf_saveComment(_("Disable window decorations. Use with care and know the keyboard controls to quit and toggle fullscreen."));
+   conf_saveBool("borderless",conf.borderless);
    conf_saveEmptyLine();
 
    conf_saveComment(_("Minimize on focus loss"));

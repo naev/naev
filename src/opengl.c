@@ -254,11 +254,14 @@ static int gl_createWindow( unsigned int flags )
 {
    int i, ret, fallback;
 
+   flags |= SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE | SDL_WINDOW_ALLOW_HIGHDPI;
+   if (conf.borderless)
+      flags |= SDL_WINDOW_BORDERLESS;
+
    /* Create the window. */
    gl_screen.window = SDL_CreateWindow( APPNAME,
          SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
-         conf.width, conf.height, flags | SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE
-                                   | SDL_WINDOW_ALLOW_HIGHDPI );
+         conf.width, conf.height, flags );
    if (gl_screen.window == NULL)
       ERR(_("Unable to create window! %s"), SDL_GetError());
 
