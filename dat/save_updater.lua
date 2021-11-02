@@ -228,7 +228,7 @@ local outfit_list = {
    ["BioPlasma Organ Stage 3"] = "BioPlasma Stinger Stage 3",
    ["BioPlasma Organ Stage 2"] = "BioPlasma Stinger Stage 2",
    ["BioPlasma Organ Stage 1"] = "BioPlasma Stinger Stage 1",
-   ["Battery"] = "Battery I"
+   ["Battery"] = "Battery I",
 }
 --[[--
    Takes an outfit name and should return either a new outfit name or the amount of credits to give back to the player.
