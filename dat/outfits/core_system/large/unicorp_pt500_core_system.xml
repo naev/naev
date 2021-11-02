@@ -13,11 +13,10 @@
  <specific type="modification">
   <cpu_max>500</cpu_max>
   <energy>2325</energy>
-  <energy_regen>95</energy_regen>
+  <energy_regen>105</energy_regen>
   <shield>650</shield>
-  <shield_regen>10</shield_regen>
-  <energy_regen_mod>10</energy_regen_mod>
-  <shield_regen_mod>10</shield_regen_mod>
+  <shield_regen>11</shield_regen>
   <ew_detect>10</ew_detect>
+  <cooldown_time>-25</cooldown_time>
  </specific>
 </outfit>
