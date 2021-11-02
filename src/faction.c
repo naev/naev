@@ -6,7 +6,6 @@
  *
  * @brief Handles the Naev factions.
  */
-
 /** @cond */
 #include <assert.h>
 #include <stdlib.h>
@@ -197,7 +196,6 @@ int* faction_getAllVisible (void)
    for (int i=0; i<array_size(faction_stack); i++)
       if (!faction_isFlag( &faction_stack[i], FACTION_INVISIBLE ))
          array_push_back( &f, i );
-
    return f;
 }
 
@@ -211,7 +209,6 @@ int* faction_getKnown()
    for (int i=0; i<array_size(faction_stack); i++)
       if (!faction_isFlag( &faction_stack[i], FACTION_INVISIBLE ) && faction_isKnown_( &faction_stack[i] ))
          array_push_back( &f, i );
-
    return f;
 }
 
@@ -451,10 +448,6 @@ const glColour* faction_colour( int f )
  */
 int* faction_getEnemies( int f )
 {
-   int i;
-   int *enemies;
-   int *tmp;
-
    if (!faction_isFaction(f)) {
       WARN(_("Faction id '%d' is invalid."),f);
       return NULL;
@@ -462,11 +455,11 @@ int* faction_getEnemies( int f )
 
    /* Player's faction ratings can change, so regenerate each call. */
    if (f == FACTION_PLAYER) {
-      enemies = array_create( int );
+      int *enemies = array_create( int );
 
-      for (i=0; i<array_size(faction_stack); i++)
+      for (int i=0; i<array_size(faction_stack); i++)
          if (faction_isPlayerEnemy(i)) {
-            tmp = &array_grow( &enemies );
+            int *tmp = &array_grow( &enemies );
             *tmp = i;
          }
 
@@ -702,7 +695,6 @@ nlua_env faction_getScheduler( int f )
       WARN(_("Faction id '%d' is invalid."),f);
       return LUA_NOREF;
    }
-
    return faction_stack[f].sched_env;
 }
 
@@ -715,7 +707,6 @@ nlua_env faction_getEquipper( int f )
       WARN(_("Faction id '%d' is invalid."),f);
       return LUA_NOREF;
    }
-
    return faction_stack[f].equip_env;
 }
 
@@ -1087,7 +1078,6 @@ char faction_getColourChar( int f )
 const char *faction_getStandingText( int f )
 {
    Faction *faction;
-   const char *r;
 
    /* Escorts always have the same standing. */
    if (f == FACTION_PLAYER)
@@ -1095,9 +1085,10 @@ const char *faction_getStandingText( int f )
 
    faction = &faction_stack[f];
 
-   if ( faction->env == LUA_NOREF )
+   if (faction->env == LUA_NOREF)
       return _("???");
    else {
+      const char *r;
       /* Set up the function:
        * faction_standing_text( standing ) */
       nlua_getenv( faction->env, "faction_standing_text" );
