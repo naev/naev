@@ -2571,7 +2571,7 @@ int player_outfitOwned( const Outfit* o )
 
    /* Special case license. */
    if (outfit_isLicense(o) &&
-         player_hasLicense(o->name))
+         player_hasLicense(o->u.lic.provides))
       return 1;
 
    /* Special case GUI. */
@@ -2692,7 +2692,7 @@ int player_addOutfit( const Outfit *o, int quantity )
    }
    /* special case if it's a license. */
    else if (outfit_isLicense(o)) {
-      player_addLicense(o->name);
+      player_addLicense(o->u.lic.provides);
       return 1; /* Success. */
    }
 

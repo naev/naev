@@ -314,6 +314,13 @@ typedef struct OutfitGUIData_ {
 } OutfitGUIData;
 
 /**
+ * @brief Represents a license.
+ */
+typedef struct OutfitLicenseData_ {
+   char *provides; /**< License provided by this license (defaults to name if NULL). */
+} OutfitLicenseData;
+
+/**
  * @brief A ship outfit, depends radically on the type.
  */
 typedef struct Outfit_ {
@@ -359,6 +366,7 @@ typedef struct Outfit_ {
       OutfitMapData_t *map;       /**< MAP */
       OutfitLocalMapData lmap;    /**< LOCALMAP */
       OutfitGUIData gui;          /**< GUI */
+      OutfitLicenseData lic;      /**< LICENSE. */
    } u; /**< Holds the type-based outfit data. */
 } Outfit;
 

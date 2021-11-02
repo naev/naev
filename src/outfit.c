@@ -2116,8 +2116,12 @@ static void outfit_parseSLicense( Outfit *temp, const xmlNodePtr parent )
 
    do {
       xml_onlyNodes(node);
+      xmlr_strd(node,"gui",temp->u.lic.provides);
       WARN(_("Outfit '%s' has unknown node '%s'"),temp->name, node->name);
    } while (xml_nextNode(node));
+
+   if (temp->u.lic.provides==NULL)
+      temp->u.lic.provides = strdup( temp->name );
 
    /* Set short description. */
    temp->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
@@ -2736,6 +2740,8 @@ void outfit_free (void)
          free(o->u.fig.ship);
       else if (outfit_isGUI(o))
          free(o->u.gui.gui);
+      else if (outfit_isLicense(o))
+         free(o->u.lic.provides);
       else if (outfit_isMap(o)) {
          array_free( o->u.map->systems );
          array_free( o->u.map->assets );

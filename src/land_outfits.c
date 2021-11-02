@@ -704,7 +704,7 @@ int outfit_canBuy( const char *name, Planet *planet )
       return 0;
    }
    /* Already has license. */
-   if (outfit_isLicense(outfit) && player_hasLicense(outfit->name)) {
+   if (outfit_isLicense(outfit) && player_hasLicense(outfit->u.lic.provides)) {
       land_errDialogueBuild( _("You already have this license.") );
       return 0;
    }
