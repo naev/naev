@@ -1,7 +1,7 @@
-local masslimit = 5000^2 -- squared
+local masslimit = 6000^2 -- squared
 local jumpdist = 2000
 local cooldown = 8
-local warmup = 3
+local warmup = 2
 local penalty = -50
 
 function init( _p, po )
@@ -24,7 +24,7 @@ function update( p, po, dt )
             dist = dist * masslimit / m
          end
          -- Direction is random
-         p:setPos( p:pos() + vec2.newP( dist, 359*rnd.rnd() ) )
+         p:setPos( p:pos() + vec2.newP( dist, p:dir()+60*rnd.sigma() ) )
          -- TODO Add blink effect and sound effect
 
          -- Set cooldown and maluses
