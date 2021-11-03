@@ -600,16 +600,16 @@ static int cust_event( unsigned int wid, SDL_Event *event, void* data )
    /* Handle all the events. */
    switch (event->type) {
       case SDL_MOUSEBUTTONDOWN:
-         x = gl_screen.x * gl_screen.mxscale;
-         y = gl_screen.y * gl_screen.myscale;
+         x = gl_screen.x;
+         y = gl_screen.y;
          return cust_mouse( 1, event->button.button, event->button.x+x, event->button.y+y, cf );
       case SDL_MOUSEBUTTONUP:
-         x = gl_screen.x * gl_screen.mxscale;
-         y = gl_screen.y * gl_screen.myscale;
+         x = gl_screen.x;
+         y = gl_screen.y;
          return cust_mouse( 2, event->button.button, event->button.x+x, event->button.y+y, cf );
       case SDL_MOUSEMOTION:
-         x = gl_screen.x * gl_screen.mxscale;
-         y = gl_screen.y * gl_screen.myscale;
+         x = gl_screen.x;
+         y = gl_screen.y;
          return cust_mouse( 3, -1, event->button.x+x, event->button.y+y, cf );
 
       case SDL_KEYDOWN:
