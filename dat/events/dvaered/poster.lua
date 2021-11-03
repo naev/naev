@@ -32,6 +32,8 @@ local messages = {}
 messages[1] = _([[This is an advertisement for the Dvaered Army.]])
 messages[2] = _("Does this poster make you want to buy this book?")
 
+local myImg, flf, myMsg, myCanvas
+
 function create()
    local imageNmsg = imagesNmsg[ rnd.rnd(1,#imagesNmsg) ]
    myImg = imageNmsg[1]

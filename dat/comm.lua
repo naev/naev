@@ -2,7 +2,6 @@
    Communication with a pilot implemented fully in Lua :D
 --]]
 local vn = require 'vn'
-local lg = require 'love.graphics'
 local fmt = require "format"
 local ccomm = require "common.comm"
 
