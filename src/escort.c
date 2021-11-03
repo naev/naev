@@ -254,7 +254,7 @@ int escorts_hold( Pilot *parent )
 {
    int ret = escort_command( parent, "e_hold", 0 );
    if ((ret == 0) && (parent == player.p))
-         player_message(_("#gEscorts: #0Holding position."));
+         player_message(_("#gEscorts: #0Holding formation."));
    return ret;
 }
 

@@ -83,7 +83,7 @@ const char *keybind_info[][3] = {
    { "e_targetNext", N_("Target Next Escort"), N_("Cycles through your escorts.") },
    { "e_targetPrev", N_("Target Previous Escort"), N_("Cycles backwards through your escorts.") },
    { "e_attack", N_("Escort Attack Command"), N_("Orders escorts to attack your target.") },
-   { "e_hold", N_("Escort Hold Command"), N_("Orders escorts to hold their positions.") },
+   { "e_hold", N_("Escort Hold Command"), N_("Orders escorts to hold their formation.") },
    { "e_return", N_("Escort Return Command"), N_("Orders escorts to return to your ship hangars.") },
    { "e_clear", N_("Escort Clear Commands"), N_("Clears your escorts of commands.") },
    /* Space Navigation */

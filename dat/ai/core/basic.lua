@@ -970,11 +970,7 @@ end
 
 -- Holds position
 function hold ()
-   if not ai.isstopped() then
-      ai.brake()
-   else
-      ai.stop()
-   end
+   follow_fleet ()
 end
 
 
