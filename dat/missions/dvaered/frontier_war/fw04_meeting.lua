@@ -41,7 +41,7 @@ message = fw.message
 
 -- TODO: hooks to penalize attacking people
 
-lore_text = {}
+local lore_text = {}
 
 lore_text[1] = _([["Both squadrons of the DHC station's space security force will be deployed with full range ships from Vendettas to Goddards. Those squadrons are the 'Beta-Storks' and the 'Beta-Hammer' and their missions will be to control medium and heavy ships and to provide anti-heavy firepower in case of need. Our squadron, named 'Alpha-NightClaws', is in charge of fast ships (Yachts and Fighters). We will be flying Hyenas.
    "The procedure is the following: any ship approaching the station will be assigned to a squad by the fleet leader, and then to a pilot by the squad leader (Captain Leblanc). When a ship is attributed to you, you will have to approach the ship within 1000 m. Their security clearance code will be automatically requested and processed by the system we install right now on your core unit. Afterwards, the ship will be allowed to land, or ordered to fly away. The same thing happens for ships that leave the station.

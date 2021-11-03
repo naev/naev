@@ -24,7 +24,7 @@ local fmt = require "format"
 local srm = require "common.soromid"
 
 
-chatter = {}
+local chatter = {}
 
 chatter[1] = _([["I just want to say again, thank you so much for helping me," C says. "It's a bit nerve-wracking, coming out to my parents, and I've met so many people who... anyway, it's nice to meet someone who understands and respects my wishes and doesn't react with sarcasm. I hope my parents understand...."
     After confirming that it's about the pronouns you use to refer to them, you simply say that it should be common decency to respect people's wishes regarding how they wish to be referred to. This leads to a conversation about common decency and people who do rude things for no good reason.]])
@@ -38,7 +38,7 @@ chatter[4] = _([["I've given it some thought," C says. "I think... my new name, 
 
 chatter[5] = _([[You and Chelsea have a long conversation about ships and piloting. It turns out that she's quite interested in the subject and has aspirations of being a mercenary some day. You talk about your adventures with passion and share some tips on how to get started with being a freelance pilot.]])
 
-reminders = {}
+local reminders = {}
 reminders[1] = _("You idly talk some more with Chelsea about the joys of being a pilot.")
 reminders[2] = _("You hear a small noise and nearly jump in your seat, but you look over your shoulder and see it's just Chelsea reading something.")
 reminders[3] = _("Chelsea watches in awe as you work the ship. You can't help but smile a little.")

@@ -18,11 +18,11 @@
 local fw = require "common.frontier_war"
 local fmt = require "format"
 
-npc_name = { _("Major Tam"), _("Captain Leblanc"), _("Lieutenant Strafer") }
+local npc_name = { _("Major Tam"), _("Captain Leblanc"), _("Lieutenant Strafer") }
 
-portraits = { fw.portrait_tam, fw.portrait_leblanc, fw.portrait_strafer }
+local portraits = { fw.portrait_tam, fw.portrait_leblanc, fw.portrait_strafer }
 
-npc_desc = {}
+local npc_desc = {}
 npc_desc[1] = _("In the Dvaered military reserved bar, where you now have access, you see the major, sitting at a table with a few High Command officers that you don't happen to know.")
 npc_desc[2] = _("Leblanc is relaxing at a table, with a group of Dvaered pilots.")
 npc_desc[3] = _([[Strafer plays cards with a few other soldiers. Of course, they don't use real money because "Dvaered Warriors never seize money of others, except the dead bodies of defeated enemies." As it is written on the Dvaered etiquette manual Strafer gave to you recently.]])

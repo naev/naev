@@ -24,8 +24,8 @@
 local fmt = require "format"
 local neu = require "common.neutral"
 
-cargoname = N_("Cynthia")
-cargodesc = N_("A young teenager.")
+local cargoname = N_("Cynthia")
+local cargodesc = N_("A young teenager.")
 
 -- Here are stored the fake texts for the OSD
 osd_text = {}

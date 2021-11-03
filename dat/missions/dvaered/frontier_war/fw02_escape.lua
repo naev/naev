@@ -50,12 +50,12 @@ escort_hailed = fw.escort_hailed
 -- TODO: add news comments about all this
 -- TODO: check that no blockade has been forgotten
 
-hamfr_desc = _("Hamfresser and his team are together at a table. The captain drinks with his favorite pink straw while incessantly scanning the room.")
-hamfr_des2 = _("The captain sits alone at a remote table. He nervously chews his pink straw, while waiting for your signal to infiltrate the hospital.")
-nikol_desc = _("The second in command of Hamfresser's squad seems to be as laid back as a Totoran gladiator on cocaine. Clearly, open spaces like this bar with many people around are not suited to commandos, who are used to seeing strangers as a potentially hostile.")
-tronk_desc = _("The young cyborg sits to the right of his captain, and looks suspiciously at his sparkling water glass.")
-theru_desc = _("This soldier is the team's medic. As such, she seems to be slightly less combat-suited than the others, but her large cybernetically-enhanced arms still make her look like she could crush a bull.")
-straf_desc = _("The pilot is the only one in the group who looks like the other people with whom you are used to working. His presence along with the others makes the group even stranger.")
+local hamfr_desc = _("Hamfresser and his team are together at a table. The captain drinks with his favorite pink straw while incessantly scanning the room.")
+local hamfr_des2 = _("The captain sits alone at a remote table. He nervously chews his pink straw, while waiting for your signal to infiltrate the hospital.")
+local nikol_desc = _("The second in command of Hamfresser's squad seems to be as laid back as a Totoran gladiator on cocaine. Clearly, open spaces like this bar with many people around are not suited to commandos, who are used to seeing strangers as a potentially hostile.")
+local tronk_desc = _("The young cyborg sits to the right of his captain, and looks suspiciously at his sparkling water glass.")
+local theru_desc = _("This soldier is the team's medic. As such, she seems to be slightly less combat-suited than the others, but her large cybernetically-enhanced arms still make her look like she could crush a bull.")
+local straf_desc = _("The pilot is the only one in the group who looks like the other people with whom you are used to working. His presence along with the others makes the group even stranger.")
 
 local commMass = 4
 local fzlk = faction.get("Za'lek")

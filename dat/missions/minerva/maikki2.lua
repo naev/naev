@@ -39,43 +39,42 @@ local vn = require 'vn'
 local love_shaders = require 'love_shaders'
 local fmt = require "format"
 
-hint1_name = _("Prof. Sato") -- Computer Science / Mathematics
-hint1_portrait = "zalek1.png"
-hint1_image = "zalek1.png"
-hint1_colour = nil
+local hint1_name = _("Prof. Sato") -- Computer Science / Mathematics
+local hint1_portrait = "zalek1.png"
+local hint1_image = "zalek1.png"
+local hint1_colour = nil
 
-hint2_name = _("Prof. Stova") -- Material Science
-hint2_portrait = "zalek2.png"
-hint2_image = "zalek2.png"
-hint2_colour = nil
+local hint2_name = _("Prof. Stova") -- Material Science
+local hint2_portrait = "zalek2.png"
+local hint2_image = "zalek2.png"
+local hint2_colour = nil
 
-hint3_name = _("Prof. Hsu") -- Philosophy
-hint3_portrait = "zalek3.png"
-hint3_image = "zalek3.png"
-hint3_colour = nil
+local hint3_name = _("Prof. Hsu") -- Philosophy
+local hint3_portrait = "zalek3.png"
+local hint3_image = "zalek3.png"
+local hint3_colour = nil
 
-hint4_name = _("Dr. Cayne") -- Dr. Shrimp
-hint4_portrait = "drshrimp.png"
-hint4_image = "drshrimp.png"
-hint4_colour = nil
+local hint4_name = _("Dr. Cayne") -- Dr. Shrimp
+local hint4_portrait = "drshrimp.png"
+local hint4_image = "drshrimp.png"
+local hint4_colour = nil
 
-strangelove = minerva.strangelove
-ecc_portrait = strangelove.portrait
+local ecc_portrait = minerva.strangelove.portrait
 
-hintpnt = {
+local hintpnt = {
    "Jorla",
    "Cantina Station",
    "Jurai",
    "Naga",
 }
-hintsys = {}
+local hintsys = {}
 for k,v in ipairs(hintpnt) do
    hintsys[k] = planet.get(v):system():nameRaw()
 end
-eccpnt = "Strangelove Lab"
-eccdiff = "strangelove"
-eccsys = "Westhaven"
-eccpos = vec2.new( 7500, -6000 ) -- Should coincide with "Strangelove Lab"
+local eccpnt = "Strangelove Lab"
+local eccdiff = "strangelove"
+local eccsys = "Westhaven"
+local eccpos = vec2.new( 7500, -6000 ) -- Should coincide with "Strangelove Lab"
 
 -- Mission states:
 --  nil: mission not yet accepted

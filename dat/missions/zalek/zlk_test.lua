@@ -46,7 +46,7 @@ engines = {_("engine with phase-change material cooling"),
            _("engine with experimental DEI-Z controller"),
            }
 
-znpcs = {}
+local znpcs = {}
 znpcs[1] = _([[A group of university students greets you. "If your flight goes well, we will validate our aerospace course! The last engine exploded during the flight, but this one is much more reliable... Hopefully."]])
 znpcs[2] = _([[A very old Za'lek researcher needs you to fly with an instrumented device in order to take measurements.]])
 znpcs[3] = _([[A Za'lek student says: "Hello, I am preparing a Ph.D in system reliability. I need to make precise measurements on this engine in order to validate a stochastic failure model I developed."]])

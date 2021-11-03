@@ -27,12 +27,10 @@ local fleet = require "fleet"
 local fmt = require "format"
 local flf = require "missions.flf.flf_common"
 
-osd_desc    = {}
-osd_desc[1] = _("Fly to the {sys} system and meet with the group of FLF ships")
+osd_desc    = {__save=true}
 osd_desc[2] = _("Wait until the coast is clear, then hail one of your wingmates")
 osd_desc[3] = _("Attack Raelid Outpost until it is destroyed")
 osd_desc[4] = _("Return to FLF base")
-osd_desc["__save"] = true
 
 function create ()
    missys = system.get( "Raelid" )
@@ -53,7 +51,7 @@ function accept ()
 
       misn.accept()
 
-      osd_desc[1] = fmt.f( osd_desc[1], {sys=missys} )
+      osd_desc[1] = fmt.f( _("Fly to the {sys} system and meet with the group of FLF ships"), {sys=missys} )
       misn.osdCreate( _("Assault on Raelid"), osd_desc )
       misn.setTitle( _("Assault on Raelid") )
       misn.setDesc( _("Join with the other FLF pilots for the assault on Raelid Outpost."):format( missys:name() ) )

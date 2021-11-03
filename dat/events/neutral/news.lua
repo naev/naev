@@ -23,7 +23,7 @@ override_list = {
    ["Strangelove"] = "Generic",
 }
 
-header_table = {}
+local header_table = {}
 
 header_table["Generic"] = _("We bring you the latest news in the universe.")
 header_table["Independent"] = _("Welcome to Universal News Feed.")

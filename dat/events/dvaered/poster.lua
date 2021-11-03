@@ -15,18 +15,20 @@ local vn = require 'vn'
 local graphics = require 'love.graphics'
 
 -- List of avaliable posters and index of the corresponding message
-imagesNmsg = { {"gfx/vn/posters/dvaered/dv_athena.png", 1},
-               {"gfx/vn/posters/dvaered/dv_brunhilde.png", 1},
-               {"gfx/vn/posters/dvaered/dv_goliath.png", 1},
-               {"gfx/vn/posters/dvaered/dv_good_manners_ad.png", 2},
-               {"gfx/vn/posters/dvaered/dv_minotaur.png", 1},
-               {"gfx/vn/posters/dvaered/dv_oeudipe.png", 1} }
+local imagesNmsg = {
+   {"gfx/vn/posters/dvaered/dv_athena.png", 1},
+   {"gfx/vn/posters/dvaered/dv_brunhilde.png", 1},
+   {"gfx/vn/posters/dvaered/dv_goliath.png", 1},
+   {"gfx/vn/posters/dvaered/dv_good_manners_ad.png", 2},
+   {"gfx/vn/posters/dvaered/dv_minotaur.png", 1},
+   {"gfx/vn/posters/dvaered/dv_oeudipe.png", 1} }
 
 -- List of FLF flyers
-FLFFlyers = { "gfx/vn/posters/flf/flf_spam_small.png",
-              "gfx/vn/posters/flf/flf_spam2.png" }
+local FLFFlyers = {
+   "gfx/vn/posters/flf/flf_spam_small.png",
+   "gfx/vn/posters/flf/flf_spam2.png" }
 
-messages = {}
+local messages = {}
 messages[1] = _([[This is an advertisement for the Dvaered Army.]])
 messages[2] = _("Does this poster make you want to buy this book?")
 

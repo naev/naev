@@ -16,10 +16,10 @@ Spawns a travelling merchant that can sell the player if interested.
 local vn = require 'vn'
 local love_shaders = require 'love_shaders'
 
-trader_name = _("Machiavellian Misi") -- Mireia Sibeko
-trader_image = "misi.png"
-trader_colour = {1, 0.3, 1}
-store_name = string.format(_("%s's \"Fine\" Wares"), trader_name)
+local trader_name = _("Machiavellian Misi") -- Mireia Sibeko
+local trader_image = "misi.png"
+local trader_colour = {1, 0.3, 1}
+local store_name = string.format(_("%s's \"Fine\" Wares"), trader_name)
 broadcastmsg = {
    string.format(_("%s's the name and selling fine shit is my game! Come get your outfits here!"), trader_name),
    _("Get your fiiiiiiiine outfits here! Guaranteed 3 space lice or less or your money back!"),

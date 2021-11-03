@@ -22,11 +22,8 @@ There will be more missions to detail how you are perceived as the kidnapper of 
 local fmt = require "format"
 local neu = require "common.neutral"
 
-cargoname = N_("Cynthia")
-cargodesc = N_("A young teenager.")
-
-osd_text = {}
-osd_text[1] = _("Deliver Cynthia to Zhiru in the Goddard system")
+local cargoname = N_("Cynthia")
+local cargodesc = N_("A young teenager.")
 
 function create ()
    startworld, startworld_sys = planet.cur()
@@ -56,7 +53,7 @@ function accept ()
 
    misn.accept()
 
-   misn.osdCreate(_("The Runaway"),osd_text)
+   misn.osdCreate(_("The Runaway"), _("Deliver Cynthia to Zhiru in the Goddard system"))
    misn.osdActive(1)
 
    local c = misn.cargoNew( cargoname, cargodesc )

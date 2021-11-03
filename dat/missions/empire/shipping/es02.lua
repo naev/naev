@@ -41,7 +41,7 @@ local emp = require "common.empire"
 
 -- Mission details
 
-log_text_fail = _([[You failed in your attempt to rescue a VIP for the Empire. Meet with Commander Soldner on Halir to try again.]])
+local log_text_fail = _([[You failed in your attempt to rescue a VIP for the Empire. Meet with Commander Soldner on Halir to try again.]])
 
 
 function create ()

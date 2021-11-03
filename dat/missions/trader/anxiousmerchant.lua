@@ -37,15 +37,12 @@ local car = require "common.cargo"
 local fmt = require "format"
 local portrait = require "portrait"
 
---- Missions details
-
--- OSD
-
 
 function create()
    -- Note: this mission does not make any system claims.
 
    -- Calculate the route, distance, jumps and cargo to take
+   local _risk, tier
    dest_planet, dest_sys, num_jumps, travel_dist, cargo, _risk, tier = car.calculateRoute()
    if dest_planet == nil or dest_sys == system.cur() then
       misn.finish(false)
@@ -53,9 +50,9 @@ function create()
 
    misn.setNPC(_("Merchant"), portrait.get("Trader"), _("You see a merchant at the bar in a clear state of anxiety.")) -- creates the merchant at the bar
 
-   stu_distance = 0.2 * travel_dist
-   stu_jumps = 10300 * num_jumps
-   stu_takeoff = 10300
+   local stu_distance = 0.2 * travel_dist
+   local stu_jumps = 10300 * num_jumps
+   local stu_takeoff = 10300
    time_limit = time.get() + time.create(0, 0, stu_distance + stu_jumps + stu_takeoff)
 
     -- Allow extra time for refuelling stops.

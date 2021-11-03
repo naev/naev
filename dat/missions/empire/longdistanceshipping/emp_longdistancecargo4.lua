@@ -27,7 +27,7 @@
 local fmt = require "format"
 local emp = require "common.empire"
 
-misn_desc = _("Deliver a shipping diplomat for the Empire to The Frontier Council in Gilligan's Light system")
+local misn_desc = _("Deliver a shipping diplomat for the Empire to The Frontier Council in Gilligan's Light system")
 
 function create ()
  -- Note: this mission does not make any system claims.
@@ -59,7 +59,7 @@ function accept ()
    reward = 500e3
    misn.setTitle(_("Frontier Long Distance Recruitment"))
    misn.setReward(fmt.credits(reward))
-   misn.setDesc( string.format( misn_desc, targetworld:name(), targetworld_sys:name() ) )
+   misn.setDesc( misn_desc )
    misn.osdCreate(_("Frontier Alliance Long Distance Recruitment"), {misn_desc})
    -- Set up the goal
    hook.land("land")

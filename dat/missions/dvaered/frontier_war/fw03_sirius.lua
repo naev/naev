@@ -42,7 +42,7 @@ local pir = require "common.pirate"
 -- common hooks
 escort_hailed = fw.escort_hailed
 
-lore_text = {}
+local lore_text = {}
 
 lore_text[1] = _([["Good question, citizen! It is very likely that some people among the intelligence services of the other nations know that General Klank and myself are implicated in the invasion project. They probably just don't know how imminent it is. So they could have hired henchmen to stop or annoy us. We have identified some of the henchmen actually, and they are the kind of independent mercenaries we find on any kind of shady operations... A bit like you in fact."]])
 
@@ -56,9 +56,9 @@ lore_text[3] = _([[You ask Major Tam to continue his story about when he used to
 lore_text[4] = _([["Oh, the captain is doing well. He spent a few periods at the hospital, but it was not so serious. About the other ones, I'm not too sure. I don't know them very well actually, they are more like statistics to me. I know it's bad, but hey, I have so many things to think about right now.
    "Oh, and we went to the funerals of the one who died, the private Amadeus Tronk, officially killed in training, of course. It was nice. Leblanc's squadron has made an aerial meeting with a mace rocket concerto for the occasion, and we organized a fight to death between a convicted criminal and a gladiator in General Klank's private arena. The role of it is to honour the memory of the dead warrior, and also to have some fun."]])
 
-flee_text = _("You were supposed to wait for Strafer to scan the system, and then if needed, kill the hostiles.")
+local flee_text = _("You were supposed to wait for Strafer to scan the system, and then if needed, kill the hostiles.")
 
-tflee_text = _([[Two of your targets went away. If there was only one, it could be manageable, but now, the mission has failed.]])
+local tflee_text = _([[Two of your targets went away. If there was only one, it could be manageable, but now, the mission has failed.]])
 
 function create()
    destpla, destsys = planet.getS("Mannannan")

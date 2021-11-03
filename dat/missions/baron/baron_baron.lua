@@ -28,10 +28,7 @@ local sys1 = system.get("Darkstone")
 local sys2 = system.get("Ingot")
 local pnt = planet.get("Varia")
 
-credits = 40e3
-
--- NPC stuff
-npc_desc = _("These must be the 'agents' hired by this Baron Sauterfeldt. They look shifty. Why must people involved in underhanded business always look shifty?")
+local credits = 40e3
 
 function create ()
    missys = {system.get("Darkstone")}
@@ -85,6 +82,7 @@ end
 
 function land()
    if planet.cur() == pnt and not talked then
+      local npc_desc = _("These must be the 'agents' hired by this Baron Sauterfeldt. They look shifty. Why must people involved in underhanded business always look shifty?")
       thief1 = misn.npcAdd("talkthieves", _("Sauterfeldt's agents"), portrait.get("Pirate"), npc_desc)
       thief2 = misn.npcAdd("talkthieves", _("Sauterfeldt's agents"), portrait.get("Pirate"), npc_desc)
       thief3 = misn.npcAdd("talkthieves", _("Sauterfeldt's agents"), portrait.get("Pirate"), npc_desc)
