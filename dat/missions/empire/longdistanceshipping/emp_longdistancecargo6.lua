@@ -61,7 +61,7 @@ function accept ()
    reward = 500e3
    misn.setTitle(_("Empire Long Distance Recruitment"))
    misn.setReward(fmt.credits(reward))
-   misn.setDesc( string.format( _("Deliver Lieutenant Czesc to Halir in the Gamma Polaris system"), targetworld:name(), targetworld_sys:name() ) )
+   misn.setDesc( _("Deliver Lieutenant Czesc to Halir in the Gamma Polaris system") )
    misn.osdCreate(_("Empire Long Distance Recruitment"), {_("Deliver Lieutenant Czesc to Halir in the Gamma Polaris system")})
    -- Set up the goal
    hook.land("land")

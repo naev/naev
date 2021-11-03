@@ -49,8 +49,8 @@ end
 
 function accept ()
    --This mission does not make any system claims
-   if not tk.yesno( _("The Search for Cynthia"), string.format( _([[Approaching him, he hands you a paper. It offers a 100,000 credit reward for the finding of a "Cynthia" person.
-    "That's my girl. She disappeared quite a few decaperiods ago. We managed to track her down to here, but where she went afterwards remains a mystery. We know she was kidnapped, but if you know anything..." The man begins to cry. "Have you seen any trace of her?"]]), reward, targetworld:name() ) ) then
+   if not tk.yesno( _("The Search for Cynthia"), _([[Approaching him, he hands you a paper. It offers a 100,000 credit reward for the finding of a "Cynthia" person.
+    "That's my girl. She disappeared quite a few decaperiods ago. We managed to track her down to here, but where she went afterwards remains a mystery. We know she was kidnapped, but if you know anything..." The man begins to cry. "Have you seen any trace of her?"]]) ) then
       misn.finish()
    end
 
@@ -63,7 +63,7 @@ function accept ()
    misn.setTitle( _("The Search for Cynthia") )
    misn.setReward( fmt.f( _("{credits} on delivery."), {credits=fmt.credits(reward)} ) )
 
-   misn.setDesc( string.format( _("Search for Cynthia."), targetworld:name(), targetworld_sys:name() ) )
+   misn.setDesc( _("Search for Cynthia.") )
    runawayMarker = misn.markerAdd( targetworld, "low" )
 
    tk.msg( _("The Search for Cynthia"), _([[Looking at the picture, you see that the locket matches the one that Cynthia wore, so you hand it to her father. "I believe that this was hers." Stunned, the man hands you a list of planets that they wanted to look for her on.]]) )

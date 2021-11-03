@@ -58,7 +58,7 @@ function accept ()
    reward = 500e3
    misn.setTitle(_("Sirius Long Distance Recruitment"))
    misn.setReward(fmt.credits(reward))
-   misn.setDesc( string.format( _("Deliver a shipping diplomat for the Empire to Madria in the Esker system"), targetworld:name(), targetworld_sys:name() ) )
+   misn.setDesc( _("Deliver a shipping diplomat for the Empire to Madria in the Esker system") )
    misn.osdCreate(_("Sirius Long Distance Recruitment"), {_("Deliver a shipping diplomat for the Empire to Madria in the Esker system")})
    -- Set up the goal
    hook.land("land")

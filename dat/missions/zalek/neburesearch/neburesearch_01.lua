@@ -98,7 +98,6 @@ function updateGoalDisplay()
     local osd_index = {1, 0, 0, 0, 2, 2, 2, 3}
     local omsg = {}
     local osd_active = 1
-    local params = {}
     for s, i in ipairs(osd_index) do
         if i > 0 then
             omsg[#omsg+1] = fmt.f(osd_msg[i], {pnt=t_planet[s], sys=t_sys[s]})

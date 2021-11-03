@@ -185,9 +185,9 @@ end
 -- The player lands to a warm welcome (if the job is done).
 function celebrate_victory()
    if victory == true then
-      tk.msg( _("Welcome back"), string.format( _([[The portmaster greets the crowd of volunteers on the spaceport causeway.
+      tk.msg( _("Welcome back"), _([[The portmaster greets the crowd of volunteers on the spaceport causeway.
     "Well done. You got those pirates on the run!" he exclaims. "Maybe they'll think twice now before bothering our peace. I hope you all feel proud. You've spared this planet millions in shipping, and saved countless lives. And you've earned a reward. Before you take off today, the port authority will give you each forty thousand credits. Congratulations!"
-    Your comrades raise a cheer, and everyone shakes the portmaster's hand. One of them kisses the master on both cheeks in the Goddard style, then the whole crowd moves toward the bar.]]), this_planet:name() ) )
+    Your comrades raise a cheer, and everyone shakes the portmaster's hand. One of them kisses the master on both cheeks in the Goddard style, then the whole crowd moves toward the bar.]]) )
       player.pay( reward)
       faction.modPlayerSingle( "Empire", 3)
       tk.msg( _("Over drinks"), fmt.f( _([[Many periods later, the celebration has wound down. You find yourself drinking with a small group of 'veterans of the Battle of {sys},' as some of them are calling it. A older pilot sits across the table and stares pensively into his drink.

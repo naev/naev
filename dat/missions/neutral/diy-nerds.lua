@@ -229,7 +229,7 @@ function nerds_fly2()
    -- no pickup since hail+2STP
    if hailed and intime and time.get() > expiryDate + time.create(0,2,0) then
       if not impatient then
-         tk.msg(_("In-system communication"), string.format(_([[Your comm link comes up again. It is the nerds, whom you'd almost forgotten. You hear Mia's voice: "Hey, what are you waiting for? You'd better be here within one period, or we'll get another pilot and pay them, not you!"]]), srcPlanet:name()) )
+         tk.msg(_("In-system communication"), _([[Your comm link comes up again. It is the nerds, whom you'd almost forgotten. You hear Mia's voice: "Hey, what are you waiting for? You'd better be here within one period, or we'll get another pilot and pay them, not you!"]]) )
          impatient = true
       end
         misn.osdCreate( _("DIY Nerds"), {
