@@ -1,13 +1,11 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
 /**
  * @file music.c
  *
  * @brief Controls all the music playing.
  */
-
 
 /** @cond */
 #include "physfsrwops.h"
@@ -28,12 +26,9 @@
 #include "nluadef.h"
 #include "nstring.h"
 
-
 #define MUSIC_SUFFIX       ".ogg" /**< Suffix of musics. */
 
-
 int music_disabled = 0; /**< Whether or not music is disabled. */
-
 
 /*
  * Handle if music should run Lua script.  Must be locked to ensure same
@@ -47,14 +42,12 @@ static SDL_mutex *music_lock = NULL; /**< lock for music_runLua so it doesn't
 static int music_runchoose = 0; /**< Whether or not music should run the choose function. */
 static char *music_situation = NULL; /**< What situation music is in. */
 
-
 /*
  * global music lua
  */
 static nlua_env music_env = LUA_NOREF; /**< The Lua music control env. */
 /* functions */
 static int music_runLua( const char *situation );
-
 
 /*
  * The current music.
@@ -66,7 +59,6 @@ static int music_temp_disabled= 0; /**< Music is temporarily disabled. */
 static int music_temp_repeat  = 0; /**< Music is repeating. */
 static char *music_temp_repeatname = NULL; /**< Repeating song name. */
 
-
 /*
  * prototypes
  */
@@ -76,7 +68,6 @@ static void music_free (void);
 /* Lua stuff */
 static int music_luaInit (void);
 static void music_luaQuit (void);
-
 
 /**
  * @brief Updates the music.
@@ -115,7 +106,6 @@ void music_update( double dt )
       music_choose("idle");
 }
 
-
 /**
  * @brief Runs the Lua music choose function.
  *
@@ -149,7 +139,6 @@ static int music_runLua( const char *situation )
 
    return 0;
 }
-
 
 /**
  * @brief Initializes the music subsystem.
@@ -185,7 +174,6 @@ int music_init (void)
    return 0;
 }
 
-
 /**
  * @brief Exits the music subsystem.
  */
@@ -210,7 +198,6 @@ void music_exit (void)
    music_luaQuit();
 }
 
-
 /**
  * @brief Frees the current playing music.
  */
@@ -226,7 +213,6 @@ static void music_free (void)
    music_al_free();
 }
 
-
 /**
  * @brief Internal music loading routines.
  *
@@ -235,8 +221,7 @@ static void music_free (void)
 static int music_find (void)
 {
    char** files;
-   size_t i;
-   int suflen, flen;
+   int suflen;
    int nmusic;
 
    if (music_disabled)
@@ -248,8 +233,8 @@ static int music_find (void)
    /* load the profiles */
    nmusic = 0;
    suflen = strlen(MUSIC_SUFFIX);
-   for (i=0; files[i]!=NULL; i++) {
-      flen = strlen(files[i]);
+   for (size_t i=0; files[i]!=NULL; i++) {
+      int flen = strlen(files[i]);
       if ((flen > suflen) &&
             strncmp( &files[i][flen - suflen], MUSIC_SUFFIX, suflen)==0) {
 
@@ -266,7 +251,6 @@ static int music_find (void)
    return 0;
 }
 
-
 /**
  * @brief Sets the music volume.
  *
@@ -281,7 +265,6 @@ int music_volume( const double vol )
    return music_al_volume( vol );
 }
 
-
 /**
  * @brief Gets the current music volume (linear).
  *
@@ -295,7 +278,6 @@ double music_getVolume (void)
    return music_al_getVolume();
 }
 
-
 /**
  * @brief Gets the current music volume (logarithmic).
  *
@@ -307,7 +289,6 @@ double music_getVolumeLog(void)
       return 0.;
    return music_al_getVolumeLog();
 }
-
 
 /**
  * @brief Loads the music by name.
@@ -344,7 +325,6 @@ int music_load( const char* name )
    return 0;
 }
 
-
 /**
  * @brief Plays the loaded music.
  */
@@ -354,7 +334,6 @@ void music_play (void)
 
    music_al_play();
 }
-
 
 /**
  * @brief Stops the loaded music.
@@ -366,7 +345,6 @@ void music_stop (void)
    music_al_stop();
 }
 
-
 /**
  * @brief Pauses the music.
  */
@@ -377,7 +355,6 @@ void music_pause (void)
    music_al_pause();
 }
 
-
 /**
  * @brief Resumes the music.
  */
@@ -387,7 +364,6 @@ void music_resume (void)
 
    music_al_resume();
 }
-
 
 /**
  * @brief Checks to see if the music is playing.
@@ -402,7 +378,6 @@ int music_isPlaying (void)
    return music_al_isPlaying();
 }
 
-
 /**
  * @brief Gets the name of the current playing song.
  *
@@ -415,7 +390,6 @@ const char *music_playingName (void)
 
    return music_name;
 }
-
 
 /**
  * @brief Gets the time since the music started playing.
@@ -430,7 +404,6 @@ double music_playingTime (void)
    return (double)(SDL_GetTicks() - music_start) / 1000.;
 }
 
-
 /**
  * @brief Sets the music to a position in seconds.
  *
@@ -444,7 +417,6 @@ void music_setPos( double sec )
    music_al_setPos( sec );
 }
 
-
 /*
  * music Lua stuff
  */
@@ -455,7 +427,6 @@ void music_setPos( double sec )
  */
 static int music_luaInit (void)
 {
-
    if (music_disabled)
       return 0;
 
@@ -468,7 +439,6 @@ static int music_luaInit (void)
    return 0;
 }
 
-
 static int music_luaSetup (void)
 {
    /* Reset the environment. */
@@ -479,7 +449,6 @@ static int music_luaSetup (void)
    nlua_loadMusic(music_env); /* write it */
    return 0;
 }
-
 
 /**
  * @brief Loads the music Lua handler from a file.
@@ -511,7 +480,6 @@ int music_luaFile( const char *filename )
    return 0;
 }
 
-
 /**
  * @brief Loads the music Lua handler from a string
  *
@@ -537,7 +505,6 @@ int music_luaString( const char *str )
    return 0;
 }
 
-
 /**
  * @brief Quits the music Lua control system.
  */
@@ -552,7 +519,6 @@ static void music_luaQuit (void)
    nlua_freeEnv(music_env);
    music_env = LUA_NOREF;
 }
-
 
 /**
  * @brief Actually runs the music stuff, based on situation.
@@ -572,8 +538,6 @@ int music_choose( const char* situation )
 
    return 0;
 }
-
-
 
 /**
  * @brief Actually runs the music stuff, based on situation after a delay.
@@ -599,7 +563,6 @@ int music_chooseDelay( const char* situation, double delay )
    return 0;
 }
 
-
 /**
  * @brief Attempts to rechoose the music.
  *
@@ -623,7 +586,6 @@ void music_rechoose (void)
    SDL_mutexV(music_lock);
 }
 
-
 /**
  * @brief Temporarily disables the music.
  */
@@ -631,7 +593,6 @@ void music_tempDisable( int disable )
 {
    music_temp_disabled = disable;
 }
-
 
 /**
  * @brief Temporarily makse the music repeat.

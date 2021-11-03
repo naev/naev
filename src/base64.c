@@ -210,7 +210,6 @@ char* base64_decode( size_t *len, const char *src, size_t sz )
 {
    char *r, *dat, pad;
    size_t c,i,j;
-   uint32_t n;
 
    /* allocate r */
    c = sz * 3 / 4 + 2;
@@ -230,9 +229,8 @@ char* base64_decode( size_t *len, const char *src, size_t sz )
    /* fill r */
    i = 0;
    for (c=0; c<j; c+=4) {
-
       /* process the input from base 64 */
-      n = dec_ch( dat[c+0] ) << 18; /* guaranteed to be valid */
+      uint32_t n = dec_ch( dat[c+0] ) << 18; /* guaranteed to be valid */
       n += (c+1<j) ? (dec_ch( dat[c+1] ) << 12) : 0; /* check if inbounds */
       n += (c+2<j) ? (dec_ch( dat[c+2] ) << 6)  : 0;
       n += (c+3<j) ? (dec_ch( dat[c+3] ) << 0)  : 0;

@@ -1,14 +1,11 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
 /**
  * @file sound.c
  *
  * @brief Handles all the sound details.
  */
-
-
 /** @cond */
 #include <sys/stat.h>
 #include "physfs.h"
@@ -34,14 +31,11 @@
 #include "player.h"
 #include "sound_openal.h"
 
-
 #define SOUND_SUFFIX_WAV   ".wav" /**< Suffix of sounds. */
 #define SOUND_SUFFIX_OGG   ".ogg" /**< Suffix of sounds. */
 
-
 #define voiceLock()        SDL_LockMutex(voice_mutex)
 #define voiceUnlock()      SDL_UnlockMutex(voice_mutex)
-
 
 /*
  * Global sound properties.
@@ -49,12 +43,10 @@
 int sound_disabled            = 0; /**< Whether sound is disabled. */
 static int sound_initialized  = 0; /**< Whether or not sound is initialized. */
 
-
 /*
  * Sound list.
  */
 static alSound *sound_list    = NULL; /**< List of available sounds. */
-
 
 /*
  * Voices.
@@ -64,14 +56,12 @@ alVoice *voice_active         = NULL; /**< Active voices. */
 static alVoice *voice_pool    = NULL; /**< Pool of free voices. */
 static SDL_mutex *voice_mutex = NULL; /**< Lock for voices. */
 
-
 /*
  * Internally used sounds.
  */
 static int snd_compression    = -1; /**< Compression sound. */
 static int snd_compressionG   = -1; /**< Compression sound group. */
 static double snd_compression_gain = 0.; /**< Current compression gain. */
-
 
 /*
  * prototypes
@@ -80,7 +70,6 @@ static double snd_compression_gain = 0.; /**< Current compression gain. */
 static int sound_makeList (void);
 static void sound_free( alSound *snd );
 /* Voices. */
-
 
 /**
  * @brief Initializes the sound subsystem.
@@ -144,19 +133,14 @@ int sound_init (void)
       sound_speedGroup( snd_compressionG, 0 );
    }
 
-
    return 0;
 }
-
 
 /**
  * @brief Cleans up after the sound subsytem.
  */
 void sound_exit (void)
 {
-   int i;
-   alVoice *v;
-
    /* Nothing to disable. */
    if (sound_disabled || !sound_initialized)
       return;
@@ -168,12 +152,12 @@ void sound_exit (void)
       voiceLock();
       /* free the voices. */
       while (voice_active != NULL) {
-         v = voice_active;
+         alVoice *v = voice_active;
          voice_active = v->next;
          free(v);
       }
       while (voice_pool != NULL) {
-         v = voice_pool;
+         alVoice *v = voice_pool;
          voice_pool = v->next;
          free(v);
       }
@@ -188,7 +172,7 @@ void sound_exit (void)
    sound_al_free_sources_locked();
 
    /* free the sounds */
-   for (i=0; i<array_size(sound_list); i++)
+   for (int i=0; i<array_size(sound_list); i++)
       sound_free( &sound_list[i] );
    array_free( sound_list );
 
@@ -200,7 +184,6 @@ void sound_exit (void)
    sound_initialized = 0;
 }
 
-
 /**
  * @brief Gets the buffer to sound of name.
  *
@@ -209,19 +192,16 @@ void sound_exit (void)
  */
 int sound_get( const char* name )
 {
-   int i;
-
    if (sound_disabled)
       return 0;
 
-   for (i=0; i<array_size(sound_list); i++)
+   for (int i=0; i<array_size(sound_list); i++)
       if (strcmp(name, sound_list[i].name)==0)
          return i;
 
    WARN(_("Sound '%s' not found in sound list"), name);
    return -1;
 }
-
 
 /**
  * @brief Gets the length of the sound buffer.
@@ -236,7 +216,6 @@ double sound_getLength( int sound )
 
    return sound_list[sound].length;
 }
-
 
 /**
  * @brief Plays the sound in the first available channel.
@@ -272,7 +251,6 @@ int sound_play( int sound )
 
    return v->id;
 }
-
 
 /**
  * @brief Plays a sound based on position.
@@ -332,7 +310,6 @@ int sound_playPos( int sound, double px, double py, double vx, double vy )
    return v->id;
 }
 
-
 /**
  * @brief Updates the position of a voice.
  *
@@ -360,7 +337,6 @@ int sound_updatePos( int voice, double px, double py, double vx, double vy )
    return 0;
 }
 
-
 /**
  * @brief Updates the sounds removing obsolete ones and such.
  *
@@ -368,8 +344,6 @@ int sound_updatePos( int voice, double px, double py, double vx, double vy )
  */
 int sound_update( double dt )
 {
-   alVoice *v, *tv;
-
    /* Update music if needed. */
    music_update(dt);
 
@@ -385,16 +359,15 @@ int sound_update( double dt )
    voiceLock();
 
    /* The actual control loop. */
-   for (v=voice_active; v!=NULL; v=v->next) {
+   for (alVoice *v=voice_active; v!=NULL; v=v->next) {
 
       /* Run first to clear in same iteration. */
       sound_al_updateVoice( v );
 
       /* Destroy and toss into pool. */
       if ((v->state == VOICE_STOPPED) || (v->state == VOICE_DESTROY)) {
-
          /* Remove from active list. */
-         tv = v->prev;
+         alVoice *tv = v->prev;
          if (tv == NULL) {
             voice_active = v->next;
             if (voice_active != NULL)
@@ -425,7 +398,6 @@ int sound_update( double dt )
    return 0;
 }
 
-
 /**
  * @brief Pauses all the sounds.
  */
@@ -439,7 +411,6 @@ void sound_pause (void)
    if (snd_compression >= 0)
       sound_al_pauseGroup( snd_compressionG );
 }
-
 
 /**
  * @brief Resumes all the sounds.
@@ -455,14 +426,11 @@ void sound_resume (void)
       sound_al_resumeGroup( snd_compressionG );
 }
 
-
 /**
  * @brief Stops all the playing voices.
  */
 void sound_stopAll (void)
 {
-   alVoice *v;
-
    if (sound_disabled)
       return;
 
@@ -471,13 +439,12 @@ void sound_stopAll (void)
       return;
 
    voiceLock();
-   for (v=voice_active; v!=NULL; v=v->next) {
+   for (alVoice *v=voice_active; v!=NULL; v=v->next) {
       sound_al_stop( v );
       v->state = VOICE_STOPPED;
    }
    voiceUnlock();
 }
-
 
 /**
  * @brief Stops a voice from playing.
@@ -499,7 +466,6 @@ void sound_stop( int voice )
 
 }
 
-
 /**
  * @brief Updates the sound listener.
  *
@@ -520,7 +486,6 @@ int sound_updateListener( double dir, double px, double py,
 
    return sound_al_updateListener( dir, px, py, vx, vy );
 }
-
 
 /**
  * @brief Sets the speed to play the sound at.
@@ -560,17 +525,13 @@ void sound_setSpeed( double s )
    return sound_al_setSpeed( s );
 }
 
-
 /**
  * @brief Makes the list of available sounds.
  */
 static int sound_makeList (void)
 {
    char** files;
-   size_t i;
-   char path[PATH_MAX];
-   int len, suflen, flen;
-   SDL_RWops *rw;
+   int suflen;
 
    if (sound_disabled)
       return 0;
@@ -583,8 +544,11 @@ static int sound_makeList (void)
 
    /* load the profiles */
    suflen = strlen(SOUND_SUFFIX_WAV);
-   for (i=0; files[i]!=NULL; i++) {
-      flen = strlen(files[i]);
+   for (size_t i=0; files[i]!=NULL; i++) {
+      int len;
+      char path[PATH_MAX];
+      SDL_RWops *rw;
+      int flen = strlen(files[i]);
 
       /* Must be longer than suffix. */
       if (flen < suflen)
@@ -615,7 +579,6 @@ static int sound_makeList (void)
    return 0;
 }
 
-
 /**
  * @brief Sets the volume.
  *
@@ -630,7 +593,6 @@ int sound_volume( const double vol )
    return sound_al_volume( vol );
 }
 
-
 /**
  * @brief Gets the current sound volume (linear).
  *
@@ -644,7 +606,6 @@ double sound_getVolume (void)
    return sound_al_getVolume();
 }
 
-
 /**
  * @brief Gets the current sound volume (logarithmic).
  *
@@ -657,7 +618,6 @@ double sound_getVolumeLog (void)
 
    return sound_al_getVolumeLog();
 }
-
 
 /**
  * @brief Frees the sound.
@@ -674,7 +634,6 @@ static void sound_free( alSound *snd )
    sound_al_free(snd);
 }
 
-
 /**
  * @brief Creates a sound group.
  *
@@ -688,7 +647,6 @@ int sound_createGroup( int size )
 
    return sound_al_createGroup( size );
 }
-
 
 /**
  * @brief Plays a sound in a group.
@@ -709,7 +667,6 @@ int sound_playGroup( int group, int sound, int once )
    return sound_al_playGroup( group, &sound_list[sound], once );
 }
 
-
 /**
  * @brief Stops all the sounds in a group.
  *
@@ -722,7 +679,6 @@ void sound_stopGroup( int group )
 
    sound_al_stopGroup( group );
 }
-
 
 /**
  * @brief Pauses all the sounds in a group.
@@ -737,7 +693,6 @@ void sound_pauseGroup( int group )
    sound_al_pauseGroup( group );
 }
 
-
 /**
  * @brief Resumes all the sounds in a group.
  *
@@ -750,7 +705,6 @@ void sound_resumeGroup( int group )
 
    sound_al_resumeGroup( group );
 }
-
 
 /**
  * @brief Sets whether or not the speed affects a group.
@@ -766,7 +720,6 @@ void sound_speedGroup( int group, int enable )
    sound_al_speedGroup( group, enable );
 }
 
-
 /**
  * @brief Sets the volume of a group.
  *
@@ -780,7 +733,6 @@ void sound_volumeGroup( int group, double volume )
 
    sound_al_volumeGroup( group, volume );
 }
-
 
 /**
  * @brief Sets up the sound environment.
@@ -797,7 +749,6 @@ int sound_env( SoundEnv_t env, double param )
    return sound_al_env( env, param );
 }
 
-
 /**
  * @brief Locks the voices.
  */
@@ -806,7 +757,6 @@ void voice_lock (void)
    voiceLock();
 }
 
-
 /**
  * @brief Unlocks the voices.
  */
@@ -814,7 +764,6 @@ void voice_unlock (void)
 {
    voiceUnlock();
 }
-
 
 /**
  * @brief Gets a new voice ready to be used.
@@ -836,7 +785,6 @@ alVoice* voice_new (void)
    v = voice_pool; /* We do not touch the next nor prev, it's still in the pool. */
    return v;
 }
-
 
 /**
  * @brief Adds a voice to the active voice stack.
@@ -873,7 +821,6 @@ int voice_add( alVoice* v )
    return 0;
 }
 
-
 /**
  * @brief Gets a voice by identifier.
  *
@@ -883,7 +830,6 @@ int voice_add( alVoice* v )
 alVoice* voice_get( int id )
 {
    alVoice *v;
-
    /* Make sure there are voices. */
    if (voice_active==NULL)
       return NULL;
@@ -896,7 +842,6 @@ alVoice* voice_get( int id )
 
    return v;
 }
-
 
 /**
  * @brief Loads a new sound source from a RWops.
@@ -922,7 +867,6 @@ int source_newRW( SDL_RWops *rw, const char *name, unsigned int flags )
    return sndl-sound_list;
 }
 
-
 /**
  * @brief Loads a new source from a file.
  */
@@ -933,4 +877,3 @@ int source_new( const char* filename, unsigned int flags )
    SDL_RWclose( rw );
    return id;
 }
-

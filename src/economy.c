@@ -1,7 +1,6 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
 /**
  * @file economy.c
  *
@@ -11,8 +10,6 @@
  *  jump routes are resistances and production is modelled as node intensity.
  *  This is then solved with linear algebra after each time increment.
  */
-
-
 /** @cond */
 #include <stdint.h>
 #include <stdio.h>
@@ -40,7 +37,6 @@
 #include "space.h"
 #include "spfx.h"
 
-
 /*
  * Economy Nodal Analysis parameters.
  */
@@ -50,14 +46,11 @@
 #define ECON_PROD_MODIFIER 500000. /**< Production modifier, divide production by this amount. */
 #define ECON_PROD_VAR      0.01 /**< Defines the variability of production. */
 
-
 /* systems stack. */
 extern StarSystem *systems_stack; /**< Star system stack. */
 
-
 /* @TODO get rid of these externs. */
 extern Commodity* commodity_stack;
-
 
 /*
  * Nodal analysis simulation for dynamic economies.
@@ -66,7 +59,6 @@ static int econ_initialized   = 0; /**< Is economy system initialized? */
 static int econ_queued        = 0; /**< Whether there are any queued updates. */
 static cs *econ_G             = NULL; /**< Admittance matrix. */
 int *econ_comm         = NULL; /**< Commodities to calculate. */
-
 
 /*
  * Prototypes.
@@ -82,8 +74,6 @@ int *econ_comm         = NULL; /**< Commodities to calculate. */
 int economy_sysSave( xmlTextWriterPtr writer );
 int economy_sysLoad( xmlNodePtr parent );
 
-
-
 /**
  * @brief Gets the price of a good on a planet in a system.
  *
@@ -96,7 +86,7 @@ credits_t economy_getPrice( const Commodity *com,
       const StarSystem *sys, const Planet *p )
 {
    /* Get current time in periods.
-    */
+   */
    return economy_getPriceAtTime( com, sys, p, ntime_get());
 }
 
@@ -110,7 +100,7 @@ credits_t economy_getPrice( const Commodity *com,
  *    @return The price of the commodity.
  */
 credits_t economy_getPriceAtTime( const Commodity *com,
-                                  const StarSystem *sys, const Planet *p, ntime_t tme )
+      const StarSystem *sys, const Planet *p, ntime_t tme )
 {
    int i, k;
    double price;
@@ -140,21 +130,21 @@ credits_t economy_getPriceAtTime( const Commodity *com,
 
    /* and get the index on this planet */
    for ( i=0; i<array_size(p->commodities); i++) {
-     if ( ( strcmp(p->commodities[i]->name, com->name) == 0 ) )
-       break;
+      if ( ( strcmp(p->commodities[i]->name, com->name) == 0 ) )
+         break;
    }
    if (i >= array_size(p->commodities)) {
-     WARN(_("Price for commodity '%s' not known on this planet."), com->name);
-     return 0;
+      WARN(_("Price for commodity '%s' not known on this planet."), com->name);
+      return 0;
    }
    commPrice = &p->commodityPrice[i];
    /* Calculate price. */
    /* price  = (double) com->price; */
    /* price *= sys->prices[i]; */
    price = (commPrice->price + commPrice->sysVariation
-            * sin(2 * M_PI * t / commPrice->sysPeriod)
+         * sin(2 * M_PI * t / commPrice->sysPeriod)
          + commPrice->planetVariation
-            * sin(2 * M_PI * t / commPrice->planetPeriod));
+         * sin(2 * M_PI * t / commPrice->planetPeriod));
    return (credits_t) (price+0.5);/* +0.5 to round */
 }
 
@@ -189,8 +179,8 @@ int economy_getAveragePlanetPrice( const Commodity *com, const Planet *p, credit
 
    /* and get the index on this planet */
    for ( i=0; i<array_size(p->commodities); i++) {
-     if ( ( strcmp(p->commodities[i]->name, com->name) == 0 ) )
-       break;
+      if ( ( strcmp(p->commodities[i]->name, com->name) == 0 ) )
+         break;
    }
    if (i >= array_size(p->commodities)) {
       WARN(_("Price for commodity '%s' not known on this planet."), com->name);
@@ -203,14 +193,13 @@ int economy_getAveragePlanetPrice( const Commodity *com, const Planet *p, credit
       *mean = (credits_t)(commPrice->sum/commPrice->cnt + 0.5); /* +0.5 to round*/
       *std = (sqrt(commPrice->sum2 / commPrice->cnt
                - (commPrice->sum * commPrice->sum)
-                  / (commPrice->cnt * commPrice->cnt)));
+               / (commPrice->cnt * commPrice->cnt)));
    } else {
       *mean = 0;
       *std = 0;
    }
    return 0;
 }
-
 
 /**
  * @brief Gets the average price of a good as seen by the player (anywhere).
@@ -220,12 +209,10 @@ int economy_getAveragePlanetPrice( const Commodity *com, const Planet *p, credit
  *    @param[out] std Sample standard deviation (via uncorrected population formula).
  *    @return The average price of the commodity.
  */
-
-int economy_getAveragePrice( const Commodity *com, credits_t *mean, double *std ) {
+int economy_getAveragePrice( const Commodity *com, credits_t *mean, double *std )
+{
    int i,j,k;
    CommodityPrice *commPrice;
-   StarSystem *sys;
-   Planet *p;
    double av = 0;
    double av2 = 0;
    int cnt = 0;
@@ -233,7 +220,7 @@ int economy_getAveragePrice( const Commodity *com, credits_t *mean, double *std 
    k = com - commodity_stack;
 
    /* Find what commodity this is */
-   for ( i=0; i<array_size(econ_comm); i++ )
+   for (i=0; i<array_size(econ_comm); i++)
       if (econ_comm[i] == k)
          break;
 
@@ -244,10 +231,10 @@ int economy_getAveragePrice( const Commodity *com, credits_t *mean, double *std 
       *std = 0;
       return 1;
    }
-   for ( i=0; i<array_size(systems_stack) ; i++) {
-      sys = &systems_stack[i];
-      for ( j=0; j<array_size(sys->planets); j++) {
-         p = sys->planets[j];
+   for (i=0; i<array_size(systems_stack) ; i++) {
+      StarSystem *sys = &systems_stack[i];
+      for (j=0; j<array_size(sys->planets); j++) {
+         Planet *p = sys->planets[j];
          /* and get the index on this planet */
          for ( k=0; k<array_size(p->commodities); k++) {
             if ( ( strcmp(p->commodities[k]->name, com->name) == 0 ) )
@@ -271,7 +258,6 @@ int economy_getAveragePrice( const Commodity *com, credits_t *mean, double *std 
    *std = av2;
    return 0;
 }
-
 
 #if 0
 /**
@@ -304,7 +290,6 @@ static double econ_calcJumpR( StarSystem *A, StarSystem *B )
 
    return R;
 }
-
 
 /**
  * @brief Calculates the intensity in a system node.
@@ -348,7 +333,6 @@ static double econ_calcSysI( unsigned int dt, StarSystem *sys, int price )
 
    return I;
 }
-
 
 /**
  * @brief Creates the admittance matrix.
@@ -408,7 +392,6 @@ static int econ_createGMatrix (void)
 }
 #endif
 
-
 /**
  * @brief Initializes the economy.
  *
@@ -416,14 +399,12 @@ static int econ_createGMatrix (void)
  */
 int economy_init (void)
 {
-   int i;
-
    /* Must not be initialized. */
    if (econ_initialized)
       return 0;
 
    /* Allocate price space. */
-   for (i=0; i<array_size(systems_stack); i++) {
+   for (int i=0; i<array_size(systems_stack); i++) {
       free(systems_stack[i].prices);
       systems_stack[i].prices = calloc(array_size(econ_comm), sizeof(double));
    }
@@ -437,7 +418,6 @@ int economy_init (void)
    return 0;
 }
 
-
 /**
  * @brief Increments the queued update counter.
  *
@@ -447,7 +427,6 @@ void economy_addQueuedUpdate (void)
 {
    econ_queued++;
 }
-
 
 /**
  * @brief Calls economy_refresh if an economy update is queued.
@@ -459,7 +438,6 @@ int economy_execQueued (void)
 
    return 0;
 }
-
 
 /**
  * @brief Regenerates the economy matrix.  Should be used if the universe
@@ -480,7 +458,6 @@ int economy_refresh (void)
 
    return 0;
 }
-
 
 /**
  * @brief Updates the economy.
@@ -509,7 +486,6 @@ int economy_update( unsigned int dt )
 
    /* Calculate the results for each price set. */
    for (j=0; j<array_size(econ_comm); j++) {
-
 
       /* First we must load the vector with intensities. */
       for (i=0; i<array_size(systems_stack); i++)
@@ -562,20 +538,17 @@ int economy_update( unsigned int dt )
    return 0;
 }
 
-
 /**
  * @brief Destroys the economy.
  */
 void economy_destroy (void)
 {
-   int i;
-
    /* Must be initialized. */
    if (!econ_initialized)
       return;
 
    /* Clean up the prices in the systems stack. */
-   for (i=0; i<array_size(systems_stack); i++) {
+   for (int i=0; i<array_size(systems_stack); i++) {
       free(systems_stack[i].prices);
       systems_stack[i].prices = NULL;
    }
@@ -614,8 +587,8 @@ static int economy_calcPrice( Planet *planet, Commodity *commodity, CommodityPri
    /* Get the cost modifier suitable for planet type/class. */
    cm = commodity->planet_modifier;
    scale = 1.;
-   while ( cm != NULL ) {
-      if ( ( strcmp( planet->class, cm->name ) == 0 ) ) {
+   while (cm != NULL) {
+      if ((strcmp( planet->class, cm->name ) == 0)) {
          scale = cm->value;
          break;
       }
@@ -677,38 +650,36 @@ static int economy_calcPrice( Planet *planet, Commodity *commodity, CommodityPri
    return 0;
 }
 
-
 /**
  * @brief Modifies commodity price based on system characteristics.
  *
  *    @param sys System.
  */
-static void economy_modifySystemCommodityPrice(StarSystem *sys)
+static void economy_modifySystemCommodityPrice( StarSystem *sys )
 {
-   int i,j,k;
-   Planet *planet;
+   int k;
    CommodityPrice *avprice;
 
    avprice = array_create( CommodityPrice );
-   for ( i=0; i<array_size(sys->planets); i++ ) {
-      planet=sys->planets[i];
-      for ( j=0; j<array_size(planet->commodityPrice); j++ ) {
+   for (int i=0; i<array_size(sys->planets); i++) {
+      Planet *planet = sys->planets[i];
+      for (int j=0; j<array_size(planet->commodityPrice); j++) {
         /* Largest is approx 35000.  Increased radius will increase price since further to travel,
            and also increase stability, since longer for prices to fluctuate, but by a larger amount when they do.*/
-         planet->commodityPrice[j].price *= 1 + sys->radius/200000;
-         planet->commodityPrice[j].planetPeriod *= 1 / (1 - sys->radius/200000.);
-         planet->commodityPrice[j].planetVariation *= 1 / (1 - sys->radius/300000.);
+         planet->commodityPrice[j].price *= 1 + sys->radius/200e3;
+         planet->commodityPrice[j].planetPeriod *= 1 / (1 - sys->radius/200e3);
+         planet->commodityPrice[j].planetVariation *= 1 / (1 - sys->radius/300e3);
 
          /* Increase price with volatility, which goes up to about 600.
             And with interference, since systems are harder to find, which goes up to about 1000.*/
          planet->commodityPrice[j].price *= 1 + sys->nebu_volatility/600.;
-         planet->commodityPrice[j].price *= 1 + sys->interference/10000.;
+         planet->commodityPrice[j].price *= 1 + sys->interference/10e3;
 
          /* Use number of jumps to determine sytsem time period.  More jumps means more options for trade
             so shorter period.  Between 1 to 6 jumps.  Make the base time 1000.*/
          planet->commodityPrice[j].sysPeriod = 2000. / (array_size(sys->jumps) + 1);
 
-         for ( k=0; k<array_size(avprice); k++) {
+         for (k=0; k<array_size(avprice); k++) {
             if ( ( strcmp( planet->commodities[j]->name, avprice[k].name ) == 0 ) ) {
                avprice[k].updateTime++;
                avprice[k].price+=planet->commodityPrice[j].price;
@@ -740,9 +711,9 @@ static void economy_modifySystemCommodityPrice(StarSystem *sys)
       avprice[k].sysVariation/=avprice[k].updateTime;
    }
    /* And now apply the averaging */
-   for ( i=0; i<array_size(sys->planets); i++ ) {
-      planet=sys->planets[i];
-      for ( j=0; j<array_size(planet->commodities); j++ ) {
+   for (int i=0; i<array_size(sys->planets); i++) {
+      Planet *planet = sys->planets[i];
+      for (int j=0; j<array_size(planet->commodities); j++) {
          for ( k=0; k<array_size(avprice); k++ ) {
             if ( ( strcmp( planet->commodities[j]->name, avprice[k].name ) == 0 ) ) {
                planet->commodityPrice[j].price*=0.25;
@@ -755,7 +726,6 @@ static void economy_modifySystemCommodityPrice(StarSystem *sys)
    array_shrink( &avprice );
    sys->averagePrice = avprice;
 }
-
 
 /**
  * @brief Calculates smoothing of commodity price based on neighbouring systems
@@ -894,29 +864,22 @@ void economy_initialiseCommodityPrices(void)
 /*
  * Calculates commodity prices for a single planet (e.g. as added by the unidiff), and does some smoothing over the system, but not neighbours.
  */
-
 void economy_initialiseSingleSystem( StarSystem *sys, Planet *planet )
 {
-   int i;
-   for ( i=0; i<array_size(planet->commodities); i++ ) {
+   for (int i=0; i<array_size(planet->commodities); i++) {
       economy_calcPrice(planet, planet->commodities[i], &planet->commodityPrice[i]);
    }
    economy_modifySystemCommodityPrice(sys);
 }
 
-
 void economy_averageSeenPrices( const Planet *p )
 {
-   int i;
-   ntime_t t;
-   Commodity *c;
-   CommodityPrice *cp;
-   credits_t price;
-   t = ntime_get();
-   for ( i = 0; i < array_size(p->commodities); i++ ) {
-      c=p->commodities[i];
-      cp=&p->commodityPrice[i];
-      if ( cp->updateTime < t ) { /* has not yet been updated at present time. */
+   ntime_t t = ntime_get();
+   for (int i=0; i < array_size(p->commodities); i++) {
+      Commodity *c = p->commodities[i];
+      CommodityPrice *cp = &p->commodityPrice[i];
+      if (cp->updateTime < t) { /* has not yet been updated at present time. */
+         credits_t price;
          cp->updateTime = t;
          /* Calculate values for mean and std */
          cp->cnt++;
@@ -927,19 +890,14 @@ void economy_averageSeenPrices( const Planet *p )
    }
 }
 
-
 void economy_averageSeenPricesAtTime( const Planet *p, const ntime_t tupdate )
 {
-   int i;
-   ntime_t t;
-   Commodity *c;
-   CommodityPrice *cp;
-   credits_t price;
-   t = ntime_get();
-   for ( i = 0; i < array_size(p->commodities); i++ ) {
-      c=p->commodities[i];
-      cp=&p->commodityPrice[i];
-      if ( cp->updateTime < t ) { /* has not yet been updated at present time. */
+   ntime_t t = ntime_get();
+   for (int i=0; i < array_size(p->commodities); i++) {
+      Commodity *c = p->commodities[i];
+      CommodityPrice *cp = &p->commodityPrice[i];
+      if (cp->updateTime < t) { /* has not yet been updated at present time. */
+         credits_t price;
          cp->updateTime = t;
          cp->cnt++;
          price = economy_getPriceAtTime(c, NULL, p, tupdate);
@@ -947,7 +905,6 @@ void economy_averageSeenPricesAtTime( const Planet *p, const ntime_t tupdate )
          cp->sum2 += price*price;
       }
    }
-
 }
 
 /**
@@ -955,26 +912,21 @@ void economy_averageSeenPricesAtTime( const Planet *p, const ntime_t tupdate )
  */
 void economy_clearKnown (void)
 {
-   int i, j, k;
-   StarSystem *sys;
-   Planet *p;
-   CommodityPrice *cp;
-   for (i=0; i<array_size(systems_stack); i++) {
-      sys = &systems_stack[i];
-      for (j=0; j<array_size(sys->planets); j++) {
-         p=sys->planets[j];
-         for (k=0; k<array_size(p->commodityPrice); k++) {
-            cp=&p->commodityPrice[k];
-            cp->cnt=0;
-            cp->sum=0;
-            cp->sum2=0;
-            cp->updateTime=0;
+   for (int i=0; i<array_size(systems_stack); i++) {
+      StarSystem *sys = &systems_stack[i];
+      for (int j=0; j<array_size(sys->planets); j++) {
+         Planet *p = sys->planets[j];
+         for (int k=0; k<array_size(p->commodityPrice); k++) {
+            CommodityPrice *cp = &p->commodityPrice[k];
+            cp->cnt = 0;
+            cp->sum = 0;
+            cp->sum2 = 0;
+            cp->updateTime = 0;
          }
       }
    }
-   for (i=0; i<array_size(commodity_stack); i++ ) {
+   for (int i=0; i<array_size(commodity_stack); i++ )
       commodity_stack[i].lastPurchasePrice=0;
-   }
 }
 
 /**
@@ -982,17 +934,14 @@ void economy_clearKnown (void)
  */
 void economy_clearSinglePlanet(Planet *p)
 {
-   CommodityPrice *cp;
-   int k;
-   for ( k=0; k<array_size(p->commodityPrice); k++ ) {
-      cp=&p->commodityPrice[k];
-      cp->cnt=0;
-      cp->sum=0;
-      cp->sum2=0;
-      cp->updateTime=0;
+   for (int k=0; k<array_size(p->commodityPrice); k++) {
+      CommodityPrice *cp = &p->commodityPrice[k];
+      cp->cnt = 0;
+      cp->sum = 0;
+      cp->sum2 = 0;
+      cp->updateTime = 0;
    }
 }
-
 
 /**
  * @brief Loads player's economy properties from an XML node.
@@ -1002,45 +951,43 @@ void economy_clearSinglePlanet(Planet *p)
  */
 int economy_sysLoad( xmlNodePtr parent )
 {
-   xmlNodePtr node, cur, nodeAsset, nodeCommodity;
-   char *str;
-   Planet *planet;
-   int i;
-   CommodityPrice *cp;
-   Commodity *c;
+   xmlNodePtr node = parent->xmlChildrenNode;
+   
    economy_clearKnown();
-
-   node = parent->xmlChildrenNode;
 
    do {
       if (xml_isNode(node,"economy")) {
-         cur = node->xmlChildrenNode;
+         xmlNodePtr cur = node->xmlChildrenNode;
          do {
+            char *str;
+            xml_onlyNodes(cur);
             if (xml_isNode(cur, "system")) {
                /* Ignore "name" attribute. */
-               nodeAsset = cur->xmlChildrenNode;
-               do{
+               xmlNodePtr nodeAsset = cur->xmlChildrenNode;
+               do {
+                  xml_onlyNodes(nodeAsset);
                   if (xml_isNode(nodeAsset, "planet")) {
                      xmlr_attr_strd(nodeAsset,"name",str);
-                     planet = planet_get(str);
+                     Planet *planet = planet_get(str);
                      if (planet==NULL)
                         WARN(_("Planet '%s' has saved economy data but doesn't exist!"), str);
                      free(str);
                      if (planet==NULL)
                         continue;
-                     nodeCommodity = nodeAsset->xmlChildrenNode;
-                     do{
+                     xmlNodePtr nodeCommodity = nodeAsset->xmlChildrenNode;
+                     do {
+                        xml_onlyNodes(nodeCommodity);
                         if (xml_isNode(nodeCommodity, "commodity")) {
                            xmlr_attr_strd(nodeCommodity,"name",str);
-                           cp = NULL;
-                           for (i=0; i<array_size(planet->commodities); i++) {
+                           CommodityPrice *cp = NULL;
+                           for (int i=0; i<array_size(planet->commodities); i++) {
                               if ( (strcmp(str,planet->commodities[i]->name) == 0) ) {
                                  cp = &planet->commodityPrice[i];
                                  break;
                               }
                            }
                            free(str);
-                           if ( cp != NULL ) {
+                           if (cp != NULL) {
                               xmlr_attr_float(nodeCommodity,"sum",cp->sum);
                               xmlr_attr_float(nodeCommodity,"sum2",cp->sum2);
                               xmlr_attr_int(nodeCommodity,"cnt",cp->cnt);
@@ -1053,8 +1000,8 @@ int economy_sysLoad( xmlNodePtr parent )
             } else if (xml_isNode(cur, "lastPurchase")) {
                xmlr_attr_strd(cur, "name", str);
                if (str) {
-                  c=commodity_get(str);
-                  c->lastPurchasePrice=xml_getLong(cur);
+                  Commodity *c = commodity_get(str);
+                  c->lastPurchasePrice = xml_getLong(cur);
                   free(str);
                }
             }
@@ -1064,8 +1011,6 @@ int economy_sysLoad( xmlNodePtr parent )
    return 0;
 }
 
-
-
 /**
  * @brief Saves what is needed to be saved for economy.
  *
@@ -1074,13 +1019,9 @@ int economy_sysLoad( xmlNodePtr parent )
  */
 int economy_sysSave( xmlTextWriterPtr writer )
 {
-  int i,j,k,doneSys,donePlanet;
-   StarSystem *sys;
-   Planet *p;
-   CommodityPrice *cp;
    /* Save what the player has seen of the economy at each planet */
    xmlw_startElem(writer,"economy");
-   for (i=0; i<array_size(commodity_stack); i++) {
+   for (int i=0; i<array_size(commodity_stack); i++) {
       if ( commodity_stack[i].lastPurchasePrice > 0 ) {
          xmlw_startElem(writer, "lastPurchase");
          xmlw_attr(writer,"name","%s",commodity_stack[i].name);
@@ -1088,22 +1029,22 @@ int economy_sysSave( xmlTextWriterPtr writer )
          xmlw_endElem(writer);
       }
    }
-   for (i=0; i<array_size(systems_stack); i++) {
-      doneSys=0;
-      sys=&systems_stack[i];
-      for (j=0; j<array_size(sys->planets); j++) {
-         p=sys->planets[j];
-         donePlanet=0;
-         for ( k=0; k<array_size(p->commodities); k++) {
-            cp=&p->commodityPrice[k];
-            if ( cp->cnt > 0 ) {/* Player has seen this commodity at this location */
-               if ( doneSys==0 ) {
-                  doneSys=1;
+   for (int i=0; i<array_size(systems_stack); i++) {
+      int doneSys=0;
+      StarSystem *sys = &systems_stack[i];
+      for (int j=0; j<array_size(sys->planets); j++) {
+         Planet *p = sys->planets[j];
+         int donePlanet=0;
+         for (int k=0; k<array_size(p->commodities); k++) {
+            CommodityPrice *cp = &p->commodityPrice[k];
+            if (cp->cnt > 0) {/* Player has seen this commodity at this location */
+               if (doneSys==0) {
+                  doneSys = 1;
                   xmlw_startElem(writer, "system");
                   xmlw_attr(writer,"name","%s",sys->name);
                }
-               if ( donePlanet==0 ) {
-                  donePlanet=1;
+               if (donePlanet==0) {
+                  donePlanet = 1;
                   xmlw_startElem(writer, "planet");
                   xmlw_attr(writer,"name","%s",p->name);
                }
@@ -1116,10 +1057,10 @@ int economy_sysSave( xmlTextWriterPtr writer )
                xmlw_endElem(writer); /* commodity */
             }
          }
-         if ( donePlanet==1 )
+         if (donePlanet==1)
             xmlw_endElem(writer); /* planet */
       }
-      if ( doneSys==1 )
+      if (doneSys==1)
          xmlw_endElem(writer); /* system */
    }
    xmlw_endElem(writer); /* economy */

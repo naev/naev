@@ -543,17 +543,17 @@ static int player_autonavApproach( const Vector2d *pos, double *dist2, int count
  */
 static void player_autonavFollow( const Vector2d *pos, const Vector2d *vel, const int follow, double *dist2 )
 {
-   double Kp, Kd, angle, radius, d;
+   double angle, radius, d;
    Vector2d dir, point;
 
    /* Define the control coefficients. If needed, they could be adapted.
       Maybe radius could be adjustable by the player. */
-   Kp = 10;
-   Kd = 20;
+   const double Kp = 10;
+   const double Kd = 20;
    radius = 100;
 
    /* Find a point behind the target at a distance of radius unless stationary, or not following. */
-   if ( !follow || ( vel->x == 0 && vel->y == 0 ) )
+   if (!follow || (vel->x == 0 && vel->y == 0))
       radius = 0;
    angle = M_PI + vel->angle;
    vect_cset( &point, pos->x + radius * cos(angle),
@@ -613,7 +613,7 @@ int player_autonavShouldResetSpeed (void)
    double shield, armour;
    Pilot *const*pstk;
    int hostiles, will_reset;
-   double hdist2, d2;
+   double hdist2;
    double reset_dist, reset_shield;
 
    if (!player_isFlag(PLAYER_AUTONAV))
@@ -636,6 +636,7 @@ int player_autonavShouldResetSpeed (void)
 
    pstk = pilot_getAll();
    for (int i=0; i<array_size(pstk); i++) {
+      double d2;
       if ((pstk[i]->id != PLAYER_ID ) && pilot_isHostile( pstk[i] )
             && pilot_inRangePilot( player.p, pstk[i], &d2 )==1
             && !pilot_isDisabled( pstk[i] )) {
