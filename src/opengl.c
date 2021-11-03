@@ -142,10 +142,8 @@ GLboolean gl_hasVersion( int major, int minor )
  */
 void gl_checkHandleError( const char *func, int line )
 {
-   GLenum err;
    const char* errstr;
-
-   err = glGetError();
+   GLenum err = glGetError();
 
    /* No error. */
    if (err == GL_NO_ERROR)
@@ -204,13 +202,10 @@ static int gl_setupAttributes( int fallback )
  */
 int gl_setupFullscreen (void)
 {
-   int display_index;
    int ok;
-   SDL_DisplayMode target, closest;
-
-   display_index = SDL_GetWindowDisplayIndex( gl_screen.window );
-
+   int display_index = SDL_GetWindowDisplayIndex( gl_screen.window );
    if (conf.fullscreen && conf.modesetting) {
+      SDL_DisplayMode target, closest;
       /* Try to use desktop resolution if nothing is specifically set. */
       if (conf.explicit_dim) {
          SDL_GetWindowDisplayMode( gl_screen.window, &target );
@@ -252,8 +247,6 @@ static int gl_getFullscreenMode (void)
  */
 static int gl_createWindow( unsigned int flags )
 {
-   int i, ret, fallback;
-
    flags |= SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE | SDL_WINDOW_ALLOW_HIGHDPI;
    if (conf.borderless)
       flags |= SDL_WINDOW_BORDERLESS;
@@ -270,7 +263,7 @@ static int gl_createWindow( unsigned int flags )
          conf.minimize ? "1" : "0" );
 
    /* Create the OpenGL context, note we don't need an actual renderer. */
-   for (fallback = 0; fallback <= 1; fallback++) {
+   for (int fallback=0; fallback <= 1; fallback++) {
       gl_setupAttributes( fallback );
       gl_screen.context = SDL_GL_CreateContext( gl_screen.window );
       if (gl_screen.context != NULL)
@@ -281,7 +274,7 @@ static int gl_createWindow( unsigned int flags )
 
    /* Set Vsync. */
    if (conf.vsync) {
-      ret = SDL_GL_SetSwapInterval( 1 );
+      int ret = SDL_GL_SetSwapInterval( 1 );
       if (ret == 0)
          gl_screen.flags |= OPENGL_VSYNC;
    } else {
@@ -290,7 +283,7 @@ static int gl_createWindow( unsigned int flags )
 
    /* Finish getting attributes. */
    gl_screen.current_fbo = 0; /* No FBO set. */
-   for (i=0; i<OPENGL_NUM_FBOS; i++) {
+   for (int i=0; i<OPENGL_NUM_FBOS; i++) {
       gl_screen.fbo[i]     = GL_INVALID_VALUE;
       gl_screen.fbo_tex[i] = GL_INVALID_VALUE;
    }
@@ -308,7 +301,6 @@ static int gl_createWindow( unsigned int flags )
 static int gl_getGLInfo (void)
 {
    int doublebuf;
-
    SDL_GL_GetAttribute( SDL_GL_RED_SIZE, &gl_screen.r );
    SDL_GL_GetAttribute( SDL_GL_GREEN_SIZE, &gl_screen.g );
    SDL_GL_GetAttribute( SDL_GL_BLUE_SIZE, &gl_screen.b );
@@ -372,8 +364,6 @@ static int gl_defState (void)
  */
 static int gl_setupScaling (void)
 {
-   double scalew, scaleh;
-
    /* Get the basic dimensions from SDL2. */
    SDL_GetWindowSize(gl_screen.window, &gl_screen.w, &gl_screen.h);
    SDL_GL_GetDrawableSize(gl_screen.window, &gl_screen.rw, &gl_screen.rh);
@@ -391,6 +381,7 @@ static int gl_setupScaling (void)
    /* Small windows get handled here. */
    if ((gl_screen.nw < RESOLUTION_W_MIN)
          || (gl_screen.nh < RESOLUTION_H_MIN)) {
+      double scalew, scaleh;
       if (gl_screen.scale != 1.)
          DEBUG(_("Screen size too small, upscaling..."));
       scalew = RESOLUTION_W_MIN / (double)gl_screen.nw;
@@ -513,9 +504,7 @@ void gl_resize (void)
  */
 void gl_viewport( int x, int y, int w, int h )
 {
-   gl_Matrix4 proj;
-
-   proj = gl_Matrix4_Ortho( 0., /* Left edge. */
+   gl_Matrix4 proj = gl_Matrix4_Ortho( 0., /* Left edge. */
             gl_screen.nw, /* Right edge. */
             0., /* Bottom edge. */
             gl_screen.nh, /* Top edge. */
@@ -620,8 +609,8 @@ GLint gl_stringToClamp( const char *s )
  */
 void gl_colorblind( int enable )
 {
-   LuaShader_t shader;
    if (enable) {
+      LuaShader_t shader;
       if (colorblind_pp != 0)
          return;
       memset( &shader, 0, sizeof(LuaShader_t) );
