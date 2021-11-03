@@ -95,13 +95,13 @@ function accept()
 end
 
 function updateGoalDisplay()
-    local osd_index, osd_active, omsg
-    osd_index = {1, 0, 0, 0, 2, 2, 2, 3}
-    omsg = {}
-    osd_active = 1
+    local osd_index = {1, 0, 0, 0, 2, 2, 2, 3}
+    local omsg = {}
+    local osd_active = 1
+    local params = {}
     for s, i in ipairs(osd_index) do
         if i > 0 then
-            omsg[#omsg+1] = osd_msg[i]:format(t_planet[s]:name(), t_sys[s]:name())
+            omsg[#omsg+1] = fmt.f(osd_msg[i], {pnt=t_planet[s], sys=t_sys[s]})
             if stage > s and (stage > s+1 or destplanet == nil) then
                 osd_active = #omsg + 1
             end
