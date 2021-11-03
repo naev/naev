@@ -1,13 +1,11 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
 /**
  * @file nlua_tk.c
  *
  * @brief Naev toolkit Lua module.
  */
-
 /** @cond */
 #include <lauxlib.h>
 #include <stdlib.h>
@@ -29,7 +27,6 @@
 #include "nluadef.h"
 #include "toolkit.h"
 
-
 /* Stuff for the custom toolkit. */
 #define TK_CUSTOMDONE   "__customDone"
 typedef struct custom_functions_s {
@@ -46,7 +43,6 @@ static void cust_render( double x, double y, double w, double h, void* data );
 static int cust_event( unsigned int wid, SDL_Event *event, void* data );
 static int cust_key( SDL_Keycode key, SDL_Keymod mod, int pressed, custom_functions_t *cf );
 static int cust_mouse( int type, int button, double x, double y, custom_functions_t *cf );
-
 
 /* Toolkit methods. */
 static int tkL_query( lua_State *L );
@@ -79,8 +75,6 @@ static const luaL_Reg tkL_methods[] = {
    {0,0}
 }; /**< Toolkit Lua methods. */
 
-
-
 /**
  * @brief Loads the Toolkit Lua library.
  *
@@ -94,7 +88,6 @@ int nlua_loadTk( nlua_env env )
    nlua_loadGFX(env);
    return 0;
 }
-
 
 /**
  * @brief Bindings for interacting with the Toolkit.
@@ -153,7 +146,6 @@ static int tkL_query( lua_State *L )
    lua_pushinteger( L, h );
    return 4;
 }
-
 
 /**
  * @brief Creates a window with an ok button, and optionally an image.
@@ -245,7 +237,6 @@ static int tkL_input( lua_State *L )
    return 1;
 }
 
-
 /**
  * @brief Creates a window with a number of selectable options
  *
@@ -298,7 +289,6 @@ static int tkL_choice( lua_State *L )
    return 2;
 }
 
-
 /**
  * @brief Creates a window with an embedded list of choices.
  *
@@ -345,7 +335,6 @@ static int tkL_list( lua_State *L )
    return 2;
 }
 
-
 /**
  * @brief Opens an outfit merchant window.
  *
@@ -390,7 +379,6 @@ static int tkL_merchantOutfit( lua_State *L )
 
    return 0;
 }
-
 
 /**
  * @brief Creates a custom widget window.
@@ -447,7 +435,6 @@ static int tkL_custom( lua_State *L )
    return 0;
 }
 
-
 /**
  * @brief Renames the custom widget window.
  *
@@ -464,7 +451,6 @@ static int tkL_customRename( lua_State *L )
    return 0;
 }
 
-
 /**
  * @brief Sets the custom widget fullscreen.
  *
@@ -480,7 +466,6 @@ static int tkL_customFullscreen( lua_State *L )
    dialogue_customFullscreen( enable );
    return 0;
 }
-
 
 /**
  * @brief Sets the custom widget fullscreen.
@@ -501,7 +486,6 @@ static int tkL_customResize( lua_State *L )
    return 0;
 }
 
-
 /**
  * @brief Gets the size of a custom widget.
  *
@@ -521,7 +505,6 @@ static int tkL_customSize( lua_State *L )
    return 2;
 }
 
-
 /**
  * @brief Ends the execution of a custom widget.
  * @luafunc customDone
@@ -535,7 +518,6 @@ static int tkL_customDone( lua_State *L )
    lua_setglobal(L, TK_CUSTOMDONE );
    return 0;
 }
-
 
 static int cust_pcall( lua_State *L, int nargs, int nresults, custom_functions_t *cf )
 {
@@ -603,7 +585,9 @@ static void cust_render( double x, double y, double w, double h, void* data )
    lua_pushnumber(L, y);
    lua_pushnumber(L, w);
    lua_pushnumber(L, h);
+   glViewport( 0, 0, gl_screen.rw, gl_screen.rh );
    cust_pcall( L, 4, 0, cf );
+   gl_defViewport();
 }
 static int cust_event( unsigned int wid, SDL_Event *event, void* data )
 {

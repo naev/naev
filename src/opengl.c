@@ -491,15 +491,13 @@ int gl_init (void)
  */
 void gl_resize (void)
 {
-   int i;
-
    gl_setupScaling();
    glViewport( 0, 0, gl_screen.rw, gl_screen.rh );
    gl_setDefViewport( 0, 0, gl_screen.nw, gl_screen.nh );
    gl_defViewport();
 
    /* Set up framebuffer. */
-   for (i=0; i<OPENGL_NUM_FBOS; i++) {
+   for (int i=0; i<OPENGL_NUM_FBOS; i++) {
       if (gl_screen.fbo[i] != GL_INVALID_VALUE) {
          glDeleteFramebuffers( 1, &gl_screen.fbo[i] );
          glDeleteTextures( 1, &gl_screen.fbo_tex[i] );
