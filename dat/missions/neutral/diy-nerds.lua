@@ -29,7 +29,7 @@ local fmt = require "format"
 misn_reward = fmt.credits(20e3)
 
 -- helper functions, defined below
-local addNerdCargo, rmNerdCargo, nerds_return, system_hasAtLeast 
+local addNerdCargo, rmNerdCargo, nerds_return, system_hasAtLeast
 
 -- the mission cargo
 misn_cargo1 = N_("Group of Nerds")

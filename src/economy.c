@@ -952,7 +952,7 @@ void economy_clearSinglePlanet(Planet *p)
 int economy_sysLoad( xmlNodePtr parent )
 {
    xmlNodePtr node = parent->xmlChildrenNode;
-   
+
    economy_clearKnown();
 
    do {
