@@ -119,6 +119,7 @@ stds.API_land = {globals={
    "zlk_ruadan",
 }}
 stds.API_rescue = {globals={"rescue"}}  -- C function: land_stranded
+stds.API_save_updater = {globals={"outfit"}}    -- C function: player_tryGetOutfit
 stds.API_shipai = {globals={"create"}}  -- C function: info_shipAI
 stds.API_spawn = {globals={
    "create",                            -- C function: system_scheduler()
@@ -178,6 +179,7 @@ files["landing.lua"].std = STANDARD .. "+API_land"
 files["missions/**/*.lua"].std = STANDARD .. "+Misn+Hook+Camera+Tex+Background+Music+Audio" .. TK
 files["outfits/**/*.lua"].std = STANDARD .. GFX .. "+PilotOutfit"
 files["rescue.lua"].std = STANDARD .. TK .. "+API_rescue"
+files["save_updater.lua"].std = "API_save_updater"
 files["scripts/love.lua"].std = STANDARD .. "+__love_impl"
 files["shipai.lua"].std = STANDARD .. "+API_shipai"
 files["snd/music.lua"].std = STANDARD .. "+Music"
