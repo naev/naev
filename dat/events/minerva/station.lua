@@ -24,11 +24,11 @@ local window = require 'love.window'
 --local love_shaders = require 'love_shaders'
 
 -- NPC Stuff
-gambling_priority = 3
-important_npc_priority = 4
-terminal = minerva.terminal
-blackjack_portrait = "blackjack.png"
-blackjack_image = minerva.chicken.image
+local gambling_priority = 3
+local important_npc_priority = 4
+local terminal = minerva.terminal
+local blackjack_portrait = "blackjack.png"
+local chuckaluck_portrait, chuckaluck_image
 if var.peek("minerva_chuckaluck_change") then
    chuckaluck_portrait = portrait.get() -- Becomes a random NPC
    chuckaluck_image = portrait.getFullPath( chuckaluck_portrait )
@@ -36,15 +36,15 @@ else
    chuckaluck_portrait = minerva.mole.portrait
    chuckaluck_image = minerva.mole.image
 end
-greeter_portrait = portrait.get() -- TODO replace?
+local greeter_portrait = portrait.get() -- TODO replace?
 
 -- Special
-spaticketcost = 100
+local spaticketcost = 100
 
-patron_names = {
+local patron_names = {
    _("Patron"),
 }
-patron_descriptions = {
+local patron_descriptions = {
    _("A gambling patron enjoying their time at the station."),
    _("A tourist looking a bit bewildered at all the noises and shiny lights all over."),
    _("A patron who seems down on their luck."),
@@ -53,7 +53,7 @@ patron_descriptions = {
    _("A patron that looks strangely out of place."),
    _("A patron that fits in perfectly into the gambling station."),
 }
-patron_messages = {
+local patron_messages = {
    _([["This place is totally what I thought it would be. The lights, the sounds, the action! I feel like I'm in Heaven!"]]),
    _([["It's incredible! Who would have thought to make money physical! These Minerva Tokens defy all logic!"]]),
    function ()
@@ -136,7 +136,7 @@ end
 -- Function that handles creating and starting random events that occur at the
 -- bar. This is triggered randomly upon finishing gambling activities.
 --]]
-function random_event()
+local function random_event()
    -- Conditional helpers
    local alter1 = has_event("Minerva Station Altercation 1")
    local alter_helped = (var.peek("minerva_altercation_helped")~=nil)
@@ -289,20 +289,20 @@ WHAT DO YOU WISH TO DO TODAY?"]], minerva.tokens_get()),
          return
       end
 
-      local t = trades[idx]
-      local tokens = t[2][1]
+      local trade = trades[idx]
+      local tokens = trade[2][1]
       if tokens > minerva.tokens_get() then
          -- Not enough money.
          vn.jump( "trade_notenough" )
          return
       end
 
-      tradein_item = t
-      if t[2][2]=="outfit" then
-         local o = outfit.get(t[1])
+      tradein_item = trade
+      if trade[2][2]=="outfit" then
+         local o = outfit.get(trade[1])
          tradein_item.description = o:description()
-      elseif t[2][2]=="ship" then
-         local s = ship.get(t[1])
+      elseif trade[2][2]=="ship" then
+         local s = ship.get(trade[1])
          tradein_item.description = s:description()
       else
          error(_("unknown tradein type"))
