@@ -1368,6 +1368,7 @@ int pilot_outfitLOntoggle( Pilot *pilot, PilotOutfitSlot *po, int on )
 {
    nlua_env env = po->outfit->u.mod.lua_env;
    int ret;
+   pilotoutfit_modified = 0;
 
    /* Set the memory. */
    lua_rawgeti(naevL, LUA_REGISTRYINDEX, po->lua_mem); /* mem */
@@ -1387,7 +1388,7 @@ int pilot_outfitLOntoggle( Pilot *pilot, PilotOutfitSlot *po, int on )
    /* Handle return boolean. */
    ret = lua_toboolean(naevL, -1);
    lua_pop(naevL, 1);
-   return ret;
+   return ret || pilotoutfit_modified; /* Even if the script says it didn't change, it may have been modified. */
 }
 
 /**

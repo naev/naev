@@ -55,10 +55,10 @@ end
 
 function ontoggle( _p, po, on )
    -- Only care about turning on (outfit never has the "on" state)
-   if not on then return end
+   if not on then return false end
 
    -- Not ready yet
-   if mem.timer > 0 then return end
+   if mem.timer > 0 then return false end
 
    -- Start the warmup
    mem.warmup = true
@@ -66,4 +66,5 @@ function ontoggle( _p, po, on )
    po:state("on")
    po:progress(1)
    -- TODO add warm-up sound effect
+   return true
 end

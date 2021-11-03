@@ -4563,9 +4563,7 @@ static int pilotL_followers( lua_State *L )
 static int pilotL_hookClear( lua_State *L )
 {
    NLUA_CHECKRW(L);
-
    Pilot *p = luaL_validpilot(L,1);
    pilot_clearHooks( p );
-
    return 0;
 }

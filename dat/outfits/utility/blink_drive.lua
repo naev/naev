@@ -17,10 +17,10 @@ end
 
 function ontoggle( p, po, on )
    -- Only care about turning on (outfit never has the "on" state)
-   if not on then return end
+   if not on then return false end
 
    -- Not ready yet
-   if mem.timer > 0 then return end
+   if mem.timer > 0 then return false end
 
    -- Blink!
    local dist = jumpdist
@@ -35,4 +35,5 @@ function ontoggle( p, po, on )
    mem.timer = cooldown
    po:state("cooldown")
    po:progress(1)
+   return true
 end
