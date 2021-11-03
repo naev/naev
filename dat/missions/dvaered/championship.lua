@@ -103,7 +103,7 @@ function accept()
       misn.accept()
 
       misn.setTitle(_("The Dvaered Championship"))
-      misn.setReward(_("From 50k to 1.6m credits, depending on your rank"):format(fmt.number(reward)))
+      misn.setReward(_("From 50k to 1.6m credits, depending on your rank"))
       misn.setDesc(_("You are taking part in a fight contest. Try to do your best!"))
       misn.osdCreate(_("The Dvaered Championship"), {
          _("Go to the starting point"),

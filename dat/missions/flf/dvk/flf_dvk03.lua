@@ -54,7 +54,7 @@ function accept ()
       osd_desc[1] = fmt.f( _("Fly to the {sys} system and meet with the group of FLF ships"), {sys=missys} )
       misn.osdCreate( _("Assault on Raelid"), osd_desc )
       misn.setTitle( _("Assault on Raelid") )
-      misn.setDesc( _("Join with the other FLF pilots for the assault on Raelid Outpost."):format( missys:name() ) )
+      misn.setDesc( _("Join with the other FLF pilots for the assault on Raelid Outpost.") )
       marker = misn.markerAdd( missys, "plot" )
       misn.setReward( _("A great victory against the Dvaereds") )
 

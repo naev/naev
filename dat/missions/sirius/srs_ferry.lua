@@ -260,7 +260,7 @@ Accept the mission anyway?]]), {time_limit=(timelimit - time.get()), time=(playe
 
         if picky > 2 then
             -- Demands to be delivered in a Sirian ship
-            tk.msg(_("Transportation details"), _("As you arrive at the hangar, the Sirian looks at your ship and remarks, \"What? This is to be the ship for my pilgrimage? This is unacceptable - such a crude ship must not be allowed to touch the sacred soil of Mutris. I will wait for a pilot who can ferry me in a true Sirian vessel.\""):format( _("As you arrive at the hangar, the Sirian looks at your ship") ))
+            tk.msg(_("Transportation details"), _("As you arrive at the hangar, the Sirian looks at your ship and remarks, \"What? This is to be the ship for my pilgrimage? This is unacceptable - such a crude ship must not be allowed to touch the sacred soil of Mutris. I will wait for a pilot who can ferry me in a true Sirian vessel.\""))
             misn.finish()
         elseif picky > 0 then
             -- Could be persuaded, for a discount

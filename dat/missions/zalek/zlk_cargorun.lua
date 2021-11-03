@@ -54,7 +54,7 @@ function accept ()
       -- mission details
       misn.setTitle( _("Za'lek Shipping Delivery") )
       misn.setReward( _("A handsome payment.") )
-      misn.setDesc( _("You agreed to help a Za'lek scientist pick up some cargo way out in the sticks. Hopefully this'll be worth it."):format(pickupWorld:name(), pickupSys:name(), delivWorld:name(), delivSys:name() ) )
+      misn.setDesc( _("You agreed to help a Za'lek scientist pick up some cargo way out in the sticks. Hopefully this'll be worth it.") )
 
       pickedup = false
       droppedoff = false

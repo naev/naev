@@ -124,7 +124,7 @@ end
 
 function out_sys_failure() --jumping pre-emptively is a bad thing.
    if system.cur() ~= homesys then
-      tk.msg(_("The Patrol"), _([[As you abandon your mission, you receive a message from Draga saying that Nasin has no need for deserters. You hope you made the right decision.]]):format( player.name() ))
+      tk.msg(_("The Patrol"), _([[As you abandon your mission, you receive a message from Draga saying that Nasin has no need for deserters. You hope you made the right decision.]]))
       faction.modPlayerSingle("Nasin",-20)
       misn.finish(false)
    end

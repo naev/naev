@@ -53,7 +53,7 @@ function accept ()
       osd_desc[1] = fmt.f( osd_desc[1], {sys=missys} )
       misn.osdCreate( _("Assault on Haleb"), osd_desc )
       misn.setTitle( _("Assault on Haleb") )
-      misn.setDesc( _("Join with the other FLF pilots for the assault on Raglan Outpost."):format( missys:name() ) )
+      misn.setDesc( _("Join with the other FLF pilots for the assault on Raglan Outpost.") )
       marker = misn.markerAdd( missys, "plot" )
       misn.setReward( _("Another great victory against the Dvaereds") )
 

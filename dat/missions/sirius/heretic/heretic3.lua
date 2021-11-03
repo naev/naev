@@ -158,7 +158,7 @@ function return_to_base()
       misn.finish(false) --mwahahahahaha!
    else
       player.pay(reward)
-      tk.msg(_("The Assault"),_([[As you land, you see the Nasin forces desperately trying to regroup. "Hurry and get your ship ready for another battle," he says, "and meet me at the bar when you're ready! Payment has been transferred into your account. More importantly, we have a dire situation!"]]):format( player.name() ))
+      tk.msg(_("The Assault"),_([[As you land, you see the Nasin forces desperately trying to regroup. "Hurry and get your ship ready for another battle," he says, "and meet me at the bar when you're ready! Payment has been transferred into your account. More importantly, we have a dire situation!"]]))
       misn_tracker = misn_tracker + 1
       faction.modPlayer("Nasin",10)
       var.push("heretic_misn_tracker",misn_tracker)

@@ -83,7 +83,7 @@ function land()
    --The player is landing on the mission planet
    if stage == 0 and planet.cur() == mispla then
       tk.msg(_("The meeting"), _([[As you land, you see a group of people that were waiting for your ship. Smith hails them and tells you to wait in the ship while he goes to a private part of the bar.
-    A few periods later, he comes back and explains that he wasn't able to improve Nexus sales in the Frontier, but he was able to stop House Sirius from entering the picture, at least.]]):format(paysys:name()))
+    A few periods later, he comes back and explains that he wasn't able to improve Nexus sales in the Frontier, but he was able to stop House Sirius from entering the picture, at least.]]))
       stage = 1
       misn.osdActive(2)
       misn.markerRm(marker)

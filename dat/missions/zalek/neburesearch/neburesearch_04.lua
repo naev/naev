@@ -51,7 +51,7 @@ function accept()
     -- Set up mission information
     misn.setTitle(_("Shielding Prototype Funding"))
     misn.setReward(fmt.credits(credits))
-    misn.setDesc(_("Help Dr. Mensing to get funding for constructing a shielding prototype."):format(dest_planet:name(), dest_sys:name()))
+    misn.setDesc(_("Help Dr. Mensing to get funding for constructing a shielding prototype."))
     misn_marker = misn.markerAdd(dest_sys, "low")
 
     misn.accept()
