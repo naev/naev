@@ -20,15 +20,16 @@
 #include "nluadef.h"
 
 /* Music methods. */
-static int musicL_delay( lua_State* L );
-static int musicL_load( lua_State* L );
-static int musicL_play( lua_State* L );
-static int musicL_pause( lua_State* L );
-static int musicL_resume( lua_State* L );
-static int musicL_stop( lua_State* L );
-static int musicL_isPlaying( lua_State* L );
-static int musicL_current( lua_State* L );
-static int musicL_setRepeat( lua_State* L );
+static int musicL_delay( lua_State *L );
+static int musicL_load( lua_State *L );
+static int musicL_play( lua_State *L );
+static int musicL_pause( lua_State *L );
+static int musicL_resume( lua_State *L );
+static int musicL_stop( lua_State *L );
+static int musicL_isPlaying( lua_State *L );
+static int musicL_current( lua_State *L );
+static int musicL_setRepeat( lua_State *L );
+static int musicL_getVolume( lua_State *L );
 static const luaL_Reg music_methods[] = {
    { "delay", musicL_delay },
    { "load", musicL_load },
@@ -39,6 +40,7 @@ static const luaL_Reg music_methods[] = {
    { "isPlaying", musicL_isPlaying },
    { "current", musicL_current },
    { "setRepeat", musicL_setRepeat },
+   { "getVolume", musicL_getVolume },
    {0,0}
 }; /**< Music specific methods. */
 
@@ -76,13 +78,8 @@ int nlua_loadMusic( nlua_env env )
  */
 static int musicL_delay( lua_State* L )
 {
-   const char *situation;
-   double delay;
-
-   /* Get parameters. */
-   situation   = luaL_checkstring(L,1);
-   delay       = luaL_checknumber(L,2);
-
+   const char *situation = luaL_checkstring(L,1);
+   double delay          = luaL_checknumber(L,2);
    /* Delay. */
    music_chooseDelay( situation, delay );
    return 0;
@@ -98,7 +95,6 @@ static int musicL_delay( lua_State* L )
  */
 static int musicL_load( lua_State *L )
 {
-   /* check parameters */
    const char *str = luaL_checkstring(L,1);
    if (music_load( str )) {
       NLUA_ERROR(L,_("Music '%s' invalid or failed to load."), str );
@@ -198,4 +194,16 @@ static int musicL_setRepeat( lua_State* L )
    int b = lua_toboolean(L,1);
    music_repeat( b );
    return 0;
+}
+
+/**
+ * @brief Gets the volume level of the music.
+ *
+ *    @luatreturn number Volume level of the music.
+ * @luafunc getVolume
+ */
+static int musicL_getVolume( lua_State *L )
+{
+   lua_pushnumber(L, music_getVolume() );
+   return 1;
 }
