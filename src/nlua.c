@@ -116,6 +116,13 @@ static int nlua_gettext_noop( lua_State *L )
    return 1;
 }
 
+static int nlua_log2( lua_State *L )
+{
+   double n = luaL_checknumber(L,1);
+   lua_pushnumber(L, log2(n));
+   return 1;
+}
+
 /*
  * @brief Initializes the global Lua state.
  */
@@ -328,7 +335,6 @@ static lua_State *nlua_newState (void)
  */
 static int nlua_loadBasic( lua_State* L )
 {
-   int i;
    const char *override[] = { /* unsafe functions */
          /*"collectgarbage",*/
          "dofile",
@@ -352,7 +358,7 @@ static int nlua_loadBasic( lua_State* L )
    lua_setglobal(L, "unpack");   /* */
 
    /* replace non-safe functions */
-   for (i=0; override[i]!=NULL; i++) {
+   for (int i=0; override[i]!=NULL; i++) {
       lua_pushnil(L);
       lua_setglobal(L, override[i]);
    }
@@ -366,6 +372,12 @@ static int nlua_loadBasic( lua_State* L )
    lua_register(L, "N_", nlua_gettext_noop);
    lua_register(L, "n_", nlua_ngettext);
    luaL_register(L, "gettext", gettext_methods);
+
+   /* Special math functions function. */
+   lua_getglobal(L,"math");
+   lua_pushcfunction(L, nlua_log2);
+   lua_setfield(L,-2,"log2");
+   lua_pop(L,1);
 
    return 0;
 }
@@ -551,9 +563,7 @@ static int nlua_require( lua_State* L )
  */
 int nlua_loadStandard( nlua_env env )
 {
-   int r;
-
-   r = 0;
+   int r = 0;
    r |= nlua_loadNaev(env);
    r |= nlua_loadVar(env);
    r |= nlua_loadPlanet(env);
