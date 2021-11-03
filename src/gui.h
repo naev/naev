@@ -33,7 +33,7 @@ void gui_setTarget (void);
 void gui_setShip (void);
 void gui_setSystem (void);
 void gui_updateFaction (void);
-void gui_setGeneric( Pilot* pilot );
+void gui_setGeneric( const Pilot* pilot );
 
 /*
  * Rendering.
@@ -50,21 +50,6 @@ void gui_clearMessages (void);
 void gui_cooldownEnd (void);
 void gui_messageScrollUp( int lines );
 void gui_messageScrollDown( int lines );
-
-/*
- * Map overlay
- */
-int map_overlay_width (void);
-int map_overlay_height (void);
-int map_overlay_center_x (void);
-int map_overlay_center_y (void);
-double map_overlay_scale_x (void);
-double map_overlay_scale_y (void);
-void gui_setMapOverlayBounds( int top, int right, int bottom, int left );
-int gui_getMapOverlayBoundTop (void);
-int gui_getMapOverlayBoundRight (void);
-int gui_getMapOverlayBoundBottom (void);
-int gui_getMapOverlayBoundLeft (void);
 
 /*
  * Radar.

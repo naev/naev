@@ -1784,7 +1784,7 @@ void gui_updateFaction (void)
  *
  *    @param pilot The pilot to act based upon.
  */
-void gui_setGeneric( Pilot* pilot )
+void gui_setGeneric( const Pilot* pilot )
 {
    if (gui_env == LUA_NOREF)
       return;
