@@ -611,7 +611,6 @@ static int player_autonavBrake (void)
 int player_autonavShouldResetSpeed (void)
 {
    double shield, armour;
-   int i;
    Pilot *const*pstk;
    int hostiles, will_reset;
    double hdist2, d2;
@@ -619,6 +618,12 @@ int player_autonavShouldResetSpeed (void)
 
    if (!player_isFlag(PLAYER_AUTONAV))
       return 0;
+
+   /* Stop on lockons. */
+   if (player.p->lockons>0) {
+      player_autonavResetSpeed();
+      return 1;
+   }
 
    reset_dist     = conf.autonav_reset_dist;
    reset_shield   = conf.autonav_reset_shield;
@@ -630,7 +635,7 @@ int player_autonavShouldResetSpeed (void)
    armour = player.p->armour / player.p->armour_max;
 
    pstk = pilot_getAll();
-   for (i=0; i<array_size(pstk); i++) {
+   for (int i=0; i<array_size(pstk); i++) {
       if ((pstk[i]->id != PLAYER_ID ) && pilot_isHostile( pstk[i] )
             && pilot_inRangePilot( player.p, pstk[i], &d2 )==1
             && !pilot_isDisabled( pstk[i] )) {
