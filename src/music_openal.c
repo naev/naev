@@ -1,7 +1,6 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
 /** @cond */
 #include <math.h>
 #include <vorbis/vorbisfile.h>
@@ -19,12 +18,10 @@
 #include "music.h"
 #include "sound_openal.h"
 
-
 /**
  * @brief Default pre-amp in dB.
  */
 #define RG_PREAMP_DB       0.0
-
 
 /* Lock for all state/cond operations. */
 #define musicLock()        SDL_mutexP(music_state_lock)
@@ -33,7 +30,6 @@
 /* Lock for all vorbisfile operations. */
 #define musicVorbisLock()  SDL_mutexP(music_vorbis_lock)
 #define musicVorbisUnlock() SDL_mutexV(music_vorbis_lock)
-
 
 typedef enum music_cmd_e {
    MUSIC_CMD_NONE,
@@ -45,7 +41,6 @@ typedef enum music_cmd_e {
    MUSIC_CMD_FADEOUT
 } music_cmd_t;
 
-
 typedef enum music_state_e {
    MUSIC_STATE_DEAD,
    MUSIC_STATE_STARTUP,
@@ -56,7 +51,6 @@ typedef enum music_state_e {
    MUSIC_STATE_PAUSED,
 } music_state_t;
 
-
 static SDL_Thread *music_player = NULL; /**< Music player thread. */
 
 /*
@@ -64,7 +58,6 @@ static SDL_Thread *music_player = NULL; /**< Music player thread. */
  */
 static const int music_bufSize      = SOUND_BUFFER_SIZE*1024; /**< Size of music playing buffer. */
 static char *music_buf              = NULL; /**< Music playing buffer. */
-
 
 /*
  * Locks.
@@ -75,7 +68,6 @@ static SDL_mutex *music_state_lock  = NULL; /**< Lock for music state. */
 static music_cmd_t   music_command  = MUSIC_CMD_NONE; /**< Target music state. */
 static music_state_t music_state    = MUSIC_STATE_DEAD; /**< Current music state. */
 static int music_forced             = 0; /**< Whether or not music is force stopped. */
-
 
 /*
  * saves the music to ram in this structure
@@ -90,7 +82,6 @@ typedef struct alMusic_ {
    ALfloat rg_max_scale; /**< Maximum scale factor before clipping. */
 } alMusic;
 
-
 typedef struct MusicData_s {
    music_state_t state;
    int active; /* active buffer */
@@ -102,7 +93,6 @@ typedef struct MusicData_s {
    uint32_t fade, fade_timer;
 } MusicData;
 
-
 /*
  * song currently playing
  */
@@ -110,13 +100,11 @@ static alMusic music_vorbis; /**< Current music. */
 static ALuint music_buffer[2]; /**< Front and back buffer. */
 static ALuint music_source = 0; /**< Source associated to music. */
 
-
 /*
  * volume
  */
 static ALfloat music_vol     = 1.; /**< Current volume level (logarithmic). */
 static ALfloat music_vol_lin = 1.; /**< Current volume level (linear). */
-
 
 /*
  * prototypes
@@ -125,7 +113,6 @@ static void rg_filter( float **pcm, long channels, long samples, void *filter_pa
 static void music_kill (void);
 static int music_thread( void* unused );
 static int stream_loadBuffer( ALuint buffer );
-
 
 /*
  * Internal stuff.
@@ -261,7 +248,6 @@ static int mal_pause( MusicData *m )
    }
    return 0;
 }
-
 
 /**
  * @brief The music thread.
@@ -426,7 +412,6 @@ static int music_thread( void* unused )
    return 0;
 }
 
-
 /**
  * @brief This is the filter function for the decoded Ogg Vorbis stream.
  *
@@ -437,17 +422,15 @@ static int music_thread( void* unused )
  */
 static void rg_filter( float **pcm, long channels, long samples, void *filter_param )
 {
-   int i, j;
-   float cur_sample;
    alMusic *param       = filter_param;
    float scale_factor   = param->rg_scale_factor;
    float max_scale      = param->rg_max_scale;
 
    /* Apply the gain, and any limiting necessary */
    if (scale_factor > max_scale) {
-      for (i = 0; i < channels; i++)
-         for (j = 0; j < samples; j++) {
-            cur_sample = pcm[i][j] * scale_factor;
+      for (int i=0; i < channels; i++)
+         for (int j=0; j < samples; j++) {
+            float cur_sample = pcm[i][j] * scale_factor;
             /*
              * This is essentially the scaled hard-limiting algorithm
              * It looks like the soft-knee to me
@@ -461,11 +444,10 @@ static void rg_filter( float **pcm, long channels, long samples, void *filter_pa
          }
    }
    else if (scale_factor > 0.0)
-      for (i = 0; i < channels; i++)
-         for (j = 0; j < samples; j++)
+      for (int i=0; i < channels; i++)
+         for (int j=0; j < samples; j++)
             pcm[i][j] *= scale_factor;
 }
-
 
 /**
  * @brief Loads a buffer.
@@ -474,7 +456,7 @@ static void rg_filter( float **pcm, long channels, long samples, void *filter_pa
  */
 static int stream_loadBuffer( ALuint buffer )
 {
-   int ret, size, section, result;
+   int ret, size;
 
    musicVorbisLock();
 
@@ -487,7 +469,8 @@ static int stream_loadBuffer( ALuint buffer )
    ret  = 0;
    size = 0;
    while (size < music_bufSize) { /* file up the entire data buffer */
-      result = ov_read_filter(
+      int section;
+      int result = ov_read_filter(
             &music_vorbis.stream,   /* stream */
             &music_buf[size],       /* data */
             music_bufSize - size,   /* amount to read */
@@ -534,7 +517,6 @@ static int stream_loadBuffer( ALuint buffer )
 
    return ret;
 }
-
 
 /**
  * @brief Initializes the OpenAL music subsystem.
@@ -616,7 +598,6 @@ void music_al_exit (void)
    SDL_DestroyCond( music_state_cond );
 }
 
-
 /**
  * @brief Internal music loading routines.
  */
@@ -668,7 +649,6 @@ int music_al_load( const char* name, SDL_RWops *rw )
    return 0;
 }
 
-
 /**
  * @brief Frees the music.
  */
@@ -687,15 +667,12 @@ void music_al_free (void)
    musicUnlock();
 
    musicVorbisLock();
-
    if (music_vorbis.rw != NULL) {
       ov_clear( &music_vorbis.stream );
       music_vorbis.rw = NULL; /* somewhat officially ended */
    }
-
    musicVorbisUnlock();
 }
-
 
 /**
  * @brief Sets the volume.
@@ -724,7 +701,6 @@ int music_al_volume( double vol )
    return 0;
 }
 
-
 /**
  * @brief Gets the volume (linear).
  */
@@ -733,7 +709,6 @@ double music_al_getVolume (void)
    return music_vol_lin;
 }
 
-
 /**
  * @brief Gets the volume (logarithmic).
  */
@@ -741,7 +716,6 @@ double music_al_getVolumeLog(void)
 {
    return music_vol;
 }
-
 
 /**
  * @brief Tells the music thread to play.
@@ -756,7 +730,6 @@ void music_al_play (void)
    musicUnlock();
 }
 
-
 /**
  * @brief Tells the music thread to stop playing.
  */
@@ -769,7 +742,6 @@ void music_al_stop (void)
 
    musicUnlock();
 }
-
 
 /**
  * @brief Tells the music thread to pause.
@@ -784,7 +756,6 @@ void music_al_pause (void)
    musicUnlock();
 }
 
-
 /**
  * @brief Tells the music thread to resume.
  */
@@ -798,17 +769,15 @@ void music_al_resume (void)
    musicUnlock();
 }
 
-
 /**
  * @brief Tells the music to seek to a position.
  */
 void music_al_setPos( double sec )
 {
-   int ret;
+   int ret = 0;
 
    musicVorbisLock();
 
-   ret = 0;
    if (music_vorbis.rw != NULL)
       ret = ov_time_seek( &music_vorbis.stream, sec );
 
@@ -818,14 +787,12 @@ void music_al_setPos( double sec )
       WARN(_("Unable to seek Vorbis file."));
 }
 
-
 /**
  * @brief Checks to see if the music is playing.
  */
 int music_al_isPlaying (void)
 {
    int ret;
-
    musicLock();
 
    if ((music_state == MUSIC_STATE_PLAYING) ||
@@ -840,7 +807,6 @@ int music_al_isPlaying (void)
 
    return ret;
 }
-
 
 /**
  * @brief Tells the music thread to die.
