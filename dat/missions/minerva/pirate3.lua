@@ -28,7 +28,7 @@ local vn = require 'vn'
 local love_shaders = require "love_shaders"
 local fmt = require "format"
 
-reward_amount = 200e3 -- 200k
+reward_amount = minerva.rewards.pirate3
 
 harper_image = portrait.getFullPath( portrait.get() ) -- TODO replace?
 local harper_bribe_big = 1e6

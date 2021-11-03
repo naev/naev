@@ -43,20 +43,20 @@ local vn = require 'vn'
 local love_shaders = require 'love_shaders'
 local fmt = require "format"
 
-maikki_portrait = minerva.maikki.portrait
-maikki_image = minerva.maikki.image
-maikki_colour = minerva.maikki.colour
+local maikki_portrait = minerva.maikki.portrait
+local maikki_image = minerva.maikki.image
+local maikki_colour = minerva.maikki.colour
 
-oldman_portrait = "old_man.png"
-oldman_image = "old_man.png"
+local oldman_portrait = "old_man.png"
+local oldman_image = "old_man.png"
 
-scav_portrait = "scavenger1.png"
-scavengera_image = "scavenger1.png"
-scavengerb_image = scavengera_image
-scavengera_portrait = "scavenger1.png"
-scavengerb_portrait = scavengera_portrait
-scavengera_colour = nil
-scavengerb_colour = nil
+local scav_portrait = "scavenger1.png"
+local scavengera_image = "scavenger1.png"
+local scavengerb_image = scavengera_image
+local scavengera_portrait = "scavenger1.png"
+local scavengerb_portrait = scavengera_portrait
+local scavengera_colour = nil
+local scavengerb_colour = nil
 
 mainsys = "Limbo"
 searchsys = "Doeston"

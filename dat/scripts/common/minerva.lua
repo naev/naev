@@ -104,6 +104,22 @@ local minerva = {
       conflict    = "snd/sounds/songs/run-for-your-life-00.ogg",
       news        = "snd/sounds/songs/news.ogg",
    },
+
+   rewards = {
+      maikki1 = nil, -- Chase scavengers and the works
+      maikki2 = nil, -- Find Dr. Strangelove, gets paid in tokens (500 ~= 1M creds)
+      kex1 = 150e3, -- Capture cargo from ship (or kill)
+      kex2 = 200e3, -- Steal from baroness eve
+      kex3 = 400e3, -- Major malik - VR deathmatch
+      kex4 = 700e3, -- Kill Jie (kestrel)
+      kex5 = 700e3, -- Bounty hunters + Dr. Strangelove's death
+      pirate1 = 300e3, -- Harass Dvaered thugs
+      pirate2 = 200e3, -- Destroy drones
+      pirate3 = 200e3, -- Get ticket from harper
+      pirate4 = 350e3, -- Defend torture ship destroying Dvaered Goddard!!
+      pirate5 = 500e3, -- Za'lek hacking station
+      pirate6 = 800e3, -- Rash Dvaered Warlord attacks
+   },
 }
 
 -- Helpers to create main characters

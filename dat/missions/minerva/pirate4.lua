@@ -26,12 +26,12 @@ local vn = require 'vn'
 local love_shaders = require "love_shaders"
 local fmt = require "format"
 
-reward_amount = 350e3
+reward_amount = minerva.rewards.pirate4
 
 mainsys     = "Fried"
 dvaeredsys  = "Limbo"
 piratesys   = "Effetey"
-shippos     = vec2.new( 4000, 0 ) -- asteroid field center
+local shippos     = vec2.new( 4000, 0 ) -- asteroid field center
 -- Mission states:
 --  nil: mission not accepted yet
 --    0. have to find spy

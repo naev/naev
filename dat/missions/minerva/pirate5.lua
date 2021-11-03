@@ -32,7 +32,7 @@ local vn = require 'vn'
 local equipopt = require 'equipopt'
 local fmt = require "format"
 
-reward_amount = 500e3
+reward_amount = minerva.rewards.pirate5
 
 mainsys = "Gammacron"
 -- Mission states:

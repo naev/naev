@@ -24,7 +24,7 @@ local minerva = require "common.minerva"
 local vn = require 'vn'
 local fmt = require "format"
 
-reward_amount = 200e3 -- 200k
+reward_amount = minerva.rewards.pirate2
 
 mainsys = "Limbo"
 jumpinsys = "Pultatis"

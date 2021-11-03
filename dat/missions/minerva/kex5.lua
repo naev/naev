@@ -44,9 +44,9 @@ misn_state = nil
 targetplanet = "Strangelove Lab"
 targetsys = "Westhaven" --planet.get(targetplanet):system():nameRaw()
 
-eccdiff = "strangelove"
+local eccdiff = "strangelove"
 
-money_reward = 700e3
+money_reward = minerva.rewards.kex5
 
 function create ()
    if not misn.claim( system.get(targetsys) ) then

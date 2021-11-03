@@ -37,7 +37,7 @@ misn_state = nil
 targetplanet = "Niflheim"
 targetsys = planet.get(targetplanet):system():nameRaw()
 
-money_reward = 200e3
+money_reward = minerva.rewards.kex2
 
 function create ()
    if not misn.claim( system.get(targetsys) ) then
