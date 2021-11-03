@@ -446,7 +446,7 @@ function wave_compute_score ()
    score = math.max( 0, score * bonus / 100 )
 
    total_score = total_score + score
-   table.insert( str, string.format("TOTAL %d (#g+%d#0)", total_score, score ) )
+   table.insert( str, string.format(_("TOTAL %d (#g+%d#0)"), total_score, score ) )
    return str, score
 end
 function wave_end_msg( d )
