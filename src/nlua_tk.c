@@ -592,6 +592,7 @@ static void cust_render( double x, double y, double w, double h, void* data )
 static int cust_event( unsigned int wid, SDL_Event *event, void* data )
 {
    (void) wid;
+   double x, y;
    custom_functions_t *cf = (custom_functions_t*) data;
    if (cf->done)
       return 0;
@@ -599,11 +600,17 @@ static int cust_event( unsigned int wid, SDL_Event *event, void* data )
    /* Handle all the events. */
    switch (event->type) {
       case SDL_MOUSEBUTTONDOWN:
-         return cust_mouse( 1, event->button.button, event->button.x, event->button.y, cf );
+         x = gl_screen.x * gl_screen.mxscale;
+         y = gl_screen.y * gl_screen.myscale;
+         return cust_mouse( 1, event->button.button, event->button.x+x, event->button.y+y, cf );
       case SDL_MOUSEBUTTONUP:
-         return cust_mouse( 2, event->button.button, event->button.x, event->button.y, cf );
+         x = gl_screen.x * gl_screen.mxscale;
+         y = gl_screen.y * gl_screen.myscale;
+         return cust_mouse( 2, event->button.button, event->button.x+x, event->button.y+y, cf );
       case SDL_MOUSEMOTION:
-         return cust_mouse( 3, -1, event->button.x, event->button.y, cf );
+         x = gl_screen.x * gl_screen.mxscale;
+         y = gl_screen.y * gl_screen.myscale;
+         return cust_mouse( 3, -1, event->button.x+x, event->button.y+y, cf );
 
       case SDL_KEYDOWN:
          return cust_key( event->key.keysym.sym, event->key.keysym.mod, 1, cf );
