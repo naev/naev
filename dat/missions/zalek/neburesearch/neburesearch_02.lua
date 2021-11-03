@@ -79,7 +79,7 @@ function land()
             tk.msg(_("Mission accomplished"), fmt.f(_([["That took long enough! I can't await getting started. I doubt you deserve full payment. I'll rather give you a reduced payment of {credits} for educational reasons." She hands you over a credit chip.]]), {credits=fmt.credits(credits / 2)} .. "\n\n" .. request_text))
             player.pay(credits / 2)
         else
-            tk.msg(_("Mission accomplished"), _([["Finally! I can't await getting started. Before I forget -" She hands you over a credit chip worth {credits}.]]):format(fmt.credits(credits)) .. "\n\n" .. request_text)
+            tk.msg(_("Mission accomplished"), fmt.f(_([["Finally! I can't await getting started. Before I forget -" She hands you over a credit chip worth {credits}.]]), {credits=fmt.credits(credits)}) .. "\n\n" .. request_text)
             player.pay(credits)
         end
         misn.markerRm(misn_marker)
