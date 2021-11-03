@@ -85,6 +85,7 @@ end
 
 function lmusic.update( dt )
    local remove = {}
+   local mvol = naev.music.getVolume()
    for k,m in pairs(lmusic._sources) do
       if m.state=="fadein" then
          m.progress = m.progress + dt / m.p.fadein
@@ -94,7 +95,7 @@ function lmusic.update( dt )
             m.progress = 0
             v = m.p.volume
          end
-         m.source:setVolume( v )
+         m.source:setVolume( v * mvol, true )
       elseif m.state=="fadeout" then
          m.progress = m.progress + dt / m.p.fadeout
          local v = (1-m.progress) * m.p.volume
@@ -102,7 +103,7 @@ function lmusic.update( dt )
             m.source:stop()
             m.state = "stop"
          else
-            m.source:setVolume( v )
+            m.source:setVolume( v * mvol, true )
          end
       end
 

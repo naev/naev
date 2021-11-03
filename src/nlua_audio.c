@@ -521,18 +521,24 @@ static int audioL_tell( lua_State *L )
  *
  *    @luatparam Audio source Source to set volume of.
  *    @luatparam number vol Volume to set the source to.
+ *    @luatparam boolean ignorevol Don't modify volume based on master.
  * @luafunc setVolume
  */
 static int audioL_setVolume( lua_State *L )
 {
    LuaAudio_t *la = luaL_checkaudio(L,1);
-   double volume = CLAMP( 0.0, 1.0,  luaL_checknumber(L,2) );
-   double master = sound_getVolumeLog();
+   double volume = CLAMP( 0.0, 1.0, luaL_checknumber(L,2) );
+   int ignorevol = lua_toboolean(L,3);
    if (sound_disabled)
       return 0;
 
    soundLock();
-   alSourcef( la->source, AL_GAIN, master * volume );
+   if (ignorevol)
+      alSourcef( la->source, AL_GAIN, volume );
+   else {
+      double master = sound_getVolumeLog();
+      alSourcef( la->source, AL_GAIN, master * volume );
+   }
    al_checkErr();
    soundUnlock();
    return 0;
