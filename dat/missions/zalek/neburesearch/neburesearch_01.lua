@@ -37,12 +37,31 @@ osd_msg[1] = _("Escort the transport ship to {pnt} in the {sys} system.")
 osd_msg[2] = _("Land on {pnt} in the {sys} system.")
 osd_msg[3] = _("Fly back to {pnt} in the {sys} system.")
 
+local station = planet.get("PSO Monitor")
+local homeworld = planet.get("Bastion Station")
+local t_sys = {
+    system.get("Ksher"),
+    system.get("Sultan"),
+    system.get("Faust"),
+    system.get("PSO"),
+    system.get("Amaroq"),
+    system.get("Ksher"),
+    system.get("Daravon"),
+    system.get("Pultatis"),
+}
+local t_planet = {
+    [1] = planet.get("Qoman"),
+    [5] = station,
+    [6] = planet.get("Qoman"),
+    [7] = planet.get("Vilati Vilata"),
+    [8] = homeworld,
+}
+
+local credits = 800e3
+
 function create()
-    station = "PSO Monitor"
-    homeworld = "Bastion Station"
     ambush = false
     stage = 0
-    credits = 800e3
 
     -- Spaceport bar stuff
     misn.setNPC(_("A scientist"), "zalek/unique/mensing.webp", _("You see a scientist who is apparently looking for someone."))
@@ -58,30 +77,15 @@ function accept()
     exited = false
     firstTakeOff = true
     origin = planet.cur()
-    t_sys = {}
-    t_sys[1] = system.get("Ksher")
-    t_sys[2] = system.get("Sultan")
-    t_sys[3] = system.get("Faust")
-    t_sys[4] = system.get("PSO")
-    t_sys[5] = system.get("Amaroq")
-    t_sys[6] = system.get("Ksher")
-    t_sys[7] = system.get("Daravon")
-    t_sys[8] = system.get("Pultatis")
-    t_planet = {}
-    t_planet[1] = planet.get("Qoman")
-    t_planet[5] = planet.get(station)
-    t_planet[6] = t_planet[1]
-    t_planet[7] = planet.get("Vilati Vilata")
-    t_planet[8] = planet.get(homeworld)
 
     tk.msg(_("Bar"), fmt.f(_([["While the data recorded by Robert is of good quality he seems to have completely forgotten that we need reference data of similarly dense nebulae. We have already installed his sensors on a transport ship. The nearby PSO nebula should be a good candidate but there are the pirate systems in between. Also the target systems are controled by the Dvaered. Hard to say whether the Dvaered or the pirates are more dangerous. So this is why we need an escort.
-    We will travel through {sys2}, {sys3}, and {sys4}. Just passing through the systems should be sufficient. Also, I want to visit the {station} station before returning back to {pnt}. You have to make sure no one shoots us down during our expedition."]]), {sys2=t_sys[2], sys3=t_sys[3], sys4=t_sys[4], station=_(station), pnt=_(homeworld)}))
+    We will travel through {sys2}, {sys3}, and {sys4}. Just passing through the systems should be sufficient. Also, I want to visit the {station} station before returning back to {pnt}. You have to make sure no one shoots us down during our expedition."]]), {sys2=t_sys[2], sys3=t_sys[3], sys4=t_sys[4], station=station, pnt=homeworld}))
 
     -- Set up mission information
     destsys = t_sys[1]
     misn.setTitle(_("Advanced Nebula Research"))
     misn.setReward(fmt.credits(credits))
-    misn.setDesc(fmt.f(_("Escort the transport ship to the {station} in the {sys} system. Make sure to stay close to the transport ship and wait until they jumped out of the system safely."), {station=_(station), sys=t_sys[5]}))
+    misn.setDesc(fmt.f(_("Escort the transport ship to the {station} in the {sys} system. Make sure to stay close to the transport ship and wait until they jumped out of the system safely."), {station=station, sys=t_sys[5]}))
     nextsys = lmisn.getNextSystem(system.cur(), destsys) -- This variable holds the system the player is supposed to jump to NEXT.
 
     misn.accept()
@@ -160,12 +164,12 @@ function land()
     if not exited then
         tk.msg(_("You abandoned your mission!"), _("You have landed, abandoning your mission to escort the transport ship. You failed science miserably!"))
         misn.finish(false)
-    elseif planet.cur() == planet.get(station) and not station_visited then
+    elseif planet.cur() == station and not station_visited then
         tk.msg(_("A short break"), fmt.f(_([[Once you are done with the refuel operations, you meet Dr. Mensing on her way back to the transport ship.
     "I just met up with another 'scientist' working on this station. The purpose of this station is to collect data about the PSO nebula, but their scans are absolute garbage. Apparently the station is being run by an independent university. They couldn't possible keep up with the Za'lek standards in terms of proper scientific methods."
-    She is visibly upset about the apparent lack of dedication to science. "Let's head back to {pnt}. Our own measurements are completed by now."]]), {pnt=_(homeworld)}))
+    She is visibly upset about the apparent lack of dedication to science. "Let's head back to {pnt}. Our own measurements are completed by now."]]), {pnt=homeworld}))
         station_visited = true
-    elseif planet.cur() == planet.get(homeworld) then
+    elseif planet.cur() == homeworld then
         tk.msg(_("Mission accomplished"), fmt.f(_([[After leaving the ship you meet up with Dr. Mensing who hands you over a chip worth {credits} and thanks you for your help.
     "We'll be able to return to Jorla safely from here on. You did science a great favor today. I'm sure the data we collected will help us to understand the cause for the Sol nebula's volatility."]]), {credits=fmt.credits(credits)}))
         player.pay(credits)
@@ -176,21 +180,6 @@ function land()
 end
 
 function continueToDest(pilot)
-    t_sys = {}
-    t_sys[1] = system.get("Ksher")
-    t_sys[2] = system.get("Sultan")
-    t_sys[3] = system.get("Faust")
-    t_sys[4] = system.get("PSO")
-    t_sys[5] = system.get("Amaroq")
-    t_sys[6] = system.get("Ksher")
-    t_sys[7] = system.get("Daravon")
-    t_sys[8] = system.get("Pultatis")
-    t_planet = {}
-    t_planet[1] = planet.get("Qoman")
-    t_planet[5] = planet.get(station)
-    t_planet[6] = t_planet[1]
-    t_planet[7] = planet.get("Vilati Vilata")
-    t_planet[8] = planet.get(homeworld)
     if pilot ~= nil and pilot:exists() then
         pilot:control(true)
         pilot:setNoJump(false)
