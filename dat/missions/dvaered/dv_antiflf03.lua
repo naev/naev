@@ -265,8 +265,7 @@ function spawnDV()
     -- Treat player as one more
     hook.pilot( player.pilot(), "attacked", "attacked" )
 
-    local i = 1
-    while i <= 4 do
+    for i = 1, 4 do
         vigilance = pilot.add( "Dvaered Vigilance", "Dvaered", fleetpos[i + 1], nil, {ai="dvaered_norun"} )
         vigilance:setDir(90)
         vigilance:setFriendly()
@@ -274,11 +273,9 @@ function spawnDV()
         vigilance:setVisplayer(true)
         hook.pilot(vigilance, "attacked", "attacked")
         fleetDV[#fleetDV + 1] = vigilance
-        i = i + 1
     end
 
-    local i = 1
-    while i <= 6 do
+    for i = 1, 6 do
         vendetta = pilot.add( "Dvaered Vendetta", "Dvaered", fighterpos[i], nil, {ai="dvaered_norun"} )
         vendetta:setDir(90)
         vendetta:setFriendly()
@@ -286,7 +283,6 @@ function spawnDV()
         vendetta:control()
         hook.pilot(vendetta, "attacked", "attacked")
         fightersDV[#fightersDV + 1] = vendetta
-        i = i + 1
     end
 end
 
