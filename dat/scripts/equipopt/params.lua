@@ -202,9 +202,10 @@ function params.battleship( overwrite )
       t_absorb    = 0.80,
       t_speed     = 70,
       t_track     = 25e3,
-      t_range     = 3e3,
+      t_range     = 2.5e3,
       duration    = 40,
-      launcher    = 0.5,
+      launcher    = 0.25,
+      mismatch    = 0.25,
    }, overwrite )
 end
 
@@ -216,6 +217,7 @@ function params.carrier( overwrite )
       t_range     = 5e3,
       fighterbay  = 1.5,
       duration    = 50,
+      mismatch    = 0.25,
    }, overwrite )
 end
 
