@@ -77,14 +77,14 @@ function enter()
         local courseangle = math.atan2(cy, cx) -- Angle of the course in polar coordinates
 
         -- Generate new angles deviating off the courseangle
-        local angle2 = courseangle + (rnd.rnd() - 0.5) * 2 * spread * 2 * math.pi / 360
-        local angle1 = courseangle + (rnd.rnd() - 0.5) * 2 * spread * 2 * math.pi / 360
+        local angle2 = courseangle + (rnd.rnd() - 0.5) * 2 * spread
+        local angle1 = courseangle + (rnd.rnd() - 0.5) * 2 * spread
 
         -- Set FLF base waypoints
         -- Base is at -8700,-3000
         -- Waypoints deviate off the course by at most spread degrees
-        waypoint2 = jumppos + vec2.new(dist / 3 * math.cos(angle2), dist / 3 * math.sin(angle2))
-        waypoint1 = jumppos + course * 1 / 3 + vec2.new(dist / 3 * math.cos(angle1), dist / 3 * math.sin(angle1))
+        waypoint2 = jumppos + vec2.newP(dist / 3, angle2)
+        waypoint1 = jumppos + course * 1 / 3 + vec2.newP(dist / 3, angle1)
         waypoint0 = basepos -- The base will not be spawned until the player is close to this waypoint.
 
         pilot.toggleSpawn(false)

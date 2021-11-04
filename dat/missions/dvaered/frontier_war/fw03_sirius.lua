@@ -518,8 +518,8 @@ function strafer_choosePoint()
    escort[1]:control()
    escort[1]:taskClear()
    local sysrad = rnd.rnd() * system.cur():radius()
-   local angle = rnd.rnd() * 2 * math.pi
-   escort[1]:moveto( vec2.new(math.cos(angle) * sysrad, math.sin(angle) * sysrad), false, false )
+   local angle = rnd.rnd() * 360
+   escort[1]:moveto( vec2.newP(sysrad, angle), false, false )
 end
 
 function increment_baddie()

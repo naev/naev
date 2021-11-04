@@ -145,8 +145,8 @@ function idle()
     if p:exists() then
         local location = p:pos()
         local dist = 750
-        local angle = rnd.rnd() * 2 * math.pi
-        local newlocation = vec2.new(dist * math.cos(angle), dist * math.sin(angle)) -- New location is 750px away in a random direction
+        local angle = rnd.rnd() * 360
+        local newlocation = vec2.newP(dist, angle) -- New location is 750px away in a random direction
         p:taskClear()
         p:moveto(location + newlocation, false, false)
         hook.timer(5.0, "idle")

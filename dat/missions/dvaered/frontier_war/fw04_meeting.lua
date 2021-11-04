@@ -387,7 +387,7 @@ end
 function imDoingNothing( self )
    local rad = rnd.rnd() * 1000 + 1000
    local ang = rnd.rnd() * 2 * math.pi
-   self:moveto( targpos + vec2.new(math.cos(ang) * rad, math.sin(ang) * rad) )
+   self:moveto( targpos + vec2.newP(rad, ang) )
 end
 
 -- A controlled ship is too close from station

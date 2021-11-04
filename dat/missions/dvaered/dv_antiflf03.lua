@@ -122,8 +122,8 @@ function enter()
         stage = 0
         standoff = 5000 -- The distance between the DV fleet and the base
         safestandoff = 2000 -- This is the distance from the base where DV ships will turn back
-        stepsize = math.pi / 10 -- The amount of points on the circle for the circular patrol
-        angle = math.pi * 1.5 - stepsize
+        stepsize = 180 / 10 -- The amount of points on the circle for the circular patrol
+        angle = 180 * 1.5 - stepsize
 
         spawnbase()
         spawnDV()
@@ -580,8 +580,8 @@ function idle()
 end
 
 function updatepos()
-    angle = (angle + stepsize) % (2 * math.pi)
-    fleetpos[1] = basepos + vec2.new(math.cos(angle) * standoff, math.sin(angle) * standoff)
+    angle = (angle + stepsize) % 360
+    fleetpos[1] = basepos + vec2.newP(standoff, angle)
     fleetpos[2] = fleetpos[1] + vec2.new(110, 0)
     fleetpos[3] = fleetpos[1] + vec2.new(-110, 0)
     fleetpos[4] = fleetpos[1] + vec2.new(0, -120)

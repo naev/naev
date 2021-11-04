@@ -132,9 +132,9 @@ function enter ()
       local fenemy = shark.pirateFaction()
 
       -- Choose a random point in the system for him to stay around
-      sysrad = rnd.rnd() * system.cur():radius()
-      angle = rnd.rnd() * 360
-      pos = vec2.newP(sysrad, angle)
+      local sysrad = rnd.rnd() * system.cur():radius()
+      local angle = rnd.rnd() * 360
+      local pos = vec2.newP(sysrad, angle)
 
       baddie = pilot.add( "Gawain", fenemy, nil, gawname, {ai="dummy"} )
       baddie:setHostile()
