@@ -70,6 +70,43 @@ function accept()
    hook.jumpin("sys_enter")
 end
 
+-- general functions
+
+-- get nearest jumppoint
+local function get_nearest_jump(pil)
+   local jpts = system.cur():jumps()
+   -- basically the distance that the map can have at
+   local dist = 2*system.cur():radius()
+   local index = 0
+   for i,jpt in ipairs(jpts) do
+      local dist1 = vec2.dist(jpt:pos(),pil:pos())
+      if dist1 < dist then
+         dist = dist1
+         index = i
+      end
+   end
+   return jpts[index]
+end
+--- create enemy ships
+local function spawn_baddies(sp)
+   -- light drones
+   local scom = {}
+   -- has eventually to be trimmed
+   -- disabling some ships since this way it is really hard to win the mission
+   scom[1] = pilot.add("Za'lek Light Drone", "Mercenary", sp )
+   scom[2] = pilot.add("Za'lek Light Drone", "Mercenary", sp )
+   scom[3] = pilot.add("Za'lek Heavy Drone", "Mercenary", sp )
+   scom[4] = pilot.add("Za'lek Heavy Drone", "Mercenary", sp )
+--   scom[5] = pilot.add("Za'lek Heavy Drone", "Mercenary", sp )
+--   scom[6] = pilot.add("Za'lek Light Drone", "Mercenary", sp )
+--   scom[7] = pilot.add("Za'lek Light Drone", "Mercenary", sp )
+   for i=1,#scom do
+     scom[i]:setHostile(false)
+   end
+
+   return scom
+end
+
 function sys_enter ()
    -- Check to see if reaching target system
    if system.cur() == t_sys[1] and not captured then
@@ -104,10 +141,7 @@ function game_of_drones ()
    idlehook = hook.pilot(t_drone, "idle", "targetIdle")
    misn.osdActive(2)
    -- wait for the drone to be hailed
-   dist = 200
    sp = t_pla[1]
-   -- + vec2.new(dist*math.cos(math.pi*2*rnd.rnd()),dist*math.sin(2*math.pi*rnd.rnd()))
-   --pilot.toggleSpawn(true)
    hailhook = hook.pilot(t_drone,"hail","got_hailed",t_drone,badguys)
 end
 
@@ -298,9 +332,9 @@ function dead_drone ()
       badguys[1]:control()
       t_drone:control()
       badguys[2]:control()
-      jpt = get_nearest_jump(badguys[1])
-      jpt2 = jpt
-      jpts = system.cur():jumps()
+      local jpt = get_nearest_jump(badguys[1])
+      local jpt2 = jpt
+      local jpts = system.cur():jumps()
       for i,j_pt in ipairs(jpts) do
          if j_pt ~= jpt2 then
             jpt2 = j_pt
@@ -318,8 +352,6 @@ function dead_drone ()
    end
 end
 
--- general functions
-
 -- keep drone moving
 function targetIdle()
    if t_drone:exists() then
@@ -329,40 +361,4 @@ function targetIdle()
       t_drone:moveto(t_drone:pos() + vec2.new( 400, -400), false)
       idlehook = hook.timer(5.0, "targetIdle")
    end
-end
-
--- get nearest jumppoint
-
-function get_nearest_jump(pil)
-   jpts = system.cur():jumps()
-   -- basically the distance that the map can have at
-   dist = 2*system.cur():radius()
-   index = 0
-   for i,jpt in ipairs(jpts) do
-      dist1 = vec2.dist(jpt:pos(),pil:pos())
-      if dist1 < dist then
-         dist = dist1
-         index = i
-      end
-   end
-   return jpts[index]
-end
---- create enemy ships
-function spawn_baddies(sp)
-   -- light drones
-   local scom = {}
-   -- has eventually to be trimmed
-   -- disabling some ships since this way it is really hard to win the mission
-   scom[1] = pilot.add("Za'lek Light Drone", "Mercenary", sp )
-   scom[2] = pilot.add("Za'lek Light Drone", "Mercenary", sp )
-   scom[3] = pilot.add("Za'lek Heavy Drone", "Mercenary", sp )
-   scom[4] = pilot.add("Za'lek Heavy Drone", "Mercenary", sp )
---   scom[5] = pilot.add("Za'lek Heavy Drone", "Mercenary", sp )
---   scom[6] = pilot.add("Za'lek Light Drone", "Mercenary", sp )
---   scom[7] = pilot.add("Za'lek Light Drone", "Mercenary", sp )
-   for i=1,#scom do
-     scom[i]:setHostile(false)
-   end
-
-   return scom
 end

@@ -93,6 +93,22 @@ function accept ()
    hook.jumpin("sys_enter")
 end
 
+-- gets the nearest jumppoint from a pilot
+local function get_nearest_jump(pilot)
+   local jpts = system.cur():jumps()
+   -- basically the distance that the map can have at
+   local dist = 2*system.cur():radius()
+   local index = 0
+   for i,jpt in ipairs(jpts) do
+      local dist1 = vec2.dist(jpt:pos(),pilot:pos())
+      if dist1 < dist then
+         dist = dist1
+         index = i
+      end
+   end
+   return jpts[index]
+end
+
 
 -- Entering a system
 -- checking if it is right system, updating OSD, if right system: create ship and wait for hail
@@ -262,19 +278,4 @@ function spawn_baddies(sp)
       badguys[i]:setEnergy(100)
    end
    return badguys
-end
--- gets the nearest jumppoint from a pilot
-function get_nearest_jump(pilot)
-   local jpts = system.cur():jumps()
-   -- basically the distance that the map can have at
-   local dist = 2*system.cur():radius()
-   local index = 0
-   for i,jpt in ipairs(jpts) do
-      local dist1 = vec2.dist(jpt:pos(),pilot:pos())
-      if dist1 < dist then
-         dist = dist1
-         index = i
-      end
-   end
-   return jpts[index]
 end
