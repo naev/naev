@@ -30,6 +30,21 @@ local dvaered_holo = "dvaered_thug1.png"
 local dvaered_image = "dvaered_thug1.png"
 local dvaered_colour = {1, 0.7, 0.3}
 
+-- Messages
+local dv_msgs = {
+   _("*incoherent expletives*"),
+   _("Disgusting Za'lek scum!"),
+   _("Your head will make a fine trophy on my ships!"),
+   _("I shall wash my hull in your blood!"),
+   _("Za'lek trash!"),
+}
+local zl_msgs = {
+   _("My defense protocols will make short work of you!"),
+   _("I'll teach you physics Dvaered punk!"),
+   _("My ship's hull is less thick than your Dvaered skull!"),
+   _("You Dvaereds smell worse than my vials of thiol!"),
+}
+
 function create ()
    if not evt.claim( system.get("Limbo") ) then evt.finish( false ) end
 
@@ -94,20 +109,6 @@ function takeoff ()
    hook.pilot( zl, "attacked", "zl_attacked" )
    hook.pilot( dv, "attacked", "dv_attacked" )
 
-   -- Messages
-   dv_msgs = {
-      _("*incoherent expletives*"),
-      _("Disgusting Za'lek scum!"),
-      _("Your head will make a fine trophy on my ships!"),
-      _("I shall wash my hull in your blood!"),
-      _("Za'lek trash!"),
-   }
-   zl_msgs = {
-      _("My defense protocols will make short work of you!"),
-      _("I'll teach you physics Dvaered punk!"),
-      _("My ship's hull is less thick than your Dvaered skull!"),
-      _("You Dvaereds smell worse than my vials of thiol!"),
-   }
    zl_yelling = (rnd.rnd()<0.5)
    timetonextanger = 1.0
    angrytimer = hook.timer( timetonextanger, "angrypeople" )
@@ -127,7 +128,7 @@ function startattack ()
    end
 end
 
-function cycle_messages( msgs, id )
+local function cycle_messages( msgs, id )
    id = id or rnd.rnd(1,#msgs)-1
    id = (id+1) % #msgs
    return id+1
