@@ -61,7 +61,7 @@ local lmisn = require "lmisn"
 --]]
 misn_state = nil
 
-reward_amount = 60e3
+local reward_amount = 60e3
 
 local function has_disable( o )
    local _dmg, dis = o:weapstats()

@@ -173,7 +173,7 @@ function format.f( str, tab )
       local key, fmt = block:match("{(.*):(.*)}")
       key = key or block:match("{(.*)}")
       key = tonumber(key) or key  -- Support {1} for printing the first member of the table, etc.
-      val = tab[key]
+      local val = tab[key]
       if val==nil then
          warn(string.format(_("fmt.f: string '%s' has '%s'==nil!"), str, key))
       end
