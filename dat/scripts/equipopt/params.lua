@@ -138,9 +138,9 @@ end
 
 function params.medium_bomber( overwrite )
    return _merge_tables( params.default{
-      t_absorb    = 0.30,
+      t_absorb    = 0.50,
       t_speed     = 200,
-      t_track     = 15e3,
+      t_track     = 20e3,
       t_range     = 5e3,
       duration    = 30,
       seeker      = 1.5,
@@ -152,11 +152,11 @@ end
 
 function params.heavy_bomber( overwrite )
    return _merge_tables( params.default{
-      t_absorb    = 0.60,
+      t_absorb    = 0.80,
       t_speed     = 50,
-      t_track     = 20e3,
-      t_range     = 5e3,
-      duration    = 40,
+      t_track     = 30e3,
+      t_range     = 6e3,
+      duration    = 50,
       seeker      = 1.5,
       type_range  = {
          ["Launcher"] = { max=3 },

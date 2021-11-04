@@ -176,7 +176,7 @@ function optimize.goodness_default( o, p )
          weap = weap * p.beam
       elseif o.typebroad == "Launcher" then
          -- Must be able to outrun target
-         local smod = math.min( 1, 0.4*(o.spec.speed_max / p.t_speed) )
+         local smod = math.min( 1, 0.33*(o.spec.speed_max / p.t_speed) )
          weap = weap * p.launcher * smod
       elseif o.typebroad == "Fighter Bay" then
          weap = weap * p.fighterbay
