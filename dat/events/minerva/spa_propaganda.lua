@@ -20,8 +20,6 @@
 local minerva = require 'common.minerva'
 local vn = require 'vn'
 
-terminal = minerva.terminal
-
 function create()
    vn.clear()
    vn.scene()
