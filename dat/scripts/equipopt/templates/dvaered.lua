@@ -95,6 +95,7 @@ local function equip_dvaered( p, opt_params )
    -- Choose parameters and make Dvaeredish
    local params = eparams.choose( p, dvaered_params_overwrite )
    params.max_mass = 0.95 + 0.2*rnd.rnd()
+   params.turret = 0.75 -- They like forwards
    -- Per ship tweaks
    local sp = dvaered_params[ sname ]
    if sp then
