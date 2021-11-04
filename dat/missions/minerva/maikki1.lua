@@ -646,7 +646,7 @@ function stealthheartbeat ()
          pscavB:broadcast( _("There's definately something there! Scram!") )
          for k,p in ipairs{pscavA, pscavB} do
             p:taskClear()
-            p:hyperspace( tscenesys )
+            p:hyperspace( cutscenesys )
          end
          player.msg( _("#rYou have been detected! Stealth failed!") )
          return
