@@ -77,7 +77,7 @@ function accept ()
    -- Set mission details
    misn.setTitle( _("The Lost Brother") )
    misn.setReward( _("Some money and a happy sister.") )
-   local desc = fmt.f(_("Locate the brother in the {0} system, the {1} system, or the {2} system"), targetsys)
+   local desc = fmt.f(_("Locate the brother in the {1} system, the {2} system, or the {3} system"), targetsys)
    misn.setDesc( desc )
    misn.osdCreate(_("The Lost Brother"), {
 	   desc,

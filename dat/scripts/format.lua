@@ -154,21 +154,15 @@ function format.list( words )
    return result
 end
 
-local function loads( code, name, env )
-   local fn, err = loadstring(code, name)
-   if fn then
-      setfenv(fn, env)
-      return fn
-   end
-   return nil, err
-end
 --[[--
-String interpolation, inspired by <a href="https://github.com/hishamhm/f-strings">f-strings</a> without debug stuff.
+String interpolation, inspired by <a href="https://github.com/hishamhm/f-strings">f-strings</a> but closer to Python's str.format().
 
    Prefer this over string.format because it allows translations to change the word order.
    It also lets you use objects in the formatting (if they support tostring()), whereas string.format can only do this under LuaJIT.
 
    @usage fmt.f(_("Deliver the loot to {pnt} in the {sys} system"),{pnt=returnpnt, sys=returnsys})
+   @usage fmt.f(_("As easy as {1}, {2}, {3}"), {"one", "two", "three"})
+   @usage fmt.f(_("A few digits of pi: {1:.2f}"), {math.pi})
 
    @tparam string str Format string which may include placeholders of the form "{var}" "{var:6.3f}"
                       (where the expression after the colon is any directive string.format understands).
@@ -176,18 +170,14 @@ String interpolation, inspired by <a href="https://github.com/hishamhm/f-strings
 --]]
 function format.f( str, tab )
    return (str:gsub("%b{}", function(block)
-      local code, fmt = block:match("{(.*):(.*)}")
-      code = code or block:match("{(.*)}")
-      local fn, err = loads("return "..code, string.format(_("format expression `%s`"),code), tab)
-      if fn then
-         fn = fn()
-         if fn==nil then
-            warn(string.format(_("fmt.f: string '%s' has '%s'==nil!"),str,code))
-         end
-         return fmt and string.format('%'..fmt, fn) or tostring(fn)
-      else
-         error(err, 0)
+      local key, fmt = block:match("{(.*):(.*)}")
+      key = key or block:match("{(.*)}")
+      key = tonumber(key) or key  -- Support {1} for printing the first member of the table, etc.
+      val = tab[key]
+      if val==nil then
+         warn(string.format(_("fmt.f: string '%s' has '%s'==nil!"), str, key))
       end
+      return fmt and string.format('%'..fmt, val) or tostring(val)
    end))
 end
 

@@ -56145,7 +56145,7 @@ msgstr ""
 #: dat/missions/neutral/kidnapped/traffic_01.lua:80
 #, fuzzy
 #| msgid "Jumped from the {1} system to the {2} system"
-msgid "Locate the brother in the {0} system, the {1} system, or the {2} system"
+msgid "Locate the brother in the {1} system, the {2} system, or the {3} system"
 msgstr "{1}星系から{2}星系へジャンプした。"
 
 #: dat/missions/neutral/kidnapped/traffic_01.lua:84
