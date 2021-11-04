@@ -37,13 +37,9 @@ local fmt = require "format"
 --  5: return to Kex
 misn_state = nil
 
-targetplanet = "Trincea"
-targetsys = planet.get(targetplanet):system():nameRaw()
-
-lastplanet = "Totoran"
-lastsys = planet.get(lastplanet):system():nameRaw()
-
-gauntletsys = system.get("Crimson Gauntlet")
+local targetplanet, targetsys = planet.getS("Trincea")
+local lastplanet, lastsys = planet.getS("Totoran")
+local gauntletsys = system.get("Crimson Gauntlet")
 
 local malik_portrait = "major_malik.webp"
 local malik_image = "major_malik.webp"
@@ -51,12 +47,12 @@ local malik_image = "major_malik.webp"
 local money_reward = minerva.rewards.kex3
 
 function create ()
-   if not misn.claim( {system.get(targetsys), system.get(lastsys)} ) then
+   if not misn.claim( {targetsys, lastsys} ) then
       misn.finish( false )
    end
    misn.setReward( _("A step closer to Kex's freedom") )
    misn.setTitle( _("Freeing Kex") )
-   misn.setDesc( fmt.f(_("You have been assigned with obtaining information from Major Malik at {pnt} in the {sys} system."), {pnt=_(targetplanet), sys=_(targetsys)}))
+   misn.setDesc( fmt.f(_("You have been assigned with obtaining information from Major Malik at {pnt} in the {sys} system."), {pnt=targetplanet, sys=targetsys}))
 
    misn.setNPC( minerva.kex.name, minerva.kex.portrait, minerva.kex.description )
 end
@@ -74,9 +70,9 @@ function accept ()
    minerva.log.kex(_("You have agreed to help Kex obtain information from Major Malik.") )
 
    misn.osdCreate( _("Freeing Kex"),
-      { fmt.f(_("Go to {pnt} in the {sys} system to find Major Malik"), {pnt=_(targetplanet), sys=_(targetsys)} ),
+      { fmt.f(_("Go to {pnt} in the {sys} system to find Major Malik"), {pnt=targetplanet, sys=targetsys} ),
       _("Return to Kex at Minerva Station") } )
-   misn_marker = misn.markerAdd( planet.get(targetplanet) )
+   misn_marker = misn.markerAdd( targetplanet )
 
    hook.land("generate_npc")
    hook.load("generate_npc")
@@ -90,27 +86,27 @@ function generate_npc ()
    if planet.cur() == planet.get("Minerva Station") then
       misn.npcAdd( "approach_kex", minerva.kex.name, minerva.kex.portrait, minerva.kex.description )
 
-   elseif misn_state==0 and planet.cur() == planet.get(targetplanet) then
+   elseif misn_state==0 and planet.cur() == targetplanet then
       vn.clear()
       vn.scene()
       vn.transition()
       vn.na(_("You land and promptly proceed to try to find Major Malik and get the job over with. After glossing over the map of the installations, you are able to quickly locate their office and head down there."))
       vn.sfxBingo()
-      vn.na(fmt.f(_("You arrive and inquire about Major Malik, but are told he is apparently enjoying some leisure time at {pnt} in the {sys} system. Looks like you have no choice but to try to look for them there."), {pnt=_(lastplanet), sys=_(lastsys)}))
+      vn.na(fmt.f(_("You arrive and inquire about Major Malik, but are told he is apparently enjoying some leisure time at {pnt} in the {sys} system. Looks like you have no choice but to try to look for them there."), {pnt=lastplanet, sys=lastsys}))
       vn.run()
 
       -- Advance the state
       misn_state = 1
-      misn.markerMove( misn_marker, planet.get(lastplanet) )
+      misn.markerMove( misn_marker, lastplanet )
       misn.osdCreate( _("Freeing Kex"),
-         { fmt.f(_("Look for Major Malik at {pnt} in the {sys} system"), {pnt=_(lastplanet), sys=_(lastsys)} ),
+         { fmt.f(_("Look for Major Malik at {pnt} in the {sys} system"), {pnt=lastplanet, sys=lastsys} ),
          _("Return to Kex at Minerva Station") } )
 
-   elseif (misn_state==2 or misn_state==3) and planet.cur() == planet.get(lastplanet) then
+   elseif (misn_state==2 or misn_state==3) and planet.cur() == lastplanet then
       misn_state = 3
       misn.npcAdd( "approach_malik", _("Major Malik"), malik_portrait, _("You see Major Malik who is fairly similar to the image shown to you by Kex.") )
 
-   elseif misn_state==4 and planet.cur() == planet.get(lastplanet) then
+   elseif misn_state==4 and planet.cur() == lastplanet then
       vn.clear()
       vn.scene()
       vn.transition()
@@ -175,7 +171,7 @@ He seems satisfied at his pun.]]))
       vn.done()
 
       vn.label("accept")
-      kex(fmt.f(_([["This time I'm hoping it's a cinch. Major Malik should be at {pnt} in the {sys} system. They should be fairly old, so it should be enough to just outright confront him and get him to talk. I'll give you a note that if you show him should be easy enough to convince him. I'll also send you a picture of him so you can easily recognize him when you see him."]]), {pnt=_(targetplanet), sys=_(targetsys)}))
+      kex(fmt.f(_([["This time I'm hoping it's a cinch. Major Malik should be at {pnt} in the {sys} system. They should be fairly old, so it should be enough to just outright confront him and get him to talk. I'll give you a note that if you show him should be easy enough to convince him. I'll also send you a picture of him so you can easily recognize him when you see him."]]), {pnt=targetplanet, sys=targetsys}))
       kex(_([["The note? It's just your run-of-the-mill blackmail. We don't really care about Major Malik himself, what we want is dirt on the CEO. Hopefully they'll be sensible and give us what we want. However, I trust you will do what it takes in case they don't."
 He winks his cyborg eye at you.]]))
       vn.func( function ()
@@ -199,9 +195,9 @@ He winks his cyborg eye at you.]]))
    vn.label("job")
    if not misn_state or misn_state < 1 then
       kex(_([["The job is pretty straightforward. We need Major Malik to talk about his dealings with the Minerva CEO. If you hand him the letter I gave you it should be enough to convince him."]]))
-      kex(fmt.f(_([["You should be able to find him at {pnt} in the {sys} system. I don't think he should give much trouble."]]), {pnt=_(targetplanet), sys=_(targetsys)}))
+      kex(fmt.f(_([["You should be able to find him at {pnt} in the {sys} system. I don't think he should give much trouble."]]), {pnt=targetplanet, sys=targetsys}))
    else
-      kex(fmt.f(_([["Oh, so Major Malik wasn't at {targetplanet}? That is really weird. Let's hope you can find him at {pnt} in the {sys} system."]]), {targetplanet=_(targetplanet), pnt=_(lastplanet), sys=_(lastsys)}))
+      kex(fmt.f(_([["Oh, so Major Malik wasn't at {targetplanet}? That is really weird. Let's hope you can find him at {pnt} in the {sys} system."]]), {targetplanet=targetplanet, pnt=lastplanet, sys=lastsys}))
    end
    vn.jump("menu_msg")
 
@@ -267,16 +263,16 @@ function enter ()
       end
    end
 
-   if misn_state==1 and system.cur() == system.get(targetsys) then
+   if misn_state==1 and system.cur() == targetsys then
       -- Spawn thugs after the player. Player should likely be going to Dvaer
       spawn_thugs( vec2.new( 15000, 15000 ), true )
       -- Move to next state
       misn_state = 2
       -- Timer
       hook.timer( 5, "thug_heartbeat" )
-   elseif misn_state==2 and system.cur() == system.get(lastsys) then
+   elseif misn_state==2 and system.cur() == lastsys then
       -- Spawn thugs from Totoran
-      spawn_thugs(planet.get(lastplanet):pos(), false )
+      spawn_thugs(lastplanet:pos(), false )
       -- Timer
       hook.timer( 5, "thug_heartbeat" )
    end
@@ -338,8 +334,6 @@ DUEL TO THE DEATH MODE ENABLED.#0]]))
    end
 end
 
-gauntletsys = system.get("Crimson Gauntlet")
-
 function gauntlet_start ()
    hook.safe("enter_the_ring")
    player.takeoff()
@@ -364,17 +358,16 @@ function enter_the_ring ()
    if player.isLanded() then return end
 
    -- Teleport the player to the Crimson Gauntlet and hide the rest of the universe
-   local sys = gauntletsys
    for k,s in ipairs(system.getAll()) do
       s:setHidden(true)
    end
-   sys:setHidden(false)
+   gauntletsys:setHidden(false)
 
    -- Set up player stuff
    player.pilot():setPos( vec2.new( 0, 0 ) )
    -- Disable escorts if they exist
    var.push("hired_escorts_disabled",true)
-   player.teleport(sys)
+   player.teleport(gauntletsys)
    var.pop("hired_escorts_disabled")
 
    -- Clean up
@@ -413,8 +406,7 @@ function leave_the_ring ()
    -- Give the player back their old ship
    player.swapShip( player_prevship, true, true )
    -- Fix the map up
-   local sys = gauntletsys
-   sys:setKnown(false)
+   gauntletsys:setKnown(false)
    for k,s in ipairs(system.getAll()) do
       s:setHidden(false)
    end

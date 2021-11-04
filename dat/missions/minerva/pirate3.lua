@@ -28,9 +28,9 @@ local vn = require 'vn'
 local love_shaders = require "love_shaders"
 local fmt = require "format"
 
-reward_amount = minerva.rewards.pirate3
+local reward_amount = minerva.rewards.pirate3
 
-harper_image = portrait.getFullPath( portrait.get() ) -- TODO replace?
+local harper_image = portrait.getFullPath( portrait.get() ) -- TODO replace?
 local harper_bribe_big = 1e6
 local harper_bribe_sml = 1e5
 local harper_bribe_tkn = 1000
@@ -38,7 +38,7 @@ local harper_bribe_tkn = 1000
 local spa_portrait = minerva.terminal.portrait
 local spa_description = _("Present your winning ticket at the terminal to enter the Minerva Station Spa.")
 
-mainsys = "Limbo"
+local mainsys = system.get("Limbo")
 -- Mission states:
 --  nil: mission not accepted yet
 --    0: try to find out how to plant listening device
@@ -53,7 +53,7 @@ mainsys = "Limbo"
 misn_state = nil
 
 function create ()
-   if not misn.claim( system.get(mainsys) ) then
+   if not misn.claim( mainsys ) then
       misn.finish( false )
    end
    misn.setNPC( minerva.pirate.name, minerva.pirate.portrait, minerva.pirate.description )

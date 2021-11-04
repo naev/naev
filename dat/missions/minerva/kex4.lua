@@ -37,8 +37,7 @@ local fmt = require "format"
 --  2: return to kex
 misn_state = nil
 
-targetplanet = "Jorlan"
-targetsys = planet.get(targetplanet):system():nameRaw()
+local targetplanet, targetsys = planet.getS("Jorlan")
 
 -- TODO custom graphic?
 jie_portrait = portrait.get()
@@ -47,12 +46,12 @@ jie_image = portrait.getFullPath(jie_portrait)
 local money_reward = minerva.rewards.kex4
 
 function create ()
-   if not misn.claim( system.get(targetsys) ) then
+   if not misn.claim( targetsys ) then
       misn.finish( false )
    end
    misn.setReward( _("A step closer to Kex's freedom") )
    misn.setTitle( _("Freeing Kex") )
-   misn.setDesc( fmt.f(_("You have been assigned with obtaining information from Jie de Luca at {pnt} in the {sys} system."), {pnt=_(targetplanet), sys=_(targetsys)}) )
+   misn.setDesc( fmt.f(_("You have been assigned with obtaining information from Jie de Luca at {pnt} in the {sys} system."), {pnt=targetplanet, sys=targetsys}) )
 
    misn.setNPC( minerva.kex.name, minerva.kex.portrait, minerva.kex.description )
 end
@@ -69,9 +68,9 @@ function accept ()
    minerva.log.kex(_("You have agreed to help Kex obtain information from Jie de Luca.") )
 
    misn.osdCreate( _("Freeing Kex"),
-      { fmt.f(_("Go to {pnt} in the {sys} system to find Jie de Luca"), {pnt=_(targetplanet), sys=_(targetsys)} ),
+      { fmt.f(_("Go to {pnt} in the {sys} system to find Jie de Luca"), {pnt=targetplanet, sys=targetsys} ),
       _("Return to Kex at Minerva Station") } )
-   misn_marker = misn.markerAdd( planet.get(targetplanet) )
+   misn_marker = misn.markerAdd( targetplanet )
 
    hook.land("generate_npc")
    hook.load("load_game")
@@ -96,7 +95,7 @@ function generate_npc ()
    if planet.cur() == planet.get("Minerva Station") then
       misn.npcAdd( "approach_kex", minerva.kex.name, minerva.kex.portrait, minerva.kex.description )
 
-   elseif misn_state==0 and planet.cur() == planet.get(targetplanet) then
+   elseif misn_state==0 and planet.cur() == targetplanet then
       misn.npcAdd( "approach_jie", _("Jie de Luca"), jie_portrait, _("You see an individual matching the description of Jie de Luca.") )
 
    end
@@ -172,7 +171,7 @@ His eyes don't seem to have changed.]]))
       vn.done()
 
       vn.label("accept")
-      kex(fmt.f(_([["Thanks. Jie de Luca should be located at {pnt} in the {sys} system. I don't really know the relationship they have with the CEO, but unlike Baroness Eve or Major Malik, Jie isn't that important of a figure so you probably shouldn't have much of an issue dealing with them."]]), {pnt=_(targetplanet), sys=_(targetsys)}))
+      kex(fmt.f(_([["Thanks. Jie de Luca should be located at {pnt} in the {sys} system. I don't really know the relationship they have with the CEO, but unlike Baroness Eve or Major Malik, Jie isn't that important of a figure so you probably shouldn't have much of an issue dealing with them."]]), {pnt=targetplanet, sys=targetsys}))
       kex(_([["There shouldn't be much trouble, but I do think that we may have caused too much of a commotion, and I wouldn't be surprised if the CEO was starting to have suspicions. Make sure to be careful out there."]]))
       vn.func( function ()
          misn_state = 0
@@ -193,7 +192,7 @@ His eyes don't seem to have changed.]]))
    end )
 
    vn.label("job")
-   kex(fmt.f(_([["Jie de Luca should be located at {pnt} in the {sys} system. I don't really know the relationship they have with the CEO, but unlike Baroness Eve or Major Malik, Jie isn't that important of a figure so you probably shouldn't have much of an issue dealing with them."]]), {pnt=_(targetplanet), sys=_(targetsys)}))
+   kex(fmt.f(_([["Jie de Luca should be located at {pnt} in the {sys} system. I don't really know the relationship they have with the CEO, but unlike Baroness Eve or Major Malik, Jie isn't that important of a figure so you probably shouldn't have much of an issue dealing with them."]]), {pnt=targetplanet, sys=targetsys}))
    kex(_([["There shouldn't be much trouble, but I do think that we may have caused too much of a commotion, and I wouldn't be surprised if the CEO was starting to have suspicions. Make sure to be careful out there."]]))
    vn.jump("menu_msg")
 
@@ -269,7 +268,7 @@ end
 local function choose_one( t ) return t[ rnd.rnd(1,#t) ] end
 
 function enter ()
-   if misn_state==1 and system.cur() ~= system.get(targetsys) then
+   if misn_state==1 and system.cur() ~= targetsys then
       player.msg(_("#rMISSION FAILED! You were supposed to take care of Jie!"))
       misn.finish(false)
    end
@@ -312,10 +311,10 @@ function enter ()
    end
 
    thug_chance = thug_chance or 0.2
-   if misn_state==0 and system.cur() == system.get(targetsys) and player.pos():dist( planet.get(targetplanet):pos() ) > 1000 then
+   if misn_state==0 and system.cur() == targetsys and player.pos():dist( targetplanet:pos() ) > 1000 then
       thug_chance = thug_chance / 0.8
       -- Spawn thugs around planet
-      spawn_thugs( planet.get(targetplanet):pos(), false )
+      spawn_thugs( targetplanet:pos(), false )
       hook.timer( 5, "thug_heartbeat" )
 
    elseif misn_state~=1 and rnd.rnd() < thug_chance then
@@ -332,7 +331,7 @@ function enter ()
       pilot.clear()
       pilot.toggleSpawn(false)
 
-      local pos = planet.get(targetplanet):pos() + vec2.new( 3000, rnd.rnd()*360 )
+      local pos = targetplanet:pos() + vec2.new( 3000, rnd.rnd()*360 )
       jie = pilot.add("Kestrel", "Independent", pos, _("Jie de Luca"), {naked=true, ai="baddie_norun"})
       equipopt.generic( jie, nil, "elite" )
       jie:setHostile(true)

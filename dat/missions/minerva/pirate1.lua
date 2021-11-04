@@ -26,10 +26,10 @@ local vn = require 'vn'
 local fmt = require "format"
 
 local time_needed = 15 -- in seconds
-reward_amount = minerva.rewards.pirate1
+local reward_amount = minerva.rewards.pirate1
 
-mainsys = "Limbo"
-runawaysys = "Pultatis"
+local mainsys = system.get("Limbo")
+local runawaysys = system.get("Pultatis")
 -- Mission states:
 --  nil: mission not accepted yet
 --    0: Go pick up Drone
@@ -41,7 +41,7 @@ misn_state = nil
 
 
 function create ()
-   if not misn.claim( system.get(mainsys) ) then
+   if not misn.claim( mainsys ) then
       misn.finish( false )
    end
    misn.setNPC( minerva.pirate.name, minerva.pirate.portrait, minerva.pirate.description )
@@ -79,7 +79,7 @@ function accept ()
    pir(_([["Sounds naïve, yes? Might be so, I've managed to get a Za'lek drone shell, all it has is the engine and some basic following software, but no weapons nor gear. If you were to drag it along while harassing the thugs, they probably would think that there is some kind  of Za'lek involvement. They're not the smartest fellows in the world if you catch my drift."]]))
    pir(_([["To make sure they are all riled up, I want you to spend 15 seconds harassing them near their original location. Make sure to harass them, but don't kill them! We want them to tell the other Dvaereds about this. Once the time is up, get the hell away from there, in one piece if possible."]]))
    pir(fmt.f(_([["I've sent you the coordinates of both the Za'lek drone and the Dvaered thugs. I'll pay you well if you manage to pull this off. Oh and one thing, when getting away, make sure to jump to the {sys} system to make it look even more like the Za'lek did it,"
-They beam a smile at you.]]), {sys=_(runawaysys)}))
+They beam a smile at you.]]), {sys=runawaysys}))
    vn.run()
 
    -- If not accepted, misn_state will still be nil
@@ -93,7 +93,7 @@ They beam a smile at you.]]), {sys=_(runawaysys)}))
    misn.osdCreate( _("Thug Decoy"),
          {_("Get the drone to follow you"),
           _("Harass the thugs"),
-          fmt.f(_("Jump to {sys}"), {sys=_(runawaysys)}),
+          fmt.f(_("Jump to {sys}"), {sys=runawaysys}),
           _("Go back to Minerva Station") } )
    misn.osdActive(1)
 
@@ -136,17 +136,17 @@ function enter ()
    end
 
    if misn_state==3 then
-      if system.cur()==system.get(runawaysys) then
+      if system.cur()==runawaysys then
          misn_state=4
          misn.osdActive(4)
          misn.markerMove( misnmarker, planet.get("Minerva Station") )
       else
-         player.msg(fmt.f(_("#rMISSION FAILED! You were supposed to jump to the {sys} system!"), {sys=_(runawaysys)}))
+         player.msg(fmt.f(_("#rMISSION FAILED! You were supposed to jump to the {sys} system!"), {sys=runawaysys}))
          misn.finish(false)
       end
    end
 
-   if system.cur()==system.get(mainsys) and misn_state==0 then
+   if system.cur()==mainsys and misn_state==0 then
       pilot.clear()
       pilot.toggleSpawn(false)
       thugpos = vec2.new( 6000, -4000 )

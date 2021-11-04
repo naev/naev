@@ -24,10 +24,10 @@ local minerva = require "common.minerva"
 local vn = require 'vn'
 local fmt = require "format"
 
-reward_amount = minerva.rewards.pirate2
+local reward_amount = minerva.rewards.pirate2
 
-mainsys = "Limbo"
-jumpinsys = "Pultatis"
+local mainsys = system.get("Limbo")
+local jumpinsys = system.get("Pultatis")
 -- Mission states:
 --  nil: mission not accepted yet
 --    0: Go kill drone
@@ -36,7 +36,7 @@ misn_state = nil
 
 
 function create ()
-   if not misn.claim( system.get(mainsys) ) then
+   if not misn.claim( mainsys ) then
       misn.finish( false )
    end
    misn.setNPC( minerva.pirate.name, minerva.pirate.portrait, minerva.pirate.description )
@@ -167,7 +167,7 @@ end
 
 
 function enter ()
-   if misn_state==0 and system.cur()==system.get(mainsys) then
+   if misn_state==0 and system.cur()==mainsys then
       weap_ok, badweaps = dvaered_weapons( player.pilot() )
       if not weap_ok then
          -- TODO: use fmt.list()? Does this work outside LuaJIT? Does it translate?
@@ -242,7 +242,7 @@ function reinforcements_jumpin ()
       "Za'lek Demon",
    }
    for k,s in ipairs(ships) do
-      local p = pilot.add( s, fzalek, system.get(jumpinsys) )
+      local p = pilot.add( s, fzalek, jumpinsys )
       if drone2:exists() then
          p:setLeader( drone2 )
       end

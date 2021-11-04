@@ -26,11 +26,11 @@ local vn = require 'vn'
 local love_shaders = require "love_shaders"
 local fmt = require "format"
 
-reward_amount = minerva.rewards.pirate4
+local reward_amount = minerva.rewards.pirate4
 
-mainsys     = "Fried"
-dvaeredsys  = "Limbo"
-piratesys   = "Effetey"
+local mainsys     = system.get("Fried")
+local dvaeredsys  = system.get("Limbo")
+local piratesys   = system.get("Effetey")
 local shippos     = vec2.new( 4000, 0 ) -- asteroid field center
 -- Mission states:
 --  nil: mission not accepted yet
@@ -40,7 +40,7 @@ local shippos     = vec2.new( 4000, 0 ) -- asteroid field center
 misn_state = nil
 
 function create ()
-   if not misn.claim( system.get(mainsys) ) then
+   if not misn.claim( mainsys ) then
       misn.finish( false )
    end
    misn.setNPC( minerva.pirate.name, minerva.pirate.portrait, minerva.pirate.description )
@@ -153,7 +153,7 @@ They make a cutting gesture from their belly up to their neck.
    vn.scene()
    local pir = vn.newCharacter( minerva.vn_pirate() )
    vn.transition()
-   pir(fmt.f(_([["Great job! It seems like you found our mole. However, our job is not done here. We have to get all the information we can out of him. This is not something we can do here at Minerva Station. Here, take him on your ship and bring him to the {sys} system. There should be a ship waiting for him in the middle of the asteroid field, it might be a bit hard to spot at first."]]), {sys=_(mainsys)}))
+   pir(fmt.f(_([["Great job! It seems like you found our mole. However, our job is not done here. We have to get all the information we can out of him. This is not something we can do here at Minerva Station. Here, take him on your ship and bring him to the {sys} system. There should be a ship waiting for him in the middle of the asteroid field, it might be a bit hard to spot at first."]]), {sys=mainsys}))
    pir(_([["I'll be waiting on the ship with my crew. Make sure to bring him over, however, watch out for any Dvaered patrols. We don't want them to know we have taken him. We're not expecting much trouble, but bring a strong ship just in case."]]))
    vn.run()
 
@@ -169,9 +169,9 @@ They make a cutting gesture from their belly up to their neck.
    -- On to next state
    misn_state = 1
    misn.osdCreate( _("Minerva Mole"), {
-      fmt.f(_("Take the mole to the interrogation facility at {sys}"), {sys=_(mainsys)}),
+      fmt.f(_("Take the mole to the interrogation facility at {sys}"), {sys=mainsys}),
    } )
-   misn.markerMove( misnmarker, system.get(mainsys) )
+   misn.markerMove( misnmarker, mainsys )
    misn.npcRm( npc_pir )
 end
 
@@ -183,7 +183,7 @@ function enter ()
       misn.finish(false)
    end
 
-   if misn_state==1 and system.cur()==system.get(mainsys) then
+   if misn_state==1 and system.cur()==mainsys then
       -- Clear system
       -- TODO maybe don't clear everything, leave some dvaered and stuff around as an obstacle
       pilot.clear()
@@ -253,7 +253,7 @@ They rush off into the depths of the ship.]]))
    -- Dvaered jump in hooks
    spawned_dvaereds = {}
    spawned_pirates = {}
-   player.msg(fmt.f(_("Sensors detecting Dvaered patrol incoming from {sys}!"), {sys=_(dvaeredsys)}))
+   player.msg(fmt.f(_("Sensors detecting Dvaered patrol incoming from {sys}!"), {sys=dvaeredsys}))
    hook.timer(  5.0, "msg1" )
    hook.timer( 10.0, "dv_reinforcement1" )
    hook.timer( 100.0, "dv_reinforcement1" )
@@ -298,9 +298,8 @@ function pir_reinforcements ()
    mainship:comm(_("Reinforcements are coming!"))
 
    -- Reinforcement spawners
-   local jmp = system.get(piratesys)
    local function addpir( shipname, leader )
-      local p = pilot.add( shipname, "Wild Ones", jmp, nil, {ai="guard"} )
+      local p = pilot.add( shipname, "Wild Ones", piratesys, nil, {ai="guard"} )
       p:setFriendly(true)
       p:setLeader(leader)
       local mem = p:memory()
@@ -343,11 +342,10 @@ end
 
 local function spawn_dvaereds( ships )
    local plts = {}
-   local jmp = system.get(dvaeredsys)
    for k,v in ipairs(ships) do
       -- We exploit the 'guard' AI to get the Dvaered to go ontop of the
       -- interrogation ship and destroy it
-      local p = pilot.add( v, "Dvaered", jmp, nil, {ai="guard"} )
+      local p = pilot.add( v, "Dvaered", dvaeredsys, nil, {ai="guard"} )
       p:setVisplayer(true)
       local mem = p:memory()
       mem.guardpos = shippos -- Go to mainship

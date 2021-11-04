@@ -41,20 +41,20 @@ local fmt = require "format"
 --  3: return to kex
 misn_state = nil
 
-targetplanet = "Strangelove Lab"
-targetsys = "Westhaven" --planet.get(targetplanet):system():nameRaw()
+local targetplanet = planet.get("Strangelove Lab")
+local targetsys = system.get("Westhaven") --same as targetplanet:system(), but only after the below diff gets applied
 
 local eccdiff = "strangelove"
 
 local money_reward = minerva.rewards.kex5
 
 function create ()
-   if not misn.claim( system.get(targetsys) ) then
+   if not misn.claim( targetsys ) then
       misn.finish( false )
    end
    misn.setReward( _("A step closer to Kex's freedom") )
    misn.setTitle( _("Freeing Kex") )
-   misn.setDesc( fmt.f(_("Kex wants you to kill Dr. Strangelove at {pnt} in the {sys} system."), {pnt=_(targetplanet), sys=_(targetsys)}) )
+   misn.setDesc( fmt.f(_("Kex wants you to kill Dr. Strangelove at {pnt} in the {sys} system."), {pnt=targetplanet, sys=targetsys}) )
 
    misn.setNPC( minerva.kex.name, minerva.kex.portrait, minerva.kex.description )
 end
@@ -90,7 +90,7 @@ function accept ()
    kex(_([["Wait, you know where he is? How you know is not important now, all I need you to do is go over there and end his rotten life once and for all."]]))
    kex(_([["The universe will be a much better place with scum like him gone, and I'll finally get my vengeance."]]))
    vn.disappear(kex)
-   vn.na(fmt.f(_([[Without saying anything else, Kex walks off stumbling into the darkness of the station. You feel like it is best to leave him alone right now and decide to go see Strangelove. He should be in the {sys} system.]]), {sys=_(targetsys)}))
+   vn.na(fmt.f(_([[Without saying anything else, Kex walks off stumbling into the darkness of the station. You feel like it is best to leave him alone right now and decide to go see Strangelove. He should be in the {sys} system.]]), {sys=targetsys}))
 
    vn.func( function ()
       misn_state = 0
@@ -106,9 +106,9 @@ function accept ()
    minerva.log.kex(_("You have agreed to help Kex deal with Dr. Strangelove.") )
 
    misn.osdCreate( _("Freeing Kex"),
-      { fmt.f(_("Go find Dr. Strangelove in the {sys} system"), {sys=_(targetsys)} ),
+      { fmt.f(_("Go find Dr. Strangelove in the {sys} system"), {sys=targetsys} ),
       _("Return to Kex at Minerva Station") } )
-   misn_marker = misn.markerAdd( system.get(targetsys) )
+   misn_marker = misn.markerAdd( targetsys )
 
    hook.enter("enter")
    hook.land("landed")
@@ -117,7 +117,7 @@ end
 
 function landed ()
    -- Can't use planet.get() here for when the diff is removed
-   if misn_state==1 and planet.cur():nameRaw() == targetplanet then
+   if misn_state==1 and planet.cur() == targetplanet then
       landed_lab()
 
    elseif misn_state==3 and planet.get("Minerva Station")==planet.cur() then
@@ -204,7 +204,7 @@ end
 local function choose_one( t ) return t[ rnd.rnd(1,#t) ] end
 
 function enter ()
-   if misn_state==2 and system.cur() ~= system.get(targetsys) then
+   if misn_state==2 and system.cur() ~= targetsys then
       player.msg(_("MISSION FAILED! You never met up with Dr. Strangelove."))
       misn.finish(false)
    end
@@ -250,7 +250,7 @@ function enter ()
    end
 
    thug_chance = thug_chance or 0.2
-   if system.cur() == system.get(targetsys) then
+   if system.cur() == targetsys then
       -- No spawns nor anything in Westhaven
       pilot.clear()
       pilot.toggleSpawn(false)
@@ -258,7 +258,7 @@ function enter ()
       if misn_state == 0 then
          -- TODO better handling, maybe more fighting with drones and a close-up cinematic?
          thug_chance = thug_chance / 0.8
-         local pos = planet.get(targetplanet):pos()
+         local pos = targetplanet:pos()
          spawn_thugs( pos, false )
          hook.timer( 5, "thug_heartbeat" )
          player.allowLand( false, _("#rYou are unable to land while the bounty hunters are still active.#0") )
@@ -285,7 +285,7 @@ function enter ()
          -- Should be taking off from the Lab
 
          -- Spawn
-         local pos = planet.get(targetplanet):pos() + vec2.new(2000, 5000)
+         local pos = targetplanet:pos() + vec2.new(2000, 5000)
          local p = pilot.add("Za'lek Sting", "Za'lek", pos, minerva.strangelove.name )
          p:setInvincible(true)
          p:setActiveBoard(true)

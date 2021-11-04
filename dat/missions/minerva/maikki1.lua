@@ -50,10 +50,10 @@ local maikki_colour = minerva.maikki.colour
 local oldman_portrait = "old_man.png"
 local oldman_image = "old_man.png"
 
-mainsys = "Limbo"
-searchsys = "Doeston"
-cutscenesys = "Arandon"
-stealthsys = "Zerantix"
+local mainsys = system.get("Limbo")
+local searchsys = system.get("Doeston")
+local cutscenesys = system.get("Arandon")
+local stealthsys = system.get("Zerantix")
 -- Mission states:
 --  nil: mission not accepted yet
 --   -1: mission started, have to talk to maikki
@@ -67,7 +67,7 @@ misn_state = nil
 
 
 function create ()
-   if not misn.claim( {system.get(cutscenesys), system.get(stealthsys)} ) then
+   if not misn.claim( {cutscenesys, stealthsys} ) then
       misn.finish( false )
    end
    misn.setNPC( _("Distraught Young Woman"), maikki_portrait, _("You see a small young woman sitting by herself. She has a worried expression on her face.") )
@@ -211,8 +211,8 @@ She starts eating the parfait, which seems to be larger than her head.]]))
       if misn_state < 0 then
          misn_state = 0
          misn.osdCreate( _("Finding Maikki's Father"),
-            { fmt.f(_("Look around the {sys} system"), {sys=_(searchsys)}) } )
-         misn_marker = misn.markerAdd( system.get(searchsys), "low" )
+            { fmt.f(_("Look around the {sys} system"), {sys=searchsys}) } )
+         misn_marker = misn.markerAdd( searchsys, "low" )
          minerva.log.maikki(_("You were told her father colud be near Doeston.") )
       end
    end )
@@ -279,7 +279,7 @@ function approach_oldman ()
       table.insert( opts, 1, {_("Ask about scavengers you saw"), "scavengers"} )
    end
    if misn_state >=4 then
-      table.insert( opts, 1, {fmt.f(_("Ask about {sys}"), {sys=_(stealthsys)}), "stealthmisn"} )
+      table.insert( opts, 1, {fmt.f(_("Ask about {sys}"), {sys=stealthsys}), "stealthmisn"} )
    end
    if misn_state >=5 then
       table.insert( opts, 1, {_("Show him the picture"), "showloot"} )
@@ -295,7 +295,7 @@ He takes a long swig from his drink.]]))
    om(_([["Still that doesn't stop the odd folk here and there from trying to find it, they usually don't end up much past Arandon."]]))
    vn.func( function ()
       if misn_state==0 then
-         misn.markerMove( misn_marker, system.get(cutscenesys) )
+         misn.markerMove( misn_marker, cutscenesys )
          misn_state=1
       end
    end )
@@ -334,7 +334,7 @@ He downs his drink and orders another.]]))
    vn.jump( "menu_msg" )
 
    vn.label( "stealthmisn" )
-   om(fmt.f(_([["{stealthsys}? That should be just past {cutscenesys}. Do you think the scavengers could have found something there?"]]), {stealthsys=_(stealthsys), cutscenesys=_(cutscenesys)}))
+   om(fmt.f(_([["{stealthsys}? That should be just past {cutscenesys}. Do you think the scavengers could have found something there?"]]), {stealthsys=stealthsys, cutscenesys=cutscenesys}))
    om(_([["If you plan to go, you should bring your best sensors. It's very hard to see anything due to the density of the nebula there."]]))
    vn.jump( "menu_msg" )
 
@@ -394,8 +394,8 @@ He pats his biceps in a fairly uninspiring way.]]))
       vn.func( function ()
          if misn_state==3 then
             misn.osdCreate( _("Finding Maikki's Father"),
-               { fmt.f(_("Follow the scavengers in the {sys} system"), {sys=_(stealthsys)}) } )
-            misn.markerMove( misn_marker, system.get(stealthsys) )
+               { fmt.f(_("Follow the scavengers in the {sys} system"), {sys=stealthsys}) } )
+            misn.markerMove( misn_marker, stealthsys )
             misn_state=4
             minerva.log.maikki(_("You overheard some scavengers talking about a wreck in Zerantix.") )
          end
@@ -408,7 +408,7 @@ end
 
 
 function enter ()
-   if system.cur() == system.get(cutscenesys) and misn_state==1 then
+   if system.cur() == cutscenesys and misn_state==1 then
       -- Set up system
       pilot.clear()
       pilot.toggleSpawn(false)
@@ -427,7 +427,7 @@ function enter ()
       -- Timer in case the player doesn't find them in a long while
       sysmaker = nil
       cuttimeout = hook.timer( 120.0, "cutscene_timeout" ) -- 2 minutes
-   elseif system.cur() == system.get(stealthsys) and misn_state==4 then
+   elseif system.cur() == stealthsys and misn_state==4 then
       -- Set up system
       pilot.clear()
       pilot.toggleSpawn(false)
@@ -512,7 +512,7 @@ function cutscene_hail ()
    vn.transition("electric")
    vn.na(_("The comm flickers as a scavenger appears into view. He looks a bit pale."))
    scavB(_([["Thank you. I thought I was a goner. My sensors failed me at the worst time and it's impossible to see shit in this nebula."]]))
-   scavB(fmt.f(_([["Could you tell me the way to {sys}? I have to get out of here as soon as possible."]]), {sys=_(searchsys)}))
+   scavB(fmt.f(_([["Could you tell me the way to {sys}? I have to get out of here as soon as possible."]]), {sys=searchsys}))
    vn.menu( {
       { _("Give him directions"), "help" },
       { _("Leave"), "leave" },
@@ -543,8 +543,8 @@ function cutscene_hail ()
    else
       pscavB:broadcast(_("Thanks!"))
       pscavB:taskClear()
-      pscavB:hyperspace( system.get(searchsys) )
-      misn.markerMove( misn_marker, system.get(searchsys) )
+      pscavB:hyperspace( searchsys )
+      misn.markerMove( misn_marker, searchsys )
       misn_state = 2
       hook.rm( cuttimer ) -- reset timer
       pilot.toggleSpawn(true)
@@ -646,7 +646,7 @@ function stealthheartbeat ()
          pscavB:broadcast( _("There's definately something there! Scram!") )
          for k,p in ipairs{pscavA, pscavB} do
             p:taskClear()
-            p:hyperspace( system.get( cutscenesys ) )
+            p:hyperspace( tscenesys )
          end
          player.msg( _("#rYou have been detected! Stealth failed!") )
          return
@@ -813,7 +813,7 @@ He seems to be clutching his head. A headache perhaps?]]))
          var.push( "maikki_scavengers_alive", true )
          for k,p in ipairs{ pscavA, pscavB } do
             p:taskClear()
-            p:hyperspace( system.get(cutscenesys) )
+            p:hyperspace( cutscenesys )
          end
          minerva.log.maikki(_("You found a wreck and bribed scavengers so that they left.") )
       end
@@ -915,7 +915,7 @@ function board_wreck ()
 
    -- Move target back to origin
    misn.osdCreate( _("Finding Maikki's Father"),
-         { fmt.f(_("Return to {name} in the {sys} system"), {name=minerva.maikki.name, sys=_(mainsys)}) } )
+         { fmt.f(_("Return to {name} in the {sys} system"), {name=minerva.maikki.name, sys=mainsys}) } )
    misn.markerMove( misn_marker, planet.get("Minerva Station") )
    misn_state=5
 

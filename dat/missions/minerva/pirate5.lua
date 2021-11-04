@@ -32,9 +32,9 @@ local vn = require 'vn'
 local equipopt = require 'equipopt'
 local fmt = require "format"
 
-reward_amount = minerva.rewards.pirate5
+local reward_amount = minerva.rewards.pirate5
 
-mainsys = "Gammacron"
+local mainsys = system.get("Gammacron")
 -- Mission states:
 --  nil: mission not accepted yet
 --    1. fly to mainsys
@@ -44,7 +44,7 @@ misn_state = nil
 
 
 function create ()
-   if not misn.claim( system.get(mainsys) ) then
+   if not misn.claim( mainsys ) then
       misn.finish( false )
    end
    misn.setNPC( minerva.zuri.name, minerva.zuri.portrait, minerva.zuri.description )
@@ -63,13 +63,13 @@ function accept ()
 
    misn.accept()
    misn.osdCreate( _("Za'lek Hacking Center"), {
-      fmt.f( _("Go to the {sys} system"), {sys=_(mainsys)} ),
+      fmt.f( _("Go to the {sys} system"), {sys=mainsys} ),
       _("Destroy the hacking center"),
       _("Return to Minerva Station"),
    } )
-   mrk_mainsys = misn.markerAdd( system.get(mainsys) )
+   mrk_mainsys = misn.markerAdd( mainsys )
 
-   minerva.log.pirate( fmt.f(_("You accepted a job from Zuri to take out a Za'lek hacking center at the {sys} system"), {sys=_(mainsys)}) )
+   minerva.log.pirate( fmt.f(_("You accepted a job from Zuri to take out a Za'lek hacking center at the {sys} system"), {sys=mainsys}) )
    local c = misn.cargoNew( _("High-Density Explosives"), _("Explosives that can be used to detonate all sorts of critical infrastructure.") )
    misn.cargoAdd( c, 0 )
 
@@ -126,10 +126,10 @@ They smile at you.]]))
       vn.label("accept")
       vn.func( function () misn_state=0 end )
       zuri(fmt.f(_([["Great! We are always counting on you.
-So, as I was saying, it seems like the Za'lek have set up some pretty serious surveillance and hacking infrastructure in the nearby {sys} system. We sent a scout to look at it quickly and it looks like they have set up several drone controllers besides the hacking center. The main objective is taking out the hacking center, but it looks like it won't be possible without taking out the drone controllers too."]]), {sys=_(mainsys)}))
+So, as I was saying, it seems like the Za'lek have set up some pretty serious surveillance and hacking infrastructure in the nearby {sys} system. We sent a scout to look at it quickly and it looks like they have set up several drone controllers besides the hacking center. The main objective is taking out the hacking center, but it looks like it won't be possible without taking out the drone controllers too."]]), {sys=mainsys}))
       zuri(_([["The main issue is that the system is infested with Za'lek drones. Heavies, bombers, lights, you name it. While usually not a real challenge to a great pilot like you, their sheer numbers make it so that a frontal attack will only end up getting you killed. However, controlling so many drones requires infrastructure, and the Za'lek, being the lazy bums they are, are not commanding them from ships, but using the drone controllers. If you could take them out, that should incapacitate most of the drones and make taking out the hacking center a piece of cake."]]))
       zuri(fmt.f(_([["My recommendation to you is to jump into {sys} and stay low. We've got some really good explosives we'll hook you up with that should let you take out the drone controllers or hacking stations if you can get close enough. So try to sneak past all the drones, plant the bombs on the drone controllers, and once they are out, do the same with the hacking center. Of course, if you prefer to be old fashion, you can take the hacking center down with missiles, railguns, or whatever you have hand. Probably easier said than done, but I know you can do it."
-They grin at you.]]), {sys=_(mainsys)}))
+They grin at you.]]), {sys=mainsys}))
       zuri(_([["That said, given the amount of drones, you should probably take a stealthy ship that is also able to take some out if you get found. They are really fast, so it's unlikely you will be able to outrun them while planting the explosives."
 "Oh and about the explosives, they've already been loaded onto your ship so you don't have to worry about them."]]))
    else
@@ -149,7 +149,7 @@ They grin at you.]]), {sys=_(mainsys)}))
    end )
 
    vn.label("job")
-   zuri(fmt.f(_([["The job is a bit trickier than what we've done up until now, but you should be able to handle it. The main objective is to take out the Za'lek hacking center in the {sys} system; everything else can be ignored. That said, the system is infested with drones that are being controlled by several drone controllers. You should probably take them out first if you want to have a shot at the hacking center."]]), {sys=_(mainsys)}))
+   zuri(fmt.f(_([["The job is a bit trickier than what we've done up until now, but you should be able to handle it. The main objective is to take out the Za'lek hacking center in the {sys} system; everything else can be ignored. That said, the system is infested with drones that are being controlled by several drone controllers. You should probably take them out first if you want to have a shot at the hacking center."]]), {sys=mainsys}))
    zuri(_([["We've loaded explosives onto your ships, so if you are able to avoid the drones and board the drone controllers or even the hacking center, you should be able to detonate them easily. However, they should also be able to be taken down by conventional weapons. Whatever is easier for you."
 They beam you a smile.
 "Make sure you take a stealthy ship that can take down a couple of drones if things go wrong, and you get caught."]]))
@@ -180,7 +180,7 @@ end
 
 function enter ()
    -- Must be goal system
-   if system.cur() ~= system.get(mainsys) then
+   if system.cur() ~= mainsys then
       if misn_state == 2 then
          misn.osdActive(1)
          misn_state = 1
@@ -397,7 +397,7 @@ function enter ()
 end
 
 function message_first ()
-   hacking_center:broadcast( fmt.f(_("Due to military exercises, {sys} is under lockdown. Please evacuate the area immediately."), {sys=_(mainsys)}), true )
+   hacking_center:broadcast( fmt.f(_("Due to military exercises, {sys} is under lockdown. Please evacuate the area immediately."), {sys=mainsys}), true )
 end
 
 function message_warn ()

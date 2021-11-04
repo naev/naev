@@ -69,7 +69,7 @@ local hintpnt = {
 }
 local hintsys = {}
 for k,v in ipairs(hintpnt) do
-   hintsys[k] = planet.get(v):system():nameRaw()
+   hintsys[k] = planet.get(v):system()
 end
 local eccpnt = "Strangelove Lab"
 local eccdiff = "strangelove"
@@ -89,7 +89,7 @@ misn_state = nil
 
 
 function create ()
-   if not misn.claim( system.get(eccsys) ) then
+   if not misn.claim( eccsys ) then
       misn.finish( false )
    end
    misn.setNPC( minerva.maikki.name, minerva.maikki.portrait, minerva.maikki.description )
@@ -126,7 +126,7 @@ function hintosd ()
       _("Investigate the Za'lek"),
    }
    local function addhint( id )
-      table.insert( osd, fmt.f(_("\tGo to {pnt} in {sys}"), {pnt=_(hintpnt[id]), sys=_(hintsys[id])}) )
+      table.insert( osd, fmt.f(_("\tGo to {pnt} in {sys}"), {pnt=_(hintpnt[id]), sys=hintsys[id]}) )
    end
 
    if misn_state==0 then
@@ -160,9 +160,9 @@ function approach_maikki ()
 {name1} in the {sys1} system,
 {name2} in the {sys2} system,
 and {name3} in the {sys3} system."]]), {
-         name1=hint1_name, sys1=_(hintsys[1]),
-         name2=hint2_name, sys2=_(hintsys[2]),
-         name3=hint3_name, sys3=_(hintsys[3])
+         name1=hint1_name, sys1=hintsys[1],
+         name2=hint2_name, sys2=hintsys[2],
+         name3=hint3_name, sys3=hintsys[3],
       }))
    end
    vn.transition("hexagon")
@@ -345,7 +345,7 @@ end
 function lasthint( prof )
    if visitedhints() > 2 then
       vn.sfxBingo()
-      prof(fmt.f(_([["Oh, I suddenly remembered. There was also a post doctoral research working on the project by the name of Cayne. I think he was last working at {pnt} in the {sys} system."]]), {pnt=_(hintpnt[4]), sys=_(hintsys[4])}))
+      prof(fmt.f(_([["Oh, I suddenly remembered. There was also a post doctoral research working on the project by the name of Cayne. I think he was last working at {pnt} in the {sys} system."]]), {pnt=_(hintpnt[4]), sys=hintsys[4]}))
       -- The mission state will be updated afterwards
    end
 end
@@ -545,15 +545,15 @@ He activates her feeding system and a food pellet drops out.]]))
    drshrimp(_([["Now I remember! There was a another post doctoral researcher who worked with me. He was a bit weird and kept obsessing with the nebula artifacts. Quite a few went missing during the project and I think it was probably him who was taking them."]]))
    drshrimp(_([["He was really upset when the project got cancelled, threw a big tantrum and all. He was locked in his office for days until they managed to coax him out. Nobody really did much as we were all busy dealing with all the paperwork of the project cancellation."]]))
    vn.sfxEerie()
-   drshrimp(fmt.f(_([["Eventually he did get out and sort of disappeared. Last I heard, he said he was going to {sys}, which is a bit strange, because not only is there not a research center there, but there isn't even an inhabited planet nor station!"]]), {sys=_(eccsys)}))
+   drshrimp(fmt.f(_([["Eventually he did get out and sort of disappeared. Last I heard, he said he was going to {sys}, which is a bit strange, because not only is there not a research center there, but there isn't even an inhabited planet nor station!"]]), {sys=eccsys}))
    drshrimp(_([["It's really weird but if you are really interested, I suppose you could try to take a look around there. The whole thing does give me the me the creeps though."]]))
    vn.func( function ()
       asked_strangelove = true
       if misn_state==1 then
          misn_state = 2
-         misn.osdCreate( _("Finding Maikki's Father"), {fmt.f(_("\tGo to {sys}"), {sys=_(eccsys)})} )
+         misn.osdCreate( _("Finding Maikki's Father"), {fmt.f(_("\tGo to {sys}"), {sys=eccsys})} )
          misn.markerRm( markerhint4 )
-         marker_ecc = misn.markerAdd( system.get(eccsys), "low" )
+         marker_ecc = misn.markerAdd( eccsys, "low" )
          minerva.log.maikki(_("You found about a strange researcher who appears to be in Westhaven and is related to the nebula research.") )
       end
    end )
@@ -570,7 +570,7 @@ end
 
 
 function enter ()
-   if misn_state==2 and system.cur() == system.get(eccsys) then
+   if misn_state==2 and system.cur() == eccsys then
       pilot.clear()
       pilot.toggleSpawn(false)
       hook.timer( 30.0, "ecc_timer" )
@@ -799,7 +799,7 @@ He glares at you.]]))
    dr(_([["While the drones themselves are dispensable, I need you to recover the nebula artifacts used in their upgrading. They should be roaming around the asteroid field and should be fairly easy to find. Make sure to recover the parts in one piece!"]]))
    vn.func( function ()
       misn.osdCreate( _("Finding Maikki's Father"), {
-         fmt.f(_("Recover nebula artifacts from the {sys} asteroid field"), {sys=_(eccsys)}),
+         fmt.f(_("Recover nebula artifacts from the {sys} asteroid field"), {sys=eccsys}),
       } )
       misn_state = 4
       minerva.log.maikki(_("You accepted Dr. Strangelove's request to recover nebula artifacts from feral drones in Westhaven." ) )

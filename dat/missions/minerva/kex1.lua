@@ -34,14 +34,14 @@ local fmt = require "format"
 --  2: return to kex
 misn_state = nil
 
-targetsys = "Provectus Nova"
-jumpinsys = "Waterhole"
-jumpoutsys = "Limbo"
+local targetsys = system.get("Provectus Nova")
+local jumpinsys = system.get("Waterhole")
+local jumpoutsys = system.get("Limbo")
 
 local money_reward = minerva.rewards.kex1
 
 function create ()
-   if not misn.claim( system.get(targetsys) ) then
+   if not misn.claim( targetsys ) then
       misn.finish( false )
    end
    misn.setReward( _("A step closer to Kex's freedom") )
@@ -187,7 +187,7 @@ He looks at you with determination.
    })
 
    vn.label("help")
-   kex(fmt.f(_([["Great! I managed to look at the station delivery logs and it seems like there is a shady delivery heading here. If you could could go to the {sys} system. All you have to do is intercept it and get the incriminating evidence and it should be easy as pie! I'll send you the precise information later."]]), {sys=_(targetsys)}))
+   kex(fmt.f(_([["Great! I managed to look at the station delivery logs and it seems like there is a shady delivery heading here. If you could could go to the {sys} system. All you have to do is intercept it and get the incriminating evidence and it should be easy as pie! I'll send you the precise information later."]]), {sys=targetsys}))
    kex(_([["If you can disable the ship and find the evidence itself it would be ideal, however, given that it is always delivered in secured vaults, you should be able to recover the vault from the debris if you roll that way."]]))
    vn.func( function ()
       if misn_state==nil then
@@ -198,9 +198,9 @@ He looks at you with determination.
          end
 
          minerva.log.kex(_("You agreed to help Kex to find dirt on the Minerva Station CEO to try to get him free."))
-         misn_marker = misn.markerAdd( system.get(targetsys) )
+         misn_marker = misn.markerAdd( targetsys )
          misn.osdCreate( _("Freeing Kex"),
-            { fmt.f(_("Intercept the transport at {sys}"), {sys=_(targetsys)}),
+            { fmt.f(_("Intercept the transport at {sys}"), {sys=targetsys}),
             _("Return to Kex at Minerva Station") } )
          misn_state = 0
          hook.land("generate_npc")
@@ -217,7 +217,7 @@ He looks at you with determination.
 
    vn.label("job")
    kex(_([["We have to find the dirt on the CEO and get him removed. It is the only chance I have for freedom."]]))
-   kex(fmt.f(_([[They should be receiving a delivery. You should go intercept it at the {sys} system before it gets here. I have sent you all the precise information. It should be a breeze with with your piloting skills.]]), {sys=_(targetsys)}))
+   kex(fmt.f(_([[They should be receiving a delivery. You should go intercept it at the {sys} system before it gets here. I have sent you all the precise information. It should be a breeze with with your piloting skills.]]), {sys=targetsys}))
    kex(_([["If you can disable the ship and find the evidence itself it would be ideal, however, given that it is always delivered in secured vaults, you should be able to recover the vault from the debris if you roll that way."]]))
    vn.jump("menu_msg")
 
@@ -263,24 +263,22 @@ function enter ()
       player.msg(_("#rMISSION FAILED! You were supposed to raid the transport!"))
       misn.finish(false)
    end
-   if system.cur() == system.get(targetsys) then
+   if system.cur() == targetsys then
       if misn_state == 0 then
          fthugs = faction.dynAdd( "Mercenary", "Convoy", _("Convoy") )
 
-         local jinsys = system.get(jumpinsys)
-         local joutsys = system.get(jumpoutsys)
-         mainguy = pilot.add( "Rhino", fthugs, jinsys, _("Transport") )
+         mainguy = pilot.add( "Rhino", fthugs, jumpinsys, _("Transport") )
          mainguy:setVisplayer(true)
          mainguy:setHilight(true)
          mainguy:control()
-         mainguy:hyperspace( joutsys, true )
+         mainguy:hyperspace( jumpoutsys, true )
          hook.pilot( mainguy, "death", "mainguy_dead" )
          hook.pilot( mainguy, "board", "mainguy_board" )
          hook.pilot( mainguy, "jump", "mainguy_left" )
          hook.pilot( mainguy, "attacked", "mainguy_attacked" )
 
          local function addescort( shipname )
-            local p = pilot.add( shipname, fthugs, jinsys, _("Escort") )
+            local p = pilot.add( shipname, fthugs, jumpinsys, _("Escort") )
             p:setLeader( mainguy )
             hook.pilot( p, "attacked", "mainguy_attacked" )
             return p
