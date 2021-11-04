@@ -6,7 +6,6 @@
  *
  * @brief Handles equipping ships.
  */
-
 /** @cond */
 #include <math.h>
 #include <stdio.h>
@@ -900,14 +899,14 @@ static void equipment_renderShip( double bx, double by,
    dt   = (double)(tick - equipment_lastick)/1000.;
    equipment_lastick = tick;
    equipment_dir += p->turn * dt;
-   if (equipment_dir > 2*M_PI)
-      equipment_dir = fmod( equipment_dir, 2*M_PI );
+   if (equipment_dir > 2.*M_PI)
+      equipment_dir = fmod( equipment_dir, 2.*M_PI );
    gl_getSpriteFromDir( &sx, &sy, p->ship->gfx_space, equipment_dir );
 
    /* Render ship graphic. */
    if (p->ship->gfx_space->sw > bw) {
-      pw = 128;
-      ph = 128;
+      pw = 128.;
+      ph = 128.;
    }
    else {
       pw = p->ship->gfx_space->sw;
@@ -934,9 +933,9 @@ static void equipment_renderShip( double bx, double by,
          v.x *= pw / p->ship->gfx_space->sw;
          v.y *= ph / p->ship->gfx_space->sh;
          if (p->ship->trail_emitters[i].trail_spec->nebula)
-            gl_renderCross(px + pw/2 + v.x, py + ph/2 + v.y*M_SQRT1_2, 2, &cFontBlue);
+            gl_renderCross(px + pw/2. + v.x, py + ph/2. + v.y*M_SQRT1_2, 2., &cFontBlue);
          else
-            gl_renderCross(px + pw/2 + v.x, py + ph/2 + v.y*M_SQRT1_2, 4, &cInert);
+            gl_renderCross(px + pw/2. + v.x, py + ph/2. + v.y*M_SQRT1_2, 4., &cInert);
       }
    }
 #endif /* DEBUGGING */
@@ -945,15 +944,15 @@ static void equipment_renderShip( double bx, double by,
       p->tsx = sx;
       p->tsy = sy;
       pilot_getMount( p, &p->outfit_weapon[eq_wgt.slot], &v );
-      px += pw/2;
-      py += ph/2;
+      px += pw/2.;
+      py += ph/2.;
       v.x *= pw / p->ship->gfx_space->sw;
       v.y *= ph / p->ship->gfx_space->sh;
 
       /* Render it. */
       glUseProgram(shaders.crosshairs.program);
       glUniform1f(shaders.crosshairs.paramf, 2.);
-      gl_renderShader( px+v.x, py+v.y, 7, 7, 0., &shaders.crosshairs, &cRadar_player, 1 );
+      gl_renderShader( px+v.x, py+v.y, 7., 7., 0., &shaders.crosshairs, &cRadar_player, 1 );
    }
 }
 /**
@@ -968,12 +967,12 @@ static void equipment_renderShip( double bx, double by,
 static int equipment_mouseInColumn( double y, double h, int n, double my )
 {
    for (int i=0; i<n; i++) {
-      if ((my > y) && (my < y+h+20))
+      if ((my > y) && (my < y+h+20.))
          return i;
-      y -= h+20;
+      y -= h+20.;
    }
 
-   return -1;
+   return -1.;
 }
 /**
  * @brief Handles a mouse press in a column.
