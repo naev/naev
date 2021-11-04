@@ -81,16 +81,15 @@ function takeoff()
          end
       end
    end
-   planetvec = planet.pos(curplanet)
    misn.osdActive(1)
    checkpoint = {}
    racers = {}
    pilot.toggleSpawn(false)
    pilot.clear()
    local srad = system.cur():radius()
-   location1 = vec2.newP( srad * rnd.rnd(), 360*rnd.rnd() )
-   location2 = vec2.newP( srad * rnd.rnd(), 360*rnd.rnd() )
-   location3 = vec2.newP( srad * rnd.rnd(), 360*rnd.rnd() )
+   local location1 = vec2.newP( srad * rnd.rnd(), 360*rnd.rnd() )
+   local location2 = vec2.newP( srad * rnd.rnd(), 360*rnd.rnd() )
+   local location3 = vec2.newP( srad * rnd.rnd(), 360*rnd.rnd() )
    if choice == 1 then
       shiptype = "Goddard"
    else

@@ -254,9 +254,7 @@ end
 
 function abort ()
    faction.get("Dreamer Clan"):setPlayerStanding( pir_starting_reputation )
-   local hj1 = nil
-   local hj2 = nil
-   hj1, hj2 = jump.get( "Tormulex", "Anger" )
+   local hj1, hj2 = jump.get( "Tormulex", "Anger" )
    hj1:setKnown( false )
    hj2:setKnown( false )
    misn.finish( false )

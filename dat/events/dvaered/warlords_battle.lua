@@ -38,12 +38,12 @@ function begin ()
    end
 
    --choose 1 particular planet
-   plan = thissystem:planets()
-   cand = {}
-   k = 1
+   local plan = thissystem:planets()
+   local cand = {}
+   local k = 1
 
    for i, j in ipairs(plan) do  --choose only Dvaered planets (and no stations)
-      classofj = j:class()
+      local classofj = j:class()
       if j:faction() == faction.get("Dvaered") and classofj ~= "0" and classofj ~= "1" and classofj ~= "2" then
          cand[k] = j
          k = k+1
@@ -124,6 +124,36 @@ local function arrangeList(list)
    return newlist
 end
 
+--Computes the reward
+--TODO: This looks fishy. Was it supposed to be called with attack=true to init and with attack=false for later kills?
+local function computeReward(attack, massOfVictims)
+   if attack == true then
+      baserew = 20000
+   end
+   baserew = baserew + 60*massOfVictims
+
+   reward = baserew + rnd.sigma() * (baserew/3)
+end
+
+-- Returns leader of fleet
+local function getLeader(list)
+   local p = chooseInList(list)
+   if p:leader() == nil or not p:leader():exists() then
+      return p
+   else
+      return p:leader()
+   end
+end
+
+--chooses the first non nil pilot in a list
+local function chooseInList(list)
+   for i, p in ipairs(list) do
+      if p ~= nil and p:exists() then
+         return p
+      end
+   end
+end
+
 function attack ()
    attAttHook = {}
    local n = rnd.rnd(3,6)
@@ -136,7 +166,7 @@ function attack ()
    attackers[2*n+5] = pilot.add("Rhino", "Dvaered", source_system)
    attackers[2*n+6] = pilot.add("Rhino", "Dvaered", source_system)
    attackers[2*n+7] = pilot.add("Rhino", "Dvaered", source_system)
-   goda             = pilot.add( "Dvaered Goddard", "Dvaered", source_system )
+   local goda       = pilot.add( "Dvaered Goddard", "Dvaered", source_system )
    attackers[2*n+8] = goda
 
    -- The transport ships tend to run away
@@ -151,10 +181,10 @@ function attack ()
    attackers[2*n+7]:memory().shield_return = 99
 
    attackers = arrangeList(attackers)  --The heaviest ships will surround the leader
-   form = formation.random_key()
+   local form = formation.random_key()
 
    -- I use Thugs and Associates based factions because they won't interact with anybody
-   f1 = faction.dynAdd( "Thugs", "Invaders", _("Warlords") )
+   local f1 = faction.dynAdd( "Thugs", "Invaders", _("Warlords") )
 
    for i, j in ipairs(attackers) do
       j:rename("Invader")
@@ -189,13 +219,13 @@ function defense ()
    defenders[2*n+1] = pilot.add( "Dvaered Phalanx", "Dvaered", source_planet )
    defenders[2*n+2] = pilot.add( "Dvaered Phalanx", "Dvaered", source_planet )
    defenders[2*n+3] = pilot.add( "Dvaered Vigilance", "Dvaered", source_planet )
-   godd             = pilot.add( "Dvaered Goddard", "Dvaered", source_planet )
+   local godd       = pilot.add( "Dvaered Goddard", "Dvaered", source_planet )
    defenders[2*n+4] = godd
 
    defenders = arrangeList(defenders)  --The heaviest ships will surround the leader
-   form = formation.random_key()
+   local form = formation.random_key()
 
-   f2 = faction.dynAdd( "Associates", "Locals", _("Warlords") )
+   local f2 = faction.dynAdd( "Associates", "Locals", _("Warlords") )
    faction.dynEnemy (f1, f2)
    faction.dynEnemy (f2, f1)
 
@@ -327,35 +357,6 @@ function defenderDeath(victim, attacker)
             computeReward(true, defkilled)
             hook.timer(1.0, "hailmeagain")
          end
-      end
-   end
-end
-
---Computes the reward
-function computeReward(attack, massOfVictims)
-   if attack == true then
-      baserew = 20000
-   end
-   baserew = baserew + 60*massOfVictims
-
-   reward = baserew + rnd.sigma() * (baserew/3)
-end
-
--- Returns leader of fleet
-function getLeader(list)
-   local p = chooseInList(list)
-   if p:leader() == nil or not p:leader():exists() then
-      return p
-   else
-      return p:leader()
-   end
-end
-
---chooses the first non nil pilot in a list
-function chooseInList(list)
-   for i, p in ipairs(list) do
-      if p ~= nil and p:exists() then
-         return p
       end
    end
 end

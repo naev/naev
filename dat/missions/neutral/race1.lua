@@ -64,21 +64,14 @@ function takeoff()
       tk.msg(_("Illegal ship!"), _([["You have switched to a ship that's not allowed in this race. Mission failed."]]))
       abort()
    end
-   planetvec = planet.pos(curplanet)
    misn.osdActive(1)
    checkpoint = {}
    racers = {}
    pilot.toggleSpawn(false)
    pilot.clear()
-   dist1 = rnd.rnd() * system.cur():radius()
-   angle1 = rnd.rnd() * 2 * math.pi
-   location1 = vec2.new(dist1 * math.cos(angle1), dist1 * math.sin(angle1))
-   dist2 = rnd.rnd() * system.cur():radius()
-   angle2 = rnd.rnd() * 2 * math.pi
-   location2 = vec2.new(dist2 * math.cos(angle2), dist2 * math.sin(angle2))
-   dist3 = rnd.rnd() * system.cur():radius()
-   angle3 = rnd.rnd() * 2 * math.pi
-   location3 = vec2.new(dist3 * math.cos(angle3), dist3 * math.sin(angle3))
+   local location1 = vec2.newP(rnd.rnd() * system.cur():radius(), rnd.rnd() * 360)
+   local location2 = vec2.newP(rnd.rnd() * system.cur():radius(), rnd.rnd() * 360)
+   local location3 = vec2.newP(rnd.rnd() * system.cur():radius(), rnd.rnd() * 360)
    checkpoint[1] = pilot.add("Goddard", "Trader", location1, nil, {ai="stationary"})
    checkpoint[2] = pilot.add("Goddard", "Trader", location2, nil, {ai="stationary"})
    checkpoint[3] = pilot.add("Goddard", "Trader", location3, nil, {ai="stationary"})

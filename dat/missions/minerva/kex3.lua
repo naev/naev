@@ -382,7 +382,7 @@ function enter_the_ring ()
 
    -- Set up Major Malik
    enemy_faction = faction.dynAdd( "Dvaered", "Combatant", _("Dvaered"), {ai="dvaered_norun"} )
-   pos = vec2.new( -1500, 1500 )
+   local pos = vec2.new( -1500, 1500 )
    pmalik = pilot.add( "Dvaered Vendetta", enemy_faction, pos, _("Major Malik") )
    pmalik:setInvincible(true)
    pmalik:setHostile(true)

@@ -134,12 +134,12 @@ function enter ()
       var.push( "music_combat_force", "FLF" )
 
       -- Get a random position near the player
-      ang = rnd.rnd(0, 360)
+      local ang = rnd.rnd(0, 360)
       enter_vect = player.pos() + vec2.newP( rnd.rnd(1500, 2000), ang )
 
       -- Create some pilots to go after the player
       local flf_sml_force = { "Hyena", "Admonisher", "Vendetta" }
-      p = fleet.add( 1, flf_sml_force, "FLF", enter_vect, _("FLF Ambusher") )
+      local p = fleet.add( 1, flf_sml_force, "FLF", enter_vect, _("FLF Ambusher") )
 
       -- Set hostile
       for k,v in ipairs(p) do

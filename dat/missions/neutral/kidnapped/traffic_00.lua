@@ -39,7 +39,7 @@ local pir1_disc = _([[The two pirates seem to be talking rather quietly, but lou
 local pir2_disc = _([[The pirates have both drank their wallet's worth today, so overhearing shouldn't be too much of an issue.]])
 
 function create()
-  claimsystem = {system.get("Goddard")}
+  local claimsystem = {system.get("Goddard")}
   if not misn.claim(claimsystem) then
     abort()
   end

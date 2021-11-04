@@ -149,11 +149,8 @@ function sys_enter ()
       misn.osdActive(2)
       -- get point between jumpgate and broship to spawn mercenaries disencouraging him from following
       jpt = get_nearest_jump(broship)
-      jpx,jpy = jpt:pos():get()
-      px,py = broship:pos():get()
       -- set spawn point between the broship and jumppoint
-      spx, spy = (2*jpx/3+px/3), (2*jpy/3+py/3)
-      sp = vec2.new(spx,spy)
+      local sp = jpt:pos() * (2/3) + broship:pos() * (1/3)
       badguys = {}
       badguys = spawn_baddies(sp)
 
@@ -268,12 +265,12 @@ function spawn_baddies(sp)
 end
 -- gets the nearest jumppoint from a pilot
 function get_nearest_jump(pilot)
-   jpts = system.cur():jumps()
+   local jpts = system.cur():jumps()
    -- basically the distance that the map can have at
-   dist = 2*system.cur():radius()
-   index = 0
+   local dist = 2*system.cur():radius()
+   local index = 0
    for i,jpt in ipairs(jpts) do
-      dist1 = vec2.dist(jpt:pos(),pilot:pos())
+      local dist1 = vec2.dist(jpt:pos(),pilot:pos())
       if dist1 < dist then
          dist = dist1
          index = i

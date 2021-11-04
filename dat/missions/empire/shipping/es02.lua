@@ -137,9 +137,9 @@ function enter ()
 
       -- Put the VIP a ways off of the player but near the jump.
       enter_vect = jump.pos(sys, prevsys)
-      m,a = enter_vect:polar()
+      local m,a = enter_vect:polar()
       enter_vect:setP( m-3000, a )
-      v = pilot.add( "Gawain", "Trader", enter_vect, _("Trader Gawain"), {ai="dummy"} )
+      local v = pilot.add( "Gawain", "Trader", enter_vect, _("Trader Gawain"), {ai="dummy"} )
 
       v:setPos( enter_vect )
       v:setVel( vec2.new( 0, 0 ) ) -- Clear velocity
@@ -153,9 +153,9 @@ function enter ()
 
       -- FLF Spawn around the Gawain
       local flf_med_force = { "Hyena", "Hyena", "Admonisher", "Vendetta", "Pacifier" }
-      p = fleet.add( 1, flf_med_force, "FLF", enter_vect, _("FLF Ambusher") )
-      for k,v in ipairs(p) do
-         v:setHostile()
+      local p = fleet.add( 1, flf_med_force, "FLF", enter_vect, _("FLF Ambusher") )
+      for k,pk in ipairs(p) do
+         pk:setHostile()
       end
       -- To make it more interesting a vendetta will solely target the player.
       p = pilot.add( "Vendetta", "FLF", enter_vect )
@@ -209,7 +209,7 @@ function delay_flf ()
 
    -- More ships to pressure player from behind
    local flf_sml_force = { "Hyena", "Admonisher", "Vendetta" }
-   p = fleet.add( 1, flf_sml_force, "FLF", prevsys, _("FLF Ambusher") )
+   local p = fleet.add( 1, flf_sml_force, "FLF", prevsys, _("FLF Ambusher") )
    for k,v in ipairs(p) do
       v:setHostile()
    end

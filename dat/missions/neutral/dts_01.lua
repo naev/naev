@@ -118,13 +118,14 @@ function defend_system()
       pilot.toggleSpawn( false )
 
   -- Set up distances
-      angle = rnd.rnd() * 2 * math.pi
+      local angle, defense_position, raider_position
+      angle = rnd.rnd() * 360
       if defender == true then
-         raider_position  = vec2.new( 400*math.cos(angle), 400*math.sin(angle) )
+         raider_position  = vec2.newP( 400, angle )
          defense_position = vec2.new( 0, 0 )
       else
-         raider_position  = vec2.new( 800*math.cos(angle), 800*math.sin(angle) )
-         defense_position = vec2.new( 400*math.cos(angle), 400*math.sin(angle) )
+         raider_position  = vec2.newP( 800, angle )
+         defense_position = vec2.newP( 400, angle )
       end
 
   -- Create a fleet of raiding pirates
@@ -179,10 +180,7 @@ function victorious()
    -- Call ships to base
       player.msg( _("Well done, pilots. Return to port.") )
    -- Get a position near the player for late Empire re-enforcements
-      starting_vect = player.pos()
-      a = rnd.rnd() * 2 * math.pi
-      d = rnd.rnd( 100, 200 )
-      local empire_vect = starting_vect:add( math.cos(a) * d, math.sin(a) * d )
+      local empire_vect = player.pos() + vec2.newP( rnd.rnd( 100, 200 ), rnd.rnd() * 360 )
       local empire_med_attack = {"Empire Lancelot", "Empire Lancelot", "Empire Lancelot", "Empire Lancelot",
                                  "Empire Admonisher", "Empire Admonisher",
                                  "Empire Pacifier", "Empire Hawking"}
@@ -208,7 +206,7 @@ end
 
 -- A fellow warrior says hello in passing if player jumps out of the system without landing
 function ship_enters()
-      enter_vect = player.pos()
+      local enter_vect = player.pos()
       pilot.add( "Empire Pacifier", "Empire", enter_vect:add( 10, 10), nil, {ai="def"} )
       hook.timer(1.0, "congratulations")
 end

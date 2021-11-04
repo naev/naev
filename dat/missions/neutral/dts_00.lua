@@ -120,13 +120,14 @@ function defend_system()
    pilot.toggleSpawn( false )
 
    -- Set up distances
-   angle = rnd.rnd() * 2 * math.pi
+   local angle, defense_position, raider_position
+   angle = rnd.rnd() * 360
    if defender == true then
-      raider_position  = vec2.new( 400*math.cos(angle), 400*math.sin(angle) )
+      raider_position  = vec2.newP( 400, angle )
       defense_position = vec2.new( 0, 0 )
    else
-      raider_position  = vec2.new( 800*math.cos(angle), 800*math.sin(angle) )
-      defense_position = vec2.new( 400*math.cos(angle), 400*math.sin(angle) )
+      raider_position  = vec2.newP( 800, angle )
+      defense_position = vec2.newP( 400, angle )
    end
 
    -- Create a fleet of raiding pirates
