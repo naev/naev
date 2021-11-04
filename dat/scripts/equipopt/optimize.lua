@@ -277,7 +277,7 @@ function optimize.optimize( p, cores, outfit_list, params )
 
    -- Modify forward weapon bonus depending on turn rate
    if st.turn < 150 then
-      params.forward = params.forward *  math.max( 0.5, st.turn/100 )
+      params.forward = params.forward * math.max( 0.5, st.turn/150 )
    end
 
    -- Determine what outfits from outfit_list we can actually equip

@@ -204,7 +204,7 @@ function params.battleship( overwrite )
       t_track     = 25e3,
       t_range     = 3e3,
       duration    = 40,
-      launcher    = 0.8,
+      launcher    = 0.5,
    }, overwrite )
 end
 
