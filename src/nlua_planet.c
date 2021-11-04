@@ -350,21 +350,12 @@ static int planetL_getBackend( lua_State *L, int system, int landable )
    }
    lua_pushplanet(L,planet_index( pnt ));
    if (system) {
-      LuaSystem luasys;
-      StarSystem *sys;
-      const char *sysname = planet_getSystem(rndplanet);
-      /* TODO: it might make more sense to make this behave the same as planetL_system and return a nil system if needed. */
-      if (sysname == NULL) {
-         NLUA_ERROR(L, _("Planet '%s' is not placed in a system"), rndplanet);
-         return 0;
-      }
-      sys = system_get( sysname );
-      if (sys == NULL) {
-         NLUA_ERROR(L, _("Planet '%s' can't find system '%s'"), rndplanet, sysname);
-         return 0;
-      }
-      luasys = system_index( sys );
-      lua_pushsystem(L,luasys);
+      LuaSystem sys;
+      const char *sysname = planet_getSystem( rndplanet );
+      if (sysname == NULL)
+         return 1;
+      sys = system_index( system_get( sysname ) );
+      lua_pushsystem( L, sys );
       return 2;
    }
    return 1;

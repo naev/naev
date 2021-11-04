@@ -889,7 +889,7 @@ char* planet_getSystem( const char* planetname )
    for (int i=0; i<array_size(planetname_stack); i++)
       if (strcmp(planetname_stack[i],planetname)==0)
          return systemname_stack[i];
-   DEBUG(_("Planet '%s' not found in planetname stack"), planetname);
+   LOG(_("Planet '%s' is not placed in a system"), planetname);
    return NULL;
 }
 
@@ -2301,7 +2301,7 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent, Commodity **st
 /**
  * @brief Adds a planet to a star system.
  *
- *    @param sys Star System to add planet to.
+ *    @param sys Star System to add planet to. (Assumed to belong to systems_stack.)
  *    @param planetname Name of the planet to add.
  *    @return 0 on success.
  */
@@ -2312,7 +2312,7 @@ int system_addPlanet( StarSystem *sys, const char *planetname )
    if (sys == NULL)
       return -1;
 
-   planet = planet_get(planetname);
+   planet = planet_get( planetname );
    if (planet == NULL)
       return -1;
    array_push_back( &sys->planets, planet );
