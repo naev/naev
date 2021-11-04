@@ -171,6 +171,7 @@ void equipment_rightClickOutfits( unsigned int wid, const char* str )
       /* We have to call once to remove, once to add. */
       if (slots[minimal].outfit != NULL)
          equipment_swapSlot( equipment_wid, p, &slots[minimal] );
+      eq_wgt.outfit  = o;
       equipment_swapSlot( equipment_wid, p, &slots[minimal] );
 
       hooks_run( "equip" ); /* Equipped. */
@@ -204,6 +205,7 @@ void equipment_rightClickOutfits( unsigned int wid, const char* str )
          p              = eq_wgt.selected;
          /* Once to unequip and once to equip. */
          equipment_swapSlot( equipment_wid, p, &slots[minimal] );
+         eq_wgt.outfit  = o;
          equipment_swapSlot( equipment_wid, p, &slots[minimal] );
          hooks_run( "equip" ); /* Equipped. */
          return;
@@ -1222,9 +1224,8 @@ static int equipment_swapSlot( unsigned int wid, Pilot *p, PilotOutfitSlot *slot
  */
 void equipment_regenLists( unsigned int wid, int outfits, int ships )
 {
-   int i;
-   int nship;
-   double offship;
+   int nship, noutfit;
+   double offship, offoutfit;
    char selship[PATH_MAX];
    const char *s;
    char *focused;
@@ -1242,8 +1243,8 @@ void equipment_regenLists( unsigned int wid, int outfits, int ships )
 
    /* Save positions. */
    if (outfits) {
-      i = window_tabWinGetActive( wid, EQUIPMENT_OUTFIT_TAB );
-      toolkit_saveImageArrayData( wid, EQUIPMENT_OUTFITS, &iar_data[i] );
+      noutfit   = toolkit_getImageArrayPos(    wid, EQUIPMENT_OUTFITS );
+      offoutfit = toolkit_getImageArrayOffset( wid, EQUIPMENT_OUTFITS );
       window_destroyWidget( wid, EQUIPMENT_OUTFITS );
    }
    if (ships) {
@@ -1260,8 +1261,8 @@ void equipment_regenLists( unsigned int wid, int outfits, int ships )
 
    /* Restore positions. */
    if (outfits) {
-      toolkit_setImageArrayPos(    wid, EQUIPMENT_OUTFITS, iar_data[i].pos );
-      toolkit_setImageArrayOffset( wid, EQUIPMENT_OUTFITS, iar_data[i].offset );
+      toolkit_setImageArrayPos(    wid, EQUIPMENT_OUTFITS, noutfit );
+      toolkit_setImageArrayOffset( wid, EQUIPMENT_OUTFITS, offoutfit );
       equipment_updateOutfits( wid, NULL );
    }
    if (ships) {
@@ -1325,9 +1326,8 @@ int equipment_shipStats( char *buf, int max_len,  const Pilot *s, int dpseps )
    dps = 0.;
    eps = 0.;
    /* Calculate damage and energy per second. */
-   if (dpseps) {
+   if (dpseps)
       pilot_dpseps( s, &dps, &eps );
-   }
 
    /* Write to buffer. */
    l = scnprintf( buf, max_len, "%s", s->name );
@@ -1440,10 +1440,10 @@ static void equipment_genShipList( unsigned int wid )
    }
    /* Ship stats in alt text. */
    for (int i=0; i<nships; i++) {
-      s        = player_getShip( cships[i].caption );
+      s  = player_getShip( cships[i].caption );
       cships[i].alt = malloc( STRMAX_SHORT );
-      l        = snprintf( &cships[i].alt[0], STRMAX_SHORT, _("Ship Stats\n") );
-      l        = equipment_shipStats( &cships[i].alt[0], STRMAX_SHORT-l, s, 1 );
+      l  = snprintf( &cships[i].alt[0], STRMAX_SHORT, _("Ship Stats\n") );
+      l  = equipment_shipStats( &cships[i].alt[0], STRMAX_SHORT-l, s, 1 );
       if (l == 0) {
          free( cships[i].alt );
          cships[i].alt = NULL;
@@ -1641,7 +1641,7 @@ eq_qCol( cur, base, inv ), eq_qSym( cur, base, inv ), cur
  */
 void equipment_updateShips( unsigned int wid, const char* str )
 {
-   (void)str;
+   (void) str;
    char *buf, buf2[ECON_CRED_STRLEN];
    char errorReport[STRMAX_SHORT];
    const char *shipname;

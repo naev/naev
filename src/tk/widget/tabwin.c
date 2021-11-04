@@ -1,13 +1,11 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
 /**
  * @file tabwin.c
  *
  * @brief Tabbed window widget.
  */
-
 
 /** @cond */
 #include <stdlib.h>
@@ -19,12 +17,9 @@
 #include "tk/toolkit_priv.h"
 #include "toolkit.h"
 
-
 #define TAB_HEIGHT   30
 #define TAB_HMARGIN  3
 #define TAB_HPADDING 15
-
-
 
 /*
  * Prototypes.
@@ -39,7 +34,6 @@ static void tab_renderOverlay( Widget* tab, double bx, double by );
 static void tab_cleanup( Widget* tab );
 static int tab_getBarWidth( const Widget* wgt );
 static Widget *tab_getWgt( unsigned int wid, const char *tab );
-
 
 /**
  * @brief Creates a widget that hijacks a window and creates many children window.
@@ -129,7 +123,6 @@ unsigned int* window_addTabbedWindow( unsigned int wid,
    return wgt->dat.tab.windows;
 }
 
-
 /**
  * @brief Handles scrolling on a tabbed window's tab bar.
  *
@@ -154,7 +147,6 @@ static int tab_scroll( Widget *tab, int dir )
    return new;
 }
 
-
 /**
  * @brief Handles focus restoring for a tabbed window's children.
  *
@@ -162,9 +154,7 @@ static int tab_scroll( Widget *tab, int dir )
  */
 static void tab_expose( Widget *tab, int exposed )
 {
-   Window *wdw;
-
-   wdw = window_wget( tab->dat.tab.windows[ tab->dat.tab.active ] );
+   Window *wdw = window_wget( tab->dat.tab.windows[ tab->dat.tab.active ] );
    if (wdw == NULL)
       return;
 
@@ -175,7 +165,6 @@ static void tab_expose( Widget *tab, int exposed )
    else
       toolkit_focusClear( wdw );
 }
-
 
 /**
  * @brief Handles input for an tabbed window widget.
@@ -211,7 +200,6 @@ static int tab_raw( Widget* tab, SDL_Event *event )
    /* Give the active window the input. */
    return toolkit_inputWindow( wdw, event, 0 );
 }
-
 
 /**
  * @brief Handles mouse events.
@@ -277,7 +265,6 @@ static int tab_mouse( Widget* tab, SDL_Event *event )
 
    return 0;
 }
-
 
 /**
  * @brief Handles key events.
@@ -357,7 +344,6 @@ static int tab_key( Widget* tab, SDL_Event *event )
 }
 #undef CHECK_CHANGE
 
-
 /**
  * @brief Renders a button widget.
  *
@@ -410,7 +396,6 @@ static void tab_render( Widget* tab, double bx, double by )
    }
 }
 
-
 /**
  * @brief Renders a button widget overlay.
  *
@@ -422,10 +407,7 @@ static void tab_renderOverlay( Widget* tab, double bx, double by )
 {
    (void) bx;
    (void) by;
-   Window *wdw;
-
-   /** Get window. */
-   wdw = window_wget( tab->dat.tab.windows[ tab->dat.tab.active ] );
+   Window *wdw = window_wget( tab->dat.tab.windows[ tab->dat.tab.active ] );
    if (wdw == NULL) {
       WARN( _("Active window in widget '%s' not found in stack."), tab->name);
       return;
@@ -435,7 +417,6 @@ static void tab_renderOverlay( Widget* tab, double bx, double by )
    window_renderOverlay( wdw );
 }
 
-
 /**
  * @brief Clean up function for the button widget.
  *
@@ -443,8 +424,7 @@ static void tab_renderOverlay( Widget* tab, double bx, double by )
  */
 static void tab_cleanup( Widget *tab )
 {
-   int i;
-   for (i=0; i<tab->dat.tab.ntabs; i++) {
+   for (int i=0; i<tab->dat.tab.ntabs; i++) {
       free( tab->dat.tab.tabnames[i] );
       window_destroy( tab->dat.tab.windows[i] );
    }
@@ -452,7 +432,6 @@ static void tab_cleanup( Widget *tab )
    free( tab->dat.tab.windows );
    free( tab->dat.tab.namelen );
 }
-
 
 /**
  * @brief Gets the widget.
@@ -475,7 +454,6 @@ static Widget *tab_getWgt( unsigned int wid, const char *tab )
 
    return wgt;
 }
-
 
 /**
  * @brief Sets the active tab.
@@ -504,7 +482,6 @@ int window_tabWinSetActive( unsigned int wid, const char *tab, int active )
    return 0;
 }
 
-
 /**
  * @brief Gets the active tab.
  *
@@ -521,7 +498,6 @@ int window_tabWinGetActive( unsigned int wid, const char *tab )
    /* Get active window. */
    return wgt->dat.tab.active;
 }
-
 
 /**
  * @brief Sets the onChange function callback.
@@ -543,7 +519,6 @@ int window_tabWinOnChange( unsigned int wid, const char *tab,
    return 0;
 }
 
-
 /**
  * @brief Changes the font used by a tabbed window widget.
  *
@@ -554,19 +529,17 @@ int window_tabWinOnChange( unsigned int wid, const char *tab,
  */
 int window_tabSetFont( unsigned int wid, const char *tab, const glFont *font )
 {
-   int i;
    Widget *wgt = tab_getWgt( wid, tab );
    if (wgt == NULL)
       return -1;
 
    wgt->dat.tab.font = font;
-   for (i=0; i<wgt->dat.tab.ntabs; i++)
+   for (int i=0; i<wgt->dat.tab.ntabs; i++)
       wgt->dat.tab.namelen[i]  = gl_printWidthRaw( wgt->dat.tab.font,
             wgt->dat.tab.tabnames[i] );
 
    return 0;
 }
-
 
 /**
  * @brief Gets the tab windows children windows.
@@ -601,13 +574,13 @@ int window_tabWinGetBarWidth( unsigned int wid, const char* tab )
  */
 int tab_getBarWidth( const Widget* wgt )
 {
-   int i, w;
+   int w;
 
    if (wgt == NULL)
       return 0;
 
    w = TAB_HMARGIN;
-   for (i=0; i<wgt->dat.tab.ntabs; i++)
+   for (int i=0; i<wgt->dat.tab.ntabs; i++)
       w += (TAB_HMARGIN + TAB_HPADDING) + wgt->dat.tab.namelen[i] + (TAB_HPADDING);
 
    return w;
