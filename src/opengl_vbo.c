@@ -146,9 +146,7 @@ void gl_vboSubData( gl_vbo *vbo, GLint offset, GLsizei size, const void* data )
  */
 gl_vbo* gl_vboCreateStream( GLsizei size, const void* data )
 {
-   gl_vbo *vbo;
-
-   vbo = gl_vboCreate( GL_ARRAY_BUFFER, size, data, GL_STREAM_DRAW );
+   gl_vbo *vbo = gl_vboCreate( GL_ARRAY_BUFFER, size, data, GL_STREAM_DRAW );
    vbo->type = NGL_VBO_STREAM;
 
    /* Check for errors. */
@@ -165,9 +163,7 @@ gl_vbo* gl_vboCreateStream( GLsizei size, const void* data )
  */
 gl_vbo* gl_vboCreateDynamic( GLsizei size, const void* data )
 {
-   gl_vbo *vbo;
-
-   vbo = gl_vboCreate( GL_ARRAY_BUFFER, size, data, GL_DYNAMIC_DRAW );
+   gl_vbo *vbo = gl_vboCreate( GL_ARRAY_BUFFER, size, data, GL_DYNAMIC_DRAW );
    vbo->type = NGL_VBO_DYNAMIC;
 
    /* Check for errors. */
