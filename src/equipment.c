@@ -1396,72 +1396,72 @@ static void equipment_genShipList( unsigned int wid )
    equipment_getDim( wid, &w, &h, &sw, &sh, NULL, NULL,
          NULL, NULL, NULL, NULL, NULL, NULL );
 
-   /* Ship list. */
-   if (!widget_exists( wid, EQUIPMENT_SHIPS )) {
-      eq_wgt.selected = NULL;
-      if (planet_hasService(land_planet, PLANET_SERVICE_SHIPYARD))
-         nships   = player_nships()+1;
-      else
-         nships   = 1;
-      cships   = calloc( nships, sizeof(ImageArrayCell) );
-      /* Add player's current ship. */
-      cships[0].image = gl_dupTexture(player.p->ship->gfx_store);
-      cships[0].caption = strdup(player.p->name);
-      cships[0].layers = gl_copyTexArray( player.p->ship->gfx_overlays, &cships[0].nlayers );
-      t = gl_newImage( OVERLAY_GFX_PATH"active.webp", 0 );
-      cships[0].layers = gl_addTexArray( cships[0].layers, &cships[0].nlayers, t );
-      if (player.favourite) {
-         t = gl_newImage( OVERLAY_GFX_PATH"favourite.webp", 0 );
-         cships[0].layers = gl_addTexArray( cships[0].layers, &cships[0].nlayers, t );
-      }
-      if (player.p->ship->rarity > 0) {
-         snprintf( r, sizeof(r), OVERLAY_GFX_PATH"rarity_%d.webp", player.p->ship->rarity );
-         t = gl_newImage( r, 0 );
-         cships[0].layers = gl_addTexArray( cships[0].layers, &cships[0].nlayers, t );
-      }
-      if (planet_hasService(land_planet, PLANET_SERVICE_SHIPYARD)) {
-         player_shipsSort();
-         ps = player_getShipStack();
-         for (int i=1; i<=array_size(ps); i++) {
-            cships[i].image = gl_dupTexture( ps[i-1].p->ship->gfx_store );
-            cships[i].caption = strdup( ps[i-1].p->name );
-            cships[i].layers = gl_copyTexArray( ps[i-1].p->ship->gfx_overlays, &cships[i].nlayers );
-            if (ps[i-1].favourite) {
-               t = gl_newImage( OVERLAY_GFX_PATH"favourite.webp", 0 );
-               cships[i].layers = gl_addTexArray( cships[i].layers, &cships[i].nlayers, t );
-            }
-            if (ps[i-1].p->ship->rarity > 0) {
-               snprintf( r, sizeof(r), OVERLAY_GFX_PATH"rarity_%d.webp", ps[i-1].p->ship->rarity );
-               t = gl_newImage( r, 0 );
-               cships[i].layers = gl_addTexArray( cships[i].layers, &cships[i].nlayers, t );
-            }
-         }
-      }
-      /* Ship stats in alt text. */
-      for (int i=0; i<nships; i++) {
-         s        = player_getShip( cships[i].caption );
-         cships[i].alt = malloc( STRMAX_SHORT );
-         l        = snprintf( &cships[i].alt[0], STRMAX_SHORT, _("Ship Stats\n") );
-         l        = equipment_shipStats( &cships[i].alt[0], STRMAX_SHORT-l, s, 1 );
-         if (l == 0) {
-            free( cships[i].alt );
-            cships[i].alt = NULL;
-         }
-      }
+   if (widget_exists( wid, EQUIPMENT_SHIPS ))
+      return;
 
-      /* Create the image array. */
-      iconsize = 96;
-      if (!conf.big_icons) {
-         if (toolkit_simImageArrayVisibleElements(sw,sh,iconsize,iconsize) < nships)
-            iconsize = 80;
-         if (toolkit_simImageArrayVisibleElements(sw,sh,iconsize,iconsize) < nships)
-            iconsize = 64;
-      }
-      window_addImageArray( wid, 20, -40,
-            sw, sh, EQUIPMENT_SHIPS, iconsize, iconsize,
-            cships, nships, equipment_updateShips, NULL, equipment_transChangeShip );
-      toolkit_setImageArrayAccept( wid, EQUIPMENT_SHIPS, equipment_transChangeShip );
+   eq_wgt.selected = NULL;
+   if (planet_hasService(land_planet, PLANET_SERVICE_SHIPYARD))
+      nships   = player_nships()+1;
+   else
+      nships   = 1;
+   cships   = calloc( nships, sizeof(ImageArrayCell) );
+   /* Add player's current ship. */
+   cships[0].image = gl_dupTexture(player.p->ship->gfx_store);
+   cships[0].caption = strdup(player.p->name);
+   cships[0].layers = gl_copyTexArray( player.p->ship->gfx_overlays, &cships[0].nlayers );
+   t = gl_newImage( OVERLAY_GFX_PATH"active.webp", 0 );
+   cships[0].layers = gl_addTexArray( cships[0].layers, &cships[0].nlayers, t );
+   if (player.favourite) {
+      t = gl_newImage( OVERLAY_GFX_PATH"favourite.webp", 0 );
+      cships[0].layers = gl_addTexArray( cships[0].layers, &cships[0].nlayers, t );
    }
+   if (player.p->ship->rarity > 0) {
+      snprintf( r, sizeof(r), OVERLAY_GFX_PATH"rarity_%d.webp", player.p->ship->rarity );
+      t = gl_newImage( r, 0 );
+      cships[0].layers = gl_addTexArray( cships[0].layers, &cships[0].nlayers, t );
+   }
+   if (planet_hasService(land_planet, PLANET_SERVICE_SHIPYARD)) {
+      player_shipsSort();
+      ps = player_getShipStack();
+      for (int i=1; i<=array_size(ps); i++) {
+         cships[i].image = gl_dupTexture( ps[i-1].p->ship->gfx_store );
+         cships[i].caption = strdup( ps[i-1].p->name );
+         cships[i].layers = gl_copyTexArray( ps[i-1].p->ship->gfx_overlays, &cships[i].nlayers );
+         if (ps[i-1].favourite) {
+            t = gl_newImage( OVERLAY_GFX_PATH"favourite.webp", 0 );
+            cships[i].layers = gl_addTexArray( cships[i].layers, &cships[i].nlayers, t );
+         }
+         if (ps[i-1].p->ship->rarity > 0) {
+            snprintf( r, sizeof(r), OVERLAY_GFX_PATH"rarity_%d.webp", ps[i-1].p->ship->rarity );
+            t = gl_newImage( r, 0 );
+            cships[i].layers = gl_addTexArray( cships[i].layers, &cships[i].nlayers, t );
+         }
+      }
+   }
+   /* Ship stats in alt text. */
+   for (int i=0; i<nships; i++) {
+      s        = player_getShip( cships[i].caption );
+      cships[i].alt = malloc( STRMAX_SHORT );
+      l        = snprintf( &cships[i].alt[0], STRMAX_SHORT, _("Ship Stats\n") );
+      l        = equipment_shipStats( &cships[i].alt[0], STRMAX_SHORT-l, s, 1 );
+      if (l == 0) {
+         free( cships[i].alt );
+         cships[i].alt = NULL;
+      }
+   }
+
+   /* Create the image array. */
+   iconsize = 96;
+   if (!conf.big_icons) {
+      if (toolkit_simImageArrayVisibleElements(sw,sh,iconsize,iconsize) < nships)
+         iconsize = 80;
+      if (toolkit_simImageArrayVisibleElements(sw,sh,iconsize,iconsize) < nships)
+         iconsize = 64;
+   }
+   window_addImageArray( wid, 20, -40,
+         sw, sh, EQUIPMENT_SHIPS, iconsize, iconsize,
+         cships, nships, equipment_updateShips, NULL, equipment_transChangeShip );
+   toolkit_setImageArrayAccept( wid, EQUIPMENT_SHIPS, equipment_transChangeShip );
 }
 
 static int equipment_filter( const Outfit *o ) {
