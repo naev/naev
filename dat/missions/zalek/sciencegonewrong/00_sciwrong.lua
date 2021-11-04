@@ -38,8 +38,8 @@ t_pla[1], t_sys[1] = planet.getS("Vilati Vilata")
 t_pla[2], t_sys[2] = planet.getS("Waterhole's Moon")
 -- t_x[3] is empty bc it depends on where the mission will start finally. (To be set in mission.xml and then adjusted in the following campaign missions)
 --t_pla[3], t_sys[3] = planet.getS("Gastan")
-pho_mny = 50e3
-reward = 1e6
+local pho_mny = 50e3
+local reward = 1e6
 
 function create ()
    -- Variable set up and clean up

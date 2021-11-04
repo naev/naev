@@ -31,7 +31,7 @@ local sciwrong = require "common.sciencegonewrong"
 t_sys = { __save=true }
 t_pla = { __save=true }
 -- Mission details
-reward = 2e6
+local reward = 2e6
 -- amount of jumps the drone did to escape. Each jump reduces it's speed
 fled = false
 jumps = 0
