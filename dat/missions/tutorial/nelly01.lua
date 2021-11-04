@@ -368,7 +368,7 @@ function info_reminder ()
    end
 end
 
-function info_msg( msg )
+local function info_msg( msg )
    vntk.msg( tutnel.nelly.name, msg )
 end
 
@@ -392,7 +392,7 @@ function info ()
    hk_info_shiplog   = hook.info( "info_shiplog",  "shiplog" )
 end
 
-function info_checkdone ()
+local function info_checkdone ()
    if hk_info_ship or
          hk_info_weapons or
          hk_info_cargo or

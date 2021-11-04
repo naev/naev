@@ -207,11 +207,11 @@ function accept ()
    hook.land("land")
 end
 
-function info_msg( msg )
+local function info_msg( msg )
    vntk.msg( tutnel.nelly.name, msg )
 end
 
-function hk_equip ()
+function equip ()
    local pp = player.pilot()
    for k,o in ipairs(pp:outfits()) do
       if has_disable(o) then
@@ -482,7 +482,7 @@ function timer_pirate_checkbribe ()
    hook.timer( 3, "timer_pirate_checkbribe" )
 end
 
-function reset_osd ()
+local function reset_osd ()
    misn.osdCreate( _("Helping Nelly Out"), {
       fmt.f(_("Go to {pnt} in {sys}"),{pnt=destpnt, sys=destsys}),
       fmt.f(_("Return to {pnt} in {sys}"),{pnt=retpnt, sys=retsys}),
