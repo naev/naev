@@ -117,19 +117,19 @@ void equipment_rightClickOutfits( unsigned int wid, const char* str )
 {
    (void)str;
    Outfit* o;
-   int i, active, minimal, n, nfits;
+   int id, active, minimal, n, nfits;
    PilotOutfitSlot* slots;
    Pilot *p;
    OutfitSlotSize size;
 
    active = window_tabWinGetActive( wid, EQUIPMENT_OUTFIT_TAB );
-   i = toolkit_getImageArrayPos( wid, EQUIPMENT_OUTFITS );
+   id = toolkit_getImageArrayPos( wid, EQUIPMENT_OUTFITS );
 
    /* Did the user click on background or placeholder cell? */
-   if (i < 0 || iar_outfits[active] == NULL)
+   if (id < 0 || iar_outfits[active] == NULL)
       return;
 
-   o = iar_outfits[active][i];
+   o = iar_outfits[active][id];
    if (o==NULL)
       return;
 
@@ -152,7 +152,7 @@ void equipment_rightClickOutfits( unsigned int wid, const char* str )
    /* See how many slots it fits into. */
    nfits = 0;
    minimal = n;
-   for (i=0; i<n; i++) {
+   for (int i=0; i<n; i++) {
       /* Must fit the slot. */
       if (!outfit_fitsSlot( o, &slots[i].sslot->slot))
          continue;
@@ -180,7 +180,7 @@ void equipment_rightClickOutfits( unsigned int wid, const char* str )
    /* See if limit is applied and swap with shared limit slot. */
    if (o->limit != NULL) {
       minimal = n;
-      for (i=0; i<n; i++) {
+      for (int i=0; i<n; i++) {
          /* Must fit the slot. */
          if (!outfit_fitsSlot( o, &slots[i].sslot->slot))
             continue;
@@ -213,7 +213,7 @@ void equipment_rightClickOutfits( unsigned int wid, const char* str )
    /* Loop through outfit slots of the right type, try to find an empty one */
    size = OUTFIT_SLOT_SIZE_NA;
    minimal = n;
-   for (i=0; i<n; i++) {
+   for (int i=0; i<n; i++) {
       /* Slot full. */
       if (slots[i].outfit != NULL)
          continue;
