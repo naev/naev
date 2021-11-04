@@ -28,15 +28,11 @@ local pir = require "common.pirate"
 local fmt = require "format"
 local shark = require "common.shark"
 
+--Change here to change the planets and the systems
+local missys = system.get("Arandon")
+local paypla, paysys = planet.getS("Darkshed")
 
 function create ()
-   --Change here to change the planets and the systems
-   missys = system.get("Arandon")
-   pplname = "Darkshed"
-   psyname = "Alteris"
-   paysys = system.get(psyname)
-   paypla = planet.get(pplname)
-
    if not misn.claim(missys) then
       misn.finish(false)
    end

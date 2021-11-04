@@ -37,18 +37,13 @@ local fmt = require "format"
 local shark = require "common.shark"
 
 
-function create ()
-   --Change here to change the planet and the system
-   bsyname = "Toaxis"
-   psyname = "Alteris"
-   pplname = "Darkshed"
-   --System neighbouring Toaxis with zero pirate presence due to a "Virtual Pirate Unpresence" asset
-   esyname = "Ingot"
-   battlesys = system.get(bsyname)
-   paysys = system.get(psyname)
-   paypla = planet.get(pplname)
-   escapesys = system.get(esyname)
+--Change here to change the planet and the system
+local battlesys = system.get("Toaxis")
+local paypla, paysys = planet.getS("Darkshed")
+--System neighbouring Toaxis with zero pirate presence due to a "Virtual Pirate Unpresence" asset
+local escapesys = system.get("Ingot")
 
+function create ()
    if not misn.claim(battlesys) then
       misn.finish(false)
    end

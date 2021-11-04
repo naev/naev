@@ -40,16 +40,12 @@ local pilotname = require "pilotname"
 local fmt = require "format"
 local shark = require "common.shark"
 
+--Change here to change the planet and the system
+local missys = system.get("Ingot")
+local mispla = planet.get("Ulios")
+local battlesys = system.get("Toaxis")
+
 function create ()
-
-   --Change here to change the planet and the system
-   local sysname = "Ingot"
-   local planame = "Ulios"
-   local bsyname = "Toaxis"
-   missys = system.get(sysname)
-   mispla = planet.get(planame)
-   battlesys = system.get(bsyname)
-
    if not misn.claim(battlesys) then
       misn.finish(false)
    end
