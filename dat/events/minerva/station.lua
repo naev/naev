@@ -117,7 +117,7 @@ function create()
 
    -- If scavengers are not dead, they sometimes appear
    if var.peek("maikki_scavengers_alive") and rnd.rnd() < 0.05 then
-      evt.npcAdd( "approach_scavengers", _("Scavengers"), "scavenger1.png", _("You see a pair of dirty looking fellows talking loudly among themselves.") )
+      evt.npcAdd( "approach_scavengers", minerva.scavengers.name, minerva.scavengers.portrait, minerva.scavengers.description )
    end
 
    -- If they player never had tokens, it is probably their first time
@@ -569,10 +569,10 @@ end
 function approach_scavengers ()
    vn.clear()
    vn.scene()
-   local scavA = vn.newCharacter( _("Scavenger A"),
-         { image=scavengera_image, color=scavengera_colour, pos="left" } )
-   local scavB = vn.newCharacter( _("Scavenger B"),
-         { image=scavengerb_image, color=scavengerb_colour, pos="right" } )
+   local scavA = vn.newCharacter( minerva.scavengera.name,
+         { image=minerva.scavengera.image, color=minerva.scavengera.colour, pos="left" } )
+   local scavB = vn.newCharacter( minerva.scavengerb.name,
+         { image=minerva.scavengerb.image, color=minerva.scavengerb.colour, pos="right" } )
    vn.transition()
    -- TODO maybe more text?
    scavB(_([["What are you looking at?"]]))

@@ -50,14 +50,6 @@ local maikki_colour = minerva.maikki.colour
 local oldman_portrait = "old_man.png"
 local oldman_image = "old_man.png"
 
-local scav_portrait = "scavenger1.png"
-local scavengera_image = "scavenger1.png"
-local scavengerb_image = scavengera_image
-local scavengera_portrait = "scavenger1.png"
-local scavengerb_portrait = scavengera_portrait
-local scavengera_colour = nil
-local scavengerb_colour = nil
-
 mainsys = "Limbo"
 searchsys = "Doeston"
 cutscenesys = "Arandon"
@@ -109,7 +101,7 @@ function generate_npc ()
    if planet.cur() == planet.get("Cerberus") then
       misn.npcAdd( "approach_oldman", _("Old Man"), oldman_portrait, _("You see a nonchalant old man sipping on his drink with a carefree aura.") )
       if misn_state==3 or misn_state==4 or bribed_scavengers==true then
-         misn.npcAdd( "approach_scavengers", _("Scavengers"), scav_portrait, _("You see a pair of dirty looking fellows talking loudly among themselves.") )
+         misn.npcAdd( "approach_scavengers", minerva.scavengers.name, minerva.scavengers.portrait, minerva.scavengers.description )
       end
    elseif planet.cur() == planet.get("Minerva Station") then
       misn.npcAdd( "approach_maikki", minerva.maikki.name, minerva.maikki.portrait, minerva.maikki.description )
@@ -336,7 +328,7 @@ He downs his drink and orders another.]]))
    vn.func( function ()
       if misn_state==2 then
          misn_state=3
-         misn.npcAdd( "approach_scavengers", _("Scavengers"), scav_portrait, _("You see a pair of dirty looking fellows talking loudly among themselves.") )
+         misn.npcAdd( "approach_scavengers", minerva.scavengers.name, minerva.scavengers.portrait, minerva.scavengers.description )
       end
    end )
    vn.jump( "menu_msg" )
@@ -364,10 +356,10 @@ end
 function approach_scavengers ()
    vn.clear()
    vn.scene()
-   local scavA = vn.newCharacter( _("Scavenger A"),
-         { image=scavengera_image, color=scavengera_colour, pos="left" } )
-   local scavB = vn.newCharacter( _("Scavenger B"),
-         { image=scavengerb_image, color=scavengerb_colour, pos="right" } )
+   local scavA = vn.newCharacter( minerva.scavengera.name,
+         { image=minerva.scavengera.image, color=minerva.scavengera.colour, pos="left" } )
+   local scavB = vn.newCharacter( minerva.scavengerb.name,
+         { image=minerva.scavengerb.image, color=minerva.scavengerb.colour, pos="right" } )
    vn.transition()
 
    if bribed_scavengers==true then
@@ -515,8 +507,8 @@ function cutscene_hail ()
    vn.clear()
    vn.scene()
    local scavB = vn.newCharacter( _("Scavenger"),
-         { image=scavengerb_image,
-         color=scavengerb_colour, shader=love_shaders.hologram{strength=2.0} } )
+         { image=minerva.scavengerb.image,
+         color=minerva.scavengerb.colour, shader=love_shaders.hologram{strength=2.0} } )
    vn.transition("electric")
    vn.na(_("The comm flickers as a scavenger appears into view. He looks a bit pale."))
    scavB(_([["Thank you. I thought I was a goner. My sensors failed me at the worst time and it's impossible to see shit in this nebula."]]))
@@ -777,12 +769,12 @@ function scavengers_encounter ()
 
    vn.clear()
    vn.scene()
-   local scavA = vn.newCharacter( _("Scavenger A"),
-         { image=scavengera_image,
-         color=scavengera_colour, shader=love_shaders.hologram{strength=2.0}, pos="left" } )
-   local scavB = vn.newCharacter( _("Scavenger B"),
-         { image=scavengerb_image,
-         color=scavengerb_colour, shader=love_shaders.hologram{strength=2.0}, pos="right" } )
+   local scavA = vn.newCharacter( minerva.scavengera.name,
+         { image=minerva.scavengera.image,
+         color=minerva.scavengera.colour, shader=love_shaders.hologram{strength=2.0}, pos="left" } )
+   local scavB = vn.newCharacter( minerva.scavengerb.name,
+         { image=minerva.scavengerb.image,
+         color=minerva.scavengerb.colour, shader=love_shaders.hologram{strength=2.0}, pos="right" } )
    vn.transition("electric")
 
    vn.na(_("Two angry scavengers appear on your screen."))

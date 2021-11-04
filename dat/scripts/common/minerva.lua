@@ -76,6 +76,25 @@ local minerva = {
       image = "minervamole.webp",
       colour = nil,
    },
+   scavengera = {
+      name = _("Scavenger A"),
+      portrait = "scavenger1.png",
+      image = "scavenger1.png",
+      colour = nil,
+   },
+   scavengerb = {
+      name = _("Scavenger B"),
+      portrait = "scavenger1.png",
+      image = "scavenger1.png",
+      colour = nil,
+   },
+   scavengers = {
+      name = _("Scavengers"),
+      portrait = "scavenger1.png",
+      image = "scavenger1.png",
+      description = _("You see a pair of dirty looking fellows talking loudly among themselves."),
+      colour = nil,
+   },
 
    log = {
       kex = function( text )
