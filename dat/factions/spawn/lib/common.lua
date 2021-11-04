@@ -11,7 +11,7 @@ local function _normalize_presence( max )
    local area = math.pow( r, 2 )
    return max * area / norm
    --]]
-   return max * math.min( 1.0, r / 15e3 )
+   return max * math.min( 1, r / 15e3 )
 end
 
 --[[
@@ -65,7 +65,7 @@ function scom.calcNextSpawn( cur )
       penaltyweight = 1 + 10 * (percent - 1)
    end
 
-   local fleetratio = (new/max)/stdfleetsize -- This turns into the base delay multiplier for the next fleet.
+   local fleetratio = (new/max) / stdfleetsize -- This turns into the base delay multiplier for the next fleet.
 
    return math.min(stddelay * fleetratio * delayweight * penaltyweight, maxdelay)
 end
@@ -91,7 +91,7 @@ function scom.createSpawnTable( weights )
    end
 
    -- Normalize
-   for k,v in ipairs(spawn_table) do
+   for _k,v in ipairs(spawn_table) do
       v.chance = v.chance / max
    end
 
@@ -103,7 +103,7 @@ end
 -- @brief Chooses what to spawn
 function scom.choose ()
    local r = rnd.rnd()
-   for k,v in ipairs( scom._weight_table ) do
+   for _k,v in ipairs( scom._weight_table ) do
       if r < v.chance then
          scom._spawn_data = v.func()
          return true
@@ -138,7 +138,7 @@ function scom.spawn( pilots )
          local p = vec2.newP( rnd.rnd() * r, rnd.rnd() * 360 )
          local m = 3000 -- margin
          local L = lanes.get(fct, "non-friendly")
-         for i = 1,20 do
+         for i = 1,20 do -- Just brute force sampling
             local np = lanes.getNonPoint( L, p, r, m )
             if np and #pilot.getHostiles( fct, m, np ) == 0 then
                origin = np
@@ -154,7 +154,7 @@ function scom.spawn( pilots )
    if not origin then
       origin = pilot.choosePoint( fct, false, pilots.__stealth ) -- Find a suitable spawn point
    end
-   for k,v in ipairs(pilots) do
+   for _k,v in ipairs(pilots) do
       local params = v.params or {}
       if not leader then
          if pilots.__formation ~= nil then
