@@ -28,25 +28,25 @@ local fmt = require "format"
 local portrait = require "portrait"
 local baron = require "common.baron"
 
+-- Mission constants
+local baronsys = system.get("Ingot")
+local artifactplanetA = planet.get("Varaati")
+local artifactplanetB = planet.get("Sinclair")
+local artifactplanetC = planet.get("Hurada")
+local flintplanet, flintsys = planet.getS("Tau Station")
+local reward = 200e3 -- The price of each artifact will always be 15% of this, so at most the player will be paid 85% and at least 55%.
+
 function create ()
    -- Note: this mission makes no system claims.
    misn.setNPC(_("An unfamiliar man"), "neutral/unique/unfamiliarman.webp", _("A man you've never seen before makes eye contact with you. It seems he knows who you are."))
 end
 
 function accept()
-   baronsys = system.get("Ingot")
-
-   artifactplanetA, artifactsysA = planet.getS("Varaati")
-   artifactplanetB, artifactsysB = planet.getS("Sinclair")
-   artifactplanetC, artifactsysC = planet.getS("Hurada")
-   flintplanet, flintsys = planet.getS("Tau Station")
-
    stage = 1
 
    flintleyfirst = true
    artifactsfound = 0
 
-   reward = 200e3 -- The price of each artifact will always be 15% of this, so at most the player will be paid 85% and at least 55%.
 
    if tk.yesno(_("His Baronship remembers you"), fmt.f(_([[As you approach the stranger, he extends his hand in greeting. He introduces himself as an associate of Baron Sauterfeldt, the man you helped to "acquire" a holopainting not too long ago.
     "The Baron was quite pleased with your performance in that matter," he confides. "He has asked me to try to find you again for another job not unlike the last one. The Baron is a collector, you see, and his hunger for new possessions is a hard one to satiate." He makes a face. "Of course, his methods aren't always completely respectable, as you've experienced for yourself. But I assure you that the Baron is not a bad man, he is simply very enthusiastic."

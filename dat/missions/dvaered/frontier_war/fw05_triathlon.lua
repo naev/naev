@@ -43,8 +43,9 @@ local portrait = require "portrait"
 -- common hooks
 message = fw.message
 
+-- Mission constants
+local destpla, destsys = planet.getS("Dvaer Prime")
 local radius = 4000
-
 local mace_fail = _("Your only weapons should be Mace rockets: land and speak again with Major Tam.")
 
 -- Joy cries (for the Mace throw)
@@ -60,8 +61,6 @@ local joy = { _("Wohoo!"),
         _("Got you!"),}
 
 function create()
-   destpla, destsys = planet.getS("Dvaer Prime")
-
    if not misn.claim(destsys) then
       misn.finish(false)
    end

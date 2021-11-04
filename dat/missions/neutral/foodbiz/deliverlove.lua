@@ -25,13 +25,13 @@ Plot: Talk to man on Zeo, bargain, load some cargo, deliver it to Zhiru in Godda
 local fmt = require "format"
 local neu = require "common.neutral"
 
-cargoname = N_("Love Letters")
-cargodesc = N_("A cargo of feelings inked onto pulped, dried cellulose fibres.")
+local cargoname = N_("Love Letters")
+local cargodesc = N_("A cargo of feelings inked onto pulped, dried cellulose fibres.")
+local targetworld, targetworld_sys = planet.getS( "Zhiru" )
 
 
 function create () --No system shall be claimed by mission
    startworld, startworld_sys = planet.cur()
-   targetworld, targetworld_sys = planet.getS( "Zhiru" )
 
    reward = 20e3
    started = false

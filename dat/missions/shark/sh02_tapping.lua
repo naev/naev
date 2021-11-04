@@ -36,6 +36,9 @@ local pir = require "common.pirate"
 local fmt = require "format"
 local shark = require "common.shark"
 
+-- Mission constants
+local paypla, paysys = planet.getS("Darkshed")
+local reward = 750e3
 
 function create ()
    mispla, missys = planet.getLandable(faction.get("Sirius"))
@@ -44,15 +47,11 @@ function create ()
       misn.finish(false)
    end
 
-   paypla, paysys = planet.getS("Darkshed")
-
    misn.setNPC(_("Arnold Smith"), "neutral/unique/arnoldsmith.webp", _([[Arnold Smith is here. Perhaps he might have another job for you.]]))
 end
 
 function accept()
-
    stage = 0
-   reward = 750e3
    proba = 0.4  --the chances you have to get an ambush
 
    if tk.yesno(_("Nexus Shipyards needs you (again)"), fmt.f(_([[You sit at Smith's table and ask him if he has a job for you. "Of course," he answers. "But this time, it's... well...

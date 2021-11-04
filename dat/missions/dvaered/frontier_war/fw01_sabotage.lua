@@ -42,15 +42,15 @@ local pir = require "common.pirate"
 -- common hooks
 message = fw.message
 
+-- Mission constants
 local bombMass = 100
+local hampla, hamsys     = planet.getS("Stutee") --Morgan Station
+local sabotpla, sabotsys = planet.getS(fw.wlrd_planet)
+local duelpla, duelsys   = planet.getS("Dvaer Prime")
+local intpla, intsys     = planet.getS("Timu")
 
 
 function create()
-   hampla, hamsys     = planet.getS("Stutee") --Morgan Station
-   sabotpla, sabotsys = planet.getS(fw.wlrd_planet)
-   duelpla, duelsys   = planet.getS("Dvaer Prime")
-   intpla, intsys     = planet.getS("Timu")
-
    if planet.cur() == hampla then
       misn.finish(false)
    end

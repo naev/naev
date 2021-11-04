@@ -23,6 +23,13 @@ local fmt = require "format"
 local shadow = require "common.shadow"
 require "proximity"
 
+-- Mission constants
+local seirplanet, seirsys = planet.getS("Edergast")
+local jorekplanet1, joreksys1 = planet.getS("Manis")
+local jorekplanet2, joreksys2 = planet.getS("The Wringer")
+local ambushsys = system.get("Herakin")
+local safesys = system.get("Eiderdown")
+
 -- Mission info stuff
 local function dest_updated(pnt, sys)
    misn.osdCreate(_("Dark Shadow"), {
@@ -33,12 +40,6 @@ end
 
 function create()
    var.push("darkshadow_active", true)
-
-   seirplanet, seirsys = planet.getS("Edergast")
-   jorekplanet1, joreksys1 = planet.getS("Manis")
-   jorekplanet2, joreksys2 = planet.getS("The Wringer")
-   ambushsys = system.get("Herakin")
-   safesys = system.get("Eiderdown")
 
    if not misn.claim ( {seirsys, joreksys2, ambushsys} ) then
       abort()

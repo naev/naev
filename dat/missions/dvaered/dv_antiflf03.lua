@@ -32,7 +32,8 @@ require "proximity"
 local portrait = require "portrait"
 local dv = require "common.dvaered"
 
-
+-- Mission constants
+local DVplanet, DVsys = planet.getS("Stalwart Station")
 
 function create()
     missys = {system.get(var.peek("flfbase_sysname"))}
@@ -45,7 +46,6 @@ end
 
 function accept()
     destsys = system.get(var.peek("flfbase_sysname"))
-    DVplanet, DVsys = planet.getS("Stalwart Station")
 
     local briefing, txt
     briefing = fmt.f(_([[The liaison's expression then turns wooden, and his voice becomes level. Clearly, he has been briefing people for a long time in his career, so he can probably do this in his sleep. It occurs to you that perhaps he DOES nap while doing this.

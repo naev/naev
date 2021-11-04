@@ -25,7 +25,7 @@ require "proximity"
 local srs = require "common.sirius"
 local fmt = require "format"
 
-misn_reward = fmt.credits(1e6)
+local reward = 1e6
 
 function create()
    -- Note: this mission does not make any system claims.
@@ -56,7 +56,7 @@ function accept()
 
    misn.accept()
    misn.setDesc(_("Joanne wants you to find Harja and interrogate him about his motives."))
-   misn.setReward(misn_reward)
+   misn.setReward(fmt.credits(reward))
    misn.osdCreate(_("Joanne's Doubt"), {
       _("Find Harja in Sirius space"),
       _("Talk to Harja"),
@@ -190,7 +190,7 @@ function land()
     "I've got to admit, I find his story a little disturbing. He genuinely seems to believe I framed him for that hack, just as I believe he tried to frame me. From what you told me, it doesn't seem like he was just putting up a self-righteous story to justify his actions, and I wouldn't expect that from him anyway. But that's impossible. Besides the two of us, there was nobody who had the slightest interest in removing either one of us from the academy. I know I didn't do it, so that means Harja must have done it. Only..." Joanne pauses. "You said he swore an oath. Whatever else I might think of him, I can't quite believe he would abuse his Sirian beliefs in such a way. We Sirii take our faith very seriously.
     "I don't know what to say, {player}. The more I find out about all this, the less sense it makes. I need to think about this, see if there's something I can figure out on my side. I suspect this isn't the end of it yet, though, so I may need your help again soon. But for now, I should give you what I promised you so you can take care of your other matters."
     Joanne pays you the agreed upon sum. Then she walks out of the spaceport bar, a thoughtful expression on her face. It seems your role in the conflict between Joanne and Harja is growing. Who knows where it'll end.]]), {player=player.name()}))
-      player.pay(1e6)
+      player.pay(reward)
       var.pop("achack03repeat")
       srs.addAcHackLog( _([[Joanne hired you to interrogate Harja about his motives for trying to assassinate her. He was unwilling to talk to you, but when you backed him into a corner, Harja claimed that it was Joanne who hacked the High Acadamy's main computer to change her scores in an attempt to frame him. He swore "on Sirichana" that he wasn't responsible for the hack. Joanne took this oath seriously, saying that he wouldn't "abuse his Sirian beliefs". She said that she may need your help again soon.]]) )
       misn.finish(true)

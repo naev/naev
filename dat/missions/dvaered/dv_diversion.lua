@@ -39,7 +39,7 @@ chatter[6] = _("Obviously the one who killed him!")
 chatter[7] = _("I will never serve a different warlord than Khan! Die, you traitors!")
 
 function create()
-   missys = {destsys}
+   local missys = {destsys}
    if not misn.claim(missys) then
       abort()
    end

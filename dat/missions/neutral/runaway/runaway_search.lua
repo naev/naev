@@ -24,8 +24,12 @@
 local fmt = require "format"
 local neu = require "common.neutral"
 
+-- Mission constants
 local cargoname = N_("Cynthia")
 local cargodesc = N_("A young teenager.")
+local targetworld, targetworld_sys = planet.getS("Niflheim")
+local releasereward = 25e3
+local reward = 100e3
 
 -- Here are stored the fake texts for the OSD
 osd_text = {}
@@ -38,12 +42,6 @@ osd_text["__save"] = true
 -- Can't let them see what's coming up, can I?
 
 function create ()
-   targetworld_sys = system.get("Dohriabi")
-   targetworld = planet.get("Niflheim")
-
-   releasereward = 25e3
-   reward = 100e3
-
    misn.setNPC( _("Old Man"), "neutral/unique/cynthia_father.webp", _("An old man sits at a table with some missing person papers.") )
 end
 

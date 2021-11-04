@@ -30,6 +30,10 @@ local fmt = require "format"
 local shark = require "common.shark"
 local lmisn = require "lmisn"
 
+-- Mission constants
+local paypla, paysys = planet.getS("Darkshed")
+local reward = 3e6
+
 osd_title = _("The Last Detail")
 
 function create ()
@@ -53,8 +57,6 @@ function create ()
    kersys2 = systems[3] or systems[ rnd.rnd(1,#systems) ]
    godsys = systems[4] or systems[ rnd.rnd(1,#systems) ]
 
-   paypla, paysys = planet.getS("Darkshed")
-
    if not misn.claim({gawsys, kersys1, kersys2, godsys}) then
       misn.finish(false)
    end
@@ -63,8 +65,6 @@ function create ()
 end
 
 function accept()
-
-   reward = 3e6
    stage = 0
 
    --Initialization of dead pirate memory

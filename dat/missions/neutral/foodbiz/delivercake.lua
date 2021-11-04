@@ -23,10 +23,10 @@ Plot: on Zhiru you meet the same girl who received the love letters,her name is 
 local fmt = require "format"
 local neu = require "common.neutral"
 
+local targetworld, targetworld_sys = planet.getS( "Zeo" )
 
 function create () --No system shall be claimed by mission
    startworld, startworld_sys = planet.cur()
-   targetworld, targetworld_sys = planet.getS( "Zeo" )
 
    reward = 10e3
 

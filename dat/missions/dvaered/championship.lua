@@ -41,10 +41,10 @@ npc_portrait[5] = portrait.get("Dvaered")
 npc_portrait[6] = portrait.get("Pirate")
 npc_portrait["__save"] = true
 
-function create ()
-   --Change here to change the planet and the system
-   mispla, missys = planet.getS("Dvaer Prime")
+--Change here to change the planet and the system
+local mispla, missys = planet.getS("Dvaer Prime")
 
+function create ()
    if not misn.claim ( missys ) then
       misn.finish(false)
    end
@@ -300,7 +300,7 @@ function enter()
       attackhook = hook.pilot( opponent, "attacked", "oppo_attacked" )
 
       --Adding the starting mark
-      start_pos = mispla:pos() + vec2.new( -1000, -1500)
+      local start_pos = mispla:pos() + vec2.new( -1000, -1500)
       mark = system.mrkAdd( start_pos, _("START") )
       prox = hook.timer(0.5, "proximity", {location = start_pos, radius = 300, funcname = "assault"})
 
@@ -430,7 +430,6 @@ function won()
 end
 
 function escort_attacked(_plt, attacker) --someone attacked the escort
-
    for i, k in ipairs({sec11, sec12, sec21, sec22}) do
       k:control()
       k:attack(attacker)
@@ -444,7 +443,6 @@ function escort_attacked(_plt, attacker) --someone attacked the escort
    if attacker == player.pilot() or attacker:leader() == player.pilot() then
       misn.finish(false)
    end
-
 end
 
 function player_wanted()  --For some reason, the security wants to take the player down

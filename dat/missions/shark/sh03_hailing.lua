@@ -28,12 +28,14 @@ local pir = require "common.pirate"
 local fmt = require "format"
 local shark = require "common.shark"
 
+-- Mission constants
+local reward = 750e3
+local paypla, paysys = planet.getS("Darkshed")
+local nextpla, nextsys = planet.getS("Curie") -- This should be the same as the planet used in sh04_meeting!
 
 function create ()
    --Change here to change the planets and the systems
    mispla,missys = planet.getLandable(faction.get("Frontier"))  -- mispla will be useful to locate the Hawking
-   paypla, paysys = planet.getS("Darkshed")
-   nextpla, nextsys = planet.getS("Curie") -- This should be the same as the planet used in sh04_meeting!
 
    if not misn.claim(missys) then
       misn.finish(false)
@@ -43,9 +45,7 @@ function create ()
 end
 
 function accept()
-
    stage = 0
-   reward = 750e3
 
    if tk.yesno(_("A new job"), fmt.f(_([["Hello there, nice to meet you again! According to the information that you brought us, the negotiations between the Frontier officials and House Sirius are proceeding very quickly. We have to act now. There is a member of the Frontier Council who, for political reasons, could help us.
     "I can't send him a message without being spotted by the Sirii, so I need you to contact him. He's probably piloting his Hawking in the {sys} system. Go there, hail him, and let him know that I have to see him on {next_pnt} in the {next_sys} system. He will understand.

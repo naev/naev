@@ -23,9 +23,11 @@
 local fmt = require "format"
 local srm = require "common.soromid"
 
+-- Mission constants
+local misplanet, missys = planet.getS( "Durea" )
+local credits = 50e3
 
 local chatter = {}
-
 chatter[1] = _([["I just want to say again, thank you so much for helping me," C says. "It's a bit nerve-wracking, coming out to my parents, and I've met so many people who... anyway, it's nice to meet someone who understands and respects my wishes and doesn't react with sarcasm. I hope my parents understand...."
     After confirming that it's about the pronouns you use to refer to them, you simply say that it should be common decency to respect people's wishes regarding how they wish to be referred to. This leads to a conversation about common decency and people who do rude things for no good reason.]])
 
@@ -50,13 +52,11 @@ reminders[8] = _("You talk to Chelsea a little about some interesting experience
 reminders[9] = _("You have a brief conversation with Chelsea about interesting sights you both have seen in your travels.")
 
 function create ()
-   misplanet, missys = planet.getS( "Durea" )
    -- Note: This mission does not make system claims
    if system.cur():jumpDist( missys, true ) < #chatter * 3 / 2 then
       misn.finish( false )
    end
 
-   credits = 50e3
    started = false
    chatter_index = 0
 

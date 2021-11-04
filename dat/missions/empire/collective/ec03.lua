@@ -34,6 +34,10 @@
 local fmt = require "format"
 local emp = require "common.empire"
 
+-- Mission constants
+local dronequota = 5 -- The amount of drones the player must whack to win
+local misn_base, misn_base_sys = planet.getS("Omega Station")
+local misn_target_sys = system.get("C-59")
 
 osd_msg = {__save=true}
 
@@ -68,10 +72,7 @@ function accept ()
       misn.accept()
 
       misn_stage = 0
-      dronequota = 5 -- The amount of drones the player must whack to win
       droneleft = dronequota
-      misn_base, misn_base_sys = planet.getS("Omega Station")
-      misn_target_sys = system.get("C-59")
       misn_marker = misn.markerAdd( misn_target_sys, "low" )
 
       -- Mission details

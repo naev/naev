@@ -32,8 +32,14 @@ require "proximity"
 local emp = require "common.empire"
 local fmt = require "format"
 
+-- Mission constants
+local misn_base = planet.get("Omega Station")
+local misn_target_sys1 = system.get("C-59")
+local misn_target_sys2 = system.get("C-28")
+local misn_final_sys = system.get("C-00")
+
 function create ()
-    missys = {system.get("C-59"), system.get("C-28"), system.get("C-00")}
+    local missys = {misn_target_sys1, misn_target_sys2, misn_final_sys}
     if not misn.claim(missys) then
         misn.finish( false )
     end
@@ -56,10 +62,6 @@ function accept ()
 
    -- Mission data
    misn_stage = 0
-   misn_base, misn_base_sys = planet.getS("Omega Station")
-   misn_target_sys1 = system.get("C-59")
-   misn_target_sys2 = system.get("C-28")
-   misn_final_sys = system.get("C-00")
    misn_marker = misn.markerAdd( misn_target_sys2, "low" )
    misn_marker = misn.markerAdd( misn_final_sys, "high" )
 

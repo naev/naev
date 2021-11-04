@@ -42,6 +42,8 @@ local pir = require "common.pirate"
 -- common hooks
 escort_hailed = fw.escort_hailed
 
+-- Mission constants
+local destpla, destsys = planet.getS("Mannannan")
 local lore_text = {}
 
 lore_text[1] = _([["Good question, citizen! It is very likely that some people among the intelligence services of the other nations know that General Klank and myself are implicated in the invasion project. They probably just don't know how imminent it is. So they could have hired henchmen to stop or annoy us. We have identified some of the henchmen actually, and they are the kind of independent mercenaries we find on any kind of shady operations... A bit like you in fact."]])
@@ -61,7 +63,6 @@ local flee_text = _("You were supposed to wait for Strafer to scan the system, a
 local tflee_text = _([[Two of your targets went away. If there was only one, it could be manageable, but now, the mission has failed.]])
 
 function create()
-   destpla, destsys = planet.getS("Mannannan")
    startsys = system.cur()
    d = startsys:jumpDist( destsys )
 

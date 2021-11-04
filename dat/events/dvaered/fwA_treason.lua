@@ -27,7 +27,9 @@
 local fw = require "common.frontier_war"
 local fmt = require "format"
 
-credits = 2e6
+-- Event constants
+local credits = 2e6
+local targetsys = system.get("Doranthex") -- TODO: not sure it's needed.
 
 
 -- Start at previous system
@@ -42,7 +44,6 @@ function begin ()
    hook.rm(landhook)
 
    thissystem = system.cur()
-   targetsys = system.get("Doranthex") -- TODO: not sure it's needed.
 
    -- thissystem and source_system must be adjacent (for those who use player.teleport)
    areAdj = false

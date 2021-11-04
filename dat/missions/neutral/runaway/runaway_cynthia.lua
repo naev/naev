@@ -22,14 +22,14 @@ There will be more missions to detail how you are perceived as the kidnapper of 
 local fmt = require "format"
 local neu = require "common.neutral"
 
+-- Mission constants
 local cargoname = N_("Cynthia")
 local cargodesc = N_("A young teenager.")
+local targetworld, targetworld_sys = planet.getS("Zhiru")
+local reward = 500e3
 
 function create ()
    startworld, startworld_sys = planet.cur()
-   targetworld_sys = system.get("Goddard")
-   targetworld = planet.get("Zhiru")
-   reward = 500e3
 
    misn.setNPC( _("Young Teenager"), "neutral/unique/cynthia.webp", _("A pretty teenager sits alone at a table.") )
 end

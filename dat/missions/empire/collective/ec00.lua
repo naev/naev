@@ -33,12 +33,13 @@ require "proximity"
 local fmt = require "format"
 local emp = require "common.empire"
 
-function create ()
-   misn_nearby = system.get("Acheron")
-   misn_target = system.get("Merisi")
-   misn_base,misn_base_sys = planet.getS("Omega Station")
+-- Mission constants
+local misn_nearby = system.get("Acheron")
+local misn_target = system.get("Merisi")
+local misn_base, misn_base_sys = planet.getS("Omega Station")
 
-    missys = {misn_target}
+function create ()
+    local missys = {misn_target}
     if not misn.claim(missys) then
         abort()
     end

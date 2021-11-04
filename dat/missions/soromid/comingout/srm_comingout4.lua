@@ -24,10 +24,11 @@
 local fmt = require "format"
 local srm = require "common.soromid"
 
+-- Mission constants
+local misplanet, missys = planet.getS( "Durea" )
+local misplanet2, missys2 = planet.getS( "Crow" )
 
 function create ()
-   misplanet, missys = planet.getS( "Durea" )
-   misplanet2, missys2 = planet.getS( "Crow" )
    if not misn.claim( missys ) then misn.finish( false ) end
 
    started = false

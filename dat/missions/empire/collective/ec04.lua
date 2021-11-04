@@ -36,9 +36,12 @@ require "proximity"
 local fmt = require "format"
 local emp = require "common.empire"
 
-function create ()
-   misn_target, misn_target_sys = planet.getS("Eiroik")
+-- Mission constants
+local misn_target, misn_target_sys = planet.getS("Eiroik")
+local misn_base, misn_base_sys = planet.getS("Omega Station")
+local credits = 1e6
 
+function create ()
    local missys = {misn_target}
    if not misn.claim(missys) then
       abort()
@@ -49,10 +52,7 @@ function create ()
     "The commando team has sent us an SOS. They were discovered by the Collective, and now they're under heavy fire. We need you to go and get them out of there. Would you be willing to embark on another dangerous mission?"]]) ) then
       misn.accept()
 
-      credits = 1e6
-
       misn_stage = 0
-      misn_base, misn_base_sys = planet.getS("Omega Station")
       misn_marker = misn.markerAdd( misn_target_sys, "low" )
 
       -- Mission details

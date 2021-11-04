@@ -33,7 +33,7 @@ local portrait = require "portrait"
 local dv = require "common.dvaered"
 
 function create()
-    missys = {system.get(var.peek("flfbase_sysname"))}
+    local missys = {system.get(var.peek("flfbase_sysname"))}
     if not misn.claim(missys) then
         abort()
     end

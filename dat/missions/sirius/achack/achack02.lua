@@ -28,13 +28,15 @@ local srs = require "common.sirius"
 local fmt = require "format"
 local pir = require "common.pirate"
 
+
+-- Mission constants
+local reward = 750e3
+
 local text4 = _([[You go through the now familiar routine of waiting for Joanne. She soon hails you on the comms.
     "That's it, {player}! This was the final stop. You've been a great help. This isn't a good place to wrap things up though. Tell you what, let's relocate to Sroolu and meet up in the spaceport bar there. I need to give you your payment of course, but I also want to talk to you for a bit. See you planetside!"
     The comm switches off. You prepare to take off and set a course for Sroolu.]])
 
 local stoptext = _("You dock with {pnt}, and the spacedock personnel immediately begins to refuel your ship. You spend a few hectoseconds going through checklists and routine maintenance operations. Then you get a ping on your comms from Joanne. She tells you that she has finished her business on this station, and that she's taking off again. You follow suit.")
-
-misn_reward = fmt.credits(750e3)
 
 function create()
    if not misn.claim ( {system.get("Humdrum"), system.get("Lapis")} ) then
@@ -88,7 +90,7 @@ function accept()
 
    misn.accept()
    misn.setDesc(_("Joanne needs you to escort her ship and fight off mercenaries sent to kill her."))
-   misn.setReward(misn_reward)
+   misn.setReward(fmt.credits(reward))
    misn.osdCreate(_("Harja's Vengeance"), {
       _("Follow Joanne's ship"),
       _("Defeat Joanne's attackers"),
@@ -134,7 +136,7 @@ function land()
     "That's basically the history between me and Harja. Up until you came to me, I just thought of him as an untrustworthy man whose own underhanded plan backfired on him. But here we are, cycles later, and now he's trying to kill me. Why, I wonder? Could he really be so bitter over what happened that he wants me dead? Even though he has nobody to blame but himself? I just don't understand it, {player}, I really don't."
     Joanne remains silent for a moment, then takes a deep breath. "Whew, I feel quite a bit better now for having told this to you. Thanks for listening, it means a lot to me. I shouldn't keep you here any longer though, I'm sure you have a lot of other problems to look after."
     Joanne leaves the spaceport bar. You can't help but reflect that even in the highest levels of society, you can find envy and vice.]]), {player=player.name()}))
-      player.pay(750e3)
+      player.pay(reward)
       var.pop("achack02repeat")
       srs.addAcHackLog( _([[Joanne, the Serra military officer who Harja tried to hire you to assassinate, enlisted you to aid her against would-be assassins. Along the way, she explained that Harja was a classmate of hers in the High Academy. According to her, Harja had hacked into the academy's main computer to change all of her grades to perfect scores in an attempt to sabotage her by making her look like a cheater.]]) )
       misn.finish(true)

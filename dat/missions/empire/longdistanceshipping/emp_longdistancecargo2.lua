@@ -27,17 +27,14 @@
 local fmt = require "format"
 local emp = require "common.empire"
 
+-- Mission constants
+local targetworld, targetworld_sys = planet.getS("Praxis")
 
 function create ()
  -- Note: this mission does not make any system claims.
 
       -- Get the planet and system at which we currently are.
    startworld, startworld_sys = planet.cur()
-
-   -- Set our target system and planet.
-   targetworld_sys = system.get("Ogat")
-   targetworld = planet.get("Praxis")
-
 
    misn.setNPC( _("Lieutenant"), "empire/unique/czesc.webp", _("Lieutenant Czesc from the Empire Armada Shipping Division is sitting at the bar.") )
 end

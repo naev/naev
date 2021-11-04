@@ -25,6 +25,9 @@ local fmt = require "format"
 local shadow = require "common.shadow"
 local pir = require "common.pirate"
 
+-- Mission constants
+local rebinasys = system.get("Pas")
+
 -- Make a pilot say a line, if he is alive. Mainly useful in sequential chat messages.
 -- argument chat: A table containing:
 -- pilot: The pilot to say the text
@@ -41,7 +44,6 @@ end
 function create()
    misn.accept()
    stage = 0
-   rebinasys = system.get("Pas")
    hook.jumpin("jumpin")
    hook.timer(1.0, "delayedClaim")
 

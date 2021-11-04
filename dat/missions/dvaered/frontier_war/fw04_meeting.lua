@@ -41,6 +41,10 @@ message = fw.message
 
 -- TODO: hooks to penalize attacking people
 
+-- Mission constants
+local destpla, destsys = planet.getS("Dvaer Prime")
+local targpla = planet.get("Dvaered High Command")
+local haltpla = planet.get("Laarss")
 local lore_text = {}
 
 lore_text[1] = _([["Both squadrons of the DHC station's space security force will be deployed with full range ships from Vendettas to Goddards. Those squadrons are the 'Beta-Storks' and the 'Beta-Hammer' and their missions will be to control medium and heavy ships and to provide anti-heavy firepower in case of need. Our squadron, named 'Alpha-NightClaws', is in charge of fast ships (Yachts and Fighters). We will be flying Hyenas.
@@ -81,10 +85,6 @@ occupations = { _("caterer"),
                 _("torturer"), }
 
 function create()
-   destpla, destsys = planet.getS("Dvaer Prime")
-   targpla = planet.get("Dvaered High Command")
-   haltpla = planet.get("Laarss")
-
    if planet.cur() == destpla then
       misn.finish(false)
    end

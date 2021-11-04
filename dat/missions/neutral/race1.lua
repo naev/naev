@@ -29,11 +29,10 @@ target = {1,1,1,1}
 
 function create ()
    this_planet, this_system = planet.cur()
-   missys = {this_system}
+   local missys = {this_system}
    if not misn.claim(missys) then
       misn.finish(false)
    end
-   cursys = system.cur()
    curplanet = planet.cur()
    misn.setNPC(_("A laid back person"), "neutral/unique/laidback.webp", _("You see a laid back person, who appears to be one of the locals, looking around the bar."))
    credits = rnd.rnd(20e3, 100e3)

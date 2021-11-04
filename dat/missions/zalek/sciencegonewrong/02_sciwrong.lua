@@ -25,7 +25,7 @@
    Author: fart but based on Mission Ideas in wiki: wiki.naev.org/wiki/Mission_Ideas
 --]]
 local sciwrong = require "common.sciencegonewrong"
-
+local fmt = require "format"
 
 -- system with the drone and the return to start
 t_sys = { __save=true }
@@ -141,7 +141,6 @@ function game_of_drones ()
    idlehook = hook.pilot(t_drone, "idle", "targetIdle")
    misn.osdActive(2)
    -- wait for the drone to be hailed
-   sp = t_pla[1]
    hailhook = hook.pilot(t_drone,"hail","got_hailed",t_drone,badguys)
 end
 
@@ -178,7 +177,7 @@ function sp_baddies()
    for i=1,#badguys do
       bghook[i] = hook.pilot(badguys[i], "exploded", "dead_drone",i)
    end
-   jps = system.cur():jumps()
+   local jps = system.cur():jumps()
    t_drone:taskClear()
    t_sys[3] = jps[1]:dest()
    t_drone:hyperspace(jps[1]:dest())
@@ -269,7 +268,7 @@ function drone_attacked()
    t_drone:setHostile(true)
    t_drone:setHilight(true)
    t_drone:setVisplayer(true)
-   jps = system.cur():jumps()
+   local jps = system.cur():jumps()
    t_drone:taskClear()
    t_sys[3] = jps[1]:dest()
    t_drone:hyperspace(jps[1]:dest())

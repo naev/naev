@@ -30,17 +30,15 @@ local fmt = require "format"
 local zlk = require "common.zalek"
 
 
--- Target Systems
-local t_sys = {}
-t_sys[1] = system.get("Doeston")
-t_sys[2] = system.get("Iris")
+-- Mission Constants
+local t_sys = { system.get("Doeston"), system.get("Iris") }
+local homeworld, homeworld_sys = planet.getS("Jorla")
+local credits = 300e3
 
 
 function create()
     -- mission variables
     misn_stage = 0
-    homeworld, homeworld_sys = planet.getS("Jorla")
-    credits = 300e3
 
     -- Spaceport bar stuff
     misn.setNPC(_("A young scientist"),  "zalek/unique/student.webp", _("You see a young scientist talking with some pilots, apparently without success.") )

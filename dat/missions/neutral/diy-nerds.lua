@@ -26,7 +26,7 @@ local pir = require "common.pirate"
 local fmt = require "format"
 
 -- Mission details.
-misn_reward = fmt.credits(20e3)
+local misn_reward = fmt.credits(20e3)
 
 -- helper functions, defined below
 local addNerdCargo, rmNerdCargo, nerds_return, system_hasAtLeast

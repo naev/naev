@@ -24,9 +24,9 @@ local npc_portrait   = "minerva_terminal.png"
 local npc_image      = "minerva_terminal.png"
 local npc_description= _("A terminal to access the Crimson Gauntlet Virtual Reality environment. This directly allows you to enter the different challenges and tournaments available.")
 
-gauntletsys = system.get("Crimson Gauntlet")
+local gauntletsys = system.get("Crimson Gauntlet")
 
-sfx_clear = audio.new( 'snd/sounds/jingles/victory.ogg' )
+local sfx_clear = audio.new( 'snd/sounds/jingles/victory.ogg' )
 
 function create ()
    misn.npcAdd( "approach_gauntlet", _("Crimson Gauntlet Terminal"), npc_portrait, npc_description )

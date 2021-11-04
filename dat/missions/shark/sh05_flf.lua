@@ -36,18 +36,18 @@ local pir = require "common.pirate"
 local fmt = require "format"
 local shark = require "common.shark"
 
+-- Mission constants
+local paypla, paysys = planet.getS("Darkshed")
+local reward = 1e6
 
 function create ()
    --Change here to change the planets and the systems
-   paypla, paysys = planet.getS("Darkshed")
    nextsys = system.get("Arandon") -- This should be the same as the system used in sh06!
    misn.setNPC(_("Arnold Smith"), "neutral/unique/arnoldsmith.webp", _([[It looks like he has yet another job for you.]]))
 end
 
 function accept()
-
    stage = 0
-   reward = 1e6
 
    if tk.yesno(_("Nice to see you again!"), fmt.f(_([["Hello, {player}! Are you ready to take part in another sales mission?
     "As you know, the FLF is a heavy user of our ships, but they're also heavy users of Dvaered ships, chiefly the Vendetta design. Since House Dvaered is an enemy of the FLF, we see this as an opportunity to expand our sales: we want to convince the FLF leaders to buy more Nexus ships and fewer Dvaered ships. This will be through a false contraband company so that word doesn't get out that we're supporting terrorists by selling them ships. What do you say? Can you help us once again?"]]), {player=player.name()})) then

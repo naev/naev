@@ -57,17 +57,16 @@ local tronk_desc = _("The young cyborg sits to the right of his captain, and loo
 local theru_desc = _("This soldier is the team's medic. As such, she seems to be slightly less combat-suited than the others, but her large cybernetically-enhanced arms still make her look like she could crush a bull.")
 local straf_desc = _("The pilot is the only one in the group who looks like the other people with whom you are used to working. His presence along with the others makes the group even stranger.")
 
+-- Mission constants
 local commMass = 4
 local fzlk = faction.get("Za'lek")
+local hampla, hamsys = planet.getS("Vilati Vilata")
+local reppla, repsys = planet.getS("Dvaer Prime")
+local pripla, prisys = planet.getS("Jorla")
+local zlkpla, zlksys = planet.getS("House Za'lek Central Station")
+local intsys = system.get("Poltergeist")
 
 function create()
-   hampla, hamsys = planet.getS("Vilati Vilata")
-   reppla, repsys = planet.getS("Dvaer Prime")
-   pripla, prisys = planet.getS("Jorla")
-   zlkpla, zlksys = planet.getS("House Za'lek Central Station")
-
-   intsys = system.get("Poltergeist")
-
    if planet.cur() == hampla then
       misn.finish(false)
    end

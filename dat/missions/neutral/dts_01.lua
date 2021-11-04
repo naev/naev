@@ -52,7 +52,7 @@ function create()
       misn.finish(false)
    end
 
-   missys = {this_system}
+   local missys = {this_system}
    if not misn.claim(missys) then
       misn.finish(false)
    end

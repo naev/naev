@@ -22,7 +22,9 @@
 local srs = require "common.sirius"
 local fmt = require "format"
 
-misn_reward = fmt.credits(400e3)
+-- Mission constants
+local misn_reward = fmt.credits(400e3)
+local destplanet, destsys = planet.getS("Racheka")
 
 function create()
     -- This mission ONLY spawns if the system it's in is not claimed by another mission. Special hack to mutex with Dark Shadow.
@@ -40,7 +42,6 @@ function accept()
     "Listen," he continues. "I don't intend to bore you with my personal sob story, so let's just say there's someone I want dead, a dangerous criminal. This woman did something to me cycles ago that just can't go unpunished. I've got money, I'm willing to pay. All you need to do is locate her, and discreetly take her out. I don't care how you do it. I don't even care if you enjoy it. Just come back when she's dead, and I'll pay you 400,000 credits. Do we have a deal?"]])) then
         abort()
     end
-    destplanet, destsys = planet.getS("Racheka")
     tk.msg(_("A Sirian with a grudge"), fmt.f(_([["Great! I was about to give up hope that I would find anyone with enough guts to do this for me. Okay, so, let me tell you about your target. She's a member of the Serra echelon, and she's got long, brown hair and blue eyes. She can usually be found in Sirius space, I believe she'll be on {pnt} in the {sys} system right now. Come back to me when she's dead, and I'll give you your reward!"
     Harja leaves the spacedock bar, satisfied that he's finally found someone to take his request. You can't help but wonder why he would try to hire a mercenary in a place like the Wringer, though. If the target is such a dangerous criminal, then wouldn't he be better off posting a bounty mission on the public board? Oh well, it's none of your business. You accepted the job, now all that's left is to complete it.]]), {pnt=destplanet, sys=destsys}))
     misn.accept()

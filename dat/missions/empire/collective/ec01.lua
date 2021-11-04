@@ -32,6 +32,10 @@
 local fmt = require "format"
 local emp = require "common.empire"
 
+-- Mission constants
+local misn_base, misn_base_sys = planet.getS("Omega Station")
+local targsys1 = system.get("C-43")
+local targsys2 = system.get("C-59")
 
 function create ()
    -- Note: this mission does not make any system claims.
@@ -53,9 +57,6 @@ function accept ()
 
    misn_stage = 0
    systems_visited = 0 -- Number of Collective systems visited
-   misn_base,misn_base_sys = planet.getS("Omega Station")
-   targsys1 = system.get("C-43")
-   targsys2 = system.get("C-59")
 
    -- Mission details
    misn.setTitle(_("Collective Espionage"))

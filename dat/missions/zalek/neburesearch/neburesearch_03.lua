@@ -27,13 +27,14 @@ local car = require "common.cargo"
 local fmt = require "format"
 local zlk = require "common.zalek"
 
+-- Mission constants
+local homeworld, homeworld_sys = planet.getS("Jorla")
+local dest_planet, dest_sys = planet.getS("Neo Pomerania")
+local lab_coat_price = 25e3
+local glasses_price = 40e3
 
 function create()
     -- mission variables
-    homeworld, homeworld_sys = planet.getS("Jorla")
-    dest_planet, dest_sys = planet.getS("Neo Pomerania")
-    lab_coat_price = 25e3
-    glasses_price = 40e3
     local numjumps = homeworld_sys:jumpDist(dest_sys, false)
     local traveldist = car.calculateDistance(homeworld_sys, homeworld:pos(), dest_sys, dest_planet)
     local stuperpx   = 0.225

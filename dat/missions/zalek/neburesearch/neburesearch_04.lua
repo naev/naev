@@ -29,13 +29,12 @@
 local fmt = require "format"
 local zlk = require "common.zalek"
 
-function create()
-    -- mission variables
-    credits = 500e3
-    homeworld, homeworld_sys = planet.getS("Jorla")
-    dest_planet, dest_sys = planet.getS("Jurai")
+-- Mission constants
+local credits = 500e3
+local homeworld, homeworld_sys = planet.getS("Jorla")
+local dest_planet, dest_sys = planet.getS("Jurai")
 
-    -- Spaceport bar stuff
+function create()
     misn.setNPC(_("Dr. Mensing"), "zalek/unique/mensing.webp", _("She probably has a new poorly paid job for you. Maybe she won't notice you if you leave now."))
 end
 

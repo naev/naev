@@ -50,9 +50,13 @@ local fleet = require "fleet"
 local fmt = require "format"
 local emp = require "common.empire"
 
+-- Mission constants
+local misn_base, misn_base_sys = planet.getS("Omega Station")
+local misn_target_sys = system.get("Rockbed")
+local misn_flee_sys = system.get("Capricorn")
 
 function create ()
-   missys = {system.get("Rockbed")}
+   local missys = {misn_target_sys}
    if not misn.claim(missys) then
       misn.finish(false)
    end
@@ -80,9 +84,6 @@ function accept ()
 
    -- Mission data
    misn_stage = 0
-   misn_base, misn_base_sys = planet.getS("Omega Station")
-   misn_target_sys = system.get("Rockbed")
-   misn_flee_sys = system.get("Capricorn")
    misn_marker = misn.markerAdd( misn_target_sys, "high" )
 
    -- Mission details

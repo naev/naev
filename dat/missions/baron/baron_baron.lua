@@ -31,7 +31,7 @@ local pnt = planet.get("Varia")
 local credits = 40e3
 
 function create ()
-   missys = {system.get("Darkstone")}
+   local missys = {system.get("Darkstone")}
    if not misn.claim(missys) then
       abort()
    end

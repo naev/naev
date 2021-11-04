@@ -22,6 +22,10 @@
 local pir = require 'common.pirate'
 local fmt = require "format"
 
+-- Mission constants
+local misn_target_sys = system.get("Unicorn")
+local misn_return_sys = system.get("Amaroq")
+
 local function update_osd()
    local osd_msg = {}
    osd_msg[1] = _("Fly to the Unicorn system.")
@@ -42,8 +46,6 @@ function create ()
    misn.setReward(_("Variable"))
    misn.setDesc(fmt.f(_("It is time to put a dent in the pirates' forces. We have detected a strong pirate presence in the system of Unicorn. We are offering a small sum for each pirate killed. The maximum we will pay you is {credits}."), {credits=fmt.credits(max_payment)} ))
 
-   misn_target_sys = system.get("Unicorn")
-   misn_return_sys = system.get("Amaroq")
    marker = misn.markerAdd( misn_target_sys, "computer" )
    marker2 = misn.markerAdd( misn_return_sys, "low" )
 end
@@ -58,7 +60,6 @@ function accept ()
       pirates_killed = 0
       bounty_earned = 0
       misn_stage = 0
-      misn_target_sys = system.get("Unicorn")
       update_osd()
       misn.osdActive(1)
 

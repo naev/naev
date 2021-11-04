@@ -38,9 +38,6 @@ piracyrisk[4] = _("#nPiracy Risk:#0 High")
 -- Create the mission
 function create()
    -- Note: this mission does not make any system claims.
-
-   origin_p, origin_s = planet.cur()
-
    -- target destination
    destplanet, destsys, numjumps, traveldist, cargo, avgrisk, tier = car.calculateRoute( rnd.rnd(5, 12) )
    if destplanet == nil then
@@ -51,9 +48,9 @@ function create()
    end
 
    -- mission generics
-   stuperpx   = 0.3 - 0.015 * tier
-   stuperjump = 11000 - 75 * tier
-   stupertakeoff = 15000
+   local stuperpx   = 0.3 - 0.015 * tier
+   local stuperjump = 11000 - 75 * tier
+   local stupertakeoff = 15000
    timelimit  = time.get() + time.create(0, 0, traveldist * stuperpx + numjumps * stuperjump + stupertakeoff + 480 * numjumps)
 
    -- Allow extra time for refuelling stops.

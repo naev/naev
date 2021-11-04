@@ -38,6 +38,12 @@ local lmisn = require "lmisn"
 local fmt = require "format"
 local pir = require "common.pirate"
 
+-- Mission constants
+local destpla1, destsys1 = planet.getS("Ginni")
+local destpla2, destsys2 = planet.getS(fw.wlrd_planet)
+local destpla3, destsys3 = planet.getS("Laarss")
+local fleepla, fleesys = planet.getS("Odonga m1")
+
 local meet_text1 = _([[After Tam boards the Goddard, you wait for about half a period until his ship undocks from the warlord's cruiser. You then receive a message from him "Everything is right, we will now land on {pnt} in order to refuel and rest for some time."]])
 
 function create()
@@ -46,12 +52,6 @@ function create()
            time.get() >= time.fromnumber(var.peek("invasion_time")) + time.create(0, 20, 0)) then
       misn.finish(false)
    end
-
-   destpla1, destsys1 = planet.getS("Ginni")
-   destpla2, destsys2 = planet.getS(fw.wlrd_planet)
-   destpla3, destsys3 = planet.getS("Laarss")
-
-   fleepla, fleesys = planet.getS("Odonga m1")
 
    if system.cur() == destsys1 then -- We need the first target to be at least 1 jump ahead
       misn.finish(false)

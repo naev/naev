@@ -20,19 +20,20 @@ local flf = require "missions.flf.flf_common"
 local fmt = require "format"
 local lmisn = require "lmisn"
 
+-- Event constants
+local emp_srcsys = system.get( "Arcanis" )
+local emp_shptypes = {
+   "Empire Peacemaker", "Empire Lancelot", "Empire Lancelot", "Empire Lancelot", "Empire Lancelot",
+   "Empire Lancelot", "Empire Lancelot", "Empire Lancelot",
+   "Empire Admonisher", "Empire Admonisher", "Empire Admonisher", "Empire Pacifier", "Empire Hawking",
+   "Empire Shark", "Empire Shark", "Empire Shark" }
+local emp_minsize = 6
 
 function create ()
    if not evt.claim( system.cur() ) then
       evt.finish( false )
    end
 
-   emp_srcsys = system.get( "Arcanis" )
-   emp_shptypes = {
-      "Empire Peacemaker", "Empire Lancelot", "Empire Lancelot", "Empire Lancelot", "Empire Lancelot",
-      "Empire Lancelot", "Empire Lancelot", "Empire Lancelot",
-      "Empire Admonisher", "Empire Admonisher", "Empire Admonisher", "Empire Pacifier", "Empire Hawking",
-      "Empire Shark", "Empire Shark", "Empire Shark" }
-   emp_minsize = 6
    found_thurion = false
    player_attacks = 0
 

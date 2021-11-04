@@ -41,13 +41,13 @@ osd_msg[1] = _("Look for Harja in Sirian bars")
 osd_msg[2] = _("Convince Harja to come with you")
 osd_msg["__save"] = true
 
-misn_reward = fmt.credits(1.5e6)
-
+-- Mission constants
+local startplanet, startsys = planet.getS("Eenerim")
+local reward = 1.5e6
 local stages = {start=1, findHarja=2, killAssociates=3, fetchHarja=4, finish=5}
 
 function create()
    -- Note: this mission does not make any system claims.
-   startplanet, startsys = planet.getS("Eenerim")
    tk.msg(_("You have mail"), fmt.f(_([[Your computer console flashes you a notice. It seems you received a message through the Sirian information exchange network. You play it.
     The message is from Joanne, the woman you've had dealings with in the past. Her recorded image looks at you from the screen. "Dear {player}," she begins. "You have helped me on several occasions in regard with my personal problem. I've given it some thought since then, and I've come to the conclusion that I want to get to the bottom of this. To do so, I will need your help yet again. I'm currently on assignment on {pnt} in the {pnt} system. Please meet me there at the earliest opportunity."
     The message ends. You save it for later reference. Maybe you should swing by {pnt} to see what Joanne wants.]]), {player=player.name(), pnt=startplanet, sys=startsys}))
@@ -56,7 +56,7 @@ function create()
 
    -- This mission auto-accepts, but a choice will be offered to the player later. No OSD yet.
    misn.accept()
-   misn.setReward(misn_reward)
+   misn.setReward(fmt.credits(reward))
    misn.setDesc(fmt.f(_("Joanne has contacted you. She wants to meet you on {pnt} ({sys})."), {pnt=startplanet, sys=startsys}))
    hook.land("land")
    hook.load("land")
@@ -90,7 +90,7 @@ function land()
     Joanne nods. "Someone did. But who? Who could possibly have had any interest in making it happen? It makes no sense."
     After that, there's little more to say for either of them. Joanne turns to you, and tells you that this will be all for now. "This has put a great emotional strain on me, and no doubt on Harja as well. I thank you for your help, {player}. I have arranged for some funds to be transferred to your account. It's the least I can do. I will probably call for you again when I've figured out how to proceed from here. I wouldn't dream of leaving you out of this, not after all you've done."
     You take your leave, and head back to the spaceport. Though on the surface it might seem like you accomplished little, you get the feeling this was an important step toward the conclusion of the whole affair.]]), {player=player.name()}))
-      player.pay(1.5e6)
+      player.pay(reward)
       var.pop("achack04repeat")
       srs.addAcHackLog( _([[You were hired by Joanne to deliver an invitation to Harja to talk with her. He agreed on the condition that you first deal with associates of his that were coming after him. When Joanne and Harja met, they came to an agreement that neither of them were responsible for the hack of the High Academy main computer which was the source of their feud. Joanne said that she will probably call for you again when she's figured out how to proceed.]]) )
       misn.finish(true)
