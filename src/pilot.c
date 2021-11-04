@@ -2987,7 +2987,8 @@ Pilot* pilot_createEmpty( const Ship* ship, const char* name,
 
 /**
  * @brief Replaces the player's pilot with an alternate ship with the same ID.
- * @return The new pilot.
+ *
+ *    @return The new pilot.
  */
 Pilot* pilot_replacePlayer( Pilot* after )
 {
@@ -3005,7 +3006,12 @@ Pilot* pilot_replacePlayer( Pilot* after )
 /**
  * @brief Finds a spawn point for a pilot
  *
- *
+ *    @param[out] vp Position.
+ *    @param[out] planet Planet chosen or NULL if not.
+ *    @param[out] jump Jump chosen or NULL if not.
+ *    @param lf Faction to choose point for.
+ *    @param ignore_rules Whether or not to ignore all rules.
+ *    @param guerilla Whether or not to spawn in deep space.
  */
 void pilot_choosePoint( Vector2d *vp, Planet **planet, JumpPoint **jump, int lf, int ignore_rules, int guerilla )
 {
@@ -3019,10 +3025,12 @@ void pilot_choosePoint( Vector2d *vp, Planet **planet, JumpPoint **jump, int lf,
 
    /* Build landable planet table. */
    ind = array_create_size( int, array_size(cur_system->planets) );
-   for (int i=0; i<array_size(cur_system->planets); i++)
-      if (planet_hasService(cur_system->planets[i],PLANET_SERVICE_INHABITED) &&
-            !areEnemies(lf,cur_system->planets[i]->presence.faction))
+   for (int i=0; i<array_size(cur_system->planets); i++) {
+      Planet *pnt = cur_system->planets[i];
+      if (planet_hasService( pnt, PLANET_SERVICE_INHABITED ) &&
+            !areEnemies( lf, pnt->presence.faction ))
          array_push_back( &ind, i );
+   }
 
    /* Build jumpable jump table. */
    validJumpPoints = array_create_size( JumpPoint*, array_size(cur_system->jumps) );
