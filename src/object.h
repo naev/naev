@@ -13,6 +13,6 @@
 struct Object_;
 typedef struct Object_ Object;
 
-Object *object_loadFromFile( const char *filename);
+Object *object_loadFromFile( const char *filename );
 void object_renderSolidPart( const Object *object, const Solid *solid, const char *part_name, GLfloat alpha, double scale );
 void object_free( Object *object );
