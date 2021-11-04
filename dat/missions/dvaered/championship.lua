@@ -33,7 +33,7 @@ require "proximity"
 local portrait = require "portrait"
 
 -- NPC
-npc_portrait = {}
+local npc_portrait = {}
 npc_portrait[2] = portrait.get()
 npc_portrait[3] = portrait.get()
 npc_portrait[4] = portrait.get("Empire")
@@ -53,7 +53,7 @@ function create ()
    official = misn.setNPC(_("An official"), officialFace, _("This person seems to be looking for suitable combat pilots."))
 end
 
-function populate_bar() --add some random npcs
+local function populate_bar() --add some random npcs
    if rnd.rnd() < 0.5 then
       misn.npcAdd("competitor1", _("Pilot"), npc_portrait[2], _("This pilot looks very self-confident"))
    end

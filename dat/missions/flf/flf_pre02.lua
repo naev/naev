@@ -35,7 +35,6 @@ require "missions.flf.flf_patrol"
 local dv = require "common.dvaered"
 
 osd_desc = {__save=true}
-refuelmsg = {}
 
 osd_desc[2] = _("Eliminate the Dvaered patrol")
 osd_desc[3] = _("Return to the FLF base")

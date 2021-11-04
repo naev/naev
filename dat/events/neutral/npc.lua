@@ -68,7 +68,7 @@ civ_desc = {
 -- When adding factional text, make sure to add it to the table of the appropriate faction.
 -- Does your faction not have a table? Then just add it. The script will find and use it if it exists.
 -- Make sure you spell the faction name exactly the same as in faction.xml though!
-msg_lore = {}
+local msg_lore = {}
 msg_lore["general"] = {
    _([["I heard the nebula is haunted! My uncle Bobby told me he saw one of the ghost ships himself over in Arandon!"]]),
    _([["I don't believe in those nebula ghost stories. The people who talk about it are just trying to scare you."]]),

@@ -39,7 +39,7 @@ header_table["Za'lek"] = _("Scientific, Socioeconomic, and Sundry Events")
 header_table["Soromid"] = _("The voice of the future.")
 header_table["Thurion"] = _("Data Relay Network")
 
-greet_table = {}
+local greet_table = {}
 
 greet_table["Generic"] =  {""}
 greet_table["Independent"] = {
