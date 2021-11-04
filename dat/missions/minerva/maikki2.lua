@@ -698,7 +698,7 @@ function ecc_feral_boss_dead ()
    minerva.log.maikki(_("You recovered a nebula artifact that Dr. Strangelove wanted from feral drones.") )
 end
 
-drone_msgs = {
+local drone_msgs = {
    _("Just destroy me and put me out of my suffering."),
    _("Why am I still alive?"),
    _("I can't deal with this anymore."),

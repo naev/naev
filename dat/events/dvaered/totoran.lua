@@ -16,18 +16,18 @@ local vn = require 'vn'
 local portrait = require 'portrait'
 local gauntlet = require 'common.gauntlet'
 
-spectator_names = {
+local spectator_names = {
    _("Spectator"),
    _("Aficionado"),
    _("Gauntlet Fan"),
 }
-spectator_descriptions = {
+local spectator_descriptions = {
    _("A person enjoying their time at the station."),
    _("An individual taking a break from viewing the action."),
    _("A spectator that looks strangely out of place."),
    _("A person enjoying some drinks."),
 }
-spectator_messages = {
+local spectator_messages = {
    _([["Sometimes when watching some of the competitions, I forget it is all just virtual reality."]]),
    _([["The realism of virtual reality here is impressive! It almost feels like it's real!"]]),
    function () return fmt.f(
@@ -42,17 +42,17 @@ spectator_messages = {
    _([["There's nothing quite like seeing two capital ships duke it out. I love watching railguns blasting away."]]),
    _([["I used to think the Za'lek virtual games were great, but this is so much better!"]]),
 }
-pilot_names = {
+local pilot_names = {
    _("Gauntlet Pilot"),
    _("Resting Pilot"),
    _("Tired Pilot"),
 }
-pilot_descriptions = {
+local pilot_descriptions = {
    _("A pilot enjoying some downtime between competitions."),
    _("A tired pilot taking a break."),
    _("A pilot lounging around."),
 }
-pilot_messages = {
+local pilot_messages = {
    _([["Some people say that the Crimson gauntlet encourages and promotes violence, but I've been destroying ships long before I started participating in the Crimson Gauntlet!"]]),
    function () return fmt.f(
       _([["Hey, didn't I see you flying a {ship} in the Crimson Gauntlet? Nice flying."]]),
@@ -65,7 +65,7 @@ pilot_messages = {
    _([["Sometimes when I get blown up in Crimson Gauntlet, it takes me a while to realize I haven't actually been blown up to smithereens."]]),
 }
 
-guide_priority = 6
+local guide_priority = 6
 
 function create()
    bgnpcs = {}

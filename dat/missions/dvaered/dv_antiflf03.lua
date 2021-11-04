@@ -47,7 +47,8 @@ function accept()
     destsys = system.get(var.peek("flfbase_sysname"))
     DVplanet, DVsys = planet.getS("Stalwart Station")
 
-    local briefing = fmt.f(_([[The liaison's expression then turns wooden, and his voice becomes level. Clearly, he has been briefing people for a long time in his career, so he can probably do this in his sleep. It occurs to you that perhaps he DOES nap while doing this.
+    local briefing, txt
+    briefing = fmt.f(_([[The liaison's expression then turns wooden, and his voice becomes level. Clearly, he has been briefing people for a long time in his career, so he can probably do this in his sleep. It occurs to you that perhaps he DOES nap while doing this.
     "In the near future, the Dvaered fleet will move against enemies of the state in the {sys} system. The objective is to seek out and destroy all hostiles. This operation will be headed by the HDSF Obstinate, and all units in this battle will defer to its commanding officer, regardless of class and rank. The Obstinate and its battle group will concentrate on performing bombing runs on the primary target. Your task as an auxiliary unit will be to secure the flanks and engage any hostiles that threaten the success of the mission. Note that once you enter the combat theater, you are considered committed, and your leaving the system will be seen as an act of cowardice and treachery."
     The liaison blinks awake. "These are the parameters and conditions of the mission. Will you be accepting this assignment?"]]), {sys=destsys})
     if first then

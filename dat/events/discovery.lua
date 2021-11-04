@@ -26,7 +26,7 @@ love.h = nh
 lg.origin()
 
 -- These trigger at specific places
-system_events = {
+local system_events = {
    --[[
    -- Unique / Interesting systems
    --]]
@@ -132,7 +132,7 @@ system_events = {
    },
 }
 -- These trigger for specific factions controlled systems
-faction_events = {
+local faction_events = {
    ["Za'lek"] = {
       type = "enter",
       name = "disc_zalek",
@@ -195,7 +195,7 @@ local function test_systems( syslist )
    end
    return false
 end
-custom_events = {
+local custom_events = {
    Nebula = {
       test = function ()
          -- These are currently the only systems from which the player can
@@ -294,13 +294,13 @@ custom_events = {
    },
 }
 
-function sfxDiscovery()
+local function sfxDiscovery()
    --sfx = audio.newSource( 'snd/sounds/jingles/success.ogg' )
    sfx = audio.newSource( 'snd/sounds/jingles/victory.ogg' )
    sfx:play()
 end
 
-function handle_event( event )
+local function handle_event( event )
    -- Don't trigger if already done
    if var.peek( event.name ) then return false end
 
@@ -357,6 +357,7 @@ function heartbeat( event )
    end
 end
 
+local textinit -- function forward-declaration
 
 function discover_trigger( event )
    local msg  = string.format(_("You found #o%s - %s!"),event.title,event.subtitle)
@@ -381,9 +382,9 @@ function discover_trigger( event )
    textinit( event.title, event.subtitle )
 end
 
-text_fadein = 1.5
-text_fadeout = 1.5
-text_length = 10.0
+local text_fadein = 1.5
+local text_fadeout = 1.5
+local text_length = 10.0
 function textinit( titletext, subtitletext )
    --local fontname = _("fonts/CormorantUnicase-Medium.ttf")
    -- Title

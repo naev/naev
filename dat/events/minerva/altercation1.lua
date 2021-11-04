@@ -79,7 +79,7 @@ function takeoff ()
    dv:setDir( dvface )
    dv:setNoDisable( true )
    zl = pilot.add("Za'lek Sting", "zl_thug", zlpos, _("Za'lek Belligerent"), {ai="zalek"} )
-   local mem = zl:memory()
+   mem = zl:memory()
    mem.doscans = false
    zl:setDir( zlface )
    zl:setNoDisable( true )
