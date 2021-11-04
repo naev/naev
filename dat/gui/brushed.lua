@@ -12,6 +12,9 @@ local radar_h, radar_w, radar_x, radar_y, screen_h, screen_w
 --local armour, autonav_hyp, autonav_jumps, bar_bg, bar_frame, bar_frame_light, bar_h, bar_light, bar_lock, bars, bar_w, bar_x, bar_y, button_disabled, button_hilighted, button_mouseover, button_normal, button_pressed, buttons, buttontypes, cargo, circle_h, circle_w, cooldown_omsg, end_right, end_right_h, end_right_w, energy, ext_right, field_bg_left, field_frame_center, field_frame_left, field_frame_right, field_h, fields_w, fields_x, fields_y, field_w, first_time, fleet_pane_b, fleet_pane_m, fleet_pane_t, fuel, left_side_h, left_side_w, lmouse, main, margin, mesg_w, mesg_x, mesg_y, nav_hyp, nav_planet, nav_pnt, navstring, planet_bg, planet_pane_b, planet_pane_m, planet_pane_t, pl_speed_x, pl_speed_y, pntflags, popup_body, popup_bottom, popup_bottom2, popup_bottom_side_left, popup_empty, popup_left_x, popup_left_y, popup_pilot, popup_right_x, popup_right_y, popup_top, pp, ptarget, question, question_h, question_w, right_side_x, services, shield, smallfont_h, speed_light, speed_light_double, speed_light_off, stats, ta_dir, ta_flt_pane_h, ta_flt_pane_h_b, ta_flt_pane_h_m, ta_flt_pane_w, ta_flt_pane_w_b, ta_flt_pane_w_m, ta_flt_pane_x, ta_flt_pane_y, ta_gfx, ta_gfx_draw_h, ta_gfx_draw_w, ta_pnt_center_x, ta_pnt_center_y, ta_pnt_faction_gfx, ta_pnt_fact_x, ta_pnt_fact_y, ta_pnt_gfx, ta_pnt_gfx_draw_h, ta_pnt_gfx_draw_w, ta_pnt_gfx_h, ta_pnt_gfx_w, ta_pnt_image_x, ta_pnt_image_y, ta_pnt_pane_h_b, ta_pnt_pane_h_m, ta_pnt_pane_w_b, ta_pnt_pane_w_m, ta_pnt_pane_x, ta_pnt_pane_y, target_bg, target_frame, target_image_h, target_image_w, target_image_x, target_image_y, ta_stats, ta_sx, ta_sy, tbar_center_h, tbar_center_w, tbar_center_x, tbar_h, tbar_left_h, tbar_left_w, tbar_right_h, tbar_right_w, tbar_w, tbar_y, top_bar, top_bar_center, top_bar_left, top_bar_right, top_icon, weapbars
 --Unfortunately, it is an error to make any function a closure over more than 60 variables.
 
+-- Namespaces
+local actions = {}
+
 function create()
    --Get Player
    pp = player.pilot()
@@ -100,10 +103,8 @@ function create()
    icon_refire = tex_open( "refireCircle.png" )
    icon_lockon2 = tex_open( "lockonCircle.png" )
    field_bg_left = tex_open( "fieldBgLeft1.png" )
-   field_bg_center1 = tex_open( "fieldBgCenter1.webp" )
-   field_bg_center2 = tex_open( "fieldBgCenter2.webp" )
-   field_bg_right1 = tex_open( "fieldBgRight1.png" )
-   field_bg_right2 = tex_open( "fieldBgRight2.png" )
+   field_bg_center = { tex_open( "fieldBgCenter1.webp" ), tex_open( "fieldBgCenter2.webp" ) }
+   field_bg_right = { tex_open( "fieldBgRight1.png" ), tex_open( "fieldBgRight2.png" ) }
    field_frame_left = tex_open( "fieldFrameLeft.png" )
    field_frame_center = tex_open( "fieldFrameCenter.png" )
    field_frame_right = tex_open( "fieldFrameRight.png" )
@@ -209,7 +210,7 @@ function create()
    buttontypes = { "missions", "cargo", "ship", "weapons" }
    buttons = {}
    for k, v in ipairs(buttontypes) do
-      buttons[v] = { x=tbar_center_x-116+(k-1)*60, y=buttons_y, w=buttons_w, h=buttons_h, state="default", icon=_G[ "icon_" .. v ], action=_G["action_" .. v ] }
+      buttons[v] = { x=tbar_center_x-116+(k-1)*60, y=buttons_y, w=buttons_w, h=buttons_h, state="default", icon=_G[ "icon_" .. v ], action=actions[v ] }
       buttons[v]["icon_w"], buttons[v]["icon_h"] = _G[ "icon_" .. v]:dim()
    end
 
@@ -591,7 +592,7 @@ local function renderField( text, x, y, w, col, icon )
    gfx.renderTex( field_bg_left, x, y )
    local drawn_w = 14
    while drawn_w < w - 14 do
-      gfx.renderTex( _G[ "field_bg_center" .. tostring(onetwo) ], x + drawn_w, y )
+      gfx.renderTex( field_bg_center[onetwo], x + drawn_w, y )
       if onetwo == 1 then
          onetwo = 2
       else
@@ -599,7 +600,7 @@ local function renderField( text, x, y, w, col, icon )
       end
       drawn_w = drawn_w + 2
    end
-   gfx.renderTex( _G[ "field_bg_right" .. tostring(onetwo) ], x + w - 14, y )
+   gfx.renderTex( field_bg_right[onetwo], x + w - 14, y )
 
    if icon ~= nil then
       local icon_w, icon_h = icon:dim()
@@ -1039,19 +1040,19 @@ function mouse_move( x, y )
    end
 end
 
-function action_missions()
+function actions.missions()
    gui.menuInfo( "missions" )
 end
 
-function action_cargo()
+function actions.cargo()
    gui.menuInfo( "cargo" )
 end
 
-function action_ship()
+function actions.ship()
    gui.menuInfo( "ship" )
 end
 
-function action_weapons()
+function actions.weapons()
    gui.menuInfo( "weapons" )
 end
 

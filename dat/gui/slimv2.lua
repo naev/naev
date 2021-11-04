@@ -8,9 +8,11 @@ local col_black, col_slot_bg, col_slot_heat, col_txt_enm, col_txt_std, col_txt_w
 local radar_h, radar_w, radar_x, radar_y, screen_h, screen_w
 -- This script has a lot of globals. It really loves them.
 -- This is what it would look like to forward-declare the ones that aren't part of the GUI API and aren't accessed via _G:
---local active, active_icons, aset, bar_bg, bar_bg_h, bar_bg_w, bar_h, bar_heat2_col, bar_sheen, bar_speed2_col, bar_speed_col, bar_stress_col, bar_w, blinkcol, cargo_free, cargo_w, cargo_x, cargo_y, cooldown, cooldown_bg, cooldown_bg_h, cooldown_bg_w, cooldown_bg_x, cooldown_bg_y, cooldown_frame, cooldown_frame_h, cooldown_frame_w, cooldown_frame_x, cooldown_frame_y, cooldown_panel, cooldown_panel_x, cooldown_panel_y, cooldown_sheen, cooldown_sheen_x, cooldown_sheen_y, credits_w, credits_x, credits_y, deffont_h, lockonA, lockonB, lockon_h, lockon_w, max_slots, player_pane, pl_pane_h, pl_pane_w, pl_pane_x, pl_pane_y, pp, ptarget, s_col, slot_img_offs_x, slot_img_offs_y, slot_img_w, slot_start_x, slot_txt_offs_x, slot_txt_offs_y, slot_txt_w, slot_w, stats, timers, time_w, time_x, time_y, weap_icons, wset, _wset_name
+--local active, active_icons, aset, bar_bg, bar_bg_h, bar_bg_w, bar_h, bar_sheen, bar_w, blinkcol, cargo_free, cargo_w, cargo_x, cargo_y, cooldown, cooldown_bg, cooldown_bg_h, cooldown_bg_w, cooldown_bg_x, cooldown_bg_y, cooldown_frame, cooldown_frame_h, cooldown_frame_w, cooldown_frame_x, cooldown_frame_y, cooldown_panel, cooldown_panel_x, cooldown_panel_y, cooldown_sheen, cooldown_sheen_x, cooldown_sheen_y, credits_w, credits_x, credits_y, deffont_h, lockonA, lockonB, lockon_h, lockon_w, max_slots, player_pane, pl_pane_h, pl_pane_w, pl_pane_x, pl_pane_y, pp, ptarget, slot_img_offs_x, slot_img_offs_y, slot_img_w, slot_start_x, slot_txt_offs_x, slot_txt_offs_y, slot_txt_w, slot_w, stats, timers, time_w, time_x, time_y, weap_icons, wset, _wset_name
 --Unfortunately, it is an error to make any function a closure over more than 60 variables.
 
+-- Namespaces
+local bars = {}
 
 local function update_wset()
    _wset_name, wset  = pp:weapset()
@@ -44,19 +46,30 @@ function create()
    deffont_h = gfx.fontSize()
    gui.viewport( 0, 0, screen_w, screen_h )
 
+   -- Bar structures
+   bars.armour = {}
+   bars.energy = {}
+   bars.fuel = {}
+   bars.heat = {}
+   bars.heat2 = {}
+   bars.shield = {}
+   bars.speed = {}
+   bars.speed2 = {}
+   bars.stress = {}
+
    --Colors
    col_txt_std = colour.new( 192/255, 198/255, 217/255 )
    col_txt_wrn = colour.new( 127/255,  31/255,  31/255 )
    col_txt_enm = colour.new( 222/255,  28/255,  28/255 )
-   bar_shield_col = colour.new( 40/255,  51/255,  88/255 )
-   bar_armour_col = colour.new( 72/255,  73/255,  60/255 )
-   bar_energy_col = colour.new( 41/255,  92/255,  47/255 )
-   bar_speed_col = colour.new( 77/255,  80/255,  21/255 )
-   bar_speed2_col = colour.new( 169/255,177/255,  46/255 )
-   bar_heat_col = colour.new(114/255,26/255, 14/255 )
-   bar_heat2_col = colour.new( 222/255, 51/255, 27/255 )
-   bar_stress_col = colour.new( 42/255,  43/255,  120/255 )
-   bar_fuel_col = colour.new( 92/255, 41/255, 41/255 )
+   bars.shield.col = colour.new( 40/255,  51/255,  88/255 )
+   bars.armour.col = colour.new( 72/255,  73/255,  60/255 )
+   bars.energy.col = colour.new( 41/255,  92/255,  47/255 )
+   bars.speed.col = colour.new( 77/255,  80/255,  21/255 )
+   bars.speed2.col = colour.new( 169/255,177/255,  46/255 )
+   bars.heat.col = colour.new(114/255,26/255, 14/255 )
+   bars.heat2.col = colour.new( 222/255, 51/255, 27/255 )
+   bars.stress.col = colour.new( 42/255,  43/255,  120/255 )
+   bars.fuel.col = colour.new( 92/255, 41/255, 41/255 )
    col_black = colour.new( 0, 0, 0 )
    col_slot_bg = colour.new( 12/255, 14/255, 20/255 )
    col_slot_heat = colour.new( 108/255, 25/255, 13/255, 200/255 )
@@ -66,12 +79,12 @@ function create()
    player_pane = tex.open( base .. "main.png" )
    bar_sheen = tex.open( base .. "sheen.png" )
    bar_bg = tex.open( base .. "bar_bg.png" )
-   bar_armour_icon = tex.open( base .. "armour.png" )
-   bar_energy_icon = tex.open( base .. "energy.png" )
-   bar_fuel_icon = tex.open( base .. "fuel.png" )
-   bar_heat_icon = tex.open( base .. "heat.png" )
-   bar_shield_icon = tex.open( base .. "shield.png" )
-   bar_speed_icon = tex.open( base .. "speed.png" )
+   bars.armour.icon = tex.open( base .. "armour.png" )
+   bars.energy.icon = tex.open( base .. "energy.png" )
+   bars.fuel.icon = tex.open( base .. "fuel.png" )
+   bars.heat.icon = tex.open( base .. "heat.png" )
+   bars.shield.icon = tex.open( base .. "shield.png" )
+   bars.speed.icon = tex.open( base .. "speed.png" )
    slotA = tex.open( base .. "slot1-3.png" )
    slotAend = tex.open( base .. "slot1-3end.png" )
    slotB = tex.open( base .. "slot4.png" )
@@ -135,23 +148,23 @@ function create()
 
    bar_bg_w, bar_bg_h = bar_bg:dim()
 
-   bar_armour_x = pl_pane_x + 127
-   bar_armour_y = 103
+   bars.armour.x = pl_pane_x + 127
+   bars.armour.y = 103
 
-   bar_shield_x = bar_armour_x-- Missile lock warning
-   bar_shield_y = 75
+   bars.shield.x = bars.armour.x-- Missile lock warning
+   bars.shield.y = 75
 
-   bar_fuel_x = pl_pane_x + 7
-   bar_fuel_y = bar_shield_y
+   bars.fuel.x = pl_pane_x + 7
+   bars.fuel.y = bars.shield.y
 
-   bar_energy_x = pl_pane_x + 409
-   bar_energy_y = bar_armour_y
+   bars.energy.x = pl_pane_x + 409
+   bars.energy.y = bars.armour.y
 
-   bar_heat_x = bar_energy_x
-   bar_heat_y = bar_shield_y
+   bars.heat.x = bars.energy.x
+   bars.heat.y = bars.shield.y
 
-   bar_speed_x = pl_pane_x + 529
-   bar_speed_y = bar_shield_y
+   bars.speed.x = pl_pane_x + 529
+   bars.speed.y = bars.shield.y
 
    -- Cooldown pane.
    cooldown_sheen = tex.open( "gfx/gui/slim/cooldown-sheen.png" )
@@ -233,7 +246,7 @@ end
 function render_cooldown( percent, _seconds )
    gfx.renderTex( cooldown_frame, cooldown_frame_x, cooldown_frame_y )
    gfx.renderTex( cooldown_bg, cooldown_bg_x, cooldown_bg_y )
-   gfx.renderRect( cooldown_bg_x, cooldown_bg_y, percent * cooldown_bg_w, cooldown_bg_h, bar_heat_col )
+   gfx.renderRect( cooldown_bg_x, cooldown_bg_y, percent * cooldown_bg_w, cooldown_bg_h, bars.heat.col )
    gfx.renderTex( cooldown_sheen, cooldown_sheen_x, cooldown_sheen_y )
    gfx.renderTex( cooldown_panel, cooldown_panel_x, cooldown_panel_y )
    gfx.print(false, _("Cooling down..."), cooldown_frame_x,
@@ -245,15 +258,17 @@ local function render_bar( left, name, value, text, txtcol, stress )
    --stress is only used for armour
    --Get values
    local values = { "x", "y", "icon", "col" }
+   local bar = bars[name]
    for k, v in ipairs(values) do
-      _G[ "s_" .. v ] = _G[ "bar_" .. name .. "_" .. v ]
+      _G[ "s_" .. v ] = bars[name][v]
    end
 
+   local s_col = bar.col
    if name == "heat" and value > 0.8 then
-      s_col = bar_heat2_col
+      s_col = bars.heat2.col
    elseif name == "speed" and value > 1. then
-      gfx.renderRect( s_x, s_y, bar_w, bar_h, bar_speed_col )
-      s_col = bar_speed2_col
+      gfx.renderRect( s_x, s_y, bar_w, bar_h, bars.speed.col )
+      s_col = bars.speed2.col
       value = value - 1
    end
 
@@ -264,38 +279,38 @@ local function render_bar( left, name, value, text, txtcol, stress )
    --Draw bar
    if name ~= "armour" then
       if left then
-         gfx.renderRect( s_x + bar_w * (1-value), s_y, bar_w * value, bar_h, s_col )
+         gfx.renderRect( bar.x + bar_w * (1-value), bar.y, bar_w * value, bar_h, s_col )
       else
-         gfx.renderRect( s_x, s_y, bar_w * value, bar_h, s_col )
+         gfx.renderRect( bar.x, bar.y, bar_w * value, bar_h, s_col )
       end
    else
-      gfx.renderRect( s_x + bar_w * (1-value), s_y, bar_w * value, bar_h, s_col )
-      gfx.renderRect( s_x + bar_w * (1-stress), s_y, bar_w * stress, bar_h, bar_stress_col )
+      gfx.renderRect( bar.x + bar_w * (1-value), bar.y, bar_w * value, bar_h, s_col )
+      gfx.renderRect( bar.x + bar_w * (1-stress), bar.y, bar_w * stress, bar_h, bars.stress.col )
    end
    --Draw border
    local scal = 1
-   local bg_x = s_x - 30
+   local bg_x = bar.x - 30
    if left then
       scal = -1
-      bg_x = s_x + bar_w + 30
+      bg_x = bar.x + bar_w + 30
    end
-   gfx.renderTexRaw( bar_bg, bg_x, s_y-2, bar_bg_w * scal, bar_bg_h, 1, 1, 0, 0, 1, 1 )
+   gfx.renderTexRaw( bar_bg, bg_x, bar.y-2, bar_bg_w * scal, bar_bg_h, 1, 1, 0, 0, 1, 1 )
    --Icon
-   local ic_w, ic_h = s_icon:dim()
-   local ic_c_x = s_x - 15
+   local ic_w, ic_h = bar.icon:dim()
+   local ic_c_x = bar.x - 15
    if left then
-      ic_c_x = s_x + bar_w + 15
+      ic_c_x = bar.x + bar_w + 15
    end
-   local ic_c_y = s_y + bar_h/2
-   gfx.renderTex( s_icon, math.floor(ic_c_x - ic_w/2), math.floor(ic_c_y - ic_h/2), 1, 1)
+   local ic_c_y = bar.y + bar_h/2
+   gfx.renderTex( bar.icon, math.floor(ic_c_x - ic_w/2), math.floor(ic_c_y - ic_h/2), 1, 1)
    --Sheen
-   gfx.renderTex( bar_sheen, s_x+1, s_y+13, 1, 1)
+   gfx.renderTex( bar_sheen, bar.x+1, bar.y+13, 1, 1)
    --Text
    local small = false
    if gfx.printDim(small, text) >= bar_w then
       small = true
    end
-   gfx.print( small, text, s_x, s_y + 6, txtcol, bar_w, true )
+   gfx.print( small, text, bar.x, bar.y + 6, txtcol, bar_w, true )
 end
 
 local function round(num)
