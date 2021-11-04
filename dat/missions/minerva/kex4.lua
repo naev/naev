@@ -44,7 +44,7 @@ targetsys = planet.get(targetplanet):system():nameRaw()
 jie_portrait = portrait.get()
 jie_image = portrait.getFullPath(jie_portrait)
 
-money_reward = minerva.rewards.kex4
+local money_reward = minerva.rewards.kex4
 
 function create ()
    if not misn.claim( system.get(targetsys) ) then

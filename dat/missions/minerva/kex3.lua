@@ -48,7 +48,7 @@ gauntletsys = system.get("Crimson Gauntlet")
 local malik_portrait = "major_malik.webp"
 local malik_image = "major_malik.webp"
 
-money_reward = minerva.rewards.kex3
+local money_reward = minerva.rewards.kex3
 
 function create ()
    if not misn.claim( {system.get(targetsys), system.get(lastsys)} ) then

@@ -46,7 +46,7 @@ targetsys = "Westhaven" --planet.get(targetplanet):system():nameRaw()
 
 local eccdiff = "strangelove"
 
-money_reward = minerva.rewards.kex5
+local money_reward = minerva.rewards.kex5
 
 function create ()
    if not misn.claim( system.get(targetsys) ) then

@@ -38,7 +38,7 @@ targetsys = "Provectus Nova"
 jumpinsys = "Waterhole"
 jumpoutsys = "Limbo"
 
-money_reward = minerva.rewards.kex1
+local money_reward = minerva.rewards.kex1
 
 function create ()
    if not misn.claim( system.get(targetsys) ) then

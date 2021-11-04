@@ -17,12 +17,12 @@ local tables = require 'missions.dvaered.gauntlet.tables'
 local fmt = require "format"
 local equipopt = require 'equipopt'
 
-logidstr = "log_gauntlet"
+local logidstr = "log_gauntlet"
 
 -- TODO replace portraits/images
-npc_portrait   = "minerva_terminal.png"
-npc_image      = "minerva_terminal.png"
-npc_description= _("A terminal to access the Crimson Gauntlet Virtual Reality environment. This directly allows you to enter the different challenges and tournaments available.")
+local npc_portrait   = "minerva_terminal.png"
+local npc_image      = "minerva_terminal.png"
+local npc_description= _("A terminal to access the Crimson Gauntlet Virtual Reality environment. This directly allows you to enter the different challenges and tournaments available.")
 
 gauntletsys = system.get("Crimson Gauntlet")
 

@@ -16,9 +16,9 @@ local vn = require 'vn'
 local lg = require 'love.graphics'
 local fmt = require "format"
 
-shiplover_portrait= "shiplover.webp"
-shiplover_image   = "shiplover.webp"
-shiplover_priority= 5
+local shiplover_portrait= "shiplover.webp"
+local shiplover_image   = "shiplover.webp"
+local shiplover_priority= 5
 
 local function getNUnique( t, n )
    local o = {}

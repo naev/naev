@@ -28,7 +28,7 @@ local neu = require "common.neutral"
 local lmisn = require "lmisn"
 local fmt = require "format"
 
-money_reward = 200e3
+local money_reward = 200e3
 
 function create ()
     -- Get an M-class Sirius planet at least 2 and at most 4 jumps away. If not found, don't spawn the mission.
