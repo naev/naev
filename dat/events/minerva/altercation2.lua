@@ -18,7 +18,6 @@
    Triggered from station.lua
 --]]
 local vn = require 'vn'
-local window = require 'love.window'
 local minerva = require 'common.minerva'
 
 local thug1_image = "scavenger1.png"

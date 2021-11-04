@@ -117,7 +117,7 @@ local event_list = {
    end,
    function () -- Temporary disable
       local pp = player.pilot()
-      local a, s, st, dis = pp:health()
+      local _a, _s, _st, dis = pp:health()
       if dis then return end -- Already disabled
       pp:disable( true )
       hook.timer( 5, "disable_restart" )

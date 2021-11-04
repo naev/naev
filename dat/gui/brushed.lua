@@ -302,7 +302,7 @@ function update_target()
       ta_dir = ptarget:dir()
       ta_gfx = ptarget:ship():gfx()
       ta_sx, ta_sy = ta_gfx:spriteFromDir( ta_dir )
-      local ta_gfx_w, ta_gfx_h, ta_gfx_sw, ta_gfx_sh = ta_gfx:dim()
+      local _ta_gfx_w, _ta_gfx_h, ta_gfx_sw, ta_gfx_sh = ta_gfx:dim()
       ta_stats = ptarget:stats()
 
       local ta_gfx_aspect = ta_gfx_sw / ta_gfx_sh
@@ -1056,7 +1056,7 @@ function actions.weapons()
    gui.menuInfo( "weapons" )
 end
 
-function render_cooldown( percent, seconds )
+function render_cooldown( _percent, seconds )
    local msg = _("Cooling down...\n%.1f seconds remaining"):format( seconds )
    local fail = true
    if cooldown_omsg ~= nil then

@@ -22,7 +22,7 @@ function log.add( entry )
 end
 
 function log.open( font )
-   local lw, lh = graphics.getDimensions()
+   local _lw, lh = graphics.getDimensions()
    local border = log.border
    log.uparrow_alpha = 0
    log.downarrow_alpha = 0
@@ -40,11 +40,8 @@ function log.open( font )
    local th = 0
    for id=#_log,1,-1 do
       local v = _log[id]
-   end
-   for id=#_log,1,-1 do
-      local v = _log[id]
-      local _maxw, headertext = font:getWrap( v.who, headerw )
-      local _maxw, bodytext = font:getWrap( v.what, bodyw )
+      local _headw, headertext = font:getWrap( v.who, headerw )
+      local _bodyw, bodytext = font:getWrap( v.what, bodyw )
 
       local nlines = math.max( #headertext, #bodytext )
       for k=1,nlines do
@@ -167,7 +164,7 @@ function log.keypress( key )
    return true
 end
 
-function log.mousepressed( mx, my, button )
+function log.mousepressed( _mx, _my, _button )
 end
 
 return log

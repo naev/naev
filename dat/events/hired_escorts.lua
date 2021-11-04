@@ -344,7 +344,6 @@ end
 
 -- Asks the player whether or not they want to fire the pilot
 local function pilot_askFire( edata, npc_id )
-   local _credits, scredits = player.credits(2)
    local approachtext = _([[Would you like to do something with this pilot?
 
 Pilot credentials:]])

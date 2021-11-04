@@ -858,7 +858,7 @@ function render( dt, dt_mod )
          gfx.renderTex( target_pane, ta_pane_x, ta_pane_y )
          gfx.renderTex( target_bg, ta_image_x, ta_image_y )
 
-         local ta_armour, ta_shield, ta_stress, ta_disabld, ta_energy
+         local ta_armour, ta_shield, ta_stress, ta_disabled, ta_energy
          if ta_scanned then
             ptarget_target = ptarget:target()
             ta_armour, ta_shield, ta_stress, ta_disabled = ptarget:health()
@@ -1034,7 +1034,6 @@ function render( dt, dt_mod )
       gfx.print( true, _("SERVICES:"), ta_pnt_pane_x + 14, ta_pnt_pane_y - 46, cols.txt_top )
 
       -- Space out the text.
-      services_h = 60
       if pntflags.land then
          local services_h = 60
          for k,v in ipairs(nav_planet.services) do

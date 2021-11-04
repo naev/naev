@@ -429,7 +429,7 @@ function won()
    end
 end
 
-function escort_attacked(pilot, attacker) --someone attacked the escort
+function escort_attacked(_plt, attacker) --someone attacked the escort
 
    for i, k in ipairs({sec11, sec12, sec21, sec22}) do
       k:control()
