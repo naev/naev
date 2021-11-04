@@ -247,21 +247,15 @@ static int planetL_getBackend( lua_State *L, int system, int landable )
    int *factions;
    char **planets;
    const char *rndplanet;
-   LuaSystem luasys;
    Planet *pnt;
-   StarSystem *sys;
-   char *sysname;
 
    rndplanet = NULL;
    planets   = NULL;
 
    /* If boolean return random. */
    if (lua_isboolean(L,1)) {
-      pnt            = planet_get( space_getRndPlanet(landable, 0, NULL) );
-      lua_pushplanet(L,planet_index( pnt ));
-      luasys         = system_index( system_get( planet_getSystem(pnt->name) ) );
-      lua_pushsystem(L,luasys);
-      return 2;
+      pnt = planet_get( space_getRndPlanet(landable, 0, NULL) );
+      rndplanet = pnt->name;
    }
 
    /* Get a planet by faction */
@@ -354,19 +348,22 @@ static int planetL_getBackend( lua_State *L, int system, int landable )
       NLUA_ERROR(L, _("Planet '%s' not found in stack"), rndplanet);
       return 0;
    }
-   sysname = planet_getSystem(rndplanet);
-   if (sysname == NULL) {
-      NLUA_ERROR(L, _("Planet '%s' is not placed in a system"), rndplanet);
-      return 0;
-   }
-   sys = system_get( sysname );
-   if (sys == NULL) {
-      NLUA_ERROR(L, _("Planet '%s' can't find system '%s'"), rndplanet, sysname);
-      return 0;
-   }
    lua_pushplanet(L,planet_index( pnt ));
-   luasys = system_index( sys );
    if (system) {
+      LuaSystem luasys;
+      StarSystem *sys;
+      const char *sysname = planet_getSystem(rndplanet);
+      /* TODO: it might make more sense to make this behave the same as planetL_system and return a nil system if needed. */
+      if (sysname == NULL) {
+         NLUA_ERROR(L, _("Planet '%s' is not placed in a system"), rndplanet);
+         return 0;
+      }
+      sys = system_get( sysname );
+      if (sys == NULL) {
+         NLUA_ERROR(L, _("Planet '%s' can't find system '%s'"), rndplanet, sysname);
+         return 0;
+      }
+      luasys = system_index( sys );
       lua_pushsystem(L,luasys);
       return 2;
    }
@@ -461,11 +458,8 @@ static int planetL_getAll( lua_State *L )
 static int planetL_system( lua_State *L )
 {
    LuaSystem sys;
-   Planet *p;
-   const char *sysname;
-   /* Arguments. */
-   p = luaL_validplanet(L,1);
-   sysname = planet_getSystem( p->name );
+   Planet *p = luaL_validplanet(L,1);
+   const char *sysname = planet_getSystem( p->name );
    if (sysname == NULL)
       return 0;
    sys = system_index( system_get( sysname ) );
