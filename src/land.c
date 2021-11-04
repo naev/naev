@@ -115,8 +115,7 @@ static void land_createMainTab( unsigned int wid );
 static void land_cleanupWindow( unsigned int wid, const char *name );
 static void land_changeTab( unsigned int wid, const char *wgt, int old, int tab );
 /* spaceport bar */
-static void bar_getDim( int wid,
-      int *w, int *h, int *iw, int *ih, int *bw, int *bh );
+static void bar_getDim( int wid, int *w, int *h, int *iw, int *ih, int *bw, int *bh );
 static void bar_open( unsigned int wid );
 static int bar_genList( unsigned int wid );
 static void bar_update( unsigned int wid, const char *str );
@@ -155,16 +154,14 @@ int land_doneLoading (void)
 int can_swapEquipment( const char *shipname )
 {
    int failure = 0;
-   Pilot *newship;
-   newship = player_getShip(shipname);
-   int diff;
+   Pilot *newship = player_getShip(shipname);
 
    if (strcmp(shipname,player.p->name)==0) { /* Already onboard. */
       land_errDialogueBuild( _("You're already onboard the %s."), shipname );
       failure = 1;
    }
    if (pilot_cargoUsed(player.p) > (pilot_cargoFree(newship) + pilot_cargoUsed(newship))) { /* Current ship has too much cargo. */
-      diff = pilot_cargoUsed(player.p) - pilot_cargoFree(newship);
+      int diff = pilot_cargoUsed(player.p) - pilot_cargoFree(newship);
       land_errDialogueBuild( n_(
                "You have %d tonne more cargo than the new ship can hold.",
                "You have %d tonnes more cargo than the new ship can hold.",
@@ -543,8 +540,7 @@ static int news_load (void)
  */
 static void misn_open( unsigned int wid )
 {
-   int w, h;
-   int y;
+   int w,h, y;
 
    /* Mark as generated. */
    land_tabGenerate(LAND_WINDOW_MISSION);
@@ -660,9 +656,8 @@ static void misn_accept( unsigned int wid, const char *str )
  */
 static void misn_genList( unsigned int wid, int first )
 {
-   int i,j;
    char** misn_names, *focused;
-   int w,h;
+   int j, w,h;
 
    /* Save focus. */
    focused = window_getFocus(wid);
@@ -679,7 +674,7 @@ static void misn_genList( unsigned int wid, int first )
    if (mission_ncomputer > 0) { /* there are missions */
       misn_names = malloc(sizeof(char*) * mission_ncomputer);
       j = 0;
-      for (i=0; i<mission_ncomputer; i++)
+      for (int i=0; i<mission_ncomputer; i++)
          if (mission_computer[i].title != NULL)
             misn_names[j++] = strdup(mission_computer[i].title);
    }
@@ -912,7 +907,7 @@ unsigned int land_getWid( int window )
  */
 void land_genWindows( int load, int changetab )
 {
-   int i, j;
+   int j;
    const char *names[LAND_NUMWINDOWS];
    int w, h;
    Planet *p;
@@ -945,7 +940,7 @@ void land_genWindows( int load, int changetab )
    window_onClose( land_wid, land_cleanupWindow );
 
    /* Set window map to invalid. */
-   for (i=0; i<LAND_NUMWINDOWS; i++)
+   for (int i=0; i<LAND_NUMWINDOWS; i++)
       land_windowsMap[i] = -1;
 
    /* See what is available. */
@@ -1245,57 +1240,57 @@ static void land_changeTab( unsigned int wid, const char *wgt, int old, int tab 
 
    /* Find what switched. */
    for (int i=0; i<LAND_NUMWINDOWS; i++) {
-      if (land_windowsMap[i] == tab) {
-         last_window = i;
-         w = land_getWid( i );
+      if (land_windowsMap[i] != tab)
+         continue;
+      last_window = i;
+      w = land_getWid( i );
 
-         /* Must regenerate outfits. */
-         switch (i) {
-            case LAND_WINDOW_MAIN:
-               land_updateMainTab();
-               break;
-            case LAND_WINDOW_OUTFITS:
-               outfits_update( w, NULL );
-               to_visit   = VISITED_OUTFITS;
-               torun_hook = "outfits";
-               break;
-            case LAND_WINDOW_SHIPYARD:
-               shipyard_update( w, NULL );
-               to_visit   = VISITED_SHIPYARD;
-               torun_hook = "shipyard";
-               break;
-            case LAND_WINDOW_BAR:
-               bar_update( w, NULL );
-               to_visit   = VISITED_BAR;
-               torun_hook = "bar";
-               break;
-            case LAND_WINDOW_MISSION:
-               misn_update( w, NULL );
-               to_visit   = VISITED_MISSION;
-               torun_hook = "mission";
-               break;
-            case LAND_WINDOW_COMMODITY:
-               commodity_update( w, NULL );
-               to_visit   = VISITED_COMMODITY;
-               torun_hook = "commodity";
-               break;
-            case LAND_WINDOW_EQUIPMENT:
-               equipment_updateShips( w, NULL );
-               equipment_updateOutfits( w, NULL );
-               to_visit   = VISITED_EQUIPMENT;
-               torun_hook = "equipment";
-               break;
+      /* Must regenerate outfits. */
+      switch (i) {
+         case LAND_WINDOW_MAIN:
+            land_updateMainTab();
+            break;
+         case LAND_WINDOW_OUTFITS:
+            outfits_update( w, NULL );
+            to_visit   = VISITED_OUTFITS;
+            torun_hook = "outfits";
+            break;
+         case LAND_WINDOW_SHIPYARD:
+            shipyard_update( w, NULL );
+            to_visit   = VISITED_SHIPYARD;
+            torun_hook = "shipyard";
+            break;
+         case LAND_WINDOW_BAR:
+            bar_update( w, NULL );
+            to_visit   = VISITED_BAR;
+            torun_hook = "bar";
+            break;
+         case LAND_WINDOW_MISSION:
+            misn_update( w, NULL );
+            to_visit   = VISITED_MISSION;
+            torun_hook = "mission";
+            break;
+         case LAND_WINDOW_COMMODITY:
+            commodity_update( w, NULL );
+            to_visit   = VISITED_COMMODITY;
+            torun_hook = "commodity";
+            break;
+         case LAND_WINDOW_EQUIPMENT:
+            equipment_updateShips( w, NULL );
+            equipment_updateOutfits( w, NULL );
+            to_visit   = VISITED_EQUIPMENT;
+            torun_hook = "equipment";
+            break;
 
-            default:
-               break;
-         }
-
-         /* Clear markers if closing Mission Computer. */
-         if (i != LAND_WINDOW_MISSION)
-            space_clearComputerMarkers();
-
-         break;
+         default:
+            break;
       }
+
+      /* Clear markers if closing Mission Computer. */
+      if (i != LAND_WINDOW_MISSION)
+         space_clearComputerMarkers();
+
+      break;
    }
 
    /* Check land missions - always run hooks. */
@@ -1428,29 +1423,28 @@ void takeoff( int delay )
  */
 static void land_stranded (void)
 {
-   char *buf;
-   size_t bufsize;
-   const char *file = RESCUE_PATH;
-
    /* Nothing to do if there's no rescue script. */
-   if (!PHYSFS_exists(file))
+   if (!PHYSFS_exists(RESCUE_PATH))
       return;
 
    if (rescue_env == LUA_NOREF) {
+      char *buf;
+      size_t bufsize;
+
       rescue_env = nlua_newEnv(1);
       nlua_loadStandard( rescue_env );
       nlua_loadTk( rescue_env );
 
-      buf = ndata_read( file, &bufsize );
+      buf = ndata_read( RESCUE_PATH, &bufsize );
       if (buf == NULL) {
          WARN( _("File '%s' not found!"), RESCUE_PATH );
          return;
       }
-      if (nlua_dobufenv(rescue_env, buf, bufsize, file) != 0) {
+      if (nlua_dobufenv(rescue_env, buf, bufsize, RESCUE_PATH) != 0) {
          WARN( _("Error loading file: %s\n"
              "%s\n"
              "Most likely Lua file has improper syntax, please check"),
-               file, lua_tostring(naevL,-1));
+               RESCUE_PATH, lua_tostring(naevL,-1));
          free(buf);
          return;
       }

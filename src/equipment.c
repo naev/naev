@@ -2031,8 +2031,6 @@ static void equipment_autoequipShip( unsigned int wid, const char* str )
    int doswap;
    const char *curship;
    const char *file = AUTOEQUIP_PATH;
-   char *buf;
-   size_t bufsize;
 
    ship = eq_wgt.selected;
 
@@ -2046,7 +2044,8 @@ static void equipment_autoequipShip( unsigned int wid, const char* str )
    /* Create the environment */
    if (autoequip_env == LUA_NOREF) {
       /* Read File. */
-      buf = ndata_read( file, &bufsize );
+      size_t bufsize;
+      char *buf = ndata_read( file, &bufsize );
       if (buf == NULL) {
          WARN( _("File '%s' not found!"), file );
          return;
@@ -2097,7 +2096,7 @@ autoequip_cleanup:
  */
 static void equipment_sellShip( unsigned int wid, const char* str )
 {
-   (void)str;
+   (void) str;
    char buf[ECON_CRED_STRLEN], *name;
    credits_t price;
    Pilot *p;
@@ -2154,7 +2153,7 @@ static void equipment_sellShip( unsigned int wid, const char* str )
  */
 static void equipment_renameShip( unsigned int wid, const char *str )
 {
-   (void)str;
+   (void) str;
    const char *shipname = toolkit_getImageArray( wid, EQUIPMENT_SHIPS );
    Pilot *ship = player_getShip(shipname);
    char *newname = dialogue_input( _("Ship Name"), 1, 60,

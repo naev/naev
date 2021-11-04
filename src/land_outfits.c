@@ -1,14 +1,11 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
 /**
  * @file land_outfits.c
  *
  * @brief Handles all the landing menus and actions.
  */
-
-
 /** @cond */
 #include <math.h>
 #include <stdio.h>
@@ -34,24 +31,20 @@
 #include "space.h"
 #include "toolkit.h"
 
-
 #define  OUTFITS_IAR    "iarOutfits"
 #define  OUTFITS_TAB    "tabOutfits"
 #define  OUTFITS_FILTER "inpFilterOutfits"
 #define  OUTFITS_NTABS  6
 
-
 typedef struct LandOutfitData_ {
    const Outfit **outfits;
 } LandOutfitData;
-
 
 static iar_data_t *iar_data = NULL; /**< Stored image array positions. */
 static Outfit ***iar_outfits = NULL; /**< C-array of Arrays: Outfits associated with the image array cells. */
 
 /* Modifier for buying and selling quantity. */
 static int outfits_mod = 1;
-
 
 /*
  * Helper functions.
@@ -68,7 +61,6 @@ static credits_t outfit_getPrice( const Outfit *outfit );
 static void outfits_genList( unsigned int wid );
 static void outfits_changeTab( unsigned int wid, const char *wgt, int old, int tab );
 static void outfits_onClose( unsigned int wid, const char *str );
-
 
 /**
  * @brief Gets the size of the outfits window.
@@ -97,7 +89,6 @@ static void outfits_getSize( unsigned int wid, int *w, int *h,
       *bh = LAND_BUTTON_HEIGHT;
 }
 
-
 /**
  * @brief For when the widget closes.
  */
@@ -110,8 +101,6 @@ static void outfits_onClose( unsigned int wid, const char *str )
    array_free( data->outfits );
    free( data );
 }
-
-
 
 /**
  * @brief Opens the outfit exchange center window.
@@ -210,7 +199,6 @@ void outfits_open( unsigned int wid, const Outfit **outfits )
    /* Set default keyboard focus to the list */
    window_setFocus( wid , OUTFITS_IAR );
 }
-
 
 /**
  * @brief Regenerates the outfit list.
@@ -340,7 +328,6 @@ static void outfits_genList( unsigned int wid )
    outfits_update( wid, NULL );
 }
 
-
 /**
  * @brief Updates the outfits in the outfit window.
  *    @param wid Window to update the outfits in.
@@ -348,7 +335,7 @@ static void outfits_genList( unsigned int wid )
  */
 void outfits_update( unsigned int wid, const char *str )
 {
-   (void)str;
+   (void) str;
    int i, active;
    Outfit* outfit;
    char buf[STRMAX], buf_price[ECON_CRED_STRLEN], buf_credits[ECON_CRED_STRLEN], buf_license[STRMAX];
@@ -449,27 +436,24 @@ void outfits_update( unsigned int wid, const char *str )
    window_moveWidget( wid, "txtDescription", 20+iw+20, -40-th-30-32 );
 }
 
-
 /**
  * @brief Updates the outfitter and equipment outfit image arrays.
  */
 void outfits_updateEquipmentOutfits( void )
 {
-   int ew, ow;
-
    if (landed && land_doneLoading()) {
       if (planet_hasService(land_planet, PLANET_SERVICE_OUTFITS)) {
-         ow = land_getWid( LAND_WINDOW_OUTFITS );
+         int ow = land_getWid( LAND_WINDOW_OUTFITS );
          outfits_regenList( ow, NULL );
       }
       else if (!planet_hasService(land_planet, PLANET_SERVICE_SHIPYARD))
          return;
-      ew = land_getWid( LAND_WINDOW_EQUIPMENT );
+
+      int ew = land_getWid( LAND_WINDOW_EQUIPMENT );
       equipment_addAmmo();
       equipment_regenLists( ew, 1, 0 );
    }
 }
-
 
 /**
  * @brief Ensures the tab's selected item is reflected in the ship slot list
@@ -508,7 +492,6 @@ static void outfits_changeTab( unsigned int wid, const char *wgt, int old, int t
    window_setFocus( wid, OUTFITS_IAR );
 }
 
-
 /**
  * @brief Applies a filter function and string to a list of outfits.
  *
@@ -521,10 +504,8 @@ static void outfits_changeTab( unsigned int wid, const char *wgt, int old, int t
 int outfits_filter( const Outfit **outfits, int n,
       int(*filter)( const Outfit *o ), const char *name )
 {
-   int i, j;
-
-   j = 0;
-   for (i=0; i<n; i++) {
+   int j = 0;
+   for (int i=0; i<n; i++) {
       if ((filter != NULL) && !filter(outfits[i]))
          continue;
 
@@ -539,7 +520,6 @@ int outfits_filter( const Outfit **outfits, int n,
    return j;
 }
 
-
 /**
  * @brief Starts the map find with outfit search selected.
  *    @param wid Window buying outfit from.
@@ -551,21 +531,15 @@ static void outfits_find( unsigned int wid, const char *str )
    map_inputFindType(wid, "outfit");
 }
 
-
 /**
  * @brief Returns the price of an outfit (subject to quantity modifier)
  */
 static credits_t outfit_getPrice( const Outfit *outfit )
 {
-   unsigned int q;
-   credits_t price;
-
-   q = outfits_getMod();
-   price = outfit->price * q;
-
+   unsigned int q = outfits_getMod();
+   credits_t price = outfit->price * q;
    return price;
 }
-
 
 /**
  * @brief Computes the alt text for an outfit.
@@ -604,21 +578,12 @@ int outfit_altText( char *buf, int n, const Outfit *o )
    return 0;
 }
 
-
 /**
  * @brief Generates image array cells corresponding to outfits.
  */
 ImageArrayCell *outfits_imageArrayCells( const Outfit **outfits, int *noutfits )
 {
-   int i;
-   const glColour *c;
-   ImageArrayCell *coutfits;
-   const Outfit *o;
-   const char *typename;
-   glTexture *t;
-
-   /* Allocate. */
-   coutfits = calloc( MAX(1,*noutfits), sizeof(ImageArrayCell) );
+   ImageArrayCell *coutfits = calloc( MAX(1,*noutfits), sizeof(ImageArrayCell) );
 
    if (*noutfits == 0) {
       *noutfits = 1;
@@ -627,8 +592,11 @@ ImageArrayCell *outfits_imageArrayCells( const Outfit **outfits, int *noutfits )
    }
    else {
       /* Set alt text. */
-      for (i=0; i<*noutfits; i++) {
-         o = outfits[i];
+      for (int i=0; i<*noutfits; i++) {
+         const glColour *c;
+         const char *typename;
+         glTexture *t;
+         const Outfit *o = outfits[i];
 
          coutfits[i].image = gl_dupTexture( o->gfx_store );
          coutfits[i].caption = strdup( _(o->name) );
@@ -667,8 +635,6 @@ ImageArrayCell *outfits_imageArrayCells( const Outfit **outfits, int *noutfits )
    }
    return coutfits;
 }
-
-
 
 /**
  * @brief Checks to see if the player can buy the outfit.
@@ -724,7 +690,6 @@ int outfit_canBuy( const char *name, Planet *planet )
 
    return !failure;
 }
-
 
 /**
  * @brief Player right-clicks on an outfit.
@@ -868,11 +833,8 @@ static void outfits_sell( unsigned int wid, const char *str )
  */
 static int outfits_getMod (void)
 {
-   SDL_Keymod mods;
-   int q;
-
-   mods = SDL_GetModState();
-   q = 1;
+   SDL_Keymod mods = SDL_GetModState();
+   int q = 1;
    if (mods & (KMOD_LCTRL | KMOD_RCTRL))
       q *= 5;
    if (mods & (KMOD_LSHIFT | KMOD_RSHIFT))
@@ -905,7 +867,6 @@ static void outfits_renderMod( double bx, double by, double w, double h, void *d
    snprintf( buf, 8, "%dx", q );
    gl_printMidRaw( &gl_smallFont, w, bx, by, &cFontWhite, -1, buf );
 }
-
 
 /**
  * @brief Cleans up outfit globals.
