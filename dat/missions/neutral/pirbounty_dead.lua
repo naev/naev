@@ -126,7 +126,7 @@ function create ()
    elseif num_pirates <= 300 then
       level = rnd.rnd( 3, 4 )
    else
-      level = rnd.rnd( 4, #misn_title )
+      level = rnd.rnd( 4, 5 )
    end
 
    -- Pirate details
@@ -329,14 +329,15 @@ end
 function bounty_setup ()
    local pship, credits, reputation
    if level == 1 then
-      pship = "Hyena"
-      credits = 50e3 + rnd.sigma() * 15e3
-      reputation = 0
-   elseif level == 2 then
-      pship = "Pirate Shark"
-      credits = 150e3 + rnd.sigma() * 50e3
+      if rnd.rnd() < 0.5 then
+         pship = "Hyena"
+         credits = 50e3 + rnd.sigma() * 15e3
+      else
+         pship = "Pirate Shark"
+         credits = 150e3 + rnd.sigma() * 50e3
+      end
       reputation = 0.5
-   elseif level == 3 then
+   elseif level == 2 then
       if rnd.rnd() < 0.5 then
          pship = "Pirate Vendetta"
       else
@@ -344,7 +345,7 @@ function bounty_setup ()
       end
       credits = 400e3 + rnd.sigma() * 80e3
       reputation = 1
-   elseif level == 4 then
+   elseif level == 3 then
       if rnd.rnd() < 0.5 then
          pship = "Pirate Admonisher"
       else
@@ -352,6 +353,14 @@ function bounty_setup ()
       end
       credits = 700e3 + rnd.sigma() * 120e3
       reputation = 2
+   elseif level == 4 then
+      if rnd.rnd() < 0.5 then
+         pship = "Pirate Starbridge"
+      else
+         pship = "Pirate Rhino"
+      end
+      credits = 950e3 + rnd.sigma() * 160e3
+      reputation = 2.8
    elseif level == 5 then
       pship = "Pirate Kestrel"
       credits = 1.2e6 + rnd.sigma() * 200e3
