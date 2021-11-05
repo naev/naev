@@ -382,11 +382,12 @@ void commodity_Jettison( int pilot, const Commodity* com, int quantity )
  *    @param com Type of commodity.
  *    @param pos Position.
  *    @param vel Velocity.
+ *    @param lifeleng Duration in seconds.
+ *    @param qtt Quantity to add.
  */
 int gatherable_init( const Commodity* com, Vector2d pos, Vector2d vel, double lifeleng, int qtt )
 {
    Gatherable *g = &array_grow( &gatherable_stack );
-
    g->type = com;
    g->pos = pos;
    g->vel = vel;

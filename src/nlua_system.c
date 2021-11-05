@@ -746,7 +746,7 @@ static int systemL_asteroidDestroyed( lua_State *L )
  *    @luatparam int nb quantity of commodity in the gatherable .
  *    @luatparam Vec2 pos position of the gatherable.
  *    @luatparam Vec2 vel velocity of the gatherable.
- *    @luatparam[opt] number lifelength Lifelength of the gatherable.
+ *    @luatparam[opt] number lifelength Lifelength of the gatherable in seconds.
  *    @luatreturn int i Id of the created gatherable object.
  * @luafunc addGatherable
  */
