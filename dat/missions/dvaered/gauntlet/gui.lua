@@ -2,7 +2,6 @@
 -- Fancy GUI interface for the Crimson Gauntlet
 --]]
 
-local love = require 'love'
 local luatk = require 'luatk'
 local lg = require 'love.graphics'
 
@@ -134,18 +133,15 @@ end
 
 function gauntlet_enter ()
    gauntlet_start = true
-   love.event.quit()
+   luatk.close()
 end
 
 function gauntlet_cancel ()
    gauntlet_start = false
-   love.event.quit()
+   luatk.close()
 end
 
-function love.load ()
-   love.window.setFullscreen(true)
-   love.graphics.setBackgroundColor( 0, 0, 0, 0 )
-
+local function gauntlet_gui ()
    -- Outlined fonts
    local largefont = lg.newFont(24)
    largefont:setOutline(3)
@@ -228,35 +224,15 @@ function love.load ()
          end
       end
    end
-end
 
-function love.update( dt )
-   luatk.update(dt)
-end
-
-function love.keypressed( key )
-   if luatk.keypressed( key ) then return true end
-   if key == "escape" then
-      gauntlet_cancel()
-   end
-end
-
-function love.draw()
-   luatk.draw()
-end
-
-function love.mousepressed( x, y, button )
-   if luatk.mousepressed( x, y, button ) then return true end
-end
-
-function love.mousemoved( x, y )
-   if luatk.mousemoved( x, y ) then return true end
+   luatk.run()
 end
 
 local gui = {}
 
 function gui.run()
-   love.run()
+   gauntlet_gui()
+
    if gauntlet_start then
       local mods = {}
       local cache = naev.cache()
