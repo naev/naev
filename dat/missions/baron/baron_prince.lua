@@ -34,7 +34,7 @@ local artifactplanetA = planet.get("Varaati")
 local artifactplanetB = planet.get("Sinclair")
 local artifactplanetC = planet.get("Hurada")
 local flintplanet, flintsys = planet.getS("Tau Station")
-local reward = 200e3 -- The price of each artifact will always be 15% of this, so at most the player will be paid 85% and at least 55%.
+local reward = baron.rewards.prince
 
 function create ()
    -- Note: this mission makes no system claims.

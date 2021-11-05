@@ -11,4 +11,9 @@ function baron.addLog( text )
    shiplog.append( "baron", text )
 end
 
+baron.rewards = {
+   baron = 200e3,
+   prince = 300e3, -- The price of each artifact will always be 15% of this, so at most the player will be paid 85% and at least 55%.
+}
+
 return baron

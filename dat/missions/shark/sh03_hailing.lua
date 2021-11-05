@@ -29,7 +29,7 @@ local fmt = require "format"
 local shark = require "common.shark"
 
 -- Mission constants
-local reward = 750e3
+local reward = shark.rewardssh03
 local paypla, paysys = planet.getS("Darkshed")
 local nextpla, nextsys = planet.getS("Curie") -- This should be the same as the planet used in sh04_meeting!
 

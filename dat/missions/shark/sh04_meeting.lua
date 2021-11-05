@@ -45,7 +45,7 @@ end
 
 function accept()
    stage = 0
-   reward = 750e3
+   reward = shark.rewards.sh04
    proba = 0.3  --the probability of ambushes will change
    firstambush = true  --In the first ambush, there will be a little surprise text
 

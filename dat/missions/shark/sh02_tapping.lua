@@ -38,7 +38,7 @@ local shark = require "common.shark"
 
 -- Mission constants
 local paypla, paysys = planet.getS("Darkshed")
-local reward = 750e3
+local reward = shark.rewards.sh02
 
 function create ()
    mispla, missys = planet.getLandable(faction.get("Sirius"))

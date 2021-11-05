@@ -43,7 +43,7 @@ end
 function accept()
 
    stage = 0
-   reward = 750e3
+   reward = shark.rewards.sh06
 
    if tk.yesno(_("Let's go"), _([["Is your ship ready for the dangers of the Nebula?"]])) then
       misn.accept()

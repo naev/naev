@@ -37,7 +37,7 @@ function create ()
       misn.finish()
    end
 
-   credits = 400e3
+   credits = shadow.rewards.shadowrun
    -- Developer note: changing these numbers may have consequences for translators (if we support more languages later on).
    timelimit1 = 20 -- In STP
    timelimit2 = 50 -- In STP

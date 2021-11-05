@@ -572,7 +572,7 @@ function board()
     "This is bad, {player}," she says when the replay shuts down. "Worse than I had even thought possible. The death of the Imperial and Dvaered diplomats is going to spark a political incident, with each faction accusing the other of treachery." She stands up and begins pacing up and down the Seiryuu's bridge. "But that's not the worst of it. You saw what happened. The diplomats were killed by their own escorts - by Four Winds operatives! This is an outrage!"
     Captain Rebina brings herself back under control through an effort of will. "{player}, this does not bode well. We have a problem, and I fear I'm going to need your help again before the end. But not yet. I have a lot to do. I have to get to the bottom of this, and I have to try to keep this situation from escalating into a disaster. I will contact you again when I know more. In the mean time, you will have the time to spend your reward - it's already in your account."
     Following this, you are swiftly escorted off the Seiryuu. Back in your cockpit, you can't help feeling a little anxious about these Four Winds. Who are they, what do they want, and what is your role in all of it? Time will have to tell.]]), {player=player.name()}))
-       player.pay(700e3)
+       player.pay( shadow.rewards.shadowvigil )
        shadow.addLog( _([[Your attempt to escort a diplomat for the Four Winds was thwarted by traitors on the inside. Other Four Winds escorts opened fire on the diplomat, killing him. Captain Rebina has said that she may need your help again at a later date.]]) )
        misn.finish(true)
     end

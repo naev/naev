@@ -106,7 +106,7 @@ function seiryuuBoard()
     Jorek and you sit down at the holotable in the middle of the bridge, and report on the events surrounding Jorek's retrieval. When you're done, Captain Rebina calls up a schematic view of the Genbu from the holotable.
     "It would seem that Giornio and his comrades have a vested interest in keeping me away from the truth. It's a good thing you managed to get out of that ambush and bring me that informant. I do hope he'll be able to shed more light on the situation. I've got a bad premonition, a hunch that we're going to have to act soon if we're going to avert disaster, whatever that may be. I trust that you will be willing to aid us again when that time comes, {player}. We're going to need all the help we can get. For now, you will find a modest amount of credits in your account. I will be in touch when things are clearer."
     You return to your ship and undock from the Seiryuu. You reflect that you had to run for your life this time around, and by all accounts, things will only get worse with the Four Winds in the future. A lesser person might get nervous.]]), {player=player.name()}))
-      player.pay(1e6)
+      player.pay( shadow.rewards.darkshadow )
       seiryuu:control()
       seiryuu:hyperspace()
       var.pop("darkshadow_active")

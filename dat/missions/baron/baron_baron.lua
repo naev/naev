@@ -28,7 +28,7 @@ local sys1 = system.get("Darkstone")
 local sys2 = system.get("Ingot")
 local pnt = planet.get("Varia")
 
-local credits = 40e3
+local credits = baron.rewards.baron
 
 function create ()
    local missys = {system.get("Darkstone")}

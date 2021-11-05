@@ -10,4 +10,10 @@ function shadow.addLog( text )
    shiplog.append( "shadow", text )
 end
 
+shadow.rewards = {
+   shadowrun = 400e3,
+   shadowvigil = 700e3,
+   darkshadow = 1e6,
+}
+
 return shadow

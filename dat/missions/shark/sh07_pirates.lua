@@ -32,7 +32,7 @@ local lmisn = require "lmisn"
 
 -- Mission constants
 local paypla, paysys = planet.getS("Darkshed")
-local reward = 3e6
+local reward = shark.rewards.sh07
 
 osd_title = _("The Last Detail")
 

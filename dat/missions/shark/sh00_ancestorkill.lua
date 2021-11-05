@@ -56,7 +56,7 @@ end
 function accept()
 
    stage = 0
-   reward = 500e3
+   reward = shark.rewards.sh00
 
    if tk.yesno(_("Nexus Shipyards needs you"), _([[You approach the man and he introduces himself. "Hello, my name is Arnold Smith; I work for Nexus Shipyards. I'm looking for a talented pilot to make a demonstration to one of our potential customers.
     "Pretty simple, really: we want someone to show how great Nexus ship designs are by destroying a Pirate Ancestor with our lowest-grade ship, the Shark. Of course, the pilot of the Ancestor has a bounty on his head, so it won't be illegal. The sum of the bounty will be paid to you and Nexus will add a little extra. Would you be interested?"]])) then

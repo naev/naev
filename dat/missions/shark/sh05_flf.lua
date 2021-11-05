@@ -38,7 +38,7 @@ local shark = require "common.shark"
 
 -- Mission constants
 local paypla, paysys = planet.getS("Darkshed")
-local reward = 1e6
+local reward = shark.rewards.sh05
 
 function create ()
    --Change here to change the planets and the systems

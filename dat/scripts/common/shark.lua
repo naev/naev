@@ -15,4 +15,15 @@ function shark.addLog( text )
    shiplog.append( "shark", text )
 end
 
+shark.rewards = {
+   sh00 = 500e3,
+   sh01 = 750e3,
+   sh02 = 750e3,
+   sh03 = 750e3,
+   sh04 = 750e3,
+   sh05 = 1e6,
+   sh06 = 750e3,
+   sh07 = 3e6,
+}
+
 return shark
