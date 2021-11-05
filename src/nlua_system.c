@@ -21,6 +21,7 @@
 #include "map.h"
 #include "map_overlay.h"
 #include "nebula.h"
+#include "nlua_commodity.h"
 #include "nlua_faction.h"
 #include "nlua_jump.h"
 #include "nlua_planet.h"
@@ -753,13 +754,12 @@ static int systemL_asteroidDestroyed( lua_State *L )
 static int systemL_addGatherable( lua_State *L )
 {
    int nb;
-   const char *name;
    Commodity *commodity;
    Vector2d *pos, *vel;
    double lifelength;
 
    /* Handle parameters. */
-   name = luaL_checkstring(L,1);
+   commodity = luaL_validcommodity( L, 1 );
    nb = luaL_checkint(L,2);
    pos = luaL_checkvector(L,3);
    vel = luaL_checkvector(L,4);
@@ -767,13 +767,6 @@ static int systemL_addGatherable( lua_State *L )
       lifelength = luaL_checknumber(L,5);
    else
       lifelength = -1.; /* This means random life length. */
-
-   /* Get commodity. */
-   commodity = commodity_get( name );
-   if (commodity == NULL) {
-      NLUA_ERROR(L,_("Commodity '%s' not found!"), name);
-      return 0;
-   }
 
    lua_pushnumber( L, gatherable_init( commodity, *pos, *vel, lifelength, nb ) );
    return 1;

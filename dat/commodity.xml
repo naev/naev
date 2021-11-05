@@ -180,12 +180,4 @@
   <faction_modifier type="Thurion">0.8</faction_modifier>
   <faction_modifier type="Za'lek">0.5</faction_modifier>
  </commodity>
- <commodity>
-  <name>Fuel</name>
-  <gfx_space>fuel.webp</gfx_space>
- </commodity>
- <commodity>
-  <name>Flowers</name>
-  <gfx_space>flowers.webp</gfx_space>
- </commodity>
 </Commodities>

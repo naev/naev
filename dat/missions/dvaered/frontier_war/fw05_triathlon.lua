@@ -107,14 +107,23 @@ function create()
    competitors_names["__save"] = true
 end
 
+local cargo_flowers
+local function _flowers()
+   if not cargo_flowers then
+      cargo_flowers = misn.cargoNew( N_("Flowers"), N_("Pretty flowers."), {gfx_space="flowers.webp"} )
+   end
+   return cargo_flowers
+end
+
 -- Entering (Dvaer)
 function enter()
    if system.cur() == destsys then
       hook.rm(enterhook)
+      local cflowers = _flowers()
       for i = 1, 100 do -- Flowers
          local pos = destpla:pos() + vec2.newP( rnd.rnd(0,1000), rnd.rnd(0,360) )
          local vel = vec2.newP( rnd.rnd(0,10), rnd.rnd(0,360) )
-         system.addGatherable( "Flowers", 1, pos, vel, 3600 )
+         system.addGatherable( cflowers, 1, pos, vel, 3600 )
       end
       leader = pilot.add("Dvaered Goddard","Dvaered",destpla,_("General Klank"))
       leader:memory().formation = "wedge"
@@ -152,8 +161,9 @@ end
 -- Landing (on Dv Prime)
 function land()
    testEscape()
+   local cflowers = _flowers()
    if stage == 5 or stage == 0 then -- Player may have picked up flowers
-      player.pilot():cargoRm( "Flowers", 100 )
+      player.pilot():cargoRm( cflowers, 100 )
    end
 
    spawnNpcs() -- This handles people on the bar
@@ -424,9 +434,10 @@ function takeoff()
          annoyers[i]:control()
       end
 
+      local cflowers = _flowers()
       for i = 1, 60 do
          pos = center + vec2.newP( rnd.rnd(0,radius), rnd.rnd(0,360) )
-         system.addGatherable( "Flowers", 1, pos, vec2.new(0,0), 3600 )
+         system.addGatherable( cflowers, 1, pos, vec2.new(0,0), 3600 )
       end
 
       playerHitHook = hook.pilot( player.pilot(), "attacked", "playerHitS" ) -- If player has zero shield: eliminated
@@ -710,11 +721,12 @@ function endStadion()
    stage = 5
    misn.osdActive(3)
 
+   local cflowers = _flowers()
    for i = 1, 9 do
-      score_stadion[i] = competitors[i]:cargoHas("Flowers")
+      score_stadion[i] = competitors[i]:cargoHas(cflowers)
       score_total[i] = score_total[i] + score_stadion[i]
    end
-   score_stadion[10] = player.pilot():cargoHas("Flowers")
+   score_stadion[10] = player.pilot():cargoHas(cflowers)
    score_total[10]   = score_total[10] + score_stadion[10]
 
    local iter = {1,2,3,4,5,6,7,8,9,10}

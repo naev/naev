@@ -4461,11 +4461,7 @@ void asteroid_hit( Asteroid *a, const Damage *dmg )
  */
 static void asteroid_explode ( Asteroid *a, AsteroidAnchor *field, int give_reward )
 {
-   int i, j, nb;
    Damage dmg;
-   AsteroidType *at;
-   Commodity *com;
-   Vector2d pos, vel;
    char buf[16];
 
    /* Manage the explosion */
@@ -4482,12 +4478,13 @@ static void asteroid_explode ( Asteroid *a, AsteroidAnchor *field, int give_rewa
 
    if (give_reward) {
       /* Release commodity. */
-      at = &asteroid_types[a->type];
+      AsteroidType *at = &asteroid_types[a->type];
 
-      for (i=0; i < array_size(at->material); i++) {
-         nb = RNG(0,at->quantity[i]);
-         com = at->material[i];
-         for (j=0; j < nb; j++) {
+      for (int i=0; i < array_size(at->material); i++) {
+         int nb = RNG(0,at->quantity[i]);
+         Commodity *com = at->material[i];
+         for (int j=0; j < nb; j++) {
+            Vector2d pos, vel;
             pos = a->pos;
             vel = a->vel;
             pos.x += (RNGF()*30.-15.);

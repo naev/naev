@@ -603,18 +603,23 @@ function straferDiscuss()
    strafer:control(false)  -- Strafer stops following the player
 
    -- Add some fuel, far away so that no npc gathers it
+   local cfuel = misn.cargoNew( N_("Fuel"), N_("Tanks of usable fuel."), {gfx_space="fuel.webp"})
    pos = vec2.new( -1.2*system.cur():radius(), 0 )
-   system.addGatherable( "Fuel", 1, pos, vec2.new(0,0), 3600 )
+   system.addGatherable( cfuel, 1, pos, vec2.new(0,0), 3600 ) -- Lasts for an houer
    Imark = system.mrkAdd( pos, _("FUEL") )
    gathHook = hook.gather("gather")
 end
 
 -- Player gathers fuel
 function gather( comm, qtt )
+   -- Only care about fuel
+   if comm~="Fuel" then
+      return
+   end
    hook.rm(gathHook)
    pilot.cargoRm( player.pilot(), comm, qtt )
    player.pilot():setFuel(true)
-   player.msg( _("You filled your fuel tanks") )
+   player.msg( _("You filled your fuel tanks.") )
    system.mrkRm(Imark)
 end
 
