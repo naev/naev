@@ -53,7 +53,7 @@ function accept ()
    -- Accept mission
    misn.accept()
 
-   credits = 600e3
+   credits = emp.rewards.ec01
 
    misn_stage = 0
    systems_visited = 0 -- Number of Collective systems visited

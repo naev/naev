@@ -61,7 +61,7 @@ function accept ()
 
    -- Mission details
    misn_stage = 0
-   reward = 500e3
+   reward = emp.rewards.es01
    misn.setTitle(_("Empire Shipping Delivery"))
    misn.setReward( fmt.credits(reward) )
    misn.setDesc( fmt.f(_("Pick up a package at {pnt} in the {sys} system"), {pnt=pickup, sys=pickupsys}) )

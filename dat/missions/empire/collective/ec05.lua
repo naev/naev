@@ -1,23 +1,23 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Operation Black Trinity">
-  <flags>
-   <unique />
-  </flags>
-  <avail>
-   <priority>2</priority>
-   <cond>faction.playerStanding("Empire") &gt; 5 and var.peek("collective_fail") ~= true</cond>
-   <done>Collective Extraction</done>
-   <chance>100</chance>
-   <location>Bar</location>
-   <planet>Omega Station</planet>
-  </avail>
-  <notes>
-   <campaign>Collective</campaign>
-   <tier>4</tier>
-  </notes>
- </mission>
- --]]
+ <flags>
+  <unique />
+ </flags>
+ <avail>
+  <priority>2</priority>
+  <cond>faction.playerStanding("Empire") &gt; 5 and var.peek("collective_fail") ~= true</cond>
+  <done>Collective Extraction</done>
+  <chance>100</chance>
+  <location>Bar</location>
+  <planet>Omega Station</planet>
+ </avail>
+ <notes>
+  <campaign>Collective</campaign>
+  <tier>4</tier>
+ </notes>
+</mission>
+--]]
 --[[
 
    Operation Black Trinity
@@ -62,7 +62,7 @@ function create ()
    end
 
    misn.setNPC( _("Dimitri?"), "unknown.webp", _("Dimitri should be around here, but you can't see him. You should probably look for him.") )
-   credits = 2e6
+   credits = emp.rewards.ec05
 end
 
 

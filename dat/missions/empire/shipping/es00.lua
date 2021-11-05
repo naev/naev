@@ -59,7 +59,7 @@ function accept ()
 
    -- Mission details
    misn_stage = 0
-   reward = 500e3
+   reward = emp.rewards.es00
    misn.setTitle(_("Prisoner Exchange"))
    misn.setReward( fmt.credits(reward) )
    misn.setDesc( fmt.f(_("Go to {pnt} in the {sys} system to exchange prisoners with the FLF"), {pnt=dest, sys=destsys}) )

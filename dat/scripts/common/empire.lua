@@ -24,4 +24,27 @@ function emp.addCollectiveLog( text )
    shiplog.append("empire_collective", text)
 end
 
+emp.rewards = {
+   cargo00 = 50e3,
+   -- Empire Shipping
+   es00 = 500e3,
+   es01 = 500e3, -- + "Heavy Weapons Combat License" permission
+   es02 = 750e3, -- + "Heavy Combat vessel License" permission
+   -- Long Distance Cargo
+   ldc1 = 500e3,
+   ldc2 = 500e3,
+   ldc3 = 500e3,
+   ldc4 = 500e3,
+   ldc5 = 500e3,
+   ldc6 = 500e3,
+   -- Collective Campaign
+   ec00 = 500e3,
+   ec01 = 600e3,
+   ec02 = 700e3,
+   ec03 = 1e6,
+   ec04 = 1e6,
+   ec05 = 2e6,
+   ec06 = 5e6, -- + "Left Boot" accessory
+}
+
 return emp

@@ -63,7 +63,7 @@ end
 
 function accept ()
    commando_planet = planet.get("Eiroik")
-   credits = 1e6
+   credits = emp.rewards.ec03
 
    -- Intro text
    if tk.yesno( _("Collective Espionage"), fmt.f(_([[As you approach Lt. Commander Dimitri you notice he seems somewhat excited.

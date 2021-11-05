@@ -55,7 +55,7 @@ function accept ()
    misn.accept()
 
    -- Description is visible in OSD and the onboard computer, it shouldn't be too long either.
-   reward = 500e3
+   reward = emp.rewards.ldc6
    misn.setTitle(_("Empire Long Distance Recruitment"))
    misn.setReward(fmt.credits(reward))
    misn.setDesc( _("Deliver Lieutenant Czesc to Halir in the Gamma Polaris system") )

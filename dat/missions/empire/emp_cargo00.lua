@@ -28,7 +28,6 @@ local fmt = require "format"
 local emp = require "common.empire"
 local lmisn = require "lmisn"
 
-
 function create ()
    -- Note: this mission does not make any system claims.
 
@@ -65,7 +64,7 @@ function accept ()
    misn.accept()
 
    -- Mission details
-   reward = 30e3
+   reward = emp.rewards.cargo00
    misn.setTitle(_("Empire Recruitment"))
    misn.setReward( fmt.credits(reward) )
    misn.setDesc( fmt.f(_("Deliver some parcels for the Empire to {pnt} in {sys}."), {pnt=dest, sys=sys}) )

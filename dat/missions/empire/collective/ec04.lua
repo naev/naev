@@ -39,7 +39,7 @@ local emp = require "common.empire"
 -- Mission constants
 local misn_target, misn_target_sys = planet.getS("Eiroik")
 local misn_base, misn_base_sys = planet.getS("Omega Station")
-local credits = 1e6
+local credits = emp.rewards.ec04
 
 function create ()
    local missys = {misn_target}

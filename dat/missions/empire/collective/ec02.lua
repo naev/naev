@@ -1,22 +1,22 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Collective Espionage 2">
-  <flags>
-   <unique />
-  </flags>
-  <avail>
-   <priority>2</priority>
-   <cond>faction.playerStanding("Empire") &gt; 5 and var.peek("collective_fail") ~= true</cond>
-   <done>Collective Espionage 1</done>
-   <chance>100</chance>
-   <location>Bar</location>
-   <planet>Omega Station</planet>
-  </avail>
-  <notes>
-   <campaign>Collective</campaign>
-  </notes>
- </mission>
- --]]
+ <flags>
+  <unique />
+ </flags>
+ <avail>
+  <priority>2</priority>
+  <cond>faction.playerStanding("Empire") &gt; 5 and var.peek("collective_fail") ~= true</cond>
+  <done>Collective Espionage 1</done>
+  <chance>100</chance>
+  <location>Bar</location>
+  <planet>Omega Station</planet>
+ </avail>
+ <notes>
+  <campaign>Collective</campaign>
+ </notes>
+</mission>
+--]]
 --[[
 
    Collective Espionage II
@@ -36,7 +36,7 @@ local fmt = require "format"
 -- Mission consstants
 local misn_base, misn_base_sys = planet.getS("Omega Station")
 local misn_target, misn_target_sys = planet.getS("Eiroik")
-local reward = 700e3
+local reward = emp.rewards.ec02
 
 function create ()
     local missys = {misn_target}

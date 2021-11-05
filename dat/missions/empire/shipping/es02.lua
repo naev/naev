@@ -76,7 +76,7 @@ function accept ()
 
    -- Mission details
    misn_stage = 0
-   reward = 750e3
+   reward = emp.rewards.es02
    misn.setTitle(_("Empire VIP Rescue"))
    misn.setReward( fmt.credits(reward) )
    misn.setDesc( fmt.f( _("Rescue the VIP from a transport ship in the {sys} system"), {sys=destsys} ) )

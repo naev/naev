@@ -23,7 +23,7 @@ shark.rewards = {
    sh04 = 750e3,
    sh05 = 1e6,
    sh06 = 750e3,
-   sh07 = 3e6,
+   sh07 = 3e6, -- + "Sandwich Holder" accessory
 }
 
 return shark

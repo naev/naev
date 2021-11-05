@@ -1,23 +1,23 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Operation Cold Metal">
-  <flags>
-   <unique />
-  </flags>
-  <avail>
-   <priority>2</priority>
-   <cond>faction.playerStanding("Empire") &gt; 5 and var.peek("collective_fail") ~= true</cond>
-   <done>Operation Black Trinity</done>
-   <chance>100</chance>
-   <location>Bar</location>
-   <planet>Omega Station</planet>
-  </avail>
-  <notes>
-   <provides name="The Collective is dead and no one will miss them"/>
-   <campaign>Collective</campaign>
-  </notes>
- </mission>
- --]]
+ <flags>
+  <unique />
+ </flags>
+ <avail>
+  <priority>2</priority>
+  <cond>faction.playerStanding("Empire") &gt; 5 and var.peek("collective_fail") ~= true</cond>
+  <done>Operation Black Trinity</done>
+  <chance>100</chance>
+  <location>Bar</location>
+  <planet>Omega Station</planet>
+ </avail>
+ <notes>
+  <provides name="The Collective is dead and no one will miss them"/>
+  <campaign>Collective</campaign>
+ </notes>
+</mission>
+--]]
 --[[
 
    Operation Cold Metal
@@ -246,7 +246,7 @@ function land ()
       -- This was the last mission in the minor campaign, so bump the reputation cap.
       emp.modReputation( 10 )
       faction.modPlayerSingle("Empire",5)
-      player.pay( 5e6 )
+      player.pay( emp.rewards.ec06 )
 
       tk.msg( _("Mission Success"), _([[She continues. "As a symbol of appreciation, you should find a deposit of 5,000,000 credits in your account. There will be a celebration later today in the officer's room if you want to join in."
     And so ends the Collective threat...

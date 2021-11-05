@@ -53,7 +53,7 @@ function accept ()
    misn.accept()
 
    -- Description is visible in OSD and the onboard computer, it shouldn't be too long either.
-   reward = 500e3
+   reward = emp.rewards.ldc5
    misn.setTitle(_("Sirius Long Distance Recruitment"))
    misn.setReward(fmt.credits(reward))
    misn.setDesc( _("Deliver a shipping diplomat for the Empire to Madria in the Esker system") )
