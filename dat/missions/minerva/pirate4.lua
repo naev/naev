@@ -111,7 +111,7 @@ They beam you a smile.]]))
       pir(_([["The bad news is we don't exactly know who the mole is. However, the good news is we were able to intercept a messenger. It was after a delivery so we weren't able to capture anything very interesting. But there was a small memo we found that could be a hint."
 They should you a crumpled up dirty piece of paper that has '10k¤ 5-6-3-1' on it and hands it to you.]]))
       vn.func( function ()
-         local c = misn.cargoNew( _("Crumpled Up Note"), _("This is a crumpled up note that says '10k¤ 5-6-3-1' on it. How could this be related to the Dvaered spy on Minerva Station?") )
+         local c = misn.cargoNew( N_("Crumpled Up Note"), N_("This is a crumpled up note that says '10k¤ 5-6-3-1' on it. How could this be related to the Dvaered spy on Minerva Station?") )
          misn.cargoAdd( c, 0 )
       end )
       pir(_([["We're still trying to figure exactly who they are, but that note is our best hint. Maybe it can be of use to you when looking for them. Once we get them we'll kindly escort them to an interrogation ship we have and we can try to get them to spill the beans."]]))
@@ -158,7 +158,7 @@ They make a cutting gesture from their belly up to their neck.
    vn.run()
 
    -- Add illegal cargo
-   local c = misn.cargoNew( _("Dvaered Mole"), _("An unconscious and restrained Dvaered mole. You better not let Dvaered ships find out you are carrying this individual.") )
+   local c = misn.cargoNew( N_("Dvaered Mole"), N_("An unconscious and restrained Dvaered mole. You better not let Dvaered ships find out you are carrying this individual.") )
    c:illegalto{"Dvaered"}
    cargo_mole = misn.cargoAdd( c, 0 )
 

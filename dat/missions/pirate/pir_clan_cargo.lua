@@ -77,7 +77,7 @@ Will you accept the mission?]]) ) then
    })
 
    -- Set up the goal
-   local c = misn.cargoNew(_("Pirate Packages"), _("A bunch of pirate packages. You don't want to know what's inside."))
+   local c = misn.cargoNew(N_("Pirate Packages"), N_("A bunch of pirate packages. You don't want to know what's inside."))
    packages = misn.cargoAdd(c, 5)
    hook.land("land")
    hook.enter("enter")

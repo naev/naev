@@ -70,7 +70,7 @@ function accept ()
    mrk_mainsys = misn.markerAdd( mainsys )
 
    minerva.log.pirate( fmt.f(_("You accepted a job from Zuri to take out a Za'lek hacking center at the {sys} system"), {sys=mainsys}) )
-   local c = misn.cargoNew( _("High-Density Explosives"), _("Explosives that can be used to detonate all sorts of critical infrastructure.") )
+   local c = misn.cargoNew( N_("High-Density Explosives"), N_("Explosives that can be used to detonate all sorts of critical infrastructure.") )
    misn.cargoAdd( c, 0 )
 
    hook.load("generate_npc")
