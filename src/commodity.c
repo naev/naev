@@ -124,13 +124,9 @@ void tonnes2str( char *str, int tonnes )
  */
 Commodity* commodity_get( const char* name )
 {
-   for (int i=0; i<array_size(commodity_stack); i++)
-      if (strcmp(commodity_stack[i].name,name)==0)
-         return &commodity_stack[i];
-   for (int i=0; i<array_size(commodity_temp); i++)
-      if (strcmp(commodity_temp[i]->name, name) == 0)
-         return commodity_temp[i];
-
+   Commodity *c = commodity_getW( name );
+   if (c!=NULL)
+      return c;
    WARN(_("Commodity '%s' not found in stack"), name);
    return NULL;
 }
@@ -143,11 +139,10 @@ Commodity* commodity_get( const char* name )
  */
 Commodity* commodity_getW( const char* name )
 {
-   int i;
-   for (i=0; i<array_size(commodity_stack); i++)
+   for (int i=0; i<array_size(commodity_stack); i++)
       if (strcmp(commodity_stack[i].name, name) == 0)
          return &commodity_stack[i];
-   for (i=0; i<array_size(commodity_temp); i++)
+   for (int i=0; i<array_size(commodity_temp); i++)
       if (strcmp(commodity_temp[i]->name, name) == 0)
          return commodity_temp[i];
    return NULL;
@@ -241,13 +236,10 @@ int commodity_compareTech( const void *commodity1, const void *commodity2 )
  */
 Commodity ** standard_commodities (void)
 {
-   int i, n;
-   Commodity *c, **com;
-
-   n = array_size(commodity_stack);
-   com = array_create_size( Commodity*, n );
-   for (i=0; i<n; i++) {
-      c = &commodity_stack[i];
+   int n = array_size(commodity_stack);
+   Commodity **com = array_create_size( Commodity*, n );
+   for (int i=0; i<n; i++) {
+      Commodity *c = &commodity_stack[i];
       if (c->standard)
          array_push_back( &com, c );
    }
@@ -358,7 +350,7 @@ static int commodity_parse( Commodity *temp, xmlNodePtr parent )
  */
 void commodity_Jettison( int pilot, const Commodity* com, int quantity )
 {
-   (void)com;
+   (void) com;
    Pilot* p;
    int n;
    double px,py, bvx, bvy;
@@ -461,11 +453,8 @@ void gatherable_render( void )
  */
 int gatherable_getClosest( Vector2d pos, double rad )
 {
-   int curg;
-   double mindist;
-
-   curg = -1;
-   mindist = INFINITY;
+   int curg = -1;
+   double mindist = INFINITY;
 
    for (int i=0; i < array_size(gatherable_stack); i++) {
       Gatherable *gat = &gatherable_stack[i];
@@ -510,22 +499,17 @@ int gatherable_getPos( Vector2d* pos, Vector2d* vel, int id )
  */
 void gatherable_gather( int pilot )
 {
-   int i, q;
-   Gatherable *gat;
-   Pilot* p;
-   HookParam hparam[3];
-
-   p = pilot_get( pilot );
-
-   for (i=0; i < array_size(gatherable_stack); i++) {
-      gat = &gatherable_stack[i];
+   Pilot *p = pilot_get( pilot );
+   for (int i=0; i < array_size(gatherable_stack); i++) {
+      Gatherable *gat = &gatherable_stack[i];
 
       if (vect_dist( &p->solid->pos, &gat->pos ) < GATHER_DIST ) {
          /* Add cargo to pilot. */
-         q = pilot_cargoAdd( p, gat->type, gat->quantity, 0 );
+         int q = pilot_cargoAdd( p, gat->type, gat->quantity, 0 );
 
          if (q>0) {
             if (pilot_isPlayer(p)) {
+               HookParam hparam[3];
                player_message( n_("%d ton of %s gathered", "%d tons of %s gathered", q), q, _(gat->type->name) );
 
                /* Run hooks. */
