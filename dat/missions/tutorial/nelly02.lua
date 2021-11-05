@@ -69,7 +69,6 @@ local function has_disable( o )
 end
 
 function create ()
-   if not var.peek("testing") then misn.finish() end
    -- Save current system to return to
    retpnt, retsys = planet.cur()
    if not misn.claim( retsys, true ) then
