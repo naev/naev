@@ -1,20 +1,20 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="The Runaway">
-  <flags>
-    <unique />
-  </flags>
-  <avail>
-   <priority>4</priority>
-   <chance>11</chance>
-   <location>Bar</location>
-   <system>Gamma Polaris</system>
-  </avail>
-  <notes>
-   <tier>1</tier>
-  </notes>
- </mission>
- --]]
+ <flags>
+   <unique />
+ </flags>
+ <avail>
+  <priority>4</priority>
+  <chance>11</chance>
+  <location>Bar</location>
+  <system>Gamma Polaris</system>
+ </avail>
+ <notes>
+  <tier>1</tier>
+ </notes>
+</mission>
+--]]
 --[[
 This is the "The Runaway" mission as described on the wiki.
 There will be more missions to detail how you are perceived as the kidnapper of "Cynthia"
@@ -22,11 +22,12 @@ There will be more missions to detail how you are perceived as the kidnapper of 
 local fmt = require "format"
 local neu = require "common.neutral"
 
+local reward = 200e3
+
 -- Mission constants
 local cargoname = N_("Cynthia")
 local cargodesc = N_("A young teenager.")
 local targetworld, targetworld_sys = planet.getS("Zhiru")
-local reward = 500e3
 
 function create ()
    startworld, startworld_sys = planet.cur()

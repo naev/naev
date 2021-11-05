@@ -29,11 +29,11 @@ local fmt = require "format"
 local neu = require "common.neutral"
 local lmisn = require "lmisn"
 
+local payment = 200e3
+
 -- defines Previous Planets table
 prevPlanets = {}
 prevPlanets.__save = true
-
-local payment = 200e3
 
 
 local moreinfotxt = {}

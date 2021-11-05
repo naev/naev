@@ -37,11 +37,11 @@ NOTE
 Because of bad planning, this mission is badly organized.
 Anyone looking for a model of good mission-making should look elsewhere! -- the author
 ]]--
-
 local fleet = require "fleet"
 local fmt = require "format"
 local pir = require "common.pirate"
 
+local reward = 400e3
 
 -- Create the mission on the current planet, and present the first Bar text.
 function create()
@@ -66,7 +66,6 @@ function create()
     "These raiders must be stopped. We are cadets at the Imperial Flight School. If you feel the injustice of this family's loss, will you fly with us to avenge their son's death?"]]) ) then
       misn.accept()
       tk.msg( _("Volunteers"), _([["These terrorists cannot sustain many losses," one of the young men explains as you and a group of other volunteers prepare for takeoff, "and they have no organization. We can destroy them if you team up and focus your fire on one ship at a time."]]))
-      reward = 40e3
       misn.setReward( fmt.f( _("{credits} and the pleasure of serving the Empire."), {credits=fmt.credits(reward)}) )
       misn.setDesc( _("Defend the system against a pirate fleet."))
       misn.setTitle( _("Defend the System"))

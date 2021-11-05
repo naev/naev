@@ -1,20 +1,20 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Deliver Love">
-  <flags>
-   <unique />
-  </flags>
-  <avail>
-   <priority>4</priority>
-   <chance>50</chance>
-   <location>Bar</location>
-   <planet>Zeo</planet>
-  </avail>
-  <notes>
-   <tier>1</tier>
-  </notes>
- </mission>
- --]]
+ <flags>
+  <unique />
+ </flags>
+ <avail>
+  <priority>4</priority>
+  <chance>50</chance>
+  <location>Bar</location>
+  <planet>Zeo</planet>
+ </avail>
+ <notes>
+  <tier>1</tier>
+ </notes>
+</mission>
+--]]
 
 --[[
 Mission Name: Deliver Love
@@ -29,11 +29,11 @@ local cargoname = N_("Love Letters")
 local cargodesc = N_("A cargo of feelings inked onto pulped, dried cellulose fibres.")
 local targetworld, targetworld_sys = planet.getS( "Zhiru" )
 
+reward = 50e3 -- Can get doubled, must be global!
 
 function create () --No system shall be claimed by mission
    startworld, startworld_sys = planet.cur()
 
-   reward = 20e3
    started = false
 
    misn.setNPC( _("Old-Fashioned Man"), "neutral/unique/michal.webp", _("A man sits in the corner of the bar, writing a letter.") )

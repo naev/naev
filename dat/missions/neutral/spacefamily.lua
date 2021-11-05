@@ -22,6 +22,8 @@ local fmt = require "format"
 local lmisn = require "lmisn"
 local neu = require "common.neutral"
 
+local reward = 500e3
+
 local directions = {}
 directions[1] = _([["I know just the place," Harrus tells you. "Take us to planet {pnt} in the {sys} system. I'm sure a man of my calibre can find everything he needs there. Captain, please notify me when we arrive." With that, Harrus turns and rejoins his family. The kids seem in the process of redecorating (if not wrecking) your quarters, and despite the apologetic glance the woman gives you you can't help but wonder if you did the right thing responding to that SOS.]])
 directions[2] = _([[Harrus steps out of your ship and takes a look around the spaceport you docked at. "No, no. This won't do at all," he says disapprovingly. "This place is a mess! Look at the dust and grime!" He rounds on you. "How are we supposed to make a decent living in a dump like this? You've brought us to the wrong place altogether. I must say I'm disappointed. I demand you take us away from this abysmal hole this minute! Let's see... Yes, {pnt} in {sys} will do. At least they're civilized there!"
@@ -101,7 +103,7 @@ function land()
          tk.msg(_("Rid of them at last"), _([[You land at your final stop in your quest to take the space family home, and not a moment too soon for both you and Harrus. Harrus stomps off your ship without so much as a greeting, his wife and children in tow, and you are just as happy to see them gone.
     Surveying your now deserted quarters, you are appalled at how much damage the temporary inhabitants have managed to do along the way. You console yourself with the thought that at least you'll have something to do during the dull periods in hyperspace and turn to tend to your ships needs, when your eye falls on a small box that you don't remember seeing here before.
     Inside the box, you find a sum of credits and a note written in neat, feminine handwriting that says, "Sorry for the trouble."]]) ) -- Final message
-         player.pay(500e3)
+         player.pay( reward )
          misn.cargoJet(carg_id)
          neu.addMiscLog( _([[You rescued a bad-tempered man and his family who were stranded aboard their ship. After a lot of annoying complaints, the man and his family finally left your ship, the man's wife leaving a generous payment for the trouble.]]) )
          misn.finish(true)

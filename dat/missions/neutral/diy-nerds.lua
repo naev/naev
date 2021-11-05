@@ -26,7 +26,7 @@ local pir = require "common.pirate"
 local fmt = require "format"
 
 -- Mission details.
-local misn_reward = fmt.credits(20e3)
+local reward = 40e3
 
 -- helper functions, defined below
 local addNerdCargo, rmNerdCargo, nerds_return, system_hasAtLeast
@@ -75,9 +75,9 @@ function accept ()
       end
 
       misn.accept()
-      misn.setTitle( _("DIY Nerds"))
-      misn.setReward( misn_reward)
-      misn.setDesc( _("Cart some nerds to their contest, and back."))
+      misn.setTitle( _("DIY Nerds") )
+      misn.setReward( fmt.credits(reward) )
+      misn.setDesc( _("Cart some nerds to their contest, and back.") )
       marker = misn.markerAdd( destPlanet, "low" )
 
       tk.msg(_("We have a deal!"), fmt.f(_([[Upon accepting the task, you see the entire group relax visibly, and you can almost feel Mia's boldness fade away - to some extent, at least. It seems that the group is quite keen on the competition, but until now had no idea how to get there.
@@ -282,7 +282,7 @@ function nerds_land3()
    if cp == srcPlanet then
       if nerdswon then
          tk.msg(_("The End"), fmt.f(_([[The nerds, finally exhausted from all the partying, still smile as they pack up their prize-winning box and leave your ship. Mia beams as she turns to you. "Well done, {player}. You see, since we got loads of prize money, we decided to give you a bonus. After all, we wouldn't have gotten there without your service. Here, have 30,000. Good day to you."]]), {player=player.name()}))
-         player.pay(30e3)
+         player.pay( reward )
       else
          if not tk.yesno(_("Minor Complications"), _([[With sagging shoulders, the nerds unload their box. Mia turns to address you, not bold at all this time. "Um, we got a bit of a problem here. You know, we intended to pay the trip from our prize money. Now we don't have no prize money."
     As you're trying to decide what to make of the situation, one of the other nerds creeps up behind Mia and cautiously gestures for her to join the group a few yards away, all the time avoiding your eyes. Strange guy, you think, as if he was not accustomed to be socializing with strangers. Mia joins the group, and some whispering ensues. Mia returns to you after a few hectoseconds.

@@ -30,7 +30,7 @@ local pir = require "common.pirate"
 local fmt = require "format"
 local neu = require "common.neutral"
 
-
+local credits = 750e3
 
 local articles={
    {
@@ -49,7 +49,6 @@ function create ()
       misn.finish(false)
    end
    satellite_sys = system.get("Arandon") -- Not too unstable
-   credits = 750e3
 
    -- Set stuff up for the spaceport bar
    misn.setNPC( _("Scientists"), "neutral/unique/neil.webp", _("A bunch of scientists seem to be chattering nervously among themselves.") )

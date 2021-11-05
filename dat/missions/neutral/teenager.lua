@@ -25,7 +25,9 @@
 
 --]]
 local fmt = require "format"
+local neu = require 'common.neutral'
 
+local reward = 300e3
 
 function create ()
     cursys = system.cur()
@@ -106,8 +108,10 @@ function land()
     if planet.cur() == curplanet then
         tk.msg(_("You're grounded, young man"), _([[The boy's father awaits you at the spaceport. He gives his son and the young lady a stern look and curtly commands them to wait for him in the spaceport hall. The couple droops off, and the father turns to face you.
     "You've done me a service, captain," he says. "As promised, I have a reward for a job well done. You'll find it in your bank account. I'm going to give my son a reprimand he'll not soon forget, so hopefully he won't repeat this little stunt anytime soon. Well then, I must be going. Thank you again, and good luck on your travels."]]))
-        player.pay(300e3)
+        player.pay( reward )
         misn.finish(true)
+
+        neu.addMiscLog( _("You helped bring back some young teenagers from a joyride through force.") )
     end
 end
 

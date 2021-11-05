@@ -1,18 +1,18 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Deliver Cake">
-  <flags>
-   <unique />
-  </flags>
-  <avail>
-   <priority>4</priority>
-   <chance>50</chance>
-   <done>Deliver Love</done>
-   <location>Bar</location>
-   <planet>Zhiru</planet>
-  </avail>
- </mission>
- --]]
+ <flags>
+  <unique />
+ </flags>
+ <avail>
+  <priority>4</priority>
+  <chance>50</chance>
+  <done>Deliver Love</done>
+  <location>Bar</location>
+  <planet>Zhiru</planet>
+ </avail>
+</mission>
+--]]
 --[[
 Mission Name: Deliver Cake
 Author: iwaschosen
@@ -25,10 +25,10 @@ local neu = require "common.neutral"
 
 local targetworld, targetworld_sys = planet.getS( "Zeo" )
 
+reward = 50e3 -- Plus 1e3 * cake, has to be global (is saved)
+
 function create () --No system shall be claimed by mission
    startworld, startworld_sys = planet.cur()
-
-   reward = 10e3
 
    misn.setNPC( _("Familiar Face"), "neutral/unique/paddy.webp", _("A familiar looking young woman is looking at you") )
 end

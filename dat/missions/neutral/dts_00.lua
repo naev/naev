@@ -1,24 +1,24 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Defend the System 1">
-  <flags>
-   <unique />
-  </flags>
-  <avail>
-   <priority>4</priority>
-   <chance>3</chance>
-   <location>None</location>
-   <faction>Dvaered</faction>
-   <faction>Frontier</faction>
-   <faction>Goddard</faction>
-   <faction>Independent</faction>
-   <faction>Soromid</faction>
-  </avail>
-  <notes>
-   <tier>3</tier>
-  </notes>
- </mission>
- --]]
+ <flags>
+  <unique />
+ </flags>
+ <avail>
+  <priority>4</priority>
+  <chance>3</chance>
+  <location>None</location>
+  <faction>Dvaered</faction>
+  <faction>Frontier</faction>
+  <faction>Goddard</faction>
+  <faction>Independent</faction>
+  <faction>Soromid</faction>
+ </avail>
+ <notes>
+  <tier>3</tier>
+ </notes>
+</mission>
+--]]
 --[[
 
    MISSION: Defend the System 1
@@ -44,6 +44,7 @@ local fleet = require "fleet"
 local fmt = require "format"
 local pir = require "common.pirate"
 
+local reward = 200e3
 
 -- Create the mission on the current planet, and present the first Bar text.
 function create ()
@@ -65,7 +66,6 @@ function create ()
     "Are you brave enough?"]]), {pnt=this_planet} ) ) then
       misn.accept()
       tk.msg( _("Volunteers"), _([[You step forward and eight other pilots join you. Together, all of you march off to the your ships and take off to face the pirate horde.]]))
-      reward = 40e3
       misn.setReward( fmt.f( _("{credits} and the pleasure of serving the Empire."), {credits=fmt.credits(reward)}) )
       misn.setDesc( _("Defend the system against a pirate fleet."))
       misn.setTitle( _("Defend the System"))
@@ -189,7 +189,7 @@ function celebrate_victory()
       tk.msg( _("Welcome back"), _([[The portmaster greets the crowd of volunteers on the spaceport causeway.
     "Well done. You got those pirates on the run!" he exclaims. "Maybe they'll think twice now before bothering our peace. I hope you all feel proud. You've spared this planet millions in shipping, and saved countless lives. And you've earned a reward. Before you take off today, the port authority will give you each forty thousand credits. Congratulations!"
     Your comrades raise a cheer, and everyone shakes the portmaster's hand. One of them kisses the master on both cheeks in the Goddard style, then the whole crowd moves toward the bar.]]) )
-      player.pay( reward)
+      player.pay( reward )
       faction.modPlayerSingle( "Empire", 3)
       tk.msg( _("Over drinks"), fmt.f( _([[Many periods later, the celebration has wound down. You find yourself drinking with a small group of 'veterans of the Battle of {sys},' as some of them are calling it. A older pilot sits across the table and stares pensively into his drink.
     "It's strange, though," he mutters. "I've never seen pirates swarm like that before."]]), {sys=this_system} ) )

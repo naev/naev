@@ -23,12 +23,12 @@
 -- The old woman keeps muttering about how the times have changed and how it used to be when she was young.
 --
 --]]
-
 local car = require "common.cargo"
 local fmt = require "format"
 local neu = require "common.neutral"
 local lmisn = require "lmisn"
 
+local reward = 500e3
 
 local complaints = {}
 complaints[1] = _([["You youngsters and your newfangled triple redundancy plasma feedback shunts. In my day, we had to use simple monopole instaconductors to keep our hyperdrives running!"]])
@@ -107,7 +107,7 @@ function land()
         tk.msg(_("Delivery complete"), _([[You help the old lady to the spacedock elevator. She keeps grumbling about how spaceports these days are so inconvenient and how advertisement holograms are getting quite cheeky of late, they wouldn't allow that sort of thing in her day. But once you deliver her to the exit terminal, she smiles at you.
     "Thank you, young captain, I don't know what I would have done without you. It seems there are still decent folk out there even now. Take this, as a token of my appreciation."
     The lady hands you a credit chip. Then she disappears through the terminal. Well, that was quite a passenger!]]))
-        player.pay(500e3)
+        player.pay( reward )
         neu.addMiscLog( _([[You escorted an old woman to her cousin in Sirian space. She was nice, albeit somewhat overly chatty.]]) )
         misn.finish(true)
     end

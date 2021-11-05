@@ -1,22 +1,22 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Defend the System 2">
-  <flags>
-   <unique />
-  </flags>
-  <avail>
-   <priority>4</priority>
-   <chance>3</chance>
-   <done>Defend the System 1</done>
-   <location>None</location>
-   <faction>Dvaered</faction>
-   <faction>Frontier</faction>
-   <faction>Goddard</faction>
-   <faction>Independent</faction>
-   <faction>Soromid</faction>
-  </avail>
- </mission>
- --]]
+ <flags>
+  <unique />
+ </flags>
+ <avail>
+  <priority>4</priority>
+  <chance>3</chance>
+  <done>Defend the System 1</done>
+  <location>None</location>
+  <faction>Dvaered</faction>
+  <faction>Frontier</faction>
+  <faction>Goddard</faction>
+  <faction>Independent</faction>
+  <faction>Soromid</faction>
+ </avail>
+</mission>
+--]]
 --[[
 
    MISSION: Defend the System 2
@@ -41,6 +41,7 @@ local fleet = require "fleet"
 local fmt = require "format"
 local pir = require "common.pirate"
 
+reward = 300e3
 
 -- Create the mission on the current planet, and present the first Bar text.
 function create()
@@ -63,7 +64,6 @@ function create()
     "I'm with the navy and I will organize the defense," her voice cuts through the commotion. "Who here is a pilot?  We must strike back quickly. I will arrange a reward for everyone who volunteers. We'll need as many pilots as possible. Follow me."]]) ) then
       misn.accept()
       tk.msg( _("Volunteers"), _([["Take as many out of the fight early as you can," advises the Commodore before you board your ships. "If you can't chase them off, you might at least improve the odds. Good luck."]]))
-      reward = 40e3
       misn.setReward( fmt.f( _("{credits} and the pleasure of serving the Empire."), {credits=fmt.credits(reward)}) )
       misn.setDesc( _("Defend the system against a pirate fleet."))
       misn.setTitle( _("Defend the System"))
@@ -193,7 +193,7 @@ function celebrate_victory()
 
       if victory == true then
          tk.msg( _("On the way in"), _([[As you taxi in to land, you can make out the tiny figure of the Commodore saluting a small group of individuals to the side of the landing pads. After you and your fellow volunteers alight, she greets you with the portmaster by her side.]]) )
-         player.pay( reward)
+         player.pay( reward )
          faction.modPlayerSingle( "Empire", 3)
          tk.msg( _("Thank you"), _([["That was good flying," the Commodore says with a tight smile. "Thank you all for your help. This gentleman has arranged a transfer of forty thousand credits to each of you. You can be proud of what you've done today."]]) )
          misn.finish( true)

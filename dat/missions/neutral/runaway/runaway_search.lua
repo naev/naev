@@ -1,18 +1,18 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="The Search for Cynthia">
-  <flags>
-    <unique />
-  </flags>
-  <avail>
-   <priority>4</priority>
-   <done>The Runaway</done>
-   <chance>11</chance>
-   <location>Bar</location>
-   <system>Goddard</system>
-  </avail>
- </mission>
- --]]
+ <flags>
+   <unique />
+ </flags>
+ <avail>
+  <priority>4</priority>
+  <done>The Runaway</done>
+  <chance>11</chance>
+  <location>Bar</location>
+  <system>Goddard</system>
+ </avail>
+</mission>
+--]]
 --[[
    This is the second half of "The Runaway"
    Here, Cynthia's father pays you to track down his daughter.
@@ -24,12 +24,13 @@
 local fmt = require "format"
 local neu = require "common.neutral"
 
+local releasereward = 25e3
+local reward = 300e3
+
 -- Mission constants
 local cargoname = N_("Cynthia")
 local cargodesc = N_("A young teenager.")
 local targetworld, targetworld_sys = planet.getS("Niflheim")
-local releasereward = 25e3
-local reward = 100e3
 
 -- Here are stored the fake texts for the OSD
 osd_text = {}
@@ -47,8 +48,8 @@ end
 
 function accept ()
    --This mission does not make any system claims
-   if not tk.yesno( _("The Search for Cynthia"), _([[Approaching him, he hands you a paper. It offers a 100,000 credit reward for the finding of a "Cynthia" person.
-    "That's my girl. She disappeared quite a few decaperiods ago. We managed to track her down to here, but where she went afterwards remains a mystery. We know she was kidnapped, but if you know anything..." The man begins to cry. "Have you seen any trace of her?"]]) ) then
+   if not tk.yesno( fmt.f(_("The Search for Cynthia"), _([[Approaching him, he hands you a paper. It offers a {credits} reward for the finding of a "Cynthia" person.
+    "That's my girl. She disappeared quite a few decaperiods ago. We managed to track her down to here, but where she went afterwards remains a mystery. We know she was kidnapped, but if you know anything..." The man begins to cry. "Have you seen any trace of her?"]]),{credits=fmt.credits(reward)})) then
       misn.finish()
    end
 

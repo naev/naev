@@ -21,10 +21,11 @@
 
       The first mission in a series of missions surrounding human trafficking. This mission consists of overhearing pirate a couple pirate conversations, disabling a trader ship, and returning the children home to their parents. It essentially sets up everything for the following 4 missions.
 --]]
-
 local fmt = require "format"
 local portrait = require "portrait"
 local neu = require "common.neutral"
+
+-- TODO add some sort of reward I guess
 
 local sys1 = system.get("Arcturus")
 local sys2 = system.get("Goddard")

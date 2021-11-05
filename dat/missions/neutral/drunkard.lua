@@ -1,19 +1,19 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Drunkard">
-  <flags>
-   <unique />
-  </flags>
-  <avail>
-   <priority>4</priority>
-   <chance>3</chance>
-   <location>Bar</location>
-  </avail>
-  <notes>
-   <tier>1</tier>
-  </notes>
- </mission>
- --]]
+ <flags>
+  <unique />
+ </flags>
+ <avail>
+  <priority>4</priority>
+  <chance>3</chance>
+  <location>Bar</location>
+ </avail>
+ <notes>
+  <tier>1</tier>
+ </notes>
+</mission>
+--]]
 --[[
 
   Drunkard
@@ -25,8 +25,7 @@
 local fmt = require "format"
 local neu = require "common.neutral"
 
-payment = 500e3
-
+local payment = 500e3
 
 function create ()
    -- Note: this mission does not make any system claims.

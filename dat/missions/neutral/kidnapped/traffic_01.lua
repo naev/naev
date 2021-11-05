@@ -1,25 +1,25 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="The Lost Brother">
-  <flags>
-   <unique />
-  </flags>
-  <avail>
-   <priority>4</priority>
-   <done>Kidnapped</done>
-   <chance>12</chance>
-   <location>Bar</location>
-   <faction>Empire</faction>
-   <faction>Dvaered</faction>
-   <faction>Frontier</faction>
-   <faction>Goddard</faction>
-   <faction>Sirius</faction>
-  </avail>
-  <notes>
-   <campaign>Kidnapping</campaign>
-  </notes>
- </mission>
- --]]
+ <flags>
+  <unique />
+ </flags>
+ <avail>
+  <priority>4</priority>
+  <done>Kidnapped</done>
+  <chance>12</chance>
+  <location>Bar</location>
+  <faction>Empire</faction>
+  <faction>Dvaered</faction>
+  <faction>Frontier</faction>
+  <faction>Goddard</faction>
+  <faction>Sirius</faction>
+ </avail>
+ <notes>
+  <campaign>Kidnapping</campaign>
+ </notes>
+</mission>
+--]]
 --[[
 
    The Ruse
@@ -36,6 +36,8 @@
 local fmt = require "format"
 local neu = require "common.neutral"
 
+local reward = 200e3
+
 function create ()
    targetsys = {system.get("Mural"),system.get("Darkstone"),system.get("Haleb")}
    targetsys["__save"] = true
@@ -49,7 +51,6 @@ function create ()
    end
 
    misn_marker = {}
-   reward = rnd.rnd(40,60)*1000
 
    -- Spaceport bar stuff
    misn.setNPC( _("Ordinary Woman"), "neutral/unique/fakesister.webp", _("The woman waves at you a bit desperately.") )
