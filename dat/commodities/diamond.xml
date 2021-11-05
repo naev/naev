@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<commodity>
+ <name>Diamond</name>
+ <description>Diamond is another form of graphite which has been crystallized due to intense pressure and heat deep beneath the surface of some types of planets. The material is useful in some cutting applications due to its hardness, and it is commonly used in decorative applications, but diamond is now easy enough to produce synthetically that it is not as sought after as much as it once was.</description>
+ <price>220</price>
+ <gfx_store>diamonds.webp</gfx_store>
+ <gfx_space>diamonds.webp</gfx_space>
+ <standard/>
+ <planet_modifier type="F">0.5</planet_modifier>
+ <planet_modifier type="K">0.9</planet_modifier>
+ <planet_modifier type="L">0.9</planet_modifier>
+ <planet_modifier type="M">0.7</planet_modifier>
+ <planet_modifier type="Q">0.8</planet_modifier>
+ <planet_modifier type="Z">0.6</planet_modifier>
+ <period>70</period>
+ <population_modifier>0.25</population_modifier>
+ <faction_modifier type="Dvaered">0.6</faction_modifier>
+ <faction_modifier type="FLF">0.4</faction_modifier>
+ <faction_modifier type="Frontier">0.4</faction_modifier>
+ <faction_modifier type="Raven Clan">1.2</faction_modifier>
+ <faction_modifier type="Wild Ones">1.2</faction_modifier>
+ <faction_modifier type="Dreamer Clan">1.2</faction_modifier>
+ <faction_modifier type="Black Lotus">1.2</faction_modifier>
+ <faction_modifier type="Sirius">1.1</faction_modifier>
+ <faction_modifier type="Soromid">0.8</faction_modifier>
+</commodity>

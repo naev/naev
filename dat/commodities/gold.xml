@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<commodity>
+ <name>Gold</name>
+ <description>Gold is prized for its combination of resistance to corrosion and conductivity, which is used to enhance the lifetime of electronics, although its most demanding application is as a component in decorative articles, such as jewelry.</description>
+ <price>550</price>
+ <gfx_store>gold.webp</gfx_store>
+ <gfx_space>gold.webp</gfx_space>
+ <standard/>
+ <planet_modifier type="M">1.1</planet_modifier>
+ <planet_modifier type="N">1.25</planet_modifier>
+ <planet_modifier type="Q">1.1</planet_modifier>
+ <period>40</period>
+ <population_modifier>0.5</population_modifier>
+ <faction_modifier type="Dvaered">0.8</faction_modifier>
+ <faction_modifier type="FLF">0.5</faction_modifier>
+ <faction_modifier type="Frontier">0.5</faction_modifier>
+ <faction_modifier type="Raven Clan">1.2</faction_modifier>
+ <faction_modifier type="Wild Ones">1.2</faction_modifier>
+ <faction_modifier type="Dreamer Clan">1.2</faction_modifier>
+ <faction_modifier type="Black Lotus">1.2</faction_modifier>
+ <faction_modifier type="Sirius">1.1</faction_modifier>
+ <faction_modifier type="Soromid">0.7</faction_modifier>
+</commodity>

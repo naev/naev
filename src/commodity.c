@@ -13,6 +13,7 @@
 /** @cond */
 #include <stdio.h>
 #include <stdint.h>
+#include "physfs.h"
 
 #include "naev.h"
 /** @endcond */
@@ -33,8 +34,7 @@
 #include "space.h"
 #include "spfx.h"
 
-#define XML_COMMODITY_ID      "Commodities" /**< XML document identifier */
-#define XML_COMMODITY_TAG     "commodity" /**< XML commodity identifier. */
+#define XML_COMMODITY_ID      "commodity" /**< XML document identifier */
 
 /* Gatherables */
 #define GATHER_DIST 30. /**< Maximum distance a gatherable can be gathered. */
@@ -627,51 +627,46 @@ int commodity_tempIllegalto( Commodity *com, int faction )
  */
 int commodity_load (void)
 {
-   xmlNodePtr node;
-   xmlDocPtr doc;
-   Commodity *c;
-   int *e;
+   char **commodities = PHYSFS_enumerateFiles( COMMODITY_DATA_PATH );
 
    commodity_stack = array_create( Commodity );
    econ_comm = array_create( int );
    gatherable_stack = array_create( Gatherable );
 
-   /* Load the file. */
-   doc = xml_parsePhysFS( COMMODITY_DATA_PATH );
-   if (doc == NULL)
-      return -1;
+   for (size_t i=0; commodities[i]!=NULL; i++) {
+      xmlNodePtr node;
+      xmlDocPtr doc;
+      Commodity *c;
+      int *e;
+      char *file;
 
-   node = doc->xmlChildrenNode; /* Commodities node */
-   if (strcmp((char*)node->name,XML_COMMODITY_ID)) {
-      ERR(_("Malformed %s file: missing root element '%s'"), COMMODITY_DATA_PATH, XML_COMMODITY_ID);
-      return -1;
-   }
+      asprintf( &file, "%s%s", COMMODITY_DATA_PATH, commodities[i] );
 
-   node = node->xmlChildrenNode; /* first commodity type */
-   if (node == NULL) {
-      ERR(_("Malformed %s file: does not contain elements"), COMMODITY_DATA_PATH);
-      return -1;
-   }
+      /* Load the file. */
+      doc = xml_parsePhysFS( file );
+      if (doc == NULL)
+         return -1;
 
-   do {
-      xml_onlyNodes(node);
-      if (xml_isNode(node, XML_COMMODITY_TAG)) {
-
-         /* Load commodity. */
-         c = &array_grow(&commodity_stack);
-         commodity_parse( c, node );
-
-         /* See if should get added to commodity list. */
-         if (c->price > 0.) {
-            e = &array_grow( &econ_comm );
-            *e = array_size(commodity_stack)-1;
-         }
+      node = doc->xmlChildrenNode; /* Commodities node */
+      if (strcmp((char*)node->name,XML_COMMODITY_ID)) {
+         ERR(_("Malformed %s file: missing root element '%s'"), COMMODITY_DATA_PATH, XML_COMMODITY_ID);
+         return -1;
       }
-      else
-         WARN(_("'%s' has unknown node '%s'."), COMMODITY_DATA_PATH, node->name);
-   } while (xml_nextNode(node));
 
-   xmlFreeDoc(doc);
+      /* Load commodity. */
+      c = &array_grow(&commodity_stack);
+      commodity_parse( c, node );
+
+      /* See if should get added to commodity list. */
+      if (c->price > 0.) {
+         e = &array_grow( &econ_comm );
+         *e = array_size(commodity_stack)-1;
+      }
+
+      xmlFreeDoc(doc);
+   }
+
+   PHYSFS_freeList( commodities );
 
    DEBUG( n_( "Loaded %d Commodity", "Loaded %d Commodities", array_size(commodity_stack) ), array_size(commodity_stack) );
 

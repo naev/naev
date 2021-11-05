@@ -29,7 +29,7 @@
 #define UNIDIFF_DATA_PATH        "unidiff/" /**< Path to unidiff XML. */
 #define SPFX_DATA_PATH           "spfx/" /**< Location of the spfx datafiles. */
 #define DTYPE_DATA_PATH          "damagetype.xml" /**< Damage-type definitions. */
-#define COMMODITY_DATA_PATH      "commodity.xml" /**< Commodity XML file. */
+#define COMMODITY_DATA_PATH      "commodities/" /**< Path to commodities. */
 #define TECH_DATA_PATH           "tech.xml"   /**< XML file containing techs. */
 #define ASTERO_DATA_PATH         "asteroids.xml" /**< Asteroid types XML file. */
 #define MAP_DECORATOR_DATA_PATH  "map.xml" /**< Where the map has background images. */

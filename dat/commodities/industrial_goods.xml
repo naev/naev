@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<commodity>
+ <name>Industrial Goods</name>
+ <description>An assortment of industrial goods, ranging from cutting lasers to processed metals.</description>
+ <price>340</price>
+ <gfx_store>recycled_electronics.webp</gfx_store>
+ <standard/>
+ <period>60</period>
+ <population_modifier>-0.25</population_modifier>
+ <planet_modifier type="0">1.4</planet_modifier>
+ <planet_modifier type="1">1.5</planet_modifier>
+ <planet_modifier type="2">1.4</planet_modifier>
+ <faction_modifier type="FLF">1.2</faction_modifier>
+ <faction_modifier type="Raven Clan">1.2</faction_modifier>
+ <faction_modifier type="Wild Ones">1.2</faction_modifier>
+ <faction_modifier type="Dreamer Clan">1.2</faction_modifier>
+ <faction_modifier type="Black Lotus">1.2</faction_modifier>
+ <faction_modifier type="Sirius">0.8</faction_modifier>
+</commodity>

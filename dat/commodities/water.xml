@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<commodity>
+ <name>Water</name>
+ <description>An unusual chemical that we humans take for granted, water is necessary for sustaining human life and useful in many industries due to its unique properties. While common, it is not evenly dispersed throughout the galaxy, leading to heavy concentrations in some areas and a complete absence of water in other areas.</description>
+ <price>250</price>
+ <gfx_store>water.webp</gfx_store>
+ <gfx_space>water.webp</gfx_space>
+ <standard/>
+ <planet_modifier type="A">1.2</planet_modifier>
+ <planet_modifier type="B">1.2</planet_modifier>
+ <planet_modifier type="E">1.2</planet_modifier>
+ <planet_modifier type="F">1.2</planet_modifier>
+ <planet_modifier type="H">1.1</planet_modifier>
+ <planet_modifier type="K">0.95</planet_modifier>
+ <planet_modifier type="L">0.9</planet_modifier>
+ <planet_modifier type="M">0.7</planet_modifier>
+ <planet_modifier type="N">0.9</planet_modifier>
+ <planet_modifier type="O">0.4</planet_modifier>
+ <planet_modifier type="P">0.5</planet_modifier>
+ <planet_modifier type="Q">0.8</planet_modifier>
+ <planet_modifier type="R">0.9</planet_modifier>
+ <planet_modifier type="X">1.25</planet_modifier>
+ <planet_modifier type="Y">1.25</planet_modifier>
+ <planet_modifier type="Z">1.25</planet_modifier>
+ <period>110</period>
+ <population_modifier>0.7</population_modifier>
+ <faction_modifier type="FLF">1.2</faction_modifier>
+ <faction_modifier type="Frontier">1.2</faction_modifier>
+</commodity>

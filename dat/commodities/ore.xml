@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<commodity>
+ <name>Ore</name>
+ <description>Ore is a key material in many industries. Smelted into metals, without ore, the ship-building industry and many others would grind to a halt.</description>
+ <price>210</price>
+ <gfx_store>ore.webp</gfx_store>
+ <standard/>
+ <planet_modifier type="1">1.2</planet_modifier>
+ <planet_modifier type="2">1.2</planet_modifier>
+ <planet_modifier type="A">0.75</planet_modifier>
+ <planet_modifier type="B">0.75</planet_modifier>
+ <planet_modifier type="D">0.8</planet_modifier>
+ <planet_modifier type="E">0.75</planet_modifier>
+ <planet_modifier type="F">0.75</planet_modifier>
+ <planet_modifier type="H">0.9</planet_modifier>
+ <planet_modifier type="I">0.9</planet_modifier>
+ <planet_modifier type="J">0.9</planet_modifier>
+ <planet_modifier type="M">0.8</planet_modifier>
+ <planet_modifier type="P">0.9</planet_modifier>
+ <planet_modifier type="S">0.9</planet_modifier>
+ <planet_modifier type="Y">0.5</planet_modifier>
+ <period>100</period>
+ <population_modifier>-0.5</population_modifier>
+ <faction_modifier type="Dvaered">0.5</faction_modifier>
+ <faction_modifier type="FLF">1.2</faction_modifier>
+ <faction_modifier type="Soromid">0.8</faction_modifier>
+</commodity>
