@@ -36,7 +36,7 @@ Converts a number of credits to a string.
 
    Should be used everywhere a number of credits is displayed.
 
-   @usage tk.msg("", _("You have been paid %s."):format(fmt.credits(credits)))
+   @usage vn.na(fmt.f(_("You have been paid {credits}."), {credits=fmt.credits(credits)}))
 
       @param credits Number of credits.
       @return A string taking the form of "X ¤".
@@ -65,9 +65,11 @@ end
 Converts a number of tonnes to a string, using ngettext.
 
    This adds "tonnes" to the output of fmt.number in a translatable way.
-   Should be used everywhere a number of tonnes is displayed.
+   Caution: Usage within sentences can backfire, if the correct grammar to use
+   depends on the number of tonnes. Using ngettext (n_) on full sentences is
+   safer where practical.
 
-   @usage tk.msg("", _("You are carrying %s."):format(fmt.tonnes(tonnes)))
+   @usage vn.na(fmt.f(_("You are carrying {tonnes}"), {tonnes=fmt.tonnes(tonnes)}))
 
    @param tonnes Number of tonnes.
    @return A string taking the form of "X tonne" or "X tonnes".
@@ -93,9 +95,11 @@ end
 Converts a number of jumps to a string, utilizing ngettext.
 
    This adds "jumps" to the output of fmt.number in a translatable way.
-   Should be used everywhere a number of jumps is displayed.
+   Caution: Usage within sentences can backfire, if the correct grammar to use
+   depends on the number of jumps. Using ngettext (n_) on full sentences is
+   safer where practical.
 
-   @usage tk.msg("", _("The system is %s away."):format(fmt.jumps(jumps)))
+   @usage vn.na(fmt.f(_("The system is {jumps} away."), {jumps=fmt.jumps(jumps)}))
 
       @param jumps Number of jumps.
       @return A string taking the form of "X jump" or "X jumps".
