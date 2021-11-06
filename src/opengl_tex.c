@@ -332,13 +332,10 @@ glTexture* gl_loadImagePadTrans( const char *name, SDL_Surface* surface, SDL_RWo
       unsigned int flags, int w, int h, int sx, int sy, int freesur )
 {
    glTexture *texture;
-   size_t i, filesize;
-   size_t cachesize, pngsize;
+   size_t filesize, cachesize;
    uint8_t *trans;
-   char *cachefile, *data;
+   char *cachefile;
    char digest[33];
-   md5_state_t md5;
-   md5_byte_t *md5val;
 
    if ((name != NULL) && !(flags & OPENGL_TEX_SKIPCACHE)) {
       texture = gl_texExists( name, sx, sy );
@@ -359,7 +356,10 @@ glTexture* gl_loadImagePadTrans( const char *name, SDL_Surface* surface, SDL_RWo
    trans     = NULL;
 
    if (rw != NULL) {
-      md5val = malloc(16);
+      size_t pngsize;
+      md5_state_t md5;
+      char *data;
+      md5_byte_t *md5val = malloc(16);
       md5_init(&md5);
 
       pngsize = SDL_RWseek( rw, 0, SEEK_END );
@@ -375,7 +375,7 @@ glTexture* gl_loadImagePadTrans( const char *name, SDL_Surface* surface, SDL_RWo
       }
       md5_finish( &md5, md5val );
 
-      for (i=0; i<16; i++)
+      for (int i=0; i<16; i++)
          snprintf( &digest[i * 2], 3, "%02x", md5val[i] );
       free(md5val);
 
