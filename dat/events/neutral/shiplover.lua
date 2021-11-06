@@ -314,7 +314,7 @@ function create ()
          shiplog.append( "shiplover", fmt.f(_("You obtained {credits} from the Ship Enthusiast for getting a quiz right."), {credits=fmt.credits(cash_reward)}) )
          player.pay( cash_reward, true ) -- Don't trigger hooks
       end
-      reward.msg_shiplover = fmt.f(_([["That's right! Damn, I thought you wouldn't know this one. This is the {n} time you got my quiz right! Here, take this as a reward for your performance."]]), {n=nwon+1})
+      reward.msg_shiplover = fmt.f(_([["That's right! Damn, I thought you wouldn't know this one. You've solved my quiz {n} times now! Here, take this as a reward for your performance."]]), {n=nwon+1})
       reward.msg_obtain = fmt.reward(cash_reward)
    end
 
