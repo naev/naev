@@ -479,7 +479,7 @@ end
 
 local function renderWeapBar( weapon, x, y )
    local offsets = { 2, 2, 4, 54, 13, 23, 47 } --third last is y of icon_weapon1, last two are the centers of the two weapon icons
-   local outfit_yoffset = 31
+   local outfit_yoffset = 36
    local name_offset = 17
    local bottom_icon, bottom_icon_w, bottom_icon_h, top_icon_w, top_icon_h, icon, weap_heat, width
    if weapon ~= nil then
@@ -533,7 +533,7 @@ local function renderWeapBar( weapon, x, y )
 
       if weapon.is_outfit then
          gfx.renderTex( icon_outfit, x + offsets[1], y + offsets[5] )
-         gfx.renderTexRaw( icon, x + offsets[1] + bar_w/2 - 20, y + offsets[2] + outfit_yoffset, 40, 40, 1, 1, 0, 0, 1, 1 )
+         gfx.renderTexRaw( icon, x + offsets[1] + bar_w/2 - 17, y + offsets[2] + outfit_yoffset, 34, 34, 1, 1, 0, 0, 1, 1 )
          if weapon.weapset ~= nil then
             local ws_name
             if weapon.weapset == 10 then
