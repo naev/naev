@@ -105,21 +105,6 @@ function format.jumps( jumps )
 end
 
 
---[[--
-   Converts a number of times (occurrences) to a string, using ngettext.
-
-   This adds "times" to the output of fmt.number in a translatable way.
-   Should be used everywhere a number of occurrences is displayed.
-
-   @usage tk.msg("", _("Brush your teeth % per day."):format(fmt.times(times)))
-
-   @param times Number of times.
-   @return A string taking the form of "X time" or "X times".
---]]
-function format.times( times )
-   return n_("%s time", "%s times", times):format(format.number(times))
-end
-
 --[[-- A version of string.gsub returning just the string. --]]
 local function _replace(template, index, text)
    local str = string.gsub(template, index, text)
