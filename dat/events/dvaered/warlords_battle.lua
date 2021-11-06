@@ -25,10 +25,10 @@ function create ()
 end
 
 function begin ()
-   thissystem = system.cur()
+   local thissystem = system.cur()
 
    -- thissystem and source_system must be adjacent (for those who use player.teleport)
-   areAdj = false
+   local areAdj = false
    for _,s in ipairs( source_system:adjacentSystems() ) do
       if thissystem == s then areAdj = true end
    end
@@ -69,9 +69,9 @@ end
 
 --Spawns a merchant ship that explains what happens
 function merchant ()
-   merShips = {"Koala", "Mule", "Rhino", "Llama"}
-   mship = merShips[rnd.rnd(1,#merShips)]
-   trader = pilot.add( mship, "Trader", source_system, _("Trader %s"):format( _(mship) ) )
+   local merShips = {"Koala", "Mule", "Rhino", "Llama"}
+   local mship = ship.get( merShips[rnd.rnd(1,#merShips)] )
+   trader = pilot.add( mship, "Trader", source_system, fmt.f(_("Trader {ship}"), {ship=mship} ) )
    hook.timer(2.0, "hailme")
 end
 

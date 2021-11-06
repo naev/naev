@@ -24940,8 +24940,7 @@ msgstr ""
 #. Battle is happening
 #. Spawns a merchant ship that explains what happens
 #: dat/events/dvaered/warlords_battle.lua:74
-#, lua-format
-msgid "Trader %s"
+msgid "Trader {ship}"
 msgstr ""
 
 #: dat/events/dvaered/warlords_battle.lua:85
