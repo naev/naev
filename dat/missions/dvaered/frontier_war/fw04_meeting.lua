@@ -60,7 +60,7 @@ lore_text[3] = _([[You ask Strafer why Major Tam requested you to be part of the
 lore_text[4] = _([["You wish to become one of them?" Before you have a chance to deny, he continues: "Anybody can become a warlord. One just has to have received the '9th grade commendation', and to conquer a planet (or a station). In the army, every rank gives you a commendation grade, for example, I have the 3rd grade. Civilians also obtain commendation for their high deeds; you obtained the first grade commendation for your involvement in the FLF destruction, if I am right. The 9th grade commendation, that is associated to the rank of first class General in the army, gives the right to own a military base, and by extension, to be granted the regal power over a region.
    "In the Dvaered army, everybody starts as a raw soldier, no matter if you're an infantryman, a pilot, a medic or even a General's child. And only Valor decides how quick you rise in the hierarchy. Warlord is the ultimate rank for the military (and private combat pilots, like yourself)"]])
 
-lords_chatter = { _("Ahoy, suckers! Here comes the master!"),
+local lords_chatter = { _("Ahoy, suckers! Here comes the master!"),
                   _("Look down, you weaklings."),
                   _("Only submission will save you from my anger!"),
                   _("Kneel, for I am destined to rule you all!"),
@@ -72,7 +72,7 @@ lords_chatter = { _("Ahoy, suckers! Here comes the master!"),
 
 -- This might be hard to translate, but that is not a problem IMHO as it is actually supposed to be an automatically generated message.
 
-occupations = { _("caterer"),
+local occupations = { _("caterer"),
                 _("butcher"),
                 _("brewer"),
                 _("waiter"),
@@ -366,12 +366,12 @@ end
 
 -- Spawn a pilot the player has to control
 function spawnControl()
-   syst = {"Gremlin", "Radix", "Urbanus"}
-   theSys = syst[ rnd.rnd(1,#syst) ]
-   origin = system.get(theSys)
+   local syst = {"Gremlin", "Radix", "Urbanus"}
+   local theSys = syst[ rnd.rnd(1,#syst) ]
+   local origin = system.get(theSys)
 
-   types = { "Gawain", "Llama", "Schroedinger", "Hyena" }
-   theTyp = types[ rnd.rnd(1,#types) ]
+   local types = { "Gawain", "Llama", "Schroedinger", "Hyena" }
+   local theTyp = types[ rnd.rnd(1,#types) ]
 
    controls[noCtrl] = pilot.add( theTyp, "Independent", origin )
    controls[noCtrl]:control()

@@ -20,7 +20,7 @@ local trader_name = _("Machiavellian Misi") -- Mireia Sibeko
 local trader_image = "misi.png"
 local trader_colour = {1, 0.3, 1}
 local store_name = _("Machiavellian Misi's \"Fine\" Wares"), trader_name
-broadcastmsg = {
+local broadcastmsg = {
    _("Machiavellian Misi's the name and selling fine shit is my game! Come get your outfits here!"),
    _("Get your fiiiiiiiine outfits here! Guaranteed 3 space lice or less or your money back!"),
    _("Recommended by the Emperor's pet iguana's third cousin! High quality outfits sold here!"),

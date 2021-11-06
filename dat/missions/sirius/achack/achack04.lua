@@ -163,8 +163,8 @@ end
 -- Jumpin hook.
 function jumpin()
    if system.cur() == destsys and stage == stages.killAssociates then
-      bhfleet = {"Pirate Vendetta", "Pacifier", "Lancelot", "Hyena"}
-      bhfleet = fleet.add(1, bhfleet, "Achack_thugs", vec2.new(-3000, -7000), _("Bounty Hunter"))
+      local bhships = {"Pirate Vendetta", "Pacifier", "Lancelot", "Hyena"}
+      bhfleet = fleet.add(1, bhships, "Achack_thugs", vec2.new(-3000, -7000), _("Bounty Hunter"))
       alive = #bhfleet
       for i, j in ipairs(bhfleet) do
          j:control()

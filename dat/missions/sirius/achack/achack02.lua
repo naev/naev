@@ -31,6 +31,8 @@ local pir = require "common.pirate"
 
 -- Mission constants
 local reward = 750e3
+-- This is the route Joanne will take.
+local route = {"Violin Station", "Fyruse Station", "Inios Station", "Tankard Station", "Sroolu"}
 
 local text4 = _([[You go through the now familiar routine of waiting for Joanne. She soon hails you on the comms.
     "That's it, {player}! This was the final stop. You've been a great help. This isn't a good place to wrap things up though. Tell you what, let's relocate to Sroolu and meet up in the spaceport bar there. I need to give you your payment of course, but I also want to talk to you for a bit. See you planetside!"
@@ -76,9 +78,6 @@ function accept()
     "Also, I think this goes without saying, but I need you to stick close to me so your ship must be fast enough. Also don't jump to any systems before I do, don't jump to the wrong systems, and don't land on any planets I don't land on. If we meet any unpleasantries along the way I will rely on you to help me fight them off. That's about it. I'll finish up a few things here, and then I'll head to my ship. I'll be in the air when you are."
     Joanne leaves the bar. You will meet up with her in orbit.]]))
 
-   -- This is the route Joanne will take.
-   route = {"Violin Station", "Fyruse Station", "Inios Station", "Tankard Station", "Sroolu"}
-   route["__save"] = true
    stage = 1
 
    destplanet, destsys = planet.getS(route[stage])

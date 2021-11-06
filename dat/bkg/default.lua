@@ -1,7 +1,7 @@
 local prng_lib = require "prng"
 prng = prng_lib.new()
 
-nebulae = {
+local nebulae = {
    "nebula02.webp",
    "nebula04.webp",
    "nebula10.webp",
@@ -26,7 +26,7 @@ nebulae = {
    "nebula34.webp",
 }
 
-stars = {
+local stars = {
    "blue01.webp",
    "blue02.webp",
    "blue04.webp",
