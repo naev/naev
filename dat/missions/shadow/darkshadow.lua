@@ -162,9 +162,8 @@ function enter()
       pilot.toggleSpawn(false)
       player.allowLand(false, _("Landing permission denied. Our docking clamps are currently undergoing maintenance."))
       -- Meet Joe, our informant.
-      joe = pilot.add( "Vendetta", "Four Winds", vec2.new(-500, -4000), _("Four Winds Vendetta"), {ai="trader"} )
+      joe = pilot.add( "Vendetta", "Four Winds", vec2.new(-500, -4000), _("Four Winds Informant"), {ai="trader"} )
       joe:control()
-      joe:rename(_("Four Winds Informant"))
       joe:setHilight(true)
       joe:setVisplayer()
       joe:setInvincible(true)
@@ -250,10 +249,9 @@ function spawnSquads(highlight)
    leader = {}
 
    for i, start in ipairs(squads) do
-      squads[i] = fleet.add( 4, "Vendetta", "Rogue Four Winds", leaderstart[i], _("Four Winds Vendetta") )
-      for j, k in ipairs(squad) do
+      squads[i] = fleet.add( 4, "Vendetta", "Rogue Four Winds", leaderstart[i], _("Four Winds Patrol") )
+      for j, k in ipairs(squads[i]) do
          hook.pilot(k, "attacked", "attacked")
-         k:rename(_("Four Winds Patrol"))
          k:control()
          k:outfitRm("all")
          k:outfitAdd("Cheater's Laser Cannon", 6) -- Equip these fellas with unfair weaponry
@@ -335,12 +333,13 @@ end
 function spawnGenbu(sys)
    genbu = pilot.add( "Pirate Kestrel", "Four Winds", sys, _("Genbu") )
    genbu:outfitRm("all")
-   genbu:outfitAdd("Turbolaser", 3)
+   genbu:outfitAdd("Heavy Laser Turret", 3)
    genbu:outfitAdd("Cheater's Ragnarok Beam", 3) -- You can't win. Seriously.
    genbu:control()
    genbu:setHilight()
    genbu:setVisplayer()
-   genbu:setNoDeath(true)
+   genbu:setNoDeath()
+   genbu:setNoDisable()
    genbuspawned = true
 end
 
