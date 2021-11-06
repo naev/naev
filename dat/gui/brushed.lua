@@ -18,7 +18,6 @@ local actions = {}
 function create()
    --Get Player
    pp = player.pilot()
-   pp = player.pilot()
 
    -- Set default formation
    local savedform = var.peek("player_formation") or "Circle"
