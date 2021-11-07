@@ -657,13 +657,9 @@ static void map_addOutfitDetailFields(unsigned int wid, int x, int y, int w, int
    window_addImage( wid, iw, -50-128, 0, 0, "imgOutfit", NULL, 1 );
 
    window_addText( wid, iw + 128 + 20, -50,
-         280, 160, 0, "txtOutfitName", &gl_defFont, NULL, NULL );
-   window_addText( wid, iw + 128 + 20, -50 - gl_defFont.h - 20,
          280, 160, 0, "txtDescShort", &gl_smallFont, NULL, NULL );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "%s\n\n", _("#nOwned:#0") );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "%s\n", _("#nSlot:#0") );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "%s\n", _("#nSize:#0") );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "%s\n\n", _("#nMass:#0") );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "%s\n", _("#nOwned:#0") );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "%s\n", _("#nMass:#0") );
    l += scnprintf( &buf[l], sizeof(buf)-l, "%s\n", _("#nPrice:#0") );
    l += scnprintf( &buf[l], sizeof(buf)-l, "%s\n", _("#nMoney:#0") );
    l += scnprintf( &buf[l], sizeof(buf)-l, "%s\n", _("#nLicense:#0") );
@@ -701,8 +697,11 @@ static void map_showOutfitDetail(unsigned int wid, const char* wgtname, int x, i
     * a 20 px gap, 280 px for the outfit's name and a final 20 px gap. */
    iw = w - 452;
 
-   window_modifyText( wid, "txtOutfitName", _(outfit->name) );
    window_modifyImage( wid, "imgOutfit", outfit->gfx_store, 128, 128 );
+   l = outfit_getNameWithClass( outfit, buf, sizeof(buf) );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "%s", outfit->desc_short );
+   window_modifyText( wid, "txtDescShort", buf );
+   th = gl_printHeightRaw( &gl_smallFont, 280, buf );
 
    if ((outfit_isLauncher(outfit) || outfit_isFighterBay(outfit)) &&
          (outfit_ammo(outfit) != NULL)) {
@@ -714,25 +713,21 @@ static void map_showOutfitDetail(unsigned int wid, const char* wgtname, int x, i
    credits2str( buf_money, player.p->credits, 2 );
    tonnes2str( buf_mass, (int)round( mass ) );
 
-   l += scnprintf( &buf[l], sizeof(buf)-l, "%d\n\n", player_outfitOwned(outfit) );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "%s\n", _(outfit_slotName(outfit)) );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "%s\n", _(outfit_slotSize(outfit)) );
-   l += scnprintf( &buf[l], sizeof(buf)-l, "%s\n\n", buf_mass );
+   l = 0;
+   l += scnprintf( &buf[l], sizeof(buf)-l, "%d\n", player_outfitOwned(outfit) );
+   l += scnprintf( &buf[l], sizeof(buf)-l, "%s\n", buf_mass );
    l += scnprintf( &buf[l], sizeof(buf)-l, "%s\n", buf_price );
    l += scnprintf( &buf[l], sizeof(buf)-l, "%s\n", buf_money );
    l += scnprintf( &buf[l], sizeof(buf)-l, "%s\n" , (outfit->license != NULL) ? _(outfit->license) : _("None") );
 
    window_modifyText( wid, "txtDDesc", buf );
-   window_modifyText( wid, "txtOutfitName", _(outfit->name) );
-   window_modifyText( wid, "txtDescShort", outfit->desc_short );
-   th = gl_printHeightRaw( &gl_smallFont, 280, outfit->desc_short );
    window_resizeWidget( wid, "txtDescShort", 280, th );
-   window_moveWidget( wid, "txtDescShort", iw + 128 + 20, -50 - gl_defFont.h - 20);
-   th = MAX( 128, gl_defFont.h + 20 + th );
-   window_moveWidget( wid, "txtSDesc", iw+20, -50-th-20 );
-   window_moveWidget( wid, "txtDDesc", iw+20+90, -50-th-20 );
+   window_moveWidget( wid, "txtDescShort", iw + 128 + 20, -50 );
+   th = MAX( 128 + gl_smallFont.h, th );
+   window_moveWidget( wid, "txtSDesc", iw+20, -50-th );
+   window_moveWidget( wid, "txtDDesc", iw+20+90, -50-th );
    th += gl_printHeightRaw( &gl_smallFont, 280, buf );
-   window_moveWidget( wid, "txtDescription", iw+20, -50-th-20 /* no more: buf ends with \n. */ );
+   window_moveWidget( wid, "txtDescription", iw+20, -50-th );
 }
 
 /**

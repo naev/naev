@@ -604,7 +604,7 @@ static void map_system_array_update( unsigned int wid, const char* str )
       /* new text */
       price2str( buf_price, outfit->price, player.p->credits, 2 );
       if (outfit->license == NULL)
-         strncpy( buf_license, _("None"), sizeof(buf_license)-1 );
+         buf_license[0] = '\0';
       else if (player_hasLicense( outfit->license ) ||
             (cur_planetObj_sel != NULL && planet_hasService( cur_planetObj_sel, PLANET_SERVICE_BLACKMARKET )))
          strncpy( buf_license, _(outfit->license), sizeof(buf_license)-1 );
@@ -615,17 +615,15 @@ static void map_system_array_update( unsigned int wid, const char* str )
           (outfit_ammo(outfit) != NULL) ) {
          mass += outfit_amount( outfit ) * outfit_ammo( outfit )->mass;
       }
-      tonnes2str( buf_mass, (int)round( mass ) );
+      snprintf( buf_mass, sizeof(buf_mass), n_( "%d t", "%d t", (int)round( mass ) ), (int)round( mass ) );
 
-      l += scnprintf( &infobuf[l], sizeof(infobuf)-l, "%s\n\n", _(outfit->name) );
+      l += outfit_getNameWithClass( outfit, &infobuf[l], sizeof(infobuf)-l );
       l += scnprintf( &infobuf[l], sizeof(infobuf)-l, "%s\n\n", _(outfit->description) );
       l += scnprintf( &infobuf[l], sizeof(infobuf)-l, "%s\n\n", outfit->desc_short );
-      l += scnprintf( &infobuf[l], sizeof(infobuf)-l, "%s %d    ", _("#nOwned:#0"), player_outfitOwned( outfit ) );
-      l += scnprintf( &infobuf[l], sizeof(infobuf)-l, "%s%s    ", _("#nSlot: #0"), _(outfit_slotName( outfit )) );
-      l += scnprintf( &infobuf[l], sizeof(infobuf)-l, "%s%s\n", _("#nSize: #0"), _(outfit_slotSize( outfit )) );
-      l += scnprintf( &infobuf[l], sizeof(infobuf)-l, "%s    %s     ", _("#nMass:#0"), buf_mass );
-      l += scnprintf( &infobuf[l], sizeof(infobuf)-l, "%s %s\n", _("#nPrice:#0"), buf_price );
-      l += scnprintf( &infobuf[l], sizeof(infobuf)-l, "%s %s", _("#nLicense:#0"), buf_license );
+      l += scnprintf( &infobuf[l], sizeof(infobuf)-l, "%s %d   ", _("#nOwned:#0"), player_outfitOwned( outfit ) );
+      l += scnprintf( &infobuf[l], sizeof(infobuf)-l, "%s %s   ", _("#nMass:#0"), buf_mass );
+      l += scnprintf( &infobuf[l], sizeof(infobuf)-l, "%s %s   ", _("#nPrice:#0"), buf_price );
+      l += scnprintf( &infobuf[l], sizeof(infobuf)-l, "%s", buf_license );
    }
    else if ((strcmp( str, MAPSYS_SHIPS ) == 0)) {
       ship = cur_planet_sel_ships[i];
