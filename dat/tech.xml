@@ -357,6 +357,7 @@
   <item>Rhino</item>
   <item>Pirate Rhino</item>
   <item>Mule</item>
+  <item>Empire Rainmaker</item>
   <item>Thurion Taciturnity</item>
   <item>Kestrel</item>
   <item>Pirate Kestrel</item>
@@ -832,6 +833,7 @@
   <item>Empire Pacifier</item>
   <item>Empire Peacemaker</item>
   <item>Empire Shark</item>
+  <item>Empire Rainmaker</item>
  </tech>
  <tech name="FLF Ships">
   <item>Hyena</item>

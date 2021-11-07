@@ -1,0 +1,60 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<ship name="Empire Rainmaker">
+ <points>120</points>
+ <base_type>Rainmaker</base_type>
+ <GFX size="128" sx="12" sy="12">rainmaker_empire</GFX>
+ <rarity>2</rarity>
+ <GUI>brushed</GUI>
+ <sound>engine</sound>
+ <class>Bulk Carrier</class>
+ <price>4000000</price>
+ <time_mod>1.375</time_mod>
+ <trail_generator x="-52" y="4" h="4" />
+ <trail_generator x="-52" y="7" h="1" />
+ <trail_generator x="-52" y="-4" h="4" />
+ <trail_generator x="-52" y="-7" h="1" />
+ <trail_generator x="-44" y="8" h="8">nebula</trail_generator>
+ <trail_generator x="-44" y="-8" h="8">nebula</trail_generator>
+ <trail_generator x="-44" y="19" h="-2" always_under="1">nebula</trail_generator>
+ <trail_generator x="-44" y="-19" h="-2" always_under="1">nebula</trail_generator>
+ <fabricator>Nexus Shipyards</fabricator>
+ <license>Large Civilian Vessel License</license>
+ <description>The Rainmaker is the largest freighter used by the Empire. It is capable of transporting extensive amounts of material through dangerous territory as small groups of pirates are no threat due to its heavy armour.</description>
+ <health>
+  <armour>900</armour>
+  <armour_regen>0</armour_regen>
+ </health>
+ <characteristics>
+  <crew>25</crew>
+  <mass>1400</mass>
+  <fuel_consumption>400</fuel_consumption>
+  <cargo>410</cargo>
+ </characteristics>
+ <slots>
+  <weapon size="large" x="41" y="14" h="0" />
+  <weapon size="large" x="41" y="-14" h="0" />
+  <weapon size="large" prop="fighter_bay" x="9" y="14" h="0" />
+  <weapon size="large" prop="fighter_bay" x="9" y="-14" h="0" />
+  <weapon size="medium" x="-23" y="14" h="0" />
+  <weapon size="medium" x="-23" y="-14" h="0" />
+  <utility size="large" prop="systems" exclusive="1" required="1">Unicorp PT-2200 Core System</utility>
+  <utility size="large" prop="accessory" exclusive="1" />
+  <utility size="large" />
+  <utility size="large" />
+  <utility size="large" />
+  <utility size="large" />
+  <structure size="large" prop="engines" exclusive="1" required="1">Nexus Bolt 3500 Engine</structure>
+  <structure size="large" prop="hull" exclusive="1" required="1">Unicorp D-48 Heavy Plating</structure>
+  <structure size="large" />
+  <structure size="large" />
+  <structure size="large" />
+  <structure size="large" />
+ </slots>
+ <stats>
+  <shield_mod>15</shield_mod>
+  <shield_regen_mod>20</shield_regen_mod>
+  <heat_dissipation>15</heat_dissipation>
+  <cargo_mod>40</cargo_mod>
+  <cargo_inertia>-30</cargo_inertia>
+ </stats>
+</ship>
