@@ -54,7 +54,7 @@ local ships = {
       corvette  = { "Empire Admonisher" },
       destroyer = { "Empire Pacifier" },
       cruiser   = { "Empire Hawking" },
-      carrier   = { "Empire Peacemaker" },
+      carrier   = { "Empire Peacemaker", "Empire Rainmaker" },
    },
    Frontier = {
       interceptor={ "Hyena" },
