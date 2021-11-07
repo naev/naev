@@ -114,6 +114,7 @@ local empire_ships = {
   "Empire Pacifier",
   "Empire Hawking",
   "Empire Peacemaker",
+  "Empire Rainmaker",
 }
 local zalek_ships = {
   "Za'lek Sting",
