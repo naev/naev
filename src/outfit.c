@@ -368,6 +368,26 @@ char outfit_slotTypeColourFont( const OutfitSlot* os )
 }
 
 /**
+ * @brief Gets a brief name/class description suitable for the title section of an outfitter screen.
+ *
+ *    @param outfit Outfit to describe.
+ *    @param[out] buf Output buffer.
+ *    @param size Size of output buffer.
+ *    @return Number of characters written.
+ */
+size_t outfit_getNameWithClass( const Outfit* outfit, char* buf, size_t size )
+{
+   size_t p = scnprintf( &buf[0], size, "%s\n", _(outfit->name) );
+   if (outfit->slot.type != OUTFIT_SLOT_NA) {
+      p += scnprintf( &buf[p], size-p, _("#%c%s #%c%s #0slot"),
+            outfit_slotSizeColourFont( &outfit->slot ), outfit_slotSize( outfit ),
+            outfit_slotTypeColourFont( &outfit->slot ), outfit_slotName( outfit ) );
+      p += scnprintf( &buf[p], size-p, "\n" );
+   }
+   return p;
+}
+
+/**
  * @brief Gets the outfit slot size from a human readable string.
  *
  *    @param s String representing an outfit slot size.
