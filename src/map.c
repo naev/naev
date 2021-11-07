@@ -445,7 +445,7 @@ static void map_update( unsigned int wid )
    int hasPlanets;
    char t;
    const char *sym, *adj;
-   char buf[PATH_MAX];
+   char buf[STRMAX];
    int p;
    const glTexture *logo;
    double w, dmg, itf;

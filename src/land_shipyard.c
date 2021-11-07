@@ -208,7 +208,7 @@ void shipyard_update( unsigned int wid, const char* str )
    (void)str;
    int i;
    Ship* ship;
-   char buf[PATH_MAX], buf2[ECON_CRED_STRLEN], buf3[ECON_CRED_STRLEN], buf_license[PATH_MAX];
+   char buf[STRMAX], buf2[ECON_CRED_STRLEN], buf3[ECON_CRED_STRLEN], buf_license[STRMAX_SHORT];
    char smass[NUM2STRLEN];
    double aspect, gw, gh;
 

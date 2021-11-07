@@ -179,7 +179,7 @@ static int nxml_persistDataNode( lua_State *L, xmlTextWriterPtr writer, int inta
    const Outfit *o;
    Planet *pnt;
    StarSystem *ss, *dest;
-   char buf[ PATH_MAX ];
+   char buf[32]; /* Buffer large enough for a formatted i64 (base 10). */
    const char *name, *str, *data;
    int keynum;
    size_t len, name_len;

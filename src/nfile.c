@@ -123,13 +123,13 @@ const char* nfile_configPath (void)
     if (naev_configPath[0] == '\0') {
         /* Global override is set. */
         if (conf.datapath) {
-           snprintf( naev_configPath, PATH_MAX, "%s/", conf.datapath );
+           snprintf( naev_configPath, sizeof(naev_configPath), "%s/", conf.datapath );
            return naev_configPath;
         }
 #if MACOS
-        if (macos_configPath( naev_configPath, PATH_MAX ) != 0) {
+        if (macos_configPath( naev_configPath, sizeof(naev_configPath) ) != 0) {
            WARN(_("Cannot determine config path, using current directory."));
-           snprintf( naev_configPath, PATH_MAX, "./naev/" );
+           snprintf( naev_configPath, sizeof(naev_configPath), "./naev/" );
         }
 #elif HAS_UNIX
         char *path = xdgGetRelativeHome( "XDG_CONFIG_HOME", "/.config" );
@@ -138,7 +138,7 @@ const char* nfile_configPath (void)
             path = strdup(".");
         }
 
-        snprintf( naev_configPath, PATH_MAX, "%s/naev/", path );
+        snprintf( naev_configPath, sizeof(naev_configPath), "%s/naev/", path );
         free (path);
 #elif WIN32
       char *path = SDL_getenv("APPDATA");
@@ -146,7 +146,7 @@ const char* nfile_configPath (void)
          WARN(_("%%APPDATA%% isn't set, using current directory."));
          path = ".";
       }
-      snprintf( naev_configPath, PATH_MAX, "%s/naev/", path );
+      snprintf( naev_configPath, sizeof(naev_configPath), "%s/naev/", path );
 #else
 #error "Feature needs implementation on this Operating System for Naev to work."
 #endif
@@ -167,13 +167,13 @@ const char* nfile_cachePath (void)
     if (naev_cachePath[0] == '\0') {
         /* Global override is set. */
         if (conf.datapath) {
-           snprintf( naev_cachePath, PATH_MAX, "%s/", conf.datapath );
+           snprintf( naev_cachePath, sizeof(naev_cachePath), "%s/", conf.datapath );
            return naev_cachePath;
         }
 #if MACOS
-        if (macos_cachePath( naev_cachePath, PATH_MAX ) != 0) {
+        if (macos_cachePath( naev_cachePath, sizeof(naev_cachePath) ) != 0) {
            WARN(_("Cannot determine cache path, using current directory."));
-           snprintf( naev_cachePath, PATH_MAX, "./naev/" );
+           snprintf( naev_cachePath, sizeof(naev_cachePath), "./naev/" );
         }
 #elif HAS_UNIX
         char *path = xdgGetRelativeHome( "XDG_CACHE_HOME", "/.cache" );
@@ -182,7 +182,7 @@ const char* nfile_cachePath (void)
             path = strdup(".");
         }
 
-        snprintf( naev_cachePath, PATH_MAX, "%s/naev/", path );
+        snprintf( naev_cachePath, sizeof(naev_cachePath), "%s/naev/", path );
         free (path);
 #elif WIN32
       char *path = SDL_getenv("APPDATA");
@@ -190,7 +190,7 @@ const char* nfile_cachePath (void)
          WARN(_("%%APPDATA%% isn't set, using current directory."));
          path = ".";
       }
-      snprintf( naev_cachePath, PATH_MAX, "%s/naev/", path );
+      snprintf( naev_cachePath, sizeof(naev_cachePath), "%s/naev/", path );
 #else
 #error "Feature needs implementation on this Operating System for Naev to work."
 #endif

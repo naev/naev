@@ -536,7 +536,7 @@ static void sysedit_btnScale( unsigned int wid_unused, const char *unused )
  */
 void sysedit_sysScale( StarSystem *sys, double factor )
 {
-   char buf[PATH_MAX];
+   char buf[STRMAX];
    Planet *p;
    JumpPoint *jp;
    int i;

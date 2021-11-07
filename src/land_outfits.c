@@ -338,7 +338,7 @@ void outfits_update( unsigned int wid, const char *str )
    (void) str;
    int i, active;
    Outfit* outfit;
-   char buf[STRMAX], buf_price[ECON_CRED_STRLEN], buf_credits[ECON_CRED_STRLEN], buf_license[STRMAX];
+   char buf[STRMAX], buf_price[ECON_CRED_STRLEN], buf_credits[ECON_CRED_STRLEN], buf_license[STRMAX_SHORT];
    double th;
    int iw, ih, w, h, p;
    double mass;
