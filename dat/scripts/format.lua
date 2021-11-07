@@ -111,7 +111,7 @@ end
 
 --[[-- A version of string.gsub returning just the string. --]]
 local function _replace(template, index, text)
-   local str = string.gsub(template, index, text)
+   local str = string.gsub(template, index, tostring(text))
    return str
 end
 
@@ -125,7 +125,7 @@ Creates a translatable list of words.
 --]]
 function format.list( words )
    local length = #words
-   if length == 1 then return words[1] end
+   if length == 1 then return tostring(words[1]) end
    if length == 2 then
       return _replace(_replace( _("{0} and {1}"), '{0}', words[1]),
          '{1}', words[2])
