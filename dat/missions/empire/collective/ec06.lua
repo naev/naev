@@ -194,9 +194,7 @@ end
 
 function addRefuelShip ()
    -- Create the pilot
-   refship = pilot.add( "Mule", "Trader", last_sys, _("Trader Mule"), {ai="empire_refuel"} )
-   refship:rename(_("Fuel Tanker"))
-   refship:setFaction("Empire")
+   refship = pilot.add( "Empire Rainmaker", "Empire", last_sys, _("Fuel Tanker"), {ai="empire_refuel"} )
    refship:setFriendly()
    refship:setVisplayer()
    refship:setHilight()
@@ -204,8 +202,8 @@ function addRefuelShip ()
 
    -- Maximize fuel
    refship:outfitRm("all") -- Only will have fuel pods
-   local _h, _m, l = refship:ship():slots()
-   refship:outfitAdd( "Small Fuel Pod", l )
+   local _w, _u, s = refship:ship():slots()
+   refship:outfitAdd( "Large Fuel Pod", s )
    refship:setFuel( true ) -- Set fuel to max
 
    -- Add some escorts

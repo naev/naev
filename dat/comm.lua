@@ -438,6 +438,9 @@ function comm( plt )
       if not str then
          str = fmt.f(_([["I should be able to refuel you for {credits}."]]), {credits=cstr})
       end
+      if cost <= 0 then
+         vn.jump("refuel_trypay")
+      end
       return fmt.f(_("{msg}\n\nYou have {credits}. Pay #r{price}#0?"), {msg=str, credits=chave, price=cstr} )
    end )
    vn.menu{
