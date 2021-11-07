@@ -44,7 +44,7 @@ static Ship **cur_planet_sel_ships = NULL;
 static int pitch = 0; /**< pitch of planet images. */
 static int nameWidth = 0; /**< text width of planet name */
 static int nshow = 0; /**< number of planets shown. */
-static char infobuf[PATH_MAX];
+static char infobuf[STRMAX];
 static unsigned int starCnt = 1;
 glTexture **bgImages; /**< array (array.h) of nebula and star textures */
 
@@ -591,7 +591,7 @@ static void map_system_array_update( unsigned int wid, const char* str )
    Outfit *outfit;
    Ship *ship;
    double mass;
-   char buf_price[ECON_CRED_STRLEN], buf_license[PATH_MAX];
+   char buf_price[ECON_CRED_STRLEN], buf_license[STRMAX_SHORT];
 
    i = toolkit_getImageArrayPos( wid, str );
    if (i < 0) {
