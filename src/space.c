@@ -4599,14 +4599,34 @@ const char *space_populationStr( uint64_t population )
    static char pop[STRMAX_SHORT];
    double p = (double)population;
 
-   if (p > 10e9)
-      snprintf( pop, sizeof(pop), _("%.0f billion"), p / 1e9 );
-   else if (p > 10e6)
-      snprintf( pop, sizeof(pop), _("%.0f million"), p / 1e6 );
-   else if (p > 10e3)
-      snprintf( pop, sizeof(pop), _("%.0f thousand"), p / 1e3 );
-   else
+   /* Out of respect for the first version of this, do something fancy and human-oriented.
+    * However, specifying a thousand/million/billion system failed in a few ways: needing 2x as many cases as
+    * intended to avoid silliness (1.0e10 -> 10000 million), and not being gettext-translatable to other number
+    * systems like the Japanese one. */
+
+   if (p < 1.0e3)
       snprintf( pop, sizeof(pop), "%.0f", p );
+   else {
+      char scratch[STRMAX_SHORT];
+      const char *digits[] = {"\xe2\x81\xb0", "\xc2\xb9", "\xc2\xb2", "\xc2\xb3", "\xe2\x81\xb4", "\xe2\x81\xb5", "\xe2\x81\xb6", "\xe2\x81\xb7", "\xe2\x81\xb8", "\xe2\x81\xb9"};
+      int state = 0,  COEF = 0, E = 1, EXP = 4;
+      size_t l = 0;
+      snprintf( scratch, sizeof(scratch), "%.1e", p );
+      for (const char *c = scratch; *c; c++) {
+         if (state == COEF && *c != 'e')
+            l += scnprintf( &pop[l], sizeof(pop)-l, "%c", *c );
+         else if (state == COEF ) {
+            l += scnprintf( &pop[l], sizeof(pop)-l, "%s", "\xc2\xb7" "10" );
+            state = E;
+         }
+         else if (state == E && (*c == '+' || *c == '0'))
+            state = E;
+         else {
+            state = EXP;
+            l += scnprintf( &pop[l], sizeof(pop)-l, "%s", digits[*c-'0'] );
+         }
+      }
+   }
 
    return pop;
 }

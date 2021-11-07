@@ -54,9 +54,7 @@ function create ()
 end
 
 function accept()
-
    stage = 0
-   reward = shark.rewards.sh00
 
    if tk.yesno(_("Nexus Shipyards needs you"), _([[You approach the man and he introduces himself. "Hello, my name is Arnold Smith; I work for Nexus Shipyards. I'm looking for a talented pilot to make a demonstration to one of our potential customers.
     "Pretty simple, really: we want someone to show how great Nexus ship designs are by destroying a Pirate Ancestor with our lowest-grade ship, the Shark. Of course, the pilot of the Ancestor has a bounty on his head, so it won't be illegal. The sum of the bounty will be paid to you and Nexus will add a little extra. Would you be interested?"]])) then
@@ -65,7 +63,7 @@ function accept()
       tk.msg(_("Wonderful"), fmt.f(_([["Great! I knew I could trust you. I'll meet you on {pnt} in the {sys} system. I'll be with my boss and our customer, Baron Sauterfeldt."]]), {sys=missys, pnt=mispla}))
 
       misn.setTitle(_("A Shark Bites"))
-      misn.setReward(fmt.credits(reward))
+      misn.setReward(fmt.credits(shark.rewards.sh00))
       misn.setDesc(_("Nexus Shipyards needs you to demonstrate to Baron Sauterfeldt the capabilities of Nexus designs."))
       misn.osdCreate(_("A Shark Bites"), {
          fmt.f(_("Buy a Shark (but not a Pirate Shark), then fly to the {sys} system and land on {pnt}"), {sys=missys, pnt=mispla}),
@@ -96,7 +94,7 @@ function land()
    -- Did the player land again on Ulios after having killed the pirate
    if planet.cur() == mispla and stage == 4 then
       tk.msg(_("Congratulations!"), _([[As you step on the ground, Arnold Smith greets you. "That was a great demonstration! Thank you. I haven't been able to speak to the Baron about the results yet, but I am confident he will be impressed." He hands you your pay. "I may have another mission for you later. Be sure to check back!"]]))
-      player.pay(reward)
+      player.pay(shark.rewards.sh00)
       misn.osdDestroy()
       hook.rm(enterhook)
       hook.rm(landhook)

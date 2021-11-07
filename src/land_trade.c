@@ -141,7 +141,7 @@ void commodity_exchange_open( unsigned int wid )
 void commodity_update( unsigned int wid, const char *str )
 {
    (void)str;
-   char buf[PATH_MAX];
+   char buf[STRMAX];
    char buf_purchase_price[ECON_CRED_STRLEN], buf_credits[ECON_CRED_STRLEN];
    int i;
    Commodity *com;

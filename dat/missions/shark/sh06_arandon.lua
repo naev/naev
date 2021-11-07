@@ -41,16 +41,14 @@ function create ()
 end
 
 function accept()
-
    stage = 0
-   reward = shark.rewards.sh06
 
    if tk.yesno(_("Let's go"), _([["Is your ship ready for the dangers of the Nebula?"]])) then
       misn.accept()
       tk.msg(_("Go"), _([[Smith once again steps in your ship in order to go to a meeting.]]))
 
       misn.setTitle(fmt.f(_("A Journey To {sys}"), {sys=missys}))
-      misn.setReward(fmt.credits(reward))
+      misn.setReward(fmt.credits(shark.rewards.sh06))
       misn.setDesc(fmt.f(_("You are to transport Arnold Smith to {sys} so that he can talk about a deal."), {sys=missys}))
       misn.osdCreate(fmt.f(_("A Journey To {sys}"), {sys=missys}), {
          fmt.f(_("Go to {sys} and wait for the FLF ship, then hail and board it."), {sys=missys}),
@@ -77,7 +75,7 @@ function land()
       if misn.cargoRm(smith) then
          tk.msg(_("Well done!"), _([[Smith thanks you for the job well done. "Here is your pay," he says. "I will be in the bar if I have another task for you."]]))
          pir.reputationNormalMission(rnd.rnd(2,3))
-         player.pay(reward)
+         player.pay(shark.rewards.sh06)
          misn.osdDestroy()
          hook.rm(enterhook)
          hook.rm(landhook)

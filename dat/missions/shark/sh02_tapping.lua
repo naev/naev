@@ -38,7 +38,6 @@ local shark = require "common.shark"
 
 -- Mission constants
 local paypla, paysys = planet.getS("Darkshed")
-local reward = shark.rewards.sh02
 
 function create ()
    mispla, missys = planet.getLandable(faction.get("Sirius"))
@@ -63,7 +62,7 @@ function accept()
       tk.msg(_("The job"), fmt.f(_([["I'm glad to hear it. Go meet our agent on {pnt} in the {sys} system. Oh, yes, and I suppose I should mention that I'm known as 'James Neptune' to the agent. Good luck!"]]), {pnt=mispla, sys=missys}))
 
       misn.setTitle(_("Unfair Competition"))
-      misn.setReward(fmt.credits(reward))
+      misn.setReward(fmt.credits(shark.rewards.sh02))
       misn.setDesc(_("Nexus Shipyards is in competition with House Sirius."))
       misn.osdCreate(_("Unfair Competition"), {
          fmt.f(_("Land on {pnt} in {sys} and meet the Nexus agent"), {pnt=mispla, sys=missys}),
@@ -92,7 +91,7 @@ function land()
       if misn.cargoRm(records) then
          tk.msg(_("Good job"), _([[The Nexus employee greets you as you reach the ground. "Excellent! I will just need to spend a few hectoseconds analyzing these recordings. See if you can find me in the bar soon; I might have another job for you."]]))
          pir.reputationNormalMission(rnd.rnd(2,3))
-         player.pay(reward)
+         player.pay(shark.rewards.sh02)
          misn.osdDestroy()
          hook.rm(enterhook)
          hook.rm(landhook)

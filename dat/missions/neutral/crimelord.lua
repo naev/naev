@@ -135,7 +135,7 @@ function spawnBaddies ()
          hook.pilot(pilot_object, "exploded", "pilotKilled")
       end
    end
-   threats = {
+   local threats = {
       _("Surrender now and we'll let you live."),
       _("You're dead!"),
       _("You won't make it out alive!"),

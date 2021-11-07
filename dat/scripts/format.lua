@@ -36,7 +36,7 @@ Converts a number of credits to a string.
 
    Should be used everywhere a number of credits is displayed.
 
-   @usage tk.msg("", _("You have been paid %s."):format(fmt.credits(credits)))
+   @usage vn.na(fmt.f(_("You have been paid {credits}."), {credits=fmt.credits(credits)}))
 
       @param credits Number of credits.
       @return A string taking the form of "X ¤".
@@ -65,9 +65,11 @@ end
 Converts a number of tonnes to a string, using ngettext.
 
    This adds "tonnes" to the output of fmt.number in a translatable way.
-   Should be used everywhere a number of tonnes is displayed.
+   Caution: Usage within sentences can backfire, if the correct grammar to use
+   depends on the number of tonnes. Using ngettext (n_) on full sentences is
+   safer where practical.
 
-   @usage tk.msg("", _("You are carrying %s."):format(fmt.tonnes(tonnes)))
+   @usage vn.na(fmt.f(_("You are carrying {tonnes}"), {tonnes=fmt.tonnes(tonnes)}))
 
    @param tonnes Number of tonnes.
    @return A string taking the form of "X tonne" or "X tonnes".
@@ -93,9 +95,11 @@ end
 Converts a number of jumps to a string, utilizing ngettext.
 
    This adds "jumps" to the output of fmt.number in a translatable way.
-   Should be used everywhere a number of jumps is displayed.
+   Caution: Usage within sentences can backfire, if the correct grammar to use
+   depends on the number of jumps. Using ngettext (n_) on full sentences is
+   safer where practical.
 
-   @usage tk.msg("", _("The system is %s away."):format(fmt.jumps(jumps)))
+   @usage vn.na(fmt.f(_("The system is {jumps} away."), {jumps=fmt.jumps(jumps)}))
 
       @param jumps Number of jumps.
       @return A string taking the form of "X jump" or "X jumps".
@@ -105,24 +109,9 @@ function format.jumps( jumps )
 end
 
 
---[[--
-   Converts a number of times (occurrences) to a string, using ngettext.
-
-   This adds "times" to the output of fmt.number in a translatable way.
-   Should be used everywhere a number of occurrences is displayed.
-
-   @usage tk.msg("", _("Brush your teeth % per day."):format(fmt.times(times)))
-
-   @param times Number of times.
-   @return A string taking the form of "X time" or "X times".
---]]
-function format.times( times )
-   return n_("%s time", "%s times", times):format(format.number(times))
-end
-
 --[[-- A version of string.gsub returning just the string. --]]
 local function _replace(template, index, text)
-   local str = string.gsub(template, index, text)
+   local str = string.gsub(template, index, tostring(text))
    return str
 end
 
@@ -136,7 +125,7 @@ Creates a translatable list of words.
 --]]
 function format.list( words )
    local length = #words
-   if length == 1 then return words[1] end
+   if length == 1 then return tostring(words[1]) end
    if length == 2 then
       return _replace(_replace( _("{0} and {1}"), '{0}', words[1]),
          '{1}', words[2])

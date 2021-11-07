@@ -45,7 +45,7 @@ abort_text[2] = _("You decide that the nearest waste dump location is too far aw
 abort_text[3] = _("You dump the waste containers into space illegally, noting that you should make sure not to get caught by authorities.")
 
 -- List of possible waste dump planets.
-dest_planets = { "The Stinker", "Eiroik" }
+local dest_planets = { "The Stinker", "Eiroik" }
 
 function create ()
    local dist = nil

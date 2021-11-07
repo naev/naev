@@ -184,15 +184,15 @@ function enter()
       misn.osdActive(1)
 
       --Actually spawn the opponent
-      ships = {}
+      local ships = {}
       ships[1] = {"Hyena", "Shark"}
       ships[2] = {"Hyena", "Shark", "Shark", "Lancelot", "Soromid Reaver"}
       ships[3] = {"Shark", "Lancelot", "Lancelot", "Vendetta", "Soromid Reaver"}
       ships[4] = {"Lancelot", "Vendetta", "Vendetta", "Soromid Reaver", "Empire Lancelot", "Dvaered Vendetta"}
       ships[5] = {"Vendetta", "Empire Lancelot", "Dvaered Vendetta", "Dvaered Vendetta", "Dvaered Vendetta"}
 
-      shiplist = ships[level+1]
-      oppotype = shiplist[ rnd.rnd(1,#shiplist) ]
+      local shiplist = ships[level+1]
+      local oppotype = shiplist[ rnd.rnd(1,#shiplist) ]
       opponent = pilot.add( oppotype, "Thugs", mispla, opponame, {ai="baddie"} )
 
       opponent:outfitRm("all")
@@ -221,7 +221,7 @@ function enter()
       -- TODO: decide if the "Faraday Tempest Coating" is a good idea
       opponent:outfitAdd("Battery I",nlow)
 
-      hvy = 0
+      local hvy = 0
       if oppotype == ship.get("Lancelot") or oppotype == ship.get("Empire Lancelot") then
          opponent:outfitAdd("Heavy Ion Cannon")
          hvy = 1

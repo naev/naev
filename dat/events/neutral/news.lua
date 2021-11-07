@@ -13,7 +13,7 @@ local fmt = require "format"
 local lmisn = require "lmisn"
 
 -- List to treat special factions diffferently
-override_list = {
+local override_list = {
    -- Treat pirate clans the same (at least for now)
    ["Wild Ones"] = "Pirate",
    ["Raven Clan"] = "Pirate",

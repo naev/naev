@@ -386,6 +386,7 @@ local text_fadein = 1.5
 local text_fadeout = 1.5
 local text_length = 10.0
 function textinit( titletext, subtitletext )
+   local title, subtitle
    --local fontname = _("fonts/CormorantUnicase-Medium.ttf")
    -- Title
    title = { text=titletext, h=48 }

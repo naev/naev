@@ -79,7 +79,7 @@ function death(pilot,killer)
    if pir.factionIsPirate( pilot:faction() )
          and (killer == player.pilot()
             or killer:leader() == player.pilot()) then
-      reward_table = {
+      local reward_table = {
          ["Hyena"]             =  10e3,
          ["Pirate Shark"]      =  30e3,
          ["Pirate Vendetta"]   =  80e3,

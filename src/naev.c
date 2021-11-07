@@ -1023,7 +1023,7 @@ void update_routine( double dt, int enter_sys )
  */
 static void window_caption (void)
 {
-   char buf[PATH_MAX];
+   char *buf;
    SDL_RWops *rw;
 
    /* Load icon. */
@@ -1039,9 +1039,10 @@ static void window_caption (void)
    }
 
    /* Set caption. */
-   snprintf(buf, sizeof(buf), APPNAME" - %s", start_name());
+   asprintf( &buf, APPNAME" - %s", start_name() );
    SDL_SetWindowTitle( gl_screen.window, buf );
-   SDL_SetWindowIcon(  gl_screen.window, naev_icon );
+   SDL_SetWindowIcon( gl_screen.window, naev_icon );
+   free( buf );
 }
 
 

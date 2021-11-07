@@ -162,9 +162,8 @@ function enter()
       pilot.toggleSpawn(false)
       player.allowLand(false, _("Landing permission denied. Our docking clamps are currently undergoing maintenance."))
       -- Meet Joe, our informant.
-      joe = pilot.add( "Vendetta", "Four Winds", vec2.new(-500, -4000), _("Four Winds Vendetta"), {ai="trader"} )
+      joe = pilot.add( "Vendetta", "Four Winds", vec2.new(-500, -4000), _("Four Winds Informant"), {ai="trader"} )
       joe:control()
-      joe:rename(_("Four Winds Informant"))
       joe:setHilight(true)
       joe:setVisplayer()
       joe:setInvincible(true)
@@ -227,47 +226,41 @@ end
 
 function spawnSquads(highlight)
    -- Start positions for the leaders
-   leaderstart = {}
-   leaderstart[1] = vec2.new(-2500, -1500)
-   leaderstart[2] = vec2.new(2500, 1000)
-   leaderstart[3] = vec2.new(-3500, -4500)
-   leaderstart[4] = vec2.new(2500, -2500)
-   leaderstart[5] = vec2.new(-2500, -6500)
+   leaderstart = {
+      vec2.new(-2500, -1500),
+      vec2.new(2500, 1000),
+      vec2.new(-3500, -4500),
+      vec2.new(2500, -2500),
+      vec2.new(-2500, -6500),
+   }
 
    -- Leaders will patrol between their start position and this one
-   leaderdest = {}
-   leaderdest[1] = vec2.new(2500, -1000)
-   leaderdest[2] = vec2.new(-500, 1500)
-   leaderdest[3] = vec2.new(-4500, -1500)
-   leaderdest[4] = vec2.new(2000, -6000)
-   leaderdest[5] = vec2.new(1000, -1500)
+   leaderdest = {
+      vec2.new(2500, -1000),
+      vec2.new(-500, 1500),
+      vec2.new(-4500, -1500),
+      vec2.new(2000, -6000),
+      vec2.new(1000, -1500),
+   }
 
    squads = {}
-   squads[1] = fleet.add( 4, "Vendetta", "Rogue Four Winds", leaderstart[1], _("Four Winds Vendetta") )
-   squads[2] = fleet.add( 4, "Vendetta", "Rogue Four Winds", leaderstart[2], _("Four Winds Vendetta") )
-   squads[3] = fleet.add( 4, "Vendetta", "Rogue Four Winds", leaderstart[3], _("Four Winds Vendetta") )
-   squads[4] = fleet.add( 4, "Vendetta", "Rogue Four Winds", leaderstart[4], _("Four Winds Vendetta") )
-   squads[5] = fleet.add( 4, "Vendetta", "Rogue Four Winds", leaderstart[5], _("Four Winds Vendetta") )
-
-   for i, squad in ipairs(squads) do
-      for j, k in ipairs(squad) do
-         hook.pilot(k, "attacked", "attacked")
-         k:rename(_("Four Winds Patrol"))
-         k:control()
-         k:outfitRm("all")
-         k:outfitAdd("Cheater's Laser Cannon", 6) -- Equip these fellas with unfair weaponry
-         k:follow(squad[1]) -- Each ship in the squad follows the squad leader
-      end
-      squad[1]:taskClear() --...except the leader himself.
-   end
 
    -- Shorthand notation for the leader pilots
    leader = {}
-   leader[1] = squads[1][1]
-   leader[2] = squads[2][1]
-   leader[3] = squads[3][1]
-   leader[4] = squads[4][1]
-   leader[5] = squads[5][1]
+
+   for i, start in ipairs(squads) do
+      squads[i] = fleet.add( 4, "Vendetta", "Rogue Four Winds", leaderstart[i], _("Four Winds Patrol") )
+      for j, k in ipairs(squads[i]) do
+         hook.pilot(k, "attacked", "attacked")
+         k:control()
+         k:outfitRm("all")
+         k:outfitAdd("Cheater's Laser Cannon", 6) -- Equip these fellas with unfair weaponry
+	 k:setNoDisable()
+         k:follow(squads[i][1]) -- Each ship in the squad follows the squad leader
+      end
+      squads[i][1]:taskClear() --...except the leader himself.
+      leader[i] = squads[i][1]
+   end
 
    leaderVis(highlight)
 
@@ -340,12 +333,13 @@ end
 function spawnGenbu(sys)
    genbu = pilot.add( "Pirate Kestrel", "Four Winds", sys, _("Genbu") )
    genbu:outfitRm("all")
-   genbu:outfitAdd("Turbolaser", 3)
+   genbu:outfitAdd("Heavy Laser Turret", 3)
    genbu:outfitAdd("Cheater's Ragnarok Beam", 3) -- You can't win. Seriously.
    genbu:control()
    genbu:setHilight()
    genbu:setVisplayer()
-   genbu:setNoDeath(true)
+   genbu:setNoDeath()
+   genbu:setNoDisable()
    genbuspawned = true
 end
 
@@ -377,7 +371,7 @@ end
 
 -- Spawns a wing of Lancelots that intercept the player.
 function spawnInterceptors()
-   inters = fleet.add( 3, "Lancelot", "Rogue Four Winds", genbu:pos(), _("Four Winds Lancelot") )
+   local inters = fleet.add( 3, "Lancelot", "Rogue Four Winds", genbu:pos(), _("Four Winds Lancelot") )
    for _, j in ipairs(inters) do
       j:outfitRm("all")
       j:outfitAdd("Cheater's Laser Cannon", 4) -- Equip these fellas with unfair weaponry

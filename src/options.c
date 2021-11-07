@@ -517,7 +517,7 @@ static void opt_gameplayUpdate( unsigned int wid, const char *str )
  */
 static void opt_setAutonavResetSpeed( unsigned int wid, const char *str )
 {
-   char buf[PATH_MAX];
+   char buf[STRMAX_SHORT];
    double autonav_reset;
 
    /* Set fader. */

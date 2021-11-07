@@ -19,7 +19,7 @@ local fmt = require "format"
 -- listed here not spawn generic civilian NPCs or get aftercare texts.
 -- Meant for factions which are either criminal (FLF, Pirate) or unaware
 -- of the main universe (Thurion, Proteron).
-nongeneric_factions = {
+local nongeneric_factions = {
    "Pirate",
    "Marauder",
    "Wild Ones",
@@ -32,7 +32,7 @@ nongeneric_factions = {
 }
 
 -- List to treat special factions diffferently
-override_list = {
+local override_list = {
    -- Treat pirate clans the same (at least for now)
    ["Wild Ones"] = "Pirate",
    ["Raven Clan"] = "Pirate",
@@ -45,7 +45,7 @@ override_list = {
 -- These descriptions will be picked at random, and may be picked multiple times in one generation.
 -- Remember that any description can end up with any portrait, so don't make any assumptions
 -- about the appearance of the NPC!
-civ_desc = {
+local civ_desc = {
    _("This person seems to be here to relax."),
    _("There is a civilian sitting on one of the tables."),
    _("There is a civilian sitting there, looking somewhere else."),
@@ -220,7 +220,7 @@ msg_lore["Trader"] = {
 -- Gameplay tip messages.
 -- ALL NPCs have a chance to say one of these lines instead of a lore message.
 -- So, make sure the tips are always faction neutral.
-msg_tip = {
+local msg_tip = {
    _([["I heard you can set your weapons to only fire when your target is in range, or just let them fire when you pull the trigger. Sounds handy!"]]),
    fmt.f( _([["Did you know that if a planet doesn't like you, you can often bribe the spaceport operators and land anyway? Just hail the planet with {hailkey}, and click the bribe button! Careful though, it doesn't always work."]]), {hailkey=tut.getKey("hail")} ),
    _([["Many factions offer rehabilitation programs to criminals through the mission computer, giving them a chance to get back into their good graces. It can get really expensive for serious offenders though!"]]),
@@ -259,7 +259,7 @@ msg_tip = {
 -- All messages must contain '{jmp}', this is the name of the target system.
 -- ALL NPCs have a chance to say one of these lines instead of a lore message.
 -- So, make sure the tips are always faction neutral.
-msg_jmp = {
+local msg_jmp = {
    _([["Hi there, traveler. Is your system map up to date? Just in case you didn't know already, let me give you the location of the jump from here to {jmp}. I hope that helps."]]),
    _([["Quite a lot of people who come in here complain that they don't know how to get to {jmp}. I travel there often, so I know exactly where the jump point is. Here, let me show you."]]),
    _([["So you're still getting to know about this area, huh? Tell you what, I'll give you the coordinates of the jump to {jmp}. Check your map next time you take off!"]]),
@@ -270,7 +270,7 @@ msg_jmp = {
 -- Mission hint messages. Each element should be a table containing the mission name and the corresponding hint.
 -- ALL NPCs have a chance to say one of these lines instead of a lore message.
 -- So, make sure the hints are always faction neutral.
-msg_mhint = {
+local msg_mhint = {
    {"Shadowrun", _([["Apparently there's a woman who regularly turns up on planets in and around the Klantar system. I wonder what she's looking for?"]])},
    {"Collective Espionage 1", _([["The Empire is trying to really do something about the Collective, I hear. Who knows, maybe you can even help them out if you make it to Omega Station."]])},
    {"Hitman", _([["There are often shady characters hanging out in the Alteris system. I'd stay away from there if I were you, someone might offer you a dirty kind of job!"]])},
@@ -279,14 +279,14 @@ msg_mhint = {
 
 -- Event hint messages. Each element should be a table containing the event name and the corresponding hint.
 -- Make sure the hints are always faction neutral.
-msg_ehint = {
+local msg_ehint = {
    {"FLF/DV Derelicts", _([["The FLF and the Dvaered sometimes clash in Surano. If you go there, you might find something of interest... Or not."]])},
 }
 
 -- Mission after-care messages. Each element should be a table containing the mission name and a line of text.
 -- This text will be said by NPCs once the player has completed the mission in question.
 -- Make sure the messages are always faction neutral.
-msg_mdone = {
+local msg_mdone = {
    {"Nebula Satellite", _([["Heard some reckless scientists got someone to put a satellite inside the nebula for them. I thought everyone with half a brain knew to stay out of there, but oh well."]])},
    {"Shadow Vigil", _([["Did you hear? There was some big incident during a diplomatic meeting between the Empire and the Dvaered. Nobody knows what exactly happened, but both diplomats died. Now both sides are accusing the other of foul play. Could get ugly."]])},
    {"Operation Cold Metal", _([["Hey, remember the Collective? They got wiped out! I feel so much better now that there aren't a bunch of robot ships out there to get me anymore."]])},
@@ -297,7 +297,7 @@ msg_mdone = {
 -- Event after-care messages. Each element should be a table containing the event name and a line of text.
 -- This text will be said by NPCs once the player has completed the event in question.
 -- Make sure the messages are always faction neutral.
-msg_edone = {
+local msg_edone = {
    {"Animal trouble", _([["What? You had rodents sabotage your ship? Man, you're lucky to be alive. If it had hit the wrong power line..."]])},
    {"Naev Needs You!", _([["What do you mean, the world ended and then the creator of the universe came and fixed it? What kind of illegal substance are you on?"]])},
 }

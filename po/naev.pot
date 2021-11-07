@@ -24940,8 +24940,7 @@ msgstr ""
 #. Battle is happening
 #. Spawns a merchant ship that explains what happens
 #: dat/events/dvaered/warlords_battle.lua:74
-#, lua-format
-msgid "Trader %s"
+msgid "Trader {ship}"
 msgstr ""
 
 #: dat/events/dvaered/warlords_battle.lua:85
@@ -65193,7 +65192,7 @@ msgstr ""
 
 #: dat/missions/tutorial/nelly02.lua:432
 msgid ""
-"\"It looks like we've been spotted by a trio of Pirate Hyenas, normally I "
+"\"It looks like we've been spotted by a trio of Pirate Hyenas. Normally I "
 "would say run, but I don't think we'll be able to outrun them. I think that "
 "bribing them may be the only way out.\""
 msgstr ""

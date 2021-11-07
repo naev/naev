@@ -59,9 +59,8 @@ function accept ()
 
    -- Mission details
    misn_stage = 0
-   reward = emp.rewards.es00
    misn.setTitle(_("Prisoner Exchange"))
-   misn.setReward( fmt.credits(reward) )
+   misn.setReward( fmt.credits( emp.rewards.es00 ) )
    misn.setDesc( fmt.f(_("Go to {pnt} in the {sys} system to exchange prisoners with the FLF"), {pnt=dest, sys=destsys}) )
 
    -- Flavour text and mini-briefing
@@ -112,7 +111,7 @@ function land ()
    elseif landed == ret and misn_stage == 1 then
 
       -- Rewards
-      player.pay(reward)
+      player.pay( emp.rewards.es00 )
       faction.modPlayerSingle("Empire",5);
 
       -- Flavour text

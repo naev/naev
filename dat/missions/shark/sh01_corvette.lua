@@ -52,9 +52,7 @@ function create ()
 end
 
 function accept()
-
    stage = 0
-   reward = shark.rewards.sh01
 
    if tk.yesno(_("Nexus Shipyards needs you"), _([["I have another job for you. The Baron was unfortunately not as impressed as we hoped. So we need a better demonstration, and we think we know what to do: we're going to demonstrate that the Lancelot, our higher-end fighter design, is more than capable of defeating destroyer class ships.
     "Now, one small problem we face is that pirates almost never use destroyer class ships; they tend to stick to fighters, corvettes, and cruisers. More importantly, actually sending a fighter after a Destroyer is exceedingly dangerous, even if we could find a pirate piloting one. So we have another plan: we want someone to pilot a destroyer class ship and just let another pilot disable them with ion cannons.
@@ -63,7 +61,7 @@ function accept()
       tk.msg(_("Wonderful"), fmt.f(_([["Great! Go and meet our pilot in {battlesys}. After the job is done, meet me on {pnt} in the {sys} system."]]), {battlesys=battlesys, pnt=paypla, sys=paysys}))
 
       misn.setTitle(_("Sharkman is back"))
-      misn.setReward(fmt.credits(reward/2))
+      misn.setReward(fmt.credits(shark.rewards.sh01/2))
       misn.setDesc(_("Nexus Shipyards wants you to fake a loss against a Lancelot while piloting a Destroyer class ship."))
       misn.osdCreate(_("Sharkman Is Back"), {
          fmt.f(_("Jump in {sys} with a destroyer class ship and let the Lancelot disable you"), {sys=battlesys}),
@@ -97,7 +95,7 @@ function land()
    if stage == 2 and planet.cur() == paypla then
       tk.msg(_("Reward"), _([[As you land, you see Arnold Smith waiting for you. He explains that the Baron was so impressed by the battle that he signed an updated contract with Nexus Shipyards, solidifying Nexus as the primary supplier of ships for his fleet. As a reward, they give you twice the sum of credits they promised to you.]]))
       pir.reputationNormalMission(rnd.rnd(2,3))
-      player.pay(reward)
+      player.pay(shark.rewards.sh01)
       misn.osdDestroy()
       hook.rm(enterhook)
       hook.rm(landhook)

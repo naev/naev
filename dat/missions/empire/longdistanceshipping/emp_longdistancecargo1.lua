@@ -54,9 +54,8 @@ function accept ()
    misn.accept()
 
    -- Description is visible in OSD and the onboard computer, it shouldn't be too long either.
-   reward = emp.rewards.ldc1
    misn.setTitle(_("Soromid Long Distance Recruitment"))
-   misn.setReward(fmt.credits(reward))
+   misn.setReward( fmt.credits( emp.rewards.ldc1 ) )
    misn.setDesc( misn_desc )
    misn.osdCreate(_("Soromid Long Distance Recruitment"), {misn_desc})
    -- Set up the goal
@@ -70,7 +69,7 @@ function land()
 
    if planet.cur() == targetworld then
          misn.cargoRm( person )
-         player.pay( reward )
+         player.pay( emp.rewards.ldc1 )
          -- More flavour text
          tk.msg( _("Mission Accomplished"), _([[You drop the bureaucrat off at Soromid Customs Central, and he hands you a credit chip. Lieutenant Czesc told you to keep an eye out for him in Empire space to continue the operation.]]) )
          faction.modPlayerSingle( "Empire",3 )

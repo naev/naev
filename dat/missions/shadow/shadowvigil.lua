@@ -27,6 +27,12 @@ local pir = require "common.pirate"
 
 -- Mission constants
 local rebinasys = system.get("Pas")
+local misssys = {
+   system.get("Qex"),           -- Escort meeting point
+   system.get("Shakar"),        -- Refuel stop
+   system.get("Borla"),         -- Protegee meeting point
+   system.get("Doranthex"),     -- Final destination
+}
 
 -- Make a pilot say a line, if he is alive. Mainly useful in sequential chat messages.
 -- argument chat: A table containing:
@@ -57,9 +63,6 @@ end
 
 -- Delayed claim to let time for the event's claim to disappear
 function delayedClaim()
-   misssys = {system.get("Qex"), system.get("Shakar"), system.get("Borla"), system.get("Doranthex")} -- Escort meeting point, refuel stop, protegee meeting point, final destination.
-   misssys["__save"] = true
-
    if not misn.claim(misssys) then
       abort()
    end

@@ -1226,7 +1226,7 @@ void equipment_regenLists( unsigned int wid, int outfits, int ships )
 {
    int nship, noutfit;
    double offship, offoutfit;
-   char selship[PATH_MAX];
+   char *selship;
    const char *s;
    char *focused;
 
@@ -1251,8 +1251,7 @@ void equipment_regenLists( unsigned int wid, int outfits, int ships )
       nship   = toolkit_getImageArrayPos(    wid, EQUIPMENT_SHIPS );
       offship = toolkit_getImageArrayOffset( wid, EQUIPMENT_SHIPS );
       s       = toolkit_getImageArray(       wid, EQUIPMENT_SHIPS );
-      strncpy( selship, s, sizeof(selship)-1 );
-      selship[PATH_MAX-1] = '\0'; /* Just in case. */
+      selship = strdup( s );
       window_destroyWidget( wid, EQUIPMENT_SHIPS );
    }
 
@@ -1278,6 +1277,7 @@ void equipment_regenLists( unsigned int wid, int outfits, int ships )
          /* Update ships. */
          equipment_updateShips( wid, NULL );
       }
+      free( selship );
    }
 
    /* Restore focus. */

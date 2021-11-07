@@ -1008,7 +1008,7 @@ static int hookL_pilot( lua_State *L )
    LuaPilot p;
    int type;
    const char *hook_type;
-   char buf[ PATH_MAX ];
+   char buf[64]; /* Large enough buffer to hold any of the allowed hook-type names. */
 
    /* Parameters. */
    if (lua_ispilot(L,1))

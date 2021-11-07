@@ -654,8 +654,9 @@ void ovr_render( double dt )
       if (!ovr_safelaneKnown( &safelanes[i], posns ))
          continue;
 
-      /* Copy over alpha. */
-      if (ovr_render_safelanes != NULL)
+      /* Copy over alpha. FIXME: Based on past bug reports, we aren't successfully resetting ovr_render_safelanes
+       * when the lane-set changes. We really want coherency rather than this array_size check. */
+      if (i < array_size(ovr_render_safelanes))
          safelanes[i].map_alpha = ovr_render_safelanes[i].map_alpha;
 
       if (safelanes[i].map_alpha < 1.0)

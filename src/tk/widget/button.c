@@ -205,7 +205,7 @@ void window_buttonCaption( unsigned int wid, const char *name, const char *displ
  */
 static void btn_updateHotkey( Widget *btn )
 {
-   char buf[PATH_MAX], *display, target;
+   char buf[STRMAX_SHORT], *display, target;
    const char *keyname;
    int match;
 

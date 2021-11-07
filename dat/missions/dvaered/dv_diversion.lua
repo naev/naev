@@ -193,12 +193,12 @@ function hawk_dead () -- mission accomplished
 
    faction.dynEnemy( hawkfaction, attkfaction, true )
    faction.dynEnemy( attkfaction, hawkfaction, true )
-   messages = {5, 6, 7}
+   local messages = {5, 6, 7}
    for k, v in ipairs(fleetdv) do
       if v:exists() then
          local _armour, _shield, disabled = v:health()
          if not disabled then
-            msg = table.remove(messages, 1)
+            local msg = table.remove(messages, 1)
             if msg then
                v:broadcast(chatter[msg])
             end

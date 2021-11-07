@@ -45,7 +45,6 @@ end
 
 function accept()
    stage = 0
-   reward = shark.rewards.sh04
    proba = 0.3  --the probability of ambushes will change
    firstambush = true  --In the first ambush, there will be a little surprise text
 
@@ -54,7 +53,7 @@ function accept()
       tk.msg(_("Time to go"), _([["Let's go, then."]]))
 
       misn.setTitle(_("The Meeting"))
-      misn.setReward(fmt.credits(reward))
+      misn.setReward(fmt.credits(shark.rewards.sh04))
       misn.setDesc(_("Nexus Shipyards asks you to take part in a secret meeting"))
       misn.osdCreate(_("The Meeting"), {
          fmt.f(_("Go to the {sys} system and land on {pnt}"), {sys=missys, pnt=mispla}),
@@ -90,7 +89,7 @@ function land()
    if stage == 1 and planet.cur() == paypla then
       if misn.cargoRm(smith) then
          tk.msg(_("End of mission"), _([[Smith gets out of your ship and looks at you, smiling. "You know, it's like that in our kind of job. Sometimes it works and sometimes it fails. It's not our fault. Anyway, here is your pay."]]))
-         player.pay(reward)
+         player.pay(shark.rewards.sh04)
          pir.reputationNormalMission(rnd.rnd(2,3))
          misn.osdDestroy()
          hook.rm(enterhook)

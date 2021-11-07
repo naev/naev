@@ -102,7 +102,7 @@ function lastsys()
 end
 
 function attacked() --several systems where the Sirius have 'strategically placed' an assault fleet to try and kill some Nasin.
-   dangersystems = {
+   local dangersystems = {
    system.get("Neon"),
    system.get("Pike"),
    system.get("Vanir"),

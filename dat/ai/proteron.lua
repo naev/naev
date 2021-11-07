@@ -16,6 +16,23 @@ local bribe_no_list = {
    _([["I'm not interested in your blood money!"]]),
    _([["All the money in the world won't save you now!"]])
 }
+local taunt_list_offensive = {
+   _("Animals like you don't deserve to live!"),
+   _("Begone from this universe, inferior scum!"),
+   _("We will cleanse you and all other scum from this universe!"),
+   _("Enemies of the state will not be tolerated!"),
+   _("Long live the Proteron!"),
+   _("War is peace!"),
+   _("Freedom is slavery!"),
+}
+local taunt_list_defensive = {
+   _("How dare you attack the Proteron?!"),
+   _("I will have your head!"),
+   _("You'll regret that!"),
+   _("Your fate has been sealed, dissident!"),
+   _("You will pay for your treason!"),
+   _("Die along with the old Empire!"),
+}
 
 function create ()
    -- Not too many credits.
@@ -91,24 +108,9 @@ function taunt ( target, offense )
    -- some taunts
    local taunts
    if offense then
-      taunts = {
-         _("Animals like you don't deserve to live!"),
-         _("Begone from this universe, inferior scum!"),
-         _("We will cleanse you and all other scum from this universe!"),
-         _("Enemies of the state will not be tolerated!"),
-         _("Long live the Proteron!"),
-         _("War is peace!"),
-         _("Freedom is slavery!"),
-      }
+      taunts = taunt_list_offensive
    else
-      taunts = {
-         _("How dare you attack the Proteron?!"),
-         _("I will have your head!"),
-         _("You'll regret that!"),
-         _("Your fate has been sealed, dissident!"),
-         _("You will pay for your treason!"),
-         _("Die along with the old Empire!"),
-      }
+      taunts = taunt_list_defensive
    end
 
    ai.pilot():comm(target, taunts[ rnd.rnd(1,#taunts) ])

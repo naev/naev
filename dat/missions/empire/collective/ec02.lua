@@ -36,7 +36,6 @@ local fmt = require "format"
 -- Mission consstants
 local misn_base, misn_base_sys = planet.getS("Omega Station")
 local misn_target, misn_target_sys = planet.getS("Eiroik")
-local reward = emp.rewards.ec02
 
 function create ()
     local missys = {misn_target}
@@ -63,7 +62,7 @@ function accept ()
 
    -- Mission details
    misn.setTitle(_("Collective Espionage"))
-   misn.setReward( fmt.credits( reward ) )
+   misn.setReward( fmt.credits( emp.rewards.ec02 ) )
    misn.setDesc( fmt.f(_("Land on {pnt} in the {sys} system to monitor Collective communications"), {pnt=misn_target, sys=misn_target_sys} ))
    misn.osdCreate(_("Collective Espionage"), {
       fmt.f(_("Fly to {sys} and land on {pnt}"), {sys=misn_target_sys, pnt=misn_target}),
@@ -91,7 +90,7 @@ function land()
 
       -- Rewards
       faction.modPlayerSingle("Empire",5)
-      player.pay( reward )
+      player.pay( emp.rewards.ec02 )
 
       emp.addCollectiveLog( _([[You monitored Collective communications for the Empire again, this time while landed on Eiroik. Lt. Commander Dimitri told you to meet him in the bar on Omega Station again later.]]) )
 

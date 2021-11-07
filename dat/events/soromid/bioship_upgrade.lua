@@ -31,7 +31,7 @@
 -- the stage of the part, or "X" for the final stage. The second entry
 -- in each inner table is the number of normal "stages", excluding the
 -- final stage (Stage X).
-bioship_parts = {
+local bioship_parts = {
    -- Brains (Core System analog)
    { "Ultralight Bioship Brain Stage %s", 2 },
    { "Light Bioship Brain Stage %s", 3 },
@@ -76,7 +76,7 @@ function create ()
 end
 
 
-function is_bioship_part( s )
+local function is_bioship_part( s )
    for i, p in ipairs( bioship_parts ) do
       if string.match( s, p[1]:format( ".*" ) ) then
          return true
@@ -88,7 +88,7 @@ end
 
 -- Returns the index of bioship_parts the given outfit is a part of if a
 -- valid undeveloped part, or nil otherwise.
-function undeveloped_bioship_part_index( s )
+local function undeveloped_bioship_part_index( s )
    for i, p in ipairs( bioship_parts ) do
       local pat = p[1]:gsub ("-", "[-]")
       if string.match( s, pat:format( "%d" ) ) then
@@ -99,7 +99,7 @@ function undeveloped_bioship_part_index( s )
 end
 
 
-function has_bioship ()
+local function has_bioship ()
    for i, o in ipairs( player.pilot():outfits() ) do
       if is_bioship_part( o:nameRaw() ) then
          return true
@@ -113,7 +113,7 @@ end
 -- the player; each inner table contains, respectively:
 --    * The outfit name
 --    * The corresponding index in bioship_parts
-function get_bioship_parts ()
+local function get_bioship_parts ()
    local parts = {}
    for i, o in ipairs( player.pilot():outfits() ) do
       local index = undeveloped_bioship_part_index( o:nameRaw() )

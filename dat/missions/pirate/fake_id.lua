@@ -21,11 +21,11 @@
 local pir = require 'common.pirate'
 local fmt = require "format"
 
-factions = {
+local factions = {
    "Empire", "Goddard", "Dvaered", "Za'lek", "Sirius", "Soromid", "Frontier",
    --"Trader", "Miner"
 }
-misnvars = {
+local misnvars = {
    Empire      = "_fcap_empire",
    Goddard     = "_fcap_goddard",
    Dvaered     = "_fcap_dvaered",
@@ -41,7 +41,7 @@ orig_standing["__save"] = true
 orig_cap = {}
 orig_cap["__save"] = true
 
-temp_cap = 10
+local temp_cap = 10
 next_discovered = false
 
 
@@ -123,7 +123,7 @@ end
 
 
 function player_scanned( _pp, scanner )
-   player.msg(_("#rYou fake ID has been detected and your cover has been blown!"))
+   player.msg(_("#rYour fake ID has been detected and your cover has been blown!"))
    scanner:setHostile(true)
    restore_standing()
    misn.finish( false )

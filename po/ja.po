@@ -68369,7 +68369,7 @@ msgstr "ネリー : ｢ちょっと、あの海賊たちはこっちへ来る�
 
 #: dat/missions/tutorial/nelly02.lua:433
 msgid ""
-"\"It looks like we've been spotted by a trio of Pirate Hyenas, normally I "
+"\"It looks like we've been spotted by a trio of Pirate Hyenas. Normally I "
 "would say run, but I don't think we'll be able to outrun them. I think that "
 "bribing them may be the only way out.\""
 msgstr ""

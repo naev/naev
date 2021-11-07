@@ -26,7 +26,8 @@ local car = require "common.cargo"
 local fmt = require "format"
 local lmisn = require "lmisn"
 
-engines = {_("engine with phase-change material cooling"),
+local engines = {
+           _("engine with phase-change material cooling"),
            _("engine controlled with Zermatt-Henry theory"),   --Some random scientists names
            _("engine using a new electron propelling system"),
            _("engine using the fifth law of thermodynamics"),      --In these times, there will maybe exist more thermo laws...

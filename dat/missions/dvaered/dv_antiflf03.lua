@@ -36,7 +36,7 @@ local dv = require "common.dvaered"
 local DVplanet, DVsys = planet.getS("Stalwart Station")
 
 function create()
-    missys = {system.get(var.peek("flfbase_sysname"))}
+    local missys = {system.get(var.peek("flfbase_sysname"))}
     if not misn.claim(missys) then
         abort()
     end
