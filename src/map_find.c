@@ -654,11 +654,11 @@ static void map_addOutfitDetailFields(unsigned int wid, int x, int y, int w, int
    window_addRect( wid, -1 + iw, -50, 128, 129, "rctImage", &cBlack, 0 );
    window_addImage( wid, iw, -50-128, 0, 0, "imgOutfit", NULL, 1 );
 
-   window_addText( wid, iw + 128 + 20, -60,
+   window_addText( wid, iw + 128 + 20, -50,
          280, 160, 0, "txtOutfitName", &gl_defFont, NULL, NULL );
-   window_addText( wid, iw + 128 + 20, -60 - gl_defFont.h - 20,
+   window_addText( wid, iw + 128 + 20, -50 - gl_defFont.h - 20,
          280, 160, 0, "txtDescShort", &gl_smallFont, NULL, NULL );
-   window_addText( wid, iw+20, -60-128-10,
+   window_addText( wid, iw+20, -50-128-10,
          90, 160, 0, "txtSDesc", &gl_smallFont, NULL,
          _("#nOwned:#0\n"
          "\n"
@@ -669,9 +669,9 @@ static void map_addOutfitDetailFields(unsigned int wid, int x, int y, int w, int
          "#nPrice:#0\n"
          "#nMoney:#0\n"
          "#nLicense:#0\n") );
-   window_addText( wid, iw+20, -60-128-10,
+   window_addText( wid, iw+20, -50-128-10,
          w - (20 + iw + 20 + 90), 160, 0, "txtDDesc", &gl_smallFont, NULL, NULL );
-   window_addText( wid, iw+20, -60-128-10-160,
+   window_addText( wid, iw+20, -50-128-10-160,
          w-(iw+80), 180, 0, "txtDescription",
          &gl_smallFont, NULL, NULL );
 }
@@ -691,7 +691,7 @@ static void map_showOutfitDetail(unsigned int wid, const char* wgtname, int x, i
    (void) y;
    (void) h;
    const Outfit *outfit;
-   char buf[PATH_MAX], buf2[ECON_CRED_STRLEN], buf3[ECON_CRED_STRLEN];
+   char *buf, buf2[ECON_CRED_STRLEN], buf3[ECON_CRED_STRLEN];
    double th;
    int iw;
    double mass;
@@ -713,7 +713,7 @@ static void map_showOutfitDetail(unsigned int wid, const char* wgtname, int x, i
    window_modifyText( wid, "txtDescription", _(outfit->description) );
    credits2str( buf2, outfit->price, 2 );
    credits2str( buf3, player.p->credits, 2 );
-   snprintf( buf, sizeof(buf),
+   asprintf( &buf,
          _("%d\n"
          "\n"
          "%s\n"
@@ -733,11 +733,15 @@ static void map_showOutfitDetail(unsigned int wid, const char* wgtname, int x, i
    window_modifyText( wid, "txtDDesc", buf );
    window_modifyText( wid, "txtOutfitName", _(outfit->name) );
    window_modifyText( wid, "txtDescShort", outfit->desc_short );
-   th = MAX( 128, gl_printHeightRaw( &gl_smallFont, 280, outfit->desc_short ) );
-   window_moveWidget( wid, "txtSDesc", iw+20, -60-th-20 );
-   window_moveWidget( wid, "txtDDesc", iw+20+90, -60-th-20 );
+   th = gl_printHeightRaw( &gl_smallFont, 280, outfit->desc_short );
+   window_resizeWidget( wid, "txtDescShort", 280, th );
+   window_moveWidget( wid, "txtDescShort", iw + 128 + 20, -50 - gl_defFont.h - 20);
+   th = MAX( 128, gl_defFont.h + 20 + th );
+   window_moveWidget( wid, "txtSDesc", iw+20, -50-th-20 );
+   window_moveWidget( wid, "txtDDesc", iw+20+90, -50-th-20 );
    th += gl_printHeightRaw( &gl_smallFont, 280, buf );
-   window_moveWidget( wid, "txtDescription", iw+20, -60-th-40 );
+   window_moveWidget( wid, "txtDescription", iw+20, -50-th-20 /* no more: buf ends with \n. */ );
+   free( buf );
 }
 
 /**
