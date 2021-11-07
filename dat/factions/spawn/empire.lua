@@ -6,6 +6,7 @@ local sadmonisher = ship.get("Empire Admonisher")
 local spacifier   = ship.get("Empire Pacifier")
 local shawking    = ship.get("Empire Hawking")
 local speacemaker = ship.get("Empire Peacemaker")
+local srainmaker  = ship.get("Empire Rainmaker")
 
 -- @brief Spawns a small patrol fleet.
 function spawn_patrol ()
@@ -56,7 +57,9 @@ function spawn_capship ()
    local r = rnd.rnd()
 
    -- Generate the capship
-   if r < 0.7 then
+   if r < 0.1 then
+      scom.addPilot( pilots, srainmaker )
+   elseif r < 0.7 then
       scom.addPilot( pilots, shawking )
    else
       scom.addPilot( pilots, speacemaker )
