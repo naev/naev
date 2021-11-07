@@ -38,7 +38,6 @@ local shark = require "common.shark"
 
 -- Mission constants
 local paypla, paysys = planet.getS("Darkshed")
-local reward = shark.rewards.sh05
 
 function create ()
    --Change here to change the planets and the systems
@@ -56,7 +55,7 @@ function accept()
     "Any FLF ship should do the job. Try hailing them and see if you get a response. If they won't talk, disable and board them so you can force them to listen. Pretty simple, really. Good luck!"]]), {sys=nextsys}))
 
       misn.setTitle(_("The FLF Contact"))
-      misn.setReward(fmt.credits(reward))
+      misn.setReward(fmt.credits(shark.rewards.sh05))
       misn.setDesc(_("Nexus Shipyards is looking to strike a better deal with the FLF."))
       misn.osdCreate(_("The FLF Contact"), {
          _("Hail any FLF ship, or disable and board one if necessary"),
@@ -78,7 +77,7 @@ function land()
    if stage == 1 and planet.cur() == paypla then
       tk.msg(_("Good news"), fmt.f(_([[Smith is clearly pleased with the results. "I have received word that the FLF leaders are indeed interested. Meet me at the bar whenever you're ready to take me to {sys}. And here's your payment."]]), {sys=nextsys}))
       pir.reputationNormalMission(rnd.rnd(2,3))
-      player.pay(reward)
+      player.pay(shark.rewards.sh05)
       shark.addLog( _([[You helped Arnold Smith establish a contact with the FLF. He said to meet you at the bar on Alteris when you're ready to take him to Arandon.]]) )
       misn.finish(true)
    end

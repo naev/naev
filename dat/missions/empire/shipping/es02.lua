@@ -76,15 +76,14 @@ function accept ()
 
    -- Mission details
    misn_stage = 0
-   reward = emp.rewards.es02
    misn.setTitle(_("Empire VIP Rescue"))
-   misn.setReward( fmt.credits(reward) )
+   misn.setReward( fmt.credits( emp.rewards.es02 ) )
    misn.setDesc( fmt.f( _("Rescue the VIP from a transport ship in the {sys} system"), {sys=destsys} ) )
 
    -- Flavour text and mini-briefing
    tk.msg( _("Commander Soldner"), fmt.f( _([[Commander Soldner nods and continues, "We've had reports that a transport vessel came under attack while transporting a VIP. They managed to escape, but the engine ended up giving out in the {sys} system. The ship is now disabled and we need someone to board the ship and rescue the VIP. There have been many FLF ships detected near the sector, but we've managed to organise a Dvaered escort for you.
     "You're going to have to fly to the {sys} system, find and board the transport ship to rescue the VIP, and then fly back. The sector is most likely going to be hot. That's where your Dvaered escorts will come in. Their mission will be to distract and neutralise all possible hostiles. You must not allow the transport ship to be destroyed before you rescue the VIP. His survival is vital."]]), {sys=destsys} ) )
-   tk.msg( _("Commander Soldner"), fmt.f( _([["Be careful with the Dvaered; they can be a bit blunt, and might accidentally destroy the transport ship. If all goes well, you'll be paid {credits} when you return with the VIP. Good luck, pilot."]]), {credits=fmt.credits(reward)} ) )
+   tk.msg( _("Commander Soldner"), fmt.f( _([["Be careful with the Dvaered; they can be a bit blunt, and might accidentally destroy the transport ship. If all goes well, you'll be paid {credits} when you return with the VIP. Good luck, pilot."]]), {credits=fmt.credits(emp.rewards.es02)} ) )
    misn.osdCreate(_("Empire VIP Rescue"), {
       fmt.f(_("Rescue the VIP from a transport ship in the {sys} system"), {sys=destsys}),
    })
@@ -109,7 +108,7 @@ function land ()
          misn.cargoRm(vip)
 
          -- Rewards
-         player.pay(reward)
+         player.pay( emp.rewards.es02 )
          emp.modReputation( 5 ) -- Bump cap a bit
          faction.modPlayerSingle("Empire",5)
          faction.modPlayerSingle("Dvaered",5)

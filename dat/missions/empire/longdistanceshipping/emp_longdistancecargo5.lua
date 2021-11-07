@@ -53,9 +53,8 @@ function accept ()
    misn.accept()
 
    -- Description is visible in OSD and the onboard computer, it shouldn't be too long either.
-   reward = emp.rewards.ldc5
    misn.setTitle(_("Sirius Long Distance Recruitment"))
-   misn.setReward(fmt.credits(reward))
+   misn.setReward( fmt.credits( emp.rewards.ldc5 ) )
    misn.setDesc( _("Deliver a shipping diplomat for the Empire to Madria in the Esker system") )
    misn.osdCreate(_("Sirius Long Distance Recruitment"), {_("Deliver a shipping diplomat for the Empire to Madria in the Esker system")})
    -- Set up the goal
@@ -69,7 +68,7 @@ function land()
 
    if planet.cur() == targetworld then
          misn.cargoRm( person )
-         player.pay( reward )
+         player.pay( emp.rewards.ldc5 )
          -- More flavour text
          tk.msg( _("Mission Accomplished"), _([[You drop the diplomat off on Madria, and she hands you a credit chip. Lieutenant Czesc said to look for him in an Empire bar for some paperwork. Bureaucracy at its finest.]]) )
          faction.modPlayerSingle( "Empire",3 )

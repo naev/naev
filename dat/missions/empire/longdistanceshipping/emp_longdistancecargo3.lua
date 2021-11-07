@@ -54,9 +54,8 @@ function accept ()
    misn.accept()
 
    -- Description is visible in OSD and the onboard computer, it shouldn't be too long either.
-   reward = emp.rewards.ldc3
    misn.setTitle(_("Za'lek Long Distance Recruitment"))
-   misn.setReward(fmt.credits(reward))
+   misn.setReward( fmt.credits( emp.rewards.ldc3 ) )
    misn.setDesc( misn_desc )
    misn.osdCreate(_("Za'lek Long Distance Recruitment"), {misn_desc})
    -- Set up the goal
@@ -70,7 +69,7 @@ function land()
 
    if planet.cur() == targetworld then
          misn.cargoRm( person )
-         player.pay( reward )
+         player.pay( emp.rewards.ldc3 )
          -- More flavour text
          tk.msg( _("Mission Accomplished"), _([[You drop the diplomat off on Outbound Station, and she hands you a credit chip. Lieutenant Czesc mentioned more work, so you figure you'll run into him at a bar again soon.]]) )
          faction.modPlayerSingle( "Empire",3 )

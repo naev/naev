@@ -61,14 +61,13 @@ function accept ()
 
    -- Mission details
    misn_stage = 0
-   reward = emp.rewards.es01
    misn.setTitle(_("Empire Shipping Delivery"))
-   misn.setReward( fmt.credits(reward) )
+   misn.setReward( fmt.credits( emp.rewards.es01 ) )
    misn.setDesc( fmt.f(_("Pick up a package at {pnt} in the {sys} system"), {pnt=pickup, sys=pickupsys}) )
 
    -- Flavour text and mini-briefing
    tk.msg( _("Commander Soldner"), fmt.f( _([[Commander Soldner begins, "We have an important package that we must take from {pickup_pnt} in the {pickup_sys} system to {dropoff_pnt} in the {dropoff_sys} system. We have reason to believe that it is also wanted by external forces.
-    "The plan is to send an advance convoy with guards to make the run in an attempt to confuse possible enemies. You will then go in and do the actual delivery by yourself. This way we shouldn't arouse suspicion. You are to report here when you finish delivery and you'll be paid {credits}."]]), {pickup_pnt=pickup, pickup_sys=pickupsys, dropoff_pnt=dest, dropoff_sys=destsys, credits=fmt.credits(reward)} ) )
+    "The plan is to send an advance convoy with guards to make the run in an attempt to confuse possible enemies. You will then go in and do the actual delivery by yourself. This way we shouldn't arouse suspicion. You are to report here when you finish delivery and you'll be paid {credits}."]]), {pickup_pnt=pickup, pickup_sys=pickupsys, dropoff_pnt=dest, dropoff_sys=destsys, credits=fmt.credits(emp.rewards.es01)} ) )
    misn.osdCreate(_("Empire Shipping Delivery"), {
       fmt.f(_("Pick up a package at {pnt} in the {sys} system"), {pnt=pickup, sys=pickupsys}),
    })
@@ -125,7 +124,7 @@ function land ()
    elseif landed == ret and misn_stage == 2 then
 
       -- Rewards
-      player.pay(reward)
+      player.pay( emp.rewards.es01 )
       faction.modPlayerSingle("Empire",5);
 
       -- Flavour text

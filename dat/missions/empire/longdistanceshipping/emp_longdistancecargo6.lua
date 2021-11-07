@@ -55,9 +55,8 @@ function accept ()
    misn.accept()
 
    -- Description is visible in OSD and the onboard computer, it shouldn't be too long either.
-   reward = emp.rewards.ldc6
    misn.setTitle(_("Empire Long Distance Recruitment"))
-   misn.setReward(fmt.credits(reward))
+   misn.setReward( fmt.credits( emp.rewards.ldc6 ) )
    misn.setDesc( _("Deliver Lieutenant Czesc to Halir in the Gamma Polaris system") )
    misn.osdCreate(_("Empire Long Distance Recruitment"), {_("Deliver Lieutenant Czesc to Halir in the Gamma Polaris system")})
    -- Set up the goal
@@ -71,7 +70,7 @@ function land()
 
    if planet.cur() == targetworld then
          misn.cargoRm( person )
-         player.pay( reward )
+         player.pay( emp.rewards.ldc6 )
          -- More flavour text
          tk.msg( _("Mission Accomplished"), _([[Lieutenant Czesc exits your ship and takes a deep breath of air. "I love the smell of bureaucracy in the morning." He shakes your hand. "Thanks for all your help, Captain! Follow me to headquarters and we can do some paperwork to get you all set up. After that you should start to receive long-distance shipping missions. They pay better than our regular shipping missions, but often require traveling longer distances and into territory controlled by other factions. You'll probably be more likely to see them on the edges of Empire space where cargo is ready to head out to other factions. Again, I can't thank you enough! The Empire does not quickly forget such dedication."]]) )
          faction.modPlayerSingle( "Empire",3 )

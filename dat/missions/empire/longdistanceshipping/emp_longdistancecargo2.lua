@@ -53,9 +53,8 @@ function accept ()
    misn.accept()
 
    -- Description is visible in OSD and the onboard computer, it shouldn't be too long either.
-   reward = emp.rewards.ldc2
    misn.setTitle(_("Dvaered Long Distance Recruitment"))
-   misn.setReward(fmt.credits(reward))
+   misn.setReward( fmt.credits( emp.rewards.ldc2 ) )
    misn.setDesc( _("Deliver a shipping diplomat for the Empire to Praxis in the Ogat system") )
    misn.osdCreate(_("Dvaered Long Distance Recruitment"), {_("Deliver a shipping diplomat for the Empire to Praxis in the Ogat system")})
    -- Set up the goal
@@ -69,7 +68,7 @@ function land()
 
    if planet.cur() == targetworld then
          misn.cargoRm( person )
-         player.pay( reward )
+         player.pay( emp.rewards.ldc2 )
          -- More flavour text
          tk.msg( _("Mission Accomplished"), _([[You drop the bureaucrat off on Praxis, and he hands you a credit chip. You remember Lieutenant Czesc told you to look for him on Empire controlled planets after you finish.]]) )
          faction.modPlayerSingle( "Empire",3 )

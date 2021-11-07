@@ -64,9 +64,8 @@ function accept ()
    misn.accept()
 
    -- Mission details
-   reward = emp.rewards.cargo00
    misn.setTitle(_("Empire Recruitment"))
-   misn.setReward( fmt.credits(reward) )
+   misn.setReward( fmt.credits( emp.rewards.cargo00 ) )
    misn.setDesc( fmt.f(_("Deliver some parcels for the Empire to {pnt} in {sys}."), {pnt=dest, sys=sys}) )
 
    -- Flavour text and mini-briefing
@@ -85,7 +84,7 @@ function land()
    local landed = planet.cur()
    if landed == dest then
       if misn.cargoRm(parcels) then
-         player.pay(reward)
+         player.pay( emp.rewards.cargo00 )
          -- More flavour text
          tk.msg(_("Mission Accomplished"), fmt.f( _([[You deliver the parcels to the Empire Shipping station at the {pnt} spaceport. Afterwards, they make you do some paperwork to formalise your participation with the Empire. They tell you to keep an eye out for missions labeled ES, which stands for Empire Shipping, in the mission computer, to which you now have access.
     You aren't too sure of what to make of your encounter with the Empire. Only time will tell...]]), {pnt=dest} ))

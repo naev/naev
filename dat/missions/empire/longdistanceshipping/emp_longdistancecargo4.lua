@@ -53,9 +53,8 @@ function accept ()
    misn.accept()
 
    -- Description is visible in OSD and the onboard computer, it shouldn't be too long either.
-   reward = emp.rewards.ldc4
    misn.setTitle(_("Frontier Long Distance Recruitment"))
-   misn.setReward(fmt.credits(reward))
+   misn.setReward( fmt.credits( emp.rewards.ldc4 ) )
    misn.setDesc( misn_desc )
    misn.osdCreate(_("Frontier Alliance Long Distance Recruitment"), {misn_desc})
    -- Set up the goal
@@ -69,7 +68,7 @@ function land()
 
    if planet.cur() == targetworld then
          misn.cargoRm( person )
-         player.pay( reward )
+         player.pay( emp.rewards.ldc4 )
          -- More flavour text
          tk.msg( _("Mission Accomplished"), _([[You deliver the diplomat to The Frontier Council, and she hands you a credit chip. Thankfully, Lieutenant Czesc mentioned only needing your assistance again for one more mission. This last bureaucrat refused to stay in her quarters, preferring to hang out on the bridge and give you the ins and outs of Empire bureaucracy. Only your loyalty to the Empire stopped you from sending her out into the vacuum of space.]]) )
          faction.modPlayerSingle( "Empire",3 )
