@@ -89,13 +89,13 @@ function takeoff ()
    local _dvdist, dvface = (zlpos-dvpos):polar()
    local _zldist, zlface = (dvpos-zlpos):polar()
    dv = pilot.add("Dvaered Phalanx", "dv_thug", dvpos, _("Dvaered Hooligan"), {ai="dvaered"} )
-   local mem = dv:memory()
-   mem.doscans = false
+   local aimem = dv:memory()
+   aimem.doscans = false
    dv:setDir( dvface )
    dv:setNoDisable( true )
    zl = pilot.add("Za'lek Sting", "zl_thug", zlpos, _("Za'lek Belligerent"), {ai="zalek"} )
-   mem = zl:memory()
-   mem.doscans = false
+   aimem = zl:memory()
+   aimem.doscans = false
    zl:setDir( zlface )
    zl:setNoDisable( true )
    dv:control()

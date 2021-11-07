@@ -236,8 +236,8 @@ function enter ()
       rampant:intrinsicSet( "shield_regen_mod", -90 )
       rampant:intrinsicSet( "stress_dissipation", -90 )
       rampant:setHilight()
-      local mem = rampant:memory()
-      mem.comm_no = _("No response.")
+      local aimem = rampant:memory()
+      aimem.comm_no = _("No response.")
       hook.pilot( rampant, "disable", "disable" )
       hook.pilot( rampant, "board", "board" )
       hook.pilot( rampant, "death", "death" )
@@ -408,10 +408,10 @@ function timer_pirate ()
          p:setHilight()
          p:setVisplayer()
          p:intrinsicSet( "fwd_damage", -75 )
-         local mem = p:memory()
-         mem.allowbribe = true
-         mem.bribe_base = 100
-         mem.vulnignore = true -- Ignore vulnerability
+         local aimem = p:memory()
+         aimem.allowbribe = true
+         aimem.bribe_base = 100
+         aimem.vulnignore = true -- Ignore vulnerability
          table.insert( enemies, p )
       end
       pp:comm(fmt.f(_([[Nelly: "Wait, are those pirates coming our way?"]])))

@@ -286,8 +286,8 @@ function wave_round_setup ()
          p:intrinsicSet("launch_damage",100)
          p:intrinsicSet("fbay_damage",  100)
       end
-      local mem = p:memory()
-      mem.comm_no = _("No response.") -- Don't allow talking
+      local aimem = p:memory()
+      aimem.comm_no = _("No response.") -- Don't allow talking
       hook.pilot( p, "disable", "p_disabled" )
       hook.pilot( p, "death", "p_death" )
       return p

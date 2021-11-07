@@ -267,8 +267,8 @@ function enter ()
          edata.pilot:fillAmmo()
          edata.pilot:setFriendly()
          -- This should be set by the player and/or part of the pilot's innate characteristics
-         local mem = edata.pilot:memory()
-         mem.atk_kill = false
+         local aimem = edata.pilot:memory()
+         aimem.atk_kill = false
 
          local temp = 250
          local armor = 100

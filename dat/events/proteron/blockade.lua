@@ -37,10 +37,10 @@ local function spawn_fleet( pos )
    for k,s in ipairs(ships) do
       local leader = plts[1]
       local p = pilot.add( s, "Proteron", pos, nil, {ai="guard"} )
-      local mem = p:memory()
-      mem.enemyclose    = 10e3
-      mem.guarddodist   = 10e3
-      mem.guardreturndist = 15e3
+      local aimem = p:memory()
+      aimem.enemyclose    = 10e3
+      aimem.guarddodist   = 10e3
+      aimem.guardreturndist = 15e3
       p:setHostile(true) -- TODO change this when something can make them non-hostile
       if leader then
          p:setLeader( leader )
