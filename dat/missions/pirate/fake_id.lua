@@ -123,7 +123,7 @@ end
 
 
 function player_scanned( _pp, scanner )
-   player.msg(_("#rYourr fake ID has been detected and your cover has been blown!"))
+   player.msg(_("#rYour fake ID has been detected and your cover has been blown!"))
    scanner:setHostile(true)
    restore_standing()
    misn.finish( false )
