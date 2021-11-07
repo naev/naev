@@ -588,10 +588,8 @@ static int map_system_mouse( unsigned int wid, SDL_Event* event, double mx, doub
 static void map_system_array_update( unsigned int wid, const char* str )
 {
    int i;
-   Outfit *outfit;
    Ship *ship;
-   double mass;
-   char buf_price[ECON_CRED_STRLEN], buf_license[STRMAX_SHORT];
+   char buf_price[ECON_CRED_STRLEN], buf_license[STRMAX_SHORT], buf_mass[ECON_MASS_STRLEN];
 
    i = toolkit_getImageArrayPos( wid, str );
    if (i < 0) {
@@ -599,7 +597,9 @@ static void map_system_array_update( unsigned int wid, const char* str )
       return;
    }
    if ((strcmp( str, MAPSYS_OUTFITS ) == 0)) {
-      outfit = cur_planet_sel_outfits[i];
+      Outfit *outfit = cur_planet_sel_outfits[i];
+      size_t l = 0;
+      double mass = outfit->mass;
 
       /* new text */
       price2str( buf_price, outfit->price, player.p->credits, 2 );
@@ -611,26 +611,21 @@ static void map_system_array_update( unsigned int wid, const char* str )
       else
          snprintf( buf_license, sizeof( buf_license ), "#r%s#0", _(outfit->license) );
 
-      mass = outfit->mass;
       if ( (outfit_isLauncher(outfit) || outfit_isFighterBay(outfit)) &&
           (outfit_ammo(outfit) != NULL) ) {
          mass += outfit_amount( outfit ) * outfit_ammo( outfit )->mass;
       }
-      snprintf( infobuf, sizeof(infobuf),
-                 _("%s\n\n%s\n\n%s\n\n"
-                   "#nOwned:#0 %d    #nSlot: #0%s    #nSize: #0%s\n"
-                   "#nMass:#0    %.0f tonnes     #nPrice:#0 %s\n"
-                   "#nLicense:#0 %s"),
-                 _(outfit->name),
-                 _(outfit->description),
-                 outfit->desc_short,
-                 player_outfitOwned( outfit ),
-                 _(outfit_slotName( outfit )),
-                 _(outfit_slotSize( outfit )),
-                 mass,
-                 buf_price,
-                 buf_license );
+      tonnes2str( buf_mass, (int)round( mass ) );
 
+      l += scnprintf( &infobuf[l], sizeof(infobuf)-l, "%s\n\n", _(outfit->name) );
+      l += scnprintf( &infobuf[l], sizeof(infobuf)-l, "%s\n\n", _(outfit->description) );
+      l += scnprintf( &infobuf[l], sizeof(infobuf)-l, "%s\n\n", outfit->desc_short );
+      l += scnprintf( &infobuf[l], sizeof(infobuf)-l, "%s %d    ", _("#nOwned:#0"), player_outfitOwned( outfit ) );
+      l += scnprintf( &infobuf[l], sizeof(infobuf)-l, "%s%s    ", _("#nSlot: #0"), _(outfit_slotName( outfit )) );
+      l += scnprintf( &infobuf[l], sizeof(infobuf)-l, "%s%s\n", _("#nSize: #0"), _(outfit_slotSize( outfit )) );
+      l += scnprintf( &infobuf[l], sizeof(infobuf)-l, "%s    %s     ", _("#nMass:#0"), buf_mass );
+      l += scnprintf( &infobuf[l], sizeof(infobuf)-l, "%s %s\n", _("#nPrice:#0"), buf_price );
+      l += scnprintf( &infobuf[l], sizeof(infobuf)-l, "%s %s", _("#nLicense:#0"), buf_license );
    }
    else if ((strcmp( str, MAPSYS_SHIPS ) == 0)) {
       ship = cur_planet_sel_ships[i];

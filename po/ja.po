@@ -82276,28 +82276,29 @@ msgstr "船の販売 : あり"
 msgid "This system does not sell ships"
 msgstr "船の販売 : なし"
 
-#: src/map_system.c:620
-#, c-format
-msgid ""
-"%s\n"
-"\n"
-"%s\n"
-"\n"
-"%s\n"
-"\n"
-"#nOwned:#0 %d    #nSlot: #0%s    #nSize: #0%s\n"
-"#nMass:#0    %.0f tonnes     #nPrice:#0 %s\n"
-"#nLicense:#0 %s"
-msgstr ""
-"%s\n"
-"\n"
-"%s\n"
-"\n"
-"%s\n"
-"\n"
-"#n所有数 :#0 %d    #nスロット : #0%s    #n大きさ : #0%s\n"
-"#n質量 :#0    %.0fトン     #n価格 :#0 %s\n"
-"#n免許 :#0 %s"
+#: src/map_system.c:623
+msgid "#nOwned:#0"
+msgstr "#n所有数 :#0"
+
+#: src/map_system.c:624
+msgid "#nSlot: #0"
+msgstr "#nスロット : #0"
+
+#: src/map_system.c:625
+msgid "#nSize: #0"
+msgstr "#n大きさ : #0"
+
+#: src/map_system.c:626
+msgid "#nMass:#0"
+msgstr "#n質量 :#0"
+
+#: src/map_system.c:627
+msgid "#nPrice:#0 %s"
+msgstr "#n価格 :#0 %s"
+
+#: src/map_system.c:628
+msgid "#nLicense:#0"
+msgstr "#n免許 :#0"
 
 #: src/map_system.c:649
 #, c-format
