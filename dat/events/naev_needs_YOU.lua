@@ -51,8 +51,9 @@ function create()
 
       -- Create an eerie atmosphere by cutting off the background music and substituting something spooky
       --disabled until difficulties with the music API are sorted out
+      local background_music
       if music.isPlaying() then
-         background_music, music_played = music.current()
+         background_music = music.current()
          music.stop()
       end
       music.load( "sirius1")

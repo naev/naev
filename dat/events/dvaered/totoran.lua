@@ -16,6 +16,9 @@ local vn = require 'vn'
 local portrait = require 'portrait'
 local gauntlet = require 'common.gauntlet'
 
+-- Unsaved global tables
+local bgnpcs
+
 local spectator_names = {
    _("Spectator"),
    _("Aficionado"),
@@ -91,7 +94,7 @@ function create()
    end
 
    -- Custom NPCs
-   npc_guide = evt.npcAdd( "approach_guide", gauntlet.guide.name, gauntlet.guide.portrait, gauntlet.guide.desc, guide_priority )
+   evt.npcAdd( "approach_guide", gauntlet.guide.name, gauntlet.guide.portrait, gauntlet.guide.desc, guide_priority )
 
    hook.takeoff( "leave" )
 end

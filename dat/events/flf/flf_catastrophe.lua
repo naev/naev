@@ -20,6 +20,9 @@ local flf = require "missions.flf.flf_common"
 local fmt = require "format"
 local lmisn = require "lmisn"
 
+-- Unsaved global tables
+local flf_ships
+
 -- Event constants
 local emp_srcsys = system.get( "Arcanis" )
 local emp_shptypes = {
@@ -35,7 +38,6 @@ function create ()
    end
 
    found_thurion = false
-   player_attacks = 0
 
    bar_hook = hook.land( "enter_bar", "bar" )
    abort_hook = hook.enter( "takeoff_abort" )

@@ -294,6 +294,9 @@ local custom_events = {
    },
 }
 
+local discover_trigger, textinit -- function forward-declaration
+local sfx, textcanvas, textshader, texttimer -- non-persistent state
+
 local function sfxDiscovery()
    --sfx = audio.newSource( 'snd/sounds/jingles/success.ogg' )
    sfx = audio.newSource( 'snd/sounds/jingles/victory.ogg' )
@@ -356,8 +359,6 @@ function heartbeat( event )
       hook.timer( 0.5, "heartbeat", event )
    end
 end
-
-local textinit -- function forward-declaration
 
 function discover_trigger( event )
    local msg  = string.format(_("You found #o%s - %s!"),event.title,event.subtitle)

@@ -15,6 +15,13 @@ local portrait = require "portrait"
 local vn = require 'vn'
 local fmt = require "format"
 
+-- Chance of a jump point message showing up. As this gradually goes
+-- down, it is replaced by lore messages. See spawnNPC function.
+local jm_chance_min = 0
+local jm_chance_max = 0.25
+-- State. Nothing persists.
+local jm_chance, msg_combined, npcs, seltargets
+
 -- Factions which will NOT get generic texts if possible.  Factions
 -- listed here not spawn generic civilian NPCs or get aftercare texts.
 -- Meant for factions which are either criminal (FLF, Pirate) or unaware
@@ -31,7 +38,7 @@ local nongeneric_factions = {
    "Proteron"
 }
 
--- List to treat special factions diffferently
+-- List to treat special factions differently
 local override_list = {
    -- Treat pirate clans the same (at least for now)
    ["Wild Ones"] = "Pirate",
@@ -473,7 +480,7 @@ local function spawnNPC()
    end
    local npcdata = {name = npcname, msg = msg, func = func, image = portrait.getFullPath(image)}
 
-   id = evt.npcAdd("talkNPC", npcname, image, desc, 10)
+   local id = evt.npcAdd("talkNPC", npcname, image, desc, 10)
    npcs[id] = npcdata
 end
 
@@ -488,10 +495,6 @@ function create()
       evt.finish(false)
    end
 
-   -- Chance of a jump point message showing up. As this gradually goes
-   -- down, it is replaced by lore messages. See spawnNPC function.
-   jm_chance_min = 0
-   jm_chance_max = 0.25
    jm_chance = var.peek( "npc_jm_chance" ) or jm_chance_max
 
    local num_npc = rnd.rnd(1, 5)

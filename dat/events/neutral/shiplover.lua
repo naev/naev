@@ -20,6 +20,8 @@ local shiplover_portrait= "shiplover.webp"
 local shiplover_image   = "shiplover.webp"
 local shiplover_priority= 5
 
+local question_data, reward -- Non-persistent state
+
 local function getNUnique( t, n )
    local o = {}
    for k,v in ipairs(t) do
@@ -143,7 +145,7 @@ local faction_list = {
 }
 local faction_ships = merge_tables( faction_list )
 
-function gen_question_ship_class( hard )
+local function gen_question_ship_class( hard )
    -- Create question
    local ship_list
    if hard then
@@ -159,7 +161,7 @@ function gen_question_ship_class( hard )
    return { type="ship_class", question=question, options=options, answer=answer }
 end
 
-function gen_question_ship_guess( hard )
+local function gen_question_ship_guess( hard )
    -- Create question
    local ship_list
    if hard then
@@ -174,7 +176,7 @@ function gen_question_ship_guess( hard )
    return { type="ship_guess", question=question, options=options, answer=answer }
 end
 
-function gen_question( difficulty )
+local function gen_question( difficulty )
    local r = rnd.rnd()
    if difficulty == 1 then
       if r < 0.6 then
@@ -276,7 +278,7 @@ function create ()
    end
 
    -- Generate the question
-   question = gen_question( difficulty )
+   question_data = gen_question( difficulty )
 
    -- Create the log if necessary.
    shiplog.create( "shiplover", _("Ship Quiz"), _("Neutral") )
@@ -329,6 +331,7 @@ end
 
 function approach_shiplover ()
    local remove_npc = false
+   local restore_vn
    local first_meet = not var.peek("shiplover_met")
 
    vn.reset()
@@ -402,12 +405,13 @@ The lift up their toy Lancelot. You can barely make out a golden Efreeti etched 
    vn.done()
 
    vn.label("play_yes")
-   if question.type == "ship_class" then
-      sl(_([["Great! So here it goes. Listen carefully."]] .. "\n\n" .. question.question))
-   elseif question.type == "ship_guess" then
+   if question_data.type == "ship_class" then
+      sl(_([["Great! So here it goes. Listen carefully."]] .. "\n\n" .. question_data.question))
+   elseif question_data.type == "ship_guess" then
       local nw, _nh = naev.gfx.dim()
-      local shipgfx = lg.newImage( ship.get(question.answer):gfxComm() )
+      local shipgfx = lg.newImage( ship.get(question_data.answer):gfxComm() )
       local shipchar = vn.Character.new( "ship", {image=shipgfx, pos="left"} )
+      local slpos, slnewpos
       local function runinit ()
          slpos = sl.offset
          slnewpos = 0.75
@@ -419,7 +423,7 @@ The lift up their toy Lancelot. You can barely make out a golden Efreeti etched 
       vn.func( function ()
          vn.menu_x = math.min( -1, 500 - nw/2 )
       end )
-      sl(_([["Great! So take a look at this ship and listen carefully."]] .. "\n\n" .. question.question))
+      sl(_([["Great! So take a look at this ship and listen carefully."]] .. "\n\n" .. question_data.question))
       function restore_vn ()
          vn.disappear( shipchar )
          vn.animation( 1, function( alpha, _dt, _params )
@@ -431,13 +435,13 @@ The lift up their toy Lancelot. You can barely make out a golden Efreeti etched 
    -- Show choices
    vn.menu( function ()
       local opts = {}
-      local qopts = rnd.permutation( question.options )
+      local qopts = rnd.permutation( question_data.options )
       for k,v in ipairs(qopts) do
          table.insert( opts, { v, v } )
       end
       return opts
    end, function( key )
-      if key==question.answer then
+      if key==question_data.answer then
          vn.jump("answer_right")
       else
          vn.jump("answer_wrong")
@@ -447,7 +451,7 @@ The lift up their toy Lancelot. You can barely make out a golden Efreeti etched 
    vn.label("answer_right")
    if restore_vn then restore_vn() end
    vn.func( function ()
-      increment_var( "shiplover_quiz_right_"..question.type )
+      increment_var( "shiplover_quiz_right_"..question_data.type )
    end )
    vn.sfxBingo()
    -- Give reward
@@ -460,12 +464,12 @@ The lift up their toy Lancelot. You can barely make out a golden Efreeti etched 
    if restore_vn then restore_vn() end
    vn.func( function ()
       shiplog.append( "shiplover", _("You got the Ship Enthusiast's quiz wrong.") )
-      increment_var( "shiplover_quiz_wrong_"..question.type )
+      increment_var( "shiplover_quiz_wrong_"..question_data.type )
    end )
    -- TODO wrong sound
    sl(fmt.f(_([[They look smug as they exclaim "Wrong!".
 "The correct answer was #g{answer}#0! Better luck next time."
-They take their leave.]]), question))
+They take their leave.]]), question_data))
 
    vn.label("remove_npc")
    vn.func( function () remove_npc = true end )

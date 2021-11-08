@@ -14,6 +14,8 @@
 --Event for kidnapped mission.
 --]]
 
+local panma, yohail -- Non-persistent state
+
 --Create Mom and Dad in their spaceship, and have them come from the planet Brooks in Arcturus system, following the player.
 function create ()
     local pnt = planet.get("Brooks")

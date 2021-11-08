@@ -24,6 +24,7 @@
 local fmt = require "format"
 
 local shipname = _("August")
+local bctimer, derelict, timer_delay -- Non-persistent state
 
 function create ()
    -- Make sure system isn't claimed, but we don't claim it

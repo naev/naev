@@ -19,6 +19,9 @@ local fmt = require 'format'
 local der = require 'common.derelict'
 local vn = require 'vn'
 
+local badevent, goodevent, missionevent, neutralevent -- forward-declared functions
+local derelict -- Non-persistent state
+
 local mission_list = {
    --[[
    {
@@ -88,7 +91,7 @@ function create ()
    hook.land("destroyevent")
 end
 
-function derelict_msg( title, text )
+local function derelict_msg( title, text )
    vntk.msg( title, text, {
       pre = function ()
          vn.music( der.sfx.ambient )

@@ -43,10 +43,10 @@ function begin ()
    hook.rm(jumphook)
    hook.rm(landhook)
 
-   thissystem = system.cur()
+   local thissystem = system.cur()
 
    -- thissystem and source_system must be adjacent (for those who use player.teleport)
-   areAdj = false
+   local areAdj = false
    for _,s in ipairs( source_system:adjacentSystems() ) do
       if thissystem == s then areAdj = true end
    end
