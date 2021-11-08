@@ -16,17 +16,15 @@
 --[[
 
     This is the first of many planned eye candy cinematics.
-    In this one, there will be a battle between the Dvaered and the FLF in the Doranthex system.
+    In this one, there will be a battle between the Dvaered and the FLF in the Tuoladis system.
 
 ]]--
 
+local fleet = require "fleet"
 
--- Unsaved global tables
-local flfguys, dvaeredguys
+local flfwave, dvaeredwave -- Non-persistent state
 
-local articles=
-{
-
+local articles = {
 {
    "Empire",
    _("Dvaered forces engaged in combat with small terrorist group"),
@@ -62,13 +60,9 @@ function create ()
     pilot.clear()
     pilot.toggleSpawn(false)
 
-    flfguys = {}
-    dvaeredguys = {}
     flfwave = 1
     dvaeredwave = 1
-
     hook.timer(3.0, "FLFSpawn")
-
     hook.timer(12.0, "DvaeredSpawn")
 
     news.add(articles)
@@ -79,15 +73,9 @@ end
 
 function FLFSpawn ()
     local source_system = system.get("Zacron")
+    local ships = { "Vendetta", "Vendetta", "Vendetta", "Vendetta", "Pacifier", "Lancelot", "Lancelot" }
 
-    flfguys[flfwave] = {}
-    flfguys[flfwave][1] = pilot.add( "Vendetta", "FLF", source_system )
-    flfguys[flfwave][2] = pilot.add( "Vendetta", "FLF", source_system )
-    flfguys[flfwave][3] = pilot.add( "Vendetta", "FLF", source_system )
-    flfguys[flfwave][4] = pilot.add( "Vendetta", "FLF", source_system )
-    flfguys[flfwave][5] = pilot.add( "Pacifier", "FLF", source_system )
-    flfguys[flfwave][6] = pilot.add( "Lancelot", "FLF", source_system )
-    flfguys[flfwave][7] = pilot.add( "Lancelot", "FLF", source_system )
+    fleet.add( 1, ships, "FLF", source_system )
 
     flfwave = flfwave + 1
     if flfwave <=5 then
@@ -97,19 +85,13 @@ end
 
 function DvaeredSpawn ()
     local source_system = system.get("Doranthex")
+    local ships = { "Dvaered Vendetta", "Dvaered Vendetta", "Dvaered Vendetta", "Dvaered Ancestor", "Dvaered Ancestor",
+                    "Dvaered Vigilance", "Dvaered Vigilance", "Dvaered Goddard" }
 
-    dvaeredguys[dvaeredwave] = {}
-    dvaeredguys[dvaeredwave][1] = pilot.add( "Dvaered Vendetta", "Dvaered", source_system )
-    dvaeredguys[dvaeredwave][2] = pilot.add( "Dvaered Vendetta", "Dvaered", source_system )
-    dvaeredguys[dvaeredwave][3] = pilot.add( "Dvaered Vendetta", "Dvaered", source_system )
-    dvaeredguys[dvaeredwave][4] = pilot.add( "Dvaered Ancestor", "Dvaered", source_system )
-    dvaeredguys[dvaeredwave][5] = pilot.add( "Dvaered Ancestor", "Dvaered", source_system )
-    dvaeredguys[dvaeredwave][6] = pilot.add( "Dvaered Vigilance", "Dvaered", source_system )
-    dvaeredguys[dvaeredwave][7] = pilot.add( "Dvaered Vigilance", "Dvaered", source_system )
-    dvaeredguys[dvaeredwave][8] = pilot.add( "Dvaered Goddard", "Dvaered", source_system )
+    fleet.add( 1, ships, "Dvaered", source_system )
 
     dvaeredwave = dvaeredwave + 1
-    if dvaeredwave <=5 then
+    if dvaeredwave <= 5 then
         hook.timer(3.0, "DvaeredSpawn")
     end
 end
