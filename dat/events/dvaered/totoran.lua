@@ -91,7 +91,7 @@ function create()
    end
 
    -- Custom NPCs
-   npc_guide = evt.npcAdd( "approach_guide", gauntlet.guide.name, gauntlet.guide.portrait, gauntlet.guide.desc, guide_priority )
+   evt.npcAdd( "approach_guide", gauntlet.guide.name, gauntlet.guide.portrait, gauntlet.guide.desc, guide_priority )
 
    hook.takeoff( "leave" )
 end

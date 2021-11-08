@@ -33,7 +33,6 @@ function create ()
    end
 
    -- Create a Vendetta who hails the player after a bit
-   hail_time = nil
    vendetta = pilot.add( "Vendetta", "Four Winds", nil, _("Four Winds Vendetta"), {ai="trader"} )
    vendetta:control()
    vendetta:follow(player.pilot())

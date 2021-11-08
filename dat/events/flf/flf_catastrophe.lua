@@ -35,7 +35,6 @@ function create ()
    end
 
    found_thurion = false
-   player_attacks = 0
 
    bar_hook = hook.land( "enter_bar", "bar" )
    abort_hook = hook.enter( "takeoff_abort" )
