@@ -19,6 +19,8 @@ local fmt = require "format"
 -- down, it is replaced by lore messages. See spawnNPC function.
 local jm_chance_min = 0
 local jm_chance_max = 0.25
+-- State. Nothing persists.
+local jm_chance, msg_combined, npcs, seltargets
 
 -- Factions which will NOT get generic texts if possible.  Factions
 -- listed here not spawn generic civilian NPCs or get aftercare texts.
