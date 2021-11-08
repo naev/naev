@@ -17,7 +17,7 @@
 --]]
 
 function create()
-   delay = rnd.uniform(10.0, 40.0)
+   local delay = rnd.uniform(10.0, 40.0)
    hook.timer(delay, "startMission")
    hook.land("cleanup")
    hook.jumpout("cleanup")

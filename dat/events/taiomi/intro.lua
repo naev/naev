@@ -21,6 +21,8 @@
 local vn = require 'vn'
 local taiomi = require 'common.taiomi'
 
+local drones_create -- Forward-declared function
+drone_faction = "Independent" -- Constant
 
 --[[
 -- Event states:
@@ -31,8 +33,6 @@ local taiomi = require 'common.taiomi'
 evt_state = 0
 
 function create ()
-   drone_faction = "Independent"
-
    hook.enter("enter")
    hook.land("land")
 
