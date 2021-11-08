@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # This file generates safe lanes
 
 # TODO the presence calculation is not the same as the current Naev
