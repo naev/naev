@@ -23,6 +23,9 @@ local lg = require 'love.graphics'
 local window = require 'love.window'
 --local love_shaders = require 'love_shaders'
 
+-- Unsaved global tables
+local npc_patrons
+
 -- NPC Stuff
 local gambling_priority = 3
 local important_npc_priority = 4

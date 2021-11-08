@@ -22,6 +22,9 @@ local portrait = require "portrait"
 local pir = require "common.pirate"
 local pilotname = require "pilotname"
 
+-- Unsaved global tables
+local npcs
+
 local logidstr = "log_hiredescort"
 
 local npctext = {}

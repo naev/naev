@@ -17,6 +17,8 @@ require "proximity"
 local fmt = require "format"
 local formation = require "formation"
 
+-- Unsaved global tables
+local attAttHook, defAttHook
 
 function create ()
    source_system = system.cur()

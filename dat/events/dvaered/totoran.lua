@@ -16,6 +16,9 @@ local vn = require 'vn'
 local portrait = require 'portrait'
 local gauntlet = require 'common.gauntlet'
 
+-- Unsaved global tables
+local bgnpcs
+
 local spectator_names = {
    _("Spectator"),
    _("Aficionado"),

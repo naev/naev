@@ -20,6 +20,9 @@ local flf = require "missions.flf.flf_common"
 local fmt = require "format"
 local lmisn = require "lmisn"
 
+-- Unsaved global tables
+local flf_ships
+
 -- Event constants
 local emp_srcsys = system.get( "Arcanis" )
 local emp_shptypes = {

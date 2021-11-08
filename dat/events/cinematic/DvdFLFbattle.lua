@@ -21,6 +21,9 @@
 ]]--
 
 
+-- Unsaved global tables
+local flfguys, dvaeredguys
+
 local articles=
 {
 
