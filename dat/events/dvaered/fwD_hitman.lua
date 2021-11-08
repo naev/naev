@@ -26,10 +26,10 @@ function create ()
 end
 
 function begin ()
-   thissystem = system.cur()
+   local thissystem = system.cur()
 
    -- thissystem and source_system must be adjacent (for those who use player.teleport)
-   areAdj = false
+   local areAdj = false
    for _,s in ipairs( source_system:adjacentSystems() ) do
       if thissystem == s then areAdj = true end
    end
@@ -102,7 +102,7 @@ end
 
 -- Player is attacked: remind what to do
 function playerAttacked()
-   omsg = player.omsgAdd(_("You are being attacked! You may get information from your attacker if you catch them alive!"), 5, 50)
+   player.omsgAdd(_("You are being attacked! You may get information from your attacker if you catch them alive!"), 5, 50)
    hook.rm(atthook)
 end
 

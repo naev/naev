@@ -75,7 +75,7 @@ function create ()
 end
 
 function FLFSpawn ()
-    source_system = system.get("Zacron")
+    local source_system = system.get("Zacron")
 
     flfguys[flfwave] = {}
     flfguys[flfwave][1] = pilot.add( "Vendetta", "FLF", source_system )
@@ -93,7 +93,7 @@ function FLFSpawn ()
 end
 
 function DvaeredSpawn ()
-    source_system = system.get("Doranthex")
+    local source_system = system.get("Doranthex")
 
     dvaeredguys[dvaeredwave] = {}
     dvaeredguys[dvaeredwave][1] = pilot.add( "Dvaered Vendetta", "Dvaered", source_system )

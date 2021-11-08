@@ -143,7 +143,7 @@ local faction_list = {
 }
 local faction_ships = merge_tables( faction_list )
 
-function gen_question_ship_class( hard )
+local function gen_question_ship_class( hard )
    -- Create question
    local ship_list
    if hard then
@@ -159,7 +159,7 @@ function gen_question_ship_class( hard )
    return { type="ship_class", question=question, options=options, answer=answer }
 end
 
-function gen_question_ship_guess( hard )
+local function gen_question_ship_guess( hard )
    -- Create question
    local ship_list
    if hard then
@@ -174,7 +174,7 @@ function gen_question_ship_guess( hard )
    return { type="ship_guess", question=question, options=options, answer=answer }
 end
 
-function gen_question( difficulty )
+local function gen_question( difficulty )
    local r = rnd.rnd()
    if difficulty == 1 then
       if r < 0.6 then
@@ -329,6 +329,7 @@ end
 
 function approach_shiplover ()
    local remove_npc = false
+   local restore_vn
    local first_meet = not var.peek("shiplover_met")
 
    vn.reset()
@@ -408,6 +409,7 @@ The lift up their toy Lancelot. You can barely make out a golden Efreeti etched 
       local nw, _nh = naev.gfx.dim()
       local shipgfx = lg.newImage( ship.get(question.answer):gfxComm() )
       local shipchar = vn.Character.new( "ship", {image=shipgfx, pos="left"} )
+      local slpos, slnewpos
       local function runinit ()
          slpos = sl.offset
          slnewpos = 0.75

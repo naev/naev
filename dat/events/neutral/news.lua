@@ -12,6 +12,8 @@ local pir = require "common.pirate"
 local fmt = require "format"
 local lmisn = require "lmisn"
 
+local add_article, add_econ_article, add_header -- forward-declared functions
+
 -- List to treat special factions diffferently
 local override_list = {
    -- Treat pirate clans the same (at least for now)
@@ -416,7 +418,7 @@ articles["Za'lek"] = {}
 articles["Thurion"] = {}
 
 -- Return an economy article based on the given commodity, planet object, and number of credits.
-function get_econ_article( cargo, pnt, credits )
+local function get_econ_article( cargo, pnt, credits )
    local econ_articles = {
       {
          title = _("Unfortunate Merchant Goes Bankrupt"),
