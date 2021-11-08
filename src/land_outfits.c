@@ -340,7 +340,7 @@ void outfits_update( unsigned int wid, const char *str )
    Outfit* outfit;
    char buf[STRMAX], buf_price[ECON_CRED_STRLEN], buf_credits[ECON_CRED_STRLEN], buf_license[STRMAX_SHORT];
    double th;
-   int iw, ih, w, h, p;
+   int iw, ih, w, h;
    double mass;
 
    /* Get dimensions. */
@@ -406,12 +406,7 @@ void outfits_update( unsigned int wid, const char *str )
       mass += outfit_amount(outfit) * outfit_ammo(outfit)->mass;
    }
 
-   p  = scnprintf( &buf[0], sizeof(buf), "%s\n", _(outfit->name) );
-   if (outfit->slot.type != OUTFIT_SLOT_NA) {
-      p += scnprintf( &buf[p], sizeof(buf)-p, _("#%c%s #%c%s #0slot"),
-            outfit_slotSizeColourFont( &outfit->slot ), outfit_slotSize( outfit ),
-            outfit_slotTypeColourFont( &outfit->slot ), outfit_slotName( outfit ) );
-   }
+   outfit_getNameWithClass( outfit, buf, sizeof(buf) );
    window_modifyText( wid, "txtOutfitName", buf );
    th = gl_printHeightRaw( &gl_defFont, w - (20 + iw + 20) - 264 - 40, buf );
    snprintf( buf, sizeof(buf),
@@ -427,13 +422,13 @@ void outfits_update( unsigned int wid, const char *str )
          buf_license );
    window_modifyText( wid, "txtDDesc", buf );
    window_modifyText( wid, "txtDescShort", outfit->desc_short );
-   window_moveWidget( wid, "txtDescShort", 20+iw+20, -40-th-30 );
+   window_moveWidget( wid, "txtDescShort", 20+iw+20, -40-th );
    th += gl_printHeightRaw( &gl_defFont, w - (20 + iw + 20) - 264 - 40, outfit->desc_short );
-   window_moveWidget( wid, "txtSDesc", 20+iw+20, -40-th-30-32 );
-   window_moveWidget( wid, "txtDDesc", 20+iw+20+90, -40-th-30-32 );
+   window_moveWidget( wid, "txtSDesc", 20+iw+20, -40-th-32 );
+   window_moveWidget( wid, "txtDDesc", 20+iw+20+90, -40-th-32 );
    th += gl_printHeightRaw( &gl_defFont, w - (20 + iw + 20) - 200 - 20, buf );
-   th = MAX( th, 256-30-32+8+10 );
-   window_moveWidget( wid, "txtDescription", 20+iw+20, -40-th-30-32 );
+   th = MAX( th, 256-32+8+10 );
+   window_moveWidget( wid, "txtDescription", 20+iw+20, -40-th-32 );
 }
 
 /**
@@ -556,20 +551,14 @@ int outfit_altText( char *buf, int n, const Outfit *o )
       mass += outfit_amount(o) * outfit_ammo(o)->mass;
    }
 
-   p  = scnprintf( &buf[0], n, "%s\n", _(o->name) );
-   if (o->slot.type != OUTFIT_SLOT_NA) {
-      p += scnprintf( &buf[p], n-p, _("#%c%s #%c%s #0slot"),
-            outfit_slotSizeColourFont(&o->slot), outfit_slotSize(o),
-            outfit_slotTypeColourFont(&o->slot), outfit_slotName(o) );
-      p += scnprintf( &buf[p], n-p, "\n\n" );
-   }
+   p  = outfit_getNameWithClass( o, buf, n );
    if (outfit_isProp(o, OUTFIT_PROP_UNIQUE))
       p += scnprintf( &buf[p], n-p, _("#oUnique#0\n") );
+   if (o->limit != NULL)
+      p += scnprintf( &buf[p], n-p, _("#rOnly 1 of type per ship#0\n") );
    if (o->slot.spid != 0)
       p += scnprintf( &buf[p], n-p, _("#o%s#0\n"),
             _( sp_display( o->slot.spid ) ) );
-   if (o->limit != NULL)
-      p += scnprintf( &buf[p], n-p, _("#rOnly 1 of type per ship#0\n") );
    p += scnprintf( &buf[p], n-p, "%s", o->desc_short );
    if ((o->mass > 0.) && (p < n))
       scnprintf( &buf[p], n-p,

@@ -424,6 +424,7 @@ const char *slotSize( const OutfitSlotSize o );
 const glColour *outfit_slotSizeColour( const OutfitSlot* os );
 char outfit_slotSizeColourFont( const OutfitSlot* os );
 char outfit_slotTypeColourFont( const OutfitSlot* os );
+size_t outfit_getNameWithClass( const Outfit* outfit, char* buf, size_t size );
 OutfitSlotSize outfit_toSlotSize( const char *s );
 const glTexture* outfit_gfx( const Outfit* o );
 const CollPoly* outfit_plg( const Outfit* o );
