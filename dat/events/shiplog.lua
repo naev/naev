@@ -19,6 +19,8 @@
 
 local fmt = require "format"
 
+local attacked, lastsys -- Non-persistent state
+
 function create ()
    shiplog.create( "travel", _("Travel Log"), _("Travel"), false, 20 )
 
