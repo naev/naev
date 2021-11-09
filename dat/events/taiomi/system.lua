@@ -143,7 +143,7 @@ function hail_wornout ()
    vn.scene()
    local d = vn.newCharacter( taiomi.vn_wornout() )
    vn.transition()
-   vn.na("The drone seems fairly beaten and immobile. You can see some slight movement when you begin communication.")
+   vn.na(_("The drone seems fairly beaten and immobile. You can see some slight movement when you begin communication."))
    d("TODO")
 
    vn.done()
