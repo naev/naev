@@ -337,7 +337,7 @@ function land ()
       local nel = vn.newCharacter( tutnel.vn_nelly() )
       vn.transition( tutnel.nelly.transition )
       vn.na(_("You land and quickly Nelly goes over to the outfitter and seems to get into some sort of argument with the person in charge. After a bit you see they exchange something and she comes back with a grin on her face."))
-      nel(fmt.f(_([["Got the parts! Cheaper than I expected to. Hopefully this will bring an end to my ship troubles. Let's go back to #o{pnt}#0 in #o{sys}#0!"]]), {pnt=retpnt, sys=retsys}))
+      nel(fmt.f(_([["Got the parts! Cheaper than I expected too. Hopefully this will bring an end to my ship troubles. Let's go back to #o{pnt}#0 in #o{sys}#0!"]]), {pnt=retpnt, sys=retsys}))
       vn.done( tutnel.nelly.transition )
       vn.run()
 
