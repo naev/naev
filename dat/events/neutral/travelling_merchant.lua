@@ -16,6 +16,8 @@ Spawns a travelling merchant that can sell the player if interested.
 local vn = require 'vn'
 local love_shaders = require 'love_shaders'
 
+local p, broadcastid, hailed_player, timerdelay, boardhook, hailhook, timer -- Non-persistent state
+
 local trader_name = _("Machiavellian Misi") -- Mireia Sibeko
 local trader_image = "misi.png"
 local trader_colour = {1, 0.3, 1}

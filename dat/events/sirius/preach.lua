@@ -18,6 +18,8 @@
 local fleet = require "fleet"
 local fmt = require "format"
 
+local restoreControl -- Forward-declared function
+
 local althoughEnemy={
 _("{player}, although you are an enemy of House Sirius, I shall not attack unless provoked, for I abhor violence!"),
 _("{player}, although you are an enemy of House Sirius, I shall not attack unless provoked, for I believe mercy is a great Truth!"),
@@ -110,7 +112,7 @@ _("Someone killed the preacher!")
 function create()
    curr = system.cur() --save the current system
 
-   v = var.peek( "si_convert" ) -- Get the value
+   local v = var.peek( "si_convert" ) -- Get the value
    if v == nil then -- Doesn't exist, so create
       var.push( "si_convert", 1 )
    else

@@ -4,7 +4,7 @@
  <trigger>none</trigger>
 </event>
 --]]
-function name()
+local function name()
    local names = {
       _("Aluminum Mallard"), -- Because we might as well allude to an existing parody. Proper spelling would be "Aluminium", by the way.
       _("Armchair Traveller"),

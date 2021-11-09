@@ -21,6 +21,8 @@ local vn = require 'vn'
 local love_shaders = require "love_shaders"
 local graphics = require 'love.graphics'
 
+local board_flashback -- Forward-declared functions
+
 -- Threshold distances to detect the drone
 local dist_detect_mule = 3e3 -- first encounter at mule
 local dist_detect_jump = 3e3 -- second encounter at jump
@@ -170,6 +172,7 @@ function boardothers( _p )
 end
 
 function board_flashback()
+   local textbox_bg_alpha, textbox_font, textbox_h, textbox_w, textbox_x, textbox_y
    vn.clear()
    vn.scene()
    vn.transition()
@@ -178,8 +181,8 @@ function board_flashback()
    vn.na(_("You begin to read the passages."))
 
    local nw, nh = naev.gfx.dim()
-   paperbg = love_shaders.paper( nw, nh )
-   oldify = love_shaders.oldify()
+   local paperbg = love_shaders.paper( nw, nh )
+   local oldify = love_shaders.oldify()
    vn.func( function ()
       vn.setBackground( function ()
          vn.setColor( {1, 1, 1, 1} )

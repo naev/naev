@@ -52,7 +52,7 @@ local function spawn_fleet( pos )
 end
 
 function create ()
-   proteron_blockade = {}
+   local proteron_blockade = {}
    local n = rnd.rnd(5,6)
    for i=1,n do
       local pos = pos_top + (pos_bot - pos_top) * (i-1) / (n-1)
@@ -62,12 +62,12 @@ function create ()
       end
    end
 
-   hook.timer(3, "heartbeat")
+   hook.timer(3, "heartbeat", proteron_blockade )
    hook.jumpout("cleanup")
    hook.land("cleanup")
 end
 
-function heartbeat ()
+function heartbeat( proteron_blockade )
    local pp = player.pilot()
    for k,p in ipairs(proteron_blockade) do
       if p:inrange( pp ) then
