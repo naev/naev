@@ -580,6 +580,7 @@ function approach_scavengers ()
    -- TODO maybe more text?
    scavB(_([["What are you looking at?"]]))
    vn.done()
+   vn.run()
 end
 
 function approach_maikki ()
