@@ -4,25 +4,18 @@
 
 const float M_PI        = 3.14159265358979323846;  /* pi */
 
-/* Textures. */
-uniform sampler2D map_Kd;  /* Diffuse map. */
-uniform sampler2D map_Ks;  /* Specular map. */
-uniform sampler2D map_Ke;  /* Emission map. */
-uniform sampler2D map_Bump;/* Bump map. */
+/* pbr_metallic_roughness */
+uniform sampler2D baseColour_tex; /**< Base colour. */
+uniform sampler2D metallic_tex; /**< Metallic texture. */
+uniform float metallicFactor;
+uniform float roughnessFactor;
+uniform vec4 baseColour;
+/* clearcoat */
+uniform float clearcoat;
+uniform float clearcoat_roughness;
 
-/* Phong model parameters. */
-uniform float Ns; /* Specular shininess. */
-uniform vec3 Ka;  /* Ambient colour. */
-uniform vec3 Kd;  /* Diffuse colour. */
-uniform vec3 Ks;  /* Specular colour. */
-uniform vec3 Ke;  /* Emissive colour. */
-uniform float Ni; /* Optical density. */
-uniform float d;  /* Dissolve (opacity). */
-
-uniform float bm; /* Bump mapping parameter. */
-
-in vec2 tex_coord;
-in vec3 pos;
+in vec2 tex_coord0;
+in vec3 position;
 in vec3 normal;
 out vec4 color_out;
 
@@ -143,31 +136,24 @@ vec3 shade( Material mat, vec3 v, vec3 n, vec3 l, float NoL )
 void main(void) {
    /* Compute normal taking into account the bump map. */
    vec3 n = normal;
-   if (bm > 0.01)
-      n += bm * texture(map_Bump, tex_coord).xyz * 2.0 - 1.0;
+   //if (bm > 0.01)
+   //   n += bm * texture(map_Bump, tex_coord0).xyz * 2.0 - 1.0;
    //norm = mix( norm, normal, 0.999 );
    n = normalize(n);
 
    /* Material values. */
-   float roughness =  0.1;
-   /* Set up textures. */
-   vec3 Td = texture(map_Kd, tex_coord).rgb;
-   vec3 Ta = Td; // Assume ambient is the same as dispersion
-   vec3 Ts = texture(map_Ks, tex_coord).rgb;
-   vec3 Te = texture(map_Ke, tex_coord).rgb;
-
    Material mat;
-   mat.albedo        = Td;
-   mat.roughness     = 0.05;
+   mat.albedo        = baseColour.rgb * texture(baseColour_tex, tex_coord0).rgb;
+   mat.roughness     = roughnessFactor;
    mat.F0            = vec3(0.56); /* Iron. */
-   mat.clearCoat     = 1.0;
-   mat.roughness_cc  = 0.01;
+   mat.clearCoat     = clearcoat;
+   mat.roughness_cc  = clearcoat_roughness;
 
    /* Get the crew ready. */
    /* Point light for now. */
    const vec3 lp  = vec3(3.0, 3.0, 3.0);
    const vec3 v   = normalize( vec3(0.0, 1.0, 1.0) );
-   vec3 p   = pos;
+   vec3 p   = position;
    vec3 l   = normalize(lp-p);
    float NoL = max(0.0,dot(n,l));
 

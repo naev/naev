@@ -13,8 +13,6 @@
 
 #include "shader_min.h"
 
-static GLuint object_shader;
-
 typedef struct glTexture_ {
    char *name; /**< name of the graphic */
 
@@ -40,15 +38,23 @@ typedef struct glTexture_ {
 
 typedef struct Shader_ {
    GLuint program;
-   GLuint position;
-   GLuint normal;
-   GLuint texcoord0;
-   GLuint H;
-   GLuint metallic;
-   GLuint roughness;
+   /* Attriutes. */
+   GLuint vertex;
+   GLuint vertex_normal;
+   GLuint vertex_tex0;
+   /* Vertex Uniforms. */
+   GLuint Hmodel;
+   GLuint Hprojection;
+   /* Fragment uniforms. */
+   GLuint baseColour_tex;
+   GLuint metallic_tex;
+   GLuint metallicFactor;
+   GLuint roughnessFactor;
+   GLuint baseColour;
    GLuint clearcoat;
+   GLuint clearcoat_roughness;
 } Shader;
-static Shader brdf_shader;
+static Shader object_shader;
 
 typedef struct Material_ {
    char *name;       /**< Name of the material if applicable. */
@@ -251,7 +257,7 @@ static int object_loadNodeRecursive( cgltf_data *data, Node *node, const cgltf_n
 static void object_renderMesh( const Object *obj, const Mesh *mesh, const GLfloat H[16] )
 {
    const Material *mat = &obj->materials[ mesh->material ];
-   Shader *shd = &brdf_shader;
+   Shader *shd = &object_shader;
 
    /* Depth testing. */
    glEnable(GL_DEPTH_TEST);
@@ -261,17 +267,17 @@ static void object_renderMesh( const Object *obj, const Mesh *mesh, const GLfloa
 
    /* TODO put everything in a single VBO */
    glBindBuffer( GL_ARRAY_BUFFER, mesh->vbo_pos );
-   glVertexAttribPointer( shd->position, 3, GL_FLOAT, GL_FALSE, 0, 0 );
-   glEnableVertexAttribArray( shd->position );
+   glVertexAttribPointer( shd->vertex, 3, GL_FLOAT, GL_FALSE, 0, 0 );
+   glEnableVertexAttribArray( shd->vertex );
    if (mesh->vbo_nor) {
       glBindBuffer( GL_ARRAY_BUFFER, mesh->vbo_nor );
-      glVertexAttribPointer( shd->normal, 3, GL_FLOAT, GL_FALSE, 0, 0 );
-      glEnableVertexAttribArray( shd->normal );
+      glVertexAttribPointer( shd->vertex_normal, 3, GL_FLOAT, GL_FALSE, 0, 0 );
+      glEnableVertexAttribArray( shd->vertex_normal );
    }
    if (mesh->vbo_tex) {
       glBindBuffer( GL_ARRAY_BUFFER, mesh->vbo_tex );
-      glVertexAttribPointer( shd->texcoord0, 2, GL_FLOAT, GL_FALSE, 0, 0 );
-      glEnableVertexAttribArray( shd->texcoord0 );
+      glVertexAttribPointer( shd->vertex_tex0, 2, GL_FLOAT, GL_FALSE, 0, 0 );
+      glEnableVertexAttribArray( shd->vertex_tex0 );
    }
 
    /* Texture. */
@@ -280,9 +286,13 @@ static void object_renderMesh( const Object *obj, const Mesh *mesh, const GLfloa
 
    /* Set up shader. */
    glUseProgram( shd->program );
-   glUniformMatrix4fv( shd->H, 1, GL_FALSE, H );
-   glUniform1f( shd->metallic, mat->metallicFactor );
-   glUniform1f( shd->roughness, mat->roughnessFactor );
+   glUniformMatrix4fv( shd->Hprojection, 1, GL_FALSE, H );
+   glUniformMatrix4fv( shd->Hmodel, 1, GL_FALSE, H );
+   glUniform1f( shd->metallicFactor, mat->metallicFactor );
+   glUniform1f( shd->roughnessFactor, mat->roughnessFactor );
+   glUniform4f( shd->baseColour, mat->baseColour[0], mat->baseColour[1], mat->baseColour[2], mat->baseColour[3] );
+   glUniform1f( shd->clearcoat, mat->clearcoat );
+   glUniform1f( shd->clearcoat_roughness, mat->clearcoat_roughness );
 
    glDrawElements( GL_TRIANGLES, mesh->nidx, GL_UNSIGNED_INT, 0 );
 
@@ -294,6 +304,8 @@ static void object_renderMesh( const Object *obj, const Mesh *mesh, const GLfloa
    glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, 0 );
 
    glDisable(GL_DEPTH_TEST);
+   
+   gl_checkErr();
 }
 
 void object_renderNode( const Object *obj, const Node *node, GLfloat H[16] )
@@ -402,9 +414,15 @@ int main( int argc, char *argv[] )
    gladLoadGLLoader(SDL_GL_GetProcAddress);
 
    /* TODO load shader. */
-   object_shader = gl_program_vert_frag( "gltf.vert", "gltf_pbr.frag" );
-   if (object_shader==0)
+   object_shader.program = gl_program_vert_frag( "gltf.vert", "gltf_pbr.frag" );
+   if (object_shader.program==0)
       return -1;
+   object_shader.vertex        = glGetAttribLocation( object_shader.program, "vertex" );
+   object_shader.vertex_normal = glGetAttribLocation( object_shader.program, "vertex_normal" );
+   object_shader.vertex_tex0   = glGetAttribLocation( object_shader.program, "vertex_tex0" );
+   object_shader.Hprojection   = glGetUniformLocation( object_shader.program, "projection ");
+   object_shader.Hmodel        = glGetUniformLocation( object_shader.program, "model ");
+   gl_checkErr();
 
    //Object *obj = object_loadFromFile( "simple.gltf" );
    Object *obj = object_loadFromFile( "admonisher.gltf" );
