@@ -1,5 +1,5 @@
 CFLAGS=-g3 -W -Wall -Wextra $(shell pkg-config --cflags sdl2 opengl) -I../../src
-LIBS=$(shell pkg-config --libs sdl2 opengl) -ldl -lSDL_image
+LIBS=$(shell pkg-config --libs sdl2 opengl) -ldl -lm -lSDL_image
 
-main: main.c
-	$(CC) $< ../../src/glad.c $(CFLAGS) $(LIBS) -o $@
+main: main.c shader_min.c shader_min.h
+	$(CC) $< ../../src/glad.c nstr.c shader_min.c $(CFLAGS) $(LIBS) -o $@

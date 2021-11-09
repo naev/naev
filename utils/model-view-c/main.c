@@ -1,6 +1,8 @@
 #include <assert.h>
 #include <stdio.h>
 
+#include "common.h"
+
 #include "SDL.h"
 #include "SDL_image.h"
 
@@ -9,15 +11,7 @@
 #define CGLTF_IMPLEMENTATION
 #include "cgltf.h"
 
-#define LOG(str, args...)     (fprintf(stdout, str"\n", ## args))
-#define DEBUG(str, args...)   (fprintf(stdout, str"\n", ## args))
-#define WARN(str, args...)    (fprintf(stderr, "WARNING %s:%d [%s]: ", __FILE__, __LINE__, __func__), fprintf(stderr, str"\n", ## args))
-#define MIN(x,y)              (((x)>(y))?(y):(x)) /**< Returns minimum. */
-
-#define DEBUGGING 1
-
-#define gl_checkErr()   gl_checkHandleError( __func__, __LINE__ )
-static void gl_checkHandleError( const char *func, int line )
+void gl_checkHandleError( const char *func, int line )
 {
    const char* errstr;
    GLenum err = glGetError();
