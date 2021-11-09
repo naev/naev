@@ -17,7 +17,7 @@ uniform float clearcoat_roughness;
 in vec2 tex_coord0;
 in vec3 position;
 in vec3 normal;
-out vec4 color_out;
+out vec4 colour_out;
 
 float pow5(float x) {
    float x2 = x * x;
@@ -159,5 +159,6 @@ void main(void) {
 
    vec3 colour = shade( mat, v, n, l, NoL );
 
-   color_out = vec4(colour * NoL, 1.0) * 2.0;
+   colour_out = vec4(colour * NoL, 1.0) * 2.0;
+   colour_out = vec4(1.0);
 }

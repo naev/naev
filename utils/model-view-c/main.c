@@ -198,7 +198,7 @@ static int object_loadNodeRecursive( cgltf_data *data, Node *node, const cgltf_n
       node->nmesh = 0;
    }
    else {
-      /* Draw mesh. */
+      /* Load meshes. */
       node->mesh = calloc( cmesh->primitives_count, sizeof(Mesh) );
       node->nmesh = cmesh->primitives_count;
       for (size_t i=0; i<cmesh->primitives_count; i++) {
@@ -230,7 +230,7 @@ static int object_loadNodeRecursive( cgltf_data *data, Node *node, const cgltf_n
                   break;
 
                case cgltf_attribute_type_normal:
-                  mesh->vbo_pos = object_loadVBO( attr->data );
+                  mesh->vbo_nor = object_loadVBO( attr->data );
                   break;
 
                case cgltf_attribute_type_texcoord:
@@ -263,11 +263,9 @@ static void object_renderMesh( const Object *obj, const Mesh *mesh, const GLfloa
    glEnable(GL_DEPTH_TEST);
    glDepthFunc(GL_LESS);
 
-   glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, mesh->vbo_idx );
-
    /* TODO put everything in a single VBO */
    glBindBuffer( GL_ARRAY_BUFFER, mesh->vbo_pos );
-   glVertexAttribPointer( shd->vertex, 3, GL_FLOAT, GL_FALSE, 0, 0 );
+   glVertexAttribPointer( shd->vertex, 4, GL_FLOAT, GL_FALSE, 0, 0 );
    glEnableVertexAttribArray( shd->vertex );
    if (mesh->vbo_nor) {
       glBindBuffer( GL_ARRAY_BUFFER, mesh->vbo_nor );
@@ -286,13 +284,21 @@ static void object_renderMesh( const Object *obj, const Mesh *mesh, const GLfloa
 
    /* Set up shader. */
    glUseProgram( shd->program );
-   glUniformMatrix4fv( shd->Hprojection, 1, GL_FALSE, H );
+   const GLfloat sca = 0.1;
+   const GLfloat Hprojection[16] = {
+      sca, 0.0, 0.0, 0.0,
+      0.0, sca, 0.0, 0.0,
+      0.0, 0.0, sca, 0.0,
+      0.0, 0.0, 0.0, 1.0 };
+   glUniformMatrix4fv( shd->Hprojection, 1, GL_FALSE, Hprojection );
    glUniformMatrix4fv( shd->Hmodel, 1, GL_FALSE, H );
    glUniform1f( shd->metallicFactor, mat->metallicFactor );
    glUniform1f( shd->roughnessFactor, mat->roughnessFactor );
    glUniform4f( shd->baseColour, mat->baseColour[0], mat->baseColour[1], mat->baseColour[2], mat->baseColour[3] );
    glUniform1f( shd->clearcoat, mat->clearcoat );
    glUniform1f( shd->clearcoat_roughness, mat->clearcoat_roughness );
+   
+   glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, mesh->vbo_idx );
 
    glDrawElements( GL_TRIANGLES, mesh->nidx, GL_UNSIGNED_INT, 0 );
 
