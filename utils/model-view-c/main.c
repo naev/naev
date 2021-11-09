@@ -2,15 +2,40 @@
 #include <stdio.h>
 
 #include "SDL.h"
+#include "SDL_image.h"
 
 #include "../../src/glad.h"
 
 #define CGLTF_IMPLEMENTATION
-#include "cgltf.h"
+#include "../../src/cgltf.h"
 
 #define DEBUG printf
+#define MIN(x,y)           (((x)>(y))?(y):(x)) /**< Returns minimum. */
 
 #define DEBUGGING 1
+
+typedef struct glTexture_ {
+   char *name; /**< name of the graphic */
+
+   /* dimensions */
+   double w; /**< Real width of the image. */
+   double h; /**< Real height of the image. */
+
+   /* sprites */
+   double sx; /**< Number of sprites on the x axis. */
+   double sy; /**< Number of sprites on the y axis. */
+   double sw; /**< Width of a sprite. */
+   double sh; /**< Height of a sprite. */
+   double srw; /**< Sprite render width - equivalent to sw/w. */
+   double srh; /**< Sprite render height - equivalent to sh/h. */
+
+   /* data */
+   GLuint texture; /**< the opengl texture itself */
+   uint8_t* trans; /**< maps the transparency */
+
+   /* properties */
+   uint8_t flags; /**< flags used for texture properties */
+} glTexture;
 
 typedef struct Shader_ {
    GLuint program;
@@ -22,14 +47,28 @@ typedef struct Shader_ {
    GLuint roughness;
    GLuint clearcoat;
 } Shader;
-static Shader brdf_shader; 
+static Shader brdf_shader;
 
 typedef struct Material_ {
    char *name;       /**< Name of the material if applicable. */
+   /* pbr_metallic_roughness */
+   GLuint baseColour_tex;
+   GLuint metallic_tex;
    GLfloat metallicFactor;
    GLfloat roughnessFactor;
    GLfloat baseColour[4];
+   /* pbr_specular_glossiness */
+   /* TODO */
+   /* clearcoat */
+   /*GLuint clearcoat_tex;
+   GLuint clearcoat_roughness_tex;
+   GLuint clearcoat_normal_tex; */
    GLfloat clearcoat;
+   GLfloat clearcoat_roughness;
+   /* misc. */
+   GLuint normal_tex;
+   GLuint occlusion_tex;
+   GLuint emissive_tex;
    GLfloat emissiveFactor[3];
    GLuint tex0;
 } Material;
@@ -61,15 +100,52 @@ typedef struct Object_ {
    GLfloat radius;      /**< Sphere fit on the model centered at 0,0. */
 } Object;
 
+static GLuint object_loadTexture( cgltf_texture_view *ctex )
+{
+   GLuint tex;
+
+   glGenTextures( 1, &tex );
+   glBindTexture( GL_TEXTURE_2D, tex );
+
+   SDL_Surface *surface = IMG_Load( ctex->texture->image->uri );
+   SDL_LockSurface( surface );
+   glPixelStorei( GL_UNPACK_ALIGNMENT, MIN( surface->pitch&-surface->pitch, 8 ) );
+   glTexImage2D( GL_TEXTURE_2D, 0, GL_SRGB_ALPHA,
+         surface->w, surface->h, 0, surface->format->Amask ? GL_RGBA : GL_RGB, GL_UNSIGNED_BYTE, surface->pixels );
+   SDL_UnlockSurface( surface );
+
+   /* read ctex->image->uri */
+   //glTexImage2D( GL_TEXTURE_2D, 0, GL_SRGB_ALPHA, w, h, 0, GL_RGBA, GL_FLOAT, data );
+
+   /* Set stuff. */
+   if (ctex->texture->sampler != NULL) {
+      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, ctex->texture->sampler->mag_filter);
+      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, ctex->texture->sampler->min_filter);
+      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, ctex->texture->sampler->wrap_s);
+      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, ctex->texture->sampler->wrap_t);
+   }
+
+   glBindTexture( GL_TEXTURE_2D, 0 );
+
+   return tex;
+}
+
 /**
  * @brief Loads a material for the object.
  */
 static int object_loadMaterial( Material *mat, const cgltf_material *cmat )
 {
    /* TODO complete this. */
-   memcpy( mat->baseColour, cmat->pbr_metallic_roughness.base_color_factor, sizeof(mat->baseColour) );
-   mat->metallicFactor = cmat->pbr_metallic_roughness.metallic_factor;
-   mat->roughnessFactor = cmat->pbr_metallic_roughness.roughness_factor;
+   if (cmat->has_pbr_metallic_roughness) {
+      memcpy( mat->baseColour, cmat->pbr_metallic_roughness.base_color_factor, sizeof(mat->baseColour) );
+      mat->metallicFactor  = cmat->pbr_metallic_roughness.metallic_factor;
+      mat->roughnessFactor = cmat->pbr_metallic_roughness.roughness_factor;
+   }
+
+   if (cmat->has_clearcoat) {
+      mat->clearcoat = cmat->clearcoat.clearcoat_factor;
+      mat->clearcoat_roughness = cmat->clearcoat.clearcoat_roughness_factor;
+   }
    return 0;
 }
 
@@ -82,7 +158,7 @@ static GLuint object_loadVBO( cgltf_accessor *acc )
    cgltf_size num = cgltf_accessor_unpack_floats( acc, NULL, 0 );
    cgltf_float *dat = malloc( sizeof(cgltf_float) * num );
    cgltf_accessor_unpack_floats( acc, dat, num );
-   
+
    /* OpenGL magic. */
    glGenBuffers( 1, &vid );
    glBindBuffer( GL_ARRAY_BUFFER, vid );
@@ -165,7 +241,7 @@ static void object_renderMesh( const Object *obj, const Mesh *mesh, const GLfloa
 {
    const Material *mat = &obj->materials[ mesh->material ];
    Shader *shd = &brdf_shader;
-  
+
    /* Depth testing. */
    glEnable(GL_DEPTH_TEST);
    glDepthFunc(GL_LESS);
@@ -198,14 +274,14 @@ static void object_renderMesh( const Object *obj, const Mesh *mesh, const GLfloa
    glUniform1f( shd->roughness, mat->roughnessFactor );
 
    glDrawElements( GL_TRIANGLES, mesh->nidx, GL_UNSIGNED_INT, 0 );
-   
+
    glUseProgram( 0 );
-   
+
    glBindTexture( GL_TEXTURE_2D, 0 );
 
    glBindBuffer( GL_ARRAY_BUFFER, 0 );
    glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, 0 );
-   
+
    glDisable(GL_DEPTH_TEST);
 }
 
