@@ -103,11 +103,18 @@ typedef struct Object_ {
 static GLuint object_loadTexture( const cgltf_texture_view *ctex )
 {
    GLuint tex;
+   SDL_Surface *surface;
+
+   /* Must haev texture to load it. */
+   if ((ctex==NULL) || (ctex->texture==NULL))
+      return 0;
 
    glGenTextures( 1, &tex );
    glBindTexture( GL_TEXTURE_2D, tex );
 
-   SDL_Surface *surface = IMG_Load( ctex->texture->image->uri );
+   surface = IMG_Load( ctex->texture->image->uri );
+   if (surface==NULL)
+      return 0;
    SDL_LockSurface( surface );
    glPixelStorei( GL_UNPACK_ALIGNMENT, MIN( surface->pitch&-surface->pitch, 8 ) );
    glTexImage2D( GL_TEXTURE_2D, 0, GL_SRGB_ALPHA,
@@ -138,7 +145,7 @@ static int object_loadMaterial( Material *mat, const cgltf_material *cmat )
       mat->metallicFactor  = cmat->pbr_metallic_roughness.metallic_factor;
       mat->roughnessFactor = cmat->pbr_metallic_roughness.roughness_factor;
       mat->baseColour_tex  = object_loadTexture( &cmat->pbr_metallic_roughness.base_color_texture );
-      mat->metallic_tex = object_loadTexture( &cmat->pbr_metallic_roughness.metallic_roughness_texture );
+      mat->metallic_tex    = object_loadTexture( &cmat->pbr_metallic_roughness.metallic_roughness_texture );
    }
 
    if (cmat->has_clearcoat) {
@@ -388,8 +395,8 @@ int main( int argc, char *argv[] )
 
    /* TODO load shader. */
 
-   Object *obj = object_loadFromFile( "simple.gltf" );
-   //Object *obj = object_loadFromFile( "admonisher.gltf" );
+   //Object *obj = object_loadFromFile( "simple.gltf" );
+   Object *obj = object_loadFromFile( "admonisher.gltf" );
    object_free( obj );
 
    return 0;
