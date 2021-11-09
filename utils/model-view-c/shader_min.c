@@ -15,7 +15,8 @@
 
 #include "nstr.h"
 
-#define GLSL_PATH "../../dat/glsl/"
+//#define GLSL_PATH "../../dat/glsl/"
+#define GLSL_PATH "./"
 
 #define GLSL_VERSION    "#version 140\n\n" /**< Version to use for all shaders. */
 #define GLSL_SUBROUTINE "#define HAS_GL_ARB_shader_subroutine 1\n" /**< Has subroutines. */
@@ -333,4 +334,37 @@ static GLuint gl_program_make( GLuint vertex_shader, GLuint fragment_shader )
    gl_checkErr();
 
    return program;
+}
+
+void gl_checkHandleError( const char *func, int line )
+{
+   const char* errstr;
+   GLenum err = glGetError();
+
+   /* No error. */
+   if (err == GL_NO_ERROR)
+      return;
+
+   switch (err) {
+      case GL_INVALID_ENUM:
+         errstr = "GL invalid enum";
+         break;
+      case GL_INVALID_VALUE:
+         errstr = "GL invalid value";
+         break;
+      case GL_INVALID_OPERATION:
+         errstr = "GL invalid operation";
+         break;
+      case GL_INVALID_FRAMEBUFFER_OPERATION:
+         errstr = "GL invalid framebuffer operation";
+         break;
+      case GL_OUT_OF_MEMORY:
+         errstr = "GL out of memory";
+         break;
+
+      default:
+         errstr = "GL unknown error";
+         break;
+   }
+   WARN("OpenGL error [%s:%d]: %s", func, line, errstr);
 }

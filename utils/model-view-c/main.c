@@ -11,38 +11,9 @@
 #define CGLTF_IMPLEMENTATION
 #include "cgltf.h"
 
-void gl_checkHandleError( const char *func, int line )
-{
-   const char* errstr;
-   GLenum err = glGetError();
+#include "shader_min.h"
 
-   /* No error. */
-   if (err == GL_NO_ERROR)
-      return;
-
-   switch (err) {
-      case GL_INVALID_ENUM:
-         errstr = "GL invalid enum";
-         break;
-      case GL_INVALID_VALUE:
-         errstr = "GL invalid value";
-         break;
-      case GL_INVALID_OPERATION:
-         errstr = "GL invalid operation";
-         break;
-      case GL_INVALID_FRAMEBUFFER_OPERATION:
-         errstr = "GL invalid framebuffer operation";
-         break;
-      case GL_OUT_OF_MEMORY:
-         errstr = "GL out of memory";
-         break;
-
-      default:
-         errstr = "GL unknown error";
-         break;
-   }
-   WARN("OpenGL error [%s:%d]: %s", func, line, errstr);
-}
+static GLuint object_shader;
 
 typedef struct glTexture_ {
    char *name; /**< name of the graphic */
@@ -431,6 +402,9 @@ int main( int argc, char *argv[] )
    gladLoadGLLoader(SDL_GL_GetProcAddress);
 
    /* TODO load shader. */
+   object_shader = gl_program_vert_frag( "gltf.vert", "gltf_pbr.frag" );
+   if (object_shader==0)
+      return -1;
 
    //Object *obj = object_loadFromFile( "simple.gltf" );
    Object *obj = object_loadFromFile( "admonisher.gltf" );
@@ -462,6 +436,8 @@ int main( int argc, char *argv[] )
       SDL_GL_SwapWindow( win );
 
       gl_checkErr();
+
+      SDL_Delay( 100 );
    }
 
    object_free( obj );
