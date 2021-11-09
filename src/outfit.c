@@ -56,14 +56,23 @@ static Outfit* outfit_stack = NULL; /**< Stack of outfits. */
  */
 #define SDESC_ADD( l, temp, txt, args... ) \
 (l) += scnprintf( &(temp)->desc_short[l], OUTFIT_SHORTDESC_MAX-(l), (txt), ## args )
+#define SDESC_COLOUR( l, temp, txt, val, args... ) \
+SDESC_ADD( l, temp, "#%c", ((val)>0)?'g':(((val)<0)?'r':'0') ); \
+SDESC_ADD( l, temp, txt, (val), ## args ); \
+SDESC_ADD( l, temp, "#0" )
+
+#define SDESC_COLOURT( l, temp, txt, threshold, val, args... ) \
+SDESC_ADD( l, temp, "#%c", ((val)>threshold)?'g':(((val)<threshold)?'r':'0') ); \
+SDESC_ADD( l, temp, txt, (val), ## args ); \
+SDESC_ADD( l, temp, "#0" )
+
 #define SDESC_COND( l, temp, txt, val, args... ) \
-if (fabs(val) > 1e-5) \
-   SDESC_ADD( l, temp, txt, val, ## args )
+if (fabs(val) > 1e-5) { \
+   SDESC_ADD( l, temp, txt, (val), ## args ); \
+}
 #define SDESC_COND_COLOUR( l, temp, txt, val, args... ) \
 if (fabs(val) > 1e-5) { \
-   SDESC_ADD( l, temp, "\n#%c", ((val)>0)?'g':'r' ); \
-   SDESC_ADD( l, temp, txt, val, ## args ); \
-   SDESC_ADD( l, temp, "#0" ); \
+   SDESC_COLOUR( l, temp, txt, (val), ## args ); \
 }
 
 /*
@@ -1190,6 +1199,7 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
    xmlNodePtr node;
    char *buf;
    double C, area;
+   double dshield, darmour, dknockback;
    int l;
 
    /* Defaults */
@@ -1320,6 +1330,10 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
    l = 0;
    SDESC_ADD(  l, temp, _("%s [%s]"), _(outfit_getType(temp)),
          _(dtype_damageTypeToStr(temp->u.blt.dmg.type)) );
+   dtype_raw( temp->u.blt.dmg.type, &dshield, &darmour, &dknockback );
+   SDESC_COLOURT(  l, temp, _("\n     %.0f%% vs armour"), 100., darmour*100. );
+   SDESC_COLOURT(  l, temp, _("\n     %.0f%% vs shield"), 100., dshield*100. );
+   SDESC_COND( l, temp, _("\n     %.0f%% knockback"), dknockback*100. );
    SDESC_COND_COLOUR( l, temp, _("\n%.0f CPU"), temp->cpu );
    SDESC_ADD(  l, temp, _("\n%.0f%% Penetration"), temp->u.blt.dmg.penetration*100. );
    SDESC_COND( l, temp, _("\n%.2f DPS [%.0f Damage]"),
