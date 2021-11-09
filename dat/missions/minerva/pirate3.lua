@@ -273,9 +273,9 @@ function enter ()
 
       local fharper = faction.dynAdd( nil, "Harper Bowdoin" )
       harper = pilot.add( "Quicksilver", fharper, pos, "Harper", {ai="civilian"} )
-      local mem = harper:memory()
-      mem.loiter = math.huge -- Should make them loiter forever
-      mem.distress = false -- Don't distress or everyone aggros
+      local aimem = harper:memory()
+      aimem.loiter = math.huge -- Should make them loiter forever
+      aimem.distress = false -- Don't distress or everyone aggros
       harper:setHilight(true)
       harper:setVisplayer(true)
       harper:setNoLand(true)

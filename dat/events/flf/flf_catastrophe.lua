@@ -123,8 +123,8 @@ function takeoff ()
          j:control()
          j:attack( flf_base )
       end
-      local mem = j:memory()
-      mem.enemyclose = nil
+      local aimem = j:memory()
+      aimem.enemyclose = nil
    end
 
    -- Spawn Dvaered ships
@@ -137,8 +137,8 @@ function takeoff ()
    for i, j in ipairs( dv_ships ) do
       j:setHostile()
       j:setVisible()
-      local mem = j:memory()
-      mem.enemyclose = nil
+      local aimem = j:memory()
+      aimem.enemyclose = nil
    end
 
    diff.remove("FLF_base") -- Get rid of Sindbad
@@ -169,8 +169,8 @@ function pilot_death_emp( _pilot, _attacker, _arg )
             end
          end
          emp_ships[ #emp_ships + 1 ] = j
-         local mem = j:memory()
-         mem.enemyclose = nil
+         local aimem = j:memory()
+         aimem.enemyclose = nil
       end
    end
 end

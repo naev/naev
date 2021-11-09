@@ -8,7 +8,7 @@ main: main.c print.c
 	$(CC) -lm `pkg-config openal --cflags` -W -Wall -o $@ $<
 
 main.c: preset-list make_prog.py
-	python make_prog.py
+	python3 make_prog.py
 
 preset-list: /usr/include/AL/efx-presets.h
 	grep EFX_REVERB_PRESET_ /usr/include/AL/efx-presets.h | sed "s/.*EFX_REVERB_PRESET_\(.*\) ./\1/" > $@

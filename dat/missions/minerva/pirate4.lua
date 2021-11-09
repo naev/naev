@@ -191,12 +191,12 @@ function enter ()
 
       -- Main ship player has to protect
       mainship = pilot.add( "Pirate Rhino", "Wild Ones", shippos, nil, {ai="guard"} )
-      local mem = mainship:memory()
-      mem.aggressive = false -- only fight back
-      mem.guardpos = shippos -- Stay around origin
-      mem.guarddodist = 2500
-      mem.guardreturndist = 4000
-      mem.enemyclose = mem.guarddodist
+      local aimem = mainship:memory()
+      aimem.aggressive = false -- only fight back
+      aimem.guardpos = shippos -- Stay around origin
+      aimem.guarddodist = 2500
+      aimem.guardreturndist = 4000
+      aimem.enemyclose = aimem.guarddodist
       mainship:rename(_("Interrogation Ship"))
       mainship:setFriendly(true)
       mainship:setVisplayer(true)
@@ -302,8 +302,8 @@ function pir_reinforcements ()
       local p = pilot.add( shipname, "Wild Ones", piratesys, nil, {ai="guard"} )
       p:setFriendly(true)
       p:setLeader(leader)
-      local mem = p:memory()
-      mem.guardpos = shippos -- Try to guard the Rhino
+      local aimem = p:memory()
+      aimem.guardpos = shippos -- Try to guard the Rhino
       table.insert( spawned_pirates, p )
       return p
    end
@@ -347,10 +347,10 @@ local function spawn_dvaereds( ships )
       -- interrogation ship and destroy it
       local p = pilot.add( v, "Dvaered", dvaeredsys, nil, {ai="guard"} )
       p:setVisplayer(true)
-      local mem = p:memory()
-      mem.guardpos = shippos -- Go to mainship
-      mem.guarddodist = math.huge -- don't actually want to guard
-      mem.guardreturndist = math.huge
+      local aimem = p:memory()
+      aimem.guardpos = shippos -- Go to mainship
+      aimem.guarddodist = math.huge -- don't actually want to guard
+      aimem.guardreturndist = math.huge
       table.insert( plts, p )
       table.insert( spawned_dvaereds, p )
    end

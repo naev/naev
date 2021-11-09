@@ -69,8 +69,8 @@ function create ()
       d:setVisplayer(false)
       d:control(false)
       d:setNoJump(true)
-      local mem = d:memory()
-      mem.loiter = math.huge -- Should make them loiter forever
+      local aimem = d:memory()
+      aimem.loiter = math.huge -- Should make them loiter forever
       table.insert( d_loiter, d )
    end
 end

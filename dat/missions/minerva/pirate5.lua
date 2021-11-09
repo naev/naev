@@ -301,9 +301,9 @@ function enter ()
          local p = spawn_drone( s, pos )
          if k==1 then
             l = p
-            local mem = p:memory()
-            mem.waypoints = route
-            mem.loiter = math.huge -- patrol forever
+            local aimem = p:memory()
+            aimem.waypoints = route
+            aimem.loiter = math.huge -- patrol forever
          else
             p:setLeader( l )
          end
@@ -320,10 +320,10 @@ function enter ()
          if k==1 then
             l = p
             p:changeAI("guard")
-            local mem = p:memory()
-            mem.guardpos = pos
-            mem.guarddodist = 6e3
-            mem.guardreturndist = 12e3
+            local aimem = p:memory()
+            aimem.guardpos = pos
+            aimem.guarddodist = 6e3
+            aimem.guardreturndist = 12e3
          else
             p:setLeader( l )
          end
@@ -344,11 +344,11 @@ function enter ()
          ["Fighter Bay"]   = { max=0 },
       },
    } )
-   local mem            = main_boss:memory()
-   mem.guardpos         = bosspos
-   mem.guarddodist      = 8e3 -- Should be enough to go far out for torpedo type weapons
-   mem.guardreturndist  = 15e3
-   mem.doscans          = false
+   local aimem            = main_boss:memory()
+   aimem.guardpos         = bosspos
+   aimem.guarddodist      = 8e3 -- Should be enough to go far out for torpedo type weapons
+   aimem.guardreturndist  = 15e3
+   aimem.doscans          = false
 
    -- Now add the different patrol groups
    --local tiny_group = {
@@ -446,8 +446,8 @@ function drone_control_update ()
 
    -- Move the boss a bit away
    if main_boss and main_boss:exists() then
-      local mem = main_boss:memory()
-      mem.guardpos = vec2.new( 4000, -14000 )
+      local aimem = main_boss:memory()
+      aimem.guardpos = vec2.new( 4000, -14000 )
    end
 end
 function hacking_center_dead ()

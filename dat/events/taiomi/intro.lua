@@ -60,8 +60,8 @@ function enter ()
       for k,d in ipairs(drones) do
          d:control(false)
          d:setNoJump(true)
-         local mem = d:memory()
-         mem.loiter = math.huge -- Should make them loiter forever
+         local aimem = d:memory()
+         aimem.loiter = math.huge -- Should make them loiter forever
       end
    end
 end
@@ -225,8 +225,8 @@ The voice sounds uncanny, almost human but something sets it apart.]]))
    for k,d in ipairs(drones) do
       d:control(false)
       d:setNoJump(true)
-      local mem = d:memory()
-      mem.loiter = math.huge -- Should make them loiter forever
+      local aimem = d:memory()
+      aimem.loiter = math.huge -- Should make them loiter forever
    end
 
    -- Scavenger lands (to avoid having to do more vn stuff for now)
