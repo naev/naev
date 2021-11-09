@@ -4,10 +4,10 @@
 #include "SDL.h"
 #include "SDL_image.h"
 
-#include "../../src/glad.h"
+#include "glad.h"
 
 #define CGLTF_IMPLEMENTATION
-#include "../../src/cgltf.h"
+#include "cgltf.h"
 
 #define DEBUG printf
 #define MIN(x,y)           (((x)>(y))?(y):(x)) /**< Returns minimum. */

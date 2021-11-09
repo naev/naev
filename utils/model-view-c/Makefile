@@ -1,4 +1,4 @@
-CFLAGS=-g3 -W -Wall -Wextra $(shell pkg-config --cflags sdl2 opengl)
+CFLAGS=-g3 -W -Wall -Wextra $(shell pkg-config --cflags sdl2 opengl) -I../../src
 LIBS=$(shell pkg-config --libs sdl2 opengl) -ldl -lSDL_image
 
 main: main.c
