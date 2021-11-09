@@ -67,8 +67,8 @@ void pilot_heatCalc( Pilot *p )
  */
 double pilot_heatCalcOutfitC( const Outfit *o )
 {
-   /* Simple thermal mass. */
-   return STEEL_HEAT_CAPACITY * 1000. * o->mass;
+   /* Simple thermal mass. Put a floor on it so we get zero heat flux in case of NaN for massless outfits. */
+   return STEEL_HEAT_CAPACITY * MAX( 1000. * o->mass, 1. );
 }
 
 
