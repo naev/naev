@@ -3330,10 +3330,10 @@ static const Outfit* player_tryGetOutfit( const char *name, int q )
       WARN( _("Board: '%s'"), lua_tostring(naevL,-1));
       lua_pop(naevL,1);
    }
-   if (lua_isstring(naevL,-1))
-      o = outfit_get( lua_tostring(naevL,-1) );
-   else if (lua_isnumber(naevL,-1))
+   if (lua_isnumber(naevL,-1))
       price = round( lua_tonumber(naevL,-1) );
+   else if (lua_isstring(naevL,-1))
+      o = outfit_get( lua_tostring(naevL,-1) );
    lua_pop(naevL,1);
 
    /* No equivalent. */
