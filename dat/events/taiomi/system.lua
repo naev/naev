@@ -18,6 +18,8 @@
 local vn = require 'vn'
 local taiomi = require 'common.taiomi'
 
+local d_loiter, d_philosopher, d_scavenger, d_wornout, d_young_a, d_young_b -- Drone pilots.
+
 function create ()
    --[[
    -- Create NPCs
