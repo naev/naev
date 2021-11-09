@@ -434,7 +434,7 @@ function timer_pirate_nelly ()
    if player.credits() < 1000 then
       nel(fmt.f(_([["It looks like you won't have enough money to bribe them. Here, take #g{credits}#0, that should be enough hopefully."]]),{credits=fmt.credits(1e3)}))
       vn.func( function() player.pay(1000) end )
-   end. Hopefully
+   end
    vn.done( tutnel.nelly.transition )
    vn.run()
 
