@@ -100,7 +100,7 @@ typedef struct Object_ {
    GLfloat radius;      /**< Sphere fit on the model centered at 0,0. */
 } Object;
 
-static GLuint object_loadTexture( cgltf_texture_view *ctex )
+static GLuint object_loadTexture( const cgltf_texture_view *ctex )
 {
    GLuint tex;
 
@@ -113,9 +113,6 @@ static GLuint object_loadTexture( cgltf_texture_view *ctex )
    glTexImage2D( GL_TEXTURE_2D, 0, GL_SRGB_ALPHA,
          surface->w, surface->h, 0, surface->format->Amask ? GL_RGBA : GL_RGB, GL_UNSIGNED_BYTE, surface->pixels );
    SDL_UnlockSurface( surface );
-
-   /* read ctex->image->uri */
-   //glTexImage2D( GL_TEXTURE_2D, 0, GL_SRGB_ALPHA, w, h, 0, GL_RGBA, GL_FLOAT, data );
 
    /* Set stuff. */
    if (ctex->texture->sampler != NULL) {
@@ -140,6 +137,8 @@ static int object_loadMaterial( Material *mat, const cgltf_material *cmat )
       memcpy( mat->baseColour, cmat->pbr_metallic_roughness.base_color_factor, sizeof(mat->baseColour) );
       mat->metallicFactor  = cmat->pbr_metallic_roughness.metallic_factor;
       mat->roughnessFactor = cmat->pbr_metallic_roughness.roughness_factor;
+      mat->baseColour_tex  = object_loadTexture( &cmat->pbr_metallic_roughness.base_color_texture );
+      mat->metallic_tex = object_loadTexture( &cmat->pbr_metallic_roughness.metallic_roughness_texture );
    }
 
    if (cmat->has_clearcoat) {
