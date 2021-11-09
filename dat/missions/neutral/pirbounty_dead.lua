@@ -385,8 +385,8 @@ function spawn_pirate( param )
 
    misn.osdActive( 2 )
    target_ship = pilot.add( pship, get_faction(), param )
-   local mem = target_ship:memory()
-   mem.loiter = math.huge -- Should make them loiter forever
+   local aimem = target_ship:memory()
+   aimem.loiter = math.huge -- Should make them loiter forever
    target_ship:rename( name )
    target_ship:setHilight( true )
    hook.pilot( target_ship, "disable", "pilot_disable" )

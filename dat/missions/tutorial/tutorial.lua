@@ -391,8 +391,8 @@ function spawn_captain_tp ()
    hook.pilot( p, "death", "pilot_death" )
 
    -- Don't distress just in case
-   local mem = p:memory()
-   mem.distress = false
+   local aimem = p:memory()
+   aimem.distress = false
 
    captainTP = p
    hook.timer(7, "taunt")
