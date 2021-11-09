@@ -6,7 +6,7 @@
  <rarity>2</rarity>
  <GUI>brushed</GUI>
  <sound>engine</sound>
- <class>Bulk Carrier</class>
+ <class>Bulk Freighter</class>
  <price>4000000</price>
  <time_mod>1.375</time_mod>
  <trail_generator x="-52" y="4" h="4" />

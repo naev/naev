@@ -48,7 +48,7 @@ local function turnon( p, po )
    np:control( true )
    --[[
    local bt = s:baseType()
-   if bt=="Yacht" or bt=="Luxury Yacht" or bt=="Cruise Ship" or bt=="Courier" or bt=="Freighter" or bt=="Bulk Carrier" then
+   if bt=="Yacht" or bt=="Luxury Yacht" or bt=="Cruise Ship" or bt=="Courier" or bt=="Freighter" or bt=="Bulk Freighter" then
       -- Run away for civilian ships
       np:runaway( t, true )
    else
