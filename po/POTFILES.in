@@ -2619,6 +2619,7 @@ src/board.c
 src/board.h
 src/camera.c
 src/camera.h
+src/cgltf.h
 src/claim.c
 src/claim.h
 src/collision.c

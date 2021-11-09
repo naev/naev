@@ -186,7 +186,7 @@ function jumpin ()
    times_jumped = times_jumped+1
    event_finish = false
    local chance = math.max( (times_jumped-10)*0.05, 0 )
-   if rnd.rnd() < chance or system.cur():presence("Wild Ones") < 50 then
+   if rnd.rnd() > chance or system.cur():presence("Wild Ones") < 50 then
       return
    end
 
