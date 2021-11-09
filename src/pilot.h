@@ -31,8 +31,8 @@
 #define HYPERSPACE_ENTER_MAX     HYPERSPACE_VEL*0.4 /**< Maximum entering distance. */
 #define HYPERSPACE_EXIT_MIN      1500. /**< Minimum distance to begin jumping. */
 /* Land/takeoff. */
-#define PILOT_LANDING_DELAY      2. /**< Delay for land animation. */
-#define PILOT_TAKEOFF_DELAY      2. /**< Delay for takeoff animation. */
+#define PILOT_LANDING_DELAY      1. /**< Delay for land animation. */
+#define PILOT_TAKEOFF_DELAY      1. /**< Delay for takeoff animation. */
 /* Refueling. */
 #define PILOT_REFUEL_TIME        3. /**< Time to complete refueling. */
 #define PILOT_REFUEL_QUANTITY    100 /**< Amount transferred per refuel. */
