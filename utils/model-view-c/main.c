@@ -9,10 +9,46 @@
 #define CGLTF_IMPLEMENTATION
 #include "cgltf.h"
 
-#define DEBUG printf
-#define MIN(x,y)           (((x)>(y))?(y):(x)) /**< Returns minimum. */
+#define LOG(str, args...)     (fprintf(stdout, str"\n", ## args))
+#define DEBUG(str, args...)   (fprintf(stdout, str"\n", ## args))
+#define WARN(str, args...)    (fprintf(stderr, "WARNING %s:%d [%s]: ", __FILE__, __LINE__, __func__), fprintf(stderr, str"\n", ## args))
+#define MIN(x,y)              (((x)>(y))?(y):(x)) /**< Returns minimum. */
 
 #define DEBUGGING 1
+
+#define gl_checkErr()   gl_checkHandleError( __func__, __LINE__ )
+static void gl_checkHandleError( const char *func, int line )
+{
+   const char* errstr;
+   GLenum err = glGetError();
+
+   /* No error. */
+   if (err == GL_NO_ERROR)
+      return;
+
+   switch (err) {
+      case GL_INVALID_ENUM:
+         errstr = "GL invalid enum";
+         break;
+      case GL_INVALID_VALUE:
+         errstr = "GL invalid value";
+         break;
+      case GL_INVALID_OPERATION:
+         errstr = "GL invalid operation";
+         break;
+      case GL_INVALID_FRAMEBUFFER_OPERATION:
+         errstr = "GL invalid framebuffer operation";
+         break;
+      case GL_OUT_OF_MEMORY:
+         errstr = "GL out of memory";
+         break;
+
+      default:
+         errstr = "GL unknown error";
+         break;
+   }
+   WARN("OpenGL error [%s:%d]: %s", func, line, errstr);
+}
 
 typedef struct glTexture_ {
    char *name; /**< name of the graphic */
@@ -131,6 +167,8 @@ static GLuint object_loadTexture( const cgltf_texture_view *ctex )
 
    glBindTexture( GL_TEXTURE_2D, 0 );
 
+   gl_checkErr();
+
    return tex;
 }
 
@@ -171,6 +209,7 @@ static GLuint object_loadVBO( cgltf_accessor *acc )
    glBufferData( GL_ARRAY_BUFFER, sizeof(cgltf_float) * num, dat, GL_STATIC_DRAW );
    glBindBuffer( GL_ARRAY_BUFFER, 0 );
 
+   gl_checkErr();
    free( dat );
    return vid;
 }
@@ -210,6 +249,7 @@ static int object_loadNodeRecursive( cgltf_data *data, Node *node, const cgltf_n
          glBufferData( GL_ELEMENT_ARRAY_BUFFER, sizeof(cgltf_uint) * num, idx, GL_STATIC_DRAW );
          mesh->nidx = acc->count;
          glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, 0 );
+         gl_checkErr();
 
          for (size_t j=0; j<prim->attributes_count; j++) {
             cgltf_attribute *attr = &prim->attributes[j];
@@ -320,6 +360,8 @@ void object_renderNode( const Object *obj, const Node *node, GLfloat H[16] )
    /* Draw children. */
    for (size_t i=0; i<node->nchildren; i++)
       object_renderNode( obj, &node->children[i], H );
+   
+   gl_checkErr();
 }
 
 void object_render( Object *obj )
@@ -389,7 +431,8 @@ int main( int argc, char *argv[] )
    SDL_Init( SDL_INIT_VIDEO );
    SDL_GL_SetAttribute( SDL_GL_CONTEXT_MAJOR_VERSION, 3 );
    SDL_GL_SetAttribute( SDL_GL_CONTEXT_MINOR_VERSION, 3 );
-   SDL_Window *win = SDL_CreateWindow( "SDL Tutorial", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 640, 480, SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN );
+   SDL_Window *win = SDL_CreateWindow( "SDL Tutorial", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 1280, 720, SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN );
+   SDL_SetWindowTitle( win, "Naev Model Viewer" );
    SDL_GL_CreateContext( win );
    gladLoadGLLoader(SDL_GL_GetProcAddress);
 
@@ -397,6 +440,36 @@ int main( int argc, char *argv[] )
 
    //Object *obj = object_loadFromFile( "simple.gltf" );
    Object *obj = object_loadFromFile( "admonisher.gltf" );
+   gl_checkErr();
+
+   int quit = 0;
+   while (!quit) {
+      SDL_Event event;
+      while (SDL_PollEvent( &event )) {
+         if (event.type == SDL_QUIT)
+            quit = 1;
+         else if (event.type == SDL_KEYDOWN) {
+            SDL_Keycode key = event.key.keysym.sym;
+            switch (key) {
+               case SDLK_q:
+               case SDLK_ESCAPE:
+                  quit = 1;
+                  break;
+
+               default:
+                  break;
+            }
+         }
+      }
+      glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+      object_render( obj );
+
+      SDL_GL_SwapWindow( win );
+
+      gl_checkErr();
+   }
+
    object_free( obj );
 
    return 0;
