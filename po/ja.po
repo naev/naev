@@ -31,7 +31,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2021-11-07 17:28-0500\n"
+"POT-Creation-Date: 2021-11-08 23:11-0500\n"
 "PO-Revision-Date: 2021-10-31 14:27+0000\n"
 "Last-Translator: OOTA, Masato <ooyooxei+gh@gmail.com>\n"
 "Language-Team: Japanese <https://hosted.weblate.org/projects/naev/naev/ja/>\n"
@@ -13310,7 +13310,7 @@ msgstr ""
 #. Get a system with both FLF and Pirate presence.
 #. Change the reputation cap for the FLF.
 #. Add an entry to the FLF campaign log.
-#: dat/faction.xml:450 dat/events/flf/flf_catastrophe.lua:98
+#: dat/faction.xml:450 dat/events/flf/flf_catastrophe.lua:100
 #: dat/missions/flf/flf_common.lua:71
 msgid "FLF"
 msgstr "FLF"
@@ -13613,8 +13613,8 @@ msgstr "DHC"
 #. I use Thugs and Associates based factions because they won't interact with anybody
 #. mass of the player's victims
 #. The heaviest ships will surround the leader
-#: dat/faction.xml:739 dat/events/dvaered/warlords_battle.lua:187
-#: dat/events/dvaered/warlords_battle.lua:228
+#: dat/faction.xml:739 dat/events/dvaered/warlords_battle.lua:189
+#: dat/events/dvaered/warlords_battle.lua:230
 msgid "Warlords"
 msgstr "軍閥領袖"
 
@@ -20812,7 +20812,7 @@ msgid "Corvus"
 msgstr "コルウス"
 
 #. Create the OSD
-#: dat/ssys/crimson_gauntlet.xml:2 dat/events/dvaered/totoran.lua:128
+#: dat/ssys/crimson_gauntlet.xml:2 dat/events/dvaered/totoran.lua:131
 #: dat/missions/dvaered/gauntlet/gauntlet.lua:80
 msgid "Crimson Gauntlet"
 msgstr "クリムゾン・ガントレット"
@@ -22654,7 +22654,7 @@ msgstr "燃料をやるつもりはない！"
 #. Spawn
 #: dat/ai/base.lua:7 dat/ai/collective.lua:9 dat/ai/drone_miner.lua:9
 #: dat/missions/dvaered/gauntlet/gauntlet.lua:290
-#: dat/missions/minerva/kex5.lua:295 dat/missions/tutorial/nelly02.lua:240
+#: dat/missions/minerva/kex5.lua:295 dat/missions/tutorial/nelly02.lua:239
 msgid "No response."
 msgstr "反応なし。"
 
@@ -25104,7 +25104,7 @@ msgid ""
 msgstr ""
 "｢浮遊する破片のかたまりにしないでおくのに、すくなくとも {credits} は必要だ｣"
 
-#: dat/comm.lua:144 dat/comm.lua:441
+#: dat/comm.lua:144 dat/comm.lua:444
 msgid ""
 "{msg}\n"
 "\n"
@@ -25143,11 +25143,11 @@ msgstr "｢かねではもうおまえは隠れたままではいられない！
 
 #. Disable rebribes
 #. Disable rebribes
-#: dat/comm.lua:233 dat/comm.lua:296 dat/comm.lua:342 dat/comm.lua:444
+#: dat/comm.lua:233 dat/comm.lua:296 dat/comm.lua:342 dat/comm.lua:447
 msgid "Pay"
 msgstr "支払う"
 
-#: dat/comm.lua:234 dat/comm.lua:297 dat/comm.lua:343 dat/comm.lua:445
+#: dat/comm.lua:234 dat/comm.lua:297 dat/comm.lua:343 dat/comm.lua:448
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:660
 #: dat/missions/neutral/aristodrink.lua:73
 msgid "Refuse"
@@ -25198,7 +25198,7 @@ msgstr "このパイロットはもうあなたに燃料補給しています。
 msgid "\"I should be able to refuel you for {credits}.\""
 msgstr "｢{credits} で燃料補給ができるはずだ｣"
 
-#: dat/comm.lua:452
+#: dat/comm.lua:455
 msgid ""
 "You only have {credits} credits. You need #r{cdif}#0 more to be able to "
 "afford the refueling!"
@@ -25206,7 +25206,7 @@ msgstr ""
 "あなたは {credits} しかもっていない。必要な #r{cdif}#0 は、燃料補給のために使"
 "える金額をこえている！"
 
-#: dat/comm.lua:469
+#: dat/comm.lua:472
 msgid "\"On my way.\""
 msgstr "｢向かっている｣"
 
@@ -25228,15 +25228,16 @@ msgstr "｢向かっている｣"
 #.
 #.
 #. This is the first of many planned eye candy cinematics.
-#. In this one, there will be a battle between the Dvaered and the FLF in the Doranthex system.
+#. In this one, there will be a battle between the Dvaered and the FLF in the Tuoladis system.
 #.
 #.
 #.
-#: dat/events/cinematic/DvdFLFbattle.lua:29
+#. Non-persistent state
+#: dat/events/cinematic/DvdFLFbattle.lua:30
 msgid "Dvaered forces engaged in combat with small terrorist group"
 msgstr ""
 
-#: dat/events/cinematic/DvdFLFbattle.lua:30
+#: dat/events/cinematic/DvdFLFbattle.lua:31
 msgid ""
 "In what the Dvaered call a 'Mighty victory', a Dvaered force was attacked "
 "and damaged by a small group of underequipped and unorganized FLF, in the "
@@ -25246,11 +25247,11 @@ msgid ""
 "leading to more internal strife and violence."
 msgstr ""
 
-#: dat/events/cinematic/DvdFLFbattle.lua:36
+#: dat/events/cinematic/DvdFLFbattle.lua:37
 msgid "FLF terrorists blasted by joint Dvaered military forces"
 msgstr ""
 
-#: dat/events/cinematic/DvdFLFbattle.lua:37
+#: dat/events/cinematic/DvdFLFbattle.lua:38
 msgid ""
 "A Dvaered patrol in Tuoladis was ambushed by a large gang of FLF terrorists. "
 "The Dvaered patrol held  under the assault, until the mighty hammer that is "
@@ -25260,11 +25261,11 @@ msgid ""
 "protect its citizens and kill and conquer those who would harm them."
 msgstr ""
 
-#: dat/events/cinematic/DvdFLFbattle.lua:43
+#: dat/events/cinematic/DvdFLFbattle.lua:44
 msgid "Dvaered forces engage FLF freedom fighters in open combat"
 msgstr ""
 
-#: dat/events/cinematic/DvdFLFbattle.lua:44
+#: dat/events/cinematic/DvdFLFbattle.lua:45
 msgid ""
 "A small group of FLF freedom fighters was beset by a Dvaered patrol in "
 "Tuoladis, who immediately called backup. The situation escalated, and a "
@@ -25275,11 +25276,11 @@ msgid ""
 "death."
 msgstr ""
 
-#: dat/events/cinematic/DvdFLFbattle.lua:50
+#: dat/events/cinematic/DvdFLFbattle.lua:51
 msgid "Dvaered, FLF clash in Tuoladis"
 msgstr ""
 
-#: dat/events/cinematic/DvdFLFbattle.lua:51
+#: dat/events/cinematic/DvdFLFbattle.lua:52
 msgid ""
 "In a chance encounter, a Dvaered patrol encountered a group of FLF. The "
 "small skirmish quickly escalated to a large scale battle many dozens large, "
@@ -25466,25 +25467,26 @@ msgstr "#Hドリーマー一味の領域#0"
 msgid "#HPiracy to Rebel against Reality#0"
 msgstr "#H現実に反逆するための海賊行為#0"
 
+#. function forward-declaration
+#. non-persistent state
 #. sfx = audio.newSource( 'snd/sounds/jingles/success.ogg' )
 #. Don't trigger if already done
 #. Trigger
 #. Nothing triggered
 #. Ends when player lands or leaves either way
-#. function forward-declaration
-#: dat/events/discovery.lua:363
+#: dat/events/discovery.lua:364
 #, lua-format
 msgid "You found #o%s - %s!"
 msgstr "あなたは#o%s#0を見つけた⸺#o%s！"
 
 #. Log and message
-#: dat/events/discovery.lua:366 src/map.c:1880
+#: dat/events/discovery.lua:367 src/map.c:1880
 msgid "Discovery"
 msgstr "発見物"
 
 #. the probability of ambushes will change
 #. In the first ambush, there will be a little surprise text
-#: dat/events/discovery.lua:366 dat/events/shiplog.lua:23
+#: dat/events/discovery.lua:367 dat/events/shiplog.lua:23
 #: dat/missions/shark/sh04_meeting.lua:51
 msgid "Travel"
 msgstr "旅"
@@ -25965,158 +25967,159 @@ msgstr "壁に貼り紙がある。"
 #.
 #. -- Event handling NPCs and such at Totoran
 #. --
-#: dat/events/dvaered/totoran.lua:20
+#. Unsaved global tables
+#: dat/events/dvaered/totoran.lua:23
 msgid "Spectator"
 msgstr ""
 
-#: dat/events/dvaered/totoran.lua:21
+#: dat/events/dvaered/totoran.lua:24
 msgid "Aficionado"
 msgstr ""
 
-#: dat/events/dvaered/totoran.lua:22
+#: dat/events/dvaered/totoran.lua:25
 msgid "Gauntlet Fan"
 msgstr ""
 
-#: dat/events/dvaered/totoran.lua:25
+#: dat/events/dvaered/totoran.lua:28
 msgid "A person enjoying their time at the station."
 msgstr ""
 
-#: dat/events/dvaered/totoran.lua:26
+#: dat/events/dvaered/totoran.lua:29
 msgid "An individual taking a break from viewing the action."
 msgstr ""
 
-#: dat/events/dvaered/totoran.lua:27
+#: dat/events/dvaered/totoran.lua:30
 msgid "A spectator that looks strangely out of place."
 msgstr ""
 
-#: dat/events/dvaered/totoran.lua:28
+#: dat/events/dvaered/totoran.lua:31
 msgid "A person enjoying some drinks."
 msgstr ""
 
-#: dat/events/dvaered/totoran.lua:31
+#: dat/events/dvaered/totoran.lua:34
 msgid ""
 "\"Sometimes when watching some of the competitions, I forget it is all just "
 "virtual reality.\""
 msgstr ""
 
-#: dat/events/dvaered/totoran.lua:32
+#: dat/events/dvaered/totoran.lua:35
 msgid ""
 "\"The realism of virtual reality here is impressive! It almost feels like "
 "it's real!\""
 msgstr ""
 
-#: dat/events/dvaered/totoran.lua:34 dat/events/minerva/station.lua:68
+#: dat/events/dvaered/totoran.lua:37 dat/events/minerva/station.lua:71
 msgid ""
 "\"I came all the way from {pnt} to be here! We don't have anything like this "
 "back at home.\""
 msgstr ""
 
 #. No Dvaered
-#: dat/events/dvaered/totoran.lua:37
+#: dat/events/dvaered/totoran.lua:40
 msgid ""
 "\"The Dvaered sure know how to put on a good show. I love seeing it rain "
 "Mace Rockets!\""
 msgstr ""
 
-#: dat/events/dvaered/totoran.lua:38
+#: dat/events/dvaered/totoran.lua:41
 msgid ""
 "\"It's a shame that they require you to own the ship you want to use to "
 "enter the virtual reality competitions. I would love to try fly one of those "
 "majestic Dvaered Goddards.\""
 msgstr ""
 
-#: dat/events/dvaered/totoran.lua:39
+#: dat/events/dvaered/totoran.lua:42
 msgid ""
 "\"I like watching the competitions between fighters, it's incredible all the "
 "moves they can pull off.\""
 msgstr ""
 
-#: dat/events/dvaered/totoran.lua:40
+#: dat/events/dvaered/totoran.lua:43
 msgid ""
 "\"I tried to compete in my Llama, but it doesn't stand a chance against even "
 "a single Hyena.\""
 msgstr ""
 
-#: dat/events/dvaered/totoran.lua:41
+#: dat/events/dvaered/totoran.lua:44
 msgid ""
 "\"I was always told that Dvaered technology was primitive, but the virtual "
 "reality of the Crimson Gauntlet is incredible!\""
 msgstr ""
 
-#: dat/events/dvaered/totoran.lua:42
+#: dat/events/dvaered/totoran.lua:45
 msgid ""
 "\"There's nothing quite like seeing two capital ships duke it out. I love "
 "watching railguns blasting away.\""
 msgstr ""
 
-#: dat/events/dvaered/totoran.lua:43
+#: dat/events/dvaered/totoran.lua:46
 msgid ""
 "\"I used to think the Za'lek virtual games were great, but this is so much "
 "better!\""
 msgstr ""
 
-#: dat/events/dvaered/totoran.lua:46
+#: dat/events/dvaered/totoran.lua:49
 msgid "Gauntlet Pilot"
 msgstr ""
 
-#: dat/events/dvaered/totoran.lua:47
+#: dat/events/dvaered/totoran.lua:50
 msgid "Resting Pilot"
 msgstr ""
 
-#: dat/events/dvaered/totoran.lua:48
+#: dat/events/dvaered/totoran.lua:51
 msgid "Tired Pilot"
 msgstr ""
 
-#: dat/events/dvaered/totoran.lua:51
+#: dat/events/dvaered/totoran.lua:54
 msgid "A pilot enjoying some downtime between competitions."
 msgstr ""
 
-#: dat/events/dvaered/totoran.lua:52
+#: dat/events/dvaered/totoran.lua:55
 msgid "A tired pilot taking a break."
 msgstr ""
 
-#: dat/events/dvaered/totoran.lua:53
+#: dat/events/dvaered/totoran.lua:56
 msgid "A pilot lounging around."
 msgstr ""
 
-#: dat/events/dvaered/totoran.lua:56
+#: dat/events/dvaered/totoran.lua:59
 msgid ""
 "\"Some people say that the Crimson gauntlet encourages and promotes "
 "violence, but I've been destroying ships long before I started participating "
 "in the Crimson Gauntlet!\""
 msgstr ""
 
-#: dat/events/dvaered/totoran.lua:58
+#: dat/events/dvaered/totoran.lua:61
 msgid ""
 "\"Hey, didn't I see you flying a {ship} in the Crimson Gauntlet? Nice flying."
 "\""
 msgstr ""
 
-#: dat/events/dvaered/totoran.lua:61
+#: dat/events/dvaered/totoran.lua:64
 msgid ""
 "\"I was doing so well in my Hyena, but it just lacks the firepower to take "
 "on larger ships. Maybe I should upgrade to a Vendetta.\""
 msgstr ""
 
-#: dat/events/dvaered/totoran.lua:62
+#: dat/events/dvaered/totoran.lua:65
 msgid ""
 "\"The Crimson Gauntlet has really taught me to appreciate the small things "
 "in life, you know, blowing up your enemies with mace rockets and such.\""
 msgstr ""
 
-#: dat/events/dvaered/totoran.lua:63
+#: dat/events/dvaered/totoran.lua:66
 msgid ""
 "\"I used to be a pretty sloppy pilot before participating in the Crimson "
 "Gauntlet. I still am, but I used to be too.\""
 msgstr ""
 
-#: dat/events/dvaered/totoran.lua:64
+#: dat/events/dvaered/totoran.lua:67
 msgid ""
 "\"Sometimes I get motion sickness from the virtual reality. What's more "
 "troublesome is it also happens when I fly my real ship!\""
 msgstr ""
 
-#: dat/events/dvaered/totoran.lua:65
+#: dat/events/dvaered/totoran.lua:68
 msgid ""
 "\"Sometimes when I get blown up in Crimson Gauntlet, it takes me a while to "
 "realize I haven't actually been blown up to smithereens.\""
@@ -26125,28 +26128,28 @@ msgstr ""
 #. Create random noise NPCs while avoiding duplicate messages
 #. Custom NPCs
 #. Just do random noise
-#: dat/events/dvaered/totoran.lua:115
+#: dat/events/dvaered/totoran.lua:118
 msgid "You approach the Crimson Gauntlet guide."
 msgstr ""
 
-#: dat/events/dvaered/totoran.lua:117
+#: dat/events/dvaered/totoran.lua:120
 msgid ""
 "\"Hello and welcome to the Crimson Gauntlet! You have {emblems}. What would "
 "you like to do?\""
 msgstr ""
 
-#: dat/events/dvaered/totoran.lua:119 dat/events/minerva/station.lua:213
+#: dat/events/dvaered/totoran.lua:122 dat/events/minerva/station.lua:216
 msgid "Information"
 msgstr ""
 
-#: dat/events/dvaered/totoran.lua:120
+#: dat/events/dvaered/totoran.lua:123
 msgid "Trade Emblems"
 msgstr ""
 
 #. TODO add some other more info text
-#: dat/events/dvaered/totoran.lua:121 dat/events/minerva/station.lua:215
-#: dat/events/minerva/station.lua:407 dat/events/minerva/station.lua:483
-#: dat/events/minerva/station.lua:596 dat/missions/minerva/kex1.lua:128
+#: dat/events/dvaered/totoran.lua:124 dat/events/minerva/station.lua:218
+#: dat/events/minerva/station.lua:410 dat/events/minerva/station.lua:486
+#: dat/events/minerva/station.lua:599 dat/missions/minerva/kex1.lua:128
 #: dat/missions/minerva/kex2.lua:151 dat/missions/minerva/kex3.lua:190
 #: dat/missions/minerva/kex4.lua:189 dat/missions/minerva/maikki1.lua:189
 #: dat/missions/minerva/maikki1.lua:276 dat/missions/minerva/maikki1.lua:518
@@ -26157,27 +26160,27 @@ msgstr ""
 msgid "Leave"
 msgstr "離れる"
 
-#: dat/events/dvaered/totoran.lua:125
+#: dat/events/dvaered/totoran.lua:128
 msgid "What would you like to know about?"
 msgstr ""
 
-#: dat/events/dvaered/totoran.lua:129
+#: dat/events/dvaered/totoran.lua:132
 msgid "Gauntlet History"
 msgstr ""
 
-#: dat/events/dvaered/totoran.lua:130
+#: dat/events/dvaered/totoran.lua:133
 msgid "Crimson Challenge"
 msgstr ""
 
-#: dat/events/dvaered/totoran.lua:131
+#: dat/events/dvaered/totoran.lua:134
 msgid "Totoran Emblems"
 msgstr ""
 
-#: dat/events/dvaered/totoran.lua:132
+#: dat/events/dvaered/totoran.lua:135
 msgid "Nothing."
 msgstr ""
 
-#: dat/events/dvaered/totoran.lua:136
+#: dat/events/dvaered/totoran.lua:139
 msgid ""
 "The Crimson Gauntlet is allows you to experience combat with your ships in "
 "virtual reality, without having to worry about any real damage. All you do "
@@ -26186,7 +26189,7 @@ msgid ""
 msgstr ""
 
 #. incident is 593:3726.4663
-#: dat/events/dvaered/totoran.lua:141
+#: dat/events/dvaered/totoran.lua:144
 msgid ""
 "The Crimson Gauntlet was founded originally in mid-UST 568, as a program for "
 "training Dvaered Military. Of course, back then they did not have such good "
@@ -26196,7 +26199,7 @@ msgid ""
 "full immersion virtual reality experiences in the Universe."
 msgstr ""
 
-#: dat/events/dvaered/totoran.lua:142
+#: dat/events/dvaered/totoran.lua:145
 msgid ""
 "Eventually, to encourage the warrior spirit among the general population, in "
 "UST 588, 20 cycles after its creation, the Crimson Gauntlet was open to the "
@@ -26206,14 +26209,14 @@ msgid ""
 "of the virtual reality environment."
 msgstr ""
 
-#: dat/events/dvaered/totoran.lua:143
+#: dat/events/dvaered/totoran.lua:146
 msgid ""
 "Many famous pilots have had their formation here, and it is also frequented "
 "by scouting agencies from across the Universe to find good pilots. Not to "
 "mention all the prizes that can be won from competing in the tournaments."
 msgstr ""
 
-#: dat/events/dvaered/totoran.lua:147
+#: dat/events/dvaered/totoran.lua:150
 msgid ""
 "The Crimson Gauntlet Challenge is a set of challenges split into three "
 "types: skirmisher, for small ships like fighters and bombers; warrior, for "
@@ -26222,7 +26225,7 @@ msgid ""
 "waves of increasingly hard opponents which you must defeat."
 msgstr ""
 
-#: dat/events/dvaered/totoran.lua:148
+#: dat/events/dvaered/totoran.lua:151
 msgid ""
 "You get bonus points depending on your ship class with respect to the "
 "category. Using smaller ships will give you a bonus in general. You also get "
@@ -26232,50 +26235,50 @@ msgid ""
 "ships!"
 msgstr ""
 
-#: dat/events/dvaered/totoran.lua:156
+#: dat/events/dvaered/totoran.lua:159
 msgid "Is there anything else you would like to know about?"
 msgstr ""
 
-#: dat/events/dvaered/totoran.lua:160
+#: dat/events/dvaered/totoran.lua:163
 msgid "\"You have {emblems}. What would you like to trade for?\""
 msgstr ""
 
-#: dat/events/dvaered/totoran.lua:162
+#: dat/events/dvaered/totoran.lua:165
 msgid "Unlock Warrior Challenge"
 msgstr ""
 
-#: dat/events/dvaered/totoran.lua:163
+#: dat/events/dvaered/totoran.lua:166
 msgid ""
 "Unlocks participation in the difficult Warrior Challenge meant for Corvette "
 "and Destroyer-class ships."
 msgstr ""
 
-#: dat/events/dvaered/totoran.lua:164
+#: dat/events/dvaered/totoran.lua:167
 msgid "Unlock Warlord Challenge"
 msgstr ""
 
-#: dat/events/dvaered/totoran.lua:165
+#: dat/events/dvaered/totoran.lua:168
 msgid ""
 "Unlocks participation in the most difficult Warlord Challenge meant for "
 "Cruiser, Carrier, and Battleship-class ships."
 msgstr ""
 
-#: dat/events/dvaered/totoran.lua:167
+#: dat/events/dvaered/totoran.lua:170
 msgid "Unlock Double Damage Enemies Perk"
 msgstr ""
 
-#: dat/events/dvaered/totoran.lua:168
+#: dat/events/dvaered/totoran.lua:171
 msgid ""
 "Unlocks the Double Damage Enemies Perk, which causes all enemies to double "
 "the amount of damage. While this increases the challenge difficulty, it also "
 "immensely increases the rewards."
 msgstr ""
 
-#: dat/events/dvaered/totoran.lua:169
+#: dat/events/dvaered/totoran.lua:172
 msgid "Unlock No Healing Perk"
 msgstr ""
 
-#: dat/events/dvaered/totoran.lua:170
+#: dat/events/dvaered/totoran.lua:173
 msgid ""
 "Unlocks the No Healing Perk, which makes it so you don't get healed between "
 "waves. While this increases the challenge difficulty, it also increases the "
@@ -26288,54 +26291,54 @@ msgstr ""
 #. Special case
 #. Not enough money.
 #. Not enough money.
-#: dat/events/dvaered/totoran.lua:192 dat/events/dvaered/totoran.lua:242
-#: dat/events/minerva/station.lua:308 dat/events/minerva/station.lua:352
+#: dat/events/dvaered/totoran.lua:195 dat/events/dvaered/totoran.lua:245
+#: dat/events/minerva/station.lua:311 dat/events/minerva/station.lua:355
 msgid "unknown tradein type"
 msgstr ""
 
-#: dat/events/dvaered/totoran.lua:208
+#: dat/events/dvaered/totoran.lua:211
 #: dat/missions/empire/collective/ec03.lua:54 src/map_find.c:427
 #, c-format, lua-format
 msgid "%s (%s)"
 msgstr "%s (%s)"
 
-#: dat/events/dvaered/totoran.lua:211 dat/events/minerva/station.lua:228
-#: dat/events/minerva/station.lua:328 src/load.c:369
+#: dat/events/dvaered/totoran.lua:214 dat/events/minerva/station.lua:231
+#: dat/events/minerva/station.lua:331 src/load.c:369
 msgid "Back"
 msgstr "戻る"
 
-#: dat/events/dvaered/totoran.lua:216
+#: dat/events/dvaered/totoran.lua:219
 msgid ""
 "\"You only have {emblems}, you would need {emblems_more} more to purchase "
 "the '{item}'.\n"
 "Is there anything else you would like to purchase?\""
 msgstr ""
 
-#: dat/events/dvaered/totoran.lua:226
+#: dat/events/dvaered/totoran.lua:229
 msgid ""
 "\"Are you sure you want to trade in for the '#w{name}#0'? The description is "
 "as follows:\"\n"
 "#w{description}#0\""
 msgstr ""
 
-#: dat/events/dvaered/totoran.lua:231 dat/events/minerva/station.lua:340
-#: dat/events/minerva/station.lua:367
+#: dat/events/dvaered/totoran.lua:234 dat/events/minerva/station.lua:343
+#: dat/events/minerva/station.lua:370
 msgid "Trade"
 msgstr ""
 
-#: dat/events/dvaered/totoran.lua:232 dat/events/minerva/station.lua:341
-#: dat/events/minerva/station.lua:368 dat/missions/dvaered/gauntlet/gui.lua:197
+#: dat/events/dvaered/totoran.lua:235 dat/events/minerva/station.lua:344
+#: dat/events/minerva/station.lua:371 dat/missions/dvaered/gauntlet/gui.lua:197
 #: dat/rescue.lua:304 dat/rescue.lua:315 src/dialogue.c:720 src/escort.c:303
 #: src/map_find.c:240 src/options.c:256 src/options.c:775 src/options.c:879
 #: src/options.c:1130 src/options.c:1182
 msgid "Cancel"
 msgstr "取り消し"
 
-#: dat/events/dvaered/totoran.lua:246
+#: dat/events/dvaered/totoran.lua:249
 msgid "\"Hope you enjoy your purchase!\""
 msgstr ""
 
-#: dat/events/dvaered/totoran.lua:250 dat/events/minerva/station.lua:630
+#: dat/events/dvaered/totoran.lua:253 dat/events/minerva/station.lua:633
 #: dat/missions/minerva/kex1.lua:225 dat/missions/minerva/kex2.lua:205
 #: dat/missions/minerva/kex3.lua:225 dat/missions/minerva/kex4.lua:224
 #: dat/missions/minerva/maikki1.lua:351 dat/missions/minerva/maikki2.lua:567
@@ -26361,6 +26364,7 @@ msgstr ""
 #. </event>
 #. --
 #. A battle between two Dvaered warlords. The player can join one of them and get a reward
+#. Unsaved global tables
 #. thissystem and source_system must be adjacent (for those who use player.teleport)
 #. choose 1 particular planet
 #. choose only Dvaered planets (and no stations)
@@ -26368,17 +26372,17 @@ msgstr ""
 #. People are in formation
 #. Battle is happening
 #. Spawns a merchant ship that explains what happens
-#: dat/events/dvaered/warlords_battle.lua:74
+#: dat/events/dvaered/warlords_battle.lua:76
 #, fuzzy
 #| msgid "Trader Rhino"
 msgid "Trader {ship}"
 msgstr "貿易商ライノ"
 
-#: dat/events/dvaered/warlords_battle.lua:85
+#: dat/events/dvaered/warlords_battle.lua:87
 msgid "A battle is about to begin"
 msgstr "戦いが始まろうとしている"
 
-#: dat/events/dvaered/warlords_battle.lua:85
+#: dat/events/dvaered/warlords_battle.lua:87
 msgid ""
 "\"Hey, you,\" the captain of the ship says. \"You seem not to know what is "
 "going to happen here: a mighty warlord from {sys} is going to attack {pnt}. "
@@ -26393,11 +26397,11 @@ msgstr ""
 "いに負ければ、別の領袖があなたに報いる。でももし攻撃した軍閥領袖が勝てば、あ"
 "なたは狩りたてられる｣"
 
-#: dat/events/dvaered/warlords_battle.lua:96
+#: dat/events/dvaered/warlords_battle.lua:98
 msgid "Here comes your reward"
 msgstr "報いがやってきた"
 
-#: dat/events/dvaered/warlords_battle.lua:96
+#: dat/events/dvaered/warlords_battle.lua:98
 msgid ""
 "\"Hello captain,\" a Dvaered officer says, \"You helped us in this battle. I "
 "am authorized to give you {credits} as a reward.\""
@@ -26473,21 +26477,22 @@ msgstr ""
 #. The FLF Catastrophe
 #.
 #. --
+#. Unsaved global tables
 #. Event constants
-#: dat/events/flf/flf_catastrophe.lua:57 dat/events/flf/flf_catastrophe.lua:58
-#: dat/events/flf/flf_catastrophe.lua:60 dat/events/flf/flf_catastrophe.lua:62
-#: dat/events/flf/flf_catastrophe.lua:63
+#: dat/events/flf/flf_catastrophe.lua:59 dat/events/flf/flf_catastrophe.lua:60
+#: dat/events/flf/flf_catastrophe.lua:62 dat/events/flf/flf_catastrophe.lua:64
+#: dat/events/flf/flf_catastrophe.lua:65
 msgid "Catastrophe Looms"
 msgstr ""
 
-#: dat/events/flf/flf_catastrophe.lua:57
+#: dat/events/flf/flf_catastrophe.lua:59
 msgid ""
 "As you enter the bar on Sindbad, you immediately know that something is "
 "wrong. Everyone is frantic and you sense dread around your comrades. You are "
 "about to ask around when Benito approaches."
 msgstr ""
 
-#: dat/events/flf/flf_catastrophe.lua:58
+#: dat/events/flf/flf_catastrophe.lua:60
 msgid ""
 "\"{player}, it's horrible,\" she says with a look of dread in her eyes. "
 "\"They found us. The damn Empire found us! I'm going to be frank, I don't "
@@ -26499,7 +26504,7 @@ msgid ""
 "hidden jumps are! This is terrible!\""
 msgstr ""
 
-#: dat/events/flf/flf_catastrophe.lua:60
+#: dat/events/flf/flf_catastrophe.lua:62
 msgid ""
 "\"Listen, we don't have much longer. A combined Empire and Dvaered fleet is "
 "just about to enter from {sys}. They have Peacemakers, Hawkings, Goddards, "
@@ -26514,7 +26519,7 @@ msgid ""
 "to man the station; our defenses are weak, but better than nothing.\""
 msgstr ""
 
-#: dat/events/flf/flf_catastrophe.lua:62
+#: dat/events/flf/flf_catastrophe.lua:64
 msgid ""
 "Silence seems to engulf the room. You see the mouths of your comrades "
 "frantically talking, but you cannot hear them. Benito puts her hand on your "
@@ -26523,7 +26528,7 @@ msgid ""
 "then hurriedly exits toward the station's weapon controls room."
 msgstr ""
 
-#: dat/events/flf/flf_catastrophe.lua:63
+#: dat/events/flf/flf_catastrophe.lua:65
 msgid ""
 "There's no time to lose. You go to the hangar bay and immediately take off."
 msgstr ""
@@ -26536,18 +26541,18 @@ msgstr ""
 #. Player decided to help destroy Sindbad for some reason. Set FLF
 #. reputation to "enemy", add a log entry, and finish the event
 #. without giving the usual rewards.
-#: dat/events/flf/flf_catastrophe.lua:221
+#: dat/events/flf/flf_catastrophe.lua:223
 msgid ""
 "You turned on the FLF and helped the Empire and the Dvaereds destroy Sindbad "
 "for some reason."
 msgstr ""
 
-#: dat/events/flf/flf_catastrophe.lua:234
 #: dat/events/flf/flf_catastrophe.lua:236
+#: dat/events/flf/flf_catastrophe.lua:238
 msgid "Escape and Live On"
 msgstr ""
 
-#: dat/events/flf/flf_catastrophe.lua:234
+#: dat/events/flf/flf_catastrophe.lua:236
 msgid ""
 "As the last shot penetrates the hull of Sindbad, a sense of dread comes over "
 "you. The FLF, Benito, your comrades... no...\n"
@@ -26556,7 +26561,7 @@ msgid ""
 "sirens and explosions in the background, but you pay them no mind."
 msgstr ""
 
-#: dat/events/flf/flf_catastrophe.lua:236
+#: dat/events/flf/flf_catastrophe.lua:238
 msgid ""
 "\"Well, this is it, soldier. My last transmission to you. I can't say I "
 "wanted it to go this way, but...\n"
@@ -26570,7 +26575,7 @@ msgid ""
 "in a fiery explosion."
 msgstr ""
 
-#: dat/events/flf/flf_catastrophe.lua:240
+#: dat/events/flf/flf_catastrophe.lua:242
 msgid ""
 "The Empire discovered Sindbad. Try as you might, you and your comrades could "
 "not stop the combined onslaught of the Empire and the Dvaereds, and Sindbad "
@@ -26582,13 +26587,13 @@ msgid ""
 "short, but memorable: \"Goodbye, {player}. Stay vigilant.\""
 msgstr ""
 
-#: dat/events/flf/flf_catastrophe.lua:275
 #: dat/events/flf/flf_catastrophe.lua:277
 #: dat/events/flf/flf_catastrophe.lua:279
+#: dat/events/flf/flf_catastrophe.lua:281
 msgid "Strange Happenings"
 msgstr ""
 
-#: dat/events/flf/flf_catastrophe.lua:275
+#: dat/events/flf/flf_catastrophe.lua:277
 msgid ""
 "Your instruments go haywire and your ship goes dark. You swear under your "
 "breath as you try to get the system back online. This isn't good. How could "
@@ -26599,7 +26604,7 @@ msgid ""
 "silently for what seems like an eternity. Finally, she speaks up."
 msgstr ""
 
-#: dat/events/flf/flf_catastrophe.lua:277
+#: dat/events/flf/flf_catastrophe.lua:279
 msgid ""
 "\"So the FLF is dead, I see. Well, not so much dead as a shadow of its "
 "former self. I can see that you did manage to more or less achieve your "
@@ -26617,7 +26622,7 @@ msgid ""
 "do, you turn back for good.\""
 msgstr ""
 
-#: dat/events/flf/flf_catastrophe.lua:279
+#: dat/events/flf/flf_catastrophe.lua:281
 msgid ""
 "Before you can even respond, the mysterious figure disappears. You detect no "
 "presences nearby, but you notice that your ship has been refueled somehow! "
@@ -26627,14 +26632,14 @@ msgid ""
 "sure it's the right one."
 msgstr ""
 
-#: dat/events/flf/flf_catastrophe.lua:286
 #: dat/events/flf/flf_catastrophe.lua:288
 #: dat/events/flf/flf_catastrophe.lua:290
 #: dat/events/flf/flf_catastrophe.lua:292
+#: dat/events/flf/flf_catastrophe.lua:294
 msgid "Welcome To the Nebula"
 msgstr ""
 
-#: dat/events/flf/flf_catastrophe.lua:286
+#: dat/events/flf/flf_catastrophe.lua:288
 msgid ""
 "As you land on the mysterious station, armed guards immediately surround "
 "your ship and order you out into the hangar. You comply, and they take you "
@@ -26645,7 +26650,7 @@ msgid ""
 "survived the nebula. Very good.\""
 msgstr ""
 
-#: dat/events/flf/flf_catastrophe.lua:288
+#: dat/events/flf/flf_catastrophe.lua:290
 msgid ""
 "\"I'm sure you're wondering who we are. We are the Thurion, a civilization "
 "left over from one of the Empire's former secret projects. Have you met the "
@@ -26659,7 +26664,7 @@ msgid ""
 "into what are now our core systems to rebuild.\""
 msgstr ""
 
-#: dat/events/flf/flf_catastrophe.lua:290
+#: dat/events/flf/flf_catastrophe.lua:292
 msgid ""
 "\"Now, about half of us are uploaded, myself included. This face you see and "
 "this voice you hear are but projections, a reflection of myself that I have "
@@ -26680,7 +26685,7 @@ msgid ""
 "uploaded.\""
 msgstr ""
 
-#: dat/events/flf/flf_catastrophe.lua:292
+#: dat/events/flf/flf_catastrophe.lua:294
 msgid ""
 "Fascinated, you finally speak up, prompting a smile from the uploaded "
 "Thurion and a fairly long, friendly discussion about her experiences as an "
@@ -26704,7 +26709,7 @@ msgid ""
 "experience...."
 msgstr ""
 
-#: dat/events/flf/flf_catastrophe.lua:296
+#: dat/events/flf/flf_catastrophe.lua:298
 msgid ""
 "Having braved the nebula, you were introduced to the Thurion by Alicia, one "
 "of many uploaded Thurion. The Thurion are the remnants of a secret project "
@@ -26744,7 +26749,8 @@ msgstr ""
 #. escort creation and behavior in space.
 #.
 #. --
-#: dat/events/hired_escorts.lua:28
+#. Unsaved global tables
+#: dat/events/hired_escorts.lua:31
 msgid ""
 "\"Hi there! I'm looking to get some piloting experience. Here are my "
 "credentials. Would you be interested in hiring me?\""
@@ -26752,7 +26758,7 @@ msgstr ""
 "｢やあ、こんにちは！　操縦の経験を積みたいと思っているんです。資格証明書はここ"
 "にあります。わたしを雇うことに興味はありますか？｣"
 
-#: dat/events/hired_escorts.lua:29
+#: dat/events/hired_escorts.lua:32
 msgid ""
 "\"Hello! I'm looking to join someone's fleet. Here's my credentials. What do "
 "you say, would you like me on board?\""
@@ -26760,7 +26766,7 @@ msgstr ""
 "｢こんにちは！　だれかの船団に加わりたいと思っているんです。資格証明書はここに"
 "あります。どうでしょうか、わたしを連れていきたいと思いますか？｣"
 
-#: dat/events/hired_escorts.lua:30
+#: dat/events/hired_escorts.lua:33
 msgid ""
 "\"Hi! You look like you could use a pilot! I'm available and charge some of "
 "the best rates in the galaxy, and I promise you I'm perfect for the job! "
@@ -26772,11 +26778,11 @@ msgstr ""
 "情報はこれになります。さあ、どうしますか？　船団にわたしを加えたいですか？｣"
 
 #. { ship = "Llama",       royalty = 0.05 },
-#: dat/events/hired_escorts.lua:119
+#: dat/events/hired_escorts.lua:122
 msgid "Pilot for Hire"
 msgstr "雇われパイロット"
 
-#: dat/events/hired_escorts.lua:120
+#: dat/events/hired_escorts.lua:123
 msgid ""
 "This pilot seems to be looking for work.\n"
 "\n"
@@ -26790,7 +26796,7 @@ msgstr ""
 "頭金 : {deposit_text}\n"
 "料金 : 任務売上の {royalty_percent:.1f}%"
 
-#: dat/events/hired_escorts.lua:145
+#: dat/events/hired_escorts.lua:148
 msgid ""
 "Pilot name: {name}\n"
 "Ship: {ship}\n"
@@ -26802,7 +26808,7 @@ msgstr ""
 "頭金 : {deposit}\n"
 "料金 : 任務の売上の {royalty:.1f}%"
 
-#: dat/events/hired_escorts.lua:151
+#: dat/events/hired_escorts.lua:154
 msgid ""
 "Money: {credits}\n"
 "Current total royalties: {total:.1f}% of mission earnings"
@@ -26812,7 +26818,7 @@ msgstr ""
 
 #. Clean up dead escorts so it doesn't build up, and create NPCs for
 #. existing escorts.
-#: dat/events/hired_escorts.lua:182 dat/events/hired_escorts.lua:447
+#: dat/events/hired_escorts.lua:185 dat/events/hired_escorts.lua:450
 msgid "This is one of the pilots currently under your wing."
 msgstr "この人は現在あなたの飛行隊にいるパイロットだ。"
 
@@ -26824,12 +26830,12 @@ msgstr "この人は現在あなたの飛行隊にいるパイロットだ。"
 #. disabled ship warping in.
 #. Ignore negative amounts
 #. Whitelist control of reasons
-#: dat/events/hired_escorts.lua:305 dat/events/hired_escorts.lua:338
+#: dat/events/hired_escorts.lua:308 dat/events/hired_escorts.lua:341
 msgid "'{name}' ({ship}) has left your employment."
 msgstr "｢{name}｣ ({ship}) があなたの雇用のもとから外れました。"
 
 #. Asks the player whether or not they want to fire the pilot
-#: dat/events/hired_escorts.lua:347
+#: dat/events/hired_escorts.lua:350
 msgid ""
 "Would you like to do something with this pilot?\n"
 "\n"
@@ -26839,19 +26845,19 @@ msgstr ""
 "\n"
 "パイロットの資格証明書 :"
 
-#: dat/events/hired_escorts.lua:351
+#: dat/events/hired_escorts.lua:354
 msgid "Fire pilot"
 msgstr "パイロットの解雇"
 
-#: dat/events/hired_escorts.lua:351
+#: dat/events/hired_escorts.lua:354
 msgid "Do nothing"
 msgstr "なにもしない"
 
-#: dat/events/hired_escorts.lua:354
+#: dat/events/hired_escorts.lua:357
 msgid "Are you sure you want to fire {name}? This cannot be undone."
 msgstr "ほんとうに{name}を解雇したいですか？　これはもとに戻せません。"
 
-#: dat/events/hired_escorts.lua:360
+#: dat/events/hired_escorts.lua:363
 msgid "You fired '{name}' ({ship})."
 msgstr "あなたは ｢{name}｣ ({ship}) を解雇しました。"
 
@@ -26861,23 +26867,23 @@ msgstr "あなたは ｢{name}｣ ({ship}) を解雇しました。"
 #. Either the attacker or the attacker's leader should be their leader
 #. Since all the escorts will turn on the player, we might as well
 #. just have them all disband at once and attack.
-#: dat/events/hired_escorts.lua:387
+#: dat/events/hired_escorts.lua:390
 msgid "You turned on your hired escort '{name}' ({ship})."
 msgstr "雇った護衛 ｢{name}｣ ({ship}) が敵になりました。"
 
 #. Escort got killed
-#: dat/events/hired_escorts.lua:399
+#: dat/events/hired_escorts.lua:402
 msgid "'{name}' ({ship}) was killed in combat."
 msgstr "｢{name}｣ ({ship}) が戦闘で亡くなりました。"
 
 #. Approaching hired pilot at the bar
 #. Approaching unhired pilot at the bar
 #. Player rejected offer
-#: dat/events/hired_escorts.lua:427
+#: dat/events/hired_escorts.lua:430
 msgid "You don't have enough credits to pay for this pilot's deposit."
 msgstr "このパイロットの頭金を払えるだけのクレジットがありません。"
 
-#: dat/events/hired_escorts.lua:431
+#: dat/events/hired_escorts.lua:434
 msgid ""
 "Hiring this pilot will lead to you paying more in royalties than you earn "
 "from missions, meaning you will lose credits when doing missions. Are you "
@@ -26887,11 +26893,11 @@ msgstr ""
 "す。これは任務を遂行するとクレジットを失うという意味です。ほんとうにこのパイ"
 "ロットを雇いますか？"
 
-#: dat/events/hired_escorts.lua:452
+#: dat/events/hired_escorts.lua:455
 msgid "Hired Escorts"
 msgstr "雇われた護衛"
 
-#: dat/events/hired_escorts.lua:453
+#: dat/events/hired_escorts.lua:456
 msgid ""
 "You hired a {ship} ship named '{name}' for {deposit_text} and "
 "{royalty_percent:.1f}% of mission earnings."
@@ -27717,186 +27723,187 @@ msgstr ""
 #. Event handling the gambling stuff going on at Minerva station
 #. --
 #. local love_shaders = require 'love_shaders'
+#. Unsaved global tables
 #. NPC Stuff
 #. Becomes a random NPC
 #. TODO replace?
 #. Special
-#: dat/events/minerva/station.lua:45
+#: dat/events/minerva/station.lua:48
 msgid "Patron"
 msgstr "常連"
 
-#: dat/events/minerva/station.lua:48
+#: dat/events/minerva/station.lua:51
 msgid "A gambling patron enjoying their time at the station."
 msgstr ""
 
-#: dat/events/minerva/station.lua:49
+#: dat/events/minerva/station.lua:52
 msgid ""
 "A tourist looking a bit bewildered at all the noises and shiny lights all "
 "over."
 msgstr ""
 
-#: dat/events/minerva/station.lua:50
+#: dat/events/minerva/station.lua:53
 msgid "A patron who seems down on their luck."
 msgstr ""
 
-#: dat/events/minerva/station.lua:51
+#: dat/events/minerva/station.lua:54
 msgid "A patron who looks exhilarated as if they won big today."
 msgstr ""
 
-#: dat/events/minerva/station.lua:52
+#: dat/events/minerva/station.lua:55
 msgid ""
 "A patron that looks like they have spend a lot of time at the station. There "
 "are clear dark circles under their eyes."
 msgstr ""
 
-#: dat/events/minerva/station.lua:53
+#: dat/events/minerva/station.lua:56
 msgid "A patron that looks strangely out of place."
 msgstr ""
 
-#: dat/events/minerva/station.lua:54
+#: dat/events/minerva/station.lua:57
 msgid "A patron that fits in perfectly into the gambling station."
 msgstr ""
 
-#: dat/events/minerva/station.lua:57
+#: dat/events/minerva/station.lua:60
 msgid ""
 "\"This place is totally what I thought it would be. The lights, the sounds, "
 "the action! I feel like I'm in Heaven!\""
 msgstr ""
 
-#: dat/events/minerva/station.lua:58
+#: dat/events/minerva/station.lua:61
 msgid ""
 "\"It's incredible! Who would have thought to make money physical! These "
 "Minerva Tokens defy all logic!\""
 msgstr ""
 
-#: dat/events/minerva/station.lua:62
+#: dat/events/minerva/station.lua:65
 msgid " Wait, what? What do you mean they are sold out!?"
 msgstr ""
 
-#: dat/events/minerva/station.lua:64
+#: dat/events/minerva/station.lua:67
 msgid ""
 "\"I really have my eyes on the Fuzzy Dice available at the terminal. I "
 "always wanted to own a piece of history!{msg}\""
 msgstr ""
 
-#: dat/events/minerva/station.lua:65
+#: dat/events/minerva/station.lua:68
 msgid ""
 "\"I played 20 hands of blackjack with that Cyborg Chicken. I may have lost "
 "them all, but that was worth every credit!\""
 msgstr ""
 
-#: dat/events/minerva/station.lua:66
+#: dat/events/minerva/station.lua:69
 msgid ""
 "\"This place is great! I still have no idea how to play blackjack, but I "
 "just keep on playing again and again against that Cyborg Chicken.\""
 msgstr ""
 
-#: dat/events/minerva/station.lua:71
+#: dat/events/minerva/station.lua:74
 msgid ""
 "\"Critics of Minerva Station say that being able to acquire nice outfits "
 "here without needing licenses increases piracy. I think they are all lame!\""
 msgstr ""
 
-#: dat/events/minerva/station.lua:72
+#: dat/events/minerva/station.lua:75
 msgid ""
 "\"I really want to go to the VIP hot springs they have, but I don't have the "
 "tokens. How does that even work in a space station?\""
 msgstr ""
 
-#: dat/events/minerva/station.lua:73
+#: dat/events/minerva/station.lua:76
 msgid ""
 "\"I hear you can do all sorts of crazy stuff here if you have enough tokens. "
 "Need… to… get… more…!\""
 msgstr ""
 
-#: dat/events/minerva/station.lua:74
+#: dat/events/minerva/station.lua:77
 msgid ""
 "\"I have never seen robots talk so roboty like the terminals here. That is "
 "so retro!\""
 msgstr ""
 
-#: dat/events/minerva/station.lua:75
+#: dat/events/minerva/station.lua:78
 msgid ""
 "\"I scrounged up my lifetime savings to get a ticket here, but I forgot to "
 "bring extra to gamble…\""
 msgstr ""
 
-#: dat/events/minerva/station.lua:76
+#: dat/events/minerva/station.lua:79
 msgid ""
 "\"I gambled all my savings away… I'm going to get killed when I get back "
 "home…\""
 msgstr ""
 
-#: dat/events/minerva/station.lua:77
+#: dat/events/minerva/station.lua:80
 msgid ""
 "\"They say you shouldn't gamble more than you can afford to lose. I wish "
 "someone had told me that yesterday. I don't even own a ship anymore!\""
 msgstr ""
 
-#: dat/events/minerva/station.lua:78
+#: dat/events/minerva/station.lua:81
 msgid ""
 "\"I like to play blackjack. I'm not addicted to gambling. I'm addicted to "
 "sitting in a semi-circle.\""
 msgstr ""
 
 #. Mitch Hedberg
-#: dat/events/minerva/station.lua:79
+#: dat/events/minerva/station.lua:82
 msgid ""
 "\"Gambling has brought our family together. We had to move to a smaller "
 "house.\""
 msgstr ""
 
 #. Tommy Cooper
-#: dat/events/minerva/station.lua:80
+#: dat/events/minerva/station.lua:83
 msgid "\"You don’t gamble to win. You gamble so you can gamble the next day.\""
 msgstr ""
 
 #. Bert Ambrose
-#: dat/events/minerva/station.lua:81
+#: dat/events/minerva/station.lua:84
 msgid "\"A credit won is twice as sweet as a credit earned!\""
 msgstr ""
 
 #. Paul Newman (dollar -> credit)
-#: dat/events/minerva/station.lua:82
+#: dat/events/minerva/station.lua:85
 msgid ""
 "\"There is a very easy way to return from Minerva Station with a small "
 "fortune: come here with a large one!\""
 msgstr ""
 
 #. Jack Yelton (paraphrased)
-#: dat/events/minerva/station.lua:83
+#: dat/events/minerva/station.lua:86
 msgid "\"Luck always seems to be against the ones who depends on it.\""
 msgstr ""
 
 #. Create NPCs
-#: dat/events/minerva/station.lua:90
+#: dat/events/minerva/station.lua:93
 msgid "Blackjack"
 msgstr ""
 
-#: dat/events/minerva/station.lua:90
+#: dat/events/minerva/station.lua:93
 msgid ""
 "Seems to be one of the more popular card games where you can play blackjack "
 "against a \"cyborg chicken\"."
 msgstr ""
 
-#: dat/events/minerva/station.lua:91
+#: dat/events/minerva/station.lua:94
 msgid "Chuck-a-luck"
 msgstr ""
 
-#: dat/events/minerva/station.lua:91
+#: dat/events/minerva/station.lua:94
 msgid "A fast-paced luck-based betting game using dice."
 msgstr ""
 
 #. Some conditional NPCs
-#: dat/events/minerva/station.lua:96
+#: dat/events/minerva/station.lua:99
 msgid "You see Maikki enjoying a parfait."
 msgstr ""
 
-#: dat/events/minerva/station.lua:97
+#: dat/events/minerva/station.lua:100
 msgid "You see Maikki talking on a transponder."
 msgstr ""
 
-#: dat/events/minerva/station.lua:98
+#: dat/events/minerva/station.lua:101
 msgid "You see Maikki looking thoughtfully into the distance."
 msgstr ""
 
@@ -27914,11 +27921,11 @@ msgstr ""
 #. Spa Propaganda
 #. TODO probably a bug, but we should be able to pass a hook argument instead of hardcoding the function
 #. Doesn't seem to work however
-#: dat/events/minerva/station.lua:177
+#: dat/events/minerva/station.lua:180
 msgid "Greeter"
 msgstr ""
 
-#: dat/events/minerva/station.lua:180
+#: dat/events/minerva/station.lua:183
 msgid ""
 "As soon as you enter the spaceport bar, a neatly dressed individual runs up "
 "to you and hands you a complementary drink. It is hard to make out what he "
@@ -27926,14 +27933,14 @@ msgid ""
 "gambling machines, but you try to make it out as best as you can."
 msgstr ""
 
-#: dat/events/minerva/station.lua:181
+#: dat/events/minerva/station.lua:184
 msgid ""
 "\"Welcome to the Minerva Station resort! It appears to be your first time "
 "here. As you enjoy your complementary drink, let me briefly explain to you "
 "how this wonderful place works. It is all very exciting!\""
 msgstr ""
 
-#: dat/events/minerva/station.lua:182
+#: dat/events/minerva/station.lua:185
 msgid ""
 "\"The currency we use on this station are Minerva Tokens. Unlike credits, "
 "they are physical and so very pretty! You can not buy Minerva Tokens "
@@ -27944,7 +27951,7 @@ msgid ""
 "10 complementary Minerva Tokens!\""
 msgstr ""
 
-#: dat/events/minerva/station.lua:183
+#: dat/events/minerva/station.lua:186
 msgid ""
 "\"If you want more information or want to check your balance. Please use the "
 "terminals located throughout the station. I highly recommend you check out "
@@ -27953,27 +27960,27 @@ msgid ""
 msgstr ""
 
 #. Have to remove
-#: dat/events/minerva/station.lua:193
+#: dat/events/minerva/station.lua:196
 msgid " TODAY MIGHT BE YOUR LUCKY DAY."
 msgstr ""
 
-#: dat/events/minerva/station.lua:194
+#: dat/events/minerva/station.lua:197
 msgid " THIS IS SO EXCITING."
 msgstr ""
 
-#: dat/events/minerva/station.lua:195
+#: dat/events/minerva/station.lua:198
 msgid " YOU SEEM LIKE YOU MIGHT ENJOY A GAME OF BLACKJACK."
 msgstr ""
 
-#: dat/events/minerva/station.lua:196
+#: dat/events/minerva/station.lua:199
 msgid " FORTUNE FAVOURS THE PERSISTENT."
 msgstr ""
 
-#: dat/events/minerva/station.lua:197
+#: dat/events/minerva/station.lua:200
 msgid " LIFE IS SHORT, SPEND IT AT MINERVA STATION."
 msgstr ""
 
-#: dat/events/minerva/station.lua:205
+#: dat/events/minerva/station.lua:208
 msgid ""
 "\"VALUED CUSTOMER, YOU HAVE #p{n} MINERVA TOKEN#0.{msg}\n"
 "\n"
@@ -27984,25 +27991,25 @@ msgid_plural ""
 "WHAT DO YOU WISH TO DO TODAY?\""
 msgstr[0] ""
 
-#: dat/events/minerva/station.lua:214 dat/events/minerva/station.lua:226
+#: dat/events/minerva/station.lua:217 dat/events/minerva/station.lua:229
 msgid "Trade-in"
 msgstr ""
 
-#: dat/events/minerva/station.lua:218
+#: dat/events/minerva/station.lua:221
 msgid ""
 "\"I AM PROGRAMMED TO EXPLAIN ABOUT THE WONDERFUL MINERVA STATION GAMBLING "
 "FACILITIES. WHAT WOULD YOU LIKE TO KNOW ABOUT?\""
 msgstr ""
 
-#: dat/events/minerva/station.lua:221
+#: dat/events/minerva/station.lua:224
 msgid "\"WHAT ELSE WOULD YOU LIKE TO KNOW?\""
 msgstr ""
 
-#: dat/events/minerva/station.lua:224
+#: dat/events/minerva/station.lua:227
 msgid "Station"
 msgstr ""
 
-#: dat/events/minerva/station.lua:225
+#: dat/events/minerva/station.lua:228
 msgid "Gambling"
 msgstr ""
 
@@ -28010,11 +28017,11 @@ msgstr ""
 #. -- Helper functions and defines for the Minerva Station campaigns
 #. --
 #. Main Characters
-#: dat/events/minerva/station.lua:227 dat/scripts/common/minerva.lua:12
+#: dat/events/minerva/station.lua:230 dat/scripts/common/minerva.lua:12
 msgid "Cyborg Chicken"
 msgstr ""
 
-#: dat/events/minerva/station.lua:231
+#: dat/events/minerva/station.lua:234
 msgid ""
 "\"MINERVA STATION IS THE BEST PLACE TO SIT BACK AND ENJOY RELAXING GAMBLING "
 "ACTIVITIES. ALTHOUGH THE AREA IS HEAVILY DISPUTED BY THE ZA'LEK AND DVAERED, "
@@ -28022,7 +28029,7 @@ msgid ""
 "THE STATION.\""
 msgstr ""
 
-#: dat/events/minerva/station.lua:234
+#: dat/events/minerva/station.lua:237
 msgid ""
 "\"WHILE GAMBLING IS NOT ALLOWED IN MOST OF THE EMPIRE, MINERVA STATION "
 "BOASTS OF AN EXCLUSIVE STATUS THANKS TO THE IMPERIAL DECREE 289.78 ARTICLE "
@@ -28031,7 +28038,7 @@ msgid ""
 "TRADED IN FOR GOODS AND SERVICES ANY TERMINAL THROUGHOUT THE STATION.\""
 msgstr ""
 
-#: dat/events/minerva/station.lua:237
+#: dat/events/minerva/station.lua:240
 msgid ""
 "\"IT IS POSSIBLE TO TRADE MINERVA TOKENS FOR GOODS AND SERVICES AT TERMINALS "
 "THROUGHOUT THE STATION. THANKS TO THE IMPERIAL DECREE 289.78 ARTICLE 478 "
@@ -28040,14 +28047,14 @@ msgid ""
 "Station' ENGRAVED ON THEM.\""
 msgstr ""
 
-#: dat/events/minerva/station.lua:240
+#: dat/events/minerva/station.lua:243
 msgid ""
 "\"CYBORG CHICKEN IS OUR MOST POPULAR BLACKJACK DEALER. NO WHERE ELSE IN THE "
 "UNIVERSE WILL YOU BE ABLE TO PLAY CARD GAMES WITH AN AI-ENHANCED CHICKEN "
 "CYBORG. IT IS A ONCE AND A LIFE-TIME CHANCE THAT YOU SHOULD NOT MISS.\""
 msgstr ""
 
-#: dat/events/minerva/station.lua:245
+#: dat/events/minerva/station.lua:248
 msgid ""
 "\"SORRY, YOU DO NOT HAVE ENOUGH MINERVA TOKENS TO TRADE-IN FOR YOUR "
 "REQUESTED ITEM. WOULD YOU LIKE TO TRADE-IN FOR SOMETHING ELSE? YOU HAVE "
@@ -28058,7 +28065,7 @@ msgid_plural ""
 "#p{n} MINERVA TOKENS#0.\""
 msgstr[0] ""
 
-#: dat/events/minerva/station.lua:251
+#: dat/events/minerva/station.lua:254
 msgid ""
 "\"I AM SORRY TO INFORM YOU THAT THE ITEM THAT YOU DESIRE IS CURRENTLY SOLD "
 "OUT. WOULD YOU LIKE TO TRADE-IN FOR SOMETHING ELSE? YOU HAVE #p{n} MINERVA "
@@ -28069,7 +28076,7 @@ msgid_plural ""
 "TOKENS#0.\""
 msgstr[0] ""
 
-#: dat/events/minerva/station.lua:257
+#: dat/events/minerva/station.lua:260
 msgid ""
 "\"YOU CAN TRADE IN YOUR PRECIOUS #p{n} MINERVA TOKEN#0 FOR THE FOLLOWING "
 "GOODS.\""
@@ -28078,37 +28085,37 @@ msgid_plural ""
 "GOODS.\""
 msgstr[0] ""
 
-#: dat/events/minerva/station.lua:319
+#: dat/events/minerva/station.lua:322
 msgid "{item} (#rSOLD OUT#0)"
 msgstr ""
 
-#: dat/events/minerva/station.lua:321
+#: dat/events/minerva/station.lua:324
 msgid "{item} ({tokens})"
 msgstr ""
 
 #. Add special ticket
-#: dat/events/minerva/station.lua:326
+#: dat/events/minerva/station.lua:329
 msgid "Special Spa Ticket ({tokens})"
 msgstr ""
 
 #. Buying stuff
-#: dat/events/minerva/station.lua:336
+#: dat/events/minerva/station.lua:339
 msgid ""
 "\"ARE YOU SURE YOU WANT TO TRADE IN FOR THE '#w{item}#0'? THE DESCRIPTION IS "
 "AS FOLLOWS:\"\n"
 "#w{description}#0"
 msgstr ""
 
-#: dat/events/minerva/station.lua:348
+#: dat/events/minerva/station.lua:351
 msgid "Gambling Bounty"
 msgstr ""
 
-#: dat/events/minerva/station.lua:359
+#: dat/events/minerva/station.lua:362
 msgid "\"THANK YOU FOR YOUR BUSINESS.\""
 msgstr ""
 
 #. Buying the ticket
-#: dat/events/minerva/station.lua:364
+#: dat/events/minerva/station.lua:367
 msgid ""
 "\"ARE YOU SURE YOU WANT TO TRADE IN FOR THE PREMIUM AND EXCLUSIVE SPECIAL "
 "SPA TICKET?\"\n"
@@ -28118,7 +28125,7 @@ msgstr ""
 
 #. Handle random bar events if necessary
 #. Not adding to queue first
-#: dat/events/minerva/station.lua:392
+#: dat/events/minerva/station.lua:395
 msgid ""
 "You make your way to the blackjack table which seems to be surrounded by "
 "many patrons, some of which are apparently taking pictures of something. You "
@@ -28126,7 +28133,7 @@ msgid ""
 "going on."
 msgstr ""
 
-#: dat/events/minerva/station.lua:394
+#: dat/events/minerva/station.lua:397
 msgid ""
 "When you make it to the front you are greeted by the cold eyes of what "
 "apparently seems to be the Cyborg Chicken you were told about. It seems to "
@@ -28136,22 +28143,22 @@ msgid ""
 "loses all his credits to the chicken, who seems unfazed."
 msgstr ""
 
-#: dat/events/minerva/station.lua:400
+#: dat/events/minerva/station.lua:403
 msgid ""
 "You elbow your way to the front of the table and are once again greeted by "
 "the cold mechanical eyes of Cyborg Chicken."
 msgstr ""
 
 #. Clear buffer without waiting
-#: dat/events/minerva/station.lua:405 dat/events/minerva/station.lua:481
+#: dat/events/minerva/station.lua:408 dat/events/minerva/station.lua:484
 msgid "Play"
 msgstr ""
 
-#: dat/events/minerva/station.lua:406 dat/events/minerva/station.lua:482
+#: dat/events/minerva/station.lua:409 dat/events/minerva/station.lua:485
 msgid "Explanation"
 msgstr ""
 
-#: dat/events/minerva/station.lua:406 dat/events/minerva/station.lua:482
+#: dat/events/minerva/station.lua:409 dat/events/minerva/station.lua:485
 msgid "explanation"
 msgstr ""
 
@@ -28162,21 +28169,21 @@ msgstr ""
 #. Horrible hack where we draw ontop of the textbox a background
 #. Draw blackjack game
 #. Undo the resize
-#: dat/events/minerva/station.lua:464
+#: dat/events/minerva/station.lua:467
 msgid "You leave the blackjack table behind and head back to the main area."
 msgstr ""
 
 #. Handle random bar events if necessary
 #. Not adding to queue first
-#: dat/events/minerva/station.lua:475
+#: dat/events/minerva/station.lua:478
 msgid "Dealer"
 msgstr ""
 
-#: dat/events/minerva/station.lua:477
+#: dat/events/minerva/station.lua:480
 msgid "You approach the chuck-a-luck table."
 msgstr ""
 
-#: dat/events/minerva/station.lua:486
+#: dat/events/minerva/station.lua:489
 msgid ""
 "\"Chuck-a-luck is a straight-forward game. You make your bet and then place "
 "a wager on what number the dice will come up as. If the number you chose "
@@ -28192,7 +28199,7 @@ msgstr ""
 #. Horrible hack where we draw ontop of the textbox a background
 #. Draw chuckaluck game
 #. Undo the resize
-#: dat/events/minerva/station.lua:539
+#: dat/events/minerva/station.lua:542
 msgid "You leave the chuck-a-luck table behind and head back to the main area."
 msgstr ""
 
@@ -28203,50 +28210,50 @@ msgstr ""
 #. Handle random bar events if necessary
 #. TODO should patrons also generate random events?
 #. TODO maybe more text?
-#: dat/events/minerva/station.lua:578 dat/missions/minerva/maikki1.lua:367
+#: dat/events/minerva/station.lua:581 dat/missions/minerva/maikki1.lua:367
 msgid "\"What are you looking at?\""
 msgstr ""
 
 #. local kex = minerva.vn_kex{ pos=0, rotation=30*math.pi/180., shader=love_shaders.aura() }
-#: dat/events/minerva/station.lua:590
+#: dat/events/minerva/station.lua:593
 msgid "You find Maikki, who beams you a smile as you approach."
 msgstr ""
 
-#: dat/events/minerva/station.lua:592
+#: dat/events/minerva/station.lua:595
 msgid "\"Did you find anything new?\""
 msgstr ""
 
-#: dat/events/minerva/station.lua:600 dat/events/minerva/station.lua:602
+#: dat/events/minerva/station.lua:603 dat/events/minerva/station.lua:605
 msgid "Talk about Kex"
 msgstr ""
 
 #. table.insert( opts, 1, { _("Ask about her father"), "memory" } )
-#: dat/events/minerva/station.lua:609
+#: dat/events/minerva/station.lua:612
 msgid "\"Anything else?\""
 msgstr ""
 
-#: dat/events/minerva/station.lua:613
+#: dat/events/minerva/station.lua:616
 msgid "You ask to see if she remembered anything else about her father."
 msgstr ""
 
-#: dat/events/minerva/station.lua:619
+#: dat/events/minerva/station.lua:622
 msgid "As you are about to talk, you notice Kex out of the corner of your eye."
 msgstr ""
 
-#: dat/events/minerva/station.lua:620
+#: dat/events/minerva/station.lua:623
 msgid ""
 "As he stares directly at you, he makes a gesture that you should watch your "
 "back."
 msgstr ""
 
-#: dat/events/minerva/station.lua:621
+#: dat/events/minerva/station.lua:624
 msgid ""
 "You decide against telling Maikki anything. It does not seem like it is the "
 "time, unless you wish to get murdered by a rampant cyborg duck."
 msgstr ""
 
 #. played backwards so slides left
-#: dat/events/minerva/station.lua:626
+#: dat/events/minerva/station.lua:629
 msgid ""
 "You are about to talk, but decide not to. Now is not the time to deal with "
 "this."
@@ -28371,7 +28378,7 @@ msgstr ""
 #. Create an eerie atmosphere by cutting off the background music and substituting something spooky
 #. disabled until difficulties with the music API are sorted out
 #. The big programmer in the sky looks in to ask the player a question
-#: dat/events/naev_needs_YOU.lua:62
+#: dat/events/naev_needs_YOU.lua:63
 msgid "Naev received SIGSEGV (address not mapped to object)!"
 msgstr ""
 "Naev が SIGSEGV を受信しました！　(オブジェクトに割り当てられていないアドレ"
@@ -28380,7 +28387,7 @@ msgstr ""
 #. if the answer is 'yes'
 #. Mission ends with a little comment after blasting off.
 #. hook.takeoff( "enter_system")
-#: dat/events/naev_needs_YOU.lua:63 dat/events/naev_needs_YOU.lua:69
+#: dat/events/naev_needs_YOU.lua:64 dat/events/naev_needs_YOU.lua:70
 msgid "The voice of the creator"
 msgstr "創造主の声"
 
@@ -28431,11 +28438,11 @@ msgstr ""
 
 #. Fly off in a random direction
 #. In theory, never deviate more than 90 degrees from the current course.
-#: dat/events/neutral/animaltrouble.lua:62
+#: dat/events/neutral/animaltrouble.lua:63
 msgid "Calm"
 msgstr ""
 
-#: dat/events/neutral/animaltrouble.lua:62
+#: dat/events/neutral/animaltrouble.lua:63
 msgid ""
 "You've found the cause of the problem. One of the little rodents you "
 "transported for that Sirian apparently got out of the crate on the way, and "
@@ -28444,7 +28451,7 @@ msgid ""
 "control again."
 msgstr ""
 
-#: dat/events/neutral/animaltrouble.lua:65
+#: dat/events/neutral/animaltrouble.lua:66
 msgid ""
 "You found that one of the rodents you transported for that Sirian got out of "
 "the crate on the way, gnawed through some of your ship's circuitry, and died "
@@ -28554,6 +28561,8 @@ msgstr "ピナクル"
 #.
 #. Creates a derelict ship that spawns random events.
 #. --
+#. forward-declared functions
+#. Non-persistent state
 #.
 #. {
 #. name = "Mission Name",
@@ -28568,7 +28577,7 @@ msgstr "ピナクル"
 #. Create the derelict.
 #. Much more visible
 #. If player is low on fuel make it more likely they get fuel
-#: dat/events/neutral/derelict.lua:110
+#: dat/events/neutral/derelict.lua:113
 msgid ""
 "The derelict appears deserted, with most everything of value long gone. As "
 "explore the ship you suddenly pick up a back-up fuel tank hidden in the "
@@ -28600,12 +28609,12 @@ msgstr ""
 #. --
 #. See if we got something
 #. Can't find target so just make everyone be dead
-#: dat/events/neutral/derelict.lua:130
+#: dat/events/neutral/derelict.lua:133
 #: dat/missions/neutral/derelict_rescue.lua:30
 msgid "Empty derelict"
 msgstr "空っぽの遺棄船"
 
-#: dat/events/neutral/derelict.lua:132
+#: dat/events/neutral/derelict.lua:135
 msgid ""
 "You spend some time searching the derelict, but it doesn't appear there are "
 "any remaining passengers, nor is there anything of interest to you. You "
@@ -28614,7 +28623,7 @@ msgstr ""
 "あなたはいくらか時間をかけて遺棄船をさがした。しかし残っている乗客も、興味を"
 "ひくものも見つからなかった。あなたは自分の船に戻ることにした。"
 
-#: dat/events/neutral/derelict.lua:133
+#: dat/events/neutral/derelict.lua:136
 msgid ""
 "This ship has clearly been abandoned a long time ago. Looters have been here "
 "many times, and all of the primary and backup systems are down. However, "
@@ -28636,7 +28645,7 @@ msgstr ""
 "れない。あなたは後ろ髪を引かれながらゲームをあとにして、毎日の現実の生活に"
 "戻った。"
 
-#: dat/events/neutral/derelict.lua:134
+#: dat/events/neutral/derelict.lua:137
 msgid ""
 "You are exploring the derelict ship when you hear a strange creaking noise. "
 "You decide to follow it to see what is causing it, but you never seem to be "
@@ -28651,7 +28660,7 @@ msgstr ""
 "間ほどかけたあとに、あなたはあきらめて遺棄船をはいまわるきしみ音とともに残す"
 "ことに決めた。"
 
-#: dat/events/neutral/derelict.lua:135
+#: dat/events/neutral/derelict.lua:138
 msgid ""
 "While exploring the cockpit of this derelict, you come across the captain's "
 "logs. Hoping to find some information that could be of use to you, you "
@@ -28667,7 +28676,7 @@ msgstr ""
 "らないことがわかった。あなたは 1,000 秒ほどかけてから、おそらくここに値打ちが"
 "あるものはなにもないと決断し、自分の船に戻った。"
 
-#: dat/events/neutral/derelict.lua:136
+#: dat/events/neutral/derelict.lua:139
 #: dat/missions/neutral/derelict_rescue.lua:30
 msgid ""
 "This derelict is not deserted. The crew are still onboard. Unfortunately for "
@@ -28678,7 +28687,7 @@ msgstr ""
 "不幸なことに、この船がなんで難破したにせよ、乗員たちは生きのびられていなかっ"
 "た。あなたはきちんとした宇宙葬をしてから出ていくことに決めた。"
 
-#: dat/events/neutral/derelict.lua:137
+#: dat/events/neutral/derelict.lua:140
 msgid ""
 "This derelict seems to have been visited by looters already. You find a "
 "message carved into the wall near the airlock. It reads: \"I WUS HEAR\". "
@@ -28690,7 +28699,7 @@ msgstr ""
 "刻まれていて、こう書かれていた。｢おま、してね｣。それ以外は、この船には興味を"
 "ひくものがなにもなかった。"
 
-#: dat/events/neutral/derelict.lua:138
+#: dat/events/neutral/derelict.lua:141
 msgid ""
 "This derelict seems to have at one time been used as an illegal casino. "
 "There are roulette tables and slot machines set up in the cargo hold. "
@@ -28704,7 +28713,7 @@ msgstr ""
 "さを聞きつけていたらしく、備品や壁に焦げ跡があり、自動小銃の薬莢も足元にあっ"
 "た。ここでなにか見つかるとは思えなかったので、あなたは出ていった。"
 
-#: dat/events/neutral/derelict.lua:139
+#: dat/events/neutral/derelict.lua:142
 msgid ""
 "When the airlock opens, you are hammered in the face by an ungodly smell "
 "that almost makes you pass out on the spot. You hurriedly close the airlock "
@@ -28715,7 +28724,7 @@ msgstr ""
 "場で気絶するところだった。あなたはいそいでまたエアロックを閉じると、自分の船"
 "に逃げかえった。あの遺棄船になにがあるにせよ、さぐりだすなど願いさげだ！"
 
-#: dat/events/neutral/derelict.lua:140
+#: dat/events/neutral/derelict.lua:143
 msgid ""
 "This derelict has really been beaten up badly. Most of the corridors are "
 "blocked by mangled metal, and your scans read depressurized compartments all "
@@ -28727,7 +28736,7 @@ msgstr ""
 "船じゅうにあった。ここでできることはあまりない。だからあなたは遺棄船を放置す"
 "ることに決めた。"
 
-#: dat/events/neutral/derelict.lua:141
+#: dat/events/neutral/derelict.lua:144
 msgid ""
 "The interior of this ship is decorated in a gaudy fashion. There are cute "
 "plushies hanging from the doorways, drapes on every viewport, colored "
@@ -28747,7 +28756,7 @@ msgstr ""
 "とがわかった。だから最後は立ち往生し、救助してもらうことになってしまったの"
 "だ。あなたは首を振って、自分の船に戻った。"
 
-#: dat/events/neutral/derelict.lua:142
+#: dat/events/neutral/derelict.lua:145
 msgid ""
 "The artificial gravity on this ship has bizarrely failed, managing to "
 "somehow reverse itself. As soon as you step aboard you fall upwards and onto "
@@ -28761,7 +28770,7 @@ msgstr ""
 "だった。あなたは自分の船に戻った⸺が、エアロックでの重力の反転のことを忘れてい"
 "たので、また床板にたたきつけられた。"
 
-#: dat/events/neutral/derelict.lua:143
+#: dat/events/neutral/derelict.lua:146
 msgid ""
 "The cargo hold of this ship contains several heavy, metal chests. You pry "
 "them open, but they are empty. Whatever was in them must have been pilfered "
@@ -28772,7 +28781,7 @@ msgstr ""
 "が、箱は空だった。中身がなんだったにせよ、ほかの火事場泥棒がすでに盗んだにち"
 "がいない。あなたはこの船で時間を無駄にしないことに決めて、自分の船に戻った。"
 
-#: dat/events/neutral/derelict.lua:144
+#: dat/events/neutral/derelict.lua:147
 msgid ""
 "You have attached your docking clamp to the derelict's airlock, but the door "
 "refuses to open. A few diagnostics reveal that the other side isn't "
@@ -28784,7 +28793,7 @@ msgstr ""
 "の遺棄船は、何年ものあいだ船殻の裂けめが放置されていたにちがいない。ここであ"
 "なたにできることはあまりなさそうだった。"
 
-#: dat/events/neutral/derelict.lua:145
+#: dat/events/neutral/derelict.lua:148
 msgid ""
 "As you walk through the corridors of the derelict, you can't help but notice "
 "the large scratch marks on the walls, the floor and even the ceiling. It's "
@@ -28800,11 +28809,11 @@ msgstr ""
 "あなたは遺棄船の捜索をやめて、接舷固定具を解除した。"
 
 #. Pick a random message from the list, display it, unboard.
-#: dat/events/neutral/derelict.lua:154
+#: dat/events/neutral/derelict.lua:157
 msgid "Lucky find!"
 msgstr "幸運な発見！"
 
-#: dat/events/neutral/derelict.lua:158
+#: dat/events/neutral/derelict.lua:161
 msgid ""
 "The derelict appears deserted, its passengers long gone. However, they seem "
 "to have left behind a small amount of credit chips in their hurry to leave! "
@@ -28814,7 +28823,7 @@ msgstr ""
 "で離れたので少量のクレジットチップを残していったようだ！　あなたはそれを自分"
 "のものにすることに決め、遺棄船を離れた。"
 
-#: dat/events/neutral/derelict.lua:164
+#: dat/events/neutral/derelict.lua:167
 msgid ""
 "This ship looks like any old piece of scrap at a glance, but it is actually "
 "an antique, one of the very first of its kind ever produced! Museums all "
@@ -28829,32 +28838,32 @@ msgstr ""
 "評判は、わずかに上昇した。"
 
 #. See if we should add maps
-#: dat/events/neutral/derelict.lua:171
+#: dat/events/neutral/derelict.lua:174
 msgid "Dvaered-Soromid trade route"
 msgstr "ドベーレッド—ソロミド貿易路"
 
-#: dat/events/neutral/derelict.lua:172
+#: dat/events/neutral/derelict.lua:175
 msgid "Sirian border systems"
 msgstr "シリウス境界星系"
 
-#: dat/events/neutral/derelict.lua:173
+#: dat/events/neutral/derelict.lua:176
 msgid "Dvaered core systems"
 msgstr "ドベーレッド中核星系"
 
-#: dat/events/neutral/derelict.lua:174
+#: dat/events/neutral/derelict.lua:177
 msgid "Empire core systems"
 msgstr "帝国中核星系"
 
-#: dat/events/neutral/derelict.lua:175
+#: dat/events/neutral/derelict.lua:178
 msgid "Sol nebula edge"
 msgstr "ソル星雲境界"
 
-#: dat/events/neutral/derelict.lua:176
+#: dat/events/neutral/derelict.lua:179
 msgid "Frontier systems"
 msgstr "辺境星系"
 
 #. There are unknown maps
-#: dat/events/neutral/derelict.lua:188
+#: dat/events/neutral/derelict.lua:191
 msgid ""
 "The derelict is empty, and seems to have been thoroughly picked over by "
 "other space buccaneers. However, the ship's computer contains a map of the "
@@ -28865,7 +28874,7 @@ msgstr ""
 "はそれを自分のコンピューターにダウンロードした。"
 
 #. If the player has little fuel left allow for refueling
-#: dat/events/neutral/derelict.lua:198
+#: dat/events/neutral/derelict.lua:201
 msgid ""
 "The derelict appears deserted, with most everything of value long gone. As "
 "explore the ship you suddenly pick up a back-up fuel tank hidden in the "
@@ -28878,7 +28887,7 @@ msgstr ""
 "満たした。"
 
 #. If the player is low on health and not regenerating, offer armour repairs
-#: dat/events/neutral/derelict.lua:207
+#: dat/events/neutral/derelict.lua:210
 msgid ""
 "The derelict is deserted and striped of everything of value, however, you "
 "notice that the ship hull is in very good shape. In fact, it is rather "
@@ -28892,12 +28901,12 @@ msgstr ""
 "船殻部品を取りはずし、自分の船の装甲の修理をすることができた。"
 
 #. Run random good event
-#: dat/events/neutral/derelict.lua:218
+#: dat/events/neutral/derelict.lua:221
 msgid "Oh no!"
 msgstr "しまった！"
 
 #. So the pilot doesn't end the event by dying.
-#: dat/events/neutral/derelict.lua:222
+#: dat/events/neutral/derelict.lua:225
 msgid ""
 "The moment you affix your boarding clamp to the derelict ship, it triggers a "
 "booby trap! The derelict explodes, severely damaging your ship. You escaped "
@@ -28907,7 +28916,7 @@ msgstr ""
 "船は爆発し、あなたの船は深刻な損害をうけた。今回は死なずにすんだが、間一髪"
 "だったのだ！"
 
-#: dat/events/neutral/derelict.lua:228
+#: dat/events/neutral/derelict.lua:231
 msgid ""
 "You board the derelict ship and search its interior, but you find nothing. "
 "When you return to your ship, however, it turns out there were Space Leeches "
@@ -28922,7 +28931,7 @@ msgstr ""
 "たが、遅すぎた。あの小さなやっかいものは、すでにあなたの燃料をすべて飲んでい"
 "たのだ。追加を見つけてくるまでどこにもジャンプができやしない！"
 
-#: dat/events/neutral/derelict.lua:233
+#: dat/events/neutral/derelict.lua:236
 msgid ""
 "You affix your boarding clamp and walk aboard the derelict ship. You've only "
 "spent a couple of hectoseconds searching the interior when there is a "
@@ -28957,6 +28966,7 @@ msgstr ""
 #.
 #. --Event for kidnapped mission.
 #. --
+#. Non-persistent state
 #. Create Mom and Dad in their spaceship, and have them come from the planet Brooks in Arcturus system, following the player.
 #. Pa and Ma are hailing the player!
 #. Pa and Ma have been hailed. The mission can begin, and panma should land on the planet Brooks
@@ -28970,161 +28980,162 @@ msgstr ""
 #.
 #. Event for creating news
 #. --
+#. forward-declared functions
 #. List to treat special factions diffferently
 #. Treat pirate clans the same (at least for now)
 #. Other misc factions
-#: dat/events/neutral/news.lua:28
+#: dat/events/neutral/news.lua:30
 msgid "We bring you the latest news in the universe."
 msgstr "宇宙における最新のニュースをお届けします。"
 
-#: dat/events/neutral/news.lua:29
+#: dat/events/neutral/news.lua:31
 msgid "Welcome to Universal News Feed."
 msgstr "ユニバーサルニュースフィードをどうぞご覧ください。"
 
-#: dat/events/neutral/news.lua:30
+#: dat/events/neutral/news.lua:32
 msgid "Welcome to the Empire News Centre."
 msgstr "帝国ニュースセンターをどうぞご覧ください。"
 
-#: dat/events/neutral/news.lua:31
+#: dat/events/neutral/news.lua:33
 msgid "Welcome to the Dvaered News Centre."
 msgstr "ドベーレッド・ニュースセンターをどうぞご覧ください。"
 
-#: dat/events/neutral/news.lua:32
+#: dat/events/neutral/news.lua:34
 msgid "Welcome to Goddard News Centre."
 msgstr "ゴダード・ニュースセンターをどうぞご覧ください。"
 
-#: dat/events/neutral/news.lua:33
+#: dat/events/neutral/news.lua:35
 msgid "Pirate News Network."
 msgstr "海賊ニュースネットワーク。"
 
-#: dat/events/neutral/news.lua:34
+#: dat/events/neutral/news.lua:36
 msgid "Sirius News Reel. Words of the Sirichana for all."
 msgstr "シリウス・ニュースリール。シリチャナの言葉をみなさまに。"
 
-#: dat/events/neutral/news.lua:35
+#: dat/events/neutral/news.lua:37
 msgid "The word of the Free Resistance."
 msgstr "フリーレジスタンスの声。"
 
-#: dat/events/neutral/news.lua:36
+#: dat/events/neutral/news.lua:38
 msgid "News from the Frontier Alliance."
 msgstr "辺境同盟からのニュース。"
 
-#: dat/events/neutral/news.lua:37
+#: dat/events/neutral/news.lua:39
 msgid "Word from the Proteron state."
 msgstr "プロテロン国からの声。"
 
-#: dat/events/neutral/news.lua:38
+#: dat/events/neutral/news.lua:40
 msgid "Scientific, Socioeconomic, and Sundry Events"
 msgstr "科学、社会経済、いろいろな出来事"
 
-#: dat/events/neutral/news.lua:39
+#: dat/events/neutral/news.lua:41
 msgid "The voice of the future."
 msgstr "将来の知らせ。"
 
-#: dat/events/neutral/news.lua:40
+#: dat/events/neutral/news.lua:42
 msgid "Data Relay Network"
 msgstr "データ・リレー・ネットワーク。"
 
-#: dat/events/neutral/news.lua:46
+#: dat/events/neutral/news.lua:48
 msgid "Interesting events from around the universe."
 msgstr "周辺宇宙からの興味深い出来事。"
 
-#: dat/events/neutral/news.lua:47
+#: dat/events/neutral/news.lua:49
 msgid "Fair and unbiased news."
 msgstr "公正かつ偏見のないニュース。"
 
-#: dat/events/neutral/news.lua:48
+#: dat/events/neutral/news.lua:50
 msgid "All the headlines all the time."
 msgstr "いかなるニュースをいかなるときにも。"
 
-#: dat/events/neutral/news.lua:51
+#: dat/events/neutral/news.lua:53
 msgid "Fresh news from around the Empire."
 msgstr "帝国じゅうの新着ニュース。"
 
-#: dat/events/neutral/news.lua:52
+#: dat/events/neutral/news.lua:54
 msgid "Remembering the Incident."
 msgstr "事象のことは忘れません。"
 
-#: dat/events/neutral/news.lua:53
+#: dat/events/neutral/news.lua:55
 msgid "Keeping you informed."
 msgstr "これであなたは事情通に。"
 
-#: dat/events/neutral/news.lua:56
+#: dat/events/neutral/news.lua:58
 msgid "Short and to the point news."
 msgstr "簡潔で要を得たニュース。"
 
-#: dat/events/neutral/news.lua:57
+#: dat/events/neutral/news.lua:59
 msgid "All that happens. In simple words. So you can understand."
 msgstr "すべての出来事。簡単な言葉。だから理解できる。"
 
-#: dat/events/neutral/news.lua:58
+#: dat/events/neutral/news.lua:60
 msgid "Simple news for busy people."
 msgstr "いそがしい人びとのための簡素なニュース。"
 
-#: dat/events/neutral/news.lua:61
+#: dat/events/neutral/news.lua:63
 msgid "We bring you the news from around the Empire."
 msgstr "帝国じゅうのニュースをお届けします。"
 
-#: dat/events/neutral/news.lua:64
+#: dat/events/neutral/news.lua:66
 msgid "News that matters."
 msgstr "重要なニュース。"
 
-#: dat/events/neutral/news.lua:65
+#: dat/events/neutral/news.lua:67
 msgid "Adopt a cat today!"
 msgstr "今日はネコを採用した！"
 
-#: dat/events/neutral/news.lua:66
+#: dat/events/neutral/news.lua:68
 msgid "Laughing at the Emperor."
 msgstr "帝国を笑う。"
 
-#: dat/events/neutral/news.lua:67
+#: dat/events/neutral/news.lua:69
 msgid "On top of the world."
 msgstr "世界のてっぺんで。"
 
-#: dat/events/neutral/news.lua:68
+#: dat/events/neutral/news.lua:70
 msgid "Piracy has never been better."
 msgstr "海賊行為よりいいものなんてけっしてない。"
 
-#: dat/events/neutral/news.lua:72
+#: dat/events/neutral/news.lua:74
 msgid "News you can trust."
 msgstr "信用できるニュース。"
 
-#: dat/events/neutral/news.lua:75
+#: dat/events/neutral/news.lua:77
 msgid "Stay faithful."
 msgstr "忠実なままであれ。"
 
-#: dat/events/neutral/news.lua:76
+#: dat/events/neutral/news.lua:78
 msgid "Sirichana watches and guides you."
 msgstr "シリチャナはあなたを見守って導く。"
 
-#: dat/events/neutral/news.lua:80
+#: dat/events/neutral/news.lua:82
 msgid "Information by optimization."
 msgstr "最適化による情報。"
 
-#: dat/events/neutral/news.lua:81
+#: dat/events/neutral/news.lua:83
 msgid "Statistically significant news."
 msgstr "統計的に意義深いニュース。"
 
-#: dat/events/neutral/news.lua:82
+#: dat/events/neutral/news.lua:84
 msgid "Peer reviewed news."
 msgstr "査読ずみのニュース。"
 
-#: dat/events/neutral/news.lua:85
+#: dat/events/neutral/news.lua:87
 msgid "Genetically tailoured for you."
 msgstr "あなたのために遺伝学的に仕立てました。"
 
-#: dat/events/neutral/news.lua:86
+#: dat/events/neutral/news.lua:88
 msgid "Naturally selected news."
 msgstr "自然に選ばれたニュース。"
 
 #.
 #. Science and technology
 #. --
-#: dat/events/neutral/news.lua:98
+#: dat/events/neutral/news.lua:100
 msgid "Techs Probe for Sol"
 msgstr "技術者たちがソルを調査"
 
-#: dat/events/neutral/news.lua:99
+#: dat/events/neutral/news.lua:101
 msgid ""
 "Technicians recently returned from a new effort to understand the Sol "
 "Incident. They expect the first data to arrive in 50 decaperiods' time."
@@ -29132,11 +29143,11 @@ msgstr ""
 "技術者たちが、ソルの事象への理解にむけた新たな試みから帰還した。新たな情報が "
 "500 時限以内に到着すると見こまれている。"
 
-#: dat/events/neutral/news.lua:102
+#: dat/events/neutral/news.lua:104
 msgid "Sand Monster Caught On Tape"
 msgstr "サンドモンスターがカメラに写る"
 
-#: dat/events/neutral/news.lua:103
+#: dat/events/neutral/news.lua:105
 msgid ""
 "Local residents claim footage from a security camera shows elusive beast "
 "walking through a desert storm. Exobiologists suspect a hoax."
@@ -29145,11 +29156,11 @@ msgstr ""
 "その動物が砂漠の嵐のなかを歩いているのだそうだ。宇宙生物学者は悪ふざけを疑っ"
 "ている。"
 
-#: dat/events/neutral/news.lua:106
+#: dat/events/neutral/news.lua:108
 msgid "New Handheld AI Debuts"
 msgstr "新しい手持ち AI デビュー"
 
-#: dat/events/neutral/news.lua:107
+#: dat/events/neutral/news.lua:109
 msgid ""
 "Braeburn, the home division of Wellington, yesterday demonstrated their new "
 "PDAI. Developer Isaac Asimov assured us the new model is guaranteed not to "
@@ -29159,11 +29170,11 @@ msgstr ""
 "た。開発者のアイザック・アシモフは、この新しい機種には自身の自我をもたないよ"
 "うな保証があると請けあった。"
 
-#: dat/events/neutral/news.lua:110
+#: dat/events/neutral/news.lua:112
 msgid "Experiment Produces Cold Fusion"
 msgstr "実験で低温核融合がおきる"
 
-#: dat/events/neutral/news.lua:111
+#: dat/events/neutral/news.lua:113
 msgid ""
 "In an interview with Bleeding Edge anchor McKenzie Kruft, a researcher at "
 "Eureka labs says he has produced a tabletop atomic reaction. He hopes to "
@@ -29173,11 +29184,11 @@ msgstr ""
 "リーカ研究所の研究者が卓上で核反応を引きおこしたと発言した。その研究者は、こ"
 "の周期の終わりごろに科学雑誌上で結果を公表したいとのこと。"
 
-#: dat/events/neutral/news.lua:114
+#: dat/events/neutral/news.lua:116
 msgid "The Case for Sex"
 msgstr "性の擁護論"
 
-#: dat/events/neutral/news.lua:115
+#: dat/events/neutral/news.lua:117
 msgid ""
 "Though cloning rates continue to rise, Vlad Taneev believes we can still "
 "benefit from genetic recombination. \"Lady chance is more creative than we,"
@@ -29187,11 +29198,11 @@ msgstr ""
 "を得られると、ブラド・タネーエフは信じている。｢ご婦人たちにはわたしたちより"
 "もっと創造的な見こみがあります｣ と、有名な遺伝子接合士は言う。"
 
-#: dat/events/neutral/news.lua:118
+#: dat/events/neutral/news.lua:120
 msgid "Hyperspace is Hot"
 msgstr "超空間は熱い"
 
-#: dat/events/neutral/news.lua:119
+#: dat/events/neutral/news.lua:121
 msgid ""
 "Researchers have found traces of matter moving very quickly in hyperspace. "
 "They are not yet sure whether the minute particles originated there, or are "
@@ -29201,11 +29212,11 @@ msgstr ""
 "がそこを起源にするものなのか、あるいは人間によって混入されたものなのかはまだ"
 "はっきりしていないとしている。"
 
-#: dat/events/neutral/news.lua:122
+#: dat/events/neutral/news.lua:124
 msgid "A Family Freezer"
 msgstr "家族の冷凍庫"
 
-#: dat/events/neutral/news.lua:123
+#: dat/events/neutral/news.lua:125
 msgid ""
 "Looking for a cryotube for your parents?  Our expert panel finds Glass Box "
 "Mark II will keep your family alive for nearly as long as the previous model."
@@ -29217,11 +29228,11 @@ msgstr ""
 #.
 #. Business
 #. --
-#: dat/events/neutral/news.lua:129
+#: dat/events/neutral/news.lua:131
 msgid "Fullerton Reports Quarterly Loss"
 msgstr "フラートンが四半期の損失を報告"
 
-#: dat/events/neutral/news.lua:130
+#: dat/events/neutral/news.lua:132
 msgid ""
 "Engine maker Fullerton Industries has posted a c47B loss over the past 25 "
 "decaperiods. A company spokeswoman attributed the loss to the high cost of "
@@ -29231,11 +29242,11 @@ msgstr ""
 "あったとあきらかにした。広報担当者によれば、損失は重水素の費用増加と売上減少"
 "のためだとする。"
 
-#: dat/events/neutral/news.lua:133
+#: dat/events/neutral/news.lua:135
 msgid "Genetric Board Meets"
 msgstr "ジェネトリック役員会の開催"
 
-#: dat/events/neutral/news.lua:134
+#: dat/events/neutral/news.lua:136
 msgid ""
 "In the wake of the Yavi Bartolo's departure as CSO of Genetric Technologies, "
 "the board of directors will meet today. The group is expected to appoint a "
@@ -29251,11 +29262,11 @@ msgstr ""
 #.
 #. Human interest.
 #. --
-#: dat/events/neutral/news.lua:143
+#: dat/events/neutral/news.lua:145
 msgid "Eyeteeth Back in Fashion"
 msgstr "犬歯の再流行"
 
-#: dat/events/neutral/news.lua:144
+#: dat/events/neutral/news.lua:146
 msgid ""
 "Despite the advice of dentists, eyetooth caps have come into vogue again. "
 "Young people throughout the inhabited worlds use home kits to strip a layer "
@@ -29266,11 +29277,11 @@ msgstr ""
 "うの若者たちが、家庭用の道具で歯からエナメル層を取り除き、水晶や花崗岩をかぶ"
 "せている。なかには火打ち石をつける者も。"
 
-#: dat/events/neutral/news.lua:147
+#: dat/events/neutral/news.lua:149
 msgid "Everyone Loves a SuperChimp"
 msgstr "みんなスーパーチンパンジーが大好きだ"
 
-#: dat/events/neutral/news.lua:148
+#: dat/events/neutral/news.lua:150
 msgid ""
 "For dozens of cycles used only as menial labourers, now SuperChimps are "
 "being widely adopted as domestic companions. Enhanced primates make an "
@@ -29280,11 +29291,11 @@ msgstr ""
 "では家庭での付き添い役として広く受けいれられている。改良型霊長類は、優しく知"
 "的なペットや、費用の安い使用人となった。"
 
-#: dat/events/neutral/news.lua:151
+#: dat/events/neutral/news.lua:153
 msgid "Admiral's Ball a Triumph"
 msgstr "大成功となった提督の舞踏会"
 
-#: dat/events/neutral/news.lua:152
+#: dat/events/neutral/news.lua:154
 msgid ""
 "The glamorous season drew to a close with an underwater themed ball held in "
 "air bubbles deep under the oceans of Anecu. All the season's debutantes "
@@ -29294,11 +29305,11 @@ msgstr ""
 "テーマにした舞踏会で終わりを迎えた。これにはこの季節に社交界入りした女性たち"
 "が全員出席した。"
 
-#: dat/events/neutral/news.lua:155
+#: dat/events/neutral/news.lua:157
 msgid "Amazing Survival Story"
 msgstr "驚くべき生存者の話"
 
-#: dat/events/neutral/news.lua:156
+#: dat/events/neutral/news.lua:158
 msgid ""
 "An Xing Long was rescued after two decaperiods floating in space. \"I used "
 "meditation to slow my breathing,\" Xing Long told us. \"It was hard because "
@@ -29307,12 +29318,12 @@ msgstr ""
 "シン・ロンが 20 時限宇宙で漂流したあとに救助された。｢瞑想して呼吸を遅くするの"
 "には慣れているんです｣ と、シン・ロンはいった。｢おびえていたので難しかった｣"
 
-#: dat/events/neutral/news.lua:159
+#: dat/events/neutral/news.lua:161
 msgid "The Best Spaceport Bars"
 msgstr "いけてる宇宙港のバー"
 
 # 銀河ヒッチハックガイドにPan Galactic Gargle Blasterというカクテルがあるらしい
-#: dat/events/neutral/news.lua:160
+#: dat/events/neutral/news.lua:162
 msgid ""
 "Where can you get the best gargle blaster?  The famous exotic drinks list at "
 "the Doranthex Lava Room charmed our reviewer, but if you care for ambiance, "
@@ -29322,11 +29333,11 @@ msgstr ""
 "われわれ批評家を魅了するドランテクス・ラバ・ルームには並んでいる。しかしもし"
 "あなたが雰囲気を気にするなら、ゴダード・バーを逃してはならない。"
 
-#: dat/events/neutral/news.lua:163
+#: dat/events/neutral/news.lua:165
 msgid "RIP: The Floating Vagabond"
 msgstr "追悼 漂流のやくざ者"
 
-#: dat/events/neutral/news.lua:164
+#: dat/events/neutral/news.lua:166
 msgid ""
 "Only two cycles after the mysterious disappearance of its owner, the "
 "galaxy's only deep space bar shut down the generators and cycled the airlock "
@@ -29335,11 +29346,11 @@ msgstr ""
 "所有者が謎の失踪をとげてからたった 2 周期しかたっていないが、銀河の唯一の深宇"
 "宙バーは発電機が止められ、エアロックが最後に 1 回使われた。"
 
-#: dat/events/neutral/news.lua:167
+#: dat/events/neutral/news.lua:169
 msgid "Games for Young Pilots"
 msgstr "若いパイロットのためのゲーム"
 
-#: dat/events/neutral/news.lua:168
+#: dat/events/neutral/news.lua:170
 msgid ""
 "Want your child to have a chance at a career as a space pilot?  Games like "
 "Super Julio Omniverse and SpaceFox help your child develop twitch muscles."
@@ -29348,11 +29359,11 @@ msgstr ""
 "パー・ジュリオ・オムニバースやスペースフォックスのようなゲームは、あなたの子"
 "どもが筋肉のけいれんを発達させるのにつながります。"
 
-#: dat/events/neutral/news.lua:171
+#: dat/events/neutral/news.lua:173
 msgid "Former Pirate Writes Target Management Self-Help Book"
 msgstr "もと海賊が書いた目標管理の自習書"
 
-#: dat/events/neutral/news.lua:173
+#: dat/events/neutral/news.lua:175
 msgid ""
 "A former pirate shares her story on how she steered herself away from "
 "piracy, which she wrote about in an award-winning self-help book. \"I used "
@@ -29375,11 +29386,11 @@ msgstr ""
 #.
 #. Science and technology
 #. --
-#: dat/events/neutral/news.lua:183
+#: dat/events/neutral/news.lua:185
 msgid "New Mace Rockets"
 msgstr "新しいメイスロケット"
 
-#: dat/events/neutral/news.lua:184
+#: dat/events/neutral/news.lua:186
 msgid ""
 "Dvaered Engineers are proud to present the new improved version of the "
 "Dvaered Mace rocket. \"We have proven the new rocket to be nearly twice as "
@@ -29396,11 +29407,11 @@ msgstr ""
 #.
 #. Politics
 #. --
-#: dat/events/neutral/news.lua:193
+#: dat/events/neutral/news.lua:195
 msgid "FLF Responsible for Piracy"
 msgstr "FLF が海賊行為の原因"
 
-#: dat/events/neutral/news.lua:194
+#: dat/events/neutral/news.lua:196
 msgid ""
 "Law enforcement expert Paet Dohmer's upcoming essay describes the group as "
 "\"more criminal gang than independence movement\", according to his "
@@ -29410,11 +29421,11 @@ msgstr ""
 "より犯罪集団｣ であるというグループについて詳しく説明されると氏の広報担当者が"
 "述べる。"
 
-#: dat/events/neutral/news.lua:197
+#: dat/events/neutral/news.lua:199
 msgid "Front Responsible for Shipping Woes"
 msgstr "運送上の災難は辺境が原因"
 
-#: dat/events/neutral/news.lua:198
+#: dat/events/neutral/news.lua:200
 msgid ""
 "A spokeswoman for the separatist group says they were behind the recent "
 "series of attacks on cargo ships operating between Dakron and Theras. "
@@ -29424,11 +29435,11 @@ msgstr ""
 "への、最近あった一連の攻撃の黒幕は自分たちだと述べた。ドベーレッド高官はその"
 "行動について強く非難している。"
 
-#: dat/events/neutral/news.lua:201
+#: dat/events/neutral/news.lua:203
 msgid "Jouvanin Tapped as Interim Chief"
 msgstr "ジュバニンが暫定知事に選出"
 
-#: dat/events/neutral/news.lua:202
+#: dat/events/neutral/news.lua:204
 msgid ""
 "Following the arrest of Rex Helmer, former Anecu deputy governor Elene "
 "Jouvanin will be sworn in today. She will serve out the term as governor."
@@ -29436,11 +29447,11 @@ msgstr ""
 "レックス・ヘルマーの逮捕をうけて、もとエイネク副知事であるエリーン・ジュバニ"
 "ンが本日就任する見こみ。ジュバニンは知事の任期まで務める予定。"
 
-#: dat/events/neutral/news.lua:205
+#: dat/events/neutral/news.lua:207
 msgid "FLF Terrorist Trial Ends"
 msgstr "FLF テロリストの裁判が終わる"
 
-#: dat/events/neutral/news.lua:206
+#: dat/events/neutral/news.lua:208
 msgid ""
 "FLF Terrorist Trial ended this cycle with an unsurprising death sentence for "
 "all five members of the Nor spaceport bombing. Execution is scheduled in 10 "
@@ -29449,11 +29460,11 @@ msgstr ""
 "FLF テロリストの裁判がこの周期に終わった。予想どおり、ノール宇宙港爆破につい"
 "て 5 人全員が死刑判決となった。執行は 10 時限以内を予定している。"
 
-#: dat/events/neutral/news.lua:209
+#: dat/events/neutral/news.lua:211
 msgid "New Challenges for New Times"
 msgstr "新しい時代への新しい挑戦"
 
-#: dat/events/neutral/news.lua:210
+#: dat/events/neutral/news.lua:212
 msgid ""
 "The Dvaered council after a unanimous ruling decided to increase patrols in "
 "Dvaered space due to the recent uprising in FLF terrorism. The new measure "
@@ -29466,11 +29477,11 @@ msgstr ""
 #.
 #. Human interest.
 #. --
-#: dat/events/neutral/news.lua:216
+#: dat/events/neutral/news.lua:218
 msgid "Sirius Weaker Than Ever"
 msgstr "シリウスが以前より弱体化"
 
-#: dat/events/neutral/news.lua:217
+#: dat/events/neutral/news.lua:219
 msgid ""
 "This cycle breaks the negative record for fewest pilgrims to Mutris since "
 "the formation of House Sirius. This weakness is yet another sign that House "
@@ -29483,11 +29494,11 @@ msgstr ""
 #.
 #. Science and technology
 #. --
-#: dat/events/neutral/news.lua:226
+#: dat/events/neutral/news.lua:228
 msgid "Goddard: Raising the Bar"
 msgstr "ゴダード、高い基準を設定"
 
-#: dat/events/neutral/news.lua:227
+#: dat/events/neutral/news.lua:229
 msgid ""
 "Many new scientists are being contracted by House Goddard to investigate "
 "possible improvements. This new strategy will increase the gap with the "
@@ -29499,11 +29510,11 @@ msgstr ""
 #.
 #. Business
 #. --
-#: dat/events/neutral/news.lua:233
+#: dat/events/neutral/news.lua:235
 msgid "Goddard Earnings on the Rise"
 msgstr "ゴダードの収益が上昇"
 
-#: dat/events/neutral/news.lua:234
+#: dat/events/neutral/news.lua:236
 msgid ""
 "House Goddard has once again increased its earnings. \"Our investment in "
 "technology and quality has paid off,\" said Kari Baker of House Goddard's "
@@ -29512,11 +29523,11 @@ msgstr ""
 "ゴダード荘がまた収益を増やした。｢技術と品質への投資が結実した｣ と、ゴダード荘"
 "営業企画局のカリ・ベイカーは述べた。"
 
-#: dat/events/neutral/news.lua:237
+#: dat/events/neutral/news.lua:239
 msgid "Goddard Awarded Best Ship"
 msgstr "ゴダードが最高の船と認定"
 
-#: dat/events/neutral/news.lua:238
+#: dat/events/neutral/news.lua:240
 msgid ""
 "Once again the Goddard Battlecruiser was awarded the Best Overall Ship prize "
 "by the Dvaered Armada's annual Ship Awards. \"Very few ships have "
@@ -29527,11 +29538,11 @@ msgstr ""
 "的に最高の船であるとまた認められた。｢ゴダードのように信頼できる船はとても少な"
 "い｣ と、ゴダード荘の代理として賞を受けとったウォーソン卿は述べた。"
 
-#: dat/events/neutral/news.lua:241
+#: dat/events/neutral/news.lua:243
 msgid "Aerosys Earnings Drop"
 msgstr "エアロシスの収益が低下"
 
-#: dat/events/neutral/news.lua:242
+#: dat/events/neutral/news.lua:244
 msgid ""
 "The spaceways may swarm with Hyena-model craft, but today Aerosys recorded "
 "another quarterly loss. The company is investigating the discrepancy between "
@@ -29541,11 +29552,11 @@ msgstr ""
 "半期の損失を公表した。この会社は、船の人気と販売額とのあいだの食い違いについ"
 "て調査している。"
 
-#: dat/events/neutral/news.lua:245
+#: dat/events/neutral/news.lua:247
 msgid "Aerosys Victim of Pirate Manufacturing"
 msgstr "エアロシスが海賊生産のかもに"
 
-#: dat/events/neutral/news.lua:246
+#: dat/events/neutral/news.lua:248
 msgid ""
 "The ship manufacturer has released a study indicating its signature Hyena "
 "model is being produced by a hidden system of unlicensed manufacturers."
@@ -29553,11 +29564,11 @@ msgstr ""
 "宇宙船製造業者が調査結果を公表した。そのなかで、ハイエナ型が隠された星系で無"
 "資格の製造業者によって生産されているという痕跡が指摘されている。"
 
-#: dat/events/neutral/news.lua:249
+#: dat/events/neutral/news.lua:251
 msgid "Melendez CEO on Strategy"
 msgstr "メレンデズ CEO の戦略"
 
-#: dat/events/neutral/news.lua:250
+#: dat/events/neutral/news.lua:252
 msgid ""
 "The Chief Executive Officer of ship maker Melendez Corp. thinks "
 "manufacturers should follow his company's lead in keeping costs down and "
@@ -29566,11 +29577,11 @@ msgstr ""
 "宇宙船製造業メレンデズ社の最高経営責任者は、原価低減と大量消費市場むけの生産"
 "を主導するメレンデズ社に、製造業者たちはつづくべきだと考えている。"
 
-#: dat/events/neutral/news.lua:253
+#: dat/events/neutral/news.lua:255
 msgid "The Goddard Exception"
 msgstr "とくべつなゴダード"
 
-#: dat/events/neutral/news.lua:254
+#: dat/events/neutral/news.lua:256
 msgid ""
 "Why has a community with more expertise sailing than flying produced the "
 "Empire's elite civilian spacecraft?  Lord Warthon says the secret lies in "
@@ -29579,11 +29590,11 @@ msgstr ""
 "飛ぶよりも航法に熟達している集団が、なぜ帝国の精鋭民間宇宙船を生産しているの"
 "か？　ウォーソン卿は、一族の実践的な指導力という伝統に秘密があるのだという。"
 
-#: dat/events/neutral/news.lua:257
+#: dat/events/neutral/news.lua:259
 msgid "Sneak Peek: the Kestrel"
 msgstr "予告 ケストレル"
 
-#: dat/events/neutral/news.lua:258
+#: dat/events/neutral/news.lua:260
 msgid ""
 "Our reporter took a tour through Krain's mysterious space craft. He says it "
 "poses a challenge to the Goddard."
@@ -29603,11 +29614,11 @@ msgstr ""
 #.
 #. Business
 #. --
-#: dat/events/neutral/news.lua:276
+#: dat/events/neutral/news.lua:278
 msgid "Trade Meeting at Lorelei"
 msgstr "ローレライでの貿易会合"
 
-#: dat/events/neutral/news.lua:277
+#: dat/events/neutral/news.lua:279
 msgid ""
 "Lorelei, in the Churchill system, is the latest world to host major trade "
 "negotiations between the Fyrra and the Space Traders Guild. The Fyrra Arch-"
@@ -29620,11 +29631,11 @@ msgstr ""
 #.
 #. Politics
 #. --
-#: dat/events/neutral/news.lua:283
+#: dat/events/neutral/news.lua:285
 msgid "Dvaered extorting pilgrims"
 msgstr "巡礼者をゆするドベーレッド"
 
-#: dat/events/neutral/news.lua:284
+#: dat/events/neutral/news.lua:286
 msgid ""
 "Recent pilgrims headed to Mutris have been telling stories of extortion and "
 "violations by Dvaered operators. Dvaered Warlord Kra'tok claims that these "
@@ -29638,11 +29649,11 @@ msgstr ""
 #.
 #. Human interest.
 #. --
-#: dat/events/neutral/news.lua:290
+#: dat/events/neutral/news.lua:292
 msgid "Words of Tranquility"
 msgstr "静穏の言葉"
 
-#: dat/events/neutral/news.lua:291
+#: dat/events/neutral/news.lua:293
 msgid ""
 "We welcome many new Touched who have recently begun ministering to the "
 "Shaira echelon after their long pilgrimage on Mutris. House Sirius is still "
@@ -29655,11 +29666,11 @@ msgstr ""
 #.
 #. Science and technology
 #. --
-#: dat/events/neutral/news.lua:300
+#: dat/events/neutral/news.lua:302
 msgid "Skull and Bones Improving"
 msgstr "どくろと骨の進歩"
 
-#: dat/events/neutral/news.lua:301
+#: dat/events/neutral/news.lua:303
 msgid ""
 "The technology behind Skull and Bones is advancing. Not only do they steal "
 "ships, but they improve on the original design. \"This gives us pirates an "
@@ -29673,11 +29684,11 @@ msgstr ""
 #.
 #. Business
 #. --
-#: dat/events/neutral/news.lua:307
+#: dat/events/neutral/news.lua:309
 msgid "Draconis Favorite Plundering Space"
 msgstr "ドラコニスはお気に入りの略奪空間"
 
-#: dat/events/neutral/news.lua:308
+#: dat/events/neutral/news.lua:310
 msgid ""
 "Draconis has recently passed Delta Pavonis in the pirate polls as the most "
 "favored plundering space. The abundance of traders and high interference "
@@ -29687,11 +29698,11 @@ msgstr ""
 "抜いた。貿易商がたくさんいて干渉が大きいので、すばやくクレジットを稼ぐにはす"
 "ばらしい場所となっている。"
 
-#: dat/events/neutral/news.lua:311
+#: dat/events/neutral/news.lua:313
 msgid "New Ships for Skull and Bones"
 msgstr "どくろと骨の新しい船"
 
-#: dat/events/neutral/news.lua:312
+#: dat/events/neutral/news.lua:314
 msgid ""
 "The Skull and Bones was able to extract a few dozen high quality vessels "
 "from Caladan warehouses under the nose of the Empire. These ships will help "
@@ -29704,11 +29715,11 @@ msgstr ""
 #.
 #. Politics
 #. --
-#: dat/events/neutral/news.lua:318
+#: dat/events/neutral/news.lua:320
 msgid "Emperor Weaker Than Ever"
 msgstr "皇帝の力が以前より衰える"
 
-#: dat/events/neutral/news.lua:319
+#: dat/events/neutral/news.lua:321
 msgid ""
 "Recent actions demonstrate the inefficiency and weakness of the Emperor. One "
 "of the last irrational decisions left Eridani without a defense fleet to "
@@ -29721,11 +29732,11 @@ msgstr ""
 #.
 #. Human interest.
 #. --
-#: dat/events/neutral/news.lua:325
+#: dat/events/neutral/news.lua:327
 msgid "Cats in New Haven"
 msgstr "ニューヘイブンのネコ"
 
-#: dat/events/neutral/news.lua:326
+#: dat/events/neutral/news.lua:328
 msgid ""
 "An explosion in the cat population of New Haven has created an adoption "
 "campaign with the slogan, \"Pirate Cats, for those lonely space trips.\". Is "
@@ -29738,11 +29749,11 @@ msgstr ""
 #.
 #. Science and technology
 #. --
-#: dat/events/neutral/news.lua:335
+#: dat/events/neutral/news.lua:337
 msgid "Terraforming Emperor's Fist"
 msgstr "エンペラーズ・フィストのテラフォーミング"
 
-#: dat/events/neutral/news.lua:336
+#: dat/events/neutral/news.lua:338
 msgid ""
 "New bleeding-edge terraforming techniques to be tried on Emperor's Fist. "
 "Studies show that these techniques could speed up the terraforming process "
@@ -29751,11 +29762,11 @@ msgstr ""
 "新しい最先端のテラフォーミング手法がエンペラーズ・フィストで試される。研究に"
 "よれば、この手法はテラフォーミングの過程を 40% ほど高速化するのだそうだ。"
 
-#: dat/events/neutral/news.lua:339
+#: dat/events/neutral/news.lua:341
 msgid "Bees Introduced to Emperor's Fist"
 msgstr "ミツバチがエンペラーズ・フィストに導入"
 
-#: dat/events/neutral/news.lua:340
+#: dat/events/neutral/news.lua:342
 msgid ""
 "As they prepare the gardens of the future Imperial compound, entomologists "
 "have established the first colony of the Earth insects on the planet "
@@ -29767,11 +29778,11 @@ msgstr ""
 #.
 #. Business
 #. --
-#: dat/events/neutral/news.lua:346
+#: dat/events/neutral/news.lua:348
 msgid "Empire Keeping Traders Safe"
 msgstr "帝国は貿易商の安全を保つ"
 
-#: dat/events/neutral/news.lua:347
+#: dat/events/neutral/news.lua:349
 msgid ""
 "Recent studies show that reports of piracy on Trader vessels have gone down "
 "by up to 40% in some sectors. This is a demonstration of the Empire's "
@@ -29781,11 +29792,11 @@ msgstr ""
 "いるということだ。これは海賊行為を根絶するという帝国の約束が守られていること"
 "を示している。"
 
-#: dat/events/neutral/news.lua:350
+#: dat/events/neutral/news.lua:352
 msgid "Nexus Contract Finalised"
 msgstr "ネクサスとの契約が完了"
 
-#: dat/events/neutral/news.lua:351
+#: dat/events/neutral/news.lua:353
 msgid ""
 "The Empire agreed to terms with shipbuilder Nexus for a new generation of "
 "military craft. The deal extends the partnership with the government for "
@@ -29797,11 +29808,11 @@ msgstr ""
 #.
 #. Politics
 #. --
-#: dat/events/neutral/news.lua:357
+#: dat/events/neutral/news.lua:359
 msgid "New Empire Recruits"
 msgstr "帝国の新しい補充兵"
 
-#: dat/events/neutral/news.lua:358
+#: dat/events/neutral/news.lua:360
 msgid ""
 "Emperor's recruiting strategy a success. Many new soldiers joining the "
 "Empire Armada. \"We haven't had such a successful campaign in ages!\" - Raid "
@@ -29811,11 +29822,11 @@ msgstr ""
 "だ。｢このように成功した宣伝活動はずっとなかったことだ！｣ と、募集活動の広報担"
 "当者であるレイド・スティールはいった。"
 
-#: dat/events/neutral/news.lua:361
+#: dat/events/neutral/news.lua:363
 msgid "Governor Helmer Jailed"
 msgstr "ヘルマー知事が投獄"
 
-#: dat/events/neutral/news.lua:362
+#: dat/events/neutral/news.lua:364
 msgid ""
 "Imperial Auditors arrested governor Rex Helmer of Anecu on charges of "
 "corruption. He has been removed from office and transported to a holding "
@@ -29824,11 +29835,11 @@ msgstr ""
 "帝国検査員たちが、エイネクの知事レックス・ヘルマーを汚職の容疑で逮捕した。知"
 "事は解任され、裁判を待つため勾留施設に移送された。"
 
-#: dat/events/neutral/news.lua:365
+#: dat/events/neutral/news.lua:367
 msgid "Imperial Council Opens Doors"
 msgstr "帝国評議会が門戸を開く"
 
-#: dat/events/neutral/news.lua:366
+#: dat/events/neutral/news.lua:368
 msgid ""
 "The supreme advisory body invited undergraduates from six top schools to sit "
 "in on a day's deliberations. Topics required biodiversity strategy."
@@ -29839,11 +29850,11 @@ msgstr ""
 #.
 #. Human interest.
 #. --
-#: dat/events/neutral/news.lua:372
+#: dat/events/neutral/news.lua:374
 msgid "New Cat in the Imperial Family"
 msgstr "皇帝一家に新しいネコ"
 
-#: dat/events/neutral/news.lua:373
+#: dat/events/neutral/news.lua:375
 msgid ""
 "The Emperor's daughter was recently gifted a cat. Cat could be named "
 "\"Snuggles\" and seems to be all white."
@@ -29851,11 +29862,11 @@ msgstr ""
 "最近皇帝のお嬢さんにネコが贈られた。ネコは ｢スナッグル｣ と名づけられる見こみ"
 "で、全身真っ白である。"
 
-#: dat/events/neutral/news.lua:376
+#: dat/events/neutral/news.lua:378
 msgid "Emperor's Aid Gets Hitched"
 msgstr "皇帝の助手が結婚"
 
-#: dat/events/neutral/news.lua:377
+#: dat/events/neutral/news.lua:379
 msgid ""
 "Imperial secretary Karil Lorenze married long time fiancee Rachid Baouda in "
 "the future palace gardens on Emperor's Fist. His Eminence the Bishop of Bao "
@@ -29865,11 +29876,11 @@ msgstr ""
 "エンペラーズ・フィストにある宮殿予定地の庭園で結婚した。バオ司教猊下が式典を"
 "とりおこなった。"
 
-#: dat/events/neutral/news.lua:380
+#: dat/events/neutral/news.lua:382
 msgid "Remembering the Past"
 msgstr "過去を忘れない"
 
-#: dat/events/neutral/news.lua:381
+#: dat/events/neutral/news.lua:383
 msgid ""
 "The Emperor has scheduled a new monument to be constructed on Emperor's Fist "
 "in honour of all those dead in the Incident."
@@ -29886,11 +29897,11 @@ msgstr ""
 #.
 #. Politics
 #. --
-#: dat/events/neutral/news.lua:396
+#: dat/events/neutral/news.lua:398
 msgid "Election on Caladan Marred by Fraud"
 msgstr "キャラダンの選挙が不正でもめる"
 
-#: dat/events/neutral/news.lua:397
+#: dat/events/neutral/news.lua:399
 msgid ""
 "As many as two of every hundred votes counted after the recent polling "
 "decaperiod may be falsified, an ombudsman reports. The opposition party "
@@ -29900,11 +29911,11 @@ msgstr ""
 "ものがあったと行政監察員が報告した。野党は選挙を無効にするように要求してい"
 "る。"
 
-#: dat/events/neutral/news.lua:400
+#: dat/events/neutral/news.lua:402
 msgid "Empire Relies on Prison Labour"
 msgstr "帝国は囚人労働に依存"
 
-#: dat/events/neutral/news.lua:401
+#: dat/events/neutral/news.lua:403
 msgid ""
 "A recent report by the Soromid House Ways and Means Committee suggests "
 "infrastructure may be too dependent the on the incarcerated population."
@@ -29912,11 +29923,11 @@ msgstr ""
 "ソロミド荘の歳入委員会の最近の報告書は、社会基盤が投獄された人びとにあまりに"
 "依存している可能性があると示唆している。"
 
-#: dat/events/neutral/news.lua:404
+#: dat/events/neutral/news.lua:406
 msgid "Imperial Oversight Scandal"
 msgstr "帝国の監督に醜聞"
 
-#: dat/events/neutral/news.lua:405
+#: dat/events/neutral/news.lua:407
 msgid ""
 "Sources close to the Imperial Chancellor say they see the failure at the "
 "Department of Oversight, whose inspectors overlooked serious failings in "
@@ -29929,11 +29940,11 @@ msgstr ""
 #. Human interest.
 #. --
 #. Return an economy article based on the given commodity, planet object, and number of credits.
-#: dat/events/neutral/news.lua:422
+#: dat/events/neutral/news.lua:424
 msgid "Unfortunate Merchant Goes Bankrupt"
 msgstr "不運な貿易商が破産"
 
-#: dat/events/neutral/news.lua:423
+#: dat/events/neutral/news.lua:425
 msgid ""
 "A merchant was forced into bankruptcy due to a badly timed trade of {cargo} "
 "on {pnt}. \"I thought {credits} per tonne was a good deal, but it turns out "
@@ -29943,11 +29954,11 @@ msgstr ""
 "なった。｢1トンあたり {credits} ならいい取引だって思ったんですが、待っているべ"
 "きだったとわかりました｣ と、その貿易商はいった。"
 
-#: dat/events/neutral/news.lua:426
+#: dat/events/neutral/news.lua:428
 msgid "Shipping Company Goes Out of Business"
 msgstr "運送会社が廃業"
 
-#: dat/events/neutral/news.lua:427
+#: dat/events/neutral/news.lua:429
 msgid ""
 "A small shipping business failed just this decaperiod. While it was already "
 "failing, what finally put the company under was a poorly-timed trade of "
@@ -29961,11 +29972,11 @@ msgstr ""
 "トは断言した。｢取引においては、忍耐が重要だ。そしてこの会社の所有者がそれを"
 "じゅうぶんにもっていなかったのはあきらかだ｣"
 
-#: dat/events/neutral/news.lua:430
+#: dat/events/neutral/news.lua:432
 msgid "Interview with an Economist"
 msgstr "経済学者へのインタビュー"
 
-#: dat/events/neutral/news.lua:431
+#: dat/events/neutral/news.lua:433
 msgid ""
 "One of the galaxy's foremost experts on economics gives an interview "
 "explaining our modern economy. \"We actually have a pretty good "
@@ -29980,11 +29991,11 @@ msgstr ""
 "た。じっさいになった価格は 1トンあたり {credits} です。われわれは約 15% しか"
 "外しませんでした。そのうちに、誤差は 2% くらいまで小さくなると期待しています｣"
 
-#: dat/events/neutral/news.lua:434
+#: dat/events/neutral/news.lua:436
 msgid "Economist Describes Sinusoidal Economic Theory"
 msgstr "経済学者が正弦波経済理論を説明"
 
-#: dat/events/neutral/news.lua:435
+#: dat/events/neutral/news.lua:437
 msgid ""
 "A little-known economist discusses a controversial economic theory. \"When "
 "you look at the trends, it resembles a sine wave. For instance, the price of "
@@ -30000,11 +30011,11 @@ msgstr ""
 "す｣。しかしほかの経済学者たちの意見は異なっていて、その経済学者たちの結果は偶"
 "然によるものだとしている。"
 
-#: dat/events/neutral/news.lua:438
+#: dat/events/neutral/news.lua:440
 msgid "Young Pilot Buys Their First Commodity"
 msgstr "若いパイロットが最初の商品を購入"
 
-#: dat/events/neutral/news.lua:439
+#: dat/events/neutral/news.lua:441
 msgid ""
 "A young pilot has bought some {cargo} as a way of breaking into the "
 "freelance piloting business. Born and raised on {pnt}, where they bought "
@@ -30021,11 +30032,11 @@ msgstr ""
 "わりじゅうを見まわせば、ずっと価格変動が大きいからね。だから利益を得る可能性"
 "もずっとあるんだよ！　やっと始められて興奮だね｣"
 
-#: dat/events/neutral/news.lua:442
+#: dat/events/neutral/news.lua:444
 msgid "Corporate Scandal Rips Through the Galaxy"
 msgstr "法人の醜聞が銀河じゅうを引き裂く"
 
-#: dat/events/neutral/news.lua:443
+#: dat/events/neutral/news.lua:445
 msgid ""
 "Economists are attributing the price of {cargo} on {pnt} to a scandal "
 "involving WarpTron Industries. Debates have ensued regarding whether or not "
@@ -30037,11 +30048,11 @@ msgstr ""
 "のか下がるのか、あるいはこのままなのかということにかんして、ひきつづき議論が"
 "まきおこった。"
 
-#: dat/events/neutral/news.lua:446
+#: dat/events/neutral/news.lua:448
 msgid "Commodity Trading Likened to Gambling"
 msgstr "商品取引が賭博にたとえられる"
 
-#: dat/events/neutral/news.lua:447
+#: dat/events/neutral/news.lua:449
 msgid ""
 "In a controversial statement, one activist has likened commodity trading to "
 "gambling. \"It's legalized gambling, plain and simple! Right now the price "
@@ -30057,11 +30068,11 @@ msgstr ""
 "か？　率直にいって、わたしの断固とした意見はこの『商品取引』が自滅的でやめる"
 "べきものだということです｣"
 
-#: dat/events/neutral/news.lua:450
+#: dat/events/neutral/news.lua:452
 msgid "Leadership Decision Disrupts Prices"
 msgstr "指導者の決定で価格が混乱"
 
-#: dat/events/neutral/news.lua:451
+#: dat/events/neutral/news.lua:453
 msgid ""
 "The price of {cargo} was jeopardized on {pnt} today when the local "
 "government passed a controversial law, bringing it to {credits} per tonne. "
@@ -30072,11 +30083,11 @@ msgstr ""
 "す法律を通したのだ。これでこの商品にはトンあたり {credits} がもたらされること"
 "になる。価格の安定を求めて、抗議者たちからこの法律の廃止の訴えが噴出した。"
 
-#: dat/events/neutral/news.lua:454
+#: dat/events/neutral/news.lua:456
 msgid "Five Cycle Old Child Starts Commodity Trading"
 msgstr "4 歳の子どもが商品取引を開始"
 
-#: dat/events/neutral/news.lua:455
+#: dat/events/neutral/news.lua:457
 msgid ""
 "A child no more than five cycles old has started commodity trading early, "
 "buying 1 tonne of {cargo}. A native of {pnt}, she explained that she has a "
@@ -30095,22 +30106,22 @@ msgstr ""
 #. Needs to be inhabited and have a bar for there to be news
 #. Needs a faction for there to be news
 #. Remove old headers (we only want one at a time)
-#: dat/events/neutral/news.lua:498
+#: dat/events/neutral/news.lua:500
 msgid "News: Faction '{fct}' does not have entry in faction table!"
 msgstr "News: Faction '{fct}' does not have entry in faction table!"
 
 #. Remove old econ articles (we only want one at a time)
-#: dat/events/neutral/news.lua:588
+#: dat/events/neutral/news.lua:590
 msgid "{pnt} in {sys}"
 msgstr "{sys}星系の{pnt}"
 
-#: dat/events/neutral/news.lua:590
+#: dat/events/neutral/news.lua:592
 msgid "{cargo}: {price}"
 msgstr "{cargo} : {price}"
 
 #. Create news, expires immediately when time advances (i.e.
 #. when you take off from the planet).
-#: dat/events/neutral/news.lua:600
+#: dat/events/neutral/news.lua:602
 msgid "Current Market Prices"
 msgstr "現在の市場価格"
 
@@ -30125,78 +30136,81 @@ msgstr "現在の市場価格"
 #. -- Event for creating random characters in the spaceport bar.
 #. -- The random NPCs will tell the player things about the Naev universe in general, about their faction, or about the game itself.
 #. --
+#. Chance of a jump point message showing up. As this gradually goes
+#. down, it is replaced by lore messages. See spawnNPC function.
+#. State. Nothing persists.
 #. Factions which will NOT get generic texts if possible.  Factions
 #. listed here not spawn generic civilian NPCs or get aftercare texts.
 #. Meant for factions which are either criminal (FLF, Pirate) or unaware
 #. of the main universe (Thurion, Proteron).
-#. List to treat special factions diffferently
+#. List to treat special factions differently
 #. Treat pirate clans the same (at least for now)
 #. Civilian descriptions for the spaceport bar.
 #. These descriptions will be picked at random, and may be picked multiple times in one generation.
 #. Remember that any description can end up with any portrait, so don't make any assumptions
 #. about the appearance of the NPC!
-#: dat/events/neutral/npc.lua:49
+#: dat/events/neutral/npc.lua:56
 msgid "This person seems to be here to relax."
 msgstr "この人はここでくつろいでいるようだ。"
 
-#: dat/events/neutral/npc.lua:50
+#: dat/events/neutral/npc.lua:57
 msgid "There is a civilian sitting on one of the tables."
 msgstr "民間人がテーブルに座っている。"
 
-#: dat/events/neutral/npc.lua:51
+#: dat/events/neutral/npc.lua:58
 msgid "There is a civilian sitting there, looking somewhere else."
 msgstr "むこうに民間人が座っている。ほかのどこかを見ている。"
 
-#: dat/events/neutral/npc.lua:52
+#: dat/events/neutral/npc.lua:59
 msgid ""
 "A worker sits at one of the tables, wearing a name tag saying \"Go away\"."
 msgstr ""
 "労働者がテーブルに座っている。つけている名札には ｢失せろ｣ と書いてある。"
 
-#: dat/events/neutral/npc.lua:53
+#: dat/events/neutral/npc.lua:60
 msgid ""
 "A civilian sits at the bar, seemingly serious about the cocktails on offer."
 msgstr "民間人がバーに座っている。見たところまじめにカクテルを注文している。"
 
-#: dat/events/neutral/npc.lua:54
+#: dat/events/neutral/npc.lua:61
 msgid "A civilian wearing a shirt saying: \"Ask me about Jaegnhild\""
 msgstr ""
 "民間人で、着ているシャツにはこう書いてある。｢イエーグンヒルドについて聞いて"
 "よ｣"
 
-#: dat/events/neutral/npc.lua:55
+#: dat/events/neutral/npc.lua:62
 msgid "There is a civilian sitting in the corner."
 msgstr "民間人が隅に座っている。"
 
-#: dat/events/neutral/npc.lua:56
+#: dat/events/neutral/npc.lua:63
 msgid "A civilian feverishly concentrating on a fluorescing drink."
 msgstr "民間人が蛍光を発する飲み物に興奮しながら集中している。"
 
-#: dat/events/neutral/npc.lua:57
+#: dat/events/neutral/npc.lua:64
 msgid "A civilian drinking alone."
 msgstr "民間人がひとりで飲んでいる。"
 
-#: dat/events/neutral/npc.lua:58
+#: dat/events/neutral/npc.lua:65
 msgid "This person seems friendly enough."
 msgstr "この人はじゅうぶん親切なようだ。"
 
-#: dat/events/neutral/npc.lua:59
+#: dat/events/neutral/npc.lua:66
 msgid "A civilian sitting at the bar."
 msgstr "民間人がバーに座っている。"
 
-#: dat/events/neutral/npc.lua:60
+#: dat/events/neutral/npc.lua:67
 msgid "This person is idly browsing a news terminal."
 msgstr "この人はぼんやりとニュース端末を拾い読みしている。"
 
-#: dat/events/neutral/npc.lua:61
+#: dat/events/neutral/npc.lua:68
 msgid "A worker sips a cold drink after a hard shift."
 msgstr "きつい仕事をしたあとの労働者が、冷たい飲み物をちびちび飲んでいる。"
 
-#: dat/events/neutral/npc.lua:62
+#: dat/events/neutral/npc.lua:69
 msgid "A worker slouched against the bar, nursing a drink."
 msgstr "労働者がバーにむかって前屈みになり、飲み物をだいじに飲んでいる。"
 
-#: dat/events/neutral/npc.lua:63
+#: dat/events/neutral/npc.lua:70
 msgid "This worker seems bored with everything but their drink."
 msgstr "この労働者は、自分の飲み物以外のすべてにうんざりしているようだ。"
 
@@ -30205,7 +30219,7 @@ msgstr "この労働者は、自分の飲み物以外のすべてにうんざり
 #. When adding factional text, make sure to add it to the table of the appropriate faction.
 #. Does your faction not have a table? Then just add it. The script will find and use it if it exists.
 #. Make sure you spell the faction name exactly the same as in faction.xml though!
-#: dat/events/neutral/npc.lua:73
+#: dat/events/neutral/npc.lua:80
 msgid ""
 "\"I heard the nebula is haunted! My uncle Bobby told me he saw one of the "
 "ghost ships himself over in Arandon!\""
@@ -30213,14 +30227,14 @@ msgstr ""
 "｢星雲には幽霊が出ると聞いたよ！　おじのボビーが、アランドンのむこうで幽霊船を"
 "自分の目で見たって教えてくれたんだ！｣"
 
-#: dat/events/neutral/npc.lua:74
+#: dat/events/neutral/npc.lua:81
 msgid ""
 "\"I don't believe in those nebula ghost stories. The people who talk about "
 "it are just trying to scare you.\""
 msgstr ""
 "｢あの星雲の幽霊話は信じてない。話してる人たちは怖がらせようとしてるだけだよ｣"
 
-#: dat/events/neutral/npc.lua:75
+#: dat/events/neutral/npc.lua:82
 msgid ""
 "\"I heard the Soromid lost their homeworld Sorom in the Incident. Its corpse "
 "can still be found in Basel.\""
@@ -30228,7 +30242,7 @@ msgstr ""
 "｢ソロミドは母世界のソロムを事象で失ったと聞いたよ。その亡骸はまだバーゼルで見"
 "つけられるんだ｣"
 
-#: dat/events/neutral/npc.lua:76
+#: dat/events/neutral/npc.lua:83
 msgid ""
 "\"The Soromid fly organic ships! I heard their ships can even heal "
 "themselves in flight. That's so weird.\""
@@ -30236,7 +30250,7 @@ msgstr ""
 "｢ソロミドは有機体の船で飛んでるんだ！　飛行中に自分で傷を治すこともできると聞"
 "いたよ。とても気味が悪いね｣"
 
-#: dat/events/neutral/npc.lua:77
+#: dat/events/neutral/npc.lua:84
 msgid ""
 "\"Have you seen that ship the Emperor lives on? It's huge! But if you ask "
 "me, it looks a bit like a... No, never mind.\""
@@ -30244,7 +30258,7 @@ msgstr ""
 "｢皇帝が住んでる船を見たことある？　とてつもなく大きいんだよ！　でも自分に言わ"
 "せれば、見た目がちょっとあれみたいで……。いや、なんでもない｣"
 
-#: dat/events/neutral/npc.lua:78
+#: dat/events/neutral/npc.lua:85
 msgid ""
 "\"I wonder why the Sirii are all so devout? I heard they have these special "
 "priesty people walking around. I wonder what's so special about them.\""
@@ -30252,7 +30266,7 @@ msgstr ""
 "｢なんでシリウス人たちはみんなあんな信心深いんだろう？　歩きまわるとくべつな聖"
 "職者たちもいると聞いたよ。なにがそんなにとくべつなんだろうね｣"
 
-#: dat/events/neutral/npc.lua:79
+#: dat/events/neutral/npc.lua:86
 msgid ""
 "\"They say Eduard Manual Goddard is drifting in space somewhere, entombed "
 "amidst a cache of his inventions! What I wouldn't give to rummage through "
@@ -30262,7 +30276,7 @@ msgstr ""
 "てるよ。発明品の隠し場所に葬られてさ！　どうにかそのなかを徹底的にあされない"
 "ものかな……｣"
 
-#: dat/events/neutral/npc.lua:80
+#: dat/events/neutral/npc.lua:87
 msgid ""
 "\"Ah man, I lost all my money on Totoran. I love the fights they stage "
 "there, but the guys I bet on always lose. What am I doing wrong?\""
@@ -30270,7 +30284,7 @@ msgstr ""
 "｢ああ、ちょっと。トトーランで全財産を失ったんだ。あそこでやってる戦いが大好き"
 "でね。でも賭けたやつがいつも負けるんだよ。なにがまずいんだろう？｣"
 
-#: dat/events/neutral/npc.lua:81
+#: dat/events/neutral/npc.lua:88
 msgid ""
 "\"Don't try to fly into the inner nebula. I've known people who tried, and "
 "none of them came back.\""
@@ -30278,14 +30292,14 @@ msgstr ""
 "｢星雲の中に向かって飛ぼうとするんじゃないよ。試した人たちを知ってるけど、だれ"
 "も戻ってきてない｣"
 
-#: dat/events/neutral/npc.lua:82
+#: dat/events/neutral/npc.lua:89
 msgid ""
 "\"Have you heard of Captain T. Practice? He's amazing, I'm his biggest fan!\""
 msgstr ""
 "｢T. プラクティス船長のことを聞いたことある？　あの人はたいした人だよ。大ファ"
 "ンなんだ！｣"
 
-#: dat/events/neutral/npc.lua:83
+#: dat/events/neutral/npc.lua:90
 msgid ""
 "\"I wouldn't travel north from Alteris if I were you, unless you're a good "
 "fighter! That area of space has really gone down the drain since the "
@@ -30294,7 +30308,7 @@ msgstr ""
 "｢自分だったら、オルタリスから北へは行かないね。戦いがうまいんじゃなければだけ"
 "ど！　あの宙域は事象からこっち、ほんとうにだめになってるよ｣"
 
-#: dat/events/neutral/npc.lua:84
+#: dat/events/neutral/npc.lua:91
 msgid ""
 "\"Sometimes I look at the stars and wonder... are we the only sentient "
 "species in the universe?\""
@@ -30302,7 +30316,7 @@ msgstr ""
 "｢ときどき星々を見て、疑問に思うことがある……。われわれは意識ある宇宙で唯一の種"
 "なんだろうか？｣"
 
-#: dat/events/neutral/npc.lua:85
+#: dat/events/neutral/npc.lua:92
 msgid ""
 "\"Hey, you ever wonder why we're here?\" You respond that it's one of the "
 "great mysteries of the universe. Why are we here? Are we the product of some "
@@ -30318,7 +30332,7 @@ msgstr ""
 "そういうと、その民間人は疑い深げにあなたを見つめた。｢えっ ??　ちがうって。な"
 "んでこのバーにいるのかって意味だよ｣"
 
-#: dat/events/neutral/npc.lua:86
+#: dat/events/neutral/npc.lua:93
 msgid ""
 "\"Life is so boring here. I would love to go gamble with all the famous "
 "people at Minerva Station.\""
@@ -30326,14 +30340,14 @@ msgstr ""
 "｢ここでの人生はとても退屈だね。ミネルバ・ステーションへ行って、有名人だらけの"
 "なかで賭け事をしてみたいよ｣"
 
-#: dat/events/neutral/npc.lua:90
+#: dat/events/neutral/npc.lua:97
 msgid ""
 "\"We're not part of any of the galactic superpowers. We can take care of "
 "ourselves!\""
 msgstr ""
 "｢われわれは銀河の超大国のどれにも属してない。自分の面倒は自分でみられる！｣"
 
-#: dat/events/neutral/npc.lua:91
+#: dat/events/neutral/npc.lua:98
 msgid ""
 "\"Sometimes I worry that our lack of a standing military leaves us "
 "vulnerable to attack. I hope nobody will get any ideas about conquering us!\""
@@ -30341,7 +30355,7 @@ msgstr ""
 "｢ときどき、われわれには常備軍がないから攻撃には弱いままだって心配になる。だれ"
 "も武力で制圧しようとか考えなきゃいいんだけどね！｣"
 
-#: dat/events/neutral/npc.lua:95
+#: dat/events/neutral/npc.lua:102
 msgid ""
 "\"Things are getting worse by the cycle. What happened to the Empire? We "
 "used to be the lords and masters over the whole galaxy!\""
@@ -30349,7 +30363,7 @@ msgstr ""
 "｢ものごとが周期ごとに悪くなっていく。帝国はどうしんだろう？　かつては全銀河"
 "じゅうに領主や家長がいたのに！｣"
 
-#: dat/events/neutral/npc.lua:96
+#: dat/events/neutral/npc.lua:103
 msgid ""
 "\"Did you know that House Za'lek was originally a Great Project initiated by "
 "the Empire? Well, now you do! There was also a Project Proteron, but that "
@@ -30358,7 +30372,7 @@ msgstr ""
 "｢ザレク荘は、もともとは帝国が始めた大計画だったって知ってる？　まあ、もう知っ"
 "たよね！　プロテロン計画もあったけど、あれはあまりうまくいかなかった｣"
 
-#: dat/events/neutral/npc.lua:97
+#: dat/events/neutral/npc.lua:104
 msgid ""
 "\"The Emperor lives on a giant supercruiser in Gamma Polaris. It's said to "
 "be the biggest ship in the galaxy! I totally want one.\""
@@ -30366,7 +30380,7 @@ msgstr ""
 "｢皇帝はガンマ・ポラリスにある巨大な超巡洋艦に住んでいるんだよ。銀河でもっとも"
 "大きな船だといわれてるね！　すっかり欲しくなった｣"
 
-#: dat/events/neutral/npc.lua:98
+#: dat/events/neutral/npc.lua:105
 msgid ""
 "\"I'm still waiting for my pilot license application to get through. Oh "
 "well, it's only been half a cycle, I just have to be patient.\""
@@ -30374,7 +30388,7 @@ msgstr ""
 "｢パイロット免許の申請がとおるのをまだ待っているんだ。ああ、ほら、たった半周期"
 "だけどね。ただ忍耐強くなきゃならない｣"
 
-#: dat/events/neutral/npc.lua:99
+#: dat/events/neutral/npc.lua:106
 msgid ""
 "\"Between you and me, the laws the Council passes can get really ridiculous! "
 "Most planets find creative ways of ignoring them...\""
@@ -30382,7 +30396,7 @@ msgstr ""
 "｢ここだけの話だけど、評議会が通す法律にはほんとうにばかばかしくなることがあ"
 "る！　ほとんどの惑星はそれを無視する独創的な方法を見つけるけどね……｣"
 
-#: dat/events/neutral/npc.lua:100
+#: dat/events/neutral/npc.lua:107
 msgid ""
 "\"Don't pay attention to the naysayers. The Empire is still strong. Have you "
 "ever seen a Peacemaker up close? I doubt any ship fielded by any other power "
@@ -30392,7 +30406,7 @@ msgstr ""
 "近くから見たことはある？　ほかの勢力が出してきてるどの船でもあれと撃ちあえる"
 "とは思えないね｣"
 
-#: dat/events/neutral/npc.lua:104
+#: dat/events/neutral/npc.lua:111
 msgid ""
 "\"Our Warlord is currently fighting for control over another planet. We all "
 "support him unconditionally, of course! Of course...\""
@@ -30400,7 +30414,7 @@ msgstr ""
 "｢われわれの軍閥領袖は現在別の惑星を支配しようとして戦っている。みんなもろ手を"
 "あげて支援しているよ、もちろん！　もちろんだとも……｣"
 
-#: dat/events/neutral/npc.lua:105
+#: dat/events/neutral/npc.lua:112
 msgid ""
 "\"My great-great-great-grandfather fought in the Dvaered Revolts! We still "
 "have the holovids he made. I'm proud to be a Dvaered!\""
@@ -30408,7 +30422,7 @@ msgstr ""
 "｢ひいひいひいおじいさんはドベーレッドの反乱を戦ったんだよ！　まだその戦いのホ"
 "ロビデオもあるんだ。自分がドベーレッドなのは誇りに思うね！｣"
 
-#: dat/events/neutral/npc.lua:106
+#: dat/events/neutral/npc.lua:113
 msgid ""
 "\"I've got lots of civilian commendations! It's important to have "
 "commendations if you're a Dvaered.\""
@@ -30416,7 +30430,7 @@ msgstr ""
 "｢民間表彰をたくさんもってるんだ！　ドベーレッドなら表彰を持ってるのは重要だ"
 "よ｣"
 
-#: dat/events/neutral/npc.lua:107
+#: dat/events/neutral/npc.lua:114
 msgid ""
 "\"You better not mess with House Dvaered. Our military is the largest and "
 "strongest in the galaxy. Nobody can stand up to us!\""
@@ -30424,7 +30438,7 @@ msgstr ""
 "｢ドベーレッド荘と面倒をおこさないほうがいい。われわれの軍隊は銀河で最大最強な"
 "んだ。だれもわれわれには立ち向かえない！｣"
 
-#: dat/events/neutral/npc.lua:108
+#: dat/events/neutral/npc.lua:115
 msgid ""
 "\"House Dvaered? House? The Empire is weak and useless, we don't need them "
 "anymore! I say we declare ourselves an independent faction today. What are "
@@ -30436,7 +30450,7 @@ msgstr ""
 "うね。帝国がどうするって？　われわれを服従させる？　前回どれだけうまくやった"
 "のか、われわれはみんな知ってるよ！　ハハッ！｣"
 
-#: dat/events/neutral/npc.lua:109
+#: dat/events/neutral/npc.lua:116
 msgid ""
 "\"I'm thinking about joining the military. Every time I see or hear news "
 "about those rotten FLF bastards, it makes my blood boil! They should all be "
@@ -30446,7 +30460,7 @@ msgstr ""
 "びに、血が沸きたつんだよ！　あいつらはみんなすりつぶして宇宙のちりにすべき"
 "だ！｣"
 
-#: dat/events/neutral/npc.lua:110
+#: dat/events/neutral/npc.lua:117
 msgid ""
 "\"FLF terrorists? I'm not too worried about them. You'll see, High Command "
 "will have smoked them out of their den soon enough, and then the Frontier "
@@ -30456,7 +30470,7 @@ msgstr ""
 "があいつらを隠れ家からじきにいぶしだすよ。そうなれば辺境はわれわれのものにな"
 "るね｣"
 
-#: dat/events/neutral/npc.lua:111
+#: dat/events/neutral/npc.lua:118
 msgid ""
 "\"Did you know that House Dvaered was named after a hero of the revolt? At "
 "least that's what my grandparents told me.\""
@@ -30464,14 +30478,14 @@ msgstr ""
 "｢ドベーレッド荘は反乱の英雄から名前を取ったんだって知ってる？　すくなくとも祖"
 "父からはそう教えられた｣"
 
-#: dat/events/neutral/npc.lua:115
+#: dat/events/neutral/npc.lua:122
 msgid ""
 "\"Greetings, traveler. May Sirichana's wisdom guide you as it guides me.\""
 msgstr ""
 "｢旅人にごあいさつ申しあげる。シリチャナの英知がわたし同様あなたも導きますよう"
 "に｣"
 
-#: dat/events/neutral/npc.lua:116
+#: dat/events/neutral/npc.lua:123
 msgid ""
 "\"I once met one of the Touched in person. Well, it wasn't really a meeting, "
 "our eyes simply met... But that instant alone was awe-inspiring.\""
@@ -30480,7 +30494,7 @@ msgstr ""
 "じゃなくて、たんに目があったんだけど……。でもあの瞬間だけで、畏怖の念が吹きこ"
 "まれたね｣"
 
-#: dat/events/neutral/npc.lua:117
+#: dat/events/neutral/npc.lua:124
 msgid ""
 "\"They say Sirichana lives and dies like any other man, but each new "
 "Sirichana is the same as the last. How is that possible?\""
@@ -30489,7 +30503,7 @@ msgstr ""
 "チャナはだれもがとことんまで同じなんだよね。どうしたらそんなことが可能になる"
 "んだろう？｣"
 
-#: dat/events/neutral/npc.lua:118
+#: dat/events/neutral/npc.lua:125
 msgid ""
 "\"My cousin was called to Mutris a cycle ago... He must be in Crater City by "
 "now. And one day, he will become one of the Touched!\""
@@ -30497,7 +30511,7 @@ msgstr ""
 "｢いとこが 1 周期まえにミュートリスへ呼ばれたんだ……。いまではクレーターの都市"
 "にいるにちがいないね。それにいつかは被触者になるんだろうな！｣"
 
-#: dat/events/neutral/npc.lua:119
+#: dat/events/neutral/npc.lua:126
 msgid ""
 "\"Some people say Sirius society is unfair because our echelons are "
 "determined by birth. But even though we are different, we are all followers "
@@ -30507,7 +30521,7 @@ msgstr ""
 "ら。でも違いがあるとしたって、みんなシリチャナの信奉者なんだよ。精神的には、"
 "わたしたちはみんな平等｣"
 
-#: dat/events/neutral/npc.lua:120
+#: dat/events/neutral/npc.lua:127
 msgid ""
 "\"House Sirius is officially part of the Empire, but everyone knows that's "
 "only true on paper. The Emperor has nothing to say in these systems. We "
@@ -30517,7 +30531,7 @@ msgstr ""
 "の上のことでしかない。皇帝はここの星系のことにはなにもいわないよ。わたしたち"
 "はシリチャナについていく。ほかのだれにでもない｣"
 
-#: dat/events/neutral/npc.lua:121
+#: dat/events/neutral/npc.lua:128
 msgid ""
 "\"You can easily tell the different echelons apart. Every Sirian citizen and "
 "soldier wears clothing appropriate to his or her echelon.\""
@@ -30525,11 +30539,11 @@ msgstr ""
 "｢階層ごとの違いは簡単にわかるよ。すべてのシリウス市民と兵士は階層にふさわしい"
 "衣服を着ているから｣"
 
-#: dat/events/neutral/npc.lua:122
+#: dat/events/neutral/npc.lua:129
 msgid "\"I hope to meet one of the Touched one day!\""
 msgstr "｢いつか被触者に会ってみたい！｣"
 
-#: dat/events/neutral/npc.lua:126
+#: dat/events/neutral/npc.lua:133
 msgid ""
 "Hello. Can I interest you in one of our galaxy famous cosmetic gene "
 "treatments? You look like you could use them..."
@@ -30537,7 +30551,7 @@ msgstr ""
 "｢こんにちは。銀河で有名なわれわれの美容遺伝子処置を紹介してもいいですか？　あ"
 "なたなら効果がありそうなんですよ……｣"
 
-#: dat/events/neutral/npc.lua:127
+#: dat/events/neutral/npc.lua:134
 msgid ""
 "\"Can you believe it? I was going to visit Sorom to find my roots, and then "
 "boom! It got burnt to a crisp! Even now, cycles later, I still can't believe "
@@ -30546,7 +30560,7 @@ msgstr ""
 "｢信じられる？　ソロムへ行って自分の祖先を見つけようとしてたんだよ。そしたら"
 "バーン！　かりかりに焼けてしまった！　何周期もたった今でも信じられない｣"
 
-#: dat/events/neutral/npc.lua:128
+#: dat/events/neutral/npc.lua:135
 msgid ""
 "\"Yes, it's true, our military ships are alive. Us normal folk don't get to "
 "own bioships though, we have to make do with synthetic constructs just like "
@@ -30556,7 +30570,7 @@ msgstr ""
 "般の人たちは生体船を所有することはありませんので、ほかの人びととまったく同じ"
 "ように、人工的に作られたもので間にあわせなければなりません｣"
 
-#: dat/events/neutral/npc.lua:129
+#: dat/events/neutral/npc.lua:136
 msgid ""
 "\"Everyone knows that we Soromid altered ourselves to survive the deadly "
 "conditions on Sorom during the Great Quarantine. What you don't hear so "
@@ -30568,7 +30582,7 @@ msgstr ""
 "れのなかの何十億もがその治療法によって死んだことだよ。われわれは生きのびるた"
 "めに高い代償を支払ったんだ｣"
 
-#: dat/events/neutral/npc.lua:130
+#: dat/events/neutral/npc.lua:137
 msgid ""
 "\"Our cosmetic gene treatments are even safer now for non-Soromids, with a "
 "rate of survival of 99.4%!\""
@@ -30576,7 +30590,7 @@ msgstr ""
 "｢われわれの美容遺伝子処置は今ではソロミドでなくてもずっと安全だよ。生きのびる"
 "確率は 99.4% なんだ！｣"
 
-#: dat/events/neutral/npc.lua:131
+#: dat/events/neutral/npc.lua:138
 msgid ""
 "\"We have been rebuilding and enhancing our bodies for so long, I say we've "
 "become a new species, one above human.\""
@@ -30584,7 +30598,7 @@ msgstr ""
 "｢われわれはずいぶん長く体の改造と増強をやってきた。わたしなら新しい種になっ"
 "たっていうね。人類をこえた種だよ｣"
 
-#: dat/events/neutral/npc.lua:135
+#: dat/events/neutral/npc.lua:142
 msgid ""
 "\"It's not easy, dancing to those scientists' tunes. They give you the most "
 "impossible tasks! Like, where am I supposed to get a triple redundant "
@@ -30594,13 +30608,13 @@ msgstr ""
 "な仕事を与えるんだよ！　たとえば、3 重冗長ヘリトロン変換器を取ってくるところ"
 "を想像してみなよ？　まったく｣"
 
-#: dat/events/neutral/npc.lua:136
+#: dat/events/neutral/npc.lua:143
 msgid ""
 "\"The Soromids? Hah! We Za'lek are the only true scientists in this galaxy.\""
 msgstr ""
 "｢ソロミド？　ハハッ！　われわれザレクがこの銀河では唯一正真正銘の科学者だよ｣"
 
-#: dat/events/neutral/npc.lua:137
+#: dat/events/neutral/npc.lua:144
 msgid ""
 "\"I don't understand why we bother sending our research results to the "
 "Empire. These asshats can't understand the simplest formulas!\""
@@ -30608,7 +30622,7 @@ msgstr ""
 "｢わざわざ研究結果を帝国に送っている理由が理解できない。あのバカたちはいちばん"
 "簡単な公式も理解できないんだよ！｣"
 
-#: dat/events/neutral/npc.lua:138
+#: dat/events/neutral/npc.lua:145
 msgid ""
 "\"Do you know why many optimization algorithms require your objective "
 "function to be convex? It's not only because of the question of local "
@@ -30621,7 +30635,7 @@ msgstr ""
 "凹んでいると、次回は目的関数の値がさらに大きくなることにつながるからだよ。こ"
 "れを知らない人がまだあまりに多すぎるね！｣"
 
-#: dat/events/neutral/npc.lua:139
+#: dat/events/neutral/npc.lua:146
 msgid ""
 "\"There are so many algorithms for solving the non-linear eigenvalues "
 "problem, I never know which one to choose. Which one do you prefer?\""
@@ -30629,7 +30643,7 @@ msgstr ""
 "｢非線形固有値問題を解くアルゴリズムはとてもたくさんあるよね。どれを選べばいい"
 "のかわかったことがない。あなたの好みは？｣"
 
-#: dat/events/neutral/npc.lua:140
+#: dat/events/neutral/npc.lua:147
 msgid ""
 "\"I recently attended a very interesting conference about the history of "
 "applied mathematics before the space age. Even in those primitive times, "
@@ -30642,7 +30656,7 @@ msgstr ""
 "ちは同次多項式計算機も持ってなかったんだよ！　想像してほしい。自由度が 100 億"
 "しかない問題を解くのに何時間も待たなきゃならないってことを！｣"
 
-#: dat/events/neutral/npc.lua:141
+#: dat/events/neutral/npc.lua:148
 msgid ""
 "\"Last time I had to solve a deconvolution problem, its condition number was "
 "so high that its inverse reached numerical zero on Octuple Precision!\""
@@ -30650,14 +30664,14 @@ msgstr ""
 "｢最後に逆たたみこみ問題を解かなきゃならなかったとき、条件数が大きすぎて逆数"
 "が 8 倍精度でも数値的に 0 になっちゃったんだよ！｣"
 
-#: dat/events/neutral/npc.lua:142
+#: dat/events/neutral/npc.lua:149
 msgid ""
 "\"I am worried about my sister. She's on trial for 'abusive self-citing' and "
 "the public prosecutor has requested a life sentence.\""
 msgstr ""
 "｢妹のことが心配で｡『自己引用の悪用』の裁判で、検察官が終身刑を求刑したんだよ｣"
 
-#: dat/events/neutral/npc.lua:143
+#: dat/events/neutral/npc.lua:150
 msgid ""
 "\"They opened two professor positions on precision machining in Atryssa "
 "Central Manufacturing Lab, and none in Bedimann Advanced Process Lab, but "
@@ -30672,7 +30686,7 @@ msgstr ""
 "中央科学募集委員会の会長に好意的な報告を公表したのは、それが理由だっていわれ"
 "てるね｣"
 
-#: dat/events/neutral/npc.lua:144
+#: dat/events/neutral/npc.lua:151
 msgid ""
 "\"Even if our labs are the best in the galaxy, other factions have their own "
 "labs as well. For example, Dvaer Prime Lab for Advanced Mace Rocket Studies "
@@ -30684,7 +30698,7 @@ msgstr ""
 "とても成功していた。ある軍閥領袖が惑星を侵略中にまちがって核攻撃するまではだ"
 "けどね｣"
 
-#: dat/events/neutral/npc.lua:148
+#: dat/events/neutral/npc.lua:155
 msgid ""
 "\"Did you know that even the slightest bit of brain damage can lead to death "
 "during the upload process? That's why we're very careful to not allow our "
@@ -30694,7 +30708,7 @@ msgstr ""
 "て知ってる？　脳が傷つく可能性をとても注意して避けている理由はそれなんだ。ほ"
 "んのすこしであってもね｣"
 
-#: dat/events/neutral/npc.lua:149
+#: dat/events/neutral/npc.lua:156
 msgid ""
 "\"My father unfortunately hit his head when he was young, so he couldn't be "
 "safely uploaded. It's okay, though; he had a long and fulfilling life, for a "
@@ -30704,7 +30718,7 @@ msgstr ""
 "かったんだよ。まあ、しかたがないね。長生きして満たされた人生を送ったんだし。"
 "アップロードされない人間としてはだけど、もちろん｣"
 
-#: dat/events/neutral/npc.lua:150
+#: dat/events/neutral/npc.lua:157
 msgid ""
 "\"One great thing once you're uploaded is that you can choose to forget "
 "things you don't want to remember. My great-grandfather had a movie spoiled "
@@ -30716,7 +30730,7 @@ msgstr ""
 "プロードされたらその記憶を消して、新たな視点でその映画を見たんだ。気がきいて"
 "るよね？｣"
 
-#: dat/events/neutral/npc.lua:151
+#: dat/events/neutral/npc.lua:158
 msgid ""
 "\"The best part of our lives is after we're uploaded, but that doesn't mean "
 "we lead boring lives before then. We have quite easy and satisfying "
@@ -30726,7 +30740,7 @@ msgstr ""
 "えの人生がつまらないものになるという意味じゃない。アップロードのまえには、か"
 "なり気楽で満たされた生物学的人生がある｣"
 
-#: dat/events/neutral/npc.lua:152
+#: dat/events/neutral/npc.lua:159
 msgid ""
 "\"Being uploaded allows you to live forever, but that doesn't mean you're "
 "forced to. Any uploaded Thurion can choose to end their own life if they "
@@ -30736,7 +30750,7 @@ msgstr ""
 "じゃない。アップロードされたザーリオンは、望めばだれでも自分自身の人生の終わ"
 "りを選ぶことができる。そうすることを選ぶのはほとんどいないけどね｣"
 
-#: dat/events/neutral/npc.lua:153
+#: dat/events/neutral/npc.lua:160
 msgid ""
 "\"Uploading is a choice in our society. No one is forced to do it. It's just "
 "that, well, what kind of person would turn down the chance to live a second "
@@ -30746,7 +30760,7 @@ msgstr ""
 "はいない。まあ、どんな人がネットワーク上で次の人生を生きる機会を拒否するの"
 "かってだけのことだよ｣"
 
-#: dat/events/neutral/npc.lua:154
+#: dat/events/neutral/npc.lua:161
 msgid ""
 "\"We were lucky to not get touched by the Incident. In fact, we kind of "
 "benefited from it. The nebula that resulted gave us a great cover and sealed "
@@ -30756,7 +30770,7 @@ msgstr ""
 "めになったね。できた星雲はうまい隠れみのを与えてくれたし、帝国はしめだされて"
 "る。そのうえあの危険なプロテロンも追い払えたしね｣"
 
-#: dat/events/neutral/npc.lua:155
+#: dat/events/neutral/npc.lua:162
 msgid ""
 "\"We don't desire galactic dominance. That being said, we do want to spread "
 "our way of life to the rest of the galaxy, so that everyone can experience "
@@ -30766,7 +30780,7 @@ msgstr ""
 "のよそへ広げていきたいとは思ってる。そうなれば、みんなアップロードの喜びを経"
 "験できるわけだからね｣"
 
-#: dat/events/neutral/npc.lua:156
+#: dat/events/neutral/npc.lua:163
 msgid ""
 "\"I think you're from the outside, aren't you? That's awesome! I've never "
 "met a foreigner before. What's it like outside the nebula?\""
@@ -30774,7 +30788,7 @@ msgstr ""
 "｢思うんだけど、あなたは外から来たんだよね？　それはすごいな！　いままでよその"
 "人を見たことがなかったんだよ。星雲の外はどんな感じ？｣"
 
-#: dat/events/neutral/npc.lua:157
+#: dat/events/neutral/npc.lua:164
 msgid ""
 "\"We actually make occasional trips outside of the nebula, though only "
 "rarely, and we always make sure to not get discovered by the Empire.\""
@@ -30782,7 +30796,7 @@ msgstr ""
 "｢じつはわれわれは、ときどき星雲の外へ行っているんだよ。ほんとにまれなことだ"
 "し、いつも帝国には見つからないように確認してるけどね｣"
 
-#: dat/events/neutral/npc.lua:158
+#: dat/events/neutral/npc.lua:165
 msgid ""
 "\"The Soromid have a rough history. Have you read up on it? First the Empire "
 "confined them to a deadly planet and doomed them to extinction. Then, when "
@@ -30794,7 +30808,7 @@ msgstr ""
 "母世界を吹き飛ばした。それにもかかわらずいまだ繁栄しているという事実は、驚異"
 "といわなきゃならないね｣"
 
-#: dat/events/neutral/npc.lua:162
+#: dat/events/neutral/npc.lua:169
 msgid ""
 "\"Our system of government is clearly superior to all others. Nothing could "
 "be more obvious.\""
@@ -30802,7 +30816,7 @@ msgstr ""
 "｢われわれの政府組織はよそよりあきらかにすぐれている。これ以上ないくらいあきら"
 "かだ｣"
 
-#: dat/events/neutral/npc.lua:163
+#: dat/events/neutral/npc.lua:170
 msgid ""
 "\"The Incident really set back our plan for galactic dominance, but that was "
 "only temporary.\""
@@ -30810,7 +30824,7 @@ msgstr ""
 "｢事象でわれわれの銀河支配計画はほんとうに遅れてしまった。でもそれは一時的なこ"
 "とでしかない｣"
 
-#: dat/events/neutral/npc.lua:164
+#: dat/events/neutral/npc.lua:171
 msgid ""
 "\"We don't have time for fun and games. The whole reason we're so great is "
 "because we're more productive than any other society.\""
@@ -30818,7 +30832,7 @@ msgstr ""
 "｢娯楽やゲームに使う時間はない。われわれがこれだけ偉大なのは、われわれがほかの"
 "どの社会よりも生産性が高いというのが完全な理由になる｣"
 
-#: dat/events/neutral/npc.lua:165
+#: dat/events/neutral/npc.lua:172
 msgid ""
 "\"We are superior, so of course we deserve control over the galaxy. It's our "
 "destiny.\""
@@ -30826,13 +30840,13 @@ msgstr ""
 "｢われわれはまさっている。だからもちろん、銀河じゅうを支配するに値する。それが"
 "われわれの運命だ｣"
 
-#: dat/events/neutral/npc.lua:166
+#: dat/events/neutral/npc.lua:173
 msgid "\"The Empire is weak, obsolete. That is why we must replace them.\""
 msgstr ""
 "｢帝国は弱くて時代遅れだ。われわれが取って代わらなければならなかったのは、それ"
 "が理由だ｣"
 
-#: dat/events/neutral/npc.lua:167
+#: dat/events/neutral/npc.lua:174
 msgid ""
 "\"Slaves? Of course we're not slaves. Slaves are beaten and starved. We are "
 "in top shape so we can serve our country better.\""
@@ -30840,7 +30854,7 @@ msgstr ""
 "｢奴隷？　もちろんわれわれは奴隷ではない。奴隷というのは打たれて飢えているもの"
 "だ。われわれは最高な体調だから、国によりよく仕えることができる｣"
 
-#: dat/events/neutral/npc.lua:168
+#: dat/events/neutral/npc.lua:175
 msgid ""
 "\"I can't believe the Empire continues to allow families. So primitive. "
 "Obviously, all this does is make them less productive.\""
@@ -30848,7 +30862,7 @@ msgstr ""
 "｢帝国が家族を許可しつづけているのが信じられない。原始的だからな。あきらかに、"
 "これは帝国の生産性を低くするだけだ｣"
 
-#: dat/events/neutral/npc.lua:169
+#: dat/events/neutral/npc.lua:176
 msgid ""
 "\"The exact cause of the Incident is a tightly-kept secret, but the "
 "government says it was caused by the Empire's inferiority. I would expect "
@@ -30857,7 +30871,7 @@ msgstr ""
 "｢事象の正確な原因は固く守られた秘密だ。しかし政府は帝国の下等性が原因だといっ"
 "ている。期待できる最小限だな｣"
 
-#: dat/events/neutral/npc.lua:170
+#: dat/events/neutral/npc.lua:177
 msgid ""
 "\"I came across some heathen a few months back who claimed, get this, that "
 "we Proterons were the cause of the Incident! What slanderous nonsense. Being "
@@ -30868,7 +30882,7 @@ msgstr ""
 "の原因だと主張してるんだ！　なんともばかげた中傷だな。完璧な社会なんだ、われ"
 "われは。もちろんわれわれはけっしてあのような巨大破局の原因ではない｣"
 
-#: dat/events/neutral/npc.lua:174
+#: dat/events/neutral/npc.lua:181
 msgid ""
 "\"We value our autonomy. We don't want to be ruled by those Dvaered "
 "Warlords! Can't they just shoot at each other instead of threatening us? If "
@@ -30878,7 +30892,7 @@ msgstr ""
 "治されることなど望んでいない！　われわれを脅迫するんじゃなくて、おたがい撃ち"
 "あうだけにできないものかな？　自由戦線が原因じゃないならね……｣"
 
-#: dat/events/neutral/npc.lua:175
+#: dat/events/neutral/npc.lua:182
 msgid ""
 "\"Have you studied your galactic history? The Frontier worlds were the first "
 "to be colonized by humans. That makes our worlds the oldest human "
@@ -30888,7 +30902,7 @@ msgstr ""
 "よ。われわれの世界が銀河にある最古の人類居留地ってことになる。いまでは地球が"
 "なくなったからね｣"
 
-#: dat/events/neutral/npc.lua:176
+#: dat/events/neutral/npc.lua:183
 msgid ""
 "\"We have the Dvaered encroaching on our territory on one side, and the "
 "Sirius zealots on the other. Sometimes I worry that in a few decacycles, the "
@@ -30898,7 +30912,7 @@ msgstr ""
 "う片側にいる。二、三十周期たったら辺境はもう存在していないんじゃないかって、"
 "ときどき心配になるよ｣"
 
-#: dat/events/neutral/npc.lua:177
+#: dat/events/neutral/npc.lua:184
 msgid ""
 "\"Have you visited the Frontier Museum? They've got a scale model of a First "
 "Growth colony ship on display in one of the big rooms. Even scaled down like "
@@ -30908,7 +30922,7 @@ msgstr ""
 "が展示してあってね。小さくしてあるとはいえ、とても大きいんだよ！　ほんもの"
 "だったらどれだけ圧倒されるか想像してほしいね｣"
 
-#: dat/events/neutral/npc.lua:178
+#: dat/events/neutral/npc.lua:185
 msgid ""
 "\"There are twelve true Frontier worlds, because twelve colony ships "
 "successfully completed their journey in the First Growth. But did you know "
@@ -30921,7 +30935,7 @@ msgstr ""
 "で成功しなかった。あるものは不可解にも消え去ったと言われてる。なにがおきたん"
 "だろうね？｣"
 
-#: dat/events/neutral/npc.lua:179
+#: dat/events/neutral/npc.lua:186
 msgid ""
 "\"We don't have much here in the Frontier, other than our long history "
 "leading directly back to Earth. But I don't mind. I'm happy living here, and "
@@ -30931,7 +30945,7 @@ msgstr ""
 "外にはね。でも気にはしてないよ。ここで生きるのを楽しんでるし、ほかのどこかへ"
 "引っ越したいとも思ってない｣"
 
-#: dat/events/neutral/npc.lua:180
+#: dat/events/neutral/npc.lua:187
 msgid ""
 "\"You know the Frontier Liberation Front? They're the guerilla movement that "
 "fights for the Frontier. Not to be confused with the Liberation Front of the "
@@ -30941,7 +30955,7 @@ msgstr ""
 "｢辺境自由戦線を知ってる？　辺境のために戦うゲリラ活動だよ。辺境における自由戦"
 "線や自由のための辺境戦線や自由な辺境の戦線と混同しないでほしい！｣"
 
-#: dat/events/neutral/npc.lua:184
+#: dat/events/neutral/npc.lua:191
 msgid ""
 "\"I can't stand Dvaereds. I just want to wipe them all off the map. Don't "
 "you?\""
@@ -30949,7 +30963,7 @@ msgstr ""
 "｢ドベーレッドには我慢できない。とにかくあいつらを地図から完全に消し去ってしま"
 "うことだけを望んでるよ。あなたはちがうの？｣"
 
-#: dat/events/neutral/npc.lua:185
+#: dat/events/neutral/npc.lua:192
 msgid ""
 "\"One of these days, we will completely rid the Frontier of Dvaered "
 "oppressors. Mark my words!\""
@@ -30957,7 +30971,7 @@ msgstr ""
 "｢そのうちに、われわれが辺境からドベーレッドの迫害者を完全に取り除く。覚えてお"
 "くように！｣"
 
-#: dat/events/neutral/npc.lua:186
+#: dat/events/neutral/npc.lua:193
 msgid ""
 "\"Have you ever wondered about our chances of actually winning over the "
 "Dvaereds? Sometimes I worry a little.\""
@@ -30965,7 +30979,7 @@ msgstr ""
 "｢じっさいわれわれがドベーレッドに勝つ見こみはあるのかって思ったことある？　と"
 "きどきわたしもちょっと心配になる｣"
 
-#: dat/events/neutral/npc.lua:187
+#: dat/events/neutral/npc.lua:194
 msgid ""
 "\"I was in charge of a bombing run recently. The mission was a success, but "
 "I lost a lot of comrades. Oh well... this is the sacrifice we must make to "
@@ -30974,7 +30988,7 @@ msgstr ""
 "｢最近爆撃行の担当になった。任務は成功したんだけど、仲間をたくさん失ったよ。あ"
 "あ、まあ……これは圧政者に抵抗するためにはしかたのない犠牲だね｣"
 
-#: dat/events/neutral/npc.lua:188
+#: dat/events/neutral/npc.lua:195
 msgid ""
 "\"What after we beat the Dvaereds, you say? Well, our work is never truly "
 "done until the Frontier is completely safe from oppression. Even if the "
@@ -30987,7 +31001,7 @@ msgstr ""
 "配することになるだろう。われわれの仕事が自分たちの人生のあいだのどこかで終わ"
 "るとは考えていない｣"
 
-#: dat/events/neutral/npc.lua:189
+#: dat/events/neutral/npc.lua:196
 msgid ""
 "\"Yeah, it's true, lots of Frontier officials fund our operations. If they "
 "didn't, we'd have a really hard time landing on Frontier planets, what with "
@@ -30998,7 +31012,7 @@ msgstr ""
 "労ってことになるだろうね。あらゆる活動でわれわれはドベーレッドに対抗している"
 "んだよ｣"
 
-#: dat/events/neutral/npc.lua:190
+#: dat/events/neutral/npc.lua:197
 msgid ""
 "\"Yeah, some civilians die because of our efforts, but that's just a "
 "sacrifice we have to make. It's for the greater good.\""
@@ -31006,7 +31020,7 @@ msgstr ""
 "｢そのとおり。われわれの活動のおかげで死ぬ民間人もいる。しかしそれはしかたのな"
 "い犠牲なんだよ。もっと大きな善のためだね｣"
 
-#: dat/events/neutral/npc.lua:191
+#: dat/events/neutral/npc.lua:198
 msgid ""
 "\"No, we're not terrorists. We're soldiers. True terrorists kill and destroy "
 "without purpose. Our operations do have a purpose: to drive out the Dvaered "
@@ -31016,7 +31030,7 @@ msgstr ""
 "て破壊するんだ。われわれの作戦にはまちがいなく目的がある。ドベーレッドの圧政"
 "者を辺境から駆逐することだ｣"
 
-#: dat/events/neutral/npc.lua:192
+#: dat/events/neutral/npc.lua:199
 msgid ""
 "\"Riddle me this: how can we be terrorists if the Dvaereds started it by "
 "encroaching on Frontier territory? It's the most ridiculous thing I ever "
@@ -31026,7 +31040,7 @@ msgstr ""
 "がテロリストになるのでしょうか？　いままで聞いたなかではいちばんばかばかしい"
 "やつだね｣"
 
-#: dat/events/neutral/npc.lua:193
+#: dat/events/neutral/npc.lua:200
 msgid ""
 "\"Well, no, the Dvaereds never actually attacked Frontier ships, but that's "
 "not the point. They have their ships in Frontier territory. What other "
@@ -31037,21 +31051,21 @@ msgstr ""
 "は問題じゃない。ドベーレッドは辺境領域に船を入れている。侵略の用意のほかに、"
 "どんな理由があるんだろうね？｣"
 
-#: dat/events/neutral/npc.lua:197
+#: dat/events/neutral/npc.lua:204
 msgid "\"Hi mate. Money or your life! Heh heh, just messing with you.\""
 msgstr "｢よう、相棒。かねか命か！　ハハッ、ちょっとふざけただけだよ｣"
 
-#: dat/events/neutral/npc.lua:198
+#: dat/events/neutral/npc.lua:205
 msgid "\"Hey, look at these new scars I got!\""
 msgstr "｢ちょっと、新しくついたこの傷をみてくれ！｣"
 
-#: dat/events/neutral/npc.lua:199
+#: dat/events/neutral/npc.lua:206
 msgid ""
 "\"Have you heard of the Pirates' Code? They're more guidelines than rules..."
 "\""
 msgstr "｢海賊の慣例について聞いたことあるか？　規則というより基準なんだが……｣"
 
-#: dat/events/neutral/npc.lua:200
+#: dat/events/neutral/npc.lua:207
 msgid ""
 "\"My gran once said to me, 'Never trust a pirate.' Well, she was right! I "
 "got a pretty credit chip outta her wallet last time I saw her, and I'd do it "
@@ -31061,7 +31075,7 @@ msgstr ""
 "たよ！　最後に会ったとき、ばあさんの財布からクレジットチップをたんまりいただ"
 "いたんだ。またやろうと思ってる｣"
 
-#: dat/events/neutral/npc.lua:201
+#: dat/events/neutral/npc.lua:208
 msgid ""
 "\"I don't understand why some pirates talk like 16th-century Earth pirates "
 "even though that planet is literally dead.\""
@@ -31069,7 +31083,7 @@ msgstr ""
 "｢16 世紀の地球の海賊みたいなしゃべりかたをする海賊がいるってのは理解できない"
 "な。あの惑星は文字どおり死んでるってのに｣"
 
-#: dat/events/neutral/npc.lua:202
+#: dat/events/neutral/npc.lua:209
 msgid ""
 "\"I may be a pirate who blows up ships and steals for a living, but that "
 "inner nebula still kind of freaks me out.\""
@@ -31077,7 +31091,7 @@ msgstr ""
 "｢生活のために船を吹き飛ばしたり盗んだりしてる海賊かもしれないけど、あの星雲内"
 "部にはまだちょっとおじけづくね｣"
 
-#: dat/events/neutral/npc.lua:203
+#: dat/events/neutral/npc.lua:210
 msgid ""
 "\"Damn Empire stopped my heist a few decaperiods ago. Just wait'll they see "
 "me again...\""
@@ -31085,7 +31099,7 @@ msgstr ""
 "｢くそったれ帝国が二、三十時限まえに強盗するのをとめやがった。また会う時をしっ"
 "かり待ってろよ……｣"
 
-#: dat/events/neutral/npc.lua:204
+#: dat/events/neutral/npc.lua:211
 msgid ""
 "\"There's a pirate clanworld I really wanted to get to, but they wouldn't "
 "let me in because I'm a 'small-time pirate'! Sometimes I think I'll never "
@@ -31094,7 +31108,7 @@ msgstr ""
 "｢行ってみたい海賊一味の世界があるんだけど、おれは『けちな海賊』だから入れてく"
 "れないんだよ！　ときどきこの商売ではうまくいかないんじゃないかって感じる｣"
 
-#: dat/events/neutral/npc.lua:205
+#: dat/events/neutral/npc.lua:212
 msgid ""
 "\"Don't forget, true pirates fly pirate ships! You won't hold onto your "
 "reputation very long if you fly around in those pathetic normie vessels. I "
@@ -31106,7 +31120,7 @@ msgstr ""
 "えにふつうのランスロットを飛ばしつづけてる海賊に会ったことがあるよ。ちょっと"
 "いわせてもらうが、そいつはあまりたいした成功をしなかった｣"
 
-#: dat/events/neutral/npc.lua:206
+#: dat/events/neutral/npc.lua:213
 msgid ""
 "\"I was around before Haven was destroyed, you know! Funny times. All the "
 "pirates were panicking and the Empire was cheering thinking that we were "
@@ -31118,7 +31132,7 @@ msgstr ""
 "ハッ！　まさかな！　変化をおこすことさえほとんどなかったよ。たんにニューヘイ"
 "ブンへ引っ越して、いつもどおりの仕事を再開しただけだ｣"
 
-#: dat/events/neutral/npc.lua:207
+#: dat/events/neutral/npc.lua:214
 msgid ""
 "\"Y'know, I got into this business by accident to tell the truth. But what "
 "can you do? I could get a fake ID and pretend to be someone else but I'd get "
@@ -31128,7 +31142,7 @@ msgstr ""
 "証明書を手に入れて、他人のふりができたんだけど、ついにばれて海賊としての評判"
 "を失ったんだよ｣"
 
-#: dat/events/neutral/npc.lua:208
+#: dat/events/neutral/npc.lua:215
 msgid ""
 "\"One of my favorite things to do is buy a fake ID and then deliver as much "
 "contraband as I can before I get caught. It's great fun, and finding out "
@@ -31137,7 +31151,7 @@ msgstr ""
 "｢好きなことのひとつは、偽の身分証明書を買って、ばれるまえにできるだけ密輸品を"
 "輸送することだな。すごく楽しいし、身元がばれたのがわかると心がおどるんだ！｣"
 
-#: dat/events/neutral/npc.lua:209
+#: dat/events/neutral/npc.lua:216
 msgid ""
 "\"Back when I started out in this business all you could do was go around "
 "delivering packages for other people. Becoming a pirate was real hard back "
@@ -31151,7 +31165,7 @@ msgstr ""
 "かにはらはらするようになってるけど、自分の選択はこれっぽっちも後悔してない"
 "ね！｣"
 
-#: dat/events/neutral/npc.lua:210
+#: dat/events/neutral/npc.lua:217
 msgid ""
 "\"Flying a real big ship is impressive, but it's still no pirate ship. I "
 "mean, I respect ya more if you're flying a Goddard than if you're flying a "
@@ -31161,18 +31175,18 @@ msgstr ""
 "民間船のランスロットを飛ばすより、ゴダードを飛ばしてたほうが尊敬するってこと"
 "だよ。でも最高の海賊は古きよき海賊ケストレルを飛ばすんだ！｣"
 
-#: dat/events/neutral/npc.lua:214
+#: dat/events/neutral/npc.lua:221
 msgid "\"Just another link in the Great Chain, right?\""
 msgstr "｢月なみな大いなる連鎖へのつながりってやつだね？｣"
 
-#: dat/events/neutral/npc.lua:215
+#: dat/events/neutral/npc.lua:222
 msgid ""
 "\"You win some, you lose some, but if you don't try you're never going to "
 "win.\""
 msgstr ""
 "｢勝つこともあり、負けることもある。でも試さないと、けっして勝つことはない｣"
 
-#: dat/events/neutral/npc.lua:216
+#: dat/events/neutral/npc.lua:223
 msgid ""
 "\"If you don't watch the markets then you'll be hopping between planets in a "
 "jury-rigged ship in no time.\""
@@ -31180,7 +31194,7 @@ msgstr ""
 "｢市場を注視していないと、即席にでっちあげた船で時間に追われて惑星から惑星へと"
 "飛びまわることになるよ｣"
 
-#: dat/events/neutral/npc.lua:217
+#: dat/events/neutral/npc.lua:224
 msgid ""
 "\"Them blimming pirates, stopping honest folk from making an honest living - "
 "it's not like we're exploiting the needy!\""
@@ -31191,7 +31205,7 @@ msgstr ""
 #. Gameplay tip messages.
 #. ALL NPCs have a chance to say one of these lines instead of a lore message.
 #. So, make sure the tips are always faction neutral.
-#: dat/events/neutral/npc.lua:224
+#: dat/events/neutral/npc.lua:231
 msgid ""
 "\"I heard you can set your weapons to only fire when your target is in "
 "range, or just let them fire when you pull the trigger. Sounds handy!\""
@@ -31199,7 +31213,7 @@ msgstr ""
 "｢目標が射程内にあるときだけ発砲するように武器を設定できるんだって聞いたよ。そ"
 "うしなかったときは、たんに引き金をしぼると発砲する。便利そうだね！｣"
 
-#: dat/events/neutral/npc.lua:225
+#: dat/events/neutral/npc.lua:232
 msgid ""
 "\"Did you know that if a planet doesn't like you, you can often bribe the "
 "spaceport operators and land anyway? Just hail the planet with {hailkey}, "
@@ -31210,7 +31224,7 @@ msgstr ""
 "呼びかけて、わいろボタンを押すだけでいいんだよ！　それでも注意したほうがい"
 "い。いつも効くわけじゃないからね｣"
 
-#: dat/events/neutral/npc.lua:226
+#: dat/events/neutral/npc.lua:233
 msgid ""
 "\"Many factions offer rehabilitation programs to criminals through the "
 "mission computer, giving them a chance to get back into their good graces. "
@@ -31220,7 +31234,7 @@ msgstr ""
 "切心を取り戻す機会を与えてる。もっとも、重犯罪者にはほんとうに高くつくことが"
 "あるけどね！｣"
 
-#: dat/events/neutral/npc.lua:227
+#: dat/events/neutral/npc.lua:234
 msgid ""
 "\"These new-fangled missile systems! You can't even fire them unless you get "
 "a target lock first! But the same thing goes for your opponents. You can "
@@ -31232,7 +31246,7 @@ msgstr ""
 "ジャマーを装備すれば、敵が自分の船を捕捉するのを難しくすることができる。偵察"
 "船に分類される船も、目標とするのが難しいね｣"
 
-#: dat/events/neutral/npc.lua:228
+#: dat/events/neutral/npc.lua:235
 msgid ""
 "\"You know how you can't change your ship or your equipment on some planets? "
 "Well, it seems you need an outfitter to change equipment, and a shipyard to "
@@ -31242,7 +31256,7 @@ msgstr ""
 "は艤装所が、船を変えるには造船所が必要なようだよ！　あなたは知らなかったと断"
 "言するね｣"
 
-#: dat/events/neutral/npc.lua:229
+#: dat/events/neutral/npc.lua:236
 msgid ""
 "\"Are you trading commodities? You can hold down #bctrl#0 to buy 50 of them "
 "at a time, and #bshift#0 to buy 100. And if you press them both at once, you "
@@ -31254,7 +31268,7 @@ msgstr ""
 "じつは艤装品についても同じことができる。でもレーザーキャノンを 50 個買いたい"
 "なんて思う？｣"
 
-#: dat/events/neutral/npc.lua:230
+#: dat/events/neutral/npc.lua:237
 msgid ""
 "\"If you're on a mission you just can't beat, you can open the information "
 "panel and abort the mission. There's no penalty for doing it, so don't "
@@ -31264,7 +31278,7 @@ msgstr ""
 "よ。そうしても罰金はない。だからためらわずに、またあとでその任務をやってみれ"
 "ばいい｣"
 
-#: dat/events/neutral/npc.lua:231
+#: dat/events/neutral/npc.lua:238
 msgid ""
 "\"Some weapons have a different effect on shields than they do on armor. "
 "Keep that in mind when equipping your ship.\""
@@ -31272,7 +31286,7 @@ msgstr ""
 "｢一部の武器は、シールドと装甲では異なる効果がある。船に装備するときには忘れな"
 "いように｣"
 
-#: dat/events/neutral/npc.lua:232
+#: dat/events/neutral/npc.lua:239
 msgid ""
 "\"Afterburners can speed you up a lot, but when they get hot they don't work "
 "as well anymore. Don't use them carelessly!\""
@@ -31280,7 +31294,7 @@ msgstr ""
 "｢アフターバーナーは大きく加速してくれる。でも熱くなると、もう同じようには働か"
 "なくなるんだよ。うかつには使わないように！｣"
 
-#: dat/events/neutral/npc.lua:233
+#: dat/events/neutral/npc.lua:240
 msgid ""
 "\"There are passive outfits and active outfits. The passive ones modify your "
 "ship continuously, but the active ones only work if you turn them on. You "
@@ -31292,7 +31306,7 @@ msgstr ""
 "ふつう能動的な艤装品をつねに動かしておくことはできないから、必要なときだけ使"
 "うように注意しなければならないね｣"
 
-#: dat/events/neutral/npc.lua:234
+#: dat/events/neutral/npc.lua:241
 msgid ""
 "\"If you're new to the galaxy, I recommend you buy a map or two. It can make "
 "exploration a bit easier.\""
@@ -31300,7 +31314,7 @@ msgstr ""
 "｢もし銀河に出たばかりなら、地図をひとつか二つ買うことをお勧めするよ。探検が"
 "ちょっと簡単になるからね｣"
 
-#: dat/events/neutral/npc.lua:235
+#: dat/events/neutral/npc.lua:242
 msgid ""
 "\"Scramblers and jammers make it harder for missiles to track you. They can "
 "be very handy if your enemies use missiles.\""
@@ -31308,7 +31322,7 @@ msgstr ""
 "｢スクランブラーやジャマーは、ミサイルが追跡してくるのを難しくするんだよ。もし"
 "敵がミサイルを使うなら、とても役に立つこともあるね｣"
 
-#: dat/events/neutral/npc.lua:236
+#: dat/events/neutral/npc.lua:243
 msgid ""
 "\"If you're having trouble with overheating weapons or outfits, you can "
 "either press {cooldownkey} or double-tap {reversekey} to put your ship into "
@@ -31321,7 +31335,7 @@ msgstr ""
 "散逸させて、ロケット弾薬の再装填もしてくれる。それでも注意が必要だけどね。エ"
 "ネルギーとシールドはそのあいだ補充されないんだよ！｣"
 
-#: dat/events/neutral/npc.lua:237
+#: dat/events/neutral/npc.lua:244
 msgid ""
 "\"If you're having trouble shooting other ships face on, try outfitting with "
 "turrets or use an afterburner to avoid them entirely!\""
@@ -31329,7 +31343,7 @@ msgstr ""
 "｢ほかの船にむかって撃つのに問題を感じてるなら、砲塔を設置してみるか、アフター"
 "バーナーを使ってその船をひたすら避けることだね！｣"
 
-#: dat/events/neutral/npc.lua:238
+#: dat/events/neutral/npc.lua:245
 msgid ""
 "\"You know how time speeds up when Autonav is on, but then goes back to "
 "normal when enemies are around? Turns out you can't disable the return to "
@@ -31342,7 +31356,7 @@ msgstr ""
 "と判定する値を変えられるのはわかったよ。じっさいに撃たれることのない敵を無視"
 "したければ、ほんとうに便利だね｣"
 
-#: dat/events/neutral/npc.lua:239
+#: dat/events/neutral/npc.lua:246
 msgid ""
 "\"Flying bigger ships is awesome, but it's a bit tougher than flying smaller "
 "ships. There's so much more you have to do for the same actions, time just "
@@ -31354,7 +31368,7 @@ msgstr ""
 "とにかく時間がもっと速くすぎていくように思えるね。いいところは、船が遅くなっ"
 "たのをそのまま知覚せずにすむことだと思うよ｣"
 
-#: dat/events/neutral/npc.lua:240
+#: dat/events/neutral/npc.lua:247
 msgid ""
 "\"I know it can be tempting to fly the big and powerful ships, but don't "
 "underestimate smaller ones! Given their simpler designs and lesser crew "
@@ -31366,7 +31380,7 @@ msgstr ""
 "んあるんだよ。あまりに簡素なんで、操縦してるとまわりじゅうの船がゆっくりに"
 "なったように感じる船もあるね！｣"
 
-#: dat/events/neutral/npc.lua:241
+#: dat/events/neutral/npc.lua:248
 msgid ""
 "\"Mining can be an easy way to earn some extra credits, but every once in a "
 "while an asteroid will just randomly explode for no apparent reason, so you "
@@ -31377,7 +31391,7 @@ msgstr ""
 "注意しなくちゃならないよ。ええと、そうはいっても、どうすればいいのかわからな"
 "いけど｣"
 
-#: dat/events/neutral/npc.lua:242
+#: dat/events/neutral/npc.lua:249
 msgid ""
 "\"Rich folk will pay extra to go on an offworld sightseeing tour in a luxury "
 "yacht. I don't get it personally; it's all the same no matter what ship "
@@ -31387,7 +31401,7 @@ msgstr ""
 "くれる。自分で受けとったことはないけどね。どんな船に乗ってたってまったく同じ"
 "じゃん｣"
 
-#: dat/events/neutral/npc.lua:243
+#: dat/events/neutral/npc.lua:250
 msgid ""
 "\"Different ships should be built and piloted differently. One of the "
 "hardest lessons I learned as a pilot was to stop worrying so much about the "
@@ -31402,7 +31416,7 @@ msgstr ""
 "いし、いうまでもないけど、複雑すぎて反応する時間が減ってしまう。だから打撃は"
 "ただうけるだけにして、注意を集中するのは敵への反撃だってことを学ぶ必要がある｣"
 
-#: dat/events/neutral/npc.lua:244
+#: dat/events/neutral/npc.lua:251
 msgid ""
 "\"Remember that when you pilot a big ship, you perceive time passing a lot "
 "faster than you do when you pilot a small ship. It can be easy to forget "
@@ -31416,7 +31430,7 @@ msgstr ""
 "いんだってことを簡単に忘れてしまいかねないから。ある意味、船がゆっくりなのは"
 "とても大きな気晴らしになるけどね！｣"
 
-#: dat/events/neutral/npc.lua:245
+#: dat/events/neutral/npc.lua:252
 msgid ""
 "\"There's always an exception to the rule, but I wouldn't recommend using "
 "forward-facing weapons on larger ships. Large ships' slower turn rates "
@@ -31430,7 +31444,7 @@ msgstr ""
 "よ。砲塔はずっといい。自動的に狙ってくれるし、ふつうはとてもいい仕事をする"
 "ね！｣"
 
-#: dat/events/neutral/npc.lua:246
+#: dat/events/neutral/npc.lua:253
 msgid ""
 "\"Did you know that turrets' automatic tracking of targets is slowed down by "
 "cloaking? Well, now you do! Small ships majorly benefit from a scrambler or "
@@ -31440,7 +31454,7 @@ msgstr ""
 "知った！　小さな船ならひとつか二つスクランブラーがあればかなり役に立つよ。大"
 "きな船の砲塔を避けるのがずっと簡単になるね｣"
 
-#: dat/events/neutral/npc.lua:247
+#: dat/events/neutral/npc.lua:254
 msgid ""
 "\"Don't forget to have your target selected. Even if you have forward-facing "
 "weapons, the weapons will swivel a bit to track your target. But it's "
@@ -31449,7 +31463,7 @@ msgstr ""
 "｢目標の選択を忘れないこと。前を向いた武器であっても、目標を狙ってすこし首を振"
 "るんだよ。でも砲塔型の武器なら、目標の選択がぜったい必須になる｣"
 
-#: dat/events/neutral/npc.lua:248
+#: dat/events/neutral/npc.lua:255
 msgid ""
 "\"Did you know that you can automatically follow pilot with Autonav? It's "
 "true! Just #bleft-click#0 the pilot to target them and then #bright-click#0 "
@@ -31460,7 +31474,7 @@ msgstr ""
 "左クリック#0して選択してから、目標を#b右クリック#0するだけで追いかけるん"
 "だ！　この機能を護衛任務で使うのが好きでね。退屈なのがずいぶんと減るよ｣"
 
-#: dat/events/neutral/npc.lua:249
+#: dat/events/neutral/npc.lua:256
 msgid ""
 "\"The new aiming helper feature is awesome! Simply turn it on in your ship's "
 "weapons configuration and you get little guides telling you where you should "
@@ -31469,7 +31483,7 @@ msgstr ""
 "｢新しい照準補助機能はすごいね！　ただ船の武器設定で有効にすれば、どこを狙えば"
 "目標に命中するのか案内してくれる！　たくさん使ってるよ｣"
 
-#: dat/events/neutral/npc.lua:250
+#: dat/events/neutral/npc.lua:257
 msgid ""
 "\"The '¤' symbol is the official galactic symbol for credits. Supposedly it "
 "comes from the currency symbol of an ancient Earth civilization. It's "
@@ -31480,7 +31494,7 @@ msgstr ""
 "古代地球文明の通貨の記号が由来らしいね。ときどきは SI 接頭語をつけて表現され"
 "る｡『k¤』は千クレジット､『M¤』は百万クレジット、とかだよ｣"
 
-#: dat/events/neutral/npc.lua:251
+#: dat/events/neutral/npc.lua:258
 msgid ""
 "\"If you're piloting a medium ship, I'd recommend you invest in at least one "
 "turreted missile launcher. I had a close call a few decaperiods ago where a "
@@ -31495,7 +31509,7 @@ msgstr ""
 "と近くの惑星に着陸できたんで、あの船から逃れられた。砲塔型のミサイル発射機を"
 "装備してからは、問題はおきてないね｣"
 
-#: dat/events/neutral/npc.lua:252
+#: dat/events/neutral/npc.lua:259
 msgid ""
 "\"I've heard that pirates have to keep their reputations up with other "
 "pirates by flying pirate ships. The Hyena is considered a pirate ship and is "
@@ -31506,7 +31520,7 @@ msgstr ""
 "らないと聞いたよ。ハイエナは海賊船だと思われていて入手も容易だけど、ほかのも"
 "のについては、どこから入手しているのかわからないね｣"
 
-#: dat/events/neutral/npc.lua:253
+#: dat/events/neutral/npc.lua:260
 msgid ""
 "\"These computer symbols can be confusing sometimes! I've figured it out, "
 "though: '{F}' means friendly, '{N}' means neutral, '{H}' means hostile, "
@@ -31518,7 +31532,7 @@ msgstr ""
 "対的､『{R}』は立入制限､『{U}』が無人だけど着陸可能なんだよね。だれか教えてく"
 "れればよかったのに！｣"
 
-#: dat/events/neutral/npc.lua:254
+#: dat/events/neutral/npc.lua:261
 msgid ""
 "\"Trade Lanes are the safest bet to travel around the universe. They have "
 "many patrols to keep you safe from pirates.\""
@@ -31531,7 +31545,7 @@ msgstr ""
 #. All messages must contain '{jmp}', this is the name of the target system.
 #. ALL NPCs have a chance to say one of these lines instead of a lore message.
 #. So, make sure the tips are always faction neutral.
-#: dat/events/neutral/npc.lua:263
+#: dat/events/neutral/npc.lua:270
 msgid ""
 "\"Hi there, traveler. Is your system map up to date? Just in case you didn't "
 "know already, let me give you the location of the jump from here to {jmp}. I "
@@ -31540,7 +31554,7 @@ msgstr ""
 "｢やあ、旅人。星系の地図は最新版？　ねんのためだけど、まだ知らないんなら、ここ"
 "から{jmp}へジャンプする場所を教えられるよ。役に立てばいいんだけど｣"
 
-#: dat/events/neutral/npc.lua:264
+#: dat/events/neutral/npc.lua:271
 msgid ""
 "\"Quite a lot of people who come in here complain that they don't know how "
 "to get to {jmp}. I travel there often, so I know exactly where the jump "
@@ -31550,7 +31564,7 @@ msgstr ""
 "た。そっちにはよく行くから、ジャンプポイントの場所は正確に知ってる。ほら、見"
 "せてあげるよ｣"
 
-#: dat/events/neutral/npc.lua:265
+#: dat/events/neutral/npc.lua:272
 msgid ""
 "\"So you're still getting to know about this area, huh? Tell you what, I'll "
 "give you the coordinates of the jump to {jmp}. Check your map next time you "
@@ -31559,7 +31573,7 @@ msgstr ""
 "｢そうすると、この領域のことをまだ知ろうとしているんだね？　ほら、{jmp}への"
 "ジャンプの座標を教えてやれるよ。次回離陸したら地図を確認してほしいね｣"
 
-#: dat/events/neutral/npc.lua:266
+#: dat/events/neutral/npc.lua:273
 msgid ""
 "\"True fact, there's a direct jump from here to {jmp}. Want to know where it "
 "is? It'll cost you! Ha ha, just kidding. Here you go, I've added it to your "
@@ -31568,7 +31582,7 @@ msgstr ""
 "｢じっさい、{jmp}へ直接行くジャンプがあるよ。どこにあるか知りたい？　かねがか"
 "かるよ！　ハハ、ただの冗談だって。ほら、地図に加えておいたから｣"
 
-#: dat/events/neutral/npc.lua:267
+#: dat/events/neutral/npc.lua:274
 msgid ""
 "\"There's a system just one jump away by the name of {jmp}. I can tell you "
 "where the jump point is. There, I've updated your map. Don't mention it.\""
@@ -31580,7 +31594,7 @@ msgstr ""
 #. Mission hint messages. Each element should be a table containing the mission name and the corresponding hint.
 #. ALL NPCs have a chance to say one of these lines instead of a lore message.
 #. So, make sure the hints are always faction neutral.
-#: dat/events/neutral/npc.lua:274
+#: dat/events/neutral/npc.lua:281
 msgid ""
 "\"Apparently there's a woman who regularly turns up on planets in and around "
 "the Klantar system. I wonder what she's looking for?\""
@@ -31588,7 +31602,7 @@ msgstr ""
 "｢どうも定期的にクランター星系やその近くの惑星に向かう女の人がいるようだね。な"
 "にをさがしているんだろう？｣"
 
-#: dat/events/neutral/npc.lua:275
+#: dat/events/neutral/npc.lua:282
 msgid ""
 "\"The Empire is trying to really do something about the Collective, I hear. "
 "Who knows, maybe you can even help them out if you make it to Omega Station."
@@ -31598,7 +31612,7 @@ msgstr ""
 "わからないけど、オメガ・ステーションに行くなら、たぶん助けてやることもできる"
 "んじゃないかな｣"
 
-#: dat/events/neutral/npc.lua:276
+#: dat/events/neutral/npc.lua:283
 msgid ""
 "\"There are often shady characters hanging out in the Alteris system. I'd "
 "stay away from there if I were you, someone might offer you a dirty kind of "
@@ -31607,7 +31621,7 @@ msgstr ""
 "｢うさんくさい人たちが、よくオルタリス星系に出入りしているよ。自分だったら、あ"
 "そこには近よらないね。だれかが汚い種類の仕事をさせようとするかもよ！｣"
 
-#: dat/events/neutral/npc.lua:277
+#: dat/events/neutral/npc.lua:284
 msgid ""
 "\"So there's some Za'lek scientist looking for a cargo monkey out on "
 "Niflheim in the Dohriabi system. I hear it's pretty good money.\""
@@ -31617,7 +31631,7 @@ msgstr ""
 
 #. Event hint messages. Each element should be a table containing the event name and the corresponding hint.
 #. Make sure the hints are always faction neutral.
-#: dat/events/neutral/npc.lua:283
+#: dat/events/neutral/npc.lua:290
 msgid ""
 "\"The FLF and the Dvaered sometimes clash in Surano. If you go there, you "
 "might find something of interest... Or not.\""
@@ -31628,7 +31642,7 @@ msgstr ""
 #. Mission after-care messages. Each element should be a table containing the mission name and a line of text.
 #. This text will be said by NPCs once the player has completed the mission in question.
 #. Make sure the messages are always faction neutral.
-#: dat/events/neutral/npc.lua:290
+#: dat/events/neutral/npc.lua:297
 msgid ""
 "\"Heard some reckless scientists got someone to put a satellite inside the "
 "nebula for them. I thought everyone with half a brain knew to stay out of "
@@ -31638,7 +31652,7 @@ msgstr ""
 "たよ。脳みそが半分もあれば、だれだってあれにはかかわらないだけの分別があると"
 "思ってたけどね。でもまあ、なんとも｣"
 
-#: dat/events/neutral/npc.lua:291
+#: dat/events/neutral/npc.lua:298
 msgid ""
 "\"Did you hear? There was some big incident during a diplomatic meeting "
 "between the Empire and the Dvaered. Nobody knows what exactly happened, but "
@@ -31650,7 +31664,7 @@ msgstr ""
 "官が死んだんだよ。今ではどちらの側も、相手の不正行為を非難してる。険悪なこと"
 "になるかもね｣"
 
-#: dat/events/neutral/npc.lua:292
+#: dat/events/neutral/npc.lua:299
 msgid ""
 "\"Hey, remember the Collective? They got wiped out! I feel so much better "
 "now that there aren't a bunch of robot ships out there to get me anymore.\""
@@ -31658,7 +31672,7 @@ msgstr ""
 "｢ちょっと、集合体を覚えてる？　一掃されたんだよ！　ずっと気分がよくなったね。"
 "今ではもう向かってくるロボット船の群れがあそこにいないんだよ｣"
 
-#: dat/events/neutral/npc.lua:293
+#: dat/events/neutral/npc.lua:300
 msgid ""
 "\"Some thieves broke into a museum on Varia and stole a holopainting! Most "
 "of the thieves were caught, but the one who carried the holopainting "
@@ -31668,7 +31682,7 @@ msgstr ""
 "は捕まったけど、ホロ絵画を外世界に運んだひとりはまだ捕まってない。手がかりな"
 "し。くそったれ犯罪者が……｣"
 
-#: dat/events/neutral/npc.lua:294
+#: dat/events/neutral/npc.lua:301
 msgid ""
 "\"The Dvaered scored a major victory against the FLF recently. They went "
 "into Sigur and blew the hidden base there to bits! I bet that was a serious "
@@ -31681,7 +31695,7 @@ msgstr ""
 #. Event after-care messages. Each element should be a table containing the event name and a line of text.
 #. This text will be said by NPCs once the player has completed the event in question.
 #. Make sure the messages are always faction neutral.
-#: dat/events/neutral/npc.lua:301
+#: dat/events/neutral/npc.lua:308
 msgid ""
 "\"What? You had rodents sabotage your ship? Man, you're lucky to be alive. "
 "If it had hit the wrong power line...\""
@@ -31689,7 +31703,7 @@ msgstr ""
 "｢なに？　破壊行為をするげっ歯動物が船にいた？　ちょっと、生きてて幸運だよ。ま"
 "ずい電力線をやられてたら……｣"
 
-#: dat/events/neutral/npc.lua:302
+#: dat/events/neutral/npc.lua:309
 msgid ""
 "\"What do you mean, the world ended and then the creator of the universe "
 "came and fixed it? What kind of illegal substance are you on?\""
@@ -31716,13 +31730,13 @@ msgstr ""
 #. Select a string, then remove it from the list of valid strings. This ensures all NPCs have something different to say.
 #. Spawns an NPC.
 #. Select a faction for the NPC. NPCs may not have a specific faction.
-#: dat/events/neutral/npc.lua:413
+#: dat/events/neutral/npc.lua:420
 msgid "Civilian"
 msgstr "民間人"
 
 #. Choose faction, overriding if necessary
 #. Append the faction to the civilian name, unless there is no faction.
-#: dat/events/neutral/npc.lua:445
+#: dat/events/neutral/npc.lua:452
 msgid "{fct} Civilian"
 msgstr "{fct}民間人"
 
@@ -31735,8 +31749,6 @@ msgstr "{fct}民間人"
 #. Mission hint message.
 #. Logic to decide what to spawn, if anything.
 #. Do not spawn any NPCs on restricted assets or that don't want NPC
-#. Chance of a jump point message showing up. As this gradually goes
-#. down, it is replaced by lore messages. See spawnNPC function.
 #. End event on takeoff.
 #. Execute NPC specific code
 #. Reduce jump message chance
@@ -31764,18 +31776,18 @@ msgstr "{fct}民間人"
 #. Make sure system isn't claimed, but we don't claim it
 #. Claim: test the claims in the mission.
 #. Create a Vendetta who hails the player after a bit
-#: dat/events/neutral/shadow_comm.lua:37
+#: dat/events/neutral/shadow_comm.lua:36
 msgid "Four Winds Vendetta"
 msgstr "フォー・ウィンズ・ベンデッタ"
 
 #. Clean up on events that remove the Vendetta from the game
 #. Make the ship hail the player
 #. Triggered when the player hails the ship
-#: dat/events/neutral/shadow_comm.lua:60
+#: dat/events/neutral/shadow_comm.lua:59
 msgid "An open invitation"
 msgstr "いつでもどうぞ"
 
-#: dat/events/neutral/shadow_comm.lua:60
+#: dat/events/neutral/shadow_comm.lua:59
 msgid ""
 "\"Greetings, {player},\" the pilot of the Vendetta says to you as soon as "
 "you answer his hail. \"I have been looking for you on behalf of an "
@@ -31806,11 +31818,11 @@ msgstr ""
 "しい。そしてどういうことなのか見つけだすための方法はたったひとつある。たぶ"
 "ん、会えるらしい場所は書きとめておくべきなのだろう。それは{sys}星系だ。"
 
-#: dat/events/neutral/shadow_comm.lua:68
+#: dat/events/neutral/shadow_comm.lua:67
 msgid "Do you intend to respond to the invitation?"
 msgstr "招待に応じるつもりですか？"
 
-#: dat/events/neutral/shadow_comm.lua:69
+#: dat/events/neutral/shadow_comm.lua:68
 msgid ""
 "Someone has invited you to meet with her in the {sys} system, supposedly an "
 "acquaintance of yours. The pilot who told you this said that there's no "
@@ -31853,13 +31865,14 @@ msgstr ""
 #.
 #. -- Recurring ship lover event.
 #. --
+#. Non-persistent state
 #. Create question
-#: dat/events/neutral/shiplover.lua:154
+#: dat/events/neutral/shiplover.lua:157
 msgid "\"What class is the #o{ship}#0 ship?\""
 msgstr "｢#o{ship}#0は何級の船か？｣"
 
 #. Create question
-#: dat/events/neutral/shiplover.lua:170
+#: dat/events/neutral/shiplover.lua:173
 msgid "\"What is the name of this ship?\""
 msgstr "｢この船の名前は？｣"
 
@@ -31875,11 +31888,11 @@ msgstr "｢この船の名前は？｣"
 #. Increase the difficulty as progresses
 #. Generate the question
 #. Create the log if necessary.
-#: dat/events/neutral/shiplover.lua:281
+#: dat/events/neutral/shiplover.lua:284
 msgid "Ship Quiz"
 msgstr "船クイズ"
 
-#: dat/events/neutral/shiplover.lua:281 dat/factions/standing/lib/base.lua:32
+#: dat/events/neutral/shiplover.lua:284 dat/factions/standing/lib/base.lua:32
 #: dat/factions/standing/lib/base.lua:38
 #: dat/factions/standing/lib/pirate.lua:32 dat/scripts/common/derelict.lua:19
 #: dat/scripts/common/neutral.lua:10 dat/scripts/common/tut_nelly.lua:29
@@ -31888,13 +31901,13 @@ msgid "Neutral"
 msgstr "中立"
 
 #. Determine reward
-#: dat/events/neutral/shiplover.lua:288
+#: dat/events/neutral/shiplover.lua:291
 msgid ""
 "You obtained 1 {outfit} from the Ship Enthusiast for getting 5 quizzes right."
 msgstr ""
 "あなたは 5 問のクイズに正解したので、宇宙船マニアから{outfit}を獲得した。"
 
-#: dat/events/neutral/shiplover.lua:291
+#: dat/events/neutral/shiplover.lua:294
 msgid ""
 "\"Wow. This is the 5th time you got my quiz right. This deserves a special "
 "reward. Here, take this special trading card. Don't worry, I have a dozen "
@@ -31904,14 +31917,14 @@ msgstr ""
 "なトレーディングカードをあげるよ。気にしなくていい。そんなのは 10 枚はもって"
 "るから。これからはクイズをもっと難しくしなくちゃ｣"
 
-#: dat/events/neutral/shiplover.lua:297
+#: dat/events/neutral/shiplover.lua:300
 msgid ""
 "You obtained 1 {outfit} from the Ship Enthusiast for getting 10 quizzes "
 "right."
 msgstr ""
 "あなたは 10 問のクイズに正解したので、宇宙船マニアから{outfit}を獲得した。"
 
-#: dat/events/neutral/shiplover.lua:300
+#: dat/events/neutral/shiplover.lua:303
 msgid ""
 "\"Wow. This is the 10th time you got my quiz right. You are doing much "
 "better than I anticipated. Here, take one of my favourite trading cards. "
@@ -31922,14 +31935,14 @@ msgstr ""
 "入ってるトレーディングカードを 1 枚あげるよ。なくさないでね。これはかなりとく"
 "べつなやつなんだ！　これからはクイズをもっと難しくしなくちゃ｣"
 
-#: dat/events/neutral/shiplover.lua:306
+#: dat/events/neutral/shiplover.lua:309
 msgid ""
 "You obtained a {outfit} from the Ship Enthusiast for getting 25 quizzes "
 "right."
 msgstr ""
 "あなたは 25 問のクイズに正解したので、宇宙船マニアから{outfit}を獲得した。"
 
-#: dat/events/neutral/shiplover.lua:309
+#: dat/events/neutral/shiplover.lua:312
 msgid ""
 "\"Damn. This is the 25th time you got my quiz right. Nobody has played my "
 "quiz with me for this long. I guess I have to commemorate this in a special "
@@ -31943,13 +31956,13 @@ msgstr ""
 "しっかり大切にしてほしいね。だめっ！　カードの包みをはがさないで！　そんなこ"
 "としたら傷つくかもしれないでしょ！｣"
 
-#: dat/events/neutral/shiplover.lua:314
+#: dat/events/neutral/shiplover.lua:317
 msgid ""
 "You obtained {credits} from the Ship Enthusiast for getting a quiz right."
 msgstr "あなたはクイズに正解したので、宇宙船マニアから{credits}を獲得した。"
 
 #. Don't trigger hooks
-#: dat/events/neutral/shiplover.lua:317
+#: dat/events/neutral/shiplover.lua:320
 #, fuzzy
 #| msgid ""
 #| "\"That's right! Damn, I thought you wouldn't know this one. This is the "
@@ -31963,18 +31976,18 @@ msgstr ""
 "ね！　ほら、これはその成績にたいする賞だよ｣"
 
 #. Set up NPC and hooks
-#: dat/events/neutral/shiplover.lua:322 dat/events/neutral/shiplover.lua:335
+#: dat/events/neutral/shiplover.lua:325 dat/events/neutral/shiplover.lua:339
 msgid "Ship Enthusiast"
 msgstr "宇宙船マニア"
 
-#: dat/events/neutral/shiplover.lua:322
+#: dat/events/neutral/shiplover.lua:325
 msgid ""
 "You see a surprisingly young individual who is playing with a small ship "
 "model."
 msgstr "小さな船の模型で遊んでいる驚くほど若い人物だとわかった。"
 
 #. First meeting
-#: dat/events/neutral/shiplover.lua:340
+#: dat/events/neutral/shiplover.lua:344
 msgid ""
 "You approach the individual who is making weird noises, likely imitating "
 "space ship noises, while playing with a space ship toy."
@@ -31982,29 +31995,29 @@ msgstr ""
 "奇妙な音をたてている人物に近づいた。宇宙船の音をまねているようだ。宇宙船のお"
 "もちゃで遊んでいる。"
 
-#: dat/events/neutral/shiplover.lua:341
+#: dat/events/neutral/shiplover.lua:345
 msgid ""
 "\"Why hello there. How do you like my new limited edition Lancelot figurine?"
 "\""
 msgstr "｢やあ、こんにちは。新しい限定品のランスロットの模型なんだけど？｣"
 
-#: dat/events/neutral/shiplover.lua:344
+#: dat/events/neutral/shiplover.lua:348
 msgid "\"It looks great!\""
 msgstr "｢すごいね！｣"
 
-#: dat/events/neutral/shiplover.lua:345
+#: dat/events/neutral/shiplover.lua:349
 msgid "\"It's awful.\""
 msgstr "｢ひどいね｣"
 
-#: dat/events/neutral/shiplover.lua:346
+#: dat/events/neutral/shiplover.lua:350
 msgid "\"Aren't you too young to be here?\""
 msgstr "｢こんなところにいるには若すぎない？｣"
 
-#: dat/events/neutral/shiplover.lua:357
+#: dat/events/neutral/shiplover.lua:361
 msgid "\"You know I own a real one.\""
 msgstr "｢ほら、本物をもってるから｣"
 
-#: dat/events/neutral/shiplover.lua:363
+#: dat/events/neutral/shiplover.lua:367
 msgid ""
 "\"I know right! It cost me a lot to find it. It was sold out all over! But "
 "it was all worth it in the end.\""
@@ -32012,7 +32025,7 @@ msgstr ""
 "｢わかってるね！　見つけるのにたくさんかかったんだよ。ずっと売りきれてて！　で"
 "もけっきょく報われたんだ｣"
 
-#: dat/events/neutral/shiplover.lua:367
+#: dat/events/neutral/shiplover.lua:371
 msgid ""
 "\"Phhhsssh. You can't appreciate this beauty. Look at the curves! The "
 "shining lights! It's a fully anatomically correct 1/128 scale model! You can "
@@ -32026,7 +32039,7 @@ msgstr ""
 "あなたは近くから見て、たしかにパイロットを見ることができた。この詳細度はかな"
 "りばかげている。"
 
-#: dat/events/neutral/shiplover.lua:372
+#: dat/events/neutral/shiplover.lua:376
 msgid ""
 "\"Aren't you too old to be here? It's not like I'm drinking or anything.\"\n"
 "They stick their tongue out at you as they still play with the space ship."
@@ -32034,7 +32047,7 @@ msgstr ""
 "｢ここにいるには年よりすぎない？　飲むようなことしてないでしょ｣\n"
 "あなたに舌を出してみせてながら、まだ宇宙船で遊びつづけている。"
 
-#: dat/events/neutral/shiplover.lua:377
+#: dat/events/neutral/shiplover.lua:381
 msgid ""
 "\"Really? Is it a Sigma-5 squadron Golden Efreeti model too?! You don't know "
 "what that is? Stop messing with me, it's probably just another mass-produced "
@@ -32048,7 +32061,7 @@ msgstr ""
 "そういっておもちゃのランスロットを持ちあげる。脇に刻まれた金色のイフリートが"
 "あなたにもなんとか見わけられた。"
 
-#: dat/events/neutral/shiplover.lua:382
+#: dat/events/neutral/shiplover.lua:386
 msgid ""
 "\"You know what, let's play a game. I know ALL the facts of all the ships. "
 "I'll ask you a question and if you get it right, I'll give you a nice "
@@ -32058,41 +32071,41 @@ msgstr ""
 "もし正しく答えられたらいい賞品をあげるよ。やりたい？｣"
 
 #. Met, didn't play quiz and came back
-#: dat/events/neutral/shiplover.lua:388
+#: dat/events/neutral/shiplover.lua:392
 msgid "You once again approach the ship enthusiast."
 msgstr "あなたはまた、あの宇宙船マニアに近づいた。"
 
-#: dat/events/neutral/shiplover.lua:389
+#: dat/events/neutral/shiplover.lua:393
 msgid ""
 "\"So you're back. Did you change your mind about playing my ship quiz?\""
 msgstr "｢じゃあ戻ってきたんだ。船のクイズをやるのも考えなおした？｣"
 
-#: dat/events/neutral/shiplover.lua:391
+#: dat/events/neutral/shiplover.lua:395
 msgid ""
 "You once again approach the ship enthusiast. They seem to move about a lot."
 msgstr ""
 "あなたはまた、あの宇宙船マニアに近づいた。どうもかなりあちこちと移動している"
 "らしい。"
 
-#: dat/events/neutral/shiplover.lua:392
+#: dat/events/neutral/shiplover.lua:396
 msgid ""
 "\"Would you like to play another round of the ship quiz? I think the "
 "question I prepared will stump you completely.\""
 msgstr "｢船のクイズをまたやりたい？　用意した質問には完全にまいると思うな｣"
 
-#: dat/events/neutral/shiplover.lua:395 dat/missions/minerva/maikki2.lua:193
+#: dat/events/neutral/shiplover.lua:399 dat/missions/minerva/maikki2.lua:193
 msgid "\"Yes!\""
 msgstr "｢はい！｣"
 
-#: dat/events/neutral/shiplover.lua:396 dat/missions/minerva/kex4.lua:146
+#: dat/events/neutral/shiplover.lua:400 dat/missions/minerva/kex4.lua:146
 msgid "\"No.\""
 msgstr "｢いいえ｣"
 
-#: dat/events/neutral/shiplover.lua:400
+#: dat/events/neutral/shiplover.lua:404
 msgid "\"Oh well, your loss!\""
 msgstr "｢しかたがないな。もったいなかったね！｣"
 
-#: dat/events/neutral/shiplover.lua:405
+#: dat/events/neutral/shiplover.lua:409
 msgid ""
 "\"Great! So here it goes. Listen carefully.\"\n"
 "\n"
@@ -32100,7 +32113,7 @@ msgstr ""
 "｢いいね！　じゃあやるよ。よく聞いててね｣\n"
 "\n"
 
-#: dat/events/neutral/shiplover.lua:421
+#: dat/events/neutral/shiplover.lua:426
 msgid ""
 "\"Great! So take a look at this ship and listen carefully.\"\n"
 "\n"
@@ -32110,12 +32123,12 @@ msgstr ""
 
 #. Show choices
 #. Give reward
-#: dat/events/neutral/shiplover.lua:461
+#: dat/events/neutral/shiplover.lua:466
 msgid "You got the Ship Enthusiast's quiz wrong."
 msgstr "あなたは宇宙船マニアのクイズで不正解になった。"
 
 #. TODO wrong sound
-#: dat/events/neutral/shiplover.lua:465
+#: dat/events/neutral/shiplover.lua:470
 msgid ""
 "They look smug as they exclaim \"Wrong!\".\n"
 "\"The correct answer was #g{answer}#0! Better luck next time.\"\n"
@@ -32125,17 +32138,18 @@ msgstr ""
 "｢正解は#g{answer}#0！　次回をお楽しみに｣\n"
 "宇宙船マニアは立ち去った。"
 
+#. Non-persistent state
 #. Make sure system isn't claimed, but we don't claim it
 #. The _("Shipwrecked {plt}") will be a random trader vessel.
 #. Create the derelict.
-#: dat/events/neutral/shipwreck.lua:49
+#: dat/events/neutral/shipwreck.lua:50
 msgid "Shipwrecked {plt}"
 msgstr "難破した ｢{plt}｣"
 
 #. Added extra visibility for big systems (A.)
 #. Set hooks
 #. Ship broadcasts an SOS every 10 seconds, until boarded or destroyed.
-#: dat/events/neutral/shipwreck.lua:68
+#: dat/events/neutral/shipwreck.lua:69
 msgid ""
 "SOS. This is {plt}. We are shipwrecked. Please #bboard#0 us by positioning "
 "your ship over ours and then #bdouble-clicking#0 on our ship."
@@ -34451,11 +34465,9 @@ msgstr "貿易商コアラ"
 msgid "Trader Quicksilver"
 msgstr "貿易商クイックシルバー"
 
-#. Create the pilot
 #. If any pirates still alive, send player back out.
 #. A fellow warrior says hello in passing if player jumps out of the system without landing
-#: dat/factions/spawn/trader.lua:20 dat/missions/empire/collective/ec06.lua:197
-#: dat/missions/flf/dvk/flf_dvk03.lua:182
+#: dat/factions/spawn/trader.lua:20 dat/missions/flf/dvk/flf_dvk03.lua:182
 #: dat/missions/flf/dvk/flf_dvk06.lua:166 dat/missions/neutral/drunkard.lua:112
 #: dat/missions/neutral/dts_00.lua:206
 msgid "Trader Mule"
@@ -43200,7 +43212,8 @@ msgstr ""
 msgid "Tanker in system, contact if in need of fuel."
 msgstr ""
 
-#: dat/missions/empire/collective/ec06.lua:198
+#. Create the pilot
+#: dat/missions/empire/collective/ec06.lua:197
 msgid "Fuel Tanker"
 msgstr ""
 
@@ -43226,15 +43239,15 @@ msgstr ""
 #. Set up hooks
 #. Mission success
 #. Remove it
-#: dat/missions/empire/collective/ec06.lua:242
-#: dat/missions/empire/collective/ec06.lua:251
+#: dat/missions/empire/collective/ec06.lua:240
+#: dat/missions/empire/collective/ec06.lua:249
 #: dat/missions/empire/shipping/es01.lua:131
 #: dat/missions/empire/shipping/es02.lua:118
 #: dat/missions/neutral/nebu_satellite.lua:102 dat/missions/pirate/raid.lua:212
 msgid "Mission Success"
 msgstr "任務に成功"
 
-#: dat/missions/empire/collective/ec06.lua:242
+#: dat/missions/empire/collective/ec06.lua:240
 msgid ""
 "As you do your approach to land on {pnt} you notice big banners placed on "
 "the exterior of the station. They seem to be in celebration of the final "
@@ -43247,7 +43260,7 @@ msgid ""
 "shouldn't take too long to be back to normal.\""
 msgstr ""
 
-#: dat/missions/empire/collective/ec06.lua:251
+#: dat/missions/empire/collective/ec06.lua:249
 msgid ""
 "She continues. \"As a symbol of appreciation, you should find a deposit of "
 "5,000,000 credits in your account. There will be a celebration later today "
@@ -43257,7 +43270,7 @@ msgid ""
 "your ship clutching an Empire officer's boot."
 msgstr ""
 
-#: dat/missions/empire/collective/ec06.lua:256
+#: dat/missions/empire/collective/ec06.lua:254
 msgid ""
 "You helped the Empire to finally destroy the Collective once and for all. "
 "The Collective is now no more."
@@ -68700,7 +68713,7 @@ msgstr ""
 "｢無力化できる#o{outfitname}#0を装備しました。見さかいのないわたしの船を無事に"
 "無力化できるようになったようですね！｣"
 
-#: dat/missions/tutorial/nelly02.lua:232
+#: dat/missions/tutorial/nelly02.lua:231
 msgid "Llaminator MK2"
 msgstr "ラーミネイター MK2"
 
@@ -68761,8 +68774,12 @@ msgstr ""
 "かった。それからネリーはにっこりとした表情で戻ってきた。"
 
 #: dat/missions/tutorial/nelly02.lua:340
+#, fuzzy
+#| msgid ""
+#| "\"Got the parts! Cheaper than I expected to. Hopefully this will bring an "
+#| "end to my ship troubles. Let's go back to #o{pnt}#0 in #o{sys}#0!\""
 msgid ""
-"\"Got the parts! Cheaper than I expected to. Hopefully this will bring an "
+"\"Got the parts! Cheaper than I expected too. Hopefully this will bring an "
 "end to my ship troubles. Let's go back to #o{pnt}#0 in #o{sys}#0!\""
 msgstr ""
 "｢部品を手に入れました！　思ったより安かったですね。うまくいけば、これでわたし"
