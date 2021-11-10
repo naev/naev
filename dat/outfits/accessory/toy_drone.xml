@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Toy Drone">
  <general>
-  <unique/>
+  <unique />
   <typename>Accessory</typename>
   <slot prop="accessory">utility</slot>
   <size>small</size>
@@ -18,4 +18,3 @@
   <tur_firerate>3</tur_firerate>
  </specific>
 </outfit>
-

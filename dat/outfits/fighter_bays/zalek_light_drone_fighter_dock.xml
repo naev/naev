@@ -6,7 +6,7 @@
   <license>Light Combat Vessel License</license>
   <rarity>2</rarity>
   <mass>400</mass>
-  <price>1200000</price>
+  <price>1400000</price>
   <gfx_store>zalek_drone_light_fighter_swarm.webp</gfx_store>
   <description>This large in-ship facility is built to maintain and launch a swarm of Za'lek light drones. The drones are expendable, but in numbers they excel at clearing eney light craft.</description>
   <cpu>-400</cpu>

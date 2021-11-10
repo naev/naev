@@ -5,7 +5,7 @@
   <slot>structure</slot>
   <size>large</size>
   <mass>320</mass>
-  <price>600000</price>
+  <price>500000</price>
   <description>A massive battery unit designed to hold 2000 MJ of energy. Given the mass of this battery, it's advisable to only mount it on capital ships.</description>
   <gfx_store>capacitor4-g.webp</gfx_store>
  </general>

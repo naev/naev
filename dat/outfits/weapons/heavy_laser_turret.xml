@@ -6,7 +6,7 @@
   <license>Heavy Weapon License</license>
   <rarity>1</rarity>
   <mass>65</mass>
-  <price>100000</price>
+  <price>320000</price>
   <description>The Heavy Laser Turret is more or less an upscaled version of the Laser Turret, though some fundamental mechanisms had to be redesigned to adapt to the increased energy throughput found in this weapon.</description>
   <gfx_store>laserturret2.webp</gfx_store>
   <cpu>-75</cpu>

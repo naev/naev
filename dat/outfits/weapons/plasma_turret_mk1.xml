@@ -5,7 +5,7 @@
   <size>small</size>
   <license>Medium Weapon License</license>
   <mass>18</mass>
-  <price>21000</price>
+  <price>43000</price>
   <description>The plasma turret essentially takes a plasma blaster and mounts it on a turret. Its short range makes it ill-suited for defense, so it is not especially popular with traders and merchants, but it has found a niche among inexperienced mercenaries who are not as well-practiced at aiming as the pros.</description>
   <gfx_store>plasma_turret.webp</gfx_store>
   <cpu>-24</cpu>

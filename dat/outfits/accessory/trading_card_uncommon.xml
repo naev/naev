@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Trading Card (Uncommon)">
  <general>
-  <unique/>
+  <unique />
   <typename>Accessory</typename>
   <slot prop="accessory">utility</slot>
   <size>small</size>
@@ -15,4 +15,3 @@
   <fwd_firerate>10</fwd_firerate>
  </specific>
 </outfit>
-

@@ -4,7 +4,7 @@
   <slot>weapon</slot>
   <size>small</size>
   <mass>1</mass>
-  <price>15000</price>
+  <price>1</price>
   <description>This weapon is a cheat. It is not meant to be used by players.</description>
   <gfx_store>laser2.webp</gfx_store>
   <cpu>-1</cpu>

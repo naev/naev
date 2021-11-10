@@ -5,7 +5,7 @@
   <size>medium</size>
   <license>Medium Weapon License</license>
   <mass>30</mass>
-  <price>32500</price>
+  <price>130000</price>
   <description>The MK2 turreted version of the Razor sees a lot of application on medium escort ships. They are often mounted alongside laser or gauss turrets to assist in de-shielding incoming attackers before they are ripped to shreds.</description>
   <gfx_store>ionturret.webp</gfx_store>
   <cpu>-50</cpu>
