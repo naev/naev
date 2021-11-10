@@ -556,7 +556,7 @@ end
 
 -- Succeed the mission
 function succeed ()
-   player.msg( "#g" .. _("MISSION SUCCESS! Pay has been transferred into your account.") .. "#0" )
+   player.msg( "#g" .. fmt.f(_("MISSION SUCCESS! Pay of {credits} has been transferred into your account."),{credits=fmt.credits(credits)}) .. "#0" )
    player.pay( credits )
 
    -- Pirate rep cap increase
