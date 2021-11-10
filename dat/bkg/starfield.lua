@@ -22,9 +22,7 @@ local starfield = [[
 uniform vec2 u_resolution;
 
 // In the noise-function space. xy corresponds to screen-space XY
-uniform vec3 u_camera = vec3(1.0);
-
-uniform float u_zoom = 0.1;
+uniform vec4 u_camera = vec4(1.0);
 
 //uniform mat2    rotate;
 //const float theta = 1.0;
@@ -38,19 +36,19 @@ uniform vec2 u_r  = vec2( 4.0, 7.0 );
 
 #define volsteps 8
 
-#define sparsity 0.5  // 0.4 to 0.5 (sparse)
+#define sparsity 0.7  // 0.4 to 0.5 (sparse)
 #define stepsize 0.2
 
 #define frequencyVariation   1.3 // 0.5 to 2.0
 
-#define brightness 0.0018
+#define brightness 0.0010
 #define distfading 0.6800
 
 vec4 effect( vec4 colour_in, Image tex, vec2 texture_coords, vec2 screen_coords )
 {
    //vec2 uv = gl_FragCoord.xy / u_resolution - 0.5;
    //uv.y *= u_resolution.y / u_resolution.x;
-   vec2 uv = (texture_coords - 0.5) * love_ScreenSize.xy * u_zoom + u_camera.xy + u_r;
+   vec2 uv = (texture_coords - 0.5) * love_ScreenSize.xy * u_camera.w + u_camera.xy + u_r;
 
    vec3 dir = vec3(uv, 1.0);
    //dir.xz *= rotate;
@@ -59,7 +57,7 @@ vec4 effect( vec4 colour_in, Image tex, vec2 texture_coords, vec2 screen_coords 
    vec4 colour = vec4( vec3(0.0), 1.0 );
    
    for (int r = 0; r < volsteps; ++r) {
-      vec3 p = vec3(1.0) + u_camera + dir * (s * 0.5);
+      vec3 p = vec3(1.0) + u_camera.xyz + dir * (s * 0.5);
       p = abs(vec3(frequencyVariation) - mod(p, vec3(frequencyVariation * 2.0)));
 
       float prevlen = 0.0, a = 0.0;
@@ -120,8 +118,7 @@ function renderbg( dt )
    local z = camera.getZoom()
    x = x / 1e6
    y = y / 1e6
-   shader:send( "u_camera", x*0.5/sf, -y*0.5/sf, 1.0 )
-   shader:send( "u_zoom", z*0.0008 )
+   shader:send( "u_camera", x*0.5/sf, -y*0.5/sf, 0.0, z*0.0008 )
 
    bgshaders.render()
 end
