@@ -31,6 +31,7 @@ local fmt = require "format"
 local credits = 2e6
 local targetsys = system.get("Doranthex") -- TODO: not sure it's needed.
 
+local finish, jumphook, landhook, source_system, stage, vendetta, yohail -- Non-persistent state.
 
 -- Start at previous system
 function create ()
@@ -55,18 +56,19 @@ function begin ()
       evt.finish(false)
    end
 
-   vedetta = pilot.add( "Dvaered Vendetta", "Dvaered", source_system )
-   finish1 = hook.pilot(vedetta, "jump", "finish")
-   finish2 = hook.pilot(vedetta, "death", "finish")
-   finish3 = hook.land("finish")
-   finish4 = hook.jumpout("finish")
+   vendetta = pilot.add( "Dvaered Vendetta", "Dvaered", source_system )
+   finish = {}
+   finish[1] = hook.pilot(vendetta, "jump", "finish")
+   finish[2] = hook.pilot(vendetta, "death", "finish")
+   finish[3] = hook.land("finish")
+   finish[4] = hook.jumpout("finish")
 
    yohail = hook.timer( 4.0, "hailme" )
 end
 
 function hailme()
-   vedetta:hailPlayer()
-   hook.pilot(vedetta, "hail", "hail")
+   vendetta:hailPlayer()
+   hook.pilot(vendetta, "hail", "hail")
 end
 
 -- Player answers to hail
@@ -95,10 +97,9 @@ function hail()
    source_system = system.cur()
    landhook = hook.land("reaction")
 
-   hook.rm(finish1)
-   hook.rm(finish2)
-   hook.rm(finish3)
-   hook.rm(finish4)
+   for i = 1,4 do
+      hook.rm(finish[i])
+   end
 end
 
 -- Reaction to player's choice at first landing

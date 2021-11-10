@@ -9,6 +9,7 @@
 -- Shows the player fancy messages as they discover things. Meant to be flavourful.
 --]]
 
+local fmt = require 'format'
 local love = require 'love'
 local lg = require 'love.graphics'
 local audio = require 'love.audio'
@@ -362,12 +363,8 @@ function heartbeat( event )
 end
 
 function discover_trigger( event )
-   local msg
-   if event.subtitle then
-      msg = fmt.f(_("You found #o{title} - {subtitle}#0!"),{title=event.title, subtitle=event.subtitle})
-   else
-      msg = fmt.f(_("You found #o{title}!#0"),{title=event.title})
-   end
+   local template = (event.subtitle and _("You found #o{title} - {subtitle}!")) or _("You found #o{title}!")
+   local msg = fmt.f(template, event)
    -- Log and message
    player.msg( msg )
    shiplog.create( "discovery", _("Discovery"), _("Travel") )

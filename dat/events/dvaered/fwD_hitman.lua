@@ -19,6 +19,8 @@
 --]]
 -- TODO: this event is neutralized because the "Dvaered Base" mission has not been written yet
 
+local baddie, atthook, jumphook, landhook, source_system -- Non-persistent state.
+
 function create ()
    source_system = system.cur()
    jumphook = hook.jumpin("begin")

@@ -17,13 +17,16 @@ require "proximity"
 local fmt = require "format"
 local formation = require "formation"
 
--- Unsaved global tables
-local attAttHook, defAttHook
+-- Non-persistent state
+local source_system, source_planet, inForm, batInProcess, side
+local attackers, attnum, attkilled, attdeath, defenders, defnum, defkilled, defdeath
+local trader, warrior, attAttHook, defAttHook, hailhook, jumphook
+local baserew, reward
 
 function create ()
    source_system = system.cur()
    jumphook = hook.jumpin("begin")
-   landhook = hook.land("leave")
+   hook.land("leave")
 end
 
 function begin ()

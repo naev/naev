@@ -127,7 +127,7 @@ stds.API_spawn = {globals={
    "spawn",                             -- C function: system_scheduler()
 }}
 stds.Background.globals={"background", "renderbg", "renderfg", "renderov"}
-stds.Evt.globals={"create"}
+stds.Evt.globals={"create", "mem"}
 stds.GUI.globals = {
    "create",
    "end_cooldown",
@@ -142,7 +142,7 @@ stds.GUI.globals = {
    "update_system",
    "update_target",
 }
-stds.Misn.globals={"abort", "accept", "create"}
+stds.Misn.globals={"abort", "accept", "create", "mem"}
 stds.Music.globals={"choose"}
 stds.PilotOutfit.globals={
    "cleanup",
