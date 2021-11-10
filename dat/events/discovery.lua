@@ -305,13 +305,17 @@ local function sfxDiscovery()
    sfx:play()
 end
 
+local triggered = false
 local function handle_event( event )
    -- Don't trigger if already done
    if var.peek( event.name ) then return false end
 
    -- Trigger
    if event.type=="enter" then
-      discover_trigger( event )
+      if not triggered then
+         discover_trigger( event )
+         triggered = true
+      end
    elseif event.type=="discover" then
       hook.discover( "discovered", event )
    elseif event.type=="distance" then
