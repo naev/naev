@@ -15,6 +15,7 @@ local audio = require 'love.audio'
 local love_math = require 'love.math'
 local love_shaders = require 'love_shaders'
 local transitions = require 'vn.transitions'
+local fmt = require "format"
 
 -- Since we don't actually activate the Love framework we have to fake the
 -- the dimensions and width, and set up the origins.
@@ -361,7 +362,12 @@ function heartbeat( event )
 end
 
 function discover_trigger( event )
-   local msg  = string.format(_("You found #o%s - %s!"),event.title,event.subtitle)
+   local msg
+   if event.subtitle then
+      msg = fmt.f(_("You found #o{title} - {subtitle}#0!"),{title=event.title, subtitle=event.subtitle})
+   else
+      msg = fmt.f(_("You found #o{title}!#0"),{title=event.title})
+   end
    -- Log and message
    player.msg( msg )
    shiplog.create( "discovery", _("Discovery"), _("Travel") )
