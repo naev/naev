@@ -57,7 +57,7 @@ class Balancer:
                     continue
                 tags = root.findall(key)
                 if len(tags) > 1:
-                    print(f"Found duplicate tag '{key}' in '{oname}'. Removing!")
+                    print(f"Found duplicate tag '{key}' in '{val}'. Removing!")
                     for i in range(1,len(tags)):
                         root.remove( tags[i] )
                 tag = root.find(key)
