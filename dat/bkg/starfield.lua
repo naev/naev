@@ -24,11 +24,10 @@ uniform vec2 u_resolution;
 // In the noise-function space. xy corresponds to screen-space XY
 uniform vec4 u_camera = vec4(1.0);
 
-//uniform mat2    rotate;
-//const float theta = 1.0;
-//const mat2 rotate = mat2( cos(theta), -sin(theta), sin(theta), cos(theta) );
+const float theta = 1.0;
+const mat2 rotate = mat2( cos(theta), -sin(theta), sin(theta), cos(theta) );
 
-uniform vec2 u_r  = vec2( 4.0, 7.0 );
+uniform vec2 u_r  = vec2( 400.0, 700.0 );
 
 //uniform sampler2D oldImage;
 
@@ -39,19 +38,17 @@ uniform vec2 u_r  = vec2( 4.0, 7.0 );
 #define sparsity 0.7  // 0.4 to 0.5 (sparse)
 #define stepsize 0.2
 
-#define frequencyVariation   1.3 // 0.5 to 2.0
+#define frequencyVariation   1.8 // 0.5 to 2.0
 
 #define brightness 0.0010
 #define distfading 0.6800
 
 vec4 effect( vec4 colour_in, Image tex, vec2 texture_coords, vec2 screen_coords )
 {
-   //vec2 uv = gl_FragCoord.xy / u_resolution - 0.5;
-   //uv.y *= u_resolution.y / u_resolution.x;
    vec2 uv = (texture_coords - 0.5) * love_ScreenSize.xy * u_camera.w + u_camera.xy + u_r;
 
    vec3 dir = vec3(uv, 1.0);
-   //dir.xz *= rotate;
+   dir.xy *= rotate;
 
    float s = 0.1, fade = 0.01;
    vec4 colour = vec4( vec3(0.0), 1.0 );
@@ -82,7 +79,6 @@ vec4 effect( vec4 colour_in, Image tex, vec2 texture_coords, vec2 screen_coords 
    // Detect and suppress flickering single pixels (ignoring the huge gradients that we encounter inside bright areas)
    float intensity = min(colour.r + colour.g + colour.b, 0.7);
 
-   //ivec2 sgn = (ivec2(gl_FragCoord.xy) & 1) * 2 - 1;
    ivec2 sgn = (ivec2(screen_coords.xy) & 1) * 2 - 1;
    vec2 gradient = vec2(dFdx(intensity) * sgn.x, dFdy(intensity) * sgn.y);
    float cutoff = max(max(gradient.x, gradient.y) - 0.1, 0.0);
