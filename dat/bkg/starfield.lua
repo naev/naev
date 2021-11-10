@@ -24,12 +24,12 @@ uniform vec2 u_resolution;
 // In the noise-function space. xy corresponds to screen-space XY
 uniform vec4 u_camera = vec4(1.0);
 
+uniform sampler2D u_prevtex;
+
 const float theta = 1.0;
 const mat2 rotate = mat2( cos(theta), -sin(theta), sin(theta), cos(theta) );
 
 uniform vec2 u_r  = vec2( 400.0, 700.0 );
-
-//uniform sampler2D oldImage;
 
 #define iterations 17
 
@@ -73,7 +73,6 @@ vec4 effect( vec4 colour_in, Image tex, vec2 texture_coords, vec2 screen_coords 
       fade *= distfading; // distance fading
       s += stepsize;
    }
-   
    colour.rgb = min(colour.rgb, vec3(1.2));
 
    // Detect and suppress flickering single pixels (ignoring the huge gradients that we encounter inside bright areas)
@@ -86,12 +85,11 @@ vec4 effect( vec4 colour_in, Image tex, vec2 texture_coords, vec2 screen_coords 
 
    // Motion blur; increases temporal coherence of undersampled flickering stars
    // and provides temporal filtering under true motion.  
-   //vec3 oldValue = texelFetch(oldImage, int2(gl_FragCoord.xy), 0).rgb;
-   //colour.rgb = lerp(oldValue - vec3(0.004), colour.rgb, 0.5);
-   colour.a = 1.0;
+   vec3 oldValue = texture(u_prevtex, texture_coords).rgb;
+   colour.rgb = mix(oldValue - vec3(0.004), colour.rgb, 0.5);
 
    colour.rgb = clamp( pow( colour.rgb, vec3(2.0) ), 0.0, 1.0 );
-   colour.rgb *= 0.5;
+   //colour.rgb *= 0.5;
    return colour;
 }
 ]]
@@ -105,7 +103,7 @@ function background ()
 
    -- Initialize shader
    shader = graphics.newShader( starfield, love_shaders.vertexcode )
-   bgshaders.init( shader, sf )
+   bgshaders.init( shader, sf, {usetex=true} )
 end
 
 function renderbg( dt )

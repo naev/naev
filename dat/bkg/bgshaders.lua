@@ -17,16 +17,21 @@ love.w = nw
 love.h = nh
 lg.origin()
 
-local bgshader, bgscale, bgcanvas
+local bgshader, bgscale, bgcanvas, prevcanvas
 local cw, ch
 
-function bgshaders.init( shader, scale )
+function bgshaders.init( shader, scale, params )
    bgshader = shader
    bgscale  = scale or 1
+   params   = params or {}
 
-   if bgscale ~= 1 then
+   if bgscale ~= 1 or params.usetex then
       cw, ch = nw/bgscale, nh/bgscale
       bgcanvas = lg.newCanvas( cw, ch )
+   end
+
+   if params.usetex then
+      prevcanvas = lg.newCanvas( cw, ch )
    end
 end
 
@@ -45,6 +50,10 @@ function bgshaders.render( dt, col )
       local oldcanvas = lg.getCanvas()
       local oldshader = lg.getShader()
 
+      if prevcanvas then
+         bgshader:send( "u_prevtex", prevcanvas )
+      end
+
       -- Render to canvas
       lg.setCanvas( bgcanvas )
       lg.clear( 0, 0, 0, 0 )
@@ -59,6 +68,11 @@ function bgshaders.render( dt, col )
       -- Render to screen
       lg.setColor( 1, 1, 1, 1 )
       bgcanvas:draw( 0, 0, 0, bgscale, bgscale )
+
+      -- Swap buffers
+      if prevcanvas then
+         prevcanvas, bgcanvas = bgcanvas, prevcanvas
+      end
       return
    end
 
