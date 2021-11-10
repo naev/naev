@@ -7,7 +7,7 @@
  <GUI>brushed</GUI>
  <sound>engine</sound>
  <class>Fighter</class>
- <price>290000</price>
+ <price>490000</price>
  <time_mod>0.8</time_mod>
  <trail_generator x="-7" y="9" h="-9" always_under="1" />
  <trail_generator x="-7" y="-9" h="-9" always_under="1" />

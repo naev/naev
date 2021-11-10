@@ -6,7 +6,7 @@
  <GUI>brushed</GUI>
  <sound>engine</sound>
  <class>Corvette</class>
- <price>450000</price>
+ <price>850000</price>
  <time_mod>1</time_mod>
  <trail_generator x="-10" y="-3" h="0" always_under="1">fire</trail_generator>
  <trail_generator x="-10" y="3" h="0" always_under="1">fire</trail_generator>
