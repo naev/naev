@@ -180,12 +180,14 @@ function land()
          player.pay( reward )
          faction.get("Traders Guild"):modPlayer(1)
       elseif alive / orig_alive >= 0.6 then
+         local reward_orig = reward
          reward = reward * alive / orig_alive
-         vntk.msg( _("Success with Casualties"), fmt.f(_("You've arrived with the trading convoy more or less intact. Your pay is docked slightly due to the loss of part of the convoy. You receive #g{credits}#0."), {credits=fmt.credits(reward)}) )
+         vntk.msg( _("Success with Casualties"), fmt.f(_("You've arrived with the trading convoy more or less intact. Your pay is docked slightly due to the loss of part of the convoy. You receive #g{credits}#0 of the original promised reward of {reward}."), {credits=fmt.credits(reward), reward=fmt.credits(reward_orig)}) )
          player.pay( reward )
       else
+         local reward_orig = reward
          reward = reward * alive / orig_alive
-         vntk.msg( _("Success with Casualties"), fmt.f(_("You arrive with what's left of the convoy. It's not much, but it's better than nothing. You are paid a steeply discounted amount of #g{credits}#0."), {credits=fmt.credits(reward)}) )
+         vntk.msg( _("Success with Casualties"), fmt.f(_("You arrive with what's left of the convoy. It's not much, but it's better than nothing. You are paid a steeply discounted amount of #g{credits}#0 from the {reward} originally promised."), {credits=fmt.credits(reward), reward=fmt.credits(reward_orig)}) )
          player.pay( reward )
       end
       pir.reputationNormalMission(rnd.rnd(2,3))
