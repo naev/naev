@@ -27,8 +27,8 @@ uniform vec3 u_camera = vec3(1.0);
 uniform float u_zoom = 0.1;
 
 //uniform mat2    rotate;
-const float theta = 0.0;
-const mat2 rotate = mat2( cos(theta), -sin(theta), sin(theta), cos(theta) );
+//const float theta = 1.0;
+//const mat2 rotate = mat2( cos(theta), -sin(theta), sin(theta), cos(theta) );
 
 uniform vec2 u_r  = vec2( 4.0, 7.0 );
 
@@ -120,8 +120,8 @@ function renderbg( dt )
    local z = camera.getZoom()
    x = x / 1e6
    y = y / 1e6
-   shader:send( "u_camera", x*0.5/sf, -y*0.5/sf, 0.0 )
-   shader:send( "u_zoom", z*0.0003 )
+   shader:send( "u_camera", x*0.5/sf, -y*0.5/sf, 1.0 )
+   shader:send( "u_zoom", z*0.0008 )
 
    bgshaders.render()
 end
