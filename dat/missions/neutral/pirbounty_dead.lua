@@ -331,10 +331,10 @@ function bounty_setup ()
    if level == 1 then
       if rnd.rnd() < 0.5 then
          pship = "Hyena"
-         credits = 50e3 + rnd.sigma() * 15e3
+         credits = 80e3 + rnd.sigma() * 15e3
       else
          pship = "Pirate Shark"
-         credits = 150e3 + rnd.sigma() * 50e3
+         credits = 100e3 + rnd.sigma() * 30e3
       end
       reputation = 0.5
    elseif level == 2 then
@@ -343,7 +343,7 @@ function bounty_setup ()
       else
          pship = "Pirate Ancestor"
       end
-      credits = 400e3 + rnd.sigma() * 80e3
+      credits = 300e3 + rnd.sigma() * 50e3
       reputation = 1
    elseif level == 3 then
       if rnd.rnd() < 0.5 then
@@ -351,7 +351,7 @@ function bounty_setup ()
       else
          pship = "Pirate Phalanx"
       end
-      credits = 700e3 + rnd.sigma() * 120e3
+      credits = 500e3 + rnd.sigma() * 80e3
       reputation = 2
    elseif level == 4 then
       if rnd.rnd() < 0.5 then
@@ -359,11 +359,11 @@ function bounty_setup ()
       else
          pship = "Pirate Rhino"
       end
-      credits = 950e3 + rnd.sigma() * 160e3
+      credits = 700e3 + rnd.sigma() * 90e3
       reputation = 2.8
    elseif level == 5 then
       pship = "Pirate Kestrel"
-      credits = 1.2e6 + rnd.sigma() * 200e3
+      credits = 1e6 + rnd.sigma() * 100e3
       reputation = 3.5
    end
    return pship, credits, reputation
