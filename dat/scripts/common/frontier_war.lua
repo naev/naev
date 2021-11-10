@@ -5,32 +5,33 @@
 local fw = {}
 
 -- All the rewards:
-fw.credits_00 = 100e3
-fw.credits_01 =  50e3
-fw.credits_02 = 200e3
-fw.credits_03 =  50e3
-fw.credits_04 = 150e3
+fw.credits_00 = 400e3 -- Paid in Gauss Guns
+fw.credits_01 = 400e3
+fw.credits_02 = 500e3
+fw.credits_03 = 700e3
+fw.credits_04 = 700e3
 
 fw.pirate_price = 10e6
 
 fw.wlrd_planet = "Buritt"
 
-fw.lords = { _("Lord Jim"),
-          _("Lady Bitterfly"),
-          _("Lady Pointblank"),
-          _("Lord Chainsaw"),
-          _("Lord Painbishop"),
-          _("Lord Kriegsreich Hundertfeuer"),
-          _("Lady Blackswan"),
-          _("Lady Killington"),
-          _("Lord Richthofen"),
-          _("Lady Dewinter"),
-          _("Lord Easytrigger"),
-          _("Lady Sainte-Beuverie"),
-          _("Lord Louverture"),
-          _("Lord Abdelkiller"),
-          _("Lady Proserpina") }
-
+fw.lords = {
+   _("Lord Jim"),
+   _("Lady Bitterfly"),
+   _("Lady Pointblank"),
+   _("Lord Chainsaw"),
+   _("Lord Painbishop"),
+   _("Lord Kriegsreich Hundertfeuer"),
+   _("Lady Blackswan"),
+   _("Lady Killington"),
+   _("Lord Richthofen"),
+   _("Lady Dewinter"),
+   _("Lord Easytrigger"),
+   _("Lady Sainte-Beuverie"),
+   _("Lord Louverture"),
+   _("Lord Abdelkiller"),
+   _("Lady Proserpina")
+}
 
 -- Character's portraits. TODO: create unique portraits for them
 fw.portrait_tam     = "dvaered/dv_military_m3.webp" -- Major Tam: main mission giver of this campaign

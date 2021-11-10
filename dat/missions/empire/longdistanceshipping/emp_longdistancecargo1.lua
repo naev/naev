@@ -66,15 +66,14 @@ end
 
 
 function land()
-
    if planet.cur() == targetworld then
-         misn.cargoRm( person )
-         player.pay( emp.rewards.ldc1 )
-         -- More flavour text
-         tk.msg( _("Mission Accomplished"), _([[You drop the bureaucrat off at Soromid Customs Central, and he hands you a credit chip. Lieutenant Czesc told you to keep an eye out for him in Empire space to continue the operation.]]) )
-         faction.modPlayerSingle( "Empire",3 )
-         emp.addShippingLog( _([[You delivered a shipping bureaucrat to Soromid Customs Central for the Empire. Lieutenant Czesc told you to keep an eye out out for him in Empire space to continue the operation.]]) )
-         misn.finish(true)
+      misn.cargoRm( person )
+      player.pay( emp.rewards.ldc1 )
+      -- More flavour text
+      tk.msg( _("Mission Accomplished"), _([[You drop the bureaucrat off at Soromid Customs Central, and he hands you a credit chip. Lieutenant Czesc told you to keep an eye out for him in Empire space to continue the operation.]]) )
+      faction.modPlayerSingle( "Empire",3 )
+      emp.addShippingLog( _([[You delivered a shipping bureaucrat to Soromid Customs Central for the Empire. Lieutenant Czesc told you to keep an eye out out for him in Empire space to continue the operation.]]) )
+      misn.finish(true)
    end
 end
 
