@@ -25476,8 +25476,8 @@ msgstr "#H現実に反逆するための海賊行為#0"
 #. Ends when player lands or leaves either way
 #: dat/events/discovery.lua:364
 #, lua-format
-msgid "You found #o%s - %s!"
-msgstr "あなたは#o%s#0を見つけた⸺#o%s！"
+msgid "You found #o{title} - {subtitle}!"
+msgstr "あなたは#o{title}#0を見つけた⸺#o{subtitle}！"
 
 #. Log and message
 #: dat/events/discovery.lua:367 src/map.c:1880
