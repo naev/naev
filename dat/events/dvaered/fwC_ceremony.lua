@@ -20,6 +20,8 @@
 -- Player receive an invitation for Strafer's ceremony
 --]]
 
+local timer
+
 function create ()
    local invasion_time = var.peek("invasion_time")
    if time.get() < time.fromnumber(invasion_time) + time.create(0, 10, 0) then
@@ -27,8 +29,8 @@ function create ()
    end
 
    timer      = hook.timer(20.0, "msgme")
-   landhook   = hook.land("finish")
-   jumpouthook= hook.jumpout("finish")
+   hook.land("finish")
+   hook.jumpout("finish")
 end
 
 -- Player receives the message
