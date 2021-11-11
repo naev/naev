@@ -400,7 +400,7 @@ end
 function spawnDVbomber()
     bomber = pilot.add( "Dvaered Ancestor", "Dvaered", obstinate:pos(), nil, {ai="dvaered_norun"} )
     bomber:outfitRm("all")
-    foo = bomber:outfitAdd("TeraCom Imperator Launcher", 1, true, true)
+    bomber:outfitAdd("TeraCom Imperator Launcher", 1, true, true)
     bomber:outfitAdd("Engine Reroute", 1)
     bomber:outfitAdd("Vulcan Gun", 3)
     bomber:setNoDisable(true)

@@ -131,11 +131,11 @@ function create()
 
     -- Calculate time limit. Depends on priority and rank.
     -- The second time limit is for the reduced reward.
-    speed = print_speed + rank - 1    -- higher-ranked citizens want faster transport
-    stuperpx   = 0.2 - 0.02 * speed
-    stuperjump = 11000 - 200 * speed
-    stupertakeoff = 12000 - 75 * speed
-    allowance  = traveldist * stuperpx + numjumps * stuperjump + stupertakeoff + 240 * numjumps
+    local speed = print_speed + rank - 1    -- higher-ranked citizens want faster transport
+    local stuperpx   = 0.2 - 0.02 * speed
+    local stuperjump = 11000 - 200 * speed
+    local stupertakeoff = 12000 - 75 * speed
+    local allowance  = traveldist * stuperpx + numjumps * stuperjump + stupertakeoff + 240 * numjumps
 
     -- Allow extra time for refuelling stops.
     local jumpsperstop = 3 + rank

@@ -78,10 +78,10 @@ function create()
 
    -- Calculate time limit. Depends on tier and distance.
    -- The second time limit is for the reduced reward.
-   stuperpx   = 0.2 - 0.025 * tier
-   stuperjump = 10300 - 300 * tier
-   stupertakeoff = 10300 - 75 * tier
-   allowance  = traveldist * stuperpx + numjumps * stuperjump + stupertakeoff + 240 * numjumps
+   local stuperpx   = 0.2 - 0.025 * tier
+   local stuperjump = 10300 - 300 * tier
+   local stupertakeoff = 10300 - 75 * tier
+   local allowance  = traveldist * stuperpx + numjumps * stuperjump + stupertakeoff + 240 * numjumps
 
    -- Allow extra time for refuelling stops.
    local jumpsperstop = 3 + math.min(tier, 3)
