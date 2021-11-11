@@ -141,7 +141,7 @@ end
 
 
 function abort ()
-   if standhook ~= nil then hook.rm(standhook) end
+   hook.rm(standhook)
 
    restore_standing()
 

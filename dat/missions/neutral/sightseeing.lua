@@ -158,7 +158,7 @@ end
 function jumpout ()
    if not job_done and system.cur() == missys then
       misn.osdActive( 1 )
-      if timer_hook ~= nil then hook.rm( timer_hook ) end
+      hook.rm( timer_hook )
       if marks ~= nil then
          for i, m in ipairs(marks) do
             if m ~= nil then
@@ -203,7 +203,7 @@ end
 
 
 function timer ()
-   if timer_hook ~= nil then hook.rm( timer_hook ) end
+   hook.rm( timer_hook )
 
    local player_pos = player.pos()
 

@@ -78,8 +78,8 @@ function enter ()
       started = false
       attacked_station = false
       misn.osdActive( 1 )
-      if timer_start_hook ~= nil then hook.rm( timer_start_hook ) end
-      if timer_pirates_hook ~= nil then hook.rm( timer_pirates_hook ) end
+      hook.rm( timer_start_hook )
+      hook.rm( timer_pirates_hook )
 
       if diff.isApplied( "raelid_outpost_death" ) then
          diff.remove( "raelid_outpost_death" )
@@ -157,7 +157,7 @@ end
 
 
 function timer_start ()
-   if timer_start_hook ~= nil then hook.rm( timer_start_hook ) end
+   hook.rm( timer_start_hook )
 
    local player_pos = player.pos()
    local proximity = false

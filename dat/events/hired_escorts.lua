@@ -162,10 +162,8 @@ end
 function land ()
    lastplanet = planet.cur()
    npcs = {}
-   if standing_hook ~= nil then
-      hook.rm(standing_hook)
-      standing_hook = nil
-   end
+   hook.rm(standing_hook)
+   standing_hook = nil
 
    -- Clean up dead escorts so it doesn't build up, and create NPCs for
    -- existing escorts.

@@ -101,7 +101,7 @@ end
 -- as you jump in (at least, not most of the time; it's technically
 -- still possible and that's fine).
 function init_chatter ()
-   if timer_hook ~= nil then hook.rm( timer_hook ) end
+   hook.rm( timer_hook )
    timer_hook = hook.timer( 10.0, "do_chatter" )
 end
 
@@ -119,7 +119,7 @@ function do_chatter ()
    end
 
    local this_mod = rnd.rnd(-chatter_freq_mod, chatter_freq_mod)
-   if date_hook ~= nil then hook.rm( date_hook ) end
+   hook.rm( date_hook )
    date_hook = hook.date( freq + time.create( 0, 0, this_mod ), "init_chatter" )
 end
 

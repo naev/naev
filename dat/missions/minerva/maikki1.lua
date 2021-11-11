@@ -468,10 +468,8 @@ function cutscene_timer ()
    if not pscavB:exists() then return end
    local dist = pscavB:pos():dist( player.pos() )
    pscavB:taskClear()
-   if hailhook ~= nil then
-      hook.rm( hailhook )
-      hailhook = nil
-   end
+   hook.rm( hailhook )
+   hailhook = nil
    if (dist < 1000) then
       pscavB:face( player.pilot() )
       pscavB:hailPlayer()

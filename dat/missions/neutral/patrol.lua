@@ -224,7 +224,7 @@ end
 
 
 function timer ()
-   if timer_hook ~= nil then hook.rm( timer_hook ) end
+   hook.rm( timer_hook )
 
    local player_pos = player.pos()
    local enemies = pilot.get( paying_faction:enemies() )
