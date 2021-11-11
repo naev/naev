@@ -12,7 +12,7 @@ local starfield = [[
 // \file starfield.pix
 // \author Morgan McGuire
 //
-// \cite Based on Star Nest by Kali 
+// \cite Based on Star Nest by Kali
 // https://www.shadertoy.com/view/4dfGDM
 // That shader and this one are open source under the MIT license
 //
@@ -52,44 +52,43 @@ vec4 effect( vec4 colour_in, Image tex, vec2 texture_coords, vec2 screen_coords 
 
    float s = 0.1, fade = 0.01;
    vec4 colour = vec4( vec3(0.0), 1.0 );
-   
-   for (int r = 0; r < volsteps; ++r) {
+
+   for (int r=0; r < volsteps; r++) {
       vec3 p = vec3(1.0) + u_camera.xyz + dir * (s * 0.5);
       p = abs(vec3(frequencyVariation) - mod(p, vec3(frequencyVariation * 2.0)));
 
       float prevlen = 0.0, a = 0.0;
-      for (int i = 0; i < iterations; ++i) {
+      for (int i=0; i < iterations; i++) {
          p = abs(p);
-         p = p * (1.0 / dot(p, p)) + (-sparsity); // the magic formula            
+         p = p * (1.0 / dot(p, p)) + (-sparsity); // the magic formula
          float len = length(p);
          a += abs(len - prevlen); // absolute sum of average change
          prevlen = len;
       }
-      
+
       a *= a * a; // add contrast
-      
-      // coloring based on distance        
+
+      /* Colouring based on distance. */
       colour.rgb += (vec3(s, s*s, s*s*s) * a * brightness + 1.0) * fade;
-      fade *= distfading; // distance fading
+      fade *= distfading; /* Distance fading. */
       s += stepsize;
    }
    colour.rgb = min(colour.rgb, vec3(1.2));
 
-   // Detect and suppress flickering single pixels (ignoring the huge gradients that we encounter inside bright areas)
+   /* Some cheap antialiasing filtering. */
    float intensity = min(colour.r + colour.g + colour.b, 0.7);
+   float w = fwidth(intensity);
+   colour.rgb = mix( colour.rgb, vec3(0.0), smoothstep(0.0,1.0,w) );
 
-   ivec2 sgn = (ivec2(screen_coords.xy) & 1) * 2 - 1;
-   vec2 gradient = vec2(dFdx(intensity) * sgn.x, dFdy(intensity) * sgn.y);
-   float cutoff = max(max(gradient.x, gradient.y) - 0.1, 0.0);
-   colour.rgb *= max(1.0 - cutoff * 6.0, 0.3);
+   /* Colour conversion. */
+   colour.rgb = clamp( pow( colour.rgb, vec3(2.0) ), 0.0, 1.0 );
 
-   // Motion blur; increases temporal coherence of undersampled flickering stars
-   // and provides temporal filtering under true motion.  
+   /* Motion blur to increase temporal coherence and provide motion blur. */
    vec3 oldValue = texture(u_prevtex, texture_coords).rgb;
    colour.rgb = mix(oldValue - vec3(0.004), colour.rgb, 0.5);
 
-   colour.rgb = clamp( pow( colour.rgb, vec3(2.0) ), 0.0, 1.0 );
-   //colour.rgb *= 0.5;
+   /* Darken it all a bit. */
+   colour.rgb *= 0.8;
    return colour;
 }
 ]]
@@ -112,7 +111,7 @@ function renderbg( dt )
    local z = camera.getZoom()
    x = x / 1e6
    y = y / 1e6
-   shader:send( "u_camera", x*0.5/sf, -y*0.5/sf, 0.0, z*0.0008 )
+   shader:send( "u_camera", x*0.5/sf, -y*0.5/sf, 0.0, z*0.0008*sf )
 
    bgshaders.render()
 end
