@@ -76,11 +76,11 @@ vec4 effect( vec4 colour_in, Image tex, vec2 texture_coords, vec2 screen_coords 
 
    /* Darken it all a bit. */
    colour.rgb *= 0.8;
-   return colour;
+   return colour * colour_in;
 }
 ]]
 
-local shader, sf, sz
+local shader, sf, sz, sb
 
 function background ()
    -- Scale factor that controls computation cost. As this shader is really
@@ -96,6 +96,7 @@ function background ()
    if prng:random()<0.5 then
       sz = -sz
    end
+   sb = naev.conf().bg_brightness
 
    -- Initialize shader
    shader = graphics.newShader( string.format(starfield, rx, ry, theta), love_shaders.vertexcode )
@@ -110,6 +111,6 @@ function renderbg( dt )
    y = y / 1e6
    shader:send( "u_camera", x*0.5/sf, -y*0.5/sf, sz, z*0.0008*sf )
 
-   bgshaders.render()
+   bgshaders.render( dt, {1,1,1,sb} )
 end
 
