@@ -36,6 +36,7 @@ local portrait = require "portrait"
 local pilotname = require "pilotname"
 local lmisn = require "lmisn"
 
+local trigger_ambush, spawn_advisor, space_clue, next_sys -- Forward-declared functions
 local quotes = {}
 local comms = {}
 
@@ -199,7 +200,7 @@ function create ()
 end
 
 -- Test if an element is in a list
-function elt_inlist( elt, list )
+local function elt_inlist( elt, list )
    for i, elti in ipairs(list) do
       if elti == elt then
          return true
@@ -352,8 +353,7 @@ function hail_ad()
 end
 
 -- Player hails a ship for info
-function hail( p )
-   target = p
+function hail( target )
    if target:leader() == player.pilot() then
       -- Don't want the player hailing their own escorts.
       return
@@ -388,7 +388,7 @@ function hail( p )
             next_sys()
             target:setHostile( false )
          else
-            space_clue()
+            space_clue( target )
          end
       end
 
@@ -397,9 +397,9 @@ function hail( p )
 end
 
 -- Decides if the pilot is scared by the player
-local function isScared (t)
+local function isScared( target )
    local pstat = player.pilot():stats()
-   local tstat = t:stats()
+   local tstat = target:stats()
 
    -- If target is stronger, no fear
    if tstat.armour+tstat.shield > 1.1 * (pstat.armour+pstat.shield) and rnd.rnd() > .2 then
@@ -408,7 +408,7 @@ local function isScared (t)
 
    -- If target is quicker, no fear
    if tstat.speed_max > pstat.speed_max and rnd.rnd() > .2 then
-      if t:hostile() then
+      if target:hostile() then
          target:control()
          target:runaway(player.pilot())
       end
@@ -423,8 +423,7 @@ local function isScared (t)
 end
 
 -- The NPC knows the target. The player has to convince him to give info
-function space_clue ()
-
+function space_clue( target )
    if target:hostile() then -- Pilot doesn't like you
       choice = tk.choice(_("I won't tell you"), quotes.noinfo[rnd.rnd(1,#quotes.noinfo)], _("Give up"), _("Threaten the pilot")) -- TODO maybe: add the possibility to pay
       if choice == 1 then
