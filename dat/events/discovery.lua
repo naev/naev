@@ -16,7 +16,6 @@ local audio = require 'love.audio'
 local love_math = require 'love.math'
 local love_shaders = require 'love_shaders'
 local transitions = require 'vn.transitions'
-local fmt = require "format"
 
 -- Since we don't actually activate the Love framework we have to fake the
 -- the dimensions and width, and set up the origins.
@@ -332,7 +331,7 @@ function create()
       hasevent = hasevent or handle_event( event )
    end
    local sf = sc:faction()
-   local event = sf and faction_events[ sf:nameRaw() ] or false
+   event = sf and faction_events[ sf:nameRaw() ] or false
    if event then
       hasevent = hasevent or handle_event( event )
    end

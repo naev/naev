@@ -24,7 +24,6 @@ local neu = require "common.neutral"
 function create ()
     -- Allow some time before the problems start
     hook.timer(45.0, "startProblems")
-    bucks = 6
 end
 
 function startProblems()
@@ -34,7 +33,7 @@ function startProblems()
     tk.msg(_("Panic!"), _([[Suddenly, your instruments go haywire, and your ship careens out of control. The controls aren't responding! Something is wrong with your systems!]]))
     local ps = player.pilot()
     ps:control()
-    hook.timer(7.0, "buck")
+    hook.timer(7.0, "buck", 5)
     hook.pilot(ps, "idle", "continueProblems")
     continueProblems()
 end
@@ -50,12 +49,11 @@ function continueProblems()
     ps:moveto(ps:pos() + newlocation, false, false)
 end
 
-function buck()
-    bucks = bucks -1
+function buck(bucks)
     if bucks == 0 then
         endProblems()
     end
-    hook.timer(7.0, "buck")
+    hook.timer(7.0, "buck", bucks-1)
     continueProblems()
 end
 
