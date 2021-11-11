@@ -80,7 +80,7 @@ vec4 effect( vec4 colour_in, Image tex, vec2 texture_coords, vec2 screen_coords 
 }
 ]]
 
-local shader, sf
+local shader, sf, sz
 
 function background ()
    -- Scale factor that controls computation cost. As this shader is really
@@ -89,9 +89,13 @@ function background ()
    
    -- Per system parameters
    prng:setSeed( system.cur():name() )
-   local theta = rnd.rnd()*2*math.pi
-   local rx = 500+500*rnd.rnd()
-   local ry = 500+500*rnd.rnd()
+   local theta = prng:random()*2*math.pi
+   local rx = 500+300*prng:random()
+   local ry = 500+300*prng:random()
+   sz = prng:random()
+   if prng:random()<0.5 then
+      sz = -sz
+   end
 
    -- Initialize shader
    shader = graphics.newShader( string.format(starfield, rx, ry, theta), love_shaders.vertexcode )
@@ -104,7 +108,7 @@ function renderbg( dt )
    local z = camera.getZoom()
    x = x / 1e6
    y = y / 1e6
-   shader:send( "u_camera", x*0.5/sf, -y*0.5/sf, 0.0, z*0.0008*sf )
+   shader:send( "u_camera", x*0.5/sf, -y*0.5/sf, sz, z*0.0008*sf )
 
    bgshaders.render()
 end
