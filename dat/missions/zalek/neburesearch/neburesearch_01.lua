@@ -134,8 +134,8 @@ function jumpin()
         if not ambush and system.cur():faction() == faction.get("Dvaered") and system.cur():jumpDist(t_sys[5]) < 5 then
             hook.timer(2.0, "startAmbush")
         elseif system.cur()==system.get("Daan") or system.cur()==system.get("Provectus Nova") then
-            ambush = fleet.add( 1,  {"Pirate Ancestor", "Pirate Vendetta", "Pirate Vendetta", "Pirate Vendetta", "Hyena", "Hyena"}, "Pirate", vec2.new(0,0), nil, {ai="baddie_norun"} )
-            for i, j in ipairs(ambush) do
+            local ambushers = fleet.add( 1,  {"Pirate Ancestor", "Pirate Vendetta", "Pirate Vendetta", "Pirate Vendetta", "Hyena", "Hyena"}, "Pirate", vec2.new(0,0), nil, {ai="baddie_norun"} )
+            for i, j in ipairs(ambushers) do
                 j:setHostile()
                 j:control(true)
                 j:attack(transporter)

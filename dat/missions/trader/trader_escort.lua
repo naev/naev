@@ -95,26 +95,6 @@ function create()
 end
 
 function accept()
-   convoy_ships = {"Rhino", "Mule"}
-   convoy_names = {_("Convoy Rhino"), _("Convoy Mule")}
-   if convoysize == 1 then
-      convoy_n = 3
-      convoy_ships = "Llama"
-      convoy_names = _("Convoy Llama")
-   elseif convoysize == 2 then
-      convoy_n = 4
-      convoy_ships = "Koala"
-      convoy_names = _("Convoy Koala")
-   elseif convoysize == 3 then
-      convoy_n = 1
-      convoy_ships = {"Rhino", "Rhino", "Mule", "Mule", "Mule"}
-      convoy_names = {_("Convoy Rhino"), _("Convoy Rhino"), _("Convoy Mule"), _("Convoy Mule"), _("Convoy Mule")}
-   elseif convoysize == 4 then
-      convoy_n = 3
-   elseif convoysize == 5 then
-      convoy_n = 4
-   end
-
    if player.jumps() < numjumps then
       if not tk.yesno( _("Not enough fuel"), fmt.f( _([[The destination is {1} away, but you only have enough fuel for {2}. You cannot stop to refuel. Accept the mission anyway?]]), {fmt.jumps(numjumps), fmt.jumps(player.jumps())} ) ) then
          misn.finish()
@@ -278,6 +258,23 @@ function spawnConvoy ()
    end
 
    --Spawn the convoy
+   local convoy_n = convoysize - 1
+   local convoy_ships = {"Rhino", "Mule"}
+   local convoy_names = {_("Convoy Rhino"), _("Convoy Mule")}
+   if convoysize == 1 then
+      convoy_n = 3
+      convoy_ships = "Llama"
+      convoy_names = _("Convoy Llama")
+   elseif convoysize == 2 then
+      convoy_n = 4
+      convoy_ships = "Koala"
+      convoy_names = _("Convoy Koala")
+   elseif convoysize == 3 then
+      convoy_n = 1
+      convoy_ships = {"Rhino", "Rhino", "Mule", "Mule", "Mule"}
+      convoy_names = {_("Convoy Rhino"), _("Convoy Rhino"), _("Convoy Mule"), _("Convoy Mule"), _("Convoy Mule")}
+   end
+
    convoy = fleet.add( convoy_n,  convoy_ships, "Traders Guild", origin, convoy_names )
    local minspeed = nil
    for i, p in ipairs(convoy) do
