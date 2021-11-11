@@ -161,7 +161,7 @@ function enter()
       warnFuel = false
    end
 
-   joanne = fleet.add(1, "Sirius Fidelity", "Achack_sirius", origin, _("Joanne"))[1]
+   joanne = pilot.add("Sirius Fidelity", "Achack_sirius", origin, _("Joanne"))
    joanne:control()
    joanne:outfitRm("cores")
    joanne:outfitRm("all")
