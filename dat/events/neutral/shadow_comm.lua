@@ -21,6 +21,7 @@ require "proximity"
 local fmt = require "format"
 local shadow = require "common.shadow"
 
+local vendetta, hailhook -- Non-persistent state.
 
 function create ()
    -- Make sure system isn't claimed, but we don't claim it
@@ -39,10 +40,10 @@ function create ()
    hook.timer(0.5, "proximityScan", {focus = vendetta, funcname = "hailme"})
 
    -- Clean up on events that remove the Vendetta from the game
-   hook1 = hook.pilot(vendetta, "jump", "finish")
-   hook2 = hook.pilot(vendetta, "death", "finish")
-   hook3 = hook.land("finish")
-   hook4 = hook.jumpout("finish")
+   hook.pilot(vendetta, "jump", "finish")
+   hook.pilot(vendetta, "death", "finish")
+   hook.land("finish")
+   hook.jumpout("finish")
 end
 
 -- Make the ship hail the player

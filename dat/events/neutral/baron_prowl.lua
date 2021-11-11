@@ -27,7 +27,7 @@ function create()
     hook.pilot(baronship, "idle", "idle")
 end
 
-function idle()
+function idle(baronship)
     baronship:moveto(pnt:pos() + vec2.new( 500,  500), false, false)
     baronship:moveto(pnt:pos() + vec2.new(-500,  500), false, false)
     baronship:moveto(pnt:pos() + vec2.new(-500, -500), false, false)
