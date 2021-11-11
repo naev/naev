@@ -9,37 +9,26 @@ local graphics = require "love.graphics"
 
 local starfield = [[
 #include "lib/gamma.glsl"
-// \file starfield.pix
-// \author Morgan McGuire
-//
-// \cite Based on Star Nest by Kali
-// https://www.shadertoy.com/view/4dfGDM
-// That shader and this one are open source under the MIT license
-//
-// Assumes an sRGB target (i.e., the output is already encoded to gamma 2.1)
-// viewport resolution (in pixels)
-
+/*
+ * Based on http://casual-effects.blogspot.com/2013/08/starfield-shader.html by Morgan McGuire
+ * which is based on Star Nest by Kali https://www.shadertoy.com/view/XlfGRj
+ * Both under MIT license.
+ * Adapted to the Naev engine by bobbens
+ */
 uniform vec2 u_resolution;
-
-// In the noise-function space. xy corresponds to screen-space XY
-uniform vec4 u_camera = vec4(1.0);
-
+uniform vec4 u_camera = vec4(1.0); /* xy corresponds to screen space */
 uniform sampler2D u_prevtex;
+uniform vec2 u_r  = vec2( 400.0, 700.0 );
 
+/* Arbitrary rotation
 const float theta = 1.0;
 const mat2 rotate = mat2( cos(theta), -sin(theta), sin(theta), cos(theta) );
 
-uniform vec2 u_r  = vec2( 400.0, 700.0 );
-
 #define iterations 17
-
 #define volsteps 8
-
 #define sparsity 0.7  // 0.4 to 0.5 (sparse)
 #define stepsize 0.2
-
 #define frequencyVariation   1.8 // 0.5 to 2.0
-
 #define brightness 0.0010
 #define distfading 0.6800
 
