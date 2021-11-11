@@ -20,8 +20,7 @@ local flf = require "missions.flf.flf_common"
 local fmt = require "format"
 local lmisn = require "lmisn"
 
--- Unsaved global tables
-local flf_ships
+local dv_ships, emp_ships, flf_ships, flf_base -- State of battle phase (jumping out to save not allowed).
 
 -- Event constants
 local emp_srcsys = system.get( "Arcanis" )
