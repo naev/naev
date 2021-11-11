@@ -425,7 +425,7 @@ function enter ()
       cuttimer = hook.timer( 3.0, "cutscene_timer" )
       pscavB:setInvincible() -- annoying to handle the case the player kills them
       -- Timer in case the player doesn't find them in a long while
-      sysmaker = nil
+      sysmarker = nil
       cuttimeout = hook.timer( 120.0, "cutscene_timeout" ) -- 2 minutes
    elseif system.cur() == stealthsys and misn_state==4 then
       -- Set up system
