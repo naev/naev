@@ -306,7 +306,7 @@ function badevent()
          local pirates = {}
          local pos = player.pos()
          local leader
-         for k,v in ipairs(enemies) do
+         for _k,v in ipairs(enemies) do
             local dist = 800 + 200 * ship.get(v):size()
             local p = pilot.add( v, "Marauder", pos + vec2.newP( dist + rnd.rnd()*0.5*dist, 360*rnd.rnd() ) )
             if v == "Hyena" then
@@ -340,7 +340,7 @@ function missionevent()
    -- Fetch all missions that haven't been flagged as done yet.
    local available_missions = {}
    local weights = 0
-   for k,m in ipairs(mission_list) do
+   for _k,m in ipairs(mission_list) do
       if not player.misnDone(m.name) and not player.misnActive(m.name) and (not m.cond or m.cond()) then
          weights = weights + (m.weight or 1)
          m.chance = weights
@@ -356,7 +356,7 @@ function missionevent()
 
    -- Roll a random mission and start it.
    local r = rnd.rnd()
-   for k,m in ipairs(available_missions) do
+   for _k,m in ipairs(available_missions) do
       if r < m.chance / weights then
          naev.missionStart( m.name )
          destroyevent()
