@@ -1,146 +1,107 @@
-local prng_lib = require "prng"
-prng = prng_lib.new()
+--[[
+   Some sort of stellar wind type background.
+--]]
 
-local nebulae = {
-   "nebula02.webp",
-   "nebula04.webp",
-   "nebula10.webp",
-   "nebula12.webp",
-   "nebula16.webp",
-   "nebula17.webp",
-   "nebula19.webp",
-   "nebula20.webp",
-   "nebula21.webp",
-   "nebula22.webp",
-   "nebula23.webp",
-   "nebula24.webp",
-   "nebula25.webp",
-   "nebula26.webp",
-   "nebula27.webp",
-   "nebula28.webp",
-   "nebula29.webp",
-   "nebula30.webp",
-   "nebula31.webp",
-   "nebula32.webp",
-   "nebula33.webp",
-   "nebula34.webp",
+-- We use the default background too!
+local bgshaders = require "bkg.bgshaders"
+local love_shaders = require 'love_shaders'
+local graphics = require "love.graphics"
+
+local starfield = [[
+#include "lib/gamma.glsl"
+/*
+ * Based on http://casual-effects.blogspot.com/2013/08/starfield-shader.html by Morgan McGuire
+ * which is based on Star Nest by Kali https://www.shadertoy.com/view/XlfGRj
+ * Both under MIT license.
+ * Adapted to the Naev engine by bobbens
+ */
+uniform vec2 u_resolution;
+uniform vec4 u_camera = vec4(1.0); /* xy corresponds to screen space */
+uniform sampler2D u_prevtex;
+uniform vec2 u_r  = vec2( 400.0, 700.0 );
+
+/* Arbitrary rotation
+const float theta = 1.0;
+const mat2 rotate = mat2( cos(theta), -sin(theta), sin(theta), cos(theta) );
+
+#define iterations 17
+#define volsteps 8
+#define sparsity 0.7  // 0.4 to 0.5 (sparse)
+#define stepsize 0.2
+#define frequencyVariation   1.8 // 0.5 to 2.0
+#define brightness 0.0010
+#define distfading 0.6800
+
+vec4 effect( vec4 colour_in, Image tex, vec2 texture_coords, vec2 screen_coords )
+{
+   vec2 uv = (texture_coords - 0.5) * love_ScreenSize.xy * u_camera.w + u_camera.xy + u_r;
+
+   vec3 dir = vec3(uv, 1.0);
+   dir.xy *= rotate;
+
+   float s = 0.1, fade = 0.01;
+   vec4 colour = vec4( vec3(0.0), 1.0 );
+
+   for (int r=0; r < volsteps; r++) {
+      vec3 p = vec3(1.0) + u_camera.xyz + dir * (s * 0.5);
+      p = abs(vec3(frequencyVariation) - mod(p, vec3(frequencyVariation * 2.0)));
+
+      float prevlen = 0.0, a = 0.0;
+      for (int i=0; i < iterations; i++) {
+         p = abs(p);
+         p = p * (1.0 / dot(p, p)) + (-sparsity); // the magic formula
+         float len = length(p);
+         a += abs(len - prevlen); // absolute sum of average change
+         prevlen = len;
+      }
+
+      a *= a * a; // add contrast
+
+      /* Colouring based on distance. */
+      colour.rgb += (vec3(s, s*s, s*s*s) * a * brightness + 1.0) * fade;
+      fade *= distfading; /* Distance fading. */
+      s += stepsize;
+   }
+   colour.rgb = min(colour.rgb, vec3(1.2));
+
+   /* Some cheap antialiasing filtering. */
+   float intensity = min(colour.r + colour.g + colour.b, 0.7);
+   float w = fwidth(intensity);
+   colour.rgb = mix( colour.rgb, vec3(0.0), smoothstep(0.0,1.0,w) );
+
+   /* Colour conversion. */
+   colour.rgb = clamp( pow( colour.rgb, vec3(2.0) ), 0.0, 1.0 );
+
+   /* Motion blur to increase temporal coherence and provide motion blur. */
+   vec3 oldValue = texture(u_prevtex, texture_coords).rgb;
+   colour.rgb = mix(oldValue - vec3(0.004), colour.rgb, 0.5);
+
+   /* Darken it all a bit. */
+   colour.rgb *= 0.8;
+   return colour;
 }
+]]
 
-local stars = {
-   "blue01.webp",
-   "blue02.webp",
-   "blue04.webp",
-   "green01.webp",
-   "green02.webp",
-   "orange01.webp",
-   "orange02.webp",
-   "orange05.webp",
-   "redgiant01.webp",
-   "white01.webp",
-   "white02.webp",
-   "yellow01.webp",
-   "yellow02.webp"
-}
-
+local shader, sf
 
 function background ()
-   -- We can do systems without nebula
-   cur_sys = system.cur()
-   local nebud, _nebuv = cur_sys:nebula()
-   if nebud > 0 then
-      return
-   end
+   -- Scale factor that controls computation cost. As this shader is really
+   -- really expensive, we can't compute it at full resolution
+   sf = naev.conf().nebu_scale * 0.5
 
-   -- Start up PRNG based on system name for deterministic nebula
-   prng:setSeed( cur_sys:name() )
-
-   -- Generate nebula
-   background_nebula()
-
-   -- Generate stars
-   background_stars()
+   -- Initialize shader
+   shader = graphics.newShader( starfield, love_shaders.vertexcode )
+   bgshaders.init( shader, sf, {usetex=true} )
 end
 
+function renderbg( dt )
+   -- Get camera properties
+   local x, y = camera.get():get()
+   local z = camera.getZoom()
+   x = x / 1e6
+   y = y / 1e6
+   shader:send( "u_camera", x*0.5/sf, -y*0.5/sf, 0.0, z*0.0008*sf )
 
-function background_nebula ()
-   -- Set up parameters
-   local path  = "gfx/bkg/"
-   local nebula = nebulae[ prng:random(1,#nebulae) ]
-   local img   = tex.open( path .. nebula )
-   local nw,nh = gfx.dim()
-   local w,h   = img:dim()
-   local r     = prng:random() * cur_sys:radius()/2
-   local a     = 2*math.pi*prng:random()
-   local x     = r*math.cos(a)
-   local y     = r*math.sin(a)
-   local move  = 0.01 + prng:random()*0.01
-   local scale = 1 + (prng:random()*0.5 + 0.5)*((2000+2000)/(w+h))
-   local angle = prng:random()*360
-   if scale > 1.9 then
-      scale = 1.9
-   end
-   scale = scale * (nw*nh)/(1280*720)
-   bkg.image( img, x, y, move, scale, angle )
+   bgshaders.render()
 end
 
-
-function background_stars ()
-   -- Chose number to generate
-   local n
-   local r = prng:random()
-   if r > 0.97 then
-      n = 3
-   elseif r > 0.94 then
-      n = 2
-   elseif r > 0.1 then
-      n = 1
-   end
-
-   -- If there is an inhabited planet we'll need at least one star
-   if not n then
-      for k,v in ipairs( cur_sys:planets() ) do
-         if v:services().land then
-            n = 1
-            break
-         end
-      end
-   end
-
-   -- Generate the stars
-   local i = 0
-   local added = {}
-   while n and i < n do
-      num = star_add( added, i )
-      added[ num ] = true
-      i = i + 1
-   end
-end
-
-
-function star_add( added, num_added )
-   -- Set up parameters
-   local path  = "gfx/bkg/star/"
-   -- Avoid repeating stars
-   local num   = prng:random(1,#stars)
-   local i     = 0
-   while added[num] and i < 10 do
-      num = prng:random(1,#stars)
-      i   = i + 1
-   end
-   local star  = stars[ num ]
-   -- Load and set stuff
-   local img   = tex.open( path .. star )
-   -- Position should depend on whether there's more than a star in the system
-   local r     = prng:random() * cur_sys:radius()/3
-   if num_added > 0 then
-      r        = r + cur_sys:radius()*2/3
-   end
-   local a     = 2*math.pi*prng:random()
-   local x     = r*math.cos(a)
-   local y     = r*math.sin(a)
-   local nmove = math.max( 0.05, prng:random()*0.1 )
-   local move  = 0.02 + nmove
-   local scale = 1.0 - (1 - nmove/0.2)/5
-   bkg.image( img, x, y, move, scale ) -- On the background
-   return num
-end
