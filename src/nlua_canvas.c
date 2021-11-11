@@ -93,8 +93,7 @@ LuaCanvas_t* luaL_checkcanvas( lua_State *L, int ind )
  */
 LuaCanvas_t* lua_pushcanvas( lua_State *L, LuaCanvas_t canvas )
 {
-   LuaCanvas_t *c;
-   c = (LuaCanvas_t*) lua_newuserdata(L, sizeof(LuaCanvas_t));
+   LuaCanvas_t *c = (LuaCanvas_t*) lua_newuserdata(L, sizeof(LuaCanvas_t));
    *c = canvas;
    luaL_getmetatable(L, CANVAS_METATABLE);
    lua_setmetatable(L, -2);
