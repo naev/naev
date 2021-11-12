@@ -49,6 +49,11 @@ local sabotpla, sabotsys = planet.getS(fw.wlrd_planet)
 local duelpla, duelsys   = planet.getS("Dvaer Prime")
 local intpla, intsys     = planet.getS("Timu")
 
+-- Non-persistent state
+local p, ps -- active pilot/fleet
+local battleaddict, hamelsen, klank, leblanc, randguy, tam, urnus, warlord -- pilots in the plot
+
+local equipGoddard, player_civilian, release_baddies -- Forward-declared functions
 
 function create()
    if planet.cur() == hampla then
@@ -145,21 +150,21 @@ function enter()
       warlord:setHilight()
       equipGoddard( warlord, false )
 
-      p = {}
+      ps = {}
       for i = 1, 4 do
-         p[i] = pilot.add( "Dvaered Vendetta", "Dvaered", sabotpla )
-         p[i]:setLeader(warlord)
+         ps[i] = pilot.add( "Dvaered Vendetta", "Dvaered", sabotpla )
+         ps[i]:setLeader(warlord)
       end
       for i = 1, 2 do
-         p[i+4] = pilot.add( "Dvaered Ancestor", "Dvaered", sabotpla )
-         p[i+4]:setLeader(warlord)
+         ps[i+4] = pilot.add( "Dvaered Ancestor", "Dvaered", sabotpla )
+         ps[i+4]:setLeader(warlord)
       end
-      p[7] = pilot.add( "Dvaered Phalanx", "Dvaered", sabotpla )
-      p[7]:setLeader(warlord)
-      p[8] = pilot.add( "Dvaered Vigilance", "Dvaered", sabotpla )
-      p[8]:setLeader(warlord)
-      p[8]:rename("Colonel Hamelsen")
-      p[8]:setNoDeath()
+      ps[7] = pilot.add( "Dvaered Phalanx", "Dvaered", sabotpla )
+      ps[7]:setLeader(warlord)
+      ps[8] = pilot.add( "Dvaered Vigilance", "Dvaered", sabotpla )
+      ps[8]:setLeader(warlord)
+      ps[8]:rename("Colonel Hamelsen")
+      ps[8]:setNoDeath()
 
       hook.timer(4.0, "enter1_message")
       hook.timer(0.5, "proximity", {anchor = warlord, radius = 2000, funcname = "meeting", focus = player.pilot()})
@@ -296,7 +301,7 @@ end
 function release_baddies()
    warlord:setFaction("Warlords")
    warlord:control(false)
-   for i, j in ipairs(p) do
+   for i, j in ipairs(ps) do
       j:setFaction("Warlords")
    end
 end
@@ -510,9 +515,9 @@ end
 
 function everyoneLands()
    local everyone = { klank, klank2, urnus, tam, leblanc, hamelsen, randguy }
-   for i, p in ipairs(everyone) do
-      p:taskClear()
-      p:land(duelpla)
+   for i, pi in ipairs(everyone) do
+      pi:taskClear()
+      pi:land(duelpla)
    end
 end
 

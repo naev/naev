@@ -28,6 +28,8 @@ local srs = require "common.sirius"
 local fmt = require "format"
 local pir = require "common.pirate"
 
+local ambush, joanne -- Non-persistent state
+local ambushSet -- Forward-declared functions
 
 -- Mission constants
 local reward = 750e3
@@ -52,7 +54,7 @@ function create()
    end
 end
 
-function player_has_fast_ship()
+local function player_has_fast_ship()
   local stats = player.pilot():stats()
   playershipspeed = stats.speed_max
   local has_fast_ship = false
@@ -161,7 +163,7 @@ function enter()
       warnFuel = false
    end
 
-   joanne = fleet.add(1, "Sirius Fidelity", "Achack_sirius", origin, _("Joanne"))[1]
+   joanne = pilot.add("Sirius Fidelity", "Achack_sirius", origin, _("Joanne"))
    joanne:control()
    joanne:outfitRm("cores")
    joanne:outfitRm("all")

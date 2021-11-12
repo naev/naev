@@ -5,7 +5,7 @@
   <slot>structure</slot>
   <size>large</size>
   <mass>320</mass>
-  <price>400000</price>
+  <price>500000</price>
   <description>The pinnacle in shield boosting technology, reinforcing the defenses of ships fighting on the front lines.</description>
   <gfx_store>capacitor8.webp</gfx_store>
  </general>

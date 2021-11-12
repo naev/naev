@@ -43,6 +43,10 @@ local portrait = require "portrait"
 -- common hooks
 message = fw.message
 
+-- Non-persistent state
+local annoyers, compHitHook, competitors, followers, joyyesno, leader, score_pankration, score_stadion, score_throw, targets
+local checkMace, endPankration, populate_bar, spawnCompetitors, tamStage1, tamStage2, tamStage3 -- Forward-declared functions
+
 -- Mission constants
 local destpla, destsys = planet.getS("Dvaer Prime")
 local radius = 4000
@@ -152,7 +156,7 @@ function introduction()
    Before giving you any chance to ask him what the event is about, Tam closes the communication channel, and your find yourself surrounded by a field of giant crowns of white flowers. You let your mind idly navigate among the bio-engineered plants that have invaded the orbit, and think that even if your alliance with the Dvaered has not been very lucrative until now, it has at least rewarded your eyes with this unique view of overgrown flowers aimlessly drifting on the constellated background.]]) )
    leader:taskClear()
    leader:land(destpla)
-   for i, p in ipairs(followers) do
+   for _i, p in ipairs(followers) do
       p:control()
       p:land(destpla) -- Actually, fleet AI should not require that, but...
    end

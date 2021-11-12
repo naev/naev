@@ -80,7 +80,7 @@ ferry_land_p3[1] = _("{passenger} counts out {credits} with pursed lips, and wal
 ferry_land_p3[2] = _("{passenger} tersely expresses their displeasure with the late arrival, and snaps {credits} down on the seat, with a look suggesting they hardly think you deserve that much.")
 
 -- Customization of car.calculateRoute in common.cargo
-function ferry_calculateRoute (dplanet, dsys)
+local function ferry_calculateRoute (dplanet, dsys)
     origin_p, origin_s = planet.cur()
     local routesys = origin_s
     local routepos = origin_p:pos()
@@ -131,11 +131,11 @@ function create()
 
     -- Calculate time limit. Depends on priority and rank.
     -- The second time limit is for the reduced reward.
-    speed = print_speed + rank - 1    -- higher-ranked citizens want faster transport
-    stuperpx   = 0.2 - 0.02 * speed
-    stuperjump = 11000 - 200 * speed
-    stupertakeoff = 12000 - 75 * speed
-    allowance  = traveldist * stuperpx + numjumps * stuperjump + stupertakeoff + 240 * numjumps
+    local speed = print_speed + rank - 1    -- higher-ranked citizens want faster transport
+    local stuperpx   = 0.2 - 0.02 * speed
+    local stuperjump = 11000 - 200 * speed
+    local stupertakeoff = 12000 - 75 * speed
+    local allowance  = traveldist * stuperpx + numjumps * stuperjump + stupertakeoff + 240 * numjumps
 
     -- Allow extra time for refuelling stops.
     local jumpsperstop = 3 + rank
@@ -167,7 +167,7 @@ function create()
 
 end
 
-function player_has_sirian_ship()
+local function player_has_sirian_ship()
     local playership = player.pilot():ship():baseType()
     local sirianships = {"Fidelity", "Shaman", "Preacher", "Divinity", "Dogma"}
     local has_sirian_ship = false

@@ -41,8 +41,15 @@ npc_portrait[5] = portrait.get("Dvaered")
 npc_portrait[6] = portrait.get("Pirate")
 npc_portrait["__save"] = true
 
+-- Non-persistent state
+local hooks = {}
+local usedNames = {}   --In order not to have two pilots with the same name
+local opponent, sec11, sec12, sec21, sec22, tv1, tv2, usedNames
+
 --Change here to change the planet and the system
 local mispla, missys = planet.getS("Dvaer Prime")
+
+local beginbattle, land_everyone, player_wanted, won -- Forward-declared functions
 
 function create ()
    if not misn.claim ( missys ) then
@@ -111,8 +118,6 @@ function accept()
          fmt.f(_("Land on {pnt}"), {pnt=mispla}),
       })
 
-      usedNames = {}   --In order not to have two pilots with the same name
-
       beginbattle()
 
    else
@@ -141,10 +146,6 @@ function beginbattle()
                 _("Nec Mergitur") }
       local reTry = true
 
-      if usedNames == nil then  --This avoids bug in case usedName table is lost
-         usedNames = {}
-      end
-
       while reTry do  --Re-pick a name while it is in the usedNames list
          opponame = names[rnd.rnd(1, #names)]
          reTry = false
@@ -167,12 +168,11 @@ function beginbattle()
 end
 
 function enter()
-
    playerclass = ship.class(pilot.ship(player.pilot()))
 
    --Launchers are forbidden
-   listofoutfits = player.pilot():outfits()
-   haslauncher = false
+   local listofoutfits = player.pilot():outfits()
+   local haslauncher = false
    for i, j in ipairs(listofoutfits) do
       if j:type() == "Launcher" then
          haslauncher = true
@@ -376,10 +376,6 @@ function cleanNbegin()
    -- Remove some hooks and begin a new battle
    for i, j in ipairs({jumphook,landhook,opdehook,opjuhook,enterhook}) do
       hook.rm(j)
-   end
-
-   if hooks == nil then
-      hooks = {}
    end
 
    for i, j in ipairs(hooks) do

@@ -39,8 +39,9 @@ require "proximity"
 local fmt = require "format"
 local pir = require "common.pirate"
 
--- common hooks
-escort_hailed = fw.escort_hailed
+escort_hailed = fw.escort_hailed -- common hooks
+local attackhooks, badguys, escort, hamelsen, tamteam, targetList, toldya -- Non-persistent state
+local compute_reward, elt_dest_inlist, increment_baddie, payNfinish, spawnBaddies, spawnEscort, spawnHamelsen, start_battle -- Forward-declared functions
 
 -- Mission constants
 local destpla, destsys = planet.getS("Mannannan")
@@ -202,8 +203,8 @@ function enter()
          target:setFaction("Warlords")
 
          hook.pilot(target, "death","lastOne_died")
-         hook.pilot(target, "jump","lastOne_jump")
-         hook.pilot(target, "land","lastOne_land")
+         hook.pilot(target, "jump","lastOne_jumped")
+         hook.pilot(target, "land","lastOne_landed")
       else
       tk.msg(_("What are you doing here?"), fmt.f(_("You were supposed to jump to {sys}."), {sys=nextt}))
          misn.finish(false)
@@ -352,7 +353,7 @@ function spawnBaddies( origin )
 end
 
 -- Spawn Tam and his crew
-function spawnTam( origin )
+local function spawnTam( origin )
    tamteam = {}
    tamteam[1] = pilot.add( "Dvaered Vigilance", "Dvaered", origin )
    tamteam[2] = pilot.add( "Dvaered Phalanx", "Dvaered", origin )

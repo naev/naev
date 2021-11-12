@@ -4,7 +4,7 @@
   <slot>weapon</slot>
   <size>small</size>
   <mass>30</mass>
-  <price>36500</price>
+  <price>55000</price>
   <license>Heavy Weapon License</license>
   <rarity>3</rarity>
   <description>The Heavy Neutron Disruptor improves upon the processes behind the smaller Neutron Disruptor, giving this weapon greater damage and range.</description>

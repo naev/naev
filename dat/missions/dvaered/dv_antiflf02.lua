@@ -32,6 +32,9 @@ local fmt = require "format"
 local portrait = require "portrait"
 local dv = require "common.dvaered"
 
+local fleetDV, fleetFLF -- Non-persistent state
+local spawnFLF -- Forward-declared functions
+
 function create()
     local missys = {system.get(var.peek("flfbase_sysname"))}
     if not misn.claim(missys) then

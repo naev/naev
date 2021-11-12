@@ -33,6 +33,7 @@ local fmt = require "format"
 --  1: have to destroy all the enemy ships
 --  2: return to kex
 misn_state = nil
+local escorts, mainguy -- Non-persistent state
 
 local targetsys = system.get("Provectus Nova")
 local jumpinsys = system.get("Waterhole")

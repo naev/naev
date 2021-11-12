@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Air Freshener">
  <general>
-  <unique/>
+  <unique />
   <typename>Accessory</typename>
   <slot prop="accessory">utility</slot>
   <size>small</size>
@@ -17,4 +17,3 @@
   <thrust_mod>10</thrust_mod>
  </specific>
 </outfit>
-

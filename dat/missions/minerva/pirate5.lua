@@ -33,6 +33,7 @@ local equipopt = require 'equipopt'
 local fmt = require "format"
 
 local reward_amount = minerva.rewards.pirate5
+local drone_control_update -- Forward-declared functions
 
 local mainsys = system.get("Gammacron")
 -- Mission states:
@@ -41,6 +42,7 @@ local mainsys = system.get("Gammacron")
 --    2. mission time!
 --    3. hacking center disabled
 misn_state = nil
+local all_ships, drone_control1, drone_control2, drone_group1, drone_group2, hacking_center, main_boss -- Non-persistent state
 
 
 function create ()
@@ -294,7 +296,7 @@ function enter ()
    hook.pilot( hacking_center, "board", "plant_explosives" )
 
    local function add_patrol_group( route, ships, group, start )
-      local start = start or rnd.rnd(1,#route)
+      start = start or rnd.rnd(1,#route)
       local pos = route[ start ]
       local l
       for k, s in ipairs( ships ) do

@@ -20,8 +20,9 @@
 local fmt = require "format"
 local zlk = require "common.zalek"
 
+local logan -- Non-persistent state
 
-payment = 800e3
+local payment = 800e3
 
 
 function create ()

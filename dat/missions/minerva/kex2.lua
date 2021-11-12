@@ -33,6 +33,7 @@ local fmt = require "format"
 --  1: run away and return alive to minerva station
 --  2: got away
 misn_state = nil
+local blockade -- Non-persistent state
 
 local targetplanet, targetsys = planet.getS("Niflheim")
 

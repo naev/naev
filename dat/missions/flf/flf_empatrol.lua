@@ -23,6 +23,8 @@ require "missions.flf.flf_patrol"
 local flf = require "missions.flf.flf_common"
 local fmt = require "format"
 
+local patrol_spawnEmpire -- Forward-declared functions
+
 misn_title = {}
 misn_title[1] = _("FLF: Single Empire patrol in {sys}")
 misn_title[2] = _("FLF: Small Empire patrol in {sys}")

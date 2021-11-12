@@ -5,6 +5,8 @@
 local luatk = require 'luatk'
 local lg = require 'love.graphics'
 
+local btn_modifiers, btn_options, btn_types -- Non-persistent state
+
 local gauntlet_modifiers = {
    { id = "doubledmgtaken", str = _("Double Damage Enemies (#g+50%#0)"), var = "gauntlet_unlock_doubledmgtaken", enabled = false },
    { id = "nohealing", str = _("No Healing Between Waves (#g+25%#0)"), var = "gauntlet_unlock_nohealing", enabled = false },
@@ -131,12 +133,12 @@ local function gauntlet_settype( wgt )
    options_divider = luatk.newRect( wdw, 20, headerh+144, w-40, 2, {0, 0, 0} )
 end
 
-function gauntlet_enter ()
+local function gauntlet_enter ()
    gauntlet_start = true
    luatk.close()
 end
 
-function gauntlet_cancel ()
+local function gauntlet_cancel ()
    gauntlet_start = false
    luatk.close()
 end

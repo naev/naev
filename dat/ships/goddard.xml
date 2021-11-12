@@ -6,7 +6,7 @@
  <GUI>brushed</GUI>
  <sound>engine</sound>
  <class>Battleship</class>
- <price>6000000</price>
+ <price>7500000</price>
  <time_mod>1.4</time_mod>
  <trail_generator x="-17" y="20" h="0" />
  <trail_generator x="-20" y="39" h="0" />

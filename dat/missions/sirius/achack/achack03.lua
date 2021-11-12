@@ -20,10 +20,11 @@
 -- This is the third mission in the Academy Hack minor campaign.
 --]]
 
-local fleet = require "fleet"
 require "proximity"
 local srs = require "common.sirius"
 local fmt = require "format"
+
+local harja -- Non-persistent state
 
 local reward = 1e6
 
@@ -82,7 +83,7 @@ function enter()
 end
 
 -- Local helper function
-function _mergeTables( old, new )
+local function _mergeTables( old, new )
    if type(old) ~= "table" or type(new) ~= "table" then
       print(_("_mergeTables: Error, this function only accepts tables."))
    end
@@ -105,7 +106,7 @@ function date()
       end
       spawnpoint = spawnpoints[rnd.rnd(#spawnpoints)]
 
-      harja = fleet.add(1, "Shark", "Achack_sirius", spawnpoint, _("Harja's Shark"), {ai="trader"})[1]
+      harja = pilot.add("Shark", "Achack_sirius", spawnpoint, _("Harja's Shark"), {ai="trader"})
       harja:memory().aggressive = true
       harja:control()
       harja:follow(player.pilot())

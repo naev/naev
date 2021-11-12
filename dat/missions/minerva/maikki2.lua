@@ -86,7 +86,9 @@ local eccpos = vec2.new( 7500, -6000 ) -- Should coincide with "Strangelove Lab"
 --    5: Got the artifacts
 --    6: Going back to Minerva Station
 misn_state = nil
+local defense_systems, feral_drone_boss -- Non-persistent state
 
+local hintosd -- Forward-declared functions
 
 function create ()
    if not misn.claim( eccsys ) then
@@ -317,7 +319,7 @@ function generate_npc ()
 end
 
 
-function visitedhints ()
+local function visitedhints ()
    local visits = 0
    if visitedhint1 then
       visits = visits + 1
@@ -332,7 +334,7 @@ function visitedhints ()
 end
 
 
-function visited ()
+local function visited ()
    if misn_state==0 and visitedhints()==3 then
       misn_state = 1
       markerhint4 = misn.markerAdd( planet.get(hintpnt[4]), "low" )
@@ -342,7 +344,7 @@ function visited ()
 end
 
 
-function lasthint( prof )
+local function lasthint( prof )
    if visitedhints() > 2 then
       vn.sfxBingo()
       prof(fmt.f(_([["Oh, I suddenly remembered. There was also a post doctoral research working on the project by the name of Cayne. I think he was last working at {pnt} in the {sys} system."]]), {pnt=_(hintpnt[4]), sys=hintsys[4]}))

@@ -64,7 +64,9 @@ local stealthsys = system.get("Zerantix")
 --    4: talk to scavengers, going to zerantix
 --    5: looted ship
 misn_state = nil
+local pscavA, pscavB, stealthmessages, waypoints, wreck -- Non-persistent state
 
+local scavengers_encounter -- Forward-declared functions
 
 function create ()
    if not misn.claim( {cutscenesys, stealthsys} ) then
@@ -425,7 +427,7 @@ function enter ()
       cuttimer = hook.timer( 3.0, "cutscene_timer" )
       pscavB:setInvincible() -- annoying to handle the case the player kills them
       -- Timer in case the player doesn't find them in a long while
-      sysmaker = nil
+      sysmarker = nil
       cuttimeout = hook.timer( 120.0, "cutscene_timeout" ) -- 2 minutes
    elseif system.cur() == stealthsys and misn_state==4 then
       -- Set up system
@@ -457,7 +459,7 @@ function enter ()
 end
 
 cutscene_msg = 0
-cutscene_messages = {
+local cutscene_messages = {
    _("Sensors damaged. Requesting assistance."),
    _("S.O.S. Scavenger here, sensors damaged."),
    _("Is anybody out there? Sensors damaged, requesting assistance."),
@@ -468,10 +470,8 @@ function cutscene_timer ()
    if not pscavB:exists() then return end
    local dist = pscavB:pos():dist( player.pos() )
    pscavB:taskClear()
-   if hailhook ~= nil then
-      hook.rm( hailhook )
-      hailhook = nil
-   end
+   hook.rm( hailhook )
+   hailhook = nil
    if (dist < 1000) then
       pscavB:face( player.pilot() )
       pscavB:hailPlayer()
@@ -693,7 +693,6 @@ function stealthheartbeat ()
                p:brake()
                p:face( wreck )
             end
-            local pp = player.pilot()
             pp:control()
             pp:brake()
             player.cinematics( true )

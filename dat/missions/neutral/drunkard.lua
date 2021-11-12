@@ -27,6 +27,8 @@ local neu = require "common.neutral"
 
 local payment = 500e3
 
+local willie -- Non-persistent state
+
 function create ()
    -- Note: this mission does not make any system claims.
 

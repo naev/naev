@@ -36,6 +36,7 @@ local fmt = require "format"
 --  1: fight with dude
 --  2: return to kex
 misn_state = nil
+local enemies, pjie, thug_leader, thug_pilots -- Non-persistent state
 
 local targetplanet, targetsys = planet.getS("Jorlan")
 
@@ -332,13 +333,13 @@ function enter ()
       pilot.toggleSpawn(false)
 
       local pos = targetplanet:pos() + vec2.new( 3000, rnd.rnd()*360 )
-      jie = pilot.add("Kestrel", "Independent", pos, _("Jie de Luca"), {naked=true, ai="baddie_norun"})
-      equipopt.generic( jie, nil, "elite" )
-      jie:setHostile(true)
-      jie:setHilight(true)
+      pjie = pilot.add("Kestrel", "Independent", pos, _("Jie de Luca"), {naked=true, ai="baddie_norun"})
+      equipopt.generic( pjie, nil, "elite" )
+      pjie:setHostile(true)
+      pjie:setHilight(true)
 
-      hook.pilot( jie, "death", "jie_death" )
-      hook.pilot( jie, "board", "jie_board" )
+      hook.pilot( pjie, "death", "jie_death" )
+      hook.pilot( pjie, "board", "jie_board" )
 
       -- Henchmen
       local henchmen = {
@@ -352,12 +353,12 @@ function enter ()
          table.insert( henchmen, "Ancestor" )
          table.insert( henchmen, "Ancestor" )
       end
-      enemies = { jie }
+      enemies = { pjie }
       for k,v in ipairs(henchmen) do
          local ppos = pos + vec2.new( rnd.rnd()*200, rnd.rnd()*360 )
          local p = pilot.add( v, "Independent", ppos, nil, {naked=true, ai="baddie_norun"} )
          equipopt.pirate( p )
-         p:setLeader( jie )
+         p:setLeader( pjie )
          p:setHostile(true)
          table.insert( enemies, p )
       end
@@ -438,12 +439,12 @@ As their head slouches down, you hear an alarm blaring, and a voice announcing "
    vn.na(_("You leave Jie behind as you rush to get back to your ship and get away from the explosion."))
    vn.run()
 
-   jie:setHealth(-1,-1)
+   pjie:setHealth(-1,-1)
    player.unboard()
 end
 
 function jie_takeoff ()
-   jie:broadcast(_("You aren't leaving this alive, dog!"))
+   pjie:broadcast(_("You aren't leaving this alive, dog!"))
 end
 
 function jie_epilogue ()

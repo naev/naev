@@ -23,6 +23,7 @@ local lmisn = require "lmisn"
 local neu = require "common.neutral"
 
 local reward = 500e3
+local getlandable, getlandablesystems -- Forward-declared functions
 
 local directions = {}
 directions[1] = _([["I know just the place," Harrus tells you. "Take us to planet {pnt} in the {sys} system. I'm sure a man of my calibre can find everything he needs there. Captain, please notify me when we arrive." With that, Harrus turns and rejoins his family. The kids seem in the process of redecorating (if not wrecking) your quarters, and despite the apologetic glance the woman gives you you can't help but wonder if you did the right thing responding to that SOS.]])
@@ -79,7 +80,7 @@ function create ()
 end
 
 -- Checks if the parameter system has planets you can land on. Return true if so, false otherwise.
-function haslandable(sys)
+local function haslandable(sys)
    for a, b in pairs(sys:planets()) do
       if b:services()["inhabited"] then return true
       end

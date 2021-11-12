@@ -27,6 +27,8 @@
 local sciwrong = require "common.sciencegonewrong"
 local fmt = require "format"
 
+local badguys, bghook, t_drone -- Non-persistent state
+
 -- system with the drone and the return to start
 t_sys = { __save=true }
 t_pla = { __save=true }
@@ -243,7 +245,7 @@ function chase_of_drones ()
    t_drone:setHilight(true)
    t_drone:setVisplayer(true)
    t_drone:moveto(t_drone:pos() + vec2.new( 400, -400), false)
-   t_stats = t_drone:stats()
+   local t_stats = t_drone:stats()
    t_drone:setHealth(50,100)
    t_drone:setNoDisable()
    dr_a_hook = hook.pilot(t_drone, "attacked", "drone_attacked")

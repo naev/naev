@@ -78,7 +78,7 @@ local _bounty_setup = bounty_setup -- Store original one
 -- Set up the ship, credits, and reputation based on the level.
 function bounty_setup ()
    local pship, credits, reputation = _bounty_setup()
-   credits = credits * 2
+   credits = credits * 1.5
    reputation = reputation * 1.5
    return pship, credits, reputation
 end

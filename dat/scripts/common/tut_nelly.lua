@@ -30,4 +30,9 @@ function tutnel.log( text )
    shiplog.append( "tut_nelly", text )
 end
 
+tutnel.reward = {
+   nelly01 = 80e3,
+   nelly02 = 120e3,
+}
+
 return tutnel

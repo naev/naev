@@ -29,7 +29,6 @@
 local fmt = require "format"
 local zlk = require "common.zalek"
 
-
 -- Mission Constants
 local t_sys = { system.get("Doeston"), system.get("Iris") }
 local homeworld, homeworld_sys = planet.getS("Jorla")
@@ -138,14 +137,14 @@ function startProblems()
     -- Cancel autonav.
     player.cinematics(true)
     player.cinematics(false)
-    ps = player.pilot()
+    local ps = player.pilot()
     ps:control()
     phook = hook.timer(0.1, "drainShields")
     hook.timer(4.0, "noticeProblems")
 end
 
 function drainShields()
-    ps = player.pilot()
+    local ps = player.pilot()
     local armour = ps:health()
     ps:setHealth(armour, 0)
     ps:setEnergy(0)
@@ -159,6 +158,7 @@ function noticeProblems()
 end
 
 function stopProblems()
+    local ps = player.pilot()
     ps:control(false)
     ps:setEnergy(100)
     if zlk.hasZalekShip() then

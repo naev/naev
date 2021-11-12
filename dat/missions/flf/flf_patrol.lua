@@ -30,7 +30,7 @@ misn_title[4] = _("FLF: Large Dvaered patrol in {sys}")
 misn_title[5] = _("FLF: Dangerous Dvaered patrol in {sys}")
 misn_title[6] = _("FLF: Highly Dangerous Dvaered patrol in {sys}")
 
-text = {}
+local text = {}
 text[1] = _("After you are handed your pay, an FLF soldier congratulates you for your victory and buys you a drink. You chat for a while before getting back to work.")
 text[2] = _("As you get your pay from the officer, FLF soldiers congratulate you for your victory.")
 text[3] = _("You collect your pay from the officer, who then congratulates you for your victory.")
@@ -169,7 +169,7 @@ end
 
 
 function leave ()
-   if spawner ~= nil then hook.rm( spawner ) end
+   hook.rm( spawner )
    dv_ships_left = 0
    last_system = system.cur()
 end

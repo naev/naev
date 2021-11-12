@@ -36,6 +36,9 @@ local pir = require "common.pirate"
 local fmt = require "format"
 local shark = require "common.shark"
 
+local badguys -- Non-persistent state
+local add_llama, bombers, corvette, cruiser, hvy_intercept, interceptors, rndNb -- Forward-declared functions
+
 -- Mission constants
 local paypla, paysys = planet.getS("Darkshed")
 
@@ -260,7 +263,7 @@ function cruiser()
    if nCruiser == 1 then
       origin = pilot.choosePoint( faction.get("Mercenary") )
 
-      badguy = pilot.add( "Kestrel", "Mercenary", origin, _("Mercenary") )
+      local badguy = pilot.add( "Kestrel", "Mercenary", origin, _("Mercenary") )
       badguy:setHostile()
 
       badguy:outfitRm("all")
@@ -338,7 +341,7 @@ end
 function add_llama()
    --adding an useless Llama
    if nLlamas == 1 then
-      useless = pilot.add( "Llama", "Mercenary", nil, _("Amateur Mercenary") )
+      local useless = pilot.add( "Llama", "Mercenary", nil, _("Amateur Mercenary") )
       useless:setHostile()
       hook.pilot( badguys[i], "death", "LlamaDead")
    end

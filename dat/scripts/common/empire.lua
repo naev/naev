@@ -25,7 +25,7 @@ function emp.addCollectiveLog( text )
 end
 
 emp.rewards = {
-   cargo00 = 50e3,
+   cargo00 = 100e3,
    -- Empire Shipping
    es00 = 500e3,
    es01 = 500e3, -- + "Heavy Weapons Combat License" permission

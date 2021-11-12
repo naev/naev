@@ -12,6 +12,8 @@
 
 local fmt = require "format"
 
+local boarded, destroyed, shipDV, shipFLF, timerDV, timerFLF
+
 function create()
    local csys = system.cur()
    local cp = csys:presences()

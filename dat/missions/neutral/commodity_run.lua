@@ -24,18 +24,6 @@
 </mission>
 --]]
 --[[
-
-   This program is free software: you can redistribute it and/or modify
-   it under the terms of the GNU General Public License version 3 as
-   published by the Free Software Foundation.
-
-   This program is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
-
---
-
    Commodity delivery missions.
 --]]
 local pir = require "common.pirate"
@@ -67,7 +55,7 @@ function update_active_runs( change )
    var.push( "commodity_runs_active", math.max( 0, current_runs + change ) )
 
    -- Note: This causes a delay (defined in create()) after accepting,
-   -- completing, or aborting a commodity run mission.  This is
+   -- completing, or aborting a commodity run mission. This is
    -- intentional.
    var.push( "last_commodity_run", time.tonumber( time.get() ) )
 end
@@ -75,9 +63,7 @@ end
 
 function create ()
    -- Note: this mission does not make any system claims.
-
-   misplanet = planet.cur()
-   missys = system.cur()
+   misplanet, missys = planet.cur()
 
    if commchoices == nil then
       local std = commodity.getStandard();
@@ -86,7 +72,7 @@ function create ()
       chosen_comm = commchoices[rnd.rnd(1, #commchoices)]
    end
    local comm = commodity.get(chosen_comm)
-   local mult = rnd.rnd(1, 3) + math.abs(rnd.threesigma() * 2)
+   local mult = 1 + math.abs(rnd.twosigma() * 2)
    price = comm:price() * mult
 
    local last_run = var.peek( "last_commodity_run" )
@@ -97,8 +83,8 @@ function create ()
       end
    end
 
-   for i, j in ipairs( missys:planets() ) do
-      for k, v in pairs( j:commoditiesSold() ) do
+   for _i, j in ipairs( missys:planets() ) do
+      for _k, v in pairs( j:commoditiesSold() ) do
          if v == comm then
             misn.finish(false)
          end

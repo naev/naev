@@ -55,6 +55,12 @@ local misn_base, misn_base_sys = planet.getS("Omega Station")
 local misn_target_sys = system.get("Rockbed")
 local misn_flee_sys = system.get("Capricorn")
 
+-- Non-persistent state
+local drone_reinforcements, paci, trinity
+local escorts = {}
+
+local enter, trinity_flee -- Forward-declared functions
+
 function create ()
    local missys = {misn_target_sys}
    if not misn.claim(missys) then
@@ -62,7 +68,6 @@ function create ()
    end
 
    misn.setNPC( _("Dimitri?"), "unknown.webp", _("Dimitri should be around here, but you can't see him. You should probably look for him.") )
-   credits = emp.rewards.ec05
 end
 
 
@@ -88,7 +93,7 @@ function accept ()
 
    -- Mission details
    misn.setTitle(_("Operation Black Trinity"))
-   misn.setReward( fmt.credits( credits ) )
+   misn.setReward( fmt.credits( emp.rewards.ec05 ) )
    misn.setDesc( fmt.f(_("Arrest the ESS Trinity in {sys}"), {sys=misn_target_sys} ))
    misn.osdCreate(_("Operation Black Trinity"), {
       fmt.f(_("Fly to the {sys} system"), {sys=misn_target_sys}),
@@ -105,8 +110,6 @@ function accept ()
     "We'll be sending you with a small force. You just stick around and if any trouble arises, take the ESS Trinity down. Zakred is currently on manoeuvre exercises in {sys}. You will have to find him there. The other ships will follow your lead to {sys}. Good luck."]]), {sys=misn_target_sys} ) )
 
    -- Escorts
-   escorts = {}
-
    hook.jumpout("jumpout")
    hook.jumpin("jumpin")
    hook.takeoff("takeoff")
@@ -279,7 +282,7 @@ end
 
 
 -- Drone killed
-function drone_dead ()
+local function drone_dead ()
    num_drone = num_drone - 1
    if num_drone < 2 and not tri_flee then
       trinity_flee()
@@ -296,7 +299,6 @@ function add_escorts( landed )
       param = last_sys
    end
 
-   if escorts == nil then escorts = {} end
    paci = pilot.add( "Empire Pacifier", "Empire", param, nil, {ai="escort_player"} )
    escorts[#escorts + 1] = paci
    paci:setFriendly()
@@ -319,6 +321,7 @@ end
 -- Handles arrival back to base
 function land ()
    local pnt = planet.cur()
+   local credits = emp.rewards.ec05
 
    -- Just landing
    if (misn_stage == 2 or misn_stage == 3) and pnt == misn_base then

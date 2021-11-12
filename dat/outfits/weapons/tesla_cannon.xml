@@ -6,7 +6,7 @@
   <license>Heavy Weapon License</license>
   <rarity>1</rarity>
   <mass>90</mass>
-  <price>84000</price>
+  <price>780000</price>
   <description>The largest weapon in Sirius space, the powerful Tesla cannon uses similar principles behind the more common ion cannons, but more specifically targets the electrical systems of a ship, particularly its reactors. Although it does poor damage for its size, in extended engagements this weapon can leave enemy combatants functionally helpless.</description>
   <gfx_store>tesla.webp</gfx_store>
   <cpu>-100</cpu>

@@ -18,6 +18,8 @@ local fmt = require "format"
 local equipopt = require 'equipopt'
 
 local logidstr = "log_gauntlet"
+local enemies, gmods, wave_enemies, wave_killed -- Non-persistent state
+local wave_end -- Forward-declared functions
 
 -- TODO replace portraits/images
 local npc_portrait   = "minerva_terminal.png"
@@ -156,7 +158,7 @@ end
 --[[
    Countdown stuff
 --]]
-function countdown_start ()
+local function countdown_start ()
    omsg_id = player.omsgAdd( _("5…"), 1.1 )
    hook.timer( 1.0, "countdown", _("4…") )
    hook.timer( 2.0, "countdown", _("3…") )
@@ -185,7 +187,7 @@ end
 --[[
    Common functions
 --]]
-function enemy_out( p )
+local function enemy_out( p )
    local idx = nil
    for k,v in ipairs(enemies) do
       if v==p then
@@ -350,7 +352,7 @@ function wave_round_setup ()
 
    all_enemies_dead = wave_end
 end
-function wave_compute_score ()
+local function wave_compute_score ()
    local pp = player.pilot()
    local score = 0
    local bonus = 100
@@ -365,8 +367,8 @@ function wave_compute_score ()
       table.insert( str, string.format("#o%s %d", _(n), s ) )
       score = score + s
       -- Store all the stuff the pilot killed
-      local k = wave_killed[n] or 0
-      wave_killed[n] = k+1
+      local killed = wave_killed[n] or 0
+      wave_killed[n] = killed+1
    end
 
    local function newbonus( s, b )

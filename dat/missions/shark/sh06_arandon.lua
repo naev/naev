@@ -28,6 +28,8 @@ local pir = require "common.pirate"
 local fmt = require "format"
 local shark = require "common.shark"
 
+local pacifier -- Non-persistent state
+
 --Change here to change the planets and the systems
 local missys = system.get("Arandon")
 local paypla, paysys = planet.getS("Darkshed")

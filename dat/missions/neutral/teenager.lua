@@ -29,6 +29,8 @@ local neu = require 'common.neutral'
 
 local reward = 300e3
 
+local target -- Non-persistent state
+
 function create ()
     cursys = system.cur()
     curplanet = planet.cur()

@@ -7,7 +7,7 @@
  <GUI>brushed</GUI>
  <sound>engine</sound>
  <class>Battleship</class>
- <price>5300000</price>
+ <price>9400000</price>
  <time_mod>1.375</time_mod>
  <trail_generator x="-50" y="0" h="5">sirius</trail_generator>
  <trail_generator x="-50" y="0" h="-5" always_under="1">sirius</trail_generator>

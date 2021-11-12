@@ -5,7 +5,7 @@
   <slot>structure</slot>
   <size>small</size>
   <mass>40</mass>
-  <price>60000</price>
+  <price>25000</price>
   <description>An enhancement for the shield power system, giving small ships a better chance of escaping attackers.</description>
   <gfx_store>capacitor.webp</gfx_store>
  </general>

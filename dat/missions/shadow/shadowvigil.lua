@@ -34,6 +34,9 @@ local misssys = {
    system.get("Doranthex"),     -- Final destination
 }
 
+local ambush, diplomat, dvaerplomat, escorts, seiryuu -- Non-persistent state
+local accept_m -- Forward-declared functions
+
 -- Make a pilot say a line, if he is alive. Mainly useful in sequential chat messages.
 -- argument chat: A table containing:
 -- pilot: The pilot to say the text
@@ -69,7 +72,7 @@ function delayedClaim()
 end
 
 -- Boarding the Seiryuu at the beginning of the mission
-function meeting()
+local function meeting()
     first = var.peek("shadowvigil_first") == nil -- nil acts as true in this case.
     if first then
         var.push("shadowvigil_first", false)
@@ -403,7 +406,7 @@ function attackerDeath()
 end
 
 -- Puts the escorts under AI control again, and makes them fight.
-function escortFree()
+local function escortFree()
     for i, j in ipairs(escorts) do
         if j:exists() then
             j:control(false)

@@ -36,6 +36,9 @@ local fmt = require "format"
 --  4: duel finished
 --  5: return to Kex
 misn_state = nil
+local enemies, enemies_weak, pmalik, thug_leader, thug_pilots -- Non-persistent state
+
+local gauntlet_start -- Forward-declared functions
 
 local targetplanet, targetsys = planet.getS("Trincea")
 local lastplanet, lastsys = planet.getS("Totoran")
@@ -461,7 +464,7 @@ function malik_death ()
    hook.timer( 5, "malik_speech" )
 end
 
-function malik_respawn ()
+local function malik_respawn ()
    luaspfx.init()
 
    enemies = {}
@@ -516,23 +519,23 @@ function malik_spawn_more_real( pos )
    table.insert( enemies, p )
    table.insert( enemies_weak, p )
 end
-function malik_spawn_more2 ()
+local function malik_spawn_more2 ()
    malik_spawn_more()
    hook.timer( 0.5, "malik_spawn_more" )
 end
 
-function noise_start ()
+local function noise_start ()
    noise_shader = pp_shaders.corruption( 1.0 )
    shader.addPPShader( noise_shader, "gui" )
 end
 
-function noise_worsen ()
+local function noise_worsen ()
    shader.rmPPShader( noise_shader )
    noise_shader = pp_shaders.corruption( 1.5 )
    shader.addPPShader( noise_shader, "gui" )
 end
 
-function maikki_arrives ()
+local function maikki_arrives ()
    local pos = player.pos()
    local mc = minerva.maikkiP.colour
    local col = {mc[1], mc[2], mc[3], 0.3}
@@ -554,7 +557,7 @@ function maikki_arrives_real( pos )
    p:setFriendly(true)
    p:control()
    p:attack( pmalik )
-   pmaikki = p
+   --pmaikki = p
 
    -- Make really really strong
    p:intrinsicSet( "armour", 1e6 )
@@ -571,9 +574,9 @@ function maikki_arrives_real( pos )
    player.omsgAdd( _("Ho ho ho and a bottle of rum!"), 5, nil, col )
 
    -- Disable some of the vendettas
-   for k,p in ipairs(enemies_weak) do
-      if p:exists() and rnd.rnd() < 0.5 then
-         p:disable()
+   for k,pk in ipairs(enemies_weak) do
+      if pk:exists() and rnd.rnd() < 0.5 then
+         pk:disable()
       end
    end
 end
@@ -593,7 +596,7 @@ function maikki_arrives_extra_real( pos )
    p:intrinsicSet( "fwd_damage", 400 )
    p:intrinsicSet( "tur_damage", 400 )
 end
-function malik_music ()
+local function malik_music ()
    music.load('battlesomething2')
    music.play()
 end

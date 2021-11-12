@@ -34,6 +34,7 @@ local cat_colour = nil
 
 local owner_image = portrait.getFullPath( portrait.get() )
 local owner_colour = nil
+local owner -- Non-persistent state
 
 local meow = audio.newSource( "snd/sounds/meow.ogg" )
 
@@ -136,7 +137,7 @@ local event_list = {
       player.autonavReset()
    end,
 }
-function event ()
+local function event ()
    -- Larger chance of just random messages
    if rnd.rnd() < 2/3 then
       local msg_list = {

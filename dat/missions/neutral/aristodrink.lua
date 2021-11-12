@@ -30,6 +30,7 @@ local neu = require "common.neutral"
 local lmisn = require "lmisn"
 
 local payment = 200e3
+local getclueplanet, isPrevPlanet -- Forward-declared functions
 
 -- defines Previous Planets table
 prevPlanets = {}

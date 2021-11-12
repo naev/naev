@@ -5,7 +5,7 @@
   <slot>utility</slot>
   <size>small</size>
   <mass>2</mass>
-  <price>1000000</price>
+  <price>5000000</price>
   <description>Cloaking Device</description>
   <desc_extra>Uses 1 MJ of energy per 10 mass and drains shield in 0.5 seconds.</desc_extra>
   <gfx_store>placeholder.webp</gfx_store>

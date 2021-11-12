@@ -32,6 +32,7 @@ local destplanet = planet.get("Jorcan")
 local destjump = system.get("Doranthex")
 
 local broadcast_first, cleanup, update_fleet -- our local functions
+local fleethooks, hawk, jump_fleet -- Non-persistent state
 
 local chatter = {}
 chatter[5] = _("Khan is dead! Who will be our warlord now?")

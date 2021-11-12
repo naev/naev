@@ -130,7 +130,7 @@ function spawnThug( param )
 
    local shiptypes = { "Hyena", "Hyena", "Shark", "Lancelot", "Admonisher" }
    local shiptype = shiptypes[ rnd.rnd( 1, #shiptypes ) ]
-   thug = pilot.add( shiptype, fthug, param, fmt.f( _("Thug {ship}"), {ship=_(shiptype)} ), {ai="baddie"} )
+   local thug = pilot.add( shiptype, fthug, param, fmt.f( _("Thug {ship}"), {ship=_(shiptype)} ), {ai="baddie"} )
 
    thug:setHostile()
 
