@@ -90,7 +90,7 @@ function starfield.init( params )
    sf = naev.conf().nebu_scale * 0.5
    
    -- Per system parameters
-   prng:setSeed( system.cur():name() )
+   prng:setSeed( system.cur():nameRaw() )
    local theta = prng:random()*2*math.pi
    local rx = 500+300*prng:random()
    local ry = 500+300*prng:random()
