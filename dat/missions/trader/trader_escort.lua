@@ -29,6 +29,7 @@ local fleet = require "fleet"
 local lmisn = require "lmisn"
 local car = require "common.cargo"
 local fmt = require "format"
+local vntk = require "vntk"
 
 local convoy -- Non-persistent state
 local continueToDest, fail, spawnConvoy -- Forward-declared functions
@@ -98,7 +99,7 @@ end
 
 function accept()
    if player.jumps() < numjumps then
-      if not tk.yesno( _("Not enough fuel"), fmt.f( _([[The destination is {1} away, but you only have enough fuel for {2}. You cannot stop to refuel. Accept the mission anyway?]]), {fmt.jumps(numjumps), fmt.jumps(player.jumps())} ) ) then
+      if not vntk.yesno( _("Not enough fuel"), fmt.f( _([[The destination is {1} away, but you only have enough fuel for {2}. You cannot stop to refuel. Accept the mission anyway?]]), {fmt.jumps(numjumps), fmt.jumps(player.jumps())} ) ) then
          misn.finish()
       end
    end
@@ -150,22 +151,26 @@ function land()
    alive = math.min( alive, exited )
 
    if planet.cur() ~= destplanet then
-      tk.msg(_("You abandoned your mission!"), _("You have landed, abandoning your mission to escort the trading convoy."))
+      vntk.msg(_("You abandoned your mission!"), _("You have landed, abandoning your mission to escort the trading convoy."))
       misn.finish(false)
    elseif alive <= 0 then
-      tk.msg(_("You landed before the convoy!"), _([[You landed at the planet before ensuring that the rest of your convoy was safe. You have abandoned your duties, and failed your mission.]]))
+      vntk.msg(_("You landed before the convoy!"), _([[You landed at the planet before ensuring that the rest of your convoy was safe. You have abandoned your duties, and failed your mission.]]))
       misn.finish(false)
    else
       if alive >= orig_alive then
-         tk.msg( _("Success!"), _("You successfully escorted the trading convoy to the destination. There wasn't a single casualty and you are rewarded the full amount.") )
+         vntk.msg( _("Success!"), fmt.f(_("You successfully escorted the trading convoy to the destination. There wasn't a single casualty and you are rewarded the full amount of #g{credits}#0."), {credits=fmt.credits(reward)}) )
          player.pay( reward )
          faction.get("Traders Guild"):modPlayer(1)
       elseif alive / orig_alive >= 0.6 then
-         tk.msg( _("Success with Casualties"), _("You've arrived with the trading convoy more or less intact. Your pay is docked slightly due to the loss of part of the convoy.") )
-         player.pay( reward * alive / orig_alive )
+         local reward_orig = reward
+         reward = reward * alive / orig_alive
+         vntk.msg( _("Success with Casualties"), fmt.f(_("You've arrived with the trading convoy more or less intact. Your pay is docked slightly due to the loss of part of the convoy. You receive #g{credits}#0 of the original promised reward of {reward}."), {credits=fmt.credits(reward), reward=fmt.credits(reward_orig)}) )
+         player.pay( reward )
       else
-         tk.msg( _("Success with Casualties"), _("You arrive with what's left of the convoy. It's not much, but it's better than nothing. You are paid a steeply discounted amount.") )
-         player.pay( reward * alive / orig_alive )
+         local reward_orig = reward
+         reward = reward * alive / orig_alive
+         vntk.msg( _("Success with Casualties"), fmt.f(_("You arrive with what's left of the convoy. It's not much, but it's better than nothing. You are paid a steeply discounted amount of #g{credits}#0 from the {reward} originally promised."), {credits=fmt.credits(reward), reward=fmt.credits(reward_orig)}) )
+         player.pay( reward )
       end
       pir.reputationNormalMission(rnd.rnd(2,3))
       misn.finish( true )
@@ -202,7 +207,6 @@ function traderLand( p, plnt )
       traderDeath()
    end
 end
-
 
 -- Handle the convoy getting attacked.
 function traderAttacked( p, _attacker )
@@ -258,6 +262,9 @@ function spawnConvoy ()
    else
       fleet.add( 1, ambushes[rnd.rnd(3,5)], "Pirate", ambush_src, nil, {ai="baddie_norun"} )
    end
+   for _,p in ipairs(ambush) do
+      p:setHostile(true)
+   end
 
    --Spawn the convoy
    local convoy_n = convoysize - 1
@@ -284,39 +291,9 @@ function spawnConvoy ()
          p:rm()
       end
       if p:exists() then
-         p:outfitRm( "cores" )
-         for j, o in ipairs( p:outfits() ) do
-            if o == "Improved Stabilizer" then
-               p:outfitRm("Improved Stabilizer")
-               p:outfitAdd("Small Cargo Pod")
-            end
-         end
-
-         for j, c in ipairs( p:cargoList() ) do
+         for _j, c in ipairs( p:cargoList() ) do
             p:cargoRm( c.name, c.q )
          end
-
-         local class = p:ship():class()
-         if class == "Yacht" or class == "Scout" or class == "Interceptor"
-               or class == "Courier" or class == "Fighter" or class == "Bomber" then
-            p:outfitAdd( "Unicorp PT-68 Core System" )
-            p:outfitAdd( "Melendez Ox XL Engine" )
-            p:outfitAdd( "S&K Small Cargo Hull" )
-         elseif class == "Freighter" or class == "Armoured Transport"
-               or class == "Corvette" or class == "Destroyer" then
-            p:outfitAdd( "Unicorp PT-310 Core System" )
-            p:outfitAdd( "Melendez Buffalo XL Engine" )
-            p:outfitAdd( "S&K Medium Cargo Hull" )
-         elseif class == "Cruiser" or class == "Carrier" or class == "Battleship" then
-            p:outfitAdd( "Unicorp PT-310 Core System" )
-            p:outfitAdd( "Melendez Mammoth XL Engine" )
-            p:outfitAdd( "S&K Large Cargo Hull" )
-         end
-
-         p:setHealth( 100, 100 )
-         p:setEnergy( 100 )
-         p:setTemp( 0 )
-         p:setFuel( true )
          p:cargoAdd( cargo, p:cargoFree() )
 
          local myspd = p:stats().speed_max
@@ -337,7 +314,7 @@ function spawnConvoy ()
    end
 
    if minspeed ~= nil then
-      for i, p in ipairs(convoy) do
+      for _i, p in ipairs(convoy) do
          if p ~= nil and p:exists() then
             p:setSpeedLimit( minspeed )
          end
@@ -347,7 +324,7 @@ function spawnConvoy ()
    exited = 0
    if orig_alive == nil then
       orig_alive = 0
-      for i, p in ipairs( convoy ) do
+      for _i, p in ipairs( convoy ) do
          if p ~= nil and p:exists() then
             orig_alive = orig_alive + 1
          end

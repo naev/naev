@@ -7,7 +7,7 @@
  <GUI>brushed</GUI>
  <sound>engine</sound>
  <class>Destroyer</class>
- <price>900000</price>
+ <price>2200000</price>
  <time_mod>1.25</time_mod>
  <trail_generator x="-36" y="0" h="0" always_under="1">fire</trail_generator>
  <trail_generator x="-30" y="15" h="-3">nebula</trail_generator>

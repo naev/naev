@@ -65,7 +65,7 @@ local derelict -- Non-persistent state
 -- Constants
 local cargo_type  = commodity.get("Food")
 local cargo_q     = 5
-local reward_amount = 40e3
+local reward_amount = tutnel.reward.nelly01
 local outfit_tobuy = outfit.get("Ion Cannon") -- If changed, references to ion cannons/damage below should too.
 
 function create ()

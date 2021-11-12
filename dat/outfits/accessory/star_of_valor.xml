@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Star of Valor">
  <general>
-  <unique/>
+  <unique />
   <typename>Accessory</typename>
   <slot prop="accessory">utility</slot>
   <size>small</size>
@@ -16,4 +16,3 @@
   <fwd_firerate>5</fwd_firerate>
  </specific>
 </outfit>
-

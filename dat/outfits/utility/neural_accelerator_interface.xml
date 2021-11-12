@@ -7,7 +7,7 @@
   <rarity>1</rarity>
   <license>Medium Weapon License</license>
   <mass>1</mass>
-  <price>450000</price>
+  <price>375000</price>
   <description>The flow of time is in general not perceived as a constant value, rather it fluctuates greatly depending on the circumstances. Using latest in neuro-interface technology, the Neural Accelerator Interface is able to exploit large amounts of ship energy to change the perception of time and accelerate the piloted ship.</description>
   <desc_extra>Active for 5 seconds with a cooldown of 20 seconds.</desc_extra>
   <gfx_store>neural_accelerator_interface.webp</gfx_store>

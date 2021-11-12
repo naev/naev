@@ -5,7 +5,7 @@
   <size>small</size>
   <license>Medium Weapon License</license>
   <mass>18</mass>
-  <price>17000</price>
+  <price>45000</price>
   <description>The Plasma Blaster MK2 is a high-powered version of the Plasma Blaster, powerful enough to blow all but the heaviest pirate ships out of the sky. Its power is substantial enough that it even gets used by some militaries, typically in combination with anti-shield weaponry.</description>
   <gfx_store>plasma2.webp</gfx_store>
   <cpu>-24</cpu>

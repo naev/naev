@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Handbook for Dvaered Good Manners">
  <general>
-  <unique/>
+  <unique />
   <typename>Accessory</typename>
   <slot prop="accessory">utility</slot>
   <size>small</size>
@@ -16,4 +16,3 @@
   <time_speedup>2</time_speedup>
  </specific>
 </outfit>
-

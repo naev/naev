@@ -7,7 +7,7 @@
  <GUI>brushed</GUI>
  <sound>engine</sound>
  <class>Corvette</class>
- <price>650000</price>
+ <price>925000</price>
  <time_mod>1</time_mod>
  <trail_generator x="-10" y="-3" h="0" always_under="1">pirate</trail_generator>
  <trail_generator x="-10" y="3" h="0" always_under="1">pirate</trail_generator>

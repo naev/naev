@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Vacuum Cleaner?">
  <general>
-  <unique/>
+  <unique />
   <typename>Accessory</typename>
   <slot prop="accessory">utility</slot>
   <size>small</size>
@@ -15,4 +15,3 @@
   <engine_limit_rel>10</engine_limit_rel>
  </specific>
 </outfit>
-

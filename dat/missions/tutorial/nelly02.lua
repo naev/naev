@@ -62,7 +62,7 @@ local lmisn = require "lmisn"
 misn_state = nil
 local enemies, rampant, spotter -- Non-persistent state
 
-local reward_amount = 60e3
+local reward_amount = tutnel.reward.nelly02
 
 local function has_disable( o )
    local _dmg, dis = o:weapstats()

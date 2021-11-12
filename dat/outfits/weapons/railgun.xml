@@ -6,7 +6,7 @@
   <license>Heavy Weapon License</license>
   <rarity>1</rarity>
   <mass>50</mass>
-  <price>72000</price>
+  <price>300000</price>
   <description>The railgun is a cannon that uses heavy magnetic pulses to accelerate pieces of debris to extremely high velocities. The impact caused by the pieces of debris can tear apart even the strongest ship hulls.</description>
   <gfx_store>railgun.webp</gfx_store>
   <cpu>-75</cpu>

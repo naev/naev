@@ -6,7 +6,7 @@
  <GUI>brushed</GUI>
  <sound>engine</sound>
  <class>Armoured Transport</class>
- <price>1100000</price>
+ <price>1400000</price>
  <time_mod>1.25</time_mod>
  <trail_generator x="-35" y="4" h="10" />
  <trail_generator x="-35" y="4" h="0" always_under="1" />

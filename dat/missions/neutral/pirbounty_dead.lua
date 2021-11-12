@@ -47,19 +47,19 @@ subdue_fail_text[3] = _("Your crew comes close to getting past the pirate's secu
 subdue_fail_text[4] = _("It seems your crew is no match for this ship's security system. You return to your ship.")
 
 pay_kill_text    = {}
-pay_kill_text[1] = _("After verifying that you killed {plt}, an officer hands you your pay.")
-pay_kill_text[2] = _("After verifying that {plt} is indeed dead, the tired-looking officer smiles and hands you your pay.")
-pay_kill_text[3] = _("The officer seems pleased that {plt} is finally dead. They thank you and promptly hand you your pay.")
-pay_kill_text[4] = _("The paranoid-looking officer takes you into a locked room, where the death of {plt} is quietly verified. The officer then pays you and sends you off.")
-pay_kill_text[5] = _("When you ask the officer for your bounty on {plt}, they sigh, lead you into an office, go through some paperwork, and hand you your pay, mumbling something about how useless the bounty system is.")
-pay_kill_text[6] = _("The officer verifies the death of {plt}, goes through the necessary paperwork, and hands you your pay, looking bored the entire time.")
+pay_kill_text[1] = _("After verifying that you killed {plt}, an officer hands you your pay of #g{credits}#0.")
+pay_kill_text[2] = _("After verifying that {plt} is indeed dead, the tired-looking officer smiles and hands you your pay of #g{credits}#0.")
+pay_kill_text[3] = _("The officer seems pleased that {plt} is finally dead. They thank you and promptly hand you your pay of #g{credits}#0.")
+pay_kill_text[4] = _("The paranoid-looking officer takes you into a locked room, where the death of {plt} is quietly verified. The officer then pays you of #g{credits}#0 and sends you off.")
+pay_kill_text[5] = _("When you ask the officer for your bounty on {plt}, they sigh, lead you into an office, go through some paperwork, and hand you your pay of #g{credits}#0, mumbling something about how useless the bounty system is.")
+pay_kill_text[6] = _("The officer verifies the death of {plt}, goes through the necessary paperwork, and hands you your pay of #g{credits}#0, looking bored the entire time.")
 
 pay_capture_text    = {}
-pay_capture_text[1] = _("An officer takes {plt} into custody and hands you your pay.")
-pay_capture_text[2] = _("The officer seems to think your decision to capture {plt} alive was foolish. They carefully take the pirate off your hands, taking precautions you think are completely unnecessary, and then hand you your pay")
-pay_capture_text[3] = _("The officer you deal with seems to especially dislike {plt}. The pirate is taken off your hands and you are handed your pay without a word.")
-pay_capture_text[4] = _("A fearful-looking officer rushes {plt} into a secure hold, pays you the appropriate bounty, and then hurries off.")
-pay_capture_text[5] = _("The officer you greet gives you a puzzled look when you say that you captured {plt} alive. Nonetheless, they politely take the pirate off of your hands and hand you your pay.")
+pay_capture_text[1] = _("An officer takes {plt} into custody and hands you your pay of #g{credits}#0.")
+pay_capture_text[2] = _("The officer seems to think your decision to capture {plt} alive was foolish. They carefully take the pirate off your hands, taking precautions you think are completely unnecessary, and then hand you your pay of #g{credits}#0.")
+pay_capture_text[3] = _("The officer you deal with seems to especially dislike {plt}. The pirate is taken off your hands and you are handed your pay of #g{credits}#0 without a word.")
+pay_capture_text[4] = _("A fearful-looking officer rushes {plt} into a secure hold, pays you the appropriate bounty of #g{credits}#0, and then hurries off.")
+pay_capture_text[5] = _("The officer you greet gives you a puzzled look when you say that you captured {plt} alive. Nonetheless, they politely take the pirate off of your hands and hand you your pay of #g{credits}#0.")
 
 share_text    = {}
 share_text[1] = _([["Greetings. I can see that you were trying to collect a bounty on {plt}. Well, as you can see, I earned the bounty, but I don't think I would have succeeded without your help, so I've transferred a portion of the bounty into your account."]])
@@ -202,7 +202,7 @@ function land ()
       else
          pay_text = pay_capture_text[ rnd.rnd( 1, #pay_capture_text ) ]
       end
-      vntk.msg( _("Mission Completed"), fmt.f( pay_text, {plt=name} ) )
+      vntk.msg( _("Mission Completed"), fmt.f( pay_text, {plt=name, credits=fmt.credits(credits)} ) )
       player.pay( credits )
       paying_faction:modPlayerSingle( reputation )
       pir.reputationNormalMission( reputation )
@@ -331,10 +331,10 @@ function bounty_setup ()
    if level == 1 then
       if rnd.rnd() < 0.5 then
          pship = "Hyena"
-         credits = 50e3 + rnd.sigma() * 15e3
+         credits = 80e3 + rnd.sigma() * 15e3
       else
          pship = "Pirate Shark"
-         credits = 150e3 + rnd.sigma() * 50e3
+         credits = 100e3 + rnd.sigma() * 30e3
       end
       reputation = 0.5
    elseif level == 2 then
@@ -343,7 +343,7 @@ function bounty_setup ()
       else
          pship = "Pirate Ancestor"
       end
-      credits = 400e3 + rnd.sigma() * 80e3
+      credits = 300e3 + rnd.sigma() * 50e3
       reputation = 1
    elseif level == 3 then
       if rnd.rnd() < 0.5 then
@@ -351,7 +351,7 @@ function bounty_setup ()
       else
          pship = "Pirate Phalanx"
       end
-      credits = 700e3 + rnd.sigma() * 120e3
+      credits = 500e3 + rnd.sigma() * 80e3
       reputation = 2
    elseif level == 4 then
       if rnd.rnd() < 0.5 then
@@ -359,11 +359,11 @@ function bounty_setup ()
       else
          pship = "Pirate Rhino"
       end
-      credits = 950e3 + rnd.sigma() * 160e3
+      credits = 700e3 + rnd.sigma() * 90e3
       reputation = 2.8
    elseif level == 5 then
       pship = "Pirate Kestrel"
-      credits = 1.2e6 + rnd.sigma() * 200e3
+      credits = 1e6 + rnd.sigma() * 100e3
       reputation = 3.5
    end
    return pship, credits, reputation

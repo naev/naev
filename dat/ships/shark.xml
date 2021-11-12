@@ -6,7 +6,7 @@
  <GUI>brushed</GUI>
  <sound>engine</sound>
  <class>Interceptor</class>
- <price>280000</price>
+ <price>250000</price>
  <time_mod>0.9</time_mod>
  <trail_generator x="-14" y="12" h="0">nebula</trail_generator>
  <trail_generator x="-14" y="-12" h="0">nebula</trail_generator>

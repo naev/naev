@@ -7,7 +7,7 @@
  <GUI>brushed</GUI>
  <sound>engine</sound>
  <class>Corvette</class>
- <price>720000</price>
+ <price>1200000</price>
  <time_mod>1</time_mod>
  <trail_generator x="-25" y="0" h="0">sirius</trail_generator>
  <fabricator>Sirius Systems</fabricator>

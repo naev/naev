@@ -7,7 +7,7 @@
  <GUI>brushed</GUI>
  <sound>engine</sound>
  <class display="Bio-Carrier">Carrier</class>
- <price>7200000</price>
+ <price>8900000</price>
  <time_mod>1.5</time_mod>
  <trail_generator x="-45" y="8" h="2">soromid</trail_generator>
  <trail_generator x="-45" y="10" h="-5">soromid</trail_generator>

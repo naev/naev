@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <outfit name="Trading Card (Rare)">
  <general>
-  <unique/>
+  <unique />
   <typename>Accessory</typename>
   <slot prop="accessory">utility</slot>
   <size>small</size>
@@ -20,5 +20,3 @@
   <ew_hide>5</ew_hide>
  </specific>
 </outfit>
-
-
