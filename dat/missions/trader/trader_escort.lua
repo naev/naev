@@ -30,7 +30,7 @@ local lmisn = require "lmisn"
 local car = require "common.cargo"
 local fmt = require "format"
 
-local ambush, convoy -- Non-persistent state
+local convoy -- Non-persistent state
 
 local misn_title = {}
 misn_title[1] = _("Escort a tiny convoy to {pnt} in {sys}")
@@ -247,15 +247,15 @@ function spawnConvoy ()
       {"Pirate Kestrel", "Pirate Admonisher", "Pirate Rhino", "Pirate Shark", "Pirate Shark", "Hyena", "Hyena", "Hyena"},
    }
    if convoysize == 1 then
-      ambush = fleet.add( 1, ambushes[1], "Pirate", ambush_src, nil, {ai="baddie_norun"} )
+      fleet.add( 1, ambushes[1], "Pirate", ambush_src, nil, {ai="baddie_norun"} )
    elseif convoysize == 2 then
-      ambush = fleet.add( 1, ambushes[rnd.rnd(1,2)], "Pirate", ambush_src, nil, {ai="baddie_norun"} )
+      fleet.add( 1, ambushes[rnd.rnd(1,2)], "Pirate", ambush_src, nil, {ai="baddie_norun"} )
    elseif convoysize == 3 then
-      ambush = fleet.add( 1, ambushes[rnd.rnd(2,3)], "Pirate", ambush_src, nil, {ai="baddie_norun"} )
+      fleet.add( 1, ambushes[rnd.rnd(2,3)], "Pirate", ambush_src, nil, {ai="baddie_norun"} )
    elseif convoysize == 4 then
-      ambush = fleet.add( 1, ambushes[rnd.rnd(2,4)], "Pirate", ambush_src, nil, {ai="baddie_norun"} )
+      fleet.add( 1, ambushes[rnd.rnd(2,4)], "Pirate", ambush_src, nil, {ai="baddie_norun"} )
    else
-      ambush = fleet.add( 1, ambushes[rnd.rnd(3,5)], "Pirate", ambush_src, nil, {ai="baddie_norun"} )
+      fleet.add( 1, ambushes[rnd.rnd(3,5)], "Pirate", ambush_src, nil, {ai="baddie_norun"} )
    end
 
    --Spawn the convoy

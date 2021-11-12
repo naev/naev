@@ -21,7 +21,7 @@ local fmt = require "format"
 local fleet = require "fleet"
 local flf = require "missions.flf.flf_common"
 
-local fleetFLF, fleetPirate -- Non-persistent state (not reused by flf_dvk05, which "require"s this script)
+local fleetFLF -- Non-persistent state (not reused by flf_dvk05, which "require"s this script)
 
 misn_title = {}
 misn_title[1] = _("FLF: Lone Pirate Disturbance in {sys}")
@@ -223,7 +223,7 @@ function patrol_spawnPirates( n, boss )
    local frogue = faction.dynAdd( "Pirate", "Rogue Pirate", _("Rogue Pirate"), {clear_allies=true, clear_enemies=true})
    frogue:dynEnemy("FLF")
 
-   fleetPirate = {}
+   --fleetPirate = {}
    for i = 1, n do
       local pos = vec2.newP( 0.8*system.cur():radius()*rnd.rnd(), 360*rnd.rnd )
       local pilotname = nil
@@ -242,7 +242,7 @@ function patrol_spawnPirates( n, boss )
       p:setHostile()
       p:setVisible( true )
       p:setHilight( true )
-      fleetPirate[i] = p
+      --fleetPirate[i] = p
       pirate_ships_left = pirate_ships_left + 1
    end
 end

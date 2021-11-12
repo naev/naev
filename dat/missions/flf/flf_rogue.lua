@@ -22,7 +22,7 @@ local fmt = require "format"
 local fleet = require "fleet"
 local flf = require "missions.flf.flf_common"
 
-local fleetFLF, fleetRogue -- Non-persistent state (not reused by flf_dvk07, which "require"s this script)
+local fleetFLF -- Non-persistent state (not reused by flf_dvk07, which "require"s this script)
 
 local misn_title  = {}
 misn_title[1] = _("FLF: Rogue Pilot in {sys}")
@@ -184,7 +184,7 @@ function rogue_spawnRogue( n )
    local frogue = faction.dynAdd( "FLF", "Rogue FLF", _("Rogue FLF"), {clear_allies=true, clear_enemies=true})
    frogue:dynEnemy("FLF")
 
-   fleetRogue = {}
+   --fleetRogue = {}
    for i = 1, n do
       local pos = vec2.newP( 0.8*system.cur():radius()*rnd.rnd(), 360*rnd.rnd )
       local pstk = fleet.add( 1, shipnames, frogue, pos, pilotnames, {ai="flf_rogue_norun"} )
@@ -193,7 +193,7 @@ function rogue_spawnRogue( n )
       p:setHostile()
       p:setVisible( true )
       p:setHilight( true )
-      fleetRogue[i] = p
+      --fleetRogue[i] = p
       rogue_ships_left = rogue_ships_left + 1
    end
 end
