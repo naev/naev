@@ -63,6 +63,7 @@ function create()
       misn.finish(false)
    end
 
+   local riskreward
    if avgrisk == 0 then
       piracyrisk = piracyrisk[1]
       riskreward = 0
@@ -80,11 +81,10 @@ function create()
    -- Choose amount of cargo and mission reward. This depends on the mission tier.
    -- Reward depends on type of cargo hauled. Hauling expensive commodities gives a better deal.
    -- Note: Pay is independent from amount by design! Not all deals are equally attractive!
-   finished_mod = 2.0 -- Modifier that should tend towards 1.0 as Naev is finished as a game
    amount = rnd.rnd(5 + 25 * tier, 20 + 60 * tier)
-   jumpreward = commodity.price(cargo)
-   distreward = math.log(100*commodity.price(cargo))/100
-   reward = 1.5^tier * (avgrisk*riskreward + numjumps * jumpreward + traveldist * distreward) * finished_mod * (1 + 0.05*rnd.twosigma())
+   local jumpreward = commodity.price(cargo)*1.5
+   local distreward = math.log(100*commodity.price(cargo))/80
+   reward = 1.5^tier * (avgrisk*riskreward + numjumps * jumpreward + traveldist * distreward) * (1 + 0.05*rnd.twosigma())
 
    misn.setTitle( fmt.f(_("Shipment to {pnt} in {sys} ({tonnes})"),
          {pnt=destplanet, sys=destsys, tonnes=fmt.tonnes(amount)} ) )
