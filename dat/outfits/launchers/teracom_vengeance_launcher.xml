@@ -18,7 +18,7 @@ TeraCom's patented launcher hardware considerably reduces the time it takes to a
   <reload_time>60</reload_time>
   <amount>10</amount>
   <lockon>4</lockon>
-  <iflockon>2</iflockon>
+  <iflockon>1.5</iflockon>
   <arc>60</arc>
   <trackmin>0</trackmin>
   <trackmax>10000</trackmax>
