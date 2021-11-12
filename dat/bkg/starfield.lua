@@ -34,10 +34,9 @@ const mat2 ROT    = mat2( cos(THETA), -sin(THETA), sin(THETA), cos(THETA) );
 
 vec4 effect( vec4 colour_in, Image tex, vec2 texture_coords, vec2 screen_coords )
 {
-   vec2 uv = (texture_coords - 0.5) * love_ScreenSize.xy * u_camera.w + u_camera.xy + R;
+   vec2 uv = ((texture_coords - 0.5) * love_ScreenSize.xy * u_camera.w + u_camera.xy)*ROT + R;
 
    vec3 dir = vec3(uv, 1.0);
-   dir.xy *= ROT;
 
    float s = 0.1, fade = 0.01;
    vec4 colour = vec4( vec3(0.0), 1.0 );
@@ -88,16 +87,12 @@ function starfield.init( params )
    -- Scale factor that controls computation cost. As this shader is really
    -- really expensive, we can't compute it at full resolution
    sf = naev.conf().nebu_scale * 0.5
-   
+
    -- Per system parameters
    prng:setSeed( system.cur():nameRaw() )
    local theta = prng:random()*2*math.pi
-   local rx = 500+300*prng:random()
-   local ry = 500+300*prng:random()
-   sz = prng:random()
-   if prng:random()<0.5 then
-      sz = -sz
-   end
+   local rx, ry = vec2.newP( 6+1*prng:random(), 3+3*prng:random() ):get()
+   sz = 1+1*prng:random()
    sb = naev.conf().bg_brightness
 
    -- Initialize shader
