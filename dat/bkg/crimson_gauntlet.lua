@@ -7,8 +7,9 @@
 -- We use the default background too!
 local starfield = require "bkg.starfield"
 local bgshaders = require "bkg.bgshaders"
-
 local love_shaders = require 'love_shaders'
+
+local shader, scircuit
 
 function background ()
    -- Shader isn't too expensive, but we try to respect nebu_scale to an
@@ -17,7 +18,7 @@ function background ()
 
    -- Initialize the shader
    shader = love_shaders.circuit{ strength=sf }
-   bgshaders.init( shader, sf )
+   scircuit = bgshaders.init( shader, sf )
 
    -- Default nebula background (no star)
    starfield.init()
@@ -31,5 +32,5 @@ function renderfg( dt )
    local z = camera.getZoom()
    shader:send( "u_camera", 0, 0, z )
 
-   bgshaders.render( dt, {1, 1, 1, 0.02} )
+   scircuit:render( dt, {1, 1, 1, 0.02} )
 end

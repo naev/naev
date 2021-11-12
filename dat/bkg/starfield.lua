@@ -82,7 +82,7 @@ vec4 effect( vec4 colour_in, Image tex, vec2 texture_coords, vec2 screen_coords 
 }
 ]]
 
-local shader, sf, sz, sb
+local shader, sstarfield, sf, sz, sb
 
 function starfield.init( params )
    -- Scale factor that controls computation cost. As this shader is really
@@ -102,7 +102,7 @@ function starfield.init( params )
 
    -- Initialize shader
    shader = graphics.newShader( string.format(starfield_frag, rx, ry, theta), love_shaders.vertexcode )
-   bgshaders.init( shader, sf, {usetex=true} )
+   sstarfield = bgshaders.init( shader, sf, {usetex=true} )
 end
 
 function starfield.render( dt )
@@ -113,7 +113,7 @@ function starfield.render( dt )
    y = y / 1e6
    shader:send( "u_camera", x*0.5/sf, -y*0.5/sf, sz, z*0.0008*sf )
 
-   bgshaders.render( dt, {1,1,1,sb} )
+   sstarfield:render( dt, {1,1,1,sb} )
 end
 
 return starfield
