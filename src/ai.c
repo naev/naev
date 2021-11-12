@@ -355,13 +355,11 @@ static int aiL_status = AI_STATUS_NORMAL; /**< Current AI run status. */
  */
 static void ai_taskGC( Pilot* pilot )
 {
-   Task *t, *prev, *pointer;
-
-   prev  = NULL;
-   t     = pilot->task;
+   Task *prev  = NULL;
+   Task *t     = pilot->task;
    while (t != NULL) {
       if (t->done) {
-         pointer = t;
+         Task * pointer = t;
          /* Unattach pointer. */
          t       = t->next;
          if (prev == NULL)
@@ -396,9 +394,7 @@ Task* ai_curTask( Pilot* pilot )
  */
 static void ai_setMemory (void)
 {
-   nlua_env env;
-   env = cur_pilot->ai->env;
-
+   nlua_env env = cur_pilot->ai->env;
    nlua_getenv(env, AI_MEM); /* pm */
    lua_rawgeti(naevL, -1, cur_pilot->id); /* pm, t */
    nlua_setenv(env, "mem"); /* pm */
@@ -512,8 +508,7 @@ void ai_cleartasks( Pilot* p )
  */
 void ai_destroy( Pilot* p )
 {
-   nlua_env env;
-   env = p->ai->env;
+   nlua_env env = p->ai->env;
 
    /* Get rid of pilot's memory. */
    if (!pilot_isPlayer(p)) { /* Player is an exception as more than one ship shares pilot id. */
@@ -535,9 +530,7 @@ void ai_destroy( Pilot* p )
 int ai_load (void)
 {
    char** files;
-   size_t i;
-   char path[PATH_MAX];
-   int flen, suflen;
+   int suflen;
 
    /* get the file list */
    files = PHYSFS_enumerateFiles( AI_PATH );
@@ -547,10 +540,11 @@ int ai_load (void)
 
    /* load the profiles */
    suflen = strlen(AI_SUFFIX);
-   for (i=0; files[i]!=NULL; i++) {
-      flen = strlen(files[i]);
+   for (size_t i=0; files[i]!=NULL; i++) {
+      int flen = strlen(files[i]);
       if ((flen > suflen) &&
             strncmp(&files[i][flen-suflen], AI_SUFFIX, suflen)==0) {
+         char path[PATH_MAX];
 
          snprintf( path, sizeof(path), AI_PATH"%s", files[i] );
          if (ai_loadProfile(path)) /* Load the profile */
@@ -714,10 +708,9 @@ void ai_exit (void)
  */
 void ai_think( Pilot* pilot, const double dt )
 {
-   nlua_env env;
    (void) dt;
+   nlua_env env;
    int data;
-
    Task *t;
 
    /* Must have AI. */
@@ -993,11 +986,8 @@ void ai_getDistress( Pilot *p, const Pilot *distressed, const Pilot *attacker )
  */
 static void ai_create( Pilot* pilot )
 {
-   nlua_env env;
-   char *func;
-
-   env = equip_env;
-   func = "equip_generic";
+   nlua_env env = equip_env;
+   char *func = "equip_generic";
 
    /* Set creation mode. */
    if (!pilot_isFlag(pilot, PILOT_CREATED_AI))
@@ -1129,14 +1119,11 @@ void ai_freetask( Task* t )
  */
 static Task* ai_createTask( lua_State *L, int subtask )
 {
-   const char *func;
-   Task *t;
-
    /* Parse basic parameters. */
-   func  = luaL_checkstring(L,1);
+   const char *func = luaL_checkstring(L,1);
 
    /* Creates a new AI task. */
-   t     = ai_newtask( L, cur_pilot, func, subtask, 0 );
+   Task *t = ai_newtask( L, cur_pilot, func, subtask, 0 );
 
    /* Set the data. */
    if (lua_gettop(L) > 1) {
@@ -1327,11 +1314,8 @@ static int aiL_pilot( lua_State *L )
  */
 static int aiL_getrndpilot( lua_State *L )
 {
-   Pilot *const* pilot_stack;
-   int p;
-
-   pilot_stack = pilot_getAll();
-   p = RNG(0, array_size(pilot_stack)-1);
+   Pilot *const* pilot_stack = pilot_getAll();
+   int p = RNG(0, array_size(pilot_stack)-1);
    /* Make sure it can't be the same pilot. */
    if (pilot_stack[p]->id == cur_pilot->id) {
       p++;
@@ -1354,22 +1338,20 @@ static int aiL_getrndpilot( lua_State *L )
  */
 static int aiL_getnearestpilot( lua_State *L )
 {
-   /*dist will be initialized to a number*/
-   /*this will only seek out pilots closer than dist*/
+   /* dist will be initialized to a number */
+   /* this will only seek out pilots closer than dist */
    Pilot *const* pilot_stack = pilot_getAll();
-   int dist=1000;
-   int i;
+   int dist = 1e6;
    int candidate_id = -1;
 
    /*cycle through all the pilots and find the closest one that is not the pilot */
-
-   for (i = 0; i<array_size(pilot_stack); i++)
-   {
-       if (pilot_stack[i]->id != cur_pilot->id && vect_dist(&pilot_stack[i]->solid->pos, &cur_pilot->solid->pos) < dist)
-       {
-            dist = vect_dist(&pilot_stack[i]->solid->pos, &cur_pilot->solid->pos);
-            candidate_id = i;
-       }
+   for (int i=0; i<array_size(pilot_stack); i++) {
+      if (pilot_stack[i]->id == cur_pilot->id)
+         continue;
+      if (vect_dist(&pilot_stack[i]->solid->pos, &cur_pilot->solid->pos) > dist)
+         continue;
+      dist = vect_dist(&pilot_stack[i]->solid->pos, &cur_pilot->solid->pos);
+      candidate_id = i;
    }
 
    /* Last check. */
@@ -1391,14 +1373,13 @@ static int aiL_getnearestpilot( lua_State *L )
 static int aiL_getdistance( lua_State *L )
 {
    Vector2d *v;
-   Pilot *p;
 
    /* vector as a parameter */
    if (lua_isvector(L,1))
       v = lua_tovector(L,1);
    /* pilot as parameter */
    else if (lua_ispilot(L,1)) {
-      p = luaL_validpilot(L,1);
+      Pilot *p = luaL_validpilot(L,1);
       v = &p->solid->pos;
    }
    /* wrong parameter */
@@ -1419,14 +1400,13 @@ static int aiL_getdistance( lua_State *L )
 static int aiL_getdistance2( lua_State *L )
 {
    Vector2d *v;
-   Pilot *p;
 
    /* vector as a parameter */
    if (lua_isvector(L,1))
       v = lua_tovector(L,1);
    /* pilot as parameter */
    else if (lua_ispilot(L,1)) {
-      p = luaL_validpilot(L,1);
+      Pilot *p = luaL_validpilot(L,1);
       v = &p->solid->pos;
    }
    /* wrong parameter */
@@ -1448,7 +1428,6 @@ static int aiL_getflybydistance( lua_State *L )
 {
    Vector2d *v;
    Vector2d perp_motion_unit, offset_vect;
-   Pilot *p;
    int offset_distance;
 
    /* vector as a parameter */
@@ -1456,7 +1435,7 @@ static int aiL_getflybydistance( lua_State *L )
       v = lua_tovector(L,1);
    /* pilot id as parameter */
    else if (lua_ispilot(L,1)) {
-      p = luaL_validpilot(L,1);
+      Pilot *p = luaL_validpilot(L,1);
       v = &p->solid->pos;
 
       /*vect_cset(&v, VX(pilot->solid->pos) - VX(cur_pilot->solid->pos), VY(pilot->solid->pos) - VY(cur_pilot->solid->pos) );*/
@@ -1489,11 +1468,10 @@ static int aiL_minbrakedist( lua_State *L )
 {
    double time, dist, vel;
    Vector2d vv;
-   Pilot *p;
 
    /* More complicated calculation based on relative velocity. */
    if (lua_gettop(L) > 0) {
-      p = luaL_validpilot(L,1);
+      Pilot *p = luaL_validpilot(L,1);
 
       /* Set up the vectors. */
       vect_cset( &vv, p->solid->vel.x - cur_pilot->solid->vel.x,
@@ -1508,7 +1486,6 @@ static int aiL_minbrakedist( lua_State *L )
       if (vel < 0.)
          vel = 0.;
    }
-
    /* Simple calculation based on distance. */
    else {
       /* Get current time to reach target. */
@@ -1702,13 +1679,12 @@ static int aiL_turn( lua_State *L )
 static int aiL_face( lua_State *L )
 {
    Vector2d *tv; /* get the position to face */
-   Pilot* p;
    double k_diff, k_vel, d, diff, vx, vy, dx, dy;
    int vel;
 
    /* Get first parameter, aka what to face. */
    if (lua_ispilot(L,1)) {
-      p = luaL_validpilot(L,1);
+      Pilot* p = luaL_validpilot(L,1);
       /* Target vector. */
       tv = &p->solid->pos;
    }
@@ -3060,10 +3036,7 @@ static int aiL_getweapammo( lua_State *L )
  */
 static int aiL_canboard( lua_State *L )
 {
-   Pilot *p;
-
-   /* Get parameters. */
-   p = luaL_validpilot(L,1);
+   Pilot *p = luaL_validpilot(L,1);
 
    /* Must be disabled. */
    if (!pilot_isDisabled(p)) {
@@ -3291,7 +3264,6 @@ static int aiL_stealth( lua_State *L )
    lua_pushboolean(L, pilot_stealth( cur_pilot ));
    return 1;
 }
-
 /**
  * @}
  */
