@@ -292,6 +292,46 @@ local function board_lootAll ()
    end
 end
 
+local can_cannibalize_ships = {
+   ["Soromid Arx"] = true,
+   ["Soromid Brigand"] = true,
+   ["Soromid Ira"] = true,
+   ["Soromid Marauder"] = true,
+   ["Soromid Nyx"] = true,
+   ["Soromid Odium"] = true,
+   ["Soromid Reaver"] = true,
+   ["Soromid Vox"] = true,
+}
+local function can_cannibalize ()
+   local pp = player.pilot()
+   if can_cannibalize_ships[ pp:ship():nameRaw() ] then
+      return true
+   end
+   return false
+end
+
+local function board_cannibalize ()
+   local armour, shield = board_plt:health(true)
+   if armour <= 1 then
+      return
+   end
+   local bs = board_plt:stats()
+
+   local pp = player.pilot()
+   local ps = pp:stats()
+   local parmour, pshield, pstress = pp:health(true)
+
+   local dmg = math.min( (armour-1), 2*(ps.armour-parmour) )
+   if dmg <= 0 then
+      return
+   end
+
+   board_plt:setHealth( 100*(armour-dmg)/bs.armour, 100*shield/bs.shield, 100 )
+   pp:setHealth( 100*(parmour+dmg/2)/ps.armour, 100*pshield/ps.shield, pstress )
+
+   player.msg(fmt.f(_("Your ship cannibalized {armour:.0f} armour from {plt}."),{armour=dmg/2, plt=board_plt:name()}))
+end
+
 local function board_close ()
    luatk.close()
    board_wdw = nil
@@ -320,6 +360,9 @@ function board( plt )
    luatk.newButton( wdw, w-20-80, h-20-30, 80, 30, _("Close"), board_close )
    luatk.newButton( wdw, w-20-80-100, h-20-30, 80, 30, _("Loot"), board_lootSel )
    luatk.newButton( wdw, w-20-80-200, h-20-30, 80, 30, _("Loot All"), board_lootAll )
+   if can_cannibalize() then
+      luatk.newButton( wdw, w-20-80-350, h-20-30, 130, 30, _("Cannibalize"), board_cannibalize )
+   end
 
    luatk.newText( wdw, 0, 10, w, 20, fmt.f(_("Boarding {shipname}"),{shipname=plt:name()}), nil, "center" )
    board_freespace = luatk.newText( wdw, 20, 40, w-40, 20, "" )
