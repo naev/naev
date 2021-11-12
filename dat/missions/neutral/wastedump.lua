@@ -49,9 +49,8 @@ local dest_planets = { "The Stinker", "Eiroik" }
 
 function create ()
    local dist = nil
-   local p, sys
    for i, j in ipairs( dest_planets ) do
-      p, sys = planet.getS( j )
+      local _p, sys = planet.getS( j )
       if dist == nil or system.cur():jumpDist(sys) < dist then
          dist = system.cur():jumpDist(sys)
       end
@@ -65,8 +64,7 @@ function create ()
    landed = true
 
    for i, j in ipairs( dest_planets ) do
-      local p, sys
-      p, sys = planet.getS( j )
+      local p = planet.get( j )
       misn.markerAdd( p, "computer" )
    end
 

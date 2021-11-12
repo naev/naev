@@ -991,11 +991,12 @@ function render( dt, dt_mod )
    end
 
    -- Planet pane
+   local services_h
    if nav_pnt then
       local ta_pnt_dist = pp:pos():dist( nav_planet.pos )
 
       -- Extend the pane depending on the services available.
-      local services_h = 44
+      services_h = 44
       if pntflags.land then
          services_h = services_h + (14 * nav_planet.nservices)
       end
@@ -1035,7 +1036,7 @@ function render( dt, dt_mod )
 
       -- Space out the text.
       if pntflags.land then
-         local services_h = 60
+         services_h = 60
          for k,v in ipairs(nav_planet.services) do
             gfx.print(true, _(v), ta_pnt_pane_x + 60, ta_pnt_pane_y - services_h, cols.txt_top )
             services_h = services_h + 14

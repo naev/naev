@@ -124,9 +124,9 @@ function create()
    cargo = cargo[1] -- set it to name only
 
    -- mission generics
-   stuperpx   = 0.3 - 0.015 * tier
-   stuperjump = 11000 - 200 * tier
-   stupertakeoff = 12000 - 50 * tier
+   local stuperpx   = 0.3 - 0.015 * tier
+   local stuperjump = 11000 - 200 * tier
+   local stupertakeoff = 12000 - 50 * tier
    timelimit  = time.get() + time.create(0, 0, traveldist * stuperpx + numjumps * stuperjump + stupertakeoff + 240 * numjumps)
 
    -- Allow extra time for refuelling stops.
@@ -137,8 +137,8 @@ function create()
 
    -- Choose amount of cargo and mission reward. This depends on the mission tier.
    amount    = rnd.rnd(10 + 3 * tier, 20 + 4 * tier)
-   jumpreward = 3000
-   distreward = 0.50
+   local jumpreward = 3000
+   local distreward = 0.50
    reward    = 1.5^tier * (numjumps * jumpreward + traveldist * distreward + math.max(1,amount/20)) * (1 + 0.05*rnd.twosigma())
 
    if pir.factionIsClan( reward_faction ) then

@@ -1,20 +1,19 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <event name="Preacher">
-  <trigger>enter</trigger>
-  <chance>10</chance>
-  <cond>system.cur():presence(faction.get("Sirius"))&gt;50 and (not player.evtActive ("Preacher")) and ( (var.peek("si_convert")==nil) or rnd.rnd(1,var.peek("si_convert")+1)==1)</cond>
-  <flags>
-   <unique />
-  </flags>
-  <notes>
-   <tier>1</tier>
-  </notes>
- </event>
- --]]
+ <trigger>enter</trigger>
+ <chance>10</chance>
+ <cond>system.cur():presence(faction.get("Sirius"))&gt;50 and (not player.evtActive ("Preacher")) and ( (var.peek("si_convert")==nil) or rnd.rnd(1,var.peek("si_convert")+1)==1)</cond>
+ <flags>
+  <unique />
+ </flags>
+ <notes>
+  <tier>1</tier>
+ </notes>
+</event>
+--]]
 --Preliminary draft of a new event where the player meets one of the Touched, who tries to convert him
 --Sudarshan S <ssoxygen@users.sf.net>
-
 local fleet = require "fleet"
 local fmt = require "format"
 
@@ -142,7 +141,7 @@ function theFunBegins()
       end
    end
    --summon a preacher from the jump point and highlight him and take control and focus on him
-   preacher=pilot.add("Sirius Reverence", "Sirius", curr, nil, {ai="sirius_norun"})
+   preacher = pilot.add("Sirius Reverence", "Sirius", curr, nil, {ai="sirius_norun"})
    preacher:setHilight()
    preacher:setVisplayer()
    preacher:control()
@@ -375,8 +374,9 @@ end
 
 --everything is done
 function cleanup()
-   player.pilot():setInvincible(false)
-   player.pilot():control(false)
+   local pp = player.pilot()
+   pp:setInvincible(false)
+   pp:control(false)
    camera.set()
    player.cinematics(false)
    evt.finish(true)

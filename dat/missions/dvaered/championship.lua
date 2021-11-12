@@ -44,7 +44,7 @@ npc_portrait["__save"] = true
 -- Non-persistent state
 local hooks = {}
 local usedNames = {}   --In order not to have two pilots with the same name
-local opponent, sec11, sec12, sec21, sec22, tv1, tv2, usedNames
+local opponent, sec11, sec12, sec21, sec22, tv1, tv2
 
 --Change here to change the planet and the system
 local mispla, missys = planet.getS("Dvaer Prime")

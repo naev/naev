@@ -89,7 +89,7 @@ end
 
 
 function enter()
-   sys = system.cur()
+   local sys = system.cur()
 
    if sys == misn_target and misn_stage == 0 then
       -- Force Collective music (note: must clear these later on).
@@ -132,7 +132,7 @@ function spotdrone()
 end
 
 function land()
-   pnt = planet.cur()
+   local pnt = planet.cur()
 
    if misn_stage == 1 and  pnt == misn_base then
       tk.msg( _("Mission Accomplished"), fmt.f(_([[After landing, you head to the Empire military headquarters and find Lt. Commander Dimitri there.

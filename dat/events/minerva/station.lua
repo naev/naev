@@ -344,13 +344,13 @@ WHAT DO YOU WISH TO DO TODAY?"]], minerva.tokens_get()),
       { _("Cancel"), "trade" },
    }, function (idx)
       if idx=="trade_consumate" then
-         local t = tradein_item
-         minerva.tokens_pay( -t[2][1] )
-         if t[2][2]=="outfit" then
-            player.outfitAdd( t[1] )
-            player.msg( _("Gambling Bounty"), fmt.reward(t[1]))
-         elseif t[2][2]=="ship" then
-            player.addShip( t[1] )
+         local ti = tradein_item
+         minerva.tokens_pay( -ti[2][1] )
+         if ti[2][2]=="outfit" then
+            player.outfitAdd( ti[1] )
+            player.msg( _("Gambling Bounty"), fmt.reward(ti[1]))
+         elseif ti[2][2]=="ship" then
+            player.addShip( ti[1] )
          else
             error(_("unknown tradein type"))
          end

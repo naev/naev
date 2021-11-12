@@ -47,9 +47,9 @@ function create()
    end
 
    -- mission generics
-   stuperpx   = 0.3 - 0.015 * tier
-   stuperjump = 11000 - 75 * tier
-   stupertakeoff = 15000
+   local stuperpx   = 0.3 - 0.015 * tier
+   local stuperjump = 11000 - 75 * tier
+   local stupertakeoff = 15000
    timelimit  = time.get() + time.create(0, 0, traveldist * stuperpx + numjumps * stuperjump + stupertakeoff + 480 * numjumps)
 
    -- Allow extra time for refuelling stops.
@@ -59,6 +59,7 @@ function create()
    end
 
    --Determine risk of piracy
+   local riskreward
     if avgrisk == 0 then
       piracyrisk = piracyrisk[1]
       riskreward = 0
@@ -74,11 +75,10 @@ function create()
    end
 
    -- Choose amount of cargo and mission reward. This depends on the mission tier.
-   finished_mod = 2.0 -- Modifier that should tend towards 1.0 as Naev is finished as a game
    amount     = rnd.rnd(10 + 3 * tier, 20 + 4 * tier)
-   jumpreward = commodity.price(cargo)*1.5
-   distreward = math.log(300*commodity.price(cargo))/100
-   reward     = 1.5^tier * (avgrisk*riskreward + numjumps * jumpreward + traveldist * distreward) * finished_mod * (1. + 0.05*rnd.twosigma())
+   local jumpreward = commodity.price(cargo)*2.5
+   local distreward = math.log(300*commodity.price(cargo))/80
+   reward     = 1.5^tier * (avgrisk*riskreward + numjumps * jumpreward + traveldist * distreward) * (1. + 0.05*rnd.twosigma())
 
    misn.setTitle( fmt.f(
       _("ES: Cargo transport to {pnt} in {sys} ({tonnes})"), {pnt=destplanet, sys=destsys, tonnes=fmt.tonnes(amount)} ) )

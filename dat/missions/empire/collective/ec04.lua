@@ -176,19 +176,19 @@ function enter()
 end
 
 -- Preps the Empire ships for attack.
-function empireAttack(fleet)
-    for _, j in ipairs(fleet) do
+function empireAttack(flt)
+    for _, j in ipairs(flt) do
         if j:exists() then
             j:control()
             j:setVisplayer()
-            j:follow(fleet[1])
+            j:follow(flt[1])
         end
     end
 end
 
 -- Makes the Empire ships run away.
-function empireRetreat(fleet)
-    for _, j in ipairs(fleet) do
+function empireRetreat(flt)
+    for _, j in ipairs(flt) do
         if j:exists() then
             j:control()
             j:setVisplayer()

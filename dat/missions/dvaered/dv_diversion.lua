@@ -177,8 +177,8 @@ function fleetdv_attacked () -- chased
    update_fleet()
 end
 
-function broadcast_first(fleet, msg) -- Find the first alive ship and broadcast a message
-   for k, v in ipairs(fleet) do
+function broadcast_first(flt, msg) -- Find the first alive ship and broadcast a message
+   for k, v in ipairs(flt) do
       if v:exists() then
          local _armour, _shield, disabled = v:health()
          if not disabled then

@@ -70,16 +70,15 @@ function create()
    end
 
    -- mission generics
-   stuperpx   = 0.3 - 0.015 * tier
-   stuperjump = 11000 - 75 * tier
-   stupertakeoff = 15000
+   --stuperpx   = 0.3 - 0.015 * tier
+   --stuperjump = 11000 - 75 * tier
+   --stupertakeoff = 15000
 
    -- Choose mission reward. This depends on the mission tier.
-   finished_mod = 2.0 -- Modifier that should tend towards 1.0 as Naev is finished as a game
-   jumpreward = 1000
-   distreward = 0.25
-   riskreward = 50
-   reward     = (1.5 ^ tier) * (avgrisk*riskreward + numjumps * jumpreward + traveldist * distreward) * finished_mod * (1. + 0.05*rnd.twosigma())
+   local jumpreward = 1500
+   local distreward = 0.30
+   local riskreward = 50
+   reward     = (1.5 ^ tier) * (avgrisk*riskreward + numjumps * jumpreward + traveldist * distreward) * (1. + 0.05*rnd.twosigma())
 
    local typeOfEng = engines[rnd.rnd(1, #engines)]
 

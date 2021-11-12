@@ -169,8 +169,8 @@ function enter ()
       -- They will jump together with you in the system at the jump point. (A.)
       local dv_med_force = { "Dvaered Vendetta", "Dvaered Vendetta", "Dvaered Ancestor", "Dvaered Ancestor", "Dvaered Phalanx", "Dvaered Vigilance" }
       p = fleet.add( 1, dv_med_force, "Dvaered", prevsys )
-      for k,v in ipairs(p) do
-         v:setFriendly()
+      for k,pk in ipairs(p) do
+         pk:setFriendly()
       end
 
       -- Add more ships on a timer to make this messy
