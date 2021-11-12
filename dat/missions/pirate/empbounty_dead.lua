@@ -40,7 +40,7 @@ local lmisn = require "lmisn"
 local bounty_setup, fail, level_setup, spawn_pirate, succeed -- Forward-declared functions
 
 -- Mission details
-misn_title = {}
+local misn_title = {}
 misn_title[1] = _("#rPIRACY:#0: Quick Assassination Job in {sys}{msg}")
 misn_title[2] = _("#rPIRACY:#0: Small Assassination Job in {sys}{msg}")
 misn_title[3] = _("#rPIRACY:#0: Moderate Assassination Job in {sys}{msg}")
@@ -48,8 +48,8 @@ misn_title[4] = _("#rPIRACY:#0: Big Assassination Job in {sys}{msg}")
 misn_title[5] = _("#rPIRACY:#0: Dangerous Assassination Job in {sys}{msg}")
 misn_title[6] = _("#rPIRACY:#0: Highly Dangerous Assassination Job in {sys}{msg}")
 
-hunters = {}
-hunter_hits = {}
+local hunters = {}
+local hunter_hits = {}
 
 function create ()
    -- Lower probability on non-pirate places
@@ -545,8 +545,7 @@ function spawn_pirate( param )
    end
 
    misn.osdActive( 2 )
-   target_ship = pilot.add( pship, target_faction, param )
-   target_ship:rename( name )
+   local target_ship = pilot.add( pship, target_faction, param, name )
    target_ship:setHilight( true )
    hook.pilot( target_ship, "attacked", "pilot_attacked" )
    hook.pilot( target_ship, "death", "pilot_death" )
