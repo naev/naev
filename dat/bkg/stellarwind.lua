@@ -3,7 +3,7 @@
 --]]
 
 -- We use the default background too!
-require "bkg.default"
+local starfield = require "bkg.starfield"
 local bgshaders = require "bkg.bgshaders"
 local love_shaders = require 'love_shaders'
 
@@ -19,11 +19,10 @@ function background ()
    bgshaders.init( shader, sf )
 
    -- Default nebula background
-   cur_sys = system.cur()
-   prng:setSeed( cur_sys:name() )
-   background_nebula()
-   background_stars()
+   starfield.init()
 end
+
+renderbg = starfield.render
 
 function renderfg( dt )
    -- Get camera properties

@@ -5,8 +5,7 @@
 --]]
 
 -- We use the default background too!
-require "bkg.default"
-
+local starfield = require "bkg.starfield"
 local love = require 'love'
 local lg = require 'love.graphics'
 
@@ -174,9 +173,7 @@ function background ()
    add_bkg( 2, 3e4, 0.08, 1.5, 0.5, 4, 3 )
 
    -- Default nebula background (no star)
-   cur_sys = system.cur()
-   prng:setSeed( cur_sys:name() )
-   background_nebula()
+   starfield.init()
 end
 function update ()
    -- Calculate player motion
@@ -213,6 +210,9 @@ function update ()
       update_part( p )
    end
 end
+
+renderbg = starfield.render
+
 local function draw_part( p, s, z )
    local x = (p.x - znw2) / z + nw2
    local y = (p.y - znh2) / z + nh2

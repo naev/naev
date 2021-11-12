@@ -2217,6 +2217,8 @@ dat/autoequip.lua
 dat/bkg/bgshaders.lua
 dat/bkg/crimson_gauntlet.lua
 dat/bkg/default.lua
+dat/bkg/old.lua
+dat/bkg/starfield.lua
 dat/bkg/stellarwind.lua
 dat/bkg/taiomi.lua
 dat/board.lua
