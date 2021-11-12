@@ -116,10 +116,9 @@ end
 function enter()
    --Jumping in Toaxis for the battle
    if system.cur() == battlesys and stage == 1 then
-
       --Check if the player uses a Shark
-      playership = player.pilot():ship()
-      playershipname = playership:nameRaw()
+      local playership = player.pilot():ship()
+      local playershipname = playership:nameRaw()
 
       if playershipname ~= "Shark" and playershipname ~= "Empire Shark" then
          player.msg( "#r" .. _("MISSION FAILED: You were supposed to use a Shark.") .. "#0" )

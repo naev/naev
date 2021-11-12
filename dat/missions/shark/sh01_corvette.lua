@@ -107,8 +107,7 @@ function land()
 end
 
 function enter()
-
-   playerclass = player.pilot():ship():class()
+   local playerclass = player.pilot():ship():class()
    --Jumping in Toaxis for the battle with a destroyer class ship
    if system.cur() == battlesys and stage == 0 and playerclass == "Destroyer" then
       pilot.clear()
