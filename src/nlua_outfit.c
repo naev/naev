@@ -45,6 +45,7 @@ static int outfitL_getShipStat( lua_State *L );
 static int outfitL_weapStats( lua_State *L );
 static int outfitL_specificStats( lua_State *L );
 static int outfitL_illegality( lua_State *L );
+static int outfitL_tags( lua_State *L );
 static const luaL_Reg outfitL_methods[] = {
    { "__tostring", outfitL_name },
    { "__eq", outfitL_eq },
@@ -66,6 +67,7 @@ static const luaL_Reg outfitL_methods[] = {
    { "weapstats", outfitL_weapStats },
    { "specificstats", outfitL_specificStats },
    { "illegality", outfitL_illegality },
+   { "tags", outfitL_tags },
    {0,0}
 }; /**< Outfit metatable methods. */
 
@@ -724,6 +726,27 @@ static int outfitL_illegality( lua_State *L )
    for (int i=0; i<array_size(o->illegalto); i++) {
       lua_pushfaction( L, o->illegalto[i] );
       lua_rawseti( L, -2, i+1 );
+   }
+   return 1;
+}
+
+/**
+ * @brief Gets the outfit tags.
+ *
+ * @usage if o:tags["fancy"] then -- Has "fancy" tag
+ *
+ *    @luatparam Outfit o Outfit to get tags of.
+ *    @luatreturn table Table of tags where the name is the key and true is the value.
+ * @luafunc tags
+ */
+static int outfitL_tags( lua_State *L )
+{
+   const Outfit *o = luaL_validoutfit(L,1);
+   lua_newtable(L);
+   for (int i=0; i<array_size(o->tags); i++) {
+      lua_pushstring(L,o->tags[i]);
+      lua_pushboolean(L,1);
+      lua_rawset(L,-3);
    }
    return 1;
 }

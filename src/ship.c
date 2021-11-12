@@ -1073,6 +1073,11 @@ void ships_free (void)
 
       array_free(s->trail_emitters);
       array_free(s->polygon);
+
+      /* Free tags. */
+      for (int j=0; j<array_size(s->tags); j++)
+         free(s->tags[j]);
+      array_free(s->tags);
    }
 
    array_free(ship_stack);
