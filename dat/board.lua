@@ -299,20 +299,15 @@ local function board_lootAll ()
    end
 end
 
-local can_cannibalize_ships = {
-   ["Soromid Arx"] = true,
-   ["Soromid Brigand"] = true,
-   ["Soromid Ira"] = true,
-   ["Soromid Marauder"] = true,
-   ["Soromid Nyx"] = true,
-   ["Soromid Odium"] = true,
-   ["Soromid Reaver"] = true,
-   ["Soromid Vox"] = true,
-}
 local function can_cannibalize ()
    local pp = player.pilot()
-   if can_cannibalize_ships[ pp:ship():nameRaw() ] then
+   if pp:ship():tags().cannibal then
       return true
+   end
+   for _k,o in ipairs(pp:outfits()) do
+      if o:tags().cannibal then
+         return true
+      end
    end
    return false
 end

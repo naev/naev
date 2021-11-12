@@ -59,4 +59,7 @@
   <shield_regen_mod>20</shield_regen_mod>
   <misc_instant_jump>1</misc_instant_jump>
  </stats>
+ <tags>
+  <tag>cannibal</tag>
+ </tags>
 </ship>
