@@ -202,8 +202,8 @@ function enter()
          target:setFaction("Warlords")
 
          hook.pilot(target, "death","lastOne_died")
-         hook.pilot(target, "jump","lastOne_jump")
-         hook.pilot(target, "land","lastOne_land")
+         hook.pilot(target, "jump","lastOne_jumped")
+         hook.pilot(target, "land","lastOne_landed")
       else
       tk.msg(_("What are you doing here?"), fmt.f(_("You were supposed to jump to {sys}."), {sys=nextt}))
          misn.finish(false)
