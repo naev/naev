@@ -65,7 +65,6 @@ function create ()
    landed = true
 
    for i, j in ipairs( dest_planets ) do
-      local p, sys
       p, sys = planet.getS( j )
       misn.markerAdd( p, "computer" )
    end

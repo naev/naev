@@ -43,9 +43,9 @@ function create ()
 
    -- Find uninhabited planet
    local planets = {}
-   for _k,p in ipairs(scur:planets()) do
-      if not p:services().inhabited then
-         table.insert( planets, p )
+   for _k,pk in ipairs(scur:planets()) do
+      if not pk:services().inhabited then
+         table.insert( planets, pk )
       end
    end
    local spawn_pos
@@ -53,8 +53,8 @@ function create ()
       local rad = scur:radius()
       spawn_pos = vec2.newP( rnd.rnd(0,rad*0.5), rnd.rnd(0,360) )
    else
-      local p = planets[rnd.rnd(1,#planets)]
-      spawn_pos = p:pos() + vec2.newP( p:radius()+100*rnd.rnd(), rnd.rnd(0,360) )
+      local pnt = planets[rnd.rnd(1,#planets)]
+      spawn_pos = pnt:pos() + vec2.newP( pnt:radius()+100*rnd.rnd(), rnd.rnd(0,360) )
    end
 
    -- Create pilot

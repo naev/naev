@@ -43,7 +43,7 @@ function create ()
    local max = 7
    local systems = lmisn.getSysAtDistance(system.cur(), min, max)
    if #systems == 0 then
-      local systems = lmisn.getSysAtDistance(system.cur(), 1, 15)
+      systems = lmisn.getSysAtDistance(system.cur(), 1, 15)
       if #systems == 0 then
          osd_title = _("Houston, we have a problem!")
          gawsys = system.get("Alteris")
