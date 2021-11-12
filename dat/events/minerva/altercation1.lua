@@ -52,23 +52,23 @@ function create ()
    if not evt.claim( system.get("Limbo") ) then evt.finish( false ) end
 
    -- Create scuffle
-   local zl = vn.Character.new( _("Za'lek Belligerent"),
+   local vn_zl = vn.Character.new( _("Za'lek Belligerent"),
          { image=zalek_image, color=zalek_colour, pos="left" } )
-   local dv = vn.Character.new( _("Dvaered Hooligan"),
+   local vn_dv = vn.Character.new( _("Dvaered Hooligan"),
          { image=dvaered_image, color=dvaered_colour, pos="right" } )
    vn.clear()
    vn.scene()
    vn.music( minerva.loops.conflict )
    vn.transition()
    vn.na( _("You hear a large commotion in one of the wings of Minerva Station. As you approach you can make out what seems to be an altercation between a group of Za'lek and Dvaered ruffians.") )
-   vn.appear( {zl, dv} )
-   dv( _([["You were using a bloody computation drone to cheat, you dirty Za'lek stink!"]]) )
-   zl( _([["Your logic makes no sense. Are you sure the excessive amounts of alcohol aren't making your rotten brain hallucinate?"]]) )
-   dv( _([["You won't trick me with your fancy words. I know a cheater when I see one!"]]) )
-   zl( _([["I wouldn't trust your judgment on bricks let alone anything that requires minimal intellect."]]) )
-   dv( _([["You Za'lek punk. Bring your ass outside and I will fill your ship with holes just like your lies!"]]) )
-   zl( _([["When you are getting eviscerated by my drones, I hope you realize you have brought this upon yourself, Dvaered trash!"]]) )
-   vn.disappear( {zl, dv} )
+   vn.appear( {vn_zl, vn_dv} )
+   vn_dv( _([["You were using a bloody computation drone to cheat, you dirty Za'lek stink!"]]) )
+   vn_zl( _([["Your logic makes no sense. Are you sure the excessive amounts of alcohol aren't making your rotten brain hallucinate?"]]) )
+   vn_dv( _([["You won't trick me with your fancy words. I know a cheater when I see one!"]]) )
+   vn_zl( _([["I wouldn't trust your judgment on bricks let alone anything that requires minimal intellect."]]) )
+   vn_dv( _([["You Za'lek punk. Bring your ass outside and I will fill your ship with holes just like your lies!"]]) )
+   vn_zl( _([["When you are getting eviscerated by my drones, I hope you realize you have brought this upon yourself, Dvaered trash!"]]) )
+   vn.disappear( {vn_zl, vn_dv} )
    vn.na( _("The Za'lek and Dvaered ruffians storm off to their ships to apparently fight to the death to solve their quarrel. Truly civilized individuals.\nIt seems like it could be an opportunity to curry favour with either one of the factions if you wished to intervene in their fight.") )
    vn.run()
 

@@ -41,7 +41,7 @@ local misn_target_sys = system.get("C-59")
 
 osd_msg = {__save=true}
 
-local function setOSD (dronequota, droneleft)
+local function setOSD (droneleft)
    local destroy_text, remaining_text
    destroy_text = gettext.ngettext(
          "Destroy at least %d drone",
@@ -85,7 +85,7 @@ function accept ()
       tk.msg( _("Collective Espionage"), _([["If all goes well, the commandos will return here with the results after 10 periods. Then we'll have a definitive answer on the communications issues. We aren't anticipating problems on the return, but we'll have some ships ready just in case they're pursued.
     "Good luck and be careful out there," he adds, before saluting you off onto your mission.]]) )
       osd_msg[1] = fmt.f(_("Fly to the {sys} system"), {sys=misn_target_sys})
-      setOSD(dronequota, droneleft)
+      setOSD(droneleft)
       osd_msg[3] = fmt.f(_("Return to {pnt}"), {pnt=misn_base})
       misn.osdCreate(_("Collective Distraction"), osd_msg)
 
@@ -107,7 +107,7 @@ end
 function death(pilot)
     if pilot:faction() == faction.get("Collective") and (pilot:ship() == ship.get("Drone") or pilot:ship() == ship.get("Heavy Drone")) and droneleft > 0 then
         droneleft = droneleft - 1
-        setOSD(dronequota, droneleft)
+        setOSD(droneleft)
         misn.osdCreate(_("Collective Distraction"), osd_msg)
         misn.osdActive(2)
         if droneleft == 0 then

@@ -124,9 +124,9 @@ function create()
    cargo = cargo[1] -- set it to name only
 
    -- mission generics
-   stuperpx   = 0.3 - 0.015 * tier
-   stuperjump = 11000 - 200 * tier
-   stupertakeoff = 12000 - 50 * tier
+   local stuperpx   = 0.3 - 0.015 * tier
+   local stuperjump = 11000 - 200 * tier
+   local stupertakeoff = 12000 - 50 * tier
    timelimit  = time.get() + time.create(0, 0, traveldist * stuperpx + numjumps * stuperjump + stupertakeoff + 240 * numjumps)
 
    -- Allow extra time for refuelling stops.

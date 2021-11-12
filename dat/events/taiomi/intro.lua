@@ -223,10 +223,10 @@ The voice sounds uncanny, almost human but something sets it apart.]]))
    player.pilot():control(false)
 
    -- Drones just run around
-   for k,d in ipairs(drones) do
-      d:control(false)
-      d:setNoJump(true)
-      local aimem = d:memory()
+   for k,dk in ipairs(drones) do
+      dk:control(false)
+      dk:setNoJump(true)
+      local aimem = dk:memory()
       aimem.loiter = math.huge -- Should make them loiter forever
    end
 

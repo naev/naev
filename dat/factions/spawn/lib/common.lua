@@ -50,8 +50,8 @@ end
 
 -- @brief Calculates when next spawn should occur
 function scom.calcNextSpawn( cur )
-   new = scom.presence( scom._spawn_data )
-   max = scom._max
+   local new = scom.presence( scom._spawn_data )
+   local max = scom._max
 
    if cur == 0 then return rnd.rnd(0, 10) end -- Kickstart spawning.
 

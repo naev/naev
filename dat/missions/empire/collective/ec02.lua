@@ -145,9 +145,9 @@ function cameraZoom(args)
     camera.set(targ, true, speed)
 end
 
-function moveSwarm(fleet, pos)
-    local dpos = pos - fleet[1]:pos()
-    for _, j in ipairs(fleet) do
+function moveSwarm(flt, pos)
+    local dpos = pos - flt[1]:pos()
+    for _, j in ipairs(flt) do
         if j:exists() then
             j:control()
             j:setVisplayer(true)
@@ -156,8 +156,8 @@ function moveSwarm(fleet, pos)
     end
 end
 
-local function removeSwarm(fleet)
-    for _, j in ipairs(fleet) do
+local function removeSwarm(flt)
+    for _, j in ipairs(flt) do
         if j:exists() then
             j:rm()
         end
