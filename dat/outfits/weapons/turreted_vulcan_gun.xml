@@ -6,7 +6,7 @@
   <mass>30</mass>
   <license>Heavy Weapon License</license>
   <rarity>1</rarity>
-  <price>43000</price>
+  <price>73000</price>
   <description>Turreted Vulcan Guns pack the same caliber ammunition as their fixed mount brethren. Ships not nimble enough to evade its relentless stream of projectiles might find themselves riddled with hull punctures before long.</description>
   <gfx_store>vulcanturret.webp</gfx_store>
   <cpu>-50</cpu>
