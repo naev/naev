@@ -36,7 +36,7 @@ local fmt = require "format"
 --  4: duel finished
 --  5: return to Kex
 misn_state = nil
-local enemies, enemies_weak, pmaikki, pmalik, thug_leader, thug_pilots -- Non-persistent state
+local enemies, enemies_weak, pmalik, thug_leader, thug_pilots -- Non-persistent state
 
 local targetplanet, targetsys = planet.getS("Trincea")
 local lastplanet, lastsys = planet.getS("Totoran")
@@ -555,7 +555,7 @@ function maikki_arrives_real( pos )
    p:setFriendly(true)
    p:control()
    p:attack( pmalik )
-   pmaikki = p
+   --pmaikki = p
 
    -- Make really really strong
    p:intrinsicSet( "armour", 1e6 )
@@ -572,9 +572,9 @@ function maikki_arrives_real( pos )
    player.omsgAdd( _("Ho ho ho and a bottle of rum!"), 5, nil, col )
 
    -- Disable some of the vendettas
-   for k,p in ipairs(enemies_weak) do
-      if p:exists() and rnd.rnd() < 0.5 then
-         p:disable()
+   for k,pk in ipairs(enemies_weak) do
+      if pk:exists() and rnd.rnd() < 0.5 then
+         pk:disable()
       end
    end
 end
