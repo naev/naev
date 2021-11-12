@@ -223,7 +223,7 @@ function do_msg2 ()
 end
 
 function spawn_baddies(sp)
-   local badguys = {}
+   badguys = {}
    --hyenas
    for i=1,2 do
       badguys[i] = pilot.add("Za'lek Light Drone", "Mercenary", sp, _("Mercenary") )
