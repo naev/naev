@@ -695,7 +695,7 @@ function create_post ()
 
    -- Give a small delay
    if mem.jumpedin then
-      ai.settimer( 0, rnd.uniform(3.0, 5.0) )
+      ai.settimer( 0, rnd.uniform(5.0, 6.0) )
       ai.pushtask("idle_wait")
    end
 end
