@@ -28,7 +28,7 @@ local fmt = require "format"
 local flf = require "missions.flf.flf_common"
 
 local civ_fleet, dv_fleet, pir_boss, pir_fleet -- Non-persistent state
-local finish, pilot_death_civilian -- Forward-declared functions
+local finish -- Forward-declared functions
 
 osd_desc    = {__save=true}
 osd_desc[2] = _("Wait until the coast is clear, then hail one of your wingmates")
@@ -192,6 +192,7 @@ function timer_start ()
          j:hyperspace( dest )
          j:setVisible()
          hook.pilot( j, "attacked", "pilot_attacked_civilian" )
+         hook.pilot( j, "death", "pilot_death_civilian" )
       end
    else
       timer_start_hook = hook.timer( 0.05, "timer_start" )

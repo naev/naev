@@ -27,7 +27,7 @@ local fleet = require "fleet"
 local flf = require "missions.flf.flf_common"
 
 local civ_fleet, pir_boss, pir_fleet -- Non-persistent state
-local finish, pilot_death_civilian -- Forward-declared functions
+local finish -- Forward-declared functions
 
 osd_desc    = {}
 osd_desc[1] = _("Fly to the {sys} system and meet with the group of FLF ships")
@@ -176,6 +176,7 @@ function timer_start ()
          j:hyperspace( dest )
          j:setVisible()
          hook.pilot( j, "attacked", "pilot_attacked_civilian" )
+         hook.pilot( j, "death", "pilot_death_civilian" )
       end
    else
       timer_start_hook = hook.timer( 0.05, "timer_start" )
