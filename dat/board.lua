@@ -185,6 +185,13 @@ local function compute_lootables ( plt )
       table.insert( lootables, cargo_loot( c.c, c.q, c.m ) )
    end
 
+   -- Display nice versions of the quantity
+   for _k,c in ipairs(lootables) do
+      if c.q then
+         c.qs = fmt.number( c.q )
+      end
+   end
+
    return lootables
 end
 
@@ -240,9 +247,9 @@ function wgtBoard:draw( bx, by )
       local th = #wrap * font:getLineHeight()
       lg.printf( txt, luatk._deffont, x, y+(h-th)/2, w, 'center' )
    end
-   if l.q then
+   if l.qs then
       lg.setColor( luatk.colour.text )
-      lg.printf( string.format("%d",l.q), luatk._deffont, x+5, y+5, w-10, 'right' )
+      lg.printf( l.qs, luatk._deffont, x+5, y+5, w-10, 'right' )
    end
 end
 function wgtBoard:drawover( bx, by )
@@ -483,6 +490,10 @@ function board_lootOne( wgt, nomsg )
    if clear then
       wgt.selected = false
       wgt.loot = nil
+   else
+      if l.q then
+         l.qs = fmt.number( l.q )
+      end
    end
    return looted
 end
