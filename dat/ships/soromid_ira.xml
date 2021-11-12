@@ -60,4 +60,7 @@
   <fwd_damage>10</fwd_damage>
   <tur_damage>-10</tur_damage>
  </stats>
+ <tags>
+  <tag>cannibal</tag>
+ </tags>
 </ship>

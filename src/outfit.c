@@ -2307,6 +2307,21 @@ static int outfit_parse( Outfit* temp, const char* file )
          continue;
       }
 
+      /* Parse tags. */
+      if (xml_isNode(node, "tags")) {
+         xmlNodePtr cur = node->children;
+         temp->tags = array_create( char* );
+         do {
+            xml_onlyNodes(cur);
+            if (xml_isNode(cur, "tag")) {
+               char *tmp = xml_get(cur);
+               if (tmp != NULL)
+                  array_push_back( &temp->tags, strdup(tmp) );
+            }
+         } while (xml_nextNode(cur));
+         continue;
+      }
+
       if (xml_isNode(node,"specific")) { /* has to be processed separately */
 
          /* get the type */
@@ -2800,6 +2815,11 @@ void outfit_free (void)
       for (int j=0; j<array_size(o->gfx_overlays); j++)
          gl_freeTexture(o->gfx_overlays[j]);
       array_free(o->gfx_overlays);
+
+      /* Free tags. */
+      for (int j=0; j<array_size(o->tags); j++)
+         free(o->tags[j]);
+      array_free(o->tags);
    }
 
    array_free(outfit_stack);

@@ -631,10 +631,8 @@ static int ship_parseSlot( Ship *temp, ShipOutfitSlot *slot, OutfitSlotType type
  */
 static int ship_parse( Ship *temp, xmlNodePtr parent )
 {
-   int i;
-   xmlNodePtr cur, node;
+   xmlNodePtr node;
    int sx, sy;
-   char *buf;
    char str[PATH_MAX];
    int noengine;
    ShipStatList *ll;
@@ -674,7 +672,7 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
 
       if (xml_isNode(node,"GFX")) {
          /* Get base graphic name. */
-         buf = xml_get(node);
+         char *buf = xml_get(node);
          if (buf==NULL) {
             WARN(_("Ship '%s': GFX element is NULL"), temp->name);
             continue;
@@ -704,9 +702,8 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
       }
 
       if (xml_isNode(node,"gfx_space")) {
-
          /* Get path */
-         buf = xml_get(node);
+         char *buf = xml_get(node);
          if (buf==NULL) {
             WARN(_("Ship '%s': gfx_space element is NULL"), temp->name);
             continue;
@@ -724,9 +721,8 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
       }
 
       if (xml_isNode(node,"gfx_engine")) {
-
          /* Get path */
-         buf = xml_get(node);
+         char *buf = xml_get(node);
          if (buf==NULL) {
             WARN(_("Ship '%s': gfx_engine element is NULL"), temp->name);
             continue;
@@ -745,7 +741,7 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
 
       if (xml_isNode(node,"gfx_comm")) {
          /* Get path */
-         buf = xml_get(node);
+         char *buf = xml_get(node);
          if (buf==NULL) {
             WARN(_("Ship '%s': gfx_comm element is NULL"), temp->name);
             continue;
@@ -755,7 +751,7 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
          continue;
       }
       if (xml_isNode(node,"gfx_overlays")) {
-         cur = node->children;
+         xmlNodePtr cur = node->children;
          temp->gfx_overlays = array_create_size( glTexture*, 2 );
          do {
             xml_onlyNodes(cur);
@@ -785,6 +781,7 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
       xmlr_int(node,"rarity",temp->rarity);
 
       if (xml_isNode(node,"trail_generator")) {
+         char *buf;
          xmlr_attr_float( node, "x", trail.x_engine );
          xmlr_attr_float( node, "y", trail.y_engine );
          xmlr_attr_float( node, "h", trail.h_engine );
@@ -802,7 +799,7 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
       }
 
       if (xml_isNode(node,"movement")) {
-         cur = node->children;
+         xmlNodePtr cur = node->children;
          do {
             xml_onlyNodes(cur);
             xmlr_float(cur,"thrust",temp->thrust);
@@ -814,7 +811,7 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
          continue;
       }
       if (xml_isNode(node,"health")) {
-         cur = node->children;
+         xmlNodePtr cur = node->children;
          do {
             xml_onlyNodes(cur);
             xmlr_float(cur,"absorb",temp->dmg_absorb);
@@ -830,7 +827,7 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
          continue;
       }
       if (xml_isNode(node,"characteristics")) {
-         cur = node->children;
+         xmlNodePtr cur = node->children;
          do {
             xml_onlyNodes(cur);
             xmlr_int(cur,"crew",temp->crew);
@@ -851,7 +848,7 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
          temp->outfit_weapon     = array_create( ShipOutfitSlot );
 
          /* Initialize the mounts. */
-         cur = node->children;
+         xmlNodePtr cur = node->children;
          do {
             xml_onlyNodes(cur);
             if (xml_isNode(cur,"structure"))
@@ -871,7 +868,7 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
 
       /* Parse ship stats. */
       if (xml_isNode(node,"stats")) {
-         cur = node->children;
+         xmlNodePtr cur = node->children;
          do {
             xml_onlyNodes(cur);
             ll = ss_listFromXML( cur );
@@ -889,6 +886,7 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
 
          /* Create description. */
          if (temp->stats != NULL) {
+            int i;
             temp->desc_stats = malloc( STATS_DESC_MAX );
             i = ss_statsListDesc( temp->stats, temp->desc_stats, STATS_DESC_MAX, 0 );
             if (i <= 0) {
@@ -897,6 +895,21 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
             }
          }
 
+         continue;
+      }
+
+      /* Parse tags. */
+      if (xml_isNode(node, "tags")) {
+         xmlNodePtr cur = node->children;
+         temp->tags = array_create( char* );
+         do {
+            xml_onlyNodes(cur);
+            if (xml_isNode(cur, "tag")) {
+               char *tmp = xml_get(cur);
+               if (tmp != NULL)
+                  array_push_back( &temp->tags, strdup(tmp) );
+            }
+         } while (xml_nextNode(cur));
          continue;
       }
 
@@ -1060,6 +1073,11 @@ void ships_free (void)
 
       array_free(s->trail_emitters);
       array_free(s->polygon);
+
+      /* Free tags. */
+      for (int j=0; j<array_size(s->tags); j++)
+         free(s->tags[j]);
+      array_free(s->tags);
    }
 
    array_free(ship_stack);

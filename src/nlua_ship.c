@@ -1,13 +1,11 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
 /**
  * @file nlua_ship.c
  *
  * @brief Handles the Lua ship bindings.
  */
-
 /** @cond */
 #include <lauxlib.h>
 
@@ -24,12 +22,10 @@
 #include "rng.h"
 #include "slots.h"
 
-
 /*
  * Prototypes.
  */
 static const OutfitSlot* ship_outfitSlotFromID( const Ship *s, int id );
-
 
 /* Ship metatable methods. */
 static int shipL_eq( lua_State *L );
@@ -54,6 +50,7 @@ static int shipL_getSize( lua_State *L );
 static int shipL_description( lua_State *L );
 static int shipL_getShipStat( lua_State *L );
 static int shipL_getShipStatDesc( lua_State *L );
+static int shipL_tags( lua_State *L );
 static const luaL_Reg shipL_methods[] = {
    { "__tostring", shipL_name },
    { "__eq", shipL_eq },
@@ -78,11 +75,9 @@ static const luaL_Reg shipL_methods[] = {
    { "description", shipL_description },
    { "shipstat", shipL_getShipStat },
    { "shipstatDesc", shipL_getShipStatDesc },
+   { "tags", shipL_tags },
    {0,0}
 }; /**< Ship metatable methods. */
-
-
-
 
 /**
  * @brief Loads the ship library.
@@ -95,7 +90,6 @@ int nlua_loadShip( nlua_env env )
    nlua_register(env, SHIP_METATABLE, shipL_methods, 1);
    return 0;
 }
-
 
 /**
  * @brief Lua bindings to interact with ships.
@@ -199,7 +193,6 @@ int lua_isship( lua_State *L, int ind )
    return ret;
 }
 
-
 /**
  * @brief Checks to see if two ships are the same.
  *
@@ -222,7 +215,6 @@ static int shipL_eq( lua_State *L )
    return 1;
 }
 
-
 /**
  * @brief Gets a ship.
  *
@@ -238,7 +230,6 @@ static int shipL_get( lua_State *L )
    lua_pushship(L, ship);
    return 1;
 }
-
 
 /**
  * @brief Gets a table containing all the ships.
@@ -256,7 +247,6 @@ static int shipL_getAll( lua_State *L )
    }
    return 1;
 }
-
 
 /**
  * @brief Gets the translated name of the ship.
@@ -278,7 +268,6 @@ static int shipL_name( lua_State *L )
    return 1;
 }
 
-
 /**
  * @brief Gets the raw (untranslated) name of the ship.
  *
@@ -299,7 +288,6 @@ static int shipL_nameRaw( lua_State *L )
    return 1;
 }
 
-
 /**
  * @brief Gets the raw (untranslated) name of the ship's base type.
  *
@@ -318,7 +306,6 @@ static int shipL_baseType( lua_State *L )
    return 1;
 }
 
-
 /**
  * @brief Gets the raw (untranslated) name of the ship's class.
  *
@@ -334,7 +321,6 @@ static int shipL_class( lua_State *L )
    lua_pushstring(L, ship_class(s));
    return 1;
 }
-
 
 /**
  * @brief Gets the raw (untranslated) display name of the ship's class (not ship's base class).
@@ -352,7 +338,6 @@ static int shipL_classDisplay( lua_State *L )
    return 1;
 }
 
-
 /**
  * @brief Gets the point value of a ship. Used for comparing relative ship strengths (minus outfits).
  *
@@ -368,7 +353,6 @@ static int shipL_getPoints( lua_State *L )
    lua_pushinteger(L, s->points);
    return 1;
 }
-
 
 /**
  * @brief Gets the amount of the ship's slots.
@@ -390,7 +374,6 @@ static int shipL_slots( lua_State *L )
    lua_pushnumber(L, array_size(s->outfit_structure));
    return 3;
 }
-
 
 /**
  * @brief Get a table of slots of a ship, where a slot is a table with a string size, type, and property
@@ -455,7 +438,6 @@ static int shipL_getSlots( lua_State *L )
    return 1;
 }
 
-
 /**
  * @brief Gets an outfit slot from ID.
  *
@@ -468,17 +450,15 @@ static const OutfitSlot* ship_outfitSlotFromID( const Ship *s, int id )
          s->outfit_structure,
          s->outfit_utility,
          s->outfit_weapon };
-   int i, n;
 
-   for (i=0; i<3 ; i++) {
-      n = array_size(outfit_arrays[i]);
+   for (int i=0; i<3 ; i++) {
+      int n = array_size(outfit_arrays[i]);
       if (id <= n)
          return &outfit_arrays[i][ id-1 ].slot;
       id -= n;
    }
    return NULL;
 }
-
 
 /**
  * @brief Checks to see if an outfit fits a ship slot.
@@ -499,7 +479,6 @@ static int shipL_fitsSlot( lua_State *L )
    return 1;
 }
 
-
 /**
  * @brief Gets the ship available CPU.
  *
@@ -515,7 +494,6 @@ static int shipL_CPU( lua_State *L )
    lua_pushnumber(L, s->cpu);
    return 1;
 }
-
 
 /**
  * @brief Gets the ship's price, with and without default outfits.
@@ -535,7 +513,6 @@ static int shipL_price( lua_State *L )
    return 2;
 }
 
-
 /**
  * @brief Gets the ship's time_mod.
  *
@@ -550,7 +527,6 @@ static int shipL_time_mod( lua_State *L )
    return 1;
 }
 
-
 /**
  * @brief Gets the ship's size. Ultra-light is 1, light is 2, medium is 3, heavy-medium is 4, heavy is 5, and super-heavy is 6.
  *
@@ -564,7 +540,6 @@ static int shipL_getSize( lua_State *L )
    lua_pushinteger(L, ship_size(s) );
    return 1;
 }
-
 
 /**
  * @brief Gets the ship's comm graphics.
@@ -589,7 +564,6 @@ static int shipL_gfxComm( lua_State *L )
    return 1;
 }
 
-
 /**
  * @brief Gets the ship's target graphics.
  *
@@ -603,7 +577,7 @@ static int shipL_gfxComm( lua_State *L )
  */
 static int shipL_gfxTarget( lua_State *L )
 {
-   const Ship *s        = luaL_validship(L,1);
+   const Ship *s  = luaL_validship(L,1);
    glTexture *tex = gl_dupTexture( s->gfx_target );
    if (tex == NULL) {
       WARN(_("Unable to get ship target graphic for '%s'."), s->name);
@@ -612,7 +586,6 @@ static int shipL_gfxTarget( lua_State *L )
    lua_pushtex( L, tex );
    return 1;
 }
-
 
 /**
  * @brief Gets the ship's graphics.
@@ -627,7 +600,7 @@ static int shipL_gfxTarget( lua_State *L )
  */
 static int shipL_gfx( lua_State *L )
 {
-   const Ship *s        = luaL_validship(L,1);
+   const Ship *s  = luaL_validship(L,1);
    glTexture *tex = gl_dupTexture( s->gfx_space );
    if (tex == NULL) {
       WARN(_("Unable to get ship graphic for '%s'."), s->name);
@@ -636,7 +609,6 @@ static int shipL_gfx( lua_State *L )
    lua_pushtex( L, tex );
    return 1;
 }
-
 
 /**
  * @brief Gets the description of the ship.
@@ -653,7 +625,6 @@ static int shipL_description( lua_State *L )
    lua_pushstring(L, s->description);
    return 1;
 }
-
 
 /**
  * @brief Gets a shipstat from an Ship by name, or a table containing all the ship stats if not specified.
@@ -673,7 +644,6 @@ static int shipL_getShipStat( lua_State *L )
    return 1;
 }
 
-
 /**
  * @brief Gets the ship stats description for a ship.
  *
@@ -684,8 +654,29 @@ static int shipL_getShipStat( lua_State *L )
 static int shipL_getShipStatDesc( lua_State *L )
 {
    char buf[STRMAX];
-   const Ship *s     = luaL_validship(L,1);
+   const Ship *s = luaL_validship(L,1);
    ss_statsDesc( &s->stats_array, buf, sizeof(buf), 0 );
    lua_pushstring(L,buf);
+   return 1;
+}
+
+/**
+ * @brief Gets the ship tags.
+ *
+ * @usage if s:tags["fancy"] then -- Has "fancy" tag
+ *
+ *    @luatparam Ship s Ship to get tags of.
+ *    @luatreturn table Table of tags where the name is the key and true is the value.
+ * @luafunc tags
+ */
+static int shipL_tags( lua_State *L )
+{
+   const Ship *s = luaL_validship(L,1);
+   lua_newtable(L);
+   for (int i=0; i<array_size(s->tags); i++) {
+      lua_pushstring(L,s->tags[i]);
+      lua_pushboolean(L,1);
+      lua_rawset(L,-3);
+   }
    return 1;
 }

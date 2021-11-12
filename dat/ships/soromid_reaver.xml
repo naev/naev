@@ -42,4 +42,7 @@
   <armour_mod>-10</armour_mod>
   <ew_hide>10</ew_hide>
  </stats>
+ <tags>
+  <tag>cannibal</tag>
+ </tags>
 </ship>

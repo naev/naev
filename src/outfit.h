@@ -335,22 +335,25 @@ typedef struct Outfit_ {
    double cpu;       /**< CPU usage. */
    char *limit;      /**< Name to limit to one per ship (ignored if NULL). */
    int *illegalto;   /**< Factions this outfit is illegal to. */
-   char **illegaltoS; /**< Temporary buffer to set up illegality. */
+   char **illegaltoS;/**< Temporary buffer to set up illegality. */
 
    /* Store stuff */
    credits_t price;  /**< Base sell price. */
-   char *description; /**< Store description. */
+   char *description;/**< Store description. */
    char *desc_short; /**< Short outfit description. */
    int priority;     /**< Sort priority, highest first. */
 
-   glTexture* gfx_store; /**< Store graphic. */
-   glTexture** gfx_overlays; /**< Array (array.h): Store overlay graphics. */
+   glTexture* gfx_store;      /**< Store graphic. */
+   glTexture** gfx_overlays;  /**< Array (array.h): Store overlay graphics. */
 
-   unsigned int properties; /**< Properties stored bitwise. */
-   unsigned int group; /**< Weapon group to use when autoweap is enabled. */
+   unsigned int properties;   /**< Properties stored bitwise. */
+   unsigned int group;        /**< Weapon group to use when autoweap is enabled. */
 
    /* Stats. */
    ShipStatList *stats; /**< Stat list. */
+
+   /* Tags. */
+   char **tags;      /**< Outfit tags. */
 
    /* Type dependent */
    OutfitType type; /**< Type of the outfit. */

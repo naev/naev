@@ -185,6 +185,13 @@ local function compute_lootables ( plt )
       table.insert( lootables, cargo_loot( c.c, c.q, c.m ) )
    end
 
+   -- Display nice versions of the quantity
+   for _k,c in ipairs(lootables) do
+      if c.q then
+         c.qs = fmt.number( c.q )
+      end
+   end
+
    return lootables
 end
 
@@ -240,9 +247,9 @@ function wgtBoard:draw( bx, by )
       local th = #wrap * font:getLineHeight()
       lg.printf( txt, luatk._deffont, x, y+(h-th)/2, w, 'center' )
    end
-   if l.q then
+   if l.qs then
       lg.setColor( luatk.colour.text )
-      lg.printf( string.format("%d",l.q), luatk._deffont, x+5, y+5, w-10, 'right' )
+      lg.printf( l.qs, luatk._deffont, x+5, y+5, w-10, 'right' )
    end
 end
 function wgtBoard:drawover( bx, by )
@@ -292,6 +299,41 @@ local function board_lootAll ()
    end
 end
 
+local function can_cannibalize ()
+   local pp = player.pilot()
+   if pp:ship():tags().cannibal then
+      return true
+   end
+   for _k,o in ipairs(pp:outfits()) do
+      if o:tags().cannibal then
+         return true
+      end
+   end
+   return false
+end
+
+local function board_cannibalize ()
+   local armour, shield = board_plt:health(true)
+   if armour <= 1 then
+      return
+   end
+   local bs = board_plt:stats()
+
+   local pp = player.pilot()
+   local ps = pp:stats()
+   local parmour, pshield, pstress = pp:health(true)
+
+   local dmg = math.min( (armour-1), 2*(ps.armour-parmour) )
+   if dmg <= 0 then
+      return
+   end
+
+   board_plt:setHealth( 100*(armour-dmg)/bs.armour, 100*shield/bs.shield, 100 )
+   pp:setHealth( 100*(parmour+dmg/2)/ps.armour, 100*pshield/ps.shield, pstress )
+
+   player.msg(fmt.f(_("Your ship cannibalized {armour:.0f} armour from {plt}."),{armour=dmg/2, plt=board_plt:name()}))
+end
+
 local function board_close ()
    luatk.close()
    board_wdw = nil
@@ -320,6 +362,9 @@ function board( plt )
    luatk.newButton( wdw, w-20-80, h-20-30, 80, 30, _("Close"), board_close )
    luatk.newButton( wdw, w-20-80-100, h-20-30, 80, 30, _("Loot"), board_lootSel )
    luatk.newButton( wdw, w-20-80-200, h-20-30, 80, 30, _("Loot All"), board_lootAll )
+   if can_cannibalize() then
+      luatk.newButton( wdw, w-20-80-350, h-20-30, 130, 30, _("Cannibalize"), board_cannibalize )
+   end
 
    luatk.newText( wdw, 0, 10, w, 20, fmt.f(_("Boarding {shipname}"),{shipname=plt:name()}), nil, "center" )
    board_freespace = luatk.newText( wdw, 20, 40, w-40, 20, "" )
@@ -440,6 +485,10 @@ function board_lootOne( wgt, nomsg )
    if clear then
       wgt.selected = false
       wgt.loot = nil
+   else
+      if l.q then
+         l.qs = fmt.number( l.q )
+      end
    end
    return looted
 end

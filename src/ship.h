@@ -117,7 +117,7 @@ typedef struct Ship_ {
    double energy_regen; /**< Maximum energy regeneration in MJ/s. */
    double dmg_absorb;   /**< Damage absorption in per one [0:1] with 1 being 100% absorption. */
 
-   /* graphics */
+   /* Graphics */
    Object *gfx_3d;         /**< 3d model of the ship */
    double gfx_3d_scale;    /**< scale for 3d model of the ship */
    glTexture *gfx_space;   /**< Space sprite sheet. */
@@ -128,37 +128,40 @@ typedef struct Ship_ {
    glTexture** gfx_overlays; /**< Array (array.h): Store overlay graphics. */
    ShipTrailEmitter* trail_emitters; /**< Trail emitters. */
 
-   /* collision polygon */
+   /* Collision polygon */
    CollPoly *polygon; /**< Array (array.h): Collision polygons. */
 
    /* GUI interface */
    char* gui;        /**< Name of the GUI the ship uses by default. */
 
-   /* sound */
+   /* Sound */
    int sound;        /**< Sound motor uses. */
 
-   /* outfits */
+   /* Outfits */
    ShipOutfitSlot *outfit_structure;/**< Array (array.h): Outfit structure slots. */
    ShipOutfitSlot *outfit_utility;  /**< Array (array.h): Outfit utility slots. */
    ShipOutfitSlot *outfit_weapon;   /**< Array (array.h): Outfit weapons slots. */
 
-   /* mounts */
+   /* Mounts */
    double mangle;    /**< Mount angle to simplify mount calculations. */
 
    /* Statistics. */
    char *desc_stats;       /**< Ship statistics information. */
    ShipStatList *stats;    /**< Ship statistics properties. */
    ShipStats stats_array;  /**< Laid out stats for referencing purposes. */
+
+   /* Tags. */
+   char **tags;   /**< Ship tags. */
 } Ship;
 
 /*
- * load/quit
+ * Load/quit
  */
 int ships_load (void);
 void ships_free (void);
 
 /*
- * get
+ * Getters.
  */
 const Ship* ship_get( const char* name );
 const Ship* ship_getW( const char* name );
@@ -174,6 +177,6 @@ glTexture* ship_loadCommGFX( const Ship* s );
 int ship_size( const Ship *s );
 
 /*
- * misc.
+ * Misc.
  */
 int ship_compareTech( const void *arg1, const void *arg2 );
