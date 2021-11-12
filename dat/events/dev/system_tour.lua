@@ -1,12 +1,12 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <event name="System Tour">
-  <trigger>none</trigger>
-  <chance>0</chance>
-  <flags>
-  </flags>
- </event>
- --]]
+ <trigger>none</trigger>
+ <chance>0</chance>
+ <flags>
+ </flags>
+</event>
+--]]
 --[[
 -- Tests system / overlay rendering by screenshotting each one.
 -- To use: land, put this line in the Lua console, and take off:
