@@ -36,8 +36,8 @@ require "proximity"
 local portrait = require "portrait"
 local fmt = require "format"
 
--- common hooks
-message = fw.message
+message = fw.message -- common hooks
+local Aidlehooks, Bidlehooks, alpha, attackers, canland, controls, hamelsen, jules, spy, toldya, wrlrds -- Non-persistent state
 
 -- TODO: hooks to penalize attacking people
 

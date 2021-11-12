@@ -36,6 +36,7 @@ local fmt = require "format"
 --  4: duel finished
 --  5: return to Kex
 misn_state = nil
+local enemies, enemies_weak, pmaikki, pmalik, thug_leader, thug_pilots -- Non-persistent state
 
 local targetplanet, targetsys = planet.getS("Trincea")
 local lastplanet, lastsys = planet.getS("Totoran")

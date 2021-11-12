@@ -30,6 +30,7 @@ local lmisn = require "lmisn"
 local car = require "common.cargo"
 local fmt = require "format"
 
+local ambush, convoy -- Non-persistent state
 
 local misn_title = {}
 misn_title[1] = _("Escort a tiny convoy to {pnt} in {sys}")

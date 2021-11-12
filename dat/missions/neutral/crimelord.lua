@@ -26,6 +26,8 @@ local fleet = require "fleet"
 
 local reward = 600e3
 
+local capship, defenders, thugs -- Non-persistent state
+
 function create ()
    targetsystem = system.get("Ogat")
 

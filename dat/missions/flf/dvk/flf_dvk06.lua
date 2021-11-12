@@ -26,6 +26,8 @@ local fmt = require "format"
 local fleet = require "fleet"
 local flf = require "missions.flf.flf_common"
 
+local civ_fleet, pir_boss, pir_fleet -- Non-persistent state
+
 osd_desc    = {}
 osd_desc[1] = _("Fly to the {sys} system and meet with the group of FLF ships")
 osd_desc[2] = _("Wait until the coast is clear, then hail one of your wingmates")

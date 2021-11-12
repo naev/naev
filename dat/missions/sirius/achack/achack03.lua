@@ -24,6 +24,8 @@ require "proximity"
 local srs = require "common.sirius"
 local fmt = require "format"
 
+local harja -- Non-persistent state
+
 local reward = 1e6
 
 function create()

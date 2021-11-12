@@ -41,6 +41,7 @@ local mainsys = system.get("Gammacron")
 --    2. mission time!
 --    3. hacking center disabled
 misn_state = nil
+local all_ships, drone_control1, drone_control2, drone_group1, drone_group2, hacking_center, main_boss -- Non-persistent state
 
 
 function create ()

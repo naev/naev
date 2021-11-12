@@ -64,6 +64,7 @@ local stealthsys = system.get("Zerantix")
 --    4: talk to scavengers, going to zerantix
 --    5: looted ship
 misn_state = nil
+local pscavA, pscavB, stealthmessages, waypoints, wreck -- Non-persistent state
 
 
 function create ()
@@ -457,7 +458,7 @@ function enter ()
 end
 
 cutscene_msg = 0
-cutscene_messages = {
+local cutscene_messages = {
    _("Sensors damaged. Requesting assistance."),
    _("S.O.S. Scavenger here, sensors damaged."),
    _("Is anybody out there? Sensors damaged, requesting assistance."),

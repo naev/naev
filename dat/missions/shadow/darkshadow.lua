@@ -23,6 +23,8 @@ local fmt = require "format"
 local shadow = require "common.shadow"
 require "proximity"
 
+local genbu, joe, leader, leaderdest, leaderstart, squads -- Non-persistent state
+
 -- Mission constants
 local seirplanet, seirsys = planet.getS("Edergast")
 local jorekplanet1, joreksys1 = planet.getS("Manis")

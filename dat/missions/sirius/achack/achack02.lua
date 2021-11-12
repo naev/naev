@@ -28,6 +28,7 @@ local srs = require "common.sirius"
 local fmt = require "format"
 local pir = require "common.pirate"
 
+local ambush, joanne -- Non-persistent state
 
 -- Mission constants
 local reward = 750e3

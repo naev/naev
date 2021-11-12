@@ -30,6 +30,7 @@ local fleet = require "fleet"
 local fmt = require "format"
 local zlk = require "common.zalek"
 
+local ships, transporter -- Non-persistent state
 
 -- Mission info stuff
 local osd_msg   = {}

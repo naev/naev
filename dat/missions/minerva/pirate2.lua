@@ -33,6 +33,7 @@ local jumpinsys = system.get("Pultatis")
 --    0: Go kill drone
 --    1: Get back to Minerva STation
 misn_state = nil
+local badweaps, drone1, drone2 -- Non-persistent state
 
 
 function create ()

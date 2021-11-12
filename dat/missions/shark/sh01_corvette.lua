@@ -36,6 +36,7 @@ local pir = require "common.pirate"
 local fmt = require "format"
 local shark = require "common.shark"
 
+local sharkboy -- Non-persistent state
 
 --Change here to change the planet and the system
 local battlesys = system.get("Toaxis")

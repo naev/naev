@@ -30,6 +30,7 @@ local fmt = require "format"
 require "proximity"
 local sciwrong = require "common.sciencegonewrong"
 
+local adm1, lance1, lance2 -- Non-persistent state
 
 -- set mission variables
 t_sys = { __save=true }

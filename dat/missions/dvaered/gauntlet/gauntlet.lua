@@ -18,6 +18,7 @@ local fmt = require "format"
 local equipopt = require 'equipopt'
 
 local logidstr = "log_gauntlet"
+local enemies, gmods, wave_enemies, wave_killed -- Non-persistent state
 
 -- TODO replace portraits/images
 local npc_portrait   = "minerva_terminal.png"

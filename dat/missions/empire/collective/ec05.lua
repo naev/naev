@@ -56,6 +56,7 @@ local misn_target_sys = system.get("Rockbed")
 local misn_flee_sys = system.get("Capricorn")
 
 -- Non-persistent state
+local drone_reinforcements, paci, trinity
 local escorts = {}
 
 function create ()

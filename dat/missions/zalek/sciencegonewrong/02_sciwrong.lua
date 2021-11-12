@@ -27,6 +27,8 @@
 local sciwrong = require "common.sciencegonewrong"
 local fmt = require "format"
 
+local badguys, bghook, t_drone -- Non-persistent state
+
 -- system with the drone and the return to start
 t_sys = { __save=true }
 t_pla = { __save=true }

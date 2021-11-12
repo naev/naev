@@ -34,6 +34,7 @@ local cat_colour = nil
 
 local owner_image = portrait.getFullPath( portrait.get() )
 local owner_colour = nil
+local owner -- Non-persistent state
 
 local meow = audio.newSource( "snd/sounds/meow.ogg" )
 

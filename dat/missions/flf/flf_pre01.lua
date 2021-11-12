@@ -28,6 +28,8 @@ local flf = require "missions.flf.flf_common"
 local fmt = require "format"
 local dv = require "common.dvaered"
 
+local fleetFLF -- Non-persistent state
+
 function create()
     local missys = {system.get(var.peek("flfbase_sysname"))}
     if not misn.claim(missys) then

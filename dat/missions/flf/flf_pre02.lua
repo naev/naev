@@ -34,6 +34,8 @@ local flf = require "missions.flf.flf_common"
 require "missions.flf.flf_patrol"
 local dv = require "common.dvaered"
 
+local boss -- Non-persistent state
+
 osd_desc = {__save=true}
 
 osd_desc[2] = _("Eliminate the Dvaered patrol")

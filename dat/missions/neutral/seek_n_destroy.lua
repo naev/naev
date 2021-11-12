@@ -37,6 +37,8 @@ local pilotname = require "pilotname"
 local lmisn = require "lmisn"
 
 local trigger_ambush, spawn_advisor, space_clue, next_sys -- Forward-declared functions
+local adm_factions, advisor, ambush, hailed, target_ship -- Non-persistent state
+
 local quotes = {}
 local comms = {}
 
@@ -123,7 +125,7 @@ function create ()
 
    -- Choose the target faction among Pirate and FLF
    adm_factions = {faction.get("Pirate"), faction.get("FLF")}
-   fact = {}
+   local fact = {}
    for i, j in ipairs(adm_factions) do
       if paying_faction:areEnemies(j) then
          fact[#fact+1] = j

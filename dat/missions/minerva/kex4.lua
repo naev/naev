@@ -36,6 +36,7 @@ local fmt = require "format"
 --  1: fight with dude
 --  2: return to kex
 misn_state = nil
+local enemies, jie, thug_leader, thug_pilots -- Non-persistent state
 
 local targetplanet, targetsys = planet.getS("Jorlan")
 

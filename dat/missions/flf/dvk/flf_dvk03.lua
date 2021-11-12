@@ -27,6 +27,8 @@ local fleet = require "fleet"
 local fmt = require "format"
 local flf = require "missions.flf.flf_common"
 
+local civ_fleet, dv_fleet, pir_boss, pir_fleet -- Non-persistent state
+
 osd_desc    = {__save=true}
 osd_desc[2] = _("Wait until the coast is clear, then hail one of your wingmates")
 osd_desc[3] = _("Attack Raelid Outpost until it is destroyed")

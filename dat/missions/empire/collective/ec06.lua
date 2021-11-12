@@ -38,6 +38,8 @@ local misn_target_sys1 = system.get("C-59")
 local misn_target_sys2 = system.get("C-28")
 local misn_final_sys = system.get("C-00")
 
+local droneC, fleetC, fleetE, refesc, refship -- Non-persistent state
+
 function create ()
     local missys = {misn_target_sys1, misn_target_sys2, misn_final_sys}
     if not misn.claim(missys) then

@@ -27,6 +27,8 @@ local fleet = require "fleet"
 local fmt = require "format"
 local srs = require "common.sirius"
 
+local de_fence, de_fence_2, sirius_be_serious -- Non-persistent state
+
 function create()
    --this mission makes one mission claim, in Suna.
    --initialize your variables
@@ -141,7 +143,7 @@ end
 
 function second_coming()
    local assault_force = {"Sirius Divinity", "Sirius Dogma", "Sirius Dogma", "Sirius Preacher", "Sirius Preacher", "Sirius Preacher", "Sirius Fidelity", "Sirius Fidelity", "Sirius Fidelity", "Sirius Fidelity", "Sirius Fidelity", "Sirius Fidelity"}
-   sirius_be_serious_2 = fleet.add( 1, assault_force, "Sirius", system.get("Herakin") )
+   local sirius_be_serious_2 = fleet.add( 1, assault_force, "Sirius", system.get("Herakin") )
    for i,p in ipairs(sirius_be_serious_2) do
       table.insert(sirius_be_serious,p) --inserting into the original table, for the death function.
       p:setHilight()

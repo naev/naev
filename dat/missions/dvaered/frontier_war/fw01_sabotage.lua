@@ -51,6 +51,7 @@ local intpla, intsys     = planet.getS("Timu")
 
 -- Non-persistent state
 local p, ps -- active pilot/fleet
+local battleaddict, hamelsen, klank, leblanc, randguy, tam, urnus, warlord -- pilots in the plot
 
 function create()
    if planet.cur() == hampla then

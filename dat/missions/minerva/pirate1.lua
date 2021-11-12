@@ -38,6 +38,7 @@ local runawaysys = system.get("Pultatis")
 --    3: Run away
 --    4: Get back to Minerva STation
 misn_state = nil
+local boss, drone, thugs -- Non-persistent state
 
 
 function create ()

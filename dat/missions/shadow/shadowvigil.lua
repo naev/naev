@@ -34,6 +34,8 @@ local misssys = {
    system.get("Doranthex"),     -- Final destination
 }
 
+local ambush, diplomat, dvaerplomat, escorts, seiryuu -- Non-persistent state
+
 -- Make a pilot say a line, if he is alive. Mainly useful in sequential chat messages.
 -- argument chat: A table containing:
 -- pilot: The pilot to say the text

@@ -24,6 +24,8 @@ require "proximity"
 local srs = require "common.sirius"
 local fmt = require "format"
 
+local bhfleet, harja -- Non-persistent state
+
 local grumblings = {
 	        _("Where's that Harja? He should be showing up any time now."),
                 _("I can't wait to pay that Harja back for the stunt he pulled."),

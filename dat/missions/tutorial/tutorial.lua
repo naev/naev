@@ -20,6 +20,8 @@ local tut = require "common.tutorial"
 local vn = require "vn"
 local vntk = require "vntk"
 
+local captainTP -- Non-persistent state
+
 local missys = system.get( "Delta Polaris" )
 local destsys = system.get( "Jade" )
 local start_planet = planet.get( "Bolero" )

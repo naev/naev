@@ -37,6 +37,8 @@ local fmt = require "format"
 local misn_base, misn_base_sys = planet.getS("Omega Station")
 local misn_target, misn_target_sys = planet.getS("Eiroik")
 
+local swarm1, swarm2, swarm3 -- Non-persistent state
+
 function create ()
     local missys = {misn_target}
     if not misn.claim(missys) then

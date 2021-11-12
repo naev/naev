@@ -28,6 +28,7 @@
 local fmt = require "format"
 local sciwrong = require "common.sciencegonewrong"
 
+local target -- Non-persistent state
 
 -- mission variables
 t_sys = { __save=true }

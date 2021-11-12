@@ -39,8 +39,8 @@ require "proximity"
 local fmt = require "format"
 local pir = require "common.pirate"
 
--- common hooks
-escort_hailed = fw.escort_hailed
+escort_hailed = fw.escort_hailed -- common hooks
+local attackhooks, badguys, escort, hamelsen, tamteam, targetList, toldya -- Non-persistent state
 
 -- Mission constants
 local destpla, destsys = planet.getS("Mannannan")

@@ -40,6 +40,7 @@ local fmt = require "format"
 --  2: meet Dr. Strangelove
 --  3: return to kex
 misn_state = nil
+local strangelove_ship, thug_leader, thug_pilots -- Non-persistent state
 
 local targetplanet = planet.get("Strangelove Lab")
 local targetsys = system.get("Westhaven") --same as targetplanet:system(), but only after the below diff gets applied

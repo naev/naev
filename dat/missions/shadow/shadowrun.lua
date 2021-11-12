@@ -31,6 +31,7 @@ local pnt, sys = planet.getS("Durea") -- Where SHITMAN lives
 local sys2 = system.get("Uhriabi") -- The system where the ship is
 local shipname = _("Seiryuu")
 
+local pirates, seiryuu -- Non-persistent state
 
 function create ()
    if not misn.claim( {sys, sys2} ) then

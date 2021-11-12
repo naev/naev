@@ -86,6 +86,7 @@ local eccpos = vec2.new( 7500, -6000 ) -- Should coincide with "Strangelove Lab"
 --    5: Got the artifacts
 --    6: Going back to Minerva Station
 misn_state = nil
+local defense_systems, feral_drone_boss -- Non-persistent state
 
 
 function create ()

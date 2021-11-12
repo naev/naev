@@ -5,6 +5,8 @@
 local luatk = require 'luatk'
 local lg = require 'love.graphics'
 
+local btn_modifiers, btn_options, btn_types -- Non-persistent state
+
 local gauntlet_modifiers = {
    { id = "doubledmgtaken", str = _("Double Damage Enemies (#g+50%#0)"), var = "gauntlet_unlock_doubledmgtaken", enabled = false },
    { id = "nohealing", str = _("No Healing Between Waves (#g+25%#0)"), var = "gauntlet_unlock_nohealing", enabled = false },

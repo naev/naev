@@ -22,6 +22,8 @@ local fmt = require "format"
 local fleet = require "fleet"
 local flf = require "missions.flf.flf_common"
 
+local fleetFLF, fleetRogue -- Non-persistent state (not reused by flf_dvk07, which "require"s this script)
+
 local misn_title  = {}
 misn_title[1] = _("FLF: Rogue Pilot in {sys}")
 misn_title[2] = _("FLF: Rogue Squadron in {sys}")

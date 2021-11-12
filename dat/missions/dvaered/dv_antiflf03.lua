@@ -35,6 +35,8 @@ local dv = require "common.dvaered"
 -- Mission constants
 local DVplanet, DVsys = planet.getS("Stalwart Station")
 
+local base, bombers, fighterpos, fightersDV, fleetDV, fleetFLF, fleetpos, obstinate, vendetta, vigilance -- Non-persistent state
+
 function create()
     local missys = {system.get(var.peek("flfbase_sysname"))}
     if not misn.claim(missys) then

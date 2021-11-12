@@ -26,6 +26,8 @@ local fmt = require "format"
 local fleet = require "fleet"
 local flf = require "missions.flf.flf_common"
 
+local boss, pirates -- Non-persistent state
+
 -- TODO this mission needs to be adapted to the new pirate clan stuff
 -- for now I just swapped "Pirate" for "Dreamer Clan"
 
