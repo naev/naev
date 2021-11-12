@@ -295,7 +295,7 @@ function enter ()
    hook.pilot( hacking_center, "board", "plant_explosives" )
 
    local function add_patrol_group( route, ships, group, start )
-      local start = start or rnd.rnd(1,#route)
+      start = start or rnd.rnd(1,#route)
       local pos = route[ start ]
       local l
       for k, s in ipairs( ships ) do

@@ -692,7 +692,6 @@ function stealthheartbeat ()
                p:brake()
                p:face( wreck )
             end
-            local pp = player.pilot()
             pp:control()
             pp:brake()
             player.cinematics( true )

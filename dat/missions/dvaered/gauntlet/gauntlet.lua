@@ -366,8 +366,8 @@ function wave_compute_score ()
       table.insert( str, string.format("#o%s %d", _(n), s ) )
       score = score + s
       -- Store all the stuff the pilot killed
-      local k = wave_killed[n] or 0
-      wave_killed[n] = k+1
+      local killed = wave_killed[n] or 0
+      wave_killed[n] = killed+1
    end
 
    local function newbonus( s, b )

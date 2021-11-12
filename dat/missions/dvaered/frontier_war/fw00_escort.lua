@@ -414,8 +414,8 @@ function ambush_msg()
    majorTam:control(false)
    hook.rm(proxHook) -- To avoid triggering by mistake
 
-   for i, p in ipairs(savers) do
-      p:setFaction("DHC")
+   for i, pi in ipairs(savers) do
+      pi:setFaction("DHC")
    end
 end
 
