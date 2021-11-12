@@ -147,10 +147,9 @@ function create()
     timelimit2 = time.get() + time.create(0, 0, allowance * 1.3)
 
     -- Choose mission reward. This depends on the priority and the passenger rank.
-    finished_mod = 2.0 -- Modifier that should tend towards 1.0 as Naev is finished as a game
-    jumpreward = 10e3
-    distreward = 0.18
-    reward     = 1.4^(speed + rank) * (numjumps * jumpreward + traveldist * distreward) * finished_mod * (1. + 0.05*rnd.twosigma()) / (2-rank/2.0)
+    local jumpreward = 15e3
+    local distreward = 0.25
+    reward     = 1.4^(speed + rank) * (numjumps * jumpreward + traveldist * distreward) * (1. + 0.05*rnd.twosigma()) / (2-rank/2.0)
 
     -- Set some mission constants.
     distbonus_maxjumps = 12 -- This is the maximum distance for reputation bonus calculations. Distances beyond this don't add to the bonus.
