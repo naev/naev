@@ -29,7 +29,9 @@ local flt = require "fleet"
 local lmisn = require "lmisn"
 local vntk = require "vntk"
 
-function get_route( sys )
+local sconvoy, sescorts -- Non-persistent state
+
+local function get_route( sys )
    local adj = sys:jumps()
    if #adj < 2 then return end
    local jumpenter, jumpexit

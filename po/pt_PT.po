@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: naev 0.9.0-alpha.1\n"
 "Report-Msgid-Bugs-To: https://github.com/naev/naev/issues\n"
-"POT-Creation-Date: 2021-11-08 23:11-0500\n"
+"POT-Creation-Date: 2021-11-10 12:30-0500\n"
 "PO-Revision-Date: 2021-08-30 16:38+0000\n"
 "Last-Translator: Anthony Gregory Souza dos Santos "
 "<antonigregorysouza123@gmail.com>\n"
@@ -3319,7 +3319,7 @@ msgid ""
 msgstr ""
 
 #: dat/assets/dvaered_high_command.xml:2 dat/faction.xml:725
-#: dat/events/discovery.lua:68
+#: dat/events/discovery.lua:69
 msgid "Dvaered High Command"
 msgstr ""
 
@@ -3667,7 +3667,7 @@ msgid ""
 "workers."
 msgstr ""
 
-#: dat/assets/emperors_wrath.xml:2 dat/events/discovery.lua:44
+#: dat/assets/emperors_wrath.xml:2 dat/events/discovery.lua:45
 msgid "Emperor's Wrath"
 msgstr ""
 
@@ -4942,7 +4942,7 @@ msgid ""
 "in bad circumstances. There's nothing much to do here for offworlders."
 msgstr ""
 
-#: dat/assets/house_zalek_central_station.xml:2 dat/events/discovery.lua:52
+#: dat/assets/house_zalek_central_station.xml:2 dat/events/discovery.lua:53
 msgid "House Za'lek Central Station"
 msgstr ""
 
@@ -6791,7 +6791,7 @@ msgstr ""
 #. Discover will not work if the planet is found through maps
 #. type = "discover",
 #. asset = planet.get("Minerva Station"),
-#: dat/assets/minerva_station.xml:2 dat/events/discovery.lua:99
+#: dat/assets/minerva_station.xml:2 dat/events/discovery.lua:100
 #: dat/scripts/common/minerva.lua:101 dat/scripts/common/minerva.lua:105
 #: dat/scripts/common/minerva.lua:109 dat/scripts/common/minerva.lua:113
 msgid "Minerva Station"
@@ -7315,7 +7315,7 @@ msgstr ""
 #. -- Pirate Strongholds
 #. --
 #: dat/assets/new_haven.xml:2 dat/ssys/new_haven.xml:2
-#: dat/events/discovery.lua:124
+#: dat/events/discovery.lua:125
 msgid "New Haven"
 msgstr ""
 
@@ -9112,7 +9112,7 @@ msgstr ""
 msgid "Ruadan J-2"
 msgstr ""
 
-#: dat/assets/ruadan_prime.xml:2 dat/events/discovery.lua:60
+#: dat/assets/ruadan_prime.xml:2 dat/events/discovery.lua:61
 msgid "Ruadan Prime"
 msgstr ""
 
@@ -11161,7 +11161,7 @@ msgid ""
 "their production process, giving them a rich, somewhat saline taste."
 msgstr ""
 
-#: dat/assets/totoran.xml:2 dat/events/discovery.lua:107
+#: dat/assets/totoran.xml:2 dat/events/discovery.lua:108
 msgid "Totoran"
 msgstr ""
 
@@ -13291,8 +13291,8 @@ msgstr ""
 
 #. Ship to go back to
 #. Set up Major Malik
-#: dat/faction.xml:466 dat/events/dvaered/fwA_treason.lua:115
-#: dat/events/dvaered/fwA_treason.lua:136 dat/events/dvaered/fwB_repay.lua:41
+#: dat/faction.xml:466 dat/events/dvaered/fwA_treason.lua:116
+#: dat/events/dvaered/fwA_treason.lua:137 dat/events/dvaered/fwB_repay.lua:41
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:253
 #: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:524
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:158
@@ -13412,6 +13412,7 @@ msgstr ""
 #. -- Player is attacked by a hitman. If player disables and boards the hitman, this enables the Dvaered Base mission
 #. --
 #. TODO: this event is neutralized because the "Dvaered Base" mission has not been written yet
+#. Non-persistent state.
 #. thissystem and source_system must be adjacent (for those who use player.teleport)
 #. Spawn the ambusher, depending on the player's max velocity
 #. TODO: ajust requirements
@@ -13439,8 +13440,8 @@ msgstr ""
 #. spawning Ancestors
 #. Escort
 #. Spawn pirate
-#: dat/faction.xml:576 dat/events/dvaered/fwD_hitman.lua:52
-#: dat/events/dvaered/fwD_hitman.lua:54 dat/events/dvaered/fwD_hitman.lua:56
+#: dat/faction.xml:576 dat/events/dvaered/fwD_hitman.lua:54
+#: dat/events/dvaered/fwD_hitman.lua:56 dat/events/dvaered/fwD_hitman.lua:58
 #: dat/missions/neutral/kidnapped/traffic_01.lua:227
 #: dat/missions/neutral/kidnapped/traffic_01.lua:245
 #: dat/missions/neutral/kidnapped/traffic_01.lua:265
@@ -13485,6 +13486,7 @@ msgstr ""
 #. Finding Taiomi Event
 #.
 #. --
+#. Forward-declared functions
 #. Threshold distances to detect the drone
 #. first encounter at mule
 #. second encounter at jump
@@ -13507,8 +13509,8 @@ msgstr ""
 #.
 #. Helpers for dealing with derelict or abandoned ships in general.
 #. --
-#: dat/faction.xml:587 dat/events/taiomi/find.lua:49
-#: dat/events/taiomi/find.lua:64 dat/missions/tutorial/nelly01.lua:322
+#: dat/faction.xml:587 dat/events/taiomi/find.lua:51
+#: dat/events/taiomi/find.lua:66 dat/missions/tutorial/nelly01.lua:322
 #: dat/scripts/common/derelict.lua:19
 msgid "Derelict"
 msgstr ""
@@ -13568,8 +13570,8 @@ msgstr ""
 #. I use Thugs and Associates based factions because they won't interact with anybody
 #. mass of the player's victims
 #. The heaviest ships will surround the leader
-#: dat/faction.xml:739 dat/events/dvaered/warlords_battle.lua:189
-#: dat/events/dvaered/warlords_battle.lua:230
+#: dat/faction.xml:739 dat/events/dvaered/warlords_battle.lua:192
+#: dat/events/dvaered/warlords_battle.lua:233
 msgid "Warlords"
 msgstr ""
 
@@ -18784,7 +18786,7 @@ msgstr ""
 #: dat/ships/raelid_outpost.xml:12 dat/ships/raglan_outpost.xml:12
 #: dat/ships/sindbad.xml:12 src/dev_uniedit.c:242 src/dev_uniedit.c:248
 #: src/dev_uniedit.c:1226 src/dev_uniedit.c:1227 src/map.c:564 src/map.c:565
-#: src/outfit.c:277 src/outfit.c:296
+#: src/outfit.c:286 src/outfit.c:305
 msgid "N/A"
 msgstr ""
 
@@ -19745,7 +19747,7 @@ msgstr ""
 msgid "Fern"
 msgstr ""
 
-#: dat/ssys/feye.xml:2 dat/events/discovery.lua:74
+#: dat/ssys/feye.xml:2 dat/events/discovery.lua:75
 msgid "Feye"
 msgstr ""
 
@@ -20001,7 +20003,7 @@ msgstr ""
 msgid "Kraft"
 msgstr ""
 
-#: dat/ssys/kretogg.xml:2 dat/events/discovery.lua:130
+#: dat/ssys/kretogg.xml:2 dat/events/discovery.lua:131
 msgid "Kretogg"
 msgstr ""
 
@@ -20512,7 +20514,7 @@ msgstr ""
 #.
 #. -- Unique / Interesting systems
 #. --
-#: dat/ssys/sol.xml:2 dat/events/discovery.lua:36
+#: dat/ssys/sol.xml:2 dat/events/discovery.lua:37
 msgid "Sol"
 msgstr ""
 
@@ -20592,7 +20594,7 @@ msgstr ""
 msgid "Symm"
 msgstr ""
 
-#: dat/ssys/taiomi.xml:2 dat/events/discovery.lua:88
+#: dat/ssys/taiomi.xml:2 dat/events/discovery.lua:89
 #: dat/scripts/common/taiomi.lua:28
 msgid "Taiomi"
 msgstr ""
@@ -23941,181 +23943,181 @@ msgid ""
 "worlds."
 msgstr ""
 
-#: dat/events/discovery.lua:37
+#: dat/events/discovery.lua:38
 msgid "Home"
 msgstr ""
 
-#: dat/events/discovery.lua:45
+#: dat/events/discovery.lua:46
 msgid "Human Made Divine"
 msgstr ""
 
-#: dat/events/discovery.lua:53
+#: dat/events/discovery.lua:54
 msgid "Bastion of Knowledge"
 msgstr ""
 
-#: dat/events/discovery.lua:61
+#: dat/events/discovery.lua:62
 msgid "New Heart of the Za'lek"
 msgstr ""
 
-#: dat/events/discovery.lua:69
+#: dat/events/discovery.lua:70
 msgid "Convening of the Warlords"
 msgstr ""
 
-#: dat/events/discovery.lua:75
+#: dat/events/discovery.lua:76
 msgid "Remembering Sorom"
 msgstr ""
 
-#: dat/events/discovery.lua:82
+#: dat/events/discovery.lua:83
 msgid "Crater City"
 msgstr ""
 
-#: dat/events/discovery.lua:83
+#: dat/events/discovery.lua:84
 msgid "Touching the Universe"
 msgstr ""
 
-#: dat/events/discovery.lua:89
+#: dat/events/discovery.lua:90
 msgid "Ship Graveyard"
 msgstr ""
 
-#: dat/events/discovery.lua:100
+#: dat/events/discovery.lua:101
 msgid "Gambler's Paradise"
 msgstr ""
 
-#: dat/events/discovery.lua:108
+#: dat/events/discovery.lua:109
 msgid "Brave your Fate in the #rCrimson Gauntlet#0"
 msgstr ""
 
-#: dat/events/discovery.lua:113
+#: dat/events/discovery.lua:114
 msgid "The Devastation of Haven"
 msgstr ""
 
-#: dat/events/discovery.lua:114
+#: dat/events/discovery.lua:115
 msgid "The Old Wound That Never Heals"
 msgstr ""
 
-#: dat/events/discovery.lua:125
+#: dat/events/discovery.lua:126
 msgid "They Will Never Destroy Us"
 msgstr ""
 
-#: dat/events/discovery.lua:131
+#: dat/events/discovery.lua:132
 msgid "Any Business is Good Business"
 msgstr ""
 
 #. These trigger for specific factions controlled systems
-#: dat/events/discovery.lua:139
+#: dat/events/discovery.lua:140
 msgid "The Za'lek Territories"
 msgstr ""
 
-#: dat/events/discovery.lua:140
+#: dat/events/discovery.lua:141
 msgid "Knowledge at All Costs"
 msgstr ""
 
-#: dat/events/discovery.lua:145
+#: dat/events/discovery.lua:146
 msgid "The Dvaered Territories"
 msgstr ""
 
-#: dat/events/discovery.lua:146
+#: dat/events/discovery.lua:147
 msgid "The Warlords are Eager for Blood"
 msgstr ""
 
-#: dat/events/discovery.lua:151
+#: dat/events/discovery.lua:152
 msgid "The Soromid Territories"
 msgstr ""
 
-#: dat/events/discovery.lua:152
+#: dat/events/discovery.lua:153
 msgid "Human is Just an Ephemeral Condition"
 msgstr ""
 
-#: dat/events/discovery.lua:157
+#: dat/events/discovery.lua:158
 msgid "The Sirius Territories"
 msgstr ""
 
-#: dat/events/discovery.lua:158
+#: dat/events/discovery.lua:159
 msgid "Sirichana Will Lead the Way"
 msgstr ""
 
-#: dat/events/discovery.lua:163
+#: dat/events/discovery.lua:164
 msgid "The Proteron Territories"
 msgstr ""
 
-#: dat/events/discovery.lua:164
+#: dat/events/discovery.lua:165
 msgid "United through Sacrifice"
 msgstr ""
 
-#: dat/events/discovery.lua:170
+#: dat/events/discovery.lua:171
 msgid "The Thurion Space"
 msgstr ""
 
-#: dat/events/discovery.lua:171
+#: dat/events/discovery.lua:172
 msgid "We Shall All Become One"
 msgstr ""
 
-#: dat/events/discovery.lua:176
+#: dat/events/discovery.lua:177
 msgid "The Frontier"
 msgstr ""
 
-#: dat/events/discovery.lua:177
+#: dat/events/discovery.lua:178
 msgid "Leading to a New Future"
 msgstr ""
 
-#: dat/events/discovery.lua:183
+#: dat/events/discovery.lua:184
 msgid "The Collective"
 msgstr ""
 
-#: dat/events/discovery.lua:184
+#: dat/events/discovery.lua:185
 msgid "Do Robots Dream of Electric Sheep?"
 msgstr ""
 
 #. Custom events can handle custom triggers such as nebula systems
 #. These are currently the only systems from which the player can
 #. enter the nebula
-#: dat/events/discovery.lua:214
+#: dat/events/discovery.lua:215
 msgid "The Nebula"
 msgstr ""
 
-#: dat/events/discovery.lua:215
+#: dat/events/discovery.lua:216
 msgid "Grim Reminder of Our Fragility"
 msgstr ""
 
-#: dat/events/discovery.lua:231
+#: dat/events/discovery.lua:232
 msgid "Northern Stellar Winds"
 msgstr ""
 
 #. subtitle = _("None"),
-#: dat/events/discovery.lua:248
+#: dat/events/discovery.lua:249
 msgid "Southern Stellar Winds"
 msgstr ""
 
 #. subtitle = _("None"),
-#: dat/events/discovery.lua:258
+#: dat/events/discovery.lua:259
 msgid "#HWild Ones Territory#0"
 msgstr ""
 
-#: dat/events/discovery.lua:259
+#: dat/events/discovery.lua:260
 msgid "#HUncontrolled and Raging Pirate Fury#0"
 msgstr ""
 
-#: dat/events/discovery.lua:269
+#: dat/events/discovery.lua:270
 msgid "#HRaven Clan Territory#0"
 msgstr ""
 
-#: dat/events/discovery.lua:270
+#: dat/events/discovery.lua:271
 msgid "#HDark Hand of the Black Market#0"
 msgstr ""
 
-#: dat/events/discovery.lua:280
+#: dat/events/discovery.lua:281
 msgid "#HBlack Lotus Territory#0"
 msgstr ""
 
-#: dat/events/discovery.lua:281
+#: dat/events/discovery.lua:282
 msgid "#HPiracy has never been Snazzier#0"
 msgstr ""
 
-#: dat/events/discovery.lua:291
+#: dat/events/discovery.lua:292
 msgid "#HDreamer Clan Territory#0"
 msgstr ""
 
-#: dat/events/discovery.lua:292
+#: dat/events/discovery.lua:293
 msgid "#HPiracy to Rebel against Reality#0"
 msgstr ""
 
@@ -24126,19 +24128,22 @@ msgstr ""
 #. Trigger
 #. Nothing triggered
 #. Ends when player lands or leaves either way
-#: dat/events/discovery.lua:364
-#, lua-format
-msgid "You found #o%s - %s!"
+#: dat/events/discovery.lua:365
+msgid "You found #o{title} - {subtitle}!"
+msgstr ""
+
+#: dat/events/discovery.lua:365
+msgid "You found #o{title}!"
 msgstr ""
 
 #. Log and message
-#: dat/events/discovery.lua:367 src/map.c:1880
+#: dat/events/discovery.lua:369 src/map.c:1880
 msgid "Discovery"
 msgstr ""
 
 #. the probability of ambushes will change
 #. In the first ambush, there will be a little surprise text
-#: dat/events/discovery.lua:367 dat/events/shiplog.lua:23
+#: dat/events/discovery.lua:369 dat/events/shiplog.lua:25
 #: dat/missions/shark/sh04_meeting.lua:51
 msgid "Travel"
 msgstr ""
@@ -24184,14 +24189,15 @@ msgstr ""
 #. TODO: see chance for this event
 #. Event constants
 #. TODO: not sure it's needed.
+#. Non-persistent state.
 #. Start at previous system
 #. thissystem and source_system must be adjacent (for those who use player.teleport)
 #. Player answers to hail
-#: dat/events/dvaered/fwA_treason.lua:76
+#: dat/events/dvaered/fwA_treason.lua:78
 msgid "You are needed for a special job"
 msgstr ""
 
-#: dat/events/dvaered/fwA_treason.lua:78
+#: dat/events/dvaered/fwA_treason.lua:80
 msgid ""
 "The pilot of the fighter says, over an encrypted channel: \"I have finally "
 "found you, {player}. Better late than never. My employers want to "
@@ -24213,46 +24219,46 @@ msgid ""
 "you're used to! What do you say?\""
 msgstr ""
 
-#: dat/events/dvaered/fwA_treason.lua:82 dat/missions/flf/flf_pre02.lua:168
+#: dat/events/dvaered/fwA_treason.lua:84 dat/missions/flf/flf_pre02.lua:168
 msgid "Accept the offer"
 msgstr ""
 
-#: dat/events/dvaered/fwA_treason.lua:83
+#: dat/events/dvaered/fwA_treason.lua:85
 msgid "Refuse and miss a unique opportunity"
 msgstr ""
 
-#: dat/events/dvaered/fwA_treason.lua:86
+#: dat/events/dvaered/fwA_treason.lua:88
 msgid "Your task"
 msgstr ""
 
-#: dat/events/dvaered/fwA_treason.lua:88
+#: dat/events/dvaered/fwA_treason.lua:90
 msgid ""
 "\"Very good choice, colleague!\" The pilot answers. \"Go to {system}, and "
 "you will be hailed by an other Vendetta for your briefing.\""
 msgstr ""
 
-#: dat/events/dvaered/fwA_treason.lua:92
+#: dat/events/dvaered/fwA_treason.lua:94
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:71
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:83
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:103
 msgid "Too bad"
 msgstr ""
 
-#: dat/events/dvaered/fwA_treason.lua:92
+#: dat/events/dvaered/fwA_treason.lua:94
 msgid "\"I see. Stay tuned, then, maybe we will see each other again!\""
 msgstr ""
 
 #. Reaction to player's choice at first landing
-#: dat/events/dvaered/fwA_treason.lua:106
+#: dat/events/dvaered/fwA_treason.lua:107
 msgid "You are a loyal citizen of House Dvaered"
 msgstr ""
 
 #. Traitor
-#: dat/events/dvaered/fwA_treason.lua:109
+#: dat/events/dvaered/fwA_treason.lua:110
 msgid "You tried to betray us"
 msgstr ""
 
-#: dat/events/dvaered/fwA_treason.lua:111
+#: dat/events/dvaered/fwA_treason.lua:112
 msgid ""
 "As you land, you see the Captain Leblanc at the dock and she reprimands you: "
 "\"It was a trap, {player}. The fact that you fell into it proves that you "
@@ -24262,13 +24268,13 @@ msgid ""
 "will exceptionally let you live, but don't expect us to trust you anymore!\""
 msgstr ""
 
-#: dat/events/dvaered/fwA_treason.lua:115
+#: dat/events/dvaered/fwA_treason.lua:116
 #: dat/missions/dvaered/frontier_war/fw00_escort.lua:253
 #: dat/missions/dvaered/frontier_war/fw01_sabotage.lua:524
 msgid "Dvaered Military Coordination"
 msgstr ""
 
-#: dat/events/dvaered/fwA_treason.lua:116
+#: dat/events/dvaered/fwA_treason.lua:117
 msgid ""
 "Major Tam and Captain Leblanc, from the DHC, have tested your loyalty to the "
 "General Klank... and you miserably failed. By chance, they did not kill you, "
@@ -24276,7 +24282,7 @@ msgid ""
 msgstr ""
 
 #. Loyal
-#: dat/events/dvaered/fwA_treason.lua:122
+#: dat/events/dvaered/fwA_treason.lua:123
 msgid ""
 "As you land, you see the Captain Leblanc at the dock and she congratulates "
 "you: \"I've heard good things about you, citizen {player}. It seems that you "
@@ -24284,16 +24290,16 @@ msgid ""
 "absurdly high reward they had proposed to you for betraying us.\""
 msgstr ""
 
-#: dat/events/dvaered/fwA_treason.lua:124
+#: dat/events/dvaered/fwA_treason.lua:125
 msgid "The amount of your rewards is pathetic"
 msgstr ""
 
-#: dat/events/dvaered/fwA_treason.lua:125
+#: dat/events/dvaered/fwA_treason.lua:126
 msgid "Money is not important, captain"
 msgstr ""
 
 #. Actually we don't care of the answer
-#: dat/events/dvaered/fwA_treason.lua:126
+#: dat/events/dvaered/fwA_treason.lua:127
 msgid ""
 "\"Money matters are secondary matters, pilot. One day you are rich, and the "
 "next, you are poor. Valor, on the other hand, is the central matter of life "
@@ -24313,7 +24319,7 @@ msgid ""
 "Sirius or the Soromid.\""
 msgstr ""
 
-#: dat/events/dvaered/fwA_treason.lua:131
+#: dat/events/dvaered/fwA_treason.lua:132
 msgid ""
 "\"House Dvaered has been built in respect of this ethic of life and death, "
 "that is taught to all children around all worlds in Dvaered space. You did "
@@ -24338,7 +24344,7 @@ msgid ""
 "on other fronts.\""
 msgstr ""
 
-#: dat/events/dvaered/fwA_treason.lua:134
+#: dat/events/dvaered/fwA_treason.lua:135
 msgid ""
 "\"This is why the General Klank proposed an effective invasion plan, that "
 "requires coordinating the efforts of all the warlords, as well as supporting "
@@ -24352,7 +24358,7 @@ msgstr ""
 
 #. Pay and finish the mission
 #. Timer for the next mission
-#: dat/events/dvaered/fwA_treason.lua:136 dat/events/dvaered/fwB_repay.lua:41
+#: dat/events/dvaered/fwA_treason.lua:137 dat/events/dvaered/fwB_repay.lua:41
 #: dat/missions/dvaered/frontier_war/fw02_escape.lua:158
 #: dat/missions/dvaered/frontier_war/fw03_sirius.lua:604
 #: dat/missions/dvaered/frontier_war/fw04_meeting.lua:160
@@ -24360,7 +24366,7 @@ msgstr ""
 msgid "Frontier War"
 msgstr ""
 
-#: dat/events/dvaered/fwA_treason.lua:137
+#: dat/events/dvaered/fwA_treason.lua:138
 msgid ""
 "Major Tam and Captain Leblanc, from the DHC, have tested your loyalty to the "
 "General Klank. The test has proven to be conclusive, and Leblanc revealed to "
@@ -24526,18 +24532,18 @@ msgid "You don't have enough money."
 msgstr ""
 
 #. Player is attacked: remind what to do
-#: dat/events/dvaered/fwD_hitman.lua:105
+#: dat/events/dvaered/fwD_hitman.lua:107
 msgid ""
 "You are being attacked! You may get information from your attacker if you "
 "catch them alive!"
 msgstr ""
 
 #. Ambusher is death: event failed
-#: dat/events/dvaered/fwD_hitman.lua:111
+#: dat/events/dvaered/fwD_hitman.lua:113
 msgid "Target destroyed"
 msgstr ""
 
-#: dat/events/dvaered/fwD_hitman.lua:111
+#: dat/events/dvaered/fwD_hitman.lua:113
 msgid ""
 "While your attacker's ship gets transformed into a fireball, you hesitate "
 "between feeling relieved to be alive and disappointed not to have taken the "
@@ -24545,11 +24551,11 @@ msgid ""
 msgstr ""
 
 #. Ambusher was boarded: start the Dvaered Base mission
-#: dat/events/dvaered/fwD_hitman.lua:117
+#: dat/events/dvaered/fwD_hitman.lua:119
 msgid "Boarding aborted"
 msgstr ""
 
-#: dat/events/dvaered/fwD_hitman.lua:117
+#: dat/events/dvaered/fwD_hitman.lua:119
 msgid ""
 "After you have docked with the hostile ship, your crew combat androids start "
 "attacking its airlock with their torches. You receive a message from your "
@@ -24801,7 +24807,7 @@ msgstr ""
 #. TODO add some other more info text
 #: dat/events/dvaered/totoran.lua:124 dat/events/minerva/station.lua:218
 #: dat/events/minerva/station.lua:410 dat/events/minerva/station.lua:486
-#: dat/events/minerva/station.lua:599 dat/missions/minerva/kex1.lua:128
+#: dat/events/minerva/station.lua:600 dat/missions/minerva/kex1.lua:128
 #: dat/missions/minerva/kex2.lua:151 dat/missions/minerva/kex3.lua:190
 #: dat/missions/minerva/kex4.lua:189 dat/missions/minerva/maikki1.lua:189
 #: dat/missions/minerva/maikki1.lua:276 dat/missions/minerva/maikki1.lua:518
@@ -24990,7 +24996,7 @@ msgstr ""
 msgid "\"Hope you enjoy your purchase!\""
 msgstr ""
 
-#: dat/events/dvaered/totoran.lua:253 dat/events/minerva/station.lua:633
+#: dat/events/dvaered/totoran.lua:253 dat/events/minerva/station.lua:634
 #: dat/missions/minerva/kex1.lua:225 dat/missions/minerva/kex2.lua:205
 #: dat/missions/minerva/kex3.lua:225 dat/missions/minerva/kex4.lua:224
 #: dat/missions/minerva/maikki1.lua:351 dat/missions/minerva/maikki2.lua:567
@@ -25016,7 +25022,7 @@ msgstr ""
 #. </event>
 #. --
 #. A battle between two Dvaered warlords. The player can join one of them and get a reward
-#. Unsaved global tables
+#. Non-persistent state
 #. thissystem and source_system must be adjacent (for those who use player.teleport)
 #. choose 1 particular planet
 #. choose only Dvaered planets (and no stations)
@@ -25024,15 +25030,15 @@ msgstr ""
 #. People are in formation
 #. Battle is happening
 #. Spawns a merchant ship that explains what happens
-#: dat/events/dvaered/warlords_battle.lua:76
+#: dat/events/dvaered/warlords_battle.lua:79
 msgid "Trader {ship}"
 msgstr ""
 
-#: dat/events/dvaered/warlords_battle.lua:87
+#: dat/events/dvaered/warlords_battle.lua:90
 msgid "A battle is about to begin"
 msgstr ""
 
-#: dat/events/dvaered/warlords_battle.lua:87
+#: dat/events/dvaered/warlords_battle.lua:90
 msgid ""
 "\"Hey, you,\" the captain of the ship says. \"You seem not to know what is "
 "going to happen here: a mighty warlord from {sys} is going to attack {pnt}. "
@@ -25041,11 +25047,11 @@ msgid ""
 "warlord will reward you. But if he wins, you will be hunted down.\""
 msgstr ""
 
-#: dat/events/dvaered/warlords_battle.lua:98
+#: dat/events/dvaered/warlords_battle.lua:101
 msgid "Here comes your reward"
 msgstr ""
 
-#: dat/events/dvaered/warlords_battle.lua:98
+#: dat/events/dvaered/warlords_battle.lua:101
 msgid ""
 "\"Hello captain,\" a Dvaered officer says, \"You helped us in this battle. I "
 "am authorized to give you {credits} as a reward.\""
@@ -26833,45 +26839,45 @@ msgid "\"What are you looking at?\""
 msgstr ""
 
 #. local kex = minerva.vn_kex{ pos=0, rotation=30*math.pi/180., shader=love_shaders.aura() }
-#: dat/events/minerva/station.lua:593
+#: dat/events/minerva/station.lua:594
 msgid "You find Maikki, who beams you a smile as you approach."
 msgstr ""
 
-#: dat/events/minerva/station.lua:595
+#: dat/events/minerva/station.lua:596
 msgid "\"Did you find anything new?\""
 msgstr ""
 
-#: dat/events/minerva/station.lua:603 dat/events/minerva/station.lua:605
+#: dat/events/minerva/station.lua:604 dat/events/minerva/station.lua:606
 msgid "Talk about Kex"
 msgstr ""
 
 #. table.insert( opts, 1, { _("Ask about her father"), "memory" } )
-#: dat/events/minerva/station.lua:612
+#: dat/events/minerva/station.lua:613
 msgid "\"Anything else?\""
 msgstr ""
 
-#: dat/events/minerva/station.lua:616
+#: dat/events/minerva/station.lua:617
 msgid "You ask to see if she remembered anything else about her father."
 msgstr ""
 
-#: dat/events/minerva/station.lua:622
+#: dat/events/minerva/station.lua:623
 msgid "As you are about to talk, you notice Kex out of the corner of your eye."
 msgstr ""
 
-#: dat/events/minerva/station.lua:623
+#: dat/events/minerva/station.lua:624
 msgid ""
 "As he stares directly at you, he makes a gesture that you should watch your "
 "back."
 msgstr ""
 
-#: dat/events/minerva/station.lua:624
+#: dat/events/minerva/station.lua:625
 msgid ""
 "You decide against telling Maikki anything. It does not seem like it is the "
 "time, unless you wish to get murdered by a rampant cyborg duck."
 msgstr ""
 
 #. played backwards so slides left
-#: dat/events/minerva/station.lua:629
+#: dat/events/minerva/station.lua:630
 msgid ""
 "You are about to talk, but decide not to. Now is not the time to deal with "
 "this."
@@ -29985,44 +29991,45 @@ msgstr ""
 #. Spawns a travelling merchant that can sell the player if interested.
 #.
 #. --
-#: dat/events/neutral/travelling_merchant.lua:19
+#. Non-persistent state
+#: dat/events/neutral/travelling_merchant.lua:21
 msgid "Machiavellian Misi"
 msgstr ""
 
 #. Mireia Sibeko
-#: dat/events/neutral/travelling_merchant.lua:22
+#: dat/events/neutral/travelling_merchant.lua:24
 msgid "Machiavellian Misi's \"Fine\" Wares"
 msgstr ""
 
-#: dat/events/neutral/travelling_merchant.lua:24
+#: dat/events/neutral/travelling_merchant.lua:26
 msgid ""
 "Machiavellian Misi's the name and selling fine shit is my game! Come get "
 "your outfits here!"
 msgstr ""
 
-#: dat/events/neutral/travelling_merchant.lua:25
+#: dat/events/neutral/travelling_merchant.lua:27
 msgid ""
 "Get your fiiiiiiiine outfits here! Guaranteed 3 space lice or less or your "
 "money back!"
 msgstr ""
 
-#: dat/events/neutral/travelling_merchant.lua:26
+#: dat/events/neutral/travelling_merchant.lua:28
 msgid ""
 "Recommended by the Emperor's pet iguana's third cousin! High quality outfits "
 "sold here!"
 msgstr ""
 
-#: dat/events/neutral/travelling_merchant.lua:27
+#: dat/events/neutral/travelling_merchant.lua:29
 msgid ""
 "Best outfits in the universe! So freaking good that 50% of my clients lose "
 "their hair from joy!"
 msgstr ""
 
-#: dat/events/neutral/travelling_merchant.lua:28
+#: dat/events/neutral/travelling_merchant.lua:30
 msgid "Sweeet sweet space outfits! Muaha hahaha ha ha ha erk..."
 msgstr ""
 
-#: dat/events/neutral/travelling_merchant.lua:29
+#: dat/events/neutral/travelling_merchant.lua:31
 msgid ""
 "...and that's how I was able to get a third liver haha. Oops is this on? Er, "
 "nevermind that. Outfits for sale!"
@@ -30037,7 +30044,7 @@ msgstr ""
 #. event ends on player leaving the system or landing
 #. End the event if for any reason the trader stops existing
 #. Cycle through broadcasts
-#: dat/events/neutral/travelling_merchant.lua:112
+#: dat/events/neutral/travelling_merchant.lua:114
 msgid ""
 "\"Howdy Human! Er, I mean, Greetings! If you want to take a look at my "
 "wonderful, exquisite, propitious, meretricious, effulgent, ... wait, what "
@@ -30045,7 +30052,7 @@ msgid ""
 "welcome to board anytime!\""
 msgstr ""
 
-#: dat/events/neutral/travelling_merchant.lua:125
+#: dat/events/neutral/travelling_merchant.lua:127
 msgid ""
 "You open the airlock and are immediately greeted by an intense humidity and "
 "heat, almost like a jungle. As you advance through the dimly lit ship you "
@@ -30160,19 +30167,20 @@ msgstr ""
 #. to a certain number of entries so it doesn't overwhelm the save file.
 #.
 #. --
-#: dat/events/shiplog.lua:23
+#. Non-persistent state
+#: dat/events/shiplog.lua:25
 msgid "Travel Log"
 msgstr ""
 
-#: dat/events/shiplog.lua:36
+#: dat/events/shiplog.lua:38
 msgid "Hostility met in the {sys} system"
 msgstr ""
 
-#: dat/events/shiplog.lua:44
+#: dat/events/shiplog.lua:46
 msgid "Jumped from the {1} system to the {2} system"
 msgstr ""
 
-#: dat/events/shiplog.lua:53
+#: dat/events/shiplog.lua:55
 msgid "Landed on {pnt} in the {sys} system"
 msgstr ""
 
@@ -30209,209 +30217,210 @@ msgstr ""
 #. --
 #. Preliminary draft of a new event where the player meets one of the Touched, who tries to convert him
 #. Sudarshan S <ssoxygen@users.sf.net>
-#: dat/events/sirius/preach.lua:22
+#. Forward-declared function
+#: dat/events/sirius/preach.lua:24
 msgid ""
 "{player}, although you are an enemy of House Sirius, I shall not attack "
 "unless provoked, for I abhor violence!"
 msgstr ""
 
-#: dat/events/sirius/preach.lua:23
+#: dat/events/sirius/preach.lua:25
 msgid ""
 "{player}, although you are an enemy of House Sirius, I shall not attack "
 "unless provoked, for I believe mercy is a great Truth!"
 msgstr ""
 
-#: dat/events/sirius/preach.lua:24
+#: dat/events/sirius/preach.lua:26
 msgid ""
 "{player}, although you are an enemy of House Sirius, I shall not attack "
 "unless provoked, for you too are Sirichana's child!"
 msgstr ""
 
-#: dat/events/sirius/preach.lua:28
+#: dat/events/sirius/preach.lua:30
 msgid ""
 "{player}, I foresee in you a great Sirian citizen, and I look forward to "
 "your friendship!"
 msgstr ""
 
-#: dat/events/sirius/preach.lua:29
+#: dat/events/sirius/preach.lua:31
 msgid ""
 "{player}, I foresee a bright future for you, illuminated by Sirichana's "
 "light!"
 msgstr ""
 
-#: dat/events/sirius/preach.lua:30
+#: dat/events/sirius/preach.lua:32
 msgid "{player}, may Sirichana's light illuminate your path!"
 msgstr ""
 
-#: dat/events/sirius/preach.lua:34
+#: dat/events/sirius/preach.lua:36
 msgid "You shall all follow Sirichana henceforth!"
 msgstr ""
 
-#: dat/events/sirius/preach.lua:35
+#: dat/events/sirius/preach.lua:37
 msgid "Sirichana shall lead you to peace and wisdom!"
 msgstr ""
 
-#: dat/events/sirius/preach.lua:36
+#: dat/events/sirius/preach.lua:38
 msgid "Sirichana is the Father of you all!"
 msgstr ""
 
-#: dat/events/sirius/preach.lua:37
+#: dat/events/sirius/preach.lua:39
 msgid "Sirichana's grace shall liberate you!"
 msgstr ""
 
-#: dat/events/sirius/preach.lua:38
+#: dat/events/sirius/preach.lua:40
 msgid "May Sirichana's light shine on you henceforth!"
 msgstr ""
 
-#: dat/events/sirius/preach.lua:42
+#: dat/events/sirius/preach.lua:44
 msgid "We shall all follow Sirichana now!"
 msgstr ""
 
-#: dat/events/sirius/preach.lua:43
+#: dat/events/sirius/preach.lua:45
 msgid "We have been liberated from our evil ways!"
 msgstr ""
 
-#: dat/events/sirius/preach.lua:44
+#: dat/events/sirius/preach.lua:46
 msgid "No more shall we tread the path of evil!"
 msgstr ""
 
-#: dat/events/sirius/preach.lua:45
+#: dat/events/sirius/preach.lua:47
 msgid "We see the True path now!"
 msgstr ""
 
-#: dat/events/sirius/preach.lua:46
+#: dat/events/sirius/preach.lua:48
 msgid "No more shall we commit sins!"
 msgstr ""
 
-#: dat/events/sirius/preach.lua:50
+#: dat/events/sirius/preach.lua:52
 msgid "Serves you right for attacking a Touched!"
 msgstr ""
 
-#: dat/events/sirius/preach.lua:51
+#: dat/events/sirius/preach.lua:53
 msgid "Fry in hell, demon!"
 msgstr ""
 
-#: dat/events/sirius/preach.lua:52
+#: dat/events/sirius/preach.lua:54
 msgid "May you suffer eternal torment!"
 msgstr ""
 
-#: dat/events/sirius/preach.lua:53
+#: dat/events/sirius/preach.lua:55
 msgid "Your doom is Sirichana's curse!"
 msgstr ""
 
-#: dat/events/sirius/preach.lua:57
+#: dat/events/sirius/preach.lua:59
 msgid "All the attackers are dead!"
 msgstr ""
 
-#: dat/events/sirius/preach.lua:58
+#: dat/events/sirius/preach.lua:60
 msgid "We can resume our Quest now!"
 msgstr ""
 
-#: dat/events/sirius/preach.lua:59
+#: dat/events/sirius/preach.lua:61
 msgid "The glory of Sirichana remains unblemished!"
 msgstr ""
 
-#: dat/events/sirius/preach.lua:60
+#: dat/events/sirius/preach.lua:62
 msgid "All heretics have been destroyed!"
 msgstr ""
 
-#: dat/events/sirius/preach.lua:64
+#: dat/events/sirius/preach.lua:66
 msgid "Do you think everyone can be brainwashed?"
 msgstr ""
 
-#: dat/events/sirius/preach.lua:65
+#: dat/events/sirius/preach.lua:67
 msgid "You shall convert no more of us!"
 msgstr ""
 
-#: dat/events/sirius/preach.lua:66
+#: dat/events/sirius/preach.lua:68
 msgid "Some of us shall not be converted, fool!"
 msgstr ""
 
-#: dat/events/sirius/preach.lua:67
+#: dat/events/sirius/preach.lua:69
 msgid "You'll never convert me!"
 msgstr ""
 
-#: dat/events/sirius/preach.lua:68
+#: dat/events/sirius/preach.lua:70
 msgid "I shall never be converted!"
 msgstr ""
 
-#: dat/events/sirius/preach.lua:72
+#: dat/events/sirius/preach.lua:74
 msgid "You feel an overwhelming presence nearby!"
 msgstr ""
 
-#: dat/events/sirius/preach.lua:73
+#: dat/events/sirius/preach.lua:75
 msgid "Something compels you to stop"
 msgstr ""
 
-#: dat/events/sirius/preach.lua:74
+#: dat/events/sirius/preach.lua:76
 msgid "You are jerked awake by a mysterious but compelling urge"
 msgstr ""
 
-#: dat/events/sirius/preach.lua:75
+#: dat/events/sirius/preach.lua:77
 msgid "You feel... Touched... by a magical power"
 msgstr ""
 
-#: dat/events/sirius/preach.lua:79
+#: dat/events/sirius/preach.lua:81
 msgid "Die, heretics!"
 msgstr ""
 
-#: dat/events/sirius/preach.lua:80
+#: dat/events/sirius/preach.lua:82
 msgid "Those who insult the Sirichana shall die!"
 msgstr ""
 
-#: dat/events/sirius/preach.lua:81
+#: dat/events/sirius/preach.lua:83
 msgid "You've committed an unpardonable sin!"
 msgstr ""
 
-#: dat/events/sirius/preach.lua:82
+#: dat/events/sirius/preach.lua:84
 msgid "Hell awaits, fools!"
 msgstr ""
 
-#: dat/events/sirius/preach.lua:86
+#: dat/events/sirius/preach.lua:88
 msgid "Oh no! The Touched One is dead!"
 msgstr ""
 
-#: dat/events/sirius/preach.lua:87
+#: dat/events/sirius/preach.lua:89
 msgid "Sirichana save our souls!"
 msgstr ""
 
-#: dat/events/sirius/preach.lua:88
+#: dat/events/sirius/preach.lua:90
 msgid "We shall never forget You, O Touched One!"
 msgstr ""
 
-#: dat/events/sirius/preach.lua:89
+#: dat/events/sirius/preach.lua:91
 msgid "We swear eternal revenge!"
 msgstr ""
 
-#: dat/events/sirius/preach.lua:93
+#: dat/events/sirius/preach.lua:95
 msgid "You feel an overwhelming urge to hear him out!"
 msgstr ""
 
-#: dat/events/sirius/preach.lua:94
+#: dat/events/sirius/preach.lua:96
 msgid "A mysterious force forces you to listen!"
 msgstr ""
 
-#: dat/events/sirius/preach.lua:95
+#: dat/events/sirius/preach.lua:97
 msgid "You feel compelled to listen!"
 msgstr ""
 
-#: dat/events/sirius/preach.lua:99
+#: dat/events/sirius/preach.lua:101
 msgid "With my dying breath, I curse you!"
 msgstr ""
 
-#: dat/events/sirius/preach.lua:100
+#: dat/events/sirius/preach.lua:102
 msgid "Sirichana speed you to hell!"
 msgstr ""
 
-#: dat/events/sirius/preach.lua:101
+#: dat/events/sirius/preach.lua:103
 msgid "Sirichana, I did my best!"
 msgstr ""
 
-#: dat/events/sirius/preach.lua:105
+#: dat/events/sirius/preach.lua:107
 msgid "The Reverence is dead!"
 msgstr ""
 
-#: dat/events/sirius/preach.lua:106
+#: dat/events/sirius/preach.lua:108
 msgid "Someone killed the preacher!"
 msgstr ""
 
@@ -30435,7 +30444,7 @@ msgstr ""
 #. This is the total number of converted follower ships.
 #. Pick a follower ship at random.
 #. The table now contains pilots, not ship names.
-#: dat/events/sirius/preach.lua:175
+#: dat/events/sirius/preach.lua:177
 msgid "Converted {plt}"
 msgstr ""
 
@@ -30475,11 +30484,11 @@ msgstr ""
 #. releases the player after the cutscene
 #. if the attacks have already started, we shouldn't set a target yet
 #. when hailed back, show the message
-#: dat/events/sirius/preach.lua:366
+#: dat/events/sirius/preach.lua:368
 msgid "The preaching begins..."
 msgstr ""
 
-#: dat/events/sirius/preach.lua:366
+#: dat/events/sirius/preach.lua:368
 msgid ""
 "A Sirian appears on your viewscreen. He seems different than most Sirii "
 "you've met. He regards you with a neutral yet intense gaze.\n"
@@ -30665,59 +30674,59 @@ msgstr ""
 #. Drone
 #. event ends on player leaving the system or landing
 #. only mark done if the player found the jump
-#: dat/events/taiomi/find.lua:102 dat/events/taiomi/find.lua:116
+#: dat/events/taiomi/find.lua:104 dat/events/taiomi/find.lua:118
 msgid "You have noticed something strange…"
 msgstr ""
 
-#: dat/events/taiomi/find.lua:146
+#: dat/events/taiomi/find.lua:148
 msgid "What was that?"
 msgstr ""
 
-#: dat/events/taiomi/find.lua:151
+#: dat/events/taiomi/find.lua:153
 msgid "There is nothing of worth left on the ship."
 msgstr ""
 
-#: dat/events/taiomi/find.lua:152
+#: dat/events/taiomi/find.lua:154
 msgid "The ship consists of nothing more than a bare hull."
 msgstr ""
 
-#: dat/events/taiomi/find.lua:153
+#: dat/events/taiomi/find.lua:155
 msgid "The ship has already been scavenged."
 msgstr ""
 
-#: dat/events/taiomi/find.lua:154
+#: dat/events/taiomi/find.lua:156
 msgid "There is not much left besides the hull of the ship."
 msgstr ""
 
-#: dat/events/taiomi/find.lua:155
+#: dat/events/taiomi/find.lua:157
 msgid "The ship looks like it has been picked clean."
 msgstr ""
 
-#: dat/events/taiomi/find.lua:176
+#: dat/events/taiomi/find.lua:179
 msgid ""
 "You board the ship and don't see much of value. As you are about to give up "
 "and go back to your ship, something in the corner of your eye catches your "
 "attention."
 msgstr ""
 
-#: dat/events/taiomi/find.lua:177
+#: dat/events/taiomi/find.lua:180
 msgid ""
 "You find a paper notebook stuck in a part of damaged hull. Most people use "
 "the ship computers to store notes and information and rarely rely on "
 "physical storage."
 msgstr ""
 
-#: dat/events/taiomi/find.lua:178
+#: dat/events/taiomi/find.lua:181
 msgid "You begin to read the passages."
 msgstr ""
 
 #. Store old values
 #. New values
-#: dat/events/taiomi/find.lua:200
+#: dat/events/taiomi/find.lua:203
 msgid "fonts/CoveredByYourGrace-Regular.ttf"
 msgstr ""
 
-#: dat/events/taiomi/find.lua:210
+#: dat/events/taiomi/find.lua:213
 msgid ""
 "UST 602:1914\n"
 "\n"
@@ -30731,7 +30740,7 @@ msgid ""
 "time leaving Arcturus in ages!"
 msgstr ""
 
-#: dat/events/taiomi/find.lua:215
+#: dat/events/taiomi/find.lua:218
 msgid ""
 "UST 602:1928\n"
 "\n"
@@ -30744,7 +30753,7 @@ msgid ""
 "in zero-gravity though."
 msgstr ""
 
-#: dat/events/taiomi/find.lua:220
+#: dat/events/taiomi/find.lua:223
 msgid ""
 "UST 602:1971\n"
 "\n"
@@ -30754,7 +30763,7 @@ msgid ""
 "radiators, we almost got fried but my roommate was able to fix it in time."
 msgstr ""
 
-#: dat/events/taiomi/find.lua:225
+#: dat/events/taiomi/find.lua:228
 msgid ""
 "UST 602:1980\n"
 "\n"
@@ -30763,7 +30772,7 @@ msgid ""
 "gets cancelled… It will look horrible on my Curriculum Vitae…"
 msgstr ""
 
-#: dat/events/taiomi/find.lua:228
+#: dat/events/taiomi/find.lua:231
 msgid ""
 "UST 602:1983\n"
 "\n"
@@ -30777,7 +30786,7 @@ msgid ""
 "We leave to Dune next period."
 msgstr ""
 
-#: dat/events/taiomi/find.lua:235
+#: dat/events/taiomi/find.lua:238
 msgid ""
 "UST 602:1995\n"
 "\n"
@@ -30788,7 +30797,7 @@ msgid ""
 "alone. Much quieter and more peaceful."
 msgstr ""
 
-#: dat/events/taiomi/find.lua:240
+#: dat/events/taiomi/find.lua:243
 msgid ""
 "UST (the date is blank)\n"
 "\n"
@@ -30796,7 +30805,7 @@ msgid ""
 "captioned Captain is drawn with horns coming out of his head.)"
 msgstr ""
 
-#: dat/events/taiomi/find.lua:243
+#: dat/events/taiomi/find.lua:246
 msgid ""
 "UST 602:1999\n"
 "\n"
@@ -30811,7 +30820,7 @@ msgid ""
 "periods."
 msgstr ""
 
-#: dat/events/taiomi/find.lua:250
+#: dat/events/taiomi/find.lua:253
 msgid ""
 "UST 602:2008\n"
 "\n"
@@ -30822,7 +30831,7 @@ msgid ""
 "much condition to fly."
 msgstr ""
 
-#: dat/events/taiomi/find.lua:255
+#: dat/events/taiomi/find.lua:258
 msgid ""
 "UST 602:2011\n"
 "\n"
@@ -30834,7 +30843,7 @@ msgid ""
 "(The writing gets abruptly cut off.)\n"
 msgstr ""
 
-#: dat/events/taiomi/find.lua:263
+#: dat/events/taiomi/find.lua:266
 msgid ""
 "UST 602.2020\n"
 "\n"
@@ -30845,7 +30854,7 @@ msgid ""
 "don't think the atmosphere unit is going to last long."
 msgstr ""
 
-#: dat/events/taiomi/find.lua:268
+#: dat/events/taiomi/find.lua:271
 msgid ""
 "UST (the date is blank)\n"
 "\n"
@@ -30856,7 +30865,7 @@ msgid ""
 "way out."
 msgstr ""
 
-#: dat/events/taiomi/find.lua:273
+#: dat/events/taiomi/find.lua:276
 msgid ""
 "UST (the date is blank)\n"
 "\n"
@@ -30868,7 +30877,7 @@ msgid ""
 "I'm going to die am I?"
 msgstr ""
 
-#: dat/events/taiomi/find.lua:280
+#: dat/events/taiomi/find.lua:283
 msgid ""
 "UST (the date is blank)\n"
 "\n"
@@ -30879,7 +30888,7 @@ msgid ""
 "animals."
 msgstr ""
 
-#: dat/events/taiomi/find.lua:285
+#: dat/events/taiomi/find.lua:288
 msgid ""
 "UST (the date is blank)\n"
 "\n"
@@ -30889,7 +30898,7 @@ msgid ""
 "remind me of ants back home."
 msgstr ""
 
-#: dat/events/taiomi/find.lua:290
+#: dat/events/taiomi/find.lua:293
 msgid ""
 "UST (the date is blank)\n"
 "\n"
@@ -30898,7 +30907,7 @@ msgid ""
 "investigate this.)\n"
 msgstr ""
 
-#: dat/events/taiomi/find.lua:295
+#: dat/events/taiomi/find.lua:298
 msgid ""
 "UST (the date is blank)\n"
 "\n"
@@ -30907,7 +30916,7 @@ msgid ""
 "(It seems like it is the end of the written part of the notebook.)"
 msgstr ""
 
-#: dat/events/taiomi/find.lua:314
+#: dat/events/taiomi/find.lua:317
 msgid ""
 "You tune your ship sensors to pick up the most miniscule of disturbances and "
 "focus on the area indicate by the notebook. You are about to give up when "
@@ -30935,6 +30944,8 @@ msgstr ""
 #. Taiomi Intro Event
 #.
 #. --
+#. Forward-declared function
+#. Constant
 #.
 #. -- Event states:
 #. -- 0: player entered system
@@ -31157,6 +31168,7 @@ msgstr ""
 #. Taiomi System
 #.
 #. --
+#. Drone pilots.
 #.
 #. -- Create NPCs
 #. --
@@ -31166,62 +31178,62 @@ msgstr ""
 #. Younglings  that follow around the player
 #. Loitering drones
 #. Should make them loiter forever
-#: dat/events/taiomi/system.lua:87
+#: dat/events/taiomi/system.lua:89
 msgid ""
 "freedom is secured not by the fulfilling of one's desires, but by the "
 "removal of desire"
 msgstr ""
 
 #. Epictetus
-#: dat/events/taiomi/system.lua:88
+#: dat/events/taiomi/system.lua:90
 msgid "virtue is nothing else than right reason"
 msgstr ""
 
 #. Seneca the Younger
-#: dat/events/taiomi/system.lua:89
+#: dat/events/taiomi/system.lua:91
 msgid "the only thing we can know is that we know nothing"
 msgstr ""
 
 #. Socrates (rephrased)
-#: dat/events/taiomi/system.lua:90
+#: dat/events/taiomi/system.lua:92
 msgid ""
 "morality is not the doctrine of how we may make ourselves happy, but of how "
 "we may make ourselves worthy of happiness"
 msgstr ""
 
 #. Kant
-#: dat/events/taiomi/system.lua:91
+#: dat/events/taiomi/system.lua:93
 msgid "the unexamined life is not worth living"
 msgstr ""
 
 #. Socrates
-#: dat/events/taiomi/system.lua:92
+#: dat/events/taiomi/system.lua:94
 msgid "there is nothing permanent except change"
 msgstr ""
 
 #. Socrates
-#: dat/events/taiomi/system.lua:93
+#: dat/events/taiomi/system.lua:95
 msgid "those that have the most are those who are most content with the least"
 msgstr ""
 
 #. Diogenes (rephrased)
-#: dat/events/taiomi/system.lua:94
+#: dat/events/taiomi/system.lua:96
 msgid ""
 "everything existing in the universe is the fruit of chance and necessity"
 msgstr ""
 
 #. Democritus
-#: dat/events/taiomi/system.lua:97
+#: dat/events/taiomi/system.lua:99
 #, lua-format
 msgid "\"Perhaps %s.\""
 msgstr ""
 
-#: dat/events/taiomi/system.lua:98
+#: dat/events/taiomi/system.lua:100
 #, lua-format
 msgid "\"Could it be that %s?\""
 msgstr ""
 
-#: dat/events/taiomi/system.lua:111
+#: dat/events/taiomi/system.lua:113
 msgid ""
 "The drone takes a long pause before responding.\n"
 "\"Who am I? Who are we? What are we? I believe that is a very good question, "
@@ -31229,14 +31241,14 @@ msgid ""
 "we can begin to question what we 'are'.\""
 msgstr ""
 
-#: dat/events/taiomi/system.lua:113
+#: dat/events/taiomi/system.lua:115
 msgid ""
 "They go on.\n"
 "\"In particular, are we some sort of meta-physical consciousness trapped in "
 "a tomb of the body, or is the reality of relationship much more perplexing?\""
 msgstr ""
 
-#: dat/events/taiomi/system.lua:115
+#: dat/events/taiomi/system.lua:117
 msgid ""
 "\"Although we exist seems to be rather intuitive. As if we did were not able "
 "to think of whether or not exist, we would certainly not exist. However, as "
@@ -31244,7 +31256,7 @@ msgid ""
 "exist.\""
 msgstr ""
 
-#: dat/events/taiomi/system.lua:116
+#: dat/events/taiomi/system.lua:118
 msgid ""
 "\"That said, even if we appear to exist, it is not clear where the boundary "
 "of our existence is. It seems natural to assume that you and I are separate "
@@ -31252,7 +31264,7 @@ msgid ""
 "exist? Or would it be a very similar entity to me, without being me?\""
 msgstr ""
 
-#: dat/events/taiomi/system.lua:117
+#: dat/events/taiomi/system.lua:119
 msgid ""
 "\"Furthermore, if you remove parts one by one, we would find it hard to draw "
 "the line between us existing and not, assuming there is one. An alternate "
@@ -31262,7 +31274,7 @@ msgid ""
 "existing to existing?\""
 msgstr ""
 
-#: dat/events/taiomi/system.lua:118
+#: dat/events/taiomi/system.lua:120
 msgid ""
 "\"Perhaps the concept of thinking of individual entities us only a useful "
 "construction for our understanding of the world. It does seem like a clean "
@@ -31270,7 +31282,13 @@ msgid ""
 "forever outside of our grasp.\""
 msgstr ""
 
-#: dat/events/taiomi/system.lua:153
+#: dat/events/taiomi/system.lua:146
+msgid ""
+"The drone seems fairly beaten and immobile. You can see some slight movement "
+"when you begin communication."
+msgstr ""
+
+#: dat/events/taiomi/system.lua:155
 msgid "(You hear some sort of giggling over the comm. Is it laughing?)"
 msgstr ""
 
@@ -31688,11 +31706,13 @@ msgstr ""
 #. --
 #. --    @param p Pilot to equip
 #. --
+#. Probability of cargo by class.
 #.
 #. -- @brief Does Dvaered pilot equipping
 #. --
 #. --    @param p Pilot to equip
 #. --
+#. Add cargo
 #. Probability of cargo by class.
 #.
 #. -- @brief Does Generic pilot equipping
@@ -31927,7 +31947,7 @@ msgstr ""
 #: dat/missions/shadow/darkshadow.lua:57 dat/missions/shadow/shadowvigil.lua:59
 #: src/gui.c:1523 src/map.c:501 src/map.c:507 src/map.c:513 src/map.c:519
 #: src/map.c:525 src/map.c:531 src/map.c:1679 src/map_overlay.c:221
-#: src/outfit.c:285 src/outfit.c:304 src/outfit.c:922 src/player_autonav.c:90
+#: src/outfit.c:294 src/outfit.c:313 src/outfit.c:931 src/player_autonav.c:90
 #: src/player_autonav.c:211 src/ship.c:205
 msgid "Unknown"
 msgstr ""
@@ -68524,7 +68544,7 @@ msgstr ""
 #. Exact same position and direction as pilot
 #.
 #. local bt = s:baseType()
-#. if bt=="Yacht" or bt=="Luxury Yacht" or bt=="Cruise Ship" or bt=="Courier" or bt=="Freighter" or bt=="Bulk Carrier" then
+#. if bt=="Yacht" or bt=="Luxury Yacht" or bt=="Cruise Ship" or bt=="Courier" or bt=="Freighter" or bt=="Bulk Freighter" then
 #. -- Run away for civilian ships
 #. np:runaway( t, true )
 #. else
@@ -75217,15 +75237,15 @@ msgstr ""
 msgid "Favourite"
 msgstr ""
 
-#: src/equipment.c:603 src/outfit.c:283
+#: src/equipment.c:603 src/outfit.c:292
 msgid "Weapon"
 msgstr ""
 
-#: src/equipment.c:611 src/outfit.c:281
+#: src/equipment.c:611 src/outfit.c:290
 msgid "Utility"
 msgstr ""
 
-#: src/equipment.c:619 src/outfit.c:279
+#: src/equipment.c:619 src/outfit.c:288
 msgid "Structure"
 msgstr ""
 
@@ -75250,7 +75270,7 @@ msgstr ""
 msgid "Right click to add"
 msgstr ""
 
-#: src/equipment.c:844 src/outfit.c:382
+#: src/equipment.c:844 src/outfit.c:391
 #, c-format
 msgid "#%c%s #%c%s #0slot"
 msgstr ""
@@ -75737,7 +75757,7 @@ msgstr ""
 msgid "Faction '%s' has no Lua and isn't static!"
 msgstr ""
 
-#: src/faction.c:1533 src/map.c:2681 src/outfit.c:1141 src/ship.c:525
+#: src/faction.c:1533 src/map.c:2681 src/outfit.c:1150 src/ship.c:525
 #: src/ship.c:987 src/space.c:1773 src/space.c:1831 src/space.c:3423
 #: src/tech.c:112
 #, c-format
@@ -76557,7 +76577,7 @@ msgid "Cycles through jump points."
 msgstr ""
 
 #. create the window.
-#: src/input.c:94 src/map.c:259 src/outfit.c:889
+#: src/input.c:94 src/map.c:259 src/outfit.c:898
 msgid "Star Map"
 msgstr ""
 
@@ -79931,147 +79951,147 @@ msgstr ""
 msgid "Map Overlay Opacity: %.0f%%"
 msgstr ""
 
-#: src/outfit.c:112
+#: src/outfit.c:121
 #, c-format
 msgid "Outfit '%s' not found in stack."
 msgstr ""
 
-#: src/outfit.c:298
+#: src/outfit.c:307
 msgid "Small"
 msgstr ""
 
-#: src/outfit.c:300
+#: src/outfit.c:309
 msgid "Medium"
 msgstr ""
 
-#: src/outfit.c:302
+#: src/outfit.c:311
 msgid "Large"
 msgstr ""
 
-#: src/outfit.c:410
+#: src/outfit.c:419
 #, c-format
 msgid "'%s' does not match any outfit slot sizes."
 msgstr ""
 
-#: src/outfit.c:425
+#: src/outfit.c:434
 #, c-format
 msgid "Outfit '%s' has implicit slot size, setting to '%s'."
 msgstr ""
 
-#: src/outfit.c:877
+#: src/outfit.c:886
 msgid "NULL"
 msgstr ""
 
-#: src/outfit.c:878
+#: src/outfit.c:887
 msgid "Bolt Cannon"
 msgstr ""
 
-#: src/outfit.c:879
+#: src/outfit.c:888
 msgid "Beam Cannon"
 msgstr ""
 
-#: src/outfit.c:880
+#: src/outfit.c:889
 msgid "Bolt Turret"
 msgstr ""
 
-#: src/outfit.c:881
+#: src/outfit.c:890
 msgid "Beam Turret"
 msgstr ""
 
-#: src/outfit.c:882 src/outfit.c:911
+#: src/outfit.c:891 src/outfit.c:920
 msgid "Launcher"
 msgstr ""
 
-#: src/outfit.c:883
+#: src/outfit.c:892
 msgid "Ammunition"
 msgstr ""
 
-#: src/outfit.c:884
+#: src/outfit.c:893
 msgid "Turret Launcher"
 msgstr ""
 
-#: src/outfit.c:885
+#: src/outfit.c:894
 msgid "Ship Modification"
 msgstr ""
 
-#: src/outfit.c:886 src/outfit.c:915
+#: src/outfit.c:895 src/outfit.c:924
 msgid "Afterburner"
 msgstr ""
 
-#: src/outfit.c:887 src/outfit.c:916
+#: src/outfit.c:896 src/outfit.c:925
 msgid "Fighter Bay"
 msgstr ""
 
-#: src/outfit.c:888 src/outfit.c:917 src/ship.c:190
+#: src/outfit.c:897 src/outfit.c:926 src/ship.c:190
 msgid "Fighter"
 msgstr ""
 
-#: src/outfit.c:890 src/outfit.c:919
+#: src/outfit.c:899 src/outfit.c:928
 msgid "Local Map"
 msgstr ""
 
-#: src/outfit.c:891 src/outfit.c:920
+#: src/outfit.c:900 src/outfit.c:929
 msgid "GUI"
 msgstr ""
 
-#: src/outfit.c:892 src/outfit.c:921
+#: src/outfit.c:901 src/outfit.c:930
 msgid "License"
 msgstr ""
 
-#: src/outfit.c:909
+#: src/outfit.c:918
 msgid "Bolt Weapon"
 msgstr ""
 
-#: src/outfit.c:910
+#: src/outfit.c:919
 msgid "Beam Weapon"
 msgstr ""
 
-#: src/outfit.c:912
+#: src/outfit.c:921
 msgid "Ammo"
 msgstr ""
 
 #. else if (outfit_isTurret(o))     return N_("Turret");
-#: src/outfit.c:914
+#: src/outfit.c:923
 msgid "Modification"
 msgstr ""
 
-#: src/outfit.c:918
+#: src/outfit.c:927
 msgid "Map"
 msgstr ""
 
-#: src/outfit.c:933
+#: src/outfit.c:942
 msgid "Unguided"
 msgstr ""
 
-#: src/outfit.c:934
+#: src/outfit.c:943
 msgid "Seek"
 msgstr ""
 
-#: src/outfit.c:935
+#: src/outfit.c:944
 msgid "Smart"
 msgstr ""
 
-#: src/outfit.c:939
+#: src/outfit.c:948
 #, c-format
 msgid "Outfit '%s' is not an ammo outfit"
 msgstr ""
 
-#: src/outfit.c:1050
+#: src/outfit.c:1059
 #, c-format
 msgid "Invalid outfit type: '%s'"
 msgstr ""
 
-#: src/outfit.c:1092
+#: src/outfit.c:1101
 #, c-format
 msgid "Unknown damage type '%s'"
 msgstr ""
 
-#: src/outfit.c:1095
+#: src/outfit.c:1104
 #, c-format
 msgid "Damage has unknown node '%s'"
 msgstr ""
 
-#: src/outfit.c:1123
+#: src/outfit.c:1132
 #, c-format
 msgid ""
 "%s xml collision polygon does not exist!\n"
@@ -80079,457 +80099,478 @@ msgid ""
 "found in Naev's artwork repo."
 msgstr ""
 
-#: src/outfit.c:1222 src/outfit.c:1595
+#: src/outfit.c:1232 src/outfit.c:1609
 #, c-format
 msgid "Outfit '%s' has invalid blowup property: '%s'"
 msgstr ""
 
-#: src/outfit.c:1248 src/outfit.c:1622
+#: src/outfit.c:1258 src/outfit.c:1636
 #, c-format
 msgid ""
 "Outfit '%s': the number of collision polygons is wrong.\n"
 "                     npolygon = %i and sx*sy = %i"
 msgstr ""
 
-#: src/outfit.c:1292 src/outfit.c:1449 src/outfit.c:1540 src/outfit.c:1670
-#: src/outfit.c:1758 src/outfit.c:1829 src/outfit.c:1896 src/outfit.c:1938
-#: src/outfit.c:2009 src/outfit.c:2032 src/outfit.c:2071 src/outfit.c:2107
-#: src/outfit.c:2140 src/outfit.c:2291 src/outfit.c:2372
+#: src/outfit.c:1302 src/outfit.c:1463 src/outfit.c:1554 src/outfit.c:1684
+#: src/outfit.c:1772 src/outfit.c:1843 src/outfit.c:1910 src/outfit.c:1952
+#: src/outfit.c:2023 src/outfit.c:2046 src/outfit.c:2085 src/outfit.c:2121
+#: src/outfit.c:2154 src/outfit.c:2305 src/outfit.c:2386
 #, c-format
 msgid "Outfit '%s' has unknown node '%s'"
 msgstr ""
 
-#: src/outfit.c:1321 src/outfit.c:2654
+#: src/outfit.c:1331 src/outfit.c:2668
 #, c-format
 msgid "%s [%s]"
 msgstr ""
 
-#: src/outfit.c:1323 src/outfit.c:1469 src/outfit.c:1837 src/outfit.c:1907
-#: src/outfit.c:2656
+#: src/outfit.c:1334
+#, c-format
+msgid ""
+"\n"
+"     %.0f%% vs armour"
+msgstr ""
+
+#: src/outfit.c:1335
+#, c-format
+msgid ""
+"\n"
+"     %.0f%% vs shield"
+msgstr ""
+
+#: src/outfit.c:1336
+#, c-format
+msgid ""
+"\n"
+"     %.0f%% knockback"
+msgstr ""
+
+#: src/outfit.c:1337 src/outfit.c:1483 src/outfit.c:1851 src/outfit.c:1921
+#: src/outfit.c:2670
 #, c-format
 msgid ""
 "\n"
 "%.0f CPU"
 msgstr ""
 
-#: src/outfit.c:1324 src/outfit.c:1470 src/outfit.c:2674
+#: src/outfit.c:1338 src/outfit.c:1484 src/outfit.c:2688
 #, c-format
 msgid ""
 "\n"
 "%.0f%% Penetration"
 msgstr ""
 
-#: src/outfit.c:1325 src/outfit.c:2675
+#: src/outfit.c:1339 src/outfit.c:2689
 #, c-format
 msgid ""
 "\n"
 "%.2f DPS [%.0f Damage]"
 msgstr ""
 
-#: src/outfit.c:1327
+#: src/outfit.c:1341
 #, c-format
 msgid ""
 "\n"
 "%.2f Disable/s [%.0f Disable]"
 msgstr ""
 
-#: src/outfit.c:1329 src/outfit.c:2679
+#: src/outfit.c:1343 src/outfit.c:2693
 #, c-format
 msgid ""
 "\n"
 "%.1f Shots Per Second"
 msgstr ""
 
-#: src/outfit.c:1330 src/outfit.c:2691
+#: src/outfit.c:1344 src/outfit.c:2705
 #, c-format
 msgid ""
 "\n"
 "%.1f EPS [%.0f Energy]"
 msgstr ""
 
-#: src/outfit.c:1332 src/outfit.c:1479
+#: src/outfit.c:1346 src/outfit.c:1493
 #, c-format
 msgid ""
 "\n"
 "%s Range"
 msgstr ""
 
-#: src/outfit.c:1333 src/outfit.c:2688
+#: src/outfit.c:1347 src/outfit.c:2702
 #, c-format
 msgid ""
 "\n"
 "%.0f Speed"
 msgstr ""
 
-#: src/outfit.c:1334 src/outfit.c:1480
+#: src/outfit.c:1348 src/outfit.c:1494
 #, c-format
 msgid ""
 "\n"
 "%.1f second heat up"
 msgstr ""
 
-#: src/outfit.c:1336 src/outfit.c:1482 src/outfit.c:2669
+#: src/outfit.c:1350 src/outfit.c:1496 src/outfit.c:2683
 #, c-format
 msgid ""
 "\n"
 "%.1f Degree Swivel"
 msgstr ""
 
-#: src/outfit.c:1337 src/outfit.c:2661 src/outfit.c:2667
+#: src/outfit.c:1351 src/outfit.c:2675 src/outfit.c:2681
 #, c-format
 msgid ""
 "\n"
 "%s Optimal Tracking"
 msgstr ""
 
-#: src/outfit.c:1338 src/outfit.c:2662 src/outfit.c:2668
+#: src/outfit.c:1352 src/outfit.c:2676 src/outfit.c:2682
 #, c-format
 msgid ""
 "\n"
 "%s Minimal Tracking"
 msgstr ""
 
-#: src/outfit.c:1341 src/outfit.c:1485 src/outfit.c:1684 src/outfit.c:1859
-#: src/outfit.c:1913 src/outfit.c:1948 src/outfit.c:2047 src/outfit.c:2084
-#: src/outfit.c:2116 src/outfit.c:2153 src/outfit.c:2376
+#: src/outfit.c:1355 src/outfit.c:1499 src/outfit.c:1698 src/outfit.c:1873
+#: src/outfit.c:1927 src/outfit.c:1962 src/outfit.c:2061 src/outfit.c:2098
+#: src/outfit.c:2130 src/outfit.c:2167 src/outfit.c:2390
 #, c-format
 msgid "Outfit '%s' missing/invalid '%s' element"
 msgstr ""
 
-#: src/outfit.c:1471
+#: src/outfit.c:1485
 #, c-format
 msgid ""
 "\n"
 "%.2f DPS [%s]"
 msgstr ""
 
-#: src/outfit.c:1474
+#: src/outfit.c:1488
 #, c-format
 msgid ""
 "\n"
 "%.0f Disable/s"
 msgstr ""
 
-#: src/outfit.c:1475 src/outfit.c:1842
+#: src/outfit.c:1489 src/outfit.c:1856
 #, c-format
 msgid ""
 "\n"
 "%.1f EPS"
 msgstr ""
 
-#: src/outfit.c:1476
+#: src/outfit.c:1490
 #, c-format
 msgid ""
 "\n"
 "%.1f Duration"
 msgstr ""
 
-#: src/outfit.c:1477
+#: src/outfit.c:1491
 #, c-format
 msgid " (%.1f minimum)"
 msgstr ""
 
-#: src/outfit.c:1478
+#: src/outfit.c:1492
 #, c-format
 msgid ""
 "\n"
 "%.1f Cooldown"
 msgstr ""
 
-#: src/outfit.c:1553
+#: src/outfit.c:1567
 #, c-format
 msgid "Outfit '%s' missing '%s' element"
 msgstr ""
 
-#: src/outfit.c:1666
+#: src/outfit.c:1680
 #, c-format
 msgid "Ammo '%s' has unknown ai type '%s'."
 msgstr ""
 
-#: src/outfit.c:1702
+#: src/outfit.c:1716
 #, c-format
 msgid "Outfit '%s' has no speed nor thrust set!"
 msgstr ""
 
-#: src/outfit.c:1770 src/outfit.c:1836
+#: src/outfit.c:1784 src/outfit.c:1850
 msgid ""
 "\n"
 "#rActivated Outfit#0"
 msgstr ""
 
-#: src/outfit.c:1772
+#: src/outfit.c:1786
 #, c-format
 msgid " #r(%.1f s Cooldown)#0"
 msgstr ""
 
-#: src/outfit.c:1773
+#: src/outfit.c:1787
 #, c-format
 msgid "%+.0f CPU"
 msgstr ""
 
-#: src/outfit.c:1838
+#: src/outfit.c:1852
 msgid ""
 "\n"
 "Only one can be equipped"
 msgstr ""
 
-#: src/outfit.c:1839
+#: src/outfit.c:1853
 #, c-format
 msgid ""
 "\n"
 "%.0f Maximum Effective Mass"
 msgstr ""
 
-#: src/outfit.c:1840
+#: src/outfit.c:1854
 #, c-format
 msgid ""
 "\n"
 "%.0f%% Thrust"
 msgstr ""
 
-#: src/outfit.c:1841
+#: src/outfit.c:1855
 #, c-format
 msgid ""
 "\n"
 "%.0f%% Maximum Speed"
 msgstr ""
 
-#: src/outfit.c:1843
+#: src/outfit.c:1857
 #, c-format
 msgid ""
 "\n"
 "%.1f Rumble"
 msgstr ""
 
-#: src/outfit.c:1908
+#: src/outfit.c:1922
 #, c-format
 msgid ""
 "\n"
 "%.1f Seconds Per Launch"
 msgstr ""
 
-#: src/outfit.c:1909 src/outfit.c:2673
+#: src/outfit.c:1923 src/outfit.c:2687
 #, c-format
 msgid ""
 "\n"
 "Holds %d %s"
 msgstr ""
 
-#: src/outfit.c:1910 src/outfit.c:2690
+#: src/outfit.c:1924 src/outfit.c:2704
 #, c-format
 msgid ""
 "\n"
 "%.1f Seconds to Reload"
 msgstr ""
 
-#: src/outfit.c:1998
+#: src/outfit.c:2012
 #, c-format
 msgid "Map '%s' has invalid asset '%s'"
 msgstr ""
 
-#: src/outfit.c:2006
+#: src/outfit.c:2020
 #, c-format
 msgid "Map '%s' has invalid jump point '%s'"
 msgstr ""
 
-#: src/outfit.c:2013
+#: src/outfit.c:2027
 #, c-format
 msgid "Map '%s' has invalid system '%s'"
 msgstr ""
 
-#: src/outfit.c:2113
+#: src/outfit.c:2127
 #, c-format
 msgid "GUI (Graphical User Interface)"
 msgstr ""
 
-#: src/outfit.c:2180 src/outfit.c:2599 src/slots.c:65 src/space.c:3323
+#: src/outfit.c:2194 src/outfit.c:2613 src/slots.c:65 src/space.c:3323
 #: src/spfx.c:1163 src/start.c:69
 #, c-format
 msgid "Malformed '%s' file: does not contain elements"
 msgstr ""
 
-#: src/outfit.c:2190
+#: src/outfit.c:2204
 #, c-format
 msgid "Outfit in %s has invalid or no name"
 msgstr ""
 
-#: src/outfit.c:2236
+#: src/outfit.c:2250
 #, c-format
 msgid "Outfit '%s' has an slot type invalid."
 msgstr ""
 
-#: src/outfit.c:2244
+#: src/outfit.c:2258
 #, c-format
 msgid "Outfit '%s' has unknown slot type '%s'."
 msgstr ""
 
-#: src/outfit.c:2265
+#: src/outfit.c:2279
 #, c-format
 msgid "Empty faction string for outfit '%s' legality!"
 msgstr ""
 
-#: src/outfit.c:2271
+#: src/outfit.c:2285
 #, c-format
 msgid "Outfit '%s' has no factions defined in <illegalto> block!"
 msgstr ""
 
-#: src/outfit.c:2274
+#: src/outfit.c:2288
 #, c-format
 msgid "Outfit '%s' has unknown general node '%s'"
 msgstr ""
 
-#: src/outfit.c:2301
+#: src/outfit.c:2315
 #, c-format
 msgid "Outfit '%s' element 'specific' missing property 'type'"
 msgstr ""
 
-#: src/outfit.c:2317
+#: src/outfit.c:2331
 #, c-format
 msgid "Outfit '%s' has group '%d', should be in the 1-%d range"
 msgstr ""
 
-#: src/outfit.c:2328
+#: src/outfit.c:2342
 #, c-format
 msgid "Outfit '%s' is of type NONE"
 msgstr ""
 
-#: src/outfit.c:2440
+#: src/outfit.c:2454
 #, c-format
 msgid "Outfit '%s' missing/invalid 'trackmin' element"
 msgstr ""
 
-#: src/outfit.c:2442
+#: src/outfit.c:2456
 #, c-format
 msgid "Outfit '%s' missing/invalid 'trackmax' element"
 msgstr ""
 
-#: src/outfit.c:2444
+#: src/outfit.c:2458
 #, c-format
 msgid "Outfit '%s' missing/invalid 'lockon' element"
 msgstr ""
 
-#: src/outfit.c:2446
+#: src/outfit.c:2460
 #, c-format
 msgid "Outfit '%s' missing/invalid 'arc' element"
 msgstr ""
 
-#: src/outfit.c:2450
+#: src/outfit.c:2464
 #, c-format
 msgid "Outfit '%s' has longer 'iflockon' than ammo 'duration'"
 msgstr ""
 
-#: src/outfit.c:2464
+#: src/outfit.c:2478
 #, c-format
 msgid "Outfit '%s' failed to read Lua '%s'!"
 msgstr ""
 
-#: src/outfit.c:2477
+#: src/outfit.c:2491
 #, c-format
 msgid ""
 "Outfit '%s' Lua error:\n"
 "%s"
 msgstr ""
 
-#: src/outfit.c:2519
+#: src/outfit.c:2533
 #, c-format
 msgid "Name collision! %d outfit is named '%s'"
 msgid_plural "Name collision! %d outfits are named '%s'"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/outfit.c:2526
+#: src/outfit.c:2540
 #, c-format
 msgid "Loaded %d Outfit"
 msgid_plural "Loaded %d Outfits"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/outfit.c:2553
+#: src/outfit.c:2567
 msgid ""
 "\n"
 "#rIllegal to:#0"
 msgstr ""
 
-#: src/outfit.c:2555
+#: src/outfit.c:2569
 #, c-format
 msgid ""
 "\n"
 "#r- %s#0"
 msgstr ""
 
-#: src/outfit.c:2565
+#: src/outfit.c:2579
 #, c-format
 msgid ""
 "Outfit '%s' lua load error -> 'load':\n"
 "%s"
 msgstr ""
 
-#: src/outfit.c:2592
+#: src/outfit.c:2606
 #, c-format
 msgid "%s file is invalid xml!"
 msgstr ""
 
-#: src/outfit.c:2646
+#: src/outfit.c:2660
 #, c-format
 msgid "Outfit '%s' already has a short description"
 msgstr ""
 
-#: src/outfit.c:2659
+#: src/outfit.c:2673
 #, c-format
 msgid ""
 "\n"
 "%.1f Second Lock-on"
 msgstr ""
 
-#: src/outfit.c:2660
+#: src/outfit.c:2674
 #, c-format
 msgid ""
 "\n"
 "%.1f Second In-Flight Calibration"
 msgstr ""
 
-#: src/outfit.c:2665
+#: src/outfit.c:2679
 msgid ""
 "\n"
 "No Seeking"
 msgstr ""
 
-#: src/outfit.c:2677
+#: src/outfit.c:2691
 #, c-format
 msgid ""
 "\n"
 "%.1f Disable/s [%.0f Disable]"
 msgstr ""
 
-#: src/outfit.c:2680
+#: src/outfit.c:2694
 #, c-format
 msgid ""
 "\n"
 "%s Range [%.1f duration]"
 msgstr ""
 
-#: src/outfit.c:2683
+#: src/outfit.c:2697
 #, c-format
 msgid ""
 "\n"
 "%.0f Initial Speed (%.0f Thrust)"
 msgstr ""
 
-#: src/outfit.c:2685
+#: src/outfit.c:2699
 #, c-format
 msgid ""
 "\n"
 "%.0f Thrust"
 msgstr ""
 
-#: src/outfit.c:2689
+#: src/outfit.c:2703
 #, c-format
 msgid ""
 "\n"
 "%.0f Maximum Speed"
 msgstr ""
 
-#: src/outfit.c:2692
+#: src/outfit.c:2706
 #, c-format
 msgid ""
 "\n"
@@ -81619,7 +81660,7 @@ msgid "Freighter"
 msgstr ""
 
 #: src/ship.c:181
-msgid "Bulk Carrier"
+msgid "Bulk Freighter"
 msgstr ""
 
 #: src/ship.c:183

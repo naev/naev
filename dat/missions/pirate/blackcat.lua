@@ -1,6 +1,9 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
 <mission name="Black Cat">
+ <flags>
+  <unique />
+ </flags>
  <avail>
   <priority>4</priority>
   <chance>0</chance>
@@ -31,6 +34,7 @@ local cat_colour = nil
 
 local owner_image = portrait.getFullPath( portrait.get() )
 local owner_colour = nil
+local owner -- Non-persistent state
 
 local meow = audio.newSource( "snd/sounds/meow.ogg" )
 
@@ -133,7 +137,7 @@ local event_list = {
       player.autonavReset()
    end,
 }
-function event ()
+local function event ()
    -- Larger chance of just random messages
    if rnd.rnd() < 2/3 then
       local msg_list = {

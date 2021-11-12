@@ -28,7 +28,6 @@ local fmt = require "format"
 local car = require "common.cargo"
 local srm = require "common.soromid"
 
-
 misn_title = _("A Friend's Aid")
 misn_desc = _("Chelsea needs you to escort her to {pnt}.")
 
@@ -123,7 +122,7 @@ function spawnThug( param )
 
    local shiptypes = { "Hyena", "Hyena", "Hyena", "Shark", "Lancelot" }
    local shiptype = shiptypes[ rnd.rnd( 1, #shiptypes ) ]
-   thug = pilot.add( shiptype, fthug, param, fmt.f(_("Thug {ship}"), {ship=_(shiptype)} ), {ai="baddie"} )
+   local thug = pilot.add( shiptype, fthug, param, fmt.f(_("Thug {ship}"), {ship=_(shiptype)} ), {ai="baddie"} )
 
    thug:setHostile()
 
@@ -219,7 +218,7 @@ end
 function chelsea_attacked ()
    if chelsea ~= nil and chelsea:exists() then
       chelsea:control( false )
-      if distress_timer_hook ~= nil then hook.rm( distress_timer_hook ) end
+      hook.rm( distress_timer_hook )
       distress_timer_hook = hook.timer( 1.0, "chelsea_distress_timer" )
    end
 end
@@ -232,7 +231,7 @@ end
 
 function thug_removed ()
    spawnThug()
-   if distress_timer_hook ~= nil then hook.rm( distress_timer_hook ) end
+   hook.rm( distress_timer_hook )
    jumpNext()
 end
 

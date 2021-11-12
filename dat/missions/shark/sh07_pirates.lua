@@ -30,6 +30,8 @@ local fmt = require "format"
 local shark = require "common.shark"
 local lmisn = require "lmisn"
 
+local baddie -- Non-persistent state
+
 -- Mission constants
 local paypla, paysys = planet.getS("Darkshed")
 

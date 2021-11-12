@@ -35,6 +35,9 @@ local dv = require "common.dvaered"
 -- Mission constants
 local DVplanet, DVsys = planet.getS("Stalwart Station")
 
+local base, bombers, fighterpos, fightersDV, fleetDV, fleetFLF, fleetpos, obstinate, vendetta, vigilance -- Non-persistent state
+local nextStage, spawnDV, spawnbase, updatepos -- Forward-declared functions
+
 function create()
     local missys = {system.get(var.peek("flfbase_sysname"))}
     if not misn.claim(missys) then
@@ -289,7 +292,7 @@ end
 
 
 -- Helper function
-function setFLF( j )
+local function setFLF( j )
   hook.pilot(j, "death", "deathFLF")
   j:setNoDisable(true)
   j:setHostile()
@@ -327,7 +330,7 @@ function spawnFLFdestroyers()
     end
 end
 
-function pruneFLF()
+local function pruneFLF()
     -- Remove dead ships from array
     local t = fleetFLF
     fleetFLF = {}
@@ -400,7 +403,7 @@ end
 function spawnDVbomber()
     bomber = pilot.add( "Dvaered Ancestor", "Dvaered", obstinate:pos(), nil, {ai="dvaered_norun"} )
     bomber:outfitRm("all")
-    foo = bomber:outfitAdd("TeraCom Imperator Launcher", 1, true, true)
+    bomber:outfitAdd("TeraCom Imperator Launcher", 1, true, true)
     bomber:outfitAdd("Engine Reroute", 1)
     bomber:outfitAdd("Vulcan Gun", 3)
     bomber:setNoDisable(true)
@@ -443,7 +446,7 @@ end
 
 
 -- Controls a fleet
-function controlFleet( fleetCur, pos, off )
+local function controlFleet( fleetCur, pos, off )
     if baseattack then
        return
     end

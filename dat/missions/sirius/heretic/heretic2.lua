@@ -27,6 +27,8 @@ local fleet = require "fleet"
 local fmt = require "format"
 local srs = require "common.sirius"
 
+local attackers, recon -- Non-persistent state
+
 function create()
    --this mission does make one system claim, in Suna.
    --initialize the variables

@@ -25,7 +25,7 @@ local fmt = require "format"
 require "missions.soromid.comingout.srm_comingout3"
 local srm = require "common.soromid"
 
-
+local fass, fthug
 
 misn_title = _("Waste Collector")
 misn_desc = _("Chelsea needs an escort to {pnt} so they can get rid of the garbage now filling their ship.")
@@ -80,8 +80,12 @@ function accept ()
 end
 
 
-function spawnChelseaShip( _param )
-   fass = faction.dynAdd( "Independent", "Comingout_associates", _("Mercenary") )
+function spawnChelseaShip( param )
+   if not fass then
+      fass = faction.dynAdd( "Independent", "Comingout_associates", _("Mercenary") )
+   end
+
+   chelsea = pilot.add( "Rhino", fass, param, _("Chelsea") )
 
    chelsea:outfitRm( "all" )
    chelsea:outfitRm( "cores" )
@@ -119,12 +123,14 @@ end
 
 
 function spawnThug( param )
-   fthug = faction.dynAdd( "Mercenary", "Comingout_thugs", _("Thugs") )
-   fthug:dynEnemy(fass)
+   if not fthug then
+      fthug = faction.dynAdd( "Mercenary", "Comingout_thugs", _("Thugs") )
+      fthug:dynEnemy(fass)
+   end
 
    local shiptypes = { "Hyena", "Hyena", "Shark", "Lancelot", "Admonisher" }
    local shiptype = shiptypes[ rnd.rnd( 1, #shiptypes ) ]
-   thug = pilot.add( shiptype, fthug, param, fmt.f( _("Thug {ship}"), {ship=_(shiptype)} ), {ai="baddie"} )
+   local thug = pilot.add( shiptype, fthug, param, fmt.f( _("Thug {ship}"), {ship=_(shiptype)} ), {ai="baddie"} )
 
    thug:setHostile()
 

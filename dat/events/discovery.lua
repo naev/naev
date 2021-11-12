@@ -9,6 +9,7 @@
 -- Shows the player fancy messages as they discover things. Meant to be flavourful.
 --]]
 
+local fmt = require 'format'
 local love = require 'love'
 local lg = require 'love.graphics'
 local audio = require 'love.audio'
@@ -303,13 +304,17 @@ local function sfxDiscovery()
    sfx:play()
 end
 
+local triggered = false
 local function handle_event( event )
    -- Don't trigger if already done
    if var.peek( event.name ) then return false end
 
    -- Trigger
    if event.type=="enter" then
-      discover_trigger( event )
+      if not triggered then
+         discover_trigger( event )
+         triggered = true
+      end
    elseif event.type=="discover" then
       hook.discover( "discovered", event )
    elseif event.type=="distance" then
@@ -326,7 +331,7 @@ function create()
       hasevent = hasevent or handle_event( event )
    end
    local sf = sc:faction()
-   local event = sf and faction_events[ sf:nameRaw() ] or false
+   event = sf and faction_events[ sf:nameRaw() ] or false
    if event then
       hasevent = hasevent or handle_event( event )
    end
@@ -361,7 +366,8 @@ function heartbeat( event )
 end
 
 function discover_trigger( event )
-   local msg  = string.format(_("You found #o%s - %s!"),event.title,event.subtitle)
+   local template = (event.subtitle and _("You found #o{title} - {subtitle}!")) or _("You found #o{title}!")
+   local msg = fmt.f(template, event)
    -- Log and message
    player.msg( msg )
    shiplog.create( "discovery", _("Discovery"), _("Travel") )

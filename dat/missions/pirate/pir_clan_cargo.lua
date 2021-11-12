@@ -30,6 +30,7 @@
 local fmt = require "format"
 local portrait = require "portrait"
 
+local invoke_enemies -- Forward-declared functions
 
 function create ()
    -- Note: this mission does not make any system claims.

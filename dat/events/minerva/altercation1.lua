@@ -30,6 +30,9 @@ local dvaered_holo = "dvaered_thug1.png"
 local dvaered_image = "dvaered_thug1.png"
 local dvaered_colour = {1, 0.7, 0.3}
 
+-- Non-persistent state
+local dv, zl, dv_msgid, zl_msgid, zl_yelling, attacktimer, angrytimer, timetonextanger, fighting_started, player_side
+
 -- Messages
 local dv_msgs = {
    _("*incoherent expletives*"),

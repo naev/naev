@@ -29,6 +29,7 @@ local sys2 = system.get("Ingot")
 local pnt = planet.get("Varia")
 
 local credits = baron.rewards.baron
+local vendetta1, vendetta2 -- Non-persistent state
 
 function create ()
    local missys = {system.get("Darkstone")}

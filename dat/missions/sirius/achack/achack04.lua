@@ -24,6 +24,8 @@ require "proximity"
 local srs = require "common.sirius"
 local fmt = require "format"
 
+local bhfleet, harja -- Non-persistent state
+
 local grumblings = {
 	        _("Where's that Harja? He should be showing up any time now."),
                 _("I can't wait to pay that Harja back for the stunt he pulled."),
@@ -185,7 +187,7 @@ end
 function enter()
    if stage == stages.finish then
       -- Remember, Harja will be with you. Always. Well, until the mission ends.
-      harja = fleet.add(1, "Shark", "Achack_sirius", enter_src, _("Harja's Shark"), {ai="trader"})[1]
+      harja = pilot.add("Shark", "Achack_sirius", enter_src, _("Harja's Shark"), {ai="trader"})
       harja:control()
       harja:setInvincible(true)
       harja:follow(player.pilot())

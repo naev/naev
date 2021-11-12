@@ -29,6 +29,9 @@ local pir = require "common.pirate"
 local equipopt = require 'equipopt'
 local lmisn = require "lmisn"
 
+local chelsea -- Non-persistent state
+local fail, spawn -- Forward-declared functions
+
 function create ()
    local systems = lmisn.getSysAtDistance( system.cur(), 1, 3,
       function(s)

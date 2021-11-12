@@ -27,6 +27,8 @@ local neu = require "common.neutral"
 
 -- TODO add some sort of reward I guess
 
+local bodyguard1, bodyguard2, bodyguard3 -- Non-persistent state
+
 local sys1 = system.get("Arcturus")
 local sys2 = system.get("Goddard")
 local sys3 = system.get("Ogat")

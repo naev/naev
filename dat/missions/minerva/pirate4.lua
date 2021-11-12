@@ -38,6 +38,7 @@ local shippos     = vec2.new( 4000, 0 ) -- asteroid field center
 --    1. kidnap spy and take to torture ship
 --    2. defend torture ship
 misn_state = nil
+local mainship, spawned_dvaereds, spawned_pirates -- Non-persistent state
 
 function create ()
    if not misn.claim( mainsys ) then

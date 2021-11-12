@@ -30,6 +30,8 @@ local pir = require "common.pirate"
 -- Mission constants
 local targetsystem = system.get("Delta Pavonis")
 
+local attack_finished -- Forward-declared functions
+
 function create ()
    -- Note: this mission does not make any system claims.
    misn.setNPC( _("Shifty Trader"),  "neutral/unique/shifty_merchant.webp", _("You see a shifty looking man sitting in a darkened corner of the bar. He is trying to discreetly motion you to join him, but is only managing to make himself look suspicious. Perhaps he's watched too many holovideos."))

@@ -44,8 +44,9 @@ local fw = require "common.frontier_war"
 local fmt = require "format"
 local pir = require "common.pirate"
 
--- common hooks
-escort_hailed = fw.escort_hailed
+escort_hailed = fw.escort_hailed -- common hooks
+local athooks, escort, hewhew, scanHooks, squad, strafer, target, zlkPilots, zlk_list -- Non-persistent state
+local rmScanHooksRaw, spawnEmpSquadron, spawnZlkSquadron -- Forward-declared functions
 
 -- TODO: add news comments about all this
 -- TODO: check that no blockade has been forgotten

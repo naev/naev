@@ -60,6 +60,7 @@ local lmisn = require "lmisn"
    3: Ship boarded
 --]]
 misn_state = nil
+local derelict -- Non-persistent state
 
 -- Constants
 local cargo_type  = commodity.get("Food")

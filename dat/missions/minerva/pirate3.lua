@@ -51,6 +51,7 @@ local mainsys = system.get("Limbo")
 --    6. kidnap spy and take to torture ship
 --    7. defend torture ship
 misn_state = nil
+local harper -- Non-persistent state
 
 function create ()
    if not misn.claim( mainsys ) then
@@ -326,7 +327,7 @@ function harper_board ()
 end
 
 
-function harper_neardeath()
+local function harper_neardeath()
    if not harper:exists() then
       return false
    end

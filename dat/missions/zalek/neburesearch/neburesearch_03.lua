@@ -33,6 +33,8 @@ local dest_planet, dest_sys = planet.getS("Neo Pomerania")
 local lab_coat_price = 25e3
 local glasses_price = 40e3
 
+local enter_ship, enter_spaceport, start_talk -- Forward-declared functions
+
 function create()
     -- mission variables
     local numjumps = homeworld_sys:jumpDist(dest_sys, false)

@@ -43,6 +43,10 @@ local portrait = require "portrait"
 -- common hooks
 message = fw.message
 
+-- Non-persistent state
+local annoyers, compHitHook, competitors, followers, joyyesno, leader, score_pankration, score_stadion, score_throw, targets
+local checkMace, endPankration, populate_bar, spawnCompetitors, tamStage1, tamStage2, tamStage3 -- Forward-declared functions
+
 -- Mission constants
 local destpla, destsys = planet.getS("Dvaer Prime")
 local radius = 4000

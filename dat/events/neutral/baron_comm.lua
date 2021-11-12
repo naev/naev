@@ -25,6 +25,7 @@
 -- Comm Event for the Baron mission string
 --]]
 
+local hyena, hailie
 
 function create ()
     if not evt.claim(system.cur()) then

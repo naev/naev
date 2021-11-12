@@ -23,6 +23,9 @@ local fmt = require "format"
 local shadow = require "common.shadow"
 require "proximity"
 
+local genbu, joe, leader, leaderdest, leaderstart, squads -- Non-persistent state
+local spawnGenbu, spawnSquads -- Forward-declared functions
+
 -- Mission constants
 local seirplanet, seirsys = planet.getS("Edergast")
 local jorekplanet1, joreksys1 = planet.getS("Manis")
@@ -65,7 +68,7 @@ function accept()
 end
 
 -- This is the "real" start of the mission. Get yer mission variables here!
-function accept2()
+local function accept2()
    tick = {false, false, false, false, false}
    tick["__save"] = true
    marker = misn.markerAdd(joreksys1, "low")

@@ -37,6 +37,8 @@ local fmt = require "format"
 local pilotname = require "pilotname"
 local lmisn = require "lmisn"
 
+local bounty_setup, fail, level_setup, spawn_pirate, succeed -- Forward-declared functions
+
 -- Mission details
 misn_title = {}
 misn_title[1] = _("#rPIRACY:#0: Quick Assassination Job in {sys}{msg}")

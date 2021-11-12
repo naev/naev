@@ -22,6 +22,7 @@ local love_shaders = require "love_shaders"
 local graphics = require 'love.graphics'
 
 local board_flashback -- Forward-declared functions
+local derelict_mule, derelicts, drone, evt_state, fidget_hook, numboarded -- Event state, never saved.
 
 -- Threshold distances to detect the drone
 local dist_detect_mule = 3e3 -- first encounter at mule

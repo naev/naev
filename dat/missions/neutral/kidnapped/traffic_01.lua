@@ -38,6 +38,9 @@ local neu = require "common.neutral"
 
 local reward = 200e3
 
+local badguys, misn_marker -- Non-persistent state
+local spawn_baddies -- Forward-declared functions
+
 function create ()
    targetsys = {system.get("Mural"),system.get("Darkstone"),system.get("Haleb")}
    targetsys["__save"] = true
@@ -221,7 +224,7 @@ function do_msg2 ()
 end
 
 function spawn_baddies(sp)
-   local badguys = {}
+   badguys = {}
    --hyenas
    for i=1,2 do
       badguys[i] = pilot.add("Za'lek Light Drone", "Mercenary", sp, _("Mercenary") )

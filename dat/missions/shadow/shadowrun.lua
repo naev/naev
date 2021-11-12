@@ -31,6 +31,8 @@ local pnt, sys = planet.getS("Durea") -- Where SHITMAN lives
 local sys2 = system.get("Uhriabi") -- The system where the ship is
 local shipname = _("Seiryuu")
 
+local seiryuu -- Non-persistent state
+local dateresolution -- Forward-declared functions
 
 function create ()
    if not misn.claim( {sys, sys2} ) then
@@ -180,7 +182,7 @@ function enter()
    if system.cur():jumpDist(sys) < 3 and system.cur():jumpDist(sys) > 0 and shadowrun == 2 then
       pilot.clear()
       pilot.toggleSpawn(false)
-      pirates = fleet.add( 4, "Hyena", "Pirate", vec2.new(0,0), _("Pirate Hyena") )
+      fleet.add( 4, "Hyena", "Pirate", vec2.new(0,0), _("Pirate Hyena") )
    elseif system.cur():jumpDist(sys) < 3 and system.cur():jumpDist(sys) > 0 and shadowrun == 3 then
       pilot.clear()
       pilot.toggleSpawn(false)

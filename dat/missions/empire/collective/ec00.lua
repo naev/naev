@@ -38,6 +38,8 @@ local misn_nearby = system.get("Acheron")
 local misn_target = system.get("Merisi")
 local misn_base, misn_base_sys = planet.getS("Omega Station")
 
+local p -- Non-persistent state
+
 function create ()
     local missys = {misn_target}
     if not misn.claim(missys) then

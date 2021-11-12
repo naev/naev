@@ -21,7 +21,7 @@ local p, broadcastid, hailed_player, timerdelay, boardhook, hailhook, timer -- N
 local trader_name = _("Machiavellian Misi") -- Mireia Sibeko
 local trader_image = "misi.png"
 local trader_colour = {1, 0.3, 1}
-local store_name = _("Machiavellian Misi's \"Fine\" Wares"), trader_name
+local store_name = _("Machiavellian Misi's \"Fine\" Wares")
 local broadcastmsg = {
    _("Machiavellian Misi's the name and selling fine shit is my game! Come get your outfits here!"),
    _("Get your fiiiiiiiine outfits here! Guaranteed 3 space lice or less or your money back!"),

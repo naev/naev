@@ -31,6 +31,8 @@ local car = require "common.cargo"
 local fmt = require "format"
 local vntk = require "vntk"
 
+local convoy -- Non-persistent state
+local continueToDest, fail, spawnConvoy -- Forward-declared functions
 
 local misn_title = {}
 misn_title[1] = _("Escort a tiny convoy to {pnt} in {sys}")
@@ -96,26 +98,6 @@ function create()
 end
 
 function accept()
-   convoy_ships = {"Rhino", "Mule"}
-   convoy_names = {_("Convoy Rhino"), _("Convoy Mule")}
-   if convoysize == 1 then
-      convoy_n = 3
-      convoy_ships = "Llama"
-      convoy_names = _("Convoy Llama")
-   elseif convoysize == 2 then
-      convoy_n = 4
-      convoy_ships = "Koala"
-      convoy_names = _("Convoy Koala")
-   elseif convoysize == 3 then
-      convoy_n = 1
-      convoy_ships = {"Rhino", "Rhino", "Mule", "Mule", "Mule"}
-      convoy_names = {_("Convoy Rhino"), _("Convoy Rhino"), _("Convoy Mule"), _("Convoy Mule"), _("Convoy Mule")}
-   elseif convoysize == 4 then
-      convoy_n = 3
-   elseif convoysize == 5 then
-      convoy_n = 4
-   end
-
    if player.jumps() < numjumps then
       if not vntk.yesno( _("Not enough fuel"), fmt.f( _([[The destination is {1} away, but you only have enough fuel for {2}. You cannot stop to refuel. Accept the mission anyway?]]), {fmt.jumps(numjumps), fmt.jumps(player.jumps())} ) ) then
          misn.finish()
@@ -270,21 +252,38 @@ function spawnConvoy ()
       {"Pirate Kestrel", "Pirate Admonisher", "Pirate Rhino", "Pirate Shark", "Pirate Shark", "Hyena", "Hyena", "Hyena"},
    }
    if convoysize == 1 then
-      ambush = fleet.add( 1, ambushes[1], "Pirate", ambush_src, nil, {ai="baddie_norun"} )
+      fleet.add( 1, ambushes[1], "Pirate", ambush_src, nil, {ai="baddie_norun"} )
    elseif convoysize == 2 then
-      ambush = fleet.add( 1, ambushes[rnd.rnd(1,2)], "Pirate", ambush_src, nil, {ai="baddie_norun"} )
+      fleet.add( 1, ambushes[rnd.rnd(1,2)], "Pirate", ambush_src, nil, {ai="baddie_norun"} )
    elseif convoysize == 3 then
-      ambush = fleet.add( 1, ambushes[rnd.rnd(2,3)], "Pirate", ambush_src, nil, {ai="baddie_norun"} )
+      fleet.add( 1, ambushes[rnd.rnd(2,3)], "Pirate", ambush_src, nil, {ai="baddie_norun"} )
    elseif convoysize == 4 then
-      ambush = fleet.add( 1, ambushes[rnd.rnd(2,4)], "Pirate", ambush_src, nil, {ai="baddie_norun"} )
+      fleet.add( 1, ambushes[rnd.rnd(2,4)], "Pirate", ambush_src, nil, {ai="baddie_norun"} )
    else
-      ambush = fleet.add( 1, ambushes[rnd.rnd(3,5)], "Pirate", ambush_src, nil, {ai="baddie_norun"} )
+      fleet.add( 1, ambushes[rnd.rnd(3,5)], "Pirate", ambush_src, nil, {ai="baddie_norun"} )
    end
    for _,p in ipairs(ambush) do
       p:setHostile(true)
    end
 
    --Spawn the convoy
+   local convoy_n = convoysize - 1
+   local convoy_ships = {"Rhino", "Mule"}
+   local convoy_names = {_("Convoy Rhino"), _("Convoy Mule")}
+   if convoysize == 1 then
+      convoy_n = 3
+      convoy_ships = "Llama"
+      convoy_names = _("Convoy Llama")
+   elseif convoysize == 2 then
+      convoy_n = 4
+      convoy_ships = "Koala"
+      convoy_names = _("Convoy Koala")
+   elseif convoysize == 3 then
+      convoy_n = 1
+      convoy_ships = {"Rhino", "Rhino", "Mule", "Mule", "Mule"}
+      convoy_names = {_("Convoy Rhino"), _("Convoy Rhino"), _("Convoy Mule"), _("Convoy Mule"), _("Convoy Mule")}
+   end
+
    convoy = fleet.add( convoy_n,  convoy_ships, "Traders Guild", origin, convoy_names )
    local minspeed = nil
    for i, p in ipairs(convoy) do

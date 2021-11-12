@@ -225,7 +225,7 @@ function pilot_board ()
       target_ship:changeAI( "dummy" )
       target_ship:setHilight( false )
       target_ship:disable() -- Stop it from coming back
-      if death_hook ~= nil then hook.rm( death_hook ) end
+      hook.rm( death_hook )
    else
       local t = fmt.f( subdue_fail_text[ rnd.rnd( 1, #subdue_fail_text ) ], {plt=name} )
       vntk.msg( _("Capture Failed"), t )
@@ -308,8 +308,8 @@ end
 
 
 function hunter_hail( _arg )
-   if hailer ~= nil then hook.rm( hailer ) end
-   if rehailer ~= nil then hook.rm( rehailer ) end
+   hook.rm( hailer )
+   hook.rm( rehailer )
    player.commClose()
 
    local text = share_text[ rnd.rnd( 1, #share_text ) ]
@@ -437,12 +437,8 @@ function succeed ()
    if marker ~= nil then
       misn.markerRm( marker )
    end
-   if pir_jump_hook ~= nil then
-      hook.rm( pir_jump_hook )
-   end
-   if pir_land_hook ~= nil then
-      hook.rm( pir_land_hook )
-   end
+   hook.rm( pir_jump_hook )
+   hook.rm( pir_land_hook )
 end
 
 

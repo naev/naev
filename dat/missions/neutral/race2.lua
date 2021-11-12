@@ -22,6 +22,8 @@
 
 local fmt = require "format"
 
+local checkpoint, racers, target -- Non-persistent state
+
 local chatter = {}
 chatter[1] = _("Let's do this!")
 chatter[2] = _("Wooo!")

@@ -36,6 +36,7 @@ local misnvars = {
    --Trader      = "_fcap_trader",
    --Miner       = "_fcap_miner"
 }
+local restore_standing -- Forward-declared functions
 orig_standing = {}
 orig_standing["__save"] = true
 orig_cap = {}
@@ -141,7 +142,7 @@ end
 
 
 function abort ()
-   if standhook ~= nil then hook.rm(standhook) end
+   hook.rm(standhook)
 
    restore_standing()
 

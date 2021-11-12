@@ -43,6 +43,9 @@ local pir = require "common.pirate"
 
 local reward = 400e3
 
+local cadet1, cadet2, defense_fleet, raider_fleet, raiders_left, second_wave -- Non-persistent state
+local defend_system, second_wave_attacks -- Forward-declared functions
+
 -- Create the mission on the current planet, and present the first Bar text.
 function create()
    this_planet, this_system = planet.cur()
@@ -217,9 +220,8 @@ function second_wave_attacks()
 
 end
 
--- Separate mission for a mid-mission interjection <-- bad organization
-function cadet_first_comm()
-
+-- Separate mission for a mid-mission interjection <-- bad organization <-- FIXME: it's worse, nothing even refers to this.
+local function cadet_first_comm()
       if cadet1_alive then
          cadet1:comm( _("We've got them on the run!") )
       elseif cadet2_alive then
