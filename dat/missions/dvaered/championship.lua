@@ -49,6 +49,8 @@ local opponent, sec11, sec12, sec21, sec22, tv1, tv2, usedNames
 --Change here to change the planet and the system
 local mispla, missys = planet.getS("Dvaer Prime")
 
+local beginbattle, land_everyone, player_wanted, won -- Forward-declared functions
+
 function create ()
    if not misn.claim ( missys ) then
       misn.finish(false)

@@ -42,6 +42,7 @@ local misn_base, misn_base_sys = planet.getS("Omega Station")
 local credits = emp.rewards.ec04
 
 local fleet1, fleet2, swarm1, swarm2, swarm3 -- Non-persistent state
+local empireAttack, empireRetreat -- Forward-declared functions
 
 function create ()
    local missys = {misn_target}

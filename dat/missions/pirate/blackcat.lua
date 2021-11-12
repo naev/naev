@@ -137,7 +137,7 @@ local event_list = {
       player.autonavReset()
    end,
 }
-function event ()
+local function event ()
    -- Larger chance of just random messages
    if rnd.rnd() < 2/3 then
       local msg_list = {

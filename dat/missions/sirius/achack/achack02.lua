@@ -29,6 +29,7 @@ local fmt = require "format"
 local pir = require "common.pirate"
 
 local ambush, joanne -- Non-persistent state
+local ambushSet -- Forward-declared functions
 
 -- Mission constants
 local reward = 750e3
@@ -53,7 +54,7 @@ function create()
    end
 end
 
-function player_has_fast_ship()
+local function player_has_fast_ship()
   local stats = player.pilot():stats()
   playershipspeed = stats.speed_max
   local has_fast_ship = false

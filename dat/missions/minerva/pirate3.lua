@@ -327,7 +327,7 @@ function harper_board ()
 end
 
 
-function harper_neardeath()
+local function harper_neardeath()
    if not harper:exists() then
       return false
    end

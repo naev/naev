@@ -31,6 +31,7 @@ local fmt = require "format"
 local neu = require "common.neutral"
 
 local credits = 750e3
+local launchSatellite -- Forward-declared functions
 
 local articles={
    {

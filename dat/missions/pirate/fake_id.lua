@@ -36,6 +36,7 @@ local misnvars = {
    --Trader      = "_fcap_trader",
    --Miner       = "_fcap_miner"
 }
+local restore_standing -- Forward-declared functions
 orig_standing = {}
 orig_standing["__save"] = true
 orig_cap = {}

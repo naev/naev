@@ -36,6 +36,8 @@ local artifactplanetC = planet.get("Hurada")
 local flintplanet, flintsys = planet.getS("Tau Station")
 local reward = baron.rewards.prince
 
+local isIn, mangle -- Forward-declared functions
+
 function create ()
    -- Note: this mission makes no system claims.
    misn.setNPC(_("An unfamiliar man"), "neutral/unique/unfamiliarman.webp", _("A man you've never seen before makes eye contact with you. It seems he knows who you are."))

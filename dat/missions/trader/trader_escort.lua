@@ -31,6 +31,7 @@ local car = require "common.cargo"
 local fmt = require "format"
 
 local convoy -- Non-persistent state
+local continueToDest, fail, spawnConvoy -- Forward-declared functions
 
 local misn_title = {}
 misn_title[1] = _("Escort a tiny convoy to {pnt} in {sys}")

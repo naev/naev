@@ -47,6 +47,7 @@ local pir = require "common.pirate"
 local reward = 200e3
 
 local defense_fleet, raider_fleet, raiders_left -- Non-persistent state
+local defend_system -- Forward-declared functions
 
 -- Create the mission on the current planet, and present the first Bar text.
 function create ()

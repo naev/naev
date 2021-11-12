@@ -194,7 +194,7 @@ function refuelBroadcast ()
 end
 
 
-function addRefuelShip ()
+local function addRefuelShip ()
    -- Create the pilot
    refship = pilot.add( "Empire Rainmaker", "Empire", last_sys, _("Fuel Tanker"), {ai="empire_refuel"} )
    refship:setFriendly()

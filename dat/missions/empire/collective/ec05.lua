@@ -59,6 +59,8 @@ local misn_flee_sys = system.get("Capricorn")
 local drone_reinforcements, paci, trinity
 local escorts = {}
 
+local enter, trinity_flee -- Forward-declared functions
+
 function create ()
    local missys = {misn_target_sys}
    if not misn.claim(missys) then
@@ -280,7 +282,7 @@ end
 
 
 -- Drone killed
-function drone_dead ()
+local function drone_dead ()
    num_drone = num_drone - 1
    if num_drone < 2 and not tri_flee then
       trinity_flee()

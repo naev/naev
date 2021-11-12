@@ -41,6 +41,7 @@ local pir = require "common.pirate"
 
 escort_hailed = fw.escort_hailed -- common hooks
 local attackhooks, badguys, escort, hamelsen, tamteam, targetList, toldya -- Non-persistent state
+local compute_reward, elt_dest_inlist, increment_baddie, payNfinish, spawnBaddies, spawnEscort, spawnHamelsen, start_battle -- Forward-declared functions
 
 -- Mission constants
 local destpla, destsys = planet.getS("Mannannan")
@@ -352,7 +353,7 @@ function spawnBaddies( origin )
 end
 
 -- Spawn Tam and his crew
-function spawnTam( origin )
+local function spawnTam( origin )
    tamteam = {}
    tamteam[1] = pilot.add( "Dvaered Vigilance", "Dvaered", origin )
    tamteam[2] = pilot.add( "Dvaered Phalanx", "Dvaered", origin )

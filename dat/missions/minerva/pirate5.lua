@@ -33,6 +33,7 @@ local equipopt = require 'equipopt'
 local fmt = require "format"
 
 local reward_amount = minerva.rewards.pirate5
+local drone_control_update -- Forward-declared functions
 
 local mainsys = system.get("Gammacron")
 -- Mission states:

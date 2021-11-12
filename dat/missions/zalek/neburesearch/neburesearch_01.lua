@@ -31,6 +31,7 @@ local fmt = require "format"
 local zlk = require "common.zalek"
 
 local ships, transporter -- Non-persistent state
+local fail, spawnTransporter, updateGoalDisplay -- Forward-declared functions
 
 -- Mission info stuff
 local osd_msg   = {}
@@ -180,7 +181,7 @@ function land()
     origin = planet.cur()
 end
 
-function continueToDest(pilot)
+local function continueToDest(pilot)
     if pilot ~= nil and pilot:exists() then
         pilot:control(true)
         pilot:setNoJump(false)

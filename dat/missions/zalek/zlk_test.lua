@@ -26,6 +26,8 @@ local car = require "common.cargo"
 local fmt = require "format"
 local lmisn = require "lmisn"
 
+local isMounted, isOwned, rmTheOutfit -- Forward-declared functions
+
 local engines = {
            _("engine with phase-change material cooling"),
            _("engine controlled with Zermatt-Henry theory"),   --Some random scientists names

@@ -38,6 +38,7 @@ local fmt = require "format"
 
 message = fw.message -- common hooks
 local Aidlehooks, Bidlehooks, alpha, attackers, canland, controls, hamelsen, jules, spy, toldya, wrlrds -- Non-persistent state
+local StraferNspy, equipHyena, scheduleIncoming, spawn1Wrlrd, spawnAlpha, spawnBeta, strNpc -- Forward-declared functions
 
 -- TODO: hooks to penalize attacking people
 
@@ -444,7 +445,7 @@ function incomingControl5()
 end
 
 -- Player checks security clearance of a ship
-function checkClearance( self )
+local function checkClearance( self )
    myjob = occupations[ rnd.rnd(1,#occupations) ]
    tk.msg( _("Controlling incoming ship"), fmt.f(_([[As you approach the ship, your targeting array focuses on it, and its clearance code gets processed. You can soon read on your control pad: "This citizen is an honorable {job} whose presence is required for the meeting: let the ship land on the station."]]), {job=myjob}) )
    self:setHilight( false )

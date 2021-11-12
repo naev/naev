@@ -121,7 +121,7 @@ They wink at you.]]))
 end
 
 
-function dvaered_weapons( p )
+local function dvaered_weapons( p )
    local function inlist( val, list )
       for k,v in ipairs(list) do
          if v==val then
@@ -155,7 +155,7 @@ function dvaered_weapons( p )
 end
 
 
-function drone_create( pos )
+local function drone_create( pos )
    local d = pilot.add( "Za'lek Scout Drone", fzalek, pos )
    d:control()
    d:brake()

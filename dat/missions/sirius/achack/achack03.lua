@@ -83,7 +83,7 @@ function enter()
 end
 
 -- Local helper function
-function _mergeTables( old, new )
+local function _mergeTables( old, new )
    if type(old) ~= "table" or type(new) ~= "table" then
       print(_("_mergeTables: Error, this function only accepts tables."))
    end

@@ -45,6 +45,7 @@ local destpla3, destsys3 = planet.getS("Laarss")
 local fleepla, fleesys = planet.getS("Odonga m1")
 
 local ambush, hamelsen, majorTam, p, quickie, savers, warlord -- Non-persistent state
+local encounterWarlord, hamelsenAmbush, spawnTam, testPlayerSpeed -- Forward-declared functions
 
 local meet_text1 = _([[After Tam boards the Goddard, you wait for about half a period until his ship undocks from the warlord's cruiser. You then receive a message from him "Everything is right, we will now land on {pnt} in order to refuel and rest for some time."]])
 

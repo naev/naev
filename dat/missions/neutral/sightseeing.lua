@@ -34,6 +34,7 @@ local vntk = require "vntk"
 local lmisn = require "lmisn"
 
 local marks -- Non-persistent state
+local set_marks -- Forward-declared functions
 
 local pay_text    = {}
 pay_text[1] = _("The passengers disembark with a new appreciation for the wonders of the universe.")

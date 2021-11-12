@@ -36,6 +36,7 @@ local dv = require "common.dvaered"
 local DVplanet, DVsys = planet.getS("Stalwart Station")
 
 local base, bombers, fighterpos, fightersDV, fleetDV, fleetFLF, fleetpos, obstinate, vendetta, vigilance -- Non-persistent state
+local nextStage, spawnDV, spawnbase, updatepos -- Forward-declared functions
 
 function create()
     local missys = {system.get(var.peek("flfbase_sysname"))}
@@ -291,7 +292,7 @@ end
 
 
 -- Helper function
-function setFLF( j )
+local function setFLF( j )
   hook.pilot(j, "death", "deathFLF")
   j:setNoDisable(true)
   j:setHostile()
@@ -329,7 +330,7 @@ function spawnFLFdestroyers()
     end
 end
 
-function pruneFLF()
+local function pruneFLF()
     -- Remove dead ships from array
     local t = fleetFLF
     fleetFLF = {}
@@ -445,7 +446,7 @@ end
 
 
 -- Controls a fleet
-function controlFleet( fleetCur, pos, off )
+local function controlFleet( fleetCur, pos, off )
     if baseattack then
        return
     end

@@ -42,6 +42,8 @@ local fmt = require "format"
 misn_state = nil
 local strangelove_ship, thug_leader, thug_pilots -- Non-persistent state
 
+local landed_lab -- Forward-declared functions
+
 local targetplanet = planet.get("Strangelove Lab")
 local targetsys = system.get("Westhaven") --same as targetplanet:system(), but only after the below diff gets applied
 

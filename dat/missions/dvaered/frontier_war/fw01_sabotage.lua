@@ -53,6 +53,8 @@ local intpla, intsys     = planet.getS("Timu")
 local p, ps -- active pilot/fleet
 local battleaddict, hamelsen, klank, leblanc, randguy, tam, urnus, warlord -- pilots in the plot
 
+local equipGoddard, player_civilian, release_baddies -- Forward-declared functions
+
 function create()
    if planet.cur() == hampla then
       misn.finish(false)

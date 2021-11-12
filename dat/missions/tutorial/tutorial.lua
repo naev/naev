@@ -21,6 +21,7 @@ local vn = require "vn"
 local vntk = require "vntk"
 
 local captainTP -- Non-persistent state
+local msg_info, spawn_captain_tp -- Forward-declared functions
 
 local missys = system.get( "Delta Polaris" )
 local destsys = system.get( "Jade" )

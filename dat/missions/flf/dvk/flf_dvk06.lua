@@ -27,6 +27,7 @@ local fleet = require "fleet"
 local flf = require "missions.flf.flf_common"
 
 local civ_fleet, pir_boss, pir_fleet -- Non-persistent state
+local finish, pilot_death_civilian -- Forward-declared functions
 
 osd_desc    = {}
 osd_desc[1] = _("Fly to the {sys} system and meet with the group of FLF ships")

@@ -31,6 +31,7 @@ require "proximity"
 local sciwrong = require "common.sciencegonewrong"
 
 local adm1, lance1, lance2 -- Non-persistent state
+local spwn_police -- Forward-declared functions
 
 -- set mission variables
 t_sys = { __save=true }

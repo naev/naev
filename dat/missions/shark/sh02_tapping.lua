@@ -37,6 +37,7 @@ local fmt = require "format"
 local shark = require "common.shark"
 
 local badguys -- Non-persistent state
+local add_llama, bombers, corvette, cruiser, hvy_intercept, interceptors, rndNb -- Forward-declared functions
 
 -- Mission constants
 local paypla, paysys = planet.getS("Darkshed")

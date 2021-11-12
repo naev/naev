@@ -66,6 +66,7 @@ local stealthsys = system.get("Zerantix")
 misn_state = nil
 local pscavA, pscavB, stealthmessages, waypoints, wreck -- Non-persistent state
 
+local scavengers_encounter -- Forward-declared functions
 
 function create ()
    if not misn.claim( {cutscenesys, stealthsys} ) then

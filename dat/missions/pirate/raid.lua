@@ -31,7 +31,7 @@ local vntk = require "vntk"
 
 local sconvoy, sescorts -- Non-persistent state
 
-function get_route( sys )
+local function get_route( sys )
    local adj = sys:jumps()
    if #adj < 2 then return end
    local jumpenter, jumpexit

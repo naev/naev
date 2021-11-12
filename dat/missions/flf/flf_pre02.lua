@@ -104,7 +104,7 @@ function leave ()
 end
 
 
-function spawnDVReinforcements ()
+local function spawnDVReinforcements ()
    reinforcements_arrived = true
    local dist = 1500
    local x
@@ -201,7 +201,7 @@ function hail ()
 end
 
 
-function spawnFLF ()
+local function spawnFLF ()
    local dist = 1500
    local x
    local y

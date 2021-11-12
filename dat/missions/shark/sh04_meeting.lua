@@ -32,6 +32,7 @@ local fleet = require "fleet"
 local shark = require "common.shark"
 
 local badguy, badguyprox -- Non-persistent state
+local ambush -- Forward-declared functions
 
 --Change here to change the planets and the systems
 local mispla, missys = planet.getS("Curie")

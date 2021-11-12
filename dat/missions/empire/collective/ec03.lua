@@ -41,7 +41,7 @@ local misn_target_sys = system.get("C-59")
 
 osd_msg = {__save=true}
 
-function setOSD (dronequota, droneleft)
+local function setOSD (dronequota, droneleft)
    local destroy_text, remaining_text
    destroy_text = gettext.ngettext(
          "Destroy at least %d drone",

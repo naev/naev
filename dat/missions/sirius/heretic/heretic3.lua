@@ -28,6 +28,7 @@ local fmt = require "format"
 local srs = require "common.sirius"
 
 local de_fence, de_fence_2, sirius_be_serious -- Non-persistent state
+local flee -- Forward-declared functions
 
 function create()
    --this mission makes one mission claim, in Suna.
