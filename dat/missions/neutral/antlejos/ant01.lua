@@ -106,6 +106,9 @@ function land ()
    vn.na( fmt.reward(reward) )
    vn.run()
 
+   -- Apply first diff
+   ant.unidiff( ant.unidiff_list[1] )
+
    player.pilot():setFuel(true) -- Refuel
 
    player.pay( reward )

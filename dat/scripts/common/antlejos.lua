@@ -32,6 +32,19 @@ function antlejos.log( text )
    shiplog.append( "antlejos", text )
 end
 
+antlejos.unidiff_list = {
+   "antlejosv_1",
+}
+
+function antlejos.unidiff( diffname )
+   for _k,d in ipairs(antlejos.unidiff_list) do
+      if diff.isApplied(d) then
+         diff.remove(d)
+      end
+   end
+   diff.apply( diffname )
+end
+
 antlejos.rewards = {
    ant01 = 150e3,
    ant02 = 200e3,
