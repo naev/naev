@@ -47,7 +47,7 @@ end
 function accept()
     if tk.yesno(_("House Dvaered needs YOU"), _([[You join the Dvaered official at his table. He greets you in a cordial fashion, at least by Dvaered standards. You explain to him that you wish to know more about the anti-FLF operation that House Dvaered is supposedly working on.
     "Ah! It's good to see such righteous enthusiasm among our citizenry. Indeed, our forces have been preparing to deal a significant blow to the FLF terrorists. I can't disclose the details, of course - this is a military operation. However, if you have a combat-capable ship and enough sense of duty to assist us, there is an opportunity to serve alongside the real Dvaered warriors. How about it? Can we count on your support?"]])) then
-        destsys = system.get(var.peek("flfbase_sysname"))
+        mem.destsys = system.get(var.peek("flfbase_sysname"))
         tk.msg(_("A clever ruse"), _([["Splendid. You have the right mindset, citizen. If only all were like you! But that is neither here nor there. Come, I will take you to the local command bunker. The details of this operation will be explained to you there."
     True to his word, the Dvaered liaison escorts you out of the spaceport bar, and within the hour you find yourself deep inside a highly secured Dvaered military complex. You are ushered into a room, in which you find a large table and several important-looking military men. At the head of the table sits a man whose name tag identifies him as Colonel Urnus. Evidently he's the man in charge.
     A Dvaered soldier instructs you to take a seat.]]))
@@ -56,7 +56,7 @@ function accept()
     "Of course, we have conducted patrols in this system, but so far without result. Our sensors are severely impaired by the nebula in this system, so the chances of us finding the terrorist hive by our own devices are slim. Fortunately, our top strategists have come up with a ruse, one that will make the FLF come to us."
     "We will use a civilian ship - your ship, naturally - as a decoy," Urnus continues. The image on the wall zooms up to the {sys} system, and a white blip representing your ship appears near the jump point. "Your ship will be equipped with an IFF transponder in use by the FLF, so to anyone who isn't looking too closely you will appear as an FLF ship. Of course, this alone is not enough. The FLF will assume you know where their base is, since you look like one of them. It is important to note that the transponder will work best in the Nebula, which we believe is where the base should be located."
     The image on the wall updates again, this time showing several House Dvaered crests near your ship.
-    "Some time after you enter the system, several of our military assets will jump in and open fire. To the FLF, it will look like one of their own has come under attack! Since their base is nearby, they will undoubtedly send reinforcements to help their 'comrade' out of a tight situation."]]), {sys=destsys}))
+    "Some time after you enter the system, several of our military assets will jump in and open fire. To the FLF, it will look like one of their own has come under attack! Since their base is nearby, they will undoubtedly send reinforcements to help their 'comrade' out of a tight situation."]]), {sys=mem.destsys}))
         tk.msg(_("A clever ruse"), _([["As soon as the FLF ships join the battle, you and the Dvaered ships will disengage and target the FLF instead. Your mission is to render at least one of their ships incapable of fighting, and board it. You can then access the ship's computer and download the flight log, which should contain the location of the FLF base. Take this information to a Dvaered base, and your mission will be complete."
     The image on the wall updates one last time, simulating the battle as described by Colonel Urnus. Several FLF logos appear, which are promptly surrounded by the Dvaered ones. Then the logos turn gray, indicating that they've been disabled.
     "Let me make one thing clear, citizen. You are allowed, even expected to fire on the Dvaered ships that are firing on you. However, you must make it look you're on the losing side, or the FLF will not come to your aid! So, do NOT disable or destroy any Dvaered ships, and make sure your own armor takes a bit of a beating. This is vital to the success of the mission. Do not fail."
@@ -65,7 +65,7 @@ function accept()
 
         misn.accept()
         misn.osdCreate(_("Lure out the FLF"), {
-            fmt.f(_("Fly to the {sys} system"), {sys=destsys}),
+            fmt.f(_("Fly to the {sys} system"), {sys=mem.destsys}),
             _("Wait for the Dvaered military to jump in and attack you"),
             _("Fight the Dvaered until the FLF step in"),
             _("Disable and board at least one FLF ship"),
@@ -74,12 +74,12 @@ function accept()
         misn.setDesc(_("You have been recruited to act as a red herring in a military operation of Dvaered design. Your chief purpose is to goad the FLF into showing themselves, then disable and board one of their ships. You will fail this mission if you disable or destroy any Dvaered ship, or if you leave the system before the operation is complete."))
         misn.setTitle(_("Lure out the FLF"))
         misn.setReward(_("Serving alongside real Dvaered warlords"))
-        marker = misn.markerAdd( destsys, "low" )
+        mem.marker = misn.markerAdd( mem.destsys, "low" )
 
-        missionstarted = false
-        DVdisablefail = true
-        logsfound = false
-        flfdead = 0
+        mem.missionstarted = false
+        mem.DVdisablefail = true
+        mem.logsfound = false
+        mem.flfdead = 0
 
         local c = misn.cargoNew( N_("FLF IFF Transponder"), N_("A transponder that will make your ship appear as FLF in the nebula.") )
         misn.cargoAdd(c, 0)
@@ -94,16 +94,16 @@ function accept()
 end
 
 function jumpout()
-    last_sys = system.cur()
+    mem.last_sys = system.cur()
 end
 
 function enter()
-    if system.cur() == destsys and not logsfound then
+    if system.cur() == mem.destsys and not mem.logsfound then
         pilot.clear()
         pilot.toggleSpawn(false)
         misn.osdActive(2)
         hook.timer(15.0, "spawnDV")
-    elseif missionstarted then -- The player has jumped away from the mission theater, which instantly ends the mission.
+    elseif mem.missionstarted then -- The player has jumped away from the mission theater, which instantly ends the mission.
         tk.msg(_("You ran away!"), _("You have left the system without first completing your mission. The operation ended in failure."))
         faction.get("Dvaered"):modPlayerSingle(-10)
         abort()
@@ -111,7 +111,7 @@ function enter()
 end
 
 function land()
-    if logsfound and planet.cur():faction() == faction.get("Dvaered") then
+    if mem.logsfound and planet.cur():faction() == faction.get("Dvaered") then
         tk.msg(_("X marks the spot"), _([[As soon as you land, a Dvaered military operator contacts you and requests you turn over the flight log you procured from the FLF ship, so you do. The Dvaered are then silent for some twenty hectoseconds, time you use to complete your post-landing routines. Then, you are summoned to the local Dvaered security station.
     Colonel Urnus welcomes you. "Well met, citizen. I have received word of your accomplishment in our recent operation. It seems HQ is quite pleased with the result, and they have instructed me to reward you appropriately."
     He hands you a credit chip that represents a decent sum of money, though you feel that a mere monetary reward doesn't begin to compensate for the dangerous plan the Dvaered made you part of. However, you wisely opt not to give voice to that thought.
@@ -127,8 +127,8 @@ end
 
 function spawnDV()
     misn.osdActive(3)
-    missionstarted = true
-    fleetDV = fleet.add( 3, "Dvaered Vigilance", "Dvaered", last_sys, nil, {ai="dvaered_norun"} )
+    mem.missionstarted = true
+    fleetDV = fleet.add( 3, "Dvaered Vigilance", "Dvaered", mem.last_sys, nil, {ai="dvaered_norun"} )
     -- The Dvaered ships should attack the player, so set them hostile.
     -- These are Vigilances, so we should tune them WAY down so the player doesn't insta-die.
     for i, j in ipairs(fleetDV) do
@@ -146,15 +146,15 @@ end
 
 -- Polls the player's health and the Dvaereds' shields, and spawns the FLF fleet if shields and armor are below a certain value.
 function pollHealth()
-    shieldDV = 0
-    parmor, pshield = player.pilot():health()
+    mem.shieldDV = 0
+    mem.parmor, mem.pshield = player.pilot():health()
     local maxshieldDV = 0
     for i, j in ipairs(fleetDV) do
         maxshieldDV = maxshieldDV + j:stats()["shield"]
-        armor, shield = j:health()
-        shieldDV = shieldDV + shield
+        mem.armor, mem.shield = j:health()
+        mem.shieldDV = mem.shieldDV + mem.shield
     end
-    if parmor <= 60 and pshield <= 10 and shieldDV <= (maxshieldDV - 50) then
+    if mem.parmor <= 60 and mem.pshield <= 10 and mem.shieldDV <= (maxshieldDV - 50) then
         spawnFLF()
     else
         hook.timer(0.5, "pollHealth")
@@ -163,7 +163,7 @@ end
 
 -- Spawn the FLF ships, reset the Dvaered.
 function spawnFLF()
-    DVdisablefail = false -- The player no longer fails the mission if a Dvaered ship is disabled
+    mem.DVdisablefail = false -- The player no longer fails the mission if a Dvaered ship is disabled
     misn.osdActive(4)
     for i, j in ipairs(fleetDV) do
         j:setFriendly()
@@ -175,7 +175,7 @@ function spawnFLF()
     end
     local vecFLF = vec2.newP(800, rnd.rnd() * 360)
     fleetFLF = fleet.add( 4, "Vendetta", "FLF", player.pos() + vecFLF, nil, {ai="flf_norun"} )
-    flfactive = #fleetFLF
+    mem.flfactive = #fleetFLF
     fleetDV[1]:comm(_("Here come the FLF! All units, switch to EMPs and disable the terrorist ships!"))
 
     for i, j in ipairs(fleetFLF) do
@@ -188,7 +188,7 @@ function spawnFLF()
 end
 
 function disableDV()
-    if DVdisablefail then -- Only true as long as the FLF aren't there yet
+    if mem.DVdisablefail then -- Only true as long as the FLF aren't there yet
         tk.msg(_("You fought too hard!"), _("You have disabled a Dvaered ship, thereby violating your orders. The operation is canceled thanks to you. The Dvaered are less than pleased."))
         faction.get("Dvaered"):modPlayerSingle(-10)
         abort()
@@ -196,13 +196,13 @@ function disableDV()
 end
 
 function disableFLF()
-    flfactive = flfactive - 1
+    mem.flfactive = mem.flfactive - 1
     -- Persuade the Dvaered to stop shooting at disabled FLF
     for i, j in ipairs(fleetDV) do
         if j:exists() then
-            if flfactive == 0 and not messaged then
+            if mem.flfactive == 0 and not mem.messaged then
                fleetDV[i]:comm(_("All targets neutralized. Download the flight log and let's get out of here!"))
-               messaged = true
+               mem.messaged = true
             end
             j:changeAI("dvaered_norun")
         end
@@ -210,8 +210,8 @@ function disableFLF()
 end
 
 function deathFLF()
-    flfdead = flfdead + 1
-    if flfdead == 6 and not logsfound then
+    mem.flfdead = mem.flfdead + 1
+    if mem.flfdead == 6 and not mem.logsfound then
         tk.msg(_("All the FLF are dead!"), _("Unfortunately, all the FLF ships have been destroyed before you managed to board one of them. The operation ended in failure."))
         abort()
     end
@@ -220,10 +220,10 @@ end
 function boardFLF()
     misn.osdActive(5)
     tk.msg(_("Take no prisoners - only their logs"), _([[You successfully board the FLF ship and secure its flight logs. This is what the Dvaered want - you should take it to a Dvaered planet immediately.]]))
-    missionstarted = false
-    logsfound = true
+    mem.missionstarted = false
+    mem.logsfound = true
     player.unboard()
-    misn.markerRm(marker)
+    misn.markerRm(mem.marker)
     for i, j in ipairs(fleetDV) do
         if j:exists() then
             j:changeAI("flee") -- Make them jump out (if they're not dead!)

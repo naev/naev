@@ -56,16 +56,16 @@ znpcs[3] = _([[A Za'lek student says: "Hello, I am preparing a Ph.D in system re
 znpcs[4] = _([[A Za'lek researcher needs you to test the new propelling system they have implemented in this engine.]])
 
 function create()
-   origin_p, origin_s = planet.cur()
+   mem.origin_p, mem.origin_s = planet.cur()
 
    -- target destination
-   destplanet, destsys, numjumps, traveldist, cargo, avgrisk, tier = car.calculateRoute()
-   if destplanet == nil then
+   mem.destplanet, mem.destsys, mem.numjumps, mem.traveldist, mem.cargo, mem.avgrisk, mem.tier = car.calculateRoute()
+   if mem.destplanet == nil then
       misn.finish(false)
    end
 
    --All the mission must go to Za'lek planets with a place to change outfits
-   if destplanet:faction() ~= faction.get( "Za'lek" ) or not destplanet:services()["outfits"] then
+   if mem.destplanet:faction() ~= faction.get( "Za'lek" ) or not mem.destplanet:services()["outfits"] then
       misn.finish(false)
    end
 
@@ -78,14 +78,14 @@ function create()
    local jumpreward = 1500
    local distreward = 0.30
    local riskreward = 50
-   reward     = (1.5 ^ tier) * (avgrisk*riskreward + numjumps * jumpreward + traveldist * distreward) * (1. + 0.05*rnd.twosigma())
+   mem.reward     = (1.5 ^ mem.tier) * (mem.avgrisk*riskreward + mem.numjumps * jumpreward + mem.traveldist * distreward) * (1. + 0.05*rnd.twosigma())
 
    local typeOfEng = engines[rnd.rnd(1, #engines)]
 
    misn.setTitle( fmt.f(_("ZT test of {engine}"), {engine=typeOfEng} ))
-   misn.markerAdd(destplanet, "computer")
-   car.setDesc( fmt.f(_("A Za'lek research team needs you to travel to {pnt} in {sys} using an engine in order to test it."), {pnt=destplanet, sys=destsys} ), nil, nil, destplanet )
-   misn.setReward(fmt.credits(reward))
+   misn.markerAdd(mem.destplanet, "computer")
+   car.setDesc( fmt.f(_("A Za'lek research team needs you to travel to {pnt} in {sys} using an engine in order to test it."), {pnt=mem.destplanet, sys=mem.destsys} ), nil, nil, mem.destplanet )
+   misn.setReward(fmt.credits(mem.reward))
 end
 
 function accept()
@@ -96,34 +96,34 @@ function accept()
    end
 
    if misn.accept() then -- able to accept the mission
-      stage = 0
+      mem.stage = 0
       player.outfitAdd("Za'lek Test Engine")
       tk.msg( _("Mission Accepted"), znpcs[ rnd.rnd(1, #znpcs) ] )
-      tk.msg( _("Mission Accepted"), fmt.f( _("Za'lek technicians give you the engine. You will have to travel to {pnt} in {sys} with this engine. The system will automatically take measures during the flight. Don't forget to equip the engine."), {pnt=destplanet, sys=destsys} ))
+      tk.msg( _("Mission Accepted"), fmt.f( _("Za'lek technicians give you the engine. You will have to travel to {pnt} in {sys} with this engine. The system will automatically take measures during the flight. Don't forget to equip the engine."), {pnt=mem.destplanet, sys=mem.destsys} ))
 
-      misn.osdCreate(_("Za'lek Test"), {fmt.f(_("Fly to {pnt} in the {sys} system"), {pnt=destplanet, sys=destsys})})
-      takehook = hook.takeoff( "takeoff" )
-      enterhook = hook.enter("enter")
+      misn.osdCreate(_("Za'lek Test"), {fmt.f(_("Fly to {pnt} in the {sys} system"), {pnt=mem.destplanet, sys=mem.destsys})})
+      mem.takehook = hook.takeoff( "takeoff" )
+      mem.enterhook = hook.enter("enter")
    else
       tk.msg( _("Too many missions"), _("You have too many active missions.") )
       misn.finish(false)
    end
 
-   isSlow = false     --Flag to know if the pilot has limited speed
-   curplanet = planet.cur()
+   mem.isSlow = false     --Flag to know if the pilot has limited speed
+   mem.curplanet = planet.cur()
 end
 
 function takeoff()  --must trigger at every takeoff to check if the player forgot the engine
 
-   if landhook == nil then
-      landhook = hook.land( "land" )
+   if mem.landhook == nil then
+      mem.landhook = hook.land( "land" )
    end
 
    if isMounted("Za'lek Test Engine") then  --everything is OK : now wait for landing
-      stage = 0
+      mem.stage = 0
 
       else   --Player has forgotten the engine
-      stage = 1
+      mem.stage = 1
       tk.msg( _("Didn't you forget something?"), _("It seems you forgot the engine you are supposed to test. Land again and put it on your ship.") )
    end
 end
@@ -151,14 +151,14 @@ end
 
 function land()
 
-   if isSlow then   --The player is still slow and will recover normal velocity
+   if mem.isSlow then   --The player is still slow and will recover normal velocity
       player.pilot():setSpeedLimit(0)
-      isSlow = false
+      mem.isSlow = false
    end
 
-   if planet.cur() == destplanet and stage == 0 then
+   if planet.cur() == mem.destplanet and mem.stage == 0 then
       tk.msg( _("Successful Landing"), _("Happy to be still alive, you land and give back the engine to a group of Za'lek scientists who were expecting you, collecting your fee along the way."))
-      player.pay(reward)
+      player.pay(mem.reward)
       player.outfitRm("Za'lek Test Engine")
 
       -- increase faction
@@ -167,12 +167,12 @@ function land()
       misn.finish(true)
    end
 
-   if planet.cur() ~= curplanet and stage == 1 then  --Lands elsewhere without the engine
+   if planet.cur() ~= mem.curplanet and mem.stage == 1 then  --Lands elsewhere without the engine
       tk.msg( _("Mission failed"), _("You traveled without the engine."))
       abort()
    end
 
-   curplanet = planet.cur()
+   mem.curplanet = planet.cur()
 end
 
 --  Breakdowns
@@ -180,7 +180,7 @@ end
 --Player is teleported in another system
 function teleport()
    hook.safe("teleportation")
-   hook.rm(enterhook)  --It's enough problem for one travel
+   hook.rm(mem.enterhook)  --It's enough problem for one travel
 end
 
 function teleportation()
@@ -206,13 +206,13 @@ function slow()
 
    hook.timer(1.0, "slowtext")
 
-   isSlow = true
+   mem.isSlow = true
 
    -- If the player is not too unlucky, the velocity is soon back to normal
    if rnd.rnd() > 0.8 then
       local time = 20.0*(1 + 0.3*rnd.twosigma())
       hook.timer(time, "backToNormal")
-      isSlow = false
+      mem.isSlow = false
    end
 
    player.pilot():setSpeedLimit(speed)

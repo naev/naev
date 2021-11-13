@@ -28,46 +28,45 @@ pay_text = {}
 pay_text[1] = _("The FLF officer in charge of the primary operation thanks you for your contribution and hands you your pay.")
 pay_text[2] = _("You greet the FLF officer in charge of the primary operation, who seems happy that the mission was a success. You congratulate each other, and the officer hands you your pay.")
 
-osd_desc    = {}
-osd_desc[1] = _("Fly to the {sys} system")
-osd_desc[2] = _("Engage and destroy Dvaered ships to get their attention")
-osd_desc[3] = _("Return to FLF base")
-osd_desc["__save"] = true
+mem.osd_desc    = {}
+mem.osd_desc[1] = _("Fly to the {sys} system")
+mem.osd_desc[2] = _("Engage and destroy Dvaered ships to get their attention")
+mem.osd_desc[3] = _("Return to FLF base")
 
 
 function create ()
-   missys = flf.getTargetSystem()
-   if not misn.claim( missys ) then misn.finish( false ) end
+   mem.missys = flf.getTargetSystem()
+   if not misn.claim( mem.missys ) then misn.finish( false ) end
 
-   local num_dvaereds = missys:presences()["Dvaered"]
-   local num_empire = missys:presences()["Empire"]
-   local num_flf = missys:presences()["FLF"]
+   local num_dvaereds = mem.missys:presences()["Dvaered"]
+   local num_empire = mem.missys:presences()["Empire"]
+   local num_flf = mem.missys:presences()["FLF"]
    if num_dvaereds == nil then num_dvaereds = 0 end
    if num_empire == nil then num_empire = 0 end
    if num_flf == nil then num_flf = 0 end
-   dv_attention_target = num_dvaereds / 50
-   credits = 200 * (num_dvaereds + num_empire - num_flf) * system.cur():jumpDist( missys, true ) / 3
-   credits = credits + rnd.sigma() * 10e3
-   reputation = math.max( (num_dvaereds + num_empire - num_flf) / 25, 1 )
-   if credits < 10e3 then misn.finish( false ) end
+   mem.dv_attention_target = num_dvaereds / 50
+   mem.credits = 200 * (num_dvaereds + num_empire - num_flf) * system.cur():jumpDist( mem.missys, true ) / 3
+   mem.credits = mem.credits + rnd.sigma() * 10e3
+   mem.reputation = math.max( (num_dvaereds + num_empire - num_flf) / 25, 1 )
+   if mem.credits < 10e3 then misn.finish( false ) end
 
    -- Set mission details
-   misn.setTitle( fmt.f( _("FLF: Diversion in {sys}"), {sys=missys} ) )
-   misn.setDesc( fmt.f( _("A fleet of FLF ships will be conducting an operation against the Dvaered forces. Create a diversion from this operation by wreaking havoc in the nearby {sys} system."), {sys=missys} ) )
-   misn.setReward( fmt.credits( credits ) )
-   marker = misn.markerAdd( missys, "computer" )
+   misn.setTitle( fmt.f( _("FLF: Diversion in {sys}"), {sys=mem.missys} ) )
+   misn.setDesc( fmt.f( _("A fleet of FLF ships will be conducting an operation against the Dvaered forces. Create a diversion from this operation by wreaking havoc in the nearby {sys} system."), {sys=mem.missys} ) )
+   misn.setReward( fmt.credits( mem.credits ) )
+   mem.marker = misn.markerAdd( mem.missys, "computer" )
 end
 
 
 function accept ()
    misn.accept()
 
-   osd_desc[1] = fmt.f( osd_desc[1], {sys=missys} )
-   misn.osdCreate( _("FLF Diversion"), osd_desc )
+   mem.osd_desc[1] = fmt.f( mem.osd_desc[1], {sys=mem.missys} )
+   misn.osdCreate( _("FLF Diversion"), mem.osd_desc )
 
-   dv_attention = 0
-   dv_coming = false
-   job_done = false
+   mem.dv_attention = 0
+   mem.dv_coming = false
+   mem.job_done = false
 
    hook.enter( "enter" )
    hook.jumpout( "leave" )
@@ -76,20 +75,20 @@ end
 
 
 function enter ()
-   if not job_done then
-      if system.cur() == missys then
+   if not mem.job_done then
+      if system.cur() == mem.missys then
          misn.osdActive( 2 )
          update_dv()
       else
          misn.osdActive( 1 )
-         dv_attention = 0
+         mem.dv_attention = 0
       end
    end
 end
 
 
 function leave ()
-   hook.rm( update_dv_hook )
+   hook.rm( mem.update_dv_hook )
 end
 
 
@@ -98,18 +97,18 @@ function update_dv ()
       hook.pilot( j, "attacked", "pilot_attacked_dv" )
       hook.pilot( j, "death", "pilot_death_dv" )
    end
-   update_dv_hook = hook.timer( 3.0, "update_dv" )
+   mem.update_dv_hook = hook.timer( 3.0, "update_dv" )
 end
 
 
 function add_attention( p )
    p:setHilight( true )
 
-   if not job_done then
-      dv_attention = dv_attention + 1
-      if dv_attention >= dv_attention_target and dv_attention - 1 < dv_attention_target then
-         hook.rm( success_hook )
-         success_hook = hook.timer( 30.0, "timer_mission_success" )
+   if not mem.job_done then
+      mem.dv_attention = mem.dv_attention + 1
+      if mem.dv_attention >= mem.dv_attention_target and mem.dv_attention - 1 < mem.dv_attention_target then
+         hook.rm( mem.success_hook )
+         mem.success_hook = hook.timer( 30.0, "timer_mission_success" )
       end
 
       hook.pilot( p, "jump", "rm_attention" )
@@ -119,17 +118,17 @@ end
 
 
 function rm_attention ()
-   dv_attention = math.max( dv_attention - 1, 0 )
-   if dv_attention < dv_attention_target then
-      hook.rm( success_hook )
+   mem.dv_attention = math.max( mem.dv_attention - 1, 0 )
+   if mem.dv_attention < mem.dv_attention_target then
+      hook.rm( mem.success_hook )
    end
 end
 
 
 function pilot_attacked_dv( _p, attacker )
    if (attacker == player.pilot() or attacker:leader() == player.pilot())
-         and not dv_coming and rnd.rnd() < 0.1 then
-      dv_coming = true
+         and not mem.dv_coming and rnd.rnd() < 0.1 then
+      mem.dv_coming = true
       hook.timer( 10.0, "timer_spawn_dv" )
    end
 end
@@ -137,16 +136,16 @@ end
 
 function pilot_death_dv( _p, attacker )
    if (attacker == player.pilot() or attacker:leader() == player.pilot())
-         and not dv_coming then
-      dv_coming = true
+         and not mem.dv_coming then
+      mem.dv_coming = true
       hook.timer( 10.0, "timer_spawn_dv" )
    end
 end
 
 
 function timer_spawn_dv ()
-   dv_coming = false
-   if not job_done then
+   mem.dv_coming = false
+   if not mem.job_done then
       local fleets = { {"Dvaered Vendetta"}, {"Dvaered Ancestor"}, {"Dvaered Phalanx"}, {"Dvaered Vigilance"}, {"Dvaered Goddard"},
                        {"Dvaered Vendetta", "Dvaered Vendetta", "Dvaered Ancestor", "Dvaered Ancestor"},
                        {"Dvaered Vendetta", "Dvaered Vendetta", "Dvaered Ancestor", "Dvaered Phalanx", "Dvaered Vigilance"} }
@@ -170,11 +169,11 @@ end
 
 
 function timer_mission_success ()
-   if dv_attention >= dv_attention_target then
-      job_done = true
+   if mem.dv_attention >= mem.dv_attention_target then
+      mem.job_done = true
       misn.osdActive( 3 )
-      if marker ~= nil then misn.markerRm( marker ) end
-      hook.rm( update_dv_hook )
+      if mem.marker ~= nil then misn.markerRm( mem.marker ) end
+      hook.rm( mem.update_dv_hook )
       hook.land( "land" )
       tk.msg( "", success_text[ rnd.rnd( 1, #success_text ) ] )
    end
@@ -184,8 +183,8 @@ end
 function land ()
    if planet.cur():faction() == faction.get("FLF") then
       tk.msg( "", pay_text[ rnd.rnd( 1, #pay_text ) ] )
-      player.pay( credits )
-      faction.get("FLF"):modPlayer( reputation )
+      player.pay( mem.credits )
+      faction.get("FLF"):modPlayer( mem.reputation )
       misn.finish( true )
    end
 end

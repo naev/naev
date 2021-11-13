@@ -31,17 +31,17 @@ local sciwrong = require "common.sciencegonewrong"
 local target -- Non-persistent state
 
 -- mission variables
-t_sys = { __save=true }
-t_pla = { __save=true }
---t_pla[1], t_sys[1] = planet.getS("Gastan")
-t_sys[2] = system.get("Shikima")
+mem.t_sys = {}
+mem.t_pla = {}
+--mem.t_pla[1], mem.t_sys[1] = planet.getS("Gastan")
+mem.t_sys[2] = system.get("Shikima")
 local reward = 1e6
 local shpnm = _("Tokera")
 
 function create ()
    -- Have to be at center of operations.
-   t_pla[1], t_sys[1] = sciwrong.getCenterOperations()
-   if planet.cur() ~= t_pla[1] then
+   mem.t_pla[1], mem.t_sys[1] = sciwrong.getCenterOperations()
+   if planet.cur() ~= mem.t_pla[1] then
       misn.finish(false)
    end
 
@@ -58,22 +58,22 @@ function accept()
     So he wants you to steal something top secret from the Soromid. Quirky people, those Za'leks. With the coordinates, the signature of the target ship and the handheld, which you hope helps you detect the box, you set off on your way.]]), {plt=shpnm} ) )
    misn.accept()
    misn.osdCreate(_("The one with the Visit"), {
-      fmt.f(_("Go to the {sys} system and find the {plt}"), {sys=t_sys[2], plt=shpnm}),
+      fmt.f(_("Go to the {sys} system and find the {plt}"), {sys=mem.t_sys[2], plt=shpnm}),
       fmt.f(_("Board the {plt} and retrieve the secret technology"), {plt=shpnm}),
-      fmt.f(_("Return to {pnt} in the {sys} system"), {pnt=t_pla[1], sys=t_sys[1]}),
+      fmt.f(_("Return to {pnt} in the {sys} system"), {pnt=mem.t_pla[1], sys=mem.t_sys[1]}),
    })
    misn.setDesc(_("You've been hired by Dr. Geller to retrieve technology he urgently needs to build his prototype."))
    misn.setTitle(_("The one with the Visit"))
    misn.setReward(_("The gratitude of science and a bit of compensation"))
    misn.osdActive(1)
-   misn_mark = misn.markerAdd( t_sys[2], "high" )
-   targetalive = true
+   mem.misn_mark = misn.markerAdd( mem.t_sys[2], "high" )
+   mem.targetalive = true
    hook.enter("sys_enter")
 end
 
 
 function sys_enter ()
-   if system.cur() == t_sys[2] and targetalive then
+   if system.cur() == mem.t_sys[2] and mem.targetalive then
       local dist = rnd.rnd() * system.cur():radius() *1/2
       local angle = rnd.rnd() * 360
       local location = vec2.newP(dist, angle) -- Randomly spawn the Ship in the system
@@ -84,24 +84,24 @@ function sys_enter ()
       target:memory().aggressive = true
       target:setHilight(true)
       target:setVisplayer(true)
-      hidle = hook.pilot(target, "idle", "targetIdle")
-      hexp = hook.pilot(target, "exploded", "targetExploded")
-      hboard = hook.pilot(target, "board", "targetBoard")
+      mem.hidle = hook.pilot(target, "idle", "targetIdle")
+      mem.hexp = hook.pilot(target, "exploded", "targetExploded")
+      mem.hboard = hook.pilot(target, "board", "targetBoard")
       targetIdle()
    end
 end
 
 function targetIdle()
    if not pilot.exists(target) then -- Tear down now-useless hooks.
-      hook.rm(hidle)
+      hook.rm(mem.hidle)
       return
    end
    if target:hostile() then
-      hook.rm(hidle)
+      hook.rm(mem.hidle)
       target:control(false)
       return
    end
-   location = target:pos()
+   local location = target:pos()
    local dist = 750
    local angle = rnd.rnd() * 360
    local newlocation = vec2.newP(dist, angle)
@@ -115,14 +115,14 @@ function targetExploded()
 end
 
 function targetDeath()
-   sor= faction.get("Soromid")
-   hook.rm(hexp)
-   if boarded then
-      sor.modPlayer(-5)
+   mem.sor= faction.get("Soromid")
+   hook.rm(mem.hexp)
+   if mem.boarded then
+      mem.sor.modPlayer(-5)
       return
    end
    tk.msg(_([[What have you done?]]),_([[The ship explodes before your eyes and you realize that you will never be able to get the secret tech now.]]))
-   sor.modPlayer(-5)
+   mem.sor.modPlayer(-5)
    misn.finish(false)
 end
 
@@ -134,20 +134,20 @@ function targetBoard()
    target:setVisplayer(false)
    local c = misn.cargoNew(N_("Secret Technology"), N_("A mysterious box of stolen Soromid technology."))
    c:illegalto( "Soromid" )
-   cargoID = misn.cargoAdd(c, 0)
+   mem.cargoID = misn.cargoAdd(c, 0)
    misn.osdActive(3)
-   misn.markerRm(misn_mark)
-   misn_mark = misn.markerAdd( t_sys[1], "high" )
-   hland = hook.land("land")
-   boarded = true
-   hook.rm(hboard)
+   misn.markerRm(mem.misn_mark)
+   mem.misn_mark = misn.markerAdd( mem.t_sys[1], "high" )
+   mem.hland = hook.land("land")
+   mem.boarded = true
+   hook.rm(mem.hboard)
 end
 
 function land()
-   if planet.cur() == t_pla[1] then
+   if planet.cur() == mem.t_pla[1] then
       tk.msg(_([[In the bar]]), _([["How'd it go?" asks Dr. Geller. You show him the box. "Ah, marvelous! Do you know what this is? This is a quantum sharpener. It's like a quantum eraser, but it does not erase but sharpen. This is exactly what I needed. I think with this I should be able to finish my prototype." He tosses you a credit chip before walking off, smiling.]]))
-      hook.rm(hland)
-      misn.markerRm(misn_mark)
+      hook.rm(mem.hland)
+      misn.markerRm(mem.misn_mark)
       player.pay(reward)
       sciwrong.addLog( _([[You stole something called a "quantum sharpener" from a Soromid ship for Dr. Geller.]]) )
       misn.finish(true)

@@ -49,17 +49,16 @@ function _proximity( trigger )
     end
 
     -- Check global proxmitiy table
-    if __proximity_tbl == nil then
-       __proximity_tbl = {}
-       __proximity_tbl["__save"] = true
-       __proximity_tbl["id"] = 0
+    if mem.__proximity_tbl == nil then
+       mem.__proximity_tbl = {}
+       mem.__proximity_tbl["id"] = 0
     end
 
     -- Assign ID if necessary
     if trigger.__id == nil then
-       __proximity_tbl["id"] = __proximity_tbl["id"]+1
-       trigger.__id = __proximity_tbl["id"]
-       __proximity_tbl[ trigger.__id ] = trigger
+       mem.__proximity_tbl["id"] = mem.__proximity_tbl["id"]+1
+       trigger.__id = mem.__proximity_tbl["id"]
+       mem.__proximity_tbl[ trigger.__id ] = trigger
     end
 
     -- First time hook is set
@@ -83,17 +82,16 @@ function _proximityScan( trigger )
     end
 
     -- Check global proxmitiy table
-    if __proximity_tbl == nil then
-       __proximity_tbl = {}
-       __proximity_tbl["__save"] = true
-       __proximity_tbl["id"] = 0
+    if mem.__proximity_tbl == nil then
+       mem.__proximity_tbl = {}
+       mem.__proximity_tbl["id"] = 0
     end
 
     -- Assign ID if necessary
     if trigger.__id == nil then
-       __proximity_tbl["id"] = __proximity_tbl["id"]+1
-       trigger.__id = __proximity_tbl["id"]
-       __proximity_tbl[ trigger.__id ] = trigger
+       mem.__proximity_tbl["id"] = mem.__proximity_tbl["id"]+1
+       trigger.__id = mem.__proximity_tbl["id"]
+       mem.__proximity_tbl[ trigger.__id ] = trigger
     end
 
     -- First time hook is set
@@ -111,6 +109,6 @@ end
 function proximityCancel( trigger )
    if trigger ~= nil then
        hook.rm( trigger.hook_tbl[1] )
-       __proximity_tbl[ trigger.__id ] = nil
+       mem.__proximity_tbl[ trigger.__id ] = nil
     end
 end

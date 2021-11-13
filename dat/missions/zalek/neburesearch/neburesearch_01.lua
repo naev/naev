@@ -62,8 +62,8 @@ local t_planet = {
 local credits = 800e3
 
 function create()
-    ambush = false
-    stage = 0
+    mem.ambush = false
+    mem.stage = 0
 
     -- Spaceport bar stuff
     misn.setNPC(_("A scientist"), "zalek/unique/mensing.webp", _("You see a scientist who is apparently looking for someone."))
@@ -75,23 +75,23 @@ function accept()
         misn.finish()
     end
 
-    stage = 1
-    exited = false
-    firstTakeOff = true
-    origin = planet.cur()
+    mem.stage = 1
+    mem.exited = false
+    mem.firstTakeOff = true
+    mem.origin = planet.cur()
 
     tk.msg(_("Bar"), fmt.f(_([["While the data recorded by Robert is of good quality he seems to have completely forgotten that we need reference data of similarly dense nebulae. We have already installed his sensors on a transport ship. The nearby PSO nebula should be a good candidate but there are the pirate systems in between. Also the target systems are controled by the Dvaered. Hard to say whether the Dvaered or the pirates are more dangerous. So this is why we need an escort.
     We will travel through {sys2}, {sys3}, and {sys4}. Just passing through the systems should be sufficient. Also, I want to visit the {station} station before returning back to {pnt}. You have to make sure no one shoots us down during our expedition."]]), {sys2=t_sys[2], sys3=t_sys[3], sys4=t_sys[4], station=station, pnt=homeworld}))
 
     -- Set up mission information
-    destsys = t_sys[1]
+    mem.destsys = t_sys[1]
     misn.setTitle(_("Advanced Nebula Research"))
     misn.setReward(fmt.credits(credits))
     misn.setDesc(fmt.f(_("Escort the transport ship to the {station} in the {sys} system. Make sure to stay close to the transport ship and wait until they jumped out of the system safely."), {station=station, sys=t_sys[5]}))
-    nextsys = lmisn.getNextSystem(system.cur(), destsys) -- This variable holds the system the player is supposed to jump to NEXT.
+    mem.nextsys = lmisn.getNextSystem(system.cur(), mem.destsys) -- This variable holds the system the player is supposed to jump to NEXT.
 
     misn.accept()
-    misn_marker = misn.markerAdd(nextsys, "low")
+    mem.misn_marker = misn.markerAdd(mem.nextsys, "low")
     updateGoalDisplay()
 
     hook.takeoff("takeoff")
@@ -107,7 +107,7 @@ function updateGoalDisplay()
     for s, i in ipairs(osd_index) do
         if i > 0 then
             omsg[#omsg+1] = fmt.f(osd_msg[i], {pnt=t_planet[s], sys=t_sys[s]})
-            if stage > s and (stage > s+1 or destplanet == nil) then
+            if mem.stage > s and (mem.stage > s+1 or mem.destplanet == nil) then
                 osd_active = #omsg + 1
             end
         end
@@ -117,23 +117,23 @@ function updateGoalDisplay()
 end
 
 function takeoff()
-    if firstTakeOff then
+    if mem.firstTakeOff then
         tk.msg(_("Departure"), fmt.f(_([["Please follow us, {player}. Make sure to jump to the next system after we jumped out. We'll have to land on some planets on our way to refuel."]]), {player=player:name()}))
-        firstTakeOff = false
+        mem.firstTakeOff = false
     end
-    destplanet = nil
+    mem.destplanet = nil
     spawnTransporter()
     updateGoalDisplay()
 end
 
 function jumpin()
-     if system.cur() ~= nextsys then
+     if system.cur() ~= mem.nextsys then
         fail(_("MISSION FAILED! You jumped into the wrong system. You failed science miserably!"))
     else
-        nextsys = lmisn.getNextSystem(system.cur(), destsys)
+        mem.nextsys = lmisn.getNextSystem(system.cur(), mem.destsys)
         updateGoalDisplay()
         spawnTransporter()
-        if not ambush and system.cur():faction() == faction.get("Dvaered") and system.cur():jumpDist(t_sys[5]) < 5 then
+        if not mem.ambush and system.cur():faction() == faction.get("Dvaered") and system.cur():jumpDist(t_sys[5]) < 5 then
             hook.timer(2.0, "startAmbush")
         elseif system.cur()==system.get("Daan") or system.cur()==system.get("Provectus Nova") then
             local ambushers = fleet.add( 1,  {"Pirate Ancestor", "Pirate Vendetta", "Pirate Vendetta", "Pirate Vendetta", "Hyena", "Hyena"}, "Pirate", vec2.new(0,0), nil, {ai="baddie_norun"} )
@@ -147,30 +147,30 @@ function jumpin()
 end
 
 function jumpout()
-    if not exited then
+    if not mem.exited then
         fail(_("MISSION FAILED! You jumped before the transport ship you were escorting."))
     end
-    origin = system.cur()
-    if nextsys == t_sys[stage] then
-        if t_planet[stage] ~= nil then
-            destplanet = t_planet[stage]
+    mem.origin = system.cur()
+    if mem.nextsys == t_sys[mem.stage] then
+        if t_planet[mem.stage] ~= nil then
+            mem.destplanet = t_planet[mem.stage]
         else
-            destplanet = nil
+            mem.destplanet = nil
         end
-        stage = stage+1
-        destsys = t_sys[stage]
+        mem.stage = mem.stage+1
+        mem.destsys = t_sys[mem.stage]
     end
 end
 
 function land()
-    if not exited then
+    if not mem.exited then
         tk.msg(_("You abandoned your mission!"), _("You have landed, abandoning your mission to escort the transport ship. You failed science miserably!"))
         misn.finish(false)
-    elseif planet.cur() == station and not station_visited then
+    elseif planet.cur() == station and not mem.station_visited then
         tk.msg(_("A short break"), fmt.f(_([[Once you are done with the refuel operations, you meet Dr. Mensing on her way back to the transport ship.
     "I just met up with another 'scientist' working on this station. The purpose of this station is to collect data about the PSO nebula, but their scans are absolute garbage. Apparently the station is being run by an independent university. They couldn't possible keep up with the Za'lek standards in terms of proper scientific methods."
     She is visibly upset about the apparent lack of dedication to science. "Let's head back to {pnt}. Our own measurements are completed by now."]]), {pnt=homeworld}))
-        station_visited = true
+        mem.station_visited = true
     elseif planet.cur() == homeworld then
         tk.msg(_("Mission accomplished"), fmt.f(_([[After leaving the ship you meet up with Dr. Mensing who hands you over a chip worth {credits} and thanks you for your help.
     "We'll be able to return to Jorla safely from here on. You did science a great favor today. I'm sure the data we collected will help us to understand the cause for the Sol nebula's volatility."]]), {credits=fmt.credits(credits)}))
@@ -178,7 +178,7 @@ function land()
         zlk.addNebuResearchLog(_([[You helped Dr. Mensing to collect sensor data of the PSO nebula.]]))
         misn.finish(true)
     end
-    origin = planet.cur()
+    mem.origin = planet.cur()
 end
 
 local function continueToDest(pilot)
@@ -186,60 +186,60 @@ local function continueToDest(pilot)
         pilot:control(true)
         pilot:setNoJump(false)
         pilot:setNoLand(false)
-        if destplanet ~= nil then
-            pilot:land(destplanet, true)
-            misn.markerMove(misn_marker, destplanet:system())
+        if mem.destplanet ~= nil then
+            pilot:land(mem.destplanet, true)
+            misn.markerMove(mem.misn_marker, mem.destplanet:system())
         else
-            pilot:hyperspace(nextsys, true)
-            misn.markerMove(misn_marker, nextsys)
+            pilot:hyperspace(mem.nextsys, true)
+            misn.markerMove(mem.misn_marker, mem.nextsys)
         end
     end
 end
 
 function transporterJump(p, j)
-    exited = true
+    mem.exited = true
     if p:exists() then
         player.msg(fmt.f(_("{plt} has jumped to {sys}."), {plt=p, sys=j:dest()}))
     end
 end
 
 function transporterLand(p, _j)
-    exited = true
+    mem.exited = true
     if p:exists() then
-        player.msg(fmt.f(_("{plt} has landed on {pnt}."), {plt=p, pnt=destplanet}))
+        player.msg(fmt.f(_("{plt} has landed on {pnt}."), {plt=p, pnt=mem.destplanet}))
     end
 end
 
 function transporterAttacked(p, attacker)
-    unsafe = true
+    mem.unsafe = true
     p:control(true)
     p:setNoJump(true)
     p:setNoLand(true)
     p:attack(attacker)
     p:control(false)
 
-    if not shuttingup then
-        shuttingup = true
+    if not mem.shuttingup then
+        mem.shuttingup = true
         p:comm(player.pilot(), _("We're under attack!"))
         hook.timer(5.0, "transporterShutup") -- Shuts him up for at least 5s.
     end
 end
 
 function transporterShutup()
-     shuttingup = false
+     mem.shuttingup = false
 end
 
 function timer_transporterSafe()
     hook.timer(2.0, "timer_transporterSafe")
 
-    if unsafe then
-        unsafe = false
+    if mem.unsafe then
+        mem.unsafe = false
         continueToDest(transporter)
     end
 end
 
 function spawnTransporter()
-    transporter = pilot.add( "Rhino", "Za'lek", origin, _("Nebula Research Shuttle") )
+    transporter = pilot.add( "Rhino", "Za'lek", mem.origin, _("Nebula Research Shuttle") )
     hook.pilot(transporter, "death", "transporterDeath")
     hook.pilot(transporter, "jump", "transporterJump")
     hook.pilot(transporter, "land", "transporterLand")
@@ -261,7 +261,7 @@ function startAmbush()
         j:control(true)
         j:moveto(vec2.new(-8000,0))
     end
-    ambush = true
+    mem.ambush = true
     hook.timer(15.0, "ambushHail")
 end
 

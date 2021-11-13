@@ -28,15 +28,17 @@ local pir = require "common.pirate"
 local fmt = require "format"
 local shark = require "common.shark"
 
+local hawking -- Non-persistent state
+
 -- Mission constants
 local paypla, paysys = planet.getS("Darkshed")
 local nextpla, nextsys = planet.getS("Curie") -- This should be the same as the planet used in sh04_meeting!
 
 function create ()
    --Change here to change the planets and the systems
-   mispla,missys = planet.getLandable(faction.get("Frontier"))  -- mispla will be useful to locate the Hawking
+   mem.mispla,mem.missys = planet.getLandable(faction.get("Frontier"))  -- mem.mispla will be useful to locate the Hawking
 
-   if not misn.claim(missys) then
+   if not misn.claim(mem.missys) then
       misn.finish(false)
    end
 
@@ -44,11 +46,11 @@ function create ()
 end
 
 function accept()
-   stage = 0
+   mem.stage = 0
 
    if tk.yesno(_("A new job"), fmt.f(_([["Hello there, nice to meet you again! According to the information that you brought us, the negotiations between the Frontier officials and House Sirius are proceeding very quickly. We have to act now. There is a member of the Frontier Council who, for political reasons, could help us.
     "I can't send him a message without being spotted by the Sirii, so I need you to contact him. He's probably piloting his Hawking in the {sys} system. Go there, hail him, and let him know that I have to see him on {next_pnt} in the {next_sys} system. He will understand.
-    "Can I count on you to do this for me?"]]), {sys=missys, next_pnt=nextpla, next_sys=nextsys})) then
+    "Can I count on you to do this for me?"]]), {sys=mem.missys, next_pnt=nextpla, next_sys=nextsys})) then
       misn.accept()
       tk.msg(_("Time to go"), _([["Fantastic! I am known as Donald Ulnish to the Council member. Good luck."]]))
 
@@ -56,15 +58,15 @@ function accept()
       misn.setReward(fmt.credits(shark.rewardssh03))
       misn.setDesc(_("Nexus Shipyards asks you to help initiate a secret meeting"))
       misn.osdCreate(_("Invitation"), {
-         fmt.f(_("Go to {sys}, find and hail the Air Force One"), {sys=missys}),
+         fmt.f(_("Go to {sys}, find and hail the Air Force One"), {sys=mem.missys}),
          fmt.f(_("Report back to {pnt} in the {sys} system"), {pnt=paypla, sys=paysys}),
       })
       misn.osdActive(1)
 
-      marker = misn.markerAdd(missys, "low")
+      mem.marker = misn.markerAdd(mem.missys, "low")
 
-      landhook = hook.land("land")
-      enterhook = hook.enter("enter")
+      mem.landhook = hook.land("land")
+      mem.enterhook = hook.enter("enter")
       else
       tk.msg(_("Sorry, not interested"), _([["OK, come back when you are interested."]]))
       misn.finish(false)
@@ -74,13 +76,13 @@ end
 function land()
 
    --Job is done
-   if stage == 1 and planet.cur() == paypla then
+   if mem.stage == 1 and planet.cur() == paypla then
    tk.msg(_("Good job"), fmt.f(_([[Smith seems to relax as you tell him that everything went according to plan. "Fantastic! I have another mission for you; meet me in the bar when you are ready to bring me to {pnt} in the {sys} system."]]), {pnt=nextpla, sys=nextsys}))
       player.pay(shark.rewardssh03)
       pir.reputationNormalMission(rnd.rnd(2,3))
       misn.osdDestroy()
-      hook.rm(enterhook)
-      hook.rm(landhook)
+      hook.rm(mem.enterhook)
+      hook.rm(mem.landhook)
       shark.addLog( _([[You helped Nexus Shipyards initiate a secret meeting with a member of the Frontier Council. Arnold Smith said that he has another mission for you and to meet him in the bar on Darkshed when you are ready to transport him to Curie.]]) )
       misn.finish(true)
    end
@@ -88,21 +90,21 @@ end
 
 function enter()
    --the system where the player must look for the Hawking
-   if system.cur() == missys then
-      hawking = pilot.add("Hawking", "Frontier", mispla:pos() + vec2.new(-400,-400), _("Air Force One"), {ai="trader"} )
+   if system.cur() == mem.missys then
+      hawking = pilot.add("Hawking", "Frontier", mem.mispla:pos() + vec2.new(-400,-400), _("Air Force One"), {ai="trader"} )
       hawking:setHilight(true)
-      hailhook = hook.pilot(hawking, "hail", "hail")
+      mem.hailhook = hook.pilot(hawking, "hail", "hail")
    end
 end
 
 function hail()
    --The player takes contact with the Hawking
-   if stage == 0 then
+   if mem.stage == 0 then
       tk.msg(fmt.f(_("Time to go back to {pnt}"), {pnt=paypla}), fmt.f(_([[The captain of the Hawking answers you. When you say that you have a message from Donald Ulnish, he redirects you to one of his officers who takes the message. Now, back to {pnt}.]]), {pnt=paypla}))
-      stage = 1
+      mem.stage = 1
       misn.osdActive(2)
-      misn.markerRm(marker)
-      marker2 = misn.markerAdd(paysys, "low")
+      misn.markerRm(mem.marker)
+      mem.marker2 = misn.markerAdd(paysys, "low")
       player.commClose()
    end
 end

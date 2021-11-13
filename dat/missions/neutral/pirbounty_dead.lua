@@ -75,7 +75,7 @@ misn_title[2] = _("Small Dead or Alive Bounty in {sys}")
 misn_title[3] = _("Moderate Dead or Alive Bounty in {sys}")
 misn_title[4] = _("High Dead or Alive Bounty in {sys}")
 misn_title[5] = _("Dangerous Dead or Alive Bounty in {sys}")
-misn_desc   = _("The pirate known as {pirname} was recently seen in the {sys} system. {fct} authorities want this pirate dead or alive. {pirname} is believed to be flying a {shipclass}-class ship.")
+mem.misn_desc   = _("The pirate known as {pirname} was recently seen in the {sys} system. {fct} authorities want this pirate dead or alive. {pirname} is believed to be flying a {shipclass}-class ship.")
 
 -- Messages
 msg    = {}
@@ -83,12 +83,11 @@ msg[1] = _("MISSION FAILURE! {plt} got away.")
 msg[2] = _("MISSION FAILURE! Another pilot eliminated {plt}.")
 msg[3] = _("MISSION FAILURE! You have left the {sys} system.")
 
-osd_title = _("Bounty Hunt")
-osd_msg    = {}
-osd_msg[1] = _("Fly to the {sys} system")
-osd_msg[2] = _("Kill or capture {plt}")
-osd_msg[3] = _("Land in {fct} territory to collect your bounty")
-osd_msg["__save"] = true
+mem.osd_title = _("Bounty Hunt")
+mem.osd_msg    = {}
+mem.osd_msg[1] = _("Fly to the {sys} system")
+mem.osd_msg[2] = _("Kill or capture {plt}")
+mem.osd_msg[3] = _("Land in {fct} territory to collect your bounty")
 
 
 hunters = {}
@@ -96,7 +95,7 @@ hunter_hits = {}
 
 
 function create ()
-   paying_faction = planet.cur():faction()
+   mem.paying_faction = planet.cur():faction()
 
    local systems = lmisn.getSysAtDistance( system.cur(), 1, 3,
       function(s)
@@ -108,54 +107,54 @@ function create ()
       misn.finish( false )
    end
 
-   missys = systems[ rnd.rnd( 1, #systems ) ]
-   if not misn.claim( missys ) then misn.finish( false ) end
+   mem.missys = systems[ rnd.rnd( 1, #systems ) ]
+   if not misn.claim( mem.missys ) then misn.finish( false ) end
 
-   jumps_permitted = system.cur():jumpDist(missys) + rnd.rnd( 5 )
+   mem.jumps_permitted = system.cur():jumpDist(mem.missys) + rnd.rnd( 5 )
    if rnd.rnd() < 0.05 then
-      jumps_permitted = jumps_permitted - 1
+      mem.jumps_permitted = mem.jumps_permitted - 1
    end
 
-   local num_pirates = pir.systemPresence( missys )
+   local num_pirates = pir.systemPresence( mem.missys )
    if num_pirates <= 50 then
-      level = 1
+      mem.level = 1
    elseif num_pirates <= 100 then
-      level = rnd.rnd( 1, 2 )
+      mem.level = rnd.rnd( 1, 2 )
    elseif num_pirates <= 200 then
-      level = rnd.rnd( 2, 3 )
+      mem.level = rnd.rnd( 2, 3 )
    elseif num_pirates <= 300 then
-      level = rnd.rnd( 3, 4 )
+      mem.level = rnd.rnd( 3, 4 )
    else
-      level = rnd.rnd( 4, 5 )
+      mem.level = rnd.rnd( 4, 5 )
    end
 
    -- Pirate details
-   name = pilotname.pirate()
-   pship = "Hyena"
-   credits = 50e3
-   reputation = 0
-   board_failed = false
-   pship, credits, reputation = bounty_setup()
+   mem.name = pilotname.pirate()
+   mem.pship = "Hyena"
+   mem.credits = 50e3
+   mem.reputation = 0
+   mem.board_failed = false
+   mem.pship, mem.credits, mem.reputation = bounty_setup()
 
    -- Set mission details
-   misn.setTitle( fmt.f( misn_title[level], {sys=missys} ) )
-   misn.setDesc( fmt.f( misn_desc, {pirname=name, sys=missys, fct=paying_faction, shipclass=_(ship.get(pship):classDisplay()) } ) )
-   misn.setReward( fmt.credits( credits ) )
-   marker = misn.markerAdd( missys, "computer" )
+   misn.setTitle( fmt.f( misn_title[mem.level], {sys=mem.missys} ) )
+   misn.setDesc( fmt.f( mem.misn_desc, {pirname=mem.name, sys=mem.missys, fct=mem.paying_faction, shipclass=_(ship.get(mem.pship):classDisplay()) } ) )
+   misn.setReward( fmt.credits( mem.credits ) )
+   mem.marker = misn.markerAdd( mem.missys, "computer" )
 end
 
 
 function accept ()
    misn.accept()
 
-   osd_msg[1] = fmt.f( osd_msg[1], {sys=missys} )
-   osd_msg[2] = fmt.f( osd_msg[2], {plt=name} )
-   osd_msg[3] = fmt.f( osd_msg[3], {fct=paying_faction} )
-   misn.osdCreate( osd_title, osd_msg )
+   mem.osd_msg[1] = fmt.f( mem.osd_msg[1], {sys=mem.missys} )
+   mem.osd_msg[2] = fmt.f( mem.osd_msg[2], {plt=mem.name} )
+   mem.osd_msg[3] = fmt.f( mem.osd_msg[3], {fct=mem.paying_faction} )
+   misn.osdCreate( mem.osd_title, mem.osd_msg )
 
-   last_sys = system.cur()
-   job_done = false
-   target_killed = false
+   mem.last_sys = system.cur()
+   mem.job_done = false
+   mem.target_killed = false
 
    hook.jumpin( "jumpin" )
    hook.jumpout( "jumpout" )
@@ -166,11 +165,11 @@ end
 
 function jumpin ()
    -- Nothing to do.
-   if system.cur() ~= missys then
+   if system.cur() ~= mem.missys then
       return
    end
 
-   local pos = jump.pos( system.cur(), last_sys )
+   local pos = jump.pos( system.cur(), mem.last_sys )
    local offset_ranges = { { -2500, -1500 }, { 1500, 2500 } }
    local xrange = offset_ranges[ rnd.rnd( 1, #offset_ranges ) ]
    local yrange = offset_ranges[ rnd.rnd( 1, #offset_ranges ) ]
@@ -180,10 +179,10 @@ end
 
 
 function jumpout ()
-   jumps_permitted = jumps_permitted - 1
-   last_sys = system.cur()
-   if not job_done and last_sys == missys then
-      fail( fmt.f( msg[3], {sys=last_sys} ) )
+   mem.jumps_permitted = mem.jumps_permitted - 1
+   mem.last_sys = system.cur()
+   if not mem.job_done and mem.last_sys == mem.missys then
+      fail( fmt.f( msg[3], {sys=mem.last_sys} ) )
    end
 end
 
@@ -194,18 +193,18 @@ end
 
 
 function land ()
-   jumps_permitted = jumps_permitted - 1
-   if job_done and planet.cur():faction() == paying_faction then
+   mem.jumps_permitted = mem.jumps_permitted - 1
+   if mem.job_done and planet.cur():faction() == mem.paying_faction then
       local pay_text
-      if target_killed then
+      if mem.target_killed then
          pay_text = pay_kill_text[ rnd.rnd( 1, #pay_kill_text ) ]
       else
          pay_text = pay_capture_text[ rnd.rnd( 1, #pay_capture_text ) ]
       end
-      vntk.msg( _("Mission Completed"), fmt.f( pay_text, {plt=name, credits=fmt.credits(credits)} ) )
-      player.pay( credits )
-      paying_faction:modPlayerSingle( reputation )
-      pir.reputationNormalMission( reputation )
+      vntk.msg( _("Mission Completed"), fmt.f( pay_text, {plt=mem.name, credits=fmt.credits(mem.credits)} ) )
+      player.pay( mem.credits )
+      mem.paying_faction:modPlayerSingle( mem.reputation )
+      pir.reputationNormalMission( mem.reputation )
       misn.finish( true )
    end
 end
@@ -217,17 +216,17 @@ end
 
 function pilot_board ()
    player.unboard()
-   if can_capture then
-      local t = fmt.f( subdue_text[ rnd.rnd( 1, #subdue_text ) ], {plt=name} )
+   if mem.can_capture then
+      local t = fmt.f( subdue_text[ rnd.rnd( 1, #subdue_text ) ], {plt=mem.name} )
       vntk.msg( _("Captured Alive"), t )
       succeed()
-      target_killed = false
+      mem.target_killed = false
       target_ship:changeAI( "dummy" )
       target_ship:setHilight( false )
       target_ship:disable() -- Stop it from coming back
-      hook.rm( death_hook )
+      hook.rm( mem.death_hook )
    else
-      local t = fmt.f( subdue_fail_text[ rnd.rnd( 1, #subdue_fail_text ) ], {plt=name} )
+      local t = fmt.f( subdue_fail_text[ rnd.rnd( 1, #subdue_fail_text ) ], {plt=mem.name} )
       vntk.msg( _("Capture Failed"), t )
       board_fail()
    end
@@ -257,7 +256,7 @@ end
 function pilot_death( _p, attacker )
    if attacker == player.pilot() or attacker:leader() == player.pilot() then
       succeed()
-      target_killed = true
+      mem.target_killed = true
    else
       local top_hunter = nil
       local top_hits = 0
@@ -277,26 +276,26 @@ function pilot_death( _p, attacker )
 
       if top_hunter == nil or player_hits >= top_hits then
          succeed()
-         target_killed = true
+         mem.target_killed = true
       elseif player_hits >= top_hits / 2 and rnd.rnd() < 0.5 then
-         hailer = hook.pilot( top_hunter, "hail", "hunter_hail", top_hunter )
-         credits = credits * player_hits / total_hits
+         mem.hailer = hook.pilot( top_hunter, "hail", "hunter_hail", top_hunter )
+         mem.credits = mem.credits * player_hits / total_hits
          hook.pilot( top_hunter, "jump", "hunter_leave" )
          hook.pilot( top_hunter, "land", "hunter_leave" )
          hook.jumpout( "hunter_leave" )
          hook.land( "hunter_leave" )
-         player.msg( "#r" .. fmt.f( msg[2], {plt=name} ) .. "#0" )
+         player.msg( "#r" .. fmt.f( msg[2], {plt=mem.name} ) .. "#0" )
          hook.timer( 3.0, "timer_hail", top_hunter )
          misn.osdDestroy()
       else
-         fail( fmt.f( msg[2], {plt=name} ) )
+         fail( fmt.f( msg[2], {plt=mem.name} ) )
       end
    end
 end
 
 
 function pilot_jump ()
-   fail( fmt.f( msg[1], {plt=name} ) )
+   fail( fmt.f( msg[1], {plt=mem.name} ) )
 end
 
 
@@ -308,14 +307,14 @@ end
 
 
 function hunter_hail( _arg )
-   hook.rm( hailer )
+   hook.rm( mem.hailer )
    hook.rm( rehailer )
    player.commClose()
 
    local text = share_text[ rnd.rnd( 1, #share_text ) ]
-   vntk.msg( _("A Smaller Reward"), fmt.f( text, {plt=name} ) )
+   vntk.msg( _("A Smaller Reward"), fmt.f( text, {plt=mem.name} ) )
 
-   player.pay( credits )
+   player.pay( mem.credits )
    misn.finish( true )
 end
 
@@ -328,7 +327,7 @@ end
 -- Set up the ship, credits, and reputation based on the level.
 function bounty_setup ()
    local pship, credits, reputation
-   if level == 1 then
+   if mem.level == 1 then
       if rnd.rnd() < 0.5 then
          pship = "Hyena"
          credits = 80e3 + rnd.sigma() * 15e3
@@ -337,7 +336,7 @@ function bounty_setup ()
          credits = 100e3 + rnd.sigma() * 30e3
       end
       reputation = 0.5
-   elseif level == 2 then
+   elseif mem.level == 2 then
       if rnd.rnd() < 0.5 then
          pship = "Pirate Vendetta"
       else
@@ -345,7 +344,7 @@ function bounty_setup ()
       end
       credits = 300e3 + rnd.sigma() * 50e3
       reputation = 1
-   elseif level == 3 then
+   elseif mem.level == 3 then
       if rnd.rnd() < 0.5 then
          pship = "Pirate Admonisher"
       else
@@ -353,7 +352,7 @@ function bounty_setup ()
       end
       credits = 500e3 + rnd.sigma() * 80e3
       reputation = 2
-   elseif level == 4 then
+   elseif mem.level == 4 then
       if rnd.rnd() < 0.5 then
          pship = "Pirate Starbridge"
       else
@@ -361,7 +360,7 @@ function bounty_setup ()
       end
       credits = 700e3 + rnd.sigma() * 90e3
       reputation = 2.8
-   elseif level == 5 then
+   elseif mem.level == 5 then
       pship = "Pirate Kestrel"
       credits = 1e6 + rnd.sigma() * 100e3
       reputation = 3.5
@@ -373,41 +372,40 @@ end
 -- Spawn the ship at the location param.
 function spawn_pirate( param )
    -- Not the time to spawn
-   if job_done or system.cur() ~= missys then
+   if mem.job_done or system.cur() ~= mem.missys then
       return
    end
 
    -- Can't jump anymore
-   if jumps_permitted < 0 then
-      fail( fmt.f( msg[1], {plt=name} ) )
+   if mem.jumps_permitted < 0 then
+      fail( fmt.f( msg[1], {plt=mem.name} ) )
       return
    end
 
    misn.osdActive( 2 )
-   target_ship = pilot.add( pship, get_faction(), param )
+   target_ship = pilot.add( mem.pship, get_faction(), param, mem.name )
    local aimem = target_ship:memory()
    aimem.loiter = math.huge -- Should make them loiter forever
-   target_ship:rename( name )
    target_ship:setHilight( true )
    hook.pilot( target_ship, "disable", "pilot_disable" )
    hook.pilot( target_ship, "board", "pilot_board" )
    hook.pilot( target_ship, "attacked", "pilot_attacked" )
-   death_hook = hook.pilot( target_ship, "death", "pilot_death" )
-   pir_jump_hook = hook.pilot( target_ship, "jump", "pilot_jump" )
-   pir_land_hook = hook.pilot( target_ship, "land", "pilot_jump" )
+   mem.death_hook = hook.pilot( target_ship, "death", "pilot_death" )
+   mem.pir_jump_hook = hook.pilot( target_ship, "jump", "pilot_jump" )
+   mem.pir_land_hook = hook.pilot( target_ship, "land", "pilot_jump" )
 
    --[[
    local pir_crew = target_ship:stats().crew
    local pl_crew = player.pilot():stats().crew
    if rnd.rnd() > (0.5 * (10 + pir_crew) / (10 + pl_crew)) then
-      can_capture = true
+      mem.can_capture = true
    else
-      can_capture = false
+      mem.can_capture = false
    end
    --]]
    -- Disabling and boarding is hard enough as is to randomly fail
    -- TODO potentially do a small capturing minigame here
-   can_capture = true
+   mem.can_capture = true
 
    return target_ship
 end
@@ -426,19 +424,19 @@ end
 -- Fail to board the ship; must kill the target instead
 -- (Unused in this mission; used by pirbounty_alive)
 function board_fail ()
-   board_failed = true
+   mem.board_failed = true
 end
 
 
 -- Succeed the mission, make the player head to a planet for pay
 function succeed ()
-   job_done = true
+   mem.job_done = true
    misn.osdActive( 3 )
-   if marker ~= nil then
-      misn.markerRm( marker )
+   if mem.marker ~= nil then
+      misn.markerRm( mem.marker )
    end
-   hook.rm( pir_jump_hook )
-   hook.rm( pir_land_hook )
+   hook.rm( mem.pir_jump_hook )
+   hook.rm( mem.pir_land_hook )
 end
 
 

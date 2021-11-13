@@ -48,17 +48,17 @@ local defend_system, second_wave_attacks -- Forward-declared functions
 
 -- Create the mission on the current planet, and present the first Bar text.
 function create()
-   this_planet, this_system = planet.cur()
-   if ( pir.systemPresence(this_system) > 0
-         or this_system:presences()["Collective"]
-         or this_system:presences()["FLF"]
-         or this_system == system.get("Gamma Polaris")
-         or this_system == system.get("Doeston")
-         or this_system == system.get("NGC-7291") ) then
+   mem.this_planet, mem.this_system = planet.cur()
+   if ( pir.systemPresence(mem.this_system) > 0
+         or mem.this_system:presences()["Collective"]
+         or mem.this_system:presences()["FLF"]
+         or mem.this_system == system.get("Gamma Polaris")
+         or mem.this_system == system.get("Doeston")
+         or mem.this_system == system.get("NGC-7291") ) then
       misn.finish(false)
    end
 
-   local missys = {this_system}
+   local missys = {mem.this_system}
    if not misn.claim(missys) then
       misn.finish(false)
    end
@@ -72,8 +72,8 @@ function create()
       misn.setReward( fmt.f( _("{credits} and the pleasure of serving the Empire."), {credits=fmt.credits(reward)}) )
       misn.setDesc( _("Defend the system against a pirate fleet."))
       misn.setTitle( _("Defend the System"))
-      misn.markerAdd( this_system, "low" )
-      defender = true
+      misn.markerAdd( mem.this_system, "low" )
+      mem.defender = true
 
   -- hook an abstract deciding function to player entering a system
       hook.enter( "enter_system")
@@ -91,7 +91,7 @@ function create()
       misn.setReward( _("No reward for you."))
       misn.setDesc( _("Watch others defend the system."))
       misn.setTitle( _("Observe the action."))
-      defender = false
+      mem.defender = false
 
   -- hook an abstract deciding function to player entering a system when not part of defense
       hook.enter( "enter_system")
@@ -101,17 +101,17 @@ end
 -- Decides what to do when player either takes off starting planet or jumps into another system
 function enter_system()
 
-      if this_system == system.cur() and defender == true then
+      if mem.this_system == system.cur() and mem.defender == true then
          defend_system()
-      elseif victory == true and defender == true then
+      elseif mem.victory == true and mem.defender == true then
          pilot.add( "Koala", "Trader", player.pos(), _("Trader Koala"), {ai="def"} )
          hook.timer(1.0, "ship_enters")
-      elseif defender == true then
+      elseif mem.defender == true then
          player.msg( _("You fled from the battle. The Empire won't forget.") )
          faction.modPlayerSingle( "Empire", -3)
          misn.finish( true)
-      elseif this_system == system.cur() and been_here_before ~= true then
-         been_here_before = true
+      elseif mem.this_system == system.cur() and mem.been_here_before ~= true then
+         mem.been_here_before = true
          defend_system()
       else
          misn.finish( true)
@@ -129,7 +129,7 @@ function defend_system()
   -- Set up distances
       local angle, defense_position, raider_position
       angle = rnd.rnd() * 360
-      if defender == true then
+      if mem.defender == true then
          raider_position  = vec2.newP( 400, angle )
          defense_position = vec2.new( 0, 0 )
       else
@@ -148,12 +148,12 @@ function defend_system()
       defense_fleet = fleet.add( 2, dfleet, "Trader", defense_position, _("Defender"), {ai="def"} )
       cadet1 = pilot.add( "Empire Lancelot", "Empire", defense_position, nil, {ai="def"} )
       do
-         cadet1_alive = true
+         mem.cadet1_alive = true
          hook.pilot( cadet1, "death", "cadet1_dead")
       end
       cadet2 = pilot.add( "Empire Lancelot", "Empire", defense_position, nil, {ai="def"} )
       do
-         cadet2_alive = true
+         mem.cadet2_alive = true
          hook.pilot( cadet2, "death", "cadet2_dead")
       end
       for k,v in ipairs( defense_fleet) do
@@ -164,40 +164,40 @@ function defend_system()
 
   --[[ Set conditions for the end of the Battle:
     hook fleet departure to disabling or killing ships]]
-      casualties = 0
-      casualty_max = (#raider_fleet / 2 + 1)
-      victories = 0
-      victory = false
+      mem.casualties = 0
+      mem.casualty_max = (#raider_fleet / 2 + 1)
+      mem.victories = 0
+      mem.victory = false
       for k, v in ipairs( raider_fleet) do
          hook.pilot (v, "disable", "add_cas_and_check")
       end
 
-      if defender == false then
+      if mem.defender == false then
          misn.finish( true)
       end
 
 end
 
 -- If they die, they can't communicate with the player.
-function cadet1_dead() cadet1_alive = false end
-function cadet2_dead() cadet2_alive = false end
+function cadet1_dead() mem.cadet1_alive = false end
+function cadet2_dead() mem.cadet2_alive = false end
 
 -- Record each raider death and make the raiders flee after too many casualties
 function add_cas_and_check()
 
-      if victory then return end
-      casualties = casualties + 1
-      if casualties > casualty_max then
+      if mem.victory then return end
+      mem.casualties = mem.casualties + 1
+      if mem.casualties > mem.casualty_max then
 
          raiders_left = pilot.get( { faction.get(fraider) } )
          for k, v in ipairs( raiders_left ) do
             v:changeAI("flee")
          end
-         if victories < 1 then  -- Send in the second wave
-            victories = victories + 1
+         if mem.victories < 1 then  -- Send in the second wave
+            mem.victories = mem.victories + 1
             second_wave_attacks()
          else
-            victory = true
+            mem.victory = true
             player.msg( _("We've got them on the run!") )  -- A few seconds after victory, the system is back under control
             hook.timer(8.0, "victorious")
             return
@@ -207,55 +207,49 @@ function add_cas_and_check()
 end
 
 function second_wave_attacks()
-
-      casualties = 0
+      mem.casualties = 0
       second_wave = fleet.add( 4, "Hyena", fraider, player.pos(), _("Pirate Hyena"), {ai="def"} )
       for k, v in ipairs( second_wave) do
          v:setHostile()
       end
-      casualty_max = math.modf( #second_wave / 2)
+      mem.casualty_max = math.modf( #second_wave / 2)
       for k, v in ipairs( second_wave) do
          hook.pilot (v, "disable", "add_cas_and_check")
       end
-
 end
 
 -- Separate mission for a mid-mission interjection <-- bad organization <-- FIXME: it's worse, nothing even refers to this.
 local function cadet_first_comm()
-      if cadet1_alive then
+      if mem.cadet1_alive then
          cadet1:comm( _("We've got them on the run!") )
-      elseif cadet2_alive then
+      elseif mem.cadet2_alive then
          cadet2:comm( _("We've got them on the run!") )
-      else player.msg( fmt.f(_("Broadcast {pnt}> The raiders are retreating!"), {pnt=this_planet}))
+      else player.msg( fmt.f(_("Broadcast {pnt}> The raiders are retreating!"), {pnt=mem.this_planet}))
       end
-
 end
 
 
 -- When the raiders are on the run then the Empire takes over
 function victorious()
-
-      if cadet1_alive then
+      if mem.cadet1_alive then
          cadet1:comm( _("Good flying, volunteers. The governor is waiting for us back in port.") )
-      elseif cadet2_alive then
+      elseif mem.cadet2_alive then
          cadet2:comm( _("Good flying, volunteers. The governor is waiting for us back in port.") )
-      else player.msg( fmt.f(_("Comm {pnt}> Good flying, volunteers. The governor is waiting for you back in port."), {pnt=this_planet}))
+      else player.msg( fmt.f(_("Comm {pnt}> Good flying, volunteers. The governor is waiting for you back in port."), {pnt=mem.this_planet}))
       end
-
 end
 
 -- The player lands to a warm welcome (if the job is done).
 function celebrate_victory()
-
-      if victory == true then
+      if mem.victory == true then
          tk.msg( _("A public occasion"), fmt.f( _([[Night is falling by the time you land back on {pnt}. Looking solemn in front of a gathering crowd and news recorders, a large man with a fleshy face comes forward to greet the survivors of the fight. A flock of men and women follow him.
     When he shakes your hand, the Governor looks keenly at you at smiles, "Very well done."
-    After meeting each surviving pilot, the tall man stands still for aide to attach an amplifier to his lapel. Then he turns his face to the news-casters and the crowd.]]), {pnt=this_planet}) )
+    After meeting each surviving pilot, the tall man stands still for aide to attach an amplifier to his lapel. Then he turns his face to the news-casters and the crowd.]]), {pnt=mem.this_planet}) )
          player.pay( reward)
          faction.modPlayerSingle( "Empire", 3)
          tk.msg( _("The Governor's speech"), fmt.f( _([[
 "Even here on {pnt}, even in the protective embrace of civilization, we face many dangers. The ties that bind us through space to other worlds are fragile. When criminals attack these precious connections, they trouble the very foundations of our peace. How glad we are now for the security of the Empire whose young navy cadets led a team of independent pilots to defend us today."  The Governor turns to the pair of officers-in-training. "In the name of the Emperor, I have the privilege of decorating these two young heroes with the {pnt} Silver Heart. I hope they and their volunteers will not be too proud to also accept a generous purse, along with the gratitude of all our people. Please join me in applauding their bravery."
-    The public ceremony lasts only a few hectoseconds. Afterwards, as interviewers draw the young navy officers aside and the crowd disperses, you catch sight of the elderly couple from the bar holding each other and looking up into the darkening sky.]]), {pnt=this_planet} ) )
+    The public ceremony lasts only a few hectoseconds. Afterwards, as interviewers draw the young navy officers aside and the crowd disperses, you catch sight of the elderly couple from the bar holding each other and looking up into the darkening sky.]]), {pnt=mem.this_planet} ) )
          misn.finish( true)
       else
          tk.msg( _("Not done yet."), _("The system isn't safe yet. Get back out there!"))   -- If any pirates still alive, send player back out.
@@ -266,23 +260,22 @@ end
 
 -- A fellow warrior says hello in passing if player jumps out of the system without landing
 function ship_enters()
-
-      enter_vect = player.pos()
+      mem.enter_vect = player.pos()
       hook.timer(1.0, "congratulations")
 end
+
 function congratulations()
       tk.msg( _("Good job!"), fmt.f( _([[A freighter hails you as you jump into the system.
     "Thank you for responding, {ship}. Are you coming in from {sys}?  I have a delivery I need to get to {pnt} and I can't wait much longer. Is the system safe now?"
     You relate the outcome of the space battle.
-    "Oh, that's good news! You know, these raids are getting worse all the time. I wish the Empire would do something about it. Anyway, thank you for the information. Safe travels."]]), {ship=player.ship(), sys=this_system, pnt=this_planet} ) )
+    "Oh, that's good news! You know, these raids are getting worse all the time. I wish the Empire would do something about it. Anyway, thank you for the information. Safe travels."]]), {ship=player.ship(), sys=mem.this_system, pnt=mem.this_planet} ) )
       misn.finish( true)
 
 end
 
 -- If the player aborts the mission, the Empire and Traders react
 function abort()
-
-      if victory == false then
+      if mem.victory == false then
          faction.modPlayerSingle( "Empire", -10)
          faction.modPlayerSingle( "Trader", -10)
          player.msg( fmt.f( _("Comm Lancelot> You're a coward, {player}. You better hope I never see you again."), {player=player.name()} ) )
@@ -290,5 +283,4 @@ function abort()
          player.msg( fmt.f( _("Comm Lancelot> You're running away now, {player}? The fight's finished, you know..."), {player=player.name()} ) )
       end
       misn.finish( true)
-
 end

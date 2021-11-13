@@ -32,7 +32,7 @@ local jumpinsys = system.get("Pultatis")
 --  nil: mission not accepted yet
 --    0: Go kill drone
 --    1: Get back to Minerva STation
-misn_state = nil
+mem.misn_state = nil
 local badweaps, drone1, drone2 -- Non-persistent state
 
 
@@ -68,14 +68,14 @@ They smiles at you.]]))
    vn.done()
 
    vn.label("accept")
-   vn.func( function () misn_state=0 end )
+   vn.func( function () mem.misn_state=0 end )
    pir(_([["Glad to have you onboard again! So the idea is very simple, we've seen that the Za'lek are setting up some reconnaissance stuff around the system. Nothing very conspicuous, but there are some scout drones here and there. I want you to take them out."]]))
    pir(_([["Just destroying them won't cut it though, we need to make it look like the Dvaered did it this time. However, that should be simple. Make sure to use Dvaered weapons to take the drones out. You know, Mace Launchers, Vulcan Guns, Shredders, Mass Drivers, Railguns and such. Make sure to not use any non-Dvaered weapons!"]]))
    pir(_([["There should be two drones out there. I have given you the locations where they were last seen. Try to take out the drones as fast as possible and get back here in one piece."]]))
    vn.run()
 
-   -- If not accepted, misn_state will still be nil
-   if misn_state==nil then
+   -- If not accepted, mem.misn_state will still be nil
+   if mem.misn_state==nil then
       return
    end
 
@@ -85,7 +85,7 @@ They smiles at you.]]))
           _("Go back to Minerva Station") } )
    misn.osdActive(1)
 
-   misnmarker = misn.markerAdd( system.cur() )
+   mem.misnmarker = misn.markerAdd( system.cur() )
 
    minerva.log.pirate(_("You accept another job from the shady individual to destroy some Za'lek scout drones around Minerva Station with Dvaered weapons only to make it seem like the Dvaered are targeting Za'lek drones.") )
 
@@ -96,7 +96,7 @@ end
 
 
 function land ()
-   if misn_state==1 and planet.cur() == planet.get("Minerva Station") then
+   if mem.misn_state==1 and planet.cur() == planet.get("Minerva Station") then
       vn.clear()
       vn.scene()
       local pir = vn.newCharacter( minerva.vn_pirate() )
@@ -156,7 +156,7 @@ end
 
 
 local function drone_create( pos )
-   local d = pilot.add( "Za'lek Scout Drone", fzalek, pos )
+   local d = pilot.add( "Za'lek Scout Drone", mem.fzalek, pos )
    d:control()
    d:brake()
    hook.pilot( d, "death", "drone_death" )
@@ -168,23 +168,23 @@ end
 
 
 function enter ()
-   if misn_state==0 and system.cur()==mainsys then
-      weap_ok, badweaps = dvaered_weapons( player.pilot() )
-      if not weap_ok then
+   if mem.misn_state==0 and system.cur()==mainsys then
+      mem.weap_ok, badweaps = dvaered_weapons( player.pilot() )
+      if not mem.weap_ok then
          player.msg(fmt.f(_("#oNon-Dvaered equipped weapons detected: {list}"), {list=fmt.list(badweaps)}))
       end
 
       pilot.clear()
       pilot.toggleSpawn(false)
-      drone1pos = vec2.new(  -2000, -15000 )
-      drone2pos = vec2.new( -10000,   6000 )
+      mem.drone1pos = vec2.new(  -2000, -15000 )
+      mem.drone2pos = vec2.new( -10000,   6000 )
 
-      fzalek = faction.dynAdd( "Za'lek", "zalek_thugs", _("Za'lek") )
+      mem.fzalek = faction.dynAdd( "Za'lek", "zalek_thugs", _("Za'lek") )
 
-      drone1 = drone_create( drone1pos )
-      drone1marker = system.mrkAdd( drone1:pos(), _("Za'lek Drone") )
+      drone1 = drone_create( mem.drone1pos )
+      mem.drone1marker = system.mrkAdd( drone1:pos(), _("Za'lek Drone") )
 
-      drones_killed = 0
+      mem.drones_killed = 0
    end
 end
 
@@ -194,20 +194,20 @@ function drone_death ()
       player.msg(_("#rMISSION FAILED! You were supposed to kill the drones with Dvaered-only weapons!"))
       misn.finish(false)
    end
-   drones_killed = drones_killed+1
-   if drones_killed==1 then
-      system.mrkRm( drone1marker )
-      drone2 = drone_create( drone2pos )
-      drone2marker = system.mrkAdd( drone2:pos(), _("Za'lek Drone") )
+   mem.drones_killed = mem.drones_killed+1
+   if mem.drones_killed==1 then
+      system.mrkRm( mem.drone1marker )
+      drone2 = drone_create( mem.drone2pos )
+      mem.drone2marker = system.mrkAdd( drone2:pos(), _("Za'lek Drone") )
       player.msg(_("You detected another Za'lek drone in the system!"))
-      zalek_inbound = false
+      mem.zalek_inbound = false
       hook.timer( 0.5, "heartbeat" )
-   elseif drones_killed==2 then
-      system.mrkRm( drone2marker )
-      misn_state = 1
+   elseif mem.drones_killed==2 then
+      system.mrkRm( mem.drone2marker )
+      mem.misn_state = 1
       misn.osdActive(2)
       pilot.toggleSpawn(true)
-      misn.markerMove( misnmarker, planet.get("Minerva Station") )
+      misn.markerMove( mem.misnmarker, planet.get("Minerva Station") )
    end
 end
 function drone_attacked( p )
@@ -222,7 +222,7 @@ end
 
 function heartbeat ()
    local pp = player.pilot()
-   local dist = pp:pos():dist( drone2pos )
+   local dist = pp:pos():dist( mem.drone2pos )
    if dist < 5000 then
       local msg = _("Your sensors are detecting a Za'lek fleet inbound!")
       player.msg("#o"..msg)
@@ -242,7 +242,7 @@ function reinforcements_jumpin ()
       "Za'lek Demon",
    }
    for k,s in ipairs(ships) do
-      local p = pilot.add( s, fzalek, jumpinsys )
+      local p = pilot.add( s, mem.fzalek, jumpinsys )
       if drone2:exists() then
          p:setLeader( drone2 )
       end

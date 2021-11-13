@@ -23,7 +23,7 @@ local fmt = require "format"
 local shadow = require "common.shadow"
 require "proximity"
 
-local genbu, joe, leader, leaderdest, leaderstart, squads -- Non-persistent state
+local genbu, joe, leader, leaderdest, leaderstart, seiryuu, squads -- Non-persistent state
 local spawnGenbu, spawnSquads -- Forward-declared functions
 
 -- Mission constants
@@ -38,7 +38,7 @@ local function dest_updated(pnt, sys)
    misn.osdCreate(_("Dark Shadow"), {
       fmt.f(_("Look for Jorek on {pnt} in the {sys} system"), {pnt=pnt, sys=sys}),
    })
-   misn.markerMove(marker, sys)
+   misn.markerMove(mem.marker, sys)
 end
 
 function create()
@@ -51,7 +51,7 @@ function create()
    tk.msg(_("An urgent invitation"), fmt.f(_([[Suddenly, out of nowhere, one of the dormant panels in your cockpit springs to life. It shows you a face you've never seen before in your life, but you recognize the plain grey uniform as belonging to the Four Winds.
     "Hello {player}," the face says. "You must be wondering who I am and how it is I'm talking to you like this. Neither question is important. What is important is that Captain Rebina has urgent need of your services. You are to meet her on the Seiryuu, which is currently in orbit around {pnt} in the {sys} system. Please don't ask any questions now. We expect to see you as quickly as you can make your way here."
     The screen goes dead again. You decide to make a note of this in your log. Perhaps it would be a good idea to visit the Seiryuu once more, if only to find out how they got a private line to your ship!]]), {player=player.name(), pnt=seirplanet, sys=seirsys}))
-   firstmarker = misn.markerAdd(seirsys, "low")
+   mem.firstmarker = misn.markerAdd(seirsys, "low")
    accept() -- The player automatically accepts this mission.
 end
 
@@ -62,21 +62,20 @@ function accept()
    misn.accept()
    misn.osdDestroy() -- This is here because setDesc initializes the OSD.
 
-   stage = 1
+   mem.stage = 1
 
    hook.enter("enter")
 end
 
 -- This is the "real" start of the mission. Get yer mission variables here!
 local function accept2()
-   tick = {false, false, false, false, false}
-   tick["__save"] = true
-   marker = misn.markerAdd(joreksys1, "low")
+   mem.tick = {false, false, false, false, false}
+   mem.marker = misn.markerAdd(joreksys1, "low")
    dest_updated(jorekplanet1, joreksys1)
    misn.setDesc(_([[You have been tasked by Captain Rebina of the Four Winds to assist Jorek McArthy.]]))
    misn.setReward(_("A sum of money."))
-   landhook = hook.land("land")
-   jumpouthook = hook.jumpout("jumpout")
+   mem.landhook = hook.land("land")
+   mem.jumpouthook = hook.jumpout("jumpout")
 end
 
 -- Handle boarding of the Seiryuu
@@ -84,7 +83,7 @@ function seiryuuBoard()
    seiryuu:setActiveBoard(false)
    seiryuu:setHilight(false)
    player.unboard()
-   if stage == 1 then -- Briefing
+   if mem.stage == 1 then -- Briefing
       tk.msg(_("Disclosure"), fmt.f(_([[You make your way through the now familiar corridors of the Seiryuu. You barely notice the strange environment anymore. It seems unimportant compared to the strange events that surround your every encounter with these Four Winds.
     You step onto the bridge, where Captain Rebina is waiting for you. "Welcome back, {player}," she says. "I'm pleased to see that you decided to respond to our communication. I doubt you would have come here if you weren't willing to continue to aid us. Your presence here confirms that you are a reliable partner, so I will treat you accordingly."
     The captain motions you to take a seat at what looks like a holotable in the center of the bridge. "Before I tell you what I've called you here for, I feel I should explain to you in full who we are, what we do and what your part in all this is." She takes a seat opposite from yours, and leans on the holotable. "As I've said before, we are the Four Winds. Our organization is a very secretive one, as you've experienced firsthand. Very few outside our ranks know of our existence, and now you're one of those few."]]), {player=player.name()}))
@@ -101,9 +100,9 @@ function seiryuuBoard()
     The captain turns the holotable back off so she can have your undivided attention. "I have sent Jorek on a recon mission to the planet of {pnt} in the {sys} system. He hasn't reported back to me so far, and that's bad news. Jorek is a reliable agent. If he fails to meet a deadline, then it means he is tied down by factors outside of his control, or worse. I want you to find him. Your position as an outsider will help you fly below the radar of potentially hostile Four Winds operatives. You must go to {pnt} and contact Jorek if you can, or find out where he is if you can't."
     Captain Rebina stands up, a signal that this briefing is over. You are seen to your ship by a gray-uniformed crewman. You sit in your cockpit for a few hectoseconds before disengaging the docking clamp. What Captain Rebina has told you is a lot to take in. A shadowy organization that guides humanity behind the scenes? And parts of that organization going rogue? The road ahead could well be a bumpy one.]]), {player=player.name(), pnt=jorekplanet1, sys=joreksys1}))
       accept2()
-      misn.markerRm(firstmarker)
-      stage = 2
-   elseif stage == 6 then -- Debriefing
+      misn.markerRm(mem.firstmarker)
+      mem.stage = 2
+   elseif mem.stage == 6 then -- Debriefing
       tk.msg(_("A safe return"), fmt.f(_([[You find yourself back on the Seiryuu, in the company of Jorek and the Four Winds informant. The informant is escorted deeper into the ship by grey-uniformed crew members, while Jorek takes you up to the bridge for a meeting with Captain Rebina.
     "Welcome back, Jorek, {player}," Rebina greets you on your arrival. "I've already got a preliminary report on the situation, but let's have ourselves a proper debriefing. Have a seat."
     Jorek and you sit down at the holotable in the middle of the bridge, and report on the events surrounding Jorek's retrieval. When you're done, Captain Rebina calls up a schematic view of the Genbu from the holotable.
@@ -127,19 +126,19 @@ function joeBoard()
    local c = misn.cargoNew(N_("Four Winds Informant"), N_("Jorek's informant."))
    misn.cargoAdd(c, 0)
    player.unboard()
-   misn.markerMove(marker, seirsys)
+   misn.markerMove(mem.marker, seirsys)
    misn.osdActive(2)
-   stage = 5
+   mem.stage = 5
 end
 
 -- Jump-out hook
 function jumpout()
-   playerlastsys = system.cur() -- Keep track of which system the player came from
+   mem.playerlastsys = system.cur() -- Keep track of which system the player came from
    if not (patroller == nil) then
       hook.rm(patroller)
    end
-   if not (spinter == nil) then
-      hook.rm(spinter)
+   if not (mem.spinter == nil) then
+      hook.rm(mem.spinter)
    end
 end
 
@@ -149,18 +148,18 @@ function enter()
       seiryuu = pilot.add( "Pirate Kestrel", "Four Winds", vec2.new(300, 300) + seirplanet:pos(), _("Seiryuu"), {ai="trader"} )
       seiryuu:setInvincible(true)
       seiryuu:control()
-      if stage == 1 or stage == 6 then
+      if mem.stage == 1 or mem.stage == 6 then
          seiryuu:setActiveBoard(true)
          seiryuu:setHilight(true)
          hook.pilot(seiryuu, "board", "seiryuuBoard")
       else
          seiryuu:setNoboard(true)
       end
-   elseif system.cur() == joreksys2 and stage == 3 then
+   elseif system.cur() == joreksys2 and mem.stage == 3 then
       pilot.clear()
       pilot.toggleSpawn(false)
       spawnSquads(false)
-   elseif system.cur() == joreksys2 and stage == 4 then
+   elseif system.cur() == joreksys2 and mem.stage == 4 then
       pilot.clear()
       pilot.toggleSpawn(false)
       player.allowLand(false, _("Landing permission denied. Our docking clamps are currently undergoing maintenance."))
@@ -178,7 +177,7 @@ function enter()
 
       -- The cutscene itself
       local delay = 0
-      zoomspeed = 2500
+      mem.zoomspeed = 2500
       hook.timer(delay, "playerControl", true)
       delay = delay + 2.0
       hook.timer(delay, "zoomTo", joe)
@@ -210,19 +209,19 @@ function enter()
       hook.timer(delay, "leaderVis", true)
 
       hook.pilot(joe, "board", "joeBoard")
-      poller = hook.timer(0.5, "patrolPoll")
-   elseif system.cur() == ambushsys and stage == 4 then
+      mem.poller = hook.timer(0.5, "patrolPoll")
+   elseif system.cur() == ambushsys and mem.stage == 4 then
       tk.msg(_("You forgot the informant!"), fmt.f(_([[Jorek is enraged. "Dammit, {player}! I told you to pick up that informant on the way! Too late to go back now. I'll have to think of somethin' else. I'm disembarkin' at the next spaceport, don't bother taking me back to the Seiryuu."]]), {player=player.name()}))
       shadow.addLog( _([[You failed to pick up Jorek's informant. As such, he refused to allow you to take him to the Seiryuu.]]) )
       abort()
-   elseif system.cur() == ambushsys and stage == 5 then
+   elseif system.cur() == ambushsys and mem.stage == 5 then
       pilot.clear()
       pilot.toggleSpawn(false)
       hook.timer(0.5, "invProximity", { location = jump.pos(system.cur(), "Suna"), radius = 8000, funcname = "startAmbush" }) -- Starts an inverse proximity poll for distance from the jump point.
-   elseif system.cur() == safesys and stage == 5 then
-      stage = 6 -- stop spawning the Genbu
-   elseif genbuspawned and stage == 5 then
-      spawnGenbu(playerlastsys) -- The Genbu follows you around, and will probably insta-kill you.
+   elseif system.cur() == safesys and mem.stage == 5 then
+      mem.stage = 6 -- stop spawning the Genbu
+   elseif mem.genbuspawned and mem.stage == 5 then
+      spawnGenbu(mem.playerlastsys) -- The Genbu follows you around, and will probably insta-kill you.
       continueAmbush()
    end
 end
@@ -311,10 +310,10 @@ end
 function leaderIdle(pilot)
    for i, j in ipairs(leader) do
       if j == pilot then
-         if tick[i] then pilot:moveto(leaderdest[i], false)
+         if mem.tick[i] then pilot:moveto(leaderdest[i], false)
          else pilot:moveto(leaderstart[i], false)
          end
-         tick[i] = not tick[i]
+         mem.tick[i] = not mem.tick[i]
          return
       end
    end
@@ -329,7 +328,7 @@ function patrolPoll()
          return
       end
    end
-   poller = hook.timer(0.5, "patrolPoll")
+   mem.poller = hook.timer(0.5, "patrolPoll")
 end
 
 -- Spawns the Genbu
@@ -343,7 +342,7 @@ function spawnGenbu(sys)
    genbu:setVisplayer()
    genbu:setNoDeath()
    genbu:setNoDisable()
-   genbuspawned = true
+   mem.genbuspawned = true
 end
 
 -- The initial ambush cutscene
@@ -351,7 +350,7 @@ function startAmbush()
    spawnGenbu(system.get("Anrique"))
 
    local delay = 0
-   zoomspeed = 4500
+   mem.zoomspeed = 4500
    hook.timer(delay, "playerControl", true)
    hook.timer(delay, "zoomTo", genbu)
    delay = delay + 5.0
@@ -367,9 +366,9 @@ end
 function continueAmbush()
    genbu:setHostile()
    genbu:attack(player.pilot())
-   waves = 0
-   maxwaves = 5
-   spinter = hook.timer(5.0, "spawnInterceptors")
+   mem.waves = 0
+   mem.maxwaves = 5
+   mem.spinter = hook.timer(5.0, "spawnInterceptors")
 end
 
 -- Spawns a wing of Lancelots that intercept the player.
@@ -383,20 +382,20 @@ function spawnInterceptors()
       j:control()
       j:attack(player.pilot())
    end
-   if waves < maxwaves then
-      waves = waves + 1
-      spinter = hook.timer(25.0, "spawnInterceptors")
+   if mem.waves < mem.maxwaves then
+      mem.waves = mem.waves + 1
+      mem.spinter = hook.timer(25.0, "spawnInterceptors")
    end
 end
 
 -- Land hook
 function land()
-   if planet.cur() == jorekplanet1 and stage == 2 then
+   if planet.cur() == jorekplanet1 and mem.stage == 2 then
       -- Thank you player, but our SHITMAN is in another castle.
       tk.msg(_("No Jorek"), _([[You step into the bar, expecting to find Jorek McArthy sitting somewhere at a table. However, you don't see him anywhere. You decide to go for a drink to contemplate your next move. Then, you notice the barman is giving you a curious look.]]))
-      barmanNPC = misn.npcAdd("barman", "Barman", "neutral/barman.webp", _("The barman seems to be eyeing you in particular."), 4)
-   elseif planet.cur() == jorekplanet2 and stage == 3 then
-      joreknpc = misn.npcAdd("jorek", "Jorek", "neutral/unique/jorek.webp", _("There he is, Jorek McArthy, the man you've been chasing across half the galaxy. What he's doing on this piece of junk is unclear."), 4)
+      mem.barmanNPC = misn.npcAdd("barman", "Barman", "neutral/barman.webp", _("The barman seems to be eyeing you in particular."), 4)
+   elseif planet.cur() == jorekplanet2 and mem.stage == 3 then
+      mem.joreknpc = misn.npcAdd("jorek", "Jorek", "neutral/unique/jorek.webp", _("There he is, Jorek McArthy, the man you've been chasing across half the galaxy. What he's doing on this piece of junk is unclear."), 4)
    end
 end
 
@@ -410,8 +409,8 @@ function barman()
     "Ah, good. You're the real deal then. Can't be too careful in times like these, you know. Anyway, old Jorek was here, but he couldn't stay. He told me to keep an eye out for you, said you'd be coming to look for him." The barman glances around to make sure nobody is within earshot, even though the bar's music makes it difficult to overhear anyone who isn't standing right next to you. "I have a message for you. Go to the {sys} system and land on {pnt}. Jorek will be waiting for you there. But you better be ready for some trouble. I don't know what kind of trouble it is, but Jorek is never in any kind of minor trouble. Don't say I didn't warn you."
     You thank the barman, pay for your drink and prepare to head back to your ship, wondering whether your armaments will be enough to deal with whatever trouble Jorek is in.]]), {player=player.name(), sys=joreksys2, pnt=jorekplanet2}))
    dest_updated(jorekplanet2, joreksys2)
-   misn.npcRm(barmanNPC)
-   stage = 3
+   misn.npcRm(mem.barmanNPC)
+   mem.stage = 3
 end
 
 -- NPC hook
@@ -425,7 +424,7 @@ function jorek()
     You ask Jorek why he didn't just lie low on some world until the coast was clear, instead of coming to this sink for the dregs of intergalactic society.
     "It ain't that simple," Jorek sighs. "See, I got an inside man. A guy in their ranks who wants out. I need to get him back to the old girl so he can tell her what he knows firsthand. He's out there now, with the pack, so we need to pick him up on our way out. Now, there's two ways we can do this. We can either go in fast, grab the guy, get out fast before the wolves get us. Or we can try to fight our way through. Let me warn you though, these guys mean business, and they're not your average pirates. Unless you got a really tough ship, I recommend you run."
     Jorek sits back in his chair. "Well, there you have it. I'll fill you in on the details once we're spaceborne. Show me to your ship, buddy, and let's get rollin'. I've had enough of this damn place."]]))
-   misn.npcRm(joreknpc)
+   misn.npcRm(mem.joreknpc)
    local c = misn.cargoNew(N_("Jorek"), N_("An unpleasant man."))
    misn.cargoAdd(c, 0)
 
@@ -434,12 +433,12 @@ function jorek()
       fmt.f(_("Return Jorek and the informant to the Seiryuu in the {sys} system"), {sys=seirsys}),
    })
 
-   stage = 4
+   mem.stage = 4
 end
 
 -- Capsule function for camera.set, for timer use
 function zoomTo(target)
-   camera.set(target, true, zoomspeed)
+   camera.set(target, true, mem.zoomspeed)
 end
 
 -- Capsule function for player.msg, for timer use
@@ -454,6 +453,7 @@ end
 
 -- Capsule function for player.pilot():control(), for timer use
 -- Also saves the player's velocity.
+local pvel
 function playerControl(status)
    player.pilot():control(status)
    player.cinematics(status)

@@ -49,73 +49,73 @@ piracyrisk[4] = _("#nPiracy Risk:#0 High")
 
 function create()
    --This mission does not make any system claims
-   destplanet, destsys, numjumps, traveldist, cargo, avgrisk, tier = car.calculateRoute()
+   mem.destplanet, mem.destsys, mem.numjumps, mem.traveldist, mem.cargo, mem.avgrisk, mem.tier = car.calculateRoute()
 
-   if destplanet == nil then
+   if mem.destplanet == nil then
       misn.finish(false)
-   elseif numjumps == 0 then
+   elseif mem.numjumps == 0 then
       misn.finish(false) -- have to escort them at least one jump!
-   elseif avgrisk * numjumps <= 25 then
+   elseif mem.avgrisk * mem.numjumps <= 25 then
       misn.finish(false) -- needs to be a little bit of piracy possible along route
    end
 
-   if avgrisk == 0 then
+   if mem.avgrisk == 0 then
       piracyrisk = piracyrisk[1]
-   elseif avgrisk <= 150 then
+   elseif mem.avgrisk <= 150 then
       piracyrisk = piracyrisk[2]
-   elseif avgrisk <= 300 then
+   elseif mem.avgrisk <= 300 then
       piracyrisk = piracyrisk[3]
    else
       piracyrisk = piracyrisk[4]
    end
 
-   convoysize = rnd.rnd(1,5)
+   mem.convoysize = rnd.rnd(1,5)
 
    -- Choose mission reward.
    -- Reward depends on type of cargo hauled. Hauling expensive commodities gives a better deal.
-   if convoysize == 1 then
-      jumpreward = 6*commodity.price(cargo)
-      distreward = math.log(500*commodity.price(cargo))/100
-   elseif convoysize == 2 then
-      jumpreward = 7*commodity.price(cargo)
-      distreward = math.log(700*commodity.price(cargo))/100
-   elseif convoysize == 3 then
-      jumpreward = 8*commodity.price(cargo)
-      distreward = math.log(800*commodity.price(cargo))/100
-   elseif convoysize == 4 then
-      jumpreward = 9*commodity.price(cargo)
-      distreward = math.log(900*commodity.price(cargo))/100
-   elseif convoysize == 5 then
-      jumpreward = 10*commodity.price(cargo)
-      distreward = math.log(1000*commodity.price(cargo))/100
+   if mem.convoysize == 1 then
+      mem.jumpreward = 6*commodity.price(mem.cargo)
+      mem.distreward = math.log(500*commodity.price(mem.cargo))/100
+   elseif mem.convoysize == 2 then
+      mem.jumpreward = 7*commodity.price(mem.cargo)
+      mem.distreward = math.log(700*commodity.price(mem.cargo))/100
+   elseif mem.convoysize == 3 then
+      mem.jumpreward = 8*commodity.price(mem.cargo)
+      mem.distreward = math.log(800*commodity.price(mem.cargo))/100
+   elseif mem.convoysize == 4 then
+      mem.jumpreward = 9*commodity.price(mem.cargo)
+      mem.distreward = math.log(900*commodity.price(mem.cargo))/100
+   elseif mem.convoysize == 5 then
+      mem.jumpreward = 10*commodity.price(mem.cargo)
+      mem.distreward = math.log(1000*commodity.price(mem.cargo))/100
    end
-   reward = 2.0 * (avgrisk * numjumps * jumpreward + traveldist * distreward) * (1. + 0.05*rnd.twosigma())
+   mem.reward = 2.0 * (mem.avgrisk * mem.numjumps * mem.jumpreward + mem.traveldist * mem.distreward) * (1. + 0.05*rnd.twosigma())
 
-   misn.setTitle( fmt.f( misn_title[convoysize], {pnt=destplanet, sys=destsys} ) )
-   car.setDesc( fmt.f(_("A convoy of traders needs protection while they go to {pnt} in {sys}. You must stick with the convoy at all times, waiting to jump or land until the entire convoy has done so."), {pnt=destplanet, sys=destsys} ), cargo, nil, destplanet, nil, piracyrisk )
-   misn.markerAdd(destplanet, "computer")
-   misn.setReward( fmt.credits(reward) )
+   misn.setTitle( fmt.f( misn_title[mem.convoysize], {pnt=mem.destplanet, sys=mem.destsys} ) )
+   car.setDesc( fmt.f(_("A convoy of traders needs protection while they go to {pnt} in {sys}. You must stick with the convoy at all times, waiting to jump or land until the entire convoy has done so."), {pnt=mem.destplanet, sys=mem.destsys} ), mem.cargo, nil, mem.destplanet, nil, piracyrisk )
+   misn.markerAdd(mem.destplanet, "computer")
+   misn.setReward( fmt.credits(mem.reward) )
 end
 
 function accept()
-   if player.jumps() < numjumps then
-      if not vntk.yesno( _("Not enough fuel"), fmt.f( _([[The destination is {1} away, but you only have enough fuel for {2}. You cannot stop to refuel. Accept the mission anyway?]]), {fmt.jumps(numjumps), fmt.jumps(player.jumps())} ) ) then
+   if player.jumps() < mem.numjumps then
+      if not vntk.yesno( _("Not enough fuel"), fmt.f( _([[The destination is {1} away, but you only have enough fuel for {2}. You cannot stop to refuel. Accept the mission anyway?]]), {fmt.jumps(mem.numjumps), fmt.jumps(player.jumps())} ) ) then
          misn.finish()
       end
    end
 
-   nextsys = lmisn.getNextSystem(system.cur(), destsys) -- This variable holds the system the player is supposed to jump to NEXT.
-   origin = planet.cur() -- The place where the AI ships spawn from.
+   mem.nextsys = lmisn.getNextSystem(system.cur(), mem.destsys) -- This variable holds the system the player is supposed to jump to NEXT.
+   mem.origin = planet.cur() -- The place where the AI ships spawn from.
 
-   orig_alive = nil
-   alive = nil
-   exited = 0
-   misnfail = false
-   unsafe = false
+   mem.orig_alive = nil
+   mem.alive = nil
+   mem.exited = 0
+   mem.misnfail = false
+   mem.unsafe = false
 
    misn.accept()
    misn.osdCreate(_("Convey Escort"), {
-      fmt.f(_("Escort a convoy of traders to {pnt} in the {sys} system"), {pnt=destplanet, sys=destsys}),
+      fmt.f(_("Escort a convoy of traders to {pnt} in the {sys} system"), {pnt=mem.destplanet, sys=mem.destsys}),
    })
 
    hook.takeoff("takeoff")
@@ -129,7 +129,7 @@ function takeoff()
 end
 
 function jumpin()
-   if system.cur() ~= nextsys then
+   if system.cur() ~= mem.nextsys then
       fail( _("MISSION FAILED! You jumped into the wrong system.") )
    else
       spawnConvoy()
@@ -137,40 +137,40 @@ function jumpin()
 end
 
 function jumpout()
-   if alive <= 0 or exited <= 0 then
+   if mem.alive <= 0 or mem.exited <= 0 then
       fail( _("MISSION FAILED! You jumped before the convoy you were escorting.") )
    else
       -- Treat those that didn't exit as dead
-      alive = math.min( alive, exited )
+      mem.alive = math.min( mem.alive, mem.exited )
    end
-   origin = system.cur()
-   nextsys = lmisn.getNextSystem(system.cur(), destsys)
+   mem.origin = system.cur()
+   mem.nextsys = lmisn.getNextSystem(system.cur(), mem.destsys)
 end
 
 function land()
-   alive = math.min( alive, exited )
+   mem.alive = math.min( mem.alive, mem.exited )
 
-   if planet.cur() ~= destplanet then
+   if planet.cur() ~= mem.destplanet then
       vntk.msg(_("You abandoned your mission!"), _("You have landed, abandoning your mission to escort the trading convoy."))
       misn.finish(false)
-   elseif alive <= 0 then
+   elseif mem.alive <= 0 then
       vntk.msg(_("You landed before the convoy!"), _([[You landed at the planet before ensuring that the rest of your convoy was safe. You have abandoned your duties, and failed your mission.]]))
       misn.finish(false)
    else
-      if alive >= orig_alive then
-         vntk.msg( _("Success!"), fmt.f(_("You successfully escorted the trading convoy to the destination. There wasn't a single casualty and you are rewarded the full amount of #g{credits}#0."), {credits=fmt.credits(reward)}) )
-         player.pay( reward )
+      if mem.alive >= mem.orig_alive then
+         vntk.msg( _("Success!"), fmt.f(_("You successfully escorted the trading convoy to the destination. There wasn't a single casualty and you are rewarded the full amount of #g{credits}#0."), {credits=fmt.credits(mem.reward)}) )
+         player.pay( mem.reward )
          faction.get("Traders Guild"):modPlayer(1)
-      elseif alive / orig_alive >= 0.6 then
-         local reward_orig = reward
-         reward = reward * alive / orig_alive
-         vntk.msg( _("Success with Casualties"), fmt.f(_("You've arrived with the trading convoy more or less intact. Your pay is docked slightly due to the loss of part of the convoy. You receive #g{credits}#0 of the original promised reward of {reward}."), {credits=fmt.credits(reward), reward=fmt.credits(reward_orig)}) )
-         player.pay( reward )
+      elseif mem.alive / mem.orig_alive >= 0.6 then
+         local reward_orig = mem.reward
+         mem.reward = mem.reward * mem.alive / mem.orig_alive
+         vntk.msg( _("Success with Casualties"), fmt.f(_("You've arrived with the trading convoy more or less intact. Your pay is docked slightly due to the loss of part of the convoy. You receive #g{credits}#0 of the original promised reward of {reward}."), {credits=fmt.credits(mem.reward), reward=fmt.credits(reward_orig)}) )
+         player.pay( mem.reward )
       else
-         local reward_orig = reward
-         reward = reward * alive / orig_alive
-         vntk.msg( _("Success with Casualties"), fmt.f(_("You arrive with what's left of the convoy. It's not much, but it's better than nothing. You are paid a steeply discounted amount of #g{credits}#0 from the {reward} originally promised."), {credits=fmt.credits(reward), reward=fmt.credits(reward_orig)}) )
-         player.pay( reward )
+         local reward_orig = mem.reward
+         mem.reward = mem.reward * mem.alive / mem.orig_alive
+         vntk.msg( _("Success with Casualties"), fmt.f(_("You arrive with what's left of the convoy. It's not much, but it's better than nothing. You are paid a steeply discounted amount of #g{credits}#0 from the {reward} originally promised."), {credits=fmt.credits(mem.reward), reward=fmt.credits(reward_orig)}) )
+         player.pay( mem.reward )
       end
       pir.reputationNormalMission(rnd.rnd(2,3))
       misn.finish( true )
@@ -178,16 +178,16 @@ function land()
 end
 
 function traderDeath()
-   alive = alive - 1
-   if alive <= 0 then
+   mem.alive = mem.alive - 1
+   if mem.alive <= 0 then
       fail( _("MISSION FAILED! The convoy you were escorting has been destroyed.") )
    end
 end
 
 -- Handle the jumps of convoy.
 function traderJump( p, j )
-   if j:dest() == lmisn.getNextSystem( system.cur(), destsys ) then
-      exited = exited + 1
+   if j:dest() == lmisn.getNextSystem( system.cur(), mem.destsys ) then
+      mem.exited = mem.exited + 1
       if p:exists() then
          player.msg( fmt.f(_("{plt} has jumped to {sys}."), {plt=p, sys=j:dest()} ) )
       end
@@ -198,8 +198,8 @@ end
 
 --Handle landing of convoy
 function traderLand( p, plnt )
-   if plnt == destplanet then
-      exited = exited + 1
+   if plnt == mem.destplanet then
+      mem.exited = mem.exited + 1
       if p:exists() then
          player.msg( fmt.f(_("{plt} has landed on {pnt}."), {plt=p, pnt=plnt} ) )
       end
@@ -210,27 +210,27 @@ end
 
 -- Handle the convoy getting attacked.
 function traderAttacked( p, _attacker )
-   unsafe = true
+   mem.unsafe = true
    p:control( false )
    p:setNoJump( true )
    p:setNoLand( true )
 
-   if not shuttingup then
-      shuttingup = true
+   if not mem.shuttingup then
+      mem.shuttingup = true
       p:comm( player.pilot(), _("Convoy ships under attack! Requesting immediate assistance!") )
       hook.timer( 5.0, "traderShutup" ) -- Shuts him up for at least 5s.
    end
 end
 
 function traderShutup()
-    shuttingup = false
+    mem.shuttingup = false
 end
 
 function timer_traderSafe()
    hook.timer( 2.0, "timer_traderSafe" )
 
-   if unsafe then
-      unsafe = false
+   if mem.unsafe then
+      mem.unsafe = false
       for i, j in ipairs( convoy ) do
          continueToDest( j )
       end
@@ -239,9 +239,9 @@ end
 
 function spawnConvoy ()
    --Make it interesting
-   local ambush_src = destplanet
-   if system.cur() ~= destsys then
-      ambush_src = lmisn.getNextSystem( system.cur(), destsys )
+   local ambush_src = mem.destplanet
+   if system.cur() ~= mem.destsys then
+      ambush_src = lmisn.getNextSystem( system.cur(), mem.destsys )
    end
 
    local ambushes = {
@@ -251,13 +251,13 @@ function spawnConvoy ()
       {"Pirate Admonisher", "Pirate Phalanx", "Pirate Phalanx", "Pirate Shark", "Pirate Shark", "Hyena", "Hyena"},
       {"Pirate Kestrel", "Pirate Admonisher", "Pirate Rhino", "Pirate Shark", "Pirate Shark", "Hyena", "Hyena", "Hyena"},
    }
-   if convoysize == 1 then
+   if mem.convoysize == 1 then
       fleet.add( 1, ambushes[1], "Pirate", ambush_src, nil, {ai="baddie_norun"} )
-   elseif convoysize == 2 then
+   elseif mem.convoysize == 2 then
       fleet.add( 1, ambushes[rnd.rnd(1,2)], "Pirate", ambush_src, nil, {ai="baddie_norun"} )
-   elseif convoysize == 3 then
+   elseif mem.convoysize == 3 then
       fleet.add( 1, ambushes[rnd.rnd(2,3)], "Pirate", ambush_src, nil, {ai="baddie_norun"} )
-   elseif convoysize == 4 then
+   elseif mem.convoysize == 4 then
       fleet.add( 1, ambushes[rnd.rnd(2,4)], "Pirate", ambush_src, nil, {ai="baddie_norun"} )
    else
       fleet.add( 1, ambushes[rnd.rnd(3,5)], "Pirate", ambush_src, nil, {ai="baddie_norun"} )
@@ -267,34 +267,34 @@ function spawnConvoy ()
    end
 
    --Spawn the convoy
-   local convoy_n = convoysize - 1
+   local convoy_n = mem.convoysize - 1
    local convoy_ships = {"Rhino", "Mule"}
    local convoy_names = {_("Convoy Rhino"), _("Convoy Mule")}
-   if convoysize == 1 then
+   if mem.convoysize == 1 then
       convoy_n = 3
       convoy_ships = "Llama"
       convoy_names = _("Convoy Llama")
-   elseif convoysize == 2 then
+   elseif mem.convoysize == 2 then
       convoy_n = 4
       convoy_ships = "Koala"
       convoy_names = _("Convoy Koala")
-   elseif convoysize == 3 then
+   elseif mem.convoysize == 3 then
       convoy_n = 1
       convoy_ships = {"Rhino", "Rhino", "Mule", "Mule", "Mule"}
       convoy_names = {_("Convoy Rhino"), _("Convoy Rhino"), _("Convoy Mule"), _("Convoy Mule"), _("Convoy Mule")}
    end
 
-   convoy = fleet.add( convoy_n,  convoy_ships, "Traders Guild", origin, convoy_names )
+   convoy = fleet.add( convoy_n,  convoy_ships, "Traders Guild", mem.origin, convoy_names )
    local minspeed = nil
    for i, p in ipairs(convoy) do
-      if alive ~= nil and alive < i then
+      if mem.alive ~= nil and mem.alive < i then
          p:rm()
       end
       if p:exists() then
          for _j, c in ipairs( p:cargoList() ) do
             p:cargoRm( c.name, c.q )
          end
-         p:cargoAdd( cargo, p:cargoFree() )
+         p:cargoAdd( mem.cargo, p:cargoFree() )
 
          local myspd = p:stats().speed_max
          if minspeed == nil or myspd < minspeed then
@@ -321,18 +321,18 @@ function spawnConvoy ()
       end
    end
 
-   exited = 0
-   if orig_alive == nil then
-      orig_alive = 0
+   mem.exited = 0
+   if mem.orig_alive == nil then
+      mem.orig_alive = 0
       for _i, p in ipairs( convoy ) do
          if p ~= nil and p:exists() then
-            orig_alive = orig_alive + 1
+            mem.orig_alive = mem.orig_alive + 1
          end
       end
-      alive = orig_alive
+      mem.alive = mem.orig_alive
 
       -- Shouldn't happen
-      if orig_alive <= 0 then misn.finish(false) end
+      if mem.orig_alive <= 0 then misn.finish(false) end
    end
 
    hook.timer( 1.0, "timer_traderSafe" )
@@ -344,10 +344,10 @@ function continueToDest( p )
       p:setNoJump( false )
       p:setNoLand( false )
 
-      if system.cur() == destsys then
-         p:land( destplanet, true )
+      if system.cur() == mem.destsys then
+         p:land( mem.destplanet, true )
       else
-         p:hyperspace( lmisn.getNextSystem( system.cur(), destsys ), true )
+         p:hyperspace( lmisn.getNextSystem( system.cur(), mem.destsys ), true )
       end
    end
 end

@@ -59,7 +59,7 @@ local lmisn = require "lmisn"
    4: Got part
    5: Flying back
 --]]
-misn_state = nil
+mem.misn_state = nil
 local enemies, rampant, spotter -- Non-persistent state
 
 local reward_amount = tutnel.reward.nelly02
@@ -71,12 +71,12 @@ end
 
 function create ()
    -- Save current system to return to
-   retpnt, retsys = planet.cur()
-   if not misn.claim( retsys, true ) then
+   mem.retpnt, mem.retsys = planet.cur()
+   if not misn.claim( mem.retsys, true ) then
       misn.finish()
    end
    -- Need commodity exchange and mission computer
-   local rs = retpnt:services()
+   local rs = mem.retpnt:services()
    if rs.commodity == nil or rs.missions == nil then
       misn.finish()
    end
@@ -94,11 +94,11 @@ function create ()
       end
       return true
    end
-   destpnt, destsys = lmisn.getRandomPlanetAtDistance( system.cur(), 1, 1, "Independent", false, pntfilter )
-   if not destpnt then
+   mem.destpnt, mem.destsys = lmisn.getRandomPlanetAtDistance( system.cur(), 1, 1, "Independent", false, pntfilter )
+   if not mem.destpnt then
       misn.finish()
    end
-   if not misn.claim{ retsys, destsys } then
+   if not misn.claim{ mem.retsys, mem.destsys } then
       misn.finish()
    end
 
@@ -130,7 +130,7 @@ function accept ()
 
    vn.label("accept")
    vn.func( function () doaccept = true end )
-   nel(fmt.f(_([["Thanks for the help again. So while I was preparing to take off on my ship, I heard a weird noise outside, and when I went to check out, the autonav locked me out and my ship took off without anyone in it! Now it's flying around in circles outside of {pnt}!"]]),{pnt=retpnt}))
+   nel(fmt.f(_([["Thanks for the help again. So while I was preparing to take off on my ship, I heard a weird noise outside, and when I went to check out, the autonav locked me out and my ship took off without anyone in it! Now it's flying around in circles outside of {pnt}!"]]),{pnt=mem.retpnt}))
 
    local pp = player.pilot()
    local has_dis = false
@@ -186,22 +186,22 @@ function accept ()
 
    misn.accept()
 
-   misn_state = 0
-   misn_marker = misn.markerAdd( retsys )
+   mem.misn_state = 0
+   mem.misn_marker = misn.markerAdd( mem.retsys )
 
    local osdtxt = {}
    if has_dis_owned then
       table.insert( osdtxt, _("Equip a weapon with disable damage") )
-      misn_state = -1
+      mem.misn_state = -1
    elseif not has_dis then
       table.insert( osdtxt, _("Buy and equip a weapon with disable damage") )
-      misn_state = -2
+      mem.misn_state = -2
    end
-   table.insert( osdtxt, fmt.f(_("Disable and board Nelly's ship in {sys}"), {sys=destsys}) )
+   table.insert( osdtxt, fmt.f(_("Disable and board Nelly's ship in {sys}"), {sys=mem.destsys}) )
    misn.osdCreate( _("Helping Nelly Out"), osdtxt )
 
-   if misn_state < 0 then
-      hk_equip = hook.equip( "equip" )
+   if mem.misn_state < 0 then
+      mem.hk_equip = hook.equip( "equip" )
    end
    hook.enter("enter")
    hook.land("land")
@@ -216,10 +216,10 @@ function equip ()
    for k,o in ipairs(pp:outfits()) do
       if has_disable(o) then
          info_msg(fmt.f(_([["You have equipped a #o{outfitname}#0 with disable damage. Looks like you'll be able to safely disable my rampant ship!"]]),{outfitname=o:name()}))
-         misn_state = 0
+         mem.misn_state = 0
          misn.osdActive(2)
-         hook.rm( hk_equip )
-         hk_equip = nil
+         hook.rm( mem.hk_equip )
+         mem.hk_equip = nil
          return
       end
    end
@@ -227,9 +227,9 @@ end
 
 function enter ()
    local scur = system.cur()
-   if misn_state <= 0  and scur == retsys then
-      rampant_pos = player.pos() + vec2.newP( 2000, rnd.rnd()*360 )
-      rampant = pilot.add( "Llama", "Dummy", rampant_pos, _("Llaminator MK2") )
+   if mem.misn_state <= 0  and scur == mem.retsys then
+      mem.rampant_pos = player.pos() + vec2.newP( 2000, rnd.rnd()*360 )
+      rampant = pilot.add( "Llama", "Dummy", mem.rampant_pos, _("Llaminator MK2") )
       rampant:intrinsicSet( "speed", -50 )
       rampant:intrinsicSet( "thrust", -50 )
       rampant:intrinsicSet( "turn", -50 )
@@ -247,21 +247,21 @@ function enter ()
       idle( rampant )
 
 
-   elseif misn_state == 2 and scur == retsys then
-      jump_dest = jump.get( retsys, destsys )
-      fpir = faction.dynAdd( "Pirate", "nelly_pirate", _("Pirate"), {clear_enemies=true, clear_allies=true} )
+   elseif mem.misn_state == 2 and scur == mem.retsys then
+      mem.jump_dest = jump.get( mem.retsys, mem.destsys )
+      mem.fpir = faction.dynAdd( "Pirate", "nelly_pirate", _("Pirate"), {clear_enemies=true, clear_allies=true} )
       hook.timer( 1, "timer_pirate" )
-      if not hk_reset_osd then
-         hk_reset_osd = hook.enter( "reset_osd_hook" )
+      if not mem.hk_reset_osd then
+         mem.hk_reset_osd = hook.enter( "reset_osd_hook" )
       end
 
-   elseif misn_state == 4 and scur == destsys then
-      jump_dest = jump.get( destsys, retsys )
+   elseif mem.misn_state == 4 and scur == mem.destsys then
+      mem.jump_dest = jump.get( mem.destsys, mem.retsys )
 
       local s = player.pilot():stats().ew_stealth
-      local m, a = jump_dest:pos():polar()
-      spotter_pos = vec2.newP( m - 1.5 * s, a )
-      spotter = pilot.add( "Pacifier", "Mercenary", spotter_pos )
+      local m, a = mem.jump_dest:pos():polar()
+      mem.spotter_pos = vec2.newP( m - 1.5 * s, a )
+      spotter = pilot.add( "Pacifier", "Mercenary", mem.spotter_pos )
       spotter:rename(_("Noisy Pacifier"))
       spotter:setVisplayer()
       spotter:setHilight()
@@ -269,18 +269,18 @@ function enter ()
       spotter:control()
       spotter:brake()
 
-      hk_timer_spotter = hook.timer( 9, "timer_spotter" )
+      mem.hk_timer_spotter = hook.timer( 9, "timer_spotter" )
       hook.timer( 15, "timer_spotter_start" )
    end
 end
 
 function idle ()
-   if misn_state > 0 then return end
+   if mem.misn_state > 0 then return end
    local radius = 200
    local samples = 18
-   rampant_pos_idx = rampant_pos_idx or 0
-   rampant_pos_idx = math.fmod( rampant_pos_idx, samples ) + 1
-   local pos = rampant_pos + vec2.newP( radius, rampant_pos_idx / samples * 360 )
+   mem.rampant_pos_idx = mem.rampant_pos_idx or 0
+   mem.rampant_pos_idx = math.fmod( mem.rampant_pos_idx, samples ) + 1
+   local pos = mem.rampant_pos + vec2.newP( radius, mem.rampant_pos_idx / samples * 360 )
    rampant:taskClear()
    rampant:moveto( pos, false, false )
 
@@ -297,16 +297,16 @@ function board ()
    local nel = vn.newCharacter( tutnel.vn_nelly() )
    vn.transition( tutnel.nelly.transition )
    vn.na(_("You board Nelly's ship and quickly go to the control panel to turn off the autonav."))
-   nel(fmt.f(_([["I hate when this happens. Err, I mean, this is the first time something like this has happened to me! Let me bring the ship back to {pnt} and meet me at the spaceport bar for your reward."]]),{pnt=retpnt}))
+   nel(fmt.f(_([["I hate when this happens. Err, I mean, this is the first time something like this has happened to me! Let me bring the ship back to {pnt} and meet me at the spaceport bar for your reward."]]),{pnt=mem.retpnt}))
    vn.done( tutnel.nelly.transition )
    vn.run()
 
    -- Update objectives
    misn.osdCreate( _("Helping Nelly Out"), {
-      fmt.f(_("Return to {pnt}"),{pnt=retpnt})
+      fmt.f(_("Return to {pnt}"),{pnt=mem.retpnt})
    } )
 
-   misn_state = 1
+   mem.misn_state = 1
 
    -- Have the ship go back
    local a, s = rampant:health()
@@ -316,7 +316,7 @@ function board ()
    rampant:setFriendly(true)
    rampant:control(true)
    rampant:taskClear()
-   rampant:land( retpnt )
+   rampant:land( mem.retpnt )
 
    player.unboard()
 end
@@ -329,26 +329,26 @@ end
 
 function land ()
    local cpnt = planet.cur()
-   if cpnt == retpnt and misn_state==1 then
-      npc_nel = misn.npcAdd( "approach_nelly", tutnel.nelly.name, tutnel.nelly.portrait, _("Nelly is motioning you to come join her at the table.") )
+   if cpnt == mem.retpnt and mem.misn_state==1 then
+      mem.npc_nel = misn.npcAdd( "approach_nelly", tutnel.nelly.name, tutnel.nelly.portrait, _("Nelly is motioning you to come join her at the table.") )
 
-   elseif cpnt == destpnt and (misn_state==2 or misn_state==3) then
+   elseif cpnt == mem.destpnt and (mem.misn_state==2 or mem.misn_state==3) then
       vn.clear()
       vn.scene()
       local nel = vn.newCharacter( tutnel.vn_nelly() )
       vn.transition( tutnel.nelly.transition )
       vn.na(_("You land and quickly Nelly goes over to the outfitter and seems to get into some sort of argument with the person in charge. After a bit you see they exchange something and she comes back with a grin on her face."))
-      nel(fmt.f(_([["Got the parts! Cheaper than I expected too. Hopefully this will bring an end to my ship troubles. Let's go back to #o{pnt}#0 in #o{sys}#0!"]]), {pnt=retpnt, sys=retsys}))
+      nel(fmt.f(_([["Got the parts! Cheaper than I expected too. Hopefully this will bring an end to my ship troubles. Let's go back to #o{pnt}#0 in #o{sys}#0!"]]), {pnt=mem.retpnt, sys=mem.retsys}))
       vn.done( tutnel.nelly.transition )
       vn.run()
 
       local c = misn.cargoNew( N_("Jumpdrive Repair Parts"), N_("Spare parts that can be used to break a ship's broken jumpdrive.") )
       misn.cargoAdd( c, 0 )
-      misn.markerMove( misn_marker, retpnt )
+      misn.markerMove( mem.misn_marker, mem.retpnt )
       misn.osdActive(2)
-      misn_state = 4
+      mem.misn_state = 4
 
-   elseif cpnt == retpnt and misn_state >= 4 then
+   elseif cpnt == mem.retpnt and mem.misn_state >= 4 then
       -- Finished mission
       vn.clear()
       vn.scene()
@@ -377,31 +377,31 @@ function approach_nelly ()
    local nel = vn.newCharacter( tutnel.vn_nelly() )
    vn.transition( tutnel.nelly.transition )
    vn.na(_("As you approach her you can see she is a bit flustered."))
-   nel(fmt.f(_([["I got my ship checked up again, and it looks like it wasn't just an autonav malfunction, but the jumpdrive is toast. I need a spare part, but they don't seem to have any here, and told me I'll have to wait at least a hectaperiod if I want it delivered. However, I was able to find that they seem to have replacements on #o{destpnt}#0 in #o{destsys}#0."]]),{destpnt=destpnt:name(), destsys=destsys:name()}))
+   nel(fmt.f(_([["I got my ship checked up again, and it looks like it wasn't just an autonav malfunction, but the jumpdrive is toast. I need a spare part, but they don't seem to have any here, and told me I'll have to wait at least a hectaperiod if I want it delivered. However, I was able to find that they seem to have replacements on #o{destpnt}#0 in #o{destsys}#0."]]),{destpnt=mem.destpnt, destsys=mem.destsys}))
    nel(fmt.f(_([[Before you can answer she grabs your arm and pulls you towards where your ship is docked.
-"Come on, let's head to #o{destpnt}#0 to grab a spare part so I can finally get my ship off the ground."]]),{destpnt=destpnt:name()}))
+"Come on, let's head to #o{destpnt}#0 to grab a spare part so I can finally get my ship off the ground."]]),{destpnt=mem.destpnt}))
    vn.na(_("Looks like you'll have to do another round trip if you want to get paid."))
    vn.done( tutnel.nelly.transition )
    vn.run()
 
    misn.osdCreate( _("Helping Nelly Out"), {
-      fmt.f(_("Go to {pnt} in {sys}"),{pnt=destpnt, sys=destsys}),
-      fmt.f(_("Return to {pnt} in {sys}"),{pnt=retpnt, sys=retsys}),
+      fmt.f(_("Go to {pnt} in {sys}"),{pnt=mem.destpnt, sys=mem.destsys}),
+      fmt.f(_("Return to {pnt} in {sys}"),{pnt=mem.retpnt, sys=mem.retsys}),
    } )
-   misn.markerMove( misn_marker, destpnt )
+   misn.markerMove( mem.misn_marker, mem.destpnt )
 
-   misn.npcRm( npc_nel )
-   misn_state = 2
+   misn.npcRm( mem.npc_nel )
+   mem.misn_state = 2
 end
 
 function timer_pirate ()
    local pp = player.pilot()
-   local d = jump_dest:pos():dist( pp:pos() )
+   local d = mem.jump_dest:pos():dist( pp:pos() )
    if d < 5000 then
       -- Spawn pirates
       enemies = {}
       for i=1,3 do
-         local p = pilot.add( "Hyena", fpir, jump_dest, _("Pirate Hyena") )
+         local p = pilot.add( "Hyena", mem.fpir, mem.jump_dest, _("Pirate Hyena") )
          if i>1 then
             p:setLeader( enemies[1] )
          end
@@ -419,7 +419,7 @@ function timer_pirate ()
       player.autonavReset(7)
       hook.timer( 5, "timer_pirate_nelly" )
       hook.timer( 3, "timer_pirate_checkbribe" )
-      nelly_spam = 2
+      mem.nelly_spam = 2
       return
    end
    hook.timer( 1, "timer_pirate" )
@@ -466,8 +466,8 @@ function timer_pirate_checkbribe ()
       return
    end
 
-   nelly_spam = math.fmod(nelly_spam,3)+1
-   if nelly_spam == 1 then
+   mem.nelly_spam = math.fmod(mem.nelly_spam,3)+1
+   if mem.nelly_spam == 1 then
       local msg
       if n <= 0 then
          msg = _([[Nelly: "I guess that's another way of doing it."]])
@@ -484,18 +484,18 @@ end
 
 local function reset_osd ()
    misn.osdCreate( _("Helping Nelly Out"), {
-      fmt.f(_("Go to {pnt} in {sys}"),{pnt=destpnt, sys=destsys}),
-      fmt.f(_("Return to {pnt} in {sys}"),{pnt=retpnt, sys=retsys}),
+      fmt.f(_("Go to {pnt} in {sys}"),{pnt=mem.destpnt, sys=mem.destsys}),
+      fmt.f(_("Return to {pnt} in {sys}"),{pnt=mem.retpnt, sys=mem.retsys}),
    } )
-   if misn_state >= 4 then
+   if mem.misn_state >= 4 then
       misn.osdActive(2)
    end
 end
 
 function reset_osd_hook ()
    reset_osd()
-   hook.rm( hk_reset_osd )
-   hk_reset_osd = nil
+   hook.rm( mem.hk_reset_osd )
+   mem.hk_reset_osd = nil
 end
 
 local spotter_msglist = {
@@ -509,12 +509,12 @@ local spotter_msglist = {
 function timer_spotter ()
    if not spotter:exists() then return end
 
-   spotter_msg = spotter_msg or 0
-   spotter_msg = math.fmod( spotter_msg, #spotter_msglist )+1
+   mem.spotter_msg = mem.spotter_msg or 0
+   mem.spotter_msg = math.fmod( mem.spotter_msg, #spotter_msglist )+1
 
-   spotter:broadcast( spotter_msglist[ spotter_msg ], true )
+   spotter:broadcast( spotter_msglist[ mem.spotter_msg ], true )
 
-   hk_timer_spotter = hook.timer( 15, "timer_spotter" )
+   mem.hk_timer_spotter = hook.timer( 15, "timer_spotter" )
 end
 
 function timer_spotter_start ()
@@ -551,7 +551,7 @@ She frowns.
    }
 
    vn.label("neverlearn")
-   nel(fmt.f(_([["Great! Avoid getting scanned by them and let's head off to {pnt} in {sys}!"]]),{pnt=destpnt,sys=destsys}))
+   nel(fmt.f(_([["Great! Avoid getting scanned by them and let's head off to {pnt} in {sys}!"]]),{pnt=mem.destpnt,sys=mem.destsys}))
 
    vn.done( tutnel.nelly.transition )
    vn.run()
@@ -571,22 +571,22 @@ function spotter_spot ()
    local _detected, scanned = spotter:inrange( pp )
    local iss   = pp:flags("stealth")
    -- Spotter lost track of them
-   if spotter_scanning and (iss or not scanned) then
-      spotter_scanning = false
+   if mem.spotter_scanning and (iss or not scanned) then
+      mem.spotter_scanning = false
       spotter:taskClear()
-      spotter:moveto( spotter_pos )
+      spotter:moveto( mem.spotter_pos )
       pp:comm(_([[Nelly: "Phew, it seems like they lost track of us."]]))
 
-   elseif spotter_scanning and spotter:scandone() then
+   elseif mem.spotter_scanning and spotter:scandone() then
       spotter:control(false)
       spotter:setHostile(true)
       spotter:comm(_("You won't get away this time Nelly!"))
-      hook.rm( hk_timer_spotter )
-      hk_timer_spotter = nil
+      hook.rm( mem.hk_timer_spotter )
+      mem.hk_timer_spotter = nil
       return
 
-   elseif scanned and not spotter_scanning then
-      spotter_scanning = true
+   elseif scanned and not mem.spotter_scanning then
+      mem.spotter_scanning = true
       spotter:taskClear()
       spotter:pushtask( "scan", pp )
       pp:comm(fmt.f(_([[Nelly: "They found us and are scanning us. Quickly try to stealth with {stealthkey}!"]]),{stealthkey=tut.getKey("stealth")}))

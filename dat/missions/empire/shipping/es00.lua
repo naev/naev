@@ -33,9 +33,9 @@ local emp = require "common.empire"
 
 function create ()
    -- Target destination
-   dest,destsys = planet.getLandable( faction.get("Frontier") )
-   ret,retsys   = planet.getLandable( "Halir" )
-   if dest == nil or ret == nil or not misn.claim(destsys) then
+   mem.dest,mem.destsys = planet.getLandable( faction.get("Frontier") )
+   mem.ret,mem.retsys   = planet.getLandable( "Halir" )
+   if mem.dest == nil or mem.ret == nil or not misn.claim(mem.destsys) then
       misn.finish(false)
    end
 
@@ -55,23 +55,23 @@ function accept ()
    misn.accept()
 
    -- target destination
-   misn_marker = misn.markerAdd( destsys, "low" )
+   mem.misn_marker = misn.markerAdd( mem.destsys, "low" )
 
    -- Mission details
-   misn_stage = 0
+   mem.misn_stage = 0
    misn.setTitle(_("Prisoner Exchange"))
    misn.setReward( fmt.credits( emp.rewards.es00 ) )
-   misn.setDesc( fmt.f(_("Go to {pnt} in the {sys} system to exchange prisoners with the FLF"), {pnt=dest, sys=destsys}) )
+   misn.setDesc( fmt.f(_("Go to {pnt} in the {sys} system to exchange prisoners with the FLF"), {pnt=mem.dest, sys=mem.destsys}) )
 
    -- Flavour text and mini-briefing
    tk.msg( _("Prisoner Exchange"), fmt.f( _([["We've got a prisoner exchange set up with the FLF to take place on {dest_pnt} in the {dest_sys} system. They want a more neutral pilot to do the exchange. You would have to go to {dest_pnt} with some FLF prisoners aboard your ship and exchange them for some of our own. You won't have visible escorts but we will have your movements watched by ships in nearby sectors.
-    "Once you get the men they captured back, bring them over to {ret_pnt} in {ret_sys} for debriefing. You'll be compensated for your troubles. Good luck."]]), {dest_pnt=dest, dest_sys=destsys, ret_pnt=ret, ret_sys=retsys} ))
+    "Once you get the men they captured back, bring them over to {ret_pnt} in {ret_sys} for debriefing. You'll be compensated for your troubles. Good luck."]]), {dest_pnt=mem.dest, dest_sys=mem.destsys, ret_pnt=mem.ret, ret_sys=mem.retsys} ))
    misn.osdCreate(_("Prisoner Exchange"), {
-      fmt.f(_("Go to {pnt} in the {sys} system to exchange prisoners with the FLF"), {pnt=dest, sys=destsys}),
+      fmt.f(_("Go to {pnt} in the {sys} system to exchange prisoners with the FLF"), {pnt=mem.dest, sys=mem.destsys}),
    })
    -- Set up the goal
    local c = misn.cargoNew( N_("Prisoners"), N_("FLF prisoners.") )
-   prisoners = misn.cargoAdd( c, 0 )
+   mem.prisoners = misn.cargoAdd( c, 0 )
    tk.msg( _("Prisoner Exchange"), _([[The Prisoners are loaded onto your ship along with a few marines to ensure nothing untoward happens.]]) )
 
    -- Set hooks
@@ -82,21 +82,21 @@ end
 
 
 function land ()
-   landed = planet.cur()
-   if landed == dest and misn_stage == 0 then
-      if misn.cargoRm(prisoners) then
+   mem.landed = planet.cur()
+   if mem.landed == mem.dest and mem.misn_stage == 0 then
+      if misn.cargoRm(mem.prisoners) then
          -- Go on to next stage
-         misn_stage = 1
+         mem.misn_stage = 1
 
          -- Some text
          tk.msg(_("Prisoner Exchange"), _([[As you land, you notice the starport has been emptied. You also notice explosives rigged on some of the columns. This doesn't look good. The marines tell you to sit still while they go out to try to complete the prisoner exchange.
     From the cockpit you see how the marines lead the prisoners in front of them with guns to their backs. You see figures step out of the shadows with weapons too; most likely the FLF.]]) )
          tk.msg(_("Prisoner Exchange"), _([[All of a sudden a siren blares and you hear shooting break out. You quickly start your engines and prepare for take off. Shots ring out all over the landing bay and you can see a couple of corpses as you leave the starport. You remember the explosives just as loud explosions go off behind you. This doesn't look good at all.
     You start your climb out of the atmosphere and notice how you're picking up many FLF and Dvaered ships. Looks like you're going to have quite a run to get the hell out of here. It didn't go as you expected.]]) )
-         misn.markerMove( misn_marker, retsys )
-         misn.setDesc( fmt.f(_("Return to {pnt} in the {sys} system to report what happened"), {pnt=ret, sys=retsys}) )
+         misn.markerMove( mem.misn_marker, mem.retsys )
+         misn.setDesc( fmt.f(_("Return to {pnt} in the {sys} system to report what happened"), {pnt=mem.ret, sys=mem.retsys}) )
          misn.osdCreate(_("Prisoner Exchange"), {
-            fmt.f(_("Return to {pnt} in the {sys} system to report what happened"), {pnt=ret, sys=retsys}),
+            fmt.f(_("Return to {pnt} in the {sys} system to report what happened"), {pnt=mem.ret, sys=mem.retsys}),
          })
 
          -- Prevent players from saving on the destination planet
@@ -108,7 +108,7 @@ function land ()
          -- Saving should be disabled for as short a time as possible
          player.allowSave()
       end
-   elseif landed == ret and misn_stage == 1 then
+   elseif mem.landed == mem.ret and mem.misn_stage == 1 then
 
       -- Rewards
       player.pay( emp.rewards.es00 )
@@ -128,17 +128,17 @@ end
 
 function enter ()
    local sys = system.cur()
-   if misn_stage == 1 and sys == destsys then
+   if mem.misn_stage == 1 and sys == mem.destsys then
       -- Force FLF combat music (note: must clear this later on).
       var.push( "music_combat_force", "FLF" )
 
       -- Get a random position near the player
       local ang = rnd.rnd(0, 360)
-      enter_vect = player.pos() + vec2.newP( rnd.rnd(1500, 2000), ang )
+      mem.enter_vect = player.pos() + vec2.newP( rnd.rnd(1500, 2000), ang )
 
       -- Create some pilots to go after the player
       local flf_sml_force = { "Hyena", "Admonisher", "Vendetta" }
-      local p = fleet.add( 1, flf_sml_force, "FLF", enter_vect, _("FLF Ambusher") )
+      local p = fleet.add( 1, flf_sml_force, "FLF", mem.enter_vect, _("FLF Ambusher") )
 
       -- Set hostile
       for k,v in ipairs(p) do
@@ -150,14 +150,14 @@ function enter ()
             vec2.newP( rnd.rnd(4000, 5000), ang + 180 )
 
       -- We'll put the FLF first
-      enter_vect = battle_pos + vec2.newP( rnd.rnd(700, 1000), rnd.rnd(0, 360) )
+      mem.enter_vect = battle_pos + vec2.newP( rnd.rnd(700, 1000), rnd.rnd(0, 360) )
       local flf_med_force = { "Hyena", "Hyena", "Admonisher", "Vendetta", "Pacifier" }
-      fleet.add( 1, flf_med_force, "FLF", enter_vect, _("FLF Ambusher") )
+      fleet.add( 1, flf_med_force, "FLF", mem.enter_vect, _("FLF Ambusher") )
 
       -- Now the Dvaered
-      enter_vect = battle_pos + vec2.newP( rnd.rnd(200, 300), rnd.rnd(0, 360) )
+      mem.enter_vect = battle_pos + vec2.newP( rnd.rnd(200, 300), rnd.rnd(0, 360) )
       local dv_med_force = { "Dvaered Vendetta", "Dvaered Vendetta", "Dvaered Ancestor", "Dvaered Ancestor", "Dvaered Phalanx", "Dvaered Vigilance" }
-      fleet.add( 1, dv_med_force, "Dvaered", enter_vect )
+      fleet.add( 1, dv_med_force, "Dvaered", mem.enter_vect )
 
       -- Player should not be able to reland
       player.allowLand(false,_("The docking stabilizers have been damaged by weapons fire!"))
@@ -167,14 +167,14 @@ end
 
 function jumpout ()
    -- Storing the system the player jumped from.
-   if system.cur() == destsys then
+   if system.cur() == mem.destsys then
       var.pop( "music_combat_force" )
    end
 end
 
 
 function abort ()
-   if system.cur() == destsys then
+   if system.cur() == mem.destsys then
       var.pop( "music_combat_force" )
    end
    misn.finish(false)

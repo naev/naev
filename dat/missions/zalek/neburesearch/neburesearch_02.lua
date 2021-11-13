@@ -36,16 +36,16 @@ local request_text = _([["There's actually another thing I've almost forgotten. 
 
 function create()
     -- mission variables
-    origin = planet.cur()
-    origin_sys = system.cur()
+    mem.origin = planet.cur()
+    mem.origin_sys = system.cur()
 
-    local numjumps = origin_sys:jumpDist(homeworld_sys, false)
-    local traveldist = car.calculateDistance(origin_sys, origin:pos(), homeworld_sys, homeworld)
+    local numjumps = mem.origin_sys:jumpDist(homeworld_sys, false)
+    local traveldist = car.calculateDistance(mem.origin_sys, mem.origin:pos(), homeworld_sys, homeworld)
     local stuperpx   = 0.15
     local stuperjump = 10000
     local stupertakeoff = 10000
     local allowance  = traveldist * stuperpx + numjumps * stuperjump + stupertakeoff + 240 * numjumps
-    timelimit  = time.get() + time.create(0, 0, allowance)
+    mem.timelimit  = time.get() + time.create(0, 0, allowance)
 
     -- Spaceport bar stuff
     misn.setNPC(_("Dr. Mensing"), "zalek/unique/mensing.webp", _("It appears she wants to talk with you."))
@@ -63,7 +63,7 @@ function accept()
     misn.setTitle(_("Emergency of Immediate Inspiration"))
     misn.setReward(fmt.credits(credits))
     misn.setDesc(fmt.f(_("Take Dr. Mensing to {pnt} in the {sys} system as fast as possible!"), {pnt=homeworld, sys=homeworld_sys}))
-    misn_marker = misn.markerAdd(homeworld_sys, "low")
+    mem.misn_marker = misn.markerAdd(homeworld_sys, "low")
 
     misn.accept()
     misn.osdCreate(_("Emergency of Immediate Inspiration"), {
@@ -74,16 +74,16 @@ function accept()
 end
 
 function land()
-    landed = planet.cur()
-    if landed == homeworld then
-        if timelimit < time.get() then
+    mem.landed = planet.cur()
+    if mem.landed == homeworld then
+        if mem.timelimit < time.get() then
             tk.msg(_("Mission accomplished"), fmt.f(_([["That took long enough! I can't await getting started. I doubt you deserve full payment. I'll rather give you a reduced payment of {credits} for educational reasons." She hands you over a credit chip.]]), {credits=fmt.credits(credits / 2)} .. "\n\n" .. request_text))
             player.pay(credits / 2)
         else
             tk.msg(_("Mission accomplished"), fmt.f(_([["Finally! I can't await getting started. Before I forget -" She hands you over a credit chip worth {credits}.]]), {credits=fmt.credits(credits)}) .. "\n\n" .. request_text)
             player.pay(credits)
         end
-        misn.markerRm(misn_marker)
+        misn.markerRm(mem.misn_marker)
         zlk.addNebuResearchLog(_([[You brought Dr. Mensing back from a Empire scientific conference.]]))
         misn.finish(true)
     end

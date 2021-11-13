@@ -34,9 +34,6 @@ local misn_desc = _("Deliver a shipping diplomat for the Empire to Gerhart Stati
 function create ()
  -- Note: this mission does not make any system claims.
 
-   -- Get the planet and system at which we currently are.
-   startworld, startworld_sys = planet.cur()
-
    misn.setNPC( _("Lieutenant"), "empire/unique/czesc.webp", _("Lieutenant Czesc from the Empire Armada Shipping Division is sitting at the bar.") )
 end
 
@@ -61,14 +58,14 @@ function accept ()
    -- Set up the goal
    hook.land("land")
    local c = misn.cargoNew( N_("Diplomat"), N_("An Imperial trade representative.") )
-   person = misn.cargoAdd( c, 0 )
+   mem.person = misn.cargoAdd( c, 0 )
 end
 
 
 function land()
 
    if planet.cur() == targetworld then
-         misn.cargoRm( person )
+         misn.cargoRm( mem.person )
          player.pay( emp.rewards.ldc3 )
          -- More flavour text
          tk.msg( _("Mission Accomplished"), _([[You drop the diplomat off on Outbound Station, and she hands you a credit chip. Lieutenant Czesc mentioned more work, so you figure you'll run into him at a bar again soon.]]) )

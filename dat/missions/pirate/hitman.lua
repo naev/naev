@@ -49,18 +49,18 @@ function accept ()
    misn.accept()
 
    -- Some variables for keeping track of the mission
-   misn_done = false
-   fledTraders = 0
-   misn_base, misn_base_sys = planet.cur()
+   mem.misn_done = false
+   mem.fledTraders = 0
+   mem.misn_base, mem.misn_base_sys = planet.cur()
 
    -- Set mission details
    misn.setTitle( _("Thug") )
    misn.setReward( _("Some easy money") )
    misn.setDesc( fmt.f( _("A shifty businessman has tasked you with chasing away merchant competition in the {sys} system."), {sys=targetsystem} ) )
-   misn_marker = misn.markerAdd( targetsystem, "low" )
+   mem.misn_marker = misn.markerAdd( targetsystem, "low" )
    misn.osdCreate( _("Thug"), {
       fmt.f(_("Attack, but do not kill, Trader pilots in the {sys} system so that they run away"), {sys=targetsystem} ),
-      fmt.f(_("Return to {pnt} in the {sys} system for payment"), {pnt=misn_base, sys=misn_base_sys} ),
+      fmt.f(_("Return to {pnt} in the {sys} system for payment"), {pnt=mem.misn_base, sys=mem.misn_base_sys} ),
    } )
    -- Some flavour text
    tk.msg( _("Spaceport Bar"), fmt.f( _([[Apparently relieved that you've accepted his offer, he continues, "There're some new merchants edging in on my trade routes in {sys}. I want you to make sure they know they're not welcome." Pausing for a moment, he notes, "You don't have to kill anyone, just rough them up a bit."]]), {sys=targetsystem}) )
@@ -71,16 +71,16 @@ end
 
 -- Entering a system
 function sys_enter ()
-   cur_sys = system.cur()
+   mem.cur_sys = system.cur()
    -- Check to see if reaching target system
-   if cur_sys == targetsystem then
+   if mem.cur_sys == targetsystem then
       hook.pilot(nil, "attacked", "trader_attacked")
    end
 end
 
 -- Attacked a trader
 function trader_attacked (hook_pilot, hook_attacker, _arg)
-   if misn_done then
+   if mem.misn_done then
       return
    end
 
@@ -96,32 +96,32 @@ end
 
 -- An attacked Trader Jumped
 function trader_jumped (_pilot, _arg)
-   if misn_done then
+   if mem.misn_done then
       return
    end
 
-   fledTraders = fledTraders + 1
-   if fledTraders >= 5 then
+   mem.fledTraders = mem.fledTraders + 1
+   if mem.fledTraders >= 5 then
       attack_finished()
    end
 end
 
 -- attack finished
 function attack_finished()
-   if misn_done then
+   if mem.misn_done then
       return
    end
-   misn_done = true
+   mem.misn_done = true
    player.msg( _("MISSION SUCCESS! Return for payment.") )
-   misn.markerRm( misn_marker )
-   misn_marker = misn.markerAdd( misn_base_sys, "low" )
+   misn.markerRm( mem.misn_marker )
+   mem.misn_marker = misn.markerAdd( mem.misn_base_sys, "low" )
    misn.osdActive(2)
    hook.land("landed")
 end
 
 -- landed
 function landed()
-   if planet.cur() == misn_base then
+   if planet.cur() == mem.misn_base then
       tk.msg(_("Mission Complete"), _([[As you inform your acquaintance that you successfully scared off the traders, he grins and transfers a sum of credits to your account. "That should teach them to stay out of my space."]]))
       player.pay(150e3)
       pir.modDecayFloor(2)

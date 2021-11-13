@@ -33,13 +33,12 @@ require "proximity"
 local portrait = require "portrait"
 
 -- NPC
-local npc_portrait = {}
-npc_portrait[2] = portrait.get()
-npc_portrait[3] = portrait.get()
-npc_portrait[4] = portrait.get("Empire")
-npc_portrait[5] = portrait.get("Dvaered")
-npc_portrait[6] = portrait.get("Pirate")
-npc_portrait["__save"] = true
+mem.npc_portrait = {}
+mem.npc_portrait[2] = portrait.get()
+mem.npc_portrait[3] = portrait.get()
+mem.npc_portrait[4] = portrait.get("Empire")
+mem.npc_portrait[5] = portrait.get("Dvaered")
+mem.npc_portrait[6] = portrait.get("Pirate")
 
 -- Non-persistent state
 local hooks = {}
@@ -56,25 +55,25 @@ function create ()
       misn.finish(false)
    end
 
-   officialFace = portrait.getMil( "Dvaered" )
-   official = misn.setNPC(_("An official"), officialFace, _("This person seems to be looking for suitable combat pilots."))
+   mem.officialFace = portrait.getMil( "Dvaered" )
+   mem.official = misn.setNPC(_("An official"), mem.officialFace, _("This person seems to be looking for suitable combat pilots."))
 end
 
 local function populate_bar() --add some random npcs
    if rnd.rnd() < 0.5 then
-      misn.npcAdd("competitor1", _("Pilot"), npc_portrait[2], _("This pilot looks very self-confident"))
+      misn.npcAdd("competitor1", _("Pilot"), mem.npc_portrait[2], _("This pilot looks very self-confident"))
    end
    if rnd.rnd() < 0.5 then
-      misn.npcAdd("competitor2", _("Pilot"), npc_portrait[3], _("This pilot seems to work as a private combat pilot"))
+      misn.npcAdd("competitor2", _("Pilot"), mem.npc_portrait[3], _("This pilot seems to work as a private combat pilot"))
    end
    if rnd.rnd() < 0.5 then
-      misn.npcAdd("competitor3", _("Imperial pilot"), npc_portrait[4], _([[This pilot is is clearly from the Empire.]]))
+      misn.npcAdd("competitor3", _("Imperial pilot"), mem.npc_portrait[4], _([[This pilot is is clearly from the Empire.]]))
    end
    if rnd.rnd() < 0.5 then
-      misn.npcAdd("competitor4", _("Dvaered pilot"), npc_portrait[5], _([[This pilot surely works as a Vendetta pilot.]]))
+      misn.npcAdd("competitor4", _("Dvaered pilot"), mem.npc_portrait[5], _([[This pilot surely works as a Vendetta pilot.]]))
    end
    if rnd.rnd() < 0.5 then
-      misn.npcAdd("competitor5", _("Strange pilot"), npc_portrait[6], _([[This pilot looks like a pirate, but strangely enough, the authorities don't seem worried.]]))
+      misn.npcAdd("competitor5", _("Strange pilot"), mem.npc_portrait[6], _([[This pilot looks like a pirate, but strangely enough, the authorities don't seem worried.]]))
    end
 end
 
@@ -101,8 +100,8 @@ function competitor5()
 end
 
 function accept()
-   level = 0
-   reward = 50e3
+   mem.level = 0
+   mem.reward = 50e3
 
    if tk.yesno(_("Do you want to take part to a challenge?"), _([["Hello, I'm a member of the staff of the Dvaered dogfight challenge. Here are the rules: you need to take off with a fighter-class ship and to join your starting mark. After that, you will try to disable your opponent. Don't kill them; the security staff won't forgive that. It is forbidden to use missiles, so you won't be allowed to have those equipped while taking off. It's also forbidden to board the opponent's ship and to attack him before the signal is given. You are not allowed to land on any planet or jump away during the championship.
     We are looking for pilots. Are you in?"]])) then
@@ -131,7 +130,7 @@ function abort () -- Everyone lands in case the player aborts
 end
 
 function beginbattle()
-      stage = 0
+      mem.stage = 0
       --Give a name to the competitor
       local names = {
 	        _("The Nice Killer"),
@@ -147,28 +146,28 @@ function beginbattle()
       local reTry = true
 
       while reTry do  --Re-pick a name while it is in the usedNames list
-         opponame = names[rnd.rnd(1, #names)]
+         mem.opponame = names[rnd.rnd(1, #names)]
          reTry = false
          for i, j in ipairs(usedNames) do
-            if j == opponame then
+            if j == mem.opponame then
                reTry = true
             end
          end
       end
 
-      usedNames[#usedNames+1] = opponame
+      usedNames[#usedNames+1] = mem.opponame
 
-      tk.msg(_("Let's go"), fmt.f(_([[For this round, your opponent is {plt}. Remember: use a fighter with no launchers. You still have to defeat {n} opponents to win.]]), {plt=opponame, n=fmt.number(5-level)}))
+      tk.msg(_("Let's go"), fmt.f(_([[For this round, your opponent is {plt}. Remember: use a fighter with no launchers. You still have to defeat {n} opponents to win.]]), {plt=mem.opponame, n=fmt.number(5-mem.level)}))
 
-      enterhook = hook.enter("enter")
+      mem.enterhook = hook.enter("enter")
 
-      if level ~= 0 then
-         misn.npcRm(official)
+      if mem.level ~= 0 then
+         misn.npcRm(mem.official)
       end
 end
 
 function enter()
-   playerclass = ship.class(pilot.ship(player.pilot()))
+   mem.playerclass = ship.class(pilot.ship(player.pilot()))
 
    --Launchers are forbidden
    local listofoutfits = player.pilot():outfits()
@@ -179,7 +178,7 @@ function enter()
       end
    end
 
-   if system.cur() == missys and stage == 0 and playerclass == "Fighter" and not haslauncher then  --The player took off for the battle
+   if system.cur() == missys and mem.stage == 0 and mem.playerclass == "Fighter" and not haslauncher then  --The player took off for the battle
 
       misn.osdActive(1)
 
@@ -191,9 +190,9 @@ function enter()
       ships[4] = {"Lancelot", "Vendetta", "Vendetta", "Soromid Reaver", "Empire Lancelot", "Dvaered Vendetta"}
       ships[5] = {"Vendetta", "Empire Lancelot", "Dvaered Vendetta", "Dvaered Vendetta", "Dvaered Vendetta"}
 
-      local shiplist = ships[level+1]
+      local shiplist = ships[mem.level+1]
       local oppotype = shiplist[ rnd.rnd(1,#shiplist) ]
-      opponent = pilot.add( oppotype, "Thugs", mispla, opponame, {ai="baddie"} )
+      opponent = pilot.add( oppotype, "Thugs", mispla, mem.opponame, {ai="baddie"} )
 
       opponent:outfitRm("all")
       opponent:outfitRm("cores")
@@ -290,24 +289,24 @@ function enter()
       sec22:follow(opponent, true)
 
       --Some hooks
-      jumphook = hook.jumpout("jumpout")
-      landhook = hook.land("land")
+      mem.jumphook = hook.jumpout("jumpout")
+      mem.landhook = hook.land("land")
 
-      opdehook = hook.pilot( opponent, "death", "oppo_dead" )
-      opjuhook = hook.pilot( opponent, "jump", "oppo_jump" )
-      pldihook = hook.pilot( player.pilot(), "disable", "player_disabled" )
-      opdihook = hook.pilot( opponent, "disable", "oppo_disabled" )
-      attackhook = hook.pilot( opponent, "attacked", "oppo_attacked" )
+      mem.opdehook = hook.pilot( opponent, "death", "oppo_dead" )
+      mem.opjuhook = hook.pilot( opponent, "jump", "oppo_jump" )
+      mem.pldihook = hook.pilot( player.pilot(), "disable", "player_disabled" )
+      mem.opdihook = hook.pilot( opponent, "disable", "oppo_disabled" )
+      mem.attackhook = hook.pilot( opponent, "attacked", "oppo_attacked" )
 
       --Adding the starting mark
       local start_pos = mispla:pos() + vec2.new( -1000, -1500)
-      mark = system.mrkAdd( start_pos, _("START") )
-      prox = hook.timer(0.5, "proximity", {location = start_pos, radius = 300, funcname = "assault"})
+      mem.mark = system.mrkAdd( start_pos, _("START") )
+      mem.prox = hook.timer(0.5, "proximity", {location = start_pos, radius = 300, funcname = "assault"})
 
    elseif haslauncher == true then
       tk.msg(_("You are dismissed"), _("You aren't allowed to use missiles"))
       misn.finish(false)
-   elseif playerclass ~= "Fighter" then
+   elseif mem.playerclass ~= "Fighter" then
       tk.msg(_("You are dismissed"), _("You had to use a fighter"))
       misn.finish(false)
    end
@@ -321,11 +320,11 @@ function land_everyone()
 end
 
 function oppo_attacked(_pilot, attacker)  --The player tries to cheat by attacking before the signal
-   if stage == 0 and (attacker == player.pilot()
+   if mem.stage == 0 and (attacker == player.pilot()
             or attacker:leader() == player.pilot()) then
       land_everyone()
       tk.msg(_("You are dismissed"), _("You weren't supposed to attack before the signal."))
-      system.mrkRm(mark)
+      system.mrkRm(mem.mark)
       misn.finish(false)
    end
 end
@@ -336,37 +335,37 @@ function jumpout()   --The player is never allowed to go away
 end
 
 function assault()
-   stage = 1
+   mem.stage = 1
    misn.osdActive(2)
    opponent:attack(player.pilot())
-   hook.rm(prox)
-   hook.rm(attackhook)
-   system.mrkRm(mark)
+   hook.rm(mem.prox)
+   hook.rm(mem.attackhook)
+   system.mrkRm(mem.mark)
 end
 
 function land()
 
-   if stage == 2 and planet.cur() == mispla then  --player goes to next round
+   if mem.stage == 2 and planet.cur() == mispla then  --player goes to next round
       --Manage the player's progress
       tk.msg(_("You won this round"), _([["Congratulations," the staff says to you. "Come back when you are ready for the next round!"]]))
 
       populate_bar()
-      official = misn.npcAdd("cleanNbegin", _("An official"), officialFace, _("This person seems to be looking for suitable combat pilots."))
+      mem.official = misn.npcAdd("cleanNbegin", _("An official"), mem.officialFace, _("This person seems to be looking for suitable combat pilots."))
 
-      elseif stage == 3 and planet.cur() == mispla then  --player will be payed
+      elseif mem.stage == 3 and planet.cur() == mispla then  --player will be payed
 
-      if level == 5 then  --you are the champion
-         tk.msg(_("You are the new champion"), fmt.f(_([[Congratulations! The staff pays you {credits}.]]), {credits=fmt.credits(reward * 2^level)}))
-      elseif level == 4 then
-         tk.msg(_("You are the vice-champion"), fmt.f(_([[Congratulations! The staff pays you {credits}.]]), {credits=fmt.credits(reward * 2^level)}))
+      if mem.level == 5 then  --you are the champion
+         tk.msg(_("You are the new champion"), fmt.f(_([[Congratulations! The staff pays you {credits}.]]), {credits=fmt.credits(mem.reward * 2^mem.level)}))
+      elseif mem.level == 4 then
+         tk.msg(_("You are the vice-champion"), fmt.f(_([[Congratulations! The staff pays you {credits}.]]), {credits=fmt.credits(mem.reward * 2^mem.level)}))
       else
-         tk.msg(_("Thanks for playing"), fmt.f(_([[The staff pays you {credits}.]]), {credits=fmt.credits(reward * 2^level)}))
+         tk.msg(_("Thanks for playing"), fmt.f(_([[The staff pays you {credits}.]]), {credits=fmt.credits(mem.reward * 2^mem.level)}))
       end
 
-      player.pay(reward * 2^level)
+      player.pay(mem.reward * 2^mem.level)
       misn.finish(true)
 
-      elseif stage == 2 then
+      elseif mem.stage == 2 then
       tk.msg(_("You are dismissed"), _("You weren't supposed to go away."))
       misn.finish(false)
    end
@@ -374,7 +373,7 @@ end
 
 function cleanNbegin()
    -- Remove some hooks and begin a new battle
-   for i, j in ipairs({jumphook,landhook,opdehook,opjuhook,enterhook}) do
+   for i, j in ipairs({mem.jumphook,mem.landhook,mem.opdehook,mem.opjuhook,mem.enterhook}) do
       hook.rm(j)
    end
 
@@ -395,18 +394,18 @@ end
 
 function player_disabled()  --player has lost
    misn.osdActive(3)
-   stage = 3
+   mem.stage = 3
    opponent:taskClear()
    opponent:land("Dvaer Prime")
-   hook.rm(opdihook)
+   hook.rm(mem.opdihook)
 end
 
 function oppo_disabled()  --Regular way to win
    won()
    opponent:setHostile(false)  --in case he recovers from disabling before the player landed
-   hook.rm(pldihook)
-   hook.rm(opdihook)
-   boardhook = hook.pilot( opponent, "board", "oppo_boarded" )
+   hook.rm(mem.pldihook)
+   hook.rm(mem.opdihook)
+   mem.boardhook = hook.pilot( opponent, "board", "oppo_boarded" )
 end
 
 function oppo_boarded()  --It is forbidden to board a competitor
@@ -415,13 +414,13 @@ function oppo_boarded()  --It is forbidden to board a competitor
 end
 
 function won()
-   level = level+1
-   stage = 2
+   mem.level = mem.level+1
+   mem.stage = 2
 
    misn.osdActive(3)
 
-   if level == 5 then  --the player is the new champion
-      stage = 3
+   if mem.level == 5 then  --the player is the new champion
+      mem.stage = 3
    end
 end
 

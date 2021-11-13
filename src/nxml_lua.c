@@ -31,7 +31,7 @@
 /*
  * Prototypes.
  */
-static int nxml_persistDataNode( lua_State *L, xmlTextWriterPtr writer, int intable );
+static int nxml_persistDataNode( lua_State *L, xmlTextWriterPtr writer );
 static int nxml_unpersistDataNode( lua_State *L, xmlNodePtr parent );
 static int nxml_canWriteString( const char *buf, size_t len );
 
@@ -166,12 +166,11 @@ static int nxml_saveJump( xmlTextWriterPtr writer, const char *name, size_t name
  *
  *    @param L Lua state with node to persist on top of the stack.
  *    @param writer XML Writer to use.
- *    @param intable Are we parsing a node in a table?  Avoids checking for extra __save.
  *    @return 0 on success.
  */
-static int nxml_persistDataNode( lua_State *L, xmlTextWriterPtr writer, int intable )
+static int nxml_persistDataNode( lua_State *L, xmlTextWriterPtr writer )
 {
-   int ret, b;
+   int ret;
    const Ship *sh;
    ntime_t t;
    LuaJump *lj;
@@ -218,14 +217,6 @@ static int nxml_persistDataNode( lua_State *L, xmlTextWriterPtr writer, int inta
    switch (lua_type(L, -1)) {
       /* Recursive for tables. */
       case LUA_TTABLE:
-         /* Check if should save -- only if not in table.. */
-         if (!intable) {
-            lua_getfield(L, -1, "__save"); /* key, value, field */
-            b = lua_toboolean(L,-1);
-            lua_pop(L,1); /* key, value */
-            if (!b) /* No need to save. */
-               break;
-         }
          /* Start the table. */
          xmlw_startElem(writer,"data");
          xmlw_attr(writer,"type","table");
@@ -235,7 +226,7 @@ static int nxml_persistDataNode( lua_State *L, xmlTextWriterPtr writer, int inta
          lua_pushnil(L); /* key, value, nil */
          while (lua_next(L, -2) != 0) {
             /* key, value, key, value */
-            ret |= nxml_persistDataNode( L, writer, 1 ); /* pops the value. */
+            ret |= nxml_persistDataNode( L, writer ); /* pops the value. */
             /* key, value, key */
          }
          /* key, value */
@@ -360,7 +351,7 @@ static int nxml_persistDataNode( lua_State *L, xmlTextWriterPtr writer, int inta
 /**
  * @brief Persists all the nxml Lua data.
  *
- * Does not save anything in tables (unless .__save=true) nor functions of any type.
+ * All supported contents of the table named "mem" are saved. Functions aren't supported.
  *
  *    @param env Lua environment to save.
  *    @param writer XML Writer to use.
@@ -370,13 +361,13 @@ int nxml_persistLua( nlua_env env, xmlTextWriterPtr writer )
 {
    int ret = 0;
 
-   nlua_pushenv(env);
+   nlua_getenv(env, "mem");
 
    lua_pushnil(naevL);         /* nil */
    /* str, nil */
    while (lua_next(naevL, -2) != 0) {
       /* key, value */
-      ret |= nxml_persistDataNode( naevL, writer, 0 );
+      ret |= nxml_persistDataNode( naevL, writer );
       /* key */
    }
 
@@ -508,7 +499,7 @@ static int nxml_unpersistDataNode( lua_State *L, xmlNodePtr parent )
 }
 
 /**
- * @brief Unpersists Lua data.
+ * @brief Unpersists Lua data into a table named "mem".
  *
  *    @param env Environment to unpersist data into.
  *    @param parent Node containing all the Lua persisted data.
@@ -518,7 +509,7 @@ int nxml_unpersistLua( nlua_env env, xmlNodePtr parent )
 {
    int ret;
 
-   nlua_pushenv(env);
+   nlua_getenv(env, "mem");
    ret = nxml_unpersistDataNode(naevL,parent);
    lua_pop(naevL,1);
 

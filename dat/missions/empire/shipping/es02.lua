@@ -46,8 +46,8 @@ local log_text_fail = _([[You failed in your attempt to rescue a VIP for the Emp
 
 function create ()
    -- Target destination
-   ret,retsys  = planet.getLandable( "Halir" )
-   if ret== nil then
+   mem.ret, mem.retsys  = planet.getLandable( "Halir" )
+   if mem.ret== nil then
       misn.finish(false)
    end
 
@@ -72,10 +72,10 @@ function accept ()
    misn.accept()
 
    -- Set marker
-   misn_marker = misn.markerAdd( destsys, "low" )
+   mem.misn_marker = misn.markerAdd( destsys, "low" )
 
    -- Mission details
-   misn_stage = 0
+   mem.misn_stage = 0
    misn.setTitle(_("Empire VIP Rescue"))
    misn.setReward( fmt.credits( emp.rewards.es02 ) )
    misn.setDesc( fmt.f( _("Rescue the VIP from a transport ship in the {sys} system"), {sys=destsys} ) )
@@ -93,19 +93,19 @@ function accept ()
    hook.jumpout("jumpout")
 
    -- Initiate mission variables (A.)
-   prevsys = system.cur()
+   mem.prevsys = system.cur()
 end
 
 
 function land ()
-   landed = planet.cur()
+   mem.landed = planet.cur()
 
-   if landed == ret then
+   if mem.landed == mem.ret then
       -- Successfully rescued the VIP
-      if misn_stage == 2 then
+      if mem.misn_stage == 2 then
 
          -- VIP gets off
-         misn.cargoRm(vip)
+         misn.cargoRm(mem.vip)
 
          -- Rewards
          player.pay( emp.rewards.es02 )
@@ -127,19 +127,19 @@ end
 
 
 function enter ()
-   sys = system.cur()
+   mem.sys = system.cur()
 
-   if misn_stage == 0 and sys == destsys then
+   if mem.misn_stage == 0 and mem.sys == destsys then
       -- Force FLF combat music (note: must clear this later on).
       var.push( "music_combat_force", "FLF" )
 
       -- Put the VIP a ways off of the player but near the jump.
-      enter_vect = jump.pos(sys, prevsys)
-      local m,a = enter_vect:polar()
-      enter_vect:setP( m-3000, a )
-      local v = pilot.add( "Gawain", "Trader", enter_vect, _("Trader Gawain"), {ai="dummy"} )
+      mem.enter_vect = jump.pos(mem.sys, mem.prevsys)
+      local m,a = mem.enter_vect:polar()
+      mem.enter_vect:setP( m-3000, a )
+      local v = pilot.add( "Gawain", "Trader", mem.enter_vect, _("Trader Gawain"), {ai="dummy"} )
 
-      v:setPos( enter_vect )
+      v:setPos( mem.enter_vect )
       v:setVel( vec2.new( 0, 0 ) ) -- Clear velocity
       v:disable()
       v:setHilight(true)
@@ -151,12 +151,12 @@ function enter ()
 
       -- FLF Spawn around the Gawain
       local flf_med_force = { "Hyena", "Hyena", "Admonisher", "Vendetta", "Pacifier" }
-      local p = fleet.add( 1, flf_med_force, "FLF", enter_vect, _("FLF Ambusher") )
+      local p = fleet.add( 1, flf_med_force, "FLF", mem.enter_vect, _("FLF Ambusher") )
       for k,pk in ipairs(p) do
          pk:setHostile()
       end
       -- To make it more interesting a vendetta will solely target the player.
-      p = pilot.add( "Vendetta", "FLF", enter_vect )
+      p = pilot.add( "Vendetta", "FLF", mem.enter_vect )
       p:setHostile()
       -- If player is seen, have them target player
       local pp = player.pilot()
@@ -168,7 +168,7 @@ function enter ()
       -- Now Dvaered
       -- They will jump together with you in the system at the jump point. (A.)
       local dv_med_force = { "Dvaered Vendetta", "Dvaered Vendetta", "Dvaered Ancestor", "Dvaered Ancestor", "Dvaered Phalanx", "Dvaered Vigilance" }
-      p = fleet.add( 1, dv_med_force, "Dvaered", prevsys )
+      p = fleet.add( 1, dv_med_force, "Dvaered", mem.prevsys )
       for k,pk in ipairs(p) do
          pk:setFriendly()
       end
@@ -177,10 +177,10 @@ function enter ()
       hook.timer(rnd.uniform( 3.0, 5.0 ) , "delay_flf")
 
       -- Pass to next stage
-      misn_stage = 1
+      mem.misn_stage = 1
 
    -- Can't run away from combat
-   elseif misn_stage == 1 then
+   elseif mem.misn_stage == 1 then
       -- Notify of mission failure
       player.msg( _("MISSION FAILED: You abandoned the VIP.") )
       emp.addShippingLog( log_text_fail )
@@ -192,22 +192,22 @@ end
 
 function jumpout ()
    -- Storing the system the player jumped from.
-   prevsys = system.cur()
+   mem.prevsys = system.cur()
 
-   if prevsys == destsys then
+   if mem.prevsys == destsys then
       var.pop( "music_combat_force" )
    end
 end
 
 
 function delay_flf ()
-   if misn_stage ~= 0 then
+   if mem.misn_stage ~= 0 then
       return
    end
 
    -- More ships to pressure player from behind
    local flf_sml_force = { "Hyena", "Admonisher", "Vendetta" }
-   local p = fleet.add( 1, flf_sml_force, "FLF", prevsys, _("FLF Ambusher") )
+   local p = fleet.add( 1, flf_sml_force, "FLF", mem.prevsys, _("FLF Ambusher") )
    for k,v in ipairs(p) do
       v:setHostile()
    end
@@ -217,15 +217,15 @@ end
 function board ()
    -- VIP boards
    local c = misn.cargoNew( N_("VIP"), N_("A Very Important Person.") )
-   vip = misn.cargoAdd( c, 0 )
+   mem.vip = misn.cargoAdd( c, 0 )
    tk.msg( _("Disabled Ship"), _([[The ship's hatch opens and immediately an unconscious VIP is brought aboard by his bodyguard. Looks like there is no one else aboard.]]) )
 
    -- Update mission details
-   misn_stage = 2
-   misn.markerMove( misn_marker, retsys )
-   misn.setDesc( fmt.f(_("Return to {pnt} in the {sys} system with the VIP"), {pnt=ret, sys=retsys} ))
+   mem.misn_stage = 2
+   misn.markerMove( mem.misn_marker, mem.retsys )
+   misn.setDesc( fmt.f(_("Return to {pnt} in the {sys} system with the VIP"), {pnt=mem.ret, sys=mem.retsys} ))
    misn.osdCreate(_("Empire VIP Rescue"), {
-      fmt.f(_("Return to {pnt} in the {sys} system with the VIP"), {pnt=ret, sys=retsys}),
+      fmt.f(_("Return to {pnt} in the {sys} system with the VIP"), {pnt=mem.ret, sys=mem.retsys}),
    })
 
    -- Force unboard
@@ -234,7 +234,7 @@ end
 
 
 function death ()
-   if misn_stage == 1 then
+   if mem.misn_stage == 1 then
       -- Notify of death
       player.msg( _("MISSION FAILED: VIP is dead.") )
       emp.addShippingLog( log_text_fail )

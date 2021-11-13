@@ -43727,7 +43727,7 @@ msgstr "船に空きがない"
 #: dat/missions/pirate/pir_contraband.lua:176
 msgid ""
 "You don't have enough cargo space to accept this mission. It requires "
-"{tonnes_free} of free space ({tonnes_short}more than you have)."
+"{tonnes_free} of free space ({tonnes_short} more than you have)."
 msgstr ""
 "この任務を引き受けられるだけの船倉の空きがありません。空き容量が "
 "{tonnes_free}必要です (船倉の空きより {tonnes_short}多い)。"

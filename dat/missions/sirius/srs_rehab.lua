@@ -17,4 +17,4 @@
 
 require "missions.rehab_common"
 
-fac = faction.get("Sirius")
+mem.fac = faction.get("Sirius")

@@ -32,7 +32,7 @@ local fmt = require "format"
 --  0: mission accepted go to targetsys
 --  1: have to destroy all the enemy ships
 --  2: return to kex
-misn_state = nil
+mem.misn_state = nil
 local escorts, mainguy -- Non-persistent state
 
 local targetsys = system.get("Provectus Nova")
@@ -59,7 +59,7 @@ function generate_npc ()
    if planet.cur() == planet.get("Minerva Station") then
       misn.npcAdd( "approach_kex", minerva.kex.name, minerva.kex.portrait, minerva.kex.description )
       if var.peek("kex_talk_ceo") then
-         npc_ceo = misn.npcAdd( "approach_ceo", minerva.ceo.name, minerva.ceo.portrait, minerva.ceo.description )
+         mem.npc_ceo = misn.npcAdd( "approach_ceo", minerva.ceo.name, minerva.ceo.portrait, minerva.ceo.description )
       end
    end
 end
@@ -73,7 +73,7 @@ function approach_kex ()
    vn.transition("hexagon")
    vn.na(_("You find Kex taking a break at his favourite spot at Minerva station."))
 
-   if misn_state==2 then
+   if mem.misn_state==2 then
       local maikki = minerva.vn_maikkiP{
             shader = love_shaders.color{ color={0,0,0,1} },
             pos = "right" }
@@ -128,10 +128,10 @@ Kex runs off and disappears into the station.]]))
          { _("Ask about the station"), "station" },
          { _("Leave"), "leave" },
       }
-      if var.peek("kex_talk_station") and misn_state == nil then
+      if var.peek("kex_talk_station") and mem.misn_state == nil then
          table.insert( opts, 1, { _("Ask about the CEO"), "ceo" } )
       end
-      if misn_state == 0 then
+      if mem.misn_state == 0 then
          table.insert( opts, 1, { _("Ask about the job"), "job" } )
       end
       return opts
@@ -163,8 +163,8 @@ Kex runs off and disappears into the station.]]))
 He lets out a sigh."]]))
    vn.func( function ()
       var.push( "kex_talk_ceo", true )
-      if not npc_ceo then
-         npc_ceo = misn.npcAdd( "approach_ceo", minerva.ceo.name, minerva.ceo.portrait, minerva.ceo.description )
+      if not mem.npc_ceo then
+         mem.npc_ceo = misn.npcAdd( "approach_ceo", minerva.ceo.name, minerva.ceo.portrait, minerva.ceo.description )
       end
    end )
    vn.jump("menu_msg")
@@ -191,7 +191,7 @@ He looks at you with determination.
    kex(fmt.f(_([["Great! I managed to look at the station delivery logs and it seems like there is a shady delivery heading here. If you could could go to the {sys} system. All you have to do is intercept it and get the incriminating evidence and it should be easy as pie! I'll send you the precise information later."]]), {sys=targetsys}))
    kex(_([["If you can disable the ship and find the evidence itself it would be ideal, however, given that it is always delivered in secured vaults, you should be able to recover the vault from the debris if you roll that way."]]))
    vn.func( function ()
-      if misn_state==nil then
+      if mem.misn_state==nil then
          if not misn.accept() then
             tk.msg(_("You have too many active missions."))
             vn.jump("menu_msg")
@@ -199,11 +199,11 @@ He looks at you with determination.
          end
 
          minerva.log.kex(_("You agreed to help Kex to find dirt on the Minerva Station CEO to try to get him free."))
-         misn_marker = misn.markerAdd( targetsys )
+         mem.misn_marker = misn.markerAdd( targetsys )
          misn.osdCreate( _("Freeing Kex"),
             { fmt.f(_("Intercept the transport at {sys}"), {sys=targetsys}),
             _("Return to Kex at Minerva Station") } )
-         misn_state = 0
+         mem.misn_state = 0
          hook.land("generate_npc")
          hook.load("generate_npc")
          hook.enter("enter")
@@ -260,15 +260,15 @@ He takes another swig from his drinks.]]))
 end
 
 function enter ()
-   if misn_state==1 then
+   if mem.misn_state==1 then
       player.msg(_("#rMISSION FAILED! You were supposed to raid the transport!"))
       misn.finish(false)
    end
    if system.cur() == targetsys then
-      if misn_state == 0 then
-         fthugs = faction.dynAdd( "Mercenary", "Convoy", _("Convoy") )
+      if mem.misn_state == 0 then
+         mem.fthugs = faction.dynAdd( "Mercenary", "Convoy", _("Convoy") )
 
-         mainguy = pilot.add( "Rhino", fthugs, jumpinsys, _("Transport") )
+         mainguy = pilot.add( "Rhino", mem.fthugs, jumpinsys, _("Transport") )
          mainguy:setVisplayer(true)
          mainguy:setHilight(true)
          mainguy:control()
@@ -279,7 +279,7 @@ function enter ()
          hook.pilot( mainguy, "attacked", "mainguy_attacked" )
 
          local function addescort( shipname )
-            local p = pilot.add( shipname, fthugs, jumpinsys, _("Escort") )
+            local p = pilot.add( shipname, mem.fthugs, jumpinsys, _("Escort") )
             p:setLeader( mainguy )
             hook.pilot( p, "attacked", "mainguy_attacked" )
             return p
@@ -289,7 +289,7 @@ function enter ()
                      addescort("Shark"),
                      addescort("Shark") }
 
-         misn_state = 1
+         mem.misn_state = 1
       end
    end
 end
@@ -301,11 +301,11 @@ end
 
 function mainguy_attacked ()
    if not mainguy:exists() then return end
-   if mainguy_attacked_msg then return end
+   if mem.mainguy_attacked_msg then return end
 
    if mainguy:exists() then
       mainguy:broadcast(_("Transport under attack! Help requested immediately!"))
-      mainguy_attacked_msg = true
+      mem.mainguy_attacked_msg = true
       mainguy:setHostile(true)
    end
 
@@ -332,8 +332,8 @@ function mainguy_board ()
 
    -- Message update
    minerva.log.kex(_("You boarded a transport destined to the Minerva CEO, but didn't find anything."))
-   misn.markerMove( misn_marker, system.get("Limbo") )
-   misn_state = 2
+   misn.markerMove( mem.misn_marker, system.get("Limbo") )
+   mem.misn_state = 2
    misn.osdActive(2)
    player.unboard()
 end
@@ -345,8 +345,8 @@ end
 function mainguy_dead_scanned ()
    player.msg(_("You scan the debris of the transport for any potential cargo, but can't find anything."))
    minerva.log.kex(_("You destroyed a transport destined to the Minerva Ceo, but didn't find anything in the debris."))
-   misn.markerMove( misn_marker, system.get("Limbo") )
-   misn_state = 2
+   misn.markerMove( mem.misn_marker, system.get("Limbo") )
+   mem.misn_state = 2
    misn.osdActive(2)
 end
 

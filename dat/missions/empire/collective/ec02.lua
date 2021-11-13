@@ -60,8 +60,8 @@ function accept ()
    -- Accept the mission
    misn.accept()
 
-   misn_stage = 0
-   misn_marker = misn.markerAdd( misn_target_sys, "low" )
+   mem.misn_stage = 0
+   mem.misn_marker = misn.markerAdd( misn_target_sys, "low" )
 
    -- Mission details
    misn.setTitle(_("Collective Espionage"))
@@ -82,12 +82,12 @@ end
 
 function land()
    -- You land on the planet, but you also immediately take off again.
-   if misn_stage == 0 and planet.cur() == misn_target then
+   if mem.misn_stage == 0 and planet.cur() == misn_target then
       -- Initiate cutscene
-      takeoffhook = hook.takeoff("takeoff")
+      mem.takeoffhook = hook.takeoff("takeoff")
       player.takeoff()
    -- Return bit
-   elseif misn_stage == 1 and planet.cur() == misn_base then
+   elseif mem.misn_stage == 1 and planet.cur() == misn_base then
       tk.msg( _("Mission Accomplished"), _([[As your ship touches ground, you see Lt. Commander Dimitri come out to greet you.
     "How was the weather?" he asks jokingly. "Glad to see you're still in one piece. We'll get right on analyzing the data acquired. Those robots have to be up to something. Meet me in the bar later. Meanwhile give yourself a treat; you've earned it. We've made a 700K credit deposit into your bank account. Enjoy it."]]) )
 
@@ -136,7 +136,7 @@ function takeoff()
     delay = delay + 4.0
     hook.timer(delay, "endCutscene")
 
-    hook.rm(takeoffhook)
+    hook.rm(mem.takeoffhook)
 end
 
 function cameraZoom(args)
@@ -169,8 +169,8 @@ function endCutscene()
     removeSwarm(swarm2)
     removeSwarm(swarm3)
     tk.msg(_("Collective Espionage"), _([[That should be enough. Time to report your findings.]]))
-    misn_stage = 1
-    misn.markerMove( misn_marker, misn_base_sys )
+    mem.misn_stage = 1
+    misn.markerMove( mem.misn_marker, misn_base_sys )
     player.pilot():setHide(false)
     player.cinematics(false)
     misn.osdActive(2)

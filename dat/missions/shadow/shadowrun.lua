@@ -39,10 +39,10 @@ function create ()
       misn.finish()
    end
 
-   credits = shadow.rewards.shadowrun
+   mem.credits = shadow.rewards.shadowrun
    -- Developer note: changing these numbers may have consequences for translators (if we support more languages later on).
-   timelimit1 = 20 -- In STP
-   timelimit2 = 50 -- In STP
+   mem.timelimit1 = 20 -- In STP
+   mem.timelimit2 = 50 -- In STP
 
    misn.setNPC( _("A dark-haired woman"), "neutral/unique/rebina_casual.webp", _("You spot a dark-haired woman sitting at the bar. Her elegant features and dress make her stand out, yet her presence here seems almost natural, as if she's in the right place at the right time, waiting for the right person. You wonder why she's all by herself.") )
 end
@@ -68,24 +68,24 @@ function accept()
       tk.msg(_("Rebina's explanation"), fmt.f(_([["You know what to do," Rebina tells you. "You will find Jorek in the spaceport bar on {pnt}. When you see him, tell him you've come to 'see to his special needs'. Oh, and please be discreet. Don't talk about things you don't need to; the walls have ears in that place. In particular, don't mention any names."
     "You will be on a time schedule. You must meet Jorek within {t1} periods, or he will assume you are not coming and go back into hiding. You must also be at the meeting point {t2} periods from now. If you fail to meet with Jorek within the time limit or if you are prevented from taking him offworld for any other reason, make your way to the {plt} and report what happened. We'll take it from there. If you fail to show up at the designated time, we will assume you have failed, and the {plt} will leave."
     Rebina empties her glass and places it on the bar before rising to her feet. "That will be all. Good luck, and keep your wits about you."
-    Then Rebina takes her leave from you and gracefully departs the spaceport bar. You order yourself another drink. You've got the feeling you're going to need it.]]), {pnt=pnt, t1=timelimit1, t2=timelimit2, plt=shipname}))
+    Then Rebina takes her leave from you and gracefully departs the spaceport bar. You order yourself another drink. You've got the feeling you're going to need it.]]), {pnt=pnt, t1=mem.timelimit1, t2=mem.timelimit2, plt=shipname}))
 
       -- Set deadlines
-      deadline1 = time.get() + time.create(0, timelimit1, 0)
-      deadline2 = time.get() + time.create(0, timelimit2, 0)
+      mem.deadline1 = time.get() + time.create(0, mem.timelimit1, 0)
+      mem.deadline2 = time.get() + time.create(0, mem.timelimit2, 0)
 
       misn.setTitle(_("Shadowrun"))
       misn.setReward(_("You were promised riches..."))
       misn.setDesc(fmt.f(_("Fly to planet {pnt} in the {sys} system and talk to Jorek. Once Jorek has boarded your ship, proceed to system {sys2} and board the {plt}."), {pnt=pnt, sys=sys, sys2=sys2, plt=shipname}))
       misn.osdCreate(_("Shadowrun"), {
          fmt.f(_("Fly to planet {pnt} in the {sys} system and pick up Jorek"), {pnt=pnt, sys=sys}),
-         fmt.f(_("You have {time} remaining"), {time=(deadline1 - time.get())}),
+         fmt.f(_("You have {time} remaining"), {time=(mem.deadline1 - time.get())}),
       })
-      misn_marker = misn.markerAdd( sys, "low" )
-      shadowrun = 2
+      mem.misn_marker = misn.markerAdd( sys, "low" )
+      mem.shadowrun = 2
 
-      dateres = 500
-      datehook = hook.date(time.create(0, 0, dateres), "date")
+      mem.dateres = 500
+      mem.datehook = hook.date(time.create(0, 0, mem.dateres), "date")
       hook.land("land")
       hook.enter("enter")
    else
@@ -110,7 +110,7 @@ end
 
 -- Talking to Jorek
 function jorek()
-   if shadowrun == 2 then
+   if mem.shadowrun == 2 then
       if tk.yesno( _("An unpleasant man"), _([[You join the man at his table. He doesn't particularly seem to welcome your company, though, because he gives you a look most people would reserve for particularly unwelcome guests. Determined not to let that get to you, you ask him if his name is indeed Jorek.
     "Yeah, that's me," he replies. "What'd ya want, kid?"
     You explain to him that you've come to see to his special needs. This earns you a sneer from Jorek. "Ha! So you're running errands for the little lady, are you? Oh don't tell me, I've got a pretty good idea what it is you want from me." He leans onto the table, bringing his face closer to yours. "Listen, buddy. I don't know if you noticed, but people are watchin' me. And you too, now that you're talkin' to me. Those goons over there? Yeah, they're here for me. Used to be fancy undercover agents, but I've been sittin' on my ass here for a long time and they figured out I was on to them, so they replaced 'em with a bunch of grunts. Cheaper, see."
@@ -123,8 +123,8 @@ function jorek()
     "I've got no use for wusses like yourself. Go on, get out of here. Go back to your ship and beat it off this rock. Maybe you should consider gettin' yourself a desk job, eh?"
     With that, Jorek leaves your table and sits down at a nearby empty one. Clearly this conversation is over, and you're not going to get anything more out of him.]]) )
       end
-      shadowrun = 3
-      misn.markerMove( misn_marker, sys2 )
+      mem.shadowrun = 3
+      misn.markerMove( mem.misn_marker, sys2 )
    else
       tk.msg( _("Dismissal"), _([[Jorek pointedly ignores you. It doesn't seem like he's willing to give you the time of day any longer. You decide not to push your luck.]]) )
    end
@@ -142,18 +142,18 @@ end
 
 function date()
    -- Deadline stuff
-   if deadline1 >= time.get() and shadowrun == 2 then
-      dateresolution(deadline1)
+   if mem.deadline1 >= time.get() and mem.shadowrun == 2 then
+      dateresolution(mem.deadline1)
       misn.osdCreate(_("Shadowrun"), {
          fmt.f(_("Fly to planet {pnt} in the {sys} system and pick up Jorek"), {pnt=pnt, sys=sys}),
-         fmt.f(_("You have {time} remaining"), {time=(deadline1 - time.get())}),
+         fmt.f(_("You have {time} remaining"), {time=(mem.deadline1 - time.get())}),
       })
-   elseif deadline2 >= time.get() and shadowrun == 3 then
-      dateresolution(deadline2)
+   elseif mem.deadline2 >= time.get() and mem.shadowrun == 3 then
+      dateresolution(mem.deadline2)
       misn.osdCreate(_("Shadowrun"), {
          _("You could not persuade Jorek to come with you"),
          fmt.f(_("Fly to the {sys} system and dock with (board) {plt} to report your result"), {sys=sys2, plt=shipname}),
-         fmt.f(_("You have {time} remaining"), {time=(deadline2 - time.get())})
+         fmt.f(_("You have {time} remaining"), {time=(mem.deadline2 - time.get())})
       })
       misn.osdActive(2)
    else
@@ -162,28 +162,28 @@ function date()
 end
 
 function dateresolution(time)
-   if time - time.get() < time.create(0, 0, 5000) and dateres > 30 then
-      dateres = 30
-      hook.rm(datehook)
-      datehook = hook.date(time.create(0, 0, dateres), "date")
-   elseif time - time.get() < time.create(0, 1, 0) and dateres > 100 then
-      dateres = 100
-      hook.rm(datehook)
-      datehook = hook.date(time.create(0, 0, dateres), "date")
-   elseif time - time.get() >= time.create(0, 1, 0) and dateres < 500 then
-      dateres = 500
-      hook.rm(datehook)
-      datehook = hook.date(time.create(0, 0, dateres), "date")
+   if time - time.get() < time.create(0, 0, 5000) and mem.dateres > 30 then
+      mem.dateres = 30
+      hook.rm(mem.datehook)
+      mem.datehook = hook.date(time.create(0, 0, mem.dateres), "date")
+   elseif time - time.get() < time.create(0, 1, 0) and mem.dateres > 100 then
+      mem.dateres = 100
+      hook.rm(mem.datehook)
+      mem.datehook = hook.date(time.create(0, 0, mem.dateres), "date")
+   elseif time - time.get() >= time.create(0, 1, 0) and mem.dateres < 500 then
+      mem.dateres = 500
+      hook.rm(mem.datehook)
+      mem.datehook = hook.date(time.create(0, 0, mem.dateres), "date")
    end
 end
 
 function enter()
    -- Random(?) pirate attacks when get closer to your system, and heavier ones when you fly away from it after meeting SHITMAN
-   if system.cur():jumpDist(sys) < 3 and system.cur():jumpDist(sys) > 0 and shadowrun == 2 then
+   if system.cur():jumpDist(sys) < 3 and system.cur():jumpDist(sys) > 0 and mem.shadowrun == 2 then
       pilot.clear()
       pilot.toggleSpawn(false)
       fleet.add( 4, "Hyena", "Pirate", vec2.new(0,0), _("Pirate Hyena") )
-   elseif system.cur():jumpDist(sys) < 3 and system.cur():jumpDist(sys) > 0 and shadowrun == 3 then
+   elseif system.cur():jumpDist(sys) < 3 and system.cur():jumpDist(sys) > 0 and mem.shadowrun == 3 then
       pilot.clear()
       pilot.toggleSpawn(false)
       fleet.add( 4, "Hyena", "Pirate", vec2.new(0,0), _("Pirate Hyena") )
@@ -196,7 +196,7 @@ function enter()
    if system.cur() == sys then
       pilot.clear()
       pilot.toggleSpawn(false)
-      planetpos = pnt:pos()
+      local planetpos = pnt:pos()
       pilot.add( "Empire Pacifier", "Empire", planetpos + vec2.new(200,0), nil, {ai="empire_idle"} )
       pilot.add( "Empire Pacifier", "Empire", planetpos + vec2.new(130,130), nil, {ai="empire_idle"} )
       pilot.add( "Empire Pacifier", "Empire", planetpos + vec2.new(0,200), nil, {ai="empire_idle"} )
@@ -208,8 +208,8 @@ function enter()
    end
 
    -- Handle the Seiryuu, the last stop on this mission
-   if shadowrun >= 2 and system.cur() == sys2 then
-      mypos = vec2.new(-1500, 600)
+   if mem.shadowrun >= 2 and system.cur() == sys2 then
+      local mypos = vec2.new(-1500, 600)
       seiryuu = pilot.add( "Pirate Kestrel", "Four Winds", mypos , _("Seiryuu"), {ai="trader"} )
 
       seiryuu:setActiveBoard(true)
@@ -223,7 +223,7 @@ function enter()
 end
 
 function board()
-   if shadowrun == 2 then
+   if mem.shadowrun == 2 then
       -- player reports in without SHITMAN
       tk.msg(_("Empty-handed"), fmt.f(_([[You complete docking operations with the {plt}, well aware that your ship isn't carrying the man they were expecting. At the airlock, you are greeted by a pair of crewmen in grey uniforms. You explain to them that you were unable to bring Jorek to them, and they receive your report in a dry, businesslike manner. The meeting is short. The crewmen disappear back into their ship, closing the airlock behind them, and you return to your bridge.
     You prepare to undock from the {plt}, but before you complete the procedures there is a sudden power spike in your primary systems. All panels go black. In the darkness, the only thing that disturbs the silence is the sound of the {plt} dislodging itself from your docking clamp.
@@ -238,7 +238,7 @@ function board()
     "That is what Jorek was keeping for us on {pnt}, and that is what we need," Rebina explains. "Jorek is nothing but a decoy to draw the Empire's attention away from our real operations. While you were talking to him, his subordinates secured our cargo aboard your ship. We chose not to inform you about this because, well... It's best you didn't know what was in that crate. I'm sure we understand each other."
     Rebina turns to follow her men back into the ship, but before she closes the airlock hatch she looks back at you over her shoulder, shooting you a casual glance that nevertheless seems to see right through you. "I'm glad to see my trust in you was not misplaced," she remarks. "Perhaps we'll see each other again someday, and when we do perhaps we can do some more business."
     Then she is gone. You stare at the airlock hatch, then down at the credit chip in your hand, first marveling at the wealth it represents and then astonished to realize you can't remember how it got there.]]), {pnt=pnt}))
-      player.pay(credits)
+      player.pay(mem.credits)
    end
 
    player.unboard()

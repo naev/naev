@@ -42,8 +42,8 @@ function create ()
    misn.setReward( _("A clear conscience.") )
    misn.setDesc( _("A shipwrecked space family has enlisted your aid. Can you take them to safety?") )
 
-   inspace = true -- For lack of a test, we'll just have to keep track ourselves.
-   harrassmsg = true
+   mem.inspace = true -- For lack of a test, we'll just have to keep track ourselves.
+   mem.harrassmsg = true
 
    -- Intro text, player meets family
    tk.msg(_("Shipwrecked space family"), _([[The airlock opens, and you are greeted by a nervous-looking man, a shy woman, and three neurotic children.
@@ -56,20 +56,20 @@ function create ()
     Without further ado, and without so much as formally asking for the favour, Harrus and his family proceed onto your ship and install themselves into your living quarters. They do not seem about to leave.]]), _("August")))
 
    local c = misn.cargoNew( N_("Space Family"), N_("A family who you rescued in space.") )
-   carg_id = misn.cargoAdd( c, 0 )
+   mem.carg_id = misn.cargoAdd( c, 0 )
 
    -- First stop; subsequent stops will be handled in the land function
-   nextstop = 1
-   targsys = lmisn.getSysAtDistance(nil, 3) -- Populate the array
-   targsys = getlandablesystems( targsys )
-   if #targsys == 0 then targsys = {system.get("Apez")} end -- In case no systems were found.
-   destsys = targsys[rnd.rnd(1, #targsys)]
-   destplanet = getlandable(destsys) -- pick a landable planet in the destination system
-   tk.msg(_("Next stop"), fmt.f(directions[nextstop], {pnt=destplanet, sys=destsys})) -- NPC telling you where to go
+   mem.nextstop = 1
+   mem.targsys = lmisn.getSysAtDistance(nil, 3) -- Populate the array
+   mem.targsys = getlandablesystems( mem.targsys )
+   if #mem.targsys == 0 then mem.targsys = {system.get("Apez")} end -- In case no systems were found.
+   mem.destsys = mem.targsys[rnd.rnd(1, #mem.targsys)]
+   mem.destplanet = getlandable(mem.destsys) -- pick a landable planet in the destination system
+   tk.msg(_("Next stop"), fmt.f(directions[mem.nextstop], {pnt=mem.destplanet, sys=mem.destsys})) -- NPC telling you where to go
    misn.osdCreate(_("The Space Family"), {
-      fmt.f(_("Take the space family to {pnt} in the {sys} system"), {pnt=destplanet, sys=destsys}),
+      fmt.f(_("Take the space family to {pnt} in the {sys} system"), {pnt=mem.destplanet, sys=mem.destsys}),
    })
-   misn_marker = misn.markerAdd( destplanet, "low" )
+   mem.misn_marker = misn.markerAdd( mem.destplanet, "low" )
 
    -- Force unboard
    player.unboard()
@@ -99,29 +99,29 @@ function getlandable(sys)
 end
 
 function land()
-   if planet.cur() == destplanet then -- We've arrived!
-      if nextstop >= 3 then -- This is the last stop
+   if planet.cur() == mem.destplanet then -- We've arrived!
+      if mem.nextstop >= 3 then -- This is the last stop
          tk.msg(_("Rid of them at last"), _([[You land at your final stop in your quest to take the space family home, and not a moment too soon for both you and Harrus. Harrus stomps off your ship without so much as a greeting, his wife and children in tow, and you are just as happy to see them gone.
     Surveying your now deserted quarters, you are appalled at how much damage the temporary inhabitants have managed to do along the way. You console yourself with the thought that at least you'll have something to do during the dull periods in hyperspace and turn to tend to your ships needs, when your eye falls on a small box that you don't remember seeing here before.
     Inside the box, you find a sum of credits and a note written in neat, feminine handwriting that says, "Sorry for the trouble."]]) ) -- Final message
          player.pay( reward )
-         misn.cargoJet(carg_id)
+         misn.cargoJet(mem.carg_id)
          neu.addMiscLog( _([[You rescued a bad-tempered man and his family who were stranded aboard their ship. After a lot of annoying complaints, the man and his family finally left your ship, the man's wife leaving a generous payment for the trouble.]]) )
          misn.finish(true)
       else
-         nextstop = nextstop + 1
-         targsys = lmisn.getSysAtDistance(nil, nextstop+1) -- Populate the array
-         targsys = getlandablesystems( targsys )
-         if #targsys == 0 then targsys = {system.get("Apez")} end -- In case no systems were found.
-         destsys = targsys[rnd.rnd(1, #targsys)]
-         destplanet = getlandable(destsys) -- pick a landable planet in the destination system
-         tk.msg(_("Next stop"), fmt.f(directions[nextstop], {pnt=destplanet, sys=destsys})) -- NPC telling you where to go
+         mem.nextstop = mem.nextstop + 1
+         mem.targsys = lmisn.getSysAtDistance(nil, mem.nextstop+1) -- Populate the array
+         mem.targsys = getlandablesystems( mem.targsys )
+         if #mem.targsys == 0 then mem.targsys = {system.get("Apez")} end -- In case no systems were found.
+         mem.destsys = mem.targsys[rnd.rnd(1, #mem.targsys)]
+         mem.destplanet = getlandable(mem.destsys) -- pick a landable planet in the destination system
+         tk.msg(_("Next stop"), fmt.f(directions[mem.nextstop], {pnt=mem.destplanet, sys=mem.destsys})) -- NPC telling you where to go
          misn.osdCreate(_("The Space Family"), {
-            fmt.f(_("Take the space family to {pnt} in the {sys} system"), {pnt=destplanet, sys=destsys})})
-         misn.markerMove( misn_marker, destplanet )
+            fmt.f(_("Take the space family to {pnt} in the {sys} system"), {pnt=mem.destplanet, sys=mem.destsys})})
+         misn.markerMove( mem.misn_marker, mem.destplanet )
       end
    end
-   inspace = false
+   mem.inspace = false
 end
 
 -- Only gets landable systems
@@ -139,13 +139,13 @@ function getlandablesystems( systems )
 end
 
 function takeoff()
-   inspace = true
+   mem.inspace = true
 end
 
 function enter()
-   if harrassmsg then
+   if mem.harrassmsg then
       hook.timer(3.0, "harrassme")
-      harrassmsg = false
+      mem.harrassmsg = false
    else
    end
 end
@@ -157,11 +157,11 @@ function harrassme()
 end
 
 function abort ()
-   if inspace then
+   if mem.inspace then
       tk.msg(_("A parting of ways"), _([[You unceremoniously shove your passengers out of the airlock and into the coldness of space. You're done playing taxi; it's time to get back to important things!]]))
    else
       tk.msg(_("A parting of ways"), _([[You unceremoniously shove your passengers out of the airlock, leaving them to their fate on this planet. You're done playing taxi; it's time to get back to important things!]]))
    end
-   misn.cargoJet(carg_id)
+   misn.cargoJet(mem.carg_id)
    misn.finish(true)
 end

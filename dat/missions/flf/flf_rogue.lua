@@ -35,9 +35,9 @@ text[1] = _("You are thanked for eliminating the traitorous scum and handed a cr
 text[2] = _("The official who hands you your pay mumbles something about traitors and then summarily dismisses you.")
 text[3] = _("While it takes an inordinate amount of time, you are eventually handed the agreed-upon payment for dispatching the traitor.")
 
-osd_desc    = {__save=true}
-osd_desc[2] = _("Eliminate the rogue FLF patrol")
-osd_desc[3] = _("Return to FLF base")
+mem.osd_desc    = {}
+mem.osd_desc[2] = _("Eliminate the rogue FLF patrol")
+mem.osd_desc[3] = _("Return to FLF base")
 
 
 local function setDescription ()
@@ -45,64 +45,64 @@ local function setDescription ()
    desc = fmt.f( n_(
          "There is {n} rogue FLF ship in the {sys} system. Eliminate this ship.",
          "There is a squadron of rogue FLF ships with {n} ships in the {sys} system. Eliminate this squadron.",
-         ships ), {n=ships, sys=missys} )
-   if flfships > 0 then
+         mem.ships ), {n=mem.ships, sys=mem.missys} )
+   if mem.flfships > 0 then
       desc = desc .. fmt.f( n_(
             " You will be accompanied by {n} other FLF pilot for this mission.",
             " You will be accompanied by {n} other FLF pilots for this mission.",
-            flfships ), {n=flfships} )
+            mem.flfships ), {n=mem.flfships} )
    end
    return desc
 end
 
 
 function create ()
-   missys = flf.getSystem()
-   if not misn.claim( missys ) then misn.finish( false ) end
+   mem.missys = flf.getSystem()
+   if not misn.claim( mem.missys ) then misn.finish( false ) end
 
-   level = rnd.rnd( 1, #misn_title )
-   ships = 0
-   flfships = 0
-   if level == 1 then
-      ships = 1
-   elseif level == 2 then
-      ships = rnd.rnd( 2, 3 )
-   elseif level == 3 then
-      ships = 4
+   mem.level = rnd.rnd( 1, #misn_title )
+   mem.ships = 0
+   mem.flfships = 0
+   if mem.level == 1 then
+      mem.ships = 1
+   elseif mem.level == 2 then
+      mem.ships = rnd.rnd( 2, 3 )
+   elseif mem.level == 3 then
+      mem.ships = 4
       if rnd.rnd() < 0.5 then
-         flfships = 2
+         mem.flfships = 2
       end
-   elseif level == 4 then
-      ships = 7
-      flfships = rnd.rnd( 2, 4 )
+   elseif mem.level == 4 then
+      mem.ships = 7
+      mem.flfships = rnd.rnd( 2, 4 )
    end
 
-   credits = ships * 30e3 - flfships * 1e3
-   credits = credits * system.cur():jumpDist( missys, true ) / 3
-   credits = credits + rnd.sigma() * 8e3
+   mem.credits = mem.ships * 30e3 - mem.flfships * 1e3
+   mem.credits = mem.credits * system.cur():jumpDist( mem.missys, true ) / 3
+   mem.credits = mem.credits + rnd.sigma() * 8e3
 
    local desc = setDescription()
 
-   late_arrival = rnd.rnd() < 0.75
-   late_arrival_delay = rnd.uniform( 10.0, 120.0 )
+   mem.late_arrival = rnd.rnd() < 0.75
+   mem.late_arrival_delay = rnd.uniform( 10.0, 120.0 )
 
    -- Set mission details
-   misn.setTitle( fmt.f( misn_title[level], {sys=missys} ) )
+   misn.setTitle( fmt.f( misn_title[mem.level], {sys=mem.missys} ) )
    misn.setDesc( desc )
-   misn.setReward( fmt.credits( credits ) )
-   marker = misn.markerAdd( missys, "computer" )
+   misn.setReward( fmt.credits( mem.credits ) )
+   mem.marker = misn.markerAdd( mem.missys, "computer" )
 end
 
 
 function accept ()
    misn.accept()
 
-   osd_desc[1] = fmt.f( _("Fly to the {sys} system"), {sys=missys} )
-   misn.osdCreate( _("Rogue FLF"), osd_desc )
+   mem.osd_desc[1] = fmt.f( _("Fly to the {sys} system"), {sys=mem.missys} )
+   misn.osdCreate( _("Rogue FLF"), mem.osd_desc )
 
-   rogue_ships_left = 0
-   job_done = false
-   last_system = planet.cur()
+   mem.rogue_ships_left = 0
+   mem.job_done = false
+   mem.last_system = planet.cur()
 
    hook.enter( "enter" )
    hook.jumpout( "leave" )
@@ -111,15 +111,15 @@ end
 
 
 function enter ()
-   if not job_done then
-      if system.cur() == missys then
+   if not mem.job_done then
+      if system.cur() == mem.missys then
          misn.osdActive( 2 )
-         rogue_spawnRogue( ships )
-         if flfships > 0 then
-            if not late_arrival then
-               rogue_spawnFLF( flfships, last_system )
+         rogue_spawnRogue( mem.ships )
+         if mem.flfships > 0 then
+            if not mem.late_arrival then
+               rogue_spawnFLF( mem.flfships, mem.last_system )
             else
-               hook.timer( late_arrival_delay, "timer_lateFLF" )
+               hook.timer( mem.late_arrival_delay, "timer_lateFLF" )
             end
          end
       else
@@ -131,24 +131,24 @@ end
 
 function leave ()
    hook.rm( spawner )
-   rogue_ships_left = 0
-   last_system = system.cur()
+   mem.rogue_ships_left = 0
+   mem.last_system = system.cur()
 end
 
 
 function timer_lateFLF ()
    local systems = system.cur():adjacentSystems()
    local source = systems[ rnd.rnd( 1, #systems ) ]
-   rogue_spawnFLF( flfships, source )
+   rogue_spawnFLF( mem.flfships, source )
 end
 
 
 function pilot_death_rogue ()
-   rogue_ships_left = rogue_ships_left - 1
-   if rogue_ships_left <= 0 then
-      job_done = true
+   mem.rogue_ships_left = mem.rogue_ships_left - 1
+   if mem.rogue_ships_left <= 0 then
+      mem.job_done = true
       misn.osdActive( 3 )
-      misn.markerRm( marker )
+      misn.markerRm( mem.marker )
       hook.land( "land_flf" )
       pilot.toggleSpawn( true )
       if fleetFLF ~= nil then
@@ -164,10 +164,10 @@ end
 
 function land_flf ()
    leave()
-   last_system = planet.cur()
+   mem.last_system = planet.cur()
    if planet.cur():faction() == faction.get("FLF") then
       tk.msg( "", text[ rnd.rnd( 1, #text ) ] )
-      player.pay( credits )
+      player.pay( mem.credits )
       misn.finish( true )
    end
 end
@@ -194,7 +194,7 @@ function rogue_spawnRogue( n )
       p:setVisible( true )
       p:setHilight( true )
       --fleetRogue[i] = p
-      rogue_ships_left = rogue_ships_left + 1
+      mem.rogue_ships_left = mem.rogue_ships_left + 1
    end
 end
 

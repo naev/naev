@@ -39,26 +39,26 @@ function create()
 
     misn.accept() -- The player chose to accept this mission by boarding the FLF ship
 
-    flfdead = false -- Flag to check if the player destroyed the FLF sentinels
-    basefound = false -- Flag to keep track if the player has seen the base
+    mem.flfdead = false -- Flag to check if the player destroyed the FLF sentinels
+    mem.basefound = false -- Flag to keep track if the player has seen the base
 
-    destsys = system.get(var.peek("flfbase_sysname"))
+    mem.destsys = system.get(var.peek("flfbase_sysname"))
 
     tk.msg(_("Gregar joins the party"), fmt.f( _([[A haggard-looking man emerges from the airlock. He says, "Thank goodness you're here. My name is Gregar, I'm with the Frontier Liberation Front. I mean you no harm." He licks his lips in hesitation before continuing. "I have come under attack from a Dvaered patrol. I wasn't violating any laws, and we're not even in Dvaered territory! Anyway, my ship is unable to fly."
     You help Gregar to your cockpit and install him in a vacant seat. He is obviously very tired, but he forces himself to speak. "Listen, I was on my way back from a mission when those Dvaered bastards jumped me. I know this is a lot to ask, but I have little choice seeing how my ship is a lost cause. Can you take me the rest of the way? It's not far. We have a secret base in the {sys} system. Fly there and contact my comrades. They will take you the rest of the way."
-    Gregar nods off, leaving you to decide what to do next. Gregar wants you to find his friends, but harboring a known terrorist, let alone helping him, might not be looked kindly upon by the authorities...]]), {sys=destsys}))
+    Gregar nods off, leaving you to decide what to do next. Gregar wants you to find his friends, but harboring a known terrorist, let alone helping him, might not be looked kindly upon by the authorities...]]), {sys=mem.destsys}))
 
     misn.osdCreate(_("Deal with the FLF agent"), {
-        fmt.f( _("Take Gregar, the FLF agent, to the {sys} system and make contact with the FLF"), {sys=destsys}),
+        fmt.f( _("Take Gregar, the FLF agent, to the {sys} system and make contact with the FLF"), {sys=mem.destsys}),
         _("Alternatively, turn Gregar in to the nearest Dvaered base"),
     })
     misn.setDesc(_("You have taken onboard a member of the FLF. You must either take him where he wants to go, or turn him in to the Dvaered."))
     misn.setTitle(_("Deal with the FLF agent"))
     misn.setReward(_("A chance to learn more about the FLF"))
-    misn.markerAdd(destsys, "low")
+    misn.markerAdd(mem.destsys, "low")
 
     local c = misn.cargoNew( N_("Gregar"), N_("A rescued FLF pilot.") )
-    gregar = misn.cargoAdd( c, 0 )
+    mem.gregar = misn.cargoAdd( c, 0 )
 
     hook.enter("enter")
     hook.land("land")
@@ -66,7 +66,7 @@ end
 
 -- Handle the FLF encounter, Gregar's intervention, and ultimately the search for the base.
 function enter()
-    if system.cur() == destsys and not flfdead and not basefound then
+    if system.cur() == mem.destsys and not mem.flfdead and not mem.basefound then
         -- Collect information needed for course calculations
         local spread = 45 -- max degrees off-course for waypoints
         local basepos = vec2.new(-8700,-3000) -- NOTE: Should be identical to the location in asset.xml!
@@ -85,9 +85,9 @@ function enter()
         -- Set FLF base waypoints
         -- Base is at -8700,-3000
         -- Waypoints deviate off the course by at most spread degrees
-        waypoint2 = jumppos + vec2.newP(dist / 3, angle2)
-        waypoint1 = jumppos + course * 1 / 3 + vec2.newP(dist / 3, angle1)
-        waypoint0 = basepos -- The base will not be spawned until the player is close to this waypoint.
+        mem.waypoint2 = jumppos + vec2.newP(dist / 3, angle2)
+        mem.waypoint1 = jumppos + course * 1 / 3 + vec2.newP(dist / 3, angle1)
+        mem.waypoint0 = basepos -- The base will not be spawned until the player is close to this waypoint.
 
         pilot.toggleSpawn(false)
         pilot.clear()
@@ -121,7 +121,7 @@ function land()
         flf.addLog( _([[You helped escort FLF Lt. Gregar Fletcher to the secret FLF base, Sindbad. This has earned you a small level of trust from the FLF and enabled you to freely access the FLF base.]]) )
         misn.finish(true)
     -- Case Dvaered planet
-    elseif planet.cur():faction() == faction.get("Dvaered") and not basefound then
+    elseif planet.cur():faction() == faction.get("Dvaered") and not mem.basefound then
         if tk.yesno(_("An opportunity to uphold the law"), _([[You have arrived at a Dvaered controlled world, and you are harboring a FLF fugitive on your ship. Fortunately, Gregar is still asleep. You could choose to alert the authorities and turn him in, and possibly collect a reward.
     Would you like to do so?]])) then
             tk.msg(_("Another criminal caught"), _([[It doesn't take Dvaered security long to arrive at your landing bay. They board your ship, seize Gregar and take him away before he even comprehends what's going on.
@@ -143,7 +143,7 @@ end
 -- Gregar wakes up and calls off the FLF attackers. They agree to guide you to their hidden base.
 -- If the player has destroyed the FLF ships, nothing happens and a flag is set. In this case, the player can only do the Dvaered side of the mini-campaign.
 function wakeUpGregarYouLazyBugger()
-    flfdead = true -- Prevents failure if ALL the ships are dead.
+    mem.flfdead = true -- Prevents failure if ALL the ships are dead.
     for i, p in ipairs(fleetFLF) do
         if p ~= nil and p:exists() then
             p:setInvincible(true)
@@ -153,10 +153,10 @@ function wakeUpGregarYouLazyBugger()
             p:setHilight(true)
             p:control()
             p:follow(player.pilot(), true)
-            flfdead = false
+            mem.flfdead = false
         end
     end
-    if not flfdead then
+    if not mem.flfdead then
         tk.msg(_("Gregar puts an end to hostilities"), _([["Wha- hey! What's going on!"
     You were too busy dodging incoming fire, rebalancing your shields and generally trying to kill your attackers before they kill you to notice that Gregar, your passenger, has roused from his slumber. Clearly the noise and the rocking have jolted him awake. You snap at him not to distract you from this fight, but he desperately interrupts.
     "These guys are my contacts, my friends! I was supposed to meet them here! Oh crap, this is not good. I didn't realize I'd be out this long! Look, I need to use your comm array right now. Trust me!"
@@ -169,7 +169,7 @@ function wakeUpGregarYouLazyBugger()
     With that, Alpha breaks the connection. It seems you have little choice but to do as he says if you ever want to take Gregar to his destination.]]))
         faction.get("FLF"):setPlayerStanding( 5 ) -- Small buffer to ensure it doesn't go negative again right away.
         misn.osdCreate(_("Deal with the FLF agent"), {
-            fmt.f( _("Take Gregar, the FLF agent, to the {sys} system and make contact with the FLF"), {sys=destsys}),
+            fmt.f( _("Take Gregar, the FLF agent, to the {sys} system and make contact with the FLF"), {sys=mem.destsys}),
             _("Follow the FLF ships to their secret base. Do not lose them!"),
             _("Alternatively, turn Gregar in to the nearest Dvaered base"),
         })
@@ -187,7 +187,7 @@ function inRange()
     end
     if mindist < 500 then
         hook.timer(2.0, "annai")
-        OORT = hook.timer(10.0, "outOfRange")
+        mem.OORT = hook.timer(10.0, "outOfRange")
     else
         hook.timer(0.5, "inRange")
     end
@@ -209,12 +209,12 @@ function annai()
             p:taskClear()
             p:control()
             p:moveto(player.pos()) -- NOT the player pilot, or the task may not pop properly.
-            p:moveto(waypoint2, false)
-            p:moveto(waypoint1, false)
-            p:moveto(waypoint0 + poss[i])
+            p:moveto(mem.waypoint2, false)
+            p:moveto(mem.waypoint1, false)
+            p:moveto(mem.waypoint0 + poss[i])
         end
     end
-    spawner = hook.timer(1.0, "spawnbase")
+    mem.spawner = hook.timer(1.0, "spawnbase")
 end
 
 -- Part of the escort script
@@ -222,20 +222,20 @@ function spawnbase()
     local mindist = 2000 -- definitely OOR.
     for i, p in ipairs(fleetFLF) do
         if p ~= nil and p:exists() then
-            mindist = math.min(mindist, vec2.dist(p:pos(), waypoint0))
+            mindist = math.min(mindist, vec2.dist(p:pos(), mem.waypoint0))
         end
     end
     if mindist < 1000 then
         diff.apply("FLF_base")
 
         -- Safety measure to ensure the player can land.
-        base = planet.get("Sindbad")
-        base:landOverride()
+        mem.base = planet.get("Sindbad")
+        mem.base:landOverride()
 
-        basefound = true
-        hook.rm(OORT)
+        mem.basefound = true
+        hook.rm(mem.OORT)
     else
-        spawner = hook.timer(1.0, "spawnbase")
+        mem.spawner = hook.timer(1.0, "spawnbase")
     end
 end
 
@@ -248,7 +248,7 @@ function outOfRange()
         end
     end
     if mindist < 1500 then
-        OORT = hook.timer(2.0, "outOfRange")
+        mem.OORT = hook.timer(2.0, "outOfRange")
     else
         tk.msg(_("You have lost contact with your escorts!"), _([[Your escorts have disappeared from your sensor grid. Unfortunately, it seems you have no way of knowing where they went.
     You notice that Gregar has disappeared from your cockpit. You search around your ship, but he's nowhere to be found. Seeing no other option, you give up on your search. Perhaps he'll turn up somewhere later.]]))

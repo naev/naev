@@ -95,8 +95,8 @@ function create ()
    end
 
    -- Choose system
-   targetsys = syslist[ rnd.rnd(1,#syslist) ]
-   if not misn.claim( targetsys ) then
+   mem.targetsys = syslist[ rnd.rnd(1,#syslist) ]
+   if not misn.claim( mem.targetsys ) then
       misn.finish(false)
    end
 
@@ -130,56 +130,55 @@ function create ()
    }
 
    -- Finish mission details
-   returnpnt, returnsys = planet.cur()
-   cargo = cargoes[ rnd.rnd(1,#cargoes) ]
-   cargo.__save = true
-   misn_cargo = misn.cargoNew( cargo[1], cargo[2] )
-   enemyfaction = faction.get("Trader")
-   convoy_enter, convoy_exit = get_route( targetsys )
+   mem.returnpnt, mem.returnsys = planet.cur()
+   mem.cargo = cargoes[ rnd.rnd(1,#cargoes) ]
+   mem.misn_cargo = misn.cargoNew( mem.cargo[1], mem.cargo[2] )
+   mem.enemyfaction = faction.get("Trader")
+   mem.convoy_enter, mem.convoy_exit = get_route( mem.targetsys )
    -- TODO make tiers based on how many times the player does them or something
    local r = rnd.rnd()
    local done = var.peek("pir_convoy_raid") or 0
    local mod = math.exp( -done*0.05 ) -- 0.95 for 1, 0.90 for 2 0.86 for 3, etc.
    mod = math.max( 0.5, mod ) -- Limit it so that 50% are large
    if r < 0.5*mod then
-      tier = 1
-      adjective = "tiny"
+      mem.tier = 1
+      mem.adjective = "tiny"
    elseif r < 1.0*mod then
-      tier = 2
-      adjective = "small"
+      mem.tier = 2
+      mem.adjective = "small"
    elseif r < 1.2*mod then
-      tier = 3
-      adjective = "medium"
+      mem.tier = 3
+      mem.adjective = "medium"
    else
-      tier = 4
-      adjective = "large"
+      mem.tier = 4
+      mem.adjective = "large"
    end
 
    -- Set up rewards
-   reward_faction = pir.systemClanP( system.cur() )
-   reward_base = 25e3 + rnd.rnd() * 15e3 + 25e3*math.sqrt(tier)
-   reward_cargo = 2e3 + rnd.rnd() * 2e3 + 3e3*math.sqrt(tier)
+   mem.reward_faction = pir.systemClanP( system.cur() )
+   mem.reward_base = 25e3 + rnd.rnd() * 15e3 + 25e3*math.sqrt(mem.tier)
+   mem.reward_cargo = 2e3 + rnd.rnd() * 2e3 + 3e3*math.sqrt(mem.tier)
 
-   local faction_text = pir.reputationMessage( reward_faction )
+   local faction_text = pir.reputationMessage( mem.reward_faction )
    local faction_title = ""
-   if pir.factionIsClan( reward_faction ) then
-      faction_title = fmt.f(_(" ({fct})"), {fct=reward_faction})
+   if pir.factionIsClan( mem.reward_faction ) then
+      faction_title = fmt.f(_(" ({fct})"), {fct=mem.reward_faction})
    end
 
-   misn.setTitle(fmt.f(_("#rPIRACY#0: Raid a {adjective} {name} convoy in the {sys} system{msg}"), {adjective=adjective, name=enemyfaction, sys=targetsys, msg=faction_title} ))
+   misn.setTitle(fmt.f(_("#rPIRACY#0: Raid a {adjective} {name} convoy in the {sys} system{msg}"), {adjective=mem.adjective, name=mem.enemyfaction, sys=mem.targetsys, msg=faction_title} ))
    misn.setDesc(fmt.f(_("A convoy carrying {cargo} will be passing through the {sys} system on the way from {entersys} to {exitsys}. A local Pirate Lord wants you to assault the convoy and bring back as many tonnes of {cargo} as possible. You will be paid based on how much you are able to bring back.{reputation}"),
-         {cargo=misn_cargo, sys=targetsys, entersys=convoy_enter:dest(), exitsys=convoy_exit:dest(), reputation=faction_text}))
-   misn.setReward(fmt.f(_("{rbase} and {rcargo} per ton of {cargo} recovered"), {rbase=fmt.credits(reward_base),rcargo=fmt.credits(reward_cargo),cargo=misn_cargo}))
-   misn.markerAdd( targetsys )
+         {cargo=mem.misn_cargo, sys=mem.targetsys, entersys=mem.convoy_enter:dest(), exitsys=mem.convoy_exit:dest(), reputation=faction_text}))
+   misn.setReward(fmt.f(_("{rbase} and {rcargo} per ton of {cargo} recovered"), {rbase=fmt.credits(mem.reward_base), rcargo=fmt.credits(mem.reward_cargo), cargo=mem.misn_cargo}))
+   misn.markerAdd( mem.targetsys )
 end
 
 function accept ()
    misn.accept()
 
    misn.osdCreate(_("Pirate Raid"), {
-      fmt.f(_("Go to the {sys} system"),{sys=targetsys}),
-      fmt.f(_("Plunder {cargo} from the convoy"),{cargo=misn_cargo}),
-      fmt.f(_("Deliver the loot to {pnt} in the {sys} system"),{pnt=returnpnt, sys=returnsys}),
+      fmt.f(_("Go to the {sys} system"),{sys=mem.targetsys}),
+      fmt.f(_("Plunder {cargo} from the convoy"),{cargo=mem.misn_cargo}),
+      fmt.f(_("Deliver the loot to {pnt} in the {sys} system"),{pnt=mem.returnpnt, sys=mem.returnsys}),
    } )
 
    hook.enter("enter")
@@ -187,58 +186,58 @@ function accept ()
 end
 
 function enter ()
-   local q = player.pilot():cargoHas( misn_cargo )
-   if convoy_spawned and q <= 0 then
-      player.msg(fmt.f(_("#rMISSION FAILED: You did not recover any {cargo} from the convoy!"), {cargo=misn_cargo}))
+   local q = player.pilot():cargoHas( mem.misn_cargo )
+   if mem.convoy_spawned and q <= 0 then
+      player.msg(fmt.f(_("#rMISSION FAILED: You did not recover any {cargo} from the convoy!"), {cargo=mem.misn_cargo}))
       misn.finish(false)
    end
-   if convoy_spawned and q > 0 then
+   if mem.convoy_spawned and q > 0 then
       misn.osdActive(3)
    end
-   if system.cur() ~= targetsys or convoy_spawned then
+   if system.cur() ~= mem.targetsys or mem.convoy_spawned then
       return
    end
 
-   convoy_spawned = true
+   mem.convoy_spawned = true
    misn.osdActive(2)
    hook.timer( 10+5*rnd.rnd(), "enter_delay" )
 end
 
 function land ()
    local pp = player.pilot()
-   local q = pp:cargoHas( misn_cargo )
-   if convoy_spawned and q > 0 and planet.cur()==returnpnt then
-      q = pp:cargoRm( misn_cargo, q ) -- Remove it
-      local reward = reward_base + q * reward_cargo
+   local q = pp:cargoHas( mem.misn_cargo )
+   if mem.convoy_spawned and q > 0 and planet.cur()==mem.returnpnt then
+      q = pp:cargoRm( mem.misn_cargo, q ) -- Remove it
+      local reward = mem.reward_base + q * mem.reward_cargo
       lmisn.sfxVictory()
-      vntk.msg( _("Mission Success"), fmt.f(_("The workers unload your {cargo} and take it away to somewhere you can't see. As you wonder about your payment, you suddenly receive a message that #g{reward}#0 was transferred to your account."), {cargo=misn_cargo, reward=fmt.credits(reward)}) )
+      vntk.msg( _("Mission Success"), fmt.f(_("The workers unload your {cargo} and take it away to somewhere you can't see. As you wonder about your payment, you suddenly receive a message that #g{reward}#0 was transferred to your account."), {cargo=mem.misn_cargo, reward=fmt.credits(reward)}) )
       player.pay( reward )
 
       -- Faction hit
-      faction.modPlayerSingle(reward_faction, tier*rnd.rnd(1, 2))
+      faction.modPlayerSingle(mem.reward_faction, mem.tier*rnd.rnd(1, 2))
 
       -- Mark as done
       local done = var.peek( "pir_convoy_raid" ) or 0
       var.push( "pir_convoy_raid", done+1 )
 
-      pir.addMiscLog(fmt.f(_("You raided a {adjective} {name} convoy in the {sys} system and stole {tonnes} of {cargo}."), {adjective=adjective, name=enemyfaction, sys=targetsys, tonnes=fmt.tonnes(q), cargo=misn_cargo}))
+      pir.addMiscLog(fmt.f(_("You raided a {adjective} {name} convoy in the {sys} system and stole {tonnes} of {cargo}."), {adjective=mem.adjective, name=mem.enemyfaction, sys=mem.targetsys, tonnes=fmt.tonnes(q), cargo=mem.misn_cargo}))
       misn.finish(true)
    end
 end
 
 function enter_delay ()
-   mrkentry = system.mrkAdd( convoy_enter:pos(), _("Convoy Entry Point") )
-   mrkexit = system.mrkAdd( convoy_exit:pos(), _("Convoy Exit Point") )
+   mem.mrkentry = system.mrkAdd( mem.convoy_enter:pos(), _("Convoy Entry Point") )
+   mem.mrkexit = system.mrkAdd( mem.convoy_exit:pos(), _("Convoy Exit Point") )
 
    player.autonavReset( 5 )
-   player.msg(fmt.f(_("The convoy will be coming in from {sys} shortly!"), {sys=convoy_enter:dest()}))
+   player.msg(fmt.f(_("The convoy will be coming in from {sys} shortly!"), {sys=mem.convoy_enter:dest()}))
    hook.timer( 5+10*rnd.rnd(), "spawn_convoy" )
 end
 
 function spawn_convoy ()
    -- Tier 1
    local tships, eships
-   if tier==4 then
+   if mem.tier==4 then
       tships = {"Mule", "Mule", "Mule"}
       if rnd.rnd() < 0.5 then
          table.insert( tships, "Mule" )
@@ -252,7 +251,7 @@ function spawn_convoy ()
          table.insert( eships, (rnd.rnd() < 0.7 and "Lancelot") or "Admonisher" )
       end
 
-   elseif tier==3 then
+   elseif mem.tier==3 then
       tships = {"Mule"}
       local r = rnd.rnd()
       if r < 0.3 then
@@ -266,7 +265,7 @@ function spawn_convoy ()
          table.insert( eships, (rnd.rnd() < 0.7 and "Shark") or "Lancelot" )
       end
 
-   elseif tier==2 then
+   elseif mem.tier==2 then
       if rnd.rnd() < 0.5 then
          tships = {"Koala", "Koala"}
       else
@@ -281,7 +280,7 @@ function spawn_convoy ()
          table.insert( eships, "Shark" )
       end
 
-   else -- tier==1
+   else -- mem.tier==1
       tships = {"Llama", "Llama"}
       eships = {"Shark", "Shark"}
       if rnd.rnd() < 0.5 then
@@ -290,16 +289,16 @@ function spawn_convoy ()
    end
 
    -- Use a dynamic faction so pirates don't destroy them
-   local fconvoy = faction.dynAdd( enemyfaction, "convoy_faction", enemyfaction:name(), {clear_enemies=true, clear_allies=true} )
+   local fconvoy = faction.dynAdd( mem.enemyfaction, "convoy_faction", mem.enemyfaction:name(), {clear_enemies=true, clear_allies=true} )
 
-   sconvoy = flt.add( 1, tships, fconvoy, convoy_enter, _("Convoy") )
+   sconvoy = flt.add( 1, tships, fconvoy, mem.convoy_enter, _("Convoy") )
    for _k,p in ipairs(sconvoy) do
       p:cargoRm("all")
-      p:cargoAdd( misn_cargo, math.floor((0.8+0.2*rnd.rnd())*p:cargoFree()) )
+      p:cargoAdd( mem.misn_cargo, math.floor((0.8+0.2*rnd.rnd())*p:cargoFree()) )
       hook.pilot( p, "board", "convoy_board" )
       hook.pilot( p, "attacked", "convoy_attacked" )
    end
-   sescorts = flt.add( 1, eships, fconvoy, convoy_enter, nil, {ai="mercenary"} )
+   sescorts = flt.add( 1, eships, fconvoy, mem.convoy_enter, nil, {ai="mercenary"} )
    for _k,p in ipairs(sescorts) do
       p:setLeader( sconvoy[1] )
       hook.pilot( p, "attacked", "convoy_attacked" )
@@ -310,7 +309,7 @@ function spawn_convoy ()
    sconvoy[1]:intrinsicSet( "turn_mod", -33 )
    sconvoy[1]:setHilight(true)
    sconvoy[1]:control()
-   sconvoy[1]:hyperspace( convoy_exit, true )
+   sconvoy[1]:hyperspace( mem.convoy_exit, true )
    hook.pilot( sconvoy[1], "death", "convoy_done" )
 end
 
@@ -333,7 +332,7 @@ function convoy_board ()
 end
 
 function convoy_boarded ()
-   if player.pilot():cargoHas( misn_cargo ) > 0 then
+   if player.pilot():cargoHas( mem.misn_cargo ) > 0 then
       misn.osdGetActive(3)
    end
 end

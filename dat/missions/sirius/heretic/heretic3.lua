@@ -33,17 +33,17 @@ local flee -- Forward-declared functions
 function create()
    --this mission makes one mission claim, in Suna.
    --initialize your variables
-   nasin_rep = faction.playerStanding("Nasin")
-   misn_tracker = var.peek("heretic_misn_tracker")
-   reward = math.floor((100e3+(math.random(5,8)*2e3)*(nasin_rep^1.315))*.01+.5)/.01
-   planding = 0
-   homeasset, homesys = planet.cur()
-   msg_checker = 0
+   mem.nasin_rep = faction.playerStanding("Nasin")
+   mem.misn_tracker = var.peek("heretic_misn_tracker")
+   mem.reward = math.floor((100e3+(math.random(5,8)*2e3)*(mem.nasin_rep^1.315))*.01+.5)/.01
+   mem.planding = 0
+   mem.homeasset, mem.homesys = planet.cur()
+   mem.msg_checker = 0
    --set the mission stuff
-   if not misn.claim(homesys) then
+   if not misn.claim(mem.homesys) then
       misn.finish(false)
    end
-   misn.setReward( fmt.credits( reward ) )
+   misn.setReward( fmt.credits( mem.reward ) )
    misn.setTitle( _("The Assault") )
    misn.setNPC(_("Draga"), "sirius/unique/draga.webp", _("The familiar form of Draga is at a table with some officers. They look busy."))
 end
@@ -55,11 +55,11 @@ function accept()
       tk.msg( _("The Assault"), _([["Excellent! See, folks? I told you this one was a keeper! Our forces will meet you out there. Ah, and while I'm sure you would never do this, as before, desertion will not be tolerated. Do not land or leave the system until your mission is completed."]]) )
 
       misn.accept()
-      misn.setDesc(fmt.f(_([[A Sirius assault fleet has just jumped into {sys}. You are to assist Nasin in destroying this fleet.]]), {sys=homesys}))
-      misn.markerAdd(homesys,"high")
+      misn.setDesc(fmt.f(_([[A Sirius assault fleet has just jumped into {sys}. You are to assist Nasin in destroying this fleet.]]), {sys=mem.homesys}))
+      misn.markerAdd(mem.homesys, "high")
       misn.osdCreate(_("The Assault"), {
-         fmt.f(_("Defend {pnt} against the Sirius assault"), {pnt=homeasset}),
-         fmt.f(_("Return to {pnt}"), {pnt=homeasset}),
+         fmt.f(_("Defend {pnt} against the Sirius assault"), {pnt=mem.homeasset}),
+         fmt.f(_("Return to {pnt}"), {pnt=mem.homeasset}),
       })
       misn.osdActive(1)
 
@@ -76,7 +76,7 @@ end
 function takeoff() --for when the player takes off from the wringer.
    pilot.clear() --clearing out all the pilots, and
    pilot.toggleSpawn("Sirius",false) --making the Sirius not spawn. I want the assault fleet the only Sirius in there.
-   deathcounter = 0 -- Counts destroyed Nasin ships.
+   mem.deathcounter = 0 -- Counts destroyed Nasin ships.
    local assault_force = {"Sirius Divinity", "Sirius Dogma", "Sirius Dogma", "Sirius Preacher", "Sirius Preacher", "Sirius Preacher", "Sirius Fidelity", "Sirius Fidelity", "Sirius Fidelity", "Sirius Fidelity", "Sirius Fidelity", "Sirius Fidelity"}
    sirius_be_serious = fleet.add( 1, assault_force, "Sirius", system.get("Herakin") )
 
@@ -87,7 +87,7 @@ function takeoff() --for when the player takes off from the wringer.
       p:setHostile() --just in case. makes thing easier.
    end
 
-   de_fence = fleet.add( 2, {"Shark", "Lancelot", "Lancelot", "Admonisher"}, "Nasin", homeasset, {_("Nasin Shark"), _("Nasin Lancelot"), _("Nasin Lancelot"), _("Nasin Admonisher")} )
+   de_fence = fleet.add( 2, {"Shark", "Lancelot", "Lancelot", "Admonisher"}, "Nasin", mem.homeasset, {_("Nasin Shark"), _("Nasin Lancelot"), _("Nasin Lancelot"), _("Nasin Admonisher")} )
    de_fence_2 = fleet.add( 2,  {"Shark", "Lancelot", "Lancelot", "Admonisher"}, "Nasin", vec2.new(rnd.rnd(25,75),rnd.rnd(100,350)), {_("Nasin Shark"), _("Nasin Lancelot"), _("Nasin Lancelot"), _("Nasin Admonisher")} )
 
    for _,p in ipairs(de_fence) do
@@ -109,28 +109,28 @@ function takeoff() --for when the player takes off from the wringer.
 end
 
 function death(_p)
-   deathcounter = deathcounter + 1
-   if deathcounter >= 9 then --9 ships is all the ships in the first fleet minus the 2 cruisers and the carrier. might adjust this later.
+   mem.deathcounter = mem.deathcounter + 1
+   if mem.deathcounter >= 9 then --9 ships is all the ships in the first fleet minus the 2 cruisers and the carrier. might adjust this later.
       flee()
    end
 end
 
 function flee()
-   returnchecker = true --used to show that deathcounter has been reached, and that the player is landing 'just because'
+   mem.returnchecker = true --used to show that mem.deathcounter has been reached, and that the player is landing 'just because'
    misn.osdActive(2)
    tk.msg(_("The Assault"), fmt.f(_([[You receive a frantic message from Draga. "{player}! This is worse than we ever thought. We need you back at the base! Stat!"]]), {player=player.name()} ))
    -- Send any surviving Nasin ships home.
    for _, j in ipairs(de_fence) do
       if j:exists() then
          j:control()
-         j:land(homeasset)
+         j:land(mem.homeasset)
          j:hookClear() -- So we don't trigger death() again.
       end
    end
    for _, j in ipairs(de_fence_2) do
       if j:exists() then
          j:control()
-         j:land(homeasset)
+         j:land(mem.homeasset)
          j:hookClear() -- So we don't trigger death() again.
       end
    end
@@ -155,16 +155,16 @@ function second_coming()
 end
 
 function return_to_base()
-   if not returnchecker then --feel like landing early? AWOL!
+   if not mem.returnchecker then --feel like landing early? AWOL!
       tk.msg(_("The Assault"),_([[As you land, Draga sees you. He seems just about ready to kill you on the spot. "You abandon us now? When we need you the most?! I should never have put my trust in you! Filth! Get out of my sight before I kill you where you stand!" You do as he says, beginning to question your decision to abandon your mission at the very place Draga was. Nonetheless, you bury your head and make a mental note to get out of here as soon as possible.]]))
       faction.modPlayerSingle("Nasin",-50)
       misn.finish(false) --mwahahahahaha!
    else
-      player.pay(reward)
+      player.pay(mem.reward)
       tk.msg(_("The Assault"),_([[As you land, you see the Nasin forces desperately trying to regroup. "Hurry and get your ship ready for another battle," he says, "and meet me at the bar when you're ready! Payment has been transferred into your account. More importantly, we have a dire situation!"]]))
-      misn_tracker = misn_tracker + 1
+      mem.misn_tracker = mem.misn_tracker + 1
       faction.modPlayer("Nasin",10)
-      var.push("heretic_misn_tracker",misn_tracker)
+      var.push("heretic_misn_tracker", mem.misn_tracker)
       srs.addHereticLog( _([[You helped Draga in an attempt to protect Nasin from the Sirius military. Draga ordered you to get your ship ready for another battle and meet him at the bar.]]) )
       misn.finish(true)
    end

@@ -145,7 +145,7 @@ They stare at you for a few seconds.
       _("Jump to a nearby system by using your starmap"),
    } )
 
-   timer_hook = hook.timer( 5.0, "timer" )
+   mem.timer_hook = hook.timer( 5.0, "timer" )
    hook.land("land")
    hook.takeoff("takeoff")
    hook.enter("enter")
@@ -153,20 +153,20 @@ They stare at you for a few seconds.
    -- Set stuff known as necessary
    dest_planet:setKnown(true)
    jump.get( system.cur(), destsys ):setKnown(true)
-   misnmarker = misn.markerAdd( start_planet )
+   mem.misnmarker = misn.markerAdd( start_planet )
 
-   stage = 1
+   mem.stage = 1
 end
 
 function timer ()
-   hook.rm( timer_hook )
-   timer_hook = hook.timer( 1.0, "timer" )
+   hook.rm( mem.timer_hook )
+   mem.timer_hook = hook.timer( 1.0, "timer" )
 
    -- Have to be in the mission system
    if not system.cur() == missys then return end
 
-   if stage==1 and player.pos():dist( start_planet:pos() ) <= start_planet_r then
-      stage = 2
+   if mem.stage==1 and player.pos():dist( start_planet:pos() ) <= start_planet_r then
+      mem.stage = 2
       misn.osdActive( 2 )
 
       vn.clear()
@@ -180,8 +180,8 @@ function timer ()
       vn.done( tut.shipai.transition )
       vn.run()
 
-   elseif stage==4 and player.pos():dist(dest_planet:pos()) <= dest_planet_r then
-      stage = 5
+   elseif mem.stage==4 and player.pos():dist(dest_planet:pos()) <= dest_planet_r then
+      mem.stage = 5
       misn.osdActive( 4 )
 
       vn.clear()
@@ -199,25 +199,25 @@ function timer ()
 
       spawn_captain_tp ()
 
-      misn.markerRm( misnmarker )
+      misn.markerRm( mem.misnmarker )
    end
 end
 
 function land ()
-   hook.rm(timer_hook)
-   timer_hook = nil
-   if stage == 2 then
-      stage = 3
+   hook.rm(mem.timer_hook)
+   mem.timer_hook = nil
+   if mem.stage == 2 then
+      mem.stage = 3
       msg_info{_([["Excellent! The landing was successful. As your Ship AI, I am in charge of guiding your ship and performing the landing procedure, which has cut down significantly on misfortunes during human-controlled manual landing procedures. When you land, your ship is refueled automatically and you can do things such as talk to civilians at the bar, buy new ship components, configure your ship, and most importantly, accept missions from the Mission Computer. Why don't we look around? As you can see, we are currently on the Landing Main tab, where you can learn about the planet and buy a local map. Click all the other tabs below and I'll give you a tour through what else you can do on a planet. When you are done, click the '#bTake Off#0' button so we can continue."]])}
 
-      bar_hook       = hook.land("land_bar", "bar")
-      mission_hook   = hook.land("land_mission", "mission")
-      outfits_hook   = hook.land("land_outfits", "outfits")
-      shipyard_hook  = hook.land("land_shipyard", "shipyard")
-      equipment_hook = hook.land("land_equipment", "equipment")
-      commodity_hook = hook.land("land_commodity", "commodity")
+      mem.bar_hook       = hook.land("land_bar", "bar")
+      mem.mission_hook   = hook.land("land_mission", "mission")
+      mem.outfits_hook   = hook.land("land_outfits", "outfits")
+      mem.shipyard_hook  = hook.land("land_shipyard", "shipyard")
+      mem.equipment_hook = hook.land("land_equipment", "equipment")
+      mem.commodity_hook = hook.land("land_commodity", "commodity")
 
-      misn.markerRm( misnmarker )
+      misn.markerRm( mem.misnmarker )
    end
 end
 
@@ -226,14 +226,14 @@ function msg_info( msg )
 end
 
 function land_bar ()
-   hook.rm(bar_hook)
-   bar_hook = nil
+   hook.rm(mem.bar_hook)
+   mem.bar_hook = nil
    msg_info(_([["This is the Spaceport Bar, where you can read the latest news (as you can see on your right at the moment), but more importantly, you can meet other pilots, civilians, and more! Click on someone at the bar and then click on the '#bApproach#0' button to approach them. Important characters will be marked with a red exclamation mark. In general, I recommend regularly talking to bar patrons, who knows what good tips or interesting jobs they will have available for you."]]))
 end
 
 function land_mission ()
-   hook.rm(mission_hook)
-   mission_hook = nil
+   hook.rm(mem.mission_hook)
+   mem.mission_hook = nil
    msg_info{_([["This is the Mission Computer, where you can find basic missions in the official mission database. Missions are how you make your living as a pilot, so I recommend you check this screen often to see where the money-making opportunities are! You can see that each mission is given a brief summary, and by clicking them, you will be able to see more information about the mission. Since many missions involve cargo, you can also see how much free space is available in your ship in the top-right."]]),
       fmt.f(_([["When picking missions, pay attention to how much they pay. You'll want to strike a balance of choosing missions that you're capable of doing, but getting paid as much as possible to do them. Once you've chosen a mission, click the '#bAccept Mission#0' button on the bottom-right and it will be added to your active missions, which you can review via the Info screen by pressing {infokey}."]]),{infokey=tut.getKey("info")}),
       _([["As you gain reputation with other factions and characters, you will be given access to more complicated and well paying missions at the mission computer. That is why I recommend also checking the spaceport bar often when travelling."]]),
@@ -241,24 +241,24 @@ function land_mission ()
 end
 
 function land_outfits ()
-   hook.rm(outfits_hook)
-   outfits_hook = nil
+   hook.rm(mem.outfits_hook)
+   mem.outfits_hook = nil
    msg_info{_([["This is the Outfitter, where you can buy new outfits to make your starship even better! You can fit your ship with new weapons, extra cargo space, more powerful core systems, and more! Regional maps which can help you explore the galaxy more easily can also be purchased here, as well as licenses required for higher-end weaponry and starships. For example, you will require a Large Civilian Vessel License to purchase a Melendez Corporation Mule Bulk Cargo Starship. As my previous owner found out, they don't do too well in combat, however."]]),
    _([["As you can see, a series of tabs at the top of your screen allow you to filter outfits by type: 'W' for weapons, 'U' for utilities, 'S' for structurals, 'Core' for cores, and 'Other' for anything outside of those categories, most notably, regional maps and licenses. When you see an outfit that interests you, click on it to see more information about it, then either click on the '#bBuy#0' button to buy it or click on the '#bSell#0' button to sell it if you have one in your possession. Different planets have different outfits available; if you don't see a specific outfit you're looking for, you can search for it via the '#bFind Outfits#0' button on the starmap screen. After buying new outfits make sure to equip them in the #oEquipment#0 window."]]),
    }
 end
 
 function land_shipyard ()
-   hook.rm(shipyard_hook)
-   shipyard_hook = nil
+   hook.rm(mem.shipyard_hook)
+   mem.shipyard_hook = nil
    msg_info{_([["This is the Shipyard, where you can buy new starships to either replace the one you've got, or to add to your collection! On the left of this screen, you will see ships available on the planet you're currently on. Click on a ship you're interested in learning more about. You can then either buy the ship with the '#bBuy#0' button, or trade your current ship in for the new ship with the '#bTrade-In#0' button. Different planets have different ships available; if you don't see a specific ship you're looking for, you can search for it via the '#bFind Ships#0' button on the starmap screen."]]),
    _([["You likely don't have enough credits for a new ship now, but later on, when you've saved up enough, you'll likely want to upgrade your ship to an even better one, depending on what kinds of tasks you will be performing. Different ships have different strengths and weaknesses which interact with the different outfits you can equip them with. Note that some ships also require licenses before you can buy them."]])
    }
 end
 
 function land_equipment ()
-   hook.rm(equipment_hook)
-   equipment_hook = nil
+   hook.rm(mem.equipment_hook)
+   mem.equipment_hook = nil
    -- TODO cut up
    msg_info{_([["This is the Equipment screen, which is available only on planets which have either an outfitter or a shipyard. Here, you can equip your ship with any outfits you have bought at the #oOutfitter#0. If and only if the current planet has a shipyard, you can also do so with any other ship you own, and you can swap which ship you are currently piloting by selecting another ship and clicking the '#bSwap Ship#0' button or #bdouble-clicking#0 on it. You can also sell those other ships, but not your current ship, with the '#bSell Ship#0' button, if you decide that you no longer need them. Selling a ship that still has outfits equipped will also lead to those outfits being sold along with the ship, so do keep that in mind if there's an outfit you need to keep."]]),
    _([["If you make any changes to your ship now, please ensure that you still have weapons equipped, as you will need those later for practicing combat and flying around space without any weapons can be very risky anyway."]]),
@@ -266,8 +266,8 @@ function land_equipment ()
 end
 
 function land_commodity ()
-   hook.rm(commodity_hook)
-   commodity_hook = nil
+   hook.rm(mem.commodity_hook)
+   mem.commodity_hook = nil
    -- TODO cut up
    msg_info{_([["This is the Commodity screen, where you can buy and sell commodities. Commodity prices vary from planet to planet and even over time, so you can use this screen to attempt to make money by buying low and selling high. Click on a commodity to see information about it, most notably its average price per tonne, and click on the '#bBuy#0' and '#bSell#0' buttons to buy or sell some of the commodity, respectively. Here, it's useful to hold the #bShift#0 and/or #bCtrl#0 keys to adjust the modifier of how many tonnes of the commodity you're buying or selling at once. This will reduce the number of times you have to click on the Buy and Sell buttons."]]),
    fmt.f(_([["If you're unsure what's profitable to buy or sell, you can press {starmapkey} to view the star map and then click on the '#bMode#0' button for various price overviews. The news terminal at the bar also includes price information for specific nearby planets."]]),{starmapkey=tut.getKey("starmap")})
@@ -275,29 +275,29 @@ function land_commodity ()
 end
 
 function takeoff ()
-   hook.rm(bar_hook)
-   hook.rm(mission_hook)
-   hook.rm(outfits_hook)
-   hook.rm(shipyard_hook)
-   hook.rm(equipment_hook)
-   hook.rm(commodity_hook)
-   bar_hook       = nil
-   mission_hook   = nil
-   outfits_hook   = nil
-   shipyard_hook  = nil
-   equipment_hook = nil
-   commodity_hook = nil
+   hook.rm(mem.bar_hook)
+   hook.rm(mem.mission_hook)
+   hook.rm(mem.outfits_hook)
+   hook.rm(mem.shipyard_hook)
+   hook.rm(mem.equipment_hook)
+   hook.rm(mem.commodity_hook)
+   mem.bar_hook       = nil
+   mem.mission_hook   = nil
+   mem.outfits_hook   = nil
+   mem.shipyard_hook  = nil
+   mem.equipment_hook = nil
+   mem.commodity_hook = nil
 end
 
 function enter ()
-   hook.rm( timer_hook )
-   timer_hook = hook.timer( 5.0, "timer" )
+   hook.rm( mem.timer_hook )
+   mem.timer_hook = hook.timer( 5.0, "timer" )
    hook.timer( 2.0, "enter_timer" )
 end
 
 function enter_timer ()
-   if stage == 3 then
-      stage = 4
+   if mem.stage == 3 then
+      mem.stage = 4
       misn.osdActive( 3 )
 
       vn.clear()
@@ -310,12 +310,12 @@ function enter_timer ()
       vn.done( tut.shipai.transition )
       vn.run()
 
-      misnmarker = misn.markerAdd( dest_planet )
+      mem.misnmarker = misn.markerAdd( dest_planet )
 
-   elseif stage == 5 and system.cur() == missys then
+   elseif mem.stage == 5 and system.cur() == missys then
       spawn_captain_tp ()
 
-   elseif stage == 6 and system.cur() ~= missys then
+   elseif mem.stage == 6 and system.cur() ~= missys then
       vn.clear()
       vn.scene()
       local sai = vn.newCharacter( tut.vn_shipai() )
@@ -337,7 +337,7 @@ function pilot_death ()
 end
 
 function pilot_death_timer ()
-   stage = 6
+   mem.stage = 6
    misn.osdActive( 5 )
    misn.markerAdd( destsys )
 

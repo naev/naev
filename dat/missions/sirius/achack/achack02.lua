@@ -56,9 +56,9 @@ end
 
 local function player_has_fast_ship()
   local stats = player.pilot():stats()
-  playershipspeed = stats.speed_max
+  mem.playershipspeed = stats.speed_max
   local has_fast_ship = false
-  if playershipspeed > 200 then
+  if mem.playershipspeed > 200 then
      has_fast_ship = true
   end
   return has_fast_ship
@@ -80,14 +80,14 @@ function accept()
     "Also, I think this goes without saying, but I need you to stick close to me so your ship must be fast enough. Also don't jump to any systems before I do, don't jump to the wrong systems, and don't land on any planets I don't land on. If we meet any unpleasantries along the way I will rely on you to help me fight them off. That's about it. I'll finish up a few things here, and then I'll head to my ship. I'll be in the air when you are."
     Joanne leaves the bar. You will meet up with her in orbit.]]))
 
-   stage = 1
+   mem.stage = 1
 
-   destplanet, destsys = planet.getS(route[stage])
-   nextsys = system.cur() -- This variable holds the system the player is supposed to jump to NEXT. This is the current system when taking off.
-   origin = planet.cur() -- Determines where Joanne spawns from. Can be a planet or system.
-   joannejumped = true -- Determines if Joanne has jumped. Needs to be set when landed.
-   mark = misn.markerAdd( destsys, "low" )
-   warnFuel = true
+   mem.destplanet, mem.destsys = planet.getS(route[mem.stage])
+   mem.nextsys = system.cur() -- This variable holds the system the player is supposed to jump to NEXT. This is the current system when taking off.
+   mem.origin = planet.cur() -- Determines where Joanne spawns from. Can be a planet or system.
+   mem.joannejumped = true -- Determines if Joanne has jumped. Needs to be set when landed.
+   mem.mark = misn.markerAdd( mem.destsys, "low" )
+   mem.warnFuel = true
 
    misn.accept()
    misn.setDesc(_("Joanne needs you to escort her ship and fight off mercenaries sent to kill her."))
@@ -104,29 +104,29 @@ end
 
 -- Land hook.
 function land()
-   if planet.cur() == destplanet and joannelanded and stage < 4 then
-      stage = stage + 1
-      destplanet, destsys = planet.getS(route[stage])
-      misn.markerMove( mark, destsys )
-      origin = planet.cur()
+   if planet.cur() == mem.destplanet and mem.joannelanded and mem.stage < 4 then
+      mem.stage = mem.stage + 1
+      mem.destplanet, mem.destsys = planet.getS(route[mem.stage])
+      misn.markerMove( mem.mark, mem.destsys )
+      mem.origin = planet.cur()
       player.refuel(200)
       tk.msg(_("Another stop successfully reached"), fmt.f(stoptext, {pnt=planet.cur()}))
-      joannejumped = true -- She "jumped" into the current system by taking off.
+      mem.joannejumped = true -- She "jumped" into the current system by taking off.
       player.takeoff()
-   elseif planet.cur() == destplanet and joannelanded and stage == 4 then
+   elseif planet.cur() == mem.destplanet and mem.joannelanded and mem.stage == 4 then
       tk.msg(_("Mission accomplished"), fmt.f(text4, {player=player.name()}))
-      stage = stage + 1
-      origin = planet.cur()
-      destplanet, destsys = planet.getS(route[stage])
-      misn.markerMove( mark, destsys )
-      joannejumped = true -- She "jumped" into the current system by taking off.
+      mem.stage = mem.stage + 1
+      mem.origin = planet.cur()
+      mem.destplanet, mem.destsys = planet.getS(route[mem.stage])
+      misn.markerMove( mem.mark, mem.destsys )
+      mem.joannejumped = true -- She "jumped" into the current system by taking off.
       misn.osdCreate(_("Harja's Vengeance"), {_("Land on Sroolu to get your reward")})
       player.takeoff()
-   elseif stage < 4 then
+   elseif mem.stage < 4 then
       tk.msg(_("You didn't follow Joanne!"), _("You landed on a planet Joanne didn't land on. Your mission is a failure!"))
       misn.finish(false)
-   elseif stage == 5 and planet.cur() == planet.get("Sroolu") then
-      misn.markerRm(mark)
+   elseif mem.stage == 5 and planet.cur() == planet.get("Sroolu") then
+      misn.markerRm(mem.mark)
       tk.msg(_("One damsel, safe and sound"), fmt.f(_([[After you both land your ships, you meet Joanne in the spaceport bar.
     "Whew! That was definitely the most exciting round I've done to date! Thank you {player}, I probably owe you my life. You more than deserved your payment, I've already arranged for the transfer." Joanne hesitates, but then apparently makes up her mind. "In fact, would you sit down for a while? I think you deserve to know what this whole business with Harja is all about. And to be honest, I kind of want to talk to someone about this, and seeing how you're involved already anyway..."
     You decide to sit down and listen to Joanne's story, not in the last place because you're rather curious yourself.
@@ -146,7 +146,7 @@ end
 
 -- Enter hook.
 function enter()
-   if not (system.cur() == nextsys and joannejumped) then
+   if not (system.cur() == mem.nextsys and mem.joannejumped) then
       tk.msg(_("You didn't follow Joanne!"), _("You jumped to a system before Joanne did, or you jumped to a different system than Joanne. Your mission is a failure!"))
       misn.finish(false)
    end
@@ -156,14 +156,14 @@ function enter()
    end
 
    -- Warn the player if fuel is not sufficient
-   if warnFuel then
+   if mem.warnFuel then
       if player.pilot():stats().fuel < 7*player.pilot():stats().fuel_consumption then
          tk.msg(_("Fuel Warning"),_("You don't have enough fuel for making 5 jumps. You'll have to buy some from civilian ships on the way."))
       end
-      warnFuel = false
+      mem.warnFuel = false
    end
 
-   joanne = pilot.add("Sirius Fidelity", "Achack_sirius", origin, _("Joanne"))
+   joanne = pilot.add("Sirius Fidelity", "Achack_sirius", mem.origin, _("Joanne"))
    joanne:control()
    joanne:outfitRm("cores")
    joanne:outfitRm("all")
@@ -182,8 +182,8 @@ function enter()
    joanne:setInvincPlayer()
    local stats = joanne:stats()
    local joanneshipspeed = stats.speed_max
-   if playershipspeed < joanneshipspeed then
-     joanne:setSpeedLimit(playershipspeed)
+   if mem.playershipspeed < joanneshipspeed then
+     joanne:setSpeedLimit(mem.playershipspeed)
    end
 
    for k,f in ipairs(pir.factions) do
@@ -191,23 +191,23 @@ function enter()
       pilot.clearSelect(f) -- Not sure if we need a claim for this.
    end
 
-   joannejumped = false
-   origin = system.cur()
+   mem.joannejumped = false
+   mem.origin = system.cur()
 
-   if system.cur() == destsys then
-      destplanet:landOverride(true)
-      joanne:land(destplanet)
+   if system.cur() == mem.destsys then
+      mem.destplanet:landOverride(true)
+      joanne:land(mem.destplanet)
       hook.pilot(joanne, "land", "joanneLand")
    else
-      nextsys = lmisn.getNextSystem(system.cur(), destsys) -- This variable holds the system the player is supposed to jump to NEXT.
-      joanne:hyperspace(nextsys)
+      mem.nextsys = lmisn.getNextSystem(system.cur(), mem.destsys) -- This variable holds the system the player is supposed to jump to NEXT.
+      joanne:hyperspace(mem.nextsys)
       hook.pilot(joanne, "jump", "joanneJump")
    end
    hook.pilot(joanne, "death", "joanneDead")
 
-   if system.cur() == system.get("Druss") and stage == 3 then
+   if system.cur() == system.get("Druss") and mem.stage == 3 then
       ambushSet({"Hyena", "Hyena"}, vec2.new(-12000, 9000))
-   elseif system.cur() == system.get("Humdrum") and stage == 4 then
+   elseif system.cur() == system.get("Humdrum") and mem.stage == 4 then
       ambushSet({"Vendetta", "Vendetta"}, vec2.new(2230, -15000))
    end
 end
@@ -228,7 +228,7 @@ function ambushActivate()
       j:setHostile()
       j:setVisplayer()
       hook.pilot(j, "death", "ambusherDead")
-      deadmans = 0
+      mem.deadmans = 0
    end
    ambush[1]:broadcast(_("That's our target! Get her, boys!"))
    joanne:control(false)
@@ -237,33 +237,33 @@ end
 
 -- Death hook for ambushers.
 function ambusherDead()
-   deadmans = deadmans + 1
-   if deadmans == #ambush then
+   mem.deadmans = mem.deadmans + 1
+   if mem.deadmans == #ambush then
       joanne:control()
-      joanne:hyperspace(nextsys)
+      joanne:hyperspace(mem.nextsys)
       misn.osdActive(1)
    end
 end
 
 -- Load hook. Makes sure the player can't start on military stations.
 function on_load()
-   if stage > 1 and stage < 5 then
+   if mem.stage > 1 and mem.stage < 5 then
       tk.msg(_("Another stop successfully reached"), fmt.f(stoptext, {pnt=planet.cur()}))
       player.takeoff()
-   elseif stage == 5 then
+   elseif mem.stage == 5 then
       tk.msg(_("Mission accomplished"), fmt.f(text4, {player=player.name()}))
       player.takeoff()
    end
 end
 
 function joanneJump()
-   joannejumped = true
-   player.msg(fmt.f(_("Joanne has jumped for the {sys} system. Follow her!"), {sys=nextsys}))
+   mem.joannejumped = true
+   player.msg(fmt.f(_("Joanne has jumped for the {sys} system. Follow her!"), {sys=mem.nextsys}))
 end
 
 function joanneLand()
-   joannelanded = true
-   player.msg(fmt.f(_("Joanne has docked with {pnt}. Follow her!"), {pnt=destplanet}))
+   mem.joannelanded = true
+   player.msg(fmt.f(_("Joanne has docked with {pnt}. Follow her!"), {pnt=mem.destplanet}))
 end
 
 function joanneDead()

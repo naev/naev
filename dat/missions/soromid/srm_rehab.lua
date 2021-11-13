@@ -17,4 +17,4 @@
 
 require "missions.rehab_common"
 
-fac = faction.get("Soromid")
+mem.fac = faction.get("Soromid")

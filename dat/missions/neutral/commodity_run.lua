@@ -31,8 +31,8 @@ local fmt = require "format"
 local vntk = require "vntk"
 
 --Mission Details
-misn_title = _("{cargo} Delivery")
-misn_desc = _("{pnt} has an insufficient supply of {cargo} to satisfy the current demand. Go to any planet which sells this commodity and bring as much of it back as possible.")
+mem.misn_title = _("{cargo} Delivery")
+mem.misn_desc = _("{pnt} has an insufficient supply of {cargo} to satisfy the current demand. Go to any planet which sells this commodity and bring as much of it back as possible.")
 
 cargo_land = {}
 cargo_land[1] = _("The containers of {cargo} are carried out of your ship and tallied. After several different men double-check the register to confirm the amount, you are paid {credits} and summarily dismissed.")
@@ -40,8 +40,8 @@ cargo_land[2] = _("The containers of {cargo} are quickly and efficiently unloade
 cargo_land[3] = _("The containers of {cargo} are unloaded from your vessel by a team of dockworkers who are in no rush to finish, eventually delivering {credits} after the number of tonnes is determined.")
 cargo_land[4] = _("The containers of {cargo} are unloaded by robotic drones that scan and tally the contents. The human overseer hands you {credits} when they finish.")
 
-osd_title = _("Commodity Delivery")
-paying_faction = faction.get("Independent")
+mem.osd_title = _("Commodity Delivery")
+mem.paying_faction = faction.get("Independent")
 
 
 -- A script may require "missions/neutral/commodity_run" and override this
@@ -63,17 +63,17 @@ end
 
 function create ()
    -- Note: this mission does not make any system claims.
-   misplanet, missys = planet.cur()
+   mem.misplanet, mem.missys = planet.cur()
 
    if commchoices == nil then
       local std = commodity.getStandard();
-      chosen_comm = std[rnd.rnd(1, #std)]:nameRaw()
+      mem.chosen_comm = std[rnd.rnd(1, #std)]:nameRaw()
    else
-      chosen_comm = commchoices[rnd.rnd(1, #commchoices)]
+      mem.chosen_comm = commchoices[rnd.rnd(1, #commchoices)]
    end
-   local comm = commodity.get(chosen_comm)
+   local comm = commodity.get(mem.chosen_comm)
    local mult = 1 + math.abs(rnd.twosigma() * 2)
-   price = comm:price() * mult
+   mem.price = comm:price() * mult
 
    local last_run = var.peek( "last_commodity_run" )
    if last_run ~= nil then
@@ -83,7 +83,7 @@ function create ()
       end
    end
 
-   for _i, j in ipairs( missys:planets() ) do
+   for _i, j in ipairs( mem.missys:planets() ) do
       for _k, v in pairs( j:commoditiesSold() ) do
          if v == comm then
             misn.finish(false)
@@ -92,22 +92,22 @@ function create ()
    end
 
    -- Set Mission Details
-   misn.setTitle( fmt.f( misn_title, {cargo=comm} ) )
+   misn.setTitle( fmt.f( mem.misn_title, {cargo=comm} ) )
    misn.markerAdd( system.cur(), "computer" )
-   misn.setDesc( fmt.f( misn_desc, {pnt=misplanet, cargo=comm} ) )
-   misn.setReward( fmt.f(_("{credits} per tonne"), {credits=fmt.credits(price)} ) )
+   misn.setDesc( fmt.f( mem.misn_desc, {pnt=mem.misplanet, cargo=comm} ) )
+   misn.setReward( fmt.f(_("{credits} per tonne"), {credits=fmt.credits(mem.price)} ) )
 end
 
 
 function accept ()
-   local comm = commodity.get(chosen_comm)
+   local comm = commodity.get(mem.chosen_comm)
 
    misn.accept()
    update_active_runs( 1 )
 
-   misn.osdCreate(osd_title, {
+   misn.osdCreate(mem.osd_title, {
       fmt.f(_("Buy as much {cargo} as possible"), {cargo=comm} ),
-      fmt.f(_("Take the {cargo} to {pnt} in the {sys} system"), {cargo=comm, pnt=misplanet, sys=missys} ),
+      fmt.f(_("Take the {cargo} to {pnt} in the {sys} system"), {cargo=comm, pnt=mem.misplanet, sys=mem.missys} ),
    })
 
    hook.enter("enter")
@@ -116,7 +116,7 @@ end
 
 
 function enter ()
-   if pilot.cargoHas( player.pilot(), chosen_comm ) > 0 then
+   if pilot.cargoHas( player.pilot(), mem.chosen_comm ) > 0 then
       misn.osdActive(2)
    else
       misn.osdActive(1)
@@ -125,16 +125,16 @@ end
 
 
 function land ()
-   local amount = pilot.cargoHas( player.pilot(), chosen_comm )
-   local reward = amount * price
+   local amount = pilot.cargoHas( player.pilot(), mem.chosen_comm )
+   local reward = amount * mem.price
 
-   if planet.cur() == misplanet and amount > 0 then
+   if planet.cur() == mem.misplanet and amount > 0 then
       local txt = fmt.f(cargo_land[rnd.rnd(1, #cargo_land)],
-            {cargo=_(chosen_comm), credits=fmt.credits(reward)} )
+            {cargo=_(mem.chosen_comm), credits=fmt.credits(reward)} )
       vntk.msg(_("Delivery success!"), txt)
-      pilot.cargoRm(player.pilot(), chosen_comm, amount)
+      pilot.cargoRm(player.pilot(), mem.chosen_comm, amount)
       player.pay(reward)
-      if not pir.factionIsPirate( paying_faction ) then
+      if not pir.factionIsPirate( mem.paying_faction ) then
          pir.reputationNormalMission(rnd.rnd(2,3))
       end
       update_active_runs(-1)

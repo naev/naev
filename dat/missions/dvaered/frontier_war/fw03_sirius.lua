@@ -40,7 +40,7 @@ local fmt = require "format"
 local pir = require "common.pirate"
 
 escort_hailed = fw.escort_hailed -- common hooks
-local attackhooks, badguys, escort, hamelsen, tamteam, targetList, toldya -- Non-persistent state
+local attackhooks, badguys, escort, hamelsen, tamteam, target, targetList, toldya -- Non-persistent state
 local compute_reward, elt_dest_inlist, increment_baddie, payNfinish, spawnBaddies, spawnEscort, spawnHamelsen, start_battle -- Forward-declared functions
 
 -- Mission constants
@@ -64,19 +64,18 @@ local flee_text = _("You were supposed to wait for Strafer to scan the system, a
 local tflee_text = _([[Two of your targets went away. If there was only one, it could be manageable, but now, the mission has failed.]])
 
 function create()
-   startsys = system.cur()
-   d = startsys:jumpDist( destsys )
+   mem.startsys = system.cur()
+   local d = mem.startsys:jumpDist( destsys )
 
    -- The starting point should not be too close from there
    if d < 3 then
       misn.finish(false)
    end
 
-   path = system.cur():jumpPath(destsys)
-   path["__save"] = true
-   ambushsys = path[ rnd.rnd(2,3) ]:dest()
+   mem.path = system.cur():jumpPath(destsys)
+   mem.ambushsys = mem.path[ rnd.rnd(2,3) ]:dest()
 
-   if not misn.claim(ambushsys) then
+   if not misn.claim(mem.ambushsys) then
       misn.finish(false)
    end
 
@@ -100,22 +99,20 @@ function accept()
    misn.setReward(_("It depends how many of your wingmen come back."))
 
    -- Markers
-   marklist = {}
-   marklist[1] = misn.markerAdd(system.cur(), "low")
-   for i,jp in ipairs(path) do
-      marklist[i+1] = misn.markerAdd(jp:dest(), "low")
+   mem.marklist = {}
+   mem.marklist[1] = misn.markerAdd(system.cur(), "low")
+   for i,jp in ipairs(mem.path) do
+      mem.marklist[i+1] = misn.markerAdd(jp:dest(), "low")
    end
-   marklist["__save"] = true
 
-   stage = 0
+   mem.stage = 0
 
-   previous = planet.cur()
-   enterhook = hook.enter("enter")
-   landhook = hook.land("land")
+   mem.previous = planet.cur()
+   mem.enterhook = hook.enter("enter")
+   mem.landhook = hook.land("land")
 
    -- Stores the state of the escort
-   alive = {true,true,true}
-   alive["__save"] = true
+   mem.alive = {true,true,true}
 
    toldya = {false,false,false,false}
    misn.npcAdd("discussWithTam", _("Major Tam"), fw.portrait_tam, _("The major seems to be waiting for you."))
@@ -135,44 +132,45 @@ function discussWithTam()
 end
 
 function enter()
+   local ambJp
 
-   -- Entering the next system of the path
-   if stage == 0 then
-      spawnEscort(previous)
+   -- Entering the next system of the mem.path
+   if mem.stage == 0 then
+      spawnEscort(mem.previous)
 
-      sysind = elt_dest_inlist(system.cur(), path) -- Save the index of the system in the list (useful to remove the marker later)
-      if (sysind > 0) or (system.cur() == startsys) then
-         stage = 1
+      mem.sysind = elt_dest_inlist(system.cur(), mem.path) -- Save the index of the system in the list (useful to remove the marker later)
+      if (mem.sysind > 0) or (system.cur() == mem.startsys) then
+         mem.stage = 1
          misn.osdActive(2)
 
          -- Decide from where the ambushers come
          if system.cur() == destsys then
-            ambStart = destpla
+            mem.ambStart = destpla
          else
-            ambStart = lmisn.getNextSystem(system.cur(), destsys)
-            ambJp = jump.get(system.cur(), ambStart) -- We assume there are no one-way jumps
+            mem.ambStart = lmisn.getNextSystem(system.cur(), destsys)
+            ambJp = jump.get(system.cur(), mem.ambStart) -- We assume there are no one-way jumps
          end
 
          escort[1]:taskClear()
          escort[1]:moveto( ambJp:pos() )  -- Let's say Strafer knows where they are supposed to come from...
 
-         if system.cur() == ambushsys then
+         if system.cur() == mem.ambushsys then
             for k,f in ipairs(pir.factions) do
                pilot.toggleSpawn(f)
                pilot.clearSelect(f)
             end
-            spawnBaddies( ambStart )
+            spawnBaddies( mem.ambStart )
 
-            -- Find the waiting point: on the line tamPoint -> ambJp, at 3000 of tamPoint
-            -- Normally, tamPoint and absStart are never the same
-            tamPoint = lmisn.getNextSystem(system.cur(), startsys)
-            tamJp = jump.get(system.cur(), tamPoint)
-            PA = ambJp:pos() - tamJp:pos()
-            PW = PA/PA:mod() * 3000
-            waitPoint = tamJp:pos() + PW
+            -- Find the waiting point: on the line mem.tamPoint -> ambJp, at 3000 of mem.tamPoint
+            -- Normally, mem.tamPoint and absStart are never the same
+            mem.tamPoint = lmisn.getNextSystem(system.cur(), mem.startsys)
+            local tamJp = jump.get(system.cur(), mem.tamPoint)
+            local PA = ambJp:pos() - tamJp:pos()
+            local PW = PA/PA:mod() * 3000
+            mem.waitPoint = tamJp:pos() + PW
             badguys[1]:control()
-            badguys[1]:moveto(waitPoint)
-            hook.timer(0.5, "proximity", {location = waitPoint, radius = 3000, funcname = "badInPosition", focus = badguys[1]})
+            badguys[1]:moveto(mem.waitPoint)
+            hook.timer(0.5, "proximity", {location = mem.waitPoint, radius = 3000, funcname = "badInPosition", focus = badguys[1]})
 
             escort[1]:taskClear()
             escort[1]:follow( badguys[1] ) -- Yes, he's not supposed to know where they are, but it's safer for the trigger
@@ -183,22 +181,22 @@ function enter()
       end
 
    -- Illegitimate system entrances
-   elseif stage == 1 then
+   elseif mem.stage == 1 then
       tk.msg(_("What are you doing here?"), flee_text)
       misn.finish(false)
-   elseif stage == 3 or stage == 5 then
+   elseif mem.stage == 3 or mem.stage == 5 then
       tk.msg( _("What are you doing here?"), _("You were supposed to clean the system before pursuing the fleeing ship.") )
       misn.finish(false)
-   elseif stage == 6 then
-      tk.msg(_("What are you doing here?"), fmt.f(_("You were supposed to land on {pnt}."), {pnt=nextt}))
+   elseif mem.stage == 6 then
+      tk.msg(_("What are you doing here?"), fmt.f(_("You were supposed to land on {pnt}."), {pnt=mem.nextt}))
       misn.finish(false)
 
    -- Enter after a fleeing enemy
-   elseif stage == 4 then
-      if system.cur() == nextt then
-         target = pilot.add( shi:nameRaw(), "Mercenary", previous )
-         target:setHealth( arm, sld, str )
-         target:setTemp( tem )
+   elseif mem.stage == 4 then
+      if system.cur() == mem.nextt then
+         target = pilot.add( mem.shi:nameRaw(), "Mercenary", mem.previous )
+         target:setHealth( mem.arm, mem.sld, mem.str )
+         target:setTemp( mem.tem )
          target:setHilight()
          target:setFaction("Warlords")
 
@@ -206,62 +204,62 @@ function enter()
          hook.pilot(target, "jump","lastOne_jumped")
          hook.pilot(target, "land","lastOne_landed")
       else
-      tk.msg(_("What are you doing here?"), fmt.f(_("You were supposed to jump to {sys}."), {sys=nextt}))
+      tk.msg(_("What are you doing here?"), fmt.f(_("You were supposed to jump to {sys}."), {sys=mem.nextt}))
          misn.finish(false)
       end
    end
 
-   previous = system.cur()
+   mem.previous = system.cur()
 end
 
 function land()
    -- Illegitimate landing
-   if stage == 1 then
+   if mem.stage == 1 then
       tk.msg(_("What are you doing here?"), flee_text)
       misn.finish(false)
 
    -- Land for reward
-   elseif stage == 2 then
+   elseif mem.stage == 2 then
       compute_reward()
-      tk.msg( _("Mission accomplished"), fmt.f(_("Your mission is a success, except for the escape of the enemy leader, Colonel Hamelsen. You can now collect your {credits} reward."), {credits=fmt.credits(effective_credits)}) )
+      tk.msg( _("Mission accomplished"), fmt.f(_("Your mission is a success, except for the escape of the enemy leader, Colonel Hamelsen. You can now collect your {credits} reward."), {credits=fmt.credits(mem.effective_credits)}) )
       payNfinish()
 
    -- More illegitimate landings
-   elseif stage == 3 or stage == 5 then
+   elseif mem.stage == 3 or mem.stage == 5 then
       tk.msg( _("What are you doing here?"), _("You were supposed to clean the system before pursuing the fleeing ship.") )
       misn.finish(false)
-   elseif stage == 4 then
-      tk.msg(_("What are you doing here?"), fmt.f(_("You were supposed to jump to {sys}."), {sys=nextt}))
+   elseif mem.stage == 4 then
+      tk.msg(_("What are you doing here?"), fmt.f(_("You were supposed to jump to {sys}."), {sys=mem.nextt}))
       misn.finish(false)
 
    -- Landing after an enemy (victory as well)
-   elseif stage == 6 then
-      if planet.cur() == nextt then
+   elseif mem.stage == 6 then
+      if planet.cur() == mem.nextt then
          compute_reward()
          tk.msg( _("End of the hunt"), fmt.f(_([[You land and walk around the spacedock, in search of your target's ship. You finally see it. A mighty {ship}, covered by the stigmas of the battle that just occurred. You decide to hide yourself behind crates close to the ship and wait for the pilot to come back and take off in order to finish your job in space.
    When looking closer at the ship, you see ancient and recent marks on the hull, caused by all kinds of weapons during the lifetime of the ship, that have been repaired on spaceports. Among the ship's scars, you see a twisted welding around the ship's nose, filled with bubbles and think: "Damn! They've got to deal with the same old deficient welding android that fixed my airlock on Alteris last time!"
-   Suddenly, you realize someone is whispering behind you "Hey, {player}, you're wrecking my firing line!" You turn around and see nothing but a deformed crate that continues to speak: "It's me, Sergeant Nikolov. In the box. Hide yourself better or you will ruin our mission." You then remember that she is a member of the space infantry commandos, and Hamfresser's second in command. Tam probably sent her to execute the enemy pilot.]]), {ship=shi, player=player.name()}) )
-         if shi:nameRaw() == "Kestrel" then -- it's Hamelsen and she escapes
+   Suddenly, you realize someone is whispering behind you "Hey, {player}, you're wrecking my firing line!" You turn around and see nothing but a deformed crate that continues to speak: "It's me, Sergeant Nikolov. In the box. Hide yourself better or you will ruin our mission." You then remember that she is a member of the space infantry commandos, and Hamfresser's second in command. Tam probably sent her to execute the enemy pilot.]]), {ship=mem.shi, player=player.name()}) )
+         if mem.shi:nameRaw() == "Kestrel" then -- it's Hamelsen and she escapes
             tk.msg( _("End of the hunt"), fmt.f(_([[A few times later, you hear a message from Nikolov's radio: "Tam here. The target escaped and won't come back to the ship. Clear the spacedock." The spacemarines emerge from the crates and disappear in a blink, while you start heading to the bar. On the way, you meet Strafer who explains the situation: "We identified the hostile pilot: it was Colonel Hamelsen, Battleaddict's former second in command, but she got away using one of her other ships and we lost her track.
-   "Poor woman. It's hard to get a new post when you're the second in command of a dead warlord, you know. So I guess someone has managed to hire her to assassinate the major. Anyway, I guess you should have received your payment of {credits} by now."]]), {credits=fmt.credits(effective_credits)}) )
+   "Poor woman. It's hard to get a new post when you're the second in command of a dead warlord, you know. So I guess someone has managed to hire her to assassinate the major. Anyway, I guess you should have received your payment of {credits} by now."]]), {credits=fmt.credits(mem.effective_credits)}) )
          else -- No pity for non-Hamelsen henchmen
             tk.msg( _("End of the hunt"), _([[A bit later, you see a woman coming from the empty corridor, anxiously looking behind her and pulling a key out of her pocket. While still approaching the ship, she presses the key's button and the ship beeps. At this very moment, a sudden and loud din erupts from all around you shake your stomach and the pilot falls without a word. Nikolov and two other soldiers emerge from the crates. The sergeant approaches the pilot, kneels and takes her pulse. She thoughtfully looks at her face "Damn! she looked like a nice person..." And then addresses to the soldiers: "All right, folks we pack up!" and the unit enters the ship with the body and takes off.
    You stay alone, on the empty dock, with nothing but your thoughts. Even the broken crates have been picked up by the commandos. You think about all the causes that pilot must have served in her life. The just causes, the evil ones... and all the others. "Meh," you think "killing people in space is definitely much better for morale."]]), "portraits/neutral/female1.webp" )
-            tk.msg( _("End of the hunt"), fmt.f(_([[When you finally go to the bar to think about something else, you get notified on your holowatch that {credits} have been transferred to your account. The leader of the ambushers has been identified: it's Colonel Hamelsen, who used to work for Battleaddict before his death. Unfortunately, the Colonel has escaped.]]), {credits=fmt.credits(effective_credits)}) )
+            tk.msg( _("End of the hunt"), fmt.f(_([[When you finally go to the bar to think about something else, you get notified on your holowatch that {credits} have been transferred to your account. The leader of the ambushers has been identified: it's Colonel Hamelsen, who used to work for Battleaddict before his death. Unfortunately, the Colonel has escaped.]]), {credits=fmt.credits(mem.effective_credits)}) )
          end
          payNfinish()
       else
-         tk.msg(_("What are you doing here?"), fmt.f(_("You were supposed to land on {pnt}."), {pnt=nextt}))
+         tk.msg(_("What are you doing here?"), fmt.f(_("You were supposed to land on {pnt}."), {pnt=mem.nextt}))
          misn.finish(false)
       end
    end
-   previous = planet.cur()
+   mem.previous = planet.cur()
 end
 
 -- Spawn the escort
 function spawnEscort( origin )
    escort = {}
-   if alive[1] then
+   if mem.alive[1] then
       escort[1] = pilot.add( "Schroedinger", "DHC", origin, _("Lieutenant Strafer") )
 
       -- Give him nice outfits
@@ -294,7 +292,7 @@ function spawnEscort( origin )
       escort[1]:follow(player.pilot(), true)
    end
 
-   if alive[2] then
+   if mem.alive[2] then
       escort[2] = pilot.add( "Vendetta", "DHC", origin )
       hook.pilot(escort[2], "hail", "escort_hailed")
       hook.pilot(escort[2], "death", "escort_died2")
@@ -304,7 +302,7 @@ function spawnEscort( origin )
       escort[2]:setHilight()
       escort[2]:setVisplayer()
    end
-   if alive[3] then
+   if mem.alive[3] then
       escort[3] = pilot.add( "Phalanx", "DHC", origin )
       hook.pilot(escort[3], "hail", "escort_hailed")
       hook.pilot(escort[3], "death", "escort_died3")
@@ -346,10 +344,10 @@ function spawnBaddies( origin )
    -- Targets
    targetList = { badguys[1], badguys[2], badguys[3] }
 
-   stampede   = true  -- This variable ensure the enemies only runaway once
-   maxbad     = #badguys
-   deadbad    = 0
-   deadtarget = 0
+   mem.stampede   = true  -- This variable ensure the enemies only runaway once
+   mem.maxbad     = #badguys
+   mem.deadbad    = 0
+   mem.deadtarget = 0
 end
 
 -- Spawn Tam and his crew
@@ -378,7 +376,7 @@ function straferScans()
    misn.osdActive(3)
 
    -- Remove all the markers.
-   for i, j in ipairs(marklist) do
+   for i, j in ipairs(mem.marklist) do
       misn.markerRm( j )
    end
 end
@@ -388,10 +386,10 @@ function straferReturns()
    escort[1]:comm( _("No hostiles here. We can proceed to next system."), true )
    escort[1]:taskClear()
    escort[1]:follow( player.pilot(), true )
-   stage = 0
+   mem.stage = 0
    misn.osdActive(1)
 
-   misn.markerRm( marklist[sysind+1] )
+   misn.markerRm( mem.marklist[mem.sysind+1] )
 end
 
 -- Baddies are in position: start the battle after a small delay
@@ -404,22 +402,22 @@ function roastedTam()
    badguys[2]:comm(_("There will be roasted Tam for lunch today!"))
 end
 function tamNattack()
-   spawnTam( tamPoint )
+   spawnTam( mem.tamPoint )
    badguys[1]:comm(_("Tam is in place, folks! don't miss him, this time!"))
    start_battle()
 end
 
 -- Death hooks
 function escort_died1( )
-   alive[1] = false
+   mem.alive[1] = false
    tk.msg(_("This is not good"),_([[You suddenly realize that your radar doesn't receive Strafer's sensors data. This means that the Lieutenant got killed. As a result, the fleet is flying blind and the mission is failed.]]))
    misn.finish(false)
 end
 function escort_died2( )
-   alive[2] = false
+   mem.alive[2] = false
 end
 function escort_died3( )
-   alive[3] = false
+   mem.alive[3] = false
 end
 function tamDied()
    tk.msg(_("This is not good"), _([[The blinking cross marked "Major Tam" on your radar screen suddenly turns off. You first believe this is an output bug and hit the screen with your open hand, but soon, you realize that the radar works perfectly well. This means that the major's ship got annihilated by the ambushers, and therefore your mission is a miserable failure.]]))
@@ -441,12 +439,12 @@ function baddie_death( pilot )
 
    -- See if it's one of the 3 targets
    if (fw.elt_inlist( pilot, targetList ) > 0) then
-      deadtarget = deadtarget + 1
+      mem.deadtarget = mem.deadtarget + 1
       player.msg( _("One of the targets was destroyed!") )
-      if deadtarget >= 3 then
+      if mem.deadtarget >= 3 then
          tk.msg(_("All targets eliminated"), _([[All three primary targets have been eliminated. The remaining ones are not dangerous anymore now. You can land to get your reward.]]))
          player.msg( _("The last target was destroyed! You can now land.") )
-         stage = 2
+         mem.stage = 2
          misn.osdActive(4)
       end
       if pilot == badguys[1] then -- It's Hamelsen: she escapes with a Schroedinger
@@ -457,20 +455,20 @@ end
 
 function baddie_jump( pilot, jump )
    if (fw.elt_inlist( pilot, targetList ) > 0) then
-      if stage == 1 then -- It's the first one who escapes
-         nextt = jump:dest()
-         arm, sld, str = pilot:health() -- Store target values
-         tem = pilot:temp()
-         shi = pilot:ship()
+      if mem.stage == 1 then -- It's the first one who escapes
+         mem.nextt = jump:dest()
+         mem.arm, mem.sld, mem.str = pilot:health() -- Store target values
+         mem.tem = pilot:temp()
+         mem.shi = pilot:ship()
 
-         tk.msg(_("This is not good"), fmt.f(_([[While your sensors lose the signal of the target you were supposed to kill, you expect to receive a mission failure message, but instead, you hear Tam's ship communication: "One of them escaped. Continue destroying the others. Afterwards, {player}, you will jump to {sys} and destroy that ship."]]), {player=player.name(), sys=nextt})) -- TODO: ensure the cleaning doesn't take too long
-         stage = 3
+         tk.msg(_("This is not good"), fmt.f(_([[While your sensors lose the signal of the target you were supposed to kill, you expect to receive a mission failure message, but instead, you hear Tam's ship communication: "One of them escaped. Continue destroying the others. Afterwards, {player}, you will jump to {sys} and destroy that ship."]]), {player=player.name(), sys=mem.nextt})) -- TODO: ensure the cleaning doesn't take too long
+         mem.stage = 3
          misn.osdDestroy()
          misn.osdCreate( _("Dvaered Diplomacy"), {
             _("Clean the current system"),
-            fmt.f(_("Jump to {sys} to follow your target"), {sys=nextt}),
+            fmt.f(_("Jump to {sys} to follow your target"), {sys=mem.nextt}),
          } )
-         misn.markerAdd( nextt, "high" )
+         misn.markerAdd( mem.nextt, "high" )
       else -- You won't follow several enemies
          tk.msg(_("This is not good"), tflee_text)
          misn.finish(false)
@@ -482,16 +480,16 @@ end
 -- Actually, after checking, this is very unlikely to happen...
 function baddie_land( pilot, planet )
    if (fw.elt_inlist( pilot, targetList ) > 0) then
-      if stage == 1 then -- It's the first one who escapes
-         nextt = planet
-         tk.msg(_("This is not good"), fmt.f(_([[While your sensors lose the signal of the target you were supposed to kill, you expect to receive a mission failure message, but instead, you hear Tam's ship communication: "One of them escaped. Continue destroying the others. Afterwards, {player}, you will land on {pnt} to keep track on the pilot."]]), {player=player.name(), pnt=nextt}))
-         stage = 5
+      if mem.stage == 1 then -- It's the first one who escapes
+         mem.nextt = planet
+         tk.msg(_("This is not good"), fmt.f(_([[While your sensors lose the signal of the target you were supposed to kill, you expect to receive a mission failure message, but instead, you hear Tam's ship communication: "One of them escaped. Continue destroying the others. Afterwards, {player}, you will land on {pnt} to keep track on the pilot."]]), {player=player.name(), pnt=mem.nextt}))
+         mem.stage = 5
 
-         shi = pilot:ship()
+         mem.shi = pilot:ship()
          misn.osdDestroy()
          misn.osdCreate( _("Dvaered Diplomacy"), {
             _("Clean the current system"),
-            fmt.f(_("Land on {pnt} to follow your target"), {pnt=nextt}),
+            fmt.f(_("Land on {pnt} to follow your target"), {pnt=mem.nextt}),
          } )
       else -- You won't follow several enemies
          tk.msg(_("This is not good"), tflee_text)
@@ -525,10 +523,10 @@ function strafer_choosePoint()
 end
 
 function increment_baddie()
-   deadbad = deadbad+1
-   if deadbad >= maxbad/2 and stampede then -- time for stampede
+   mem.deadbad = mem.deadbad+1
+   if mem.deadbad >= mem.maxbad/2 and mem.stampede then -- time for stampede
       escort[1]:comm( _("Hostiles are running away. Don't let them escape!"), true )
-      stampede = false
+      mem.stampede = false
       for i,p in ipairs(badguys) do
          if p:exists() then
             p:control(true)
@@ -536,14 +534,14 @@ function increment_baddie()
          end
       end
    end
-   if deadbad >= maxbad then -- System cleaned
+   if mem.deadbad >= mem.maxbad then -- System cleaned
       escort[1]:comm( _("Hostiles eliminated."), true )
-      if stage == 3 then
-         stage = 4
+      if mem.stage == 3 then
+         mem.stage = 4
          misn.osdActive(2)
       end
-      if stage == 5 then
-         stage = 6
+      if mem.stage == 5 then
+         mem.stage = 6
          misn.osdActive(2)
       end
    end
@@ -552,9 +550,9 @@ end
 -- Killed the last enemy after the pursuit
 function lastOne_died()
    player.msg( _("The last target was destroyed! You can now land.") )
-   stage = 2
+   mem.stage = 2
    misn.osdActive(4)
-   if shi:nameRaw() == "Kestrel" then
+   if mem.shi:nameRaw() == "Kestrel" then
       spawnHamelsen( target:pos() )
    end
 end
@@ -562,27 +560,27 @@ end
 -- Pursued enemy jumped out (this is actually kind of unlikely, but...)
 function lastOne_jumped( pilot, jump )
    player.msg(_("The target ran away again: continue the pursuit."))
-   stage = 4
-   nextt = jump:dest()
-   arm, sld, str = pilot:health()
-   tem = pilot:temp()
-   shi = pilot:ship()
+   mem.stage = 4
+   mem.nextt = jump:dest()
+   mem.arm, mem.sld, mem.str = pilot:health()
+   mem.tem = pilot:temp()
+   mem.shi = pilot:ship()
 end
 
 -- Pursued enemy landed (this is actually kind of unlikely, but...)
 function lastOne_landed( pilot, planet )
    player.msg(_("The target ran away again: continue the pursuit."))
-   stage = 6
-   nextt = planet
-   shi = pilot:ship()
+   mem.stage = 6
+   mem.nextt = planet
+   mem.shi = pilot:ship()
 end
 
 -- Compute the effective reward from nb of alive pilots
 function compute_reward()
-   effective_credits = fw.credits_03
-   for i, j in ipairs(alive) do
+   mem.effective_credits = fw.credits_03
+   for i, j in ipairs(mem.alive) do
       if j then
-         effective_credits = effective_credits + fw.credits_03
+         mem.effective_credits = mem.effective_credits + fw.credits_03
       end
    end
 end
@@ -601,7 +599,7 @@ end
 
 -- Pay and finish the mission
 function payNfinish()
-   player.pay(effective_credits)
+   player.pay(mem.effective_credits)
    shiplog.create( "frontier_war", _("Frontier War"), _("Dvaered") )
    shiplog.append( "frontier_war", _("A group of killers, who were after Major Tam have been trapped and killed. For now, we don't know who has paid them, but they were led by Colonel Hamelsen, who has managed to escape.") )
    misn.finish(true)

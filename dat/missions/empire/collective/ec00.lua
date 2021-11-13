@@ -60,13 +60,13 @@ function accept ()
    -- Accept mission
    misn.accept()
 
-   misn_stage = 0
-   misn_marker = misn.markerAdd( misn_target, "low" )
-   credits = emp.rewards.ec00
+   mem.misn_stage = 0
+   mem.misn_marker = misn.markerAdd( misn_target, "low" )
+   mem.credits = emp.rewards.ec00
 
    -- Mission details
    misn.setTitle(_("Collective Scout"))
-   misn.setReward( fmt.credits( credits ) )
+   misn.setReward( fmt.credits( mem.credits ) )
    misn.setDesc( fmt.f(_("Find a scout last seen in the {sys} system"), {sys=misn_nearby}))
 
    -- Flavour text and mini-briefing
@@ -91,7 +91,7 @@ end
 function enter()
    local sys = system.cur()
 
-   if sys == misn_target and misn_stage == 0 then
+   if sys == misn_target and mem.misn_stage == 0 then
       -- Force Collective music (note: must clear these later on).
       var.push("music_ambient_force", "Collective")
       var.push("music_combat_force", "Collective")
@@ -100,7 +100,7 @@ function enter()
       pilot.toggleSpawn(false)
       misn.osdActive(2)
       hook.timer(0.5, "proximity", {location = vec2.new(8000, -20000), radius = 5000, funcname = "spotdrone"})
-   elseif misn_stage == 0 then
+   elseif mem.misn_stage == 0 then
       misn.osdActive(1)
    end
 end
@@ -127,18 +127,18 @@ function spotdrone()
    misn.osdActive(3)
    player.msg(_("Drone spotted!"))
    misn.setDesc( fmt.f(_("Travel back to {pnt} in {sys}"), {pnt=misn_base, sys=misn_base_sys}) )
-   misn_stage = 1
-   misn.markerMove( misn_marker, misn_base_sys )
+   mem.misn_stage = 1
+   misn.markerMove( mem.misn_marker, misn_base_sys )
 end
 
 function land()
    local pnt = planet.cur()
 
-   if misn_stage == 1 and  pnt == misn_base then
+   if mem.misn_stage == 1 and  pnt == misn_base then
       tk.msg( _("Mission Accomplished"), fmt.f(_([[After landing, you head to the Empire military headquarters and find Lt. Commander Dimitri there.
     "Well it seems like the drone has some strange fixation on {sys}. We aren't quite sure what to make of it, but intelligence is working on it. Report back to the bar in a bit and we'll see what we can do about the Collective."]]), {sys=misn_target}) )
       faction.modPlayerSingle("Empire",5)
-      player.pay(credits)
+      player.pay(mem.credits)
       emp.addCollectiveLog( _([[You scouted out a Collective drone on behalf of the Empire. Lt. Commander Dimitri told you to report back to the bar on Omega Station for your next mission.]]) )
       misn.finish(true)
    end

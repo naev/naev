@@ -45,15 +45,15 @@ function create ()
    end
 
    local index = rnd.rnd(1, #planets)
-   dest = planets[index][1]
-   sys = planets[index][2]
+   mem.dest = planets[index][1]
+   mem.sys = planets[index][2]
 
    misn.setNPC( _("Pirate Lord"), portrait.getMil("Pirate"), _("You see a pirate lord raving about something. A significant crowd has gathered around.") )
 end
 
 
 function accept ()
-   misn.markerAdd( sys, "low" )
+   misn.markerAdd( mem.sys, "low" )
 
    -- Intro text
    if not tk.yesno( _("Spaceport Bar"), _([[It seems like this planet's clan is looking for a pilot to transport a package to another pirate world. Obviously, quite a few mercenaries or even fellow pirates would try to stop anyone transporting that package, and there is probably no need to say the only ways to the other pirate worlds are through hostile territory.
@@ -66,20 +66,20 @@ Will you accept the mission?]]) ) then
    misn.accept()
 
    -- Mission details
-   reward = rnd.rnd(10,20) * 100e3 -- Hey, this mission is probably hell, after all.
+   mem.reward = rnd.rnd(10,20) * 100e3 -- Hey, this mission is probably hell, after all.
    misn.setTitle(_("Clans trade"))
-   misn.setReward( fmt.credits(reward) )
-   misn.setDesc( fmt.f(_("Deliver some boxes to the pirate clan of {pnt}, in the {sys} system."), {pnt=dest, sys=sys}) )
+   misn.setReward( fmt.credits(mem.reward) )
+   misn.setDesc( fmt.f(_("Deliver some boxes to the pirate clan of {pnt}, in the {sys} system."), {pnt=mem.dest, sys=mem.sys}) )
 
    -- Flavour text and mini-briefing
    tk.msg( _("Spaceport Bar"), _([[You roll up your sleeve and head off to your ship.]]) )
    misn.osdCreate(_("Spaceport Bar"), {
-      fmt.f(_("Deliver some boxes to the pirate clan of {pnt}, in the {sys} system."), {pnt=dest, sys=sys}),
+      fmt.f(_("Deliver some boxes to the pirate clan of {pnt}, in the {sys} system."), {pnt=mem.dest, sys=mem.sys}),
    })
 
    -- Set up the goal
    local c = misn.cargoNew(N_("Pirate Packages"), N_("A bunch of pirate packages. You don't want to know what's inside."))
-   packages = misn.cargoAdd(c, 5)
+   mem.packages = misn.cargoAdd(c, 5)
    hook.land("land")
    hook.enter("enter")
 end
@@ -87,14 +87,14 @@ end
 
 function land()
    local landed = planet.cur()
-   if landed == dest then
-      if misn.cargoRm(packages) then
+   if landed == mem.dest then
+      if misn.cargoRm(mem.packages) then
          tk.msg( _("Mission Accomplished"), _("Your mission was a complete success! The clan you just gave the packages have already paid you.") )
 
-         player.pay(reward)
+         player.pay(mem.reward)
          faction.modPlayerSingle("Pirate",5);
 
-         n = var.peek("ps_clancargo_misn") or 0
+         local n = var.peek("ps_clancargo_misn") or 0
          var.push("ps_clancargo_misn", n + 1)
          -- The first time this mission is done, the player’s max standing is
          -- increased by 5.
@@ -108,13 +108,13 @@ function land()
 end
 
 function enter ()
-   sys = system.cur()
+   mem.sys = system.cur()
 
    if misn_stage == 1 then
 
       -- Mercenaries appear after a couple of jumps
-      jumped = jumped + 1
-      if jumped <= 5 then
+      mem.jumped = mem.jumped + 1
+      if mem.jumped <= 5 then
          return
       end
 
@@ -125,19 +125,19 @@ function enter ()
       end
 
       -- Get player position
-      enter_vect = player.pos()
+      mem.enter_vect = player.pos()
 
       -- Calculate where the enemies will be
       local r = rnd.rnd(0,4)
       -- Next to player (always if landed)
-      if enter_vect:dist() < 1000 or r < 2 then
+      if mem.enter_vect:dist() < 1000 or r < 2 then
          local a = rnd.rnd() * 360
          local d = rnd.rnd( 400, 1000 )
-         enter_vect:add( vec2.newP( d, a ) )
+         mem.enter_vect:add( vec2.newP( d, a ) )
          invoke_enemies()
       -- Enter after player
       else
-         t = hook.timer(rnd.uniform( 2.0, 5.0 ) , "enemies")
+         hook.timer(rnd.uniform( 2.0, 5.0 ) , "enemies")
       end
    end
 end
@@ -167,9 +167,9 @@ function invoke_enemies()
       -- Move position a bit
       local a = rnd.rnd() * 360
       local d = rnd.rnd( 50, 75 )
-      enter_vect:add( vec2.newP( d, a ) )
+      mem.enter_vect:add( vec2.newP( d, a ) )
       -- Add pilots
-      local p = pilot.add( v, "Pirate", enter_vect, nil, {ai="mercenary"} )
+      local p = pilot.add( v, "Pirate", mem.enter_vect, nil, {ai="mercenary"} )
       -- Set hostile
       for k2,v2 in ipairs(p) do
          v:setHostile()

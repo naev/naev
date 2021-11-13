@@ -35,12 +35,12 @@ function create ()
    misn.setNPC( _("Drunkard"), "neutral/unique/drunkard.webp", _("You see a drunkard at the bar mumbling about how he was so close to getting his break.") )  -- creates the drunkard at the bar
 
    -- Planets
-   pickupWorld, pickupSys  = planet.getLandable("INSS-2")
-   delivWorld, delivSys    = planet.getLandable("Darkshed")
-   if pickupWorld == nil or delivWorld == nil then -- Must be landable
+   mem.pickupWorld, mem.pickupSys  = planet.getLandable("INSS-2")
+   mem.delivWorld, mem.delivSys    = planet.getLandable("Darkshed")
+   if mem.pickupWorld == nil or mem.delivWorld == nil then -- Must be landable
       misn.finish(false)
    end
-   origWorld, origSys      = planet.cur()
+   mem.origWorld, mem.origSys      = planet.cur()
 
 --   origtime = time.get()
 end
@@ -61,26 +61,26 @@ function accept ()
       misn.setReward( _("More than it's worth!") )
       misn.setDesc( _("You've decided to help some drunkard at the bar by picking up some goods for some countess. Though you're not sure why you accepted.") )
 
-      pickedup = false
-      droppedoff = false
+      mem.pickedup = false
+      mem.droppedoff = false
 
-      marker = misn.markerAdd( pickupSys, "low" )  -- pickup
+      mem.marker = misn.markerAdd( mem.pickupSys, "low" )  -- pickup
       -- OSD
       misn.osdCreate( _("Help the Drunkard"), {
-         fmt.f(_("Go pick up some goods at {pnt} in the {sys} system"), {pnt=pickupWorld, sys=pickupSys}),
-         fmt.f(_("Drop off the goods at {pnt} in the {sys} system"), {pnt=delivWorld, sys=delivSys}),
+         fmt.f(_("Go pick up some goods at {pnt} in the {sys} system"), {pnt=mem.pickupWorld, sys=mem.pickupSys}),
+         fmt.f(_("Drop off the goods at {pnt} in the {sys} system"), {pnt=mem.delivWorld, sys=mem.delivSys}),
       } )
 
       tk.msg( _("Pick Up the Countess's Goods"), fmt.f(_([["Oh, thank the ancestors! I knew you would help me!" The man relaxes considerably and puts his arm around you. "Have a drink while I explain it to you.", he motions to the bartender to bring two drinks over. "You see, I know this countess, she's like...whoa...you know what I mean?", he nudges you. "But she's rich, like personal escort fleet rich, golden shuttles, diamond laser turrets rich.
-    Well, occasionally she needs some things shipped that she can't just ask her driver to go get for her. So, she asks me to go get this package. I don't know what it is; I don't ask; she doesn't tell me; that's the way she likes it. I had just got off this 72 hour run through pirate infested space though, and I was all hopped up on grasshoppers without a hatch to jump. So I decided to get a drink or two and hit the hay. Turned out those drinks er two got a little procreation goin' on and turned into three or twelve. Maybe twenty. I don't know, but they didn't seem too liking to my gamblin', as next thing I knew, I was wakin' up with water splashed on my face, bein' tellered I gots in the hock, and they gots me ship, ye know? But hey, all yous gotta do is go pick up whatever it is she wants at {pickup_pnt} in the {pickup_sys} system. I doubt it's anything too hot, but I also doubt it's kittens and rainbows. All I ask is 25 percent. So just go get it, deliver it to {dropoff_pnt} in the {dropoff_sys} system, and don't ask any questions. And if she's there when you drop it off, just tell her I sent you. And don't you be lookin' at her too untoforward, or um, uh, you know what I mean." You figure you better take off before the drinks he's had take any more hold on him, and the bottle sucks you in.]]), {pickup_pnt=pickupWorld, pickup_sys=pickupSys, dropoff_pnt=delivWorld, dropoff_sys=delivSys} ) )
+    Well, occasionally she needs some things shipped that she can't just ask her driver to go get for her. So, she asks me to go get this package. I don't know what it is; I don't ask; she doesn't tell me; that's the way she likes it. I had just got off this 72 hour run through pirate infested space though, and I was all hopped up on grasshoppers without a hatch to jump. So I decided to get a drink or two and hit the hay. Turned out those drinks er two got a little procreation goin' on and turned into three or twelve. Maybe twenty. I don't know, but they didn't seem too liking to my gamblin', as next thing I knew, I was wakin' up with water splashed on my face, bein' tellered I gots in the hock, and they gots me ship, ye know? But hey, all yous gotta do is go pick up whatever it is she wants at {pickup_pnt} in the {pickup_sys} system. I doubt it's anything too hot, but I also doubt it's kittens and rainbows. All I ask is 25 percent. So just go get it, deliver it to {dropoff_pnt} in the {dropoff_sys} system, and don't ask any questions. And if she's there when you drop it off, just tell her I sent you. And don't you be lookin' at her too untoforward, or um, uh, you know what I mean." You figure you better take off before the drinks he's had take any more hold on him, and the bottle sucks you in.]]), {pickup_pnt=mem.pickupWorld, pickup_sys=mem.pickupSys, dropoff_pnt=mem.delivWorld, dropoff_sys=mem.delivSys} ) )
 
-      landhook = hook.land ("land")
-      flyhook = hook.takeoff ("takeoff")
+      mem.landhook = hook.land ("land")
+      mem.flyhook = hook.takeoff ("takeoff")
    end
 end
 
 function land ()
-   if planet.cur() == pickupWorld and not pickedup then
+   if planet.cur() == mem.pickupWorld and not mem.pickedup then
       if player.pilot():cargoFree() < 45 then
          tk.msg( _("No Room"), _([[You don't have enough cargo space to accept this mission.]]) )  -- Not enough space
          misn.finish()
@@ -89,27 +89,27 @@ function land ()
 
          tk.msg( _("Deliver the Goods"), _([[You land on the planet and hand the manager of the docks the crumpled claim slip that the drunkard gave you, realizing now that you don't think he even told you his name. The man looks at the slip, and then gives you an odd look before motioning for the dockworkers to load up the cargo that's brought out after he punches in a code on his electronic pad.]]) )
          local c = misn.cargoNew( N_("Goods"), N_("A package of unknown goods for delivery to a countess.") )
-         cargoID = misn.cargoAdd( c, 45 )  -- adds cargo
-         pickedup = true
+         mem.cargoID = misn.cargoAdd( c, 45 )  -- adds cargo
+         mem.pickedup = true
 
-         misn.markerMove( marker, delivSys )  -- destination
+         misn.markerMove( mem.marker, mem.delivSys )  -- destination
 
          misn.osdActive(2)  --OSD
       end
-   elseif planet.cur() == delivWorld and pickedup and not droppedoff then
+   elseif planet.cur() == mem.delivWorld and mem.pickedup and not mem.droppedoff then
       tk.msg( _("Success"), _([[You finally arrive at your destination, bringing your ship down to land right beside a beautiful woman with long blonde locks in a long extravagant gown. You know this must be the countess, but you're unsure how she knew you were going to arrive, to be waiting for you. When you get out of your ship, you notice there are no dock workers anywhere in sight, only a group of heavily armed private militia that weren't there when you landed.
     You gulp as she motions to them without showing a hint of emotion. In formation, they all raise their weapons. As you think your life is about to end, every other row turns and hands off their weapon, and then marches forward and quickly unloads your cargo onto a small transport carrier, and march off. The countess smirks at you and winks before walking off. You breath a sigh of relief, only to realize you haven't been paid. As you walk back onto your ship, you see a card laying on the floor with simply her name, Countess Amelia Vollana.]]) )
-      misn.cargoRm (cargoID)
+      misn.cargoRm (mem.cargoID)
 
-      misn.markerRm(marker)
+      misn.markerRm(mem.marker)
       misn.osdDestroy ()
 
-      droppedoff = true
+      mem.droppedoff = true
    end
 end
 
 function takeoff()
-   if system.cur() == delivSys and droppedoff then
+   if system.cur() == mem.delivSys and mem.droppedoff then
 
       willie = pilot.add( "Mule", "Trader", player.pos() + vec2.new(-500,-500), _("Trader Mule") )
       willie:rename(_("Ol Bess"))
@@ -122,7 +122,7 @@ function takeoff()
       willie:control()
       willie:moveto(player.pos() + vec2.new( 150, 75), true)
       tk.msg( _("Takeoff"), _([[As you finish your takeoff procedures and once again enter the cold black of space, you can't help but feel relieved. You might not have gotten paid, but you're just glad to still be alive. Just as you're about to punch it to the jump gate to get as far away from whatever you just dropped off, you see the flashing light of an incoming hail.]]) )
-      hailhook = hook.pilot(willie, "hail", "hail")
+      mem.hailhook = hook.pilot(willie, "hail", "hail")
    end
 end
 
@@ -130,14 +130,14 @@ function hail()
    tk.msg( _("Drunkard's Call"), _([["Hello again. It's Willie. I'm just here to inform you that the countess has taken care of your payment and transferred it to your account. And don't worry about me, the countess has covered my portion just fine. I'm just glad to have Ol' Bessy here back."]]) )
 
 --   eventually I'll implement a bonus
---   tk.msg( _("Bonus"), fmt.f(_([["Oh, and she put in a nice bonus for you of {credits} for such a speedy delivery."]]), {credits=fmt.credits(bonus)} ) )
+--   tk.msg( _("Bonus"), fmt.f(_([["Oh, and she put in a nice bonus for you of {credits} for such a speedy delivery."]]), {credits=fmt.credits(mem.bonus)} ) )
 
    hook.update("closehail")
    player.commClose()
 end
 
 function closehail()
-   bonus = 0
+   mem.bonus = 0
    player.pay( payment )
    tk.msg( _("Check Account"), fmt.f(_([[You check your account balance as he closes the comm channel to find yourself {credits} richer. Just being alive felt good, but this feels better. You can't help but think that she might have given him more than just the 25 percent he was asking for, judging by his sunny disposition. At least you have your life though.]]), {credits=fmt.credits(payment)} ) )
    willie:setVisplayer(false)
@@ -149,8 +149,8 @@ function closehail()
 end
 
 function abort()
-   hook.rm(landhook)
-   hook.rm(flyhook)
-   if hailhook then hook.rm(hailhook) end
+   hook.rm(mem.landhook)
+   hook.rm(mem.flyhook)
+   if mem.hailhook then hook.rm(mem.hailhook) end
    misn.finish()
 end

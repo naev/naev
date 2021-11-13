@@ -50,7 +50,7 @@ local mainsys = system.get("Limbo")
 -- These two will be done in another mission
 --    6. kidnap spy and take to torture ship
 --    7. defend torture ship
-misn_state = nil
+mem.misn_state = nil
 local harper -- Non-persistent state
 
 function create ()
@@ -70,8 +70,8 @@ end
 function accept ()
    approach_pir()
 
-   -- If not accepted, misn_state will still be nil
-   if misn_state==nil then
+   -- If not accepted, mem.misn_state will still be nil
+   if mem.misn_state==nil then
       return
    end
 
@@ -84,8 +84,8 @@ end
 function generate_npc ()
    if planet.cur() == planet.get("Minerva Station") then
       misn.npcAdd( "approach_pir", minerva.pirate.name, minerva.pirate.portrait, minerva.pirate.description )
-      if misn_state == 4 then
-         npc_spa = misn.npcAdd( "approach_spa", _("Minerva Station Spa"), spa_portrait, spa_description )
+      if mem.misn_state == 4 then
+         mem.npc_spa = misn.npcAdd( "approach_spa", _("Minerva Station Spa"), spa_portrait, spa_description )
       end
    end
 end
@@ -96,15 +96,15 @@ end
 function start_spa ()
    naev.eventStart( "Chicken Rendezvous" )
    if player.evtDone( "Chicken Rendezvous" ) then
-      misn_state = 5
-      misn.npcRm( npc_spa )
+      mem.misn_state = 5
+      misn.npcRm( mem.npc_spa )
    end
 end
 
 
 function approach_pir ()
-   if misn_state==0 and player.evtDone("Spa Propaganda") then
-      misn_state = 1
+   if mem.misn_state==0 and player.evtDone("Spa Propaganda") then
+      mem.misn_state = 1
    end
 
    vn.clear()
@@ -113,7 +113,7 @@ function approach_pir ()
    vn.music( minerva.loops.pirate )
    vn.transition()
 
-   if misn_state==nil then
+   if mem.misn_state==nil then
       -- Not accepted
       vn.na(_("You approach the sketch individual who seems to be calling your attention yet once again."))
       pir(_([["Hello again, we have another job for you. Our previous actions has led us to believe that there are several Dvaered and Za'lek spies deeply infiltrated into the station infrastructure. Would you be up to the challenge of helping us get rid of them?"]]))
@@ -128,7 +128,7 @@ function approach_pir ()
 
       vn.label("accept")
       vn.func( function ()
-         misn_state=0
+         mem.misn_state=0
 
          misn.accept()
          misn.osdCreate( _("Minerva Moles"),
@@ -152,7 +152,7 @@ They take out a metallic object from their pocket and show it to you. You don't 
       vn.na(_("You approach the shady character you have become familiarized with."))
    end
 
-   if misn_state == 5 then
+   if mem.misn_state == 5 then
       vn.na(_("You explain to them that you were able to successfully plant the device in the Minerva Spa."))
       pir(_([["Great job! I knew you had it in you. Catching the mole now should be just a matter of time. After we collect some data and process them, we can see how to catch the asshole. Meet me again at the bar in a bit, I have a feeling we will catch them soon."]]))
       vn.na(fmt.reward(reward_amount))
@@ -175,7 +175,7 @@ They take out a metallic object from their pocket and show it to you. You don't 
          {_("Ask about Minerva Station"), "station"},
          {_("Leave"), "leave"},
       }
-      if misn_state < 3 and player.evtDone("Spa Propaganda") then
+      if mem.misn_state < 3 and player.evtDone("Spa Propaganda") then
          if var.peek("minerva_spa_ticket")==nil then
             table.insert( opts, 1, {_("Ask them about the spa"), "spa" } )
          else
@@ -183,7 +183,7 @@ They take out a metallic object from their pocket and show it to you. You don't 
          end
       end
 
-      if misn_state == 3 and harper_gotticket then
+      if mem.misn_state == 3 and mem.harper_gotticket then
          table.insert( opts, 1, {_("Show them the winning ticket"), "trueticket" } )
       end
       return opts
@@ -192,18 +192,18 @@ They take out a metallic object from their pocket and show it to you. You don't 
    vn.label("job")
    pir(_([["From the few intercepted Dvaered and Za'lek communications we were able to decode, it seems like we might have some moles at Minerva Station. They are probably really deep so it won't be an easy task to drive them out."]]))
    pir(_([["The high-tech latest gen signal capturing device I gave should be able to bypass moste jammers. However, you're going to have to plant it in a VIP room or in some place where we might be able to catch the mole."]]))
-   if misn_state==0 then
+   if mem.misn_state==0 then
       pir(_([["The main issue we have right now is that VIP rooms and such are not of easy access, so we're going to have to keep our eyes open and see if we can spot an opportunity to plant the device."]]))
-   elseif misn_state==1 then
+   elseif mem.misn_state==1 then
       pir(_([["The spa sounds like a perfect place to set up the signal capturing device. Nobody will suspect a thing! You should buy a ticket to the Spa and see if we can get lucky. If  not, we may have to take other measures to ensure success."]]))
-   elseif misn_state==3 then
-      if not harper_gotticket then
+   elseif mem.misn_state==3 then
+      if not mem.harper_gotticket then
          pir(_([["I can't believe we didn't win a ticket to the Spa. However, it seems like this guy called Harper Bowdown managed to get it instead."]]))
          pir(_([["I need you to go pay this guy a visit. See if you can 'encourage' them to give the ticket to you. Everyone has a price at Minerva Station."]]))
       else
          vn.jump("trueticket")
       end
-   elseif misn_state==4 then
+   elseif mem.misn_state==4 then
       pir(_([["You got the ticket to the Minerva spa, so all you have to do now is go in, plant the listening device, and enjoy the thermal waters."]]))
    end
    vn.jump("menu_msg")
@@ -236,7 +236,7 @@ They start frantically typing into their portable holo-deck. It makes weird beep
       misn.osdCreate( _("Minerva Moles"),
          {_("Get Harper Bowdoin's ticket in Limbo.")},
          {_("Plant a listening device in a VIP room.") } )
-      misn_state = 3
+      mem.misn_state = 3
       minerva.log.pirate(_("You did not obtain the winning ticket of the Minerva Spa event and were tasked with obtaining it from a so called Harper Bowdoin.") )
    end )
    vn.jump("menu_msg")
@@ -247,16 +247,16 @@ They start frantically typing into their portable holo-deck. It makes weird beep
 She beams you a smile.
 "Now go enjoy yourself at the spa and don't forget to plant the listening device!"]]))
    vn.func( function ()
-      misn_state = 4
+      mem.misn_state = 4
       misn.osdCreate( _("Minerva Moles"),
          {_("Plant a listening device in the Spa.") } )
-      npc_spa = misn.npcAdd( "approach_spa", _("Minerva Station Spa"), spa_portrait, spa_description )
+      mem.npc_spa = misn.npcAdd( "approach_spa", _("Minerva Station Spa"), spa_portrait, spa_description )
       minerva.log.pirate(_("You obtained the winning ticket to enter the Minerva Spa.") )
    end )
    vn.jump("menu_msg")
 
    vn.label("leave")
-   if misn_state==0 then
+   if mem.misn_state==0 then
       vn.na(_("You take your leave and ponder where you should start looking. The casino seems to be your best bet."))
    else
       vn.na(_("You take your leave."))
@@ -266,7 +266,7 @@ end
 
 
 function enter ()
-   if misn_state==3 and not harper_nospawn and system.cur()==system.get("Limbo") then
+   if mem.misn_state==3 and not mem.harper_nospawn and system.cur()==system.get("Limbo") then
       -- Don't stop spawns, but claimed in case something else stops spawns
       -- TODO maybe add Minerva patrols that aggro ta make it a bit harder?
       -- Spawn Harper Bowdoin and stuff
@@ -288,15 +288,15 @@ function enter ()
       hook.pilot( harper, "land", "harper_land" )
 
       -- Clear variables to be kind to the player
-      harper_almostdied = false
-      harper_talked = false
-      harper_attacked = false
+      mem.harper_almostdied = false
+      mem.harper_talked = false
+      mem.harper_attacked = false
    end
 end
 
 
 function harper_death ()
-   if not harper_gotticket then
+   if not mem.harper_gotticket then
       player.msg(_("#rMISSION FAILED! You were supposed to get the ticket, but you blew up Harper's ship!"))
       misn.finish(false)
    end
@@ -305,7 +305,7 @@ end
 
 function harper_land ()
    -- Case harper lands with the ticket, i.e., ran away
-   if not harper_gotticket then
+   if not mem.harper_gotticket then
       player.msg(_("#rMISSION FAILED! You were supposed to get the ticket but they got away!"))
       misn.finish(false)
    end
@@ -313,9 +313,9 @@ end
 
 
 function harper_board ()
-   if not harper_gotticket then
-      harper_gotticket = true
-      harper_nospawn = true
+   if not mem.harper_gotticket then
+      mem.harper_gotticket = true
+      mem.harper_nospawn = true
       var.push("harper_ticket","stole")
 
       vn.clear()
@@ -341,16 +341,16 @@ end
 
 function harper_gotattacked( _plt, attacker )
    if attacker == player.pilot() then
-      if not harper_attacked then
+      if not mem.harper_attacked then
          -- Run to land at the station
          harper:setNoLand(false)
          harper:control()
          harper:land( planet.get("Minerva Station") )
-         harper_attacked = true
+         mem.harper_attacked = true
       end
 
       if harper_neardeath() then
-         harper_almostdied = true
+         mem.harper_almostdied = true
          harper:comm( _("Stop shooting! Maybe we can reach an agreement!") )
          harper:hailPlayer()
       end
@@ -382,15 +382,15 @@ function harper_hail ()
    end
 
    local function _harper_done ()
-      harper_gotticket = true
-      harper_nospawn = true
+      mem.harper_gotticket = true
+      mem.harper_nospawn = true
       -- He goes land now
       harper:setNoLand(false)
       harper:control()
       harper:land( planet.get("Minerva Station") )
    end
 
-   if harper_almostdied then
+   if mem.harper_almostdied then
       vn.clear()
       vn.scene()
       local h = harper_hologram()
@@ -463,13 +463,13 @@ He looks around nervously.
       return
    end
 
-   if harper_attacked then
+   if mem.harper_attacked then
       harper:comm( _("Get away from me!") )
       player.commClose()
       return
    end
 
-   if harper_talked then
+   if mem.harper_talked then
       vn.clear()
       vn.scene()
       local h = harper_hologram()
@@ -513,7 +513,7 @@ He looks triumphant as he boasts.]]))
    h(_([["What are you going to do? Shoot me?"
 He scoffs at you and closes the transmission.]]))
    vn.func( function ()
-      harper_attacked = true
+      mem.harper_attacked = true
    end )
    vn.done("electric")
 
@@ -584,7 +584,7 @@ He cuts the transmission.]]))
    vn.done("electric")
    vn.run()
 
-   harper_talked = true
+   mem.harper_talked = true
 
    player.commClose()
 end

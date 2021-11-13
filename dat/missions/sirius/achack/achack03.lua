@@ -52,8 +52,8 @@ function accept()
    tk.msg(_("The hunt begins"), fmt.f(_([["Oh, I'm glad to hear that. Here, I'll upload the details of Harja's private ship into your computer. I did some digging in the military database to find them. You don't graduate from the Sinass High Academy with honors without picking up a few tricks! I know, I know, it's classified data, but it's for a good cause, wouldn't you say? You should be able to identify Harja when you pick him up on your sensors now. If you have trouble locating him, consider installing better sensors on your ship so you can pick him up from farther away. But don't spend too much effort looking for him, just keep a look out as you go about your normal business. If you just stay in Sirius space, I'm sure you'll run into him sooner or later."
     Joanne gets up to leave, but before she goes she adds, "I'll be on {pnt} for a while longer, so come back here when you've got something. Good luck!"]]), {pnt=planet.cur()}))
 
-   destplanet, destsys = planet.cur() -- Keeps track of where the mission was accepted.
-   origin = planet.cur() -- Keeps track of where the player enters the system from.
+   mem.destplanet, mem.destsys = planet.cur() -- Keeps track of where the mission was accepted.
+   mem.origin = planet.cur() -- Keeps track of where the player enters the system from.
 
    misn.accept()
    misn.setDesc(_("Joanne wants you to find Harja and interrogate him about his motives."))
@@ -61,23 +61,23 @@ function accept()
    misn.osdCreate(_("Joanne's Doubt"), {
       _("Find Harja in Sirius space"),
       _("Talk to Harja"),
-      fmt.f(_("Return to Joanne on {pnt} ({sys})"), {pnt=destplanet, sys=destsys}),
+      fmt.f(_("Return to Joanne on {pnt} ({sys})"), {pnt=mem.destplanet, sys=mem.destsys}),
    })
 
-   enterhook = hook.enter("enter")
-   enterhook = hook.jumpout("jumpout")
+   mem.enterhook = hook.enter("enter")
+   mem.enterhook = hook.jumpout("jumpout")
    hook.land("land")
-   datehook = hook.date(time.create(0, 2, 0), "date")
+   mem.datehook = hook.date(time.create(0, 2, 0), "date")
 end
 
 -- Jump-out hook.
 function jumpout()
-   origin = system.cur()
+   mem.origin = system.cur()
 end
 
 -- Enter hook.
 function enter()
-   if not harjatalked then
+   if not mem.harjatalked then
       misn.osdActive(1)
    end
 end
@@ -100,13 +100,13 @@ function date()
       -- Determine spawn point. The reason why we don't use the normal random is that we don't want Harja spawning from the same place as the player.
       local spawnpoints = _mergeTables(system.cur():adjacentSystems(), system.cur():planets())
       for i, j in ipairs(spawnpoints) do
-         if j == origin then
+         if j == mem.origin then
             table.remove(spawnpoints, i) -- The place the player entered from is not a valid spawn point.
          end
       end
-      spawnpoint = spawnpoints[rnd.rnd(#spawnpoints)]
+      mem.spawnpoint = spawnpoints[rnd.rnd(#spawnpoints)]
 
-      harja = pilot.add("Shark", "Achack_sirius", spawnpoint, _("Harja's Shark"), {ai="trader"})
+      harja = pilot.add("Shark", "Achack_sirius", mem.spawnpoint, _("Harja's Shark"), {ai="trader"})
       harja:memory().aggressive = true
       harja:control()
       harja:follow(player.pilot())
@@ -131,7 +131,7 @@ end
 -- Triggers when Harja leaves the system.
 function leave()
    player.msg(_("Harja is no longer in the system."))
-   if not harjatalked then
+   if not mem.harjatalked then
       misn.osdActive(1)
    end
 end
@@ -139,11 +139,11 @@ end
 -- Harja's hail hook.
 function hail()
    player.commClose()
-   if not hailed then
+   if not mem.hailed then
       tk.msg(_("Harja's ire"), _([[You hail Harja's ship. A few moments later his face appears on your console. When he recognizes you, his face sets in an angry scowl.
     "You! How dare you show your face to me again after double-crossing me like that! I had a perfect shot at taking out that damn woman, but you had to go and tip her off instead. Worse, you even helped her fight off the other guys I hired to blast her into space dust! You ruined everything! The past cycles of my life, completely wasted! Damn you!"
     You try to convince Harja that you want to have a word with him about this matter, but he is furious. "I've got nothing to say to a traitorous scumbag like you! Now leave me alone, I'm having a bad day as it is without you spoiling it further!" With that, Harja breaks the connection. Oh well, looks like you're going to have to do this the hard way.]]))
-      hailed = true
+      mem.hailed = true
    else
       player.msg(_("Harja doesn't respond. It doesn't look like he wants to talk to you."))
    end
@@ -169,11 +169,11 @@ function board()
    harja:setHealth(100, 100)
    harja:control()
    harja:hyperspace()
-   hook.rm(enterhook)
-   hook.rm(datehook)
+   hook.rm(mem.enterhook)
+   hook.rm(mem.datehook)
    misn.osdActive(3)
-   misn.markerAdd(destsys, "low")
-   harjatalked = true
+   misn.markerAdd(mem.destsys, "low")
+   mem.harjatalked = true
 end
 
 -- Harja's death hook.
@@ -184,8 +184,8 @@ end
 
 -- Land hook.
 function land()
-   origin = planet.cur()
-   if planet.cur() == destplanet and harjatalked then
+   mem.origin = planet.cur()
+   if planet.cur() == mem.destplanet and mem.harjatalked then
       player.landWindow("bar")
       tk.msg(_("Full circle"), fmt.f(_([[You meet Joanne in the spaceport bar. She listens to your account of your conversation with Harja. When you're finished, she frowns.
     "I've got to admit, I find his story a little disturbing. He genuinely seems to believe I framed him for that hack, just as I believe he tried to frame me. From what you told me, it doesn't seem like he was just putting up a self-righteous story to justify his actions, and I wouldn't expect that from him anyway. But that's impossible. Besides the two of us, there was nobody who had the slightest interest in removing either one of us from the academy. I know I didn't do it, so that means Harja must have done it. Only..." Joanne pauses. "You said he swore an oath. Whatever else I might think of him, I can't quite believe he would abuse his Sirian beliefs in such a way. We Sirii take our faith very seriously.

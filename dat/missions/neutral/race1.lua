@@ -30,29 +30,29 @@ chatter[3] = _("Time to Shake 'n Bake")
 target = {1,1,1,1}
 
 function create ()
-   this_planet, this_system = planet.cur()
-   local missys = {this_system}
+   mem.this_planet, mem.this_system = planet.cur()
+   local missys = {mem.this_system}
    if not misn.claim(missys) then
       misn.finish(false)
    end
-   curplanet = planet.cur()
+   mem.curplanet = planet.cur()
    misn.setNPC(_("A laid back person"), "neutral/unique/laidback.webp", _("You see a laid back person, who appears to be one of the locals, looking around the bar."))
-   credits = rnd.rnd(20e3, 100e3)
+   mem.credits = rnd.rnd(20e3, 100e3)
 end
 
 
 function accept ()
-   if tk.yesno(_("Looking for a 4th"), fmt.f(_([["Hiya there! We're having a race around this system system soon and need a 4th person to participate. You have to bring a Yacht class ship, and there's a prize of {credits} if you win. Interested?"]]), {credits=fmt.credits(credits)})) then
+   if tk.yesno(_("Looking for a 4th"), fmt.f(_([["Hiya there! We're having a race around this system system soon and need a 4th person to participate. You have to bring a Yacht class ship, and there's a prize of {credits} if you win. Interested?"]]), {credits=fmt.credits(mem.credits)})) then
       misn.accept()
       misn.setDesc(_("You're participating in a race!"))
-      misn.setReward(fmt.credits(credits))
+      misn.setReward(fmt.credits(mem.credits))
       misn.osdCreate(_("Racing Skills 1"), {
          _("Board checkpoint 1"),
          _("Board checkpoint 2"),
          _("Board checkpoint 3"),
-         fmt.f(_("Land at {pnt}"), {pnt=curplanet}),
+         fmt.f(_("Land at {pnt}"), {pnt=mem.curplanet}),
       })
-      tk.msg(_("Awesome"), fmt.f(_([["That's great! Here's how it works: We will all be in a Yacht class ship. Once we take off from {pnt}, there will be a countdown, and then we will proceed to the various checkpoints in order, boarding them before going to the next checkpoint. After the last checkpoint has been boarded, head back to {pnt} and land. Let's have some fun!"]]), {pnt=curplanet}))
+      tk.msg(_("Awesome"), fmt.f(_([["That's great! Here's how it works: We will all be in a Yacht class ship. Once we take off from {pnt}, there will be a countdown, and then we will proceed to the various checkpoints in order, boarding them before going to the next checkpoint. After the last checkpoint has been boarded, head back to {pnt} and land. Let's have some fun!"]]), {pnt=mem.curplanet}))
       hook.takeoff("takeoff")
    else
       tk.msg(_("Refusal"), _([["I guess we'll need to find another pilot."]]))
@@ -83,11 +83,11 @@ function takeoff()
       j:setActiveBoard(true)
       j:setVisible(true)
    end
-   racers[1] = pilot.add("Llama", "Independent", curplanet)
+   racers[1] = pilot.add("Llama", "Independent", mem.curplanet)
    racers[1]:outfitAdd("Engine Reroute")
-   racers[2] = pilot.add("Llama", "Independent", curplanet)
+   racers[2] = pilot.add("Llama", "Independent", mem.curplanet)
    racers[2]:outfitAdd("Engine Reroute")
-   racers[3] = pilot.add("Llama", "Independent", curplanet)
+   racers[3] = pilot.add("Llama", "Independent", mem.curplanet)
    racers[3]:outfitAdd("Improved Stabilizer")
    for i, j in ipairs(racers) do
       j:rename(fmt.f(_("Racer {n}"), {n=i}))
@@ -100,10 +100,10 @@ function takeoff()
    end
    player.pilot():control()
    player.pilot():face(checkpoint[1]:pos(), true)
-   countdown = 5 -- seconds
-   omsg = player.omsgAdd(tostring(countdown), 0, 50)
-   counting = true
-   counterhook = hook.timer(1.0, "counter")
+   mem.countdown = 5 -- seconds
+   mem.omsg = player.omsgAdd(tostring(mem.countdown), 0, 50)
+   mem.counting = true
+   mem.counterhook = hook.timer(1.0, "counter")
    hook.board("board")
    hook.jumpin("jumpin")
    hook.land("land")
@@ -111,24 +111,24 @@ end
 
 
 function counter()
-   countdown = countdown - 1
-   if countdown == 0 then
-      player.omsgChange(omsg, _("Go!"), 1000)
+   mem.countdown = mem.countdown - 1
+   if mem.countdown == 0 then
+      player.omsgChange(mem.omsg, _("Go!"), 1000)
       hook.timer(1.0, "stopcount")
       player.pilot():control(false)
-      counting = false
-      hook.rm(counterhook)
+      mem.counting = false
+      hook.rm(mem.counterhook)
       for i, j in ipairs(racers) do
          j:control()
          j:moveto(checkpoint[target[i]]:pos())
          hook.pilot(j, "land", "racerland")
       end
-      hp1 = hook.pilot(racers[1], "idle", "racer1idle")
-      hp2 = hook.pilot(racers[2], "idle", "racer2idle")
-      hp3 = hook.pilot(racers[3], "idle", "racer3idle")
+      mem.hp1 = hook.pilot(racers[1], "idle", "racer1idle")
+      mem.hp2 = hook.pilot(racers[2], "idle", "racer2idle")
+      mem.hp3 = hook.pilot(racers[3], "idle", "racer3idle")
    else
-      player.omsgChange(omsg, tostring(countdown), 0)
-      counterhook = hook.timer(1.0, "counter")
+      player.omsgChange(mem.omsg, tostring(mem.countdown), 0)
+      mem.counterhook = hook.timer(1.0, "counter")
    end
 end
 
@@ -143,8 +143,8 @@ end
 
 function nexttarget1()
    if target[1] == 4 then
-      racers[1]:land(curplanet)
-      hook.rm(hp1)
+      racers[1]:land(mem.curplanet)
+      hook.rm(mem.hp1)
    else
       racers[1]:moveto(checkpoint[target[1]]:pos())
    end
@@ -161,8 +161,8 @@ end
 
 function nexttarget2()
    if target[2] == 4 then
-      racers[2]:land(curplanet)
-      hook.rm(hp2)
+      racers[2]:land(mem.curplanet)
+      hook.rm(mem.hp2)
    else
       racers[2]:moveto(checkpoint[target[2]]:pos())
    end
@@ -179,8 +179,8 @@ end
 
 function nexttarget3()
    if target[3] == 4 then
-      racers[3]:land(curplanet)
-      hook.rm(hp3)
+      racers[3]:land(mem.curplanet)
+      hook.rm(mem.hp3)
    else
       racers[3]:moveto(checkpoint[target[3]]:pos())
    end
@@ -188,7 +188,7 @@ end
 
 
 function stopcount()
-   player.omsgRm(omsg)
+   player.omsgRm(mem.omsg)
 end
 
 
@@ -199,7 +199,7 @@ function board(ship)
          misn.osdActive(i+1)
          target[4] = target[4] + 1
          if target[4] == 4 then
-            tk.msg(fmt.f(_("Checkpoint {n} reached"), {n=i}), fmt.f(_("Land on {pnt}"), {pnt=curplanet}))
+            tk.msg(fmt.f(_("Checkpoint {n} reached"), {n=i}), fmt.f(_("Land on {pnt}"), {pnt=mem.curplanet}))
          else
             tk.msg(fmt.f(_("Checkpoint {n} reached"), {n=i}), fmt.f(_("Proceed to Checkpoint {n}"), {n=i+1}))
          end
@@ -217,7 +217,7 @@ end
 
 
 function racerland(p)
-   player.msg(fmt.f(_("{plt} just landed at {pnt} and finished the race"), {plt=p, pnt=curplanet}))
+   player.msg(fmt.f(_("{plt} just landed at {pnt} and finished the race"), {plt=p, pnt=mem.curplanet}))
 end
 
 
@@ -226,7 +226,7 @@ function land()
       if racers[1]:exists() and racers[2]:exists() and racers[3]:exists() then
          tk.msg(_("You Won!"), _([[The laid back person comes up to you and hands you a credit chip.
    "Nice racing! Here's your prize money. Let's race again sometime soon!"]]))
-         player.pay(credits)
+         player.pay(mem.credits)
          misn.finish(true)
       else
          tk.msg(_("You failed to win the race."), _([[As you congratulate the winner on a great race, the laid back person comes up to you.

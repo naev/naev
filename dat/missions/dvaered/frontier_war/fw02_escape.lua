@@ -94,23 +94,23 @@ function accept()
    misn.setDesc(_("You will help a Goddard executive to evade his Za'lek prison."))
    misn.setReward(_("Hopefully something better than Gauss Guns..."))
 
-   stage = 0
+   mem.stage = 0
    hook.land("land")
    hook.enter("enter")
-   barLandHook = hook.land("landBar","bar")
-   loadhook    = hook.load("loading")
+   mem.barLandHook = hook.land("landBar","bar")
+   mem.loadhook    = hook.load("loading")
    misn.osdCreate( _("Dvaered Escape"), {
       fmt.f(_("Meet the rest of the team in {pnt} in {sys}"), {pnt=hampla, sys=hamsys}),
       fmt.f(_("Intercept the convoy in {sys}. Your Vendetta escort must survive"), {sys=intsys}),
       fmt.f(_("Report back on {pnt} in {sys}"), {pnt=reppla, sys=repsys}),
    } )
-   mark = misn.markerAdd(hamsys, "low")
+   mem.mark = misn.markerAdd(hamsys, "low")
 end
 
 function landBar()
 
    -- You land at the commando's planet
-   if stage == 0 and planet.cur() == hampla then
+   if mem.stage == 0 and planet.cur() == hampla then
       misn.npcAdd("discussHam", _("Captain Hamfresser"), fw.portrait_hamfresser, hamfr_desc)
       misn.npcAdd("discussNik", _("Sergeant Nikolov"), fw.portrait_nikolov, nikol_desc)
       misn.npcAdd("discussTro", _("Private Tronk"), fw.portrait_tronk, tronk_desc)
@@ -118,58 +118,58 @@ function landBar()
       misn.npcAdd("discussStr", _("Lieutenant Strafer"), fw.portrait_strafer, straf_desc)
 
       local c = misn.cargoNew( N_("Commando"), N_("A commando unit.") )
-      commando = misn.cargoAdd( c, commMass ) -- TODO: see if it gets auto-removed at the end of mission
+      mem.commando = misn.cargoAdd( c, commMass ) -- TODO: see if it gets auto-removed at the end of mission
 
       tk.msg(_("Hello again"), _([[When you enter the bar, you feel an unusual atmosphere in the air. Most customers seem to be annoyed to be there, not lifting their eyes from their drinks. Even the mercenary pilots, normally easily distinguishable by their arrogant posture and their loud voices, do not manifest. Moving forward in the room, you soon discover the reason for that: Captain Hamfresser, from the space infantry commandos. And this time, he is not alone.
    The group of cyborgs sits in an empty part of the room, staring periodically at each customer and at the walls. For the first time, you think to yourself that they can probably see through most walls with their implants and try to remember if you had contraband in your ship last time they were aboard. Finally, between two cyborgs, you spot Lientenant Strafer, the pilot, apparently the only normal person who can look serene around space infantry cyborgs. Well, "normal" might be a stretch; he is a Dvaered soldier, after all.
    When you look at Hamfresser's face, you notice a large smile on it. The implants on his face do not look like they have been designed to deal with the possibility of a spacemarine trying to smile, and his skin twists horribly. You finally approach and he tells you the team is ready to leave on a moment's notice.]]) )
 
-      stage = 1
+      mem.stage = 1
       misn.osdActive(2)
-      misn.markerRm(mark)
-      mark = misn.markerAdd(intsys, "high")
+      misn.markerRm(mem.mark)
+      mem.mark = misn.markerAdd(intsys, "high")
 
-      hook.rm(barLandHook)
+      hook.rm(mem.barLandHook)
    end
 end
 
 function land()
-   lastPlanet = planet.cur()
+   mem.lastPlanet = planet.cur()
 
    -- You land to steal a medical machine
-   if stage == 3 then
+   if mem.stage == 3 then
       misn.npcAdd("fireSteal", _("Captain Hamfresser"), fw.portrait_hamfresser, hamfr_des2)
 
    -- Land at an Imperial planet and meet the agents
-   elseif stage == 5 and planet.cur():faction() == faction.get("Empire") then
+   elseif mem.stage == 5 and planet.cur():faction() == faction.get("Empire") then
       tk.msg(_("Other help offer"), fmt.f(_([[As you land, someone seems to be waiting for you on the spaceport. "Hello, colleague! Someone is in trouble with the authorities, out there. You seem to have had an argument with the Za'lek, and now the Imperials help them. I've seen blockades everywhere on the borders of Imperial space. Even the way to the secret jumps is impassable. It looks like the Empire wants to get you at all costs, but luckily enough, I have the solution. You probably already got a fake transponder, but they seem to have identified it, so what about receiving another one? I can sell you an authentic fake transponder, coming straight outta Skulls and Bones factory."
    This person is for sure a pirate who wants to take the opportunity to get a few credits. The idea is not bad as the imperial ships would not look for a ship with a Skulls and Bones fake transponder. So you ask him how many credits he wants. "{number}" is the answer. "That sounds a great many, doesn't it? But maybe it's a suitable amount of money for your life and the success of whatever unscrupulous mission you're trying to carry out. Of course, you may not have such an amount right here, so I'll accept if you give your word to pay me at some point. Your word and your DNA signature as well, so that I can find you if you try to trick me."
    You know that if you agree, you will have to pay whatever happens, otherwise you will be harassed by hit men until the end of your life. But actually, paying {credits} could allow you to skirt the messy and compromising deal you will otherwise have to do with the Imperial secret services. Meet the fake transponder dealer at the bar if interested.]]), {number=fmt.number(fw.pirate_price), credits=fmt.credits(fw.pirate_price)}))
-      pirag = misn.npcAdd("pirateDealer", _("Fake transponder dealer"), portrait.get("Pirate"), _("This shifty person is for sure one of the pirates that want to sell their fake transponder to you."))
-      impag = misn.npcAdd("imperialAgent", _("Feather-hat agent"), portrait.get(), _("The imperial agent looks like a nondescript trader, as there are so many in imperial space."))
-      stage = 6
+      mem.pirag = misn.npcAdd("pirateDealer", _("Fake transponder dealer"), portrait.get("Pirate"), _("This shifty person is for sure one of the pirates that want to sell their fake transponder to you."))
+      mem.impag = misn.npcAdd("imperialAgent", _("Feather-hat agent"), portrait.get(), _("The imperial agent looks like a nondescript trader, as there are so many in imperial space."))
+      mem.stage = 6
 
    -- Land to end the mission
-   elseif stage >= 4 and planet.cur() == reppla then
+   elseif mem.stage >= 4 and planet.cur() == reppla then
       tk.msg(_("Finally back"), fmt.f(_([[Upon landing, Hamfresser, the VIP and you go to the spaceport's military office, where the Major Tam is waiting for you along with a few other soldiers. He warmly greets the executive and addresses to Hamfresser: "Do you know that you scared us, people? We learned by the diplomatic channel that you destroyed an hospital's pharmacy quasi-entirely, along with two police tanks and half a dozen battle androids on {pnt}. Apparently, you did not kill anyone at least, but the Za'lek were really upset".
    The captain explains: "Sir, we needed a machine to heal the VIP, that had been injured during the interception, but once in the hospital, we'd been apparently spotted by a traffic cop. Things then got gradually worse and we had to escape through the pharmacy's wall. I've lost a soldier in this operation." Tam answers: "Well, you will make a detailed report later. And don't worry about the soldier, I will make sure he is replaced immediately.
-   "And you, {player}, anything to report?"]]), {pnt=hospPlanet, player=player.name()}))
+   "And you, {player}, anything to report?"]]), {pnt=mem.hospPlanet, player=player.name()}))
       var.push("dv_empire_deal", false)
       var.push("dv_pirate_debt", false)
       shiplog.create( "frontier_war", _("Frontier War"), _("Dvaered") )
-      if stage == 7 then -- Empire solution
+      if mem.stage == 7 then -- Empire solution
          tk.msg(_("A problem with the Empire"), fmt.f(_([[You explain to the major what problems you encountered. You talk about the strange deal the Empire has forced you to make with them and the major's face turns red: "You did WHAT? The imperial intelligence service is the strongest in the world, they can deduce things you would not even imagine just by looking at someone, and you let them interview a black ops commando leader!"
    As you argue that you had no other choice, he seems to calm down a little bit "I will interrogate Hamfresser to see if one can understand what they were looking for. Damn! I'm afraid something awful may happen to us somehow because of that. Oh, and by the way, I made sure with the Za'lek that they don't blame you personally for what happened. They should accept you in their space now."
    The major starts to go away, but then comes back "Oh, I almost forgot to pay you. Hehe. Here are {credits}."]]), {credits=fmt.credits(fw.credits_02)}))
          var.push("dv_empire_deal", true)
          shiplog.append( "frontier_war", _("You helped the Dvaered High Command to liberate Mr. Danftang, public relations executive at Goddard, who was imprisoned by the Za'lek for obscure reasons. This executive is likely to help House Dvaered on the diplomatic point of view. Many unexpected events happened during this operation, that forced you to make a deal with the Empire secret services.") )
-      elseif stage == 8 then -- Pirate debt
+      elseif mem.stage == 8 then -- Pirate debt
          tk.msg(_("Everything is almost alright"), fmt.f(_([[You explain to the major what problems you encountered. You talk about the strange deal the Empire has tried to make with you. "Yes, the Imperial intelligence services are formidable. It is very hard for us to hide our intentions from them. It was right for you not to accept their offer. So you bought a pirate fake transponder, right? I hope it was not too expensive!"
   When you tell him the sum you had to promise to pay, Major Tam squeaks. "Whawhawhat? {price} for a fake transponder! This is not trade, it is theft!" "Well, technically..." You answer "those folks are pirates, so it's their job to rob people." The major calms down "Alright. I'll take care of the payment, so that they don't kill you, but you'll have to refund us, don't forget that! Oh, and by the way, I made sure with the Za'lek that they don't blame you personally for what happened. They should accept you in their space now."
    The major starts to go away, but then comes back "Oh, I almost forgot to pay you. Hehe. Here are {credits}."]]), {price=fmt.credits(fw.pirate_price), credits=fmt.credits(fw.credits_02)}))
          var.push("dv_pirate_debt", true)
          shiplog.append( "frontier_war", _("You helped the Dvaered High Command to liberate Mr. Danftang, public relations executive at Goddard, who was imprisoned by the Za'lek for obscure reasons. This executive is likely to help House Dvaered on the diplomatic point of view. Many unexpected events happened during this operation, that forced you to get into debt with House Dvaered. It is very likely they won't entrust you with important missions until you repay them.") )
-      elseif stage == 9 then -- Pirate cash
+      elseif mem.stage == 9 then -- Pirate cash
          tk.msg(_("No major problem to report"), fmt.f(_([[You explain to the major what problems you encountered. You talk about the strange deal the Empire has tried to make with you. "Yes, the Imperial intelligence services are formidable. It is very hard for us to hide our intentions from them. It was right for you not to accept their offer. So you bought a pirate fake transponder, right? I hope it was not too expensive!"
    You consider requesting to be refunded for your mission expenses, but then you remember that the Dvaered are tightfisted and violent, so you give up and simply answer: "Oh, no... not... really."
    Tam looks satisfied, and answers: "By the way, I made sure with the Za'lek that they don't blame you personally for what happened. They should accept you in their space now."
@@ -183,26 +183,26 @@ function land()
       player.pay(fw.credits_02)
 
       -- Reset the zlk standing.
-      stand1 = fzlk:playerStanding()
-      fzlk:modPlayerRaw( stand0-stand1 )
+      local stand1 = fzlk:playerStanding()
+      fzlk:modPlayerRaw( mem.stand0-stand1 )
       var.pop("loyal2klank") -- We don't need this one anymore
       misn.finish(true)
    end
 
-   lastPla = planet.cur()
+   mem.lastPla = planet.cur()
 end
 
 -- Put the npcs back at loading
 function loading()
-   if stage == 1 and planet.cur() == hampla then
+   if mem.stage == 1 and planet.cur() == hampla then
       misn.npcAdd("discussHam", _("Captain Hamfresser"), fw.portrait_hamfresser, hamfr_desc)
       misn.npcAdd("discussNik", _("Sergeant Nikolov"), fw.portrait_nikolov, nikol_desc)
       misn.npcAdd("discussTro", _("Private Tronk"), fw.portrait_tronk, tronk_desc)
       misn.npcAdd("discussThe", _("Corporal Therus"), fw.portrait_therus, theru_desc)
       misn.npcAdd("discussStr", _("Lieutenant Strafer"), fw.portrait_strafer, straf_desc)
-   elseif stage == 3 then
+   elseif mem.stage == 3 then
       misn.npcAdd("fireSteal", _("Captain Hamfresser"), fw.portrait_hamfresser, hamfr_des2)
-   --elseif stage == 4 then -- TODO: decide if we do that
+   --elseif mem.stage == 4 then -- TODO: decide if we do that
       --player.takeoff()
    end
 end
@@ -231,18 +231,18 @@ end
 function fireSteal()
    if tk.yesno(_("Ready for action?"), _([[Are you ready to start "Operation Drugstore Thunder"? (Hamfresser named it.)]])) then
       tk.msg(_("At the hospital"), _([[After giving the signal to Hamfresser, you join the cockpit of your ship and start the motors in anticipation of an escape. A heavy explosion coming from the distance shakes your ship, followed by detonations that seem to approach. After a while, you see the commandos running in your direction, pursued by Za'lek police androids. When the last member of the team enters the ship, you take off in a hurry, closely followed by a few drones. "We made a mess, out there!" Says Hamfresser "But at least we've got the machine!"]]))
-      stage = 4
+      mem.stage = 4
       misn.osdDestroy()
       misn.osdCreate( _("Dvaered Escape"), {
          fmt.f(_("Escape to {pnt} in {sys}. Do NOT destroy any Za'lek inhabited ship (only drones are allowed)"), {pnt=reppla, sys=repsys}),
       } )
       hook.pilot(nil, "death", "killed_zlk")
 
-      hospPlanet = planet.cur()
+      mem.hospPlanet = planet.cur()
       hook.takeoff("takeoff")
       player.takeoff()
-      firstBloc = true
-      hook.rm(datehook)
+      mem.firstBloc = true
+      hook.rm(mem.datehook)
    end
 end
 
@@ -251,8 +251,8 @@ function killed_zlk(pilot,killer)
    if pilot:faction() == fzlk
          and (killer == player.pilot()
             or killer:leader() == player.pilot()) then
-      killed_ship = pilot:ship():nameRaw()
-      if (fw.elt_inlist( killed_ship, {"Za'lek Scout Drone", "Za'lek Light Drone", "Za'lek Heavy Drone", "Za'lek Bomber Drone"} ) == 0) then
+      mem.killed_ship = pilot:ship():nameRaw()
+      if (fw.elt_inlist( mem.killed_ship, {"Za'lek Scout Drone", "Za'lek Light Drone", "Za'lek Heavy Drone", "Za'lek Bomber Drone"} ) == 0) then
          tk.msg(_("The mission failed"), _([[The rule was not to kill anybody, did you remember?]]))
          misn.finish(false)
       end
@@ -261,38 +261,39 @@ end
 
 function enter()
    -- Intercept the ship
-   if stage == 1 and system.cur() == intsys then
-      stand0 = fzlk:playerStanding() -- To reset it after the fight
+   if mem.stage == 1 and system.cur() == intsys then
+      mem.stand0 = fzlk:playerStanding() -- To reset it after the fight
 
       pilot.toggleSpawn(false)
       pilot.clear()
-      prevsys = lmisn.getNextSystem(system.cur(), prisys)
-      nextsys = lmisn.getNextSystem(system.cur(), zlksys)
+      mem.prevsys = lmisn.getNextSystem(system.cur(), prisys)
+      mem.nextsys = lmisn.getNextSystem(system.cur(), zlksys)
 
       hook.timer(5.0, "convoyEnter")
 
    -- At first jump, it gets announced that you've got to land
-   elseif stage == 2 then
+   elseif mem.stage == 2 then
       hook.timer( 7.0, "weNeed2land" )
 
-   elseif stage == 4 and tronkDeath then
-      tronkDeath = false
+   elseif mem.stage == 4 and mem.tronkDeath then
+      mem.tronkDeath = false
       tk.msg(_("Journey to the other side"), _([[After having outrun your enemies, you start inquiring about how the operation went at the hospital. A quick look at your living quarters gives you an answer. You see the VIP, still unconscious, but not blue anymore, his body covered by electrodes connected to the machine in question. Next to him, the commandos look like they had better days. Hamfresser, his face as pale as death, sits on the ground, leaning on a pillar, busy changing a long and blood-dripping bandage on his left arm. The sergeant Nikolov looks at a huge hole in her foot with an empty eye and the medic Therus limps from the one to the other, spreading blood marks on the walls.
    Lying in the center of the room, covered with bandages, is private Tronk. His battle armor, pierced with multiple holes, has been thrown a few meters away in a blood puddle. The soldier looks at the two remaining fingers of his less damaged arm that are slowly walking on the ground, in a sad smile. "Leopold, you remember when you were a kid? Did you play with your fingers like that?" Hamfresser answers: "Tronky-boy, don't use my first name, only dying people have used my first name before..." "Don't be afraid, this won't change, Leopold."
    Suddenly, the soldier opens his eyes wide and calls the medic: "Therus! I know why Major Tam can catch the turtle! Each time, when he reaches the point where the turtle previously was, the time he needs for that is smaller. And at some point, it becomes so infinitely small that even if you have an infinity of steps to go, the total time is finite." The medic looks at the dying man: "Tronky, how did you? Tronky?" She then stops and takes the pulse at Tronk's neck "It's over, captain." Hamfresser answers: "Damn! It's the fifth kid to die under my command and it still hurts as much. I just can't get used to that."]])) -- The death of Tronk
 
    -- When entering Empire Space, contact with Captain HewHew
-   elseif stage == 4 and system.cur():presences()["Empire"] and (not system.cur():presences()["Za'lek"]) then
-      hook.timer(2.0, "spawnHewHew", lastSys)
+   elseif mem.stage == 4 and system.cur():presences()["Empire"] and (not system.cur():presences()["Za'lek"]) then
+      hook.timer(2.0, "spawnHewHew", mem.lastSys)
       hook.timer(10.0, "backDialog")  -- And some dialog with the VIP
    end
 
    -- Spawn Strafer
-   if stage == 1 then
-      if lastSys == system.cur() then -- We're taking off
-         origin = lastPla
+   if mem.stage == 1 then
+      local origin
+      if mem.lastSys == system.cur() then -- We're taking off
+         origin = mem.lastPla
       else
-         origin = lastSys
+         origin = mem.lastSys
       end
 
       strafer = pilot.add("Vendetta", "DHC", origin, _("Lieutenant Strafer"), {ai="baddie_norun"})
@@ -320,7 +321,7 @@ function enter()
       hook.pilot(strafer, "hail", "escort_hailed")
    end
 
-   if stage >= 4 then
+   if mem.stage >= 4 then
       -- Zlk Blocus:
       -- Pultatis -> Provectus Nova
       --          -> Limbo
@@ -330,8 +331,8 @@ function enter()
       zlk_list = { system.get("Pultatis"), system.get("Stone Table"), system.get("Xavier"), system.get("Straight Row") }
       local zlk_lisj = { {"Provectus Nova", "Limbo"}, {"Sollav"}, {"Sheffield"}, {"Nunavut"} }
 
-      index = fw.elt_inlist( system.cur(), zlk_list )
-      if index > 0 then -- /!\ We did not claim this system /!\
+      mem.index = fw.elt_inlist( system.cur(), zlk_list )
+      if mem.index > 0 then -- /!\ We did not claim this system /!\
          pilot.toggleSpawn("Za'lek")
          pilot.clearSelect("Za'lek")
          for k,f in ipairs(pir.factions) do
@@ -339,14 +340,14 @@ function enter()
             pilot.clearSelect(f)
          end
 
-         if firstBloc then
+         if mem.firstBloc then
             scanHooks = {}
-            jpoutHook = hook.jumpout("rmScanHooks")
+            mem.jpoutHook = hook.jumpout("rmScanHooks")
          end
-         for i, j in ipairs(zlk_lisj[index]) do
+         for i, j in ipairs(zlk_lisj[mem.index]) do
             local jp = jump.get( system.cur(), j )
-            pos = jp:pos()
-            spawnZlkSquadron( pos, (stage < 8) )
+            local pos = jp:pos()
+            spawnZlkSquadron( pos, (mem.stage < 8) )
          end
       end
 
@@ -364,27 +365,27 @@ function enter()
                          system.get("Delta Pavonis"), system.get("Fortitude"), system.get("Merisi") }
       local emp_lisj = { {"Pas", "Waterhole"}, {"Hakoi"}, {"Salvador"}, {"Goddard"}, {"Goddard"}, {"Pontus", "Acheron"}, {"Acheron"} }
 
-      index = fw.elt_inlist( system.cur(), emp_list )
-      if index > 0 then -- /!\ We did not claim this system /!\
+      mem.index = fw.elt_inlist( system.cur(), emp_list )
+      if mem.index > 0 then -- /!\ We did not claim this system /!\
          pilot.toggleSpawn("Za'lek")
          pilot.clearSelect("Za'lek")
          pilot.toggleSpawn("Pirate")
          pilot.clearSelect("Pirate")
 
-         for i, j in ipairs(emp_lisj[index]) do
+         for i, j in ipairs(emp_lisj[mem.index]) do
             local jp = jump.get( system.cur(), j )
-            pos = jp:pos()
-            if system.cur() == system.get("Arcturus") and j == "Goddard" and stage == 7 then -- Special case: JP from Arcturus to Goddard
+            local pos = jp:pos()
+            if system.cur() == system.get("Arcturus") and j == "Goddard" and mem.stage == 7 then -- Special case: JP from Arcturus to Goddard
                spawnEmpSquadron( pos, false )
             else
-               spawnEmpSquadron( pos, (stage < 8) )
+               spawnEmpSquadron( pos, (mem.stage < 8) )
             end
          end
       end
 
    end
 
-   lastSys = system.cur()
+   mem.lastSys = system.cur()
 end
 
 -- Functions for the escort
@@ -395,18 +396,18 @@ end
 
 -- Makes the carceral convoy enter the system
 function convoyEnter()
-   target = pilot.add( "Za'lek Sting", "Za'lek", prevsys )
+   target = pilot.add( "Za'lek Sting", "Za'lek", mem.prevsys )
    target:memory().formation = "wedge"
    target:setHilight()
    target:setVisible()
    target:control(true)
-   target:hyperspace(nextsys)
+   target:hyperspace(mem.nextsys)
 
    escort = {}
-   escort[1] = pilot.add( "Za'lek Light Drone", "Za'lek", prevsys, nil, {ai="collective"} )
-   escort[2] = pilot.add( "Za'lek Light Drone", "Za'lek", prevsys, nil, {ai="collective"} )
-   escort[3] = pilot.add( "Za'lek Heavy Drone", "Za'lek", prevsys, nil, {ai="collective"} )
-   --escort[4] = pilot.add( "Za'lek Heavy Drone", "Za'lek", prevsys, nil, {ai="collective"} )
+   escort[1] = pilot.add( "Za'lek Light Drone", "Za'lek", mem.prevsys, nil, {ai="collective"} )
+   escort[2] = pilot.add( "Za'lek Light Drone", "Za'lek", mem.prevsys, nil, {ai="collective"} )
+   escort[3] = pilot.add( "Za'lek Heavy Drone", "Za'lek", mem.prevsys, nil, {ai="collective"} )
+   --escort[4] = pilot.add( "Za'lek Heavy Drone", "Za'lek", mem.prevsys, nil, {ai="collective"} )
 
    athooks = {}
    for i, p in ipairs(escort) do
@@ -414,8 +415,8 @@ function convoyEnter()
       athooks[i] = hook.pilot(p, "attacked", "targetAttacked")
    end
 
-   attackhook = hook.pilot(target, "attacked", "targetAttacked")
-   boardhook  = hook.pilot(target, "board", "targetBoarded")
+   mem.attackhook = hook.pilot(target, "attacked", "targetAttacked")
+   mem.boardhook  = hook.pilot(target, "board", "targetBoarded")
    hook.pilot( target, "death", "targetDied" )
    hook.pilot( target, "jump", "targetEscaped" )
    hook.pilot( target, "land", "targetEscaped" )
@@ -425,7 +426,7 @@ end
 -- Hooks for the interception target
 function targetAttacked()
    strafer:control(false)
-   hook.rm(attackhook)
+   hook.rm(mem.attackhook)
    for i, j in ipairs(athooks) do
       hook.rm(j)
       escort[i]:setFaction("Warlords") -- Hack so that Strafer attacks them and not the Sting
@@ -445,16 +446,16 @@ end
 function targetBoarded()
    tk.msg(_("A new passenger"), _([[The commandos gather near the airlock. This time, four combat androids are in the front. Hamfresser gives his orders and the first android smashes the enemy ship's airlock with its fist. After that, the team rushes into the ship and the explosions start to thunder. Before long, the team comes back. Nikolov enters first, carrying an immobile and blue man in a prisoner suit, then Hamfresser, followed by the medic Therus, busily applying compresses on a large bloody wound on the captain's side, and by Tronk, who seems to be trying to explain himself. After that come the androids, that seem to have received heavy damage. You jump at the cockpit and start the engines.]]))
    player.unboard()
-   hook.rm(boardhook)
+   hook.rm(mem.boardhook)
 
-   stage = 2
+   mem.stage = 2
    misn.osdActive(3)
-   misn.markerRm(mark)
-   mark = misn.markerAdd(repsys, "low")
+   misn.markerRm(mem.mark)
+   mem.mark = misn.markerAdd(repsys, "low")
 
    -- Reset the zlk standing
    local stand1 = fzlk:playerStanding()
-   fzlk:modPlayerRaw( stand0-stand1 )
+   fzlk:modPlayerRaw( mem.stand0-stand1 )
 end
 function targetDied()
    tk.msg(_("Mission Failed: target destroyed"), _("You were supposed to disable that ship, not destroy it. How are you supposed to free anyone now?"))
@@ -467,21 +468,21 @@ end
 
 -- Hamfresser explains that we need to land at an hospital
 function weNeed2land()
-   stage = 3
+   mem.stage = 3
    tk.msg(_("We are in trouble"), _([[While you finally jump out, Hamfresser reports: "We've got an unexpected situation in there. After we destroyed the androids, and got to the imprisonment room, we saw that there were three other prisoners along with the target, and much more human guards than expected. They exploded our first assault bot, and we had to take them down with the paralyzers, but one of the prisoners took a weapon for some reason and started to fire on us. Fortunately for me, he just breached my lung. That is a replaceable part.
    "Then, Tronk paralyzed all the prisoners and we identified and recovered the target. That's why the guy is blue actually. But in his hurry, Tronk used the armor-piercing dose. According to the medic, it is worse that we first thought. Apparently, she can keep the guy alive for a few periods, but she needs a machine that is not on board to save him. So at next stop, I'm afraid we will have to steal the machine at the spaceport's hospital. It really annoys me as it's the kind of operation that can get ugly very quickly, especially since the killing interdiction still runs, but we have no choice. I'll just be waiting for your signal at the bar next time we land.
    "If I may, I'd advise you to land somewhere within 3 periods, otherwise the VIP is likely to die, and to choose a place with a shipyard and an outfitter so that you'll be able to prepare your ship at best in case we need to escape quickly."]]))
-   timelimit = time.get() + time.create(0,3,0)
+   mem.timelimit = time.get() + time.create(0,3,0)
    misn.osdCreate(_("Dvaered Escape"), {
-      fmt.f(_("Land anywhere to let Hamfresser steal a machine. Time left: {time}"), {time=(timelimit - time.get())}),
+      fmt.f(_("Land anywhere to let Hamfresser steal a machine. Time left: {time}"), {time=(mem.timelimit - time.get())}),
    })
-   datehook = hook.date(time.create(0, 0, 100), "tick")
+   mem.datehook = hook.date(time.create(0, 0, 100), "tick")
 end
 
 function tick()
-   if timelimit >= time.get() then
+   if mem.timelimit >= time.get() then
       misn.osdCreate(_("Dvaered Escape"), {
-         fmt.f(_("Land anywhere to let Hamfresser steal a machine. Time left: {time}"), {time=(timelimit - time.get())}),
+         fmt.f(_("Land anywhere to let Hamfresser steal a machine. Time left: {time}"), {time=(mem.timelimit - time.get())}),
       })
    else
       tk.msg(_("The mission failed"), fmt.f(_([[Hamfresser rushes to the bridge. "All is lost, {player}! The guy died. Our mission failed!"]]), {player=player.name()}))
@@ -491,7 +492,7 @@ end
 
 function takeoff( )
    -- Player takes off from planet after attacking the hospital
-   if stage == 4 and lastPlanet:faction() == fzlk then
+   if mem.stage == 4 and mem.lastPlanet:faction() == fzlk then
       fzlk:modPlayerRaw( -100 )
       hook.timer(1.0, "spawnDrones")
 
@@ -508,10 +509,10 @@ end
 
 -- Drones are after the player after the hospital attack
 function spawnDrones()
-   pilot.add( "Za'lek Light Drone", "Za'lek", lastPlanet, nil, {ai="collective"} )
-   pilot.add( "Za'lek Light Drone", "Za'lek", lastPlanet, nil, {ai="collective"} )
-   pilot.add( "Za'lek Heavy Drone", "Za'lek", lastPlanet, nil, {ai="collective"} )
-   tronkDeath = true -- This says that at next jump, Tronk will die
+   pilot.add( "Za'lek Light Drone", "Za'lek", mem.lastPlanet, nil, {ai="collective"} )
+   pilot.add( "Za'lek Light Drone", "Za'lek", mem.lastPlanet, nil, {ai="collective"} )
+   pilot.add( "Za'lek Heavy Drone", "Za'lek", mem.lastPlanet, nil, {ai="collective"} )
+   mem.tronkDeath = true -- This says that at next jump, Tronk will die
 end
 
 -- Spawn blockade ships
@@ -538,7 +539,7 @@ function spawnZlkSquadron( pos, bloc )
       j:setHostile(bloc)
    end
 
-   if firstBloc then
+   if mem.firstBloc then
       scanHooks[#scanHooks+1] = hook.timer(0.5, "proximityScan", {focus = squad[2], funcname = "scanBloc"})
    end
 end
@@ -568,7 +569,7 @@ end
 
 -- The player sees the blocus fleet
 function scanBloc()
-   if firstBloc then -- avoid having that happening twice in systems where there are 2 blocus
+   if mem.firstBloc then -- avoid having that happening twice in systems where there are 2 blocus
       tk.msg(_("Troubles straight ahead!"), _([[When approaching the jump point, your sensors pick up a squadron of military ships, that stationnate close to the jump point in a tight formation. No doubt those ships are here for you, and it looks more than chancy to try to force the blockade.]]))
 
       player.pilot():control()
@@ -577,7 +578,7 @@ function scanBloc()
       camera.set( squad[1]:pos() ) -- TODO if possible: choose the right squad
 
       rmScanHooksRaw()
-      firstBloc = false
+      mem.firstBloc = false
       hook.timer(4.0, "spawnStrafer")
    end
 end
@@ -590,12 +591,12 @@ function spawnStrafer()
    strafer:control(true)
    strafer:follow( player.pilot() )
    camera.set( strafer )
-   prox = hook.timer(0.5, "proximity", {anchor = strafer, radius = 2000, funcname = "straferDiscuss", focus = player.pilot()})
+   mem.prox = hook.timer(0.5, "proximity", {anchor = strafer, radius = 2000, funcname = "straferDiscuss", focus = player.pilot()})
 end
 
 -- The player discuss with Strafer
 function straferDiscuss()
-   hook.rm(prox)
+   hook.rm(mem.prox)
    camera.set()
    player.cinematics(false)
    player.pilot():control(false)
@@ -605,10 +606,10 @@ function straferDiscuss()
 
    -- Add some fuel, far away so that no npc gathers it
    local cfuel = misn.cargoNew( N_("Fuel"), N_("Tanks of usable fuel."), {gfx_space="fuel.webp"})
-   pos = vec2.new( -1.2*system.cur():radius(), 0 )
+   local pos = vec2.new( -1.2*system.cur():radius(), 0 )
    system.addGatherable( cfuel, 1, pos, vec2.new(0,0), 3600 ) -- Lasts for an houer
-   Imark = system.mrkAdd( pos, _("FUEL") )
-   gathHook = hook.gather("gather")
+   mem.Imark = system.mrkAdd( pos, _("FUEL") )
+   mem.gathHook = hook.gather("gather")
 end
 
 -- Player gathers fuel
@@ -617,17 +618,17 @@ function gather( comm, qtt )
    if comm~="Fuel" then
       return
    end
-   hook.rm(gathHook)
+   hook.rm(mem.gathHook)
    pilot.cargoRm( player.pilot(), comm, qtt )
    player.pilot():setFuel(true)
    player.msg( _("You filled your fuel tanks.") )
-   system.mrkRm(Imark)
+   system.mrkRm(mem.Imark)
 end
 
 -- Remove scan hooks
 function rmScanHooks()
    rmScanHooksRaw()
-   hook.rm(jpoutHook)
+   hook.rm(mem.jpoutHook)
 end
 function rmScanHooksRaw()
    if scanHooks ~= nil then
@@ -643,15 +644,15 @@ function spawnHewHew( origin )
    hewhew = pilot.add("Hyena", "Independent", origin, _("Strange Pilot"))
    hewhew:setInvincible()  -- Don't wreck my Captain HewHew
    hewhew:hailPlayer()
-   hailie = hook.pilot(hewhew, "hail", "hailMe")
+   mem.hailie = hook.pilot(hewhew, "hail", "hailMe")
 end
 function hailMe()
-   hook.rm(hailie)
+   hook.rm(mem.hailie)
    player.commClose()
    tk.msg( _("Help offer"), fmt.f(_([[The pilot of the ship starts to talk with a strange and disturbing familiarity: "Doing good, folks? Ya just walked into those Za'lek's freaks' space, wrecked a squadron, helped a prisoner escape and desolated an hospital. You're worse than the Incident, mates!" You wonder how this pilot could know so much about your operation, but the spiel continues: "Hewhewhew! People usually think I'm some useless pirates scum. I know you thought that! Neh, don't lie to me!"
    The pilot's voice suddenly becomes harsh: "In reality, I am a faithful subject of his Imperial Majesty, as you should be yourself, {player} from Hakoi! But you denied your own nation, and for that you should be severely punished. Don't forget, {player}: The Empire is watching you. Anywhere. Anytime. Anyhow.
    "Hewhewhew! And what was the other one already? Oh yeah: The Emperor sees all! So old-fashioned! Hey! But ya're all lucky, 'cause the Empire feels in a merciful mood today. So at your next stop, you will kindly go and talk to the agent with a feather hat, and both of you will agree on a way for us not to kill you!"]]), {player=player.name()}) )
-   stage = 5
+   mem.stage = 5
 end
 
 -- Discuss with the Pirate or Imperial agent
@@ -667,8 +668,8 @@ function pirateDealer()
          misn.osdCreate( _("Dvaered Escape"), {
             fmt.f(_("Escape to {pnt} in {sys}. Thanks to your new fake transponder, the squadrons should not stop you anymore"), {pnt=reppla, sys=repsys}),
          } )
-         misn.npcRm(pirag)
-         stage = 9
+         misn.npcRm(mem.pirag)
+         mem.stage = 9
       else
          tk.msg(_("Not enough money"), _([["Don't try to trick me, crook! I can see from here that you don't have enough money!"]]))
       end
@@ -678,8 +679,8 @@ function pirateDealer()
       misn.osdCreate( _("Dvaered Escape"), {
          fmt.f(_("Escape to {pnt} in {sys}. Thanks to your new fake transponder, the squadrons should not stop you anymore"), {pnt=reppla, sys=repsys}),
       } )
-      misn.npcRm(pirag)
-      stage = 8
+      misn.npcRm(mem.pirag)
+      mem.stage = 8
    else
       tk.msg(_("You're way too expensive"),_([["As you wish," says the pirate. "Just come back when you've understood that I'm your only chance!"]]))
    end
@@ -694,8 +695,8 @@ function imperialAgent()
          fmt.f(_("Escape to {pnt} in {sys}. Thanks to your deal with the Empire, the squadron in Alteris won't prevent you from jumping to Goddard"), {pnt=reppla, sys=repsys}),
       } )
       misn.markerAdd( system.get("Alteris"), "plot" )
-      misn.npcRm(impag)
-      stage = 7
+      misn.npcRm(mem.impag)
+      mem.stage = 7
    else
       tk.msg(_("That was the wrong answer"),_([["Mwell." Says the agent. "I guess you want to see for yourself that this is the only solution. If you're still alive when you're done, come back, we will be waiting for you."]]))
    end
@@ -707,10 +708,10 @@ function backDialog()
    Hamfresser defends himself: "But sir, if the operation succeeds, you'll be back to business really soon. Isn't that wonderful?" "... and if the operation fails, we all die! No, strong-arm, learn that patience, negotiation, bribing and craftiness can achieve much more than violence and destruction. I have paid the best lawyers in Za'lek space and my assistants negotiate with the authorities, I was sure to get out in about half a cycle." Hamfresser simply raises his shoulders: "Dvaered warriors don't use deception, not patience, nor craftiness. Dvaered warriors use respectable methods instead, like violence and destruction."]]))
 end
 
--- Aborting if stage >= 4: reset zlk reputation
+-- Aborting if mem.stage >= 4: reset zlk reputation
 function abort()
-   if stage >= 4 then
+   if mem.stage >= 4 then
       local stand1 = fzlk:playerStanding()
-      fzlk:modPlayerRaw( stand0-stand1 )
+      fzlk:modPlayerRaw( mem.stand0-stand1 )
    end
 end

@@ -25,11 +25,9 @@ local neu = require "common.neutral"
 
 local targetworld, targetworld_sys = planet.getS( "Zeo" )
 
-reward = 50e3 -- Plus 1e3 * cake, has to be global (is saved)
+mem.reward = 50e3 -- Plus 1e3 * cake, has to be global (is saved)
 
 function create () --No system shall be claimed by mission
-   startworld, startworld_sys = planet.cur()
-
    misn.setNPC( _("Familiar Face"), "neutral/unique/paddy.webp", _("A familiar looking young woman is looking at you") )
 end
 
@@ -41,19 +39,19 @@ function accept()
 
    misn.accept()
 
-   amount = player.pilot():cargoFree()
-   if amount > 0 then
-      misn.cargoAdd( "Food", amount )
-      reward = reward + ( 1e3 * amount )
+   mem.amount = player.pilot():cargoFree()
+   if mem.amount > 0 then
+      misn.cargoAdd( "Food", mem.amount )
+      mem.reward = mem.reward + ( 1e3 * mem.amount )
       tk.msg( _("A Tasty Job"), fmt.f(_([["Great!" Paddy says with a smile. She hands you what appear to be recipes. "I just need you to deliver these recipes to him. Oh, and some of my homemade cake! I've packed that cake into your ship. Feel free to give it a taste! It's delicious! Anyway, Michal will pay you {credits} when you get there. Thank you so much!"
-    When you arrive at your ship, you find your cargo hold packed to the brim with cake. You decide to try some, but the second it enters your mouth, you can't help but to spit it out in disgust. This is easily the most disgusting cake you've ever tasted. Well, as long as you get paid....]]), {credits=fmt.credits(reward)} ) )
+    When you arrive at your ship, you find your cargo hold packed to the brim with cake. You decide to try some, but the second it enters your mouth, you can't help but to spit it out in disgust. This is easily the most disgusting cake you've ever tasted. Well, as long as you get paid....]]), {credits=fmt.credits(mem.reward)} ) )
    else
-      tk.msg( _("A Tasty Job"), fmt.f(_([["Great!" Paddy says with a smile. She hands you what appear to be recipes. "I just need you to deliver these recipes to him. I was hoping to deliver some cake to him too, but it seems your ship doesn't have enough space for it, so that's unfortunate. In any case, Michal will pay you {credits} when you arrive. Thank you so much!"]]), {credits=fmt.credits(reward)} ) )
+      tk.msg( _("A Tasty Job"), fmt.f(_([["Great!" Paddy says with a smile. She hands you what appear to be recipes. "I just need you to deliver these recipes to him. I was hoping to deliver some cake to him too, but it seems your ship doesn't have enough space for it, so that's unfortunate. In any case, Michal will pay you {credits} when you arrive. Thank you so much!"]]), {credits=fmt.credits(mem.reward)} ) )
    end
 
    -- set up mission computer
    misn.setTitle( _("A Tasty Job") )
-   misn.setReward( fmt.credits( reward ) )
+   misn.setReward( fmt.credits( mem.reward ) )
    misn.setDesc( fmt.f(_([[Deliver the recipes to Michal on {pnt} in the {sys} system.]]), {pnt=targetworld, sys=targetworld_sys} ) )
 
    misn.osdCreate( _("A Tasty Job"), {
@@ -62,12 +60,12 @@ function accept()
    misn.markerAdd( targetworld, "low" )
 
    --set up hooks
-   landhook = hook.land( "land" )
+   mem.landhook = hook.land( "land" )
 end
 
 function land()
    if planet.cur() == targetworld then
-      if amount > 0 then
+      if mem.amount > 0 then
          tk.msg( "", _([[As Michal takes the recipes and cake off your hands, you can't help but wonder how quickly his business will fail with food as bad as the cake you tried. When he remarks how delicious he apparently thinks the cake is, that confirms in your mind that he doesn't have a clue what he's doing. You bite your tongue, however, wishing him good luck as you take your pay.]]) )
          neu.addMiscLog( _([[You delivered a whole lot of the most disgusting cake you've ever tasted in your life as well as recipes for making said cake to Michal, the man who had you deliver a literal tonne of love letters before. Supposedly this is for an attempt to start a restaurant, but with food as disgusting as that cake, you're sure the business will fail.]]) )
       else
@@ -75,7 +73,7 @@ function land()
          neu.addMiscLog( _([[You delivered recipes for making some kind of cake to Michal, the man who had you deliver a literal tonne of love letters before.]]) )
       end
 
-      player.pay( reward )
+      player.pay( mem.reward )
       misn.finish(true)
    end
 end

@@ -36,14 +36,14 @@ local dv = require "common.dvaered"
 
 local boss -- Non-persistent state
 
-osd_desc = {__save=true}
+mem.osd_desc = {}
 
-osd_desc[2] = _("Eliminate the Dvaered patrol")
-osd_desc[3] = _("Return to the FLF base")
+mem.osd_desc[2] = _("Eliminate the Dvaered patrol")
+mem.osd_desc[3] = _("Return to the FLF base")
 
 function create ()
-   missys = system.get( "Arcanis" )
-   if not misn.claim( missys ) then misn.finish( false ) end
+   mem.missys = system.get( "Arcanis" )
+   if not misn.claim( mem.missys ) then misn.finish( false ) end
 
    misn.setNPC( _("FLF petty officer"), "flf/unique/benito.webp", _("There is a low-ranking officer of the Frontier Liberation Front sitting at one of the tables. She seems somewhat more receptive than most people in the bar.") )
 end
@@ -56,22 +56,22 @@ function accept ()
     Benito waves her hand to indicate you needn't pay them any heed. "That said, the upper ranks have decided that if you are truly sympathetic to our cause, you will be given an opportunity to prove yourself. Of course, if you'd rather not get involved in our struggle, that's understandable. But if you're in for greater things, if you stand for justice... Perhaps you'll consider joining with us?"]]) ) then
       tk.msg( _("Patrol-B-gone"), fmt.f( _([["I'm happy to hear that. It's good to know we still have the support from the common pilot. Anyway, let me fill you in on what it is we want you to do. As you may be aware, the Dvaered have committed a lot of resources to finding us and flushing us out lately. And while our base is well hidden, those constant patrols are certainly not doing anything to make us feel more secure! I think you can see where this is going. You will go out there and eliminate one of those patrols in the {sys} system."
     You object, asking the Corporal if all recruits have to undertake dangerous missions like this to be accepted into the FLF ranks. Benito chuckles and makes a pacifying gesture.
-    "Calm down, it's not as bad as it sounds. You only have to take out one small patrol; I don't think you will have to fight more than 3 ships, 4 if you're really unlucky. If you think that's too much for you, you can abort the mission for now and come to me again later. Otherwise, good luck!"]]), {sys=missys} ) )
+    "Calm down, it's not as bad as it sounds. You only have to take out one small patrol; I don't think you will have to fight more than 3 ships, 4 if you're really unlucky. If you think that's too much for you, you can abort the mission for now and come to me again later. Otherwise, good luck!"]]), {sys=mem.missys} ) )
 
-      osd_desc[1] = fmt.f( _("Fly to the {sys} system"), {sys=missys} )
+      mem.osd_desc[1] = fmt.f( _("Fly to the {sys} system"), {sys=mem.missys} )
 
       misn.accept()
-      misn.osdCreate( _("Dvaered Patrol"), osd_desc )
+      misn.osdCreate( _("Dvaered Patrol"), mem.osd_desc )
       misn.setDesc( _("To prove yourself to the FLF, you must take out one of the Dvaered security patrols.") )
-      misn.setTitle( fmt.f( _("FLF: Small Dvaered Patrol in {sys}"), {sys=missys} ) )
-      marker = misn.markerAdd( missys, "low" )
+      misn.setTitle( fmt.f( _("FLF: Small Dvaered Patrol in {sys}"), {sys=mem.missys} ) )
+      mem.marker = misn.markerAdd( mem.missys, "low" )
       misn.setReward( _("A chance to make friends with the FLF.") )
 
-      DVplanet, DVsys = planet.getS("Raelid Outpost")
+      mem.DVplanet, mem.DVsys = planet.getS("Raelid Outpost")
 
-      reinforcements_arrived = false
-      dv_ships_left = 0
-      job_done = false
+      mem.reinforcements_arrived = false
+      mem.dv_ships_left = 0
+      mem.job_done = false
 
       hook.enter( "enter" )
       hook.jumpout( "leave" )
@@ -84,8 +84,8 @@ end
 
 
 function enter ()
-   if not job_done then
-      if system.cur() == missys then
+   if not mem.job_done then
+      if system.cur() == mem.missys then
          misn.osdActive( 2 )
          patrol_spawnDV( 3, nil )
       else
@@ -96,16 +96,16 @@ end
 
 
 function leave ()
-   hook.rm( spawner )
-   hook.rm( hailer )
-   hook.rm( rehailer )
-   reinforcements_arrived = false
-   dv_ships_left = 0
+   hook.rm( mem.spawner )
+   hook.rm( mem.hailer )
+   hook.rm( mem.rehailer )
+   mem.reinforcements_arrived = false
+   mem.dv_ships_left = 0
 end
 
 
 local function spawnDVReinforcements ()
-   reinforcements_arrived = true
+   mem.reinforcements_arrived = true
    local dist = 1500
    local x
    local y
@@ -130,46 +130,46 @@ local function spawnDVReinforcements ()
       j:setVisible( true )
       j:setHilight( true )
       fleetDV[ #fleetDV + 1 ] = j
-      dv_ships_left = dv_ships_left + 1
+      mem.dv_ships_left = mem.dv_ships_left + 1
    end
 
    -- Check for defection possibility
    if faction.playerStanding( "Dvaered" ) >= -5 then
-      hailer = hook.timer( 30.0, "timer_hail" )
+      mem.hailer = hook.timer( 30.0, "timer_hail" )
    else
-      spawner = hook.timer( 30.0, "timer_spawnFLF" )
+      mem.spawner = hook.timer( 30.0, "timer_spawnFLF" )
    end
 end
 
 
 function timer_hail ()
-   hook.rm( hailer )
+   hook.rm( mem.hailer )
    if boss ~= nil and boss:exists() then
       timer_rehail()
-      hailer = hook.pilot( boss, "hail", "hail" )
+      mem.hailer = hook.pilot( boss, "hail", "hail" )
    end
 end
 
 
 function timer_rehail ()
-   hook.rm( rehailer )
+   hook.rm( mem.rehailer )
    if boss ~= nil and boss:exists() then
       boss:hailPlayer()
-      rehailer = hook.timer( 8.0, "timer_rehail" )
+      mem.rehailer = hook.timer( 8.0, "timer_rehail" )
    end
 end
 
 
 function hail ()
-   hook.rm( hailer )
-   hook.rm( rehailer )
+   hook.rm( mem.hailer )
+   hook.rm( mem.rehailer )
    player.commClose()
    tk.msg( _("A tempting offer"), _([[Your viewscreen shows a Dvaered Colonel. He looks tense. Normally, a tense Dvaered would be bad news, but then this one bothered to hail you in the heat of battle, so perhaps there is more here than meets the eye.]]) )
    tk.msg( _("A tempting offer"), _([["I am Colonel Urnus of the Dvaered Fleet, anti-terrorism division. I would normally never contact an enemy of House Dvaered, but my intelligence officer has looked through our records and found that you were recently a law-abiding citizen, doing honest freelance missions."]]) )
-   choice = tk.choice( _("A tempting offer"), fmt.f( _([["I know your type, {player}. You take jobs where profit is to be had, and you side with the highest bidder. There are many like you in the galaxy, though admittedly not so many with your talent. That's why I'm willing to make you this offer: you will provide us with information on their base of operations and their combat strength. In return, I will convince my superiors that you were working for me all along, so you won't face any repercussions for assaulting Dvaered ships. Furthermore, I will transfer a considerable amount of credits in your account, as well as put you into a position to make an ally out of House Dvaered. If you refuse, however, I guarantee you that you will never again be safe in Dvaered space. What say you? Surely this proposition beats anything that rabble can do for you?"]]), {player=player.name()} ),
+   local choice = tk.choice( _("A tempting offer"), fmt.f( _([["I know your type, {player}. You take jobs where profit is to be had, and you side with the highest bidder. There are many like you in the galaxy, though admittedly not so many with your talent. That's why I'm willing to make you this offer: you will provide us with information on their base of operations and their combat strength. In return, I will convince my superiors that you were working for me all along, so you won't face any repercussions for assaulting Dvaered ships. Furthermore, I will transfer a considerable amount of credits in your account, as well as put you into a position to make an ally out of House Dvaered. If you refuse, however, I guarantee you that you will never again be safe in Dvaered space. What say you? Surely this proposition beats anything that rabble can do for you?"]]), {player=player.name()} ),
       _("Accept the offer"), _("Remain loyal to the FLF") )
    if choice == 1 then
-      tk.msg( _("Opportunism is an art"), fmt.f( _([[Colonel Urnus smiles broadly. "I knew you'd make the right choice, citizen!" He addresses someone on his bridge, out of the view of the camera. "Notify the flight group. This ship is now friendly. Cease fire." Then he turns back to you. "Proceed to {pnt} in the {sys} system, citizen. I will personally meet you there."]]), {pnt=DVplanet, sys=DVsys} ) )
+      tk.msg( _("Opportunism is an art"), fmt.f( _([[Colonel Urnus smiles broadly. "I knew you'd make the right choice, citizen!" He addresses someone on his bridge, out of the view of the camera. "Notify the flight group. This ship is now friendly. Cease fire." Then he turns back to you. "Proceed to {pnt} in the {sys} system, citizen. I will personally meet you there."]]), {pnt=mem.DVplanet, sys=mem.DVsys} ) )
 
       faction.get("FLF"):setPlayerStanding( -100 )
       local standing = faction.get("Dvaered"):playerStanding()
@@ -184,15 +184,15 @@ function hail ()
          end
       end
 
-      job_done = true
-      osd_desc[1] = fmt.f( _("Fly to the {sys} system and land on {pnt}"), {sys=DVsys, pnt=DVplanet} )
-      osd_desc[2] = nil
+      mem.job_done = true
+      mem.osd_desc[1] = fmt.f( _("Fly to the {sys} system and land on {pnt}"), {sys=mem.DVsys, pnt=mem.DVplanet} )
+      mem.osd_desc[2] = nil
       misn.osdActive( 1 )
-      misn.osdCreate( _("Dvaered Patrol"), osd_desc )
-      misn.markerRm( marker )
-      marker = misn.markerAdd( DVsys, "high" )
+      misn.osdCreate( _("Dvaered Patrol"), mem.osd_desc )
+      misn.markerRm( mem.marker )
+      mem.marker = misn.markerAdd( mem.DVsys, "high" )
 
-      spawner = hook.timer( 3.0, "timer_spawnHostileFLF" )
+      mem.spawner = hook.timer( 3.0, "timer_spawnHostileFLF" )
       hook.land( "land_dv" )
    else
       tk.msg( _("End of negotiations"), _([[Colonel Urnus is visibly annoyed by your response. "Very well then," he bites at you. "In that case you will be destroyed along with the rest of that terrorist scum. Helm, full speed ahead! All batteries, fire at will!"]]) )
@@ -258,20 +258,20 @@ end
 
 
 function pilot_death_dv ()
-   dv_ships_left = dv_ships_left - 1
-   if dv_ships_left <= 0 then
-      hook.rm( spawner )
-      hook.rm( hailer )
-      hook.rm( rehailer )
+   mem.dv_ships_left = mem.dv_ships_left - 1
+   if mem.dv_ships_left <= 0 then
+      hook.rm( mem.spawner )
+      hook.rm( mem.hailer )
+      hook.rm( mem.rehailer )
 
-      job_done = true
+      mem.job_done = true
       local standing = faction.get("Dvaered"):playerStanding()
       if standing > -20 then
          faction.get("Dvaered"):setPlayerStanding( -20 )
       end
       misn.osdActive( 3 )
-      misn.markerRm( marker )
-      marker = misn.markerAdd( system.get( var.peek( "flfbase_sysname" ) ), "high" )
+      misn.markerRm( mem.marker )
+      mem.marker = misn.markerAdd( system.get( var.peek( "flfbase_sysname" ) ), "high" )
       hook.land( "land_flf" )
       pilot.toggleSpawn( true )
       local hailed = false
@@ -290,7 +290,7 @@ function pilot_death_dv ()
             end
          end
       end
-   elseif dv_ships_left <= 1 and not reinforcements_arrived then
+   elseif mem.dv_ships_left <= 1 and not mem.reinforcements_arrived then
       spawnDVReinforcements()
    end
 end
@@ -319,7 +319,7 @@ end
 
 function land_dv ()
    leave()
-   if planet.cur() == DVplanet then
+   if planet.cur() == mem.DVplanet then
       tk.msg( _("A reward for a job well botched"), _([[Soon after docking, you are picked up by a couple of soldiers, who escort you to Colonel Urnus's office. Urnus greets you warmly, and offers you a seat and a cigar. You take the former, not the latter.
     "I am most pleased with the outcome of this situation, citizen," Urnus begins. "To be absolutely frank with you, I was beginning to get frustrated. My superiors have been breathing down my neck, demanding results on those blasted FLF, but they are as slippery as eels. Just when you think you've cornered them, poof! They're gone, lost in that nebula. Thick as soup, that thing. I don't know how they can even find their own way home!"]]) )
       tk.msg( _("A reward for a job well botched"), _([[Urnus takes a puff of his cigar and blows out a ring of smoke. It doesn't take a genius to figure out you're the best thing that's happened to him in a long time.

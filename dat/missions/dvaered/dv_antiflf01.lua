@@ -42,12 +42,13 @@ function create()
    misn.setReward(_("A chance to aid in the effort against the FLF"))
 
    local c = misn.cargoNew( N_("Dvaered Ship Crew"), N_("Dvaered crew from a ship that was disabled by the FLF.") )
-   DVcrew = misn.cargoAdd(c, 0)
+   mem.DVcrew = misn.cargoAdd(c, 0)
 
    hook.land("land")
 end
 
 function land()
+   local mid
    if planet.cur():faction() == faction.get("Dvaered") then
       if var.peek("flfbase_flfshipkilled") then
          mid = _([[In addition, you complied with your instructions and destroyed a terrorist that threatened the peace and stability of the region. You will be rewarded appropriately."]])
@@ -66,7 +67,7 @@ function land()
     When he is gone, you find yourself wondering what this campaign he mentioned is all about. There is one way to find out - if you are up to it...]])
       )
    end
-   misn.cargoJet(DVcrew)
+   misn.cargoJet(mem.DVcrew)
    var.push("flfbase_intro", 1)
    var.pop("flfbase_flfshipkilled")
    dv.addAntiFLFLog( _([[You rescued the crew of a Dvaered ship that was disabled by an FLF ship. The Dvaered officer mentioned that a campaign is being prepared against the FLF terrorists; if you are interested in joining in that operation, you can seek out a Dvaered liaison.]]) )

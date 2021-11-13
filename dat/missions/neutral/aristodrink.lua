@@ -33,8 +33,7 @@ local payment = 200e3
 local getclueplanet, isPrevPlanet -- Forward-declared functions
 
 -- defines Previous Planets table
-prevPlanets = {}
-prevPlanets.__save = true
+mem.prevPlanets = {}
 
 
 local moreinfotxt = {}
@@ -56,28 +55,25 @@ function create ()
    -- creates the NPC at the bar to create the mission
    misn.setNPC( _("Drinking Aristocrat"), "neutral/unique/aristocrat.webp", _("You see an aristocrat sitting at a table in the middle of the bar, drinking a swirling concoction in a martini glass with a disappointed look on his face every time he takes a sip.") )
 
-   startplanet, startsys = planet.cur()
-
-   prevPlanets[1] = startplanet
-   prevPlanets.__save = true
-
-   numjumps = 0
+   mem.startplanet, mem.startsys = planet.cur()
+   mem.prevPlanets[1] = mem.startplanet
+   mem.numjumps = 0
 
    -- chooses the planet
-   clueplanet, cluesys = getclueplanet(1, 3)
-   prevPlanets[#prevPlanets+1] = clueplanet
+   mem.clueplanet, mem.cluesys = getclueplanet(1, 3)
+   mem.prevPlanets[#mem.prevPlanets+1] = mem.clueplanet
 end
 
 function accept ()
    if not tk.yesno( _("Drinking Aristocrat"), fmt.f( _([[You begin to approach the aristocrat. Next to him stands a well dressed and muscular man, perhaps his assistant, or maybe his bodyguard, you're not sure. When you get close to his table, he begins talking to you as if you work for him. "This simply will not do. When I ordered this 'drink', if you can call it that, it seemed interesting. It certainly doesn't taste interesting. It's just bland. The only parts of it that are in any way interesting are not at all pleasing. It just tastes so, common.
-    You know what I would really like? There was this drink at a bar on, what planet was that? Damien, do you remember? The green drink with the red fruit shavings." Damien looks down at him and seems to think for a second before shaking his head. "I believe it might have been {pnt} in the {sys} system. The drink was something like an Atmospheric Re-Entry or Gaian Bombing or something. It's the bar's specialty. They'll know what you're talking about. You should go get me one. Can you leave right away?"]]), {pnt=clueplanet, sys=cluesys} ) ) then
+    You know what I would really like? There was this drink at a bar on, what planet was that? Damien, do you remember? The green drink with the red fruit shavings." Damien looks down at him and seems to think for a second before shaking his head. "I believe it might have been {pnt} in the {sys} system. The drink was something like an Atmospheric Re-Entry or Gaian Bombing or something. It's the bar's specialty. They'll know what you're talking about. You should go get me one. Can you leave right away?"]]), {pnt=mem.clueplanet, sys=mem.cluesys} ) ) then
       tk.msg( _("Refuse"), _([["What do you mean, you can't leave right away? Then why even bother? Remove yourself from my sight." The aristocrat makes a horrible face, and sips his drink, only to look even more disgusted. He puts his drink back on the table and motions to the bartender, ignoring you beyond now.]]) )
       misn.finish()
 
    else
       misn.accept()
 
-      landmarker = misn.markerAdd( clueplanet, "low" )
+      mem.landmarker = misn.markerAdd( mem.clueplanet, "low" )
 
       -- mission details
       misn.setTitle( _("Drinking Aristocrat") )
@@ -87,68 +83,68 @@ function accept ()
       tk.msg( _("Leave Immediately"), _([["Oh good! Of course you will be paid handsomely for your efforts. I trust you can figure out how to get it here intact on your own." The aristocrat goes back to sipping his drink, making an awful face every time he tastes it, ignoring you. You walk away, a bit confused.]]) )
 
       -- how many systems you'll have to run through
-      numclues = rnd.rnd(1,5)
-      numexwork = rnd.rnd(1,3)
+      mem.numclues = rnd.rnd(1,5)
+      mem.numexwork = rnd.rnd(1,3)
 
       -- final bartender data
-      fintendergen = rnd.rnd(1,3)
+      mem.fintendergen = rnd.rnd(1,3)
 
       -- hooks
-      landhook = hook.land ("land", "bar")
-      takeoffhook = hook.takeoff ("takeoff")
+      mem.landhook = hook.land ("land", "bar")
+      mem.takeoffhook = hook.takeoff ("takeoff")
    end
 end
 
 function land ()
-   if planet.cur() == clueplanet then
-      if numclues > 0 then   -- first clue
-         numclues = numclues - 1
-         numjumps = numjumps + 1
+   if planet.cur() == mem.clueplanet then
+      if mem.numclues > 0 then   -- first clue
+         mem.numclues = mem.numclues - 1
+         mem.numjumps = mem.numjumps + 1
 
          -- next planet
-         clueplanet, cluesys = getclueplanet(1, 3)
-         misn.markerMove( landmarker, clueplanet )
-         prevPlanets[#prevPlanets+1] = clueplanet
+         mem.clueplanet, mem.cluesys = getclueplanet(1, 3)
+         misn.markerMove( mem.landmarker, mem.clueplanet )
+         mem.prevPlanets[#mem.prevPlanets+1] = mem.clueplanet
 
          tk.msg( _("Clue"), fmt.f( _([[You walk into the bar and approach the bartender. You describe the drink, but the bartender doesn't seem to know what you're talking about. There is another bartender that they think may be able to help you though, at {pnt} in the {sys} system.]]),
-            {pnt=clueplanet, sys=cluesys} ) )
+            {pnt=mem.clueplanet, sys=mem.cluesys} ) )
 
       else
-         if not foundexwork then   -- find out that it's a bartender's specialty
-            foundexwork = true
-            numexwork = numexwork - 1
-            numjumps = numjumps + 1
+         if not mem.foundexwork then   -- find out that it's a bartender's specialty
+            mem.foundexwork = true
+            mem.numexwork = mem.numexwork - 1
+            mem.numjumps = mem.numjumps + 1
 
             -- next planet
-            clueplanet, cluesys = getclueplanet(1, 5)
-            misn.markerMove( landmarker, clueplanet )
-            prevPlanets[#prevPlanets+1] = clueplanet
+            mem.clueplanet, mem.cluesys = getclueplanet(1, 5)
+            misn.markerMove( mem.landmarker, mem.clueplanet )
+            mem.prevPlanets[#mem.prevPlanets+1] = mem.clueplanet
 
-            tk.msg( _("A bit more info..."), fmt.f( moreinfotxt[fintendergen],
-               {pnt=clueplanet, sys=cluesys} ) )
+            tk.msg( _("A bit more info..."), fmt.f( moreinfotxt[mem.fintendergen],
+               {pnt=mem.clueplanet, sys=mem.cluesys} ) )
 
          else   -- find another bar that the bartender used to work at
-            if numexwork > 0 then
-               numexwork = numexwork - 1
+            if mem.numexwork > 0 then
+               mem.numexwork = mem.numexwork - 1
 
                -- next planet
-               clueplanet, cluesys = getclueplanet(1, 5)
-               misn.markerMove( landmarker, clueplanet )
-               prevPlanets[#prevPlanets+1] = clueplanet
+               mem.clueplanet, mem.cluesys = getclueplanet(1, 5)
+               misn.markerMove( mem.landmarker, mem.clueplanet )
+               mem.prevPlanets[#mem.prevPlanets+1] = mem.clueplanet
 
                tk.msg( _("Is this it?"), fmt.f( _([[You walk into the bar fully confident that this is the bar. You walk up to the bartender and ask for a Swamp Bombing. "A wha???" Guess this isn't the right bar. You get another possible clue, {pnt} in the {sys} system, and head on your way.]]),
-                  {pnt=clueplanet, sys=cluesys} ) )
+                  {pnt=mem.clueplanet, sys=mem.cluesys} ) )
 
-            elseif not hasDrink then  -- get the drink
-               hasDrink = true
+            elseif not mem.hasDrink then  -- get the drink
+               mem.hasDrink = true
 
-               tk.msg( _("This is it!"), worktxt[fintendergen] )
+               tk.msg( _("This is it!"), worktxt[mem.fintendergen] )
 
-               misn.markerMove(landmarker, startplanet)
+               misn.markerMove(mem.landmarker, mem.startplanet)
             end
          end
       end
-   elseif hasDrink and planet.cur() == startplanet then
+   elseif mem.hasDrink and planet.cur() == mem.startplanet then
       lmisn.sfxVictory()
       tk.msg( _("Delivery"), fmt.f( _([["Ahh! I was just thinking how much I wanted one of those drinks! I'm so glad that you managed to find it. You sure seemed to take your time though." You give him his drink and tell him that it wasn't easy, and how many systems you had to go through. "Hmm. That is quite a few systems. No reason for you to be this late though." He takes a sip from his drink. "Ahh! That is good though. I suppose you'll be wanting to get paid for your troubles. You did go through a lot of trouble. Then again, you did take quite a long time. I suppose {credits} should be appropriate."
     Considering the amount of effort that you went through, you feel almost cheated. You don't feel like arguing with the snobby aristocrat though, so you just leave him to his drink without another word. It's probably the most that anyone's ever paid for a drink like that anyway.
@@ -156,8 +152,8 @@ function land ()
       player.outfitAdd( "Swamp Bombing" )
       player.pay( payment )
 
-      hook.rm(landhook)
-      hook.rm(takeoffhook)
+      hook.rm(mem.landhook)
+      hook.rm(mem.takeoffhook)
       neu.addMiscLog( _([[You delivered a special drink called a Swamp Bombing to an aristocrat.]]) )
       misn.finish( true )
    end
@@ -182,21 +178,21 @@ function getclueplanet ( mini, maxi )
 end
 
 function isPrevPlanet ( passedPlanet )
-   for i = 1, #prevPlanets, 1 do
-      if prevPlanets[i] == passedPlanet then
+   for i = 1, #mem.prevPlanets, 1 do
+      if mem.prevPlanets[i] == passedPlanet then
          return true
       end
    end
 end
 
 function takeoff ()
-   if hasDrink then
+   if mem.hasDrink then
       misn.osdCreate( _("Find the Drink"), {
-         fmt.f( _("Return the drink to the Aristocrat at {pnt} in the {sys} system."), {pnt=startplanet, sys=startsys} )
+         fmt.f( _("Return the drink to the Aristocrat at {pnt} in the {sys} system."), {pnt=mem.startplanet, sys=mem.startsys} )
       } )
    else
       misn.osdCreate( _("Find the Drink"), {
-         fmt.f( _("Go to {pnt} in the {sys} system and look for the special drink that the Aristocrat wants"), {pnt=clueplanet, sys=cluesys} )
+         fmt.f( _("Go to {pnt} in the {sys} system and look for the special drink that the Aristocrat wants"), {pnt=mem.clueplanet, sys=mem.cluesys} )
       } )
    end
 end

@@ -39,18 +39,18 @@ local receiverimage = portrait.getFullPath(portrait.get())
 function create()
    -- Note: this mission does not make any system claims.
 
-   origin_p, origin_s = planet.cur()
+   mem.origin_p, mem.origin_s = planet.cur()
 
    -- target destination. Override "always_available" to true.
-   destplanet, destsys, numjumps, traveldist, cargo, avgrisk, tier = car.calculateRoute( rnd.rnd(5, 10), true )
-   if destplanet == nil or pir.factionIsPirate( destplanet:faction() ) then
+   mem.destplanet, mem.destsys, mem.numjumps, mem.traveldist, mem.cargo, mem.avgrisk, mem.tier = car.calculateRoute( rnd.rnd(5, 10), true )
+   if mem.destplanet == nil or pir.factionIsPirate( mem.destplanet:faction() ) then
       misn.finish(false)
    end
 
    -- Choose reward
    local jumpreward = 3000
    local distreward = 0.50
-   reward    = 1.5^tier * (numjumps * jumpreward + traveldist * distreward) * (1 + 0.05*rnd.twosigma())
+   mem.reward    = 1.5^mem.tier * (mem.numjumps * jumpreward + mem.traveldist * distreward) * (1 + 0.05*rnd.twosigma())
 
    misn.setNPC( givername, giverportrait, _("You see a nervous looking individual that seems to be sweating profusely.") )
 end
@@ -72,15 +72,15 @@ They coughs to the side somewhat exaggeratedly while looking at you from the cor
    g(fmt.f(_([[They lean closer to you and lower their voice.
 "I was asked to deliver a… a…"
 They furrow their brows for a second.
-"…a cake! To {pnt} in the {sys} system."]]), {pnt=destplanet, sys=destsys}))
+"…a cake! To {pnt} in the {sys} system."]]), {pnt=mem.destplanet, sys=mem.destsys}))
    g(_([["It's nothing out of the ordinary, I swear! Only that this cake you see, it's got some special… icing that is really sensitive. Like super sensitive. The slightest disturbance can melt it and lay it all to waste. In particular, any radiation can easily melt it even though it is shielded. Especially stuff like scanning radiation. You catch my drift?"]]))
    g(fmt.f(_([["All you would have to do is take the cake and go to {pnt} in the {sys} system, without getting any of that nasty scanning radiation on you."
 They shiver with disgust to emphasize and you can see some of their sweat fly off onto the bar floor.
-"Once you deliver it I'll split the money half and half with you."]]), {pnt=destplanet, sys=destsys}))
+"Once you deliver it I'll split the money half and half with you."]]), {pnt=mem.destplanet, sys=mem.destsys}))
    vn.na("You stare at them coldly.")
    g(fmt.f(_([["Fine fine, take it all. It should be {credits}. Just remember no scanning means no problems."
 They extend their sweaty hand towards you.
-"So, are you in?"]]), {credits=fmt.credits(reward)}))
+"So, are you in?"]]), {credits=fmt.credits(mem.reward)}))
    vn.menu{
       {_("Accept"), "accept"},
       {_("Decline"), "decline"},
@@ -114,7 +114,7 @@ They lean forward and get a bit more serious.
    vn.label("notut")
    g(fmt.f(_([["Great. One second, let me get the cake."
 They go to the restroom and come back holding a nondescript brown box that seems to have 'Cake' hastily scribbled on it. They promptly hand it over to you while looking both ways.
-"OK, so that's it. Make sure to take this to {pnt} in the {sys} system, and watch out for scanning!"]]), {pnt=destplanet, sys=destsys}))
+"OK, so that's it. Make sure to take this to {pnt} in the {sys} system, and watch out for scanning!"]]), {pnt=mem.destplanet, sys=mem.destsys}))
    vn.na(_("As leave them behind you can hear them let out a big sigh of what you can only assume is relief."))
    vn.run()
 
@@ -126,21 +126,21 @@ They go to the restroom and come back holding a nondescript brown box that seems
 
    local c = misn.cargoNew( N_("Cake"), N_("A cake that is supposedly sensitive to scanning radiation. Don't let anyone scan it.") )
    c:illegalto( {"Empire", "Dvaered", "Soromid", "Sirius", "Za'lek", "Frontier"} )
-   carg_id = misn.cargoAdd( c, 0 )
+   mem.carg_id = misn.cargoAdd( c, 0 )
 
-   misn.osdCreate( _("Deliver Cake"), { fmt.f(_("Fly to {pnt} in the {sys} system without getting scanned"), {pnt=destplanet, sys=destsys}) } )
+   misn.osdCreate( _("Deliver Cake"), { fmt.f(_("Fly to {pnt} in the {sys} system without getting scanned"), {pnt=mem.destplanet, sys=mem.destsys}) } )
 
    misn.setTitle(_("Deliver Cake"))
-   misn.setReward( fmt.credits(reward) )
-   misn.setDesc( fmt.f(_("Deliver a cake to {pnt} in the {sys} system. Apparently it has a special frosting and will be damaged if you are scanned. Use stealth to avoid getting scanned."), {pnt=destplanet, sys=destsys} ) )
-   misn.markerAdd(destplanet)
+   misn.setReward( fmt.credits(mem.reward) )
+   misn.setDesc( fmt.f(_("Deliver a cake to {pnt} in the {sys} system. Apparently it has a special frosting and will be damaged if you are scanned. Use stealth to avoid getting scanned."), {pnt=mem.destplanet, sys=mem.destsys} ) )
+   misn.markerAdd(mem.destplanet)
 
    hook.land( "land" ) -- only hook after accepting
 end
 
 -- Land hook
 function land()
-   if planet.cur() ~= destplanet then
+   if planet.cur() ~= mem.destplanet then
       return
    end
 
@@ -159,7 +159,7 @@ They chuckle.
 As they lumber away, you suddenly notice that quite a few suspicious figures in the background disappear and follow them away. What have you gotten into?]]))
    vn.run()
 
-   player.pay(reward)
+   player.pay(mem.reward)
 
    -- increase faction
    faction.modPlayerSingle("Pirate", rnd.rnd(2, 4))

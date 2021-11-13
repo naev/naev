@@ -57,18 +57,18 @@ function create ()
       misn.finish( false )
    end
 
-   started = false
-   chatter_index = 0
+   mem.started = false
+   mem.chatter_index = 0
 
    misn.setNPC( _("Quiet stranger"), "soromid/unique/chelsea.webp", _("A stranger is sitting quietly at a table, alone, glancing around the bar. In need of a suitable pilot, perhaps?") )
 end
 
 
 function accept ()
-   local txt = started and _([["Oh, hi again. I'm still having trouble finding someone. Can you help me? It would mean so much if you could."]]) or _([[The stranger seems rather nervous as you approach, but speaks up. The stranger's voice is deeper than you expected from their appearance, but you pay it no mind.
+   local txt = mem.started and _([["Oh, hi again. I'm still having trouble finding someone. Can you help me? It would mean so much if you could."]]) or _([[The stranger seems rather nervous as you approach, but speaks up. The stranger's voice is deeper than you expected from their appearance, but you pay it no mind.
     "H-hi! N-nice to meet you. I'm... um, you know what, you can just call me 'C' for now. I'm not sure about the name yet. They/them pronouns if that's okay." You agree to the request, introduce yourself, and chat with them a bit. They seem like a nice person.
     After a while, C crosses their arms in thought. "So... um, you're a pilot, you say, right? Thing is, I'm in need of some transportation, but I don't really have much money on me so no one's willing to take me. It's a bit far and there's a lot of pirates in the area, so I get why no one wants to do it, but you know... I just... I need to see my parents. Just something I need to tell them. I'm not picky about how long it takes, and I promise I won't cause any trouble.... Could you do this for me?"]])
-   started = true
+   mem.started = true
 
    if tk.yesno( _("Just Some Transportation"), txt ) then
       tk.msg( _("Just Some Transportation"), fmt.f(_([[C seems relieved at your answer. "Thank you so much," they say. "I really appreciate it. I'll make it up to you somehow. My parents live in {pnt} in the {sys} system. Like I said, no rush. Just as long as I get there, that's what matters."]]), {pnt=misplanet, sys=missys} ) )
@@ -78,7 +78,7 @@ function accept ()
       misn.setTitle( _("Coming Out") )
       misn.setDesc( fmt.f(_("Your new friend needs you to take them to their parents in {sys}."), {sys=missys} ) )
       misn.setReward( _("The satisfaction of helping out a new friend") )
-      marker = misn.markerAdd( missys, "low" )
+      mem.marker = misn.markerAdd( missys, "low" )
 
       misn.osdCreate( _("Coming Out"), {
          fmt.f(_("Go to the {sys} system and land on the planet {pnt}."), {sys=missys, pnt=misplanet} ),
@@ -86,10 +86,10 @@ function accept ()
 
       hook.land( "land" )
 
-      chatter_freq = time.create( 0, 10, 0 )
-      chatter_freq_mod = 8000
-      reminder_freq = time.create( 0, 20, 0 )
-      date_hook = hook.date( chatter_freq, "init_chatter" )
+      mem.chatter_freq = time.create( 0, 10, 0 )
+      mem.chatter_freq_mod = 8000
+      mem.reminder_freq = time.create( 0, 20, 0 )
+      mem.date_hook = hook.date( mem.chatter_freq, "init_chatter" )
    else
       tk.msg( _("Just Some Transportation"), _([["Okay. I understand. Thanks anyway."]]) )
       misn.finish()
@@ -101,26 +101,26 @@ end
 -- as you jump in (at least, not most of the time; it's technically
 -- still possible and that's fine).
 function init_chatter ()
-   hook.rm( timer_hook )
-   timer_hook = hook.timer( 10.0, "do_chatter" )
+   hook.rm( mem.timer_hook )
+   mem.timer_hook = hook.timer( 10.0, "do_chatter" )
 end
 
 
 function do_chatter ()
-   local freq = reminder_freq
+   local freq = mem.reminder_freq
 
-   if chatter_index < #chatter then
-      chatter_index = chatter_index + 1
-      tk.msg( "", chatter[ chatter_index ] )
-      if chatter_index < #chatter then freq = chatter_freq end
+   if mem.chatter_index < #chatter then
+      mem.chatter_index = mem.chatter_index + 1
+      tk.msg( "", chatter[ mem.chatter_index ] )
+      if mem.chatter_index < #chatter then freq = mem.chatter_freq end
    else
       local i = rnd.rnd( 1, #reminders )
       tk.msg( "", reminders[ i ] )
    end
 
-   local this_mod = rnd.rnd(-chatter_freq_mod, chatter_freq_mod)
-   hook.rm( date_hook )
-   date_hook = hook.date( freq + time.create( 0, 0, this_mod ), "init_chatter" )
+   local this_mod = rnd.rnd(-mem.chatter_freq_mod, mem.chatter_freq_mod)
+   hook.rm( mem.date_hook )
+   mem.date_hook = hook.date( freq + time.create( 0, 0, this_mod ), "init_chatter" )
 end
 
 
@@ -128,9 +128,9 @@ function land ()
    if planet.cur() == misplanet then
       -- Use any remaining chatter boxes (make sure the player gets the
       -- whole story)
-      while chatter_index < #chatter do
-         chatter_index = chatter_index + 1
-         tk.msg( "", chatter[ chatter_index ] )
+      while mem.chatter_index < #chatter do
+         mem.chatter_index = mem.chatter_index + 1
+         tk.msg( "", chatter[ mem.chatter_index ] )
       end
 
       tk.msg( "", _([[As you step off the ship with Chelsea in tow, you can tell that she's nervous about the whole thing. She asks you one more favor. "Can you come with me, as a friend?" You smile and say that you can.
