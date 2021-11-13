@@ -70,5 +70,5 @@ function create ( max )
    weights[ spawn_patrol  ] = 100
    weights[ spawn_squad   ] = math.max(1, -80 + 0.80 * max)
 
-   return scom.init( ftradersguild )
+   return scom.init( ftradersguild, weights, max )
 end
