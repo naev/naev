@@ -1,6 +1,6 @@
 --[[
 <?xml version='1.0' encoding='utf8'?>
-<mission name="Antlejos Terraforming 1">
+<mission name="Terraforming Antlejos 1">
  <flags>
   <unique />
  </flags>
@@ -104,6 +104,7 @@ function land ()
    v(_([[He turns to you and speaks.
 "Thank you for bringing me here. This is much better than expected. You are probably asking what I've come to do to such an inhospitable place, but it should be obvious. I'm going to terraform this wonderful place into a paradise!"]]))
    v(_([["I'm going to be setting up camp, but come back in a bit and I'll have more work for you. This is going to be very exciting indeed!"]]))
+   vn.sfxVictory()
    vn.na( fmt.reward(reward) )
    vn.run()
 
