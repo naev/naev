@@ -1,14 +1,11 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
 /**
  * @file nlua_var.c
  *
  * @brief Lua Variable module.
  */
-
-
 /** @cond */
 #include <lauxlib.h>
 #include <lua.h>
@@ -26,8 +23,6 @@
 #include "nluadef.h"
 #include "nstring.h"
 #include "nxml.h"
-
-
 
 /* similar to Lua vars, but with less variety */
 enum {
@@ -52,12 +47,10 @@ typedef struct misn_var_ {
    } d; /**< Variable data. */
 } misn_var;
 
-
 /*
  * variable stack
  */
 static misn_var* var_stack = NULL; /**< Stack of mission variables. */
-
 
 /*
  * prototypes
@@ -71,7 +64,6 @@ static void var_free( misn_var* var );
 int var_save( xmlTextWriterPtr writer );
 int var_load( xmlNodePtr parent );
 
-
 /* var */
 static int varL_peek( lua_State *L );
 static int varL_pop( lua_State *L );
@@ -82,7 +74,6 @@ static const luaL_Reg var_methods[] = {
    { "push", varL_push },
    {0,0}
 }; /**< Mission variable Lua methods. */
-
 
 /**
  * @brief Loads the mission variable Lua library.
@@ -95,7 +86,6 @@ int nlua_loadVar( nlua_env env )
    return 0;
 }
 
-
 static int var_cmp( const void *p1, const void *p2 )
 {
    const misn_var *mv1, *mv2;
@@ -103,7 +93,6 @@ static int var_cmp( const void *p1, const void *p2 )
    mv2 = (const misn_var*) p2;
    return strcmp(mv1->name,mv2->name);
 }
-
 
 /**
  * @brief Gets a mission var by name.
@@ -115,7 +104,6 @@ static misn_var *var_get( const char *str )
       return NULL;
    return bsearch( &mv, var_stack, array_size(var_stack), sizeof(misn_var), var_cmp );
 }
-
 
 /**
  * @brief Saves the mission variables.
@@ -158,7 +146,6 @@ int var_save( xmlTextWriterPtr writer )
    return 0;
 }
 
-
 /**
  * @brief Loads the vars from XML file.
  *
@@ -167,20 +154,18 @@ int var_save( xmlTextWriterPtr writer )
  */
 int var_load( xmlNodePtr parent )
 {
-   char *str;
-   xmlNodePtr node, cur;
-   misn_var var;
+   xmlNodePtr node = parent->xmlChildrenNode;
 
    var_cleanup();
 
-   node = parent->xmlChildrenNode;
-
    do {
       if (xml_isNode(node,"vars")) {
-         cur = node->xmlChildrenNode;
+         xmlNodePtr cur = node->xmlChildrenNode;
 
          do {
             if (xml_isNode(cur,"var")) {
+               misn_var var;
+               char *str;
                xmlr_attr_strd(cur,"name",var.name);
                xmlr_attr_strd(cur,"type",str);
                if (strcmp(str,"nil")==0)
@@ -212,7 +197,6 @@ int var_load( xmlNodePtr parent )
 
    return 0;
 }
-
 
 /**
  * @brief Adds a var to the stack, strings will be SHARED, don't free.
@@ -246,7 +230,6 @@ static int var_add( misn_var *new_var, int sort )
 
    return 0;
 }
-
 
 /**
  * @brief Mission variable Lua bindings.
@@ -395,12 +378,9 @@ static void var_free( misn_var* var )
  */
 void var_cleanup (void)
 {
-   int i;
-
-   for (i=0; i<array_size(var_stack); i++)
+   for (int i=0; i<array_size(var_stack); i++)
       var_free( &var_stack[i] );
 
    array_free( var_stack );
    var_stack   = NULL;
 }
-
