@@ -9,10 +9,8 @@ local mt = require 'merge_tables'
 local antlejos = {}
 
 antlejos.verner = {
-   --portrait = "verner.webp",
-   --image = "verner.webp",
-   portrait = "nelly.webp",
-   image = "nelly.webp",
+   portrait = "verner.webp",
+   image = "verner.webp",
    name = _("Verner"),
    color = nil,
    transition = nil, -- Use default
