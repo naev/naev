@@ -4,7 +4,7 @@ local sdrone = ship.get("Drone")
 local sheavy = ship.get("Heavy Drone")
 
 -- @brief Spawns a small swarm.
-function spawn_patrol ()
+local function spawn_patrol ()
    local pilots = {}
 
    scom.addPilot( pilots, sdrone )
@@ -14,7 +14,7 @@ end
 
 
 -- @brief Spawns a medium sized squadron.
-function spawn_squad ()
+local function spawn_squad ()
    local pilots = {}
    local r = rnd.rnd()
 
@@ -37,7 +37,7 @@ end
 
 
 -- @brief Spawns a large swarm.
-function spawn_capship ()
+local function spawn_capship ()
    local pilots = {}
    local r = rnd.rnd()
 

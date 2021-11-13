@@ -9,7 +9,7 @@ local sarx        = ship.get("Soromid Arx")
 local sira        = ship.get("Soromid Ira")
 
 -- @brief Spawns a small patrol fleet.
-function spawn_patrol ()
+local function spawn_patrol ()
    local pilots = { __doscans = true }
    local r = rnd.rnd()
 
@@ -26,7 +26,7 @@ function spawn_patrol ()
 end
 
 -- @brief Spawns a medium sized squadron.
-function spawn_squad ()
+local function spawn_squad ()
    local pilots = {}
    if rnd.rnd() < 0.5 then
       pilots.__doscans = true
@@ -50,7 +50,7 @@ function spawn_squad ()
 end
 
 -- @brief Spawns a capship with escorts.
-function spawn_capship ()
+local function spawn_capship ()
    local pilots = {}
    local r = rnd.rnd()
 

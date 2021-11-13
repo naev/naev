@@ -10,7 +10,7 @@ local smephisto   = ship.get("Za'lek Mephisto")
 local sdiablo     = ship.get("Za'lek Diablo")
 
 -- @brief Spawns a small patrol fleet.
-function spawn_patrol( pilots )
+local function spawn_patrol( pilots )
    pilots = pilots or { __doscans = true }
    local r = rnd.rnd()
 
@@ -39,7 +39,7 @@ function spawn_patrol( pilots )
 end
 
 -- @brief Spawns a medium sized squadron.
-function spawn_squad ()
+local function spawn_squad ()
    local pilots = {}
    if rnd.rnd() < 0.5 then
       pilots.__doscans = true
@@ -63,7 +63,7 @@ function spawn_squad ()
 end
 
 -- @brief Spawns a capship with escorts.
-function spawn_capship ()
+local function spawn_capship ()
    local pilots = {}
    local r = rnd.rnd()
 
