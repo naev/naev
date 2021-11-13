@@ -25,11 +25,14 @@ local minerva = require "common.minerva"
 local vn = require 'vn'
 local fmt = require "format"
 
+-- Mission constants:
 local time_needed = 15 -- in seconds
 local reward_amount = minerva.rewards.pirate1
-
 local mainsys = system.get("Limbo")
 local runawaysys = system.get("Pultatis")
+local thugpos = vec2.new( 6000, -4000 )
+local dronepos = vec2.new( -12000, -12000 )
+
 -- Mission states:
 --  nil: mission not accepted yet
 --    0: Go pick up Drone
@@ -150,12 +153,10 @@ function enter ()
    if system.cur()==mainsys and mem.misn_state==0 then
       pilot.clear()
       pilot.toggleSpawn(false)
-      mem.thugpos = vec2.new( 6000, -4000 )
-      mem.dronepos = vec2.new( -12000, -12000 )
 
       mem.fthugs = faction.dynAdd( "Dvaered", "Dvaered Thugs", _("Dvaered Thugs") )
 
-      local pos = mem.thugpos
+      local pos = thugpos
       boss = pilot.add( "Dvaered Vigilance", mem.fthugs, pos )
       boss:control()
       boss:brake()
@@ -163,7 +164,7 @@ function enter ()
       hook.pilot( boss, "death", "thugs_dead" )
       thugs = { boss }
       for i = 1,3 do
-         pos = mem.thugpos + vec2.newP( rnd.rnd(50,150), rnd.rnd(1,360) )
+         pos = thugpos + vec2.newP( rnd.rnd(50,150), rnd.rnd(1,360) )
          local p = pilot.add( "Dvaered Vendetta", mem.fthugs, pos )
          p:setLeader( boss )
          hook.pilot( p, "attacked", "thugs_attacked" )
@@ -172,7 +173,7 @@ function enter ()
       end
 
       mem.fdrone = faction.dynAdd( "Independent", "Drone", _("Drone") )
-      drone = pilot.add( "Za'lek Light Drone", mem.fdrone, mem.dronepos )
+      drone = pilot.add( "Za'lek Light Drone", mem.fdrone, dronepos )
       drone:control()
       drone:brake()
 
@@ -228,7 +229,7 @@ end
 
 function harassed ()
    local pp = player.pilot()
-   local dist = pp:pos():dist( mem.thugpos )
+   local dist = pp:pos():dist( thugpos )
    if dist > 5000 then
       if mem.failingdistance==nil then
          player.msg(_("#rYou are moving too far away from the harassment point!"))

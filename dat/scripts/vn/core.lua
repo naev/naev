@@ -255,9 +255,8 @@ local function _draw( tocanvas )
       y = vn.options_y
       w = vn.options_w
       h = vn.options_h
-      local colbg, colfg
+      local colbg
       if vn._options_over then
-         local c = vn.textbox_bg
          colbg = {0.3, 0.3, 0.3 }
       else
          colbg = vn.textbox_bg
@@ -635,7 +634,6 @@ function vn.StateSay:_init()
    self._textbuf = self.what
    -- Parse for line breaks and insert newlines
    local font = vn.textbox_font
-   local bw = 20
    local _maxw, wrappedtext = font:getWrap( self._textbuf, vn.textbox_tw )
    self._textbuf = table.concat( wrappedtext, "\n" )
    -- Set up initial buffer
@@ -681,7 +679,6 @@ function vn.StateSay:_update( dt )
       end
 
       -- Checks to see if we should scroll down
-      local bw = 20
       local bh = 20
       local font = vn.textbox_font
       local _maxw, wrappedtext = font:getWrap( self._text, vn.textbox_tw )
@@ -725,8 +722,6 @@ local function _check_scroll( lines )
 end
 function vn.StateWait:_init()
    local x, y, w, h = vn.textbox_x, vn.textbox_y, vn.textbox_w, vn.textbox_h
-   local font = vn.namebox_font
-   self._font = font
    self._w = 25
    self._h = 25
    self._x = x+w-10-self._w
@@ -1225,7 +1220,8 @@ Makes a character appear in the VN.
    @tparam[opt="linear"] string transition Name of the CSS transition to use.
 --]]
 function vn.appear( c, name, seconds, transition )
-   local shader, seconds, transition = transitions.get( name, seconds, transition )
+   local shader
+   shader, seconds, transition = transitions.get( name, seconds, transition )
    if getmetatable(c)==vn.Character_mt then
       c = {c}
    end
@@ -1260,7 +1256,8 @@ The way it works is that the transition is played backwards, so if you want the 
    @tparam[opt="linear"] string transition Name of the CSS transition to use.
 --]]
 function vn.disappear( c, name, seconds, transition )
-   local shader, seconds, transition = transitions.get( name, seconds, transition )
+   local shader
+   shader, seconds, transition = transitions.get( name, seconds, transition )
    if getmetatable(c)==vn.Character_mt then
       c = {c}
    end
@@ -1438,7 +1435,8 @@ Creates a transition state.
 --]]
 function vn.transition( name, seconds, transition )
    vn._checkstarted()
-   local shader, seconds, transition = transitions.get( name, seconds, transition )
+   local shader
+   shader, seconds, transition = transitions.get( name, seconds, transition )
 
    vn.animation( seconds,
       function (progress, dt) -- progress
