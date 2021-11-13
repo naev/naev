@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Antlejos V">
+ <pos>
+  <x>-4600.101436</x>
+  <y>-196.156312</y>
+ </pos>
+ <GFX>
+  <space>moon-K00.webp</space>
+  <exterior>uninhabited-rocky-airless-02.webp</exterior>
+ </GFX>
+ <general>
+  <class>D</class>
+  <population>0</population>
+  <hide>1.000000</hide>
+  <services>
+   <land/>
+  </services>
+  <description>A cold and barren inhospitable moon devoid of all life.</description>
+ </general>
+</asset>

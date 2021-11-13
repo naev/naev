@@ -24,10 +24,13 @@ local minerva = require "common.minerva"
 local vn = require 'vn'
 local fmt = require "format"
 
+-- Mission constants:
 local reward_amount = minerva.rewards.pirate2
-
 local mainsys = system.get("Limbo")
 local jumpinsys = system.get("Pultatis")
+local drone1pos = vec2.new(  -2000, -15000 )
+local drone2pos = vec2.new( -10000,   6000 )
+
 -- Mission states:
 --  nil: mission not accepted yet
 --    0: Go kill drone
@@ -176,12 +179,10 @@ function enter ()
 
       pilot.clear()
       pilot.toggleSpawn(false)
-      mem.drone1pos = vec2.new(  -2000, -15000 )
-      mem.drone2pos = vec2.new( -10000,   6000 )
 
       mem.fzalek = faction.dynAdd( "Za'lek", "zalek_thugs", _("Za'lek") )
 
-      drone1 = drone_create( mem.drone1pos )
+      drone1 = drone_create( drone1pos )
       mem.drone1marker = system.mrkAdd( drone1:pos(), _("Za'lek Drone") )
 
       mem.drones_killed = 0
@@ -197,7 +198,7 @@ function drone_death ()
    mem.drones_killed = mem.drones_killed+1
    if mem.drones_killed==1 then
       system.mrkRm( mem.drone1marker )
-      drone2 = drone_create( mem.drone2pos )
+      drone2 = drone_create( drone2pos )
       mem.drone2marker = system.mrkAdd( drone2:pos(), _("Za'lek Drone") )
       player.msg(_("You detected another Za'lek drone in the system!"))
       mem.zalek_inbound = false
@@ -222,7 +223,7 @@ end
 
 function heartbeat ()
    local pp = player.pilot()
-   local dist = pp:pos():dist( mem.drone2pos )
+   local dist = pp:pos():dist( drone2pos )
    if dist < 5000 then
       local msg = _("Your sensors are detecting a Za'lek fleet inbound!")
       player.msg("#o"..msg)

@@ -1,14 +1,11 @@
 /*
  * See Licensing and Copyright notice in naev.h
  */
-
 /**
  * @file nlua_diff.c
  *
  * @brief Unidiff Lua module.
  */
-
-
 /** @cond */
 #include "nstring.h"
 #include <lauxlib.h>
@@ -26,7 +23,6 @@
 #include "nluadef.h"
 #include "unidiff.h"
 
-
 /* diffs */
 static int diff_applyL( lua_State *L );
 static int diff_removeL( lua_State *L );
@@ -38,7 +34,6 @@ static const luaL_Reg diff_methods[] = {
    {0,0}
 }; /**< Unidiff Lua methods. */
 
-
 /**
  * @brief Loads the diff Lua library.
  *    @param env Lua enviornment.
@@ -49,7 +44,6 @@ int nlua_loadDiff( nlua_env env )
    nlua_register(env, "diff", diff_methods, 0);
    return 0;
 }
-
 
 /**
  * @brief Lua bindings to apply/remove Universe Diffs.
@@ -77,6 +71,7 @@ static int diff_applyL( lua_State *L )
    diff_apply( name );
    return 0;
 }
+
 /**
  * @brief Removes a diff by name.
  *
@@ -90,6 +85,7 @@ static int diff_removeL( lua_State *L )
    diff_remove( name );
    return 0;
 }
+
 /**
  * @brief Checks to see if a diff is currently applied.
  *

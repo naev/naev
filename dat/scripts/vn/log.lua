@@ -31,7 +31,6 @@ function log.open( font )
 
    -- Build the tables
    log.font = font
-   local font = log.font
    local headerw = log.headerw
    local bodyw = log.bodyw
    _header = {}

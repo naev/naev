@@ -428,6 +428,7 @@ local function spawnNPC()
 
    -- Choose faction, overriding if necessary
    local f  = planet.cur():faction()
+   if not f then evt.finish() end
    local of = override_list[f:nameRaw()]
    if of then f = faction.get(of) end
 

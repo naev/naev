@@ -1,8 +1,10 @@
 -- Lazy loader for pilotname
+local pilotname
 local lazy = setmetatable( {}, {
    __index = function( self, key )
-      if not vn then
-         self.__index = require "pilotname.core"
+      if not pilotname then
+         pilotname = require "pilotname.core"
+         self.__index = pilotname
       end
       return self.__index[key]
    end
