@@ -44,7 +44,7 @@ local neu = require "common.neutral"
 local vntk = require "vntk"
 
 --[[
-Multi-paragraph dialog strings should go here, each with an identifiable
+Multi-paragraph dialog strings *can* go here, each with an identifiable
 name. You can see here that we wrap strings that are displayed to the
 player with `_()`. This is a call to gettext, which enables
 localization. The _() call should be used directly on the string, as
@@ -72,6 +72,21 @@ are portions that will be filled in later by the mission via the
 ask_text = _([[As you approach the guy, he looks up in curiosity. You sit down and ask him how his day is. "Why, fine," he answers. "How are you?" You answer that you are fine as well and compliment him on his suit, which seems to make his eyes light up. "Why, thanks! It's my favorite suit! I had it custom tailored, you know.
     "Actually, that reminds me! There was a special suit on {pnt} in the {sys} system, the last one I need to complete my collection, but I don't have a ship. You do have a ship, don't you? So I'll tell you what, give me a ride and I'll pay you {reward} for it! What do you say?"]])
 
+-- Set some mission parameters.
+-- For credit values in the thousands or millions, we use scientific notation (less error-prone than counting zeros).
+-- There are two ways to set values usable from outside the create() function:
+-- - Define them at file scope in a statement like "local credits = 250e3" (good for constants)
+-- - Define them as fields of a special "mem" table: "mem.credits = 250e3" (will persist across games in the player's save file)
+local misplanet, missys = planet.getS("Ulios")
+local credits = 250e3
+
+-- Here we use the `fmt.credits()` function to convert our credits
+-- from a number to a string. This function both applies gettext
+-- correctly for variable amounts (by using the ngettext function),
+-- and formats the number in a way that is appropriate for Naev (by
+-- using the numstring function). You should always use this when
+-- displaying a number of credits.
+local reward_text = fmt.credits( credits )
 
 --[[ 
 First you need to *create* the mission.  This is *obligatory*.
@@ -81,19 +96,9 @@ bar with the character that gives the mission and the character's
 description.
 --]]
 function create ()
-   -- Set our mission parameters.
-   -- For credit values in the thousands or millions, we use scientific notation (less error-prone than counting zeros).
-   misplanet, missys = planet.get("Ulios")
-   credits = 250e3
-   talked = false
-
-   -- Here we use the `fmt.credits()` function to convert our credits
-   -- from a number to a string. This function both applies gettext
-   -- correctly for variable amounts (by using the ngettext function),
-   -- and formats the number in a way that is appropriate for Naev (by
-   -- using the numstring function). You should always use this when
-   -- displaying a number of credits.
-   reward_text = fmt.credits(credits)
+   -- Naev will keep the contents of "mem" across games if the player saves and quits.
+   -- Track mission state there. Warning: pilot variables cannot be saved.
+   mem.talked = false
    
    -- If we needed to claim a system, we would do that here with
    -- something like the following commented out statement. However,
@@ -122,7 +127,7 @@ function accept ()
    -- Use different text if we've already talked to him before than if
    -- this is our first time.
    local text
-   if talked then
+   if mem.talked then
       -- We use `fmt.f()` here to fill in the destination and
       -- reward text. (You may also see Lua's standard library used for similar purposes:
       -- `s1:format(arg1, ...)` or equivalently string.format(s1, arg1, ...)`.)
@@ -131,7 +136,7 @@ function accept ()
       text = fmt.f(_([["Ah, it's you again! Have you changed your mind? Like I said, I just need transport to {pnt} in the {sys} system, and I'll pay you {reward} when we get there. How's that sound?"]]), {pnt=misplanet, sys=missys, reward=reward_text})
    else
       text = ask_text
-      talked = true
+      mem.talked = true
    end
 
    -- This will create the typical "Yes/No" dialogue. It returns true if
