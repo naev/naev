@@ -18,6 +18,10 @@
   <asset>Wellen</asset>
  </assets>
  <jumps>
+  <jump target="NGC-4746">
+   <autopos/>
+   <hide>1.000000</hide>
+  </jump>
   <jump target="Shinnok">
    <autopos/>
    <hide>1.000000</hide>
