@@ -181,23 +181,23 @@ const char* planet_getServiceName( int service )
  */
 int planet_getService( const char *name )
 {
-   if (strcmp(name,"Land")==0)
+   if (strcasecmp(name,"Land")==0)
       return PLANET_SERVICE_LAND;
-   else if (strcmp(name,"Inhabited")==0)
+   else if (strcasecmp(name,"Inhabited")==0)
       return PLANET_SERVICE_INHABITED;
-   else if (strcmp(name,"Refuel")==0)
+   else if (strcasecmp(name,"Refuel")==0)
       return PLANET_SERVICE_REFUEL;
-   else if (strcmp(name,"Bar")==0)
+   else if (strcasecmp(name,"Bar")==0)
       return PLANET_SERVICE_BAR;
-   else if (strcmp(name,"Missions")==0)
+   else if (strcasecmp(name,"Missions")==0)
       return PLANET_SERVICE_MISSIONS;
-   else if (strcmp(name,"Commodity")==0)
+   else if (strcasecmp(name,"Commodity")==0)
       return PLANET_SERVICE_COMMODITY;
-   else if (strcmp(name,"Outfits")==0)
+   else if (strcasecmp(name,"Outfits")==0)
       return PLANET_SERVICE_OUTFITS;
-   else if (strcmp(name,"Shipyard")==0)
+   else if (strcasecmp(name,"Shipyard")==0)
       return PLANET_SERVICE_SHIPYARD;
-   else if (strcmp(name,"Blackmarket")==0)
+   else if (strcasecmp(name,"Blackmarket")==0)
       return PLANET_SERVICE_BLACKMARKET;
    return -1;
 }
