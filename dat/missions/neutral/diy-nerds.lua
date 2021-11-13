@@ -32,12 +32,12 @@ local reward = 40e3
 local addNerdCargo, rmNerdCargo, nerds_return, system_hasAtLeast
 
 -- the mission cargo
-mem.misn_cargo1 = N_("Group of Nerds")
-mem.misn_cargodesc1 = N_("A bunch of protagonists.")
-mem.misn_cargoamount1 = 0
-mem.misn_cargo2 = N_("Box")
-mem.misn_cargodesc2 = N_("A homebrew processing unit.")
-mem.misn_cargoamount2 = 4
+local misn_cargo1 = N_("Group of Nerds")
+local misn_cargodesc1 = N_("A bunch of protagonists.")
+local misn_cargoamount1 = 0
+local misn_cargo2 = N_("Box")
+local misn_cargodesc2 = N_("A homebrew processing unit.")
+local misn_cargoamount2 = 4
 
 -- the outfit name as in outfit.xml
 local reward_outfit = "Unicorp PT-16 Core System"
@@ -317,10 +317,10 @@ end
 
 -- helper functions, used repeatedly
 function addNerdCargo()
-   local c1 = misn.cargoNew(mem.misn_cargo1, mem.misn_cargodesc1)
-   local c2 = misn.cargoNew(mem.misn_cargo2, mem.misn_cargodesc2)
-   mem.cargo1 = misn.cargoAdd(c1, mem.misn_cargoamount1)
-   mem.cargo2 = misn.cargoAdd(c2, mem.misn_cargoamount2)
+   local c1 = misn.cargoNew(misn_cargo1, misn_cargodesc1)
+   local c2 = misn.cargoNew(misn_cargo2, misn_cargodesc2)
+   mem.cargo1 = misn.cargoAdd(c1, misn_cargoamount1)
+   mem.cargo2 = misn.cargoAdd(c2, misn_cargoamount2)
 end
 
 function rmNerdCargo()
