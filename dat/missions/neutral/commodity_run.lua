@@ -44,7 +44,7 @@ mem.osd_title = _("Commodity Delivery")
 mem.paying_faction = faction.get("Independent")
 
 
--- A script may require "missions/neutral/commodity_run" and override this
+-- A script may require "missions.neutral.commodity_run" and override this
 -- with a table of (raw) commodity names to choose from.
 commchoices = nil
 

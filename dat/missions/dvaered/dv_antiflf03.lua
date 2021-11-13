@@ -34,6 +34,7 @@ local dv = require "common.dvaered"
 
 -- Mission constants
 local DVplanet, DVsys = planet.getS("Stalwart Station")
+local basepos = vec2.new(-8700, -3000) -- NOTE: Should be the same coordinates as in asset.xml!
 
 local base, bomber, bombers, fighterpos, fightersDV, fleetDV, fleetFLF, fleetpos, obstinate, vendetta, vigilance -- Non-persistent state
 local nextStage, spawnDV, spawnbase, updatepos -- Forward-declared functions
@@ -116,7 +117,6 @@ function enter()
         fleetpos = {}
         fightersDV = {}
         fighterpos = {}
-        mem.basepos = vec2.new(-8700, -3000) -- NOTE: Should be the same coordinates as in asset.xml!
         mem.DVbombers = 5 -- Amount of initial Dvaered bombers
         mem.DVreinforcements = 20 -- Amount of reinforcement Dvaered bombers
         mem.deathsFLF = 0
@@ -185,7 +185,7 @@ end
 
 -- Spawns the FLF base, ship version.
 function spawnbase()
-    base = pilot.add( "Sindbad", "FLF", mem.basepos, nil, {ai="flf_norun"} )
+    base = pilot.add( "Sindbad", "FLF", basepos, nil, {ai="flf_norun"} )
     base:outfitRm("all")
     base:outfitRm("cores")
     base:outfitAdd("Dummy Systems")
@@ -584,7 +584,7 @@ end
 
 function updatepos()
     mem.angle = (mem.angle + mem.stepsize) % 360
-    fleetpos[1] = mem.basepos + vec2.newP(mem.standoff, mem.angle)
+    fleetpos[1] = basepos + vec2.newP(mem.standoff, mem.angle)
     fleetpos[2] = fleetpos[1] + vec2.new(110, 0)
     fleetpos[3] = fleetpos[1] + vec2.new(-110, 0)
     fleetpos[4] = fleetpos[1] + vec2.new(0, -120)
