@@ -32,8 +32,6 @@ local targetworld, targetworld_sys = planet.getS( "Zhiru" )
 mem.reward = 50e3 -- Can get doubled, must be global!
 
 function create () --No system shall be claimed by mission
-   mem.startworld, mem.startworld_sys = planet.cur()
-
    mem.started = false
 
    misn.setNPC( _("Old-Fashioned Man"), "neutral/unique/michal.webp", _("A man sits in the corner of the bar, writing a letter.") )

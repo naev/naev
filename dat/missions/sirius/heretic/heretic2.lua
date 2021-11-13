@@ -38,7 +38,6 @@ function create()
    end
    mem.nasin_rep = faction.playerStanding("Nasin")
    mem.misn_tracker = var.peek("heretic_misn_tracker")
-   mem.playername = player.name()
    mem.reward = math.floor((100e3+(math.random(5,8)*2e3)*(mem.nasin_rep^1.315))*.01+.5)/.01
    mem.chronic = 0
    mem.finished = 0

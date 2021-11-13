@@ -33,8 +33,6 @@ local misn_desc = _("Deliver a shipping diplomat for the Empire to The Frontier 
 
 function create ()
    -- Note: this mission does not make any system claims.
-   -- Get the planet and system at which we currently are.
-   mem.startworld, mem.startworld_sys = planet.cur()
 
    misn.setNPC( _("Lieutenant"), "empire/unique/czesc.webp", _("Lieutenant Czesc from the Empire Armada Shipping Division is sitting at the bar.") )
 end

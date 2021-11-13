@@ -32,11 +32,9 @@ local targetworld, targetworld_sys = planet.getS("Halir")
 
 function create ()
    -- Note: this mission does not make any system claims.
-   -- Get the planet and system at which we currently are.
-   mem.startworld, mem.startworld_sys = planet.cur()
 
    misn.setNPC( _("Lieutenant"), "empire/unique/czesc.webp", _("Lieutenant Czesc from the Empire Armada Shipping Division is sitting at the bar.") )
-   if targetworld == mem.startworld then --makes sure pilot is not currently on Gamma Polaris
+   if targetworld == planet.cur() then --makes sure pilot is not currently on Gamma Polaris
        misn.finish(false)
     end
 end

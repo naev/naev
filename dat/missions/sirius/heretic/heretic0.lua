@@ -29,7 +29,6 @@ function create()
    --this mission makes no mission claims
    --set the variables
    mem.reward = 200e3 --mem.reward algorithm after this mission = 100e3 + (rnd.rnd(5,8)*2e3 * (nasin_rep^1.51). flat rate for first mission.
-   mem.startworld = planet.cur()
    mem.targetasset = planet.get("Margot")
    mem.targetsystem = system.get("Brendon")
    if system.cur() == mem.targetsystem then --I didn't want the player to start the mission in the same system as it was supposed to end

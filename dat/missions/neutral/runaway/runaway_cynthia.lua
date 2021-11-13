@@ -30,8 +30,6 @@ local cargodesc = N_("A young teenager.")
 local targetworld, targetworld_sys = planet.getS("Zhiru")
 
 function create ()
-   mem.startworld, mem.startworld_sys = planet.cur()
-
    misn.setNPC( _("Young Teenager"), "neutral/unique/cynthia.webp", _("A pretty teenager sits alone at a table.") )
 end
 

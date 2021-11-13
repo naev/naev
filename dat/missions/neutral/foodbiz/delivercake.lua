@@ -28,8 +28,6 @@ local targetworld, targetworld_sys = planet.getS( "Zeo" )
 mem.reward = 50e3 -- Plus 1e3 * cake, has to be global (is saved)
 
 function create () --No system shall be claimed by mission
-   mem.startworld, mem.startworld_sys = planet.cur()
-
    misn.setNPC( _("Familiar Face"), "neutral/unique/paddy.webp", _("A familiar looking young woman is looking at you") )
 end
 
