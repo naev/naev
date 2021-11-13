@@ -73,7 +73,7 @@ function create ()
    end
 
    misn.accept()
-   misn.setTitle( _("Verner's Request") )
+   misn.setTitle( _("Terraforming Antlejos") )
    misn.setDesc(fmt.f(_("Pick up heavy machinery at {pnt} in the {sys} system and deliver it to {retpnt}."), {pnt=mem.destpnt, sys=mem.destsys, retpnt=returnpnt}))
    misn.setReward( fmt.credits(reward) )
    misn.osdCreate(_("Terraforming Antlejos V"), {
@@ -81,13 +81,14 @@ function create ()
       fmt.f(_("Deliver the cargo to {pnt} ({sys} system)"), {pnt=returnpnt, sys=returnsys})
    })
    mem.mrk = misn.markerAdd( mem.destpnt )
+   mem.state = 1
 
    hook.land( "land" )
 end
 
 -- Land hook.
 function land ()
-   if planet.cur() == mem.destpnt then
+   if mem.state==1 and  planet.cur() == mem.destpnt then
 
       local fs = player.pilot():cargoFree()
       if fs < cargo_amount then
@@ -98,11 +99,12 @@ function land ()
 
       local c = misn.cargoNew( N_("Heavy Machinery"), N_("Heavy machinery of Dvaered manufacture. Seems like it could be fairly useful for terraforming.") )
       misn.cargoAdd( c, cargo_amount )
+      misn.osdActive(2)
+      mem.state = 2
 
       misn.markerMove( mem.mrk, returnpnt )
 
-   elseif planet.cur() == returnpnt then
-
+   elseif mem.state==2 and planet.cur() == returnpnt then
       vn.clear()
       vn.scene()
       local v = vn.newCharacter( ant.vn_verner() )
@@ -119,7 +121,7 @@ He slaps the hull of a heavy machine.
       ant.unidiff( ant.unidiff_list[2] )
 
       player.pay( reward )
-      ant.log(fmt.f(_("You brought heavy Dvaered machinery to {returnpnt} to help Verner terraform it."),{pnt=returnpnt}))
+      ant.log(fmt.f(_("You brought heavy Dvaered machinery to {pnt} to help Verner terraform it."),{pnt=returnpnt}))
       misn.finish(true)
    end
 end
