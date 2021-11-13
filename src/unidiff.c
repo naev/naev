@@ -953,7 +953,8 @@ static int diff_patchHunk( UniHunk_t *hunk )
          if (p==NULL)
             return -1;
          hunk->o.data = p->services;
-         planet_addService( p, hunk->o.data );
+         planet_addService( p, hunk->u.data );
+         diff_universe_changed = 1;
          return 0;
 
       case HUNK_TYPE_ASSET_SERVICE_REMOVE:
@@ -961,7 +962,8 @@ static int diff_patchHunk( UniHunk_t *hunk )
          if (p==NULL)
             return -1;
          hunk->o.data = p->services;
-         planet_rmService( p, hunk->o.data );
+         planet_rmService( p, hunk->u.data );
+         diff_universe_changed = 1;
          return 0;
 
       case HUNK_TYPE_ASSET_SERVICE_REVERT:
@@ -969,6 +971,7 @@ static int diff_patchHunk( UniHunk_t *hunk )
          if (p==NULL)
             return -1;
          p->services = hunk->o.data;
+         diff_universe_changed = 1;
          return 0;
 
       /* Making a faction visible. */
