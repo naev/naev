@@ -282,15 +282,6 @@ function drone_attacked ()
 end
 
 
--- Drone killed
-local function drone_dead ()
-   mem.num_drone = mem.num_drone - 1
-   if mem.num_drone < 2 and not mem.tri_flee then
-      trinity_flee()
-   end
-end
-
-
 -- Adds escorts
 function add_escorts( landed )
    local param
