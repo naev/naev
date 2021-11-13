@@ -17,12 +17,12 @@
 --]]
 --[[
    Campaign to Terraform Antlejos V
+
+   Just take Verner to see Antlejos V and set up camp.
 --]]
 local vn = require "vn"
-local car = require "common.cargo"
 local fmt = require "format"
 local ant = require "common.antlejos"
-local lmisn = require "lmisn"
 
 local destpnt, destsys = planet.getS("Antlejos V")
 
@@ -77,7 +77,7 @@ function accept ()
 
    misn.accept()
    misn.setTitle( _("Verner's Request") )
-   misn.setDesc(fmt.f(_("Verner asked you to take them toto {pnt} in the {sys} system."), {pnt=destpnt, sys=destsys}))
+   misn.setDesc(fmt.f(_("Verner asked you to take them to {pnt} in the {sys} system."), {pnt=destpnt, sys=destsys}))
    misn.setReward( fmt.credits(reward) )
    misn.osdCreate(_("Verner's Request"), {
       fmt.f(_("Take Verner to {pnt} ({sys} system)"), {pnt=destpnt, sys=destsys}),

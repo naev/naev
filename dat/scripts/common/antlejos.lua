@@ -34,6 +34,9 @@ end
 
 antlejos.unidiff_list = {
    "antlejosv_1",
+   "antlejosv_2",
+   "antlejosv_3",
+   "antlejosv_4",
 }
 
 function antlejos.unidiff( diffname )
