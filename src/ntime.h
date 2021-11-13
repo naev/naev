@@ -7,6 +7,8 @@
 #include <stdint.h>
 /** @endcond */
 
+#define TIME_PRI        PRIi64
+
 #define NT_CYCLE_PERIODS   (5000)      /**< periods in a cycle */
 #define NT_PERIOD_SECONDS   (10000)     /**< seconds in a period */
 

@@ -23,13 +23,15 @@
 #include "nluadef.h"
 #include "nstring.h"
 #include "nxml.h"
+#include "nlua_time.h"
 
 /* similar to Lua vars, but with less variety */
 enum {
    MISN_VAR_NIL, /**< Nil type. */
    MISN_VAR_NUM, /**< Number type. */
-   MISN_VAR_BOOL, /**< Boolean type. */
+   MISN_VAR_BOOL,/**< Boolean type. */
    MISN_VAR_STR, /**< String type. */
+   MISN_VAR_TIME,/**< Time type. */
 };
 
 /**
@@ -44,6 +46,7 @@ typedef struct misn_var_ {
       double num; /**< Used if type is number. */
       char* str; /**< Used if type is string. */
       int b; /**< Used if type is boolean. */
+      ntime_t time;
    } d; /**< Variable data. */
 } misn_var;
 
@@ -113,11 +116,9 @@ static misn_var *var_get( const char *str )
  */
 int var_save( xmlTextWriterPtr writer )
 {
-   int i;
-
    xmlw_startElem(writer,"vars");
 
-   for (i=0; i<array_size(var_stack); i++) {
+   for (int i=0; i<array_size(var_stack); i++) {
       xmlw_startElem(writer,"var");
 
       xmlw_attr(writer,"name","%s",var_stack[i].name);
@@ -137,6 +138,10 @@ int var_save( xmlTextWriterPtr writer )
          case MISN_VAR_STR:
             xmlw_attr(writer,"type","str");
             xmlw_str(writer,"%s",var_stack[i].d.str);
+            break;
+         case MISN_VAR_TIME:
+            xmlw_attr(writer,"type","time");
+            xmlw_str(writer,TIME_PRI,var_stack[i].d.time);
             break;
       }
       xmlw_endElem(writer); /* "var" */
@@ -181,6 +186,10 @@ int var_load( xmlNodePtr parent )
                else if (strcmp(str,"str")==0) {
                   var.type = MISN_VAR_STR;
                   var.d.str = xml_getStrd(cur);
+               }
+               else if (strcmp(str,"time")==0) {
+                  var.type = MISN_VAR_TIME;
+                  var.d.time = xml_getLong(cur);
                }
                else { /* super error checking */
                   WARN(_("Unknown var type '%s'"), str);
@@ -289,6 +298,9 @@ static int varL_peek( lua_State *L )
       case MISN_VAR_STR:
          lua_pushstring(L,mv->d.str);
          break;
+      case MISN_VAR_TIME:
+         lua_pushtime(L,mv->d.time);
+         break;
    }
    return 1;
 }
@@ -331,6 +343,10 @@ static int varL_push( lua_State *L )
    /* store appropriate data */
    if (lua_isnil(L,2))
       var.type = MISN_VAR_NIL;
+   else if (lua_istime(L,2)) {
+      var.type = MISN_VAR_TIME;
+      var.d.time = luaL_validtime(L,2);
+   }
    else if (lua_isnumber(L,2)) {
       var.type = MISN_VAR_NUM;
       var.d.num = (double) lua_tonumber(L,2);
@@ -368,6 +384,7 @@ static void var_free( misn_var* var )
       case MISN_VAR_NIL:
       case MISN_VAR_NUM:
       case MISN_VAR_BOOL:
+      case MISN_VAR_TIME:
          break;
    }
    free(var->name);
