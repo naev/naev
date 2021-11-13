@@ -3,8 +3,8 @@
 --]]
 
 local fmt = require "format"
-local playerform = require "scripts/playerform"
-local formation = require "scripts/formation"
+local formation = require "formation"
+local playerform = require "playerform"
 
 local radar_h, radar_w, radar_x, radar_y, screen_h, screen_w
 -- This script has a lot of globals. It really loves them.
