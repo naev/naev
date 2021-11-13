@@ -2,5 +2,6 @@
 <unidiff name="antlejosv_2">
  <asset name="Antlejos V">
   <description>A cold and barren inhospitable moon devoid of all life except for a base camp for terraforming the entire planet. You can see dust on the ground vibrating as heavy machinery operates nearby.</description>
+  <service_add>refuel</service_add>
  </asset>
 </unidiff>

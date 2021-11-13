@@ -90,6 +90,9 @@ typedef enum UniHunkType_ {
    HUNK_TYPE_ASSET_FACTION_REMOVE, /* For internal usage. */
    HUNK_TYPE_ASSET_DESCRIPTION,
    HUNK_TYPE_ASSET_DESCRIPTION_REVERT, /* For internal usage. */
+   HUNK_TYPE_ASSET_SERVICE_ADD,
+   HUNK_TYPE_ASSET_SERVICE_REMOVE,
+   HUNK_TYPE_ASSET_SERVICE_REVERT, /* For internal usage. */
    /* Target should be faction. */
    HUNK_TYPE_FACTION_VISIBLE,
    HUNK_TYPE_FACTION_INVISIBLE,
@@ -111,6 +114,7 @@ typedef struct UniHunk_ {
    xmlNodePtr node; /**< Parent node. */
    union {
       char *name;
+      int data;
    } u; /**< Actual data to patch. */
    union {
       const char *name;
@@ -563,6 +567,32 @@ static int diff_patchAsset( UniDiff_t *diff, xmlNodePtr node )
             diff_hunkSuccess( diff, &hunk );
          continue;
       }
+      else if (xml_isNode(cur,"service_add")) {
+         hunk.target.type = base.target.type;
+         hunk.target.u.name = strdup(base.target.u.name);
+         hunk.type = HUNK_TYPE_ASSET_SERVICE_ADD;
+         hunk.u.data = planet_getService( xml_get(cur) );
+
+         /* Apply diff. */
+         if (diff_patchHunk( &hunk ) < 0)
+            diff_hunkFailed( diff, &hunk );
+         else
+            diff_hunkSuccess( diff, &hunk );
+         continue;
+      }
+      else if (xml_isNode(cur,"service_remove")) {
+         hunk.target.type = base.target.type;
+         hunk.target.u.name = strdup(base.target.u.name);
+         hunk.type = HUNK_TYPE_ASSET_SERVICE_REMOVE;
+         hunk.u.data = planet_getService( xml_get(cur) );
+
+         /* Apply diff. */
+         if (diff_patchHunk( &hunk ) < 0)
+            diff_hunkFailed( diff, &hunk );
+         else
+            diff_hunkSuccess( diff, &hunk );
+         continue;
+      }
       WARN(_("Unidiff '%s' has unknown node '%s'."), diff->name, node->name);
    } while (xml_nextNode(cur));
 
@@ -768,6 +798,14 @@ static int diff_patch( xmlNodePtr parent )
                WARN(_("   [%s] asset description revert: '%s'"), target,
                      fail->u.name );
                break;
+            case HUNK_TYPE_ASSET_SERVICE_ADD:
+               WARN(_("   [%s] asset service add: '%s'"), target,
+                     planet_getServiceName(fail->u.data) );
+               break;
+            case HUNK_TYPE_ASSET_SERVICE_REMOVE:
+               WARN(_("   [%s] asset service remove: '%s'"), target,
+                     planet_getServiceName(fail->u.data) );
+               break;
             case HUNK_TYPE_FACTION_VISIBLE:
                WARN(_("   [%s] faction visible: '%s'"), target,
                      fail->u.name );
@@ -908,6 +946,29 @@ static int diff_patchHunk( UniHunk_t *hunk )
          if (p==NULL)
             return -1;
          p->description = (char*)hunk->o.name;
+         return 0;
+
+      case HUNK_TYPE_ASSET_SERVICE_ADD:
+         p = planet_get( hunk->target.u.name );
+         if (p==NULL)
+            return -1;
+         hunk->o.data = p->services;
+         planet_addService( p, hunk->o.data );
+         return 0;
+
+      case HUNK_TYPE_ASSET_SERVICE_REMOVE:
+         p = planet_get( hunk->target.u.name );
+         if (p==NULL)
+            return -1;
+         hunk->o.data = p->services;
+         planet_rmService( p, hunk->o.data );
+         return 0;
+
+      case HUNK_TYPE_ASSET_SERVICE_REVERT:
+         p = planet_get( hunk->target.u.name );
+         if (p==NULL)
+            return -1;
+         p->services = hunk->o.data;
          return 0;
 
       /* Making a faction visible. */
@@ -1136,6 +1197,11 @@ static int diff_removeDiff( UniDiff_t *diff )
 
          case HUNK_TYPE_ASSET_DESCRIPTION:
             hunk.type = HUNK_TYPE_ASSET_DESCRIPTION_REVERT;
+            break;
+
+         case HUNK_TYPE_ASSET_SERVICE_ADD:
+         case HUNK_TYPE_ASSET_SERVICE_REMOVE:
+            hunk.type = HUNK_TYPE_ASSET_SERVICE_REVERT;
             break;
 
          case HUNK_TYPE_FACTION_VISIBLE:
