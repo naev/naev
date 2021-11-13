@@ -722,8 +722,6 @@ local function _check_scroll( lines )
 end
 function vn.StateWait:_init()
    local x, y, w, h = vn.textbox_x, vn.textbox_y, vn.textbox_w, vn.textbox_h
-   local font = vn.namebox_font
-   self._font = font
    self._w = 25
    self._h = 25
    self._x = x+w-10-self._w
