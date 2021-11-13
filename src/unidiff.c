@@ -10,7 +10,6 @@
  *  These are meant to be applied after the player triggers them, mostly
  *  through missions.
  */
-
 /** @cond */
 #include <stdlib.h>
 
@@ -247,7 +246,6 @@ static int diff_applyInternal( const char *name, int oneshot )
    xmlNodePtr node;
    xmlDocPtr doc;
    char *filename;
-   int i;
 
    /* Check if already applied. */
    if (diff_isApplied(name))
@@ -258,7 +256,7 @@ static int diff_applyInternal( const char *name, int oneshot )
       diff_universe_changed = 0;
 
    filename = NULL;
-   for (i=0; i<array_size(diff_available); i++) {
+   for (int i=0; i<array_size(diff_available); i++) {
       if (strcmp(diff_available[i].name,name)==0) {
          filename = diff_available[i].filename;
          break;
@@ -1086,11 +1084,8 @@ static UniDiff_t *diff_newDiff (void)
  */
 static int diff_removeDiff( UniDiff_t *diff )
 {
-   int i;
-   UniHunk_t hunk;
-
-   for (i=0; i<array_size(diff->applied); i++) {
-      hunk = diff->applied[i];
+   for (int i=0; i<array_size(diff->applied); i++) {
+      UniHunk_t hunk = diff->applied[i];
       /* Invert the type for reverting. */
       switch (hunk.type) {
          case HUNK_TYPE_ASSET_ADD:
@@ -1263,8 +1258,7 @@ int diff_save( xmlTextWriterPtr writer )
  */
 int diff_load( xmlNodePtr parent )
 {
-   xmlNodePtr node, cur;
-   char *     diffName;
+   xmlNodePtr node;
 
    diff_clear();
    diff_universe_changed = 0;
@@ -1272,10 +1266,10 @@ int diff_load( xmlNodePtr parent )
    node = parent->xmlChildrenNode;
    do {
       if (xml_isNode(node,"diffs")) {
-         cur = node->xmlChildrenNode;
+         xmlNodePtr cur = node->xmlChildrenNode;
          do {
             if ( xml_isNode( cur, "diff" ) ) {
-               diffName = xml_get( cur );
+               char *diffName = xml_get( cur );
                if ( diffName == NULL ) {
                   WARN( _( "Expected node \"diff\" to contain the name of a unidiff. Was empty." ) );
                   continue;
