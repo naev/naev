@@ -596,10 +596,12 @@ static int diff_patchAsset( UniDiff_t *diff, xmlNodePtr node )
          continue;
       }
       else if (xml_isNode(cur,"exterior")) {
+         char str[PATH_MAX];
          hunk.target.type = base.target.type;
          hunk.target.u.name = strdup(base.target.u.name);
          hunk.type = HUNK_TYPE_ASSET_EXTERIOR;
-         hunk.u.name = xml_getStrd(cur);
+         snprintf( str, sizeof(str), PLANET_GFX_EXTERIOR_PATH"%s", xml_get(cur));
+         hunk.u.name = strdup(str);
 
          /* Apply diff. */
          if (diff_patchHunk( &hunk ) < 0)
