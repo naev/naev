@@ -33,7 +33,7 @@ local reward = ant.rewards.ant02
 local returnpnt, returnsys = planet.getS("Antlejos V")
 
 function create ()
-   mem.destpnt, mem.destsys = lmisn.getPlanetAtDistance( system.cur(), 5, 30, "Dvaered", true, function( p )
+   mem.destpnt, mem.destsys = lmisn.getRandomPlanetAtDistance( system.cur(), 5, 30, "Dvaered", true, function( p )
       -- TODO only look for industrial Dvaered planets
       --return p.tags().industrial
       return true
@@ -62,12 +62,6 @@ function create ()
    vn.done()
 
    vn.label("accept")
-   vn.func( function ()
-      if player.pilot():cargoFree() < cargo_amount then
-         vn.jump("nospace")
-         return
-      end
-   end )
    v(_([["Awesome. The heavy machinery should be of great help."]]))
    vn.func( function () accepted = true end )
 
