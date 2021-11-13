@@ -63,7 +63,7 @@ function create ()
    vn.done()
 
    vn.label("accept")
-   v(_([["Perfect! We're starting t omake true progress!."]]))
+   v(_([["Perfect! We're starting to make true progress!."]]))
    vn.func( function () accepted = true end )
 
    vn.run()
