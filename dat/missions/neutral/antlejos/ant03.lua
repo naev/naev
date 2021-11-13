@@ -34,6 +34,8 @@ local reward = ant.rewards.ant03
 local returnpnt, returnsys = planet.getS("Antlejos V")
 
 function create ()
+   if ant.datecheck() then misn.finish() end
+
    mem.destpnt, mem.destsys = lmisn.getRandomPlanetAtDistance( system.cur(), 5, 30, "Za'lek", true, function( p )
       -- TODO only look for industrial Za'lek planets
       --return p.tags().industrial
@@ -126,6 +128,7 @@ You can see glee in his eyes.
 
       player.pay( reward )
       ant.log(fmt.f(_("You brought a Za'lek atmosphere generator to {pnt} to help Verner further terraform it."),{pnt=returnpnt}))
+      ant.dateupdate()
       misn.finish(true)
    end
 end

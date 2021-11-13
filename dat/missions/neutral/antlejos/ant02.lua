@@ -34,6 +34,8 @@ local reward = ant.rewards.ant02
 local returnpnt, returnsys = planet.getS("Antlejos V")
 
 function create ()
+   if ant.datecheck() then misn.finish() end
+
    mem.destpnt, mem.destsys = lmisn.getRandomPlanetAtDistance( system.cur(), 5, 30, "Dvaered", true, function( p )
       -- TODO only look for industrial Dvaered planets
       --return p.tags().industrial
@@ -125,6 +127,7 @@ He slaps the hull of a heavy machine.
 
       player.pay( reward )
       ant.log(fmt.f(_("You brought heavy Dvaered machinery to {pnt} to help Verner terraform it."),{pnt=returnpnt}))
+      ant.dateupdate()
       misn.finish(true)
    end
 end

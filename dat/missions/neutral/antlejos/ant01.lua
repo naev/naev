@@ -116,5 +116,6 @@ function land ()
 
    player.pay( reward )
    ant.log(fmt.f(_("You escorted Verner to {pnt}. He may have more work for you for his terraforming project."),{pnt=destpnt}))
+   ant.dateupdate()
    misn.finish(true)
 end

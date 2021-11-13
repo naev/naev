@@ -48,6 +48,14 @@ function antlejos.unidiff( diffname )
    diff.apply( diffname )
 end
 
+function antlejos.dateupdate ()
+   var.push( "antlejos_date", time.get() )
+end
+function antlejos.datecheck ()
+   local d = var.peek("antlejos_date")
+   return d and d==time.get()
+end
+
 antlejos.rewards = {
    ant01 = 150e3,
    ant02 = 200e3,
