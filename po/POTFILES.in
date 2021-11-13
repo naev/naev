@@ -56,6 +56,10 @@ dat/assets/anku_i.xml
 dat/assets/anku_ii.xml
 dat/assets/anku_iii.xml
 dat/assets/antica.xml
+dat/assets/antlejos_iii.xml
+dat/assets/antlejos_iv.xml
+dat/assets/antlejos_prime.xml
+dat/assets/antlejos_v.xml
 dat/assets/anubis.xml
 dat/assets/anya.xml
 dat/assets/apez_ii.xml
@@ -872,6 +876,7 @@ dat/assets/seiben_iv.xml
 dat/assets/seiben_xi.xml
 dat/assets/selphod.xml
 dat/assets/semper.xml
+dat/assets/senara_i.xml
 dat/assets/sergio_vix_i.xml
 dat/assets/sergio_vix_iii.xml
 dat/assets/serria.xml
@@ -1788,6 +1793,7 @@ dat/ssys/anger.xml
 dat/ssys/anku.xml
 dat/ssys/anrique.xml
 dat/ssys/antares.xml
+dat/ssys/antlejos.xml
 dat/ssys/apez.xml
 dat/ssys/apik.xml
 dat/ssys/arandon.xml
@@ -1815,6 +1821,7 @@ dat/ssys/borla.xml
 dat/ssys/botarn.xml
 dat/ssys/brendon.xml
 dat/ssys/brimstone.xml
+dat/ssys/brumerebus.xml
 dat/ssys/c00.xml
 dat/ssys/c14.xml
 dat/ssys/c28.xml
@@ -1933,6 +1940,7 @@ dat/ssys/kelvos.xml
 dat/ssys/khaas.xml
 dat/ssys/kiwi.xml
 dat/ssys/klantar.xml
+dat/ssys/klintus.xml
 dat/ssys/knave.xml
 dat/ssys/kobopos.xml
 dat/ssys/kohler.xml
@@ -1978,6 +1986,13 @@ dat/ssys/neexi.xml
 dat/ssys/neon.xml
 dat/ssys/new_haven.xml
 dat/ssys/newmarch.xml
+dat/ssys/ngc1292.xml
+dat/ssys/ngc3219.xml
+dat/ssys/ngc4746.xml
+dat/ssys/ngc5483.xml
+dat/ssys/ngc7078.xml
+dat/ssys/ngc728.xml
+dat/ssys/ngc902.xml
 dat/ssys/niger.xml
 dat/ssys/nixon.xml
 dat/ssys/norn.xml
@@ -2048,6 +2063,7 @@ dat/ssys/scarlet.xml
 dat/ssys/seelie.xml
 dat/ssys/seiben.xml
 dat/ssys/seifer.xml
+dat/ssys/senara.xml
 dat/ssys/seport.xml
 dat/ssys/seran.xml
 dat/ssys/sergio_vix.xml
@@ -2394,6 +2410,7 @@ dat/missions/minerva/pirate3.lua
 dat/missions/minerva/pirate4.lua
 dat/missions/minerva/pirate5.lua
 dat/missions/neutral/animaltransport.lua
+dat/missions/neutral/antlejos/ant01.lua
 dat/missions/neutral/aristodrink.lua
 dat/missions/neutral/cargo.lua
 dat/missions/neutral/cargo_rush.lua
@@ -2506,6 +2523,7 @@ dat/rescue.lua
 dat/save_updater.lua
 dat/scripts/class.lua
 dat/scripts/colour.lua
+dat/scripts/common/antlejos.lua
 dat/scripts/common/baron.lua
 dat/scripts/common/cargo.lua
 dat/scripts/common/comm.lua
