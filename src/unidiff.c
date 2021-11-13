@@ -89,6 +89,8 @@ typedef enum UniHunkType_ {
    /* Target should be asset. */
    HUNK_TYPE_ASSET_FACTION,
    HUNK_TYPE_ASSET_FACTION_REMOVE, /* For internal usage. */
+   HUNK_TYPE_ASSET_DESCRIPTION,
+   HUNK_TYPE_ASSET_DESCRIPTION_REVERT, /* For internal usage. */
    /* Target should be faction. */
    HUNK_TYPE_FACTION_VISIBLE,
    HUNK_TYPE_FACTION_INVISIBLE,
@@ -540,11 +542,20 @@ static int diff_patchAsset( UniDiff_t *diff, xmlNodePtr node )
       if (xml_isNode(cur,"faction")) {
          hunk.target.type = base.target.type;
          hunk.target.u.name = strdup(base.target.u.name);
-
-         /* Outfit type is constant. */
          hunk.type = HUNK_TYPE_ASSET_FACTION;
+         hunk.u.name = xml_getStrd(cur);
 
-         /* Get the data. */
+         /* Apply diff. */
+         if (diff_patchHunk( &hunk ) < 0)
+            diff_hunkFailed( diff, &hunk );
+         else
+            diff_hunkSuccess( diff, &hunk );
+         continue;
+      }
+      else if (xml_isNode(cur,"description")) {
+         hunk.target.type = base.target.type;
+         hunk.target.u.name = strdup(base.target.u.name);
+         hunk.type = HUNK_TYPE_ASSET_DESCRIPTION;
          hunk.u.name = xml_getStrd(cur);
 
          /* Apply diff. */
@@ -751,6 +762,14 @@ static int diff_patch( xmlNodePtr parent )
                WARN(_("   [%s] asset faction removal: '%s'"), target,
                      fail->u.name );
                break;
+            case HUNK_TYPE_ASSET_DESCRIPTION:
+               WARN(_("   [%s] asset description: '%s'"), target,
+                     fail->u.name );
+               break;
+            case HUNK_TYPE_ASSET_DESCRIPTION_REVERT:
+               WARN(_("   [%s] asset description revert: '%s'"), target,
+                     fail->u.name );
+               break;
             case HUNK_TYPE_FACTION_VISIBLE:
                WARN(_("   [%s] faction visible: '%s'"), target,
                      fail->u.name );
@@ -877,6 +896,21 @@ static int diff_patchHunk( UniHunk_t *hunk )
          return planet_setFaction( p, faction_get(hunk->u.name) );
       case HUNK_TYPE_ASSET_FACTION_REMOVE:
          return planet_setFaction( planet_get(hunk->target.u.name), faction_get(hunk->o.name) );
+
+      /* Changing asset description. */
+      case HUNK_TYPE_ASSET_DESCRIPTION:
+         p = planet_get( hunk->target.u.name );
+         if (p==NULL)
+            return -1;
+         hunk->o.name = p->description;
+         p->description = hunk->u.name;
+         return 0;
+      case HUNK_TYPE_ASSET_DESCRIPTION_REVERT:
+         p = planet_get( hunk->target.u.name );
+         if (p==NULL)
+            return -1;
+         p->description = (char*)hunk->o.name;
+         return 0;
 
       /* Making a faction visible. */
       case HUNK_TYPE_FACTION_VISIBLE:
@@ -1105,6 +1139,10 @@ static int diff_removeDiff( UniDiff_t *diff )
             hunk.type = HUNK_TYPE_ASSET_FACTION_REMOVE;
             break;
 
+         case HUNK_TYPE_ASSET_DESCRIPTION:
+            hunk.type = HUNK_TYPE_ASSET_DESCRIPTION_REVERT;
+            break;
+
          case HUNK_TYPE_FACTION_VISIBLE:
             hunk.type = HUNK_TYPE_FACTION_INVISIBLE;
             break;
@@ -1178,6 +1216,8 @@ static void diff_cleanupHunk( UniHunk_t *hunk )
       case HUNK_TYPE_TECH_REMOVE:
       case HUNK_TYPE_ASSET_FACTION:
       case HUNK_TYPE_ASSET_FACTION_REMOVE:
+      case HUNK_TYPE_ASSET_DESCRIPTION:
+      case HUNK_TYPE_ASSET_DESCRIPTION_REVERT:
       case HUNK_TYPE_FACTION_VISIBLE:
       case HUNK_TYPE_FACTION_INVISIBLE:
       case HUNK_TYPE_FACTION_ALLY:

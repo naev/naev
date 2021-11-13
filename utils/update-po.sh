@@ -17,7 +17,7 @@ python3 "$ROOT/po/credits_pot.py" dat/intro dat/AUTHORS artwork/gfx/loading/*.tx
 echo po/credits.pot > "$ROOT/po/POTFILES.in"
 
 # Steps 2/3: list out the xml/source files in the tree.
-XML_SKIP_PATTERN='/((space|ship)_polygon|unidiff)/'
+XML_SKIP_PATTERN='/((space|ship)_polygon)/'
 
 if [ -d .git ]; then
    git ls-files -- 'dat/**.xml' | egrep -v "$XML_SKIP_PATTERN" | LC_ALL=C sort
