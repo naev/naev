@@ -36,9 +36,10 @@ local vn = {
    },
    transitions = transitions,
    _sfx = {
-      victory = audio.newSource( 'snd/sounds/jingles/victory.ogg' ),
       bingo = audio.newSource( 'snd/sounds/jingles/success.ogg' ),
       eerie = audio.newSource( 'snd/sounds/jingles/eerie.ogg' ),
+      money = audio.newSource( 'snd/sounds/jingles/money.ogg' ),
+      victory = audio.newSource( 'snd/sounds/jingles/victory.ogg' ),
       ui = {
          option = audio.newSource( 'snd/sounds/ui/happy.wav' ),
       },
@@ -1505,8 +1506,7 @@ end
 Plays a money sound.
 --]]
 function vn.sfxMoney( params )
-   -- TODO
-   -- return vn.sfx( vn._sfx.money, params )
+   return vn.sfx( vn._sfx.money, params )
 end
 --[[--
 Plays a victory sound.
