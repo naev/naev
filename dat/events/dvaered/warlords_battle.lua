@@ -188,9 +188,6 @@ function attack ()
    attackers = arrangeList(attackers)  --The heaviest ships will surround the leader
    local form = formation.random_key()
 
-   -- I use Thugs and Associates based factions because they won't interact with anybody
-   local f1 = faction.dynAdd( "Thugs", "Invaders", _("Warlords") )
-
    for i, j in ipairs(attackers) do
       j:rename("Invader")
       j:setFaction("Invaders")
@@ -230,6 +227,8 @@ function defense ()
    defenders = arrangeList(defenders)  --The heaviest ships will surround the leader
    local form = formation.random_key()
 
+   -- I use Thugs and Associates based factions because they won't interact with anybody
+   local f1 = faction.dynAdd( "Thugs", "Invaders", _("Warlords") )
    local f2 = faction.dynAdd( "Associates", "Locals", _("Warlords") )
    faction.dynEnemy (f1, f2)
    faction.dynEnemy (f2, f1)
