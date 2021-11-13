@@ -44,8 +44,6 @@ local love_shaders = require 'love_shaders'
 local fmt = require "format"
 
 local maikki_portrait = minerva.maikki.portrait
-local maikki_image = minerva.maikki.image
-local maikki_colour = minerva.maikki.colour
 
 local oldman_portrait = "old_man.png"
 local oldman_image = "old_man.png"

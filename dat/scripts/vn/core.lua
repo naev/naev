@@ -142,10 +142,9 @@ local function _draw_character( c )
       isportrait = c.params.isportrait
    end
    local lw, lh = love.graphics.getDimensions()
-   local tw, th = vn.textbox_w, vn.textbox_h
    local scale, x, y
    if isportrait then
-      scale = math.min( tw/w, (vn.textbox_y-(lh-vn.display_h)/2)/h )
+      scale = math.min( vn.textbox_w/w, (vn.textbox_y-(lh-vn.display_h)/2)/h )
       x = (lw-vn.display_w)/2 + c.offset*vn.display_w - w*scale/2
       y = vn.textbox_y-scale*h
    else

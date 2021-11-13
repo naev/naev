@@ -37,7 +37,7 @@ local portrait = require "portrait"
 local fmt = require "format"
 
 message = fw.message -- common hooks
-local Aidlehooks, Bidlehooks, alpha, attackers, canland, controls, hamelsen, jules, spy, toldya, wrlrds -- Non-persistent state
+local alpha, attackers, canland, controls, hamelsen, jules, spy, toldya, wrlrds -- Non-persistent state
 local StraferNspy, equipHyena, scheduleIncoming, spawn1Wrlrd, spawnAlpha, spawnBeta, strNpc -- Forward-declared functions
 
 -- TODO: hooks to penalize attacking people
@@ -265,11 +265,10 @@ function spawnBeta()
    beta[12] = pilot.add( "Dvaered Goddard", "Dvaered", targpla )
    beta[12]:rename(_("B-Hammer-Lead"))
 
-   Bidlehooks = {}
    for i, p in ipairs(beta) do
       p:control()
       imDoingNothing( p )
-      Bidlehooks[i] = hook.pilot( p, "idle", "imDoingNothing", p )
+      hook.pilot( p, "idle", "imDoingNothing", p )
       p:setVisible()
    end
 end
@@ -283,11 +282,10 @@ function spawnAlpha()
    alpha[4] = pilot.add( "Hyena", "Dvaered", targpla, _("A-NightClaws-4"), {ai="baddie"} )
    alpha[5] = pilot.add( "Hyena", "Dvaered", destpla, _("A-NightClaws-5"), {ai="baddie"} )
 
-   Aidlehooks = {}
    for i, p in ipairs(alpha) do
       p:control()
       imDoingNothing( p )
-      Aidlehooks[i] = hook.pilot( p, "idle", "imDoingNothing", p )
+      hook.pilot( p, "idle", "imDoingNothing", p )
       p:setVisible()
    end
 end

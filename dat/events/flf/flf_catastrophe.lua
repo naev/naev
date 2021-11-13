@@ -127,7 +127,7 @@ function takeoff ()
    end
 
    -- Spawn Dvaered ships
-   local shptypes = {
+   shptypes = {
       "Dvaered Goddard", "Dvaered Vigilance", "Dvaered Vigilance",
       "Dvaered Phalanx", "Dvaered Ancestor", "Dvaered Ancestor",
       "Dvaered Ancestor", "Dvaered Vendetta", "Dvaered Vendetta",
